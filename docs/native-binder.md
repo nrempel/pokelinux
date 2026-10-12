@@ -227,7 +227,19 @@ bash tools/build-native-radio.sh build
 bash tools/framework-suite.sh radio-ipc
 ```
 
-The indication handle is currently a test-only descriptor endpoint; indication
-delivery is not implemented by this test. This is actual cross-process native
-request/response IPC, but not an actual vendor service or production session
-recovery result. [Remaining integration gates](native-radio-integration.md).
+The subsequent native indication endpoint replaces the descriptor-only test
+handle. Both endpoints share a bounded event queue and terminal failure state.
+Raw and segmented indications now pass across processes; fragments preserve
+message, slot, segment index and total length. Reassembly is not implemented.
+
+The peer submits indications before returning registration. After the request
+round trips, a separate test-only burst overfills the four-event inbox while the
+client does not consume it. Both endpoints report QueueFull and the inbox refuses
+buffered events. This proves local inbox failure across actual Binder, not driver
+buffer exhaustion or session-owner recovery. Malformed argument tests reject
+truncation, null arrays and trailing fields on Linux and ARM64/QEMU.
+
+The old provenance above records the earlier request/response milestone. The
+[indication report](evidence/radio-indication-provenance.json) records this extension.
+Neither establishes actual vendor service behavior or production recovery.
+[Remaining integration gates](native-radio-integration.md).

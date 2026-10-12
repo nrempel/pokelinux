@@ -1,8 +1,9 @@
 # Native radio integration: next execution gate
 
 Status: bootstrap, native registration, raw/segmented requests, response delivery
-and observed teardown pass across processes on the owned x86 emulator. See
-[execution evidence](evidence/radio-ipc-provenance.json). Production session
+and observed teardown pass across processes on the owned x86 emulator. Raw and
+segmented indication delivery and shared inbox overflow now pass too. See
+[execution evidence](evidence/radio-indication-provenance.json). Production session
 recovery and the remaining failure gates below are not complete. Android is an
 independent synthetic test peer. No physical phone was accessed.
 
@@ -53,7 +54,10 @@ Registration original-proxy execution is now covered by
 [the five passing cases](evidence/registration-provenance.json). Separate-process
 native radio registration now passes against the synthetic peer, along with raw
 and segmented round trips and observed teardown. The rest of these gates remain
-open; the indication object currently supplies only a distinct descriptor.
+open except raw/segmented indication delivery and shared inbox overflow, now
+covered by the native endpoint. Indication reassembly, owner wakeup, pending
+operation failure and reconnect are still required. The overflow test polls the
+endpoint failure state; it does not prove a production owner wakes correctly.
 
 ## Independent review
 

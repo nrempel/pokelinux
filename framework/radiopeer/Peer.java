@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 public final class Peer extends Instrumentation {
     private static final String RADIO = "vendor.samsung_slsi.telephony.hardware.radioExternal.IOemSlsiRadioExternal";
     private volatile IBinder response;
+    private volatile IBinder indication;
     private final ByteArrayOutputStream segments = new ByteArrayOutputStream();
     private int segmentIndex, segmentSerial, segmentTotal;
     private volatile int rawCalls, segmentCalls;
@@ -27,6 +28,15 @@ public final class Peer extends Instrumentation {
             require(response.transact(1, data, null, IBinder.FLAG_ONEWAY), "callback submission");
         } finally { data.recycle(); }
     }
+    private void indicate(int message, byte[] bytes, int index, int total) throws RemoteException {
+        Parcel data = Parcel.obtain();
+        try {
+            data.writeInterfaceToken(RADIO + "Ind");
+            data.writeInt(message); data.writeInt(0); data.writeByteArray(bytes);
+            if (index >= 0) { data.writeInt(index); data.writeInt(total); }
+            require(indication.transact(index < 0 ? 1 : 2, data, null, IBinder.FLAG_ONEWAY), "indication submission");
+        } finally { data.recycle(); }
+    }
     private final Binder endpoint = new Binder() {
         { attachInterface(null, RADIO); }
         @Override protected boolean onTransact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
@@ -37,7 +47,7 @@ public final class Peer extends Instrumentation {
             if (code == 5) {
                 require(callFlags == 0, "registration flags: " + flags);
                 response = data.readStrongBinder();
-                IBinder indication = data.readStrongBinder();
+                indication = data.readStrongBinder();
                 require(response != null && indication != null && response != indication, "distinct callbacks");
                 require((RADIO + "Res").equals(response.getInterfaceDescriptor()), "response descriptor");
                 require((RADIO + "Ind").equals(indication.getInterfaceDescriptor()), "indication descriptor");
@@ -52,6 +62,9 @@ public final class Peer extends Instrumentation {
                     out.enforceNoDataAvail();
                 } finally { in.recycle(); out.recycle(); }
                 respond(7, new byte[]{7});
+                indicate(33, new byte[]{1, 2, 3}, -1, 0);
+                indicate(34, new byte[]{4, 5}, 0, 5);
+                indicate(34, new byte[]{6, 7, 8}, 1, 5);
                 reply.writeNoException(); reply.writeInt(42);
                 return true;
             }
@@ -75,7 +88,13 @@ public final class Peer extends Instrumentation {
             }
             if (code == 1) {
                 require(callFlags == IBinder.FLAG_ONEWAY && data.readInt() == 42, "clear framing");
-                data.enforceNoDataAvail(); cleared = true; response = null; return true;
+                data.enforceNoDataAvail(); cleared = true; response = null; indication = null; return true;
+            }
+            if (code == 105) { // Test-only bounded inbox pressure, not a vendor transaction.
+                require(callFlags == 0 && indication != null && !cleared, "burst state/flags");
+                data.enforceNoDataAvail();
+                for (int i = 0; i < 5; i++) indicate(99, new byte[]{1}, -1, 0);
+                reply.writeNoException(); return true;
             }
             if (code == 100) { // Test-only observation, never called by production transport.
                 data.enforceNoDataAvail(); reply.writeNoException();

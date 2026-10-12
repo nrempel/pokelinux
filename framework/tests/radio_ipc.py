@@ -44,10 +44,11 @@ try:
     output = run('shell', root + '/radio-ipc-test', '51')
     Path('artifacts/native-radio/ipc-output.txt').write_text(output)
     lines = output.splitlines()
-    expected = ['radio-bootstrap\tPASS', 'radio-registration\tPASS']
+    expected = ['radio-bootstrap\tPASS', 'radio-registration\tPASS', 'radio-indications\tPASS']
     expected += ['radio-roundtrip\t'+str(n)+'\tPASS' for n in [0, 2048, 2049, 4096]]
-    assert lines[:6] == expected and len(lines) == 8, output
-    assert lines[6].startswith('radio-peer\t') and lines[7] == 'radio-clear-observed\tPASS', output
+    expected += ['radio-callback-overflow\tPASS']
+    assert lines[:8] == expected and len(lines) == 10, output
+    assert lines[8].startswith('radio-peer\t') and lines[9] == 'radio-clear-observed\tPASS', output
     assert run('shell', 'getenforce').strip() == 'Enforcing'
     print(output, flush=True)
 finally:

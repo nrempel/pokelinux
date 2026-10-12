@@ -1,0 +1,55 @@
+{
+  "scope": "Rust Samsung radioExternal indication endpoints and shared terminal callback inbox; independent synthetic Android peer",
+  "image": "google/sdk_gphone64_x86_64/emu64xa:17/CE2A.260420.019/15611780:userdebug/dev-keys",
+  "binary_sha256": "8bde1bcc22c82f3571972d89cd849608f2a28c5f51fb5568a0c098116ae2213e",
+  "peer_apk_sha256": "eff30969be91d849cf98bdc38e1f8b3d5860317875bab4837771ae15baab636d",
+  "framework_jar_sha256": "cfd8c422620cf584b5f190d8e5a211b83468a5ffd2bdb5cad1e0e410a22f30d8",
+  "sources_sha256": {
+    "native-radio/src/receiver.rs": "7b344c4d56414c61339aff4bee376182bd981212211824bf691f713cdad540f1",
+    "native-radio/src/indication.rs": "cf645e64492034bee2ae22e27537bdd4b99aa04bcf6183e7a7841af806660456",
+    "native-radio/src/bin/radio-ipc-test.rs": "cbb15dbae72b673178aa3c36e26bdbbb598afe0bab37e17fdb4782091debbba5",
+    "native-radio/tests/indication_arguments.rs": "f5cf476f870c3a79df53434b30aa2e94b30cb299220d910829ca07657089b157",
+    "native-radio/tests/response_receiver.rs": "a81c90aaf6ed038c3e27ed0fd9e6102c4ea3ee04c4ca610f87a6ab36a52b07e2",
+    "framework/radiopeer/Peer.java": "839747031a0da1c4ba633579a71c4bd0a2f0ad06e9835df8593c67765c1d4e95",
+    "framework/tests/radio_ipc.py": "beb046872731dbe78a1d7e5ea3f235ad4eb98638f95bc6e2651a0013283ea7b9",
+    "framework/tests/binder_kernel.py": "d87e583b1459be77d7645a79e8210cb6e812e5b5f0ffeec15067351cd16dae99"
+  },
+  "output_sha256": "96887a3e8aa5966915af6d65896019666f97fbb4d6cbce5a1142d313e417613e",
+  "output": [
+    "radio-bootstrap\tPASS",
+    "radio-registration\tPASS",
+    "radio-indications\tPASS",
+    "radio-roundtrip\t0\tPASS",
+    "radio-roundtrip\t2048\tPASS",
+    "radio-roundtrip\t2049\tPASS",
+    "radio-roundtrip\t4096\tPASS",
+    "radio-callback-overflow\tPASS",
+    "radio-peer\t2430\t10234\tu:r:untrusted_app:s0:c234,c256,c512,c768",
+    "radio-clear-observed\tPASS"
+  ],
+  "client_uid": 2000,
+  "client_selinux_domain": "u:r:shell:s0",
+  "selinux_enforcing": true,
+  "phone_accessed": false,
+  "verified": [
+    "Raw indication and two segmented fragments preserve all fields across actual Binder",
+    "Both callbacks submitted by peer before registration reply; endpoint delivery order not assumed",
+    "Four-event shared inbox overflow from five one-way indications invalidates both endpoints and hides queued events",
+    "Request round trips 0, 2048, 2049 and 4096 bytes and observed clear remain passing",
+    "Six dispatch-wrapper tests pass with owned emulator Binder initialization",
+    "Malformed indication prefixes, trailing fields and null/invalid array lengths rejected on x86 musl and ARM64/QEMU"
+  ],
+  "red_before_green": "New integration test timed out waiting for indications against the earlier response-only peer; same native binary passed after peer indication delivery was added",
+  "not_verified": [
+    "Indication segment reassembly and bounded incomplete-message lifetime",
+    "Production session owner wakeup, pending operations, death, reconnect and hung calls",
+    "Driver queue pressure, remote malformed parcels and actual vendor sender flags",
+    "Actual vendor service access, second-device compatibility or ARM64 kernel IPC",
+    "Modem, IMS, carrier, audio, camera, graphics, suspend/wake or physical phone boot"
+  ],
+  "reproduce": [
+    "bash tools/build-native-radio.sh build",
+    "bash tools/framework-suite.sh radio-ipc",
+    "bash tools/framework-suite.sh binder-kernel"
+  ]
+}

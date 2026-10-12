@@ -38,5 +38,5 @@ except subprocess.CalledProcessError as error:
  print(error.output,flush=True)
  raise
 Path('artifacts/native-radio/response-receiver-output.txt').write_text(output)
-assert 'test result: ok. 5 passed; 0 failed;' in output,output
-print('Native response receiver: 5 dispatch-wrapper tests passed using emulator Binder initialization',flush=True)
+assert 'test result: ok. 6 passed; 0 failed;' in output,output
+print('Native response receiver: 6 dispatch-wrapper tests passed using emulator Binder initialization',flush=True)

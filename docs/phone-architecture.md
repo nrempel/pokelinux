@@ -1,8 +1,14 @@
 # Phone architecture and proof boundaries
 
-The intended user interface is native Arch/Omarchy. The retained Android subsystem owns cellular services. This is not an Android-free operating system, and Android app compatibility is not the objective.
+The target is Arch/Omarchy with native Rust phone services, QML apps and hardware-specific backends. Android framework bridges are reference and test infrastructure, not the final production architecture. Replacing all required Android userspace remains unproven. See the authoritative [smartphone scope](smartphone-goal.md).
+
+Pixel 10 is the first qualification target, not a dependency of the shared phone model. [Device portability](device-portability.md) defines the boundary between shared services, vendor protocols and device integration.
 
 The [hardware boundary decision](hardware-boundary-decision.md) specifies native Linux first, with separate adapters only for demonstrated vendor dependencies. The Telecom APK is not a universal camera, input or power bridge. The smartphone product is a native app bundle plus shared system services that remain active when app windows close.
+
+## Historical Android reference system
+
+The diagram below describes the existing reference bridge and its tests. It does not describe the intended Rust runtime.
 
 ```mermaid
 flowchart LR
@@ -24,7 +30,7 @@ The emulator-to-VM test route uses ADB forwarding. The separate direct-loopback 
 
 Waydroid is not running in this setup. A Waydroid-derived Android container is one possible deployment structure, not a selected or verified Pixel platform. Stock Pixel services also require matching framework/APEX/vendor files, signatures, policy and device access; a generic Waydroid image does not supply those by itself.
 
-## Intended phone structure, still to prove
+## Earlier bridge deployment proposal, not the target
 
 Arch/Omarchy would provide the main desktop on Google's Pixel kernel and drivers. A retained Android environment would provide the framework and hardware services required by the Pixel vendor stack. The precise init/container arrangement, Binder device allocation, SELinux policy, display ownership, audio routing and suspend behavior are not established by the emulator tests.
 

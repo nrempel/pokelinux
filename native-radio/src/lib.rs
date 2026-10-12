@@ -1,4 +1,5 @@
-//! Generated native vendor metadata bindings, checked against original Android bytes.
+//! Samsung radioExternal backend, checked against original Android bytes.
+//! These vendor events and wire types are not the device-neutral phone model.
 //! Vendor discovery and session recovery remain outside these transport primitives.
 // AIDL package names are wire identifiers, including radioExternal.
 #[allow(non_snake_case)]
@@ -11,3 +12,5 @@ pub mod receiver;
 pub mod response;
 
 pub mod transport;
+
+pub mod indication;

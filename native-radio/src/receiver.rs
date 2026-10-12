@@ -1,6 +1,10 @@
-//! Native response Binder endpoint. Queue failure is terminal for this endpoint;
+//! Native response and indication endpoints share one terminal event stream;
 //! its owner must fail the associated session rather than continue after loss.
-use crate::response::{RadioResponse, decode_response_arguments};
+use crate::{
+    indication::{RadioIndication, decode_indication_arguments},
+    response::{RadioResponse, decode_response_arguments},
+    transport::INDICATION_DESCRIPTOR,
+};
 use rsbinder::{Binder, Parcel, Remotable, Result, Stability, StatusCode};
 use std::{
     num::NonZeroUsize,
@@ -18,7 +22,7 @@ const INTERFACE_HASH: &str = "62c86cf5f8f15456f451d2241b4f21b10627e514";
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 #[repr(u8)]
 pub enum ReceiverFailure {
-    MalformedResponse = 1,
+    MalformedCallback = 1,
     QueueFull = 2,
     ConsumerGone = 3,
     InternalFailure = 4,
@@ -27,7 +31,7 @@ pub enum ReceiverFailure {
 fn failure(state: &AtomicU8) -> Option<ReceiverFailure> {
     match state.load(Ordering::Acquire) {
         0 => None,
-        1 => Some(ReceiverFailure::MalformedResponse),
+        1 => Some(ReceiverFailure::MalformedCallback),
         2 => Some(ReceiverFailure::QueueFull),
         3 => Some(ReceiverFailure::ConsumerGone),
         5 => Some(ReceiverFailure::PublisherGone),
@@ -35,17 +39,17 @@ fn failure(state: &AtomicU8) -> Option<ReceiverFailure> {
     }
 }
 
-pub struct RadioResponseReceiver {
-    sender: Mutex<Option<SyncSender<RadioResponse>>>,
+struct CallbackQueue {
+    sender: Mutex<Option<SyncSender<RadioEvent>>>,
     failure: Arc<AtomicU8>,
 }
-pub struct ResponseInbox {
-    receiver: Receiver<RadioResponse>,
+pub struct CallbackInbox {
+    receiver: Receiver<RadioEvent>,
     failure: Arc<AtomicU8>,
 }
-impl ResponseInbox {
+impl CallbackInbox {
     /// Never returns buffered responses once endpoint failure is observed.
-    pub fn try_recv(&self) -> std::result::Result<Option<RadioResponse>, ReceiverFailure> {
+    pub fn try_recv(&self) -> std::result::Result<Option<RadioEvent>, ReceiverFailure> {
         if let Some(error) = failure(&self.failure) {
             return Err(error);
         }
@@ -60,7 +64,7 @@ impl ResponseInbox {
         result
     }
 }
-impl RadioResponseReceiver {
+impl CallbackQueue {
     pub fn failure(&self) -> Option<ReceiverFailure> {
         failure(&self.failure)
     }
@@ -74,7 +78,7 @@ impl RadioResponseReceiver {
             .ok();
         sender.take();
     }
-    fn deliver(&self, event: RadioResponse) -> Result<()> {
+    fn deliver(&self, event: RadioEvent) -> Result<()> {
         let mut sender = match self.sender.lock() {
             Ok(sender) => sender,
             Err(poison) => {
@@ -104,11 +108,14 @@ impl RadioResponseReceiver {
         }
     }
 }
-impl Remotable for RadioResponseReceiver {
-    fn descriptor() -> &'static str {
-        RESPONSE_DESCRIPTOR
-    }
-    fn on_transact(&self, code: u32, input: &mut Parcel, reply: &mut Parcel) -> Result<()> {
+impl CallbackQueue {
+    fn dispatch(
+        &self,
+        code: u32,
+        input: &mut Parcel,
+        reply: &mut Parcel,
+        decode: fn(u32, &mut Parcel) -> Result<RadioEvent>,
+    ) -> Result<()> {
         match code {
             16_777_215 | 16_777_214 => {
                 if input.data_avail() != 0 {
@@ -125,10 +132,10 @@ impl Remotable for RadioResponseReceiver {
                 if self.failure().is_some() {
                     return Err(StatusCode::FailedTransaction);
                 }
-                match decode_response_arguments(code, input) {
+                match decode(code, input) {
                     Ok(event) => self.deliver(event),
                     Err(error) => {
-                        self.fail(ReceiverFailure::MalformedResponse);
+                        self.fail(ReceiverFailure::MalformedCallback);
                         Err(error)
                     }
                 }
@@ -136,22 +143,68 @@ impl Remotable for RadioResponseReceiver {
             _ => Err(StatusCode::UnknownTransaction),
         }
     }
-    fn on_dump(&self, _writer: &mut dyn std::io::Write, _args: &[String]) -> Result<()> {
-        Err(StatusCode::InvalidOperation)
-    }
 }
 
-pub fn new_response_receiver(
-    capacity: NonZeroUsize,
-) -> (Binder<RadioResponseReceiver>, ResponseInbox) {
+#[derive(Debug)]
+pub enum RadioEvent {
+    Response(RadioResponse),
+    Indication(RadioIndication),
+}
+pub struct RadioResponseReceiver(Arc<CallbackQueue>);
+pub struct RadioIndicationReceiver(Arc<CallbackQueue>);
+fn response_event(code: u32, input: &mut Parcel) -> Result<RadioEvent> {
+    decode_response_arguments(code, input).map(RadioEvent::Response)
+}
+fn indication_event(code: u32, input: &mut Parcel) -> Result<RadioEvent> {
+    decode_indication_arguments(code, input).map(RadioEvent::Indication)
+}
+macro_rules! endpoint {
+    ($receiver:ty, $descriptor:expr, $decoder:expr) => {
+        impl $receiver {
+            pub fn failure(&self) -> Option<ReceiverFailure> {
+                self.0.failure()
+            }
+        }
+        impl Remotable for $receiver {
+            fn descriptor() -> &'static str {
+                $descriptor
+            }
+            fn on_transact(&self, code: u32, input: &mut Parcel, reply: &mut Parcel) -> Result<()> {
+                self.0.dispatch(code, input, reply, $decoder)
+            }
+            fn on_dump(&self, _: &mut dyn std::io::Write, _: &[String]) -> Result<()> {
+                Err(StatusCode::InvalidOperation)
+            }
+        }
+    };
+}
+endpoint!(RadioResponseReceiver, RESPONSE_DESCRIPTOR, response_event);
+endpoint!(
+    RadioIndicationReceiver,
+    INDICATION_DESCRIPTOR,
+    indication_event
+);
+
+pub struct RadioCallbacks {
+    pub response: Binder<RadioResponseReceiver>,
+    pub indication: Binder<RadioIndicationReceiver>,
+    pub events: CallbackInbox,
+}
+/// One bounded stream for one registration. On terminal failure the owner must
+/// fail that session and create fresh endpoints; neither endpoint can reset it.
+pub fn new_radio_callbacks(capacity: NonZeroUsize) -> RadioCallbacks {
     let (sender, receiver) = mpsc::sync_channel(capacity.get());
     let failure = Arc::new(AtomicU8::new(0));
-    let binder = Binder::new_with_stability(
-        RadioResponseReceiver {
-            sender: Mutex::new(Some(sender)),
-            failure: failure.clone(),
-        },
-        Stability::Vintf,
-    );
-    (binder, ResponseInbox { receiver, failure })
+    let shared = Arc::new(CallbackQueue {
+        sender: Mutex::new(Some(sender)),
+        failure: failure.clone(),
+    });
+    RadioCallbacks {
+        response: Binder::new_with_stability(
+            RadioResponseReceiver(shared.clone()),
+            Stability::Vintf,
+        ),
+        indication: Binder::new_with_stability(RadioIndicationReceiver(shared), Stability::Vintf),
+        events: CallbackInbox { receiver, failure },
+    }
 }

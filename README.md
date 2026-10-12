@@ -41,7 +41,7 @@ Dashed connections are work still required, not working hardware paths. “Rust 
 | Original request segmentation | Five executed boundary cases reproduce missing final chunks for exact multiples of 2,048 above 2,048 bytes. [Evidence](docs/evidence/segmentation-provenance.json) | Vendor endpoint acceptance and real-world impact |
 | Native request splitting | Lossless Rust planner tested on Linux x86-64 and ARM64/QEMU across 14,337 segmented payload lengths. [Evidence](docs/evidence/request-parts-provenance.json) | Vendor endpoint acceptance |
 | Native Linux Binder | Static Linux Rust client performs service lookup and receives a one-way Android callback through the real Binder driver with SELinux enforcing. [Report](docs/native-binder.md) | Vendor radio calls/callbacks, ARM64 kernel IPC and Pixel permissions |
-| Native radio transport | Rust registration, raw/segmented request and response round trips through real Binder to an independent Java test peer; payload sizes 0, 2048, 2049 and 4096, SELinux enforcing. [Evidence](docs/evidence/radio-ipc-provenance.json) | Vendor service, indication delivery, session recovery and modem operation |
+| Native radio transport | Rust registration, request/response round trips, raw/segmented indication delivery and shared inbox overflow through real Binder to an independent Java test peer, SELinux enforcing. [Evidence](docs/evidence/radio-indication-provenance.json) | Vendor service, indication reassembly, session recovery and modem operation |
 | Vendor response metadata | Generated Rust AIDL binding matches seven original Android typed-object fixtures on Linux and ARM64/QEMU; selected malformed boundaries are rejected. [Evidence](docs/evidence/response-info-provenance.json) | Full vendor callback transactions, response semantics and reassembly |
 | Native desktop | Arch ARM VM, Hyprland, virtual touch, installed app lifecycle and live theme tests. [Report](docs/native-virtual-graphics.md) | Physical display/input, full phone shell and device boot |
 | Android reference bridge | Enrollment, permissions, callbacks and call controls tested against Android Telecom in an emulator. [Report](docs/android-framework-tests.md) | These tests do not prove native IMS or real voice calls |
@@ -88,6 +88,8 @@ These are separate test paths. None emulates the Pixel modem, PowerVR GPU or cam
 Phone UI, theme integration, common state models and test tools can be reused. Radio protocols, camera interfaces, GPU/display paths, boot configuration and power behavior depend on the device. Another phone will need its own adapters and hardware qualification.
 
 We will build the concrete Pixel target first and extract shared interfaces when supported by real needs. We do not claim a universal phone hardware layer or support for untested devices.
+
+The [device portability decision](docs/device-portability.md) keeps vendor protocols outside shared phone logic. The current `native-radio` crate implements Samsung radioExternal; it is not a universal modem API. Java peers are Android test infrastructure, not the target phone runtime.
 
 ```mermaid
 %%{init: {'theme':'dark'}}%%
