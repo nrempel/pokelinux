@@ -171,3 +171,24 @@ also passed in this run. These are local original-proxy captures, not native
 registration or cross-process vendor qualification. The next integration gate is
 a separate synthetic service process exercising the production native adapter,
 with explicit test-only discovery permissions, callback delivery and death.
+
+## Indication recovery notes (static only)
+
+REA inspection of the same APK finds a distinct indication protocol: raw
+transaction 1 contains two integers and a byte array; segmented transaction 2
+adds two integers. The concrete indication adapter treats these as message ID,
+slot ID, payload, segment index and total length. It filters by its configured
+slot and maintains a segment map keyed by message ID. The segment accumulator
+counts only the first occurrence of an index; the adapter delivers when the
+accumulated length equals the declared total and then removes the message entry.
+
+This is static decompiler evidence, not an execution result or a modem contract.
+It does not establish bounds, ordering guarantees, concurrency rules for repeated
+message IDs, timeout behavior, or callback sender flags. Native indication work
+must test those cases explicitly and bound memory and incomplete-message lifetime.
+Do not reuse the empty original segmented-response behavior for indications.
+
+The inspected methods are `IOemSlsiRadioExternalInd.Stub.onTransact`,
+`OemSlsiRadioExternalIndAidl.OemSlsiRadioExternalIndStub.rilExternalRawIndicationSeg`,
+and `OemSlsiRadioExternalIndBase.SegmentRilMessage.addDataSegment`. Raw decompiler
+outputs remain excluded from the public repository.
