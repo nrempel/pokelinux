@@ -1,0 +1,34 @@
+{
+  "scope": "Absolute suspend-aware local session expiry; Linux components, ARM64 user-mode QEMU, and real Binder synthetic peer on Harbour",
+  "base_revision": "f4203a51e84d82d1019aae2b724e351956ae43d5",
+  "sources_sha256": {
+    "native-radio/Cargo.toml": "76cbf1e9e8b5f5f8766642819af9745371a4b85824c9302001083fcc3d412397",
+    "native-radio/Cargo.lock": "79da65efd795316ef184d2f1c7895946254913b68d4cf5f4fd8d83a5dc20ccd4",
+    "native-radio/src/deadline.rs": "abc2a3f23284402fe3bc34abfb380bdf1f84a1f6d15cbd90b38a09bf5450c2ee",
+    "native-radio/src/owner.rs": "33f0acc1ea815ebc0c1ef9f2ca753fbf2ee657f5335d6ca20e9884e093dbb809",
+    "native-radio/src/receiver.rs": "eb638f48378753d5a1f8188c2f6bd889118ca844a54be7165b7dd84209f68678",
+    "native-radio/src/bin/radio-ipc-test.rs": "e3cef1a6be2997364e847a2226774440a18535915260c42599ffb7259e1720c2",
+    "framework/tests/radio_ipc.py": "d4148a4a37578cc143d3b67b476d889c987934b01b3b9f3bb4a77f8db6052854"
+  },
+  "binary_sha256": "83a005242d953e7400de340872335a4e2ae32d331faf702166e4f5afd8945ebd",
+  "red": "Four compiling component regressions failed: expired activation returned Ok, expired publication returned Ok, snapshot remained Active and expired begin revoked live state",
+  "green": [
+    "radio-bootstrap\tPASS",
+    "radio-registration-held\tPASS",
+    "radio-registration-held-expire\tPASS",
+    "radio-registration-late-success-rejected\tPASS"
+  ],
+  "other_gates": "fmt, Clippy -D warnings, full x86_64 and ARM64/QEMU tests and release builds; held cancellation, owner, registration death and ordinary IPC scenarios all pass",
+  "selinux": "Enforcing asserted after each scenario",
+  "phone_accessed": false,
+  "original_code_execution": "No new original-code execution in this increment",
+  "limits": [
+    "Controlled clock jump is not physical suspend/wake evidence",
+    "Scope is the owner session lifetime; no candidate or operation lifetime deadline yet",
+    "No production worker, permanent-hang recovery, remote cleanup or IMS semantic proof"
+  ],
+  "commands": [
+    "bash tools/build-native-radio.sh build",
+    "bash tools/framework-suite.sh radio-ipc"
+  ]
+}

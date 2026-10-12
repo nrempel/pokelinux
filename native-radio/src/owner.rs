@@ -1,5 +1,6 @@
 //! Session publication authority. Raw response observations are not call state.
 use crate::{
+    deadline::{BootClock, Clock, Deadline},
     receiver::{
         self, CallbackControl, CallbackInbox, CallbackQueue, RadioEndpoints, RadioEvent,
         ReceiverFailure,
@@ -60,6 +61,7 @@ pub(crate) struct Gate {
     revision: u64,
     response: Option<Arc<RadioResponse>>,
     preparing: Option<Arc<()>>,
+    deadline: Option<Deadline>,
 }
 impl Default for Gate {
     fn default() -> Self {
@@ -70,6 +72,7 @@ impl Default for Gate {
             revision: 0,
             response: None,
             preparing: None,
+            deadline: None,
         }
     }
 }
@@ -97,11 +100,15 @@ impl Gate {
         }
     }
 }
-#[derive(Default)]
-pub(crate) struct Shared(pub(crate) Mutex<Gate>);
+pub(crate) struct Shared(pub(crate) Mutex<Gate>, Arc<dyn Clock>);
+impl Default for Shared {
+    fn default() -> Self {
+        Self(Mutex::new(Gate::default()), Arc::new(BootClock))
+    }
+}
 impl Shared {
     pub(crate) fn lock(&self) -> MutexGuard<'_, Gate> {
-        self.0.lock().unwrap_or_else(|poison| {
+        let mut state = self.0.lock().unwrap_or_else(|poison| {
             let mut state = poison.into_inner();
             if let Some(queue) = state.queue.upgrade() {
                 queue.fail_locked(&mut state, ReceiverFailure::InternalFailure);
@@ -109,7 +116,19 @@ impl Shared {
                 state.invalidate(&key, ReceiverFailure::InternalFailure);
             }
             state
-        })
+        });
+        // Every admission/activation/commit/snapshot checks absolute time, even
+        // if the executor has not delivered a timer after suspend.
+        if matches!(state.phase, Phase::Registering | Phase::Active { .. })
+            && state.deadline.is_some_and(|end| end.elapsed(self.1.now()))
+        {
+            if let Some(queue) = state.queue.upgrade() {
+                queue.fail_locked(&mut state, ReceiverFailure::Expired);
+            } else if let Some(key) = state.current.clone() {
+                state.invalidate(&key, ReceiverFailure::Expired);
+            }
+        }
+        state
     }
 }
 
@@ -160,8 +179,11 @@ pub struct RadioOwner {
 }
 impl RadioOwner {
     pub fn new(retained_limit: NonZeroUsize) -> Self {
+        Self::with_clock(retained_limit, Arc::new(BootClock))
+    }
+    pub fn with_clock(retained_limit: NonZeroUsize, clock: Arc<dyn Clock>) -> Self {
         Self {
-            shared: Arc::new(Shared::default()),
+            shared: Arc::new(Shared(Mutex::new(Gate::default()), clock)),
             inbox: None,
             control: None,
             retained: Vec::new(),
@@ -181,6 +203,7 @@ impl RadioOwner {
         &mut self,
         expected: Option<&SessionKey>,
         capacity: NonZeroUsize,
+        deadline: Deadline,
     ) -> Result<(SessionKey, Arc<CallbackQueue>), OwnerError> {
         self.retained.retain(|queue| queue.strong_count() != 0);
         if self.retained.len() >= self.retained_limit.get() {
@@ -192,6 +215,9 @@ impl RadioOwner {
             let mut gate = self.shared.lock();
             if gate.current.as_ref() != expected {
                 return Err(OwnerError::StaleSession);
+            }
+            if deadline.elapsed(self.shared.1.now()) {
+                return Err(OwnerError::Failed(ReceiverFailure::Expired));
             }
             if self.shared.0.is_poisoned() {
                 return Err(OwnerError::Failed(ReceiverFailure::InternalFailure));
@@ -213,6 +239,7 @@ impl RadioOwner {
             gate.current = Some(key.clone());
             gate.queue = Arc::downgrade(&queue);
             gate.phase = Phase::Registering;
+            gate.deadline = Some(deadline);
             gate.response = None;
             gate.preparing = None;
         }
@@ -222,19 +249,26 @@ impl RadioOwner {
         self.retained.push(Arc::downgrade(&queue));
         Ok((key, queue))
     }
-    pub fn begin(
+    pub fn begin_until(
         &mut self,
         expected: Option<&SessionKey>,
         capacity: NonZeroUsize,
+        deadline: Deadline,
     ) -> Result<Registration, OwnerError> {
-        let (key, queue) = self.begin_queue(expected, capacity)?;
+        let (key, queue) = self.begin_queue(expected, capacity, deadline)?;
         Ok(Registration {
             key,
             endpoints: receiver::endpoints(queue),
         })
     }
+    pub fn expire(&mut self, key: &SessionKey) -> Result<(), OwnerError> {
+        if !self.shared.lock().is_current(key) {
+            return Err(OwnerError::StaleSession);
+        }
+        Ok(())
+    }
     /// Call only with the result of registration on these exact endpoints.
-    /// This guards activation but does not cancel or time-bound the remote call.
+    /// This bounds local activation; it does not cancel the remote call.
     pub fn activate(&mut self, key: &SessionKey, client_id: i32) -> Result<(), OwnerError> {
         let mut gate = self.shared.lock();
         if !gate.is_current(key) {
@@ -348,6 +382,19 @@ mod tests {
         receiver::RadioEvent,
         response::{RadioResponse, ResponseKind},
     };
+    impl RadioOwner {
+        fn test_begin_queue(
+            &mut self,
+            expected: Option<&SessionKey>,
+            capacity: NonZeroUsize,
+        ) -> Result<(SessionKey, Arc<CallbackQueue>), OwnerError> {
+            self.begin_queue(
+                expected,
+                capacity,
+                Deadline::at(self.shared.1.now() + std::time::Duration::from_secs(60)),
+            )
+        }
+    }
     fn response(value: u8) -> RadioEvent {
         RadioEvent::Response(RadioResponse {
             info: RadioExternalResponseInfo::default(),
@@ -355,11 +402,120 @@ mod tests {
             kind: ResponseKind::Raw,
         })
     }
+    struct TestClock(std::sync::atomic::AtomicU64);
+    impl crate::deadline::Clock for TestClock {
+        fn now(&self) -> std::time::Duration {
+            std::time::Duration::from_nanos(self.0.load(std::sync::atomic::Ordering::SeqCst))
+        }
+    }
+    fn timed_owner() -> (RadioOwner, Arc<TestClock>) {
+        let clock = Arc::new(TestClock(std::sync::atomic::AtomicU64::new(10)));
+        (
+            RadioOwner::with_clock(NonZeroUsize::new(4).unwrap(), clock.clone()),
+            clock,
+        )
+    }
+    #[test]
+    fn expired_registration_rejects_late_success_without_timer_delivery() {
+        let (mut owner, clock) = timed_owner();
+        let registration = owner
+            .begin_until(
+                None,
+                NonZeroUsize::new(2).unwrap(),
+                crate::deadline::Deadline::at(std::time::Duration::from_nanos(20)),
+            )
+            .unwrap();
+        clock.0.store(20, std::sync::atomic::Ordering::SeqCst);
+        assert_eq!(
+            owner.activate(&registration.key, 42),
+            Err(OwnerError::Failed(ReceiverFailure::Expired))
+        );
+        assert_eq!(
+            owner.snapshot().phase,
+            Phase::Failed(ReceiverFailure::Expired)
+        );
+        assert_eq!(
+            registration.endpoints.control.queue().failure(),
+            Some(ReceiverFailure::Expired)
+        );
+    }
+    #[test]
+    fn expired_publication_withdraws_response_without_timer_delivery() {
+        let (mut owner, clock) = timed_owner();
+        let registration = owner
+            .begin_until(
+                None,
+                NonZeroUsize::new(2).unwrap(),
+                crate::deadline::Deadline::at(std::time::Duration::from_nanos(20)),
+            )
+            .unwrap();
+        owner.activate(&registration.key, 42).unwrap();
+        let queue = registration.endpoints.control.queue();
+        queue.deliver(response(7)).unwrap();
+        let first = owner.prepare_until(Instant::now()).unwrap().unwrap();
+        owner.publish(first).unwrap();
+        queue.deliver(response(8)).unwrap();
+        let late = owner.prepare_until(Instant::now()).unwrap().unwrap();
+        clock.0.store(21, std::sync::atomic::Ordering::SeqCst);
+        assert_eq!(
+            owner.publish(late),
+            Err(OwnerError::Failed(ReceiverFailure::Expired))
+        );
+        assert!(owner.snapshot().response.is_none());
+    }
+    #[test]
+    fn snapshot_expires_live_state_and_old_timer_cannot_fail_replacement() {
+        let (mut owner, clock) = timed_owner();
+        let old = owner
+            .begin_until(
+                None,
+                NonZeroUsize::new(2).unwrap(),
+                crate::deadline::Deadline::at(std::time::Duration::from_nanos(20)),
+            )
+            .unwrap();
+        owner.activate(&old.key, 42).unwrap();
+        clock.0.store(20, std::sync::atomic::Ordering::SeqCst);
+        assert_eq!(
+            owner.snapshot().phase,
+            Phase::Failed(ReceiverFailure::Expired)
+        );
+        let fresh = owner
+            .begin_until(
+                Some(&old.key),
+                NonZeroUsize::new(2).unwrap(),
+                crate::deadline::Deadline::at(std::time::Duration::from_nanos(30)),
+            )
+            .unwrap();
+        owner.activate(&fresh.key, 42).unwrap();
+        assert_eq!(owner.expire(&old.key), Err(OwnerError::StaleSession));
+        assert_eq!(owner.snapshot().phase, Phase::Active { client_id: 42 });
+    }
+    #[test]
+    fn already_expired_begin_preserves_current_session() {
+        let (mut owner, _clock) = timed_owner();
+        let current = owner
+            .begin_until(
+                None,
+                NonZeroUsize::new(2).unwrap(),
+                crate::deadline::Deadline::at(std::time::Duration::from_nanos(20)),
+            )
+            .unwrap();
+        owner.activate(&current.key, 42).unwrap();
+        assert!(matches!(
+            owner.begin_until(
+                Some(&current.key),
+                NonZeroUsize::new(2).unwrap(),
+                crate::deadline::Deadline::at(std::time::Duration::from_nanos(10))
+            ),
+            Err(OwnerError::Failed(ReceiverFailure::Expired))
+        ));
+        assert_eq!(owner.snapshot().phase, Phase::Active { client_id: 42 });
+    }
     #[test]
     fn consumed_event_cannot_publish_after_cancellation() {
         let mut owner = RadioOwner::new(NonZeroUsize::new(4).unwrap());
         let (key, queue) = owner
-            .begin_queue(None, NonZeroUsize::new(2).unwrap())
+            .test_begin_queue(None, NonZeroUsize::new(2).unwrap())
             .unwrap();
         owner.activate(&key, 42).unwrap();
         queue.deliver(response(7)).unwrap();
@@ -377,13 +533,13 @@ mod tests {
     fn replacement_rejects_old_work_and_old_endpoint_failure() {
         let mut owner = RadioOwner::new(NonZeroUsize::new(4).unwrap());
         let (old, queue) = owner
-            .begin_queue(None, NonZeroUsize::new(2).unwrap())
+            .test_begin_queue(None, NonZeroUsize::new(2).unwrap())
             .unwrap();
         owner.activate(&old, 42).unwrap();
         queue.deliver(response(99)).unwrap();
         let prepared = owner.prepare_until(Instant::now()).unwrap().unwrap();
         let (new, fresh) = owner
-            .begin_queue(Some(&old), NonZeroUsize::new(2).unwrap())
+            .test_begin_queue(Some(&old), NonZeroUsize::new(2).unwrap())
             .unwrap();
         owner.activate(&new, 42).unwrap();
         let revision = owner.snapshot().revision;
@@ -400,7 +556,7 @@ mod tests {
     fn registration_cannot_publish_or_activate_after_failure() {
         let mut owner = RadioOwner::new(NonZeroUsize::new(4).unwrap());
         let (key, queue) = owner
-            .begin_queue(None, NonZeroUsize::new(2).unwrap())
+            .test_begin_queue(None, NonZeroUsize::new(2).unwrap())
             .unwrap();
         queue.deliver(response(7)).unwrap();
         assert!(matches!(
@@ -417,7 +573,7 @@ mod tests {
     fn commit_before_failure_is_visible_then_withdrawn() {
         let mut owner = RadioOwner::new(NonZeroUsize::new(4).unwrap());
         let (key, queue) = owner
-            .begin_queue(None, NonZeroUsize::new(2).unwrap())
+            .test_begin_queue(None, NonZeroUsize::new(2).unwrap())
             .unwrap();
         owner.activate(&key, 42).unwrap();
         queue.deliver(response(7)).unwrap();
@@ -432,7 +588,7 @@ mod tests {
     fn exhausted_begin_does_not_revoke_current_session() {
         let mut owner = RadioOwner::new(NonZeroUsize::new(4).unwrap());
         let (key, queue) = owner
-            .begin_queue(None, NonZeroUsize::new(2).unwrap())
+            .test_begin_queue(None, NonZeroUsize::new(2).unwrap())
             .unwrap();
         owner.activate(&key, 42).unwrap();
         queue.deliver(response(7)).unwrap();
@@ -440,7 +596,7 @@ mod tests {
         owner.publish(prepared).unwrap();
         owner.shared.lock().revision = u64::MAX - 2;
         assert!(matches!(
-            owner.begin_queue(Some(&key), NonZeroUsize::new(2).unwrap()),
+            owner.test_begin_queue(Some(&key), NonZeroUsize::new(2).unwrap()),
             Err(OwnerError::Exhausted)
         ));
         assert_eq!(owner.snapshot().phase, Phase::Active { client_id: 42 });
@@ -451,13 +607,13 @@ mod tests {
     fn old_preparation_drop_cannot_release_current_preparation() {
         let mut owner = RadioOwner::new(NonZeroUsize::new(4).unwrap());
         let (old, queue) = owner
-            .begin_queue(None, NonZeroUsize::new(2).unwrap())
+            .test_begin_queue(None, NonZeroUsize::new(2).unwrap())
             .unwrap();
         owner.activate(&old, 42).unwrap();
         queue.deliver(response(99)).unwrap();
         let stale = owner.prepare_until(Instant::now()).unwrap().unwrap();
         let (new, fresh) = owner
-            .begin_queue(Some(&old), NonZeroUsize::new(2).unwrap())
+            .test_begin_queue(Some(&old), NonZeroUsize::new(2).unwrap())
             .unwrap();
         owner.activate(&new, 42).unwrap();
         fresh.deliver(response(7)).unwrap();
@@ -475,11 +631,11 @@ mod tests {
         let mut first = RadioOwner::new(NonZeroUsize::new(4).unwrap());
         let mut other = RadioOwner::new(NonZeroUsize::new(4).unwrap());
         let (key, queue) = first
-            .begin_queue(None, NonZeroUsize::new(2).unwrap())
+            .test_begin_queue(None, NonZeroUsize::new(2).unwrap())
             .unwrap();
         first.activate(&key, 42).unwrap();
         let (other_key, other_queue) = other
-            .begin_queue(None, NonZeroUsize::new(2).unwrap())
+            .test_begin_queue(None, NonZeroUsize::new(2).unwrap())
             .unwrap();
         other.activate(&other_key, 42).unwrap();
         other_queue.deliver(response(8)).unwrap();
@@ -500,27 +656,27 @@ mod tests {
     fn retained_limit_and_stale_begin_preserve_current_state() {
         let mut owner = RadioOwner::new(NonZeroUsize::new(2).unwrap());
         let (old, queue) = owner
-            .begin_queue(None, NonZeroUsize::new(2).unwrap())
+            .test_begin_queue(None, NonZeroUsize::new(2).unwrap())
             .unwrap();
         owner.activate(&old, 42).unwrap();
         assert!(matches!(
-            owner.begin_queue(None, NonZeroUsize::new(2).unwrap()),
+            owner.test_begin_queue(None, NonZeroUsize::new(2).unwrap()),
             Err(OwnerError::StaleSession)
         ));
         assert_eq!(queue.failure(), None);
         let (current, fresh) = owner
-            .begin_queue(Some(&old), NonZeroUsize::new(2).unwrap())
+            .test_begin_queue(Some(&old), NonZeroUsize::new(2).unwrap())
             .unwrap();
         owner.activate(&current, 42).unwrap();
         assert!(matches!(
-            owner.begin_queue(Some(&current), NonZeroUsize::new(2).unwrap()),
+            owner.test_begin_queue(Some(&current), NonZeroUsize::new(2).unwrap()),
             Err(OwnerError::RetainedLimit)
         ));
         assert_eq!(fresh.failure(), None);
         drop(queue);
         assert!(
             owner
-                .begin_queue(Some(&current), NonZeroUsize::new(2).unwrap())
+                .test_begin_queue(Some(&current), NonZeroUsize::new(2).unwrap())
                 .is_ok()
         );
     }
@@ -529,7 +685,7 @@ mod tests {
     fn poisoned_gate_invalidates_the_current_callback_stream() {
         let mut owner = RadioOwner::new(NonZeroUsize::new(4).unwrap());
         let (key, queue) = owner
-            .begin_queue(None, NonZeroUsize::new(2).unwrap())
+            .test_begin_queue(None, NonZeroUsize::new(2).unwrap())
             .unwrap();
         owner.activate(&key, 42).unwrap();
         let shared = owner.shared.clone();
@@ -547,7 +703,7 @@ mod tests {
         );
         assert_eq!(queue.failure(), Some(ReceiverFailure::InternalFailure));
         assert!(matches!(
-            owner.begin_queue(Some(&key), NonZeroUsize::new(2).unwrap()),
+            owner.test_begin_queue(Some(&key), NonZeroUsize::new(2).unwrap()),
             Err(OwnerError::Failed(ReceiverFailure::InternalFailure))
         ));
         assert!(matches!(
@@ -559,7 +715,7 @@ mod tests {
     fn overflow_withdraws_published_state_and_rejects_preparing_work() {
         let mut owner = RadioOwner::new(NonZeroUsize::new(4).unwrap());
         let (key, queue) = owner
-            .begin_queue(None, NonZeroUsize::new(1).unwrap())
+            .test_begin_queue(None, NonZeroUsize::new(1).unwrap())
             .unwrap();
         owner.activate(&key, 42).unwrap();
         queue.deliver(response(1)).unwrap();
@@ -579,23 +735,23 @@ mod tests {
     fn held_preparation_counts_against_retained_limit() {
         let mut owner = RadioOwner::new(NonZeroUsize::new(2).unwrap());
         let (old, queue) = owner
-            .begin_queue(None, NonZeroUsize::new(1).unwrap())
+            .test_begin_queue(None, NonZeroUsize::new(1).unwrap())
             .unwrap();
         owner.activate(&old, 42).unwrap();
         queue.deliver(response(7)).unwrap();
         let prepared = owner.prepare_until(Instant::now()).unwrap().unwrap();
         drop(queue);
         let (current, _fresh) = owner
-            .begin_queue(Some(&old), NonZeroUsize::new(1).unwrap())
+            .test_begin_queue(Some(&old), NonZeroUsize::new(1).unwrap())
             .unwrap();
         assert!(matches!(
-            owner.begin_queue(Some(&current), NonZeroUsize::new(1).unwrap()),
+            owner.test_begin_queue(Some(&current), NonZeroUsize::new(1).unwrap()),
             Err(OwnerError::RetainedLimit)
         ));
         drop(prepared);
         assert!(
             owner
-                .begin_queue(Some(&current), NonZeroUsize::new(1).unwrap())
+                .test_begin_queue(Some(&current), NonZeroUsize::new(1).unwrap())
                 .is_ok()
         );
     }
@@ -603,7 +759,7 @@ mod tests {
     fn unsupported_preparation_is_rejected_and_releases_slot() {
         let mut owner = RadioOwner::new(NonZeroUsize::new(2).unwrap());
         let (key, queue) = owner
-            .begin_queue(None, NonZeroUsize::new(1).unwrap())
+            .test_begin_queue(None, NonZeroUsize::new(1).unwrap())
             .unwrap();
         owner.activate(&key, 42).unwrap();
         let mut segmented = response(7);

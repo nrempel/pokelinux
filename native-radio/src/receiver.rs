@@ -32,6 +32,7 @@ pub enum ReceiverFailure {
     Cancelled = 6,
     ServiceDied = 7,
     MonitoringFailed = 8,
+    Expired = 9,
 }
 fn failure(state: &AtomicU8) -> Option<ReceiverFailure> {
     match state.load(Ordering::Acquire) {
@@ -43,6 +44,7 @@ fn failure(state: &AtomicU8) -> Option<ReceiverFailure> {
         6 => Some(ReceiverFailure::Cancelled),
         7 => Some(ReceiverFailure::ServiceDied),
         8 => Some(ReceiverFailure::MonitoringFailed),
+        9 => Some(ReceiverFailure::Expired),
         _ => Some(ReceiverFailure::InternalFailure),
     }
 }

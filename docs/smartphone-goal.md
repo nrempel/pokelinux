@@ -2,7 +2,7 @@
 
 This scope supersedes the earlier call-bridge-only completion target. It records Nicholas's expanded instruction: build a complete Omarchy smartphone system for Pixel 10, including SMS, camera, power and all phone functions that need special treatment, with genuine Omarchy plugin and theme integration.
 
-Build and test everything possible offline on temporary Harbour capacity. Do not access or modify the physical phone. Harbour must not be a runtime dependency. The existing active goal remains unfinished; its stored objective predates this scope expansion.
+Build and test everything possible offline on temporary Harbour capacity. Do not access or modify the physical phone. Harbour must not be a runtime dependency. The active goal remains unfinished and now records this full smartphone scope.
 
 **No backwards compatibility:** build one target implementation and matching component set. Do not add legacy adapters, dual production runtimes, old-format migrations or downgrade support for earlier iterations. Test required behavior and restart recovery within the target version. Prior code and artifacts provide evidence, not a requirement to preserve old formats.
 

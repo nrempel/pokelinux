@@ -104,7 +104,10 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     }
     let scenario = std::env::args().nth(2);
     let die_register = match scenario.as_deref() {
-        None | Some("session-owner") | Some("cancel-during-registration") => false,
+        None
+        | Some("session-owner")
+        | Some("cancel-during-registration")
+        | Some("expire-during-registration") => false,
         Some("death-during-registration") => true,
         _ => return Err("unknown test scenario".into()),
     };
@@ -146,8 +149,11 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     if scenario.as_deref() == Some("session-owner") {
         return owner_ipc(&transport, &peer);
     }
+    if scenario.as_deref() == Some("expire-during-registration") {
+        return cancelled_registration(&transport, &peer, true);
+    }
     if scenario.as_deref() == Some("cancel-during-registration") {
-        return cancelled_registration(&transport, &peer);
+        return cancelled_registration(&transport, &peer, false);
     }
     let callbacks = new_radio_callbacks(NonZeroUsize::new(4).unwrap());
     let inbox = &callbacks.events;
@@ -503,7 +509,7 @@ fn owner_ipc(
     use pokelinux_radio::owner::{OwnerError, Phase, RadioOwner};
     let mut owner = RadioOwner::new(NonZeroUsize::new(4).unwrap());
     let first = owner
-        .begin(None, NonZeroUsize::new(4).unwrap())
+        .begin_until(None, NonZeroUsize::new(4).unwrap(), owner_deadline())
         .map_err(|e| format!("owner begin: {e:?}"))?;
     let _first_watch = transport.watch_death(first.endpoints.control.clone())?;
     let id = transport.register(
@@ -539,7 +545,11 @@ fn owner_ipc(
     println!("radio-owner-consumed-cancel\tPASS");
     owner_clear(transport, peer, id)?;
     let second = owner
-        .begin(Some(&first.key), NonZeroUsize::new(4).unwrap())
+        .begin_until(
+            Some(&first.key),
+            NonZeroUsize::new(4).unwrap(),
+            owner_deadline(),
+        )
         .map_err(|e| format!("owner replace: {e:?}"))?;
     let _second_watch = transport.watch_death(second.endpoints.control.clone())?;
     let id = transport.register(
@@ -561,7 +571,11 @@ fn owner_ipc(
     }
     owner_clear(transport, peer, id)?;
     let third = owner
-        .begin(Some(&second.key), NonZeroUsize::new(4).unwrap())
+        .begin_until(
+            Some(&second.key),
+            NonZeroUsize::new(4).unwrap(),
+            owner_deadline(),
+        )
         .map_err(|e| format!("owner replace: {e:?}"))?;
     let _third_watch = transport.watch_death(third.endpoints.control.clone())?;
     let id = transport.register(
@@ -637,11 +651,33 @@ fn registration_latch(peer: &SIBinder, code: u32) -> Result<()> {
 fn cancelled_registration(
     transport: &RadioTransport,
     peer: &SIBinder,
+    expire: bool,
 ) -> std::result::Result<(), Box<dyn std::error::Error>> {
+    use pokelinux_radio::deadline::{Clock, Deadline};
     use pokelinux_radio::owner::{OwnerError, Phase, RadioOwner};
-    let mut owner = RadioOwner::new(NonZeroUsize::new(2).unwrap());
+    use std::sync::{
+        Arc,
+        atomic::{AtomicU64, Ordering},
+    };
+    struct ControlledClock(AtomicU64);
+    impl Clock for ControlledClock {
+        fn now(&self) -> Duration {
+            Duration::from_nanos(self.0.load(Ordering::SeqCst))
+        }
+    }
+    let clock = Arc::new(ControlledClock(AtomicU64::new(10)));
+    let mut owner = RadioOwner::with_clock(NonZeroUsize::new(2).unwrap(), clock.clone());
+    let terminal = if expire {
+        ReceiverFailure::Expired
+    } else {
+        ReceiverFailure::Cancelled
+    };
     let registration = owner
-        .begin(None, NonZeroUsize::new(4).unwrap())
+        .begin_until(
+            None,
+            NonZeroUsize::new(4).unwrap(),
+            Deadline::at(Duration::from_nanos(20)),
+        )
         .map_err(|e| format!("begin: {e:?}"))?;
     let _watch = transport.watch_death(registration.endpoints.control.clone())?;
     let response = registration.endpoints.response.as_binder();
@@ -659,16 +695,29 @@ fn cancelled_registration(
                     return Err("registration not held".into());
                 }
                 println!("radio-registration-held\tPASS");
-                owner
-                    .stop(&registration.key)
-                    .map_err(|e| format!("stop: {e:?}"))?;
-                if owner.snapshot().phase != Phase::Failed(ReceiverFailure::Cancelled)
+                if expire {
+                    // No timer or expire() call: emulate boot-time advancing
+                    // across suspend while the synchronous Binder reply is held.
+                    clock.0.store(20, Ordering::SeqCst);
+                } else {
+                    owner
+                        .stop(&registration.key)
+                        .map_err(|e| format!("stop: {e:?}"))?;
+                }
+                if owner.snapshot().phase != Phase::Failed(terminal)
                     || owner.snapshot().response.is_some()
                     || worker.is_finished()
                 {
                     return Err("cancel did not revoke state while register stayed held".into());
                 }
-                println!("radio-registration-held-cancel\tPASS");
+                println!(
+                    "{}\tPASS",
+                    if expire {
+                        "radio-registration-held-expire"
+                    } else {
+                        "radio-registration-held-cancel"
+                    }
+                );
                 Ok(())
             })();
             // Release even when an assertion fails, then join outside the owner gate.
@@ -678,8 +727,7 @@ fn cancelled_registration(
             release?;
             let id = result?;
             if id != 42
-                || owner.activate(&registration.key, id)
-                    != Err(OwnerError::Failed(ReceiverFailure::Cancelled))
+                || owner.activate(&registration.key, id) != Err(OwnerError::Failed(terminal))
                 || owner.snapshot().response.is_some()
             {
                 return Err("late successful registration restored cancelled state".into());
@@ -688,4 +736,9 @@ fn cancelled_registration(
             Ok(())
         },
     )
+}
+
+fn owner_deadline() -> pokelinux_radio::deadline::Deadline {
+    use pokelinux_radio::deadline::{BootClock, Clock, Deadline};
+    Deadline::at(BootClock.now() + Duration::from_secs(60))
 }

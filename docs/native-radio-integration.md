@@ -167,3 +167,18 @@ This qualifies the existing cancellation/publication gate through a synchronous
 Binder call. It does not implement the production worker, prove permanent-hang
 recovery, cancel vendor registration, or establish cleanup/re-registration safety.
 The added Java code is only the independent test peer.
+
+## Suspend-aware session expiry
+
+The `expire-during-registration` scenario holds the actual Rust registration in
+Binder and advances a controlled absolute clock to the session deadline. No timer
+is delivered. The owner snapshot fails with `Expired` while registration is still
+blocked; the peer is then released, and successful ID 42 cannot activate. The
+production clock uses Linux `CLOCK_BOOTTIME`; the controlled jump is synthetic
+suspend-time evidence, not a hardware suspend/wake test. Four component regressions
+cover expiry at activation, final publication, snapshots and attempted replacement.
+See [execution provenance](evidence/radio-deadline-provenance.json).
+
+The registration thread is still scoped test infrastructure. Worker ownership,
+permanent-hang supervision, candidate/operation deadlines and vendor cleanup
+remain unfinished.

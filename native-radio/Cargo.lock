@@ -364,6 +364,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "omarchy-ims"
+version = "0.1.0"
+
+[[package]]
 name = "owo-colors"
 version = "4.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -414,16 +418,13 @@ dependencies = [
 ]
 
 [[package]]
-name = "omarchy-ims"
-version = "0.1.0"
-
-[[package]]
 name = "pokelinux-radio"
 version = "0.1.0"
 dependencies = [
  "omarchy-ims",
  "rsbinder",
  "rsbinder-aidl",
+ "rustix",
 ]
 
 [[package]]

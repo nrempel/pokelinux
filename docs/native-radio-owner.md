@@ -2,11 +2,14 @@
 
 Status: the registration/publication authority is implemented in
 `native-radio/src/owner.rs` and tested through real Binder on Harbour. It owns a
-private callback inbox and the latest raw vendor response observation. It does
-not yet own a transport worker, death watch, operation receipts or lifetime timers,
-and it does not decode phone/IMS state. `prepare_until` bounds receive waiting
-only; it is not an event-age, registration or publication deadline. The remaining
-design below is unfinished.
+private callback inbox and the latest raw vendor response observation. It now enforces an explicit absolute session deadline using Linux `CLOCK_BOOTTIME`
+at every gate acquisition, including activation, callback admission, preparation,
+publication and snapshots. Expiry counts suspend time and withdraws local state
+even with timer delivery withheld. `begin_until` replaces unbounded owner begin.
+It does not yet own a transport worker, death watch, operation receipts or timer
+delivery, and it does not decode phone/IMS state. `prepare_until` still bounds
+receive waiting only; candidate/event-age and operation deadlines remain open.
+See [deadline execution](evidence/radio-deadline-provenance.json).
 
 A [held-registration Binder test](evidence/held-registration-provenance.json)
 also proves that local stop remains usable while a synthetic registration is
@@ -169,7 +172,7 @@ The low-level transport qualification factory still exposes before/after receive
 checks; the new owner additionally fences final publication. `register` remains
 synchronous without a cancellation API, and the existing runtime phone observer
 decodes Android Telecom snapshots. Therefore raw radio data must not be presented
-as native call state. Worker ownership and the native IMS semantic decoder must
+as native call state. Worker ownership, candidate/operation deadlines and the native IMS semantic decoder must
 be integrated before replacing that reference input.
 
 The owner error paths keep lock guards local and prepared values as function

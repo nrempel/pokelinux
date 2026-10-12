@@ -23,7 +23,15 @@ opaque session identity, revision and a preparation token. Callback failures,
 cancellation and replacement withdraw current state. This is not a native IMS
 semantic decoder or a complete service lifecycle.
 
-The latest test adds a bounded synthetic registration barrier. The native client
+The owner now requires an absolute boot-time session deadline. Four component
+regressions failed before locked expiry checks and then passed. Real Binder also
+passes `expire-during-registration`: a controlled clock reaches expiry with timer
+delivery withheld while registration stays held, and late successful ID 42 cannot
+activate. The owner checks expiry at every gate acquisition; this does not prove
+hardware wake or candidate/operation lifetimes. See
+`evidence/radio-deadline-provenance.json`.
+
+The earlier test adds a bounded synthetic registration barrier. The native client
 stops the real owner while `RadioTransport::register` remains blocked in Binder,
 then rejects activation when the independent peer returns successful ID 42.
 `held-registration-provenance.json` records the source and binary hashes and
@@ -36,7 +44,8 @@ barriers. Existing owner, registration-death and ordinary IPC scenarios also pas
 1. Read `native-radio-owner.md`, `native-radio-integration.md`,
    `device-portability.md` and the completion matrix in `smartphone-goal.md`.
 2. Implement production ownership of transport work and the service-death watch,
-   absolute suspend-aware deadlines, and permanent-hang recovery. Avoid detached
+   candidate/operation deadlines and permanent-hang recovery. Absolute suspend-aware
+   session deadlines are implemented; timer delivery remains unfinished. Avoid detached
    blocked threads, an indefinite join in Drop, or releasing worker capacity
    merely because local state was cancelled. Keep stop and snapshots responsive.
 3. Establish the process supervision contract before claiming bounded recovery.
