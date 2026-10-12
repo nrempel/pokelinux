@@ -58,6 +58,12 @@ assert rows==[
 ],output
 print('Original Shannon segmentation executed: 5 boundaries; exact multiples lose final chunk',flush=True)
 
+output=adb('shell','env','CLASSPATH='+root+'/oracle.jar:'+root+'/shannon.apk','app_process','/system/bin','org.omarchy.audit.IndicationAssemblyOracle')
+Path('artifacts/ims-native-audit/original-indication-assembly-output.txt').write_text(output)
+rows=[line for line in output.splitlines() if line.startswith('indicationAssembly\t')]
+assert rows==['indicationAssembly\t'+name+'\tPASS' for name in ['ordered','reversed','duplicate','conflicting-duplicate','gap','negative-index','overshoot','empty']],output
+print('Original indication accumulator executed: 8 ordering and malformed-fragment cases',flush=True)
+
 output=adb('shell','env','CLASSPATH='+root+'/oracle.jar:'+root+'/shannon.apk','app_process','/system/bin','org.omarchy.audit.ResponseInfoOracle')
 Path('artifacts/ims-native-audit/original-response-info-output.txt').write_text(output)
 rows=[line.split('\t') for line in output.splitlines() if line.startswith('responseInfo\t')]

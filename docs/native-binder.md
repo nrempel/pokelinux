@@ -196,6 +196,35 @@ The inspected methods are `IOemSlsiRadioExternalInd.Stub.onTransact`,
 and `OemSlsiRadioExternalIndBase.SegmentRilMessage.addDataSegment`. Raw decompiler
 outputs remain excluded from the public repository.
 
+### Original accumulator execution
+
+The owned emulator now executes the original `SegmentRilMessage` constructor,
+`addDataSegment` and `getMessageData` methods with synthetic fragments. Its unused
+outer instance is null; this does not exercise adapter startup or modem access.
+All eight cases pass, alongside the existing original-code suite:
+
+| Case | Observed original behavior |
+|---|---|
+| Ordered and reversed arrival | Concatenates bytes in index order |
+| Identical duplicate | Does not count its bytes twice |
+| Conflicting duplicate | Keeps the first bytes, including when duplicate length differs |
+| Index gap or negative index | Byte accounting can reach zero, but assembly throws NullPointerException |
+| Excess bytes | Returns negative remaining length; direct assembly still returns all supplied bytes |
+| Zero total and empty fragment | Returns zero and assembles an empty list |
+
+[Source and artifact identities](evidence/indication-assembly-provenance.json)
+make this reproducible. The excess-byte case calls assembly directly; it does
+not claim the enclosing adapter would emit that result. The test does not prove
+conflicting-total handling, multiple interleaved messages, cleanup, timeouts or
+the producer's guarantees. Original crashes and unbounded retention are not
+requirements for the Rust implementation.
+
+No recovered fragment field identifies a particular occurrence of a message ID.
+An old fragment and a new fragment with the same slot, message ID and total can
+look like one valid message. Local session epochs can reject old callback objects;
+they cannot prove the vendor has discarded old fragments. Timeout and reconnect
+must not be documented as a verified vendor flush boundary without evidence.
+
 ## Native request transport across processes
 
 `RadioTransport` now submits recovered registration, raw/segmented request and

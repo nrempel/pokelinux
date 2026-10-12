@@ -29,6 +29,16 @@ transport, not production vendor service discovery or access policy.
 
 ## Required end-to-end tests
 
+Before accepting assembled indications, use the [original accumulator cases](evidence/indication-assembly-provenance.json) as evidence for valid index ordering. Bound bytes, fragment count, index range, active messages and incomplete-message lifetime separately. Reject conflicting duplicate payloads and totals explicitly; those are deliberate local validation rules, not claims about the producer. Test same-ID interleaving and late fragments. A local epoch or timeout does not establish vendor-side message identity or a flush boundary.
+
+Next original-code gate: execute the enclosing indication adapter, capture emitted
+bytes/count and subsequent same-owner behavior, and vary totals, duplicate payloads,
+slots, IDs, completion/reuse and incomplete-message interleaving. The accumulator
+test alone cannot establish routing scope or cleanup. For example, an old index-0
+fragment and a new index-1 fragment can have the same ID, slot and total as a valid
+single message. Without another discriminator or a producer serialization rule,
+no consumer algorithm can distinguish these histories.
+
 - Two distinct callbacks, registration ID and error propagation, original wire
   fields/flags, raw and lossless segmented requests at 2048, 2049 and 4096 bytes.
 - Callback before registration reply, callback with no concurrent client request,
@@ -72,3 +82,11 @@ after certain driver failures. The subsequent execution report above supplies bo
 Passing this gate will establish emulator IPC and recovery only. ARM64 kernel
 Binder, vendor permissions, modem/IMS behavior, GPU, camera and physical audio
 remain separate qualifications.
+
+An additional Pro review completed with Chat and Pro selected, marker
+PRO-BRIDGE-20261012-segments-b731, zero context rounds and terminal response actions
+observed. It recommended the enclosing-adapter matrix, absolute lifetime limits
+that duplicates cannot extend, immutable callback epochs, and serialized
+completion/invalidation. These are review recommendations, not execution evidence.
+The original accumulator execution independently verifies ordering and malformed
+index behavior; producer identity and reset guarantees remain unknown.

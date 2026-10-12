@@ -1,0 +1,29 @@
+{
+  "scope": "Original Shannon segment accumulator execution; no IMS startup or modem access",
+  "apk_sha256": "8b017599727398e80df5ab618d648890dcdc34b5fe2ba71fb2331e51bd8b8879",
+  "oracle_jar_sha256": "61ce691f090c2a1de0e9332d89413039e37c0d121d0558b2b1bf8af16fb1f6ce",
+  "sources_sha256": {
+    "framework/shannon-oracle/IndicationAssemblyOracle.java": "7fd1aa4984a465bdc4c4e0a27a603cb0269c17fbfd141c0c714e436f14f9cdd8",
+    "framework/tests/shannon_oracle.py": "8bec9252f849e25211a918e3a024228ecd16b4deb89ded783a418649a4d12cfc"
+  },
+  "output_sha256": "cb84156ca45425c41507060bff7b7fdad712f5d0eb6959119f42e44749e1ada9",
+  "output": [
+    "indicationAssembly\tordered\tPASS",
+    "indicationAssembly\treversed\tPASS",
+    "indicationAssembly\tduplicate\tPASS",
+    "indicationAssembly\tconflicting-duplicate\tPASS",
+    "indicationAssembly\tgap\tPASS",
+    "indicationAssembly\tnegative-index\tPASS",
+    "indicationAssembly\tovershoot\tPASS",
+    "indicationAssembly\tempty\tPASS"
+  ],
+  "test_setup": "Original constructor with null unused enclosing instance; original addDataSegment and getMessageData via reflection, synthetic bytes only",
+  "reproduce": "bash tools/framework-suite.sh shannon-codec",
+  "not_verified": [
+    "Enclosing indication adapter lifecycle or conflicting total fields",
+    "Vendor fragment ordering, serialization or generation identity",
+    "Timeout, service death, reconnect or vendor buffer flush",
+    "Native Rust reassembly or physical device behavior"
+  ],
+  "phone_accessed": false
+}
