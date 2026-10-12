@@ -167,6 +167,15 @@ reader wake lock yet. USF200ms, top-level HAL1s cleanup, actual suspend integrat
 app publication/lifecycle, durable reconciliation, calibration and ARM64/device
 proof remain open; see `native-sensors-boundary.md`.
 
+Native GSM status-report parsing now passes57 field comparisons against actual
+original AOSP execution plus12 focused tests on x86 and ARM64 user-QEMU. Both
+receipt/discharge timestamps, numeric addresses, status, optional PID/DCS and
+qualified text are bounded. AOSP parsed41 deliberately rejected native cases;
+that divergence remains explicit. TPDU/full-PDU limits are164/177 bytes. Parsing
+provides no unique outbox delivery key or modem acknowledgement authority.
+Incoming receipt/ACK ownership is currently a design with no implied deduplication
+or replay; see `native-sms-status-report.md` and `native-sms-receipt-owner.md`.
+
 ## Next work
 
 1. Recover and test the actual vendor cleanup/reset and registration-overlap

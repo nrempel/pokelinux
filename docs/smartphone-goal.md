@@ -106,3 +106,9 @@ processing-before-ACK and quarantine are qualified with synthetic Events/counts.
 Actual suspend wake acquisition, USF200ms/HAL1s obligations, native app delivery,
 restart reconciliation, calibration and ARM64/device proof remain open. See
 [native sensors](native-sensors-boundary.md).
+
+Native GSM status-report metadata is built and original-code-tested:57 actual
+AOSP comparisons and12 focused x86/ARM64 user-QEMU tests pass. Calendar-valid
+status/timestamps do not establish delivery identity; receipt/ACK ownership,
+outbox correlation and installed notification/app behavior remain separate gates.
+See [status reports](native-sms-status-report.md).

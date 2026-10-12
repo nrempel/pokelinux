@@ -152,3 +152,9 @@ carrier policy and national-language encodings before promising support.
 
 Actual Pixel modem acceptance, incoming messages, delivery reports, carrier
 compatibility and suspend/wake remain hardware gates. No phone was accessed.
+
+The [native status-report decoder](native-sms-status-report.md) now passes57 actual
+AOSP comparisons and12 focused native tests. It preserves untrusted status and
+both timestamps, with explicit stricter malformed-input rejection; it never
+correlates or finalizes outbox delivery. The proposed [incoming receipt/ACK
+owner](native-sms-receipt-owner.md) remains a separate ownership gate.

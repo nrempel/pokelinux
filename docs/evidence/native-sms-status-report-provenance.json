@@ -1,0 +1,176 @@
+{
+  "date_utc": "2026-10-12",
+  "host": "Harbour",
+  "baseline_commit": "fb20199f556db7e9b0ef5745932feceb7056b7e2",
+  "evidence_classes": [
+    "Authored device-neutral native GSM parser runtime TDD on x86 Linux",
+    "Original AOSP full GSM SmsMessage and private timestamp parser execution on owned x86_64 SDK37 emulator",
+    "Same native parser/fixtures executed under ARM64 user-QEMU; no ARM64 kernel or physical phone qualification"
+  ],
+  "public_sources": [
+    {
+      "url": "https://android.googlesource.com/platform/frameworks/base/+/android-17.0.0_r1/telephony/java/com/android/internal/telephony/gsm/SmsMessage.java?format=TEXT",
+      "path": "SmsMessage.java",
+      "sha256": "f47b9254b31a751cc434e6f0af7d20747f92c20dda5fae04e7d5a2bc33c4afcc"
+    },
+    {
+      "url": "https://android.googlesource.com/platform/frameworks/base/+/android-17.0.0_r1/telephony/java/com/android/internal/telephony/SmsMessageBase.java?format=TEXT",
+      "path": "SmsMessageBase.java",
+      "sha256": "9bee6dfe59cd6474289732692ea1e12fa10d6835f9767083697cfd99334d6e06"
+    },
+    {
+      "url": "https://android.googlesource.com/platform/frameworks/base/+/android-17.0.0_r1/telephony/java/com/android/internal/telephony/gsm/GsmSmsAddress.java?format=TEXT",
+      "path": "GsmSmsAddress.java",
+      "sha256": "1d12d6fe1bb1bf82bbdc30b5e91d6a77c52fe654df3a23b9caeab3c10d43b3d3"
+    },
+    {
+      "url": "https://www.etsi.org/deliver/etsi_ts/123000_123099/123040/19.00.00_60/ts_123040v190000p.pdf",
+      "version": "19.0.0",
+      "access": "web PDF viewer on 2026-10-12; direct download returned HTTP403",
+      "bytes_preserved": false,
+      "sections": [
+        "9.2.2.3",
+        "9.2.3.11",
+        "9.2.3.13",
+        "9.2.3.14",
+        "9.2.3.15",
+        "9.2.3.27"
+      ]
+    }
+  ],
+  "implementation_and_fixture_sha256": {
+    "native-messaging/Cargo.toml": "d2fdf280609b6b9b2743315ccf4dc4216e38b3a60ed70bc4199e20fe4a4c40d0",
+    "native-messaging/Cargo.lock": "e7cb16fc3e8c6abb7fbbc7a52d8f73f07c934a7a103de1cef5a0c414f3bd375f",
+    "native-messaging/src/lib.rs": "95f3194d3e14cf5295be04fb79e685fac9924658acea91755b3fae02b03767b8",
+    "native-messaging/src/status_report.rs": "6ac6ad437f2e9dbec9c7beb0e614c910f03a161f07583ebdf7ebb0d629888595",
+    "native-messaging/tests/status_report.rs": "9c8a542e85ac41414b9ad3b407e83db211aedf1823a816d561b3991650e7dab8",
+    "native-messaging/tests/original_status_report.rs": "847dd09798e1008c34323b65dafe8ba2e1f9c6073c3003711265e800827b6ec8",
+    "native-messaging/tests/fixtures/status-report-input.tsv": "2cd0578ad034b6705e567836d5bbba3def7218c5f23eefbac4cea4e68f9e33a6",
+    "native-messaging/tests/fixtures/aosp-status-report.tsv": "d8990348a18d97d43603786205b48bc33048c8c3e84f1e92358f846f2fff9646",
+    "native-messaging/tests/fixtures/aosp-submit.tsv": "ffadac7dbee8a3db9044857ca05a969d18ff4c0f005bae5fedaa7eaad617050b",
+    "framework/shannon-oracle/SmsStatusReportOracle.java": "54b5259a1039d7a878b81ddeebfc7b4cc2e58c7697b830bef8be15ae1bacf16e",
+    "framework/tests/sms_status_report.py": "526bbbe38f793c9fcb2e0e7d8c401f07b8d9f6140f0ee36ec050efb89f52dfec",
+    "tools/prepare-sms-status-report.py": "5fa647fd70cd15204833bb3a51fc6fd17671e1d91f5d19e773eb2d732209ebac",
+    "tools/build-sms-status-oracle.sh": "5b475fc3f50f615bc869ba3ccb1d9e5f091396b8f24a260baf8851893c9be3ba"
+  },
+  "build_images": {
+    "native": "sha256:5b8db5a581335ef1ce100691772e2109357bc9a9f051bfcb5b3c3a06ff0b0661",
+    "framework": "sha256:138ba37b86c97e1d6654f197f50bccd61fdf4afcebe2712255ae0e3dc8cac1a9"
+  },
+  "native_test_executables": {
+    "artifacts/native-messaging/x86_64-unknown-linux-gnu/debug/deps/original_status_report-f17780dd18ca9cda": {
+      "sha256": "69ab12f67456e95b7fc897991cfb6f57612c92fce7398fca605128291ff041e1",
+      "elf_machine": 62
+    },
+    "artifacts/native-messaging/x86_64-unknown-linux-gnu/debug/deps/status_report-d9f0829c8ffcd2f1": {
+      "sha256": "a9942bf57e86453b0e26edfc38467e4a58ba07c941ac85cd25035e522cb62d2a",
+      "elf_machine": 62
+    },
+    "artifacts/native-messaging/aarch64-unknown-linux-gnu/debug/deps/original_status_report-495965c0de7f16c0": {
+      "sha256": "f5a19cb0b9461693fce3b2e2f0c15e065d96e448f8d9871fcee61cc3da97ec23",
+      "elf_machine": 183
+    },
+    "artifacts/native-messaging/aarch64-unknown-linux-gnu/debug/deps/status_report-d1d35274df899965": {
+      "sha256": "4b8f4cf60cec1d88b8ffa5160af983451735bf23129af5109404fa5a49190fae",
+      "elf_machine": 183
+    }
+  },
+  "runtime_reds": [
+    {
+      "exit_code": 101,
+      "log_sha256": "678fb3b329be533462390b0f49f5fa6185d5aa574a2b462acf65000c0fc1cd55",
+      "observation": "Actual valid-report runtime assertion failed with Unsupported before status-report decoding implementation"
+    },
+    {
+      "exit_code": 101,
+      "log_sha256": "54036ebc066cdbc28f24c3573d7ce0a5b41dc2ef3887953b1471c3da2a4b77d3",
+      "observation": "Actual well-framed165-byte TPDU decoded successfully through empty SMSC prefix before independent TPDU budget guard"
+    }
+  ],
+  "original_aosp": {
+    "exit_code": 0,
+    "runtime_log_sha256": "634746f05cc2844e037a28c31ea4512148c2142ed2d2f676ab51a8dbaff7c82e",
+    "result": {
+      "passed": true,
+      "scope": "original AOSP full GSM SmsMessage parser and its private PduParser timestamp decoder on bounded synthetic reports",
+      "reports": 126,
+      "qualified_full_parser_comparisons": 57,
+      "native_stricter_malformed_cases": 61,
+      "native_explicit_unsupported_cases": 8,
+      "discharge_timestamp_via_original_timestamp_decoder": true,
+      "full_parser_discards_discharge_timestamp": true,
+      "original_calendar_invalid_may_return_zero": true,
+      "input_sha256": "2cd0578ad034b6705e567836d5bbba3def7218c5f23eefbac4cea4e68f9e33a6",
+      "output_sha256": "d8990348a18d97d43603786205b48bc33048c8c3e84f1e92358f846f2fff9646",
+      "oracle_jar_sha256": "dcbdab3162b2f43620fd8beb616aeb5c2829e94f7016ec5e84f9003464f8b03e",
+      "framework_jar_sha256": "cfd8c422620cf584b5f190d8e5a211b83468a5ffd2bdb5cad1e0e410a22f30d8",
+      "telephony_common_jar_sha256": "4c741f17ac1ba0a2c51b2d8a28c41e0061d2473ae5748c722f3ec6f2cb86932a",
+      "selinux": "Enforcing",
+      "delivery_correlation_qualified": false,
+      "receive_identity_qualified": false,
+      "modem_acknowledgement_dispatched": false,
+      "vendor_execution": false,
+      "physical_phone_accessed": false
+    },
+    "fingerprint": "google/sdk_gphone64_x86_64/emu64xa:17/CE2A.260420.019/15611780:userdebug/dev-keys",
+    "client_identity": "uid=2000(shell) gid=2000(shell) groups=2000(shell),1004(input),1007(log),1011(adb),1015(sdcard_rw),1028(sdcard_r),1078(ext_data_rw),1079(ext_obb_rw),3001(net_bt_admin),3002(net_bt),3003(inet),3006(net_bw_stats),3009(readproc),3011(uhid),3012(readtracefs) context=u:r:shell:s0",
+    "class": "com.android.internal.telephony.gsm.SmsMessage",
+    "method": "createFromPdu(byte[])",
+    "discharge_comparison": "Original private PduParser.getSCTimestampMillis invoked independently at TP-DT; full parser consumes/discards TP-DT",
+    "strict_native_rejection_cases_aosp_also_parsed": 41
+  },
+  "native_green": {
+    "exit_code": 0,
+    "log_sha256": "4c4b8c6ec5bc313ab3bc3fd4df9acfc0e365d81d314352861bd2c3fa9233a5d6",
+    "focused_tests": 12,
+    "original_fixture_comparison_tests": 1,
+    "qualified_original_reports_compared": 57,
+    "x86_64_linux": true,
+    "arm64_user_qemu": true,
+    "full_native_messaging_regression": true,
+    "fmt": true,
+    "clippy_all_targets_deny_warnings": true,
+    "locked_offline_build": true
+  },
+  "accepted_subset": {
+    "full_pdu_including_smsc_maximum": 177,
+    "independent_tpdu_maximum": 164,
+    "parameter_indicator_maximum_octets": 4,
+    "numeric_recipient_digits": [
+      1,
+      20
+    ],
+    "smsc_prefix_octets_maximum": 12,
+    "optional_text": [
+      "default GSM7",
+      "UTF-16BE"
+    ],
+    "user_data_header_supported": false,
+    "status_raw_untrusted_u8": true,
+    "hex_requires_bounded_complete_ascii_octets": true,
+    "complete_consumption_required": true
+  },
+  "scope_limits": [
+    "Parsing alone never finalizes outbox delivery or provides a unique network message key",
+    "TP-MR zero, reused references, colliding recipients and delayed reports require separate per-slot/per-attempt correlation",
+    "Strict malformed/unsupported rejection differs from permissive AOSP, including invalid-calendar zero timestamps, trailing data and over-budget TPDU",
+    "TPDU164 is a conservative acceptance budget derived from public status-report layout, not a complete standards conformance claim",
+    "Original API field comparison covers57 supported synthetic reports; flags/limits also use the public field layout",
+    "No native receive deduplication, ACK dispatch/replay or ACK idempotence qualification",
+    "No vendor target, modem, physical phone, ARM64 kernel Binder or installed message/notification integration"
+  ],
+  "next_receipt_owner": "Design only in docs/native-sms-receipt-owner.md; local occurrence UUIDs, durable admission before eligibility, uncertain ACK claim before IPC, no replay/dedup inferred from equal bytes",
+  "cleanup": {
+    "framework_suite_exit_code": 0,
+    "owned_container_id": "8b5424dcf41f5fb23a5762df5a8c7442f5f05e6fbbc0090d76444d94bd387c5d",
+    "owned_container_removed": true,
+    "owned_internal_network_removed": true,
+    "suite_lock_released": true
+  },
+  "previous_submission_binder_source_and_provenance_untouched": true,
+  "private_artifacts": "Ignored artifacts/sms-status-report contains public source copies, dedicated original harness/framework jars, complete runtime/build outputs and owned cleanup identities",
+  "physical_phone_accessed": false,
+  "vendor_execution": false,
+  "delivery_correlation_qualified": false,
+  "modem_acknowledgement_dispatched": false
+}

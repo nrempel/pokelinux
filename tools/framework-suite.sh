@@ -31,7 +31,7 @@ case "$action" in
   docker build -t "$image" -f build-support/Dockerfile.framework build-support
   docker run --rm --network none --cpus 4 --memory 6g --pids-limit 512 --cap-drop ALL --security-opt no-new-privileges --user "$(id -u):$(id -g)" -v "$PWD:/workspace" "$image" bash tools/build-framework.sh
   ;;
- test|enrollment|callui|gui|plugin|direct|journal|radio-baseline|rust|shannon-codec|sms-codec|sms-transport-oracle|sms-binder|binder-kernel|radio-ipc|camera-binder|camera-owner)
+ test|enrollment|callui|gui|plugin|direct|journal|radio-baseline|rust|shannon-codec|sms-codec|sms-transport-oracle|sms-binder|sms-status-report|binder-kernel|radio-ipc|camera-binder|camera-owner)
   if [ "$action" = rust ]; then bash tools/build-qt-android-tests.sh; fi
   if [ "$action" = camera-binder ] || [ "$action" = camera-owner ]; then bash tools/build-native-camera-boundary.sh; fi
   if docker container inspect "$name" >/dev/null 2>&1 || docker network inspect "$name" >/dev/null 2>&1; then
@@ -65,6 +65,11 @@ case "$action" in
   container_created=1
   docker inspect "$name" > android-framework/results/container.json
   docker network inspect "$name" > android-framework/results/network.json
+  if [ "$action" = sms-status-report ]; then
+   docker exec "$name" bash tools/build-sms-status-oracle.sh
+   docker exec "$name" python3 framework/tests/sms_status_report.py
+   exit 0
+  fi
   if [ "$action" = sms-binder ]; then
    docker exec "$name" bash tools/build-sms-peer.sh
    docker exec "$name" bash tools/build-shannon-oracle.sh
