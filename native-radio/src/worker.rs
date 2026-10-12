@@ -77,8 +77,11 @@ pub struct RegistrationReport {
 pub struct TransportSession {
     owner: RadioOwner,
     worker: Option<OwnedWorker<Completion>>,
+    // Drop an unfinished request worker before a potentially blocking watch unlink.
+    request_worker: Option<OwnedWorker<crate::request::RequestReport>>,
     watch: Option<RadioDeathWatch>,
     attempted: bool,
+    transport: Option<RadioTransport>,
 }
 impl TransportSession {
     pub fn new(retained_limit: NonZeroUsize) -> Self {
@@ -90,6 +93,8 @@ impl TransportSession {
             worker: None,
             watch: None,
             attempted: false,
+            transport: None,
+            request_worker: None,
         }
     }
     pub fn snapshot(&self) -> Snapshot {
@@ -97,6 +102,10 @@ impl TransportSession {
     }
     pub fn worker_occupied(&self) -> bool {
         self.worker.as_ref().is_some_and(OwnedWorker::occupied)
+            || self
+                .request_worker
+                .as_ref()
+                .is_some_and(OwnedWorker::occupied)
     }
     pub fn start(
         &mut self,
@@ -120,6 +129,7 @@ impl TransportSession {
             .begin_until(previous.as_ref(), capacity, deadline)
             .map_err(LifecycleError::Owner)?;
         let key = registration.key.clone();
+        let request_transport = transport.clone();
         let spawned = OwnedWorker::spawn(move || {
             let key = registration.key.clone();
             let watch = match transport.watch_death(registration.endpoints.control.clone()) {
@@ -159,6 +169,7 @@ impl TransportSession {
             Ok(worker) => {
                 self.worker = Some(worker);
                 self.attempted = true;
+                self.transport = Some(request_transport);
                 Ok(key)
             }
             Err(_) => {
@@ -167,6 +178,62 @@ impl TransportSession {
                 Err(LifecycleError::SpawnFailed)
             }
         }
+    }
+    pub fn prepare_request(
+        &mut self,
+        key: &SessionKey,
+        request: i32,
+        slot: i32,
+        payload: Vec<u8>,
+        deadline: Deadline,
+    ) -> Result<crate::request::PreparedRequest, LifecycleError> {
+        if self.worker_occupied() {
+            return Err(LifecycleError::WorkerOccupied);
+        }
+        self.owner
+            .prepare_request(key, request, slot, payload, deadline)
+            .map_err(LifecycleError::Owner)
+    }
+    pub fn submit_request(
+        &mut self,
+        request: crate::request::PreparedRequest,
+    ) -> Result<(), LifecycleError> {
+        if self.worker_occupied() {
+            return Err(LifecycleError::WorkerOccupied);
+        }
+        if !self.owner.owns_request(&request) {
+            return Err(LifecycleError::Owner(OwnerError::StaleSession));
+        }
+        let transport = self
+            .transport
+            .as_ref()
+            .ok_or(LifecycleError::Owner(OwnerError::NotActive))?
+            .clone();
+        self.request_worker = Some(
+            OwnedWorker::spawn(move || request.run(&transport))
+                .map_err(|_| LifecycleError::SpawnFailed)?,
+        );
+        Ok(())
+    }
+    pub fn prepare_callback_until(
+        &mut self,
+        deadline: std::time::Instant,
+    ) -> Result<Option<crate::owner::PreparedEvent>, OwnerError> {
+        self.owner.prepare_until(deadline)
+    }
+    pub fn publish_callback(
+        &mut self,
+        event: crate::owner::PreparedEvent,
+    ) -> Result<u64, OwnerError> {
+        self.owner.publish(event)
+    }
+    pub fn cancel_request(&mut self, key: &crate::request::RequestKey) -> Result<(), OwnerError> {
+        self.owner.cancel_request(key)
+    }
+    pub fn poll_request(&mut self) -> Option<std::thread::Result<crate::request::RequestReport>> {
+        let report = self.request_worker.as_mut()?.try_join()?;
+        self.request_worker = None;
+        Some(report)
     }
     /// Revokes local publication immediately without joining, dropping the watch
     /// or pretending that the blocked synchronous Binder transaction was cancelled.

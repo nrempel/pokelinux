@@ -8,8 +8,9 @@ publication and snapshots. Expiry counts suspend time and withdraws local state
 even with timer delivery withheld. `begin_until` replaces unbounded owner begin.
 `TransportSession` now owns one registration worker, its reserved JoinHandle
 completion and retained death watch. `RadioOwner` remains the publication gate.
-Operation receipts and timer delivery are unfinished, and it does not decode
-phone/IMS state. `prepare_until` still bounds
+One bounded owned request now distinguishes queued, NotSent and OutcomeUnknown
+under this gate. Qualified final semantic receipts and timer delivery remain
+unfinished, and it does not decode phone/IMS state. `prepare_until` still bounds
 receive waiting only; candidate/event-age and operation deadlines remain open.
 See [deadline execution](evidence/radio-deadline-provenance.json).
 
@@ -216,8 +217,9 @@ Even after completion, this lifecycle refuses another registration attempt. No
 `clear` is sent automatically. Its one-way acknowledgement cannot establish remote
 cleanup. Supervisor termination/reaping and a durable admission marker across process
 restart are now implemented. A qualified vendor reset/cleanup contract remains
-required before permitting any successor registration. Request
-transport ownership beyond registration and native IMS semantics are still open.
+required before permitting any successor registration. The [owned request boundary](native-radio-requests.md) now qualifies local
+admission and one-way submission; final outcomes, durable admission, safe
+subsequent operations and native IMS semantics remain open.
 
 ## Supervised reclamation and durable uncertainty
 

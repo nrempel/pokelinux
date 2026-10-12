@@ -176,6 +176,16 @@ provides no unique outbox delivery key or modem acknowledgement authority.
 Incoming receipt/ACK ownership is currently a design with no implied deduplication
 or replay; see `native-sms-status-report.md` and `native-sms-receipt-owner.md`.
 
+Native radio request ownership now shares the session gate and exact registered
+transport. Six real x86 Binder scenarios and five new component checks qualify
+absolute per-part admission, NotSent/OutcomeUnknown, cancellation/stop/death,
+complete4096-byte segmentation and a held late raw callback that cannot accept the
+operation. The expiry defect failed at actual peer count1 before the fix. x86,
+ARM64 user-QEMU and actual ARM64-kernel component/process gates pass. One request
+attempt is intentionally retained; durable admission, final semantic receipts,
+subsequent operations, driver pressure and installed native IMS remain open. See
+`native-radio-requests.md` and `evidence/radio-request-provenance.json`.
+
 ## Next work
 
 1. Recover and test the actual vendor cleanup/reset and registration-overlap

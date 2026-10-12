@@ -18,6 +18,9 @@ public final class Peer extends Instrumentation {
     private int segmentIndex, segmentSerial, segmentTotal;
     private volatile int rawCalls, segmentCalls;
     private volatile boolean cleared;
+    private volatile boolean holdRequestResponse;
+    private final CountDownLatch requestEntered = new CountDownLatch(1);
+    private final CountDownLatch requestResponseRelease = new CountDownLatch(1);
     private final CountDownLatch registrationEntered = new CountDownLatch(1);
     private final CountDownLatch registrationRelease = new CountDownLatch(1);
     private static void awaitLatch(CountDownLatch latch) {
@@ -114,7 +117,11 @@ public final class Peer extends Instrumentation {
                 require(data.readInt() == 42 && data.readInt() == 137 && data.readInt() == 0, "routing IDs");
                 byte[] bytes = data.createByteArray();
                 require(bytes != null && bytes.length <= 2048, "part size");
-                if (code == 2) { data.enforceNoDataAvail(); rawCalls++; respond(serial, bytes); }
+                if (code == 2) {
+                    data.enforceNoDataAvail(); rawCalls++;
+                    if (holdRequestResponse) { requestEntered.countDown(); awaitLatch(requestResponseRelease); }
+                    respond(serial, bytes);
+                }
                 else {
                     int index = data.readInt(), total = data.readInt(); data.enforceNoDataAvail();
                     require(total > 2048 && total <= 4096, "test total bound");
@@ -188,6 +195,14 @@ public final class Peer extends Instrumentation {
                 data.enforceNoDataAvail();
                 if (code == 110) awaitLatch(registrationEntered);
                 else registrationRelease.countDown();
+                reply.writeNoException(); reply.writeInt(1); return true;
+            }
+            if (code == 111 || code == 112 || code == 113) { // Synthetic request/response barriers only.
+                require(callFlags == 0 && response != null && !cleared, "request barrier state/flags");
+                data.enforceNoDataAvail();
+                if (code == 111) holdRequestResponse = true;
+                else if (code == 112) awaitLatch(requestEntered);
+                else requestResponseRelease.countDown();
                 reply.writeNoException(); reply.writeInt(1); return true;
             }
             if (code == 100) { // Test-only observation, never called by production transport.

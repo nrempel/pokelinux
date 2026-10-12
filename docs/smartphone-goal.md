@@ -112,3 +112,9 @@ AOSP comparisons and12 focused x86/ARM64 user-QEMU tests pass. Calendar-valid
 status/timestamps do not establish delivery identity; receipt/ACK ownership,
 outbox correlation and installed notification/app behavior remain separate gates.
 See [status reports](native-sms-status-report.md).
+
+Native radio requests now have one owned worker, absolute per-part admission and
+NotSent/OutcomeUnknown receipts, with six actual x86 Binder cases and five native
+component checks across x86, ARM64 user-QEMU and an ARM64 kernel. This does not
+qualify final modem outcomes, safe subsequent operations or native IMS/call state.
+See [request ownership](native-radio-requests.md).

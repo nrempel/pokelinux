@@ -41,6 +41,18 @@ Path('artifacts/native-radio/ipc-image.txt').write_text(run('shell', 'getprop', 
 run('push', str(binary), root + '/radio-ipc-test')
 run('shell', 'chmod', '755', root + '/radio-ipc-test')
 try:
+    output = run('shell', root + '/radio-ipc-test', '51', 'expire-before-request')
+    Path('artifacts/native-radio/request-expire-output.txt').write_text(output)
+    assert output.splitlines() == ['radio-bootstrap\tPASS','radio-owned-request-registration\tPASS','radio-owned-request-peer-count\t0','radio-owned-request-expiry-without-timer\tPASS'],output
+    print(output,flush=True)
+    run('shell','am','force-stop','org.pokelinux.radiopeer')
+    for scenario in ('cancel-before-request','stop-before-request','death-before-request','send-owned-segments','cancel-before-response'):
+        output=run('shell',root+'/radio-ipc-test','51',scenario)
+        Path('artifacts/native-radio/request-'+scenario+'-output.txt').write_text(output)
+        assert output.splitlines()==['radio-bootstrap\tPASS','radio-owned-request-'+scenario+'\tPASS'],output
+        assert run('shell','getenforce').strip()=='Enforcing'
+        print(output,flush=True)
+        run('shell','am','force-stop','org.pokelinux.radiopeer')
     output = run('shell', root + '/radio-ipc-test', '51', 'supervised-blocked-registration')
     Path('artifacts/native-radio/supervised-registration-output.txt').write_text(output)
     assert output.splitlines() == ['radio-supervised-held\tPASS', 'radio-supervisor-output-revoked\tPASS', 'radio-supervisor-reaped\tPASS', 'radio-supervisor-retry-refused\tPASS', 'radio-supervisor-restart-refused\tPASS'], output

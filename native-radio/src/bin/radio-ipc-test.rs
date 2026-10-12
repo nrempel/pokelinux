@@ -109,6 +109,12 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     let die_register = match scenario.as_deref() {
         None
         | Some("session-owner")
+        | Some("expire-before-request")
+        | Some("cancel-before-request")
+        | Some("stop-before-request")
+        | Some("death-before-request")
+        | Some("send-owned-segments")
+        | Some("cancel-before-response")
         | Some("cancel-during-registration")
         | Some("expire-during-registration")
         | Some("owned-service-death")
@@ -163,6 +169,21 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
             &peer,
             scenario.as_deref() == Some("owned-registration-death"),
         );
+    }
+    if matches!(
+        scenario.as_deref(),
+        Some(
+            "cancel-before-request"
+                | "stop-before-request"
+                | "death-before-request"
+                | "send-owned-segments"
+                | "cancel-before-response"
+        )
+    ) {
+        return owned_request_scenario(&peer, scenario.as_deref().unwrap());
+    }
+    if scenario.as_deref() == Some("expire-before-request") {
+        return expire_before_request(&peer);
     }
     if scenario.as_deref() == Some("session-owner") {
         return owner_ipc(&transport, &peer);
@@ -978,5 +999,260 @@ fn supervised_registration() -> std::result::Result<(), Box<dyn std::error::Erro
         return Err("supervisor restart forgot uncertain registration".into());
     }
     println!("radio-supervisor-restart-refused\tPASS");
+    Ok(())
+}
+
+fn expire_before_request(peer: &SIBinder) -> std::result::Result<(), Box<dyn std::error::Error>> {
+    use pokelinux_radio::{
+        deadline::{Clock, Deadline},
+        request::Outcome,
+        worker::TransportSession,
+    };
+    use std::sync::{
+        Arc,
+        atomic::{AtomicU64, Ordering},
+    };
+    struct Controlled(AtomicU64);
+    impl Clock for Controlled {
+        fn now(&self) -> Duration {
+            Duration::from_nanos(self.0.load(Ordering::Acquire))
+        }
+    }
+    let clock = Arc::new(Controlled(AtomicU64::new(10)));
+    let mut session = TransportSession::with_clock(NonZeroUsize::new(2).unwrap(), clock.clone());
+    let key = session
+        .start(
+            RadioTransport::from_binder(peer.clone())?,
+            "pokelinux-ipc-test".into(),
+            NonZeroUsize::new(8).unwrap(),
+            Deadline::at(Duration::from_nanos(100)),
+        )
+        .map_err(|e| format!("registration admission: {e:?}"))?;
+    let end = Instant::now() + Duration::from_secs(5);
+    let registration = loop {
+        if let Some(report) = session.poll_registration() {
+            break report;
+        }
+        assert!(Instant::now() < end);
+        std::thread::yield_now();
+    };
+    registration
+        .activation
+        .map_err(|e| format!("activation: {e:?}"))?;
+    println!("radio-owned-request-registration\tPASS");
+    let prepared = session
+        .prepare_request(
+            &key,
+            137,
+            0,
+            vec![9, 8],
+            Deadline::at(Duration::from_nanos(20)),
+        )
+        .map_err(|e| format!("request preparation: {e:?}"))?;
+    clock.0.store(20, Ordering::Release); // Withhold timers; expiry must govern dispatch.
+    session
+        .submit_request(prepared)
+        .map_err(|e| format!("request worker: {e:?}"))?;
+    let end = Instant::now() + Duration::from_secs(5);
+    let result = loop {
+        if let Some(report) = session.poll_request() {
+            break report.map_err(|_| "request worker panicked")?;
+        }
+        assert!(Instant::now() < end);
+        std::thread::yield_now();
+    };
+    let end = Instant::now() + Duration::from_secs(5);
+    let observed = loop {
+        let r = report(peer)?;
+        if result.submitted_parts == 0 || r.0 > 0 {
+            break r;
+        }
+        assert!(Instant::now() < end);
+        std::thread::yield_now();
+    };
+    println!("radio-owned-request-peer-count\t{}", observed.0);
+    assert_eq!(
+        observed.0, 0,
+        "expired operation crossed actual Binder into peer"
+    );
+    assert_eq!(result.submitted_parts, 0);
+    assert_eq!(result.outcome, Outcome::NotSent);
+    assert!(result.submission.is_err(), "expired dispatch was accepted");
+    assert_eq!(
+        session.snapshot().request.unwrap().outcome,
+        Outcome::NotSent
+    );
+    session.stop(&key).map_err(|e| format!("stop: {e:?}"))?;
+    println!("radio-owned-request-expiry-without-timer\tPASS");
+    Ok(())
+}
+
+fn request_control(peer: &SIBinder, code: u32) -> Result<()> {
+    let remote = peer.as_remote().ok_or(StatusCode::BadType)?;
+    let data = remote.prepare_transact(true)?;
+    let mut reply = remote
+        .submit_transact(code, &data, 0)?
+        .ok_or(StatusCode::UnexpectedNull)?;
+    let status: Status = reply.read()?;
+    if !status.is_ok() {
+        return Err(StatusCode::from(status));
+    }
+    if code != 107 && reply.read_i32()? != 1 {
+        return Err(StatusCode::BadValue);
+    }
+    if reply.data_avail() != 0 {
+        return Err(StatusCode::BadValue);
+    }
+    Ok(())
+}
+fn owned_request_scenario(
+    peer: &SIBinder,
+    scenario: &str,
+) -> std::result::Result<(), Box<dyn std::error::Error>> {
+    use pokelinux_radio::{
+        deadline::{BootClock, Clock, Deadline},
+        owner::{OwnerError, Phase},
+        request::Outcome,
+        worker::{LifecycleError, TransportSession},
+    };
+    let mut session = TransportSession::new(NonZeroUsize::new(2).unwrap());
+    let key = session
+        .start(
+            RadioTransport::from_binder(peer.clone())?,
+            "pokelinux-ipc-test".into(),
+            NonZeroUsize::new(8).unwrap(),
+            Deadline::at(BootClock.now() + Duration::from_secs(60)),
+        )
+        .map_err(|e| format!("register admission: {e:?}"))?;
+    let end = Instant::now() + Duration::from_secs(5);
+    let registration = loop {
+        if let Some(r) = session.poll_registration() {
+            break r;
+        }
+        assert!(Instant::now() < end);
+        std::thread::yield_now();
+    };
+    registration
+        .activation
+        .map_err(|e| format!("activation: {e:?}"))?;
+    let payload = if scenario == "send-owned-segments" {
+        vec![42; 4096]
+    } else {
+        vec![9, 8]
+    };
+    let prepared = session
+        .prepare_request(
+            &key,
+            137,
+            0,
+            payload,
+            Deadline::at(BootClock.now() + Duration::from_secs(30)),
+        )
+        .map_err(|e| format!("prepare: {e:?}"))?;
+    let operation = prepared.key();
+    match scenario {
+        "cancel-before-request" => session
+            .cancel_request(&operation)
+            .map_err(|e| format!("cancel: {e:?}"))?,
+        "stop-before-request" => session.stop(&key).map_err(|e| format!("stop: {e:?}"))?,
+        "death-before-request" => {
+            assert_eq!(report(peer)?.0, 0);
+            request_control(peer, 107)?;
+            let end = Instant::now() + Duration::from_secs(5);
+            while session.snapshot().phase != Phase::Failed(ReceiverFailure::ServiceDied) {
+                assert!(Instant::now() < end);
+                std::thread::yield_now();
+            }
+        }
+        "cancel-before-response" => request_control(peer, 111)?,
+        "send-owned-segments" => {}
+        _ => unreachable!(),
+    }
+    session
+        .submit_request(prepared)
+        .map_err(|e| format!("worker: {e:?}"))?;
+    let end = Instant::now() + Duration::from_secs(5);
+    let result = loop {
+        if let Some(r) = session.poll_request() {
+            break r.map_err(|_| "request panic")?;
+        }
+        assert!(Instant::now() < end);
+        std::thread::yield_now();
+    };
+    assert!(!session.worker_occupied());
+    if matches!(
+        scenario,
+        "cancel-before-request" | "stop-before-request" | "death-before-request"
+    ) {
+        assert_eq!(result.submitted_parts, 0);
+        assert_eq!(result.outcome, Outcome::NotSent);
+        assert!(result.submission.is_err());
+        if scenario != "death-before-request" {
+            assert_eq!(report(peer)?.0, 0);
+        }
+        assert_eq!(
+            session.snapshot().request.unwrap().outcome,
+            Outcome::NotSent
+        );
+    } else {
+        assert!(result.submission.is_ok());
+        assert_eq!(result.outcome, Outcome::OutcomeUnknown);
+        if scenario == "send-owned-segments" {
+            assert_eq!(result.submitted_parts, 2);
+            let end = Instant::now() + Duration::from_secs(5);
+            loop {
+                let counts = report(peer)?;
+                if counts.1 == 2 {
+                    assert_eq!(counts.0, 0);
+                    break;
+                }
+                assert!(Instant::now() < end);
+                std::thread::yield_now();
+            }
+            assert!(matches!(
+                session.prepare_request(
+                    &key,
+                    137,
+                    0,
+                    vec![0],
+                    Deadline::at(BootClock.now() + Duration::from_secs(30))
+                ),
+                Err(LifecycleError::Owner(OwnerError::OperationPending))
+            ));
+        } else {
+            request_control(peer, 112)?; // The original-wire request actually entered the peer.
+            assert_eq!(result.submitted_parts, 1);
+            session
+                .cancel_request(&operation)
+                .map_err(|e| format!("cancel: {e:?}"))?;
+            assert_eq!(
+                session.snapshot().request.unwrap().outcome,
+                Outcome::OutcomeUnknown
+            );
+            let started = Instant::now();
+            let _ = session.snapshot();
+            assert!(started.elapsed() < Duration::from_millis(350));
+            request_control(peer, 113)?;
+            let end = Instant::now() + Duration::from_secs(5);
+            loop {
+                let event = session
+                    .prepare_callback_until(end)
+                    .map_err(|e| format!("callback: {e:?}"))?
+                    .ok_or("response deadline")?;
+                if matches!(event.event(),RadioEvent::Response(r) if r.info.serial==1) {
+                    session
+                        .publish_callback(event)
+                        .map_err(|e| format!("publish raw: {e:?}"))?;
+                    break;
+                }
+                assert!(Instant::now() < end);
+            }
+            let snapshot = session.snapshot();
+            assert_eq!(snapshot.response.unwrap().payload, [9, 8]);
+            assert_eq!(snapshot.request.unwrap().outcome, Outcome::OutcomeUnknown);
+        }
+    }
+    session.stop(&key).map_err(|e| format!("stop: {e:?}"))?;
+    println!("radio-owned-request-{}\tPASS", scenario);
     Ok(())
 }

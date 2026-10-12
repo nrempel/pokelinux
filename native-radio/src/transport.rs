@@ -10,6 +10,7 @@ pub const RADIO_DESCRIPTOR: &str =
 pub const INDICATION_DESCRIPTOR: &str =
     "vendor.samsung_slsi.telephony.hardware.radioExternal.IOemSlsiRadioExternalInd";
 
+#[derive(Clone)]
 pub struct RadioTransport(SIBinder);
 struct RadioDeath(CallbackControl);
 impl rsbinder::DeathRecipient for RadioDeath {
@@ -108,6 +109,33 @@ impl RadioTransport {
             .submit_transact(1, &data, FLAG_ONEWAY)?;
         Ok(())
     }
+    pub(crate) fn send_part(&self, arguments: [i32; 4], part: RequestPart<'_>) -> Result<()> {
+        let mut data = self.input()?;
+        for value in arguments {
+            data.write_i32(value)?;
+        }
+        let code = match part {
+            RequestPart::Raw(bytes) => {
+                data.write(bytes)?;
+                2
+            }
+            RequestPart::Segment {
+                index,
+                total_length,
+                payload,
+            } => {
+                data.write(payload)?;
+                data.write_i32(index)?;
+                data.write_i32(total_length)?;
+                3
+            }
+        };
+        self.0
+            .as_remote()
+            .ok_or(StatusCode::BadType)?
+            .submit_transact(code, &data, FLAG_ONEWAY)?;
+        Ok(())
+    }
     /// Submit once, in order, without retries. Any failure leaves the complete
     /// operation uncertain; the caller must not blindly replay it.
     pub fn send(
@@ -123,33 +151,7 @@ impl RadioTransport {
             submitted_parts: 0,
         })?;
         for (submitted_parts, part) in parts.enumerate() {
-            let result = (|| -> Result<()> {
-                let mut data = self.input()?;
-                for value in [serial, client_id, request, slot] {
-                    data.write_i32(value)?;
-                }
-                let code = match part {
-                    RequestPart::Raw(bytes) => {
-                        data.write(bytes)?;
-                        2
-                    }
-                    RequestPart::Segment {
-                        index,
-                        total_length,
-                        payload,
-                    } => {
-                        data.write(payload)?;
-                        data.write_i32(index)?;
-                        data.write_i32(total_length)?;
-                        3
-                    }
-                };
-                self.0
-                    .as_remote()
-                    .ok_or(StatusCode::BadType)?
-                    .submit_transact(code, &data, FLAG_ONEWAY)?;
-                Ok(())
-            })();
+            let result = self.send_part([serial, client_id, request, slot], part);
             if let Err(source) = result {
                 return Err(SubmissionError {
                     source,

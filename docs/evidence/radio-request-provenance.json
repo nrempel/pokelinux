@@ -1,0 +1,207 @@
+{
+  "schema": 1,
+  "recorded_utc": "2026-10-12T23:02:23.411056+00:00",
+  "host": "Harbour",
+  "scope": "one bounded native request attempt on owned registered transport; local admission/submission receipts only",
+  "native_ims_complete": false,
+  "physical_phone_accessed": false,
+  "vendor_execution": false,
+  "source_sha256": {
+    "native-radio/src/request.rs": "f9e1a3ee79a3d118314df617c51085006ab0d6738cbdf0ee4dd527cbfe374b76",
+    "native-radio/src/lib.rs": "13e0a76744bc8b83678b9e37d93a1c965dc207603f2aad6133f5ceb2173d760e",
+    "native-radio/src/owner.rs": "37ec8cc3f94bed8aa4abc5856fb51d5c94823daa821a69e7a1d86c04ed03f958",
+    "native-radio/src/worker.rs": "ba9e55c6bc96a80962c1b1dca56b608b624df89d579844e186afde1615856313",
+    "native-radio/src/transport.rs": "f01d1ec1d543ed667f3b8d06366d909eb02168235a41ab58a831ebed2a11e455",
+    "native-radio/src/deadline.rs": "abc2a3f23284402fe3bc34abfb380bdf1f84a1f6d15cbd90b38a09bf5450c2ee",
+    "native-radio/src/bin/radio-ipc-test.rs": "a944ea10531d6e094ae165a9f9da01bd76b2eaf395213524110a27823a3cd38f",
+    "native-radio/Cargo.toml": "d4d53aafceec699f40368e7ed4c615a0e0c5b9745ef5c200bc1cb2c21ae75c3a",
+    "native-radio/Cargo.lock": "79da65efd795316ef184d2f1c7895946254913b68d4cf5f4fd8d83a5dc20ccd4",
+    "native-ims/src/requests.rs": "ad0b411f0f385d620df18a7a206034199e9cf9d390b13c13925f19e347cba26f",
+    "framework/radiopeer/Peer.java": "661a2db4895eed6decdb4685ae1b4dc150a8fc2dde4b352488632ebaa8588567",
+    "framework/tests/radio_ipc.py": "a6c399e5253d2481f0ccb35f4cbc54eff00f834194c3989ba259a39eaf47b8e5",
+    "tools/build-native-radio.sh": "7d93f11e93a07341ccf52a3e1db8f30e1e32110d6871c3f2fb3c081133881f93",
+    "tools/build-radio-peer.sh": "c207fceae4ba3a82ffc1a4337a1c702027d9315b110e40aaa94f5e3dc76eef20",
+    "tools/native-process-vm.py": "6c23dc72fd12e18043bab1d9466aa6ee022e7a8535092f9b52444050efca5164",
+    "sim/guest/native_process.py": "e5f4b798e9da63c830bae19ca5960c7f9b42a4e4c11a48805c3dedb0032bacd7",
+    "docs/native-radio-requests.md": "0c00f159713347f4198bdeb0cb421f3c02355f8543930afc5921c47f67045a7e"
+  },
+  "binary_sha256": {
+    "artifacts/native-radio/x86_64-unknown-linux-musl/release/radio-ipc-test": "3fd68d7c85ba7579bfeb1de71d5f86278ccd77dc3859300fa77f895d7d37a6e3",
+    "artifacts/native-radio/peer/peer.apk": "45d201ee12d9eef5c8c5991e2cb6727aad41ebe2468868f8d293bd07dea48549",
+    "artifacts/native-radio/aarch64-unknown-linux-gnu/debug/deps/pokelinux_radio-54b079e93642f61e": "c16c11222a92f0894ea8a60c1c688fa6117f5592f740a9c9b1da1765f3598fbb"
+  },
+  "runtime_red": {
+    "exit": 101,
+    "actual_peer_raw_calls": 1,
+    "expected_calls": 0,
+    "withheld_timer": true,
+    "immutable_manifest": {
+      "exit": 101,
+      "peer_raw_calls": 1,
+      "expected": 0,
+      "withheld_timer": true,
+      "source_sha256": {
+        "native-radio/src/request.rs": "cba63a03956feb9d0611eee143db76f42b3764a7d393de068ab3efdeb3802abc",
+        "native-radio/src/owner.rs": "275988cdf728c6f05afa866a6182f7949cab4fa71e24df23dd844550c87d0134",
+        "native-radio/src/worker.rs": "c58c6c3a0699e9c3cca9bd0130042b891d64b9956d12d68e8ae502b5f3ca9e46",
+        "native-radio/src/transport.rs": "e7a29149c532634c4539ccc500bc9ace52a8a1325c2303461c62c476a0000ff4",
+        "native-radio/src/bin/radio-ipc-test.rs": "0ceba504dc2978f830c5dbf68570eb3b00cde7ebafa0c3a4d36d364e1b847ffb",
+        "framework/tests/radio_ipc.py": "07cd2f6e8de9d2390c7144367e5b4281cb9ac486aa997b52640b841b555e7fef",
+        "artifacts/native-radio/x86_64-unknown-linux-musl/release/radio-ipc-test": "018b0b7fc96eb8b253cfbbe0f5be9c95948275405d1c16d611c90801136738e8",
+        "artifacts/native-radio/peer/peer.apk": "d534336cb07674327da24c1269b042367a34d96605d433616a4ecbc83ec9e4de",
+        "android-framework/results/container-final.json": "585309723756c49880cc9cc2a46f731b108605bbc55d81abaae01b5d366a87b9"
+      }
+    },
+    "private_directory": "artifacts/native-radio/request-red"
+  },
+  "real_binder_green": {
+    "architecture": "x86_64",
+    "image_fingerprint": "google/sdk_gphone64_x86_64/emu64xa:17/CE2A.260420.019/15611780:userdebug/dev-keys",
+    "selinux": "Enforcing",
+    "scenarios": {
+      "artifacts/native-radio/request-expire-output.txt": [
+        "radio-bootstrap\tPASS",
+        "radio-owned-request-registration\tPASS",
+        "radio-owned-request-peer-count\t0",
+        "radio-owned-request-expiry-without-timer\tPASS"
+      ],
+      "artifacts/native-radio/request-cancel-before-request-output.txt": [
+        "radio-bootstrap\tPASS",
+        "radio-owned-request-cancel-before-request\tPASS"
+      ],
+      "artifacts/native-radio/request-stop-before-request-output.txt": [
+        "radio-bootstrap\tPASS",
+        "radio-owned-request-stop-before-request\tPASS"
+      ],
+      "artifacts/native-radio/request-death-before-request-output.txt": [
+        "radio-bootstrap\tPASS",
+        "radio-owned-request-death-before-request\tPASS"
+      ],
+      "artifacts/native-radio/request-send-owned-segments-output.txt": [
+        "radio-bootstrap\tPASS",
+        "radio-owned-request-send-owned-segments\tPASS"
+      ],
+      "artifacts/native-radio/request-cancel-before-response-output.txt": [
+        "radio-bootstrap\tPASS",
+        "radio-owned-request-cancel-before-response\tPASS"
+      ]
+    },
+    "all_previous_radio_ipc_scenarios": true,
+    "synthetic_controls": [
+      111,
+      112,
+      113
+    ],
+    "oneway_return_is_modem_acceptance": false,
+    "late_raw_observation_is_request_acceptance": false,
+    "owned_framework_container_removed": true,
+    "owned_framework_network_removed": true
+  },
+  "component_green": {
+    "new_tests": 5,
+    "x86_library_tests": 35,
+    "arm64_user_library_tests": 33,
+    "arm64_user_process_tests_ignored": 2,
+    "fmt": true,
+    "clippy_all_targets_warnings_denied": true,
+    "actual_arm64_kernel_library_components": true,
+    "arm64_system_result": {
+      "passed": true,
+      "architecture": "aarch64",
+      "qemu_mode": "system",
+      "hardware_verified": false,
+      "phone_accessed": false,
+      "kernel": "7.1.6-1-aarch64-ARCH",
+      "os": "NAME=\"Arch Linux ARM\"\nPRETTY_NAME=\"Arch Linux ARM\"\nID=archarm\nID_LIKE=arch\nBUILD_ID=rolling\nANSI_COLOR=\"38;2;23;147;209\"\nHOME_URL=\"https://archlinuxarm.org/\"\nDOCUMENTATION_URL=\"https://archlinuxarm.org/wiki\"\nSUPPORT_URL=\"https://archlinuxarm.org/forum\"\nBUG_REPORT_URL=\"https://github.com/archlinuxarm/PKGBUILDs/issues\"\nLOGO=archlinux-logo\n",
+      "checks": {
+        "pokelinux_radio_components_under_arm64_kernel": true,
+        "blocked_worker_drop_aborts_process_instead_of_detaching_or_joining": true,
+        "spawn_failure_leaves_durable_admission_and_restart_refuses_launch": true,
+        "outbox_components_under_arm64_kernel": true,
+        "outbox_process_components_under_arm64_kernel": true,
+        "sigkill_releases_owner_but_does_not_release_uncertain_part": true,
+        "pokelinux_suspend_components_under_arm64_kernel": true,
+        "coordination_components_under_arm64_kernel": true,
+        "descriptors_components_under_arm64_kernel": true,
+        "deadlines_components_under_arm64_kernel": true,
+        "process_lifetime_components_under_arm64_kernel": true,
+        "killed_client_eof_destroys_one_native_object_after_actual_reap": true,
+        "killed_controller_eof_drops_authority_without_reentry": true,
+        "actual_service_side_disconnect_reaches_client_as_eof": true,
+        "unprivileged_execution": true
+      },
+      "binary_sha256": {
+        "pokelinux_radio": "c16c11222a92f0894ea8a60c1c688fa6117f5592f740a9c9b1da1765f3598fbb",
+        "outbox": "190fa99f46eebcbe3b255cb3a47d013775fc97d9f33b2919a102a08130f4392d",
+        "outbox_process": "4eaffe1a43001cd4852c9937dccdc4b1c0b22b6492581e72e739f33b238e3117",
+        "suspend_lifetime_peer": "f79d282c7e4c2d1711d4f9c5dcc185be307ab6c973a9d171cf1a8cc38f57b9f8",
+        "pokelinux_suspend": "3f34a1bac65b15e7fca4115fdd51b1cad37a08b119cf9f70e4cd592d68e9996c",
+        "coordination": "0d59f6cd8a34590642ad2b8811867fc9d8f4a32abba8b7cfc4093a520105f353",
+        "descriptors": "9da25d92f83ced939d57198df49479ae4fe0033547332ce0c603503b9e428adc",
+        "deadlines": "c03465c8009b0c845b4c8feef0cd9fe79751d727795fb79cdec39791b806ef03",
+        "process_lifetime": "e6b2bf0e453a9ae9ccc415081b0c9bf09e20607df9e8556011d483f8b800e29e"
+      }
+    },
+    "arm64_system_private_directory": "sim/results/native-process-20261012T225632.154891Z",
+    "arm64_binder_execution": false
+  },
+  "qualified_bounds": {
+    "request_attempts_per_process": 1,
+    "registration_attempts_per_process": 1,
+    "payload_bytes": 4096,
+    "wire_serial": 1,
+    "reused_serial": false,
+    "per_part_admission_clock": "CLOCK_BOOTTIME",
+    "request_receipt_revision_distinct_from_raw_observation": true,
+    "request_worker_shares_occupied_capacity": true,
+    "drop_order": "unfinished request worker before death-watch unsubscribe",
+    "durable_request_ledger": false
+  },
+  "limits": [
+    "local Queued/NotSent/OutcomeUnknown only; no qualified final modem receipt",
+    "one attempt retained; no implicit retirement/retry or subsequent request",
+    "generic blocked-worker abort/registration process supervisor qualified; actual permanent request-call blockage and async-driver pressure open",
+    "synthetic peer uses original recovered wire framing; vendor producer/cleanup/response semantics unqualified",
+    "no installed native service permission/watch/notification integration or durable request admission",
+    "no ARM64 Binder/Pixel kernel policy, native IMS/call state or carrier/device behavior"
+  ],
+  "ignored_proof_sha256": {
+    "artifacts/native-radio/request-arm64-kernel.log": "4620eaa20f6d74573d0870a82a7cab7158f83873288bf1cda2c562f634e65112",
+    "artifacts/native-radio/request-cancel-before-request-output.txt": "875bf485ce1c620d9d103818880db09b837d2c1044e46bc667cbc4fff6c140d8",
+    "artifacts/native-radio/request-cancel-before-response-output.txt": "f758b6b8b287c91ae0fd3b36d4a07374bec4654f0d9e6ffb8e0daca713d8ae13",
+    "artifacts/native-radio/request-death-before-request-output.txt": "31607a7d1ff8d27621ca461269665df6bc83ec3b00d17d98188112bd2f51cf89",
+    "artifacts/native-radio/request-expire-output.txt": "2e0691613278021603d36514d13ead73b2b4b070fb9b0abc3fe5ac2eefe94466",
+    "artifacts/native-radio/request-final-build.log": "b07e38ddbf2ecb657b79a4eef8186ca9f2aec0f68f415148d7fd06102cbb1942",
+    "artifacts/native-radio/request-green.log": "42088a79dfd699a5d89660d9ab3cfbf6bfe30bf68227ca29cf63198a3442fc31",
+    "artifacts/native-radio/request-red/build.log": "e951e5cd7b5da478a81b2fa9283528e8b4831f2a1c734d99c789a98a87adad8d",
+    "artifacts/native-radio/request-red/manifest.json": "cf846116497a4195785ae2f1fcd5f68882ad467113f53b0b56e774b1b104a990",
+    "artifacts/native-radio/request-red/runtime.log": "17640fce44079481886fc564f220a9a483501cbd849efbe2a1788bb27432ce4c",
+    "artifacts/native-radio/request-send-owned-segments-output.txt": "a4c91a899f2d1a87958e6b8e35ef2d186f8234706f4c236b56848032fbb71541",
+    "artifacts/native-radio/request-stop-before-request-output.txt": "d82a9785bfab51c61027e424801aeb2c35bb0e18bde6dc8a83cdad186480d26e",
+    "sim/results/native-process-20261012T225632.154891Z/actual_service_side_disconnect_reaches_client_as_eof.log": "19b783fa338eea6d7fe967a1d715afbeb27f8ced57579c7303939c8cbe6edcce",
+    "sim/results/native-process-20261012T225632.154891Z/blocked_worker_drop_aborts_process_instead_of_detaching_or_joining.log": "ac5b22f4881aca576ae05ab538170556412277c7c07576bcef3b3eb78bae049d",
+    "sim/results/native-process-20261012T225632.154891Z/command.json": "758c73106a04c18472c717ca2fc539e54ace980d5b9653f9c67c9c13390998cc",
+    "sim/results/native-process-20261012T225632.154891Z/coordination-components.log": "9d429a801081ef70658078df584ece6c8e4086dbca64a0616555c159e1fe60e8",
+    "sim/results/native-process-20261012T225632.154891Z/coordination-test-list.txt": "9e6dff68fb3b2c21abe794ad181149904b2f6b525f8c9a6853548a7066851950",
+    "sim/results/native-process-20261012T225632.154891Z/deadlines-components.log": "c5e9c67fcd905f2c3222e60eec2bd49a5a80d0258bc029dda35e77b5b08cec57",
+    "sim/results/native-process-20261012T225632.154891Z/deadlines-test-list.txt": "224b371d11458c234758b1a7cb92d3912b34f2ea0e3ecc8d0022d9955457a883",
+    "sim/results/native-process-20261012T225632.154891Z/descriptors-components.log": "0a4879afd91ac2a034aaad6a1498eb0b590dddf7868ad4a7726b28f5abc6377c",
+    "sim/results/native-process-20261012T225632.154891Z/descriptors-test-list.txt": "dbbf669cf9e096469a402fe95e9dd9e459ee4b6a04d0f2bd419a106f0fd8a746",
+    "sim/results/native-process-20261012T225632.154891Z/killed_client_eof_destroys_one_native_object_after_actual_reap.log": "5eecfb9122f1936d112133ebca4e015530d0ded347ea1061fd825e5d02e53426",
+    "sim/results/native-process-20261012T225632.154891Z/killed_controller_eof_drops_authority_without_reentry.log": "9db77ab8d81b324a231c6ebffd2a05f6a896538661d65d40472e25f5d48963d5",
+    "sim/results/native-process-20261012T225632.154891Z/outbox-components.log": "f9479db5755c928372b2f0edef3c9b5b346ca6da10b562d5c1d0efb2f9aefc0a",
+    "sim/results/native-process-20261012T225632.154891Z/outbox-test-list.txt": "9777aa96eb6c612d2f599a5e1a10ccb7868f4ec836e424227c8020d44525033e",
+    "sim/results/native-process-20261012T225632.154891Z/outbox_process-components.log": "b65017f9aafe55e609c73fa13f556bc401b68b55577e4e2702f39a57bccd64bd",
+    "sim/results/native-process-20261012T225632.154891Z/outbox_process-test-list.txt": "2129cafbcc6ce56dcf12e10490548df675fc2670430981bb0738f0e5a3d0f414",
+    "sim/results/native-process-20261012T225632.154891Z/pokelinux_radio-components.log": "3af6e1afd5960acc4c877ef894f60756eb911b5b58376804c2435ad579784b18",
+    "sim/results/native-process-20261012T225632.154891Z/pokelinux_radio-test-list.txt": "de93e6a09f15cd0a0c8f3c17fa4ed42c01c6d385e4d1c22a2d600f7a12eb5dac",
+    "sim/results/native-process-20261012T225632.154891Z/pokelinux_suspend-components.log": "1fc083f8b242aed34a41792036b499465ea461cf62786baaa71efc3974c92344",
+    "sim/results/native-process-20261012T225632.154891Z/pokelinux_suspend-test-list.txt": "24cc9bc56312394c9688415edfc00bb4f32e048c10ec93c2719d01c452cff20b",
+    "sim/results/native-process-20261012T225632.154891Z/process_lifetime-components.log": "1c0820e7f4fad89c46c539a6fc07f00ecb937020db74de4cf916f598558e3153",
+    "sim/results/native-process-20261012T225632.154891Z/process_lifetime-test-list.txt": "069e4c3bad650c457658d194ce7a4d851a5cd7f07b0234700d78689ca1720289",
+    "sim/results/native-process-20261012T225632.154891Z/result.json": "56a28aec1f37ef7ec2e4eaad8b4f65b68f5a4459f28e47c9ef53d2198bcf2d16",
+    "sim/results/native-process-20261012T225632.154891Z/serial.log": "c10f181f13b7d287e5ad49de01cc3e98631a42d7dfce3547924b933e1cf4ca8a",
+    "sim/results/native-process-20261012T225632.154891Z/sigkill_releases_owner_but_does_not_release_uncertain_part.log": "38e01540ceda9f91178b885dd237159f93a16aaba36b8bc3dd75990b4ddfb0d1",
+    "sim/results/native-process-20261012T225632.154891Z/spawn_failure_leaves_durable_admission_and_restart_refuses_launch.log": "c78031db290a1eca9523cec288c93263e0077369d7824f17167bc58e34f9169d"
+  }
+}

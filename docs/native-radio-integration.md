@@ -234,3 +234,17 @@ including `tools/build-native-suspend.sh arm64-process`, before the guest run.
 The integrated run preserves both radio process checks and adds27 suspend
 checks under an actual ARM64 Arch kernel; this does not qualify Pixel Binder
 or hardware suspend. See [native suspend](native-suspend.md).
+
+## Owned request admission
+
+The [owned request boundary](native-radio-requests.md) now qualifies six actual
+x86 Binder scenarios: expiry with timer delivery withheld, cancel/stop/death before
+dispatch, complete4096-byte segmentation, and successful one-way return followed
+by cancellation and a held late raw echo. Guarded part admission records local
+uncertainty before Binder; the echo does not accept the operation. Five additional
+component checks pass on x86, ARM64 user-QEMU and under an actual ARM64 kernel.
+Only one request attempt is allowed. Final semantic receipts, durable admission,
+wire correlation/subsequent work, permanent request-call blockage/driver pressure,
+installed native IMS and actual vendor/modem behavior remain open. Existing
+registration supervision/reaping does not prove request cancellation or remote
+cleanup. See [separate source/runtime provenance](evidence/radio-request-provenance.json).

@@ -44,6 +44,7 @@ pub enum OwnerError {
     RetainedLimit,
     Exhausted,
     Unsupported,
+    OperationPending,
     Failed(ReceiverFailure),
 }
 #[derive(Clone, Debug)]
@@ -53,6 +54,7 @@ pub struct Snapshot {
     pub phase: Phase,
     /// Latest committed raw vendor response, not decoded call/IMS state.
     pub response: Option<Arc<RadioResponse>>,
+    pub request: Option<crate::request::RequestReceipt>,
 }
 pub(crate) struct Gate {
     pub(crate) current: Option<SessionKey>,
@@ -62,6 +64,7 @@ pub(crate) struct Gate {
     response: Option<Arc<RadioResponse>>,
     preparing: Option<Arc<()>>,
     deadline: Option<Deadline>,
+    pub(crate) request: Option<crate::request::RequestState>,
 }
 impl Default for Gate {
     fn default() -> Self {
@@ -73,6 +76,7 @@ impl Default for Gate {
             response: None,
             preparing: None,
             deadline: None,
+            request: None,
         }
     }
 }
@@ -85,6 +89,9 @@ impl Gate {
             self.phase = Phase::Failed(reason);
             self.response = None;
             self.preparing = None;
+            if let Some(request) = &mut self.request {
+                request.cancel(reason);
+            }
             self.revision = self.revision.saturating_add(1);
         }
     }
@@ -92,7 +99,7 @@ impl Gate {
         self.revision = self.revision.checked_add(1).ok_or(OwnerError::Exhausted)?;
         Ok(())
     }
-    fn active(&self) -> Result<(), OwnerError> {
+    pub(crate) fn active(&self) -> Result<(), OwnerError> {
         match self.phase {
             Phase::Active { .. } => Ok(()),
             Phase::Failed(reason) => Err(OwnerError::Failed(reason)),
@@ -100,7 +107,7 @@ impl Gate {
         }
     }
 }
-pub(crate) struct Shared(pub(crate) Mutex<Gate>, Arc<dyn Clock>);
+pub(crate) struct Shared(pub(crate) Mutex<Gate>, pub(crate) Arc<dyn Clock>);
 impl Default for Shared {
     fn default() -> Self {
         Self(Mutex::new(Gate::default()), Arc::new(BootClock))
@@ -127,6 +134,11 @@ impl Shared {
             } else if let Some(key) = state.current.clone() {
                 state.invalidate(&key, ReceiverFailure::Expired);
             }
+        }
+        if let Some(request) = &mut state.request
+            && request.deadline.elapsed(self.1.now())
+        {
+            request.cancel(ReceiverFailure::Expired);
         }
         state
     }
@@ -211,6 +223,7 @@ impl RadioOwner {
             revision: gate.revision,
             phase: gate.phase,
             response: gate.response.clone(),
+            request: gate.request.as_ref().map(|request| request.receipt.clone()),
         }
     }
     fn begin_queue(
@@ -235,6 +248,9 @@ impl RadioOwner {
             }
             if self.shared.0.is_poisoned() {
                 return Err(OwnerError::Failed(ReceiverFailure::InternalFailure));
+            }
+            if gate.request.is_some() {
+                return Err(OwnerError::OperationPending);
             }
             // Reserve old invalidation, begin, activation and new invalidation.
             // A failed reservation must leave the current session unchanged.
@@ -317,6 +333,48 @@ impl RadioOwner {
         if let Some(control) = &self.control {
             control.fail_locked(&mut gate, ReceiverFailure::Cancelled);
         }
+        Ok(())
+    }
+    pub(crate) fn owns_request(&self, request: &crate::request::PreparedRequest) -> bool {
+        request.belongs_to(&self.shared)
+    }
+    pub fn prepare_request(
+        &mut self,
+        key: &SessionKey,
+        request: i32,
+        slot: i32,
+        payload: Vec<u8>,
+        deadline: Deadline,
+    ) -> Result<crate::request::PreparedRequest, OwnerError> {
+        let client_id = {
+            let gate = self.shared.lock();
+            if !gate.is_current(key) {
+                return Err(OwnerError::StaleSession);
+            }
+            gate.active()?;
+            match gate.phase {
+                Phase::Active { client_id } => client_id,
+                _ => unreachable!(),
+            }
+        };
+        // Exactly one attempt, serial1, for this process/session. Unknown response
+        // semantics forbid retirement, serial reuse, or another operation here.
+        crate::request::PreparedRequest::new(
+            self.shared.clone(),
+            key.clone(),
+            [1, client_id, request, slot],
+            payload,
+            deadline,
+        )
+    }
+    pub fn cancel_request(&mut self, key: &crate::request::RequestKey) -> Result<(), OwnerError> {
+        let mut gate = self.shared.lock();
+        let request = gate
+            .request
+            .as_mut()
+            .filter(|r| r.receipt.key == *key)
+            .ok_or(OwnerError::StaleSession)?;
+        request.cancel(ReceiverFailure::Cancelled);
         Ok(())
     }
     pub fn prepare_until(
