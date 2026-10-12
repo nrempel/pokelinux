@@ -1,0 +1,43 @@
+{
+  "repository": "https://android.googlesource.com/platform/hardware/google/pixel",
+  "commit": "8612656e216075f79a1efa3bb9be6b6943d6e8cc",
+  "files": [
+    {
+      "path": "RequestGroup.cc",
+      "url": "https://android.googlesource.com/platform/hardware/google/pixel/+/8612656e216075f79a1efa3bb9be6b6943d6e8cc/power-libperfmgr/libperfmgr/RequestGroup.cc?format=TEXT",
+      "sha256": "cd1aeb5ece1b19a9c329bb4458bcfc24badca90d08a1dc68f800741f2dbff71c",
+      "bytes": 2795
+    },
+    {
+      "path": "Node.cc",
+      "url": "https://android.googlesource.com/platform/hardware/google/pixel/+/8612656e216075f79a1efa3bb9be6b6943d6e8cc/power-libperfmgr/libperfmgr/Node.cc?format=TEXT",
+      "sha256": "45c00c8db0cf5ed50d359543f1601d5a2d587a74be83ec6be4266f37f31aec46",
+      "bytes": 2843
+    },
+    {
+      "path": "FileNode.cc",
+      "url": "https://android.googlesource.com/platform/hardware/google/pixel/+/8612656e216075f79a1efa3bb9be6b6943d6e8cc/power-libperfmgr/libperfmgr/FileNode.cc?format=TEXT",
+      "sha256": "decc4361b259ab9a493fe74fc78b5d087ff18f90ffeaab730a441f34ee5e773e",
+      "bytes": 5486
+    },
+    {
+      "path": "include/perfmgr/RequestGroup.h",
+      "url": "https://android.googlesource.com/platform/hardware/google/pixel/+/8612656e216075f79a1efa3bb9be6b6943d6e8cc/power-libperfmgr/libperfmgr/include/perfmgr/RequestGroup.h?format=TEXT",
+      "sha256": "59f8760a48ffb5bcb21952fd9a09590aa5e432a1dc66507d6b485a8b6896c452",
+      "bytes": 2711
+    },
+    {
+      "path": "include/perfmgr/Node.h",
+      "url": "https://android.googlesource.com/platform/hardware/google/pixel/+/8612656e216075f79a1efa3bb9be6b6943d6e8cc/power-libperfmgr/libperfmgr/include/perfmgr/Node.h?format=TEXT",
+      "sha256": "520e149728c39864caf584af288d39715c734dc30a0fa5682d368b33aaeae36e",
+      "bytes": 3724
+    },
+    {
+      "path": "include/perfmgr/FileNode.h",
+      "url": "https://android.googlesource.com/platform/hardware/google/pixel/+/8612656e216075f79a1efa3bb9be6b6943d6e8cc/power-libperfmgr/libperfmgr/include/perfmgr/FileNode.h?format=TEXT",
+      "sha256": "20c9871956cba3eaede3344601f63dedfd2aca695227dba33febe2026244b90f",
+      "bytes": 1724
+    }
+  ],
+  "publication": "Only this manifest and our harness/fixtures are published. Downloaded upstream source stays under ignored artifacts."
+}

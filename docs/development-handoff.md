@@ -82,8 +82,12 @@ private. The camera error-reply/FD fixture now passes through real Binder using 
 generated NDK proxy/dispatcher and an independent Rust client. Both pass
 64-cycle FD budgets, transfer/reverse-transfer lifetime, error-count omission,
 DEAD_OBJECT and death notification. See `native-camera-boundary.md`; pipe FDs
-do not prove gralloc/sync_file/DMA or capture. Native power arbitration and
-isolated audio graph work remain in progress on Sol6.1 xhigh agents.
+do not prove gralloc/sync_file/DMA or capture. Native power arbitration now passes18 tests on x86/ARM64 user-QEMU and18
+outcomes against actual pinned public RequestGroup/Node/FileNode execution.
+Owned leases, cancellation, boot-time expiry, uncertain application, retry and
+stale completion fencing are implemented. Authentication, actual backend IO
+ownership and a deployed suspend authority remain open; see `native-power.md`.
+Isolated audio graph work remains in progress on a Sol6.1 xhigh agent.
 
 ## Next work
 
@@ -118,6 +122,8 @@ affected docs each work turn when implementation or evidence changes. Run:
 ```sh
 bash tools/build-native-radio.sh build
 bash tools/build-native-messaging.sh build
+bash tools/build-power-reference.sh build
+bash tools/build-native-power.sh build
 bash tools/framework-suite.sh sms-codec
 bash tools/framework-suite.sh binder-kernel
 bash tools/framework-suite.sh radio-ipc

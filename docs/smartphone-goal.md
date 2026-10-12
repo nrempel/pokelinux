@@ -77,3 +77,5 @@ installed messaging integration. Send/receive, transport receipt qualification, 
 background/lock/suspend behavior remain open. See [native messaging](native-messaging.md).
 
 Incoming SMS text/metadata parsing also matches33 actual AOSP decoder outputs with bounded malformed-input tests on x86 and ARM64 user-QEMU. Durable incoming ownership, vendor acknowledgement and installed Messages integration remain open.
+
+The first native power-request arbiter is built and component-tested, including18 outcomes from actual public source. Installed permission/lifecycle, native suspend authority and hardware policy remain open; see [native power](native-power.md).

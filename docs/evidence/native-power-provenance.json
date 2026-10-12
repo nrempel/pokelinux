@@ -1,0 +1,186 @@
+{
+  "scope": "First portable native Rust power request arbitration component; no deployed service/backend or suspend ownership",
+  "recorded_utc": "2026-10-12T21:01:47.420702+00:00",
+  "validation": {
+    "format_check": true,
+    "clippy_warnings_denied": true,
+    "arbitration_tests_per_architecture": 17,
+    "original_reference_comparison_tests_per_architecture": 1,
+    "original_source_outcomes_compared": 18,
+    "reference_only_descriptor_outcomes": 2,
+    "x86_64_linux": true,
+    "aarch64_user_qemu": true,
+    "arm64_kernel": false,
+    "process_integration": false,
+    "physical_hardware": false,
+    "shell_python_tool_syntax": true
+  },
+  "red_green": [
+    {
+      "case": "default-only baseline versus active request arbitration",
+      "runtime_red_exit": 101,
+      "red_passed": 3,
+      "red_failed": 11,
+      "compilation_completed": true,
+      "green_same_tests_passed": 14
+    },
+    {
+      "case": "dispatch must invalidate current confirmation while retaining historical confirmation",
+      "runtime_red_exit": 101,
+      "red_passed": 15,
+      "red_failed": 1,
+      "compilation_completed": true,
+      "green_final_validation_passed": true
+    }
+  ],
+  "toolchain": {
+    "rustc": "1.98.1 (48a229cea 2026-09-01)",
+    "cargo": "1.98.1 (797e8a9bc 2026-08-05)",
+    "qemu_aarch64": "10.0.13 (Debian 1:10.0.13+ds-0+deb13u1)",
+    "host_kernel": "6.8.0-136-generic",
+    "rust_image": "pixel-phone-rust:20261012-b472",
+    "rust_image_id": "sha256:5b8db5a581335ef1ce100691772e2109357bc9a9f051bfcb5b3c3a06ff0b0661",
+    "reference_image": "pixel-graphics-build:20261011-b472",
+    "reference_image_id": "sha256:072106341a377dc38091e09c79cc642e5717cf57d10915c0928e3e9a49b1659c"
+  },
+  "public_reference": {
+    "repository": "https://android.googlesource.com/platform/hardware/google/pixel",
+    "commit": "8612656e216075f79a1efa3bb9be6b6943d6e8cc",
+    "source_files": [
+      {
+        "path": "RequestGroup.cc",
+        "url": "https://android.googlesource.com/platform/hardware/google/pixel/+/8612656e216075f79a1efa3bb9be6b6943d6e8cc/power-libperfmgr/libperfmgr/RequestGroup.cc?format=TEXT",
+        "sha256": "cd1aeb5ece1b19a9c329bb4458bcfc24badca90d08a1dc68f800741f2dbff71c",
+        "bytes": 2795
+      },
+      {
+        "path": "Node.cc",
+        "url": "https://android.googlesource.com/platform/hardware/google/pixel/+/8612656e216075f79a1efa3bb9be6b6943d6e8cc/power-libperfmgr/libperfmgr/Node.cc?format=TEXT",
+        "sha256": "45c00c8db0cf5ed50d359543f1601d5a2d587a74be83ec6be4266f37f31aec46",
+        "bytes": 2843
+      },
+      {
+        "path": "FileNode.cc",
+        "url": "https://android.googlesource.com/platform/hardware/google/pixel/+/8612656e216075f79a1efa3bb9be6b6943d6e8cc/power-libperfmgr/libperfmgr/FileNode.cc?format=TEXT",
+        "sha256": "decc4361b259ab9a493fe74fc78b5d087ff18f90ffeaab730a441f34ee5e773e",
+        "bytes": 5486
+      },
+      {
+        "path": "include/perfmgr/RequestGroup.h",
+        "url": "https://android.googlesource.com/platform/hardware/google/pixel/+/8612656e216075f79a1efa3bb9be6b6943d6e8cc/power-libperfmgr/libperfmgr/include/perfmgr/RequestGroup.h?format=TEXT",
+        "sha256": "59f8760a48ffb5bcb21952fd9a09590aa5e432a1dc66507d6b485a8b6896c452",
+        "bytes": 2711
+      },
+      {
+        "path": "include/perfmgr/Node.h",
+        "url": "https://android.googlesource.com/platform/hardware/google/pixel/+/8612656e216075f79a1efa3bb9be6b6943d6e8cc/power-libperfmgr/libperfmgr/include/perfmgr/Node.h?format=TEXT",
+        "sha256": "520e149728c39864caf584af288d39715c734dc30a0fa5682d368b33aaeae36e",
+        "bytes": 3724
+      },
+      {
+        "path": "include/perfmgr/FileNode.h",
+        "url": "https://android.googlesource.com/platform/hardware/google/pixel/+/8612656e216075f79a1efa3bb9be6b6943d6e8cc/power-libperfmgr/libperfmgr/include/perfmgr/FileNode.h?format=TEXT",
+        "sha256": "20c9871956cba3eaede3344601f63dedfd2aca695227dba33febe2026244b90f",
+        "bytes": 1724
+      }
+    ],
+    "implementation_modified": false,
+    "execution": "Actual x86 C++17 RequestGroup/Node/FileNode source with our POSIX Android-base helper shims",
+    "fixture": "native-power/tests/fixtures/public-node-reference.tsv",
+    "fixture_sha256": "6d89d20f3c61c3b7445867a69250751ff0fed53636a3dc985c470641171cb60e",
+    "publication": "Our harness, manifest and synthetic outputs only; downloaded upstream source stays ignored"
+  },
+  "deliberate_differences": [
+    "Native CLOCK_BOOTTIME policy includes suspended time; public steady_clock reference does not establish suspend-aware policy.",
+    "Native full Duration deadlines versus reference millisecond remaining-time rounding.",
+    "Native rejects already elapsed acquisition; reference accepts then prunes.",
+    "Native renewal bool means deadline extended; public AddRequest bool means new entry.",
+    "Native application begins unknown and dispatch/failure report unknown while preserving historical confirmation.",
+    "Callbacks are fenced; actual backend IO/process reclamation remains the caller responsibility."
+  ],
+  "constraints": [
+    "No phone access",
+    "No host suspend or sysfs/device control",
+    "No factory vendor execution",
+    "No detached workers or process tests",
+    "No proprietary or raw audit artifact publication",
+    "No backwards compatibility",
+    "No commit or push by this worker"
+  ],
+  "remaining": [
+    "Native authenticated service and owner-disconnect/revocation integration",
+    "Actual serialized backend/profile and pre-dispatch intent validation",
+    "Backend cancellation/reclamation and restart/durable policy",
+    "Exact PowerV7 Binder/ADPF and vendor libpower participation",
+    "One suspend authority, thermal/charging/display/sensor dependencies",
+    "Later authorized physical wake, charging, thermal, drain and device measurements"
+  ],
+  "source_inventory": {
+    "native-power/Cargo.toml": {
+      "sha256": "7f2ee64a94c00f0b15267af41bd76001fd6893897e0daff93df19b42ca2666b4",
+      "bytes": 192
+    },
+    "native-power/Cargo.lock": {
+      "sha256": "65674be12771cbd56d3030ecec345554b3c5d2f7215aaffbe5b0ab0286dd42a1",
+      "bytes": 1707
+    },
+    "native-power/src/lib.rs": {
+      "sha256": "1f1ef69d79a7dc07f0106df5bd2b4d3949efe988a2c23a95520aec385dd9144f",
+      "bytes": 13410
+    },
+    "native-power/src/clock.rs": {
+      "sha256": "cc32f4fe076606a46a1704cd42f6a161ae3c9a8809b1905223041b23d8eda5dd",
+      "bytes": 1031
+    },
+    "native-power/tests/arbitration.rs": {
+      "sha256": "58260e7bed11296f56307682bbfe0089bfb9ae1e9fa834042c01f116a6b581ef",
+      "bytes": 15176
+    },
+    "native-power/tests/original_node.rs": {
+      "sha256": "8b964163e2576b98fd626b2bd315ca4e32f359765f0a019a9136f014a767d887",
+      "bytes": 7095
+    },
+    "native-power/tests/support/mod.rs": {
+      "sha256": "6410fa7b244e5c89155d63a0344022043e8e76adb0d65ffbb8a9c90f7a31b7e5",
+      "bytes": 1150
+    },
+    "native-power/tests/fixtures/public-node-reference.tsv": {
+      "sha256": "6d89d20f3c61c3b7445867a69250751ff0fed53636a3dc985c470641171cb60e",
+      "bytes": 549
+    },
+    "tools/build-native-power.sh": {
+      "sha256": "7eee8df0797cb691b943d1727ab681b2a18ce229b6cb11815d4540aa067a80fe",
+      "bytes": 1200
+    },
+    "tools/build-power-reference.sh": {
+      "sha256": "2f225634456689fbcd04f67a7f6cf18452fa86df8cceed981ec283d99906fb55",
+      "bytes": 1602
+    },
+    "tools/fetch-power-reference.py": {
+      "sha256": "52d30f7526413a412137895063835959f276166d0a29f6e9d329c8d3b9951f33",
+      "bytes": 1443
+    },
+    "tools/verify-power-reference.py": {
+      "sha256": "48e8ac3386f2e8eafdb593884944515fbcda61b9d5c12ac48360f85b9181cf14",
+      "bytes": 1769
+    },
+    "tools/power-reference/fetch-manifest.json": {
+      "sha256": "5b047079fbf09443d742c328b8d8ef4a3c5ab378e8eabdc280acc7e53ce216a6",
+      "bytes": 2312
+    },
+    "tools/power-reference/oracle.cpp": {
+      "sha256": "a08d65155e63174dc41522c2cbcd17d134249fe3f6a1383717bd7d008943070c",
+      "bytes": 3739
+    },
+    "tools/power-reference/platform.h": {
+      "sha256": "3ab5e6ec4520f27af1adea00d585519ea7513f05b8365c7150132942c9376a64",
+      "bytes": 1812
+    }
+  },
+  "private_validation_artifacts": [
+    "/home/ubuntu/Projects/pokelinux/artifacts/native-power/red-tests.log",
+    "/home/ubuntu/Projects/pokelinux/artifacts/native-power/red-dispatch-state-tests.log",
+    "/home/ubuntu/Projects/pokelinux/artifacts/native-power/full-validation.log",
+    "/home/ubuntu/Projects/pokelinux/artifacts/native-power/reference/reference.tsv"
+  ]
+}

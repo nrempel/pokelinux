@@ -465,5 +465,6 @@
     "Carrier, camera, audio, sensors, power and thermal physical gates"
   ],
   "recorded_source_commit": "e3f8a63f18611e59208efeecd90ebb381eac0a70",
-  "later_runtime_evidence": "native-camera-boundary.json: synthetic generated NDK/Rust real-Binder error/FD/death fixture; not vendor camera integration"
+  "later_runtime_evidence": "native-camera-boundary.json: synthetic generated NDK/Rust real-Binder error/FD/death fixture; not vendor camera integration",
+  "later_native_power_evidence": "native-power-provenance.json: native request arbitration and18 original-public-reference comparisons; no vendor execution/suspend authority"
 }
