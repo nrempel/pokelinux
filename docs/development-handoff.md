@@ -186,6 +186,16 @@ attempt is intentionally retained; durable admission, final semantic receipts,
 subsequent operations, driver pressure and installed native IMS remain open. See
 `native-radio-requests.md` and `evidence/radio-request-provenance.json`.
 
+Native permission/lifecycle authority now passes18 installed Linux groups plus4
+real pidfd/durable-file checks on x86 and under an actual ARM64 Arch kernel.
+The owned launcher assigns distinct app UIDs; each packet checks real credentials
+and exact launched PID, rejecting inherited-socket delegation and kernel-forged
+identity attempts. Policy/lifecycle/principal generations, boot-time expiry,
+revocation, child death/reaping and durable uncertainty are qualified after four
+executed reds. Receipt history is not later effect permission. Omarchy ingress,
+production app/package/service-manager integration, supervised storage stalls and
+atomic backend dispatch remain open; see `native-lifecycle.md` and its provenance.
+
 ## Next work
 
 1. Recover and test the actual vendor cleanup/reset and registration-overlap

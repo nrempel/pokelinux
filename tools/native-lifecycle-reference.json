@@ -1,0 +1,32 @@
+{
+  "project": "Linux",
+  "tag": "v6.8",
+  "commit": "e8f897f4afef0031fe618a8e94127a0934896aba",
+  "purpose": "public credential and pidfd source inspection; not a claim of building this kernel",
+  "files": [
+    {
+      "path": "net/core/scm.c",
+      "url": "https://raw.githubusercontent.com/torvalds/linux/e8f897f4afef0031fe618a8e94127a0934896aba/net/core/scm.c",
+      "sha256": "a06acb5b720e076434cd1d8528f3132defae5ee185d944dbabd37616e4b5bbb4",
+      "bytes": 8987
+    },
+    {
+      "path": "net/unix/af_unix.c",
+      "url": "https://raw.githubusercontent.com/torvalds/linux/e8f897f4afef0031fe618a8e94127a0934896aba/net/unix/af_unix.c",
+      "sha256": "a5ecafbd6a071f271687bfffd0b2976a0788b3cc463397afbe2f780c97db67e9",
+      "bytes": 88711
+    },
+    {
+      "path": "kernel/pid.c",
+      "url": "https://raw.githubusercontent.com/torvalds/linux/e8f897f4afef0031fe618a8e94127a0934896aba/kernel/pid.c",
+      "sha256": "b0fa137e20740163864206a921421b3a9f17e0d53790d3a3472677257813515f",
+      "bytes": 18738
+    },
+    {
+      "path": "kernel/cred.c",
+      "url": "https://raw.githubusercontent.com/torvalds/linux/e8f897f4afef0031fe618a8e94127a0934896aba/kernel/cred.c",
+      "sha256": "bb322cecceb878794570febd2f9cfc1a3b99e88d21f4417abafdcc207c0a8f84",
+      "bytes": 19184
+    }
+  ]
+}

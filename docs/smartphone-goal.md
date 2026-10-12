@@ -118,3 +118,11 @@ NotSent/OutcomeUnknown receipts, with six actual x86 Binder cases and five nativ
 component checks across x86, ARM64 user-QEMU and an ARM64 kernel. This does not
 qualify final modem outcomes, safe subsequent operations or native IMS/call state.
 See [request ownership](native-radio-requests.md).
+
+The native permission/lifecycle authority now qualifies18 installed Linux
+credential/process groups and4 pidfd/file tests on x86 and under an actual ARM64
+kernel. Distinct-UID launched principals, policy/lifecycle fencing and private
+durable uncertainty are implemented. Actual Omarchy lifecycle ingress, shared-UID
+app migration, service-manager/storage supervision and backend effect integration
+remain open; historical receipts do not grant later permission. See
+[native lifecycle](native-lifecycle.md).

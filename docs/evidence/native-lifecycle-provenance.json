@@ -1,0 +1,504 @@
+{
+  "schema_version": 1,
+  "component": "native-lifecycle",
+  "status": "x86 and actual ARM64-kernel installed local admission boundaries qualified; Omarchy app/backend/ingress and storage supervision remain open",
+  "scope": {
+    "physical_phone": false,
+    "host_sys_power": false,
+    "vendor_execution": false,
+    "android_java_production_dependency": false,
+    "public_original_kernel_built": false,
+    "upstream_inputs_published": false,
+    "shared_docs_scripts_modified_by_this_task": false
+  },
+  "public_reference": {
+    "project": "Linux",
+    "tag": "v6.8",
+    "commit": "e8f897f4afef0031fe618a8e94127a0934896aba",
+    "purpose": "public credential and pidfd source inspection; not a claim of building this kernel",
+    "files": [
+      {
+        "path": "net/core/scm.c",
+        "url": "https://raw.githubusercontent.com/torvalds/linux/e8f897f4afef0031fe618a8e94127a0934896aba/net/core/scm.c",
+        "sha256": "a06acb5b720e076434cd1d8528f3132defae5ee185d944dbabd37616e4b5bbb4",
+        "bytes": 8987
+      },
+      {
+        "path": "net/unix/af_unix.c",
+        "url": "https://raw.githubusercontent.com/torvalds/linux/e8f897f4afef0031fe618a8e94127a0934896aba/net/unix/af_unix.c",
+        "sha256": "a5ecafbd6a071f271687bfffd0b2976a0788b3cc463397afbe2f780c97db67e9",
+        "bytes": 88711
+      },
+      {
+        "path": "kernel/pid.c",
+        "url": "https://raw.githubusercontent.com/torvalds/linux/e8f897f4afef0031fe618a8e94127a0934896aba/kernel/pid.c",
+        "sha256": "b0fa137e20740163864206a921421b3a9f17e0d53790d3a3472677257813515f",
+        "bytes": 18738
+      },
+      {
+        "path": "kernel/cred.c",
+        "url": "https://raw.githubusercontent.com/torvalds/linux/e8f897f4afef0031fe618a8e94127a0934896aba/kernel/cred.c",
+        "sha256": "bb322cecceb878794570febd2f9cfc1a3b99e88d21f4417abafdcc207c0a8f84",
+        "bytes": 19184
+      }
+    ]
+  },
+  "execution": {
+    "x86_installed": {
+      "class": "actual Linux kernel process/AF_UNIX credentials, disposable container, synthetic installed app profiles",
+      "kernel": "6.8.0-136-generic",
+      "machine": "x86_64",
+      "passed_groups": [
+        "real_process_lock_generation_fence",
+        "claimed_pid_uid_app_and_unregistered_kernel_principal_denied",
+        "kernel_rejected_real_child_credential_forgery",
+        "inherited_actual_socket_cannot_delegate_pid_authority",
+        "cross_principal_permit_refused_and_admission_once",
+        "background_suspend_and_resume_fence",
+        "durable_revocation_and_absolute_deadline",
+        "per_principal_capacity_and_prompt_snapshot",
+        "real_death_reaping_and_fresh_principal_generation",
+        "single_durable_owner_and_revocation_retains_uncertainty",
+        "restart_policy_uncertainty_persist_and_old_permit_fenced",
+        "durable_uncertain_receipt_capacity_never_evicts_or_retries",
+        "reserved_control_capacity_with_idle_app_clients",
+        "truncated_packet_and_unexpected_descriptors_fail_closed",
+        "durable_failure_latches_unavailable_without_reentry",
+        "owned_children_stopped_reaped_and_socket_cleanup",
+        "unreconciled_durable_pending_blocks_restart",
+        "bounded_private_receipts_contain_no_pid_uid_app_payload"
+      ],
+      "count": 18,
+      "trusted_control": "root inside disposable container",
+      "app_uids": [
+        10000,
+        10001
+      ],
+      "owned_children_reaped": true
+    },
+    "x86_components": {
+      "class": "real pidfd/temp-file IO with injected component caller and CLOCK_BOOTTIME samples",
+      "passed": 4,
+      "tests": [
+        "late_durable_success_grants_no_current_admission",
+        "suspended_time_jump_expires_without_timer_delivery",
+        "failed_admission_write_never_recovers_or_retries",
+        "exhausted_lifecycle_revision_fences_prepared_work"
+      ]
+    },
+    "build": {
+      "format": "passed",
+      "clippy_all_targets_warnings_denied": "passed",
+      "x86_64_gnu_bins": "passed",
+      "aarch64_gnu_bins_and_component_binary": "passed",
+      "arm64_runtime_qualified": true,
+      "arm64_user_mode_process_claim": false
+    },
+    "red_green": [
+      {
+        "class": "installed process runtime",
+        "red": "stale permit survived actual lock/unlock lifecycle transition",
+        "red_exit": 1,
+        "fix": "lifecycle epoch invalidation and final current-policy checks"
+      },
+      {
+        "class": "installed process runtime",
+        "red": "query accepted claimed PID/UID/app field",
+        "red_exit": 1,
+        "fix": "strict struct request variant instead of Serde unit variant"
+      },
+      {
+        "class": "installed process runtime",
+        "red": "unreconciled durable pending file allowed owner restart",
+        "red_exit": 1,
+        "fix": "startup refuses any pending durable file"
+      },
+      {
+        "class": "real pidfd/temp-file component",
+        "red": "revision exhaustion retained usable authority",
+        "red_exit": 101,
+        "fix": "terminal degraded state and prepared-work withdrawal"
+      }
+    ],
+    "bootstrap_failures": [
+      "prepared Rust image omitted Python; switched runtime to existing prepared Python image",
+      "install tmpfs initially lacked exec; enabled exec only on disposable /opt mount"
+    ],
+    "historical_vs_current_fixture": "first complete x86 18-group fixture proof preserved before explicit binary/result-root parameterization; parameterized fixture rerun also passes18 groups",
+    "images": [
+      {
+        "tag": "pixel-phone-rust:20261012-b472",
+        "id": "sha256:5b8db5a581335ef1ce100691772e2109357bc9a9f051bfcb5b3c3a06ff0b0661"
+      },
+      {
+        "tag": "pixel-graphics-build:20261011-b472",
+        "id": "sha256:072106341a377dc38091e09c79cc642e5717cf57d10915c0928e3e9a49b1659c"
+      }
+    ],
+    "arm64_kernel_installed": {
+      "class": "actual ARM64 Arch kernel/process/credentials in disposable system-QEMU guest; root test controller, no NIC",
+      "result": {
+        "passed": true,
+        "architecture": "aarch64",
+        "kernel": "7.1.6-1-aarch64-ARCH",
+        "qemu_mode": "system",
+        "hardware_verified": false,
+        "phone_accessed": false,
+        "network": "none",
+        "binary_sha256": {
+          "lifecycle-daemon": "b6308eac1abb6e62b04c626fd85a61ff58dd17bf096a03f3f2f4b52b5fc6f077",
+          "lifecycle-launcher": "90dff96d63ef2a9010895436d104b499dba51bdb811a0b01fd79334731dc3866",
+          "lifecycle-client": "2544455279cd08318d7d05cb65eb21aa7da301a9604038ab3a8b27475e9d0b9e",
+          "pokelinux_lifecycle": "3860c5eba105a49fb06f515352ee754567334f249c175a14e82e4997e4c045a6"
+        },
+        "artifact_manifest_sha256": "e39955b5c6f7b56f2d3122e76ccf754cef8c794ca7c71da81c28da3a24b2f51e",
+        "actual_pidfd_durable_file_components": 4,
+        "installed_boundary": {
+          "passed": true,
+          "groups": [
+            "real_process_lock_generation_fence",
+            "claimed_pid_uid_app_and_unregistered_kernel_principal_denied",
+            "kernel_rejected_real_child_credential_forgery",
+            "inherited_actual_socket_cannot_delegate_pid_authority",
+            "cross_principal_permit_refused_and_admission_once",
+            "background_suspend_and_resume_fence",
+            "durable_revocation_and_absolute_deadline",
+            "per_principal_capacity_and_prompt_snapshot",
+            "real_death_reaping_and_fresh_principal_generation",
+            "single_durable_owner_and_revocation_retains_uncertainty",
+            "restart_policy_uncertainty_persist_and_old_permit_fenced",
+            "durable_uncertain_receipt_capacity_never_evicts_or_retries",
+            "reserved_control_capacity_with_idle_app_clients",
+            "truncated_packet_and_unexpected_descriptors_fail_closed",
+            "durable_failure_latches_unavailable_without_reentry",
+            "owned_children_stopped_reaped_and_socket_cleanup",
+            "unreconciled_durable_pending_blocks_restart",
+            "bounded_private_receipts_contain_no_pid_uid_app_payload"
+          ],
+          "kernel": "7.1.6-1-aarch64-ARCH",
+          "machine": "aarch64"
+        }
+      },
+      "private_results": "sim/results/native-lifecycle-20261012T230531.656160Z",
+      "phone_hardware": false,
+      "arm64_user_mode_substitution": false
+    }
+  },
+  "bounds": {
+    "installed_apps": 16,
+    "accepted_app_connections": 12,
+    "reserved_privileged_connections": 4,
+    "packet_bytes": 4096,
+    "profile_bytes": 16384,
+    "prepared_total": 64,
+    "prepared_per_app": 4,
+    "permit_lifetime_ms_max": 5000,
+    "durable_grants": 32,
+    "durable_receipts": 128,
+    "durable_bytes": 32768
+  },
+  "remaining_gates": [
+    "package/UID installation and update authority; shared-UID and multiprocess app migration",
+    "authenticated Omarchy compositor lock/background/suspend ingress",
+    "service-manager/cgroup ownership and resource quotas",
+    "owned supervised storage IO for unbounded write/fsync stalls",
+    "trusted backend dispatch at the same admission boundary; historical receipt is not later effect permission",
+    "phone hardware and qualified remote cleanup/reset"
+  ],
+  "source_files": [
+    {
+      "path": "docs/native-lifecycle.md",
+      "sha256": "8dd28da7c69e6297b2aa3d055c95deb36cd64a584852ecbcc69adfaaf2916654",
+      "bytes": 9647
+    },
+    {
+      "path": "native-lifecycle/Cargo.lock",
+      "sha256": "4d2cd14aac0d5e12f453ec7ca8d0e212a67c6bc1891a6271f7947e59785842fe",
+      "bytes": 4205
+    },
+    {
+      "path": "native-lifecycle/Cargo.toml",
+      "sha256": "e631d86e37912f49585681e9d720b1d371aa4ae28a7bac359138cb820a806822",
+      "bytes": 327
+    },
+    {
+      "path": "native-lifecycle/src/authority.rs",
+      "sha256": "1d3e2406cf7450845643c14d4e2b5f26fe4d57a9d0e4435d4208fc35748342ff",
+      "bytes": 18475
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-client.rs",
+      "sha256": "faa2a342c3291632a58fe0c0e27f371d21040fe059976e636bccb39cef1767a2",
+      "bytes": 3212
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-daemon.rs",
+      "sha256": "02bcfef4d0164e58dee587da9d635053db21d56713f56f492093f8ce54b897be",
+      "bytes": 396
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-launcher.rs",
+      "sha256": "49a0e279b381a45ed49242a74c94b202ebebb81bc42bd8b61cfd58f8bb80a923",
+      "bytes": 796
+    },
+    {
+      "path": "native-lifecycle/src/ipc.rs",
+      "sha256": "4570aaf25df10155ad1d452c47e9a266343ebd25dc56602a16300b8c7ed3571e",
+      "bytes": 4674
+    },
+    {
+      "path": "native-lifecycle/src/lib.rs",
+      "sha256": "cf214405ae716f97a54320f5cc8c33e2191f1692bcaa608c64bcadf145ac2830",
+      "bytes": 2500
+    },
+    {
+      "path": "native-lifecycle/src/service.rs",
+      "sha256": "97794e73c20a49d0d09ab698d6d8c9393d119affe4c9a507c7c2a78c9b20e53b",
+      "bytes": 16531
+    },
+    {
+      "path": "tools/build-native-lifecycle.sh",
+      "sha256": "71bb9473e02fee045d0924a021e5a27c2d65301f8dd7cfb2f363795ea65c81cf",
+      "bytes": 1880
+    },
+    {
+      "path": "tools/fetch-native-lifecycle-reference.py",
+      "sha256": "403883aeaadb531c3689ba4c492306ea96c35c4ceeb1854ba2e4ce8943396a39",
+      "bytes": 1160
+    },
+    {
+      "path": "tools/index-native-lifecycle.py",
+      "sha256": "fb98643ff04528efa75b4c4bfef4d7a52fb83ddd72d0d2169f72a71a43b62458",
+      "bytes": 2182
+    },
+    {
+      "path": "tools/native-lifecycle-fixture.py",
+      "sha256": "116eb838f2835625744bc4de741dbf157adac40892cefa30544bdb3c6d267862",
+      "bytes": 13686
+    },
+    {
+      "path": "tools/native-lifecycle-reference.json",
+      "sha256": "13e4e40f77b45e0c02d5b225b80faa3edd1cb4d2fcc5ad3790170b7618a9f54a",
+      "bytes": 1299
+    },
+    {
+      "path": "tools/test-native-lifecycle-components.sh",
+      "sha256": "de6dbd4af13e42fbbf2c6617ffdbd1d3cab94d5270fdb2de38b173489b9b6ebb",
+      "bytes": 953
+    },
+    {
+      "path": "tools/test-native-lifecycle.sh",
+      "sha256": "14ebed6becf6f1c4b3f20afcb702d0220f28ca658c56460a97273d3ddb355f73",
+      "bytes": 955
+    },
+    {
+      "path": "tools/lifecycle-process-vm.py",
+      "sha256": "c064e667e81c6b89feeac3d928e9586835901978032ffef8006c9aa6cf61f4fd",
+      "bytes": 2175
+    },
+    {
+      "path": "sim/guest/lifecycle_process.py",
+      "sha256": "8aa9e5e1b3c9197c97196cdb40661adebc74edbf571b5a21d19ebd63d472692d",
+      "bytes": 2926
+    },
+    {
+      "path": "sim/guest/boot.sh",
+      "sha256": "207e90b93f2c03f2f5f95cb72e7f2e2a5cd1af9f417d579b326cf5645e77140c",
+      "bytes": 3011
+    }
+  ],
+  "private_proof_files": [
+    {
+      "path": "artifacts/native-lifecycle/runtime-red.log",
+      "sha256": "21037ddf2781cbed909d554a4bb6be1948896e5c82fb7481d46a796a9f595aa4",
+      "bytes": 386
+    },
+    {
+      "path": "artifacts/native-lifecycle/red-build-evidence.json",
+      "sha256": "e7e9319cf5695b2cc024b843c3698c0793c609643928cbdd3c916393716d383b",
+      "bytes": 1129
+    },
+    {
+      "path": "artifacts/native-lifecycle/runtime-credential-red.log",
+      "sha256": "d0f76208093a39cdabd0d47022eefeebb057ede397d9a0ef4330db2c996917d0",
+      "bytes": 346
+    },
+    {
+      "path": "artifacts/native-lifecycle/credential-red-build-evidence.json",
+      "sha256": "30ec1d21cc3b16745dfda3430b9a0b356d2bd184e22858247d11e9047ddf2fbf",
+      "bytes": 420
+    },
+    {
+      "path": "artifacts/native-lifecycle/runtime-pending-red.log",
+      "sha256": "6fac1430e55afd682502b6732a4274ffe3e8facdf3288f92b75f80c00a990c38",
+      "bytes": 1309
+    },
+    {
+      "path": "artifacts/native-lifecycle/pending-red-build-evidence.json",
+      "sha256": "768fb7767208085b1877238c31bc30f847e6869dac778753de872bc081cbb157",
+      "bytes": 570
+    },
+    {
+      "path": "artifacts/native-lifecycle/component-red.log",
+      "sha256": "35c1ca0c59c0a6ba6ba7683e7e4cd1e224b2d78b5acaf57db2d3cefbed6de2dd",
+      "bytes": 863
+    },
+    {
+      "path": "artifacts/native-lifecycle/component-red-build-evidence.json",
+      "sha256": "5d84177b071614e7032cef5b8b4fbf4a6e91b437d95cbe5a767aa1490c29aef0",
+      "bytes": 547
+    },
+    {
+      "path": "artifacts/native-lifecycle/runtime-green.log",
+      "sha256": "a5fcfc933a17b51ed9fc8d2bde37424acea1fcc4ed3f7c2362ef0d55a7b9d280",
+      "bytes": 983
+    },
+    {
+      "path": "artifacts/native-lifecycle/green/result.json",
+      "sha256": "428a84c646b432804f8420476ace99c316783d579dd58e78e69b446137a0906b",
+      "bytes": 1114
+    },
+    {
+      "path": "artifacts/native-lifecycle/component-green.log",
+      "sha256": "d0dbf483be72bbec828206265aaab6ed28cbc55c0368559f43cb4c9594b83509",
+      "bytes": 432
+    },
+    {
+      "path": "artifacts/native-lifecycle/build.log",
+      "sha256": "2fdb176e871e5e1e8c6670447efe1676477b6170ee007e3ba7faff22ebbf1628",
+      "bytes": 977
+    },
+    {
+      "path": "artifacts/native-lifecycle/arm64-bins-cargo.jsonl",
+      "sha256": "81382d6ff8bc933a964300e258e94f8d792eb5c968560f3294b6b00901852056",
+      "bytes": 20133
+    },
+    {
+      "path": "artifacts/native-lifecycle/arm64-lib-cargo.jsonl",
+      "sha256": "3013a37c8b90601188c68946df9b650cdff2a8d2834c80587fa6d87864130fec",
+      "bytes": 18164
+    },
+    {
+      "path": "artifacts/native-lifecycle/x86-lib-cargo.jsonl",
+      "sha256": "80ae1d14026f83181a5658ebed6a2871efa811a4df115411eafd3117026132f1",
+      "bytes": 18139
+    },
+    {
+      "path": "artifacts/native-lifecycle/arm64-artifacts.json",
+      "sha256": "e39955b5c6f7b56f2d3122e76ccf754cef8c794ca7c71da81c28da3a24b2f51e",
+      "bytes": 3338
+    },
+    {
+      "path": "artifacts/native-lifecycle/x86-runtime-inputs-original.json",
+      "sha256": "e78f6e229627c3cb7b6c4147c654fa1b6be710106c8588bbae4bc16608cdb5f2",
+      "bytes": 2641
+    },
+    {
+      "path": "artifacts/native-lifecycle/runtime-x86-original-green.log",
+      "sha256": "a5fcfc933a17b51ed9fc8d2bde37424acea1fcc4ed3f7c2362ef0d55a7b9d280",
+      "bytes": 983
+    },
+    {
+      "path": "artifacts/native-lifecycle/green/result-x86-original.json",
+      "sha256": "428a84c646b432804f8420476ace99c316783d579dd58e78e69b446137a0906b",
+      "bytes": 1114
+    },
+    {
+      "path": "artifacts/native-lifecycle/runtime-bootstrap.log",
+      "sha256": "f1190ea3df1d87bc7e9ef1176787e18eb76d937a5eed52a3d1c17158d3d0d2d8",
+      "bytes": 64
+    },
+    {
+      "path": "artifacts/native-lifecycle/runtime-mount-bootstrap.log",
+      "sha256": "7d672a42af9d7a0b8c7976b5d88db7b0fa3b24c4fdbb41347e279c44c15ba9b6",
+      "bytes": 1681
+    },
+    {
+      "path": "sim/results/native-lifecycle-20261012T230531.656160Z/components.log",
+      "sha256": "e647159f4a3fb41a2ac4510b97d8726ff3ae5dad2c03cff376488ade4e3c9849",
+      "bytes": 432
+    },
+    {
+      "path": "sim/results/native-lifecycle-20261012T230531.656160Z/result.json",
+      "sha256": "15bf765638b93ec5f899dd1a8cb7ef5bbcddc3864f9447e54c7d35cfbd23fd62",
+      "bytes": 1921
+    },
+    {
+      "path": "sim/results/native-lifecycle-20261012T230531.656160Z/installed.log",
+      "sha256": "a5fcfc933a17b51ed9fc8d2bde37424acea1fcc4ed3f7c2362ef0d55a7b9d280",
+      "bytes": 983
+    },
+    {
+      "path": "sim/results/native-lifecycle-20261012T230531.656160Z/serial.log",
+      "sha256": "c8959b5215c0342a472934f77dea4d7081880db04b2b02f136466fc2a916b37b",
+      "bytes": 66411
+    },
+    {
+      "path": "sim/results/native-lifecycle-20261012T230531.656160Z/command.json",
+      "sha256": "c1145669bf330f1999a0ca4c012460a74991b98767de87a6c85477d5b4699f8a",
+      "bytes": 1053
+    },
+    {
+      "path": "sim/results/native-lifecycle-20261012T230531.656160Z/components-list.txt",
+      "sha256": "e8b4b68cc6b76af4070aae41b76123fd3533358f37855cccb847d150a0ad4ff9",
+      "bytes": 318
+    },
+    {
+      "path": "sim/results/native-lifecycle-20261012T230531.656160Z/installed/result.json",
+      "sha256": "6be1696ba57819cf63bb5eb10b2f6c67301e324ac5320b5e66d95beeaa07a425",
+      "bytes": 1118
+    },
+    {
+      "path": "artifacts/native-lifecycle/arm64-kernel.log",
+      "sha256": "d7ebbbd9e7ca9433b7e47e4979a3503e351ab5af503d1ac80db77749cefaada4",
+      "bytes": 2010
+    }
+  ],
+  "arm64_artifacts": [
+    {
+      "kind": "binary",
+      "name": "lifecycle-daemon",
+      "cargo_path": "/target/aarch64-unknown-linux-gnu/debug/lifecycle-daemon",
+      "project_path": "artifacts/native-lifecycle/target/aarch64-unknown-linux-gnu/debug/lifecycle-daemon",
+      "guest_path": "/workspace/artifacts/native-lifecycle/target/aarch64-unknown-linux-gnu/debug/lifecycle-daemon",
+      "sha256": "b6308eac1abb6e62b04c626fd85a61ff58dd17bf096a03f3f2f4b52b5fc6f077",
+      "bytes": 13791448,
+      "cargo_manifest": "artifacts/native-lifecycle/arm64-bins-cargo.jsonl",
+      "cargo_manifest_sha256": "81382d6ff8bc933a964300e258e94f8d792eb5c968560f3294b6b00901852056"
+    },
+    {
+      "kind": "binary",
+      "name": "lifecycle-launcher",
+      "cargo_path": "/target/aarch64-unknown-linux-gnu/debug/lifecycle-launcher",
+      "project_path": "artifacts/native-lifecycle/target/aarch64-unknown-linux-gnu/debug/lifecycle-launcher",
+      "guest_path": "/workspace/artifacts/native-lifecycle/target/aarch64-unknown-linux-gnu/debug/lifecycle-launcher",
+      "sha256": "90dff96d63ef2a9010895436d104b499dba51bdb811a0b01fd79334731dc3866",
+      "bytes": 13157408,
+      "cargo_manifest": "artifacts/native-lifecycle/arm64-bins-cargo.jsonl",
+      "cargo_manifest_sha256": "81382d6ff8bc933a964300e258e94f8d792eb5c968560f3294b6b00901852056"
+    },
+    {
+      "kind": "binary",
+      "name": "lifecycle-client",
+      "cargo_path": "/target/aarch64-unknown-linux-gnu/debug/lifecycle-client",
+      "project_path": "artifacts/native-lifecycle/target/aarch64-unknown-linux-gnu/debug/lifecycle-client",
+      "guest_path": "/workspace/artifacts/native-lifecycle/target/aarch64-unknown-linux-gnu/debug/lifecycle-client",
+      "sha256": "2544455279cd08318d7d05cb65eb21aa7da301a9604038ab3a8b27475e9d0b9e",
+      "bytes": 13339920,
+      "cargo_manifest": "artifacts/native-lifecycle/arm64-bins-cargo.jsonl",
+      "cargo_manifest_sha256": "81382d6ff8bc933a964300e258e94f8d792eb5c968560f3294b6b00901852056"
+    },
+    {
+      "kind": "library_test",
+      "name": "pokelinux_lifecycle",
+      "cargo_path": "/target/aarch64-unknown-linux-gnu/debug/deps/pokelinux_lifecycle-f69c899708719a52",
+      "project_path": "artifacts/native-lifecycle/target/aarch64-unknown-linux-gnu/debug/deps/pokelinux_lifecycle-f69c899708719a52",
+      "guest_path": "/workspace/artifacts/native-lifecycle/target/aarch64-unknown-linux-gnu/debug/deps/pokelinux_lifecycle-f69c899708719a52",
+      "sha256": "3860c5eba105a49fb06f515352ee754567334f249c175a14e82e4997e4c045a6",
+      "bytes": 14355432,
+      "cargo_manifest": "artifacts/native-lifecycle/arm64-lib-cargo.jsonl",
+      "cargo_manifest_sha256": "3013a37c8b90601188c68946df9b650cdff2a8d2834c80587fa6d87864130fec"
+    }
+  ],
+  "recorded_utc": "2026-10-12T23:10:32.166255+00:00"
+}
