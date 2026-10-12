@@ -76,7 +76,7 @@ SIGKILL/restart under x86 and an actual ARM64 kernel. These are components, not
 installed messaging integration. Send/receive, transport receipt qualification, delivery, native app and
 background/lock/suspend behavior remain open. See [native messaging](native-messaging.md).
 
-Incoming SMS text/metadata parsing also matches33 actual AOSP decoder outputs with bounded malformed-input tests on x86 and ARM64 user-QEMU. Durable incoming ownership, vendor acknowledgement and installed Messages integration remain open.
+Incoming SMS text/metadata parsing also matches33 actual AOSP decoder outputs with bounded malformed-input tests on x86 and ARM64 user-QEMU. Distinct durable incoming ownership and test-only ACK fencing now pass19 SQLite tests on x86/ARM64 kernels and12 frozen Binder groups. Production receive/ACK identity, vendor acknowledgement and installed Messages integration remain open.
 
 The first native power-request arbiter is built and component-tested, including18 outcomes from actual public source. Installed permission/lifecycle, native suspend authority and hardware policy remain open; see [native power](native-power.md).
 
@@ -109,7 +109,7 @@ restart reconciliation, calibration and ARM64/device proof remain open. See
 
 Native GSM status-report metadata is built and original-code-tested:57 actual
 AOSP comparisons and12 focused x86/ARM64 user-QEMU tests pass. Calendar-valid
-status/timestamps do not establish delivery identity; receipt/ACK ownership,
+status/timestamps do not establish delivery identity; production receive/ACK identity,
 outbox correlation and installed notification/app behavior remain separate gates.
 See [status reports](native-sms-status-report.md).
 
@@ -133,3 +133,11 @@ processing, ACK backpressure and notification uncertainty retain wake ownership.
 The shared authority is fenced before unresolved teardown. Original source wake
 acquisition, USF200ms/HAL1s obligations, installed lifecycle/app delivery, durable
 recovery, ARM64 and physical suspend remain open. See [sensor wake ownership](native-sensor-wake.md).
+
+Incoming receipt ownership now has bounded private raw storage, distinct local
+occurrences, uncertainty-before-dispatch, conservative source windows and
+no uncertain ACK replay. Nineteen SQLite tests pass under x86 and an actual ARM64
+kernel; twelve original-NDK/Rust frozen Binder groups pass in the x86 SDK emulator.
+The adapter is test-only. Modem producer/reset identity, ACK policy, callback/storage
+supervision, retention and installed messaging/background integration remain open.
+See [incoming ownership](native-sms-receipt-owner.md).

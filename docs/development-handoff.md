@@ -173,8 +173,14 @@ receipt/discharge timestamps, numeric addresses, status, optional PID/DCS and
 qualified text are bounded. AOSP parsed41 deliberately rejected native cases;
 that divergence remains explicit. TPDU/full-PDU limits are164/177 bytes. Parsing
 provides no unique outbox delivery key or modem acknowledgement authority.
-Incoming receipt/ACK ownership is currently a design with no implied deduplication
-or replay; see `native-sms-status-report.md` and `native-sms-receipt-owner.md`.
+Incoming receipt ownership now persists distinct raw observations before any test
+ACK permit and commits uncertainty before dispatch. Cancellation revokes the source
+before I/O; late callbacks stay quarantined and restart never reconstructs windows.
+Nineteen actual SQLite tests pass on x86 and an actual ARM64 kernel, including
+SIGKILL/reap/restart, and twelve frozen V3 NDK/Rust Binder groups pass. The ACK
+adapter remains explicitly test-only: producer identity/reset, modem success/cause
+policy, receive-worker/storage supervision and installed apps remain open. See
+`native-sms-status-report.md` and `native-sms-receipt-owner.md`.
 
 Native radio request ownership now shares the session gate and exact registered
 transport. Six real x86 Binder scenarios and five new component checks qualify

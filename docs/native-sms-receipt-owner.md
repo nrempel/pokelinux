@@ -1,97 +1,96 @@
-# Proposed durable incoming receipt and acknowledgement owner
+# Native incoming receipt and test ACK ownership
 
-This is a design for the next native messaging milestone. It grants no modem
-acknowledgement permission and adds no receive deduplication implementation.
-The recovered [transport contract](native-sms-transport.md) remains the evidence
-for its assumptions and unresolved gates.
+The Linux `ReceiptOwner` persists bounded incoming GSM occurrences in a private,
+exclusive SQLite store. Its acknowledgement API is explicitly limited to injected
+or synthetic **test backend** scope. It connects no production modem ACK adapter,
+infers no receive deduplication, and claims no modem acknowledgement success.
+The recovered [transport contract](native-sms-transport.md) remains the source of
+the unresolved backend gates.
 
-The frozen standard `newSms` and `newSmsStatusReport` indications contain a type
-and complete PDU, with no durable receive identity. Their public ordering contract
-holds subsequent SMS/status-report indications until acknowledgement of the last
-incoming GSM item. The serial passed to `acknowledgeLastIncomingGsmSms` identifies
-the acknowledgement command, not the arrival. Factory ordering, reset and replay
-semantics have not been executed. Shannon's TPID/token fields supply no independently
-qualified durable identity or reconnect idempotence either.
+Each admitted arrival gets a fresh local UUID, complete raw bytes, `Deliver` or
+`StatusReport` kind, explicit slot, owner UUID, source incarnation, and backend
+scope. Equal bytes remain separate receipts. These UUIDs identify local
+observations and commands; they supply no durable modem receive key. Parsing,
+text assembly and delivery correlation are separate: storing a status report
+neither creates incoming text nor completes an outbox part. Current TP-MR zero
+and later reference reuse cannot establish unique delivery.
 
-## Local occurrence storage
+The store admits at most 4,096 occurrences of at most 512 raw bytes, including
+empty or malformed bytes. Capacity or store failure releases no ACK authority.
+It uses a canonical private owner directory, owner-only regular files, a permanent
+exclusive file lock, rollback journal, `synchronous=EXTRA`, and immediate
+transactions. Admission verifies exact bytes and provenance before committing;
+this equality check validates storage, never deduplicates content. Snapshots omit
+raw bytes and return at most 32 summaries. A zero SQLite busy timeout bounds lock
+contention. `control()`, permission revocation and `stop()` perform no database I/O.
+Stop revokes all ACK windows immediately, while bounded late arrivals can still
+be stored in quarantine. It cannot reattach or regain permission.
 
-Each admitted indication receives a fresh local receipt UUID. Equal bytes, a body
-hash, a concatenation reference, recipient/timestamps or a TP-MR do not reuse a
-receipt UUID. A source-generation/endpoint/occurrence ordinal records where it was
-observed; it supplies no cross-session or network identity. Duplicate-looking
-arrivals remain distinct records. Text assembly and display policy may link
-records only as explicitly untrusted content associations; they must not erase
-transport occurrences or reuse their acknowledgement authority.
+ACK permission defaults to denied. Only an explicitly attached test source with
+current permission can open a live window. SMS and status-report arrivals share
+one window per slot. A second arrival before qualified completion stores another
+occurrence and revokes that source's window. Replaced callbacks, source loss,
+permission changes and stop revoke local authority. Stale or foreign-source raw
+arrivals are still stored without transferring authority to a newer source.
+Factory ordering and cross-object callback ordering remain unqualified; the
+conservative window can quarantine a legitimate next arrival that races the
+previous command's final response.
 
-A bounded serialized owner should persist the complete bounded raw PDU, indication
-kind, local receipt UUID and source provenance in its exclusive private SQLite
-store before granting any positive receipt acknowledgement. Decode outcomes belong
-to separate fields: valid deliver text, valid status-report metadata, unsupported
-or malformed. A status report must not enter the incoming-text path or finalize an
-outbox part solely because it parsed. Delivery correlation needs its own qualified
-per-slot/per-attempt mapping; current TP-MR zero and later reference reuse collide.
+`claim_test_ack` commits `Uncertain` with a fresh attempt UUID before returning a
+non-cloneable permit. Dropping, invalidating or dispatching it cannot refund it.
+`dispatch_test_ack` consumes it through the owner and rechecks permission, source,
+window, cancellation, attempt and durable uncertainty immediately before the test
+adapter. Cancellation revokes the affected live source before attempting its own
+durable update, including when that update fails. Later raw callbacks on that
+source stay quarantined. Explicit test reattachment supplies fresh local authority
+only; it establishes no vendor producer drain/reset or network-message identity. Dispatch failure keeps
+uncertainty and revokes the source. Restart recovers raw receipts and states,
+never incoming windows or dispatch authority.
 
-Only the backend-qualified live incoming window can become acknowledgement eligible.
-Stored receipts reopened after restart cannot recover that authority. One current
-window must cover both SMS and status-report indications for a GSM endpoint; a
-second unacknowledged indication violates the assumed ordering and revokes local
-eligibility rather than selecting whichever receipt was stored last. Callback
-queue overflow, replaced callbacks, endpoint death and source revocation also
-revoke it. Existing receipts stay durable. An adapter must independently qualify
-factory registration, ordering and quiescence before it can open such a window.
+One-way IPC return and intermediate `acknowledgeRequest` are progress only.
+An exact adapter-qualified test final response can record `TestBackendAccepted`
+for its original dispatched attempt. Duplicate, old-source, cancelled, undispatched
+or late-after-death results are ignored. Storage failure emits no accepted result.
+The dedicated synthetic messaging V3 adapter binds command serials to attempts,
+keeps serials unique within its bounded callback incarnation, and accepts only
+`acknowledgeLastIncomingGsmSmsResponse`, `SOLICITED`, and `RadioError::NONE`.
+This describes its test policy; it proves no modem receive correlation. Its chosen
+success flag and unused cause are synthetic values, not a production ACK policy.
+`UNSOLICITED_ACK_EXP` raw arrivals are quarantined because the separate
+`responseAcknowledgement()` obligation is unqualified. No generic ACK path exists.
 
-## One-shot acknowledgement ownership
-
-An acknowledgement permit would bind a local receipt UUID, opaque endpoint/source
-generation, opaque live incoming-window identity and a fresh command attempt ID.
-Its backend-specific target stays outside the shared owner. Standard last-incoming
-acknowledgement has no message target token; a provider token, where available,
-remains scoped to its qualified live session until evidence establishes more.
-
-Claiming a permit must durably record acknowledgement uncertainty before exposing
-an IPC command. The permit is non-cloneable and cannot be refunded after it is
-claimed, dropped, timed out or invalidated. The adapter owns command serial/method
-validation and maps an exact final acknowledgement result to the attempt. One-way
-return and `acknowledgeRequest` are progress only. A final response that qualifies
-an acknowledgement transport command still does not establish unique network
-receipt identity, carrier delivery or safety of replaying that command.
-
-Positive versus negative receipt policy and the GSM failure-cause mapping require
-separate qualification. Durable storage alone must not silently choose a success
-flag or an error cause. `responseAcknowledgement()` for ACK_EXP callbacks is another
-protocol obligation; it must not consume or replace this last-incoming GSM permit.
-The proposed API should therefore expose no generic “acknowledge everything” path.
-
-Cancellation of local ownership, source replacement, callback consumption and
-service death must be serialized with acknowledgement claims/finalization. A held
-or late callback must pass the current source/attempt fence when applied. It may
-finish only its original attempt; it cannot choose a newer last-incoming receipt,
-reactivate an ineligible receipt or authorize a retry. Store failures emit no
-successful receipt result.
-
-| Crash or uncertainty point | Required durable/local behavior |
+| Event | Durable and local result |
 |---|---|
-| Before arrival storage commits | No positive acknowledgement authority is released. Remote retry behavior remains unqualified. |
-| Receipt stored, permit not claimed | Receipt remains; ephemeral incoming-window eligibility is lost on restart. |
-| Permit claimed before IPC, or command outcome unknown | Uncertainty remains; no automatic replay after restart/reconnect. |
-| Equal-looking arrival after reconnect | Store a new local occurrence; do not deduplicate or transfer an earlier permit. |
-| Qualified final acknowledgement for an old attempt | Record only that attempt's result; preserve newer receipt ownership and all uncertain history. |
+| Arrival commit fails or bound is exhausted | No test ACK eligibility; source revoked. |
+| Receipt committed, permit absent | Raw stays stored; restart cannot reconstruct its window. |
+| Permit claimed, dropped, dispatch lost or outcome unknown | `Uncertain` remains; no implicit retry or reconnect replay. |
+| Equal-looking arrival, including after restart | Fresh local occurrence; no deduplication or permit transfer. |
+| Exact test final accepted | Only its original test command records `TestBackendAccepted`; no network success claim. |
+| Cancellation, death, replacement, permission revocation or stop | Held dispatch and callbacks fenced; raw history retained. |
 
-## Smallest next executable qualification
+The authored SQLite tests have runtime red-green evidence for missing permit
+ownership, a real child dying before the claim, trigger-mutated admission
+metadata, and cancellation reopening a source window. Native x86 tests include a real owned child SIGKILL/reap and restart;
+ARM64 user-mode results exclude those process tests. A separate networkless
+ARM64 system-QEMU guest executes the exact corrected binary as unprivileged
+`alarm`; all19 tests, including SIGKILL/reap/restart, pass under its real Linux
+7.1.6 kernel. This is Linux process evidence, separate from x86 Binder and
+physical modem evidence. The dedicated frozen Binder
+runner uses an independent original NDK synthetic endpoint and generated Rust
+callbacks, real SQLite and kernel Binder on an owned SDK emulator. Evidence and
+exact source/binary identities are recorded in
+[receipt provenance](evidence/native-sms-receipt-owner-provenance.json).
 
-Use the existing frozen messaging V3 generated NDK/Rust Binder peer to emit synthetic
-`newSms` and `newSmsStatusReport` into a proposed owner backed by real SQLite. First
-observe a runtime red proving that no acknowledgement command can escape before
-durable admission. Exercise bounded queues/storage, both indication kinds sharing
-one window, a second premature arrival, callback-generation replacement, held
-callbacks after cancellation/death, malformed PDUs, store failures, one-way and
-intermediate progress, exact final command qualification and restart with uncertainty.
-Assert separately that equal PDU bytes produce two receipt UUIDs and that neither
-creates a retry permit. No production modem acknowledgement dispatch is part of
-that synthetic test milestone.
+Factory callback registration, incoming-window ordering across reset, exact
+producer lifetime, success/failure-cause policy, durable redelivery identity and
+ACK idempotence remain required before any production ACK adapter. A production
+receive path also needs a private retention/deletion policy and an explicit
+nonblocking worker/queue integration. This bounded owner grants no exactly-once
+receive or carrier delivery promise.
 
-Factory incoming-window ordering/registration, backend success/failure mapping,
-producer lifetime across resets, redelivery identity and acknowledgement idempotence
-remain gates. A future native implementation can store local occurrences without
-resolving those gates, but it cannot connect a production acknowledgement adapter
-or promise exactly-once receive semantics from this design.
+Run the real ARM64 process qualification with
+`python3 tools/receipt-process-vm.py` in the existing graphics simulation image.
+The guest checks final selection, Cargo artifact, implementation/test hashes and
+full test counts. Its root disk uses a disposable snapshot, project export is
+read-only and the VM has no NIC. Existing status-report and superseded receipt
+proofs remain unchanged.

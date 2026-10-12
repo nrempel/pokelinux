@@ -1,0 +1,352 @@
+{
+  "date_utc": "2026-10-12",
+  "host": "Harbour",
+  "baseline_status_commit": "e21f2b3a585b80ee2980bd206b648fdf636ff337",
+  "evidence_classes": [
+    "Authored native receipt owner with actual SQLite and owned x86 Linux child SIGKILL/reap/restart",
+    "Same native SQLite tests under ARM64 user-QEMU, excluding two real-process tests",
+    "Independent original generated frozen messaging V3 NDK/Rust incoming/ACK peer over actual kernel Binder in owned x86_64 SDK37 emulator",
+    "Exact corrected native ARM64 SQLite test executable under real isolated Linux 7.1.6 ARM64 system-QEMU kernel, including owned child SIGKILL/reap/restart"
+  ],
+  "public_schema": {
+    "release_tag": "android-17.0.0_r1",
+    "version": 3,
+    "messaging_hash": "30b0bc0e84679bc3b5ccb3a52da34c47cda6b7eb",
+    "manifest": "artifacts/sms-binder/frozen-schema-manifest.json",
+    "manifest_sha256": "3688bca6338ee23b27d5c8c470f97aa7fe2754daa3df746452633610d73793a6",
+    "all_manifest_source_bytes_verified": true,
+    "selected_sources": [
+      {
+        "path": "frozen-aidl/android/hardware/radio/messaging/IRadioMessaging.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio.messaging/3/android/hardware/radio/messaging/IRadioMessaging.aidl",
+        "sha256": "f5f8b5d2ace36dcb34e232778d35f3c7854dd89a3038811237275e67cbce8e39"
+      },
+      {
+        "path": "frozen-aidl/android/hardware/radio/messaging/IRadioMessagingIndication.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio.messaging/3/android/hardware/radio/messaging/IRadioMessagingIndication.aidl",
+        "sha256": "31c12781991bb2374fcd24ac2548fcddd57fbc3cda25d0f0af16d260a87f54ff"
+      },
+      {
+        "path": "frozen-aidl/android/hardware/radio/messaging/IRadioMessagingResponse.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio.messaging/3/android/hardware/radio/messaging/IRadioMessagingResponse.aidl",
+        "sha256": "324ce4320a3ba13a59de11156e2e44c50da94f8e150e64cdde2b8edbe6fcd52c"
+      },
+      {
+        "path": "frozen-aidl/android/hardware/radio/messaging/SmsAcknowledgeFailCause.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio.messaging/3/android/hardware/radio/messaging/SmsAcknowledgeFailCause.aidl",
+        "sha256": "8cf93485c7c44d36b92e1be57b9dc2243afa1d25e9b24a57f08a995be2230669"
+      },
+      {
+        "path": "frozen-aidl/android/hardware/radio/RadioIndicationType.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio/3/android/hardware/radio/RadioIndicationType.aidl",
+        "sha256": "f299dc43c5f4997212765fe1bf9bc60e9b28fa26f2718b03affa279224ff9f5b"
+      },
+      {
+        "path": "frozen-aidl/android/hardware/radio/RadioResponseInfo.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio/3/android/hardware/radio/RadioResponseInfo.aidl",
+        "sha256": "fa9d5ccc53e9aa238fd3025680b5629d981352c1f5b6a5f09d65f3570a2ed201"
+      }
+    ]
+  },
+  "implementation_sha256": {
+    "native-messaging/src/receipt.rs": "8002d6c4b6006c97b4ade7fc40232d3c960f4139f2031a1bf98fc535d4728d66",
+    "native-messaging/tests/receipt.rs": "5d96c6129e214f7c9172f9fb5f633f1972a9bf75ca34b3d2b90616408aa6c64d",
+    "native-messaging/src/lib.rs": "b291059cbed5d33fd69e6437e41e85aa82e94004c147eec634a09bf8cf86925d",
+    "native-messaging/Cargo.toml": "d2fdf280609b6b9b2743315ccf4dc4216e38b3a60ed70bc4199e20fe4a4c40d0",
+    "native-messaging/Cargo.lock": "e7cb16fc3e8c6abb7fbbc7a52d8f73f07c934a7a103de1cef5a0c414f3bd375f",
+    "native-sms-receipt-boundary/build.rs": "25b6dc9083fb187f49f709afb8765e5e37b4ad0c648fa4cb042fa9af9b289159",
+    "native-sms-receipt-boundary/src/bin/sms-receipt-client.rs": "c74aea57b7bd3df2683869e919e00cf5c9c677b499bdfbf5c293142e16f193e1",
+    "native-sms-receipt-boundary/src/lib.rs": "450d6f4abe430f288a0025c3fa1150b01552486834917f8c39102121efabc2c9",
+    "native-sms-receipt-boundary/Cargo.toml": "06ece8e03c33b1d097e90931a7308177b10793e74181c2e3de83f10d1c519d63",
+    "native-sms-receipt-boundary/Cargo.lock": "e6826d6ec99665565e1151200dc412511c7fb5c1ab87f212f21385b497dff139",
+    "framework/smsreceiptpeer/AndroidManifest.xml": "8b2fae6bab1f167a9fbb5bde3f676a68fa0491d143cdd382cd11c6b8b7432bfd",
+    "framework/smsreceiptpeer/Peer.java": "a69f06e9f307f960f71387049c5e296bebc690c8fa6b9ed366e3d4adf5cc6b6f",
+    "framework/smsreceiptpeer/aidl/org/pokelinux/smsreceipttest/ISmsReceiptProbe.aidl": "57ac912d5862a4241bdbb832142132252dfd1ab69a4aee3d42c09e8a5678b461",
+    "framework/smsreceiptpeer/peer.cpp": "718073a4275858f7f7d8f545d235c9cea076d600024bb5c01cf360144795e3c7",
+    "framework/tests/sms_receipt.py": "bf33c68b21f21fc0961d63120c6bff074a0e1d4795dac48bc6ff59f3874a69bb",
+    "tools/native-sms-receipt-tests.sh": "243ceca7ad4035f71deb642e7140a10979604bf5c6826d8687e5f96005a9e986",
+    "tools/native-sms-receipt-suite.sh": "d8506152355f8f8dc43c115734c50e258baaf910ab7925adf69be9f6dd121d94",
+    "tools/build-native-sms-receipt-boundary.sh": "b46893af5e860dad2605bef51a9ad0f673f8426d7b6de5a6965f0eb2dc5ca613",
+    "tools/build-sms-receipt-peer.sh": "6a0d838cf4edb0a0cf6becf27bc4dcd96de5d9f37b18ccf40025dd57fbe78188",
+    "docs/native-sms-receipt-owner.md": "210bc58c157422720312c8c6630ad2df0bd6ab4c80fe0cbce3df539dd0e63750",
+    "sim/guest/receipt_process.py": "e82952bdff1d597bc62149aef92531cb304c1cdd68cfb341c95a22c8cae2a77f",
+    "tools/receipt-process-vm.py": "11e5aaae1d4ca57032203950f8d6d2f556f02496f135d9401172eafc4d0bc854",
+    "sim/guest/boot.sh": "0e3a54cb3da46386a752a46d0656e4fd1233fa6bbdea92f741b5bff6407844aa"
+  },
+  "generated_rust_release_sha256": {
+    "artifacts/native-sms-receipt/binder/x86_64-unknown-linux-musl/release/build/pokelinux-sms-receipt-boundary-8d62f2801c89d60e/out/sms_receipt.rs": "4c3909212c777dbc55bc1782f8f873418df0566c4bc8f03bb55265cb5ecda7f5"
+  },
+  "runtime_reds": [
+    {
+      "class": "native SQLite",
+      "exit": 101,
+      "path": "artifacts/native-sms-receipt/sqlite-red.log",
+      "expected": "durable one-shot ACK permit ownership missing",
+      "observed": "Refused ACK permit ownership not implemented after raw admission"
+    },
+    {
+      "class": "native owned child process",
+      "exit": 101,
+      "path": "artifacts/native-sms-receipt/process-red.log",
+      "expected": "child durably commits uncertainty before SIGKILL test",
+      "observed": "actual child exited before durable ACK claim; raw admission marker true"
+    },
+    {
+      "class": "native SQLite trigger fault",
+      "exit": 101,
+      "path": "artifacts/native-sms-receipt/admission-metadata-red.log",
+      "expected": "changed slot provenance fails admission atomically",
+      "observed": "AFTER INSERT slot mutation accepted; corrected exact precommit byte/provenance validation"
+    },
+    {
+      "class": "actual frozen kernel Binder",
+      "native_client_exit": 101,
+      "runner_exit": 1,
+      "path": "artifacts/native-sms-receipt/binder/runtime/red/output.txt",
+      "expected": "wrong ACK method Ignored",
+      "observed": "TestBackendAccepted from acknowledgeIncomingGsmSmsWithPduResponse; corrected exact method qualifier"
+    },
+    {
+      "class": "native SQLite cancellation/source window",
+      "exit": 101,
+      "path": "artifacts/native-sms-receipt/window-fixed/cancel-window-red.log",
+      "expected": "late callback after cancellation remains quarantined until explicit local test reattachment",
+      "observed": "same source reopened eligible incoming window",
+      "source_before_fix": "artifacts/native-sms-receipt/before-cancel-window-fix/receipt.rs",
+      "source_before_fix_sha256": "27da9fe227cf4e1c56d19a3f65d1d309358e515f39c22098f3c06f4871ca6cb1",
+      "red_binary_preserved": false
+    }
+  ],
+  "green": {
+    "native_full_runner_exit": 0,
+    "fmt_clippy_release_builds": true,
+    "native_x86_receipt_tests": 19,
+    "native_x86_helper_noenv_is_noop": true,
+    "native_x86_actual_sigkill_parent_passed": true,
+    "arm64_user_receipt_tests": 17,
+    "arm64_user_real_process_tests_ignored": 2,
+    "existing_messaging_regression_passed_both_architectures": true,
+    "binder_runner_exit": 0,
+    "binder_groups": 12,
+    "binder_result": {
+      "passed": true,
+      "phase": "green-cancel",
+      "scope": "synthetic frozen standard messaging V3 incoming/ACK with original native SQLite receipt owner",
+      "real_binder": true,
+      "selinux": "Enforcing",
+      "raw_storage_before_ipc": true,
+      "uncertainty_before_ipc": true,
+      "oneway_and_intermediate_not_final": true,
+      "exact_test_final_only": true,
+      "wrong_serial_method_slot_type_fenced": true,
+      "duplicate_and_old_generation_fenced": true,
+      "premature_arrival_quarantines_window": true,
+      "cancel_permission_death_fenced": true,
+      "restart_without_replay": true,
+      "equal_raw_arrivals_remain_distinct": true,
+      "backend_scope": "test_backend",
+      "last_incoming_modem_identity_qualified": false,
+      "modem_ack_success_qualified": false,
+      "production_success_cause_policy_qualified": false,
+      "acknowledgement_replay_qualified": false,
+      "physical_phone_accessed": false,
+      "vendor_execution": false,
+      "arm64_binder_verified": false
+    },
+    "native_full_log": "artifacts/native-sms-receipt/window-fixed/full-green.log",
+    "binder_final_runtime": "artifacts/native-sms-receipt/binder/runtime/green-cancel",
+    "cancellation_revokes_source_before_io": true,
+    "late_cancelled_source_arrival_quarantined": true,
+    "arm64_kernel": {
+      "results": "sim/results/native-sms-receipt-20261012T233822.461378Z",
+      "result": {
+        "passed": true,
+        "architecture": "aarch64",
+        "kernel": "7.1.6-1-aarch64-ARCH",
+        "qemu_mode": "system",
+        "hardware_verified": false,
+        "phone_accessed": false,
+        "network": "none",
+        "checks": {
+          "unprivileged_execution": true,
+          "native_receipt_tests": 19,
+          "actual_owned_child_sigkill_reap_restart": true,
+          "no_uncertain_ack_replay": true,
+          "distinct_equal_redelivery": true
+        },
+        "binary_sha256": {
+          "receipt": "0aa11f6ec94507b51b3188e995cfc42983e8a7a35a073f14bbebcb384d8a734c"
+        },
+        "selection_sha256": "20fbc9eab4eaa64fdf52deaafa8818504539afe905d73a866aa4f80ce7aeac1c",
+        "cargo_manifest_sha256": "126ebf43c208fe20db31dc18887435488ddd5bfd3217cec0cd7b3a2ae193e253"
+      }
+    }
+  },
+  "durable_contract": {
+    "private_directory_mode": "0700",
+    "private_files_mode": "0600",
+    "exclusive_permanent_owner_lock": true,
+    "journal_mode": "delete",
+    "synchronous": "EXTRA",
+    "schema_version": 1,
+    "migration_policy": "refuse unsupported",
+    "raw_commit_before_eligibility": true,
+    "uncertainty_commit_before_permit_and_ipc": true,
+    "restore_live_windows_after_restart": false,
+    "default_ack_permission": false,
+    "bounds": {
+      "raw_bytes": 512,
+      "receipts": 4096,
+      "slots": 8,
+      "pending_ack_permits": 8,
+      "summary_rows": 32,
+      "test_callback_queue": 32,
+      "serial_bindings_per_callback_incarnation": 32
+    },
+    "responsive_control_and_stop_no_database_io": true,
+    "sqlite_busy_timeout_ms": 0
+  },
+  "test_adapter_policy": {
+    "backend_scope": "test_backend",
+    "request_method": "acknowledgeLastIncomingGsmSms",
+    "success": true,
+    "cause": "UNSPECIFIED_ERROR (255), synthetic success request only",
+    "qualified_final_method": "acknowledgeLastIncomingGsmSmsResponse",
+    "qualified_type": "SOLICITED",
+    "qualified_error": "NONE",
+    "oneway_intermediate_finalize": false,
+    "ACK_EXP_protocol_obligation": "quarantine raw and revoke source; responseAcknowledgement unqualified",
+    "serial_is_receive_identity": false,
+    "premature_arrival_before_final": "durable distinct occurrence, source/window revoked, no ACK replay",
+    "cancellation_of_live_receipt_revokes_source": true,
+    "explicit_reattachment": "fresh local test authority only; no vendor producer drain/reset, network identity or uncertain ACK replay"
+  },
+  "binary_sha256": {
+    "artifacts/native-sms-receipt/window-fixed/x86_64-unknown-linux-gnu/debug/deps/receipt-6a45ce8da2f139a6": "0f18c39c59466c7b01f23424753296231ee9588b0138f2e7a33840b474291b40",
+    "artifacts/native-sms-receipt/window-fixed/aarch64-unknown-linux-gnu/debug/deps/receipt-22dd47932267ff18": "0aa11f6ec94507b51b3188e995cfc42983e8a7a35a073f14bbebcb384d8a734c",
+    "artifacts/native-sms-receipt/binder/x86_64-unknown-linux-musl/release/sms-receipt-client": "4421748000f8653a3e2518e90d79c0f48b780768e200251036dc375cade72d63",
+    "artifacts/native-sms-receipt/binder/peer/peer.apk": "a7fffc449889008ce7b9fe7fe926e2811c14fef200dfac2031df57e9a2669002"
+  },
+  "private_runtime_binary_source_sha256": {
+    "artifacts/native-sms-receipt/binder/runtime/red/client": "ef28108971449dde191a0a53fa75500c4134471f2340bd06b5142b4d327f89f9",
+    "artifacts/native-sms-receipt/binder/runtime/red/peer.apk": "a7fffc449889008ce7b9fe7fe926e2811c14fef200dfac2031df57e9a2669002",
+    "artifacts/native-sms-receipt/binder/runtime/red/client-source.rs": "5a9eb44b92659e3cc7ace49bd1626e8d4a1d7ecfb950c607063fe21e3b05c305",
+    "artifacts/native-sms-receipt/binder/runtime/green/client": "2e3f57960e6c90853e14db149fb843d6ea1c873ab430bf109b43f807e29406e3",
+    "artifacts/native-sms-receipt/binder/runtime/green/peer.apk": "a7fffc449889008ce7b9fe7fe926e2811c14fef200dfac2031df57e9a2669002",
+    "artifacts/native-sms-receipt/binder/runtime/green-cancel/client": "4421748000f8653a3e2518e90d79c0f48b780768e200251036dc375cade72d63",
+    "artifacts/native-sms-receipt/binder/runtime/green-cancel/peer.apk": "a7fffc449889008ce7b9fe7fe926e2811c14fef200dfac2031df57e9a2669002"
+  },
+  "arm64_kernel_next_selection": {
+    "executable": "artifacts/native-sms-receipt/window-fixed/aarch64-unknown-linux-gnu/debug/deps/receipt-22dd47932267ff18",
+    "sha256": "0aa11f6ec94507b51b3188e995cfc42983e8a7a35a073f14bbebcb384d8a734c",
+    "cargo_json": "artifacts/native-sms-receipt/window-fixed/receipt-test-build-arm64.json",
+    "helper": "receipt_crash_child",
+    "parent": "sigkill_releases_single_owner_without_replaying_claimed_ack_or_deduplicating_redelivery",
+    "kernel_selection": [
+      "--include-ignored"
+    ],
+    "user_mode_process_tests_ignored": true,
+    "receipt_source_sha256": "8002d6c4b6006c97b4ade7fc40232d3c960f4139f2031a1bf98fc535d4728d66",
+    "receipt_tests_sha256": "5d96c6129e214f7c9172f9fb5f633f1972a9bf75ca34b3d2b90616408aa6c64d",
+    "module_export_sha256": "b291059cbed5d33fd69e6437e41e85aa82e94004c147eec634a09bf8cf86925d"
+  },
+  "evidence_artifact_sha256": {
+    "artifacts/native-sms-receipt/sqlite-red.log": "c9bb872dff44bebc3e95b357ebcf2a04838c6eb6e7762dc732b13e8916e40c04",
+    "artifacts/native-sms-receipt/process-red.log": "fa6b7e3849e42d6c42f32779516c9c507d4ad77a777b2df5fdb7f54d25e66113",
+    "artifacts/native-sms-receipt/admission-metadata-red.log": "2d2970ec40cec8c8dde4d1be765802d3882e7c426cb4f4847a698c6464d5ec5e",
+    "artifacts/native-sms-receipt/sqlite-process-green.log": "cff7eb620e4036ff5cdb27216f30ac827308b4ff290bd85281b87b53cfbf0811",
+    "artifacts/native-sms-receipt/full-green.log": "db7ffe914d9d07079f5f336e886e501f2d94f7992cc80d33d273a07448c14304",
+    "artifacts/native-sms-receipt/receipt-test-build-arm64.json": "e236d447b06e33ad486717785babc11ed3afc89f7570f3cbf86c675e93f16015",
+    "artifacts/native-sms-receipt/arm64-selection.json": "109bc28bbff6281cdc7d631e9ab23b0f830d5359c818dd877fbe7829589e874c",
+    "artifacts/native-sms-receipt/boundary-build.log": "51a4475c35e317d8d8636737fe7bb8503a96a3ec6d73f66733058ccf60ab4f49",
+    "artifacts/native-sms-receipt/boundary-green-build.log": "daa78ac39b1082001e614b34d472f8bc71166008b3e0b5cdbce4a27a5c0a7ac5",
+    "artifacts/native-sms-receipt/peer-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-sms-receipt/historical-proof-check.json": "38032149349ad0b7a61e3df66dd7c4a414991c7936e92b92b1fc9bb6306a8efa",
+    "artifacts/native-sms-receipt/binder/runtime/green/binder-libraries.sha256": "bb79bd91ae83e0d5c9ca7c35ba5d1e22efe3fd4a9fe5311ca064b3f424d81c98",
+    "artifacts/native-sms-receipt/binder/runtime/green/cleanup.json": "153411bd91bed180dcf653291706b498cde525b6698b6761b446dce9b9e9a86c",
+    "artifacts/native-sms-receipt/binder/runtime/green/client-identity.txt": "ca16d0c472527e961d800f8575a3d50b831690fd79124effc1b0d03afbab9c9b",
+    "artifacts/native-sms-receipt/binder/runtime/green/framework-bootstrap.txt": "cde55ef4738d0be3420545dda0ddd3a45855d7bff0df52c88011278e5739c0a8",
+    "artifacts/native-sms-receipt/binder/runtime/green/image.txt": "71fa916fc1a09e7fbf426c8e9a70e9ed2b29a67f5c73cc432c5525f89c250eee",
+    "artifacts/native-sms-receipt/binder/runtime/green/output.txt": "70f88d7e7588f34ea059d6f3eca905d3534fd4959576a05306e40f059968e4e0",
+    "artifacts/native-sms-receipt/binder/runtime/green/result.json": "03f932897fbef57bbc2ef6979e671c741d473c0526933ebce2bc1016d8882457",
+    "artifacts/native-sms-receipt/binder/runtime/green/runner-output.txt": "cc10b98a5a9dec38dcf507c4b6d0664e1a9e7554ff865f18990314fcb326d68e",
+    "artifacts/native-sms-receipt/binder/runtime/green/runtime-source-hashes.json": "02e0d45a8f26b09d69eace0537caf9c7e762e739278d19f179ae21f27e265667",
+    "artifacts/native-sms-receipt/binder/runtime/red/binder-libraries.sha256": "bb79bd91ae83e0d5c9ca7c35ba5d1e22efe3fd4a9fe5311ca064b3f424d81c98",
+    "artifacts/native-sms-receipt/binder/runtime/red/cleanup.json": "153411bd91bed180dcf653291706b498cde525b6698b6761b446dce9b9e9a86c",
+    "artifacts/native-sms-receipt/binder/runtime/red/client-identity.txt": "ca16d0c472527e961d800f8575a3d50b831690fd79124effc1b0d03afbab9c9b",
+    "artifacts/native-sms-receipt/binder/runtime/red/framework-bootstrap.txt": "cde55ef4738d0be3420545dda0ddd3a45855d7bff0df52c88011278e5739c0a8",
+    "artifacts/native-sms-receipt/binder/runtime/red/image.txt": "71fa916fc1a09e7fbf426c8e9a70e9ed2b29a67f5c73cc432c5525f89c250eee",
+    "artifacts/native-sms-receipt/binder/runtime/red/output.txt": "e0dc761695fa65668d9daee85bd9c4cced3c6b8ba0462ab54b007cddc33aac17",
+    "artifacts/native-sms-receipt/binder/runtime/red/result.json": "d5c3b87ed24eb56b9fa9016314028acf4794a8c07291d52c31887ee4fde391d9",
+    "artifacts/native-sms-receipt/binder/runtime/red/runner-output.txt": "50a748cdb7b1b57d0dbf42173c2bd3442786155a2850489eea29557eb2b22395",
+    "artifacts/native-sms-receipt/binder/runtime/red/runtime-source-hashes.json": "92351f64eaa2652f8df9668f76e58e9897e598d7c93c8bd23c58d0fb58ecb1b9",
+    "artifacts/native-sms-receipt/window-fixed/cancel-window-red.log": "6ecde782c7ce71ee36417fda037945363bd0814a182f17d36a02769288381f39",
+    "artifacts/native-sms-receipt/window-fixed/full-green.log": "fdc93cd0877ad4e3f60a1c613b75a5556f0c322adcd804de05837e63e2e70011",
+    "artifacts/native-sms-receipt/window-fixed/receipt-test-build-arm64.json": "126ebf43c208fe20db31dc18887435488ddd5bfd3217cec0cd7b3a2ae193e253",
+    "artifacts/native-sms-receipt/window-fixed/arm64-selection.json": "20fbc9eab4eaa64fdf52deaafa8818504539afe905d73a866aa4f80ce7aeac1c",
+    "artifacts/native-sms-receipt/boundary-cancel-green-build.log": "7cdbe7aaff1adf7ef640e18f99fd4baf2afe6cb1944ec7ea3a3ca03696f7ab6c",
+    "artifacts/native-sms-receipt/binder/runtime/green-cancel/binder-libraries.sha256": "bb79bd91ae83e0d5c9ca7c35ba5d1e22efe3fd4a9fe5311ca064b3f424d81c98",
+    "artifacts/native-sms-receipt/binder/runtime/green-cancel/cleanup.json": "153411bd91bed180dcf653291706b498cde525b6698b6761b446dce9b9e9a86c",
+    "artifacts/native-sms-receipt/binder/runtime/green-cancel/client-identity.txt": "ca16d0c472527e961d800f8575a3d50b831690fd79124effc1b0d03afbab9c9b",
+    "artifacts/native-sms-receipt/binder/runtime/green-cancel/framework-bootstrap.txt": "cde55ef4738d0be3420545dda0ddd3a45855d7bff0df52c88011278e5739c0a8",
+    "artifacts/native-sms-receipt/binder/runtime/green-cancel/image.txt": "71fa916fc1a09e7fbf426c8e9a70e9ed2b29a67f5c73cc432c5525f89c250eee",
+    "artifacts/native-sms-receipt/binder/runtime/green-cancel/output.txt": "70f88d7e7588f34ea059d6f3eca905d3534fd4959576a05306e40f059968e4e0",
+    "artifacts/native-sms-receipt/binder/runtime/green-cancel/result.json": "b8d25b96d37dc3a6ae6d339e0bbc98206dee3b0e11c68004f97febdb37e2e17d",
+    "artifacts/native-sms-receipt/binder/runtime/green-cancel/runner-output.txt": "cc10b98a5a9dec38dcf507c4b6d0664e1a9e7554ff865f18990314fcb326d68e",
+    "artifacts/native-sms-receipt/binder/runtime/green-cancel/runtime-source-hashes.json": "295930e93b5184c0ab8b12ba5085e3905b831f3c33d9956ef6747550dfca8d0f",
+    "artifacts/native-sms-receipt/arm64-process-vm-result.json": "13cdbdcc2985b82fbe48d9c05e66b0774f2b1c4577ce38c1f434791321762cb9",
+    "sim/results/native-sms-receipt-20261012T233822.461378Z/result.json": "42b62b7c7f001a760d8f84491af81ea0768086e1f75508a6950923c15aef27cd",
+    "sim/results/native-sms-receipt-20261012T233822.461378Z/command.json": "33586d743a4bd50bdb53c296e19da3d43a5b535565b9808e8b9bb0f66741e05c",
+    "sim/results/native-sms-receipt-20261012T233822.461378Z/receipt-components.log": "f75813885cbe7beba86c739b2ebfc10268dc8299f8153877ed655a292b597bee",
+    "sim/results/native-sms-receipt-20261012T233822.461378Z/receipt-list.txt": "8dd2a2c45b18dd49f144381995f4adb0b88e4f9d24f5a70b250aebc8b91930b0"
+  },
+  "cleanup": {
+    "red": {
+      "owned_container_absent": true,
+      "owned_network_absent": true,
+      "suite_lock_released": true
+    },
+    "green": {
+      "owned_container_absent": true,
+      "owned_network_absent": true,
+      "suite_lock_released": true
+    },
+    "rea_sessions_opened_for_this_milestone": false,
+    "previous_green": {
+      "owned_container_absent": true,
+      "owned_network_absent": true,
+      "suite_lock_released": true
+    }
+  },
+  "historical_status_and_prior_binder_proof_unchanged": true,
+  "production_gates": [
+    "Factory callback registration and reset/quiescence lifetime",
+    "Last-incoming GSM acknowledgement correlation and cross-object ordering",
+    "Production positive/negative ACK success/cause policy",
+    "Durable modem redelivery identity and ACK idempotence",
+    "Receive worker and callback overflow integration, private retention/deletion policy"
+  ],
+  "not_qualified": {
+    "physical_phone_accessed": false,
+    "vendor_execution": false,
+    "proprietary_data_published": false,
+    "production_modem_ack_dispatch": false,
+    "modem_ack_success": false,
+    "receive_deduplication": false,
+    "ack_replay_safety": false,
+    "carrier_delivery": false,
+    "arm64_binder": false
+  },
+  "superseded_snapshot": {
+    "reason": "Cancellation initially cleared a live window without revoking its source; corrected after actual SQLite runtime red",
+    "native_x86_receipt_tests": 18,
+    "arm64_user_receipt_tests": 16,
+    "arm64_user_process_ignored": 2,
+    "actual_binder_groups": 12,
+    "snapshot_provenance": "artifacts/native-sms-receipt/before-cancel-window-fix/native-sms-receipt-owner-provenance.json",
+    "snapshot_provenance_sha256": "a9f5802ecfa6ef5b77d97bfefda7b16467b4139fe8185dedfb77171ad9e9abd9",
+    "prior_green_runtime": "artifacts/native-sms-receipt/binder/runtime/green",
+    "prior_arm64_selection": "artifacts/native-sms-receipt/arm64-selection.json"
+  },
+  "arm64_kernel_process_qualified": true
+}

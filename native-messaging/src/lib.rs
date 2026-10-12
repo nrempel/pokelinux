@@ -229,3 +229,6 @@ pub mod receive;
 pub mod transport;
 
 pub mod status_report;
+
+#[cfg(target_os = "linux")]
+pub mod receipt;

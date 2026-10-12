@@ -156,5 +156,7 @@ compatibility and suspend/wake remain hardware gates. No phone was accessed.
 The [native status-report decoder](native-sms-status-report.md) now passes57 actual
 AOSP comparisons and12 focused native tests. It preserves untrusted status and
 both timestamps, with explicit stricter malformed-input rejection; it never
-correlates or finalizes outbox delivery. The proposed [incoming receipt/ACK
-owner](native-sms-receipt-owner.md) remains a separate ownership gate.
+correlates or finalizes outbox delivery. The [incoming receipt owner](native-sms-receipt-owner.md) now qualifies distinct
+raw storage, durable uncertainty and test-only ACK fencing with19 SQLite tests on
+x86 and a real ARM64 guest kernel plus12 actual frozen Binder groups. Production
+ACK identity/policy, installed receive workers and app integration remain open.
