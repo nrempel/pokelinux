@@ -41,15 +41,24 @@ Path('artifacts/native-radio/ipc-image.txt').write_text(run('shell', 'getprop', 
 run('push', str(binary), root + '/radio-ipc-test')
 run('shell', 'chmod', '755', root + '/radio-ipc-test')
 try:
+    for scenario, markers in [
+        ('owned-service-death', ['radio-bootstrap\tPASS', 'radio-owned-activation\tPASS', 'radio-owned-service-death\tPASS']),
+        ('owned-registration-death', ['radio-bootstrap\tPASS', 'radio-owned-registration-death\tPASS'])]:
+        output = run('shell', root + '/radio-ipc-test', '51', scenario)
+        Path('artifacts/native-radio/' + scenario + '-output.txt').write_text(output)
+        assert output.splitlines() == markers, output
+        assert run('shell', 'getenforce').strip() == 'Enforcing'
+        print(output, flush=True)
+        run('shell', 'am', 'force-stop', 'org.pokelinux.radiopeer')
     output = run('shell', root + '/radio-ipc-test', '51', 'expire-during-registration')
     Path('artifacts/native-radio/registration-expire-output.txt').write_text(output)
-    assert output.splitlines() == ['radio-bootstrap\tPASS', 'radio-registration-held\tPASS', 'radio-registration-held-expire\tPASS', 'radio-registration-late-success-rejected\tPASS'], output
+    assert output.splitlines() == ['radio-bootstrap\tPASS', 'radio-registration-held\tPASS', 'radio-registration-held-expire\tPASS', 'radio-worker-capacity-retained\tPASS', 'radio-registration-late-success-rejected\tPASS', 'radio-registration-retry-refused\tPASS'], output
     assert run('shell', 'getenforce').strip() == 'Enforcing'
     print(output, flush=True)
     run('shell', 'am', 'force-stop', 'org.pokelinux.radiopeer')
     output = run('shell', root + '/radio-ipc-test', '51', 'cancel-during-registration')
     Path('artifacts/native-radio/registration-cancel-output.txt').write_text(output)
-    assert output.splitlines() == ['radio-bootstrap\tPASS', 'radio-registration-held\tPASS', 'radio-registration-held-cancel\tPASS', 'radio-registration-late-success-rejected\tPASS'], output
+    assert output.splitlines() == ['radio-bootstrap\tPASS', 'radio-registration-held\tPASS', 'radio-registration-held-cancel\tPASS', 'radio-worker-capacity-retained\tPASS', 'radio-registration-late-success-rejected\tPASS', 'radio-registration-retry-refused\tPASS'], output
     assert run('shell', 'getenforce').strip() == 'Enforcing'
     print(output, flush=True)
     run('shell', 'am', 'force-stop', 'org.pokelinux.radiopeer')

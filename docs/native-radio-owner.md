@@ -6,8 +6,10 @@ private callback inbox and the latest raw vendor response observation. It now en
 at every gate acquisition, including activation, callback admission, preparation,
 publication and snapshots. Expiry counts suspend time and withdraws local state
 even with timer delivery withheld. `begin_until` replaces unbounded owner begin.
-It does not yet own a transport worker, death watch, operation receipts or timer
-delivery, and it does not decode phone/IMS state. `prepare_until` still bounds
+`TransportSession` now owns one registration worker, its reserved JoinHandle
+completion and retained death watch. `RadioOwner` remains the publication gate.
+Operation receipts and timer delivery are unfinished, and it does not decode
+phone/IMS state. `prepare_until` still bounds
 receive waiting only; candidate/event-age and operation deadlines remain open.
 See [deadline execution](evidence/radio-deadline-provenance.json).
 
@@ -172,7 +174,7 @@ The low-level transport qualification factory still exposes before/after receive
 checks; the new owner additionally fences final publication. `register` remains
 synchronous without a cancellation API, and the existing runtime phone observer
 decodes Android Telecom snapshots. Therefore raw radio data must not be presented
-as native call state. Worker ownership, candidate/operation deadlines and the native IMS semantic decoder must
+as native call state. Supervised process recovery, candidate/operation deadlines and the native IMS semantic decoder must
 be integrated before replacing that reference input.
 
 The owner error paths keep lock guards local and prepared values as function
@@ -189,3 +191,25 @@ defect in the supplied excerpts. Revision exhaustion, poisoned-gate propagation
 and retained prepared work were checked with failing tests before their fixes.
 This review covers raw-response publication only; it does not establish native
 IMS, call state or physical-device behavior.
+
+## Owned registration worker
+
+`TransportSession` performs one registration attempt per supervised process. The
+worker arms and retains the death watch, takes dispatch permission under the owner
+gate, and executes synchronous registration outside it. Its owned JoinHandle is
+the reserved completion mailbox, independent of the callback stream. The service
+only joins after `is_finished`; stop and snapshots never wait for registration or
+unlink the watch. Cancellation and expiry preserve occupied worker capacity. A
+late result records dispatch and Binder outcome separately from guarded activation.
+
+The worker and watch remain owned. Accidentally dropping an unfinished worker
+explicitly aborts its process; it does not detach or hide an indefinite join in
+Drop. This requires a real parent supervisor before production deployment. A
+unit test starts a disposable child and proves SIGABRT; ARM64/QEMU tests exercise
+completion ownership but do not repeat that native subprocess signal test.
+
+Even after completion, this lifecycle refuses another registration attempt. No
+`clear` is sent automatically. Its one-way acknowledgement cannot establish remote
+cleanup. Supervisor termination/reaping, durable uncertainty across process
+restart, and a qualified vendor reset/cleanup contract remain required. Request
+transport ownership beyond registration and native IMS semantics are still open.

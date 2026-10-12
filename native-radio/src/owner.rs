@@ -164,8 +164,22 @@ impl Drop for PreparedEvent {
     }
 }
 pub struct Registration {
+    shared: Arc<Shared>,
     pub key: SessionKey,
     pub endpoints: RadioEndpoints,
+}
+impl Registration {
+    pub(crate) fn admit_dispatch(&self) -> Result<(), OwnerError> {
+        let gate = self.shared.lock();
+        if !gate.is_current(&self.key) {
+            return Err(OwnerError::StaleSession);
+        }
+        match gate.phase {
+            Phase::Registering => Ok(()),
+            Phase::Failed(reason) => Err(OwnerError::Failed(reason)),
+            _ => Err(OwnerError::NotRegistering),
+        }
+    }
 }
 /// Owns the receive path and the authoritative raw-response observation. The
 /// transport worker, death watch and absolute lifetime timers are not yet owned
@@ -257,6 +271,7 @@ impl RadioOwner {
     ) -> Result<Registration, OwnerError> {
         let (key, queue) = self.begin_queue(expected, capacity, deadline)?;
         Ok(Registration {
+            shared: self.shared.clone(),
             key,
             endpoints: receiver::endpoints(queue),
         })
@@ -285,6 +300,14 @@ impl RadioOwner {
         gate.bump()?;
         gate.phase = Phase::Active { client_id };
         Ok(())
+    }
+    pub(crate) fn fail_current(&self, key: &SessionKey, reason: ReceiverFailure) {
+        let mut gate = self.shared.lock();
+        if gate.is_current(key)
+            && let Some(control) = &self.control
+        {
+            control.fail_locked(&mut gate, reason);
+        }
     }
     pub fn stop(&mut self, expected: &SessionKey) -> Result<(), OwnerError> {
         let mut gate = self.shared.lock();

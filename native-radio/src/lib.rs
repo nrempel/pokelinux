@@ -19,3 +19,5 @@ pub mod indication;
 pub mod owner;
 
 pub mod deadline;
+
+pub mod worker;

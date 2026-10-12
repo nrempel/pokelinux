@@ -1,0 +1,56 @@
+{
+  "scope": "Owned registration worker and retained death watch; native Linux, ARM64 user-mode QEMU and real Binder synthetic peer on Harbour",
+  "base_revision": "c6451d4",
+  "sources_sha256": {
+    "native-radio/src/worker.rs": "111afbb009fbfeab24ffedaf7b34368a22ba61dd00f2585e9cbce84de0dd469e",
+    "native-radio/src/owner.rs": "3180375d86d252d3d421f74c82f89fbd709d5427e8f41ce1e776d775e8fff687",
+    "native-radio/src/bin/radio-ipc-test.rs": "a7e77567d9e292dfcfa6882897769cf370540846add7106c278a589bfdaeb091",
+    "framework/tests/radio_ipc.py": "350ccc1a674fba89bddc40cbab5a175e6176656deb073a5fd67af469d4cb0cbf"
+  },
+  "binary_sha256": "690df0b7570413246d20c877500907475ebb519b496a7939bee4915a465e7500",
+  "red": [
+    "Disposable child returned success after default JoinHandle drop detached a blocked worker; expected SIGABRT",
+    "DeadObject result before death notification was labelled InternalFailure; expected ServiceDied"
+  ],
+  "green": {
+    "owned-service-death": [
+      "radio-bootstrap\tPASS",
+      "radio-owned-activation\tPASS",
+      "radio-owned-service-death\tPASS"
+    ],
+    "owned-registration-death": [
+      "radio-bootstrap\tPASS",
+      "radio-owned-registration-death\tPASS"
+    ],
+    "registration-expire": [
+      "radio-bootstrap\tPASS",
+      "radio-registration-held\tPASS",
+      "radio-registration-held-expire\tPASS",
+      "radio-worker-capacity-retained\tPASS",
+      "radio-registration-late-success-rejected\tPASS",
+      "radio-registration-retry-refused\tPASS"
+    ],
+    "registration-cancel": [
+      "radio-bootstrap\tPASS",
+      "radio-registration-held\tPASS",
+      "radio-registration-held-cancel\tPASS",
+      "radio-worker-capacity-retained\tPASS",
+      "radio-registration-late-success-rejected\tPASS",
+      "radio-registration-retry-refused\tPASS"
+    ]
+  },
+  "other_gates": "fmt, Clippy -D warnings, full x86_64 and ARM64/QEMU tests and static release build; reference owner, registration-death and ordinary IPC scenarios pass",
+  "selinux": "Enforcing asserted after each scenario",
+  "phone_accessed": false,
+  "original_code_execution": "No new original-code execution in this increment",
+  "limits": [
+    "SIGABRT subprocess test is native x86_64 only; ARM64/QEMU runs completion ownership and status mapping tests",
+    "Bounded synthetic Binder barriers do not prove permanent-hang supervision",
+    "No remote cleanup or retry guarantee; lifecycle refuses every second registration attempt",
+    "One registration worker only; other operations, durable admission, native IMS semantics and hardware gates remain open"
+  ],
+  "commands": [
+    "bash tools/build-native-radio.sh build",
+    "bash tools/framework-suite.sh radio-ipc"
+  ]
+}

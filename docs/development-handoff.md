@@ -35,15 +35,19 @@ The earlier test adds a bounded synthetic registration barrier. The native clien
 stops the real owner while `RadioTransport::register` remains blocked in Binder,
 then rejects activation when the independent peer returns successful ID 42.
 `held-registration-provenance.json` records the source and binary hashes and
-red/green results. The scoped thread exists only in the disposable test binary;
-production worker ownership is still unfinished. The Java change only adds test
+red/green results. Those historical scoped-thread results have now been extended: production
+`TransportSession` owns one worker and its death watch, retains capacity after
+stop/expiry, reports late success without activation, and refuses another attempt.
+The owned death scenarios also pass before/after activation. See
+`evidence/radio-worker-provenance.json`. Permanent-hang supervision, durable
+uncertainty and the real vendor cleanup/reset contract remain unfinished. The Java change only adds test
 barriers. Existing owner, registration-death and ordinary IPC scenarios also pass.
 
 ## Next work
 
 1. Read `native-radio-owner.md`, `native-radio-integration.md`,
    `device-portability.md` and the completion matrix in `smartphone-goal.md`.
-2. Implement production ownership of transport work and the service-death watch,
+2. Extend owned registration work to the remaining transport operations,
    candidate/operation deadlines and permanent-hang recovery. Absolute suspend-aware
    session deadlines are implemented; timer delivery remains unfinished. Avoid detached
    blocked threads, an indefinite join in Drop, or releasing worker capacity

@@ -12,8 +12,9 @@ app server. Keep host-specific paths and private artifact inventories outside Gi
 
 Read `AGENTS.md`, `docs/smartphone-goal.md`, `docs/device-portability.md`,
 `docs/native-radio-owner.md` and `docs/native-radio-integration.md` before continuing.
-The native owner fences raw-response publication. Remaining work includes owned
-transport workers, candidate/operation deadlines and timer delivery, native IMS semantics and phone-service
+The native owner fences raw-response publication. Registration worker/death-watch ownership is now implemented. Remaining work includes
+process supervision, other transport operations, candidate/operation deadlines
+and timer delivery, native IMS semantics and phone-service
 integration. Raw responses are not decoded call state. Java peers remain test
 and reference infrastructure. Physical-device behavior remains unverified.
 

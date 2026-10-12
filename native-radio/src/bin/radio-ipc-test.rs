@@ -107,7 +107,9 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
         None
         | Some("session-owner")
         | Some("cancel-during-registration")
-        | Some("expire-during-registration") => false,
+        | Some("expire-during-registration")
+        | Some("owned-service-death")
+        | Some("owned-registration-death") => false,
         Some("death-during-registration") => true,
         _ => return Err("unknown test scenario".into()),
     };
@@ -146,6 +148,15 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     peer.ping_binder()?;
     println!("radio-bootstrap\tPASS");
     let transport = RadioTransport::from_binder(peer.clone())?;
+    if matches!(
+        scenario.as_deref(),
+        Some("owned-service-death") | Some("owned-registration-death")
+    ) {
+        return owned_death(
+            &peer,
+            scenario.as_deref() == Some("owned-registration-death"),
+        );
+    }
     if scenario.as_deref() == Some("session-owner") {
         return owner_ipc(&transport, &peer);
     }
@@ -649,12 +660,13 @@ fn registration_latch(peer: &SIBinder, code: u32) -> Result<()> {
     Ok(())
 }
 fn cancelled_registration(
-    transport: &RadioTransport,
+    _transport: &RadioTransport,
     peer: &SIBinder,
     expire: bool,
 ) -> std::result::Result<(), Box<dyn std::error::Error>> {
     use pokelinux_radio::deadline::{Clock, Deadline};
-    use pokelinux_radio::owner::{OwnerError, Phase, RadioOwner};
+    use pokelinux_radio::owner::{OwnerError, Phase};
+    use pokelinux_radio::worker::{LifecycleError, TransportSession};
     use std::sync::{
         Arc,
         atomic::{AtomicU64, Ordering},
@@ -666,79 +678,174 @@ fn cancelled_registration(
         }
     }
     let clock = Arc::new(ControlledClock(AtomicU64::new(10)));
-    let mut owner = RadioOwner::with_clock(NonZeroUsize::new(2).unwrap(), clock.clone());
+    let mut session = TransportSession::with_clock(NonZeroUsize::new(2).unwrap(), clock.clone());
     let terminal = if expire {
         ReceiverFailure::Expired
     } else {
         ReceiverFailure::Cancelled
     };
-    let registration = owner
-        .begin_until(
-            None,
+    let key = session
+        .start(
+            RadioTransport::from_binder(peer.clone())?,
+            "pokelinux-hold-register-test".into(),
             NonZeroUsize::new(4).unwrap(),
             Deadline::at(Duration::from_nanos(20)),
         )
-        .map_err(|e| format!("begin: {e:?}"))?;
-    let _watch = transport.watch_death(registration.endpoints.control.clone())?;
-    let response = registration.endpoints.response.as_binder();
-    let indication = registration.endpoints.indication.as_binder();
-    // Scoped test thread only: the synthetic peer has a bounded latch wait and
-    // the outer harness kills the disposable process on its own timeout.
-    std::thread::scope(
-        |scope| -> std::result::Result<(), Box<dyn std::error::Error>> {
-            let worker = scope.spawn(|| {
-                transport.register(&response, &indication, "pokelinux-hold-register-test")
-            });
-            let checked = (|| -> std::result::Result<(), Box<dyn std::error::Error>> {
-                registration_latch(peer, 110)?;
-                if worker.is_finished() || owner.snapshot().phase != Phase::Registering {
-                    return Err("registration not held".into());
-                }
-                println!("radio-registration-held\tPASS");
-                if expire {
-                    // No timer or expire() call: emulate boot-time advancing
-                    // across suspend while the synchronous Binder reply is held.
-                    clock.0.store(20, Ordering::SeqCst);
-                } else {
-                    owner
-                        .stop(&registration.key)
-                        .map_err(|e| format!("stop: {e:?}"))?;
-                }
-                if owner.snapshot().phase != Phase::Failed(terminal)
-                    || owner.snapshot().response.is_some()
-                    || worker.is_finished()
-                {
-                    return Err("cancel did not revoke state while register stayed held".into());
-                }
-                println!(
-                    "{}\tPASS",
-                    if expire {
-                        "radio-registration-held-expire"
-                    } else {
-                        "radio-registration-held-cancel"
-                    }
-                );
-                Ok(())
-            })();
-            // Release even when an assertion fails, then join outside the owner gate.
-            let release = registration_latch(peer, 109);
-            let result = worker.join().map_err(|_| "registration thread panicked")?;
-            checked?;
-            release?;
-            let id = result?;
-            if id != 42
-                || owner.activate(&registration.key, id) != Err(OwnerError::Failed(terminal))
-                || owner.snapshot().response.is_some()
-            {
-                return Err("late successful registration restored cancelled state".into());
-            }
-            println!("radio-registration-late-success-rejected\tPASS");
-            Ok(())
-        },
-    )
+        .map_err(|e| format!("start: {e:?}"))?;
+    registration_latch(peer, 110)?;
+    if !session.worker_occupied() || session.snapshot().phase != Phase::Registering {
+        return Err("registration not held".into());
+    }
+    println!("radio-registration-held\tPASS");
+    if expire {
+        clock.0.store(20, Ordering::SeqCst);
+    } else {
+        session.stop(&key).map_err(|e| format!("stop: {e:?}"))?;
+    }
+    if session.snapshot().phase != Phase::Failed(terminal)
+        || session.snapshot().response.is_some()
+        || session.poll_registration().is_some()
+        || !session.worker_occupied()
+    {
+        return Err("local terminal state released held worker or retained response".into());
+    }
+    println!(
+        "{}\tPASS",
+        if expire {
+            "radio-registration-held-expire"
+        } else {
+            "radio-registration-held-cancel"
+        }
+    );
+    for _ in 0..16 {
+        if session.start(
+            RadioTransport::from_binder(peer.clone())?,
+            "retry".into(),
+            NonZeroUsize::new(4).unwrap(),
+            Deadline::at(Duration::from_nanos(30)),
+        ) != Err(LifecycleError::WorkerOccupied)
+        {
+            return Err("replacement freed an occupied worker".into());
+        }
+        session
+            .stop(&key)
+            .map_err(|e| format!("repeated stop: {e:?}"))?;
+        if session.snapshot().phase != Phase::Failed(terminal) {
+            return Err("first failure changed".into());
+        }
+    }
+    println!("radio-worker-capacity-retained\tPASS");
+    registration_latch(peer, 109)?;
+    let end = Instant::now() + Duration::from_secs(5);
+    let report = loop {
+        if let Some(report) = session.poll_registration() {
+            break report;
+        }
+        if Instant::now() >= end {
+            return Err("owned completion timeout".into());
+        }
+        std::thread::yield_now();
+    };
+    if !report.dispatched
+        || !matches!(report.result, Ok(42))
+        || report.activation != Err(OwnerError::Failed(terminal))
+        || session.snapshot().response.is_some()
+        || session.worker_occupied()
+    {
+        return Err("late registration completion violated lifecycle".into());
+    }
+    println!("radio-registration-late-success-rejected\tPASS");
+    if session.start(
+        RadioTransport::from_binder(peer.clone())?,
+        "retry".into(),
+        NonZeroUsize::new(4).unwrap(),
+        Deadline::at(Duration::from_nanos(30)),
+    ) != Err(LifecycleError::AlreadyAttempted)
+    {
+        return Err("uncertain registration was retried".into());
+    }
+    println!("radio-registration-retry-refused\tPASS");
+    Ok(())
 }
 
 fn owner_deadline() -> pokelinux_radio::deadline::Deadline {
     use pokelinux_radio::deadline::{BootClock, Clock, Deadline};
     Deadline::at(BootClock.now() + Duration::from_secs(60))
+}
+
+fn owned_death(
+    peer: &SIBinder,
+    during_registration: bool,
+) -> std::result::Result<(), Box<dyn std::error::Error>> {
+    use pokelinux_radio::owner::{OwnerError, Phase};
+    use pokelinux_radio::worker::{RegistrationFailure, TransportSession};
+    let mut session = TransportSession::new(NonZeroUsize::new(2).unwrap());
+    session
+        .start(
+            RadioTransport::from_binder(peer.clone())?,
+            if during_registration {
+                "pokelinux-die-register-test"
+            } else {
+                "pokelinux-ipc-test"
+            }
+            .into(),
+            NonZeroUsize::new(8).unwrap(),
+            owner_deadline(),
+        )
+        .map_err(|e| format!("start: {e:?}"))?;
+    let end = Instant::now() + Duration::from_secs(5);
+    let result = loop {
+        if let Some(report) = session.poll_registration() {
+            break report;
+        }
+        if Instant::now() >= end {
+            return Err("owned death registration timeout".into());
+        }
+        std::thread::yield_now();
+    };
+    if during_registration {
+        if !matches!(result.result, Err(RegistrationFailure::Binder(status)) if status.transaction_error() == StatusCode::DeadObject)
+            || result.activation != Err(OwnerError::Failed(ReceiverFailure::ServiceDied))
+        {
+            return Err("owned registration death mismatch".into());
+        }
+    } else {
+        if !matches!(result.result, Ok(42))
+            || result.activation != Ok(())
+            || session.snapshot().phase != (Phase::Active { client_id: 42 })
+        {
+            return Err("owned registration did not activate".into());
+        }
+        println!("radio-owned-activation\tPASS");
+        let remote = peer.as_remote().ok_or("local peer")?;
+        let data = remote.prepare_transact(true)?;
+        let mut reply = remote
+            .submit_transact(107, &data, 0)?
+            .ok_or("missing exit reply")?;
+        let status: Status = reply.read()?;
+        if !status.is_ok() || reply.data_avail() != 0 {
+            return Err("exit control mismatch".into());
+        }
+    }
+    loop {
+        if session.snapshot().phase == Phase::Failed(ReceiverFailure::ServiceDied) {
+            break;
+        }
+        if Instant::now() >= end {
+            return Err("owned watch failed to invalidate session".into());
+        }
+        std::thread::yield_now();
+    }
+    if session.worker_occupied() || session.snapshot().response.is_some() {
+        return Err("owned death retained state or worker".into());
+    }
+    println!(
+        "{}\tPASS",
+        if during_registration {
+            "radio-owned-registration-death"
+        } else {
+            "radio-owned-service-death"
+        }
+    );
+    Ok(())
 }

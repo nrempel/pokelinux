@@ -179,6 +179,26 @@ suspend-time evidence, not a hardware suspend/wake test. Four component regressi
 cover expiry at activation, final publication, snapshots and attempted replacement.
 See [execution provenance](evidence/radio-deadline-provenance.json).
 
-The registration thread is still scoped test infrastructure. Worker ownership,
-permanent-hang supervision, candidate/operation deadlines and vendor cleanup
-remain unfinished.
+The current held scenarios use production `TransportSession`, replacing the
+earlier scoped test thread. Permanent-hang supervision, candidate/operation
+deadlines and vendor cleanup remain unfinished.
+
+## Production registration lifecycle integration
+
+Held cancellation and expiry now run through the owned Rust worker and retained
+death watch. Sixteen replacement attempts return `WorkerOccupied`; repeated stop
+and snapshot checks preserve the first terminal reason. Completion remains
+available despite terminal callback state. Late successful ID 42 is returned as a
+dispatched result with rejected activation; capacity is reclaimed only after
+worker completion is joined. A further attempt returns `AlreadyAttempted`, without
+sending `clear` or retrying registration.
+
+`owned-service-death` proves watch retention after activation.
+`owned-registration-death` proves watch/error invalidation during registration.
+A component regression first exposed `DeadObject` being labelled InternalFailure
+before watch delivery; the result now maps to ServiceDied while preserving earlier
+terminal reasons. See [source and binary provenance](evidence/radio-worker-provenance.json).
+
+These tests still have bounded synthetic registration barriers. A watchdog abort
+regression is local process evidence, not supervised recovery from permanent
+Binder blockage, vendor cleanup or modem/IMS correctness.
