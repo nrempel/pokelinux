@@ -55,6 +55,7 @@ Dashed connections are work still required, not working hardware paths. “Rust 
 | Native desktop | Arch ARM VM, Hyprland, virtual touch, installed app lifecycle and live theme tests. [Report](docs/native-virtual-graphics.md) | Physical display/input, full phone shell and device boot |
 | Android reference bridge | Enrollment, permissions, callbacks and call controls tested against Android Telecom in an emulator. [Report](docs/android-framework-tests.md) | These tests do not prove native IMS or real voice calls |
 | Graphics compatibility | Stock Pixel EGL/GLES libraries load through libhybris; initialization reaches the missing-GPU boundary. [Audit](docs/hardware-boundary-decision.md) | Successful Pixel EGL initialization, dma-buf allocation/import, fences and scanout |
+| Native device contracts | Exact Android17 camera/audio/power/sensor schemas, selected factory hash matches and focused REA lifecycle facts. Public power-source checks and AIDL compiler generation pass. [Report](docs/native-device-contracts.md) | Installed Rust services, actual ABI/FMQ/DSP/buffer integration and device gates |
 | Complete smartphone | Scope and hardware dependency audit recorded. [Completion matrix](docs/smartphone-goal.md) | SMS, camera, audio, cellular data, sensors, power and background wake require further implementation and integration |
 
 Historical reports refer to local `artifacts/` paths. Those files are not all published. A source test or old report is not a current hardware qualification certificate.

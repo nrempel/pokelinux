@@ -65,6 +65,16 @@ restart tests pass. This does not implement send/receive, delivery, permissions,
 a messaging service or UI. See `native-messaging.md` and
 `evidence/sms-submit-provenance.json` and `evidence/sms-outbox-provenance.json`.
 
+Focused REA/public-source investigations now recover camera AIDL4, audio core4,
+Power7 and Sensors3. Selected audio/power/sensor frozen hashes match shipped
+libraries; camera hash equality remains open. Camera failed-return/count and
+flush semantics, AoC call audio, two sensor wake obligations and potentially
+wedged haptic completion remain explicit boundaries. Twenty-five public power
+source checks and AIDL compiler generation passed, separately from runtime.
+See `native-device-contracts.md` and its provenance; raw factory/REA records stay
+private. Real camera Binder/FD, native power arbitration and isolated audio graph
+work are in progress on Sol6.1 xhigh agents.
+
 ## Next work
 
 1. Recover and test the actual vendor cleanup/reset and registration-overlap

@@ -1,0 +1,467 @@
+{
+  "date_utc": "2026-10-12",
+  "host": "Harbour",
+  "factory": "Pixel10 frankel CP3A.261005.005",
+  "scope": "Portable native backend contracts; static factory evidence and public reference execution, not working hardware",
+  "public_frozen_source": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/",
+  "abi": {
+    "camera": {
+      "provider_version": 4,
+      "provider_hash": "6d711578fd7d8ed6b5ab3a94743c4df77f6cdeaa",
+      "device_version": 4,
+      "device_hash": "6e6878817de92e03fd52d5f10937714862ab4922",
+      "factory_service_sha256": "735db9471d162426151348816bb9261e06602bbd97cb51f57b75f3d4d8d2a085",
+      "factory_hash_equality": false,
+      "basis": "Factory VINTF and ELF imports identify AIDL4; exact public frozen schemas recovered"
+    },
+    "audio": {
+      "core_version": 4,
+      "core_hash": "bd0612235335e8a7bd07714095b17d06e54fbd0e",
+      "factory_core_library_sha256": "0168a66d9bfcef5e55a37cc99967e84691860f62d45dc43fad119f98d7d5e5f2",
+      "factory_hash_embedded": true,
+      "common_version": 5,
+      "common_hash": "a31411d81700d960bfc9f95ad643c3b1a3611a4b",
+      "common_hash_embedded": false,
+      "factory_service_sha256": "eebfb13c453dd57affe8dd6584b905891627d19b6f0f898681f347de2eb043c4"
+    },
+    "power": {
+      "version": 7,
+      "hash": "4642211f44ad39c8c592b3611e62d29974b784b5",
+      "factory_hash_embedded": true,
+      "factory_service_sha256": "fd4ad945710d95ba28b4fe27d213f8d0edd1803fd0222fabb283a0128243856b"
+    },
+    "sensors": {
+      "version": 3,
+      "hash": "b051523be857524c99057b69f253a7d0bd295400",
+      "factory_hash_embedded": true,
+      "usf_sha256": "a8152b4b43128a070f082eadde42b493ff929b46a4f7c64e85a0f1b2a5153810"
+    },
+    "limit": "Static identities only. No live vendor getInterfaceVersion/getInterfaceHash or FMQ mapping qualification."
+  },
+  "camera_static_findings": [
+    {
+      "id": "camera-abi",
+      "claim": "The @2.7 executable/init name is legacy naming. Factory declares AIDL provider4; DT_NEEDED independently confirms device-V4-ndk/provider-V4-ndk. Exact frozen public v4 reference is recovered from Android17 release tag. Missing main-tree v4 was branch-specific.",
+      "evidence_ids": [
+        "ev_9e884fa814e9cf0bed193647e432f55f4288ea0f8618f9fef6dd016dbb6ea2a8",
+        "ev_56c759bc8e36f5d89384fc7dff8afbfbbaa1914690b93b61f5002f0720a0a475"
+      ],
+      "confidence": "high for declared version; factory interface-hash equality unresolved"
+    },
+    {
+      "id": "request-acceptance",
+      "claim": "Request wrapper removes caches, converts requests, delegates to GoogleCameraHal::ProcessCaptureRequest, sets processed-count output and maps status. Capture remains asynchronous. Android17 NDK dispatcher and proxy skip return/out values on error, so a failed remote batch cannot safely expose or imply the locally set partial count. Add submission-uncertain ownership until callbacks/drain/reset reconcile.",
+      "evidence_ids": [
+        "ev_43554d82da5544c1395735c7933b5f1463a0eb0ee513971ff2706cfa901d216e"
+      ],
+      "confidence": "high static call and generator evidence; factory dispatcher execution unverified"
+    },
+    {
+      "id": "buffers-fences",
+      "claim": "Track first-submit NativeHandle+bufferId, subsequent cached bufferId, cache removal and frame/stream lookup. Acquire fence gates HAL access; release fence gates client access and reuse even on failed buffers. Callback return can precede fence signalling. Factory request-buffer callback calls dupFromAidl and GraphicBufferMapper::importBufferNoValidate, then deletes temporary handle envelopes. Distinguish envelope deletion, fd close, allocator release and completed DMA.",
+      "evidence_ids": [
+        "ev_b01c281da447f89d220e32884c3f3c60884630d65434cec8579d6187fce8bda0",
+        "ev_eb32b2efab324f351f6eeccf3103a60fd81a644178e6c79870a22c0fa36623e3",
+        "ev_e5c4dcc83e87638eecfceee1bbacb9a8f107f783b02e4984c0dc0a5217549b3c"
+      ],
+      "confidence": "high public obligations and call evidence; full factory allocator semantics unresolved"
+    },
+    {
+      "id": "flush-close",
+      "claim": "flush delegates to Google HAL Flush. Factory signalStreamFlush is a 40-byte success stub whose only callee is AStatus_newOk; its oneway acknowledgement proves no drainage. close has no direct Flush callee; public wrapper clears underlying unique_ptr and returns OK. Actual destructor cleanup, in-flight DMA safety and reopen behavior remain unverified.",
+      "evidence_ids": [
+        "ev_dbabb34cf120b9ec4f17f2f0003c1e44604e9205f875240026424fd5279409b1",
+        "ev_54d3bd2fd750463ce82ad7aba0b6ec29a2f9201d8173d0474f1d83e3b78284ac",
+        "ev_2074fa5c054a3c38d255175da5f414c3a87e23c263454efa0aebfff25fcdef21"
+      ],
+      "confidence": "high wrapper evidence; dependency cleanup unknown"
+    },
+    {
+      "id": "callback-death",
+      "claim": "Result callback converts results and checks transaction status; diagnostic path reports callback transaction failure. Bounded death/died/disconnect procedure search and link/unlink-death/string search returned zero matches for this executable. This does not establish absence of cleanup in Binder-generated code or dependent libraries.",
+      "evidence_ids": [
+        "ev_a2f680c23141fdbef53909d9c0fba430e065479c4e41e081359198f324500cbf",
+        "ev_b27ff0cec445813891d1af0a897bb07a965935a7518faefd1afc6f8c62a0d567",
+        "ev_b8455b7a998206aaa7a1815f575e94a0db61f3f127c156776d9f054adc2aa072"
+      ],
+      "confidence": "high bounded observation; cleanup/restart contract unresolved"
+    },
+    {
+      "id": "startup-dependencies",
+      "claim": "Initialize creates request/result metadata FMQs, preloads GraphicBufferMapper and discovers/waits for declared thermal/default. Retained init uses system user, SYS_NICE, rtprio10, memlock268435456, camera task profiles and cameraWatchdog class. Native startup must account for Binder/policy, thermal, properties, FMQ, allocator/mapper and Bionic dependency closure.",
+      "evidence_ids": [
+        "ev_3cc5cb3de4d6ccc8c016654b8f099dc365c7ec3b5bdd2262d519350290f3baf6",
+        "ev_5fb4e4376f4071977f2aa0ccd1296e5cab57907e64ee04612a0e060bebcc2525"
+      ],
+      "confidence": "high call/import evidence; Initialize high-pcode truncation explicit"
+    },
+    {
+      "id": "capability-boundary",
+      "claim": "Device profile must supply qualified version/hash, IDs/logical-physical mapping, facing/orientation, supported combinations, formats/dataspaces/usage, maxBuffers, metadata/vendor tags, flash/torch and video/offline support. Static feature XMLs do not establish operating sensors or quality.",
+      "evidence_ids": [
+        "ev_56c759bc8e36f5d89384fc7dff8afbfbbaa1914690b93b61f5002f0720a0a475"
+      ],
+      "confidence": "required gate; dynamic values unobserved"
+    }
+  ],
+  "audio_static_evidence": [
+    {
+      "record": "aoc-close-stream",
+      "evidence_id": "ev_d40a54d5200e2734b812413df22bd680a6d602047a61ea2cfc619a7eccb0d33f",
+      "target_sha256": "eebfb13c453dd57affe8dd6584b905891627d19b6f0f898681f347de2eb043c4",
+      "value_flow_truncated": false
+    },
+    {
+      "record": "aoc-extension-call",
+      "evidence_id": "ev_3a4d68732c32b72cd8e320603ac5e5633d4240af3f22adb157c1d1051fccc5f3",
+      "target_sha256": "eebfb13c453dd57affe8dd6584b905891627d19b6f0f898681f347de2eb043c4",
+      "value_flow_truncated": false
+    },
+    {
+      "record": "aoc-extension-network",
+      "evidence_id": "ev_b15087908e2d0bde4d97625cc10ed090c421814d334607e0005f1b77fbb053a6",
+      "target_sha256": "eebfb13c453dd57affe8dd6584b905891627d19b6f0f898681f347de2eb043c4",
+      "value_flow_truncated": false
+    },
+    {
+      "record": "aoc-mic-mute",
+      "evidence_id": "ev_928634c8252d839f60ed1caa520275b39ea144d7b4eb41bd7e85066f2e17e59d",
+      "target_sha256": "eebfb13c453dd57affe8dd6584b905891627d19b6f0f898681f347de2eb043c4",
+      "value_flow_truncated": false
+    },
+    {
+      "record": "aoc-output-stream",
+      "evidence_id": "ev_e10ec1ed462417ef5a2171652ac13f37ad8c8e3d1557e631fdc44c9c385b1ece",
+      "target_sha256": "eebfb13c453dd57affe8dd6584b905891627d19b6f0f898681f347de2eb043c4",
+      "value_flow_truncated": true
+    },
+    {
+      "record": "aoc-patch",
+      "evidence_id": "ev_ce764b43abc6cc408ab7aa8f8adb91fc92c34a658d6db42aa37d18ac88b4edbb",
+      "target_sha256": "eebfb13c453dd57affe8dd6584b905891627d19b6f0f898681f347de2eb043c4",
+      "value_flow_truncated": false
+    },
+    {
+      "record": "aoc-prepare-close",
+      "evidence_id": "ev_e8d480663c3e40a10431189cbc3222157a132bf4757d536a59976b761f8c1eb4",
+      "target_sha256": "eebfb13c453dd57affe8dd6584b905891627d19b6f0f898681f347de2eb043c4",
+      "value_flow_truncated": false
+    },
+    {
+      "record": "aoc-search",
+      "evidence_id": "ev_ef9850949555a0428c23a675894ef4a2b17ecebc6d413b21ddc3525ae48996bb",
+      "target_sha256": "eebfb13c453dd57affe8dd6584b905891627d19b6f0f898681f347de2eb043c4",
+      "value_flow_truncated": null
+    },
+    {
+      "record": "aoc-start-voice",
+      "evidence_id": "ev_3b8492359df3f461382afb59cb938be034090012a230008a7a3903500c6c9c29",
+      "target_sha256": "eebfb13c453dd57affe8dd6584b905891627d19b6f0f898681f347de2eb043c4",
+      "value_flow_truncated": false
+    },
+    {
+      "record": "aoc-stop-voice",
+      "evidence_id": "ev_ee50f8f5749f260d014097958e3f9320603ee647c4d0e19b868c95ca332dd620",
+      "target_sha256": "eebfb13c453dd57affe8dd6584b905891627d19b6f0f898681f347de2eb043c4",
+      "value_flow_truncated": false
+    },
+    {
+      "record": "aoc-switch-mode",
+      "evidence_id": "ev_a6c6da02ee75e9b6e65ec6fdd731217f69b1a01d50c4e414d2bdefd48ce3bb00",
+      "target_sha256": "eebfb13c453dd57affe8dd6584b905891627d19b6f0f898681f347de2eb043c4",
+      "value_flow_truncated": false
+    },
+    {
+      "record": "aoc-telecom-config",
+      "evidence_id": "ev_bd7064837023b1a3dab4c08288b543148aae2e92be484cec8fc289abbc743980",
+      "target_sha256": "eebfb13c453dd57affe8dd6584b905891627d19b6f0f898681f347de2eb043c4",
+      "value_flow_truncated": false
+    },
+    {
+      "record": "aoc-telephony-search",
+      "evidence_id": "ev_99f4b76ab21f95aa117d61d3babfa653752bba18d3d73469883dcee905c81e08",
+      "target_sha256": "eebfb13c453dd57affe8dd6584b905891627d19b6f0f898681f347de2eb043c4",
+      "value_flow_truncated": null
+    },
+    {
+      "record": "media-aoc-error",
+      "evidence_id": "ev_c0b5b3bbfe0a91c0b0df188f7ce41080f2031210630eeaf0caabb204e91e5a67",
+      "target_sha256": "b3b50569203f748d5c82ea383f585ba0948c961ab75c753c5113142e4c6aa412",
+      "value_flow_truncated": false
+    },
+    {
+      "record": "media-aoc-open-rx",
+      "evidence_id": "ev_a9f52487da4defe30dd343d1de3c5495baf167151b9bb6cd8897c36cfe4157c8",
+      "target_sha256": "b3b50569203f748d5c82ea383f585ba0948c961ab75c753c5113142e4c6aa412",
+      "value_flow_truncated": false
+    },
+    {
+      "record": "media-aoc-open-tx",
+      "evidence_id": "ev_6b38ad42c625e5b3112bd2ccb2d64d9bfe06dab152c86a384ee1b1daf05bd6b2",
+      "target_sha256": "b3b50569203f748d5c82ea383f585ba0948c961ab75c753c5113142e4c6aa412",
+      "value_flow_truncated": false
+    },
+    {
+      "record": "media-aoc-read-data",
+      "evidence_id": "ev_944f8818bc012ea4abe757882e5fb3776bc21085bc4657d001c5e554d11c2e36",
+      "target_sha256": "b3b50569203f748d5c82ea383f585ba0948c961ab75c753c5113142e4c6aa412",
+      "value_flow_truncated": false
+    },
+    {
+      "record": "media-aoc-write-data",
+      "evidence_id": "ev_515a49f9f24a32ff4ee6369ae239143248783a765634d1b48fe3af78db87f8e2",
+      "target_sha256": "b3b50569203f748d5c82ea383f585ba0948c961ab75c753c5113142e4c6aa412",
+      "value_flow_truncated": false
+    },
+    {
+      "record": "media-call-update",
+      "evidence_id": "ev_a730b12ab830ec9dee147e8ba24b3125a73c0b630f85858163898f1ee4c8046a",
+      "target_sha256": "b3b50569203f748d5c82ea383f585ba0948c961ab75c753c5113142e4c6aa412",
+      "value_flow_truncated": false
+    },
+    {
+      "record": "media-close-session",
+      "evidence_id": "ev_35c08b685934cac926952d602f2c568f901e5b3d60d7b94448e231536ea036ef",
+      "target_sha256": "b3b50569203f748d5c82ea383f585ba0948c961ab75c753c5113142e4c6aa412",
+      "value_flow_truncated": false
+    },
+    {
+      "record": "media-codec-constructor",
+      "evidence_id": "ev_6436bbb27ceb2db46d287f846c4a669d1d6c35a84364e95a86191659909b3fde",
+      "target_sha256": "b3b50569203f748d5c82ea383f585ba0948c961ab75c753c5113142e4c6aa412",
+      "value_flow_truncated": false
+    },
+    {
+      "record": "media-codec-decoder-init",
+      "evidence_id": "ev_758a020f8d8212ceab07730c77caf3c259fc19d21f2ecf473db18595ee8dd60e",
+      "target_sha256": "b3b50569203f748d5c82ea383f585ba0948c961ab75c753c5113142e4c6aa412",
+      "value_flow_truncated": false
+    },
+    {
+      "record": "media-codec-encoder-init",
+      "evidence_id": "ev_8c56d72e496db10037d74dd5d1eba94eec746f58430b647adf1b4f5b2b971564",
+      "target_sha256": "b3b50569203f748d5c82ea383f585ba0948c961ab75c753c5113142e4c6aa412",
+      "value_flow_truncated": false
+    },
+    {
+      "record": "media-codec-read",
+      "evidence_id": "ev_83b221506b9d6b48a011d0dc1e0c592ef81ea664a41ae6f4b58dd18728da7659",
+      "target_sha256": "b3b50569203f748d5c82ea383f585ba0948c961ab75c753c5113142e4c6aa412",
+      "value_flow_truncated": false
+    },
+    {
+      "record": "media-codec-write",
+      "evidence_id": "ev_ca1191f8f8c7c2f0b069fefee90016f69cc1ed47684a118f4462835dcc220c0f",
+      "target_sha256": "b3b50569203f748d5c82ea383f585ba0948c961ab75c753c5113142e4c6aa412",
+      "value_flow_truncated": false
+    },
+    {
+      "record": "media-exclusive-session",
+      "evidence_id": "ev_f0450be79a30b6d8ea8c37635f502d6e4a1d2685adea2dc6f4a262dd7468db2c",
+      "target_sha256": "b3b50569203f748d5c82ea383f585ba0948c961ab75c753c5113142e4c6aa412",
+      "value_flow_truncated": false
+    },
+    {
+      "record": "media-network-update",
+      "evidence_id": "ev_4023b0359f0b211701287f858b72d6906ee91581849e674530d44afa23533c03",
+      "target_sha256": "b3b50569203f748d5c82ea383f585ba0948c961ab75c753c5113142e4c6aa412",
+      "value_flow_truncated": false
+    },
+    {
+      "record": "media-open-session",
+      "evidence_id": "ev_18e9bd6b17069f3b00d8e10552d20fae0949f25467174af2c728c9b6224e72f5",
+      "target_sha256": "b3b50569203f748d5c82ea383f585ba0948c961ab75c753c5113142e4c6aa412",
+      "value_flow_truncated": false
+    },
+    {
+      "record": "media-player-start",
+      "evidence_id": "ev_00c3dca8903577637965e714e1e723684ced138943225ee096ee5c7813a65a8a",
+      "target_sha256": "b3b50569203f748d5c82ea383f585ba0948c961ab75c753c5113142e4c6aa412",
+      "value_flow_truncated": false
+    },
+    {
+      "record": "media-session-graph",
+      "evidence_id": "ev_0dcce1d37d93d942be882ab0f74f86aa2764d60861b81c30311497245925ffd1",
+      "target_sha256": "b3b50569203f748d5c82ea383f585ba0948c961ab75c753c5113142e4c6aa412",
+      "value_flow_truncated": false
+    },
+    {
+      "record": "media-source-start",
+      "evidence_id": "ev_91d3128259acedb8f12e5f10b3371cb4a6c2cb550febb060c305274e6da63a49",
+      "target_sha256": "b3b50569203f748d5c82ea383f585ba0948c961ab75c753c5113142e4c6aa412",
+      "value_flow_truncated": false
+    },
+    {
+      "record": "media-wrapper-init",
+      "evidence_id": "ev_414c5482b890e2b3712b8591e7a314404a77979b4bb1f707ae5b9341622c46d7",
+      "target_sha256": "b3b50569203f748d5c82ea383f585ba0948c961ab75c753c5113142e4c6aa412",
+      "value_flow_truncated": false
+    }
+  ],
+  "power_sensor_static_evidence": {
+    "factory-power-setmode": {
+      "id": "ev_918760a52a6e21178475d56cf4ca0c80a74e514b6d236753abd5eca0c609a7c3",
+      "target_sha256": "fd4ad945710d95ba28b4fe27d213f8d0edd1803fd0222fabb283a0128243856b",
+      "confidence": "static observation; behavioral summary is inferred; no target execution"
+    },
+    "factory-power-setboost": {
+      "id": "ev_7103324ef9dda4366f0ba27ea5574c63cf73dd252256b5c6d6947e6a84e11e19",
+      "target_sha256": "fd4ad945710d95ba28b4fe27d213f8d0edd1803fd0222fabb283a0128243856b",
+      "confidence": "static observation; behavioral summary is inferred; no target execution"
+    },
+    "factory-power-modesupported": {
+      "id": "ev_e8df01912b16ca9f15642449fdfd048509c53ef4cb4f5c1d3416759ef5ab4f1f",
+      "target_sha256": "fd4ad945710d95ba28b4fe27d213f8d0edd1803fd0222fabb283a0128243856b",
+      "confidence": "static observation; behavioral summary is inferred; no target execution"
+    },
+    "factory-power-constructor": {
+      "id": "ev_ea4bcdc91c39338f453be6d5512c2085915c8b0e6993df8899d3f06f4b4e45b9",
+      "target_sha256": "fd4ad945710d95ba28b4fe27d213f8d0edd1803fd0222fabb283a0128243856b",
+      "confidence": "static observation; behavioral summary is inferred; no target execution"
+    },
+    "factory-power-supportinfo": {
+      "id": "ev_1e18b1e367efc946e6c92ce9c6fb26b8e6be4533f813a3f3a11efe712477e38b",
+      "target_sha256": "fd4ad945710d95ba28b4fe27d213f8d0edd1803fd0222fabb283a0128243856b",
+      "confidence": "static observation; behavioral summary is inferred; no target execution"
+    },
+    "factory-perfmgr-renewal": {
+      "id": "ev_3015351d029ead243453f62be7156e7ba02255fe32a6cdd7a2d424ab3d0d24fc",
+      "target_sha256": "e4d6a6259a7d2a38a498f50c977eb637a63c47127f151e97d76e480ed8ea6a63",
+      "confidence": "static observation; behavioral summary is inferred; no target execution"
+    },
+    "factory-perfmgr-request": {
+      "id": "ev_f90a2eae38ccf08b9ef2ea52de28e59f8369217c6a5d8d3cc521ae5ece2b6f70",
+      "target_sha256": "e4d6a6259a7d2a38a498f50c977eb637a63c47127f151e97d76e480ed8ea6a63",
+      "confidence": "static observation; behavioral summary is inferred; no target execution"
+    },
+    "factory-perfmgr-file-update": {
+      "id": "ev_9ac3ffb314f77c1474346a73783ff06c549c14a3a2172c9b21424f2e74ec3b05",
+      "target_sha256": "e4d6a6259a7d2a38a498f50c977eb637a63c47127f151e97d76e480ed8ea6a63",
+      "confidence": "static observation; behavioral summary is inferred; no target execution"
+    },
+    "usf-hold-wake": {
+      "id": "ev_d875a5cb5e8439b99a22318accedad2280fc096e4b444b1a28a5bf353e0a1dbf",
+      "target_sha256": "a8152b4b43128a070f082eadde42b493ff929b46a4f7c64e85a0f1b2a5153810",
+      "confidence": "static observation; behavioral summary is inferred; no target execution"
+    },
+    "usf-wake-timeout": {
+      "id": "ev_1fbfe76be3a678c0802c3e9e8a7ad839c33531269ea75c379edfad6699e3e20c",
+      "target_sha256": "a8152b4b43128a070f082eadde42b493ff929b46a4f7c64e85a0f1b2a5153810",
+      "confidence": "static observation; behavioral summary is inferred; no target execution"
+    },
+    "usf-reinitialize": {
+      "id": "ev_824c64b29f07086523f64fbf53326b180f4b3f89bf178900a8299a92836555bb",
+      "target_sha256": "a8152b4b43128a070f082eadde42b493ff929b46a4f7c64e85a0f1b2a5153810",
+      "confidence": "static observation; behavioral summary is inferred; no target execution"
+    },
+    "usf-deinit": {
+      "id": "ev_3bbfcf55b78c72bb9c3ffb029e1c717f79a591e6e5e88e31a6d3fa5547cec7b6",
+      "target_sha256": "a8152b4b43128a070f082eadde42b493ff929b46a4f7c64e85a0f1b2a5153810",
+      "confidence": "static observation; behavioral summary is inferred; no target execution"
+    },
+    "usf-reconnect": {
+      "id": "ev_a84f8c16763b1efa403cbbdcd6fa55876c82c11837027932e32218c25570c895",
+      "target_sha256": "a8152b4b43128a070f082eadde42b493ff929b46a4f7c64e85a0f1b2a5153810",
+      "confidence": "static observation; behavioral summary is inferred; no target execution"
+    },
+    "vibrator-completion": {
+      "id": "ev_dc043ac2e137dffbe5c5aedcb3725e1461a0855f10ac81040ec348fde3aa0e70",
+      "target_sha256": "df5c3075afe15dc8de1a559c04cc8383a3f6ad43dcc24a66c068e3cd1b29ac7f",
+      "confidence": "static observation; behavioral summary is inferred; no target execution"
+    },
+    "vibrator-on": {
+      "id": "ev_cce637295cc869274c6741d89a34c8cccde89dc9c903b1bf37ada348948fce2a",
+      "target_sha256": "df5c3075afe15dc8de1a559c04cc8383a3f6ad43dcc24a66c068e3cd1b29ac7f",
+      "confidence": "static observation; behavioral summary is inferred; no target execution"
+    },
+    "vibrator-off": {
+      "id": "ev_ffa94310151ee80208395074419776c89c344f226be2b7f9beb968957dbc2b6d",
+      "target_sha256": "df5c3075afe15dc8de1a559c04cc8383a3f6ad43dcc24a66c068e3cd1b29ac7f",
+      "confidence": "static observation; behavioral summary is inferred; no target execution"
+    },
+    "vibrator-discovery": {
+      "id": "ev_a41c736d4e0ff2fa6480ef2f01cce8dced8f2d8211d8b4defb02518797a752ae",
+      "target_sha256": "9b391867214e5188b31f0739da01ebefd680dd27fbcce05613b349cf8cfa6081",
+      "confidence": "static observation; behavioral summary is inferred; no target execution"
+    },
+    "vibrator-upload-effect": {
+      "id": "ev_bb00dc9dde15846ee361da9289bc11b139719d47413d6a159def292b9381e4b0",
+      "target_sha256": "9b391867214e5188b31f0739da01ebefd680dd27fbcce05613b349cf8cfa6081",
+      "confidence": "static observation; behavioral summary is inferred; no target execution"
+    },
+    "vibrator-play-event": {
+      "id": "ev_ba4904c30765bad3c050e3044e87175468904510277f85e9806163bb3b5e65b7",
+      "target_sha256": "9b391867214e5188b31f0739da01ebefd680dd27fbcce05613b349cf8cfa6081",
+      "confidence": "static observation; behavioral summary is inferred; no target execution"
+    },
+    "vibrator-poll-state": {
+      "id": "ev_cba7d76f30e3f3e7e8ddf7799ece2b68d969c005c348265fb3d6829e83e076a1",
+      "target_sha256": "9b391867214e5188b31f0739da01ebefd680dd27fbcce05613b349cf8cfa6081",
+      "confidence": "static observation; behavioral summary is inferred; no target execution"
+    }
+  },
+  "original_public_execution": {
+    "camera_compiler": {
+      "scope": "Original public AIDL compiler execution/generation only; generated NDK Binder proxy/dispatcher not compiled or executed. Interface/version/hash are synthetic test infrastructure.",
+      "compiler_sha256": "a4ad150a7cf6ea297c299cb779da7a58c537cfc07923d1e15ccbc554a30cd4ba",
+      "compiler_sdk": 37,
+      "generation_exit_code": 0,
+      "input_sha256": "ad0b569f732b24ef21a2f542e6d029cdbf31622e4045a2ec5f17e77180cd116f",
+      "import": "Pinned frozen public hardware.common-V2 NativeHandle",
+      "generated_sha256": "79cd25d2d04b432c59a8bd61df60c65f4c0aade65ef32528a1df26d64d3fefe1",
+      "server_error_gate_before_return": true,
+      "client_error_gate_before_return": true
+    },
+    "power_nodes": {
+      "checks": 25,
+      "result": "pass",
+      "implementation": "Unmodified public RequestGroup.cc, Node.cc, FileNode.cc; host C++17/glibc in preexisting pixel-graphics-build container; POSIX Android-base helper shims use real temporary file I/O; properties select fallback and tracing/logging are simplified.",
+      "covers": [
+        "renewal never shortens",
+        "expired/max-lived requests",
+        "owner cancellation",
+        "indexed request priority and default restoration",
+        "invalid value rejection",
+        "500 ms failed-write retry without advancing applied state",
+        "held descriptor released at default"
+      ],
+      "limits": [
+        "Reference original-source execution only",
+        "No stock vendor execution",
+        "No native Rust backend comparison yet",
+        "No factory/source equivalence",
+        "No kernel suspend, real power nodes, thermal/charging or hardware proof"
+      ]
+    }
+  },
+  "input_verification": {
+    "selected_files": 33,
+    "selected_elf_hashes_matched": 12,
+    "official_vendor_member_size_crc_verified": true,
+    "whole_outer_zip_sha256_verified": false,
+    "avb_signature_verified": false
+  },
+  "execution_boundaries": {
+    "proprietary_vendor_targets_executed": false,
+    "real_camera_audio_power_sensor_service_integration": "Not executed in this checkpoint",
+    "arm64_hardware": "Not tested",
+    "physical_phone_accessed": false,
+    "raw_records_published": false
+  },
+  "next_actual_boundaries": [
+    "NDK generated camera error-reply and FD lifecycle over real Binder",
+    "Power original source versus native Rust arbitration",
+    "Actual isolated PipeWire/WirePlumber graph and focus ownership",
+    "AOSP FMQ/EventFlag sensor wake accounting",
+    "Single SystemSuspend-equivalent wakeup_count commit authority",
+    "Native NM/BlueZ lifecycle under virtual radios"
+  ],
+  "remaining": [
+    "Native installed services and authenticated IPC/permissions",
+    "Pixel native backend/dependency reduction",
+    "Matched kernel/policy/device-node integration",
+    "Buffer/DMA/fence and DSP/firmware semantics",
+    "Background lock/suspend/wake and privacy",
+    "Carrier, camera, audio, sensors, power and thermal physical gates"
+  ]
+}

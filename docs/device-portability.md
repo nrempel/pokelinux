@@ -51,3 +51,5 @@ Pixel fallback. No second device is currently qualified.
 
 The emulator validates IPC and synthetic behavior. ARM64 user-mode QEMU validates
 CPU/runtime behavior. Neither proves a backend works on another physical device.
+
+The [native device contracts](native-device-contracts.md) keep exact Pixel AIDL/FMQ, firmware and calibration details in backends while shared Rust services own policy, permissions, leases and lifecycle. Static hash/source agreement does not qualify live hardware or make retained userspace a completed native architecture.
