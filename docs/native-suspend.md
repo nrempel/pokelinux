@@ -38,3 +38,9 @@ Remaining gates are concrete:
 3. Add a separate device backend profile for paths, ownership, privileges and wake-source discovery, then connect native power policy and service shutdown lifetimes. Pixel paths and node names belong in that profile, not this shared coordinator. Sensor/AOC wake events, thermal policy and native policy leases are not integrated by these tests.
 
 All downloaded public source, selected proprietary inputs and raw REA records remain ignored. The task-owned REA target was closed, its provider reaped, and its private ledger/snapshot retained. No physical phone, host power interface or vendor binary was used; root extended the shared actual ARM64 kernel runner after the component handoff. The owned guest uses a snapshot root disk, read-only project export and no network; no physical phone is involved.
+
+The separate [frozen V1 Binder boundary](native-suspend-boundary.md) now connects
+this coordinator to original generated NDK/Rust proxies and unchanged public
+libpower clients. Eighteen actual x86 outcomes qualify release, strong-reference
+transfer, client death and authority fencing; discovery adapters and injected
+backend files do not qualify standard installation or hardware suspend.

@@ -1,0 +1,130 @@
+{
+  "schema": 1,
+  "tag": "android-17.0.0_r1",
+  "version": 1,
+  "hash": "082a58c2505b703702f34ab8abcb1d1b5e890be4",
+  "files": [
+    {
+      "path": "frozen-aidl/android/system/suspend/ISystemSuspend.aidl",
+      "file": "frozen-V1-ISystemSuspend.aidl",
+      "url": "https://android.googlesource.com/platform/system/hardware/interfaces/+/refs/tags/android-17.0.0_r1/suspend/aidl/aidl_api/android.system.suspend/1/android/system/suspend/ISystemSuspend.aidl?format=TEXT",
+      "bytes": 1901,
+      "sha256": "7fe0eaf0b10f10e37f077c2c4c69fda8e82b8c809301944307f328b69f0a37a6"
+    },
+    {
+      "path": "frozen-aidl/android/system/suspend/IWakeLock.aidl",
+      "file": "frozen-V1-IWakeLock.aidl",
+      "url": "https://android.googlesource.com/platform/system/hardware/interfaces/+/refs/tags/android-17.0.0_r1/suspend/aidl/aidl_api/android.system.suspend/1/android/system/suspend/IWakeLock.aidl?format=TEXT",
+      "bytes": 1803,
+      "sha256": "743af1134908839e3ecae2ff244611c85667e7ec93a4f8ab259627eb638f3838"
+    },
+    {
+      "path": "frozen-aidl/android/system/suspend/WakeLockType.aidl",
+      "file": "frozen-V1-WakeLockType.aidl",
+      "url": "https://android.googlesource.com/platform/system/hardware/interfaces/+/refs/tags/android-17.0.0_r1/suspend/aidl/aidl_api/android.system.suspend/1/android/system/suspend/WakeLockType.aidl?format=TEXT",
+      "bytes": 1803,
+      "sha256": "e7cbeadda626e370da30ab2d3d6f3e56f7409d9cb04658143ce46cc51a58ef95"
+    },
+    {
+      "path": "public/libpower17-power.cpp",
+      "file": "libpower17-power.cpp",
+      "url": "https://android.googlesource.com/platform/hardware/libhardware_legacy/+/refs/tags/android-17.0.0_r1/power.cpp?format=TEXT",
+      "bytes": 5788,
+      "sha256": "86dff13349c9ff8e241ca679df196dfee2eb9c6a2fa5c3cfe4c42a165b2b2a48"
+    },
+    {
+      "path": "public/libpower17-power.h",
+      "file": "libpower17-power.h",
+      "url": "https://android.googlesource.com/platform/hardware/libhardware_legacy/+/refs/tags/android-17.0.0_r1/include/hardware_legacy/power.h?format=TEXT",
+      "bytes": 1118,
+      "sha256": "79dd5cec81254775257b4993a36d84603119493bd3bba0c95e86b7ceae288394"
+    },
+    {
+      "path": "public/wakelock/wakelock.h",
+      "file": null,
+      "url": "https://android.googlesource.com/platform/hardware/libhardware_legacy/+/refs/tags/android-17.0.0_r1/include/wakelock/wakelock.h?format=TEXT",
+      "bytes": 1286,
+      "sha256": "80e3de9a928fd8be79711de6389ccbb3d2cc127ff4a81491ab96782303aa4af3"
+    },
+    {
+      "path": "public/android/binder_manager.h",
+      "file": null,
+      "url": "https://android.googlesource.com/platform/frameworks/native/+/refs/tags/android-17.0.0_r1/libs/binder/ndk/include_platform/android/binder_manager.h?format=TEXT",
+      "bytes": 17186,
+      "sha256": "2b9881819404151e3b055910f002b3635e332238ec37266ade1ed3f000505184"
+    },
+    {
+      "path": "public/ActivityManager.java",
+      "file": null,
+      "url": "https://android.googlesource.com/platform/frameworks/base/+/refs/tags/android-17.0.0_r1/core/java/android/app/ActivityManager.java?format=TEXT",
+      "bytes": 287152,
+      "sha256": "b77a98e9aad8110436048ded1c86f36515fba9ac406703eaf21f297acfb7af02"
+    },
+    {
+      "path": "public/ActivityManagerService.java",
+      "file": null,
+      "url": "https://android.googlesource.com/platform/frameworks/base/+/refs/tags/android-17.0.0_r1/services/core/java/com/android/server/am/ActivityManagerService.java?format=TEXT",
+      "bytes": 946188,
+      "sha256": "17923170a97fb001c3892ab4e0d71f9e249f9ea0b427a7aaf29916aae5208797"
+    }
+  ],
+  "public_ndk_reused": "artifacts/camera-boundary/android-ndk-r30",
+  "public_binder_helpers_reused": "artifacts/camera-boundary/public-headers",
+  "reused_public_files": [
+    {
+      "path": "android-framework/sdk/build-tools/android-37.0/aidl",
+      "bytes": 3754432,
+      "sha256": "a4ad150a7cf6ea297c299cb779da7a58c537cfc07923d1e15ccbc554a30cd4ba"
+    },
+    {
+      "path": "artifacts/camera-boundary/toolchain.json",
+      "bytes": 410,
+      "sha256": "847334ac59488e2eb8f11f16d9c60a7639a3fb8e2b2dd5c46fdc160a46139720"
+    },
+    {
+      "path": "artifacts/camera-boundary/public-headers.json",
+      "bytes": 2319,
+      "sha256": "b21e537dab35b30292e1aadec296167a068bf4eca8b5d9f4630c0b40111433d6"
+    },
+    {
+      "path": "artifacts/camera-boundary/public-headers/android/binder_api_level_utils.h",
+      "bytes": 975,
+      "sha256": "a6e8c5357e08e06ccbaff882d7f9c324868322a653ac4af2be7c9feed3101f73"
+    },
+    {
+      "path": "artifacts/camera-boundary/public-headers/android/binder_auto_utils.h",
+      "bytes": 15401,
+      "sha256": "91a7587d9010e2bac7c6d347d78463fa15a193c025eae260c91b17e76ef9631d"
+    },
+    {
+      "path": "artifacts/camera-boundary/public-headers/android/binder_enums.h",
+      "bytes": 1723,
+      "sha256": "a4f3b34f5478d5ad820e93eabfa0d5fe82e53a71727ad6f48b5932a043060189"
+    },
+    {
+      "path": "artifacts/camera-boundary/public-headers/android/binder_interface_utils.h",
+      "bytes": 13705,
+      "sha256": "6a3437abc3edd1dbec4cc78d3e3360ee457b4bcca26776f13b0e33ad6c9ad666"
+    },
+    {
+      "path": "artifacts/camera-boundary/public-headers/android/binder_internal_logging.h",
+      "bytes": 1010,
+      "sha256": "b3dc27d60e3c75629f231f94ab24779af9faeede2c4d605401179265d6d5eea8"
+    },
+    {
+      "path": "artifacts/camera-boundary/public-headers/android/binder_parcel_utils.h",
+      "bytes": 72223,
+      "sha256": "159b2f59a84fcf988bd4dc3ced2b58b55de9f8e49681ab96722045ae61f8ec3c"
+    },
+    {
+      "path": "artifacts/camera-boundary/public-headers/android/binder_parcelable_utils.h",
+      "bytes": 5730,
+      "sha256": "9c330de3ef09843d69d54116616efb52e7f442fb3bca28dc7d22f26c8f0fb869"
+    },
+    {
+      "path": "artifacts/camera-boundary/public-headers/android/binder_to_string.h",
+      "bytes": 7497,
+      "sha256": "23eb9663863013f862ebe8cee5d1ee9ba48e89998b8795a36f0772c1f0d91048"
+    }
+  ]
+}

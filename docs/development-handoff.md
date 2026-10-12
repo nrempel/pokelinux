@@ -130,9 +130,19 @@ terminal uncertainty. Absolute CLOCK_BOOTTIME budgets fence late successful FD
 operations without resetting after EINTR. Twenty-seven checks pass on x86 and
 under an actual ARM64 Arch kernel, including three process/Unix lifetime cases;
 24 component checks pass under ARM64 user-QEMU. Eight actual unmodified Android17
-source cases qualify the reference ordering/lifetime separately. Retained V1
-Binder/libpower clients, Pixel kernel count/abort controls and driver-blocked
-process supervision remain open; see `native-suspend.md`.
+source cases qualify the reference ordering/lifetime separately. Pixel kernel
+count/abort controls and driver-blocked process supervision remain open; see
+`native-suspend.md`.
+
+The retained frozen V1 suspend Binder boundary now passes18 actual x86 outcomes:
+original generated NDK/Rust interoperability in both directions, explicit and
+final-reference release, strong-object transfer across client exit, second-client
+death, and a retained authority death recipient permanently fencing the native
+coordinator. Both unchanged original libpower cache branches execute actual RPCs
+through a link-time discovery adapter. A held-name success after service death
+does not prove a current wake blocker. SELinux stays enforcing; default is occupied
+and custom registration is denied. Installed standard discovery/permissions,
+ARM64 Binder and actual suspend remain open; see `native-suspend-boundary.md`.
 
 Native SMS submission ownership now drives the durable outbox through exact
 frozen messaging V3 original NDK/Rust Binder. Ten live groups and seven additional
@@ -182,6 +192,9 @@ bash tools/build-native-power.sh build
 bash tools/build-suspend-reference.sh build
 bash tools/build-native-suspend.sh build
 bash tools/build-native-suspend.sh arm64-process
+bash tools/build-native-suspend-boundary.sh build
+bash tools/build-native-suspend-boundary.sh arm64-check
+bash tools/suspend-boundary-suite.sh green
 bash tools/build-native-audio.sh build
 bash tools/build-native-connectivity.sh build
 bash tools/build-native-audio.sh integration artifacts/native-audio/NEW_RUN

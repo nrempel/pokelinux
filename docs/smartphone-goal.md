@@ -92,5 +92,9 @@ Native suspend coordination now passes27 checks on x86 and an actual ARM64 guest
 kernel, with24 component checks under ARM64 user-QEMU and eight original Android17
 source cases. One cooperating writer, wake-object lifetime, responsive local
 stop/snapshots and boot-time FD deadlines are qualified in injected boundaries.
-Retained Binder clients and real Pixel suspend/wake/thermal/charging remain open;
-see [native suspend](native-suspend.md).
+A separate frozen V1 boundary now qualifies18 actual x86 Binder outcomes with
+original NDK/Rust proxies, object transfer/client death, authority fencing and
+both unchanged original libpower cache branches. Discovery uses a synthetic
+adapter; standard default registration and production permissions remain open.
+ARM64 Binder and real Pixel suspend/wake/thermal/charging remain unverified. See
+[native suspend](native-suspend.md) and [retained Binder boundary](native-suspend-boundary.md).

@@ -1,0 +1,721 @@
+{
+  "schema": 1,
+  "component": "native-suspend-boundary",
+  "recorded_utc": "2026-10-12T22:32:34.702242+00:00",
+  "status": "actual frozen V1 Binder object boundary qualified; standard service registration/installed permission authority/hardware suspend remain open",
+  "scope": {
+    "host_power_access": false,
+    "physical_phone_access": false,
+    "factory_vendor_execution": false,
+    "selinux_modified": false,
+    "existing_native_suspend_core_modified": false,
+    "shared_framework_suite_modified": false,
+    "new_rea_sessions": 0
+  },
+  "frozen_abi": {
+    "descriptors": [
+      "android.system.suspend.ISystemSuspend",
+      "android.system.suspend.IWakeLock"
+    ],
+    "version": 1,
+    "hash": "082a58c2505b703702f34ab8abcb1d1b5e890be4",
+    "tag": "android-17.0.0_r1",
+    "public_inputs": [
+      {
+        "path": "frozen-aidl/android/system/suspend/ISystemSuspend.aidl",
+        "file": "frozen-V1-ISystemSuspend.aidl",
+        "url": "https://android.googlesource.com/platform/system/hardware/interfaces/+/refs/tags/android-17.0.0_r1/suspend/aidl/aidl_api/android.system.suspend/1/android/system/suspend/ISystemSuspend.aidl?format=TEXT",
+        "bytes": 1901,
+        "sha256": "7fe0eaf0b10f10e37f077c2c4c69fda8e82b8c809301944307f328b69f0a37a6"
+      },
+      {
+        "path": "frozen-aidl/android/system/suspend/IWakeLock.aidl",
+        "file": "frozen-V1-IWakeLock.aidl",
+        "url": "https://android.googlesource.com/platform/system/hardware/interfaces/+/refs/tags/android-17.0.0_r1/suspend/aidl/aidl_api/android.system.suspend/1/android/system/suspend/IWakeLock.aidl?format=TEXT",
+        "bytes": 1803,
+        "sha256": "743af1134908839e3ecae2ff244611c85667e7ec93a4f8ab259627eb638f3838"
+      },
+      {
+        "path": "frozen-aidl/android/system/suspend/WakeLockType.aidl",
+        "file": "frozen-V1-WakeLockType.aidl",
+        "url": "https://android.googlesource.com/platform/system/hardware/interfaces/+/refs/tags/android-17.0.0_r1/suspend/aidl/aidl_api/android.system.suspend/1/android/system/suspend/WakeLockType.aidl?format=TEXT",
+        "bytes": 1803,
+        "sha256": "e7cbeadda626e370da30ab2d3d6f3e56f7409d9cb04658143ce46cc51a58ef95"
+      },
+      {
+        "path": "public/libpower17-power.cpp",
+        "file": "libpower17-power.cpp",
+        "url": "https://android.googlesource.com/platform/hardware/libhardware_legacy/+/refs/tags/android-17.0.0_r1/power.cpp?format=TEXT",
+        "bytes": 5788,
+        "sha256": "86dff13349c9ff8e241ca679df196dfee2eb9c6a2fa5c3cfe4c42a165b2b2a48"
+      },
+      {
+        "path": "public/libpower17-power.h",
+        "file": "libpower17-power.h",
+        "url": "https://android.googlesource.com/platform/hardware/libhardware_legacy/+/refs/tags/android-17.0.0_r1/include/hardware_legacy/power.h?format=TEXT",
+        "bytes": 1118,
+        "sha256": "79dd5cec81254775257b4993a36d84603119493bd3bba0c95e86b7ceae288394"
+      },
+      {
+        "path": "public/wakelock/wakelock.h",
+        "file": null,
+        "url": "https://android.googlesource.com/platform/hardware/libhardware_legacy/+/refs/tags/android-17.0.0_r1/include/wakelock/wakelock.h?format=TEXT",
+        "bytes": 1286,
+        "sha256": "80e3de9a928fd8be79711de6389ccbb3d2cc127ff4a81491ab96782303aa4af3"
+      },
+      {
+        "path": "public/android/binder_manager.h",
+        "file": null,
+        "url": "https://android.googlesource.com/platform/frameworks/native/+/refs/tags/android-17.0.0_r1/libs/binder/ndk/include_platform/android/binder_manager.h?format=TEXT",
+        "bytes": 17186,
+        "sha256": "2b9881819404151e3b055910f002b3635e332238ec37266ade1ed3f000505184"
+      },
+      {
+        "path": "public/ActivityManager.java",
+        "file": null,
+        "url": "https://android.googlesource.com/platform/frameworks/base/+/refs/tags/android-17.0.0_r1/core/java/android/app/ActivityManager.java?format=TEXT",
+        "bytes": 287152,
+        "sha256": "b77a98e9aad8110436048ded1c86f36515fba9ac406703eaf21f297acfb7af02"
+      },
+      {
+        "path": "public/ActivityManagerService.java",
+        "file": null,
+        "url": "https://android.googlesource.com/platform/frameworks/base/+/refs/tags/android-17.0.0_r1/services/core/java/com/android/server/am/ActivityManagerService.java?format=TEXT",
+        "bytes": 946188,
+        "sha256": "17923170a97fb001c3892ab4e0d71f9e249f9ea0b427a7aaf29916aae5208797"
+      }
+    ],
+    "reused_public_inputs": [
+      {
+        "path": "android-framework/sdk/build-tools/android-37.0/aidl",
+        "bytes": 3754432,
+        "sha256": "a4ad150a7cf6ea297c299cb779da7a58c537cfc07923d1e15ccbc554a30cd4ba"
+      },
+      {
+        "path": "artifacts/camera-boundary/toolchain.json",
+        "bytes": 410,
+        "sha256": "847334ac59488e2eb8f11f16d9c60a7639a3fb8e2b2dd5c46fdc160a46139720"
+      },
+      {
+        "path": "artifacts/camera-boundary/public-headers.json",
+        "bytes": 2319,
+        "sha256": "b21e537dab35b30292e1aadec296167a068bf4eca8b5d9f4630c0b40111433d6"
+      },
+      {
+        "path": "artifacts/camera-boundary/public-headers/android/binder_api_level_utils.h",
+        "bytes": 975,
+        "sha256": "a6e8c5357e08e06ccbaff882d7f9c324868322a653ac4af2be7c9feed3101f73"
+      },
+      {
+        "path": "artifacts/camera-boundary/public-headers/android/binder_auto_utils.h",
+        "bytes": 15401,
+        "sha256": "91a7587d9010e2bac7c6d347d78463fa15a193c025eae260c91b17e76ef9631d"
+      },
+      {
+        "path": "artifacts/camera-boundary/public-headers/android/binder_enums.h",
+        "bytes": 1723,
+        "sha256": "a4f3b34f5478d5ad820e93eabfa0d5fe82e53a71727ad6f48b5932a043060189"
+      },
+      {
+        "path": "artifacts/camera-boundary/public-headers/android/binder_interface_utils.h",
+        "bytes": 13705,
+        "sha256": "6a3437abc3edd1dbec4cc78d3e3360ee457b4bcca26776f13b0e33ad6c9ad666"
+      },
+      {
+        "path": "artifacts/camera-boundary/public-headers/android/binder_internal_logging.h",
+        "bytes": 1010,
+        "sha256": "b3dc27d60e3c75629f231f94ab24779af9faeede2c4d605401179265d6d5eea8"
+      },
+      {
+        "path": "artifacts/camera-boundary/public-headers/android/binder_parcel_utils.h",
+        "bytes": 72223,
+        "sha256": "159b2f59a84fcf988bd4dc3ced2b58b55de9f8e49681ab96722045ae61f8ec3c"
+      },
+      {
+        "path": "artifacts/camera-boundary/public-headers/android/binder_parcelable_utils.h",
+        "bytes": 5730,
+        "sha256": "9c330de3ef09843d69d54116616efb52e7f442fb3bca28dc7d22f26c8f0fb869"
+      },
+      {
+        "path": "artifacts/camera-boundary/public-headers/android/binder_to_string.h",
+        "bytes": 7497,
+        "sha256": "23eb9663863013f862ebe8cee5d1ee9ba48e89998b8795a36f0772c1f0d91048"
+      }
+    ],
+    "rsbinder_version": "0.12.0",
+    "rsbinder_aidl_version": "0.12.0",
+    "generated_ndk_proxy_and_dispatcher_unmodified": true,
+    "generated_trees_published": false
+  },
+  "actual_runtime": {
+    "architecture": "x86_64",
+    "image_fingerprint": "google/sdk_gphone64_x86_64/emu64xa:17/CE2A.260420.019/15611780:userdebug/dev-keys",
+    "selinux": "Enforcing",
+    "kernel_binder": true,
+    "identity": [
+      "UID 2000",
+      "actual native synchronous PID",
+      "u:r:shell:s0 SELinux context"
+    ],
+    "basic_outcomes": [
+      "frozen-v1-native-identity\tPASS",
+      "oneway-release-receipt\tPASS",
+      "explicit-release-once\tPASS",
+      "last-binder-reference\tPASS",
+      "foreign-native-caller-rejected\tPASS"
+    ],
+    "reverse_rust_ndk_outcomes": [
+      "rust-proxy-ndk-v1-dispatch-identity\tPASS",
+      "rust-proxy-ndk-release-once\tPASS",
+      "rust-proxy-ndk-last-reference\tPASS"
+    ],
+    "native_core_wake_lease_lifetime": "actual remote object release/final destruction/transfer/client death integrates injected-FD coordinator",
+    "reverse_ndk_endpoint": "synthetic real native object destruction ledger; no suspend implementation",
+    "authority": "real remote Binder token death recipient -> native guard destruction; terminal AuthorityLost and no rearm",
+    "client_transfer": "first native client exits while broker retains; second native client obtains object, broker clears its strong reference; second client killed and reaped -> wake counter zero",
+    "public_libpower_branches": [
+      "locked",
+      "ENABLE_NO_LOCK_BINDER_TXN"
+    ],
+    "public_libpower_source_unmodified": true,
+    "public_libpower_adapters": [
+      "logging",
+      "tracing",
+      "link-time declaration/wait discovery routes original exact /default request to dedicated actual V1 Binder endpoint"
+    ],
+    "public_libpower_outcomes": [
+      "cached null stays null",
+      "held-name deduplication",
+      "held-name success after actual service death; new name fails; release ignores failure and clears entry",
+      "explicit new server epoch does not rediscover cached dead proxy"
+    ],
+    "default_observation": {
+      "declared": true,
+      "present": true,
+      "default_replaced": false
+    },
+    "custom_registration": {
+      "name": "android.system.suspend.ISystemSuspend/pokelinux_test",
+      "result": "Security / Ok: SELinux denied for service."
+    },
+    "no_restart_flag": 8,
+    "no_restart_flag_installed_framework_verified": true,
+    "red_green": {
+      "red": "V1 metadata/identity and held one-way receipt pass; explicit release effect fails at wake count assertion",
+      "fix": "call the owned coordinator lease release once",
+      "green": "same basic scenario and full interoperability/lifetime/cache suite pass"
+    }
+  },
+  "validation": {
+    "x86_static_musl_build": true,
+    "x86_format_clippy": "pass with -D warnings",
+    "arm64_gnu_compile_clippy": "pass with -D warnings; no Binder runtime execution",
+    "scenario_outcome_count": 18,
+    "reaping": "owned clients/server/app/emulator closed; no task-owned provider or detached worker remains"
+  },
+  "images": [
+    {
+      "name": "pixel-native-radio:20261012",
+      "id": "sha256:e92d881f5bd3eeab9742b69799a0959218efe08b8ac92dd8f00a8f04653d26ad"
+    },
+    {
+      "name": "pixel-android-framework:20261011-b472",
+      "id": "sha256:138ba37b86c97e1d6654f197f50bccd61fdf4afcebe2712255ae0e3dc8cac1a9"
+    }
+  ],
+  "commands": [
+    "tools/prepare-suspend-boundary.py --verify-only",
+    "tools/build-native-suspend-boundary.sh build",
+    "tools/build-native-suspend-boundary.sh arm64-check",
+    "tools/build-suspend-boundary-peer.sh (prepared framework image)",
+    "tools/suspend-boundary-suite.sh red",
+    "tools/suspend-boundary-suite.sh green"
+  ],
+  "metadata_after_runtime": "fetch manifest subsequently added hashes of already-used public compiler/helper inputs only; exact historical manifest retained in ignored runtime-input-manifest.json",
+  "owned_files": [
+    {
+      "path": "native-suspend-boundary/Cargo.lock",
+      "bytes": 23905,
+      "sha256": "3cddbfa0d23efe0f4d650c95cd79f5d6bca1388330ef68cb59c54c945c89599a"
+    },
+    {
+      "path": "native-suspend-boundary/Cargo.toml",
+      "bytes": 406,
+      "sha256": "495802c2dfe1a7e9e01016cee4331c2e7832fc368ddfd1dec348f9e6d7b281ea"
+    },
+    {
+      "path": "native-suspend-boundary/build.rs",
+      "bytes": 829,
+      "sha256": "5e0f5abb7d199aafd314f5576d6e6bb2e793e655aa72364e8442930d9ae0c7f8"
+    },
+    {
+      "path": "native-suspend-boundary/src/bin/suspend-binder-client.rs",
+      "bytes": 2171,
+      "sha256": "90cd5814f1332a564af90e5f8427e9c34904df98314a1f0a68a027f3b33e136c"
+    },
+    {
+      "path": "native-suspend-boundary/src/bin/suspend-binder-server.rs",
+      "bytes": 2089,
+      "sha256": "a60386f3bdcb17869f0dac1e678aadfe77953990e21494e43604d4f1b8e12e3a"
+    },
+    {
+      "path": "native-suspend-boundary/src/bootstrap.rs",
+      "bytes": 3372,
+      "sha256": "256a97863d96d68103c645ba83081f6d2b67daa45f359b782dc6b9d9bce3187f"
+    },
+    {
+      "path": "native-suspend-boundary/src/frontend.rs",
+      "bytes": 7258,
+      "sha256": "fe9c143a632fe25b96815209b1ff629f3649507ad4a8008e5dd9267be3c00e58"
+    },
+    {
+      "path": "native-suspend-boundary/src/lib.rs",
+      "bytes": 475,
+      "sha256": "ce5a40a73d4e2ecc9fcbaf1938a7ec2a730895d2f742c9785e54129ea942fe2b"
+    },
+    {
+      "path": "framework/suspendpeer/AndroidManifest.xml",
+      "bytes": 372,
+      "sha256": "843627b06310bec193a4cd2c7b5d1bb1b29326a3e14b0f05fcc8105b17fa1843"
+    },
+    {
+      "path": "framework/suspendpeer/FlagOracle.java",
+      "bytes": 477,
+      "sha256": "e4154ab9a2e4504a39697644b673ff77b6c0db00cb34ffbc7374babcb5f649b3"
+    },
+    {
+      "path": "framework/suspendpeer/Peer.java",
+      "bytes": 589,
+      "sha256": "3f3078a01078b9905ccb064a9c108c8fcde102762a0df690a8f8bca769185a74"
+    },
+    {
+      "path": "framework/suspendpeer/aidl/org/pokelinux/suspendtest/ISuspendBoundaryProbe.aidl",
+      "bytes": 494,
+      "sha256": "c9fcae1d7faf349500315e875c4da6b924407f9732f86a6f2d5c8caf32921043"
+    },
+    {
+      "path": "framework/suspendpeer/aidl/org/pokelinux/suspendtest/ISuspendControl.aidl",
+      "bytes": 207,
+      "sha256": "2f3729efcbf3593b592488c81310767e908390cd2e46b8fff9b38f1b1f2fbb98"
+    },
+    {
+      "path": "framework/suspendpeer/binder_test.py",
+      "bytes": 9134,
+      "sha256": "4e89634b4aa909098f22189920051f7dbf11abb1b1e59f0ef15eae36de230699"
+    },
+    {
+      "path": "framework/suspendpeer/bootstrap.h",
+      "bytes": 5412,
+      "sha256": "5fed2f2e4c416457f52d5ba19cfe7c761d76ec0b44434ae7a6e8e2fbbab640a3"
+    },
+    {
+      "path": "framework/suspendpeer/client.cpp",
+      "bytes": 6982,
+      "sha256": "010389f85a65a34490711858f97341a5bdd672331274d2a989baf3b4b0e9df13"
+    },
+    {
+      "path": "framework/suspendpeer/fetch-manifest.json",
+      "bytes": 5950,
+      "sha256": "a714faaf0fce36dd0f07bedb4a00aa367120110dae1f974270736d1e4fcc763a"
+    },
+    {
+      "path": "framework/suspendpeer/peer.cpp",
+      "bytes": 4464,
+      "sha256": "53728d3c8fcdfc1c86ff6bf9abf6d7a102c8bd598dcfe75d240a590ef287bd36"
+    },
+    {
+      "path": "framework/suspendpeer/platform-adapters/android-base/logging.h",
+      "bytes": 120,
+      "sha256": "1757e526eabee2292a644f98b1cee9823a81ab22c5314eb9134765bda767fa3a"
+    },
+    {
+      "path": "framework/suspendpeer/platform-adapters/utils/Trace.h",
+      "bytes": 153,
+      "sha256": "69b4da6423b7b6dfe3d31527b80ff36777f7a8fbe2d8eea7954488be8251e812"
+    },
+    {
+      "path": "tools/build-native-suspend-boundary.sh",
+      "bytes": 1348,
+      "sha256": "b5f63bf310457845817e74eeaa73a7c42d662deb9a8e4d5d3ae9a4da2a3a78ce"
+    },
+    {
+      "path": "tools/build-suspend-boundary-peer.sh",
+      "bytes": 3542,
+      "sha256": "d82aae4379e50256ebe51a749f7f0e5c4396f19e1c75620c45e8d32c912de56d"
+    },
+    {
+      "path": "tools/prepare-suspend-boundary.py",
+      "bytes": 1271,
+      "sha256": "d137ae8ca97e94edde5490486c0cb12abc54c73ff526f2de1b6a79249d2b2168"
+    },
+    {
+      "path": "tools/suspend-boundary-suite.sh",
+      "bytes": 1896,
+      "sha256": "8ea8d3931e38a30bfb52ae8b4bfac91fc66dedf3534f75b82fbdd3e8e389c643"
+    },
+    {
+      "path": "docs/native-suspend-boundary.md",
+      "bytes": 8742,
+      "sha256": "10efeb599184212bb3106ad4b901ead9c3e3989a8a09ea4a77515714ac79a830"
+    }
+  ],
+  "ignored_proof_files": [
+    {
+      "path": "artifacts/suspend-boundary/runtime/red/basic-locked-stderr.txt",
+      "bytes": 26,
+      "sha256": "c92d5f04eb91d3f02d0f38199a986386bca70f9eb9143d56fbf8455e6d44c93f"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/red/basic-locked-stdout.txt",
+      "bytes": 59,
+      "sha256": "7739746071662a9a95057f962c76ead8b56c3c80213e4ff1fa24a20347add5c5"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/red/framework-bootstrap.txt",
+      "bytes": 58,
+      "sha256": "cde55ef4738d0be3420545dda0ddd3a45855d7bff0df52c88011278e5739c0a8"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/red/framework-flags.txt",
+      "bytes": 13,
+      "sha256": "7792825bbe0078e3bd4dd49431b8026dd1f9c9ab5bb9eff0918cb65cb12d3e83"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/red/identity.txt",
+      "bytes": 289,
+      "sha256": "ca16d0c472527e961d800f8575a3d50b831690fd79124effc1b0d03afbab9c9b"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/red/image.txt",
+      "bytes": 82,
+      "sha256": "71fa916fc1a09e7fbf426c8e9a70e9ed2b29a67f5c73cc432c5525f89c250eee"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/red/result.json",
+      "bytes": 197,
+      "sha256": "87aae702797e26bbc05299b44c31dfa3d359ad299711784c754e68968b74e0aa"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/red/server-1-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/red/server-1-stdout.txt",
+      "bytes": 99,
+      "sha256": "88364e52ec5d891822d84ddf15698974e656dbf2ab93565963c03cd5dd0d388f"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/red/snapshot-locked-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/red/snapshot-locked-stdout.txt",
+      "bytes": 32,
+      "sha256": "d06818ff0e24847bc0cbac7afff453f822c100d074fee77531fbafefb1333d20"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/red/startup-observation.txt",
+      "bytes": 32,
+      "sha256": "d06818ff0e24847bc0cbac7afff453f822c100d074fee77531fbafefb1333d20"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/authority-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/authority-stdout.txt",
+      "bytes": 21,
+      "sha256": "28066cf9edcc4062f3d19946856f451b8cf80b0bd392daced558976747fe9d53"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/basic-locked-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/basic-locked-stdout.txt",
+      "bytes": 149,
+      "sha256": "c8fbda103615d1328db6e790d450c6df269aea4b2e8871bfabe448b274918e1c"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/default-gate-locked-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/default-gate-locked-stdout.txt",
+      "bytes": 39,
+      "sha256": "a597f679686a496fa7d6fd1fb8ff2790c118cac05e85eebbedf1367865e18b58"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/fenced-locked-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/fenced-locked-stdout.txt",
+      "bytes": 28,
+      "sha256": "5cd48bdd88ba4ca68990f47893f404d2ecfde80d0c64eedca88d894a5575b645"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/framework-bootstrap.txt",
+      "bytes": 58,
+      "sha256": "cde55ef4738d0be3420545dda0ddd3a45855d7bff0df52c88011278e5739c0a8"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/framework-flags.txt",
+      "bytes": 13,
+      "sha256": "7792825bbe0078e3bd4dd49431b8026dd1f9c9ab5bb9eff0918cb65cb12d3e83"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/holder-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/holder-stdout.txt",
+      "bytes": 18,
+      "sha256": "7387e99e3b9e1d9d9bdb3474ed6a9a70ee42b491a648598a28fbc76e23845f6b"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/identity.txt",
+      "bytes": 289,
+      "sha256": "ca16d0c472527e961d800f8575a3d50b831690fd79124effc1b0d03afbab9c9b"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/image.txt",
+      "bytes": 82,
+      "sha256": "71fa916fc1a09e7fbf426c8e9a70e9ed2b29a67f5c73cc432c5525f89c250eee"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/null-cache-locked-stderr.txt",
+      "bytes": 70,
+      "sha256": "7636c0a08e9720d26591ec4d905136ead01fa0e1faaf056ee575ae3eea7c8be4"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/null-cache-locked-stdout.txt",
+      "bytes": 26,
+      "sha256": "1d1f49710cfdfb4ffc0230d90707dcb2e04e1e98553b5ed867422775095c5edb"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/null-cache-unlocked-stderr.txt",
+      "bytes": 70,
+      "sha256": "7636c0a08e9720d26591ec4d905136ead01fa0e1faaf056ee575ae3eea7c8be4"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/null-cache-unlocked-stdout.txt",
+      "bytes": 26,
+      "sha256": "1d1f49710cfdfb4ffc0230d90707dcb2e04e1e98553b5ed867422775095c5edb"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/power-cache-locked-stderr.txt",
+      "bytes": 286,
+      "sha256": "72932bd0bdc6be7a83585bcf603623e187cda404de6a878288bb83e1ffd7f540"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/power-cache-locked-stdout.txt",
+      "bytes": 83,
+      "sha256": "65174afacec4b71d39be6373ab0c4e84be88219bacd64ace8d1273ddec5ed1ff"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/power-cache-unlocked-stderr.txt",
+      "bytes": 286,
+      "sha256": "72932bd0bdc6be7a83585bcf603623e187cda404de6a878288bb83e1ffd7f540"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/power-cache-unlocked-stdout.txt",
+      "bytes": 83,
+      "sha256": "65174afacec4b71d39be6373ab0c4e84be88219bacd64ace8d1273ddec5ed1ff"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/result.json",
+      "bytes": 823,
+      "sha256": "c2bbd2627c1f96b6ce9427d1e8526740d1d394b7ba1124ab34b34077d93f3ec5"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/rust-client-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/rust-client-stdout.txt",
+      "bytes": 109,
+      "sha256": "8522e51093ba657c99c53183bc818d1a7e04b94881afdf1311813855f1be3543"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/server-1-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/server-1-stdout.txt",
+      "bytes": 99,
+      "sha256": "ee98912aac490dfb5c0be904bd34bfd105b6bcb9f0cdae4efbdfbce8e9033a74"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/server-2-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/server-2-stdout.txt",
+      "bytes": 99,
+      "sha256": "2a658ddf9fbe7bfc83f0d3d33092a3aec2deb78a642dde81e26792c67933d2a9"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/server-3-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/server-3-stdout.txt",
+      "bytes": 99,
+      "sha256": "756e819a1a5daecfdbb4f6c98b0985a1e8e4d0412a10d60f0ffd7df59bbcf13b"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/snapshot-locked-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/snapshot-locked-stdout.txt",
+      "bytes": 23,
+      "sha256": "dbf806c62e724dde8e0d439267cf20c2e6c3d90be91ca82c249d01a4fa930c7e"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/transfer-owner-locked-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime/green/transfer-owner-locked-stdout.txt",
+      "bytes": 20,
+      "sha256": "4587728ffd251832a918643124d81b3fcd6410fcd4169ae6889006699a13a164"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime-abi-startup.log",
+      "bytes": 572,
+      "sha256": "4177f8bed4fcb169c3055460586a37fcb9ba47e1744102cf43e6f2208150536b"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime-broker-restart.log",
+      "bytes": 620,
+      "sha256": "e599cad3dd608316f9ba19c8264861dd83f554f6d75b8288ec05281986927667"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime-red.log",
+      "bytes": 60,
+      "sha256": "fa3d6419c365bec686c099e29e730e134a700f9fc2d59afacbd7d9964459b437"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime-green.log",
+      "bytes": 479,
+      "sha256": "a7f4ba2237bb0e8df7e4c66f2a94de20c9ba491505b8da873e83919f4fadf4fb"
+    },
+    {
+      "path": "artifacts/suspend-boundary/red-build-evidence.json",
+      "bytes": 1634,
+      "sha256": "38eb217086e65f143017d0aab8395d7fb15538d2eaac51c5e38096cb46bd28d9"
+    },
+    {
+      "path": "artifacts/suspend-boundary/ndk-build-evidence.json",
+      "bytes": 3489,
+      "sha256": "e53f23d84df7984c7d2794577e81f07b45cadbdf31b274fca743026f01ed03d7"
+    },
+    {
+      "path": "artifacts/suspend-boundary/rust-build.log",
+      "bytes": 412,
+      "sha256": "38d8de7f9635ec54641fadc21fc0883f70e918e80ab5d2300578b469c7d5fe46"
+    },
+    {
+      "path": "artifacts/suspend-boundary/arm64-build.log",
+      "bytes": 1210,
+      "sha256": "8610411aed1c6c1db5f3fe0ac5a4a9e90d2ab516a04f7d79b4313df9e75b8567"
+    },
+    {
+      "path": "artifacts/suspend-boundary/runtime-input-manifest.json",
+      "bytes": 3732,
+      "sha256": "3bb64950e898ec55b5f1b27828250f1230600d164170466adcf0d76d39801698"
+    },
+    {
+      "path": "artifacts/suspend-boundary/peer.apk",
+      "bytes": 651791,
+      "sha256": "86a1b22064ebc29cb894078a7830c66c2f0d707fbc6e60e6135449f2bba989d8"
+    },
+    {
+      "path": "artifacts/suspend-boundary/suspend-ndk-client-locked",
+      "bytes": 5410696,
+      "sha256": "bfb8ff99ec390eae3264690edd88977d4c5813a670df1564ac48246d13083aaf"
+    },
+    {
+      "path": "artifacts/suspend-boundary/suspend-ndk-client-unlocked",
+      "bytes": 5415080,
+      "sha256": "ff00f5d94eedc05ded3f713e280010bd02d4bc4c476b8b1909bbfee63037dd58"
+    },
+    {
+      "path": "artifacts/suspend-boundary/rust/x86_64-unknown-linux-musl/release/suspend-binder-server",
+      "bytes": 1325440,
+      "sha256": "3fc3711a65f67c0d51685767f73d5fc1bd51af6d8d60a5861008754f24b3704a"
+    },
+    {
+      "path": "artifacts/suspend-boundary/rust/x86_64-unknown-linux-musl/release/suspend-binder-client",
+      "bytes": 1235944,
+      "sha256": "90b33957988ede77f1ce4896e1dca4ee6d71055ce7286d9d3588e7dbc38a4f17"
+    },
+    {
+      "path": "artifacts/suspend-boundary/rust/aarch64-unknown-linux-gnu/release/suspend-binder-server",
+      "bytes": 1303352,
+      "sha256": "022a22e7537bfa8d8c473b1c3f41fc8247d1807eece5e7bb95e2ca10358fb691"
+    },
+    {
+      "path": "artifacts/suspend-boundary/rust/aarch64-unknown-linux-gnu/release/suspend-binder-client",
+      "bytes": 1193200,
+      "sha256": "2970d86439c4e49c2776b39d3d0a2cc9f149798e74ffe781390ac05f089e2459"
+    },
+    {
+      "path": "artifacts/suspend-boundary/rust/x86_64-unknown-linux-musl/release/build/pokelinux-suspend-boundary-b4d454aec05ed702/out/suspend.rs",
+      "bytes": 86134,
+      "sha256": "79654e5bdba071ec4a02966b6e8c910f5788440245d82a3df39463353f79eb76"
+    },
+    {
+      "path": "artifacts/suspend-boundary/rust/aarch64-unknown-linux-gnu/release/build/pokelinux-suspend-boundary-a646ca661345c8e2/out/suspend.rs",
+      "bytes": 86134,
+      "sha256": "79654e5bdba071ec4a02966b6e8c910f5788440245d82a3df39463353f79eb76"
+    },
+    {
+      "path": "artifacts/suspend-boundary/ndk/org/pokelinux/suspendtest/ISuspendControl.cpp",
+      "bytes": 15090,
+      "sha256": "6663ca29bd2cad916594ad5ba0c9b30511ae03d189eefad9455f5afdc12b9179"
+    },
+    {
+      "path": "artifacts/suspend-boundary/ndk/org/pokelinux/suspendtest/ISuspendBoundaryProbe.cpp",
+      "bytes": 23229,
+      "sha256": "928a09984f95fab8ddd31f93692713801bfa637a264b9ab7a7cb70a63aec7bb8"
+    },
+    {
+      "path": "artifacts/suspend-boundary/ndk/android/system/suspend/ISystemSuspend.cpp",
+      "bytes": 11706,
+      "sha256": "67d952b82cf9daea61837a1d4fd45548f32dfcae2f8e40f46d9a9d9bb92d48b8"
+    },
+    {
+      "path": "artifacts/suspend-boundary/ndk/android/system/suspend/IWakeLock.cpp",
+      "bytes": 9605,
+      "sha256": "4dad34b25cacc2d57d0082c1491814068739b69d371b5e37d55c173010ba3877"
+    },
+    {
+      "path": "artifacts/suspend-boundary/ndk/android/system/suspend/WakeLockType.cpp",
+      "bytes": 721,
+      "sha256": "2439540cd8fa44e17eb5c9d22fb80c9c8dee551962a30db24d62547e11fae0e6"
+    }
+  ],
+  "remaining_gates": [
+    "standard default registration/VINTF/SELinux for an installed native service",
+    "production principals, revocation and lifecycle authority; test UID/broker/control must not become production policy",
+    "owned process supervision for blocked Binder and backend calls; no blind retry/restart of uncertain physical backend",
+    "actual ARM64 Binder and retained factory client qualification without proprietary publication",
+    "actual kernel/device wakeup_count/userspace-abort/pm_fs_abort and suspend/resume hardware profile"
+  ]
+}
