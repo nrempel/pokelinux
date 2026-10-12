@@ -93,3 +93,27 @@ radio response transaction, all malformed inputs, or callback reassembly.
 The generated binding is available to native code but is not yet wired into a
 production vendor callback receiver. The build script runs its tests on static
 Linux x86-64 and ARM64/QEMU.
+
+## Explicit response argument decoder
+
+`decode_response_arguments` now decodes transaction 1 and 2 into `RadioResponse`
+events. The caller must first validate the Binder interface token; this function
+starts at the argument boundary. Raw and segmented responses have distinct kinds.
+The two segmented integers remain opaque parameters until sender-side semantics
+are verified. Unlike the original empty segmented handler, decoding does not
+silently discard this input.
+
+[Source and fixture provenance](evidence/response-arguments-provenance.json)
+records the tested native decoder.
+
+Four argument fixtures were built with Android Parcel and the original metadata
+class, then exercised through the original receiver. Native tests run the actual
+Rust decoder through rsbinder's Parcel reader. They check preserved metadata and
+payload bytes, explicit segmented events, rejection of every truncated prefix,
+unknown transaction codes, trailing bytes, null metadata, and null/oversized
+payload lengths. All fixture bytes can be reproduced independently from standard
+framing and synthetic integers/bytes; they contain no copied vendor payload.
+
+The decoder neither consumes pending requests nor queues callbacks. It preserves
+metadata without claiming its modem semantics. It is not yet connected to a
+production Binder receiver, and does not implement reassembly or response policy.

@@ -1,0 +1,21 @@
+{
+  "scope": "Native argument decoder through real rsbinder Parcel reader; not a cross-process vendor callback",
+  "targets": [
+    "x86_64-unknown-linux-musl",
+    "aarch64-unknown-linux-gnu (QEMU user)"
+  ],
+  "fixture_cases": 4,
+  "fixtures_contain_only": "Independently reproducible standard framing and synthetic integers/bytes",
+  "explicit_segment_events": true,
+  "vendor_segment_parameter_semantics_verified": false,
+  "pending_request_policy_implemented": false,
+  "phone_accessed": false,
+  "sources_sha256": {
+    "framework/shannon-oracle/ResponseDispatchOracle.java": "5d47ec8b8241c53b1f967ee7600262718bba741b15f87278210de73d206c3012",
+    "native-radio/src/response.rs": "69c81928998b9399c2b9085bf713403f747bffdcbfd457a9c358b4eef1f37589",
+    "native-radio/src/lib.rs": "aa47b13f116bf3a9349b130cc132f25370a91c5ddcecb87d3bb4e27bbb984a72",
+    "native-radio/tests/response_arguments.rs": "f98b32af369ae1571bf14e51acf7b6123702f893e4563c5abfdf370c2eaf8a65",
+    "native-radio/tests/fixtures/response-arguments.tsv": "1460c6865a971a96569305374062ffee923153075c421b49d6e70eb7345cd68e",
+    "native-radio/Cargo.lock": "c5904ffe40fafd59fe9c7a521f4412d49808131bef831d78ccd3b78c8e1bc8f7"
+  }
+}

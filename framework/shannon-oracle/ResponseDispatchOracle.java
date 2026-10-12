@@ -62,10 +62,17 @@ public final class ResponseDispatchOracle {
             Parcel data = Parcel.obtain();
             try {
                 data.writeInterfaceToken(VENDOR + "IOemSlsiRadioExternalRes");
+                int argumentsStart = data.dataPosition();
                 data.writeTypedObject(info, 0);
                 data.writeByteArray(new byte[]{1, 2, 3});
                 if (test == 2) { data.writeInt(0); data.writeInt(3); }
                 if (test == 3) data.writeInt(123);
+                byte[] encoded = data.marshall();
+                StringBuilder hex = new StringBuilder();
+                for (int offset = argumentsStart; offset < encoded.length; offset++) {
+                    hex.append(String.format(java.util.Locale.ROOT, "%02x", encoded[offset] & 255));
+                }
+                System.out.println("responseArgs\t" + test + "\t" + (test == 2 ? 2 : 1) + "\t" + hex);
                 data.setDataPosition(0);
                 boolean rejected = false;
                 try {
