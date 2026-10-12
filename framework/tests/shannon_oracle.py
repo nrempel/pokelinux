@@ -45,3 +45,15 @@ rows=[line for line in output.splitlines() if line.startswith('binderSegment\t')
 assert rows==['binderSegment\t'+str(i)+'\tPASS' for i in range(5)],output
 assert 'binderSegmentRejected\tPASS' in output,output
 print('Original Shannon Binder proxies executed: 10 payload cases and 2 rejected transactions',flush=True)
+
+output=adb('shell','env','CLASSPATH='+root+'/oracle.jar:'+root+'/shannon.apk','app_process','/system/bin','org.omarchy.audit.SegmentationOracle')
+Path('artifacts/ims-native-audit/original-segmentation-output.txt').write_text(output)
+rows=[line for line in output.splitlines() if line.startswith('segments\t')]
+assert rows==[
+ 'segments\t2049\t2048,1\t2049',
+ 'segments\t4095\t2048,2047\t4095',
+ 'segments\t4096\t2048,0\t2048',
+ 'segments\t4097\t2048,2048,1\t4097',
+ 'segments\t6144\t2048,2048,0\t4096',
+],output
+print('Original Shannon segmentation executed: 5 boundaries; exact multiples lose final chunk',flush=True)

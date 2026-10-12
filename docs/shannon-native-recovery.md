@@ -159,7 +159,7 @@ as request serial, client ID, request ID and instance ID. The trailing fields
 are the zero-based segment index and the complete payload length. This field
 meaning is static caller evidence, separate from the executed proxy checks.
 
-**Open boundary finding:** `sendMultiFrame` only enters its loop for payloads
+**Initial static boundary finding (runtime follow-up below):** `sendMultiFrame` only enters its loop for payloads
 larger than 2,048 bytes. It computes the last segment length using remaining
 bytes AND 2,047. The DEX has this literal mask at code-unit offset `0x0048`
 (method code offset `0x19426c`), consistent with REA. For a 4,096-byte input,
@@ -169,3 +169,37 @@ runtime defect or proof of a reachable carrier failure. Before implementing
 Rust segmentation, execute this original method with controlled collaborators
 and inspect its dispatch caller to determine reachable lengths. Do not silently
 copy the mask into a native implementation or assume a fix is protocol-safe.
+
+### Runtime confirmation of the boundary defect
+
+`SegmentationOracle` now executes the original `OemRIL.sendMultiFrame`, original
+AIDL adapter, and original generated Binder proxy against a local capture endpoint.
+It bypasses constructors with a test-only allocator and injects the request map,
+client/instance identifiers, original DataWriter and the original proxy connection.
+This avoids service startup; it does not verify constructor or lifecycle behavior.
+The capture validates all routing fields, zero-based indices, full-length metadata,
+and each delivered byte against the corresponding input position.
+
+| Input bytes | Captured segment lengths | Delivered bytes |
+|---:|---|---:|
+| 2049 | 2048, 1 | 2049 |
+| 4095 | 2048, 2047 | 4095 |
+| 4096 | 2048, 0 | 2048 |
+| 4097 | 2048, 2048, 1 | 4097 |
+| 6144 | 2048, 2048, 0 | 4096 |
+
+All five observations were reproduced by original-code execution in the owned
+Harbour emulator. [Provenance and transcript](evidence/segmentation-provenance.json)
+record the test sources and output hashes. The existing 207 serializer cases
+and 12 proxy cases also passed in this run.
+
+REA and DEX inspection of `invokeRequestRaw` confirm that input lengths greater
+than 2,048 select this method without an exact-multiple exclusion. This establishes
+the dispatch condition statically; the runtime oracle invokes sendMultiFrame
+directly. It does not establish that a real IMS request has either affected size,
+that the vendor service accepts these requests, or that a carrier failure results.
+
+The native implementation must preserve the complete payload. These observations
+are regression evidence about the original implementation, not a requirement to
+reproduce its data loss. A corrected splitter still needs vendor-endpoint and
+hardware validation before protocol compatibility can be claimed.

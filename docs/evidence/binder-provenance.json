@@ -10,7 +10,7 @@
   "carrier_ims_verified": false,
   "sha256": {
     "framework/shannon-oracle/BinderOracle.java": "f5034d5c99c528b9745bd72a0d5f569cfce0305fc82fefe1c6d6bc3bb98983c5",
-    "framework/tests/shannon_oracle.py": "303740d091811b02aa54eb4395d609698fa5a65d523a5ba327f8466257378ca3",
+    "framework/tests/shannon_oracle.py": "5374929ea7a9515af854eb948c41c1bfdecd91b1d125b098206a215e3557a604",
     "tools/build-shannon-oracle.sh": "9b4ca064b9462179e87d7f1a5af5f36301b4072d9d01c23cd3f447a651fd0a69"
   },
   "original_output_sha256": "0ac677f72bafdbd6a4fe58490a0293ec52680c0167c6179b26c05bc4ca5cb59d",

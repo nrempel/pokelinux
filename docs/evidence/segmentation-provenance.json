@@ -1,0 +1,24 @@
+{
+  "factory_apk_sha256": "8b017599727398e80df5ab618d648890dcdc34b5fe2ba71fb2331e51bd8b8879",
+  "scope": "Original OemRIL.sendMultiFrame with injected collaborators, original AIDL adapter and proxy, and in-process Binder capture in owned Android emulator",
+  "original_code_executed": true,
+  "boundary_cases": 5,
+  "constructors_bypassed": true,
+  "service_startup_verified": false,
+  "phone_accessed": false,
+  "vendor_service_verified": false,
+  "carrier_impact_verified": false,
+  "sha256": {
+    "framework/shannon-oracle/SegmentationOracle.java": "21b9e2b43d1fa4dac95c4aa5da8855ed04485a67e68f9ed903bde59a861172e8",
+    "framework/tests/shannon_oracle.py": "5374929ea7a9515af854eb948c41c1bfdecd91b1d125b098206a215e3557a604",
+    "tools/build-shannon-oracle.sh": "9b4ca064b9462179e87d7f1a5af5f36301b4072d9d01c23cd3f447a651fd0a69"
+  },
+  "original_output_sha256": "77d5c76cd451c7f01bf82540ac8b95315670c85a61dca32a4467884147592986",
+  "output": [
+    "segments\t2049\t2048,1\t2049",
+    "segments\t4095\t2048,2047\t4095",
+    "segments\t4096\t2048,0\t2048",
+    "segments\t4097\t2048,2048,1\t4097",
+    "segments\t6144\t2048,2048,0\t4096"
+  ]
+}
