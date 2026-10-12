@@ -147,3 +147,27 @@ These receiver transactions are local dispatches, not kernel-crossing vendor
 calls. The separate service-manager cross-process callback test still passes.
 ARM64 argument tests pass, but ARM64 receiver IPC, vendor registration, sender
 identity/permissions, service death and production session recovery remain open.
+
+## Original registration and teardown contract
+
+The original command proxy now runs against synthetic Android Binder capture
+endpoints in the owned emulator. Five cases verify transaction 5 registration:
+response handle, indication handle, client-name string, synchronous exception
+header and returned signed client ID. Handle identity and order are checked.
+A synthetic SecurityException is propagated; rejected transactions produce
+RemoteException without automatic retries. Null fields and a negative returned
+ID are preserved by the proxy; this does not establish that a vendor accepts them.
+
+Teardown is transaction **1**, with one client-ID integer and the one-way flag.
+There is no reply parcel or completion acknowledgement. Successful submission
+therefore cannot establish that callbacks have stopped. The native session must
+invalidate its local callback generation and pending requests independently of
+remote cleanup. A synchronous registration error must not trigger blind retries:
+a transport failure can leave the remote registration outcome unknown.
+
+[Registration evidence](evidence/registration-provenance.json) records source,
+APK, built oracle and output identities. All previous original-bytecode tests
+also passed in this run. These are local original-proxy captures, not native
+registration or cross-process vendor qualification. The next integration gate is
+a separate synthetic service process exercising the production native adapter,
+with explicit test-only discovery permissions, callback delivery and death.

@@ -69,3 +69,9 @@ Path('artifacts/ims-native-audit/original-response-dispatch-output.txt').write_t
 rows=[line for line in output.splitlines() if line.startswith('responseDispatch\t')]
 assert rows==['responseDispatch\t'+str(i)+'\tPASS' for i in range(4)],output
 print('Original response receiver executed: match, unknown serial, ignored segment, trailing-data rejection',flush=True)
+
+output=adb('shell','env','CLASSPATH='+root+'/oracle.jar:'+root+'/shannon.apk','app_process','/system/bin','org.omarchy.audit.RegistrationOracle')
+Path('artifacts/ims-native-audit/original-registration-output.txt').write_text(output)
+rows=[line for line in output.splitlines() if line.startswith('registration\t')]
+assert rows==['registration\t'+str(i)+'\tPASS' for i in range(5)],output
+print('Original registration proxy executed: handles, returned ID, exception, rejection and one-way teardown',flush=True)

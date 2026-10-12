@@ -1,0 +1,28 @@
+{
+  "scope": "Original command proxy executed against synthetic in-process Android Binder endpoints",
+  "apk_sha256": "8b017599727398e80df5ab618d648890dcdc34b5fe2ba71fb2331e51bd8b8879",
+  "oracle_jar_sha256": "7f7667834473be17b4f5590f525d4e51da16d677bc86340021de64b056666e90",
+  "sources": {
+    "framework/shannon-oracle/RegistrationOracle.java": "06946cd5be74ad304ec54889435045df736d34fa8ba1b6cda6128d603c8fd42a",
+    "framework/tests/shannon_oracle.py": "98b297b62b807b17f64fa008c97a165d72e8f24830a860146c8731005cb18368"
+  },
+  "output_sha256": "63e0ec8efdb8d44a4e60157ec2423732282ef9507bc7147eedb77facb5f22750",
+  "cases": [
+    "nonnull callback handle identity and client name; returned ID 42",
+    "null callback handles and name; returned ID -1 preserved",
+    "SecurityException propagated",
+    "registration transact false becomes RemoteException, no retry",
+    "clear code 1, one-way, no reply, signed client ID preserved; rejection becomes RemoteException, no retry"
+  ],
+  "environment": {
+    "owned_sdk37_x86_emulator": true,
+    "selinux": "Enforcing",
+    "phone_accessed": false
+  },
+  "limits": [
+    "In-process capture, not cross-process radio IPC",
+    "Synthetic peer acceptance does not prove vendor acceptance or client ID validity",
+    "No registration policy, callback invocation, teardown completion or vendor service tested"
+  ],
+  "reproduce": "bash tools/framework-suite.sh shannon-codec"
+}
