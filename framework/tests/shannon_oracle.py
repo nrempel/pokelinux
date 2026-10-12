@@ -63,3 +63,9 @@ Path('artifacts/ims-native-audit/original-response-info-output.txt').write_text(
 rows=[line.split('\t') for line in output.splitlines() if line.startswith('responseInfo\t')]
 assert len(rows)==7 and all(len(row)==7 and len(row[-1])==56 for row in rows),output
 print('Original vendor response Parcelable executed: 7 boundary fixtures',flush=True)
+
+output=adb('shell','env','CLASSPATH='+root+'/oracle.jar:'+root+'/shannon.apk','app_process','/system/bin','org.omarchy.audit.ResponseDispatchOracle')
+Path('artifacts/ims-native-audit/original-response-dispatch-output.txt').write_text(output)
+rows=[line for line in output.splitlines() if line.startswith('responseDispatch\t')]
+assert rows==['responseDispatch\t'+str(i)+'\tPASS' for i in range(4)],output
+print('Original response receiver executed: match, unknown serial, ignored segment, trailing-data rejection',flush=True)

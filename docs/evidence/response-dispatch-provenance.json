@@ -1,0 +1,29 @@
+{
+  "factory_apk_sha256": "8b017599727398e80df5ab618d648890dcdc34b5fe2ba71fb2331e51bd8b8879",
+  "scope": "Original response Stub.onTransact and concrete receiver with injected OemRIL pending-request map; local dispatch only",
+  "cases": [
+    "matching serial removes pending request despite mismatched metadata",
+    "unknown serial leaves pending request",
+    "segmented response leaves pending request",
+    "trailing data rejected before request removal"
+  ],
+  "constructors_bypassed": [
+    "OemRIL",
+    "OemRIL.RILRequest"
+  ],
+  "callback_delivery_to_application_verified": false,
+  "vendor_sender_flags_verified": false,
+  "vendor_service_verified": false,
+  "phone_accessed": false,
+  "sources_sha256": {
+    "framework/shannon-oracle/ResponseDispatchOracle.java": "e651b0dfdd9a6a4d6f07dc201adcfc67a48ede7ed8bc19b50967c48973bdcb96",
+    "framework/tests/shannon_oracle.py": "8d5a615a2d3204eea3a6fd1a67cb0f571d0b80bee74ba9e9f8a9f4faadfdcd78",
+    "tools/build-shannon-oracle.sh": "9b4ca064b9462179e87d7f1a5af5f36301b4072d9d01c23cd3f447a651fd0a69"
+  },
+  "output": [
+    "responseDispatch\t0\tPASS",
+    "responseDispatch\t1\tPASS",
+    "responseDispatch\t2\tPASS",
+    "responseDispatch\t3\tPASS"
+  ]
+}

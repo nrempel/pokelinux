@@ -262,3 +262,36 @@ all five fields from them. The tests also reject selected invalid sizes and
 trailing data. This validates metadata encoding independently of the vendor
 service. It does not establish response status meanings, length consistency with
 payloads, request matching, segmented response assembly or carrier operation.
+
+## Executed response receiver behavior
+
+The APK's response Proxy retains only its constructor and asBinder; its sending
+methods are absent. REA's missing-method result was confirmed against the DEX.
+Consequently no original response-sender flags are claimed from this APK.
+
+`ResponseDispatchOracle` constructs the original concrete response Stub and
+invokes its original onTransact with synthetic parcels. OemRIL and its pending
+request object are allocated without service-starting constructors. A controlled
+request map supplies one pending request, serial 42. The request has no Android
+Message target, so these tests observe request completion, not app delivery.
+
+Four cases pass in the owned emulator:
+
+| Input | Observed pending-request behavior |
+|---|---|
+| Raw response with serial 42 | Removes the request, even with slotId, rilcMsgId and length differing from local request/payload data |
+| Raw response with serial 99 | Retains request 42 |
+| Segmented response for serial 42 | Retains request 42; original method is empty in both REA and DEX |
+| Raw response with extra trailing integer | BadParcelableException before request removal |
+
+[Provenance](evidence/response-dispatch-provenance.json) records the exact oracle
+and synthetic result transcript. All preceding original-code checks also passed
+in this run. The segmented callback's empty implementation is not evidence that
+segmented responses never occur, or a requirement to reproduce silent loss in
+Rust. Whether the vendor sends such responses remains unknown.
+
+The serial lookup is verified for these controlled cases. This does not validate
+error delivery, metadata policy, callbacks to a real caller, races, request-timeout
+handling, cross-process vendor dispatch, service death or modem operation.
+The parcel invocation supplies a one-way flag locally; it does not establish the
+flags used by the unavailable vendor sender.
