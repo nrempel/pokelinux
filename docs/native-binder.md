@@ -12,7 +12,9 @@ implementation provides kernel Binder on Linux. The client does not enable its
 socket RPC transport or link AOSP libbinder. Upstream source is Apache-2.0;
 transitive dependencies retain their own licenses.
 
-`native-radio` currently contains a kernel IPC qualification binary. It opens
+`native-radio` contains a kernel IPC qualification binary and a request transport
+library now tested against a separate synthetic Java peer (see the final section).
+The original qualification binary opens
 `/dev/binder`, checks the context manager descriptor, pings it, looks up the
 existing `activity` service, checks its descriptor and pings that remote object.
 It also subscribes to activity-service registration notifications, receives a
@@ -47,8 +49,9 @@ Results are written under ignored `artifacts/native-radio/`.
 
 ## Still required
 
-- Generate or implement the recovered vendor radio interface and callbacks.
-- Connect the native lossless request planner through this real transport.
+- Complete the native indication endpoint and production session owner.
+- Qualify the request transport against the actual vendor service; synthetic
+  cross-process transport now passes as documented below.
 - Verify cross-process callback objects, one-way requests, error propagation,
   Binder death, request correlation and bounded shutdown.
 - Verify the Pixel vendor service's interface version, service discovery,
@@ -192,3 +195,39 @@ The inspected methods are `IOemSlsiRadioExternalInd.Stub.onTransact`,
 `OemSlsiRadioExternalIndAidl.OemSlsiRadioExternalIndStub.rilExternalRawIndicationSeg`,
 and `OemSlsiRadioExternalIndBase.SegmentRilMessage.addDataSegment`. Raw decompiler
 outputs remain excluded from the public repository.
+
+## Native request transport across processes
+
+`RadioTransport` now submits recovered registration, raw/segmented request and
+teardown transactions through rsbinder. It uses `native-ims::RequestParts`, so
+4096-byte payloads retain the final full segment. It preserves registration
+exceptions, never retries sends, and reports how many earlier parts were submitted
+when a request fails. Submission is not modem acceptance. Discovery, session
+ownership, deadlines and recovery are still required.
+
+The independent Java peer runs as an untrusted app. A test-only instrumentation
+watcher transfers its Binder handle to the static musl client running as shell.
+The installed framework's original proxies verify the exact bootstrap layout
+before the test starts. Framework transaction 51 and the observed status trailer
+are confined to this pinned SDK37 harness. The library contains no framework
+bootstrap ABI.
+
+With SELinux enforcing, the test passes registration with distinct callback
+handles, a nested metadata query, response submission before the registration
+reply, and byte-exact payload round trips at 0, 2048, 2049 and 4096 bytes. The peer
+checks request fields and one-way flags (separately accounting for the transport's
+TF_ACCEPT_FDS flag). A separate test-only query confirms the peer processed clear;
+that query is not part of the vendor protocol.
+
+[Provenance and limits](evidence/radio-ipc-provenance.json) identify the executable,
+APK, framework, sources and test domains. Reproduce after the standard preparation:
+
+```sh
+bash tools/build-native-radio.sh build
+bash tools/framework-suite.sh radio-ipc
+```
+
+The indication handle is currently a test-only descriptor endpoint; indication
+delivery is not implemented by this test. This is actual cross-process native
+request/response IPC, but not an actual vendor service or production session
+recovery result. [Remaining integration gates](native-radio-integration.md).

@@ -1,0 +1,66 @@
+{
+  "scope": "Native Rust request transport and response receiver across real Binder to an independent synthetic Java peer",
+  "image": "google/sdk_gphone64_x86_64/emu64xa:17/CE2A.260420.019/15611780:userdebug/dev-keys",
+  "binary_sha256": "76d8609d4280317d85003dd7225bdf0cc81a91c62b11e8fe6608aefaf9ca16a1",
+  "peer_apk_sha256": "18db658eed2403c7d5d798e01e65ead9ff8fe502119f37b64f01ed0ff92b69cd",
+  "framework_jar_sha256": "cfd8c422620cf584b5f190d8e5a211b83468a5ffd2bdb5cad1e0e410a22f30d8",
+  "sources_sha256": {
+    "native-radio/Cargo.toml": "38dfd1fab26d8e31fc1b5177932b1ac422b50b6573a476e13ff7fe908437cd8f",
+    "native-radio/Cargo.lock": "1ce6cd35630168f143ca12fd5166237405124499b5f7a3d975310a17ab7b145a",
+    "native-radio/src/transport.rs": "3877b4cb5be0e28c5d87cf8d5151825f09c5ef4605eb5df6c9936f80816fc069",
+    "native-radio/src/bin/radio-ipc-test.rs": "db21b206e57f8332967472593d413a84e69f24611b071111c40aca793a904de1",
+    "native-radio/src/receiver.rs": "25351ec151e666ce105a573c067583280fb95e95bc6ec55172dadb1fd45dd5c6",
+    "native-radio/src/response.rs": "69c81928998b9399c2b9085bf713403f747bffdcbfd457a9c358b4eef1f37589",
+    "native-ims/src/requests.rs": "ad0b411f0f385d620df18a7a206034199e9cf9d390b13c13925f19e347cba26f",
+    "framework/radiopeer/Peer.java": "8c6c99bc82b21dc4348999d1672fa2b342d9343e8b1b5864801e522408d03dda",
+    "framework/radiopeer/AndroidManifest.xml": "b2066bdd722d167cea15bda4ea5d555ca0971d60e8630afdef7c13b03b14e187",
+    "framework/shannon-oracle/FrameworkBootstrapOracle.java": "046b873836aa94ff22ef2dd6e351595d7cdd98df4395638c2e4861b091a50980",
+    "framework/tests/radio_ipc.py": "3f412f11e2b9ede9172571b3ab5547dfe350ce1bf0c9da9e3277637ec275cbbc",
+    "tools/build-radio-peer.sh": "c207fceae4ba3a82ffc1a4337a1c702027d9315b110e40aaa94f5e3dc76eef20",
+    "tools/build-native-radio.sh": "2541020554e241d2209de80f29e1586a79cf2121e07be66a52b0df424863474a",
+    "tools/framework-suite.sh": "88b668ba7d0a27af39694883a738d9814125f7c8067aa053607e6deff6f028fc"
+  },
+  "output_sha256": "46d2cea93639d564800f5a49544a28c1aa23f1134d4fca24294e3f820f13b5d4",
+  "client_uid": 2000,
+  "client_selinux_domain": "u:r:shell:s0",
+  "peer_selinux_domain": "u:r:untrusted_app:s0:c234,c256,c512,c768",
+  "selinux_enforcing": true,
+  "dynamic_elf_interpreter": false,
+  "bootstrap_abi_capture": [
+    "startInstrumentation\t51\tPASS",
+    "instrumentationStatus\t1\tPASS"
+  ],
+  "verified": [
+    "framework-to-native live handle transfer",
+    "distinct response and indication Binder handles during registration",
+    "nested synchronous response metadata call before registration reply",
+    "one-way raw response submitted by peer before registration reply",
+    "returned client ID 42",
+    "full byte equality and metadata correlation for 0, 2048, 2049, 4096 byte payloads",
+    "raw request count 2 and segmented request count 4 observed in peer",
+    "one-way teardown observed through separate test-only query"
+  ],
+  "not_verified": [
+    "actual vendor endpoint, client naming policy and permissions",
+    "production indication event decoding: test uses a descriptor-only handle",
+    "session owner, pending-request failure policy, death and reconnect",
+    "one-way overflow and malformed remote transaction policy",
+    "hung registration cancellation or worker isolation",
+    "ARM64 kernel IPC",
+    "modem, IMS, carrier, audio, graphics, camera, power"
+  ],
+  "phone_accessed": false,
+  "reproduce": [
+    "bash tools/build-native-radio.sh build",
+    "bash tools/framework-suite.sh radio-ipc"
+  ],
+  "build_checks": [
+    "locked offline clippy for all musl targets",
+    "locked offline x86_64-musl and aarch64-GNU/QEMU codec tests",
+    "static ELF interpreter absence for radio-ipc-test"
+  ],
+  "regression_checks": [
+    "existing real service-manager callback test passed",
+    "all five response receiver dispatch-wrapper tests passed in owned emulator"
+  ]
+}

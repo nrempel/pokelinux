@@ -31,7 +31,7 @@ case "$action" in
   docker build -t "$image" -f build-support/Dockerfile.framework build-support
   docker run --rm --network none --cpus 4 --memory 6g --pids-limit 512 --cap-drop ALL --security-opt no-new-privileges --user "$(id -u):$(id -g)" -v "$PWD:/workspace" "$image" bash tools/build-framework.sh
   ;;
- test|enrollment|callui|gui|plugin|direct|journal|radio-baseline|rust|shannon-codec|binder-kernel)
+ test|enrollment|callui|gui|plugin|direct|journal|radio-baseline|rust|shannon-codec|binder-kernel|radio-ipc)
   if [ "$action" = rust ]; then bash tools/build-qt-android-tests.sh; fi
   if docker container inspect "$name" >/dev/null 2>&1 || docker network inspect "$name" >/dev/null 2>&1; then
    echo 'The dedicated test container/network already exists; inspect its owner before cleanup.' >&2;exit 1
@@ -64,6 +64,12 @@ case "$action" in
   container_created=1
   docker inspect "$name" > android-framework/results/container.json
   docker network inspect "$name" > android-framework/results/network.json
+  if [ "$action" = radio-ipc ]; then
+   docker exec "$name" bash tools/build-radio-peer.sh
+   docker exec "$name" bash tools/build-shannon-oracle.sh
+   docker exec "$name" python3 framework/tests/radio_ipc.py
+   exit 0
+  fi
   if [ "$action" = binder-kernel ]; then
    docker exec "$name" python3 framework/tests/binder_kernel.py
    exit 0

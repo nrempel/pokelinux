@@ -5,6 +5,7 @@ edition = "2024"
 publish = false
 
 [dependencies]
+omarchy-ims = { path = "../native-ims" }
 rsbinder = { version = "=0.12.0", default-features = false }
 
 [lints.rust]

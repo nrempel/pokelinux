@@ -1,8 +1,10 @@
 # Native radio integration: next execution gate
 
-Status: proposed test bootstrap, not yet implemented or qualified. Production
-radio traffic must use the native transport; Android exists here as an independent
-synthetic test peer. No physical phone access is required.
+Status: bootstrap, native registration, raw/segmented requests, response delivery
+and observed teardown pass across processes on the owned x86 emulator. See
+[execution evidence](evidence/radio-ipc-provenance.json). Production session
+recovery and the remaining failure gates below are not complete. Android is an
+independent synthetic test peer. No physical phone was accessed.
 
 ## Test peer bootstrap
 
@@ -15,7 +17,8 @@ runs outside callback dispatch. Keep the peer alive until controlled shutdown.
 
 Android documents [Binder values in Bundles](https://developer.android.com/reference/android/os/Bundle#putBinder(java.lang.String,%20android.os.IBinder))
 and [instrumentation status delivery](https://developer.android.com/reference/android/app/Instrumentation#sendStatus(int,%20android.os.Bundle)).
-Those APIs support this proposal; they do not prove execution on our image.
+The APIs informed the design; the recorded emulator execution now proves this
+bootstrap on the pinned image.
 Pin and verify the test-only framework transaction ABI against the installed
 image. Do not copy it into the production radio client or guess transaction IDs.
 
@@ -48,7 +51,9 @@ transport, not production vendor service discovery or access policy.
 
 Registration original-proxy execution is now covered by
 [the five passing cases](evidence/registration-provenance.json). Separate-process
-native radio registration and all gates above remain open.
+native radio registration now passes against the synthetic peer, along with raw
+and segmented round trips and observed teardown. The rest of these gates remain
+open; the indication object currently supplies only a distinct descriptor.
 
 ## Independent review
 
@@ -58,7 +63,7 @@ instrumentation bootstrap and the failure cases above. The first UI entry sent
 only the marker; the complete brief was supplied and verified in the context
 round. The review is advisory. Local source inspection independently confirms
 weak death-recipient storage and the rsbinder 0.12 warning about late replies
-after certain driver failures. The bootstrap still requires runtime evidence.
+after certain driver failures. The subsequent execution report above supplies bootstrap runtime evidence.
 
 Passing this gate will establish emulator IPC and recovery only. ARM64 kernel
 Binder, vendor permissions, modem/IMS behavior, GPU, camera and physical audio

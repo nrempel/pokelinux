@@ -414,9 +414,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "omarchy-ims"
+version = "0.1.0"
+
+[[package]]
 name = "pokelinux-radio"
 version = "0.1.0"
 dependencies = [
+ "omarchy-ims",
  "rsbinder",
  "rsbinder-aidl",
 ]

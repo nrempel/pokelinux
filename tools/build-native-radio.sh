@@ -28,6 +28,10 @@ case "${1:-build}" in
   if grep -q INTERP artifacts/native-radio/elf-program-headers.txt; then
    echo 'Probe unexpectedly requires a dynamic ELF interpreter' >&2; exit 1
   fi
+  docker run "${args[@]}" --network none "$image" readelf -l /target/x86_64-unknown-linux-musl/release/radio-ipc-test > artifacts/native-radio/ipc-elf-program-headers.txt
+  if grep -q INTERP artifacts/native-radio/ipc-elf-program-headers.txt; then
+   echo 'Radio IPC test unexpectedly requires a dynamic ELF interpreter' >&2; exit 1
+  fi
   ;;
  *) echo 'Usage: build-native-radio.sh prepare|build' >&2; exit 2;;
 esac
