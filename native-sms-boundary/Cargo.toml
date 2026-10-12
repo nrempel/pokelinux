@@ -1,0 +1,15 @@
+[package]
+name = "pokelinux-sms-boundary"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+pokelinux-messaging = { path = "../native-messaging" }
+rsbinder = { version = "=0.12.0", default-features = false }
+
+[build-dependencies]
+rsbinder-aidl = { version = "=0.12.0", default-features = false }
+
+[lints.rust]
+unsafe_code = "forbid"

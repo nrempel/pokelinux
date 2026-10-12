@@ -123,6 +123,18 @@ python3 tools/native-process-vm.py
 
 See [provenance](evidence/sms-submit-provenance.json).
 
+## Submission-result owner
+
+The device-neutral `SubmissionOwner` retains non-cloneable dispatch permits
+and fresh source/attempt identities. Cancellation and local source revocation
+remove pending ownership while keeping durable uncertainty. One-way return and
+intermediate acknowledgement do not settle a part. Qualified exact final results
+may persist TransportAccepted; duplicates, consumed stale callbacks and failed
+SQLite acceptance cannot. Seven additional ownership tests pass on x86 and
+ARM64 user-QEMU; ten actual frozen NDK/Rust Binder groups qualify the synthetic
+adapter separately. See [transport qualification](native-sms-transport.md).
+No modem adapter or receive acknowledgement replay is enabled by these tests.
+
 ## Remaining integration
 
 Implement authenticated permission admission, durable conversations/drafts,

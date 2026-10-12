@@ -1,0 +1,310 @@
+{
+  "date_utc": "2026-10-12",
+  "host": "Harbour",
+  "evidence_class": "Original public generated NDK/Rust kernel Binder interoperability with actual SQLite outbox, on owned x86_64 SDK37 emulator",
+  "public_schema": {
+    "release_tag": "android-17.0.0_r1",
+    "sources": [
+      {
+        "path": "frozen-aidl/android/hardware/radio/messaging/CdmaBroadcastSmsConfigInfo.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio.messaging/3/android/hardware/radio/messaging/CdmaBroadcastSmsConfigInfo.aidl",
+        "sha256": "16e7b3042c0343a740eb445529e944aa64ba611d402b436368a676b88e09931c"
+      },
+      {
+        "path": "frozen-aidl/android/hardware/radio/messaging/CdmaSmsAck.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio.messaging/3/android/hardware/radio/messaging/CdmaSmsAck.aidl",
+        "sha256": "70e53c8c38502f90973b103df8f3bef068034dbef42d4df65be987c513ac357e"
+      },
+      {
+        "path": "frozen-aidl/android/hardware/radio/messaging/CdmaSmsAddress.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio.messaging/3/android/hardware/radio/messaging/CdmaSmsAddress.aidl",
+        "sha256": "797c97ba57b6418cf4f49ccad270804c301e40ead3dd923a9bb8ae02bfbec5d3"
+      },
+      {
+        "path": "frozen-aidl/android/hardware/radio/messaging/CdmaSmsMessage.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio.messaging/3/android/hardware/radio/messaging/CdmaSmsMessage.aidl",
+        "sha256": "f55ad7d270a989a6c479d9ae99f83d8da9ddd6a4177c6936e779a6c570e62535"
+      },
+      {
+        "path": "frozen-aidl/android/hardware/radio/messaging/CdmaSmsSubaddress.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio.messaging/3/android/hardware/radio/messaging/CdmaSmsSubaddress.aidl",
+        "sha256": "a45dd3cdb5e15d350ae88c761b86ee0588bef06f9bbaf08e128c76f6c2891fbf"
+      },
+      {
+        "path": "frozen-aidl/android/hardware/radio/messaging/CdmaSmsWriteArgs.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio.messaging/3/android/hardware/radio/messaging/CdmaSmsWriteArgs.aidl",
+        "sha256": "4f0021827cd2d7b68e6d1e7752302ff2728f02312825d2d093371bdd153e0759"
+      },
+      {
+        "path": "frozen-aidl/android/hardware/radio/messaging/GsmBroadcastSmsConfigInfo.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio.messaging/3/android/hardware/radio/messaging/GsmBroadcastSmsConfigInfo.aidl",
+        "sha256": "01843a8f7832400ac1f37fbfa79c2d91aad0c36fefdb38d4be3ba8a2f226e4b2"
+      },
+      {
+        "path": "frozen-aidl/android/hardware/radio/messaging/GsmSmsMessage.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio.messaging/3/android/hardware/radio/messaging/GsmSmsMessage.aidl",
+        "sha256": "73d1cb72522828997e25f29ef7a23f9aeec88ee2ba761bab08a63b8d00e2e742"
+      },
+      {
+        "path": "frozen-aidl/android/hardware/radio/messaging/IRadioMessaging.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio.messaging/3/android/hardware/radio/messaging/IRadioMessaging.aidl",
+        "sha256": "f5f8b5d2ace36dcb34e232778d35f3c7854dd89a3038811237275e67cbce8e39"
+      },
+      {
+        "path": "frozen-aidl/android/hardware/radio/messaging/IRadioMessagingIndication.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio.messaging/3/android/hardware/radio/messaging/IRadioMessagingIndication.aidl",
+        "sha256": "31c12781991bb2374fcd24ac2548fcddd57fbc3cda25d0f0af16d260a87f54ff"
+      },
+      {
+        "path": "frozen-aidl/android/hardware/radio/messaging/IRadioMessagingResponse.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio.messaging/3/android/hardware/radio/messaging/IRadioMessagingResponse.aidl",
+        "sha256": "324ce4320a3ba13a59de11156e2e44c50da94f8e150e64cdde2b8edbe6fcd52c"
+      },
+      {
+        "path": "frozen-aidl/android/hardware/radio/messaging/ImsSmsMessage.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio.messaging/3/android/hardware/radio/messaging/ImsSmsMessage.aidl",
+        "sha256": "f431959c5bb98afce0d8cb87b9a398b52354bef985f4cf9cb970dea97d7e03f5"
+      },
+      {
+        "path": "frozen-aidl/android/hardware/radio/messaging/SendSmsResult.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio.messaging/3/android/hardware/radio/messaging/SendSmsResult.aidl",
+        "sha256": "4ed9daaaf901ecf2689fb248ae3fb8b40da2fe8645bd78af2d9a57e5a853eaee"
+      },
+      {
+        "path": "frozen-aidl/android/hardware/radio/messaging/SmsAcknowledgeFailCause.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio.messaging/3/android/hardware/radio/messaging/SmsAcknowledgeFailCause.aidl",
+        "sha256": "8cf93485c7c44d36b92e1be57b9dc2243afa1d25e9b24a57f08a995be2230669"
+      },
+      {
+        "path": "frozen-aidl/android/hardware/radio/messaging/SmsWriteArgs.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio.messaging/3/android/hardware/radio/messaging/SmsWriteArgs.aidl",
+        "sha256": "3b3892a3a114ec48648374543d3de1c6fae052190b451ff2b7a475e8723d317b"
+      },
+      {
+        "module": "android.hardware.radio.messaging",
+        "version": 3,
+        "interface_hash": "30b0bc0e84679bc3b5ccb3a52da34c47cda6b7eb",
+        "tree_id": "f4565da40de363597935a88db9aba2e89912e49e"
+      },
+      {
+        "path": "frozen-aidl/android/hardware/radio/AccessNetwork.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio/3/android/hardware/radio/AccessNetwork.aidl",
+        "sha256": "ad2d5b7916a58d9cb32455c4277faf198a80a60bee2180b836caccdd0c42d30f"
+      },
+      {
+        "path": "frozen-aidl/android/hardware/radio/RadioAccessFamily.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio/3/android/hardware/radio/RadioAccessFamily.aidl",
+        "sha256": "15b8f633c16cf646e1cd68ae8ec8a40291a3033528427ff163aa5d1aeed5dbfd"
+      },
+      {
+        "path": "frozen-aidl/android/hardware/radio/RadioConst.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio/3/android/hardware/radio/RadioConst.aidl",
+        "sha256": "a6d98b4d5e54541396a6e732e18addb2b7d53e3d4b7c35ee2c88255b8cd4ba99"
+      },
+      {
+        "path": "frozen-aidl/android/hardware/radio/RadioError.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio/3/android/hardware/radio/RadioError.aidl",
+        "sha256": "c673d85a79b4fec27125f55459ff8a2ff9a4f412e999c30c7f2626a1661dbc54"
+      },
+      {
+        "path": "frozen-aidl/android/hardware/radio/RadioIndicationType.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio/3/android/hardware/radio/RadioIndicationType.aidl",
+        "sha256": "f299dc43c5f4997212765fe1bf9bc60e9b28fa26f2718b03affa279224ff9f5b"
+      },
+      {
+        "path": "frozen-aidl/android/hardware/radio/RadioResponseInfo.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio/3/android/hardware/radio/RadioResponseInfo.aidl",
+        "sha256": "fa9d5ccc53e9aa238fd3025680b5629d981352c1f5b6a5f09d65f3570a2ed201"
+      },
+      {
+        "path": "frozen-aidl/android/hardware/radio/RadioResponseInfoModem.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio/3/android/hardware/radio/RadioResponseInfoModem.aidl",
+        "sha256": "b88e4a8a2bd00fe578f96844e3ecda4589950260481712e78ac51541f8c00efd"
+      },
+      {
+        "path": "frozen-aidl/android/hardware/radio/RadioResponseType.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio/3/android/hardware/radio/RadioResponseType.aidl",
+        "sha256": "90ed071d9035b93e3fe240f03376774d310372c4813dec7a5080e7a1a24db567"
+      },
+      {
+        "path": "frozen-aidl/android/hardware/radio/RadioTechnology.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio/3/android/hardware/radio/RadioTechnology.aidl",
+        "sha256": "af985a167e7d37012f1b7e4c83fb321105e9102688ee058d67928ac0f3e70718"
+      },
+      {
+        "path": "frozen-aidl/android/hardware/radio/RadioTechnologyFamily.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio/3/android/hardware/radio/RadioTechnologyFamily.aidl",
+        "sha256": "820775a3c0bbf7058f4ad691b8d880212326146d48a80ff3c0450af339ea6012"
+      },
+      {
+        "module": "android.hardware.radio",
+        "version": 3,
+        "interface_hash": "58d15e9e2c355be7b3dda6d4d34effd672bfd1cb",
+        "tree_id": "fa192eebd3c89ff33a1e7a1f37a0e71a60102b73"
+      }
+    ]
+  },
+  "implementation_files": {
+    "native-messaging/src/lib.rs": "681e351fb54b72b213f86bcf46715bd0c647df76e6c32c677089112c0b484142",
+    "native-messaging/src/outbox.rs": "b910f78d0b48386e055535d24e44c0985f019657e232695f89fa7f522ab596eb",
+    "native-messaging/src/receive.rs": "55f2cf7da7feca551297526a14fff1216e5a798d3b41d44d9bfea8b033877acc",
+    "native-messaging/src/transport.rs": "1602a7ed81b01433793296a873fbfa5ec1ee9faf5899da9a808d7f673dd1ae67",
+    "native-messaging/tests/transport.rs": "eddd6adc2a007aabd895332ec1aa6f2d67bc9d2257e8619c5614e4a4f1a22e56",
+    "native-sms-boundary/build.rs": "e074129fffd5c3a89c722a441658af7e77d63e9ebee50fad5c4afe79220e4354",
+    "native-sms-boundary/src/bin/sms-binder-client.rs": "0c9d8820c2e6588042d5e9465d3ef26eb406903f1f25e0c34a8df1e70b78cea9",
+    "native-sms-boundary/src/lib.rs": "ff9dd24cee488e321bff8f3b1e6647963d232bb06b97dcccbaac7c93a0269954",
+    "native-sms-boundary/Cargo.toml": "6c3245f4169615b20b4ea713a99827a3e49192dda165833b72a032cdf891f156",
+    "native-sms-boundary/Cargo.lock": "0a61f6c1a1a07ed3a64fba383d75901b9caf974dc7f66f5b700f8ee7694d1d29",
+    "framework/smspeer/AndroidManifest.xml": "7abeb27103a22ae2f220421ba993f429a30f30f3ae50c8f9af538dbf1719049c",
+    "framework/smspeer/Peer.java": "1becbfdb41590720ecace8dad487307753f2e07f57a7ba2156f67086f9972b5d",
+    "framework/smspeer/aidl/org/pokelinux/smstest/ISmsBoundaryProbe.aidl": "e694fdb02fd467ebdac3597fbfc74b4cd4a5b549e7e2f9612ad0a09295504bce",
+    "framework/smspeer/peer.cpp": "c18068bb5b3fa6b8bf0826de34597ad714bb1206908f5fce06e9c6416a53f07f",
+    "framework/tests/sms_binder.py": "de95ee915261ced0aff689eda1365283d7b076683c1a3d80609df33815c99fc1",
+    "tools/prepare-sms-boundary.py": "d4a80bc058594f132cecb78bb6882308cc12ac78d7cb7689d0a6f17d66100522",
+    "tools/build-sms-peer.sh": "9441cb6ea3373d77d8f63e925699aea671f7e811b597de4c5ecc1d9e5a8c4d75",
+    "tools/build-native-sms-boundary.sh": "b960bc4ae6daae6150b93bea182101574f6587d2fed343209180d8f5147e5f85"
+  },
+  "generated_aidl_compiler_sha256": "a4ad150a7cf6ea297c299cb779da7a58c537cfc07923d1e15ccbc554a30cd4ba",
+  "peer_apk_sha256": "118d5a3a7efdbc416175f12c6111df7f8f8ff37afc6537565206e1e524deb567",
+  "peer_native_library_sha256": "8fe18a22a3dbef0f5e2f9490d61263bc23a15c0cac16d758db762d5c16840ce9",
+  "rust_client_sha256": "8e2fa2630e460fc21307c7b8b0940b7dac5b250c0538fbc9791f8d457c050a5d",
+  "red": {
+    "exit_code": 101,
+    "output_sha256": "9b11f326c45054ec42a3b48c58f3e7dee52c0361422b6c564114372734a1bb13",
+    "observation": "Actual one-way generated send return incorrectly persisted TransportAccepted; intended Uncertain assertion failed before any final send callback"
+  },
+  "green": {
+    "exit_code": 0,
+    "output_sha256": "cf5ebbb5820d9f5d75c97d95555cdd19764cff5a27b943e79673cd1fe8635b5d",
+    "scenario_groups": [
+      "sms-binder-frozen-bootstrap\tPASS",
+      "sms-binder-durable-before-ipc-oneway\tPASS",
+      "sms-binder-intermediate-ack\tPASS",
+      "sms-binder-malformed-ackpdu\tPASS",
+      "sms-binder-final-matching-wrong-duplicate\tPASS",
+      "sms-binder-cancel-consumed-late\tPASS",
+      "sms-binder-replaced-generation-same-serial\tPASS",
+      "sms-binder-error-no-negative-proof-retry\tPASS",
+      "sms-binder-death-consumed-callback\tPASS",
+      "sms-binder-restart-preserves-uncertainty\tPASS"
+    ],
+    "result": {
+      "passed": true,
+      "scope": "synthetic frozen standard messaging V3 NDK/Rust kernel Binder with actual durable native outbox",
+      "frozen_messaging_version": 3,
+      "frozen_messaging_hash": "30b0bc0e84679bc3b5ccb3a52da34c47cda6b7eb",
+      "real_binder": true,
+      "selinux": "Enforcing",
+      "uncertainty_before_ipc": true,
+      "oneway_and_intermediate_ack_not_acceptance": true,
+      "matching_final_send_only": true,
+      "malformed_ackpdu_preserves_permit": true,
+      "wrong_serial_method_slot_metadata_fenced": true,
+      "duplicate_and_old_generation_fenced": true,
+      "cancel_and_death_consumed_callbacks_fenced": true,
+      "restart_persists_uncertainty": true,
+      "modem_acceptance_qualified": false,
+      "carrier_delivery_verified": false,
+      "receive_identity_qualified": false,
+      "acknowledgement_idempotence_qualified": false,
+      "physical_phone_accessed": false,
+      "vendor_execution": false,
+      "arm64_binder_verified": false
+    }
+  },
+  "component_checks": {
+    "new_owner_tests": 7,
+    "x86_64_linux": true,
+    "arm64_user_qemu": true,
+    "native_messaging_fmt_clippy_regression": true,
+    "boundary_fmt_clippy_locked_offline_build": true
+  },
+  "ownership": {
+    "durable_uncertainty_before_ipc": true,
+    "source_and_attempt_identifiers_opaque": true,
+    "wire_fields_confined_to_boundary_test_crate": true,
+    "pending_limit": 32,
+    "endpoint_limit": 8,
+    "callback_queue_limit": 64,
+    "per_session_wire_binding_limit": 32,
+    "cancel_revoke_replacement_drop_permits_without_refund": true,
+    "database_acceptance_failure_has_no_accepted_receipt": true,
+    "no_negative_submission_classification": true,
+    "no_uncertain_retry": true
+  },
+  "runtime_identity": {
+    "fingerprint": "google/sdk_gphone64_x86_64/emu64xa:17/CE2A.260420.019/15611780:userdebug/dev-keys",
+    "client": [
+      "uid=2000(shell) gid=2000(shell) groups=2000(shell),1004(input),1007(log),1011(adb),1015(sdcard_rw),1028(sdcard_r),1078(ext_data_rw),1079(ext_obb_rw),3001(net_bt_admin),3002(net_bt),3003(inet),3006(net_bw_stats),3009(readproc),3011(uhid),3012(readtracefs) context=u:r:shell:s0",
+      "u:r:shell:s0\u0000"
+    ],
+    "binder_library_hashes": [
+      "c8f02237afa4a5643a68f13c4d43114f3d57f2322f17309d34c11e68b48e2e68  /system/lib64/libbinder_ndk.so",
+      "02be0d8d198cabf24c0a1529b7f6b02c3305c84bbf27a15be600dfd1235aa5ee  /system/lib64/libbinder.so"
+    ]
+  },
+  "scope_limits": [
+    "Synthetic peer endpoint is obtained from owned instrumentation; no production vendor service discovery",
+    "Successful synthetic final callback qualifies the synthetic transport only, not real modem acceptance",
+    "Only SOLICITED sendSmsResponse with NONE radio error, reference0..255, bounded even-length ASCII hex acknowledgement (whole octets) and errorCode-1 qualifies this test adapter",
+    "No SMS sent over a modem, no carrier delivery/status-report correlation",
+    "No durable receive/acknowledgement owner or redelivery/idempotence identity inferred",
+    "No physical Pixel, ARM64 Binder, matched kernel or carrier IMS verification",
+    "No installed messaging daemon/app/notification/lock/suspend integration"
+  ],
+  "cleanup": {
+    "framework_suite_exit_code": 0,
+    "peer_death_observed": true,
+    "peer_force_stop_finally": true,
+    "shared_emulator_owner_released": true,
+    "owned_container_id": "a57ee5767bd5766fb704f75addf8dab65b107787ea531145b77cd4e575bf0627",
+    "owned_container_removed": true,
+    "owned_internal_network_removed": true
+  },
+  "private_artifacts": "Ignored artifacts/sms-binder; generated public schemas/code/binaries and complete runtime/build logs retained",
+  "physical_phone_accessed": false,
+  "vendor_execution": false,
+  "initial_green": {
+    "exit_code": 0,
+    "output_sha256": "9d604367ef05f47c13cc9a37da691574fad857884de7e608f95eae8a7f944201",
+    "scenario_groups": [
+      "sms-binder-frozen-bootstrap\tPASS",
+      "sms-binder-durable-before-ipc-oneway\tPASS",
+      "sms-binder-intermediate-ack\tPASS",
+      "sms-binder-final-matching-wrong-duplicate\tPASS",
+      "sms-binder-cancel-consumed-late\tPASS",
+      "sms-binder-replaced-generation-same-serial\tPASS",
+      "sms-binder-error-no-negative-proof-retry\tPASS",
+      "sms-binder-death-consumed-callback\tPASS",
+      "sms-binder-restart-preserves-uncertainty\tPASS"
+    ],
+    "result": {
+      "passed": true,
+      "scope": "synthetic frozen standard messaging V3 NDK/Rust kernel Binder with actual durable native outbox",
+      "frozen_messaging_version": 3,
+      "frozen_messaging_hash": "30b0bc0e84679bc3b5ccb3a52da34c47cda6b7eb",
+      "real_binder": true,
+      "selinux": "Enforcing",
+      "uncertainty_before_ipc": true,
+      "oneway_and_intermediate_ack_not_acceptance": true,
+      "matching_final_send_only": true,
+      "wrong_serial_method_slot_metadata_fenced": true,
+      "duplicate_and_old_generation_fenced": true,
+      "cancel_and_death_consumed_callbacks_fenced": true,
+      "restart_persists_uncertainty": true,
+      "modem_acceptance_qualified": false,
+      "carrier_delivery_verified": false,
+      "receive_identity_qualified": false,
+      "acknowledgement_idempotence_qualified": false,
+      "physical_phone_accessed": false,
+      "vendor_execution": false,
+      "arm64_binder_verified": false
+    }
+  },
+  "odd_ack_red": {
+    "exit_code": 101,
+    "output_sha256": "52ff0faaaf5aa88be944d2705adb89a4724c0102c00e0f285b7e2c8e9c1511a8",
+    "observation": "Actual generated frozen sendSmsResponse with ackPDU f incorrectly qualified Accepted; intended Ignored assertion failed, proving malformed final metadata consumed a permit before the parity guard",
+    "synthetic_fixture": "Independent NDK peer mode5: valid matching SOLICITED/NONE/reference7/errorCode-1 final response with odd-length hexadecimal acknowledgement f"
+  }
+}

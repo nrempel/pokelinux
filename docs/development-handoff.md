@@ -134,6 +134,16 @@ source cases qualify the reference ordering/lifetime separately. Retained V1
 Binder/libpower clients, Pixel kernel count/abort controls and driver-blocked
 process supervision remain open; see `native-suspend.md`.
 
+Native SMS submission ownership now drives the durable outbox through exact
+frozen messaging V3 original NDK/Rust Binder. Ten live groups and seven additional
+SQLite owner tests pass. One-way return/intermediate ACK cannot accept a part;
+only a matching final qualified result can. Malformed acknowledgement hex,
+wrong endpoint/method/serial/generation, duplicates, cancellation and death
+cannot consume or revive work. Both live defects went red before their fixes.
+This remains a synthetic SOLICITED/NONE/errorCode-1 qualification, with modem
+mapping, receive identity/ACK replay, delivery and installed integration open.
+See `native-sms-transport.md` and `evidence/native-sms-binder-provenance.json`.
+
 ## Next work
 
 1. Recover and test the actual vendor cleanup/reset and registration-overlap
@@ -177,6 +187,7 @@ bash tools/build-native-connectivity.sh build
 bash tools/build-native-audio.sh integration artifacts/native-audio/NEW_RUN
 bash tools/framework-suite.sh sms-codec
 bash tools/framework-suite.sh sms-transport-oracle
+bash tools/framework-suite.sh sms-binder
 bash tools/framework-suite.sh binder-kernel
 bash tools/framework-suite.sh radio-ipc
 bash tools/framework-suite.sh camera-owner
