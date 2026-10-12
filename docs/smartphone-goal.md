@@ -126,3 +126,10 @@ durable uncertainty are implemented. Actual Omarchy lifecycle ingress, shared-UI
 app migration, service-manager/storage supervision and backend effect integration
 remain open; historical receipts do not grant later permission. See
 [native lifecycle](native-lifecycle.md).
+
+Sensor wake admission now uses real native coordinator leases across10 actual
+original-FMQ/frozen-V1 Binder groups. Failed acquisition leaves queues unread;
+processing, ACK backpressure and notification uncertainty retain wake ownership.
+The shared authority is fenced before unresolved teardown. Original source wake
+acquisition, USF200ms/HAL1s obligations, installed lifecycle/app delivery, durable
+recovery, ARM64 and physical suspend remain open. See [sensor wake ownership](native-sensor-wake.md).

@@ -416,14 +416,37 @@ dependencies = [
 [[package]]
 name = "pokelinux-sensors"
 version = "0.1.0"
+dependencies = [
+ "pokelinux-suspend",
+]
 
 [[package]]
 name = "pokelinux-sensors-boundary"
 version = "0.1.0"
 dependencies = [
+ "libc",
  "pokelinux-sensors",
+ "pokelinux-suspend",
+ "pokelinux-suspend-boundary",
  "rsbinder",
  "rsbinder-aidl",
+]
+
+[[package]]
+name = "pokelinux-suspend"
+version = "0.1.0"
+dependencies = [
+ "rustix",
+]
+
+[[package]]
+name = "pokelinux-suspend-boundary"
+version = "0.1.0"
+dependencies = [
+ "pokelinux-suspend",
+ "rsbinder",
+ "rsbinder-aidl",
+ "rustix",
 ]
 
 [[package]]

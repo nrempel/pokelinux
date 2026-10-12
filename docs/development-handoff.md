@@ -196,6 +196,17 @@ executed reds. Receipt history is not later effect permission. Omarchy ingress,
 production app/package/service-manager integration, supervised storage stalls and
 atomic backend dispatch remain open; see `native-lifecycle.md` and its provenance.
 
+Native sensor wake ownership now connects consumed events to actual coordinator
+wake objects. Ten original-FMQ/frozen-V1 Binder groups pass after two live reds:
+acquire before read, retain through processing/full ACK queue, share retained V1
+blockers and release only after qualified queue+signal handoff. A real guest-thread
+futex EPERM can coexist with peer-visible ACK count; it retains quarantine and
+cannot retry. Actual blocked Unix-socket acquire keeps snapshot/revoke responsive.
+Source death/last-owner drop fence authority before lease destruction. Injected
+power descriptors do not prove hardware suspend or source wake acquisition;
+USF200ms/HAL1s, installed lifecycle/app delivery, durable recovery and ARM64/device
+integration remain open; see `native-sensor-wake.md` and its provenance.
+
 ## Next work
 
 1. Recover and test the actual vendor cleanup/reset and registration-overlap

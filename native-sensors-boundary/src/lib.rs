@@ -22,3 +22,8 @@ pub use bindings::android::hardware::common::{
         SynchronizedReadWrite::SynchronizedReadWrite,
     },
 };
+
+pub mod bootstrap;
+
+#[cfg(all(feature = "wake-fault-test", target_arch = "x86_64"))]
+pub mod futex_fault;

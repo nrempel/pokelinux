@@ -3,5 +3,8 @@ name="pokelinux-sensors"
 version="0.1.0"
 edition="2024"
 publish=false
+[dependencies]
+pokelinux-suspend={path="../native-suspend"}
+
 [lints.rust]
 unsafe_code="forbid"

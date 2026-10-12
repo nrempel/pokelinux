@@ -1,5 +1,9 @@
 # Native sensor ownership across SensorsV3 and FMQ
 
+This records the original11-group ownership boundary from7752354. The separate
+[current sensor wake integration](native-sensor-wake.md) adds actual coordinator
+leases around reads/ACKs and its own10-group original-FMQ/frozen-V1 evidence.
+
 `native-sensors` provides a bounded, device-neutral owner for authenticated sensor subscriptions, event admission, normalized acceleration samples, processing and wake acknowledgements. `native-sensors-boundary` drives it with the frozen Android 17 SensorsV3 interface and an independent original NDK peer. The fixture uses the original public `AidlMessageQueue`, `MessageQueueBase`, `EventFlag` and native-handle implementation over actual Binder, shared memory and futex event words in an owned SDK37 x86_64 emulator. No Android sensor framework implementation is part of the native service owner.
 
 The owner holds logical kinds and client tokens. The backend adapter holds raw handle 77, the fixture's sensor type and its generated object layout. Location is an explicit unsupported permission path. The test app's installed UID comes from the owned emulator's package manager. Nested NDK-to-Rust Binder calls authenticate the kernel caller UID, check the payload claim against it and require a service grant. A claimed UID of zero cannot authenticate the app. Revocation prevents further admission and publication eligibility; already admitted, correctly processed service-owned work may still be disposed and acknowledged.

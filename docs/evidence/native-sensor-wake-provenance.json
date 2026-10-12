@@ -1,0 +1,147 @@
+{
+  "schema": 1,
+  "created_utc": "2026-10-12T23:15:35.465797+00:00",
+  "scope": "actual native sensor wake admission and ACK disposition under one native coordinator, original public FMQ + generated frozen SensorsV3/V1 Binder; injected kernel power descriptors",
+  "historical_milestones": {
+    "sensor": "7752354",
+    "suspend_binder": "e8ff6ea",
+    "sensor_evidence_preserved": "docs/evidence/native-sensors-boundary.json"
+  },
+  "versions": {
+    "sensors": 3,
+    "sensors_hash": "b051523be857524c99057b69f253a7d0bd295400",
+    "suspend": 1,
+    "suspend_hash": "082a58c2505b703702f34ab8abcb1d1b5e890be4",
+    "rsbinder": "0.12.0"
+  },
+  "runtime_red": [
+    {
+      "phase": "red-acquire",
+      "client_exit": 101,
+      "suite_exit": 1,
+      "failure": "original FMQ consumed with native wake count0 before acquisition; expected1",
+      "private_snapshot": "artifacts/sensor-wake/runtime/red-acquire",
+      "faulted_binary_sha256": "3737d8ebd697b21b5e1d6d151c18e9ff38c36623abe8151887cb82d337dc8015",
+      "output_sha256": "471b8980e17040f73e45cfdadd1e3522b4b342068b13743d01ebff6f38c81ecb"
+    },
+    {
+      "phase": "red-full-ack",
+      "client_exit": 101,
+      "suite_exit": 1,
+      "failure": "native lease dropped at processing; actual full ACK queue unable to transfer; injected attempt Returned instead of Blocked",
+      "private_snapshot": "artifacts/sensor-wake/runtime/red-full-ack",
+      "faulted_binary_sha256": "98f540cede1f44d935479f0bb32bf5e61982a767a68fb78ea0c776c5202c5786",
+      "output_sha256": "c30d3910146f83abd69d278be9cbe6b4397bdb13bb3bb4cd9874c6661ba5d36f"
+    }
+  ],
+  "runtime_green": {
+    "passed": true,
+    "client_exit": 0,
+    "suite_exit": 0,
+    "groups": [
+      "sensor-wake-frozen-v1-shared-coordinator",
+      "sensor-wake-acquire-before-original-read",
+      "sensor-wake-processing-backpressure-handoff",
+      "sensor-wake-retained-v1-reference",
+      "sensor-wake-responsive-acquire-revocation",
+      "sensor-wake-real-fd-acquire-failures",
+      "sensor-wake-written-signal-failure-quarantine",
+      "sensor-wake-malformed-generation-retention",
+      "sensor-wake-real-binder-death-retention",
+      "sensor-wake-owner-drop-fences-before-release"
+    ],
+    "image": "google/sdk_gphone64_x86_64/emu64xa:17/CE2A.260420.019/15611780:userdebug/dev-keys",
+    "selinux": "Enforcing",
+    "private_output": "artifacts/sensor-wake/runtime/green/runtime-output.txt",
+    "output_sha256": "6c73bac5fbd056bf10344f654ef0d260aa4e381600bc3bf06f519e852cedfb77",
+    "binary_sha256": "0fff1f0e8242b7078158ddad7d5fc4d7b9dcc33c86f1fb1699108f7d1b7050a4",
+    "v1_original_ndk_outcomes": [
+      "metadata/native UID-PID-SID",
+      "oneway receipt distinct from completion",
+      "release once",
+      "final reference",
+      "foreign reject",
+      "retained reference overlaps sensor native lease"
+    ],
+    "real_fd_acquire_failures": [
+      "read-only abort",
+      "read-only unlock"
+    ],
+    "acquire_pressure": "full real Unix socket; revoked reader leaves FMQ unread; snapshot/revoke under100ms",
+    "notification_failure": "valid real ACK write; per-owned-guest-thread seccomp injects actual futexWakeBitset EPERM; original NDK EventFlag reader can see atomically published bit/count; native lease remains quarantined",
+    "real_binder_death": "source death leaves3 native leases retained and coordinatorStopped; final owner destruction releases only after fence"
+  },
+  "checks": {
+    "public_input_pins": true,
+    "fmt": true,
+    "clippy_warnings_denied": true,
+    "static_musl_no_interpreter": true,
+    "compiled_source_hashes_verified": true,
+    "native_suspend_core_changed": false,
+    "original_peer_source_changed": false
+  },
+  "cleanup": {
+    "container_id": "154b6f0b5a4f3b12c31012846505d124e140a4d1b91a252afdd996537e5d7d0c",
+    "container_name": "pokelinux-sensor-wake-b472",
+    "container_removed": true,
+    "network_removed": true,
+    "sdk_lock_released": true,
+    "clients_bounded_seconds": 40,
+    "ndk_subprocess_bounded_seconds": 15,
+    "workers_joined": true,
+    "physical_cleanup_claimed": false
+  },
+  "unsafe_glue": {
+    "production_owner": "unsafe forbidden",
+    "fmq_leaf": "inherited opaque96-byte/tag1 Element qualification",
+    "fault_leaf": "test-only wake-fault-test feature; synchronous libc prctl initialized POD filters; one x86_64 guest thread; no TSYNC or host execution"
+  },
+  "remaining_gates": [
+    "Durable quarantine, restart reconciliation and safe uncertain-record retirement",
+    "Production sensor/permission/lifecycle/app-publication integration",
+    "Concurrent transport generation binding and held producer/reinitialize callbacks",
+    "Original source acquire-before-publish and failure participation in installed shared authority",
+    "Distinct USF200ms and top-level HAL1s original wake behavior",
+    "Standard V1 discovery/VINTF/SELinux and libpower stale-name/service-cache recovery",
+    "Qualified kernel power paths/count rejection/abort and stuck-driver supervisor",
+    "ARM64 FMQ/Binder and physical sensor/suspend evidence",
+    "AOC/Suez/USF/calibration/display/proximity integration"
+  ],
+  "not_claimed": {
+    "physical_phone": false,
+    "host_sensor": false,
+    "host_suspend": false,
+    "vendor_execution": false,
+    "hardware_suspend": false,
+    "source_wake_algorithm_execution": false,
+    "original_hal_timeout_cleanup": false,
+    "usf_runtime": false,
+    "local_reaping_is_vendor_cleanup": false
+  },
+  "owned_source_sha256": {
+    "native-sensors/src/wake.rs": "7853d1f304440b40158f88fc63d0b464ac68b4987c9279285a3883c1d976fb62",
+    "native-sensors/src/lib.rs": "8ac60337ae27ec94021fd87ed8f3fe54a8fd48c5ae936772d78e85dd96b59278",
+    "native-sensors/Cargo.toml": "2e70bb8586927b5f8d8460c144176432ba7aba9f93da01833ca8e82ff6e21a25",
+    "native-sensors/Cargo.lock": "68b52d33fbeabfce322e654d165ec3eb20efb5c2ec0938ad4014920e0959d890",
+    "native-sensors-boundary/Cargo.toml": "57eded5632c4b648c2b2ce24b481010a0524b1fc02b7ef855869941504462dae",
+    "native-sensors-boundary/Cargo.lock": "0da3da90c3ce24139e62dfa017fa903eb508a399e234797bf70d48226ee6d31b",
+    "native-sensors-boundary/src/lib.rs": "0dd1f94350ffb4eccd383d2d40665ba4b310637f3bfb71def56dd35c080271b1",
+    "native-sensors-boundary/src/bootstrap.rs": "f2ba32262ddecceac433597c9bac84df8a1290d906c54b3da803c31bbe1211af",
+    "native-sensors-boundary/src/futex_fault.rs": "535f2417124382115423341f11d45c23f134f25ac456edae8d4fd46b8315595c",
+    "native-sensors-boundary/src/bin/sensor-wake-client.rs": "eb7f783ea07f5f4472c2fb47e173d80533ade799ac79296ff5841c56ddca7d7c",
+    "tools/build-native-sensor-wake.sh": "4570e323fba7120eaba234d16eb66f538f784b96b834d612ae0a01489789ac8b",
+    "tools/sensor-wake-suite.sh": "ea439acb21cec602ae3b9ba84364d2d071173d81026a8ef6a51e54c7752edd24",
+    "framework/tests/sensor_wake.py": "84285791b0f903285cca427229b81673b15633699fcd828981e3971b90535940",
+    "docs/native-sensor-wake.md": "54ab67c7d53b5b2277ab9d039d2c1c81022f473d0c15a469bc36f01fcb4f0a4e"
+  },
+  "unchanged_input_sha256": {
+    "artifacts/sensors-boundary/peer.apk": "00b84f80ceb7d8e3149298cf111e7a2fbfc63c526fa57545f109c98f17810866",
+    "artifacts/suspend-boundary/peer.apk": "86a1b22064ebc29cb894078a7830c66c2f0d707fbc6e60e6135449f2bba989d8",
+    "artifacts/suspend-boundary/suspend-ndk-client-locked": "bfb8ff99ec390eae3264690edd88977d4c5813a670df1564ac48246d13083aaf",
+    "framework/sensorpeer/public-manifest.json": "13f48ca711fe439273b82c9ea154a3836e017d0c2af9cab57b73e69287ef8f60",
+    "framework/suspendpeer/fetch-manifest.json": "a714faaf0fce36dd0f07bedb4a00aa367120110dae1f974270736d1e4fcc763a",
+    "native-suspend/src/lib.rs": "b5cd7986b62e81216b0628038f259805529f1c2f9d7a43edd1079c9aaed40371",
+    "native-suspend/src/descriptors.rs": "b7699e9fa73a1a1bc5a00ea69aa6f24e96b8860a08ae4c19039b8042cff3fd9c",
+    "native-suspend-boundary/src/frontend.rs": "fe9c143a632fe25b96815209b1ff629f3649507ad4a8008e5dd9267be3c00e58"
+  }
+}

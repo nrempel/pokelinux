@@ -44,3 +44,8 @@ this coordinator to original generated NDK/Rust proxies and unchanged public
 libpower clients. Eighteen actual x86 outcomes qualify release, strong-reference
 transfer, client death and authority fencing; discovery adapters and injected
 backend files do not qualify standard installation or hardware suspend.
+
+The [sensor wake owner](native-sensor-wake.md) now shares this coordinator with
+original frozenV1 Binder wake objects. Ten actual x86 FMQ/Binder groups qualify
+reader acquisition and ACK lease handoff using injected power descriptors; source
+wake acquisition, installed authority and physical suspend remain open.
