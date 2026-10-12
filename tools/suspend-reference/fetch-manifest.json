@@ -1,0 +1,163 @@
+{
+  "schema": 1,
+  "tag": "android-17.0.0_r1",
+  "frozen_v1_hash": "082a58c2505b703702f34ab8abcb1d1b5e890be4",
+  "files": [
+    {
+      "file": "SystemSuspend.cpp",
+      "url": "https://android.googlesource.com/platform/system/hardware/interfaces/+/refs/tags/android-17.0.0_r1/suspend/aidl/default/SystemSuspend.cpp?format=TEXT",
+      "bytes": 29840,
+      "sha256": "2bb2bfbbeb683d7b03101a88093ab1bc3ee9d3b06fc7d2eb69297a928aa92dee"
+    },
+    {
+      "file": "SystemSuspend.h",
+      "url": "https://android.googlesource.com/platform/system/hardware/interfaces/+/refs/tags/android-17.0.0_r1/suspend/aidl/default/SystemSuspend.h?format=TEXT",
+      "bytes": 6573,
+      "sha256": "f1ba3bcecf907227c8b37f2489351471143485165e088166621a15ef7a2036af"
+    },
+    {
+      "file": "SystemSuspendAidl.cpp",
+      "url": "https://android.googlesource.com/platform/system/hardware/interfaces/+/refs/tags/android-17.0.0_r1/suspend/aidl/default/SystemSuspendAidl.cpp?format=TEXT",
+      "bytes": 2210,
+      "sha256": "af0a6f8084718899349fc94b6e6e8c4ea71822c548ad3ed291750b24c622d5b1"
+    },
+    {
+      "file": "SystemSuspendAidl.h",
+      "url": "https://android.googlesource.com/platform/system/hardware/interfaces/+/refs/tags/android-17.0.0_r1/suspend/aidl/default/SystemSuspendAidl.h?format=TEXT",
+      "bytes": 1692,
+      "sha256": "605d81948a05177d01889c92fe953ad6558a6a0ba94476e531608022fbf8afc8"
+    },
+    {
+      "file": "SystemSuspendUnitTest.cpp",
+      "url": "https://android.googlesource.com/platform/system/hardware/interfaces/+/refs/tags/android-17.0.0_r1/suspend/aidl/default/SystemSuspendUnitTest.cpp?format=TEXT",
+      "bytes": 90784,
+      "sha256": "297d7f5a61cbe2535a9b4a31ca151ae6c5ee658ef7bc4c9fa65b89b9cbbd95bc"
+    },
+    {
+      "file": "SystemSuspendAidlTest.cpp",
+      "url": "https://android.googlesource.com/platform/system/hardware/interfaces/+/refs/tags/android-17.0.0_r1/suspend/aidl/default/SystemSuspendAidlTest.cpp?format=TEXT",
+      "bytes": 5021,
+      "sha256": "eee87837dc272ccf40c7947855dcba40ceb16e34c076572c708847bac1f59c5a"
+    },
+    {
+      "file": "SuspendControlService.h",
+      "url": "https://android.googlesource.com/platform/system/hardware/interfaces/+/refs/tags/android-17.0.0_r1/suspend/aidl/default/SuspendControlService.h?format=TEXT",
+      "bytes": 4350,
+      "sha256": "5cee55e76ca88ec5468556281254315519ca7d180a55cca3f26af017a0a8acc0"
+    },
+    {
+      "file": "SuspendControlService.cpp",
+      "url": "https://android.googlesource.com/platform/system/hardware/interfaces/+/refs/tags/android-17.0.0_r1/suspend/aidl/default/SuspendControlService.cpp?format=TEXT",
+      "bytes": 18746,
+      "sha256": "119bf6e17f1abfbf12e140011c6a64ecf2361ecc05c4b7b31770052ad888a68e"
+    },
+    {
+      "file": "WakeLockEntryList.h",
+      "url": "https://android.googlesource.com/platform/system/hardware/interfaces/+/refs/tags/android-17.0.0_r1/suspend/aidl/default/WakeLockEntryList.h?format=TEXT",
+      "bytes": 6218,
+      "sha256": "b8966c6975162ad615e69ae6da20cf115b7e254124c54e3df4140102f8137a42"
+    },
+    {
+      "file": "WakeupList.h",
+      "url": "https://android.googlesource.com/platform/system/hardware/interfaces/+/refs/tags/android-17.0.0_r1/suspend/aidl/default/WakeupList.h?format=TEXT",
+      "bytes": 1633,
+      "sha256": "1ae92ea74f8b23fe74c8ac4908c1482532a089e7ad78cdeeb340da977aab69f4"
+    },
+    {
+      "file": "SuspendInfoHistogram.h",
+      "url": "https://android.googlesource.com/platform/system/hardware/interfaces/+/refs/tags/android-17.0.0_r1/suspend/aidl/default/SuspendInfoHistogram.h?format=TEXT",
+      "bytes": 2712,
+      "sha256": "48cd10fe08f01ef68ac3ddeaacb1c89bf5bc27ad2d30db34d98867b273b7a8cf"
+    },
+    {
+      "file": "main.cpp",
+      "url": "https://android.googlesource.com/platform/system/hardware/interfaces/+/refs/tags/android-17.0.0_r1/suspend/aidl/default/main.cpp?format=TEXT",
+      "bytes": 8080,
+      "sha256": "4512a6d72cbf38a15f4000375d802dbc2b05a7a3c988ae60a731bb7711107b89"
+    },
+    {
+      "file": "android.system.suspend-service.rc",
+      "url": "https://android.googlesource.com/platform/system/hardware/interfaces/+/refs/tags/android-17.0.0_r1/suspend/aidl/default/android.system.suspend-service.rc?format=TEXT",
+      "bytes": 276,
+      "sha256": "957c6d8bbce641fc3bf1c64fd38bd84e7ce223f9299646d84ff63402a595860b"
+    },
+    {
+      "file": "Android.bp",
+      "url": "https://android.googlesource.com/platform/system/hardware/interfaces/+/refs/tags/android-17.0.0_r1/suspend/aidl/default/Android.bp?format=TEXT",
+      "bytes": 5726,
+      "sha256": "8112f0675a3ae1ad2b06e8de18fcb738630261556195ec0511a376fe4a9ef6af"
+    },
+    {
+      "file": "ISystemSuspend.aidl",
+      "url": "https://android.googlesource.com/platform/system/hardware/interfaces/+/refs/tags/android-17.0.0_r1/suspend/aidl/android/system/suspend/ISystemSuspend.aidl?format=TEXT",
+      "bytes": 859,
+      "sha256": "4ef9b85fbdf5fb18fc9e7cc50d184a2d9aa003b624ddcc12d128477b63e6062d"
+    },
+    {
+      "file": "IWakeLock.aidl",
+      "url": "https://android.googlesource.com/platform/system/hardware/interfaces/+/refs/tags/android-17.0.0_r1/suspend/aidl/android/system/suspend/IWakeLock.aidl?format=TEXT",
+      "bytes": 1137,
+      "sha256": "663fb611a9b421168ed9d74b96a4fc67d16ed7c371fd5e39f2ab199f1575716c"
+    },
+    {
+      "file": "WakeLockType.aidl",
+      "url": "https://android.googlesource.com/platform/system/hardware/interfaces/+/refs/tags/android-17.0.0_r1/suspend/aidl/android/system/suspend/WakeLockType.aidl?format=TEXT",
+      "bytes": 996,
+      "sha256": "fcd5e48f11ad311cd10dcae0689d6f64ae5db74b07357b23edad14015ad8f019"
+    },
+    {
+      "file": "libpower17-power.cpp",
+      "url": "https://android.googlesource.com/platform/hardware/libhardware_legacy/+/refs/tags/android-17.0.0_r1/power.cpp?format=TEXT",
+      "bytes": 5788,
+      "sha256": "86dff13349c9ff8e241ca679df196dfee2eb9c6a2fa5c3cfe4c42a165b2b2a48"
+    },
+    {
+      "file": "libpower17-block_suspend.cpp",
+      "url": "https://android.googlesource.com/platform/hardware/libhardware_legacy/+/refs/tags/android-17.0.0_r1/block_suspend.cpp?format=TEXT",
+      "bytes": 1299,
+      "sha256": "166fa5d724f1ed3330d109d5995ae5104afd130f25b36d42bc330192ed9a0a65"
+    },
+    {
+      "file": "libpower17-build.bp",
+      "url": "https://android.googlesource.com/platform/hardware/libhardware_legacy/+/refs/tags/android-17.0.0_r1/Android.bp?format=TEXT",
+      "bytes": 2933,
+      "sha256": "15bef4452591efe8f7d3bb447e71077de7bd4f8d8868d0532fdf556c9cbf7f55"
+    },
+    {
+      "file": "suspend-V1-hash.txt",
+      "url": "https://android.googlesource.com/platform/system/hardware/interfaces/+/refs/tags/android-17.0.0_r1/suspend/aidl/aidl_api/android.system.suspend/1/.hash?format=TEXT",
+      "bytes": 41,
+      "sha256": "52d56658ff088c4661cf35a2d58371cfbf1fd03771416451ca1fe5d6b3f6dd1d"
+    },
+    {
+      "file": "system-suspend.te",
+      "url": "https://android.googlesource.com/platform/system/sepolicy/+/refs/tags/android-17.0.0_r1/private/system_suspend.te?format=TEXT",
+      "bytes": 2520,
+      "sha256": "06a4d770046ca7ed746dca1b0ac7ed3786de8bda49289f8647668c3d308dba5e"
+    },
+    {
+      "file": "frozen-V1-ISystemSuspend.aidl",
+      "url": "https://android.googlesource.com/platform/system/hardware/interfaces/+/refs/tags/android-17.0.0_r1/suspend/aidl/aidl_api/android.system.suspend/1/android/system/suspend/ISystemSuspend.aidl?format=TEXT",
+      "bytes": 1901,
+      "sha256": "7fe0eaf0b10f10e37f077c2c4c69fda8e82b8c809301944307f328b69f0a37a6"
+    },
+    {
+      "file": "frozen-V1-IWakeLock.aidl",
+      "url": "https://android.googlesource.com/platform/system/hardware/interfaces/+/refs/tags/android-17.0.0_r1/suspend/aidl/aidl_api/android.system.suspend/1/android/system/suspend/IWakeLock.aidl?format=TEXT",
+      "bytes": 1803,
+      "sha256": "743af1134908839e3ecae2ff244611c85667e7ec93a4f8ab259627eb638f3838"
+    },
+    {
+      "file": "frozen-V1-WakeLockType.aidl",
+      "url": "https://android.googlesource.com/platform/system/hardware/interfaces/+/refs/tags/android-17.0.0_r1/suspend/aidl/aidl_api/android.system.suspend/1/android/system/suspend/WakeLockType.aidl?format=TEXT",
+      "bytes": 1803,
+      "sha256": "e7cbeadda626e370da30ab2d3d6f3e56f7409d9cb04658143ce46cc51a58ef95"
+    },
+    {
+      "file": "libpower17-power.h",
+      "url": "https://android.googlesource.com/platform/hardware/libhardware_legacy/+/refs/tags/android-17.0.0_r1/include/hardware_legacy/power.h?format=TEXT",
+      "bytes": 1118,
+      "sha256": "79dd5cec81254775257b4993a36d84603119493bd3bba0c95e86b7ceae288394"
+    }
+  ]
+}

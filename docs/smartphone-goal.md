@@ -87,3 +87,10 @@ crash-owned links. Five policy tests also pass on x86 and ARM64 user-QEMU.
 Installed responsive lifecycle, per-app streams, physical routes and mute,
 Pixel AoC/carrier audio, DND/volume/haptics and idle power remain open. See
 [native audio](native-audio.md).
+
+Native suspend coordination now passes27 checks on x86 and an actual ARM64 guest
+kernel, with24 component checks under ARM64 user-QEMU and eight original Android17
+source cases. One cooperating writer, wake-object lifetime, responsive local
+stop/snapshots and boot-time FD deadlines are qualified in injected boundaries.
+Retained Binder clients and real Pixel suspend/wake/thermal/charging remain open;
+see [native suspend](native-suspend.md).

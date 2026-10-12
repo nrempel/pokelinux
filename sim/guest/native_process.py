@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run exact native ARM64 radio and messaging test artifacts as unprivileged alarm."""
+"""Run exact native ARM64 radio, messaging and suspend test artifacts as unprivileged alarm."""
 import hashlib
 import json
 from pathlib import Path
@@ -13,13 +13,13 @@ result = {'passed': False, 'architecture': platform.machine(), 'qemu_mode': 'sys
           'hardware_verified': False, 'phone_accessed': False, 'kernel': platform.release(),
           'os': Path('/etc/os-release').read_text(), 'checks': {}, 'binary_sha256': {}}
 
-def execute(crate, manifest, name, process_tests):
+def execute(crate, manifest, name, process_tests, artifact_target="."):
     rows = [json.loads(line) for line in Path('/workspace/artifacts', crate, manifest).read_text().splitlines()]
     paths = [row['executable'] for row in rows if row.get('reason') == 'compiler-artifact'
              and row.get('target', {}).get('name') == name
              and row.get('profile', {}).get('test') and row.get('executable')]
     assert len(paths) == 1, paths
-    binary = Path('/workspace/artifacts', crate) / Path(paths[0]).relative_to('/target')
+    binary = Path('/workspace/artifacts', crate, artifact_target) / Path(paths[0]).relative_to('/target')
     result['binary_sha256'][name] = hashlib.sha256(binary.read_bytes()).hexdigest()
     prefix = ['runuser', '-u', 'alarm', '--', str(binary)]
     listing = subprocess.check_output(prefix + ['--list'], text=True, timeout=20)
@@ -47,6 +47,16 @@ try:
     execute('native-messaging', 'outbox-test-build-arm64.json', 'outbox', [])
     execute('native-messaging', 'outbox_process-test-build-arm64.json', 'outbox_process', [
         'sigkill_releases_owner_but_does_not_release_uncertain_part'])
+    suspend_index = json.loads(Path('/workspace/artifacts/native-suspend/arm64-executables.json').read_text())
+    peer = Path(suspend_index['executables']['lifetime-peer']['guest_path'])
+    assert hashlib.sha256(peer.read_bytes()).hexdigest() == suspend_index['executables']['lifetime-peer']['sha256']
+    result['binary_sha256']['suspend_lifetime_peer'] = suspend_index['executables']['lifetime-peer']['sha256']
+    for name in ['pokelinux_suspend', 'coordination', 'descriptors', 'deadlines']:
+        execute('native-suspend', 'arm64-tests-cargo.jsonl', name, [], 'target')
+    execute('native-suspend', 'arm64-tests-cargo.jsonl', 'process_lifetime', [
+        'killed_client_eof_destroys_one_native_object_after_actual_reap',
+        'killed_controller_eof_drops_authority_without_reentry',
+        'actual_service_side_disconnect_reaches_client_as_eof'], 'target')
     result['checks']['unprivileged_execution'] = True
     result['passed'] = True
 except Exception as error:

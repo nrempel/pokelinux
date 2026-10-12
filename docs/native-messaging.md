@@ -116,6 +116,8 @@ bash tools/build-native-messaging.sh prepare
 bash tools/framework-suite.sh sms-codec
 bash tools/build-native-messaging.sh build
 # In the prepared network-disabled graphics simulation container:
+# Prepare exact suspend artifacts for the shared process runner first:
+# bash tools/build-native-suspend.sh arm64-process (on Harbour)
 python3 tools/native-process-vm.py
 ```
 

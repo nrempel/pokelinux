@@ -1,0 +1,8 @@
+ordering	PASS
+idempotent-release	PASS
+destructor-release	PASS
+concurrent-acquire	PASS
+count-reject	PASS
+state-write-failure	PASS
+dead-controller	PASS
+dead-client	PASS

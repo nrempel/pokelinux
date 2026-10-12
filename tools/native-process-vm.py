@@ -30,5 +30,6 @@ result = json.loads((out / 'result.json').read_text())
 print(json.dumps(result, indent=2), flush=True)
 assert result['passed'] and result['architecture'] == 'aarch64'
 assert result['qemu_mode'] == 'system' and result['hardware_verified'] is False
-(root / 'artifacts/native-messaging/arm64-process-vm-result.json').write_text(json.dumps({
-    'results': str(out.relative_to(root)), 'result': result}, indent=2) + '\n')
+for crate in ['native-messaging', 'native-suspend']:
+    (root / 'artifacts' / crate / 'arm64-process-vm-result.json').write_text(json.dumps({
+        'results': str(out.relative_to(root)), 'result': result}, indent=2) + '\n')

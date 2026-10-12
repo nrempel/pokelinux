@@ -227,3 +227,10 @@ The guest runs the actual Rust component binary and native subprocess tests as a
 unprivileged user under its own Arch Linux ARM kernel. It does not use Android or
 exercise Binder. The x86 Android emulator remains the real Binder evidence class;
 user-mode ARM64/QEMU and physical Pixel qualifications remain separate.
+
+The shared `tools/native-process-vm.py` runner now also executes the exact
+message-outbox and native-suspend artifacts. Prepare their ARM64 manifests,
+including `tools/build-native-suspend.sh arm64-process`, before the guest run.
+The integrated run preserves both radio process checks and adds27 suspend
+checks under an actual ARM64 Arch kernel; this does not qualify Pixel Binder
+or hardware suspend. See [native suspend](native-suspend.md).

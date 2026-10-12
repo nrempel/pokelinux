@@ -1,0 +1,427 @@
+{
+  "schema": 1,
+  "component": "native-suspend",
+  "status": "tested isolated coordinator; retained-client Binder and kernel suspend unqualified",
+  "recorded_utc": "2026-10-12T22:03:04.530854+00:00",
+  "scope": {
+    "host_power_access": false,
+    "physical_device_access": false,
+    "vendor_code_execution": false,
+    "retained_client_rpc": false,
+    "real_binder_lifetime_proof": false,
+    "shared_vm_runner_changed": true,
+    "native_power_proof_changed": false
+  },
+  "original_source": {
+    "tag": "android-17.0.0_r1",
+    "fetch_manifest": {
+      "path": "tools/suspend-reference/fetch-manifest.json",
+      "bytes": 8613,
+      "sha256": "1309e6b47a76db8259c9799c3f8a09d371eff5c7f653ca01dc2c5c12396d4d07"
+    },
+    "compiled_unmodified": [
+      "SystemSuspend.cpp",
+      "SystemSuspendAidl.cpp"
+    ],
+    "source_sha256": {
+      "SystemSuspend.cpp": "2bb2bfbbeb683d7b03101a88093ab1bc3ee9d3b06fc7d2eb69297a928aa92dee",
+      "SystemSuspend.h": "f1ba3bcecf907227c8b37f2489351471143485165e088166621a15ef7a2036af",
+      "SystemSuspendAidl.cpp": "af0a6f8084718899349fc94b6e6e8c4ea71822c548ad3ed291750b24c622d5b1",
+      "SystemSuspendAidl.h": "605d81948a05177d01889c92fe953ad6558a6a0ba94476e531608022fbf8afc8",
+      "SystemSuspendUnitTest.cpp": "297d7f5a61cbe2535a9b4a31ca151ae6c5ee658ef7bc4c9fa65b89b9cbbd95bc",
+      "SystemSuspendAidlTest.cpp": "eee87837dc272ccf40c7947855dcba40ceb16e34c076572c708847bac1f59c5a",
+      "SuspendControlService.h": "5cee55e76ca88ec5468556281254315519ca7d180a55cca3f26af017a0a8acc0",
+      "SuspendControlService.cpp": "119bf6e17f1abfbf12e140011c6a64ecf2361ecc05c4b7b31770052ad888a68e",
+      "WakeLockEntryList.h": "b8966c6975162ad615e69ae6da20cf115b7e254124c54e3df4140102f8137a42",
+      "WakeupList.h": "1ae92ea74f8b23fe74c8ac4908c1482532a089e7ad78cdeeb340da977aab69f4",
+      "SuspendInfoHistogram.h": "48cd10fe08f01ef68ac3ddeaacb1c89bf5bc27ad2d30db34d98867b273b7a8cf",
+      "main.cpp": "4512a6d72cbf38a15f4000375d802dbc2b05a7a3c988ae60a731bb7711107b89",
+      "android.system.suspend-service.rc": "957c6d8bbce641fc3bf1c64fd38bd84e7ce223f9299646d84ff63402a595860b",
+      "Android.bp": "8112f0675a3ae1ad2b06e8de18fcb738630261556195ec0511a376fe4a9ef6af",
+      "ISystemSuspend.aidl": "4ef9b85fbdf5fb18fc9e7cc50d184a2d9aa003b624ddcc12d128477b63e6062d",
+      "IWakeLock.aidl": "663fb611a9b421168ed9d74b96a4fc67d16ed7c371fd5e39f2ab199f1575716c",
+      "WakeLockType.aidl": "fcd5e48f11ad311cd10dcae0689d6f64ae5db74b07357b23edad14015ad8f019",
+      "libpower17-power.cpp": "86dff13349c9ff8e241ca679df196dfee2eb9c6a2fa5c3cfe4c42a165b2b2a48",
+      "libpower17-block_suspend.cpp": "166fa5d724f1ed3330d109d5995ae5104afd130f25b36d42bc330192ed9a0a65",
+      "libpower17-build.bp": "15bef4452591efe8f7d3bb447e71077de7bd4f8d8868d0532fdf556c9cbf7f55",
+      "suspend-V1-hash.txt": "52d56658ff088c4661cf35a2d58371cfbf1fd03771416451ca1fe5d6b3f6dd1d",
+      "system-suspend.te": "06a4d770046ca7ed746dca1b0ac7ed3786de8bda49289f8647668c3d308dba5e",
+      "frozen-V1-ISystemSuspend.aidl": "7fe0eaf0b10f10e37f077c2c4c69fda8e82b8c809301944307f328b69f0a37a6",
+      "frozen-V1-IWakeLock.aidl": "743af1134908839e3ecae2ff244611c85667e7ec93a4f8ab259627eb638f3838",
+      "frozen-V1-WakeLockType.aidl": "e7cbeadda626e370da30ab2d3d6f3e56f7409d9cb04658143ce46cc51a58ef95",
+      "libpower17-power.h": "79dd5cec81254775257b4993a36d84603119493bd3bba0c95e86b7ceae288394"
+    },
+    "cases_passed": 8,
+    "architecture": "x86_64 Linux",
+    "platform_adapters": "our POSIX FD/flags/stats/service-token adapters; no Binder or calling-identity enforcement",
+    "count_rejection": "injected recognized commit rejection; not kernel wakeup_count driver",
+    "lifetime": "actual child kill/reap and Unix EOF mapped by harness to original object destruction"
+  },
+  "retained_contract": {
+    "service": "android.system.suspend.ISystemSuspend/default",
+    "aidl_version": 1,
+    "frozen_hash": "082a58c2505b703702f34ab8abcb1d1b5e890be4",
+    "factory_hash_marker_match": true,
+    "factory_inputs": [
+      {
+        "path": "/vendor/lib64/libpower.so",
+        "bytes": 52128,
+        "sha256": "c2014e5895a3de86a245e5a2384b829e26d7c7afb1f1c5d5277fa8aecc969527"
+      },
+      {
+        "path": "/vendor/lib64/android.system.suspend-V1-ndk.so",
+        "bytes": 68752,
+        "sha256": "1bdd4bf783e728112670a7bd338bed77309d03e460cd27aa2566ee97a582bac4"
+      }
+    ],
+    "rea_evidence_ids": [
+      "ev_ac012ec4d11fb471919ab351b16b6e653b96798a873ec653be272a3063691a15",
+      "ev_f6334e6a11f3805de95cac628495e00af82348a37ca689546ad3adadc5231fca",
+      "ev_c6bb3f577d90328b3e69392fac8a452a6c9f6a4ca2dcc79a6f0b8e89ad185034",
+      "ev_22acdbaf09dedb8936c271184b15e10623926009199ea1779bda57458e5748e9"
+    ],
+    "rea_closed_and_reaped": true,
+    "private_ledger_records": 4,
+    "binary_source_equivalence_claimed": false
+  },
+  "native_validation": {
+    "format": "pass",
+    "clippy": "pass with -D warnings",
+    "x86_64": {
+      "tests_passed": 27,
+      "component_fd_tests": 24,
+      "actual_kernel_process_tests": 3,
+      "kernel": "6.8.0-136-generic"
+    },
+    "aarch64": {
+      "tests_passed": 24,
+      "runtime": "qemu-aarch64 user mode",
+      "process_tests_run": false,
+      "arm_kernel_proof": false,
+      "process_executables_compiled": true,
+      "guest_kernel_runner_status": "compiled and executed separately under actual ARM64 kernel; user-mode process exclusions retained"
+    },
+    "red_green": [
+      {
+        "red_passed": 0,
+        "red_failed": 9,
+        "green_passed": 9,
+        "scope": "compiled initial coordinator scaffold"
+      },
+      {
+        "red_passed": 17,
+        "red_failed": 1,
+        "green_passed": 18,
+        "scope": "uncertain abort unlock must not retry"
+      },
+      {
+        "red_passed": 19,
+        "red_failed": 1,
+        "green_passed": 20,
+        "scope": "backend unwind must latch uncertainty and undo unpublished reservation"
+      },
+      {
+        "red_passed": 0,
+        "red_failed": 3,
+        "green_passed": 3,
+        "scope": "deadline test executable: late real-FD success and simulated suspend-time expiry"
+      },
+      {
+        "red_passed": 0,
+        "red_failed": 1,
+        "green_passed": 1,
+        "scope": "injected EINTR retains one absolute BOOTTIME write budget"
+      }
+    ],
+    "deadlines": {
+      "clock": "CLOCK_BOOTTIME",
+      "read_budget_seconds": 2,
+      "write_budget_seconds": 1,
+      "absolute_deadline_reused_across_retries": true,
+      "post_syscall_expiry_checked": true,
+      "late_success_status": "uncertain/degraded",
+      "eintr_injection": "synthetic EINTR result with real temporary descriptor; no driver-signal qualification",
+      "stuck_kernel_call": "requires owned process supervision/reclamation; O_NONBLOCK cannot force arbitrary driver calls to return"
+    },
+    "arm64_system_qemu": {
+      "tests_passed": 27,
+      "component_fd_tests": 24,
+      "actual_kernel_process_tests": 3,
+      "unprivileged_user": "alarm",
+      "record": {
+        "results": "sim/results/native-process-20261012T215910.390759Z",
+        "result": {
+          "passed": true,
+          "architecture": "aarch64",
+          "qemu_mode": "system",
+          "hardware_verified": false,
+          "phone_accessed": false,
+          "kernel": "7.1.6-1-aarch64-ARCH",
+          "os": "NAME=\"Arch Linux ARM\"\nPRETTY_NAME=\"Arch Linux ARM\"\nID=archarm\nID_LIKE=arch\nBUILD_ID=rolling\nANSI_COLOR=\"38;2;23;147;209\"\nHOME_URL=\"https://archlinuxarm.org/\"\nDOCUMENTATION_URL=\"https://archlinuxarm.org/wiki\"\nSUPPORT_URL=\"https://archlinuxarm.org/forum\"\nBUG_REPORT_URL=\"https://github.com/archlinuxarm/PKGBUILDs/issues\"\nLOGO=archlinux-logo\n",
+          "checks": {
+            "pokelinux_radio_components_under_arm64_kernel": true,
+            "blocked_worker_drop_aborts_process_instead_of_detaching_or_joining": true,
+            "spawn_failure_leaves_durable_admission_and_restart_refuses_launch": true,
+            "outbox_components_under_arm64_kernel": true,
+            "outbox_process_components_under_arm64_kernel": true,
+            "sigkill_releases_owner_but_does_not_release_uncertain_part": true,
+            "pokelinux_suspend_components_under_arm64_kernel": true,
+            "coordination_components_under_arm64_kernel": true,
+            "descriptors_components_under_arm64_kernel": true,
+            "deadlines_components_under_arm64_kernel": true,
+            "process_lifetime_components_under_arm64_kernel": true,
+            "killed_client_eof_destroys_one_native_object_after_actual_reap": true,
+            "killed_controller_eof_drops_authority_without_reentry": true,
+            "actual_service_side_disconnect_reaches_client_as_eof": true,
+            "unprivileged_execution": true
+          },
+          "binary_sha256": {
+            "pokelinux_radio": "3d6804457c0aa017eba8de1fa202acaac7df6ea1adf89ec19367b012b9700e9a",
+            "outbox": "19ad12791ef0e3b1182699c0a0d43585c5d7c268e889f191d3bb94a1bba3a5ff",
+            "outbox_process": "17dee532ce0cb0db2b3e3b1fa7640aac533569e475dbd6450ce03ff451943692",
+            "suspend_lifetime_peer": "f79d282c7e4c2d1711d4f9c5dcc185be307ab6c973a9d171cf1a8cc38f57b9f8",
+            "pokelinux_suspend": "3f34a1bac65b15e7fca4115fdd51b1cad37a08b119cf9f70e4cd592d68e9996c",
+            "coordination": "0d59f6cd8a34590642ad2b8811867fc9d8f4a32abba8b7cfc4093a520105f353",
+            "descriptors": "9da25d92f83ced939d57198df49479ae4fe0033547332ce0c603503b9e428adc",
+            "deadlines": "c03465c8009b0c845b4c8feef0cd9fe79751d727795fb79cdec39791b806ef03",
+            "process_lifetime": "e6b2bf0e453a9ae9ccc415081b0c9bf09e20607df9e8556011d483f8b800e29e"
+          }
+        }
+      },
+      "kernel_suspend_controls_verified": false,
+      "binder_lifetime_verified": false,
+      "project_export": "read-only",
+      "root_disk": "snapshot",
+      "network": "none",
+      "first_setup_failure": "Cargo target directory mapping; prior radio/outbox gates passed before fixture path error",
+      "first_private_results": "sim/results/native-process-20261012T215637.176228Z"
+    }
+  },
+  "images": [
+    {
+      "name": "pixel-phone-rust:20261012-b472",
+      "id": "sha256:5b8db5a581335ef1ce100691772e2109357bc9a9f051bfcb5b3c3a06ff0b0661"
+    },
+    {
+      "name": "pixel-graphics-build:20261011-b472",
+      "id": "sha256:072106341a377dc38091e09c79cc642e5717cf57d10915c0928e3e9a49b1659c"
+    }
+  ],
+  "commands": [
+    "tools/build-suspend-reference.sh fetch",
+    "tools/build-suspend-reference.sh build",
+    "tools/build-native-suspend.sh build",
+    "tools/build-native-suspend.sh arm64-process",
+    "python3 tools/native-process-vm.py (prepared graphics-sim container)"
+  ],
+  "owned_files": [
+    {
+      "path": "docs/native-suspend.md",
+      "bytes": 11084,
+      "sha256": "2acb122fbc3b0dba329f8dfdbf0429272e8deb2e6c97c489550286ebaf0a6b0e"
+    },
+    {
+      "path": "native-suspend/Cargo.lock",
+      "bytes": 1709,
+      "sha256": "45278c57dcc136f412777b88172f15f0ac6aa8ad454a49946210637f338b88a4"
+    },
+    {
+      "path": "native-suspend/Cargo.toml",
+      "bytes": 209,
+      "sha256": "40224dee4154af6186fa10e695971ca405ffe69ed161972d0c7470ef6d931097"
+    },
+    {
+      "path": "native-suspend/src/bin/lifetime-peer.rs",
+      "bytes": 657,
+      "sha256": "097cd005ec9ca587f1698a525ad2e74bca559b841a3e86508a53226c1f7ac7e1"
+    },
+    {
+      "path": "native-suspend/src/clock.rs",
+      "bytes": 597,
+      "sha256": "715b2b3a7d00d3c58f200cbf5d82f12d0e2a72ea3879ef1fd425f318e8be310a"
+    },
+    {
+      "path": "native-suspend/src/descriptors.rs",
+      "bytes": 7932,
+      "sha256": "b7699e9fa73a1a1bc5a00ea69aa6f24e96b8860a08ae4c19039b8042cff3fd9c"
+    },
+    {
+      "path": "native-suspend/src/lib.rs",
+      "bytes": 13899,
+      "sha256": "b5cd7986b62e81216b0628038f259805529f1c2f9d7a43edd1079c9aaed40371"
+    },
+    {
+      "path": "native-suspend/tests/coordination.rs",
+      "bytes": 13741,
+      "sha256": "4c6b42bd9ed99b340129c64176d4016338efe2083fc28405221ed0e9c3c8eb20"
+    },
+    {
+      "path": "native-suspend/tests/deadlines.rs",
+      "bytes": 6655,
+      "sha256": "53f068737ec6cee8b0c19ea8e64edaf0e7e572592a4ed2cfeac77ce0b629b2d5"
+    },
+    {
+      "path": "native-suspend/tests/descriptors.rs",
+      "bytes": 12225,
+      "sha256": "f07563b77e1d6a0a4cadbd01fbbdf86eb5ba0200cd05a256850caa040e3ef15a"
+    },
+    {
+      "path": "native-suspend/tests/fixtures/public-suspend-reference.tsv",
+      "bytes": 167,
+      "sha256": "4cde0a89221523d0c5803c512eee453da6b42ce3f008ebd56b025e8d43c65482"
+    },
+    {
+      "path": "native-suspend/tests/process_lifetime.rs",
+      "bytes": 6942,
+      "sha256": "3405a2ea2ecf9e824dc9ace2a69dc2ec42210ed16bc8a67c1f6f6861c0538d92"
+    },
+    {
+      "path": "sim/guest/native_process.py",
+      "bytes": 4159,
+      "sha256": "e5f4b798e9da63c830bae19ca5960c7f9b42a4e4c11a48805c3dedb0032bacd7"
+    },
+    {
+      "path": "tools/build-native-suspend.sh",
+      "bytes": 1828,
+      "sha256": "c8db0c558902ebf7ce5da600d797330bffb7e50986807837fa3909a67f5c1420"
+    },
+    {
+      "path": "tools/build-suspend-reference.sh",
+      "bytes": 1478,
+      "sha256": "d27ce043fc0626962dddaa37cffecbe27726ee716e44c33670a1e597e5d73e42"
+    },
+    {
+      "path": "tools/fetch-suspend-reference.py",
+      "bytes": 1574,
+      "sha256": "47866091bb0ff2c0382cd6f239219e25524156ca36a8a65b72025ae27b057361"
+    },
+    {
+      "path": "tools/index-suspend-arm64.py",
+      "bytes": 1973,
+      "sha256": "7b765476fb04d114ad378233f7a885c7591f91c6f0eb691f2a1e474945b905f1"
+    },
+    {
+      "path": "tools/native-process-vm.py",
+      "bytes": 2181,
+      "sha256": "6c23dc72fd12e18043bab1d9466aa6ee022e7a8535092f9b52444050efca5164"
+    },
+    {
+      "path": "tools/suspend-reference/fetch-manifest.json",
+      "bytes": 8613,
+      "sha256": "1309e6b47a76db8259c9799c3f8a09d371eff5c7f653ca01dc2c5c12396d4d07"
+    },
+    {
+      "path": "tools/suspend-reference/oracle.cpp",
+      "bytes": 9704,
+      "sha256": "4a25b7ad5bd014b8b4bdb1f48aa021bdb2ca088fbbe2b5d68695d2e39520dee6"
+    },
+    {
+      "path": "tools/suspend-reference/platform.h",
+      "bytes": 7151,
+      "sha256": "99f3d52c7131033d27e5f6f1f73e58329f74da444d75d900ad111222751d832e"
+    },
+    {
+      "path": "tools/suspend-reference/prepare-shims.py",
+      "bytes": 1237,
+      "sha256": "7332fc8932b5caaeb669d2dad7e21a8eef84b5ae34d2b7c351a3ead36d60ef90"
+    },
+    {
+      "path": "tools/suspend-reference/support.cpp",
+      "bytes": 405,
+      "sha256": "0aedbedde321e1a9baca7c9a665704ab06e0435a7778dccc92a8875d0d86b9c0"
+    },
+    {
+      "path": "tools/verify-suspend-reference.py",
+      "bytes": 1152,
+      "sha256": "dc913915cd143ef759f13cc060180b952a21af3c5e01ba3151ee1eb5143b7a9e"
+    }
+  ],
+  "ignored_execution_logs": [
+    {
+      "path": "artifacts/native-suspend/rust/red.log",
+      "bytes": 4233,
+      "sha256": "b4680d6330b07621a4099eedbd4c71c5313fcd4239b47e83b1b720aeb47604d8"
+    },
+    {
+      "path": "artifacts/native-suspend/rust/green-initial.log",
+      "bytes": 1317,
+      "sha256": "927057fe1ede8496abb8e8f802a4bea8d42244ff28b7edb7aba0b0738090bf0f"
+    },
+    {
+      "path": "artifacts/native-suspend/rust/red-unlock.log",
+      "bytes": 2394,
+      "sha256": "77e963ac3c9845a5176df6ff480668e9c562976db457834107594716d83e2ede"
+    },
+    {
+      "path": "artifacts/native-suspend/rust/green-expanded.log",
+      "bytes": 2772,
+      "sha256": "72aabcbafd425725b6dc04b890c34805f728ffb657058ed83e704906042dd116"
+    },
+    {
+      "path": "artifacts/native-suspend/rust/red-unwind.log",
+      "bytes": 3013,
+      "sha256": "917dc1bdb808b3d6b51cbeda7a57515c10a9fdbca0e09d484300016d55180736"
+    },
+    {
+      "path": "artifacts/native-suspend/rust/green-unwind.log",
+      "bytes": 2932,
+      "sha256": "3d01af35c5a920956ac1e18dc921b7f742e3c6e4621be7f78d5955010bb8ac6d"
+    },
+    {
+      "path": "artifacts/native-suspend/rust/final-build.log",
+      "bytes": 6512,
+      "sha256": "45ccaeb402276e51b3670dfd44a9d58bd3a054ce198acf2947d284ecd0a15e8a"
+    },
+    {
+      "path": "artifacts/native-suspend/reference/final-build.log",
+      "bytes": 1116,
+      "sha256": "0413a1aba07791be990a34dc3ef102ee621a39c7ecaf45906a468d49ea11661f"
+    },
+    {
+      "path": "artifacts/native-suspend/reference/reference.tsv",
+      "bytes": 167,
+      "sha256": "4cde0a89221523d0c5803c512eee453da6b42ce3f008ebd56b025e8d43c65482"
+    },
+    {
+      "path": "artifacts/native-suspend/rust/red-boottime.log",
+      "bytes": 3108,
+      "sha256": "f31551cd6f4919736079e4191e1c595312171e49ffb0af88a746362a9637062c"
+    },
+    {
+      "path": "artifacts/native-suspend/rust/red-eintr.log",
+      "bytes": 952,
+      "sha256": "55bff54edcd0d87b509d5eacd23648a63d025d9446222946520f88973e6678ba"
+    },
+    {
+      "path": "artifacts/native-suspend/rust/green-boottime.log",
+      "bytes": 3457,
+      "sha256": "d877d58348ebaffea3616e56c1ece7d7a60e55b7cc370975115ae8f3766c39c2"
+    },
+    {
+      "path": "artifacts/native-suspend/arm64-manifest-build.log",
+      "bytes": 275,
+      "sha256": "4159860c5ca2211bda9e9a71752237d6431ef32710fa65cd21224d5e3ab43747"
+    },
+    {
+      "path": "artifacts/native-suspend/arm64-helper-cargo.jsonl",
+      "bytes": 4789,
+      "sha256": "fb9561305c0537c695eb78c2cbf392f4e496ec38383d0ab7ab510a2887135a5b"
+    },
+    {
+      "path": "artifacts/native-suspend/arm64-tests-cargo.jsonl",
+      "bytes": 7434,
+      "sha256": "d712b23fcb9550f1014ed9c17d7fda0016c2cc392720ecbfa3a0f7ec92fbd6d9"
+    },
+    {
+      "path": "artifacts/native-suspend/arm64-executables.json",
+      "bytes": 2663,
+      "sha256": "7211b3ae4fe31b5029117d8c0b88774aeb2a2912955db93f39b0d7abb11dda0a"
+    }
+  ],
+  "remaining_gates": [
+    "actual frozen-V1 Binder frontend, original libpower RPC and remote-object transfer/death/restart tests",
+    "actual kernel wakeup_count rejection, userspace-abort/pm_fs_abort and driver-blocked IO qualification",
+    "device privilege/path profile and native power/wake-source lifecycle integration"
+  ],
+  "arm64_exact_index_sha256": "fcf3c9966f4f3bd59c3c68d0766cab52021acb3e3c782de39eebcf4686912bfa"
+}

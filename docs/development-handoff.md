@@ -124,6 +124,16 @@ and ARM64 user-QEMU Rust clients; the daemon stays x86 in both runs. No host NIC
 or bus is accessed. Installed authority, authenticated permissions, mutations,
 BlueZ and device behavior remain open; see `native-connectivity.md`.
 
+The native suspend coordinator now has one cooperating writer, owned wake
+objects, atomic responsive stop/snapshots, abort-before-counter ordering and
+terminal uncertainty. Absolute CLOCK_BOOTTIME budgets fence late successful FD
+operations without resetting after EINTR. Twenty-seven checks pass on x86 and
+under an actual ARM64 Arch kernel, including three process/Unix lifetime cases;
+24 component checks pass under ARM64 user-QEMU. Eight actual unmodified Android17
+source cases qualify the reference ordering/lifetime separately. Retained V1
+Binder/libpower clients, Pixel kernel count/abort controls and driver-blocked
+process supervision remain open; see `native-suspend.md`.
+
 ## Next work
 
 1. Recover and test the actual vendor cleanup/reset and registration-overlap
@@ -159,6 +169,9 @@ bash tools/build-native-radio.sh build
 bash tools/build-native-messaging.sh build
 bash tools/build-power-reference.sh build
 bash tools/build-native-power.sh build
+bash tools/build-suspend-reference.sh build
+bash tools/build-native-suspend.sh build
+bash tools/build-native-suspend.sh arm64-process
 bash tools/build-native-audio.sh build
 bash tools/build-native-connectivity.sh build
 bash tools/build-native-audio.sh integration artifacts/native-audio/NEW_RUN
