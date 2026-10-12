@@ -290,7 +290,10 @@ mod tests {
         assert!(!worker.occupied());
     }
     #[test]
-    #[cfg(target_arch = "x86_64")]
+    #[cfg_attr(
+        target_arch = "aarch64",
+        ignore = "requires native ARM64 kernel process execution; run tools/radio-process-vm.py"
+    )]
     fn blocked_worker_drop_aborts_process_instead_of_detaching_or_joining() {
         const MARKER: &str = "POKELINUX_BLOCKED_WORKER_CHILD";
         if std::env::var_os(MARKER).is_some() {
@@ -312,6 +315,7 @@ mod tests {
             .args([
                 "--exact",
                 "worker::tests::blocked_worker_drop_aborts_process_instead_of_detaching_or_joining",
+                "--include-ignored",
             ])
             .env(MARKER, "1")
             .process_group(0)

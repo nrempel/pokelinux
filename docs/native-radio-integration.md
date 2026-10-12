@@ -219,3 +219,11 @@ registration is allowed by this implementation. Safe reconnection needs recovere
 reset/cleanup evidence. [Provenance](evidence/radio-supervisor-provenance.json)
 separates real Binder reclamation, controlled reaping failures, ARM64/QEMU state
 tests and the unresolved native ARM64 subprocess gate.
+
+## ARM64 process qualification
+
+The process boundary now has separate [ARM64 system-QEMU evidence](evidence/arm64-radio-process-provenance.json).
+The guest runs the actual Rust component binary and native subprocess tests as an
+unprivileged user under its own Arch Linux ARM kernel. It does not use Android or
+exercise Binder. The x86 Android emulator remains the real Binder evidence class;
+user-mode ARM64/QEMU and physical Pixel qualifications remain separate.

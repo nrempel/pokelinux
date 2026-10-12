@@ -45,11 +45,14 @@ Java changes are synthetic peer controls only; no physical phone was accessed.
 Harbour now has authenticated `gh` write access and the repository-local existing
 author identity. Authentication remains outside source control.
 
-ARM64 user-mode QEMU passes component state, journal and provenance tests. Its
-failed-exec subprocess test unexpectedly returns a successful child for a missing
-executable, then hits the fail-closed abort. Native subprocess execution tests are
-therefore explicitly x86-64 only. Native ARM64 kernel/process validation remains
-required; this is not a passing ARM64 Binder or production supervision claim.
+ARM64 user-mode QEMU passes component state, journal and provenance tests, but
+its failed-exec subprocess test unexpectedly returns a successful child for a
+missing executable. The two process execution tests are now compiled for ARM64
+and explicitly ignored by the user-mode suite. `tools/radio-process-vm.py` runs
+them under an Arch Linux ARM guest kernel in system-QEMU, as the unprivileged
+`alarm` user. Both pass, along with the component tests. See
+`evidence/arm64-radio-process-provenance.json`. This closes the process-specific
+gate; ARM64 Binder, matched Pixel kernel/policy and physical hardware remain open.
 
 ## Next work
 
@@ -60,7 +63,8 @@ required; this is not a passing ARM64 Binder or production supervision claim.
 2. Integrate these primitives into an installed Rust service and its service
    manager. Define authenticated permissions and observer IPC with process/session
    fencing, bounded output, safe durable admission and bounded diagnostics.
-   Qualify actual ARM64 kernel/process behavior on an owned VM.
+   Qualify ARM64 Binder and matched Pixel kernel/policy separately; the owned
+   ARM64 system-QEMU process gate now passes.
 3. Extend ownership to request transport, operation receipts, absolute candidate
    and operation deadlines, timer delivery, notification watches and aggregate
    budgets. Recover producer identity before enabling fragmented semantic output.
@@ -84,6 +88,8 @@ affected docs each work turn when implementation or evidence changes. Run:
 bash tools/build-native-radio.sh build
 bash tools/framework-suite.sh binder-kernel
 bash tools/framework-suite.sh radio-ipc
+# In the prepared network-disabled graphics simulation container:
+python3 tools/radio-process-vm.py
 ```
 
 These are focused native-radio gates, not proof that the full smartphone goal is

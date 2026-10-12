@@ -1,0 +1,39 @@
+{
+  "scope": "Native Rust process behavior under an ARM64 Arch Linux kernel in system-QEMU; unprivileged execution; no Binder or physical phone",
+  "base_revision": "f3d3a5f178d1a3d0759685b42c65613c32d12779",
+  "sources_sha256": {
+    "native-radio/src/worker.rs": "2dd9ba20c7f8897ae836cc02c410104b06d62c9ce22c9b0ec5da9ad85c4e34dd",
+    "native-radio/src/supervisor.rs": "3f114c25c9300cb8e0ed064e15a3537c829d5031585ef012cfba33d6f53bfbf5",
+    "tools/build-native-radio.sh": "7d93f11e93a07341ccf52a3e1db8f30e1e32110d6871c3f2fb3c081133881f93",
+    "tools/radio-process-vm.py": "14f9e57e0b9d94e3580f79a936946682e539c26e4061c2f7e6d7240d8e25c71c",
+    "sim/guest/radio_process.py": "6dd1f9ee0621f9ff4f81586be8b38229c2dd458fbaaaeac65da0a267156c1ceb",
+    "sim/guest/boot.sh": "c468a632712ab4b9e13dc517050e195793c1d1fd83bcf1ddc25d26aeefd0152d"
+  },
+  "binary_sha256": "3d6804457c0aa017eba8de1fa202acaac7df6ea1adf89ec19367b012b9700e9a",
+  "kernel_image_sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+  "kernel_release": "7.1.6-1-aarch64-ARCH",
+  "red": "The guest reached its ARM64 Linux kernel but failed because the blocked-worker and failed-exec tests were not compiled for ARM64",
+  "green": {
+    "components_under_arm64_kernel": true,
+    "blocked_worker_drop_aborts_process_instead_of_detaching_or_joining": true,
+    "spawn_failure_leaves_durable_admission_and_restart_refuses_launch": true,
+    "unprivileged_execution": true
+  },
+  "uid_context": "Rust test binary and all subprocesses launched with runuser -u alarm; private journal UID/mode validation passes",
+  "qemu_mode": "system",
+  "hardware_verified": false,
+  "phone_accessed": false,
+  "original_code_execution": "No new original vendor-code execution in this gate",
+  "user_mode_limitation": "The pinned user-mode QEMU failed-exec observation persists; process tests are explicitly ignored there and executed under system-QEMU instead",
+  "other_gates": "Native build fmt/Clippy/components/release checks pass; no runtime transport behavior changed in this increment",
+  "commands": [
+    "bash tools/build-native-radio.sh build",
+    "python3 tools/radio-process-vm.py in prepared network-disabled pixel-graphics-sim container"
+  ],
+  "limits": [
+    "System-QEMU emulates ARM64 CPU and virtual hardware; not physical Pixel evidence",
+    "No ARM64 Binder/vendor/carrier proof",
+    "Guest kernel is prepared Arch Linux ARM, not the matched Google Pixel kernel",
+    "Installed service manager, app permissions and actual vendor cleanup/re-registration remain open"
+  ]
+}

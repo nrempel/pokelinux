@@ -279,7 +279,10 @@ mod tests {
         assert!(!supervisor.admits_frame(live, live, 2));
     }
     #[test]
-    #[cfg(target_arch = "x86_64")]
+    #[cfg_attr(
+        target_arch = "aarch64",
+        ignore = "requires native ARM64 kernel process execution; run tools/radio-process-vm.py"
+    )]
     fn spawn_failure_leaves_durable_admission_and_restart_refuses_launch() {
         use std::os::unix::fs::DirBuilderExt;
         let path = std::env::temp_dir().join(format!(

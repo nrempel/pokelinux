@@ -209,8 +209,8 @@ The worker and watch remain owned. Accidentally dropping an unfinished worker
 explicitly aborts its process; it does not detach or hide an indefinite join in
 Drop. `Supervisor` now provides tested parent ownership; installed service-manager
 integration is still required before production deployment. A
-unit test starts a disposable child and proves SIGABRT; ARM64/QEMU tests exercise
-completion ownership but do not repeat that native subprocess signal test.
+unit test starts a disposable child and proves SIGABRT; ARM64 user-mode QEMU tests exercise completion ownership; the ARM64 system-QEMU
+guest now also runs the subprocess signal test under its own kernel.
 
 Even after completion, this lifecycle refuses another registration attempt. No
 `clear` is sent automatically. Its one-way acknowledgement cannot establish remote
@@ -245,7 +245,24 @@ an unkillable kernel task. See [execution](evidence/radio-supervisor-provenance.
 
 The native x86-64 failed-exec subprocess test passes. Under pinned ARM64 user-mode
 QEMU, spawning a nonexistent executable unexpectedly returns success; the
-fail-closed destructor then aborts when the assertion unwinds. That subprocess
-test is explicitly scoped to native x86-64. Journal, provenance and lifecycle
-state tests still run under ARM64/QEMU. Actual ARM64 kernel/process qualification
+fail-closed destructor then aborts when the assertion unwinds. That subprocess test is now compiled for ARM64 but explicitly ignored under
+user-mode QEMU. Journal, provenance and lifecycle state tests still run there.
+The system-QEMU guest runs both native process tests under an Arch Linux ARM
+kernel, unprivileged, and passes. ARM64 Binder, the matched Pixel kernel/policy
 and installed service-manager behavior remain open.
+
+## ARM64 kernel process execution
+
+`tools/radio-process-vm.py` boots the existing prepared Arch Linux ARM image using
+a temporary disk overlay, a read-only project share and a fresh results share. It
+uses no network, physical phone or host device transport. The guest selects the
+exact test executable from Cargo's recorded artifact manifest, runs the components
+as `alarm`, then explicitly executes the two ARM64 process tests. The first VM
+run failed because those tests were excluded from the ARM64 binary. After replacing
+architecture exclusion with an explicit user-mode ignore, all gates pass.
+
+This demonstrates SIGABRT ownership behavior and failed-exec/durable-admission
+semantics under an ARM64 Linux kernel in system-QEMU. It does not demonstrate
+ARM64 Binder or Pixel kernel behavior. The earlier pinned user-mode failed-exec
+observation remains recorded rather than being reclassified as a native failure.
+See [the separate evidence class](evidence/arm64-radio-process-provenance.json).
