@@ -29,6 +29,8 @@ pub enum ReceiverFailure {
     InternalFailure = 4,
     PublisherGone = 5,
     Cancelled = 6,
+    ServiceDied = 7,
+    MonitoringFailed = 8,
 }
 fn failure(state: &AtomicU8) -> Option<ReceiverFailure> {
     match state.load(Ordering::Acquire) {
@@ -38,6 +40,8 @@ fn failure(state: &AtomicU8) -> Option<ReceiverFailure> {
         3 => Some(ReceiverFailure::ConsumerGone),
         5 => Some(ReceiverFailure::PublisherGone),
         6 => Some(ReceiverFailure::Cancelled),
+        7 => Some(ReceiverFailure::ServiceDied),
+        8 => Some(ReceiverFailure::MonitoringFailed),
         _ => Some(ReceiverFailure::InternalFailure),
     }
 }
@@ -222,6 +226,9 @@ pub struct RadioCallbacks {
 #[derive(Clone)]
 pub struct CallbackControl(Arc<CallbackQueue>);
 impl CallbackControl {
+    pub(crate) fn fail(&self, reason: ReceiverFailure) {
+        self.0.fail(reason);
+    }
     pub fn cancel(&self) {
         self.0.fail(ReceiverFailure::Cancelled);
     }

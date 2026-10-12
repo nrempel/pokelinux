@@ -1,7 +1,9 @@
 //! Recovered vendor request transport. Successful one-way submission is not
 //! modem acceptance. Session lifetime, discovery and retries belong to the owner.
+use crate::receiver::{CallbackControl, ReceiverFailure};
 use omarchy_ims::requests::{RequestPart, RequestParts};
 use rsbinder::{BinderResult, FLAG_ONEWAY, Parcel, Result, SIBinder, Status, StatusCode};
+use std::sync::Arc;
 
 pub const RADIO_DESCRIPTOR: &str =
     "vendor.samsung_slsi.telephony.hardware.radioExternal.IOemSlsiRadioExternal";
@@ -9,6 +11,27 @@ pub const INDICATION_DESCRIPTOR: &str =
     "vendor.samsung_slsi.telephony.hardware.radioExternal.IOemSlsiRadioExternalInd";
 
 pub struct RadioTransport(SIBinder);
+struct RadioDeath(CallbackControl);
+impl rsbinder::DeathRecipient for RadioDeath {
+    fn binder_died(&self, _: &rsbinder::WIBinder) {
+        self.0.fail(ReceiverFailure::ServiceDied);
+    }
+}
+/// Retains the strong recipient required by rsbinder's weak death subscription.
+/// Dropping the watch cancels its local callback stream before unlinking.
+#[must_use = "retain the death watch for the callback session lifetime"]
+pub struct RadioDeathWatch {
+    binder: SIBinder,
+    recipient: Arc<RadioDeath>,
+}
+impl Drop for RadioDeathWatch {
+    fn drop(&mut self) {
+        self.recipient.0.cancel();
+        // DeadObject is normal after death; local cancellation does not depend
+        // on successful driver unsubscribe or any remote cleanup.
+        let _ = self.binder.unlink_to_death_arc(&self.recipient);
+    }
+}
 #[derive(Debug)]
 pub struct SubmissionError {
     pub source: StatusCode,
@@ -16,6 +39,23 @@ pub struct SubmissionError {
     pub submitted_parts: usize,
 }
 impl RadioTransport {
+    /// Arm before registration. A link error invalidates the associated stream;
+    /// this does not cancel synchronous calls or settle pending requests.
+    pub fn watch_death(&self, control: CallbackControl) -> Result<RadioDeathWatch> {
+        let recipient = Arc::new(RadioDeath(control));
+        if let Err(error) = self.0.link_to_death_arc(&recipient) {
+            recipient.0.fail(if error == StatusCode::DeadObject {
+                ReceiverFailure::ServiceDied
+            } else {
+                ReceiverFailure::MonitoringFailed
+            });
+            return Err(error);
+        }
+        Ok(RadioDeathWatch {
+            binder: self.0.clone(),
+            recipient,
+        })
+    }
     pub fn from_binder(binder: SIBinder) -> Result<Self> {
         if !binder.is_remote() || binder.descriptor() != RADIO_DESCRIPTOR {
             return Err(StatusCode::BadType);

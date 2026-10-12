@@ -325,6 +325,22 @@ The peer trigger is test-only, and a one-way submit is not remote acknowledgemen
 This proves local state separation and remote parser failure delivery, not service
 death recovery, stale-fragment isolation or a vendor flush guarantee.
 
+`RadioTransport::watch_death` now returns a guard that owns the strong death
+recipient required by rsbinder 0.12. Arm it before registration and retain it for
+the session lifetime. Service death invalidates the shared stream as `ServiceDied`;
+a failed link invalidates it as `ServiceDied` for `DeadObject`, otherwise
+`MonitoringFailed`. Dropping the guard cancels local consumption before a
+best-effort unlink. It does not clear vendor registration or resolve the outcome
+of already-submitted requests. First failure remains authoritative.
+
+The owned emulator verifies guard drop/cancellation, re-arming a new watch,
+successful registration followed by actual peer-process exit, and rejection of
+a watch on the already-dead Binder proxy. The active stream returns `ServiceDied`
+without a concurrent outgoing call. The dead-proxy link returns `DeadObject` and
+also invalidates its fresh stream. [Execution identities](evidence/radio-death-provenance.json).
+Other monitoring-link errors, death during registration, restart/reconnect and
+late callbacks remain separate tests. These results do not establish modem reset.
+
 The old provenance above records the earlier request/response milestone. The
 [indication report](evidence/radio-indication-provenance.json) records this extension.
 Neither establishes actual vendor service behavior or production recovery.

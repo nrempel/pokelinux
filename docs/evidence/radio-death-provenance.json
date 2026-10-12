@@ -1,0 +1,58 @@
+{
+  "scope": "Native Rust death watch on an independent disposable Android peer, actual Binder process-death notification",
+  "sources_sha256": {
+    "native-radio/src/receiver.rs": "ca944cc8e4c056a6aa5bed3838fec2280428c70e225c569432469e6bc0ab7d6d",
+    "native-radio/src/transport.rs": "28f59c9bd607c6eb68d4192b4b9e4a9d42c852446f9c7e0144465431c20d02f0",
+    "native-radio/src/bin/radio-ipc-test.rs": "62f50d93c4de44d8243e31115aad60fa896666e8d63fe07b512ce7dabdae281f",
+    "framework/radiopeer/Peer.java": "c443e660b895022952fde75380a804e64919f2d6cc030b2e7099cad7210049e7",
+    "framework/tests/radio_ipc.py": "6b61a1b1641f9f690f530c1f22a5e0d1823aced8dcdbc1531d3bbd7d2028a92e"
+  },
+  "binary_sha256": "dcf1b4af70e49eec09fbc8876a8af66f7996dc24e4d858cb6e9e4e57630ab9e0",
+  "peer_apk_sha256": "3da68c63c588d6ccfbaf7019cf133a134ed94bc6eb6962231102ab53bfa20fdb",
+  "output_sha256": "4fcc82177db04e7714767eaf0e6e0731b18789391ec7f97791209ee1122bcc5a",
+  "output": [
+    "radio-bootstrap\tPASS",
+    "radio-registration\tPASS",
+    "radio-indications\tPASS",
+    "radio-assembly\tPASS",
+    "radio-roundtrip\t0\tPASS",
+    "radio-roundtrip\t2048\tPASS",
+    "radio-roundtrip\t2049\tPASS",
+    "radio-roundtrip\t4096\tPASS",
+    "radio-callback-overflow\tPASS",
+    "radio-peer\t2648\t10234\tu:r:untrusted_app:s0:c234,c256,c512,c768",
+    "radio-clear-observed\tPASS",
+    "radio-malformed-wakeup\tPASS",
+    "radio-owner-cancel\tPASS",
+    "radio-service-death\tPASS",
+    "radio-already-dead\tPASS"
+  ],
+  "verified": [
+    "Drop death guard cancels its callback stream; new watch can arm on the live peer",
+    "Strong recipient retained through registration and delayed peer self-exit",
+    "Blocking callback wait returns ServiceDied after actual peer exit",
+    "Watch on already-dead proxy returns DeadObject and invalidates associated stream",
+    "Existing request, indication, assembly, overflow, malformed and cancellation cases pass"
+  ],
+  "build_checks": [
+    "fmt",
+    "clippy all musl targets",
+    "Linux musl component tests",
+    "ARM64 GNU component tests under QEMU",
+    "static ELF interpreter checks"
+  ],
+  "selinux_enforcing": true,
+  "not_verified": [
+    "Death during registration or request submission",
+    "Monitoring link errors other than DeadObject",
+    "Restart/reconnect, late callbacks and epoch replacement",
+    "Pending operations, atomic publication and remote cleanup",
+    "Actual vendor service or modem recovery",
+    "ARM64 kernel Binder or physical device"
+  ],
+  "phone_accessed": false,
+  "reproduce": [
+    "bash tools/build-native-radio.sh build",
+    "bash tools/framework-suite.sh radio-ipc"
+  ]
+}

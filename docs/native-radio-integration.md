@@ -73,8 +73,10 @@ The separate blocking inbox wait now passes component wakeup tests and normal
 real-Binder delivery. See [evidence](evidence/callback-wait-provenance.json).
 Explicit callback cancellation and remote malformed-indication wakeup now pass
 [the extended test](evidence/callback-cancel-provenance.json). Fresh endpoint state
-is separate even when the synthetic peer reuses ID 42. Next: service death and
-late-callback epoch replacement, then deadline/aggregate-budget integration and
+is separate even when the synthetic peer reuses ID 42. Service death after
+registration, watch-drop invalidation and already-dead link failure now pass
+[real Binder tests](evidence/radio-death-provenance.json). Next: death during
+registration, restart/reconnect and late-callback epoch replacement, then deadline/aggregate-budget integration and
 pending-operation resolution. These primitives are not yet a complete owner.
 
 ## Independent review

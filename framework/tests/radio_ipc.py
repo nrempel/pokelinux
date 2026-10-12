@@ -47,9 +47,9 @@ try:
     expected = ['radio-bootstrap\tPASS', 'radio-registration\tPASS', 'radio-indications\tPASS', 'radio-assembly\tPASS']
     expected += ['radio-roundtrip\t'+str(n)+'\tPASS' for n in [0, 2048, 2049, 4096]]
     expected += ['radio-callback-overflow\tPASS']
-    assert lines[:9] == expected and len(lines) == 13, output
+    assert lines[:9] == expected and len(lines) == 15, output
     assert lines[9].startswith('radio-peer\t') and lines[10] == 'radio-clear-observed\tPASS', output
-    assert lines[11:] == ['radio-malformed-wakeup\tPASS', 'radio-owner-cancel\tPASS'], output
+    assert lines[11:] == ['radio-malformed-wakeup\tPASS', 'radio-owner-cancel\tPASS', 'radio-service-death\tPASS', 'radio-already-dead\tPASS'], output
     assert run('shell', 'getenforce').strip() == 'Enforcing'
     print(output, flush=True)
 finally:

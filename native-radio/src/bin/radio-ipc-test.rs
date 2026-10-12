@@ -334,5 +334,56 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     }
     println!("radio-owner-cancel\tPASS");
     transport.clear(fresh_id)?;
+    let end = Instant::now() + Duration::from_secs(5);
+    while report(&peer)?.2 != 1 {
+        if Instant::now() >= end {
+            return Err("replacement clear timeout".into());
+        }
+        std::thread::sleep(Duration::from_millis(5));
+    }
+    let dying = new_radio_callbacks(NonZeroUsize::new(4).unwrap());
+    let abandoned = new_radio_callbacks(NonZeroUsize::new(1).unwrap());
+    drop(transport.watch_death(abandoned.control.clone())?);
+    if !matches!(abandoned.events.try_recv(), Err(ReceiverFailure::Cancelled)) {
+        return Err("dropping death watch did not invalidate local stream".into());
+    }
+    let _watch = transport.watch_death(dying.control.clone())?;
+    transport.register(
+        &dying.response.as_binder(),
+        &dying.indication.as_binder(),
+        "pokelinux-ipc-test",
+    )?;
+    for _ in 0..4 {
+        callback(&dying.events)?;
+    }
+    let data = remote.prepare_transact(true)?;
+    let mut reply = remote
+        .submit_transact(107, &data, 0)?
+        .ok_or("missing exit-trigger reply")?;
+    let status: Status = reply.read()?;
+    if !status.is_ok() {
+        return Err(status.into());
+    }
+    if reply.data_avail() != 0 {
+        return Err("extra exit reply".into());
+    }
+    if !matches!(
+        dying
+            .events
+            .recv_until(Instant::now() + Duration::from_secs(5)),
+        Err(ReceiverFailure::ServiceDied)
+    ) {
+        return Err("peer death did not invalidate callback stream".into());
+    }
+    println!("radio-service-death\tPASS");
+    let dead = new_radio_callbacks(NonZeroUsize::new(1).unwrap());
+    if !matches!(
+        transport.watch_death(dead.control.clone()),
+        Err(StatusCode::DeadObject)
+    ) || !matches!(dead.events.try_recv(), Err(ReceiverFailure::ServiceDied))
+    {
+        return Err("already-dead service watch did not fail closed".into());
+    }
+    println!("radio-already-dead\tPASS");
     Ok(())
 }

@@ -116,6 +116,16 @@ public final class Peer extends Instrumentation {
                 } }, "malformed-callback-test").start();
                 reply.writeNoException(); return true;
             }
+            if (code == 107) { // Exit only this disposable test peer, after replying.
+                require(callFlags == 0 && indication != null && !cleared, "exit state/flags");
+                data.enforceNoDataAvail();
+                new Thread(new Runnable() { @Override public void run() {
+                    try { Thread.sleep(100); }
+                    catch (InterruptedException error) { Thread.currentThread().interrupt(); return; }
+                    android.os.Process.killProcess(android.os.Process.myPid());
+                } }, "peer-exit-test").start();
+                reply.writeNoException(); return true;
+            }
             if (code == 100) { // Test-only observation, never called by production transport.
                 data.enforceNoDataAvail(); reply.writeNoException();
                 reply.writeInt(rawCalls); reply.writeInt(segmentCalls); reply.writeInt(cleared ? 1 : 0);
