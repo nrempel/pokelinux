@@ -225,6 +225,37 @@ look like one valid message. Local session epochs can reject old callback object
 they cannot prove the vendor has discarded old fragments. Timeout and reconnect
 must not be documented as a verified vendor flush boundary without evidence.
 
+### Original adapter execution
+
+Seven additional cases execute the original AIDL owner constructors and callback
+`onTransact`, with an injected listener and synthetic parcels. Wrong-slot input
+is ignored. Different message IDs keep separate accumulators; successful delivery
+removes the entry and permits reuse. A synthetic old head and new tail with the
+same ID/slot/total produce mixed output without detection.
+
+The first fragment's total controls completion, but the final fragment's total
+controls the result constructor's copy length. Changing the total therefore
+produces padding or truncation in the tested cases. A listener exception retains
+the completed entry; a later conflicting duplicate retries the first bytes.
+Missing-index failure also retains state, and a later gap fill can overshoot the
+total without delivery. These are consumer observations, not proof that a real
+producer emits these malformed sequences.
+
+### Native single-candidate assembly
+
+`native-radio::assembly::Assembly` reconstructs one candidate with explicit local
+byte and fragment/index limits. It preserves valid numeric ordering and exact
+duplicate behavior, rejects conflicting totals/payloads and invalid coverage,
+and permanently invalidates a candidate after any error. Completed instances
+cannot accept another message. Empty index-zero/zero-total assembly is explicit;
+empty fragments in nonempty messages are rejected as a local supported-input rule.
+
+This is not yet a production session owner. It has no independent timer, epoch
+fence, aggregate multi-message budget or vendor resynchronization guarantee.
+The owner must supply those before delivering results to phone consumers. Peak
+payload allocation can reach twice the configured candidate byte limit during
+assembly, plus bounded map overhead; the caller owns the input event allocation.
+
 ## Native request transport across processes
 
 `RadioTransport` now submits recovered registration, raw/segmented request and
@@ -258,8 +289,9 @@ bash tools/framework-suite.sh radio-ipc
 
 The subsequent native indication endpoint replaces the descriptor-only test
 handle. Both endpoints share a bounded event queue and terminal failure state.
-Raw and segmented indications now pass across processes; fragments preserve
-message, slot, segment index and total length. Reassembly is not implemented.
+Raw and segmented indications pass across processes; fragments preserve
+message, slot, segment index and total length. Single-candidate assembly now exists;
+production session ownership and safe reuse remain incomplete.
 
 The peer submits indications before returning registration. After the request
 round trips, a separate test-only burst overfills the four-event inbox while the

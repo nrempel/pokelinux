@@ -1,0 +1,26 @@
+{
+  "scope": "Original indication owner constructors and AIDL callback dispatch, injected listener and synthetic parcels",
+  "apk_sha256": "8b017599727398e80df5ab618d648890dcdc34b5fe2ba71fb2331e51bd8b8879",
+  "oracle_jar_sha256": "f7467daae3e53ef27b61f259c452acebe38a753e03ed3011918aa890654da99a",
+  "sources_sha256": {
+    "framework/shannon-oracle/IndicationAdapterOracle.java": "98b05cb679bf590dc33415fc010eec0cd6fe19a24d1d6239afd78aa110776158",
+    "framework/tests/shannon_oracle.py": "c97097d606fc86c78ff1c00970438af8dfa4b2a244ca747606304dc4a7c5ee9f"
+  },
+  "output_sha256": "a7fd4623fae06ceabecd97025321415cff446dc381329557f84322149f6bca2b",
+  "output": [
+    "indicationAdapter\tslot-filter\tPASS",
+    "indicationAdapter\treuse\tPASS",
+    "indicationAdapter\tseparate-ids\tPASS",
+    "indicationAdapter\tmixed-instance\tPASS",
+    "indicationAdapter\ttotal-change\tPASS",
+    "indicationAdapter\tlistener-failure\tPASS",
+    "indicationAdapter\tgap-retained\tPASS"
+  ],
+  "not_verified": [
+    "Vendor producer serialization and interleaving",
+    "Service death, timeout and remote teardown/registration reset",
+    "Physical device behavior"
+  ],
+  "phone_accessed": false,
+  "reproduce": "bash tools/framework-suite.sh shannon-codec"
+}

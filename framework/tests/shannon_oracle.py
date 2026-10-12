@@ -64,6 +64,12 @@ rows=[line for line in output.splitlines() if line.startswith('indicationAssembl
 assert rows==['indicationAssembly\t'+name+'\tPASS' for name in ['ordered','reversed','duplicate','conflicting-duplicate','gap','negative-index','overshoot','empty']],output
 print('Original indication accumulator executed: 8 ordering and malformed-fragment cases',flush=True)
 
+output=adb('shell','env','CLASSPATH='+root+'/oracle.jar:'+root+'/shannon.apk','app_process','/system/bin','org.omarchy.audit.IndicationAdapterOracle')
+Path('artifacts/ims-native-audit/original-indication-adapter-output.txt').write_text(output)
+rows=[line for line in output.splitlines() if line.startswith('indicationAdapter\t')]
+assert rows==['indicationAdapter\t'+name+'\tPASS' for name in ['slot-filter','reuse','separate-ids','mixed-instance','total-change','listener-failure','gap-retained']],output
+print('Original indication adapter executed: 7 routing, reuse and failure cases',flush=True)
+
 output=adb('shell','env','CLASSPATH='+root+'/oracle.jar:'+root+'/shannon.apk','app_process','/system/bin','org.omarchy.audit.ResponseInfoOracle')
 Path('artifacts/ims-native-audit/original-response-info-output.txt').write_text(output)
 rows=[line.split('\t') for line in output.splitlines() if line.startswith('responseInfo\t')]

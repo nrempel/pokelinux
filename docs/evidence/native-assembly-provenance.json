@@ -1,0 +1,39 @@
+{
+  "scope": "Bounded single-candidate Rust indication assembly; no production session owner",
+  "sources_sha256": {
+    "native-radio/src/assembly.rs": "d9030c3041294576e44b20563f8d953c27da6dd695aa44dd9da72b958979ef16",
+    "native-radio/tests/assembly.rs": "b5490262522a7f5872ed3a769345e683aed4b47ee44a382f6342e4f73df545d3",
+    "native-radio/src/bin/radio-ipc-test.rs": "f5a42f97fda21971b05a19ea07138711f25371261dfe6f7ba7444b2720c5ca95"
+  },
+  "binary_sha256": "2386b9d181667d7ed794e35df8e17f5e5173eb75b8db81498eca077320bbfc54",
+  "output_sha256": "43117e8af4f0a1d94509d4e1241452839c813152f01f46d5e4706e388934df8c",
+  "output": [
+    "radio-bootstrap\tPASS",
+    "radio-registration\tPASS",
+    "radio-indications\tPASS",
+    "radio-assembly\tPASS",
+    "radio-roundtrip\t0\tPASS",
+    "radio-roundtrip\t2048\tPASS",
+    "radio-roundtrip\t2049\tPASS",
+    "radio-roundtrip\t4096\tPASS",
+    "radio-callback-overflow\tPASS",
+    "radio-peer\t2376\t10234\tu:r:untrusted_app:s0:c234,c256,c512,c768",
+    "radio-clear-observed\tPASS"
+  ],
+  "checks": [
+    "Four component tests on x86 musl and ARM64 GNU/QEMU",
+    "fmt and clippy all targets",
+    "Real Binder decoded fragments assembled to exact bytes with SELinux enforcing",
+    "Existing request round trips and shared callback overflow remain passing"
+  ],
+  "not_verified": [
+    "Session deadlines, aggregate limits, owner wakeup, epochs and recovery",
+    "Vendor message identity and reset guarantees",
+    "Physical device or ARM64 kernel Binder"
+  ],
+  "phone_accessed": false,
+  "reproduce": [
+    "bash tools/build-native-radio.sh build",
+    "bash tools/framework-suite.sh radio-ipc"
+  ]
+}

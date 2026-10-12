@@ -156,10 +156,28 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
         return Err("client ID mismatch".into());
     }
     let mut seen = [false; 4];
+    let mut assembly = pokelinux_radio::assembly::Assembly::new(
+        34,
+        0,
+        5,
+        pokelinux_radio::assembly::Limits {
+            bytes: 8,
+            fragments: 3,
+        },
+    )
+    .map_err(|e| format!("assembly setup: {e:?}"))?;
+    let mut assembled = None;
     for _ in 0..4 {
         let index = match callback(inbox)? {
             RadioEvent::Response(event) if event.info.serial == 7 && event.payload == [7] => 0,
             RadioEvent::Indication(event) if event.slot_id == 0 => {
+                if event.message_id == 34
+                    && let Some(bytes) = assembly
+                        .push(&event)
+                        .map_err(|e| format!("assembly: {e:?}"))?
+                {
+                    assembled = Some(bytes);
+                }
                 match (event.message_id, event.kind, event.payload.as_slice()) {
                     (33, IndicationKind::Raw, [1, 2, 3]) => 1,
                     (
@@ -190,6 +208,10 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     }
     println!("radio-registration\tPASS");
     println!("radio-indications\tPASS");
+    if assembled != Some(vec![4, 5, 6, 7, 8]) {
+        return Err("assembled indication mismatch".into());
+    }
+    println!("radio-assembly\tPASS");
     for (offset, length) in [0, 2048, 2049, 4096].into_iter().enumerate() {
         let serial = 100 + i32::try_from(offset)?;
         let payload: Vec<u8> = (0..length).map(|index| (index % 251) as u8).collect();

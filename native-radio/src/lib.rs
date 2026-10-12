@@ -13,4 +13,5 @@ pub mod response;
 
 pub mod transport;
 
+pub mod assembly;
 pub mod indication;

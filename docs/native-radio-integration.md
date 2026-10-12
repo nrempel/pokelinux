@@ -31,9 +31,9 @@ transport, not production vendor service discovery or access policy.
 
 Before accepting assembled indications, use the [original accumulator cases](evidence/indication-assembly-provenance.json) as evidence for valid index ordering. Bound bytes, fragment count, index range, active messages and incomplete-message lifetime separately. Reject conflicting duplicate payloads and totals explicitly; those are deliberate local validation rules, not claims about the producer. Test same-ID interleaving and late fragments. A local epoch or timeout does not establish vendor-side message identity or a flush boundary.
 
-Next original-code gate: execute the enclosing indication adapter, capture emitted
-bytes/count and subsequent same-owner behavior, and vary totals, duplicate payloads,
-slots, IDs, completion/reuse and incomplete-message interleaving. The accumulator
+The enclosing indication adapter now passes seven original-code cases covering
+slot filtering, ID reuse, interleaving, changed totals and exception retention.
+See [evidence](evidence/indication-adapter-provenance.json). The accumulator
 test alone cannot establish routing scope or cleanup. For example, an old index-0
 fragment and a new index-1 fragment can have the same ID, slot and total as a valid
 single message. Without another discriminator or a producer serialization rule,
@@ -65,7 +65,8 @@ Registration original-proxy execution is now covered by
 native radio registration now passes against the synthetic peer, along with raw
 and segmented round trips and observed teardown. The rest of these gates remain
 open except raw/segmented indication delivery and shared inbox overflow, now
-covered by the native endpoint. Indication reassembly, owner wakeup, pending
+covered by the native endpoint. Single-candidate assembly also passes the real Binder path. Session-level
+reassembly lifetime, owner wakeup, pending
 operation failure and reconnect are still required. The overflow test polls the
 endpoint failure state; it does not prove a production owner wakes correctly.
 
