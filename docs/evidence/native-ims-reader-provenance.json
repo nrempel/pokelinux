@@ -1,0 +1,164 @@
+{
+  "date_utc": "2026-10-12",
+  "host": "Harbour",
+  "evidence_classes": [
+    "Private focused REA static interface/method inspection",
+    "Original factory APK pure reader bytecode with authored synthetic inputs in isolated x86 SDK37 emulator",
+    "Independent Rust reader comparisons and stricter malformed policy on x86",
+    "Same Rust components under ARM64 user-QEMU, not an ARM64 kernel or Binder"
+  ],
+  "input_apk_sha256": "8b017599727398e80df5ab618d648890dcdc34b5fe2ba71fb2331e51bd8b8879",
+  "rea_version": "6.4.0",
+  "jadx_provider_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+  "static_evidence": [
+    {
+      "evidence_id": "ev_a8c90c5365cc01edd95d3ac41f43763fc178ee297302ff4ecad7f15b46f91e6a",
+      "operation": "inspect_android_class",
+      "private_result": "artifacts/ims-response-rea/reader.json"
+    },
+    {
+      "evidence_id": "ev_f4ff6f54725a4f0f30058a056d4ad66a52558ce598ca8d65ac214db334b6354b",
+      "operation": "inspect_android_method",
+      "private_result": "artifacts/ims-response-rea/range-constructor.json"
+    },
+    {
+      "evidence_id": "ev_e45acf95a15d96b3282e260f240a4610b1e363a53f7a141801051f612d8d0737",
+      "operation": "inspect_android_method",
+      "private_result": "artifacts/ims-response-rea/long.json"
+    },
+    {
+      "evidence_id": "ev_f918abe08110769de83b5000c48d9fbad0d67c582d113c58277caac5749f4b18",
+      "operation": "inspect_android_method",
+      "private_result": "artifacts/ims-response-rea/bytes.json"
+    },
+    {
+      "evidence_id": "ev_0935618442e622afc81f56034b45e5ba27f4a54598244557d6cadf2aca42d203",
+      "operation": "inspect_android_method",
+      "private_result": "artifacts/ims-response-rea/skip.json"
+    },
+    {
+      "evidence_id": "ev_b923fed05c72e9d1e5511732ad7343c1fe093f8600afc3bf5fc545a246981ed2",
+      "operation": "inspect_android_method",
+      "private_result": "artifacts/ims-response-rea/byte-string.json"
+    },
+    {
+      "evidence_id": "ev_de98a59c29e6d71cf90f6eb4db0baa442c5d73065570653a9a7ad30f6a4112f2",
+      "operation": "inspect_android_method",
+      "private_result": "artifacts/ims-response-rea/short-string.json"
+    }
+  ],
+  "original_code": {
+    "passed": true,
+    "cases": 247,
+    "original_apk_executed": true,
+    "pure_reader_only": true,
+    "services_or_modem_called": false,
+    "hardware_verified": false,
+    "selinux": "Enforcing"
+  },
+  "native_comparison": {
+    "valid_values_and_remaining": 148,
+    "bounded_fixture_cases": 244,
+    "refused_bounded_cases": 96,
+    "oversized_original_inputs": 3,
+    "focused_tests_each_architecture": 10,
+    "existing_regression_tests_each_architecture": 5,
+    "no_java_production_dependency": true,
+    "cp_fields_are_opaque_bytes_not_text": true,
+    "first_failure_permanent": true,
+    "read_errors_preserve_cursor": true,
+    "whole_packet_finish_before_semantic_publication": "Required; semantic response adapters remain unimplemented",
+    "runtime_reds": [
+      {
+        "path": "artifacts/native-ims-reader/red/test.log",
+        "exit": 101,
+        "expected": "valid read_i32 succeeds",
+        "observed": "NotImplemented"
+      },
+      {
+        "path": "artifacts/native-ims-reader/contract-red/test.log",
+        "exit": 101,
+        "failed_runtime_tests": 10
+      }
+    ],
+    "fmt_clippy_release_both_architectures": true,
+    "input_policy_bytes": 4096
+  },
+  "source_sha256": {
+    "native-ims/src/reader.rs": "65cf29526840c2d501adc527532360120e2eb5ee9e1b38eb1b08fc94b3bf118c",
+    "native-ims/src/lib.rs": "f2c96a080e52c9fdd78a8a61413a5bfd04de4e06a9729052f4d387ca635ea466",
+    "native-ims/tests/data_reader.rs": "a3418023f044d068ef109ce17b76fe4423aec317616cd8f1050fe70ecd4a35d3",
+    "native-ims/tests/fixtures/shannon-reader.tsv": "a0d9ce3523a378982f69a7e6f09ea8f00672033179aa2a2805e9dc14c9b5a2ea",
+    "native-ims/Cargo.toml": "673a36e6e406492b7418c0fcf6b806327bae3061ab47fd91232a2d7eab8ffd6f",
+    "native-ims/Cargo.lock": "6aa52824cf4c8784c9ab049bceadc5e9fa60a9bee95e506d4804659f4fec2eb6",
+    "framework/shannon-reader-oracle/ReaderOracle.java": "f8b12a34bede9c5e748293503aab3f232ea14eb75fa8f0e6d2c6bc3baea64c53",
+    "framework/tests/shannon_reader.py": "be5b14467a3f142451a9157a9b9622af49e67cbc00bcb944138d6bd6b7f56c41",
+    "tools/build-shannon-reader-oracle.sh": "66209140cd9cf518ac8f6b5841a60cadf2712c1c76809e9893dfbd6988eed15a",
+    "tools/native-ims-reader-suite.sh": "9b5d576301228052b7bcd662b30c1417fbbbaf7af712f73eb28cd57414d7979b",
+    "tools/native-ims-reader-tests.sh": "47e1c32810a4a1b05dd016cc4455481b8756c58a88443acee2beb66efa2faa62",
+    "docs/native-ims-reader.md": "dbe1ce583a6212e76dd2c9c9624cf61ed8278c3fca172dfa708613608a2d2bb4"
+  },
+  "binary_sha256": {
+    "artifacts/native-ims-reader/green/x86_64-unknown-linux-gnu/debug/deps/data_reader-711ca38b63a417b9": "d7851f5a0a23962e9c2cfc1aae9374b7c4a50dabb7f61054c80baac2e27e7b34",
+    "artifacts/native-ims-reader/green/aarch64-unknown-linux-gnu/debug/deps/data_reader-14d22c4159c3cfea": "8477f1ae557c8888273dc6d455359b01981da05dffa1f38a4c4d7a1718db1f68",
+    "artifacts/native-ims-reader/red/x86_64-unknown-linux-gnu/debug/deps/data_reader-711ca38b63a417b9": "486f69719561c38117c0290f599dcca474b46404d5bdfa8c4c11b4894e4e7f4c",
+    "artifacts/native-ims-reader/contract-red/x86_64-unknown-linux-gnu/debug/deps/data_reader-711ca38b63a417b9": "39e6990acf630f696e30c9ba7ff63fde8f9b0862f80839da02754543d789d75c"
+  },
+  "private_evidence_sha256": {
+    "artifacts/ims-response-rea/package.json": "cf438c6365b79262c1eae7440bfea7ebcada0781c9ae36939382c14ec407a870",
+    "artifacts/ims-response-rea/reader.json": "5ee93967fc15a8a54bbfd22ef4b7e20aa2fd204787fcf6483e4428f3dc346618",
+    "artifacts/ims-response-rea/classes.json": "cd6a890fea39e93a1aa4207fdfdda8da031821a48fa0f86844b8e8a4548541bc",
+    "artifacts/ims-response-rea/range-constructor.json": "1350068fcf6adeace4486766d454a49b8737a1e10c162d68297d5196346b986b",
+    "artifacts/ims-response-rea/long.json": "ba78a99a3eeb80d01777d3bf484c49b911ba8d74fae498449fc3e710532c72b5",
+    "artifacts/ims-response-rea/bytes.json": "4c97ce14979f45a5c33d6301d1be5c5106b4f3c85ec81e8655b0c55c72f1d316",
+    "artifacts/ims-response-rea/skip.json": "9e5f46f90598e4f10cb19615587dfebfc4c8ba032bf5d78d718b6aa4bd96956a",
+    "artifacts/ims-response-rea/byte-string.json": "f68ef9dfb949ed64d4e12a0698b7138e32552f6c66ed466c5915a49e01aecf4d",
+    "artifacts/ims-response-rea/short-string.json": "377cab7cb6d985739a415979f44cb7e8bb681022d452191b51cb3106aec287e5",
+    "artifacts/ims-response-rea/original-reader-output.txt": "b168bd8f005cd6b41e1f23198ec52431b97deba61dbbeb9e10c87433ef314914",
+    "artifacts/ims-response-rea/original-reader.json": "564784a5fd3b62176de2ccc35ac70fe7f3ded397ff279f95489d742c3550dcc1",
+    "artifacts/ims-response-rea/oracle-result.json": "d537e25f44895a76b1573df44dfb5f7933f33c861b273078064941d3b2934fc6",
+    "artifacts/ims-response-rea/native-reader-classification.json": "a2b7faed593d1047026cc602e2dcf4a473d15d147e002a9da8e4baa7c2318b02",
+    "artifacts/ims-response-rea/oracle/oracle.jar": "202174d2e8f40d2264097b7736ccb8669f85b9dab67269346b486637e9cc0ef2",
+    "artifacts/ims-response-rea/runtime/oracle/runner-output.txt": "326b35f79b131fb4ba8f656027cb39c3522b4ee31d8d61b52dafbb0644dfb167",
+    "artifacts/ims-response-rea/runtime/oracle/emulator.log": "004eed5c428842eef2822ba344855b7b545c9f864406f14a136707ce1e0f22fc",
+    "artifacts/ims-response-rea/runtime/oracle/container.json": "42e8cacfaf958b78348ac20d083606f36eeb87f30ddeff5c86376cfdba269b10",
+    "artifacts/native-ims-reader/red/test.log": "9900aad5350e27ab00439140504c9d015290c2eed49d6e387474e7a3fddf63c3",
+    "artifacts/native-ims-reader/red/reader.rs": "521d1cda1f10ccc7162800aacb13c22cb5b8634c36fc016f796d2fe57d170353",
+    "artifacts/native-ims-reader/red/lib.rs": "97c5b79c503be69a17aba6a93b10c23ab767e8c9de416428463609097bb2e9c1",
+    "artifacts/native-ims-reader/red/data_reader.rs": "b26ec2fb246466a4997710a2af9f4828e8990dafbfc3d5b05d5d7102515a25a2",
+    "artifacts/native-ims-reader/contract-red/test.log": "be4dbb2affdb6ac9681fc4ad750971634aff7f0ed163f0138fb9b77a31dbf7db",
+    "artifacts/native-ims-reader/contract-red/reader.rs": "e88ae884285db78d09c40e2a6bf24b2f127b0ac5b0e5dc4e87dad5610baff4af",
+    "artifacts/native-ims-reader/contract-red/data_reader.rs": "bf9805dd2e45d60ade1abafa5c4aec8ad7b98abe5a880d6e4d5e6931ab7644f3",
+    "artifacts/native-ims-reader/contract-red/shannon-reader.tsv": "a0d9ce3523a378982f69a7e6f09ea8f00672033179aa2a2805e9dc14c9b5a2ea",
+    "artifacts/native-ims-reader/green-clippy-failure.log": "befb2628d711e98a40c411e6ef6cdf00e6a92783300bd29ef33ef332983b6f6b",
+    "artifacts/native-ims-reader/green.log": "00adb3ecd2e1a7fc0f03848893ee66c621ac4a28a15d82f4b713f42be24f5294",
+    "artifacts/native-ims-reader/green/reader-test-build-arm64.json": "96a5ce9ede7472e9d064bd58932b91c39cb2818c5f9176c9b071ed088e765658"
+  },
+  "cleanup": {
+    "owned_container_absent": true,
+    "owned_network_absent": true,
+    "suite_lock_released": true
+  },
+  "production_gates": [
+    "Whole response layouts and exact method/error/slot/producer identity",
+    "Native IMS state/bearer/SIM/registration/call/media/carrier sequencing",
+    "Durable operation admission, subsequent operations and vendor cleanup/reset",
+    "Installed service permissions/lifecycle/background and ARM64 Binder",
+    "Matched Pixel kernel/policy and authorized physical modem/carrier validation"
+  ],
+  "not_qualified": {
+    "hardware_verified": false,
+    "physical_phone_accessed": false,
+    "proprietary_inputs_or_decompilation_published": false,
+    "services_or_modem_called": false,
+    "native_ims_registration": false,
+    "native_calls": false,
+    "native_response_publication": false,
+    "arm64_system_kernel_for_this_reader": false,
+    "arm64_binder": false
+  },
+  "validated_module_header_sha256": "92ff90adf5cfc589214d7ef2f3d7da5c6ed4a3eb8cddb038cd9ae6ed5455b920",
+  "post_validation_changes": [
+    "Crate documentation header clarifies installed native IMS registration/state integration; executable reader and tests unchanged."
+  ]
+}

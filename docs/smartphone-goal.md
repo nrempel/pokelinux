@@ -141,3 +141,9 @@ kernel; twelve original-NDK/Rust frozen Binder groups pass in the x86 SDK emulat
 The adapter is test-only. Modem producer/reset identity, ACK policy, callback/storage
 supervision, retention and installed messaging/background integration remain open.
 See [incoming ownership](native-sms-receipt-owner.md).
+
+Native IMS scalar/opaque decoding now has148 original-code matches from247 pure
+reader probes and10 focused x86/ARM64 user-QEMU tests. The native parser rejects
+malformed ranges/counts and permanently fences failed packets. Whole response
+semantics and installed IMS/calls/bearer/media/carrier work remain open; see
+[bounded reader](native-ims-reader.md).

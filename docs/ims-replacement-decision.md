@@ -1,5 +1,13 @@
 # IMS replacement checkpoint
 
+The12 October target in [smartphone-goal.md](smartphone-goal.md) supersedes the
+retained-Android production recommendations below: shared native Rust services
+and hardware-specific backends on matched Google kernel/modules/firmware.
+This11 October stock-reuse audit remains historical reference evidence. Android
+and Java are test/reference infrastructure; unresolved retained vendor userspace
+is an explicit gate, not the completed architecture. Current native progress is
+recorded in [the handoff](development-handoff.md).
+
 11 October 2026. No physical phone accessed. This is a feasibility comparison, not a completed replacement implementation.
 
 ## Decision

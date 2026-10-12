@@ -24,7 +24,8 @@ They are not native IMS semantics or a complete phone service.
 
 - `RadioOwner` fences session/revision/preparation identity and checks Linux
   `CLOCK_BOOTTIME` expiry under the gate. Withheld timer delivery cannot permit
-  late activation or publication. Candidate/operation lifetimes remain open.
+  late activation or publication. Assembly candidate and durable operation policies
+  remain open; the bounded single-request checkpoint is described below.
 - `TransportSession` owns one registration worker and retained death watch. Stop
   and snapshots do not join or unlink. Cancellation/expiry retain occupied worker
   capacity; completion is independent of the failed callback stream. Late success
@@ -77,9 +78,9 @@ IDs without radio dispatch or service startup. Signed response lengths, token
 reuse, message-reference ambiguity and removal before failed acknowledgement
 are explicit observations. Last-incoming GSM acknowledgement has no durable
 receive identity; replay after reconnect remains forbidden without qualification.
-See `native-sms-transport.md` and its provenance. The next synthetic frozen Binder
-boundary must distinguish one-way return/intermediate ACK from an exact final
-send callback, preserve durable uncertainty and fence old endpoint generations.
+See `native-sms-transport.md` and its provenance. The frozen Binder submission
+and receipt owners now qualify these local fences as described below; production
+modem identity, reset and acknowledgement policy remain open.
 
 Focused REA/public-source investigations now recover camera AIDL4, audio core4,
 Power7 and Sensors3. Selected audio/power/sensor frozen hashes match shipped
@@ -162,10 +163,11 @@ Rust copies opaque aligned bytes and validates them before normalization.
 Authenticated subscriptions, reserve-before-read, processing-before-ACK, exact
 split counts, full-queue retention, revocation, stale FD generations, malformed
 Event ownership,32 FD cycles and peer-death quarantine pass after two live reds.
-The source wake counter is synthetic and there is no acquired SystemSuspend
-reader wake lock yet. USF200ms, top-level HAL1s cleanup, actual suspend integration,
+This11-group baseline uses a synthetic source wake counter. The subsequent
+10-group checkpoint below now acquires actual native coordinator reader leases
+and shares frozen V1 blockers. USF200ms, top-level HAL1s cleanup, physical suspend,
 app publication/lifecycle, durable reconciliation, calibration and ARM64/device
-proof remain open; see `native-sensors-boundary.md`.
+proof remain open; see `native-sensors-boundary.md` and `native-sensor-wake.md`.
 
 Native GSM status-report parsing now passes57 field comparisons against actual
 original AOSP execution plus12 focused tests on x86 and ARM64 user-QEMU. Both
@@ -213,6 +215,15 @@ power descriptors do not prove hardware suspend or source wake acquisition;
 USF200ms/HAL1s, installed lifecycle/app delivery, durable recovery and ARM64/device
 integration remain open; see `native-sensor-wake.md` and its provenance.
 
+Native IMS decoding now has an independent allocation-free bounded reader. REA
+method inspection and247 original pure APK reader calls qualify148 valid values
+and remaining counts;96 bounded refusals and3 oversized original inputs are
+explicit native policy differences. CP "String" getters are byte-array diagnostics,
+so the native API returns opaque bytes and never invents text. Ten focused tests
+plus all prior codec tests pass on x86 and ARM64 user-QEMU after executed runtime
+reds. Whole response layouts/producer identity, semantic publication and native
+IMS/call/bearer/media integration remain open; see `native-ims-reader.md`.
+
 ## Next work
 
 1. Recover and test the actual vendor cleanup/reset and registration-overlap
@@ -224,9 +235,9 @@ integration remain open; see `native-sensor-wake.md` and its provenance.
    fencing, bounded output, safe durable admission and bounded diagnostics.
    Qualify ARM64 Binder and matched Pixel kernel/policy separately; the owned
    ARM64 system-QEMU process gate now passes.
-3. Extend ownership to request transport, operation receipts, absolute candidate
-   and operation deadlines, timer delivery, notification watches and aggregate
-   budgets. Recover producer identity before enabling fragmented semantic output.
+3. Extend the existing single-attempt request transport to durable operation
+   receipts, safe subsequent operations, assembly candidate deadlines, notification
+   watches and aggregate budgets. Recover producer identity before enabling fragmented semantic output.
 4. Recover native IMS state/response contracts with original-code comparison and
    integrate the shared phone service. Continue calls, SMS, camera, power, audio,
    connectivity, sensors, background/lock behavior, permissions, apps, deployment

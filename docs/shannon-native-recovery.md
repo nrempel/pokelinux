@@ -49,6 +49,17 @@ These functions preserve low-bit truncation and little-endian integer order.
 They do not establish valid state/RAT enums, request sequencing, modem
 registration, audio, or the ability to remove the vendor radio service.
 
+## Bounded native reader checkpoint
+
+A separate [native reader](native-ims-reader.md) now uses clean REA interface facts
+and247 executed original pure reader probes. It matches148 valid scalar/opaque
+CP-field values and remaining counts;96 bounded refusals and3 oversized inputs
+are explicit policy differences. Ten native tests pass on x86 and ARM64 user-QEMU
+alongside all previous codec regression. Original CP "String" getters render byte
+arrays; they do not supply an IMS text encoding contract. Whole response layouts,
+producer identity, semantic state and installed IMS integration remain open. See
+[separate reader provenance](evidence/native-ims-reader-provenance.json).
+
 ## REA registration ownership trace
 
 REA 6.4.0 with the pinned JADX headless provider 0.7.1 successfully inspected the

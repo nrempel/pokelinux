@@ -1,6 +1,7 @@
 //! Native IMS protocol components recovered against original-code fixtures.
-//! No modem transport or IMS registration implementation exists yet.
+//! Installed native IMS registration/state integration remains unimplemented.
 
+pub mod reader;
 pub mod requests;
 
 /// Little-endian scalar encoding used by the audited Shannon DataWriter.

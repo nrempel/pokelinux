@@ -1,5 +1,13 @@
 # Pixel 10 cellular and IMS dependency audit
 
+The12 October target in [smartphone-goal.md](smartphone-goal.md) supersedes the
+retained-Android production recommendations below: shared native Rust services
+and hardware-specific backends on matched Google kernel/modules/firmware.
+This11 October stock-reuse audit remains historical reference evidence. Android
+and Java are test/reference infrastructure; unresolved retained vendor userspace
+is an explicit gate, not the completed architecture. Current native progress is
+recorded in [the handoff](development-handoff.md).
+
 Follow-up: [Android framework runtime tests](android-framework-tests.md) now verify bridge permissions, Telecom callbacks, and reference IMS activation. Stock Shannon reaches framework binding but hits hidden-API failures; Pixel IMS Media is rejected by the emulator shared-UID signer check.
 
 

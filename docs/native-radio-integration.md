@@ -248,3 +248,10 @@ wire correlation/subsequent work, permanent request-call blockage/driver pressur
 installed native IMS and actual vendor/modem behavior remain open. Existing
 registration supervision/reaping does not prove request cancellation or remote
 cleanup. See [separate source/runtime provenance](evidence/radio-request-provenance.json).
+
+The independently authored [bounded IMS reader](native-ims-reader.md) now matches
+148 valid scalar/opaque-field observations from original pure reader execution.
+It is not connected to response publication. A semantic response adapter must
+qualify complete layouts and producer/method/error/slot identity, enforce full
+packet completion, and pass the owner gate before exposing state. Raw snapshots
+and successful getters alone remain insufficient.
