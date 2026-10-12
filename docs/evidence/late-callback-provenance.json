@@ -1,0 +1,48 @@
+{
+  "scope": "Late callback to a failed but live old endpoint after synthetic registration replacement",
+  "sources_sha256": {
+    "native-radio/src/bin/radio-ipc-test.rs": "b83d7a8e4129f942d8c64aeab96af070e2ac8ac9e49b5d779621e97a4485218b",
+    "framework/radiopeer/Peer.java": "af8bc9073fa65ef15b817240e6f96a4050f80de3f10b7a56ab9d593f0a1babdc",
+    "framework/tests/radio_ipc.py": "72001576fccf9ab37ad395333a72c8a66d965d4a2f1000de4bca6c2009a2ac1e"
+  },
+  "binary_sha256": "05c2c36a03f10f627ca1bce109930c092fb2a61820968a2670bcfee73124f2bd",
+  "peer_apk_sha256": "e2c4f02e1197a122b3511e51d0013c450df62c31198882ef5e7dfe926ecfe959",
+  "output_sha256": "17d872c9684664ac091512c2a14a4722b89135df3d905b01064dd14b7ba22253",
+  "output": [
+    "radio-bootstrap\tPASS",
+    "radio-registration\tPASS",
+    "radio-indications\tPASS",
+    "radio-assembly\tPASS",
+    "radio-roundtrip\t0\tPASS",
+    "radio-roundtrip\t2048\tPASS",
+    "radio-roundtrip\t2049\tPASS",
+    "radio-roundtrip\t4096\tPASS",
+    "radio-callback-overflow\tPASS",
+    "radio-peer\t2806\t10234\tu:r:untrusted_app:s0:c234,c256,c512,c768",
+    "radio-clear-observed\tPASS",
+    "radio-late-callback\tandroid.os.DeadObjectException\tPASS",
+    "radio-malformed-wakeup\tPASS",
+    "radio-owner-cancel\tPASS",
+    "radio-service-death\tPASS",
+    "radio-already-dead\tPASS"
+  ],
+  "verified": [
+    "Old endpoint ping succeeds before and after failed synchronous callback",
+    "Old stream remains QueueFull; peer observes android.os.DeadObjectException for rejected transaction",
+    "New endpoint accepts a synchronous callback with identical serial 777 and distinct payload 7",
+    "Replacement stream contains only the new payload, not stale payload 99",
+    "Registration-death and full ordinary IPC suite remain passing"
+  ],
+  "selinux_enforcing": true,
+  "not_verified": [
+    "Publication or assembly work already consumed before replacement",
+    "Vendor callback flag mode or successful synchronous readException contract",
+    "Automatic reconnect and retained vendor fragment identity",
+    "Hung calls, aggregate limits, deadlines or physical hardware"
+  ],
+  "phone_accessed": false,
+  "reproduce": [
+    "bash tools/build-native-radio.sh build",
+    "bash tools/framework-suite.sh radio-ipc"
+  ]
+}

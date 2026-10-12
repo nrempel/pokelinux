@@ -341,8 +341,23 @@ also invalidates its fresh stream. [Execution identities](evidence/radio-death-p
 Death during registration now also passes: the synchronous call returns
 `DeadObject` and the pre-armed callback stream reports `ServiceDied`. The normal
 suite passes afterward in fresh processes. [Evidence](evidence/registration-death-provenance.json).
-Other monitoring-link errors, in-process restart/reconnect and late callbacks
-remain separate tests. These results do not establish modem reset.
+Other monitoring-link errors, in-process restart/reconnect and owner-level
+late-event fencing remain separate tests. These results do not establish modem reset.
+
+The late-callback test keeps the failed old response endpoint alive in the peer
+after clear and replacement. It reuses client ID 42 and response serial 777,
+sends payload 99 to the old endpoint and payload 7 to the new endpoint, using
+synchronous transactions for an observable comparison. Binder pings succeed on
+the old endpoint before and after rejection. Android surfaces its failed
+transaction as `DeadObjectException`; that exception alone does not prove process
+death. The old stream retains `QueueFull`, and the new stream receives only
+payload 7. [Evidence](evidence/late-callback-provenance.json).
+
+These are raw synthetic synchronous transactions; the peer does not call
+`readException()` on the successful empty callback reply. Vendor callback flag
+compatibility remains unqualified. Endpoint isolation does not fence results
+already consumed by an owner or partial fragments delivered to a fresh endpoint
+from retained vendor state. Those require separate owner and producer evidence.
 
 The old provenance above records the earlier request/response milestone. The
 [indication report](evidence/radio-indication-provenance.json) records this extension.

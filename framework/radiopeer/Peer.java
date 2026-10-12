@@ -11,6 +11,7 @@ public final class Peer extends Instrumentation {
     private static final String RADIO = "vendor.samsung_slsi.telephony.hardware.radioExternal.IOemSlsiRadioExternal";
     private volatile IBinder response;
     private volatile IBinder indication;
+    private volatile IBinder previousResponse;
     private final ByteArrayOutputStream segments = new ByteArrayOutputStream();
     private int segmentIndex, segmentSerial, segmentTotal;
     private volatile int rawCalls, segmentCalls;
@@ -18,13 +19,17 @@ public final class Peer extends Instrumentation {
     private static void require(boolean ok, String reason) {
         if (!ok) throw new IllegalArgumentException(reason);
     }
-    private void respond(int serial, byte[] bytes) throws RemoteException {
+    private static Parcel responseParcel(int serial, byte[] bytes) {
         Parcel data = Parcel.obtain();
+        data.writeInterfaceToken(RADIO + "Res");
+        data.writeInt(1); data.writeInt(24);
+        for (int value : new int[]{0, serial, 137, bytes.length, 0}) data.writeInt(value);
+        data.writeByteArray(bytes);
+        return data;
+    }
+    private void respond(int serial, byte[] bytes) throws RemoteException {
+        Parcel data = responseParcel(serial, bytes);
         try {
-            data.writeInterfaceToken(RADIO + "Res");
-            data.writeInt(1); data.writeInt(24);
-            for (int value : new int[]{0, serial, 137, bytes.length, 0}) data.writeInt(value);
-            data.writeByteArray(bytes);
             require(response.transact(1, data, null, IBinder.FLAG_ONEWAY), "callback submission");
         } finally { data.recycle(); }
     }
@@ -95,7 +100,7 @@ public final class Peer extends Instrumentation {
             }
             if (code == 1) {
                 require(callFlags == IBinder.FLAG_ONEWAY && data.readInt() == 42, "clear framing");
-                data.enforceNoDataAvail(); cleared = true; response = null; indication = null; return true;
+                data.enforceNoDataAvail(); cleared = true; previousResponse = response; response = null; indication = null; return true;
             }
             if (code == 105) { // Test-only bounded inbox pressure, not a vendor transaction.
                 require(callFlags == 0 && indication != null && !cleared, "burst state/flags");
@@ -131,6 +136,24 @@ public final class Peer extends Instrumentation {
                     android.os.Process.killProcess(android.os.Process.myPid());
                 } }, "peer-exit-test").start();
                 reply.writeNoException(); return true;
+            }
+            if (code == 108) { // Late callback to a still-live, failed old endpoint.
+                require(callFlags == 0 && previousResponse != null && response != null && !cleared, "late callback state/flags");
+                data.enforceNoDataAvail();
+                require(previousResponse.pingBinder(), "old endpoint live before late callback");
+                Parcel input = responseParcel(777, new byte[]{99}), output = Parcel.obtain();
+                String rejection = null;
+                try {
+                    // Synchronous test-only delivery makes rejection observable;
+                    // the actual vendor sender's flag mode is still unqualified.
+                    require(previousResponse.transact(1, input, output, 0), "late callback transaction handled");
+                } catch (RemoteException error) { rejection = error.getClass().getName(); }
+                finally { input.recycle(); output.recycle(); }
+                require(rejection != null && previousResponse.pingBinder(), "old live endpoint rejected late callback");
+                input = responseParcel(777, new byte[]{7}); output = Parcel.obtain();
+                try { require(response.transact(1, input, output, 0), "new endpoint accepts same-mode callback"); }
+                finally { input.recycle(); output.recycle(); }
+                reply.writeNoException(); reply.writeString(rejection); return true;
             }
             if (code == 100) { // Test-only observation, never called by production transport.
                 data.enforceNoDataAvail(); reply.writeNoException();

@@ -321,6 +321,33 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     let remote = peer.as_remote().ok_or("peer is local")?;
     let data = remote.prepare_transact(true)?;
     let mut reply = remote
+        .submit_transact(108, &data, 0)?
+        .ok_or("missing late-callback reply")?;
+    let status: Status = reply.read()?;
+    if !status.is_ok() {
+        return Err(status.into());
+    }
+    let rejection: String = reply.read()?;
+    if rejection.is_empty() || reply.data_avail() != 0 {
+        return Err("invalid late callback evidence".into());
+    }
+    let RadioEvent::Response(current) = callback(&fresh.events)? else {
+        return Err("replacement event type".into());
+    };
+    if current.info.serial != 777
+        || current.payload != [7]
+        || fresh
+            .events
+            .try_recv()
+            .map_err(|e| format!("new stream failed: {e:?}"))?
+            .is_some()
+        || !matches!(inbox.try_recv(), Err(ReceiverFailure::QueueFull))
+    {
+        return Err("late callback escaped its old stream".into());
+    }
+    println!("radio-late-callback\t{rejection}\tPASS");
+    let data = remote.prepare_transact(true)?;
+    let mut reply = remote
         .submit_transact(106, &data, 0)?
         .ok_or("missing malformed-trigger reply")?;
     let status: Status = reply.read()?;

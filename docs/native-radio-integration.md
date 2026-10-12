@@ -80,6 +80,12 @@ registration, watch-drop invalidation and already-dead link failure now pass
 restart/reconnect and late-callback epoch replacement, then deadline/aggregate-budget integration and
 pending-operation resolution. These primitives are not yet a complete owner.
 
+Late delivery to a still-live failed old endpoint now passes the
+[replacement test](evidence/late-callback-provenance.json), using identical serials
+and distinct payloads on old/new callbacks. This proves endpoint/queue separation.
+The next owner gate must fence already-consumed events and assembly/publication
+work against replacement; it must not treat this test as proof of that race.
+
 The harness also has a `death-during-registration` scenario. It arms the watch
 before submitting registration; the peer exits after validating the request and
 before writing a reply. Acceptance requires both transaction `DeadObject` and
