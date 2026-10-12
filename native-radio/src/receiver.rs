@@ -9,7 +9,7 @@ use rsbinder::{Binder, Parcel, Remotable, Result, Stability, StatusCode};
 use std::{
     num::NonZeroUsize,
     sync::{
-        Arc, Mutex,
+        Arc, Mutex, Weak,
         atomic::{AtomicU8, Ordering},
         mpsc::{self, Receiver, RecvTimeoutError, SyncSender, TryRecvError, TrySendError},
     },
@@ -51,8 +51,18 @@ struct CallbackQueue {
     failure: Arc<AtomicU8>,
 }
 pub struct CallbackInbox {
+    queue: Weak<CallbackQueue>,
     receiver: Receiver<RadioEvent>,
     failure: Arc<AtomicU8>,
+}
+impl Drop for CallbackInbox {
+    fn drop(&mut self) {
+        // Do not retain a publisher merely to observe owner loss: the last
+        // endpoint disappearing must still disconnect and wake the receiver.
+        if let Some(queue) = self.queue.upgrade() {
+            queue.fail(ReceiverFailure::ConsumerGone);
+        }
+    }
 }
 impl CallbackInbox {
     /// Wait without polling. Terminal failure closes the shared sender, waking
@@ -242,6 +252,7 @@ pub fn new_radio_callbacks(capacity: NonZeroUsize) -> RadioCallbacks {
         sender: Mutex::new(Some(sender)),
         failure: failure.clone(),
     });
+    let queue = Arc::downgrade(&shared);
     RadioCallbacks {
         control: CallbackControl(shared.clone()),
         response: Binder::new_with_stability(
@@ -249,7 +260,11 @@ pub fn new_radio_callbacks(capacity: NonZeroUsize) -> RadioCallbacks {
             Stability::Vintf,
         ),
         indication: Binder::new_with_stability(RadioIndicationReceiver(shared), Stability::Vintf),
-        events: CallbackInbox { receiver, failure },
+        events: CallbackInbox {
+            queue,
+            receiver,
+            failure,
+        },
     }
 }
 
@@ -263,13 +278,27 @@ mod wait_tests {
     fn stream() -> (Arc<CallbackQueue>, CallbackInbox) {
         let (sender, receiver) = mpsc::sync_channel(1);
         let failure = Arc::new(AtomicU8::new(0));
-        (
-            Arc::new(CallbackQueue {
-                sender: Mutex::new(Some(sender)),
-                failure: failure.clone(),
-            }),
-            CallbackInbox { receiver, failure },
-        )
+        let queue = Arc::new(CallbackQueue {
+            sender: Mutex::new(Some(sender)),
+            failure: failure.clone(),
+        });
+        let inbox = CallbackInbox {
+            queue: Arc::downgrade(&queue),
+            receiver,
+            failure,
+        };
+        (queue, inbox)
+    }
+    #[test]
+    fn dropping_owner_inbox_immediately_invalidates_endpoints() {
+        let (queue, inbox) = stream();
+        drop(inbox);
+        assert_eq!(queue.failure(), Some(ReceiverFailure::ConsumerGone));
+        // No later callback is needed to discover owner loss. First failure wins.
+        let (queue, inbox) = stream();
+        queue.fail(ReceiverFailure::ServiceDied);
+        drop(inbox);
+        assert_eq!(queue.failure(), Some(ReceiverFailure::ServiceDied));
     }
     #[test]
     fn cancellation_is_terminal_and_preserves_an_earlier_failure() {

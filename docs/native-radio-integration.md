@@ -115,3 +115,13 @@ that duplicates cannot extend, immutable callback epochs, and serialized
 completion/invalidation. These are review recommendations, not execution evidence.
 The original accumulator execution independently verifies ordering and malformed
 index behavior; producer identity and reset guarantees remain unknown.
+
+## Owner loss
+
+Dropping `CallbackInbox` now invalidates both endpoints immediately with
+`ConsumerGone`, preserving an earlier terminal reason. Its weak queue reference
+does not retain the publisher or break publisher-loss wakeup. The regression
+failed before implementation, then passed on Linux and ARM64/QEMU; the six
+Binder dispatch tests and full radio IPC suite also passed on Harbour. See
+[the execution record](evidence/inbox-drop-provenance.json). This closes implicit
+owner teardown only; it does not fence events already taken from the inbox.

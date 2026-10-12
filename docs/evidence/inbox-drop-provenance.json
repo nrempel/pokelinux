@@ -1,0 +1,60 @@
+{
+  "scope": "Immediate callback invalidation when the sole inbox owner is dropped",
+  "sources_sha256": {
+    "native-radio/src/receiver.rs": "c703f804999f2f971047e08510f62749e6aa36af9cf3ddbd7624147d4c82f494",
+    "native-radio/tests/response_receiver.rs": "e1101126035ef5a964a248d1f43dd4ccfd473f22d2dc159700a5aa9f0276171b"
+  },
+  "red_test": "dropping_owner_inbox_immediately_invalidates_endpoints failed before implementation: None instead of Some(ConsumerGone)",
+  "component_tests": {
+    "x86_64_linux_musl": 16,
+    "aarch64_linux_gnu_qemu_user": 16,
+    "receiver_lifecycle_tests_per_target": 5
+  },
+  "emulator_dispatch_tests": 6,
+  "binary_sha256": "ab4f761db8cb2e4d4e10439704f8cf2bab88e77e1819cf1d0041b3e1ba6a4d85",
+  "peer_apk_sha256": "b75be10c89340cb284156d946a66c22a57e3c6b8e3e9014e3b19ea2d1ca7e196",
+  "image": "google/sdk_gphone64_x86_64/emu64xa:17/CE2A.260420.019/15611780:userdebug/dev-keys",
+  "output": [
+    "radio-bootstrap\tPASS",
+    "radio-registration\tPASS",
+    "radio-indications\tPASS",
+    "radio-assembly\tPASS",
+    "radio-roundtrip\t0\tPASS",
+    "radio-roundtrip\t2048\tPASS",
+    "radio-roundtrip\t2049\tPASS",
+    "radio-roundtrip\t4096\tPASS",
+    "radio-callback-overflow\tPASS",
+    "radio-peer\t2251\t10234\tu:r:untrusted_app:s0:c234,c256,c512,c768",
+    "radio-clear-observed\tPASS",
+    "radio-late-callback\tandroid.os.DeadObjectException\tPASS",
+    "radio-malformed-wakeup\tPASS",
+    "radio-owner-cancel\tPASS",
+    "radio-service-death\tPASS",
+    "radio-already-dead\tPASS"
+  ],
+  "registration_death_output": [
+    "radio-bootstrap\tPASS",
+    "radio-registration-death\tDeadObject\tPASS"
+  ],
+  "logs_sha256": {
+    "owner-drop-build.log": "ddb43adb1d416f54d9d676fa69dc25239528ec19cb2f4483b0336919797beed3",
+    "owner-drop-kernel.log": "20b6432d77fe255cc29e7cf36f5d6bee19a99a92ea8beb141befc1e58e842fdf",
+    "owner-drop-ipc.log": "636cf803e0bccc7b3dc3e5fa2411bbf09a757d92b1a50b226b4750fc44ebc886"
+  },
+  "verified": [
+    "Inbox drop immediately latches ConsumerGone on both endpoints without waiting for another callback",
+    "Earlier ServiceDied reason survives inbox drop; later cancellation preserves ConsumerGone",
+    "Weak inbox reference does not keep the publisher alive; publisher-loss wakeup regression remains passing",
+    "Full synthetic Binder radio suite remains passing"
+  ],
+  "not_verified": [
+    "Fencing work consumed before invalidation",
+    "Production session owner, native IMS or physical modem behavior"
+  ],
+  "phone_accessed": false,
+  "reproduce": [
+    "bash tools/build-native-radio.sh build",
+    "bash tools/framework-suite.sh binder-kernel",
+    "bash tools/framework-suite.sh radio-ipc"
+  ]
+}

@@ -90,10 +90,29 @@ fn full_queue_is_terminal_and_does_not_deliver_buffered_events() {
 #[test]
 #[ignore = "Requires the owned Android emulator Binder driver"]
 fn disconnected_consumer_latches_failure() {
-    let (binder, events) = response_receiver(NonZeroUsize::new(1).unwrap());
-    drop(events);
-    assert!(transact(&binder, 1, &mut response(RESPONSE_DESCRIPTOR, false)).is_err());
-    assert_eq!(binder.failure(), Some(ReceiverFailure::ConsumerGone));
+    let callbacks = new_radio_callbacks(NonZeroUsize::new(1).unwrap());
+    drop(callbacks.events);
+    assert_eq!(
+        callbacks.response.failure(),
+        Some(ReceiverFailure::ConsumerGone)
+    );
+    assert_eq!(
+        callbacks.indication.failure(),
+        Some(ReceiverFailure::ConsumerGone)
+    );
+    callbacks.control.cancel();
+    assert!(
+        transact(
+            &callbacks.response,
+            1,
+            &mut response(RESPONSE_DESCRIPTOR, false)
+        )
+        .is_err()
+    );
+    assert_eq!(
+        callbacks.response.failure(),
+        Some(ReceiverFailure::ConsumerGone)
+    );
 }
 
 #[test]
