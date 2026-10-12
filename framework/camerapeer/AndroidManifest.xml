@@ -2,4 +2,5 @@
 <uses-sdk android:minSdkVersion="31" android:targetSdkVersion="37" />
 <application android:label="Disposable camera NDK Binder peer" android:debuggable="true" />
 <instrumentation android:name=".Peer" android:targetPackage="org.pokelinux.camerapeer" />
+<instrumentation android:name=".OwnershipPeer" android:targetPackage="org.pokelinux.camerapeer" />
 </manifest>

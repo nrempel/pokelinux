@@ -1,0 +1,107 @@
+{
+  "source_tag": "android-17.0.0_r1",
+  "camera_device_version": 4,
+  "hardware_common_version": 2,
+  "imports": [
+    {
+      "path": "android/hardware/camera/device/StreamBuffer.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/StreamBuffer.aidl?format=TEXT",
+      "sha256": "fb76033c7b9dadcd3b56aa7e4093aafc367fc092036ce528686d245cdeca1993"
+    },
+    {
+      "path": "android/hardware/camera/device/BufferStatus.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/BufferStatus.aidl?format=TEXT",
+      "sha256": "16ab32965dde8bc0a6778de7c114fdac5455fe41bdfcdea4ea3525892ce7e077"
+    },
+    {
+      "path": "android/hardware/camera/device/CaptureRequest.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/CaptureRequest.aidl?format=TEXT",
+      "sha256": "83866b50c32b338fef95a04bd7a76b397413493988b79dd65e758f6f63a9ef9a"
+    },
+    {
+      "path": "android/hardware/camera/device/CaptureResult.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/CaptureResult.aidl?format=TEXT",
+      "sha256": "b9d81ba19a682c5685ffba51da42ccd6ec9ed68939f502401b4da851c35e7d34"
+    },
+    {
+      "path": "android/hardware/camera/device/CameraMetadata.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/CameraMetadata.aidl?format=TEXT",
+      "sha256": "0e7ec40a8f188b26fecbe955b7ea52a71da6690e59c798e165e5d5d7d0a15a6b"
+    },
+    {
+      "path": "android/hardware/camera/device/PhysicalCameraSetting.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/PhysicalCameraSetting.aidl?format=TEXT",
+      "sha256": "3eed75f28eebbee5b33b16cbfa85a70e27f957c0779ac9365bceb24b5da0a6b3"
+    },
+    {
+      "path": "android/hardware/camera/device/PhysicalCameraMetadata.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/PhysicalCameraMetadata.aidl?format=TEXT",
+      "sha256": "18dc3f0ed4712e01f3d9c89d6256bbb3b3e6a35493f2c3a5455bafd27cfdcae9"
+    },
+    {
+      "path": "android/hardware/camera/device/ICameraDeviceCallback.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/ICameraDeviceCallback.aidl?format=TEXT",
+      "sha256": "f90ea1bc55a34b98147c00b19b6c787ff7b6203d1f15b01376af4c0ea3ee3674"
+    },
+    {
+      "path": "android/hardware/camera/device/NotifyMsg.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/NotifyMsg.aidl?format=TEXT",
+      "sha256": "29822a3987b24d6c67d937c6006fe3a7261e9943c71e738ed079eb1daf91ddb1"
+    },
+    {
+      "path": "android/hardware/camera/device/ShutterMsg.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/ShutterMsg.aidl?format=TEXT",
+      "sha256": "361f1e4b11f904dc79722b7097d0f26f4473750f2ff1be2d0a779ba317813fb0"
+    },
+    {
+      "path": "android/hardware/camera/device/ErrorMsg.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/ErrorMsg.aidl?format=TEXT",
+      "sha256": "94d59cb4823313a728b724b4c903ecd794db7ade5defc55133dbfcdee850336f"
+    },
+    {
+      "path": "android/hardware/camera/device/ErrorCode.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/ErrorCode.aidl?format=TEXT",
+      "sha256": "9d4e28131d319d063f726e9030017e2501cfca76147531f9007ab1c095fae905"
+    },
+    {
+      "path": "android/hardware/camera/device/StreamGroupState.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/StreamGroupState.aidl?format=TEXT",
+      "sha256": "e07481f65b08b9000ce066667c504b27ac285029033518483b0de3d1bba7e0e1"
+    },
+    {
+      "path": "android/hardware/camera/device/BufferRequestStatus.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/BufferRequestStatus.aidl?format=TEXT",
+      "sha256": "72c53f0357c64339013bfd3ed7857d86f7130790423727f10850956d11a57409"
+    },
+    {
+      "path": "android/hardware/camera/device/BufferRequest.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/BufferRequest.aidl?format=TEXT",
+      "sha256": "af613119e8571e63c41dcf67994006204473a724ca7cf34cdbfd9601d37ba909"
+    },
+    {
+      "path": "android/hardware/camera/device/StreamBufferRet.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/StreamBufferRet.aidl?format=TEXT",
+      "sha256": "852a0f84b0261a55d64f16b35c2763a1df29ccebe6a99035bdf8fd8266075f8a"
+    },
+    {
+      "path": "android/hardware/camera/device/StreamBufferRequestError.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/StreamBufferRequestError.aidl?format=TEXT",
+      "sha256": "2df22d5f7d908ee23e143f8fb7db6c55e6c5ea04df380e9fd09bdf5f814c617b"
+    },
+    {
+      "path": "android/hardware/camera/device/StreamBuffersVal.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/StreamBuffersVal.aidl?format=TEXT",
+      "sha256": "1ee1c3dd6aab6d2b4ee06034864b0d030e6fe208f985a3aebfb32f618825198c"
+    },
+    {
+      "path": "android/hardware/common/NativeHandle.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/common/aidl/aidl_api/android.hardware.common/2/android/hardware/common/NativeHandle.aidl?format=TEXT",
+      "sha256": "bda89ace51cfb22a84c6a9d6836776a459706debb2f2a4f398a768fcc5935976"
+    },
+    {
+      "path": "android/hardware/camera/device/BufferCache.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/BufferCache.aidl?format=TEXT",
+      "sha256": "59af5e04e9e3ba63145a8eb1dda956ef0c07bda1479a2442aade31d2f151ae74"
+    }
+  ]
+}

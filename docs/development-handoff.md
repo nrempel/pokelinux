@@ -107,6 +107,16 @@ not physical mute or installed production audio. The synchronous actor still
 needs responsive lifecycle/stop and event-driven observations, a native PCM
 broker, durable call recovery and Pixel AoC/DSP routing; see `native-audio.md`.
 
+Native camera ownership now passes nine checks with exact frozen cameraV4
+requests/results and original generated NDK callbacks over real Binder. Buffer
+return, capture completion and release readiness are distinct. Cached reuse
+preserves older capture accounting; duplicate/resolved receipts cannot reclassify
+acceptance. Held-call revocation/configuration fences stay responsive, and peer
+death retains quarantine; EOF is not a release signal. Three actual runtime reds
+preceded fixes. Production publication/storage, durable quarantine/reset,
+multi-stream/FMQ, sync_file/gralloc/DMA and physical capture remain open. See
+`native-camera-owner.md` and its evidence.
+
 The read-only native connectivity adapter now pins the original NetworkManager
 owner and bus identity, targets unique-name RPCs, and checks absolute boot-time
 expiry before publication. Eight real-daemon/private-D-Bus stages pass with x86
@@ -156,6 +166,7 @@ bash tools/framework-suite.sh sms-codec
 bash tools/framework-suite.sh sms-transport-oracle
 bash tools/framework-suite.sh binder-kernel
 bash tools/framework-suite.sh radio-ipc
+bash tools/framework-suite.sh camera-owner
 # In the prepared network-disabled graphics simulation container:
 python3 tools/native-process-vm.py
 ```

@@ -31,9 +31,9 @@ case "$action" in
   docker build -t "$image" -f build-support/Dockerfile.framework build-support
   docker run --rm --network none --cpus 4 --memory 6g --pids-limit 512 --cap-drop ALL --security-opt no-new-privileges --user "$(id -u):$(id -g)" -v "$PWD:/workspace" "$image" bash tools/build-framework.sh
   ;;
- test|enrollment|callui|gui|plugin|direct|journal|radio-baseline|rust|shannon-codec|sms-codec|sms-transport-oracle|binder-kernel|radio-ipc|camera-binder)
+ test|enrollment|callui|gui|plugin|direct|journal|radio-baseline|rust|shannon-codec|sms-codec|sms-transport-oracle|binder-kernel|radio-ipc|camera-binder|camera-owner)
   if [ "$action" = rust ]; then bash tools/build-qt-android-tests.sh; fi
-  if [ "$action" = camera-binder ]; then bash tools/build-native-camera-boundary.sh; fi
+  if [ "$action" = camera-binder ] || [ "$action" = camera-owner ]; then bash tools/build-native-camera-boundary.sh; fi
   if docker container inspect "$name" >/dev/null 2>&1 || docker network inspect "$name" >/dev/null 2>&1; then
    echo 'The dedicated test container/network already exists; inspect its owner before cleanup.' >&2;exit 1
   fi
@@ -79,6 +79,12 @@ case "$action" in
    docker exec "$name" bash tools/build-radio-peer.sh
    docker exec "$name" bash tools/build-shannon-oracle.sh
    docker exec "$name" python3 framework/tests/radio_ipc.py
+   exit 0
+  fi
+  if [ "$action" = camera-owner ]; then
+   docker exec "$name" bash tools/build-camera-boundary.sh
+   docker exec "$name" bash tools/build-shannon-oracle.sh
+   docker exec "$name" python3 framework/tests/camera_owner.py
    exit 0
   fi
   if [ "$action" = camera-binder ]; then

@@ -414,9 +414,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "pokelinux-camera"
+version = "0.1.0"
+
+[[package]]
 name = "pokelinux-camera-boundary"
 version = "0.1.0"
 dependencies = [
+ "pokelinux-camera",
  "rsbinder",
  "rsbinder-aidl",
  "rustix",

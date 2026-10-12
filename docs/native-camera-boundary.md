@@ -7,8 +7,8 @@ the same NDK dispatcher. This is executed interface and FD evidence, separate
 from the earlier AIDL compiler generation and static factory audit. It is not a
 camera service, capture implementation or Pixel qualification.
 
-The public frozen `hardware.common` V2 `NativeHandle` is copied unchanged with
-its Apache notice. `ICameraBoundaryProbe` is original test infrastructure, with
+The public frozen `hardware.common` V2 `NativeHandle` is fetched unchanged into
+ignored artifacts with its Apache notice and checked against a tracked pin manifest. `ICameraBoundaryProbe` is original test infrastructure, with
 a synthetic descriptor/version/hash. No factory ABI equality is claimed. Java
 instrumentation only starts the disposable JNI endpoint and passes its Binder
 object to the clients. Java is not part of the intended production runtime.
@@ -103,10 +103,10 @@ allocator release, cache IDs, completed DMA, provider flush/close behavior,
 callback reconciliation, cancellation, generation revocation or safe successor
 reuse. A locally reaped synthetic peer does not establish hardware cleanup.
 
-Next, qualify frozen camera device V4 `StreamBuffer`, capture request/result and
-FMQ schemas and matching factory interface hashes, then exercise cached-handle,
-error-buffer and delayed-fence accounting against independent original public
-code. Matched vendor processing/Bionic/configuration/calibration/firmware,
+The later [owner continuation](native-camera-owner.md) executes frozen camera
+device V4 stream-buffer, capture request/result and callback types over Binder,
+including cached handles, error returns, delayed pipe signals and quarantine.
+Full session/FMQ schemas and matching factory hashes still need qualification. Matched vendor processing/Bionic/configuration/calibration/firmware,
 kernel permissions, sensor capabilities, privacy, storage, preview/photo/video
 and later authorized physical capture tests remain open. No ARM64 camera
 execution or physical camera evidence is claimed here.

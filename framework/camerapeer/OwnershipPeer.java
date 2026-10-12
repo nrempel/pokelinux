@@ -1,0 +1,13 @@
+package org.pokelinux.camerapeer;
+import android.app.Instrumentation;
+import android.os.Bundle;
+import android.os.IBinder;
+/** Java only bootstraps an original generated NDK camera callback fixture. */
+public final class OwnershipPeer extends Instrumentation {
+    static { System.loadLibrary("camera_boundary_peer"); }
+    private static native IBinder createEndpoint();
+    @Override public void onCreate(Bundle arguments) {
+        super.onCreate(arguments);
+        Bundle status = new Bundle(); status.putBinder("peer", createEndpoint()); sendStatus(37, status);
+    }
+}

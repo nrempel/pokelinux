@@ -1,0 +1,354 @@
+{
+  "recorded_at_utc": "2026-10-12T21:53:21.869295+00:00",
+  "scope": "bounded device-neutral Rust owner component, driven by exact original public generated cameraV4 data/callbacks over real Binder; synthetic FD transport",
+  "result": {
+    "passed": true,
+    "scope": "device-neutral Rust owner driven by exact public generated cameraV4 Binder callbacks and synthetic pipe FDs",
+    "frozen_camera_device_version": 4,
+    "frozen_common_version": 2,
+    "real_binder": true,
+    "selinux": "Enforcing",
+    "cached_handles": true,
+    "returned_complete_fence_distinct": true,
+    "invalid_count_quarantined": true,
+    "revocation_while_submit_held": true,
+    "configuration_and_session_fenced": true,
+    "death_retains_quarantine": true,
+    "unknown_duplicate_stale_returns_fenced": true,
+    "sync_file_verified": false,
+    "dma_cleanup_verified": false,
+    "physical_phone_accessed": false,
+    "vendor_execution": false,
+    "camera_capture_verified": false,
+    "arm64_camera_verified": false
+  },
+  "markers": [
+    "camera-owner-frozen-bootstrap\tPASS",
+    "camera-owner-return-complete-fence\tPASS",
+    "camera-owner-cached-error-duplicate\tPASS",
+    "camera-owner-cache-removal\tPASS",
+    "camera-owner-error-invalid-count\tPASS",
+    "camera-owner-single-shot-receipts\tPASS",
+    "camera-owner-late-metadata-after-reuse\tPASS",
+    "camera-owner-held-revoke-generation\tPASS",
+    "camera-owner-death-quarantine\tPASS"
+  ],
+  "red_before_green": [
+    {
+      "exit_code": 101,
+      "failure": "returned buffer cannot be reused before release signal",
+      "fix": "Retain release FD and keep fence readiness false until observed signal; buffer return is separate.",
+      "passed_before_failure": [
+        "camera-owner-frozen-bootstrap\tPASS"
+      ],
+      "artifacts": {
+        "owner-red/output.txt": "725ee383b8ce8cc82c961544efabdddc84e9c201b6368c885520bd7ebafc9fa2",
+        "owner-red/lib.rs": "3577fa8f4d6169bcf587223f6f253a924e7066616682e8c22e2ef7b2cf7276f6",
+        "owner-red/camera-owner-client": "f0f5047d2645cc68e5c7525ee4b03307c3fcd78f99e0ef65701155764e4220ec"
+      }
+    },
+    {
+      "exit_code": 101,
+      "failure": "late metadata completion survives cached lease reuse",
+      "fix": "Keep per-capture return/fence records independent of current lease capture; old metadata cannot release or publish from a reused buffer.",
+      "passed_before_failure": [
+        "camera-owner-frozen-bootstrap\tPASS",
+        "camera-owner-return-complete-fence\tPASS",
+        "camera-owner-cached-error-duplicate\tPASS",
+        "camera-owner-cache-removal\tPASS",
+        "camera-owner-error-invalid-count\tPASS"
+      ],
+      "artifacts": {
+        "owner-late-metadata-red/output.txt": "e965f4fd474003cbbde90125ace24472d352d286645c4a3839506365925b42fd",
+        "owner-late-metadata-red/lib.rs": "aa664584977b7750ce3196b8a21c91463c55ed97a7c3d6dfaa8cd547f27721ce",
+        "owner-late-metadata-red/camera-owner-client": "2e622c88165b0a3760525fe7fbac921d396cd5d3153e85903d39eef1524cd81b"
+      }
+    },
+    {
+      "exit_code": 101,
+      "failure": "resolved receipt is single-shot despite duplicate delivery of real Binder result",
+      "fix": "Validate complete receipt batch before mutation, refusing duplicate capture IDs and any resolved receipt.",
+      "passed_before_failure": [
+        "camera-owner-frozen-bootstrap\tPASS",
+        "camera-owner-return-complete-fence\tPASS",
+        "camera-owner-cached-error-duplicate\tPASS",
+        "camera-owner-cache-removal\tPASS",
+        "camera-owner-error-invalid-count\tPASS"
+      ],
+      "artifacts": {
+        "owner-receipt-red/output.txt": "167fd70cbc8859f0a6cbcf15f834579352e0454c02aacf73ef66017a720cb4d4",
+        "owner-receipt-red/lib.rs": "aa664584977b7750ce3196b8a21c91463c55ed97a7c3d6dfaa8cd547f27721ce",
+        "owner-receipt-red/camera-owner-client": "63c92b404d723bd70fad0c77f6efb8656a0ce2e646977c79c612974c7fb9defc"
+      }
+    }
+  ],
+  "frozen_reference": {
+    "source_tag": "android-17.0.0_r1",
+    "camera_device_version": 4,
+    "hardware_common_version": 2,
+    "imports": [
+      {
+        "path": "android/hardware/camera/device/StreamBuffer.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/StreamBuffer.aidl?format=TEXT",
+        "sha256": "fb76033c7b9dadcd3b56aa7e4093aafc367fc092036ce528686d245cdeca1993"
+      },
+      {
+        "path": "android/hardware/camera/device/BufferStatus.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/BufferStatus.aidl?format=TEXT",
+        "sha256": "16ab32965dde8bc0a6778de7c114fdac5455fe41bdfcdea4ea3525892ce7e077"
+      },
+      {
+        "path": "android/hardware/camera/device/CaptureRequest.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/CaptureRequest.aidl?format=TEXT",
+        "sha256": "83866b50c32b338fef95a04bd7a76b397413493988b79dd65e758f6f63a9ef9a"
+      },
+      {
+        "path": "android/hardware/camera/device/CaptureResult.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/CaptureResult.aidl?format=TEXT",
+        "sha256": "b9d81ba19a682c5685ffba51da42ccd6ec9ed68939f502401b4da851c35e7d34"
+      },
+      {
+        "path": "android/hardware/camera/device/CameraMetadata.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/CameraMetadata.aidl?format=TEXT",
+        "sha256": "0e7ec40a8f188b26fecbe955b7ea52a71da6690e59c798e165e5d5d7d0a15a6b"
+      },
+      {
+        "path": "android/hardware/camera/device/PhysicalCameraSetting.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/PhysicalCameraSetting.aidl?format=TEXT",
+        "sha256": "3eed75f28eebbee5b33b16cbfa85a70e27f957c0779ac9365bceb24b5da0a6b3"
+      },
+      {
+        "path": "android/hardware/camera/device/PhysicalCameraMetadata.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/PhysicalCameraMetadata.aidl?format=TEXT",
+        "sha256": "18dc3f0ed4712e01f3d9c89d6256bbb3b3e6a35493f2c3a5455bafd27cfdcae9"
+      },
+      {
+        "path": "android/hardware/camera/device/ICameraDeviceCallback.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/ICameraDeviceCallback.aidl?format=TEXT",
+        "sha256": "f90ea1bc55a34b98147c00b19b6c787ff7b6203d1f15b01376af4c0ea3ee3674"
+      },
+      {
+        "path": "android/hardware/camera/device/NotifyMsg.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/NotifyMsg.aidl?format=TEXT",
+        "sha256": "29822a3987b24d6c67d937c6006fe3a7261e9943c71e738ed079eb1daf91ddb1"
+      },
+      {
+        "path": "android/hardware/camera/device/ShutterMsg.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/ShutterMsg.aidl?format=TEXT",
+        "sha256": "361f1e4b11f904dc79722b7097d0f26f4473750f2ff1be2d0a779ba317813fb0"
+      },
+      {
+        "path": "android/hardware/camera/device/ErrorMsg.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/ErrorMsg.aidl?format=TEXT",
+        "sha256": "94d59cb4823313a728b724b4c903ecd794db7ade5defc55133dbfcdee850336f"
+      },
+      {
+        "path": "android/hardware/camera/device/ErrorCode.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/ErrorCode.aidl?format=TEXT",
+        "sha256": "9d4e28131d319d063f726e9030017e2501cfca76147531f9007ab1c095fae905"
+      },
+      {
+        "path": "android/hardware/camera/device/StreamGroupState.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/StreamGroupState.aidl?format=TEXT",
+        "sha256": "e07481f65b08b9000ce066667c504b27ac285029033518483b0de3d1bba7e0e1"
+      },
+      {
+        "path": "android/hardware/camera/device/BufferRequestStatus.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/BufferRequestStatus.aidl?format=TEXT",
+        "sha256": "72c53f0357c64339013bfd3ed7857d86f7130790423727f10850956d11a57409"
+      },
+      {
+        "path": "android/hardware/camera/device/BufferRequest.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/BufferRequest.aidl?format=TEXT",
+        "sha256": "af613119e8571e63c41dcf67994006204473a724ca7cf34cdbfd9601d37ba909"
+      },
+      {
+        "path": "android/hardware/camera/device/StreamBufferRet.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/StreamBufferRet.aidl?format=TEXT",
+        "sha256": "852a0f84b0261a55d64f16b35c2763a1df29ccebe6a99035bdf8fd8266075f8a"
+      },
+      {
+        "path": "android/hardware/camera/device/StreamBufferRequestError.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/StreamBufferRequestError.aidl?format=TEXT",
+        "sha256": "2df22d5f7d908ee23e143f8fb7db6c55e6c5ea04df380e9fd09bdf5f814c617b"
+      },
+      {
+        "path": "android/hardware/camera/device/StreamBuffersVal.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/StreamBuffersVal.aidl?format=TEXT",
+        "sha256": "1ee1c3dd6aab6d2b4ee06034864b0d030e6fe208f985a3aebfb32f618825198c"
+      },
+      {
+        "path": "android/hardware/common/NativeHandle.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/common/aidl/aidl_api/android.hardware.common/2/android/hardware/common/NativeHandle.aidl?format=TEXT",
+        "sha256": "bda89ace51cfb22a84c6a9d6836776a459706debb2f2a4f398a768fcc5935976"
+      },
+      {
+        "path": "android/hardware/camera/device/BufferCache.aidl",
+        "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/camera/device/aidl/aidl_api/android.hardware.camera.device/4/android/hardware/camera/device/BufferCache.aidl?format=TEXT",
+        "sha256": "59af5e04e9e3ba63145a8eb1dda956ef0c07bda1479a2442aade31d2f151ae74"
+      }
+    ]
+  },
+  "callback_metadata": {
+    "interface": "android.hardware.camera.device.ICameraDeviceCallback",
+    "version": 4,
+    "hash": "6e6878817de92e03fd52d5f10937714862ab4922",
+    "queried_from_original_ndk_proxy_over_binder": true,
+    "factory_equality_verified": false
+  },
+  "source_and_build_sha256": {
+    "android-framework/sdk/build-tools/android-37.0/aidl": "a4ad150a7cf6ea297c299cb779da7a58c537cfc07923d1e15ccbc554a30cd4ba",
+    "artifacts/camera-boundary/toolchain.json": "847334ac59488e2eb8f11f16d9c60a7639a3fb8e2b2dd5c46fdc160a46139720",
+    "artifacts/camera-boundary/public-headers.json": "b21e537dab35b30292e1aadec296167a068bf4eca8b5d9f4630c0b40111433d6",
+    "artifacts/camera-boundary/public-headers/android/binder_api_level_utils.h": "a6e8c5357e08e06ccbaff882d7f9c324868322a653ac4af2be7c9feed3101f73",
+    "artifacts/camera-boundary/public-headers/android/binder_auto_utils.h": "91a7587d9010e2bac7c6d347d78463fa15a193c025eae260c91b17e76ef9631d",
+    "artifacts/camera-boundary/public-headers/android/binder_enums.h": "a4f3b34f5478d5ad820e93eabfa0d5fe82e53a71727ad6f48b5932a043060189",
+    "artifacts/camera-boundary/public-headers/android/binder_interface_utils.h": "6a3437abc3edd1dbec4cc78d3e3360ee457b4bcca26776f13b0e33ad6c9ad666",
+    "artifacts/camera-boundary/public-headers/android/binder_internal_logging.h": "b3dc27d60e3c75629f231f94ab24779af9faeede2c4d605401179265d6d5eea8",
+    "artifacts/camera-boundary/public-headers/android/binder_parcel_utils.h": "159b2f59a84fcf988bd4dc3ced2b58b55de9f8e49681ab96722045ae61f8ec3c",
+    "artifacts/camera-boundary/public-headers/android/binder_parcelable_utils.h": "9c330de3ef09843d69d54116616efb52e7f442fb3bca28dc7d22f26c8f0fb869",
+    "artifacts/camera-boundary/public-headers/android/binder_to_string.h": "23eb9663863013f862ebe8cee5d1ee9ba48e89998b8795a36f0772c1f0d91048",
+    "framework/camerapeer/AndroidManifest.xml": "a0e2c214e6ab898b9bd856df97478766444081ea8c8110861885e0c6781f7665",
+    "framework/camerapeer/OwnershipPeer.java": "1fa354c76bac99576ce2afd574637286f2bbe828780bfea783d9c60de07e74bb",
+    "framework/camerapeer/Peer.java": "3096350b3536b8b8c1ffced6c9a8a51a751f59ecac3e37a7fe4ad7b48ba0db2c",
+    "framework/camerapeer/aidl/org/pokelinux/cameratest/ICameraBoundaryProbe.aidl": "0ec9f631e2eaadc7fde7ce1beae7ae2e2c7965bb23c518f7d0ad56e6a6c264b7",
+    "framework/camerapeer/aidl/org/pokelinux/cameratest/ICameraOwnershipProbe.aidl": "5f993a13b016fc48356eac4b770f12a56136af1b6b082999f04c5e4292fd7502",
+    "framework/camerapeer/client.cpp": "df860eb01d54d1ced14ccc5f59da7e91b1ea618417b0af5c5838152345e5567a",
+    "framework/camerapeer/frozen-schema-manifest.json": "8674b3aab56606b79f6e907e403130056e610f236e3b5db4793d07d0043488ef",
+    "framework/camerapeer/ownership_peer.cpp": "c2cbd72214a88386a3cad38449638c2a76ab8316fba565ad7436f3906fd47c76",
+    "framework/camerapeer/peer.cpp": "027f8933d74a82de0b73cef9b2ba27089b6a4ff0c85184d83ecb03f457d344f2",
+    "framework/camerapeer/public-sources.json": "3518fc9e92ada2bd10c6811aa4a33ca2091a308ebfdd19879ef5ea8e95d3e635",
+    "artifacts/camera-boundary/frozen-aidl/android/hardware/camera/device/BufferCache.aidl": "59af5e04e9e3ba63145a8eb1dda956ef0c07bda1479a2442aade31d2f151ae74",
+    "artifacts/camera-boundary/frozen-aidl/android/hardware/camera/device/BufferRequest.aidl": "af613119e8571e63c41dcf67994006204473a724ca7cf34cdbfd9601d37ba909",
+    "artifacts/camera-boundary/frozen-aidl/android/hardware/camera/device/BufferRequestStatus.aidl": "72c53f0357c64339013bfd3ed7857d86f7130790423727f10850956d11a57409",
+    "artifacts/camera-boundary/frozen-aidl/android/hardware/camera/device/BufferStatus.aidl": "16ab32965dde8bc0a6778de7c114fdac5455fe41bdfcdea4ea3525892ce7e077",
+    "artifacts/camera-boundary/frozen-aidl/android/hardware/camera/device/CameraMetadata.aidl": "0e7ec40a8f188b26fecbe955b7ea52a71da6690e59c798e165e5d5d7d0a15a6b",
+    "artifacts/camera-boundary/frozen-aidl/android/hardware/camera/device/CaptureRequest.aidl": "83866b50c32b338fef95a04bd7a76b397413493988b79dd65e758f6f63a9ef9a",
+    "artifacts/camera-boundary/frozen-aidl/android/hardware/camera/device/CaptureResult.aidl": "b9d81ba19a682c5685ffba51da42ccd6ec9ed68939f502401b4da851c35e7d34",
+    "artifacts/camera-boundary/frozen-aidl/android/hardware/camera/device/ErrorCode.aidl": "9d4e28131d319d063f726e9030017e2501cfca76147531f9007ab1c095fae905",
+    "artifacts/camera-boundary/frozen-aidl/android/hardware/camera/device/ErrorMsg.aidl": "94d59cb4823313a728b724b4c903ecd794db7ade5defc55133dbfcdee850336f",
+    "artifacts/camera-boundary/frozen-aidl/android/hardware/camera/device/ICameraDeviceCallback.aidl": "f90ea1bc55a34b98147c00b19b6c787ff7b6203d1f15b01376af4c0ea3ee3674",
+    "artifacts/camera-boundary/frozen-aidl/android/hardware/camera/device/NotifyMsg.aidl": "29822a3987b24d6c67d937c6006fe3a7261e9943c71e738ed079eb1daf91ddb1",
+    "artifacts/camera-boundary/frozen-aidl/android/hardware/camera/device/PhysicalCameraMetadata.aidl": "18dc3f0ed4712e01f3d9c89d6256bbb3b3e6a35493f2c3a5455bafd27cfdcae9",
+    "artifacts/camera-boundary/frozen-aidl/android/hardware/camera/device/PhysicalCameraSetting.aidl": "3eed75f28eebbee5b33b16cbfa85a70e27f957c0779ac9365bceb24b5da0a6b3",
+    "artifacts/camera-boundary/frozen-aidl/android/hardware/camera/device/ShutterMsg.aidl": "361f1e4b11f904dc79722b7097d0f26f4473750f2ff1be2d0a779ba317813fb0",
+    "artifacts/camera-boundary/frozen-aidl/android/hardware/camera/device/StreamBuffer.aidl": "fb76033c7b9dadcd3b56aa7e4093aafc367fc092036ce528686d245cdeca1993",
+    "artifacts/camera-boundary/frozen-aidl/android/hardware/camera/device/StreamBufferRequestError.aidl": "2df22d5f7d908ee23e143f8fb7db6c55e6c5ea04df380e9fd09bdf5f814c617b",
+    "artifacts/camera-boundary/frozen-aidl/android/hardware/camera/device/StreamBufferRet.aidl": "852a0f84b0261a55d64f16b35c2763a1df29ccebe6a99035bdf8fd8266075f8a",
+    "artifacts/camera-boundary/frozen-aidl/android/hardware/camera/device/StreamBuffersVal.aidl": "1ee1c3dd6aab6d2b4ee06034864b0d030e6fe208f985a3aebfb32f618825198c",
+    "artifacts/camera-boundary/frozen-aidl/android/hardware/camera/device/StreamGroupState.aidl": "e07481f65b08b9000ce066667c504b27ac285029033518483b0de3d1bba7e0e1",
+    "artifacts/camera-boundary/frozen-aidl/android/hardware/common/NativeHandle.aidl": "bda89ace51cfb22a84c6a9d6836776a459706debb2f2a4f398a768fcc5935976",
+    "artifacts/camera-boundary/ndk/android/hardware/camera/device/BufferCache.cpp": "e77aeff69bebe9b9c8e017d064afd2b53c66dfdac64a485eb016137f3d449886",
+    "artifacts/camera-boundary/ndk/android/hardware/camera/device/BufferRequest.cpp": "ddbe52c88eee5765aad08940e4b5e8683cc01ca863202669b36543afe5c71a11",
+    "artifacts/camera-boundary/ndk/android/hardware/camera/device/BufferRequestStatus.cpp": "a123a98e7e24c5d099b983fe5c28d68e41b2218f9ad839ac6d2b6ef1a2bc3142",
+    "artifacts/camera-boundary/ndk/android/hardware/camera/device/BufferStatus.cpp": "26b44c0b942f3a6edd6176835aba0ec55001abab054095ac1ffb2ec7726ce930",
+    "artifacts/camera-boundary/ndk/android/hardware/camera/device/CameraMetadata.cpp": "0df6370631f3439afe9c4373df67569a46ee0b7f030a045c568752e4fcfc1f3a",
+    "artifacts/camera-boundary/ndk/android/hardware/camera/device/CaptureRequest.cpp": "b63b619ea208b3151e28a4f8f1a41631923500fdbbbc783a119ca430ac4be03e",
+    "artifacts/camera-boundary/ndk/android/hardware/camera/device/CaptureResult.cpp": "da8e3480bb9fb050e2000cdffbc58e6cebc4cf62b4a8c6c35566afdf6e83bd5d",
+    "artifacts/camera-boundary/ndk/android/hardware/camera/device/ErrorCode.cpp": "bd4b7ecddab8f182358d0f04d01d70431301112a679a614acb5d6e977dc29e19",
+    "artifacts/camera-boundary/ndk/android/hardware/camera/device/ErrorMsg.cpp": "8e13683dd8c3e532e44854006b7053e433fa173397adc4fd558c7c59dd4071b6",
+    "artifacts/camera-boundary/ndk/android/hardware/camera/device/ICameraDeviceCallback.cpp": "e090e548abfcd5d95fb62b8ec4fb62193d819dc5f742f917e3dc344fd407bfd6",
+    "artifacts/camera-boundary/ndk/android/hardware/camera/device/NotifyMsg.cpp": "b6d5f370a2574c8c43317fbe6dc342f706992947c51994639431f3dc866acc8a",
+    "artifacts/camera-boundary/ndk/android/hardware/camera/device/PhysicalCameraMetadata.cpp": "992aa12db01af9b3eddd3eb890dc135ca89b0ae14dd3d8d7f4091883159723eb",
+    "artifacts/camera-boundary/ndk/android/hardware/camera/device/PhysicalCameraSetting.cpp": "27d62fdc5afa4389d1bd1642e341975b74083be4fe2fe989df19c43845ac2f2e",
+    "artifacts/camera-boundary/ndk/android/hardware/camera/device/ShutterMsg.cpp": "ae0259aa5c3807f5b892bce54dd44e3f6d2bf63ce264f35f46f03bd98513c9a1",
+    "artifacts/camera-boundary/ndk/android/hardware/camera/device/StreamBuffer.cpp": "b76c6f82054ad9e8fe37b663b6628cb99f6f142a0f00fc68336f060d3649c0ee",
+    "artifacts/camera-boundary/ndk/android/hardware/camera/device/StreamBufferRequestError.cpp": "e9625c3b5830ef2fd80b498e4ba8dca196ff1385f730e6e8eaccfe9267d6fb84",
+    "artifacts/camera-boundary/ndk/android/hardware/camera/device/StreamBufferRet.cpp": "2f78262f571b9bd9b419954260109050731e8e2948ad10050385aa979f23b7b1",
+    "artifacts/camera-boundary/ndk/android/hardware/camera/device/StreamBuffersVal.cpp": "47ffd0cd746eb541f57dca4952eea29b4d244c709dd762ed7c2e2e386c2c5a9a",
+    "artifacts/camera-boundary/ndk/android/hardware/camera/device/StreamGroupState.cpp": "6bc49dfe71462110257b127e93c8a49fffc8ea7d1a37bb06a5bce5030ef577e6",
+    "artifacts/camera-boundary/ndk/android/hardware/common/NativeHandle.cpp": "732f2973f46ff57bb296afe30979c55ae0fa23a9bd664375343e99d9efe57285",
+    "artifacts/camera-boundary/ndk/org/pokelinux/cameratest/ICameraBoundaryProbe.cpp": "bfd9e229b5b3f6b9d03defa3657982b205dc5773dacaccd8a72dcf66e9b7ff12",
+    "artifacts/camera-boundary/ndk/org/pokelinux/cameratest/ICameraOwnershipProbe.cpp": "ca0fa6bf70095f1fb578984e3c51027e7405cc73a0d6459aefd50dd92801274a",
+    "artifacts/camera-boundary/camera-ndk-client": "b0b1d768843c059b5342eb8b3a419dedc1ef5a3b571624eeff5872d637986411",
+    "artifacts/camera-boundary/apk/lib/x86_64/libcamera_boundary_peer.so": "8eeb29bc0c528a20654f9ab3e518c987a21dcaad8e4c1b43a36de154c7a17087",
+    "artifacts/camera-boundary/peer.apk": "7c4d7583882867a0854cd92e9b169e46ce1bf6cb0f2c304e008ef1990123685d",
+    "native-camera-boundary/build.rs": "12e7ddfaf50be9356d45a90e4e7960d94de8766340769f98444e922bc1cb4122",
+    "native-camera-boundary/src/bin/camera-binder-client.rs": "ae277b6510f5fad722c2299c3bc5c7318669a46b3e8c5ed9cd070c77ad5e524d",
+    "native-camera-boundary/src/bin/camera-owner-client.rs": "7837ef170c96be92709f890e0d2344352b639362442a7976b18c123e2802edac",
+    "native-camera-boundary/src/lib.rs": "9c6db5907013038d9bc7b1e3096c5958475780309b7694b89612ee7f04c50c21",
+    "native-camera/src/lib.rs": "3ceb27d000194de361bdac7667d5b49660db0d3598f5c95f1961bcab406542ba",
+    "native-camera/Cargo.toml": "129897f013103c6e97c177fb100ebcab246a81f6a0c3f71e6d1e749b16adeea5",
+    "native-camera-boundary/Cargo.toml": "b674ca562236c4ff48f34b24ca7b1acf6fdb680756bfdef142bfc18a29772a89",
+    "native-camera-boundary/Cargo.lock": "1441d15933ac8c74d1b1f5ed79ff984461d2893fd370d5f7796c8abcd01d9373",
+    "artifacts/camera-boundary/x86_64-unknown-linux-musl/release/camera-binder-client": "ea601603cdf1b3a88ca62845626b0975f088b8cfb0ff64587babe0ce82d666a1",
+    "artifacts/camera-boundary/x86_64-unknown-linux-musl/release/camera-owner-client": "7a69205dcba8a5923bcc10bd2a0798971ce4c32476b429a144631b0053f56d5f",
+    "artifacts/camera-boundary/x86_64-unknown-linux-musl/release/build/pokelinux-camera-boundary-26ac501851f1b2b0/out/camera.rs": "070629fb7226b07f92754ba5577b7ed70b86660d560b12e5139ec07ee2520153",
+    "framework/tests/camera_owner.py": "3e1a01b596a7413ceecc29d967fd133d04fe1c603beafd7b01c3c6ab1663b2d5",
+    "tools/verify-camera-schemas.py": "3038d200e60e145b22c52fc303ae371362958309a0e9f4d29be23004aafecf67",
+    "tools/prepare-camera-boundary.py": "727d79f1d78e689a8517a5407a22fdcae5d3387e6a956de8b7616502db1ff4b7",
+    "tools/build-camera-boundary.sh": "2a7f3d685fefaa28a83dac150fcc68fff5df52adfd4e615710e75e066a152652",
+    "tools/build-native-camera-boundary.sh": "3e3d97c2505bf60e2eb66473a483d91b170b4027d91e83e849d844907f9270fb"
+  },
+  "ndk_toolchain": {
+    "url": "https://dl.google.com/android/repository/android-ndk-r30-linux.zip",
+    "version": "30.0.16248370",
+    "size": 738633529,
+    "sha1": "5107f898313790e449e87eee2183d9a20602dee9",
+    "sha256": "753611f410d002cfcd3f3dc2ef49aad532089d3180b436c060a90bf0fcb64df2",
+    "source": "https://developer.android.com/ndk/downloads",
+    "scope": "original public toolchain; synthetic Android test infrastructure only"
+  },
+  "emulator_fingerprint": "google/sdk_gphone64_x86_64/emu64xa:17/CE2A.260420.019/15611780:userdebug/dev-keys",
+  "framework_bootstrap": [
+    "startInstrumentation\t51\tPASS",
+    "instrumentationStatus\t1\tPASS"
+  ],
+  "runtime_binder_libraries": {
+    "/system/lib64/libbinder_ndk.so": "c8f02237afa4a5643a68f13c4d43114f3d57f2322f17309d34c11e68b48e2e68",
+    "/system/lib64/libbinder.so": "02be0d8d198cabf24c0a1529b7f6b02c3305c84bbf27a15be600dfd1235aa5ee"
+  },
+  "ownership_cases": {
+    "buffer_return_before_final_metadata": true,
+    "capture_complete_before_fence_ready": true,
+    "owned_callback_fd_survives_parcel": true,
+    "cached_empty_handle_submission": true,
+    "cache_removal_error": 23,
+    "buffer_error_and_request_error_accounted": true,
+    "duplicate_unknown_stale_returns_do_not_settle_new_owner": true,
+    "late_metadata_completes_old_capture_after_reuse": true,
+    "service_error_is_uncertain": 17,
+    "negative_and_oversized_counts_quarantined": true,
+    "resolved_receipts_single_shot": [
+      "Accepted",
+      "Rejected",
+      "InvalidCount",
+      "Uncertain"
+    ],
+    "duplicate_capture_id_batch_refused_without_mutation": true,
+    "rejected_to_accepted_publication_refused": true,
+    "receipt_duplicate_test": "duplicate adapter delivery of values from actual original-generated Binder replies; does not claim duplicate synchronous Binder replies",
+    "held_submit_max_seconds": 3,
+    "revoke_and_snapshot_limit_ms": 100,
+    "pipe_wait_seconds": 2,
+    "death_wait_seconds": 5,
+    "outer_client_timeout_seconds": 25,
+    "revocation_and_config_replacement_during_held_submit": true,
+    "late_returns_reconcile_without_publication": true,
+    "death_pipe_eof_is_not_release_signal": true,
+    "death_retains_quarantined_lease_and_refuses_new_session": true,
+    "capture_budget_per_owner": 8,
+    "lease_budget_per_owner": 2,
+    "fd_cleanup_scope": "synthetic NDK cache/frame/fence closure and owned processes only"
+  },
+  "cleanup": {
+    "container_id": "10746f64f2953fa0e4ae438352838c39ce73792eb605e7defb2c7eb8a94b6982",
+    "owned_container_removed": true,
+    "owned_network_removed": true,
+    "peer_death_and_harness_force_stop": true
+  },
+  "remaining_gates": [
+    "Installed native service, permission/IPC admission, atomic media publication, capture-record retirement and durable restart quarantine.",
+    "Qualified cleanup/reset/reopen, actual vendor hang supervision, flush/close/drain and HAL buffer management.",
+    "Full matching ICameraDeviceSession/provider ABI/hash and matched transitive dependency closure.",
+    "FMQ/real camera metadata, acquire fences, sync_file, gralloc/dma-buf import/layout, mapper and actual DMA completion.",
+    "Multi-stream/input/physical camera operation, partial metadata policy, actual images, preview/photo/video, privacy and media storage.",
+    "ARM64 camera runtime and later authorized hardware qualification."
+  ],
+  "vendor_binary_execution": false,
+  "upstream_source_published": false,
+  "physical_phone_accessed": false,
+  "sync_file_verified": false,
+  "dma_safety_verified": false,
+  "camera_capture_verified": false
+}

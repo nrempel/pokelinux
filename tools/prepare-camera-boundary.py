@@ -70,3 +70,14 @@ for name in pins:
     identities[name] = {'url': url, 'sha256': digest}
 (OUT / 'public-headers.json').write_text(json.dumps(identities, indent=2) + '\n')
 print('Public Android17 Binder C++ helper headers ready', flush=True)
+
+manifest = json.loads((ROOT / 'framework/camerapeer/frozen-schema-manifest.json').read_text())
+frozen = OUT / 'frozen-aidl'
+for item in manifest['imports']:
+    path = frozen / item['path']
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if not path.is_file():
+        with urllib.request.urlopen(item['url'], timeout=45) as response:
+            path.write_bytes(base64.b64decode(response.read()))
+    assert hashlib.sha256(path.read_bytes()).hexdigest() == item['sha256'], 'Frozen camera schema identity mismatch: ' + item['path']
+print('Frozen camera deviceV4/commonV2 callback closure ready', flush=True)
