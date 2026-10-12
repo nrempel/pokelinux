@@ -1,0 +1,145 @@
+{
+  "date_utc": "2026-10-12",
+  "host": "Harbour",
+  "scope": "read-only native Rust NetworkManager owner/deadline boundary over real private D-Bus",
+  "production_connectivity_complete": false,
+  "hardware_verified": false,
+  "vendor_executed": false,
+  "source_sha256": {
+    "native-connectivity/Cargo.toml": "659a3dddfa23628ff571112496381bbba10415d17d6b3804c2f814a133316d30",
+    "native-connectivity/Cargo.lock": "634348ce203b5728d48f2ab135ad42c2653001259af7955b1a8d50473166506d",
+    "native-connectivity/src/lib.rs": "a61062d592d45dba294142197c2ecf010843c47b1da8fc87423ed293c3776030",
+    "native-connectivity/src/bin/nm-boundary.rs": "e6191bb6dc52a5770891da72d4b99ce361b4f65dd7d36eef41b8028a076d21c8",
+    "native-power/src/clock.rs": "cc32f4fe076606a46a1704cd42f6a161ae3c9a8809b1905223041b23d8eda5dd",
+    "tools/build-native-connectivity.sh": "072334a5fba4c1596df14719a7986cd2083259205c0ad89fb206ab31fc8569bd",
+    "tools/native-connectivity-fixture.py": "bafcd705897e6360ec6b154af427a51c85b5291bc0cb154a83765a26fbef78cb",
+    "tools/native-connectivity-suite.py": "df6577543a9889841b3c056c2ea602e526bd86017564e8dabe0c24ca6e7c29ef",
+    "build-support/Dockerfile.native-connectivity": "91a69d1d3742f0329b63963e3738e000702aeb5b0ccd034c80e90fde0221f137",
+    "docs/native-connectivity.md": "fb71dab27c56d9ac412c73db201669a73d5f1f84c77200a2fb307e55093953d7"
+  },
+  "image_id": "sha256:f7b4a190b1d3b79331828e463a913d29a44fd9eb6239dd78f4c63ca0d3eb306a",
+  "actual_runs": {
+    "native_x86_64": {
+      "passed": true,
+      "scope": "original NetworkManager, private real D-Bus, no managed physical interface",
+      "hardware_verified": false,
+      "network": "none",
+      "stages": [
+        "absence_does_not_autostart_or_report_network",
+        "actual_properties_no_wifi_or_reachability_claim",
+        "late_success_expires_with_injected_boot_time",
+        "actual_stopped_daemon_read_timeout",
+        "actual_daemon_death_refuses_old_snapshot",
+        "restart_requires_explicit_owner_replacement",
+        "explicit_new_owner_observation",
+        "bus_death_refuses_cached_success"
+      ],
+      "original_daemon_architecture": "x86_64",
+      "client_execution": "x86_64",
+      "original_version": "1.52.1",
+      "initial_devices": [
+        {
+          "device_type": 32,
+          "path": "/org/freedesktop/NetworkManager/Devices/1",
+          "state": 10
+        }
+      ],
+      "paused_read_elapsed_seconds": 0.25066171679645777,
+      "owned_children_reaped": {
+        "dbus": -9,
+        "rust-observer": -9,
+        "nm-first": -9,
+        "nm-second": -9
+      },
+      "owned_container_absent": true
+    },
+    "arm64_user_client_x86_daemon": {
+      "passed": true,
+      "scope": "original NetworkManager, private real D-Bus, no managed physical interface",
+      "hardware_verified": false,
+      "network": "none",
+      "stages": [
+        "absence_does_not_autostart_or_report_network",
+        "actual_properties_no_wifi_or_reachability_claim",
+        "late_success_expires_with_injected_boot_time",
+        "actual_stopped_daemon_read_timeout",
+        "actual_daemon_death_refuses_old_snapshot",
+        "restart_requires_explicit_owner_replacement",
+        "explicit_new_owner_observation",
+        "bus_death_refuses_cached_success"
+      ],
+      "original_daemon_architecture": "x86_64",
+      "client_execution": "aarch64_user",
+      "original_version": "1.52.1",
+      "initial_devices": [
+        {
+          "device_type": 32,
+          "path": "/org/freedesktop/NetworkManager/Devices/1",
+          "state": 10
+        }
+      ],
+      "paused_read_elapsed_seconds": 0.25212270114570856,
+      "owned_children_reaped": {
+        "dbus": -9,
+        "rust-observer": -9,
+        "nm-first": -9,
+        "nm-second": -9
+      },
+      "owned_container_absent": true
+    }
+  },
+  "original_daemon": "NetworkManager1.52.1 x86_64 Debian package",
+  "runtime_red": [
+    {
+      "path": "artifacts/native-connectivity/owner-red3/result.json",
+      "failure": "replacement daemon was published under old pinned owner",
+      "actual_stages_before_failure": 4,
+      "owned_container_absent": true
+    },
+    {
+      "path": "artifacts/native-connectivity/deadline-red/result.json",
+      "failure": "successful daemon reply published despite expired injected boot-time clock",
+      "actual_stages_before_failure": 2,
+      "owned_container_absent": true
+    }
+  ],
+  "setup_failures_separate": [
+    "offline uncached serde/serde_json pins corrected to existing1.0.229/1.0.154",
+    "fixture output group permissions",
+    "fixture user database and cross-UID owned-child signaling",
+    "temporary proxy borrow compile correction"
+  ],
+  "validation": {
+    "fmt": true,
+    "clippy_D_warnings": true,
+    "x86_release": true,
+    "arm64_release": true,
+    "additional_component_tests": 0
+  },
+  "decode_limits": {
+    "property_body_bytes": 65536,
+    "property_entries": 128,
+    "device_list_body_bytes": 8192,
+    "devices": 16,
+    "version_bytes": 128,
+    "zbus_main_queue": 32
+  },
+  "deadline": {
+    "clock": "shared native-power CLOCK_BOOTTIME",
+    "observation_budget_ms": 1000,
+    "per_method_timeout_ms": 250,
+    "connection_auth_bounded": false,
+    "hard_return_time_guaranteed": false
+  },
+  "limits": [
+    "read-only; no scan/activation or physical radio",
+    "original daemon remains x86 in ARM64 user-QEMU client run",
+    "upstream wire-allocation and background-executor ownership not a production hostile-bus/supervision proof",
+    "separate global/device observations, not atomic daemon-wide state",
+    "permissions, responsive installed IPC, BlueZ and kernel/device gates remain"
+  ],
+  "binary_sha256": {
+    "artifacts/native-connectivity/target/release/nm-boundary": "a8e02aad44a7ce589c3f149602203ec82c9d7c94aad6720b18e8637ad2297fd7",
+    "artifacts/native-connectivity/target/aarch64-unknown-linux-gnu/release/nm-boundary": "3c45069653d60a62b8fdf5e2c14c1d319efb696566b3affe9909d357af329734"
+  }
+}

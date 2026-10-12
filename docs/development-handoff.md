@@ -107,6 +107,13 @@ not physical mute or installed production audio. The synchronous actor still
 needs responsive lifecycle/stop and event-driven observations, a native PCM
 broker, durable call recovery and Pixel AoC/DSP routing; see `native-audio.md`.
 
+The read-only native connectivity adapter now pins the original NetworkManager
+owner and bus identity, targets unique-name RPCs, and checks absolute boot-time
+expiry before publication. Eight real-daemon/private-D-Bus stages pass with x86
+and ARM64 user-QEMU Rust clients; the daemon stays x86 in both runs. No host NIC
+or bus is accessed. Installed authority, authenticated permissions, mutations,
+BlueZ and device behavior remain open; see `native-connectivity.md`.
+
 ## Next work
 
 1. Recover and test the actual vendor cleanup/reset and registration-overlap
@@ -143,6 +150,7 @@ bash tools/build-native-messaging.sh build
 bash tools/build-power-reference.sh build
 bash tools/build-native-power.sh build
 bash tools/build-native-audio.sh build
+bash tools/build-native-connectivity.sh build
 bash tools/build-native-audio.sh integration artifacts/native-audio/NEW_RUN
 bash tools/framework-suite.sh sms-codec
 bash tools/framework-suite.sh sms-transport-oracle

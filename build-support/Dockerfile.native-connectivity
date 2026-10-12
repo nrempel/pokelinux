@@ -1,0 +1,4 @@
+FROM pixel-phone-rust:20261012-b472
+RUN apt-get update && apt-get install -y --no-install-recommends network-manager dbus-daemon python3 && rm -rf /var/lib/apt/lists/*
+RUN useradd --uid 1000 --no-create-home --shell /usr/sbin/nologin connectivity-client
+WORKDIR /workspace/native-connectivity

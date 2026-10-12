@@ -60,6 +60,9 @@ These are static deductions, not successful DSP operation. Audio core v4 mmap
 uses `IStreamCommon.createMmapBuffer`; the older open-stream FD is not the usable
 audio buffer. Stream close and device disconnect have ordered teardown contracts.
 
+The [read-only native connectivity boundary](native-connectivity.md) now qualifies
+original NetworkManager owner identity, observation expiry and daemon/bus death
+against a private loopback-only namespace. It performs no radio mutation.
 Native connectivity should coordinate one qualified NetworkManager Wi-Fi path
 and BlueZ ownership. Scan completion, association, IP configuration and reachability
 need separate observations. iwd `Network.Connected` can describe a connection
