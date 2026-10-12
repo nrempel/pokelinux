@@ -41,7 +41,7 @@ Dashed connections are work still required, not working hardware paths. “Rust 
 | Original request segmentation | Five executed boundary cases reproduce missing final chunks for exact multiples of 2,048 above 2,048 bytes. [Evidence](docs/evidence/segmentation-provenance.json) | Vendor endpoint acceptance and real-world impact |
 | Original indication assembly | Eight executed cases verify index ordering, duplicate handling, missing-index exceptions, excess bytes and empty payloads in the original APK accumulator. [Evidence](docs/evidence/indication-assembly-provenance.json) | Interleaved message identity and vendor reset guarantees |
 | Original indication adapter | Seven executed cases cover slot filtering, ID reuse, interleaving, changed totals and state retained after exceptions. [Evidence](docs/evidence/indication-adapter-provenance.json) | Producer serialization and reset guarantees; malformed input acceptance is not a Rust requirement |
-| Native callback lifecycle | Blocking delivery, cancellation, owner-inbox loss, replacement, rejection of late callbacks to an old endpoint, and peer death during/after registration pass through Binder on Harbour. [Latest evidence](docs/evidence/inbox-drop-provenance.json) | Owned transport worker, reconnect, lifetime deadlines and native phone-state integration |
+| Native callback lifecycle | Blocking delivery, cancellation during held registration, rejection of late registration success, owner-inbox loss, replacement, late callbacks and peer death pass through Binder on Harbour. [Held-registration evidence](docs/evidence/held-registration-provenance.json) | Owned transport worker, reconnect, lifetime deadlines and native phone-state integration |
 | Native publication owner | Raw response snapshots reject consumed work after cancellation/replacement; activation, failure and commit share one gate. Linux/ARM64 tests and real Binder owner scenario pass. [Evidence](docs/evidence/radio-owner-provenance.json) | Worker/death-watch ownership, deadlines, operation receipts, watch notifications and decoded IMS/call state |
 | Native indication assembly | Bounded single-candidate Rust assembly passes Linux/ARM64 component tests and a real Binder fragment-to-result test. [Evidence](docs/evidence/native-assembly-provenance.json) | Session deadlines, aggregate budgets, epoch fencing and vendor message identity |
 | Native request splitting | Lossless Rust planner tested on Linux x86-64 and ARM64/QEMU across 14,337 segmented payload lengths. [Evidence](docs/evidence/request-parts-provenance.json) | Vendor endpoint acceptance |
@@ -147,6 +147,8 @@ bash tools/framework-suite.sh shannon-codec  # Requires exact local Shannon APK
 Read the scripts and [framework report](docs/android-framework-tests.md) before running the larger suites. They use dedicated containers and emulators. Temporary build servers are validation capacity, not runtime dependencies. No instruction here authorizes flashing a phone.
 
 Development can run on a remote Linux build host. Native builds, component tests and Binder/radio IPC qualification pass from the relocated checkout. See [remote development](docs/remote-development.md) for setup and handoff guidance.
+
+The current stopping point and next implementation gates are in the [development handoff](docs/development-handoff.md).
 
 ## Source map
 

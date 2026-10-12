@@ -41,6 +41,12 @@ Path('artifacts/native-radio/ipc-image.txt').write_text(run('shell', 'getprop', 
 run('push', str(binary), root + '/radio-ipc-test')
 run('shell', 'chmod', '755', root + '/radio-ipc-test')
 try:
+    output = run('shell', root + '/radio-ipc-test', '51', 'cancel-during-registration')
+    Path('artifacts/native-radio/registration-cancel-output.txt').write_text(output)
+    assert output.splitlines() == ['radio-bootstrap\tPASS', 'radio-registration-held\tPASS', 'radio-registration-held-cancel\tPASS', 'radio-registration-late-success-rejected\tPASS'], output
+    assert run('shell', 'getenforce').strip() == 'Enforcing'
+    print(output, flush=True)
+    run('shell', 'am', 'force-stop', 'org.pokelinux.radiopeer')
     output = run('shell', root + '/radio-ipc-test', '51', 'session-owner')
     Path('artifacts/native-radio/owner-output.txt').write_text(output)
     assert output.splitlines() == ['radio-bootstrap\tPASS', 'radio-owner-activation\tPASS', 'radio-owner-consumed-cancel\tPASS', 'radio-owner-consumed-replacement\tPASS', 'radio-owner-late-endpoint\tPASS', 'radio-owner-stop\tPASS'], output

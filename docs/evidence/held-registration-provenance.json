@@ -1,0 +1,29 @@
+{
+  "scope": "Real Binder synthetic held-registration cancellation; no physical phone",
+  "base_revision": "e88c673",
+  "sources_sha256": {
+    "native-radio/src/bin/radio-ipc-test.rs": "72f219d615c32de55fa2a7f76dd5f8c56d7da37977a7c099b738f4e0274375b4",
+    "framework/tests/radio_ipc.py": "1bf41a307d10375f2f789cc5623262c702fecd13dc1b802a52536c6d4de82660",
+    "framework/radiopeer/Peer.java": "6648e9d29979371c6b01202ff0b51477d06640b88c0434b32f339909b5192a50"
+  },
+  "binary_sha256": "e8e4e56d7ca222665c38829d8e8cda2b8ceaf2800979d716aac60b9e1584f6aa",
+  "peer_apk_sha256": "344fb8d6a70212b7f3216073c9684d47cd7cefd27252c165fb6787665d035806",
+  "red": "UnknownTransaction before adding synthetic latch controls",
+  "green": [
+    "radio-bootstrap\tPASS",
+    "radio-registration-held\tPASS",
+    "radio-registration-held-cancel\tPASS",
+    "radio-registration-late-success-rejected\tPASS"
+  ],
+  "other_scenarios": "session-owner, death-during-registration and all sixteen ordinary IPC markers passed",
+  "selinux": "Enforcing asserted after each scenario",
+  "commands": [
+    "bash tools/build-native-radio.sh build",
+    "bash tools/framework-suite.sh radio-ipc"
+  ],
+  "limits": [
+    "Scoped registration thread is test infrastructure, not the production worker",
+    "No cancellation or cleanup of vendor-side registration proven",
+    "No permanent-hang recovery or hardware/carrier proof"
+  ]
+}

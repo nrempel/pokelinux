@@ -5,6 +5,8 @@ import android.os.*;
 import java.io.ByteArrayOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /** Independent synthetic endpoint. No vendor code, network or modem access. */
 public final class Peer extends Instrumentation {
@@ -16,6 +18,15 @@ public final class Peer extends Instrumentation {
     private int segmentIndex, segmentSerial, segmentTotal;
     private volatile int rawCalls, segmentCalls;
     private volatile boolean cleared;
+    private final CountDownLatch registrationEntered = new CountDownLatch(1);
+    private final CountDownLatch registrationRelease = new CountDownLatch(1);
+    private static void awaitLatch(CountDownLatch latch) {
+        try { require(latch.await(10, TimeUnit.SECONDS), "registration latch timeout"); }
+        catch (InterruptedException error) {
+            Thread.currentThread().interrupt();
+            throw new IllegalStateException(error);
+        }
+    }
     private static void require(boolean ok, String reason) {
         if (!ok) throw new IllegalArgumentException(reason);
     }
@@ -61,6 +72,13 @@ public final class Peer extends Instrumentation {
                 if ("pokelinux-die-register-test".equals(client)) {
                     // Deliberately exit this test process before writing a sync reply.
                     android.os.Process.killProcess(android.os.Process.myPid());
+                    return true;
+                }
+                if ("pokelinux-hold-register-test".equals(client)) {
+                    // Independent, bounded synthetic barrier. No modem access.
+                    registrationEntered.countDown();
+                    awaitLatch(registrationRelease);
+                    reply.writeNoException(); reply.writeInt(42);
                     return true;
                 }
                 require("pokelinux-ipc-test".equals(client), "client name");
@@ -154,6 +172,13 @@ public final class Peer extends Instrumentation {
                 try { require(response.transact(1, input, output, 0), "new endpoint accepts same-mode callback"); }
                 finally { input.recycle(); output.recycle(); }
                 reply.writeNoException(); reply.writeString(rejection); return true;
+            }
+            if (code == 109 || code == 110) { // Test-only registration barriers.
+                require(callFlags == 0, "registration barrier flags");
+                data.enforceNoDataAvail();
+                if (code == 110) awaitLatch(registrationEntered);
+                else registrationRelease.countDown();
+                reply.writeNoException(); reply.writeInt(1); return true;
             }
             if (code == 100) { // Test-only observation, never called by production transport.
                 data.enforceNoDataAvail(); reply.writeNoException();

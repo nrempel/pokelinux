@@ -104,7 +104,7 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     }
     let scenario = std::env::args().nth(2);
     let die_register = match scenario.as_deref() {
-        None | Some("session-owner") => false,
+        None | Some("session-owner") | Some("cancel-during-registration") => false,
         Some("death-during-registration") => true,
         _ => return Err("unknown test scenario".into()),
     };
@@ -145,6 +145,9 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     let transport = RadioTransport::from_binder(peer.clone())?;
     if scenario.as_deref() == Some("session-owner") {
         return owner_ipc(&transport, &peer);
+    }
+    if scenario.as_deref() == Some("cancel-during-registration") {
+        return cancelled_registration(&transport, &peer);
     }
     let callbacks = new_radio_callbacks(NonZeroUsize::new(4).unwrap());
     let inbox = &callbacks.events;
@@ -613,4 +616,76 @@ fn owner_ipc(
     owner_clear(transport, peer, id)?;
     println!("radio-owner-stop\tPASS");
     Ok(())
+}
+
+// Test controls below belong only to the independent synthetic peer.
+fn registration_latch(peer: &SIBinder, code: u32) -> Result<()> {
+    let remote = peer.as_remote().ok_or(StatusCode::BadType)?;
+    let data = remote.prepare_transact(true)?;
+    let mut reply = remote
+        .submit_transact(code, &data, 0)?
+        .ok_or(StatusCode::UnexpectedNull)?;
+    let status: Status = reply.read()?;
+    if !status.is_ok() {
+        return Err(StatusCode::from(status));
+    }
+    if reply.read_i32()? != 1 || reply.data_avail() != 0 {
+        return Err(StatusCode::BadValue);
+    }
+    Ok(())
+}
+fn cancelled_registration(
+    transport: &RadioTransport,
+    peer: &SIBinder,
+) -> std::result::Result<(), Box<dyn std::error::Error>> {
+    use pokelinux_radio::owner::{OwnerError, Phase, RadioOwner};
+    let mut owner = RadioOwner::new(NonZeroUsize::new(2).unwrap());
+    let registration = owner
+        .begin(None, NonZeroUsize::new(4).unwrap())
+        .map_err(|e| format!("begin: {e:?}"))?;
+    let _watch = transport.watch_death(registration.endpoints.control.clone())?;
+    let response = registration.endpoints.response.as_binder();
+    let indication = registration.endpoints.indication.as_binder();
+    // Scoped test thread only: the synthetic peer has a bounded latch wait and
+    // the outer harness kills the disposable process on its own timeout.
+    std::thread::scope(
+        |scope| -> std::result::Result<(), Box<dyn std::error::Error>> {
+            let worker = scope.spawn(|| {
+                transport.register(&response, &indication, "pokelinux-hold-register-test")
+            });
+            let checked = (|| -> std::result::Result<(), Box<dyn std::error::Error>> {
+                registration_latch(peer, 110)?;
+                if worker.is_finished() || owner.snapshot().phase != Phase::Registering {
+                    return Err("registration not held".into());
+                }
+                println!("radio-registration-held\tPASS");
+                owner
+                    .stop(&registration.key)
+                    .map_err(|e| format!("stop: {e:?}"))?;
+                if owner.snapshot().phase != Phase::Failed(ReceiverFailure::Cancelled)
+                    || owner.snapshot().response.is_some()
+                    || worker.is_finished()
+                {
+                    return Err("cancel did not revoke state while register stayed held".into());
+                }
+                println!("radio-registration-held-cancel\tPASS");
+                Ok(())
+            })();
+            // Release even when an assertion fails, then join outside the owner gate.
+            let release = registration_latch(peer, 109);
+            let result = worker.join().map_err(|_| "registration thread panicked")?;
+            checked?;
+            release?;
+            let id = result?;
+            if id != 42
+                || owner.activate(&registration.key, id)
+                    != Err(OwnerError::Failed(ReceiverFailure::Cancelled))
+                || owner.snapshot().response.is_some()
+            {
+                return Err("late successful registration restored cancelled state".into());
+            }
+            println!("radio-registration-late-success-rejected\tPASS");
+            Ok(())
+        },
+    )
 }

@@ -147,3 +147,23 @@ raw-response publication boundary. It does not establish worker supervision,
 absolute deadlines, durable operation outcomes, notification delivery, native IMS
 or physical phone behavior. These remain required in the
 [owner plan](native-radio-owner.md).
+
+## Held registration cancellation
+
+The `cancel-during-registration` native scenario runs the actual Rust transport
+and owner against a separate synthetic Binder peer. Test-only transactions 110
+and 109 acknowledge a held registration and release it. The native caller stops
+the owner before release, checks failed state and an unfinished registration
+thread, then joins the returned call and rejects its successful ID 42. Both
+barriers have bounded synthetic waits; the outer emulator harness also bounds
+execution. No sleep establishes the ordering.
+
+The first run failed with `UnknownTransaction` before the peer controls existed.
+After adding those controls, all four scenario markers and the existing owner,
+registration-death and ordinary IPC scenarios passed with SELinux enforcing.
+See [source/binary evidence](evidence/held-registration-provenance.json).
+
+This qualifies the existing cancellation/publication gate through a synchronous
+Binder call. It does not implement the production worker, prove permanent-hang
+recovery, cancel vendor registration, or establish cleanup/re-registration safety.
+The added Java code is only the independent test peer.

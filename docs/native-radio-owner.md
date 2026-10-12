@@ -8,6 +8,11 @@ and it does not decode phone/IMS state. `prepare_until` bounds receive waiting
 only; it is not an event-age, registration or publication deadline. The remaining
 design below is unfinished.
 
+A [held-registration Binder test](evidence/held-registration-provenance.json)
+also proves that local stop remains usable while a synthetic registration is
+held, and rejects activation after that call eventually returns success. The
+scoped thread is test infrastructure, not the missing production worker.
+
 The [execution record](evidence/radio-owner-provenance.json) separates the tested
 publication boundary from the rest of the target architecture.
 
