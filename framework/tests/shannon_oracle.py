@@ -41,4 +41,7 @@ Path('artifacts/ims-native-audit/original-binder-output.txt').write_text(output)
 rows=[line for line in output.splitlines() if line.startswith('binderRaw\t')]
 assert rows==['binderRaw\t'+str(i)+'\tPASS' for i in range(5)],output
 assert 'binderRejected\tPASS' in output,output
-print('Original Shannon Binder proxy executed: 5 payload cases and rejected transaction',flush=True)
+rows=[line for line in output.splitlines() if line.startswith('binderSegment\t')]
+assert rows==['binderSegment\t'+str(i)+'\tPASS' for i in range(5)],output
+assert 'binderSegmentRejected\tPASS' in output,output
+print('Original Shannon Binder proxies executed: 10 payload cases and 2 rejected transactions',flush=True)

@@ -17,9 +17,11 @@ public final class BinderOracle {
         final int[] expected;
         final byte[] payload;
         final boolean accepted;
+        final int[] tail;
         int calls;
 
-        Capture(int[] expected, byte[] payload, boolean accepted) {
+        Capture(int[] expected, byte[] payload, boolean accepted, int... tail) {
+            this.tail = tail;
             this.expected = expected;
             this.payload = payload;
             this.accepted = accepted;
@@ -27,12 +29,13 @@ public final class BinderOracle {
 
         @Override protected boolean onTransact(int code, Parcel data, Parcel reply, int flags) {
             calls++;
-            require(code == 2, "raw transaction code");
+            require(code == (tail.length == 0 ? 2 : 3), "transaction code");
             require(flags == IBinder.FLAG_ONEWAY, "one-way flag");
             require(reply == null, "no reply parcel");
             data.enforceInterface(DESCRIPTOR);
             for (int value : expected) require(data.readInt() == value, "integer order/value");
             require(Arrays.equals(data.createByteArray(), payload), "byte-array nullness/content");
+            for (int value : tail) require(data.readInt() == value, "segment metadata order/value");
             require(data.dataAvail() == 0, "no trailing parcel fields");
             return accepted;
         }
@@ -47,7 +50,11 @@ public final class BinderOracle {
         Object proxy = asInterface.invoke(null, capture);
         require(proxy.getClass().getName().equals(DESCRIPTOR + "$Stub$Proxy"), "original proxy selected");
         int[] fields = capture.expected;
-        method.invoke(proxy, fields[0], fields[1], fields[2], fields[3], capture.payload);
+        if (capture.tail.length == 0) {
+            method.invoke(proxy, fields[0], fields[1], fields[2], fields[3], capture.payload);
+        } else {
+            method.invoke(proxy, fields[0], fields[1], fields[2], fields[3], capture.payload, capture.tail[0], capture.tail[1]);
+        }
     }
 
     public static void main(String[] args) throws Exception {
@@ -77,6 +84,25 @@ public final class BinderOracle {
             require(rejected.calls == 1, "rejected request is not retried");
         }
         System.out.println("binderRejected\tPASS");
+        Method segmented = type.getMethod("sendRequestRawSegment", int.class, int.class,
+            int.class, int.class, byte[].class, int.class, int.class);
+        int[][] tails = {{0, 2049}, {1, 4096}, {-1, 0},
+            {Integer.MIN_VALUE, Integer.MAX_VALUE}, {2, 4353}};
+        for (int i = 0; i < payloads.length; i++) {
+            Capture capture = new Capture(fields[i], payloads[i], true, tails[i]);
+            invoke(segmented, asInterface, capture);
+            require(capture.calls == 1, "one transaction per segment");
+            System.out.println("binderSegment\t" + i + "\tPASS");
+        }
+        Capture segmentRejected = new Capture(fields[0], payloads[0], false, tails[0]);
+        try {
+            invoke(segmented, asInterface, segmentRejected);
+            throw new AssertionError("rejected segment must throw");
+        } catch (InvocationTargetException exception) {
+            require(exception.getCause() instanceof RemoteException, "segment rejection is RemoteException");
+            require(segmentRejected.calls == 1, "rejected segment is not retried");
+        }
+        System.out.println("binderSegmentRejected\tPASS");
         System.exit(0);
     }
 }

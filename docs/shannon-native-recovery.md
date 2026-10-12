@@ -144,3 +144,28 @@ segmentation, cross-process behavior, modem responses or carrier registration.
 No native Rust transport is claimed. The next transport boundary requires
 recovering callbacks and segmented requests, then testing a Rust client through
 an actual cross-process Binder endpoint before involving vendor hardware.
+
+### Segmented proxy and caller boundary
+
+The same oracle now exercises the original `sendRequestRawSegment` proxy.
+It uses one-way transaction 3: interface token, four integer fields, byte array,
+then two integer fields. Five capture cases include null/empty arrays and signed
+boundary values for the two trailing fields; another case checks RemoteException
+on a rejected transaction without retry. These are proxy serialization checks,
+not validation that these inputs are valid radio requests.
+
+REA and DEX inspection of `OemRIL.sendMultiFrame` identify the first four fields
+as request serial, client ID, request ID and instance ID. The trailing fields
+are the zero-based segment index and the complete payload length. This field
+meaning is static caller evidence, separate from the executed proxy checks.
+
+**Open boundary finding:** `sendMultiFrame` only enters its loop for payloads
+larger than 2,048 bytes. It computes the last segment length using remaining
+bytes AND 2,047. The DEX has this literal mask at code-unit offset `0x0048`
+(method code offset `0x19426c`), consistent with REA. For a 4,096-byte input,
+this implies a 2,048-byte first segment followed by an empty segment, leaving
+2,048 bytes unsent by this method. This is a static finding, not a reproduced
+runtime defect or proof of a reachable carrier failure. Before implementing
+Rust segmentation, execute this original method with controlled collaborators
+and inspect its dispatch caller to determine reachable lengths. Do not silently
+copy the mask into a native implementation or assume a fix is protocol-safe.

@@ -37,7 +37,7 @@ Dashed connections are work still required, not working hardware paths. “Rust 
 | Area | Evidence and scope | Still missing |
 |---|---|---|
 | Native IMS codecs | 207 cases match outputs from the original Shannon APK: 45 scalar writes and 162 payload encodings for two request classes. [Tests](native-ims/tests) · [provenance](docs/evidence/codec-provenance.json) | Transport, state machine, valid state/RAT semantics, registration and carrier operation |
-| Original radio proxy | Five payload cases and one rejected transaction through the original `sendRequestRaw` proxy into an in-process Binder capture endpoint. [Provenance](docs/evidence/binder-provenance.json) | Rust Binder client, cross-process transport, vendor service and modem behavior |
+| Original radio proxy | Ten payload cases and two rejected transactions through the original raw and segmented request proxies into an in-process Binder capture endpoint. [Provenance](docs/evidence/binder-provenance.json) | Rust Binder client, cross-process transport, vendor service and modem behavior |
 | Native desktop | Arch ARM VM, Hyprland, virtual touch, installed app lifecycle and live theme tests. [Report](docs/native-virtual-graphics.md) | Physical display/input, full phone shell and device boot |
 | Android reference bridge | Enrollment, permissions, callbacks and call controls tested against Android Telecom in an emulator. [Report](docs/android-framework-tests.md) | These tests do not prove native IMS or real voice calls |
 | Graphics compatibility | Stock Pixel EGL/GLES libraries load through libhybris; initialization reaches the missing-GPU boundary. [Audit](docs/hardware-boundary-decision.md) | Successful Pixel EGL initialization, dma-buf allocation/import, fences and scanout |
