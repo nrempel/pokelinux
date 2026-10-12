@@ -1,0 +1,49 @@
+{
+  "scope": "Explicit local callback cancellation and independent-process malformed indication failure",
+  "sources_sha256": {
+    "native-radio/src/receiver.rs": "3755bfce1c19c90a4d4443443ac7942c7d12259a4931028c220ecd27c6759d7d",
+    "native-radio/src/bin/radio-ipc-test.rs": "ce3b2d1b89d7fdd79d718dea88e758eeac5c0d3c9fceb3c4f6b5ea06f56b61b6",
+    "framework/radiopeer/Peer.java": "95118c1ad2d148373d72dd431ebdc00f567c57fe5eed6b348368d43c636b5c97",
+    "framework/tests/radio_ipc.py": "71465d9e5c053366e2fdf985aa97ad69900915b1ed6dd0efdab63f23a891ba4b"
+  },
+  "binary_sha256": "1899b27bba0b1fe099d487800bee13121ebc7c8c0db975608995b57086cc71d6",
+  "peer_apk_sha256": "9246abc003ed7b48fc51ed6ff0926e9d95f1286eec6638abf3c1d40b5a9b6d91",
+  "output_sha256": "fd8be72aae4fc336ae59248902bbe22ea4d8e22eb54a649eb7e187ca18283291",
+  "output": [
+    "radio-bootstrap\tPASS",
+    "radio-registration\tPASS",
+    "radio-indications\tPASS",
+    "radio-assembly\tPASS",
+    "radio-roundtrip\t0\tPASS",
+    "radio-roundtrip\t2048\tPASS",
+    "radio-roundtrip\t2049\tPASS",
+    "radio-roundtrip\t4096\tPASS",
+    "radio-callback-overflow\tPASS",
+    "radio-peer\t2434\t10234\tu:r:untrusted_app:s0:c234,c256,c512,c768",
+    "radio-clear-observed\tPASS",
+    "radio-malformed-wakeup\tPASS",
+    "radio-owner-cancel\tPASS"
+  ],
+  "verified": [
+    "Four callback lifecycle component tests pass on Linux musl and ARM64 GNU/QEMU",
+    "Cancellation idempotence and first-failure preservation",
+    "Fresh callbacks register with reused synthetic ID 42; old QueueFull remains separate",
+    "Peer sends delayed indication missing required array; native wait returns MalformedCallback",
+    "Explicit local cancellation ends a waiting thread with Cancelled",
+    "Existing registration, request round trips, assembly, overflow and observed first clear remain passing"
+  ],
+  "red_before_green": "Lifecycle component failed to compile before cancellation API; new IPC trigger failed UnknownTransaction against previous peer, then passed after peer extension",
+  "selinux_enforcing": true,
+  "not_verified": [
+    "Real vendor registration or resynchronization",
+    "Service death, late callbacks, epochs and reconnect",
+    "Production owner, deadlines, aggregate budgets, pending requests and atomic publication",
+    "Remote transaction cancellation or observed second clear",
+    "Physical phone behavior"
+  ],
+  "phone_accessed": false,
+  "reproduce": [
+    "bash tools/build-native-radio.sh build",
+    "bash tools/framework-suite.sh radio-ipc"
+  ]
+}

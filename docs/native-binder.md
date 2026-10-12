@@ -308,6 +308,23 @@ terminal wakeup, publisher loss and buffered-event rejection. The wait deadline
 bounds blocking only; it does not establish event freshness, suspend-aware expiry
 or atomic publication against later invalidation. Those remain session-owner work.
 
+Each callback pair now exposes a cloneable `CallbackControl`. Explicit `cancel()`
+invalidates both endpoints and closes the shared sender, waking a local waiter.
+It preserves the first terminal failure and cannot reset the stream. Dropping one
+control clone does not cancel the others. This cancels local callback consumption;
+it does not cancel an in-flight remote Binder transaction, clear a vendor
+registration, or settle pending phone operations. Those require the session owner.
+
+The updated real-Binder test observes clear, registers fresh endpoints with the
+same synthetic client ID, drains initial events, then asks the independent peer
+to submit a delayed malformed indication. The required byte array is absent.
+The blocking native inbox returns `MalformedCallback`; its response endpoint
+also fails, while the old pair retains `QueueFull`. A separate local waiter exits
+with `Cancelled` after explicit control cancellation. [Provenance](evidence/callback-cancel-provenance.json).
+The peer trigger is test-only, and a one-way submit is not remote acknowledgement.
+This proves local state separation and remote parser failure delivery, not service
+death recovery, stale-fragment isolation or a vendor flush guarantee.
+
 The old provenance above records the earlier request/response milestone. The
 [indication report](evidence/radio-indication-provenance.json) records this extension.
 Neither establishes actual vendor service behavior or production recovery.

@@ -54,6 +54,7 @@ public final class Peer extends Instrumentation {
                 require("pokelinux-ipc-test".equals(data.readString()), "client name");
                 data.enforceNoDataAvail();
                 // Nested synchronous metadata call before registration returns.
+                cleared = false;
                 Parcel in = Parcel.obtain(), out = Parcel.obtain();
                 try {
                     in.writeInterfaceToken(RADIO + "Res");
@@ -94,6 +95,25 @@ public final class Peer extends Instrumentation {
                 require(callFlags == 0 && indication != null && !cleared, "burst state/flags");
                 data.enforceNoDataAvail();
                 for (int i = 0; i < 5; i++) indicate(99, new byte[]{1}, -1, 0);
+                reply.writeNoException(); return true;
+            }
+            if (code == 106) { // Test-only delayed malformed callback from this process.
+                require(callFlags == 0 && indication != null && !cleared, "malformed trigger state/flags");
+                data.enforceNoDataAvail();
+                final IBinder target = indication;
+                new Thread(new Runnable() { @Override public void run() {
+                    try {
+                        Thread.sleep(100);
+                        Parcel input = Parcel.obtain();
+                        try {
+                            input.writeInterfaceToken(RADIO + "Ind");
+                            input.writeInt(99); input.writeInt(0);
+                            // Required byte array deliberately absent.
+                            require(target.transact(1, input, null, IBinder.FLAG_ONEWAY), "malformed submission");
+                        } finally { input.recycle(); }
+                    } catch (InterruptedException error) { Thread.currentThread().interrupt(); }
+                    catch (RemoteException error) { throw new IllegalStateException(error); }
+                } }, "malformed-callback-test").start();
                 reply.writeNoException(); return true;
             }
             if (code == 100) { // Test-only observation, never called by production transport.

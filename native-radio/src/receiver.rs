@@ -28,6 +28,7 @@ pub enum ReceiverFailure {
     ConsumerGone = 3,
     InternalFailure = 4,
     PublisherGone = 5,
+    Cancelled = 6,
 }
 fn failure(state: &AtomicU8) -> Option<ReceiverFailure> {
     match state.load(Ordering::Acquire) {
@@ -36,6 +37,7 @@ fn failure(state: &AtomicU8) -> Option<ReceiverFailure> {
         2 => Some(ReceiverFailure::QueueFull),
         3 => Some(ReceiverFailure::ConsumerGone),
         5 => Some(ReceiverFailure::PublisherGone),
+        6 => Some(ReceiverFailure::Cancelled),
         _ => Some(ReceiverFailure::InternalFailure),
     }
 }
@@ -213,6 +215,16 @@ pub struct RadioCallbacks {
     pub response: Binder<RadioResponseReceiver>,
     pub indication: Binder<RadioIndicationReceiver>,
     pub events: CallbackInbox,
+    pub control: CallbackControl,
+}
+/// Local cancellation only: this does not cancel an in-flight remote Binder call.
+/// The owner must cancel explicitly; dropping one clone does not cancel others.
+#[derive(Clone)]
+pub struct CallbackControl(Arc<CallbackQueue>);
+impl CallbackControl {
+    pub fn cancel(&self) {
+        self.0.fail(ReceiverFailure::Cancelled);
+    }
 }
 /// One bounded stream for one registration. On terminal failure the owner must
 /// fail that session and create fresh endpoints; neither endpoint can reset it.
@@ -224,6 +236,7 @@ pub fn new_radio_callbacks(capacity: NonZeroUsize) -> RadioCallbacks {
         failure: failure.clone(),
     });
     RadioCallbacks {
+        control: CallbackControl(shared.clone()),
         response: Binder::new_with_stability(
             RadioResponseReceiver(shared.clone()),
             Stability::Vintf,
@@ -250,6 +263,25 @@ mod wait_tests {
             }),
             CallbackInbox { receiver, failure },
         )
+    }
+    #[test]
+    fn cancellation_is_terminal_and_preserves_an_earlier_failure() {
+        let (queue, inbox) = stream();
+        let control = CallbackControl(queue.clone());
+        control.cancel();
+        control.cancel();
+        assert!(matches!(
+            inbox.recv_until(Instant::now() + Duration::from_secs(30)),
+            Err(ReceiverFailure::Cancelled)
+        ));
+        assert_eq!(queue.failure(), Some(ReceiverFailure::Cancelled));
+        let (queue, inbox) = stream();
+        queue.fail(ReceiverFailure::MalformedCallback);
+        CallbackControl(queue).cancel();
+        assert!(matches!(
+            inbox.recv_until(Instant::now()),
+            Err(ReceiverFailure::MalformedCallback)
+        ));
     }
     #[test]
     fn idle_wait_expires_without_invalidating_stream() {

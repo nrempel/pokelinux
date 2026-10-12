@@ -71,8 +71,11 @@ operation failure and reconnect are still required. The overflow test polls the
 endpoint failure state; it does not prove a production owner wakes correctly.
 The separate blocking inbox wait now passes component wakeup tests and normal
 real-Binder delivery. See [evidence](evidence/callback-wait-provenance.json).
-Next: explicit owner cancellation, remote malformed-callback wakeup, service death
-and epoch replacement, then deadline/aggregate-budget integration.
+Explicit callback cancellation and remote malformed-indication wakeup now pass
+[the extended test](evidence/callback-cancel-provenance.json). Fresh endpoint state
+is separate even when the synthetic peer reuses ID 42. Next: service death and
+late-callback epoch replacement, then deadline/aggregate-budget integration and
+pending-operation resolution. These primitives are not yet a complete owner.
 
 ## Independent review
 

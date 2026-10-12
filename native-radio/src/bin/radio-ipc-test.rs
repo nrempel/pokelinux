@@ -279,5 +279,60 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
         }
         std::thread::sleep(Duration::from_millis(5));
     }
+    // New endpoints after observed teardown; a reused ID does not reuse local state.
+    let fresh = new_radio_callbacks(NonZeroUsize::new(4).unwrap());
+    let fresh_id = transport.register(
+        &fresh.response.as_binder(),
+        &fresh.indication.as_binder(),
+        "pokelinux-ipc-test",
+    )?;
+    if fresh_id != 42 {
+        return Err("replacement ID mismatch".into());
+    }
+    for _ in 0..4 {
+        callback(&fresh.events)?;
+    }
+    let remote = peer.as_remote().ok_or("peer is local")?;
+    let data = remote.prepare_transact(true)?;
+    let mut reply = remote
+        .submit_transact(106, &data, 0)?
+        .ok_or("missing malformed-trigger reply")?;
+    let status: Status = reply.read()?;
+    if !status.is_ok() {
+        return Err(status.into());
+    }
+    if reply.data_avail() != 0 {
+        return Err("extra malformed-trigger reply fields".into());
+    }
+    if !matches!(
+        fresh
+            .events
+            .recv_until(Instant::now() + Duration::from_secs(5)),
+        Err(ReceiverFailure::MalformedCallback)
+    ) {
+        return Err("remote malformed callback did not wake failure wait".into());
+    }
+    if fresh.response.failure() != Some(ReceiverFailure::MalformedCallback)
+        || callbacks.response.failure() != Some(ReceiverFailure::QueueFull)
+    {
+        return Err("replacement callback state not isolated".into());
+    }
+    println!("radio-malformed-wakeup\tPASS");
+    let local = new_radio_callbacks(NonZeroUsize::new(1).unwrap());
+    let control = local.control.clone();
+    let waiter = std::thread::spawn(move || {
+        local
+            .events
+            .recv_until(Instant::now() + Duration::from_secs(5))
+    });
+    control.cancel();
+    if !matches!(
+        waiter.join().map_err(|_| "waiter panicked")?,
+        Err(ReceiverFailure::Cancelled)
+    ) {
+        return Err("owner cancellation did not wake wait".into());
+    }
+    println!("radio-owner-cancel\tPASS");
+    transport.clear(fresh_id)?;
     Ok(())
 }
