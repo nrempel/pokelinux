@@ -1,8 +1,15 @@
 # Native radio session owner
 
-Status: design accepted for implementation, not a working session owner. The
-existing transport, callbacks and single-candidate assembly are tested
-primitives. This design supplies their missing lifetime and publication authority.
+Status: the registration/publication authority is implemented in
+`native-radio/src/owner.rs` and tested through real Binder on Harbour. It owns a
+private callback inbox and the latest raw vendor response observation. It does
+not yet own a transport worker, death watch, operation receipts or lifetime timers,
+and it does not decode phone/IMS state. `prepare_until` bounds receive waiting
+only; it is not an event-age, registration or publication deadline. The remaining
+design below is unfinished.
+
+The [execution record](evidence/radio-owner-provenance.json) separates the tested
+publication boundary from the rest of the target architecture.
 
 ## One authority
 
@@ -12,10 +19,14 @@ revision and authoritative state. Keep parsing, assembly, allocation, Binder cal
 and resource destruction outside that mutex. Do not expose arbitrary closures
 that run under the lock.
 
-Each attempt has an owner incarnation plus a checked attempt counter. Every
-callback endpoint permanently captures its attempt identity. Numeric vendor
-registration IDs and response serials are not session identities. Raw callback
-consumption becomes private to the owner.
+The current in-process `SessionKey` is an opaque allocation identity held by an
+`Arc`; prepared work also captures the exact owner allocation. Keys cannot be
+recreated by another owner or a later attempt. Every callback endpoint permanently
+captures its attempt identity. Numeric vendor registration IDs and response
+serials are not session identities. Raw callback consumption is private to the
+owner. A future cross-process observer/supervisor protocol must additionally
+carry an owner incarnation and attempt identity; local pointer identity is not a
+wire format and does not establish restart fencing.
 
 A prepared result contains its originating attempt, applicable deadline, operation
 or candidate identity and any base revision on which it depends. A fixed internal
@@ -29,7 +40,27 @@ replacement, then updates authoritative state and revision before unlocking.
 - Old endpoint failure cannot invalidate a replacement or advance its revision.
 - Never drop the death watch under this lock: its destructor cancels and unlinks.
 
-Observers receive coalesced revision hints and read current snapshots. Hints must
+Current callers read point-in-time snapshots under the gate. A snapshot contains
+a raw response, not a successful operation receipt or call model. Publication of
+indications and segmented responses is rejected. This does not discard those
+protocols from scope: semantic decoding and sound instance attribution remain
+required before they can change phone state.
+
+The callback sender has a storage mutex always taken after the publication gate;
+there is no reverse lock path. All state validity decisions use the shared gate.
+Poison recovery fails the current callback stream and closes its sender; a
+poisoned owner cannot start another attempt. Failed revision reservations preserve
+the current session. Live transitions retain room for terminal invalidation.
+
+A prepared event retains its queue until dropped so old consumed work counts
+against the retained-generation limit even if all endpoint wrappers are gone.
+The owner itself retains a control. Publisher disappearance therefore means loss
+of **all** strong queue owners, including controls, not merely endpoint-wrapper
+drop. Stop, explicit cancellation and the retained service-death watch provide
+lifecycle invalidation. Snapshot clones are historical caller-owned values; the
+current generation cap is not a proof of total process-memory bounds.
+
+A future watch API must send coalesced revision hints and read current snapshots. Hints must
 not carry deferred mutations that can restore old state. A snapshot is a
 point-in-time observation, not proof the session remains valid when the UI renders
 it. Version the watch operation so waiter registration cannot lose a change.
@@ -129,8 +160,24 @@ completed in Chat mode at Pro power 5/5, marker
 `PRO-BRIDGE-20261012-owner-c842`, zero context rounds. The completed response had
 Copy/Regenerate controls with Stop absent. It is advisory, not execution evidence.
 
-Source inspection confirms that callback validity currently has only before/after
-receive checks, `register` is synchronous without a cancellation API, and the
-existing runtime phone observer decodes Android Telecom snapshots. Therefore raw
-radio data must not be presented as native call state. The owner and native IMS
-semantic decoder must be integrated before replacing that reference input.
+The low-level transport qualification factory still exposes before/after receive
+checks; the new owner additionally fences final publication. `register` remains
+synchronous without a cancellation API, and the existing runtime phone observer
+decodes Android Telecom snapshots. Therefore raw radio data must not be presented
+as native call state. Worker ownership and the native IMS semantic decoder must
+be integrated before replacing that reference input.
+
+The owner error paths keep lock guards local and prepared values as function
+parameters; the guards therefore leave scope before the prepared-value destructor
+reacquires the gate. This follows the independently checked
+[Rust drop-scope rules](https://doc.rust-lang.org/reference/destructors.html#scopes-of-function-parameters)
+and is also exercised by failed publication and wrong-owner tests.
+
+A focused [implementation review](https://chatgpt.com/c/6acd2a5b-1b24-83e8-8e49-d7edc95e19cb)
+completed at Pro power 5/5 with one context round, marker
+`PRO-BRIDGE-20261012-owner-diff-a8d1`. Copy/Regenerate controls were present and
+Stop was absent. The review found no remaining concrete ownership or concurrency
+defect in the supplied excerpts. Revision exhaustion, poisoned-gate propagation
+and retained prepared work were checked with failing tests before their fixes.
+This review covers raw-response publication only; it does not establish native
+IMS, call state or physical-device behavior.

@@ -83,8 +83,9 @@ pending-operation resolution. These primitives are not yet a complete owner.
 Late delivery to a still-live failed old endpoint now passes the
 [replacement test](evidence/late-callback-provenance.json), using identical serials
 and distinct payloads on old/new callbacks. This proves endpoint/queue separation.
-The next owner gate must fence already-consumed events and assembly/publication
-work against replacement; it must not treat this test as proof of that race.
+That endpoint test alone does not fence already-consumed events. The raw-response
+owner scenario below now covers consumed-event publication; assembly lifetime and
+native phone-state integration remain separate gates.
 
 The harness also has a `death-during-registration` scenario. It arms the watch
 before submitting registration; the peer exits after validating the request and
@@ -128,4 +129,21 @@ owner teardown only; it does not fence events already taken from the inbox.
 
 The [session-owner design](native-radio-owner.md) records the accepted publication
 and recovery boundary, the completed independent review, and deterministic gates
-for implementation. It is a plan, not additional runtime qualification.
+for implementation. The publication portion is now exercised below; worker,
+deadline and semantic phone-state integration remain unfinished.
+
+## Native publication owner integration
+
+The `session-owner` IPC scenario uses the actual `RadioOwner`, endpoints and
+transport. It verifies pre-activation refusal, publication of the initial raw
+response, cancellation after a response has been consumed, replacement after
+consumption with recycled vendor ID 42, old-endpoint rejection, and withdrawal on
+stop. The original low-level IPC suite remains an independent transport test.
+
+[The owner evidence](evidence/radio-owner-provenance.json) also covers failed
+transition preservation, poison propagation, wrong-owner and stale-preparation
+cleanup, overflow withdrawal and retained prepared work. This is an in-process
+raw-response publication boundary. It does not establish worker supervision,
+absolute deadlines, durable operation outcomes, notification delivery, native IMS
+or physical phone behavior. These remain required in the
+[owner plan](native-radio-owner.md).

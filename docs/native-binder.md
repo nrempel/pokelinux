@@ -363,3 +363,14 @@ The old provenance above records the earlier request/response milestone. The
 [indication report](evidence/radio-indication-provenance.json) records this extension.
 Neither establishes actual vendor service behavior or production recovery.
 [Remaining integration gates](native-radio-integration.md).
+
+## Native owner publication boundary
+
+A new `session-owner` scenario runs the native `RadioOwner` against the independent
+Java Binder peer. Events consumed before cancellation or replacement cannot update
+the owner's current raw-response snapshot. Registration IDs are deliberately reused,
+and late callbacks to a failed old endpoint cannot invalidate the replacement.
+Linux and ARM64/QEMU tests cover additional ownership and failure cases. See
+[the execution record](evidence/radio-owner-provenance.json) and
+[remaining owner work](native-radio-owner.md). This is not native call/IMS state,
+worker recovery, or physical hardware qualification.

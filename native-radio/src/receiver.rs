@@ -2,6 +2,7 @@
 //! its owner must fail the associated session rather than continue after loss.
 use crate::{
     indication::{RadioIndication, decode_indication_arguments},
+    owner::{Gate, Phase, SessionKey, Shared},
     response::{RadioResponse, decode_response_arguments},
     transport::INDICATION_DESCRIPTOR,
 };
@@ -46,7 +47,9 @@ fn failure(state: &AtomicU8) -> Option<ReceiverFailure> {
     }
 }
 
-struct CallbackQueue {
+pub(crate) struct CallbackQueue {
+    shared: Arc<Shared>,
+    key: SessionKey,
     sender: Mutex<Option<SyncSender<RadioEvent>>>,
     failure: Arc<AtomicU8>,
 }
@@ -108,7 +111,11 @@ impl CallbackQueue {
     pub fn failure(&self) -> Option<ReceiverFailure> {
         failure(&self.failure)
     }
-    fn fail(&self, reason: ReceiverFailure) {
+    pub(crate) fn fail(&self, reason: ReceiverFailure) {
+        let mut gate = self.shared.lock();
+        self.fail_locked(&mut gate, reason);
+    }
+    pub(crate) fn fail_locked(&self, gate: &mut Gate, reason: ReceiverFailure) {
         let mut sender = self
             .sender
             .lock()
@@ -116,21 +123,36 @@ impl CallbackQueue {
         self.failure
             .compare_exchange(0, reason as u8, Ordering::AcqRel, Ordering::Acquire)
             .ok();
+        gate.invalidate(&self.key, self.failure().unwrap_or(reason));
         sender.take();
     }
-    fn deliver(&self, event: RadioEvent) -> Result<()> {
+    pub(crate) fn deliver(&self, event: RadioEvent) -> Result<()> {
+        let mut gate = self.shared.lock();
+        if self.failure().is_some()
+            || !gate.is_current(&self.key)
+            || matches!(gate.phase, Phase::Failed(_))
+        {
+            return Err(StatusCode::FailedTransaction);
+        }
         let mut sender = match self.sender.lock() {
             Ok(sender) => sender,
             Err(poison) => {
                 self.failure
-                    .store(ReceiverFailure::InternalFailure as u8, Ordering::Release);
+                    .compare_exchange(
+                        0,
+                        ReceiverFailure::InternalFailure as u8,
+                        Ordering::AcqRel,
+                        Ordering::Acquire,
+                    )
+                    .ok();
+                gate.invalidate(
+                    &self.key,
+                    self.failure().unwrap_or(ReceiverFailure::InternalFailure),
+                );
                 poison.into_inner().take();
                 return Err(StatusCode::FailedTransaction);
             }
         };
-        if self.failure().is_some() {
-            return Err(StatusCode::FailedTransaction);
-        }
         let Some(active) = sender.as_ref() else {
             return Err(StatusCode::DeadObject);
         };
@@ -141,7 +163,10 @@ impl CallbackQueue {
                     TrySendError::Full(_) => ReceiverFailure::QueueFull,
                     TrySendError::Disconnected(_) => ReceiverFailure::ConsumerGone,
                 };
-                self.failure.store(reason as u8, Ordering::Release);
+                self.failure
+                    .compare_exchange(0, reason as u8, Ordering::AcqRel, Ordering::Acquire)
+                    .ok();
+                gate.invalidate(&self.key, self.failure().unwrap_or(reason));
                 sender.take();
                 Err(StatusCode::FailedTransaction)
             }
@@ -236,6 +261,15 @@ pub struct RadioCallbacks {
 #[derive(Clone)]
 pub struct CallbackControl(Arc<CallbackQueue>);
 impl CallbackControl {
+    pub(crate) fn queue(&self) -> Arc<CallbackQueue> {
+        self.0.clone()
+    }
+    pub(crate) fn from_queue(queue: Arc<CallbackQueue>) -> Self {
+        Self(queue)
+    }
+    pub(crate) fn fail_locked(&self, gate: &mut Gate, reason: ReceiverFailure) {
+        self.0.fail_locked(gate, reason);
+    }
     pub(crate) fn fail(&self, reason: ReceiverFailure) {
         self.0.fail(reason);
     }
@@ -243,29 +277,67 @@ impl CallbackControl {
         self.0.fail(ReceiverFailure::Cancelled);
     }
 }
-/// One bounded stream for one registration. On terminal failure the owner must
-/// fail that session and create fresh endpoints; neither endpoint can reset it.
+/// Low-level stream for transport/oracle qualification. It does not guard raw
+/// consumer publication. Production observations use `owner::RadioOwner`, which
+/// retains the inbox and supplies the activation/publication boundary.
+/// Neither endpoint can reset a failed stream.
 pub fn new_radio_callbacks(capacity: NonZeroUsize) -> RadioCallbacks {
+    let shared = Arc::new(Shared::default());
+    let key = SessionKey::new();
+    {
+        let mut gate = shared.lock();
+        gate.current = Some(key.clone());
+        gate.phase = Phase::Active { client_id: 0 };
+    }
+    let (queue, events) = stream(shared, key, capacity);
+    let endpoints = endpoints(queue);
+    RadioCallbacks {
+        response: endpoints.response,
+        indication: endpoints.indication,
+        control: endpoints.control,
+        events,
+    }
+}
+pub struct RadioEndpoints {
+    pub response: Binder<RadioResponseReceiver>,
+    pub indication: Binder<RadioIndicationReceiver>,
+    pub control: CallbackControl,
+}
+pub(crate) fn endpoints(queue: Arc<CallbackQueue>) -> RadioEndpoints {
+    RadioEndpoints {
+        control: CallbackControl(queue.clone()),
+        response: Binder::new_with_stability(
+            RadioResponseReceiver(queue.clone()),
+            Stability::Vintf,
+        ),
+        indication: Binder::new_with_stability(RadioIndicationReceiver(queue), Stability::Vintf),
+    }
+}
+pub(crate) fn stream(
+    shared: Arc<Shared>,
+    key: SessionKey,
+    capacity: NonZeroUsize,
+) -> (Arc<CallbackQueue>, CallbackInbox) {
     let (sender, receiver) = mpsc::sync_channel(capacity.get());
     let failure = Arc::new(AtomicU8::new(0));
-    let shared = Arc::new(CallbackQueue {
+    let queue = Arc::new(CallbackQueue {
+        shared,
+        key,
         sender: Mutex::new(Some(sender)),
         failure: failure.clone(),
     });
-    let queue = Arc::downgrade(&shared);
-    RadioCallbacks {
-        control: CallbackControl(shared.clone()),
-        response: Binder::new_with_stability(
-            RadioResponseReceiver(shared.clone()),
-            Stability::Vintf,
-        ),
-        indication: Binder::new_with_stability(RadioIndicationReceiver(shared), Stability::Vintf),
-        events: CallbackInbox {
-            queue,
-            receiver,
-            failure,
-        },
+    {
+        let mut gate = queue.shared.lock();
+        if gate.is_current(&queue.key) {
+            gate.queue = Arc::downgrade(&queue);
+        }
     }
+    let inbox = CallbackInbox {
+        queue: Arc::downgrade(&queue),
+        receiver,
+        failure,
+    };
+    (queue, inbox)
 }
 
 #[cfg(test)]
@@ -276,18 +348,14 @@ mod wait_tests {
         time::{Duration, Instant},
     };
     fn stream() -> (Arc<CallbackQueue>, CallbackInbox) {
-        let (sender, receiver) = mpsc::sync_channel(1);
-        let failure = Arc::new(AtomicU8::new(0));
-        let queue = Arc::new(CallbackQueue {
-            sender: Mutex::new(Some(sender)),
-            failure: failure.clone(),
-        });
-        let inbox = CallbackInbox {
-            queue: Arc::downgrade(&queue),
-            receiver,
-            failure,
-        };
-        (queue, inbox)
+        let shared = Arc::new(Shared::default());
+        let key = SessionKey::new();
+        {
+            let mut gate = shared.lock();
+            gate.current = Some(key.clone());
+            gate.phase = Phase::Active { client_id: 0 };
+        }
+        super::stream(shared, key, NonZeroUsize::new(1).unwrap())
     }
     #[test]
     fn dropping_owner_inbox_immediately_invalidates_endpoints() {

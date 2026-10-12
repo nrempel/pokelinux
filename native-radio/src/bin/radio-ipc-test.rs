@@ -102,8 +102,9 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     if code != 51 {
         return Err("unqualified framework transaction ID".into());
     }
-    let die_register = match std::env::args().nth(2).as_deref() {
-        None => false,
+    let scenario = std::env::args().nth(2);
+    let die_register = match scenario.as_deref() {
+        None | Some("session-owner") => false,
         Some("death-during-registration") => true,
         _ => return Err("unknown test scenario".into()),
     };
@@ -142,6 +143,9 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     peer.ping_binder()?;
     println!("radio-bootstrap\tPASS");
     let transport = RadioTransport::from_binder(peer.clone())?;
+    if scenario.as_deref() == Some("session-owner") {
+        return owner_ipc(&transport, &peer);
+    }
     let callbacks = new_radio_callbacks(NonZeroUsize::new(4).unwrap());
     let inbox = &callbacks.events;
     if die_register {
@@ -438,5 +442,175 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
         return Err("already-dead service watch did not fail closed".into());
     }
     println!("radio-already-dead\tPASS");
+    Ok(())
+}
+
+fn owner_next(
+    owner: &mut pokelinux_radio::owner::RadioOwner,
+) -> std::result::Result<pokelinux_radio::owner::PreparedEvent, Box<dyn std::error::Error>> {
+    owner
+        .prepare_until(Instant::now() + Duration::from_secs(5))
+        .map_err(|e| format!("owner receive: {e:?}"))?
+        .ok_or_else(|| "owner response timeout".into())
+}
+fn owner_initial(
+    owner: &mut pokelinux_radio::owner::RadioOwner,
+) -> std::result::Result<(), Box<dyn std::error::Error>> {
+    let mut responses = 0;
+    for _ in 0..4 {
+        let event = owner_next(owner)?;
+        if matches!(event.event(), RadioEvent::Response(_)) {
+            owner
+                .publish(event)
+                .map_err(|e| format!("owner publish: {e:?}"))?;
+            responses += 1;
+        }
+    }
+    if responses != 1
+        || owner
+            .snapshot()
+            .response
+            .as_ref()
+            .map(|r| r.payload.as_slice())
+            != Some(&[7][..])
+    {
+        return Err("owner initial response mismatch".into());
+    }
+    Ok(())
+}
+fn owner_clear(
+    transport: &RadioTransport,
+    peer: &SIBinder,
+    id: i32,
+) -> std::result::Result<(), Box<dyn std::error::Error>> {
+    transport.clear(id)?;
+    let end = Instant::now() + Duration::from_secs(5);
+    while report(peer)?.2 != 1 {
+        if Instant::now() >= end {
+            return Err("owner clear timeout".into());
+        }
+        std::thread::sleep(Duration::from_millis(5));
+    }
+    Ok(())
+}
+fn owner_ipc(
+    transport: &RadioTransport,
+    peer: &SIBinder,
+) -> std::result::Result<(), Box<dyn std::error::Error>> {
+    use pokelinux_radio::owner::{OwnerError, Phase, RadioOwner};
+    let mut owner = RadioOwner::new(NonZeroUsize::new(4).unwrap());
+    let first = owner
+        .begin(None, NonZeroUsize::new(4).unwrap())
+        .map_err(|e| format!("owner begin: {e:?}"))?;
+    let _first_watch = transport.watch_death(first.endpoints.control.clone())?;
+    let id = transport.register(
+        &first.endpoints.response.as_binder(),
+        &first.endpoints.indication.as_binder(),
+        "pokelinux-ipc-test",
+    )?;
+    if !matches!(
+        owner.prepare_until(Instant::now()),
+        Err(OwnerError::NotActive)
+    ) {
+        return Err("callback published before activation".into());
+    }
+    owner
+        .activate(&first.key, id)
+        .map_err(|e| format!("owner activate: {e:?}"))?;
+    owner_initial(&mut owner)?;
+    println!("radio-owner-activation\tPASS");
+    transport
+        .send(9000, id, 137, 0, &[9, 8])
+        .map_err(|e| format!("owner send: {e:?}"))?;
+    let prepared = owner_next(&mut owner)?;
+    if !matches!(prepared.event(), RadioEvent::Response(r) if r.info.serial == 9000 && r.payload == [9, 8])
+    {
+        return Err("owner consumed response mismatch".into());
+    }
+    first.endpoints.control.cancel();
+    if owner.publish(prepared) != Err(OwnerError::Failed(ReceiverFailure::Cancelled))
+        || owner.snapshot().response.is_some()
+    {
+        return Err("consumed event survived cancellation".into());
+    }
+    println!("radio-owner-consumed-cancel\tPASS");
+    owner_clear(transport, peer, id)?;
+    let second = owner
+        .begin(Some(&first.key), NonZeroUsize::new(4).unwrap())
+        .map_err(|e| format!("owner replace: {e:?}"))?;
+    let _second_watch = transport.watch_death(second.endpoints.control.clone())?;
+    let id = transport.register(
+        &second.endpoints.response.as_binder(),
+        &second.endpoints.indication.as_binder(),
+        "pokelinux-ipc-test",
+    )?;
+    owner
+        .activate(&second.key, id)
+        .map_err(|e| format!("owner activate: {e:?}"))?;
+    owner_initial(&mut owner)?;
+    transport
+        .send(9001, id, 137, 0, &[5])
+        .map_err(|e| format!("owner send: {e:?}"))?;
+    let stale = owner_next(&mut owner)?;
+    if !matches!(stale.event(), RadioEvent::Response(r) if r.info.serial == 9001 && r.payload == [5])
+    {
+        return Err("owner stale response mismatch".into());
+    }
+    owner_clear(transport, peer, id)?;
+    let third = owner
+        .begin(Some(&second.key), NonZeroUsize::new(4).unwrap())
+        .map_err(|e| format!("owner replace: {e:?}"))?;
+    let _third_watch = transport.watch_death(third.endpoints.control.clone())?;
+    let id = transport.register(
+        &third.endpoints.response.as_binder(),
+        &third.endpoints.indication.as_binder(),
+        "pokelinux-ipc-test",
+    )?;
+    if id != 42 {
+        return Err("owner recycled registration id mismatch".into());
+    }
+    owner
+        .activate(&third.key, id)
+        .map_err(|e| format!("owner activate: {e:?}"))?;
+    if owner.publish(stale) != Err(OwnerError::StaleSession) {
+        return Err("consumed event survived replacement".into());
+    }
+    owner_initial(&mut owner)?;
+    println!("radio-owner-consumed-replacement\tPASS");
+    let remote = peer.as_remote().ok_or("owner peer is local")?;
+    let data = remote.prepare_transact(true)?;
+    let mut reply = remote
+        .submit_transact(108, &data, 0)?
+        .ok_or("owner late reply absent")?;
+    let status: Status = reply.read()?;
+    if !status.is_ok() {
+        return Err(status.into());
+    }
+    let rejection = reply.read::<String>()?;
+    if !rejection.starts_with("android.os.") || reply.data_avail() != 0 {
+        return Err("owner late callback evidence mismatch".into());
+    }
+    let fresh = owner_next(&mut owner)?;
+    if !matches!(fresh.event(), RadioEvent::Response(r) if r.info.serial == 777 && r.payload == [7])
+    {
+        return Err("owner fresh callback mismatch".into());
+    }
+    owner
+        .publish(fresh)
+        .map_err(|e| format!("owner fresh publish: {e:?}"))?;
+    if owner.snapshot().phase != (Phase::Active { client_id: 42 }) {
+        return Err("old endpoint invalidated replacement".into());
+    }
+    println!("radio-owner-late-endpoint\tPASS");
+    owner
+        .stop(&third.key)
+        .map_err(|e| format!("owner stop: {e:?}"))?;
+    if owner.snapshot().response.is_some()
+        || owner.snapshot().phase != Phase::Failed(ReceiverFailure::Cancelled)
+    {
+        return Err("owner stop retained current response".into());
+    }
+    owner_clear(transport, peer, id)?;
+    println!("radio-owner-stop\tPASS");
     Ok(())
 }

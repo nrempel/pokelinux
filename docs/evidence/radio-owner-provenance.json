@@ -1,0 +1,90 @@
+{
+  "scope": "Native in-process raw-response publication owner; no decoded phone state",
+  "sources_sha256": {
+    "native-radio/src/owner.rs": "a3870869d0145151967be85dd31690a5ce1b250bab6139f02eb84eea7a2c6281",
+    "native-radio/src/receiver.rs": "59be8e5c6d4c6d5363860381c38633059493ef7eddd50b848c81a836b00803c9",
+    "native-radio/src/lib.rs": "15c2e74a16358acf8343b92916e4baccd6f2764f1bee2ea0e49f5ebd97331ecc",
+    "native-radio/src/bin/radio-ipc-test.rs": "5e98f5f143927f4776e1a94f772c9fd36fc399ec7b7049a9c6686baeb3724829",
+    "framework/tests/radio_ipc.py": "1c7b36bbbca3e47e7aa9c1a8fb61b99ebf9a37f5103d4b1ccb65e16d11838ac6"
+  },
+  "binary_sha256": "c4ae92476b8ca0b32818f58e536978f73f98d258808c9cf1a39e4f3b5fbef000",
+  "peer_apk_sha256": "239b3129bce8c10595dc26edd6357c41ed881597c4ef02a1de44911e15bfffdf",
+  "image": "google/sdk_gphone64_x86_64/emu64xa:17/CE2A.260420.019/15611780:userdebug/dev-keys",
+  "component_tests": {
+    "per_target": 28,
+    "owner_tests_per_target": 12,
+    "targets": [
+      "x86_64-unknown-linux-musl",
+      "aarch64-unknown-linux-gnu under QEMU user emulation"
+    ]
+  },
+  "binder_dispatch_tests": 6,
+  "owner_output": [
+    "radio-bootstrap\tPASS",
+    "radio-owner-activation\tPASS",
+    "radio-owner-consumed-cancel\tPASS",
+    "radio-owner-consumed-replacement\tPASS",
+    "radio-owner-late-endpoint\tPASS",
+    "radio-owner-stop\tPASS"
+  ],
+  "ordinary_ipc_output": [
+    "radio-bootstrap\tPASS",
+    "radio-registration\tPASS",
+    "radio-indications\tPASS",
+    "radio-assembly\tPASS",
+    "radio-roundtrip\t0\tPASS",
+    "radio-roundtrip\t2048\tPASS",
+    "radio-roundtrip\t2049\tPASS",
+    "radio-roundtrip\t4096\tPASS",
+    "radio-callback-overflow\tPASS",
+    "radio-peer\t2721\t10234\tu:r:untrusted_app:s0:c234,c256,c512,c768",
+    "radio-clear-observed\tPASS",
+    "radio-late-callback\tandroid.os.DeadObjectException\tPASS",
+    "radio-malformed-wakeup\tPASS",
+    "radio-owner-cancel\tPASS",
+    "radio-service-death\tPASS",
+    "radio-already-dead\tPASS"
+  ],
+  "registration_death_output": [
+    "radio-bootstrap\tPASS",
+    "radio-registration-death\tDeadObject\tPASS"
+  ],
+  "red_green_cases": [
+    "Revision exhaustion test failed before transition reservation fix",
+    "Poisoned gate test failed before callback sender invalidation fix",
+    "Retained prepared-work test failed before prepared-event queue retention fix"
+  ],
+  "logs_sha256": {
+    "owner-build.log": "0ecc65ade08e00b21eff8e90e8ea9aedc6fcf5f78373e729298fbc7cc2a29530",
+    "owner-kernel.log": "20b6432d77fe255cc29e7cf36f5d6bee19a99a92ea8beb141befc1e58e842fdf",
+    "owner-ipc.log": "22331aa0895394bac9bda0d38a93b286d713a227f0a69784ad89bd658e4af3b3",
+    "owner-failure-red.log": "7d56d93f0333d91bce2d42f37b9cc43ebe41b21f405a16ff37b7b441c4f44ba0",
+    "owner-retained-red.log": "f662b2bf10170d2a175c4960db1944755c6ed0744bff1784a8eda8c631382cf1"
+  },
+  "verified": [
+    "Registration callbacks cannot publish before activation",
+    "Consumed response rejected after cancellation or replacement",
+    "Commit before failure is visible then withdrawn by failure",
+    "Old endpoint cannot invalidate replacement with reused vendor registration ID",
+    "Foreign owner and stale preparation drops preserve current reservation",
+    "Overflow withdraws raw-response state and rejects already-consumed work",
+    "Failed revision reservation preserves active response and sender",
+    "Poison recovery invalidates callbacks and prevents reusing that owner",
+    "Retained queue generation limit includes old prepared events",
+    "Unsupported segmented response publication rejected; preparation slot released"
+  ],
+  "not_verified": [
+    "Owned registration/transport worker or hung-call supervision",
+    "Absolute registration, operation or fragment lifetime deadlines",
+    "Versioned notification/watch delivery or cross-process restart fencing",
+    "Aggregate payload/process memory budget or decoded native IMS/call state",
+    "Request outcomes, native modem behavior, producer message identity or physical hardware"
+  ],
+  "selinux_enforcing": true,
+  "phone_accessed": false,
+  "reproduce": [
+    "bash tools/build-native-radio.sh build",
+    "bash tools/framework-suite.sh binder-kernel",
+    "bash tools/framework-suite.sh radio-ipc"
+  ]
+}
