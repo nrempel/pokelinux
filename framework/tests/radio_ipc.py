@@ -41,6 +41,13 @@ Path('artifacts/native-radio/ipc-image.txt').write_text(run('shell', 'getprop', 
 run('push', str(binary), root + '/radio-ipc-test')
 run('shell', 'chmod', '755', root + '/radio-ipc-test')
 try:
+    output = run('shell', root + '/radio-ipc-test', '51', 'death-during-registration')
+    Path('artifacts/native-radio/registration-death-output.txt').write_text(output)
+    assert output.splitlines() == ['radio-bootstrap\tPASS', 'radio-registration-death\tDeadObject\tPASS'], output
+    assert run('shell', 'getenforce').strip() == 'Enforcing'
+    print(output, flush=True)
+    run('shell', 'am', 'force-stop', 'org.pokelinux.radiopeer')
+    # A fresh client process and peer exercise ordinary setup after the death case.
     output = run('shell', root + '/radio-ipc-test', '51')
     Path('artifacts/native-radio/ipc-output.txt').write_text(output)
     lines = output.splitlines()

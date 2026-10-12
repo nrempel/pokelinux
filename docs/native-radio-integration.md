@@ -75,9 +75,18 @@ Explicit callback cancellation and remote malformed-indication wakeup now pass
 [the extended test](evidence/callback-cancel-provenance.json). Fresh endpoint state
 is separate even when the synthetic peer reuses ID 42. Service death after
 registration, watch-drop invalidation and already-dead link failure now pass
-[real Binder tests](evidence/radio-death-provenance.json). Next: death during
-registration, restart/reconnect and late-callback epoch replacement, then deadline/aggregate-budget integration and
+[real Binder tests](evidence/radio-death-provenance.json). Death during registration also passes
+[the extended scenario](evidence/registration-death-provenance.json). Next:
+restart/reconnect and late-callback epoch replacement, then deadline/aggregate-budget integration and
 pending-operation resolution. These primitives are not yet a complete owner.
+
+The harness also has a `death-during-registration` scenario. It arms the watch
+before submitting registration; the peer exits after validating the request and
+before writing a reply. Acceptance requires both transaction `DeadObject` and
+callback-stream `ServiceDied`, without assuming their delivery order. The harness
+then force-stops its own package and runs the ordinary suite in fresh client and
+peer processes. This is process-level test recovery, not in-process reconnect or
+cancellation of an indefinitely hung synchronous call.
 
 ## Independent review
 

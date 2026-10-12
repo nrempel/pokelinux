@@ -102,6 +102,11 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     if code != 51 {
         return Err("unqualified framework transaction ID".into());
     }
+    let die_register = match std::env::args().nth(2).as_deref() {
+        None => false,
+        Some("death-during-registration") => true,
+        _ => return Err("unknown test scenario".into()),
+    };
     ProcessState::init("/dev/binder", 2)?;
     ProcessState::start_thread_pool();
     let activity = hub::try_get_service("activity")?.ok_or("activity absent")?;
@@ -139,6 +144,27 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     let transport = RadioTransport::from_binder(peer.clone())?;
     let callbacks = new_radio_callbacks(NonZeroUsize::new(4).unwrap());
     let inbox = &callbacks.events;
+    if die_register {
+        let _watch = transport.watch_death(callbacks.control.clone())?;
+        let error = transport
+            .register(
+                &callbacks.response.as_binder(),
+                &callbacks.indication.as_binder(),
+                "pokelinux-die-register-test",
+            )
+            .expect_err("peer unexpectedly returned a registration ID");
+        if error.transaction_error() != StatusCode::DeadObject {
+            return Err(format!("unexpected registration failure: {error:?}").into());
+        }
+        if !matches!(
+            inbox.recv_until(Instant::now() + Duration::from_secs(5)),
+            Err(ReceiverFailure::ServiceDied)
+        ) {
+            return Err("registration death did not invalidate callbacks".into());
+        }
+        println!("radio-registration-death\tDeadObject\tPASS");
+        return Ok(());
+    }
     let id = transport.register(
         &callbacks.response.as_binder(),
         &callbacks.indication.as_binder(),

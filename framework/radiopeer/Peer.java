@@ -51,8 +51,14 @@ public final class Peer extends Instrumentation {
                 require(response != null && indication != null && response != indication, "distinct callbacks");
                 require((RADIO + "Res").equals(response.getInterfaceDescriptor()), "response descriptor");
                 require((RADIO + "Ind").equals(indication.getInterfaceDescriptor()), "indication descriptor");
-                require("pokelinux-ipc-test".equals(data.readString()), "client name");
+                String client = data.readString();
                 data.enforceNoDataAvail();
+                if ("pokelinux-die-register-test".equals(client)) {
+                    // Deliberately exit this test process before writing a sync reply.
+                    android.os.Process.killProcess(android.os.Process.myPid());
+                    return true;
+                }
+                require("pokelinux-ipc-test".equals(client), "client name");
                 // Nested synchronous metadata call before registration returns.
                 cleared = false;
                 Parcel in = Parcel.obtain(), out = Parcel.obtain();

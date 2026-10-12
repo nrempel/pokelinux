@@ -1,0 +1,59 @@
+{
+  "scope": "Actual synthetic peer death inside synchronous registration, followed by fresh-process normal suite",
+  "sources_sha256": {
+    "native-radio/src/bin/radio-ipc-test.rs": "c239192338d2064ef8d66513a129a79430bdc0df888e424d31f02be56b9bbfc1",
+    "framework/radiopeer/Peer.java": "672cd4009d55c2f672a47392355f7daa6f0bd720b50256714bae4ae20a45d2cd",
+    "framework/tests/radio_ipc.py": "1afd998c67e545839261034a46cee6bd516209b195534a78a859668ab317be93"
+  },
+  "binary_sha256": "482683a9842d8cedd2528a91d6b0ff68edf50b79d0b7ed7ca5d0e53951fe0810",
+  "peer_apk_sha256": "de688be5c7fdbc8a31c544e1bdea5d3d50f4e2bd8f9962d7d848ef133a4a56f9",
+  "outputs": {
+    "registration-death-output.txt": {
+      "sha256": "9d840e0e058553250ffae89f712d96496e75eebc70a0641869b6f610add6b2f8",
+      "lines": [
+        "radio-bootstrap\tPASS",
+        "radio-registration-death\tDeadObject\tPASS"
+      ]
+    },
+    "ipc-output.txt": {
+      "sha256": "17fdc1172fd5d45d9682cac7cc0e668a05b4810ca6a231b6a1ee0313d20b5258",
+      "lines": [
+        "radio-bootstrap\tPASS",
+        "radio-registration\tPASS",
+        "radio-indications\tPASS",
+        "radio-assembly\tPASS",
+        "radio-roundtrip\t0\tPASS",
+        "radio-roundtrip\t2048\tPASS",
+        "radio-roundtrip\t2049\tPASS",
+        "radio-roundtrip\t4096\tPASS",
+        "radio-callback-overflow\tPASS",
+        "radio-peer\t2720\t10234\tu:r:untrusted_app:s0:c234,c256,c512,c768",
+        "radio-clear-observed\tPASS",
+        "radio-malformed-wakeup\tPASS",
+        "radio-owner-cancel\tPASS",
+        "radio-service-death\tPASS",
+        "radio-already-dead\tPASS"
+      ]
+    }
+  },
+  "verified": [
+    "Watch armed before registration",
+    "Peer exits before writing synchronous registration reply",
+    "Registration error transaction code is DeadObject",
+    "Shared callback stream reports ServiceDied",
+    "Ordinary full IPC suite passes afterward using fresh client and peer processes"
+  ],
+  "red_before_green": "Prior peer rejected the test client name with IllegalArgument; acceptance test required DeadObject and failed until peer exit mode was added",
+  "selinux_enforcing": true,
+  "not_verified": [
+    "In-process automatic reconnect and late callback epochs",
+    "Cancellation or isolation of a hung synchronous registration",
+    "Pending-operation outcomes and publication ordering",
+    "Actual vendor modem, carrier or phone behavior"
+  ],
+  "phone_accessed": false,
+  "reproduce": [
+    "bash tools/build-native-radio.sh build",
+    "bash tools/framework-suite.sh radio-ipc"
+  ]
+}

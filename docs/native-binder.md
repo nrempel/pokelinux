@@ -338,8 +338,11 @@ successful registration followed by actual peer-process exit, and rejection of
 a watch on the already-dead Binder proxy. The active stream returns `ServiceDied`
 without a concurrent outgoing call. The dead-proxy link returns `DeadObject` and
 also invalidates its fresh stream. [Execution identities](evidence/radio-death-provenance.json).
-Other monitoring-link errors, death during registration, restart/reconnect and
-late callbacks remain separate tests. These results do not establish modem reset.
+Death during registration now also passes: the synchronous call returns
+`DeadObject` and the pre-armed callback stream reports `ServiceDied`. The normal
+suite passes afterward in fresh processes. [Evidence](evidence/registration-death-provenance.json).
+Other monitoring-link errors, in-process restart/reconnect and late callbacks
+remain separate tests. These results do not establish modem reset.
 
 The old provenance above records the earlier request/response milestone. The
 [indication report](evidence/radio-indication-provenance.json) records this extension.
