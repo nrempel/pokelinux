@@ -1,6 +1,6 @@
 {
   "target": "x86_64-unknown-linux-musl",
-  "scope": "Read-only cross-process kernel Binder service lookup and ping in owned Android emulator",
+  "scope": "Cross-process kernel Binder lookup, ping, one-way Android-to-Rust callback and transferred-handle use in owned emulator",
   "selinux_enforcing": true,
   "real_binder_driver": true,
   "dynamic_elf_interpreter": false,
@@ -8,17 +8,22 @@
   "vendor_radio_verified": false,
   "phone_accessed": false,
   "rsbinder_version": "0.12.0",
-  "binary_sha256": "c3c44a9d46cb5dc6c3ed73760647d10d736cd0e704939772585ed2aea2ec9d55",
+  "binary_sha256": "3f91139df59f0a520db2b28fea7b73ac854bd8d5d52846933a3bb080f36e1fdb",
   "sources_sha256": {
-    "native-radio/src/main.rs": "c5acee1b3bc0ee17935d5bcb91709da88b34a1d9d64d27ac953bc5e14b76afca",
+    "native-radio/src/main.rs": "c27968c70082183e2ed629b462b7d245b3fab8c3d4d0e225fc8555d8dedebe29",
     "native-radio/Cargo.toml": "9e7f40f8b77d69ea53c3c38e86a96dd96e2f4d50734388a50a04047fea869af5",
     "native-radio/Cargo.lock": "80f465b77df03235a0967030cf78f821037a0e1521ab998b1094a7143b64cda2",
-    "framework/tests/binder_kernel.py": "923ed377ad28c6dd2a52bc15c60aca37b4638361af34695a11a00be84d62e8c8",
+    "framework/tests/binder_kernel.py": "98458b3c2d983ce4fe3ee900f49ba9c3bbda4c52fd98faf58b9ecb5c617c019b",
     "tools/build-native-radio.sh": "2fed60f9dabcd7f71ea2e50ac00008af3fcfa0fa807aa099a2f6bae8ac990eda",
     "tools/framework-suite.sh": "fbe15d0cf2deee329f72e0a0b3a1ec862c6f2ed21761f519f4d9aebb6b6192fe",
     "build-support/Dockerfile.native-radio": "398c3a673c0f31134c8c1ecaadbf89b24e824ace7cb68ba1f702061beff20f9f"
   },
   "output": [
-    "kernel-binder\tandroid.os.IServiceManager\tandroid.app.IActivityManager\tPASS"
-  ]
+    "kernel-binder\tandroid.os.IServiceManager\tandroid.app.IActivityManager\tPASS",
+    "kernel-callback\tactivity\tandroid.app.IActivityManager\tPASS"
+  ],
+  "oneway_callback_verified": true,
+  "unregister_acknowledged": true,
+  "callback_after_unsubscribe_absence_verified": false,
+  "binder_death_verified": false
 }

@@ -12,10 +12,13 @@ implementation provides kernel Binder on Linux. The client does not enable its
 socket RPC transport or link AOSP libbinder. Upstream source is Apache-2.0;
 transitive dependencies retain their own licenses.
 
-`native-radio` currently contains a read-only qualification binary. It opens
+`native-radio` currently contains a kernel IPC qualification binary. It opens
 `/dev/binder`, checks the context manager descriptor, pings it, looks up the
 existing `activity` service, checks its descriptor and pings that remote object.
-It sends no radio commands, registers no services and changes no service state.
+It also subscribes to activity-service registration notifications, receives a
+one-way callback into its own Rust Binder object, checks the transferred service
+handle and pings it. It then unregisters its notification subscription. It sends
+no radio commands and registers no service.
 
 The initial run and the final locked offline rebuild both passed with SELinux
 enforcing. [Source and binary provenance](evidence/kernel-binder-provenance.json)
@@ -58,3 +61,17 @@ Results are written under ignored `artifacts/native-radio/`.
 The existing Android framework bridge remains reference test infrastructure.
 This qualification does not alter the goal of native phone services or establish
 a complete production radio transport.
+
+## Callback verification
+
+The callback check first failed against the old binary, which only reported the
+lookup/ping result. After implementation, the static Linux client received the
+Android service-manager callback, verified the name and remote interface, used
+the transferred Binder handle, and received successful unregistration status.
+The locked offline build and clippy checks passed.
+
+A bounded one-entry channel keeps the callback handler from blocking a Binder
+worker. The probe waits up to five seconds for receipt and attempts unregistration
+even after a timeout. The success path is executed; timeout cleanup, callbacks
+already in flight after unregistration, service death, and production shutdown
+have not yet been qualified. This is not a vendor radio callback test.

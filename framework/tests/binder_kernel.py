@@ -23,6 +23,6 @@ try:
 except subprocess.CalledProcessError as error:
  print(error.output,flush=True)
  raise
-assert output.splitlines()==['kernel-binder\tandroid.os.IServiceManager\tandroid.app.IActivityManager\tPASS'],output
+assert output.splitlines()==['kernel-binder\tandroid.os.IServiceManager\tandroid.app.IActivityManager\tPASS', 'kernel-callback\tactivity\tandroid.app.IActivityManager\tPASS'],output
 Path('artifacts/native-radio/kernel-binder-output.txt').write_text(output)
 print('Static Linux Rust client: real Binder driver, service lookup and remote ping passed',flush=True)

@@ -224,3 +224,27 @@ This is a native request planner, not a Binder transport. It does not implement
 service discovery, callback handling, request correlation, retries or vendor
 acceptance. Those must be verified through the production transport before any
 claim of working native radio communication.
+
+## Vendor callback contract: static recovery
+
+REA inspection of the original generated interface establishes these next
+transport contracts. They are static findings, not executed vendor callbacks:
+
+- `setResponseFunctions` uses synchronous transaction 5. Its parcel contains
+  the interface token, response Binder reference, indication Binder reference,
+  and client-name string. It reads the remote exception header and then an int.
+  The int's application meaning still needs caller tracing and runtime checks.
+- Response callback transaction 1 reads a typed RadioExternalResponseInfo and
+  a byte array. Transaction 2 adds two integer fields after that array. The
+  original stub enforces no trailing data before invoking the implementation.
+- RadioExternalResponseInfo writes a size-prefixed parcelable containing five
+  ints in order: slotId, serial, rilcMsgId, length, error. The prefix includes
+  itself in the byte count. Nullability, shortened parcelables, response length
+  semantics and error values require further tests; names alone do not define
+  a safe production parser.
+
+The original proxy and stub analysis is retained privately in
+`artifacts/ims-native-audit/rea-register-callbacks.json`,
+`rea-response-on-transact.json` and `rea-response-info-write.json`.
+The native service-manager callback test in [native-binder.md](native-binder.md)
+qualifies a general Binder primitive, not these vendor-specific methods.
