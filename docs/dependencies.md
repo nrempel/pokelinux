@@ -33,3 +33,9 @@ into an empty temporary directory and verified their SHA-256 values. It also
 verified all 196 locally cached selected Omarchy files against the blob manifest.
 Four tests cover accepted downloads, rejected checksums, corrupt cache handling
 and Git blob verification. This does not claim a clean-machine full OS build.
+
+Native messaging pins CC0 `sms-pdu` 1.1.0 for GSM alphabet mapping.
+`native-messaging/Cargo.lock` pins its transitive dependencies; the crate archive
+hash and actual AOSP comparison provenance are in
+`evidence/sms-submit-provenance.json`. The private Android framework JAR is not
+distributed. Public synthetic fixtures can be compared independently of it.

@@ -54,6 +54,14 @@ them under an Arch Linux ARM guest kernel in system-QEMU, as the unprivileged
 `evidence/arm64-radio-process-provenance.json`. This closes the process-specific
 gate; ARM64 Binder, matched Pixel kernel/policy and physical hardware remain open.
 
+Native messaging now has a device-neutral SMS-SUBMIT encoder and bounded multipart
+planner. Twenty-seven byte comparisons match actual AOSP encoder execution in the
+owned SDK37 emulator, including forced UTF-16 ASCII fragments. The comparison
+found and fixed an upstream form-feed mapping omission. Five planner tests and
+x86/ARM64 user-QEMU builds pass. This does not implement send/receive, delivery,
+a messaging service or UI. See `native-messaging.md` and
+`evidence/sms-submit-provenance.json`.
+
 ## Next work
 
 1. Recover and test the actual vendor cleanup/reset and registration-overlap
@@ -86,6 +94,8 @@ affected docs each work turn when implementation or evidence changes. Run:
 
 ```sh
 bash tools/build-native-radio.sh build
+bash tools/build-native-messaging.sh build
+bash tools/framework-suite.sh sms-codec
 bash tools/framework-suite.sh binder-kernel
 bash tools/framework-suite.sh radio-ipc
 # In the prepared network-disabled graphics simulation container:

@@ -36,6 +36,7 @@ Dashed connections are work still required, not working hardware paths. “Rust 
 
 | Area | Evidence and scope | Still missing |
 |---|---|---|
+| Native SMS payloads | 27 byte comparisons with Android’s actual encoder; bounded multipart planning preserves GSM extension and Unicode pairs on Linux and ARM64 user-QEMU. [Report](docs/native-messaging.md) · [Evidence](docs/evidence/sms-submit-provenance.json) | Installed messaging service/app, durable receipts, send/receive transport, delivery, carrier and wake behavior |
 | Native IMS codecs | 207 cases match outputs from the original Shannon APK: 45 scalar writes and 162 payload encodings for two request classes. [Tests](native-ims/tests) · [provenance](docs/evidence/codec-provenance.json) | Transport, state machine, valid state/RAT semantics, registration and carrier operation |
 | Original radio proxy | Ten payload cases and two rejected transactions through the original raw and segmented request proxies into an in-process Binder capture endpoint. [Provenance](docs/evidence/binder-provenance.json) | Actual vendor service and modem behavior |
 | Original request segmentation | Five executed boundary cases reproduce missing final chunks for exact multiples of 2,048 above 2,048 bytes. [Evidence](docs/evidence/segmentation-provenance.json) | Vendor endpoint acceptance and real-world impact |

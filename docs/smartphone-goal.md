@@ -66,3 +66,11 @@ Contacts, media storage and notifications are shared facilities, not private cop
 Prioritise native replacement contracts and original-code comparison tests across phone services. Preserve the existing bridge tests as reference evidence while implementing the native target. Extend the same installed end-to-end test environment to each subsystem; do not substitute mocks for a real boundary that can be exercised offline.
 
 Track each feature as designed, built, component-tested, installed-integration-tested or hardware-verified. Existing call emulator proof does not prove SMS, camera, GPU, carrier IMS, physical audio or power behavior. The project is not complete merely because the bridge or an emulator suite passes. If all offline work is complete, report the exact remaining physical-device gates without touching the phone.
+
+## Native messaging checkpoint
+
+The SMS payload encoder and multipart planner are built and component-tested,
+with 27 byte comparisons against actual AOSP encoder execution and Linux/ARM64
+user-QEMU validation. This is a payload component, not installed messaging
+integration. Send/receive, durable receipts, delivery, native app and
+background/lock/suspend behavior remain open. See [native messaging](native-messaging.md).

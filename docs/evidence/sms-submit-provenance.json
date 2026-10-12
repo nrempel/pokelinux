@@ -1,0 +1,66 @@
+{
+  "date_utc": "2026-10-12",
+  "host": "Harbour",
+  "scope": "Device-neutral SMS-SUBMIT payloads and multipart planning; no submission or delivery",
+  "original_code_execution": {
+    "class": "com.android.internal.telephony.gsm.SmsMessage",
+    "method": "getSubmitPdu(String,String,String,boolean,byte[],int,int,int)",
+    "environment": "Owned SDK37 x86_64 Android emulator, SELinux Enforcing",
+    "fingerprint": "google/sdk_gphone64_x86_64/emu64xa:17/CE2A.260420.019/15611780:userdebug/dev-keys",
+    "framework": "/system/framework/telephony-common.jar",
+    "framework_sha256": "4c741f17ac1ba0a2c51b2d8a28c41e0061d2473ae5748c722f3ec6f2cb86932a",
+    "oracle_jar_sha256": "8b61e0b14e2b6d6adceb1de00349ad070455d44085de7df0e574bdb111d259ec",
+    "synthetic_cases": 27,
+    "radio_service_discovery": false,
+    "sms_sent": false
+  },
+  "open_source_reuse": {
+    "crate": "sms-pdu",
+    "version": "1.1.0",
+    "license": "CC0-1.0",
+    "crate_sha256": "64627d8ad91bdec4c7500ae826484a84cb1800ef0bf9a44d5641266b341db6d9",
+    "source": "https://github.com/morgverd/sms-pdu",
+    "used_for": "Default GSM alphabet character mapping; wrapper adds form-feed found missing by original-code comparison"
+  },
+  "public_sha256": {
+    "native-messaging/Cargo.lock": "0de9341e9a0ebc98293f57782715c7021d5b8082d0c6348043654322d068b54f",
+    "native-messaging/tests/fixtures/aosp-submit.tsv": "ffadac7dbee8a3db9044857ca05a969d18ff4c0f005bae5fedaa7eaad617050b",
+    "framework/shannon-oracle/SmsCodecOracle.java": "ea190141513d324f0beadf2468d189c5a6d27bb2d68c1dc7d19785e37db0ec43",
+    "native-messaging/src/lib.rs": "94952b2899ac5a9291458ec16f99e2736587c51e0c70c07db61255b9b51a740a"
+  },
+  "red_green": {
+    "initial": "Compiling native tests failed at runtime with unimplemented encoding and planning",
+    "original_comparison": "Initial mapping failed the original controls fixture because upstream omitted GSM extension form-feed",
+    "green": "27 original-code byte comparisons and five planner tests pass on x86_64 Linux and ARM64 user-mode QEMU; fmt, clippy -D warnings and release builds pass"
+  },
+  "bounds": {
+    "message_utf8_bytes": 16384,
+    "multipart_parts": 32,
+    "single_gsm_septets": 160,
+    "multipart_gsm_septets": 152,
+    "single_utf16_units": 70,
+    "multipart_utf16_units": 66,
+    "concatenation_reference_bits": 16
+  },
+  "evidence_classes": {
+    "original_code": "Actual AOSP encoder executed on x86 Android emulator; framework hash pinned",
+    "synthetic_integration": "No modem/send integration claimed",
+    "arm64_user_qemu": "Native encoder and planner tests only",
+    "arm64_system_qemu": "Not tested for messaging",
+    "physical": "None"
+  },
+  "commands": [
+    "bash tools/framework-suite.sh sms-codec",
+    "bash tools/build-native-messaging.sh build"
+  ],
+  "remaining": [
+    "Authenticated permissions and installed owner service",
+    "Durable references, conversations, drafts and send receipts",
+    "Modem/IMS send, receive and status-report contracts",
+    "Duplicate/retry/uncertain-send recovery",
+    "Native app and Omarchy theme integration",
+    "Background, lock-screen and suspend/wake behavior",
+    "MMS, SMSC and carrier dependencies",
+    "Physical Pixel and carrier validation"
+  ]
+}
