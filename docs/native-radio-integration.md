@@ -125,3 +125,7 @@ failed before implementation, then passed on Linux and ARM64/QEMU; the six
 Binder dispatch tests and full radio IPC suite also passed on Harbour. See
 [the execution record](evidence/inbox-drop-provenance.json). This closes implicit
 owner teardown only; it does not fence events already taken from the inbox.
+
+The [session-owner design](native-radio-owner.md) records the accepted publication
+and recovery boundary, the completed independent review, and deterministic gates
+for implementation. It is a plan, not additional runtime qualification.
