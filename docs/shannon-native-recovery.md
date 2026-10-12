@@ -29,7 +29,7 @@ The complete dexdump is saved privately under
 and builds a small reflection caller. It loads the original APK's DataWriter
 class and invokes writeByte(int), writeShort(int) and writeInt(int) on 15 signed
 boundary inputs each. No Shannon service is installed or started; no vendor
-radio interface is called. The APK hash and SELinux enforcing state are checked.
+radio service is contacted. The additional proxy capture test is described below. The APK hash and SELinux enforcing state are checked.
 
 The initial run exited 0 and executed all 45 reference cases. Evidence is
 `artifacts/ims-native-audit/original-codec-output.txt`. The caller supplies no
@@ -116,3 +116,31 @@ collaborators, preserving notification order, duplicate suppression, handover
 and callback failure behavior. The current serializer oracle does not cover
 these behaviors. Do not implement guessed carrier registration transitions
 from this partial call graph.
+
+## Original Binder proxy capture
+
+The `shannon-codec` suite now also runs `BinderOracle` in the owned emulator.
+REA identified `IOemSlsiRadioExternal.Stub.Proxy.sendRequestRaw` as transaction
+code 2, one-way, with an interface token, four integers in argument order and a
+byte array. Original-code execution checks these facts against a local Binder
+capture object. The oracle checks that `Stub.asInterface` actually selects the
+original generated proxy; it does not look up or contact a vendor service.
+
+Five cases cover signed integer boundaries, distinct field values, null versus
+empty byte arrays, high-bit bytes and a 257-byte sequence. The endpoint checks
+transaction code, flags, absence of a reply parcel, token, field order, payload
+and absence of trailing fields. A sixth case returns false from the endpoint;
+the original proxy throws RemoteException without retrying. All six passed on
+Harbour alongside the previous 207 serializer cases. The new harness first
+failed before the oracle class was implemented; the completed suite exited zero.
+
+[Public provenance](evidence/binder-provenance.json) records source and output
+hashes plus the small generated result transcript. Raw analysis and emulator
+logs remain in ignored `artifacts/ims-native-audit/` files.
+
+This is an **in-process capture**, not a Binder-driver or vendor-service test.
+It does not establish argument meanings, service permissions, callback lifetime,
+segmentation, cross-process behavior, modem responses or carrier registration.
+No native Rust transport is claimed. The next transport boundary requires
+recovering callbacks and segmented requests, then testing a Rust client through
+an actual cross-process Binder endpoint before involving vendor hardware.

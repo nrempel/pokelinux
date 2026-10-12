@@ -6,7 +6,11 @@ import subprocess
 import time
 ADB=['android-framework/sdk/platform-tools/adb','-s','emulator-5554']
 def adb(*args):
- return subprocess.check_output(ADB+list(args),timeout=45,text=True,stderr=subprocess.STDOUT)
+ try:
+  return subprocess.check_output(ADB+list(args),timeout=45,text=True,stderr=subprocess.STDOUT)
+ except subprocess.CalledProcessError as error:
+  print(error.output,flush=True)
+  raise
 adb('wait-for-device')
 end=time.monotonic()+180
 while adb('shell','getprop','sys.boot_completed').strip()!='1':
@@ -31,3 +35,10 @@ Path('artifacts/ims-native-audit/original-message-output.txt').write_text(output
 rows=[line.split('\t') for line in output.splitlines() if line.startswith(('RilReqStackStartReq\t','RilReqSetImsRegistrationState\t'))]
 assert len(rows)==162,(len(rows),output)
 print('Original Shannon message encoders executed: 162 reference cases',flush=True)
+
+output=adb('shell','env','CLASSPATH='+root+'/oracle.jar:'+root+'/shannon.apk','app_process','/system/bin','org.omarchy.audit.BinderOracle')
+Path('artifacts/ims-native-audit/original-binder-output.txt').write_text(output)
+rows=[line for line in output.splitlines() if line.startswith('binderRaw\t')]
+assert rows==['binderRaw\t'+str(i)+'\tPASS' for i in range(5)],output
+assert 'binderRejected\tPASS' in output,output
+print('Original Shannon Binder proxy executed: 5 payload cases and rejected transaction',flush=True)
