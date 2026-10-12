@@ -1,0 +1,195 @@
+{
+  "tag": "android-17.0.0_r1",
+  "sensors_version": 3,
+  "sensors_hash": "b051523be857524c99057b69f253a7d0bd295400",
+  "common_fmq_version": 1,
+  "common_native_handle_version": 2,
+  "files": [
+    {
+      "path": "EventFlag.cpp",
+      "url": "https://android.googlesource.com/platform/system/libfmq/+/refs/tags/android-17.0.0_r1/EventFlag.cpp?format=TEXT",
+      "sha256": "cbc48a5121732b3c698dcfc23d42cb9f043ed4e86f2f01edadf91782badaa3f7"
+    },
+    {
+      "path": "frozen-aidl/android/hardware/common/NativeHandle.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/common/aidl/aidl_api/android.hardware.common/2/android/hardware/common/NativeHandle.aidl?format=TEXT",
+      "sha256": "bda89ace51cfb22a84c6a9d6836776a459706debb2f2a4f398a768fcc5935976"
+    },
+    {
+      "path": "frozen-aidl/android/hardware/common/fmq/GrantorDescriptor.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/common/fmq/aidl/aidl_api/android.hardware.common.fmq/1/android/hardware/common/fmq/GrantorDescriptor.aidl?format=TEXT",
+      "sha256": "c145ef26b647c7a97cec2920a86ececdf27aa0d1e914e097e9ea118708b38c96"
+    },
+    {
+      "path": "frozen-aidl/android/hardware/common/fmq/MQDescriptor.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/common/fmq/aidl/aidl_api/android.hardware.common.fmq/1/android/hardware/common/fmq/MQDescriptor.aidl?format=TEXT",
+      "sha256": "2813e2c45aab90989d6f406e8eb685344faee855c63496d0960362d9262d34bd"
+    },
+    {
+      "path": "frozen-aidl/android/hardware/common/fmq/SynchronizedReadWrite.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/common/fmq/aidl/aidl_api/android.hardware.common.fmq/1/android/hardware/common/fmq/SynchronizedReadWrite.aidl?format=TEXT",
+      "sha256": "848607eacd112b661a0e5231d99ebf4a0359f71ffc68e2e8418240897203d180"
+    },
+    {
+      "path": "frozen-aidl/android/hardware/common/fmq/UnsynchronizedWrite.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/common/fmq/aidl/aidl_api/android.hardware.common.fmq/1/android/hardware/common/fmq/UnsynchronizedWrite.aidl?format=TEXT",
+      "sha256": "ccc156468a9d4186db3b5cfcde016a6a2b912a0beaf228e3a9272230bfd2d7a8"
+    },
+    {
+      "path": "frozen-aidl/android/hardware/sensors/AdditionalInfo.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/sensors/aidl/aidl_api/android.hardware.sensors/3/android/hardware/sensors/AdditionalInfo.aidl?format=TEXT",
+      "sha256": "a9e47ed3d61d6b8db90d1dae1c1a85bfe24f4ecc3ac1fa912c12123581b36e49"
+    },
+    {
+      "path": "frozen-aidl/android/hardware/sensors/DynamicSensorInfo.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/sensors/aidl/aidl_api/android.hardware.sensors/3/android/hardware/sensors/DynamicSensorInfo.aidl?format=TEXT",
+      "sha256": "64d43d92173e487311f5ddb8d90fe3abb63f35bf23ac81358209d4391e7b02fa"
+    },
+    {
+      "path": "frozen-aidl/android/hardware/sensors/Event.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/sensors/aidl/aidl_api/android.hardware.sensors/3/android/hardware/sensors/Event.aidl?format=TEXT",
+      "sha256": "3e06252e783614fb1faeb905d95f20fe7b5fb94e48cfad18f1e79b219545420f"
+    },
+    {
+      "path": "frozen-aidl/android/hardware/sensors/ISensors.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/sensors/aidl/aidl_api/android.hardware.sensors/3/android/hardware/sensors/ISensors.aidl?format=TEXT",
+      "sha256": "8ecf63b6a28bee2bb9082cc5fa0f3939836da174b629949599b37b0528492c52"
+    },
+    {
+      "path": "frozen-aidl/android/hardware/sensors/ISensorsCallback.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/sensors/aidl/aidl_api/android.hardware.sensors/3/android/hardware/sensors/ISensorsCallback.aidl?format=TEXT",
+      "sha256": "080dbc469c7ae0ed9e90a1eef1d3e0f188d423fd5341a43a292145b910cf77d2"
+    },
+    {
+      "path": "frozen-aidl/android/hardware/sensors/SensorInfo.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/sensors/aidl/aidl_api/android.hardware.sensors/3/android/hardware/sensors/SensorInfo.aidl?format=TEXT",
+      "sha256": "28f8f9a594f6ae6e4cb4ac498e366f4ab0abc11bd5d0e62e47b79c9949be9779"
+    },
+    {
+      "path": "frozen-aidl/android/hardware/sensors/SensorStatus.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/sensors/aidl/aidl_api/android.hardware.sensors/3/android/hardware/sensors/SensorStatus.aidl?format=TEXT",
+      "sha256": "90459a9fe129e679f8ab585e96cb07a6032871f090d7846568adcc6a10e1b0c1"
+    },
+    {
+      "path": "frozen-aidl/android/hardware/sensors/SensorType.aidl",
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/sensors/aidl/aidl_api/android.hardware.sensors/3/android/hardware/sensors/SensorType.aidl?format=TEXT",
+      "sha256": "2421fb5284641af91e3425782b52dd1e63d60f198f08af65c7f4a5a6f6575669"
+    },
+    {
+      "path": "include/android-base/unique_fd.h",
+      "url": "https://android.googlesource.com/platform/system/libbase/+/refs/tags/android-17.0.0_r1/include/android-base/unique_fd.h?format=TEXT",
+      "sha256": "670ee4419c5f8768121fc8dbcffa88b861e05a5a6e5adfb96dec0746e8c5db84"
+    },
+    {
+      "path": "include/cutils/ashmem.h",
+      "url": "https://android.googlesource.com/platform/system/core/+/refs/tags/android-17.0.0_r1/libcutils/include/cutils/ashmem.h?format=TEXT",
+      "sha256": "1617b960e398e20fc9a66ae482034cb67894a3b22563cf305dd020c4eb6a8b22"
+    },
+    {
+      "path": "include/cutils/native_handle.h",
+      "url": "https://android.googlesource.com/platform/system/core/+/refs/tags/android-17.0.0_r1/libcutils/include/cutils/native_handle.h?format=TEXT",
+      "sha256": "af0277ffd3756c4c1047071742c362ef1b3f036552eefad98980266fc4660e9c"
+    },
+    {
+      "path": "include/fmq/AidlMQDescriptorShim.h",
+      "url": "https://android.googlesource.com/platform/system/libfmq/+/refs/tags/android-17.0.0_r1/include/fmq/AidlMQDescriptorShim.h?format=TEXT",
+      "sha256": "e1f941dafcefde0851ca90d4d282c2b8c2b05062b2a7932bfb62c66cbe0fd725"
+    },
+    {
+      "path": "include/fmq/AidlMQDescriptorShimBase.h",
+      "url": "https://android.googlesource.com/platform/system/libfmq/+/refs/tags/android-17.0.0_r1/include/fmq/AidlMQDescriptorShimBase.h?format=TEXT",
+      "sha256": "680c7a00829d06770015709c6867a1f8fdffc2278b1493150c2d8376eaf6655c"
+    },
+    {
+      "path": "include/fmq/AidlMessageQueue.h",
+      "url": "https://android.googlesource.com/platform/system/libfmq/+/refs/tags/android-17.0.0_r1/include/fmq/AidlMessageQueue.h?format=TEXT",
+      "sha256": "7becb7b873726b0dbad8d09c9963d828bf9f073251d88ca2d46843828744199c"
+    },
+    {
+      "path": "include/fmq/AidlMessageQueueBase.h",
+      "url": "https://android.googlesource.com/platform/system/libfmq/+/refs/tags/android-17.0.0_r1/include/fmq/AidlMessageQueueBase.h?format=TEXT",
+      "sha256": "3899cb93618de77892e6e675e8b7b70bdac4111a839244b5034e0b749e3460aa"
+    },
+    {
+      "path": "include/fmq/EventFlag.h",
+      "url": "https://android.googlesource.com/platform/system/libfmq/+/refs/tags/android-17.0.0_r1/include/fmq/EventFlag.h?format=TEXT",
+      "sha256": "d04780b97e22c35a0062c028085c399a93773fd4df7dd84cd8219d34289cdad6"
+    },
+    {
+      "path": "include/fmq/MQDescriptorBase.h",
+      "url": "https://android.googlesource.com/platform/system/libfmq/+/refs/tags/android-17.0.0_r1/base/fmq/MQDescriptorBase.h?format=TEXT",
+      "sha256": "70f67c3673f52cee62211bd11461fe3879769188ee4f82710dbfcc4e2ae29e14"
+    },
+    {
+      "path": "include/fmq/MessageQueueBase.h",
+      "url": "https://android.googlesource.com/platform/system/libfmq/+/refs/tags/android-17.0.0_r1/include/fmq/MessageQueueBase.h?format=TEXT",
+      "sha256": "d998c2065413e19c8d3a130489c33a7f50eb5d32f0201b352a7df65536c1cb7c"
+    },
+    {
+      "path": "include/utils/Errors.h",
+      "url": "https://android.googlesource.com/platform/system/core/+/refs/tags/android-17.0.0_r1/libutils/binder/include/utils/Errors.h?format=TEXT",
+      "sha256": "54191a326eb111ce030555b0e6e59d2f42ca24d39034766fbeb12019a8100f6e"
+    },
+    {
+      "path": "include/utils/SystemClock.h",
+      "url": "https://android.googlesource.com/platform/system/core/+/refs/tags/android-17.0.0_r1/libutils/include/utils/SystemClock.h?format=TEXT",
+      "sha256": "eaf14a37425f6c1a5179c3188cbe245191f8cbd8fda4a3fbe322afae482d14af"
+    },
+    {
+      "path": "native_handle.cpp",
+      "url": "https://android.googlesource.com/platform/system/core/+/refs/tags/android-17.0.0_r1/libcutils/native_handle.cpp?format=TEXT",
+      "sha256": "57af5f02dad52316e24f56fa63b65c1fd9a66d19c754e300bd217f8ebb1ea708"
+    }
+  ],
+  "existing_qualified_build_inputs": [
+    {
+      "path": "android-framework/sdk/build-tools/android-37.0/aidl",
+      "sha256": "a4ad150a7cf6ea297c299cb779da7a58c537cfc07923d1e15ccbc554a30cd4ba"
+    },
+    {
+      "path": "artifacts/camera-boundary/android-ndk-r30/source.properties",
+      "sha256": "e73b7dc557cea2da9212c09ee1795434957d62e63b7550eef69fd1887a355d94"
+    },
+    {
+      "path": "artifacts/camera-boundary/android-ndk-r30/toolchains/llvm/prebuilt/linux-x86_64/bin/clang",
+      "sha256": "ad535f0b6fc303edba958b51636169ff0291c6e36463236c99ff8abcaa34247c"
+    },
+    {
+      "path": "artifacts/camera-boundary/public-headers/android/binder_api_level_utils.h",
+      "sha256": "a6e8c5357e08e06ccbaff882d7f9c324868322a653ac4af2be7c9feed3101f73"
+    },
+    {
+      "path": "artifacts/camera-boundary/public-headers/android/binder_auto_utils.h",
+      "sha256": "91a7587d9010e2bac7c6d347d78463fa15a193c025eae260c91b17e76ef9631d"
+    },
+    {
+      "path": "artifacts/camera-boundary/public-headers/android/binder_enums.h",
+      "sha256": "a4f3b34f5478d5ad820e93eabfa0d5fe82e53a71727ad6f48b5932a043060189"
+    },
+    {
+      "path": "artifacts/camera-boundary/public-headers/android/binder_interface_utils.h",
+      "sha256": "6a3437abc3edd1dbec4cc78d3e3360ee457b4bcca26776f13b0e33ad6c9ad666"
+    },
+    {
+      "path": "artifacts/camera-boundary/public-headers/android/binder_internal_logging.h",
+      "sha256": "b3dc27d60e3c75629f231f94ab24779af9faeede2c4d605401179265d6d5eea8"
+    },
+    {
+      "path": "artifacts/camera-boundary/public-headers/android/binder_parcel_utils.h",
+      "sha256": "159b2f59a84fcf988bd4dc3ced2b58b55de9f8e49681ab96722045ae61f8ec3c"
+    },
+    {
+      "path": "artifacts/camera-boundary/public-headers/android/binder_parcelable_utils.h",
+      "sha256": "9c330de3ef09843d69d54116616efb52e7f442fb3bca28dc7d22f26c8f0fb869"
+    },
+    {
+      "path": "artifacts/camera-boundary/public-headers/android/binder_to_string.h",
+      "sha256": "23eb9663863013f862ebe8cee5d1ee9ba48e89998b8795a36f0772c1f0d91048"
+    }
+  ],
+  "toolchain": {
+    "ndk_version": "30.0.16248370",
+    "official_zip_sha256": "753611f410d002cfcd3f3dc2ef49aad532089d3180b436c060a90bf0fcb64df2",
+    "sdk_aidl_sha256": "a4ad150a7cf6ea297c299cb779da7a58c537cfc07923d1e15ccbc554a30cd4ba"
+  }
+}

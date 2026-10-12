@@ -1,0 +1,12 @@
+[package]
+name="pokelinux-sensors-boundary"
+version="0.1.0"
+edition="2024"
+publish=false
+[dependencies]
+pokelinux-sensors={path="../native-sensors"}
+rsbinder={version="=0.12.0",default-features=false}
+[build-dependencies]
+rsbinder-aidl={version="=0.12.0",default-features=false}
+[lints.rust]
+unsafe_code="deny"

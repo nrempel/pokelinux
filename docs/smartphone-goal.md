@@ -98,3 +98,10 @@ both unchanged original libpower cache branches. Discovery uses a synthetic
 adapter; standard default registration and production permissions remain open.
 ARM64 Binder and real Pixel suspend/wake/thermal/charging remain unverified. See
 [native suspend](native-suspend.md) and [retained Binder boundary](native-suspend-boundary.md).
+
+Native sensor ownership is built and boundary-tested in11 actual x86 Binder and
+original FMQ/EventFlag groups. Authenticated subscriptions, reserve-before-read,
+processing-before-ACK and quarantine are qualified with synthetic Events/counts.
+Actual suspend wake acquisition, USF200ms/HAL1s obligations, native app delivery,
+restart reconciliation, calibration and ARM64/device proof remain open. See
+[native sensors](native-sensors-boundary.md).

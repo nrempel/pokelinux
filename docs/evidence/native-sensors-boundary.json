@@ -1,0 +1,160 @@
+{
+  "schema": 1,
+  "created_utc": "2026-10-12T22:35:49.280136+00:00",
+  "scope": "native Rust ownership across real frozen SensorsV3 Binder and original public libfmq/EventFlag, synthetic Event fixture only",
+  "public_inputs": {
+    "tag": "android-17.0.0_r1",
+    "sensors_version": 3,
+    "sensors_hash": "b051523be857524c99057b69f253a7d0bd295400",
+    "fmq_version": 1,
+    "native_handle_version": 2,
+    "manifest": "framework/sensorpeer/public-manifest.json",
+    "manifest_sha256": "13f48ca711fe439273b82c9ea154a3836e017d0c2af9cab57b73e69287ef8f60",
+    "upstream_source_published": false
+  },
+  "abi": {
+    "target": "x86_64-linux-android31 original NDK \u2194 x86_64-unknown-linux-musl Rust",
+    "ndk": {
+      "ndk_version": "30.0.16248370",
+      "official_zip_sha256": "753611f410d002cfcd3f3dc2ef49aad532089d3180b436c060a90bf0fcb64df2",
+      "sdk_aidl_sha256": "a4ad150a7cf6ea297c299cb779da7a58c537cfc07923d1e15ccbc554a30cd4ba"
+    },
+    "event_size": 96,
+    "event_alignment": 8,
+    "tag_size": 1,
+    "offsets": {
+      "timestamp": 0,
+      "handle": 8,
+      "type": 12,
+      "tag": 16,
+      "x": 24,
+      "y": 28,
+      "z": 32,
+      "status": 36
+    },
+    "mapping": "opaque aligned bytes, one audited Element implementation; generated Rust enums are never copied from FMQ"
+  },
+  "runtime_red": [
+    {
+      "id": "unprocessed-ack",
+      "client_exit": 101,
+      "suite_exit": 1,
+      "failure": "actual original FMQ acknowledgement reduced synthetic pending count from2 to1 before processing",
+      "snapshot_private": "artifacts/sensors-boundary/runtime/red-unprocessed-ack",
+      "initial_client_sha256": "2adcbf2b16d335a46c3592f45308a2fe622ecb3758d421c80ec01d59c7c69c3b"
+    },
+    {
+      "id": "malformed-event-ownership",
+      "client_exit": 101,
+      "suite_exit": 1,
+      "failure": "original generated malformed Event advanced queue read counter while native wake ownership stayed0; expected1",
+      "snapshot_private": "artifacts/sensors-boundary/runtime/red-malformed-event",
+      "initial_client_sha256": "04329c0e139e1709343a03e1aff757c54c5887c42620b6bc05048e9901d462c9"
+    }
+  ],
+  "prerequisite_failure": {
+    "client_exit": 1,
+    "failure": "decoder qualification expected four-byte tag; original fixed-size generated tag is one byte",
+    "counted_as_runtime_tdd_red": false,
+    "snapshot_private": "artifacts/sensors-boundary/runtime/abi-prerequisite-failure"
+  },
+  "checks": {
+    "fmt": true,
+    "clippy_warnings_denied": true,
+    "static_musl_elf_no_interpreter": true,
+    "public_hash_closure": true
+  },
+  "runtime_green": {
+    "passed": true,
+    "client_exit": 0,
+    "suite_exit": 0,
+    "groups": [
+      "sensor-frozen-ndk-abi-bootstrap",
+      "sensor-authenticated-per-client",
+      "sensor-original-one-second-wait",
+      "sensor-admitted-before-ack",
+      "sensor-exact-split-ack-accounting",
+      "sensor-bounded-queue-backpressure",
+      "sensor-revocation-publication-fence",
+      "sensor-stale-generation-fd-lifetime",
+      "sensor-malformed-event-quarantine",
+      "sensor-bounded-death-quarantine",
+      "sensor-original-eventflag-timeout"
+    ],
+    "image_fingerprint": "google/sdk_gphone64_x86_64/emu64xa:17/CE2A.260420.019/15611780:userdebug/dev-keys",
+    "selinux": "Enforcing",
+    "fixture_identity": "package:org.pokelinux.sensorpeer uid:10234",
+    "transport": "kernel Binder / real memfd mappings / original public native FMQ and EventFlag / rsbinder Rust queue",
+    "rust_client_sha256": "64b3ff714157a877e4a8cfd3876cdc8a2b01cfc5720ac02a198c0be879ad73aa",
+    "peer_apk_sha256": "00b84f80ceb7d8e3149298cf111e7a2fbfc63c526fa57545f109c98f17810866",
+    "original_ndk_peer_library_sha256": "6475d3f9010b65286132d379f12af38fa11691fd7662a6cff153d1458ff59ec6",
+    "private_output": "artifacts/sensors-boundary/runtime-output.txt",
+    "output_sha256": "81b3ad2c21a652e1f8d523652b992e5adf68cf2e4a3a7cc4913f8a0efa583cb7",
+    "fd_replacement_cycles": 32,
+    "one_second_original_eventflag_wait": true,
+    "eventflag_timeout_is_not_ack": true
+  },
+  "remaining_gates": [
+    "Actual SystemSuspend reader wake acquire-before-read, release/ack failure handoff and single authority integration",
+    "Original top-level HAL one-second timeout recovery and distinct USF200ms libpower obligation",
+    "Durable quarantine, restart reconciliation and safe record retirement",
+    "Concurrent held producer/reinitialize and deactivate-discard behavior against the original HAL implementation",
+    "Independent app death, multiple authenticated UIDs and production permission/publication authority",
+    "Rate aggregation, non-wake events, flush/one-shot, dynamic sensors, direct-channel cleanup",
+    "AOC/Suez/USF backend, calibration, axes/units/timestamps and proximity/display dependencies",
+    "ARM64 ABI/kernel, physical sensor/location and actual suspend/resume"
+  ],
+  "prohibited_access": {
+    "physical_phone": false,
+    "host_sensor": false,
+    "host_suspend": false,
+    "vendor_execution": false,
+    "proprietary_publication": false
+  },
+  "source_sha256": {
+    "native-sensors/src/lib.rs": "88a6b1a4c816268851aba2842e4dca04f8487e5dc452daece428161d635fcc1c",
+    "native-sensors-boundary/build.rs": "b223c967ce6e41a1c38c05612a8d6c00dce616e1b9ac5f6c18d7bbe0d4a8ff4a",
+    "native-sensors-boundary/src/bin/sensor-fmq-client.rs": "4b22ae964398b27f3c4fdd459d27929801ed2ed59a97608fbf6fe4c35c8df454",
+    "native-sensors-boundary/src/event_abi.rs": "e898843c37f32181bc10baf6944705d982e8fd4ea0fc84fc62d083230189af28",
+    "native-sensors-boundary/src/lib.rs": "a873aed190c616f517e4c055eaae99201f1bcb9b592dfbb80ed2635160a3994f",
+    "framework/sensorpeer/AndroidManifest.xml": "3fb07551d4c35f6c25c5df840cd6c104e80fd96237832c7b9323b01b834bb133",
+    "framework/sensorpeer/Peer.java": "fb8aff87140467da030988334f52c5b6ea9d24112d02628d2447310e6815c378",
+    "framework/sensorpeer/aidl/org/pokelinux/sensortest/ISensorBoundaryControl.aidl": "279f60f20dd48de96228f3cfca79560532161122eface1b3e148ae2f9b7d4a97",
+    "framework/sensorpeer/aidl/org/pokelinux/sensortest/ISensorClient.aidl": "657bf8cd1e9682c797a58e336099a1d410d40f20f78a99dc31d8229646b68055",
+    "framework/sensorpeer/event_abi.cpp": "ea88f87fd20bcaf805e60738de89acac515a0534a4fbb28c258fde5c73ed21cd",
+    "framework/sensorpeer/peer.cpp": "509803344e2ad003f00648195a40c650eddc8eef8a8b91661649803413d4a044",
+    "framework/sensorpeer/public-manifest.json": "13f48ca711fe439273b82c9ea154a3836e017d0c2af9cab57b73e69287ef8f60",
+    "framework/sensorpeer/support/utils/Log.h": "ebbfcabc7342df600249352e8f7a272405c32425152b42e1e160baec3bb27697",
+    "framework/sensorpeer/support.cpp": "7645711adf10a4fe5a85ecb5b76d01e83ed4c6452cb97f75854874abca58e7d7",
+    "native-sensors/Cargo.toml": "12752b03d5ea4a8b20b4f2b5dacba14ef55aa1f37e66c8a4a0cbf2aee0e0d566",
+    "native-sensors-boundary/Cargo.toml": "662d9d79d58527d4bed578cd7c3989bf095f118ed17e06d8c781a8a8184f5e08",
+    "native-sensors-boundary/Cargo.lock": "44e0191dcab87c9775c8d57bfb4a4caf5aac424e50f875828e2a7d66b4a9ecfc",
+    "tools/build-native-sensors-boundary.sh": "fb5e5ac1657d8afdad22025dde7dba666056f6b7b1edf6df2457dd026cb5c8a1",
+    "tools/build-sensor-peer.sh": "766aa215d7501ed0516c1cfcbec2c846fbdfe9c992909cd1a7acdda61b954d7b",
+    "tools/prepare-sensors-boundary.py": "800f8d38ee0d1102f31e69f161469d36deac0f213d7f21d2de9186d51025ea75",
+    "tools/sensors-boundary-suite.sh": "9852e68febd173c4371b16ea3cfa18c2ec57a430a1261159b5ceb29506979005",
+    "framework/tests/sensors_boundary.py": "3c937d6ef6ea123fd6c6a51b1106c0d896efd19ee32e57c0b767ba8720436b8f",
+    "native-sensors/Cargo.lock": "80a9522f28baf5c69643ecfd28e6f8190e320111eb07caf4a20b426f9da70669",
+    "docs/native-sensors-boundary.md": "f5b8bb3de931460e6b20a6f1c4e4206d19d273ef774cd5ee6857ba33ed5038b2"
+  },
+  "cleanup": {
+    "owned_container_id": "6e6a6d7889ed613db6bd746f9ff62120d6ac26e4116e25818a97f4112d40886c",
+    "container_name": "pokelinux-sensors-boundary-b472",
+    "container_removed": true,
+    "network_removed": true,
+    "suite_lock_released": true,
+    "client_bounded_by_timeout_seconds": 25,
+    "peer_force_stopped": true,
+    "source_reaping_is_not_wake_cleanup": true
+  },
+  "observations_not_claimed": {
+    "original_hal_wake_counter_execution": false,
+    "actual_reader_systemsuspend_wakelock": false,
+    "usf_200ms_runtime": false,
+    "original_hal_1s_cleanup": false,
+    "physical_suspend": false,
+    "physical_calibration": false,
+    "physical_location": false,
+    "arm64_abi": false
+  }
+}

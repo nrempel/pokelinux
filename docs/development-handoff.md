@@ -154,6 +154,17 @@ This remains a synthetic SOLICITED/NONE/errorCode-1 qualification, with modem
 mapping, receive identity/ACK replay, delivery and installed integration open.
 See `native-sms-transport.md` and `evidence/native-sms-binder-provenance.json`.
 
+Native sensor ownership now passes11 actual x86 SensorsV3 Binder/original FMQ
+and EventFlag groups. The fixed96-byte Event ABI is probed by original NDK code;
+Rust copies opaque aligned bytes and validates them before normalization.
+Authenticated subscriptions, reserve-before-read, processing-before-ACK, exact
+split counts, full-queue retention, revocation, stale FD generations, malformed
+Event ownership,32 FD cycles and peer-death quarantine pass after two live reds.
+The source wake counter is synthetic and there is no acquired SystemSuspend
+reader wake lock yet. USF200ms, top-level HAL1s cleanup, actual suspend integration,
+app publication/lifecycle, durable reconciliation, calibration and ARM64/device
+proof remain open; see `native-sensors-boundary.md`.
+
 ## Next work
 
 1. Recover and test the actual vendor cleanup/reset and registration-overlap
@@ -195,6 +206,8 @@ bash tools/build-native-suspend.sh arm64-process
 bash tools/build-native-suspend-boundary.sh build
 bash tools/build-native-suspend-boundary.sh arm64-check
 bash tools/suspend-boundary-suite.sh green
+bash tools/build-native-sensors-boundary.sh
+bash tools/sensors-boundary-suite.sh green
 bash tools/build-native-audio.sh build
 bash tools/build-native-connectivity.sh build
 bash tools/build-native-audio.sh integration artifacts/native-audio/NEW_RUN
