@@ -6,7 +6,7 @@ image=pokelinux-native-audio:20261012
 mkdir -p artifacts/native-audio/target sim/rust-cargo
 args=(--rm --cpus 2 --memory 2g --pids-limit 256 --cap-drop ALL --security-opt no-new-privileges
   --user "$(id -u):$(id -g)" -e CARGO_HOME=/cargo -e CARGO_TARGET_DIR=/target
-  -v "$PWD/native-audio:/workspace/native-audio" -v "$PWD/sim/rust-cargo:/cargo"
+  -v "$PWD/native-audio:/workspace/native-audio" -v "$PWD/native-power:/workspace/native-power:ro" -v "$PWD/sim/rust-cargo:/cargo"
   -v "$PWD/artifacts/native-audio/target:/target")
 case "${1:-build}" in
   prepare)

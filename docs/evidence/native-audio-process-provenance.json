@@ -1,0 +1,236 @@
+{
+  "schema": 1,
+  "recorded_utc": "2026-10-12T22:41:37.689325+00:00",
+  "host": "Harbour",
+  "scope": "native Rust audio intent authority; isolated original PipeWire1.4.2/WirePlumber0.5.8 virtual mono graph, owned backend process",
+  "production_audio_complete": false,
+  "hardware_verified": false,
+  "vendor_executed": false,
+  "historical_component_commit": "70002ae2d0ac4b1a5f6843c01e6303218d6be242",
+  "historical_provenance": "docs/evidence/native-audio-provenance.json",
+  "source_sha256": {
+    "native-audio/Cargo.toml": "96db1b8d5ff48b13d116e4dde6b2e96e569abb9ab24217c5a2d26a77743c8a5a",
+    "native-audio/Cargo.lock": "78c727f75f9346652a3cac7a64ba7572f51ec93ecc41910cb5282510e856fafc",
+    "native-audio/src/lib.rs": "61d69559374b052a1b21af22e480cfa97943d63a2dfdabd81044a7b92720af0b",
+    "native-audio/src/main.rs": "6d544b89e085eae6c493d56a2ea90ef3d07ebeac304540b47106e6e2e7456fde",
+    "native-audio/src/backend_process.rs": "6fa30b8477c4a438298a74d66fd36b01efd4ec71ffd6ae694cce30e20fe177be",
+    "native-audio/src/pipewire.rs": "295e9373b148b225655c4b80bf80c75aeb6cae0f0068893916a3963b71305d46",
+    "native-audio/tests/authority.rs": "45e5a7749423db9022532df868d40c0ffeeb2e8d707f8f42d9e9310b26dcd637",
+    "native-power/src/clock.rs": "cc32f4fe076606a46a1704cd42f6a161ae3c9a8809b1905223041b23d8eda5dd",
+    "tools/build-native-audio.sh": "b573ed4c8232707eeab3a0c32b5f879c057ab5a8e6e354e1b98c2d222f07d02f",
+    "tools/native-audio-suite.py": "5bd35707285be2ca3164704c6da073ea3b9d0a3fe6b8bae3cc32902bb8399dce",
+    "tools/native-audio-fixture.py": "50b30164b07ad66ee322949e4e61741a33f1b3c8faea436bf535e3534ee382b8",
+    "build-support/Dockerfile.native-audio": "c4ea42850a4dd6cdfabea96821763b6a0ec1ef685fdf2cb3e20b9fc95e26832b",
+    "docs/native-audio.md": "67513a22a88fd249250c6f1f98d7b3ab6e79a99d4c72c7b14ab74b782ad8b6a0"
+  },
+  "binary_sha256": {
+    "artifacts/native-audio/target/debug/pokelinux-audio": "eeacfbd3852cc6c18847dda7c88f2cb2aaf43f37ed48b09379084d13460472dd",
+    "artifacts/native-audio/target/release/pokelinux-audio": "b76683afde18a8f490823c967d172b84a3fee1389a01a6756eceeb58f8407263",
+    "artifacts/native-audio/target/aarch64-unknown-linux-gnu/release/pokelinux-audio": "8edb3d087e691ef129702364daccb4a005c2e8fd48d0eb671ef57c0365498054"
+  },
+  "image_id": "sha256:1bb0ad6850403a1362ffadc8c78d6c0f8d750ccbf5cd51bee550cd67cd64489b",
+  "component_checks": {
+    "x86_tests": 5,
+    "arm64_user_qemu_tests": 5,
+    "fmt": true,
+    "clippy_warnings_denied": true,
+    "release_built": [
+      "x86_64-unknown-linux-gnu",
+      "aarch64-unknown-linux-gnu"
+    ],
+    "private_build_log": "artifacts/native-audio/process-final-build.log"
+  },
+  "actual_daemon_boundary": {
+    "architecture": "native x86_64 Linux",
+    "result": {
+      "passed": true,
+      "scope": "isolated native Rust authority and original PipeWire/WirePlumber virtual graph",
+      "hardware_verified": false,
+      "vendor_executed": false,
+      "network": "none",
+      "uids": {
+        "audio_owner": 1000,
+        "call_owner": 1001,
+        "app": 1002
+      },
+      "stages": [
+        "original_daemons_and_virtual_nodes",
+        "real_parent_exits_before_worker_guard",
+        "application_connection_exhaustion_preserves_call_admission",
+        "application_lease_exhaustion_preserves_call_admission",
+        "status_responsive_during_actual_daemon_stall",
+        "media_link_active",
+        "kernel_peer_auth_and_private_graph_access",
+        "call_interrupts_media",
+        "owned_route_and_media_restoration",
+        "permanent_backend_stall_reaped_without_implicit_recovery",
+        "capture_revocation_unlinks_real_graph",
+        "connection_death_releases_owned_links",
+        "daemon_death_preserves_intent_and_invalidates_observation",
+        "unrelated_disconnect_does_not_reapply_uncertain_intent",
+        "explicit_reconciliation_after_daemon_restart",
+        "authority_kill_removes_capture_links"
+      ],
+      "stalled_backend_status_seconds": 0.0022831792011857033,
+      "fixture_exit": 0,
+      "owned_container_absent": true,
+      "graph_snapshots": 24
+    },
+    "cleanup": {
+      "children_reaped": {
+        "bus": 0,
+        "pipewire": 0,
+        "wireplumber": 0,
+        "authority": -9
+      },
+      "host_audio": false,
+      "host_dbus": false,
+      "hardware": false,
+      "orphan_workers_reaped": {
+        "282": -9,
+        "383": -9,
+        "407": -9,
+        "422": -9,
+        "434": -9,
+        "492": -9,
+        "495": -9,
+        "525": -9
+      },
+      "parent_race": {
+        "29": 1
+      }
+    }
+  },
+  "actual_stop_boundary": {
+    "result": {
+      "passed": true,
+      "scope": "isolated native Rust authority and original PipeWire/WirePlumber virtual graph",
+      "hardware_verified": false,
+      "vendor_executed": false,
+      "network": "none",
+      "uids": {
+        "audio_owner": 1000,
+        "call_owner": 1001,
+        "app": 1002
+      },
+      "stages": [
+        "original_daemons_and_virtual_nodes",
+        "authenticated_stop_reclaims_stalled_backend_without_detach"
+      ],
+      "stalled_backend_stop_seconds": 0.0006386321038007736,
+      "fixture_exit": 0,
+      "owned_container_absent": true,
+      "graph_snapshots": 4
+    },
+    "cleanup": {
+      "children_reaped": {
+        "bus": 0,
+        "pipewire": 0,
+        "wireplumber": 0,
+        "authority": 0
+      },
+      "host_audio": false,
+      "host_dbus": false,
+      "hardware": false,
+      "orphan_workers_reaped": {
+        "39": -9,
+        "54": -9
+      },
+      "parent_race": {}
+    },
+    "stop_response_is_cleanup_receipt": false
+  },
+  "runtime_red_green": [
+    {
+      "red": "original synchronous actor returns status after1.7903546188s with real PipeWire SIGSTOP;350ms assertion fails",
+      "path": "artifacts/native-audio/response-red2",
+      "log": "artifacts/native-audio/process-status-red.log",
+      "fix": "owned backend process and bounded nonblocking actor pipes",
+      "green_seconds": 0.0022831792011857033
+    },
+    {
+      "red": "privileged stop while original PipeWire is stopped returns invalid_request",
+      "path": "artifacts/native-audio/stop-red2",
+      "log": "artifacts/native-audio/process-stop-red.log",
+      "fix": "authenticated intent cancellation, publication fencing and retained stop owners",
+      "green_seconds": 0.0006386321038007736
+    },
+    {
+      "red": "first supervised run cannot restore media after capture revocation; actual graph empty",
+      "path": "artifacts/native-audio/process-first",
+      "fix": "establish new backend graph cookie before creating non-lingering links",
+      "green": "same full capture revocation/restoration scenario passes"
+    }
+  ],
+  "prerequisite_failures_separate": [
+    "first pause fixture lacked signal import",
+    "first stop test expected denied but unimplemented stop returned invalid_request"
+  ],
+  "qualified_lifecycle": {
+    "clock": "CLOCK_BOOTTIME",
+    "job_deadline_seconds": 3,
+    "application_deadline_seconds": 2,
+    "late_reply_check": "after actual bounded pipe read",
+    "replacement": "no new backend until previous Child try_wait reports reaped",
+    "failure_recovery": "retained intent; explicit privileged reconcile required",
+    "frontends": "owned until joined; unexpected exit with live frontend aborts",
+    "stop": "clear intent, advance revision, fence backend before kill; cleanup pending response; join local owners or abort",
+    "publication": "ok admits intent; matching revision and active graph observation settle separately",
+    "local_reaping_is_vendor_cleanup": false
+  },
+  "limits": [
+    "single configured app UID and preallocated mono nodes; no PCM broker",
+    "cached availability is last accepted sample, not immediate device health",
+    "scheduling, process creation and150ms polling are not hard latency/idle-power guarantees",
+    "fixed trusted original tools; arbitrary plugin descendants not qualified",
+    "in-memory leases/grants; no durable installed call-service reconciliation",
+    "no ARM64 original-daemon/kernel audio runtime or physical suspend",
+    "no installed service-manager unit, physical routes/mute, Pixel AoC/carrier audio, DND/volume/haptics"
+  ],
+  "ignored_proof_sha256": {
+    "artifacts/native-audio/process-final-build.log": "53eff3640859832f39be30d2ccb938e64c6523c94bfe36b3a4184fa28c817848",
+    "artifacts/native-audio/process-final-stop.log": "2aa739335fe2fe01a5151bee9461aa6dd3b0984df92436e42c1587c32224a14f",
+    "artifacts/native-audio/process-final-stop/fixture-cleanup.json": "813ec5e92da7093a82a7b0947249953100156d03e2c645843bb22d884016cee3",
+    "artifacts/native-audio/process-final-stop/fixture-ready.json": "b4656c0f4c078d09a27e78674469c26f53bb501fb2ade088b23beea91793cc37",
+    "artifacts/native-audio/process-final-stop/result.json": "294784f74d40d4815f48df415197c16d3afea4c973a8084ab5e842a7984320f8",
+    "artifacts/native-audio/process-final.log": "2ed7a1fb63f231cf07373621444d8c264cbe56d48b616a439c278052108ff580",
+    "artifacts/native-audio/process-final/fixture-cleanup.json": "cd9a3fb2fd5ca3decd904f801b6af73332aab54a9593cb6954d13ebae8cef386",
+    "artifacts/native-audio/process-final/fixture-ready.json": "b4656c0f4c078d09a27e78674469c26f53bb501fb2ade088b23beea91793cc37",
+    "artifacts/native-audio/process-final/graph-000.json": "3f9802b428ca20613c4672daa1082a43057c6e85886aaba544bf86d32baa45c0",
+    "artifacts/native-audio/process-final/graph-001.json": "e82ef614858dc7eaf05f799e74ba78d6dc73339e5d51075a3ad87a0ff94e171b",
+    "artifacts/native-audio/process-final/graph-002.json": "ce1ed10904719f1f151990a39219112ab46f711c0bf4f611f88b7fafbfeadbc3",
+    "artifacts/native-audio/process-final/graph-003.json": "3dea5003a70b648b7f6e2a8fcab08f52ade95b8ad58361a5c0559a0fd56f1ae0",
+    "artifacts/native-audio/process-final/graph-004.json": "9f15e176833688e297a27984347835cb2b7e1e21fa5231d9ecb8726e917ad77c",
+    "artifacts/native-audio/process-final/graph-005.json": "0b210c398136149c48d876c632074a8402d9d9bb2385ea55ee7de9e339d55c0f",
+    "artifacts/native-audio/process-final/graph-006.json": "145ea32085098fe45eaaeed444bb8f18e8b638f0390a2c094fb61cc18dc55bbe",
+    "artifacts/native-audio/process-final/graph-007.json": "2879cc7f03ca95405f61813bac1cb17d4151c8b72420bb6de597002bec46f789",
+    "artifacts/native-audio/process-final/graph-008.json": "53711a44115c5cf9dc6e2b2582f475a30ef6d2457f1a3b6e48fe088100210ecb",
+    "artifacts/native-audio/process-final/graph-009.json": "ea6adddab9f7c077fc7a92f516bbdb836618cc46b187ea2c3429546c80206dce",
+    "artifacts/native-audio/process-final/graph-010.json": "7b48d7f4ecbeabca916d4e612f859eda71e279e0f7f89730bbf62922c9f9f0ea",
+    "artifacts/native-audio/process-final/graph-011.json": "214b441c1216f2c57d6220d952e7f844513b8baae47bffa9e0243d29b8bca13c",
+    "artifacts/native-audio/process-final/graph-012.json": "01972a6d300a2777027826de00838c895577958e2ee89172490db7fd651bf954",
+    "artifacts/native-audio/process-final/graph-013.json": "a9851513c18b8250e77e7a5553b13d8dfdfea9c64aa7d32e91a710542b664d40",
+    "artifacts/native-audio/process-final/graph-014.json": "b421e70b05e14924df15e24f03f5336428c2e28a206da00223c844498e2446a4",
+    "artifacts/native-audio/process-final/graph-015.json": "e1d84098741df551002cfb2b4df7142967a70ba6e008edd14371d5d17a5af750",
+    "artifacts/native-audio/process-final/graph-016.json": "36c96212b3d70448c4207ba80ddce3a695584434dfcf2c290887eda13512d3ac",
+    "artifacts/native-audio/process-final/graph-017.json": "feced72c09b990a44096deec6b673a62b69c002a1e1da7001024e8293c529250",
+    "artifacts/native-audio/process-final/graph-018.json": "b4de78c6b2720d6ccb0d1f8bc97a53cf568ea1905e69b8a774bcd10e03d08092",
+    "artifacts/native-audio/process-final/graph-019.json": "1f71e8bda365f74bfa38cfdc591ed99c4094459fa596a38f26fe9cbffda04ee1",
+    "artifacts/native-audio/process-final/graph-020.json": "0b91928c491d8e58a9b624a62849a5efb1e5bb2c24ecb4205913889853c8ec4f",
+    "artifacts/native-audio/process-final/graph-021.json": "4697cde17260c4e9bf4a264b05236e47fd549b256fba0e348fb71b0c4af9acff",
+    "artifacts/native-audio/process-final/graph-022.json": "284d799fa75b44fb6db6b71990eb0f33a34ee90f58b68708b4fe9b795b67b1e4",
+    "artifacts/native-audio/process-final/graph-023.json": "c3b72de968c60aa27ce22873bac38af192daca189c8d61aff8247e2516082ac4",
+    "artifacts/native-audio/process-final/result.json": "4929a774284293777a5fa556455848d868103ca4e676f78c37cba439536f19b3",
+    "artifacts/native-audio/process-first/fixture-cleanup.json": "c350a30475c6daf5549b8256ff954f6caac102f7c9b1c9e41f74596fbdbf80c9",
+    "artifacts/native-audio/process-first/fixture-ready.json": "b4656c0f4c078d09a27e78674469c26f53bb501fb2ade088b23beea91793cc37",
+    "artifacts/native-audio/process-first/result.json": "aabc35e46d48e9ab8106121df6fffccef16963df9770413652fd9ebb9b039eab",
+    "artifacts/native-audio/process-status-red.log": "96709e4c1877f80992d1ac1c2ad25b909c219704fda613f774a6717cc3a3f944",
+    "artifacts/native-audio/process-stop-red.log": "263695f3b393df63d70f306a45b1afea3f013c99442f8845f810d5a34ad78963",
+    "artifacts/native-audio/response-red2/fixture-cleanup.json": "66f8dc3b9cc1befde0af956989013e2e4d348de17516b505936b89042b53123b",
+    "artifacts/native-audio/response-red2/fixture-ready.json": "b4656c0f4c078d09a27e78674469c26f53bb501fb2ade088b23beea91793cc37",
+    "artifacts/native-audio/response-red2/result.json": "5105cc2047d5664bbd04a9bae7eb75af93a123f170875b1bd1f6113dffd981e2",
+    "artifacts/native-audio/stop-red2/fixture-cleanup.json": "5d082338c408e0c011bf45a789913bac1c75dc02937ba706c4097356b6fcd132",
+    "artifacts/native-audio/stop-red2/fixture-ready.json": "b4656c0f4c078d09a27e78674469c26f53bb501fb2ade088b23beea91793cc37",
+    "artifacts/native-audio/stop-red2/result.json": "8220335a15d308f96f1fc37d746b3cc25d5e9d7e787d4c70e5c10975e66d1e26"
+  }
+}

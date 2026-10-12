@@ -33,7 +33,7 @@ impl Profile {
     }
 }
 
-#[derive(Clone, Debug, PartialEq, Eq, Serialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct ObservedLink {
     pub source: String,
     pub target: String,

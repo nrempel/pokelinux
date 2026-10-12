@@ -50,7 +50,7 @@ class Client:
                 self.process.wait(timeout=5)
 
 
-def run(output):
+def run(output, stop_only=False):
     repo = pathlib.Path(__file__).resolve().parent.parent
     output.mkdir(parents=True, exist_ok=False)
     name = 'pokelinux-native-audio-test-' + str(os.getpid())
@@ -122,6 +122,30 @@ def run(output):
         assert any(x.get('info', {}).get('props', {}).get('application.process.binary') == 'wireplumber'
                    for x in objects if x['type'].endswith(':Client'))
         stages.append('original_daemons_and_virtual_nodes')
+        if stop_only:
+            app = client(1002)
+            call = client(1001)
+            accepted(app.request({'op': 'acquire', 'role': 'media', 'route': 'route.speaker'}))
+            expect_graph({('source.media', 'route.speaker')})
+            denied = app.request({'op': 'stop'})
+            assert not denied.get('ok'), denied
+            expect_graph({('source.media', 'route.speaker')})
+            fixture_command('pause_pipewire')
+            try:
+                time.sleep(0.35)
+                started = time.monotonic()
+                stopped = accepted(call.request({'op': 'stop'}))
+                elapsed = time.monotonic() - started
+                assert elapsed < 0.35, ('stop waited on actual PipeWire', elapsed, stopped)
+                assert stopped['desired'] == [] and not stopped['observed']['available'], stopped
+                assert stopped['phase'] == 'stopping' and stopped['cleanup'] == 'pending', stopped
+                result['stalled_backend_stop_seconds'] = elapsed
+            finally:
+                fixture_command('resume_pipewire')
+            expect_graph(set())
+            stages.append('authenticated_stop_reclaims_stalled_backend_without_detach')
+            result['passed'] = True
+            return
         # Own and register a worker before its actual parent exits, then execute
         # the guard after that death. This exercises the fork-before-prctl race.
         race_child = """import os,sys,time
@@ -191,6 +215,22 @@ sys.stdin.readline()
         expect_graph(set())
         stages.append('application_lease_exhaustion_preserves_call_admission')
 
+        observer = client(1002)
+        accepted(observer.request({'op': 'status'}))
+        fixture_command('pause_pipewire')
+        try:
+            # The real daemon stays stopped while an actual pw-dump read is pending.
+            time.sleep(0.35)
+            started = time.monotonic()
+            status = accepted(observer.request({'op': 'status'}))
+            elapsed = time.monotonic() - started
+            assert elapsed < 0.35, ('status blocked behind actual PipeWire read', elapsed, status)
+            result['stalled_backend_status_seconds'] = elapsed
+        finally:
+            fixture_command('resume_pipewire')
+            observer.close()
+        stages.append('status_responsive_during_actual_daemon_stall')
+
         app = client(1002)
         call = client(1001)
         media = accepted(app.request({'op': 'acquire', 'role': 'media', 'route': 'route.speaker'}))['lease']
@@ -215,6 +255,27 @@ sys.stdin.readline()
         accepted(call.request({'op': 'release', 'lease': lease}))
         expect_graph({('source.media', 'route.speaker')})
         stages.append('owned_route_and_media_restoration')
+        paused = fixture_command('pause_backend')
+        deadline = time.monotonic() + 6
+        while True:
+            started = time.monotonic()
+            recovered = accepted(app.request({'op': 'status'}))
+            assert time.monotonic() - started < 0.35, recovered
+            if recovered['application'] == 'uncertain':
+                break
+            assert time.monotonic() < deadline, recovered
+            time.sleep(0.05)
+        assert recovered['desired'] and not recovered['observed']['available'], recovered
+        assert app.request({'op': 'acquire', 'role': 'media', 'route': 'route.speaker'}).get('error') == 'explicit_recovery_required'
+        expect_graph(set())
+        # Kernel reaping is a separate local observation, not remote-device cleanup.
+        probe = subprocess.run(['docker', 'exec', '--user', '1000', name, 'python3', '-c',
+                                'import os,sys;sys.exit(1 if os.path.exists("/proc/"+sys.argv[1]) else 0)',
+                                str(paused['backend_pid'])], timeout=3)
+        assert probe.returncode == 0, 'retired backend not reaped'
+        accepted(call.request({'op': 'reconcile'}))
+        expect_graph({('source.media', 'route.speaker')})
+        stages.append('permanent_backend_stall_reaped_without_implicit_recovery')
         accepted(call.request({'op': 'grant_capture'}))
         accepted(app.request({'op': 'acquire', 'role': 'capture', 'route': 'route.capture'}))
         expect_graph({('source.media', 'route.speaker'), ('source.microphone', 'route.capture')})
@@ -291,4 +352,6 @@ sys.stdin.readline()
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--output', type=pathlib.Path, required=True)
-    run(parser.parse_args().output.resolve())
+    parser.add_argument('--stop-only', action='store_true')
+    args = parser.parse_args()
+    run(args.output.resolve(), args.stop_only)

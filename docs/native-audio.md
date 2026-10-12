@@ -37,54 +37,64 @@ desktop WirePlumber policy or enable Bluetooth/ALSA device management.
 
 ## Desired state, observations and process lifetime
 
-Responses distinguish desired lease state from observed graph links, backend
-availability, graph epoch and observation revision. A graph mutation succeeds
-only after actual PipeWire links are observed active. The backend discovers
-current ports and rejects unsupported channel layouts rather than guessing.
+Responses distinguish admitted desired intent from cached graph observations,
+backend availability, graph epoch and observation revision. `ok:true` accepts an
+intent; it does not claim that a graph mutation completed. `intent_revision` and
+`application` (`pending`, `observed`, or `uncertain`) report application separately.
+Only an active-link observation for the matching submitted intent can settle it.
+Availability describes the last accepted sample, not instantaneous device health.
+The backend discovers current ports and rejects unsupported channel layouts.
 It invokes documented `pw-dump`/`pw-link` programs as owned children; a native
 libpipewire event binding and lower polling overhead remain future work.
 
-PipeWire death invalidates the observation and advances the epoch while
-retaining authorized intent. Restart does not silently repeat mutations. The
-call owner must request reconciliation explicitly. A client with no leases
-disconnecting does not trigger reconciliation. An uncertain command returns
-its error and retained lease/desired state; callers must query state instead
-of blindly retrying. Lease IDs are valid only during their current IPC
-connection. Service restart loses its in-memory leases and capture grants;
-durable call-service reconciliation is not implemented here.
+One owned backend process performs original-stack IO. The authority polls bounded
+nonblocking pipes and can serve status or authenticated stop while a real tool or
+backend is blocked. Each job has a token and an absolute three-second
+`CLOCK_BOOTTIME` budget, checked again after consuming reply bytes. Applying links
+also checks an inner two-second boot-time deadline after graph replies. Expiry,
+malformed output, wrong tokens or process death fence observations before signaling
+the child. The authority retains that child until `try_wait` reaps it; it never
+starts a replacement while the old process owns capacity. Those budgets qualify
+this recorded local boundary, not hard system latency or physical suspend behavior.
+Process creation and OS scheduling remain outside a hard response guarantee.
 
-Each active link belongs to a non-lingering `pw-link -m` child. All graph
-children are spawned by the stable main actor thread. A safe Rust worker sets
-Linux's parent-death signal before checking the expected parent PID, then
-executes the original program. The post-registration check catches the race
-where the original parent died between fork and signal registration. There is
-no unsafe `pre_exec`, reliance on `Child` drop to detach workers, or cosmetic
-post-crash unlink. Normal cleanup explicitly kills and reaps children with a
-shared deadline; failure exits the authority rather than claiming cleanup.
-Fixture PID 1 also reaps adopted workers during crash tests.
+Permanent backend failure retains authorized intent, marks application uncertain
+and denies new acquisition/route changes. The call owner must explicitly request
+`reconcile` before recovery can apply it. PipeWire death similarly invalidates
+observations and advances the graph epoch; daemon restart and an unrelated
+connection's departure do not repeat old mutations. Lease IDs remain scoped to
+their authenticated IPC connection. Service restart loses in-memory leases and
+capture grants; durable call-service reconciliation is not implemented here.
+
+Capture revocation, capture release and a lease-owning connection's departure
+retire the current backend before new authorized work can run. This immediately
+fences its publication while actual unlinking remains a separate observation.
+A privileged `stop` clears intent, advances its revision and returns
+`phase:stopping`, `cleanup:pending`; that response does not claim cleanup. The
+frontend stops admission, retains and joins its threads, and exits only after
+local owners finish. An unreaped worker or unfinished stop owner causes process
+abort at a bounded deadline. An unexpected actor exit also refuses to detach a
+live frontend. There is no installed service-manager unit yet.
+
+Each active link belongs to a non-lingering `pw-link -m` child spawned by the
+stable backend main thread. Both backend and tool worker set Linux's parent-death
+signal before checking their expected parent PID. The check catches parent death
+between fork and signal registration. Original-stack snapshot readers remain
+owned inside that backend; normal helper cleanup explicitly kills/reaps and joins
+them. If trusted tool cleanup wedges, the authority can retire the whole backend.
+The fixed original tools and container configuration qualify this child tree;
+arbitrary plugins and descendants retaining stdout are outside the scope.
+Fixture PID1 reaps adopted helpers during crash tests. Reaping proves local
+process reclamation, not remote cleanup, physical microphone mute or DSP shutdown.
 
 The service bounds connections (32 total:16 application,8 call owner and8 other
 principals). Kernel credentials select the budget before worker admission, so
 application connection exhaustion preserves call-owner capacity. Applications
-share at most32 of the64 lease slots; an authenticated call can still interrupt
-media after the application budget is exhausted. It also bounds request bytes (4096), queued
-messages (64), snapshot bytes (1 MiB), tool execution and cleanup deadlines,
-and queued-request response lifetime. Timed-out queued requests are marked
-cancelled before the actor can apply them. These bounds are not a production
-latency or power-efficiency qualification.
-The actor currently waits synchronously for snapshots and reconciliation;
-operations and a status request queued behind them can take seconds. The
-150 ms polling interval is a scheduling trigger, not a responsiveness guarantee.
-There is no installed stop protocol, service-manager unit or event-driven
-production loop yet. This evidence does not qualify phone idle power.
-
-The snapshot stdout reader remains owned and is joined after its child is
-reaped. EOF after reaping is qualified only for the recorded, trusted
-`pw-dump`/`pw-link` tools and container configuration, which execute the fixed
-original programs directly. It is not a bound for an arbitrary tool or plugin
-that launches descendants retaining stdout. Changing that scope requires
-further lifetime qualification; the implementation does not detach a blocked
-reader and continue claiming success.
+share at most32 of64 lease slots; an authenticated call can still interrupt media
+after application exhaustion. Request bytes are bounded to4096, queued messages
+to64, snapshot bytes to1MiB and worker frames to65536. Timed-out queued requests
+are cancelled before later actor admission. The150ms observation polling trigger
+and10ms actor scheduling loop are not an idle-power or general latency guarantee.
 
 
 ## Verification
@@ -106,7 +116,7 @@ proprietary inputs or physical phone access.
 Red-green component tests cover call interruption/restoration, connection
 ownership, capture revocation, UID separation and privileged admission under
 application lease exhaustion. All five pass on x86 and ARM64 user-QEMU. The
-real daemon test passes14 stages with22 recorded graph snapshots and checks:
+real daemon test passes16 stages with24 recorded graph snapshots and checks:
 
 - Actual active links and running virtual sources/null sinks.
 - Spoofed call authority and direct application access to the private graph.
@@ -117,6 +127,13 @@ real daemon test passes14 stages with22 recorded graph snapshots and checks:
 - No uncertain-intent reapplication when an unrelated connection drops.
 - A registered real worker whose original parent exits before its guard.
 - Authority `SIGKILL` removing an active virtual capture link.
+- Responsive status while original PipeWire is stopped, and a permanently stopped
+  owned backend killed/reaped with no implicit recovery.
+
+A separate authenticated stop run keeps original PipeWire stopped while the
+service clears intent and responds, then observes unlinking after the daemon
+resumes. The final runs measured status at2.3ms and stop at0.64ms under these
+conditions; those measurements are evidence, not service-level guarantees.
 
 The original stack is PipeWire 1.4.2 and WirePlumber 0.5.8 from the dedicated
 Debian container. Source versions and Cargo dependencies are recorded in
@@ -124,11 +141,15 @@ ignored evidence. `artifacts/native-audio/` preserves the initial failing
 component and daemon-boundary runs, the two real lifetime regressions, graph
 snapshots, final verification and child-reaping receipts. ARM64 component
 execution uses QEMU user mode; the original-daemon integration executes on
-native x86-64. Those evidence classes must remain separate. The public
-[provenance](evidence/native-audio-provenance.json) records the current source
-hashes, real fixture cleanup receipts and retained runtime red phases. Both
-application-exhaustion regressions failed at runtime before the budget fixes;
-build or fixture setup failures are recorded separately.
+native x86-64. Those evidence classes must remain separate. The initial [provenance](evidence/native-audio-provenance.json) records the
+committed synchronous component and its runtime reds. The current
+[process provenance](evidence/native-audio-process-provenance.json) records owned
+source/binary hashes,16-stage and stop-only results, cleanup receipts and executed
+reds: original status blocked for1.79s and privileged stop returned
+`invalid_request`. A first supervised run then exposed fresh links being killed
+on the first cookie observation; establishing graph identity before linking
+made the same capture-revocation/media-restoration case green. Fixture/setup
+failures remain separate from those actual behavioral failures.
 
 ## Remaining phone and Pixel gates
 

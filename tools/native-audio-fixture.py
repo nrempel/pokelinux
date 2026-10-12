@@ -3,6 +3,7 @@
 import json
 import os
 import pathlib
+import signal
 import subprocess
 import sys
 import time
@@ -123,7 +124,26 @@ try:
     for line in sys.stdin:
         request = json.loads(line)
         op = request['op']
-        if op == 'stop_pipewire':
+        if op == 'pause_pipewire':
+            children['pipewire'].send_signal(signal.SIGSTOP)
+        elif op == 'resume_pipewire':
+            children['pipewire'].send_signal(signal.SIGCONT)
+        elif op == 'pause_backend':
+            parent = children['authority'].pid
+            candidates = []
+            for text_pid in pathlib.Path('/proc/%d/task/%d/children' % (parent, parent)).read_text().split():
+                pid = int(text_pid)
+                try:
+                    command = pathlib.Path('/proc/%d/cmdline' % pid).read_bytes().split(b'\0')
+                    if b'--backend-worker' in command:
+                        candidates.append(pid)
+                except FileNotFoundError:
+                    pass
+            assert len(candidates) == 1, 'expected one owned backend process'
+            os.kill(candidates[0], signal.SIGSTOP)
+            print(json.dumps({'op': op, 'backend_pid': candidates[0]}), flush=True)
+            continue
+        elif op == 'stop_pipewire':
             stop('pipewire')
         elif op == 'restart_pipewire':
             start('pipewire', ['pipewire', '-c', str(pw_config)])

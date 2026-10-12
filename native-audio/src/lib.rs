@@ -1,3 +1,4 @@
+pub mod backend_process;
 pub mod pipewire;
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
@@ -155,6 +156,11 @@ impl Authority {
                 .map(|(id, lease)| (*id, lease.role, lease.route.clone())),
         );
         result
+    }
+
+    pub fn cancel_all(&mut self) {
+        self.capture_allowed = false;
+        self.leases.clear();
     }
 
     pub fn disconnect(&mut self, peer: Identity) -> bool {

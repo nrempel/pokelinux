@@ -81,10 +81,11 @@ Incoming SMS text/metadata parsing also matches33 actual AOSP decoder outputs wi
 The first native power-request arbiter is built and component-tested, including18 outcomes from actual public source. Installed permission/lifecycle, native suspend authority and hardware policy remain open; see [native power](native-power.md).
 
 The native audio authority is built and boundary-tested against original
-PipeWire/WirePlumber in a private virtual mono graph:14 stages cover call/media
-priority, authenticated capacity, capture-link revocation, backend recovery and
-crash-owned links. Five policy tests also pass on x86 and ARM64 user-QEMU.
-Installed responsive lifecycle, per-app streams, physical routes and mute,
+PipeWire/WirePlumber in a private virtual mono graph:16 stages and an authenticated
+stop run cover call/media priority, reserved capacity, capture revocation,
+responsive status/stop, permanently blocked worker reaping and explicit recovery.
+Five policy tests also pass on x86 and ARM64 user-QEMU. Installed service
+management, per-app streams, durable reconciliation, physical routes/mute,
 Pixel AoC/carrier audio, DND/volume/haptics and idle power remain open. See
 [native audio](native-audio.md).
 

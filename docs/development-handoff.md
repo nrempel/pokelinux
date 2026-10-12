@@ -97,15 +97,17 @@ outcomes against actual pinned public RequestGroup/Node/FileNode execution.
 Owned leases, cancellation, boot-time expiry, uncertain application, retry and
 stale completion fencing are implemented. Authentication, actual backend IO
 ownership and a deployed suspend authority remain open; see `native-power.md`.
-Native audio now passes five policy tests on x86/ARM64 user-QEMU and14 actual
-PipeWire/WirePlumber stages. The private graph uses authenticated connection-owned
-leases, call priority, capture-link revocation and owned non-lingering helpers.
-Application exhaustion cannot consume call-owner connection or lease capacity.
-Backend death preserves intent without implicit reapplication; explicit recovery
-and authority SIGKILL unlinking pass. This is a virtual mono graph qualification,
-not physical mute or installed production audio. The synchronous actor still
-needs responsive lifecycle/stop and event-driven observations, a native PCM
-broker, durable call recovery and Pixel AoC/DSP routing; see `native-audio.md`.
+Native audio now passes five policy tests on x86/ARM64 user-QEMU and16 actual
+PipeWire/WirePlumber stages plus an authenticated stop run. One owned backend
+process isolates original-stack IO from responsive status/stop. Nonblocking
+worker pipes, boot-time deadlines and intent tokens fence late replies; expired
+work is killed, retained until reaped and requires explicit recovery. `ok:true`
+admits intent; observed application and pending cleanup remain separate. Actual
+stalls measured status2.3ms/stop0.64ms, without claiming hard latency. Capture
+revocation, capacity reservation, parent death and graph-cookie restoration pass
+through real daemons. This qualifies a virtual mono graph; installed service
+management, PCM brokerage, durable call recovery, physical mute and Pixel AoC/DSP
+routing remain open; see `native-audio.md` and its process provenance.
 
 Native camera ownership now passes nine checks with exact frozen cameraV4
 requests/results and original generated NDK callbacks over real Binder. Buffer
