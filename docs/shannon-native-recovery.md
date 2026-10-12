@@ -248,3 +248,17 @@ The original proxy and stub analysis is retained privately in
 `rea-response-on-transact.json` and `rea-response-info-write.json`.
 The native service-manager callback test in [native-binder.md](native-binder.md)
 qualifies a general Binder primitive, not these vendor-specific methods.
+
+### Executed response metadata fixtures
+
+`ResponseInfoOracle` uses Android Parcel.writeTypedObject with the original
+RadioExternalResponseInfo class. Seven rotated signed-boundary input rows produce
+28-byte fixtures: a four-byte presence marker plus a 24-byte size-prefixed
+parcelable. Those original bytes are checked in at
+`native-radio/tests/fixtures/response-info.tsv`; the factory APK is not included.
+
+Generated Rust AIDL bindings serialize to exactly those bytes and deserialize
+all five fields from them. The tests also reject selected invalid sizes and
+trailing data. This validates metadata encoding independently of the vendor
+service. It does not establish response status meanings, length consistency with
+payloads, request matching, segmented response assembly or carrier operation.

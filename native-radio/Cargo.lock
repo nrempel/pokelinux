@@ -418,6 +418,7 @@ name = "pokelinux-radio"
 version = "0.1.0"
 dependencies = [
  "rsbinder",
+ "rsbinder-aidl",
 ]
 
 [[package]]

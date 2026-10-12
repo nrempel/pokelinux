@@ -9,3 +9,6 @@ rsbinder = { version = "=0.12.0", default-features = false }
 
 [lints.rust]
 unsafe_code = "forbid"
+
+[build-dependencies]
+rsbinder-aidl = { version = "=0.12.0", default-features = false }

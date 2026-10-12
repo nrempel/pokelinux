@@ -57,3 +57,9 @@ assert rows==[
  'segments\t6144\t2048,2048,0\t4096',
 ],output
 print('Original Shannon segmentation executed: 5 boundaries; exact multiples lose final chunk',flush=True)
+
+output=adb('shell','env','CLASSPATH='+root+'/oracle.jar:'+root+'/shannon.apk','app_process','/system/bin','org.omarchy.audit.ResponseInfoOracle')
+Path('artifacts/ims-native-audit/original-response-info-output.txt').write_text(output)
+rows=[line.split('\t') for line in output.splitlines() if line.startswith('responseInfo\t')]
+assert len(rows)==7 and all(len(row)==7 and len(row[-1])==56 for row in rows),output
+print('Original vendor response Parcelable executed: 7 boundary fixtures',flush=True)

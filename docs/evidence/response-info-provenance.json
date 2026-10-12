@@ -1,0 +1,24 @@
+{
+  "factory_apk_sha256": "8b017599727398e80df5ab618d648890dcdc34b5fe2ba71fb2331e51bd8b8879",
+  "scope": "Original Android typed response metadata serialization compared with generated native Rust AIDL binding",
+  "fixture_cases": 7,
+  "fixture_bytes_each": 28,
+  "fixture_contents": "Only standard parcel markers and synthetic boundary integers; each row independently equals struct.pack(<7i,1,24,*inputs)",
+  "targets": [
+    "x86_64-unknown-linux-musl",
+    "aarch64-unknown-linux-gnu (QEMU user)"
+  ],
+  "malformed_sizes_and_trailing_data_tested": true,
+  "vendor_callback_execution_verified": false,
+  "phone_accessed": false,
+  "sources_sha256": {
+    "framework/shannon-oracle/ResponseInfoOracle.java": "ea61f882ae6d59bdda2a50e94ad02ae1a2fdeb1570f7cebffdfe8e82463454f3",
+    "framework/tests/shannon_oracle.py": "24a2ea65e4de8d67eb4e8132659f8550f2b43308212d15b9a0973fdf77318bfa",
+    "native-radio/aidl/RadioExternalResponseInfo.aidl": "750c6a2251fa35e6b537eb3baa0d080d1f39964d5cbc92b6f77d4e5a0c945245",
+    "native-radio/build.rs": "5118ea2f7e4878ffe1bea136e9cb3b2cf91b8b933b2061e6219e4e4de840ee31",
+    "native-radio/src/lib.rs": "a0ab188a198d258d74df8bce2ec37989d33bfdc5e1f2836b02139b95b583029d",
+    "native-radio/Cargo.lock": "c5904ffe40fafd59fe9c7a521f4412d49808131bef831d78ccd3b78c8e1bc8f7",
+    "native-radio/tests/response_info.rs": "4ef1d2e1e281610280adff38cd64e51802ee871dba1acf09e72cf04ca334288e",
+    "native-radio/tests/fixtures/response-info.tsv": "1c0031388c9ef428e14f1cbb070f17d44051a4b3cd659479c3a920ac8e7f32fd"
+  }
+}
