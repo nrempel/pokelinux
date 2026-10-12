@@ -1,0 +1,24 @@
+{
+  "target": "x86_64-unknown-linux-musl",
+  "scope": "Read-only cross-process kernel Binder service lookup and ping in owned Android emulator",
+  "selinux_enforcing": true,
+  "real_binder_driver": true,
+  "dynamic_elf_interpreter": false,
+  "arm64_kernel_ipc_verified": false,
+  "vendor_radio_verified": false,
+  "phone_accessed": false,
+  "rsbinder_version": "0.12.0",
+  "binary_sha256": "c3c44a9d46cb5dc6c3ed73760647d10d736cd0e704939772585ed2aea2ec9d55",
+  "sources_sha256": {
+    "native-radio/src/main.rs": "c5acee1b3bc0ee17935d5bcb91709da88b34a1d9d64d27ac953bc5e14b76afca",
+    "native-radio/Cargo.toml": "9e7f40f8b77d69ea53c3c38e86a96dd96e2f4d50734388a50a04047fea869af5",
+    "native-radio/Cargo.lock": "80f465b77df03235a0967030cf78f821037a0e1521ab998b1094a7143b64cda2",
+    "framework/tests/binder_kernel.py": "923ed377ad28c6dd2a52bc15c60aca37b4638361af34695a11a00be84d62e8c8",
+    "tools/build-native-radio.sh": "2fed60f9dabcd7f71ea2e50ac00008af3fcfa0fa807aa099a2f6bae8ac990eda",
+    "tools/framework-suite.sh": "fbe15d0cf2deee329f72e0a0b3a1ec862c6f2ed21761f519f4d9aebb6b6192fe",
+    "build-support/Dockerfile.native-radio": "398c3a673c0f31134c8c1ecaadbf89b24e824ace7cb68ba1f702061beff20f9f"
+  },
+  "output": [
+    "kernel-binder\tandroid.os.IServiceManager\tandroid.app.IActivityManager\tPASS"
+  ]
+}

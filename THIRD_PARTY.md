@@ -12,6 +12,8 @@ binary distribution must satisfy their respective license obligations.
 - Omarchy: selected sources pinned in dependencies/omarchy-files.lock.json;
   upstream MIT license is fetched as part of the source inventory. The shell
   patch retains that license. Omarchy names and logos are not licensed by MIT.
+- rsbinder: version 0.12.0, Apache-2.0, used by the native Linux Binder
+  qualification client; exact transitive versions are in native-radio/Cargo.lock.
 - Rust crates: versions and source checksums in each Cargo.lock; each crate retains
   its own license. Qt, Linux, Mesa, Hyprland and other system dependencies retain
   their upstream licenses.
