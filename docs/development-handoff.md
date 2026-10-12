@@ -48,7 +48,7 @@ author identity. Authentication remains outside source control.
 ARM64 user-mode QEMU passes component state, journal and provenance tests, but
 its failed-exec subprocess test unexpectedly returns a successful child for a
 missing executable. The two process execution tests are now compiled for ARM64
-and explicitly ignored by the user-mode suite. `tools/radio-process-vm.py` runs
+and explicitly ignored by the user-mode suite. `tools/native-process-vm.py` runs
 them under an Arch Linux ARM guest kernel in system-QEMU, as the unprivileged
 `alarm` user. Both pass, along with the component tests. See
 `evidence/arm64-radio-process-provenance.json`. This closes the process-specific
@@ -58,9 +58,12 @@ Native messaging now has a device-neutral SMS-SUBMIT encoder and bounded multipa
 planner. Twenty-seven byte comparisons match actual AOSP encoder execution in the
 owned SDK37 emulator, including forced UTF-16 ASCII fragments. The comparison
 found and fixed an upstream form-feed mapping omission. Five planner tests and
-x86/ARM64 user-QEMU builds pass. This does not implement send/receive, delivery,
+x86/ARM64 user-QEMU builds pass. The durable outbox now reserves references/payloads atomically, commits uncertain
+state before dispatch permission, fences stale owners and preserves cancellation
+after late acceptance. Twelve actual SQLite tests and x86/ARM64-kernel SIGKILL
+restart tests pass. This does not implement send/receive, delivery, permissions,
 a messaging service or UI. See `native-messaging.md` and
-`evidence/sms-submit-provenance.json`.
+`evidence/sms-submit-provenance.json` and `evidence/sms-outbox-provenance.json`.
 
 ## Next work
 
@@ -99,7 +102,7 @@ bash tools/framework-suite.sh sms-codec
 bash tools/framework-suite.sh binder-kernel
 bash tools/framework-suite.sh radio-ipc
 # In the prepared network-disabled graphics simulation container:
-python3 tools/radio-process-vm.py
+python3 tools/native-process-vm.py
 ```
 
 These are focused native-radio gates, not proof that the full smartphone goal is

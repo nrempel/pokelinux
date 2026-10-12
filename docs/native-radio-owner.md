@@ -253,7 +253,7 @@ and installed service-manager behavior remain open.
 
 ## ARM64 kernel process execution
 
-`tools/radio-process-vm.py` boots the existing prepared Arch Linux ARM image using
+`tools/native-process-vm.py` boots the existing prepared Arch Linux ARM image using
 a temporary disk overlay, a read-only project share and a fresh results share. It
 uses no network, physical phone or host device transport. The guest selects the
 exact test executable from Cargo's recorded artifact manifest, runs the components
@@ -266,3 +266,11 @@ semantics under an ARM64 Linux kernel in system-QEMU. It does not demonstrate
 ARM64 Binder or Pixel kernel behavior. The earlier pinned user-mode failed-exec
 observation remains recorded rather than being reclassified as a native failure.
 See [the separate evidence class](evidence/arm64-radio-process-provenance.json).
+
+## Vendor cleanup checkpoint
+
+Focused REA static evidence shows client-list/callback cleanup and separately
+managed pending modem requests. One-way clear and local reaping establish no
+acknowledged remote reset. The durable uncertainty fence remains unchanged.
+See [cleanup contract](native-radio-cleanup.md) and
+[provenance](evidence/vendor-radio-cleanup-provenance.json).

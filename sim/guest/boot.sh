@@ -15,8 +15,8 @@ if grep -q 'pixel.mode=provision' /proc/cmdline; then
     systemctl disable sshd.service || true
     usermod -a -G video,input alarm
     printf '{"provisioned":true}\n' > /results/provision.json
-elif grep -q 'pixel.mode=radio-process' /proc/cmdline; then
-  exec python3 /workspace/sim/guest/radio_process.py
+elif grep -q 'pixel.mode=native-process' /proc/cmdline; then
+  exec python3 /workspace/sim/guest/native_process.py
 elif grep -q 'pixel.mode=service-package' /proc/cmdline; then
   python3 /workspace/sim/guest/service_package.py
 elif grep -q 'pixel.mode=omarchy-shell' /proc/cmdline; then

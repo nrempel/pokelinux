@@ -62,5 +62,6 @@
     "Background, lock-screen and suspend/wake behavior",
     "MMS, SMSC and carrier dependencies",
     "Physical Pixel and carrier validation"
-  ]
+  ],
+  "recorded_source_commit": "311b8b1ca9a0e54d311abac1f7b61be30f4d85cd"
 }

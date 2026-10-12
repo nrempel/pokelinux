@@ -1,0 +1,58 @@
+{
+  "date_utc": "2026-10-12",
+  "host": "Harbour",
+  "method": "REA focused static shipped-artifact investigation; no vendor target execution",
+  "targets": {
+    "ShannonIms.apk": "8b017599727398e80df5ab618d648890dcdc34b5fe2ba71fb2331e51bd8b8879",
+    "libril_sitril.so": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c"
+  },
+  "findings": [
+    {
+      "claim": "APK clear is one-way and has no cleanup reply",
+      "evidence_ids": [
+        "ev_80b3af6473996633c0176468179459499449dc10704bc6602a03ffff880591be"
+      ]
+    },
+    {
+      "claim": "Focused manager clear removes the client and client clear releases callback references/segmented request storage",
+      "evidence_ids": [
+        "ev_21eb346cb5b6d61d2110a92067ac37c36246faa691aaa1404e464e46c6c1449e",
+        "ev_4677168fc26f13c6672c17f389af18062f1365e595834ae721f45d0d436d3a5e"
+      ]
+    },
+    {
+      "claim": "Pending modem request records complete separately; clear/reset does not establish modem cancellation",
+      "evidence_ids": [
+        "ev_8ed7eb22dd45fbe657fb74b19c85a9b6cd77ce06074195adec2ef121ca3db2cf",
+        "ev_0dd98ad121d0b05cc5ae94b6e09803f3d0563c231bad1f0566544a2f53402ee2",
+        "ev_86ee05b8996766bef3fb0f9660cbf7ad8aa3fde6908697a47b90b122a0e4742b"
+      ]
+    },
+    {
+      "claim": "Callback failure can cause client removal; no immediate death cleanup guarantee inferred",
+      "evidence_ids": [
+        "ev_7e5d368e2fa12c7585cda7b1535b48382a6dab1098da3474552bbbe484c5a7ad",
+        "ev_df354cb0104377e3ea53cae44649dfb7311e63574b4abbd0b5d3f958d7a67c5e"
+      ]
+    },
+    {
+      "claim": "Focused allocation increments a process-local counter before manager lock; no observed free-list reuse; external serialization and restart reuse unresolved",
+      "evidence_ids": [
+        "ev_ec72e38f57fe37487613e37fdb1c580d1ea2e10f8839ed04aaed5e78d87df295",
+        "ev_88dafd9bb44d18c0e7d784658165afb9d24a91c4a275266a0fb018b8b3ae5a6d"
+      ]
+    }
+  ],
+  "runtime_effect": "No fence relaxed. Durable uncertainty marker retained; successor registration refused.",
+  "separate_existing_evidence": "Synthetic and original proxy Binder clear behavior is recorded separately; it does not execute this vendor implementation.",
+  "remaining": [
+    "Vendor clear/reset execution and acknowledgement",
+    "Pending response after clear",
+    "Death cleanup",
+    "Concurrent allocation/registration",
+    "Numeric ID reuse across restart",
+    "Qualified modem/request reset"
+  ],
+  "physical_phone_accessed": false,
+  "raw_artifacts_published": false
+}

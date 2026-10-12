@@ -52,7 +52,7 @@ To run the ARM64 kernel process gate after the native build:
 docker run --rm --network none --cpus 3 --memory 4g --pids-limit 256 \
   --cap-drop ALL --security-opt no-new-privileges --user 1000:1000 \
   -v "$PWD:/workspace" pixel-graphics-sim:20261011-b472 \
-  python3 tools/radio-process-vm.py
+  python3 tools/native-process-vm.py
 ```
 
 The build records `owner-test-build-arm64.json`; the guest uses that exact binary.

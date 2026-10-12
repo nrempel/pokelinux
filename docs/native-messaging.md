@@ -1,8 +1,8 @@
 # Native messaging
 
 The device-neutral Rust crate `native-messaging` implements bounded SMS-SUBMIT
-payload encoding and multipart planning. This is the first native messaging
-component, not a complete messaging service or working modem path.
+payload encoding, multipart planning and a durable single-owner outbox. These
+components do not form an installed messaging service or working modem path.
 
 ## Implemented contract
 
@@ -26,6 +26,42 @@ GSM character mapping reuses the pinned CC0 `sms-pdu` 1.1.0 implementation. Actu
 AOSP execution exposed its omitted form-feed extension entry; a narrow wrapper
 adds that standard entry. The rest of the alphabet remains in the upstream crate.
 Dependency identity is recorded in `Cargo.lock` and the evidence manifest.
+
+## Durable outbox
+
+The Linux outbox owns a permanent lock inode and a private SQLite state directory
+(0700 directory, 0600 regular files, no symlinks/hard links). It checks the actual
+SQLite DELETE/EXTRA/foreign-key configuration and uses immediate transactions.
+This excludes other UIDs; it does not isolate applications sharing the service UID.
+Authenticated IPC and application permissions remain separate integration work.
+
+Preparation stores the intent, digest and complete part payloads while reserving
+a 16-bit reference atomically. Duplicate IDs return the same receipt; changing
+an intent under the same ID fails. References never wrap or reuse in this store.
+At most 4,096 message receipts are admitted; SQLite also has a 32,768-page
+budget. Exhaustion refuses new admissions rather than deleting uncertainty.
+There is no migration, receipt deletion or automatic reference-space reset.
+
+Explicit claim commits `Uncertain` before exposing a non-cloneable owner-specific
+dispatch permit. Claim/drop, cancellation and restart cannot refund it. A stale
+permit from a previous owner cannot finish a restarted outbox. Subsequent parts
+require earlier transport acceptance. Cancellation is durable and remains set
+even when a held request succeeds later. `TransportAccepted` means a qualified
+transport acknowledgement, never delivery; `NotSubmitted` requires an adapter
+proof and still grants no retry of the original part. No transport is attached
+yet. A prepared part requires an explicit owner claim after restart.
+
+Twelve tests use real SQLite files and cover duplicate admission, rollback,
+reference/capacity exhaustion, restart, cancellation, stale permits and unsafe
+lock files. An injected SQLite `RAISE(IGNORE)` exposed a permit despite an
+unchanged row; the red-green correction verifies the write count and actual
+uncertainty before committing. A native child is SIGKILLed after claiming a part;
+the next owner opens successfully while both retry and continuation remain denied.
+That process boundary passes on x86 Linux and under an actual ARM64 Arch kernel
+in system-QEMU as unprivileged `alarm`. User-mode QEMU runs the database tests
+but explicitly ignores process tests.
+
+See [outbox provenance](evidence/sms-outbox-provenance.json).
 
 ## Executed evidence
 
@@ -51,14 +87,17 @@ execution only, not system-QEMU Binder or hardware evidence.
 bash tools/build-native-messaging.sh prepare
 bash tools/framework-suite.sh sms-codec
 bash tools/build-native-messaging.sh build
+# In the prepared network-disabled graphics simulation container:
+python3 tools/native-process-vm.py
 ```
 
 See [provenance](evidence/sms-submit-provenance.json).
 
 ## Remaining integration
 
-Implement authenticated permission admission, durable conversations/drafts and
-operation receipts, duplicate handling, uncertain-result recovery, a background
+Implement authenticated permission admission, durable conversations/drafts,
+transport receipt qualification, receive deduplication, uncertain-result
+reconciliation, a background
 owner and native Messages UI using the live Omarchy theme. Recover the actual
 modem/IMS send, receive and status-report contracts. Test installed service and
 UI restart, locked/closed-window notification behavior and revocation. No

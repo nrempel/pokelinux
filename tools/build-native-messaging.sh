@@ -17,6 +17,9 @@ case "${1:-build}" in
    docker run "${args[@]}" --network none "$image" cargo test --locked --offline --target "$target"
    docker run "${args[@]}" --network none "$image" cargo build --locked --offline --release --target "$target"
   done
+  for test in outbox outbox_process; do
+   docker run "${args[@]}" --network none "$image" cargo test --locked --offline --target aarch64-unknown-linux-gnu --test "$test" --no-run --message-format=json > "artifacts/native-messaging/$test-test-build-arm64.json"
+  done
   ;;
  *) echo 'Usage: build-native-messaging.sh prepare|build' >&2; exit 2 ;;
 esac

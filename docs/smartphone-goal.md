@@ -71,6 +71,7 @@ Track each feature as designed, built, component-tested, installed-integration-t
 
 The SMS payload encoder and multipart planner are built and component-tested,
 with 27 byte comparisons against actual AOSP encoder execution and Linux/ARM64
-user-QEMU validation. This is a payload component, not installed messaging
-integration. Send/receive, durable receipts, delivery, native app and
+user-QEMU validation. The durable single-owner outbox also passes twelve actual SQLite tests and
+SIGKILL/restart under x86 and an actual ARM64 kernel. These are components, not
+installed messaging integration. Send/receive, transport receipt qualification, delivery, native app and
 background/lock/suspend behavior remain open. See [native messaging](native-messaging.md).

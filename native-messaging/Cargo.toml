@@ -6,6 +6,10 @@ publish = false
 
 [dependencies]
 sms-pdu = "=1.1.0"
+rusqlite = { version = "=0.40.2", features = ["bundled"] }
+sha2 = "=0.10.9"
+uuid = { version = "=1.28.0", features = ["v4"] }
+rustix = { version = "=1.1.5", features = ["fs", "process"] }
 
 [lints.rust]
 unsafe_code = "forbid"

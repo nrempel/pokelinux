@@ -1,0 +1,74 @@
+{
+  "date_utc": "2026-10-12",
+  "host": "Harbour",
+  "scope": "Durable native SMS preparation/dispatch admission; no modem transport or delivery",
+  "implementation": {
+    "database": "Pinned rusqlite0.40.2 with bundled SQLite",
+    "journal": "DELETE",
+    "synchronous": "EXTRA",
+    "foreign_keys": true,
+    "state_permissions": "0700 directory,0600 regular files, owner UID, no symlinks or hard links",
+    "same_uid_application_isolation": false,
+    "message_receipt_budget": 4096,
+    "reference_reuse": false,
+    "schema_migrations": false,
+    "sqlite_page_budget": 32768
+  },
+  "red_green": {
+    "initial": "Six compiled runtime tests failed with missing outbox implementation",
+    "silent_write": "Real SQLite trigger RAISE(IGNORE) caused a dispatch permit while part remained Ready; runtime-red assertion failed",
+    "correction": "Check one row changed and read back Uncertain in the transaction before commit/permit",
+    "arm64_process": "System-QEMU gate failed when the required crash test was absent from ARM64 binary; compile it and explicitly ignore only in user-mode suite"
+  },
+  "tests": {
+    "database_files": 12,
+    "native_x86_process": "SIGKILL after claim; reaped owner releases lock but uncertainty survives and no retry/continuation admitted",
+    "arm64_user_qemu": "Codec, planner and SQLite tests pass; process tests explicitly ignored",
+    "arm64_system_qemu": {
+      "passed": true,
+      "architecture": "aarch64",
+      "qemu_mode": "system",
+      "hardware_verified": false,
+      "phone_accessed": false,
+      "kernel": "7.1.6-1-aarch64-ARCH",
+      "os": "NAME=\"Arch Linux ARM\"\nPRETTY_NAME=\"Arch Linux ARM\"\nID=archarm\nID_LIKE=arch\nBUILD_ID=rolling\nANSI_COLOR=\"38;2;23;147;209\"\nHOME_URL=\"https://archlinuxarm.org/\"\nDOCUMENTATION_URL=\"https://archlinuxarm.org/wiki\"\nSUPPORT_URL=\"https://archlinuxarm.org/forum\"\nBUG_REPORT_URL=\"https://github.com/archlinuxarm/PKGBUILDs/issues\"\nLOGO=archlinux-logo\n",
+      "checks": {
+        "pokelinux_radio_components_under_arm64_kernel": true,
+        "blocked_worker_drop_aborts_process_instead_of_detaching_or_joining": true,
+        "spawn_failure_leaves_durable_admission_and_restart_refuses_launch": true,
+        "outbox_components_under_arm64_kernel": true,
+        "outbox_process_components_under_arm64_kernel": true,
+        "sigkill_releases_owner_but_does_not_release_uncertain_part": true,
+        "unprivileged_execution": true
+      },
+      "binary_sha256": {
+        "pokelinux_radio": "3d6804457c0aa017eba8de1fa202acaac7df6ea1adf89ec19367b012b9700e9a",
+        "outbox": "09950d342248637af6de65deba23a3d9acc2462ab77cc28c6b0b1b61a3bc83ab",
+        "outbox_process": "8f79ad04fcc5d39089534d6a5968ac808be0001c96dd73cc82b4b228c075c3ea"
+      }
+    },
+    "original_sms_encoder": "Separate27-case AOSP execution in sms-submit-provenance.json",
+    "synthetic_modem_integration": "None for outbox",
+    "physical": "None"
+  },
+  "public_sha256": {
+    "native-messaging/Cargo.lock": "a6845b32ea678934da70b4b175a92f6df8033d6f61c6b1ae2941fe156bddd2b9",
+    "native-messaging/src/outbox.rs": "b910f78d0b48386e055535d24e44c0985f019657e232695f89fa7f522ab596eb",
+    "native-messaging/tests/outbox.rs": "7ec099c549d70e45f2b11cfa380822f2ad59766e00012429456eb94de2f46949",
+    "native-messaging/tests/outbox_process.rs": "148ed57b10113fbdf435e0b5e8379d0eab51b88246b8fc98ff398ce80c2d62be",
+    "sim/guest/native_process.py": "65a7ef7c753c81a9850b8798e041d32242cb57dc1639636115b791a8504c2f9c",
+    "tools/native-process-vm.py": "d24cac2002eaabb217647a4ff3cc9bc23a810ada3c0d07c3dfb3d0b83e435c8d"
+  },
+  "commands": [
+    "bash tools/build-native-messaging.sh build",
+    "python3 tools/native-process-vm.py in prepared offline graphics container"
+  ],
+  "remaining": [
+    "Installed native owner/authenticated IPC and application permissions",
+    "Modem/IMS send/receive and transport result qualification",
+    "Delivery report correlation and incoming duplicates",
+    "Drafts/conversations/native Messages app",
+    "Lock/background/suspend wake and notifications",
+    "Carrier and hardware validation"
+  ]
+}
