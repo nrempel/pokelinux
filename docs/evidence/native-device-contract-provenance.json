@@ -463,5 +463,7 @@
     "Buffer/DMA/fence and DSP/firmware semantics",
     "Background lock/suspend/wake and privacy",
     "Carrier, camera, audio, sensors, power and thermal physical gates"
-  ]
+  ],
+  "recorded_source_commit": "e3f8a63f18611e59208efeecd90ebb381eac0a70",
+  "later_runtime_evidence": "native-camera-boundary.json: synthetic generated NDK/Rust real-Binder error/FD/death fixture; not vendor camera integration"
 }

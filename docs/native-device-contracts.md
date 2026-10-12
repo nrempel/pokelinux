@@ -34,7 +34,7 @@ The public original AIDL compiler produced proxy/dispatcher code that omits
 return values on error. Thus a wrapper’s locally updated partial count cannot
 prove acceptance after a failed Binder reply. Retain uncertain ownership until
 qualified callback/drain/reset reconciliation. This is compiler execution and
-static reasoning; the generated NDK runtime boundary is a separate next test.
+static reasoning; the generated NDK/Rust runtime boundary now passes the [real Binder error/FD fixture](native-camera-boundary.md). Pipe FD ownership does not qualify camera DMA, gralloc or fences.
 
 Normal flush delegates to Google HAL. The recovered `signalStreamFlush` is a
 success stub, so it establishes no drainage. Close/destructor cleanup, failed

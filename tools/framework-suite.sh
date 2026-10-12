@@ -31,8 +31,9 @@ case "$action" in
   docker build -t "$image" -f build-support/Dockerfile.framework build-support
   docker run --rm --network none --cpus 4 --memory 6g --pids-limit 512 --cap-drop ALL --security-opt no-new-privileges --user "$(id -u):$(id -g)" -v "$PWD:/workspace" "$image" bash tools/build-framework.sh
   ;;
- test|enrollment|callui|gui|plugin|direct|journal|radio-baseline|rust|shannon-codec|sms-codec|binder-kernel|radio-ipc)
+ test|enrollment|callui|gui|plugin|direct|journal|radio-baseline|rust|shannon-codec|sms-codec|binder-kernel|radio-ipc|camera-binder)
   if [ "$action" = rust ]; then bash tools/build-qt-android-tests.sh; fi
+  if [ "$action" = camera-binder ]; then bash tools/build-native-camera-boundary.sh; fi
   if docker container inspect "$name" >/dev/null 2>&1 || docker network inspect "$name" >/dev/null 2>&1; then
    echo 'The dedicated test container/network already exists; inspect its owner before cleanup.' >&2;exit 1
   fi
@@ -73,6 +74,12 @@ case "$action" in
    docker exec "$name" bash tools/build-radio-peer.sh
    docker exec "$name" bash tools/build-shannon-oracle.sh
    docker exec "$name" python3 framework/tests/radio_ipc.py
+   exit 0
+  fi
+  if [ "$action" = camera-binder ]; then
+   docker exec "$name" bash tools/build-camera-boundary.sh
+   docker exec "$name" bash tools/build-shannon-oracle.sh
+   docker exec -e CAMERA_RUST_CLIENT=1 "$name" python3 framework/tests/camera_binder.py
    exit 0
   fi
   if [ "$action" = binder-kernel ]; then

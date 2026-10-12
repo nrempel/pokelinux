@@ -1,0 +1,12 @@
+{
+  "NativeHandle.aidl": {
+    "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/common/aidl/aidl_api/android.hardware.common/2/android/hardware/common/NativeHandle.aidl",
+    "sha256": "bda89ace51cfb22a84c6a9d6836776a459706debb2f2a4f398a768fcc5935976",
+    "identity": "frozen public hardware.common V2",
+    "license": "Apache-2.0; original notice retained"
+  },
+  "ICameraBoundaryProbe.aidl": {
+    "identity": "original synthetic test infrastructure",
+    "factory_abi_equality": false
+  }
+}

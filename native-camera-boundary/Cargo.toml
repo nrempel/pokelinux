@@ -1,0 +1,16 @@
+[package]
+name = "pokelinux-camera-boundary"
+version = "0.1.0"
+edition = "2024"
+publish = false
+description = "Synthetic camera NativeHandle Binder boundary validation"
+
+[dependencies]
+rsbinder = { version = "=0.12.0", default-features = false }
+rustix = { version = "=1.1.5", features = ["event"] }
+
+[build-dependencies]
+rsbinder-aidl = { version = "=0.12.0", default-features = false }
+
+[lints.rust]
+unsafe_code = "forbid"

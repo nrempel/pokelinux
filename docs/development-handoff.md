@@ -72,8 +72,12 @@ flush semantics, AoC call audio, two sensor wake obligations and potentially
 wedged haptic completion remain explicit boundaries. Twenty-five public power
 source checks and AIDL compiler generation passed, separately from runtime.
 See `native-device-contracts.md` and its provenance; raw factory/REA records stay
-private. Real camera Binder/FD, native power arbitration and isolated audio graph
-work are in progress on Sol6.1 xhigh agents.
+private. The camera error-reply/FD fixture now passes through real Binder using original
+generated NDK proxy/dispatcher and an independent Rust client. Both pass
+64-cycle FD budgets, transfer/reverse-transfer lifetime, error-count omission,
+DEAD_OBJECT and death notification. See `native-camera-boundary.md`; pipe FDs
+do not prove gralloc/sync_file/DMA or capture. Native power arbitration and
+isolated audio graph work remain in progress on Sol6.1 xhigh agents.
 
 ## Next work
 

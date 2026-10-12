@@ -1,0 +1,184 @@
+{
+  "recorded_at_utc": "2026-10-12T20:56:48.741171+00:00",
+  "scope": "original public generated NDK execution plus synthetic kernel-Binder interoperability",
+  "result": {
+    "passed": true,
+    "phone_accessed": false,
+    "scope": "synthetic original-generated NDK kernel Binder integration",
+    "ndk_proxy_dispatcher_executed": true,
+    "rust_interoperability": true,
+    "service_error_omits_count": true,
+    "receiver_and_returned_fd_independent_lifetimes": true,
+    "repeated_fd_budget": 64,
+    "bounded_service_death": true,
+    "selinux": "Enforcing",
+    "vendor_execution": false,
+    "camera_capture_verified": false,
+    "dma_safety_verified": false
+  },
+  "emulator_fingerprint": "google/sdk_gphone64_x86_64/emu64xa:17/CE2A.260420.019/15611780:userdebug/dev-keys",
+  "framework_bootstrap": [
+    "startInstrumentation\t51\tPASS",
+    "instrumentationStatus\t1\tPASS"
+  ],
+  "original_public_compiler": {
+    "sdk": 37,
+    "sha256": "a4ad150a7cf6ea297c299cb779da7a58c537cfc07923d1e15ccbc554a30cd4ba"
+  },
+  "ndk_toolchain": {
+    "url": "https://dl.google.com/android/repository/android-ndk-r30-linux.zip",
+    "version": "30.0.16248370",
+    "size": 738633529,
+    "sha1": "5107f898313790e449e87eee2183d9a20602dee9",
+    "sha256": "753611f410d002cfcd3f3dc2ef49aad532089d3180b436c060a90bf0fcb64df2",
+    "source": "https://developer.android.com/ndk/downloads",
+    "scope": "original public toolchain; synthetic Android test infrastructure only"
+  },
+  "public_binder_helper_headers": {
+    "binder_api_level_utils.h": {
+      "url": "https://android.googlesource.com/platform/frameworks/native/+/refs/tags/android-17.0.0_r1/libs/binder/ndk/include_cpp/android/binder_api_level_utils.h?format=TEXT",
+      "sha256": "a6e8c5357e08e06ccbaff882d7f9c324868322a653ac4af2be7c9feed3101f73"
+    },
+    "binder_auto_utils.h": {
+      "url": "https://android.googlesource.com/platform/frameworks/native/+/refs/tags/android-17.0.0_r1/libs/binder/ndk/include_cpp/android/binder_auto_utils.h?format=TEXT",
+      "sha256": "91a7587d9010e2bac7c6d347d78463fa15a193c025eae260c91b17e76ef9631d"
+    },
+    "binder_enums.h": {
+      "url": "https://android.googlesource.com/platform/frameworks/native/+/refs/tags/android-17.0.0_r1/libs/binder/ndk/include_cpp/android/binder_enums.h?format=TEXT",
+      "sha256": "a4f3b34f5478d5ad820e93eabfa0d5fe82e53a71727ad6f48b5932a043060189"
+    },
+    "binder_interface_utils.h": {
+      "url": "https://android.googlesource.com/platform/frameworks/native/+/refs/tags/android-17.0.0_r1/libs/binder/ndk/include_cpp/android/binder_interface_utils.h?format=TEXT",
+      "sha256": "6a3437abc3edd1dbec4cc78d3e3360ee457b4bcca26776f13b0e33ad6c9ad666"
+    },
+    "binder_internal_logging.h": {
+      "url": "https://android.googlesource.com/platform/frameworks/native/+/refs/tags/android-17.0.0_r1/libs/binder/ndk/include_cpp/android/binder_internal_logging.h?format=TEXT",
+      "sha256": "b3dc27d60e3c75629f231f94ab24779af9faeede2c4d605401179265d6d5eea8"
+    },
+    "binder_parcel_utils.h": {
+      "url": "https://android.googlesource.com/platform/frameworks/native/+/refs/tags/android-17.0.0_r1/libs/binder/ndk/include_cpp/android/binder_parcel_utils.h?format=TEXT",
+      "sha256": "159b2f59a84fcf988bd4dc3ced2b58b55de9f8e49681ab96722045ae61f8ec3c"
+    },
+    "binder_parcelable_utils.h": {
+      "url": "https://android.googlesource.com/platform/frameworks/native/+/refs/tags/android-17.0.0_r1/libs/binder/ndk/include_cpp/android/binder_parcelable_utils.h?format=TEXT",
+      "sha256": "9c330de3ef09843d69d54116616efb52e7f442fb3bca28dc7d22f26c8f0fb869"
+    },
+    "binder_to_string.h": {
+      "url": "https://android.googlesource.com/platform/frameworks/native/+/refs/tags/android-17.0.0_r1/libs/binder/ndk/include_cpp/android/binder_to_string.h?format=TEXT",
+      "sha256": "23eb9663863013f862ebe8cee5d1ee9ba48e89998b8795a36f0772c1f0d91048"
+    }
+  },
+  "frozen_native_handle": {
+    "url": "https://android.googlesource.com/platform/hardware/interfaces/+/refs/tags/android-17.0.0_r1/common/aidl/aidl_api/android.hardware.common/2/android/hardware/common/NativeHandle.aidl",
+    "sha256": "bda89ace51cfb22a84c6a9d6836776a459706debb2f2a4f398a768fcc5935976",
+    "identity": "frozen public hardware.common V2",
+    "license": "Apache-2.0; original notice retained"
+  },
+  "runtime_binder_libraries": {
+    "/system/lib64/libbinder_ndk.so": "c8f02237afa4a5643a68f13c4d43114f3d57f2322f17309d34c11e68b48e2e68",
+    "/system/lib64/libbinder.so": "02be0d8d198cabf24c0a1529b7f6b02c3305c84bbf27a15be600dfd1235aa5ee"
+  },
+  "ndk_markers": [
+    "camera-ndk-bootstrap\tPASS",
+    "camera-ndk-fd-independent\tPASS",
+    "camera-ndk-error-output-untouched\tPASS",
+    "camera-ndk-error-uncertain\tPASS",
+    "camera-ndk-fd-budget\t64\tPASS",
+    "camera-ndk-service-death\tPASS"
+  ],
+  "rust_markers": [
+    "camera-rust-bootstrap\tPASS",
+    "camera-rust-fd-independent\tPASS",
+    "camera-rust-error-uncertain\tPASS",
+    "camera-rust-fd-budget\t64\tPASS",
+    "camera-rust-service-death\tPASS"
+  ],
+  "red_before_green": [
+    {
+      "client": "ndk",
+      "exit_code": 1,
+      "failure": "service error has no valid acceptance result",
+      "passed_before_failure": [
+        "remote bootstrap",
+        "independent FD lifetime",
+        "generated proxy error leaves sentinel -77 untouched"
+      ],
+      "fix": "Count is valid only if remote status is successful.",
+      "output_sha256": "1d2d91838f420dc89dad77401ba43a4d1458fd1cbc13777b0d9aa166c7b173d4"
+    },
+    {
+      "client": "rust",
+      "exit_code": 101,
+      "failure": "Accepted(1) != Uncertain { service_error: 17, transport_error: Ok }",
+      "passed_before_failure": [
+        "remote bootstrap",
+        "independent FD lifetime"
+      ],
+      "fix": "Generated proxy errors become an uncertain receipt without a count.",
+      "output_sha256": "2de6191e90e57ce9652a2847eb2f3c070ed4c127ac0b474ec66dfc30887dca98"
+    }
+  ],
+  "final_source_and_build_sha256": {
+    "android-framework/sdk/build-tools/android-37.0/aidl": "a4ad150a7cf6ea297c299cb779da7a58c537cfc07923d1e15ccbc554a30cd4ba",
+    "artifacts/camera-boundary/toolchain.json": "847334ac59488e2eb8f11f16d9c60a7639a3fb8e2b2dd5c46fdc160a46139720",
+    "artifacts/camera-boundary/public-headers.json": "b21e537dab35b30292e1aadec296167a068bf4eca8b5d9f4630c0b40111433d6",
+    "artifacts/camera-boundary/public-headers/android/binder_api_level_utils.h": "a6e8c5357e08e06ccbaff882d7f9c324868322a653ac4af2be7c9feed3101f73",
+    "artifacts/camera-boundary/public-headers/android/binder_auto_utils.h": "91a7587d9010e2bac7c6d347d78463fa15a193c025eae260c91b17e76ef9631d",
+    "artifacts/camera-boundary/public-headers/android/binder_enums.h": "a4f3b34f5478d5ad820e93eabfa0d5fe82e53a71727ad6f48b5932a043060189",
+    "artifacts/camera-boundary/public-headers/android/binder_interface_utils.h": "6a3437abc3edd1dbec4cc78d3e3360ee457b4bcca26776f13b0e33ad6c9ad666",
+    "artifacts/camera-boundary/public-headers/android/binder_internal_logging.h": "b3dc27d60e3c75629f231f94ab24779af9faeede2c4d605401179265d6d5eea8",
+    "artifacts/camera-boundary/public-headers/android/binder_parcel_utils.h": "159b2f59a84fcf988bd4dc3ced2b58b55de9f8e49681ab96722045ae61f8ec3c",
+    "artifacts/camera-boundary/public-headers/android/binder_parcelable_utils.h": "9c330de3ef09843d69d54116616efb52e7f442fb3bca28dc7d22f26c8f0fb869",
+    "artifacts/camera-boundary/public-headers/android/binder_to_string.h": "23eb9663863013f862ebe8cee5d1ee9ba48e89998b8795a36f0772c1f0d91048",
+    "framework/camerapeer/AndroidManifest.xml": "5b467b086c8422601714429a91157f6f173e5c5f29b0f4bd6ffa795465411ded",
+    "framework/camerapeer/Peer.java": "3096350b3536b8b8c1ffced6c9a8a51a751f59ecac3e37a7fe4ad7b48ba0db2c",
+    "framework/camerapeer/aidl/android/hardware/common/NativeHandle.aidl": "bda89ace51cfb22a84c6a9d6836776a459706debb2f2a4f398a768fcc5935976",
+    "framework/camerapeer/aidl/org/pokelinux/cameratest/ICameraBoundaryProbe.aidl": "0ec9f631e2eaadc7fde7ce1beae7ae2e2c7965bb23c518f7d0ad56e6a6c264b7",
+    "framework/camerapeer/client.cpp": "df860eb01d54d1ced14ccc5f59da7e91b1ea618417b0af5c5838152345e5567a",
+    "framework/camerapeer/peer.cpp": "027f8933d74a82de0b73cef9b2ba27089b6a4ff0c85184d83ecb03f457d344f2",
+    "framework/camerapeer/public-sources.json": "3518fc9e92ada2bd10c6811aa4a33ca2091a308ebfdd19879ef5ea8e95d3e635",
+    "artifacts/camera-boundary/ndk/android/hardware/common/NativeHandle.cpp": "ef305547e53b66b42833ce0c138da27a0e4090a74d425086f232ec1bca4340b2",
+    "artifacts/camera-boundary/ndk/org/pokelinux/cameratest/ICameraBoundaryProbe.cpp": "ad78d9bcdceb04fd9a9c664ff82eaf04c6df7b7bad510ff9f6a25a853f0ebb32",
+    "artifacts/camera-boundary/camera-ndk-client": "9f9fa185d4d2ec0b641b7ad91856fd85be2055f2ddaac958d77d22c353e68b56",
+    "artifacts/camera-boundary/apk/lib/x86_64/libcamera_boundary_peer.so": "6739f1d06a936806ba9465dbd7b1ffd45e38ff7f647a347aa2f0f97c93d54c20",
+    "artifacts/camera-boundary/peer.apk": "ddc164b9392b46073065b34c260ac596cb8d939a11aa27ab6a6c540fe3f341c2",
+    "native-camera-boundary/build.rs": "9b16d5a4590218fb1c93a9e7988cd4f15d75b8512a0f7e0a1272f55806336add",
+    "native-camera-boundary/src/bin/camera-binder-client.rs": "ae277b6510f5fad722c2299c3bc5c7318669a46b3e8c5ed9cd070c77ad5e524d",
+    "native-camera-boundary/src/lib.rs": "53cf7bbd98ddcf05ac73699a758c883c07ae22201566bb4d58dc54bdc344fd16",
+    "native-camera-boundary/Cargo.toml": "8304c1e7a0aa4b600085dd3d8835403e3eb1406f012b60b8735ddcc63c2ac6cf",
+    "native-camera-boundary/Cargo.lock": "c32332807e18484d3f99d47767481f7d28ed0d34375a42bfcc83a2fb2c6ee9ff",
+    "artifacts/camera-boundary/x86_64-unknown-linux-musl/release/camera-binder-client": "1744800e02d593095422ba63f038d549284f0e652924665209f87363f3143f0c",
+    "artifacts/camera-boundary/x86_64-unknown-linux-musl/release/build/pokelinux-camera-boundary-26ac501851f1b2b0/out/camera.rs": "e7f434300fe2220e0ad7323969764984a8ad085b8c5b73627de74dc52c09e0ff"
+  },
+  "cleanup": {
+    "container_id": "bfcdaef20df283b3593ea29683d5c27932c4dddbf0810874ff4de1359fd8adc7",
+    "owned_container_removed": true,
+    "owned_network_name": "pixel-framework-b472",
+    "owned_network_absent_at_check": true,
+    "cleanup_method": "framework-suite EXIT trap stopped and removed owned emulator and internal network; camera peer force-stopped in finally"
+  },
+  "boundaries": {
+    "separate_processes": true,
+    "real_kernel_binder": true,
+    "native_fd_objects": true,
+    "client_selinux": "u:r:shell:s0",
+    "selinux": "Enforcing",
+    "repeat_count_per_client": 64,
+    "pipe_wait_seconds": 2,
+    "death_wait_seconds": 5,
+    "client_outer_timeout_seconds": 25,
+    "service_specific_error": 17,
+    "server_local_count": 1,
+    "ndk_error_output_sentinel": -77,
+    "direct_local_call_used": false,
+    "byte_only_fd_fixture_used": false,
+    "vendor_abi_equality": false,
+    "factory_generated_library_execution": false,
+    "sync_file_verified": false,
+    "gralloc_verified": false,
+    "dma_completion_verified": false,
+    "arm64_camera_execution": false,
+    "physical_phone_accessed": false,
+    "production_camera_service_complete": false
+  }
+}
