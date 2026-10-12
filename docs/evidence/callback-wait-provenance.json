@@ -1,0 +1,44 @@
+{
+  "scope": "Blocking callback inbox wait, component-level terminal wakeup and actual Binder normal delivery",
+  "sources_sha256": {
+    "native-radio/src/receiver.rs": "0ced80fff3f9c04b2ced7035c8e3ae7a5072677c1059380af8bce8012d04b726",
+    "native-radio/src/bin/radio-ipc-test.rs": "5398eff080fffb3301f45b4a7ef9b1c31a4107337adbff3f2216bb7442ebdd62"
+  },
+  "binary_sha256": "03e55df15ad17362b1ed0ac22f311898e261651087c7034d442d56760bc5797b",
+  "output_sha256": "7f9cbfc7120e4f43203fe28a4c9caa3f97922787f341e29959e8dbd6d123145e",
+  "output": [
+    "radio-bootstrap\tPASS",
+    "radio-registration\tPASS",
+    "radio-indications\tPASS",
+    "radio-assembly\tPASS",
+    "radio-roundtrip\t0\tPASS",
+    "radio-roundtrip\t2048\tPASS",
+    "radio-roundtrip\t2049\tPASS",
+    "radio-roundtrip\t4096\tPASS",
+    "radio-callback-overflow\tPASS",
+    "radio-peer\t2386\t10234\tu:r:untrusted_app:s0:c234,c256,c512,c768",
+    "radio-clear-observed\tPASS"
+  ],
+  "component_tests": [
+    "idle_wait_expires_without_invalidating_stream",
+    "terminal_failure_wakes_owner_before_its_deadline",
+    "publisher_loss_wakes_owner_and_buffered_events_cannot_hide_failure"
+  ],
+  "component_targets": [
+    "x86_64-unknown-linux-musl",
+    "aarch64-unknown-linux-gnu under QEMU"
+  ],
+  "selinux_enforcing": true,
+  "not_verified": [
+    "Remote malformed-callback wakeup across processes",
+    "Production session owner shutdown, pending operations, epochs and recovery",
+    "Atomic publication versus invalidation",
+    "Suspend-aware event expiry",
+    "Physical device behavior"
+  ],
+  "phone_accessed": false,
+  "reproduce": [
+    "bash tools/build-native-radio.sh build",
+    "bash tools/framework-suite.sh radio-ipc"
+  ]
+}

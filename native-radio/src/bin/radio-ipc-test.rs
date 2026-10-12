@@ -61,18 +61,10 @@ impl Remotable for Watcher {
 }
 fn callback(events: &CallbackInbox) -> std::result::Result<RadioEvent, Box<dyn std::error::Error>> {
     let end = Instant::now() + Duration::from_secs(5);
-    loop {
-        if let Some(event) = events
-            .try_recv()
-            .map_err(|e| format!("receiver failure: {e:?}"))?
-        {
-            return Ok(event);
-        }
-        if Instant::now() >= end {
-            return Err("callback timeout".into());
-        }
-        std::thread::sleep(Duration::from_millis(5));
-    }
+    events
+        .recv_until(end)
+        .map_err(|e| format!("receiver failure: {e:?}"))?
+        .ok_or_else(|| "callback timeout".into())
 }
 fn report(peer: &SIBinder) -> Result<(i32, i32, i32, i32, i32, String)> {
     let data = peer

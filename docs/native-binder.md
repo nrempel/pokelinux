@@ -300,6 +300,14 @@ buffered events. This proves local inbox failure across actual Binder, not drive
 buffer exhaustion or session-owner recovery. Malformed argument tests reject
 truncation, null arrays and trailing fields on Linux and ARM64/QEMU.
 
+`CallbackInbox::recv_until` now waits directly on the bounded channel. Terminal
+failure drops its shared sender and wakes the wait; failure state is checked both
+before and after receiving so already-buffered events cannot hide an observed
+failure. Three Linux and ARM64/QEMU tests cover timeout without invalidation,
+terminal wakeup, publisher loss and buffered-event rejection. The wait deadline
+bounds blocking only; it does not establish event freshness, suspend-aware expiry
+or atomic publication against later invalidation. Those remain session-owner work.
+
 The old provenance above records the earlier request/response milestone. The
 [indication report](evidence/radio-indication-provenance.json) records this extension.
 Neither establishes actual vendor service behavior or production recovery.

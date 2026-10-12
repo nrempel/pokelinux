@@ -66,9 +66,13 @@ native radio registration now passes against the synthetic peer, along with raw
 and segmented round trips and observed teardown. The rest of these gates remain
 open except raw/segmented indication delivery and shared inbox overflow, now
 covered by the native endpoint. Single-candidate assembly also passes the real Binder path. Session-level
-reassembly lifetime, owner wakeup, pending
+reassembly lifetime, production owner integration, pending
 operation failure and reconnect are still required. The overflow test polls the
 endpoint failure state; it does not prove a production owner wakes correctly.
+The separate blocking inbox wait now passes component wakeup tests and normal
+real-Binder delivery. See [evidence](evidence/callback-wait-provenance.json).
+Next: explicit owner cancellation, remote malformed-callback wakeup, service death
+and epoch replacement, then deadline/aggregate-budget integration.
 
 ## Independent review
 

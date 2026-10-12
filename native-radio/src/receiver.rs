@@ -11,8 +11,9 @@ use std::{
     sync::{
         Arc, Mutex,
         atomic::{AtomicU8, Ordering},
-        mpsc::{self, Receiver, SyncSender, TryRecvError, TrySendError},
+        mpsc::{self, Receiver, RecvTimeoutError, SyncSender, TryRecvError, TrySendError},
     },
+    time::Instant,
 };
 
 pub const RESPONSE_DESCRIPTOR: &str =
@@ -48,6 +49,29 @@ pub struct CallbackInbox {
     failure: Arc<AtomicU8>,
 }
 impl CallbackInbox {
+    /// Wait without polling. Terminal failure closes the shared sender, waking
+    /// this wait even when no event can be enqueued. The deadline bounds waiting,
+    /// not event age or downstream publication; those remain owner policy.
+    pub fn recv_until(
+        &self,
+        deadline: Instant,
+    ) -> std::result::Result<Option<RadioEvent>, ReceiverFailure> {
+        if let Some(error) = failure(&self.failure) {
+            return Err(error);
+        }
+        let result = match self
+            .receiver
+            .recv_timeout(deadline.saturating_duration_since(Instant::now()))
+        {
+            Ok(event) => Ok(Some(event)),
+            Err(RecvTimeoutError::Timeout) => Ok(None),
+            Err(RecvTimeoutError::Disconnected) => Err(ReceiverFailure::PublisherGone),
+        };
+        if let Some(error) = failure(&self.failure) {
+            return Err(error);
+        }
+        result
+    }
     /// Never returns buffered responses once endpoint failure is observed.
     pub fn try_recv(&self) -> std::result::Result<Option<RadioEvent>, ReceiverFailure> {
         if let Some(error) = failure(&self.failure) {
@@ -206,5 +230,82 @@ pub fn new_radio_callbacks(capacity: NonZeroUsize) -> RadioCallbacks {
         ),
         indication: Binder::new_with_stability(RadioIndicationReceiver(shared), Stability::Vintf),
         events: CallbackInbox { receiver, failure },
+    }
+}
+
+#[cfg(test)]
+mod wait_tests {
+    use super::*;
+    use std::{
+        thread,
+        time::{Duration, Instant},
+    };
+    fn stream() -> (Arc<CallbackQueue>, CallbackInbox) {
+        let (sender, receiver) = mpsc::sync_channel(1);
+        let failure = Arc::new(AtomicU8::new(0));
+        (
+            Arc::new(CallbackQueue {
+                sender: Mutex::new(Some(sender)),
+                failure: failure.clone(),
+            }),
+            CallbackInbox { receiver, failure },
+        )
+    }
+    #[test]
+    fn idle_wait_expires_without_invalidating_stream() {
+        let (queue, inbox) = stream();
+        assert!(
+            inbox
+                .recv_until(Instant::now() + Duration::from_millis(5))
+                .unwrap()
+                .is_none()
+        );
+        assert_eq!(queue.failure(), None);
+        queue.fail(ReceiverFailure::MalformedCallback);
+        assert!(matches!(
+            inbox.recv_until(Instant::now()),
+            Err(ReceiverFailure::MalformedCallback)
+        ));
+    }
+    #[test]
+    fn terminal_failure_wakes_owner_before_its_deadline() {
+        let (queue, inbox) = stream();
+        let (started, ready) = mpsc::channel();
+        let (done, result) = mpsc::channel();
+        let worker = thread::spawn(move || {
+            started.send(()).unwrap();
+            done.send(inbox.recv_until(Instant::now() + Duration::from_secs(30)))
+                .unwrap();
+        });
+        ready.recv().unwrap();
+        queue.fail(ReceiverFailure::MalformedCallback);
+        assert!(matches!(
+            result.recv_timeout(Duration::from_secs(2)).unwrap(),
+            Err(ReceiverFailure::MalformedCallback)
+        ));
+        worker.join().unwrap();
+    }
+    #[test]
+    fn publisher_loss_wakes_owner_and_buffered_events_cannot_hide_failure() {
+        let (queue, inbox) = stream();
+        drop(queue);
+        assert!(matches!(
+            inbox.recv_until(Instant::now() + Duration::from_secs(30)),
+            Err(ReceiverFailure::PublisherGone)
+        ));
+        let (queue, inbox) = stream();
+        queue
+            .deliver(RadioEvent::Indication(RadioIndication {
+                message_id: 1,
+                slot_id: 0,
+                payload: vec![1],
+                kind: crate::indication::IndicationKind::Raw,
+            }))
+            .unwrap();
+        queue.fail(ReceiverFailure::QueueFull);
+        assert!(matches!(
+            inbox.recv_until(Instant::now() + Duration::from_secs(30)),
+            Err(ReceiverFailure::QueueFull)
+        ));
     }
 }
