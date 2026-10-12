@@ -1,0 +1,49 @@
+{
+  "source_revision": "ae33f1e",
+  "scope": "Post-relocation offline qualification; synthetic emulator, no physical device",
+  "commands": [
+    "bash tools/build-native-radio.sh build",
+    "bash tools/framework-suite.sh binder-kernel",
+    "bash tools/framework-suite.sh radio-ipc"
+  ],
+  "result": "pass",
+  "binary_sha256": "c4ae92476b8ca0b32818f58e536978f73f98d258808c9cf1a39e4f3b5fbef000",
+  "binder_dispatch_tests": 6,
+  "outputs": {
+    "owner-output.txt": [
+      "radio-bootstrap\tPASS",
+      "radio-owner-activation\tPASS",
+      "radio-owner-consumed-cancel\tPASS",
+      "radio-owner-consumed-replacement\tPASS",
+      "radio-owner-late-endpoint\tPASS",
+      "radio-owner-stop\tPASS"
+    ],
+    "registration-death-output.txt": [
+      "radio-bootstrap\tPASS",
+      "radio-registration-death\tDeadObject\tPASS"
+    ],
+    "ipc-output.txt": [
+      "radio-bootstrap\tPASS",
+      "radio-registration\tPASS",
+      "radio-indications\tPASS",
+      "radio-assembly\tPASS",
+      "radio-roundtrip\t0\tPASS",
+      "radio-roundtrip\t2048\tPASS",
+      "radio-roundtrip\t2049\tPASS",
+      "radio-roundtrip\t4096\tPASS",
+      "radio-callback-overflow\tPASS",
+      "radio-peer\t2824\t10234\tu:r:untrusted_app:s0:c234,c256,c512,c768",
+      "radio-clear-observed\tPASS",
+      "radio-late-callback\tandroid.os.DeadObjectException\tPASS",
+      "radio-malformed-wakeup\tPASS",
+      "radio-owner-cancel\tPASS",
+      "radio-service-death\tPASS",
+      "radio-already-dead\tPASS"
+    ]
+  },
+  "limits": [
+    "No real modem or IMS acceptance",
+    "No physical graphics, camera, audio or power verification",
+    "Owned transport worker and lifetime deadlines remain unfinished"
+  ]
+}

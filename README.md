@@ -146,7 +146,7 @@ bash tools/framework-suite.sh shannon-codec  # Requires exact local Shannon APK
 
 Read the scripts and [framework report](docs/android-framework-tests.md) before running the larger suites. They use dedicated containers and emulators. Temporary build servers are validation capacity, not runtime dependencies. No instruction here authorizes flashing a phone.
 
-Development can run on a remote Linux build host. See [remote development](docs/remote-development.md) for setup and handoff guidance.
+Development can run on a remote Linux build host. Native builds, component tests and Binder/radio IPC qualification pass from the relocated checkout. See [remote development](docs/remote-development.md) for setup and handoff guidance.
 
 ## Source map
 

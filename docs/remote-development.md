@@ -27,8 +27,11 @@ bash tools/framework-suite.sh radio-ipc
 
 The first command checks formatting, Clippy, x86_64 and ARM64 component tests
 under QEMU, and release builds. It passed after relocating the development
-checkout. The other commands use a prepared Android emulator and real Binder
-with a synthetic peer. They do not prove real modem, carrier, camera, GPU or
+checkout. Both Binder qualification commands also passed after the move: six
+dispatch tests, six owner scenario markers, registration death, and all sixteen
+ordinary IPC markers. The tested binary hash matches the existing owner evidence.
+See [relocation evidence](evidence/remote-workspace-provenance.json). These tests
+use a prepared Android emulator and real Binder with a synthetic peer. They do not prove real modem, carrier, camera, GPU or
 power behavior. No physical phone access is authorized.
 
 Coordinate changes through Git. Review untracked files before staging; private
