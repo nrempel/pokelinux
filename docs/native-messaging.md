@@ -127,7 +127,11 @@ Implement authenticated permission admission, durable conversations/drafts,
 transport receipt qualification, receive deduplication, uncertain-result
 reconciliation, a background
 owner and native Messages UI using the live Omarchy theme. Recover the actual
-modem/IMS send, receive and status-report contracts. Test installed service and
+modem/IMS send, receive and status-report contracts. The
+[SMS transport report](native-sms-transport.md) now recovers the frozen standard
+V3 ABI and records50 original Shannon codec/tracker outcomes plus8 message IDs.
+Those tests do not qualify a modem adapter, receive acknowledgement replay or
+unique delivery correlation. Test installed service and
 UI restart, locked/closed-window notification behavior and revocation. No
 implicit retransmission is permitted after an uncertain send. Audit MMS, SMSC,
 carrier policy and national-language encodings before promising support.

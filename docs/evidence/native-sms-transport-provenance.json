@@ -1,0 +1,336 @@
+{
+  "date_utc": "2026-10-12",
+  "host": "Harbour",
+  "scope": "Public Android17 frozen standard SMS ABI plus static REA and isolated original APK codec/local tracker execution",
+  "targets": {
+    "ShannonIms.apk": "8b017599727398e80df5ab618d648890dcdc34b5fe2ba71fb2331e51bd8b8879",
+    "libril_sitril.so": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+    "libsitril.so": "a92bebfa7152356f27a925960ddd11736a0ad55cff9786997550d4d2a49105cd"
+  },
+  "factory_vintf_sha256": "1cfc70c2095ec46bba6c25df619578eb1026973c35015c0f60ee885780796338",
+  "standard_messaging": {
+    "release_tag": "android-17.0.0_r1",
+    "frozen_version": 3,
+    "hash": "30b0bc0e84679bc3b5ccb3a52da34c47cda6b7eb",
+    "declared_instances": [
+      "IRadioMessaging/slot1",
+      "IRadioMessaging/slot2"
+    ],
+    "factory_runtime_hash_verified": false
+  },
+  "public_sources": [
+    {
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio.messaging/3/android/hardware/radio/messaging/IRadioMessaging.aidl",
+      "sha256": "f5f8b5d2ace36dcb34e232778d35f3c7854dd89a3038811237275e67cbce8e39"
+    },
+    {
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio.messaging/3/android/hardware/radio/messaging/IRadioMessagingResponse.aidl",
+      "sha256": "324ce4320a3ba13a59de11156e2e44c50da94f8e150e64cdde2b8edbe6fcd52c"
+    },
+    {
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio.messaging/3/android/hardware/radio/messaging/IRadioMessagingIndication.aidl",
+      "sha256": "31c12781991bb2374fcd24ac2548fcddd57fbc3cda25d0f0af16d260a87f54ff"
+    },
+    {
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio.messaging/3/android/hardware/radio/messaging/GsmSmsMessage.aidl",
+      "sha256": "73d1cb72522828997e25f29ef7a23f9aeec88ee2ba761bab08a63b8d00e2e742"
+    },
+    {
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio.messaging/3/android/hardware/radio/messaging/ImsSmsMessage.aidl",
+      "sha256": "f431959c5bb98afce0d8cb87b9a398b52354bef985f4cf9cb970dea97d7e03f5"
+    },
+    {
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio.messaging/3/android/hardware/radio/messaging/SendSmsResult.aidl",
+      "sha256": "4ed9daaaf901ecf2689fb248ae3fb8b40da2fe8645bd78af2d9a57e5a853eaee"
+    },
+    {
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio.messaging/3/android/hardware/radio/messaging/SmsAcknowledgeFailCause.aidl",
+      "sha256": "8cf93485c7c44d36b92e1be57b9dc2243afa1d25e9b24a57f08a995be2230669"
+    },
+    {
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/aidl_api/android.hardware.radio.messaging/3/.hash",
+      "sha256": "292ab8eef9f19712b3fbf1db3166de55d29358d8dc2339a66e108e2d24998258"
+    },
+    {
+      "url": "https://android.googlesource.com/platform/frameworks/base/+/android-17.0.0_r1/telephony/java/android/telephony/ims/aidl/IImsSmsListener.aidl",
+      "sha256": "981a7ca61de3df7ee2a6955990b6e8cea2004d8cc9a33aafcc776d24b7a2624a"
+    },
+    {
+      "url": "https://android.googlesource.com/platform/frameworks/base/+/android-17.0.0_r1/telephony/java/android/telephony/ims/stub/ImsSmsImplBase.java",
+      "sha256": "4eaeb949a587c3f8aa74623c0a38cd998b64acecda01f6889f7481e81c5ffce5"
+    },
+    {
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/android/hardware/radio/RadioResponseInfo.aidl",
+      "sha256": "10a71df5c50652399885716cbdc061ad7a2608f383789e0ebeed8ef422dfaf41"
+    },
+    {
+      "url": "https://android.googlesource.com/platform/hardware/interfaces/+/android-17.0.0_r1/radio/aidl/android/hardware/radio/RadioResponseType.aidl",
+      "sha256": "777846847f286fa075bbed7f527c2324dd54d3227cf04c3a5dd6ca6e69e62eca"
+    }
+  ],
+  "tools": {
+    "REA": "6.4.0",
+    "JADX": "0.7.1",
+    "JADX_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+    "Ghidra": "12.1.4"
+  },
+  "findings": [
+    {
+      "id": "submit-fixed-areas",
+      "claim": "Original request codec uses 260 bytes: unsigned-length byte and fixed12 SMSC area; length byte and fixed244 payload area; SMS type byte and geolocation byte. Token changes do not affect payload.",
+      "evidence_ids": [
+        "ev_feb354b694c5d77c41e7ce8ed7240d9eb9a1caca9e422ad2ab6e0c60313be3c7",
+        "ev_1fdeaf2d6c806c1848c6415efef4c68317e1a9474f7e250ae5de0162ca2d17bb"
+      ],
+      "runtime_corroborated": true
+    },
+    {
+      "id": "response-fixed-area-signed-length",
+      "claim": "Original response parser reads int message reference, signed acknowledgement-length byte, fixed244 acknowledgement area and int error. Length128 becomes -128;244 becomes -12.",
+      "evidence_ids": [
+        "ev_97d3fcefa62afa89c6901b52c37fd388010961462a6417ab32cf20e091fb6950",
+        "ev_ff102afd88c3e2f55242bee292261b9cda24d7baf1dd05777428d3657e948f06"
+      ],
+      "runtime_corroborated": true
+    },
+    {
+      "id": "receive-wrapper",
+      "claim": "Original receive/status wrapper has unsigned byte TPID, unsigned byte length capped244, fixed244 payload area and optional verification byte.",
+      "evidence_ids": [
+        "ev_a4332647ac7a57a1f747d6239ffed0d9a85f760a15274f9559d26a78bddacf6a",
+        "ev_25304479b37410c167a740276515795382812784fc6b400f8f01beaf33a4a1fd"
+      ],
+      "runtime_corroborated": true
+    },
+    {
+      "id": "ack-fields",
+      "claim": "Original acknowledgement payload is little-endian int result, low byte TPID, little-endian int cause.",
+      "evidence_ids": [
+        "ev_40b0f476c1015167b43fa5fcae3287668cec871422cad7f6195f6fc1b4477335",
+        "ev_cccd9426f762cf0b2a65a87b052b7dafcc6ef3dc5049323db77b851efbb169ae"
+      ],
+      "runtime_corroborated": true
+    },
+    {
+      "id": "ack-local-removal",
+      "claim": "Original report acknowledgement removes the token tracker before dispatch; a controlled null adaptor fails after removal and a duplicate then returns without retry. This is not remote idempotence.",
+      "evidence_ids": [
+        "ev_c7701ad96f08acfee747a13d944564c247a0dd9c1a356d66269f5deeca986e4b",
+        "ev_99243f1baf4aac93fefc1eb9adde5b7ee6165ed9787a15461f91aa646e588683"
+      ],
+      "runtime_corroborated": true
+    },
+    {
+      "id": "identity-distinction",
+      "claim": "Incoming callback creates a local key and stores vendor TPID separately. Status report searches trackers by message reference; two equal references return one tracker in the controlled oracle.",
+      "evidence_ids": [
+        "ev_823d4b0ac4ec953a6b8ac7f36e3460a1909a102a62cf53ba97a30e547708f768",
+        "ev_d7ff4ee714c8f201ba177233ed80dccba8c7241db520415bdff07d0e1c55a421",
+        "ev_f414763c4b28a0054ce12d88ab161f608e942dea23515b9e48d0f97267fdd59f",
+        "ev_3e2dcc5d3dfa25c3a6a3a8f8c6148a5b43d948ea48705d38090254d8f3a660df"
+      ],
+      "runtime_corroborated": false,
+      "runtime_component": "Controlled message-reference collision corroborated; receive-key creation remains static evidence."
+    },
+    {
+      "id": "ims-provisioning",
+      "claim": "Focused normal GSM send path checks SMS_OVER_IP provisioned value1; this is not proof of carrier registration.",
+      "evidence_ids": [
+        "ev_2c12703fd96bd7c51d7f954bd57b3793c82a5a0d40d6af519bd06179b02b5a12",
+        "ev_91027b4ec8deb96c5c041b9cd5e2a45fec1abb68fca79e1edc9b722a83dcd668"
+      ],
+      "runtime_corroborated": false
+    },
+    {
+      "id": "003-sendSms",
+      "claim": "Factory standard send forwarder constructs HIDL strings and delegates through an indirect target; no modem acceptance proof.",
+      "evidence_ids": [
+        "ev_d910df9e9c2aa62208b7f40c4652d8cf481d0dc8fa0309f73ad6cedf453b216c"
+      ],
+      "procedure_address": "0x216640",
+      "target_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "value_flow_truncated": false,
+      "runtime_corroborated": false
+    },
+    {
+      "id": "004-ackLast",
+      "claim": "Factory standard last-incoming acknowledgement forwards through an indirect target; no replay/idempotence proof.",
+      "evidence_ids": [
+        "ev_952a6f229c4cea6e729ae7f9a8ff490b193aabe288d697465343b50fcfff463e"
+      ],
+      "procedure_address": "0x215fd0",
+      "target_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "value_flow_truncated": false,
+      "runtime_corroborated": false
+    },
+    {
+      "id": "007-setCallbacks",
+      "claim": "Factory callback setup retains callback references and configures response/indication hooks; no acknowledged registration or cleanup proof.",
+      "evidence_ids": [
+        "ev_0a91a4780ba2a307bf9b08241c128b61cc0e64c90ecb57b1e8394916122e59fc"
+      ],
+      "procedure_address": "0x20ee20",
+      "target_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "value_flow_truncated": false,
+      "runtime_corroborated": false
+    },
+    {
+      "id": "009-publish",
+      "claim": "Factory publication invokes declared-service checks and addService; declarations are not observed hardware service availability.",
+      "evidence_ids": [
+        "ev_94e95ab1884053f8e2c7df0f82e07f957c27f5eb21647a7e3e55285b19bd6aa9"
+      ],
+      "procedure_address": "0x20f480",
+      "target_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "value_flow_truncated": false,
+      "runtime_corroborated": false
+    },
+    {
+      "id": "014-core-send",
+      "claim": "Core SMS send invokes protocol SMS request builder.",
+      "evidence_ids": [
+        "ev_22cd644fb60000df25e193f0498f181a835eaac172a4e63cef10d843b6c6df16"
+      ],
+      "procedure_address": "0x26dac0",
+      "target_sha256": "a92bebfa7152356f27a925960ddd11736a0ad55cff9786997550d4d2a49105cd",
+      "value_flow_truncated": false,
+      "runtime_corroborated": false
+    },
+    {
+      "id": "015-core-send-done",
+      "claim": "Core SMS completion obtains protocol errors and reference, then uses SMS error mappers; full completion/delivery semantics remain unqualified.",
+      "evidence_ids": [
+        "ev_1ce5eaaf8d4d48f30f73e30d99e9c939d8af9a7b15f4b78efd7fedcde4b39c1f"
+      ],
+      "procedure_address": "0x26ddf0",
+      "target_sha256": "a92bebfa7152356f27a925960ddd11736a0ad55cff9786997550d4d2a49105cd",
+      "value_flow_truncated": false,
+      "runtime_corroborated": false
+    },
+    {
+      "id": "016-core-ack",
+      "claim": "Core acknowledgement invokes protocol SMS acknowledgement builder.",
+      "evidence_ids": [
+        "ev_a951b775fd1c22f79bd9c3de570a70b3c6fc01ba3adad0ee42aed4975b853a93"
+      ],
+      "procedure_address": "0x26e070",
+      "target_sha256": "a92bebfa7152356f27a925960ddd11736a0ad55cff9786997550d4d2a49105cd",
+      "value_flow_truncated": false,
+      "runtime_corroborated": false
+    },
+    {
+      "id": "018-core-new",
+      "claim": "Core incoming path has SMS class/SMSC/TPDU parsing and delayed work; durable replay identity remains unqualified.",
+      "evidence_ids": [
+        "ev_8798ee77bda827ec315faae24af90a1795ed58775d59d1fe9d4aa8c344057888"
+      ],
+      "procedure_address": "0x270090",
+      "target_sha256": "a92bebfa7152356f27a925960ddd11736a0ad55cff9786997550d4d2a49105cd",
+      "value_flow_truncated": false,
+      "runtime_corroborated": false
+    },
+    {
+      "id": "019-core-status",
+      "claim": "Core status report obtains protocol PDU separately from send completion.",
+      "evidence_ids": [
+        "ev_6a50a7910fcf3064ba44c9f3bae8ee17a24b18da6eda7b15e3c5a6045ef4adae"
+      ],
+      "procedure_address": "0x26df70",
+      "target_sha256": "a92bebfa7152356f27a925960ddd11736a0ad55cff9786997550d4d2a49105cd",
+      "value_flow_truncated": false,
+      "runtime_corroborated": false
+    }
+  ],
+  "runtime": {
+    "suite_action": "sms-transport-oracle",
+    "evidence_class": "original APK bytecode in owned x86_64 SDK37 emulator; controlled in-process local objects",
+    "exit_code": 0,
+    "source_sha256": {
+      "framework/shannon-oracle/SmsTransportOracle.java": "2302181a641804b38b3eead22b6598573858b5ec537258520f2c3689dca9b66a",
+      "framework/tests/sms_transport_oracle.py": "f8eddd46f24b39444a15e1df3ad305a608471e9060d8b93d6568a6cb969c5130"
+    },
+    "oracle_jar_sha256": "f9807e50ab25d0c7ae9f89a5304516a8375e7ce836ae82be162b33eb6c98880c",
+    "output_sha256": "df1007b69b9ec31b844948f5906ce5f4ce371efe89d7a13fb47f9729bd03815e",
+    "image_fingerprint": "google/sdk_gphone64_x86_64/emu64xa:17/CE2A.260420.019/15611780:userdebug/dev-keys",
+    "fixture_counts": {
+      "submit": 20,
+      "ack": 5,
+      "response": 5,
+      "incoming": 16,
+      "tracker": 4,
+      "message-id": 8,
+      "complete": 1
+    },
+    "signed_acknowledgement_lengths": [
+      [
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "1"
+      ],
+      [
+        "127",
+        "127"
+      ],
+      [
+        "128",
+        "-128"
+      ],
+      [
+        "244",
+        "-12"
+      ]
+    ],
+    "tracker_outcomes": [
+      "token-replacement",
+      "message-reference-collision",
+      "remove-before-failed-ack-no-local-retry",
+      "discard-ack"
+    ],
+    "message_ids": {
+      "RILC_REQ_AIMS_SEND_SMS": 121,
+      "RILC_REQ_AIMS_SEND_SMS_ACK": 123,
+      "RILC_REQ_AIMS_SEND_ACK_INCOMING_SMS": 124,
+      "RILC_REQ_AIMS_SEND_ACK_INCOMING_CDMA_SMS": 134,
+      "RILC_REQ_AIMS_CDMA_SEND_SMS": 144,
+      "RILC_UNSOL_AIMS_NEW_SMS": 3016,
+      "RILC_UNSOL_AIMS_NEW_SMS_STATUS_REPORT": 3017,
+      "RILC_UNSOL_AIMS_NEW_CDMA_SMS": 3022
+    },
+    "red_observations": [
+      "Initial launcher exited134 before oracle implementation",
+      "First implemented run passed46 codec rows, then fixture setup rejected HashMap for original ConcurrentHashMap; corrected rerun passed"
+    ],
+    "boundary_limits": [
+      "Null request channel; no request send invoked",
+      "ImsSms constructors bypassed; local tracker map/logger injected",
+      "Report-ack failure uses null adaptor; no successful acknowledgement dispatch",
+      "No original Shannon service, radio endpoint, modem or carrier execution"
+    ]
+  },
+  "private_artifacts": "Ignored artifacts/sms-transport-audit; per-request REA evidence retained; preserved input snapshots copied, not modified",
+  "cleanup": {
+    "native_broker_container_id": "1a07cbae0596a54a92c863d51039ac361705bfdbeb8fa4b882c52e5951a3a76a",
+    "wrapper_close_request": "011-close-wrapper",
+    "core_close_request": "022-close-core",
+    "broker_exit_request": "023-exit",
+    "broker_exit_acknowledged": true,
+    "container_exit_code": 0,
+    "container_reaped_and_removed": true,
+    "framework_suite_exit_code": 0,
+    "framework_shared_owner_released": true
+  },
+  "remaining": [
+    "Factory runtime interface version/hash and callback ownership qualification",
+    "Real remote standard-SMS Binder request/callback boundary and epoch/serial fencing",
+    "Qualified send acceptance and negative not-submitted error mappings",
+    "Safe modem acknowledgement replay/reset and durable receive identity",
+    "Status-report framing/parser and recipient/reference/slot correlation under collisions and restart",
+    "Shannon IMS registration, carrier provisioning, service/dependency and hardware contracts"
+  ],
+  "physical_phone_accessed": false,
+  "vendor_target_executed": false,
+  "proprietary_source_published": false
+}

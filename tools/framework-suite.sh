@@ -31,7 +31,7 @@ case "$action" in
   docker build -t "$image" -f build-support/Dockerfile.framework build-support
   docker run --rm --network none --cpus 4 --memory 6g --pids-limit 512 --cap-drop ALL --security-opt no-new-privileges --user "$(id -u):$(id -g)" -v "$PWD:/workspace" "$image" bash tools/build-framework.sh
   ;;
- test|enrollment|callui|gui|plugin|direct|journal|radio-baseline|rust|shannon-codec|sms-codec|binder-kernel|radio-ipc|camera-binder)
+ test|enrollment|callui|gui|plugin|direct|journal|radio-baseline|rust|shannon-codec|sms-codec|sms-transport-oracle|binder-kernel|radio-ipc|camera-binder)
   if [ "$action" = rust ]; then bash tools/build-qt-android-tests.sh; fi
   if [ "$action" = camera-binder ]; then bash tools/build-native-camera-boundary.sh; fi
   if docker container inspect "$name" >/dev/null 2>&1 || docker network inspect "$name" >/dev/null 2>&1; then
@@ -65,6 +65,11 @@ case "$action" in
   container_created=1
   docker inspect "$name" > android-framework/results/container.json
   docker network inspect "$name" > android-framework/results/network.json
+  if [ "$action" = sms-transport-oracle ]; then
+   docker exec "$name" bash tools/build-shannon-oracle.sh
+   docker exec "$name" python3 framework/tests/sms_transport_oracle.py
+   exit 0
+  fi
   if [ "$action" = sms-codec ]; then
    docker exec "$name" bash tools/build-shannon-oracle.sh
    docker exec "$name" python3 framework/tests/sms_codec.py

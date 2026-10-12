@@ -71,6 +71,16 @@ tests and x86/ARM64 user-QEMU builds pass. Parts are parsed only; durable incomi
 deduplication/assembly, vendor acknowledgement, delivery and UI remain open.
 See `evidence/sms-receive-provenance.json`.
 
+The frozen standard SMS messaging V3 contract is now recovered. An isolated
+original Shannon APK oracle passes50 codec/tracker outcomes and records8 message
+IDs without radio dispatch or service startup. Signed response lengths, token
+reuse, message-reference ambiguity and removal before failed acknowledgement
+are explicit observations. Last-incoming GSM acknowledgement has no durable
+receive identity; replay after reconnect remains forbidden without qualification.
+See `native-sms-transport.md` and its provenance. The next synthetic frozen Binder
+boundary must distinguish one-way return/intermediate ACK from an exact final
+send callback, preserve durable uncertainty and fence old endpoint generations.
+
 Focused REA/public-source investigations now recover camera AIDL4, audio core4,
 Power7 and Sensors3. Selected audio/power/sensor frozen hashes match shipped
 libraries; camera hash equality remains open. Camera failed-return/count and
@@ -135,6 +145,7 @@ bash tools/build-native-power.sh build
 bash tools/build-native-audio.sh build
 bash tools/build-native-audio.sh integration artifacts/native-audio/NEW_RUN
 bash tools/framework-suite.sh sms-codec
+bash tools/framework-suite.sh sms-transport-oracle
 bash tools/framework-suite.sh binder-kernel
 bash tools/framework-suite.sh radio-ipc
 # In the prepared network-disabled graphics simulation container:
