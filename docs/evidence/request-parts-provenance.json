@@ -1,0 +1,37 @@
+{
+  "scope": "Native request planning only; no Binder or modem transport",
+  "targets": [
+    "x86_64-unknown-linux-gnu",
+    "aarch64-unknown-linux-gnu (QEMU user)"
+  ],
+  "reconstruction_lengths": {
+    "first": 2049,
+    "last": 16385,
+    "count": 14337
+  },
+  "original_codec_comparisons": 207,
+  "raw_payload_lengths": [
+    0,
+    1,
+    2047,
+    2048
+  ],
+  "original_boundary_lengths": [
+    2049,
+    4095,
+    4096,
+    4097,
+    6144
+  ],
+  "corrects_original_exact_multiple_data_loss": true,
+  "vendor_acceptance_verified": false,
+  "phone_accessed": false,
+  "sha256": {
+    "native-ims/src/lib.rs": "24f03afc36ac19d6da822c3fa911247320e50774dee1325162e1bba2ab6867c6",
+    "native-ims/src/requests.rs": "ad0b411f0f385d620df18a7a206034199e9cf9d390b13c13925f19e347cba26f",
+    "native-ims/tests/request_parts.rs": "fa924efa9333150cf9842e7dad36babf67b6c7432ea5b811d0ba5673f078eb3e",
+    "native-ims/Cargo.lock": "6aa52824cf4c8784c9ab049bceadc5e9fa60a9bee95e506d4804659f4fec2eb6",
+    "artifacts/ims-native-audit/request-parts-x86_64-unknown-linux-gnu.log": "840886bfad485ea00bf77c20c888fe918db37132979be421dd855360eb81d224",
+    "artifacts/ims-native-audit/request-parts-aarch64-unknown-linux-gnu.log": "6e12ec15f8a6912125efad41a2542ac06f52d67e39ae341e8258bb986a97a573"
+  }
+}

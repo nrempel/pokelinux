@@ -1,6 +1,8 @@
 //! Native IMS protocol components recovered against original-code fixtures.
 //! No modem transport or IMS registration implementation exists yet.
 
+pub mod requests;
+
 /// Little-endian scalar encoding used by the audited Shannon DataWriter.
 /// Narrow writes retain low bits, including for negative Java int inputs.
 #[derive(Default)]

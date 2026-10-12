@@ -203,3 +203,24 @@ The native implementation must preserve the complete payload. These observations
 are regression evidence about the original implementation, not a requirement to
 reproduce its data loss. A corrected splitter still needs vendor-endpoint and
 hardware validation before protocol compatibility can be claimed.
+
+## Native lossless request splitting
+
+`native-ims::requests::RequestParts` now selects a single raw request for payloads
+of zero through 2,048 bytes and indexed segments for larger payloads. It borrows
+the input bytes, preserves the complete payload and carries the original signed
+full length on each segment. Lengths outside the signed 32-bit field are rejected
+before iteration. Null payloads are not represented by this API.
+
+The Rust code intentionally differs from the original at exact multiples: 4,096
+bytes become two complete 2,048-byte segments, not a full segment and an empty
+one. Tests compare the observed non-multiple boundaries and require lossless
+behavior at the defective boundaries. A reconstruction test checks every length
+from 2,049 through 16,385, including indices, total lengths, content, segment
+bounds, borrowed storage and iterator exhaustion. Raw empty/threshold cases and
+signed length overflow are checked separately.
+
+This is a native request planner, not a Binder transport. It does not implement
+service discovery, callback handling, request correlation, retries or vendor
+acceptance. Those must be verified through the production transport before any
+claim of working native radio communication.
