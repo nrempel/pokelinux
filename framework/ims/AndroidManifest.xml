@@ -1,0 +1,9 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.omarchy.imsfixture">
+ <uses-sdk android:minSdkVersion="37" android:targetSdkVersion="37" />
+ <application android:label="IMS lifecycle test fixture" android:allowBackup="false">
+  <service android:name=".TestImsService" android:exported="true" android:permission="android.permission.BIND_IMS_SERVICE">
+   <meta-data android:name="org.omarchy.fixture" android:value="true" />
+   <intent-filter><action android:name="android.telephony.ims.ImsService" /></intent-filter>
+  </service>
+ </application>
+</manifest>

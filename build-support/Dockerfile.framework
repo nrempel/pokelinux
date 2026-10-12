@@ -1,0 +1,4 @@
+FROM pixel-hardware-audit:20261011-b472
+RUN apt-get update && apt-get install -y --no-install-recommends openjdk-21-jdk-headless libnss3 libx11-6 libxcb1 libxcomposite1 libxcursor1 libxi6 libxtst6 libpulse0 libglu1-mesa unzip zip && rm -rf /var/lib/apt/lists/*
+ENV ANDROID_SDK_ROOT=/workspace/android-framework/sdk ANDROID_HOME=/workspace/android-framework/sdk HOME=/workspace/android-framework/home
+WORKDIR /workspace

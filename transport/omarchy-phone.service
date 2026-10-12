@@ -1,0 +1,18 @@
+[Unit]
+Description=Omarchy Android phone bridge
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/omarchy-phoned --enrollment %E/omarchy-phone/enrollment --runtime %t/omarchy-phone --state %S/omarchy-phone
+RuntimeDirectory=omarchy-phone
+RuntimeDirectoryMode=0700
+StateDirectory=omarchy-phone
+StateDirectoryMode=0700
+Restart=on-failure
+RestartSec=2
+TimeoutStopSec=10
+UMask=0077
+NoNewPrivileges=yes
+
+[Install]
+WantedBy=default.target

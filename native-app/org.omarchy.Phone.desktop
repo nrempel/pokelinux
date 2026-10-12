@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Phone
+Comment=Calls through the paired Android bridge
+Exec=omarchy-phone-app
+Icon=call-start
+Terminal=false
+Categories=Network;Telephony;
+StartupNotify=true

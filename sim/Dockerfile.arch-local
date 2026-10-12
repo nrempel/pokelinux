@@ -1,0 +1,11 @@
+# Import the rootfs pinned by tools/download-sim.sh before building this image.
+# Docker Desktop LinuxKit lacks Landlock. Disable only pacman filesystem
+# download sandboxing for this disposable image build; keep signature checks,
+# the unprivileged download user and syscall sandbox.
+# Validation userspace only: this does not boot systemd or model Pixel hardware.
+FROM pixel-phone-arch-base:202608-pinned
+RUN printf 'Server = https://de3.mirror.archlinuxarm.org/$arch/$repo\n' > /etc/pacman.d/mirrorlist \
+    && pacman-key --init \
+    && pacman-key --populate archlinuxarm \
+    && pacman -Syu --disable-sandbox-filesystem --noconfirm --needed qt6-base qt6-declarative qt6-wayland cmake ninja gcc dbus ttf-dejavu \
+    && pacman -Q > /arch-validation-packages.txt

@@ -1,0 +1,22 @@
+--- a/hybris/common/q/linker_soinfo.cpp
++++ b/hybris/common/q/linker_soinfo.cpp
+@@ -438,7 +438,7 @@
+ // Defined somewhere else in this linker.
+ extern "C" void* android_dlsym(void* handle, const char* symbol);
+ 
+-void (*bionic___system_properties_init)(void) = NULL;
++int (*bionic___system_properties_init)(void) = NULL;
+ 
+ void soinfo::call_constructors() {
+   if (constructors_called) {
+@@ -447,7 +447,9 @@
+ 
+   if (soname_ != nullptr && strcmp(soname_, "libc.so") == 0) {
+     DEBUG("HYBRIS: =============> Skipping libc.so (but initializing properties)\n");
+-    bionic___system_properties_init = (void(*)())android_dlsym(this, "__system_properties_init");
++    bionic___system_properties_init = (int(*)())_get_hooked_symbol("__system_properties_init", get_realpath());
++    if (!bionic___system_properties_init)
++        bionic___system_properties_init = (int(*)())android_dlsym(this, "__system_properties_init");
+     if (!bionic___system_properties_init) {
+         fprintf(stderr, "Could not initialize android system properties!\n");
+         abort();

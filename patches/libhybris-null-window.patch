@@ -1,0 +1,14 @@
+--- a/hybris/egl/egl.c
++++ b/hybris/egl/egl.c
+@@ -442,6 +442,11 @@
+ 	HYBRIS_TRACE_BEGIN("hybris-egl", "eglCreateWindowSurface", "");
+ 	struct _EGLDisplay *display = hybris_egl_display_get_mapping(dpy);
+ 	win = ws_CreateWindow(win, display);
++	if (!win) {
++		__eglHybrisSetError(EGL_BAD_NATIVE_WINDOW);
++		HYBRIS_TRACE_END("hybris-egl", "eglCreateWindowSurface", "");
++		return EGL_NO_SURFACE;
++	}
+ 
+ 	assert(((struct ANativeWindow *) win)->common.magic == ANDROID_NATIVE_WINDOW_MAGIC);
+ 

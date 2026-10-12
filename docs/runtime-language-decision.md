@@ -1,0 +1,69 @@
+# Runtime language decision
+
+2026-10-12 UTC. First-principles review requested by Nicholas, including a preference to keep Java only where Android integration needs it.
+
+## Updated target — 12 October 2026
+
+The later explicit user instruction supersedes the Android-retention rows below:
+required phone userspace services are to be implemented in Rust. Use REA for
+closed-source behaviour recovery across IMS, camera, power, SMS and other
+subsystems. Keep Google's matched kernel, drivers and firmware initially.
+The earlier bridge architecture below is historical test infrastructure, not
+the final completion target. See `smartphone-goal.md` for authoritative scope.
+
+## Earlier recommended target
+
+| Layer | Language | Reason |
+|---|---|---|
+| Linux phone/platform services and command clients | Rust | Explicit state types, ownership of resources and concurrent work, native ARM64 deployment, bounded IPC and durable state |
+| Native app presentation | QML / Qt Quick Controls, with a small compiled adapter where needed | Matches Omarchy shell technology and permits independent app processes; see `ui-framework-decision.md` |
+| Omarchy shell integration | Thin Quickshell/QML plugin | Uses the actual shell plugin and live theme interfaces |
+| Android framework edge | Small Java adapter | Public Telecom/InCallService, permissions, roles, lifecycle and AndroidKeyStore remain Android-owned |
+| Graphics/camera/vendor ABI edge | Existing C/C++, or narrowly scoped Rust FFI where it improves ownership | EGL, native camera, vendor libraries and Qt interfaces define the boundary; do not rewrite stable ABI glue for language uniformity |
+| Build, audit and test tools | Python and shell | Useful orchestration without making the phone runtime depend on the test tools |
+
+This is a target decision, not a claim that a Rust replacement already exists. Current production candidates still use Python on Arch and Java on Android. Rust is suitable, but adopting it requires integration proof rather than a syntax translation.
+
+Nicholas subsequently accepted this decision and instructed completion with no backwards compatibility. The clean Rust protocol/socket/journal components now pass twenty-seven component tests on Harbour native Linux and twenty-six under ARM64 QEMU user-mode; saved source hashes match. Native tests include actual process termination after durable admission. Separate real emulator tests now verify Rust mTLS observations and strict Android request parsing on both architectures. This is not yet a daemon or a replacement release. The existing packaged Python runtime is historical verification material while the target is built, not a promised compatibility path or a second target to maintain.
+
+## Why change the Linux runtime choice
+
+Python provides sockets, TLS, SQLite and process tooling with little build setup. It made the current adapter, emulator environment and failure tests straightforward to exercise. That is a useful development benefit, but it is not sufficient reason to keep it as the default for an expanding smartphone platform. The existing service has independent observation threads, locks, session fences, command admissions and durable recovery. Rust is a stronger fit for expressing those lifetimes and states explicitly in the final service.
+
+Python is memory-safe at the language level too. Rust's advantages here are not a claim that Python inherently corrupts memory or cannot be production-quality. A Rust port will add compiler/build and dependency maintenance costs, and native dependencies/FFI still require care. No measured battery, memory or latency comparison currently proves a performance improvement. Reducing polling and needless wakeups matters regardless of language.
+
+[Rust supports the ARM64 glibc target](https://doc.rust-lang.org/rustc/platform-support/aarch64-unknown-linux-gnu.html). Maintained interfaces exist for [Unix sockets](https://docs.rs/tokio/latest/tokio/net/struct.UnixStream.html), [TLS](https://docs.rs/rustls/latest/rustls/) and [SQLite](https://docs.rs/rusqlite/latest/rusqlite/). These establish feasibility, not a final dependency selection or compatibility claim. Pin and audit the selected versions and features in the actual build.
+
+QML does not require Python or Java. [CXX-Qt](https://kdab.github.io/cxx-qt/book/) provides a Rust/Qt interop path through generated C++/CXX bindings. A service can also remain fully outside Qt behind IPC, using a small Qt-native client adapter. Choose the simpler verified boundary; do not put Rust inside the shell just to share a language.
+
+Qt's separate [Qt Bridge for Rust 0.3](https://www.qt.io/blog/qt-bridge-for-rust-0.3-cxx-qt-compatibility-and-soundness) is explicitly beta as of its September 2026 announcement. Its existence is not a reason to make the system service depend on that UI binding. Keep the service independently buildable and test the chosen Qt/Rust binding against the pinned ARM64 runtime before adopting it.
+
+## Keep the Android boundary small and honest
+
+The current Java adapter uses public [InCallService](https://developer.android.com/reference/android/telecom/InCallService) and Telecom behavior. Android policy checks that must be atomic with a framework operation must remain on that side of the boundary. Do not relocate all permission or freshness checks to Arch merely to reduce Java lines.
+
+[AOSP supports native Rust components](https://source.android.com/docs/setup/build/rust/building-rust-modules/overview) and a [Rust AIDL backend](https://source.android.com/docs/core/architecture/aidl/aidl-backends). That does not turn Java SDK classes into Rust APIs or make platform-only Binder interfaces available to an ordinary APK. JNI wrappers can call Java, but they retain the dependency and add an interface to maintain. Keep Java where it directly serves the Android framework contract; consider Rust for substantial reusable policy only when the extra JNI/FFI boundary has a demonstrated benefit.
+
+This does not remove Java from Google's retained telephony/IMS stack. The project controls its own adapter language, not the implementation language of those dependencies.
+
+A C ABI does not require a C implementation: Rust can implement or call it through a reviewed FFI boundary. Retaining the current narrow C glue is a migration-cost decision, not a platform requirement. C++ throughout would simplify direct Qt integration, but would add manual memory/lifetime obligations to services that do not otherwise need C++. It would not remove the Android framework dependency.
+
+## Clean replacement requirements
+
+Nicholas explicitly requires **no backwards compatibility**. Build one target runtime and deploy its matching components together. Do not retain legacy adapters, parallel production runtimes, old-format readers, schema migrations from earlier test iterations or downgrade support. Earlier implementations and reports are evidence, not a compatibility contract. Use fresh state for the new offline test deployment; do not erase historical evidence or unrelated data.
+
+1. Define the target wire schema, enrollment format, trust checks, operation identities and durable state model from current requirements. Reuse behavioral scenarios from the existing tests, not their obsolete serialization choices.
+2. Implement protocol parsing and typed state transitions with failing tests first. Enforce bounds, integer/boolean distinctions, unknown-field rejection and deterministic request identity within the target implementation. Reject unsupported versions explicitly.
+3. Port durable admission and recovery. Exercise real SQLite commits, failed commits, process death, exclusive ownership, concurrent admissions, unresolved operations and capacity behavior. A transaction API call is not proof of equivalent commit semantics.
+4. Port the transport while preserving TLS 1.3, mutual authentication, CA/hostname validation, certificate pin checks, key-file permissions, strict response identity and total deadlines. Do not replace standard certificate verification with pin-only acceptance.
+5. Preserve the no-automatic-retry rule. Test cancellation after durable admission: dropping an async future must not silently lose responsibility for an admitted command. Keep known receipt, unknown outcome and remote invocation distinct.
+6. Run the new binary through the installed ARM64 systemd/socket path and real Android emulator with matching target components. Verify incoming/outgoing, duplicate IDs, changed payloads, permission revocation, shell death, lost replies and restart recovery of the target's own state. Do not drive two command owners against the same backend or ledger.
+7. Ship one Rust runtime after required behavior is verified. Retain Python only for independent test/build tools where useful. Measure idle wakeups and resource use before claiming an efficiency benefit.
+
+The UI language review and a Rust migration are independent decisions. The secure protocol, test fixtures, Android integration and graphics work remain reusable.
+
+## Independent critique
+
+The Pro language review (private transcript) supports this split for new development and highlights rewrite risk. Retain its requirement to make commit-to-worker handoff cancellation-safe even if database work outlives its awaiting task. Its legacy digest/schema and rollback recommendations are superseded by Nicholas's subsequent explicit no-backwards-compatibility instruction. Compare behavioral fault scenarios in isolated runs, never by dispatching each real action through two implementations.
+
+BRIDGE VERIFIED: Chat and Pro 5 of 5 selected; two marked user turns and their corresponding terminal responses; final response Copy/Rate/Share controls present, Stop absent; marker `PRO-BRIDGE-20261012-qt-91b3` matched. One language follow-up, no missing-context rounds. Owned tab closed after extraction. This is a critique of the proposed architecture, not verification of Rust code.

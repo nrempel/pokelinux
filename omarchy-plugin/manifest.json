@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "nbrempel.phone",
+  "name": "Phone",
+  "version": "0.4.0",
+  "description": "Call controls for the paired Android phone bridge",
+  "kinds": ["service", "panel"],
+  "keepLoaded": true,
+  "entryPoints": {"service": "Service.qml", "panel": "Panel.qml"}
+}

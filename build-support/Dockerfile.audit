@@ -1,0 +1,5 @@
+FROM pixel-graphics-build:20261011-b472
+RUN apt-get update && apt-get install -y --no-install-recommends aapt dexdump gdb-multiarch python3-venv && rm -rf /var/lib/apt/lists/*
+RUN python3 -m venv /opt/audit && /opt/audit/bin/pip install --no-cache-dir dissect.extfs==3.15 pyelftools==0.33
+ENV PATH="/opt/audit/bin:${PATH}"
+WORKDIR /workspace

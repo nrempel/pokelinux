@@ -1,0 +1,8 @@
+ARG BUILD_IMAGE=pixel-graphics-build:20261011-b472
+FROM ${BUILD_IMAGE}
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    qemu-system-arm qemu-utils libarchive-tools e2fsprogs curl gnupg \
+    cpio kmod busybox-static proot python3-pil zstd qemu-system-gui xvfb xauth \
+    libegl-mesa0:amd64 libgl1-mesa-dri:amd64 libglx-mesa0:amd64 mesa-utils && \
+    rm -rf /var/lib/apt/lists/*
+WORKDIR /workspace

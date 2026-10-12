@@ -1,0 +1,5 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.omarchy.enrollmentprobe">
+<uses-sdk android:minSdkVersion="31" android:targetSdkVersion="37" />
+<application android:label="Enrollment test only" />
+<instrumentation android:name="org.omarchy.enrollmentprobe.Probe" android:targetPackage="org.omarchy.bridge" />
+</manifest>

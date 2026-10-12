@@ -1,0 +1,6 @@
+ARG RUST_BUILD_IMAGE=pixel-phone-rust-native:20261011
+FROM ${RUST_BUILD_IMAGE}
+RUN apt-get update && apt-get install -y --no-install-recommends qml6-module-qtquick qml6-module-qtquick-controls qml6-module-qtquick-layouts qml6-module-qtquick-templates qml6-module-qtquick-window fonts-dejavu-core dbus-daemon g++ cmake ninja-build qt6-base-dev qt6-declarative-dev qml6-module-qtqml qml6-module-qtqml-models qml6-module-qtqml-workerscript && rm -rf /var/lib/apt/lists/*
+# The private D-Bus test daemon requires an NSS entry for the unprivileged UID.
+ARG PHONE_TEST_UID=1000
+RUN useradd --uid "$PHONE_TEST_UID" --no-create-home --shell /usr/sbin/nologin phone-test

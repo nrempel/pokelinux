@@ -1,0 +1,5 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.omarchy.provision">
+ <uses-sdk android:minSdkVersion="31" android:targetSdkVersion="37" />
+ <application android:label="Disposable bridge test provisioner" />
+ <instrumentation android:name="org.omarchy.provision.Provision" android:targetPackage="org.omarchy.bridge" />
+</manifest>

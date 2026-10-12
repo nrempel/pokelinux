@@ -1,0 +1,12 @@
+{
+  "libhybris": {
+    "repository": "https://github.com/Linux-on-droid/libhybris",
+    "commit": "c6a03429d12202f0b198d88140610a49ab73ddb0",
+    "archive_sha256": "281e785be60111816dd03568cab3d2428de6ae921dce8a0741635de7201675bb"
+  },
+  "android-headers": {
+    "repository": "https://github.com/droidian/android-headers-30",
+    "commit": "7438d904e9db7d66e9da4e726bbeeb077d74f610",
+    "archive_sha256": "61b08ce2d78c39d2d356297cf2b1e028ac6ec0b1e32b49564762b7d938f11c0d"
+  }
+}

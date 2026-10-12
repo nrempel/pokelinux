@@ -1,0 +1,10 @@
+--- a/hybris/common/hooks.c
++++ b/hybris/common/hooks.c
+@@ -2927,6 +2927,7 @@
+     HOOK_INDIRECT(malloc),
+     HOOK_INDIRECT(free),
+     HOOK_DIRECT_NO_DEBUG(calloc),
++    HOOK_DIRECT_NO_DEBUG(aligned_alloc),
+     HOOK_DIRECT_NO_DEBUG(free),
+     HOOK_DIRECT_NO_DEBUG(realloc),
+     HOOK_DIRECT_NO_DEBUG(memalign),

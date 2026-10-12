@@ -1,0 +1,6 @@
+# Temporary graphical-session validation userspace; no Pixel device access.
+FROM pixel-phone-arch-native:20261012
+RUN pacman -Syu --disable-sandbox-filesystem --noconfirm --needed \
+      hyprland quickshell grim wayland-utils python python-pillow jq inotify-tools \
+      ttf-jetbrains-mono-nerd ttf-font-awesome pipewire wireplumber uwsm gtk3 \
+    && pacman -Q > /omarchy-validation-packages.txt

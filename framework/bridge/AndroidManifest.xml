@@ -1,0 +1,32 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.omarchy.bridge" android:versionCode="1" android:versionName="0.1">
+ <uses-sdk android:minSdkVersion="31" android:targetSdkVersion="37" />
+ <permission android:name="org.omarchy.bridge.ACCESS" android:protectionLevel="signature" />
+ <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+ <uses-permission android:name="android.permission.INTERNET" />
+ <uses-permission android:name="android.permission.CALL_PHONE" />
+ <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+ <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+ <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+ <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+ <uses-permission android:name="android.permission.FOREGROUND_SERVICE_PHONE_CALL" />
+ <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+ <application android:label="Omarchy framework bridge" android:allowBackup="false">
+  <receiver android:name=".CallActionReceiver" android:exported="false" />
+  <receiver android:name=".StopReceiver" android:exported="false" />
+  <receiver android:name=".BootReceiver" android:exported="false"><intent-filter><action android:name="android.intent.action.BOOT_COMPLETED" /><action android:name="android.intent.action.MY_PACKAGE_REPLACED" /></intent-filter></receiver>
+  <service android:name=".GatewayService" android:exported="false" android:foregroundServiceType="specialUse">
+   <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE" android:value="Authenticated local phone state and explicitly enabled call controls for the paired Linux desktop" />
+  </service>
+  <service android:name=".BridgeService" android:exported="true" android:permission="org.omarchy.bridge.ACCESS" />
+  <service android:name=".CallService" android:foregroundServiceType="phoneCall" android:exported="true" android:permission="android.permission.BIND_INCALL_SERVICE">
+   <meta-data android:name="android.telecom.IN_CALL_SERVICE_UI" android:value="true" />
+   <meta-data android:name="android.telecom.IN_CALL_SERVICE_RINGING" android:value="true" />
+   <intent-filter><action android:name="android.telecom.InCallService" /></intent-filter>
+  </service>
+  <activity android:name=".DialActivity" android:exported="true" android:launchMode="singleTop">
+   <intent-filter><action android:name="android.intent.action.MAIN" /><category android:name="android.intent.category.LAUNCHER" /></intent-filter>
+   <intent-filter><action android:name="android.intent.action.DIAL" /><category android:name="android.intent.category.DEFAULT" /></intent-filter>
+   <intent-filter><action android:name="android.intent.action.DIAL" /><category android:name="android.intent.category.DEFAULT" /><data android:scheme="tel" /></intent-filter>
+  </activity>
+ </application>
+</manifest>

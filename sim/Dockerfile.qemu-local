@@ -1,0 +1,8 @@
+# Temporary offline VM runner. No host GPU or physical phone is exposed.
+FROM pixel-phone-omarchy-native:20261012
+RUN pacman -Syu --disable-sandbox-filesystem --noconfirm --needed \
+      qemu-system-aarch64 qemu-img qemu-ui-sdl qemu-ui-opengl qemu-hw-display-virtio-gpu \
+      qemu-hw-display-virtio-gpu-gl qemu-hw-display-virtio-gpu-pci \
+      qemu-hw-display-virtio-gpu-pci-gl xorg-server-xvfb xorg-xauth \
+      mesa virglrenderer e2fsprogs libarchive \
+    && pacman -Q > /qemu-validation-packages.txt

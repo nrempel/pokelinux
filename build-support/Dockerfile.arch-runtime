@@ -1,0 +1,4 @@
+FROM archlinux:base
+RUN pacman -Syu --noconfirm python openssl && pacman -Q > /runtime-packages.txt
+COPY export-arch-runtime.py /export-arch-runtime.py
+RUN python /export-arch-runtime.py
