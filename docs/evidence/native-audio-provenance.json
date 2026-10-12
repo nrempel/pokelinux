@@ -1,0 +1,141 @@
+{
+  "date_utc": "2026-10-12",
+  "host": "Harbour",
+  "scope": "Rust native audio authority; isolated original PipeWire1.4.2/WirePlumber0.5.8 virtual mono graph",
+  "production_audio_complete": false,
+  "hardware_verified": false,
+  "vendor_executed": false,
+  "source_files": {
+    "build-support/Dockerfile.native-audio": "c4ea42850a4dd6cdfabea96821763b6a0ec1ef685fdf2cb3e20b9fc95e26832b",
+    "tools/build-native-audio.sh": "4a2cdd547ca13a8052d2c7a3112ed1229f5dd8e3fe77ccac5f0eaaec12d73486",
+    "tools/native-audio-suite.py": "be8244d66b2941e64bb4b660fd7e4ada81dc5772e9244a19f89644ddc3e848bf",
+    "tools/native-audio-fixture.py": "a2186721edbc5a676683ff761158433e2851e92c2dfeb19ee86f821b6c8d045a",
+    "docs/native-audio.md": "98a656441dd7565f7fcc722c1c664d05989fb0497794160d815e8194631fe5b1",
+    "native-audio/Cargo.lock": "7692418405c0c9c2f475a9429671b8da4445efd9cf85fa6caa2a63c2f58315f1",
+    "native-audio/Cargo.toml": "44ff2453dfab93503289fec59f148211436dbe0fc5ee73181788a7355394d1b3",
+    "native-audio/src/lib.rs": "b166553bbc276f928aa5601444b3dd6d297dad87d33e7fd725483608acf495e4",
+    "native-audio/src/main.rs": "1e81d78f2dbe205cf91d0127427476abb3a60214233a6f364927fd19f9f351a9",
+    "native-audio/src/pipewire.rs": "243765bbf7da4ea89e2d9c22a1ec885ac5c9866c07bc4452ea564a269ac72c9b",
+    "native-audio/tests/authority.rs": "45e5a7749423db9022532df868d40c0ffeeb2e8d707f8f42d9e9310b26dcd637"
+  },
+  "image_id": "sha256:1bb0ad6850403a1362ffadc8c78d6c0f8d750ccbf5cd51bee550cd67cd64489b",
+  "original_versions": {
+    "pipewire_compiled_and_linked": "1.4.2",
+    "wireplumber_compiled_and_linked": "0.5.8"
+  },
+  "component": {
+    "native_x86_64_policy_tests": 5,
+    "arm64_qemu_user_policy_tests": 5,
+    "fmt_passed": true,
+    "clippy_D_warnings_passed": true,
+    "release_built": [
+      "x86_64-unknown-linux-gnu",
+      "aarch64-unknown-linux-gnu"
+    ],
+    "private_log": "artifacts/native-audio/pokelinux-audio-budget-green-build.log"
+  },
+  "actual_daemon_boundary": {
+    "execution_arch": "x86_64 Linux",
+    "result": {
+      "passed": true,
+      "scope": "isolated native Rust authority and original PipeWire/WirePlumber virtual graph",
+      "hardware_verified": false,
+      "vendor_executed": false,
+      "network": "none",
+      "uids": {
+        "audio_owner": 1000,
+        "call_owner": 1001,
+        "app": 1002
+      },
+      "stages": [
+        "original_daemons_and_virtual_nodes",
+        "real_parent_exits_before_worker_guard",
+        "application_connection_exhaustion_preserves_call_admission",
+        "application_lease_exhaustion_preserves_call_admission",
+        "media_link_active",
+        "kernel_peer_auth_and_private_graph_access",
+        "call_interrupts_media",
+        "owned_route_and_media_restoration",
+        "capture_revocation_unlinks_real_graph",
+        "connection_death_releases_owned_links",
+        "daemon_death_preserves_intent_and_invalidates_observation",
+        "unrelated_disconnect_does_not_reapply_uncertain_intent",
+        "explicit_reconciliation_after_daemon_restart",
+        "authority_kill_removes_capture_links"
+      ],
+      "fixture_exit": 0,
+      "owned_container_absent": true,
+      "graph_snapshots": 22
+    },
+    "cleanup": {
+      "children_reaped": {
+        "bus": 0,
+        "pipewire": 0,
+        "wireplumber": 0,
+        "authority": -9
+      },
+      "host_audio": false,
+      "host_dbus": false,
+      "hardware": false,
+      "orphan_workers_reaped": {
+        "580": -9
+      },
+      "parent_race": {
+        "28": 1
+      }
+    },
+    "private_run": "artifacts/native-audio/call-capacity-green"
+  },
+  "red_green": {
+    "initial_runtime_red_private_logs": [
+      "component-red.log",
+      "integration-red-authority.log",
+      "lifetime-red.log",
+      "authority-kill-red.log",
+      "uid-config-red.log"
+    ],
+    "additional_runtime_red": [
+      {
+        "path": "artifacts/native-audio/pokelinux-audio-budget-red.log",
+        "failure": "App consumed all64 leases; call acquire returned lease_limit."
+      },
+      {
+        "path": "artifacts/native-audio/pokelinux-audio-connections-red.log",
+        "failure": "App consumed32 connection workers; new authenticated call connection ended before response."
+      }
+    ],
+    "historical_fixture_or_compile_failures_separate": [
+      "component-build-failure.log",
+      "integration-red.log",
+      "integration-red-policy.log",
+      "integration-red-debug.log",
+      "integration-red-ready.log",
+      "integration-red-boundary.log",
+      "integration-green-first.log",
+      "owned-links-build-final.log"
+    ]
+  },
+  "qualified_budgets": {
+    "workers_total": 32,
+    "call_owner_workers_reserved": 8,
+    "application_workers": 16,
+    "other_principals_workers": 8,
+    "leases_total": 64,
+    "application_leases": 32,
+    "request_bytes": 4096,
+    "queued_messages": 64,
+    "snapshot_bytes": 1048576
+  },
+  "limits": [
+    "preallocated mono nodes, no app PCM broker or physical devices",
+    "WirePlumber standard linking and all hardware monitors disabled",
+    "synchronous actor, snapshot/reconciliation can take seconds;150ms polling is not a responsiveness or idle-power claim",
+    "fixed trusted original tools only; stdout reader is owned/joined, arbitrary descendant stdout lifetime not qualified",
+    "single configured app UID, no installed service-manager/stop/event-driven production loop",
+    "in-memory connection-scoped leases and capture grants; durable call-service recovery still required"
+  ],
+  "binary_sha256": {
+    "artifacts/native-audio/target/release/pokelinux-audio": "2bd7000a92f4de0610daedaa6eee9ce0f1d2c5820903e6cfd9bcf168ae44381e",
+    "artifacts/native-audio/target/aarch64-unknown-linux-gnu/release/pokelinux-audio": "cc1e4927ad2a147d9c7d1be087e367ab69fa31e7113a7be35b20d84dc021cfa8"
+  }
+}

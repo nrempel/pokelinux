@@ -79,3 +79,11 @@ background/lock/suspend behavior remain open. See [native messaging](native-mess
 Incoming SMS text/metadata parsing also matches33 actual AOSP decoder outputs with bounded malformed-input tests on x86 and ARM64 user-QEMU. Durable incoming ownership, vendor acknowledgement and installed Messages integration remain open.
 
 The first native power-request arbiter is built and component-tested, including18 outcomes from actual public source. Installed permission/lifecycle, native suspend authority and hardware policy remain open; see [native power](native-power.md).
+
+The native audio authority is built and boundary-tested against original
+PipeWire/WirePlumber in a private virtual mono graph:14 stages cover call/media
+priority, authenticated capacity, capture-link revocation, backend recovery and
+crash-owned links. Five policy tests also pass on x86 and ARM64 user-QEMU.
+Installed responsive lifecycle, per-app streams, physical routes and mute,
+Pixel AoC/carrier audio, DND/volume/haptics and idle power remain open. See
+[native audio](native-audio.md).

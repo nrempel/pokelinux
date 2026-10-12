@@ -1,0 +1,4 @@
+FROM pixel-phone-rust:20261012-b472
+RUN apt-get update && apt-get install -y --no-install-recommends pipewire pipewire-bin wireplumber dbus-daemon python3 && rm -rf /var/lib/apt/lists/*
+RUN useradd --uid 1000 --no-create-home --shell /usr/sbin/nologin audio-owner && useradd --uid 1001 --no-create-home --shell /usr/sbin/nologin call-owner && useradd --uid 1002 --no-create-home --shell /usr/sbin/nologin audio-app
+WORKDIR /workspace/native-audio

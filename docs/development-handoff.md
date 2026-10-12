@@ -87,7 +87,15 @@ outcomes against actual pinned public RequestGroup/Node/FileNode execution.
 Owned leases, cancellation, boot-time expiry, uncertain application, retry and
 stale completion fencing are implemented. Authentication, actual backend IO
 ownership and a deployed suspend authority remain open; see `native-power.md`.
-Isolated audio graph work remains in progress on a Sol6.1 xhigh agent.
+Native audio now passes five policy tests on x86/ARM64 user-QEMU and14 actual
+PipeWire/WirePlumber stages. The private graph uses authenticated connection-owned
+leases, call priority, capture-link revocation and owned non-lingering helpers.
+Application exhaustion cannot consume call-owner connection or lease capacity.
+Backend death preserves intent without implicit reapplication; explicit recovery
+and authority SIGKILL unlinking pass. This is a virtual mono graph qualification,
+not physical mute or installed production audio. The synchronous actor still
+needs responsive lifecycle/stop and event-driven observations, a native PCM
+broker, durable call recovery and Pixel AoC/DSP routing; see `native-audio.md`.
 
 ## Next work
 
@@ -124,6 +132,8 @@ bash tools/build-native-radio.sh build
 bash tools/build-native-messaging.sh build
 bash tools/build-power-reference.sh build
 bash tools/build-native-power.sh build
+bash tools/build-native-audio.sh build
+bash tools/build-native-audio.sh integration artifacts/native-audio/NEW_RUN
 bash tools/framework-suite.sh sms-codec
 bash tools/framework-suite.sh binder-kernel
 bash tools/framework-suite.sh radio-ipc
