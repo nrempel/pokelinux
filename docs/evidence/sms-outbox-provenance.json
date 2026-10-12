@@ -70,5 +70,6 @@
     "Drafts/conversations/native Messages app",
     "Lock/background/suspend wake and notifications",
     "Carrier and hardware validation"
-  ]
+  ],
+  "recorded_source_commit": "c4491aff35f236f60b4cef27ac69a05155251da1"
 }

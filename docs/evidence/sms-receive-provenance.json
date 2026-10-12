@@ -1,0 +1,66 @@
+{
+  "date_utc": "2026-10-12",
+  "host": "Harbour",
+  "scope": "Bounded SMS-DELIVER text and metadata decoding; no incoming modem receipt/acknowledgement",
+  "original_code_execution": {
+    "class": "com.android.internal.telephony.gsm.SmsMessage",
+    "method": "createFromPdu(byte[])",
+    "environment": "Owned SDK37 x86 emulator, SELinux Enforcing",
+    "fingerprint": "google/sdk_gphone64_x86_64/emu64xa:17/CE2A.260420.019/15611780:userdebug/dev-keys",
+    "telephony_common_jar_sha256": "4c741f17ac1ba0a2c51b2d8a28c41e0061d2473ae5748c722f3ec6f2cb86932a",
+    "oracle_jar_sha256": "96dcaf99c4f4c4a7358f138873421218bb244bb99304fb1397fddb22a99bbc5f",
+    "synthetic_cases": 33,
+    "construction": "Synthetic SMS-DELIVER envelopes around actual recorded AOSP SMS-SUBMIT user data; additional original 8-bit header encoding and alphanumeric sender fixture",
+    "modem_receipt": false
+  },
+  "red_green": {
+    "initial": "Compiled native tests failed plain text/timestamp parsing and unsupported-data classification before implementation",
+    "green": "33 original-code metadata/text comparisons and five receive bounds/malformed tests pass; all existing planner/outbox/submit comparisons pass; formatting/clippy/release builds pass"
+  },
+  "bounds": {
+    "full_pdu_bytes": 176,
+    "gsm_user_septets": 160,
+    "utf16_user_bytes": 140,
+    "numeric_sender_digits": 20,
+    "alphanumeric_sender_semi_octets": 20
+  },
+  "supported": [
+    "Default GSM and UTF-16 text",
+    "Numeric and GSM alphanumeric sender",
+    "Signed quarter-hour timezone with calendar validation",
+    "Reply-path flag",
+    "8-bit and16-bit concatenation metadata"
+  ],
+  "explicit_unsupported": [
+    "Binary/user application and port-addressed payloads",
+    "Message waiting and non-default national language headers",
+    "Nonzero protocol identifier",
+    "Other DCS/address forms"
+  ],
+  "reused": {
+    "gsm_mapping": "Pinned sms-pdu1.1.0 plus form-feed wrapper",
+    "calendar": "Pinned time0.3.55; dependencies locked"
+  },
+  "public_sha256": {
+    "native-messaging/src/receive.rs": "55f2cf7da7feca551297526a14fff1216e5a798d3b41d44d9bfea8b033877acc",
+    "native-messaging/tests/original_deliver.rs": "af6ffe72153803f522a0e5eefa2958d5950cd79427bf5cb882aee5416649230f",
+    "native-messaging/tests/receive.rs": "238b323320cec1405cf629458cce0f4163877ba7982da9a5484580c3d79d51c1",
+    "native-messaging/tests/fixtures/aosp-deliver.tsv": "c39f8a95fdefed5dca6c2e9a7064bb67c512ee08de1341f198462ac884ebb9ea",
+    "native-messaging/Cargo.lock": "e7cb16fc3e8c6abb7fbbc7a52d8f73f07c934a7a103de1cef5a0c414f3bd375f",
+    "framework/shannon-oracle/SmsReceiveOracle.java": "4108ddbd303c64630f63630b6cce14358819d12a89b67247114fbc8a7de692fd"
+  },
+  "evidence_classes": {
+    "original_code": "Actual AOSP parser on x86 emulator",
+    "native_x86": "All comparisons and five bounds/malformed tests",
+    "arm64_user_qemu": "Same native parser tests, no Binder or modem",
+    "arm64_system_qemu": "Earlier outbox process gate separately documented, not decoder vendor integration",
+    "physical": "None"
+  },
+  "remaining": [
+    "Durable incoming admission/duplicate and multipart ownership",
+    "Actual vendor incoming/acknowledgement contract",
+    "Status report/transport correlation and delivery semantics",
+    "Native app, permissions, background/lock/suspend wake",
+    "Carrier/hardware qualification"
+  ]
+}

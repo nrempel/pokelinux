@@ -65,6 +65,12 @@ restart tests pass. This does not implement send/receive, delivery, permissions,
 a messaging service or UI. See `native-messaging.md` and
 `evidence/sms-submit-provenance.json` and `evidence/sms-outbox-provenance.json`.
 
+Incoming SMS text decoding now matches 33 actual AOSP parser outputs for text,
+sender, timestamp, reply-path and8/16-bit concatenation. Five bounds/malformed
+tests and x86/ARM64 user-QEMU builds pass. Parts are parsed only; durable incoming
+deduplication/assembly, vendor acknowledgement, delivery and UI remain open.
+See `evidence/sms-receive-provenance.json`.
+
 Focused REA/public-source investigations now recover camera AIDL4, audio core4,
 Power7 and Sensors3. Selected audio/power/sensor frozen hashes match shipped
 libraries; camera hash equality remains open. Camera failed-return/count and

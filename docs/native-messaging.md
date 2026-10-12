@@ -27,6 +27,34 @@ AOSP execution exposed its omitted form-feed extension entry; a narrow wrapper
 adds that standard entry. The rest of the alphabet remains in the upstream crate.
 Dependency identity is recorded in `Cargo.lock` and the evidence manifest.
 
+## Incoming text decoding
+
+The bounded SMS-DELIVER decoder parses a complete GSM PDU with its SMSC-length
+prefix. Numeric and GSM alphanumeric senders, default GSM/UTF-16 text, reply-path
+flag, service-centre time and 8/16-bit concatenation metadata are supported.
+Reference width remains explicit so an 8-bit reference cannot collide silently
+with a 16-bit reference. Sender and timestamp are untrusted network content.
+
+Framing caps the input at 176 bytes and user data at its GSM/UTF-16 bounds. It
+rejects truncation, excess trailing bytes, invalid calendar/BCD, broken UTF-16
+or escape sequences and inconsistent/duplicate concatenation headers. Binary,
+message-waiting, nonzero PID and application/port/language headers need a
+qualified separate path and currently return an explicit unsupported error.
+Malformed input is not made compatible with Android's lenient parsing.
+
+GSM mapping reuses the pinned upstream decoder with the verified form-feed
+wrapper. Calendar/offset handling uses pinned `time` 0.3.55. Our framing and
+signed quarter-hour handling are explicit; the upstream complete-PDU parser
+does not enforce the needed length/timezone contract. Thirty-three synthetic
+inputs were parsed by actual AOSP `createFromPdu`; native text, sender, time,
+reply-path and concatenation match those outputs on x86 and ARM64 user-QEMU.
+Five boundary tests include all truncated prefixes and bounded byte mutations.
+See [receive provenance](evidence/sms-receive-provenance.json).
+
+This supplies parsed parts only. Durable receive admission/deduplication,
+multipart lifetime/collision handling, modem acknowledgement, background
+notifications and carrier delivery remain separate work.
+
 ## Durable outbox
 
 The Linux outbox owns a permanent lock inode and a private SQLite state directory

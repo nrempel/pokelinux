@@ -75,3 +75,5 @@ user-QEMU validation. The durable single-owner outbox also passes twelve actual 
 SIGKILL/restart under x86 and an actual ARM64 kernel. These are components, not
 installed messaging integration. Send/receive, transport receipt qualification, delivery, native app and
 background/lock/suspend behavior remain open. See [native messaging](native-messaging.md).
+
+Incoming SMS text/metadata parsing also matches33 actual AOSP decoder outputs with bounded malformed-input tests on x86 and ARM64 user-QEMU. Durable incoming ownership, vendor acknowledgement and installed Messages integration remain open.

@@ -32,3 +32,12 @@ adb('pull', '/system/framework/telephony-common.jar', str(framework))
 (out / 'oracle-sha256.txt').write_text(hashlib.sha256(jar.read_bytes()).hexdigest() + '\n')
 assert adb('shell', 'getenforce').strip() == 'Enforcing'
 print('Actual AOSP SMS-SUBMIT encoder executed: 27 fixtures; no SMS sent', flush=True)
+
+fixtures = root + '/aosp-submit.tsv'
+adb('push', 'native-messaging/tests/fixtures/aosp-submit.tsv', fixtures)
+received = adb('shell', 'env', 'CLASSPATH=' + root + '/oracle.jar', 'app_process', '/system/bin', 'org.omarchy.audit.SmsReceiveOracle', fixtures)
+(out / 'aosp-deliver-output.tsv').write_text(received)
+rows = [line for line in received.splitlines() if line.startswith('sms-deliver\t')]
+assert len(rows) == 33 and len({row.split('\t')[1] for row in rows}) == 33, received
+assert all(len(row.split('\t')) == 9 for row in rows), received
+print('Actual AOSP SMS-DELIVER decoder executed: 33 synthetic fixtures; no SMS received from a modem', flush=True)
