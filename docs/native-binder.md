@@ -115,5 +115,35 @@ payload lengths. All fixture bytes can be reproduced independently from standard
 framing and synthetic integers/bytes; they contain no copied vendor payload.
 
 The decoder neither consumes pending requests nor queues callbacks. It preserves
-metadata without claiming its modem semantics. It is not yet connected to a
-production Binder receiver, and does not implement reassembly or response policy.
+metadata without claiming its modem semantics. It is connected to the native receiver described below, but that receiver has
+not been connected to a vendor service. Reassembly and response policy remain
+unimplemented.
+
+## Bounded native response receiver
+
+`new_response_receiver` wraps the decoder in a VINTF-stable rsbinder Binder
+endpoint. The original Java stub marks that stability in its constructor; its
+version and interface hash have now also been checked by original-code execution.
+The native endpoint serves those metadata transactions. Initialize ProcessState
+before exporting or dispatching this endpoint.
+
+The rsbinder wrapper validates the interface token before our decoder runs.
+Known malformed responses, queue overflow and consumer loss latch a terminal
+failure. Queue sends never wait for capacity. A short mutex serializes sends and
+failure transitions; the inbox refuses buffered events after it observes failure.
+The session owner must drop the failed endpoint and fail its outstanding requests;
+that owner integration is still outstanding. The endpoint cannot reset itself
+and silently continue after losing a response.
+
+Five tests exercise the real rsbinder dispatch wrapper inside the x86 emulator:
+wrong-token rejection, malformed-call failure without delivery, full-queue failure,
+consumer loss, and matching interface metadata. They require real Binder process
+initialization and are explicitly ignored in ordinary Cargo runs. The build
+collects the exact static test binary from Cargo's JSON output; `binder-kernel`
+pushes it only to the owned emulator and requires all five ignored tests to pass.
+[Provenance](evidence/response-receiver-provenance.json) records this scope.
+
+These receiver transactions are local dispatches, not kernel-crossing vendor
+calls. The separate service-manager cross-process callback test still passes.
+ARM64 argument tests pass, but ARM64 receiver IPC, vendor registration, sender
+identity/permissions, service death and production session recovery remain open.

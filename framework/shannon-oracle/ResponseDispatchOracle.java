@@ -52,6 +52,12 @@ public final class ResponseDispatchOracle {
             pending.put(42, request);
             set(ril, "mRequestList", pending);
             Object stub = constructor.newInstance(ril);
+            if (test == 0) {
+                Class<?> iface = Class.forName(VENDOR + "IOemSlsiRadioExternalRes");
+                Object version = iface.getMethod("getInterfaceVersion").invoke(stub);
+                Object hash = iface.getMethod("getInterfaceHash").invoke(stub);
+                System.out.println("responseInterface\t" + version + "\t" + hash);
+            }
             Parcelable info = (Parcelable) infoType.getConstructor().newInstance();
             set(info, "serial", test == 1 ? 99 : 42);
             set(info, "error", status);

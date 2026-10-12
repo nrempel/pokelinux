@@ -1,0 +1,22 @@
+{
+  "scope": "In-process rsbinder dispatch wrapper in owned x86 Android emulator with real Binder ProcessState; not vendor cross-process delivery",
+  "driver_initialized": true,
+  "selinux_enforcing": true,
+  "tests_passed": 5,
+  "arm64_receiver_execution_verified": false,
+  "vendor_service_verified": false,
+  "phone_accessed": false,
+  "original_interface_metadata": [
+    "responseInterface\t1\t62c86cf5f8f15456f451d2241b4f21b10627e514"
+  ],
+  "test_executable_sha256": "009017129a396734110331830cf7f5e7f754ba4d941807550f2873617af2692d",
+  "sources_sha256": {
+    "native-radio/src/receiver.rs": "25351ec151e666ce105a573c067583280fb95e95bc6ec55172dadb1fd45dd5c6",
+    "native-radio/src/lib.rs": "11593fe2c3eec239a0ae39539f934b531e4cdb080cc83c791b2530a3021992cc",
+    "native-radio/tests/response_receiver.rs": "29c00c524211b1e24329d7b097b771962f100720a1caa663456dc17f0991c5e9",
+    "framework/tests/binder_kernel.py": "86990848298ca525cae4c69db69437db8335d4cb3dbd3ade0198f715af8c5fad",
+    "framework/shannon-oracle/ResponseDispatchOracle.java": "395b373f89bbc82da8a933163a07c32d977b910a75866983070aeda0948c6277",
+    "tools/build-native-radio.sh": "2ac6012eceb17c585fd02f0ade1640fc01c99f77fafb6e14be0cf8bdf8fe5245",
+    "tools/collect-receiver-test.py": "ee058d67b6281edca47b9b1c5c9dcde6967deb509b91c390fc28bd4581f850b0"
+  }
+}

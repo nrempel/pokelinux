@@ -21,6 +21,8 @@ case "${1:-build}" in
   for target in x86_64-unknown-linux-musl aarch64-unknown-linux-gnu; do
    docker run "${args[@]}" --network none "$image" cargo test --locked --offline --target "$target"
   done
+  docker run "${args[@]}" --network none "$image" cargo test --locked --offline --target x86_64-unknown-linux-musl --test response_receiver --no-run --message-format=json > artifacts/native-radio/receiver-test-build.json
+  python3 tools/collect-receiver-test.py
   docker run "${args[@]}" --network none "$image" cargo build --locked --offline --release --target x86_64-unknown-linux-musl
   docker run "${args[@]}" --network none "$image" readelf -l /target/x86_64-unknown-linux-musl/release/pokelinux-radio > artifacts/native-radio/elf-program-headers.txt
   if grep -q INTERP artifacts/native-radio/elf-program-headers.txt; then

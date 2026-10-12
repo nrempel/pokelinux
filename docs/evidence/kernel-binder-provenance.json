@@ -13,8 +13,8 @@
     "native-radio/src/main.rs": "c27968c70082183e2ed629b462b7d245b3fab8c3d4d0e225fc8555d8dedebe29",
     "native-radio/Cargo.toml": "b920167d2ce22ddbcdb81446aa823c3fe70a61e3a3a87eedade7e2856d9e0b1f",
     "native-radio/Cargo.lock": "c5904ffe40fafd59fe9c7a521f4412d49808131bef831d78ccd3b78c8e1bc8f7",
-    "framework/tests/binder_kernel.py": "98458b3c2d983ce4fe3ee900f49ba9c3bbda4c52fd98faf58b9ecb5c617c019b",
-    "tools/build-native-radio.sh": "bb7033204291ea9f742b97e96ac7d6ef66e1713d4256d451fb700fa65470bc80",
+    "framework/tests/binder_kernel.py": "86990848298ca525cae4c69db69437db8335d4cb3dbd3ade0198f715af8c5fad",
+    "tools/build-native-radio.sh": "2ac6012eceb17c585fd02f0ade1640fc01c99f77fafb6e14be0cf8bdf8fe5245",
     "tools/framework-suite.sh": "fbe15d0cf2deee329f72e0a0b3a1ec862c6f2ed21761f519f4d9aebb6b6192fe",
     "build-support/Dockerfile.native-radio": "398c3a673c0f31134c8c1ecaadbf89b24e824ace7cb68ba1f702061beff20f9f"
   },
