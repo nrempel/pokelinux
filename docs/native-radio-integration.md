@@ -129,8 +129,8 @@ owner teardown only; it does not fence events already taken from the inbox.
 
 The [session-owner design](native-radio-owner.md) records the accepted publication
 and recovery boundary, the completed independent review, and deterministic gates
-for implementation. The publication portion is now exercised below; worker,
-deadline and semantic phone-state integration remain unfinished.
+for implementation. The publication portion is now exercised below; other transport operations, candidate/operation deadlines and semantic phone-state
+integration remain unfinished. Owned registration and local supervision are covered below.
 
 ## Native publication owner integration
 
@@ -180,8 +180,8 @@ cover expiry at activation, final publication, snapshots and attempted replaceme
 See [execution provenance](evidence/radio-deadline-provenance.json).
 
 The current held scenarios use production `TransportSession`, replacing the
-earlier scoped test thread. Permanent-hang supervision, candidate/operation
-deadlines and vendor cleanup remain unfinished.
+earlier scoped test thread. Local permanent-hang reclamation is now covered below;
+candidate/operation deadlines and vendor cleanup remain unfinished.
 
 ## Production registration lifecycle integration
 
@@ -202,3 +202,20 @@ terminal reasons. See [source and binary provenance](evidence/radio-worker-prove
 These tests still have bounded synthetic registration barriers. A watchdog abort
 regression is local process evidence, not supervised recovery from permanent
 Binder blockage, vendor cleanup or modem/IMS correctness.
+
+## Permanently held Binder registration
+
+`supervised-blocked-registration` launches a separate native Rust child under the
+production `Supervisor`. The independent peer permanently withholds registration,
+with no release transaction. The child proves cancellation/snapshot responsiveness
+and occupied-worker replacement refusal before reporting its process/attempt tag.
+The parent revokes that tag, sends SIGKILL, retains occupancy until wait confirms
+reaping, then rejects old output and all registration retries. A recreated
+supervisor also refuses launch from the synced private admission marker.
+
+The outer harness force-stops the synthetic peer after the scenario. That separate
+test teardown is not evidence of vendor cleanup from client death. No successor
+registration is allowed by this implementation. Safe reconnection needs recovered
+reset/cleanup evidence. [Provenance](evidence/radio-supervisor-provenance.json)
+separates real Binder reclamation, controlled reaping failures, ARM64/QEMU state
+tests and the unresolved native ARM64 subprocess gate.

@@ -74,6 +74,16 @@ public final class Peer extends Instrumentation {
                     android.os.Process.killProcess(android.os.Process.myPid());
                     return true;
                 }
+                if ("pokelinux-permanent-hold-test".equals(client)) {
+                    // Deliberate permanent test-only Binder blockage. The outer
+                    // harness owns and force-stops this whole synthetic peer.
+                    registrationEntered.countDown();
+                    try { new CountDownLatch(1).await(); }
+                    catch (InterruptedException error) {
+                        Thread.currentThread().interrupt(); throw new IllegalStateException(error);
+                    }
+                    throw new IllegalStateException("unreachable permanent release");
+                }
                 if ("pokelinux-hold-register-test".equals(client)) {
                     // Independent, bounded synthetic barrier. No modem access.
                     registrationEntered.countDown();

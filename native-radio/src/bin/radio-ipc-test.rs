@@ -94,6 +94,9 @@ fn report(peer: &SIBinder) -> Result<(i32, i32, i32, i32, i32, String)> {
     Ok(value)
 }
 fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
+    if std::env::args().nth(2).as_deref() == Some("supervised-blocked-registration") {
+        return supervised_registration();
+    }
     // Captured and checked against the installed framework by FrameworkBootstrapOracle.
     let code: u32 = std::env::args()
         .nth(1)
@@ -109,7 +112,8 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
         | Some("cancel-during-registration")
         | Some("expire-during-registration")
         | Some("owned-service-death")
-        | Some("owned-registration-death") => false,
+        | Some("owned-registration-death")
+        | Some("permanent-registration-child") => false,
         Some("death-during-registration") => true,
         _ => return Err("unknown test scenario".into()),
     };
@@ -148,6 +152,9 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     peer.ping_binder()?;
     println!("radio-bootstrap\tPASS");
     let transport = RadioTransport::from_binder(peer.clone())?;
+    if scenario.as_deref() == Some("permanent-registration-child") {
+        return permanent_registration(&peer);
+    }
     if matches!(
         scenario.as_deref(),
         Some("owned-service-death") | Some("owned-registration-death")
@@ -847,5 +854,129 @@ fn owned_death(
             "radio-owned-service-death"
         }
     );
+    Ok(())
+}
+
+fn permanent_registration(peer: &SIBinder) -> std::result::Result<(), Box<dyn std::error::Error>> {
+    use pokelinux_radio::owner::Phase;
+    use pokelinux_radio::supervisor::ProcessIdentity;
+    use pokelinux_radio::worker::{LifecycleError, TransportSession};
+    use std::io::Write;
+    let identity = std::env::var("POKELINUX_OWNER_INCARNATION")?;
+    ProcessIdentity::from_hex(&identity).ok_or("missing owner incarnation")?;
+    let mut session = TransportSession::new(NonZeroUsize::new(2).unwrap());
+    let key = session
+        .start(
+            RadioTransport::from_binder(peer.clone())?,
+            "pokelinux-permanent-hold-test".into(),
+            NonZeroUsize::new(4).unwrap(),
+            owner_deadline(),
+        )
+        .map_err(|e| format!("permanent start: {e:?}"))?;
+    registration_latch(peer, 110)?;
+    session
+        .stop(&key)
+        .map_err(|e| format!("permanent stop: {e:?}"))?;
+    for _ in 0..16 {
+        if session.snapshot().phase != Phase::Failed(ReceiverFailure::Cancelled)
+            || !session.worker_occupied()
+            || session.poll_registration().is_some()
+            || session.start(
+                RadioTransport::from_binder(peer.clone())?,
+                "retry".into(),
+                NonZeroUsize::new(4).unwrap(),
+                owner_deadline(),
+            ) != Err(LifecycleError::WorkerOccupied)
+        {
+            return Err("permanent worker failed local responsiveness/capacity".into());
+        }
+    }
+    println!("radio-permanent-held\t{identity}\t1");
+    std::io::stdout().flush()?;
+    // Do not detach or drop the owned blocked worker. The supervisor terminates
+    // this whole process. No release transaction exists for the permanent peer.
+    loop {
+        std::thread::park();
+    }
+}
+fn supervised_registration() -> std::result::Result<(), Box<dyn std::error::Error>> {
+    use pokelinux_radio::supervisor::{StartError, Supervisor};
+    use std::{os::unix::fs::DirBuilderExt, process::Command};
+    let directory = std::path::PathBuf::from(format!(
+        "/data/local/tmp/pokelinux-supervisor-{}",
+        std::process::id()
+    ));
+    std::fs::DirBuilder::new().mode(0o700).create(&directory)?;
+    let journal = directory.join("registration-admission");
+    let mut supervisor = Supervisor::new(journal.clone());
+    let binary = std::env::current_exe()?;
+    let mut command = Command::new(&binary);
+    command.args(["51", "permanent-registration-child"]);
+    let id = supervisor
+        .start(&mut command)
+        .map_err(|e| format!("supervisor start: {e:?}"))?;
+    let expected = format!("radio-permanent-held\t{}\t1\n", id.hex());
+    let end = Instant::now() + Duration::from_secs(5);
+    let mut output = Vec::new();
+    loop {
+        let mut buffer = [0; 1024];
+        match supervisor.read_output(&mut buffer) {
+            Ok(0) => return Err("permanent child exited before barrier".into()),
+            Ok(count) => output.extend_from_slice(&buffer[..count]),
+            Err(error) if error.kind() == std::io::ErrorKind::WouldBlock => (),
+            Err(error) => return Err(error.into()),
+        }
+        if output.len() > 8192 {
+            return Err("bounded child output exceeded".into());
+        }
+        if output.ends_with(expected.as_bytes()) {
+            break;
+        }
+        if Instant::now() >= end {
+            return Err("permanent registration barrier timeout".into());
+        }
+        std::thread::yield_now();
+    }
+    if !supervisor.admits_frame(id, id, 1) {
+        return Err("live child tag rejected".into());
+    }
+    println!("radio-supervised-held\tPASS");
+    supervisor.stop()?;
+    if supervisor.admits_frame(id, id, 1)
+        || supervisor.start(&mut command) != Err(StartError::Occupied)
+    {
+        return Err("termination released publication or process occupancy incorrectly".into());
+    }
+    println!("radio-supervisor-output-revoked\tPASS");
+    let end = Instant::now() + Duration::from_secs(5);
+    loop {
+        if let Some(status) = supervisor.poll_reap()? {
+            use std::os::unix::process::ExitStatusExt;
+            if status.signal() != Some(9) {
+                return Err("unexpected worker process exit".into());
+            }
+            break;
+        }
+        if !supervisor.occupied() || supervisor.start(&mut command) != Err(StartError::Occupied) {
+            return Err("unreaped child capacity was released".into());
+        }
+        if Instant::now() >= end {
+            return Err("worker reaping timeout: registration still unavailable".into());
+        }
+        std::thread::yield_now();
+    }
+    println!("radio-supervisor-reaped\tPASS");
+    if supervisor.admits_frame(id, id, 1)
+        || supervisor.occupied()
+        || supervisor.start(&mut command) != Err(StartError::RegistrationUncertain)
+    {
+        return Err("reaping was confused with vendor cleanup".into());
+    }
+    println!("radio-supervisor-retry-refused\tPASS");
+    let mut restarted = Supervisor::new(journal);
+    if restarted.start(&mut command) != Err(StartError::RegistrationUncertain) {
+        return Err("supervisor restart forgot uncertain registration".into());
+    }
+    println!("radio-supervisor-restart-refused\tPASS");
     Ok(())
 }

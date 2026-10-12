@@ -18,47 +18,56 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
-The raw-response owner in `native-radio/src/owner.rs` fences publication with
-opaque session identity, revision and a preparation token. Callback failures,
-cancellation and replacement withdraw current state. This is not a native IMS
-semantic decoder or a complete service lifecycle.
+The native raw-response publication gate, absolute suspend-aware session expiry,
+owned registration worker/death watch, and local process reclamation are implemented.
+They are not native IMS semantics or a complete phone service.
 
-The owner now requires an absolute boot-time session deadline. Four component
-regressions failed before locked expiry checks and then passed. Real Binder also
-passes `expire-during-registration`: a controlled clock reaches expiry with timer
-delivery withheld while registration stays held, and late successful ID 42 cannot
-activate. The owner checks expiry at every gate acquisition; this does not prove
-hardware wake or candidate/operation lifetimes. See
-`evidence/radio-deadline-provenance.json`.
+- `RadioOwner` fences session/revision/preparation identity and checks Linux
+  `CLOCK_BOOTTIME` expiry under the gate. Withheld timer delivery cannot permit
+  late activation or publication. Candidate/operation lifetimes remain open.
+- `TransportSession` owns one registration worker and retained death watch. Stop
+  and snapshots do not join or unlink. Cancellation/expiry retain occupied worker
+  capacity; completion is independent of the failed callback stream. Late success
+  cannot activate, and every second attempt is refused.
+- `Supervisor` revokes process output before SIGKILL and retains ownership until
+  reaping. Its exclusive, synced private admission marker persists uncertainty
+  before launch and survives supervisor restart. It never removes that marker or
+  treats reaping as remote cleanup. No successor registration is permitted.
+- Real Binder passes held cancellation/expiry, death before/after activation,
+  permanent blocked-child termination/reaping, stale-tag refusal and durable
+  restart refusal. Component red/green tests include worker detachment, death-result
+  ordering, output revocation and stalled reaping. Existing IPC and six Binder
+  dispatch-wrapper tests also pass on Harbour with SELinux enforcing.
 
-The earlier test adds a bounded synthetic registration barrier. The native client
-stops the real owner while `RadioTransport::register` remains blocked in Binder,
-then rejects activation when the independent peer returns successful ID 42.
-`held-registration-provenance.json` records the source and binary hashes and
-red/green results. Those historical scoped-thread results have now been extended: production
-`TransportSession` owns one worker and its death watch, retains capacity after
-stop/expiry, reports late success without activation, and refuses another attempt.
-The owned death scenarios also pass before/after activation. See
-`evidence/radio-worker-provenance.json`. Permanent-hang supervision, durable
-uncertainty and the real vendor cleanup/reset contract remain unfinished. The Java change only adds test
-barriers. Existing owner, registration-death and ordinary IPC scenarios also pass.
+Evidence: `evidence/radio-deadline-provenance.json`,
+`evidence/radio-worker-provenance.json`, `evidence/radio-supervisor-provenance.json`.
+Java changes are synthetic peer controls only; no physical phone was accessed.
+Harbour now has authenticated `gh` write access and the repository-local existing
+author identity. Authentication remains outside source control.
+
+ARM64 user-mode QEMU passes component state, journal and provenance tests. Its
+failed-exec subprocess test unexpectedly returns a successful child for a missing
+executable, then hits the fail-closed abort. Native subprocess execution tests are
+therefore explicitly x86-64 only. Native ARM64 kernel/process validation remains
+required; this is not a passing ARM64 Binder or production supervision claim.
 
 ## Next work
 
-1. Read `native-radio-owner.md`, `native-radio-integration.md`,
-   `device-portability.md` and the completion matrix in `smartphone-goal.md`.
-2. Extend owned registration work to the remaining transport operations,
-   candidate/operation deadlines and permanent-hang recovery. Absolute suspend-aware
-   session deadlines are implemented; timer delivery remains unfinished. Avoid detached
-   blocked threads, an indefinite join in Drop, or releasing worker capacity
-   merely because local state was cancelled. Keep stop and snapshots responsive.
-3. Establish the process supervision contract before claiming bounded recovery.
-   Reject obsolete process/session output. Reaping a process proves local
-   reclamation; it does not establish vendor cleanup or permit an uncertain
-   registration to be retried. `clear` is currently one-way. Recover and test the
-   real vendor cleanup/reset contract instead of assuming it.
-4. Integrate recovered native IMS semantics and the phone service. Continue the
-   full smartphone matrix; do not reduce completion to the radio harness.
+1. Recover and test the actual vendor cleanup/reset and registration-overlap
+   contract. `clear` is one-way. Do not remove uncertainty markers, retry, use a
+   recycled numeric registration ID for delayed cleanup, or call local reaping
+   vendor cleanup. Keep registration unavailable without proven remote recovery.
+2. Integrate these primitives into an installed Rust service and its service
+   manager. Define authenticated permissions and observer IPC with process/session
+   fencing, bounded output, safe durable admission and bounded diagnostics.
+   Qualify actual ARM64 kernel/process behavior on an owned VM.
+3. Extend ownership to request transport, operation receipts, absolute candidate
+   and operation deadlines, timer delivery, notification watches and aggregate
+   budgets. Recover producer identity before enabling fragmented semantic output.
+4. Recover native IMS state/response contracts with original-code comparison and
+   integrate the shared phone service. Continue calls, SMS, camera, power, audio,
+   connectivity, sensors, background/lock behavior, permissions, apps, deployment
+   and genuine Omarchy integration in the full smartphone matrix.
 
 An advisory Pro worker-lifecycle consultation was stopped at the user's handoff
 request before a terminal answer. It is not a completed review or accepted design:

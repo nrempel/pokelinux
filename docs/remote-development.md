@@ -13,7 +13,8 @@ app server. Keep host-specific paths and private artifact inventories outside Gi
 Read `AGENTS.md`, `docs/smartphone-goal.md`, `docs/device-portability.md`,
 `docs/native-radio-owner.md` and `docs/native-radio-integration.md` before continuing.
 The native owner fences raw-response publication. Registration worker/death-watch ownership is now implemented. Remaining work includes
-process supervision, other transport operations, candidate/operation deadlines
+installed service supervision, qualified vendor cleanup/re-registration, other
+transport operations, candidate/operation deadlines
 and timer delivery, native IMS semantics and phone-service
 integration. Raw responses are not decoded call state. Java peers remain test
 and reference infrastructure. Physical-device behavior remains unverified.
@@ -37,3 +38,10 @@ power behavior. No physical phone access is authorized.
 
 Coordinate changes through Git. Review untracked files before staging; private
 inputs and raw audit outputs must not be published.
+
+Owned registration and local permanent-hang process reclamation now pass on
+Harbour. A durable admission marker refuses registration after restart until
+remote cleanup can be established. See
+[evidence](evidence/radio-supervisor-provenance.json). ARM64 user-mode QEMU tests
+state and journal behavior; native subprocess and Binder qualification currently
+remain x86-64 emulator evidence.

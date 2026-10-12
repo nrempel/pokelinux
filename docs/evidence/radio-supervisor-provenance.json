@@ -1,0 +1,44 @@
+{
+  "scope": "Local supervised reclamation of a permanently blocked synthetic Binder registration and durable no-retry gate on Harbour",
+  "base_revision": "0ea186b",
+  "sources_sha256": {
+    "native-radio/src/supervisor.rs": "aaac855345cb87c884b5e6b43c8740b52af89eb4c3ab5490ae92550d6af14de7",
+    "native-radio/src/worker.rs": "111afbb009fbfeab24ffedaf7b34368a22ba61dd00f2585e9cbce84de0dd469e",
+    "native-radio/src/owner.rs": "3180375d86d252d3d421f74c82f89fbd709d5427e8f41ce1e776d775e8fff687",
+    "native-radio/src/bin/radio-ipc-test.rs": "e7ce95202e508bc66ea649fe944c2a4013a9cfdc729c17210ce3a34fcde93368",
+    "native-radio/Cargo.toml": "d4d53aafceec699f40368e7ed4c615a0e0c5b9745ef5c200bc1cb2c21ae75c3a",
+    "framework/tests/radio_ipc.py": "e86666a2af9a9974e0f85ae1de781b0b3bfb7caee41ceca2d15cdebc59582e0d",
+    "framework/radiopeer/Peer.java": "b09ddd4c16fb41c6d247c7f07fbc7baca64d9d54279d6806968388ec088aad71"
+  },
+  "binary_sha256": "d913ba1f1146c520f66a7fe1ee570e5384393416607013d8502a97b13b020e36",
+  "peer_apk_sha256": "25e98ab22d0faf69789a043937654b85ba31dbf04832ccc616cedc70d282ed2f",
+  "red": [
+    "Stop retained publication rights",
+    "Pending reap discarded the owned process"
+  ],
+  "green": [
+    "radio-supervised-held\tPASS",
+    "radio-supervisor-output-revoked\tPASS",
+    "radio-supervisor-reaped\tPASS",
+    "radio-supervisor-retry-refused\tPASS",
+    "radio-supervisor-restart-refused\tPASS"
+  ],
+  "component_gates": "Kill/reap error ownership, connection/owner/attempt provenance, durable journal recreation and delayed reaping pass on x86_64 and ARM64 user-mode QEMU. Native x86_64 failed-exec and worker SIGABRT tests pass.",
+  "arm64_process_gate": "Pinned user-mode QEMU unexpectedly returned Ok for spawning a nonexistent executable. That subprocess assertion then hit fail-closed destructor abort. Native subprocess tests are explicitly x86_64-only; actual ARM64 kernel/process qualification remains open.",
+  "other_gates": "fmt, Clippy -D warnings, x86_64 and scoped ARM64/QEMU tests, static release builds; six Binder dispatch tests; owned death/held scenarios, reference owner, registration death and all ordinary IPC scenarios pass",
+  "selinux": "Enforcing asserted after each IPC scenario",
+  "phone_accessed": false,
+  "original_code_execution": "No new original-code execution in this increment",
+  "commands": [
+    "bash tools/build-native-radio.sh build",
+    "bash tools/framework-suite.sh radio-ipc",
+    "bash tools/framework-suite.sh binder-kernel"
+  ],
+  "limits": [
+    "Observed SIGKILL/reap is local resource reclamation; synthetic peer is separately force-stopped by the harness",
+    "No successor registration, remote cleanup, carrier/IMS correctness or physical hardware proof",
+    "Controlled reaping stall is component evidence, not an unkillable kernel task",
+    "Provenance gate is not app authentication, an installed service manager or completed native phone IPC",
+    "Durable marker is conservative and has no reset/removal API; recovery requires a qualified vendor contract"
+  ]
+}

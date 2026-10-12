@@ -41,6 +41,12 @@ Path('artifacts/native-radio/ipc-image.txt').write_text(run('shell', 'getprop', 
 run('push', str(binary), root + '/radio-ipc-test')
 run('shell', 'chmod', '755', root + '/radio-ipc-test')
 try:
+    output = run('shell', root + '/radio-ipc-test', '51', 'supervised-blocked-registration')
+    Path('artifacts/native-radio/supervised-registration-output.txt').write_text(output)
+    assert output.splitlines() == ['radio-supervised-held\tPASS', 'radio-supervisor-output-revoked\tPASS', 'radio-supervisor-reaped\tPASS', 'radio-supervisor-retry-refused\tPASS', 'radio-supervisor-restart-refused\tPASS'], output
+    assert run('shell', 'getenforce').strip() == 'Enforcing'
+    print(output, flush=True)
+    run('shell', 'am', 'force-stop', 'org.pokelinux.radiopeer')
     for scenario, markers in [
         ('owned-service-death', ['radio-bootstrap\tPASS', 'radio-owned-activation\tPASS', 'radio-owned-service-death\tPASS']),
         ('owned-registration-death', ['radio-bootstrap\tPASS', 'radio-owned-registration-death\tPASS'])]:

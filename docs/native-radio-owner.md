@@ -15,8 +15,9 @@ See [deadline execution](evidence/radio-deadline-provenance.json).
 
 A [held-registration Binder test](evidence/held-registration-provenance.json)
 also proves that local stop remains usable while a synthetic registration is
-held, and rejects activation after that call eventually returns success. The
-scoped thread is test infrastructure, not the missing production worker.
+held, and rejects activation after that call eventually returns success. The earlier
+scoped thread was test infrastructure; current held scenarios use the production
+owned lifecycle and supervisor described below.
 
 The [execution record](evidence/radio-owner-provenance.json) separates the tested
 publication boundary from the rest of the target architecture.
@@ -34,8 +35,9 @@ The current in-process `SessionKey` is an opaque allocation identity held by an
 recreated by another owner or a later attempt. Every callback endpoint permanently
 captures its attempt identity. Numeric vendor registration IDs and response
 serials are not session identities. Raw callback consumption is private to the
-owner. A future cross-process observer/supervisor protocol must additionally
-carry an owner incarnation and attempt identity; local pointer identity is not a
+owner. The supervisor now checks a random 128-bit owner incarnation, the source
+connection identity and attempt 1 (one attempt per process). A future authenticated
+app observer protocol must carry those identities too; local pointer identity is not a
 wire format and does not establish restart fencing.
 
 A prepared result contains its originating attempt, applicable deadline, operation
@@ -97,8 +99,9 @@ process boundary. Keep Binder endpoints, this gate and the authoritative reducer
 together in that process. Revoke old process identity, terminate and reap before
 starting a successor; if reaping stalls, remain unavailable. Parent/UI snapshots
 must reject obsolete process/session identities. Reaping proves local resource
-reclamation, not vendor cleanup or cancellation. This process lifecycle remains
-to be built and tested; it is not a second production runtime.
+reclamation, not vendor cleanup or cancellation. Local termination/reaping and
+durable uncertainty now pass real Binder testing, described below. Installed
+service-manager integration and safe successor registration remain unfinished.
 
 Never send delayed cleanup using only a recycled vendor registration ID against
 a new connection. Remote cleanup, registration overlap and producer reset rules
@@ -204,12 +207,45 @@ late result records dispatch and Binder outcome separately from guarded activati
 
 The worker and watch remain owned. Accidentally dropping an unfinished worker
 explicitly aborts its process; it does not detach or hide an indefinite join in
-Drop. This requires a real parent supervisor before production deployment. A
+Drop. `Supervisor` now provides tested parent ownership; installed service-manager
+integration is still required before production deployment. A
 unit test starts a disposable child and proves SIGABRT; ARM64/QEMU tests exercise
 completion ownership but do not repeat that native subprocess signal test.
 
 Even after completion, this lifecycle refuses another registration attempt. No
 `clear` is sent automatically. Its one-way acknowledgement cannot establish remote
-cleanup. Supervisor termination/reaping, durable uncertainty across process
-restart, and a qualified vendor reset/cleanup contract remain required. Request
+cleanup. Supervisor termination/reaping and a durable admission marker across process
+restart are now implemented. A qualified vendor reset/cleanup contract remains
+required before permitting any successor registration. Request
 transport ownership beyond registration and native IMS semantics are still open.
+
+## Supervised reclamation and durable uncertainty
+
+`Supervisor` revokes output admission before signalling its child. `poll_reap`
+retains the owned process on a pending or failed wait, without blocking or creating
+an output-reader thread. Native output reads use a nonblocking pipe and caller
+bounds. Process identity, source connection and attempt must agree before a frame
+can be accepted. This is provenance fencing, not app authentication or a complete
+native phone IPC/reducer contract.
+
+Before spawn, the supervisor creates a mode-0600 admission marker in a private
+directory belonging to the service UID, then syncs the file and directory. Marker
+creation is exclusive. It records uncertainty conservatively before the child can
+register and survives spawn failure, termination, reaping and supervisor restart.
+No code here deletes that marker or sends `clear`. A marker blocks every new
+registration launch. This implements safe unavailability while remote state is
+unknown; it does not restore vendor registration or define a reset protocol.
+
+The synthetic peer's permanent-registration branch has no release control. The
+actual Rust child retains its blocked worker while stop, snapshots and replacement
+refusal remain responsive. The Rust parent sends SIGKILL, reaps it, rejects its old
+tag, and proves restart refusal from the persisted marker. Deferred reaping and
+kill/wait failures have separate controlled component tests. These do not emulate
+an unkillable kernel task. See [execution](evidence/radio-supervisor-provenance.json).
+
+The native x86-64 failed-exec subprocess test passes. Under pinned ARM64 user-mode
+QEMU, spawning a nonexistent executable unexpectedly returns success; the
+fail-closed destructor then aborts when the assertion unwinds. That subprocess
+test is explicitly scoped to native x86-64. Journal, provenance and lifecycle
+state tests still run under ARM64/QEMU. Actual ARM64 kernel/process qualification
+and installed service-manager behavior remain open.
