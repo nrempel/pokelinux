@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "base_revision": "220cf1cbc63667a2994c8b462a89d14cec275ae1",
+  "source_files": {
+    "tools/native-boot-probe-package.py": "dd5ee7875fccd86920011d2dbbb9cddda7eed1308fca91828ce3664192ccc862",
+    "tools/native-boot-probe-package-suite.py": "b5aaf2f3bad34fd9c48d1da769a31a8b5e17c1aa53fde5308a0ca045e159c2b6",
+    "tools/native-boot-probe-package-runtime.py": "8fa5574f7c932d34ff850c8c55da49ab3ca22e139f202befc4587ba1b7e1acfc",
+    "tools/native-boot-inputs-reference.py": "9d18de2397e2203156e6788774122cdf4e31691570a835feed09bd085071500f",
+    "native-boot-package/input-pins.json": "951e94b9d181fbfefc7149ee7585fb65a6d521578dcc6e8b3003da32d1787171",
+    "native-boot-package/README.md": "469ebb32c1b9fbb82f3f1633a4aa4ab543b87ad197ce673c72d53fcc8ee6e07b",
+    "native-boot-package/evidence/candidate-manifest.json": "bec1b0a726e2ff3a4ce62dd34b0d3a05ca018d45a76d93e23d2a77a3412f0380",
+    "native-boot-package/evidence/verification.json": "cf160be96c49b029836c7310ba02e8fe17d6b6f81cee728056928ddf824550a5",
+    "native-boot-package/evidence/runtime-verification.json": "31c4c810436da0006e3bc3951223ade1cc712405d99f8d19f86bdbb3aa4d7d37",
+    "native-boot-package/evidence/vendor-startup-metadata.json": "60761688969e17ce2e36f4e997af47a45d466396cbc725d4ce837307c0064819"
+  },
+  "public_scope": "authored-code-and-clean-metadata-only",
+  "original_frozen_offline_source_files": {
+    "tools/native-boot-probe-package.py": "dd5ee7875fccd86920011d2dbbb9cddda7eed1308fca91828ce3664192ccc862",
+    "tools/native-boot-probe-package-suite.py": "b5aaf2f3bad34fd9c48d1da769a31a8b5e17c1aa53fde5308a0ca045e159c2b6",
+    "tools/native-boot-inputs-reference.py": "9d18de2397e2203156e6788774122cdf4e31691570a835feed09bd085071500f",
+    "native-boot-package/input-pins.json": "951e94b9d181fbfefc7149ee7585fb65a6d521578dcc6e8b3003da32d1787171",
+    "native-boot-package/README.md": "0e66c349148ed792f0d080f796e27d8e69e8d4af28ca3f57d68bd7e07e548567",
+    "native-boot-package/evidence/candidate-manifest.json": "bec1b0a726e2ff3a4ce62dd34b0d3a05ca018d45a76d93e23d2a77a3412f0380",
+    "native-boot-package/evidence/verification.json": "cf160be96c49b029836c7310ba02e8fe17d6b6f81cee728056928ddf824550a5"
+  },
+  "original_offline_candidate_sha256": "588cabd9399e1ece30cd35373c07d5de8ee5c6654bae692879aeb912c9ac1faf",
+  "original_producer_suite_and_candidate_unchanged": true,
+  "runtime_evidence_class": "actual-Arch-ARM-kernel-consumer-of-exact-original-extracted-candidate-generic-LZ4",
+  "runtime_executed_consumer_sha256": "2f36feff0e18ef2b1c2f5d3865aed98666061be1646841247ee6f6375c832d31",
+  "executed_source_snapshot_retained_privately": true,
+  "failed_runtime_red_expectation_preserved": true,
+  "genuine_runtime_red_observed": false,
+  "original_candidate_actual_Arch_native_completion_observed": true,
+  "publication_classifier_checked_on_actual_retained_console_without_new_VM": true,
+  "private_prototype_sources_and_candidate_preserved": true,
+  "private_prototype_is_not_publication_candidate": true,
+  "private_upstream_sources_retained": true,
+  "private_original_inputs_retained": true,
+  "private_candidate_images_retained": true,
+  "pixel_kernel_runtime_verified": false,
+  "phone_accessed": false,
+  "full_deployment_admitted": false,
+  "independent_publication_verification": {
+    "authored_and_frozen_source_bindings": 11,
+    "selected_original_rehashes": 14,
+    "exact_component_extent_hashes_verified": true,
+    "two_private_candidates_byte_identical": true,
+    "original_runtime_result_and_console_hashes_verified": true,
+    "original_failed_red_expectation_preserved": true,
+    "revised_classifier_checked_on_exact_retained_console_and_negative_controls": true,
+    "revised_consumer_reexecuted_in_VM": false
+  }
+}

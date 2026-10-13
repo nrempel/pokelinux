@@ -36,12 +36,31 @@ wait implementation are present, but permanently held-child/error/shutdown-signa
 integration is not qualified by the two successful groups. Console/device IO,
 module loading and persistent boot-log/USB diagnostics also remain work.
 
-The first phone candidate is a separate RAM-resident probe before the full
-Omarchy session. It still needs authenticated, structurally validated Pixel boot
-composition, a selected kernel/module/page-size pairing where required, generic
-ramdisk ownership of `/init`, a usable diagnostic path, and a concrete bootloader/
-AVB acceptance and recovery plan. A later physical test must observe native PID1
-and a recoverable diagnostic result. No physical phone is accessed here.
+The first experimental Pixel candidate is now built offline. The
+[packager](../native-boot-package/README.md) produces a reproducible1,454,080-byte
+unsigned v4 `init_boot` containing the exact native init and diagnostic child.
+Pinned unchanged AOSP unpacking and the Rust inspector agree on its extents.
+Independent legacy-LZ4/newc decoding of the actual two selected4K vendor fragments
+with generic last confirms that the native regular `/init` replaces the vendor
+symlink. Two actual builds are byte-identical; eight input/output refusal groups
+pass. The images and original payloads stay private.
+
+The exact candidate's extracted generic LZ4 also runs under the retained Arch
+ARM7.1.6 kernel: root PID1 executes and actually waits child exit37, then powers
+down in1.987s with actual container wait0. This observation uses only the authored
+generic ramdisk. Google's kernel and the selected vendor overlay are not executed.
+The original consumer expected startup failure from missing initial device nodes;
+that expectation was falsified. Its recorded aggregate exit1 and `passed=false`
+remain unchanged beside the successful native execution observation. No runtime
+RED or device-node repair is claimed. See the
+[runtime record](../native-boot-package/evidence/runtime-verification.json).
+
+The restricted RAM probe precedes the full Omarchy session. Pixel kernel startup,
+bootloader fragment selection, AVB acceptance and recovery, a usable diagnostic
+path, and watchdog/thermal behavior remain unresolved. Module KMI/loading is a
+separate gate where modules are required. A later authorized physical test must
+observe native PID1 and a recoverable diagnostic result. There is no reliable
+phone-boot date from the Arch result. No physical phone is accessed here.
 
 For modern Android devices the generic ramdisk normally resides in `init_boot`,
 while `boot` contains the kernel and vendor boot images supply board resources.

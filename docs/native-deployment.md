@@ -29,6 +29,14 @@ requirements and the later physical gate are still unresolved; deployment is
 still refused. The separate [RAM-only native PID1 guest probe](native-phone-boot-probe.md)
 does not qualify Pixel boot or installed Arch supervision.
 
+An [experimental unsigned `init_boot` candidate](../native-boot-package/README.md)
+now packages the exact native probe in a reproducible1,454,080-byte container.
+Original AOSP unpacking and independent actual vendor/generic overlay checks
+qualify its offline format. The exact generic LZ4 executes under the Arch guest
+kernel, with no vendor overlay loaded. That observation leaves the full profile,
+all nine offline requirements and the physical gate refused; neither a valid
+container nor an Arch PID1 result establishes Google's bootloader/AVB acceptance.
+
 The following paragraphs retain the original2026-10-12 audit checkpoint; their
 missing kernel/whole-ZIP facts are superseded by the update above, while runtime,
 KMI, AVB and hardware limits remain open.

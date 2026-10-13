@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "candidate_class": "UNQUALIFIED_PIXEL_NATIVE_BOOT_PROBE_CANDIDATE",
+  "factory_archive": {
+    "bytes": 11378664978,
+    "sha256": "3721e6accc2e87d851ee7966d794318078ec74c7cc32343daa10968264d6bb62",
+    "official_reference": "https://developers.google.cn/android/images/?hl=id#frankel"
+  },
+  "selected": [
+    {
+      "name": "android-info.txt",
+      "bytes": 161,
+      "sha256": "7bfd7c555aa80c7f18d29f9691329a90e14226870701c89d347141e202416441"
+    },
+    {
+      "name": "boot.img",
+      "bytes": 67108864,
+      "sha256": "f68a58f2d4fd591beaca0e569713006a593644ffda4e2fb580339677d867d403"
+    },
+    {
+      "name": "dtbo.img",
+      "bytes": 16777216,
+      "sha256": "4f7fb4e5cbacc1fc494fd3b0aa0cd80ec34c207d88272a5e82083148ca679fd0"
+    },
+    {
+      "name": "fastboot-info.txt",
+      "bytes": 410,
+      "sha256": "307b6cd053b6c2908130e6e600e5fae8fc62751322d88ef3d036395a52ae43d4"
+    },
+    {
+      "name": "init_boot.img",
+      "bytes": 8388608,
+      "sha256": "8ce3679285604688cea9c358d449a31db5fb7c0f0b49ef16c0f8c2c807f8425d"
+    },
+    {
+      "name": "kernel_16k",
+      "bytes": 17315962,
+      "sha256": "92e60d4117a3bb1031baf3f464d10cce1beb19600191aadfb821433e6694275b"
+    },
+    {
+      "name": "ramdisk_16k.img",
+      "bytes": 15291325,
+      "sha256": "0444a8dab23de0bfbffe32d7ea8fee123ee075ecee55013c1080db6772fca0fe"
+    },
+    {
+      "name": "system_dlkm.img",
+      "bytes": 11173888,
+      "sha256": "c9da4e00ca20436e5c407f2849dc1389e8501533917bf6350fc0b3e6d2eeb311"
+    },
+    {
+      "name": "vbmeta.img",
+      "bytes": 16384,
+      "sha256": "b8bd852e4ff03d8c0bb6bb6e5633b041e1c687a49f83f8e2d5f8982b672f9e32"
+    },
+    {
+      "name": "vbmeta_system.img",
+      "bytes": 8192,
+      "sha256": "a42cc65cc9076ebe64a911f441a0e8d5eba1a9b0b718ca7872d950878029fa3c"
+    },
+    {
+      "name": "vbmeta_vendor.img",
+      "bytes": 4096,
+      "sha256": "ae657ff21df8163182f71d5e26443c52d4f5759e8f526b055fe11a6ae98b3420"
+    },
+    {
+      "name": "vendor_boot.img",
+      "bytes": 67108864,
+      "sha256": "8062043c15ad497690e71429194de4e358846db3752cf33342e6b325f2e6522e"
+    },
+    {
+      "name": "vendor_dlkm.img",
+      "bytes": 43810816,
+      "sha256": "a41db39a1ffbb91b7176ddfc3a4bd1a424200961cd806fa2a3dfa250c32b038a"
+    },
+    {
+      "name": "vendor_kernel_boot.img",
+      "bytes": 67108864,
+      "sha256": "44ad13534c7575b8d3d23a6db9bfdcb3ef33918dfd8fce61e14ecf686da269a8"
+    }
+  ],
+  "native_payload": {
+    "init": {
+      "bytes": 1190352,
+      "sha256": "cbf938d20127b02dc84afe2bd0e1fc4c66bd6f2d33d33c436e7a8c9fe37d205c"
+    },
+    "probe-child": {
+      "bytes": 993728,
+      "sha256": "3b15eb4a9fd289e6664c917861f98bbe385e117e26b28abb149b3021e4b19e63"
+    }
+  },
+  "inspector_sha256": "4a0e9b27ff9195bf60ad80f8a95f6c4e6f2b72df7e03b65971103a24dedb73da",
+  "reference_wrapper_sha256": "9d18de2397e2203156e6788774122cdf4e31691570a835feed09bd085071500f"
+}

@@ -38,6 +38,19 @@ or phone is attached. See [boot probe](native-phone-boot-probe.md) and
 IO, Pixel module/diagnostic/thermal/watchdog behavior and actual phone boot remain
 unqualified. The first restricted Pixel candidate is independent of full IMS/UI.
 
+That experimental candidate now exists offline: a reproducible1,454,080-byte
+unsigned v4 `init_boot` owns generic `/init` with the exact native ELF. Pinned AOSP
+unpacking, Rust geometry, independent actual vendor-fragment overlay and eight
+input/output refusal groups pass. Its exact extracted generic LZ4 also executes
+native PID1/child wait37/poweroff under Arch ARM7.1.6 in1.987s. A hypothesis that
+missing startup device nodes would abort init was falsified; the original
+consumer's failed RED expectation/exit1 remain preserved. No runtime defect or
+node repair is claimed. Public tooling and clean metadata are in
+[native boot package](../native-boot-package/README.md). Candidate images and
+original inputs remain private. This does not qualify Pixel kernel startup,
+vendor-overlay runtime, AVB, bootloader selection, temporary multi-partition boot
+or diagnostic/watchdog/thermal behavior. Full deployment stays refused.
+
 The full original frankelCP3A.261005.005 factory archive now matches Google's
 published SHA256, with38 index reads rebound to the authenticated stream and14
 selected boot/module inputs preserved privately. The new bounded Rust v4

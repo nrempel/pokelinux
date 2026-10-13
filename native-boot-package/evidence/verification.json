@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "actual_original_red_precedes_implementation": true,
+  "actual_original_red": {
+    "boundary": "actual-authenticated-factory-init-boot-CPIO-init",
+    "stock_init_sha256": "67e58e501941ff52f7c1b409af6c1a29e4872763d1b32940db3bde7739ed3b41",
+    "required_native_init_sha256": "cbf938d20127b02dc84afe2bd0e1fc4c66bd6f2d33d33c436e7a8c9fe37d205c",
+    "stock_init_bytes": 2942024,
+    "native_init_present": false,
+    "phone_accessed": false,
+    "log_sha256": "e1a80d99ce67b1724e074c8e1dc5003d5c1045becd483822333f35dd4645e800",
+    "frozen_pre_implementation_verifier_sha256": "84ea1d38dcfdd7ebb8f6643f6b5e4bcd2d0f9d91d8e13e039586cac8a62c2f97"
+  },
+  "candidate_checks": {
+    "image_sha256": "588cabd9399e1ece30cd35373c07d5de8ee5c6654bae692879aeb912c9ac1faf",
+    "image_bytes": 1454080,
+    "generic_init_sha256": "cbf938d20127b02dc84afe2bd0e1fc4c66bd6f2d33d33c436e7a8c9fe37d205c",
+    "generic_child_sha256": "3b15eb4a9fd289e6664c917861f98bbe385e117e26b28abb149b3021e4b19e63",
+    "independent_original_unpack_and_rust_inspector": true,
+    "actual_three_frame_overlay": true,
+    "vendor_init_target": "/system/bin/init",
+    "generic_init_replaces_vendor_symlink": true,
+    "full_deployment_refused": true
+  },
+  "reproducible_two_actual_builds": true,
+  "negative_groups": [
+    "changed-native-init",
+    "changed-native-child",
+    "actual-stock-Android-init",
+    "existing-output-label",
+    "Git-output",
+    "unauthenticated-selection",
+    "changed-original-AOSP-source",
+    "changed-Rust-inspector"
+  ],
+  "immutable_selected_files_rechecked": 14,
+  "immutable_inputs_unchanged": true,
+  "phone_accessed": false,
+  "pixel_kernel_booted": false,
+  "avb_verified": false
+}

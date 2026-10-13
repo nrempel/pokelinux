@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "boundary": "authenticated-selected-platform-vendor-CPIO-metadata-only",
+  "records": [
+    {
+      "image": "vendor_kernel_boot.img",
+      "fragment": "vendor_ramdisk00",
+      "compressed_sha256": "afbfcd662afb88e4be997c11d436ebf4cbb964cd2293eab0095d0b95798c6483",
+      "entries": 209,
+      "paths": {
+        "dev": null,
+        "dev/console": null,
+        "dev/null": null,
+        "init": null
+      }
+    },
+    {
+      "image": "vendor_boot.img",
+      "fragment": "vendor_ramdisk00",
+      "compressed_sha256": "ffeef1fd4e1314f6448cf2c482045adf44bc1aabe1197d310a40da7026d470a6",
+      "entries": 531,
+      "paths": {
+        "dev": {
+          "mode": 16877,
+          "uid": 0,
+          "gid": 0,
+          "nlink": 1,
+          "mtime": 0,
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "dev/console": null,
+        "dev/null": null,
+        "init": {
+          "mode": 41448,
+          "uid": 0,
+          "gid": 0,
+          "nlink": 1,
+          "mtime": 0,
+          "bytes": 16,
+          "sha256": "bbbdc95750f115afc6e9739235885bb7f99141c57477f26261a565c5c547b9d9"
+        }
+      }
+    }
+  ],
+  "no_vendor_elf_executed": true,
+  "pixel_kernel_booted": false,
+  "physical_device_accessed": false
+}
