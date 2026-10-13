@@ -236,3 +236,11 @@ remain separate checks. Normal installed Messages remains local-history-only.
 Complete enumeration/retention, shared receive during held-read cancellation,
 production attachment/ACK/reset, notifications, wake and hardware remain open.
 See [incoming composition](native-messages-incoming.md).
+
+Complete bounded raw receipt enumeration now qualifies every committed ID within
+an append-only4096 limit, beyond the earlier latest32 projection. Six actual ARM
+Binder/storage/history groups and22 receipt/6 projection cases per architecture
+preserve exact IDs, exclusions and history-only recovery. It uses the frozen
+`f733d3b` actor/source; later session composition remains separate. Raw retention,
+inbox limits, cold-backlog deadlines and production receive remain open. See
+[enumeration](native-messages-enumeration.md).

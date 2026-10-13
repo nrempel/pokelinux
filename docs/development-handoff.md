@@ -329,10 +329,20 @@ admission/restore containment. See `native-session-build-boundary.md` and
 `native-session-contract.md`; the production facts adapter and actor bridge remain
 separate from this probe.
 
+Complete bounded raw enumeration now removes the33rd-occurrence stop within the
+append-only4096 receipt limit. Fixed-upper owner-bound pages and eight-import
+projection turns preserve exact IDs and expose Ready only after full coverage plus
+current tail. Fresh component/live-Binder reds precede six actual ARM greens;
+22 receipt and6 projection cases pass per architecture. Four independent peer/
+manager contexts actually reap. The frozen `f733d3b` actor/source is explicit;
+new session composition remains separate. Raw retention, inbox capacity and large
+cold backlog availability under original deadlines remain open. See
+`native-messages-enumeration.md` and its clean provenance.
+
 ## Next work
 
-1. Continue the qualified synthetic incoming Messages path with complete bounded
-   receipt enumeration/retention and held-read cancellation that preserves shared
+1. Continue the qualified synthetic incoming Messages path with raw retention/capacity,
+   cold backlog availability and held-read cancellation that preserves shared
    receiving. Retain original ingestion deadlines and durable source uncertainty;
    history recovery never permits implicit backend reattachment. Compose the
    bounded compositor facts source with current read authority, then qualify

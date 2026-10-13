@@ -13,6 +13,7 @@ pub const MAX_RAW_BYTES: usize = 512;
 pub const MAX_SLOTS: u8 = 8;
 pub const MAX_PENDING: usize = 8;
 pub const MAX_SNAPSHOT: usize = 32;
+pub const MAX_SCAN_PAGE: usize = 32;
 #[derive(Debug)]
 pub enum Error {
     Refused(&'static str),
@@ -152,6 +153,35 @@ pub struct Snapshot {
     pub active_sources: usize,
     pub pending: usize,
     pub latest: Vec<ReceiptSummary>,
+}
+/// Owner-bound data cursor over a fixed append-only sequence upper bound.
+/// This is not read/ACK authority and carries no raw payload or modem token.
+pub struct ReceiptScan {
+    owner: uuid::Uuid,
+    upper: i64,
+    after: i64,
+}
+impl ReceiptScan {
+    pub fn total(&self) -> usize {
+        self.upper as usize
+    }
+    pub fn remaining(&self) -> usize {
+        (self.upper - self.after) as usize
+    }
+    pub fn complete(&self) -> bool {
+        self.after == self.upper
+    }
+}
+/// A completed local enumeration prefix, usable only by the same open owner.
+/// Copies remain data checkpoints, never transferable permission.
+#[derive(Clone, Copy)]
+pub struct ReceiptCheckpoint {
+    owner: uuid::Uuid,
+    through: i64,
+}
+pub struct ReceiptPage {
+    pub items: Vec<ReceiptSummary>,
+    pub complete: bool,
 }
 /// Non-cloneable local one-use permission. This contains no modem target token,
 /// raw payload, serial, success flag or GSM cause; use only dispatch_test_ack.
@@ -423,13 +453,22 @@ impl ReceiptOwner {
         if count >= MAX_RECEIPTS as u32 {
             return Err(Error::Refused("durable receipt capacity exhausted"));
         }
-        let changed=tx.execute("INSERT INTO receipts(id,slot,origin_owner,source_incarnation,scope,kind,raw) VALUES(?1,?2,?3,?4,?5,?6,?7)",params![id.to_string(),source.slot.0,source.owner.simple().to_string(),source.incarnation.simple().to_string(),scope.value(),kind.value(),raw])?;
+        let last: i64 = tx.query_row("SELECT COALESCE(max(seq),0) FROM receipts", [], |r| {
+            r.get(0)
+        })?;
+        if last != i64::from(count) {
+            return Err(Error::Refused("invalid append-only receipt sequence"));
+        }
+        let next = last
+            .checked_add(1)
+            .ok_or(Error::Refused("receipt sequence exhausted"))?;
+        let changed=tx.execute("INSERT INTO receipts(seq,id,slot,origin_owner,source_incarnation,scope,kind,raw) VALUES(?1,?2,?3,?4,?5,?6,?7,?8)",params![next,id.to_string(),source.slot.0,source.owner.simple().to_string(),source.incarnation.simple().to_string(),scope.value(),kind.value(),raw])?;
         if changed != 1 {
             return Err(Error::Refused("raw receipt was not stored"));
         }
         // Byte equality here validates this atomic admission, never deduplicates
         // a network arrival or derives its local receipt identity from content.
-        let valid:bool=tx.query_row("SELECT raw=?2 AND origin_owner=?3 AND source_incarnation=?4 AND slot=?5 AND scope=?6 AND kind=?7 AND ack='stored' AND cancelled=0 AND attempt IS NULL FROM receipts WHERE id=?1",params![id.to_string(),raw,source.owner.simple().to_string(),source.incarnation.simple().to_string(),source.slot.0,scope.value(),kind.value()],|r|r.get(0))?;
+        let valid:bool=tx.query_row("SELECT raw=?2 AND origin_owner=?3 AND source_incarnation=?4 AND slot=?5 AND scope=?6 AND kind=?7 AND ack='stored' AND cancelled=0 AND attempt IS NULL AND seq=?8 FROM receipts WHERE id=?1",params![id.to_string(),raw,source.owner.simple().to_string(),source.incarnation.simple().to_string(),source.slot.0,scope.value(),kind.value(),next],|r|r.get(0))?;
         if !valid {
             return Err(Error::Refused("raw receipt admission changed"));
         }
@@ -519,6 +558,91 @@ impl ReceiptOwner {
             active_sources: self.sources.len(),
             pending: self.pending.len(),
             latest,
+        })
+    }
+    fn scan_upper(&self) -> Result<i64> {
+        // A bounded scalar inventory verifies the existing append-only schema.
+        // Raw deletion/reordering is unsupported; no migration or retention is inferred.
+        let (count,min,max):(i64,i64,i64)=self.db.query_row("SELECT count(*),COALESCE(min(seq),0),COALESCE(max(seq),0) FROM (SELECT seq FROM receipts LIMIT 4097)",[],|r|Ok((r.get(0)?,r.get(1)?,r.get(2)?)))?;
+        if count < 0 || count > MAX_RECEIPTS as i64 || max != count || (count > 0 && min != 1) {
+            return Err(Error::Refused(
+                "receipt enumeration sequence outside append-only bound",
+            ));
+        }
+        Ok(max)
+    }
+    pub fn scan(&self, after: Option<&ReceiptCheckpoint>) -> Result<ReceiptScan> {
+        let upper = self.scan_upper()?;
+        let after = if let Some(checkpoint) = after {
+            if checkpoint.owner != self.owner
+                || checkpoint.through < 0
+                || checkpoint.through > upper
+            {
+                return Err(Error::Refused("stale or foreign receipt checkpoint"));
+            }
+            checkpoint.through
+        } else {
+            0
+        };
+        Ok(ReceiptScan {
+            owner: self.owner,
+            upper,
+            after,
+        })
+    }
+    pub fn scan_current(&self, scan: &ReceiptScan) -> Result<bool> {
+        if scan.owner != self.owner {
+            return Err(Error::Refused("stale or foreign receipt scan"));
+        }
+        Ok(self.scan_upper()? == scan.upper)
+    }
+    pub fn scan_page(&self, scan: &mut ReceiptScan, limit: usize) -> Result<ReceiptPage> {
+        if scan.owner != self.owner || !(1..=MAX_SCAN_PAGE).contains(&limit) {
+            return Err(Error::Refused("stale scan or page limit outside bound"));
+        }
+        let mut q=self.db.prepare("SELECT seq,id,slot,kind,ack,cancelled,length(raw) FROM receipts WHERE seq>?1 AND seq<=?2 ORDER BY seq LIMIT ?3")?;
+        let mut rows = q.query(params![scan.after, scan.upper, limit as u32])?;
+        let mut items = Vec::with_capacity(limit);
+        let mut next = scan.after;
+        while let Some(r) = rows.next()? {
+            let seq: i64 = r.get(0)?;
+            if next.checked_add(1) != Some(seq) || seq > scan.upper {
+                return Err(Error::Refused("receipt scan membership changed"));
+            }
+            let raw_length = r.get::<_, u32>(6)? as usize;
+            let slot: u8 = r.get(2)?;
+            if raw_length > MAX_RAW_BYTES || slot >= MAX_SLOTS {
+                return Err(Error::Refused("stored receipt summary outside bound"));
+            }
+            items.push(ReceiptSummary {
+                id: ReceiptId(uuid(&r.get::<_, String>(1)?)?),
+                slot: Slot(slot),
+                kind: IncomingKind::parse(&r.get::<_, String>(3)?)?,
+                ack: AckState::parse(&r.get::<_, String>(4)?)?,
+                cancelled: r.get(5)?,
+                raw_length,
+            });
+            next = seq;
+        }
+        if items.len() < limit && next != scan.upper {
+            return Err(Error::Refused(
+                "receipt scan ended before captured upper bound",
+            ));
+        }
+        // Advance only after the entire bounded page validates; errors preserve cursor.
+        scan.after = next;
+        Ok(ReceiptPage {
+            items,
+            complete: scan.complete(),
+        })
+    }
+    pub fn checkpoint(&self, scan: &ReceiptScan) -> Result<ReceiptCheckpoint> {
+        if scan.owner != self.owner || !scan.complete() {
+            return Err(Error::Refused("receipt scan incomplete or foreign"));
+        }
+        Ok(ReceiptCheckpoint {
+            owner: self.owner,
+            through: scan.upper,
         })
     }
     fn persist_claim(&mut self, source: Source, id: ReceiptId, attempt: AckAttempt) -> Result<()> {

@@ -1,0 +1,12 @@
+[package]
+name = "native-messages-enumeration-fixture"
+version = "0.1.0"
+edition = "2024"
+publish = false
+[workspace]
+[dependencies]
+pokelinux-messages = {path="../../../native-messages"}
+pokelinux-messaging = {path="../../../native-messaging"}
+serde_json = "=1.0.154"
+[lints.rust]
+unsafe_code = "forbid"

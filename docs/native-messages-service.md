@@ -71,11 +71,14 @@ stays in `ReceiptOwner`; the inbox and window hold no ACK or delivery authority.
 Existing exclusions and tombstones survive reconciliation; capacity exhaustion
 refuses imports rather than dropping occurrence keys.
 
-The frozen receipt snapshot API enumerates only the latest32 receipts. This
-service explicitly refuses and surfaces history as unavailable when total raw
-receipts exceed32, before importing a partial snapshot. It never silently drops
-older arrivals. Complete receipt enumeration and raw retention policy are
-required before continuous production ingestion. Inbox bounds remain4096 keys,
+The diagnostic receipt snapshot API enumerates only the latest32 receipts. The
+frozen `f733d3b` service refused larger history before partial import. The current
+[complete enumeration](native-messages-enumeration.md) uses fixed-upper owner-bound
+pages instead, with eight imports per worker turn and exact-ID reconstruction.
+Ready requires all captured records and a current-tail check;33 no longer silently
+limits projection or stops that qualified source. The append-only raw journal
+still refuses beyond4096, and raw retention remains unimplemented. Original
+deadlines can make a large cold backlog unavailable. Inbox bounds remain4096 keys,
 2048 text messages and512 conversations; IPC pages contain at most8 conversations
 or2 messages and every packet is bounded to4096 bytes. Read deadlines are1–1000ms.
 The actor retains the existing32-record policy-grant budget; this is a total

@@ -74,11 +74,12 @@ receiving across held-read cancellation.
 
 A raw commit followed by projection loss or completion loss survives as the exact
 existing receipt ID. Restart reconciles those IDs without recreating an arrival.
-The frozen raw API exposes latest32 only. The33rd raw occurrence may commit, then
-projection becomes terminally unavailable before importing a partial snapshot.
-The existing32 projected records remain; history restart still refuses that raw
-backlog. Full enumeration and retention remain necessary for continuous production
-receiving.
+The frozen `f733d3b` source exposed latest32 only: its33rd raw occurrence committed
+before terminal projection refusal. That evidence remains historical. The subsequent
+[complete enumeration](native-messages-enumeration.md) removes this33rd-occurrence
+limit with owner-bound fixed-upper pages and eight-import turns; its separately
+frozen actor/source selection qualifies all committed IDs over64/67-key fixtures.
+Raw4096/inbox capacity, retention and cold-backlog deadlines remain production gates.
 
 ## Authenticated shutdown completion
 

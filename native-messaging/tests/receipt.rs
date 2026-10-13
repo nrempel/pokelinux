@@ -678,3 +678,109 @@ fn cancellation_revokes_the_incoming_source_until_explicit_test_reattachment() {
         assert!(owner.eligible(replacement, fresh));
     }
 }
+
+#[test]
+fn fixed_upper_paged_enumeration_preserves_equal_ids_and_defers_new_tail() {
+    let directory = Directory::new();
+    let mut owner = directory.owner();
+    let source = owner.attach(Slot(0), BackendScope::Unqualified).unwrap();
+    let ids: Vec<_> = (0..33)
+        .map(|_| {
+            owner
+                .admit(source, IncomingKind::Deliver, b"equal")
+                .unwrap()
+        })
+        .collect();
+    let mut scan = owner.scan(None).unwrap();
+    assert_eq!(scan.total(), 33);
+    assert!(owner.checkpoint(&scan).is_err());
+    assert!(owner.scan_page(&mut scan, 0).is_err());
+    assert!(owner.scan_page(&mut scan, 33).is_err());
+    let first = owner.scan_page(&mut scan, 8).unwrap();
+    assert!(!first.complete);
+    let extra = owner
+        .admit(source, IncomingKind::Deliver, b"equal")
+        .unwrap();
+    let mut seen: Vec<_> = first.items.into_iter().map(|r| r.id).collect();
+    while !scan.complete() {
+        let page = owner.scan_page(&mut scan, 8).unwrap();
+        assert!(page.items.len() <= 8);
+        seen.extend(page.items.into_iter().map(|r| r.id));
+    }
+    assert_eq!(seen, ids);
+    assert_eq!(scan.total(), 33);
+    assert!(!owner.scan_current(&scan).unwrap());
+    let checkpoint = owner.checkpoint(&scan).unwrap();
+    let mut tail = owner.scan(Some(&checkpoint)).unwrap();
+    assert_eq!(tail.total(), 34);
+    assert_eq!(tail.remaining(), 1);
+    assert_eq!(owner.scan_page(&mut tail, 8).unwrap().items[0].id, extra);
+    assert!(owner.scan_current(&tail).unwrap());
+    let tail_checkpoint = owner.checkpoint(&tail).unwrap();
+    assert!(!owner.control().permission);
+    assert_eq!(owner.control().pending, 0);
+    drop(owner);
+    let reopened = directory.owner();
+    assert!(reopened.scan(Some(&tail_checkpoint)).is_err());
+    assert!(reopened.scan_page(&mut tail, 8).is_err());
+    let mut fresh = reopened.scan(None).unwrap();
+    let mut again = Vec::new();
+    while !fresh.complete() {
+        again.extend(
+            reopened
+                .scan_page(&mut fresh, 32)
+                .unwrap()
+                .items
+                .into_iter()
+                .map(|r| r.id),
+        );
+    }
+    let mut expected = ids;
+    expected.push(extra);
+    assert_eq!(again, expected);
+}
+#[test]
+fn bounded_full4096_enumeration_has_no_silent_latest32_truncation() {
+    let directory = Directory::new();
+    let owner = directory.owner();
+    let db = rusqlite::Connection::open(directory.0.join("receipts.sqlite3")).unwrap();
+    db.execute_batch("WITH RECURSIVE n(x) AS (VALUES(1) UNION ALL SELECT x+1 FROM n WHERE x<4096) INSERT INTO receipts(id,slot,origin_owner,source_incarnation,scope,kind,raw) SELECT printf('%032x',x),0,printf('%032x',0),printf('%032x',0),'unqualified','deliver',X'78' FROM n;").unwrap();
+    let mut scan = owner.scan(None).unwrap();
+    assert_eq!(scan.total(), 4096);
+    let mut seen = std::collections::HashSet::new();
+    let mut pages = 0;
+    while !scan.complete() {
+        let page = owner.scan_page(&mut scan, 32).unwrap();
+        assert_eq!(page.items.len(), 32);
+        pages += 1;
+        for row in page.items {
+            assert!(seen.insert(row.id));
+        }
+    }
+    assert_eq!(pages, 128);
+    assert_eq!(seen.len(), 4096);
+    assert_eq!(owner.snapshot(32).unwrap().latest.len(), 32);
+}
+#[test]
+fn changed_captured_membership_refuses_without_advancing_page_or_ack_control() {
+    let directory = Directory::new();
+    let mut owner = directory.owner();
+    let source = owner.attach(Slot(0), BackendScope::Unqualified).unwrap();
+    for _ in 0..33 {
+        owner
+            .admit(source, IncomingKind::Deliver, b"equal")
+            .unwrap();
+    }
+    let mut scan = owner.scan(None).unwrap();
+    owner.scan_page(&mut scan, 8).unwrap();
+    let remaining = scan.remaining();
+    let db = rusqlite::Connection::open(directory.0.join("receipts.sqlite3")).unwrap();
+    db.execute("DELETE FROM receipts WHERE seq=12", []).unwrap();
+    assert!(owner.scan_page(&mut scan, 8).is_err());
+    assert_eq!(scan.remaining(), remaining);
+    assert!(owner.scan_current(&scan).is_err());
+    assert!(owner.scan(None).is_err());
+    assert!(!owner.control().permission);
+    assert_eq!(owner.control().pending, 0);
+    assert_eq!(owner.snapshot(32).unwrap().total, 32);
+}

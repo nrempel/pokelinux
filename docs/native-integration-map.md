@@ -42,10 +42,12 @@ appearance ACL setup remain explicit test infrastructure.
    Explicit synthetic successors require fresh independent peers and reset context.
    Decouple held-read cancellation from shared source ownership before promising
    receiving across every app close. No production ACK/send is enabled.
-3. Qualify complete bounded receipt enumeration/retention. The current service
-   refuses history above32 raw receipts before partial import; this limit is not
-   continuous production receive support. Preserve raw/projection crash outcomes
-   and recover exact committed IDs without recreating arrivals.
+3. Complete receipt retention/capacity and cold-backlog availability. The
+   [bounded enumeration](native-messages-enumeration.md) now qualifies every ID
+   within the append-only4096 bound using fixed-upper pages/eight-import turns;
+   no partial Ready or callback recreation occurs. Its six ARM greens use the
+   frozen `f733d3b` actor, separately from later session composition. Raw eviction,
+   inbox bounds and throughput under unchanged deadlines remain open.
 4. Add trusted lock/focus/session ingress and native notifications through this
    same authority. Source failure/default lock denies reads. Distinct UIDs and
    Wayland socket ACLs do not establish compositor protocol containment. Qualify

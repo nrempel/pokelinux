@@ -614,12 +614,33 @@ pub fn entry_with_backend(
         .map_err(|_| io::ErrorKind::InvalidData)?;
     let mut sequence = 0u64;
     let mut incoming: Option<crate::incoming::Incoming> = None;
+    let mut request: Option<Request> = None;
+    let mut active: Option<(
+        crate::incoming::Arrival,
+        pokelinux_messaging::receipt::ReceiptId,
+    )> = None;
     loop {
+        if request.as_ref().is_some_and(|r| boottime_ns() >= r.until) {
+            if let Some(i) = &incoming {
+                i.control.fail("worker_request_deadline");
+            }
+            return Err(io::ErrorKind::TimedOut.into());
+        }
         if let Some(i) = &incoming {
             if i.control.failed() {
                 return Err(io::ErrorKind::BrokenPipe.into());
             }
-            if let Ok(arrival) = i.queue.try_recv() {
+            if active
+                .as_ref()
+                .is_some_and(|(a, _)| boottime_ns() >= a.until)
+            {
+                i.control.fail("arrival_deadline");
+                return Err(io::ErrorKind::TimedOut.into());
+            }
+            if active.is_none()
+                && request.is_none()
+                && let Ok(arrival) = i.queue.try_recv()
+            {
                 if boottime_ns() >= arrival.until {
                     i.control.fail("arrival_deadline");
                     return Err(io::ErrorKind::TimedOut.into());
@@ -642,85 +663,97 @@ pub fn entry_with_backend(
                 if let Some((_, b)) = &mut backend {
                     b.after_raw()?;
                 }
-                // Reconcile immediately on this committed occurrence, with no window/read.
-                match store.reconcile() {
-                    Ok(StorageStatus::Ready) => {}
-                    Ok(_) => {
-                        i.control.fail("projection_backlog_unavailable");
-                        return Err(io::ErrorKind::InvalidData.into());
-                    }
-                    Err(_) => {
-                        i.control.fail("projection_storage_unavailable");
-                        return Err(io::ErrorKind::InvalidData.into());
-                    }
-                }
-                if let Some((_, b)) = &mut backend {
-                    b.before_complete()?;
-                }
-                if i.control.complete(&arrival, receipt.to_string()).is_err() {
-                    i.control.fail("completion_ipc_failed");
-                    return Err(io::ErrorKind::BrokenPipe.into());
-                }
+                active = Some((arrival, receipt));
             }
         }
-        let Some((bytes, c)) = ipc::receive(&*fd)? else {
-            std::thread::sleep(std::time::Duration::from_millis(2));
-            continue;
-        };
-        if c.uid.as_raw() != 0 || c.pid.as_raw_nonzero().get() as u32 != parent {
-            return Err(io::ErrorKind::PermissionDenied.into());
-        }
-        let r: Request = serde_json::from_slice(&bytes)?;
-        if r.source != source
-            || sequence.checked_add(1) != Some(r.token)
-            || boottime_ns() >= r.until
+        if request.is_none()
+            && let Some((bytes, c)) = ipc::receive(&*fd)?
         {
-            return Err(io::ErrorKind::InvalidData.into());
-        }
-        sequence = r.token;
-        let status = store.reconcile().map_err(|_| io::ErrorKind::InvalidData)?;
-        if r.token == 1
-            && r.query.is_none()
-            && status == StorageStatus::Ready
-            && let Some((generation, b)) = &mut backend
-        {
-            if store
-                .claim_test_source(generation)
-                .map_err(|_| io::ErrorKind::InvalidData)?
+            if c.uid.as_raw() != 0 || c.pid.as_raw_nonzero().get() as u32 != parent {
+                return Err(io::ErrorKind::PermissionDenied.into());
+            }
+            let r: Request = serde_json::from_slice(&bytes)?;
+            if r.source != source
+                || sequence.checked_add(1) != Some(r.token)
+                || boottime_ns() >= r.until
             {
-                let i = crate::incoming::Incoming::new(fd.clone(), source, generation);
-                b.initialize(&mut store, &i.control, r.until)?;
-                if i.control.failed() || boottime_ns() >= r.until {
-                    return Err(io::ErrorKind::TimedOut.into());
-                }
-                incoming = Some(i);
-            } else {
-                backend = None;
-            } // Whole-service restart also opens history only.
-        }
-        let page = r
-            .query
-            .as_ref()
-            .map(|q| store.query(q).map_err(|_| io::ErrorKind::InvalidData))
-            .transpose()?;
-        let response = serde_json::to_vec(&Response::Read {
-            source: source.into(),
-            token: r.token,
-            status,
-            page,
-            receiving: incoming.is_some(),
-        })?;
-        loop {
-            if boottime_ns() >= r.until {
-                return Err(io::ErrorKind::TimedOut.into());
+                return Err(io::ErrorKind::InvalidData.into());
             }
-            match ipc::send(&*fd, &response) {
-                Ok(()) => break,
-                Err(e) if matches!(e.raw_os_error(), Some(4 | 11)) => {
-                    std::thread::sleep(std::time::Duration::from_millis(2))
+            sequence = r.token;
+            request = Some(r);
+        }
+        if active.is_some() || request.is_some() {
+            // At most one bounded import page per turn. No full-history loop
+            // holds the worker; every next turn rechecks original deadlines.
+            let status = match store.reconcile() {
+                Ok(status) => status,
+                Err(_) => {
+                    if let Some(i) = &incoming {
+                        i.control.fail("projection_storage_unavailable");
+                    }
+                    return Err(io::ErrorKind::InvalidData.into());
                 }
-                Err(e) => return Err(e),
+            };
+            if status == StorageStatus::Ready {
+                if let Some((arrival, receipt)) = active.take() {
+                    if let Some((_, b)) = &mut backend {
+                        b.before_complete()?;
+                    }
+                    let i = incoming.as_ref().ok_or(io::ErrorKind::InvalidData)?;
+                    if i.control.complete(&arrival, receipt.to_string()).is_err() {
+                        i.control.fail("completion_ipc_failed");
+                        return Err(io::ErrorKind::BrokenPipe.into());
+                    }
+                }
+                if let Some(r) = request.take() {
+                    if boottime_ns() >= r.until {
+                        return Err(io::ErrorKind::TimedOut.into());
+                    }
+                    if r.token == 1
+                        && r.query.is_none()
+                        && let Some((generation, b)) = &mut backend
+                    {
+                        if store
+                            .claim_test_source(generation)
+                            .map_err(|_| io::ErrorKind::InvalidData)?
+                        {
+                            let i = crate::incoming::Incoming::new(fd.clone(), source, generation);
+                            b.initialize(&mut store, &i.control, r.until)?;
+                            if i.control.failed() || boottime_ns() >= r.until {
+                                return Err(io::ErrorKind::TimedOut.into());
+                            }
+                            incoming = Some(i);
+                        } else {
+                            backend = None;
+                        } // A service restart remains history-only.
+                    }
+                    let page = r
+                        .query
+                        .as_ref()
+                        .map(|q| store.query(q).map_err(|_| io::ErrorKind::InvalidData))
+                        .transpose()?;
+                    let response = serde_json::to_vec(&Response::Read {
+                        source: source.into(),
+                        token: r.token,
+                        status,
+                        page,
+                        receiving: incoming.is_some(),
+                    })?;
+                    loop {
+                        if boottime_ns() >= r.until {
+                            return Err(io::ErrorKind::TimedOut.into());
+                        }
+                        match ipc::send(&*fd, &response) {
+                            Ok(()) => break,
+                            Err(e) if matches!(e.raw_os_error(), Some(4 | 11)) => {
+                                std::thread::sleep(std::time::Duration::from_millis(2))
+                            }
+                            Err(e) => return Err(e),
+                        }
+                    }
+                }
             }
         }
+        std::thread::sleep(std::time::Duration::from_millis(2));
     }
 }

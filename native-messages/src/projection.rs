@@ -1,7 +1,10 @@
 use crate::protocol::{ConversationView, DataId, MessageView, Page, Query, StorageStatus};
 use pokelinux_inbox::{ConversationId, ImportLease, Inbox, ReadLease};
 use pokelinux_messaging::{
-    receipt::{BackendScope, IncomingKind, ReceiptId, ReceiptOwner, Slot, Source},
+    receipt::{
+        BackendScope, IncomingKind, ReceiptCheckpoint, ReceiptId, ReceiptOwner, ReceiptScan, Slot,
+        Source,
+    },
     receive::ReferenceWidth,
 };
 use std::{
@@ -12,6 +15,7 @@ use std::{
 };
 /// Synchronous private storage component. The supervisor, not this object,
 /// keeps stop and authority checks responsive while filesystem calls execute.
+pub const RECONCILE_BATCH: usize = 8;
 pub struct Store {
     raw: ReceiptOwner,
     directory: PathBuf,
@@ -19,6 +23,8 @@ pub struct Store {
     read: ReadLease,
     import: ImportLease,
     status: StorageStatus,
+    scan: Option<ReceiptScan>,
+    completed: Option<ReceiptCheckpoint>,
 }
 impl Store {
     pub fn open(raw: &Path, inbox: &Path) -> Result<Self, &'static str> {
@@ -44,6 +50,8 @@ impl Store {
                 .map_err(|_| "local projection unavailable")?,
             inbox,
             status: StorageStatus::LocalStorageUnavailable,
+            scan: None,
+            completed: None,
         })
     }
     /// Durable test-source attempt only. Presence never authorizes reattachment.
@@ -136,27 +144,57 @@ impl Store {
         kind: IncomingKind,
         raw: &[u8],
     ) -> Result<ReceiptId, &'static str> {
-        self.raw
-            .admit(source, kind, raw)
-            .map_err(|_| "raw occurrence commit unavailable")
-    }
-    pub fn reconcile(&mut self) -> Result<StorageStatus, &'static str> {
-        self.status = StorageStatus::LocalStorageUnavailable;
-        let snapshot = self
+        let id = self
             .raw
-            .snapshot(32)
-            .map_err(|_| "raw snapshot unavailable")?;
-        if snapshot.total > 32 {
-            self.status = StorageStatus::ProjectionBacklogUnavailable;
-            return Ok(self.status);
+            .admit(source, kind, raw)
+            .map_err(|_| "raw occurrence commit unavailable")?;
+        self.status = StorageStatus::ProjectionBacklogUnavailable;
+        Ok(id)
+    }
+    /// One bounded projection turn, not a synchronous scan of all raw receipts.
+    /// Ready requires a completed fixed upper bound plus a current-tail check.
+    pub fn reconcile(&mut self) -> Result<StorageStatus, &'static str> {
+        self.status = StorageStatus::ProjectionBacklogUnavailable;
+        let result = self.reconcile_turn();
+        if result.is_err() {
+            self.scan = None;
+            self.status = StorageStatus::LocalStorageUnavailable;
         }
-        // Existing API is newest first. Import oldest first for local ordinals.
-        for receipt in snapshot.latest.iter().rev() {
+        result
+    }
+    fn reconcile_turn(&mut self) -> Result<StorageStatus, &'static str> {
+        if self.scan.is_none() {
+            self.scan = Some(
+                self.raw
+                    .scan(self.completed.as_ref())
+                    .map_err(|_| "raw enumeration unavailable")?,
+            );
+        }
+        let scan = self.scan.as_mut().ok_or("missing receipt scan")?;
+        let page = self
+            .raw
+            .scan_page(scan, RECONCILE_BATCH)
+            .map_err(|_| "raw enumeration page unavailable")?;
+        for receipt in page.items {
             self.inbox
                 .import(&self.import, &self.raw, receipt.id)
                 .map_err(|_| "projection transaction unavailable")?;
         }
-        self.status = StorageStatus::Ready;
+        if page.complete {
+            let completed = self
+                .raw
+                .checkpoint(scan)
+                .map_err(|_| "incomplete receipt enumeration")?;
+            if self
+                .raw
+                .scan_current(scan)
+                .map_err(|_| "raw enumeration tail unavailable")?
+            {
+                self.status = StorageStatus::Ready;
+            }
+            self.completed = Some(completed);
+            self.scan = None;
+        }
         Ok(self.status)
     }
     fn conversation(&self, key: &DataId) -> Result<ConversationId, &'static str> {
