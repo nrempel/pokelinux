@@ -58,8 +58,12 @@ actual designated desktop UID1000 and one fixed `launch_messages` operation for
 `org.omarchy.Messages`; it has no grant, data, arbitrary-app or executable
 selection authority. Messages launches begin background-denied. The desktop
 fixture observes the actual focused compositor PID before its trusted root
-controller changes that lifecycle state. A production trusted lock/focus bridge
-is still absent, so startup remains locked and background-denied.
+controller changes that lifecycle state. The subsequent
+[native session prototype](native-session-ingress.md) optionally composes validated
+facts with this same actor and exact owned app pidfs identity in13 actual ARM
+synthetic-source groups. The normal installed entrypoint has no production source
+selector or trusted session launcher, so startup remains locked/background-denied.
+The joint original-compositor/app path and retained-kernel identity remain open.
 
 ## Local storage, recovery and bounds
 

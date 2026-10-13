@@ -121,3 +121,5 @@ pub fn fresh_id() -> std::io::Result<String> {
     rustix::rand::getrandom(&mut bytes, rustix::rand::GetRandomFlags::empty())?;
     Ok(bytes.iter().map(|b| format!("{b:02x}")).collect())
 }
+
+pub mod session;

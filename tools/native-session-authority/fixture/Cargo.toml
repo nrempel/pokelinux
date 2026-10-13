@@ -1,0 +1,20 @@
+[package]
+name = "native-session-authority-fixture"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+pokelinux-lifecycle = { path = "../../../native-lifecycle" }
+pokelinux-messages = { path = "../../../native-messages" }
+pokelinux-session = { path = "../../../native-session" }
+rustix = { version = "=1.1.5", features = ["net", "process", "fs"] }
+
+[features]
+isolated-fixture = []
+baseline-ignored = []
+
+[[bin]]
+name = "messages-session-authority-fixture-service"
+path = "src/bin/service.rs"
+required-features = ["isolated-fixture"]

@@ -63,3 +63,13 @@ before checking actual staged package/file identity. The authoritative AOSP tabl
 confirms Pixel10's frankel codename; it does not authenticate the selected factory
 build or kernel/KMI. Missing set pins and unresolved offline requirements refuse
 deployment. Runtime ownership and device qualification require their own evidence.
+
+The [native session prototype](native-session-ingress.md) currently qualifies
+scalar pidfs identity on Arch ARM7.1.6 and denies Harbour6.8 anon-inode aliases.
+The selected Pixel module release is6.6; those guest results do not qualify its
+exact retained kernel/config. Keep matched assets unchanged. The next unified
+Linux identity boundary retains/transfers the actual Wayland socket's peer pidfd
+and compares both owned live references in one protected procfs namespace view,
+with executed anon-inode and ARM tests before use. This is an offline interface
+qualification gate, separate from physical-device evidence and from trusted
+compositor/locker provisioning.

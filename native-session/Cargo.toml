@@ -1,0 +1,28 @@
+[package]
+name = "pokelinux-session"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+pokelinux-lifecycle = { path = "../native-lifecycle" }
+serde = { version = "=1.0.229", features = ["derive"] }
+serde_json = "=1.0.154"
+rustix = { version = "=1.1.5", features = ["net", "process", "fs", "event"] }
+
+[features]
+isolated-fixture = []
+
+[[bin]]
+name = "session-peer-fixture"
+path = "src/bin/session-peer-fixture.rs"
+required-features = ["isolated-fixture"]
+
+[[test]]
+name = "process"
+required-features = ["isolated-fixture"]
+
+[[bin]]
+name = "session-observer-fixture"
+path = "src/bin/session-observer-fixture.rs"
+required-features = ["isolated-fixture"]

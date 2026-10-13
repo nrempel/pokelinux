@@ -724,12 +724,14 @@
   },
   "documentation": {
     "report_path": "docs/native-session-contract.md",
-    "report_sha256": "3a5328d683c197c821e6a27cbb68a83603f4beb0878ebfe425ef01e3902f33ce",
+    "report_sha256": "41d8290ad83df819c669ede657443403447d06e19b8bb1de68f69edb3f1a3ab3",
     "shared_readme_map_handoff_modified_by_this_work": false,
     "messages_or_authority_source_modified_by_this_work": false,
     "final_selected_dependency_manifest_modified_by_this_work": false,
     "initial_static_report_sha256": "9fdd0eb07686c4df51a657f6cabd6b881ffaf86c40b4780952f665b267aafbf2",
     "subsequent_matching_build_report": "docs/native-session-build-boundary.md",
-    "subsequent_crosslinks_do_not_upgrade_static_evidence": true
+    "subsequent_crosslinks_do_not_upgrade_static_evidence": true,
+    "preceding_crosslinked_report_sha256": "3a5328d683c197c821e6a27cbb68a83603f4beb0878ebfe425ef01e3902f33ce",
+    "subsequent_ingress_report": "docs/native-session-ingress.md"
   }
 }

@@ -165,7 +165,32 @@ pub fn run_with_messages(
     profile_path: &Path,
     entry: &Path,
     test: Option<&str>,
+    messages: Option<&mut dyn crate::messages::Provider>,
+) -> io::Result<()> {
+    run_with_messages_and_session(runtime, policy, profile_path, entry, test, messages, None)
+}
+fn refresh_session(
+    authority: &mut Authority,
+    session: &mut Option<&mut dyn crate::session::Provider>,
+) -> io::Result<()> {
+    if let Some(provider) = session.as_deref_mut() {
+        match provider.poll() {
+            Ok(Some(s)) => authority.observe_session(s, boottime_ns())?,
+            Ok(None) => authority.missing_session()?,
+            Err(_) => authority.fail_session()?,
+        }
+    }
+    Ok(())
+}
+#[allow(clippy::too_many_arguments)]
+pub fn run_with_messages_and_session(
+    runtime: &Path,
+    policy: &Path,
+    profile_path: &Path,
+    entry: &Path,
+    test: Option<&str>,
     mut messages: Option<&mut dyn crate::messages::Provider>,
+    mut session: Option<&mut dyn crate::session::Provider>,
 ) -> io::Result<()> {
     if rustix::process::getuid().as_raw() != 0 || rustix::process::geteuid().as_raw() != 0 {
         return Err(io::ErrorKind::PermissionDenied.into());
@@ -176,6 +201,9 @@ pub fn run_with_messages(
     }
     let profiles = profile(profile_path)?.apps;
     let mut authority = Authority::loading(profiles.clone())?;
+    if session.is_some() {
+        authority.require_session()?;
+    }
     let admin_path = runtime.join("admin.sock");
     let app_path = runtime.join("app.sock");
     let admin = ipc::listener(&admin_path, 0o600)?;
@@ -232,6 +260,7 @@ pub fn run_with_messages(
                 children.remove(&name);
             }
             authority.reap_dead()?;
+            refresh_session(&mut authority, &mut session)?;
             if let Some(op) = &mut operation
                 && !op.retired
                 && boottime_ns() >= op.until
@@ -454,6 +483,13 @@ pub fn run_with_messages(
                 }
             }
             connections.retain_mut(|connection| {
+                // Drain facts before processing each request/publication, including
+                // every retry after EAGAIN. This is ordered ingress, not a barrier
+                // against an external compositor change that is not yet observed.
+                if refresh_session(&mut authority, &mut session).is_err() {
+                    authority.invalidate();
+                    return false;
+                }
                 if boottime_ns() >= connection.deadline {
                     if connection.reading.is_some()
                         && let Some(p) = messages.as_deref_mut()

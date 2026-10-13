@@ -1,0 +1,1117 @@
+{
+  "scope": "Separate owned observer, synthetic facts-to-current-authority and prepared original-compositor facts-to-observer evidence; no joint production path",
+  "current_actor_observer_sources": {
+    "native-lifecycle/Cargo.lock": "a2e355beab9e0de61199d0bdfb640a751c93c30768be4fa64557065c40d3a814",
+    "native-lifecycle/Cargo.toml": "ddbfa855d2973beffc5317462061add6647f1dc056ee67b9bc4d2f7330f659d7",
+    "native-lifecycle/src/authority.rs": "0d0d9395e841db639c8985eb91e1ec0236c64ec796480220dc4558d65822c68c",
+    "native-lifecycle/src/bin/lifecycle-client.rs": "6dd1f2c86a96bca4364b5ee2e85fd39fecaf10bc68b8f7b727bd3e65f86bc9bf",
+    "native-lifecycle/src/bin/lifecycle-daemon.rs": "ee33d2d77a8fc98ce56b582d9b9c96d0f2f8240e3fda182ec9bdeba8f6af4f01",
+    "native-lifecycle/src/bin/lifecycle-launcher.rs": "49a0e279b381a45ed49242a74c94b202ebebb81bc42bd8b61cfd58f8bb80a923",
+    "native-lifecycle/src/ipc.rs": "6a9073bb4c4413f8b4d49caa6a8827cfe7ffe167b3c712192d0951d6be8465c1",
+    "native-lifecycle/src/lib.rs": "076119670b9e98a510f0c1dfd14ce1598b7d2c3356e235b9b346535a76833151",
+    "native-lifecycle/src/messages.rs": "c4697ad460baa14fb4b1b7726ac4afc686ec50f44599cf2055290f3dd7509ba3",
+    "native-lifecycle/src/service.rs": "c21db83c20ef3237106a077059bb0d5dfe84be5926e72c9331f5e3cbae3d32a6",
+    "native-lifecycle/src/session.rs": "ad499efb82112cd615dc8fecb437ba7b0cd4a29a3ccb31a734d506a825c48105",
+    "native-lifecycle/src/storage.rs": "e860864db2ec8b6c00930128c1592918f06b00e3b4a466b71d17effe0764997f",
+    "native-session/Cargo.lock": "6bb808a3816ea130456ec62b47f8c1a205853e0196011ff3b428b16d2ccdaad2",
+    "native-session/Cargo.toml": "0a2fed0277b020f11986174e4e77e03a91e7ad6ab55a370dc6191b79fc7ca856",
+    "native-session/src/bin/session-observer-fixture.rs": "85a3ab5b4c8b0a1190baabef38176012b8a21a6d2d9048827b958f9213bee3aa",
+    "native-session/src/bin/session-peer-fixture.rs": "43df3bc9c2b5c4f3498cd62536c3d01b89d29b97f175d76f5988ff6f0d73b335",
+    "native-session/src/lib.rs": "124d65a4445f9d5e41ea7f48b8f72b33d5d27e3a11f4f78727f6eafd2f4978aa",
+    "native-session/tests/process.rs": "2da7796fb092ff11758dfe5180210f8e166caf49a14276a152559d564e9334e9"
+  },
+  "corrected_arm_build": {
+    "path": "artifacts/native-session-authority/arm-source-corrections-build/selection.json",
+    "sha256": "3da66ac089a5ebf6c7e52b99b272d1afd3b2cab4c5e615ad3c0a1ec8cda6871b"
+  },
+  "corrected_arm_runtime": {
+    "path": "artifacts/native-session-authority/arm-source-corrections-green/result.json",
+    "sha256": "4af10e31a9e4b728e5fe3bdbc728a90778fdcfa80c9e7e97b9cb0fee1ec88514"
+  },
+  "corrected_arm_groups": 13,
+  "history_dependencies": "Frozen f733d3b history dependencies from arm-green-build-final/source; new enumeration is separately qualified",
+  "arm_elf_checksums": {
+    "artifacts/native-session-authority/arm-source-corrections-build/bins/lifecycle-launcher": "c578d70247c7b466a261a36b85cb102c714768ebff4aa10098a72f6b24bca467",
+    "artifacts/native-session-authority/arm-source-corrections-build/bins/messages-seed-fixture": "e5714b06121e06999dd0d45512e09e0e7c2e5a641f2cb3cf3af9d43510a2dc1f",
+    "artifacts/native-session-authority/arm-source-corrections-build/bins/messages-session-authority-fixture-service": "ecbaf7696776baba6c7be73a212d453630afc3a0162c287d11c852d3861ab3cf"
+  },
+  "current_observer_green": {
+    "path": "artifacts/native-session-observer/green-source-corrections/selection.json",
+    "sha256": "402830b50c2f44f6aeb98867198911e034bbc7eb8a77f1f66a83c27203e0eabd"
+  },
+  "observer_source_snapshot_checksums": {
+    "native-lifecycle/Cargo.lock": "a2e355beab9e0de61199d0bdfb640a751c93c30768be4fa64557065c40d3a814",
+    "native-lifecycle/Cargo.toml": "ddbfa855d2973beffc5317462061add6647f1dc056ee67b9bc4d2f7330f659d7",
+    "native-lifecycle/src/authority.rs": "0d0d9395e841db639c8985eb91e1ec0236c64ec796480220dc4558d65822c68c",
+    "native-lifecycle/src/bin/lifecycle-client.rs": "6dd1f2c86a96bca4364b5ee2e85fd39fecaf10bc68b8f7b727bd3e65f86bc9bf",
+    "native-lifecycle/src/bin/lifecycle-daemon.rs": "ee33d2d77a8fc98ce56b582d9b9c96d0f2f8240e3fda182ec9bdeba8f6af4f01",
+    "native-lifecycle/src/bin/lifecycle-launcher.rs": "49a0e279b381a45ed49242a74c94b202ebebb81bc42bd8b61cfd58f8bb80a923",
+    "native-lifecycle/src/ipc.rs": "6a9073bb4c4413f8b4d49caa6a8827cfe7ffe167b3c712192d0951d6be8465c1",
+    "native-lifecycle/src/lib.rs": "076119670b9e98a510f0c1dfd14ce1598b7d2c3356e235b9b346535a76833151",
+    "native-lifecycle/src/messages.rs": "c4697ad460baa14fb4b1b7726ac4afc686ec50f44599cf2055290f3dd7509ba3",
+    "native-lifecycle/src/service.rs": "c21db83c20ef3237106a077059bb0d5dfe84be5926e72c9331f5e3cbae3d32a6",
+    "native-lifecycle/src/session.rs": "ad499efb82112cd615dc8fecb437ba7b0cd4a29a3ccb31a734d506a825c48105",
+    "native-lifecycle/src/storage.rs": "e860864db2ec8b6c00930128c1592918f06b00e3b4a466b71d17effe0764997f",
+    "native-session/Cargo.lock": "6bb808a3816ea130456ec62b47f8c1a205853e0196011ff3b428b16d2ccdaad2",
+    "native-session/Cargo.toml": "0a2fed0277b020f11986174e4e77e03a91e7ad6ab55a370dc6191b79fc7ca856",
+    "native-session/src/bin/session-observer-fixture.rs": "85a3ab5b4c8b0a1190baabef38176012b8a21a6d2d9048827b958f9213bee3aa",
+    "native-session/src/bin/session-peer-fixture.rs": "43df3bc9c2b5c4f3498cd62536c3d01b89d29b97f175d76f5988ff6f0d73b335",
+    "native-session/src/lib.rs": "124d65a4445f9d5e41ea7f48b8f72b33d5d27e3a11f4f78727f6eafd2f4978aa",
+    "native-session/tests/process.rs": "2da7796fb092ff11758dfe5180210f8e166caf49a14276a152559d564e9334e9"
+  },
+  "observer_process_socket_exec_cases": 16,
+  "typed_policy_component_cases": 1,
+  "typed_policy_scope": "Actual BOOTTIME and internal Source facts policy boundary; no IPC source None event or physical suspend",
+  "behavior_reds": [
+    {
+      "path": "artifacts/native-session-observer/red-fields/log",
+      "sha256": "f0a28392d084b2d85c618506def085b5c7a3c86d1fe4aa6fbb95df21bfe5a724"
+    },
+    {
+      "path": "artifacts/native-session-observer/red-semantic-revision/log",
+      "sha256": "cbfa12f253d647027d8a12761d2ae962bcd35ed4bc314eb7a7d7db3b4d42d011"
+    },
+    {
+      "path": "artifacts/native-session-observer/red-source-pidfd-exec/log",
+      "sha256": "6ec0cf4830be45412ff34f63f64302cbf65fbd9854e93f1d4f59bf7e5408ef73"
+    },
+    {
+      "path": "artifacts/native-session-observer/red-source-pidfd-exec/resume-component-red.log",
+      "sha256": "7903a516a8fc24c0f582664cc1a40563db3366642de4b11f2e1dcbafc91041df"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-red-proven/result.json",
+      "sha256": "71b008621e22541364d4f543e0d4654db64e57be312591fd5c7de7cc3f56157d"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/result.json",
+      "sha256": "064ae05bd227ef73db0b646df36331d3b37c7c11378c63ea1976fef68d3f103e"
+    }
+  ],
+  "runner_ownership_red": {
+    "path": "artifacts/native-session-observer/runner-ownership-red/result.json",
+    "sha256": "2e292547c1b35068128614a0a02f69988a3b9f3f3d7957a62a59012205a04a44"
+  },
+  "runner_ownership_green": {
+    "path": "artifacts/native-session-observer/runner-ownership-green/result.json",
+    "sha256": "26721d2a59abe9f370e02b893183b2389ec090343c260fe7a14c9dd43ff4470d"
+  },
+  "historical_actor_index": {
+    "path": "tools/native-session-authority/observed-evidence.json",
+    "sha256": "9f8b01182c5e147271e2182b6090614d5323f5bd84274eb274899db4c2ca38cf"
+  },
+  "original_compositor_qualification": {
+    "scope": "Facts adapter and actual Rust Observer on prepared virtual compositor; no actor authorization or trusted compositor/locker qualification",
+    "artifact_type": "private executed evidence index",
+    "qualified_monitor_mode": "320x240@60",
+    "kernel": "Linux alarm 7.1.6-1-aarch64-ARCH #1 SMP PREEMPT_DYNAMIC Wed Aug  5 00:20:13 UTC 2026 aarch64 GNU/Linux",
+    "interfaces": [
+      "lo"
+    ],
+    "red_run": "red-admission-final",
+    "green_run": "green-prepared-1",
+    "green_result_sha256": "b37cdd349a8b862b5ce2f5e741b2e8440117dc502c456e63d8fe5cf34d1119f7",
+    "adapter_source_sha256": "a346032e099ca66e0edc19e23d6b142253a0f3547155ae2d42e5db91a885dfd3",
+    "adapter_elf_sha256": "1d1f46c570ca480aae480ec0b0ac2a140a528965682d96912ade4ada3b2e9200",
+    "rust_observer_elf_sha256": "9067080da2c24e891c7cfb27a434ed60f6880b49962ed1dd080c77a8094290ed",
+    "hyprland_elf_sha256": "ae9a9e4129263e74df3f8a0a62beefd00f9bf4224caf51e96ebf0482ab74a85a",
+    "green_groups": [
+      {
+        "id": "native_adapter_exact_package_build",
+        "passed": true
+      },
+      {
+        "id": "actual_compositor_child_SCM_credentials_override_root_socketpair_creation",
+        "passed": true
+      },
+      {
+        "id": "python_actual_native_focus_pidfs_matches_owned_child",
+        "passed": true
+      },
+      {
+        "id": "python_central_null_focus",
+        "passed": true
+      },
+      {
+        "id": "python_exclusive_layer_fences_actual_focus_while_activewindow_stays",
+        "passed": true
+      },
+      {
+        "id": "first_actual_admission_packet_locked_without_focus",
+        "passed": true
+      },
+      {
+        "id": "actual_locker_death_retains_immediate_denial",
+        "passed": true
+      },
+      {
+        "id": "actual_restore_fallback_completion_separate_from_presentation",
+        "passed": true
+      },
+      {
+        "id": "actual_protocol_unlock_reconciles_native_focus",
+        "passed": true
+      },
+      {
+        "id": "actual_force_unlock_reconciles_native_focus",
+        "passed": true
+      },
+      {
+        "id": "rust_actual_native_focus_pidfs_matches_owned_child",
+        "passed": true
+      },
+      {
+        "id": "rust_central_null_focus",
+        "passed": true
+      },
+      {
+        "id": "rust_exclusive_layer_fences_actual_focus_while_activewindow_stays",
+        "passed": true
+      },
+      {
+        "id": "actual_Rust_Observer_adapter_unload_closes_source_and_denies",
+        "passed": true
+      },
+      {
+        "id": "actual_stopped_compositor_Rust_Observer_absolute_BOOTTIME_expiry",
+        "passed": true
+      },
+      {
+        "id": "actual_adapter_output_backpressure_terminal_closure_and_Rust_denial",
+        "passed": true
+      },
+      {
+        "id": "actual_compositor_death_Rust_Observer_fences_source",
+        "passed": true
+      }
+    ],
+    "green_cleanup": {
+      "recorded_reap_entries": 41,
+      "distinct_owned_children": 40,
+      "all_tracked_children_reaped": true
+    },
+    "current_executable_recipe_sha256": {
+      "guest.py": "12393aa405d7a00798208517190b9f3c6ea1aeab7d444a9ed4ab9d918d6872ee",
+      "run.sh": "9aee18b68b6bc3c9a7d15a508defeecdb21449f26e3c0eb02b6d8bc0658752b4",
+      "run-vm.sh": "d9b0a1654aca68c4afaeca8dca26bb015a5e90d1302c55b46fe1e5d008e6a4b4"
+    },
+    "limitations": [
+      "Original cold graphics availability failed at the strict100ms fence and remains unqualified",
+      "Warmup occurs before first adapter load and zero wireframes; no source revival",
+      "Python recorder transition checks are facts diagnostics, not terminal Observer failure-policy qualification",
+      "Unload/backpressure/death observed TimedOut with positive_state=false, not immediate EOF or specific death errorpath",
+      "SIGSTOP proves stopped living source expiry, not true suspend",
+      "No physical device, secure presentation, trusted locker/profile, actor grant or cross-process atomic publication qualification",
+      "No numeric PID reuse physically forced",
+      "ARM recipe/source-patch identity remains unresolved outside the exact installed headers/package/plugin API qualification"
+    ],
+    "preserved_runs": {
+      "green-admission-1": {
+        "result_sha256": "2c0046d4ac65a97bf505c064defdaf8d3892f6fc901265dc026efe48fa9bdaef",
+        "passed": false,
+        "red_detected": false,
+        "groups_completed": 7,
+        "all_tracked_children_reaped": true,
+        "adapter_elf_sha256": "1d1f46c570ca480aae480ec0b0ac2a140a528965682d96912ade4ada3b2e9200"
+      },
+      "green-admission-2": {
+        "result_sha256": "bdb95ea8da563b9a85e17529964cd5a734ce8fda3a6009f6f59ffec5673abb86",
+        "passed": false,
+        "red_detected": false,
+        "groups_completed": 11,
+        "all_tracked_children_reaped": true,
+        "adapter_elf_sha256": "1d1f46c570ca480aae480ec0b0ac2a140a528965682d96912ade4ada3b2e9200"
+      },
+      "green-admission-3": {
+        "result_sha256": "48bc4ef4b5c164dd8d611daf0d9203730977acec9448e33b6c78f62e6ee165ff",
+        "passed": false,
+        "red_detected": false,
+        "groups_completed": 11,
+        "all_tracked_children_reaped": true,
+        "adapter_elf_sha256": "1d1f46c570ca480aae480ec0b0ac2a140a528965682d96912ade4ada3b2e9200"
+      },
+      "green-admission-4": {
+        "result_sha256": "638a02b8717ff0fc790eb5eb1635406281fa62265d00d340fab951f2a43b1b6a",
+        "passed": false,
+        "red_detected": false,
+        "groups_completed": 11,
+        "all_tracked_children_reaped": true,
+        "adapter_elf_sha256": "1d1f46c570ca480aae480ec0b0ac2a140a528965682d96912ade4ada3b2e9200"
+      },
+      "green-admission-5": {
+        "result_sha256": "0717022c22346b9b61578f5a33eccda3bfde8f8d9e9d05a7e0e71a9337402a98",
+        "passed": false,
+        "red_detected": false,
+        "groups_completed": 11,
+        "all_tracked_children_reaped": true,
+        "adapter_elf_sha256": "1d1f46c570ca480aae480ec0b0ac2a140a528965682d96912ade4ada3b2e9200"
+      },
+      "green-admission-6": {
+        "result_sha256": "6f879e657a5ac0439ed576a5d6e2bad3f4ed4632ed7f1ce7f303a76fb6fdc6b2",
+        "passed": false,
+        "red_detected": false,
+        "groups_completed": 11,
+        "all_tracked_children_reaped": true,
+        "adapter_elf_sha256": "1d1f46c570ca480aae480ec0b0ac2a140a528965682d96912ade4ada3b2e9200"
+      },
+      "green-admission-7": {
+        "result_sha256": "f7df5cc1c0436df7b62f79c2494b950ad5c66093dd76f6295ddaed60b1efab64",
+        "passed": false,
+        "red_detected": false,
+        "groups_completed": 11,
+        "all_tracked_children_reaped": true,
+        "adapter_elf_sha256": "1d1f46c570ca480aae480ec0b0ac2a140a528965682d96912ade4ada3b2e9200"
+      },
+      "green-prepared-1": {
+        "result_sha256": "b37cdd349a8b862b5ce2f5e741b2e8440117dc502c456e63d8fe5cf34d1119f7",
+        "passed": true,
+        "red_detected": false,
+        "groups_completed": 17,
+        "all_tracked_children_reaped": true,
+        "adapter_elf_sha256": "1d1f46c570ca480aae480ec0b0ac2a140a528965682d96912ade4ada3b2e9200"
+      },
+      "red-admission-1": {
+        "result_sha256": "4730fd79528556f87ef7b1fd0f860040e2b9946e035e2918444fbb23d2bf1a16",
+        "passed": false,
+        "red_detected": true,
+        "groups_completed": 6,
+        "all_tracked_children_reaped": true,
+        "adapter_elf_sha256": "a4958f9fb90cd9d655d2bb199fb7e468403ff59ee7f7195233edfcf0f4801c6d"
+      },
+      "red-admission-final": {
+        "result_sha256": "064ae05bd227ef73db0b646df36331d3b37c7c11378c63ea1976fef68d3f103e",
+        "passed": false,
+        "red_detected": true,
+        "groups_completed": 6,
+        "all_tracked_children_reaped": true,
+        "adapter_elf_sha256": "a4958f9fb90cd9d655d2bb199fb7e468403ff59ee7f7195233edfcf0f4801c6d"
+      }
+    },
+    "red_result_sha256": "064ae05bd227ef73db0b646df36331d3b37c7c11378c63ea1976fef68d3f103e",
+    "red_adapter_source_sha256": "0e1ff6ca124bc59bb9efc7f60edbbfed6f642f1f287945f2ec420646e81a4a64",
+    "red_adapter_elf_sha256": "a4958f9fb90cd9d655d2bb199fb7e468403ff59ee7f7195233edfcf0f4801c6d",
+    "red_cleanup": {
+      "all_tracked_children_reaped": true,
+      "recorded_reap_entries": 21,
+      "distinct_owned_children": 21
+    },
+    "same_executed_red_green_fixture_recipe": {
+      "guest.py": true,
+      "run.sh": true,
+      "run-vm.sh": true,
+      "lock-client-original.c": true
+    },
+    "current_readme_sha256": "336e94c90f248ba0645d387fb646eae2b71120c1c55bbf1f839c66265533bbaa",
+    "host_owned_container_cleanup": {
+      "container_name": "pokelinux-session-compositor-sol-20261012",
+      "inspect_returncode": 1,
+      "absent_after_final_owned_runner": true
+    },
+    "red_signature": {
+      "first_null_focus_packet_locked": false,
+      "corrected_admission_locked": true
+    }
+  },
+  "current_authored_fixture_sources": {
+    "tools/native-session-authority/README.md": "11c91b3b8179c4b43af857a76dad99dbc6cb6cc9878e4e0ddef626fc5f21ca90",
+    "tools/native-session-authority/fixture/Cargo.lock": "90e5945ddf651b93504846ac7a4098dcc78c7b1ebc4f1e0ca2f3af78ced082a8",
+    "tools/native-session-authority/fixture/Cargo.toml": "6147b44d4771771104db88f942a9247d6557c82e5addbfd2f58a63a3ca467ddb",
+    "tools/native-session-authority/fixture/src/bin/service.rs": "02953750c964c3981ebab7c1243dcf7e8106eda5bfef7b913ca9a575d4c38cbd",
+    "tools/native-session-authority/observed-evidence.json": "9f8b01182c5e147271e2182b6090614d5323f5bd84274eb274899db4c2ca38cf",
+    "tools/native-session-authority/runner.py": "d8c4b594fed0e28750720e9050e502785916a6ec434e4bddd550576f0299dac5",
+    "tools/native-session-authority/vm-guest.py": "30ae497eb40a2fef043819b9b259135c580157abbf019d2ab6598f5b59d401b4",
+    "tools/native-session-authority/vm.py": "5a4a58a35925ef4ae55321546735035b8a5aea3ca8ede4306041b7b4a60081fd",
+    "tools/native-session-compositor/README.md": "336e94c90f248ba0645d387fb646eae2b71120c1c55bbf1f839c66265533bbaa",
+    "tools/native-session-compositor/adapter.cpp": "a346032e099ca66e0edc19e23d6b142253a0f3547155ae2d42e5db91a885dfd3",
+    "tools/native-session-compositor/guest.py": "12393aa405d7a00798208517190b9f3c6ea1aeab7d444a9ed4ab9d918d6872ee",
+    "tools/native-session-compositor/run-vm.sh": "d9b0a1654aca68c4afaeca8dca26bb015a5e90d1302c55b46fe1e5d008e6a4b4",
+    "tools/native-session-compositor/run.sh": "9aee18b68b6bc3c9a7d15a508defeecdb21449f26e3c0eb02b6d8bc0658752b4"
+  },
+  "proof_manifest": [
+    {
+      "path": "artifacts/native-session-observer/green-source-corrections/container-id",
+      "sha256": "9735519413a14e7ec1bd42d70946f6642fcc8710ad7e359f815a04cc2e9c408b"
+    },
+    {
+      "path": "artifacts/native-session-observer/green-source-corrections/exit-code",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "artifacts/native-session-observer/green-source-corrections/image-id",
+      "sha256": "647b40a4965faceb565fa38a094a323dace13014061a494a767a4fbd35d45f29"
+    },
+    {
+      "path": "artifacts/native-session-observer/green-source-corrections/log",
+      "sha256": "3e1c2e281e7ac2d2e77533894eba2c865e39fac9e1e774d9d7e0b1f0beb5bb68"
+    },
+    {
+      "path": "artifacts/native-session-observer/green-source-corrections/resume-component-green.log",
+      "sha256": "0339f447bcac29612ae64b60a065b2c0224ac4ce0100e26d6819198f41373599"
+    },
+    {
+      "path": "artifacts/native-session-observer/green-source-corrections/selection.json",
+      "sha256": "402830b50c2f44f6aeb98867198911e034bbc7eb8a77f1f66a83c27203e0eabd"
+    },
+    {
+      "path": "artifacts/native-session-observer/red-source-pidfd-exec/container-id",
+      "sha256": "b83e3c32248fe83855d07c3a47649c51e5fc578c8c3e8c952b804629417ee459"
+    },
+    {
+      "path": "artifacts/native-session-observer/red-source-pidfd-exec/exit-code",
+      "sha256": "39b8dc3fc8b44765c8e6f1adee04c5b465e555ab791cc42d0d9e810d5b64297c"
+    },
+    {
+      "path": "artifacts/native-session-observer/red-source-pidfd-exec/image-id",
+      "sha256": "647b40a4965faceb565fa38a094a323dace13014061a494a767a4fbd35d45f29"
+    },
+    {
+      "path": "artifacts/native-session-observer/red-source-pidfd-exec/log",
+      "sha256": "6ec0cf4830be45412ff34f63f64302cbf65fbd9854e93f1d4f59bf7e5408ef73"
+    },
+    {
+      "path": "artifacts/native-session-observer/red-source-pidfd-exec/resume-component-red.log",
+      "sha256": "7903a516a8fc24c0f582664cc1a40563db3366642de4b11f2e1dcbafc91041df"
+    },
+    {
+      "path": "artifacts/native-session-observer/red-source-pidfd-exec/selection.json",
+      "sha256": "4cb10e6d4e4fbf15b2bd54b0cef498497b5a939ef006a6a13b17dbe4bef6b75a"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/command.json",
+      "sha256": "efc8c25cdf87949aaaf4c544f3a29bd497916049c8d71de1599e8540523263d9"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/execution/eagain_rechecks_source.json",
+      "sha256": "4a8709a2b0dda0d7b5ec8ae70daf4f92de7a3692d54e4a1ac1798a88af94c153"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/execution/eagain_rechecks_source.service.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/execution/focus_and_pidfs_denied.json",
+      "sha256": "9789e798b63b669fc7abb3c028dd2312f6833aac4a968fda0ca8a73c222600e6"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/execution/focus_and_pidfs_denied.service.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/execution/heartbeat_cannot_extend_read.json",
+      "sha256": "ab8c5f8a93c029ff636e7713370bb2623b833a35de2f584b730cc7e1e3066cf4"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/execution/heartbeat_cannot_extend_read.service.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/execution/heartbeat_preserves_read.json",
+      "sha256": "3ece620260d152d019104c91313ad22276756a752a6bc21a8dcb0e598ba91b24"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/execution/heartbeat_preserves_read.service.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/execution/held_semantic_burst.json",
+      "sha256": "ad7c7023ad60d1ed189ca99d31fe802aede39b969b4b8a106cd3ac10faaf9fb7"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/execution/held_semantic_burst.service.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/execution/new_app_identity_and_grant.json",
+      "sha256": "68a9607272a8d2fd1d29789ea89cbd55463281a6d327b8a6996b365ea1d1cd66"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/execution/new_app_identity_and_grant.service.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/execution/result.json",
+      "sha256": "a3f14f30e6ad9467a7e78ca1818ff5024373b842e43c4752e32f1e07c8974c91"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/execution/root_controls_unknown_denied.json",
+      "sha256": "ecd4f68284bffeddbdb2d69b5d7e8d322de0a9fdbef3f0f036e5036f67114397"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/execution/root_controls_unknown_denied.service.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/execution/source_death_denies.json",
+      "sha256": "2534873ec7aa24ac63f98a58d295704709250028cb9d9a4fcea39dba05a777f5"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/execution/source_death_denies.service.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/execution/source_eof_denies.json",
+      "sha256": "9797f0a33020819e86667ebccbc49b3e932861c07b999db5bfaa620057670aa3"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/execution/source_eof_denies.service.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/execution/source_false_cannot_clear_intent.json",
+      "sha256": "28f9d060b7279a5e17a2d2bb1ebc5469c97b410216296814632d14833eb917aa"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/execution/source_false_cannot_clear_intent.service.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/execution/source_only_read.json",
+      "sha256": "e38cfe1dcca7ef0ce918464ad884ef899501e351a2de509a0de333b152f1b01c"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/execution/source_only_read.service.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/execution/stopped_source_denies.json",
+      "sha256": "c96e30a57d64f81779a935f701df76bf3afa7a7a21d4fdffa3eb6ce7b6c723cb"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/execution/stopped_source_denies.service.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/execution/unknown_denied.json",
+      "sha256": "f20ae3778b6a44ea2d9f018045bb0afc032966a00ba8013c9a6ac0cd8059ae5d"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/execution/unknown_denied.service.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/execution.log",
+      "sha256": "728b2a77a2a3249808d524f1774c420ec6444a32230cd7b1d902f8068ca43c41"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/exit-code",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/proof-sha256.json",
+      "sha256": "46ef8a6a8b005d8e36cf7f622b4395790c274b84c467899c7fc81f9a2e128535"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/result.json",
+      "sha256": "4af10e31a9e4b728e5fe3bdbc728a90778fdcfa80c9e7e97b9cb0fee1ec88514"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/selection.json",
+      "sha256": "22d3d972871b11affe70a5a7af55bdeb5cdc5887f1ba0b867a1d21b517c62de3"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/serial.log",
+      "sha256": "148e9ea7aaef1db51d4cf4dcf5dac43fe98459d33458a7ed598d727f156e9319"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/vm-guest.py",
+      "sha256": "30ae497eb40a2fef043819b9b259135c580157abbf019d2ab6598f5b59d401b4"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-source-corrections-green/vm.py",
+      "sha256": "5a4a58a35925ef4ae55321546735035b8a5aea3ca8ede4306041b7b4a60081fd"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-red-proven/command.json",
+      "sha256": "efc8c25cdf87949aaaf4c544f3a29bd497916049c8d71de1599e8540523263d9"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-red-proven/execution/result.json",
+      "sha256": "05640837a5950f7959f46bfc9a425ea7eade25aedf6fe8d8180a5b85292d21fe"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-red-proven/execution/root_controls_unknown_denied.json",
+      "sha256": "572605e50a05eb5f9e866ae6c7dc0a91deea1def361b615f5ea9816ba5e9ebc2"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-red-proven/execution/root_controls_unknown_denied.service.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-red-proven/execution/source_only_read.json",
+      "sha256": "ee9c7c3a419d9f1e94123811b7272d19c56c5147146cea7f4ce5ac30dde82041"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-red-proven/execution/source_only_read.service.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-red-proven/execution/unknown_denied.json",
+      "sha256": "b7a1a73b34912170057bba590d8d48b1d0b2dfb933ccea0684b84af04e813eae"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-red-proven/execution/unknown_denied.service.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-red-proven/execution.log",
+      "sha256": "1c94b33a6b850b9229c16d83466075aadd1a358bcb33b6e04f46cc7f35e18c54"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-red-proven/exit-code",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-red-proven/proof-sha256.json",
+      "sha256": "3fc44d5a8f1b642eafa15d8b9caef80b5094c5bdcf64923bc7bed8da5dc1e4df"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-red-proven/result.json",
+      "sha256": "71b008621e22541364d4f543e0d4654db64e57be312591fd5c7de7cc3f56157d"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-red-proven/selection.json",
+      "sha256": "e7108c7a26597bcbf78b735623317a88c245a4568eec930f0dfe6efebd3087a5"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-red-proven/serial.log",
+      "sha256": "ee5e51b41c8c9ee9f3bf4465a0078c3964cb526684bec994f59397529579ecba"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-red-proven/vm-guest.py",
+      "sha256": "30ae497eb40a2fef043819b9b259135c580157abbf019d2ab6598f5b59d401b4"
+    },
+    {
+      "path": "artifacts/native-session-authority/arm-red-proven/vm.py",
+      "sha256": "5a4a58a35925ef4ae55321546735035b8a5aea3ca8ede4306041b7b4a60081fd"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/adapter-build.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/adapter-elf-notes.log",
+      "sha256": "ac3ead1fc283a333aba2c1fc8bfeb21cc0a565ed6cdab25995cd0b2f91812c5b"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/container-id",
+      "sha256": "c55c727780d73467ac84640cc38fe97d151e7e1daeb767e004cb23a4ed36d280"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/exit-code",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/groups.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/headers.json",
+      "sha256": "4a9f8ec187515b105d646e7bacd8af57eab3b1bf13dab25c9b5fe91aeda1f78e"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/host.log",
+      "sha256": "3738218ef052ce6d7aec4c95be3ce8049901cce1cbe67a8814e66ba3acf8c736"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/hyprland-elf-notes.log",
+      "sha256": "ced58f4b9f6f27dc1c949f16d20b755479debcd337ab47d9ec1f80fe4ac0344f"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/hyprland-symbols.log",
+      "sha256": "29cf9a751db8191dae6e6fa9073ddcd13faa4fbb9441da0d921c6e48d7fabb6d"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/image-id",
+      "sha256": "a47878a075ae7531e409ff38db047a5764b0099666dd2386842d1a082eb53872"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/kernel.log",
+      "sha256": "66991da961a3f054172cb96cd9406cfe08dd0c8a4633e56eeddb88f2be904f8f"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/lock-client",
+      "sha256": "1765a58d0fc95c7e6c95c4761f7d2c2b967ba74561eadaf76348a0aeb790451f"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/lock-client-build.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/lock-client-code.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/lock-client-elf-notes.log",
+      "sha256": "2859a8c145e4c7b6354bdf863576c45986d9b922a261ed4cce5b8678c0da6bce"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/lock-client-header.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/lock-client.c",
+      "sha256": "fa2c90f36a0dabc3a538298b6d0fe7f47e29625a3cc860bb335a6ae8b81a81f3"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/modprobe.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/observer-elf-notes.log",
+      "sha256": "2b0a593be2d3bdf415c43b05b3ddca3d7054b18a668776724adca6ee0c3b00d9"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/original-probe-events.jsonl",
+      "sha256": "445fc2fc48e1b4689f9719317c3368681913d34a594d1ebde46a95832961c404"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/packages.log",
+      "sha256": "f4711f90e047cfc0c40a3cd69b5fe4cef842547fc4e738fe3879f3afe78c8147"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/pkgconfig.log",
+      "sha256": "c2ec2d14ad3a6006b08b56ad8ad9872ccee2500fc522409c9906ca6e6b8df4a0"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/python-active-window.log",
+      "sha256": "d31573aa5972672a0fb01248b87210fe6886ed6c2c381bdf58d7c348b6f6856b"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/python-admission-adapter-load.log",
+      "sha256": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/python-admission-hyprland.log",
+      "sha256": "6cf1ce70de0bd2ef16e1f9c4cbfeeb037be7815e7f47dc2e772a3d1cc8cdc65e"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/python-admission-packets.jsonl",
+      "sha256": "1b10d5f5b0088f558214705ba6dedc1b79a4b46c61e7c962720cae1f64a78bd5"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/python-admission-probe-load.log",
+      "sha256": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/python-clear-focus.log",
+      "sha256": "865b97bb6637d1371a3e5b4ca3e1ec08320a8bbdc9381f0c296180b0bfc467f7"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/python-first-lock-locker.log",
+      "sha256": "847340bbae87d707c8383e409518e8a7a19ff789b38270c721e17f39adb00733"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/python-foot.log",
+      "sha256": "68e3a732aae5c4fe369838df8c6a6244546d508c8a78b400b6ffde96e42c2f2a"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/python-force-lock-locker.log",
+      "sha256": "8ce07985d69eb575a0ad690d7d475526147ed6b03c19d8ddb27d9dd99acec05b"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/python-force-unlock.log",
+      "sha256": "2034e4a19fbb60c46acd69a1309694c5859b155f5bbb0f8f7340b9607b000641"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/python-layer-probe.log",
+      "sha256": "c301da721289745ca7d80790c5ad491c369fc685008912dec98bbeea078b11bb"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/python-layer.log",
+      "sha256": "cd8c3e1380a68ee05969d2cbe9351af6e53f8b8cf257591960f3eba7b9c317ab"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/python-refocus.log",
+      "sha256": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/python-restored-lock-locker.log",
+      "sha256": "ad00b076143bf61819e72462fab62710109f10df9b7fdb90e047a9a64d3d7028"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/result.json",
+      "sha256": "b37cdd349a8b862b5ce2f5e741b2e8440117dc502c456e63d8fe5cf34d1119f7"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/runtime.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-active-window.log",
+      "sha256": "1ad8533a2907b5d075a78d294a30ee04b19c3b2fd626a33807c57db44b31c117"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-clear-focus.log",
+      "sha256": "c4b267ce04935cb47448dd12d21d434545a1ea593413386028359943c49f57a1"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-death-adapter-load.log",
+      "sha256": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-death-foot.log",
+      "sha256": "bab3b42e397bddd88734e0d5d0d59756731c31f3cb1b7ae8c78604d714641137"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-death-hyprland.log",
+      "sha256": "b6c6f14d2b6b0382782832b962d2bb84b534d26ade713cd5224d16aff20265e6"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-death-observer.jsonl",
+      "sha256": "9c3bcbf10113dd0ffe186c6a1149e5ea5b9f0144e92ccb673dd4085bd0fe829f"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-death-packets.jsonl",
+      "sha256": "2ae4d2a6056ed7a2d46a5f6b8288eb1f7552db059b14194c8eec6894f64b3887"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-death-probe-load.log",
+      "sha256": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-death-warmup-clear-focus.log",
+      "sha256": "c6fad5a524a014834a76be6f2ba0865b02fd7b58356f2a1988dece49482379ef"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-death-warmup-foot.log",
+      "sha256": "560a07fe88b20e47c9f6cbaa9538046a845a4d2c777b2f6a5f8ee566ef672d10"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-death-warmup-probe.log",
+      "sha256": "dbe6af4a1d46a5fc1a100b50b65355e6c42abbc95beebd183e8562703d24459a"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-foot.log",
+      "sha256": "68e3a732aae5c4fe369838df8c6a6244546d508c8a78b400b6ffde96e42c2f2a"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-layer-probe.log",
+      "sha256": "6e750bd390348592023ad905af9a8a267f021110ba25116cee9449f082413094"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-layer.log",
+      "sha256": "58f8e993640f91a401d8c538ee75fa9f19e8b92bfd23d54c28ac3bb2cf4d1129"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-live-adapter-load.log",
+      "sha256": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-live-hyprland.log",
+      "sha256": "e56bef2a9d1021e5fd527808db9012ecdb5cc43cedcee149e46c964a846bdfb3"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-live-observer.jsonl",
+      "sha256": "f71bac8e5ad1d2a46ea6079120b0c8ca21add69f36cfa259d85205b00a3a4b5a"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-live-packets.jsonl",
+      "sha256": "0c7d979e60e5d670aa796656757685a0b8009b950afb46c369e848c35c5bc785"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-live-probe-load.log",
+      "sha256": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-live-warmup-clear-focus.log",
+      "sha256": "c7a15b86f83803fd67ba320b2a1fcea6af4f9501d17b7cd472e5dad8b7c5f188"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-live-warmup-foot.log",
+      "sha256": "560a07fe88b20e47c9f6cbaa9538046a845a4d2c777b2f6a5f8ee566ef672d10"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-live-warmup-probe.log",
+      "sha256": "0ffb1bcc435287e6803a53f9565663e376654e8c1433968863552c0bf76ee224"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-pressure-adapter-load.log",
+      "sha256": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-pressure-foot.log",
+      "sha256": "68e3a732aae5c4fe369838df8c6a6244546d508c8a78b400b6ffde96e42c2f2a"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-pressure-hyprland.log",
+      "sha256": "1fc3171377ab373bf837920f7b8f7bd8ba1f9173acb8e0e0a9b5f35fb1bd9563"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-pressure-observer.jsonl",
+      "sha256": "4f61e01a0a254b6be9a1ce7a2b08a13d905bbdc2d8322f73bd9ffae08a38b227"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-pressure-packets.jsonl",
+      "sha256": "8bc50afe361aba18da1677eeb86b25a738f8090a9c3d3931a6c29613020f36f4"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-pressure-probe-load.log",
+      "sha256": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-pressure-warmup-clear-focus.log",
+      "sha256": "c641415448be90b269e554bbbb30ff09c43d733ce23ae25280e6361775876940"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-pressure-warmup-foot.log",
+      "sha256": "560a07fe88b20e47c9f6cbaa9538046a845a4d2c777b2f6a5f8ee566ef672d10"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-pressure-warmup-probe.log",
+      "sha256": "3ed878beec80684fc069b8a6ac278cc188e1016ff60756115a142baff8f44d9d"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-refocus.log",
+      "sha256": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-stopped-adapter-load.log",
+      "sha256": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-stopped-foot.log",
+      "sha256": "acadb523446a895c23244baf92c3397d2c485e22a6a769498dc8b02d8f35b9ea"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-stopped-hyprland.log",
+      "sha256": "34598c97df3e408902d49b69d969b8795fafd35ded2d3a720498f38fd276fd0b"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-stopped-observer.jsonl",
+      "sha256": "3d1f38a2093a75372d4eb5060608be03eb13796a7f1c4c7afa214a2e45ba7ac8"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-stopped-packets.jsonl",
+      "sha256": "f58e64ac9a167270ba5d5cf6a173f0b0fadfb39419f01000c328a0d27c5cfe79"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-stopped-probe-load.log",
+      "sha256": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-stopped-warmup-clear-focus.log",
+      "sha256": "c7a15b86f83803fd67ba320b2a1fcea6af4f9501d17b7cd472e5dad8b7c5f188"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-stopped-warmup-foot.log",
+      "sha256": "bab3b42e397bddd88734e0d5d0d59756731c31f3cb1b7ae8c78604d714641137"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-stopped-warmup-probe.log",
+      "sha256": "9d03ddd116fae34006fa5f1ba352f340e337f36537dcb77fced1c2997d9d65f8"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/rust-unload.log",
+      "sha256": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/seatd.log",
+      "sha256": "ee85c7aa7f52660af4e67c8849ff4578e67cbb4f412eb10faf6b772e0a0bd337"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/selection.json",
+      "sha256": "030d9088a646914d78f9c58f88f8b8f7466752d93bbb8ae9061346e0bad34780"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/serial.log",
+      "sha256": "a30718e4db49f39aa4e5079bb441b5f17504aaf5395b6f91795205fd48707eb5"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/session-lock-client.h",
+      "sha256": "f6a5730171b9541ca72755a5b150d5dce4cccbc015ec0b955c5f90949637b5c1"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/session-lock-protocol.c",
+      "sha256": "97b67c96f7ae85fb7a25fa785f402531350504e746d23e14bf1cbf8fec595e1d"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/session-lock-v1.xml",
+      "sha256": "a05df7d95c5e523e457037b3a149484e8064828cda66971f3c7caeb87d597a81"
+    },
+    {
+      "path": "artifacts/native-session-compositor/green-prepared-1/udev.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/adapter-build.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/adapter-elf-notes.log",
+      "sha256": "0244ee577b10ce3366201be3960572e767dd62351ff6a112c1313ac3b61a6f37"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/container-id",
+      "sha256": "9abb07a9149f061439b018bf45c1a6d9980cbbd38e6a3f02c1e6105c41b9e97a"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/exit-code",
+      "sha256": "39b8dc3fc8b44765c8e6f1adee04c5b465e555ab791cc42d0d9e810d5b64297c"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/groups.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/headers.json",
+      "sha256": "4a9f8ec187515b105d646e7bacd8af57eab3b1bf13dab25c9b5fe91aeda1f78e"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/host.log",
+      "sha256": "6570c2e3dcd8a467e43293e09c8b4f93d615fec04a233b5fb5df287b2e70b667"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/hyprland-elf-notes.log",
+      "sha256": "ced58f4b9f6f27dc1c949f16d20b755479debcd337ab47d9ec1f80fe4ac0344f"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/hyprland-symbols.log",
+      "sha256": "29cf9a751db8191dae6e6fa9073ddcd13faa4fbb9441da0d921c6e48d7fabb6d"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/image-id",
+      "sha256": "a47878a075ae7531e409ff38db047a5764b0099666dd2386842d1a082eb53872"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/kernel.log",
+      "sha256": "66991da961a3f054172cb96cd9406cfe08dd0c8a4633e56eeddb88f2be904f8f"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/lock-client",
+      "sha256": "1765a58d0fc95c7e6c95c4761f7d2c2b967ba74561eadaf76348a0aeb790451f"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/lock-client-build.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/lock-client-code.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/lock-client-elf-notes.log",
+      "sha256": "2859a8c145e4c7b6354bdf863576c45986d9b922a261ed4cce5b8678c0da6bce"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/lock-client-header.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/lock-client.c",
+      "sha256": "fa2c90f36a0dabc3a538298b6d0fe7f47e29625a3cc860bb335a6ae8b81a81f3"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/modprobe.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/observer-elf-notes.log",
+      "sha256": "2b0a593be2d3bdf415c43b05b3ddca3d7054b18a668776724adca6ee0c3b00d9"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/original-probe-events.jsonl",
+      "sha256": "cac8a84e3bb5cac13f92bdd31c68e3773f8c0ff43af16e45abb2e2143aa80793"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/packages.log",
+      "sha256": "f4711f90e047cfc0c40a3cd69b5fe4cef842547fc4e738fe3879f3afe78c8147"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/pkgconfig.log",
+      "sha256": "c2ec2d14ad3a6006b08b56ad8ad9872ccee2500fc522409c9906ca6e6b8df4a0"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/python-active-window.log",
+      "sha256": "0fc96311cee699ca89c051bf3c56a1767c21976a1da39c47cb530f325279b3d7"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/python-admission-adapter-load.log",
+      "sha256": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/python-admission-hyprland.log",
+      "sha256": "87d52cac57b8729d0ad37be7442c24e2ef02c2570f02dbf7d43a97a27f6220c0"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/python-admission-packets.jsonl",
+      "sha256": "f8dcfb34cc827ac709ba71ded0a64ed6a817cc2f92425100a6396e92e937be50"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/python-admission-probe-load.log",
+      "sha256": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/python-clear-focus.log",
+      "sha256": "865b97bb6637d1371a3e5b4ca3e1ec08320a8bbdc9381f0c296180b0bfc467f7"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/python-first-lock-locker.log",
+      "sha256": "847340bbae87d707c8383e409518e8a7a19ff789b38270c721e17f39adb00733"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/python-foot.log",
+      "sha256": "68e3a732aae5c4fe369838df8c6a6244546d508c8a78b400b6ffde96e42c2f2a"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/python-layer-probe.log",
+      "sha256": "7bd8f6daab739a6f6bbebcac7c1f61b366e28b0c1bb47e1532bd4400a5b0e633"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/python-layer.log",
+      "sha256": "0a713ff67f4a408c333ade81879c2980045a1f193e2397ef694b2f69dcc67eca"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/python-refocus.log",
+      "sha256": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/result.json",
+      "sha256": "064ae05bd227ef73db0b646df36331d3b37c7c11378c63ea1976fef68d3f103e"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/runtime.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/seatd.log",
+      "sha256": "480d83850c89527823cf1dc30825ae59206731d5d87f4a38ad1fbcc7891ddbf8"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/selection.json",
+      "sha256": "f62f142aefd46b67158853af4372dc43fd69119433fe8557cd9216e9fb3182c3"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/serial.log",
+      "sha256": "23ecfd1de50d6e5f68448940aae5cc65f2b1d2805863bf0d1c5d5e5228bc1ecf"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/session-lock-client.h",
+      "sha256": "f6a5730171b9541ca72755a5b150d5dce4cccbc015ec0b955c5f90949637b5c1"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/session-lock-protocol.c",
+      "sha256": "97b67c96f7ae85fb7a25fa785f402531350504e746d23e14bf1cbf8fec595e1d"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/session-lock-v1.xml",
+      "sha256": "a05df7d95c5e523e457037b3a149484e8064828cda66971f3c7caeb87d597a81"
+    },
+    {
+      "path": "artifacts/native-session-compositor/red-admission-final/udev.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "limits": [
+    "Scalar PIDFS requires actual supporting kernel; retained Pixel6.6 set not qualified",
+    "Prepared320x240 graphics only; cold source gaps fail100ms lease",
+    "No source freshness relaxation or implicit revival",
+    "No actual compositor-to-actor-to-installed-Messages joint run",
+    "No trusted production launch/configuration or Quickshell/PAM protocol containment",
+    "No physical suspend, device hardware, vendor/carrier execution",
+    "Already queued bytes cannot be withdrawn; no atomic barrier for unobserved external transitions"
+  ],
+  "report": {
+    "path": "docs/native-session-ingress.md",
+    "sha256": "d69d61aa9f9ae9e8f437fcdd5d4f9dc10c30faf3a4575df3095c51edfac47dce"
+  }
+}

@@ -53,8 +53,12 @@ appearance ACL setup remain explicit test infrastructure.
    Wayland socket ACLs do not establish compositor protocol containment. Qualify
    wake ownership separately; closed windows do not prove suspended delivery.
    The [matching compositor build probe](native-session-build-boundary.md) now
-   executes11 original API/protocol/kernel groups; central seat and socket-derived
-   pidfs identity are qualified separately from facts transport/actor composition.
+   executes11 original API/protocol/kernel groups; the subsequent
+   [ingress prototype](native-session-ingress.md) qualifies17 prepared original
+   compositor/observer groups and13 synthetic-source/current-authority ARM groups
+   separately. Joint composition, cold availability and retained-kernel identity
+   remain open; the current scalar-pidfs prototype cannot substitute for Pixel
+   capability qualification.
    Admission callbacks precede the original locked flag. The
    [session contract](native-session-contract.md) retains trusted locker/restore
    containment and external-transition publication ordering as explicit gates.

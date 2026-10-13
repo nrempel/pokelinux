@@ -9,11 +9,14 @@ publication gate. Java or an Android framework service is unnecessary.
 
 This document records public original-source inspection and the session contract.
 Its [static provenance](evidence/native-session-contract-provenance.json) qualifies
-source inspection only. The separate [matching-build observation](native-session-build-boundary.md)
-now executes eleven API/protocol/kernel groups in an ARM64 guest. That probe
-qualifies original focus, lock ordering and socket-derived identity; production
-facts transport, the actor bridge, trusted locker containment, secure presentation
-and hardware remain separate gates.
+source inspection only. The [matching-build observation](native-session-build-boundary.md)
+executes eleven original API/protocol/kernel groups. Subsequent
+[native ingress prototypes](native-session-ingress.md) separately qualify17 prepared
+compositor/observer groups,13 synthetic-source/current-authority ARM groups,
+16 process/socket/exec cases and one typed policy regression. Production launch,
+retained-kernel identity, a joint compositor/app path, trusted locker containment,
+secure presentation and hardware remain separate gates. The static inspection's
+unexecuted case records describe its original checkpoint, not these later runs.
 
 The existing [lifecycle authority](native-lifecycle.md) and
 [installed Messages path](native-messages-service.md) qualify separate launched

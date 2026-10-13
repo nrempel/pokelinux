@@ -11,6 +11,7 @@ struct Principal {
     pid: u32,
     generation: u64,
     background: bool,
+    background_intent: bool,
     alive: OwnedFd,
 }
 /// Internal, non-cloneable stamp; never serialized or supplied by an app.
@@ -22,6 +23,12 @@ pub(crate) struct ReadStamp {
     policy: u64,
     lifecycle: u64,
     backend: String,
+    until: u64,
+    session: Option<SessionRead>,
+}
+struct SessionRead {
+    source: String,
+    revision: u64,
     until: u64,
 }
 struct Permit {
@@ -66,6 +73,12 @@ pub struct Authority {
     suspended: bool,
     degraded: bool,
     ready: bool,
+    session_required: bool,
+    session: Option<crate::session::Snapshot>,
+    session_source: Option<String>,
+    session_failed: bool,
+    root_lock_intent: bool,
+    reconcile_after: u64,
 }
 impl Authority {
     pub(crate) fn loading(profiles: Vec<AppProfile>) -> io::Result<Self> {
@@ -83,7 +96,147 @@ impl Authority {
             suspended: false,
             degraded: false,
             ready: false,
+            session_required: false,
+            session: None,
+            session_source: None,
+            session_failed: false,
+            root_lock_intent: false,
+            reconcile_after: 0,
         })
+    }
+    pub(crate) fn require_session(&mut self) -> io::Result<()> {
+        self.session_required = true;
+        self.locked = true;
+        for p in self.principals.values_mut() {
+            p.background = true;
+        }
+        self.lifecycle(None, None, None)
+    }
+    fn fresh_session(&self, now: u64) -> Option<&crate::session::Snapshot> {
+        self.session.as_ref().filter(|s| {
+            !self.session_failed && s.sampled_at_ns > self.reconcile_after && now < s.until
+        })
+    }
+    fn matches_focus(p: &Principal, focus: &crate::session::NativeFocus) -> bool {
+        if p.pid != focus.pid
+            || p.uid != focus.uid
+            || focus.gid != p.uid
+            || !living(&p.alive).unwrap_or(false)
+        {
+            return false;
+        }
+        // Compare the already owned launched-generation descriptor. On kernels
+        // using shared anon_inode identities this check must remain unavailable.
+        let Ok(fs) = rustix::fs::fstatfs(&p.alive) else {
+            return false;
+        };
+        let Ok(st) = rustix::fs::fstat(&p.alive) else {
+            return false;
+        };
+        fs.f_type as u64 == 0x50494446
+            && st.st_ino != 0
+            && st.st_dev == focus.pidfs_device
+            && st.st_ino == focus.pidfs_inode
+    }
+    pub(crate) fn fail_session(&mut self) -> io::Result<()> {
+        if !self.session_failed {
+            self.session_failed = true;
+            self.session = None;
+            self.lifecycle(None, None, None)?;
+        }
+        self.locked = true;
+        for p in self.principals.values_mut() {
+            p.background = true;
+        }
+        Ok(())
+    }
+    pub(crate) fn missing_session(&mut self) -> io::Result<()> {
+        // Explicit resume discards the current sample, not source establishment.
+        // None after an established source is terminal even during reconciliation.
+        if self.session_source.is_some() {
+            return self.fail_session();
+        }
+        self.locked = true;
+        for p in self.principals.values_mut() {
+            p.background = true;
+        }
+        Ok(())
+    }
+    pub(crate) fn observe_session(
+        &mut self,
+        s: crate::session::Snapshot,
+        now: u64,
+    ) -> io::Result<()> {
+        if self.session_failed {
+            return self.fail_session();
+        }
+        let canonical = s.source.len() == 32
+            && s.source
+                .bytes()
+                .all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b));
+        if !canonical
+            || s.revision == 0
+            || s.sequence == 0
+            || s.sampled_at_ns > now
+            || s.sampled_at_ns
+                .checked_add(crate::session::SAMPLE_BUDGET_NS)
+                != Some(s.until)
+            || now >= s.until
+            || (s.locked && s.focus.is_some())
+            || self
+                .session_source
+                .as_ref()
+                .is_some_and(|id| id != &s.source)
+            || self.session.as_ref().is_some_and(|old| {
+                s.sequence < old.sequence
+                    || s.revision < old.revision
+                    || s.sampled_at_ns < old.sampled_at_ns
+                    || (s.sequence == old.sequence && old != &s)
+                    || (s.revision == old.revision
+                        && (s.locked != old.locked || s.focus != old.focus))
+            })
+        {
+            return self.fail_session();
+        }
+        // Explicit resume/session reconciliation needs a newly sampled packet.
+        // Cached but otherwise fresh pre-resume facts cannot restore authority.
+        if s.sampled_at_ns <= self.reconcile_after {
+            self.session = None;
+            self.locked = true;
+            for p in self.principals.values_mut() {
+                p.background = true;
+            }
+            return Ok(());
+        }
+        let locked = self.root_lock_intent || s.locked;
+        let selected = if !locked {
+            s.focus.as_ref().and_then(|focus| {
+                self.principals
+                    .iter()
+                    .find(|(_, p)| Self::matches_focus(p, focus))
+                    .map(|(app, _)| app.clone())
+            })
+        } else {
+            None
+        };
+        let changed = self
+            .session
+            .as_ref()
+            .is_none_or(|old| old.revision != s.revision)
+            || self.locked != locked
+            || self.principals.iter().any(|(app, p)| {
+                p.background != (p.background_intent || selected.as_ref() != Some(app))
+            });
+        if changed {
+            self.lifecycle(None, None, None)?;
+        }
+        for (app, p) in &mut self.principals {
+            p.background = p.background_intent || selected.as_ref() != Some(app);
+        }
+        self.locked = locked;
+        self.session_source.get_or_insert_with(|| s.source.clone());
+        self.session = Some(s);
+        Ok(())
     }
     pub(crate) fn activate(&mut self, durable: Durable) {
         self.durable = durable;
@@ -121,6 +274,7 @@ impl Authority {
                 pid,
                 generation: self.generation,
                 background: app == crate::messages::APP,
+                background_intent: false,
                 alive,
             },
         );
@@ -202,16 +356,36 @@ impl Authority {
         };
         self.permits.clear();
         if let Some(v) = locked {
-            self.locked = v;
+            if self.session_required {
+                self.root_lock_intent = v;
+                self.locked = v
+                    || self
+                        .fresh_session(crate::boottime_ns())
+                        .is_none_or(|s| s.locked);
+            } else {
+                self.locked = v;
+            }
         }
         if let Some(v) = suspended {
             self.suspended = v;
+            if self.session_required {
+                self.reconcile_after = crate::boottime_ns();
+                self.session = None;
+                self.locked = true;
+                for p in self.principals.values_mut() {
+                    p.background = true;
+                }
+            }
         }
         if let Some((app, v)) = background {
-            self.principals
+            let p = self
+                .principals
                 .get_mut(app)
-                .ok_or(io::ErrorKind::NotFound)?
-                .background = v;
+                .ok_or(io::ErrorKind::NotFound)?;
+            p.background = v;
+            if self.session_required {
+                p.background_intent = v;
+            }
         }
         Ok(())
     }
@@ -219,6 +393,16 @@ impl Authority {
         !self.locked
             && !self.suspended
             && self.principals.get(app).is_some_and(|p| !p.background)
+            && (!self.session_required
+                || self.fresh_session(crate::boottime_ns()).is_some_and(|s| {
+                    !self.root_lock_intent
+                        && !s.locked
+                        && s.focus.as_ref().is_some_and(|focus| {
+                            self.principals
+                                .get(app)
+                                .is_some_and(|p| Self::matches_focus(p, focus))
+                        })
+                }))
             && self
                 .durable
                 .grants
@@ -256,6 +440,16 @@ impl Authority {
             lifecycle: self.lifecycle,
             backend: backend.into(),
             until: now.saturating_add(ttl_ms * 1_000_000),
+            session: if self.session_required {
+                let s = self.fresh_session(now).ok_or(Reply::Denied)?;
+                Some(SessionRead {
+                    source: s.source.clone(),
+                    revision: s.revision,
+                    until: s.until,
+                })
+            } else {
+                None
+            },
         })
     }
     pub(crate) fn current_read(&self, stamp: &ReadStamp, backend: &str, now: u64) -> bool {
@@ -264,6 +458,13 @@ impl Authority {
             && self.policy == stamp.policy
             && self.lifecycle == stamp.lifecycle
             && stamp.backend == backend
+            && (!self.session_required
+                || stamp.session.as_ref().is_some_and(|stamp| {
+                    now < stamp.until
+                        && self.fresh_session(now).is_some_and(|s| {
+                            s.source == stamp.source && s.revision == stamp.revision
+                        })
+                }))
             && self.allowed(&stamp.app, Permission::MessagesRead)
             && self.principals.get(&stamp.app).is_some_and(|p| {
                 p.pid == stamp.pid
@@ -451,6 +652,51 @@ mod tests {
     use super::*;
     use crate::storage::Disk;
     use std::path::PathBuf;
+    #[test]
+    fn resume_does_not_erase_established_source_loss_history() {
+        // Internal policy boundary: actual BOOTTIME, typed owned-provider facts.
+        // This does not claim an IPC source emitted None or a physical resume.
+        let mut a = Authority::loading(vec![]).unwrap();
+        a.activate(Durable::default());
+        a.require_session().unwrap();
+        let source = "11111111111111111111111111111111".to_string();
+        let sample = crate::boottime_ns();
+        a.observe_session(
+            crate::session::Snapshot {
+                source: source.clone(),
+                revision: 1,
+                sequence: 1,
+                sampled_at_ns: sample,
+                until: sample + crate::session::SAMPLE_BUDGET_NS,
+                locked: false,
+                focus: None,
+            },
+            crate::boottime_ns(),
+        )
+        .unwrap();
+        assert!(!a.locked);
+        a.lifecycle(None, Some(false), None).unwrap();
+        a.missing_session().unwrap();
+        std::thread::sleep(std::time::Duration::from_millis(1));
+        let sample = crate::boottime_ns();
+        a.observe_session(
+            crate::session::Snapshot {
+                source,
+                revision: 1,
+                sequence: 2,
+                sampled_at_ns: sample,
+                until: sample + crate::session::SAMPLE_BUDGET_NS,
+                locked: false,
+                focus: None,
+            },
+            crate::boottime_ns(),
+        )
+        .unwrap();
+        assert!(
+            a.locked,
+            "fresh facts reactivated lost source after resume cleared current sample"
+        );
+    }
     struct Harness {
         core: Authority,
         disk: Disk,

@@ -339,14 +339,29 @@ new session composition remains separate. Raw retention, inbox capacity and larg
 cold backlog availability under original deadlines remain open. See
 `native-messages-enumeration.md` and its clean provenance.
 
+Native session ingress prototypes now qualify16 actual process/socket/exec cases,
+13 corrected synthetic-source/current-authority ARM groups, one typed policy
+resume-history regression and17 separate prepared original-compositor/observer
+groups. Every meaningful drained transition fences old reads; unchanged heartbeat
+cannot extend the captured source lease. Root intents remain separate and current
+owned app pidfs identity is mandatory. Two review corrections have executed reds:
+inherited source pidfd CLOEXEC and source-loss history across a resume fence.
+Cold rendering still exceeds100ms; preparation precedes all facts and no revival
+is allowed. The retained Pixel profile records6.6 modules; scalar pidfs support is
+unqualified there. Next use one transferred owned socket-peer pidfd design on
+both anon-inode/new kernels, before joint installed app/production session gates.
+No matched kernel replacement, trusted PAM/restore or hardware completion follows.
+See `native-session-ingress.md` and its clean provenance.
+
 ## Next work
 
 1. Continue the qualified synthetic incoming Messages path with raw retention/capacity,
    cold backlog availability and held-read cancellation that preserves shared
    receiving. Retain original ingestion deadlines and durable source uncertainty;
    history recovery never permits implicit backend reattachment. Compose the
-   bounded compositor facts source with current read authority, then qualify
-   trusted lock admission/restore, notifications and wake. Producer/ACK/reset,
+   transferred focus-peer handle on the retained-kernel interface before the
+   joint compositor/current-authority/installed-app path. Then qualify trusted
+   lock admission/restore, notifications and wake. Producer/ACK/reset,
    sending and hardware gates remain separate. See `native-integration-map.md`,
    `native-messages-service.md` and `native-messages-incoming.md`.
 2. Recover and test the actual vendor cleanup/reset and registration-overlap

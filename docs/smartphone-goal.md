@@ -244,3 +244,13 @@ preserve exact IDs, exclusions and history-only recovery. It uses the frozen
 `f733d3b` actor/source; later session composition remains separate. Raw retention,
 inbox limits, cold-backlog deadlines and production receive remain open. See
 [enumeration](native-messages-enumeration.md).
+
+Native session prototypes now separately qualify16 actual process/socket/exec
+cases,13 corrected ARM synthetic-source/current-authority groups and17 prepared
+original-compositor/observer groups. Original source leases, semantic revisions,
+exact app identity and independent root denial intents gate read publication.
+Cold rendering, retained Pixel kernel identity and joint installed app composition
+remain open. The next unified owned-peer-pidfd design targets the retained6.6
+interface; no new kernel or compatibility fallback is assumed. Trusted Omarchy
+PAM/restore containment, secure presentation, actual resume/wake and hardware
+remain gates. See [native ingress](native-session-ingress.md).
