@@ -7,7 +7,7 @@ Android framework/Java peers remain reference and test infrastructure.
 
 | Function | Existing native component or boundary | Installed service and app composition | Backend and evidence still required |
 | --- | --- | --- | --- |
-| Permission/lifecycle | One Rust principal/policy actor; exact per-packet Linux credentials, pidfds, generations; owned policy-storage child | Distinct-UID launcher and controls pass installed process fixtures on x86 and an ARM64 kernel. Local Messages reads compose this actor with its own storage child; trusted Omarchy ingress and hardware dispatch remain open | Trusted lock/focus/session ingress, complete process-tree supervision, startup/launch IO and device SELinux. [Authority](native-lifecycle.md), [storage](native-lifecycle-storage.md) |
+| Permission/lifecycle | One Rust principal/policy actor; exact per-packet Linux credentials, pidfds, generations; owned policy-storage child | Distinct-UID launcher and controls pass installed process fixtures on x86 and an ARM64 kernel. Local Messages reads compose this actor with its own storage child. Fixed UID1000 lock-only entry now precedes the exact original Omarchy action; durable pending intent survives healthy actor and changed display/Source replacement in the same policy directory | Trusted unlock/restore and secure frames, complete process-tree supervision, startup/launch IO, hardware dispatch and device SELinux. [Authority](native-lifecycle.md), [storage](native-lifecycle-storage.md), [lock admission](native-lock-admission.md) |
 | Incoming messages | Durable receipt owner, bounded AOSP-qualified codecs, private inbox, exact local occurrence IDs and deletion exclusions | Installed local-history Messages service/Qt window now pass11 ARM64 desktop groups with10 service groups and2 retained-descriptor cases; current read authority, responsive storage and local recovery qualify. A separately built receiving fixture now composes actual ARM64 Binder arrivals with this actor and sole raw/inbox child (18 groups); normal installed service stays history-only | Producer/reset/ACK identity, raw-retention/backlog policy, multipart association, notifications and carrier receive. [Receipt](native-sms-receipt-owner.md), [inbox](native-inbox.md), [installed history](native-messages-service.md), [synthetic incoming](native-messages-incoming.md) |
 | Outgoing messages | Durable outbox and one-attempt submission owner; frozen V3 Binder synthetic boundary | No installed Messages send path through the single current permission authority yet | Final modem/error policy, receive/ACK identity, separately qualified delivery correlation, retries/reconciliation and carrier SMS/MMS. [Submission](native-sms-transport.md) |
 | IMS/calls | Original-compared wire encoders/reader/registration payload, single-attempt owned transport/death watch, supervised child reclamation and scoped ARM64 kernel Binder/NDK interop | Existing Phone UI/Android bridge is reference infrastructure; a production native IMS/call service is not composed | Producer/response identity and reset, registration state machine, bearer/data/SIM/eSIM, call/media/audio and carrier operation. [Radio owner](native-radio-owner.md), [reader](native-ims-reader.md), [registration payload](native-ims-registration.md) |
@@ -52,7 +52,7 @@ appearance ACL setup remain explicit test infrastructure.
    no partial Ready or callback recreation occurs. Its six ARM greens use the
    frozen `f733d3b` actor, separately from later session composition. Raw eviction,
    inbox bounds and throughput under unchanged deadlines remain open.
-4. Add trusted lock/focus/session ingress and native notifications through this
+4. Complete trusted session restoration and native notifications through this
    same authority. Source failure/default lock denies reads. Distinct UIDs and
    Wayland socket ACLs do not establish compositor protocol containment. Qualify
    wake ownership separately; closed windows do not prove suspended delivery.
@@ -89,6 +89,17 @@ appearance ACL setup remain explicit test infrastructure.
    passes34 process cases per host/ARM kernel and nine separately selected original
    compositor/incoming/normal-Qt groups, including cold reopen and source/peer loss.
    It accepts only fresh continuous queued samples; actual expiry remains terminal.
+   The [native lock entry](native-lock-admission.md) now fences authority through
+   fixed session UID1000 per-packet credentials before the unchanged original
+   Omarchy action. Initial 8 host/6 original ARM/8 component groups remain separate
+   from later 6 host/5 original ARM/8 component persistence groups. The latter
+   genuine healthy-restart Qt-page RED precedes synced required `lock_pending`
+   restoration before Ready and fresh-page denial in the same policy directory.
+   Source/admin false cannot clear pending intent. Whole SIGKILL qualifies
+   uncertain-history refusal; fresh unlocked storage requires an explicit root-owned
+   lifecycle. Trusted unlock/PAM/secure presentation and camera plus new-lock runtime
+   remain open. Same-Source continuation and an old-compositor fresh-endpoint reload
+   are unavailable; this proof changes the display/Source epoch.
    The observed99.2ms publisher gap leaves broad availability open. Actual locked
    graphics can expire the original100ms lease and restoration remains unavailable.
    Protected procfs/common namespaces and matched Pixel kernel remain gates.

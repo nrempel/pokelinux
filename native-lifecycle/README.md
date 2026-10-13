@@ -17,5 +17,20 @@ cleanup.
 [Per-app ARM evidence](../docs/native-display-app-generations.md) qualifies
 lifetime/relaunch and held-init Stop. Pending EOF passes its narrow boundary;
 its successor aggregate is failed after Source InvalidData of unknown predicate.
-The full installed smartphone, trusted lock/restore, incoming restricted-display
-composition, suspend/wake and Pixel hardware gates remain open.
+The [native lock entry](../docs/native-lock-admission.md) now accepts only a fixed
+UID1000 `{"op":"lock"}` request on the actor's `lock.sock`, using kernel credentials
+on every packet. Memory authority is revoked before owned storage work; successful
+ACK requires synced required-schema `Durable.lock_pending`. That intent is restored
+before Ready and cannot be cleared by unlocked Source facts or root admin false.
+`Gate::Lock` remains monotonic through irrelevant focus revisions. The fixed Rust
+client verifies the connected root actor's reply within the original two-second
+BOOTTIME budget before executing the exact retained original Omarchy action.
+
+Initial 8 host/6 original ARM/8 component ingress groups and later 6 host/5 original
+ARM/8 component persistence groups are separate frozen selections. The later actual
+healthy actor Stop/wait and changed display/Source epoch preserve denial in the
+same policy directory. SIGKILL establishes unclean-history refusal, not positive
+crash recovery. A fresh unlocked session needs an explicit root-owned fresh storage
+lifecycle. The full installed smartphone, trusted unlock/restore, PAM/secure frames,
+camera plus new-lock runtime, incoming restricted-display composition, suspend/wake
+and Pixel hardware gates remain open.

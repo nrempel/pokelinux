@@ -31,9 +31,10 @@ actual launched PID. The daemon checks the peer and each packet's kernel UID/PID
 against its owned child, then checks a fresh source nonce, increasing operation
 token and absolute `CLOCK_BOOTTIME` deadline. The worker checks the actual
 parent's per-packet credentials and source/token/deadline. There is one pending
-operation and no queued work. Accepted response publication checks the deadline
-after receive, actual pidfd liveness and the still-current principal, policy and
-lifecycle revisions. EINTR and retries retain the original deadline.
+operation and no queued work. Accepted grant/admission publication checks the
+deadline after receive, actual pidfd liveness and the still-current principal,
+policy and lifecycle revisions. Monotonic pending-lock completion has the separate
+rule below. EINTR and retries retain the original deadline.
 
 Failure, expiry, caller loss or stop invalidates publication before signalling
 the worker. Retired work remains owned until the actual child is reaped. An exit
@@ -43,8 +44,9 @@ unavailable admission consumes that principal's prepared permit; a foreign
 principal cannot consume it. Status and trusted lifecycle controls remain
 available without waiting for disk IO.
 
-A synced response arriving after lock/background/suspend changes retains known
-receipt history but grants no current admission and latches degraded state.
+A synced grant/admission response arriving after lock/background/suspend changes
+retains known receipt history but grants no current admission and latches degraded
+state.
 `AdmittedUncertain` remains a historical receipt, never a token for a later
 hardware effect. Atomic backend effect dispatch is still a separate integration
 gate. Revocation and process death establish no remote cleanup.
@@ -69,6 +71,19 @@ and its child is reaped. There is no automatic file deletion, admission replay,
 receipt eviction, reset or recovery API. Root or a future trusted recovery
 service must qualify storage state and backend uncertainty before deliberately
 changing this state. Removing files is not a provided recovery procedure.
+
+The later [native lock admission](native-lock-admission.md) adds required-schema
+`Durable.lock_pending` to the same 32 KiB policy. Memory authority is revoked first;
+success ACK requires a confirmed synced replacement through this owned child.
+Monotonic `Gate::Lock` completion tolerates irrelevant focus revisions without
+issuing an effect stamp. Startup restores pending intent before Ready. Source or
+admin false cannot clear it, and old policy JSON without the field is refused.
+Healthy same-directory replacement retains denial. Actual actor SIGKILL, storage
+death, pending-file collision, corrupt sealed policy and held initial load qualify
+refusal or continued denial under their separate process/file controls. They do
+not qualify power loss, physical blocked IO or successful crash recovery. There
+is no trusted unlock/reset; fresh unlocked storage requires an explicit root-owned
+storage lifecycle.
 
 ## Bounded stop and final ownership
 

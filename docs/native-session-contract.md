@@ -1,8 +1,9 @@
 # Trusted native Omarchy session ingress contract
 
-The next installed Messages boundary needs a small adapter in the matching
+The installed Messages path now uses a small adapter in the matching
 open-source compositor and a native Rust bridge into the existing lifecycle
-actor. Hyprland 0.56.2 exposes actual lock state, but its public `activewindow`
+actor, with separately selected evidence linked below. Hyprland 0.56.2 exposes
+actual lock state, but its public `activewindow`
 query does not establish actual keyboard focus. The adapter exports compositor
 facts; the existing actor retains the only permission policy and final data
 publication gate. Java or an Android framework service is unnecessary.
@@ -156,7 +157,7 @@ Wayland client could take lock ownership and unlock its replacement. This is a
 static inference requiring a real protocol test, not an executed vulnerability
 finding. Checking compositor lock state does not itself prove trusted unlocking.
 
-Production lock admission and restoration must select the exact trusted locker
+Trusted presentation and restoration must select the exact trusted locker
 kernel identity and launched generation. Neither caller app metadata, a PAM UI
 string nor general UID1000 membership is sufficient. Restrict privileged protocol
 access for apps, and constrain restoration to the trusted owned locker and the
@@ -218,12 +219,28 @@ current launched app generation, background all other principals and apply that
 focus change in one actor transition. A new Messages generation still starts
 denied and requires fresh focus plus separately owned policy.
 
-Production Omarchy lock requests must first fence lifecycle authority in that
-same actor and receive its acknowledgement before requesting/starting the locker.
-Failed or delayed locker startup retains denial. A compositor false query must
-not cancel an outstanding trusted lock intent. Clearing that intent needs a
-qualified trusted unlock/reconciliation path. Apps acquire no grant or unlock
-capability through this ingress.
+The [native lock entry](native-lock-admission.md) now fences lifecycle authority
+in that same actor before requesting/starting the original Omarchy locker. The
+fixed session UID1000 route accepts only `{"op":"lock"}`, checks each packet's
+kernel `SCM_CREDENTIALS` and supplies no parameters, grants, launch or unlock.
+The fixed Rust client requires a reply from the connected root actor's exact
+PID/UID/GID within its original two-second BOOTTIME budget, then executes the
+exact retained original action. Failed or delayed admission refuses that action;
+failed or delayed locker startup retains denial. This denial-only route does not
+establish trusted locker identity, PAM success or secure presentation.
+
+The actor revokes current memory authority before storage admission. A successful
+ACK requires the owned storage child to confirm file sync, replacement and directory
+sync of required-schema `Durable.lock_pending`. This monotonic `Gate::Lock` supplies
+no effect stamp and tolerates irrelevant focus revisions during sync. Restore loads
+the pending intent before Ready; fresh compositor `locked:false`, root admin false,
+UI death and display/Source replacement cannot clear it. Repeated pending locks
+use the already confirmed durable state. The healthy same-directory actor replacement
+and changed original display/Source epoch now retain fresh normal Qt-page denial.
+Whole-actor SIGKILL separately refuses uncertain unclean recovery. Clearing pending
+intent requires a qualified trusted unlock/reconciliation path, which is absent;
+a fresh unlocked session requires an explicit root-owned fresh storage lifecycle.
+No old-schema compatibility or implicit policy deletion/reset is provided.
 
 Bind a current read to source incarnation/revision/freshness in addition to the
 existing principal, policy, lifecycle, worker, connection and BOOTTIME bounds.
@@ -264,10 +281,14 @@ nor focus. This design does not qualify suspend authority or actual device sleep
 
 ## Required original-protocol red/green plan
 
-Every case below is unexecuted. First preserve the failing implementation and
-exact binaries; then qualify the adapter/bridge through installed processes and
-the actual selected compositor/Quickshell protocols. Synthetic actor injection
-can test local fencing but cannot substitute for these source boundaries.
+This table preserves the initial plan. Later owned-focus, installed-app and
+freshness reports qualify their separate source boundaries; the
+[native lock report](native-lock-admission.md) now qualifies denial before the
+original locker and healthy same-directory persistence. It does not qualify
+trusted restore, PAM, secure frames or an atomic external-transition barrier.
+For remaining cases, preserve the failing implementation and exact binaries before
+qualifying the boundary through installed processes and selected original protocols.
+Synthetic actor injection cannot substitute for original source execution.
 
 | Planned case | Failure to expose / required observation |
 | --- | --- |

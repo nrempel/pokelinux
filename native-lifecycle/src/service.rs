@@ -89,6 +89,7 @@ struct Connection {
     fd: OwnedFd,
     admin: bool,
     desktop: bool,
+    lock: bool,
     reading: Option<(u64, ReadStamp)>,
     read_stamp: Option<ReadStamp>,
     deadline: u64,
@@ -254,8 +255,11 @@ pub fn run_with_services(
     }
     let admin_path = runtime.join("admin.sock");
     let app_path = runtime.join("app.sock");
+    let lock_path = runtime.join("lock.sock");
     let admin = ipc::listener(&admin_path, 0o600)?;
     let app = ipc::listener(&app_path, 0o666)?;
+    // This route belongs to the lifecycle actor, independently of Messages.
+    let lock = ipc::listener(&lock_path, 0o666)?;
     let desktop_path = runtime.join("launch-messages.sock");
     let desktop = if messages.is_some() {
         Some(ipc::listener(&desktop_path, 0o666)?)
@@ -266,7 +270,7 @@ pub fn run_with_services(
         .as_ref()
         .map(|_| fs::symlink_metadata(&desktop_path).map(|m| (m.dev(), m.ino())))
         .transpose()?;
-    let socket_ids: Vec<_> = [&admin_path, &app_path]
+    let socket_ids: Vec<_> = [&admin_path, &app_path, &lock_path]
         .iter()
         .map(|p| fs::symlink_metadata(p).map(|m| (m.dev(), m.ino())))
         .collect::<io::Result<_>>()?;
@@ -547,6 +551,7 @@ pub fn run_with_services(
             let mut fds = vec![
                 PollFd::new(&admin, PollFlags::IN),
                 PollFd::new(&app, PollFlags::IN),
+                PollFd::new(&lock, PollFlags::IN),
             ];
             if let Some(fd) = &desktop {
                 fds.push(PollFd::new(fd, PollFlags::IN));
@@ -572,14 +577,18 @@ pub fn run_with_services(
                 Err(e) => return Err(e.into()),
             }
             drop(fds);
-            let mut listeners = vec![(&admin, true, false, 4), (&app, false, false, 12)];
+            let mut listeners = vec![
+                (&admin, true, false, false, 4),
+                (&app, false, false, false, 12),
+                (&lock, false, false, true, 2),
+            ];
             if let Some(fd) = &desktop {
-                listeners.push((fd, false, true, 2));
+                listeners.push((fd, false, true, false, 2));
             }
-            for (listener, is_admin, is_desktop, limit) in listeners {
+            for (listener, is_admin, is_desktop, is_lock, limit) in listeners {
                 if connections
                     .iter()
-                    .filter(|c| c.admin == is_admin && c.desktop == is_desktop)
+                    .filter(|c| c.admin == is_admin && c.desktop == is_desktop && c.lock == is_lock)
                     .count()
                     >= limit
                 {
@@ -588,7 +597,7 @@ pub fn run_with_services(
                 match net::accept_with(listener, SocketFlags::NONBLOCK | SocketFlags::CLOEXEC) {
                     Ok(fd) => {
                         net::sockopt::set_socket_passcred(&fd, true)?;
-                        if messages.is_some() && !is_admin && !is_desktop {
+                        if messages.is_some() && !is_admin && !is_desktop && !is_lock {
                             net::sockopt::set_socket_send_buffer_size(&fd, 8192)?;
                         }
                         connection_id = connection_id.checked_add(1).ok_or(io::ErrorKind::Other)?;
@@ -598,6 +607,7 @@ pub fn run_with_services(
                             fd,
                             admin: is_admin,
                             desktop: is_desktop,
+                            lock: is_lock,
                             reading: None,
                             read_stamp: None,
                             deadline: now.saturating_add(30_000_000_000),
@@ -805,7 +815,45 @@ pub fn run_with_services(
                     Err(e) if e.raw_os_error() == Some(4) => return true,
                     Err(_) => return false,
                 };
-                let reply = if connection.desktop {
+                let reply = if connection.lock {
+                    if cred.uid.as_raw() != crate::lock::SESSION_UID
+                        || serde_json::from_slice::<crate::lock::Request>(&bytes).is_err()
+                    {
+                        Reply::Denied
+                    } else if stopping {
+                        Reply::Unavailable
+                    } else {
+                        match authority.plan_lock(boottime_ns()) {
+                            Decision::Immediate(reply) => reply,
+                            Decision::Persist(_) if operation.is_some() || storage.busy() => {
+                                Reply::Unavailable
+                            }
+                            Decision::Persist(intent) => {
+                                match storage.start_write(intent.next.clone(), intent.until) {
+                                    Ok(token) => {
+                                        connection.awaiting = Some(token);
+                                        connection.deadline = intent.until;
+                                        operation = Some(Operation {
+                                            token,
+                                            connection: Some(connection.id),
+                                            until: intent.until,
+                                            intent: Some(intent),
+                                            retired: false,
+                                            shutdown: false,
+                                            camera: false,
+                                        });
+                                        return true;
+                                    }
+                                    Err(_) => {
+                                        authority.invalidate();
+                                        storage.stop();
+                                        Reply::Unavailable
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else if connection.desktop {
                     if cred.uid.as_raw() != crate::messages::DESKTOP_UID
                         || stopping
                         || serde_json::from_slice::<crate::messages::DesktopRequest>(&bytes)
@@ -1238,7 +1286,10 @@ pub fn run_with_services(
             std::thread::sleep(std::time::Duration::from_millis(2));
         }
     }
-    for (path, identity) in [&admin_path, &app_path].into_iter().zip(socket_ids) {
+    for (path, identity) in [&admin_path, &app_path, &lock_path]
+        .into_iter()
+        .zip(socket_ids)
+    {
         if fs::symlink_metadata(path).is_ok_and(|m| (m.dev(), m.ino()) == identity) {
             fs::remove_file(path)?;
         }

@@ -444,6 +444,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "pokelinux-camera"
+version = "0.1.0"
+
+[[package]]
 name = "pokelinux-inbox"
 version = "0.1.0"
 dependencies = [
@@ -465,6 +469,7 @@ dependencies = [
 name = "pokelinux-lifecycle"
 version = "0.1.0"
 dependencies = [
+ "pokelinux-camera",
  "pokelinux-kernel-identity",
  "rustix",
  "serde",

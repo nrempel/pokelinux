@@ -18,6 +18,34 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+Native lock entry now reaches the same Rust lifecycle actor through a fixed
+UID1000 lock-only socket. The installed wrapper invokes `lifecycle-lock`, which
+requires the actual root actor ACK within one original two-second BOOTTIME budget
+before executing the exact retained Omarchy action. The action, QML, PAM and 500 ms
+stabilization timer retain their original bytes. Initial ingress evidence remains
+8 host groups, 6 original ARM groups and 8 components against its frozen selection.
+It does not qualify secure frames, PAM, trusted unlocking or physical hardware.
+
+A later genuine original ARM RED exposed a fresh unchanged normal Qt Messages
+page after healthy actor Stop/wait and a changed compositor/display/Source epoch
+using the same sealed policy directory while the original QML remained T-held.
+Required `Durable.lock_pending` now revokes memory authority first, then requires
+owned bounded storage file/rename/directory sync before a successful ACK. It is
+restored before Ready; Source `locked:false` and root admin `locked:false` cannot
+clear it. Monotonic `Gate::Lock` completion tolerates irrelevant focus revisions.
+Fresh unlocked sessions require an explicit root-owned fresh storage lifecycle;
+there is no unlock/reset API or old-schema compatibility. Later 6 host groups,
+5 original ARM groups and 8 components pass separately; Root independently
+verified 1,375 private bindings. Whole-actor SIGKILL establishes unclean-history
+restart refusal, not successful crash recovery. Every failed build/runtime/component
+epoch remains recorded. The latest format/Clippy and exact Cargo component ELF
+pass; two dependent Cargo.lock graphs include the already selected native-camera
+dependency, without camera plus new-lock merged runtime evidence. Source remains
+`610aa` with its 100 ms lease, and same-Source continuation/old-compositor fresh-endpoint
+reload, production install and trusted restoration remain unavailable. See
+[lock admission](native-lock-admission.md), [public ingress proof](../tools/native-session-lock-admission/integration-proof.json)
+and [public restart proof](../tools/native-session-lock-admission/restart-proof.json).
+
 The native camera actor/process route now qualifies17 actual ARM Binder groups
 after a genuine missing-route RED and an actual Supervisor-channel EAGAIN revoke
 RED. Durable history is separate from the retained current stamp; every actual

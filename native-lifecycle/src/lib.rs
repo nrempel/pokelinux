@@ -4,6 +4,7 @@ pub mod authority;
 pub mod camera;
 pub mod display;
 pub mod ipc;
+pub mod lock;
 pub mod messages;
 pub mod service;
 pub mod storage;

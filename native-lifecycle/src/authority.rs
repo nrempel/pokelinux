@@ -53,6 +53,7 @@ struct Permit {
 }
 pub(crate) enum Gate {
     Grant,
+    Lock,
     Admit {
         app: String,
         generation: u64,
@@ -113,7 +114,7 @@ impl Authority {
             session: None,
             session_source: None,
             session_failed: false,
-            root_lock_intent: false,
+            root_lock_intent: true,
             reconcile_after: 0,
             session_view: None,
         })
@@ -265,8 +266,30 @@ impl Authority {
         Ok(())
     }
     pub(crate) fn activate(&mut self, durable: Durable) {
+        // Load the pending intent before ready can authorize any Source fact.
+        self.root_lock_intent = durable.lock_pending;
+        self.locked |= durable.lock_pending;
         self.durable = durable;
         self.ready = true;
+    }
+    pub(crate) fn plan_lock(&mut self, now: u64) -> Decision {
+        // Revoke current authority before considering owned storage capacity.
+        // Refusal/uncertainty still denies; no successful ACK precedes a sync.
+        if self.lifecycle(Some(true), None, None).is_err() || !self.ready() {
+            return Decision::Immediate(Reply::Unavailable);
+        }
+        if self.durable.lock_pending {
+            return Decision::Immediate(Reply::Ok);
+        }
+        let mut next = self.durable.clone();
+        next.lock_pending = true;
+        Decision::Persist(WriteIntent {
+            next,
+            until: now.saturating_add(1_000_000_000),
+            policy: self.policy,
+            lifecycle: self.lifecycle,
+            gate: Gate::Lock,
+        })
     }
     pub(crate) fn invalidate(&mut self) {
         self.degraded = true;
@@ -386,13 +409,13 @@ impl Authority {
         self.permits.clear();
         if let Some(v) = locked {
             if self.session_required {
-                self.root_lock_intent = v;
-                self.locked = v
+                self.root_lock_intent = v || self.durable.lock_pending;
+                self.locked = self.root_lock_intent
                     || self
                         .fresh_session(crate::boottime_ns())
                         .is_none_or(|s| s.locked);
             } else {
-                self.locked = v;
+                self.locked = v || self.durable.lock_pending;
             }
         }
         if let Some(v) = suspended {
@@ -707,6 +730,17 @@ impl Authority {
         }
         // A known durable commit is retained as history, even when current publication fails.
         self.durable = intent.next;
+        if matches!(intent.gate, Gate::Lock) {
+            // Source focus/background revisions may advance during the sync.
+            // They cannot weaken this monotonic lock; no effect stamp is issued.
+            self.root_lock_intent = true;
+            self.locked = true;
+            if self.ready() && now < intent.until {
+                return Reply::Ok;
+            }
+            self.invalidate();
+            return Reply::Unavailable;
+        }
         if !self.ready()
             || now >= intent.until
             || self.policy != intent.policy
@@ -716,6 +750,7 @@ impl Authority {
             return Reply::Unavailable;
         }
         match intent.gate {
+            Gate::Lock => unreachable!("monotonic lock completion handled above"),
             Gate::Grant => Reply::Ok,
             Gate::Admit {
                 app,

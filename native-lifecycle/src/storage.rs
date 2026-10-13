@@ -28,6 +28,9 @@ pub(crate) struct Grant {
 pub(crate) struct Durable {
     pub grants: Vec<Grant>,
     pub receipts: Vec<String>,
+    /// Native lock admission survives actor and display/source replacement.
+    /// Only an explicitly fresh root-owned session store starts without it.
+    pub lock_pending: bool,
 }
 pub(crate) struct Disk {
     directory: PathBuf,
@@ -130,6 +133,9 @@ impl Disk {
         let mut policy_hash = hash(b"");
         let path = directory.join("policy.json");
         let durable = match std::fs::symlink_metadata(&path) {
+            // This is root-owned storage bootstrap, never an unlocked Source
+            // observation. Existing owner seals still bind exact policy bytes;
+            // deleting an admitted policy cannot qualify a fresh session here.
             Err(e) if e.kind() == io::ErrorKind::NotFound => Durable::default(),
             Err(e) => return Err(e),
             Ok(m) => {
@@ -731,6 +737,7 @@ mod tests {
                 allowed: true,
             }],
             receipts: vec![],
+            lock_pending: false,
         };
         disk.replace(&state).unwrap();
         disk.close_clean().unwrap();

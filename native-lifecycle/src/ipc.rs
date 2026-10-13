@@ -95,10 +95,18 @@ pub fn call<T: serde::Serialize, R: serde::de::DeserializeOwned>(
     fd: impl AsFd,
     request: &T,
 ) -> io::Result<R> {
-    let bytes = serde_json::to_vec(request)?;
     let deadline = boottime_ns()
         .checked_add(2_000_000_000)
         .ok_or(io::ErrorKind::InvalidInput)?;
+    call_until_from(fd, request, deadline, None)
+}
+pub(crate) fn call_until_from<T: serde::Serialize, R: serde::de::DeserializeOwned>(
+    fd: impl AsFd,
+    request: &T,
+    deadline: u64,
+    peer: Option<UCred>,
+) -> io::Result<R> {
+    let bytes = serde_json::to_vec(request)?;
     loop {
         if boottime_ns() >= deadline {
             return Err(io::ErrorKind::TimedOut.into());
@@ -123,7 +131,11 @@ pub fn call<T: serde::Serialize, R: serde::de::DeserializeOwned>(
                 if boottime_ns() >= deadline {
                     return Err(io::ErrorKind::TimedOut.into());
                 }
-                if cred.uid.as_raw() != 0 {
+                if cred.uid.as_raw() != 0
+                    || peer.is_some_and(|p| {
+                        p.pid != cred.pid || p.uid != cred.uid || p.gid != cred.gid
+                    })
+                {
                     return Err(io::ErrorKind::PermissionDenied.into());
                 }
                 return Ok(serde_json::from_slice(&data)?);
