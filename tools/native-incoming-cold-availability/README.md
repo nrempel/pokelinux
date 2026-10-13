@@ -1,0 +1,11 @@
+# Cold incoming Qt availability investigation
+
+This diagnostic selects the immutable full-matrix v2 core (518954b) and actual installed normal Qt app. The previous v1/v2 full matrices remain failed. Their TimedOut events occurred 111.463790 ms and 110.721490 ms after the last accepted sample. The observer checks cached expiry before recvmsg; those records alone cannot distinguish absent publications from a stalled actor with fresh frames queued.
+
+New fixed-size private seqpacket diagnostics report actual observer poll begin/end/previous-begin and result, and actual original-compositor emit sampling/send begin/end/result. Both channels are nonblocking, close on exec and independently drained with kernel PID/UID credential validation. Trace backpressure only increments a drop counter; it never changes source frames, Source state, return values, the original 25 ms timer, or the unchanged 100 ms BOOTTIME source lease. A diagnostic adapter ELF is compiled against the installed exact original headers in each isolated guest and is explicitly distinct from the published production adapter.
+
+The desired real regression, before any availability fix, is: after actual original focus and independent grant expose incoming history in the installed normal Qt app, close/reap a held readonly incarnation while preserving the receiving writer; launch a fresh normal Qt incarnation through the current actor; require an accepted current-source focus fact for that new PID and actual history presentation through the unchanged lease. A terminal source failure leaves this episode unqualified and is recorded. No source resurrection or deadline extension is permitted.
+
+A separately labeled warm-focus control uses the existing app after the same initial real source/data/grant gates. One perturbed failure alone does not establish causality. This lane diagnoses availability; it changes no production API, UI or policy and claims no fix.
+
+All VM inputs use the existing immutable receiver backing read-only with snapshot=on, shared input lock and exclusive per-label output lock. Each exact owned container has no NIC, 6 CPU / 8 GiB cap and 4 guest vCPUs. No new image clone or physical device is used.

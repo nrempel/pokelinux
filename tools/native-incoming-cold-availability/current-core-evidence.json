@@ -1,0 +1,110 @@
+{
+  "phase": "actual_current_baseline_before_observer_queue_fix",
+  "selected_core_head": "10ce2f19fde19c5a9eedbfccb01de45a1941dca7",
+  "build": "current-core-cold-timing-build-1",
+  "epoch": "current-core-cold-reopen-timing-arm-red-1",
+  "legacy_publication_commit": "9333bc3",
+  "legacy_results_and_driver_unchanged": true,
+  "fixture_required_methods": "real Observer stop/occupied delegation",
+  "production_source_edited": false,
+  "source_revival_permitted": false,
+  "source_budget_ns": 100000000,
+  "source_timer_ms": 25,
+  "actual_desired_assertion_failed": true,
+  "prerequisite_groups_passed": 6,
+  "diagnostic_controller_exit": 0,
+  "result_passed": false,
+  "all_tracked_children_reaped": true,
+  "cleanup_entries": 46,
+  "core_source_hashes": {
+    "native-session/src/lib.rs": "3f2e9d07b3163dcc057b85bef6d1f353f10b9f207558d5d41386532970da7bb2",
+    "native-lifecycle/src/service.rs": "23b840cc417ec96820500675844dcf544e1c58c017201c2374f6392f962ec079",
+    "native-lifecycle/src/session.rs": "be4989639a50750d8901f0ce1c55fdd10695bf23b5f0934c137c1ee6d47c08ad",
+    "native-messages/src/worker.rs": "d30150ff9bc2f7e3bf461af53f9f7e4dc16e77255c20a984ca73583d41866a8a"
+  },
+  "build_selected_file_count": 113,
+  "count_scope": "all frozen selected inputs including tools/tests/docs; not compiled source count or earlier51 selection",
+  "bins": {
+    "lifecycle-launcher": "2745c055c5f4f8a02215651815118926addcd44aa6f2c2c24990f6cfaca629a4",
+    "messages-session-cold-current-fixture": "ee507df438139340b2b59da654510f650c0c4166460a8776c3a80cdb351240c8"
+  },
+  "diagnostic_adapter_elf_sha256": "874f09a612b5c17def76e4e3ad4e079dcca9d07275ab462fe8ed22857cbc46ac",
+  "normal_qt_elf_sha256": "4aa50f980eab1100637d582a2752090f7545e1eb30630888753dfb9a7d2512c8",
+  "actual_new_app_pid": 466,
+  "timing_records": {
+    "publisher": 319,
+    "observer": 1919
+  },
+  "trace_drops": {
+    "publisher": 0,
+    "observer": 0
+  },
+  "kernel_timing_credentials_validated": {
+    "publisher": [
+      342,
+      1000,
+      1000
+    ],
+    "observer": [
+      394,
+      0,
+      0
+    ]
+  },
+  "failure_poll": {
+    "began_ns": 59820465363,
+    "ended_ns": 59820785751,
+    "previous_begin_ns": 59719389858,
+    "error_code": 1,
+    "last_accepted_sample_ns": 59702361286,
+    "interval_since_sample_ns": 118104077
+  },
+  "actual_live_packets_sent_before_failure": [
+    [
+      2,
+      317,
+      59727800405,
+      59727941399,
+      59728116326,
+      168,
+      0,
+      0
+    ],
+    [
+      2,
+      318,
+      59819378181,
+      59819574267,
+      59819677660,
+      168,
+      0,
+      0
+    ]
+  ],
+  "ultimate_shared_pause_cause": "unresolved; diagnostic instrumentation and scheduler/graphics availability limits remain explicit",
+  "no_filtered_realm_or_SDK_claim": true,
+  "private_artifact_hashes": {
+    "selection.json": "1ad7ba3aed1f8922f4b67d769c4b32451bac1e689ab11c7e5c7dac9ae8c92c53",
+    "result.json": "b150099d1e5b1cb170fb11c3720a1dc80efffb8f0d09524077583c3c54f52477",
+    "timings.json": "95e6a229c5c42761accbd2e8bb841ec72439bd2a2c711857f31d821eb9ab390d",
+    "guest-timeline.json": "6a38ac5f764ee64a941e79b1a94b16b49b7810e47c69a7fd69882480da15cd5b",
+    "timing-analysis.json": "007cfad8448fd63a73cabed224738185a08b0bd039a23805cbfd7802b61702d5",
+    "provider-stop-timing-analysis.json": "bf3be9cf4af30af12f5f8419d142be32fde2599686e0ce9eb01a18af28abff28",
+    "source/guest-current.py": "5fab7a9e2c675c7fee280bde82076b1618735da00fb0082090101a1bb41bfefe",
+    "source/run-current.py": "98e4acb31856b1a3cfa753d96a6e00c2e39de68b7c91aac1f9b6c7aee34508da",
+    "source/adapter.cpp": "1073b3dc5652131dd668b3866c207da5ec71e95d19b55e7fa577ddfe9f140535"
+  },
+  "build_selection_sha256": "d51b8bfe10ad3149daf1495604ad653ecabb2910634052ed5bbb2a9129655a55",
+  "static_elf_metadata_sha256": "da6d673465cca503e5e94eb981e79030d5096aecc7213dbc80792b6bbbdc9a51",
+  "authored_files": {
+    "build-current.py": "922851b2a5ef6f0b77b0f7e7f002f5844658c079c995f865babdcaadefb1f990",
+    "run-current.py": "98e4acb31856b1a3cfa753d96a6e00c2e39de68b7c91aac1f9b6c7aee34508da",
+    "guest-current.py": "5fab7a9e2c675c7fee280bde82076b1618735da00fb0082090101a1bb41bfefe",
+    "analyze-current.py": "63d19e89114bb36a10040becf0dbc831515a48da1d66e1bef52d9bfeeb4b11a5",
+    "current-fixture/Cargo.toml": "25dac10beeb4763d9820f5028c2f7eeeddb57ebbac056e3ce0bf0e60f42d705f",
+    "current-fixture/Cargo.lock": "546e8f93032e68663903121b8bfb632ee63edded7e88074387c7311897d8f859",
+    "current-fixture/src/bin/service.rs": "db295e9b298faf06a553f777dcea4b92a8b02a9ed00c73416ab8280c7849d395",
+    "current-core-notes.md": "39fe41a31a2b5d8711f8f937a782e6eec37a76c23e1365cad0d62c0088509deb",
+    "current-core-visual-review.json": "6d8d7e2efa288e7f4f9017e96d22190f2454c651c9a6bfdd5a879aa38d4a1e7c"
+  }
+}

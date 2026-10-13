@@ -1,0 +1,171 @@
+{
+  "scope": "availability discrimination before any production fix; old frozen actor/Observer and actual incoming/normal Qt",
+  "core_head": "518954b112dbd344584f29bcb6d9e503dc1800ac",
+  "unchanged_core_files_compared": {
+    "native-lifecycle": 12,
+    "native-messages": 13,
+    "native-session": 6,
+    "native-kernel-identity": 8,
+    "native-inbox": 5,
+    "native-messaging": 22
+  },
+  "build": "cold-timing-build-2",
+  "diagnostic_service_elf_sha256": "f288ac3c1c47321315aadb1eadd87b8a1c9e145f4089b11767acf1629ed570d8",
+  "unchanged_lifecycle_launcher_elf_sha256": "d7d05cea88594e7315cbe104f22249b1246b08926030cd2ba94442bc159b7433",
+  "build_selection_sha256": "aac640a859b7596a828fc0d0cbdae2c050809d9cacd0e8f2749ec81894dadceb",
+  "static_elf_metadata_sha256": "9cb7f5b7de340e8c4a056eb9eba8f86772912adb0a6e94ec6c9a40f2ae38ee5e",
+  "source_budget_ns": 100000000,
+  "source_period_ms": 25,
+  "source_revival_permitted": false,
+  "availability_fix_applied": false,
+  "observed_mechanism": "cached source expiry is rejected before draining two authentic original-compositor packets whose original 100ms leases were still live",
+  "ultimate_stall_cause": "unresolved; concurrent publisher and actor scheduling pause, diagnostic perturbation explicitly qualified",
+  "historical_full_matrices_remain_failed": true,
+  "epochs": [
+    {
+      "label": "cold-reopen-timing-arm-v1",
+      "diagnostic_only": true,
+      "passed": false,
+      "prerequisite_groups": 6,
+      "cleanup_entries": 48,
+      "all_tracked_children_reaped": true,
+      "timing_records": {
+        "publisher": 316,
+        "observer": 1965
+      },
+      "trace_drops": {
+        "publisher": 0,
+        "observer": 0
+      },
+      "kernel_timing_credentials_validated": {
+        "publisher": [
+          349,
+          1000,
+          1000
+        ],
+        "observer": [
+          396,
+          0,
+          0
+        ]
+      },
+      "maximum_source_epoch_poll_gap_ns": 102027265,
+      "maximum_publisher_sample_gap_ns": 93797267,
+      "first_failure_poll": {
+        "began_ns": 102123429256,
+        "ended_ns": 102123778088,
+        "previous_begin_ns": 102021401991,
+        "error_code": 1,
+        "last_accepted_sample_ns": 102003506862,
+        "interval_since_sample_ns": 119922394
+      },
+      "fresh_actual_source_packets_before_failure": [
+        [
+          2,
+          314,
+          102028788913,
+          102028876818,
+          102028931420,
+          169,
+          0,
+          0
+        ],
+        [
+          2,
+          315,
+          102122586180,
+          102122772238,
+          102122886261,
+          169,
+          0,
+          0
+        ]
+      ],
+      "diagnostic_adapter_elf_sha256": "874f09a612b5c17def76e4e3ad4e079dcca9d07275ab462fe8ed22857cbc46ac",
+      "private_artifact_hashes": {
+        "selection.json": "c58f4d5be2226a665082a1ccf23d8bcd8be018c25a88f8a1116a83762faa9c16",
+        "result.json": "84880362c9155c0194d844af46eeaee3b139dfb97e0e79b9da22cba5fb8808a6",
+        "timings.json": "c44bce855631fb875f1a3098a4eb5069b6b69a19042d25a85e19c0fa7d5b4336",
+        "guest-timeline.json": "d65d26cb1808b05fa24634fc3f8ff0cf15e8b34e4923d6f5ce72523af2f577e5",
+        "timing-analysis.json": "3656617150644426d21a97337c5c61734186e48c2421d4111489cbcde173a7be",
+        "source/guest.py": "862d8da821d53b01c882eed8ffe223a4787e6b1e6c15f01b872778080a402ccf",
+        "source/run.py": "aaa96d33ce7dad93ad425cbffa4aa8b9755bdc49c0fbc9ea6b4ec4f08f1d09da",
+        "source/adapter.cpp": "1073b3dc5652131dd668b3866c207da5ec71e95d19b55e7fa577ddfe9f140535"
+      },
+      "generated_adapter_recovered_by_byte_identical_independent_compile": {
+        "retained_label": "warm-focus-timing-arm-v1",
+        "path": "diagnostic-adapter.so",
+        "sha256": "874f09a612b5c17def76e4e3ad4e079dcca9d07275ab462fe8ed22857cbc46ac"
+      }
+    },
+    {
+      "label": "warm-focus-timing-arm-v1",
+      "diagnostic_only": true,
+      "passed": true,
+      "prerequisite_groups": 6,
+      "cleanup_entries": 43,
+      "all_tracked_children_reaped": true,
+      "timing_records": {
+        "publisher": 289,
+        "observer": 1702
+      },
+      "trace_drops": {
+        "publisher": 0,
+        "observer": 0
+      },
+      "kernel_timing_credentials_validated": {
+        "publisher": [
+          348,
+          1000,
+          1000
+        ],
+        "observer": [
+          395,
+          0,
+          0
+        ]
+      },
+      "maximum_source_epoch_poll_gap_ns": 22880573,
+      "maximum_publisher_sample_gap_ns": 31911124,
+      "first_failure_poll": null,
+      "fresh_actual_source_packets_before_failure": [],
+      "diagnostic_adapter_elf_sha256": "874f09a612b5c17def76e4e3ad4e079dcca9d07275ab462fe8ed22857cbc46ac",
+      "private_artifact_hashes": {
+        "selection.json": "4eb8b440ce65396b883a8d797fb891da54c38a8692b13b17e8e2d7d1937d6266",
+        "result.json": "a8c1a1814c50dba9afa83fea06d39f090253cf04ce97c80789f5a11631227d7f",
+        "timings.json": "88a61b18e6e3ba7ebf2597fe067416f037319c961cddb5be902d5a7da8ed15ab",
+        "guest-timeline.json": "50688a6e7ef97684f1a4fbf5f15eb1fbce1570465e8a9a169b2e32c582b8f229",
+        "timing-analysis.json": "e2768a9860c5224ca58bfcc8f8488503f7c917ac082a2c339e7765873b5cd8f0",
+        "source/guest.py": "af6677368b1a4b79ee8615a732d59003ba5965d58313997274ea14b09fc25432",
+        "source/run.py": "ac76e5aacd20b4b065a97acbea1b78f2e368f8e77a4d98a284ae0a9edc7bd599",
+        "source/adapter.cpp": "1073b3dc5652131dd668b3866c207da5ec71e95d19b55e7fa577ddfe9f140535"
+      }
+    }
+  ],
+  "resources": {
+    "cpu_cap": 6,
+    "memory_cap": "8g",
+    "guest_vcpus": 4,
+    "network": "none",
+    "existing_immutable_snapshot_backing": true,
+    "new_clones": 0,
+    "shared_input_lock": true,
+    "exclusive_label_output_lock": true
+  },
+  "authored_files": {
+    "README.md": "506faa1161cedf4e697574f6962841a1b4ac0153f08617c96c306c7bb04ee032",
+    "adapter.cpp": "1073b3dc5652131dd668b3866c207da5ec71e95d19b55e7fa577ddfe9f140535",
+    "analyze.py": "8af58d9ba2f1d959b86647251e6135ba006c9e8d8ae9d4d35e0a431364a5d9a4",
+    "baseline-evidence.json": "76423413a22a5c17d58f345604530caca841a4e2fd487652b48e6db848f5ba6f",
+    "boot.sh": "4d5a0bb533d2d6ced3a148e7fc665f3c3d231102a65a2b9dd3d031eb25af178d",
+    "build.py": "368864f1bc2c3f217883b676789dd8429221ffde865a26e08c299791f5e55609",
+    "fixture/Cargo.lock": "784d3164b0f95745c4c80cafd99f6a60805cba2f93a9e2733bda1636e1cbc4f9",
+    "fixture/Cargo.toml": "49855e7b07726ebb639d94b39ba9aef95e232ef9f023796c40e67e98249cc464",
+    "fixture/src/bin/service.rs": "7996922180fae53ca9fe5196549004923415d5062cde887433446dccf5ccfc4e",
+    "guest.py": "af6677368b1a4b79ee8615a732d59003ba5965d58313997274ea14b09fc25432",
+    "run.py": "ac76e5aacd20b4b065a97acbea1b78f2e368f8e77a4d98a284ae0a9edc7bd599",
+    "source-call-path.json": "368645ff126413e58e4bd34879236d18f69c2e0b693f9a1710a6dc7163884314",
+    "test-lane-notes.md": "1c7b3d6b234c6681710a8888a80c08b61cb2f53c899bfad2e29ca0ef56c3de8b",
+    "visual-review.json": "ad9b82a4768d9772de3bf94da000beeb91229e68a9f35b5d6900605c697a80bb"
+  }
+}

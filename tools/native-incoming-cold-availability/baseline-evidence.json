@@ -1,0 +1,89 @@
+{
+  "phase": "before_availability_fix",
+  "scope": "preserved uninstrumented full-matrix failure evidence; fresh diagnostics are independent",
+  "production_fix_applied": false,
+  "sample_budget_ns": 100000000,
+  "source_revival_permitted": false,
+  "failures": [
+    {
+      "label": "incoming-session-composed-green-arm-v1",
+      "passed": false,
+      "all_tracked_children_reaped": true,
+      "source_failure": {
+        "event": "source_failed",
+        "kind": "TimedOut",
+        "last_sampled_at_ns": 59743989133,
+        "maximum_sample_gap_ns": 63551576,
+        "observed_at_ns": 59855452923
+      },
+      "cache_age_at_observation_ns": 111463790,
+      "accepted_maximum_sample_gap_ns": 63551576,
+      "new_current_focus_verified": false,
+      "core_head": "518954b112dbd344584f29bcb6d9e503dc1800ac",
+      "selection_sha256": "636f426f18e5cb5347fcacc4244210501b0bbea6b374646375c57c6df8fc6dd7",
+      "result_sha256": "9bc1657056e2e5cb8a05e82200b51a8cb4952bfb6190f77a5b2209ffd2cd916a",
+      "availability_failure": null
+    },
+    {
+      "label": "incoming-session-composed-green-arm-v2",
+      "passed": false,
+      "all_tracked_children_reaped": true,
+      "source_failure": {
+        "event": "source_failed",
+        "kind": "TimedOut",
+        "last_sampled_at_ns": 59340165114,
+        "maximum_sample_gap_ns": 64103446,
+        "observed_at_ns": 59450886604
+      },
+      "cache_age_at_observation_ns": 110721490,
+      "accepted_maximum_sample_gap_ns": 64103446,
+      "new_current_focus_verified": false,
+      "core_head": "518954b112dbd344584f29bcb6d9e503dc1800ac",
+      "selection_sha256": "bd2886c25a40fa840d293a1d6fce1fd6a0131c22ee4d4ca0d450637ad74349de",
+      "result_sha256": "06db43869e571ea8ed9acb54d94b8c0c571025b332a98b9c3c8a7a7216a5efec",
+      "availability_failure": {
+        "app_pid": 457,
+        "source_failure": {
+          "event": "source_failed",
+          "kind": "TimedOut",
+          "last_sampled_at_ns": 59340165114,
+          "maximum_sample_gap_ns": 64103446,
+          "observed_at_ns": 59450886604
+        },
+        "snapshot": {
+          "result": "snapshot",
+          "principals": 1,
+          "permits": 0,
+          "receipts": 0,
+          "locked": true,
+          "suspended": false,
+          "degraded": false,
+          "ready": true,
+          "storage_occupied": true,
+          "storage_busy": false
+        },
+        "messages": {
+          "result": "messages_storage",
+          "incoming_started": 3,
+          "incoming_raw_committed": 3,
+          "incoming_completed": 3,
+          "receiving": true,
+          "incoming_failure": null,
+          "occupied": true,
+          "busy": false,
+          "available": true,
+          "pending_publications": 0,
+          "backpressure": 0
+        }
+      }
+    }
+  ],
+  "observer_semantics": {
+    "cached_expiry_checked_before_recvmsg": true,
+    "cached_expiry_error": "TimedOut",
+    "stale_packet_validation_error": "InvalidData",
+    "accepted_snapshot_gap_does_not_measure_all_compositor_sends": true,
+    "original_publisher_period_ms": 25,
+    "original_publisher_event_loop": "Wayland compositor main event loop shared with backend/frame/render callbacks"
+  }
+}

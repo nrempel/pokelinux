@@ -1,0 +1,18 @@
+{
+  "method": "Visual inspection of actual original-compositor screencopy frames",
+  "epoch": "patched-core-cold-full-matrix-arm-green-1",
+  "normal_installed_production_qt": true,
+  "scope": "conversation visibility and future access denial; no literal body display, UI queue withdrawal or secure presentation claim",
+  "frames": {
+    "green-focused-independent-grant-history.png": "5a3b29d6059035667af39ec918e83925d89847736e397f912fd98c6e9745ac53",
+    "green-grant-revoked.png": "4364bfd4eb2e3dca2e7769756c2abd34a705fc3832c035dd4e0a084a9bb0a3e9",
+    "green-reopened-same-receiver-history.png": "c4fa0cfbd89ff7a57c0987ac97157cc6a5a26c60348a39acc6e074df6b608a96",
+    "green-terminal-session-loss-future-incoming-denied.png": "9708d4424d95ac4e4a45a9a9aa3f4a62fc83754316b625386018123c13d7a881"
+  },
+  "observations": {
+    "initial_current_focus_grant": "Messages +15550100 conversation visible",
+    "grant_revoked": "Messages access denied",
+    "fresh_reopened_current_app": "Messages +15550100 conversation visible",
+    "terminal_source_loss": "Messages unavailable; conversation absent"
+  }
+}

@@ -4,9 +4,18 @@ The new isolated composition executes authored frozen messaging V3 callbacks on
 an actual ARM64 Binder kernel through the existing sole incoming writer, current
 owned-focus session observer/lifecycle actor, independent readonly child and
 unchanged normal UID11010 Qt Messages ELF. Six narrow checks pass in each of two
-composed epochs. **The full close/reopen/source-unload/death matrix fails:** the
+historical composed epochs. **Their full close/reopen/source-unload/death matrices fail:** the
 original 100ms source lease expires while reopening Qt. This is an offline
 availability gate, not hardware-only work and not a complete receive/UI result.
+
+A later [bounded source-queue correction](native-session-freshness-chain.md) now
+passes a separately selected nine-group full ARM matrix, including cold reopen,
+held-reader source loss and actual peer death. An exact `10ce2f1` diagnostic RED
+first demonstrates fresh authenticated packets queued before cached expiry.
+The corrected replay uses that immutable base plus the reviewed observer patch,
+with the other65 core inputs and normal Qt unchanged. The100ms lease remains;
+a99.2ms observed publisher gap leaves broad availability open. These new results
+do not relabel the historical failures described below.
 
 The chronological red ran before the new composition fixture existed. A real
 callback committed one exact ID to both raw receipts and inbox while no app

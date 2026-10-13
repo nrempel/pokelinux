@@ -1,0 +1,98 @@
+diff --git a/native-session/src/lib.rs b/native-session/src/lib.rs
+index 8747eec..09c03a2 100644
+--- a/native-session/src/lib.rs
++++ b/native-session/src/lib.rs
+@@ -103,13 +103,6 @@ impl Observer {
+         if !living(&self.alive).unwrap_or(false) {
+             return self.fail(io::ErrorKind::NotConnected);
+         }
+-        if self
+-            .current
+-            .as_ref()
+-            .is_some_and(|f| !Self::live_sample(f, boottime_ns()))
+-        {
+-            return self.fail(io::ErrorKind::TimedOut);
+-        }
+         let mut count = 0;
+         loop {
+             let packet = match receive(self.fd.as_ref().ok_or(io::ErrorKind::NotConnected)?) {
+@@ -145,6 +138,16 @@ impl Observer {
+                     .focus
+                     .as_ref()
+                     .is_some_and(|f| f.pid == 0 || f.pid > i32::MAX as u32)
++                // Timely authentic successors can already be queued when the
++                // actor resumes. Require an uninterrupted, monotonic sample
++                // chain before replacing its cached sample; never bridge a gap.
++                || self.current.as_ref().is_some_and(|previous| {
++                    frame.sampled_at_ns < previous.sampled_at_ns
++                        || previous
++                            .sampled_at_ns
++                            .checked_add(SAMPLE_BUDGET_NS)
++                            .is_none_or(|until| frame.sampled_at_ns > until)
++                })
+                 || !Self::live_sample(&frame, boottime_ns())
+             {
+                 return self.fail(io::ErrorKind::InvalidData);
+@@ -199,13 +202,24 @@ impl Observer {
+         self.revision
+     }
+     /// A living source alone never extends the original sample's absolute deadline.
+-    pub fn snapshot(&self) -> Option<&Frame> {
+-        if self.failed || !living(&self.alive).unwrap_or(false) {
++    /// Observed expiry/death is terminal, including before a later poll.
++    pub fn snapshot(&mut self) -> Option<&Frame> {
++        if self.failed {
++            return None;
++        }
++        if !living(&self.alive).unwrap_or(false) {
++            let _ = self.fail(io::ErrorKind::NotConnected);
+             return None;
+         }
+-        self.current
++        if self
++            .current
+             .as_ref()
+-            .filter(|f| Self::live_sample(f, boottime_ns()))
++            .is_some_and(|f| !Self::live_sample(f, boottime_ns()))
++        {
++            let _ = self.fail(io::ErrorKind::TimedOut);
++            return None;
++        }
++        self.current.as_ref()
+     }
+ }
+ 
+@@ -277,17 +291,21 @@ impl pokelinux_lifecycle::session::Provider for Observer {
+     }
+     fn poll(&mut self) -> io::Result<Option<pokelinux_lifecycle::session::Snapshot>> {
+         Observer::poll(self)?;
+-        Ok(self
+-            .snapshot()
+-            .map(|frame| pokelinux_lifecycle::session::Snapshot {
+-                source: frame.source.clone(),
+-                revision: self.revision,
+-                sequence: frame.sequence,
+-                sampled_at_ns: frame.sampled_at_ns,
+-                // The original sample is checked before it reaches this conversion.
+-                until: frame.sampled_at_ns + SAMPLE_BUDGET_NS,
+-                locked: frame.locked,
+-                focus: self.focus.clone(),
+-            }))
++        let frame = self.snapshot().cloned();
++        if self.failed {
++            // Expiry between the bounded drain and this final observation is
++            // terminal for resource-owning providers as well as data admission.
++            return Err(io::ErrorKind::NotConnected.into());
++        }
++        Ok(frame.map(|frame| pokelinux_lifecycle::session::Snapshot {
++            source: frame.source.clone(),
++            revision: self.revision,
++            sequence: frame.sequence,
++            sampled_at_ns: frame.sampled_at_ns,
++            // The original sample is checked before it reaches this conversion.
++            until: frame.sampled_at_ns + SAMPLE_BUDGET_NS,
++            locked: frame.locked,
++            focus: self.focus.clone(),
++        }))
+     }
+ }

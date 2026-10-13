@@ -243,7 +243,7 @@ fn invalid_source_stays_failed_even_after_valid_packet() {
 }
 #[test]
 fn unknown_source_has_no_positive_state() {
-    let (_p, o) = start(0);
+    let (_p, mut o) = start(0);
     assert!(o.snapshot().is_none());
 }
 #[allow(dead_code)]
@@ -444,4 +444,148 @@ fn source_death_watch_must_name_the_actual_expected_live_source() {
         observer.is_err(),
         "a different living task was accepted as the source death watch"
     );
+}
+
+fn await_boottime(target: u64) {
+    while boottime_ns() < target {
+        std::thread::sleep(Duration::from_millis(1));
+    }
+}
+
+fn queue_timely_successor(peer: &mut Peer, sampled_at: u64, mode: &str) -> u64 {
+    await_boottime(sampled_at + 60_000_000);
+    let sent_after = boottime_ns();
+    peer.command(mode);
+    assert!(
+        boottime_ns() < sampled_at + pokelinux_session::SAMPLE_BUDGET_NS,
+        "fixture scheduling missed the actual original source lease"
+    );
+    // The sender samples real BOOTTIME after receiving this command and sends
+    // before acknowledging it. No frame time is authored in these positives.
+    await_boottime(sampled_at + pokelinux_session::SAMPLE_BUDGET_NS + 10_000_000);
+    assert!(
+        boottime_ns() < sent_after + pokelinux_session::SAMPLE_BUDGET_NS,
+        "actual queued successor itself expired before the test poll"
+    );
+    sent_after
+}
+
+#[test]
+fn timely_actual_queued_heartbeat_is_drained_before_cached_expiry() {
+    let (mut peer, mut observer) = start(0);
+    peer.command("valid");
+    observer.poll().unwrap();
+    let initial = observer.snapshot().unwrap().clone();
+    let original_until = initial.sampled_at_ns + pokelinux_session::SAMPLE_BUDGET_NS;
+    let successor_after = queue_timely_successor(&mut peer, initial.sampled_at_ns, "heartbeat");
+    assert!(boottime_ns() >= original_until);
+    observer
+        .poll()
+        .expect("a real timely fresh queued heartbeat must precede expiry detection");
+    let current = observer.snapshot().unwrap();
+    assert_eq!(current.sequence, 2);
+    assert!(current.sampled_at_ns >= successor_after);
+    assert!(current.sampled_at_ns < original_until);
+    assert_eq!(observer.revision(), 1);
+    // A new source sample never renews a deadline already captured by old work.
+    assert!(boottime_ns() >= original_until);
+}
+
+#[test]
+fn timely_actual_queued_lock_cycle_preserves_every_semantic_revision() {
+    let (mut peer, mut observer) = start(0);
+    peer.command("valid");
+    observer.poll().unwrap();
+    let initial = observer.snapshot().unwrap().clone();
+    queue_timely_successor(&mut peer, initial.sampled_at_ns, "cycle");
+    observer
+        .poll()
+        .expect("timely fresh queued lock/unlock must be examined before cache expiry");
+    let current = observer.snapshot().unwrap();
+    assert_eq!(current.sequence, 3);
+    assert!(!current.locked);
+    assert_eq!(current.focus, initial.focus);
+    assert_eq!(observer.revision(), 3);
+}
+
+#[test]
+fn genuine_actual_successor_sampling_gap_remains_terminal() {
+    let (mut peer, mut observer) = start(0);
+    peer.command("valid");
+    observer.poll().unwrap();
+    let until = observer.snapshot().unwrap().sampled_at_ns + pokelinux_session::SAMPLE_BUDGET_NS;
+    await_boottime(until + 10_000_000);
+    peer.command("heartbeat");
+    assert!(
+        observer.poll().is_err(),
+        "a real sampling gap revived the source"
+    );
+    assert!(observer.snapshot().is_none());
+}
+
+#[test]
+fn expired_snapshot_observation_cannot_later_admit_queued_successor() {
+    let (mut peer, mut observer) = start(0);
+    peer.command("valid");
+    observer.poll().unwrap();
+    let sampled_at = observer.snapshot().unwrap().sampled_at_ns;
+    queue_timely_successor(&mut peer, sampled_at, "heartbeat");
+    assert!(observer.snapshot().is_none());
+    assert!(
+        observer.poll().is_err(),
+        "an observed expired established source was implicitly restored"
+    );
+}
+
+#[test]
+fn backwards_intermediate_actual_sample_cannot_hide_in_fresh_final_frame() {
+    let (mut peer, mut observer) = start(0);
+    peer.command("valid");
+    observer.poll().unwrap();
+    let sampled_at = observer.snapshot().unwrap().sampled_at_ns;
+    peer.command(&format!("backward-cycle:{}", sampled_at - 1));
+    assert!(
+        observer.poll().is_err(),
+        "backwards intermediate sample coalesced away"
+    );
+    assert!(observer.snapshot().is_none());
+}
+
+#[test]
+fn expired_intermediate_actual_packet_is_not_skipped_for_fresh_final_frame() {
+    let (mut peer, mut observer) = start(0);
+    peer.command("expired-then-fresh");
+    assert!(observer.poll().is_err());
+    assert!(observer.snapshot().is_none());
+}
+
+#[test]
+fn previously_returned_timeout_stays_terminal_after_actual_fresh_packet() {
+    let (mut peer, mut observer) = start(0);
+    peer.command("valid");
+    observer.poll().unwrap();
+    let until = observer.snapshot().unwrap().sampled_at_ns + pokelinux_session::SAMPLE_BUDGET_NS;
+    await_boottime(until + 10_000_000);
+    assert!(observer.poll().is_err());
+    peer.command("heartbeat");
+    assert!(observer.poll().is_err());
+    assert!(observer.snapshot().is_none());
+}
+
+#[test]
+fn exactly_contiguous_actual_wire_leases_do_not_extend_old_deadline() {
+    let (mut peer, mut observer) = start(0);
+    peer.command("valid");
+    observer.poll().unwrap();
+    let until = observer.snapshot().unwrap().sampled_at_ns + pokelinux_session::SAMPLE_BUDGET_NS;
+    await_boottime(until);
+    // An authored exact-boundary field travels through the real credential/FD
+    // interface after BOOTTIME reaches it. This is a wire boundary test, not an
+    // original-compositor sampling or scheduling claim.
+    peer.command(&format!("timestamp-heartbeat:{until}"));
+    observer
+        .poll()
+        .expect("contiguous half-open leases must be accepted");
+    assert_eq!(observer.snapshot().unwrap().sampled_at_ns, until);
+    assert!(boottime_ns() >= until);
 }

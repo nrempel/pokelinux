@@ -1,0 +1,53 @@
+{
+  "exact_release_archive_sha256": "03ad3f5ef152ff44116ffd56fcf808486211ecabf4f0ba567108ee746ba5cd2e",
+  "source_context": "locally provided public original Hyprland 0.56.2 release; inventory compares installed headers and package ELF",
+  "adapter_source_sha256": "8a7a5c2a6a5a3a40aabe2583bdc2fda9fded8619804695dbec663c23ca6f7501",
+  "original_adapter_elf_sha256": "312227400c39a793c2e591d0893c692d0ac258b8f5f9ad925ae2b8727fd53621",
+  "mechanism": "25ms adapter timer and rendering/backend callbacks execute on the original Wayland main event loop. Synchronous rendering is possible on that loop; this source evidence does not prove which callback caused the observed shared pause.",
+  "files": [
+    {
+      "archive_member": "hyprland-source/src/managers/eventLoop/EventLoopManager.cpp",
+      "sha256": "104ff43a4c02fcc88e8711cade68becd3a1fe099e970e4b1306774c85dd76f7c",
+      "relevant_lines": [
+        64,
+        66,
+        124,
+        125,
+        137,
+        142,
+        146,
+        278,
+        279
+      ]
+    },
+    {
+      "archive_member": "hyprland-source/src/output/MonitorFrameScheduler.cpp",
+      "sha256": "affa6cc46dc1e57152819791318eb10dd276a4bac48d822d130e2c8ab9306bec",
+      "relevant_lines": [
+        47,
+        105,
+        122
+      ]
+    },
+    {
+      "archive_member": "hyprland-source/src/Compositor.cpp",
+      "sha256": "74833ecbf0e2b6f8ad84345ac0716a3295a0e347420a188be0ab4f6a684af7c0",
+      "relevant_lines": [
+        281,
+        285
+      ]
+    },
+    {
+      "archive_member": "hyprland-source/src/render/Renderer.cpp",
+      "sha256": "9af8a74e7dc42ba3c5532303b9bb4ee7c350d4cef2f2c8984e41f2a01b3bdd22",
+      "relevant_lines": [
+        1743,
+        1789,
+        1792,
+        2019,
+        2140,
+        2229
+      ]
+    }
+  ]
+}

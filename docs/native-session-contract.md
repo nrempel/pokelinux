@@ -231,6 +231,16 @@ Before each nonblocking publication attempt, including every EAGAIN retry,
 consume available source transitions/failures and recheck authority. A late
 query or worker reply cannot refresh its own source lease or read stamp.
 
+The [bounded observer correction](native-session-freshness-chain.md) now examines
+up to16 authenticated queued packets before rejecting an expired cached sample.
+Each successor must be fresh when examined and satisfy monotonic sample continuity
+within the previous100ms lease; gaps, backwards or expired intermediate samples
+remain terminal. Every semantic revision is processed before coalescing. A mutable
+snapshot observation permanently latches established expiry/death, so later polls
+cannot restore failed authority. Existing work retains its captured deadline;
+accepting a fresh source sample grants no renewal to that work. The34 actual
+process cases per host/ARM kernel remain separate from actor-held-read evidence.
+
 An asynchronous event/query bridge still has a whole-publication race: the
 compositor can change after a successful query or event drain but before the
 actor sends to the app. A source revision is not an atomic cross-process send

@@ -1,0 +1,10 @@
+{
+  "method": "Visual inspection of actual original-compositor screencopy frames",
+  "epoch": "current-core-cold-reopen-timing-arm-red-1",
+  "scope": "normal production Qt conversation +15550100 visible with independent grant; revoked access denied; literal body display and expired-source new app restoration not claimed",
+  "frames": {
+    "green-focused-independent-grant-history.png": "3e18f2f4a869ac30943ec8752077185a3c9d7d72e08274e0e6c61e3d5d3fc1d3",
+    "green-grant-revoked.png": "2d2c389bca98e1dbbb3a660155cbdce40679f405d5c63a54eedf9680224183a7",
+    "green-grant-restored.png": "3e18f2f4a869ac30943ec8752077185a3c9d7d72e08274e0e6c61e3d5d3fc1d3"
+  }
+}

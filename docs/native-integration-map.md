@@ -44,7 +44,7 @@ appearance ACL setup remain explicit test infrastructure.
    The [owned read split](native-messages-receive-isolation.md) preserves the same
    qualified receiver through close, expiry and actual SQLite-lock contention.
    Exact-occurrence permits and original deadlines still govern projection;
-   production attachment and successful cold app/session reopen remain separate.
+   production attachment and broad cold app/session availability remain separate.
    No production ACK/send is enabled.
 3. Complete receipt retention/capacity and cold-backlog availability. The
    [bounded enumeration](native-messages-enumeration.md) now qualifies every ID
@@ -81,8 +81,12 @@ appearance ACL setup remain explicit test infrastructure.
    fencing and actual SDK reaping within the original actor cleanup budget.
    [Incoming/session/normal Qt](native-incoming-session-installed-app.md) now
    qualifies six narrow groups in each of two epochs and eight separate source-loss
-   groups. Both full close/reopen matrices fail cold reopening under the unchanged
-   lease; successful current-source reopen remains next. Actual locked
+   groups. Both historical full close/reopen matrices fail cold reopening under
+   the unchanged lease. The later [source-queue correction](native-session-freshness-chain.md)
+   passes34 process cases per host/ARM kernel and nine separately selected original
+   compositor/incoming/normal-Qt groups, including cold reopen and source/peer loss.
+   It accepts only fresh continuous queued samples; actual expiry remains terminal.
+   The observed99.2ms publisher gap leaves broad availability open. Actual locked
    graphics can expire the original100ms lease and restoration remains unavailable.
    Protected procfs/common namespaces and matched Pixel kernel remain gates.
 5. Add one authorized outbound operation through the same authority to the frozen

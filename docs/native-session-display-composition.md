@@ -8,6 +8,12 @@ pass25 observation groups after two chronological integration reds. This is
 seeded local history; the separately frozen incoming Binder/session/Qt lane does
 not establish incoming plus restricted-display composition.
 
+Those display-owner runtime selections precede the later
+[source-queue freshness correction](native-session-freshness-chain.md). They remain
+frozen to their recorded observer and service ELFs. The new34-case host/ARM proof
+and nine-group incoming compositor replay qualify different selections; neither
+reexecutes these25 display groups or establishes per-app context ownership.
+
 The first red executes the previously selected current actor and normal app on
 the original unrestricted socket. Actual focus plus independent read grant shows
 the conversation, while a separate same-UID client can advertise and bind the

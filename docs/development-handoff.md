@@ -395,7 +395,7 @@ reader while the same receiver commits callback4; actual retained Binder peer
 death then fences receiving. No source revival or reattachment occurs. These
 runtime selections remain based on518954b; normal conversation screenshots,
 database bodies and failed reopen groups retain separate scope. See
-`native-incoming-session-installed-app.md`. Cold availability remains offline work,
+`native-incoming-session-installed-app.md`. Broad cold availability remains offline work,
 alongside production transport/ACK/reset, privileged display and trusted restore.
 
 Native display containment now uses open-source Rust security-context-v1 bindings
@@ -421,6 +421,24 @@ Runtime selections and current API build adaptations remain distinct. See
 `native-session-display-composition.md`. Per-app display contexts, production
 privileged source/configuration, PAM/restore and secure presentation remain open.
 
+The next freshness checkpoint preserves both actual host/ARM reds before changing
+the observer:30 cases pass and four desired boundaries fail per kernel. The bounded
+drain now examines timely authenticated queued successors before cached expiry,
+requiring a monotonic continuous100ms sample chain and rejecting expired
+intermediates. Mutable snapshots permanently latch observed expiry/death; failed
+authority cannot revive. Fresh builds pass34/34 per kernel, with original negative
+controls, deadlines and assertions retained.
+
+An exact published10ce2f1 original-compositor cold RED independently reproduces
+fresh queued samples rejected before draining. Immutable base plus the reviewed
+single-file patch then passes nine actual ARM incoming/session/normal-Qt matrix
+groups, including successful cold reopen, source unload with held reader and the
+same receiver, and actual peer-death fencing. The accepted queued successor follows
+an expired cache by a99.177139ms sample gap; producer availability remains narrow.
+Root verifies1,600 proof files and1,575 nested pins and independently reviews four
+normal frames. Historical failures and earlier25 display groups remain frozen.
+See `native-session-freshness-chain.md` and its publication provenance.
+
 ## Next work
 
 1. Continue the qualified synthetic incoming Messages path with raw retention/capacity
@@ -429,8 +447,9 @@ privileged source/configuration, PAM/restore and secure presentation remain open
    history recovery never permits implicit backend reattachment. The transferred focus-peer handle now passes host/ARM interface checks; the joint
    original-compositor/current-authority/installed-app local-history path now passes separately. A fresh
    local-history replay combines the reader/writer split with that path. Next qualify
-   successful cold incoming/session/Qt reopen and per-app restricted display context
-   generations/relaunch beyond the qualified service-epoch listener, then trusted lock admission/restore,
+   broader cold incoming/session/Qt availability beyond the newly qualified nine-group
+   replay and per-app restricted display context generations/relaunch beyond the
+   qualified service-epoch listener, then trusted lock admission/restore,
    notifications and wake. Producer/ACK/reset,
    sending and hardware gates remain separate. See `native-integration-map.md`,
    `native-messages-service.md` and `native-messages-incoming.md`.

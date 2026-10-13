@@ -229,6 +229,24 @@ fn main() -> io::Result<()> {
                             _ => std::process::abort(),
                         }
                     }
+                } else if let Some(sample) = mode.strip_prefix("timestamp-heartbeat:") {
+                    let mut frame: Frame =
+                        serde_json::from_slice(&wire(source, "valid", 2)).unwrap();
+                    frame.sampled_at_ns =
+                        sample.parse().map_err(|_| io::ErrorKind::InvalidInput)?;
+                    packet(&fd, &serde_json::to_vec(&frame).unwrap())?;
+                } else if let Some(sample) = mode.strip_prefix("backward-cycle:") {
+                    let mut frame: Frame =
+                        serde_json::from_slice(&wire(source, "valid", 2)).unwrap();
+                    frame.sampled_at_ns =
+                        sample.parse().map_err(|_| io::ErrorKind::InvalidInput)?;
+                    frame.locked = true;
+                    frame.focus = None;
+                    packet(&fd, &serde_json::to_vec(&frame).unwrap())?;
+                    packet(&fd, &wire(source, "valid", 3))?;
+                } else if mode == "expired-then-fresh" {
+                    packet(&fd, &wire(source, "stale", 1))?;
+                    packet(&fd, &wire(source, "valid", 2))?;
                 } else if mode == "heartbeat" {
                     packet(&fd, &wire(source, "valid", 2))?;
                 } else if mode == "cycle" {

@@ -296,3 +296,16 @@ and eight lifecycle checks remain separate evidence. This checkpoint uses one
 service-epoch display context, with per-app contexts, incoming plus restricted
 display, cold availability, production trusted source/PAM and hardware still open.
 See [owned display composition](native-session-display-composition.md).
+
+The observer now drains a bounded continuous queue before checking cached expiry.
+Four actual desired process failures per host/ARM kernel precede the correction;
+fresh builds pass34/34 with genuine gaps and observed failure still terminal.
+An exact current original-compositor cold RED precedes a separately frozen
+nine-group incoming/session/normal-Qt GREEN with successful reopen, held-reader
+source loss preserving receiving, and peer-death fencing. The100ms budget remains
+unchanged and the largest observed sample gap is99.177139ms, so broad availability
+remains open. Root's provenance binds1,600 proof files and independently reviewed
+normal frames. Earlier failed matrices and25 display groups retain their original
+selections. Per-app display generations, incoming plus restricted display,
+production privileged source/PAM, wake and hardware remain gates. See
+[source freshness](native-session-freshness-chain.md).

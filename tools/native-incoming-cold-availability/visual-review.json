@@ -1,0 +1,16 @@
+{
+  "method": "Visual inspection of actual original-compositor screencopy frames",
+  "normal_installed_qt": true,
+  "scope": "conversation visibility, grant denial/restoration; no literal message-body display or expired cold new-app restoration claim",
+  "cold_label": "cold-reopen-timing-arm-v1",
+  "frames": {
+    "green-focused-independent-grant-history.png": "2d1244cf9b8d50b9e975c83c5d08658714e4c64a61da0cb96aae7d1183e1a708",
+    "green-grant-revoked.png": "25cf47032548df09424c65e74184bb1c693bc671355cbe937034e4f5b4b710a5",
+    "green-grant-restored.png": "2d1244cf9b8d50b9e975c83c5d08658714e4c64a61da0cb96aae7d1183e1a708"
+  },
+  "observations": {
+    "granted": "Messages and +15550100 conversation button visible",
+    "revoked": "Messages access denied visible",
+    "restored": "Messages and +15550100 conversation button visible"
+  }
+}
