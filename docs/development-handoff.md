@@ -224,6 +224,16 @@ plus all prior codec tests pass on x86 and ARM64 user-QEMU after executed runtim
 reds. Whole response layouts/producer identity, semantic publication and native
 IMS/call/bearer/media integration remain open; see `native-ims-reader.md`.
 
+Native inbox projection now qualifies private durable conversation storage with
+20 actual SQLite/access/process tests on x86 and an ARM64 guest kernel and33
+recorded original AOSP fixture comparisons. Exact local occurrence IDs import
+idempotently; equal bytes under distinct IDs stay separate. Durable deletion and
+retention keys prevent resurrection; local leases fence storage-time publication.
+This is a synchronous component, not OS/app authorization. The next integration
+priority is an installed Messages service/window through the existing lifecycle
+owner, supervised storage and real lock/revoke ingress; no production modem
+ACK/delivery capability is inferred. See `native-inbox.md`.
+
 ## Next work
 
 1. Recover and test the actual vendor cleanup/reset and registration-overlap

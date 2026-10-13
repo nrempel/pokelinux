@@ -147,3 +147,10 @@ reader probes and10 focused x86/ARM64 user-QEMU tests. The native parser rejects
 malformed ranges/counts and permanently fences failed packets. Whole response
 semantics and installed IMS/calls/bearer/media/carrier work remain open; see
 [bounded reader](native-ims-reader.md).
+
+Native inbox projection now passes20 SQLite/access/process tests on x86 and an
+ARM64 guest kernel plus33 recorded original decoder comparisons. It preserves
+local occurrence identity and durable content-removal exclusions. Installed
+Messages service/window, current OS/lifecycle authorization and notifications
+remain the next vertical integration; no modem receive/delivery promise follows.
+See [native inbox](native-inbox.md).

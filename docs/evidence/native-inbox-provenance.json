@@ -1,0 +1,350 @@
+{
+  "evidence_written_utc": "2026-10-13T00:06:22.034315+00:00",
+  "host": "Harbour",
+  "receipt_dependency_commit": "a47be6e62e9c115e3fd04507bd9ff9697341643d",
+  "evidence_classes": [
+    "Authored device-neutral Linux inbox over actual SQLite and owned x86 child SIGKILL/reap/restart",
+    "Same SQLite inbox under ARM64 user-QEMU excluding two real-process tests",
+    "Durable projection/restart comparison with33 previously recorded synthetic original AOSP parser outputs; no new Android execution",
+    "Exact pre-restoration qualified binaries under real isolated ARM64 Linux7.1.6 system-QEMU kernel, including owned child SIGKILL/reap/restart"
+  ],
+  "implementation_sha256": {
+    "native-inbox/src/lib.rs": "fd896642dc5b261fdd3c630abed093c975882bab8d66c7e035a7f38b8e3a5633",
+    "native-inbox/tests/inbox.rs": "05ca3e719d9078483a8b1fa1076d33fba3d62fce9de34bc4d28f48a36b86a1fc",
+    "native-inbox/tests/original_deliver.rs": "550767db0ef66c11b50d8451df6e4b91443f3ec04be120b2fdae99764f7307e8",
+    "native-inbox/Cargo.toml": "9ef2b7baf22a760b96700730f7edcb78301b82c98b29914444a966e8ab708c5c",
+    "native-inbox/Cargo.lock": "713ed0a0f107c2bb0586de2a0453e8ff0e0c2fb5a2dd9097fadc5e8d16efb729",
+    "tools/native-inbox-tests.sh": "4e4077eb157d8f7db8970c06bb94b6cfb2e310f005ebcd0e37531408da94a687",
+    "docs/native-inbox.md": "2001f9eb1aa70ddcd2741ad3562f10f20765a7311ab8667ca5008532d034ea84",
+    "tools/inbox-process-vm.py": "f1679330fbd0913be1b1eec1293dc2d2fb2ef1d8c3970c829bb4770355216269",
+    "sim/guest/inbox_process.py": "8ae7bd247e3305edd089d5ce0bd641bd940cb9e933d7f5a638b766cedf5c58d0"
+  },
+  "read_only_dependency_sha256": {
+    "native-messaging/src/lib.rs": "b291059cbed5d33fd69e6437e41e85aa82e94004c147eec634a09bf8cf86925d",
+    "native-messaging/src/receipt.rs": "8002d6c4b6006c97b4ade7fc40232d3c960f4139f2031a1bf98fc535d4728d66",
+    "native-messaging/src/receive.rs": "55f2cf7da7feca551297526a14fff1216e5a798d3b41d44d9bfea8b033877acc",
+    "native-messaging/Cargo.toml": "d2fdf280609b6b9b2743315ccf4dc4216e38b3a60ed70bc4199e20fe4a4c40d0",
+    "native-messaging/Cargo.lock": "e7cb16fc3e8c6abb7fbbc7a52d8f73f07c934a7a103de1cef5a0c414f3bd375f",
+    "native-messaging/tests/fixtures/aosp-deliver.tsv": "c39f8a95fdefed5dca6c2e9a7064bb67c512ee08de1341f198462ac884ebb9ea",
+    "native-messaging/tests/original_deliver.rs": "af6ffe72153803f522a0e5eefa2958d5950cd79427bf5cb882aee5416649230f",
+    "docs/evidence/sms-receive-provenance.json": "4ff30c9cce5ec2e6a4497c0d6f2f0c7e8ba7316a43cd918abc45a9322ccb8b18"
+  },
+  "runtime_reds": [
+    {
+      "class": "actual SQLite",
+      "exit": 101,
+      "path": "artifacts/native-inbox/sqlite-red.log",
+      "failure": "committed text projection missing"
+    },
+    {
+      "class": "actual owned child",
+      "exit": 101,
+      "path": "artifacts/native-inbox/process-red.log",
+      "failure": "child exited before durable projection, raw commit marker true"
+    },
+    {
+      "class": "actual SQLite progress and commit hooks",
+      "exit": 101,
+      "path": "artifacts/native-inbox/access-storage-red.log",
+      "failed_tests": 3,
+      "failure": "read, precommit import and postcommit import revocation published results",
+      "fix": "recheck role generation before commit and after storage; postcommit refusal preserves actual committed row"
+    },
+    {
+      "class": "actual SQLite removal fault",
+      "exit": 101,
+      "path": "artifacts/native-inbox/label-cleanup-red.log",
+      "failure": "ignored empty-conversation deletion retained private label but emitted success",
+      "fix": "verify cleanup inside transaction and roll back on failure"
+    },
+    {
+      "class": "local control runtime",
+      "exit": 101,
+      "path": "artifacts/native-inbox/generation-exhaustion-red.log",
+      "failure": "exhaustion left old authority active",
+      "fix": "stop both roles fail-closed"
+    }
+  ],
+  "completed_green": {
+    "full_runner_exit": 0,
+    "log": "artifacts/native-inbox/full-green.log",
+    "fmt_clippy_release_builds_both_targets": true,
+    "x86_unit": 4,
+    "x86_inbox": 15,
+    "x86_original_fixture_test": 1,
+    "x86_total": 20,
+    "x86_standalone_child_helper_without_environment_noop": true,
+    "x86_owned_sigkill_parent_passed": true,
+    "arm64_user_unit": 4,
+    "arm64_user_inbox": 13,
+    "arm64_user_original_fixture_test": 1,
+    "arm64_user_total_passed": 18,
+    "arm64_user_real_process_ignored": 2,
+    "arm64_system_kernel": {
+      "results": "sim/results/native-inbox-20261013T001409.002227Z",
+      "result": {
+        "passed": true,
+        "architecture": "aarch64",
+        "kernel": "7.1.6-1-aarch64-ARCH",
+        "qemu_mode": "system",
+        "hardware_verified": false,
+        "phone_accessed": false,
+        "network": "none",
+        "checks": {
+          "unit": 4,
+          "inbox": 15,
+          "original_deliver": 1,
+          "unprivileged_execution": true,
+          "actual_child_sigkill_reap_restart": true,
+          "recorded_original_aosp_comparisons": 33,
+          "total_tests": 20
+        },
+        "binary_sha256": {
+          "unit": "bdbe8bf2fef3be8e58aeee60728324ae344e6c04e435cc69e0ba6ad31794341e",
+          "inbox": "3da86bdd2d82ad5dbb4e72a80532f6a7ca70ff363c2bfcacbd106758380d70a6",
+          "original_deliver": "9e4fdd283b56d7a332cc4e07a378590501aeb8f0140d0e993cb57800104d8a9e"
+        },
+        "selection_sha256": "d9f47c4f4e82d42844a7f4aa2aa48741a0169b7364d2f89d96af3b97ddb4fca7"
+      }
+    }
+  },
+  "recorded_original": {
+    "manifest": "docs/evidence/sms-receive-provenance.json",
+    "fixture": "native-messaging/tests/fixtures/aosp-deliver.tsv",
+    "fixture_sha256": "c39f8a95fdefed5dca6c2e9a7064bb67c512ee08de1341f198462ac884ebb9ea",
+    "cases": 33,
+    "class": "com.android.internal.telephony.gsm.SmsMessage",
+    "method": "createFromPdu(byte[])",
+    "environment": "Owned SDK37 x86 emulator, SELinux Enforcing",
+    "fingerprint": "google/sdk_gphone64_x86_64/emu64xa:17/CE2A.260420.019/15611780:userdebug/dev-keys",
+    "telephony_jar_sha256": "4c741f17ac1ba0a2c51b2d8a28c41e0061d2473ae5748c722f3ec6f2cb86932a",
+    "fields": [
+      "sender UTF-8",
+      "text UTF-8",
+      "timestamp milliseconds",
+      "8/16-bit concat metadata",
+      "reply-path flag"
+    ],
+    "new_android_execution": false,
+    "synthetic_inputs": true
+  },
+  "contract": {
+    "source": "immutable ReceiptOwner lookup by typed ReceiptId",
+    "raw_pdu_or_digest_copied_to_inbox": false,
+    "local_receipt_uuid_copied_unchanged": true,
+    "same_local_id_idempotent": true,
+    "equal_bytes_under_distinct_ids_remain_distinct": true,
+    "changed_provenance_or_decoded_content_same_id_refused": true,
+    "display_group": [
+      "slot",
+      "exact decoded sender label",
+      "GSM address kind"
+    ],
+    "carrier_contact_e164_or_subscription_identity_inferred": false,
+    "multipart_assembly_or_identity": false,
+    "excluded": [
+      "status_report",
+      "malformed",
+      "unsupported",
+      "cancelled",
+      "deleted",
+      "retained-away"
+    ],
+    "tombstones_evicted": false,
+    "retention_order": "local insertion ordinal, not network time",
+    "ACK_raw_or_transport_state_modified": false,
+    "cancel_reconciliation": "explicit fresh import, no automatic monitoring"
+  },
+  "access": {
+    "local_trusted_code_control_only": true,
+    "OS_credentials_permissions_or_lock_screen_proof": false,
+    "read_import_default_denied_after_open_restart": true,
+    "separate_role_generations": true,
+    "foreign_restart_and_stop_fenced": true,
+    "after_storage_before_publication_check": true,
+    "in_progress_filesystem_interruptible": false,
+    "commit_time_revocation": "returns error; actual committed row remains durable for later authorized reconciliation",
+    "previously_returned_text_recall": false,
+    "same_uid_process_isolation": false
+  },
+  "storage": {
+    "directory_mode": "0700",
+    "files_mode": "0600",
+    "exclusive_permanent_owner_lock": true,
+    "rollback_journal": "delete",
+    "synchronous": "EXTRA",
+    "secure_delete": "ON, no forensic erasure guarantee",
+    "busy_timeout_ms": 0,
+    "max_pages": 32768,
+    "schema_version": 1,
+    "migration_policy": "refuse unsupported; no migrations",
+    "single_owner_synchronous": true,
+    "bounds": {
+      "receipt_keys": 4096,
+      "text_occurrences": 2048,
+      "conversations": 512,
+      "page_batch": 32,
+      "body_utf8_bytes": 640,
+      "sender_utf8_bytes": 64
+    },
+    "capacity_policy": "refuse imports; explicit retention removes content but never identity keys",
+    "no_bounded_filesystem_latency_or_supervisor_claim": true
+  },
+  "artifact_sha256": {
+    "artifacts/native-inbox/access-storage-green.log": "33bd108ef199e8258872cf37051b567ca729cf5551d8af298a55c4249c52fb11",
+    "artifacts/native-inbox/access-storage-red.log": "9210c33d0fbf426db7b5f722a35a6c1054f9b6cfc3ed7df43a307351203da898",
+    "artifacts/native-inbox/all-x86-first.log": "a86000cea29b6b78a0f3c420e66be14b4eda99a67fcf49396fa75badfa5b4a70",
+    "artifacts/native-inbox/first-process-green.log": "e7fcdc14a00167d7bf86c5f32db97ad49e4c0bec04e568a8d833ce86a50b32ac",
+    "artifacts/native-inbox/first-sqlite-green.log": "93843eb3550c0a39cc1d5f4b281b08817d4f425b498b9b394540293b7661c97e",
+    "artifacts/native-inbox/full-green.log": "980bdf90707a7ce791143eec2d018a5498419b16a1bd668f76dcff6ff9ff0495",
+    "artifacts/native-inbox/generation-exhaustion-red.log": "d1d9bfddd600c978ac04012253c199cf60cbc99dfa380bcf48113e74ed9af1b5",
+    "artifacts/native-inbox/label-cleanup-red.log": "82d048414fcf4fde133fce37e845130804acc089740d1b91f2c41e19d15c8193",
+    "artifacts/native-inbox/process-red.log": "999ff93658940b04d3e6f75240af972e95757ce61bfee626d5072b31da087d6b",
+    "artifacts/native-inbox/projection-regression.log": "040a1e03ff5729020bcca57306988e69b1f3434ae946f9f8bd8f29fd6c5ccbb5",
+    "artifacts/native-inbox/sqlite-red.log": "2992c455cedac19fe2f508086a88f40cf3353666ab68f6e9dc94f402aba7c030",
+    "artifacts/native-inbox/qualified-selection.json": "ee792596676f0f149e774d91efc90a6f4670be675966b8fc799f7b318dac48f2",
+    "artifacts/native-inbox/arm64-selection.json": "d9f47c4f4e82d42844a7f4aa2aa48741a0169b7364d2f89d96af3b97ddb4fca7",
+    "artifacts/native-inbox/access-storage-red-source.rs": "b0f2610da1722c2dbf63460fbee6e68fdd6982c922610b1540c36cafaddb7579",
+    "artifacts/native-inbox/cleanup-generation-red-source.rs": "01340fcb6d535feb39d924216324b10613ff9540f1977de4c9734da7224274e2",
+    "artifacts/native-inbox/inbox-test-build-arm64.json": "838949e9af5946648c519ede7aba8293e0936b46cf3c79d12203f4130164bd48",
+    "artifacts/native-inbox/metadata-restored/all-tests.next.json": "838949e9af5946648c519ede7aba8293e0936b46cf3c79d12203f4130164bd48",
+    "artifacts/native-inbox/qualified-snapshot/pokelinux_inbox-86b70d019cda09fd": "bdbe8bf2fef3be8e58aeee60728324ae344e6c04e435cc69e0ba6ad31794341e",
+    "artifacts/native-inbox/qualified-snapshot/inbox-dbd85a68aa5e313d": "3da86bdd2d82ad5dbb4e72a80532f6a7ca70ff363c2bfcacbd106758380d70a6",
+    "artifacts/native-inbox/qualified-snapshot/original_deliver-7fdaeb59fe879ee6": "9e4fdd283b56d7a332cc4e07a378590501aeb8f0140d0e993cb57800104d8a9e",
+    "artifacts/native-inbox/arm64-process-vm-result.json": "11e997b4c1b1d1e1dd68041f3fbdc0b360caa139e965098f0fbfb80e35c7c47a",
+    "sim/results/native-inbox-20261013T001409.002227Z/result.json": "64c9ae8ea857ace8f970371305a41f34db4641b28e0bbc2b68ecee98132e29b7",
+    "sim/results/native-inbox-20261013T001409.002227Z/command.json": "88d2a12c5b2195b994e09354cbb5a7c34e9ba472c367fc6caccddd144e1429b8",
+    "sim/results/native-inbox-20261013T001409.002227Z/unit-components.log": "55ae8e22218f34d482967936277ddff422f622fecec2c9cee8475c5b76e2714c",
+    "sim/results/native-inbox-20261013T001409.002227Z/inbox-components.log": "0e991d3358bc9fc1fea3e3b1f2e8745ac80c38b7a0b9fea13f830be56697a414",
+    "sim/results/native-inbox-20261013T001409.002227Z/original_deliver-components.log": "bb05e7a1b497815ca5edc942c1dd0d1c22e8e8fde9282e522d47d23d6caaa16e"
+  },
+  "arm64_kernel_next_selection": {
+    "selection_origin": "exact executable paths actually executed in full-green.log, all bytes preserved before metadata re-emission",
+    "executables": [
+      {
+        "name": "unit",
+        "executable": "artifacts/native-inbox/aarch64-unknown-linux-gnu/debug/deps/pokelinux_inbox-86b70d019cda09fd",
+        "snapshot_executable": "artifacts/native-inbox/qualified-snapshot/pokelinux_inbox-86b70d019cda09fd",
+        "sha256": "bdbe8bf2fef3be8e58aeee60728324ae344e6c04e435cc69e0ba6ad31794341e",
+        "kernel_arguments": []
+      },
+      {
+        "name": "inbox",
+        "executable": "artifacts/native-inbox/aarch64-unknown-linux-gnu/debug/deps/inbox-dbd85a68aa5e313d",
+        "snapshot_executable": "artifacts/native-inbox/qualified-snapshot/inbox-dbd85a68aa5e313d",
+        "sha256": "3da86bdd2d82ad5dbb4e72a80532f6a7ca70ff363c2bfcacbd106758380d70a6",
+        "kernel_arguments": [
+          "--include-ignored"
+        ]
+      },
+      {
+        "name": "original_deliver",
+        "executable": "artifacts/native-inbox/aarch64-unknown-linux-gnu/debug/deps/original_deliver-7fdaeb59fe879ee6",
+        "snapshot_executable": "artifacts/native-inbox/qualified-snapshot/original_deliver-7fdaeb59fe879ee6",
+        "sha256": "9e4fdd283b56d7a332cc4e07a378590501aeb8f0140d0e993cb57800104d8a9e",
+        "kernel_arguments": []
+      }
+    ],
+    "helper": "inbox_crash_child",
+    "parent": "sigkill_releases_private_inbox_with_committed_projection_intact",
+    "helper_environment": "POKELINUX_INBOX_CRASH_TEST set only by parent",
+    "source_sha256": "fd896642dc5b261fdd3c630abed093c975882bab8d66c7e035a7f38b8e3a5633",
+    "tests_sha256": "05ca3e719d9078483a8b1fa1076d33fba3d62fce9de34bc4d28f48a36b86a1fc",
+    "cargo_json_capture": "completed with restored image in dedicated copied targets; all3 executables byte-identical to qualified snapshot",
+    "cargo_json": "artifacts/native-inbox/inbox-test-build-arm64.json",
+    "metadata_executables": [
+      {
+        "target": "pokelinux_inbox",
+        "path": "artifacts/native-inbox/metadata-restored/aarch64-unknown-linux-gnu/debug/deps/pokelinux_inbox-86b70d019cda09fd",
+        "sha256": "bdbe8bf2fef3be8e58aeee60728324ae344e6c04e435cc69e0ba6ad31794341e",
+        "fresh": true,
+        "matches_qualified_snapshot": true
+      },
+      {
+        "target": "original_deliver",
+        "path": "artifacts/native-inbox/metadata-restored/aarch64-unknown-linux-gnu/debug/deps/original_deliver-7fdaeb59fe879ee6",
+        "sha256": "9e4fdd283b56d7a332cc4e07a378590501aeb8f0140d0e993cb57800104d8a9e",
+        "fresh": true,
+        "matches_qualified_snapshot": true
+      },
+      {
+        "target": "inbox",
+        "path": "artifacts/native-inbox/metadata-restored/aarch64-unknown-linux-gnu/debug/deps/inbox-dbd85a68aa5e313d",
+        "sha256": "3da86bdd2d82ad5dbb4e72a80532f6a7ca70ff363c2bfcacbd106758380d70a6",
+        "fresh": true,
+        "matches_qualified_snapshot": true
+      }
+    ]
+  },
+  "remaining_gates": [
+    "Independent actual ARM64 kernel process qualification",
+    "Installed distinct-UID credential/lifecycle and lock policy",
+    "Supervised storage worker and explicit raw cancellation/retention reconciliation",
+    "Privacy-preserving native app/notification delivery",
+    "Qualified multipart association and actual modem/carrier receive"
+  ],
+  "not_qualified": {
+    "installed_service_app_notifications": false,
+    "OS_credential_or_lock_policy": false,
+    "async_storage_supervision": false,
+    "ACK_dispatch_authority": false,
+    "carrier_identity_or_delivery": false,
+    "vendor_execution": false,
+    "physical_phone_access": false,
+    "proprietary_publication": false
+  },
+  "cleanup": {
+    "bounded_offline_containers_auto_removed": true,
+    "owned_child_killed_reaped": true,
+    "REA_or_SDK_sessions_opened": false,
+    "VM_guest_used_or_edited": false,
+    "prior_receipt_sources_artifacts_edited": false
+  },
+  "earlier_metadata_capture_failure": {
+    "completed": false,
+    "reason": "required local builder image vanished after actual full greens",
+    "required_image": "pixel-phone-rust:20261012-b472",
+    "attempted_emitter_exit": 125,
+    "attempted_emitter_error": "Unable to find image locally; pull access denied",
+    "final_all_tests_cargo_json": "artifacts/native-inbox/inbox-test-build-arm64.json",
+    "current_file_empty_not_evidence": false,
+    "scope": "only all-tests no-run CargoJSON capture; no runtime/code checks pending",
+    "qualified_executables_preserved": true,
+    "future_runner_metadata_publication": "write next.json then move only after success; --pull=never",
+    "subsequently_completed": true
+  },
+  "metadata_capture": {
+    "completed": true,
+    "exit": 0,
+    "scope": "all-tests no-run CargoJSON only, original green source/ELFs/logs preserved",
+    "restored_image": "pixel-phone-rust:20261012-b472",
+    "restored_image_id": "sha256:0b4b956502a9f55d992eaced6975737b523be19bd2034078983b36bbcfd7aee6",
+    "cargo_json": "artifacts/native-inbox/inbox-test-build-arm64.json",
+    "all3_executables_byte_identical_to_qualified": true,
+    "captured": [
+      {
+        "target": "pokelinux_inbox",
+        "path": "artifacts/native-inbox/metadata-restored/aarch64-unknown-linux-gnu/debug/deps/pokelinux_inbox-86b70d019cda09fd",
+        "sha256": "bdbe8bf2fef3be8e58aeee60728324ae344e6c04e435cc69e0ba6ad31794341e",
+        "fresh": true,
+        "matches_qualified_snapshot": true
+      },
+      {
+        "target": "original_deliver",
+        "path": "artifacts/native-inbox/metadata-restored/aarch64-unknown-linux-gnu/debug/deps/original_deliver-7fdaeb59fe879ee6",
+        "sha256": "9e4fdd283b56d7a332cc4e07a378590501aeb8f0140d0e993cb57800104d8a9e",
+        "fresh": true,
+        "matches_qualified_snapshot": true
+      },
+      {
+        "target": "inbox",
+        "path": "artifacts/native-inbox/metadata-restored/aarch64-unknown-linux-gnu/debug/deps/inbox-dbd85a68aa5e313d",
+        "sha256": "3da86bdd2d82ad5dbb4e72a80532f6a7ca70ff363c2bfcacbd106758380d70a6",
+        "fresh": true,
+        "matches_qualified_snapshot": true
+      }
+    ]
+  },
+  "arm64_kernel_qualified": true,
+  "native_inbox_arm64_kernel_process_qualified": true
+}

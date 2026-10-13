@@ -15,6 +15,8 @@ if grep -q 'pixel.mode=provision' /proc/cmdline; then
     systemctl disable sshd.service || true
     usermod -a -G video,input alarm
     printf '{"provisioned":true}\n' > /results/provision.json
+elif grep -q 'pixel.mode=inbox-process' /proc/cmdline; then
+  exec python3 /workspace/sim/guest/inbox_process.py
 elif grep -q 'pixel.mode=receipt-process' /proc/cmdline; then
   exec python3 /workspace/sim/guest/receipt_process.py
 elif grep -q 'pixel.mode=lifecycle-process' /proc/cmdline; then

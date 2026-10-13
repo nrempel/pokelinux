@@ -1,0 +1,14 @@
+[package]
+name = "pokelinux-inbox"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+pokelinux-messaging = { path = "../native-messaging" }
+rusqlite = { version = "=0.40.2", features = ["bundled", "hooks"] }
+uuid = { version = "=1.28.0", features = ["v4"] }
+rustix = { version = "=1.1.5", features = ["fs", "process"] }
+
+[lints.rust]
+unsafe_code = "forbid"

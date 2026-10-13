@@ -160,3 +160,11 @@ correlates or finalizes outbox delivery. The [incoming receipt owner](native-sms
 raw storage, durable uncertainty and test-only ACK fencing with19 SQLite tests on
 x86 and a real ARM64 guest kernel plus12 actual frozen Binder groups. Production
 ACK identity/policy, installed receive workers and app integration remain open.
+
+The separate [native inbox projection](native-inbox.md) now imports committed
+local receipts through the qualified decoder into private durable conversations.
+Twenty actual SQLite/access/process tests pass on x86 and an ARM64 guest kernel,
+including SIGKILL/restart;33 recorded AOSP outputs survive import/restart.
+Tombstones prevent re-import resurrection, while equal arrivals remain distinct.
+Installed Messages, OS authorization, supervised storage and notification/lock
+integration remain required before this becomes a smartphone receive path.
