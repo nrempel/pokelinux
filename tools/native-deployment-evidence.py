@@ -62,7 +62,7 @@ def main():
         assert sum(scope == 'offline' for scope in unresolved.values()) == 9
         assert unresolved['physical-device'] == 'physical'
         assert {issue['subject'] for issue in report['issues'] if issue['code'] == 'unpinned-artifact'} == {
-            'google-kernel', 'google-modules-complete', 'google-firmware-complete'}
+            'google-modules-complete', 'google-firmware-complete'}
         assert sum(issue['code'] == 'resource-owner' for issue in report['issues']) == len(profile['resources'])
         inventory['unexpected_field'] = 'authored negative fixture'
         inventory_path.write_text(json.dumps(inventory))

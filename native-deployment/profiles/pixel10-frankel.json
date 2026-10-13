@@ -5,19 +5,19 @@
   "architecture": "aarch64",
   "component_set": "google-frankel-CP3A.261005.005",
   "evidence": "recorded-original",
-  "kernel_release": "6.6.127-android15-8-gee206ffe8752-ab16254410-4k",
+  "kernel_release": "6.6.127-android15-8-g91d825611104-ab16252310-4k",
   "artifacts": [
     {
       "id": "google-kernel",
       "kind": "kernel",
-      "sha256": null,
-      "source": "Original factory partition index records kernel_16k; exact chosen kernel image/hash/config and compatibility with the observed 4k graphics modules remain unresolved. Do not substitute the ARM VM kernel."
+      "sha256": "e43d13d5b8e2657e27437bc59d8d5abd2131f255dfca26354d96e02ce43115d1",
+      "source": "Authenticated frankel CP3A.261005.005 boot.img contains this exact legacy-LZ4 4K kernel payload. Header/banner/config recovered statically; no kernel execution or module KMI qualification. See native-boot-inputs/evidence/factory-metadata.json."
     },
     {
       "id": "google-modules-complete",
       "kind": "module",
       "sha256": null,
-      "source": "Original graphics audit records module release; complete selected Google system/vendor module set and dependency closure are unavailable in this checkpoint."
+      "source": "Authenticated system_dlkm/vendor_dlkm and vendor-kernel ramdisk inventories are recovered. Complete deployed module dependency, signature/protected-symbol and KMI/load closure remains unqualified; the 16K fragment is separate."
     },
     {
       "id": "google-firmware-complete",
@@ -52,13 +52,13 @@
       "id": "factory-integrity",
       "scope": "offline",
       "state": "unresolved",
-      "evidence": "Selected vendor member size/CRC was checked in the original audit; whole outer ZIP SHA256 and AVB verification are unresolved. AOSP lists Pixel 10 with codename frankel (https://source.android.com/docs/setup/reference/build-numbers, checked 2026-10-12); this does not independently authenticate the selected CP3A.261005.005 factory build/set."
+      "evidence": "Whole official frankel CP3A.261005.005 ZIP matches published SHA256 3721e6accc2e87d851ee7966d794318078ec74c7cc32343daa10968264d6bb62; 38 index reads rebound to authenticated stream and 14 selected members hash checked on 2026-10-13. AVB verification remains unresolved. See native-boot-inputs/evidence/factory-metadata.json."
     },
     {
       "id": "kernel-kmi",
       "scope": "offline",
       "state": "unresolved",
-      "evidence": "Keep the Google matched kernel/modules/firmware. Observed graphics module release is 6.6.127-android15-8-gee206ffe8752-ab16254410-4k; exact kernel image/config/source/KMI and complete module/firmware set hashes are unavailable here. A digest or release string alone cannot qualify KMI compatibility."
+      "evidence": "Authenticated 4K kernel payload/banner/config and separate 16K kernel are recovered. Retain exact Google matched inputs; vendor module vermagic strings differ from base GKI release. MODVERSIONS and MODULE_SIG_PROTECT are enabled; strings alone establish neither compatibility nor incompatibility. Actual dependency/symbol-CRC/protected-signature/module-load closure remains unresolved."
     },
     {
       "id": "vendor-userspace-reduction",
@@ -76,7 +76,7 @@
       "id": "native-init",
       "scope": "offline",
       "state": "unresolved",
-      "evidence": "Native Arch boot/init and service-manager supervision/order/restart integration remain offline work; no phone boot or privileged host service mutation is permitted."
+      "evidence": "Authored Rust root PID1, native child actual wait and controlled RAM-only shutdown pass on non-Pixel Arch ARM7.1.6. Pixel native ramdisk packaging, diagnostic transport and Arch service supervision/order/restart integration remain offline work; no phone boot or privileged host service mutation."
     },
     {
       "id": "selinux",

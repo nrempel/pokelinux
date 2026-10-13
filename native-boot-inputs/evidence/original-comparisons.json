@@ -1,0 +1,215 @@
+{
+  "reference_commit": "d2bb0af5ba6d3198a3e99529c97eda1be0b5a093",
+  "results": [
+    {
+      "image": "authored-boot-v4.img",
+      "image_sha256": "65eb11e1e82e3ec38169521300e4fbff0ee6cdc9307ef7e3cbf084afc30960a1",
+      "kind": "boot-v4",
+      "container_page_size": 4096,
+      "components": {
+        "kernel": {
+          "extent": {
+            "offset": 4096,
+            "size": 8197
+          },
+          "sha256": "e18a3c7f38d71c7d7482e4d3493c4b1ca390d3811346c787b4976cf3f213ed41"
+        },
+        "ramdisk": {
+          "extent": {
+            "offset": 16384,
+            "size": 4097
+          },
+          "sha256": "e9b66ae7cb510f0ad5cb78b88084b5769bd2d684204cb9293063923f7232c09c"
+        }
+      },
+      "original_component_bytes_equal": true,
+      "avb_verified": false,
+      "kernel_kmi_qualified": false,
+      "phone_accessed": false
+    },
+    {
+      "image": "authored-vendor-v4.img",
+      "image_sha256": "87cfc78de2d5220ced5d7687b585351c3604c0ae333e407835f4a842e9ab78b0",
+      "kind": "vendor-boot-v4",
+      "container_page_size": 4096,
+      "components": {
+        "dtb": {
+          "extent": {
+            "offset": 16384,
+            "size": 127
+          },
+          "sha256": "1597611ab9b1780b6304237d5e11894de40989efbad85b8331b6faa9173190b1"
+        },
+        "bootconfig": {
+          "extent": {
+            "offset": 24576,
+            "size": 9
+          },
+          "sha256": "039dd2bea2e857e94a1e30491b353a2ae4fb88d96d893d6a03ac2517086c4605"
+        },
+        "vendor_ramdisk00": {
+          "extent": {
+            "offset": 4096,
+            "size": 123
+          },
+          "sha256": "f3a4fc079f8348ab12bc5be05102c38ff4d1e9ad911ebb13a57d39c8f6b4cc77"
+        },
+        "vendor_ramdisk01": {
+          "extent": {
+            "offset": 4219,
+            "size": 9001
+          },
+          "sha256": "baf0cfc445bb838d13c76cc02112a3fe6b6679081978424e43a0c26bd98a5292"
+        }
+      },
+      "original_component_bytes_equal": true,
+      "avb_verified": false,
+      "kernel_kmi_qualified": false,
+      "phone_accessed": false
+    },
+    {
+      "image": "authored-vendor-2048-v4.img",
+      "image_sha256": "12738b4880ba63481d6b0485ee834748a5bf97cacb07c48214d564195e0bd0e5",
+      "kind": "vendor-boot-v4",
+      "container_page_size": 2048,
+      "components": {
+        "bootconfig": {
+          "extent": {
+            "offset": 8192,
+            "size": 0
+          },
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "vendor_ramdisk00": {
+          "extent": {
+            "offset": 4096,
+            "size": 123
+          },
+          "sha256": "f3a4fc079f8348ab12bc5be05102c38ff4d1e9ad911ebb13a57d39c8f6b4cc77"
+        }
+      },
+      "original_component_bytes_equal": true,
+      "avb_verified": false,
+      "kernel_kmi_qualified": false,
+      "phone_accessed": false
+    },
+    {
+      "image": "boot.img",
+      "image_sha256": "f68a58f2d4fd591beaca0e569713006a593644ffda4e2fb580339677d867d403",
+      "kind": "boot-v4",
+      "container_page_size": 4096,
+      "components": {
+        "kernel": {
+          "extent": {
+            "offset": 4096,
+            "size": 17315533
+          },
+          "sha256": "e43d13d5b8e2657e27437bc59d8d5abd2131f255dfca26354d96e02ce43115d1"
+        },
+        "ramdisk": {
+          "extent": {
+            "offset": 17321984,
+            "size": 0
+          },
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "original_component_bytes_equal": true,
+      "avb_verified": false,
+      "kernel_kmi_qualified": false,
+      "phone_accessed": false
+    },
+    {
+      "image": "init_boot.img",
+      "image_sha256": "8ce3679285604688cea9c358d449a31db5fb7c0f0b49ef16c0f8c2c807f8425d",
+      "kind": "boot-v4",
+      "container_page_size": 4096,
+      "components": {
+        "kernel": {
+          "extent": {
+            "offset": 4096,
+            "size": 0
+          },
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "ramdisk": {
+          "extent": {
+            "offset": 4096,
+            "size": 2685572
+          },
+          "sha256": "358f8123e2831338dd00de8ec22ba8cd137c0f8475377139aee6427b351b1e27"
+        }
+      },
+      "original_component_bytes_equal": true,
+      "avb_verified": false,
+      "kernel_kmi_qualified": false,
+      "phone_accessed": false
+    },
+    {
+      "image": "vendor_boot.img",
+      "image_sha256": "8062043c15ad497690e71429194de4e358846db3752cf33342e6b325f2e6522e",
+      "kind": "vendor-boot-v4",
+      "container_page_size": 2048,
+      "components": {
+        "bootconfig": {
+          "extent": {
+            "offset": 40001536,
+            "size": 77
+          },
+          "sha256": "b97da18db3594b008c1df4ba9ed9ffbdacda2948fdf1a1d297b2511ee8e215db"
+        },
+        "vendor_ramdisk00": {
+          "extent": {
+            "offset": 4096,
+            "size": 24702895
+          },
+          "sha256": "ffeef1fd4e1314f6448cf2c482045adf44bc1aabe1197d310a40da7026d470a6"
+        },
+        "vendor_ramdisk01": {
+          "extent": {
+            "offset": 24706991,
+            "size": 15291325
+          },
+          "sha256": "0444a8dab23de0bfbffe32d7ea8fee123ee075ecee55013c1080db6772fca0fe"
+        }
+      },
+      "original_component_bytes_equal": true,
+      "avb_verified": false,
+      "kernel_kmi_qualified": false,
+      "phone_accessed": false
+    },
+    {
+      "image": "vendor_kernel_boot.img",
+      "image_sha256": "44ad13534c7575b8d3d23a6db9bfdcb3ef33918dfd8fce61e14ecf686da269a8",
+      "kind": "vendor-boot-v4",
+      "container_page_size": 2048,
+      "components": {
+        "dtb": {
+          "extent": {
+            "offset": 5349376,
+            "size": 1447123
+          },
+          "sha256": "5747b628c89b2944f5b264ee6140f1c2436227109604181da38c829f99218369"
+        },
+        "bootconfig": {
+          "extent": {
+            "offset": 6799360,
+            "size": 0
+          },
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "vendor_ramdisk00": {
+          "extent": {
+            "offset": 4096,
+            "size": 5343791
+          },
+          "sha256": "afbfcd662afb88e4be997c11d436ebf4cbb964cd2293eab0095d0b95798c6483"
+        }
+      },
+      "original_component_bytes_equal": true,
+      "avb_verified": false,
+      "kernel_kmi_qualified": false,
+      "phone_accessed": false
+    }
+  ]
+}

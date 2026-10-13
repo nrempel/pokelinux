@@ -18,6 +18,28 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+First native early boot now has a separate RAM-only checkpoint. A genuine
+missing-`/init` ARM RED precedes the Rust root-PID1 probe. Native child actual wait
+and controlled poweroff pass, and a missing-helper failure powers down separately.
+The non-Pixel Arch ARM7.1.6 kernel is unchanged; no root disk, NIC, vendor service
+or phone is attached. See [boot probe](native-phone-boot-probe.md) and
+[proof](evidence/native-boot-probe-provenance.json). Full signal/stuck-child/device
+IO, Pixel module/diagnostic/thermal/watchdog behavior and actual phone boot remain
+unqualified. The first restricted Pixel candidate is independent of full IMS/UI.
+
+The full original frankelCP3A.261005.005 factory archive now matches Google's
+published SHA256, with38 index reads rebound to the authenticated stream and14
+selected boot/module inputs preserved privately. The new bounded Rust v4
+inspector passes27 tests on each x86/ARM64 user-QEMU target and seven exact-byte
+comparisons with pinned unchanged AOSP tools. Actual Google4K kernel/config,
+separate16K inputs, generic `/init`, vendor ramdisk fragments and DTBs are static
+metadata evidence. They do not qualify AVB, kernel/module KMI or hardware.
+DEVTMPFS and PID namespaces are disabled in the selected kernels; tmpfs/proc/sysfs
+are available. See [input evidence](../native-boot-inputs/README.md).
+The live deployment profile now pins the authenticated4K kernel payload and
+observed base release; complete module/firmware pins and all nine offline plus
+one physical requirement remain unresolved. Full-device admission stays refused.
+
 Per-app display ownership is now implemented in the current actor. Three actual
 ARM chronology REDs precede fresh context/listener generations, asynchronous
 Ready-before-app launch and exact-client EOF cancellation. Four lifetime groups

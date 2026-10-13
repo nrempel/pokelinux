@@ -8,6 +8,31 @@ phone boot or privileged host configuration is changed by this work.
 
 ## Current device and matching boundary
 
+Update2026-10-13: the whole original frankelCP3A.261005.005 factory archive now
+matches Google's published SHA256. All38 ZIP index reads are rebound to the same
+authenticated stream and14 selected boot/module members are size/CRC/hash checked.
+The [new v4 Rust inspector](../native-boot-inputs/README.md) adds seven exact-byte
+comparisons with pinned unchanged AOSP tools; the [clean metadata](../native-boot-inputs/evidence/factory-metadata.json)
+records the actual4K/16K kernels, configs, ramdisks, DTBs and module inventories.
+Original payloads remain private and are not executed.
+
+The live profile now pins the exact legacy-LZ4 kernel payload extracted from
+authenticated `boot.img`, SHA256`e43d13d5b8e2657e27437bc59d8d5abd2131f255dfca26354d96e02ce43115d1`,
+and selects its observed base release
+`6.6.127-android15-8-g91d825611104-ab16252310-4k`. The earlier graphics/vendor
+module release below is a distinct observed build. MODVERSIONS and protected
+module signatures are enabled; different release strings prove neither KMI
+compatibility nor incompatibility. Full dependency/symbol-CRC/signature/module
+loading and complete firmware qualification remain unresolved. Complete module
+and firmware artifact pins remain null. AVB remains unverified. All nine offline
+requirements and the later physical gate are still unresolved; deployment is
+still refused. The separate [RAM-only native PID1 guest probe](native-phone-boot-probe.md)
+does not qualify Pixel boot or installed Arch supervision.
+
+The following paragraphs retain the original2026-10-12 audit checkpoint; their
+missing kernel/whole-ZIP facts are superseded by the update above, while runtime,
+KMI, AVB and hardware limits remain open.
+
 `native-deployment/profiles/pixel10-frankel.json` selects the requested first
 Pixel target and the recorded frankel `CP3A.261005.005` factory set. This checkpoint
 independently checked the [authoritative AOSP device table](https://source.android.com/docs/setup/reference/build-numbers)

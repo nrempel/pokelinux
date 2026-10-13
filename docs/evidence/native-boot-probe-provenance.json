@@ -1,0 +1,191 @@
+{
+  "schema": 1,
+  "scope": "Native authored root PID1 in actual non-Pixel Arch ARM7.1.6 system-QEMU, RAM-only; not phone boot",
+  "base_commit": "cea74644ecfe8b903aeb29ba4096418f0c15d764",
+  "source_sha256": {
+    "native-boot-probe/Cargo.toml": "2c22d417bf3a52d4dfb6981bd0887d10cca27388e068fb19ccc85c4dec3b9e5b",
+    "native-boot-probe/Cargo.lock": "a62e6e33b94c42f380421526cffc60855b22cbf0e1e9730deac582f45c5a2b38",
+    "native-boot-probe/src/main.rs": "e0a40097a35b4ef3558c2b9e0fa56f2f679bcdc5dc4d19973e63ce2b728c1b60",
+    "native-boot-probe/src/child.rs": "fa2b8705383a20add37f2a3fbecfa619849bf586901ee7dc90e96535502e87ca",
+    "tools/native-boot-probe/run.py": "6580ba9d17e916f629aebdd0a7f6f4f325da6cdeda53684daa0d5277eb2b08ee",
+    "tools/native-boot-probe/build.sh": "6acd675fcb096105ce56fb39dd7bcad4eb9897715ae73987cba24f0fdf4bbe4c"
+  },
+  "binary_sha256": {
+    "pokelinux-boot-probe": "cbf938d20127b02dc84afe2bd0e1fc4c66bd6f2d33d33c436e7a8c9fe37d205c",
+    "pokelinux-boot-child": "3b15eb4a9fd289e6664c917861f98bbe385e117e26b28abb149b3021e4b19e63"
+  },
+  "chronology": [
+    {
+      "label": "missing-native-init-red-1",
+      "result": {
+        "evidence": "authored RAM initramfs on actual Arch ARM guest kernel; not Pixel boot",
+        "kernel_sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+        "qemu_mode": "system",
+        "mode": "red",
+        "passed": false,
+        "expected_red": false,
+        "docker_actual_wait": true,
+        "docker_exit": 1,
+        "timed_out": false,
+        "elapsed_seconds": 0.542,
+        "phone_accessed": false,
+        "vendor_userspace_executed": false,
+        "root_disk_attached": false,
+        "console_sha256": "0f30e0dcf957ab6597e007cd3d5b34f9037db6f07459f9090166357896ae5f59"
+      },
+      "selection": {
+        "kernel": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+        "runner": "eeda1677029ba1047edc174fceb40d51708e0b261e92db81bbb4bc1309f0548a",
+        "initramfs": "5b77965e83ac7f7265d0309b706feeb61166eb2e091783d9d9b9653d14b85da7"
+      }
+    },
+    {
+      "label": "missing-native-init-red-2",
+      "result": {
+        "evidence": "authored RAM initramfs on actual Arch ARM guest kernel; not Pixel boot",
+        "kernel_sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+        "qemu_mode": "system",
+        "mode": "red",
+        "passed": false,
+        "expected_red": false,
+        "docker_actual_wait": true,
+        "docker_exit": 0,
+        "timed_out": false,
+        "elapsed_seconds": 2.645,
+        "phone_accessed": false,
+        "vendor_userspace_executed": false,
+        "root_disk_attached": false,
+        "console_sha256": "146b7ec173dfff3cce039222a2fd49ef61fa197fd01ca1addf081d7c30bf29ea"
+      },
+      "selection": {
+        "kernel": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+        "runner": "3be8ead9a750aebf4a9438740ce2b793e478a6517f787bfe56b666292749dc8a",
+        "initramfs": "5b77965e83ac7f7265d0309b706feeb61166eb2e091783d9d9b9653d14b85da7"
+      }
+    },
+    {
+      "label": "missing-native-init-red-3",
+      "result": {
+        "evidence": "authored RAM initramfs on actual Arch ARM guest kernel; not Pixel boot",
+        "kernel_sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+        "qemu_mode": "system",
+        "mode": "red",
+        "passed": false,
+        "expected_red": true,
+        "docker_actual_wait": true,
+        "docker_exit": 0,
+        "timed_out": false,
+        "elapsed_seconds": 2.697,
+        "phone_accessed": false,
+        "vendor_userspace_executed": false,
+        "root_disk_attached": false,
+        "console_sha256": "aa0455f7396441a2848720a30a53980e45055835a5f8d0f0d6322ef0b10232ef"
+      },
+      "selection": {
+        "kernel": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+        "runner": "6580ba9d17e916f629aebdd0a7f6f4f325da6cdeda53684daa0d5277eb2b08ee",
+        "initramfs": "5b77965e83ac7f7265d0309b706feeb61166eb2e091783d9d9b9653d14b85da7"
+      }
+    },
+    {
+      "label": "native-pid1-green-1",
+      "result": {
+        "evidence": "authored RAM initramfs on actual Arch ARM guest kernel; not Pixel boot",
+        "kernel_sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+        "qemu_mode": "system",
+        "mode": "green",
+        "passed": true,
+        "expected_red": false,
+        "docker_actual_wait": true,
+        "docker_exit": 0,
+        "timed_out": false,
+        "elapsed_seconds": 1.945,
+        "phone_accessed": false,
+        "vendor_userspace_executed": false,
+        "root_disk_attached": false,
+        "console_sha256": "768d68d721a412e2b3e2ea66302e3636ed763b0eec8f0fa425b17a676db798e9"
+      },
+      "selection": {
+        "kernel": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+        "runner": "6580ba9d17e916f629aebdd0a7f6f4f325da6cdeda53684daa0d5277eb2b08ee",
+        "init": "cbf938d20127b02dc84afe2bd0e1fc4c66bd6f2d33d33c436e7a8c9fe37d205c",
+        "probe-child": "3b15eb4a9fd289e6664c917861f98bbe385e117e26b28abb149b3021e4b19e63",
+        "initramfs": "eb3fb21fad54a585477aa97ac481056fe4dbe65d935681f294cf775f7fbc95cb"
+      }
+    },
+    {
+      "label": "missing-helper-green-1",
+      "result": {
+        "evidence": "authored RAM initramfs on actual Arch ARM guest kernel; not Pixel boot",
+        "kernel_sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+        "qemu_mode": "system",
+        "mode": "missing-child",
+        "passed": true,
+        "expected_red": false,
+        "docker_actual_wait": true,
+        "docker_exit": 0,
+        "timed_out": false,
+        "elapsed_seconds": 1.995,
+        "phone_accessed": false,
+        "vendor_userspace_executed": false,
+        "root_disk_attached": false,
+        "console_sha256": "6c33b27f446ca2ec43e6e6ea986ffce4320e521960c37177339de6af36e85e08"
+      },
+      "selection": {
+        "kernel": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+        "runner": "6580ba9d17e916f629aebdd0a7f6f4f325da6cdeda53684daa0d5277eb2b08ee",
+        "init": "cbf938d20127b02dc84afe2bd0e1fc4c66bd6f2d33d33c436e7a8c9fe37d205c",
+        "initramfs": "57c6efd2096fc7c36b37ea0d8dfeb4c64046c389917c2ce842f40b748d034d26"
+      }
+    }
+  ],
+  "private_bindings": {
+    "artifacts/native-boot-probe/missing-native-init-red-1/console.log": "0f30e0dcf957ab6597e007cd3d5b34f9037db6f07459f9090166357896ae5f59",
+    "artifacts/native-boot-probe/missing-native-init-red-1/result.json": "5d191ea52c2857583d185f74420736d8bf6d12994d2a5c9b79aba8b1a2265c26",
+    "artifacts/native-boot-probe/missing-native-init-red-1/probe.cpio.gz": "5b77965e83ac7f7265d0309b706feeb61166eb2e091783d9d9b9653d14b85da7",
+    "artifacts/native-boot-probe/missing-native-init-red-1/command.json": "46cdedd9d908583c0ec45734a46ecf12ce8084f9575974be843e295109a16d26",
+    "artifacts/native-boot-probe/missing-native-init-red-1/selection.json": "0c3ed8879740e343745dea1d4ba7aa7ff43c48fa419401b72811a6994cc693e6",
+    "artifacts/native-boot-probe/missing-native-init-red-2/console.log": "146b7ec173dfff3cce039222a2fd49ef61fa197fd01ca1addf081d7c30bf29ea",
+    "artifacts/native-boot-probe/missing-native-init-red-2/result.json": "dd8ea45498eea843afa01bd4578af2a6da9a6bbf05fdb54aa043444515a6334d",
+    "artifacts/native-boot-probe/missing-native-init-red-2/probe.cpio.gz": "5b77965e83ac7f7265d0309b706feeb61166eb2e091783d9d9b9653d14b85da7",
+    "artifacts/native-boot-probe/missing-native-init-red-2/command.json": "97b0fabf2d74d60862e5f0a4bf637da29eb2cf1c62b98a8a6c2ef79033163c89",
+    "artifacts/native-boot-probe/missing-native-init-red-2/selection.json": "80396a6f1a0faaee37eb9ad7e59c5e9717e4698e6cefd13d20882d12f3085565",
+    "artifacts/native-boot-probe/missing-native-init-red-3/console.log": "aa0455f7396441a2848720a30a53980e45055835a5f8d0f0d6322ef0b10232ef",
+    "artifacts/native-boot-probe/missing-native-init-red-3/result.json": "29c59770c7bbc4db3ef78a7f207a9ea23fdf6b3bdf1dfdd4f2b278ec89ddbb32",
+    "artifacts/native-boot-probe/missing-native-init-red-3/probe.cpio.gz": "5b77965e83ac7f7265d0309b706feeb61166eb2e091783d9d9b9653d14b85da7",
+    "artifacts/native-boot-probe/missing-native-init-red-3/command.json": "e3996e46104b9aa18590489f08a5eaab04c9061974eeeecc2675cb238fc281e0",
+    "artifacts/native-boot-probe/missing-native-init-red-3/selection.json": "1fcdbf27adc854668e08d1a3c2c647f44dbbd39b1ba9059e8c229351a0f4339f",
+    "artifacts/native-boot-probe/native-pid1-green-1/console.log": "768d68d721a412e2b3e2ea66302e3636ed763b0eec8f0fa425b17a676db798e9",
+    "artifacts/native-boot-probe/native-pid1-green-1/result.json": "de95f1edc37ccb0ec7b48dc3069d0f93deba1813c9720c4ef22551e510d19826",
+    "artifacts/native-boot-probe/native-pid1-green-1/probe.cpio.gz": "eb3fb21fad54a585477aa97ac481056fe4dbe65d935681f294cf775f7fbc95cb",
+    "artifacts/native-boot-probe/native-pid1-green-1/command.json": "fa0b21ab219f088080b061b5187a2b757a8720641ef85e22f635af318644065f",
+    "artifacts/native-boot-probe/native-pid1-green-1/selection.json": "96ac3a0e25e8d3939f3a7838673b979d39d178a979a8eb90c20a268972b69459",
+    "artifacts/native-boot-probe/missing-helper-green-1/console.log": "6c33b27f446ca2ec43e6e6ea986ffce4320e521960c37177339de6af36e85e08",
+    "artifacts/native-boot-probe/missing-helper-green-1/result.json": "90e6559ed4abed60b3f250fcba3f697b7d93ed8d6d3d62e90c2dca5c0602743e",
+    "artifacts/native-boot-probe/missing-helper-green-1/probe.cpio.gz": "57c6efd2096fc7c36b37ea0d8dfeb4c64046c389917c2ce842f40b748d034d26",
+    "artifacts/native-boot-probe/missing-helper-green-1/command.json": "760f493e61f09dc2175a2e68920a39a34e6a9b546ad866474497655cdadbeb5c",
+    "artifacts/native-boot-probe/missing-helper-green-1/selection.json": "8bd9329fe86d3db84beb980c385a9de154fdb20c40191e5a485607e2fa00e3f5"
+  },
+  "checks": {
+    "arm_clippy_warnings_denied": true,
+    "formatting": true,
+    "static_arm_release": true,
+    "two_kernel_success_groups": true,
+    "actual_native_child_wait_exit": 37,
+    "persistent_root_disk_attached": false,
+    "network_attached": false,
+    "elf_interp_or_dynamic_section_present": false
+  },
+  "link_warnings": "Static GNU libc stdlib NSS warnings are retained; no claim of universal runtime closure. Exercised RAM-only paths run without loader/shared libraries.",
+  "limits": {
+    "google_kernel_executed": false,
+    "pixel_boot_qualified": false,
+    "phone_accessed": false,
+    "full_smartphone_deployment_admitted": false,
+    "held_child_cleanup_qualified": false,
+    "full_pid1_signal_handling_qualified": false,
+    "pixel_diagnostic_path_qualified": false,
+    "thermal_watchdog_policy_qualified": false,
+    "hardware_device_io_latency_qualified": false
+  }
+}

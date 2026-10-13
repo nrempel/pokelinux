@@ -1,0 +1,23 @@
+[package]
+name = "pokelinux-boot-probe"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+rustix = { version = "=1.1.5", features = ["fs", "mount", "process", "system", "time"] }
+
+[[bin]]
+name = "pokelinux-boot-probe"
+path = "src/main.rs"
+
+[[bin]]
+name = "pokelinux-boot-child"
+path = "src/child.rs"
+
+[profile.release]
+strip = true
+panic = "abort"
+
+[lints.rust]
+unsafe_code = "forbid"

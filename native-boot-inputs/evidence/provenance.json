@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "source_base": "4c9288c9d9e4161bf19ffecdc74984e8fc815bae",
+  "source_sha256": {
+    "native-boot-inputs/Cargo.toml": "cfa54c5182578135984ef8d559ef6ee45391de3cd3f002aa93903d47e5aa4426",
+    "native-boot-inputs/Cargo.lock": "96d06722a8cd412180b01de1e4de6028502796edaba8ec9ffd2e3363488a1874",
+    "native-boot-inputs/src/lib.rs": "ef557daeafdc6a6073cc4ce0b49e1799c06b2fb99d8273958f136e8921880098",
+    "native-boot-inputs/src/main.rs": "9b9f57a38884498fac6ad543301136c3e13ff5d9f2f022f791cee37ae791ac62",
+    "native-boot-inputs/tests/containers.rs": "e3c8ffe91f28c4e3eedf6d6152052e74048b3a310bffa01d7c1d37a3d3d9d231",
+    "native-boot-inputs/README.md": "73641f3260785ca51f5c2ba94e7db2bdbd03b90da56951b5e5f1f6f5b35d6d11",
+    "tools/build-native-boot-inputs.sh": "d85e5b8ff8a67f724dce2a4aa8e7c00a31a14ca9c417fc4017ff0789ec39cb31",
+    "tools/native-boot-inputs-reference.py": "9d18de2397e2203156e6788774122cdf4e31691570a835feed09bd085071500f",
+    "tools/native-boot-inputs-audit.py": "2d15612cdabd3e10ad60f5e81ed5e7ce0300e0b0f184a8e921aa63286825162c",
+    "native-boot-inputs/evidence/factory-metadata.json": "ead74a1be70a64d3081ba36a223f563fc8b880dd7ad0d68018ec81e06248b7fc",
+    "native-boot-inputs/evidence/original-comparisons.json": "e6cc5d311cc21e53dceeff48be4a07ca05d1e2e20f341539ee373fbe5ecdefe3"
+  },
+  "private_execution_bindings": {
+    "/tmp/pokelinux-boot-inputs-evidence-20261013/green-final.log": "86ed14d0ccb8e6be74a7d870644445c464789e383f62f2bf1b4c0c2edda7a8f3",
+    "/tmp/pokelinux-boot-inputs-evidence-20261013/green.log": "68df26066eb35cf8021c66b8d50fc6302d7b2e8ad4ae00bbac080fc370f56bbd",
+    "/tmp/pokelinux-boot-inputs-evidence-20261013/red-2048.log": "4cde01bc236f6d7ec462b542c4ac516fc4bd2838630a5d69beff26b4359006bf",
+    "/tmp/pokelinux-boot-inputs-evidence-20261013/red-corrected-fixtures.log": "8d41f0ede8e8a47aa1352ce380afedd6e561e77f83a5e991be7f6ee7a3e7c43d",
+    "/tmp/pokelinux-boot-inputs-evidence-20261013/red-corrected-runtime.log": "2d667d0b613b843e8b036bb81ab5e4bd09458f30c94e1eec052d325988ded2b4",
+    "/tmp/pokelinux-boot-inputs-evidence-20261013/red.log": "e985832107ccc0776567ad566aef6a589702c9c8d9314296bb0795550c20a499",
+    "/tmp/pokelinux-boot-inputs-evidence-20261013/reproduction-bfd-build.log": "920d42d74e9d0d0b3709e60b024e305778744d5a565b09fba785dbf36773c32f",
+    "/tmp/pokelinux-boot-inputs-evidence-20261013/reproduction-build.log": "000ffbaf748397c0c84991c81ff4a075c4a74ae305f0c9349a772a02103cedc3"
+  },
+  "binary_sha256": {
+    "inspect-x86": "4a0e9b27ff9195bf60ad80f8a95f6c4e6f2b72df7e03b65971103a24dedb73da",
+    "inspect-arm64": "f558b1953f31f1f4f96639ad2014c18d978ca51449ece4f3e0b9095b14b74499"
+  },
+  "public_source_commit": "d2bb0af5ba6d3198a3e99529c97eda1be0b5a093",
+  "source_hashes": {
+    "mkbootimg.py": "37d84b3d162e0bc62e36c1f4e1c63c85ea0caa9f29be023eb2f8efe006ad948c",
+    "unpack_bootimg.py": "a9d260978a63bd06a24b6347e7dee8a28ff96639793caea15dff6aa491316308",
+    "include/bootimg/bootimg.h": "9adba595989e15b3343969cdc508df666e0c05d3b8a38aa362bd9945302c814e",
+    "gki/generate_gki_certificate.py": "1bb1feec68a13da18d581aa2c631798f86f6bc10b55d587b2dd31446a0f8a203"
+  },
+  "execution": {
+    "component_tests": {
+      "x86_64": 27,
+      "arm64_user_qemu": 27
+    },
+    "actual_original_cli_equal": 4,
+    "exact_original_comparisons": 7,
+    "formatting": true,
+    "clippy_warnings_denied": true,
+    "release_targets": [
+      "x86_64-unknown-linux-gnu",
+      "aarch64-unknown-linux-gnu"
+    ],
+    "docker_image": "sha256:0b4b956502a9f55d992eaced6975737b523be19bd2034078983b36bbcfd7aee6",
+    "network": "none",
+    "cpu_quota": 8,
+    "cargo_jobs": 8,
+    "target_storage": "container RAM tmpfs",
+    "linker": "GNU bfd",
+    "host_lz4_version": "1.9.4"
+  },
+  "chronology": [
+    {
+      "run": "red.log",
+      "result": "26 executed failures against permissive baseline; two fixture errors later identified"
+    },
+    {
+      "run": "red-2048.log",
+      "result": "27 executed failures; added original-produced 2048-page boundary"
+    },
+    {
+      "run": "green.log",
+      "result": "25 passed,2 failed; incorrect tail count and nonduplicate negative fixture retained"
+    },
+    {
+      "run": "red-corrected-fixtures.log",
+      "result": "compilation failed: new CLI expected Display absent in frozen baseline"
+    },
+    {
+      "run": "red-corrected-runtime.log",
+      "result": "27 executed failures against baseline plus API-neutral Display"
+    },
+    {
+      "run": "green-final.log",
+      "result": "27 passed on each target plus format/clippy/releases"
+    },
+    {
+      "run": "reproduction-build.log",
+      "result": "lld thread EAGAIN under128-pid bound"
+    },
+    {
+      "run": "reproduction-bfd-build.log",
+      "result": "exact source wrapper passed27 on each target plus format/clippy/releases using8 Cargo jobs/GNU bfd"
+    }
+  ],
+  "limits": {
+    "rust_inspector_authenticates": false,
+    "avb_verified": false,
+    "kernel_kmi_qualified": false,
+    "pixel_kernel_executed": false,
+    "vendor_modules_loaded": false,
+    "original_vendor_userspace_executed": false,
+    "phone_accessed": false,
+    "full_smartphone_deployment_admitted": false
+  },
+  "clean_evidence_only": true
+}

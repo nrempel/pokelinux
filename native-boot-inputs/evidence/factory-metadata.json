@@ -1,0 +1,312 @@
+{
+  "factory_sha256": "3721e6accc2e87d851ee7966d794318078ec74c7cc32343daa10968264d6bb62",
+  "whole_archive_authenticated": true,
+  "kernel_4k": {
+    "compressed_sha256": "e43d13d5b8e2657e27437bc59d8d5abd2131f255dfca26354d96e02ce43115d1",
+    "image_sha256": "0226c3be4224b02884d4f9b332aee58ec06c65b2263265e80f2498332ef15c06",
+    "image_bytes": 36866560,
+    "kernel_release": "6.6.127-android15-8-g91d825611104-ab16252310-4k",
+    "image_page_flag": 1,
+    "config_sha256": "f3be4cd72a437f07d1c804f2127c72f60ff1474d6acf370e5c969618ed6388d0",
+    "config_flags": {
+      "CONFIG_ARM64_4K_PAGES": "y",
+      "CONFIG_ARM64_16K_PAGES": "n",
+      "CONFIG_ARM64_64K_PAGES": "n",
+      "CONFIG_BLK_DEV_INITRD": "y",
+      "CONFIG_RD_LZ4": "y",
+      "CONFIG_NAMESPACES": "y",
+      "CONFIG_PID_NS": "n",
+      "CONFIG_DEVTMPFS": "n",
+      "CONFIG_TMPFS": "y",
+      "CONFIG_PROC_FS": "y",
+      "CONFIG_SYSFS": "y",
+      "CONFIG_UNIX": "y",
+      "CONFIG_TTY": "y",
+      "CONFIG_VT": "n",
+      "CONFIG_SERIAL_EARLYCON": "y",
+      "CONFIG_SERIAL_8250_CONSOLE": "y",
+      "CONFIG_SERIAL_AMBA_PL011_CONSOLE": "y",
+      "CONFIG_SERIAL_SAMSUNG_CONSOLE": "y",
+      "CONFIG_PSTORE": "y",
+      "CONFIG_PSTORE_RAM": "y",
+      "CONFIG_PSTORE_CONSOLE": "y",
+      "CONFIG_PSTORE_PMSG": "y",
+      "CONFIG_USB_GADGET": "y",
+      "CONFIG_USB_CONFIGFS": "y",
+      "CONFIG_USB_CONFIGFS_ACM": "y",
+      "CONFIG_USB_CONFIGFS_F_FS": "y",
+      "CONFIG_USB_DWC3": "y",
+      "CONFIG_USB_DWC3_DUAL_ROLE": "y",
+      "CONFIG_MODVERSIONS": "y",
+      "CONFIG_MODULE_SIG": "y",
+      "CONFIG_MODULE_SIG_FORCE": "n",
+      "CONFIG_MODULE_SIG_PROTECT": "y",
+      "CONFIG_SECURITY_SELINUX": "y",
+      "CONFIG_SECURITY_SELINUX_BOOTPARAM": "n",
+      "CONFIG_IKCONFIG": "y",
+      "CONFIG_PRINTK": "y"
+    }
+  },
+  "kernel_16k": {
+    "compressed_sha256": "92e60d4117a3bb1031baf3f464d10cce1beb19600191aadfb821433e6694275b",
+    "image_sha256": "c143a41d3d40575621e993ae24b83a012d500891ab733d8bafae90b89bd7f735",
+    "image_bytes": 37308928,
+    "kernel_release": "6.6.127-android15-8-g91d825611104-ab16252310",
+    "image_page_flag": 2,
+    "config_sha256": "14a9179199928a76dbeb894f43de3a3dc5e12d15b451091975c9ee01e5993e20",
+    "config_flags": {
+      "CONFIG_ARM64_4K_PAGES": "n",
+      "CONFIG_ARM64_16K_PAGES": "y",
+      "CONFIG_ARM64_64K_PAGES": "n",
+      "CONFIG_BLK_DEV_INITRD": "y",
+      "CONFIG_RD_LZ4": "y",
+      "CONFIG_NAMESPACES": "y",
+      "CONFIG_PID_NS": "n",
+      "CONFIG_DEVTMPFS": "n",
+      "CONFIG_TMPFS": "y",
+      "CONFIG_PROC_FS": "y",
+      "CONFIG_SYSFS": "y",
+      "CONFIG_UNIX": "y",
+      "CONFIG_TTY": "y",
+      "CONFIG_VT": "n",
+      "CONFIG_SERIAL_EARLYCON": "y",
+      "CONFIG_SERIAL_8250_CONSOLE": "y",
+      "CONFIG_SERIAL_AMBA_PL011_CONSOLE": "y",
+      "CONFIG_SERIAL_SAMSUNG_CONSOLE": "y",
+      "CONFIG_PSTORE": "y",
+      "CONFIG_PSTORE_RAM": "y",
+      "CONFIG_PSTORE_CONSOLE": "y",
+      "CONFIG_PSTORE_PMSG": "y",
+      "CONFIG_USB_GADGET": "y",
+      "CONFIG_USB_CONFIGFS": "y",
+      "CONFIG_USB_CONFIGFS_ACM": "y",
+      "CONFIG_USB_CONFIGFS_F_FS": "y",
+      "CONFIG_USB_DWC3": "y",
+      "CONFIG_USB_DWC3_DUAL_ROLE": "y",
+      "CONFIG_MODVERSIONS": "y",
+      "CONFIG_MODULE_SIG": "y",
+      "CONFIG_MODULE_SIG_FORCE": "n",
+      "CONFIG_MODULE_SIG_PROTECT": "y",
+      "CONFIG_SECURITY_SELINUX": "y",
+      "CONFIG_SECURITY_SELINUX_BOOTPARAM": "n",
+      "CONFIG_IKCONFIG": "y",
+      "CONFIG_PRINTK": "y"
+    }
+  },
+  "dtb_records": [
+    {
+      "offset": 0,
+      "bytes": 721895,
+      "version": 17,
+      "sha256": "e14146687df8df8c5b9eb4f813c158a2a0dbb16dbeeeae0f96db2c4f52f9d68e"
+    },
+    {
+      "offset": 721895,
+      "bytes": 725228,
+      "version": 17,
+      "sha256": "9cf5015d9aa1bbf943a81a0520fe96fa447cb67427480f7f1db45569c5c18449"
+    }
+  ],
+  "selected_artifacts": [
+    {
+      "name": "android-info.txt",
+      "bytes": 161,
+      "sha256": "7bfd7c555aa80c7f18d29f9691329a90e14226870701c89d347141e202416441"
+    },
+    {
+      "name": "boot.img",
+      "bytes": 67108864,
+      "sha256": "f68a58f2d4fd591beaca0e569713006a593644ffda4e2fb580339677d867d403"
+    },
+    {
+      "name": "dtbo.img",
+      "bytes": 16777216,
+      "sha256": "4f7fb4e5cbacc1fc494fd3b0aa0cd80ec34c207d88272a5e82083148ca679fd0"
+    },
+    {
+      "name": "fastboot-info.txt",
+      "bytes": 410,
+      "sha256": "307b6cd053b6c2908130e6e600e5fae8fc62751322d88ef3d036395a52ae43d4"
+    },
+    {
+      "name": "init_boot.img",
+      "bytes": 8388608,
+      "sha256": "8ce3679285604688cea9c358d449a31db5fb7c0f0b49ef16c0f8c2c807f8425d"
+    },
+    {
+      "name": "kernel_16k",
+      "bytes": 17315962,
+      "sha256": "92e60d4117a3bb1031baf3f464d10cce1beb19600191aadfb821433e6694275b"
+    },
+    {
+      "name": "ramdisk_16k.img",
+      "bytes": 15291325,
+      "sha256": "0444a8dab23de0bfbffe32d7ea8fee123ee075ecee55013c1080db6772fca0fe"
+    },
+    {
+      "name": "system_dlkm.img",
+      "bytes": 11173888,
+      "sha256": "c9da4e00ca20436e5c407f2849dc1389e8501533917bf6350fc0b3e6d2eeb311"
+    },
+    {
+      "name": "vbmeta.img",
+      "bytes": 16384,
+      "sha256": "b8bd852e4ff03d8c0bb6bb6e5633b041e1c687a49f83f8e2d5f8982b672f9e32"
+    },
+    {
+      "name": "vbmeta_system.img",
+      "bytes": 8192,
+      "sha256": "a42cc65cc9076ebe64a911f441a0e8d5eba1a9b0b718ca7872d950878029fa3c"
+    },
+    {
+      "name": "vbmeta_vendor.img",
+      "bytes": 4096,
+      "sha256": "ae657ff21df8163182f71d5e26443c52d4f5759e8f526b055fe11a6ae98b3420"
+    },
+    {
+      "name": "vendor_boot.img",
+      "bytes": 67108864,
+      "sha256": "8062043c15ad497690e71429194de4e358846db3752cf33342e6b325f2e6522e"
+    },
+    {
+      "name": "vendor_dlkm.img",
+      "bytes": 43810816,
+      "sha256": "a41db39a1ffbb91b7176ddfc3a4bd1a424200961cd806fa2a3dfa250c32b038a"
+    },
+    {
+      "name": "vendor_kernel_boot.img",
+      "bytes": 67108864,
+      "sha256": "44ad13534c7575b8d3d23a6db9bfdcb3ef33918dfd8fce61e14ecf686da269a8"
+    }
+  ],
+  "ramdisks": {
+    "init_boot.img/ramdisk": {
+      "compressed_sha256": "358f8123e2831338dd00de8ec22ba8cd137c0f8475377139aee6427b351b1e27",
+      "newc_sha256": "9506d3e091469af9ec68e66b1968ad334a4c685aefc89af41c8adc3e233d3e7c",
+      "newc_bytes": 5105664,
+      "entries": 37,
+      "init": {
+        "path": "init",
+        "mode": "0o100750",
+        "bytes": 2942024,
+        "sha256": "67e58e501941ff52f7c1b409af6c1a29e4872763d1b32940db3bde7739ed3b41",
+        "kind": "regular"
+      },
+      "module_count": 0,
+      "module_vermagic_counts": {},
+      "module_metadata": {}
+    },
+    "vendor_boot.img/vendor_ramdisk00": {
+      "compressed_sha256": "ffeef1fd4e1314f6448cf2c482045adf44bc1aabe1197d310a40da7026d470a6",
+      "newc_sha256": "6a93be5d204dd0dd1f16386f42da0496d29d5289121230b619f5f51313717f62",
+      "newc_bytes": 50138112,
+      "entries": 531,
+      "init": {
+        "path": "init",
+        "mode": "0o120750",
+        "bytes": 16,
+        "sha256": "bbbdc95750f115afc6e9739235885bb7f99141c57477f26261a565c5c547b9d9",
+        "kind": "symlink",
+        "target": "/system/bin/init"
+      },
+      "module_count": 0,
+      "module_vermagic_counts": {},
+      "module_metadata": {}
+    },
+    "vendor_boot.img/vendor_ramdisk01": {
+      "compressed_sha256": "0444a8dab23de0bfbffe32d7ea8fee123ee075ecee55013c1080db6772fca0fe",
+      "newc_sha256": "e408ea70823565fea50fae7314a7a768a5c3bd1b38dc11f0748fcaa95f8bf007",
+      "newc_bytes": 44911872,
+      "entries": 389,
+      "init": null,
+      "module_count": 375,
+      "module_vermagic_counts": {
+        "6.6.127-android15-8-g91d825611104-ab16252310 SMP preempt mod_unload modversions aarch64": 73,
+        "6.6.127-android15-8-gee206ffe8752-ab16254410 SMP preempt mod_unload modversions aarch64": 302
+      },
+      "module_metadata": {
+        "lib/modules/6.6.127-android15-8-g91d825611104-ab16252310_16k/modules.dep": {
+          "sha256": "b617e3d520256c8901446e2deddd9b0730ab1e005f75fa6ad9a0f5e3c16294d6",
+          "bytes": 25264,
+          "lines": 375
+        },
+        "lib/modules/6.6.127-android15-8-g91d825611104-ab16252310_16k/modules.load": {
+          "sha256": "0e91e30f535d34539d6c13144c2cdb79e920aa2c6d89ce7592a92b6ec71fb3a9",
+          "bytes": 5976,
+          "lines": 376
+        }
+      }
+    },
+    "vendor_kernel_boot.img/vendor_ramdisk00": {
+      "compressed_sha256": "afbfcd662afb88e4be997c11d436ebf4cbb964cd2293eab0095d0b95798c6483",
+      "newc_sha256": "12f635429814c7bc3a5b2d2c78ae468404ae536a1376ef976e47f428e6b87a04",
+      "newc_bytes": 18359552,
+      "entries": 209,
+      "init": null,
+      "module_count": 203,
+      "module_vermagic_counts": {
+        "6.6.127-android15-8-gee206ffe8752-ab16254410-4k SMP preempt mod_unload modversions aarch64": 201,
+        "6.6.98-android15-8-gda059b1ba54d-ab14303597-4k SMP preempt mod_unload modversions aarch64": 1,
+        "6.6.127-android15-8-g91d825611104-ab16252310-4k SMP preempt mod_unload modversions aarch64": 1
+      },
+      "module_metadata": {
+        "lib/modules/modules.dep": {
+          "sha256": "0da918bd831293db06d1ea935b99bc55a23fdc80e635f739ae943898ea3bf015",
+          "bytes": 29086,
+          "lines": 203
+        },
+        "lib/modules/modules.load": {
+          "sha256": "39adbf17c635e0a1cc150a87a09b9737de40e5f37c25b1dc528d3b4b502b5eb4",
+          "bytes": 3393,
+          "lines": 203
+        }
+      }
+    }
+  },
+  "dlkm": {
+    "system_dlkm.img": {
+      "image_sha256": "c9da4e00ca20436e5c407f2849dc1389e8501533917bf6350fc0b3e6d2eeb311",
+      "module_count": 74,
+      "module_vermagic_counts": {
+        "6.6.127-android15-8-g91d825611104-ab16252310-4k SMP preempt mod_unload modversions aarch64": 74
+      },
+      "module_metadata": {
+        "modules.dep": {
+          "sha256": "09ef60cd03510a396fd7c3e587c77aadce0f5310300d618ce719a2ca16f93b8d",
+          "bytes": 4737,
+          "lines": 74
+        },
+        "modules.load": {
+          "sha256": "831916f1844fbf3b349c126d7820bad3e9171c959c61d6dacf49ad5befb43e51",
+          "bytes": 906,
+          "lines": 74
+        }
+      }
+    },
+    "vendor_dlkm.img": {
+      "image_sha256": "a41db39a1ffbb91b7176ddfc3a4bd1a424200961cd806fa2a3dfa250c32b038a",
+      "module_count": 117,
+      "module_vermagic_counts": {
+        "6.6.127-android15-8-gee206ffe8752-ab16254410-4k SMP preempt mod_unload modversions aarch64": 117
+      },
+      "module_metadata": {
+        "modules.dep": {
+          "sha256": "03b9f43ce11a4f63ad8d36ec3b8773851b9e1e24489aa1fc27565f3a51d4942d",
+          "bytes": 10919,
+          "lines": 191
+        },
+        "modules.load": {
+          "sha256": "54999a556743534dc75bc5ed25d8df2cf14001fcf3e45d88058ba0d91b85c671",
+          "bytes": 1977,
+          "lines": 117
+        }
+      }
+    }
+  },
+  "avb_verified": false,
+  "kernel_kmi_qualified": false,
+  "original_vendor_payload_executed": false,
+  "guest_pixel_kernel_executed": false,
+  "phone_accessed": false,
+  "external_16k_ramdisk_equals_vendor_fragment": true
+}
