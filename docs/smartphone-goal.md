@@ -154,3 +154,10 @@ local occurrence identity and durable content-removal exclusions. Installed
 Messages service/window, current OS/lifecycle authorization and notifications
 remain the next vertical integration; no modem receive/delivery promise follows.
 See [native inbox](native-inbox.md).
+
+Lifecycle policy storage is now one owned process with27 installed/process groups
+and seven real file/pidfd components passing on x86 and an ARM64 guest kernel.
+Controls remain responsive under actual SIGSTOP; late replies, uncertain restart
+and bounded cleanup failures are fenced. Actual Omarchy ingress, backend effect
+composition, service-manager/process-tree budgets and platform filesystem behavior
+remain open. See [owned lifecycle storage](native-lifecycle-storage.md).

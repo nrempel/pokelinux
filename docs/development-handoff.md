@@ -201,7 +201,7 @@ and exact launched PID, rejecting inherited-socket delegation and kernel-forged
 identity attempts. Policy/lifecycle/principal generations, boot-time expiry,
 revocation, child death/reaping and durable uncertainty are qualified after four
 executed reds. Receipt history is not later effect permission. Omarchy ingress,
-production app/package/service-manager integration, supervised storage stalls and
+production app/package/service-manager integration, full storage/kernel closure and
 atomic backend dispatch remain open; see `native-lifecycle.md` and its provenance.
 
 Native sensor wake ownership now connects consumed events to actual coordinator
@@ -234,14 +234,25 @@ priority is an installed Messages service/window through the existing lifecycle
 owner, supervised storage and real lock/revoke ingress; no production modem
 ACK/delivery capability is inferred. See `native-inbox.md`.
 
+Lifecycle policy IO now runs in one owned storage process, retaining source/token
+and boot-time deadline identity through actual reap. Twenty-seven installed/process
+groups plus seven pidfd/file components pass on x86 and an actual ARM64 kernel.
+SIGSTOP storage keeps snapshots/stop responsive; post-sync late replies cannot
+restore admission. Healthy quiescent shutdown writes an epoch+exact-policy-hash
+seal; uncertainty forbids automatic successor/replay. Stop and fatal cleanup share
+a two-second absolute budget and abort with ownership retained. Injected wait
+failures are distinct from uninterruptible Linux tasks. Existing historical receipts
+still grant no later backend capability. See `native-lifecycle-storage.md`.
+
 ## Next work
 
 1. Recover and test the actual vendor cleanup/reset and registration-overlap
    contract. `clear` is one-way. Do not remove uncertainty markers, retry, use a
    recycled numeric registration ID for delayed cleanup, or call local reaping
    vendor cleanup. Keep registration unavailable without proven remote recovery.
-2. Integrate these primitives into an installed Rust service and its service
-   manager. Define authenticated permissions and observer IPC with process/session
+2. Complete the installed native Messages service/window vertical slice first,
+   composing receipt/inbox storage with the single current lifecycle authority
+   and service supervision. Define authenticated permissions and observer IPC with process/session
    fencing, bounded output, safe durable admission and bounded diagnostics.
    Qualify ARM64 Binder and matched Pixel kernel/policy separately; the owned
    ARM64 system-QEMU process gate now passes.

@@ -1,5 +1,8 @@
 use crate::{
-    AdminRequest, AppProfile, AppRequest, Profile, Reply, authority::Authority, boottime_ns, ipc,
+    AdminRequest, AppProfile, AppRequest, Profile, Reply,
+    authority::{Authority, Decision, WriteIntent},
+    boottime_ns, ipc,
+    storage::{Event, Worker},
 };
 use rustix::{
     event::{PollFd, PollFlags},
@@ -69,7 +72,17 @@ pub fn profile(path: &Path) -> io::Result<Profile> {
     }
     Ok(profile)
 }
+struct Operation {
+    token: u64,
+    connection: Option<u64>,
+    intent: Option<WriteIntent>,
+    until: u64,
+    retired: bool,
+    shutdown: bool,
+}
 struct Connection {
+    id: u64,
+    awaiting: Option<u64>,
     fd: OwnedFd,
     admin: bool,
     deadline: u64,
@@ -91,7 +104,13 @@ fn launch(entry: &Path, p: &AppProfile) -> io::Result<Child> {
         .stderr(Stdio::null())
         .spawn()
 }
-pub fn run(runtime: &Path, policy: &Path, profile_path: &Path, entry: &Path) -> io::Result<()> {
+pub fn run(
+    runtime: &Path,
+    policy: &Path,
+    profile_path: &Path,
+    entry: &Path,
+    test: Option<&str>,
+) -> io::Result<()> {
     if rustix::process::getuid().as_raw() != 0 || rustix::process::geteuid().as_raw() != 0 {
         return Err(io::ErrorKind::PermissionDenied.into());
     }
@@ -100,7 +119,7 @@ pub fn run(runtime: &Path, policy: &Path, profile_path: &Path, entry: &Path) -> 
         return Err(io::ErrorKind::PermissionDenied.into());
     }
     let profiles = profile(profile_path)?.apps;
-    let mut authority = Authority::open(profiles.clone(), policy)?;
+    let mut authority = Authority::loading(profiles.clone())?;
     let admin_path = runtime.join("admin.sock");
     let app_path = runtime.join("app.sock");
     let admin = ipc::listener(&admin_path, 0o600)?;
@@ -109,9 +128,26 @@ pub fn run(runtime: &Path, policy: &Path, profile_path: &Path, entry: &Path) -> 
         .iter()
         .map(|p| fs::symlink_metadata(p).map(|m| (m.dev(), m.ino())))
         .collect::<io::Result<_>>()?;
+    let mut storage = Worker::spawn(runtime, policy, &std::env::current_exe()?, test)?;
+    let initial_until = boottime_ns().saturating_add(1_000_000_000);
+    let initial_token = storage.start_load(
+        profiles.iter().map(|p| p.app.clone()).collect(),
+        initial_until,
+    )?;
+    let mut operation = Some(Operation {
+        token: initial_token,
+        connection: None,
+        intent: None,
+        until: initial_until,
+        retired: false,
+        shutdown: false,
+    });
+    let mut connection_id = 0u64;
+    let mut startup_failed = false;
     let mut children = BTreeMap::<String, Child>::new();
     let mut connections: Vec<Connection> = Vec::new();
     let mut stopping = false;
+    let mut cleanup_until = None;
     let outcome = (|| {
         loop {
             // Never block on child wait, request IO, or an idle client.
@@ -128,7 +164,128 @@ pub fn run(runtime: &Path, policy: &Path, profile_path: &Path, entry: &Path) -> 
                 children.remove(&name);
             }
             authority.reap_dead()?;
-            if stopping && children.is_empty() {
+            if let Some(op) = &mut operation
+                && !op.retired
+                && boottime_ns() >= op.until
+            {
+                authority.invalidate();
+                op.retired = true;
+                storage.stop();
+                for c in &mut connections {
+                    if c.awaiting == Some(op.token) {
+                        c.awaiting = None;
+                        c.pending = Some(serde_json::to_vec(&Reply::Unavailable)?);
+                        c.deadline = boottime_ns().saturating_add(1_000_000_000);
+                    }
+                }
+                if op.connection.is_none() && !stopping {
+                    startup_failed = true;
+                }
+            }
+            match storage.poll() {
+                Ok(Some(event)) => match event {
+                    Event::Complete {
+                        token,
+                        success,
+                        state,
+                    } => {
+                        if let Some(op) = &mut operation {
+                            if token != op.token || op.retired {
+                                authority.invalidate();
+                                storage.stop();
+                                op.retired = true;
+                            } else if op.shutdown {
+                                op.retired = true;
+                                storage.stop();
+                            } else {
+                                let reply = if let Some(intent) = op.intent.take() {
+                                    authority.finish(
+                                        intent,
+                                        success && state.is_none(),
+                                        boottime_ns(),
+                                    )
+                                } else if success && boottime_ns() < op.until {
+                                    if let Some(state) = state {
+                                        authority.activate(state);
+                                        Reply::Ok
+                                    } else {
+                                        authority.invalidate();
+                                        startup_failed = true;
+                                        Reply::Unavailable
+                                    }
+                                } else {
+                                    authority.invalidate();
+                                    startup_failed = true;
+                                    Reply::Unavailable
+                                };
+                                for c in &mut connections {
+                                    if c.id == op.connection.unwrap_or(0)
+                                        && c.awaiting == Some(token)
+                                    {
+                                        c.awaiting = None;
+                                        c.pending = Some(serde_json::to_vec(&reply)?);
+                                        c.deadline = boottime_ns().saturating_add(1_000_000_000);
+                                    }
+                                }
+                                if authority.is_degraded() {
+                                    op.retired = true;
+                                    storage.stop();
+                                } else {
+                                    operation = None;
+                                }
+                            }
+                        } else {
+                            authority.invalidate();
+                            storage.stop();
+                        }
+                    }
+                    Event::Failed { token } => {
+                        authority.invalidate();
+                        storage.stop();
+                        if let Some(op) = &mut operation {
+                            op.retired = true;
+                            if op.connection.is_none() && !stopping {
+                                startup_failed = true;
+                            }
+                            for c in &mut connections {
+                                if c.awaiting == Some(token) {
+                                    c.awaiting = None;
+                                    c.pending = Some(serde_json::to_vec(&Reply::Unavailable)?);
+                                    c.deadline = boottime_ns().saturating_add(1_000_000_000);
+                                }
+                            }
+                        }
+                    }
+                    Event::Reaped => {
+                        authority.invalidate();
+                    }
+                },
+                Ok(None) => {}
+                Err(_) => {
+                    authority.invalidate();
+                    storage.stop();
+                    if let Some(op) = &mut operation {
+                        op.retired = true;
+                    }
+                }
+            }
+            if !storage.occupied() && operation.as_ref().is_some_and(|o| o.retired) {
+                operation = None;
+            }
+            if stopping || startup_failed {
+                let until = *cleanup_until
+                    .get_or_insert_with(|| boottime_ns().saturating_add(2_000_000_000));
+                if boottime_ns() >= until {
+                    break;
+                }
+            }
+            if (stopping || startup_failed)
+                && children.is_empty()
+                && !storage.occupied()
+                && connections
+                    .iter()
+                    .all(|c| c.pending.is_none() && c.awaiting.is_none())
+            {
                 break;
             }
             let now = boottime_ns();
@@ -164,7 +321,10 @@ pub fn run(runtime: &Path, policy: &Path, profile_path: &Path, entry: &Path) -> 
                 match net::accept_with(listener, SocketFlags::NONBLOCK | SocketFlags::CLOEXEC) {
                     Ok(fd) => {
                         net::sockopt::set_socket_passcred(&fd, true)?;
+                        connection_id = connection_id.checked_add(1).ok_or(io::ErrorKind::Other)?;
                         connections.push(Connection {
+                            id: connection_id,
+                            awaiting: None,
                             fd,
                             admin: is_admin,
                             deadline: now.saturating_add(30_000_000_000),
@@ -177,7 +337,28 @@ pub fn run(runtime: &Path, policy: &Path, profile_path: &Path, entry: &Path) -> 
             }
             connections.retain_mut(|connection| {
                 if boottime_ns() >= connection.deadline {
+                    if connection.awaiting.is_some() {
+                        authority.invalidate();
+                        storage.stop();
+                        if let Some(op) = &mut operation {
+                            op.retired = true;
+                        }
+                    }
                     return false;
+                }
+                if connection.awaiting.is_some() {
+                    match ipc::receive(&connection.fd) {
+                        Ok(None) => return true,
+                        Err(e) if e.raw_os_error() == Some(4) => return true,
+                        _ => {
+                            authority.invalidate();
+                            if let Some(op) = &mut operation {
+                                op.retired = true;
+                            }
+                            storage.stop();
+                            return false;
+                        }
+                    }
                 }
                 if let Some(bytes) = &connection.pending {
                     return match ipc::send(&connection.fd, bytes) {
@@ -202,9 +383,37 @@ pub fn run(runtime: &Path, policy: &Path, profile_path: &Path, entry: &Path) -> 
                     } else {
                         match serde_json::from_slice::<AdminRequest>(&bytes) {
                             Err(_) => Reply::Denied,
-                            Ok(AdminRequest::Snapshot {}) => authority.snapshot(),
+                            Ok(AdminRequest::Snapshot {}) => {
+                                authority.snapshot(storage.occupied(), storage.busy())
+                            }
                             Ok(AdminRequest::Stop {}) => {
                                 stopping = true;
+                                cleanup_until.get_or_insert_with(|| {
+                                    boottime_ns().saturating_add(2_000_000_000)
+                                });
+                                let clean =
+                                    authority.ready() && operation.is_none() && !storage.busy();
+                                authority.invalidate();
+                                if clean {
+                                    let until = boottime_ns().saturating_add(1_000_000_000);
+                                    if let Ok(token) = storage.start_shutdown(until) {
+                                        operation = Some(Operation {
+                                            token,
+                                            connection: None,
+                                            intent: None,
+                                            until,
+                                            retired: false,
+                                            shutdown: true,
+                                        });
+                                    } else {
+                                        storage.stop();
+                                    }
+                                } else {
+                                    if let Some(op) = &mut operation {
+                                        op.retired = true;
+                                    }
+                                    storage.stop();
+                                }
                                 for (app, c) in &mut children {
                                     authority.revoke(app);
                                     let _ = c.kill();
@@ -274,10 +483,47 @@ pub fn run(runtime: &Path, policy: &Path, profile_path: &Path, entry: &Path) -> 
                                 permission,
                                 allowed,
                             }) => {
-                                if authority.grant(&app, permission, allowed).is_ok() {
-                                    Reply::Ok
-                                } else {
+                                if operation.is_some() {
+                                    authority.invalidate();
+                                    if let Some(op) = &mut operation {
+                                        op.retired = true;
+                                    }
+                                    storage.stop();
                                     Reply::Unavailable
+                                } else {
+                                    match authority.plan_grant(
+                                        &app,
+                                        permission,
+                                        allowed,
+                                        boottime_ns(),
+                                    ) {
+                                        Ok(intent) => {
+                                            match storage
+                                                .start_write(intent.next.clone(), intent.until)
+                                            {
+                                                Ok(token) => {
+                                                    connection.awaiting = Some(token);
+                                                    connection.deadline =
+                                                        intent.until.saturating_add(1_000_000_000);
+                                                    operation = Some(Operation {
+                                                        token,
+                                                        connection: Some(connection.id),
+                                                        until: intent.until,
+                                                        intent: Some(intent),
+                                                        retired: false,
+                                                        shutdown: false,
+                                                    });
+                                                    return true;
+                                                }
+                                                Err(_) => {
+                                                    authority.invalidate();
+                                                    storage.stop();
+                                                    Reply::Unavailable
+                                                }
+                                            }
+                                        }
+                                        Err(_) => Reply::Unavailable,
+                                    }
                                 }
                             }
                             Ok(AdminRequest::Background { app, background }) => {
@@ -308,12 +554,47 @@ pub fn run(runtime: &Path, policy: &Path, profile_path: &Path, entry: &Path) -> 
                     }
                 } else {
                     match serde_json::from_slice::<AppRequest>(&bytes) {
-                        Ok(r) if !stopping => authority.request(
-                            cred.pid.as_raw_nonzero().get() as u32,
-                            cred.uid.as_raw(),
-                            r,
-                            boottime_ns,
-                        ),
+                        Ok(r) if !stopping => {
+                            if operation.is_some() && !matches!(r, AppRequest::Query {}) {
+                                authority.refuse_busy(
+                                    cred.pid.as_raw_nonzero().get() as u32,
+                                    cred.uid.as_raw(),
+                                    r,
+                                )
+                            } else {
+                                match authority.plan_request(
+                                    cred.pid.as_raw_nonzero().get() as u32,
+                                    cred.uid.as_raw(),
+                                    r,
+                                    boottime_ns(),
+                                ) {
+                                    Decision::Immediate(r) => r,
+                                    Decision::Persist(intent) => match storage
+                                        .start_write(intent.next.clone(), intent.until)
+                                    {
+                                        Ok(token) => {
+                                            connection.awaiting = Some(token);
+                                            connection.deadline =
+                                                intent.until.saturating_add(1_000_000_000);
+                                            operation = Some(Operation {
+                                                token,
+                                                connection: Some(connection.id),
+                                                until: intent.until,
+                                                intent: Some(intent),
+                                                retired: false,
+                                                shutdown: false,
+                                            });
+                                            return true;
+                                        }
+                                        Err(_) => {
+                                            authority.invalidate();
+                                            storage.stop();
+                                            Reply::Unavailable
+                                        }
+                                    },
+                                }
+                            }
+                        }
                         _ => Reply::Denied,
                     }
                 };
@@ -322,20 +603,40 @@ pub fn run(runtime: &Path, policy: &Path, profile_path: &Path, entry: &Path) -> 
                 connection.pending.is_some()
             });
         }
-        Ok(())
-    })();
-    if !children.is_empty() {
-        // Fail closed without relinquishing live children. Fatal IO cannot detach them.
-        for (name, child) in &mut children {
-            authority.revoke(name);
-            let _ = child.kill();
+        if startup_failed {
+            Err(io::ErrorKind::InvalidData.into())
+        } else {
+            Ok(())
         }
-        loop {
-            children.retain(|_, child| !matches!(child.try_wait(), Ok(Some(_))));
-            if children.is_empty() {
-                break;
+    })();
+    authority.invalidate();
+    let until = cleanup_until.unwrap_or_else(|| boottime_ns().saturating_add(2_000_000_000));
+    // Fence before every signal, and retain both child sets through actual reaping.
+    for (name, child) in &mut children {
+        authority.revoke(name);
+        let _ = child.kill();
+    }
+    if !storage.drain_until(until) {
+        std::process::abort();
+    }
+    while !children.is_empty() {
+        if boottime_ns() >= until {
+            std::process::abort();
+        }
+        let mut failed = false;
+        children.retain(|_, child| match child.try_wait() {
+            Ok(Some(_)) => false,
+            Ok(None) => true,
+            Err(_) => {
+                failed = true;
+                true
             }
-            std::thread::sleep(std::time::Duration::from_millis(20));
+        });
+        if failed {
+            std::process::abort();
+        }
+        if !children.is_empty() {
+            std::thread::sleep(std::time::Duration::from_millis(2));
         }
     }
     for (path, identity) in [&admin_path, &app_path].into_iter().zip(socket_ids) {

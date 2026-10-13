@@ -1,31 +1,11 @@
+use crate::storage::{Durable, Grant};
 use crate::{AppProfile, AppRequest, MAX_PERMITS, MAX_RECEIPTS, Permission, Reply, fresh_id};
 use rustix::{
     event::{PollFd, PollFlags, poll},
     fd::OwnedFd,
 };
-use serde::{Deserialize, Serialize};
-use std::{
-    collections::BTreeMap,
-    fs::{File, OpenOptions},
-    io,
-    io::{Read, Write},
-    os::unix::fs::{MetadataExt, OpenOptionsExt},
-    path::{Path, PathBuf},
-};
+use std::{collections::BTreeMap, io};
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
-#[serde(deny_unknown_fields)]
-struct Grant {
-    app: String,
-    permission: Permission,
-    allowed: bool,
-}
-#[derive(Clone, Debug, Default, Serialize, Deserialize)]
-#[serde(deny_unknown_fields)]
-struct Durable {
-    grants: Vec<Grant>,
-    receipts: Vec<String>,
-}
 struct Principal {
     uid: u32,
     pid: u32,
@@ -41,14 +21,31 @@ struct Permit {
     permission: Permission,
     until: u64,
 }
-
+pub(crate) enum Gate {
+    Grant,
+    Admit {
+        app: String,
+        generation: u64,
+        permission: Permission,
+        receipt: String,
+    },
+}
+pub(crate) struct WriteIntent {
+    pub next: Durable,
+    pub until: u64,
+    policy: u64,
+    lifecycle: u64,
+    gate: Gate,
+}
+pub(crate) enum Decision {
+    Immediate(Reply),
+    Persist(WriteIntent),
+}
 pub struct Authority {
     profiles: Vec<AppProfile>,
     principals: BTreeMap<String, Principal>,
     permits: BTreeMap<String, Permit>,
-    durable: Durable,
-    directory: PathBuf,
-    _lock: File,
+    pub(crate) durable: Durable,
     incarnation: String,
     sequence: u64,
     generation: u64,
@@ -57,85 +54,15 @@ pub struct Authority {
     locked: bool,
     suspended: bool,
     degraded: bool,
-}
-fn private_file(path: &Path) -> io::Result<File> {
-    let meta = std::fs::symlink_metadata(path)?;
-    if !meta.is_file() || meta.uid() != 0 || meta.mode() & 0o077 != 0 {
-        return Err(io::ErrorKind::PermissionDenied.into());
-    }
-    OpenOptions::new()
-        .read(true)
-        .custom_flags(rustix::fs::OFlags::NOFOLLOW.bits() as i32)
-        .open(path)
+    ready: bool,
 }
 impl Authority {
-    pub fn open(profiles: Vec<AppProfile>, directory: &Path) -> io::Result<Self> {
-        let m = std::fs::symlink_metadata(directory)?;
-        if !m.is_dir() || m.uid() != 0 || m.mode() & 0o077 != 0 {
-            return Err(io::ErrorKind::PermissionDenied.into());
-        }
-        let lock = OpenOptions::new()
-            .read(true)
-            .write(true)
-            .create(true)
-            .mode(0o600)
-            .custom_flags(rustix::fs::OFlags::NOFOLLOW.bits() as i32)
-            .open(directory.join("owner.lock"))?;
-        let m = lock.metadata()?;
-        if !m.is_file() || m.uid() != 0 || m.mode() & 0o077 != 0 {
-            return Err(io::ErrorKind::PermissionDenied.into());
-        }
-        rustix::fs::flock(&lock, rustix::fs::FlockOperation::NonBlockingLockExclusive)?;
-        match std::fs::symlink_metadata(directory.join("policy.pending")) {
-            Ok(_) => return Err(io::ErrorKind::InvalidData.into()),
-            Err(e) if e.kind() == io::ErrorKind::NotFound => {}
-            Err(e) => return Err(e),
-        }
-        let path = directory.join("policy.json");
-        let durable = if match std::fs::symlink_metadata(&path) {
-            Ok(_) => true,
-            Err(e) if e.kind() == io::ErrorKind::NotFound => false,
-            Err(e) => return Err(e),
-        } {
-            let mut bytes = Vec::new();
-            private_file(&path)?.take(32769).read_to_end(&mut bytes)?;
-            if bytes.len() > 32768 {
-                return Err(io::ErrorKind::InvalidData.into());
-            }
-            let value: Durable = serde_json::from_slice(&bytes)?;
-            if value.grants.len() > crate::MAX_APPS * 2 || value.receipts.len() > MAX_RECEIPTS {
-                return Err(io::ErrorKind::InvalidData.into());
-            }
-            for (i, grant) in value.grants.iter().enumerate() {
-                if !profiles.iter().any(|p| p.app == grant.app)
-                    || value.grants[..i]
-                        .iter()
-                        .any(|g| g.app == grant.app && g.permission == grant.permission)
-                {
-                    return Err(io::ErrorKind::InvalidData.into());
-                }
-            }
-            if value.receipts.iter().any(|s| {
-                s.len() != 49
-                    || s.as_bytes()[32] != b'-'
-                    || !s
-                        .bytes()
-                        .enumerate()
-                        .all(|(i, b)| i == 32 || b.is_ascii_hexdigit())
-            }) {
-                return Err(io::ErrorKind::InvalidData.into());
-            }
-            value
-        } else {
-            Durable::default()
-        };
+    pub(crate) fn loading(profiles: Vec<AppProfile>) -> io::Result<Self> {
         Ok(Self {
             profiles,
             principals: BTreeMap::new(),
             permits: BTreeMap::new(),
-            durable,
-            directory: directory.into(),
-            _lock: lock,
+            durable: Durable::default(),
             incarnation: fresh_id()?,
             sequence: 0,
             generation: 0,
@@ -144,40 +71,22 @@ impl Authority {
             locked: true,
             suspended: false,
             degraded: false,
+            ready: false,
         })
     }
-    fn persist(&mut self, next: Durable) -> io::Result<()> {
-        let result = (|| {
-            let path = self.directory.join("policy.pending");
-            let mut file = OpenOptions::new()
-                .write(true)
-                .create_new(true)
-                .mode(0o600)
-                .open(&path)?;
-            let bytes = serde_json::to_vec(&next)?;
-            if bytes.len() > 32768 {
-                return Err(io::ErrorKind::InvalidData.into());
-            }
-            file.write_all(&bytes)?;
-            file.sync_all()?;
-            std::fs::rename(path, self.directory.join("policy.json"))?;
-            File::open(&self.directory)?.sync_all()?;
-            Ok(())
-        })();
-        match result {
-            Ok(()) => {
-                self.durable = next;
-                Ok(())
-            }
-            Err(e) => {
-                self.degraded = true;
-                self.permits.clear();
-                Err(e)
-            }
-        }
+    pub(crate) fn activate(&mut self, durable: Durable) {
+        self.durable = durable;
+        self.ready = true;
+    }
+    pub(crate) fn invalidate(&mut self) {
+        self.degraded = true;
+        self.permits.clear();
+    }
+    pub(crate) fn ready(&self) -> bool {
+        self.ready && !self.degraded
     }
     pub fn register(&mut self, app: &str, pid: u32, alive: OwnedFd) -> io::Result<()> {
-        if self.degraded || !living(&alive)? {
+        if !self.ready() || !living(&alive)? {
             return Err(io::ErrorKind::PermissionDenied.into());
         }
         let profile = self
@@ -224,8 +133,14 @@ impl Authority {
         }
         Ok(())
     }
-    pub fn grant(&mut self, app: &str, permission: Permission, allowed: bool) -> io::Result<()> {
-        if self.degraded || !self.profiles.iter().any(|p| p.app == app) {
+    pub(crate) fn plan_grant(
+        &mut self,
+        app: &str,
+        permission: Permission,
+        allowed: bool,
+        now: u64,
+    ) -> io::Result<WriteIntent> {
+        if !self.ready() || !self.profiles.iter().any(|p| p.app == app) {
             return Err(io::ErrorKind::PermissionDenied.into());
         }
         // Revocation fences memory before durable IO; failure stays unavailable.
@@ -252,7 +167,13 @@ impl Authority {
                 allowed,
             });
         }
-        self.persist(next)
+        Ok(WriteIntent {
+            next,
+            until: now.checked_add(1_000_000_000).ok_or(io::ErrorKind::Other)?,
+            policy: self.policy,
+            lifecycle: self.lifecycle,
+            gate: Gate::Grant,
+        })
     }
     pub fn lifecycle(
         &mut self,
@@ -297,18 +218,35 @@ impl Authority {
         self.sequence = self.sequence.checked_add(1)?;
         Some(format!("{}-{:016x}", self.incarnation, self.sequence))
     }
-    pub fn request(
+    pub(crate) fn refuse_busy(&mut self, pid: u32, uid: u32, r: AppRequest) -> Reply {
+        let _ = self.reap_dead();
+        let Some(app) = self
+            .principals
+            .iter()
+            .find(|(_, p)| p.pid == pid && p.uid == uid)
+            .map(|(a, _)| a.clone())
+        else {
+            return Reply::Denied;
+        };
+        if let AppRequest::Admit { permit } = r
+            && self.permits.get(&permit).is_some_and(|p| p.app == app)
+        {
+            self.permits.remove(&permit);
+        }
+        Reply::Unavailable
+    }
+    pub(crate) fn plan_request(
         &mut self,
         pid: u32,
         uid: u32,
         request: AppRequest,
-        mut clock: impl FnMut() -> u64,
-    ) -> Reply {
-        let now = clock();
+        now: u64,
+    ) -> Decision {
         let _ = self.reap_dead();
         self.permits.retain(|_, p| now < p.until);
-        if self.degraded {
-            return Reply::Unavailable;
+        let immediate = |r| Decision::Immediate(r);
+        if !self.ready() {
+            return immediate(Reply::Unavailable);
         }
         let Some(app) = self
             .principals
@@ -316,81 +254,113 @@ impl Authority {
             .find(|(_, p)| p.uid == uid && p.pid == pid)
             .map(|(a, _)| a.clone())
         else {
-            return Reply::Denied;
+            return immediate(Reply::Denied);
         };
         match request {
-            AppRequest::Query {} => Reply::Ok,
+            AppRequest::Query {} => immediate(Reply::Ok),
             AppRequest::Prepare { permission, ttl_ms } => {
                 if !(1..=5000).contains(&ttl_ms)
                     || !self.allowed(&app, permission)
                     || self.permits.len() >= MAX_PERMITS
                     || self.permits.values().filter(|p| p.app == app).count() >= 4
                 {
-                    return Reply::Denied;
+                    return immediate(Reply::Denied);
                 }
                 let Some(until) = now.checked_add(ttl_ms * 1_000_000) else {
-                    return Reply::Unavailable;
+                    return immediate(Reply::Unavailable);
                 };
                 let Some(id) = self.id() else {
-                    self.degraded = true;
-                    return Reply::Unavailable;
+                    self.invalidate();
+                    return immediate(Reply::Unavailable);
                 };
-                let generation = self.principals[&app].generation;
                 self.permits.insert(
                     id.clone(),
                     Permit {
-                        app,
-                        generation,
+                        app: app.clone(),
+                        generation: self.principals[&app].generation,
                         policy: self.policy,
                         lifecycle: self.lifecycle,
                         permission,
                         until,
                     },
                 );
-                Reply::Prepared { permit: id }
+                immediate(Reply::Prepared { permit: id })
             }
             AppRequest::Admit { permit } => {
-                // A foreign principal cannot consume another principal's reservation.
                 if self.permits.get(&permit).is_none_or(|p| p.app != app) {
-                    return Reply::Denied;
+                    return immediate(Reply::Denied);
                 }
-                let Some(p) = self.permits.remove(&permit) else {
-                    return Reply::Denied;
-                };
-                if p.app != app
-                    || now >= p.until
+                let p = self.permits.remove(&permit).unwrap();
+                if now >= p.until
                     || p.generation != self.principals[&app].generation
                     || p.policy != self.policy
                     || p.lifecycle != self.lifecycle
                     || !self.allowed(&app, p.permission)
                 {
-                    return Reply::Denied;
+                    return immediate(Reply::Denied);
                 }
                 if self.durable.receipts.len() >= MAX_RECEIPTS {
-                    return Reply::Unavailable;
+                    return immediate(Reply::Unavailable);
                 }
                 let Some(id) = self.id() else {
-                    self.degraded = true;
-                    return Reply::Unavailable;
+                    self.invalidate();
+                    return immediate(Reply::Unavailable);
                 };
                 let mut next = self.durable.clone();
                 next.receipts.push(id.clone());
-                if self.persist(next).is_err() {
+                Decision::Persist(WriteIntent {
+                    next,
+                    until: p.until.min(now.saturating_add(1_000_000_000)),
+                    policy: self.policy,
+                    lifecycle: self.lifecycle,
+                    gate: Gate::Admit {
+                        app,
+                        generation: p.generation,
+                        permission: p.permission,
+                        receipt: id,
+                    },
+                })
+            }
+        }
+    }
+    pub(crate) fn finish(&mut self, intent: WriteIntent, success: bool, now: u64) -> Reply {
+        if !success {
+            self.invalidate();
+            return Reply::Unavailable;
+        }
+        // A known durable commit is retained as history, even when current publication fails.
+        self.durable = intent.next;
+        if !self.ready()
+            || now >= intent.until
+            || self.policy != intent.policy
+            || self.lifecycle != intent.lifecycle
+        {
+            self.invalidate();
+            return Reply::Unavailable;
+        }
+        match intent.gate {
+            Gate::Grant => Reply::Ok,
+            Gate::Admit {
+                app,
+                generation,
+                permission,
+                receipt,
+            } => {
+                if !self.principals.get(&app).is_some_and(|p| {
+                    p.generation == generation && living(&p.alive).unwrap_or(false)
+                }) || !self.allowed(&app, permission)
+                {
+                    self.invalidate();
                     return Reply::Unavailable;
                 }
-                // Durability can consume the permit lifetime. Late success records
-                // uncertainty but grants no current admission and cannot be retried.
-                if clock() >= p.until || !living(&self.principals[&app].alive).unwrap_or(false) {
-                    return Reply::Unavailable;
-                }
-                Reply::AdmittedUncertain { receipt: id }
+                Reply::AdmittedUncertain { receipt }
             }
         }
     }
     pub fn is_degraded(&self) -> bool {
         self.degraded
     }
-    pub fn snapshot(&mut self) -> Reply {
+    pub(crate) fn snapshot(&mut self, occupied: bool, busy: bool) -> Reply {
         let _ = self.reap_dead();
         Reply::Snapshot {
             principals: self.principals.len(),
@@ -399,6 +369,9 @@ impl Authority {
             locked: self.locked,
             suspended: self.suspended,
             degraded: self.degraded,
+            ready: self.ready(),
+            storage_occupied: occupied,
+            storage_busy: busy,
         }
     }
 }
@@ -413,10 +386,37 @@ pub fn living(fd: &OwnedFd) -> io::Result<bool> {
     )?;
     Ok(fds[0].revents().is_empty())
 }
-
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::storage::Disk;
+    use std::path::PathBuf;
+    struct Harness {
+        core: Authority,
+        disk: Disk,
+    }
+    impl std::ops::Deref for Harness {
+        type Target = Authority;
+        fn deref(&self) -> &Authority {
+            &self.core
+        }
+    }
+    impl std::ops::DerefMut for Harness {
+        fn deref_mut(&mut self) -> &mut Authority {
+            &mut self.core
+        }
+    }
+    impl Harness {
+        fn grant(&mut self, app: &str, permission: Permission, allowed: bool) -> io::Result<()> {
+            let intent = self.core.plan_grant(app, permission, allowed, 0)?;
+            let success = self.disk.replace(&intent.next).is_ok();
+            if self.core.finish(intent, success, 0) == Reply::Ok {
+                Ok(())
+            } else {
+                Err(io::ErrorKind::Other.into())
+            }
+        }
+    }
     use crate::{AppRequest, boottime_ns};
     use std::os::unix::fs::PermissionsExt;
 
@@ -432,17 +432,17 @@ mod tests {
             std::fs::set_permissions(&path, std::fs::Permissions::from_mode(0o700)).unwrap();
             Self(path)
         }
-        fn authority(&self) -> Authority {
-            let mut a = Authority::open(
-                vec![AppProfile {
-                    app: "one".into(),
-                    uid: 10000,
-                    executable: "/unused".into(),
-                    args: vec![],
-                }],
-                &self.0,
-            )
-            .unwrap();
+        fn authority(&self) -> Harness {
+            let profiles = vec![AppProfile {
+                app: "one".into(),
+                uid: 10000,
+                executable: "/unused".into(),
+                args: vec![],
+            }];
+            let (disk, durable) = Disk::open(&self.0, &["one".into()]).unwrap();
+            let mut core = Authority::loading(profiles).unwrap();
+            core.activate(durable);
+            let mut a = Harness { core, disk };
             let pid = rustix::process::getpid();
             a.register(
                 "one",
@@ -460,11 +460,17 @@ mod tests {
             std::fs::remove_dir_all(&self.0).unwrap();
         }
     }
-    fn request(a: &mut Authority, r: AppRequest, clock: impl FnMut() -> u64) -> Reply {
+    fn request(a: &mut Harness, r: AppRequest, mut clock: impl FnMut() -> u64) -> Reply {
         // Direct component caller injection; actual credentials are qualified separately.
-        a.request(std::process::id(), 10000, r, clock)
+        match a.core.plan_request(std::process::id(), 10000, r, clock()) {
+            Decision::Immediate(r) => r,
+            Decision::Persist(intent) => {
+                let success = a.disk.replace(&intent.next).is_ok();
+                a.core.finish(intent, success, clock())
+            }
+        }
     }
-    fn prepared(a: &mut Authority, now: u64) -> String {
+    fn prepared(a: &mut Harness, now: u64) -> String {
         match request(
             a,
             AppRequest::Prepare {
@@ -492,7 +498,7 @@ mod tests {
         assert_eq!(a.durable.receipts.len(), 1);
         assert_eq!(
             request(&mut a, AppRequest::Admit { permit: p }, || 10),
-            Reply::Denied
+            Reply::Unavailable
         );
         assert!(dir.0.join("policy.json").is_file());
     }

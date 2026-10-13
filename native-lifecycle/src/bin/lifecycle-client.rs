@@ -9,6 +9,7 @@ fn main() -> io::Result<()> {
         return Err(io::ErrorKind::InvalidInput.into());
     }
     let listener = ipc::listener(Path::new(&args[1]), 0o600)?;
+    let mut second = None;
     let mut service = ipc::connect(Path::new(&args[0]))?;
     let deadline = boottime_ns().saturating_add(30_000_000_000);
     loop {
@@ -26,6 +27,45 @@ fn main() -> io::Result<()> {
                             break;
                         }
                         let value: serde_json::Value = serde_json::from_slice(&data)?;
+                        if matches!(
+                            value.get("driver").and_then(serde_json::Value::as_str),
+                            Some("send" | "receive")
+                        ) {
+                            let channel = value
+                                .get("channel")
+                                .and_then(serde_json::Value::as_u64)
+                                .ok_or(io::ErrorKind::InvalidInput)?;
+                            if channel > 1 {
+                                return Err(io::ErrorKind::InvalidInput.into());
+                            }
+                            if channel == 1 && second.is_none() {
+                                second = Some(ipc::connect(Path::new(&args[0]))?);
+                            }
+                            let fd = if channel == 0 {
+                                &service
+                            } else {
+                                second.as_ref().unwrap()
+                            };
+                            let reply = if value["driver"] == "send" {
+                                let bytes = serde_json::to_vec(
+                                    value.get("request").ok_or(io::ErrorKind::InvalidInput)?,
+                                )?;
+                                ipc::send(fd, &bytes)?;
+                                serde_json::json!({"driver_result":"sent"})
+                            } else {
+                                match ipc::receive(fd)? {
+                                    None => serde_json::json!({"driver_result":"pending"}),
+                                    Some((wire, cred)) => {
+                                        if cred.uid.as_raw() != 0 {
+                                            return Err(io::ErrorKind::PermissionDenied.into());
+                                        }
+                                        serde_json::from_slice::<serde_json::Value>(&wire)?
+                                    }
+                                }
+                            };
+                            ipc::send(&driver, &serde_json::to_vec(&reply)?)?;
+                            continue;
+                        }
                         if value.get("driver") == Some(&serde_json::json!("exit")) {
                             return Ok(());
                         }

@@ -19,6 +19,8 @@ elif grep -q 'pixel.mode=inbox-process' /proc/cmdline; then
   exec python3 /workspace/sim/guest/inbox_process.py
 elif grep -q 'pixel.mode=receipt-process' /proc/cmdline; then
   exec python3 /workspace/sim/guest/receipt_process.py
+elif grep -q 'pixel.mode=lifecycle-storage-process' /proc/cmdline; then
+  exec python3 /workspace/sim/guest/lifecycle_storage_process.py
 elif grep -q 'pixel.mode=lifecycle-process' /proc/cmdline; then
   exec python3 /workspace/sim/guest/lifecycle_process.py
 elif grep -q 'pixel.mode=native-process' /proc/cmdline; then

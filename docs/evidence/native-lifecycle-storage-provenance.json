@@ -1,0 +1,835 @@
+{
+  "schema_version": 1,
+  "component": "native-lifecycle-storage",
+  "status": "x86 and actual isolated ARM64 kernel installed/process storage supervision qualified:27 groups plus7 components each",
+  "historical_milestone": {
+    "commit": "a536634885d3ec836ee6ed5cbe95e6d18c60835a",
+    "provenance": "docs/evidence/native-lifecycle-provenance.json",
+    "proof": "18 installed plus4 components on x86 and actual ARM64 Arch kernel; preserved separately",
+    "historical_arm64_private_results": "sim/results/native-lifecycle-20261012T230531.656160Z",
+    "historical_sources_and_root_arm_reports_modified": false
+  },
+  "scope": {
+    "physical_phone": false,
+    "host_sys_power": false,
+    "vendor_execution": false,
+    "android_java_production_dependency": false,
+    "upstream_inputs_published": false,
+    "raw_private_receipts_published": false,
+    "shared_vm_guest_runner_modified": true,
+    "rea_sessions_opened": 0,
+    "commit_or_push_by_subagent": false,
+    "root_vm_changes": "Dedicated lifecycle-storage process guest/runner plus boot-mode dispatch; historical fixtures and proof untouched."
+  },
+  "public_reference": {
+    "inspection_manifest": "tools/native-lifecycle-reference.json",
+    "manifest_sha256": "13e4e40f77b45e0c02d5b225b80faa3edd1cb4d2fcc5ad3790170b7618a9f54a",
+    "kernel_source_commit": "e8f897f4afef0031fe618a8e94127a0934896aba",
+    "public_original_kernel_built": false,
+    "documentation": [
+      "https://man7.org/linux/man-pages/man7/unix.7.html",
+      "https://man7.org/linux/man-pages/man2/pidfd_open.2.html",
+      "https://man7.org/linux/man-pages/man2/wait.2.html",
+      "https://man7.org/linux/man-pages/man2/fsync.2.html",
+      "https://man7.org/linux/man-pages/man2/PR_SET_CHILD_SUBREAPER.2const.html"
+    ]
+  },
+  "execution": {
+    "x86_installed_process": {
+      "class": "actual Linux kernel/process/AF_UNIX credentials; disposable root synthetic installed apps; real SIGSTOP worker; actual owned-child cleanup with injected reap error or withheld wait",
+      "kernel": "6.8.0-136-generic",
+      "machine": "x86_64",
+      "passed": true,
+      "passed_groups": [
+        "real_process_lock_generation_fence",
+        "claimed_pid_uid_app_and_unregistered_kernel_principal_denied",
+        "kernel_rejected_real_child_credential_forgery",
+        "inherited_actual_socket_cannot_delegate_pid_authority",
+        "cross_principal_permit_refused_and_admission_once",
+        "background_suspend_and_resume_fence",
+        "durable_revocation_and_absolute_deadline",
+        "per_principal_capacity_and_prompt_snapshot",
+        "real_death_reaping_and_fresh_principal_generation",
+        "single_durable_owner_and_revocation_retains_uncertainty",
+        "restart_policy_uncertainty_persist_and_old_permit_fenced",
+        "durable_uncertain_receipt_capacity_never_evicts_or_retries",
+        "reserved_control_capacity_with_idle_app_clients",
+        "truncated_packet_and_unexpected_descriptors_fail_closed",
+        "durable_failure_latches_unavailable_without_reentry",
+        "owned_children_stopped_reaped_and_socket_cleanup",
+        "unreconciled_durable_pending_blocks_restart",
+        "bounded_private_receipts_contain_no_pid_uid_app_payload",
+        "SIGSTOP_storage_process_status_stop_responsive_and_reaped",
+        "uncertain_storage_owner_refuses_restart_after_reaping",
+        "concurrent_same_principal_busy_refusal_consumes_permit",
+        "synced_late_success_after_lifecycle_change_is_historical_only",
+        "absolute_deadline_revokes_before_kill_reap_and_no_successor",
+        "actual_worker_previous_token_reply_cannot_publish_current_admission",
+        "paused_initial_storage_load_keeps_status_stop_responsive",
+        "bounded_final_cleanup_reap_error_aborts_without_dropping_owned_child",
+        "bounded_final_cleanup_reap_withheld_aborts_without_dropping_owned_child"
+      ],
+      "count": 27,
+      "preserved_baseline_groups": 18,
+      "new_storage_groups": 7,
+      "new_cleanup_groups": 2,
+      "baseline_fixture_sha256": "116eb838f2835625744bc4de741dbf157adac40892cefa30544bdb3c6d267862",
+      "owned_children_reaped": true,
+      "cleanup_modes": [
+        {
+          "passed": true,
+          "mode": "error",
+          "mechanism": "real child process and injected wait/reap error; no unkillable filesystem syscall",
+          "kernel": "6.8.0-136-generic",
+          "machine": "x86_64",
+          "daemon_sha256": "e9938096bb3dc7f66c986846ae9623f1fa68a050ffa9916b23afb9c8111e5f94",
+          "groups": [
+            "bounded_final_cleanup_reap_error_aborts_without_dropping_owned_child"
+          ],
+          "cleanup_elapsed_seconds": 0.06344394106417894
+        },
+        {
+          "passed": true,
+          "mode": "withheld",
+          "mechanism": "real child process and injected wait/reap withheld; no unkillable filesystem syscall",
+          "kernel": "6.8.0-136-generic",
+          "machine": "x86_64",
+          "daemon_sha256": "e9938096bb3dc7f66c986846ae9623f1fa68a050ffa9916b23afb9c8111e5f94",
+          "groups": [
+            "bounded_final_cleanup_reap_withheld_aborts_without_dropping_owned_child"
+          ],
+          "cleanup_elapsed_seconds": 0.2636321298778057
+        }
+      ]
+    },
+    "x86_components": {
+      "class": "actual pidfd and bounded temporary-file IO; injected core caller/clock samples are separate from installed credentials",
+      "passed": 7,
+      "tests": [
+        "authority::tests::exhausted_lifecycle_revision_fences_prepared_work",
+        "authority::tests::failed_admission_write_never_recovers_or_retries",
+        "authority::tests::late_durable_success_grants_no_current_admission",
+        "authority::tests::suspended_time_jump_expires_without_timer_delivery",
+        "storage::tests::clean_seal_binds_exact_policy_and_unclean_owner_never_reopens",
+        "storage::tests::clean_seal_rejects_changed_policy_without_overwriting_owner",
+        "storage::tests::terminated_worker_slot_remains_owned_until_actual_reap"
+      ]
+    },
+    "build": {
+      "format": "passed",
+      "clippy_all_targets_warnings_denied": "passed",
+      "x86_64_gnu_bins_and_library_test": "passed",
+      "aarch64_gnu_bins_and_library_test": "passed",
+      "arm64_storage_runtime_qualified": true,
+      "arm64_user_mode_process_substitution": false,
+      "rustc": "1.98.1 (48a229cea 2026-09-01)",
+      "python_runtime": "3.13.5"
+    },
+    "red_green": [
+      {
+        "red": "status/stop blocked behind SIGSTOP owned storage process",
+        "class": "actual owned process SIGSTOP with synchronous refactor baseline; not direct a536634 binary or held filesystem syscall",
+        "fix": "asynchronous storage polling and current actor controls",
+        "source_identity": "artifacts/native-lifecycle-storage/red-inputs.json"
+      },
+      {
+        "red": "uncertain storage owner silently reopened after kill",
+        "class": "actual worker SIGKILL/reap and new daemon with same policy",
+        "fix": "durable fresh live epoch plus exact policy hash clean seal",
+        "source_identity": "artifacts/native-lifecycle-storage/recovery-red-inputs.json"
+      },
+      {
+        "red": "busy refusal left an owned permit reusable after another write completed",
+        "class": "actual same appPID/two IPC connections; worker paused after synced first admission",
+        "fix": "authenticate owner and consume admitted ticket on busy refusal",
+        "source_identity": "artifacts/native-lifecycle-storage/busy-red-inputs.json",
+        "red_cleanup_note": "intended assertion preceded duplicate-finally cleanup noise; owned processes/container reclaimed; final fixture corrected"
+      },
+      {
+        "red": "final cleanup held by wait/reap error beyond fixed budget",
+        "class": "actual owned child plus explicit test-only reap EIO",
+        "fix": "terminal cleanup error aborts before dropping owned Child",
+        "source_identity": "artifacts/native-lifecycle-storage/cleanup-red-inputs.json"
+      },
+      {
+        "red": "final cleanup held by wait/reap withheld beyond fixed budget",
+        "class": "actual owned child plus explicit test-only withheld try_wait",
+        "fix": "one absolute BOOTTIME deadline and abort retaining unreaped Child",
+        "source_identity": "artifacts/native-lifecycle-storage/cleanup-red-inputs.json"
+      }
+    ],
+    "bootstrap_failures": [
+      "prepared build/runtime images disappeared before cleanup compile; root restored original recipes with new image identities",
+      "first cleanup red reached intended failure but cap-drop-only container could not write host-owned evidence directory; corrected isolated DAC_OVERRIDE evidence mount and reran both intended reds",
+      "final Clippy rejected unused production drain convenience helper; restricted that helper to component tests and reran required build"
+    ],
+    "images": {
+      "historical_prefix_green": [
+        {
+          "tag": "pixel-phone-rust:20261012-b472",
+          "id": "sha256:5b8db5a581335ef1ce100691772e2109357bc9a9f051bfcb5b3c3a06ff0b0661"
+        },
+        {
+          "tag": "pixel-graphics-build:20261011-b472",
+          "id": "sha256:072106341a377dc38091e09c79cc642e5717cf57d10915c0928e3e9a49b1659c"
+        }
+      ],
+      "restored_cleanup_red_and_final_green": [
+        {
+          "tag": "pixel-phone-rust:20261012-b472",
+          "id": "sha256:0b4b956502a9f55d992eaced6975737b523be19bd2034078983b36bbcfd7aee6"
+        },
+        {
+          "tag": "pixel-graphics-build:20261011-b472",
+          "id": "sha256:07b2b220c62ebe15a90af7e10d703297b511508891492a292ae986f0521c448a"
+        }
+      ]
+    },
+    "historical_vs_current": "prefix runtime/component green copied to precleanup outputs and executable hashes retained; cleanup red source snapshot retained before fix; final current binaries/fixtures have separate hashes; a536634 ARM proof remains historical",
+    "arm64_system_kernel": {
+      "results": "sim/results/native-lifecycle-storage-20261013T001644.970116Z",
+      "result": {
+        "passed": true,
+        "architecture": "aarch64",
+        "kernel": "7.1.6-1-aarch64-ARCH",
+        "qemu_mode": "system",
+        "hardware_verified": false,
+        "phone_accessed": false,
+        "network": "none",
+        "binary_sha256": {
+          "lifecycle-daemon": "6099ca1eacacb159716388ab01913b97a96d7eefbc59546ce2176bf64656c1af",
+          "lifecycle-client": "c7defefaee71540aabe258db212f1d9fb31b20fbd6b08117a10ff89082160324",
+          "lifecycle-launcher": "5df3c4b786fa162abbe195388bde753f6ab306e3db0147fed4c687947b1a2cfd",
+          "pokelinux_lifecycle": "6f7545f4a879c561b529bcfb13533d0e0f0828f55a7fcf0c301f6e4603238016"
+        },
+        "groups": [
+          "real_process_lock_generation_fence",
+          "claimed_pid_uid_app_and_unregistered_kernel_principal_denied",
+          "kernel_rejected_real_child_credential_forgery",
+          "inherited_actual_socket_cannot_delegate_pid_authority",
+          "cross_principal_permit_refused_and_admission_once",
+          "background_suspend_and_resume_fence",
+          "durable_revocation_and_absolute_deadline",
+          "per_principal_capacity_and_prompt_snapshot",
+          "real_death_reaping_and_fresh_principal_generation",
+          "single_durable_owner_and_revocation_retains_uncertainty",
+          "restart_policy_uncertainty_persist_and_old_permit_fenced",
+          "durable_uncertain_receipt_capacity_never_evicts_or_retries",
+          "reserved_control_capacity_with_idle_app_clients",
+          "truncated_packet_and_unexpected_descriptors_fail_closed",
+          "durable_failure_latches_unavailable_without_reentry",
+          "owned_children_stopped_reaped_and_socket_cleanup",
+          "unreconciled_durable_pending_blocks_restart",
+          "bounded_private_receipts_contain_no_pid_uid_app_payload",
+          "SIGSTOP_storage_process_status_stop_responsive_and_reaped",
+          "uncertain_storage_owner_refuses_restart_after_reaping",
+          "concurrent_same_principal_busy_refusal_consumes_permit",
+          "synced_late_success_after_lifecycle_change_is_historical_only",
+          "absolute_deadline_revokes_before_kill_reap_and_no_successor",
+          "actual_worker_previous_token_reply_cannot_publish_current_admission",
+          "paused_initial_storage_load_keeps_status_stop_responsive",
+          "bounded_final_cleanup_reap_error_aborts_without_dropping_owned_child",
+          "bounded_final_cleanup_reap_withheld_aborts_without_dropping_owned_child"
+        ],
+        "selection_sha256": "770bfdf61e37dce337bf48ad24689ab755186190d105a876db0fe28cd29d5f90",
+        "component_tests": 7,
+        "installed_boundary": {
+          "passed": true,
+          "groups": [
+            "preserved18_installed_cases_with_loading_bootstrap_adapter",
+            "SIGSTOP_storage_process_status_stop_responsive_and_reaped",
+            "uncertain_storage_owner_refuses_restart_after_reaping",
+            "concurrent_same_principal_busy_refusal_consumes_permit",
+            "synced_late_success_after_lifecycle_change_is_historical_only",
+            "absolute_deadline_revokes_before_kill_reap_and_no_successor",
+            "actual_worker_previous_token_reply_cannot_publish_current_admission",
+            "paused_initial_storage_load_keeps_status_stop_responsive"
+          ],
+          "baseline_fixture_sha256": "116eb838f2835625744bc4de741dbf157adac40892cefa30544bdb3c6d267862",
+          "kernel": "7.1.6-1-aarch64-ARCH",
+          "machine": "aarch64",
+          "mechanism": "SIGSTOP process supervision; no held filesystem syscall"
+        },
+        "baseline_boundary": {
+          "passed": true,
+          "groups": [
+            "real_process_lock_generation_fence",
+            "claimed_pid_uid_app_and_unregistered_kernel_principal_denied",
+            "kernel_rejected_real_child_credential_forgery",
+            "inherited_actual_socket_cannot_delegate_pid_authority",
+            "cross_principal_permit_refused_and_admission_once",
+            "background_suspend_and_resume_fence",
+            "durable_revocation_and_absolute_deadline",
+            "per_principal_capacity_and_prompt_snapshot",
+            "real_death_reaping_and_fresh_principal_generation",
+            "single_durable_owner_and_revocation_retains_uncertainty",
+            "restart_policy_uncertainty_persist_and_old_permit_fenced",
+            "durable_uncertain_receipt_capacity_never_evicts_or_retries",
+            "reserved_control_capacity_with_idle_app_clients",
+            "truncated_packet_and_unexpected_descriptors_fail_closed",
+            "durable_failure_latches_unavailable_without_reentry",
+            "owned_children_stopped_reaped_and_socket_cleanup",
+            "unreconciled_durable_pending_blocks_restart",
+            "bounded_private_receipts_contain_no_pid_uid_app_payload"
+          ],
+          "kernel": "7.1.6-1-aarch64-ARCH",
+          "machine": "aarch64"
+        },
+        "cleanup_error": {
+          "passed": true,
+          "mode": "error",
+          "mechanism": "real child process and injected wait/reap error; no unkillable filesystem syscall",
+          "kernel": "7.1.6-1-aarch64-ARCH",
+          "machine": "aarch64",
+          "daemon_sha256": "6099ca1eacacb159716388ab01913b97a96d7eefbc59546ce2176bf64656c1af",
+          "groups": [
+            "bounded_final_cleanup_reap_error_aborts_without_dropping_owned_child"
+          ],
+          "cleanup_elapsed_seconds": 0.2673112630000034
+        },
+        "cleanup_withheld": {
+          "passed": true,
+          "mode": "withheld",
+          "mechanism": "real child process and injected wait/reap withheld; no unkillable filesystem syscall",
+          "kernel": "7.1.6-1-aarch64-ARCH",
+          "machine": "aarch64",
+          "daemon_sha256": "6099ca1eacacb159716388ab01913b97a96d7eefbc59546ce2176bf64656c1af",
+          "groups": [
+            "bounded_final_cleanup_reap_withheld_aborts_without_dropping_owned_child"
+          ],
+          "cleanup_elapsed_seconds": 0.4718084080000011
+        },
+        "mechanism_limits": "SIGSTOP and explicitly injected wait/reap error/withheld wait with real owned children; no uninterruptible filesystem syscall claim"
+      }
+    }
+  },
+  "bounds": {
+    "owned_storage_workers": 1,
+    "queued_storage_operations": 0,
+    "pending_storage_operations": 1,
+    "storage_packet_bytes": 65536,
+    "durable_state_bytes": 32768,
+    "durable_grants": 32,
+    "durable_receipts": 128,
+    "load_deadline_ms": 1000,
+    "grant_write_deadline_ms": 1000,
+    "healthy_shutdown_deadline_ms": 1000,
+    "shared_stop_fatal_reap_budget_ms": 2000,
+    "cleanup_test_budget_ms": 200,
+    "cleanup_fixture_observation_budget_ms": 700,
+    "accepted_app_connections": 12,
+    "reserved_privileged_connections": 4
+  },
+  "ownership_rules": [
+    "fence publication before signalling",
+    "keep occupied capacity until actual wait/reap",
+    "terminal worker never restarts a successor",
+    "each IPC response must match child credentials, live pidfd, source nonce, operation token and original BOOTTIME deadline",
+    "late disk success never grants current admission",
+    "busy admission refusal consumes only actual owners permit",
+    "historical AdmittedUncertain receipt is not later hardware authority",
+    "uncertain owner does not emit clean seal or automatically replay/admit/recover"
+  ],
+  "remaining_gates": [
+    "actual uninterruptible filesystem/kernel task reclamation and external service-manager/cgroup ownership",
+    "filesystem crash/power-loss durability; temp-file fsync tests do not qualify arbitrary storage",
+    "startup/profile/launch executable trust filesystem checks and runtime socket-path cleanup are not supervised storage operations",
+    "complete app process tree resource/reclamation contract",
+    "installed Omarchy package/UID and authenticated lifecycle ingress",
+    "backend effect dispatch atomically at current admission; remote uncertain effect cleanup/reset",
+    "physical phone/hardware"
+  ],
+  "source_files": [
+    {
+      "path": "native-lifecycle/Cargo.lock",
+      "sha256": "a2e355beab9e0de61199d0bdfb640a751c93c30768be4fa64557065c40d3a814",
+      "bytes": 6235
+    },
+    {
+      "path": "native-lifecycle/Cargo.toml",
+      "sha256": "ddbfa855d2973beffc5317462061add6647f1dc056ee67b9bc4d2f7330f659d7",
+      "bytes": 345
+    },
+    {
+      "path": "native-lifecycle/src/authority.rs",
+      "sha256": "0bf6387c6c227bc7d466de676f0f6f436bb425a6752f4ba6c6f778fe672b100e",
+      "bytes": 18066
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-client.rs",
+      "sha256": "6dd1f2c86a96bca4364b5ee2e85fd39fecaf10bc68b8f7b727bd3e65f86bc9bf",
+      "bytes": 5420
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-daemon.rs",
+      "sha256": "ee33d2d77a8fc98ce56b582d9b9c96d0f2f8240e3fda182ec9bdeba8f6af4f01",
+      "bytes": 1148
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-launcher.rs",
+      "sha256": "49a0e279b381a45ed49242a74c94b202ebebb81bc42bd8b61cfd58f8bb80a923",
+      "bytes": 796
+    },
+    {
+      "path": "native-lifecycle/src/ipc.rs",
+      "sha256": "6a9073bb4c4413f8b4d49caa6a8827cfe7ffe167b3c712192d0951d6be8465c1",
+      "bytes": 5138
+    },
+    {
+      "path": "native-lifecycle/src/lib.rs",
+      "sha256": "6a81f77faf839d3b5937f995ebbf9e31a18468b5682376bdb9a6ea68d57aab86",
+      "bytes": 2598
+    },
+    {
+      "path": "native-lifecycle/src/service.rs",
+      "sha256": "7fa85df90b6227d9d8a1c515eb04467ac641cc68a4523079fe897d8328f85972",
+      "bytes": 30612
+    },
+    {
+      "path": "native-lifecycle/src/storage.rs",
+      "sha256": "e860864db2ec8b6c00930128c1592918f06b00e3b4a466b71d17effe0764997f",
+      "bytes": 29876
+    },
+    {
+      "path": "tools/build-native-lifecycle-storage.sh",
+      "sha256": "5edc8d1d376667e19d3b27e0f2db78a50210dae67b2b4cd21ef28872172466bd",
+      "bytes": 1824
+    },
+    {
+      "path": "tools/index-native-lifecycle-storage.py",
+      "sha256": "dbd89567634f8f05270b18bbe850d6402aa9b38832d27dfa3aaee60ae65ceab8",
+      "bytes": 4925
+    },
+    {
+      "path": "tools/native-lifecycle-storage-cleanup-fixture.py",
+      "sha256": "028cc1f7a95f622370247b9ec940eeec82503928752b9222d13b3b63b0124ad2",
+      "bytes": 3791
+    },
+    {
+      "path": "tools/native-lifecycle-storage-fixture.py",
+      "sha256": "4c00fc0c59b74474a69293d3250e6ae5042f0937f004f5ec04968613b8d81080",
+      "bytes": 11804
+    },
+    {
+      "path": "tools/test-native-lifecycle-storage-cleanup.sh",
+      "sha256": "2dcfc24b9e021f63f272dfcf380550b2705f990cd4d45fa9df6f844e9b8ec454",
+      "bytes": 985
+    },
+    {
+      "path": "tools/test-native-lifecycle-storage-components.sh",
+      "sha256": "15cf2e9cece1864d60a9d5b1273f8675d358fc2ffd0ce9aabf240316bde58721",
+      "bytes": 1182
+    },
+    {
+      "path": "tools/test-native-lifecycle-storage.sh",
+      "sha256": "b0248315210427600a6a7e10ef006b7f9675b0cbe4e1589cae863a62230c4026",
+      "bytes": 1011
+    },
+    {
+      "path": "tools/lifecycle-storage-process-vm.py",
+      "sha256": "adf99448908d27084aed1ce281e1ca923ddc536f995aa49022190684a95e5331",
+      "bytes": 2208
+    },
+    {
+      "path": "sim/guest/lifecycle_storage_process.py",
+      "sha256": "9ae555b34e903a1f17669630071035738ffed31703000cd231b614b071c525e2",
+      "bytes": 4691
+    },
+    {
+      "path": "sim/guest/boot.sh",
+      "sha256": "b3142deaf06fbe04e9a40250c47ce0838ec2e99c26ffcce223281d7a52cd1b8e",
+      "bytes": 3378
+    },
+    {
+      "path": "docs/native-lifecycle-storage.md",
+      "sha256": "9e8b4220aa80b84e9852ce83f26068458daac611576dbc000a834914219a31a9",
+      "bytes": 8040
+    },
+    {
+      "path": "docs/native-lifecycle.md",
+      "sha256": "a26212e094f850d1d522a94dcb3e35b41057a41bda94333f8303ce6cd7cd83c5",
+      "bytes": 10259
+    }
+  ],
+  "private_proof_files": [
+    {
+      "path": "artifacts/native-lifecycle-storage/runtime-red.log",
+      "sha256": "b3c24cbb1627f436a2e93ad72a3a71ce762d78720845b2a8fe8e8ab0c5d7e048",
+      "bytes": 842
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/red-inputs.json",
+      "sha256": "eeb46aca7194a5bca575bb49bea38da6a1173b06ac22a17ca9b2d9014592f7bf",
+      "bytes": 2523
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/runtime-recovery-red.log",
+      "sha256": "15e92ac4ab556f1ed6d533efd7f9eec609a71d3c4569d33a39a36db09c760bfa",
+      "bytes": 1469
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/recovery-red-inputs.json",
+      "sha256": "3123b4017b9647e33241e53238eb86c4dac2be99001adc76dadb80b6a9bf80a0",
+      "bytes": 929
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/runtime-busy-red.log",
+      "sha256": "4e3100ff3c376d5206e98a29bdff606aa1e5cdba736460cb0a1f73f7e4da0d66",
+      "bytes": 2685
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/busy-red-inputs.json",
+      "sha256": "48e203340a2288227abb4b860d89209ef28397fe03622f8dcbbd6a158fb73fbf",
+      "bytes": 990
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/runtime-responsive-green.log",
+      "sha256": "e86cc826842eb7cd7698d19101955d3b091f5764ad7624755b3b65ef46cddfb8",
+      "bytes": 1110
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/runtime-precleanup-green.log",
+      "sha256": "66562dff049e6c86ab58e3aad060799650fc6c28196637cc6e61b3c69935de3c",
+      "bytes": 1496
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/components-precleanup-green.log",
+      "sha256": "f60e19ad56f348cad22fdb175989b9bbbd8d9b6e845774a4118aa92747569528",
+      "bytes": 693
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/precleanup-inputs.json",
+      "sha256": "002bed38ecdf3f9fdb373e687cb5edfb3006c03c39aca9382bd2412037174f26",
+      "bytes": 3752
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/green/result-precleanup-green.json",
+      "sha256": "2331974018fb8096703b0a15e1bffcfb3ac8b56f5e3688031567d8b0dbd45cc2",
+      "bytes": 795
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/runtime-cleanup-red-bootstrap.log",
+      "sha256": "3acc6af8d2a047a472c9a31434aa44555367ddb2eca9d80b579f2c8077888ff4",
+      "bytes": 4106
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/runtime-cleanup-red.log",
+      "sha256": "c7c081690ba9d84fa5eda3e600b748e224bea67ec1ce6f537691ffafe9e9e44c",
+      "bytes": 2000
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/cleanup-red-inputs.json",
+      "sha256": "6297bd4ac59f6a38d1e7b5e38840b75ed96d059abc9cc8d22e1d0c09c0f3eef6",
+      "bytes": 1861
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/cleanup-red-error/result.json",
+      "sha256": "14a7cdfc88e39f1cf77cc0209510d869f09d8c20902b8bb6877f71381dfe4b69",
+      "bytes": 284
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/cleanup-red-withheld/result.json",
+      "sha256": "97122b7b9988d133618bf519f4fe55f78849baf48515cb410dfaa91dcb7dfbd5",
+      "bytes": 287
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/build-cleanup-red.log",
+      "sha256": "789efbc78b71799a520598cb8e787cd7bd0e8ba97d1b14b849792efd8afc394e",
+      "bytes": 241
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/build-cleanup-red-restored.log",
+      "sha256": "63260e8559489d5be9e1bf004ad3aa58a9940e93201fa07459b1f00977268f0c",
+      "bytes": 285
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/build-storage-final-lint-first.log",
+      "sha256": "eea7f9a1bbb01bc94df57fff14c87ab0dd08d1521d3fe5eedf86632d9ba841c9",
+      "bytes": 571
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/build-storage-final.log",
+      "sha256": "9abd5db83f75f517b4e15d0cbb7acae8814a6f641ab4c898a2a0993115480f4b",
+      "bytes": 712
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/runtime-storage-final-green.log",
+      "sha256": "66562dff049e6c86ab58e3aad060799650fc6c28196637cc6e61b3c69935de3c",
+      "bytes": 1496
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/components-storage-final-green.log",
+      "sha256": "f60e19ad56f348cad22fdb175989b9bbbd8d9b6e845774a4118aa92747569528",
+      "bytes": 693
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/runtime-cleanup-final-green.log",
+      "sha256": "ab07059fd35dc8a81c9175c79e4c0907857f6a55cfba6a42f96a39bb8d4181df",
+      "bytes": 151
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/green/result.json",
+      "sha256": "2331974018fb8096703b0a15e1bffcfb3ac8b56f5e3688031567d8b0dbd45cc2",
+      "bytes": 795
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/green/baseline/result.json",
+      "sha256": "428a84c646b432804f8420476ace99c316783d579dd58e78e69b446137a0906b",
+      "bytes": 1114
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/cleanup-green-error/result.json",
+      "sha256": "6964757ba4f66e643be51290eef8939ca98f61921b356b004111b4209d3766c8",
+      "bytes": 427
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/cleanup-green-withheld/result.json",
+      "sha256": "1993633282a247b705ffb3ace9604516b96d60696de88fa2ba431246390f1abf",
+      "bytes": 435
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/arm64-artifacts.json",
+      "sha256": "770bfdf61e37dce337bf48ad24689ab755186190d105a876db0fe28cd29d5f90",
+      "bytes": 6633
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/x86-artifacts.json",
+      "sha256": "00f9f9bdd018d89fe66b0af10e3ae55de5b25f9da1bb8b8f932e36fc2249ebc2",
+      "bytes": 6614
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/aarch64-bins-cargo.jsonl",
+      "sha256": "3c91b06e050b710c3d9f4c674fceb7393e45ec27361bece5cb3ebde7be4b0ccc",
+      "bytes": 29661
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/aarch64-tests-cargo.jsonl",
+      "sha256": "7341413c74b469fe1fd990a7160b278b353b3e0945a1196ababafff6f3a7baec",
+      "bytes": 27701
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/x86_64-bins-cargo.jsonl",
+      "sha256": "19acfd218eec45b77690a60ec9f1707503b66331b8d3aba4e604f69f712b5ef0",
+      "bytes": 27945
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/x86_64-tests-cargo.jsonl",
+      "sha256": "30d5ee4e46f6ad90d37a8ec4ae9217ecd748e5c040ac821c48126bb4e0d6ba71",
+      "bytes": 25991
+    },
+    {
+      "path": "artifacts/native-lifecycle-storage/arm64-process-vm-result.json",
+      "sha256": "7aee1fc26ed4ea89c48788f5bf5aff8194dbbd415008b3ca07fd4ea366209f0f",
+      "bytes": 5832
+    },
+    {
+      "path": "sim/results/native-lifecycle-storage-20261013T001644.970116Z/result.json",
+      "sha256": "4866a5ebe0fb7aab63049469e0d9733bb40881ebd705626275af56d918c638a1",
+      "bytes": 5515
+    },
+    {
+      "path": "sim/results/native-lifecycle-storage-20261013T001644.970116Z/command.json",
+      "sha256": "2c70c7bf8a3f676d8b0ae1040e6e1b3d94470d4d462280dd8425253a0a388856",
+      "bytes": 1069
+    },
+    {
+      "path": "sim/results/native-lifecycle-storage-20261013T001644.970116Z/components.log",
+      "sha256": "ccf0fdb1a2bc65e87eafa7ca13c32c8cf926c6508248e27093f88c9081c64b28",
+      "bytes": 693
+    },
+    {
+      "path": "sim/results/native-lifecycle-storage-20261013T001644.970116Z/component-list.txt",
+      "sha256": "cf11d5819e7265c9c68f29063bff805c7cf21f43bf7efdf180e48fa53346765a",
+      "bytes": 561
+    },
+    {
+      "path": "sim/results/native-lifecycle-storage-20261013T001644.970116Z/installed.log",
+      "sha256": "66562dff049e6c86ab58e3aad060799650fc6c28196637cc6e61b3c69935de3c",
+      "bytes": 1496
+    },
+    {
+      "path": "sim/results/native-lifecycle-storage-20261013T001644.970116Z/installed/result.json",
+      "sha256": "8bdbb02c1c9f1e2972234105df547d9cbd928e8f977d2625e0a579541bee8be3",
+      "bytes": 799
+    },
+    {
+      "path": "sim/results/native-lifecycle-storage-20261013T001644.970116Z/installed/baseline/result.json",
+      "sha256": "6be1696ba57819cf63bb5eb10b2f6c67301e324ac5320b5e66d95beeaa07a425",
+      "bytes": 1118
+    },
+    {
+      "path": "sim/results/native-lifecycle-storage-20261013T001644.970116Z/cleanup-error/result.json",
+      "sha256": "06bef8ee60e6116691ffb1142173f83ac4630167a83cb2083b61d512b8035e2e",
+      "bytes": 430
+    },
+    {
+      "path": "sim/results/native-lifecycle-storage-20261013T001644.970116Z/cleanup-withheld/result.json",
+      "sha256": "5dacb031c6ad2f63bde372d138f7350009ddb854b2c3eaa3f9df5e6cc3e160ce",
+      "bytes": 439
+    }
+  ],
+  "arm64_artifacts": [
+    {
+      "kind": "binary",
+      "name": "lifecycle-daemon",
+      "cargo_path": "/target/aarch64-unknown-linux-gnu/debug/lifecycle-daemon",
+      "project_path": "artifacts/native-lifecycle-storage/target/aarch64-unknown-linux-gnu/debug/lifecycle-daemon",
+      "guest_path": "/workspace/artifacts/native-lifecycle-storage/target/aarch64-unknown-linux-gnu/debug/lifecycle-daemon",
+      "sha256": "6099ca1eacacb159716388ab01913b97a96d7eefbc59546ce2176bf64656c1af",
+      "bytes": 15046768,
+      "cargo_manifest": "artifacts/native-lifecycle-storage/aarch64-bins-cargo.jsonl",
+      "cargo_manifest_sha256": "3c91b06e050b710c3d9f4c674fceb7393e45ec27361bece5cb3ebde7be4b0ccc"
+    },
+    {
+      "kind": "binary",
+      "name": "lifecycle-client",
+      "cargo_path": "/target/aarch64-unknown-linux-gnu/debug/lifecycle-client",
+      "project_path": "artifacts/native-lifecycle-storage/target/aarch64-unknown-linux-gnu/debug/lifecycle-client",
+      "guest_path": "/workspace/artifacts/native-lifecycle-storage/target/aarch64-unknown-linux-gnu/debug/lifecycle-client",
+      "sha256": "c7defefaee71540aabe258db212f1d9fb31b20fbd6b08117a10ff89082160324",
+      "bytes": 14103824,
+      "cargo_manifest": "artifacts/native-lifecycle-storage/aarch64-bins-cargo.jsonl",
+      "cargo_manifest_sha256": "3c91b06e050b710c3d9f4c674fceb7393e45ec27361bece5cb3ebde7be4b0ccc"
+    },
+    {
+      "kind": "binary",
+      "name": "lifecycle-launcher",
+      "cargo_path": "/target/aarch64-unknown-linux-gnu/debug/lifecycle-launcher",
+      "project_path": "artifacts/native-lifecycle-storage/target/aarch64-unknown-linux-gnu/debug/lifecycle-launcher",
+      "guest_path": "/workspace/artifacts/native-lifecycle-storage/target/aarch64-unknown-linux-gnu/debug/lifecycle-launcher",
+      "sha256": "5df3c4b786fa162abbe195388bde753f6ab306e3db0147fed4c687947b1a2cfd",
+      "bytes": 13906192,
+      "cargo_manifest": "artifacts/native-lifecycle-storage/aarch64-bins-cargo.jsonl",
+      "cargo_manifest_sha256": "3c91b06e050b710c3d9f4c674fceb7393e45ec27361bece5cb3ebde7be4b0ccc"
+    },
+    {
+      "kind": "library_test",
+      "name": "pokelinux_lifecycle",
+      "cargo_path": "/target/aarch64-unknown-linux-gnu/debug/deps/pokelinux_lifecycle-42f7f090241212c7",
+      "project_path": "artifacts/native-lifecycle-storage/target/aarch64-unknown-linux-gnu/debug/deps/pokelinux_lifecycle-42f7f090241212c7",
+      "guest_path": "/workspace/artifacts/native-lifecycle-storage/target/aarch64-unknown-linux-gnu/debug/deps/pokelinux_lifecycle-42f7f090241212c7",
+      "sha256": "6f7545f4a879c561b529bcfb13533d0e0f0828f55a7fcf0c301f6e4603238016",
+      "bytes": 15009224,
+      "cargo_manifest": "artifacts/native-lifecycle-storage/aarch64-tests-cargo.jsonl",
+      "cargo_manifest_sha256": "7341413c74b469fe1fd990a7160b278b353b3e0945a1196ababafff6f3a7baec"
+    }
+  ],
+  "x86_artifacts": [
+    {
+      "kind": "binary",
+      "name": "lifecycle-daemon",
+      "cargo_path": "/target/x86_64-unknown-linux-gnu/debug/lifecycle-daemon",
+      "project_path": "artifacts/native-lifecycle-storage/target/x86_64-unknown-linux-gnu/debug/lifecycle-daemon",
+      "guest_path": "/workspace/artifacts/native-lifecycle-storage/target/x86_64-unknown-linux-gnu/debug/lifecycle-daemon",
+      "sha256": "e9938096bb3dc7f66c986846ae9623f1fa68a050ffa9916b23afb9c8111e5f94",
+      "bytes": 15524656,
+      "cargo_manifest": "artifacts/native-lifecycle-storage/x86_64-bins-cargo.jsonl",
+      "cargo_manifest_sha256": "19acfd218eec45b77690a60ec9f1707503b66331b8d3aba4e604f69f712b5ef0"
+    },
+    {
+      "kind": "binary",
+      "name": "lifecycle-launcher",
+      "cargo_path": "/target/x86_64-unknown-linux-gnu/debug/lifecycle-launcher",
+      "project_path": "artifacts/native-lifecycle-storage/target/x86_64-unknown-linux-gnu/debug/lifecycle-launcher",
+      "guest_path": "/workspace/artifacts/native-lifecycle-storage/target/x86_64-unknown-linux-gnu/debug/lifecycle-launcher",
+      "sha256": "fa7e23e9275e260c6426d1d490e968320f59811f11fd857ebce5b7590233969c",
+      "bytes": 14314408,
+      "cargo_manifest": "artifacts/native-lifecycle-storage/x86_64-bins-cargo.jsonl",
+      "cargo_manifest_sha256": "19acfd218eec45b77690a60ec9f1707503b66331b8d3aba4e604f69f712b5ef0"
+    },
+    {
+      "kind": "binary",
+      "name": "lifecycle-client",
+      "cargo_path": "/target/x86_64-unknown-linux-gnu/debug/lifecycle-client",
+      "project_path": "artifacts/native-lifecycle-storage/target/x86_64-unknown-linux-gnu/debug/lifecycle-client",
+      "guest_path": "/workspace/artifacts/native-lifecycle-storage/target/x86_64-unknown-linux-gnu/debug/lifecycle-client",
+      "sha256": "51e7b759f12253b5d1efb2a5b41208a07135360863a840060ee42748bba25fe8",
+      "bytes": 14535264,
+      "cargo_manifest": "artifacts/native-lifecycle-storage/x86_64-bins-cargo.jsonl",
+      "cargo_manifest_sha256": "19acfd218eec45b77690a60ec9f1707503b66331b8d3aba4e604f69f712b5ef0"
+    },
+    {
+      "kind": "library_test",
+      "name": "pokelinux_lifecycle",
+      "cargo_path": "/target/x86_64-unknown-linux-gnu/debug/deps/pokelinux_lifecycle-e12577e224cf634c",
+      "project_path": "artifacts/native-lifecycle-storage/target/x86_64-unknown-linux-gnu/debug/deps/pokelinux_lifecycle-e12577e224cf634c",
+      "guest_path": "/workspace/artifacts/native-lifecycle-storage/target/x86_64-unknown-linux-gnu/debug/deps/pokelinux_lifecycle-e12577e224cf634c",
+      "sha256": "6730c308f0e4eb87110fbaece37b63078b2c049d81b413e92dfac1e9851f6e7f",
+      "bytes": 15333144,
+      "cargo_manifest": "artifacts/native-lifecycle-storage/x86_64-tests-cargo.jsonl",
+      "cargo_manifest_sha256": "30d5ee4e46f6ad90d37a8ec4ae9217ecd748e5c040ac821c48126bb4e0d6ba71"
+    }
+  ],
+  "arm64_fixture_contract": {
+    "target": "aarch64-unknown-linux-gnu",
+    "fixtures": [
+      {
+        "path": "tools/native-lifecycle-fixture.py",
+        "sha256": "116eb838f2835625744bc4de741dbf157adac40892cefa30544bdb3c6d267862"
+      },
+      {
+        "path": "tools/native-lifecycle-storage-fixture.py",
+        "sha256": "4c00fc0c59b74474a69293d3250e6ae5042f0937f004f5ec04968613b8d81080"
+      },
+      {
+        "path": "tools/native-lifecycle-storage-cleanup-fixture.py",
+        "sha256": "028cc1f7a95f622370247b9ec940eeec82503928752b9222d13b3b63b0124ad2"
+      }
+    ],
+    "fixture_binary_root": "/workspace/artifacts/native-lifecycle-storage/target/aarch64-unknown-linux-gnu/debug",
+    "fixture_environment": {
+      "NATIVE_LIFECYCLE_ISOLATED": "1",
+      "LIFECYCLE_STORAGE_RUN_BASELINE": "1"
+    },
+    "component_environment": {
+      "NATIVE_LIFECYCLE_TEST_ROOT": "/run",
+      "NATIVE_LIFECYCLE_STORAGE_HELPER": "/workspace/artifacts/native-lifecycle-storage/target/aarch64-unknown-linux-gnu/debug/lifecycle-daemon"
+    },
+    "required_runtime": "actual Linux kernel; isolated root; Python3; GNU libc; writable executable /opt plus private /run and /var/lib; fixture-owned child subreaper; core dumps disabled; no network/phone/device transport",
+    "expected_installed_process_groups": [
+      "real_process_lock_generation_fence",
+      "claimed_pid_uid_app_and_unregistered_kernel_principal_denied",
+      "kernel_rejected_real_child_credential_forgery",
+      "inherited_actual_socket_cannot_delegate_pid_authority",
+      "cross_principal_permit_refused_and_admission_once",
+      "background_suspend_and_resume_fence",
+      "durable_revocation_and_absolute_deadline",
+      "per_principal_capacity_and_prompt_snapshot",
+      "real_death_reaping_and_fresh_principal_generation",
+      "single_durable_owner_and_revocation_retains_uncertainty",
+      "restart_policy_uncertainty_persist_and_old_permit_fenced",
+      "durable_uncertain_receipt_capacity_never_evicts_or_retries",
+      "reserved_control_capacity_with_idle_app_clients",
+      "truncated_packet_and_unexpected_descriptors_fail_closed",
+      "durable_failure_latches_unavailable_without_reentry",
+      "owned_children_stopped_reaped_and_socket_cleanup",
+      "unreconciled_durable_pending_blocks_restart",
+      "bounded_private_receipts_contain_no_pid_uid_app_payload",
+      "SIGSTOP_storage_process_status_stop_responsive_and_reaped",
+      "uncertain_storage_owner_refuses_restart_after_reaping",
+      "concurrent_same_principal_busy_refusal_consumes_permit",
+      "synced_late_success_after_lifecycle_change_is_historical_only",
+      "absolute_deadline_revokes_before_kill_reap_and_no_successor",
+      "actual_worker_previous_token_reply_cannot_publish_current_admission",
+      "paused_initial_storage_load_keeps_status_stop_responsive",
+      "bounded_final_cleanup_reap_error_aborts_without_dropping_owned_child",
+      "bounded_final_cleanup_reap_withheld_aborts_without_dropping_owned_child"
+    ],
+    "expected_installed_process_count": 27,
+    "expected_component_tests": [
+      "authority::tests::exhausted_lifecycle_revision_fences_prepared_work",
+      "authority::tests::failed_admission_write_never_recovers_or_retries",
+      "authority::tests::late_durable_success_grants_no_current_admission",
+      "authority::tests::suspended_time_jump_expires_without_timer_delivery",
+      "storage::tests::clean_seal_binds_exact_policy_and_unclean_owner_never_reopens",
+      "storage::tests::clean_seal_rejects_changed_policy_without_overwriting_owner",
+      "storage::tests::terminated_worker_slot_remains_owned_until_actual_reap"
+    ],
+    "expected_component_count": 7,
+    "cleanup_modes": [
+      "error",
+      "withheld"
+    ],
+    "mechanism_limits": "SIGSTOP and explicitly injected wait/reap error/withheld wait with real owned children; no uninterruptible filesystem syscall claim"
+  }
+}

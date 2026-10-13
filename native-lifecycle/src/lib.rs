@@ -2,6 +2,7 @@
 pub mod authority;
 pub mod ipc;
 pub mod service;
+pub mod storage;
 use serde::{Deserialize, Serialize};
 
 pub const MAX_PACKET: usize = 4096;
@@ -83,6 +84,9 @@ pub enum Reply {
         locked: bool,
         suspended: bool,
         degraded: bool,
+        ready: bool,
+        storage_occupied: bool,
+        storage_busy: bool,
     },
 }
 

@@ -1,8 +1,10 @@
 # Native installed permission and lifecycle authority
 
-The Rust daemon and privileged launcher pass 18 installed Linux process groups
-and four component tests on the x86 Harbour kernel and under an actual ARM64
-Arch kernel. The fixtures install our binaries into a disposable container/guest,
+The initial authority milestone passed18 installed Linux process groups and
+four component tests on x86 and an actual ARM64 Arch kernel. The current
+[owned storage extension](native-lifecycle-storage.md) passes27 installed/process
+groups plus seven components on both kernels, with responsive controls and
+absolute bounded cleanup. The fixtures install our binaries into a disposable container/guest,
 assign two distinct app UIDs and run actual separate processes. Exact compiled
 ARM64 test/daemon/launcher/client identities are checked before guest execution. No Android/Java runtime,
 phone, host power interface or vendor executable participates.
@@ -35,8 +37,9 @@ child wait in its request loop. Death removes the principal and prepared work,
 even when another process retains the app's actual connection. Termination
 revokes before signalling. A successor cannot launch until the previous owned
 child has been reaped. Stop kills and reaps all owned children before normal
-exit. The fatal-error cleanup retains owned children until reaped; an unkillable
-kernel task requires an external supervisor/cgroup. Process reaping establishes
+exit. Stop and fatal cleanup share one absolute two-second boot-time budget and abort
+before relinquishing unreaped children. An uninterruptible kernel task still
+requires an external supervisor/cgroup. Process reaping establishes
 no remote backend cleanup.
 
 Omarchy plugins and caller-supplied app labels are not security principals. The
@@ -113,11 +116,12 @@ limit and proves the next admission is unavailable without eviction.
 | Accepted idle / pending response lifetime | 30 s / 1 s |
 
 Kernel socket queues and the complete app process tree still require installed
-service-manager/cgroup budgets. Durable IO is executed on bounded temporary
-files here. A stuck filesystem write/sync can still block the single actor;
-responsive stop/snapshots under such a stall require a separately owned storage
-worker/process and supervised reclamation. No test claims arbitrary storage IO
-becomes nonblocking.
+service-manager/cgroup budgets. The current actor delegates policy IO to one
+owned storage process. Actual SIGSTOP tests qualify responsive snapshots/stop,
+late-response fences and reaping; this does not make filesystem calls nonblocking
+or qualify an uninterruptible task. Startup/profile/launch trust checks remain
+separate filesystem operations. Healthy storage shutdown seals its exact epoch
+and policy hash; uncertain ownership refuses automatic recovery after restart.
 
 ## Execution and remaining gates
 
@@ -129,9 +133,11 @@ pidfd component tests cover withheld-timer expiry, expiry after durable success,
 failed admission persistence and revision exhaustion. Injected core credentials
 in those component tests are separate from the actual kernel credential tests.
 
-Run `tools/build-native-lifecycle.sh build`, then
-`tools/test-native-lifecycle-components.sh` and
-`tools/test-native-lifecycle.sh green`. The build records exact Cargo JSON
+The original18/four result belongs to commit a536634 and its historical artifact
+selection. For current source, run `tools/build-native-lifecycle-storage.sh build`,
+`tools/test-native-lifecycle-storage-components.sh`,
+`tools/test-native-lifecycle-storage.sh green` and the separate cleanup qualifier;
+see [storage reproduction](native-lifecycle-storage.md). The build records exact Cargo JSON
 artifacts for ARM64. `tools/index-native-lifecycle.py` generates a private
 manifest of paths/hashes for the shared VM runner. The reusable Python fixture
 accepts explicit binary, result, install, runtime and policy roots, and requires
@@ -141,7 +147,7 @@ services do not consume these permits yet.
 
 Remaining gates are the installed Omarchy
 service-manager and package/UID policy, app delegation/sandboxing, authenticated
-Omarchy lifecycle ingress, supervised storage IO, and trusted backend dispatch
+Omarchy lifecycle ingress, complete storage/platform supervision, and trusted backend dispatch
 at the same admission boundary. Phone hardware and remote cleanup remain
 unqualified. A later backend must not accept a historical receipt as current
 permission or infer cleanup from revocation or process death.

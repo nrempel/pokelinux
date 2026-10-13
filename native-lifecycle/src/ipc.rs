@@ -36,7 +36,13 @@ pub fn connect(path: &Path) -> io::Result<OwnedFd> {
     Ok(fd)
 }
 pub fn receive(fd: impl AsFd) -> io::Result<Option<(Vec<u8>, UCred)>> {
-    let mut data = [0u8; MAX_PACKET];
+    receive_limit(fd, MAX_PACKET)
+}
+pub(crate) fn receive_storage(fd: impl AsFd) -> io::Result<Option<(Vec<u8>, UCred)>> {
+    receive_limit(fd, 65536)
+}
+fn receive_limit(fd: impl AsFd, limit: usize) -> io::Result<Option<(Vec<u8>, UCred)>> {
+    let mut data = vec![0u8; limit];
     let mut space = [MaybeUninit::uninit(); rustix::cmsg_space!(ScmCredentials(1), ScmRights(1))];
     let mut ancillary = RecvAncillaryBuffer::new(&mut space);
     let msg = match net::recvmsg(
@@ -70,7 +76,13 @@ pub fn receive(fd: impl AsFd) -> io::Result<Option<(Vec<u8>, UCred)>> {
     )))
 }
 pub fn send(fd: impl AsFd, bytes: &[u8]) -> io::Result<()> {
-    if bytes.is_empty() || bytes.len() > MAX_PACKET {
+    send_limit(fd, bytes, MAX_PACKET)
+}
+pub(crate) fn send_storage(fd: impl AsFd, bytes: &[u8]) -> io::Result<()> {
+    send_limit(fd, bytes, 65536)
+}
+fn send_limit(fd: impl AsFd, bytes: &[u8], limit: usize) -> io::Result<()> {
+    if bytes.is_empty() || bytes.len() > limit {
         return Err(io::ErrorKind::InvalidInput.into());
     }
     let count = net::send(fd, bytes, SendFlags::DONTWAIT | SendFlags::NOSIGNAL)?;
