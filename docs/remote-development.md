@@ -44,7 +44,10 @@ Harbour. A durable admission marker refuses registration after restart until
 remote cleanup can be established. See
 [evidence](evidence/radio-supervisor-provenance.json). ARM64 user-mode QEMU tests
 state and journal behavior; native process tests now also pass in an unprivileged ARM64 system-QEMU guest.
-Binder qualification remains x86-64 Android emulator evidence.
+The original x86-64 Android emulator evidence remains separate from the newer
+[actual ARM64 kernel Binder qualification](native-arm64-binder.md). The latter
+uses the unchanged Arch test kernel and genuine retained Android NDK/Bionic
+runtime; it does not qualify the matched Pixel kernel, vendor cleanup or modem.
 
 To run the ARM64 kernel process gate after the native build:
 
@@ -58,3 +61,27 @@ docker run --rm --network none --cpus 3 --memory 4g --pids-limit 256 \
 The build records `owner-test-build-arm64.json`; the guest uses that exact binary.
 The VM keeps the prepared disk unchanged with `snapshot=on`, and writes only its
 fresh result directory. It is temporary Harbour validation capacity.
+
+## Harbour build capacity and retained outputs
+
+Use the build host's available CPU capacity for independent compilation and test
+jobs. Measure aggregate CPU use, affinity, available memory and disk before
+raising concurrency. A mostly idle host can still be waiting on a serial protocol,
+graphics deadline, model response or storage; extra compilation workers do not
+resolve those waits. Preserve exact selected VM and container quotas in each
+run's evidence rather than retroactively assigning newer limits.
+
+The current Harbour allocation exposes 16 logical CPUs and about 62 GiB RAM.
+Current owned-session build drivers permit 12 CPUs/12 GiB; independent app and
+receiver builds permit 8 CPUs/12 GiB each. Their separate ARM64 guests use 4 vCPUs
+with 6 CPU/8 GiB container quotas. Coordinate critical graphics epochs and avoid
+oversubscribing the original 100ms source lease. No quota change extends a
+production deadline or replaces an integration check.
+
+Completed evidence labels and their build targets are immutable. On 13 October,
+byte-verified hardlink deduplication of completed private owned-focus targets
+preserved 2,953 output paths and exact bytes, recovering about 4.45 GiB. The private
+plan and replacement journal remain under ignored artifacts. Never rebuild or
+write into those shared target inodes; every new build uses a new label and target.
+Active targets, VM images, source inputs and unrelated host workloads were untouched.
+Do not prune private inputs or other workloads to make space.
