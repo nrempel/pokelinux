@@ -288,3 +288,16 @@ can test local fencing but cannot substitute for these source boundaries.
 Later ARM64 installed replay must record the real guest kernel and matching
 compositor/adapter ELF identities. None of these steps authorizes phone access,
 modem operations or a stronger physical secure-lock/publication claim.
+
+## Current per-app context ownership
+
+The [per-app actor checkpoint](native-display-app-generations.md) gives each
+reserved launch its own trusted SDK context, listener path and original one-second
+setup deadline within the two-second RPC. Exact pending-client EOF is checked
+before app spawn; app/context retirement revokes data authority and withdraws the
+path before SDK signals, retaining the occupied slot until actual parent waits.
+It leaves the plain Source Observer and Messages writer independent. Four ARM
+lifetime groups and one held-init Stop group pass. Pending EOF passes narrowly,
+but the successor aggregate fails after Source InvalidData of unknown predicate.
+The Source100ms lease is unchanged. Metadata grants no data/exclusive PID authority;
+accepted clients, secure frames, installed PAM restoration and wake remain gates.

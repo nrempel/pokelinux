@@ -1,5 +1,5 @@
 use crate::{
-    AdminRequest, AppProfile, AppRequest, Profile, Reply,
+    AdminRequest, AppRequest, Profile, Reply,
     authority::{Authority, Decision, ReadStamp, WriteIntent},
     boottime_ns, ipc,
     storage::{Event, Worker},
@@ -8,15 +8,13 @@ use rustix::{
     event::{PollFd, PollFlags},
     fd::OwnedFd,
     net::{self, SocketFlags},
-    process::{Pid, PidfdFlags},
 };
 use std::{
-    collections::BTreeMap,
     fs,
     io::{self, Read},
     os::unix::fs::MetadataExt,
     path::{Path, PathBuf},
-    process::{Child, Command, Stdio},
+    process::Command,
 };
 
 pub fn trusted_executable(path: &Path) -> io::Result<()> {
@@ -94,61 +92,32 @@ struct Connection {
     read_stamp: Option<ReadStamp>,
     deadline: u64,
     pending: Option<Vec<u8>>,
+    launching: Option<String>,
 }
-fn launch(entry: &Path, p: &AppProfile) -> io::Result<Child> {
-    trusted_executable(entry)?;
-    trusted_executable(Path::new(&p.executable))?;
-    Command::new(entry)
-        .arg("app-entry")
-        .arg(p.uid.to_string())
-        .arg(std::process::id().to_string())
-        .arg(&p.executable)
-        .args(&p.args)
-        .env_clear()
-        .current_dir("/")
-        .stdin(Stdio::null())
-        .stdout(Stdio::null())
-        .stderr(Stdio::null())
-        .spawn()
-}
-fn launch_registered(
-    entry: &Path,
-    p: &AppProfile,
-    children: &mut BTreeMap<String, Child>,
-    authority: &mut Authority,
-) -> Reply {
-    if !authority.ready() {
-        return Reply::Unavailable;
-    }
-    let std::collections::btree_map::Entry::Vacant(slot) = children.entry(p.app.clone()) else {
-        return Reply::Denied;
-    };
-    match launch(entry, p) {
-        Err(_) => Reply::Unavailable,
-        Ok(mut child) => {
-            let registration = Pid::from_raw(child.id() as i32)
-                .ok_or(io::ErrorKind::InvalidInput)
-                .and_then(|pid| {
-                    rustix::process::pidfd_open(pid, PidfdFlags::NONBLOCK)
-                        .map_err(|_| io::ErrorKind::Other)
-                })
-                .and_then(|fd| {
-                    authority
-                        .register(&p.app, child.id(), fd)
-                        .map_err(|_| io::ErrorKind::Other)
+fn complete_launches(
+    completed: Vec<crate::apps::Completion>,
+    connections: &mut [Connection],
+    recovery: &mut Option<LocalRecovery>,
+    messages: &Option<&mut dyn crate::messages::Provider>,
+) -> io::Result<()> {
+    for completion in completed {
+        if let Some(connection) = connections.iter_mut().find(|c| {
+            c.id == completion.connection
+                && c.launching.as_deref() == Some(completion.instance.as_str())
+        }) {
+            connection.pending = Some(serde_json::to_vec(&completion.reply)?);
+            if completion.reply == Reply::Ok
+                && completion.app == crate::messages::APP
+                && let Some(provider) = messages.as_deref()
+            {
+                *recovery = Some(LocalRecovery {
+                    source: provider.incarnation().into(),
+                    until: boottime_ns().saturating_add(2_000_000_000),
                 });
-            if registration.is_err() {
-                authority.revoke(&p.app);
-                let _ = child.kill();
-            }
-            slot.insert(child);
-            if registration.is_ok() {
-                Reply::Ok
-            } else {
-                Reply::Unavailable
             }
         }
     }
+    Ok(())
 }
 pub fn run(
     runtime: &Path,
@@ -192,8 +161,32 @@ pub fn run_with_messages_and_session(
     profile_path: &Path,
     entry: &Path,
     test: Option<&str>,
+    messages: Option<&mut dyn crate::messages::Provider>,
+    session: Option<&mut dyn crate::session::Provider>,
+) -> io::Result<()> {
+    // Headless service/test entrypoints use the same actor slot machinery;
+    // installed GUI provisioning supplies a display Factory explicitly.
+    run_with_services(
+        runtime,
+        policy,
+        profile_path,
+        entry,
+        test,
+        messages,
+        session,
+        None,
+    )
+}
+#[allow(clippy::too_many_arguments)]
+pub fn run_with_services(
+    runtime: &Path,
+    policy: &Path,
+    profile_path: &Path,
+    entry: &Path,
+    test: Option<&str>,
     mut messages: Option<&mut dyn crate::messages::Provider>,
     mut session: Option<&mut dyn crate::session::Provider>,
+    mut display: Option<&mut dyn crate::display::Factory>,
 ) -> io::Result<()> {
     if rustix::process::getuid().as_raw() != 0 || rustix::process::geteuid().as_raw() != 0 {
         return Err(io::ErrorKind::PermissionDenied.into());
@@ -241,29 +234,23 @@ pub fn run_with_messages_and_session(
     });
     let mut connection_id = 0u64;
     let mut startup_failed = false;
-    let mut children = BTreeMap::<String, Child>::new();
+    let mut apps = crate::apps::Apps::default();
     let mut connections: Vec<Connection> = Vec::new();
     let mut stopping = false;
     let mut cleanup_until = None;
     let mut read_backpressure = 0u64;
     let mut local_recovery: Option<LocalRecovery> = None;
-    let outcome = (|| {
+    let mut outcome = (|| {
         loop {
             // Never block on child wait, request IO, or an idle client.
-            let dead: Vec<_> = children
-                .iter_mut()
-                .filter_map(|(app, c)| match c.try_wait() {
-                    Ok(Some(_)) => Some(Ok(app.clone())),
-                    Ok(None) => None,
-                    Err(e) => Some(Err(e)),
-                })
-                .collect::<io::Result<_>>()?;
-            for name in dead {
-                authority.revoke(&name);
-                children.remove(&name);
-            }
             authority.reap_dead()?;
             refresh_session(&mut authority, &mut session)?;
+            complete_launches(
+                apps.poll(&mut authority)?,
+                &mut connections,
+                &mut local_recovery,
+                &messages,
+            )?;
             if let Some(op) = &mut operation
                 && !op.retired
                 && boottime_ns() >= op.until
@@ -401,6 +388,7 @@ pub fn run_with_messages_and_session(
             }
             if stopping || startup_failed {
                 authority.invalidate();
+                apps.stop(&mut authority)?;
                 if let Some(provider) = session.as_deref_mut() {
                     provider.stop();
                 }
@@ -411,7 +399,7 @@ pub fn run_with_messages_and_session(
                 }
             }
             if (stopping || startup_failed)
-                && children.is_empty()
+                && !apps.occupied()
                 && !storage.occupied()
                 && messages.as_deref().is_none_or(|p| !p.occupied())
                 && session.as_deref().is_none_or(|p| !p.occupied())
@@ -484,12 +472,14 @@ pub fn run_with_messages_and_session(
                             read_stamp: None,
                             deadline: now.saturating_add(30_000_000_000),
                             pending: None,
+                            launching: None,
                         });
                     }
                     Err(rustix::io::Errno::AGAIN | rustix::io::Errno::INTR) => {}
                     Err(e) => return Err(e.into()),
                 }
             }
+            let mut launch_completions = Vec::new();
             connections.retain_mut(|connection| {
                 // Drain facts before processing each request/publication, including
                 // every retry after EAGAIN. This is ordered ingress, not a barrier
@@ -498,7 +488,21 @@ pub fn run_with_messages_and_session(
                     authority.invalidate();
                     return false;
                 }
+                match apps.poll(&mut authority) {
+                    Ok(completed) => launch_completions.extend(completed),
+                    Err(_) => {
+                        authority.invalidate();
+                        startup_failed = true;
+                        return false;
+                    }
+                }
                 if boottime_ns() >= connection.deadline {
+                    if let Some(instance) = connection.launching.take()
+                        && apps.cancel(&instance, &mut authority).is_err()
+                    {
+                        authority.invalidate();
+                        startup_failed = true;
+                    }
                     if connection.reading.is_some()
                         && let Some(p) = messages.as_deref_mut()
                     {
@@ -513,13 +517,13 @@ pub fn run_with_messages_and_session(
                     }
                     return false;
                 }
-                if connection.reading.is_some() {
+                if let Some((token, _)) = &connection.reading {
                     match ipc::receive(&connection.fd) {
                         Ok(None) => return true,
                         Err(e) if e.raw_os_error() == Some(4) => return true,
                         _ => {
                             if let Some(p) = messages.as_deref_mut() {
-                                p.cancel_read(connection.reading.as_ref().unwrap().0);
+                                p.cancel_read(*token);
                             }
                             return false;
                         }
@@ -538,6 +542,40 @@ pub fn run_with_messages_and_session(
                             return false;
                         }
                     }
+                }
+                if connection.pending.is_none() && connection.launching.is_some() {
+                    return match ipc::receive(&connection.fd) {
+                        Ok(None) => {
+                            let instance = connection.launching.as_deref().unwrap();
+                            match apps.launch(instance, connection.id, entry, &mut authority) {
+                                Ok(Some(completed)) => launch_completions.push(completed),
+                                Ok(None) => {}
+                                Err(_) => {
+                                    authority.invalidate();
+                                    startup_failed = true;
+                                    return false;
+                                }
+                            }
+                            true
+                        }
+                        Err(e) if e.raw_os_error() == Some(4) => true,
+                        _ => {
+                            if let Some(instance) = connection.launching.take()
+                                && apps.cancel(&instance, &mut authority).is_err()
+                            {
+                                authority.invalidate();
+                                startup_failed = true;
+                            }
+                            false
+                        }
+                    };
+                }
+                if connection
+                    .launching
+                    .as_ref()
+                    .is_some_and(|id| !apps.current(id))
+                {
+                    connection.pending = serde_json::to_vec(&Reply::Unavailable).ok();
                 }
                 // This check runs immediately before every nonblocking send attempt,
                 // including every retry after EAGAIN. Storage owns no read permission.
@@ -558,6 +596,9 @@ pub fn run_with_messages_and_session(
                         Ok(()) => {
                             connection.pending = None;
                             connection.read_stamp = None;
+                            if let Some(instance) = connection.launching.take() {
+                                apps.acknowledge(&instance);
+                            }
                             connection.deadline = boottime_ns().saturating_add(30_000_000_000);
                             true
                         }
@@ -567,7 +608,15 @@ pub fn run_with_messages_and_session(
                             }
                             true
                         }
-                        Err(_) => false,
+                        Err(_) => {
+                            if let Some(instance) = connection.launching.take()
+                                && apps.cancel(&instance, &mut authority).is_err()
+                            {
+                                authority.invalidate();
+                                startup_failed = true;
+                            }
+                            false
+                        }
                     };
                 }
                 let (bytes, cred) = match ipc::receive(&connection.fd) {
@@ -585,16 +634,14 @@ pub fn run_with_messages_and_session(
                         Reply::Denied
                     } else if let Some(p) = profiles.iter().find(|p| p.app == crate::messages::APP)
                     {
-                        let reply = launch_registered(entry, p, &mut children, &mut authority);
-                        if reply == Reply::Ok
-                            && let Some(provider) = messages.as_deref()
-                        {
-                            local_recovery = Some(LocalRecovery {
-                                source: provider.incarnation().into(),
-                                until: boottime_ns().saturating_add(2_000_000_000),
-                            });
+                        match apps.start(p, connection.id, &authority, &mut display) {
+                            crate::apps::Start::Rejected(reply) => reply,
+                            crate::apps::Start::Reserved { instance, until } => {
+                                connection.launching = Some(instance);
+                                connection.deadline = until.saturating_add(1_000_000_000);
+                                return true;
+                            }
                         }
-                        reply
                     } else {
                         Reply::Unavailable
                     }
@@ -672,33 +719,32 @@ pub fn run_with_messages_and_session(
                                     }
                                     storage.stop();
                                 }
-                                for (app, c) in &mut children {
-                                    authority.revoke(app);
-                                    let _ = c.kill();
+                                if apps.stop(&mut authority).is_ok() {
+                                    Reply::Ok
+                                } else {
+                                    Reply::Unavailable
                                 }
-                                Reply::Ok
                             }
                             Ok(_) if stopping => Reply::Unavailable,
                             Ok(AdminRequest::Launch { app }) => {
                                 match profiles.iter().find(|p| p.app == app) {
                                     Some(p) => {
-                                        launch_registered(entry, p, &mut children, &mut authority)
+                                        match apps.start(p, connection.id, &authority, &mut display)
+                                        {
+                                            crate::apps::Start::Rejected(reply) => reply,
+                                            crate::apps::Start::Reserved { instance, until } => {
+                                                connection.launching = Some(instance);
+                                                connection.deadline =
+                                                    until.saturating_add(1_000_000_000);
+                                                return true;
+                                            }
+                                        }
                                     }
                                     None => Reply::Denied,
                                 }
                             }
                             Ok(AdminRequest::Terminate { app }) => {
-                                authority.revoke(&app);
-                                match children.get_mut(&app) {
-                                    Some(c) => {
-                                        if c.kill().is_ok() {
-                                            Reply::Ok
-                                        } else {
-                                            Reply::Unavailable
-                                        }
-                                    }
-                                    None => Reply::Denied,
-                                }
+                                apps.terminate(&app, &mut authority)
                             }
                             Ok(AdminRequest::Grant {
                                 app,
@@ -858,6 +904,17 @@ pub fn run_with_messages_and_session(
                 connection.deadline = boottime_ns().saturating_add(1_000_000_000);
                 connection.pending.is_some()
             });
+            complete_launches(
+                launch_completions,
+                &mut connections,
+                &mut local_recovery,
+                &messages,
+            )?;
+            let active_launches: Vec<_> = connections
+                .iter()
+                .filter_map(|c| c.launching.as_deref().map(|instance| (c.id, instance)))
+                .collect();
+            apps.cancel_disconnected(&active_launches, &mut authority)?;
             // A successful fixed launch records one source-bound local intent.
             // Decide only after every connection retirement in this pass: an
             // older desktop connection can precede the dead app's read socket.
@@ -898,10 +955,9 @@ pub fn run_with_messages_and_session(
     if let Some(provider) = session.as_deref_mut() {
         provider.stop();
     }
-    // Fence before every signal, and retain both child sets through actual reaping.
-    for (name, child) in &mut children {
-        authority.revoke(name);
-        let _ = child.kill();
+    // Fence every app pathname before draining any other process owner.
+    if let Err(e) = apps.stop(&mut authority) {
+        outcome = Err(e);
     }
     if messages.is_some_and(|p| !p.drain_until(until)) {
         std::process::abort();
@@ -909,7 +965,7 @@ pub fn run_with_messages_and_session(
     if !storage.drain_until(until) {
         std::process::abort();
     }
-    if let Some(provider) = session.as_deref_mut() {
+    if let Some(provider) = session {
         while provider.occupied() {
             if boottime_ns() >= until {
                 std::process::abort();
@@ -922,23 +978,13 @@ pub fn run_with_messages_and_session(
             }
         }
     }
-    while !children.is_empty() {
+    while apps.occupied() {
         if boottime_ns() >= until {
             std::process::abort();
         }
-        let mut failed = false;
-        children.retain(|_, child| match child.try_wait() {
-            Ok(Some(_)) => false,
-            Ok(None) => true,
-            Err(_) => {
-                failed = true;
-                true
-            }
-        });
-        if failed {
-            std::process::abort();
-        }
-        if !children.is_empty() {
+        // Errors retain the slot; only actual app/helper parent waits clear it.
+        let _ = apps.poll(&mut authority);
+        if apps.occupied() {
             std::thread::sleep(std::time::Duration::from_millis(2));
         }
     }

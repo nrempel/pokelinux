@@ -1,0 +1,702 @@
+{
+  "actor_try_wait_source_sha256": "23b840cc417ec96820500675844dcf544e1c58c017201c2374f6392f962ec079",
+  "actual_post_reap_registry": {
+    "allowed_bound": [
+      "wl_compositor",
+      "xdg_wm_base"
+    ],
+    "forged_bind_completed": null,
+    "forged_bind_error": null,
+    "gid": 11010,
+    "globals": [
+      {
+        "interface": "wl_seat",
+        "name": 1,
+        "version": 9
+      },
+      {
+        "interface": "wl_data_device_manager",
+        "name": 2,
+        "version": 3
+      },
+      {
+        "interface": "wl_compositor",
+        "name": 3,
+        "version": 6
+      },
+      {
+        "interface": "wl_subcompositor",
+        "name": 4,
+        "version": 1
+      },
+      {
+        "interface": "wl_shm",
+        "name": 5,
+        "version": 2
+      },
+      {
+        "interface": "wp_viewporter",
+        "name": 6,
+        "version": 1
+      },
+      {
+        "interface": "wp_tearing_control_manager_v1",
+        "name": 7,
+        "version": 1
+      },
+      {
+        "interface": "wp_fractional_scale_manager_v1",
+        "name": 8,
+        "version": 1
+      },
+      {
+        "interface": "wp_cursor_shape_manager_v1",
+        "name": 10,
+        "version": 2
+      },
+      {
+        "interface": "zwp_idle_inhibit_manager_v1",
+        "name": 11,
+        "version": 1
+      },
+      {
+        "interface": "zwp_relative_pointer_manager_v1",
+        "name": 12,
+        "version": 1
+      },
+      {
+        "interface": "zxdg_decoration_manager_v1",
+        "name": 13,
+        "version": 2
+      },
+      {
+        "interface": "wp_alpha_modifier_v1",
+        "name": 14,
+        "version": 1
+      },
+      {
+        "interface": "zwp_pointer_gestures_v1",
+        "name": 17,
+        "version": 3
+      },
+      {
+        "interface": "zwp_keyboard_shortcuts_inhibit_manager_v1",
+        "name": 19,
+        "version": 1
+      },
+      {
+        "interface": "zwp_text_input_manager_v1",
+        "name": 20,
+        "version": 1
+      },
+      {
+        "interface": "zwp_text_input_manager_v3",
+        "name": 21,
+        "version": 1
+      },
+      {
+        "interface": "zwp_pointer_constraints_v1",
+        "name": 22,
+        "version": 1
+      },
+      {
+        "interface": "xdg_activation_v1",
+        "name": 24,
+        "version": 1
+      },
+      {
+        "interface": "ext_idle_notifier_v1",
+        "name": 25,
+        "version": 2
+      },
+      {
+        "interface": "org_kde_kwin_server_decoration_manager",
+        "name": 32,
+        "version": 1
+      },
+      {
+        "interface": "zwp_tablet_manager_v2",
+        "name": 34,
+        "version": 1
+      },
+      {
+        "interface": "wp_presentation",
+        "name": 36,
+        "version": 2
+      },
+      {
+        "interface": "xdg_wm_base",
+        "name": 37,
+        "version": 7
+      },
+      {
+        "interface": "zwp_primary_selection_device_manager_v1",
+        "name": 39,
+        "version": 1
+      },
+      {
+        "interface": "xdg_wm_dialog_v1",
+        "name": 43,
+        "version": 1
+      },
+      {
+        "interface": "wp_single_pixel_buffer_manager_v1",
+        "name": 44,
+        "version": 1
+      },
+      {
+        "interface": "hyprland_surface_manager_v1",
+        "name": 48,
+        "version": 2
+      },
+      {
+        "interface": "xdg_toplevel_tag_manager_v1",
+        "name": 50,
+        "version": 1
+      },
+      {
+        "interface": "xdg_system_bell_v1",
+        "name": 51,
+        "version": 1
+      },
+      {
+        "interface": "wp_fifo_manager_v1",
+        "name": 56,
+        "version": 1
+      },
+      {
+        "interface": "zxdg_exporter_v2",
+        "name": 57,
+        "version": 1
+      },
+      {
+        "interface": "zxdg_importer_v2",
+        "name": 58,
+        "version": 1
+      },
+      {
+        "interface": "ext_background_effect_manager_v1",
+        "name": 59,
+        "version": 1
+      },
+      {
+        "interface": "wp_commit_timing_manager_v1",
+        "name": 60,
+        "version": 1
+      },
+      {
+        "interface": "wp_color_manager_v1",
+        "name": 66,
+        "version": 3
+      },
+      {
+        "interface": "wp_linux_drm_syncobj_manager_v1",
+        "name": 68,
+        "version": 1
+      },
+      {
+        "interface": "wl_drm",
+        "name": 69,
+        "version": 2
+      },
+      {
+        "interface": "zwp_linux_dmabuf_v1",
+        "name": 70,
+        "version": 5
+      },
+      {
+        "interface": "wl_output",
+        "name": 71,
+        "version": 4
+      }
+    ],
+    "peer_credentials": [
+      377,
+      0,
+      0
+    ],
+    "pid": 399,
+    "uid": 11010
+  },
+  "app_parent_reap": {
+    "actor_principals": 0,
+    "app_pid": 383,
+    "app_pidfd_death_observed": true,
+    "app_proc_absent": true,
+    "evidence_kind": "inferred from trusted compiled Actor Child removal after try_wait plus kernel absence while original service parent remains alive",
+    "independent_syscall_trace": false,
+    "original_parent_pid": 377,
+    "original_parent_pidfd_living": true
+  },
+  "cleanup": {
+    "direct_python_parent_wait_or_final_helper_death_absence": true,
+    "limit": "Python directly waits its children. Service-owned helper records use pidfd death/proc absence; app parent reap additionally uses the retained original living parent and trusted compiled try_wait inference. No independent syscall trace.",
+    "tracked_unique_pids": 24
+  },
+  "current_authored_tools_checksums": {
+    "tools/native-display-app-generations/.gitignore": "862263fa1f46c20f0d1e4dac5ffcc75abd55c08211b2c3864c5f8764b9d87793",
+    "tools/native-display-app-generations/README.md": "eb9ebc57ec5e23bcf8e7e4dce2cea646fdf760e45ce61770213a97b7987e1f15",
+    "tools/native-display-app-generations/boot.sh": "724fa85b2b518cfd40c99c1ca38629bf59d7c448a111aba73a91a4c70a3dba9c",
+    "tools/native-display-app-generations/boundary-probe.py": "c50a77ba9d17ee6da5b92a900c46836e53803890479ec1a679723332cc7b3e0a",
+    "tools/native-display-app-generations/guest.py": "a6d86fbd5455ea24c81693e3ee4b677b257a4692e52340aee4c8f35bdbee97d8",
+    "tools/native-display-app-generations/proof.py": "934e6b278bf2fc0d14a4c3f3c2e32f15c58ce2c8e1d15aec9508fb7b083ee5f4",
+    "tools/native-display-app-generations/registry-probe.py": "3826ee3b958e2e7ce5962bac5596d89c7b429211898afa37344197f2c172c52c",
+    "tools/native-display-app-generations/run.py": "b169f250b1a38ada46c7272285a02d9d7b55e66faa6216ce063964bfe729ddaa",
+    "tools/native-display-app-generations/setup-evidence.json": "885cb93466a682abdeab2fe1d353df513d4cfd00bf6a2f8806847568723d51c6"
+  },
+  "data_boundary_probe": {
+    "admin_snapshot": {
+      "errno": 13,
+      "error": "PermissionError"
+    },
+    "app_read": {
+      "reply": {
+        "result": "denied"
+      }
+    },
+    "gid": 11010,
+    "pid": 398,
+    "raw_history": {
+      "inbox/inbox.sqlite3": {
+        "errno": 13,
+        "readable": false
+      },
+      "raw/receipts.sqlite3": {
+        "errno": 13,
+        "readable": false
+      }
+    },
+    "uid": 11010
+  },
+  "freshness_corrected_core_selected": false,
+  "historical_runtime_source_checksums": {
+    "native-display/Cargo.lock": "dd376c75a1e1d9955959562893c6b7c2dc66d99129e97bcc9f0786c06999ee5b",
+    "native-display/Cargo.toml": "0d9306f3389c6c93f204ccac1ddf2f93c6d9af7513890110a51607d2760d2b09",
+    "native-display/README.md": "23cec364ed93cce70cc98665590a738e828845ffb13f1f03a57ca46a4a505510",
+    "native-display/public-api-inputs.json": "9f821a725df3c2a57e8c132c646dd382137ec24a672636357eeba37db412f0ae",
+    "native-display/src/bin/display-context-fixture.rs": "905f9a3b5338e4afe092332d4346011a68def02a7e8219c98e59d8cb20801554",
+    "native-display/src/bin/display-supervisor-fixture.rs": "6114f2f18288dc5341587895a6d925dea9bed50f6c26511013efc155ccc486d6",
+    "native-display/src/lib.rs": "1556ce9bd3b5edfbb58e779f70e9a6d80e00140ece7def69e88f8c6bb8946c8c",
+    "native-display/src/supervisor.rs": "310a928c0e9341328d05ceeb1fea2b3d720c97c314f0cb27d8e26c199a248829",
+    "native-display/tests/descriptor.rs": "1c71ff07b1ab544bad7aae1148ae2dc98d4bffaf385d416ced360fbf05631192",
+    "native-inbox/Cargo.lock": "713ed0a0f107c2bb0586de2a0453e8ff0e0c2fb5a2dd9097fadc5e8d16efb729",
+    "native-inbox/Cargo.toml": "9ef2b7baf22a760b96700730f7edcb78301b82c98b29914444a966e8ab708c5c",
+    "native-inbox/src/lib.rs": "e0811dcd8e29a1d01afc2b2c9e0965724539965f935a3e4c5c8d383aea0e02dc",
+    "native-inbox/tests/inbox.rs": "05ca3e719d9078483a8b1fa1076d33fba3d62fce9de34bc4d28f48a36b86a1fc",
+    "native-inbox/tests/original_deliver.rs": "550767db0ef66c11b50d8451df6e4b91443f3ec04be120b2fdae99764f7307e8",
+    "native-kernel-identity/Cargo.lock": "ea2dd27ddd1bf8c00b3bf15d5fface7d5bddd6e20b5d1e89fbc1fc10172ff592",
+    "native-kernel-identity/Cargo.toml": "5cab2f22141987e4f1470b0fb575107b5c3ad134829bd2b92d5b7ccb3ef12431",
+    "native-kernel-identity/README.md": "07ff5508164058ad2d51f449e91b06b0a02d2373b2d33d8885274d044c84d19a",
+    "native-kernel-identity/public-api-inputs.json": "21981ee4e529ce04afc90453b5e9215d5d71eeb3dc758e32731deaa3fb9d6197",
+    "native-kernel-identity/src/lib.rs": "464a5e2a96dd99f127cce5b32514ff4a9a7340f8bee2581e941685e6df82cbcd",
+    "native-kernel-identity/src/pidfd.rs": "caf4b44738fc53093a32ef96c2e639c1a376935ad29fa17a42091a56180b11ff",
+    "native-kernel-identity/tests/pidfd.rs": "ed310e5152426ae8a3d723ca2869cdcd3fda50e0552cdc16938c638d308cc3b3",
+    "native-kernel-identity/tests/socket.rs": "2e9d134e7913ddadb564939bf241538690698a9ca7b660213479d843c638fd08",
+    "native-lifecycle/Cargo.lock": "bad4e41a75608010924bb766c35c100f758fac903e8b628e66078e9a50bd28be",
+    "native-lifecycle/Cargo.toml": "dcf7bffba5345547cbd91a6035589705b73be9adab569322bdff9214dda5d901",
+    "native-lifecycle/src/authority.rs": "93d59a62096076b0551ec5485852b996a411edd7f6b121b1f719ff9d057917c6",
+    "native-lifecycle/src/bin/lifecycle-client.rs": "6dd1f2c86a96bca4364b5ee2e85fd39fecaf10bc68b8f7b727bd3e65f86bc9bf",
+    "native-lifecycle/src/bin/lifecycle-daemon.rs": "ee33d2d77a8fc98ce56b582d9b9c96d0f2f8240e3fda182ec9bdeba8f6af4f01",
+    "native-lifecycle/src/bin/lifecycle-launcher.rs": "49a0e279b381a45ed49242a74c94b202ebebb81bc42bd8b61cfd58f8bb80a923",
+    "native-lifecycle/src/ipc.rs": "6a9073bb4c4413f8b4d49caa6a8827cfe7ffe167b3c712192d0951d6be8465c1",
+    "native-lifecycle/src/lib.rs": "076119670b9e98a510f0c1dfd14ce1598b7d2c3356e235b9b346535a76833151",
+    "native-lifecycle/src/messages.rs": "2e446fa1eef820b14510f60ce88b880637d84daf90cec8909639d0ec97f2c657",
+    "native-lifecycle/src/service.rs": "23b840cc417ec96820500675844dcf544e1c58c017201c2374f6392f962ec079",
+    "native-lifecycle/src/session.rs": "be4989639a50750d8901f0ce1c55fdd10695bf23b5f0934c137c1ee6d47c08ad",
+    "native-lifecycle/src/storage.rs": "e860864db2ec8b6c00930128c1592918f06b00e3b4a466b71d17effe0764997f",
+    "native-messages/Cargo.lock": "e77b78eeb9323c1c5793a728b70f8b5bf9a256f10fc974b7699efed53884792e",
+    "native-messages/Cargo.toml": "8502b6bd0693869827833f52fcdde13d17658e4123607ca905d633d96db5240b",
+    "native-messages/packaging/pokelinux-messages.service": "f6f8ef6b4f9d5563777fa73f4e74dd202ec393423f955499a7502f85a52c14d3",
+    "native-messages/src/bin/messages-launch.rs": "2b2b413307ae51814b44a4cede235218871f9a459ee9e8fd38f2d576c0067976",
+    "native-messages/src/bin/messages-service.rs": "8c7319e12f1f9ceee6f516df172d60fbf78849442aadd86f9474d73ce089cb02",
+    "native-messages/src/bin/messages-stop.rs": "82b16a187b295d60623f6a8c6da86b944ac78390810a99616b705158bebc7990",
+    "native-messages/src/incoming.rs": "2144bb80bd8211ae1c241ce5b8c8931e3b91ab1f8d6b2f0ffb81a7f8eb679d90",
+    "native-messages/src/lib.rs": "faa6df0140ea61301b84e35a8ff664fa4cfe1f13159ab4ea6c1d2395ca82550c",
+    "native-messages/src/projection.rs": "ea45ff7a36e385bc366ba458bf00a40169707c1834c7c8a673530585f7ed89d7",
+    "native-messages/src/protocol.rs": "aac4405329604affa079074a6c7317570882384f6164fdf6ae6f05a831d17c8e",
+    "native-messages/src/worker.rs": "d30150ff9bc2f7e3bf461af53f9f7e4dc16e77255c20a984ca73583d41866a8a",
+    "native-messages/tests/projection.rs": "192b1f74d68a302b070d3ca303a40f18730ed8a1ee9b1ed5e6a43f5d7ba4a7c4",
+    "native-messages/tests/support/seed.rs": "a60873377c9582ce42645b5a5c8d9d0054e3f25d025983097873031f108face7",
+    "native-messaging/Cargo.lock": "e7cb16fc3e8c6abb7fbbc7a52d8f73f07c934a7a103de1cef5a0c414f3bd375f",
+    "native-messaging/Cargo.toml": "d2fdf280609b6b9b2743315ccf4dc4216e38b3a60ed70bc4199e20fe4a4c40d0",
+    "native-messaging/src/lib.rs": "b291059cbed5d33fd69e6437e41e85aa82e94004c147eec634a09bf8cf86925d",
+    "native-messaging/src/outbox.rs": "b910f78d0b48386e055535d24e44c0985f019657e232695f89fa7f522ab596eb",
+    "native-messaging/src/receipt.rs": "09718ae9ccbad56ef697da7fe1ce1e3100890097e6695361360e05923bbd6091",
+    "native-messaging/src/receive.rs": "55f2cf7da7feca551297526a14fff1216e5a798d3b41d44d9bfea8b033877acc",
+    "native-messaging/src/status_report.rs": "6ac6ad437f2e9dbec9c7beb0e614c910f03a161f07583ebdf7ebb0d629888595",
+    "native-messaging/src/transport.rs": "1602a7ed81b01433793296a873fbfa5ec1ee9faf5899da9a808d7f673dd1ae67",
+    "native-messaging/tests/fixtures/aosp-deliver.tsv": "c39f8a95fdefed5dca6c2e9a7064bb67c512ee08de1341f198462ac884ebb9ea",
+    "native-messaging/tests/fixtures/aosp-status-report.tsv": "d8990348a18d97d43603786205b48bc33048c8c3e84f1e92358f846f2fff9646",
+    "native-messaging/tests/fixtures/aosp-submit.tsv": "ffadac7dbee8a3db9044857ca05a969d18ff4c0f005bae5fedaa7eaad617050b",
+    "native-messaging/tests/fixtures/status-report-input.tsv": "2cd0578ad034b6705e567836d5bbba3def7218c5f23eefbac4cea4e68f9e33a6",
+    "native-messaging/tests/original_deliver.rs": "af6ffe72153803f522a0e5eefa2958d5950cd79427bf5cb882aee5416649230f",
+    "native-messaging/tests/original_status_report.rs": "847dd09798e1008c34323b65dafe8ba2e1f9c6073c3003711265e800827b6ec8",
+    "native-messaging/tests/original_submit.rs": "b55df0120b7f048d791ffc79d82c0686eb67e0041bb34e66e65344023c163627",
+    "native-messaging/tests/outbox.rs": "7ec099c549d70e45f2b11cfa380822f2ad59766e00012429456eb94de2f46949",
+    "native-messaging/tests/outbox_process.rs": "148ed57b10113fbdf435e0b5e8379d0eab51b88246b8fc98ff398ce80c2d62be",
+    "native-messaging/tests/planner.rs": "b53a569f1ea982e23a64a3125b52faadcef70d09a9c47ecbbe85d273da6a63a6",
+    "native-messaging/tests/receipt.rs": "22a5c28c6c60652f5e86f2635122f01daf2c64fc15d13e2f686160aac89a97d8",
+    "native-messaging/tests/receive.rs": "238b323320cec1405cf629458cce0f4163877ba7982da9a5484580c3d79d51c1",
+    "native-messaging/tests/status_report.rs": "9c8a542e85ac41414b9ad3b407e83db211aedf1823a816d561b3991650e7dab8",
+    "native-messaging/tests/transport.rs": "eddd6adc2a007aabd895332ec1aa6f2d67bc9d2257e8619c5614e4a4f1a22e56",
+    "native-session/Cargo.lock": "8b5034dc2d7279634f6af4fb68100ee47a6c99e46a1c378b4bd4f9ae9c319977",
+    "native-session/Cargo.toml": "ea4f943b4b34e053c9d19cc91f2c62e2aea37abfa91318d11fa2800f86993f45",
+    "native-session/src/bin/session-observer-fixture.rs": "75e55d00a1402affa12e323f92c654299e4eec6f26cf004e6c97c2f173a58a91",
+    "native-session/src/bin/session-peer-fixture.rs": "c4e214a8a56a7e159a7b96171b1f841f65991be1b353b33bcd2135fe2f2f35d3",
+    "native-session/src/lib.rs": "3f2e9d07b3163dcc057b85bef6d1f353f10b9f207558d5d41386532970da7bb2",
+    "native-session/tests/process.rs": "621c2af4556dc121b3b07b24bb94c5db51132ea001e968ff78eb128a17c046ad",
+    "tools/native-session-display-app/fixture/Cargo.lock": "e54a85e29e60409279a8d8ee2c445bfccab4f9e042f46c9ee690716c6a331ddd",
+    "tools/native-session-display-app/fixture/Cargo.toml": "f8c8dea232849ec008fb4abcd1c4e7bac37ec1b096fce68ed0ed8787d714d992",
+    "tools/native-session-display-app/fixture/src/bin/service.rs": "84c670e81fa247452df57eca4158d443cb3bc3334e0f5580fd200469440c544f"
+  },
+  "independent_parent_wait_trace_qualified": false,
+  "limits": [
+    "This is a new per-app lifetime requirement; a surviving service-epoch realm is consistent with the old selected contract.",
+    "No new per-app implementation or GREEN was executed here; no generation replacement or relaunch is qualified.",
+    "Original Source remains healthy through the post-reap registry. Whole-service Stop during final cleanup intentionally produces terminal Source/display transitions afterward.",
+    "Close-to-observed-absence timing is an observation, not a hard cancellation or original-read deadline bound.",
+    "Allowed display metadata/registry does not grant data, raw history, admin, sensor/capture or modem effect authority."
+  ],
+  "no_cold_Qt_reopen": true,
+  "normal_qt_elf_sha256": "4aa50f980eab1100637d582a2752090f7545e1eb30630888753dfb9a7d2512c8",
+  "original_source": {
+    "gid": 1000,
+    "incarnation": "fe0904c13780d93941c5038814578c95",
+    "owned_launcher_pidfd_retained": true,
+    "pid": 337,
+    "pidfd_fdinfo": "pos:\t0\nflags:\t02004002\nmnt_id:\t5\nino:\t4210\nPid:\t337\nNSpid:\t337\n",
+    "pidfd_fileno": 13,
+    "uid": 1000
+  },
+  "physical_phone_qualified": false,
+  "post_reap_same_live_service_health": {
+    "SDK_pidfd_fdinfo": "pos:\t0\nflags:\t02004002\nmnt_id:\t5\nino:\t115\nPid:\t378\nNSpid:\t378\n",
+    "actor_snapshot": {
+      "degraded": false,
+      "locked": false,
+      "permits": 0,
+      "principals": 0,
+      "ready": true,
+      "receipts": 0,
+      "result": "snapshot",
+      "storage_busy": false,
+      "storage_occupied": true,
+      "suspended": false
+    },
+    "display": {
+      "admission": true,
+      "event": "display",
+      "metadata_scope": "service_epoch",
+      "occupied": true,
+      "state": "Ready",
+      "until_ns": 43512265923,
+      "worker_pid": 378
+    },
+    "observed_at_ns": 46270444329,
+    "sdk_pid": 378,
+    "service_pidfd_fdinfo": "pos:\t0\nflags:\t02004002\nmnt_id:\t5\nino:\t12372\nPid:\t377\nNSpid:\t377\n",
+    "source_current_probe": {
+      "complete": false,
+      "eligible": true,
+      "gid": 1000,
+      "locked": false,
+      "peer_pidfd_errno": 0,
+      "peer_pidfd_fd": 69,
+      "peer_pidfd_live": true,
+      "peer_pidfd_valid": true,
+      "peer_pidfs_dev": 6,
+      "peer_pidfs_ino": 12363,
+      "peer_pidfs_magic": 1346978886,
+      "pid": 364,
+      "reason": "query",
+      "seq": 252,
+      "type": 0,
+      "uid": 1000
+    },
+    "writer_pid": 379,
+    "writer_pidfd_fdinfo": "pos:\t0\nflags:\t02004002\nmnt_id:\t5\nino:\t116\nPid:\t379\nNSpid:\t379\n"
+  },
+  "proof_checksums": {
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/app-user.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/bins/adapter.so": "312227400c39a793c2e591d0893c692d0ac258b8f5f9ad925ae2b8727fd53621",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/bins/lifecycle-launcher": "632d4139f291a57efbb50a47f778ef72b2b4be0a52d36c7e7878812dfe90ef5d",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/bins/lock-client": "1765a58d0fc95c7e6c95c4761f7d2c2b967ba74561eadaf76348a0aeb790451f",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/bins/messages-seed-fixture": "f0834e901fc1c5ba130915af10db7635ab3a749aa511f900c85f2c9749de1117",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/bins/messages-service": "15393d7d257f8636887cd00fbfd7020093209d08146789f19d0366e29f87e807",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/bins/messages-session-display-fixture": "1a4d606e41e85422c999a16c3adda7072eaccb2999fe3d25bf9b61cf89e13c57",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/bins/pokelinux-messages": "4aa50f980eab1100637d582a2752090f7545e1eb30630888753dfb9a7d2512c8",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/bins/pokelinux-messages-observer": "6c14578f16ead1cdea814380ce907e99432362355e44b10186d06b54dcec027f",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/bins/probe.so": "ac673f13ee21d1ea42b7d509e04703bac7bc40661c08d064172c4177d9a5e60b",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/command.json": "1d347bae7a5efab4a15afcf9cb2c6a392251f00920652b470e423948adee3b1b",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/desktop-launch.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/direct-original-app-connect.log": "d707e262c303637310299104068b9c7746c27ea1f2e16b7d87e4f87c323e82f2",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/exit-code": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/groups.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/hyprland.log": "83b67aa15c5f72f423b004a18b479141313da8f3f3662815baea1b22ac3fbdc8",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/layer.log": "54a853c0ea82de1e2e67b4700549c7c94fce3c05ed981945785f1b5c1e36fa44",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/modprobe.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/normal-app-realm-allowed-registry.log": "ed3393ddf67b9212518b0229e23db1af3dae9517ce4e43b13fc222c40c516475",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/normal-current-focus-grant-conversation-capture.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/normal-current-focus-grant-conversation.png": "eed6176dfc693711fd4cdaccb23710305d4f7b852c655faf59f219b893d631e9",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/normal-unknown-source-denied-capture.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/normal-unknown-source-denied.png": "6249b644aa2a2dfcc99a20e3681b9977e7c4bff6c4dcfba2eb760265cc979fe6",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/packages.log": "7bc8c04cb0025f3c25a9f52fd73fc9ac88c29751677db3bfd6a56c35213c2d66",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/result.json": "a956dcfd13bfa1364b8ca48070d2de9fdd5b3cf3ff3a51f258fa90f30dd39ff1",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/runtime.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/same-UID-future-old-listener-registry.log": "4ca5d23ae9a0c9608d674d70bb5c2888bbaec3e3adde813c70487a1378890058",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/same-UID-without-principal-data-boundary.log": "4c32e5cd94ddd29d6ffa6d196fddfe08225615c172038f5adaf1a5aac7c3cd23",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/seatd.log": "b9fa08b10ed7529812ba15ccd00ab7516b0adf7316f11c9011c7f018ee7cd6a7",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/seed.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/selection.json": "25b5aac71a2f5f35a316102b4573f424a53ee8f3ee44e1801538afb17d09814b",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/serial.log": "d5075a9e5334fe3a39cd1cb38dccde49e2c9932671da19b75843c0072e05681c",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/service.log": "91ef4c46f42d0eec409338e9fc0217216bc1254bd4d1423029ad611d7c33c153",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/README.md": "865abaa827b457e158fc8b2a76da0620ad198c1a1e9de10ba4043ff2fe9ba55d",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/boot.sh": "724fa85b2b518cfd40c99c1ca38629bf59d7c448a111aba73a91a4c70a3dba9c",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/boundary-probe.py": "c50a77ba9d17ee6da5b92a900c46836e53803890479ec1a679723332cc7b3e0a",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/compositor-build-selection.json": "4c8eaff1655877e9745691e75b0e819df35b238442b7212644e6c9147b3dbcbd",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/guest.py": "a6d86fbd5455ea24c81693e3ee4b677b257a4692e52340aee4c8f35bdbee97d8",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/native-app/PhoneTheme.qml": "67caaa853a01ac2108f16bff88009d026779da4df54961b11d3d82a1d2ed2fd1",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/native-app/PhoneThemeFiles.cpp": "57b39dcf95a8d28b65cced5d730a13e5eab8726edc2e889d936acdecac668664",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/native-app/PhoneThemeFiles.h": "9bfdbb38ed23e4b03491073038264596ec3825b91e83d3b05eafd941623ecc1a",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/native-app/ThemePalette.js": "677d9faa94873dd6aceee81a900f179600f7a699defe1c4304760beeccd26a33",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/registry-probe.py": "3826ee3b958e2e7ce5962bac5596d89c7b429211898afa37344197f2c172c52c",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/run.py": "b169f250b1a38ada46c7272285a02d9d7b55e66faa6216ce063964bfe729ddaa",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build-selection.json": "076ed725b13a16c1c2be106591d8457db68ec7150a76bb91daf0bbabaeebadfa",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-display/Cargo.lock": "dd376c75a1e1d9955959562893c6b7c2dc66d99129e97bcc9f0786c06999ee5b",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-display/Cargo.toml": "0d9306f3389c6c93f204ccac1ddf2f93c6d9af7513890110a51607d2760d2b09",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-display/README.md": "23cec364ed93cce70cc98665590a738e828845ffb13f1f03a57ca46a4a505510",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-display/public-api-inputs.json": "9f821a725df3c2a57e8c132c646dd382137ec24a672636357eeba37db412f0ae",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-display/src/bin/display-context-fixture.rs": "905f9a3b5338e4afe092332d4346011a68def02a7e8219c98e59d8cb20801554",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-display/src/bin/display-supervisor-fixture.rs": "6114f2f18288dc5341587895a6d925dea9bed50f6c26511013efc155ccc486d6",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-display/src/lib.rs": "1556ce9bd3b5edfbb58e779f70e9a6d80e00140ece7def69e88f8c6bb8946c8c",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-display/src/supervisor.rs": "310a928c0e9341328d05ceeb1fea2b3d720c97c314f0cb27d8e26c199a248829",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-display/tests/descriptor.rs": "1c71ff07b1ab544bad7aae1148ae2dc98d4bffaf385d416ced360fbf05631192",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-inbox/Cargo.lock": "713ed0a0f107c2bb0586de2a0453e8ff0e0c2fb5a2dd9097fadc5e8d16efb729",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-inbox/Cargo.toml": "9ef2b7baf22a760b96700730f7edcb78301b82c98b29914444a966e8ab708c5c",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-inbox/src/lib.rs": "e0811dcd8e29a1d01afc2b2c9e0965724539965f935a3e4c5c8d383aea0e02dc",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-inbox/tests/inbox.rs": "05ca3e719d9078483a8b1fa1076d33fba3d62fce9de34bc4d28f48a36b86a1fc",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-inbox/tests/original_deliver.rs": "550767db0ef66c11b50d8451df6e4b91443f3ec04be120b2fdae99764f7307e8",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-kernel-identity/Cargo.lock": "ea2dd27ddd1bf8c00b3bf15d5fface7d5bddd6e20b5d1e89fbc1fc10172ff592",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-kernel-identity/Cargo.toml": "5cab2f22141987e4f1470b0fb575107b5c3ad134829bd2b92d5b7ccb3ef12431",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-kernel-identity/README.md": "07ff5508164058ad2d51f449e91b06b0a02d2373b2d33d8885274d044c84d19a",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-kernel-identity/public-api-inputs.json": "21981ee4e529ce04afc90453b5e9215d5d71eeb3dc758e32731deaa3fb9d6197",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-kernel-identity/src/lib.rs": "464a5e2a96dd99f127cce5b32514ff4a9a7340f8bee2581e941685e6df82cbcd",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-kernel-identity/src/pidfd.rs": "caf4b44738fc53093a32ef96c2e639c1a376935ad29fa17a42091a56180b11ff",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-kernel-identity/tests/pidfd.rs": "ed310e5152426ae8a3d723ca2869cdcd3fda50e0552cdc16938c638d308cc3b3",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-kernel-identity/tests/socket.rs": "2e9d134e7913ddadb564939bf241538690698a9ca7b660213479d843c638fd08",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-lifecycle/Cargo.lock": "bad4e41a75608010924bb766c35c100f758fac903e8b628e66078e9a50bd28be",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-lifecycle/Cargo.toml": "dcf7bffba5345547cbd91a6035589705b73be9adab569322bdff9214dda5d901",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-lifecycle/src/authority.rs": "93d59a62096076b0551ec5485852b996a411edd7f6b121b1f719ff9d057917c6",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-lifecycle/src/bin/lifecycle-client.rs": "6dd1f2c86a96bca4364b5ee2e85fd39fecaf10bc68b8f7b727bd3e65f86bc9bf",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-lifecycle/src/bin/lifecycle-daemon.rs": "ee33d2d77a8fc98ce56b582d9b9c96d0f2f8240e3fda182ec9bdeba8f6af4f01",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-lifecycle/src/bin/lifecycle-launcher.rs": "49a0e279b381a45ed49242a74c94b202ebebb81bc42bd8b61cfd58f8bb80a923",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-lifecycle/src/ipc.rs": "6a9073bb4c4413f8b4d49caa6a8827cfe7ffe167b3c712192d0951d6be8465c1",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-lifecycle/src/lib.rs": "076119670b9e98a510f0c1dfd14ce1598b7d2c3356e235b9b346535a76833151",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-lifecycle/src/messages.rs": "2e446fa1eef820b14510f60ce88b880637d84daf90cec8909639d0ec97f2c657",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-lifecycle/src/service.rs": "23b840cc417ec96820500675844dcf544e1c58c017201c2374f6392f962ec079",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-lifecycle/src/session.rs": "be4989639a50750d8901f0ce1c55fdd10695bf23b5f0934c137c1ee6d47c08ad",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-lifecycle/src/storage.rs": "e860864db2ec8b6c00930128c1592918f06b00e3b4a466b71d17effe0764997f",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messages/Cargo.lock": "e77b78eeb9323c1c5793a728b70f8b5bf9a256f10fc974b7699efed53884792e",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messages/Cargo.toml": "8502b6bd0693869827833f52fcdde13d17658e4123607ca905d633d96db5240b",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messages/packaging/pokelinux-messages.service": "f6f8ef6b4f9d5563777fa73f4e74dd202ec393423f955499a7502f85a52c14d3",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messages/src/bin/messages-launch.rs": "2b2b413307ae51814b44a4cede235218871f9a459ee9e8fd38f2d576c0067976",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messages/src/bin/messages-service.rs": "8c7319e12f1f9ceee6f516df172d60fbf78849442aadd86f9474d73ce089cb02",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messages/src/bin/messages-stop.rs": "82b16a187b295d60623f6a8c6da86b944ac78390810a99616b705158bebc7990",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messages/src/incoming.rs": "2144bb80bd8211ae1c241ce5b8c8931e3b91ab1f8d6b2f0ffb81a7f8eb679d90",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messages/src/lib.rs": "faa6df0140ea61301b84e35a8ff664fa4cfe1f13159ab4ea6c1d2395ca82550c",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messages/src/projection.rs": "ea45ff7a36e385bc366ba458bf00a40169707c1834c7c8a673530585f7ed89d7",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messages/src/protocol.rs": "aac4405329604affa079074a6c7317570882384f6164fdf6ae6f05a831d17c8e",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messages/src/worker.rs": "d30150ff9bc2f7e3bf461af53f9f7e4dc16e77255c20a984ca73583d41866a8a",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messages/tests/projection.rs": "192b1f74d68a302b070d3ca303a40f18730ed8a1ee9b1ed5e6a43f5d7ba4a7c4",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messages/tests/support/seed.rs": "a60873377c9582ce42645b5a5c8d9d0054e3f25d025983097873031f108face7",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messaging/Cargo.lock": "e7cb16fc3e8c6abb7fbbc7a52d8f73f07c934a7a103de1cef5a0c414f3bd375f",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messaging/Cargo.toml": "d2fdf280609b6b9b2743315ccf4dc4216e38b3a60ed70bc4199e20fe4a4c40d0",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messaging/src/lib.rs": "b291059cbed5d33fd69e6437e41e85aa82e94004c147eec634a09bf8cf86925d",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messaging/src/outbox.rs": "b910f78d0b48386e055535d24e44c0985f019657e232695f89fa7f522ab596eb",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messaging/src/receipt.rs": "09718ae9ccbad56ef697da7fe1ce1e3100890097e6695361360e05923bbd6091",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messaging/src/receive.rs": "55f2cf7da7feca551297526a14fff1216e5a798d3b41d44d9bfea8b033877acc",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messaging/src/status_report.rs": "6ac6ad437f2e9dbec9c7beb0e614c910f03a161f07583ebdf7ebb0d629888595",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messaging/src/transport.rs": "1602a7ed81b01433793296a873fbfa5ec1ee9faf5899da9a808d7f673dd1ae67",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messaging/tests/fixtures/aosp-deliver.tsv": "c39f8a95fdefed5dca6c2e9a7064bb67c512ee08de1341f198462ac884ebb9ea",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messaging/tests/fixtures/aosp-status-report.tsv": "d8990348a18d97d43603786205b48bc33048c8c3e84f1e92358f846f2fff9646",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messaging/tests/fixtures/aosp-submit.tsv": "ffadac7dbee8a3db9044857ca05a969d18ff4c0f005bae5fedaa7eaad617050b",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messaging/tests/fixtures/status-report-input.tsv": "2cd0578ad034b6705e567836d5bbba3def7218c5f23eefbac4cea4e68f9e33a6",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messaging/tests/original_deliver.rs": "af6ffe72153803f522a0e5eefa2958d5950cd79427bf5cb882aee5416649230f",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messaging/tests/original_status_report.rs": "847dd09798e1008c34323b65dafe8ba2e1f9c6073c3003711265e800827b6ec8",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messaging/tests/original_submit.rs": "b55df0120b7f048d791ffc79d82c0686eb67e0041bb34e66e65344023c163627",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messaging/tests/outbox.rs": "7ec099c549d70e45f2b11cfa380822f2ad59766e00012429456eb94de2f46949",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messaging/tests/outbox_process.rs": "148ed57b10113fbdf435e0b5e8379d0eab51b88246b8fc98ff398ce80c2d62be",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messaging/tests/planner.rs": "b53a569f1ea982e23a64a3125b52faadcef70d09a9c47ecbbe85d273da6a63a6",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messaging/tests/receipt.rs": "22a5c28c6c60652f5e86f2635122f01daf2c64fc15d13e2f686160aac89a97d8",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messaging/tests/receive.rs": "238b323320cec1405cf629458cce0f4163877ba7982da9a5484580c3d79d51c1",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messaging/tests/status_report.rs": "9c8a542e85ac41414b9ad3b407e83db211aedf1823a816d561b3991650e7dab8",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-messaging/tests/transport.rs": "eddd6adc2a007aabd895332ec1aa6f2d67bc9d2257e8619c5614e4a4f1a22e56",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-session/Cargo.lock": "8b5034dc2d7279634f6af4fb68100ee47a6c99e46a1c378b4bd4f9ae9c319977",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-session/Cargo.toml": "ea4f943b4b34e053c9d19cc91f2c62e2aea37abfa91318d11fa2800f86993f45",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-session/src/bin/session-observer-fixture.rs": "75e55d00a1402affa12e323f92c654299e4eec6f26cf004e6c97c2f173a58a91",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-session/src/bin/session-peer-fixture.rs": "c4e214a8a56a7e159a7b96171b1f841f65991be1b353b33bcd2135fe2f2f35d3",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-session/src/lib.rs": "3f2e9d07b3163dcc057b85bef6d1f353f10b9f207558d5d41386532970da7bb2",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/native-session/tests/process.rs": "621c2af4556dc121b3b07b24bb94c5db51132ea001e968ff78eb128a17c046ad",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/tools/native-session-display-app/fixture/Cargo.lock": "e54a85e29e60409279a8d8ee2c445bfccab4f9e042f46c9ee690716c6a331ddd",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/tools/native-session-display-app/fixture/Cargo.toml": "f8c8dea232849ec008fb4abcd1c4e7bac37ec1b096fce68ed0ed8787d714d992",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/source/rust-build/tools/native-session-display-app/fixture/src/bin/service.rs": "84c670e81fa247452df57eca4158d443cb3bc3334e0f5580fd200469440c544f",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/udev.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/warmup.log": "68e3a732aae5c4fe369838df8c6a6244546d508c8a78b400b6ffde96e42c2f2a"
+  },
+  "scope": "New per-app generation admission requirement is absent; selected service-epoch context deliberately survives normal app reap. This does not retroactively invalidate its documented service-epoch contract.",
+  "selected_groups": {
+    "desired_future_boundary_failed": 1,
+    "passed_controls": 6
+  },
+  "selected_label": "service-epoch-app-reap-generation-red-arm-2",
+  "selected_result_sha256": "a956dcfd13bfa1364b8ca48070d2de9fdd5b3cf3ff3a51f258fa90f30dd39ff1",
+  "selected_selection_sha256": "25b5aac71a2f5f35a316102b4573f424a53ee8f3ee44e1801538afb17d09814b",
+  "selected_service_elf_sha256": "1a4d606e41e85422c999a16c3adda7072eaccb2999fe3d25bf9b61cf89e13c57",
+  "setup_index_sha256": "885cb93466a682abdeab2fe1d353df513d4cfd00bf6a2f8806847568723d51c6",
+  "source_revival_permitted": false,
+  "unselected_setup_checksums": {
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/app-user.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/bins/adapter.so": "312227400c39a793c2e591d0893c692d0ac258b8f5f9ad925ae2b8727fd53621",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/bins/lifecycle-launcher": "632d4139f291a57efbb50a47f778ef72b2b4be0a52d36c7e7878812dfe90ef5d",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/bins/lock-client": "1765a58d0fc95c7e6c95c4761f7d2c2b967ba74561eadaf76348a0aeb790451f",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/bins/messages-seed-fixture": "f0834e901fc1c5ba130915af10db7635ab3a749aa511f900c85f2c9749de1117",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/bins/messages-service": "15393d7d257f8636887cd00fbfd7020093209d08146789f19d0366e29f87e807",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/bins/messages-session-display-fixture": "1a4d606e41e85422c999a16c3adda7072eaccb2999fe3d25bf9b61cf89e13c57",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/bins/pokelinux-messages": "4aa50f980eab1100637d582a2752090f7545e1eb30630888753dfb9a7d2512c8",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/bins/pokelinux-messages-observer": "6c14578f16ead1cdea814380ce907e99432362355e44b10186d06b54dcec027f",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/bins/probe.so": "ac673f13ee21d1ea42b7d509e04703bac7bc40661c08d064172c4177d9a5e60b",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/command.json": "92092c2356bcb69b61526ac4721f9f9c878daf5c092ac715797976990cbd9695",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/desktop-launch.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/direct-original-app-connect.log": "d707e262c303637310299104068b9c7746c27ea1f2e16b7d87e4f87c323e82f2",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/exit-code": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/groups.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/hyprland.log": "3064a9c6acee0167087e5ed2a6c90c13896e17339c640c792f70b79e490edad0",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/layer.log": "c661f832d1aa12fcdd43e813e983d6dce2be728d2e1a7f5d852e19c88e5715f3",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/modprobe.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/normal-app-realm-allowed-registry.log": "ed3393ddf67b9212518b0229e23db1af3dae9517ce4e43b13fc222c40c516475",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/normal-unknown-source-denied-capture.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/normal-unknown-source-denied.png": "928ed5a123765177de4dd24727d9f8667266de9b598d06a4a4670abab3601453",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/packages.log": "7bc8c04cb0025f3c25a9f52fd73fc9ac88c29751677db3bfd6a56c35213c2d66",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/result.json": "19ea6babefe28923dc4a5664ae20ed8a94f3e94c77f5ae180ffa99d3bfe616ef",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/runtime.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/seatd.log": "5afb30edc63231d8a39e176078258ebcda6aa0afed7e158656923c5ab119a3fc",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/seed.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/selection.json": "c1d34ff3342501efdac7fa9ffb08e74f55857f19445e55a982ffea6ed686b50b",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/serial.log": "bc341fb69c8412a59adc32dd9e5776d96defa34a932b198342c80d990c484e8c",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/service.log": "ca696909003c631c1b193e92b26b1c5f6475b572073e799b38c51d799b23fb60",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/README.md": "ad1f4fa0027b4e02f18ffb651f14edc89c0240a25912c05b492553281605a238",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/boot.sh": "724fa85b2b518cfd40c99c1ca38629bf59d7c448a111aba73a91a4c70a3dba9c",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/boundary-probe.py": "c50a77ba9d17ee6da5b92a900c46836e53803890479ec1a679723332cc7b3e0a",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/compositor-build-selection.json": "4c8eaff1655877e9745691e75b0e819df35b238442b7212644e6c9147b3dbcbd",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/guest.py": "44686fc85bd4d7ed407d692487c214f220f1993258441bca1aab9a3f689d7313",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/native-app/PhoneTheme.qml": "67caaa853a01ac2108f16bff88009d026779da4df54961b11d3d82a1d2ed2fd1",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/native-app/PhoneThemeFiles.cpp": "57b39dcf95a8d28b65cced5d730a13e5eab8726edc2e889d936acdecac668664",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/native-app/PhoneThemeFiles.h": "9bfdbb38ed23e4b03491073038264596ec3825b91e83d3b05eafd941623ecc1a",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/native-app/ThemePalette.js": "677d9faa94873dd6aceee81a900f179600f7a699defe1c4304760beeccd26a33",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/registry-probe.py": "3826ee3b958e2e7ce5962bac5596d89c7b429211898afa37344197f2c172c52c",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/run.py": "8d2503a8ff58e9e17eace44776fbc346d7a5b262ba5d89418ca42083c41b1d8f",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build-selection.json": "076ed725b13a16c1c2be106591d8457db68ec7150a76bb91daf0bbabaeebadfa",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-display/Cargo.lock": "dd376c75a1e1d9955959562893c6b7c2dc66d99129e97bcc9f0786c06999ee5b",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-display/Cargo.toml": "0d9306f3389c6c93f204ccac1ddf2f93c6d9af7513890110a51607d2760d2b09",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-display/README.md": "23cec364ed93cce70cc98665590a738e828845ffb13f1f03a57ca46a4a505510",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-display/public-api-inputs.json": "9f821a725df3c2a57e8c132c646dd382137ec24a672636357eeba37db412f0ae",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-display/src/bin/display-context-fixture.rs": "905f9a3b5338e4afe092332d4346011a68def02a7e8219c98e59d8cb20801554",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-display/src/bin/display-supervisor-fixture.rs": "6114f2f18288dc5341587895a6d925dea9bed50f6c26511013efc155ccc486d6",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-display/src/lib.rs": "1556ce9bd3b5edfbb58e779f70e9a6d80e00140ece7def69e88f8c6bb8946c8c",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-display/src/supervisor.rs": "310a928c0e9341328d05ceeb1fea2b3d720c97c314f0cb27d8e26c199a248829",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-display/tests/descriptor.rs": "1c71ff07b1ab544bad7aae1148ae2dc98d4bffaf385d416ced360fbf05631192",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-inbox/Cargo.lock": "713ed0a0f107c2bb0586de2a0453e8ff0e0c2fb5a2dd9097fadc5e8d16efb729",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-inbox/Cargo.toml": "9ef2b7baf22a760b96700730f7edcb78301b82c98b29914444a966e8ab708c5c",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-inbox/src/lib.rs": "e0811dcd8e29a1d01afc2b2c9e0965724539965f935a3e4c5c8d383aea0e02dc",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-inbox/tests/inbox.rs": "05ca3e719d9078483a8b1fa1076d33fba3d62fce9de34bc4d28f48a36b86a1fc",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-inbox/tests/original_deliver.rs": "550767db0ef66c11b50d8451df6e4b91443f3ec04be120b2fdae99764f7307e8",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-kernel-identity/Cargo.lock": "ea2dd27ddd1bf8c00b3bf15d5fface7d5bddd6e20b5d1e89fbc1fc10172ff592",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-kernel-identity/Cargo.toml": "5cab2f22141987e4f1470b0fb575107b5c3ad134829bd2b92d5b7ccb3ef12431",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-kernel-identity/README.md": "07ff5508164058ad2d51f449e91b06b0a02d2373b2d33d8885274d044c84d19a",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-kernel-identity/public-api-inputs.json": "21981ee4e529ce04afc90453b5e9215d5d71eeb3dc758e32731deaa3fb9d6197",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-kernel-identity/src/lib.rs": "464a5e2a96dd99f127cce5b32514ff4a9a7340f8bee2581e941685e6df82cbcd",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-kernel-identity/src/pidfd.rs": "caf4b44738fc53093a32ef96c2e639c1a376935ad29fa17a42091a56180b11ff",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-kernel-identity/tests/pidfd.rs": "ed310e5152426ae8a3d723ca2869cdcd3fda50e0552cdc16938c638d308cc3b3",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-kernel-identity/tests/socket.rs": "2e9d134e7913ddadb564939bf241538690698a9ca7b660213479d843c638fd08",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-lifecycle/Cargo.lock": "bad4e41a75608010924bb766c35c100f758fac903e8b628e66078e9a50bd28be",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-lifecycle/Cargo.toml": "dcf7bffba5345547cbd91a6035589705b73be9adab569322bdff9214dda5d901",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-lifecycle/src/authority.rs": "93d59a62096076b0551ec5485852b996a411edd7f6b121b1f719ff9d057917c6",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-lifecycle/src/bin/lifecycle-client.rs": "6dd1f2c86a96bca4364b5ee2e85fd39fecaf10bc68b8f7b727bd3e65f86bc9bf",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-lifecycle/src/bin/lifecycle-daemon.rs": "ee33d2d77a8fc98ce56b582d9b9c96d0f2f8240e3fda182ec9bdeba8f6af4f01",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-lifecycle/src/bin/lifecycle-launcher.rs": "49a0e279b381a45ed49242a74c94b202ebebb81bc42bd8b61cfd58f8bb80a923",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-lifecycle/src/ipc.rs": "6a9073bb4c4413f8b4d49caa6a8827cfe7ffe167b3c712192d0951d6be8465c1",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-lifecycle/src/lib.rs": "076119670b9e98a510f0c1dfd14ce1598b7d2c3356e235b9b346535a76833151",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-lifecycle/src/messages.rs": "2e446fa1eef820b14510f60ce88b880637d84daf90cec8909639d0ec97f2c657",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-lifecycle/src/service.rs": "23b840cc417ec96820500675844dcf544e1c58c017201c2374f6392f962ec079",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-lifecycle/src/session.rs": "be4989639a50750d8901f0ce1c55fdd10695bf23b5f0934c137c1ee6d47c08ad",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-lifecycle/src/storage.rs": "e860864db2ec8b6c00930128c1592918f06b00e3b4a466b71d17effe0764997f",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messages/Cargo.lock": "e77b78eeb9323c1c5793a728b70f8b5bf9a256f10fc974b7699efed53884792e",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messages/Cargo.toml": "8502b6bd0693869827833f52fcdde13d17658e4123607ca905d633d96db5240b",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messages/packaging/pokelinux-messages.service": "f6f8ef6b4f9d5563777fa73f4e74dd202ec393423f955499a7502f85a52c14d3",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messages/src/bin/messages-launch.rs": "2b2b413307ae51814b44a4cede235218871f9a459ee9e8fd38f2d576c0067976",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messages/src/bin/messages-service.rs": "8c7319e12f1f9ceee6f516df172d60fbf78849442aadd86f9474d73ce089cb02",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messages/src/bin/messages-stop.rs": "82b16a187b295d60623f6a8c6da86b944ac78390810a99616b705158bebc7990",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messages/src/incoming.rs": "2144bb80bd8211ae1c241ce5b8c8931e3b91ab1f8d6b2f0ffb81a7f8eb679d90",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messages/src/lib.rs": "faa6df0140ea61301b84e35a8ff664fa4cfe1f13159ab4ea6c1d2395ca82550c",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messages/src/projection.rs": "ea45ff7a36e385bc366ba458bf00a40169707c1834c7c8a673530585f7ed89d7",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messages/src/protocol.rs": "aac4405329604affa079074a6c7317570882384f6164fdf6ae6f05a831d17c8e",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messages/src/worker.rs": "d30150ff9bc2f7e3bf461af53f9f7e4dc16e77255c20a984ca73583d41866a8a",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messages/tests/projection.rs": "192b1f74d68a302b070d3ca303a40f18730ed8a1ee9b1ed5e6a43f5d7ba4a7c4",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messages/tests/support/seed.rs": "a60873377c9582ce42645b5a5c8d9d0054e3f25d025983097873031f108face7",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messaging/Cargo.lock": "e7cb16fc3e8c6abb7fbbc7a52d8f73f07c934a7a103de1cef5a0c414f3bd375f",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messaging/Cargo.toml": "d2fdf280609b6b9b2743315ccf4dc4216e38b3a60ed70bc4199e20fe4a4c40d0",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messaging/src/lib.rs": "b291059cbed5d33fd69e6437e41e85aa82e94004c147eec634a09bf8cf86925d",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messaging/src/outbox.rs": "b910f78d0b48386e055535d24e44c0985f019657e232695f89fa7f522ab596eb",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messaging/src/receipt.rs": "09718ae9ccbad56ef697da7fe1ce1e3100890097e6695361360e05923bbd6091",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messaging/src/receive.rs": "55f2cf7da7feca551297526a14fff1216e5a798d3b41d44d9bfea8b033877acc",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messaging/src/status_report.rs": "6ac6ad437f2e9dbec9c7beb0e614c910f03a161f07583ebdf7ebb0d629888595",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messaging/src/transport.rs": "1602a7ed81b01433793296a873fbfa5ec1ee9faf5899da9a808d7f673dd1ae67",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messaging/tests/fixtures/aosp-deliver.tsv": "c39f8a95fdefed5dca6c2e9a7064bb67c512ee08de1341f198462ac884ebb9ea",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messaging/tests/fixtures/aosp-status-report.tsv": "d8990348a18d97d43603786205b48bc33048c8c3e84f1e92358f846f2fff9646",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messaging/tests/fixtures/aosp-submit.tsv": "ffadac7dbee8a3db9044857ca05a969d18ff4c0f005bae5fedaa7eaad617050b",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messaging/tests/fixtures/status-report-input.tsv": "2cd0578ad034b6705e567836d5bbba3def7218c5f23eefbac4cea4e68f9e33a6",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messaging/tests/original_deliver.rs": "af6ffe72153803f522a0e5eefa2958d5950cd79427bf5cb882aee5416649230f",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messaging/tests/original_status_report.rs": "847dd09798e1008c34323b65dafe8ba2e1f9c6073c3003711265e800827b6ec8",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messaging/tests/original_submit.rs": "b55df0120b7f048d791ffc79d82c0686eb67e0041bb34e66e65344023c163627",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messaging/tests/outbox.rs": "7ec099c549d70e45f2b11cfa380822f2ad59766e00012429456eb94de2f46949",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messaging/tests/outbox_process.rs": "148ed57b10113fbdf435e0b5e8379d0eab51b88246b8fc98ff398ce80c2d62be",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messaging/tests/planner.rs": "b53a569f1ea982e23a64a3125b52faadcef70d09a9c47ecbbe85d273da6a63a6",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messaging/tests/receipt.rs": "22a5c28c6c60652f5e86f2635122f01daf2c64fc15d13e2f686160aac89a97d8",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messaging/tests/receive.rs": "238b323320cec1405cf629458cce0f4163877ba7982da9a5484580c3d79d51c1",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messaging/tests/status_report.rs": "9c8a542e85ac41414b9ad3b407e83db211aedf1823a816d561b3991650e7dab8",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-messaging/tests/transport.rs": "eddd6adc2a007aabd895332ec1aa6f2d67bc9d2257e8619c5614e4a4f1a22e56",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-session/Cargo.lock": "8b5034dc2d7279634f6af4fb68100ee47a6c99e46a1c378b4bd4f9ae9c319977",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-session/Cargo.toml": "ea4f943b4b34e053c9d19cc91f2c62e2aea37abfa91318d11fa2800f86993f45",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-session/src/bin/session-observer-fixture.rs": "75e55d00a1402affa12e323f92c654299e4eec6f26cf004e6c97c2f173a58a91",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-session/src/bin/session-peer-fixture.rs": "c4e214a8a56a7e159a7b96171b1f841f65991be1b353b33bcd2135fe2f2f35d3",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-session/src/lib.rs": "3f2e9d07b3163dcc057b85bef6d1f353f10b9f207558d5d41386532970da7bb2",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/native-session/tests/process.rs": "621c2af4556dc121b3b07b24bb94c5db51132ea001e968ff78eb128a17c046ad",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/tools/native-session-display-app/fixture/Cargo.lock": "e54a85e29e60409279a8d8ee2c445bfccab4f9e042f46c9ee690716c6a331ddd",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/tools/native-session-display-app/fixture/Cargo.toml": "f8c8dea232849ec008fb4abcd1c4e7bac37ec1b096fce68ed0ed8787d714d992",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/rust-build/tools/native-session-display-app/fixture/src/bin/service.rs": "84c670e81fa247452df57eca4158d443cb3bc3334e0f5580fd200469440c544f",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/source/wait-trace.py": "6a434588f9bd97b80c1b155e3c15c1e15e5a9223982edd224973931aecda8fdb",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/tracefs-mount.log": "0afa17eede038fb46f6f83c345c2b59d98b7b8770db3f26cf0baa55c8fe236e5",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/udev.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/warmup.log": "89686b28bc2843689a441ec021117227d79ce467a12d1a85aec7e947575d4902"
+  },
+  "visual_review": [
+    {
+      "observation": "Unselected pre-Source setup: Messages access denied",
+      "path": "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-1/normal-unknown-source-denied.png",
+      "sha256": "928ed5a123765177de4dd24727d9f8667266de9b598d06a4a4670abab3601453",
+      "visually_reviewed": true
+    },
+    {
+      "observation": "Selected normal Qt: Messages access denied",
+      "path": "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/normal-unknown-source-denied.png",
+      "sha256": "6249b644aa2a2dfcc99a20e3681b9977e7c4bff6c4dcfba2eb760265cc979fe6",
+      "visually_reviewed": true
+    },
+    {
+      "observation": "Selected normal Qt: Local receipt history and conversation sender +15550100; modem receive/send unavailable. Literal message body not visually qualified.",
+      "path": "artifacts/native-display-app-generations/service-epoch-app-reap-generation-red-arm-2/normal-current-focus-grant-conversation.png",
+      "sha256": "eed6176dfc693711fd4cdaccb23710305d4f7b852c655faf59f219b893d631e9",
+      "visually_reviewed": true
+    }
+  ]
+}

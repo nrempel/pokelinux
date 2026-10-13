@@ -1,5 +1,7 @@
 //! Linux credentials are authority; app labels are trusted installation metadata.
+mod apps;
 pub mod authority;
+pub mod display;
 pub mod ipc;
 pub mod messages;
 pub mod service;

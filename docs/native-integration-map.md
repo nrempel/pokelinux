@@ -75,7 +75,10 @@ appearance ACL setup remain explicit test infrastructure.
    ten separately labeled diagnostic groups; see [combined reads](native-session-receive-read-combined.md).
    The [display primitive](native-display-containment.md) now qualifies original
    privileged bind filtering and supervised SDK ownership separately. Compose its
-   restricted listener with per-app context generations/relaunch. The
+   restricted listener with current per-app ownership. The
+   [per-app checkpoint](native-display-app-generations.md) now passes four lifetime
+   groups and one held-init Stop group; pending EOF passes narrowly but its cold
+   successor aggregate remains failed after unexplained Source InvalidData. The
    [service-epoch actor composition](native-session-display-composition.md) now
    passes25 ARM observations after two integration reds, with source admission
    fencing and actual SDK reaping within the original actor cleanup budget.

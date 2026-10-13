@@ -18,6 +18,26 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+Per-app display ownership is now implemented in the current actor. Three actual
+ARM chronology REDs precede fresh context/listener generations, asynchronous
+Ready-before-app launch and exact-client EOF cancellation. Four lifetime groups
+and one held-initialization Stop group pass with unchanged normal Qt, Source610aa,
+original Hyprland and the same independent history writer. Pending EOF passes
+its boundary; its subsequent cold-successor aggregate fails after Source
+InvalidData. The rejecting predicate is not retained in that old epoch. Preserve
+the failure and investigate using separately pinned diagnostics; do not retry,
+relax the100ms lease or classify it as hardware-only. Root independently verifies
+2,740 nested bindings/1,206 paths and eight correctly run host lifecycle tests.
+A separate exact-code host selection passes27 distinct headless process groups:
+18 installed lifecycle, seven storage and two cleanup. Root verifies93 bindings;
+the unsupported admin.sock-only startup attempt remains preserved. See
+[evidence](evidence/native-display-app-headless-regression.json).
+See [per-app display](native-display-app-generations.md) and its provenance.
+A separately pinned diagnostic-only epoch identifies its own103.208749ms
+publisher sample-chain gap, exceeding the unchanged100ms limit by3.208749ms.
+Authenticated trace closure has zero drops; this does not retroactively diagnose
+the old failure or establish scheduling causality. Production Source is unchanged.
+
 The native raw-response publication gate, absolute suspend-aware session expiry,
 owned registration worker/death watch, and local process reclamation are implemented.
 They are not native IMS semantics or a complete phone service.
@@ -448,8 +468,8 @@ See `native-session-freshness-chain.md` and its publication provenance.
    original-compositor/current-authority/installed-app local-history path now passes separately. A fresh
    local-history replay combines the reader/writer split with that path. Next qualify
    broader cold incoming/session/Qt availability beyond the newly qualified nine-group
-   replay and per-app restricted display context generations/relaunch beyond the
-   qualified service-epoch listener, then trusted lock admission/restore,
+   replay and the failed per-app cancellation successor beyond the newly qualified
+   lifetime/held-initialization Stop boundaries, then trusted lock admission/restore,
    notifications and wake. Producer/ACK/reset,
    sending and hardware gates remain separate. See `native-integration-map.md`,
    `native-messages-service.md` and `native-messages-incoming.md`.

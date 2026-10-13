@@ -21,3 +21,12 @@ The two binaries require `isolated-fixture` and exercise separate test entrypoin
 They are not installed production services. Metadata is not permission, closing
 the listener does not disconnect accepted clients, and local reap does not
 acknowledge remote cleanup. See the [containment report](../docs/native-display-containment.md).
+
+`listener::Listener` owns a fresh Root-protected per-instance pathname. It checks
+parent/directory/socket identity, prepares ACLs before exposure and withdraws only
+its own socket before the SDK is signalled. Existing accepted clients are separate.
+The lifecycle display Factory returns an owned Context to each app slot; app and
+SDK reaping precede slot reuse. [Per-app evidence](../docs/native-display-app-generations.md)
+qualifies lifetime and held-init Stop; cancellation successor availability remains
+failed after unexplained Source InvalidData. These APIs are not an installed
+privileged-runtime/PAM provisioner or a physical display qualification.

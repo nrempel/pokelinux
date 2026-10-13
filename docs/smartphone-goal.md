@@ -283,7 +283,7 @@ Native display containment and supervised setup now pass separate original ARM
 checkpoints:15 protocol/normal Qt identity observations and22 owner observations
 across six epochs after an executed held-helper red. Rust uses the original
 open-source compositor filter and owned SDK child; app metadata remains separate
-from permission. Per-app context generations/relaunch, production privileged runtime
+from permission. Broad per-app successor availability, production privileged runtime
 and PAM ownership, secure frames, wake and Pixel qualification remain open. See
 [display containment](native-display-containment.md).
 
@@ -306,6 +306,26 @@ source loss preserving receiving, and peer-death fencing. The100ms budget remain
 unchanged and the largest observed sample gap is99.177139ms, so broad availability
 remains open. Root's provenance binds1,600 proof files and independently reviewed
 normal frames. Earlier failed matrices and25 display groups retain their original
-selections. Per-app display generations, incoming plus restricted display,
+selections. Broad per-app successor availability, incoming plus restricted display,
 production privileged source/PAM, wake and hardware remain gates. See
 [source freshness](native-session-freshness-chain.md).
+
+Per-app display ownership is now implemented in the current actor. Three actual
+ARM chronology REDs precede fresh context/listener generations, asynchronous
+Ready-before-app launch and exact-client EOF cancellation. Four lifetime groups
+and one held-initialization Stop group pass with unchanged normal Qt, Source610aa,
+original Hyprland and the same independent history writer. Pending EOF passes
+its boundary; its subsequent cold-successor aggregate fails after Source
+InvalidData. The rejecting predicate is not retained in that old epoch. Preserve
+the failure and investigate using separately pinned diagnostics; do not retry,
+relax the100ms lease or classify it as hardware-only. Root independently verifies
+2,740 nested bindings/1,206 paths and eight correctly run host lifecycle tests.
+A separate exact-code host selection passes27 distinct headless process groups:
+18 installed lifecycle, seven storage and two cleanup. Root verifies93 bindings;
+the unsupported admin.sock-only startup attempt remains preserved. See
+[evidence](evidence/native-display-app-headless-regression.json).
+See [per-app display](native-display-app-generations.md) and its provenance.
+A separately pinned diagnostic-only epoch identifies its own103.208749ms
+publisher sample-chain gap, exceeding the unchanged100ms limit by3.208749ms.
+Authenticated trace closure has zero drops; this does not retroactively diagnose
+the old failure or establish scheduling causality. Production Source is unchanged.

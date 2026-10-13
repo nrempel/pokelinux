@@ -263,6 +263,9 @@ impl Authority {
     pub(crate) fn ready(&self) -> bool {
         self.ready && !self.degraded
     }
+    pub(crate) fn session_terminal(&self) -> bool {
+        self.session_failed
+    }
     pub fn register(&mut self, app: &str, pid: u32, alive: OwnedFd) -> io::Result<()> {
         if !self.ready() || !living(&alive)? {
             return Err(io::ErrorKind::PermissionDenied.into());

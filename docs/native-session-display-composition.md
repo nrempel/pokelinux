@@ -10,7 +10,10 @@ not establish incoming plus restricted-display composition.
 
 Those display-owner runtime selections precede the later
 [source-queue freshness correction](native-session-freshness-chain.md). They remain
-frozen to their recorded observer and service ELFs. The new34-case host/ARM proof
+frozen to their recorded observer and service ELFs. The subsequent
+[per-app display checkpoint](native-display-app-generations.md) implements fresh
+app/context lifetime and Ready-before-app launch. Its lifetime and held-init Stop
+epochs pass; its cancellation successor aggregate remains failed. The new34-case host/ARM proof
 and nine-group incoming compositor replay qualify different selections; neither
 reexecutes these25 display groups or establishes per-app context ownership.
 

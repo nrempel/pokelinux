@@ -14,6 +14,7 @@ use wayland_protocols::wp::security_context::v1::client::{
     wp_security_context_v1::WpSecurityContextV1,
 };
 
+pub mod listener;
 pub mod supervisor;
 
 const MAX_GLOBALS: usize = 256;

@@ -174,8 +174,10 @@ client filtering retain their separate meanings.
 
 ## Remaining integration
 
-The service-epoch actor composition now passes separately. Next join per-app
-display contexts and relaunch to exact launched app generations. Root must own
+The service-epoch actor composition passes separately. The newer
+[per-app checkpoint](native-display-app-generations.md) joins display lifetime to
+exact actor app generations: lifetime/relaunch and held-init Stop pass, while
+the cancellation successor aggregate remains failed after Source InvalidData. Root must own
 source/executable/listener provisioning and app UID isolation, deny direct
 privileged runtime access, and retain app/context/resource lifetimes together.
 Existing accepted clients and previously released data require their own
