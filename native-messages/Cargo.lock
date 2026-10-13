@@ -426,6 +426,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "pokelinux-kernel-identity"
+version = "0.1.0"
+dependencies = [
+ "libc",
+ "rustix",
+]
+
+[[package]]
 name = "pokelinux-lifecycle"
 version = "0.1.0"
 dependencies = [
@@ -440,6 +448,7 @@ name = "pokelinux-messages"
 version = "0.1.0"
 dependencies = [
  "pokelinux-inbox",
+ "pokelinux-kernel-identity",
  "pokelinux-lifecycle",
  "pokelinux-messaging",
  "rustix",

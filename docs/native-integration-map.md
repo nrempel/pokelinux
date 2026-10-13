@@ -8,7 +8,7 @@ Android framework/Java peers remain reference and test infrastructure.
 | Function | Existing native component or boundary | Installed service and app composition | Backend and evidence still required |
 | --- | --- | --- | --- |
 | Permission/lifecycle | One Rust principal/policy actor; exact per-packet Linux credentials, pidfds, generations; owned policy-storage child | Distinct-UID launcher and controls pass installed process fixtures on x86 and an ARM64 kernel. Local Messages reads compose this actor with its own storage child; trusted Omarchy ingress and hardware dispatch remain open | Trusted lock/focus/session ingress, complete process-tree supervision, startup/launch IO and device SELinux. [Authority](native-lifecycle.md), [storage](native-lifecycle-storage.md) |
-| Incoming messages | Durable receipt owner, bounded AOSP-qualified codecs, private inbox, exact local occurrence IDs and deletion exclusions | Installed local-history Messages service/Qt window now pass11 ARM64 desktop groups with10 service groups and2 retained-descriptor cases; current read authority, responsive storage and local recovery qualify. Ongoing Binder arrivals are not composed yet | Producer/reset/ACK identity, raw-retention/backlog policy, multipart association, notifications and carrier receive. [Receipt](native-sms-receipt-owner.md), [inbox](native-inbox.md), [installed history](native-messages-service.md) |
+| Incoming messages | Durable receipt owner, bounded AOSP-qualified codecs, private inbox, exact local occurrence IDs and deletion exclusions | Installed local-history Messages service/Qt window now pass11 ARM64 desktop groups with10 service groups and2 retained-descriptor cases; current read authority, responsive storage and local recovery qualify. A separately built receiving fixture now composes actual ARM64 Binder arrivals with this actor and sole raw/inbox child (18 groups); normal installed service stays history-only | Producer/reset/ACK identity, raw-retention/backlog policy, multipart association, notifications and carrier receive. [Receipt](native-sms-receipt-owner.md), [inbox](native-inbox.md), [installed history](native-messages-service.md), [synthetic incoming](native-messages-incoming.md) |
 | Outgoing messages | Durable outbox and one-attempt submission owner; frozen V3 Binder synthetic boundary | No installed Messages send path through the single current permission authority yet | Final modem/error policy, receive/ACK identity, separately qualified delivery correlation, retries/reconciliation and carrier SMS/MMS. [Submission](native-sms-transport.md) |
 | IMS/calls | Original-compared wire encoders/reader/registration payload, single-attempt owned transport/death watch, supervised child reclamation and scoped ARM64 kernel Binder/NDK interop | Existing Phone UI/Android bridge is reference infrastructure; a production native IMS/call service is not composed | Producer/response identity and reset, registration state machine, bearer/data/SIM/eSIM, call/media/audio and carrier operation. [Radio owner](native-radio-owner.md), [reader](native-ims-reader.md), [registration payload](native-ims-registration.md) |
 | Camera | Frozen camera NDK/Rust Binder types, transferred FDs and owned completion/release/quarantine | No installed Camera service/app with permission, media publication and background ownership | Exact factory interface identity, gralloc/DMA/sync_file/FMQ, capture/streams and reset. [Camera owner](native-camera-owner.md) |
@@ -32,14 +32,16 @@ actual send/EAGAIN retry; one supervised child owns receipt/inbox IO. The native
 window is installed in original Omarchy. Root fixture focus/lock controls and
 appearance ACL setup remain explicit test infrastructure.
 
-1. Compose the frozen synthetic messagingV3 Binder source with the sole storage
-   child. Bounded callbacks reserve distinct occurrence identity; raw commit and
-   projection run with no window/read. Parent supervision drains unsolicited
-   start/completion/failure and enforces original absolute ingestion deadlines.
-2. Separate history recovery from source reattachment. Persist uncertain source
-   registration across child and whole-service restart; local reap never grants
-   backend retry or vendor cleanup. Explicit fixture successor tests require
-   independently fresh peer/reset evidence. No production ACK/send is enabled.
+1. Preserve the qualified synthetic incoming composition: genuine ARM64 Binder
+   callbacks reach the sole storage child; raw commit and projection run without
+   a window/read. The parent drains unsolicited start/raw/completion/failure and
+   enforces original boot-time deadlines. Normal production service stays history-only.
+2. Preserve durable source uncertainty across child and whole-service restart,
+   including installed systemd restart. Only local history recovers; actual reap
+   and authenticated stop-to-service-exit never grant reattachment or vendor cleanup.
+   Explicit synthetic successors require fresh independent peers and reset context.
+   Decouple held-read cancellation from shared source ownership before promising
+   receiving across every app close. No production ACK/send is enabled.
 3. Qualify complete bounded receipt enumeration/retention. The current service
    refuses history above32 raw receipts before partial import; this limit is not
    continuous production receive support. Preserve raw/projection crash outcomes

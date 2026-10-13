@@ -1,0 +1,86 @@
+{
+  "scope": "independent authored frozen messaging V3 NDK/Rust fixture on genuine ARM64 kernel Binder; no Messages storage/authority qualification",
+  "current_selection": "artifacts/native-messages-incoming-binder/selections/scaffold-v2/selection.json",
+  "selection_sha256": "68f9679deda2b25ac7b4a0b765ba9adcf6b1185c794bbf50b891c7f22b987ce9",
+  "runtime": "artifacts/native-messages-incoming-binder/runtime/scaffold-v2-smoke/result.json",
+  "runtime_sha256": "b256a8db5f5a0a16dd8ec6fcb24757f976e4d8f018a1e9f878ded4c962b85b3f",
+  "passed": true,
+  "architecture": "aarch64",
+  "kernel": "7.1.6-1-aarch64-ARCH",
+  "checks": {
+    "callback_uid": 1000,
+    "callbacks": 3,
+    "counters": [
+      [
+        2,
+        1,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "death_notified": true,
+    "equal_payload_callbacks": 2,
+    "generation": "d9e9b68002104436ae13b5c049f8ea9b",
+    "installed_authority_qualified": false,
+    "passed": true,
+    "second_attachment_refused": true,
+    "slots": 2,
+    "storage_qualified": false
+  },
+  "genuine_runtime_mapping_verified": true,
+  "link_stub_runtime": false,
+  "peer_and_manager_actually_reaped": true,
+  "source_successor_requires_explicit_independent_fixture_teardown": true,
+  "registration_hold_mode": "permanent no-release fixture control; implemented, not separately executed in scaffold smoke",
+  "historical_scaffold_failure": {
+    "selection": "artifacts/native-messages-incoming-binder/selections/scaffold-v1/selection.json",
+    "runtime": "artifacts/native-messages-incoming-binder/runtime/scaffold-v1-smoke/result.json",
+    "observed": "UnknownTransaction during fixture lookup before callback registration",
+    "classification": "fixture bootstrap failure, not Messages incoming raw-only red"
+  },
+  "physical_phone_accessed": false,
+  "vendor_execution": false,
+  "production_source_enabled": false,
+  "raw_store_or_inbox_opened": false,
+  "sources": {
+    "tools/native-messages-incoming-binder/README.md": "518ba553058890e50477be5fea5a4f4a9d64cc4b62a933d4742b5f6adffb6247",
+    "tools/native-messages-incoming-binder/aidl/org/pokelinux/messagesincomingtest/IIncomingMessagesProbe.aidl": "dfe39b8ce2de444f7003c40b04e85ebf31454f65bf6c53d16c3c43b2397157d8",
+    "tools/native-messages-incoming-binder/boot.sh": "1b2a40c3070d53fdacef67ef976c520322a3a1d5a49b226ef550579b135e5f52",
+    "tools/native-messages-incoming-binder/build-ndk.sh": "e8197803c223df81c8ab1ac84dfae8e271df2d61d6cc0f90480f01997ce4a199",
+    "tools/native-messages-incoming-binder/fixture/Cargo.lock": "4062c61d80f82fb4fb2eb539f53837f273915b1fc566b636f8a685192a4344b0",
+    "tools/native-messages-incoming-binder/fixture/Cargo.toml": "128646734e7936d0fc97fbc602078f9145ceed2df28332ad63889b9d2aac7250",
+    "tools/native-messages-incoming-binder/fixture/build.rs": "c3e85d31b1a65ac85b6de7153233a242188de0fec781745dcb28dac8db541b59",
+    "tools/native-messages-incoming-binder/fixture/src/bin/incoming-manager.rs": "de09bc07dc39ac22c6358011f6488d5bb70e55a9964c5ad64300c06440fea132",
+    "tools/native-messages-incoming-binder/fixture/src/bin/incoming-probe.rs": "ac3401ca1d8d4471c048d28a819b103399e5a624c571772774af4c6b7d74d176",
+    "tools/native-messages-incoming-binder/fixture/src/bin/incoming-smoke.rs": "533ee96962d37e0c58002271fde89d7baa92211b8f82c74e46a58011313dc8aa",
+    "tools/native-messages-incoming-binder/fixture/src/lib.rs": "558905c2384d19c1d394cab0aaaace9f66557043b390c5f70694d73ee906ab0f",
+    "tools/native-messages-incoming-binder/fixture/src/smoke_callbacks.rs": "defb2ba4109900b54ab4346c17b4625ca43c75bb344184d04993bc067cfd2d56",
+    "tools/native-messages-incoming-binder/freeze-scaffold.py": "fee6f0756ba43a670cb04356d7e8a68c54a71808b92e200c5831ebac21db27a4",
+    "tools/native-messages-incoming-binder/guest.py": "e1e4a2c342d31a8052c1d99dc7feb9947d974b6c102374602559d912411cf2bd",
+    "tools/native-messages-incoming-binder/peer.cpp": "69d9516fb7cbcf2c68655817614bdd86d88833a41c6f23edb0765b006c14d35b",
+    "tools/native-messages-incoming-binder/peer_session.py": "6a1570525e6e246d4de6b1412d67be3667b0474289851a444380300ca8eb7fd2",
+    "tools/native-messages-incoming-binder/run.sh": "d556fe896335a971ea3b3cecf9152808b9ab3031a9c7d773671c1a9c1bb61ae9",
+    "tools/native-messages-incoming-binder/verify-inputs.py": "560256fbb43f01f981b8c25a7f21ea8c78ee3583610f4a3e45d9a58bbf0c80c5",
+    "tools/native-messages-incoming-binder/vm.py": "c21c7ba10a5ca36e7b183bdebe790a8f272e2d78a8d0e34be274593e165b78ec"
+  },
+  "binaries": {
+    "incoming-peer": "d3ace7cd833d10aa81217bae20d7a8765d06c3160167dbf69d848a9ce72560f4",
+    "property-info": "7c81ebd6b1b2bde547675aed2f6ee4cdc0e0b2a4892160c5af08b92b0d0f4f85",
+    "property-init": "27ba656934837f802ee05a7817ab83dd25fc1bbac57bd491a269dc5d338067a2",
+    "target/aarch64-unknown-linux-gnu/debug/incoming-manager": "85a18d34821ddc6f468c7c5e827366380368d930d19eb49dace067403211c63a",
+    "target/aarch64-unknown-linux-gnu/debug/incoming-probe": "433d62d8fa9730632939e75d5f387ec075b24af7333246d245b3f56c9e2f99ef",
+    "target/aarch64-unknown-linux-gnu/debug/incoming-smoke": "e5105831c157c76fc60725cc3747d15397048f10755908c728b70b449c29e999"
+  }
+}

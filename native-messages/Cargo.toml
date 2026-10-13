@@ -5,6 +5,7 @@ edition = "2024"
 publish = false
 
 [dependencies]
+pokelinux-kernel-identity = { path = "../native-kernel-identity" }
 pokelinux-inbox = { path = "../native-inbox" }
 pokelinux-messaging = { path = "../native-messaging" }
 pokelinux-lifecycle = { path = "../native-lifecycle" }

@@ -74,6 +74,11 @@ pub enum AdminRequest {
 #[serde(tag = "result", rename_all = "snake_case", deny_unknown_fields)]
 pub enum Reply {
     MessagesStorage {
+        incoming_started: u64,
+        incoming_raw_committed: u64,
+        incoming_completed: u64,
+        receiving: bool,
+        incoming_failure: Option<String>,
         occupied: bool,
         busy: bool,
         available: bool,

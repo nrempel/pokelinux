@@ -212,7 +212,8 @@ and recovery checks. One lifecycle actor gates each data send; one supervised
 child owns raw/inbox IO. Seven actual Qt/socket checks qualify stopped exchanges,
 checked boot-time completion and confirmed thread exit before destruction. The
 original Omarchy shell, distinct-UID Qt app and installed systemd unit are composed
-for local history. Continuous incoming callbacks, complete enumeration beyond32,
+for local history. Synthetic incoming callbacks now compose separately below;
+complete enumeration beyond32, receiving through held-read cancellation,
 trusted lock/focus/session ingress, notifications/wake, outgoing operations, ACK,
 producer identity and hardware remain unfinished. See [Messages](native-messages-service.md)
 and [owned client](native-messages-ui-worker.md).
@@ -225,3 +226,13 @@ qualify current read authority. The bounded facts adapter, actor bridge, genuine
 Omarchy Quickshell/PAM lock flow, secure presentation and suspend remain open.
 See [session build boundary](native-session-build-boundary.md) and
 [contract](native-session-contract.md).
+
+Synthetic incoming Messages now composes genuine ARM64 Binder callbacks, immediate
+raw/inbox projection without a window, and exact-ID reads through current authority
+in18 integration groups. Durable pre-Binder attempts prevent implicit reattachment
+on child/whole-service/systemd restart. A socket-origin pidfd strengthens installed
+stop ACK into actual bounded service exit; healthy Main status and policy validation
+remain separate checks. Normal installed Messages remains local-history-only.
+Complete enumeration/retention, shared receive during held-read cancellation,
+production attachment/ACK/reset, notifications, wake and hardware remain open.
+See [incoming composition](native-messages-incoming.md).

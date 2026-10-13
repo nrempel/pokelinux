@@ -1,0 +1,25 @@
+{
+  "scope": "pinned public Linux socket-origin pidfd ABI source inspection, not a claim of building or executing Linux v6.8",
+  "project": "Linux",
+  "tag": "v6.8",
+  "commit": "e8f897f4afef0031fe618a8e94127a0934896aba",
+  "files": [
+    {
+      "source": "net/core/sock.c",
+      "url": "https://raw.githubusercontent.com/torvalds/linux/e8f897f4afef0031fe618a8e94127a0934896aba/net/core/sock.c",
+      "sha256": "3997357b25c99e5de78962cfaf49d96973ee5ea8e147722cd1514ea19bd419aa",
+      "bytes": 104039,
+      "private_cache": "artifacts/native-messages-incoming-binder/public/net-core-sock.c-v6_8"
+    },
+    {
+      "source": "kernel/fork.c",
+      "url": "https://raw.githubusercontent.com/torvalds/linux/e8f897f4afef0031fe618a8e94127a0934896aba/kernel/fork.c",
+      "sha256": "82e2af227e6f67d64f9c4c20a5c121c59aac575c6cb59da54a9bd16c5eb159e8",
+      "bytes": 89451,
+      "private_cache": "artifacts/native-messages-incoming-binder/public/kernel-fork.c-v6_8"
+    }
+  ],
+  "libc_version": "0.2.190",
+  "rustix_version": "1.1.5",
+  "dependency_checksums": "Cargo.lock"
+}

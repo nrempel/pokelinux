@@ -1,11 +1,20 @@
 use crate::protocol::{ConversationView, DataId, MessageView, Page, Query, StorageStatus};
 use pokelinux_inbox::{ConversationId, ImportLease, Inbox, ReadLease};
-use pokelinux_messaging::{receipt::ReceiptOwner, receive::ReferenceWidth};
-use std::path::Path;
+use pokelinux_messaging::{
+    receipt::{BackendScope, IncomingKind, ReceiptId, ReceiptOwner, Slot, Source},
+    receive::ReferenceWidth,
+};
+use std::{
+    fs::{self, File, OpenOptions},
+    io::{Read, Write},
+    os::unix::fs::{MetadataExt, OpenOptionsExt},
+    path::{Path, PathBuf},
+};
 /// Synchronous private storage component. The supervisor, not this object,
 /// keeps stop and authority checks responsive while filesystem calls execute.
 pub struct Store {
     raw: ReceiptOwner,
+    directory: PathBuf,
     inbox: Inbox,
     read: ReadLease,
     import: ImportLease,
@@ -13,6 +22,7 @@ pub struct Store {
 }
 impl Store {
     pub fn open(raw: &Path, inbox: &Path) -> Result<Self, &'static str> {
+        let directory = raw.to_path_buf();
         let raw = ReceiptOwner::open(raw).map_err(|_| "raw storage unavailable")?;
         let inbox = Inbox::open(inbox).map_err(|_| "projection storage unavailable")?;
         let control = inbox.control();
@@ -25,6 +35,7 @@ impl Store {
             .map_err(|_| "local projection unavailable")?;
         Ok(Self {
             raw,
+            directory,
             read: control
                 .read_lease()
                 .map_err(|_| "local worker read unavailable")?,
@@ -34,6 +45,100 @@ impl Store {
             inbox,
             status: StorageStatus::LocalStorageUnavailable,
         })
+    }
+    /// Durable test-source attempt only. Presence never authorizes reattachment.
+    /// Partial/invalid evidence remains unavailable; no cleanup or retry exists.
+    pub fn claim_test_source(&self, generation: &str) -> Result<bool, &'static str> {
+        DataId::parse(generation)?;
+        let path = self
+            .directory
+            .join(format!("incoming-attempt-{generation}"));
+        let expected = format!("incoming-test-v1:{generation}\n");
+        // Test-only attachment history is also bounded; never evict an uncertainty marker.
+        if !path
+            .try_exists()
+            .map_err(|_| "source attempt lookup unavailable")?
+        {
+            let mut attempts = 0;
+            for entry in
+                fs::read_dir(&self.directory).map_err(|_| "source attempt inventory unavailable")?
+            {
+                let entry = entry.map_err(|_| "source attempt inventory unavailable")?;
+                if entry
+                    .file_name()
+                    .to_str()
+                    .is_some_and(|name| name.starts_with("incoming-attempt-"))
+                {
+                    attempts += 1;
+                    if attempts >= 8 {
+                        break;
+                    }
+                }
+            }
+            if attempts >= 8 {
+                return Err("durable source attempt capacity exhausted");
+            }
+        }
+
+        let mut options = OpenOptions::new();
+        options
+            .read(true)
+            .write(true)
+            .create_new(true)
+            .mode(0o600)
+            .custom_flags(rustix::fs::OFlags::NOFOLLOW.bits() as i32);
+        match options.open(&path) {
+            Ok(mut file) => {
+                file.write_all(expected.as_bytes())
+                    .map_err(|_| "source attempt write unavailable")?;
+                file.sync_all()
+                    .map_err(|_| "source attempt sync unavailable")?;
+                File::open(&self.directory)
+                    .and_then(|f| f.sync_all())
+                    .map_err(|_| "source attempt directory sync unavailable")?;
+                Ok(true)
+            }
+            Err(e) if e.kind() == std::io::ErrorKind::AlreadyExists => {
+                let metadata = fs::symlink_metadata(&path)
+                    .map_err(|_| "source attempt metadata unavailable")?;
+                if !metadata.is_file()
+                    || metadata.nlink() != 1
+                    || metadata.uid() != rustix::process::geteuid().as_raw()
+                    || metadata.mode() & 0o777 != 0o600
+                    || metadata.len() != expected.len() as u64
+                {
+                    return Err("invalid durable source attempt");
+                }
+                let mut old = String::new();
+                OpenOptions::new()
+                    .read(true)
+                    .custom_flags(rustix::fs::OFlags::NOFOLLOW.bits() as i32)
+                    .open(path)
+                    .and_then(|f| f.take(128).read_to_string(&mut old))
+                    .map_err(|_| "source attempt read unavailable")?;
+                if old != expected {
+                    return Err("invalid durable source attempt");
+                }
+                Ok(false)
+            }
+            Err(_) => Err("source attempt storage unavailable"),
+        }
+    }
+    /// Typed service-owned source. Test ACK permission remains denied permanently.
+    pub fn attach_test_incoming(&mut self, slot: Slot) -> Result<Source, &'static str> {
+        self.raw
+            .attach(slot, BackendScope::TestBackend)
+            .map_err(|_| "incoming source unavailable")
+    }
+    pub fn admit_incoming(
+        &mut self,
+        source: Source,
+        kind: IncomingKind,
+        raw: &[u8],
+    ) -> Result<ReceiptId, &'static str> {
+        self.raw
+            .admit(source, kind, raw)
+            .map_err(|_| "raw occurrence commit unavailable")
     }
     pub fn reconcile(&mut self) -> Result<StorageStatus, &'static str> {
         self.status = StorageStatus::LocalStorageUnavailable;

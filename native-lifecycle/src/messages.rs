@@ -18,6 +18,15 @@ pub trait Provider {
     fn occupied(&self) -> bool;
     fn busy(&self) -> bool;
     fn available(&self) -> bool;
+    fn incoming_progress(&self) -> (u64, u64, u64) {
+        (0, 0, 0)
+    }
+    fn receiving(&self) -> bool {
+        false
+    }
+    fn incoming_failure(&self) -> Option<&str> {
+        None
+    }
     fn start(&mut self, query: serde_json::Value, until: u64) -> io::Result<u64>;
     fn poll(&mut self) -> io::Result<Option<Event>>;
     fn stop(&mut self);

@@ -305,6 +305,21 @@ lock/focus/session ingress, notifications/wake, send/ACK, production session ACL
 and Wayland/device policy remain open. See `native-messages-service.md`,
 `native-messages-ui-worker.md` and `evidence/native-messages-correction-provenance.json`.
 
+Synthetic incoming Messages now qualifies18 genuine ARM64 Binder/storage/authority
+integration groups plus3 kernel identity cases. Two equal callbacks commit and
+project distinct IDs before any app/read. Unsolicited ingestion retains original
+boot-time deadlines; queue/socket/storage/source failures fence receiving while
+stop and snapshots remain responsive. Durable attempt markers precede Binder
+initialization and survive child/whole-service/systemd restart; recovery reads
+history without registering again. Three actual reds establish raw-only projection
+failure and old stop ACK returning before service exit/systemd healthy completion.
+The new stop helper owns the exact socket-origin pidfd and observes service exit;
+Main status and private policy seal/startup validation qualify separately. All16
+fixture peer/manager contexts actually reap. Normal installed service is still
+history-only;33rd-occurrence refusal, held-read close failing the source, callback
+allocation/completion limits, modem identity/ACK/reset, session/notifications/wake
+and hardware remain open. See `native-messages-incoming.md` and its provenance.
+
 The next native session source now has an executed build boundary: eleven groups
 in original Arch ARM Hyprland qualify matching package/header loading, central
 keyboard focus, socket-derived live pidfs identity and original early lock signal
@@ -316,14 +331,14 @@ separate from this probe.
 
 ## Next work
 
-1. Continue the qualified installed Messages local-history path with real frozen
-   synthetic Binder arrivals into its sole supervised raw/inbox child while no
-   app exists. Qualify unsolicited ingestion supervision and original boot-time
-   deadlines; retain uncertainty across child/whole-service restart before any
-   backend reattachment. Then complete receipt enumeration/retention, trusted
-   lock/focus ingress, notifications and wake under the existing authority.
-   Producer/ACK/reset, sending and hardware gates remain separate. See
-   `native-integration-map.md` and `native-messages-service.md`.
+1. Continue the qualified synthetic incoming Messages path with complete bounded
+   receipt enumeration/retention and held-read cancellation that preserves shared
+   receiving. Retain original ingestion deadlines and durable source uncertainty;
+   history recovery never permits implicit backend reattachment. Compose the
+   bounded compositor facts source with current read authority, then qualify
+   trusted lock admission/restore, notifications and wake. Producer/ACK/reset,
+   sending and hardware gates remain separate. See `native-integration-map.md`,
+   `native-messages-service.md` and `native-messages-incoming.md`.
 2. Recover and test the actual vendor cleanup/reset and registration-overlap
    contract. `clear` is one-way. Do not remove uncertainty markers, retry, use a
    recycled numeric registration ID for delayed cleanup, or call local reaping

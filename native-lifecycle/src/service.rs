@@ -562,6 +562,11 @@ pub fn run_with_messages(
                             Err(_) => Reply::Denied,
                             Ok(AdminRequest::MessagesStatus {}) => match messages.as_deref() {
                                 Some(p) => Reply::MessagesStorage {
+                                    incoming_started: p.incoming_progress().0,
+                                    incoming_raw_committed: p.incoming_progress().1,
+                                    incoming_completed: p.incoming_progress().2,
+                                    receiving: p.receiving(),
+                                    incoming_failure: p.incoming_failure().map(str::to_owned),
                                     occupied: p.occupied(),
                                     busy: p.busy(),
                                     available: p.available(),

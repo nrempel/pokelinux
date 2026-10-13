@@ -15,10 +15,13 @@ use rustix::{
 };
 use serde::{Deserialize, Serialize};
 use std::{
+    collections::BTreeMap,
+    ffi::OsString,
     fs, io,
     os::unix::fs::MetadataExt,
     path::{Path, PathBuf},
     process::{Child, Command, Stdio},
+    sync::Arc,
 };
 #[derive(Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -28,13 +31,63 @@ struct Request {
     until: u64,
     query: Option<Query>,
 }
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
-struct Response {
-    source: String,
-    token: u64,
-    status: StorageStatus,
-    page: Option<Page>,
+pub(crate) struct Binding {
+    pub slot: u8,
+    pub incarnation: String,
+    pub generation: String,
+}
+#[derive(Serialize, Deserialize)]
+#[serde(tag = "event", rename_all = "snake_case", deny_unknown_fields)]
+pub(crate) enum Response {
+    Read {
+        source: String,
+        token: u64,
+        status: StorageStatus,
+        page: Option<Page>,
+        receiving: bool,
+    },
+    SourceBound {
+        source: String,
+        binding: Binding,
+    },
+    ArrivalStarted {
+        source: String,
+        occurrence: u64,
+        binding: Binding,
+        until: u64,
+    },
+    RawCommitted {
+        source: String,
+        occurrence: u64,
+        binding: Binding,
+        until: u64,
+        receipt: String,
+    },
+    ArrivalComplete {
+        source: String,
+        occurrence: u64,
+        binding: Binding,
+        until: u64,
+        receipt: String,
+    },
+    SourceFailed {
+        source: String,
+        reason: String,
+    },
+}
+impl Response {
+    fn source(&self) -> &str {
+        match self {
+            Self::Read { source, .. }
+            | Self::SourceBound { source, .. }
+            | Self::ArrivalStarted { source, .. }
+            | Self::RawCommitted { source, .. }
+            | Self::ArrivalComplete { source, .. }
+            | Self::SourceFailed { source, .. } => source,
+        }
+    }
 }
 struct Pending {
     token: u64,
@@ -50,25 +103,44 @@ struct Worker {
     source: String,
     pending: Option<Pending>,
     sequence: u64,
+    incoming_sequence: u64,
+    incoming: BTreeMap<u64, (Binding, u64, Option<String>)>,
+    raw_committed: u64,
+    incoming_completed: u64,
+    bindings: Vec<Binding>,
+    generation: Option<String>,
+    receiving: bool,
+    failure: Option<String>,
     terminal: bool,
     ready: bool,
     path: PathBuf,
     identity: (u64, u64),
 }
 impl Worker {
-    fn spawn(runtime: &Path, raw: &Path, inbox: &Path, exe: &Path) -> io::Result<Self> {
+    fn spawn(
+        runtime: &Path,
+        raw: &Path,
+        inbox: &Path,
+        exe: &Path,
+        incoming_args: &[OsString],
+    ) -> io::Result<Self> {
         pokelinux_lifecycle::service::trusted_executable(exe)?;
         let path = runtime.join("messages-storage.sock");
         let listener = ipc::listener(&path, 0o600)?;
         let m = fs::symlink_metadata(&path)?;
         let source = fresh_id()?;
         let launch = Command::new(exe)
-            .arg("--messages-worker")
+            .arg(if incoming_args.is_empty() {
+                "--messages-worker"
+            } else {
+                "--messages-incoming-worker"
+            })
             .arg(&path)
             .arg(raw)
             .arg(inbox)
             .arg(std::process::id().to_string())
             .arg(&source)
+            .args(incoming_args)
             .env_clear()
             .current_dir("/")
             .stdin(Stdio::null())
@@ -106,7 +178,13 @@ impl Worker {
                 return Err(e.into());
             }
         };
-        let until = boottime_ns().saturating_add(1_000_000_000);
+        let until = boottime_ns()
+            .checked_add(if incoming_args.is_empty() {
+                1_000_000_000
+            } else {
+                3_000_000_000
+            })
+            .ok_or(io::ErrorKind::Other)?;
         let wire = serde_json::to_vec(&Request {
             source: source.clone(),
             token: 1,
@@ -126,6 +204,17 @@ impl Worker {
                 init: true,
             }),
             sequence: 1,
+            incoming_sequence: 0,
+            incoming: BTreeMap::new(),
+            raw_committed: 0,
+            incoming_completed: 0,
+            bindings: Vec::new(),
+            generation: incoming_args
+                .first()
+                .and_then(|v| v.to_str())
+                .map(str::to_owned),
+            receiving: false,
+            failure: None,
             terminal: false,
             ready: false,
             path,
@@ -135,6 +224,7 @@ impl Worker {
     fn stop(&mut self) {
         self.terminal = true;
         self.ready = false;
+        self.receiving = false;
         if let Some(c) = &mut self.child {
             let _ = c.kill();
         }
@@ -148,19 +238,22 @@ impl Worker {
     }
     fn poll(&mut self) -> io::Result<Option<Event>> {
         if let Some(c) = &mut self.child
-            && c.try_wait()?.is_some()
+            && let Some(status) = c.try_wait()?
         {
             self.child = None;
+            if self.failure.is_none() {
+                self.failure = status.code().map(|code| format!("child_exit_{code}"));
+            }
             return Ok(self.fail());
         }
         if self.terminal {
             return Ok(None);
         }
-        if self
-            .pending
-            .as_ref()
-            .is_some_and(|p| boottime_ns() >= p.until)
+        let now = boottime_ns();
+        if self.pending.as_ref().is_some_and(|p| now >= p.until)
+            || self.incoming.values().any(|(_, until, _)| now >= *until)
         {
+            self.failure = Some("worker_or_arrival_deadline".into());
             return Ok(self.fail());
         }
         if self.fd.is_none() {
@@ -172,71 +265,177 @@ impl Worker {
                         && Some(c.pid.as_raw_nonzero().get() as u32)
                             == self.child.as_ref().map(Child::id)
                     {
-                        self.fd = Some(fd)
+                        self.fd = Some(fd);
                     }
                 }
                 Err(rustix::io::Errno::AGAIN | rustix::io::Errno::INTR) => {}
                 Err(e) => return Err(e.into()),
             }
         }
-        let (Some(fd), Some(p)) = (&self.fd, &mut self.pending) else {
+        let Some(fd) = &self.fd else {
             return Ok(None);
         };
-        if let Some(bytes) = &p.wire {
-            match ipc::send(fd, bytes) {
+        if let Some(p) = &mut self.pending
+            && let Some(wire) = &p.wire
+        {
+            match ipc::send(fd, wire) {
                 Ok(()) => p.wire = None,
                 Err(e) if matches!(e.raw_os_error(), Some(4 | 11)) => return Ok(None),
                 Err(_) => return Ok(self.fail()),
             }
         }
-        match ipc::receive(fd) {
-            Ok(Some((bytes, c))) => {
-                let p = self.pending.take().ok_or(io::ErrorKind::Other)?;
-                let response = serde_json::from_slice::<Response>(&bytes);
-                if c.uid.as_raw() != 0
-                    || Some(c.pid.as_raw_nonzero().get() as u32)
-                        != self.child.as_ref().map(Child::id)
-                    || !living(&self.alive)?
-                    || boottime_ns() >= p.until
+        // Always drain authenticated child packets, including with no app/read.
+        let received = match ipc::receive(fd) {
+            Ok(Some(v)) => v,
+            Ok(None) => return Ok(None),
+            Err(e) if e.raw_os_error() == Some(4) => return Ok(None),
+            Err(_) => return Ok(self.fail()),
+        };
+        let (bytes, c) = received;
+        if c.uid.as_raw() != 0
+            || Some(c.pid.as_raw_nonzero().get() as u32) != self.child.as_ref().map(Child::id)
+            || !living(&self.alive)?
+        {
+            return Ok(self.fail());
+        }
+        let response = match serde_json::from_slice::<Response>(&bytes) {
+            Ok(r) if r.source() == self.source => r,
+            _ => return Ok(self.fail()),
+        };
+        let now = boottime_ns();
+        let valid_binding = |b: &Binding| {
+            b.slot < 8
+                && crate::protocol::DataId::parse(&b.incarnation).is_ok()
+                && crate::protocol::DataId::parse(&b.generation).is_ok()
+                && self.generation.as_deref() == Some(b.generation.as_str())
+        };
+        match response {
+            Response::SourceBound { binding, .. } => {
+                if self.ready
+                    || !self.pending.as_ref().is_some_and(|p| p.init)
+                    || !valid_binding(&binding)
+                    || self.bindings.len() >= 8
+                    || self.bindings.iter().any(|b| b.slot == binding.slot)
+                {
+                    return Ok(self.fail());
+                }
+                self.bindings.push(binding);
+                Ok(None)
+            }
+            Response::ArrivalStarted {
+                occurrence,
+                binding,
+                until,
+                ..
+            } => {
+                if !valid_binding(&binding)
+                    || !self.bindings.contains(&binding)
+                    || self.incoming_sequence.checked_add(1) != Some(occurrence)
+                    || self.incoming.len() > crate::incoming::MAX_QUEUED
+                    || now >= until
+                    || until > now.saturating_add(crate::incoming::ARRIVAL_TTL_NS)
+                {
+                    return Ok(self.fail());
+                }
+                self.incoming_sequence = occurrence;
+                self.incoming.insert(occurrence, (binding, until, None));
+                Ok(None)
+            }
+            Response::RawCommitted {
+                occurrence,
+                binding,
+                until,
+                receipt,
+                ..
+            } => {
+                let Some(record) = self.incoming.get_mut(&occurrence) else {
+                    return Ok(self.fail());
+                };
+                if now >= until
+                    || record.0 != binding
+                    || record.1 != until
+                    || record.2.is_some()
+                    || crate::protocol::DataId::parse(&receipt).is_err()
+                {
+                    return Ok(self.fail());
+                }
+                record.2 = Some(receipt);
+                self.raw_committed = self
+                    .raw_committed
+                    .checked_add(1)
+                    .ok_or(io::ErrorKind::Other)?;
+                Ok(None)
+            }
+            Response::ArrivalComplete {
+                occurrence,
+                binding,
+                until,
+                receipt,
+                ..
+            } => {
+                if now >= until
+                    || self.incoming.remove(&occurrence)
+                        != Some((binding, until, Some(receipt.clone())))
+                    || crate::protocol::DataId::parse(&receipt).is_err()
+                {
+                    return Ok(self.fail());
+                }
+                self.incoming_completed = self
+                    .incoming_completed
+                    .checked_add(1)
+                    .ok_or(io::ErrorKind::Other)?;
+                Ok(None)
+            }
+            Response::SourceFailed { reason, .. } => {
+                if !reason.is_empty()
+                    && reason.len() <= 64
+                    && reason.bytes().all(|b| b.is_ascii_lowercase() || b == b'_')
+                {
+                    self.failure = Some(reason);
+                }
+                Ok(self.fail())
+            }
+            Response::Read {
+                token,
+                status,
+                page,
+                receiving,
+                ..
+            } => {
+                let Some(p) = self.pending.take() else {
+                    return Ok(self.fail());
+                };
+                if token != p.token
+                    || now >= p.until
+                    || status != StorageStatus::Ready
+                    || (receiving && self.bindings.is_empty())
+                    || (!receiving && !self.bindings.is_empty())
                 {
                     self.stop();
                     return Ok((!p.init).then_some(Event::Failed { token: p.token }));
                 }
-                match response {
-                    Ok(r) if r.source == self.source && r.token == p.token => {
-                        if r.status != StorageStatus::Ready {
-                            self.stop();
-                            return Ok((!p.init).then_some(Event::Failed { token: p.token }));
-                        }
-                        if p.init && r.page.is_none() {
-                            self.ready = true;
-                            Ok(None)
-                        } else if !p.init && r.page.is_some() {
-                            let packet =
-                                serde_json::to_vec(&r.page.ok_or(io::ErrorKind::InvalidData)?)?;
-                            if packet.len() > 4096 {
-                                self.stop();
-                                Ok(Some(Event::Failed { token: p.token }))
-                            } else {
-                                Ok(Some(Event::Complete {
-                                    token: p.token,
-                                    packet,
-                                }))
-                            }
-                        } else {
-                            self.stop();
-                            Ok((!p.init).then_some(Event::Failed { token: p.token }))
-                        }
-                    }
-                    _ => {
+                if p.init && page.is_none() {
+                    self.ready = true;
+                    self.receiving = receiving;
+                    Ok(None)
+                } else if !p.init
+                    && let Some(page) = page
+                {
+                    let packet = serde_json::to_vec(&page)?;
+                    if packet.len() > 4096 {
                         self.stop();
-                        Ok((!p.init).then_some(Event::Failed { token: p.token }))
+                        Ok(Some(Event::Failed { token: p.token }))
+                    } else {
+                        Ok(Some(Event::Complete {
+                            token: p.token,
+                            packet,
+                        }))
                     }
+                } else {
+                    self.stop();
+                    Ok((!p.init).then_some(Event::Failed { token: p.token }))
                 }
             }
-            Ok(None) => Ok(None),
-            Err(e) if e.raw_os_error() == Some(4) => Ok(None),
-            Err(_) => Ok(self.fail()),
         }
     }
 }
@@ -260,7 +459,32 @@ pub struct Projector {
 impl Projector {
     pub fn spawn(runtime: &Path, raw: &Path, inbox: &Path, exe: &Path) -> io::Result<Self> {
         Ok(Self {
-            worker: Some(Worker::spawn(runtime, raw, inbox, exe)?),
+            worker: Some(Worker::spawn(runtime, raw, inbox, exe, &[])?),
+            runtime: runtime.into(),
+            raw: raw.into(),
+            inbox: inbox.into(),
+            exe: exe.into(),
+        })
+    }
+}
+impl Projector {
+    /// Explicit trusted synthetic entry only; restart intentionally discards these arguments.
+    pub fn spawn_receiving(
+        runtime: &Path,
+        raw: &Path,
+        inbox: &Path,
+        exe: &Path,
+        args: &[OsString],
+    ) -> io::Result<Self> {
+        if args.len() != 2
+            || args[0]
+                .to_str()
+                .is_none_or(|s| crate::protocol::DataId::parse(s).is_err())
+        {
+            return Err(io::ErrorKind::InvalidInput.into());
+        }
+        Ok(Self {
+            worker: Some(Worker::spawn(runtime, raw, inbox, exe, args)?),
             runtime: runtime.into(),
             raw: raw.into(),
             inbox: inbox.into(),
@@ -276,7 +500,20 @@ impl Provider for Projector {
         self.worker.as_ref().is_some_and(|w| w.child.is_some())
     }
     fn busy(&self) -> bool {
-        self.worker.as_ref().is_some_and(|w| w.pending.is_some())
+        self.worker
+            .as_ref()
+            .is_some_and(|w| w.pending.is_some() || !w.incoming.is_empty())
+    }
+    fn incoming_progress(&self) -> (u64, u64, u64) {
+        self.worker.as_ref().map_or((0, 0, 0), |w| {
+            (w.incoming_sequence, w.raw_committed, w.incoming_completed)
+        })
+    }
+    fn receiving(&self) -> bool {
+        self.available() && self.worker.as_ref().is_some_and(|w| w.receiving)
+    }
+    fn incoming_failure(&self) -> Option<&str> {
+        self.worker.as_ref().and_then(|w| w.failure.as_deref())
     }
     fn available(&self) -> bool {
         self.worker.as_ref().is_some_and(|w| {
@@ -287,7 +524,12 @@ impl Provider for Projector {
         let q: Query = serde_json::from_value(query)?;
         q.validate().map_err(|_| io::ErrorKind::InvalidInput)?;
         let w = self.worker.as_mut().ok_or(io::ErrorKind::NotConnected)?;
-        if !w.ready || w.terminal || w.pending.is_some() || boottime_ns() >= until {
+        if !w.ready
+            || w.terminal
+            || w.pending.is_some()
+            || !w.incoming.is_empty()
+            || boottime_ns() >= until
+        {
             return Err(io::ErrorKind::WouldBlock.into());
         }
         w.sequence = w.sequence.checked_add(1).ok_or(io::ErrorKind::Other)?;
@@ -329,6 +571,7 @@ impl Provider for Projector {
             &self.raw,
             &self.inbox,
             &self.exe,
+            &[],
         )?);
         Ok(())
     }
@@ -343,8 +586,15 @@ impl Provider for Projector {
         true
     }
 }
-/// Private installed child entry. No incoming PDU, ACK or send endpoint exists.
-pub fn entry(args: &[std::ffi::OsString]) -> io::Result<()> {
+/// Private normal installed child: no source is selected or attached.
+pub fn entry(args: &[OsString]) -> io::Result<()> {
+    entry_with_backend(args, None)
+}
+/// Only separately built trusted fixture binaries supply a receive backend.
+pub fn entry_with_backend(
+    args: &[OsString],
+    mut backend: Option<(String, Box<dyn crate::incoming::Backend>)>,
+) -> io::Result<()> {
     if args.len() != 5 || rustix::process::getuid().as_raw() != 0 {
         return Err(io::ErrorKind::PermissionDenied.into());
     }
@@ -357,13 +607,63 @@ pub fn entry(args: &[std::ffi::OsString]) -> io::Result<()> {
     if rustix::process::getppid().map(|p| p.as_raw_nonzero().get() as u32) != Some(parent) {
         return Err(io::ErrorKind::PermissionDenied.into());
     }
-    let fd = ipc::connect(Path::new(&args[0]))?;
+    let fd = Arc::new(ipc::connect(Path::new(&args[0]))?);
     let source = args[4].to_str().ok_or(io::ErrorKind::InvalidInput)?;
+    crate::protocol::DataId::parse(source).map_err(|_| io::ErrorKind::InvalidInput)?;
     let mut store = Store::open(Path::new(&args[1]), Path::new(&args[2]))
         .map_err(|_| io::ErrorKind::InvalidData)?;
-    let mut sequence = 0;
+    let mut sequence = 0u64;
+    let mut incoming: Option<crate::incoming::Incoming> = None;
     loop {
-        let Some((bytes, c)) = ipc::receive(&fd)? else {
+        if let Some(i) = &incoming {
+            if i.control.failed() {
+                return Err(io::ErrorKind::BrokenPipe.into());
+            }
+            if let Ok(arrival) = i.queue.try_recv() {
+                if boottime_ns() >= arrival.until {
+                    i.control.fail("arrival_deadline");
+                    return Err(io::ErrorKind::TimedOut.into());
+                }
+                let receipt = match store.admit_incoming(arrival.source, arrival.kind, &arrival.raw)
+                {
+                    Ok(id) => id,
+                    Err(_) => {
+                        i.control.fail("raw_storage_unavailable");
+                        return Err(io::ErrorKind::InvalidData.into());
+                    }
+                };
+                if i.control
+                    .raw_committed(&arrival, receipt.to_string())
+                    .is_err()
+                {
+                    i.control.fail("raw_commit_ipc_failed");
+                    return Err(io::ErrorKind::BrokenPipe.into());
+                }
+                if let Some((_, b)) = &mut backend {
+                    b.after_raw()?;
+                }
+                // Reconcile immediately on this committed occurrence, with no window/read.
+                match store.reconcile() {
+                    Ok(StorageStatus::Ready) => {}
+                    Ok(_) => {
+                        i.control.fail("projection_backlog_unavailable");
+                        return Err(io::ErrorKind::InvalidData.into());
+                    }
+                    Err(_) => {
+                        i.control.fail("projection_storage_unavailable");
+                        return Err(io::ErrorKind::InvalidData.into());
+                    }
+                }
+                if let Some((_, b)) = &mut backend {
+                    b.before_complete()?;
+                }
+                if i.control.complete(&arrival, receipt.to_string()).is_err() {
+                    i.control.fail("completion_ipc_failed");
+                    return Err(io::ErrorKind::BrokenPipe.into());
+                }
+            }
+        }
+        let Some((bytes, c)) = ipc::receive(&*fd)? else {
             std::thread::sleep(std::time::Duration::from_millis(2));
             continue;
         };
@@ -371,28 +671,50 @@ pub fn entry(args: &[std::ffi::OsString]) -> io::Result<()> {
             return Err(io::ErrorKind::PermissionDenied.into());
         }
         let r: Request = serde_json::from_slice(&bytes)?;
-        if r.source != source || r.token != sequence + 1 || boottime_ns() >= r.until {
+        if r.source != source
+            || sequence.checked_add(1) != Some(r.token)
+            || boottime_ns() >= r.until
+        {
             return Err(io::ErrorKind::InvalidData.into());
         }
         sequence = r.token;
-        // Every retry/restart only reconciles exact pre-existing local receipt IDs.
         let status = store.reconcile().map_err(|_| io::ErrorKind::InvalidData)?;
-        let page = if let Some(q) = r.query {
-            Some(store.query(&q).map_err(|_| io::ErrorKind::InvalidData)?)
-        } else {
-            None
-        };
-        let response = serde_json::to_vec(&Response {
+        if r.token == 1
+            && r.query.is_none()
+            && status == StorageStatus::Ready
+            && let Some((generation, b)) = &mut backend
+        {
+            if store
+                .claim_test_source(generation)
+                .map_err(|_| io::ErrorKind::InvalidData)?
+            {
+                let i = crate::incoming::Incoming::new(fd.clone(), source, generation);
+                b.initialize(&mut store, &i.control, r.until)?;
+                if i.control.failed() || boottime_ns() >= r.until {
+                    return Err(io::ErrorKind::TimedOut.into());
+                }
+                incoming = Some(i);
+            } else {
+                backend = None;
+            } // Whole-service restart also opens history only.
+        }
+        let page = r
+            .query
+            .as_ref()
+            .map(|q| store.query(q).map_err(|_| io::ErrorKind::InvalidData))
+            .transpose()?;
+        let response = serde_json::to_vec(&Response::Read {
             source: source.into(),
             token: r.token,
             status,
             page,
+            receiving: incoming.is_some(),
         })?;
         loop {
             if boottime_ns() >= r.until {
                 return Err(io::ErrorKind::TimedOut.into());
             }
-            match ipc::send(&fd, &response) {
+            match ipc::send(&*fd, &response) {
                 Ok(()) => break,
                 Err(e) if matches!(e.raw_os_error(), Some(4 | 11)) => {
                     std::thread::sleep(std::time::Duration::from_millis(2))

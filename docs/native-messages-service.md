@@ -1,7 +1,7 @@
 # Installed native Messages read path
 
-The native Messages service reconciles committed local receipts at startup and
-reopen with its window closed, and before reads. It releases bounded history to an installed
+The normal installed native Messages service reconciles committed local receipts
+at startup and reopen with its window closed, and before reads. It releases bounded history to an installed
 native Qt window through the existing lifecycle actor. The final disposable
 ARM64 desktop run passed eleven groups, including an actual systemd unit, a
 registered UID-11010 Wayland window, plain SMS text, two original Omarchy themes,
@@ -10,7 +10,7 @@ window binary has no observer or fixture entrypoint. This is a local history
 vertical path; production modem receive, ACK, sending, carrier delivery,
 notifications and trusted Omarchy lock/focus ingress remain unavailable.
 
-[Current correction evidence](evidence/native-messages-correction-provenance.json) separates native
+[Frozen installed correction evidence](evidence/native-messages-correction-provenance.json) separates native
 components, installed x86 process tests, actual ARM64 kernel tests, the original
 Omarchy execution and inherited AOSP decoder comparisons. No physical phone or
 proprietary executable participates. The original decoder/receipt/inbox proof
@@ -27,12 +27,17 @@ One lifecycle actor owns policy, launched principals and publication. Its
 optional Messages provider owns one persistent child containing `ReceiptOwner`
 and `Inbox`; the actor never accesses the raw or projection database. Projection
 runs at child startup and before reads, independently of app read permission.
-There is no ongoing new-arrival trigger while no window/read exists; desktop
+The normal installed entrypoint has no ongoing new-arrival source; desktop
 reopen reaches pre-read reconciliation or qualified local worker recovery.
-There is no production raw-admission, ACK or send endpoint. Test receipts are
-precommitted by a separately built `isolated-fixture` helper, which the installed
-service and normal production build do not include. This milestone does not
-connect the previous frozen messaging-V3 incoming peer to this service.
+There is no production raw-admission, ACK or send endpoint. The frozen `ac57dd6`
+desktop/UI milestone used receipts precommitted by its separately built
+`isolated-fixture` helper. The subsequent [synthetic incoming composition](native-messages-incoming.md)
+connects a separately built actual frozen-V3 Binder peer to this same sole
+supervised raw/inbox child and projects each committed arrival with no window.
+Its source messages are supervised independently of reads, its durable
+one-attempt marker prevents implicit attachment after local or whole-service
+restart, and its read publication uses the existing authority unchanged.
+That separate test entrypoint is absent from the normal installed service.
 
 `MessagesRead` is a current data-release permission. It cannot be prepared or
 admitted as a historical transferable permit. A private, non-cloneable read stamp
@@ -94,7 +99,10 @@ Closing during a held read therefore permits ordinary desktop reopen without a
 root restart command. The old connection, query and stamp are discarded; the new
 registered app begins background-denied and needs fresh current read authorization.
 Explicit root recovery obeys the same reap-before-restart rule. Recovery reopens
-and validates the same private SQLite journals and re-imports exact existing IDs. It never recreates raw arrivals or
+and validates the same private SQLite journals and re-imports exact existing IDs.
+For the synthetic incoming composition, every such local restart opens history
+only; app close during a held read explicitly fails that source. Ordinary app
+close with no held read preserves receiving. Recovery never recreates raw arrivals or
 replays a modem operation. Ordinary clean service restart and valid hot-journal
 rollback recover normally; unresolved ownership, invalid permissions, corrupt
 schema/data or failed recovery remain unavailable. Policy-storage uncertainty
@@ -108,7 +116,13 @@ it does not prove that every filesystem or process-launch syscall can be
 interrupted or that an uninterruptible kernel task can be reaped. Failure to
 confirm cleanup retains ownership or aborts, never reports a free slot. The
 systemd unit uses an authenticated `ExecStop`, control-group teardown,96 tasks
-and512MiB bounds; the final guest exercised its installed start/stop path.
+and512MiB bounds; the frozen desktop guest exercised its installed start/stop
+path. The subsequent incoming qualification exposed the Stop ACK/completion
+race under an actual held policy write. `messages-stop` now pins the exact root
+socket peer with `SO_PEERPIDFD` and waits for its actual exit within one original
+three-second BOOTTIME budget. The [incoming evidence](native-messages-incoming.md)
+separates process exit, systemd Main exit status and private policy seal/restart
+validation; unsupported kernels fail explicitly without a numeric-PID fallback.
 
 Raw/inbox directories are0700 and their validated files0600. Only the service
 owns them. The app has a separate0700 home/runtime and a distinct UID. Wayland

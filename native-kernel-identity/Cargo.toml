@@ -1,0 +1,15 @@
+[package]
+name = "pokelinux-kernel-identity"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+libc = "=0.2.190"
+rustix = { version = "=1.1.5" }
+
+[lints.rust]
+unsafe_op_in_unsafe_fn = "deny"
+
+[dev-dependencies]
+rustix = { version = "=1.1.5", features = ["net", "event"] }
