@@ -1,0 +1,952 @@
+{
+  "schema_version": 1,
+  "authored_utc": "2026-10-13T08:37:08.490748+00:00",
+  "boundary": "actual original compositor -> unchanged current owned-focus Observer/lifecycle actor -> sole Messages writer plus independent readonly child -> installed UID11010 Qt",
+  "core_head": "e3d2f77c4948b3a28d3198ea232d0e63719eb4ec",
+  "evidence_class": "actual ARM64 kernel/system-QEMU with original Hyprland and seeded synthetic local receipt history; no phone or incoming backend",
+  "source_sample_budget_ns": 100000000,
+  "source_revival_permitted": false,
+  "old_published_epochs_reclassified": false,
+  "implementation_changes": {
+    "tools/native-session-installed-app/fixture/src/bin/service.rs": "55559b1ea10d0032dbcc218f76cb1f0126b51f4ed6efb7862d656dbcdf7d0acf",
+    "tools/native-session-installed-app/guest.py": "d8fa1f4db280dac3a4a5548deda42a5b7aa4bbd1955afec432ff7bc5f6baa256",
+    "tools/native-session-authority/fixture/src/bin/service.rs": "a163e544f7612954d96e99e94bfbbc65ea5ba91d55105f6c9da618760ad54e41"
+  },
+  "chronological_read_selector_red": {
+    "selection": {
+      "path": "artifacts/native-session-installed-app/combined-read-selector-observed-red-arm/selection.json",
+      "sha256": "1fa69addb7ee69e609e02504f540bdfd1538474460b8470a830e703c2735ed3f"
+    },
+    "result": {
+      "path": "artifacts/native-session-installed-app/combined-read-selector-observed-red-arm/result.json",
+      "sha256": "59ec7c288e58a2b490cac09d80198c2674a83e491b9a6ce9e18459879b2d8341"
+    },
+    "signature": "current_core_old_fixture_rejects_readonly_bootstrap_selector",
+    "ran_before_dispatch_correction": true,
+    "lifecycle_ready_and_writer_alive": true,
+    "readonly_available": false,
+    "actual_old_fixture_selector_probe": {
+      "selected_fixture_sha256": "71558efec06816ae5741d929e6ceb3b9dbfc4a29d9b6f91f0552e8a93cb83213",
+      "returncode": 1,
+      "observed_error": "PermissionDenied",
+      "live_writer_pid": 378,
+      "lifecycle_ready": true,
+      "readonly_available": false
+    },
+    "setup_complete": false,
+    "qt_qualified": false,
+    "all_tracked_children_reaped": true,
+    "reader_lifetime_observable_as_ready": false
+  },
+  "builds": {
+    "old_fixture_new_core": {
+      "selection": {
+        "path": "artifacts/native-session-installed-app/combined-read-selector-red-build/selection.json",
+        "sha256": "718933b6b1d438e5e9223604d525d97bb88bb96bdc51257b7d92baea434a563d"
+      },
+      "build_log": {
+        "path": "artifacts/native-session-installed-app/combined-read-selector-red-build/build.log",
+        "sha256": "65b86d730b89c6cf3a91be9bbfa924f2b3b673f09cfb53888db57df24f66306e"
+      },
+      "bins": {
+        "messages-seed-fixture": "f0834e901fc1c5ba130915af10db7635ab3a749aa511f900c85f2c9749de1117",
+        "messages-session-installed-fixture": "71558efec06816ae5741d929e6ceb3b9dbfc4a29d9b6f91f0552e8a93cb83213",
+        "lifecycle-launcher": "5ef715d97b054352355f459c174381949e87daf56951ccb6b5ff4ac29f398914"
+      }
+    },
+    "corrected_fixture_same_core": {
+      "selection": {
+        "path": "artifacts/native-session-installed-app/combined-read-selector-green-build/selection.json",
+        "sha256": "e1490439d15bb9faa2677970dcf006b5f42b6f296f1b22dd96d6d426aac61f8c"
+      },
+      "build_log": {
+        "path": "artifacts/native-session-installed-app/combined-read-selector-green-build/build.log",
+        "sha256": "b0f2e58697b9420be9e278e0d582370906c873e72b7dd520d7b7d68da5eadc32"
+      },
+      "bins": {
+        "messages-seed-fixture": "f0834e901fc1c5ba130915af10db7635ab3a749aa511f900c85f2c9749de1117",
+        "messages-session-installed-fixture": "4de010e554c5d0261a0a593d97ccb2b8e7c5241035385dceeaa43f70cbe3ebfb",
+        "lifecycle-launcher": "5ef715d97b054352355f459c174381949e87daf56951ccb6b5ff4ac29f398914"
+      }
+    },
+    "identical_core_sources": {
+      "native-inbox/Cargo.lock": "713ed0a0f107c2bb0586de2a0453e8ff0e0c2fb5a2dd9097fadc5e8d16efb729",
+      "native-inbox/Cargo.toml": "9ef2b7baf22a760b96700730f7edcb78301b82c98b29914444a966e8ab708c5c",
+      "native-inbox/src/lib.rs": "e0811dcd8e29a1d01afc2b2c9e0965724539965f935a3e4c5c8d383aea0e02dc",
+      "native-inbox/tests/inbox.rs": "05ca3e719d9078483a8b1fa1076d33fba3d62fce9de34bc4d28f48a36b86a1fc",
+      "native-inbox/tests/original_deliver.rs": "550767db0ef66c11b50d8451df6e4b91443f3ec04be120b2fdae99764f7307e8",
+      "native-kernel-identity/Cargo.lock": "ea2dd27ddd1bf8c00b3bf15d5fface7d5bddd6e20b5d1e89fbc1fc10172ff592",
+      "native-kernel-identity/Cargo.toml": "5cab2f22141987e4f1470b0fb575107b5c3ad134829bd2b92d5b7ccb3ef12431",
+      "native-kernel-identity/README.md": "07ff5508164058ad2d51f449e91b06b0a02d2373b2d33d8885274d044c84d19a",
+      "native-kernel-identity/public-api-inputs.json": "21981ee4e529ce04afc90453b5e9215d5d71eeb3dc758e32731deaa3fb9d6197",
+      "native-kernel-identity/src/lib.rs": "464a5e2a96dd99f127cce5b32514ff4a9a7340f8bee2581e941685e6df82cbcd",
+      "native-kernel-identity/src/pidfd.rs": "caf4b44738fc53093a32ef96c2e639c1a376935ad29fa17a42091a56180b11ff",
+      "native-kernel-identity/tests/pidfd.rs": "ed310e5152426ae8a3d723ca2869cdcd3fda50e0552cdc16938c638d308cc3b3",
+      "native-kernel-identity/tests/socket.rs": "2e9d134e7913ddadb564939bf241538690698a9ca7b660213479d843c638fd08",
+      "native-lifecycle/Cargo.lock": "bad4e41a75608010924bb766c35c100f758fac903e8b628e66078e9a50bd28be",
+      "native-lifecycle/Cargo.toml": "dcf7bffba5345547cbd91a6035589705b73be9adab569322bdff9214dda5d901",
+      "native-lifecycle/src/authority.rs": "93d59a62096076b0551ec5485852b996a411edd7f6b121b1f719ff9d057917c6",
+      "native-lifecycle/src/bin/lifecycle-client.rs": "6dd1f2c86a96bca4364b5ee2e85fd39fecaf10bc68b8f7b727bd3e65f86bc9bf",
+      "native-lifecycle/src/bin/lifecycle-daemon.rs": "ee33d2d77a8fc98ce56b582d9b9c96d0f2f8240e3fda182ec9bdeba8f6af4f01",
+      "native-lifecycle/src/bin/lifecycle-launcher.rs": "49a0e279b381a45ed49242a74c94b202ebebb81bc42bd8b61cfd58f8bb80a923",
+      "native-lifecycle/src/ipc.rs": "6a9073bb4c4413f8b4d49caa6a8827cfe7ffe167b3c712192d0951d6be8465c1",
+      "native-lifecycle/src/lib.rs": "076119670b9e98a510f0c1dfd14ce1598b7d2c3356e235b9b346535a76833151",
+      "native-lifecycle/src/messages.rs": "2e446fa1eef820b14510f60ce88b880637d84daf90cec8909639d0ec97f2c657",
+      "native-lifecycle/src/service.rs": "cf1fcda5a775c533d0b39c000cec383e5ab7bd5b3c558fe82615dcf8c47b8dc0",
+      "native-lifecycle/src/session.rs": "c10804d154a6b4b14b6f3068a2ef09a56678890ce37a01902fbbcd0e17c41014",
+      "native-lifecycle/src/storage.rs": "e860864db2ec8b6c00930128c1592918f06b00e3b4a466b71d17effe0764997f",
+      "native-messages/Cargo.lock": "e77b78eeb9323c1c5793a728b70f8b5bf9a256f10fc974b7699efed53884792e",
+      "native-messages/Cargo.toml": "8502b6bd0693869827833f52fcdde13d17658e4123607ca905d633d96db5240b",
+      "native-messages/packaging/pokelinux-messages.service": "f6f8ef6b4f9d5563777fa73f4e74dd202ec393423f955499a7502f85a52c14d3",
+      "native-messages/src/bin/messages-launch.rs": "2b2b413307ae51814b44a4cede235218871f9a459ee9e8fd38f2d576c0067976",
+      "native-messages/src/bin/messages-service.rs": "8c7319e12f1f9ceee6f516df172d60fbf78849442aadd86f9474d73ce089cb02",
+      "native-messages/src/bin/messages-stop.rs": "82b16a187b295d60623f6a8c6da86b944ac78390810a99616b705158bebc7990",
+      "native-messages/src/incoming.rs": "2144bb80bd8211ae1c241ce5b8c8931e3b91ab1f8d6b2f0ffb81a7f8eb679d90",
+      "native-messages/src/lib.rs": "faa6df0140ea61301b84e35a8ff664fa4cfe1f13159ab4ea6c1d2395ca82550c",
+      "native-messages/src/projection.rs": "ea45ff7a36e385bc366ba458bf00a40169707c1834c7c8a673530585f7ed89d7",
+      "native-messages/src/protocol.rs": "aac4405329604affa079074a6c7317570882384f6164fdf6ae6f05a831d17c8e",
+      "native-messages/src/worker.rs": "d30150ff9bc2f7e3bf461af53f9f7e4dc16e77255c20a984ca73583d41866a8a",
+      "native-messages/tests/projection.rs": "192b1f74d68a302b070d3ca303a40f18730ed8a1ee9b1ed5e6a43f5d7ba4a7c4",
+      "native-messages/tests/support/seed.rs": "a60873377c9582ce42645b5a5c8d9d0054e3f25d025983097873031f108face7",
+      "native-messaging/Cargo.lock": "e7cb16fc3e8c6abb7fbbc7a52d8f73f07c934a7a103de1cef5a0c414f3bd375f",
+      "native-messaging/Cargo.toml": "d2fdf280609b6b9b2743315ccf4dc4216e38b3a60ed70bc4199e20fe4a4c40d0",
+      "native-messaging/src/lib.rs": "b291059cbed5d33fd69e6437e41e85aa82e94004c147eec634a09bf8cf86925d",
+      "native-messaging/src/outbox.rs": "b910f78d0b48386e055535d24e44c0985f019657e232695f89fa7f522ab596eb",
+      "native-messaging/src/receipt.rs": "09718ae9ccbad56ef697da7fe1ce1e3100890097e6695361360e05923bbd6091",
+      "native-messaging/src/receive.rs": "55f2cf7da7feca551297526a14fff1216e5a798d3b41d44d9bfea8b033877acc",
+      "native-messaging/src/status_report.rs": "6ac6ad437f2e9dbec9c7beb0e614c910f03a161f07583ebdf7ebb0d629888595",
+      "native-messaging/src/transport.rs": "1602a7ed81b01433793296a873fbfa5ec1ee9faf5899da9a808d7f673dd1ae67",
+      "native-messaging/tests/fixtures/aosp-deliver.tsv": "c39f8a95fdefed5dca6c2e9a7064bb67c512ee08de1341f198462ac884ebb9ea",
+      "native-messaging/tests/fixtures/aosp-status-report.tsv": "d8990348a18d97d43603786205b48bc33048c8c3e84f1e92358f846f2fff9646",
+      "native-messaging/tests/fixtures/aosp-submit.tsv": "ffadac7dbee8a3db9044857ca05a969d18ff4c0f005bae5fedaa7eaad617050b",
+      "native-messaging/tests/fixtures/status-report-input.tsv": "2cd0578ad034b6705e567836d5bbba3def7218c5f23eefbac4cea4e68f9e33a6",
+      "native-messaging/tests/original_deliver.rs": "af6ffe72153803f522a0e5eefa2958d5950cd79427bf5cb882aee5416649230f",
+      "native-messaging/tests/original_status_report.rs": "847dd09798e1008c34323b65dafe8ba2e1f9c6073c3003711265e800827b6ec8",
+      "native-messaging/tests/original_submit.rs": "b55df0120b7f048d791ffc79d82c0686eb67e0041bb34e66e65344023c163627",
+      "native-messaging/tests/outbox.rs": "7ec099c549d70e45f2b11cfa380822f2ad59766e00012429456eb94de2f46949",
+      "native-messaging/tests/outbox_process.rs": "148ed57b10113fbdf435e0b5e8379d0eab51b88246b8fc98ff398ce80c2d62be",
+      "native-messaging/tests/planner.rs": "b53a569f1ea982e23a64a3125b52faadcef70d09a9c47ecbbe85d273da6a63a6",
+      "native-messaging/tests/receipt.rs": "22a5c28c6c60652f5e86f2635122f01daf2c64fc15d13e2f686160aac89a97d8",
+      "native-messaging/tests/receive.rs": "238b323320cec1405cf629458cce0f4163877ba7982da9a5484580c3d79d51c1",
+      "native-messaging/tests/status_report.rs": "9c8a542e85ac41414b9ad3b407e83db211aedf1823a816d561b3991650e7dab8",
+      "native-messaging/tests/transport.rs": "eddd6adc2a007aabd895332ec1aa6f2d67bc9d2257e8619c5614e4a4f1a22e56",
+      "native-session/Cargo.lock": "8b5034dc2d7279634f6af4fb68100ee47a6c99e46a1c378b4bd4f9ae9c319977",
+      "native-session/Cargo.toml": "ea4f943b4b34e053c9d19cc91f2c62e2aea37abfa91318d11fa2800f86993f45",
+      "native-session/src/bin/session-observer-fixture.rs": "75e55d00a1402affa12e323f92c654299e4eec6f26cf004e6c97c2f173a58a91",
+      "native-session/src/bin/session-peer-fixture.rs": "c4e214a8a56a7e159a7b96171b1f841f65991be1b353b33bcd2135fe2f2f35d3",
+      "native-session/src/lib.rs": "3a5defab136fd6f2388f20296a693185b1ce66b38656f561b1dab67b3c932636",
+      "native-session/tests/process.rs": "621c2af4556dc121b3b07b24bb94c5db51132ea001e968ff78eb128a17c046ad"
+    },
+    "identical_core_source_count": 66,
+    "build_resources": {
+      "cpus": 8,
+      "memory": "12g",
+      "network": "none",
+      "cargo_cache": "readonly"
+    },
+    "scratch_policy": "Two new source/bin labels share only a new unselected mutable scratch target; no immutable old target rebuilt."
+  },
+  "normal_production": {
+    "selection": {
+      "path": "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/selection.json",
+      "sha256": "a4aa127226702ccea1842ac6f4e017a409b4d6b97609d2c37f6b7c01cab13252"
+    },
+    "result": {
+      "path": "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/result.json",
+      "sha256": "7d8da20256d6e719c7009565148cae46ff876842b5e3f2cc7758bc8c34835a8d"
+    },
+    "group_count": 6,
+    "groups": [
+      {
+        "id": "normal_production_ELF_installed_UID11010_window_unknown_source",
+        "passed": true,
+        "screen": {
+          "file": "production-unknown.png",
+          "sha256": "592b3373bf0cc05528ea6a1478b124797091b2fec8a181e4f41b1b5820323ac2"
+        }
+      },
+      {
+        "id": "normal_production_unknown_source_root_controls_remain_denied",
+        "passed": true,
+        "screen": {
+          "file": "production-unknown-root-controls.png",
+          "sha256": "e1670f863f7bef87c8dfcc40ead438e2590ccf4299f5abcc3f10e351b17bdea8"
+        }
+      },
+      {
+        "id": "normal_production_focused_owned_app_plus_independent_grant",
+        "passed": true,
+        "source": {
+          "event": "session",
+          "focus": {
+            "gid": 11010,
+            "pid": 387,
+            "uid": 11010
+          },
+          "locked": false,
+          "revision": 1,
+          "sampled_at_ns": 41768555521,
+          "sequence": 1,
+          "until": 41868555521
+        },
+        "screen": {
+          "file": "production-granted.png",
+          "sha256": "b21bf76dd039194d0900a6b777e0f1a660df969b606dcb2c0ab183a982ded542"
+        }
+      },
+      {
+        "id": "normal_production_current_grant_revocation_changes_actual_view",
+        "passed": true,
+        "screen": {
+          "file": "production-grant-revoked.png",
+          "sha256": "92424d8a8dd6be9609858a49835cd4625edcf20ddf0d66997780cf36cb22ec58"
+        }
+      },
+      {
+        "id": "normal_production_same_window_restores_local_history_after_new_grant",
+        "passed": true,
+        "screen": {
+          "file": "production-grant-restored.png",
+          "sha256": "e62adc62a6aded3549a9a7834b03d4f4363af0719b851a1d96fe9d282ad6a307"
+        }
+      },
+      {
+        "id": "normal_production_source_loss_fences_held_read_and_changes_actual_view",
+        "passed": true,
+        "source": {
+          "event": "source_failed",
+          "kind": "TimedOut",
+          "last_sampled_at_ns": 46393954127,
+          "maximum_sample_gap_ns": 42640298,
+          "observed_at_ns": 46511927308
+        },
+        "screen": {
+          "file": "production-source-unloaded.png",
+          "sha256": "4d3bcb79a214aa7534a6d14c8ff3bcd6fa5839cd9182f76c1792a67868effe7e"
+        },
+        "held_readonly_pid": 385,
+        "writer_pid": 383
+      }
+    ],
+    "app": {
+      "pid": 387,
+      "mapped": true,
+      "xwayland": false,
+      "class": "pokelinux-messages",
+      "title": "Messages"
+    },
+    "combined_messages_children": {
+      "writer_pid": 383,
+      "readonly_pid": 385,
+      "readonly_reaped_after_source_loss": true,
+      "writer_alive_before_whole_stop": true
+    },
+    "combined_messages_children_reaped": {
+      "messages_writer": true,
+      "messages_read_worker": true
+    },
+    "cleanup": [
+      {
+        "role": "packages.log",
+        "pid": 332,
+        "signals": [],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "modprobe.log",
+        "pid": 333,
+        "signals": [],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "udev.log",
+        "pid": 334,
+        "signals": [],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "groups.log",
+        "pid": 335,
+        "signals": [],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "app-user.log",
+        "pid": 336,
+        "signals": [],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "runtime.log",
+        "pid": 337,
+        "signals": [],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "layer.log",
+        "pid": 356,
+        "signals": [
+          "SIGCONT",
+          "SIGTERM"
+        ],
+        "reaped": true,
+        "returncode": -15
+      },
+      {
+        "role": "runtime-acl.log",
+        "pid": 377,
+        "signals": [],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "wayland-acl.log",
+        "pid": 379,
+        "signals": [],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "seed.log",
+        "pid": 380,
+        "signals": [],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "desktop-launch.log",
+        "pid": 386,
+        "signals": [],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "production-unknown-capture.log",
+        "pid": 397,
+        "signals": [],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "production-unknown-root-controls-capture.log",
+        "pid": 398,
+        "signals": [],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "production-granted-capture.log",
+        "pid": 400,
+        "signals": [],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "production-grant-revoked-capture.log",
+        "pid": 402,
+        "signals": [],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "production-grant-restored-capture.log",
+        "pid": 403,
+        "signals": [],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "production-source-unloaded-capture.log",
+        "pid": 404,
+        "signals": [],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "service.log",
+        "pid": 382,
+        "signals": [],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "warmup.log",
+        "pid": 367,
+        "signals": [
+          "SIGCONT",
+          "SIGTERM"
+        ],
+        "reaped": true,
+        "returncode": 230
+      },
+      {
+        "role": "hyprland.log",
+        "pid": 340,
+        "signals": [
+          "SIGCONT",
+          "SIGTERM"
+        ],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "seatd.log",
+        "pid": 338,
+        "signals": [
+          "SIGCONT",
+          "SIGTERM"
+        ],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "messages_writer",
+        "pid": 383,
+        "owned_pidfd_death_observed": true,
+        "proc_absent": true,
+        "reaped": true
+      },
+      {
+        "role": "policy_storage_worker",
+        "pid": 384,
+        "owned_pidfd_death_observed": true,
+        "proc_absent": true,
+        "reaped": true
+      },
+      {
+        "role": "messages_read_worker",
+        "pid": 385,
+        "owned_pidfd_death_observed": true,
+        "proc_absent": true,
+        "reaped": true
+      },
+      {
+        "role": "installed_Qt_app",
+        "pid": 387,
+        "owned_pidfd_death_observed": true,
+        "proc_absent": true,
+        "reaped": true
+      }
+    ],
+    "all_tracked_children_reaped": true,
+    "binary_sha256": {
+      "adapter.so": "312227400c39a793c2e591d0893c692d0ac258b8f5f9ad925ae2b8727fd53621",
+      "lifecycle-launcher": "5ef715d97b054352355f459c174381949e87daf56951ccb6b5ff4ac29f398914",
+      "lock-client": "1765a58d0fc95c7e6c95c4761f7d2c2b967ba74561eadaf76348a0aeb790451f",
+      "messages-seed-fixture": "f0834e901fc1c5ba130915af10db7635ab3a749aa511f900c85f2c9749de1117",
+      "messages-service": "15393d7d257f8636887cd00fbfd7020093209d08146789f19d0366e29f87e807",
+      "messages-session-installed-fixture": "4de010e554c5d0261a0a593d97ccb2b8e7c5241035385dceeaa43f70cbe3ebfb",
+      "pokelinux-messages": "4aa50f980eab1100637d582a2752090f7545e1eb30630888753dfb9a7d2512c8",
+      "pokelinux-messages-observer": "6c14578f16ead1cdea814380ce907e99432362355e44b10186d06b54dcec027f",
+      "probe.so": "ac673f13ee21d1ea42b7d509e04703bac7bc40661c08d064172c4177d9a5e60b"
+    },
+    "source_loss_events": [
+      {
+        "event": "source_failed",
+        "kind": "TimedOut",
+        "last_sampled_at_ns": 46393954127,
+        "maximum_sample_gap_ns": 42640298,
+        "observed_at_ns": 46511927308
+      }
+    ]
+  },
+  "diagnostic_current_core": {
+    "selection": {
+      "path": "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/selection.json",
+      "sha256": "a84f394f5e5217304a9043a11521e78f74a3571bd133c2a48078daa614f7d93e"
+    },
+    "result": {
+      "path": "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/result.json",
+      "sha256": "e7f681af2faca9dd5d8c80067f58ca125b1c7e9af4897619acda06aaa0303a14"
+    },
+    "group_count": 10,
+    "groups": [
+      {
+        "id": "unknown_source_actual_Qt_denied_before_first_adapter_load",
+        "passed": true
+      },
+      {
+        "id": "root_controls_cannot_replace_unknown_source",
+        "passed": true
+      },
+      {
+        "id": "actual_compositor_focus_plus_independent_grant_admits_installed_Qt",
+        "passed": true,
+        "ui": {
+          "accessDenied": false,
+          "available": false,
+          "background": "#101315",
+          "bodyCount": 2,
+          "conversationCount": 1,
+          "fontFamily": "monospace",
+          "fontTokens": {
+            "body": 12,
+            "bodySmall": 11,
+            "caption": 10,
+            "display": 24,
+            "displayLarge": 28,
+            "heading": 16,
+            "subtitle": 13,
+            "title": 14
+          },
+          "foreground": "#cacccc",
+          "literalFixture": true,
+          "pid": 386,
+          "pixel": "#101315",
+          "plain": true,
+          "sequence": 4,
+          "sourceBodyCount": 2,
+          "uid": 11010
+        }
+      },
+      {
+        "id": "actual_focus_cannot_replace_revoked_independent_grant",
+        "passed": true
+      },
+      {
+        "id": "actual_central_null_focus_clears_Qt_while_activewindow_remembers_app",
+        "passed": true,
+        "probe": {
+          "reason": "query",
+          "seq": 249,
+          "locked": false,
+          "complete": false,
+          "pid": 0,
+          "uid": 0,
+          "gid": 0,
+          "type": -1,
+          "eligible": false,
+          "peer_pidfd_fd": -1,
+          "peer_pidfd_valid": false,
+          "peer_pidfd_live": false,
+          "peer_pidfd_errno": 0,
+          "peer_pidfs_dev": 0,
+          "peer_pidfs_ino": 0,
+          "peer_pidfs_magic": 0
+        }
+      },
+      {
+        "id": "actual_exclusive_layer_focus_clears_Qt_with_remembered_activewindow",
+        "passed": true,
+        "probe": {
+          "reason": "query",
+          "seq": 368,
+          "locked": false,
+          "complete": false,
+          "pid": 398,
+          "uid": 1000,
+          "gid": 1000,
+          "type": 3,
+          "eligible": false,
+          "peer_pidfd_fd": 79,
+          "peer_pidfd_valid": true,
+          "peer_pidfd_live": true,
+          "peer_pidfd_errno": 0,
+          "peer_pidfs_dev": 6,
+          "peer_pidfs_ino": 8312,
+          "peer_pidfs_magic": 1346978886
+        }
+      },
+      {
+        "id": "source_facts_cannot_clear_root_locked_denial_intent",
+        "passed": true
+      },
+      {
+        "id": "source_facts_cannot_clear_root_background_denial_intent",
+        "passed": true
+      },
+      {
+        "id": "actual_unload_source_terminally_fences_current_actor",
+        "passed": true,
+        "failure": {
+          "event": "source_failed",
+          "kind": "TimedOut",
+          "last_sampled_at_ns": 46420502152,
+          "maximum_sample_gap_ns": 74536941,
+          "observed_at_ns": 46525590174
+        }
+      },
+      {
+        "id": "current_source_loss_cannot_be_revived_by_root_controls_or_continued_compositor",
+        "passed": true
+      }
+    ],
+    "actual_literal_plain_body_model": {
+      "accessDenied": false,
+      "available": false,
+      "background": "#101315",
+      "bodyCount": 2,
+      "conversationCount": 1,
+      "fontFamily": "monospace",
+      "fontTokens": {
+        "body": 12,
+        "bodySmall": 11,
+        "caption": 10,
+        "display": 24,
+        "displayLarge": 28,
+        "heading": 16,
+        "subtitle": 13,
+        "title": 14
+      },
+      "foreground": "#cacccc",
+      "literalFixture": true,
+      "pid": 386,
+      "pixel": "#101315",
+      "plain": true,
+      "sequence": 4,
+      "sourceBodyCount": 2,
+      "uid": 11010
+    },
+    "normal_production_elf": false,
+    "combined_messages_children_reaped": {
+      "messages_writer": true,
+      "messages_read_worker": true
+    },
+    "cleanup": [
+      {
+        "role": "packages.log",
+        "pid": 331,
+        "signals": [],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "modprobe.log",
+        "pid": 332,
+        "signals": [],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "udev.log",
+        "pid": 333,
+        "signals": [],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "groups.log",
+        "pid": 334,
+        "signals": [],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "app-user.log",
+        "pid": 335,
+        "signals": [],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "runtime.log",
+        "pid": 336,
+        "signals": [],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "layer.log",
+        "pid": 355,
+        "signals": [
+          "SIGCONT",
+          "SIGTERM"
+        ],
+        "reaped": true,
+        "returncode": -15
+      },
+      {
+        "role": "runtime-acl.log",
+        "pid": 376,
+        "signals": [],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "wayland-acl.log",
+        "pid": 378,
+        "signals": [],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "seed.log",
+        "pid": 379,
+        "signals": [],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "desktop-launch.log",
+        "pid": 385,
+        "signals": [],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "layer-live.log",
+        "pid": 398,
+        "signals": [
+          "SIGCONT",
+          "SIGTERM"
+        ],
+        "reaped": true,
+        "returncode": -15
+      },
+      {
+        "role": "service.log",
+        "pid": 381,
+        "signals": [],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "warmup.log",
+        "pid": 366,
+        "signals": [
+          "SIGCONT",
+          "SIGTERM"
+        ],
+        "reaped": true,
+        "returncode": 230
+      },
+      {
+        "role": "hyprland.log",
+        "pid": 339,
+        "signals": [
+          "SIGCONT",
+          "SIGTERM"
+        ],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "seatd.log",
+        "pid": 337,
+        "signals": [
+          "SIGCONT",
+          "SIGTERM"
+        ],
+        "reaped": true,
+        "returncode": 0
+      },
+      {
+        "role": "messages_writer",
+        "pid": 382,
+        "owned_pidfd_death_observed": true,
+        "proc_absent": true,
+        "reaped": true
+      },
+      {
+        "role": "policy_storage_worker",
+        "pid": 383,
+        "owned_pidfd_death_observed": true,
+        "proc_absent": true,
+        "reaped": true
+      },
+      {
+        "role": "messages_read_worker",
+        "pid": 384,
+        "owned_pidfd_death_observed": true,
+        "proc_absent": true,
+        "reaped": true
+      },
+      {
+        "role": "installed_Qt_app",
+        "pid": 386,
+        "owned_pidfd_death_observed": true,
+        "proc_absent": true,
+        "reaped": true
+      }
+    ],
+    "all_tracked_children_reaped": true,
+    "binary_sha256": {
+      "adapter.so": "312227400c39a793c2e591d0893c692d0ac258b8f5f9ad925ae2b8727fd53621",
+      "lifecycle-launcher": "5ef715d97b054352355f459c174381949e87daf56951ccb6b5ff4ac29f398914",
+      "lock-client": "1765a58d0fc95c7e6c95c4761f7d2c2b967ba74561eadaf76348a0aeb790451f",
+      "messages-seed-fixture": "f0834e901fc1c5ba130915af10db7635ab3a749aa511f900c85f2c9749de1117",
+      "messages-service": "15393d7d257f8636887cd00fbfd7020093209d08146789f19d0366e29f87e807",
+      "messages-session-installed-fixture": "4de010e554c5d0261a0a593d97ccb2b8e7c5241035385dceeaa43f70cbe3ebfb",
+      "pokelinux-messages": "4aa50f980eab1100637d582a2752090f7545e1eb30630888753dfb9a7d2512c8",
+      "pokelinux-messages-observer": "6c14578f16ead1cdea814380ce907e99432362355e44b10186d06b54dcec027f",
+      "probe.so": "ac673f13ee21d1ea42b7d509e04703bac7bc40661c08d064172c4177d9a5e60b"
+    },
+    "source_loss_events": [
+      {
+        "event": "source_failed",
+        "kind": "TimedOut",
+        "last_sampled_at_ns": 46420502152,
+        "maximum_sample_gap_ns": 74536941,
+        "observed_at_ns": 46525590174
+      }
+    ]
+  },
+  "visual_review": {
+    "path": "docs/evidence/native-session-receive-read-combined-visual-review.json",
+    "sha256": "089d7236c9e2b25ef8f730bdd9f5ace464938a9c71b2765878be3e5d452e3ffe"
+  },
+  "vm": {
+    "key": "controls",
+    "existing_backing_reused": true,
+    "backing_sha256": "866ed918e5ca968ea01de72e6621c17cceb0961671ae006bfee8c5a671bcc257",
+    "no_nic": true,
+    "readonly_backing": true,
+    "snapshot": true,
+    "guest_vcpus": 4,
+    "container_cpus": 6,
+    "container_memory": "8g",
+    "kernel_sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+    "initrd_sha256": "a9bb29d29abda94748c9948f903c3c1704f829eea477652b9a4201a61f36a647",
+    "image_id": "sha256:561177a4305051567b1d28d67ba9a95e0ce0ad32a8815b49da42fe71aa5a3dd6"
+  },
+  "source_authority_fixture": {
+    "change": "readonly reader_entry dispatch only",
+    "format_and_clippy_passed": true,
+    "check_log": {
+      "path": "artifacts/native-session-installed-app/combined-authority-selector-check.log",
+      "sha256": "82e360f895a57cf3779ed054e2828aa397c0799ec610872ebab3372199d80e0b"
+    },
+    "integration_replayed": false,
+    "historical15_14_reclassified": false
+  },
+  "proof_sha256": {
+    "artifacts/native-session-installed-app/combined-read-selector-observed-red-arm/missing-reader-selector.log": "f3905990f85abbe5d378f369bed668a724745eb04753bd4ce437e201864a3ef8",
+    "artifacts/native-session-installed-app/combined-read-selector-observed-red-arm/result.json": "59ec7c288e58a2b490cac09d80198c2674a83e491b9a6ce9e18459879b2d8341",
+    "artifacts/native-session-installed-app/combined-read-selector-observed-red-arm/hyprland.log": "72db9ad20cba713595b6ab943f49335662672ad9e461abc0f78a80af1d09d397",
+    "artifacts/native-session-installed-app/combined-read-selector-observed-red-arm/warmup.log": "68e3a732aae5c4fe369838df8c6a6244546d508c8a78b400b6ffde96e42c2f2a",
+    "artifacts/native-session-installed-app/combined-read-selector-observed-red-arm/seed.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-read-selector-observed-red-arm/packages.log": "7bc8c04cb0025f3c25a9f52fd73fc9ac88c29751677db3bfd6a56c35213c2d66",
+    "artifacts/native-session-installed-app/combined-read-selector-observed-red-arm/layer.log": "43423e4699a62b724e62938bdf5e029f4662d0851cadf1ab83a1062cfaeece8f",
+    "artifacts/native-session-installed-app/combined-read-selector-observed-red-arm/service.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-read-selector-observed-red-arm/wayland-acl.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-read-selector-observed-red-arm/exit-code": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "artifacts/native-session-installed-app/combined-read-selector-observed-red-arm/serial.log": "bc04deda8b54c72f7a24216cdd6c3478e90d87c9b15653ab970727f2681d1c44",
+    "artifacts/native-session-installed-app/combined-read-selector-observed-red-arm/runtime.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-read-selector-observed-red-arm/selection.json": "1fa69addb7ee69e609e02504f540bdfd1538474460b8470a830e703c2735ed3f",
+    "artifacts/native-session-installed-app/combined-read-selector-observed-red-arm/modprobe.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-read-selector-observed-red-arm/app-user.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-read-selector-observed-red-arm/groups.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-read-selector-observed-red-arm/seatd.log": "7af9b8deeb474de033c1c7acb28e3e16dec0bcbad63a5741538d534ea7033d8b",
+    "artifacts/native-session-installed-app/combined-read-selector-observed-red-arm/udev.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-read-selector-observed-red-arm/runtime-acl.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/production-granted-capture.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/result.json": "7d8da20256d6e719c7009565148cae46ff876842b5e3f2cc7758bc8c34835a8d",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/hyprland.log": "3756c6471ac9ffc25f74b5609d274551b89221a19fa6a3e5cde3db29e29e32c1",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/warmup.log": "68e3a732aae5c4fe369838df8c6a6244546d508c8a78b400b6ffde96e42c2f2a",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/seed.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/production-grant-restored-capture.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/packages.log": "7bc8c04cb0025f3c25a9f52fd73fc9ac88c29751677db3bfd6a56c35213c2d66",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/layer.log": "b516c8678c87b92f692a0b75b95eb304c2ef8aebc1115c453c57cb28a7a59df0",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/production-grant-revoked.png": "92424d8a8dd6be9609858a49835cd4625edcf20ddf0d66997780cf36cb22ec58",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/production-source-unloaded.png": "4d3bcb79a214aa7534a6d14c8ff3bcd6fa5839cd9182f76c1792a67868effe7e",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/service.log": "20bcd0df8ec3059b7e7f2d7dcd8573485b765afdf4ba1a64122b31cd340c78fa",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/production-granted.png": "b21bf76dd039194d0900a6b777e0f1a660df969b606dcb2c0ab183a982ded542",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/desktop-launch.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/production-grant-restored.png": "e62adc62a6aded3549a9a7834b03d4f4363af0719b851a1d96fe9d282ad6a307",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/wayland-acl.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/exit-code": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/production-grant-revoked-capture.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/serial.log": "f64cd8a6587798a024207e579745e92cd89e1164e4b69f9ff13ff6dc94a0a110",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/runtime.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/production-unknown-root-controls.png": "e1670f863f7bef87c8dfcc40ead438e2590ccf4299f5abcc3f10e351b17bdea8",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/production-unknown-capture.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/selection.json": "a4aa127226702ccea1842ac6f4e017a409b4d6b97609d2c37f6b7c01cab13252",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/production-source-unloaded-capture.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/production-unknown.png": "592b3373bf0cc05528ea6a1478b124797091b2fec8a181e4f41b1b5820323ac2",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/production-unknown-root-controls-capture.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/modprobe.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/app-user.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/groups.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/seatd.log": "79355ab02e68a799c72da6da7641ca1973a0e564c0898c62185901f193a52a90",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/udev.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-normal-read-isolation-green-arm/runtime-acl.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-8.json": "94df2528a17ed298e25185aa1569b112a8fa42a488eb6b90b80e94f342b052cb",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-6.png": "62004061805b77de0aa2e228727536c3bd3d5220754ba86d294d953be77fc5c1",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-5.png": "60fdacd52ec494486e9835aa92363dbf81c1455100639ac05f15e60d45ff1056",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-14.json": "64bbd33ed0b3faf12d085b0ae4751c16465d5bebca5d24a06787c1aed9bc93d0",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-13.json": "dc19698da748b4dcc5ed574ef50d265acab2b7875405bb18910699cf881925f9",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-19.png": "62004061805b77de0aa2e228727536c3bd3d5220754ba86d294d953be77fc5c1",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-9.png": "62004061805b77de0aa2e228727536c3bd3d5220754ba86d294d953be77fc5c1",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-4.png": "60fdacd52ec494486e9835aa92363dbf81c1455100639ac05f15e60d45ff1056",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/result.json": "e7f681af2faca9dd5d8c80067f58ca125b1c7e9af4897619acda06aaa0303a14",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/hyprland.log": "3dc7cc4c67727b381f8d259cc12cbebfb260188ea8852c968eca2395d2ad446e",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/warmup.log": "68e3a732aae5c4fe369838df8c6a6244546d508c8a78b400b6ffde96e42c2f2a",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-10.png": "fd5ddd822ba217d13f93668584841d41ce3e53aec2b78a648ad77c19e377a9cd",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-8.png": "62004061805b77de0aa2e228727536c3bd3d5220754ba86d294d953be77fc5c1",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-18.json": "b3e673a980dbde51933080595b85155b4bf07816e3052d085c341b5cdadde8bc",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-6.json": "87c02d0aff40a1a36d3670881207b1f7a421266599cb293061399b91a4295e85",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/seed.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/packages.log": "7bc8c04cb0025f3c25a9f52fd73fc9ac88c29751677db3bfd6a56c35213c2d66",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/layer.log": "356bd9fb3b66934687c4f34517381abfaac7978fd4537da4ea622eab9081350a",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-7.json": "8c85f5e8e1a4628bab0cc3d2a3f85d8f2b453f18be2ba567935ceaf5e3d1780b",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-2.png": "9447837241696be7049536632312f45b19f79de786d03e6be0bc7835c6e73f48",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-16.png": "fd5ddd822ba217d13f93668584841d41ce3e53aec2b78a648ad77c19e377a9cd",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-12.png": "62004061805b77de0aa2e228727536c3bd3d5220754ba86d294d953be77fc5c1",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-15.png": "fd5ddd822ba217d13f93668584841d41ce3e53aec2b78a648ad77c19e377a9cd",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/service.log": "22750ea3a06ddd629c1b10bf785d2b6dd7cda6282a2bc7f4792c965b311bbf40",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-10.json": "5c417f51b15c1b71ba5e791afb74ca9eb69a470020d4156de2556a63c8b32fdd",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-17.png": "62004061805b77de0aa2e228727536c3bd3d5220754ba86d294d953be77fc5c1",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-18.png": "fd5ddd822ba217d13f93668584841d41ce3e53aec2b78a648ad77c19e377a9cd",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-3.png": "a23edb24e7d644f94837d568a54b5deec49495de94a2b4ce8eb51949b3ddafda",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-17.json": "21ea7391b966b2140754e4dc6132ebf340494a34d45d6cd2281bd3f49bcd3dec",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-11.json": "847dc74a64170af74978f86ce54d2f2f731f6be8c32704cda0d8c9b6d5c4ed69",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-9.json": "368c71f534d880683c4b18cc024cc897bc65f7cac61bf0ead0ab919d423dc8c5",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-14.png": "62004061805b77de0aa2e228727536c3bd3d5220754ba86d294d953be77fc5c1",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/desktop-launch.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/wayland-acl.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-12.json": "9785587031e917fac230848352efeed0364c6672fb96bb807fac19626538de03",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-16.json": "381b60b8c4f8381368bc3012a72df1579aea667d8d5ea6bff90d58cbb39b7e16",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-1.json": "d102355044d6c58e2254005c11636165e7c140f1637eac6d21b5bd952ccf83b9",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/exit-code": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/serial.log": "3a5f8a4f6a89ceb507c6b236f23cd85ff395bfa5a67448fb67723037c47bb6fa",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/runtime.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-13.png": "fd5ddd822ba217d13f93668584841d41ce3e53aec2b78a648ad77c19e377a9cd",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-2.json": "5c8a3d3257d6e2f83875ae62b251fe7afcd42e8a05d01fa7a13c2512a0348085",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-7.png": "fd5ddd822ba217d13f93668584841d41ce3e53aec2b78a648ad77c19e377a9cd",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/control.json": "fd3edba1f7d05b19318fbd59d5feaa5d7626f29634954a19b1996eec029269d2",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/selection.json": "a84f394f5e5217304a9043a11521e78f74a3571bd133c2a48078daa614f7d93e",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-20.json": "a9fa75198adb91259b2c3664a8362400f52d5e879a23f278f53e105fda3bca46",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-5.json": "1a9d81fafa061095c6dbd8aff6438d82e977675c60ea705905d25a9927623cfe",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-4.json": "372fd4e9c7f2762a0c8d8cc431a835916310195c23f81120d4bf29f435e9728a",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-19.json": "66d4282c051b2fce045e65d94437d9293043837448e84836c2c5c345998fd39f",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-15.json": "a650ca2d2714ef116234be8bc2c42842e60db296770a1f240a4e9737a6e0e274",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-3.json": "7d950ef4b2982f04cb19604152c55efda6184b18d3ddb12e7c0c8e1b577de7ce",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-11.png": "9b828ddc524edb934c3cd7915ad9e3fd8d5ad33cf3b6d3c2f3d25fceb1593f3b",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-20.png": "62004061805b77de0aa2e228727536c3bd3d5220754ba86d294d953be77fc5c1",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/layer-live.log": "21650e6640986e8e634ca0208f42b95a24c50aab2cb417cc5955785f83756beb",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/modprobe.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/window-1.png": "9447837241696be7049536632312f45b19f79de786d03e6be0bc7835c6e73f48",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/app-user.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/groups.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/seatd.log": "cea36d5d9a3cd20c0ae9e9d59f3b56a31aabc9ab6534e1cc4827cbe7d54c0238",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/udev.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-diagnostic-read-isolation-green-arm/runtime-acl.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/native-session-installed-app/combined-read-selector-red-build/selection.json": "718933b6b1d438e5e9223604d525d97bb88bb96bdc51257b7d92baea434a563d",
+    "artifacts/native-session-installed-app/combined-read-selector-red-build/build.log": "65b86d730b89c6cf3a91be9bbfa924f2b3b673f09cfb53888db57df24f66306e",
+    "artifacts/native-session-installed-app/combined-read-selector-red-build/actual-build-command.json": "157a95ed9487f5ca0be089201d4884208b809a62bde43229d7aa7b1e4d5b1e45",
+    "artifacts/native-session-installed-app/combined-read-selector-red-build/scratch-target-policy.json": "e95197ff718b8be507081ba8e998955ad1437bc8ba3440fbb7e8e9ab92e479f4",
+    "artifacts/native-session-installed-app/combined-read-selector-green-build/selection.json": "e1490439d15bb9faa2677970dcf006b5f42b6f296f1b22dd96d6d426aac61f8c",
+    "artifacts/native-session-installed-app/combined-read-selector-green-build/build.log": "b0f2e58697b9420be9e278e0d582370906c873e72b7dd520d7b7d68da5eadc32",
+    "artifacts/native-session-installed-app/combined-read-selector-green-build/actual-build-command.json": "bb13607956b7a386ddaf1351e4e089717ed0373e61590c5a359ba69fb80348eb",
+    "artifacts/native-session-installed-app/combined-authority-selector-check.log": "82e360f895a57cf3779ed054e2828aa397c0799ec610872ebab3372199d80e0b",
+    "artifacts/native-session-installed-app/combined-completed-copy-dedup.json": "ddd6cc70f40fcbc47539bad9accf3682b70ad15b8ede0e01ec319b7c4fa7c72a",
+    "docs/native-session-receive-read-combined.md": "b2fb43acf789a7898db3fb991da21dfcd17eff8ba0e36bb3f146fb875c1071df",
+    "docs/evidence/native-session-receive-read-combined-visual-review.json": "089d7236c9e2b25ef8f730bdd9f5ace464938a9c71b2765878be3e5d452e3ffe"
+  },
+  "diagnostics": "combined-read-selector-red-arm retained as incomplete setup observation; selected observed red adds actual selector rejection/writer state before correction. Generic inherited build chronological_red field refers to the prior unrelated fixture milestone; this report selects only the new executed bootstrap red.",
+  "qualification_limits": [
+    "Seeded local history only; no incoming Binder backend or producer/ACK/send/carrier proof.",
+    "Normal320x240 captures show conversation rather than literal body; fresh diagnostic model/body evidence is separately labeled.",
+    "Old three diagnostic epochs and source-authority15/14 proof remain historical.",
+    "Unchanged100ms source lease; previous actual locked-graphics restoration availability gate remains open.",
+    "No secure lock presentation, PAM/restoration, released-byte/queued-Qt/cached-pixel withdrawal claim.",
+    "Shared protected procfs/common PID/user/mount namespaces are qualified only inside the isolated guest.",
+    "Production launch/configuration ownership, Wayland containment, notifications/wake, retention and Pixel/kernel/physical device remain unqualified."
+  ]
+}

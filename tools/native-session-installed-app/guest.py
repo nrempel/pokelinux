@@ -75,7 +75,10 @@ def source_events():
  return [v for line in p.read_text().splitlines() if line.startswith('{') and (v:=json.loads(line)).get('event')]
 def worker():
  track()
- return next(pid for pid,v in owned.items() if v['role']=='messages_worker' and Path(f'/proc/{pid}').exists())
+ return next(pid for pid,v in owned.items() if v['role']=='messages_read_worker' and Path(f'/proc/{pid}').exists())
+def writer():
+ track()
+ return next(pid for pid,v in owned.items() if v['role']=='messages_writer' and Path(f'/proc/{pid}').exists())
 def refocus():
  assert ctl('dispatch hl.dsp.focus({ window = '+json.dumps('address:'+window['address'])+' })').strip()=='ok'
  wait(lambda:json.loads(ctl('nativebuildprobe'))['pid']==pid,10)
@@ -88,7 +91,7 @@ def track():
    if int((path/'stat').read_text().split()[3])!=service.pid:continue
    pid=int(path.name)
    if pid in owned:continue
-   args=(path/'cmdline').read_bytes().split(b'\0');role='messages_worker' if b'--messages-worker' in args else 'policy_storage_worker' if b'--storage-worker' in args else 'installed_Qt_app'
+   args=(path/'cmdline').read_bytes().split(b'\0');role='messages_read_worker' if b'--messages-read-worker' in args else 'messages_writer' if b'--messages-worker' in args else 'policy_storage_worker' if b'--storage-worker' in args else 'installed_Qt_app'
    owned[pid]={'fd':os.pidfd_open(pid,os.O_NONBLOCK),'role':role}
   except FileNotFoundError:pass
 sequence=0
@@ -112,10 +115,10 @@ def production_checks():
  fact=wait(lambda:next((v for v in reversed(source_events()) if v['event']=='session' and (v.get('focus') or {}).get('pid')==pid),None),3);assert fact['focus']=={'pid':pid,'uid':UID,'gid':UID};time.sleep(1);granted=capture('production-granted');assert granted['sha256']!=unknown['sha256'];record('normal_production_focused_owned_app_plus_independent_grant',source=fact,screen=granted)
  assert admin({'op':'grant','app':APP,'permission':'messages_read','allowed':False})=={'result':'ok'};time.sleep(1.5);revoked=capture('production-grant-revoked');assert revoked['sha256']!=granted['sha256'];record('normal_production_current_grant_revocation_changes_actual_view',screen=revoked)
  assert admin({'op':'grant','app':APP,'permission':'messages_read','allowed':True})=={'result':'ok'};time.sleep(1.5);restored=capture('production-grant-restored');assert restored['sha256']!=revoked['sha256'];assert json.loads(ctl('nativebuildprobe'))['pid']==pid;record('normal_production_same_window_restores_local_history_after_new_grant',screen=restored)
- held=worker();os.kill(held,signal.SIGSTOP);wait(lambda:admin({'op':'messages_status'}).get('busy'),2);assert ctl('plugin unload '+str(B/'adapter.so')).strip()=='ok';failure=wait(lambda:next((v for v in source_events() if v['event']=='source_failed'),None),3);assert admin({'op':'snapshot'})['locked'];time.sleep(1.5);lost=capture('production-source-unloaded');assert lost['sha256']!=restored['sha256'];record('normal_production_source_loss_fences_held_read_and_changes_actual_view',source=failure,screen=lost)
+ held=worker();writer_pid=writer();assert held!=writer_pid;r['combined_messages_children']={'writer_pid':writer_pid,'readonly_pid':held};os.kill(held,signal.SIGSTOP);wait(lambda:admin({'op':'messages_status'}).get('busy'),2);assert ctl('plugin unload '+str(B/'adapter.so')).strip()=='ok';failure=wait(lambda:next((v for v in source_events() if v['event']=='source_failed'),None),3);assert admin({'op':'snapshot'})['locked'];time.sleep(1.5);lost=capture('production-source-unloaded');assert lost['sha256']!=restored['sha256'];record('normal_production_source_loss_fences_held_read_and_changes_actual_view',source=failure,screen=lost,held_readonly_pid=held,writer_pid=writer_pid)
  try:os.kill(held,signal.SIGCONT)
  except ProcessLookupError:pass
- wait(lambda:not Path(f'/proc/{held}').exists(),3);track();r['production_screens_require_visual_review']=True;r['passed']=True
+ wait(lambda:not Path(f'/proc/{held}').exists(),3);assert Path(f'/proc/{writer_pid}').exists();r['combined_messages_children'].update({'readonly_reaped_after_source_loss':True,'writer_alive_before_whole_stop':True});track();r['production_screens_require_visual_review']=True;r['passed']=True
 try:
  assert os.getuid()==0 and os.uname().machine=='aarch64';assert os.uname().release=='7.1.6-1-aarch64-ARCH';assert sorted(p.name for p in Path('/sys/class/net').iterdir())==['lo']
  for n,d in selection['files'].items():assert sha(R/n)==d,n
@@ -164,7 +167,24 @@ Scope {
  else:receiver=receive;fds=()
  service=start(args,'service.log',dict(os.environ,NATIVE_MESSAGES_ISOLATED='1'),fds=fds)
  if selection['phase']=='green':receive.close()
- wait(lambda:admin({'op':'snapshot'}).get('ready'));wait(lambda:admin({'op':'messages_status'}).get('available'))
+ wait(lambda:admin({'op':'snapshot'}).get('ready'))
+ def read_available():
+  track();status=admin({'op':'messages_status'});r['last_messages_status']=status;return status.get('available')
+ # The new shared core requires this exact owned reader selector. Observe the
+ # selected old executable on the actual ARM kernel before correcting dispatch.
+ fixture_source=R/'source/rust-build/tools/native-session-installed-app/fixture/src/bin/service.rs'
+ core_source=R/'source/rust-build/native-messages/src/worker.rs'
+ if fixture_source.exists() and b'--messages-read-worker' in core_source.read_bytes() and b'--messages-read-worker' not in fixture_source.read_bytes():
+  probe_child=start([str(install/'messages-session-installed-fixture'),'--messages-read-worker',str(runtime/'messages-read.sock'),str(state/'raw'),str(state/'inbox'),str(service.pid),os.urandom(16).hex()],'missing-reader-selector.log',{})
+  wait(lambda:probe_child.poll() is not None,3);finish(probe_child,'missing-reader-selector.log',False)
+  assert probe_child.returncode==1 and 'PermissionDenied' in (O/'missing-reader-selector.log').read_text()
+  assert wait(read_available,2,True) is None
+  owner=writer();assert Path(f'/proc/{owner}').exists();assert admin({'op':'snapshot'})['ready']
+  r['expected_red']=True;r['red_detected']=True;r['signature']='current_core_old_fixture_rejects_readonly_bootstrap_selector'
+  r['reader_selector_probe']={'selected_fixture_sha256':sha(install/'messages-session-installed-fixture'),'returncode':probe_child.returncode,'observed_error':'PermissionDenied','live_writer_pid':owner,'lifecycle_ready':True,'readonly_available':False}
+  raise AssertionError('desired new-core readonly bootstrap must become available under the selected fixture')
+ wait(read_available)
+
  assert admin({'op':'grant','app':APP,'permission':'messages_read','allowed':True})=={'result':'ok'}
  command(['python3','-c','import socket,json; s=socket.socket(socket.AF_UNIX,socket.SOCK_SEQPACKET); s.connect('+repr(str(runtime/'launch-messages.sock'))+'); s.send(b\'{"op":"launch_messages"}\'); assert json.loads(s.recv(4096))=={"result":"ok"}'],'desktop-launch.log',user=True)
  window=wait(lambda:next((v for v in json.loads(ctl('j/clients')) if v.get('title')=='Messages' and v.get('mapped')),None),90);pid=window['pid'];track();r['app']={k:window[k] for k in ['pid','mapped','xwayland','class','title']};assert not window['xwayland'];assert Path(f'/proc/{pid}/status').read_text().split('Uid:\t')[1].split()[0]=='11010';assert all(os.readlink(f'/proc/{p}/ns/{k}')==value for p in [compositor.pid,service.pid,pid] for k,value in r['namespaces'].items());r['setup_complete']=True
@@ -247,6 +267,7 @@ finally:
  if receiver is not None:receiver.close()
  if sourcefd is not None:os.close(sourcefd)
  for f in logs:f.close()
+ r['combined_messages_children_reaped']={role:any(v['role']==role and v['reaped'] for v in r['cleanup']) for role in ['messages_writer','messages_read_worker']}
  r['source_events']=source_events() if (O/'service.log').exists() else [];r['baseline_frames']=frames;r['all_tracked_children_reaped']=not r.get('cleanup_errors') and all(v['reaped'] for v in r['cleanup']);r['passed']=r['passed'] and r['all_tracked_children_reaped']
  for p in observe.glob('*'):
   if p.suffix in ['.json','.png']:shutil.copyfile(p,O/p.name)

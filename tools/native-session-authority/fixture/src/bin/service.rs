@@ -21,6 +21,9 @@ fn main() -> io::Result<()> {
     if a.first().is_some_and(|s| s == "--storage-worker") {
         return pokelinux_lifecycle::storage::worker(&a[1..]);
     }
+    if a.first().is_some_and(|s| s == "--messages-read-worker") {
+        return pokelinux_messages::worker::reader_entry(&a[1..]);
+    }
     if a.first().is_some_and(|s| s == "--messages-worker") {
         return pokelinux_messages::worker::entry(&a[1..]);
     }

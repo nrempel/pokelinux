@@ -364,19 +364,37 @@ The original100ms lease and locked-graphics availability gate remain: actual loc
 can expire the source, and no failed source is revived. Trusted launch/procfs/common
 namespaces, genuine Quickshell/PAM restoration, privileged Wayland containment,
 secure frames, resume/wake and notifications remain open. Matched Pixel6.6
-image/config/KMI remains unqualified. The receiving/read split needs its explicit
-read-worker dispatch and a fresh joint replay before combining the evidence.
+image/config/KMI remains unqualified. The fresh replay below adds the explicit
+read-worker dispatch and qualifies the writer/readonly local-history path.
 No matched kernel replacement or physical hardware completion follows.
+
+Independent Messages read ownership now preserves the same live synthetic
+receiver through app close, expiry, reader failure and actual held SQLite read
+locks. Exact occurrence-bound projection permits wait for transaction completion
+or actual reap without renewing the one-second arrival deadline. Two actual ARM
+reds precede correction;17 ARM groups and51 focused cases per x86/actual ARM
+kernel pass. Read identity, incoming source identity and whole Stop stay separate.
+See `native-messages-receive-isolation.md` and its frozen-base proof.
+
+A fresh combined replay now uses the current owned-focus actor and writer/readonly
+split through original Hyprland and an actual UID11010 Qt window. The missing
+reader-selector failure ran before its three-line fixture correction. Six normal
+production-app groups and ten separately labeled diagnostic groups pass; held
+readonly work is reaped after source unload while the writer stays alive until
+whole Stop. Normal conversation screenshots and diagnostic literal-body evidence
+remain separate. See `native-session-receive-read-combined.md`. This local-history
+replay does not attach Binder; the incoming proof remains independent.
 
 ## Next work
 
-1. Continue the qualified synthetic incoming Messages path with raw retention/capacity,
-   cold backlog availability and held-read cancellation that preserves shared
-   receiving. Retain original ingestion deadlines and durable source uncertainty;
+1. Continue the qualified synthetic incoming Messages path with raw retention/capacity
+   and cold backlog availability. Held-read cancellation now preserves shared
+   receiving through the qualified occurrence permit and owned readonly child. Retain original ingestion deadlines and durable source uncertainty;
    history recovery never permits implicit backend reattachment. The transferred focus-peer handle now passes host/ARM interface checks; the joint
-   original-compositor/current-authority/installed-app local-history path now passes separately. Combine
-   receiving/read isolation with that path, then qualify trusted
-   lock admission/restore, notifications and wake. Producer/ACK/reset,
+   original-compositor/current-authority/installed-app local-history path now passes separately. A fresh
+   local-history replay combines the reader/writer split with that path. Next qualify
+   actual incoming Binder/session/Qt composition, trusted lock admission/restore,
+   notifications and wake. Producer/ACK/reset,
    sending and hardware gates remain separate. See `native-integration-map.md`,
    `native-messages-service.md` and `native-messages-incoming.md`.
 2. Recover and test the actual vendor cleanup/reset and registration-overlap

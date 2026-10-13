@@ -233,8 +233,9 @@ in18 integration groups. Durable pre-Binder attempts prevent implicit reattachme
 on child/whole-service/systemd restart. A socket-origin pidfd strengthens installed
 stop ACK into actual bounded service exit; healthy Main status and policy validation
 remain separate checks. Normal installed Messages remains local-history-only.
-Complete enumeration/retention, shared receive during held-read cancellation,
-production attachment/ACK/reset, notifications, wake and hardware remain open.
+The later checkpoints below add complete bounded enumeration and preserve shared
+receive through held-read cancellation. Retention, production attachment/ACK/reset,
+notifications, wake and hardware remain open.
 See [incoming composition](native-messages-incoming.md).
 
 Complete bounded raw receipt enumeration now qualifies every committed ID within
@@ -253,7 +254,17 @@ procfs view and final joint liveness; scalar identity and old wire fields are go
 Original sample deadlines, semantic revisions and independent root denial intents
 still gate reads. The [joint installed app path](native-session-installed-app.md)
 now passes six normal Qt groups and three separate10-group diagnostic source epochs
-for local synthetic history. Cold/locked rendering, combined receiving/read isolation
-and exact retained Pixel kernel/procfs/namespace qualification remain open. Genuine Omarchy PAM/restore
+for local synthetic history. The newer replay below combines the writer/readonly
+split with this path. Cold/locked rendering and exact retained Pixel kernel/procfs/
+namespace qualification remain open. Genuine Omarchy PAM/restore
 containment, secure presentation, actual resume/wake and hardware remain gates.
 See [owned focus](native-session-owned-focus.md).
+
+Independent supervised Messages reads now preserve the same synthetic receiving
+source through close, expiry and actual SQLite-lock contention:17 actual ARM
+integration/component groups and51 focused cases per architecture pass after
+two executed reds. A fresh original-compositor/current-actor/normal-Qt local-history
+replay passes six groups with the writer/readonly split, plus ten separate
+diagnostic groups. These are distinct from full incoming Binder/session/Qt
+composition and production producer/ACK/reset. See [read isolation](native-messages-receive-isolation.md)
+and [combined local-history replay](native-session-receive-read-combined.md).

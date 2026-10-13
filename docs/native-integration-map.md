@@ -67,7 +67,9 @@ appearance ACL setup remain explicit test infrastructure.
    original-compositor groups qualify separate paths. The
    [joint installed app path](native-session-installed-app.md) now passes six normal
    production Qt groups and three separate10-group diagnostic source epochs for
-   local synthetic history. Combine receiving/read isolation next; actual locked
+   local synthetic history. The writer/readonly split now passes a fresh six-group normal Qt replay and
+   ten separately labeled diagnostic groups; see [combined reads](native-session-receive-read-combined.md).
+   Full incoming Binder/session/Qt composition remains next. Actual locked
    graphics can expire the original100ms lease and restoration remains unavailable.
    Protected procfs/common namespaces and matched Pixel kernel remain gates.
 5. Add one authorized outbound operation through the same authority to the frozen
