@@ -1,0 +1,1109 @@
+{
+  "scope": "Real ARM64 guest-kernel Binder through native Rust radio owner/workers/supervisor; independent synthetic native Rust peer and separate genuine Android-runtime NDK interop",
+  "recorded_utc": "2026-10-13T02:04:44.045344+00:00",
+  "repository_head_at_recording": "c4927708c2a42104e1349da934728e01b52c34b1",
+  "production_sources_changed_by_this_gate": false,
+  "phone_accessed": false,
+  "hardware_verified": false,
+  "production_backend_enabled": false,
+  "evidence_classes": {
+    "arm64_system_qemu_kernel_binder_synthetic_native_peer": "Nine executed scenarios, genuine guest driver, manual independent Rust peer wire parcels",
+    "arm64_system_qemu_original_android_runtime_interop": "Three executed scenarios with synthetic NDK peer over hash-verified original ARM64 Android Binder/Bionic, synthetic Rust service manager and one readiness property",
+    "arm64_user_mode_qemu": "Not used for these runtime verdicts",
+    "x86_android_reference": "Earlier independent evidence; not reused as ARM proof",
+    "original_vendor_radio_service_execution": false,
+    "physical_device_execution": false
+  },
+  "retained_test_kernel": {
+    "release": "7.1.6-1-aarch64-ARCH",
+    "version": "#1 SMP PREEMPT_DYNAMIC Wed Aug  5 00:20:13 UTC 2026",
+    "image_path": "sim/boot/Image",
+    "image_sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+    "initramfs_sha256": "a9bb29d29abda94748c9948f903c3c1704f829eea477652b9a4201a61f36a647",
+    "config_sha256": "57b271019434470737eb6fa2bfa08fe09d33b7ed92db25dea929739bf9e39f5b",
+    "binder_config": [
+      "CONFIG_ANDROID_BINDER_IPC=y",
+      "CONFIG_ANDROID_BINDERFS=y",
+      "CONFIG_ANDROID_BINDER_DEVICES=\"\""
+    ],
+    "compiler_config": [
+      "CONFIG_CC_VERSION_TEXT=\"aarch64-unknown-linux-gnu-gcc (GCC) 16.1.1 20260430\"",
+      "CONFIG_LD_VERSION=24600"
+    ],
+    "matched_module_directory": "/usr/lib/modules/7.1.6-1-aarch64-ARCH",
+    "inventory_sha256": "769817c2c384e0c64345cef8576dfb7c263fe8d359de04fa89b62501287ca040",
+    "new_kernel_or_module_build": false,
+    "public_prebuilt_origin": "Retained Arch Linux ARM base/boot image from pinned public rootfs; Binder built in, no retained kernel headers needed",
+    "arch_base_url": "https://de3.mirror.archlinuxarm.org/os/multi/ArchLinuxARM-2026.08-aarch64-rootfs.tar.gz",
+    "arch_base_archive_sha256": "42a4eeaa038994ffd31fa173256ef2f0ef511358eeb41b9ea1f8626391b9b319",
+    "pixel_matched_kernel": false,
+    "google_target_kernel_modules_firmware": "Retained target assets untouched; not replaced or qualified by this test kernel"
+  },
+  "execution_environment": {
+    "builder_image": "sha256:0b4b956502a9f55d992eaced6975737b523be19bd2034078983b36bbcfd7aee6",
+    "qemu_container_image": "sha256:561177a4305051567b1d28d67ba9a95e0ce0ad32a8815b49da42fe71aa5a3dd6",
+    "rust_compiler": "rustc1.98.1 (48a229cea 2026-09-01), LLVM22.1.8",
+    "rust_cross_linker": "aarch64-linux-gnu-gcc Debian14.2.0-19",
+    "ndk_compiler": "Android (16134705, +pgo, +bolt, +lto, +mlgo, based on r574158c) clang version 21.0.0 (https://android.googlesource.com/toolchain/llvm-project 9f872551d3c681d06fd303b36f16ed5c274735eb)\nTarget: aarch64-unknown-linux-android35\nThread model: posix\nInstalledDir: /workspace/artifacts/camera-boundary/android-ndk-r30/toolchains/llvm/prebuilt/linux-x86_64/bin",
+    "native_uid": 1000,
+    "network": "none at container and QEMU NIC",
+    "root_disk": "dedicated clone, snapshot writes; shared base disk untouched",
+    "project_mount": "read-only",
+    "host_device_transport": "no adb/USB/host Binder device/module exposure",
+    "process_ownership": "actual production worker JoinHandle/death watch and Supervisor Child retained until completed join/actual reap; every independent fixture Popen explicitly waited"
+  },
+  "source_sha256": {
+    "native-ims/Cargo.toml": "673a36e6e406492b7418c0fcf6b806327bae3061ab47fd91232a2d7eab8ffd6f",
+    "native-ims/src/requests.rs": "ad0b411f0f385d620df18a7a206034199e9cf9d390b13c13925f19e347cba26f",
+    "native-radio/Cargo.lock": "79da65efd795316ef184d2f1c7895946254913b68d4cf5f4fd8d83a5dc20ccd4",
+    "native-radio/Cargo.toml": "d4d53aafceec699f40368e7ed4c615a0e0c5b9745ef5c200bc1cb2c21ae75c3a",
+    "native-radio/aidl/RadioExternalResponseInfo.aidl": "750c6a2251fa35e6b537eb3baa0d080d1f39964d5cbc92b6f77d4e5a0c945245",
+    "native-radio/build.rs": "5118ea2f7e4878ffe1bea136e9cb3b2cf91b8b933b2061e6219e4e4de840ee31",
+    "native-radio/src/deadline.rs": "abc2a3f23284402fe3bc34abfb380bdf1f84a1f6d15cbd90b38a09bf5450c2ee",
+    "native-radio/src/indication.rs": "cf645e64492034bee2ae22e27537bdd4b99aa04bcf6183e7a7841af806660456",
+    "native-radio/src/lib.rs": "13e0a76744bc8b83678b9e37d93a1c965dc207603f2aad6133f5ceb2173d760e",
+    "native-radio/src/owner.rs": "37ec8cc3f94bed8aa4abc5856fb51d5c94823daa821a69e7a1d86c04ed03f958",
+    "native-radio/src/receiver.rs": "eb638f48378753d5a1f8188c2f6bd889118ca844a54be7165b7dd84209f68678",
+    "native-radio/src/request.rs": "f9e1a3ee79a3d118314df617c51085006ab0d6738cbdf0ee4dd527cbfe374b76",
+    "native-radio/src/response.rs": "69c81928998b9399c2b9085bf713403f747bffdcbfd457a9c358b4eef1f37589",
+    "native-radio/src/supervisor.rs": "3f114c25c9300cb8e0ed064e15a3537c829d5031585ef012cfba33d6f53bfbf5",
+    "native-radio/src/transport.rs": "f01d1ec1d543ed667f3b8d06366d909eb02168235a41ab58a831ebed2a11e455",
+    "native-radio/src/worker.rs": "ba9e55c6bc96a80962c1b1dca56b608b624df89d579844e186afde1615856313",
+    "sim/rust-cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rsbinder-0.12.0/aidl/16/android/os/IServiceManager.aidl": "993014d0fc2c8ce9c40032f745b2b956b1ef1cd11f2157599c3fa4aef8eb796a",
+    "sim/rust-cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rsbinder-0.12.0/src/native.rs": "44893d1a2ea38d8aa7cce21318dd6d60f6b5ce992d52e7f8010cf99db5ec2492",
+    "sim/rust-cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rsbinder-0.12.0/src/parcel.rs": "b31c0be63ec3b5e5274cfc5fdcabd727c19af3003579315e83fe267057b101c1",
+    "sim/rust-cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rsbinder-0.12.0/src/process_state.rs": "ddad6766cd184564a4889ce68f7c92b8d7c1971255b7070ade78d8fc01534fb4",
+    "sim/rust-cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rsbinder-0.12.0/src/proxy.rs": "a3dccb05c012253d99868252c7295a0ef2b668b9e9ece78e4a6ae0af41eee601",
+    "sim/rust-cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rsbinder-0.12.0/src/status.rs": "e196365264f6494e91501fbda91073a03440ba192dd1dd17277fdaa72aa2972a",
+    "sim/rust-cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rsbinder-0.12.0/src/thread_state.rs": "5ed6a24ee758a07e79dc6c11336c2f84f7f5f6fc01034f3e99f99bc32549759d",
+    "tools/native-arm64-binder/android-runtime-inputs.json": "4de151324a6e74cb5ef8ca56463f308feee76f4b809865847f8f1f39deb9e25c",
+    "tools/native-arm64-binder/boot.sh": "ac475d11c6510b7f1a9a17c2895ee4e6106288cba5e1e33e447488b615604daa",
+    "tools/native-arm64-binder/build-ndk-in-container.sh": "623da9faa64492547b587d914f946dfdbb2f533e12ce47dd653bf676942a172e",
+    "tools/native-arm64-binder/fixture/Cargo.lock": "869ec1e7cb47e1b4d9e6bae1114add54ee6823ac7f681372bfb95e6f8a8a694b",
+    "tools/native-arm64-binder/fixture/Cargo.toml": "a6f86ed2168918417953dc16b1e9f6a130e1454bdad68298a8b9029cf3a0ca6e",
+    "tools/native-arm64-binder/fixture/src/bin/client.rs": "381cb6577f5bcba04e945c367806c3c5ad4fe5d851508b1cf6277aa733471603",
+    "tools/native-arm64-binder/fixture/src/bin/manager.rs": "57bbf39edba6a5760429b89e1c3d471d420f9c08378996cc079d2ff91c3bd24b",
+    "tools/native-arm64-binder/fixture/src/bin/peer.rs": "66b5ed5044f5dd90b5730bf3de8599c9518f4e62823b745a7b5ef17a51f0b8c6",
+    "tools/native-arm64-binder/fixture/src/supervised.rs": "a150bf528432245217e5de8a974381a13ba60c5ee2bbd1317bf8a4ee34f828f0",
+    "tools/native-arm64-binder/guest.py": "65adb8e3142101a50c295a3daa06fab33c04110498c55c1a53a873d95ba9ce9e",
+    "tools/native-arm64-binder/ndk-link-inputs.json": "c9f604a7453d5ffa0eb5a2b2379418e487a8671d850f01bbc11be9777e3094d6",
+    "tools/native-arm64-binder/ndk-peer.cpp": "668d396e313a3b2e8bdcc0347bcc8a091e33f98d36b497c0d887667d01142bb4",
+    "tools/native-arm64-binder/ndk.py": "c9a50193fd2aa626c5cd73b0a48bddd93ae2eb6a136d685c787e04f94cdc67c1",
+    "tools/native-arm64-binder/prepare-public.py": "969ef4f7e51a91646d9051c0ac87ffad08a8c55bdf7ece1bf86bd554b2bab42a",
+    "tools/native-arm64-binder/property-info.cpp": "622cd8323ed8bccbeeccc54df96a0f84be48853e6cff4e23fc6633c4eda88ebc",
+    "tools/native-arm64-binder/property-init.c": "7fc6b5acde9501af119ad9bf75b2a743bb8de16f996134720447899a7e316a5b",
+    "tools/native-arm64-binder/public-inputs.json": "d7aa13bacc8c172c7d982544e3f19e21482f5f4a45c8841fee44e7998896a34b",
+    "tools/native-arm64-binder/run.sh": "2a2a15850effab1871e144aaa28e7b123c226411cf62fdbe149a9292f2d9d3a1",
+    "tools/native-arm64-binder/verify-link-inputs.py": "5ea109e224e37b0bd75ea9e71fade676d0e14919f3050bc674420c227545f7cf",
+    "tools/native-arm64-binder/verify-runtime.py": "fa0b9e027acd30f288e921a0a274565703e8ae2999de4e77a9b8027e21c578ce",
+    "tools/native-arm64-binder/vm.py": "d6edc984085628c6afb9058414cdd3e4b5ddabb6cfb5ee84d6cf86c4658c6bcf",
+    "tools/native-arm64-binder/write-provenance.py": "b67c4b4868928150934621d31212c601d90236af91b8f3d724f18ab81c3214cc"
+  },
+  "generated_interface_sha256": {
+    "artifacts/native-arm64-binder/target/aarch64-unknown-linux-gnu/debug/build/pokelinux-radio-c6b9bea693a544fe/out/radio.rs": "73cf09a6a1072e603bccb9a28d5f9f327b04a482e35d3fe42cc11330f5ae1d0f",
+    "artifacts/native-arm64-binder/target/aarch64-unknown-linux-gnu/debug/build/rsbinder-e2872d3c48b19373/out/service_manager_16.rs": "848d23ff03ee8f04d9074dd7c64c1dacacbdcbf837cc491a66dcea9aa1676a30"
+  },
+  "red_green": {
+    "driver_provisioning_red": {
+      "directory": "artifacts/native-arm64-binder/runtime/driver-red",
+      "result": {
+        "passed": false,
+        "architecture": "aarch64",
+        "kernel": "7.1.6-1-aarch64-ARCH",
+        "qemu_mode": "system",
+        "hardware_verified": false,
+        "phone_accessed": false,
+        "peer_class": "independent synthetic native Rust peer; no original interop",
+        "network": "none",
+        "binder_config": [
+          "CONFIG_ANDROID_BINDER_IPC=y",
+          "CONFIG_ANDROID_BINDERFS=y",
+          "CONFIG_ANDROID_BINDER_DEVICES=\"\""
+        ],
+        "filesystems": "nodev\tsysfs\nnodev\ttmpfs\nnodev\tproc\nnodev\tcgroup\nnodev\tcgroup2\nnodev\tdevtmpfs\nnodev\tbinfmt_misc\nnodev\tconfigfs\nnodev\tdebugfs\nnodev\tsecurityfs\nnodev\tsockfs\nnodev\tbpf\nnodev\tpipefs\nnodev\tramfs\nnodev\thugetlbfs\nnodev\trpc_pipefs\nnodev\tdevpts\n\text3\n\text2\n\text4\n\tvfat\n\tmsdos\nnodev\tnfs\nnodev\tnfs4\n\tntfs3\nnodev\tautofs\n\txfs\n\tf2fs\nnodev\tefivarfs\nnodev\tmqueue\nnodev\tbinder\n\tbtrfs\nnodev\tpstore\n\tfuseblk\nnodev\tfuse\nnodev\tfusectl\nnodev\t9p\n",
+        "client_sha256": "569a219492fb2ffe76e95476639a4cabdb86d3a75378343c5ef2433574278eb9",
+        "client_exit": 1,
+        "error": "Traceback (most recent call last):\n  File \"/workspace/tools/native-arm64-binder/guest.py\", line 20, in <module>\n    assert run.returncode == 0, 'actual Rust client could not initialize kernel Binder'\n           ^^^^^^^^^^^^^^^^^^^\nAssertionError: actual Rust client could not initialize kernel Binder\n"
+      },
+      "files_sha256": {
+        "client.log": "4268430758500ab66cb0693570bc2fede6c5fb628ccfff5b35183a512c7c6d1d",
+        "command.json": "8fe1483db3c15c234b0c82b871a7348d0aa8ce3c6cce34db98228eb33e68fe31",
+        "kernel.config": "57b271019434470737eb6fa2bfa08fe09d33b7ed92db25dea929739bf9e39f5b",
+        "result.json": "293249e1cdd29db052947e068ae8789463a924d1c17eaa87bec52e810ac2f701"
+      }
+    },
+    "unchanged_driver_binary_green": {
+      "directory": "artifacts/native-arm64-binder/runtime/driver-green",
+      "result": {
+        "passed": true,
+        "architecture": "aarch64",
+        "kernel": "7.1.6-1-aarch64-ARCH",
+        "qemu_mode": "system",
+        "hardware_verified": false,
+        "phone_accessed": false,
+        "peer_class": "independent synthetic native Rust peer; no original interop",
+        "network": "none",
+        "binder_config": [
+          "CONFIG_ANDROID_BINDER_IPC=y",
+          "CONFIG_ANDROID_BINDERFS=y",
+          "CONFIG_ANDROID_BINDER_DEVICES=\"\""
+        ],
+        "filesystems": "nodev\tsysfs\nnodev\ttmpfs\nnodev\tproc\nnodev\tcgroup\nnodev\tcgroup2\nnodev\tdevtmpfs\nnodev\tbinfmt_misc\nnodev\tconfigfs\nnodev\tdebugfs\nnodev\tsecurityfs\nnodev\tsockfs\nnodev\tbpf\nnodev\tpipefs\nnodev\tramfs\nnodev\thugetlbfs\nnodev\trpc_pipefs\nnodev\tdevpts\n\text3\n\text2\n\text4\n\tvfat\n\tmsdos\nnodev\tnfs\nnodev\tnfs4\n\tntfs3\nnodev\tautofs\n\txfs\n\tf2fs\nnodev\tefivarfs\nnodev\tmqueue\nnodev\tbinder\n\tbtrfs\nnodev\tpstore\n\tfuseblk\nnodev\tfuse\nnodev\tfusectl\nnodev\t9p\n",
+        "driver": {
+          "major": 505,
+          "minor": 1,
+          "binder_protocol": 8,
+          "uid": 1000,
+          "mode": "0600",
+          "created_in": "guest only"
+        },
+        "client_sha256": "569a219492fb2ffe76e95476639a4cabdb86d3a75378343c5ef2433574278eb9",
+        "client_exit": 0
+      },
+      "files_sha256": {
+        "client.log": "b46fcd3faaab05a2e24b8765ff16666d7d9f186371e4b670037fd7e86b1f3bf3",
+        "command.json": "2ec9b771d93530a75c8835c4297786a661f35e74e8d83a9bd76e54347250c473",
+        "kernel.config": "57b271019434470737eb6fa2bfa08fe09d33b7ed92db25dea929739bf9e39f5b",
+        "result.json": "fb11b601246a65a42906c7944f3c5118094185175a7481deb8b29b1628702745"
+      }
+    },
+    "held_fixture_capability_red": {
+      "directory": "artifacts/native-arm64-binder/runtime/held-red",
+      "result": {
+        "passed": false,
+        "architecture": "aarch64",
+        "kernel": "7.1.6-1-aarch64-ARCH",
+        "qemu_mode": "system",
+        "hardware_verified": false,
+        "phone_accessed": false,
+        "peer_class": "independent synthetic native Rust peer; no original interop",
+        "network": "none",
+        "binder_config": [
+          "CONFIG_ANDROID_BINDER_IPC=y",
+          "CONFIG_ANDROID_BINDERFS=y",
+          "CONFIG_ANDROID_BINDER_DEVICES=\"\""
+        ],
+        "filesystems": "nodev\tsysfs\nnodev\ttmpfs\nnodev\tproc\nnodev\tcgroup\nnodev\tcgroup2\nnodev\tdevtmpfs\nnodev\tbinfmt_misc\nnodev\tconfigfs\nnodev\tdebugfs\nnodev\tsecurityfs\nnodev\tsockfs\nnodev\tbpf\nnodev\tpipefs\nnodev\tramfs\nnodev\thugetlbfs\nnodev\trpc_pipefs\nnodev\tdevpts\n\text3\n\text2\n\text4\n\tvfat\n\tmsdos\nnodev\tnfs\nnodev\tnfs4\n\tntfs3\nnodev\tautofs\n\txfs\n\tf2fs\nnodev\tefivarfs\nnodev\tmqueue\nnodev\tbinder\n\tbtrfs\nnodev\tpstore\n\tfuseblk\nnodev\tfuse\nnodev\tfusectl\nnodev\t9p\n",
+        "driver": {
+          "major": 505,
+          "minor": 1,
+          "binder_protocol": 8,
+          "uid": 1000,
+          "mode": "0600",
+          "created_in": "guest only"
+        },
+        "client_sha256": "3bbba34d6bd283124dbf89a731472b98567ce9987965b01fd1ff91b8999a312c",
+        "peer_sha256": "a1dd1469cd26fcf46fc5d33595b9b9c5d6199644349068882e8c002759041f65",
+        "checks": {
+          "callbacks": {
+            "exit": 0,
+            "passed": true,
+            "peer_pid": 303,
+            "client_markers": [
+              "arm64-real-kernel-binder-handle-transfer\tPASS",
+              "arm64-kernel-object-transfer-nested-metadata-response-indication\tPASS"
+            ],
+            "peer_reaped": true
+          },
+          "hold-cancel": {
+            "exit": 1,
+            "passed": false,
+            "peer_pid": 311,
+            "client_markers": [
+              "arm64-real-kernel-binder-handle-transfer\tPASS"
+            ],
+            "peer_reaped": true
+          }
+        },
+        "error": "Traceback (most recent call last):\n  File \"/workspace/tools/native-arm64-binder/guest.py\", line 79, in <module>\n    assert client is not None and client.returncode==0, 'actual ARM kernel Binder scenario failed: '+scenario\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: actual ARM kernel Binder scenario failed: hold-cancel\n"
+      },
+      "files_sha256": {
+        "callbacks-binder-failed_transaction_log.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "callbacks-binder-state.txt": "9b966e79efc190e5726e2cb39f90f6a9808c229f4fb30e54e858a3385b0c3e28",
+        "callbacks-binder-stats.txt": "e5d7b847f0b6cc56bf284e984d5858d9de39ca0436c4f08ace4c37a8ce2d2bfa",
+        "callbacks-binder-transaction_log.txt": "461ed902abe5ce0d6622cc034b34fac1628c23a690135cdebb18655a624bbfde",
+        "callbacks-binder-transactions.txt": "2a564de6c064bbbcefb09382382c415f9e169bfbd130f4727f5dbf5ae8cfacb6",
+        "callbacks-client.log": "17230c2e388de0c05314b24e2ba9221e2b0f3e2dbec4fd1bafa87ae1dca1c0da",
+        "callbacks-peer.log": "85e57d959f1f4cb6d0da4b6b4dee22fbcf50640c8e9e394fc4c0c2846346f733",
+        "command.json": "a7daea2bd054c48675c54176c3c99b88176e6750f55cfabe66e675d05de733ea",
+        "hold-cancel-binder-failed_transaction_log.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "hold-cancel-binder-state.txt": "9b966e79efc190e5726e2cb39f90f6a9808c229f4fb30e54e858a3385b0c3e28",
+        "hold-cancel-binder-stats.txt": "8fbbc5a9d84dcb9481e1094759ac00949d84dd827b414ca6abee7200cb483b0d",
+        "hold-cancel-binder-transaction_log.txt": "2e4e3537cb33b609241ec7b87c2465e5c0e36869adb117d2b7d6fe494b2ee5ac",
+        "hold-cancel-binder-transactions.txt": "2a564de6c064bbbcefb09382382c415f9e169bfbd130f4727f5dbf5ae8cfacb6",
+        "hold-cancel-client.log": "068d2b09b0fbae355588afcaacc33a056917ad7d71f5e48d1f74c845ae599dbc",
+        "hold-cancel-peer.log": "b756c16c10a22be51978cb062ffd03a200e98b0d309d087d3435dcd329a7c045",
+        "kernel.config": "57b271019434470737eb6fa2bfa08fe09d33b7ed92db25dea929739bf9e39f5b",
+        "result.json": "fab21a6727f9799870495e35343ef9bcd5cf28d8da33eba8645f744dcd64135f"
+      }
+    },
+    "held_fixture_red_meaning": "Actual Binder UnknownTransaction199 before synthetic hold controls; fixture capability regression, not a new production policy defect",
+    "genuine_ndk_startup_red": {
+      "directory": "artifacts/native-arm64-binder/runtime/ndk-red-2",
+      "result": {
+        "passed": false,
+        "architecture": "aarch64",
+        "kernel": "7.1.6-1-aarch64-ARCH",
+        "kernel_version": "#1 SMP PREEMPT_DYNAMIC Wed Aug  5 00:20:13 UTC 2026",
+        "qemu_mode": "system",
+        "hardware_verified": false,
+        "phone_accessed": false,
+        "peer_class": "independent synthetic native Rust peer; no original interop",
+        "network": "none",
+        "binder_config": [
+          "CONFIG_ANDROID_BINDER_IPC=y",
+          "CONFIG_ANDROID_BINDERFS=y",
+          "CONFIG_ANDROID_BINDER_DEVICES=\"\""
+        ],
+        "filesystems": "nodev\tsysfs\nnodev\ttmpfs\nnodev\tproc\nnodev\tcgroup\nnodev\tcgroup2\nnodev\tdevtmpfs\nnodev\tbinfmt_misc\nnodev\tconfigfs\nnodev\tdebugfs\nnodev\tsecurityfs\nnodev\tsockfs\nnodev\tbpf\nnodev\tpipefs\nnodev\tramfs\nnodev\thugetlbfs\nnodev\trpc_pipefs\nnodev\tdevpts\n\text3\n\text2\n\text4\n\tvfat\n\tmsdos\nnodev\tnfs\nnodev\tnfs4\n\tntfs3\nnodev\tautofs\n\txfs\n\tf2fs\nnodev\tefivarfs\nnodev\tmqueue\nnodev\tbinder\n\tbtrfs\nnodev\tpstore\n\tfuseblk\nnodev\tfuse\nnodev\tfusectl\nnodev\t9p\n",
+        "driver": {
+          "major": 505,
+          "minor": 1,
+          "binder_protocol": 8,
+          "uid": 1000,
+          "mode": "0600",
+          "created_in": "guest only"
+        },
+        "client_sha256": "0da6ffe571109d76929b16359c9c7d377da81a2950457ba535ea6314a04336c9",
+        "ndk_command": [
+          "/workspace/artifacts/runtime/apex/com.android.runtime/bin/linker64",
+          "/workspace/artifacts/native-arm64-binder/ndk-peer"
+        ],
+        "ndk_timeout": true,
+        "error": "Traceback (most recent call last):\n  File \"/workspace/tools/native-arm64-binder/guest.py\", line 58, in <module>\n    ndk=subprocess.run(cmd,capture_output=True,text=True,timeout=12,user=account.pw_uid,group=account.pw_gid,env=ndk_env)\n  File \"/usr/lib/python3.14/subprocess.py\", line 557, in run\n    stdout, stderr = process.communicate(input, timeout=timeout)\n                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.14/subprocess.py\", line 1221, in communicate\n    stdout, stderr = self._communicate(input, endtime, timeout)\n                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.14/subprocess.py\", line 2154, in _communicate\n    self._check_timeout(endtime, orig_timeout, stdout, stderr)\n    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.14/subprocess.py\", line 1268, in _check_timeout\n    raise TimeoutExpired(\n    ...<2 lines>...\n            stderr=b''.join(stderr_seq) if stderr_seq else None)\nsubprocess.TimeoutExpired: Command '['/workspace/artifacts/runtime/apex/com.android.runtime/bin/linker64', '/workspace/artifacts/native-arm64-binder/ndk-peer']' timed out after 12 seconds\n"
+      },
+      "files_sha256": {
+        "baseline-manager.log": "ba76a7ab07aa774e836fa8fcb702f4f42155a19673fed38915a390b2b5e05869",
+        "command.json": "b3048f78c4d0f1e4011a09405618a3a3c0f636a9e095378c51738bc13cf91774",
+        "kernel.config": "57b271019434470737eb6fa2bfa08fe09d33b7ed92db25dea929739bf9e39f5b",
+        "ndk-peer.log": "3c8ed5b837254a3d053789366543be0b0ddda662aa374397126ce30ef68292e7",
+        "result.json": "a9587a6bc12b5abb24b7ec28d02e74806481aaadceff2a56608eafbf4b68a4eb"
+      }
+    },
+    "genuine_ndk_startup_red_meaning": "Original libbinder_ndk loaded, then actual12-second timeout on absent servicemanager.ready property; resolved via pinned original serializer and genuine Bionic API, without library mocking",
+    "ndk_manager_numbering_red": {
+      "directory": "artifacts/native-arm64-binder/runtime/ndk-green",
+      "result": {
+        "passed": false,
+        "architecture": "aarch64",
+        "kernel": "7.1.6-1-aarch64-ARCH",
+        "kernel_version": "#1 SMP PREEMPT_DYNAMIC Wed Aug  5 00:20:13 UTC 2026",
+        "qemu_mode": "system",
+        "hardware_verified": false,
+        "phone_accessed": false,
+        "peer_class": "independent synthetic native Rust peer; no original interop",
+        "network": "none",
+        "binder_config": [
+          "CONFIG_ANDROID_BINDER_IPC=y",
+          "CONFIG_ANDROID_BINDERFS=y",
+          "CONFIG_ANDROID_BINDER_DEVICES=\"\""
+        ],
+        "filesystems": "nodev\tsysfs\nnodev\ttmpfs\nnodev\tproc\nnodev\tcgroup\nnodev\tcgroup2\nnodev\tdevtmpfs\nnodev\tbinfmt_misc\nnodev\tconfigfs\nnodev\tdebugfs\nnodev\tsecurityfs\nnodev\tsockfs\nnodev\tbpf\nnodev\tpipefs\nnodev\tramfs\nnodev\thugetlbfs\nnodev\trpc_pipefs\nnodev\tdevpts\n\text3\n\text2\n\text4\n\tvfat\n\tmsdos\nnodev\tnfs\nnodev\tnfs4\n\tntfs3\nnodev\tautofs\n\txfs\n\tf2fs\nnodev\tefivarfs\nnodev\tmqueue\nnodev\tbinder\n\tbtrfs\nnodev\tpstore\n\tfuseblk\nnodev\tfuse\nnodev\tfusectl\nnodev\t9p\n",
+        "driver": {
+          "major": 505,
+          "minor": 1,
+          "binder_protocol": 8,
+          "uid": 1000,
+          "mode": "0600",
+          "created_in": "guest only"
+        },
+        "client_sha256": "b3b616badddead681fa2c07ba62cab60177f57137b687ee76ecf8ff195cb2472",
+        "error": "Traceback (most recent call last):\n  File \"/workspace/tools/native-arm64-binder/guest.py\", line 40, in <module>\n    result.update(ndk.execute(account,out,binary))\n                  ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/tools/native-arm64-binder/ndk.py\", line 71, in execute\n    ndk_prefix = ready(ndk,b'READY-NDK ')\n  File \"/workspace/tools/native-arm64-binder/ndk.py\", line 22, in ready\n    assert chunk, 'peer exited before readiness'\n           ^^^^^\nAssertionError: peer exited before readiness\n"
+      },
+      "files_sha256": {
+        "callbacks-binder-failed_transaction_log.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "callbacks-binder-state.txt": "9b966e79efc190e5726e2cb39f90f6a9808c229f4fb30e54e858a3385b0c3e28",
+        "callbacks-binder-stats.txt": "3ef7b2e9f392fadca72de2e186217a734ad5d8141201674b2043d8cfc75c47b2",
+        "callbacks-binder-transaction_log.txt": "df8ab32e1d70e5f84c01e5c62cb4c51c44aa0fcea8ac695827c9c0336729ce12",
+        "callbacks-binder-transactions.txt": "2a564de6c064bbbcefb09382382c415f9e169bfbd130f4727f5dbf5ae8cfacb6",
+        "callbacks-manager.log": "db712a6c0b2f2bc57319631213e055f82b7739dab56708e50150504a2f70a1cf",
+        "callbacks-ndk-peer.log": "4eb9e579e23204df5a5e9be5280fd5ccb877be7ddefe8135286cfb8e61cc8e38",
+        "command.json": "1c07bc88a8f815a383aafe973d3bfcfb1aa6ca9c3696eb5758c9aaf4c1eefaec",
+        "kernel.config": "57b271019434470737eb6fa2bfa08fe09d33b7ed92db25dea929739bf9e39f5b",
+        "property-init.log": "51d87818570ea2f2dd19381a8586173346090afa505dd1cab0e65c30663a6d67",
+        "property-serializer.log": "64b801b2ad70764a25d2d1bc797edb3afa6ddd162ed1853386964be7a643fcd2",
+        "result.json": "ba41e9d1438628d7ebd299c26fef4c26e33a43e69e76d960cab3045253c83be4"
+      }
+    },
+    "ndk_manager_numbering_red_meaning": "Actual NDK service registration rejected before Android16 addService5/checkService3 correction; early stdout prefix was lost by original ready helper, retained stderr/kernel logs show failure",
+    "setup_failures_not_runtime_policy_red": [
+      "runtime/harness-setup-failed: initial container user/mount paths corrected before actual driver red",
+      "runtime/ndk-red: Android loader rejected glibc-style --library-path argument; corrected to actual LD_LIBRARY_PATH interface"
+    ],
+    "frozen_artifacts": [
+      "driver-red",
+      "held-red",
+      "rust-green",
+      "ndk-red",
+      "ndk-manager-red"
+    ],
+    "frozen_artifacts_sha256": {
+      "artifacts/native-arm64-binder/driver-red/client": "569a219492fb2ffe76e95476639a4cabdb86d3a75378343c5ef2433574278eb9",
+      "artifacts/native-arm64-binder/driver-red/client.rs": "7c39a23fac09e18b9ce1cb0c74869746664dee56ac0a4b5245e8b32135e6ce5b",
+      "artifacts/native-arm64-binder/driver-red/guest.py": "ce4e94801e23d51f79b9cd4a4e11b528330c59006ffaa5ca2dcedeae105a18a0",
+      "artifacts/native-arm64-binder/driver-red/vm.py": "374b6f108ef71ba5255459f238aad26384363204024642cc7cf176c39a123897",
+      "artifacts/native-arm64-binder/held-red/client": "3bbba34d6bd283124dbf89a731472b98567ce9987965b01fd1ff91b8999a312c",
+      "artifacts/native-arm64-binder/held-red/client.rs": "72e176903a95c230743e794e970941f3395fa73cd984dcb7ebc779f41a24f1be",
+      "artifacts/native-arm64-binder/held-red/guest.py": "4adcef53d0a7584bc488c016be7a1582951dda5539e35872cd89513fbf23387a",
+      "artifacts/native-arm64-binder/held-red/peer": "a1dd1469cd26fcf46fc5d33595b9b9c5d6199644349068882e8c002759041f65",
+      "artifacts/native-arm64-binder/held-red/peer.rs": "b77643aec11126c41bf043ae3af8023c3d4bb6b0e7573a9be54c391be3128868",
+      "artifacts/native-arm64-binder/held-red/vm.py": "bee81aa2f67b8c6e50f67637d1353487f6b9795d994f82ebf7b0e1fcac3fda0d",
+      "artifacts/native-arm64-binder/rust-green/client": "0da6ffe571109d76929b16359c9c7d377da81a2950457ba535ea6314a04336c9",
+      "artifacts/native-arm64-binder/rust-green/fixture/Cargo.lock": "869ec1e7cb47e1b4d9e6bae1114add54ee6823ac7f681372bfb95e6f8a8a694b",
+      "artifacts/native-arm64-binder/rust-green/fixture/Cargo.toml": "a6f86ed2168918417953dc16b1e9f6a130e1454bdad68298a8b9029cf3a0ca6e",
+      "artifacts/native-arm64-binder/rust-green/fixture/src/bin/client.rs": "342d629ad0e18febd61362988229af9206148e3501d95d5564a1145e3b936f94",
+      "artifacts/native-arm64-binder/rust-green/fixture/src/bin/peer.rs": "66b5ed5044f5dd90b5730bf3de8599c9518f4e62823b745a7b5ef17a51f0b8c6",
+      "artifacts/native-arm64-binder/rust-green/fixture/src/supervised.rs": "a150bf528432245217e5de8a974381a13ba60c5ee2bbd1317bf8a4ee34f828f0",
+      "artifacts/native-arm64-binder/rust-green/guest.py": "23f2a1f81660670cc6ba903248e58e7804edb32b4394bb4fa8200e92dc6e9c0f",
+      "artifacts/native-arm64-binder/rust-green/peer": "a044cf107e8c2419b549ae46699589e8eb5bcd52282c4b892cae0d53ad2ad11c",
+      "artifacts/native-arm64-binder/rust-green/run.sh": "39b89e49f24a197448146f54059129acadc0c0483d76123b85d92e047a640072",
+      "artifacts/native-arm64-binder/rust-green/vm.py": "bee81aa2f67b8c6e50f67637d1353487f6b9795d994f82ebf7b0e1fcac3fda0d",
+      "artifacts/native-arm64-binder/ndk-red/android-runtime-closure.json": "4de151324a6e74cb5ef8ca56463f308feee76f4b809865847f8f1f39deb9e25c",
+      "artifacts/native-arm64-binder/ndk-red/guest.py": "b0c461641312a6838e47a4a50f8ecc72fc11990cc2a246c937737cb9b1b29a9b",
+      "artifacts/native-arm64-binder/ndk-red/ndk-peer": "96823cd9639d30f4c6ba8dfe4cba159ada7377d71e88bdd86ce046831030c7a0",
+      "artifacts/native-arm64-binder/ndk-red/ndk-peer.cpp": "668d396e313a3b2e8bdcc0347bcc8a091e33f98d36b497c0d887667d01142bb4",
+      "artifacts/native-arm64-binder/ndk-red/vm.py": "d6edc984085628c6afb9058414cdd3e4b5ddabb6cfb5ee84d6cf86c4658c6bcf",
+      "artifacts/native-arm64-binder/ndk-manager-red/client": "b3b616badddead681fa2c07ba62cab60177f57137b687ee76ecf8ff195cb2472",
+      "artifacts/native-arm64-binder/ndk-manager-red/client.rs": "99e61aafd83016b0e8778f5274b56b84b89b3a2f7812e8b9fd9d7668bead5b69",
+      "artifacts/native-arm64-binder/ndk-manager-red/manager": "234e0598b602f220ba9f7670af441b6c2ca03bb7ee3e38d7d872e3445b28d94c",
+      "artifacts/native-arm64-binder/ndk-manager-red/manager.rs": "b84120eae0ac7fb78eabe4c65c2746f17f767b8f45dfd0ac0c24a28925eab899",
+      "artifacts/native-arm64-binder/ndk-manager-red/ndk.py": "dd2e2dd77f4ea94d49efaea42de31b984a71a30db5fcd8583b0326cd0200e080"
+    }
+  },
+  "synthetic_native_rust_peer_green": {
+    "directory": "artifacts/native-arm64-binder/runtime/final-rust-green",
+    "result": {
+      "passed": true,
+      "architecture": "aarch64",
+      "kernel": "7.1.6-1-aarch64-ARCH",
+      "kernel_version": "#1 SMP PREEMPT_DYNAMIC Wed Aug  5 00:20:13 UTC 2026",
+      "qemu_mode": "system",
+      "hardware_verified": false,
+      "phone_accessed": false,
+      "peer_class": "independent synthetic native Rust peer; no original interop",
+      "network": "none",
+      "binder_config": [
+        "CONFIG_ANDROID_BINDER_IPC=y",
+        "CONFIG_ANDROID_BINDERFS=y",
+        "CONFIG_ANDROID_BINDER_DEVICES=\"\""
+      ],
+      "filesystems": "nodev\tsysfs\nnodev\ttmpfs\nnodev\tproc\nnodev\tcgroup\nnodev\tcgroup2\nnodev\tdevtmpfs\nnodev\tbinfmt_misc\nnodev\tconfigfs\nnodev\tdebugfs\nnodev\tsecurityfs\nnodev\tsockfs\nnodev\tbpf\nnodev\tpipefs\nnodev\tramfs\nnodev\thugetlbfs\nnodev\trpc_pipefs\nnodev\tdevpts\n\text3\n\text2\n\text4\n\tvfat\n\tmsdos\nnodev\tnfs\nnodev\tnfs4\n\tntfs3\nnodev\tautofs\n\txfs\n\tf2fs\nnodev\tefivarfs\nnodev\tmqueue\nnodev\tbinder\n\tbtrfs\nnodev\tpstore\n\tfuseblk\nnodev\tfuse\nnodev\tfusectl\nnodev\t9p\n",
+      "driver": {
+        "major": 505,
+        "minor": 1,
+        "binder_protocol": 8,
+        "uid": 1000,
+        "mode": "0600",
+        "created_in": "guest only"
+      },
+      "client_sha256": "253fe51c9e633aca96ccc91cb0278b9606ebd3b0d48cefbf29fe04fe53031f3b",
+      "peer_sha256": "a044cf107e8c2419b549ae46699589e8eb5bcd52282c4b892cae0d53ad2ad11c",
+      "checks": {
+        "callbacks": {
+          "exit": 0,
+          "passed": true,
+          "peer_pid": 298,
+          "client_markers": [
+            "arm64-real-kernel-binder-handle-transfer\tPASS",
+            "arm64-kernel-object-transfer-nested-metadata-response-indication\tPASS"
+          ],
+          "peer_reaped": true
+        },
+        "hold-cancel": {
+          "exit": 0,
+          "passed": true,
+          "peer_pid": 306,
+          "client_markers": [
+            "arm64-real-kernel-binder-handle-transfer\tPASS",
+            "arm64-held-registration-stop-snapshot-capacity\tPASS",
+            "arm64-cancelled-late-registration-success-rejected\tPASS",
+            "arm64-no-implicit-registration-retry-or-clear\tPASS"
+          ],
+          "peer_reaped": true
+        },
+        "hold-expire": {
+          "exit": 0,
+          "passed": true,
+          "peer_pid": 315,
+          "client_markers": [
+            "arm64-real-kernel-binder-handle-transfer\tPASS",
+            "arm64-held-registration-stop-snapshot-capacity\tPASS",
+            "arm64-expired-late-registration-success-rejected-no-timer\tPASS",
+            "arm64-no-implicit-registration-retry-or-clear\tPASS"
+          ],
+          "peer_reaped": true
+        },
+        "death-register": {
+          "exit": 0,
+          "passed": true,
+          "peer_pid": 323,
+          "client_markers": [
+            "arm64-real-kernel-binder-handle-transfer\tPASS",
+            "arm64-owned-registration-death\tPASS"
+          ],
+          "peer_reaped": true
+        },
+        "death-active": {
+          "exit": 0,
+          "passed": true,
+          "peer_pid": 331,
+          "client_markers": [
+            "arm64-real-kernel-binder-handle-transfer\tPASS",
+            "arm64-retained-watch-service-death-withdraws-publication\tPASS"
+          ],
+          "peer_reaped": true
+        },
+        "expired-request": {
+          "exit": 0,
+          "passed": true,
+          "peer_pid": 339,
+          "client_markers": [
+            "arm64-real-kernel-binder-handle-transfer\tPASS",
+            "arm64-owned-request-expiry-withheld-timer-not-sent\tPASS"
+          ],
+          "peer_reaped": true
+        },
+        "segments": {
+          "exit": 0,
+          "passed": true,
+          "peer_pid": 348,
+          "client_markers": [
+            "arm64-real-kernel-binder-handle-transfer\tPASS",
+            "arm64-owned-two-part-request-and-4096-byte-callback\tPASS"
+          ],
+          "peer_reaped": true
+        },
+        "late-request": {
+          "exit": 0,
+          "passed": true,
+          "peer_pid": 357,
+          "client_markers": [
+            "arm64-real-kernel-binder-handle-transfer\tPASS",
+            "arm64-oneway-and-held-late-callback-retain-unknown\tPASS"
+          ],
+          "peer_reaped": true
+        },
+        "supervised-permanent": {
+          "exit": 0,
+          "passed": true,
+          "peer_pid": 369,
+          "client_markers": [
+            "arm64-permanent-binder-registration-child-stop-snapshot-responsive\tPASS",
+            "arm64-supervisor-revokes-before-reap-keeps-child-occupied\tPASS",
+            "arm64-permanent-binder-registration-sigkill-actual-reap-old-output-fenced\tPASS",
+            "arm64-durable-uncertainty-refuses-restart-after-local-reap\tPASS"
+          ],
+          "peer_reaped": true
+        }
+      }
+    },
+    "files_sha256": {
+      "callbacks-binder-failed_transaction_log.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "callbacks-binder-state.txt": "9b966e79efc190e5726e2cb39f90f6a9808c229f4fb30e54e858a3385b0c3e28",
+      "callbacks-binder-stats.txt": "e5d7b847f0b6cc56bf284e984d5858d9de39ca0436c4f08ace4c37a8ce2d2bfa",
+      "callbacks-binder-transaction_log.txt": "1ffbf6daf476e5d891afa089826fc36769cc2f8f41401fd9fbcde497d31ae621",
+      "callbacks-binder-transactions.txt": "2a564de6c064bbbcefb09382382c415f9e169bfbd130f4727f5dbf5ae8cfacb6",
+      "callbacks-client.log": "17230c2e388de0c05314b24e2ba9221e2b0f3e2dbec4fd1bafa87ae1dca1c0da",
+      "callbacks-peer.log": "3c509b0de252767ec48af00989663a8430ee4afdfbdcedf292079fcd4d5f3496",
+      "command.json": "739c3f23c4115697ee41af58a64b576411318af5f115fcf09c0ee876f62cc71f",
+      "death-active-binder-failed_transaction_log.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "death-active-binder-state.txt": "9b966e79efc190e5726e2cb39f90f6a9808c229f4fb30e54e858a3385b0c3e28",
+      "death-active-binder-stats.txt": "a062c518f839049c7f18a4254d1a1b47c8a01ccb46e7093145d5489703ca63bc",
+      "death-active-binder-transaction_log.txt": "b5bd3565801fb4979c25f93bae50cce65ce8363d8ef77eb25f5072a4176295d5",
+      "death-active-binder-transactions.txt": "2a564de6c064bbbcefb09382382c415f9e169bfbd130f4727f5dbf5ae8cfacb6",
+      "death-active-client.log": "05fa0a04be1335e038a3c6833084be72e7a7071af2f0bcd9c235783979b72de2",
+      "death-active-peer.log": "904b3ed254e17340261855ccf208cb988d3b403150b06935166db1d30951b5fc",
+      "death-register-binder-failed_transaction_log.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "death-register-binder-state.txt": "9b966e79efc190e5726e2cb39f90f6a9808c229f4fb30e54e858a3385b0c3e28",
+      "death-register-binder-stats.txt": "7a533dbf28c7c625c90e5bffe7078c9630edc0d03ec8a30017ad3a2706adb3cc",
+      "death-register-binder-transaction_log.txt": "09fa222d359532244f81de93d434755fb0a5548f891d615f710eb0e73eab4591",
+      "death-register-binder-transactions.txt": "2a564de6c064bbbcefb09382382c415f9e169bfbd130f4727f5dbf5ae8cfacb6",
+      "death-register-client.log": "02355841aee0288b67224cc8a7c96ac8ac70a93e6d57ce53d4cc5e024d8e0d53",
+      "death-register-peer.log": "c264fe7c4b3af6f6b71ed77620878c98f1ad75307cf2aeaae4ab7e2319dc40cc",
+      "expired-request-binder-failed_transaction_log.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expired-request-binder-state.txt": "9b966e79efc190e5726e2cb39f90f6a9808c229f4fb30e54e858a3385b0c3e28",
+      "expired-request-binder-stats.txt": "9f8449c0b6824dc8ecf0adab289663ff795cce152652d93025c436e87c36cf57",
+      "expired-request-binder-transaction_log.txt": "e27ad597fd81711197654970e56c7379ea35497f34bb96010ba1baf2dd6406c3",
+      "expired-request-binder-transactions.txt": "2a564de6c064bbbcefb09382382c415f9e169bfbd130f4727f5dbf5ae8cfacb6",
+      "expired-request-client.log": "c1b5c41ae9dcd929a8a5e51def4cbe3d7f2f47ddb4d1d3dd8a8adf5a9d184523",
+      "expired-request-peer.log": "0a63b43dd3a36d74da0f6066c4fa81e2dc5b6eb659698122f3f0dc75b27e1bbe",
+      "hold-cancel-binder-failed_transaction_log.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "hold-cancel-binder-state.txt": "9b966e79efc190e5726e2cb39f90f6a9808c229f4fb30e54e858a3385b0c3e28",
+      "hold-cancel-binder-stats.txt": "e2e77cf60a1d43821ba485533437e3c5ebc6de51197f29c9b72e2732ef2f13a1",
+      "hold-cancel-binder-transaction_log.txt": "e7bc016a4e332cefe3b66061f57a97d986e4db4260c57ffb13234766a1b0c211",
+      "hold-cancel-binder-transactions.txt": "2a564de6c064bbbcefb09382382c415f9e169bfbd130f4727f5dbf5ae8cfacb6",
+      "hold-cancel-client.log": "5e40c1628f40cbdfa68947637231c06e4179f186421e14b03da39ddf514a98e4",
+      "hold-cancel-peer.log": "5b4e828774b0b1309b9ed8ad8a110b62a77455eca401767e428997d50dfab4ca",
+      "hold-expire-binder-failed_transaction_log.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "hold-expire-binder-state.txt": "9b966e79efc190e5726e2cb39f90f6a9808c229f4fb30e54e858a3385b0c3e28",
+      "hold-expire-binder-stats.txt": "86933d4cc280ec2586efab1a7b1f3339263027dcc10c6edbf9c08d1f8bf99c84",
+      "hold-expire-binder-transaction_log.txt": "0beb5b956b3347912214bb826f6921b6e3d1d78638e2936da45abbfd790cc288",
+      "hold-expire-binder-transactions.txt": "2a564de6c064bbbcefb09382382c415f9e169bfbd130f4727f5dbf5ae8cfacb6",
+      "hold-expire-client.log": "b46bd36eb3540ca2553fff2778e2f2790f9423e4a3b3aa8adc9223f280ecd5f6",
+      "hold-expire-peer.log": "8c26375809dad05802f8b6810edfb5d368e28c8b3ca5e3b1aebfca1adee49d18",
+      "kernel.config": "57b271019434470737eb6fa2bfa08fe09d33b7ed92db25dea929739bf9e39f5b",
+      "late-request-binder-failed_transaction_log.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "late-request-binder-state.txt": "9b966e79efc190e5726e2cb39f90f6a9808c229f4fb30e54e858a3385b0c3e28",
+      "late-request-binder-stats.txt": "4365d3d09b4caff9a65174a8b5f5d0b1e1b50964b1eb9effc5fdf27f16611877",
+      "late-request-binder-transaction_log.txt": "5fab4d3b612ff54ebd3a2964d52e1b25b340a8c847443d02dfccc41095b879c9",
+      "late-request-binder-transactions.txt": "2a564de6c064bbbcefb09382382c415f9e169bfbd130f4727f5dbf5ae8cfacb6",
+      "late-request-client.log": "7a6696739bf61b337b6c3983fcfac71ca1f3bd8a445a8b5b2d00b0009eca6579",
+      "late-request-peer.log": "058a2779850d3aeed94a167766ddf3c2bc3c6a31f794b54dfb75eb8cf57e6482",
+      "result.json": "c9669646ba6ef1b73387904bed02fdc8a6fdecc582ef0a6d361ed538ff20f9b8",
+      "segments-binder-failed_transaction_log.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "segments-binder-state.txt": "9b966e79efc190e5726e2cb39f90f6a9808c229f4fb30e54e858a3385b0c3e28",
+      "segments-binder-stats.txt": "b591a059520117c4519225e914b28a7268e6fb912bc9d18f122bdd050f6835bf",
+      "segments-binder-transaction_log.txt": "89ed8d89c2996a6564ebf144dc69a93afb5bff2c2a5908d531d0a22e1ebabfb9",
+      "segments-binder-transactions.txt": "2a564de6c064bbbcefb09382382c415f9e169bfbd130f4727f5dbf5ae8cfacb6",
+      "segments-client.log": "d3cc8a16a84da5ac6874b785f5788e73eef1bd1785455adf824e6820f1d83189",
+      "segments-peer.log": "b1cff96b6e491dd872ef458992204aa12656d6cdf4aa7d9130e08d95f6b0ebe3",
+      "supervised-permanent-binder-failed_transaction_log.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "supervised-permanent-binder-state.txt": "9b966e79efc190e5726e2cb39f90f6a9808c229f4fb30e54e858a3385b0c3e28",
+      "supervised-permanent-binder-stats.txt": "5f900c3e405c7366fa7ec4eeefc7d65618b89ba0ebc71e76718d626b28e896ef",
+      "supervised-permanent-binder-transaction_log.txt": "715e11874274c06e9efc3d7b094caa3da08bc834cc981c006a40427daabba707",
+      "supervised-permanent-binder-transactions.txt": "2a564de6c064bbbcefb09382382c415f9e169bfbd130f4727f5dbf5ae8cfacb6",
+      "supervised-permanent-client.log": "fb0a1081d451e60595aee15589b81884af5b0f278d421037095cce9496cda9a3",
+      "supervised-permanent-peer.log": "92a44caf76802c11ac524e27be7d3ac9baf291323bbe3107a2afef280d1f1621"
+    }
+  },
+  "genuine_android_runtime_ndk_peer_green": {
+    "directory": "artifacts/native-arm64-binder/runtime/final-ndk-green",
+    "result": {
+      "passed": true,
+      "architecture": "aarch64",
+      "kernel": "7.1.6-1-aarch64-ARCH",
+      "kernel_version": "#1 SMP PREEMPT_DYNAMIC Wed Aug  5 00:20:13 UTC 2026",
+      "qemu_mode": "system",
+      "hardware_verified": false,
+      "phone_accessed": false,
+      "peer_class": "synthetic NDK peer over genuine retained ARM64 Android Binder/Bionic; synthetic Rust service manager",
+      "network": "none",
+      "binder_config": [
+        "CONFIG_ANDROID_BINDER_IPC=y",
+        "CONFIG_ANDROID_BINDERFS=y",
+        "CONFIG_ANDROID_BINDER_DEVICES=\"\""
+      ],
+      "filesystems": "nodev\tsysfs\nnodev\ttmpfs\nnodev\tproc\nnodev\tcgroup\nnodev\tcgroup2\nnodev\tdevtmpfs\nnodev\tbinfmt_misc\nnodev\tconfigfs\nnodev\tdebugfs\nnodev\tsecurityfs\nnodev\tsockfs\nnodev\tbpf\nnodev\tpipefs\nnodev\tramfs\nnodev\thugetlbfs\nnodev\trpc_pipefs\nnodev\tdevpts\n\text3\n\text2\n\text4\n\tvfat\n\tmsdos\nnodev\tnfs\nnodev\tnfs4\n\tntfs3\nnodev\tautofs\n\txfs\n\tf2fs\nnodev\tefivarfs\nnodev\tmqueue\nnodev\tbinder\n\tbtrfs\nnodev\tpstore\n\tfuseblk\nnodev\tfuse\nnodev\tfusectl\nnodev\t9p\n",
+      "driver": {
+        "major": 505,
+        "minor": 1,
+        "binder_protocol": 8,
+        "uid": 1000,
+        "mode": "0600",
+        "created_in": "guest only"
+      },
+      "client_sha256": "253fe51c9e633aca96ccc91cb0278b9606ebd3b0d48cefbf29fe04fe53031f3b",
+      "runtime_closure": {
+        "scope": "metadata-only genuine retained AArch64 Android runtime closure; no runtime interop claimed yet",
+        "search_order": [
+          "artifacts/runtime/system/lib64",
+          "artifacts/runtime/apex/com.android.runtime/lib64/bionic"
+        ],
+        "files": {
+          "libbinder_ndk.so": {
+            "path": "artifacts/runtime/system/lib64/libbinder_ndk.so",
+            "sha256": "04b980f8c8f61052f69d1f32f451f558e14da4685c80ef2499227eafaaf802f8",
+            "needed": [
+              "libbinder.so",
+              "liblog.so",
+              "libutils.so",
+              "libc++.so",
+              "libc.so",
+              "libm.so",
+              "libdl.so"
+            ]
+          },
+          "libbinder.so": {
+            "path": "artifacts/runtime/system/lib64/libbinder.so",
+            "sha256": "43851b67bc81f6bd6592cf062ced138108e594689df9f4bcb6adea4d31821b04",
+            "needed": [
+              "libcutils.so",
+              "liblog.so",
+              "libutils.so",
+              "libapexsupport.so",
+              "libvndksupport.so",
+              "libc++.so",
+              "libc.so",
+              "libm.so",
+              "libdl.so"
+            ]
+          },
+          "liblog.so": {
+            "path": "artifacts/runtime/system/lib64/liblog.so",
+            "sha256": "b8d3d934c076003f46cd6f8b1c38248cf0ad37199aecc2e38633dd7d729174cd",
+            "needed": [
+              "libc++.so",
+              "libc.so",
+              "libm.so",
+              "libdl.so"
+            ]
+          },
+          "libutils.so": {
+            "path": "artifacts/runtime/system/lib64/libutils.so",
+            "sha256": "bde65f17afa6eddee66c7f06b33fda2acc7f9f54691da9539aa627abeee3be64",
+            "needed": [
+              "libcutils.so",
+              "liblog.so",
+              "libvndksupport.so",
+              "libc++.so",
+              "libc.so",
+              "libm.so",
+              "libdl.so"
+            ]
+          },
+          "libc++.so": {
+            "path": "artifacts/runtime/system/lib64/libc++.so",
+            "sha256": "cb118e98c74d3454858921123b9b51ba13df9cad7dfa141dd892c453661a4d78",
+            "needed": [
+              "libc.so",
+              "libm.so",
+              "libdl.so"
+            ]
+          },
+          "libc.so": {
+            "path": "artifacts/runtime/apex/com.android.runtime/lib64/bionic/libc.so",
+            "sha256": "ff418def7a55466ed696b7aa3a2ecac7d3a56715111f128e87b2ac6657f72c8d",
+            "needed": [
+              "ld-android.so",
+              "libdl.so"
+            ]
+          },
+          "libm.so": {
+            "path": "artifacts/runtime/apex/com.android.runtime/lib64/bionic/libm.so",
+            "sha256": "b2d6a95953bb770409782a3f008a1ab0827a0bd329ba40b8dc93206f685f7809",
+            "needed": [
+              "libc.so"
+            ]
+          },
+          "libdl.so": {
+            "path": "artifacts/runtime/apex/com.android.runtime/lib64/bionic/libdl.so",
+            "sha256": "ee703baa9cbd373217a225148329044b16e672edeec243c8dd5fdeffa16c7d8d",
+            "needed": [
+              "ld-android.so"
+            ]
+          },
+          "libcutils.so": {
+            "path": "artifacts/runtime/system/lib64/libcutils.so",
+            "sha256": "9fa33e2c09f9a784c7bd6ec8a434ff81fcc8cdcb5e83984b7b021df66a92f384",
+            "needed": [
+              "liblog.so",
+              "libbase.so",
+              "libc++.so",
+              "libc.so",
+              "libm.so",
+              "libdl.so"
+            ]
+          },
+          "libapexsupport.so": {
+            "path": "artifacts/runtime/system/lib64/libapexsupport.so",
+            "sha256": "d2ba91ffa733999abbb2bcf22a353c75a997899df40cbbe215a8aeeba888ca77",
+            "needed": [
+              "libdl_android.so",
+              "liblog.so",
+              "libc++.so",
+              "libc.so",
+              "libm.so",
+              "libdl.so"
+            ]
+          },
+          "libvndksupport.so": {
+            "path": "artifacts/runtime/system/lib64/libvndksupport.so",
+            "sha256": "bc9ad880333fbee88e98e89215b66859add36e7eca71356778c839074aa45d15",
+            "needed": [
+              "libdl_android.so",
+              "liblog.so",
+              "libc++.so",
+              "libc.so",
+              "libm.so",
+              "libdl.so"
+            ]
+          },
+          "ld-android.so": {
+            "path": "artifacts/runtime/system/lib64/ld-android.so",
+            "sha256": "17e62ef0931210a31d291539307a00062d32f1c18971a7bf94c3b29aa6c9deef",
+            "needed": []
+          },
+          "libbase.so": {
+            "path": "artifacts/runtime/system/lib64/libbase.so",
+            "sha256": "0f9fb043b2ec9e9846a8127c2e6f455af5d4eea552f8a48e4a21cb200df0f5b5",
+            "needed": [
+              "liblog.so",
+              "libc++.so",
+              "libc.so",
+              "libm.so",
+              "libdl.so"
+            ]
+          },
+          "libdl_android.so": {
+            "path": "artifacts/runtime/system/lib64/libdl_android.so",
+            "sha256": "e39c7b45d6bad442e7d2d1a42ac369e0cb70b4e55bcef5f483556e4cd65bc19c",
+            "needed": [
+              "ld-android.so"
+            ]
+          },
+          "explicit_loader": {
+            "path": "artifacts/runtime/apex/com.android.runtime/bin/linker64",
+            "sha256": "09105dda9253238d125dc9be82c68a2b54819d03f92177348ef7211288001941"
+          }
+        }
+      },
+      "runtime_substitution": false,
+      "checks": {
+        "callbacks": {
+          "passed": true,
+          "exit": 0,
+          "ndk_pid": 304,
+          "manager_pid": 300,
+          "client_markers": [
+            "arm64-real-kernel-binder-handle-transfer\tPASS",
+            "arm64-kernel-object-transfer-nested-metadata-response-indication\tPASS"
+          ],
+          "genuine_android_library_mapping": true,
+          "ndk_stub_runtime": false,
+          "ndk-peer_reaped": true,
+          "manager_reaped": true
+        },
+        "death-register": {
+          "passed": true,
+          "exit": 0,
+          "ndk_pid": 314,
+          "manager_pid": 312,
+          "client_markers": [
+            "arm64-real-kernel-binder-handle-transfer\tPASS",
+            "arm64-owned-registration-death\tPASS"
+          ],
+          "genuine_android_library_mapping": true,
+          "ndk_stub_runtime": false,
+          "ndk-peer_reaped": true,
+          "manager_reaped": true
+        },
+        "death-active": {
+          "passed": true,
+          "exit": 0,
+          "ndk_pid": 324,
+          "manager_pid": 322,
+          "client_markers": [
+            "arm64-real-kernel-binder-handle-transfer\tPASS",
+            "arm64-retained-watch-service-death-withdraws-publication\tPASS"
+          ],
+          "genuine_android_library_mapping": true,
+          "ndk_stub_runtime": false,
+          "ndk-peer_reaped": true,
+          "manager_reaped": true
+        }
+      },
+      "ndk-peer_sha256": "96823cd9639d30f4c6ba8dfe4cba159ada7377d71e88bdd86ce046831030c7a0",
+      "property-info_sha256": "f0c8a554c3cde1dd7ce8bb84975f3c5e0e6dca21fc88cb92a75b4990dae01711",
+      "property-init_sha256": "b7422f8463266ee458be471ebad59924728819d0eec7e263d5164a757a45d2b3",
+      "fixture_property_info_sha256": "a5fb05ee5a7080be0a81949ab8effebeecd75d1c1acc8afbb453376b5c5850af"
+    },
+    "files_sha256": {
+      "callbacks-binder-failed_transaction_log.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "callbacks-binder-state.txt": "9b966e79efc190e5726e2cb39f90f6a9808c229f4fb30e54e858a3385b0c3e28",
+      "callbacks-binder-stats.txt": "2c8240d904931aa4a5767df57b9d64edf4f6c1e186ae4b02e014bb041bdbd995",
+      "callbacks-binder-transaction_log.txt": "e85ca0b9192f0f5796a259bdaf63bd591e2bcaf75f82fe51c045d4d9c43e3ad9",
+      "callbacks-binder-transactions.txt": "2a564de6c064bbbcefb09382382c415f9e169bfbd130f4727f5dbf5ae8cfacb6",
+      "callbacks-client.log": "17230c2e388de0c05314b24e2ba9221e2b0f3e2dbec4fd1bafa87ae1dca1c0da",
+      "callbacks-manager-prefix.log": "db712a6c0b2f2bc57319631213e055f82b7739dab56708e50150504a2f70a1cf",
+      "callbacks-manager.log": "8e10bc82bf5032eec1cb6ac8bf9de78a25c4bf20bed89f21941d2060494183ef",
+      "callbacks-ndk-maps.txt": "3ac3c72b72aa978ee7836e5b045d49b20b5b8286c58512cb81eddc870ae1b29c",
+      "callbacks-ndk-peer-prefix.log": "82085b023ca04709d4da7e295baceb5bc27ee89d89ebcdac2d334117d09c1c48",
+      "callbacks-ndk-peer.log": "945c48fc92cbd47c625119a293e29e41fb971318df5d7cb4ae87b3f08bcfba0a",
+      "command.json": "f552a0748417d5d1191212ed5f34d684e8f2d412d8e42436601f75e822afdd38",
+      "death-active-binder-failed_transaction_log.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "death-active-binder-state.txt": "9b966e79efc190e5726e2cb39f90f6a9808c229f4fb30e54e858a3385b0c3e28",
+      "death-active-binder-stats.txt": "4ce6c0e673d3a4def6a50cd8d9fc47ed476c995472a8265c71abe1ed0018b681",
+      "death-active-binder-transaction_log.txt": "c20dbe385d56e8b99976ee1950015bcdec91b500a5795af80925cef584d9e763",
+      "death-active-binder-transactions.txt": "2a564de6c064bbbcefb09382382c415f9e169bfbd130f4727f5dbf5ae8cfacb6",
+      "death-active-client.log": "05fa0a04be1335e038a3c6833084be72e7a7071af2f0bcd9c235783979b72de2",
+      "death-active-manager-prefix.log": "30e5d0eb7ac7a67ad67b1d3caa9a7237c2a46df7508211fab8ab4f6bb656fb11",
+      "death-active-manager.log": "56ba46c84b284304a3d1de43f5975d5b5dd247d03b4f7bbf4042239fb1872071",
+      "death-active-ndk-maps.txt": "50885b1cfee510a884f032fdbb32e9e918a203ec69f5ab72daa1a1408cc17a71",
+      "death-active-ndk-peer-prefix.log": "28c081424e62b89fa3b71f80e59a0703c7ba90a76d507547e17e2d77c9712fcc",
+      "death-active-ndk-peer.log": "721c50852885ba5a2f7d3d5e1ff0c7fa75f19c21899948379fa1af6e1934ab0a",
+      "death-register-binder-failed_transaction_log.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "death-register-binder-state.txt": "9b966e79efc190e5726e2cb39f90f6a9808c229f4fb30e54e858a3385b0c3e28",
+      "death-register-binder-stats.txt": "920c7ae716bb75a30ad9693e250053ee0176060dc59d6a99f48ea7ee4d8acf82",
+      "death-register-binder-transaction_log.txt": "257418d635d78eaeca6f0cbefe59ea6e60d53ee95732c01106c6ce24b63c88f3",
+      "death-register-binder-transactions.txt": "2a564de6c064bbbcefb09382382c415f9e169bfbd130f4727f5dbf5ae8cfacb6",
+      "death-register-client.log": "02355841aee0288b67224cc8a7c96ac8ac70a93e6d57ce53d4cc5e024d8e0d53",
+      "death-register-manager-prefix.log": "5448727ec06fb8d9e26652ef852b264684142105e1fcf58b42ba065882b6bbe2",
+      "death-register-manager.log": "54d752c6fc8d0e7a7bcd4861895a29c8835f404560f150c5811515c611673e05",
+      "death-register-ndk-maps.txt": "b178a7545cf344823ebabfdee67ff66862eceabc25672652bea2ea18d847e946",
+      "death-register-ndk-peer-prefix.log": "63f247a19ee716b3635396e11f2e1d11e74202fdb65683c30dfab888d07c5490",
+      "death-register-ndk-peer.log": "fc2d49ca8088e60c7ea6f91f7a894d16deeac640843ca31bd8c22ead991102ea",
+      "kernel.config": "57b271019434470737eb6fa2bfa08fe09d33b7ed92db25dea929739bf9e39f5b",
+      "property-init.log": "51d87818570ea2f2dd19381a8586173346090afa505dd1cab0e65c30663a6d67",
+      "property-serializer.log": "64b801b2ad70764a25d2d1bc797edb3afa6ddd162ed1853386964be7a643fcd2",
+      "result.json": "efc90328149a0084b5459d5df0bae8a79f5b6dabe1c71cc01a6f005ee8b8c2ee"
+    }
+  },
+  "ndk_link_inputs": {
+    "scope": "cached NDKr30 compiler/API35 link stubs and headers; never runtime substitution",
+    "sha256": {
+      "artifacts/camera-boundary/android-ndk-r30/toolchains/llvm/prebuilt/linux-x86_64/bin/clang": "ad535f0b6fc303edba958b51636169ff0291c6e36463236c99ff8abcaa34247c",
+      "artifacts/camera-boundary/android-ndk-r30/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android35-clang": "6849c55600a1521148f9841c74b0ae5f3fa805ee30002d8bcca1ab3faabfa829",
+      "artifacts/camera-boundary/android-ndk-r30/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android35-clang++": "0cea2b2b11e4e3f7f9db8df466879b91833a43c7d97860d0ca6266080b3b6843",
+      "artifacts/camera-boundary/android-ndk-r30/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/35/libbinder_ndk.so": "f4b60f3a3fd629f728fd37751c08b62ff7d1793d519d1a4e1ce2a5f398d14923",
+      "artifacts/camera-boundary/android-ndk-r30/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/35/libc.so": "95aba9ef5dfe3f98ce257111f41fddff45a568f754771c2c758a29e218eac49a",
+      "artifacts/camera-boundary/android-ndk-r30/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/35/libdl.so": "257028cb8a5a6f22aceb987fe2bfb6396b03ce65f2c4289a9b7a2fe09d5be3e7",
+      "artifacts/camera-boundary/android-ndk-r30/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/35/libm.so": "e80b580ddd327514cdc8940908de8a1d5ff33f67cfe8d28f473a0ccb7c70a67f",
+      "artifacts/camera-boundary/android-ndk-r30/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/android/binder_ibinder.h": "3a185c2a3e6ae42145705a827fbaa6efffcdaa567a55b61250308d5b05084b60",
+      "artifacts/camera-boundary/android-ndk-r30/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/android/binder_parcel.h": "9cbd46ab9de85aa996104f2cfc9a1e1cda92b28f29bbf4f29460db677aad2012",
+      "artifacts/camera-boundary/android-ndk-r30/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/android/binder_status.h": "b8413d75df67857b0ffd7d94c082e0222e360f4e69dd38f695d8d4dcaa1f55d4",
+      "artifacts/camera-boundary/android-ndk-r30/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/system_properties.h": "5c75bfb163b201a223c67ff6e31111b77c81f3474d7373e606bd6885eb7569e2"
+    }
+  },
+  "genuine_android_runtime_inputs": {
+    "scope": "metadata-only genuine retained AArch64 Android runtime closure; no runtime interop claimed yet",
+    "search_order": [
+      "artifacts/runtime/system/lib64",
+      "artifacts/runtime/apex/com.android.runtime/lib64/bionic"
+    ],
+    "files": {
+      "libbinder_ndk.so": {
+        "path": "artifacts/runtime/system/lib64/libbinder_ndk.so",
+        "sha256": "04b980f8c8f61052f69d1f32f451f558e14da4685c80ef2499227eafaaf802f8",
+        "needed": [
+          "libbinder.so",
+          "liblog.so",
+          "libutils.so",
+          "libc++.so",
+          "libc.so",
+          "libm.so",
+          "libdl.so"
+        ]
+      },
+      "libbinder.so": {
+        "path": "artifacts/runtime/system/lib64/libbinder.so",
+        "sha256": "43851b67bc81f6bd6592cf062ced138108e594689df9f4bcb6adea4d31821b04",
+        "needed": [
+          "libcutils.so",
+          "liblog.so",
+          "libutils.so",
+          "libapexsupport.so",
+          "libvndksupport.so",
+          "libc++.so",
+          "libc.so",
+          "libm.so",
+          "libdl.so"
+        ]
+      },
+      "liblog.so": {
+        "path": "artifacts/runtime/system/lib64/liblog.so",
+        "sha256": "b8d3d934c076003f46cd6f8b1c38248cf0ad37199aecc2e38633dd7d729174cd",
+        "needed": [
+          "libc++.so",
+          "libc.so",
+          "libm.so",
+          "libdl.so"
+        ]
+      },
+      "libutils.so": {
+        "path": "artifacts/runtime/system/lib64/libutils.so",
+        "sha256": "bde65f17afa6eddee66c7f06b33fda2acc7f9f54691da9539aa627abeee3be64",
+        "needed": [
+          "libcutils.so",
+          "liblog.so",
+          "libvndksupport.so",
+          "libc++.so",
+          "libc.so",
+          "libm.so",
+          "libdl.so"
+        ]
+      },
+      "libc++.so": {
+        "path": "artifacts/runtime/system/lib64/libc++.so",
+        "sha256": "cb118e98c74d3454858921123b9b51ba13df9cad7dfa141dd892c453661a4d78",
+        "needed": [
+          "libc.so",
+          "libm.so",
+          "libdl.so"
+        ]
+      },
+      "libc.so": {
+        "path": "artifacts/runtime/apex/com.android.runtime/lib64/bionic/libc.so",
+        "sha256": "ff418def7a55466ed696b7aa3a2ecac7d3a56715111f128e87b2ac6657f72c8d",
+        "needed": [
+          "ld-android.so",
+          "libdl.so"
+        ]
+      },
+      "libm.so": {
+        "path": "artifacts/runtime/apex/com.android.runtime/lib64/bionic/libm.so",
+        "sha256": "b2d6a95953bb770409782a3f008a1ab0827a0bd329ba40b8dc93206f685f7809",
+        "needed": [
+          "libc.so"
+        ]
+      },
+      "libdl.so": {
+        "path": "artifacts/runtime/apex/com.android.runtime/lib64/bionic/libdl.so",
+        "sha256": "ee703baa9cbd373217a225148329044b16e672edeec243c8dd5fdeffa16c7d8d",
+        "needed": [
+          "ld-android.so"
+        ]
+      },
+      "libcutils.so": {
+        "path": "artifacts/runtime/system/lib64/libcutils.so",
+        "sha256": "9fa33e2c09f9a784c7bd6ec8a434ff81fcc8cdcb5e83984b7b021df66a92f384",
+        "needed": [
+          "liblog.so",
+          "libbase.so",
+          "libc++.so",
+          "libc.so",
+          "libm.so",
+          "libdl.so"
+        ]
+      },
+      "libapexsupport.so": {
+        "path": "artifacts/runtime/system/lib64/libapexsupport.so",
+        "sha256": "d2ba91ffa733999abbb2bcf22a353c75a997899df40cbbe215a8aeeba888ca77",
+        "needed": [
+          "libdl_android.so",
+          "liblog.so",
+          "libc++.so",
+          "libc.so",
+          "libm.so",
+          "libdl.so"
+        ]
+      },
+      "libvndksupport.so": {
+        "path": "artifacts/runtime/system/lib64/libvndksupport.so",
+        "sha256": "bc9ad880333fbee88e98e89215b66859add36e7eca71356778c839074aa45d15",
+        "needed": [
+          "libdl_android.so",
+          "liblog.so",
+          "libc++.so",
+          "libc.so",
+          "libm.so",
+          "libdl.so"
+        ]
+      },
+      "ld-android.so": {
+        "path": "artifacts/runtime/system/lib64/ld-android.so",
+        "sha256": "17e62ef0931210a31d291539307a00062d32f1c18971a7bf94c3b29aa6c9deef",
+        "needed": []
+      },
+      "libbase.so": {
+        "path": "artifacts/runtime/system/lib64/libbase.so",
+        "sha256": "0f9fb043b2ec9e9846a8127c2e6f455af5d4eea552f8a48e4a21cb200df0f5b5",
+        "needed": [
+          "liblog.so",
+          "libc++.so",
+          "libc.so",
+          "libm.so",
+          "libdl.so"
+        ]
+      },
+      "libdl_android.so": {
+        "path": "artifacts/runtime/system/lib64/libdl_android.so",
+        "sha256": "e39c7b45d6bad442e7d2d1a42ac369e0cb70b4e55bcef5f483556e4cd65bc19c",
+        "needed": [
+          "ld-android.so"
+        ]
+      },
+      "explicit_loader": {
+        "path": "artifacts/runtime/apex/com.android.runtime/bin/linker64",
+        "sha256": "09105dda9253238d125dc9be82c68a2b54819d03f92177348ef7211288001941"
+      }
+    }
+  },
+  "public_aosp_fixture_sources": {
+    "property/libpropertyinfoserializer/property_info_serializer.cpp": {
+      "url": "https://android.googlesource.com/platform/system/core/+/android-16.0.0_r4/property_service/libpropertyinfoserializer/property_info_serializer.cpp?format=TEXT",
+      "sha256": "437b15d25c3c0c67cc81b46619058e8ffdee3aa4d988d07a46fafe4313740377"
+    },
+    "property/libpropertyinfoserializer/trie_builder.cpp": {
+      "url": "https://android.googlesource.com/platform/system/core/+/android-16.0.0_r4/property_service/libpropertyinfoserializer/trie_builder.cpp?format=TEXT",
+      "sha256": "342e0988158416e7362c340afd7d7e178d4181824282ed9f3c4710f5aac4a757"
+    },
+    "property/libpropertyinfoserializer/trie_builder.h": {
+      "url": "https://android.googlesource.com/platform/system/core/+/android-16.0.0_r4/property_service/libpropertyinfoserializer/trie_builder.h?format=TEXT",
+      "sha256": "8427fa061c1e779d735e5a504a1afb0e28e93a5c4a9cf8ee97e016fa8740242b"
+    },
+    "property/libpropertyinfoserializer/trie_node_arena.h": {
+      "url": "https://android.googlesource.com/platform/system/core/+/android-16.0.0_r4/property_service/libpropertyinfoserializer/trie_node_arena.h?format=TEXT",
+      "sha256": "fc01f6e90aca050a338f55e68cf769ae2fc94100473f0e635226e97640641652"
+    },
+    "property/libpropertyinfoserializer/trie_serializer.cpp": {
+      "url": "https://android.googlesource.com/platform/system/core/+/android-16.0.0_r4/property_service/libpropertyinfoserializer/trie_serializer.cpp?format=TEXT",
+      "sha256": "d099e3e5db69f827520cda7f12fdc1eab861745869937ebd8d84dc99c8fb29d8"
+    },
+    "property/libpropertyinfoserializer/trie_serializer.h": {
+      "url": "https://android.googlesource.com/platform/system/core/+/android-16.0.0_r4/property_service/libpropertyinfoserializer/trie_serializer.h?format=TEXT",
+      "sha256": "d48d020c2e10612b89de1433f31522bd15600e8f423ff7c79478d4fbe3671163"
+    },
+    "property/libpropertyinfoserializer/include/property_info_serializer/property_info_serializer.h": {
+      "url": "https://android.googlesource.com/platform/system/core/+/android-16.0.0_r4/property_service/libpropertyinfoserializer/include/property_info_serializer/property_info_serializer.h?format=TEXT",
+      "sha256": "f15502eb3b884ab4a186e367e445001f295044961fadaef5145f2ad53f35b71b"
+    },
+    "property/libpropertyinfoparser/include/property_info_parser/property_info_parser.h": {
+      "url": "https://android.googlesource.com/platform/system/core/+/android-16.0.0_r4/property_service/libpropertyinfoparser/include/property_info_parser/property_info_parser.h?format=TEXT",
+      "sha256": "3054e6fc677e76006f62b8c8d70c73cfe3f1f33b20b8f6cdad0db5a4f2f530d8"
+    },
+    "property/libpropertyinfoparser/property_info_parser.cpp": {
+      "url": "https://android.googlesource.com/platform/system/core/+/android-16.0.0_r4/property_service/libpropertyinfoparser/property_info_parser.cpp?format=TEXT",
+      "sha256": "cd340fdd555b42d056d01fb489d619a26782886d577cc8b2837eebfad63ad54c"
+    },
+    "property/libbase/include/android-base/strings.h": {
+      "url": "https://android.googlesource.com/platform/system/libbase/+/android-16.0.0_r4/include/android-base/strings.h?format=TEXT",
+      "sha256": "20d97318d295631e524f27a6e600b3337dcf6a12f0545b236eecfcb4e8716cc7"
+    },
+    "property/libbase/include/android-base/macros.h": {
+      "url": "https://android.googlesource.com/platform/system/libbase/+/android-16.0.0_r4/include/android-base/macros.h?format=TEXT",
+      "sha256": "ce9f87182ca5b57b45c7baea472893eefa099415a7f3832c87f4b9869f5424bc"
+    },
+    "property/libbase/strings.cpp": {
+      "url": "https://android.googlesource.com/platform/system/libbase/+/android-16.0.0_r4/strings.cpp?format=TEXT",
+      "sha256": "12e70fe4ff6eae9825a05514902fae31ca9ec529831594a89dbc84e90b375940"
+    },
+    "property/libbase/include/android-base/stringprintf.h": {
+      "url": "https://android.googlesource.com/platform/system/libbase/+/android-16.0.0_r4/include/android-base/stringprintf.h?format=TEXT",
+      "sha256": "127525d36c8546925f09a3c2299a744080400b7ee73b64a1e9f8a6b9d27f2917"
+    },
+    "property/libbase/stringprintf.cpp": {
+      "url": "https://android.googlesource.com/platform/system/libbase/+/android-16.0.0_r4/stringprintf.cpp?format=TEXT",
+      "sha256": "0ac350c5e3223eb714aa6a2a165541710bfd08f018c15e01fe5bbccb72d198ea"
+    },
+    "android/binder_process.h": {
+      "url": "https://android.googlesource.com/platform/frameworks/native/+/android-16.0.0_r4/libs/binder/ndk/include_platform/android/binder_process.h?format=TEXT",
+      "sha256": "fe9626e20b24d32cfc1c0dc1dc5de1cb80c07489cbb38afc563fa5082bf4a00a"
+    },
+    "android/binder_manager.h": {
+      "url": "https://android.googlesource.com/platform/frameworks/native/+/android-16.0.0_r4/libs/binder/ndk/include_platform/android/binder_manager.h?format=TEXT",
+      "sha256": "c059f869706737ab74c1ed0f7a2d3946b17901ec929f75309b359fc1392e3167"
+    }
+  },
+  "reproduction": [
+    "bash tools/native-arm64-binder/run.sh build",
+    "bash tools/native-arm64-binder/run.sh clone (once; refuses overwriting existing clone)",
+    "bash tools/native-arm64-binder/run.sh run",
+    "bash tools/native-arm64-binder/run.sh ndk-build",
+    "bash tools/native-arm64-binder/run.sh ndk-run"
+  ],
+  "limits": [
+    "System-QEMU ARM CPU/virtual hardware only; not physical Pixel evidence",
+    "Arch Binder/kernel policy differs from matched Google target; Pixel permissions/SELinux remain open",
+    "NDK peer and minimal service manager/readiness property are synthetic; no original vendor radio service executed",
+    "Explicit genuine library path lacks Android linker namespace config; recorded loader warning, not full Android deployment",
+    "NDK held-registration/permanent-supervisor scenarios are not qualified; those nine gates use independent native Rust peer",
+    "One-way submission/raw echo remain OutcomeUnknown, no modem or semantic receipt claim",
+    "Local reaping is not vendor cleanup; no implicit uncertain registration retry/successor allowed",
+    "Installed service manager/app boundaries, vendor discovery/reset/cleanup, native IMS/call state, permanent request driver pressure, modem/carrier behavior and hardware remain open"
+  ],
+  "independent_review": {
+    "mode": "Read-only offline inspection of retained sources, executables and executed logs; no rerun",
+    "result": "No material defect found for stated nine Rust/manual and three genuine Android NDK scenarios",
+    "verified_counts": {
+      "current_sources": 45,
+      "generated_interfaces": 2,
+      "evidence_files": 146,
+      "frozen_artifacts": 30,
+      "public_aosp_inputs": 16,
+      "ndk_build_inputs": 11,
+      "original_runtime_files": 15,
+      "executed_current_binary_hashes": 5
+    },
+    "manifest_scope_note": "Frozen android-runtime-inputs metadata-only wording describes inventory creation before separate successful runtime qualification; do not reclassify the inventory as runtime proof."
+  }
+}

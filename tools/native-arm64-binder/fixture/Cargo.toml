@@ -1,0 +1,11 @@
+[package]
+name = "native-arm64-binder-fixture"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[workspace]
+
+[dependencies]
+pokelinux-radio = { path = "../../../native-radio" }
+rsbinder = { version = "=0.12.0", default-features = false }

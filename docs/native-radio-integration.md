@@ -264,3 +264,16 @@ adapter and `libril_sitril.so` manager/producers. Their static identity/flags ar
 qualified separately from this synthetic peer. An original adapter fixture cannot
 prove manager deletion or pending modem cleanup if it replaces those collaborators;
 the report defines distinct adapter, manager/producer and pending/reset gates.
+
+## Actual ARM64 kernel Binder
+
+The [separate ARM64 Binder milestone](native-arm64-binder.md) now passes nine
+Rust/manual peer scenarios through the unchanged Arch ARM7.1.6 kernel and three
+genuine retained Android Binder/Bionic NDK interop scenarios. It exercises the
+actual production transport/owner/workers/supervisor, including callback/death,
+held cancellation/expiry, request uncertainty and permanently blocked registration
+reaping. The original runtime dependency set excludes NDK link stubs. Synthetic
+service-manager/property fixtures are reference infrastructure; no vendor radio
+service, Pixel SELinux/discovery or modem ran. Keep the original x86, ARM64
+user-QEMU and this guest-kernel evidence distinct. Remote cleanup/reset, installed
+service composition and matched Pixel kernel/policy remain open.

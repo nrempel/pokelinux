@@ -196,3 +196,12 @@ scoped locking/death paths are known; whole producer identity and acknowledged
 remote cleanup/reset remain unqualified. No vendor runtime, successor retry or
 semantic publication follows from this static work. See
 [radio recovery contract](native-radio-recovery-contract.md).
+
+Native radio transport now qualifies nine real ARM64 guest-kernel Binder scenarios
+with an independently authored Rust peer and three separate genuine Android
+Binder/Bionic NDK interop scenarios. The unchanged Arch ARM7.1.6 test kernel is
+separate from Google's matched Pixel assets. Transfer, death, withheld-timer
+expiry and blocked-registration child reaping retain the no-retry uncertainty
+fence. This closes the scoped native radio ARM64 Binder gate, not the separate
+SMS/camera/suspend/sensor Binder gates or Pixel policy/vendor cleanup/modem gates.
+See [ARM64 Binder](native-arm64-binder.md).

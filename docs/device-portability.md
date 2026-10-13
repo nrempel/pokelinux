@@ -50,7 +50,10 @@ Missing capabilities must be reported as unavailable, not silently mapped to a
 Pixel fallback. No second device is currently qualified.
 
 The emulator validates IPC and synthetic behavior. ARM64 user-mode QEMU validates
-CPU/runtime behavior. Neither proves a backend works on another physical device.
+CPU/runtime behavior. The separately qualified [ARM64 radio Binder](native-arm64-binder.md)
+executes under an unchanged Arch ARM kernel with synthetic peers and separately
+retained Android runtime interop. It does not qualify Pixel policy or any second
+device. None of these evidence classes proves a backend works on physical hardware.
 
 The [native device contracts](native-device-contracts.md) keep exact Pixel AIDL/FMQ, firmware and calibration details in backends while shared Rust services own policy, permissions, leases and lifecycle. Static hash/source agreement does not qualify live hardware or make retained userspace a completed native architecture.
 

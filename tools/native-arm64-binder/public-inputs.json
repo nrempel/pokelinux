@@ -1,0 +1,66 @@
+{
+  "property/libpropertyinfoserializer/property_info_serializer.cpp": {
+    "url": "https://android.googlesource.com/platform/system/core/+/android-16.0.0_r4/property_service/libpropertyinfoserializer/property_info_serializer.cpp?format=TEXT",
+    "sha256": "437b15d25c3c0c67cc81b46619058e8ffdee3aa4d988d07a46fafe4313740377"
+  },
+  "property/libpropertyinfoserializer/trie_builder.cpp": {
+    "url": "https://android.googlesource.com/platform/system/core/+/android-16.0.0_r4/property_service/libpropertyinfoserializer/trie_builder.cpp?format=TEXT",
+    "sha256": "342e0988158416e7362c340afd7d7e178d4181824282ed9f3c4710f5aac4a757"
+  },
+  "property/libpropertyinfoserializer/trie_builder.h": {
+    "url": "https://android.googlesource.com/platform/system/core/+/android-16.0.0_r4/property_service/libpropertyinfoserializer/trie_builder.h?format=TEXT",
+    "sha256": "8427fa061c1e779d735e5a504a1afb0e28e93a5c4a9cf8ee97e016fa8740242b"
+  },
+  "property/libpropertyinfoserializer/trie_node_arena.h": {
+    "url": "https://android.googlesource.com/platform/system/core/+/android-16.0.0_r4/property_service/libpropertyinfoserializer/trie_node_arena.h?format=TEXT",
+    "sha256": "fc01f6e90aca050a338f55e68cf769ae2fc94100473f0e635226e97640641652"
+  },
+  "property/libpropertyinfoserializer/trie_serializer.cpp": {
+    "url": "https://android.googlesource.com/platform/system/core/+/android-16.0.0_r4/property_service/libpropertyinfoserializer/trie_serializer.cpp?format=TEXT",
+    "sha256": "d099e3e5db69f827520cda7f12fdc1eab861745869937ebd8d84dc99c8fb29d8"
+  },
+  "property/libpropertyinfoserializer/trie_serializer.h": {
+    "url": "https://android.googlesource.com/platform/system/core/+/android-16.0.0_r4/property_service/libpropertyinfoserializer/trie_serializer.h?format=TEXT",
+    "sha256": "d48d020c2e10612b89de1433f31522bd15600e8f423ff7c79478d4fbe3671163"
+  },
+  "property/libpropertyinfoserializer/include/property_info_serializer/property_info_serializer.h": {
+    "url": "https://android.googlesource.com/platform/system/core/+/android-16.0.0_r4/property_service/libpropertyinfoserializer/include/property_info_serializer/property_info_serializer.h?format=TEXT",
+    "sha256": "f15502eb3b884ab4a186e367e445001f295044961fadaef5145f2ad53f35b71b"
+  },
+  "property/libpropertyinfoparser/include/property_info_parser/property_info_parser.h": {
+    "url": "https://android.googlesource.com/platform/system/core/+/android-16.0.0_r4/property_service/libpropertyinfoparser/include/property_info_parser/property_info_parser.h?format=TEXT",
+    "sha256": "3054e6fc677e76006f62b8c8d70c73cfe3f1f33b20b8f6cdad0db5a4f2f530d8"
+  },
+  "property/libpropertyinfoparser/property_info_parser.cpp": {
+    "url": "https://android.googlesource.com/platform/system/core/+/android-16.0.0_r4/property_service/libpropertyinfoparser/property_info_parser.cpp?format=TEXT",
+    "sha256": "cd340fdd555b42d056d01fb489d619a26782886d577cc8b2837eebfad63ad54c"
+  },
+  "property/libbase/include/android-base/strings.h": {
+    "url": "https://android.googlesource.com/platform/system/libbase/+/android-16.0.0_r4/include/android-base/strings.h?format=TEXT",
+    "sha256": "20d97318d295631e524f27a6e600b3337dcf6a12f0545b236eecfcb4e8716cc7"
+  },
+  "property/libbase/include/android-base/macros.h": {
+    "url": "https://android.googlesource.com/platform/system/libbase/+/android-16.0.0_r4/include/android-base/macros.h?format=TEXT",
+    "sha256": "ce9f87182ca5b57b45c7baea472893eefa099415a7f3832c87f4b9869f5424bc"
+  },
+  "property/libbase/strings.cpp": {
+    "url": "https://android.googlesource.com/platform/system/libbase/+/android-16.0.0_r4/strings.cpp?format=TEXT",
+    "sha256": "12e70fe4ff6eae9825a05514902fae31ca9ec529831594a89dbc84e90b375940"
+  },
+  "property/libbase/include/android-base/stringprintf.h": {
+    "url": "https://android.googlesource.com/platform/system/libbase/+/android-16.0.0_r4/include/android-base/stringprintf.h?format=TEXT",
+    "sha256": "127525d36c8546925f09a3c2299a744080400b7ee73b64a1e9f8a6b9d27f2917"
+  },
+  "property/libbase/stringprintf.cpp": {
+    "url": "https://android.googlesource.com/platform/system/libbase/+/android-16.0.0_r4/stringprintf.cpp?format=TEXT",
+    "sha256": "0ac350c5e3223eb714aa6a2a165541710bfd08f018c15e01fe5bbccb72d198ea"
+  },
+  "android/binder_process.h": {
+    "url": "https://android.googlesource.com/platform/frameworks/native/+/android-16.0.0_r4/libs/binder/ndk/include_platform/android/binder_process.h?format=TEXT",
+    "sha256": "fe9626e20b24d32cfc1c0dc1dc5de1cb80c07489cbb38afc563fa5082bf4a00a"
+  },
+  "android/binder_manager.h": {
+    "url": "https://android.googlesource.com/platform/frameworks/native/+/android-16.0.0_r4/libs/binder/ndk/include_platform/android/binder_manager.h?format=TEXT",
+    "sha256": "c059f869706737ab74c1ed0f7a2d3946b17901ec929f75309b359fc1392e3167"
+  }
+}

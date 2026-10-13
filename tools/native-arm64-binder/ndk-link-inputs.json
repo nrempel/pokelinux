@@ -1,0 +1,16 @@
+{
+  "scope": "cached NDKr30 compiler/API35 link stubs and headers; never runtime substitution",
+  "sha256": {
+    "artifacts/camera-boundary/android-ndk-r30/toolchains/llvm/prebuilt/linux-x86_64/bin/clang": "ad535f0b6fc303edba958b51636169ff0291c6e36463236c99ff8abcaa34247c",
+    "artifacts/camera-boundary/android-ndk-r30/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android35-clang": "6849c55600a1521148f9841c74b0ae5f3fa805ee30002d8bcca1ab3faabfa829",
+    "artifacts/camera-boundary/android-ndk-r30/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android35-clang++": "0cea2b2b11e4e3f7f9db8df466879b91833a43c7d97860d0ca6266080b3b6843",
+    "artifacts/camera-boundary/android-ndk-r30/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/35/libbinder_ndk.so": "f4b60f3a3fd629f728fd37751c08b62ff7d1793d519d1a4e1ce2a5f398d14923",
+    "artifacts/camera-boundary/android-ndk-r30/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/35/libc.so": "95aba9ef5dfe3f98ce257111f41fddff45a568f754771c2c758a29e218eac49a",
+    "artifacts/camera-boundary/android-ndk-r30/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/35/libdl.so": "257028cb8a5a6f22aceb987fe2bfb6396b03ce65f2c4289a9b7a2fe09d5be3e7",
+    "artifacts/camera-boundary/android-ndk-r30/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/35/libm.so": "e80b580ddd327514cdc8940908de8a1d5ff33f67cfe8d28f473a0ccb7c70a67f",
+    "artifacts/camera-boundary/android-ndk-r30/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/android/binder_ibinder.h": "3a185c2a3e6ae42145705a827fbaa6efffcdaa567a55b61250308d5b05084b60",
+    "artifacts/camera-boundary/android-ndk-r30/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/android/binder_parcel.h": "9cbd46ab9de85aa996104f2cfc9a1e1cda92b28f29bbf4f29460db677aad2012",
+    "artifacts/camera-boundary/android-ndk-r30/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/android/binder_status.h": "b8413d75df67857b0ffd7d94c082e0222e360f4e69dd38f695d8d4dcaa1f55d4",
+    "artifacts/camera-boundary/android-ndk-r30/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/system_properties.h": "5c75bfb163b201a223c67ff6e31111b77c81f3474d7373e606bd6885eb7569e2"
+  }
+}

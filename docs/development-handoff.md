@@ -53,7 +53,16 @@ and explicitly ignored by the user-mode suite. `tools/native-process-vm.py` runs
 them under an Arch Linux ARM guest kernel in system-QEMU, as the unprivileged
 `alarm` user. Both pass, along with the component tests. See
 `evidence/arm64-radio-process-provenance.json`. This closes the process-specific
-gate; ARM64 Binder, matched Pixel kernel/policy and physical hardware remain open.
+gate; matched Pixel kernel/policy and physical hardware remain open.
+
+Native radio Binder now has nine actual Rust/manual scenarios under the unchanged
+Arch ARM7.1.6 kernel and three separate genuine Android Binder/Bionic NDK interop
+scenarios. Actual transferred objects/callbacks/death, withheld-timer cancellation
+and expiry, request uncertainty and permanently blocked child reclamation are
+qualified. Original runtime libraries are separate from NDK link stubs and the
+public AOSP synthetic startup/property fixtures. No original vendor service ran;
+matched Pixel policy, vendor cleanup/reset, installed ownership and modem/carrier
+remain open. See `native-arm64-binder.md` and its separate evidence classes.
 
 Native messaging now has a device-neutral SMS-SUBMIT encoder and bounded multipart
 planner. Twenty-seven byte comparisons match actual AOSP encoder execution in the

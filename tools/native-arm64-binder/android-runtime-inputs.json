@@ -1,0 +1,154 @@
+{
+  "scope": "metadata-only genuine retained AArch64 Android runtime closure; no runtime interop claimed yet",
+  "search_order": [
+    "artifacts/runtime/system/lib64",
+    "artifacts/runtime/apex/com.android.runtime/lib64/bionic"
+  ],
+  "files": {
+    "libbinder_ndk.so": {
+      "path": "artifacts/runtime/system/lib64/libbinder_ndk.so",
+      "sha256": "04b980f8c8f61052f69d1f32f451f558e14da4685c80ef2499227eafaaf802f8",
+      "needed": [
+        "libbinder.so",
+        "liblog.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ]
+    },
+    "libbinder.so": {
+      "path": "artifacts/runtime/system/lib64/libbinder.so",
+      "sha256": "43851b67bc81f6bd6592cf062ced138108e594689df9f4bcb6adea4d31821b04",
+      "needed": [
+        "libcutils.so",
+        "liblog.so",
+        "libutils.so",
+        "libapexsupport.so",
+        "libvndksupport.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ]
+    },
+    "liblog.so": {
+      "path": "artifacts/runtime/system/lib64/liblog.so",
+      "sha256": "b8d3d934c076003f46cd6f8b1c38248cf0ad37199aecc2e38633dd7d729174cd",
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ]
+    },
+    "libutils.so": {
+      "path": "artifacts/runtime/system/lib64/libutils.so",
+      "sha256": "bde65f17afa6eddee66c7f06b33fda2acc7f9f54691da9539aa627abeee3be64",
+      "needed": [
+        "libcutils.so",
+        "liblog.so",
+        "libvndksupport.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ]
+    },
+    "libc++.so": {
+      "path": "artifacts/runtime/system/lib64/libc++.so",
+      "sha256": "cb118e98c74d3454858921123b9b51ba13df9cad7dfa141dd892c453661a4d78",
+      "needed": [
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ]
+    },
+    "libc.so": {
+      "path": "artifacts/runtime/apex/com.android.runtime/lib64/bionic/libc.so",
+      "sha256": "ff418def7a55466ed696b7aa3a2ecac7d3a56715111f128e87b2ac6657f72c8d",
+      "needed": [
+        "ld-android.so",
+        "libdl.so"
+      ]
+    },
+    "libm.so": {
+      "path": "artifacts/runtime/apex/com.android.runtime/lib64/bionic/libm.so",
+      "sha256": "b2d6a95953bb770409782a3f008a1ab0827a0bd329ba40b8dc93206f685f7809",
+      "needed": [
+        "libc.so"
+      ]
+    },
+    "libdl.so": {
+      "path": "artifacts/runtime/apex/com.android.runtime/lib64/bionic/libdl.so",
+      "sha256": "ee703baa9cbd373217a225148329044b16e672edeec243c8dd5fdeffa16c7d8d",
+      "needed": [
+        "ld-android.so"
+      ]
+    },
+    "libcutils.so": {
+      "path": "artifacts/runtime/system/lib64/libcutils.so",
+      "sha256": "9fa33e2c09f9a784c7bd6ec8a434ff81fcc8cdcb5e83984b7b021df66a92f384",
+      "needed": [
+        "liblog.so",
+        "libbase.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ]
+    },
+    "libapexsupport.so": {
+      "path": "artifacts/runtime/system/lib64/libapexsupport.so",
+      "sha256": "d2ba91ffa733999abbb2bcf22a353c75a997899df40cbbe215a8aeeba888ca77",
+      "needed": [
+        "libdl_android.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ]
+    },
+    "libvndksupport.so": {
+      "path": "artifacts/runtime/system/lib64/libvndksupport.so",
+      "sha256": "bc9ad880333fbee88e98e89215b66859add36e7eca71356778c839074aa45d15",
+      "needed": [
+        "libdl_android.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ]
+    },
+    "ld-android.so": {
+      "path": "artifacts/runtime/system/lib64/ld-android.so",
+      "sha256": "17e62ef0931210a31d291539307a00062d32f1c18971a7bf94c3b29aa6c9deef",
+      "needed": []
+    },
+    "libbase.so": {
+      "path": "artifacts/runtime/system/lib64/libbase.so",
+      "sha256": "0f9fb043b2ec9e9846a8127c2e6f455af5d4eea552f8a48e4a21cb200df0f5b5",
+      "needed": [
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ]
+    },
+    "libdl_android.so": {
+      "path": "artifacts/runtime/system/lib64/libdl_android.so",
+      "sha256": "e39c7b45d6bad442e7d2d1a42ac369e0cb70b4e55bcef5f483556e4cd65bc19c",
+      "needed": [
+        "ld-android.so"
+      ]
+    },
+    "explicit_loader": {
+      "path": "artifacts/runtime/apex/com.android.runtime/bin/linker64",
+      "sha256": "09105dda9253238d125dc9be82c68a2b54819d03f92177348ef7211288001941"
+    }
+  }
+}

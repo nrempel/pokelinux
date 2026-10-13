@@ -250,8 +250,9 @@ QEMU, spawning a nonexistent executable unexpectedly returns success; the
 fail-closed destructor then aborts when the assertion unwinds. That subprocess test is now compiled for ARM64 but explicitly ignored under
 user-mode QEMU. Journal, provenance and lifecycle state tests still run there.
 The system-QEMU guest runs both native process tests under an Arch Linux ARM
-kernel, unprivileged, and passes. ARM64 Binder, the matched Pixel kernel/policy
-and installed service-manager behavior remain open.
+kernel, unprivileged, and passes. The matched Pixel kernel/policy and installed
+service-manager behavior remain open; scoped ARM64 Binder qualification now has
+its separate report below.
 
 ## ARM64 kernel process execution
 
@@ -285,3 +286,16 @@ REA evidence. Its scoped locks and one-way clear do not establish remote drain,
 pending modem cleanup, safe successor registration or all-path producer identity.
 No original vendor code was executed. Retain current uncertainty and fragmented
 semantic-publication fences until the specified original runtime gates qualify.
+
+## ARM64 Binder checkpoint
+
+The owned production transport/registration/request and process-supervisor
+boundaries now execute through actual Binder in an unchanged Arch ARM7.1.6
+system-QEMU guest. Nine Rust/manual peer scenarios cover real callback transfer,
+cancellation/absolute expiry with timers withheld, capacity retention, late
+registration refusal, death, request uncertainty and permanently blocked child
+reaping with durable successor refusal. Three separate genuine Android NDK
+interop scenarios cover callback/metadata and death. Successful join/reap is
+local reclamation; no vendor cleanup or retry authorization follows. See
+[scope and pinned evidence](native-arm64-binder.md). Pixel policy, actual vendor
+manager/reset and installed IMS/call service remain unqualified.
