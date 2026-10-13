@@ -1,0 +1,735 @@
+{
+  "schema_version": 1,
+  "scope": "Source-first contract for trusted native Omarchy/Hyprland session ingress into the existing lifecycle authority",
+  "evidence_class": "Public original-source inspection and proposed integration contract; no new execution",
+  "inspection_date": "2026-10-12",
+  "status": "Designed; adapter, Rust bridge, protocol containment and planned red/green remain unimplemented and unexecuted",
+  "original_pins": {
+    "omarchy": {
+      "release": "v4.0.4",
+      "commit": "c668141e9c42b13c80c9ca4ea108e11708c5e8a5",
+      "archive_url": "https://codeload.github.com/omacom/omarchy/tar.gz/c668141e9c42b13c80c9ca4ea108e11708c5e8a5",
+      "archive_sha256": "8cc6b1d9d903c606600395e3b3d80ad9f15bd3ab78f0f19b0f49041b1df82013",
+      "archive_hash_verified": true
+    },
+    "hyprland": {
+      "release": "v0.56.2",
+      "commit": "efb50993780079460b0cbed1363e2166a2de1d9f",
+      "tag_ref_url": "https://api.github.com/repos/hyprwm/Hyprland/git/ref/tags/v0.56.2",
+      "tag_ref_sha256": "3544ae403073a97bdfece8695328603b8d7e341c699cc2b52a520f92ae4f440d",
+      "tag_resolves_to_commit": true,
+      "protocol_submodule_commit": "bd153e76f751f150a09328dbdeb5e4fab9d23622"
+    },
+    "separate_hyprlock_reference": {
+      "release": "v0.9.6",
+      "commit": "b222d9b1f87e980cac379371df57913a53b99d7f",
+      "executed": false,
+      "selected_omarchy_locker": false
+    }
+  },
+  "inherited_inventory": {
+    "source": "docs/evidence/native-theme-provenance.json",
+    "evidence_class": "Earlier executed ARM64 renderer inventory, not new session evidence",
+    "packages": [
+      "hyprland 0.56.2-4",
+      "quickshell 0.3.2-1",
+      "qt6-base 6.12.0-2",
+      "qt6-declarative 6.12.0-1",
+      "qt6-wayland 6.12.0-1"
+    ],
+    "kernel": "Arch ARM 7.1.6-1-aarch64-ARCH",
+    "distribution_patch_equivalence_verified": false,
+    "hyprland_elf_hash_qualified_by_this_work": false
+  },
+  "publication": {
+    "allowed": "Authored report, provenance, public URLs, pins, hashes and static observations only",
+    "public_original_sources_committed": false,
+    "private_cache_root": "/tmp/pokelinux-lock-ingress-source",
+    "proprietary_sources_or_binaries_accessed": false,
+    "credentials_accessed_or_published": false
+  },
+  "source_files": {
+    "omarchy_lock": {
+      "repository": "https://github.com/omacom/omarchy",
+      "revision": "c668141e9c42b13c80c9ca4ea108e11708c5e8a5",
+      "path": "shell/plugins/lock/Service.qml",
+      "url": "https://github.com/omacom/omarchy/blob/c668141e9c42b13c80c9ca4ea108e11708c5e8a5/shell/plugins/lock/Service.qml",
+      "raw_url": "https://raw.githubusercontent.com/omacom/omarchy/c668141e9c42b13c80c9ca4ea108e11708c5e8a5/shell/plugins/lock/Service.qml",
+      "sha256": "3f0a265a09f7957e8f5d74666595d3136ec64899c414426190460f9e2098e701",
+      "bytes": 15301,
+      "private_cache_file": "omarchy_lock.qml"
+    },
+    "omarchy_lock_command": {
+      "repository": "https://github.com/omacom/omarchy",
+      "revision": "c668141e9c42b13c80c9ca4ea108e11708c5e8a5",
+      "path": "bin/omarchy-system-lock",
+      "url": "https://github.com/omacom/omarchy/blob/c668141e9c42b13c80c9ca4ea108e11708c5e8a5/bin/omarchy-system-lock",
+      "raw_url": "https://raw.githubusercontent.com/omacom/omarchy/c668141e9c42b13c80c9ca4ea108e11708c5e8a5/bin/omarchy-system-lock",
+      "sha256": "f1953110658d819597d3c9d8df616350c362ee4c257227fcbdefac8275bbd596",
+      "bytes": 935,
+      "private_cache_file": "omarchy_lock_command"
+    },
+    "omarchy_lock_inference": {
+      "repository": "https://github.com/omacom/omarchy",
+      "revision": "c668141e9c42b13c80c9ca4ea108e11708c5e8a5",
+      "path": "bin/omarchy-hyprland-session-locked",
+      "url": "https://github.com/omacom/omarchy/blob/c668141e9c42b13c80c9ca4ea108e11708c5e8a5/bin/omarchy-hyprland-session-locked",
+      "raw_url": "https://raw.githubusercontent.com/omacom/omarchy/c668141e9c42b13c80c9ca4ea108e11708c5e8a5/bin/omarchy-hyprland-session-locked",
+      "sha256": "e5004580e41475932f852d622b36ec07bfb0e98633c4d3c3055071a54d0eda07",
+      "bytes": 1013,
+      "private_cache_file": "omarchy_lock_inference"
+    },
+    "omarchy_sleep_lock": {
+      "repository": "https://github.com/omacom/omarchy",
+      "revision": "c668141e9c42b13c80c9ca4ea108e11708c5e8a5",
+      "path": "bin/omarchy-system-sleep-lock",
+      "url": "https://github.com/omacom/omarchy/blob/c668141e9c42b13c80c9ca4ea108e11708c5e8a5/bin/omarchy-system-sleep-lock",
+      "raw_url": "https://raw.githubusercontent.com/omacom/omarchy/c668141e9c42b13c80c9ca4ea108e11708c5e8a5/bin/omarchy-system-sleep-lock",
+      "sha256": "6081b11c89d47ab3242a5eb25793724ebd09e1a99aa391950fea6e08b559cb39",
+      "bytes": 4733,
+      "private_cache_file": "omarchy_sleep_lock"
+    },
+    "omarchy_lock_restore_config": {
+      "repository": "https://github.com/omacom/omarchy",
+      "revision": "c668141e9c42b13c80c9ca4ea108e11708c5e8a5",
+      "path": "default/hypr/looknfeel.lua",
+      "url": "https://github.com/omacom/omarchy/blob/c668141e9c42b13c80c9ca4ea108e11708c5e8a5/default/hypr/looknfeel.lua",
+      "raw_url": "https://raw.githubusercontent.com/omacom/omarchy/c668141e9c42b13c80c9ca4ea108e11708c5e8a5/default/hypr/looknfeel.lua",
+      "sha256": "d257ea9864abb9cac124083bef88374659e759144a3d2028ec9486e578978804",
+      "bytes": 4048,
+      "private_cache_file": "omarchy_lock_restore_config.lua"
+    },
+    "omarchy_session_entry": {
+      "repository": "https://github.com/omacom/omarchy",
+      "revision": "c668141e9c42b13c80c9ca4ea108e11708c5e8a5",
+      "path": "default/wayland-sessions/omarchy.desktop",
+      "url": "https://github.com/omacom/omarchy/blob/c668141e9c42b13c80c9ca4ea108e11708c5e8a5/default/wayland-sessions/omarchy.desktop",
+      "raw_url": "https://raw.githubusercontent.com/omacom/omarchy/c668141e9c42b13c80c9ca4ea108e11708c5e8a5/default/wayland-sessions/omarchy.desktop",
+      "sha256": "0a4b9feeecd8822b708281d4c1c98f66421cf1769ff79a1a3b4f25af62886641",
+      "bytes": 178,
+      "private_cache_file": "omarchy_session_entry.desktop"
+    },
+    "hyprland_ipc": {
+      "repository": "https://github.com/hyprwm/Hyprland",
+      "revision": "efb50993780079460b0cbed1363e2166a2de1d9f",
+      "path": "src/debug/HyprCtl.cpp",
+      "url": "https://github.com/hyprwm/Hyprland/blob/efb50993780079460b0cbed1363e2166a2de1d9f/src/debug/HyprCtl.cpp",
+      "raw_url": "https://raw.githubusercontent.com/hyprwm/Hyprland/efb50993780079460b0cbed1363e2166a2de1d9f/src/debug/HyprCtl.cpp",
+      "sha256": "798b7c6c4c1684557842463d46ac99c96629be4179e0e461dca77670247b91fa",
+      "bytes": 97582,
+      "private_cache_file": "hyprland-ipc.cpp"
+    },
+    "hyprland_lock_protocol": {
+      "repository": "https://github.com/hyprwm/Hyprland",
+      "revision": "efb50993780079460b0cbed1363e2166a2de1d9f",
+      "path": "src/protocols/SessionLock.cpp",
+      "url": "https://github.com/hyprwm/Hyprland/blob/efb50993780079460b0cbed1363e2166a2de1d9f/src/protocols/SessionLock.cpp",
+      "raw_url": "https://raw.githubusercontent.com/hyprwm/Hyprland/efb50993780079460b0cbed1363e2166a2de1d9f/src/protocols/SessionLock.cpp",
+      "sha256": "e43ec48906406c1d53aabd7bbfde1abdd57ba9035fdb0633cba970dbfaab0e85",
+      "bytes": 8449,
+      "private_cache_file": "hyprland-session.cpp"
+    },
+    "hyprland_lock_manager": {
+      "repository": "https://github.com/hyprwm/Hyprland",
+      "revision": "efb50993780079460b0cbed1363e2166a2de1d9f",
+      "path": "src/managers/SessionLockManager.cpp",
+      "url": "https://github.com/hyprwm/Hyprland/blob/efb50993780079460b0cbed1363e2166a2de1d9f/src/managers/SessionLockManager.cpp",
+      "raw_url": "https://raw.githubusercontent.com/hyprwm/Hyprland/efb50993780079460b0cbed1363e2166a2de1d9f/src/managers/SessionLockManager.cpp",
+      "sha256": "221e45b09e75ced356bf229169c207f43b4adf8e93147288c47de0cd04e9a9c0",
+      "bytes": 8830,
+      "private_cache_file": "hyprland-lock-manager.cpp"
+    },
+    "hyprland_lock_notify": {
+      "repository": "https://github.com/hyprwm/Hyprland",
+      "revision": "efb50993780079460b0cbed1363e2166a2de1d9f",
+      "path": "src/protocols/LockNotify.cpp",
+      "url": "https://github.com/hyprwm/Hyprland/blob/efb50993780079460b0cbed1363e2166a2de1d9f/src/protocols/LockNotify.cpp",
+      "raw_url": "https://raw.githubusercontent.com/hyprwm/Hyprland/efb50993780079460b0cbed1363e2166a2de1d9f/src/protocols/LockNotify.cpp",
+      "sha256": "4882961188b871ef32e3e16b18ef78565cfae7fec66c460ead4706b1fc591ff1",
+      "bytes": 2956,
+      "private_cache_file": "hyprland-locknotify.cpp"
+    },
+    "hyprland_lock_notify_state": {
+      "repository": "https://github.com/hyprwm/Hyprland",
+      "revision": "efb50993780079460b0cbed1363e2166a2de1d9f",
+      "path": "src/protocols/LockNotify.hpp",
+      "url": "https://github.com/hyprwm/Hyprland/blob/efb50993780079460b0cbed1363e2166a2de1d9f/src/protocols/LockNotify.hpp",
+      "raw_url": "https://raw.githubusercontent.com/hyprwm/Hyprland/efb50993780079460b0cbed1363e2166a2de1d9f/src/protocols/LockNotify.hpp",
+      "sha256": "5e9e5bc556e268328acfb5a8697b70215fe8dd5f2a99055cfef5c5d89b276eb3",
+      "bytes": 1298,
+      "private_cache_file": "hyprland-locknotify.hpp"
+    },
+    "hyprland_window": {
+      "repository": "https://github.com/hyprwm/Hyprland",
+      "revision": "efb50993780079460b0cbed1363e2166a2de1d9f",
+      "path": "src/desktop/view/Window.cpp",
+      "url": "https://github.com/hyprwm/Hyprland/blob/efb50993780079460b0cbed1363e2166a2de1d9f/src/desktop/view/Window.cpp",
+      "raw_url": "https://raw.githubusercontent.com/hyprwm/Hyprland/efb50993780079460b0cbed1363e2166a2de1d9f/src/desktop/view/Window.cpp",
+      "sha256": "d735d454cc4b7983f19626514d310669047da46780c509ffae68ccf072211ded",
+      "bytes": 124226,
+      "private_cache_file": "hyprland-window.cpp"
+    },
+    "hyprland_focus": {
+      "repository": "https://github.com/hyprwm/Hyprland",
+      "revision": "efb50993780079460b0cbed1363e2166a2de1d9f",
+      "path": "src/desktop/state/FocusState.cpp",
+      "url": "https://github.com/hyprwm/Hyprland/blob/efb50993780079460b0cbed1363e2166a2de1d9f/src/desktop/state/FocusState.cpp",
+      "raw_url": "https://raw.githubusercontent.com/hyprwm/Hyprland/efb50993780079460b0cbed1363e2166a2de1d9f/src/desktop/state/FocusState.cpp",
+      "sha256": "9b971362bba97f200f0ef786237deed6b7b863066590d243cac11787e2a56ebd",
+      "bytes": 12700,
+      "private_cache_file": "hyprland-focus.cpp"
+    },
+    "hyprland_layer": {
+      "repository": "https://github.com/hyprwm/Hyprland",
+      "revision": "efb50993780079460b0cbed1363e2166a2de1d9f",
+      "path": "src/desktop/view/LayerSurface.cpp",
+      "url": "https://github.com/hyprwm/Hyprland/blob/efb50993780079460b0cbed1363e2166a2de1d9f/src/desktop/view/LayerSurface.cpp",
+      "raw_url": "https://raw.githubusercontent.com/hyprwm/Hyprland/efb50993780079460b0cbed1363e2166a2de1d9f/src/desktop/view/LayerSurface.cpp",
+      "sha256": "63b24015ecf7df55bf384fc7c19aba52a7a89d132c60ecc1ba465cac30070ab8",
+      "bytes": 19660,
+      "private_cache_file": "hyprland-layer.cpp"
+    },
+    "hyprland_seat": {
+      "repository": "https://github.com/hyprwm/Hyprland",
+      "revision": "efb50993780079460b0cbed1363e2166a2de1d9f",
+      "path": "src/managers/SeatManager.cpp",
+      "url": "https://github.com/hyprwm/Hyprland/blob/efb50993780079460b0cbed1363e2166a2de1d9f/src/managers/SeatManager.cpp",
+      "raw_url": "https://raw.githubusercontent.com/hyprwm/Hyprland/efb50993780079460b0cbed1363e2166a2de1d9f/src/managers/SeatManager.cpp",
+      "sha256": "bd7485535c7e9f71382e587d92a7c73e048a0d7a5efcf518a1e671a188f94378",
+      "bytes": 26074,
+      "private_cache_file": "hyprland-seat-manager.cpp"
+    },
+    "hyprland_compositor": {
+      "repository": "https://github.com/hyprwm/Hyprland",
+      "revision": "efb50993780079460b0cbed1363e2166a2de1d9f",
+      "path": "src/Compositor.cpp",
+      "url": "https://github.com/hyprwm/Hyprland/blob/efb50993780079460b0cbed1363e2166a2de1d9f/src/Compositor.cpp",
+      "raw_url": "https://raw.githubusercontent.com/hyprwm/Hyprland/efb50993780079460b0cbed1363e2166a2de1d9f/src/Compositor.cpp",
+      "sha256": "74833ecbf0e2b6f8ad84345ac0716a3295a0e347420a188be0ab4f6a684af7c0",
+      "bytes": 38550,
+      "private_cache_file": "hyprland-compositor.cpp"
+    },
+    "hyprland_protocol_manager": {
+      "repository": "https://github.com/hyprwm/Hyprland",
+      "revision": "efb50993780079460b0cbed1363e2166a2de1d9f",
+      "path": "src/managers/ProtocolManager.cpp",
+      "url": "https://github.com/hyprwm/Hyprland/blob/efb50993780079460b0cbed1363e2166a2de1d9f/src/managers/ProtocolManager.cpp",
+      "raw_url": "https://raw.githubusercontent.com/hyprwm/Hyprland/efb50993780079460b0cbed1363e2166a2de1d9f/src/managers/ProtocolManager.cpp",
+      "sha256": "b4a91b2647f3bb80dd28b41377465916c00ba84da9f3494370bd90302b9e8622",
+      "bytes": 21205,
+      "private_cache_file": "hyprland-protocol-manager.cpp"
+    },
+    "hyprland_event_manager": {
+      "repository": "https://github.com/hyprwm/Hyprland",
+      "revision": "efb50993780079460b0cbed1363e2166a2de1d9f",
+      "path": "src/managers/EventManager.cpp",
+      "url": "https://github.com/hyprwm/Hyprland/blob/efb50993780079460b0cbed1363e2166a2de1d9f/src/managers/EventManager.cpp",
+      "raw_url": "https://raw.githubusercontent.com/hyprwm/Hyprland/efb50993780079460b0cbed1363e2166a2de1d9f/src/managers/EventManager.cpp",
+      "sha256": "eea605dfe5ce09e1f92a67ec478bf61a19894c6e0ee3302c0393521a2ee9540d",
+      "bytes": 6479,
+      "private_cache_file": "hyprland-event-manager.cpp"
+    },
+    "hyprland_main": {
+      "repository": "https://github.com/hyprwm/Hyprland",
+      "revision": "efb50993780079460b0cbed1363e2166a2de1d9f",
+      "path": "src/main.cpp",
+      "url": "https://github.com/hyprwm/Hyprland/blob/efb50993780079460b0cbed1363e2166a2de1d9f/src/main.cpp",
+      "raw_url": "https://raw.githubusercontent.com/hyprwm/Hyprland/efb50993780079460b0cbed1363e2166a2de1d9f/src/main.cpp",
+      "sha256": "98e5752cd485378c58c2a8cb0ba89265eaea27144925ea059e5564917dd3b645",
+      "bytes": 10963,
+      "private_cache_file": "hyprland-main.cpp"
+    },
+    "hyprland_lock_notify_xml": {
+      "repository": "https://github.com/hyprwm/hyprland-protocols",
+      "revision": "bd153e76f751f150a09328dbdeb5e4fab9d23622",
+      "path": "protocols/hyprland-lock-notify-v1.xml",
+      "url": "https://github.com/hyprwm/hyprland-protocols/blob/bd153e76f751f150a09328dbdeb5e4fab9d23622/protocols/hyprland-lock-notify-v1.xml",
+      "raw_url": "https://raw.githubusercontent.com/hyprwm/hyprland-protocols/bd153e76f751f150a09328dbdeb5e4fab9d23622/protocols/hyprland-lock-notify-v1.xml",
+      "sha256": "360589bc58a0a82768b477564f429dc4a8c016ae8311efad12e03f249ac704fc",
+      "bytes": 4280,
+      "private_cache_file": "hyprland-lock-notify-pinned.xml"
+    },
+    "hyprlock_reference": {
+      "repository": "https://github.com/hyprwm/hyprlock",
+      "revision": "b222d9b1f87e980cac379371df57913a53b99d7f",
+      "release": "v0.9.6",
+      "path": "src/core/hyprlock.cpp",
+      "url": "https://github.com/hyprwm/hyprlock/blob/b222d9b1f87e980cac379371df57913a53b99d7f/src/core/hyprlock.cpp",
+      "raw_url": "https://raw.githubusercontent.com/hyprwm/hyprlock/b222d9b1f87e980cac379371df57913a53b99d7f/src/core/hyprlock.cpp",
+      "sha256": "68b5491c4ea9105e51b31d1694c18c62efd4addaef24b261ff32556f56ce3663",
+      "bytes": 32922,
+      "private_cache_file": "hyprlock-core.cpp",
+      "qualification": "Separate public reference inspection; not the selected Omarchy locker and not executed"
+    }
+  },
+  "primary_documentation": [
+    {
+      "url": "https://wiki.hypr.land/Configuring/Advanced-and-Cool/Using-hyprctl/",
+      "claim": "Direct locked query documented; compositor handles requests synchronously",
+      "qualification": "Current upstream primary documentation consulted; mutable page, not binary qualification"
+    },
+    {
+      "url": "https://wiki.hypr.land/IPC/",
+      "claim": "Actual socket2 active-window event interface; no invented lock event",
+      "qualification": "Current upstream primary documentation consulted; exact implementation selection is separately pinned"
+    },
+    {
+      "url": "https://wayland.freedesktop.org/docs/html/apc.html",
+      "claim": "wl_client_get_credentials uses connection-time SO_PEERCRED and documents PID/socketpair caveats",
+      "qualification": "Current primary API documentation, not current per-packet sender credentials"
+    },
+    {
+      "url": "https://man7.org/linux/man-pages/man7/unix.7.html",
+      "claim": "SO_PEERCRED and per-message SCM_CREDENTIALS are different Unix socket identity boundaries",
+      "qualification": "Primary Linux manual consulted; actual source adapter transport not implemented"
+    },
+    {
+      "url": "https://github.com/systemd/systemd/blob/main/man/org.freedesktop.login1.xml",
+      "claim": "Session Active, caller-set LockedHint, and sleep preparation have distinct semantics",
+      "qualification": "Current upstream primary documentation; installed logind source/binary not qualified by this work"
+    }
+  ],
+  "static_observations": [
+    {
+      "id": "direct_locked_query",
+      "classification": "static_original_source",
+      "claim": "Hyprland registers locked and JSON output reads protocol lock state.",
+      "sources": [
+        "hyprland_ipc",
+        "hyprland_lock_manager"
+      ],
+      "line_references": {
+        "hyprland_ipc": [
+          1967,
+          2021
+        ],
+        "hyprland_lock_manager": [
+          143
+        ]
+      },
+      "executed": false
+    },
+    {
+      "id": "notification_is_completed_lock",
+      "classification": "static_original_source",
+      "claim": "Protocol lock admission state and completed-lock notification have different timing; manager uses output frames or five-second fallback.",
+      "sources": [
+        "hyprland_lock_protocol",
+        "hyprland_lock_manager",
+        "hyprland_lock_notify_xml"
+      ],
+      "line_references": {
+        "hyprland_lock_protocol": [
+          147,
+          185,
+          200
+        ],
+        "hyprland_lock_manager": [
+          103,
+          113,
+          167
+        ]
+      },
+      "executed": false
+    },
+    {
+      "id": "notification_bootstrap_not_unlocked",
+      "classification": "static_original_source",
+      "claim": "Notifier initializes false, sends an initial locked only when its own state is true, and has no initial unlocked event.",
+      "sources": [
+        "hyprland_lock_notify",
+        "hyprland_lock_notify_state",
+        "hyprland_lock_notify_xml"
+      ],
+      "line_references": {
+        "hyprland_lock_notify": [
+          44,
+          56,
+          60,
+          74
+        ],
+        "hyprland_lock_notify_state": [
+          44
+        ]
+      },
+      "executed": false
+    },
+    {
+      "id": "early_locker_death_observation_gap",
+      "classification": "static_inference",
+      "claim": "Locker death before sendLocked can retain protocol lock without a completed notification; notification-only positive state is insufficient.",
+      "sources": [
+        "hyprland_lock_protocol",
+        "hyprland_lock_manager",
+        "hyprland_lock_notify"
+      ],
+      "line_references": {
+        "hyprland_lock_protocol": [
+          110,
+          177,
+          200
+        ],
+        "hyprland_lock_manager": [
+          90,
+          113
+        ]
+      },
+      "executed": false
+    },
+    {
+      "id": "activewindow_is_not_seat_focus",
+      "classification": "static_original_source",
+      "claim": "Interactive layer focus and null raw surface focus can retain remembered window while actual keyboard focus differs.",
+      "sources": [
+        "hyprland_ipc",
+        "hyprland_focus",
+        "hyprland_layer"
+      ],
+      "line_references": {
+        "hyprland_ipc": [
+          633
+        ],
+        "hyprland_focus": [
+          223,
+          241,
+          259
+        ],
+        "hyprland_layer": [
+          185,
+          201,
+          401
+        ]
+      },
+      "executed": false
+    },
+    {
+      "id": "central_seat_focus",
+      "classification": "static_original_source",
+      "claim": "SeatManager owns actual keyboardFocus and emits keyboardFocusChange for null/non-null and destruction; this is the minimal central adapter hook.",
+      "sources": [
+        "hyprland_seat"
+      ],
+      "line_references": {
+        "hyprland_seat": [
+          182,
+          204,
+          207,
+          250,
+          252
+        ]
+      },
+      "executed": false
+    },
+    {
+      "id": "native_pid_vs_xwayland",
+      "classification": "static_original_source",
+      "claim": "Native PID is from wl_client_get_credentials; XWayland PID comes from stored XWayland state.",
+      "sources": [
+        "hyprland_window"
+      ],
+      "line_references": {
+        "hyprland_window": [
+          469,
+          475,
+          480
+        ]
+      },
+      "executed": false
+    },
+    {
+      "id": "original_omarchy_quickshell_pam",
+      "classification": "static_original_source",
+      "claim": "Selected Omarchy locker is Quickshell/PAM with a pending request and screen stabilization before ext-session-lock.",
+      "sources": [
+        "omarchy_lock",
+        "omarchy_lock_command"
+      ],
+      "line_references": {
+        "omarchy_lock": [
+          4,
+          37,
+          62,
+          131,
+          157,
+          308,
+          326,
+          434
+        ],
+        "omarchy_lock_command": [
+          8
+        ]
+      },
+      "executed": false
+    },
+    {
+      "id": "monitor_inference_obsolete_for_pin",
+      "classification": "static_original_source",
+      "claim": "Omarchy helper infers LOCK from monitor blockers and returns undetermined; selected Hyprland has a direct lock query.",
+      "sources": [
+        "omarchy_lock_inference",
+        "hyprland_ipc"
+      ],
+      "line_references": {
+        "omarchy_lock_inference": [
+          6,
+          15,
+          29
+        ],
+        "hyprland_ipc": [
+          2021
+        ]
+      },
+      "executed": false
+    },
+    {
+      "id": "distinct_uid_is_not_protocol_containment",
+      "classification": "static_original_source",
+      "claim": "Hyprland global filtering distinguishes registered security-context clients; distinct UID and raw Wayland socket ACL alone do not establish this classification.",
+      "sources": [
+        "hyprland_compositor",
+        "hyprland_protocol_manager"
+      ],
+      "line_references": {
+        "hyprland_compositor": [
+          262,
+          283
+        ],
+        "hyprland_protocol_manager": [
+          348,
+          361
+        ]
+      },
+      "executed": false
+    },
+    {
+      "id": "restore_owner_requires_qualification",
+      "classification": "static_inference",
+      "claim": "Omarchy enables restoration; manager condition does not visibly require old locker death, so unrestricted replacement/unlock needs real protocol testing and trusted-owner policy.",
+      "sources": [
+        "omarchy_lock_restore_config",
+        "hyprland_lock_manager",
+        "hyprland_compositor"
+      ],
+      "line_references": {
+        "omarchy_lock_restore_config": [
+          113,
+          115
+        ],
+        "hyprland_lock_manager": [
+          53,
+          55,
+          61,
+          67
+        ],
+        "hyprland_compositor": [
+          262
+        ]
+      },
+      "executed": false
+    },
+    {
+      "id": "watchdog_not_full_ingress",
+      "classification": "static_original_source",
+      "claim": "Inherited watchdog lines report lock/unlock but lack exact focus, snapshot, source revision and complete bounded-output behavior.",
+      "sources": [
+        "hyprland_compositor",
+        "hyprland_main"
+      ],
+      "line_references": {
+        "hyprland_compositor": [
+          127,
+          133,
+          436,
+          441,
+          816
+        ],
+        "hyprland_main": [
+          166,
+          272
+        ]
+      },
+      "executed": false
+    },
+    {
+      "id": "socket2_bounds_not_authority",
+      "classification": "static_original_source",
+      "claim": "Socket2 formats bounded event data and disconnects overflowed clients; this does not provide focus credentials or lock-admission protocol.",
+      "sources": [
+        "hyprland_event_manager"
+      ],
+      "line_references": {
+        "hyprland_event_manager": [
+          125,
+          172
+        ]
+      },
+      "executed": false
+    },
+    {
+      "id": "whole_publication_race",
+      "classification": "design_limit",
+      "claim": "Async observation/drain/query does not serialize external compositor mutation with actual app send; stronger claim requires source-backed ordering integration.",
+      "sources": [
+        "hyprland_lock_protocol",
+        "hyprland_seat"
+      ],
+      "line_references": {
+        "hyprland_lock_protocol": [
+          185
+        ],
+        "hyprland_seat": [
+          182
+        ]
+      },
+      "executed": false
+    },
+    {
+      "id": "hyprlock_separate_reference",
+      "classification": "static_original_source",
+      "claim": "Separately pinned Hyprlock uses ext-session-lock acquire/release; it is not selected Omarchy locker execution.",
+      "sources": [
+        "hyprlock_reference"
+      ],
+      "line_references": {
+        "hyprlock_reference": [
+          760,
+          792,
+          821,
+          830
+        ]
+      },
+      "executed": false
+    }
+  ],
+  "proposed_contract": {
+    "single_policy_and_publication_owner": "Existing native lifecycle actor",
+    "adapter_role": "Matching open-source compositor adapter exports actual central seat/native wl_client state and immediate lock facts only",
+    "rust_bridge_role": "Bounded authenticated source ingress with fixed trusted launch identity, owned pidfd, incarnation, ordered source revision and BOOTTIME freshness",
+    "existing_api_used": "Hyprland locked JSON query and original state hooks",
+    "new_adapter_schema_is_proposed_not_existing_api": true,
+    "default": "Locked and background-denied on startup, unknown state or source failure",
+    "trusted_omarchy_lock_order": "Actor fence acknowledgement before locker request/launch; failure retains denial",
+    "unlock_trust": "Exact trusted locker kernel identity/generation and qualified restore/containment policy; no app metadata or PAM UI string authority",
+    "direct_listener_identity": "SO_PEERCRED must match exact root-trusted launched compositor and live pidfd generation",
+    "inherited_socketpair_identity": "Creation-time peer credentials are insufficient; actual per-packet SCM_CREDENTIALS must match owned compositor generation",
+    "publication_limit": "Fences after ordered authority ingress with bounded source freshness; no atomic external mutation-to-send promise; already-sent bytes cannot be withdrawn",
+    "java_or_android_production_runtime_required": false,
+    "general_framework_or_backward_compatibility_added": false
+  },
+  "planned_original_protocol_cases": [
+    {
+      "id": "interactive_shell_layer",
+      "status": "Unexecuted plan",
+      "executed": false,
+      "red_preserved": false,
+      "green_passed": false
+    },
+    {
+      "id": "null_destroy_popup_focus",
+      "status": "Unexecuted plan",
+      "executed": false,
+      "red_preserved": false,
+      "green_passed": false
+    },
+    {
+      "id": "lock_before_first_frame",
+      "status": "Unexecuted plan",
+      "executed": false,
+      "red_preserved": false,
+      "green_passed": false
+    },
+    {
+      "id": "observer_initial_and_restart",
+      "status": "Unexecuted plan",
+      "executed": false,
+      "red_preserved": false,
+      "green_passed": false
+    },
+    {
+      "id": "trusted_lock_intent",
+      "status": "Unexecuted plan",
+      "executed": false,
+      "red_preserved": false,
+      "green_passed": false
+    },
+    {
+      "id": "restore_and_external_lock_client",
+      "status": "Unexecuted plan",
+      "executed": false,
+      "red_preserved": false,
+      "green_passed": false
+    },
+    {
+      "id": "rendered_vs_admitted_lock",
+      "status": "Unexecuted plan",
+      "executed": false,
+      "red_preserved": false,
+      "green_passed": false
+    },
+    {
+      "id": "held_read_and_real_eagain",
+      "status": "Unexecuted plan",
+      "executed": false,
+      "red_preserved": false,
+      "green_passed": false
+    },
+    {
+      "id": "external_transition_publication_race",
+      "status": "Unexecuted plan",
+      "executed": false,
+      "red_preserved": false,
+      "green_passed": false
+    },
+    {
+      "id": "source_transport_identity",
+      "status": "Unexecuted plan",
+      "executed": false,
+      "red_preserved": false,
+      "green_passed": false
+    },
+    {
+      "id": "source_stop_death_flood_deadline",
+      "status": "Unexecuted plan",
+      "executed": false,
+      "red_preserved": false,
+      "green_passed": false
+    },
+    {
+      "id": "app_generation_xwayland_delegation",
+      "status": "Unexecuted plan",
+      "executed": false,
+      "red_preserved": false,
+      "green_passed": false
+    },
+    {
+      "id": "session_change_restart_resume",
+      "status": "Unexecuted plan",
+      "executed": false,
+      "red_preserved": false,
+      "green_passed": false
+    }
+  ],
+  "execution": {
+    "new_components_built": false,
+    "tests_run": false,
+    "protocol_red_executed": false,
+    "protocol_green_executed": false,
+    "guest_booted": false,
+    "host_desktop_accessed": false,
+    "physical_phone_accessed": false,
+    "hardware_verified": false,
+    "secure_output_presentation_verified": false,
+    "atomic_external_state_publication_verified": false,
+    "commit_or_push_performed": false
+  },
+  "documentation": {
+    "report_path": "docs/native-session-contract.md",
+    "report_sha256": "3a5328d683c197c821e6a27cbb68a83603f4beb0878ebfe425ef01e3902f33ce",
+    "shared_readme_map_handoff_modified_by_this_work": false,
+    "messages_or_authority_source_modified_by_this_work": false,
+    "final_selected_dependency_manifest_modified_by_this_work": false,
+    "initial_static_report_sha256": "9fdd0eb07686c4df51a657f6cabd6b881ffaf86c40b4780952f665b267aafbf2",
+    "subsequent_matching_build_report": "docs/native-session-build-boundary.md",
+    "subsequent_crosslinks_do_not_upgrade_static_evidence": true
+  }
+}

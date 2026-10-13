@@ -216,3 +216,12 @@ for local history. Continuous incoming callbacks, complete enumeration beyond32,
 trusted lock/focus/session ingress, notifications/wake, outgoing operations, ACK,
 producer identity and hardware remain unfinished. See [Messages](native-messages-service.md)
 and [owned client](native-messages-ui-worker.md).
+
+Native session source qualification now executes eleven original Hyprland groups
+in an ARM64 kernel guest against the exact installed package/header build. It
+qualifies central focus, socket-derived pidfs identity and early lock ordering;
+public callback observation does not contain privileged locker restoration or
+qualify current read authority. The bounded facts adapter, actor bridge, genuine
+Omarchy Quickshell/PAM lock flow, secure presentation and suspend remain open.
+See [session build boundary](native-session-build-boundary.md) and
+[contract](native-session-contract.md).

@@ -48,6 +48,12 @@ appearance ACL setup remain explicit test infrastructure.
    same authority. Source failure/default lock denies reads. Distinct UIDs and
    Wayland socket ACLs do not establish compositor protocol containment. Qualify
    wake ownership separately; closed windows do not prove suspended delivery.
+   The [matching compositor build probe](native-session-build-boundary.md) now
+   executes11 original API/protocol/kernel groups; central seat and socket-derived
+   pidfs identity are qualified separately from facts transport/actor composition.
+   Admission callbacks precede the original locked flag. The
+   [session contract](native-session-contract.md) retains trusted locker/restore
+   containment and external-transition publication ordering as explicit gates.
 5. Add one authorized outbound operation through the same authority to the frozen
    synthetic backend. Resolve production identity/ACK/reset and device backend
    gates separately, then extend the installed path to the remaining phone apps.

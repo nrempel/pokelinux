@@ -1,0 +1,642 @@
+{
+  "schema_version": 1,
+  "scope": "Exact installed-package native Hyprland FactsObserver plugin build and original focus/lock/kernel API observation boundary",
+  "evidence_class": "Actual original distribution compositor and Linux kernel execution through authored fixtures in isolated ARM64 system-QEMU",
+  "inspection_date": "2026-10-12",
+  "status": "Eleven executed observation groups passed; production facts adapter, trusted locker containment and Rust actor bridge are outside this evidence selection",
+  "selected_run": "run-4",
+  "plugin_name": "native-session-build-probe",
+  "identity": {
+    "package": "hyprland 0.56.2-4 aarch64",
+    "package_archive_sha256": "4183f5212200625c278eefbbf70c912f1e8803df7ed99a8a2988beb4f4c74e04",
+    "installed_compositor_elf_sha256": "ae9a9e4129263e74df3f8a0a62beefd00f9bf4224caf51e96ebf0482ab74a85a",
+    "compositor_build_id": "d42f21e7b9bd77d03e8cb1778c9a2dd5986ae86b",
+    "pkgbuild_sha256_recorded_in_BUILDINFO": "73ec2161a62dd11d84f15fa36daa1cff0540f57fdeacaf7605143bd3ff6284f7",
+    "upstream_git_commit": "efb50993780079460b0cbed1363e2166a2de1d9f",
+    "upstream_release_archive_sha256": "03ad3f5ef152ff44116ffd56fcf808486211ecabf4f0ba567108ee746ba5cd2e",
+    "headers_manifest_sha256": "4a9f8ec187515b105d646e7bacd8af57eab3b1bf13dab25c9b5fe91aeda1f78e",
+    "matching_package_headers": 497,
+    "matching_non_generated_src_headers_against_upstream_release": 400,
+    "probe_elf_sha256": "ac673f13ee21d1ea42b7d509e04703bac7bc40661c08d064172c4177d9a5e60b",
+    "probe_build_id": "62cd6cbdbb1f144b2836e22e3833211a570eb463",
+    "kernel_image_sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+    "initrd_sha256": "a9bb29d29abda94748c9948f903c3c1704f829eea477652b9a4201a61f36a647",
+    "package_build_timestamp": 1791044002
+  },
+  "build_selection": {
+    "strategy": "Native guest build against exact installed package headers; no assumed upstream compositor rebuild",
+    "architecture": "aarch64",
+    "compiler_version": "g++ (GCC)16.1.1 20260430",
+    "compiler_package": "gcc 16.1.1+r12+g301eb08fa2c5-1",
+    "binutils_package": "binutils 2.46+r70+g155188ea10a7-1",
+    "installed_dependencies": {
+      "hyprland": "0.56.2-4",
+      "gcc": "16.1.1+r12+g301eb08fa2c5-1",
+      "binutils": "2.46+r70+g155188ea10a7-1",
+      "pkgconf": "3.0.7-1",
+      "hyprutils": "0.14.2-1",
+      "aquamarine": "0.15.1-1",
+      "hyprgraphics": "0.5.1-4",
+      "hyprlang": "0.6.8-5",
+      "hyprcursor": "0.1.13-7",
+      "wayland": "1.26.0-1",
+      "quickshell": "0.3.2-1"
+    },
+    "compile_command": [
+      "g++",
+      "-std=c++23",
+      "-fPIC",
+      "-shared",
+      "-O2",
+      "-g",
+      "-I/usr/include/hyprland/protocols",
+      "-I/usr/include/hyprland",
+      "-I/usr/include/hyprland/src",
+      "-I/usr/include/libdrm",
+      "-I/usr/include/cairo",
+      "-I/usr/include/freetype2",
+      "-I/usr/include/libpng16",
+      "-I/usr/include/pixman-1",
+      "/tmp/native-session-probe-build/probe.cpp",
+      "-o",
+      "/tmp/native-session-probe-build/probe.so"
+    ],
+    "plugin_load_return": "ok",
+    "plugin_unload_return": "ok",
+    "runtime_abi_hash": "efb50993780079460b0cbed1363e2166a2de1d9f_aq_0.15_hu_0.14_hg_0.5_hc_0.1_hlg_0.6",
+    "package_archive_payload_matches_installed_compositor": true,
+    "all_installed_hyprland_header_files_match_package_payload": true,
+    "matching_package_header_count": 497,
+    "matching_src_header_count_against_upstream_release": 400,
+    "different_src_headers_against_upstream_release": 0,
+    "generated_src_headers_not_in_release_archive": 33,
+    "package_signature_reverified_this_work": false,
+    "exact_ARCHARM_PKGBUILD_recovered": false,
+    "complete_distribution_CPP_patch_set_recovered": false,
+    "upstream_source_assumed_unpatched": false,
+    "package_payload_comparison": {
+      "path": "artifacts/native-session-build-probe/inventory/package-payload-match.json",
+      "sha256": "afa065189813f8ef909dd78a7fd11eee7b2b602e6dc50f3db886ae77377c5f56",
+      "bytes": 359,
+      "private_ignored_artifact": true
+    },
+    "installed_vs_release_header_comparison": {
+      "path": "artifacts/native-session-build-probe/inventory/installed-vs-release-headers.json",
+      "sha256": "4f9771487eae839df70d97a394664dca83f7438e4d19cce45eeb89211f050fa4",
+      "bytes": 2276,
+      "private_ignored_artifact": true
+    }
+  },
+  "guest_isolation": {
+    "kernel": "Linux alarm 7.1.6-1-aarch64-ARCH #1 SMP PREEMPT_DYNAMIC Wed Aug  5 00:20:13 UTC 2026 aarch64 GNU/Linux",
+    "system_emulation": true,
+    "user_mode_emulation": false,
+    "virtualization": "qemu-system-aarch64 virt TCG",
+    "docker_image": "pixel-graphics-sim:20261011-b472",
+    "docker_image_id": "sha256:561177a4305051567b1d28d67ba9a95e0ce0ad32a8815b49da42fe71aa5a3dd6",
+    "docker_network": "none",
+    "qemu_nic": "none",
+    "actual_guest_interfaces": [
+      "lo"
+    ],
+    "dedicated_clone": "artifacts/native-session-build-probe/vm/root.img",
+    "clone_source": "sim/rootfs.img",
+    "guest_disk_writes": "QEMU snapshot overlay",
+    "repository_mount": "read-only 9p",
+    "clone_mount_into_container": "read-only",
+    "virtual_display": "owned Xvfb plus SDL/virtio GPU; no host GPU/input device exposure",
+    "dedicated_lock": "artifacts/native-session-build-probe/owned.lock",
+    "shared_VM_booted": false,
+    "host_desktop_accessed": false,
+    "physical_phone_accessed": false,
+    "hardware_verified": false
+  },
+  "public_native_API_qualification": {
+    "private_memory_casts_used": false,
+    "private_visibility_macros_used": false,
+    "focus_state": "g_pSeatManager->m_state.keyboardFocus.lock()",
+    "focus_signal": "g_pSeatManager->m_events.keyboardFocusChange.listen",
+    "actual_native_client": "CWLSurfaceResource::client(), wl_client_get_credentials, wl_client_get_fd",
+    "window_eligibility": "m_hlSurface.lock()->view(); view type WINDOW; CWindow::fromView; mapped, native XDG and not X11; valid live socket-derived pidfs identity",
+    "lock_state": "PROTO::sessionLock->isLocked()",
+    "completion": "g_pSessionLockManager->clientLocked(), sampled by compositor event-loop timer",
+    "signals": [
+      "PROTO::sessionLock->m_events.newLock",
+      "g_pSessionLockManager->m_events.lock",
+      "g_pSessionLockManager->m_events.unlock",
+      "CSessionLock::m_events.unlockAndDestroy",
+      "CSessionLock::m_events.destroyed"
+    ],
+    "lock_notify_has_public_native_completion_signal": false,
+    "dynamic_symbols": {
+      "path": "artifacts/native-session-build-probe/run-4/hyprland-symbols.txt",
+      "sha256": "29cf9a751db8191dae6e6fa9073ddcd13faa4fbb9441da0d921c6e48d7fabb6d",
+      "bytes": 1526755,
+      "private_ignored_artifact": true
+    },
+    "probe_undefined_symbols": {
+      "path": "artifacts/native-session-build-probe/run-4/probe-undefined-symbols.txt",
+      "sha256": "605c66133a8c4a4a2e65f698494eab4000e3cdb2fc63882d42764cfd6aa1b9b6",
+      "bytes": 4213,
+      "private_ignored_artifact": true
+    },
+    "qualification_limit": "Native load and exercised methods/signals only; presence of an additional exported method is static evidence, not runtime qualification"
+  },
+  "peer_pidfs_identity": {
+    "source": "SO_PEERPIDFD from wl_client_get_fd(actual focused wl_client)",
+    "numeric_pidfd_open_fallback_in_plugin": false,
+    "SO_PEERPIDFD_constant": 77,
+    "ino_t_width_requirement_bits": 64,
+    "filesystem_magic": 1346978886,
+    "live_requirement": "poll pidfd for POLLIN at zero timeout returns0 with no revents",
+    "focused_process": {
+      "pid": 413,
+      "uid": 1000,
+      "gid": 1000,
+      "view_type": 0
+    },
+    "socket_observed": {
+      "peer_pidfd_fd": 72,
+      "peer_pidfd_valid": true,
+      "peer_pidfd_live": true,
+      "peer_pidfd_errno": 0,
+      "peer_pidfs_dev": 6,
+      "peer_pidfs_ino": 8291,
+      "peer_pidfs_magic": 1346978886
+    },
+    "independent_fixture_pidfd_comparison": {
+      "method": "root Python os.pidfd_open for known current live native window PID; test comparison only",
+      "pid": 413,
+      "dev": 6,
+      "ino": 8291,
+      "live": true,
+      "identities_match": true
+    },
+    "future_actor_requirement": "Compare opaque pidfs dev/inode with already owned registered current-generation pidfd; check that descriptor liveness; bind boot and source incarnation",
+    "unsupported_failed_wrongfs_or_dead_peer_eligible": false,
+    "numeric_PID_reuse_forced": false,
+    "dead_delegated_Wayland_client_executed": false,
+    "unsupported_kernel_executed": false,
+    "identity_mismatch_executed": false
+  },
+  "original_lock_ordering": {
+    "executed": true,
+    "first_manager_lock_event_sequence": 28,
+    "first_manager_lock_protocol_locked": false,
+    "first_manager_lock_old_native_candidate_eligible": true,
+    "first_protocol_newLock_event_sequence": 30,
+    "first_protocol_newLock_protocol_locked": false,
+    "later_snapshot_locked": true,
+    "admission_denial_fix_implemented_by_this_probe": false,
+    "interpretation": "Expected original ordering observation; naive callback-only flag snapshot can export old unlocked value; no deployed permission vulnerability claim",
+    "required_adapter_handling": "Sticky admission denial during callbacks, then reconciliation after onLock; intervening focus snapshot cannot clear denial",
+    "manager_unlock_can_see_prior_completion_before_manager_reset": true
+  },
+  "groups": [
+    {
+      "id": "native_aarch64_compile",
+      "executed_group_name": "matching_installed_headers_compile_native_aarch64_plugin",
+      "executed": true,
+      "passed": true,
+      "observation": "Installed GCC compiled the authored plugin against exact installed package headers; ELF preserved",
+      "primary_private_artifact": "artifacts/native-session-build-probe/run-4/build.log"
+    },
+    {
+      "id": "plugin_load_initial_snapshot",
+      "executed_group_name": "exact_installed_hyprland_plugin_load_and_initial_protocol_snapshot",
+      "executed": true,
+      "passed": true,
+      "observation": "Installed distribution Hyprland loaded the plugin and returned initially unlocked/no-focus snapshot",
+      "primary_private_artifact": "artifacts/native-session-build-probe/run-4/hyprland.log"
+    },
+    {
+      "id": "native_focus_kernel_credentials",
+      "executed_group_name": "central_seat_native_window_credentials_match_actual_kernel_principal",
+      "executed": true,
+      "passed": true,
+      "observation": "Central seat focus pointed to native foot PID413 UID/GID1000, matched by proc credentials and activewindow PID",
+      "primary_private_artifact": "artifacts/native-session-build-probe/run-4/events.ndjson"
+    },
+    {
+      "id": "wayland_peer_pidfs_identity",
+      "executed_group_name": "actual_wayland_SO_PEERPIDFD_pidfs_identity_matches_independent_current_task_pidfd",
+      "executed": true,
+      "passed": true,
+      "observation": "SO_PEERPIDFD from actual focused Wayland client socket matched independent live pidfd_open PID413 at device6/inode8291",
+      "primary_private_artifact": "artifacts/native-session-build-probe/run-4/events.ndjson"
+    },
+    {
+      "id": "null_focus",
+      "executed_group_name": "central_seat_null_focus_signal_observed",
+      "executed": true,
+      "passed": true,
+      "observation": "Fixture invoked central seat setter with null; signal and no-principal snapshot observed",
+      "primary_private_artifact": "artifacts/native-session-build-probe/run-4/events.ndjson"
+    },
+    {
+      "id": "exclusive_layer_focus",
+      "executed_group_name": "actual_layer_focus_differs_from_remembered_activewindow_pid",
+      "executed": true,
+      "passed": true,
+      "observation": "Authored Quickshell exclusive layer PID444/view3 owned actual keyboard focus while activewindow retained foot PID413",
+      "primary_private_artifact": "artifacts/native-session-build-probe/run-4/layer.log"
+    },
+    {
+      "id": "early_lock_locker_death",
+      "executed_group_name": "real_ext_session_lock_early_admission_and_dead_locker_remain_locked",
+      "executed": true,
+      "passed": true,
+      "observation": "Actual native ext-session-lock acquisition without surfaces set locked true before completion; locker death left locked true",
+      "primary_private_artifact": "artifacts/native-session-build-probe/run-4/early-lock.log"
+    },
+    {
+      "id": "restore_completion_fallback",
+      "executed_group_name": "restored_lock_and_five_second_completion_fallback_are_separate",
+      "executed": true,
+      "passed": true,
+      "observation": "Native replacement lock restored stranded state, supplied no surfaces, and received five-second completion fallback",
+      "primary_private_artifact": "artifacts/native-session-build-probe/run-4/restore-lock.log"
+    },
+    {
+      "id": "protocol_unlock",
+      "executed_group_name": "real_protocol_unlock_signal_observed_after_protocol_state_clear",
+      "executed": true,
+      "passed": true,
+      "observation": "Actual restored lock owner sent unlock_and_destroy; flag clear and signals observed",
+      "primary_private_artifact": "artifacts/native-session-build-probe/run-4/events.ndjson"
+    },
+    {
+      "id": "force_unlock",
+      "executed_group_name": "manager_force_unlock_signal_observed",
+      "executed": true,
+      "passed": true,
+      "observation": "Private fixture control invoked public manager forceUnlock; manager signal and cleared state observed",
+      "primary_private_artifact": "artifacts/native-session-build-probe/run-4/force-lock.log"
+    },
+    {
+      "id": "original_flag_ordering",
+      "executed_group_name": "first_lock_signal_precedes_protocol_m_locked_assignment_executed",
+      "executed": true,
+      "passed": true,
+      "observation": "First manager lock and protocol newLock callbacks observed false m_locked before later true snapshot; expected unsafe original observer input",
+      "primary_private_artifact": "artifacts/native-session-build-probe/run-4/events.ndjson"
+    }
+  ],
+  "group_count": 11,
+  "historical_runs": [
+    {
+      "run": "run-1",
+      "passed": false,
+      "groups_passed": 4,
+      "runner_exit_code": 101,
+      "classification": "fixture_setup_failure",
+      "failure_summary": "Obsolete focuswindow CLI syntax rejected by selected Lua dispatcher; test setup failure after4 passing groups",
+      "result": {
+        "path": "artifacts/native-session-build-probe/run-1/result.json",
+        "sha256": "6fe6320fe392767d5afac01548a208bd532597247453938c5e631b74a9858232",
+        "bytes": 7564,
+        "private_ignored_artifact": true
+      },
+      "host_log": {
+        "path": "artifacts/native-session-build-probe/run-1/host.log",
+        "sha256": "d19a8ba64780a5b2c57a8134a2ca220c67bb459006808ff81b8c5f8d0ba8fe55",
+        "bytes": 1409,
+        "private_ignored_artifact": true
+      },
+      "serial_log": {
+        "path": "artifacts/native-session-build-probe/run-1/serial.log",
+        "sha256": "4abad78e70c2acf80b2152c99cc69ea4631d652192f0d4a8df9d9b5f8c108692",
+        "bytes": 82428,
+        "private_ignored_artifact": true
+      },
+      "preserved": true
+    },
+    {
+      "run": "run-2",
+      "passed": false,
+      "groups_passed": 4,
+      "runner_exit_code": 101,
+      "classification": "fixture_setup_failure",
+      "failure_summary": "Authored layer QML invalid semicolon prevented load; bounded layer-focus wait expired after4 passing groups",
+      "result": {
+        "path": "artifacts/native-session-build-probe/run-2/result.json",
+        "sha256": "13ab7047732c00ce143bddc90cf942a13b6b781049e988389400e3eea6611eaf",
+        "bytes": 7292,
+        "private_ignored_artifact": true
+      },
+      "host_log": {
+        "path": "artifacts/native-session-build-probe/run-2/host.log",
+        "sha256": "680bf823ad0c85bf4a0de5ef5d8c4efcef74ea8b351931ee50ccd1ff8e2e77a8",
+        "bytes": 686,
+        "private_ignored_artifact": true
+      },
+      "serial_log": {
+        "path": "artifacts/native-session-build-probe/run-2/serial.log",
+        "sha256": "14ab65e67b11427d3708f0cef8ad36933025e279f93b54b2ea87f6e78dc85b06",
+        "bytes": 85969,
+        "private_ignored_artifact": true
+      },
+      "preserved": true
+    },
+    {
+      "run": "run-3",
+      "passed": true,
+      "groups_passed": 10,
+      "runner_exit_code": 0,
+      "classification": "API_and_original_protocol_observation_pass",
+      "failure_summary": null,
+      "result": {
+        "path": "artifacts/native-session-build-probe/run-3/result.json",
+        "sha256": "d58057fc4f8ffa676ac5a93040526d6c0793259b9bdeb3a5dbea7025c00624cf",
+        "bytes": 9461,
+        "private_ignored_artifact": true
+      },
+      "host_log": {
+        "path": "artifacts/native-session-build-probe/run-3/host.log",
+        "sha256": "cfbd3223e511e6878ee13bfe63760b9d23a809dafb20ee8f4db93fb26cd07111",
+        "bytes": 716,
+        "private_ignored_artifact": true
+      },
+      "serial_log": {
+        "path": "artifacts/native-session-build-probe/run-3/serial.log",
+        "sha256": "8d5341ee2b2c286d428e27862d0153f2dcef81d0a3b0ef41495f00c297141de4",
+        "bytes": 83761,
+        "private_ignored_artifact": true
+      },
+      "preserved": true
+    },
+    {
+      "run": "run-4",
+      "passed": true,
+      "groups_passed": 11,
+      "runner_exit_code": 0,
+      "classification": "API_and_original_protocol_observation_pass",
+      "failure_summary": null,
+      "result": {
+        "path": "artifacts/native-session-build-probe/run-4/result.json",
+        "sha256": "b5f8ab74d2e3460da769a04ba3e441d131db5d130fc4af7502710fc4ffbfa96b",
+        "bytes": 11553,
+        "private_ignored_artifact": true
+      },
+      "host_log": {
+        "path": "artifacts/native-session-build-probe/run-4/host.log",
+        "sha256": "f0d91429f27590d9f74d2cb7202a291dd6669cb1c2e051527d1b8375ecf691c7",
+        "bytes": 805,
+        "private_ignored_artifact": true
+      },
+      "serial_log": {
+        "path": "artifacts/native-session-build-probe/run-4/serial.log",
+        "sha256": "85c34175cdf94ef478bd053e11b07892ca79582c154a61b3a2adbe8714999f0f",
+        "bytes": 85145,
+        "private_ignored_artifact": true
+      },
+      "preserved": true
+    }
+  ],
+  "cleanup": {
+    "runner_exit_code": 0,
+    "plugin_unloaded": true,
+    "guest_finally_attempts_bounded_owned_process_termination_and_wait": true,
+    "per_guest_child_reap_results_recorded": false,
+    "guest_poweroff_requested": true,
+    "owned_container_absent_after_run": true,
+    "inspection": {
+      "path": "artifacts/native-session-build-probe/process-cleanup.json",
+      "sha256": "272fe9a41f5093bde1a0be25bb7d4ef894a75b113dc76a13ddc7e0a9ce1a3ebd",
+      "bytes": 469,
+      "private_ignored_artifact": true
+    },
+    "cleanup_target_only": "pokelinux-session-build-sol-20261012",
+    "production_actor_cleanup_qualified": false
+  },
+  "source_selection": {
+    "five_current_executable_source_recipes_match_selected_run4_copies": true,
+    "five_result_source_hashes_match_selected_run4_copies": true,
+    "verification": {
+      "path": "artifacts/native-session-build-probe/selection-verification.json",
+      "sha256": "958279301bbe41463cc31782bfdb092ad9e62624a1c18f8e1df3f174bae17efd",
+      "bytes": 1608,
+      "private_ignored_artifact": true
+    },
+    "published_authored_files": [
+      {
+        "path": "tools/native-session-build-probe/probe.cpp",
+        "sha256": "2718e8c1594a04938093a53cd5e7ce4b0f7ff6c40b9ead682725b7452b7f1bef"
+      },
+      {
+        "path": "tools/native-session-build-probe/guest.py",
+        "sha256": "6abb0eb4889d974a1ead7f3eb895da690e9bbaa28450438254e6869b08aafbc2"
+      },
+      {
+        "path": "tools/native-session-build-probe/lock-client.c",
+        "sha256": "c6ef34ce9234b32f6b6f34e4f7f197bfe9bbd835bcc05cc5e0618418e45101a9"
+      },
+      {
+        "path": "tools/native-session-build-probe/run.sh",
+        "sha256": "b480da5a60f5f3f50ec28d975659b9d389a446c70ce341f39db95660a1f9c48c"
+      },
+      {
+        "path": "tools/native-session-build-probe/run-vm.sh",
+        "sha256": "7209a78d3ba83f594eee77d71ccb4c848aa0651fa311143695b2516423ad2563"
+      },
+      {
+        "path": "tools/native-session-build-probe/README.md",
+        "sha256": "8e15996bdd565ab937e47be2205aa220d167efc67dfe74bd64b560993ce253d2"
+      }
+    ],
+    "selected_run4_source_hashes": {
+      "guest.py": "6abb0eb4889d974a1ead7f3eb895da690e9bbaa28450438254e6869b08aafbc2",
+      "lock-client.c": "c6ef34ce9234b32f6b6f34e4f7f197bfe9bbd835bcc05cc5e0618418e45101a9",
+      "run.sh": "b480da5a60f5f3f50ec28d975659b9d389a446c70ce341f39db95660a1f9c48c",
+      "probe.cpp": "2718e8c1594a04938093a53cd5e7ce4b0f7ff6c40b9ead682725b7452b7f1bef",
+      "run-vm.sh": "7209a78d3ba83f594eee77d71ccb4c848aa0651fa311143695b2516423ad2563"
+    },
+    "selected_run4_source_directory": "artifacts/native-session-build-probe/run-4/source",
+    "bootstrap_executes_current_workspace_guest_entry": "Recipes were unchanged during selected run and verified to match preserved source; reproduction requires keeping them fixed during each run"
+  },
+  "selected_artifact_manifest": [
+    {
+      "path": "artifacts/native-session-build-probe/run-4/build.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "private_ignored_artifact": true
+    },
+    {
+      "path": "artifacts/native-session-build-probe/run-4/early-lock.log",
+      "sha256": "f047742fa2adf1549a2322303778b6c83d87a1621423647aba56df5e01536c8f",
+      "bytes": 67,
+      "private_ignored_artifact": true
+    },
+    {
+      "path": "artifacts/native-session-build-probe/run-4/events.ndjson",
+      "sha256": "3763df03da5136f0473953b3a5e22b2c50086bb0520e0a7329f7298e8069a095",
+      "bytes": 15212,
+      "private_ignored_artifact": true
+    },
+    {
+      "path": "artifacts/native-session-build-probe/run-4/exit-code",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2,
+      "private_ignored_artifact": true
+    },
+    {
+      "path": "artifacts/native-session-build-probe/run-4/foot.log",
+      "sha256": "fee4c1160fb07cb42c7090767b08e7883c55c9a9fc4425f74fda0c4c9971087a",
+      "bytes": 191,
+      "private_ignored_artifact": true
+    },
+    {
+      "path": "artifacts/native-session-build-probe/run-4/force-lock.log",
+      "sha256": "bd8c1a9b68a652aaa7ddca7f88b1643b11c379e745a745d0fdc9109336a0eb85",
+      "bytes": 27,
+      "private_ignored_artifact": true
+    },
+    {
+      "path": "artifacts/native-session-build-probe/run-4/headers.json",
+      "sha256": "4a9f8ec187515b105d646e7bacd8af57eab3b1bf13dab25c9b5fe91aeda1f78e",
+      "bytes": 65182,
+      "private_ignored_artifact": true
+    },
+    {
+      "path": "artifacts/native-session-build-probe/run-4/host.log",
+      "sha256": "f0d91429f27590d9f74d2cb7202a291dd6669cb1c2e051527d1b8375ecf691c7",
+      "bytes": 805,
+      "private_ignored_artifact": true
+    },
+    {
+      "path": "artifacts/native-session-build-probe/run-4/hyprland-symbols.txt",
+      "sha256": "29cf9a751db8191dae6e6fa9073ddcd13faa4fbb9441da0d921c6e48d7fabb6d",
+      "bytes": 1526755,
+      "private_ignored_artifact": true
+    },
+    {
+      "path": "artifacts/native-session-build-probe/run-4/hyprland.log",
+      "sha256": "bd6febd056bb16480235f2f9b5252f0cfd11c4a3d7a865ced3a3a713d5bddad3",
+      "bytes": 3593,
+      "private_ignored_artifact": true
+    },
+    {
+      "path": "artifacts/native-session-build-probe/run-4/layer.log",
+      "sha256": "9fa2b940d57d5ef0b8e99a8548099bc48f52e96ba957f6e31ffc6756e19adb0e",
+      "bytes": 540,
+      "private_ignored_artifact": true
+    },
+    {
+      "path": "artifacts/native-session-build-probe/run-4/package.BUILDINFO",
+      "sha256": "219c42650b32626c209885c8abcff945c6d3a5f5e9caf60e7422283ef9be2609",
+      "bytes": 10839,
+      "private_ignored_artifact": true
+    },
+    {
+      "path": "artifacts/native-session-build-probe/run-4/probe-undefined-symbols.txt",
+      "sha256": "605c66133a8c4a4a2e65f698494eab4000e3cdb2fc63882d42764cfd6aa1b9b6",
+      "bytes": 4213,
+      "private_ignored_artifact": true
+    },
+    {
+      "path": "artifacts/native-session-build-probe/run-4/probe.so",
+      "sha256": "ac673f13ee21d1ea42b7d509e04703bac7bc40661c08d064172c4177d9a5e60b",
+      "bytes": 2218064,
+      "private_ignored_artifact": true
+    },
+    {
+      "path": "artifacts/native-session-build-probe/run-4/restore-lock.log",
+      "sha256": "6dcd5c2ec2500c8fb249298b249c74b11e1caa24eb9dc9231e8f785b23d00b8a",
+      "bytes": 25,
+      "private_ignored_artifact": true
+    },
+    {
+      "path": "artifacts/native-session-build-probe/run-4/result.json",
+      "sha256": "b5f8ab74d2e3460da769a04ba3e441d131db5d130fc4af7502710fc4ffbfa96b",
+      "bytes": 11553,
+      "private_ignored_artifact": true
+    },
+    {
+      "path": "artifacts/native-session-build-probe/run-4/seatd.log",
+      "sha256": "f2caf31bf89bebbf5c3ab7f48a26c1f64d7c6352099376f7a8e737aa6e74b86e",
+      "bytes": 586,
+      "private_ignored_artifact": true
+    },
+    {
+      "path": "artifacts/native-session-build-probe/run-4/serial.log",
+      "sha256": "85c34175cdf94ef478bd053e11b07892ca79582c154a61b3a2adbe8714999f0f",
+      "bytes": 85145,
+      "private_ignored_artifact": true
+    }
+  ],
+  "result_event_count_before_unload": 53,
+  "final_event_log_record_count": 55,
+  "official_original_reference_inputs": [
+    {
+      "name": "Official Hyprland v0.56.2 release source archive",
+      "url": "https://github.com/hyprwm/Hyprland/releases/download/v0.56.2/source-v0.56.2.tar.gz",
+      "sha256": "03ad3f5ef152ff44116ffd56fcf808486211ecabf4f0ba567108ee746ba5cd2e",
+      "private_cache_path": "artifacts/native-session-build-probe/inventory/upstream-source-release",
+      "used_to_compile_plugin": false,
+      "used_to_compare_installed_source_headers": true
+    },
+    {
+      "name": "Arch0.56.2-4 PKGBUILD",
+      "commit": "abb207b0391249daf8a01171f08567dc0209a826",
+      "url": "https://gitlab.archlinux.org/archlinux/packaging/packages/hyprland/-/raw/0.56.2-4/PKGBUILD",
+      "sha256": "2403e124b50afb22174e55125efcd57337bf9d25f96394f9d9c7865e4224bd29",
+      "matches_installed_ARCHARM_BUILDINFO_recipe_hash": false,
+      "private_cache_path": "artifacts/native-session-build-probe/inventory/arch-tag-PKGBUILD"
+    },
+    {
+      "name": "linux-7.1.6-sock.c",
+      "url": "https://raw.githubusercontent.com/gregkh/linux/v7.1.6/net/core/sock.c",
+      "sha256": "6e612481c271162474de29585e79b9b6ff1b4ed273989595104797e4bfb62e70",
+      "bytes": 114845,
+      "private_cache_path": "artifacts/native-session-build-probe/inventory/linux-7.1.6-sock.c"
+    },
+    {
+      "name": "linux-7.1.6-af_unix.c",
+      "url": "https://raw.githubusercontent.com/gregkh/linux/v7.1.6/net/unix/af_unix.c",
+      "sha256": "0705e667d6a3ff2d23407c75e69dde2f59facfaf351f9d5854c73c65bc92fc38",
+      "bytes": 93584,
+      "private_cache_path": "artifacts/native-session-build-probe/inventory/linux-7.1.6-af_unix.c"
+    },
+    {
+      "name": "linux-7.1.6-pidfs.c",
+      "url": "https://raw.githubusercontent.com/gregkh/linux/v7.1.6/fs/pidfs.c",
+      "sha256": "38cbaae0e646e6dd64812749fe81273fe2cc73834396098d8c935785a3e2177a",
+      "bytes": 30295,
+      "private_cache_path": "artifacts/native-session-build-probe/inventory/linux-7.1.6-pidfs.c"
+    },
+    {
+      "name": "linux-7.1.6-socket.h",
+      "url": "https://raw.githubusercontent.com/gregkh/linux/v7.1.6/include/uapi/asm-generic/socket.h",
+      "sha256": "23df5ed2dca8ae80ec5ae21f05b5b6a0d4138bab7851a3e0da087e0b73df3c55",
+      "bytes": 4116,
+      "private_cache_path": "artifacts/native-session-build-probe/inventory/linux-7.1.6-socket.h"
+    }
+  ],
+  "original_cache_private_ignored": true,
+  "raw_original_sources_binaries_and_logs_published": false,
+  "not_qualified": [
+    "Production FactsObserver adapter/authenticated transport",
+    "Rust lifecycle actor bridge and current registered app identity comparison",
+    "Trusted locker admission, restore authorization and privileged protocol containment",
+    "Original Omarchy lock/PAM/delegation contract",
+    "Native popup ownership and XWayland/delegation paths",
+    "Rejected/inert acquisition, observer restart and force-lock cases",
+    "No-output handling and secure presentation on every output",
+    "Source failure, backpressure, flooding, deadlines and EAGAIN publication fences",
+    "Lock-intent coordination, session mapping and suspend/resume",
+    "Atomic publication across unobserved external lock/focus transitions",
+    "Forced numeric PID reuse and dead retained Wayland client identity",
+    "Modem/carrier/device behavior"
+  ],
+  "repository_scope": {
+    "production_service_or_actor_modified_by_this_work": false,
+    "shared_README_map_or_handoff_modified_by_this_work": false,
+    "commit_or_push_performed": false,
+    "published_report_path": "docs/native-session-build-boundary.md",
+    "published_report_sha256": "4230ea4610e69a11f3423678bfd60ecaa994ce0ae654a6b4cf7c583921f852b9",
+    "probe_README_sha256": "8e15996bdd565ab937e47be2205aa220d167efc67dfe74bd64b560993ce253d2",
+    "initial_probe_report_sha256": "2a4a65e3bc8cc67c293e6b8a0732b5b3e78a698e1d6fc248ffcfe93ba142b767",
+    "scope_at_probe_handoff": true,
+    "subsequent_root_publication_updates_shared_links_only": true
+  }
+}

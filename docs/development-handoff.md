@@ -305,6 +305,15 @@ lock/focus/session ingress, notifications/wake, send/ACK, production session ACL
 and Wayland/device policy remain open. See `native-messages-service.md`,
 `native-messages-ui-worker.md` and `evidence/native-messages-correction-provenance.json`.
 
+The next native session source now has an executed build boundary: eleven groups
+in original Arch ARM Hyprland qualify matching package/header loading, central
+keyboard focus, socket-derived live pidfs identity and original early lock signal
+ordering. Callbacks precede the protocol locked flag; admission must retain denial
+until later reconciliation. Public observation APIs do not provide trusted locker
+admission/restore containment. See `native-session-build-boundary.md` and
+`native-session-contract.md`; the production facts adapter and actor bridge remain
+separate from this probe.
+
 ## Next work
 
 1. Continue the qualified installed Messages local-history path with real frozen
