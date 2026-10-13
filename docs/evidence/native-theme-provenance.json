@@ -1,0 +1,338 @@
+{
+  "schema_version": 1,
+  "scope": "Actual original Omarchy generation/switch/font/text-size scripts and running Omarchy/Hyprland/production native Qt component renderer; synthetic call/intent/draft",
+  "original_source": {
+    "repository": "https://github.com/omacom/omarchy",
+    "release": "v4.0.4",
+    "commit": "c668141e9c42b13c80c9ca4ea108e11708c5e8a5",
+    "archive_url": "https://codeload.github.com/omacom/omarchy/tar.gz/c668141e9c42b13c80c9ca4ea108e11708c5e8a5",
+    "archive_sha256": "8cc6b1d9d903c606600395e3b3d80ad9f15bd3ab78f0f19b0f49041b1df82013",
+    "files": {
+      "bin/omarchy-theme-set": "2356e6e19656fcc67aa345fc46352a310945e54146706c039bf92a7bd3b3fb5a",
+      "bin/omarchy-theme-set-templates": "add9154d012c12b5628128d71efcf216ed62024cef2370e3c5c470378c06d45f",
+      "bin/omarchy-font-set": "12d66d4e0a44966f61b3d068d0e3153b6ace0cecc9f001d964e62fb1f9fd4375",
+      "bin/omarchy-display-text-size": "8dad4951ec1e70998ee5f7aa41c6a49f267800fd3d42ae952bf8a3b8f37c433b",
+      "bin/omarchy-restart-shell": "e4c996275a15025c9aac829d34913d6bcaf8a30a17fae5ce5e260df2ddf21cd7",
+      "bin/omarchy-launch-shell": "484f3af00ee3d13b8f4e33b118d9b7355c72d254a631fc740a160f5f1d140cff",
+      "bin/omarchy-shell": "538ece231aba80154c76ab48df8ab013b2f02c5171241d08bddbf08a5fe5ac34",
+      "bin/omarchy-hook": "c64ea844feb1849375e7cd43dde98933293b0e0f0f522e1ba2c6572d86386c7b",
+      "default/themed/shell.toml.tpl": "bdc8e76a5a9a700adaca0d2fa44a2a340584892fd507e3fcbd4f9a4843765242",
+      "shell/Commons/Color.qml": "cc9b62e2eaf8c307aa02206d9320c3d0ca349cf8feed452a6eddf387adaa5320",
+      "shell/Commons/Style.qml": "f5901092617ae62645597199270afd4dfb0644d596bdfff16e1834fca6ad7243",
+      "shell/shell.qml": "4a4b7694e5b9e0bd952ce0efa2d6dc2cea44cdfa98cc2f442e40fe41cbc1beab",
+      "themes/tokyo-night/colors.toml": "8b5f53ba35b9305aafa72776dd56ea2029faaf29015e2e42db5e19ef698a8e0e",
+      "themes/catppuccin-latte/colors.toml": "071e27fe9b0dd7ee0063c7a3a55288648dcc6ac05a6cf7702caeb51c9ca4398e"
+    },
+    "publication": "Manifest and own harness only; upstream tree/archive ignored."
+  },
+  "environment": {
+    "architecture": "aarch64",
+    "kernel": "Linux alarm 7.1.6-1-aarch64-ARCH #1 SMP PREEMPT_DYNAMIC Wed Aug  5 00:20:13 UTC 2026 aarch64 GNU/Linux",
+    "packages": [
+      "hyprland 0.56.2-4",
+      "quickshell 0.3.2-1",
+      "qt6-base 6.12.0-2",
+      "qt6-declarative 6.12.0-1",
+      "qt6-wayland 6.12.0-1",
+      "fontconfig 2:2.18.3-2"
+    ],
+    "graphics": "virtio-gpu/virgl, container llvmpipe, ARM64 system TCG",
+    "network": "No container network or guest NIC",
+    "host_desktop_accessed": false,
+    "physical_phone_accessed": false,
+    "graphics_image_observed_before_launch": "sha256:45f43fa5dc4185a9f5e6deeabf0d089b2aa4a063f6f2ac473102f88bf034a829",
+    "qt_image_observed_before_launch": "sha256:5563df10c6f31872bdc5d2200ff710a08c2c03acfde1b1e8a1cea86f5041cb14",
+    "image_availability_after_cleanup": "Test images absent at final inspection; rebuild/provision prerequisite for future runs, not a failed completed run",
+    "boot_sha256": {
+      "sim/boot/Image": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+      "sim/boot/initramfs-linux.img": "a9bb29d29abda94748c9948f903c3c1704f829eea477652b9a4201a61f36a647"
+    }
+  },
+  "compiler_execution": {
+    "actual_guest_gcc_against_installed_qt_abi": true,
+    "compiled_probe_sha256": "914197279d87fddceac785e1df7fd8936840f30e5071b90f4ec5ccf4653ced9b"
+  },
+  "original_boundary_execution": {
+    "theme_set": true,
+    "theme_set_templates": true,
+    "font_set": true,
+    "display_text_size": true,
+    "actual_running_shell_ipc_and_style_singletons": true,
+    "native_wayland_window_and_actual_qfontinfo_metrics_and_pixels": true,
+    "theme_name_matching_or_canned_palettes": false,
+    "desktop_commands_stubbed": [],
+    "explicit_compatibility_patch": "Existing verified Color -> Commons.Color namespace qualification only for Qt6.12; no template or script changes",
+    "wallpaper_branch": "Original OMARCHY_THEME_SKIP_BACKGROUND=1; wallpaper transitions not tested"
+  },
+  "records": [
+    {
+      "artifact": "artifacts/native-theme/runtime/red",
+      "classification": "behavioral-red-token",
+      "passed": false,
+      "error": "Actual native display token 36 != original 37",
+      "host_exit_code": 101,
+      "result_sha256": "005df8127eea1cc9ffa28d511b55c5c8807e5342348fe5cb59d5686e982abca2"
+    },
+    {
+      "artifact": "artifacts/native-theme/runtime/red-font",
+      "classification": "behavioral-red-font-clean",
+      "passed": false,
+      "error": "Actual native font {'advance': 155, 'pixelSize': 37, 'requestedFamily': 'monospace', 'resolvedFamily': 'Adwaita Mono'} != original Adwaita Sans",
+      "host_exit_code": 101,
+      "result_sha256": "3cf11b0d32cdbe032d1f2b5a64d2e4a123716411cc299dd3373b7e44c22d2d23"
+    },
+    {
+      "artifact": "artifacts/native-theme/runtime/green",
+      "classification": "behavioral-green",
+      "passed": true,
+      "error": null,
+      "host_exit_code": 0,
+      "result_sha256": "3606c59c19f6c83953fac2330b0c447e07b7c24f7b880620641cc3662a5bf7e1"
+    },
+    {
+      "artifact": "artifacts/native-theme/runtime/red-font-host-eof",
+      "classification": "guest-behavioral-red-with-host-runner-error",
+      "passed": false,
+      "error": "Actual native font {'advance': 155, 'pixelSize': 37, 'requestedFamily': 'monospace', 'resolvedFamily': 'Adwaita Mono'} != original Adwaita Sans",
+      "host_exit_code": null,
+      "result_sha256": "9ac8b82dd2c0b1d20d23c473a5b67ae5eac8afcb7c9c4dd7d78035ec4d34317d"
+    },
+    {
+      "artifact": "artifacts/native-theme/runtime/setup-oracle-disabled",
+      "classification": "setup-failure",
+      "passed": false,
+      "error": "Bounded guest condition",
+      "host_exit_code": 101,
+      "result_sha256": "d566aa61cdb087ee5a5ed26ad706604749fd281576c54063efee596eb1af2e4a"
+    },
+    {
+      "artifact": "artifacts/native-theme/runtime/setup-js-observation",
+      "classification": "observer-failure",
+      "passed": false,
+      "error": "'NoneType' object is not subscriptable",
+      "host_exit_code": 101,
+      "result_sha256": "b0af9c3503c42e25257755d058f32fa0b6993ddf83e740e732f6e7109a34e9eb"
+    },
+    {
+      "artifact": "artifacts/native-theme/runtime/setup-qt-decoder-compile",
+      "classification": "compile-failure",
+      "passed": false,
+      "error": "Command exit 1: ['python3', '/workspace/tools/build-native-theme-guest.py', '/results/build']: \u2018struct QStringDecoder::EncodedData<const QByteArray&>\u2019 has no member named \u2018trimmed\u2019\n  161 |     const auto family = decoder.decode(fontOutput).trimmed();\n      |                                                    ^~~~~~~\nTraceback (most recent call last):\n  File \"/workspace/tools/build-native-theme-guest.py\", line 10, in <module>\n    subprocess.run(['g++','-std=c++17','-O0','-Wall','-Wextra','-Werror','-fPIC','-I'+str(source/'native-app'),str(source/'native-theme/renderer.cpp'),str(source/'native-app/PhoneThemeFiles.cpp'),str(out/'moc_Theme.cpp'),'-o',str(out/'native-theme-renderer'),*flags],check=True,timeout=360)\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.14/subprocess.py\", line 578, in run\n    raise CalledProcessError(retcode, process.args,\n                             output=stdout, stderr=stderr)\nsubprocess.CalledProcessError: Command '['g++', '-std=c++17', '-O0', '-Wall', '-Wextra', '-Werror', '-fPIC', '-I/workspace/native-app', '/workspace/native-theme/renderer.cpp', '/workspace/native-app/PhoneThemeFiles.cpp', '/results/build/moc_Theme.cpp', '-o', '/results/build/native-theme-renderer', '-I/usr/include/qt6/QtQuickControls2', '-I/usr/include/qt6', '-DQT_QUICKCONTROLS2_LIB', '-I/usr/include/qt6/QtQuick', '-DQT_QUICK_LIB', '-I/usr/include/qt6/QtOpenGL', '-DQT_OPENGL_LIB', '-I/usr/include/qt6/QtGui', '-DQT_GUI_LIB', '-I/usr/include/qt6/QtQml', '-DQT_QML_LIB', '-I/usr/include/qt6/QtQmlIntegration', '-DQT_QMLINTEGRATION_LIB', '-I/usr/include/qt6/QtNetwork', '-DQT_NETWORK_LIB', '-I/usr/include/qt6/QtCore', '-DQT_CORE_LIB', '-I/usr/lib/qt6/mkspecs/linux-g++', '-lQt6QuickControls2', '-lQt6Quick', '-lQt6OpenGL', '-lQt6Gui', '-lQt6Qml', '-lQt6Network', '-lQt6Core']' returned non-zero exit status 1.\n",
+      "host_exit_code": 101,
+      "result_sha256": "4e07b7a1f004d048c88f169686bbd7c1ca5b518f9e0c58ddb17725aaef91388f"
+    }
+  ],
+  "green_steps": [
+    {
+      "name": "original tokyo-night generation + native renderer",
+      "background": "#1a1b26",
+      "pixel": "#1a1b26",
+      "base_size": 12,
+      "display_token": 24,
+      "native_font": {
+        "advance": 101,
+        "pixelSize": 24,
+        "requestedFamily": "Adwaita Mono",
+        "resolvedFamily": "Adwaita Mono"
+      },
+      "same_native_root": true,
+      "draft_preserved": true,
+      "unresolved_intent_preserved": true,
+      "snapshot": "artifacts/native-theme/runtime/green/native-0.json",
+      "screenshot": "artifacts/native-theme/runtime/green/desktop-0.png"
+    },
+    {
+      "name": "original text-size setter + token override",
+      "background": "#1a1b26",
+      "pixel": "#1a1b26",
+      "base_size": 18,
+      "display_token": 37,
+      "native_font": {
+        "advance": 155,
+        "pixelSize": 37,
+        "requestedFamily": "Adwaita Mono",
+        "resolvedFamily": "Adwaita Mono"
+      },
+      "same_native_root": true,
+      "draft_preserved": true,
+      "unresolved_intent_preserved": true,
+      "snapshot": "artifacts/native-theme/runtime/green/native-1.json",
+      "screenshot": "artifacts/native-theme/runtime/green/desktop-1.png"
+    },
+    {
+      "name": "original font-set Adwaita Mono",
+      "background": "#1a1b26",
+      "pixel": "#1a1b26",
+      "base_size": 18,
+      "display_token": 37,
+      "native_font": {
+        "advance": 155,
+        "pixelSize": 37,
+        "requestedFamily": "Adwaita Mono",
+        "resolvedFamily": "Adwaita Mono"
+      },
+      "same_native_root": true,
+      "draft_preserved": true,
+      "unresolved_intent_preserved": true,
+      "snapshot": "artifacts/native-theme/runtime/green/native-2.json",
+      "screenshot": "artifacts/native-theme/runtime/green/desktop-2.png"
+    },
+    {
+      "name": "original font-set Adwaita Sans",
+      "background": "#1a1b26",
+      "pixel": "#1a1b26",
+      "base_size": 18,
+      "display_token": 37,
+      "native_font": {
+        "advance": 151,
+        "pixelSize": 37,
+        "requestedFamily": "Adwaita Sans",
+        "resolvedFamily": "Adwaita Sans"
+      },
+      "same_native_root": true,
+      "draft_preserved": true,
+      "unresolved_intent_preserved": true,
+      "snapshot": "artifacts/native-theme/runtime/green/native-3.json",
+      "screenshot": "artifacts/native-theme/runtime/green/desktop-3.png"
+    },
+    {
+      "name": "original catppuccin-latte switch preserves settings/window/state",
+      "background": "#eff1f5",
+      "pixel": "#eff1f5",
+      "base_size": 18,
+      "display_token": 37,
+      "native_font": {
+        "advance": 151,
+        "pixelSize": 37,
+        "requestedFamily": "Adwaita Sans",
+        "resolvedFamily": "Adwaita Sans"
+      },
+      "same_native_root": true,
+      "draft_preserved": true,
+      "unresolved_intent_preserved": true,
+      "snapshot": "artifacts/native-theme/runtime/green/native-4.json",
+      "screenshot": "artifacts/native-theme/runtime/green/desktop-4.png"
+    },
+    {
+      "name": "original text-size reset preserves token override",
+      "background": "#eff1f5",
+      "pixel": "#eff1f5",
+      "base_size": 12,
+      "display_token": 37,
+      "native_font": {
+        "advance": 151,
+        "pixelSize": 37,
+        "requestedFamily": "Adwaita Sans",
+        "resolvedFamily": "Adwaita Sans"
+      },
+      "same_native_root": true,
+      "draft_preserved": true,
+      "unresolved_intent_preserved": true,
+      "snapshot": "artifacts/native-theme/runtime/green/native-5.json",
+      "screenshot": "artifacts/native-theme/runtime/green/desktop-5.png"
+    },
+    {
+      "name": "same original setting after resolver restoration recovers live native font",
+      "background": "#eff1f5",
+      "pixel": "#eff1f5",
+      "base_size": 12,
+      "display_token": 37,
+      "native_font": {
+        "advance": 155,
+        "pixelSize": 37,
+        "requestedFamily": "Adwaita Mono",
+        "resolvedFamily": "Adwaita Mono"
+      },
+      "same_native_root": true,
+      "draft_preserved": true,
+      "unresolved_intent_preserved": true,
+      "snapshot": "artifacts/native-theme/runtime/green/native-7.json",
+      "screenshot": "artifacts/native-theme/runtime/green/desktop-7.png"
+    },
+    {
+      "name": "invalid original theme selection preserves current palette/window/draft",
+      "background": "#eff1f5",
+      "pixel": "#eff1f5",
+      "base_size": 12,
+      "display_token": 37,
+      "native_font": {
+        "advance": 155,
+        "pixelSize": 37,
+        "requestedFamily": "Adwaita Mono",
+        "resolvedFamily": "Adwaita Mono"
+      },
+      "same_native_root": true,
+      "draft_preserved": true,
+      "unresolved_intent_preserved": true,
+      "snapshot": "artifacts/native-theme/runtime/green/native-8.json",
+      "screenshot": "artifacts/native-theme/runtime/green/desktop-8.png"
+    }
+  ],
+  "resolver_outage": {
+    "injection": "Rename actual /usr/bin/fc-match only inside disposable ARM64 guest; no replacement stub",
+    "availability": false,
+    "last_native_family_retained": "Adwaita Sans",
+    "recovery": "Restore executable then repeat original font-set with same setting; native concrete family recovers without app restart"
+  },
+  "separate_native_regression": {
+    "passed": true,
+    "exit_code": 0,
+    "scope": "Native Qt/QML full isolated regression with actual Rust daemon/CLI and synthetic authenticated peer; no Omarchy/Hyprland/Android/hardware proof"
+  },
+  "desktop_post_hook_limitations": {
+    "browser_policy": "Error accessing /usr/bin/omarchy-theme-set-browser-policy: No such file or directory\n",
+    "pipewire_network_upower_portal": "Warnings retained in original shell logs; these services are not validated"
+  },
+  "gates": [
+    "Installed native package/desktop launcher plus enrolled Rust service together in this Omarchy session; ARM64 probe uses production components and synthetic state",
+    "User plugin activation, Omarchy icon-font/glyph provisioning and desktop app/service post-hooks including packaged browser-policy helper",
+    "Compositor decoration/theme configuration and wallpaper transitions in production session",
+    "Arbitrary third-party themes, gradients/per-side borders and every shell control style token",
+    "Concurrent in-place multi-file writers are not an atomic appearance transaction; reader selection checks do not prove arbitrary writer safety",
+    "Physical phone GPU/display/touch/font installation/suspend; virtual rendering does not establish hardware or vendor cleanup",
+    "Prepared Docker images must be rebuilt/restored for a new execution; their observed prior identities are retained"
+  ],
+  "android_or_java_production_dependency": false,
+  "hardware_verified": false,
+  "consumer_source_sha256": {
+    "org.omarchy.Phone.service.in": "9459685b8d1474c575347f0a2f7029ee5b97c4723d53f91a5eeaa82cb8e676cf",
+    "CMakeLists.txt": "afaa0ab5c20432e4907dfc27a892234b78b275d8121f96735582ab171ae43759",
+    "ThemePalette.js": "677d9faa94873dd6aceee81a900f179600f7a699defe1c4304760beeccd26a33",
+    "org.omarchy.Phone.desktop": "a39fc6ca79afb64d2e6afb4fc6f98eb5080851c55ba3abb17ce6641902f906bc",
+    "PhoneActions.qml": "9412ce3369440215d34984eb90341b474d7547b50b77aac375623c32f045742a",
+    "Main.qml": "f4e152845bb605e212bf83966bf9435d0f72d47c58583343efd8fc04fcc778b1",
+    "PhonePower.h": "88154802aac9662b65bcfeb7e15a20d06a0d132db0ca96de3b48ae74d2e7dde8",
+    "PhonePower.cpp": "63082e4bfb2d376f16b46a8fa87d2c5fd034d2171a3b9615353348395510523c",
+    "PhoneSession.qml": "3025c01d1f8949aa01f9cd51f51f26c0853a44c1ef665ab50d376747dfe216dd",
+    "PhoneLifecycle.qml": "baa729b1fc52d9ba39857b1515874f4d42d8ab5e8f5610851a64680c53c4acbf",
+    "PhoneThemeFiles.cpp": "4fa90529d2a4f6388e5c0ec1717e4cf64f6bc5398c32ab87c9de34f56387ab38",
+    "PhoneTheme.qml": "67caaa853a01ac2108f16bff88009d026779da4df54961b11d3d82a1d2ed2fd1",
+    "PhoneRpc.h": "a1cb9cdb30a2b99fcb9ac4246c290aab7026cd9d2ed798d14a88a8db70e35419",
+    "PhoneView.qml": "002cf17ade75628d448113d14c610e61d7990c5912facb8776e6d6c584cf9f79",
+    "PhoneRpc.cpp": "4d0da8879265455b06fda86d36f992117abea1aa5e76b7ac854042d73b2dfe07",
+    "README.md": "103eecb476b183d5f5df908e2b4dc2f5254ee7b27d1b208be30818c28c2a6f4b",
+    "IntentButton.qml": "3eccf64a62b9b775d0d825ce1f21f8f57f8e6966cf16f614b65292e916f3a244",
+    "main.cpp": "a25e386a1ffa050a23b8d64f6321017ac40bdd8097ba2295489c112c1d49bb6d",
+    "PhoneThemeFiles.h": "cb14c863907dde099218e92b362483d5ede891a53fe373228403f976cc79841a",
+    "PhoneObservations.qml": "e2e3cab4a274a9bc9b86db43541882d3cc9dd5c6688e206e22966da64a18d3ab",
+    "tests/test_view.cpp": "7a2152b89581f61c4e03cf776c4135536d2b85f36a45dd95067464a8c6768c7a",
+    "tests/test_power.cpp": "36d12d39c43da6d4cdf6026004b9be953173e1e003fee8941c7287d8a2d195d6",
+    "tests/test_theme_files.cpp": "eb4c6de783553230e36684895f5ae8e0849d2ba47f236fcb68cbcac9e2ba05ec",
+    "tests/test_actions.cpp": "59d037fb6dbc4fbf0af903e9964f3e79a850053fe03168d4caa8e13a50171786",
+    "tests/ViewFixture.qml": "9bbff6a740f150603e8846ccf3273af3aad66f6415336609561f6e891be627f3",
+    "tests/test_android_view.cpp": "7cb2f05d969d84f55bafb641833ac2293683984140097937cb42a8e41dafa3c9",
+    "tests/test_theme.cpp": "c85bf06408c98614b7f007ef21793927cb6bd2965896c53bd6eec5a867bb4cbd",
+    "tests/test_application.cpp": "f8677ea60bb5adc28502579977216ba7858f91c73a6d0dbae44851d145f18eaa",
+    "tests/test_rpc.cpp": "2d3ecfc28908276ecd476dae4697546172121dc9aac97caca91be0537e00f0b5"
+  },
+  "tools_source_sha256": {
+    "tools/build-native-theme-guest.py": "a9af67902a58dd16651cb6da8cada3cd2179aefd30f865c50dbd08f9a5f343e1",
+    "tools/test-native-theme-qt.py": "25f8f12bdb44205098579582c65407e0ad86e561a8494b6d0f5e306a4d9c69cb",
+    "tools/prepare-native-theme-baseline.py": "491f3eb3348a843ff619d7b497e118aa33a2ae819f789ebc9c4ab2a3ceb1f3da",
+    "tools/native-theme-suite.sh": "2a2cd8b4e0148730fac4c7b11cc8c55b4d24ecd24f9ac67b69be07c0afa4b809",
+    "tools/fetch-native-theme-source.py": "becc2533f28ac19bae0254d19f4d5788ad7b2cea09796ae72c48ed75bdd6ec8b",
+    "tools/build-native-theme.sh": "781990c97392451ac8911d9d1dfb5b5e44709f7bfe8fdefc6b64f6dd6ab38f29",
+    "tools/run-native-theme-vm.sh": "b6ffeed998fda4c9a84408a79d028db779f407ff844da223ab3a91c236564103",
+    "tools/native-theme-guest.py": "fa79b87a29db0231beadb499940d2c612bdc08ae125802a4eba45a4dd77746f0"
+  }
+}

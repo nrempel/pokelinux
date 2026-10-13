@@ -161,3 +161,11 @@ Controls remain responsive under actual SIGSTOP; late replies, uncertain restart
 and bounded cleanup failures are fenced. Actual Omarchy ingress, backend effect
 composition, service-manager/process-tree budgets and platform filesystem behavior
 remain open. See [owned lifecycle storage](native-lifecycle-storage.md).
+
+Original Omarchy appearance now passes eight original/native renderer comparisons
+in an ARM64 Hyprland guest, including live theme/font/text-size changes and retained
+window/draft state. Six actual Qt/process cases qualify boot-time font completion
+and failure before uncertain child ownership is relinquished. Installed native
+service/app composition in that session, complete desktop provisioning and physical
+rendering remain separate gates. See [appearance](native-theme.md) and
+[font worker](native-theme-worker.md).

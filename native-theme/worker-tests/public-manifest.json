@@ -1,0 +1,17 @@
+{
+  "qt_version": "6.8.2",
+  "repository": "https://github.com/qt/qtbase",
+  "files": [
+    {
+      "path": "qprocess.cpp",
+      "url": "https://raw.githubusercontent.com/qt/qtbase/v6.8.2/src/corelib/io/qprocess.cpp",
+      "sha256": "c6d079a61f385aeb109de130c4d3a9350e34fed3efc3d19310133eb0db9d6c79"
+    },
+    {
+      "path": "qprocess_unix.cpp",
+      "url": "https://raw.githubusercontent.com/qt/qtbase/v6.8.2/src/corelib/io/qprocess_unix.cpp",
+      "sha256": "85abc29f0ba084d644774422d7dd7c489739e60cc32ba9d00433ec4516067f3f"
+    }
+  ],
+  "publication": "Original source remains ignored; manifest and own harness only"
+}

@@ -1,0 +1,11 @@
+{
+  "scope": "Pre-worker-review reader; previous original Omarchy green remains immutable",
+  "files": {
+    "PhoneThemeFiles.cpp": "4fa90529d2a4f6388e5c0ec1717e4cf64f6bc5398c32ab87c9de34f56387ab38",
+    "PhoneThemeFiles.h": "cb14c863907dde099218e92b362483d5ede891a53fe373228403f976cc79841a"
+  },
+  "post_correction_sources": {
+    "PhoneThemeFiles.cpp": "57b39dcf95a8d28b65cced5d730a13e5eab8726edc2e889d936acdecac668664",
+    "PhoneThemeFiles.h": "9bfdbb38ed23e4b03491073038264596ec3825b91e83d3b05eafd941623ecc1a"
+  }
+}

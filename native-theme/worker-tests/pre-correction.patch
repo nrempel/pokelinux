@@ -1,0 +1,97 @@
+--- a/PhoneThemeFiles.cpp
++++ b/PhoneThemeFiles.cpp
+@@ -5,23 +5,9 @@
+ #include <QSet>
+ #include <QStringDecoder>
+ #include <QProcessEnvironment>
+-#include <cstdlib>
+-#include <limits>
+-#include <time.h>
+ 
+ namespace {
+ constexpr qint64 maxFileBytes = 256 * 1024;
+-constexpr int fontBudgetMs = 1500;
+-qint64 bootTimeMs() {
+-    timespec value{};
+-    if (clock_gettime(CLOCK_BOOTTIME,&value) != 0 || value.tv_sec < 0
+-        || value.tv_sec > std::numeric_limits<qint64>::max()/1000
+-        || value.tv_nsec < 0 || value.tv_nsec >= 1000000000) return -1;
+-    const auto seconds = static_cast<qint64>(value.tv_sec)*1000;
+-    const auto millis = value.tv_nsec/1000000;
+-    if (seconds > std::numeric_limits<qint64>::max()-millis) return -1;
+-    return seconds+millis;
+-}
+ bool readText(const QString &path, bool optional, QString &text) {
+     const QFileInfo info(path);
+     if (!info.exists() && !info.isSymLink()) {
+@@ -46,7 +32,7 @@
+       overridePath(homePath + "/.config/omarchy/shell.toml"),
+       fontPath(homePath + "/.config/fontconfig/fonts.conf") {
+     fontDeadline.setSingleShot(true);
+-    fontDeadline.setInterval(fontBudgetMs);
++    fontDeadline.setInterval(1500);
+     connect(&fontDeadline, &QTimer::timeout, this, [this] { fontOutputValid = false; fontMatch.kill(); });
+     connect(&fontMatch, &QProcess::readyReadStandardOutput, this, [this] {
+         fontOutput += fontMatch.readAllStandardOutput();
+@@ -136,16 +122,9 @@
+ PhoneThemeFiles::~PhoneThemeFiles() {
+     // The only helper is a fixed, direct fc-match child; no shell or detached worker.
+     disconnect(&fontMatch,nullptr,this,nullptr);
+-    disconnect(&watcher,nullptr,this,nullptr);
+-    fontDeadline.stop();
+-    settle.stop();
+     if (fontMatch.state() != QProcess::NotRunning) {
+         fontMatch.kill();
+-        // Never enter QProcess's implicit destructor wait with occupied or
+-        // uncertain ownership. Aborting is a local failure disposition, not
+-        // evidence that an unobserved kernel child was cleaned up.
+-        if (!fontMatch.waitForFinished(1000) || fontMatch.state() != QProcess::NotRunning)
+-            std::abort();
++        fontMatch.waitForFinished(1000);
+     }
+ }
+ 
+@@ -167,12 +146,6 @@
+     activeFontConfiguration = wantedFontConfiguration;
+     fontOutput.clear();
+     fontOutputValid = true;
+-    fontStartedBootMs = bootTimeMs();
+-    if (fontStartedBootMs < 0) {
+-        fontOutputValid = false;
+-        fontResolutionAvailable = false;
+-        return;
+-    }
+     auto environment = QProcessEnvironment::systemEnvironment();
+     environment.insert("HOME",homePath);
+     environment.insert("XDG_CONFIG_HOME",homePath+"/.config");
+@@ -183,11 +156,6 @@
+ 
+ void PhoneThemeFiles::finishFontMatch(int exitCode, QProcess::ExitStatus status) {
+     fontDeadline.stop();
+-    // Qt timers assist cancellation. Completion itself must qualify against
+-    // boot time, including time in suspend or with the event loop undelivered.
+-    const auto completedBootMs = bootTimeMs();
+-    const bool timely = fontStartedBootMs >= 0 && completedBootMs >= fontStartedBootMs
+-        && completedBootMs-fontStartedBootMs < fontBudgetMs;
+     fontOutput += fontMatch.readAllStandardOutput();
+     QStringDecoder decoder(QStringDecoder::Utf8,QStringConverter::Flag::Stateless);
+     const QString decoded = decoder.decode(fontOutput);
+@@ -196,7 +164,7 @@
+     const bool currentRequest = readText(fontPath,true,configuration)
+         && configuration == activeFontConfiguration
+         && activeFontConfiguration == wantedFontConfiguration;
+-    if (currentRequest && timely && fontOutputValid && exitCode == 0 && status == QProcess::NormalExit
++    if (currentRequest && fontOutputValid && exitCode == 0 && status == QProcess::NormalExit
+         && fontOutput.size() <= 4096 && !decoder.hasError() && !family.isEmpty()
+         && family.size() <= 512 && !family.contains('\n') && !family.contains('\0')) {
+         resolvedFontFamily = family;
+--- a/PhoneThemeFiles.h
++++ b/PhoneThemeFiles.h
+@@ -35,7 +35,6 @@
+     bool fontPending = false;
+     bool fontResolutionAvailable = false;
+     bool fontOutputValid = true;
+-    qint64 fontStartedBootMs = -1;
+     QProcess fontMatch;
+     QTimer fontDeadline;
+     QVariantMap current;

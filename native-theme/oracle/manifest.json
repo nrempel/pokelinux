@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "pokelinux.theme-oracle",
+  "name": "Native appearance conformance observer",
+  "version": "0.1.0",
+  "description": "Read-only observation of the original Omarchy style singletons in a disposable test session",
+  "kinds": ["service"],
+  "keepLoaded": true,
+  "entryPoints": {"service": "Service.qml"}
+}

@@ -73,10 +73,31 @@ function palette(snapshot) {
         const a = shell[key+"-alpha"] === undefined ? 1 : Number(shell[key+"-alpha"])
         return composite(value,isFinite(a)?a:1,color(bg))
     }
-    const size = parseInt(shell["font.base-size"],10)
+    const parsedSize = parseInt(shell["font.base-size"],10)
+    const size = isFinite(parsedSize) ? Math.max(1,parsedSize) : 12
+    // Match original Commons.Style's per-token sizes, not app-specific scales.
+    function fontToken(key,mult) {
+        const value = parseInt(shell["font."+key],10)
+        return isFinite(value) && value > 0 ? Math.round(value) : Math.max(1,Math.round(size*mult))
+    }
+    const fonts = {caption:fontToken("caption",0.833),bodySmall:fontToken("body-small",0.917),
+        body:fontToken("body",1),subtitle:fontToken("subtitle",1.083),title:fontToken("title",1.167),
+        heading:fontToken("heading",1.333),display:fontToken("display",2),displayLarge:fontToken("display-large",2.333)}
+    const spacingRaw = parseFloat(shell["spacing.scale"])
+    const spacingScale = isFinite(spacingRaw) && spacingRaw >= 0 ? spacingRaw : 1
+    const withFont = !/^(false|0|no|off)$/i.test(String(shell["spacing.scale-with-font"]).trim())
+    const scale = spacingScale * (withFont ? size/12 : 1)
+    function spacingToken(key,fallback) {
+        const value = parseFloat(shell["spacing."+key])
+        return isFinite(value) && value >= 0 ? Math.round(value) : (scale===0 ? 0 : Math.max(1,Math.round(fallback*scale)))
+    }
+    const spacing = {controlGap:spacingToken("control-gap",8),panelPadding:spacingToken("panel-padding",18),
+        panelGap:spacingToken("panel-gap",14),rowGap:spacingToken("row-gap",8),
+        controlPaddingX:spacingToken("control-padding-x",10),controlPaddingY:spacingToken("control-padding-y",6)}
     return {background:bg,foreground:surface("popups.text",fg),
         surface:surface("popups.background",bg),border:surface("popups.border",accent),
         accent:accent,muted:roles.muted,urgent:roles.urgent,
         positive:hex(base.green)||hex(base.color2)||accent,ink:bg,
-        fontScale:isFinite(size)?Math.max(1,size)/12:1}
+        fontScale:size/12,fontTokens:fonts,spacingTokens:spacing,
+        fontFamily:String(snapshot.resolvedFontFamily || "monospace")}
 }

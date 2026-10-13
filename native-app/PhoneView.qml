@@ -43,35 +43,35 @@ Item {
     }
     Rectangle { anchors.fill: parent; color: root.theme.background }
     ScrollView {
-        anchors.fill: parent; anchors.margins: 20
+        anchors.fill: parent; anchors.margins: root.theme.spacingPixel ? root.theme.spacingPixel("panelPadding",20) : 20
         contentWidth: availableWidth
         clip: true
         ColumnLayout {
             width: parent.width
-            spacing: 20
+            spacing: root.theme.spacingPixel ? root.theme.spacingPixel("panelGap",20) : 20
             Label {
                 text: "Phone"; color: root.theme.foreground
-                font.family: root.theme.monoFamily; font.pixelSize: Math.max(1, Math.round(30 * root.theme.fontScale)); font.bold: true
+                font.family: root.theme.monoFamily; font.pixelSize: root.theme.fontPixel ? root.theme.fontPixel("displayLarge",30) : Math.max(1, Math.round(30 * root.theme.fontScale)); font.bold: true
                 Layout.fillWidth: true
             }
             Label {
                 text: root.session.ready ? "Bridge connected" : root.session.needsRecovery ? "Review required" : "Bridge unavailable"
-                color: root.theme.muted; font.family: root.theme.fontFamily; font.pixelSize: Math.max(1, Math.round(15 * root.theme.fontScale))
+                color: root.theme.muted; font.family: root.theme.fontFamily; font.pixelSize: root.theme.fontPixel ? root.theme.fontPixel("body",15) : Math.max(1, Math.round(15 * root.theme.fontScale))
                 Layout.fillWidth: true; wrapMode: Text.Wrap
             }
             Frame {
-                Layout.fillWidth: true; padding: 20
+                Layout.fillWidth: true; padding: root.theme.spacingPixel ? root.theme.spacingPixel("panelPadding",20) : 20
                 background: Rectangle { color: root.theme.surface; radius: 4; border.color: root.theme.border }
                 ColumnLayout {
-                    anchors.fill: parent; spacing: 16
+                    anchors.fill: parent; spacing: root.theme.spacingPixel ? root.theme.spacingPixel("rowGap",16) : 16
                     Label {
                         text: root.callTitle; color: root.theme.foreground
-                        font.family: root.theme.fontFamily; font.pixelSize: Math.max(1, Math.round(25 * root.theme.fontScale)); font.bold: true
+                        font.family: root.theme.fontFamily; font.pixelSize: root.theme.fontPixel ? root.theme.fontPixel("heading",25) : Math.max(1, Math.round(25 * root.theme.fontScale)); font.bold: true
                         Layout.fillWidth: true; wrapMode: Text.Wrap
                     }
                     Label {
                         text: "Caller ID unavailable"; visible: root.call !== null
-                        color: root.theme.muted; font.family: root.theme.fontFamily; font.pixelSize: Math.max(1, Math.round(16 * root.theme.fontScale))
+                        color: root.theme.muted; font.family: root.theme.fontFamily; font.pixelSize: root.theme.fontPixel ? root.theme.fontPixel("subtitle",16) : Math.max(1, Math.round(16 * root.theme.fontScale))
                         Layout.fillWidth: true; wrapMode: Text.Wrap
                     }
                     Label {
@@ -79,7 +79,7 @@ Item {
                         text: root.actions.outcome === "unknown" || root.session.needsRecovery
                             ? "An earlier action may have taken effect. Review its result before continuing."
                             : "Waiting for the command result…"
-                        color: root.theme.accent; font.family: root.theme.fontFamily; font.pixelSize: Math.max(1, Math.round(16 * root.theme.fontScale))
+                        color: root.theme.accent; font.family: root.theme.fontFamily; font.pixelSize: root.theme.fontPixel ? root.theme.fontPixel("subtitle",16) : Math.max(1, Math.round(16 * root.theme.fontScale))
                         Layout.fillWidth: true; wrapMode: Text.Wrap
                     }
                     IntentButton {
@@ -115,12 +115,12 @@ Item {
                 }
             }
             ColumnLayout {
-                Layout.fillWidth: true; spacing: 12
-                Label { text: "Number"; color: root.theme.foreground; font.family: root.theme.fontFamily; font.pixelSize: Math.max(1, Math.round(16 * root.theme.fontScale)) }
+                Layout.fillWidth: true; spacing: root.theme.spacingPixel ? root.theme.spacingPixel("controlGap",12) : 12
+                Label { text: "Number"; color: root.theme.foreground; font.family: root.theme.fontFamily; font.pixelSize: root.theme.fontPixel ? root.theme.fontPixel("subtitle",16) : Math.max(1, Math.round(16 * root.theme.fontScale)) }
                 TextField {
                     id: number; objectName: "numberField"
                     Layout.fillWidth: true; implicitHeight: 56
-                    font.family: root.theme.monoFamily; font.pixelSize: Math.max(1, Math.round(24 * root.theme.fontScale)); color: root.theme.foreground
+                    font.family: root.theme.monoFamily; font.pixelSize: root.theme.fontPixel ? root.theme.fontPixel("display",24) : Math.max(1, Math.round(24 * root.theme.fontScale)); color: root.theme.foreground
                     Accessible.name: "Phone number"
                     placeholderText: "Phone number"; placeholderTextColor: root.theme.muted
                     inputMethodHints: Qt.ImhDialableCharactersOnly
@@ -129,7 +129,7 @@ Item {
                     background: Rectangle { color: root.theme.surface; radius: 4; border.color: number.activeFocus ? root.theme.accent : root.theme.border }
                 }
                 RowLayout {
-                    Layout.fillWidth: true; spacing: 12
+                    Layout.fillWidth: true; spacing: root.theme.spacingPixel ? root.theme.spacingPixel("controlGap",12) : 12
                     IntentButton {
                         theme: root.theme; text: root.keypadVisible ? "Hide keypad" : "Keypad"
                         contextKey: "keypad"; Layout.fillWidth: true

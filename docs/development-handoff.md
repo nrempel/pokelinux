@@ -244,6 +244,16 @@ a two-second absolute budget and abort with ownership retained. Injected wait
 failures are distinct from uninterruptible Linux tasks. Existing historical receipts
 still grant no later backend capability. See `native-lifecycle-storage.md`.
 
+Original Omarchy appearance now executes the pinned v4.0.4 scripts and shell
+against production Qt view/theme components in a private ARM64 Hyprland guest.
+Eight original/native comparisons pass, including live font changes and token
+overrides without replacing the window/draft. Six real Qt/process cases qualify
+boot-time result fencing and abort before uncertain helper ownership is lost.
+Historical theme proof and the corrected worker replay have separate provenance;
+injected wait faults are not uninterruptible-task evidence. Installed native
+service composition, complete desktop provisioning and hardware remain open.
+See `native-theme.md` and `native-theme-worker.md`.
+
 ## Next work
 
 1. Recover and test the actual vendor cleanup/reset and registration-overlap

@@ -11,7 +11,7 @@ Button {
     implicitHeight: 56
     implicitWidth: 120
     font.family: theme.fontFamily
-    font.pixelSize: Math.max(1, Math.round(17 * theme.fontScale))
+    font.pixelSize: theme.fontPixel ? theme.fontPixel("title",17) : Math.max(1, Math.round(17 * theme.fontScale))
     font.weight: Font.DemiBold
     Accessible.name: text
     onPressed: pressedContext = contextKey

@@ -352,11 +352,10 @@ different selection targets during a normal theme switch. It does not claim an
 atomic transaction across independent in-place edits of several theme files.
 The debounce coalesces filesystem events; it is not a transaction protocol.
 
-This component only loads trusted local appearance data. Palette parsing,
-surface-role mapping, fontconfig refresh, rendered theme-switch tests and the
-installed standalone entry point remain unfinished. No call state is owned by
-the reader. Its four file integration cases supplement the earlier native
-controller/view tests; they do not establish Omarchy theme rendering yet.
+This component only loads trusted local appearance data and owns no call state.
+The four initial file integration cases were a historical file-reader checkpoint.
+Palette/view integration and original Omarchy execution are now qualified below;
+installed native service composition remains a separate gate.
 
 The full native suite passes 47 behavior cases / 57 Qt entries after this
 addition. The reader's red test failed on missing loading behavior; a second
@@ -382,10 +381,12 @@ values are replaced together. Missing required base colors preserve the previous
 palette and mark the source unavailable. The default is a neutral startup
 palette until valid installed theme data exists.
 
-The view uses the `monospace` family, matching Omarchy's fontconfig alias, and
-scales its phone-sized typography with `[font].base-size`. Per-token shell font
-sizes and live fontconfig family-cache refresh are still unfinished; do not
-claim complete font integration from this checkpoint.
+The view now uses the original shell's per-token font sizes and spacing. One
+owned fixed `/usr/bin/fc-match` child resolves Omarchy's `monospace` alias after
+fontconfig changes; the concrete family updates the existing Qt window. Invalid
+resolution retains the last family. Admission and completion use `CLOCK_BOOTTIME`,
+and uncertain teardown aborts before relinquishing an occupied QProcess. This
+qualifies appearance; it grants no service or user-action authority.
 
 The rendered integration test changes real theme files while the existing view
 holds an entered number and a synthetic unresolved command. It verifies the
@@ -398,8 +399,19 @@ real Rust service and authenticated synthetic Android peer.
 Palette tests also check explicit accent precedence, user override precedence,
 invalid-file recovery, numbered-color fallbacks, unquoted colors supported by
 the pinned shell, bounded reference cycles, unknown roles and alpha composition.
-The installed standalone entry point, shell plugin wiring, Android framework
-run and complete theme/font contract remain required.
+The later dedicated original Omarchy proof executes unmodified v4.0.4 theme,
+font and text-size commands in an ARM64 Hyprland guest. Eight original/native
+comparisons cover two themes, two fonts, token overrides and retained draft/intent
+state. Six actual Qt/process cases separately qualify the font worker, including
+late completion with timers undelivered and explicitly injected uncertain wait
+observations. See [appearance integration](../docs/native-theme.md) and
+[owned worker](../docs/native-theme-worker.md).
+
+The renderer uses production view/theme components with synthetic call data.
+Installed native service/app composition in the same real Omarchy session, user
+plugin activation, complete desktop provisioning, arbitrary themes/wallpapers,
+actual suspend and physical display/input remain open. Android tests are reference
+evidence rather than a production theme dependency.
 
 ## Standalone entry point
 
