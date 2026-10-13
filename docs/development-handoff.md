@@ -38,6 +38,16 @@ or phone is attached. See [boot probe](native-phone-boot-probe.md) and
 IO, Pixel module/diagnostic/thermal/watchdog behavior and actual phone boot remain
 unqualified. The first restricted Pixel candidate is independent of full IMS/UI.
 
+Later unchanged-init ARM controls qualify held-child failure/powerdown, exit38
+actual wait/rejection and a real `CAP_SYS_BOOT`-denied shutdown producing EPERM
+and visible PID1 panic. Root verifies44 private bindings plus six unchanged
+baseline sources. The failed shutdown consumer expectation is retained; corrected
+classification uses the same frozen console. Held cleanup is source-bound
+inference without independent syscall tracing, and uninterruptible tasks/full
+signal policy remain open. These authored control ramdisks do not inherit Pixel
+candidate evidence. No probe change was needed. See
+[failure proof](evidence/native-boot-probe-failure-provenance.json).
+
 That experimental candidate now exists offline: a reproducible1,454,080-byte
 unsigned v4 `init_boot` owns generic `/init` with the exact native ELF. Pinned AOSP
 unpacking, Rust geometry, independent actual vendor-fragment overlay and eight

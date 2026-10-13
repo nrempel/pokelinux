@@ -36,6 +36,21 @@ wait implementation are present, but permanently held-child/error/shutdown-signa
 integration is not qualified by the two successful groups. Console/device IO,
 module loading and persistent boot-log/USB diagnostics also remain work.
 
+Three later actual-kernel controls execute the unchanged init ELF with separate
+authored RAM fixtures. A permanently held child reaches failure and powerdown
+in3.969s; child exit38 is actually waited and rejected before powerdown in1.716s.
+A bootstrap removing `CAP_SYS_BOOT` produces real kernel EPERM on poweroff,
+followed by visible PID1 panic in4.769s. These are observed wrapper times.
+The shutdown consumer initially expected the wrong error/abort representation;
+its failure remains preserved, and the corrected classifier checks the same
+frozen console without another VM run. The held-child cleanup branch is supported
+by exact source and observed poweroff, with no independent reap syscall trace:
+the kernel rejected the requested tracing options. Uninterruptible kernel-task
+cleanup and full PID1 signal policy remain unqualified. There was no meaningful
+implementation RED and no probe change. See
+[failure provenance](evidence/native-boot-probe-failure-provenance.json).
+These fixture ramdisks are separate from the Pixel candidate below.
+
 The first experimental Pixel candidate is now built offline. The
 [packager](../native-boot-package/README.md) produces a reproducible1,454,080-byte
 unsigned v4 `init_boot` containing the exact native init and diagnostic child.

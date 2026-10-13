@@ -1,0 +1,357 @@
+{
+  "scope": "Unchanged restricted native Rust PID1 failure lifecycle under actual non-Pixel Arch ARM7.1.6 kernel; authored RAM-only fixture controls",
+  "baseline_commit": "5d428d3d64f6681563fff1aafa2d8e0776e443b7",
+  "production_changes": [],
+  "baseline_source_bindings": {
+    "native-boot-probe/Cargo.toml": "2c22d417bf3a52d4dfb6981bd0887d10cca27388e068fb19ccc85c4dec3b9e5b",
+    "native-boot-probe/Cargo.lock": "a62e6e33b94c42f380421526cffc60855b22cbf0e1e9730deac582f45c5a2b38",
+    "native-boot-probe/src/main.rs": "e0a40097a35b4ef3558c2b9e0fa56f2f679bcdc5dc4d19973e63ce2b728c1b60",
+    "native-boot-probe/src/child.rs": "fa2b8705383a20add37f2a3fbecfa619849bf586901ee7dc90e96535502e87ca",
+    "tools/native-boot-probe/run.py": "6580ba9d17e916f629aebdd0a7f6f4f325da6cdeda53684daa0d5277eb2b08ee",
+    "tools/native-boot-probe/build.sh": "6acd675fcb096105ce56fb39dd7bcad4eb9897715ae73987cba24f0fdf4bbe4c"
+  },
+  "native_elf_bindings": {
+    "frozen-bin/pokelinux-boot-probe": "cbf938d20127b02dc84afe2bd0e1fc4c66bd6f2d33d33c436e7a8c9fe37d205c",
+    "frozen-bin/pokelinux-boot-child": "3b15eb4a9fd289e6664c917861f98bbe385e117e26b28abb149b3021e4b19e63"
+  },
+  "authored_control_source_bindings": {
+    "authored-fixtures/deny-poweroff-init.c": "ac5eb8953d0f438e121699aad2a7a2cbc9a58d54f634a9d65f55d30daa3efc48",
+    "authored-fixtures/failed-child.c": "089b2073bde676be37ed1730157234484240c629dd84edd4085669e6ef1d995d",
+    "authored-fixtures/held-child.c": "c12ae902153e504137974c9ebed94e204c98946791ed56c5d2e40ec0c6be64bc",
+    "baseline-source/tools/native-boot-probe/run.py": "6580ba9d17e916f629aebdd0a7f6f4f325da6cdeda53684daa0d5277eb2b08ee",
+    "correct-frozen-runtime-consumer.py": "4df4893b7ea13d55cf113277152bd318dfcd983c08087ca1c82a9f9c36c1520a",
+    "fixture-build-command.json": "29a67d026a425f9848756b3efa3767da89a6065d0f3eb97ce41ddd83137a2e4c",
+    "kernel-lifecycle-controls.py": "6c362f0ecf8e8daa4425884bead5444f2585d97b5a5a727713966fd2954b5ea2"
+  },
+  "fixture_binary_bindings": {
+    "authored-fixtures/deny-poweroff-init": "77912f5686bd2bc1ce52657e7d84a1d6672b0cf02c9bce206bb5aaeee7cf54ee",
+    "authored-fixtures/failed-child": "062c26050b0de38dc71cdf466b7120ae87a216b6e64cae94dd9c0bbabdc2be3b",
+    "authored-fixtures/held-child": "d6ba869a4ff3ef5be17cbae4533c37fffd3e408f6b9d5df46b2c1191eea11e8f"
+  },
+  "build_image": "0b4b956502a9f55d992eaced6975737b523be19bd2034078983b36bbcfd7aee6",
+  "qemu_image": "561177a4305051567b1d28d67ba9a95e0ce0ad32a8815b49da42fe71aa5a3dd6",
+  "kernel_sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+  "private_evidence_root": "/tmp/pokelinux-native-boot-failure-sol-evidence",
+  "all_private_bindings_manifest": {
+    "file": "all-private-bindings.json",
+    "sha256": "90321e9a73ba5a0d9be9d6bff801749bf40b21d66c5dcf3eda7d714707d6bfa5",
+    "entries": 44
+  },
+  "cases": [
+    {
+      "label": "held-child-1",
+      "hypothesis": "A permanently held authored child might defeat the BOOTTIME bound or shutdown ownership.",
+      "hypothesis_falsified": true,
+      "observed_failure_path_passed": true,
+      "original_consumer_passed": true,
+      "runtime_reexecuted_after_predicate_correction": false,
+      "elapsed_seconds": 3.969,
+      "selection": {
+        "kernel": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+        "qemu_image": "561177a4305051567b1d28d67ba9a95e0ce0ad32a8815b49da42fe71aa5a3dd6",
+        "native_init": "cbf938d20127b02dc84afe2bd0e1fc4c66bd6f2d33d33c436e7a8c9fe37d205c",
+        "authored_helper": "d6ba869a4ff3ef5be17cbae4533c37fffd3e408f6b9d5df46b2c1191eea11e8f",
+        "baseline_runner": "6580ba9d17e916f629aebdd0a7f6f4f325da6cdeda53684daa0d5277eb2b08ee",
+        "control_runner": "6c362f0ecf8e8daa4425884bead5444f2585d97b5a5a727713966fd2954b5ea2",
+        "initramfs": "14516a929a5ab5d79db2faef15c55242f35abba8976a33cef9245f13608439b7",
+        "archive_entries": [
+          {
+            "name": "dev",
+            "mode": "0o40755",
+            "size": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "major": 0,
+            "minor": 0
+          },
+          {
+            "name": "proc",
+            "mode": "0o40755",
+            "size": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "major": 0,
+            "minor": 0
+          },
+          {
+            "name": "sys",
+            "mode": "0o40755",
+            "size": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "major": 0,
+            "minor": 0
+          },
+          {
+            "name": "dev/console",
+            "mode": "0o20600",
+            "size": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "major": 5,
+            "minor": 1
+          },
+          {
+            "name": "dev/null",
+            "mode": "0o20666",
+            "size": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "major": 1,
+            "minor": 3
+          },
+          {
+            "name": "init",
+            "mode": "0o100755",
+            "size": 1190352,
+            "sha256": "cbf938d20127b02dc84afe2bd0e1fc4c66bd6f2d33d33c436e7a8c9fe37d205c",
+            "major": 0,
+            "minor": 0
+          },
+          {
+            "name": "probe-child",
+            "mode": "0o100755",
+            "size": 705520,
+            "sha256": "d6ba869a4ff3ef5be17cbae4533c37fffd3e408f6b9d5df46b2c1191eea11e8f",
+            "major": 0,
+            "minor": 0
+          }
+        ]
+      },
+      "runtime_console_sha256": "a2ef9ba1e21db82e235ed4d0a017c2d9accdce2be85215b1fa1c0f255d3fe9bb",
+      "held_reap_observation": "The frozen implementation reaches failure+poweroff only after child.try_wait returns Some on cleanup; this is source-bound inference, not an independent syscall trace.",
+      "private_bindings": {
+        "held-child-1/command.json": "57bcf8fedaa7e007cb1725063f24893f0d5776cdd8318512df8633539b687458",
+        "held-child-1/console.log": "a2ef9ba1e21db82e235ed4d0a017c2d9accdce2be85215b1fa1c0f255d3fe9bb",
+        "held-child-1/hypothesis-before-execution.json": "855d1312851dd9f2e051eca60ae1c573c216aae8dc9356c4a223c886ae435edf",
+        "held-child-1/probe.cpio.gz": "14516a929a5ab5d79db2faef15c55242f35abba8976a33cef9245f13608439b7",
+        "held-child-1/result.json": "7b24a46fcd35720c48fb112c27f6f861078eb2af8ce906dcc320f2d26c5ef1dd",
+        "held-child-1/selection.json": "e0766e5607671a13b4b8708c037e0e6ca2a00df185151edbf0ef96cad942247d"
+      }
+    },
+    {
+      "label": "failed-child-1",
+      "hypothesis": "An actual authored child exit38 might incorrectly count as success or skip failure shutdown.",
+      "hypothesis_falsified": true,
+      "observed_failure_path_passed": true,
+      "original_consumer_passed": true,
+      "runtime_reexecuted_after_predicate_correction": false,
+      "elapsed_seconds": 1.716,
+      "selection": {
+        "kernel": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+        "qemu_image": "561177a4305051567b1d28d67ba9a95e0ce0ad32a8815b49da42fe71aa5a3dd6",
+        "native_init": "cbf938d20127b02dc84afe2bd0e1fc4c66bd6f2d33d33c436e7a8c9fe37d205c",
+        "authored_helper": "062c26050b0de38dc71cdf466b7120ae87a216b6e64cae94dd9c0bbabdc2be3b",
+        "baseline_runner": "6580ba9d17e916f629aebdd0a7f6f4f325da6cdeda53684daa0d5277eb2b08ee",
+        "control_runner": "6c362f0ecf8e8daa4425884bead5444f2585d97b5a5a727713966fd2954b5ea2",
+        "initramfs": "89139595c8edb48f2323acaecc1536e92578200ce5f128ec6a106980e2aab8b1",
+        "archive_entries": [
+          {
+            "name": "dev",
+            "mode": "0o40755",
+            "size": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "major": 0,
+            "minor": 0
+          },
+          {
+            "name": "proc",
+            "mode": "0o40755",
+            "size": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "major": 0,
+            "minor": 0
+          },
+          {
+            "name": "sys",
+            "mode": "0o40755",
+            "size": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "major": 0,
+            "minor": 0
+          },
+          {
+            "name": "dev/console",
+            "mode": "0o20600",
+            "size": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "major": 5,
+            "minor": 1
+          },
+          {
+            "name": "dev/null",
+            "mode": "0o20666",
+            "size": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "major": 1,
+            "minor": 3
+          },
+          {
+            "name": "init",
+            "mode": "0o100755",
+            "size": 1190352,
+            "sha256": "cbf938d20127b02dc84afe2bd0e1fc4c66bd6f2d33d33c436e7a8c9fe37d205c",
+            "major": 0,
+            "minor": 0
+          },
+          {
+            "name": "probe-child",
+            "mode": "0o100755",
+            "size": 705024,
+            "sha256": "062c26050b0de38dc71cdf466b7120ae87a216b6e64cae94dd9c0bbabdc2be3b",
+            "major": 0,
+            "minor": 0
+          }
+        ]
+      },
+      "runtime_console_sha256": "a6617a76c08cbf997721aa31949b81a4cc421e49009ed4c5e391178126a29c33",
+      "held_reap_observation": "Native console reports actual_wait=true exit=Some(38).",
+      "private_bindings": {
+        "failed-child-1/command.json": "cfd224f6d30f2a23bfd5961e3f1f58300f7721504ac1c33e60433e4da835c738",
+        "failed-child-1/console.log": "a6617a76c08cbf997721aa31949b81a4cc421e49009ed4c5e391178126a29c33",
+        "failed-child-1/hypothesis-before-execution.json": "ca05c6c45ba35f322da05299064d108080cd688d1773bf91d1645a2ff32269d7",
+        "failed-child-1/probe.cpio.gz": "89139595c8edb48f2323acaecc1536e92578200ce5f128ec6a106980e2aab8b1",
+        "failed-child-1/result.json": "fd51d405e7f98ce7750f5531ff41e384994cf678c673afa067467b74241494d3",
+        "failed-child-1/selection.json": "93230e63ae2f0f3f6a7556dfca9c1f29bebed5f62e738eb20e4edc3f585ec605"
+      }
+    },
+    {
+      "label": "held-child-denied-poweroff-trace-1",
+      "hypothesis": "A real kernel poweroff EPERM after held-child termination might be hidden or allow PID1 to change role.",
+      "hypothesis_falsified": true,
+      "observed_failure_path_passed": true,
+      "original_consumer_passed": false,
+      "runtime_reexecuted_after_predicate_correction": false,
+      "elapsed_seconds": 4.769,
+      "selection": {
+        "kernel": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+        "qemu_image": "561177a4305051567b1d28d67ba9a95e0ce0ad32a8815b49da42fe71aa5a3dd6",
+        "native_init": "cbf938d20127b02dc84afe2bd0e1fc4c66bd6f2d33d33c436e7a8c9fe37d205c",
+        "authored_helper": "d6ba869a4ff3ef5be17cbae4533c37fffd3e408f6b9d5df46b2c1191eea11e8f",
+        "baseline_runner": "6580ba9d17e916f629aebdd0a7f6f4f325da6cdeda53684daa0d5277eb2b08ee",
+        "control_runner": "6c362f0ecf8e8daa4425884bead5444f2585d97b5a5a727713966fd2954b5ea2",
+        "initramfs": "8a9fc9df373d4908cc2fa9ae20beeb423d5849285b287dc3c3b29b139828c7e4",
+        "archive_entries": [
+          {
+            "name": "dev",
+            "mode": "0o40755",
+            "size": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "major": 0,
+            "minor": 0
+          },
+          {
+            "name": "proc",
+            "mode": "0o40755",
+            "size": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "major": 0,
+            "minor": 0
+          },
+          {
+            "name": "sys",
+            "mode": "0o40755",
+            "size": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "major": 0,
+            "minor": 0
+          },
+          {
+            "name": "dev/console",
+            "mode": "0o20600",
+            "size": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "major": 5,
+            "minor": 1
+          },
+          {
+            "name": "dev/null",
+            "mode": "0o20666",
+            "size": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "major": 1,
+            "minor": 3
+          },
+          {
+            "name": "init",
+            "mode": "0o100755",
+            "size": 705400,
+            "sha256": "77912f5686bd2bc1ce52657e7d84a1d6672b0cf02c9bce206bb5aaeee7cf54ee",
+            "major": 0,
+            "minor": 0
+          },
+          {
+            "name": "native-init",
+            "mode": "0o100755",
+            "size": 1190352,
+            "sha256": "cbf938d20127b02dc84afe2bd0e1fc4c66bd6f2d33d33c436e7a8c9fe37d205c",
+            "major": 0,
+            "minor": 0
+          },
+          {
+            "name": "probe-child",
+            "mode": "0o100755",
+            "size": 705520,
+            "sha256": "d6ba869a4ff3ef5be17cbae4533c37fffd3e408f6b9d5df46b2c1191eea11e8f",
+            "major": 0,
+            "minor": 0
+          }
+        ],
+        "authored_bootstrap": "77912f5686bd2bc1ce52657e7d84a1d6672b0cf02c9bce206bb5aaeee7cf54ee"
+      },
+      "runtime_console_sha256": "832c23b621abb7333b3c0ec57560bd45ec06df9b045eccdac265bccfe44abca1",
+      "held_reap_observation": "The frozen implementation reaches failure+poweroff only after child.try_wait returns Some on cleanup; this is source-bound inference, not an independent syscall trace.",
+      "private_bindings": {
+        "held-child-denied-poweroff-trace-1/command.json": "29d322a67ad39f3eb6d6051b801e67fc42cda4042d6530a7c694552bb38a4012",
+        "held-child-denied-poweroff-trace-1/console.log": "832c23b621abb7333b3c0ec57560bd45ec06df9b045eccdac265bccfe44abca1",
+        "held-child-denied-poweroff-trace-1/hypothesis-before-execution.json": "52e0724188584811104d1982b9ae45bd22f10531caccf4e70460b86a8036afc7",
+        "held-child-denied-poweroff-trace-1/probe.cpio.gz": "8a9fc9df373d4908cc2fa9ae20beeb423d5849285b287dc3c3b29b139828c7e4",
+        "held-child-denied-poweroff-trace-1/result.json": "4b223e94bdda2bbf73c033d8b0707b16e3b4331457b645e4d7a2b94f4dfca911",
+        "held-child-denied-poweroff-trace-1/selection.json": "9462e21a8c222b1a00a24576bd65cfc2a9ebd66c00e53cc9ab019098aa891644"
+      }
+    }
+  ],
+  "checks": {
+    "all_corrected_frozen_failure_paths_pass": true,
+    "meaningful_implementation_red_found": false,
+    "rust_probe_source_changed": false,
+    "rust_probe_elf_changed": false,
+    "no_elf_interp_or_dynamic_section": true,
+    "all_owned_containers_absent_after_actual_wait": true,
+    "candidate_image_unchanged": true,
+    "root_disk_attached": false,
+    "network_attached": false,
+    "phone_accessed": false,
+    "vendor_userspace_executed": false,
+    "google_kernel_executed": false
+  },
+  "limits": {
+    "pixel_candidate_boot_proof_inherited_by_controls": false,
+    "pixel_kernel_executed": false,
+    "phone_accessed": false,
+    "full_pid1_signal_policy_qualified": false,
+    "uninterruptible_kernel_task_cleanup_qualified": false,
+    "independent_held_branch_reap_syscall_observed": false,
+    "shutdown_success_after_reboot_error_claimed": false
+  },
+  "retained_failed_attempts": [
+    "execution-startup-attempts.json",
+    "initial-controls-summary.json",
+    "initial-controls.log",
+    "held-child-denied-poweroff-trace-1/result.json"
+  ],
+  "decision": "Existing failure handling already passes the meaningful authored held, exit38 and kernel poweroff-error boundaries. Preserve falsified hypotheses and make no implementation change.",
+  "next_real_boundaries": [
+    "Uninterruptible kernel-task termination/reaping under an actual kernel, with independent cleanup observation and retained ownership until kernel failure.",
+    "Explicit PID1 signal policy where a required signal has defined behavior; selected Pixel kernel disables PID namespaces.",
+    "Pixel console/device diagnostics, mount/reboot latency, watchdog/thermal and later separately authorized hardware boot."
+  ],
+  "untouched_pixel_candidate": {
+    "path": "/dev/shm/pokelinux-native-boot-package-sol-frozen/first/init_boot.img",
+    "sha256": "588cabd9399e1ece30cd35373c07d5de8ee5c6654bae692879aeb912c9ac1faf",
+    "executed_by_these_controls": false,
+    "proof_inherited_by_authored_controls": false
+  },
+  "independent_publication_review": {
+    "private_bindings_verified": 44,
+    "current_probe_and_runner_sources_match_frozen_baseline": true,
+    "held_cleanup_claim": "source-bound inference, no independent wait syscall trace",
+    "failed_consumer_result_preserved": true,
+    "runtime_reexecuted_for_corrected_predicate": false
+  }
+}
