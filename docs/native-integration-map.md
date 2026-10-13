@@ -64,9 +64,12 @@ appearance ACL setup remain explicit test infrastructure.
    containment and external-transition publication ordering as explicit gates.
    Current [owned focus](native-session-owned-focus.md) replaces scalar identity:
    14 leaf/26 observer checks pass on host/ARM,15 host/14 ARM actor groups and17
-   original-compositor groups qualify separate paths. Continue their joint
-   installed app path; protected procfs/common namespaces and matched Pixel kernel
-   qualification remain gates.
+   original-compositor groups qualify separate paths. The
+   [joint installed app path](native-session-installed-app.md) now passes six normal
+   production Qt groups and three separate10-group diagnostic source epochs for
+   local synthetic history. Combine receiving/read isolation next; actual locked
+   graphics can expire the original100ms lease and restoration remains unavailable.
+   Protected procfs/common namespaces and matched Pixel kernel remain gates.
 5. Add one authorized outbound operation through the same authority to the frozen
    synthetic backend. Resolve production identity/ACK/reset and device backend
    gates separately, then extend the installed path to the remaining phone apps.

@@ -350,7 +350,7 @@
   },
   "report": {
     "path": "docs/native-session-owned-focus.md",
-    "sha256": "8598ad65c1ce9843c17c3dfa148f9d7d2bf6d45a5656e4e4030d9d6f320fad69",
-    "bytes": 9284
+    "sha256": "6b03d8272699fbe16db90bfd6d1d06d0b20502ee835f7750b0faa0711425813a",
+    "bytes": 9534
   }
 }

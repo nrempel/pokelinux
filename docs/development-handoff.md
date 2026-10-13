@@ -351,19 +351,31 @@ was after code drafting, explicitly regression evidence rather than chronologica
 TDD. Core source/leaf reds preceded implementation. See
 `native-session-owned-focus.md` and clean provenance.
 
-The original100ms lease and cold graphics availability gate remain. Matched Pixel
-6.6 image/config/KMI and protected common procfs/PID/user namespace deployment are
-unqualified. Next compose actual compositor/current actor/installed native app,
-then trusted launch and genuine Quickshell/PAM/restore containment, secure frames,
-resume/wake. No matched kernel replacement or physical hardware completion follows.
+The actual original compositor now composes with the current observer/actor and
+installed native Messages window. Six normal production-app groups and three
+independent10-group diagnostic epochs pass. Unknown source, separate grants,
+central null/layer focus, root intents and source unload/stop/death fence actual
+reads. The separate fixture numeric-FD alias RED/GREEN prevents double adoption;
+the guarded entry passes a fresh normal ARM app replay. Local synthetic history,
+normal conversation visibility and diagnostic literal body remain separate.
+See `native-session-installed-app.md` and its authored provenance.
+
+The original100ms lease and locked-graphics availability gate remain: actual lock
+can expire the source, and no failed source is revived. Trusted launch/procfs/common
+namespaces, genuine Quickshell/PAM restoration, privileged Wayland containment,
+secure frames, resume/wake and notifications remain open. Matched Pixel6.6
+image/config/KMI remains unqualified. The receiving/read split needs its explicit
+read-worker dispatch and a fresh joint replay before combining the evidence.
+No matched kernel replacement or physical hardware completion follows.
 
 ## Next work
 
 1. Continue the qualified synthetic incoming Messages path with raw retention/capacity,
    cold backlog availability and held-read cancellation that preserves shared
    receiving. Retain original ingestion deadlines and durable source uncertainty;
-   history recovery never permits implicit backend reattachment. The transferred focus-peer handle now passes host/ARM interface checks; continue
-   the joint compositor/current-authority/installed-app path with that protocol. Then qualify trusted
+   history recovery never permits implicit backend reattachment. The transferred focus-peer handle now passes host/ARM interface checks; the joint
+   original-compositor/current-authority/installed-app local-history path now passes separately. Combine
+   receiving/read isolation with that path, then qualify trusted
    lock admission/restore, notifications and wake. Producer/ACK/reset,
    sending and hardware gates remain separate. See `native-integration-map.md`,
    `native-messages-service.md` and `native-messages-incoming.md`.

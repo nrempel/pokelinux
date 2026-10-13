@@ -109,8 +109,11 @@ the first adapter load and accepted frame. Earlier cold render gaps above100ms
 remain unresolved. Preparation is not source revival and the lease was not relaxed.
 Bounded bytes/work do not prove a hard wall-clock bound for kernel/procfs IO.
 
-Actual original compositor → actor → installed native Messages is the next joint
-boundary. Trusted launch/configuration/plugin identity, genuine Omarchy
+The subsequent [actual original compositor → actor → installed Messages path](native-session-installed-app.md)
+now passes six normal production Qt groups and three separate10-group diagnostic
+epochs for local synthetic history. Its locked-graphics expiry remains an
+availability gate; combined receiving/read isolation needs a fresh replay.
+Trusted launch/configuration/plugin identity, genuine Omarchy
 Quickshell/PAM admission/restoration, privileged Wayland containment, delegation/
 popup ownership and secure output presentation remain separate gates. Forced
 numeric PID reuse, translated namespaces, physical suspend/input/display, wake,

@@ -251,7 +251,9 @@ and17 prepared original-compositor/observer groups qualify separate boundaries.
 The actor matches its already owned app generation using one pinned protected
 procfs view and final joint liveness; scalar identity and old wire fields are gone.
 Original sample deadlines, semantic revisions and independent root denial intents
-still gate reads. Joint installed app composition, cold rendering and exact retained
-Pixel kernel/procfs/namespace qualification remain open. Genuine Omarchy PAM/restore
+still gate reads. The [joint installed app path](native-session-installed-app.md)
+now passes six normal Qt groups and three separate10-group diagnostic source epochs
+for local synthetic history. Cold/locked rendering, combined receiving/read isolation
+and exact retained Pixel kernel/procfs/namespace qualification remain open. Genuine Omarchy PAM/restore
 containment, secure presentation, actual resume/wake and hardware remain gates.
 See [owned focus](native-session-owned-focus.md).
