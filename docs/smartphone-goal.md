@@ -245,12 +245,13 @@ preserve exact IDs, exclusions and history-only recovery. It uses the frozen
 inbox limits, cold-backlog deadlines and production receive remain open. See
 [enumeration](native-messages-enumeration.md).
 
-Native session prototypes now separately qualify16 actual process/socket/exec
-cases,13 corrected ARM synthetic-source/current-authority groups and17 prepared
-original-compositor/observer groups. Original source leases, semantic revisions,
-exact app identity and independent root denial intents gate read publication.
-Cold rendering, retained Pixel kernel identity and joint installed app composition
-remain open. The next unified owned-peer-pidfd design targets the retained6.6
-interface; no new kernel or compatibility fallback is assumed. Trusted Omarchy
-PAM/restore containment, secure presentation, actual resume/wake and hardware
-remain gates. See [native ingress](native-session-ingress.md).
+Native session identity now transfers and retains one owned focus pidfd protocol.
+14 leaf/26 observer cases pass on host and actual ARM;15 host/14 ARM actor groups
+and17 prepared original-compositor/observer groups qualify separate boundaries.
+The actor matches its already owned app generation using one pinned protected
+procfs view and final joint liveness; scalar identity and old wire fields are gone.
+Original sample deadlines, semantic revisions and independent root denial intents
+still gate reads. Joint installed app composition, cold rendering and exact retained
+Pixel kernel/procfs/namespace qualification remain open. Genuine Omarchy PAM/restore
+containment, secure presentation, actual resume/wake and hardware remain gates.
+See [owned focus](native-session-owned-focus.md).

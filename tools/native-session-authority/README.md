@@ -2,90 +2,148 @@
 
 This fixture runs the real lifecycle actor, native session Observer, native
 Messages storage worker and SQLite projection in an owned Linux container. Its
-facts source is a separately launched synthetic UID1000 process, not Hyprland.
-The Messages client is the actual installed app launched as UID11010. The fixture
-never calls manual root unlock/background controls to establish a positive read.
-Root policy grants remain separate from source facts.
+facts source is a separately launched synthetic UID1000 process. The Messages
+client is an actual installed test app launched as UID11010. Positive reads use
+source focus/unlock facts and a separate actor policy grant; they never use root
+unlock/background controls to establish foreground authority.
 
-A root-created inherited `SOCK_SEQPACKET` channel carries kernel
-`SCM_CREDENTIALS`; the creation-time peer credentials are recorded separately.
-The installer transfers the source socket and an independently owned source pidfd
-only to the fixture service. The actor gets a real Observer Provider. Each source
-focus names the actual launched app's socket-derived `SO_PEERPIDFD` device/inode,
-checked against a separately opened live app pidfd. No hard-coded PID or synthetic
-pidfs identity is used for positive authority.
+A root-created inherited `SOCK_SEQPACKET` channel carries actual kernel
+`SCM_CREDENTIALS`; its creation-time credentials are recorded separately. The
+installer transfers the source socket and a separately owned source pidfd to the
+fixture service. The root test driver gets the launched app's actual
+`SO_PEERPIDFD` from its private app-driver socket, retains it, and transfers it to
+the source over a private control socket. The source retains that handle across
+heartbeats. Every focused facts packet carries only PID/UID/GID metadata and
+exactly one actual `SCM_RIGHTS` pidfd; null focus carries no descriptor. Received
+control handles have atomic CLOEXEC and are closed on replacement, null focus,
+source close and exit. Extra, truncated or mismatched control rights are refused.
 
-The fixture service exists only behind `isolated-fixture` in this separate crate.
-Its inherited descriptor arguments do not add a selector to production
-`messages-service`. Worker entry points dispatch to the existing native workers.
+The production Observer first checks that the retained source pidfd is living
+and matches the expected source PID in the pinned procfs view. It then retains
+the received focused handle. The actor compares
+it with its already-owned launched app pidfd through the shared identity leaf's
+pinned protected procfs view and a final joint liveness poll. Numeric focus PIDs
+never cause a pidfd lookup. Device/inode metadata are recorded as observations,
+not used to grant authority. This protocol works with host Linux6.8 shared
+anon-inode pidfds and newer ARM pidfs handles. Deployment still requires one
+qualified PID namespace and protected procfs mount.
 
-Run from the checkout with the already provisioned local Docker image and offline
-Cargo cache:
+The inherited descriptor arguments exist only behind `isolated-fixture` in this
+separate crate. They do not add a selector to production `messages-service`.
+Worker entry points dispatch to the existing native workers. Current combined
+history/enumeration sources are selected by default. This selection does not
+qualify a joint actual Binder/session run.
 
-```sh
-python3 tools/native-session-authority/runner.py --phase red --label red-proof
-python3 tools/native-session-authority/runner.py --phase green --label green-proof
-```
-
-Use `--case <case_name>` repeatedly to select cases. Labels are immutable:
-existing evidence is preserved and refuses overwrite. A run owns a uniquely named
-container only after successful creation, disables network access, and removes
-that container in a `finally` block. Child processes remain owned until their
-actual wait result is observed; service-owned app disappearance is checked.
-
-The red selection freezes exact commit
-`f733d3b937ab13fa9eb8d81bcf76ab72d0dcf184` for lifecycle authority/service and
-Messages dependencies. Current session Observer code is separately selected.
-Only shared `session` type declarations may be overlaid to compile the current
-Observer; the old production authority/service bytes remain unchanged.
-`baseline-ignored` constructs the real credential/pidfd-bound Observer but calls
-the original `run_with_messages` entry, which has no session ingress. This is an
-executed missing-integration baseline, not a mocked Observer or production shim.
-The same assertions and actual processes run through
-`run_with_messages_and_session` for green.
-
-Cases cover unknown-source denial even after manual root controls; source-only
-focus/unlock plus separately granted reads; null/ineligible focus and exact app
-PID/UID/GID/pidfs matching; a lock→unlock→refocus burst queued while the actor is
-actually stopped; same-state heartbeat preservation within an original read
-lease; heartbeat refusal to extend that lease; actual source SIGSTOP, EOF and
-SIGKILL with responsive snapshots/stop; real reply-queue EAGAIN retries; sticky
-root lock intent; and a newly launched app's own identity plus policy grant.
-
-`artifacts/native-session-authority/<label>/` contains frozen source hashes,
-selected entry/features and image identity, offline build log, exact executed ELF
-hashes, execution log, per-case real identities/timestamps/reap observations,
-result JSON and proof hashes. Raw local-history content is not copied into the
-publishable report. Build/setup failures are retained and cannot be described as
-executed red cases.
-
-These results qualify synthetic local process/socket authority ingress. They do
-not qualify the original compositor/Quickshell protocols, actual layer/null
-keyboard-focus observation, trusted production PAM unlocking, source code/config
-containment, zero publication after an unobserved external transition, phone
-hardware, modem behavior, or physical suspend. A `focus: null` packet here is an
-ineligible synthetic source fact; original compositor evidence is separate.
-
-The host Docker kernel is Linux6.8 and exposes `SO_PEERPIDFD` through shared
-`anon_inode` metadata. Its pidfds cannot establish the required distinct pidfs
-identity. That host lane qualifies missing-ingress red behavior and explicit
-unsupported-platform denial only. Positive authority and wrong-pidfs separation
-run in this fixture's own ARM QEMU system guest using Linux7.1.6-1-aarch64-ARCH:
+Run with the already provisioned local Docker images and offline Cargo cache:
 
 ```sh
-python3 tools/native-session-authority/runner.py --phase red --label arm-red-build --target aarch64-unknown-linux-gnu --build-only
-python3 tools/native-session-authority/vm.py --build arm-red-build --label arm-red-authority --case unknown_denied --case root_controls_unknown_denied --case source_only_read
-python3 tools/native-session-authority/runner.py --phase green --label arm-green-build --target aarch64-unknown-linux-gnu --build-only
-python3 tools/native-session-authority/vm.py --build arm-green-build --label arm-green-authority
+python3 tools/native-session-authority/runner.py --phase red --protocol-baseline 84ac3f8 --label owned-focus-red --case unknown_denied --case root_controls_unknown_denied --case source_only_read --case anon_inode_owned_focus_read
+python3 tools/native-session-authority/runner.py --phase green --label owned-focus-green
 ```
 
-The VM runner owns a separate guest clone, lock, container and evidence directory.
-The compositor fixture's VM is untouched. It records the selected kernel/initrd,
-root image, QEMU command and image/container identities, validates every selected
-source/ELF hash inside the guest, requires actual `PID_FS_MAGIC`, and powers off
-after child reap evidence is saved. This is ARM64 system emulation with the actual
-guest kernel; user-mode QEMU is insufficient for this boundary.
+The explicit red selects immutable commit
+`84ac3f856d9b71aeb7bccbfd33eb5a8a828b079f` for all production dependencies and
+runs the actual `run_with_messages_and_session` ingress. Its earlier scalar
+protocol rejects the desired owned-focus packets, so positive reads fail while
+unknown-source denial and root-control fencing remain passing controls. No
+production code or type declaration is overlaid. All selected crate locks are
+regenerated offline in a private copy, recorded, and built with `--locked`.
+These scalar-protocol baseline assertions were executed after the initial
+owned-focus implementation was written; they do not establish test-first
+chronology. The later source-owner constructor regression and its red-before-fix
+ordering belong to the separate Observer selection. The former f733
+missing-ingress fixture is preserved only in historical frozen artifacts.
 
-Preserved initial authority red proof: `artifacts/native-session-authority/arm-red-proven/` executes the two missing-ingress failures on the actual ARM kernel, with default unknown denial passing and all child reaps recorded. The earlier host `red-authority/` proof records the same old behavior, but does not qualify distinct pidfs identity. Setup-only failures are retained in separate labels and excluded from behavioral evidence.
+Use `--case <case_name>` repeatedly to select cases. The default is 14 groups;
+on a shared anon-inode host it adds a fifteenth positive group. Groups cover
+unknown-source denial, separate policy grants, null/ineligible focus, exact
+PID/UID/GID, a wrong living handle with the same metadata, a retained dead app
+handle with a fresh generation's exact metadata, and fresh-generation grants.
+Held read tests preserve coalesced lock→unlock→refocus invalidation, same-state
+heartbeat preservation and the original100ms lease. Actual source SIGSTOP, EOF
+and SIGKILL, real reply-queue EAGAIN retries, sticky root lock/background intents,
+and responsive stop remain exercised. The dead-handle group also performs24
+focus/null replacements and requires no source FD-count growth. The source may
+observe dead focus and later recover fresh focus while remaining the same living
+source; source loss itself remains terminal.
 
-Final green proof: `artifacts/native-session-authority/arm-green-authority-final/` passes all13 groups on Linux7.1.6-1-aarch64-ARCH with exact real pidfs identities. The three host denial groups pass at `host-green-unsupported/`; that run explicitly reports `pidfs_identity_qualified: false`. The first ARM green label preserves12 passes plus the fixture reap-wait failure; the final label corrects only that bounded wait and records explicit owned worker/app pidfd death and process disappearance. Production authority source hashes are identical between those two green builds. [observed-evidence.json](observed-evidence.json) indexes selected source/ELF/result/proof hashes and states the evidence limits.
+Labels are immutable and refuse overwrite. The runner holds its own `flock`,
+owns each uniquely named container only after successful creation, disables
+network access, and removes that owned container in a `finally` block. Direct
+children remain owned until actual wait results are recorded. Service-owned
+app/worker death requires both owned pidfd readiness and process disappearance.
+Successful service exit alone is insufficient reap evidence.
+
+`artifacts/native-session-authority/<label>/` contains selected source origins and
+hashes, selected entry/features and image identity, offline build log, exact ELF
+hashes, per-case identities/timestamps/reap observations, result JSON and proof
+hashes. Raw local-history content and execution logs are kept private; authored
+evidence publishes counts and hashes. [owned-focus-evidence.json](owned-focus-evidence.json)
+indexes the current protocol selection and its limits.
+
+The separate ARM64 system guest uses its own clone, lock, container and evidence
+directory. It does not touch the compositor fixture VM. Selected source/ELF
+hashes are checked both before boot and inside the guest, then child reap evidence
+is saved and the guest powers off:
+
+```sh
+python3 tools/native-session-authority/runner.py --phase green --label owned-focus-arm-build --target aarch64-unknown-linux-gnu --build-only
+python3 tools/native-session-authority/vm.py --build owned-focus-arm-build --label owned-focus-arm-green
+```
+
+This uses the actual guest Linux7.1.6-1-aarch64-ARCH kernel; user-mode QEMU cannot
+qualify this boundary. PIDFS metadata are descriptive and not an authority gate.
+Neither this guest nor the host substitutes for the retained Pixel kernel set.
+
+## Selected owned-focus evidence
+
+`owned-focus-host-red-2` records two passing unknown-source controls and two
+failed desired positive reads against immutable84ac3f8. Both failures return
+`denied`; all four setups and cleanups qualify. The preceding `red-1` also fails
+both desired positives, but its second source-state command encounters a broken
+pipe after scalar-protocol rejection. It remains exploratory evidence.
+
+`owned-focus-host-green-4` passes all15 groups on actual x86_64 Linux6.8.
+`owned-focus-arm-green-2`, built from `owned-focus-arm-build-2`, passes all14 groups
+on actual ARM64 Linux7.1.6-1-aarch64-ARCH. Their53 production Rust/manifest hashes
+match and include the corrected source-owner constructor. The host records109
+reap entries for94 distinct recorded owned children; the ARM guest records102
+entries for88. All recorded service-owned pidfd deaths and process disappearances
+are observed. Excluding each intentional source-death test, bounded source
+SIGKILL cleanup is required once on host and six times in ARM. These are qualified
+waits, not claims that every source exited gracefully.
+
+The separate Observer selection `red-source-owner-pair` records25 passes and one
+failure: the earlier constructor accepted a wrong live pidfd while expecting
+another source PID. That red precedes the constructor fix.
+`green-source-owner-pair` passes all26 Observer cases with the corrected binding.
+Those labels live under `artifacts/native-session-observer/`; their evidence is
+maintained separately. These15/14 authority groups install the expected source
+handle and do not exercise deliberate wrong-source constructor input.
+
+The earlier host `green-1` preserves14 passes plus the fixture grant-sequence
+failure while old dead-focus heartbeats remained. `green-2` passes all15 groups
+before the private Rust packet representation was adjusted for strict linting.
+`green-3` and `owned-focus-arm-green-1` preserve passing15/14 selections before
+the source-owner correction. Their artifacts remain unchanged. Unprovable dead
+focus streams do not establish stable grant availability; the dead-handle fixture
+supplies fresh living focus before requesting the fresh generation's grant.
+
+## Preserved scalar-protocol history
+
+The previous13-group ARM scalar selection remains frozen at
+`arm-green-authority-final`; its exact actual pidfs identity requirement passed
+on Linux7.1.6-1-aarch64-ARCH. The old three-group host denial selection remains
+`host-green-unsupported`, with `pidfs_identity_qualified: false`. The original
+missing-ingress red is retained at `arm-red-proven`. Earlier setup/reap failures
+remain in their original labels. [observed-evidence.json](observed-evidence.json)
+indexes those historical source/ELF/result/proof hashes. They do not describe
+the current owned-focus implementation.
+
+These selections qualify synthetic local process/socket authority ingress. They
+do not qualify original compositor/Quickshell protocols, trusted production PAM
+unlocking, compositor configuration/containment, zero publication after an
+unobserved external transition, a joint installed production session launch,
+actual Binder/session composition, phone hardware, modem behavior or physical
+suspend. The normal installed Messages entrypoint still has no production source
+selector. No physical phone, proprietary executable or vendor input is used.

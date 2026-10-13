@@ -1,0 +1,1008 @@
+{
+  "scope": "synthetic UID1000 source -> actual native Observer/lifecycle actor/SQLite Messages worker -> launched UID11010 installed test app; owned focused socket pidfd protocol",
+  "protocol": "focus PID/UID/GID with exactly one actual SCM_RIGHTS pidfd; null focus has no descriptor; source retains focus handle across heartbeats",
+  "identity": "both retained handles compared through shared pinned trusted procfs view and final joint liveness; scalar pidfs metadata are descriptive",
+  "baseline_timing": "scalar-protocol baseline tested after initial owned-focus implementation was authored; later source-owner red-before-fix belongs to the separate Observer selection",
+  "selected_labels": [
+    "owned-focus-host-red-2",
+    "owned-focus-host-green-4",
+    "owned-focus-arm-green-2"
+  ],
+  "runs": [
+    {
+      "artifact_label": "owned-focus-host-red-2",
+      "selection_status": "selected",
+      "phase": "red",
+      "protocol_baseline": "84ac3f856d9b71aeb7bccbfd33eb5a8a828b079f",
+      "kernel_release": "6.8.0-136-generic",
+      "machine": "x86_64",
+      "qemu_mode": null,
+      "passed": false,
+      "passed_cases": 2,
+      "total_cases": 4,
+      "all_setup_completed": true,
+      "all_cleanup_qualified": true,
+      "cases": [
+        {
+          "case": "unknown_denied",
+          "passed": true
+        },
+        {
+          "case": "root_controls_unknown_denied",
+          "passed": true
+        },
+        {
+          "case": "source_only_read",
+          "passed": false
+        },
+        {
+          "case": "anon_inode_owned_focus_read",
+          "passed": false
+        }
+      ],
+      "pidfs_metadata_distinct": false,
+      "positive_authority_qualified": false,
+      "reaps": {
+        "observed_entries": 28,
+        "actual_direct_wait_entries": 12,
+        "service_owned_pidfd_death_and_proc_absence_entries": 12,
+        "distinct_recorded_owned_children": 24,
+        "source_sigkill_waits": 0,
+        "cleanup_source_sigkill_fallbacks": 0
+      },
+      "selected_entry": "run_with_messages_and_session; real Observer Provider ingress",
+      "features": "isolated-fixture",
+      "source_overlay": [],
+      "offline_regenerated_locks": [
+        "tools/native-session-authority/fixture/Cargo.lock",
+        "native-lifecycle/Cargo.lock",
+        "native-messages/Cargo.lock",
+        "native-session/Cargo.lock",
+        "native-kernel-identity/Cargo.lock",
+        "native-inbox/Cargo.lock",
+        "native-messaging/Cargo.lock"
+      ],
+      "elf_sha256": {
+        "lifecycle-launcher": "1f490648004a7899938e4c708c760a2853f3e951f9fd8d7d16af5570c37871ad",
+        "messages-seed-fixture": "10c75a258349d1f192ac90af6ea16604cdafd374fb0b9f0db0f8891b5d524592",
+        "messages-session-authority-fixture-service": "d91ed0550914fe225235b5cd83e0bc86b6e1fa98304352ee705e3b7bd042d554"
+      },
+      "selected_source_sha256": {
+        "native-lifecycle/Cargo.toml": "ddbfa855d2973beffc5317462061add6647f1dc056ee67b9bc4d2f7330f659d7",
+        "native-lifecycle/src/authority.rs": "0d0d9395e841db639c8985eb91e1ec0236c64ec796480220dc4558d65822c68c",
+        "native-lifecycle/src/session.rs": "ad499efb82112cd615dc8fecb437ba7b0cd4a29a3ccb31a734d506a825c48105",
+        "native-lifecycle/src/service.rs": "c21db83c20ef3237106a077059bb0d5dfe84be5926e72c9331f5e3cbae3d32a6",
+        "native-session/Cargo.toml": "0a2fed0277b020f11986174e4e77e03a91e7ad6ab55a370dc6191b79fc7ca856",
+        "native-session/src/lib.rs": "124d65a4445f9d5e41ea7f48b8f72b33d5d27e3a11f4f78727f6eafd2f4978aa",
+        "native-kernel-identity/Cargo.toml": "08850c16b68b41ebf6ae988598ff7b8457e50cdc04c43a13c7cafb0db0cdb4a0",
+        "native-kernel-identity/src/lib.rs": "40296884acdd7b00c65be03930d79097849d538f684ce8d66e75c348fec219c2",
+        "native-messages/Cargo.toml": "8502b6bd0693869827833f52fcdde13d17658e4123607ca905d633d96db5240b",
+        "tools/native-session-authority/runner.py": "fb011955392b0b7c88da8072ae4ceb95b6745f84c1838f00da4496429a03de60",
+        "tools/native-session-authority/fixture/Cargo.lock": "90e5945ddf651b93504846ac7a4098dcc78c7b1ebc4f1e0ca2f3af78ced082a8",
+        "native-messages/src/bin/messages-launch.rs": "2b2b413307ae51814b44a4cede235218871f9a459ee9e8fd38f2d576c0067976",
+        "native-messages/src/bin/messages-service.rs": "91dd6048f394d82a10d5f8527b4a38867fd9aadaf9f39ea4f4525cdc41734a2b",
+        "native-messages/src/bin/messages-stop.rs": "82b16a187b295d60623f6a8c6da86b944ac78390810a99616b705158bebc7990",
+        "native-messages/src/incoming.rs": "b3f07487e69df947f5bae3a5645827269151a9cce9be993f999abb00761ac5f2",
+        "native-messages/src/lib.rs": "faa6df0140ea61301b84e35a8ff664fa4cfe1f13159ab4ea6c1d2395ca82550c",
+        "native-messages/src/projection.rs": "2dcd7be48fde584ce3a56110bce4514442ed7e6526f3414ae362fa8ed1d05bef",
+        "native-messages/src/protocol.rs": "aac4405329604affa079074a6c7317570882384f6164fdf6ae6f05a831d17c8e",
+        "native-messages/src/worker.rs": "18e66bedb8f0e5edfe1bbb491ff36408a8b73690914c49fa7a51ef5aace32e61"
+      },
+      "selection_sha256": "77405c53d59753fa3814adc8e83bc43c3e8472784a5567c58aac8fa902449355",
+      "result_sha256": "c199be3efe81383d77d6472ef45292aa3647bf38cf2fba276f9d7dacfeb8096e",
+      "proof_sha256": "f6ed75086df0c620b845d4d84ff0a957d5f6bef234000c60affd5ce9d45e83bf"
+    },
+    {
+      "artifact_label": "owned-focus-host-green-4",
+      "selection_status": "selected",
+      "phase": "green",
+      "protocol_baseline": null,
+      "kernel_release": "6.8.0-136-generic",
+      "machine": "x86_64",
+      "qemu_mode": null,
+      "passed": true,
+      "passed_cases": 15,
+      "total_cases": 15,
+      "all_setup_completed": true,
+      "all_cleanup_qualified": true,
+      "cases": [
+        {
+          "case": "unknown_denied",
+          "passed": true
+        },
+        {
+          "case": "root_controls_unknown_denied",
+          "passed": true
+        },
+        {
+          "case": "source_only_read",
+          "passed": true
+        },
+        {
+          "case": "focus_and_handle_denied",
+          "passed": true
+        },
+        {
+          "case": "dead_retained_handle_denied",
+          "passed": true
+        },
+        {
+          "case": "held_semantic_burst",
+          "passed": true
+        },
+        {
+          "case": "heartbeat_preserves_read",
+          "passed": true
+        },
+        {
+          "case": "heartbeat_cannot_extend_read",
+          "passed": true
+        },
+        {
+          "case": "stopped_source_denies",
+          "passed": true
+        },
+        {
+          "case": "source_eof_denies",
+          "passed": true
+        },
+        {
+          "case": "source_death_denies",
+          "passed": true
+        },
+        {
+          "case": "eagain_rechecks_source",
+          "passed": true
+        },
+        {
+          "case": "source_false_cannot_clear_intent",
+          "passed": true
+        },
+        {
+          "case": "new_app_identity_and_grant",
+          "passed": true
+        },
+        {
+          "case": "anon_inode_owned_focus_read",
+          "passed": true
+        }
+      ],
+      "pidfs_metadata_distinct": false,
+      "positive_authority_qualified": true,
+      "reaps": {
+        "observed_entries": 109,
+        "distinct_recorded_owned_children": 94,
+        "actual_direct_wait_entries": 47,
+        "service_owned_pidfd_death_and_proc_absence_entries": 47,
+        "source_sigkill_waits": 2,
+        "cleanup_source_sigkill_fallbacks": 1
+      },
+      "selected_entry": "run_with_messages_and_session; real Observer Provider ingress",
+      "features": "isolated-fixture",
+      "source_overlay": [],
+      "offline_regenerated_locks": [
+        "tools/native-session-authority/fixture/Cargo.lock",
+        "native-lifecycle/Cargo.lock",
+        "native-messages/Cargo.lock",
+        "native-session/Cargo.lock",
+        "native-kernel-identity/Cargo.lock",
+        "native-inbox/Cargo.lock",
+        "native-messaging/Cargo.lock"
+      ],
+      "elf_sha256": {
+        "lifecycle-launcher": "bc6ffc785cfb5db1c521301764c6c82d9cc9a3e26a0edb7d7f9ac3b69a4be2a3",
+        "messages-seed-fixture": "7bf6f6a662c991cdd11f09327addd2becd9c4349064c36e9eb6d100f7fa08b4e",
+        "messages-session-authority-fixture-service": "64202a0b0c02d09ad8ba98981fe18d0144f5fc64668a971f16df007599065901"
+      },
+      "selected_source_sha256": {
+        "native-lifecycle/Cargo.toml": "dcf7bffba5345547cbd91a6035589705b73be9adab569322bdff9214dda5d901",
+        "native-lifecycle/src/authority.rs": "93d59a62096076b0551ec5485852b996a411edd7f6b121b1f719ff9d057917c6",
+        "native-lifecycle/src/session.rs": "c10804d154a6b4b14b6f3068a2ef09a56678890ce37a01902fbbcd0e17c41014",
+        "native-lifecycle/src/service.rs": "c21db83c20ef3237106a077059bb0d5dfe84be5926e72c9331f5e3cbae3d32a6",
+        "native-session/Cargo.toml": "ea4f943b4b34e053c9d19cc91f2c62e2aea37abfa91318d11fa2800f86993f45",
+        "native-session/src/lib.rs": "3a5defab136fd6f2388f20296a693185b1ce66b38656f561b1dab67b3c932636",
+        "native-kernel-identity/Cargo.toml": "5cab2f22141987e4f1470b0fb575107b5c3ad134829bd2b92d5b7ccb3ef12431",
+        "native-kernel-identity/src/lib.rs": "464a5e2a96dd99f127cce5b32514ff4a9a7340f8bee2581e941685e6df82cbcd",
+        "native-kernel-identity/src/pidfd.rs": "caf4b44738fc53093a32ef96c2e639c1a376935ad29fa17a42091a56180b11ff",
+        "native-messages/Cargo.toml": "8502b6bd0693869827833f52fcdde13d17658e4123607ca905d633d96db5240b",
+        "tools/native-session-authority/runner.py": "8fc43d1909a2a39f1919f884b1c897f7bc1424a01f760494c64d3bd69162e711",
+        "tools/native-session-authority/fixture/Cargo.lock": "5fcf7f2bb40125d2b2f28d76cf1aa08ea0c35e5b817589e061513a28a6727c1c",
+        "native-messages/src/bin/messages-launch.rs": "2b2b413307ae51814b44a4cede235218871f9a459ee9e8fd38f2d576c0067976",
+        "native-messages/src/bin/messages-service.rs": "91dd6048f394d82a10d5f8527b4a38867fd9aadaf9f39ea4f4525cdc41734a2b",
+        "native-messages/src/bin/messages-stop.rs": "82b16a187b295d60623f6a8c6da86b944ac78390810a99616b705158bebc7990",
+        "native-messages/src/incoming.rs": "b3f07487e69df947f5bae3a5645827269151a9cce9be993f999abb00761ac5f2",
+        "native-messages/src/lib.rs": "faa6df0140ea61301b84e35a8ff664fa4cfe1f13159ab4ea6c1d2395ca82550c",
+        "native-messages/src/projection.rs": "2dcd7be48fde584ce3a56110bce4514442ed7e6526f3414ae362fa8ed1d05bef",
+        "native-messages/src/protocol.rs": "aac4405329604affa079074a6c7317570882384f6164fdf6ae6f05a831d17c8e",
+        "native-messages/src/worker.rs": "18e66bedb8f0e5edfe1bbb491ff36408a8b73690914c49fa7a51ef5aace32e61"
+      },
+      "selection_sha256": "dfeea1050a43e999380408355a4187e59271b5981f6b0a7c037bdd7d2f8f74f6",
+      "result_sha256": "7c0048f458bcba1354cb774e65cbff11433afdf587c10ec7f2afb0ba95fb64e4",
+      "proof_sha256": "41a42e0745460ea5d5e66d50861b8dc853c406c2b9fd68a91cdc8bedb3cd6dfa",
+      "source_owner_constructor_correction_included": true,
+      "deliberately_wrong_source_constructor_input_exercised": false
+    },
+    {
+      "artifact_label": "owned-focus-arm-green-2",
+      "selection_status": "selected",
+      "phase": "green",
+      "protocol_baseline": null,
+      "kernel_release": "7.1.6-1-aarch64-ARCH",
+      "machine": "aarch64",
+      "qemu_mode": "system",
+      "passed": true,
+      "passed_cases": 14,
+      "total_cases": 14,
+      "all_setup_completed": true,
+      "all_cleanup_qualified": true,
+      "cases": [
+        {
+          "case": "unknown_denied",
+          "passed": true
+        },
+        {
+          "case": "root_controls_unknown_denied",
+          "passed": true
+        },
+        {
+          "case": "source_only_read",
+          "passed": true
+        },
+        {
+          "case": "focus_and_handle_denied",
+          "passed": true
+        },
+        {
+          "case": "dead_retained_handle_denied",
+          "passed": true
+        },
+        {
+          "case": "held_semantic_burst",
+          "passed": true
+        },
+        {
+          "case": "heartbeat_preserves_read",
+          "passed": true
+        },
+        {
+          "case": "heartbeat_cannot_extend_read",
+          "passed": true
+        },
+        {
+          "case": "stopped_source_denies",
+          "passed": true
+        },
+        {
+          "case": "source_eof_denies",
+          "passed": true
+        },
+        {
+          "case": "source_death_denies",
+          "passed": true
+        },
+        {
+          "case": "eagain_rechecks_source",
+          "passed": true
+        },
+        {
+          "case": "source_false_cannot_clear_intent",
+          "passed": true
+        },
+        {
+          "case": "new_app_identity_and_grant",
+          "passed": true
+        }
+      ],
+      "pidfs_metadata_distinct": true,
+      "positive_authority_qualified": true,
+      "reaps": {
+        "observed_entries": 102,
+        "distinct_recorded_owned_children": 88,
+        "actual_direct_wait_entries": 44,
+        "service_owned_pidfd_death_and_proc_absence_entries": 44,
+        "source_sigkill_waits": 7,
+        "cleanup_source_sigkill_fallbacks": 6
+      },
+      "selected_entry": "run_with_messages_and_session; real Observer Provider ingress",
+      "features": "isolated-fixture",
+      "source_overlay": [],
+      "offline_regenerated_locks": [
+        "tools/native-session-authority/fixture/Cargo.lock",
+        "native-lifecycle/Cargo.lock",
+        "native-messages/Cargo.lock",
+        "native-session/Cargo.lock",
+        "native-kernel-identity/Cargo.lock",
+        "native-inbox/Cargo.lock",
+        "native-messaging/Cargo.lock"
+      ],
+      "elf_sha256": {
+        "lifecycle-launcher": "54bf542b7d7343550d85b9ad29e18dbb0ae3eb793369c9c738ee921cfcf9fc1c",
+        "messages-seed-fixture": "8576c6951fe714256a5005566bf59f3cf631b913759e0078e2b5f838a1f5ebee",
+        "messages-session-authority-fixture-service": "35c7f67d362d9f527d77efb1533f0df198bc679bc29a94e07c659683c2786e39"
+      },
+      "selected_source_sha256": {
+        "native-lifecycle/Cargo.toml": "dcf7bffba5345547cbd91a6035589705b73be9adab569322bdff9214dda5d901",
+        "native-lifecycle/src/authority.rs": "93d59a62096076b0551ec5485852b996a411edd7f6b121b1f719ff9d057917c6",
+        "native-lifecycle/src/session.rs": "c10804d154a6b4b14b6f3068a2ef09a56678890ce37a01902fbbcd0e17c41014",
+        "native-lifecycle/src/service.rs": "c21db83c20ef3237106a077059bb0d5dfe84be5926e72c9331f5e3cbae3d32a6",
+        "native-session/Cargo.toml": "ea4f943b4b34e053c9d19cc91f2c62e2aea37abfa91318d11fa2800f86993f45",
+        "native-session/src/lib.rs": "3a5defab136fd6f2388f20296a693185b1ce66b38656f561b1dab67b3c932636",
+        "native-kernel-identity/Cargo.toml": "5cab2f22141987e4f1470b0fb575107b5c3ad134829bd2b92d5b7ccb3ef12431",
+        "native-kernel-identity/src/lib.rs": "464a5e2a96dd99f127cce5b32514ff4a9a7340f8bee2581e941685e6df82cbcd",
+        "native-kernel-identity/src/pidfd.rs": "caf4b44738fc53093a32ef96c2e639c1a376935ad29fa17a42091a56180b11ff",
+        "native-messages/Cargo.toml": "8502b6bd0693869827833f52fcdde13d17658e4123607ca905d633d96db5240b",
+        "tools/native-session-authority/runner.py": "8fc43d1909a2a39f1919f884b1c897f7bc1424a01f760494c64d3bd69162e711",
+        "tools/native-session-authority/fixture/Cargo.lock": "5fcf7f2bb40125d2b2f28d76cf1aa08ea0c35e5b817589e061513a28a6727c1c",
+        "native-messages/src/bin/messages-launch.rs": "2b2b413307ae51814b44a4cede235218871f9a459ee9e8fd38f2d576c0067976",
+        "native-messages/src/bin/messages-service.rs": "91dd6048f394d82a10d5f8527b4a38867fd9aadaf9f39ea4f4525cdc41734a2b",
+        "native-messages/src/bin/messages-stop.rs": "82b16a187b295d60623f6a8c6da86b944ac78390810a99616b705158bebc7990",
+        "native-messages/src/incoming.rs": "b3f07487e69df947f5bae3a5645827269151a9cce9be993f999abb00761ac5f2",
+        "native-messages/src/lib.rs": "faa6df0140ea61301b84e35a8ff664fa4cfe1f13159ab4ea6c1d2395ca82550c",
+        "native-messages/src/projection.rs": "2dcd7be48fde584ce3a56110bce4514442ed7e6526f3414ae362fa8ed1d05bef",
+        "native-messages/src/protocol.rs": "aac4405329604affa079074a6c7317570882384f6164fdf6ae6f05a831d17c8e",
+        "native-messages/src/worker.rs": "18e66bedb8f0e5edfe1bbb491ff36408a8b73690914c49fa7a51ef5aace32e61"
+      },
+      "selection_sha256": "6c0e888574e33df33a74084118ee39349a17fe8987d971707952df708f2c8049",
+      "result_sha256": "18b5a514f142525333f5d7afc1581e732199e14117bd0a8cfc993da110f3e322",
+      "proof_sha256": "a3e0ad60b89c24526d445144799afd0d943eb2b3f25a01606b7d68afebbd1456",
+      "source_owner_constructor_correction_included": true,
+      "deliberately_wrong_source_constructor_input_exercised": false,
+      "selected_build": "owned-focus-arm-build-2",
+      "kernel_image_sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+      "initrd_sha256": "a9bb29d29abda94748c9948f903c3c1704f829eea477652b9a4201a61f36a647",
+      "owned_vm_root_sha256": "12751efd030c8e6f1a645380e58f97eb7d415298a7cfa6345dc03d5213c82227",
+      "vm_image_id": "sha256:561177a4305051567b1d28d67ba9a95e0ce0ad32a8815b49da42fe71aa5a3dd6",
+      "vm_guest_sha256": "bd0f85c9cdff35d56da2f897951b6fd4f970a947a1155b39cf9394c3914970b2"
+    },
+    {
+      "artifact_label": "owned-focus-host-green-3",
+      "selection_status": "preserved_previous_valid_constructor_selection",
+      "phase": "green",
+      "protocol_baseline": null,
+      "kernel_release": "6.8.0-136-generic",
+      "machine": "x86_64",
+      "qemu_mode": null,
+      "passed": true,
+      "passed_cases": 15,
+      "total_cases": 15,
+      "all_setup_completed": true,
+      "all_cleanup_qualified": true,
+      "cases": [
+        {
+          "case": "unknown_denied",
+          "passed": true
+        },
+        {
+          "case": "root_controls_unknown_denied",
+          "passed": true
+        },
+        {
+          "case": "source_only_read",
+          "passed": true
+        },
+        {
+          "case": "focus_and_handle_denied",
+          "passed": true
+        },
+        {
+          "case": "dead_retained_handle_denied",
+          "passed": true
+        },
+        {
+          "case": "held_semantic_burst",
+          "passed": true
+        },
+        {
+          "case": "heartbeat_preserves_read",
+          "passed": true
+        },
+        {
+          "case": "heartbeat_cannot_extend_read",
+          "passed": true
+        },
+        {
+          "case": "stopped_source_denies",
+          "passed": true
+        },
+        {
+          "case": "source_eof_denies",
+          "passed": true
+        },
+        {
+          "case": "source_death_denies",
+          "passed": true
+        },
+        {
+          "case": "eagain_rechecks_source",
+          "passed": true
+        },
+        {
+          "case": "source_false_cannot_clear_intent",
+          "passed": true
+        },
+        {
+          "case": "new_app_identity_and_grant",
+          "passed": true
+        },
+        {
+          "case": "anon_inode_owned_focus_read",
+          "passed": true
+        }
+      ],
+      "pidfs_metadata_distinct": false,
+      "positive_authority_qualified": true,
+      "reaps": {
+        "observed_entries": 109,
+        "actual_direct_wait_entries": 47,
+        "service_owned_pidfd_death_and_proc_absence_entries": 47,
+        "distinct_recorded_owned_children": 94,
+        "source_sigkill_waits": 2,
+        "cleanup_source_sigkill_fallbacks": 1
+      },
+      "selected_entry": "run_with_messages_and_session; real Observer Provider ingress",
+      "features": "isolated-fixture",
+      "source_overlay": [],
+      "offline_regenerated_locks": [
+        "tools/native-session-authority/fixture/Cargo.lock",
+        "native-lifecycle/Cargo.lock",
+        "native-messages/Cargo.lock",
+        "native-session/Cargo.lock",
+        "native-kernel-identity/Cargo.lock",
+        "native-inbox/Cargo.lock",
+        "native-messaging/Cargo.lock"
+      ],
+      "elf_sha256": {
+        "lifecycle-launcher": "bc6ffc785cfb5db1c521301764c6c82d9cc9a3e26a0edb7d7f9ac3b69a4be2a3",
+        "messages-seed-fixture": "7bf6f6a662c991cdd11f09327addd2becd9c4349064c36e9eb6d100f7fa08b4e",
+        "messages-session-authority-fixture-service": "fb66262312539ca8cef2af30c78c89924dfeae1f2bef8f3041ccc804bb12672d"
+      },
+      "selected_source_sha256": {
+        "native-lifecycle/Cargo.toml": "dcf7bffba5345547cbd91a6035589705b73be9adab569322bdff9214dda5d901",
+        "native-lifecycle/src/authority.rs": "93d59a62096076b0551ec5485852b996a411edd7f6b121b1f719ff9d057917c6",
+        "native-lifecycle/src/session.rs": "c10804d154a6b4b14b6f3068a2ef09a56678890ce37a01902fbbcd0e17c41014",
+        "native-lifecycle/src/service.rs": "c21db83c20ef3237106a077059bb0d5dfe84be5926e72c9331f5e3cbae3d32a6",
+        "native-session/Cargo.toml": "ea4f943b4b34e053c9d19cc91f2c62e2aea37abfa91318d11fa2800f86993f45",
+        "native-session/src/lib.rs": "b9c3d0108bf4ce60631f36ee90b6cd99481f3b2abde4e3031bd5b08684b42b3c",
+        "native-kernel-identity/Cargo.toml": "5cab2f22141987e4f1470b0fb575107b5c3ad134829bd2b92d5b7ccb3ef12431",
+        "native-kernel-identity/src/lib.rs": "464a5e2a96dd99f127cce5b32514ff4a9a7340f8bee2581e941685e6df82cbcd",
+        "native-kernel-identity/src/pidfd.rs": "caf4b44738fc53093a32ef96c2e639c1a376935ad29fa17a42091a56180b11ff",
+        "native-messages/Cargo.toml": "8502b6bd0693869827833f52fcdde13d17658e4123607ca905d633d96db5240b",
+        "tools/native-session-authority/runner.py": "8fc43d1909a2a39f1919f884b1c897f7bc1424a01f760494c64d3bd69162e711",
+        "tools/native-session-authority/fixture/Cargo.lock": "5fcf7f2bb40125d2b2f28d76cf1aa08ea0c35e5b817589e061513a28a6727c1c",
+        "native-messages/src/bin/messages-launch.rs": "2b2b413307ae51814b44a4cede235218871f9a459ee9e8fd38f2d576c0067976",
+        "native-messages/src/bin/messages-service.rs": "91dd6048f394d82a10d5f8527b4a38867fd9aadaf9f39ea4f4525cdc41734a2b",
+        "native-messages/src/bin/messages-stop.rs": "82b16a187b295d60623f6a8c6da86b944ac78390810a99616b705158bebc7990",
+        "native-messages/src/incoming.rs": "b3f07487e69df947f5bae3a5645827269151a9cce9be993f999abb00761ac5f2",
+        "native-messages/src/lib.rs": "faa6df0140ea61301b84e35a8ff664fa4cfe1f13159ab4ea6c1d2395ca82550c",
+        "native-messages/src/projection.rs": "2dcd7be48fde584ce3a56110bce4514442ed7e6526f3414ae362fa8ed1d05bef",
+        "native-messages/src/protocol.rs": "aac4405329604affa079074a6c7317570882384f6164fdf6ae6f05a831d17c8e",
+        "native-messages/src/worker.rs": "18e66bedb8f0e5edfe1bbb491ff36408a8b73690914c49fa7a51ef5aace32e61"
+      },
+      "selection_sha256": "7b9bde78aa15d0ecdf22f7f86800c5b347afab5d82d9fecf089fb3ae5f14362a",
+      "result_sha256": "7fff6eb0922f0036c18eb96129346a4237a2285643e5fe8cda413839c1a6118f",
+      "proof_sha256": "973cbf7359a4548bb09013ff0819e875c406caad6c05265e4ded134b5eb1dcc3",
+      "source_owner_constructor_correction_included": false
+    },
+    {
+      "artifact_label": "owned-focus-arm-green-1",
+      "selection_status": "preserved_previous_valid_constructor_selection",
+      "phase": "green",
+      "protocol_baseline": null,
+      "kernel_release": "7.1.6-1-aarch64-ARCH",
+      "machine": "aarch64",
+      "qemu_mode": "system",
+      "passed": true,
+      "passed_cases": 14,
+      "total_cases": 14,
+      "all_setup_completed": true,
+      "all_cleanup_qualified": true,
+      "cases": [
+        {
+          "case": "unknown_denied",
+          "passed": true
+        },
+        {
+          "case": "root_controls_unknown_denied",
+          "passed": true
+        },
+        {
+          "case": "source_only_read",
+          "passed": true
+        },
+        {
+          "case": "focus_and_handle_denied",
+          "passed": true
+        },
+        {
+          "case": "dead_retained_handle_denied",
+          "passed": true
+        },
+        {
+          "case": "held_semantic_burst",
+          "passed": true
+        },
+        {
+          "case": "heartbeat_preserves_read",
+          "passed": true
+        },
+        {
+          "case": "heartbeat_cannot_extend_read",
+          "passed": true
+        },
+        {
+          "case": "stopped_source_denies",
+          "passed": true
+        },
+        {
+          "case": "source_eof_denies",
+          "passed": true
+        },
+        {
+          "case": "source_death_denies",
+          "passed": true
+        },
+        {
+          "case": "eagain_rechecks_source",
+          "passed": true
+        },
+        {
+          "case": "source_false_cannot_clear_intent",
+          "passed": true
+        },
+        {
+          "case": "new_app_identity_and_grant",
+          "passed": true
+        }
+      ],
+      "pidfs_metadata_distinct": true,
+      "positive_authority_qualified": true,
+      "reaps": {
+        "observed_entries": 102,
+        "actual_direct_wait_entries": 44,
+        "service_owned_pidfd_death_and_proc_absence_entries": 44,
+        "distinct_recorded_owned_children": 88,
+        "source_sigkill_waits": 5,
+        "cleanup_source_sigkill_fallbacks": 4
+      },
+      "selected_entry": "run_with_messages_and_session; real Observer Provider ingress",
+      "features": "isolated-fixture",
+      "source_overlay": [],
+      "offline_regenerated_locks": [
+        "tools/native-session-authority/fixture/Cargo.lock",
+        "native-lifecycle/Cargo.lock",
+        "native-messages/Cargo.lock",
+        "native-session/Cargo.lock",
+        "native-kernel-identity/Cargo.lock",
+        "native-inbox/Cargo.lock",
+        "native-messaging/Cargo.lock"
+      ],
+      "elf_sha256": {
+        "lifecycle-launcher": "54bf542b7d7343550d85b9ad29e18dbb0ae3eb793369c9c738ee921cfcf9fc1c",
+        "messages-seed-fixture": "8576c6951fe714256a5005566bf59f3cf631b913759e0078e2b5f838a1f5ebee",
+        "messages-session-authority-fixture-service": "acd009baa28ad656b452800b0b9e67fdb944b20a304bef3e9bdfb6ac181fba35"
+      },
+      "selected_source_sha256": {
+        "native-lifecycle/Cargo.toml": "dcf7bffba5345547cbd91a6035589705b73be9adab569322bdff9214dda5d901",
+        "native-lifecycle/src/authority.rs": "93d59a62096076b0551ec5485852b996a411edd7f6b121b1f719ff9d057917c6",
+        "native-lifecycle/src/session.rs": "c10804d154a6b4b14b6f3068a2ef09a56678890ce37a01902fbbcd0e17c41014",
+        "native-lifecycle/src/service.rs": "c21db83c20ef3237106a077059bb0d5dfe84be5926e72c9331f5e3cbae3d32a6",
+        "native-session/Cargo.toml": "ea4f943b4b34e053c9d19cc91f2c62e2aea37abfa91318d11fa2800f86993f45",
+        "native-session/src/lib.rs": "b9c3d0108bf4ce60631f36ee90b6cd99481f3b2abde4e3031bd5b08684b42b3c",
+        "native-kernel-identity/Cargo.toml": "5cab2f22141987e4f1470b0fb575107b5c3ad134829bd2b92d5b7ccb3ef12431",
+        "native-kernel-identity/src/lib.rs": "464a5e2a96dd99f127cce5b32514ff4a9a7340f8bee2581e941685e6df82cbcd",
+        "native-kernel-identity/src/pidfd.rs": "caf4b44738fc53093a32ef96c2e639c1a376935ad29fa17a42091a56180b11ff",
+        "native-messages/Cargo.toml": "8502b6bd0693869827833f52fcdde13d17658e4123607ca905d633d96db5240b",
+        "tools/native-session-authority/runner.py": "8fc43d1909a2a39f1919f884b1c897f7bc1424a01f760494c64d3bd69162e711",
+        "tools/native-session-authority/fixture/Cargo.lock": "5fcf7f2bb40125d2b2f28d76cf1aa08ea0c35e5b817589e061513a28a6727c1c",
+        "native-messages/src/bin/messages-launch.rs": "2b2b413307ae51814b44a4cede235218871f9a459ee9e8fd38f2d576c0067976",
+        "native-messages/src/bin/messages-service.rs": "91dd6048f394d82a10d5f8527b4a38867fd9aadaf9f39ea4f4525cdc41734a2b",
+        "native-messages/src/bin/messages-stop.rs": "82b16a187b295d60623f6a8c6da86b944ac78390810a99616b705158bebc7990",
+        "native-messages/src/incoming.rs": "b3f07487e69df947f5bae3a5645827269151a9cce9be993f999abb00761ac5f2",
+        "native-messages/src/lib.rs": "faa6df0140ea61301b84e35a8ff664fa4cfe1f13159ab4ea6c1d2395ca82550c",
+        "native-messages/src/projection.rs": "2dcd7be48fde584ce3a56110bce4514442ed7e6526f3414ae362fa8ed1d05bef",
+        "native-messages/src/protocol.rs": "aac4405329604affa079074a6c7317570882384f6164fdf6ae6f05a831d17c8e",
+        "native-messages/src/worker.rs": "18e66bedb8f0e5edfe1bbb491ff36408a8b73690914c49fa7a51ef5aace32e61"
+      },
+      "selection_sha256": "a41c0a13016da77a7db41cf160f96040261ec13a521e55893ca7cec58b75365b",
+      "result_sha256": "18b5a514f142525333f5d7afc1581e732199e14117bd0a8cfc993da110f3e322",
+      "proof_sha256": "0c21e81c78dfd01c3c2136c4c24cecb986fcf9ef4d1eb98a449f4a92e05305b2",
+      "selected_build": "owned-focus-arm-build-1",
+      "kernel_image_sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+      "initrd_sha256": "a9bb29d29abda94748c9948f903c3c1704f829eea477652b9a4201a61f36a647",
+      "owned_vm_root_sha256": "12751efd030c8e6f1a645380e58f97eb7d415298a7cfa6345dc03d5213c82227",
+      "vm_image_id": "sha256:561177a4305051567b1d28d67ba9a95e0ce0ad32a8815b49da42fe71aa5a3dd6",
+      "vm_guest_sha256": "bd0f85c9cdff35d56da2f897951b6fd4f970a947a1155b39cf9394c3914970b2",
+      "source_owner_constructor_correction_included": false
+    },
+    {
+      "artifact_label": "owned-focus-host-red-1",
+      "selection_status": "preserved_intermediate",
+      "phase": "red",
+      "protocol_baseline": "84ac3f856d9b71aeb7bccbfd33eb5a8a828b079f",
+      "kernel_release": "6.8.0-136-generic",
+      "machine": "x86_64",
+      "qemu_mode": null,
+      "passed": false,
+      "passed_cases": 2,
+      "total_cases": 4,
+      "all_setup_completed": true,
+      "all_cleanup_qualified": true,
+      "cases": [
+        {
+          "case": "unknown_denied",
+          "passed": true
+        },
+        {
+          "case": "root_controls_unknown_denied",
+          "passed": true
+        },
+        {
+          "case": "source_only_read",
+          "passed": false
+        },
+        {
+          "case": "anon_inode_owned_focus_read",
+          "passed": false
+        }
+      ],
+      "pidfs_metadata_distinct": false,
+      "positive_authority_qualified": false,
+      "reaps": {
+        "observed_entries": 28,
+        "actual_direct_wait_entries": 12,
+        "service_owned_pidfd_death_and_proc_absence_entries": 12,
+        "distinct_recorded_owned_children": 24,
+        "source_sigkill_waits": 0,
+        "cleanup_source_sigkill_fallbacks": 0
+      },
+      "selected_entry": "run_with_messages_and_session; real Observer Provider ingress",
+      "features": "isolated-fixture",
+      "source_overlay": [],
+      "offline_regenerated_locks": [
+        "tools/native-session-authority/fixture/Cargo.lock",
+        "native-lifecycle/Cargo.lock",
+        "native-messages/Cargo.lock",
+        "native-session/Cargo.lock",
+        "native-kernel-identity/Cargo.lock",
+        "native-inbox/Cargo.lock",
+        "native-messaging/Cargo.lock"
+      ],
+      "elf_sha256": {
+        "lifecycle-launcher": "1f490648004a7899938e4c708c760a2853f3e951f9fd8d7d16af5570c37871ad",
+        "messages-seed-fixture": "10c75a258349d1f192ac90af6ea16604cdafd374fb0b9f0db0f8891b5d524592",
+        "messages-session-authority-fixture-service": "d91ed0550914fe225235b5cd83e0bc86b6e1fa98304352ee705e3b7bd042d554"
+      },
+      "selected_source_sha256": {
+        "native-lifecycle/Cargo.toml": "ddbfa855d2973beffc5317462061add6647f1dc056ee67b9bc4d2f7330f659d7",
+        "native-lifecycle/src/authority.rs": "0d0d9395e841db639c8985eb91e1ec0236c64ec796480220dc4558d65822c68c",
+        "native-lifecycle/src/session.rs": "ad499efb82112cd615dc8fecb437ba7b0cd4a29a3ccb31a734d506a825c48105",
+        "native-lifecycle/src/service.rs": "c21db83c20ef3237106a077059bb0d5dfe84be5926e72c9331f5e3cbae3d32a6",
+        "native-session/Cargo.toml": "0a2fed0277b020f11986174e4e77e03a91e7ad6ab55a370dc6191b79fc7ca856",
+        "native-session/src/lib.rs": "124d65a4445f9d5e41ea7f48b8f72b33d5d27e3a11f4f78727f6eafd2f4978aa",
+        "native-kernel-identity/Cargo.toml": "08850c16b68b41ebf6ae988598ff7b8457e50cdc04c43a13c7cafb0db0cdb4a0",
+        "native-kernel-identity/src/lib.rs": "40296884acdd7b00c65be03930d79097849d538f684ce8d66e75c348fec219c2",
+        "native-messages/Cargo.toml": "8502b6bd0693869827833f52fcdde13d17658e4123607ca905d633d96db5240b",
+        "tools/native-session-authority/runner.py": "6c7f4bb003d8b2bb92c4f3b75ddd87e02bdd7d6cb5ecec64bc947d17ae887580",
+        "tools/native-session-authority/fixture/Cargo.lock": "90e5945ddf651b93504846ac7a4098dcc78c7b1ebc4f1e0ca2f3af78ced082a8",
+        "native-messages/src/bin/messages-launch.rs": "2b2b413307ae51814b44a4cede235218871f9a459ee9e8fd38f2d576c0067976",
+        "native-messages/src/bin/messages-service.rs": "91dd6048f394d82a10d5f8527b4a38867fd9aadaf9f39ea4f4525cdc41734a2b",
+        "native-messages/src/bin/messages-stop.rs": "82b16a187b295d60623f6a8c6da86b944ac78390810a99616b705158bebc7990",
+        "native-messages/src/incoming.rs": "b3f07487e69df947f5bae3a5645827269151a9cce9be993f999abb00761ac5f2",
+        "native-messages/src/lib.rs": "faa6df0140ea61301b84e35a8ff664fa4cfe1f13159ab4ea6c1d2395ca82550c",
+        "native-messages/src/projection.rs": "2dcd7be48fde584ce3a56110bce4514442ed7e6526f3414ae362fa8ed1d05bef",
+        "native-messages/src/protocol.rs": "aac4405329604affa079074a6c7317570882384f6164fdf6ae6f05a831d17c8e",
+        "native-messages/src/worker.rs": "18e66bedb8f0e5edfe1bbb491ff36408a8b73690914c49fa7a51ef5aace32e61"
+      },
+      "selection_sha256": "171f6ed78089058955f112b6925d2f535c15c9fe6204c058716951ca4e7b8904",
+      "result_sha256": "0e41b16c3e17c0e0e7825abe888e727f3ece1a2d673d18b9f6e9220e5ad5c3b1",
+      "proof_sha256": "27c565e6409919217becad59b8b1725573043d6728de5e39c78c83aebd26f831"
+    },
+    {
+      "artifact_label": "owned-focus-host-green-1",
+      "selection_status": "preserved_intermediate",
+      "phase": "green",
+      "protocol_baseline": null,
+      "kernel_release": "6.8.0-136-generic",
+      "machine": "x86_64",
+      "qemu_mode": null,
+      "passed": false,
+      "passed_cases": 14,
+      "total_cases": 15,
+      "all_setup_completed": true,
+      "all_cleanup_qualified": true,
+      "cases": [
+        {
+          "case": "unknown_denied",
+          "passed": true
+        },
+        {
+          "case": "root_controls_unknown_denied",
+          "passed": true
+        },
+        {
+          "case": "source_only_read",
+          "passed": true
+        },
+        {
+          "case": "focus_and_handle_denied",
+          "passed": true
+        },
+        {
+          "case": "dead_retained_handle_denied",
+          "passed": false
+        },
+        {
+          "case": "held_semantic_burst",
+          "passed": true
+        },
+        {
+          "case": "heartbeat_preserves_read",
+          "passed": true
+        },
+        {
+          "case": "heartbeat_cannot_extend_read",
+          "passed": true
+        },
+        {
+          "case": "stopped_source_denies",
+          "passed": true
+        },
+        {
+          "case": "source_eof_denies",
+          "passed": true
+        },
+        {
+          "case": "source_death_denies",
+          "passed": true
+        },
+        {
+          "case": "eagain_rechecks_source",
+          "passed": true
+        },
+        {
+          "case": "source_false_cannot_clear_intent",
+          "passed": true
+        },
+        {
+          "case": "new_app_identity_and_grant",
+          "passed": true
+        },
+        {
+          "case": "anon_inode_owned_focus_read",
+          "passed": true
+        }
+      ],
+      "pidfs_metadata_distinct": false,
+      "positive_authority_qualified": true,
+      "reaps": {
+        "observed_entries": 109,
+        "actual_direct_wait_entries": 47,
+        "service_owned_pidfd_death_and_proc_absence_entries": 47,
+        "distinct_recorded_owned_children": 94,
+        "source_sigkill_waits": 2,
+        "cleanup_source_sigkill_fallbacks": 1
+      },
+      "selected_entry": "run_with_messages_and_session; real Observer Provider ingress",
+      "features": "isolated-fixture",
+      "source_overlay": [],
+      "offline_regenerated_locks": [
+        "tools/native-session-authority/fixture/Cargo.lock",
+        "native-lifecycle/Cargo.lock",
+        "native-messages/Cargo.lock",
+        "native-session/Cargo.lock",
+        "native-kernel-identity/Cargo.lock",
+        "native-inbox/Cargo.lock",
+        "native-messaging/Cargo.lock"
+      ],
+      "elf_sha256": {
+        "lifecycle-launcher": "bc6ffc785cfb5db1c521301764c6c82d9cc9a3e26a0edb7d7f9ac3b69a4be2a3",
+        "messages-seed-fixture": "7bf6f6a662c991cdd11f09327addd2becd9c4349064c36e9eb6d100f7fa08b4e",
+        "messages-session-authority-fixture-service": "2297389b3bf9089b55a942f564be402bf30bf56e92f25cfc77be11ae85fb26fa"
+      },
+      "selected_source_sha256": {
+        "native-lifecycle/Cargo.toml": "dcf7bffba5345547cbd91a6035589705b73be9adab569322bdff9214dda5d901",
+        "native-lifecycle/src/authority.rs": "93d59a62096076b0551ec5485852b996a411edd7f6b121b1f719ff9d057917c6",
+        "native-lifecycle/src/session.rs": "c10804d154a6b4b14b6f3068a2ef09a56678890ce37a01902fbbcd0e17c41014",
+        "native-lifecycle/src/service.rs": "c21db83c20ef3237106a077059bb0d5dfe84be5926e72c9331f5e3cbae3d32a6",
+        "native-session/Cargo.toml": "ea4f943b4b34e053c9d19cc91f2c62e2aea37abfa91318d11fa2800f86993f45",
+        "native-session/src/lib.rs": "497ec85289dc976c6b5a8b6b9f2275f8b492a6a637ffd0bec0dc1a7bfb88bfe8",
+        "native-kernel-identity/Cargo.toml": "5cab2f22141987e4f1470b0fb575107b5c3ad134829bd2b92d5b7ccb3ef12431",
+        "native-kernel-identity/src/lib.rs": "464a5e2a96dd99f127cce5b32514ff4a9a7340f8bee2581e941685e6df82cbcd",
+        "native-kernel-identity/src/pidfd.rs": "caf4b44738fc53093a32ef96c2e639c1a376935ad29fa17a42091a56180b11ff",
+        "native-messages/Cargo.toml": "8502b6bd0693869827833f52fcdde13d17658e4123607ca905d633d96db5240b",
+        "tools/native-session-authority/runner.py": "fb011955392b0b7c88da8072ae4ceb95b6745f84c1838f00da4496429a03de60",
+        "tools/native-session-authority/fixture/Cargo.lock": "5fcf7f2bb40125d2b2f28d76cf1aa08ea0c35e5b817589e061513a28a6727c1c",
+        "native-messages/src/bin/messages-launch.rs": "2b2b413307ae51814b44a4cede235218871f9a459ee9e8fd38f2d576c0067976",
+        "native-messages/src/bin/messages-service.rs": "91dd6048f394d82a10d5f8527b4a38867fd9aadaf9f39ea4f4525cdc41734a2b",
+        "native-messages/src/bin/messages-stop.rs": "82b16a187b295d60623f6a8c6da86b944ac78390810a99616b705158bebc7990",
+        "native-messages/src/incoming.rs": "b3f07487e69df947f5bae3a5645827269151a9cce9be993f999abb00761ac5f2",
+        "native-messages/src/lib.rs": "faa6df0140ea61301b84e35a8ff664fa4cfe1f13159ab4ea6c1d2395ca82550c",
+        "native-messages/src/projection.rs": "2dcd7be48fde584ce3a56110bce4514442ed7e6526f3414ae362fa8ed1d05bef",
+        "native-messages/src/protocol.rs": "aac4405329604affa079074a6c7317570882384f6164fdf6ae6f05a831d17c8e",
+        "native-messages/src/worker.rs": "18e66bedb8f0e5edfe1bbb491ff36408a8b73690914c49fa7a51ef5aace32e61"
+      },
+      "selection_sha256": "eca140af71a4b802b7907fdbd2295170dad668d9872a2e472525a2af8f16ed7b",
+      "result_sha256": "453900b431aa8815a76d089e1641e48818a4aee6286eb22b25b245d50ec67e67",
+      "proof_sha256": "73c121191e175e57a82693c2118a87584b28c2065483b5a65ab33ebb011d7cce"
+    },
+    {
+      "artifact_label": "owned-focus-host-green-2",
+      "selection_status": "preserved_intermediate",
+      "phase": "green",
+      "protocol_baseline": null,
+      "kernel_release": "6.8.0-136-generic",
+      "machine": "x86_64",
+      "qemu_mode": null,
+      "passed": true,
+      "passed_cases": 15,
+      "total_cases": 15,
+      "all_setup_completed": true,
+      "all_cleanup_qualified": true,
+      "cases": [
+        {
+          "case": "unknown_denied",
+          "passed": true
+        },
+        {
+          "case": "root_controls_unknown_denied",
+          "passed": true
+        },
+        {
+          "case": "source_only_read",
+          "passed": true
+        },
+        {
+          "case": "focus_and_handle_denied",
+          "passed": true
+        },
+        {
+          "case": "dead_retained_handle_denied",
+          "passed": true
+        },
+        {
+          "case": "held_semantic_burst",
+          "passed": true
+        },
+        {
+          "case": "heartbeat_preserves_read",
+          "passed": true
+        },
+        {
+          "case": "heartbeat_cannot_extend_read",
+          "passed": true
+        },
+        {
+          "case": "stopped_source_denies",
+          "passed": true
+        },
+        {
+          "case": "source_eof_denies",
+          "passed": true
+        },
+        {
+          "case": "source_death_denies",
+          "passed": true
+        },
+        {
+          "case": "eagain_rechecks_source",
+          "passed": true
+        },
+        {
+          "case": "source_false_cannot_clear_intent",
+          "passed": true
+        },
+        {
+          "case": "new_app_identity_and_grant",
+          "passed": true
+        },
+        {
+          "case": "anon_inode_owned_focus_read",
+          "passed": true
+        }
+      ],
+      "pidfs_metadata_distinct": false,
+      "positive_authority_qualified": true,
+      "reaps": {
+        "observed_entries": 109,
+        "actual_direct_wait_entries": 47,
+        "service_owned_pidfd_death_and_proc_absence_entries": 47,
+        "distinct_recorded_owned_children": 94,
+        "source_sigkill_waits": 2,
+        "cleanup_source_sigkill_fallbacks": 1
+      },
+      "selected_entry": "run_with_messages_and_session; real Observer Provider ingress",
+      "features": "isolated-fixture",
+      "source_overlay": [],
+      "offline_regenerated_locks": [
+        "tools/native-session-authority/fixture/Cargo.lock",
+        "native-lifecycle/Cargo.lock",
+        "native-messages/Cargo.lock",
+        "native-session/Cargo.lock",
+        "native-kernel-identity/Cargo.lock",
+        "native-inbox/Cargo.lock",
+        "native-messaging/Cargo.lock"
+      ],
+      "elf_sha256": {
+        "lifecycle-launcher": "bc6ffc785cfb5db1c521301764c6c82d9cc9a3e26a0edb7d7f9ac3b69a4be2a3",
+        "messages-seed-fixture": "7bf6f6a662c991cdd11f09327addd2becd9c4349064c36e9eb6d100f7fa08b4e",
+        "messages-session-authority-fixture-service": "2297389b3bf9089b55a942f564be402bf30bf56e92f25cfc77be11ae85fb26fa"
+      },
+      "selected_source_sha256": {
+        "native-lifecycle/Cargo.toml": "dcf7bffba5345547cbd91a6035589705b73be9adab569322bdff9214dda5d901",
+        "native-lifecycle/src/authority.rs": "93d59a62096076b0551ec5485852b996a411edd7f6b121b1f719ff9d057917c6",
+        "native-lifecycle/src/session.rs": "c10804d154a6b4b14b6f3068a2ef09a56678890ce37a01902fbbcd0e17c41014",
+        "native-lifecycle/src/service.rs": "c21db83c20ef3237106a077059bb0d5dfe84be5926e72c9331f5e3cbae3d32a6",
+        "native-session/Cargo.toml": "ea4f943b4b34e053c9d19cc91f2c62e2aea37abfa91318d11fa2800f86993f45",
+        "native-session/src/lib.rs": "497ec85289dc976c6b5a8b6b9f2275f8b492a6a637ffd0bec0dc1a7bfb88bfe8",
+        "native-kernel-identity/Cargo.toml": "5cab2f22141987e4f1470b0fb575107b5c3ad134829bd2b92d5b7ccb3ef12431",
+        "native-kernel-identity/src/lib.rs": "464a5e2a96dd99f127cce5b32514ff4a9a7340f8bee2581e941685e6df82cbcd",
+        "native-kernel-identity/src/pidfd.rs": "caf4b44738fc53093a32ef96c2e639c1a376935ad29fa17a42091a56180b11ff",
+        "native-messages/Cargo.toml": "8502b6bd0693869827833f52fcdde13d17658e4123607ca905d633d96db5240b",
+        "tools/native-session-authority/runner.py": "8fc43d1909a2a39f1919f884b1c897f7bc1424a01f760494c64d3bd69162e711",
+        "tools/native-session-authority/fixture/Cargo.lock": "5fcf7f2bb40125d2b2f28d76cf1aa08ea0c35e5b817589e061513a28a6727c1c",
+        "native-messages/src/bin/messages-launch.rs": "2b2b413307ae51814b44a4cede235218871f9a459ee9e8fd38f2d576c0067976",
+        "native-messages/src/bin/messages-service.rs": "91dd6048f394d82a10d5f8527b4a38867fd9aadaf9f39ea4f4525cdc41734a2b",
+        "native-messages/src/bin/messages-stop.rs": "82b16a187b295d60623f6a8c6da86b944ac78390810a99616b705158bebc7990",
+        "native-messages/src/incoming.rs": "b3f07487e69df947f5bae3a5645827269151a9cce9be993f999abb00761ac5f2",
+        "native-messages/src/lib.rs": "faa6df0140ea61301b84e35a8ff664fa4cfe1f13159ab4ea6c1d2395ca82550c",
+        "native-messages/src/projection.rs": "2dcd7be48fde584ce3a56110bce4514442ed7e6526f3414ae362fa8ed1d05bef",
+        "native-messages/src/protocol.rs": "aac4405329604affa079074a6c7317570882384f6164fdf6ae6f05a831d17c8e",
+        "native-messages/src/worker.rs": "18e66bedb8f0e5edfe1bbb491ff36408a8b73690914c49fa7a51ef5aace32e61"
+      },
+      "selection_sha256": "f85f355b0db3b1e2122921e8991d11ba52fa4cd7f7abc1183cb899002a01336e",
+      "result_sha256": "cd0e40c87d1fd830a95e4c1d1c28c3c469ca7d845a3d1724e4931e5d16d62f17",
+      "proof_sha256": "7698e1a6f63a8a79d038e24c4a115e10815c7b5763d4709852a611f250190e15"
+    }
+  ],
+  "checks": {
+    "red_baseline_non_lock_production_files_byte_exact_to_commit": 58,
+    "red_green_selected_positive_case_and_shared_driver_recipe_sha256": {
+      "peer_identity": "1a85c6236f2252c0c1721571f9b6f9a22f95cae7c919a7cc2c9400218131044d",
+      "receive_rights": "7d85419f01df60d33ee35bea55b04fdeb31a28ee91c15720865e96a358cb7c59",
+      "source_entry": "d20cab1ca2336697453832b6e4213a7bba1f240cffdfcf1f215c19c5b8f0a814",
+      "Scope": "299656d2c5dfc32b4a3f4f6dd7049f4d443d85ae19cf87a66fd65ac4ef96a207",
+      "anon_inode_owned_focus_read": "da8d8dea835ea12a0149037e00554d34ff4bfe16b857a5d56115119739af5885",
+      "source_only_read": "8c4c67cba36810fd2b0de986f93831cf9e50dde89df5fdf171d6fb0116f6448f"
+    },
+    "host_arm_identical_production_rust_and_manifest_count": 53,
+    "final_observer_sha256": "3a5defab136fd6f2388f20296a693185b1ce66b38656f561b1dab67b3c932636",
+    "wrong_live_handle_same_pid_uid_gid_denied": true,
+    "reaped_retained_dead_handle_with_fresh_exact_metadata_denied": true,
+    "healthy_source_fresh_handle_restores_read": true,
+    "source_focus_null_replacement_cycles_without_fd_growth": 24,
+    "original_semantic_heartbeat_lease_eagain_root_intent_groups_preserved": true,
+    "expected_source_owned_pidfd_binding_included": true,
+    "wrong_source_constructor_input_exercised_by_authority_groups": false
+  },
+  "preserved_limits": {
+    "historical_scalar_evidence_index": "observed-evidence.json",
+    "raw_private_logs_published": false,
+    "physical_phone_accessed": false,
+    "proprietary_input_used": false,
+    "phone_hardware_qualified": false,
+    "retained_pixel_kernel_qualified": false,
+    "actual_compositor_protocol_qualified": false,
+    "actual_binder_session_composition_qualified": false,
+    "production_session_source_selector_added": false,
+    "physical_suspend_qualified": false,
+    "zero_unobserved_external_transition_publication_qualified": false,
+    "namespace_deployment_qualified": false,
+    "grant_availability_during_unprovable_dead_focus_stream_qualified": false
+  },
+  "separate_source_owner_regression": {
+    "scope": "actual Observer process/socket selection, maintained separately from authority groups",
+    "red_label": "artifacts/native-session-observer/red-source-owner-pair",
+    "red_counts": {
+      "passed": 25,
+      "failed": 1
+    },
+    "failure": "constructor accepted a wrong living pidfd while expecting another source PID",
+    "green_label": "artifacts/native-session-observer/green-source-owner-pair",
+    "green_counts": {
+      "passed": 26,
+      "failed": 0
+    },
+    "ordering": "this source-owner red precedes the source-owner constructor fix",
+    "owned_by_this_authority_selection": false
+  }
+}

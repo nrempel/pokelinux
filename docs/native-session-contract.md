@@ -10,7 +10,9 @@ publication gate. Java or an Android framework service is unnecessary.
 This document records public original-source inspection and the session contract.
 Its [static provenance](evidence/native-session-contract-provenance.json) qualifies
 source inspection only. The [matching-build observation](native-session-build-boundary.md)
-executes eleven original API/protocol/kernel groups. Subsequent
+executes eleven original API/protocol/kernel groups. The current
+[owned-focus protocol](native-session-owned-focus.md) has separate executed
+identity, observer, actor and original-compositor selections. Historical
 [native ingress prototypes](native-session-ingress.md) separately qualify17 prepared
 compositor/observer groups,13 synthetic-source/current-authority ARM groups,
 16 process/socket/exec cases and one typed policy regression. Production launch,
@@ -123,9 +125,10 @@ Wayland FD inheritance/delegation remains a separate qualification gate. The
 Rust actor must still match the exact installed app generation and live pidfd.
 The executed build probe additionally obtains `SO_PEERPIDFD` from the actual
 Wayland socket, requires live pidfs identity, and matches its device/inode against
-an independently opened current task pidfd. The production actor must compare
-that identity to its already owned app pidfd, with source incarnation and boot
-binding. Opening a pidfd from an observed numeric PID can alias a recycled PID;
+an independently opened current task pidfd. The current [owned-focus protocol](native-session-owned-focus.md) transfers that
+actual socket peer handle to compare with the already owned app pidfd through a
+pinned protected procfs view and joint final liveness; scalar identity is unused.
+Source incarnation, semantic revisions and original boot-time leases remain bound. Opening a pidfd from an observed numeric PID can alias a recycled PID;
 unsupported socket identity must deny. Delegation and numeric PID reuse have
 not been qualified by that probe.
 
@@ -178,9 +181,10 @@ The following are proposed fields and behavior, not existing Hyprland APIs:
 4. A root-created inherited socketpair has creation-time peer credentials. If
    used for adapter output, enable kernel `SCM_CREDENTIALS` and verify each packet
    against the expected compositor PID/UID and generation. Close parent copies,
-   set close-on-exec and refuse descriptors/truncation. FD possession alone is
-   insufficient. The actor's existing IPC behavior supplies an implementation
-   precedent, not an executed adapter result.
+   set close-on-exec, and transfer exactly one owned focus pidfd when focused.
+   Refuse unexpected descriptors and truncation. FD possession alone is
+   insufficient. General app/policy IPC still refuses all descriptors; the
+   dedicated source receiver now has separately executed owned-focus evidence.
 5. The trusted launch profile must fix executable, security configuration and
    approved adapter/plugin identities, and prevent untrusted modification of the
    compositor. Process credentials prove identity, not code/config integrity.

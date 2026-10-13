@@ -1,4 +1,8 @@
-//! Fixed Linux socket-origin pidfd boundary, with no numeric-PID fallback.
+//! Fixed Linux socket-origin and owned-pidfd identity boundaries.
+#[cfg(target_os = "linux")]
+mod pidfd;
+#[cfg(target_os = "linux")]
+pub use pidfd::ProcessView;
 use std::{
     io,
     os::fd::{AsFd, AsRawFd, FromRawFd, OwnedFd},

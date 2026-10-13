@@ -1112,6 +1112,8 @@
   ],
   "report": {
     "path": "docs/native-session-ingress.md",
-    "sha256": "d69d61aa9f9ae9e8f437fcdd5d4f9dc10c30faf3a4575df3095c51edfac47dce"
-  }
+    "sha256": "dcdb69d1be253f0fb5bb1e00fdb00a33619b30ed8403a2a95fc86dd44310e1ac",
+    "previous_sha256": "d69d61aa9f9ae9e8f437fcdd5d4f9dc10c30faf3a4575df3095c51edfac47dce"
+  },
+  "historical_protocol": "Frozen scalar-pidfs selection; replaced by docs/native-session-owned-focus.md with separate current provenance"
 }

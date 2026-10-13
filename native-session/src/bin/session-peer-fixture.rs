@@ -1,8 +1,10 @@
 //! Separately built synthetic sender; production library contains no fixture entrypoint.
 use pokelinux_lifecycle::{boottime_ns, ipc};
 use pokelinux_session::{Frame, NativeFocus};
-use rustix::fd::{FromRawFd, OwnedFd};
+use rustix::fd::{AsFd, BorrowedFd, FromRawFd, OwnedFd};
+use rustix::net::{SendAncillaryBuffer, SendAncillaryMessage, SendFlags, sendmsg};
 use std::{io, process::Command};
+use std::{io::IoSlice, mem::MaybeUninit};
 fn wire(source: &str, mode: &str, sequence: u64) -> Vec<u8> {
     let mut f = Frame {
         source: source.into(),
@@ -11,11 +13,9 @@ fn wire(source: &str, mode: &str, sequence: u64) -> Vec<u8> {
         locked: false,
         lock_completed: false,
         focus: Some(NativeFocus {
-            pid: 42,
+            pid: std::process::id(),
             uid: 11010,
             gid: 11010,
-            pidfs_device: 6,
-            pidfs_inode: 12345,
         }),
     };
     if mode == "wrong-source" {
@@ -40,7 +40,7 @@ fn adopt(raw: &str) -> OwnedFd {
     // Only own isolated test process adopts descriptors supplied by its spawning parent.
     unsafe { OwnedFd::from_raw_fd(raw.parse().unwrap()) }
 }
-fn packet(fd: &OwnedFd, bytes: &[u8]) -> io::Result<()> {
+fn plain_packet(fd: &OwnedFd, bytes: &[u8]) -> io::Result<()> {
     match ipc::send(fd, bytes) {
         Err(e) if matches!(e.raw_os_error(), Some(32 | 104)) => {
             eprintln!(
@@ -50,6 +50,86 @@ fn packet(fd: &OwnedFd, bytes: &[u8]) -> io::Result<()> {
             Ok(())
         }
         result => result,
+    }
+}
+fn packet(fd: &OwnedFd, bytes: &[u8]) -> io::Result<()> {
+    let focused = serde_json::from_slice::<Frame>(bytes)
+        .map(|f| f.focus.is_some())
+        .unwrap_or(true);
+    if focused {
+        let owned = rustix::process::pidfd_open(
+            rustix::process::getpid(),
+            rustix::process::PidfdFlags::empty(),
+        )?;
+        packet_with_rights(fd, bytes, &[owned.as_fd()])
+    } else {
+        plain_packet(fd, bytes)
+    }
+}
+fn packet_with_rights(fd: &OwnedFd, bytes: &[u8], rights: &[BorrowedFd<'_>]) -> io::Result<()> {
+    let mut storage = [MaybeUninit::uninit(); rustix::cmsg_space!(ScmRights(2))];
+    let mut ancillary = SendAncillaryBuffer::new(&mut storage);
+    assert!(ancillary.push(SendAncillaryMessage::ScmRights(rights)));
+    match sendmsg(
+        fd,
+        &[IoSlice::new(bytes)],
+        &mut ancillary,
+        SendFlags::DONTWAIT | SendFlags::NOSIGNAL,
+    ) {
+        Ok(n) if n == bytes.len() => Ok(()),
+        Ok(_) => Err(io::ErrorKind::WriteZero.into()),
+        Err(e) if matches!(e.raw_os_error(), 32 | 104) => Ok(()),
+        Err(e) => Err(e.into()),
+    }
+}
+fn owned_packet(fd: &OwnedFd, source: &str, mode: &str, sequence: u64) -> io::Result<()> {
+    let mut frame: Frame = serde_json::from_slice(&wire(source, "valid", sequence)).unwrap();
+    let owned = rustix::process::pidfd_open(
+        rustix::process::getpid(),
+        rustix::process::PidfdFlags::empty(),
+    )?;
+    match mode {
+        "owned-focus" | "owned-focus-heartbeat" => {
+            packet_with_rights(fd, &serde_json::to_vec(&frame).unwrap(), &[owned.as_fd()])
+        }
+        "owned-focus-missing" => plain_packet(fd, &serde_json::to_vec(&frame).unwrap()),
+        "owned-focus-unexpected" => {
+            frame.focus = None;
+            packet_with_rights(fd, &serde_json::to_vec(&frame).unwrap(), &[owned.as_fd()])
+        }
+        "owned-focus-two" => packet_with_rights(
+            fd,
+            &serde_json::to_vec(&frame).unwrap(),
+            &[owned.as_fd(), owned.as_fd()],
+        ),
+        "owned-focus-old-wire" => {
+            let mut value = serde_json::to_value(&frame).unwrap();
+            value["focus"]["pidfs_device"] = 6.into();
+            value["focus"]["pidfs_inode"] = 12345.into();
+            packet_with_rights(fd, &serde_json::to_vec(&value).unwrap(), &[owned.as_fd()])
+        }
+        "owned-focus-truncated-rights" => {
+            let mut storage = [MaybeUninit::uninit(); rustix::cmsg_space!(ScmRights(64))];
+            let rights = vec![owned.as_fd(); 64];
+            let mut ancillary = SendAncillaryBuffer::new(&mut storage);
+            assert!(ancillary.push(SendAncillaryMessage::ScmRights(&rights)));
+            let bytes = serde_json::to_vec(&frame).unwrap();
+            assert_eq!(
+                sendmsg(
+                    fd,
+                    &[IoSlice::new(&bytes)],
+                    &mut ancillary,
+                    SendFlags::DONTWAIT | SendFlags::NOSIGNAL
+                )?,
+                bytes.len()
+            );
+            Ok(())
+        }
+        "owned-focus-file" => {
+            let file = std::fs::File::open("/dev/null")?;
+            packet_with_rights(fd, &serde_json::to_vec(&frame).unwrap(), &[file.as_fd()])
+        }
+        _ => Err(io::ErrorKind::InvalidInput.into()),
     }
 }
 fn main() -> io::Result<()> {
@@ -79,14 +159,58 @@ fn main() -> io::Result<()> {
     let command = adopt(&args[2]);
     let source = &args[3];
     let until = boottime_ns() + 10_000_000_000;
+    let mut own_sequence = 0;
+    let mut focus_child = None::<(std::process::Child, OwnedFd, u32)>;
     while boottime_ns() < until {
         match ipc::receive(&command)? {
             Some((bytes, _)) => {
                 let mode = std::str::from_utf8(&bytes).unwrap();
                 if mode == "quit" {
+                    if let Some((mut child, _, _)) = focus_child.take() {
+                        child.kill()?;
+                        child.wait()?;
+                    }
                     return Ok(());
                 }
-                if mode == "delegated" {
+                if mode.starts_with("focus-child-") {
+                    own_sequence += 1;
+                    if mode == "focus-child-live" {
+                        let child = Command::new("/bin/sleep").arg("30").spawn()?;
+                        let pid = child.id();
+                        let peer = rustix::process::pidfd_open(
+                            rustix::process::Pid::from_raw(pid as i32).unwrap(),
+                            rustix::process::PidfdFlags::empty(),
+                        )?;
+                        focus_child = Some((child, peer, pid));
+                    } else if mode == "focus-child-dead" {
+                        let (child, _, _) = focus_child.as_mut().unwrap();
+                        child.kill()?;
+                        child.wait()?;
+                    } else if mode == "focus-child-new-same-metadata" {
+                        let (_, _, old_pid) = focus_child.take().unwrap();
+                        let child = Command::new("/bin/sleep").arg("30").spawn()?;
+                        let peer = rustix::process::pidfd_open(
+                            rustix::process::Pid::from_raw(child.id() as i32).unwrap(),
+                            rustix::process::PidfdFlags::empty(),
+                        )?;
+                        assert_ne!(
+                            child.id(),
+                            old_pid,
+                            "fixture does not force numeric PID reuse"
+                        );
+                        focus_child = Some((child, peer, old_pid));
+                    } else {
+                        return Err(io::ErrorKind::InvalidInput.into());
+                    }
+                    let (_, peer, metadata_pid) = focus_child.as_ref().unwrap();
+                    let mut frame: Frame =
+                        serde_json::from_slice(&wire(source, "valid", own_sequence)).unwrap();
+                    frame.focus.as_mut().unwrap().pid = *metadata_pid;
+                    packet_with_rights(&fd, &serde_json::to_vec(&frame).unwrap(), &[peer.as_fd()])?;
+                } else if mode.starts_with("owned-focus") {
+                    own_sequence += 1;
+                    owned_packet(&fd, source, mode, own_sequence)?;
+                } else if mode == "delegated" {
                     let mut c = Command::new(std::env::current_exe()?)
                         .args(["--delegated", &args[1], source, "valid"])
                         .spawn()?;

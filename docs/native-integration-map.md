@@ -54,14 +54,19 @@ appearance ACL setup remain explicit test infrastructure.
    wake ownership separately; closed windows do not prove suspended delivery.
    The [matching compositor build probe](native-session-build-boundary.md) now
    executes11 original API/protocol/kernel groups; the subsequent
-   [ingress prototype](native-session-ingress.md) qualifies17 prepared original
+   historical [ingress prototype](native-session-ingress.md) qualifies17 prepared original
    compositor/observer groups and13 synthetic-source/current-authority ARM groups
    separately. Joint composition, cold availability and retained-kernel identity
-   remain open; the current scalar-pidfs prototype cannot substitute for Pixel
+   remain open; that earlier scalar-pidfs prototype cannot substitute for Pixel
    capability qualification.
    Admission callbacks precede the original locked flag. The
    [session contract](native-session-contract.md) retains trusted locker/restore
    containment and external-transition publication ordering as explicit gates.
+   Current [owned focus](native-session-owned-focus.md) replaces scalar identity:
+   14 leaf/26 observer checks pass on host/ARM,15 host/14 ARM actor groups and17
+   original-compositor groups qualify separate paths. Continue their joint
+   installed app path; protected procfs/common namespaces and matched Pixel kernel
+   qualification remain gates.
 5. Add one authorized outbound operation through the same authority to the frozen
    synthetic backend. Resolve production identity/ACK/reset and device backend
    gates separately, then extend the installed path to the remaining phone apps.

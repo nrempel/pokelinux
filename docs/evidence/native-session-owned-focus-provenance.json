@@ -1,0 +1,356 @@
+{
+  "schema": 1,
+  "scope": "Separate original-code compositor, real host/ARM kernel observer/identity and synthetic source-to-Messages-authority; joint installed native app not qualified",
+  "current_core_sources": {
+    "native-kernel-identity/Cargo.lock": "ea2dd27ddd1bf8c00b3bf15d5fface7d5bddd6e20b5d1e89fbc1fc10172ff592",
+    "native-kernel-identity/Cargo.toml": "5cab2f22141987e4f1470b0fb575107b5c3ad134829bd2b92d5b7ccb3ef12431",
+    "native-kernel-identity/src/lib.rs": "464a5e2a96dd99f127cce5b32514ff4a9a7340f8bee2581e941685e6df82cbcd",
+    "native-kernel-identity/src/pidfd.rs": "caf4b44738fc53093a32ef96c2e639c1a376935ad29fa17a42091a56180b11ff",
+    "native-kernel-identity/tests/pidfd.rs": "ed310e5152426ae8a3d723ca2869cdcd3fda50e0552cdc16938c638d308cc3b3",
+    "native-kernel-identity/tests/socket.rs": "2e9d134e7913ddadb564939bf241538690698a9ca7b660213479d843c638fd08",
+    "native-lifecycle/Cargo.lock": "bad4e41a75608010924bb766c35c100f758fac903e8b628e66078e9a50bd28be",
+    "native-lifecycle/Cargo.toml": "dcf7bffba5345547cbd91a6035589705b73be9adab569322bdff9214dda5d901",
+    "native-lifecycle/src/authority.rs": "93d59a62096076b0551ec5485852b996a411edd7f6b121b1f719ff9d057917c6",
+    "native-lifecycle/src/bin/lifecycle-client.rs": "6dd1f2c86a96bca4364b5ee2e85fd39fecaf10bc68b8f7b727bd3e65f86bc9bf",
+    "native-lifecycle/src/bin/lifecycle-daemon.rs": "ee33d2d77a8fc98ce56b582d9b9c96d0f2f8240e3fda182ec9bdeba8f6af4f01",
+    "native-lifecycle/src/bin/lifecycle-launcher.rs": "49a0e279b381a45ed49242a74c94b202ebebb81bc42bd8b61cfd58f8bb80a923",
+    "native-lifecycle/src/ipc.rs": "6a9073bb4c4413f8b4d49caa6a8827cfe7ffe167b3c712192d0951d6be8465c1",
+    "native-lifecycle/src/lib.rs": "076119670b9e98a510f0c1dfd14ce1598b7d2c3356e235b9b346535a76833151",
+    "native-lifecycle/src/messages.rs": "c4697ad460baa14fb4b1b7726ac4afc686ec50f44599cf2055290f3dd7509ba3",
+    "native-lifecycle/src/service.rs": "c21db83c20ef3237106a077059bb0d5dfe84be5926e72c9331f5e3cbae3d32a6",
+    "native-lifecycle/src/session.rs": "c10804d154a6b4b14b6f3068a2ef09a56678890ce37a01902fbbcd0e17c41014",
+    "native-lifecycle/src/storage.rs": "e860864db2ec8b6c00930128c1592918f06b00e3b4a466b71d17effe0764997f",
+    "native-session/Cargo.lock": "8b5034dc2d7279634f6af4fb68100ee47a6c99e46a1c378b4bd4f9ae9c319977",
+    "native-session/Cargo.toml": "ea4f943b4b34e053c9d19cc91f2c62e2aea37abfa91318d11fa2800f86993f45",
+    "native-session/src/bin/session-observer-fixture.rs": "75e55d00a1402affa12e323f92c654299e4eec6f26cf004e6c97c2f173a58a91",
+    "native-session/src/bin/session-peer-fixture.rs": "c4e214a8a56a7e159a7b96171b1f841f65991be1b353b33bcd2135fe2f2f35d3",
+    "native-session/src/lib.rs": "3a5defab136fd6f2388f20296a693185b1ce66b38656f561b1dab67b3c932636",
+    "native-session/tests/process.rs": "621c2af4556dc121b3b07b24bb94c5db51132ea001e968ff78eb128a17c046ad"
+  },
+  "source_protocol": "PID/UID/GID metadata plus exactly one retained SCM_RIGHTS pidfd iff focused; no scalar pidfs wire or observed PID reopen",
+  "identity": "pinned protected common procfs namespace; both retained handles read before joint final liveness; source ctor bound to expected PID",
+  "leaf_frozen_host_and_prepared_arm_index": {
+    "path": "artifacts/pidfd-identity/proof.json",
+    "sha256": "2c9365f849a2a84a1dddbff04336fb29948fb36e878c063b449acee4d09d26d9",
+    "bytes": 12714
+  },
+  "source_boundary_red": {
+    "selection": {
+      "path": "artifacts/native-session-observer/red-owned-focus-protocol/selection.json",
+      "sha256": "818bd3ca4be18649cbf97157449d905564fef354c77ba0e5abb405831f6f6e36",
+      "bytes": 2051
+    },
+    "log": {
+      "path": "artifacts/native-session-observer/red-owned-focus-protocol/log",
+      "sha256": "c7b61b1102998a1a07da0ce8b4c9a8ea9ad747c23c1099fef77dc717febf47c0",
+      "bytes": 3339
+    },
+    "passed": 19,
+    "failed": 2,
+    "before_implementation": true
+  },
+  "source_owner_red": {
+    "selection": {
+      "path": "artifacts/native-session-observer/red-source-owner-pair/selection.json",
+      "sha256": "c4e6fd461658a10b3a0706f3cfd348f97b246fa096622910341236c2c8864b5e",
+      "bytes": 2945
+    },
+    "log": {
+      "path": "artifacts/native-session-observer/red-source-owner-pair/log",
+      "sha256": "5dcd137fc219247026f4b7f4f48425bd4939f0c268b74f62f10fee1678461029",
+      "bytes": 3428
+    },
+    "passed": 25,
+    "failed": 1,
+    "before_fix": true
+  },
+  "host_observer": {
+    "selection": {
+      "path": "artifacts/native-session-observer/green-source-owner-pair/selection.json",
+      "sha256": "ee12e003881834339f46bb1f8fbefc71c1ad99b2564a848b064f1abada2f17aa",
+      "bytes": 2947
+    },
+    "log": {
+      "path": "artifacts/native-session-observer/green-source-owner-pair/log",
+      "sha256": "188df828ed880eee6c602ca05605c45473753c64a1a8defa7d96ccae09f20301",
+      "bytes": 2947
+    },
+    "passed": 26
+  },
+  "static_arm_and_host_components": {
+    "selection": {
+      "path": "artifacts/native-session-observer/owned-source-final-arm-build/selection.json",
+      "sha256": "58af4a546b38ed856aca4b8df26301048ab13cf00a0edd3d285c412ec0f4500c",
+      "bytes": 4410
+    },
+    "build_log": {
+      "path": "artifacts/native-session-observer/owned-source-final-arm-build/build.log",
+      "sha256": "aa6283f4538d8e80eda716a60d832fc95322e0271be142c9ee1606bc8aa428af",
+      "bytes": 5157
+    },
+    "component_log": {
+      "path": "artifacts/native-session-observer/owned-source-final-arm-build/lifecycle-component.log",
+      "sha256": "68162903abc28798fe16a1615bbafe2c85336e424cf912b4b0a42ce132df81b8",
+      "bytes": 777
+    },
+    "host_components_passed": 8,
+    "component_executables_bound_before_execution": {
+      "target/debug/deps/pokelinux_lifecycle-d2192560aae51e6c": "ef57464dc6f38a682482eb58862e154baa72a22b0a776484d024e743a211a783",
+      "target/debug/lifecycle-daemon": "64b6fa1aa802731fedaf9e0eb9754c17fa99fbdf9fff39592ab484e45b95dbc3"
+    },
+    "arm_executables": {
+      "bins/process-tests": "7ad1eb856b75ad1313fa77d0ede4010954b264ba48e92347093feec690e44d43",
+      "bins/process-tests-elf.txt": "e6aee7020d163d5e7c2a4ca31737911a900f56bfb8dd6b4b00676478fef2163e",
+      "bins/session-observer-fixture": "a2e0aee677294203d0400217589ef810e731b6488f0136b5b1eebfa82e53f134",
+      "bins/session-observer-fixture-elf.txt": "09db4d3e233a0b2233cd4a5437ba4b4bb173685861e4643e5deeaf0fe9e08433",
+      "bins/session-peer-fixture": "20aa4d1594778d9b9e13ef4b68e185761694424fd77ab2d1aafad87338b89d44",
+      "bins/session-peer-fixture-elf.txt": "f36b415fa11719f8abdf36631dfcb799f13856d39b8bb7b37fa58c1416f1e6db"
+    },
+    "build_alone_qualifies_arm_execution": false
+  },
+  "synthetic_authority": {
+    "index": {
+      "path": "tools/native-session-authority/owned-focus-evidence.json",
+      "sha256": "f9412a2193594c804b5e83ac45368f8fb3a84a68c015d34165c675c3513e6d43",
+      "bytes": 47479
+    },
+    "host_passed": 15,
+    "arm_kernel_passed": 14,
+    "actor_baseline_replay_after_initial_code_drafting": true,
+    "real_compositor_qualified": false
+  },
+  "original_compositor_red": {
+    "selection": {
+      "path": "artifacts/native-session-compositor/red-owned-focus-baseline/selection.json",
+      "sha256": "f3b7e6bc56f2206434c4953e6cb3c4b483d9fb525b5f4f275d1b51b25c050268",
+      "bytes": 4242
+    },
+    "result": {
+      "path": "artifacts/native-session-compositor/red-owned-focus-baseline/result.json",
+      "sha256": "1458dd797f5ec25d93e752c896d564940fca4d3e42562a5bf585d38bfe919341",
+      "bytes": 13599
+    },
+    "classification": "Actual focused frame lacked required owned descriptor; emitted red_detected field was false in this initial runner, error predicate demonstrates boundary failure"
+  },
+  "original_compositor_current": {
+    "selection": {
+      "path": "artifacts/native-session-compositor/green-owned-source-final/selection.json",
+      "sha256": "4c8eaff1655877e9745691e75b0e819df35b238442b7212644e6c9147b3dbcbd",
+      "bytes": 5341
+    },
+    "result": {
+      "path": "artifacts/native-session-compositor/green-owned-source-final/result.json",
+      "sha256": "26b37554dac8503d10ee64b26b8a64031eb56e8fe88abbc0941bebc50d0d894f",
+      "bytes": 35401
+    },
+    "original_protocol_groups_passed": 17,
+    "kernel_leaf_passed": 14,
+    "observer_kernel_passed": 26,
+    "group_records": 21,
+    "groups": [
+      {
+        "id": "native_adapter_exact_package_build",
+        "passed": true
+      },
+      {
+        "id": "actual_ARM_kernel_kernel-lib-tests",
+        "passed": true
+      },
+      {
+        "id": "actual_ARM_kernel_kernel-pidfd-tests",
+        "passed": true
+      },
+      {
+        "id": "actual_ARM_kernel_kernel-socket-tests",
+        "passed": true
+      },
+      {
+        "id": "actual_ARM_kernel_observer-process-tests",
+        "passed": true
+      },
+      {
+        "id": "actual_compositor_child_SCM_credentials_override_root_socketpair_creation",
+        "passed": true
+      },
+      {
+        "id": "python_actual_native_focus_owned_pidfd_matches_child",
+        "passed": true
+      },
+      {
+        "id": "python_central_null_focus",
+        "passed": true
+      },
+      {
+        "id": "python_exclusive_layer_fences_actual_focus_while_activewindow_stays",
+        "passed": true
+      },
+      {
+        "id": "first_actual_admission_packet_locked_without_focus",
+        "passed": true
+      },
+      {
+        "id": "actual_locker_death_retains_immediate_denial",
+        "passed": true
+      },
+      {
+        "id": "actual_restore_fallback_completion_separate_from_presentation",
+        "passed": true
+      },
+      {
+        "id": "actual_protocol_unlock_reconciles_native_focus",
+        "passed": true
+      },
+      {
+        "id": "actual_force_unlock_reconciles_native_focus",
+        "passed": true
+      },
+      {
+        "id": "rust_actual_native_focus_owned_pidfd_matches_child",
+        "passed": true
+      },
+      {
+        "id": "rust_central_null_focus",
+        "passed": true
+      },
+      {
+        "id": "rust_exclusive_layer_fences_actual_focus_while_activewindow_stays",
+        "passed": true
+      },
+      {
+        "id": "actual_Rust_Observer_adapter_unload_closes_source_and_denies",
+        "passed": true
+      },
+      {
+        "id": "actual_stopped_compositor_Rust_Observer_absolute_BOOTTIME_expiry",
+        "passed": true
+      },
+      {
+        "id": "actual_adapter_output_backpressure_terminal_closure_and_Rust_denial",
+        "passed": true
+      },
+      {
+        "id": "actual_compositor_death_Rust_Observer_fences_source",
+        "passed": true
+      }
+    ],
+    "reap_entries": 45,
+    "distinct_direct_children": 44,
+    "all_tracked_reaped": true,
+    "adapter_elf_sha256": "312227400c39a793c2e591d0893c692d0ac258b8f5f9ad925ae2b8727fd53621",
+    "rust_observer_elf_sha256": "a2e0aee677294203d0400217589ef810e731b6488f0136b5b1eebfa82e53f134",
+    "qualification": "Prepared320x240 virtual graphics before first source acceptance; current wire/observer, not current actor or installed app",
+    "observed_terminal_error": "TimedOut",
+    "immediate_eof_qualified": false,
+    "proof_files": {
+      "artifacts/native-session-compositor/green-owned-source-final/adapter-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "artifacts/native-session-compositor/green-owned-source-final/adapter-elf-notes.log": "1c096113b4e6bb7b369ee57013d9f8db4a059c806aecc2f925f5fa2bbbf3d257",
+      "artifacts/native-session-compositor/green-owned-source-final/groups.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "artifacts/native-session-compositor/green-owned-source-final/headers.json": "4a9f8ec187515b105d646e7bacd8af57eab3b1bf13dab25c9b5fe91aeda1f78e",
+      "artifacts/native-session-compositor/green-owned-source-final/hyprland-elf-notes.log": "ced58f4b9f6f27dc1c949f16d20b755479debcd337ab47d9ec1f80fe4ac0344f",
+      "artifacts/native-session-compositor/green-owned-source-final/hyprland-symbols.log": "29cf9a751db8191dae6e6fa9073ddcd13faa4fbb9441da0d921c6e48d7fabb6d",
+      "artifacts/native-session-compositor/green-owned-source-final/kernel-lib-tests.log": "9674959a3d72ec1992f31e3ed35fdbbd028359671b42b1d4eddaecf4a413c39e",
+      "artifacts/native-session-compositor/green-owned-source-final/kernel-pidfd-tests.log": "864730ab53517e6e8552ff02db554c9e8d040210a5b302437c6ef98aa4ef4ff6",
+      "artifacts/native-session-compositor/green-owned-source-final/kernel-socket-tests.log": "77e091a1b71e5651f11408bf6b3b8099ed03045e2d6f96086d1866aa9219f3c4",
+      "artifacts/native-session-compositor/green-owned-source-final/kernel.log": "66991da961a3f054172cb96cd9406cfe08dd0c8a4633e56eeddb88f2be904f8f",
+      "artifacts/native-session-compositor/green-owned-source-final/lock-client": "1765a58d0fc95c7e6c95c4761f7d2c2b967ba74561eadaf76348a0aeb790451f",
+      "artifacts/native-session-compositor/green-owned-source-final/lock-client-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "artifacts/native-session-compositor/green-owned-source-final/lock-client-code.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "artifacts/native-session-compositor/green-owned-source-final/lock-client-elf-notes.log": "2859a8c145e4c7b6354bdf863576c45986d9b922a261ed4cce5b8678c0da6bce",
+      "artifacts/native-session-compositor/green-owned-source-final/lock-client-header.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "artifacts/native-session-compositor/green-owned-source-final/lock-client.c": "fa2c90f36a0dabc3a538298b6d0fe7f47e29625a3cc860bb335a6ae8b81a81f3",
+      "artifacts/native-session-compositor/green-owned-source-final/modprobe.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "artifacts/native-session-compositor/green-owned-source-final/observer-elf-notes.log": "d25e1b849d8f47af4499acaecb29090c3922ea21bf8d6c68a4c37391bd8d1d3c",
+      "artifacts/native-session-compositor/green-owned-source-final/observer-process-tests.log": "4f7e3c6c330faa35f7b3f1ba3bea79a2e414d8dee8c00ae18e9b140add2f0220",
+      "artifacts/native-session-compositor/green-owned-source-final/original-probe-events.jsonl": "843c02b99eea7e2d4cd0dfd2228e2b44c00e8a15f478fd04f023d3f3e94c1914",
+      "artifacts/native-session-compositor/green-owned-source-final/packages.log": "f4711f90e047cfc0c40a3cd69b5fe4cef842547fc4e738fe3879f3afe78c8147",
+      "artifacts/native-session-compositor/green-owned-source-final/pkgconfig.log": "c2ec2d14ad3a6006b08b56ad8ad9872ccee2500fc522409c9906ca6e6b8df4a0",
+      "artifacts/native-session-compositor/green-owned-source-final/python-active-window.log": "4db5b38f85518dd36ffbbde5d9ad8168ff1c29177385b3c6091002440710c11e",
+      "artifacts/native-session-compositor/green-owned-source-final/python-admission-adapter-load.log": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df",
+      "artifacts/native-session-compositor/green-owned-source-final/python-admission-hyprland.log": "93192eb045486150ca3d61b8fc9acace970311e7775f96834878533e26ed1c8c",
+      "artifacts/native-session-compositor/green-owned-source-final/python-admission-packets.jsonl": "3ad9d810f4292049d9a2dd29acdd9ca3af7bd1832666c983e456ff41b148efbe",
+      "artifacts/native-session-compositor/green-owned-source-final/python-admission-probe-load.log": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df",
+      "artifacts/native-session-compositor/green-owned-source-final/python-clear-focus.log": "865b97bb6637d1371a3e5b4ca3e1ec08320a8bbdc9381f0c296180b0bfc467f7",
+      "artifacts/native-session-compositor/green-owned-source-final/python-first-lock-locker.log": "71f410f2a31fbc3374720e4779913f2c69d9193696f26178bb504bb1ff883e98",
+      "artifacts/native-session-compositor/green-owned-source-final/python-foot.log": "68e3a732aae5c4fe369838df8c6a6244546d508c8a78b400b6ffde96e42c2f2a",
+      "artifacts/native-session-compositor/green-owned-source-final/python-force-lock-locker.log": "bac674efe7365d9ed4d62ee9ec59ab9e27dd4c537a9ec8093123cc6d4225d619",
+      "artifacts/native-session-compositor/green-owned-source-final/python-force-unlock.log": "9e8026d7378e612b441ff2ae36940919667001bb1f6a5ae230dbe8834fbf8d12",
+      "artifacts/native-session-compositor/green-owned-source-final/python-layer-probe.log": "ea033198d1fecef534344cf8bf57597faa1d3e9d77e6c4a7de87928333bcc8df",
+      "artifacts/native-session-compositor/green-owned-source-final/python-layer.log": "667f67f320489a43c0ba0a09bfb51258125e08daf45a44357455e8584d840311",
+      "artifacts/native-session-compositor/green-owned-source-final/python-refocus.log": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df",
+      "artifacts/native-session-compositor/green-owned-source-final/python-restored-lock-locker.log": "dc5e3b0dbf2763867eb1e1369e0a87b9c14c23712513f91295cc5d5e789a6bdf",
+      "artifacts/native-session-compositor/green-owned-source-final/runtime.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-active-window.log": "1ca2ea6a9d9b518d4442a2aa746fd76845c03e317302ed9528c7e984576ce5f3",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-clear-focus.log": "46b4b1bb6ad48e698fa10bb137b80496adbeccb9c72fecd4b134e9b5d940e338",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-death-adapter-load.log": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-death-foot.log": "bab3b42e397bddd88734e0d5d0d59756731c31f3cb1b7ae8c78604d714641137",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-death-hyprland.log": "bd44950a3331d2d3ee5320e9fb05f18d59220f38b011dafa66347b4fbcc9293a",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-death-observer.jsonl": "46a70e9e9c778496976ff6fb32674a19f5a8ba9e8f69c8730a5a90038df880b1",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-death-packets.jsonl": "971b8f2a3cca6df526f464b8fce471d1fc86c57e9b2569d11658abf457abdc17",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-death-probe-load.log": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-death-warmup-clear-focus.log": "7997648205d3851aabdeede7d872628425ec301b9fe3a8cf343f518521d51b4f",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-death-warmup-foot.log": "560a07fe88b20e47c9f6cbaa9538046a845a4d2c777b2f6a5f8ee566ef672d10",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-death-warmup-probe.log": "80b4fc6e2afd828ad8cac54329c2a060a23b8e9d209d263cbf01f2ba197829a1",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-foot.log": "68e3a732aae5c4fe369838df8c6a6244546d508c8a78b400b6ffde96e42c2f2a",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-layer-probe.log": "b83996f338ee1442f565014a3f98d47e88cefbcb0005b367c064fff3e6697c7b",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-layer.log": "afe82fc5c97b3fa1e7ba906ffb8a7053cee3312873d2972f601e64ad40dda832",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-live-adapter-load.log": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-live-hyprland.log": "be06f8e09e23ee7dd3c99b94aa9d011be8002be6e7242cac02d8b61df3417ee8",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-live-observer.jsonl": "51e140ae101811cc2c206ed904069a8b066487588b77e4611efaca3c79c7debd",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-live-packets.jsonl": "33ed9a6cb0b160b86e2f94d75f524706a016e3e2a17e7133581a64291367d9b2",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-live-probe-load.log": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-live-warmup-clear-focus.log": "48c4a297cc812a1922c45a4376b5c94c9621dda57e0d18a37b77ca09f575d5ff",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-live-warmup-foot.log": "560a07fe88b20e47c9f6cbaa9538046a845a4d2c777b2f6a5f8ee566ef672d10",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-live-warmup-probe.log": "5449fabfd905a927dd505ec2029f07686a7692e5165a3bf33aa3a754d0cf9763",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-pressure-adapter-load.log": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-pressure-foot.log": "68e3a732aae5c4fe369838df8c6a6244546d508c8a78b400b6ffde96e42c2f2a",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-pressure-hyprland.log": "a94ab4b15e098dc3951765b5f061dc4e93b3208495867848ce2e67125c971ddd",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-pressure-observer.jsonl": "ad6d2ef3bcddeb44880bf8e89e7fe12e74bd337bfa09b16abddebfdab38184f7",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-pressure-packets.jsonl": "ae203beb04ef901010297fc04a2f4a4c1b015a60275417b5f12992fcfecc98f4",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-pressure-probe-load.log": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-pressure-warmup-clear-focus.log": "c7a15b86f83803fd67ba320b2a1fcea6af4f9501d17b7cd472e5dad8b7c5f188",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-pressure-warmup-foot.log": "560a07fe88b20e47c9f6cbaa9538046a845a4d2c777b2f6a5f8ee566ef672d10",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-pressure-warmup-probe.log": "e14e3fa99021ad6a115413384928cb4627d084b75ba4bddbfc390050537c999e",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-refocus.log": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-stopped-adapter-load.log": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-stopped-foot.log": "acadb523446a895c23244baf92c3397d2c485e22a6a769498dc8b02d8f35b9ea",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-stopped-hyprland.log": "92580d0ceb77831f6bd8c4efcb06c376e9b542338e2cb11ca1070f388c0689ca",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-stopped-observer.jsonl": "9b671421a33347ce21a023727e683aca4c00881686d9a64d99676fd2232d03d0",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-stopped-packets.jsonl": "9bde208e2dfcedbe2db5780a7fcbf0f00d27066d767a409bdf2d47b1cf58e7f8",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-stopped-probe-load.log": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-stopped-warmup-clear-focus.log": "c7a15b86f83803fd67ba320b2a1fcea6af4f9501d17b7cd472e5dad8b7c5f188",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-stopped-warmup-foot.log": "bab3b42e397bddd88734e0d5d0d59756731c31f3cb1b7ae8c78604d714641137",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-stopped-warmup-probe.log": "663b2f6ffa5bafe6aa173db70fbce2ed359cb3fa34102e334b0164042aab2b1b",
+      "artifacts/native-session-compositor/green-owned-source-final/rust-unload.log": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df",
+      "artifacts/native-session-compositor/green-owned-source-final/seatd.log": "e5bd73913708b7fbf81f23a6e417814ae7c084df7ca65538743b9a15e5f386e5",
+      "artifacts/native-session-compositor/green-owned-source-final/session-lock-client.h": "f6a5730171b9541ca72755a5b150d5dce4cccbc015ec0b955c5f90949637b5c1",
+      "artifacts/native-session-compositor/green-owned-source-final/session-lock-protocol.c": "97b67c96f7ae85fb7a25fa785f402531350504e746d23e14bf1cbf8fec595e1d",
+      "artifacts/native-session-compositor/green-owned-source-final/session-lock-v1.xml": "a05df7d95c5e523e457037b3a149484e8064828cda66971f3c7caeb87d597a81",
+      "artifacts/native-session-compositor/green-owned-source-final/udev.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "review": "Astra medium inspected owned handle publication architecture before source ctor pair correction; no blocker. Sol scoped review verified source selections and found missing lifecycle executable hashes, corrected in final build. Sol review ended on model-capacity error, so not a completed publicability review; root verification follows.",
+  "operational_resources": "Selected runs use recorded original caps; future build/observer quotas12CPU12GiB and compositor10CPU8GiB are syntax-checked operational allowances, not rerun qualification",
+  "remaining_gates": [
+    "exact matched Pixel6.6 image/config/KMI",
+    "protected procfs/common PID and user namespace deployment",
+    "trusted executable/configuration/plugin provisioning",
+    "genuine Omarchy Quickshell/PAM/restore and privileged Wayland containment",
+    "joint compositor/actor/installed native app",
+    "cold renderer availability under original100ms lease",
+    "forced numeric PID reuse and translated namespaces",
+    "popup/delegation ownership and secure presentation",
+    "actual logind/power/resume, notifications and wake",
+    "hardware/carrier/vendor cleanup"
+  ],
+  "publication": {
+    "raw_logs_or_binaries_in_public_patch": false,
+    "proprietary_inputs_or_decompilation_published": false,
+    "credentials_published": false,
+    "physical_phone_accessed": false
+  },
+  "report": {
+    "path": "docs/native-session-owned-focus.md",
+    "sha256": "8598ad65c1ce9843c17c3dfa148f9d7d2bf6d45a5656e4e4030d9d6f320fad69",
+    "bytes": 9284
+  }
+}

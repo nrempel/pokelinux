@@ -97,9 +97,18 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cf8baf1c55e62ffcace7a9f06f4bd9cd3f0c4beb022d3b367256b91b87513d98"
 
 [[package]]
+name = "pokelinux-kernel-identity"
+version = "0.1.0"
+dependencies = [
+ "libc",
+ "rustix",
+]
+
+[[package]]
 name = "pokelinux-lifecycle"
 version = "0.1.0"
 dependencies = [
+ "pokelinux-kernel-identity",
  "rustix",
  "serde",
  "serde_json",
@@ -110,6 +119,7 @@ dependencies = [
 name = "pokelinux-session"
 version = "0.1.0"
 dependencies = [
+ "pokelinux-kernel-identity",
  "pokelinux-lifecycle",
  "rustix",
  "serde",

@@ -320,3 +320,128 @@ fn transferred_source_pidfd_does_not_leak_into_an_actual_later_exec() {
         }
     }
 }
+
+#[test]
+fn actual_owned_focus_pidfd_is_retained_after_sender_closes_its_transfer_copy() {
+    let (mut p, mut o) = start(0);
+    p.command("owned-focus");
+    o.poll().unwrap();
+    let frame = o
+        .snapshot()
+        .expect("actual owned focused peer must be admitted");
+    assert_eq!(frame.focus.as_ref().unwrap().pid, p.child.id());
+}
+#[test]
+fn actual_owned_focus_requires_exactly_one_descriptor() {
+    invalid_packet("owned-focus-missing");
+}
+#[test]
+fn actual_owned_focus_absent_metadata_rejects_unexpected_descriptor() {
+    invalid_packet("owned-focus-unexpected");
+}
+#[test]
+fn actual_owned_focus_rejects_two_transferred_descriptors_without_leaking() {
+    let (mut p, mut o) = start(0);
+    let before = std::fs::read_dir("/proc/self/fd").unwrap().count();
+    p.command("owned-focus-two");
+    let _ = o.poll();
+    assert!(o.snapshot().is_none());
+    let after = std::fs::read_dir("/proc/self/fd").unwrap().count();
+    assert!(
+        after <= before,
+        "rejected SCM_RIGHTS descriptors leaked: {before} -> {after}"
+    );
+}
+#[test]
+fn actual_owned_focus_refuses_regular_file_ancillary() {
+    invalid_packet("owned-focus-file");
+}
+
+#[test]
+fn actual_ancillary_truncation_drops_every_delivered_handle() {
+    let (mut p, mut o) = start(0);
+    let before = std::fs::read_dir("/proc/self/fd").unwrap().count();
+    p.command("owned-focus-truncated-rights");
+    let _ = o.poll();
+    assert!(o.snapshot().is_none());
+    assert!(std::fs::read_dir("/proc/self/fd").unwrap().count() <= before);
+}
+#[test]
+fn scalar_pidfs_wire_is_refused_without_compatibility() {
+    invalid_packet("owned-focus-old-wire");
+}
+#[test]
+fn repeated_actual_transfer_retains_one_handle_and_cloexec_fences_later_exec() {
+    let (mut p, mut o) = start(0);
+    p.command("owned-focus");
+    o.poll().unwrap();
+    let before = std::fs::read_dir("/proc/self/fd").unwrap().count();
+    for _ in 0..100 {
+        p.command("owned-focus-heartbeat");
+        o.poll().unwrap();
+    }
+    assert_eq!(o.revision(), 1);
+    assert_eq!(std::fs::read_dir("/proc/self/fd").unwrap().count(), before);
+    let matches: Vec<_> = std::fs::read_dir("/proc/self/fdinfo")
+        .unwrap()
+        .filter_map(|entry| {
+            let entry = entry.ok()?;
+            std::fs::read_to_string(entry.path())
+                .ok()?
+                .contains(&format!("Pid:\t{}", p.child.id()))
+                .then(|| entry.file_name().to_string_lossy().into_owned())
+        })
+        .collect();
+    assert_eq!(
+        matches.len(),
+        2,
+        "source and focus each retain their actual own pidfd"
+    );
+    for fd in matches {
+        let status = Command::new(env!("CARGO_BIN_EXE_session-peer-fixture"))
+            .args(["--expect-source-fd-closed", &fd, &p.child.id().to_string()])
+            .status()
+            .unwrap();
+        assert!(status.success(), "focused pidfd inherited across exec");
+    }
+}
+#[test]
+fn dead_focused_app_does_not_fail_source_and_changed_handle_fences_same_metadata() {
+    let (mut p, mut o) = start(0);
+    p.command("focus-child-live");
+    o.poll().unwrap();
+    let metadata = o.snapshot().unwrap().focus.clone();
+    assert_eq!(o.revision(), 1);
+    p.command("focus-child-dead");
+    o.poll().unwrap();
+    assert_eq!(o.revision(), 2);
+    assert_eq!(o.snapshot().unwrap().focus, metadata);
+    p.command("focus-child-new-same-metadata");
+    o.poll().unwrap();
+    assert_eq!(o.snapshot().unwrap().focus, metadata);
+    assert_eq!(
+        o.revision(),
+        3,
+        "same numeric metadata erased changed owned handle"
+    );
+}
+
+#[test]
+fn source_death_watch_must_name_the_actual_expected_live_source() {
+    let (p, _original) = start(0);
+    let (receive, _send) = pair();
+    let wrong =
+        rustix::process::pidfd_open(rustix::process::getpid(), PidfdFlags::NONBLOCK).unwrap();
+    assert_ne!(p.child.id(), std::process::id());
+    let observer = Observer::new(
+        receive,
+        wrong,
+        Pid::from_raw(p.child.id() as i32).unwrap(),
+        rustix::process::getuid().as_raw(),
+        SOURCE.into(),
+    );
+    assert!(
+        observer.is_err(),
+        "a different living task was accepted as the source death watch"
+    );
+}

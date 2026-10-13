@@ -8,14 +8,13 @@ The monitor configuration is explicitly `320x240@60` with virtual graphics and
 host software GL. No production permission/actor integration or trusted-locker
 containment follows.
 
-From the repository root, select a new label and immutable adapter source:
+Current owned-focus run from the repository root; select fresh result labels:
 
 ```sh
-bash tools/native-session-compositor/run.sh red red-admission \
-  artifacts/native-session-compositor/baseline/adapter.cpp
-bash tools/native-session-compositor/run.sh green green-admission \
-  artifacts/native-session-compositor/green-admission-1/source/adapter.cpp \
-  artifacts/native-session-observer/arm64-observer-build-v1/target/aarch64-unknown-linux-gnu/debug/session-observer-fixture
+python3 tools/native-session-owned-build.py new-owned-focus-build
+bash tools/native-session-compositor/run.sh green new-owned-focus-compositor \
+  tools/native-session-compositor/adapter.cpp \
+  artifacts/native-session-observer/new-owned-focus-build/target/aarch64-unknown-linux-gnu/debug/session-observer-fixture
 ```
 
 Each result preserves the fixture/adapter source, frozen diagnostic probe,
@@ -86,3 +85,13 @@ denial with actual channel closure/source state, not immediate EOF or a specific
 pidfd-death error path. The separate process suite covers its own synthetic peers.
 All artifact/source/ELF selections are preserved privately in each result; no
 raw logs, proprietary components or binaries belong in published source.
+
+The current owned-focus selection `green-owned-source-final` replaces scalar fields
+with actual SCM_RIGHTS peer pidfds. It passes17 original-compositor groups and
+separately executes14 leaf and26 observer checks on the actual ARM kernel.
+The immutable prior adapter fails the focused-descriptor requirement in
+`red-owned-focus-baseline`.45 reap entries cover44 distinct direct children;
+all reaped, with one bounded SIGKILL fallback. The current observer/actor source
+is selected independently; this producer run does not compose the actor or app.
+See [owned focus](../../docs/native-session-owned-focus.md). Earlier admission/
+scalar selections above remain frozen historical records.

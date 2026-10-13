@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Owned actual compositor packets; facts observation only, never app authorization."""
-import grp,hashlib,json,os,platform,select,shlex,shutil,signal,socket,struct,subprocess,time,traceback
+import array,fcntl,grp,re,hashlib,json,os,platform,select,shlex,shutil,signal,socket,struct,subprocess,time,traceback
 from pathlib import Path
 R=Path('/results');S=R/'source';B=Path('/tmp/session-compositor-fixture')
 B.mkdir();O=B/'evidence';O.mkdir();(O/'bins').mkdir()
@@ -57,7 +57,7 @@ def live(fd):
 
 class Epoch:
  def __init__(self,label,rust=False):
-  self.label=label;self.rust=rust;self.warmup=None;self.events=[];self.frames=[];self.current=None;self.closed=False;self.failure=None;self.line=0;self.sequence=0
+  self.label=label;self.rust=rust;self.warmup=None;self.events=[];self.frames=[];self.current=None;self.closed=False;self.failure=None;self.line=0;self.sequence=0;self.current_peer_fd=None;self.focus_peer_qualified=False
   self.last_pump_ns=None;self.maximum_pump_gap_ns=0;self.output_closed_at_ns=None
   self.source=os.urandom(16).hex();receive,send=socket.socketpair(socket.AF_UNIX,socket.SOCK_SEQPACKET)
   receive.setsockopt(socket.SOL_SOCKET,socket.SO_PASSCRED,1);receive.setblocking(False)
@@ -128,8 +128,8 @@ class Epoch:
   assert not frame['lock_completed'] or frame['locked']
   assert not frame['locked'] or frame['focus'] is None
   if frame['focus'] is not None:
-   f=frame['focus'];assert set(f)=={'pid','uid','gid','pidfs_device','pidfs_inode'}
-   assert all(type(x) is int and x>=0 for x in f.values()) and 0<f['pid']<=2147483647 and f['pidfs_inode']>0
+   f=frame['focus'];assert set(f)=={'pid','uid','gid'}
+   assert all(type(x) is int and x>=0 for x in f.values()) and 0<f['pid']<=2147483647
   self.sequence=frame['sequence'];self.current=frame;self.frames.append(frame)
   assert len(self.frames)<=10000
  def pump(self):
@@ -143,7 +143,11 @@ class Epoch:
    lines=p.read_text().splitlines(keepends=True)
    while self.line<len(lines) and lines[self.line].endswith('\n'):
     event=json.loads(lines[self.line]);self.line+=1;event['observed_at_ns']=now();self.events.append(event)
-    if event['event']=='sample':self.accept(event['frame'])
+    if event['event']=='sample':
+     frame=event['frame'];assert event['has_owned_focus']==(frame['focus'] is not None)
+     self.focus_peer_qualified=event['focused_peer_matches_metadata'] is True and event['focused_peer_cloexec'] is True
+     if frame['focus'] is not None:assert self.focus_peer_qualified,'Rust focused metadata lacks live retained CLOEXEC peer'
+     self.accept(frame)
     elif event['event']=='failed':
      assert event['positive_state'] is False
      event['last_accepted_sampled_at_ns']=self.current['sampled_at_ns'] if self.current else None
@@ -156,13 +160,31 @@ class Epoch:
    try:data,anc,flags,_=self.receive.recvmsg(MAX_FRAME,socket.CMSG_SPACE(12)+socket.CMSG_SPACE(4),socket.MSG_DONTWAIT|socket.MSG_CMSG_CLOEXEC)
    except BlockingIOError:return
    if not data:self.closed=True;self.current=None;self.events.append({'event':'eof','at_ns':now()});return
-   assert not flags&(socket.MSG_TRUNC|socket.MSG_CTRUNC)
-   credentials=[]
-   for level,kind,body in anc:
-    assert level==socket.SOL_SOCKET and kind==socket.SCM_CREDENTIALS
-    credentials.append(struct.unpack('3i',body))
-   assert credentials==[(self.child.pid,1000,1000)],credentials
-   frame=json.loads(data);self.events.append({'event':'packet','received_at_ns':now(),'credentials':list(credentials[0]),'bytes':len(data),'frame':frame});self.accept(frame)
+   credentials=[];rights=[]
+   try:
+    unexpected=False
+    for level,kind,body in anc:
+     if level==socket.SOL_SOCKET and kind==socket.SCM_RIGHTS:
+      received=array.array('i');received.frombytes(body[:len(body)-len(body)%received.itemsize]);rights.extend(received)
+     elif level==socket.SOL_SOCKET and kind==socket.SCM_CREDENTIALS:credentials.append(struct.unpack('3i',body))
+     else:unexpected=True
+    assert not flags&(socket.MSG_TRUNC|socket.MSG_CTRUNC) and not unexpected
+    assert credentials==[(self.child.pid,1000,1000)],credentials
+    frame=json.loads(data)
+    assert len(rights)==(1 if frame['focus'] is not None else 0),'ACTUAL_OWNED_FOCUS_RED: focused metadata requires exactly one pidfd'
+    self.focus_peer_qualified=False
+    if rights:
+     owned=rights[0];assert os.readlink(f'/proc/self/fd/{owned}')=='anon_inode:[pidfd]'
+     assert fcntl.fcntl(owned,fcntl.F_GETFD)&fcntl.FD_CLOEXEC
+     text=Path(f'/proc/self/fdinfo/{owned}').read_text();peer_pid=int(next(line.split()[1] for line in text.splitlines() if line.startswith('Pid:')))
+     self.focus_peer_qualified=live(owned) and peer_pid==frame['focus']['pid']
+     assert self.focus_peer_qualified
+    self.events.append({'event':'packet','received_at_ns':now(),'credentials':list(credentials[0]),'bytes':len(data),'frame':frame,'retained_peer_live_matches_metadata':self.focus_peer_qualified})
+    self.accept(frame)
+    if self.current_peer_fd is not None:os.close(self.current_peer_fd);self.current_peer_fd=None
+    if rights:self.current_peer_fd=rights.pop()
+   finally:
+    for owned in rights:os.close(owned)
   raise RuntimeError('packet recorder bounded drain exhausted')
  def state(self):
   self.pump()
@@ -177,6 +199,7 @@ class Epoch:
  def stop(self):
   self.pump();self.save()
   if self.receive is not None:self.receive.close();self.receive=None
+  if self.current_peer_fd is not None:os.close(self.current_peer_fd);self.current_peer_fd=None
   if self.rust:
    finish(self.observer,self.label+'-observer.jsonl');self.pump();shutil.copyfile(self.observer_log,O/(self.label+'-observer.jsonl'))
   finish(self.child,self.label+'-hyprland.log')
@@ -210,18 +233,28 @@ try:
  (B/'hypr.lua').write_text('hl.monitor({ output = "", mode = "320x240@60", position = "auto", scale = 1 })\nhl.config({ animations = { enabled = false }, decoration = { blur = { enabled = false }, shadow = { enabled = false } }, misc = { disable_hyprland_logo = true, disable_splash_rendering = true, allow_session_lock_restore = true } })\n')
  baseenv={'HOME':'/home/alarm','XDG_RUNTIME_DIR':'/run/user/1000','LIBSEAT_BACKEND':'seatd','AQ_NO_MODIFIERS':'1','XDG_SESSION_TYPE':'wayland','QT_QPA_PLATFORM':'wayland','PATH':'/usr/local/bin:/usr/bin'}
  record('native_adapter_exact_package_build',adapter_sha256=r['adapter_elf_sha256'])
+ if selection.get('owned_kernel_test_binaries'):
+  r['owned_kernel_tests']={}
+  for name,expected in [('kernel-lib-tests',5),('kernel-pidfd-tests',7),('kernel-socket-tests',2),('observer-process-tests',26)]:
+   shutil.copyfile(R/'bins'/name,B/name);(B/name).chmod(0o755)
+   output=command([str(B/name),'--test-threads=1','--nocapture'],name+'.log',timeout=120)
+   reports=re.findall(r'test result: ok[.] (\d+) passed; (\d+) failed;',output)
+   assert reports and tuple(map(int,reports[-1]))==(expected,0),reports
+   r['owned_kernel_tests'][name]={'passed':expected,'failed':0,'elf_sha256':sha(B/name)}
+   record('actual_ARM_kernel_'+name,passed_tests=expected)
+
  def foot(e,label):
   p=start(['foot','--app-id=session-compositor-test','sleep','180'],label+'-foot.log',e.env,True)
   frame=wait(lambda:(f if (f:=e.state()) and f['focus'] is not None else None),20,e.pump)
   assert frame['focus']['pid']==p.pid and frame['focus']['uid']==1000 and frame['focus']['gid']==1000
-  appfd=os.pidfd_open(p.pid,0);st=os.fstat(appfd);assert live(appfd) and frame['focus']['pidfs_device']==st.st_dev and frame['focus']['pidfs_inode']==st.st_ino;os.close(appfd)
+  appfd=os.pidfd_open(p.pid,0);assert live(appfd) and e.focus_peer_qualified;os.close(appfd)
   return p,frame
  def locker(e,label):
   p=start([str(B/'lock-client')],label+'-locker.log',e.env,True,stdin=subprocess.PIPE)
   wait(lambda:'CONNECTED' in (O/(label+'-locker.log')).read_text(),10,e.pump)
   e.pump();trigger=now();p.stdin.write(b'lock\n');p.stdin.flush();return p,trigger
  def focus_cases(e,label):
-  p,f=foot(e,label);record(label+'_actual_native_focus_pidfs_matches_owned_child',focus=f['focus'])
+  p,f=foot(e,label);record(label+'_actual_native_focus_owned_pidfd_matches_child',focus=f['focus'])
   e.cmd(['hyprctl','nativebuildclearfocus'],label+'-clear-focus.log');wait(lambda:(f if (f:=e.state()) and f['focus'] is None else None),10,e.pump);record(label+'_central_null_focus')
   e.cmd(['hyprctl','dispatch','hl.dsp.focus({ window = "class:session-compositor-test" })'],label+'-refocus.log');wait(lambda:(f if (f:=e.state()) and f['focus'] is not None else None),10,e.pump)
   layerdir=B/(label+'-layer');layerdir.mkdir();(layerdir/'shell.qml').write_text('import QtQuick\nimport Quickshell\nimport Quickshell.Wayland\nScope { PanelWindow { anchors { top: true; left: true; right: true } implicitHeight: 80; color: "#223344"; WlrLayershell.layer: WlrLayer.Overlay; WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive; Text { text: "Session layer fixture"; color: "white" } } }\n')
@@ -252,7 +285,10 @@ try:
   e=Epoch('rust-death',True);app,f=foot(e,'rust-death');finish(e.child,'rust-death-hyprland.log');wait(lambda:e.failure,3,e.pump);assert not live(e.pidfd);record('actual_compositor_death_Rust_Observer_fences_source',failure=e.failure);finish(app,'rust-death-foot.log');e.stop()
  r['passed']=True
 except Exception:
- r['error']=traceback.format_exc();print(r['error'],flush=True)
+ r['error']=traceback.format_exc()
+ if 'ACTUAL_OWNED_FOCUS_RED' in r['error']:
+  r['red_detected']=True;r['groups'].append({'id':'actual_focused_metadata_requires_owned_pidfd','passed':False})
+ print(r['error'],flush=True)
 finally:
  if Path('/tmp/native-session-build-probe.ndjson').exists():shutil.copyfile('/tmp/native-session-build-probe.ndjson',O/'original-probe-events.jsonl')
  for e in epochs:
@@ -260,6 +296,7 @@ finally:
    try:e.pump();e.save()
    except Exception:pass
    if e.receive is not None:e.receive.close();e.receive=None
+   if e.current_peer_fd is not None:os.close(e.current_peer_fd);e.current_peer_fd=None
    os.close(e.pidfd);e.pidfd=-1
  for p,name in reversed(processes):
   if not any(x['pid']==p.pid and x['reaped'] for x in r['cleanup']):

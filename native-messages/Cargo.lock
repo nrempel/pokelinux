@@ -437,6 +437,7 @@ dependencies = [
 name = "pokelinux-lifecycle"
 version = "0.1.0"
 dependencies = [
+ "pokelinux-kernel-identity",
  "rustix",
  "serde",
  "serde_json",

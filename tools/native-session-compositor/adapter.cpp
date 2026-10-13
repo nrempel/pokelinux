@@ -9,8 +9,6 @@
 #include <hyprland/src/desktop/view/View.hpp>
 #include <hyprland/src/desktop/view/Window.hpp>
 #include <sys/socket.h>
-#include <sys/stat.h>
-#include <sys/statfs.h>
 #include <asm-generic/socket.h>
 #include <poll.h>
 #include <fcntl.h>
@@ -18,6 +16,8 @@
 #include <time.h>
 #include <charconv>
 #include <cstdio>
+#include <cstring>
+#include <utility>
 #include <cstdlib>
 #include <limits>
 #include <stdexcept>
@@ -47,40 +47,46 @@ bool boottime(uint64_t& ns) {
     ns = sec * 1000000000ULL + static_cast<uint64_t>(ts.tv_nsec);
     return true;
 }
-std::string nativeFocus(bool locked) {
-    if (locked) return "null";
+struct NativePeer {
+    std::string metadata = "null";
+    int pidfd = -1;
+    NativePeer() = default;
+    NativePeer(std::string value, int owned) : metadata(std::move(value)), pidfd(owned) {}
+    NativePeer(const NativePeer&) = delete;
+    NativePeer& operator=(const NativePeer&) = delete;
+    NativePeer(NativePeer&& other) noexcept : metadata(std::move(other.metadata)), pidfd(std::exchange(other.pidfd, -1)) {}
+    ~NativePeer() { if (pidfd >= 0) close(pidfd); }
+};
+NativePeer nativeFocus(bool locked) {
+    if (locked) return {};
     auto surface = g_pSeatManager->m_state.keyboardFocus.lock();
-    if (!surface) return "null";
+    if (!surface) return {};
     auto hlSurface = surface->m_hlSurface.lock();
     auto view = hlSurface ? hlSurface->view() : SP<Desktop::View::IView>{};
-    if (!view || view->type() != Desktop::View::VIEW_TYPE_WINDOW) return "null";
+    if (!view || view->type() != Desktop::View::VIEW_TYPE_WINDOW) return {};
     auto window = Desktop::View::CWindow::fromView(view);
-    if (!window || window->m_isX11 || !window->m_isMapped || !window->m_xdgSurface) return "null";
+    if (!window || window->m_isX11 || !window->m_isMapped || !window->m_xdgSurface) return {};
     pid_t pid = 0; uid_t uid = 0; gid_t gid = 0;
     wl_client_get_credentials(surface->client(), &pid, &uid, &gid);
-    if (pid <= 0) return "null";
+    if (pid <= 0) return {};
     int peerFd = -1;
     socklen_t length = sizeof(peerFd);
     // Failure does not transfer a descriptor even if Linux copied a prospective
     // number before a later copyout error. Never close output on syscall failure.
     if (getsockopt(wl_client_get_fd(surface->client()), SOL_SOCKET, SO_PEERPIDFD, &peerFd, &length) != 0)
-        return "null";
-    if (peerFd < 0) return "null";
-    struct stat st{}; struct statfs fs{};
+        return {};
+    if (peerFd < 0) return {};
+    const int descriptorFlags = fcntl(peerFd, F_GETFD);
     pollfd item{peerFd, POLLIN, 0};
     const bool live = length == sizeof(peerFd)
-        && (fcntl(peerFd, F_GETFD) & FD_CLOEXEC) != 0
-        && fstat(peerFd, &st) == 0 && fstatfs(peerFd, &fs) == 0
-        && static_cast<unsigned long>(fs.f_type) == 0x50494446UL
-        && st.st_ino != 0 && poll(&item, 1, 0) == 0 && item.revents == 0;
-    close(peerFd);
-    if (!live) return "null";
+        && descriptorFlags >= 0 && (descriptorFlags & FD_CLOEXEC) != 0
+        && poll(&item, 1, 0) == 0 && item.revents == 0;
+    if (!live) { close(peerFd); return {}; }
     char focus[256];
     const int n = snprintf(focus, sizeof(focus),
-        "{\"pid\":%d,\"uid\":%u,\"gid\":%u,\"pidfs_device\":%llu,\"pidfs_inode\":%llu}",
-        pid, uid, gid, static_cast<unsigned long long>(st.st_dev), static_cast<unsigned long long>(st.st_ino));
-    if (n <= 0 || static_cast<size_t>(n) >= sizeof(focus)) return "null";
-    return std::string(focus, static_cast<size_t>(n));
+        "{\"pid\":%d,\"uid\":%u,\"gid\":%u}", pid, uid, gid);
+    if (n <= 0 || static_cast<size_t>(n) >= sizeof(focus)) { close(peerFd); return {}; }
+    return {std::string(focus, static_cast<size_t>(n)), peerFd};
 }
 void emit() {
     if (output < 0) return;
@@ -93,11 +99,28 @@ void emit() {
     const int n = snprintf(frame, sizeof(frame),
         "{\"source\":\"%s\",\"sequence\":%llu,\"sampled_at_ns\":%llu,\"locked\":%s,\"lock_completed\":%s,\"focus\":%s}",
         incarnation.c_str(), static_cast<unsigned long long>(++sequence), static_cast<unsigned long long>(sampled),
-        locked ? "true" : "false", complete ? "true" : "false", focus.c_str());
+        locked ? "true" : "false", complete ? "true" : "false", focus.metadata.c_str());
     if (n <= 0 || static_cast<size_t>(n) >= sizeof(frame)) { closeOutput(); return; }
     // One nonblocking atomic packet attempt. No queue, retries, detached worker
     // or renewed incarnation on failure; receiver expiration fences old facts.
-    if (send(output, frame, static_cast<size_t>(n), MSG_DONTWAIT | MSG_NOSIGNAL) != n) closeOutput();
+    iovec bytes{frame, static_cast<size_t>(n)};
+    msghdr packet{};
+    packet.msg_iov = &bytes;
+    packet.msg_iovlen = 1;
+    alignas(cmsghdr) char control[CMSG_SPACE(sizeof(int))]{};
+    if (focus.pidfd >= 0) {
+        packet.msg_control = control;
+        packet.msg_controllen = sizeof(control);
+        auto* rights = CMSG_FIRSTHDR(&packet);
+        rights->cmsg_level = SOL_SOCKET;
+        rights->cmsg_type = SCM_RIGHTS;
+        rights->cmsg_len = CMSG_LEN(sizeof(int));
+        std::memcpy(CMSG_DATA(rights), &focus.pidfd, sizeof(focus.pidfd));
+    }
+    // nativeFocus owns the exact socket-derived handle until this atomic send.
+    // Its temporary copy closes after success and every failure; the receiver
+    // owns the SCM_RIGHTS reference. No pidfs identity or PID reopening is used.
+    if (sendmsg(output, &packet, MSG_DONTWAIT | MSG_NOSIGNAL) != n) closeOutput();
 }
 int tick(void*) {
     // Timer reconciliation runs after the original onLock callback has returned.

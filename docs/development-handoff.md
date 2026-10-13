@@ -339,28 +339,31 @@ new session composition remains separate. Raw retention, inbox capacity and larg
 cold backlog availability under original deadlines remain open. See
 `native-messages-enumeration.md` and its clean provenance.
 
-Native session ingress prototypes now qualify16 actual process/socket/exec cases,
-13 corrected synthetic-source/current-authority ARM groups, one typed policy
-resume-history regression and17 separate prepared original-compositor/observer
-groups. Every meaningful drained transition fences old reads; unchanged heartbeat
-cannot extend the captured source lease. Root intents remain separate and current
-owned app pidfs identity is mandatory. Two review corrections have executed reds:
-inherited source pidfd CLOEXEC and source-loss history across a resume fence.
-Cold rendering still exceeds100ms; preparation precedes all facts and no revival
-is allowed. The retained Pixel profile records6.6 modules; scalar pidfs support is
-unqualified there. Next use one transferred owned socket-peer pidfd design on
-both anon-inode/new kernels, before joint installed app/production session gates.
-No matched kernel replacement, trusted PAM/restore or hardware completion follows.
-See `native-session-ingress.md` and its clean provenance.
+Native session identity now uses one owned focused-socket pidfd protocol on
+anon-inode/pidfs kernels, with no scalar fields or observed numeric PID lookup.
+14 leaf and26 observer checks pass on host and actual ARM; eight host policy/storage
+components pass.15 host/14 ARM synthetic actor groups preserve independent grants,
+original leases, held transitions, exact handle matching and responsive ownership.
+17 prepared original-compositor/observer groups pass with the same current wire;
+its prior adapter fails the actual missing-descriptor boundary. All selected
+children reap; source/reap/vendor cleanup remain separate. Actor baseline replay
+was after code drafting, explicitly regression evidence rather than chronological
+TDD. Core source/leaf reds preceded implementation. See
+`native-session-owned-focus.md` and clean provenance.
+
+The original100ms lease and cold graphics availability gate remain. Matched Pixel
+6.6 image/config/KMI and protected common procfs/PID/user namespace deployment are
+unqualified. Next compose actual compositor/current actor/installed native app,
+then trusted launch and genuine Quickshell/PAM/restore containment, secure frames,
+resume/wake. No matched kernel replacement or physical hardware completion follows.
 
 ## Next work
 
 1. Continue the qualified synthetic incoming Messages path with raw retention/capacity,
    cold backlog availability and held-read cancellation that preserves shared
    receiving. Retain original ingestion deadlines and durable source uncertainty;
-   history recovery never permits implicit backend reattachment. Compose the
-   transferred focus-peer handle on the retained-kernel interface before the
-   joint compositor/current-authority/installed-app path. Then qualify trusted
+   history recovery never permits implicit backend reattachment. The transferred focus-peer handle now passes host/ARM interface checks; continue
+   the joint compositor/current-authority/installed-app path with that protocol. Then qualify trusted
    lock admission/restore, notifications and wake. Producer/ACK/reset,
    sending and hardware gates remain separate. See `native-integration-map.md`,
    `native-messages-service.md` and `native-messages-incoming.md`.

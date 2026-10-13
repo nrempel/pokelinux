@@ -22,7 +22,7 @@ import traceback
 SOURCE_UID = 1000
 APP_UID = 11010
 APP = 'org.omarchy.Messages'
-BASELINE = 'f733d3b937ab13fa9eb8d81bcf76ab72d0dcf184'
+PROTOCOL_BASELINE = '84ac3f856d9b71aeb7bccbfd33eb5a8a828b079f'
 SERVICE = 'messages-session-authority-fixture-service'
 DOCKER = ['env', '-u', 'DOCKER_HOST', '-u', 'DOCKER_CONTEXT', '-u', 'DOCKER_TLS',
           '-u', 'DOCKER_TLS_VERIFY', '-u', 'DOCKER_CERT_PATH',
@@ -84,17 +84,40 @@ def peer_identity(client):
     pid, uid, gid = struct.unpack('3i', client.getsockopt(socket.SOL_SOCKET, socket.SO_PEERCRED, 12))
     raw = struct.unpack('i', client.getsockopt(socket.SOL_SOCKET, 77, 4))[0]  # Linux SO_PEERPIDFD
     try:
-        observed = os.fstat(raw)
-        owned = os.pidfd_open(pid, os.O_NONBLOCK)
-        try:
-            exact = os.fstat(owned)
-            assert (exact.st_dev, exact.st_ino) == (observed.st_dev, observed.st_ino)
-        finally:
-            os.close(owned)
-        return {'pid': pid, 'uid': uid, 'gid': gid,
-                'pidfs_device': observed.st_dev, 'pidfs_inode': observed.st_ino}
-    finally:
+        os.set_inheritable(raw, False)
+        assert os.readlink(f'/proc/self/fd/{raw}') == 'anon_inode:[pidfd]'
+        assert fdinfo_pid(raw) == pid and not select.select([raw], [], [], 0)[0]
+        return {'pid': pid, 'uid': uid, 'gid': gid}, raw
+    except BaseException:
         os.close(raw)
+        raise
+
+
+def fdinfo_pid(fd):
+    values = [line.split('\t', 1)[1] for line in Path(f'/proc/self/fdinfo/{fd}').read_text().splitlines()
+              if line.startswith('Pid:\t')]
+    assert len(values) == 1
+    return int(values[0])
+
+
+def receive_rights(control):
+    packet, ancillary, flags, _ = control.recvmsg(65536, socket.CMSG_SPACE(64 * array.array('i').itemsize),
+                                                 socket.MSG_CMSG_CLOEXEC)
+    descriptors = []
+    try:
+        for level, kind, data in ancillary:
+            assert level == socket.SOL_SOCKET and kind == socket.SCM_RIGHTS, 'unexpected control ancillary'
+            assert len(data) % array.array('i').itemsize == 0, 'malformed control rights'
+            received = array.array('i')
+            received.frombytes(data)
+            descriptors.extend(received)
+        assert not flags & (socket.MSG_TRUNC | socket.MSG_CTRUNC), 'truncated control packet'
+        assert all(not os.get_inheritable(fd) for fd in descriptors), 'received control descriptor lacks CLOEXEC'
+        return packet, descriptors
+    except BaseException:
+        for fd in descriptors:
+            os.close(fd)
+        raise
 
 
 def app_entry(service, driver):
@@ -139,8 +162,21 @@ def source_entry(output_raw, control_raw, source_name):
     output.setblocking(False)
     sequence = 0
     current = None
+    focus_fd = None
     next_heartbeat = 0
     heartbeat = False
+
+    def retain(state, received):
+        nonlocal current, focus_fd
+        if state.get('focus') is None:
+            assert received is None, 'null control focus carried rights'
+        else:
+            assert received is not None, 'focused control state lacks owned pidfd'
+            assert os.readlink(f'/proc/self/fd/{received}') == 'anon_inode:[pidfd]'
+        if focus_fd is not None:
+            os.close(focus_fd)
+        focus_fd = received
+        current = state
 
     def publish(state):
         nonlocal sequence
@@ -150,44 +186,64 @@ def source_entry(output_raw, control_raw, source_name):
                  'locked': state.get('locked', False),
                  'lock_completed': state.get('lock_completed', False),
                  'focus': state.get('focus')}
-        output.send(wire(frame))
+        rights = [] if focus_fd is None else [(socket.SOL_SOCKET, socket.SCM_RIGHTS, array.array('i', [focus_fd]))]
+        assert (frame['focus'] is not None) == (focus_fd is not None)
+        assert output.sendmsg([wire(frame)], rights) == len(wire(frame))
         return frame
+
+    def ownership():
+        return {'source_owned_focus_handles': int(focus_fd is not None),
+                'source_fd_count': len(list(Path('/proc/self/fd').iterdir())),
+                'source_focus_cloexec': focus_fd is None or not os.get_inheritable(focus_fd),
+                'source_focus_kernel_pid': None if focus_fd is None else fdinfo_pid(focus_fd)}
 
     try:
         while True:
             delay = max(0, (next_heartbeat - boot()) / 1e9) if heartbeat else 1
             readable, _, _ = select.select([control], [], [], min(delay, 1))
             if readable:
-                packet = control.recv(4096)
-                if not packet:
-                    return
-                command = json.loads(packet)
-                operation = command['source_op']
-                if operation == 'state':
-                    current = command['state']
-                    heartbeat = command.get('heartbeat', True)
-                    frame = publish(current)
-                    next_heartbeat = boot() + 20_000_000
-                    control.send(wire({'sequence': sequence, 'frame': frame}))
-                elif operation == 'burst':
-                    heartbeat = False
-                    frames = [publish(state) for state in command['states']]
-                    current = command['states'][-1]
-                    heartbeat = command.get('heartbeat', True)
-                    next_heartbeat = boot() + 20_000_000
-                    control.send(wire({'sequence': sequence, 'frames': frames}))
-                elif operation == 'idle':
-                    heartbeat = False
-                    control.send(wire({'sequence': sequence}))
-                elif operation == 'close':
-                    heartbeat = False
-                    output.close()
-                    control.send(wire({'sequence': sequence, 'closed': True}))
-                elif operation == 'quit':
-                    control.send(wire({'sequence': sequence, 'quit': True}))
-                    return
-                else:
-                    raise ValueError('unsupported isolated source command')
+                packet, received = receive_rights(control)
+                try:
+                    if not packet:
+                        assert not received
+                        return
+                    command = json.loads(packet)
+                    operation = command['source_op']
+                    states = [command['state']] if operation == 'state' else command['states'] if operation == 'burst' else []
+                    assert len(received) == sum(state.get('focus') is not None for state in states), 'control focus/rights count mismatch'
+                    if operation in ('state', 'burst'):
+                        heartbeat = False
+                        frames = []
+                        for state in states:
+                            descriptor = received[0] if state.get('focus') is not None else None
+                            retain(state, descriptor)
+                            if descriptor is not None:
+                                received.pop(0)
+                            frames.append(publish(current))
+                        heartbeat = command.get('heartbeat', True)
+                        next_heartbeat = boot() + 20_000_000
+                        reply = {'sequence': sequence, **ownership()}
+                        reply['frame' if operation == 'state' else 'frames'] = frames[0] if operation == 'state' else frames
+                        control.send(wire(reply))
+                    elif operation == 'idle':
+                        heartbeat = False
+                        control.send(wire({'sequence': sequence, **ownership()}))
+                    elif operation == 'inspect':
+                        control.send(wire({'sequence': sequence, **ownership()}))
+                    elif operation == 'close':
+                        heartbeat = False
+                        retain({'focus': None}, None)
+                        output.close()
+                        control.send(wire({'sequence': sequence, 'closed': True, **ownership()}))
+                    elif operation == 'quit':
+                        retain({'focus': None}, None)
+                        control.send(wire({'sequence': sequence, 'quit': True, **ownership()}))
+                        return
+                    else:
+                        raise ValueError('unsupported isolated source command')
+                finally:
+                    for fd in received:
+                        os.close(fd)
             elif heartbeat:
                 publish(current)
                 next_heartbeat = boot() + 20_000_000
@@ -195,6 +251,8 @@ def source_entry(output_raw, control_raw, source_name):
         # Owned actor shutdown or a fenced source closes the receiver.
         return
     finally:
+        if focus_fd is not None:
+            os.close(focus_fd)
         output.close()
         control.close()
 
@@ -207,6 +265,8 @@ class Scope:
         self.install = Path('/opt/session-authority') / name
         self.source = self.service = self.control = self.alive = None
         self.app = None
+        self.app_fd = None
+        self.focus_handles = {}
         self.source_name = os.urandom(16).hex()
         self.tracked_children = {}
         self.details = {'name': name, 'observations': [], 'reaps': []}
@@ -297,21 +357,26 @@ class Scope:
         with socket.socket(socket.AF_UNIX, socket.SOCK_SEQPACKET) as client:
             client.settimeout(2)
             client.connect(str(self.directory / 'app' / 'driver.sock'))
-            identity = peer_identity(client)
+            identity, retained = peer_identity(client)
         assert identity['uid'] == identity['gid'] == APP_UID
         self.app = identity
+        self.app_fd = retained
+        self.focus_handles[identity['pid']] = retained
         self.track_child(identity['pid'], 'app')
-        self.observe('actual_app_connection_peerpidfd_matches_independent_owned_pidfd', identity)
+        self.observe('actual_app_socket_peer_pidfd_retained', {**identity, 'kernel_pid': fdinfo_pid(retained),
+            'cloexec': not os.get_inheritable(retained), 'pidfd_metadata': self.pidfs(retained),
+            'pidfs_supported': pidfs_supported(retained)})
 
     def grant(self, allowed=True):
         assert self.admin({'op': 'grant', 'app': APP, 'permission': 'messages_read',
                            'allowed': allowed}) == {'result': 'ok'}
 
-    def facts(self, focus='app', locked=False, heartbeat=True):
+    def facts(self, focus='app', locked=False, heartbeat=True, focus_fd=None):
         if focus == 'app':
             focus = self.app
         state = {'locked': locked, 'lock_completed': False, 'focus': focus}
-        reply = self.command({'source_op': 'state', 'state': state, 'heartbeat': heartbeat})
+        reply = self.command({'source_op': 'state', 'state': state, 'heartbeat': heartbeat},
+                             handles=None if focus_fd is None else [focus_fd])
         self.observe('source_packet', reply)
         # Actor normally polls source once per 20ms turn. A snapshot reply proves
         # a later actor turn, but is not an atomic cross-process publication barrier.
@@ -321,8 +386,14 @@ class Scope:
             self.admin({'op': 'snapshot'})
         return reply
 
-    def command(self, value):
-        self.control.send(wire(value))
+    def command(self, value, handles=None):
+        states = [value['state']] if value['source_op'] == 'state' else value['states'] if value['source_op'] == 'burst' else []
+        if handles is None:
+            handles = [self.focus_handles[state['focus']['pid']] if state['focus']['pid'] in self.focus_handles
+                       else self.app_fd for state in states if state.get('focus') is not None]
+        assert len(handles) == sum(state.get('focus') is not None for state in states)
+        ancillary = [] if not handles else [(socket.SOL_SOCKET, socket.SCM_RIGHTS, array.array('i', handles))]
+        assert self.control.sendmsg([wire(value)], ancillary) == len(wire(value))
         return json.loads(self.control.recv(65536))
 
     def send(self, query=Q, ttl=1000):
@@ -450,11 +521,15 @@ class Scope:
             os.close(self.alive)
         if self.log:
             self.log.close()
+        for fd in self.focus_handles.values():
+            os.close(fd)
+        self.focus_handles.clear()
         if self.app:
             live = Path('/proc') / str(self.app['pid'])
-            assert not live.exists(), 'service abandoned its actual launched app'
+            if live.exists():
+                errors.append('service abandoned its actual launched app')
             self.details['reaps'].append({'role': 'app_service_owned', 'pid': self.app['pid'],
-                                         'proc_absent': True})
+                                         'proc_absent': not live.exists()})
         for pid, child in self.tracked_children.items():
             dead = bool(select.select([child['fd']], [], [], 0)[0])
             absent = not Path(f'/proc/{pid}').exists()
@@ -478,42 +553,78 @@ def root_controls_unknown_denied(scope):
     assert scope.read() == {'result': 'denied'}, 'manual root controls substituted for unknown trusted source'
 
 
-def unsupported_pidfs_denies(scope):
-    assert not pidfs_supported(scope.alive), 'unsupported-kernel case requires actual anon_inode pidfds'
-    scope.grant()
-    scope.facts()
-    assert scope.read() == {'result': 'denied'}, 'unsupported pidfs platform published exact-focus data'
-    scope.observe('actual_anon_inode_pidfds_never_grant', {'source_pidfs': scope.pidfs(scope.alive), 'app_identity': scope.app})
+def anon_inode_owned_focus_read(scope):
+    assert not pidfs_supported(scope.alive), 'host case requires actual anon_inode pidfds'
+    page = scope.authorized()
+    assert scope.pidfs(scope.alive) == scope.pidfs(scope.app_fd), 'host pidfds unexpectedly have distinct metadata'
+    scope.observe('actual_shared_anon_inode_owned_focus_authorizes', {
+        'source_pidfd_metadata': scope.pidfs(scope.alive), 'app_pidfd_metadata': scope.pidfs(scope.app_fd),
+        'actual_source_pid': scope.source.pid, 'actual_app_pid': scope.app['pid'],
+        'page': page['page'], 'count': len(page['items'])})
 
 
 def source_only_read(scope):
-    scope.facts()
-    assert scope.read() == {'result': 'denied'}, 'source facts granted MessagesRead permission'
     scope.grant()
     scope.facts()
     page = scope.read()
     assert page.get('page') == 'conversations' and len(page['items']) == 1, (
         'native source ingress did not authorize without manual root unlock/focus', page)
     scope.observe('authorized_page_kind_and_count', {'page': page['page'], 'count': len(page['items'])})
+    scope.grant(False)
+    scope.facts()
+    assert scope.read() == {'result': 'denied'}, 'source facts granted MessagesRead permission'
+    scope.observe('focus_facts_cannot_supply_revoked_policy_grant', {'denied': True})
 
 
-def focus_and_pidfs_denied(scope):
+def focus_and_handle_denied(scope):
     scope.authorized()
-    source_pidfs = scope.pidfs(scope.alive)
-    assert pidfs_supported(scope.alive), 'this kernel exposes anon_inode pidfds; exact pidfs boundary is unsupported'
-    assert source_pidfs['inode'] != scope.app['pidfs_inode'], 'distinct processes aliased pidfs inode'
-    for label, focus in [('synthetic_null_or_ineligible_layer_fact', None),
-                         ('wrong_launched_pid', {**scope.app, 'pid': scope.source.pid}),
-                         ('wrong_native_uid', {**scope.app, 'uid': SOURCE_UID}),
-                         ('wrong_native_gid', {**scope.app, 'gid': SOURCE_UID}),
-                         ('same_pid_metadata_other_actual_pidfs', {
-                             **scope.app, 'pidfs_device': source_pidfs['device'],
-                             'pidfs_inode': source_pidfs['inode']})]:
-        scope.facts(focus=focus)
+    for label, focus, handle in [('synthetic_null_or_ineligible_layer_fact', None, None),
+                                 ('wrong_launched_pid', {**scope.app, 'pid': scope.source.pid}, scope.app_fd),
+                                 ('wrong_native_uid', {**scope.app, 'uid': SOURCE_UID}, scope.app_fd),
+                                 ('wrong_native_gid', {**scope.app, 'gid': SOURCE_UID}, scope.app_fd),
+                                 ('same_pid_uid_gid_metadata_other_live_handle', scope.app, scope.alive)]:
+        scope.facts(focus=focus, focus_fd=handle)
         assert scope.read() == {'result': 'denied'}, label
-        scope.observe(label, {'denied': True, 'focus': focus})
+        scope.observe(label, {'denied': True, 'focus': focus,
+                             'actual_handle_pid': None if handle is None else fdinfo_pid(handle)})
         scope.facts()
         assert scope.read().get('page') == 'conversations'
+
+
+def dead_retained_handle_denied(scope):
+    scope.authorized()
+    old = dict(scope.app)
+    dead = scope.app_fd
+    scope.grant(False)
+    assert scope.admin({'op': 'terminate', 'app': APP}) == {'result': 'ok'}
+    wait(lambda: scope.admin({'op': 'snapshot'}).get('principals') == 0)
+    wait(lambda: not Path(f'/proc/{old["pid"]}').exists())
+    assert select.select([dead], [], [], 0)[0] and fdinfo_pid(dead) == -1
+    scope.observe('old_app_actual_reap_retained_dead_socket_handle', {'pid': old['pid'],
+        'proc_absent': True, 'owned_pidfd_death_observed': True, 'kernel_pid': fdinfo_pid(dead)})
+    scope.launch()
+    scope.facts()
+    assert scope.read() == {'result': 'denied'}, 'fresh focus supplied a revoked policy grant'
+    scope.grant()
+    scope.facts()
+    assert scope.read().get('page') == 'conversations'
+    scope.facts(focus=scope.app, focus_fd=dead)
+    assert scope.read() == {'result': 'denied'}, 'dead retained handle with fresh exact metadata authorized'
+    scope.observe('fresh_exact_metadata_dead_retained_handle_denied', {'focus': scope.app,
+        'handle_kernel_pid': fdinfo_pid(dead), 'source_alive': scope.source.poll() is None})
+    scope.facts()
+    assert scope.read().get('page') == 'conversations', 'dead focus closed healthy source'
+    scope.facts(focus=None)
+    original = scope.command({'source_op': 'inspect'})
+    for _ in range(24):
+        scope.facts()
+        scope.facts(focus=None)
+    final = scope.command({'source_op': 'inspect'})
+    assert original['source_owned_focus_handles'] == final['source_owned_focus_handles'] == 0
+    assert original['source_fd_count'] == final['source_fd_count']
+    assert final['source_focus_cloexec']
+    scope.observe('source_focus_replacement_and_null_close_no_fd_growth', {
+        'replacements': 24, 'before': original, 'after': final})
 
 
 def held_semantic_burst(scope):
@@ -619,6 +730,12 @@ def source_false_cannot_clear_intent(scope):
     assert scope.admin({'op': 'locked', 'locked': False}) == {'result': 'ok'}
     scope.facts()
     assert scope.read().get('page') == 'conversations'
+    assert scope.admin({'op': 'background', 'app': APP, 'background': True}) == {'result': 'ok'}
+    scope.facts()
+    assert scope.read() == {'result': 'denied'}, 'source focus cleared outstanding root background intent'
+    assert scope.admin({'op': 'background', 'app': APP, 'background': False}) == {'result': 'ok'}
+    scope.facts()
+    assert scope.read().get('page') == 'conversations'
     scope.observe('explicit_root_fixture_intent_clear_requires_source', {'cleared_by_root_fixture': True,
         'production_PAM_unlock_qualified': False})
 
@@ -632,7 +749,8 @@ def new_app_identity_and_grant(scope):
     wait(lambda: not Path(f'/proc/{old["pid"]}').exists())
     scope.observe('old_app_actually_reaped', {'pid': old['pid']})
     scope.launch()
-    assert scope.app['pidfs_inode'] != old['pidfs_inode']
+    assert scope.app['pid'] != old['pid']
+    assert select.select([scope.focus_handles[old['pid']]], [], [], 0)[0]
     scope.facts(focus=old)
     assert scope.read() == {'result': 'denied'}, 'old focus identified fresh app generation'
     scope.facts()
@@ -643,7 +761,7 @@ def new_app_identity_and_grant(scope):
 
 
 CASES = [unknown_denied, root_controls_unknown_denied, source_only_read,
-         focus_and_pidfs_denied, held_semantic_burst, heartbeat_preserves_read,
+         focus_and_handle_denied, dead_retained_handle_denied, held_semantic_burst, heartbeat_preserves_read,
          heartbeat_cannot_extend_read, stopped_source_denies, source_eof_denies,
          source_death_denies, eagain_rechecks_source, source_false_cannot_clear_intent,
          new_app_identity_and_grant]
@@ -654,8 +772,9 @@ def inside(args):
     bins, output = Path(args.bins), Path(args.output)
     output.mkdir(parents=True, exist_ok=True)
     results = []
-    choices = CASES + [unsupported_pidfs_denies]
-    selected = [case for case in choices if (not args.case and case in CASES) or (args.case and case.__name__ in args.case)]
+    choices = CASES + [anon_inode_owned_focus_read]
+    selected = [case for case in choices if (not args.case and (case in CASES or not self_pidfs_supported()))
+                or (args.case and case.__name__ in args.case)]
     assert selected and (not args.case or len(selected) == len(args.case))
     for case in selected:
         scope = Scope(bins, output, case.__name__)
@@ -682,7 +801,9 @@ def inside(args):
         'kernel': {field: getattr(os.uname(), field) for field in ('sysname', 'nodename', 'release', 'version', 'machine')}, 'evidence': 'actual Linux process/credential/pidfd/seqpacket + real SQLite',
         'source': 'synthetic separately launched UID1000 facts source',
         'compositor_original_protocol_qualified': False, 'phone_hardware_qualified': False,
-        'pidfs_identity_qualified': all(case['setup_complete'] for case in results) and self_pidfs_supported(),
+        'pidfs_metadata_distinct': self_pidfs_supported(),
+        'owned_focus_protocol_exercised': all(case['setup_complete'] for case in results),
+        'positive_authority_qualified': any(case['passed'] and case['case'] in ('source_only_read', 'anon_inode_owned_focus_read') for case in results),
         'suspend_qualified': False, 'zero_external_transition_publication_race_qualified': False}, indent=2) + '\n')
     return 0 if passed else 1
 
@@ -705,63 +826,74 @@ def orchestrate(args):
         output.mkdir()
         source = output / 'source'
         source.mkdir()
+        assert (args.phase == 'red') == bool(args.protocol_baseline), 'red requires explicit --protocol-baseline; green selects current sources'
+        origins = {}
         if args.phase == 'red':
-            selection = subprocess.check_output(['git', 'rev-parse', BASELINE], cwd=repo).decode().strip()
+            selection = subprocess.check_output(['git', 'rev-parse', args.protocol_baseline], cwd=repo).decode().strip()
+            assert selection == PROTOCOL_BASELINE, 'select the documented immutable scalar-protocol baseline'
+            assert not args.store_selection, 'protocol baseline freezes all production dependencies'
             archive = output / 'baseline.tar'
             with archive.open('wb') as destination:
-                subprocess.run(['git', 'archive', selection, *[name for name in DEPENDENCIES if name != 'native-session']],
+                subprocess.run(['git', 'archive', selection, *DEPENDENCIES],
                                cwd=repo, stdout=destination, check=True)
             with tarfile.open(archive) as selected:
                 selected.extractall(source, filter='data')
             archive.unlink()
-            shutil.copytree(repo / 'native-session', source / 'native-session', ignore=shutil.ignore_patterns('target', '__pycache__'))
-            # Declarations only let the current Observer compile against frozen
-            # f733. Old authority/service behavior remains byte-identical.
-            shared = repo / 'native-lifecycle/src/session.rs'
-            if shared.exists():
-                shutil.copyfile(shared, source / 'native-lifecycle/src/session.rs')
-                lib = source / 'native-lifecycle/src/lib.rs'
-                lib.write_text(lib.read_text().replace('pub mod service;', 'pub mod service;\npub mod session;'))
+            origins = {name: {'kind': 'immutable_commit', 'commit': selection} for name in DEPENDENCIES}
         else:
             selection = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=repo).decode().strip()
             for name in DEPENDENCIES:
                 selected = repo / name
-                if args.store_selection and name not in ('native-lifecycle', 'native-session'):
+                if args.store_selection and name not in ('native-lifecycle', 'native-session', 'native-kernel-identity'):
                     selected = Path(args.store_selection) / name
                     assert selected.is_dir(), 'frozen history dependency missing: ' + name
                 shutil.copytree(selected, source / name, ignore=shutil.ignore_patterns('target', '__pycache__', '._*'))
+                origins[name] = {'kind': 'working_tree' if selected == repo / name else 'explicit_frozen_store',
+                                 'path': str(selected)}
         fixture = source / 'tools/native-session-authority'
         shutil.copytree(Path(__file__).parent, fixture, ignore=shutil.ignore_patterns('target', '__pycache__'))
         metadata = {'phase': args.phase, 'head': selection,
-            'selected_entry': 'f733 original run_with_messages; real Observer constructed but no source ingress' if args.phase == 'red'
-                              else 'run_with_messages_and_session; real Observer Provider ingress',
-            'red_declaration_only_overlay': ['native-lifecycle/src/session.rs', 'native-lifecycle/src/lib.rs: pub mod session'] if args.phase == 'red' else [],
+            'selected_entry': 'run_with_messages_and_session; real Observer Provider ingress',
+            'protocol_baseline': selection if args.phase == 'red' else None,
+            'baseline_timing': 'immutable previous production tested after current code was authored' if args.phase == 'red' else None,
+            'source_origins': origins,
+            'wire_protocol': 'NativeFocus pid/uid/gid plus exactly one actual focused socket-derived SCM_RIGHTS pidfd; null focus has no FD',
+            'production_source_overlay': [],
             'target': args.target,
             'frozen_history_store_selection': args.store_selection,
-            'features': 'isolated-fixture,baseline-ignored' if args.phase == 'red' else 'isolated-fixture',
+            'features': 'isolated-fixture',
             'sources': hashes(source), 'container_image': IMAGE,
             'runtime_image': RUNTIME_IMAGE,
             'runtime_image_id': subprocess.check_output(DOCKER + ['image', 'inspect', RUNTIME_IMAGE, '--format', '{{.Id}}']).decode().strip(),
             'container_image_id': subprocess.check_output(DOCKER + ['image', 'inspect', IMAGE, '--format', '{{.Id}}']).decode().strip()}
         (output / 'selection.json').write_text(json.dumps(metadata, indent=2) + '\n')
-        common = ['--network', 'none', '--cpus', '2', '--memory', '3g', '--pids-limit', '128',
+        common = ['--network', 'none', '--cpus', '12', '--memory', '12g', '--pids-limit', '128',
                   '--security-opt', 'no-new-privileges', '--cap-drop', 'ALL',
                   '-v', str(source) + ':/source:ro', '-v', str(output) + ':/results:rw']
-        build = 'cargo generate-lockfile --offline --manifest-path /source/tools/native-session-authority/fixture/Cargo.toml'
-        # Generate the fixture lockfile once in a writable private copy, then copy
-        # it back into the selected source and require --locked for every build.
+        # Every affected crate lock is generated offline in a private writable
+        # copy before freezing. Production source bytes are never overlaid.
+        manifests = ['tools/native-session-authority/fixture', *DEPENDENCIES]
         temp = output / 'lock-source'
         shutil.copytree(source, temp)
+        lock_container = None
         with (output / 'build.log').open('wb') as log:
-            generated = subprocess.run(DOCKER + ['run', '--rm', '--pull=never',
-                '--network', 'none', '--cap-drop', 'ALL', '--security-opt', 'no-new-privileges',
-                '--user', f'{os.getuid()}:{os.getgid()}',
-                '-v', str(temp) + ':/source:rw', '-v', str(repo / 'sim/rust-cargo') + ':/cargo:rw',
-                '-e', 'CARGO_HOME=/cargo', IMAGE, 'bash', '-c', build], stdout=log, stderr=subprocess.STDOUT)
-            assert generated.returncode == 0, 'offline fixture lock generation failed; inspect build.log'
-            shutil.copyfile(temp / 'tools/native-session-authority/fixture/Cargo.lock', fixture / 'fixture/Cargo.lock')
-            shutil.copyfile(fixture / 'fixture/Cargo.lock', Path(__file__).parent / 'fixture/Cargo.lock')
+            lock_container = subprocess.check_output(DOCKER + ['create', '--name', 'pokelinux-session-authority-lock-' + label,
+                '--pull=never', '--network', 'none', '--cap-drop', 'ALL', '--security-opt', 'no-new-privileges',
+                '--user', f'{os.getuid()}:{os.getgid()}', '-v', str(temp) + ':/source:rw',
+                '-v', str(repo / 'sim/rust-cargo') + ':/cargo:rw', '-e', 'CARGO_HOME=/cargo', IMAGE,
+                'bash', '-c', 'for manifest in "$@"; do cargo generate-lockfile --offline --manifest-path "$manifest" || exit; done',
+                'lock-generation', *['/source/' + name + '/Cargo.toml' for name in manifests]]).decode().strip()
+            try:
+                generated = subprocess.run(DOCKER + ['start', '-a', lock_container], stdout=log, stderr=subprocess.STDOUT)
+                assert generated.returncode == 0, 'offline selected lock generation failed; inspect build.log'
+            finally:
+                subprocess.run(DOCKER + ['rm', '-f', lock_container], stdout=subprocess.DEVNULL, check=True)
+            for name in manifests:
+                shutil.copyfile(temp / name / 'Cargo.lock', source / name / 'Cargo.lock')
+            if args.phase == 'green':
+                shutil.copyfile(fixture / 'fixture/Cargo.lock', Path(__file__).parent / 'fixture/Cargo.lock')
             shutil.rmtree(temp)
+            metadata['offline_regenerated_locks'] = [name + '/Cargo.lock' for name in manifests]
             metadata['sources'] = hashes(source)
             (output / 'selection.json').write_text(json.dumps(metadata, indent=2) + '\n')
             feature = metadata['features']
@@ -769,13 +901,18 @@ def orchestrate(args):
                 ['cargo', 'build', '--offline', '--locked', '--manifest-path', '/source/tools/native-session-authority/fixture/Cargo.toml', '--features', feature],
                 ['cargo', 'build', '--offline', '--locked', '--manifest-path', '/source/native-lifecycle/Cargo.toml', '--bin', 'lifecycle-launcher'],
                 ['cargo', 'build', '--offline', '--locked', '--manifest-path', '/source/native-messages/Cargo.toml', '--features', 'isolated-fixture', '--bin', 'messages-seed-fixture']]
-            for command in commands:
+            for index, command in enumerate(commands):
                 command.extend(['--target', args.target])
-                result = subprocess.run(DOCKER + ['run', '--rm', '--pull=never', *common,
+                build_container = subprocess.check_output(DOCKER + ['create', '--name',
+                    'pokelinux-session-authority-build-' + label + '-' + str(index), '--pull=never', *common,
                     '--user', f'{os.getuid()}:{os.getgid()}',
                     '-v', str(repo / 'sim/rust-cargo') + ':/cargo:rw', '-e', 'CARGO_HOME=/cargo',
-                    '-e', 'CARGO_TARGET_DIR=/results/target', IMAGE, *command], stdout=log, stderr=subprocess.STDOUT)
-                assert result.returncode == 0, 'isolated build failed; inspect build.log'
+                    '-e', 'CARGO_TARGET_DIR=/results/target', IMAGE, *command]).decode().strip()
+                try:
+                    result = subprocess.run(DOCKER + ['start', '-a', build_container], stdout=log, stderr=subprocess.STDOUT)
+                    assert result.returncode == 0, 'isolated build failed; inspect build.log'
+                finally:
+                    subprocess.run(DOCKER + ['rm', '-f', build_container], stdout=subprocess.DEVNULL, check=True)
         bins = output / 'bins'
         bins.mkdir()
         for name in (SERVICE, 'lifecycle-launcher', 'messages-seed-fixture'):
@@ -814,13 +951,14 @@ def orchestrate(args):
         (output / 'proof-sha256.json').write_text(json.dumps(proof, indent=2) + '\n')
         details = json.loads((output / 'execution/result.json').read_text())
         if args.phase == 'red':
-            failures = [case['case'] for case in details['cases'] if not case['passed']]
-            expected = ('source_only_read', 'root_controls_unknown_denied')
-            assert all(case['setup_complete'] for case in details['cases']), 'red setup failures are not authority evidence'
-            assert next(case['passed'] for case in details['cases'] if case['case'] == 'unknown_denied'), 'red default unknown denial control failed'
-            assert all(case in failures for case in expected), 'red missed actual missing-ingress/control-bypass failures'
-            assert all(not case.get('cleanup_error') for case in details['cases']), 'red cleanup not qualified'
-            print('Qualified RED: frozen old entry exposes ' + ', '.join(failures))
+            cases = details['cases']
+            failures = [case['case'] for case in cases if not case['passed']]
+            assert all(case['setup_complete'] for case in cases), 'red setup failures are not authority evidence'
+            assert all(not case.get('cleanup_error') for case in cases), 'red cleanup not qualified'
+            assert next(case['passed'] for case in cases if case['case'] == 'unknown_denied'), 'red default unknown denial failed'
+            assert next(case['passed'] for case in cases if case['case'] == 'root_controls_unknown_denied'), 'red unknown source root fencing failed'
+            assert 'source_only_read' in failures, 'immutable scalar baseline unexpectedly admitted owned-focus protocol'
+            print('Qualified RED: immutable scalar protocol rejects desired owned-focus positive authority: ' + ', '.join(failures))
             return 0
         return result.returncode
 
@@ -839,7 +977,8 @@ def main():
     parser.add_argument('--label')
     parser.add_argument('--target', default='x86_64-unknown-linux-gnu', choices=('x86_64-unknown-linux-gnu', 'aarch64-unknown-linux-gnu'))
     parser.add_argument('--build-only', action='store_true')
-    parser.add_argument('--store-selection', help='isolated frozen history dependencies; actor/observer still use current sources')
+    parser.add_argument('--protocol-baseline', help='explicit immutable scalar-protocol production commit for desired behavioral red')
+    parser.add_argument('--store-selection', help='explicit frozen history dependencies; lifecycle/session/kernel identity always use current sources')
     parser.add_argument('--case', action='append')
     parser.add_argument('--inside', action='store_true')
     parser.add_argument('--bins', default='/bins')

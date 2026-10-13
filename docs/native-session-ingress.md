@@ -1,6 +1,11 @@
-# Native session facts and current read authority
+# Historical scalar session ingress prototype
 
-The native Rust observer and the existing lifecycle actor now compose through a
+This report preserves the scalar-pidfs prototype frozen at84ac3f8. The current
+[owned-focus protocol](native-session-owned-focus.md) replaces its identity/wire
+and has separate executed evidence. Statements and source pins below describe
+this historical selection.
+
+The native Rust observer and the existing lifecycle actor compose through a
 small internal facts boundary. The separately qualified matching Hyprland adapter
 exports actual central focus and lock observations. Three independent selections
 qualify observer/process behavior, synthetic facts into actual Messages authority,
@@ -85,15 +90,10 @@ qualified on the newer Arch guest, not that Pixel set. Public
 do not establish pidfs support for the retained set. No matched kernel is replaced
 or assumed upgraded to make this prototype work.
 
-The next unified identity design transfers the focused socket's owned
-`SO_PEERPIDFD` over the private credentialed channel and retains that handle through
-publication. Linux6.6's [socket implementation](https://raw.githubusercontent.com/torvalds/linux/v6.6/net/core/sock.c)
-uses the retained peer process reference. Comparing both already-owned live
-handles through one pinned protected procfs namespace view can remove the pidfs
-scalar dependency; this is an architectural inference awaiting executed tests.
-It requires handle-aware revisions, bounded ancillary parsing/FD cleanup and
-qualified namespace configuration. Numeric PID lookup, an anon-inode scalar
-comparison or an unqualified compatibility fallback is not admitted.
+The current [owned-focus design](native-session-owned-focus.md) transfers the
+focused socket's owned `SO_PEERPIDFD` and executes live-handle comparisons on
+both Harbour6.8 and the ARM guest. Its own provenance qualifies that newer wire;
+this historical selection continues to qualify only the scalar prototype.
 
 Other remaining offline gates are trusted compositor executable/configuration and
 plugin provisioning; genuine Omarchy Quickshell/PAM lock admission/restoration;

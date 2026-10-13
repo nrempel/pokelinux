@@ -1,9 +1,15 @@
 #![forbid(unsafe_code)]
 //! Compositor facts only. No grants, app launch, unlock command or publication authority.
-use pokelinux_lifecycle::{authority::living, boottime_ns, ipc};
+use pokelinux_kernel_identity::ProcessView;
+use pokelinux_lifecycle::session::OwnedFocus;
+use pokelinux_lifecycle::{authority::living, boottime_ns};
+use rustix::net::{self, RecvAncillaryBuffer, RecvAncillaryMessage, RecvFlags, ReturnFlags, UCred};
 use rustix::{fd::OwnedFd, process::Pid};
 use serde::{Deserialize, Serialize};
-use std::io;
+use std::{
+    io::{self, IoSliceMut},
+    mem::MaybeUninit,
+};
 pub const SAMPLE_BUDGET_NS: u64 = pokelinux_lifecycle::session::SAMPLE_BUDGET_NS;
 pub const MAX_FRAME: usize = 1024;
 pub const MAX_DRAIN: usize = 16;
@@ -25,6 +31,8 @@ pub struct Observer {
     uid: u32,
     source: String,
     current: Option<Frame>,
+    focus: Option<OwnedFocus>,
+    view: ProcessView,
     sequence: u64,
     revision: u64,
     failed: bool,
@@ -53,7 +61,11 @@ impl Observer {
         rustix::net::sockopt::set_socket_passcred(&fd, true)?;
         rustix::io::fcntl_setfd(&fd, rustix::io::FdFlags::CLOEXEC)?;
         rustix::io::fcntl_setfd(&alive, rustix::io::FdFlags::CLOEXEC)?;
-        if !living(&alive)? {
+        let view = ProcessView::open()?;
+        if !view
+            .matches(&alive, &alive, pid.as_raw_nonzero().get() as u32)
+            .unwrap_or(false)
+        {
             return Err(io::ErrorKind::NotConnected.into());
         }
         Ok(Self {
@@ -63,6 +75,8 @@ impl Observer {
             uid,
             source,
             current: None,
+            focus: None,
+            view,
             sequence: 0,
             revision: 0,
             failed: false,
@@ -71,6 +85,7 @@ impl Observer {
     fn fail(&mut self, kind: io::ErrorKind) -> io::Result<()> {
         self.failed = true;
         self.current = None;
+        self.focus = None;
         self.fd = None;
         Err(kind.into())
     }
@@ -97,14 +112,14 @@ impl Observer {
         }
         let mut count = 0;
         loop {
-            let packet = match ipc::receive(self.fd.as_ref().ok_or(io::ErrorKind::NotConnected)?) {
+            let packet = match receive(self.fd.as_ref().ok_or(io::ErrorKind::NotConnected)?) {
                 Ok(v) => v,
                 Err(e) if e.raw_os_error() == Some(4) => {
                     return self.fail(io::ErrorKind::Interrupted);
                 }
                 Err(_) => return self.fail(io::ErrorKind::InvalidData),
             };
-            let Some((bytes, cred)) = packet else {
+            let Some(SourcePacket { bytes, cred, peer }) = packet else {
                 break;
             };
             count += 1;
@@ -129,17 +144,34 @@ impl Observer {
                 || frame
                     .focus
                     .as_ref()
-                    .is_some_and(|f| f.pid == 0 || f.pid > i32::MAX as u32 || f.pidfs_inode == 0)
+                    .is_some_and(|f| f.pid == 0 || f.pid > i32::MAX as u32)
                 || !Self::live_sample(&frame, boottime_ns())
             {
                 return self.fail(io::ErrorKind::InvalidData);
             }
+            if frame.focus.is_some() != peer.is_some()
+                || peer
+                    .as_ref()
+                    .is_some_and(|fd| !self.view.is_pidfd(fd).unwrap_or(false))
+            {
+                return self.fail(io::ErrorKind::InvalidData);
+            }
+            let focus = frame
+                .focus
+                .clone()
+                .zip(peer)
+                .map(|(metadata, fd)| OwnedFocus::new(metadata, fd));
+            let same_focus = match (&self.focus, &focus) {
+                (None, None) => true,
+                (Some(left), Some(right)) => left.equivalent(right, &self.view),
+                _ => false,
+            };
             // Inspect every packet before coalescing. A lock/unlock or focus cycle
             // cannot disappear merely because the final facts equal old facts.
             if self.current.as_ref().is_none_or(|previous| {
                 previous.locked != frame.locked
                     || previous.lock_completed != frame.lock_completed
-                    || previous.focus != frame.focus
+                    || !same_focus
             }) {
                 let Some(revision) = self.revision.checked_add(1) else {
                     return self.fail(io::ErrorKind::InvalidData);
@@ -148,6 +180,7 @@ impl Observer {
             }
             self.sequence = frame.sequence;
             self.current = Some(frame);
+            self.focus = focus;
         }
         if !living(&self.alive).unwrap_or(false) {
             return self.fail(io::ErrorKind::NotConnected);
@@ -176,6 +209,61 @@ impl Observer {
     }
 }
 
+/// Dedicated trusted source receiver. General app/policy IPC still rejects all
+/// descriptors. Every ancillary handle is owned and dropped on rejection.
+struct SourcePacket {
+    bytes: Vec<u8>,
+    cred: UCred,
+    peer: Option<OwnedFd>,
+}
+fn receive(fd: &OwnedFd) -> io::Result<Option<SourcePacket>> {
+    let mut bytes = [0; MAX_FRAME];
+    let mut space = [MaybeUninit::uninit(); rustix::cmsg_space!(ScmCredentials(1), ScmRights(2))];
+    let mut ancillary = RecvAncillaryBuffer::new(&mut space);
+    let result = match net::recvmsg(
+        fd,
+        &mut [IoSliceMut::new(&mut bytes)],
+        &mut ancillary,
+        RecvFlags::DONTWAIT | RecvFlags::CMSG_CLOEXEC,
+    ) {
+        Err(rustix::io::Errno::AGAIN) => return Ok(None),
+        result => result?,
+    };
+    let mut invalid = result.bytes == 0
+        || result
+            .flags
+            .intersects(ReturnFlags::TRUNC | ReturnFlags::CTRUNC);
+    let mut credentials = None;
+    let mut peer = None;
+    let mut rights_messages = 0;
+    for message in ancillary.drain() {
+        match message {
+            RecvAncillaryMessage::ScmCredentials(cred) if credentials.is_none() => {
+                credentials = Some(cred)
+            }
+            RecvAncillaryMessage::ScmRights(handles) => {
+                rights_messages += 1;
+                for handle in handles {
+                    if peer.is_none() {
+                        peer = Some(handle);
+                    } else {
+                        invalid = true;
+                    }
+                }
+            }
+            _ => invalid = true,
+        }
+    }
+    if invalid || rights_messages > 1 {
+        return Err(io::ErrorKind::InvalidData.into());
+    }
+    Ok(Some(SourcePacket {
+        bytes: bytes[..result.bytes].to_vec(),
+        cred: credentials.ok_or(io::ErrorKind::PermissionDenied)?,
+        peer,
+    }))
+}
+
 impl pokelinux_lifecycle::session::Provider for Observer {
     fn poll(&mut self) -> io::Result<Option<pokelinux_lifecycle::session::Snapshot>> {
         Observer::poll(self)?;
@@ -189,7 +277,7 @@ impl pokelinux_lifecycle::session::Provider for Observer {
                 // The original sample is checked before it reaches this conversion.
                 until: frame.sampled_at_ns + SAMPLE_BUDGET_NS,
                 locked: frame.locked,
-                focus: frame.focus.clone(),
+                focus: self.focus.clone(),
             }))
     }
 }

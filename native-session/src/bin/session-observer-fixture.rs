@@ -42,21 +42,29 @@ fn main() -> io::Result<()> {
         .checked_add(60_000_000_000)
         .ok_or(io::ErrorKind::InvalidInput)?;
     let mut sequence = 0;
+    let view = pokelinux_kernel_identity::ProcessView::open()?;
     emit(
         json!({"event":"ready","expected_source_pid":pid.as_raw_nonzero().get(),"expected_source_uid":uid}),
     )?;
     while boottime_ns() < until {
-        if let Err(error) = source.poll() {
-            emit(
-                json!({"event":"failed","error":error.to_string(),"positive_state":source.snapshot().is_some()}),
-            )?;
-            return Ok(());
-        }
+        let snapshot = match pokelinux_lifecycle::session::Provider::poll(&mut source) {
+            Ok(snapshot) => snapshot,
+            Err(error) => {
+                emit(
+                    json!({"event":"failed","error":error.to_string(),"positive_state":source.snapshot().is_some()}),
+                )?;
+                return Ok(());
+            }
+        };
         if let Some(frame) = source.snapshot()
             && frame.sequence != sequence
         {
             sequence = frame.sequence;
-            emit(json!({"event":"sample","frame":frame}))?;
+            let focused = snapshot.as_ref().and_then(|s| s.focus.as_ref());
+            emit(json!({"event":"sample","frame":frame,
+                "has_owned_focus":focused.is_some(),
+                "focused_peer_matches_metadata":focused.map(|f| view.matches(f.pidfd(), f.pidfd(), f.metadata.pid).unwrap_or(false)),
+                "focused_peer_cloexec":focused.map(|f| rustix::io::fcntl_getfd(f.pidfd()).is_ok_and(|flags| flags.contains(rustix::io::FdFlags::CLOEXEC)))}))?;
         }
         std::thread::sleep(Duration::from_millis(1));
     }

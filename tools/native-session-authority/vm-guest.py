@@ -31,7 +31,7 @@ try:
     result.update(json.loads((ROOT / 'execution/result.json').read_text()))
     result['runner_exit_code'] = completed.returncode
     result['qemu_mode'] = 'system'
-    assert result['kernel']['machine'] == 'aarch64' and result['pidfs_identity_qualified']
+    assert result['kernel']['machine'] == 'aarch64' and result['owned_focus_protocol_exercised']
 except BaseException as error:
     result['passed'] = False
     result['error'] = str(error)

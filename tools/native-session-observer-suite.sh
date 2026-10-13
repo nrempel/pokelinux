@@ -19,12 +19,12 @@ python3 - "$out" "$phase" <<'SNAPSHOT'
 from pathlib import Path
 import hashlib,json,shutil,sys
 out=Path(sys.argv[1])
-for name in ('native-session','native-lifecycle'):
+for name in ('native-session','native-lifecycle','native-kernel-identity'):
  shutil.copytree(name,out/'source'/name,ignore=shutil.ignore_patterns('target','._*'))
 sources={str(p.relative_to(out/'source')):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((out/'source').rglob('*')) if p.is_file()}
 (out/'selection.json').write_text(json.dumps({'phase':sys.argv[2],'executed_source_mount':'/source:ro','sources':sources},indent=2)+'\n')
 SNAPSHOT
-container_id=$("${docker_local[@]}" create --name "$name" --network none --cpus 2 --memory 3g --pids-limit 128 --cap-drop ALL \
+container_id=$("${docker_local[@]}" create --name "$name" --network none --cpus 12 --memory 12g --pids-limit 128 --cap-drop ALL \
  --security-opt no-new-privileges --user "$(id -u):$(id -g)" \
  -v "$PWD/$out/source:/source:ro" -v "$PWD/sim/rust-cargo:/cargo:rw" -v "$PWD/$out:/results:rw" \
  -e CARGO_HOME=/cargo -e CARGO_TARGET_DIR=/results/target --entrypoint bash \

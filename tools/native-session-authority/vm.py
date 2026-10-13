@@ -122,21 +122,24 @@ exec python3 /results/vm-guest.py
             if not key.startswith(('source/', 'bins/')) and key != 'proof-sha256.json'}, indent=2) + '\n')
         print((output / 'execution.log').read_text() if (output / 'execution.log').exists() else '', end='')
         print(json.dumps({'passed': result['passed'], 'kernel': result.get('kernel'),
-                          'error': result.get('error'), 'pidfs_identity_qualified': result.get('pidfs_identity_qualified')}, indent=2))
+                          'error': result.get('error'), 'owned_focus_protocol_exercised': result.get('owned_focus_protocol_exercised'),
+                          'positive_authority_qualified': result.get('positive_authority_qualified'),
+                          'pidfs_metadata_distinct': result.get('pidfs_metadata_distinct')}, indent=2))
         assert completed.returncode == 0, 'owned QEMU process failed/timed out'
         assert result.get('kernel'), result.get('traceback', 'guest setup result absent')
         assert result['kernel']['machine'] == 'aarch64' and result['qemu_mode'] == 'system'
-        assert result['pidfs_identity_qualified'], 'actual PID_FS_MAGIC not qualified'
+        assert result['owned_focus_protocol_exercised'], 'actual owned focused pidfd protocol not exercised'
         if selection['phase'] == 'red':
             cases = result['cases']
             assert all(case['setup_complete'] for case in cases)
             assert next(case['passed'] for case in cases if case['case'] == 'unknown_denied')
             failures = {case['case'] for case in cases if not case['passed']}
-            assert {'root_controls_unknown_denied', 'source_only_read'} <= failures
+            assert next(case['passed'] for case in cases if case['case'] == 'root_controls_unknown_denied')
+            assert 'source_only_read' in failures
             assert all(not case.get('cleanup_error') for case in cases)
-            print('Qualified actual ARM kernel red missing-ingress and manual-controls bypass')
+            print('Qualified actual ARM kernel red: immutable scalar protocol refuses desired owned-focus authority')
             return 0
-        assert result['passed']
+        assert result['passed'] and result['positive_authority_qualified']
         return 0
 
 

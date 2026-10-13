@@ -64,12 +64,12 @@ confirms Pixel10's frankel codename; it does not authenticate the selected facto
 build or kernel/KMI. Missing set pins and unresolved offline requirements refuse
 deployment. Runtime ownership and device qualification require their own evidence.
 
-The [native session prototype](native-session-ingress.md) currently qualifies
-scalar pidfs identity on Arch ARM7.1.6 and denies Harbour6.8 anon-inode aliases.
-The selected Pixel module release is6.6; those guest results do not qualify its
-exact retained kernel/config. Keep matched assets unchanged. The next unified
-Linux identity boundary retains/transfers the actual Wayland socket's peer pidfd
-and compares both owned live references in one protected procfs namespace view,
-with executed anon-inode and ARM tests before use. This is an offline interface
-qualification gate, separate from physical-device evidence and from trusted
-compositor/locker provisioning.
+The [owned native session identity](native-session-owned-focus.md) now retains
+and transfers the actual Wayland socket peer pidfd, comparing it with the already
+owned app-generation handle through one pinned protected procfs view and joint
+final liveness. Host6.8 shared anon-inode and ARM7.1 kernel tests pass; scalar
+pidfs equality and the earlier wire are removed. Common protected PID/user
+namespace deployment remains a gate. Pixel's matched6.6 image/config/KMI remains
+unqualified by those tests; keep matched assets unchanged. Original compositor,
+synthetic actor and joint installed-app evidence remain distinct. Trusted locker/
+configuration provisioning and physical hardware have separate gates.

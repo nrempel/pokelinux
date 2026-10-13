@@ -79,6 +79,7 @@ pub struct Authority {
     session_failed: bool,
     root_lock_intent: bool,
     reconcile_after: u64,
+    session_view: Option<pokelinux_kernel_identity::ProcessView>,
 }
 impl Authority {
     pub(crate) fn loading(profiles: Vec<AppProfile>) -> io::Result<Self> {
@@ -102,9 +103,11 @@ impl Authority {
             session_failed: false,
             root_lock_intent: false,
             reconcile_after: 0,
+            session_view: None,
         })
     }
     pub(crate) fn require_session(&mut self) -> io::Result<()> {
+        self.session_view = Some(pokelinux_kernel_identity::ProcessView::open()?);
         self.session_required = true;
         self.locked = true;
         for p in self.principals.values_mut() {
@@ -117,26 +120,32 @@ impl Authority {
             !self.session_failed && s.sampled_at_ns > self.reconcile_after && now < s.until
         })
     }
-    fn matches_focus(p: &Principal, focus: &crate::session::NativeFocus) -> bool {
-        if p.pid != focus.pid
-            || p.uid != focus.uid
-            || focus.gid != p.uid
-            || !living(&p.alive).unwrap_or(false)
-        {
-            return false;
+    fn matches_focus(&self, p: &Principal, focus: &crate::session::OwnedFocus) -> bool {
+        let metadata = &focus.metadata;
+        p.pid == metadata.pid
+            && p.uid == metadata.uid
+            && metadata.gid == p.uid
+            && self.session_view.as_ref().is_some_and(|view| {
+                view.matches(&p.alive, focus.pidfd(), p.pid)
+                    .unwrap_or(false)
+            })
+    }
+    fn same_focus(
+        &self,
+        left: Option<&crate::session::OwnedFocus>,
+        right: Option<&crate::session::OwnedFocus>,
+    ) -> bool {
+        match (left, right) {
+            (None, None) => true,
+            (Some(left), Some(right)) => {
+                left.same_reference(right)
+                    || self
+                        .session_view
+                        .as_ref()
+                        .is_some_and(|view| left.equivalent(right, view))
+            }
+            _ => false,
         }
-        // Compare the already owned launched-generation descriptor. On kernels
-        // using shared anon_inode identities this check must remain unavailable.
-        let Ok(fs) = rustix::fs::fstatfs(&p.alive) else {
-            return false;
-        };
-        let Ok(st) = rustix::fs::fstat(&p.alive) else {
-            return false;
-        };
-        fs.f_type as u64 == 0x50494446
-            && st.st_ino != 0
-            && st.st_dev == focus.pidfs_device
-            && st.st_ino == focus.pidfs_inode
     }
     pub(crate) fn fail_session(&mut self) -> io::Result<()> {
         if !self.session_failed {
@@ -191,9 +200,16 @@ impl Authority {
                 s.sequence < old.sequence
                     || s.revision < old.revision
                     || s.sampled_at_ns < old.sampled_at_ns
-                    || (s.sequence == old.sequence && old != &s)
+                    || (s.sequence == old.sequence
+                        && (s.revision != old.revision
+                            || s.sampled_at_ns != old.sampled_at_ns
+                            || s.until != old.until
+                            || s.locked != old.locked
+                            || !self.same_focus(s.focus.as_ref(), old.focus.as_ref())))
                     || (s.revision == old.revision
-                        && (s.locked != old.locked || s.focus != old.focus))
+                        && (s.locked != old.locked
+                            || s.focus.as_ref().map(|f| &f.metadata)
+                                != old.focus.as_ref().map(|f| &f.metadata)))
             })
         {
             return self.fail_session();
@@ -213,17 +229,15 @@ impl Authority {
             s.focus.as_ref().and_then(|focus| {
                 self.principals
                     .iter()
-                    .find(|(_, p)| Self::matches_focus(p, focus))
+                    .find(|(_, p)| self.matches_focus(p, focus))
                     .map(|(app, _)| app.clone())
             })
         } else {
             None
         };
-        let changed = self
-            .session
-            .as_ref()
-            .is_none_or(|old| old.revision != s.revision)
-            || self.locked != locked
+        let changed = self.session.as_ref().is_none_or(|old| {
+            old.revision != s.revision || !self.same_focus(old.focus.as_ref(), s.focus.as_ref())
+        }) || self.locked != locked
             || self.principals.iter().any(|(app, p)| {
                 p.background != (p.background_intent || selected.as_ref() != Some(app))
             });
@@ -400,7 +414,7 @@ impl Authority {
                         && s.focus.as_ref().is_some_and(|focus| {
                             self.principals
                                 .get(app)
-                                .is_some_and(|p| Self::matches_focus(p, focus))
+                                .is_some_and(|p| self.matches_focus(p, focus))
                         })
                 }))
             && self
@@ -472,6 +486,12 @@ impl Authority {
                     && p.generation == stamp.generation
                     && living(&p.alive).unwrap_or(false)
             })
+            && crate::boottime_ns() < stamp.until
+            && (!self.session_required
+                || stamp
+                    .session
+                    .as_ref()
+                    .is_some_and(|s| crate::boottime_ns() < s.until))
     }
     fn id(&mut self) -> Option<String> {
         self.sequence = self.sequence.checked_add(1)?;

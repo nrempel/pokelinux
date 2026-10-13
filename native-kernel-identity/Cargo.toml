@@ -6,10 +6,10 @@ publish = false
 
 [dependencies]
 libc = "=0.2.190"
-rustix = { version = "=1.1.5" }
+rustix = { version = "=1.1.5", features = ["fs", "event"] }
 
 [lints.rust]
 unsafe_op_in_unsafe_fn = "deny"
 
 [dev-dependencies]
-rustix = { version = "=1.1.5", features = ["net", "event"] }
+rustix = { version = "=1.1.5", features = ["net", "event", "process"] }
