@@ -6,6 +6,19 @@ is useful source material for Pokélinux's mobile desktop. This review pins comm
 not execution of that project's scripts or an independent hardware qualification.
 No phone or proprietary input was accessed.
 
+The inspected implementation uses QML/JavaScript for presentation, Python for
+sensor/SIT service logic, Bash for setup, and C for selected device utilities.
+The pinned tree contains no Rust source. Reuse of service or policy logic means
+selecting its contracts and porting them to Rust; genuine Omarchy presentation
+may retain QML. Do not install its Python daemons as Pokélinux's final services.
+
+Treat every candidate as unverified for our requirements. Static inspection does
+not establish correct protocol behavior, safe lifetime handling or faithful
+hardware state. Adoption requires a genuine RED for the intended contract and
+actual boundary tests, including negative and ownership cases. Upstream tests
+and reported hardware success remain separate evidence rather than acceptance
+criteria supplied by the upstream author.
+
 ## Concrete reuse candidates
 
 | Candidate | Observed implementation | Pokélinux integration requirement |
