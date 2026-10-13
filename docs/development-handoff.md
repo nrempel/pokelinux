@@ -60,6 +60,18 @@ The native raw-response publication gate, absolute suspend-aware session expiry,
 owned registration worker/death watch, and local process reclamation are implemented.
 They are not native IMS semantics or a complete phone service.
 
+The next original radio-runtime precursor now has public-only containment
+evidence: a genuine unchanged-supervisor outside-root/Unix-IPC RED precedes six
+actual Arch ARM7.1.6 groups under an isolated authored owner. Final credentials,
+namespaces, restricted access, resource/task limits, second-exec fencing, late
+readiness and parent death pass with actual child/thread waits and empty cgroups.
+Maximum recorded status/stop is2.413108ms. Root independently verifies289
+bindings; bootstrap and wrapper-closure failures remain failed. Production
+radio code is unchanged. Original linker/Bionic/vendor loading, namespace/maps,
+property behavior, registration and cleanup/reset remain separate boundaries.
+See [tools](../tools/native-radio-load-only/README.md) and
+[proof](evidence/native-radio-containment-provenance.json).
+
 - `RadioOwner` fences session/revision/preparation identity and checks Linux
   `CLOCK_BOOTTIME` expiry under the gate. Withheld timer delivery cannot permit
   late activation or publication. Assembly candidate and durable operation policies

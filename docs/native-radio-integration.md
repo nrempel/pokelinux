@@ -258,6 +258,18 @@ and successful getters alone remain insufficient.
 
 ## Exact factory adapter boundary
 
+The separately selected [public containment precursor](../tools/native-radio-load-only/README.md)
+has a genuine current-supervisor RED and six actual ARM kernel GREEN groups.
+It runs harmless authored Rust children only. Final credentials, private
+namespaces, restricted filesystem/IPC, resource limits, second-exec refusal,
+late readiness and parent death qualify with direct retained-child/thread waits,
+empty cgroups and actual QEMU/Docker exits. Root verifies289 bindings; the two
+failed aggregate labels remain separately classified in
+[provenance](evidence/native-radio-containment-provenance.json).
+No production radio code or original vendor runtime was changed or executed.
+The original load-only startup/namespace-binding stage remains unqualified, as
+do registration admission, vendor cleanup/reset and matched Pixel policy.
+
 The current [factory recovery trace](native-radio-recovery-contract.md) separates
 the original generated native V1 binding from the actual `libril-aidl.so` service
 adapter and `libril_sitril.so` manager/producers. Their static identity/flags are

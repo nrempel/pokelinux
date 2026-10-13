@@ -280,6 +280,25 @@ See [cleanup contract](native-radio-cleanup.md) and
 
 ## Factory recovery evidence
 
+A public-only containment precursor now passes six actual Arch ARM7.1.6 kernel
+groups. The unchanged production supervisor first allowed an authored child's
+outside-root read and independently observed Unix connection, establishing the
+new containment requirement's RED. An isolated authored owner then enforces
+namespaces, final UID/GID/groups/capabilities, no-new-privileges, seccomp and
+resource limits. Held controls, forbidden access, attempted second exec, task
+limits, queued readiness after the original BOOTTIME deadline and parent death
+pass with actual child/thread waits and an empty cgroup. The largest recorded
+status/stop sample is2.413108ms, an observation rather than a realtime guarantee.
+
+The earlier bootstrap failure and guest-pass/wrapper-failure labels remain
+failed. Only a bounded actual QEMU wait corrects the latter wrapper; it changes
+no owner/child bytes. Root independently verifies289 preserved bindings. See
+the [public authored tools](../tools/native-radio-load-only/README.md) and
+[separate evidence](evidence/native-radio-containment-provenance.json).
+Production radio code is unchanged. Original linker/Bionic/vendor execution,
+loader namespace/maps and property behavior remain a separate next boundary;
+these harmless controls authorize no registration, reset or successor retry.
+
 The [factory recovery contract](native-radio-recovery-contract.md) identifies the
 actual native V1 service adapter and manager/complete producers through static
 REA evidence. Its scoped locks and one-way clear do not establish remote drain,

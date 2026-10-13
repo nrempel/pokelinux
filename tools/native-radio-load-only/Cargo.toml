@@ -1,0 +1,22 @@
+[package]
+name = "radio-load-owner-controls"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+pokelinux-radio = { path = "../../native-radio" }
+libc = "=0.2.190"
+serde_json = "=1.0.154"
+
+[[bin]]
+name = "radio-containment-red"
+path = "src/red.rs"
+
+[[bin]]
+name = "radio-harmless-child"
+path = "src/child.rs"
+
+[[bin]]
+name = "radio-load-owner"
+path = "src/parent.rs"
