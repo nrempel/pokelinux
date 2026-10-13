@@ -9,6 +9,7 @@ Android framework/Java peers remain reference and test infrastructure.
 | --- | --- | --- | --- |
 | Permission/lifecycle | One Rust principal/policy actor; exact per-packet Linux credentials, pidfds, generations; owned policy-storage child | Distinct-UID launcher and controls pass installed process fixtures on x86 and an ARM64 kernel. Local Messages reads compose this actor with its own storage child. Fixed UID1000 lock-only entry now precedes the exact original Omarchy action; durable pending intent survives healthy actor and changed display/Source replacement in the same policy directory | Trusted unlock/restore and secure frames, complete process-tree supervision, startup/launch IO, hardware dispatch and device SELinux. [Authority](native-lifecycle.md), [storage](native-lifecycle-storage.md), [lock admission](native-lock-admission.md) |
 | Incoming messages | Durable receipt owner, bounded AOSP-qualified codecs, private inbox, exact local occurrence IDs and deletion exclusions | Installed local-history Messages service/Qt window now pass11 ARM64 desktop groups with10 service groups and2 retained-descriptor cases; current read authority, responsive storage and local recovery qualify. A separately built receiving fixture now composes actual ARM64 Binder arrivals with this actor and sole raw/inbox child (18 groups); normal installed service stays history-only | Producer/reset/ACK identity, raw-retention/backlog policy, multipart association, notifications and carrier receive. [Receipt](native-sms-receipt-owner.md), [inbox](native-inbox.md), [installed history](native-messages-service.md), [synthetic incoming](native-messages-incoming.md) |
+| Phone tracer | Existing incoming writer/readonly split and lifecycle actor, original session and unchanged normal Qt | Eight ARM groups qualify closed-window authored Binder SMS, desktop/keyboard use, app/context retirement, fresh reopen of both occurrences and revoke/regrant. Two whole1080×2424 SDL/X11 captures pass RGB equality, Source health and Root visual review; pre-lock core selection | Newer joint lock/camera runtime, trusted controls/live theme broker, desktop icon fonts, notifications/wake and production modem/Pixel hardware. [Tracer](native-phone-tracer.md) |
 | Outgoing messages | Durable outbox and one-attempt submission owner; frozen V3 Binder synthetic boundary | No installed Messages send path through the single current permission authority yet | Final modem/error policy, receive/ACK identity, separately qualified delivery correlation, retries/reconciliation and carrier SMS/MMS. [Submission](native-sms-transport.md) |
 | IMS/calls | Original-compared wire encoders/reader/registration payload, single-attempt owned transport/death watch, supervised child reclamation and scoped ARM64 kernel Binder/NDK interop | Existing Phone UI/Android bridge is reference infrastructure; a production native IMS/call service is not composed | Producer/response identity and reset, registration state machine, bearer/data/SIM/eSIM, call/media/audio and carrier operation. [Radio owner](native-radio-owner.md), [reader](native-ims-reader.md), [registration payload](native-ims-registration.md) |
 | Camera | Frozen camera NDK/Rust types and ownership; typed current Capture authority, durable uncertain admission and retained backend process | Headless public Rust/Rust Binder composition passes17 ARM kernel groups, including actual channel EAGAIN and held-call cancellation/death/reaping. Synthetic Root controls; production installed Source/Camera app/media path is still absent | Backend containment, qualified reset, exact factory ABI, gralloc/DMA/sync_file/FMQ and real capture. [Service](native-camera-service.md), [owner](native-camera-owner.md) |
@@ -25,6 +26,16 @@ integration. These are offline engineering gates, in addition to later physical
 qualification. No physical phone has been accessed.
 
 ## Next composed path
+
+The vertical [phone tracer](native-phone-tracer.md) now qualifies eight actual
+ARM groups and both reviewed native-size frontend captures through the same
+writer/peer generation. Runtime ownership and current-authority reads compose
+with the unchanged normal app; full PNG/XImage RGB equality and Source health
+surround both one-message and two-message images. This remains authored incoming
+SMS on the selected pre-lock service core. Earlier1–11 aggregates stay failed;
+epoch12's terminal Source event is ordered after Stop without claiming causality.
+Current joint lock/camera, trusted controls, live appearance, notifications/wake
+and production modem/device qualification remain separate.
 
 The installed local-history Messages path is qualified separately from continuous
 receiving. One existing lifecycle actor owns current read authority and every

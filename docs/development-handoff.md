@@ -18,6 +18,28 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The vertical phone tracer now qualifies eight actual ARM groups: authored SMS
+commits to native storage while the window is closed, genuine Omarchy launches
+unchanged UID11010 Qt Messages, actual keyboard submission precedes a normal history read, close
+retires the app/context, a second arrival retains the same writer/incarnation,
+and a fresh context reads both occurrences. Revoke/regrant passes. Both whole
+1080×2424 SDL/X11 captures pass complete PNG/XImage RGB equality and current
+Source health before/after; Root viewed one then two literal messages with the
+original Tokyo Night app palette and Omarchy bar. Missing icon fonts remain a
+fixture provisioning gap. Cleanup, actual CLI0, separate exact-container absence
+and frozen input closure pass; Root independently binds169 selected files.
+
+The service closure is compiled from `052c63c`, pre-lock core published at
+`9804b02`; newer joint lock/camera runtime is outside this selection. Source
+remains25ms/100ms with terminal failure and no revival. Epoch12's terminal
+`NotConnected` is observed17.481079ms after the owned Stop request: ordering only,
+not proven causality or vendor cleanup. All1–11 failed aggregates remain;11's
+Source event has no Stop timestamp and remains unlocalized. Native Wayland buffer
+equality is false and normal QWindow DPR is unobserved. Appearance is an immutable
+fixture view, not a live production broker. Trusted controls, notifications/wake,
+production modem/carrier and Pixel hardware remain open. See
+[phone tracer](native-phone-tracer.md) and its bounded provenance.
+
 Native lock entry now reaches the same Rust lifecycle actor through a fixed
 UID1000 lock-only socket. The installed wrapper invokes `lifecycle-lock`, which
 requires the actual root actor ACK within one original two-second BOOTTIME budget
