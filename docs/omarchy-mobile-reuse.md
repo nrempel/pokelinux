@@ -32,6 +32,25 @@ solve the distinct native app UID's access to the private desktop theme home.
 The [installed appearance RED](native-appearance-service.md) remains the next
 service implementation boundary.
 
+## Correctness checks identified by source review
+
+The [rotation state update](https://github.com/derekross/omarchy-mobile/blob/4ee1339c2ebc5baf5be9b0167ffdfd0e1ea071f7/packages/omamobile-sensors/lib/autorotate.py#L136)
+records `self.current` before applying the transform; the fallback calls at
+lines74–76 have unchecked results. The source can therefore skip a repeated
+orientation after an apply failure. This is a static finding, not an executed
+upstream failure test. Before porting, reject a compositor operation or remove
+the output, restore it and repeat the same orientation. Success must follow
+observed display and touch state. The synchronous control helper also lacks a
+subprocess timeout; held-call responsiveness needs actual owned-worker tests.
+
+The [launcher action](https://github.com/derekross/omarchy-mobile/blob/4ee1339c2ebc5baf5be9b0167ffdfd0e1ea071f7/packages/omamobile-shell/plugins/omamobile.launcher/Launcher.qml#L125)
+uses detached launch and dismisses the drawer. Its presentation feedback is not
+our admission or process-ownership evidence. Test native launcher failures,
+current app/context identity, close/reap and reopen. Deferred layer-shell focus,
+OSK interoperability and lock-screen input remain execution hypotheses: test
+actual Source focus and restricted app-listener bindings rather than infer them
+from QML flags or setup-script success.
+
 ## Hardware and service boundaries
 
 The reviewed [device descriptor](https://github.com/derekross/omarchy-mobile/blob/4ee1339c2ebc5baf5be9b0167ffdfd0e1ea071f7/device/cheetah/device.conf)
