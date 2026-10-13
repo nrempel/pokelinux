@@ -205,3 +205,14 @@ expiry and blocked-registration child reaping retain the no-retry uncertainty
 fence. This closes the scoped native radio ARM64 Binder gate, not the separate
 SMS/camera/suspend/sensor Binder gates or Pixel policy/vendor cleanup/modem gates.
 See [ARM64 Binder](native-arm64-binder.md).
+
+Installed native Messages local history now passes11 actual ARM64 desktop groups
+with10 service groups and2 retained-descriptor cases, plus x86 current-authority
+and recovery checks. One lifecycle actor gates each data send; one supervised
+child owns raw/inbox IO. Seven actual Qt/socket checks qualify stopped exchanges,
+checked boot-time completion and confirmed thread exit before destruction. The
+original Omarchy shell, distinct-UID Qt app and installed systemd unit are composed
+for local history. Continuous incoming callbacks, complete enumeration beyond32,
+trusted lock/focus/session ingress, notifications/wake, outgoing operations, ACK,
+producer identity and hardware remain unfinished. See [Messages](native-messages-service.md)
+and [owned client](native-messages-ui-worker.md).

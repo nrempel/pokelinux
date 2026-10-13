@@ -7,8 +7,8 @@ Android framework/Java peers remain reference and test infrastructure.
 
 | Function | Existing native component or boundary | Installed service and app composition | Backend and evidence still required |
 | --- | --- | --- | --- |
-| Permission/lifecycle | One Rust principal/policy actor; exact per-packet Linux credentials, pidfds, generations; owned policy-storage child | Distinct-UID launcher and controls pass installed process fixtures on x86 and an ARM64 kernel. Actual Omarchy ingress and backend dispatch composition remain open | Trusted lock/focus/session ingress, complete process-tree supervision, startup/launch IO and device SELinux. [Authority](native-lifecycle.md), [storage](native-lifecycle-storage.md) |
-| Incoming messages | Durable receipt owner, bounded AOSP-qualified codecs, private inbox, exact local occurrence IDs and deletion exclusions | Native Messages service/window integration is in progress; the separately committed synchronous components do not establish current OS authorization or responsive service IO | Producer/reset/ACK identity, raw-retention/backlog policy, multipart association, notifications and carrier receive. [Receipt](native-sms-receipt-owner.md), [inbox](native-inbox.md) |
+| Permission/lifecycle | One Rust principal/policy actor; exact per-packet Linux credentials, pidfds, generations; owned policy-storage child | Distinct-UID launcher and controls pass installed process fixtures on x86 and an ARM64 kernel. Local Messages reads compose this actor with its own storage child; trusted Omarchy ingress and hardware dispatch remain open | Trusted lock/focus/session ingress, complete process-tree supervision, startup/launch IO and device SELinux. [Authority](native-lifecycle.md), [storage](native-lifecycle-storage.md) |
+| Incoming messages | Durable receipt owner, bounded AOSP-qualified codecs, private inbox, exact local occurrence IDs and deletion exclusions | Installed local-history Messages service/Qt window now pass11 ARM64 desktop groups with10 service groups and2 retained-descriptor cases; current read authority, responsive storage and local recovery qualify. Ongoing Binder arrivals are not composed yet | Producer/reset/ACK identity, raw-retention/backlog policy, multipart association, notifications and carrier receive. [Receipt](native-sms-receipt-owner.md), [inbox](native-inbox.md), [installed history](native-messages-service.md) |
 | Outgoing messages | Durable outbox and one-attempt submission owner; frozen V3 Binder synthetic boundary | No installed Messages send path through the single current permission authority yet | Final modem/error policy, receive/ACK identity, separately qualified delivery correlation, retries/reconciliation and carrier SMS/MMS. [Submission](native-sms-transport.md) |
 | IMS/calls | Original-compared wire encoders/reader/registration payload, single-attempt owned transport/death watch, supervised child reclamation and scoped ARM64 kernel Binder/NDK interop | Existing Phone UI/Android bridge is reference infrastructure; a production native IMS/call service is not composed | Producer/response identity and reset, registration state machine, bearer/data/SIM/eSIM, call/media/audio and carrier operation. [Radio owner](native-radio-owner.md), [reader](native-ims-reader.md), [registration payload](native-ims-registration.md) |
 | Camera | Frozen camera NDK/Rust Binder types, transferred FDs and owned completion/release/quarantine | No installed Camera service/app with permission, media publication and background ownership | Exact factory interface identity, gralloc/DMA/sync_file/FMQ, capture/streams and reset. [Camera owner](native-camera-owner.md) |
@@ -16,7 +16,7 @@ Android framework/Java peers remain reference and test infrastructure.
 | Audio | Rust routing policy and owned helper lifecycle against actual PipeWire/WirePlumber | Dedicated process/CLI fixtures; no installed authorized PCM broker and complete call/media routing | AoC/DSP, physical routes/mute, volume/DND/haptics, durable reconciliation and idle power. [Audio](native-audio.md) |
 | Connectivity | Rust reads against actual NetworkManager/private D-Bus with owner/death/late-response fences | No installed permission/app policy for scan, activation, background or portal workflows | Wi-Fi activation/IP/portal, BlueZ Bluetooth, coexistence, USB and device RF. [Connectivity](native-connectivity.md) |
 | Sensors/location | Frozen V3 Binder/original FMQ, bounded subscription/read/ACK and wake-lease ownership | No installed app delivery tied to the single lifecycle/permission owner | Source/reader wake duties, USF200ms/HAL1s, calibration, GNSS/location, restart reconciliation and physical sensors. [Sensors](native-sensors-boundary.md), [wake](native-sensor-wake.md) |
-| Omarchy appearance | Production Qt theme/view reads original generated files/settings and resolves the live font alias; original commands/rendering pass in ARM64 Hyprland | Original shell plus production-component renderer is qualified; installed enrolled native app/service composition in that same session remains separate | User plugin activation, desktop services/fonts/browser provisioning, full wallpapers/decorations/themes, mobile GPU/display/touch. [Appearance](native-theme.md), [worker](native-theme-worker.md) |
+| Omarchy appearance | Production Qt theme/view reads original generated files/settings and resolves the live font alias; original commands/rendering pass in ARM64 Hyprland | Original shell plus production-component renderer is qualified; the installed distinct-UID Messages service/window also qualifies in that session; the full phone bundle remains open | User plugin activation, desktop services/fonts/browser provisioning, full wallpapers/decorations/themes, mobile GPU/display/touch. [Appearance](native-theme.md), [worker](native-theme-worker.md) |
 | Deployment | Explicit device/profile and read-only staging admission pass29 x86/ARM64 user-QEMU groups; actual ELF geometry and streaming inspection qualify | No production native boot image, installed service closure or launcher consumes a qualified deployment report; selected Pixel profile refuses admission | Nine offline requirements, one physical gate, three absent artifact pins: authenticated set, kernel/KMI/modules/firmware, vendor userspace/Bionic closure, init/SELinux/discovery and service composition. [Deployment](native-deployment.md) |
 
 Contacts, notifications, shared media storage, phone settings, updates and the
@@ -26,25 +26,31 @@ qualification. No physical phone has been accessed.
 
 ## Next composed path
 
-Finish one installed Messages path before multiplying independent service owners:
+The installed local-history Messages path is qualified separately from continuous
+receiving. One existing lifecycle actor owns current read authority and every
+actual send/EAGAIN retry; one supervised child owns receipt/inbox IO. The native
+window is installed in original Omarchy. Root fixture focus/lock controls and
+appearance ACL setup remain explicit test infrastructure.
 
-1. The lifecycle actor launches the actual distinct-UID app and authenticates each
-   packet using current kernel identity. Desktop launch ingress carries a fixed app
-   identity and cannot grant policy or read messages.
-2. A private, supervised Messages worker projects service-owned durable occurrences
-   independently of open windows. Current read authorization binds the principal,
-   operation, policy/lifecycle generation, worker incarnation, request and absolute
-   boot-time deadline. Historical durable admission is not a later capability.
-3. Publication rechecks that current authority at actual nonblocking send, including
-   delayed/EAGAIN attempts, without holding the authority lock across storage IO.
-   Lock, revocation, death, expiry and old-worker replies cannot publish text.
-4. Qualify the installed window in original Omarchy/Hyprland, private filesystem
-   access, close/reopen and explicit local worker recovery after actual reap.
-   Ordinary local reads/projection can recover under qualified SQLite rules;
-   uncertain modem effects retain their separate no-replay fence.
-5. Add notifications and actual lock/background ingress, then one authorized
-   outbound operation through the same authority to the frozen synthetic backend.
-   Resolve production identity/ACK/reset and device backend gates separately.
+1. Compose the frozen synthetic messagingV3 Binder source with the sole storage
+   child. Bounded callbacks reserve distinct occurrence identity; raw commit and
+   projection run with no window/read. Parent supervision drains unsolicited
+   start/completion/failure and enforces original absolute ingestion deadlines.
+2. Separate history recovery from source reattachment. Persist uncertain source
+   registration across child and whole-service restart; local reap never grants
+   backend retry or vendor cleanup. Explicit fixture successor tests require
+   independently fresh peer/reset evidence. No production ACK/send is enabled.
+3. Qualify complete bounded receipt enumeration/retention. The current service
+   refuses history above32 raw receipts before partial import; this limit is not
+   continuous production receive support. Preserve raw/projection crash outcomes
+   and recover exact committed IDs without recreating arrivals.
+4. Add trusted lock/focus/session ingress and native notifications through this
+   same authority. Source failure/default lock denies reads. Distinct UIDs and
+   Wayland socket ACLs do not establish compositor protocol containment. Qualify
+   wake ownership separately; closed windows do not prove suspended delivery.
+5. Add one authorized outbound operation through the same authority to the frozen
+   synthetic backend. Resolve production identity/ACK/reset and device backend
+   gates separately, then extend the installed path to the remaining phone apps.
 
 Reuse this installed authority for camera/audio/sensors when their real backend
 and app boundary is ready. Keep hardware details in device adapters. An abstract

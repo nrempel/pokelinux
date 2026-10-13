@@ -10,8 +10,10 @@ ARM64 test/daemon/launcher/client identities are checked before guest execution.
 phone, host power interface or vendor executable participates.
 [Provenance](evidence/native-lifecycle-provenance.json) separates these results.
 
-This is an implemented local permission/admission boundary. Native phone apps,
-backend dispatch and Omarchy lifecycle ingress are not integrated yet. Its
+This historic milestone is a local permission/admission boundary. The new
+[installed Messages extension](native-messages-service.md) adds current data
+release and a distinct-UID native window to the same actor. Production hardware
+dispatch and trusted Omarchy lock/focus ingress remain open. Its
 `AdmittedUncertain` receipt records conservative authorization history; it is not
 a transferable token granting a later hardware operation.
 
@@ -19,8 +21,10 @@ a transferable token granting a later hardware operation.
 
 The installer owns a bounded profile mapping app IDs to unique UIDs, absolute
 executables and fixed arguments. Only the privileged admin socket can request
-launch, grant/revoke policy, change lifecycle or stop. A launch request supplies
-an app ID; it cannot select executable, UID, PID or arguments. Executables and
+launch arbitrary configured apps, grant/revoke policy, change lifecycle or stop.
+The optional Messages provider also admits one fixed launch-only request from the
+actual designated desktop UID; it grants no policy or data authority. A privileged
+launch request supplies an app ID; it cannot select executable, UID, PID or arguments. Executables and
 containing directories must belong to root and be unwritable by apps. Set-ID
 executables and symlink executables are refused.
 
@@ -160,3 +164,11 @@ Root inside that disposable guest is the trusted test controller; it grants no
 host authority. Those are actual ARM64 kernel/process/credential results, not
 ARM64 user-QEMU or phone evidence. Kernel/driver storage stalls, complete app
 trees and production Omarchy service installation remain separate gates.
+
+The [installed Messages correction](native-messages-service.md) now qualifies
+current read publication through this actor in original Omarchy, including
+actual EAGAIN, retained old descriptors and source-bound recovery after real
+reaping. The storage child holds no app read authority; new app/worker generations
+need fresh stamps. The [native client worker](native-messages-ui-worker.md) keeps
+thread ownership until confirmed exit. Trusted compositor lock/focus/session
+ingress and hardware effect composition remain separate open gates.

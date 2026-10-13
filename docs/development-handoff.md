@@ -291,15 +291,30 @@ retry/publication fence was relaxed. The next original runtime boundaries are
 adapter, actual manager/producers, then pending work/reset, kept separate. See
 `native-radio-recovery-contract.md`.
 
+Installed Messages local history now qualifies one actor, an owned raw/inbox
+child and an actual UID11010 Qt window in original Omarchy. Selected correction
+passes11 ARM64 desktop groups, nested10 service groups and2 retained-descriptor
+cases; current x86 permission/EAGAIN/recovery,27 lifecycle cases,4 components per
+architecture and7 actual Qt/socket worker checks pass. Persistent desktop launch
+ordering and transferred old-read descriptors retain source-bound local recovery
+until actual reap; successor app/worker identities require fresh authorization.
+The Qt worker checks stop/boot-time exchange completion and observes thread exit
+before destruction, aborting if cleanup remains uncertain. Historical ff8d source
+and proofs remain separate. Ongoing arrivals,>32 receipt enumeration, actual
+lock/focus/session ingress, notifications/wake, send/ACK, production session ACLs
+and Wayland/device policy remain open. See `native-messages-service.md`,
+`native-messages-ui-worker.md` and `evidence/native-messages-correction-provenance.json`.
+
 ## Next work
 
-1. Complete the installed native Messages service/window vertical slice first,
-   composing receipt/inbox storage with the single current lifecycle authority
-   and service supervision. Authenticate current read authorization at the actual
-   bounded reply send, including delayed/EAGAIN attempts; qualify closed-window
-   projection, local recovery, lock/revoke and distinct-UID installed Omarchy UI.
-   See `native-integration-map.md`. Production modem identity and hardware stay
-   separate from that local service qualification.
+1. Continue the qualified installed Messages local-history path with real frozen
+   synthetic Binder arrivals into its sole supervised raw/inbox child while no
+   app exists. Qualify unsolicited ingestion supervision and original boot-time
+   deadlines; retain uncertainty across child/whole-service restart before any
+   backend reattachment. Then complete receipt enumeration/retention, trusted
+   lock/focus ingress, notifications and wake under the existing authority.
+   Producer/ACK/reset, sending and hardware gates remain separate. See
+   `native-integration-map.md` and `native-messages-service.md`.
 2. Recover and test the actual vendor cleanup/reset and registration-overlap
    contract. `clear` is one-way. Do not remove uncertainty markers, retry, use a
    recycled numeric registration ID for delayed cleanup, or call local reaping

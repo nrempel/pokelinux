@@ -1,0 +1,380 @@
+{
+  "written_utc": "2026-10-13T01:53:05.676558+00:00",
+  "host": "Harbour",
+  "scope": "Installed local Messages history through one lifecycle authority; startup/reopen/pre-read projection only",
+  "base_milestones": {
+    "receipt": "a47be6e62e9c115e3fd04507bd9ff9697341643d",
+    "inbox": "7e8c1d3",
+    "lifecycle_storage": "26c9bc9"
+  },
+  "evidence_classes": [
+    "Authored Rust projection over actual SQLite, x86 and ARM64 user-QEMU",
+    "Installed x86 actual kernel PID/UID/pidfd/SCM/process supervision and SQLite",
+    "Actual ARM64 Linux kernel system-QEMU storage and distinct-UID Wayland/systemd native renderer",
+    "Original public Omarchy v4.0.4 shell/themes plus unchanged shared native appearance",
+    "Inherited recorded33 actual AOSP GSM DELIVER parser comparisons; no new Android parser execution"
+  ],
+  "source_sha256": {
+    "docs/native-lifecycle.md": "5703fc29e0236697b5849e8c9a90688637f4ee22b8e2d17f9ee4fca1e6f4414f",
+    "docs/native-messages-service.md": "f089be5101053d92a5a2d0d9a429a0a6c355643fa23425f8a8d799ebf7104bd8",
+    "native-lifecycle/src/authority.rs": "6392b858a6e6a3270310925afcdb4cd91e91d5b9b6b3a96b9e93092d2df734aa",
+    "native-lifecycle/src/lib.rs": "e935d186896ddbcabec33deea8fd8f7f6cbe616722a510b9ed8284b79d412279",
+    "native-lifecycle/src/messages.rs": "7c610aafa49a305d77939aa5c963c103fde95309c438d737079d56a1f53cac3d",
+    "native-lifecycle/src/service.rs": "b901545e029ff2f5c288ba0ed5aa8465c2b7e9240fa2d7f29fedf6ef53d37bbb",
+    "native-messages/Cargo.lock": "9acd762beb3bc50855850669da3069c55b0a05da5b23cf5be00e6493c7a88f83",
+    "native-messages/Cargo.toml": "d19f09525898d0d49f42d8b2419993c17e2244c8912b95336dcf31b0f1a4a32c",
+    "native-messages/packaging/pokelinux-messages.service": "f6f8ef6b4f9d5563777fa73f4e74dd202ec393423f955499a7502f85a52c14d3",
+    "native-messages/src/bin/messages-launch.rs": "2b2b413307ae51814b44a4cede235218871f9a459ee9e8fd38f2d576c0067976",
+    "native-messages/src/bin/messages-service.rs": "91dd6048f394d82a10d5f8527b4a38867fd9aadaf9f39ea4f4525cdc41734a2b",
+    "native-messages/src/bin/messages-stop.rs": "1679c3f00a460a01d0cbc9f2004aeeb1d14cc04b8dab22d12380fd194b955658",
+    "native-messages/src/lib.rs": "5a32844898c41487f4b7d25eecdc7cf6f8915248d949b94d2026f7a74bafd133",
+    "native-messages/src/projection.rs": "fcff8da23e29056629bd0aa431905daf58dc7fc3ade71a7e76f61c04dfc9dad5",
+    "native-messages/src/protocol.rs": "aac4405329604affa079074a6c7317570882384f6164fdf6ae6f05a831d17c8e",
+    "native-messages/src/worker.rs": "28f3df726e079c7ce0fe556202216a695ddc88bb843f28ac254bc7215899ffcb",
+    "native-messages/tests/projection.rs": "2b74d6870f7604483fc312de849a57ff5deb10e8e776eb6e64efa9d915df2a7c",
+    "native-messages/tests/support/seed.rs": "a60873377c9582ce42645b5a5c8d9d0054e3f25d025983097873031f108face7",
+    "native-messages-ui/CMakeLists.txt": "a589b5b4b83efdf991bc1c9fab22b2bfafa677ac1b2342b15e88f11513486445",
+    "native-messages-ui/MessagesClient.cpp": "eaeed7f43fbed6f020b655ebba207b7756f6a4df785454d58fd1f424f5b9ea6f",
+    "native-messages-ui/MessagesClient.h": "467b76acab9bfe5b30cbb765a3338ef1ea95c80f5e78f75994f2d3fbd984402b",
+    "native-messages-ui/MessagesView.qml": "e39c725fe014bf17e84a445065cbaacc093c09204f826f9068dafc22074e099c",
+    "native-messages-ui/main.cpp": "d83bf1e6eb9a2fa02423f637341b875eeee9308d4bf04727dfc4ee6d5f059cc3",
+    "native-messages-ui/org.omarchy.Messages.desktop": "799d3579698651f61ebb2827b4e74d1436670e82a1ff9987b2dbec56d70b0c5e",
+    "native-messages-ui/resources.qrc": "91df1dfa68b76ec8ae48ecee92aeb7b6413a8d4d778cedc25c3e17b9e70f9c7d",
+    "tools/build-native-messages-qt-guest.py": "6e92a031d4044ab48648ae0678ae423031bc5ccd431adbf58e9c4504682bdefd",
+    "tools/build-native-messages.sh": "bcae296b14b0952c95534bbce9fbc3b312663adf6b568f574576a8cd515a94c9",
+    "tools/native-messages-component-tests.sh": "7aee641e15c00b9bc72d889a201b55474eeed25b6c75b0b153b66333374c7242",
+    "tools/native-messages-desktop.sh": "dda9e971423c80ab501cab9634059727a1d6c0e0b86e404e811752acf80006d1",
+    "tools/native-messages-guest.py": "b972ee76062d04af4389ce7a61fe92c0ece168c0728f3fe2a4b514975b74ee67",
+    "tools/native-messages-service-fixture.py": "0e4c5aa745166be7d7d805bb6ffbec1f7b1c940d90c9ff0ab18bcc3b3bf4c7ac",
+    "tools/run-native-messages-vm.sh": "a08dba2cb24b986c9da7de245e6af762b79f02fd8874f3086b9cbf89ebfb616e",
+    "tools/test-native-messages-regression.sh": "0722b1cc4c171e4e21e1ecd2e7b302bdfc9ee313933c6212212aa08af8285422",
+    "tools/test-native-messages-service.sh": "aa01d04a79eddd8219e5b9f9e9f15b86c8bf90eef6e3d2c01f5bf08226b02256"
+  },
+  "read_only_dependency_sha256": {
+    "native-app/PhoneTheme.qml": "67caaa853a01ac2108f16bff88009d026779da4df54961b11d3d82a1d2ed2fd1",
+    "native-app/PhoneThemeFiles.cpp": "57b39dcf95a8d28b65cced5d730a13e5eab8726edc2e889d936acdecac668664",
+    "native-app/PhoneThemeFiles.h": "9bfdbb38ed23e4b03491073038264596ec3825b91e83d3b05eafd941623ecc1a",
+    "native-app/ThemePalette.js": "677d9faa94873dd6aceee81a900f179600f7a699defe1c4304760beeccd26a33",
+    "native-inbox/Cargo.lock": "713ed0a0f107c2bb0586de2a0453e8ff0e0c2fb5a2dd9097fadc5e8d16efb729",
+    "native-inbox/Cargo.toml": "9ef2b7baf22a760b96700730f7edcb78301b82c98b29914444a966e8ab708c5c",
+    "native-inbox/src/lib.rs": "fd896642dc5b261fdd3c630abed093c975882bab8d66c7e035a7f38b8e3a5633",
+    "native-lifecycle/Cargo.lock": "a2e355beab9e0de61199d0bdfb640a751c93c30768be4fa64557065c40d3a814",
+    "native-lifecycle/Cargo.toml": "ddbfa855d2973beffc5317462061add6647f1dc056ee67b9bc4d2f7330f659d7",
+    "native-lifecycle/src/bin/lifecycle-client.rs": "6dd1f2c86a96bca4364b5ee2e85fd39fecaf10bc68b8f7b727bd3e65f86bc9bf",
+    "native-lifecycle/src/bin/lifecycle-daemon.rs": "ee33d2d77a8fc98ce56b582d9b9c96d0f2f8240e3fda182ec9bdeba8f6af4f01",
+    "native-lifecycle/src/bin/lifecycle-launcher.rs": "49a0e279b381a45ed49242a74c94b202ebebb81bc42bd8b61cfd58f8bb80a923",
+    "native-lifecycle/src/ipc.rs": "6a9073bb4c4413f8b4d49caa6a8827cfe7ffe167b3c712192d0951d6be8465c1",
+    "native-lifecycle/src/storage.rs": "e860864db2ec8b6c00930128c1592918f06b00e3b4a466b71d17effe0764997f",
+    "native-messaging/Cargo.lock": "e7cb16fc3e8c6abb7fbbc7a52d8f73f07c934a7a103de1cef5a0c414f3bd375f",
+    "native-messaging/Cargo.toml": "d2fdf280609b6b9b2743315ccf4dc4216e38b3a60ed70bc4199e20fe4a4c40d0",
+    "native-messaging/src/lib.rs": "b291059cbed5d33fd69e6437e41e85aa82e94004c147eec634a09bf8cf86925d",
+    "native-messaging/src/outbox.rs": "b910f78d0b48386e055535d24e44c0985f019657e232695f89fa7f522ab596eb",
+    "native-messaging/src/receipt.rs": "8002d6c4b6006c97b4ade7fc40232d3c960f4139f2031a1bf98fc535d4728d66",
+    "native-messaging/src/receive.rs": "55f2cf7da7feca551297526a14fff1216e5a798d3b41d44d9bfea8b033877acc",
+    "native-messaging/src/status_report.rs": "6ac6ad437f2e9dbec9c7beb0e614c910f03a161f07583ebdf7ebb0d629888595",
+    "native-messaging/src/transport.rs": "1602a7ed81b01433793296a873fbfa5ec1ee9faf5899da9a808d7f673dd1ae67",
+    "native-theme/oracle/manifest.json": "05a49c7aaa6d01ba79c9399351249b9bdd82c8338ab467890bf1607feae47149",
+    "native-theme/oracle/Service.qml": "f4e0075c3c96ff698f8a9c20386b98c2f8be6e89b87de659fbc6fb3d6ebc0258",
+    "tools/omarchy_theme_patch.py": "9f1e7146d4995922c7b7aba4564343351fa7e0fbd5d8c68a69ce27db566a6b6b",
+    "sim/omarchy-source/source-manifest.json": "89387ceedadd5a587b01b97ea288fa287d08b74afdbd70780c91d57d791a735c"
+  },
+  "qualified_selection": {
+    "path": "artifacts/native-messages/qualified-release/selection.json",
+    "sha256": "ff8d206cc04b14706a0d40cf255ff0e63fd2279d9be8cb95aa485f9afff3772a",
+    "cargo_json_complete": true,
+    "snapshot": "artifacts/native-messages/qualified-release"
+  },
+  "runtime_reds": [
+    {
+      "class": "actual SQLite",
+      "log": "artifacts/native-messages/components/projection-red.log",
+      "failure": "service-owned startup projection absent",
+      "exit": 101
+    },
+    {
+      "class": "installed x86 process/SQLite",
+      "log": "artifacts/native-messages/read-red-qualified/log",
+      "selection": "artifacts/native-messages/read-red-source/source-manifest.json",
+      "binaries": "artifacts/native-messages/read-red-qualified/binary-manifest.json",
+      "failure": "late read published after actual SIGSTOP and current permission revocation",
+      "exit": 1
+    },
+    {
+      "class": "installed x86 process/SQLite",
+      "log": "artifacts/native-messages/service-reopen-red/log",
+      "selection": "artifacts/native-messages/reopen-red-selection/manifest.json",
+      "failure": "held-read app close/reap then desktop reopen remained unavailable without root recovery",
+      "exit": 1
+    },
+    {
+      "class": "actual ARM64 kernel Wayland renderer",
+      "result": "artifacts/native-messages/desktop/red-5/result.json",
+      "failure": "synthetic incoming markup interpreted as rich text",
+      "received_fixture": true,
+      "rendered_plain": false,
+      "exit": 101
+    }
+  ],
+  "selected_green": {
+    "components": {
+      "log": "artifacts/native-messages/components/component-corrected-final.log",
+      "fmt_clippy": true,
+      "x86_cases": 4,
+      "arm64_user_qemu_cases": 4
+    },
+    "x86_service": {
+      "result": "artifacts/native-messages/service-green-8/result.json",
+      "groups": [
+        "closed_window_background_projection_distinct_occurrences_and_current_read",
+        "actual_SIGSTOP_read_revocation_and_responsive_snapshot",
+        "lock_suspend_background_invalidate_held_publication",
+        "actual_socket_EAGAIN_revalidates_current_read_before_retry",
+        "held_read_actual_app_close_reap_desktop_reopen_local_recovery",
+        "deadline_reaped_local_restart_preserves_exact_history_without_remote_replay",
+        "actual_SIGKILL_hot_journal_recovery_and_exact_local_reprojection",
+        "actual_foreign_UID_unregistered_PID_and_forged_SCM_denied",
+        "ordinary_service_restart_exact_SQLite_recovery_no_new_arrivals"
+      ]
+    },
+    "arm64_kernel": {
+      "result": "artifacts/native-messages/desktop/green-5/service-kernel/result.json",
+      "groups": [
+        "closed_window_background_projection_distinct_occurrences_and_current_read",
+        "actual_SIGSTOP_read_revocation_and_responsive_snapshot",
+        "lock_suspend_background_invalidate_held_publication",
+        "actual_socket_EAGAIN_revalidates_current_read_before_retry",
+        "held_read_actual_app_close_reap_desktop_reopen_local_recovery",
+        "deadline_reaped_local_restart_preserves_exact_history_without_remote_replay",
+        "actual_SIGKILL_hot_journal_recovery_and_exact_local_reprojection",
+        "actual_foreign_UID_unregistered_PID_and_forged_SCM_denied",
+        "ordinary_service_restart_exact_SQLite_recovery_no_new_arrivals"
+      ],
+      "kernel": "Linux alarm 7.1.6-1-aarch64-ARCH #1 SMP PREEMPT_DYNAMIC Wed Aug  5 00:20:13 UTC 2026 aarch64 GNU/Linux\n"
+    },
+    "arm64_installed_desktop": {
+      "result": "artifacts/native-messages/desktop/green-5/result.json",
+      "groups": [
+        "complete_installed_service_process_SQLite_suite_under_actual_ARM64_kernel",
+        "narrow_Wayland_theme_ACLs_preserve_private_desktop_home",
+        "installed_desktop_launch_same_registered_distinct_UID_actual_Wayland_window",
+        "actual_service_SMS_payload_is_literal_plain_text_in_native_renderer",
+        "original_Omarchy_tokyo_theme_and_font_match_native_window",
+        "original_live_theme_switch_preserves_registered_window_and_local_text",
+        "actual_Qt_held_read_window_close_reap_desktop_reopen_without_root_restart",
+        "native_window_clears_previously_released_text_on_denied_refresh",
+        "installed_systemd_authenticated_stop_reaps_window_and_storage_children",
+        "installed_production_binary_without_observer_real_UID_Wayland_and_graceful_stop"
+      ],
+      "packages": "hyprland 0.56.2-4\nquickshell 0.3.2-1\nqt6-base 6.12.0-2\nqt6-declarative 6.12.0-1\nqt6-wayland 6.12.0-1\nfontconfig 2:2.18.3-2\nacl 2.4.0-1\n",
+      "original_omarchy": {
+        "repository": "https://github.com/omacom/omarchy",
+        "release": "v4.0.4",
+        "commit": "c668141e9c42b13c80c9ca4ea108e11708c5e8a5",
+        "archive_url": "https://codeload.github.com/omacom/omarchy/tar.gz/c668141e9c42b13c80c9ca4ea108e11708c5e8a5",
+        "archive_sha256": "8cc6b1d9d903c606600395e3b3d80ad9f15bd3ab78f0f19b0f49041b1df82013",
+        "explicit_Qt_namespace_patch_sha256": {
+          "shell/Commons/Border.qml": "2bfc7373a0ec36052c8a99b20fe5633e5b330bbb7e7fffeba699688133c91551",
+          "shell/Commons/Style.qml": "08306b406d647018c5efda3841bb07afb936d716dc82d2fca139e58c874a1d79",
+          "shell/Ui/Button.qml": "b2718648b8906061f5192b05ff523de0b6698676327c86c0acd1fe8e6c7accf1",
+          "shell/Ui/ButtonGroup.qml": "4f1c145f597f34336d8652204266345161223f3512fd29af7b022e03346156c5",
+          "shell/Ui/ConfirmDialog.qml": "81c7874b59f87bfa915909a7f0b1bb906cb093619f1d6f5cbd963667ef8dc17f",
+          "shell/Ui/CursorSurface.qml": "8c2122ac17774a2afcadfdf410123f87579683952500cfb47c28882d52d18b20",
+          "shell/Ui/Dropdown.qml": "aeac4450ce95c7da294f2928167161027a82f4e001d16b2ef1795c1315bef76b",
+          "shell/Ui/KeyboardPanel.qml": "5755205c41806e95685d5eb091e372db5cc17abb9ee7e3d0ee0e2ba9b8b6b9cd",
+          "shell/Ui/MultiSelect.qml": "d1de79b75ebaa9a77134cdfea600370d19527894cd038863aa7e30ac3981d236",
+          "shell/Ui/NumberField.qml": "673270b62d8804133b241005a24d986b1bca950eea206bedf4b17c71d9b2fe5a",
+          "shell/Ui/OpticalGlyph.qml": "cc732b2e6ed530196e8f2a82b1ada95f82b496b0da7ae1aa76c52660e870d09a",
+          "shell/Ui/Panel.qml": "5f5968a500bb8722cdb102a4e2f806cbfc77c06b58bf627c2849a07b062998be",
+          "shell/Ui/PanelActionButton.qml": "f8671dc82067f6f5b87fe6bf97d752f6857d78f9d1e48ace0084b2b121be88c7",
+          "shell/Ui/PanelHero.qml": "51ef057bb5231362e98df260b774ed9eac71571b989bd0e85b189db536342fc1",
+          "shell/Ui/PanelSectionHeader.qml": "3bc0f59c058c4b59b34c7f765150a12b50aaf9816d538064a6327fcb00bf7b73",
+          "shell/Ui/PanelSeparator.qml": "19dc5b992cc70502998fdbcfa9c264dc9e5f617c681518ddb2290b6fa04bd7b9",
+          "shell/Ui/PanelSlider.qml": "64fc7f1cc72f73592110dbdda0dcf18e4e260b7f198322fd525732ccef1996e2",
+          "shell/Ui/PanelToolTip.qml": "403153b53a63f15f7419846b282680dfa81aae4437ff0306e456cf0b13a9e25f",
+          "shell/Ui/PopupCard.qml": "3145a8b6972bcede5f45eeb285e535b2712769c08617e30618329f381fe31d7a",
+          "shell/Ui/SearchableDropdown.qml": "1136acfc4ccd1003c77f0fb41ce2ab903fce4408257785a4729188a5d3ff2cb6",
+          "shell/Ui/SpeedTestOverlay.qml": "b3f1b3a692e304f848cc006a4df97b3bcff63b9c5ad8f718fa671d005b1b26d4",
+          "shell/Ui/TextField.qml": "24e3dc045ce297fc84c76113cb9fbfceec1c4bfba80158944634f49dc66450bd",
+          "shell/Ui/Toggle.qml": "da4bd184adb54d9d52fd3bd97d1dd392c13189852a48369d27e9435ac2d0eacf",
+          "shell/Ui/ToggleSwitch.qml": "8f4ab5df0f7c53ffcc9d9d9452d4bdb27901dcf6250b2a006b92867de6ecde73",
+          "shell/Ui/WidgetButton.qml": "cc6b9789041282d3a5e914a9734ee6321e7dc486fad4eb0f83a48d89c27f5e9c",
+          "shell/plugins/agents/Panel.qml": "c795b52c483217ae066e6e5a5a04123adfad91c4d834e4901c1386201faf3488",
+          "shell/plugins/background/Background.qml": "32659ab5c7525e8f73ca501b13e053a70a71fd3ab3ffcc9d01bd16472fbab38f",
+          "shell/plugins/bar/Bar.qml": "9823b306ce3cab740af429a104e368646dbc4a38a00cef3ecc44a9a57f0e50ca",
+          "shell/plugins/bar/widgets/ActiveWindow.qml": "0950bae8a6632d1b6850b194b56d3639a09c808717d82c4d8238f2acda758904",
+          "shell/plugins/bar/widgets/Tray.qml": "9e4d64086b76f910ab6789d01c6b174bacf06a3c86aacd8c314658e97d968591",
+          "shell/plugins/clipboard/Clipboard.qml": "cbb6052826f607725491978f18dea813b4a9caa7e2aeab062d594cfc92b0f4cc",
+          "shell/plugins/dev-gallery/GalleryPanel.qml": "28e6186ddc4e01fea7a37685420d933d3ba4833c43668b646799d8ea1527c90b",
+          "shell/plugins/emojis/Emojis.qml": "d2322b75f7b91710eb430a708a14dddd29c9eb71dfabf94b36ed2ae587644c2b",
+          "shell/plugins/image-picker/ImagePicker.qml": "fadbbc4d44e1f71fc9e4160d074562a0f85f7f77a4c5c2397b81884e9f0463ad",
+          "shell/plugins/lock/LockView.qml": "fde147437e017d890cf0fb7043fe166288959b1677105adaf2f43c28b8d8f5d7",
+          "shell/plugins/lock/Service.qml": "0343b92b5da82919a05def437eb36cdd194b7974c66e1db34fedb01e490e939b",
+          "shell/plugins/menu/Menu.qml": "3c31cb44b262d935dd972a7feaffb1228cbb08cb656dea9753cd77ff7f05d7fd",
+          "shell/plugins/notifications/components/NotificationCard.qml": "4d2a979821ac69b3157dac4636a6a627e3fad7582b097a3a641c0defb16e8882",
+          "shell/plugins/osd/Osd.qml": "b2b5f4f4b1290c940d8bfa0761e220fdae8ced694267288cb595bae19f3155f5",
+          "shell/plugins/panels/audio/Panel.qml": "3eafc38bc17a7deea22ce7b6cb175b604ed0cbd1c69649c2493b393b8587906b",
+          "shell/plugins/panels/bluetooth/Panel.qml": "28b71849ea7d9865f102d934741271fa567756891771987677b784d9d4f3edf9",
+          "shell/plugins/panels/clock/Panel.qml": "f4000333575d0e214a5c7c65e5c790558c5659c4bc0bbd2f36d524a89af95061",
+          "shell/plugins/panels/dropbox/DropboxIcon.qml": "303b1dea82b63bd2b60364114fc59d1f4aa6c1ce66508a4a6b10d6867c504e67",
+          "shell/plugins/panels/dropbox/Panel.qml": "441978e78990e26ba3d6a621a93f0b0e890313eb108bdf9d7877a0a0cb8d627c",
+          "shell/plugins/panels/monitor/Panel.qml": "700989c0907251577c9e5b532565f1065b255e9a91fec5d6240db3d301bc5ca2",
+          "shell/plugins/panels/network/Panel.qml": "ae4c7f67a05d460c3ac2aeebf21da8d255c676a6ae4668591a173bc7245b8508",
+          "shell/plugins/panels/power/Panel.qml": "22a87aead04064bec3cc587443cf094b70b45d8c5f0f84698eed1d5dd1b793d5",
+          "shell/plugins/panels/tailscale/Panel.qml": "cb25ba42849af7ae74f858e21dbba297fe70204bd5e3d2eac8c2a0185673f6b5",
+          "shell/plugins/panels/tailscale/TailscaleIcon.qml": "42b2f63ad94e80402719a2509a4d39ab34d0a6e1688297096cf55ca2bb6867e2",
+          "shell/plugins/panels/weather/Panel.qml": "d6b40b28260e52150badac09a2d6d5da116bf0e049c631f6cc7b2e7065bedbfb",
+          "shell/plugins/polkit/PolkitAgent.qml": "a736b5217bbca4b6c3a379e3d904d2762ebe71d2f7b63986cebf98ad9e89c029",
+          "shell/plugins/reminders/ReminderFlow.qml": "1fe9694b5624e698ef037285c150a7b1b5652ad597fb2c3420484c7cd156030b",
+          "shell/plugins/services/media/BarWidget.qml": "ae87a82ce03388c3164af7586064df1edbcb6cfdb3875a0c5b36cca6b18026be",
+          "shell/shell.qml": "a4618b6e6d08b7de28939d9e8501dcf1ae19b11ae03395512fbd70922af92be3"
+        },
+        "read_only_observer_plugin": [
+          "native-theme/oracle/manifest.json",
+          "native-theme/oracle/Service.qml"
+        ]
+      },
+      "production_and_observer_elf_sha256": {
+        "pokelinux-messages": "0de6312c1944994282f06df5096d616e1796a50ce8eff2bd2a883ee0fda99e3c",
+        "pokelinux-messages-observer": "67151c568aa6a365cbc0ece89c7102a8a84c9d83addf5dd297c43ef0873e7962"
+      },
+      "production_window_uid": 11010,
+      "actual_wayland": true,
+      "actual_systemd_start_and_authenticated_stop": true,
+      "human_inspected_synthetic_screenshot": "artifacts/native-messages/desktop/green-5/production-desktop.png"
+    },
+    "current_x86_lifecycle_regression": {
+      "result": "artifacts/native-messages/lifecycle-regression-corrected/result.json",
+      "cases": 27,
+      "scope": "18 installed +7 supervision +2 explicit injected reap failures with actual child cleanup; earlier seven components remain historical"
+    },
+    "lifecycle_fmt_clippy": {
+      "log": "artifacts/native-messages/lifecycle-current-checks-green.log",
+      "passed": true,
+      "earlier_diagnostic": "artifacts/native-messages/lifecycle-current-checks.log: two semantics-preserving style warnings corrected; pre-lint exact green-4 retained"
+    },
+    "x86_production_qt_build": {
+      "log": "artifacts/native-messages/qt-production-final-2/build.log",
+      "observer_compiled_in": false,
+      "sha256": "8e6286aed937c58da7b0f21b55c9a6d96011b38122b489323703abdd08865e20"
+    }
+  },
+  "authority": {
+    "one_lifecycle_actor": true,
+    "read_stamp_transferable": false,
+    "actual_release_rechecks": [
+      "kernel PID/UID and launched pidfd generation",
+      "current permission/policy/lifecycle",
+      "backend source incarnation and liveness",
+      "BOOTTIME deadline",
+      "every actual send attempt including EAGAIN"
+    ],
+    "MessagesRead_prepare_admission": "denied",
+    "desktop_ingress": "fixed launch-only actual designated UID1000; no grant/data/executable selection",
+    "actual_app_uid": 11010,
+    "lock_focus_source": "trusted root fixture observes actual compositor focused PID; production bridge unavailable"
+  },
+  "local_recovery": {
+    "ordinary_close_reopen": "successful fixed desktop launch creates one source-bound2s recovery intent; after actual old child reaping, fresh worker incarnation and app authorization",
+    "old_read_replayed": false,
+    "lost_read_reply_is_remote_effect": false,
+    "uncertain_SQLite_commit": "validate/recover same private SQLite and exact existing ReceiptIds; no recreated raw arrivals",
+    "uncertain_modem_replayed": false,
+    "ongoing_closed_window_new_arrival_trigger": false
+  },
+  "privacy": {
+    "raw_only_in_ReceiptOwner": true,
+    "same_local_id_idempotent": true,
+    "equal_payload_different_ids_distinct": true,
+    "sender_group_is_carrier_identity": false,
+    "directory_mode": "0700",
+    "data_file_mode": "0600",
+    "app_separate_uid_home_runtime": true,
+    "Wayland_theme_ACLs": "fixture-only narrow selected socket/exact regular appearance files and necessary traversal/watch paths; private home negative test",
+    "message_content_plain_text": true,
+    "message_content_resource_URLs": false,
+    "raw_text_logs": false,
+    "observers": "isolated build only; fixture booleans/counts/appearance; authored synthetic screenshots"
+  },
+  "bounds": {
+    "raw_snapshot_receipts": 32,
+    "over_capacity": "refuse unavailable before partial import, preserve raw occurrences",
+    "inbox_receipt_keys": 4096,
+    "inbox_text_messages": 2048,
+    "inbox_conversations": 512,
+    "conversation_page": 8,
+    "message_page": 2,
+    "packet_bytes": 4096,
+    "read_ttl_ms": [
+      1,
+      1000
+    ],
+    "policy_total_grants": 32,
+    "systemd_tasks": 96,
+    "systemd_memory_MiB": 512
+  },
+  "original_decoder": {
+    "provenance": "docs/evidence/native-inbox-provenance.json",
+    "cases": 33,
+    "new_original_execution": false,
+    "current_markup_fixture": "authored synthetic GSM DELIVER Unicode fixture; no modem ingestion or new AOSP comparison"
+  },
+  "not_qualified": [
+    "Production raw receipt ingestion or continuous new-arrival projection",
+    "Modem ACK/send/network delivery or retransmission",
+    "Trusted production Omarchy lock/focus bridge",
+    "Production dynamic-session Wayland/theme ACL provisioning and compositor isolation",
+    "Notifications/contacts/MMS/multipart assembly",
+    "Platform retention/encryption/forensic erasure",
+    "Uninterruptible filesystem/process cleanup and complete process-tree budgets",
+    "Pixel physical rendering/modem/carrier"
+  ],
+  "history": "All earlier six/seven/eight-service and eight/nine-desktop greens retained. Pre-lint green-4 with9service+10desktop remains an exact historical proof; final corrected selection is service-green-8 and desktop/green-5 with9service+10desktop. Initial prerequisite/observer/old-Hypr-CLI and lifecycle lint failures are unselected diagnostics. Historical receipt/inbox/storage source and provenance unchanged.",
+  "artifact_sha256": {
+    "artifacts/native-messages/components/projection-red.log": "951909548676b5ab32a5beb690abedfe6b6531a908eb0f91b628665a565d5cbc",
+    "artifacts/native-messages/components/component-corrected-final.log": "6971ee4724cace8ed76367b58ab7c88fae477a2a2ffb06ea4ca5f96a6a5e20eb",
+    "artifacts/native-messages/read-red-qualified/log": "ad9208970c36ee42b6d7305ae22c5f3b9214f9021ebdedf090904a4dd405d524",
+    "artifacts/native-messages/read-red-qualified/binary-manifest.json": "6dac40db7044ce8865f1013c543a3c91d102d9553e3977f34fa65c84a582203c",
+    "artifacts/native-messages/read-red-source/source-manifest.json": "7c008cc0d9f1ef704aa179e00780ccf8556d5b0f6216ff5f9be3ca7f65ccc88f",
+    "artifacts/native-messages/reopen-red-selection/manifest.json": "1c10b34937e51734bf9065273f15332307b709a58606c8fda40ba042befd824f",
+    "artifacts/native-messages/service-reopen-red/log": "2064cd1ee1fe6c553f2a054458a0252b5ef29571fffdddd90cc57bc6d439c80c",
+    "artifacts/native-messages/service-green-8/result.json": "68d895e5e3aedf10e9fac52d78fb8bfa4d592fb845bc9f745d2e5c37f9432170",
+    "artifacts/native-messages/service-green-8/log": "43fad089f12b81d09e432421aa69bfbf13bf74792f7a4558f80f5ee7f9d08b9c",
+    "artifacts/native-messages/desktop/red-5/result.json": "a2d610defd14570569e7a687aed75ac802340be782dcb12ba92bcedff8535965",
+    "artifacts/native-messages/desktop/green-5/result.json": "fa81f2a5419f2a7fdaa13b8f1d934423b7bae2aa633af8154b8040c50447e38c",
+    "artifacts/native-messages/desktop/green-5/run-config.json": "c84db866744b0d408d3b18a24c692ddae97cc78d3b8fd0b24175ee066ad12e06",
+    "artifacts/native-messages/desktop/green-5/binary-manifest.json": "1c74e41dcb108482413620de092918dfe5e55004b7a489b5d4e200db259baed7",
+    "artifacts/native-messages/desktop/green-5/exit-code": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "artifacts/native-messages/desktop/green-5/service-kernel/result.json": "68d895e5e3aedf10e9fac52d78fb8bfa4d592fb845bc9f745d2e5c37f9432170",
+    "artifacts/native-messages/desktop/green-5/production-desktop.png": "1b021eff154d91b08d385c8adbc5932982157322d3c7387189a1d0151873f4f9",
+    "artifacts/native-messages/lifecycle-regression-corrected/result.json": "41e1c35921673206d922da97c506a2800cf439eea4603fffb34bbafa2d3544d8",
+    "artifacts/native-messages/lifecycle-current-checks-green.log": "4a73bfba173068574de13f08cd45b204e2767cedfdf7d9b9522adcb65b989ddd",
+    "artifacts/native-messages/qt-production-final-2/build.log": "2143eaaf30a7eecb579673aeaba4bf4aee8379a5136deb87a077b1db1415628c",
+    "artifacts/native-messages/build-corrected-final.log": "09cf46356d07efb4b3ce4addf96b8c54c21e6b3b0876360905059b882e62ba2e",
+    "artifacts/native-messages/final-cargo-json-corrected/x86_64-unknown-linux-gnu-bins.stderr": "a13905646e2aed93ec6ea9ed6ac91490a4e01f91af0215c3965279a910612149",
+    "artifacts/native-messages/final-cargo-json-corrected/x86_64-unknown-linux-gnu-tests.stderr": "7684d1a819c7613020f243bddbc3045519cfac3b718e516cfaa8c0b15bb15584",
+    "artifacts/native-messages/final-cargo-json-corrected/aarch64-unknown-linux-gnu-bins.stderr": "a13905646e2aed93ec6ea9ed6ac91490a4e01f91af0215c3965279a910612149",
+    "artifacts/native-messages/final-cargo-json-corrected/x86_64-unknown-linux-gnu-bins.jsonl": "9f6adcb9a12afa6d7aeaa85fc7ef8c04b85351f0269f727578057f4bb5d3e90e",
+    "artifacts/native-messages/final-cargo-json-corrected/aarch64-unknown-linux-gnu-bins.jsonl": "dc10b26f4723db9f97ade6586e27c96999005f8b1d3eb815f17ea52be898c0c4",
+    "artifacts/native-messages/final-cargo-json-corrected/x86_64-unknown-linux-gnu-tests.jsonl": "d1256f27b2bfddf71591e71e370369f48488a44cb320be82bed66714faa2d497",
+    "artifacts/native-messages/final-cargo-json-corrected/aarch64-unknown-linux-gnu-tests.stderr": "7684d1a819c7613020f243bddbc3045519cfac3b718e516cfaa8c0b15bb15584",
+    "artifacts/native-messages/final-cargo-json-corrected/aarch64-unknown-linux-gnu-tests.jsonl": "569b8e128ee2bac38951a1f42f735c54848f744f5fd26fe5afba33caf04166d8"
+  },
+  "build_images": {
+    "pixel-phone-rust:20261012-b472": "sha256:0b4b956502a9f55d992eaced6975737b523be19bd2034078983b36bbcfd7aee6",
+    "pixel-phone-qt-native:20261012-b472": "sha256:301351bc3c526ab54e07ad284f117f95021a2c339171a050386cc5a6c620883d",
+    "pixel-graphics-build:20261011-b472": "sha256:07b2b220c62ebe15a90af7e10d703297b511508891492a292ae986f0521c448a",
+    "pixel-graphics-sim:20261011-b472": "sha256:561177a4305051567b1d28d67ba9a95e0ce0ad32a8815b49da42fe71aa5a3dd6"
+  },
+  "cleanup": {
+    "owned_desktop_container_removed": true,
+    "owned_child_reaped_in_tests": true,
+    "REA_or_SDK_sessions_opened": false,
+    "shared_VM_scripts_modified": false,
+    "shared_README_handoff_modified": false,
+    "phone_accessed": false,
+    "proprietary_execution_or_publication": false,
+    "committed_or_pushed": false
+  },
+  "state": "Frozen reviewable corrected source; no commit or push by implementing agent",
+  "source_aggregate_sha256": "857c4c3463d62c69499bdafccc3b8a686ef0eed0236e48a294e8c6ee42cb656f"
+}

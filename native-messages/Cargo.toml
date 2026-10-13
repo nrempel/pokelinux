@@ -1,0 +1,24 @@
+[package]
+name = "pokelinux-messages"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+pokelinux-inbox = { path = "../native-inbox" }
+pokelinux-messaging = { path = "../native-messaging" }
+pokelinux-lifecycle = { path = "../native-lifecycle" }
+serde = { version = "=1.0.229", features = ["derive"] }
+serde_json = "=1.0.154"
+rustix = { version = "=1.1.5", features = ["net", "process", "thread", "fs", "event", "time"] }
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[features]
+isolated-fixture = []
+
+[[bin]]
+name = "messages-seed-fixture"
+path = "tests/support/seed.rs"
+required-features = ["isolated-fixture"]

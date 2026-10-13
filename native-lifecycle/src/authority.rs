@@ -13,6 +13,17 @@ struct Principal {
     background: bool,
     alive: OwnedFd,
 }
+/// Internal, non-cloneable stamp; never serialized or supplied by an app.
+pub(crate) struct ReadStamp {
+    app: String,
+    generation: u64,
+    pid: u32,
+    uid: u32,
+    policy: u64,
+    lifecycle: u64,
+    backend: String,
+    until: u64,
+}
 struct Permit {
     app: String,
     generation: u64,
@@ -109,7 +120,7 @@ impl Authority {
                 uid: profile.uid,
                 pid,
                 generation: self.generation,
-                background: false,
+                background: app == crate::messages::APP,
                 alive,
             },
         );
@@ -214,6 +225,53 @@ impl Authority {
                 .iter()
                 .any(|g| g.app == app && g.permission == permission && g.allowed)
     }
+    pub(crate) fn begin_read(
+        &mut self,
+        pid: u32,
+        uid: u32,
+        backend: &str,
+        ttl_ms: u64,
+        now: u64,
+    ) -> Result<ReadStamp, Reply> {
+        let _ = self.reap_dead();
+        if !self.ready() {
+            return Err(Reply::Unavailable);
+        }
+        let Some((app, p)) = self
+            .principals
+            .iter()
+            .find(|(_, p)| p.pid == pid && p.uid == uid)
+        else {
+            return Err(Reply::Denied);
+        };
+        if !(1..=1000).contains(&ttl_ms) || !self.allowed(app, Permission::MessagesRead) {
+            return Err(Reply::Denied);
+        }
+        Ok(ReadStamp {
+            app: app.clone(),
+            generation: p.generation,
+            pid,
+            uid,
+            policy: self.policy,
+            lifecycle: self.lifecycle,
+            backend: backend.into(),
+            until: now.saturating_add(ttl_ms * 1_000_000),
+        })
+    }
+    pub(crate) fn current_read(&self, stamp: &ReadStamp, backend: &str, now: u64) -> bool {
+        self.ready()
+            && now < stamp.until
+            && self.policy == stamp.policy
+            && self.lifecycle == stamp.lifecycle
+            && stamp.backend == backend
+            && self.allowed(&stamp.app, Permission::MessagesRead)
+            && self.principals.get(&stamp.app).is_some_and(|p| {
+                p.pid == stamp.pid
+                    && p.uid == stamp.uid
+                    && p.generation == stamp.generation
+                    && living(&p.alive).unwrap_or(false)
+            })
+    }
     fn id(&mut self) -> Option<String> {
         self.sequence = self.sequence.checked_add(1)?;
         Some(format!("{}-{:016x}", self.incarnation, self.sequence))
@@ -257,9 +315,11 @@ impl Authority {
             return immediate(Reply::Denied);
         };
         match request {
+            AppRequest::MessagesRead { .. } => immediate(Reply::Unavailable),
             AppRequest::Query {} => immediate(Reply::Ok),
             AppRequest::Prepare { permission, ttl_ms } => {
-                if !(1..=5000).contains(&ttl_ms)
+                if permission == Permission::MessagesRead
+                    || !(1..=5000).contains(&ttl_ms)
                     || !self.allowed(&app, permission)
                     || self.permits.len() >= MAX_PERMITS
                     || self.permits.values().filter(|p| p.app == app).count() >= 4

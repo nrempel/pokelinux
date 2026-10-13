@@ -1,0 +1,152 @@
+{
+  "schema_version": 1,
+  "scope": "Actual native x86_64 Qt/Linux thread and credentialled socket exchange; synthetic packet only",
+  "environment": {
+    "qt": "6.8.2",
+    "architecture": "native x86_64 Linux",
+    "image": "sha256:301351bc3c526ab54e07ad284f117f95021a2c339171a050386cc5a6c620883d",
+    "network": "none",
+    "container_uid": 0,
+    "host_phone_accessed": false
+  },
+  "production_policy": {
+    "rpc_budget_ms": 1000,
+    "rpc_clock": "Checked CLOCK_BOOTTIME at admission, each send/receive loop and post-recv completion",
+    "stop": "Atomic stop checked inside the nonblocking exchange",
+    "cleanup_budget_ms": 500,
+    "cleanup": "Owned QThread:20ms wait slices; require actual successful wait before delete; clock unavailable permits one20ms actual wait then abort if unconfirmed",
+    "uncertain_cleanup": "SIGABRT before QThread/member destruction; no detached thread, terminate or implicit uncertain destructor wait",
+    "queued_gui_scope": "Generation fence only; completed exchange deadline is not a new current-authority check or arbitrary queued GUI delivery deadline"
+  },
+  "injections": {
+    "clock": "Test-linker wrapper returns EIO for caller CLOCK_BOOTTIME; Qt library clock untouched",
+    "wait": "Wrapper calls actual Qt wait and, only after success, returns false; actual_finished=1 is separately recorded",
+    "completion": "Actual recvmsg first receives113 genuine socket bytes; wrapper then injects clock error or real1100ms delay before production completion validation",
+    "peer": "Actual root UID/PID credentials on own local SOCK_SEQPACKET within one real process: server on main thread, production client on owned thread; authored synthetic history; no mock service method call"
+  },
+  "red": {
+    "path": "artifacts/native-messages-ui-worker/red-post-receive",
+    "exit_code": 101,
+    "cases": [
+      {
+        "case": "held-close",
+        "exit_code": 101,
+        "timeout": false,
+        "passed": false
+      },
+      {
+        "case": "clock-admission",
+        "exit_code": 101,
+        "timeout": false,
+        "passed": false
+      },
+      {
+        "case": "clock-completion",
+        "exit_code": 101,
+        "timeout": false,
+        "passed": false
+      },
+      {
+        "case": "held-clock-close",
+        "exit_code": null,
+        "timeout": true,
+        "passed": false
+      },
+      {
+        "case": "wait-report-failure",
+        "exit_code": 101,
+        "timeout": false,
+        "passed": false
+      },
+      {
+        "case": "within-budget",
+        "exit_code": 0,
+        "timeout": false,
+        "passed": true
+      },
+      {
+        "case": "late-completion",
+        "exit_code": 0,
+        "timeout": false,
+        "passed": true
+      }
+    ],
+    "binary_sha256": "ec9814bfcbd1c9b80ee29e2861774dc50daffd52eb69370153eb83c7656432cc",
+    "behavior_failures": 5
+  },
+  "green": {
+    "path": "artifacts/native-messages-ui-worker/green-post-receive",
+    "exit_code": 0,
+    "cases": [
+      {
+        "case": "held-close",
+        "exit_code": 0,
+        "timeout": false,
+        "passed": true
+      },
+      {
+        "case": "clock-admission",
+        "exit_code": 0,
+        "timeout": false,
+        "passed": true
+      },
+      {
+        "case": "clock-completion",
+        "exit_code": 0,
+        "timeout": false,
+        "passed": true
+      },
+      {
+        "case": "held-clock-close",
+        "exit_code": -6,
+        "timeout": false,
+        "passed": true
+      },
+      {
+        "case": "wait-report-failure",
+        "exit_code": -6,
+        "timeout": false,
+        "passed": true
+      },
+      {
+        "case": "within-budget",
+        "exit_code": 0,
+        "timeout": false,
+        "passed": true
+      },
+      {
+        "case": "late-completion",
+        "exit_code": 0,
+        "timeout": false,
+        "passed": true
+      }
+    ],
+    "binary_sha256": "cb66d85d7bcf5a87c90d74b86897d9e2737ae3b1a9196bcb1b8d1714ed1ab5de",
+    "passed": true
+  },
+  "source_sha256": {
+    "native-messages-ui/MessagesClient.cpp": "22fbd7c8e15969b3f1d59ac8b53d73e426068dfc47558c5f342d810342deb969",
+    "native-messages-ui/MessagesClient.h": "6f70b0ae3552f44c97a27ada54c4b903d9ee8c6ad23973b345173e1ec646a4ae",
+    "native-messages-ui/worker-tests/CMakeLists.txt": "b73ce086f51fed4f80df1c0c4c3fb24c1dc7f8a2700f57202156beabc0a8ea92",
+    "native-messages-ui/worker-tests/process.cpp": "56f787b73c5da729c4cb5499dce05d7d9a08f52b510cf248b1a6f2ad4f9837e8",
+    "tools/native-messages-ui-worker-suite.sh": "513c0a6ca465e7a78570e000c98d4802c56b4ccdcca3faa727bdf1af83db52fe",
+    "tools/native-messages-ui-worker-test.py": "7af10ce51492221469aa9a8c659f8033217bc9ff66bf4c6888e4f0998a400440"
+  },
+  "evidence_index": {
+    "path": "artifacts/native-messages-ui-worker/qualified-index.json",
+    "sha256": "3fdf5c41ecfc6bf09a651d792e6c6102d198e9a52938e996b99d59ab8de947c5",
+    "source_count": 6,
+    "proof_count": 48
+  },
+  "red_harness_snapshot_note": "Own source reconstructed exactly after only comment/scope string corrections; packet, clock, wait, delay and assertion behavior unchanged.",
+  "independent_review": {
+    "mode": "Read-only inspection; no rerun",
+    "result": "No material ownership/shared-state or strengthened completion-proof defect; exact consumer/binary hashes match"
+  },
+  "remaining": [
+    "No actual suspend or uninterruptible kernel thread",
+    "No arbitrary queued GUI-delivery expiry claim",
+    "No modem/ACK/send/vendor/carrier or physical-device proof",
+    "Installed service/window composition is recorded separately in Messages correction provenance"
+  ]
+}

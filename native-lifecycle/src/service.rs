@@ -1,6 +1,6 @@
 use crate::{
     AdminRequest, AppProfile, AppRequest, Profile, Reply,
-    authority::{Authority, Decision, WriteIntent},
+    authority::{Authority, Decision, ReadStamp, WriteIntent},
     boottime_ns, ipc,
     storage::{Event, Worker},
 };
@@ -72,6 +72,10 @@ pub fn profile(path: &Path) -> io::Result<Profile> {
     }
     Ok(profile)
 }
+struct LocalRecovery {
+    source: String,
+    until: u64,
+}
 struct Operation {
     token: u64,
     connection: Option<u64>,
@@ -85,6 +89,9 @@ struct Connection {
     awaiting: Option<u64>,
     fd: OwnedFd,
     admin: bool,
+    desktop: bool,
+    reading: Option<(u64, ReadStamp)>,
+    read_stamp: Option<ReadStamp>,
     deadline: u64,
     pending: Option<Vec<u8>>,
 }
@@ -104,12 +111,61 @@ fn launch(entry: &Path, p: &AppProfile) -> io::Result<Child> {
         .stderr(Stdio::null())
         .spawn()
 }
+fn launch_registered(
+    entry: &Path,
+    p: &AppProfile,
+    children: &mut BTreeMap<String, Child>,
+    authority: &mut Authority,
+) -> Reply {
+    if !authority.ready() {
+        return Reply::Unavailable;
+    }
+    let std::collections::btree_map::Entry::Vacant(slot) = children.entry(p.app.clone()) else {
+        return Reply::Denied;
+    };
+    match launch(entry, p) {
+        Err(_) => Reply::Unavailable,
+        Ok(mut child) => {
+            let registration = Pid::from_raw(child.id() as i32)
+                .ok_or(io::ErrorKind::InvalidInput)
+                .and_then(|pid| {
+                    rustix::process::pidfd_open(pid, PidfdFlags::NONBLOCK)
+                        .map_err(|_| io::ErrorKind::Other)
+                })
+                .and_then(|fd| {
+                    authority
+                        .register(&p.app, child.id(), fd)
+                        .map_err(|_| io::ErrorKind::Other)
+                });
+            if registration.is_err() {
+                authority.revoke(&p.app);
+                let _ = child.kill();
+            }
+            slot.insert(child);
+            if registration.is_ok() {
+                Reply::Ok
+            } else {
+                Reply::Unavailable
+            }
+        }
+    }
+}
 pub fn run(
     runtime: &Path,
     policy: &Path,
     profile_path: &Path,
     entry: &Path,
     test: Option<&str>,
+) -> io::Result<()> {
+    run_with_messages(runtime, policy, profile_path, entry, test, None)
+}
+pub fn run_with_messages(
+    runtime: &Path,
+    policy: &Path,
+    profile_path: &Path,
+    entry: &Path,
+    test: Option<&str>,
+    mut messages: Option<&mut dyn crate::messages::Provider>,
 ) -> io::Result<()> {
     if rustix::process::getuid().as_raw() != 0 || rustix::process::geteuid().as_raw() != 0 {
         return Err(io::ErrorKind::PermissionDenied.into());
@@ -124,6 +180,16 @@ pub fn run(
     let app_path = runtime.join("app.sock");
     let admin = ipc::listener(&admin_path, 0o600)?;
     let app = ipc::listener(&app_path, 0o666)?;
+    let desktop_path = runtime.join("launch-messages.sock");
+    let desktop = if messages.is_some() {
+        Some(ipc::listener(&desktop_path, 0o666)?)
+    } else {
+        None
+    };
+    let desktop_identity = desktop
+        .as_ref()
+        .map(|_| fs::symlink_metadata(&desktop_path).map(|m| (m.dev(), m.ino())))
+        .transpose()?;
     let socket_ids: Vec<_> = [&admin_path, &app_path]
         .iter()
         .map(|p| fs::symlink_metadata(p).map(|m| (m.dev(), m.ino())))
@@ -148,6 +214,8 @@ pub fn run(
     let mut connections: Vec<Connection> = Vec::new();
     let mut stopping = false;
     let mut cleanup_until = None;
+    let mut read_backpressure = 0u64;
+    let mut local_recovery: Option<LocalRecovery> = None;
     let outcome = (|| {
         loop {
             // Never block on child wait, request IO, or an idle client.
@@ -269,6 +337,33 @@ pub fn run(
                     }
                 }
             }
+            if let Some(provider) = messages.as_deref_mut() {
+                let event = match provider.poll() {
+                    Ok(v) => v,
+                    Err(_) => {
+                        provider.stop();
+                        None
+                    }
+                };
+                if let Some(event) = event {
+                    let (token, mut packet) = match event {
+                        crate::messages::Event::Complete { token, packet } => (token, Some(packet)),
+                        crate::messages::Event::Failed { token } => (token, None),
+                    };
+                    for c in &mut connections {
+                        if c.reading.as_ref().is_some_and(|(t, _)| *t == token) {
+                            let (_, stamp) = c.reading.take().unwrap();
+                            c.read_stamp = packet.as_ref().map(|_| stamp);
+                            c.pending = Some(
+                                packet
+                                    .take()
+                                    .filter(|p| !p.is_empty() && p.len() <= crate::MAX_PACKET)
+                                    .unwrap_or(serde_json::to_vec(&Reply::Unavailable)?),
+                            );
+                        }
+                    }
+                }
+            }
             if !storage.occupied() && operation.as_ref().is_some_and(|o| o.retired) {
                 operation = None;
             }
@@ -282,6 +377,7 @@ pub fn run(
             if (stopping || startup_failed)
                 && children.is_empty()
                 && !storage.occupied()
+                && messages.as_deref().is_none_or(|p| !p.occupied())
                 && connections
                     .iter()
                     .all(|c| c.pending.is_none() && c.awaiting.is_none())
@@ -289,10 +385,17 @@ pub fn run(
                 break;
             }
             let now = boottime_ns();
+            let pending_publications = connections
+                .iter()
+                .filter(|c| c.read_stamp.is_some())
+                .count();
             let mut fds = vec![
                 PollFd::new(&admin, PollFlags::IN),
                 PollFd::new(&app, PollFlags::IN),
             ];
+            if let Some(fd) = &desktop {
+                fds.push(PollFd::new(fd, PollFlags::IN));
+            }
             for c in &connections {
                 fds.push(PollFd::new(
                     &c.fd,
@@ -314,19 +417,34 @@ pub fn run(
                 Err(e) => return Err(e.into()),
             }
             drop(fds);
-            for (listener, is_admin, limit) in [(&admin, true, 4), (&app, false, 12)] {
-                if connections.iter().filter(|c| c.admin == is_admin).count() >= limit {
+            let mut listeners = vec![(&admin, true, false, 4), (&app, false, false, 12)];
+            if let Some(fd) = &desktop {
+                listeners.push((fd, false, true, 2));
+            }
+            for (listener, is_admin, is_desktop, limit) in listeners {
+                if connections
+                    .iter()
+                    .filter(|c| c.admin == is_admin && c.desktop == is_desktop)
+                    .count()
+                    >= limit
+                {
                     continue;
                 }
                 match net::accept_with(listener, SocketFlags::NONBLOCK | SocketFlags::CLOEXEC) {
                     Ok(fd) => {
                         net::sockopt::set_socket_passcred(&fd, true)?;
+                        if messages.is_some() && !is_admin && !is_desktop {
+                            net::sockopt::set_socket_send_buffer_size(&fd, 8192)?;
+                        }
                         connection_id = connection_id.checked_add(1).ok_or(io::ErrorKind::Other)?;
                         connections.push(Connection {
                             id: connection_id,
                             awaiting: None,
                             fd,
                             admin: is_admin,
+                            desktop: is_desktop,
+                            reading: None,
+                            read_stamp: None,
                             deadline: now.saturating_add(30_000_000_000),
                             pending: None,
                         });
@@ -337,6 +455,11 @@ pub fn run(
             }
             connections.retain_mut(|connection| {
                 if boottime_ns() >= connection.deadline {
+                    if connection.reading.is_some()
+                        && let Some(p) = messages.as_deref_mut()
+                    {
+                        p.stop();
+                    }
                     if connection.awaiting.is_some() {
                         authority.invalidate();
                         storage.stop();
@@ -345,6 +468,18 @@ pub fn run(
                         }
                     }
                     return false;
+                }
+                if connection.reading.is_some() {
+                    match ipc::receive(&connection.fd) {
+                        Ok(None) => return true,
+                        Err(e) if e.raw_os_error() == Some(4) => return true,
+                        _ => {
+                            if let Some(p) = messages.as_deref_mut() {
+                                p.stop();
+                            }
+                            return false;
+                        }
+                    }
                 }
                 if connection.awaiting.is_some() {
                     match ipc::receive(&connection.fd) {
@@ -360,14 +495,34 @@ pub fn run(
                         }
                     }
                 }
+                // This check runs immediately before every nonblocking send attempt,
+                // including every retry after EAGAIN. Storage owns no read permission.
+                if let Some(stamp) = &connection.read_stamp {
+                    let current = operation.is_none()
+                        && !stopping
+                        && messages.as_deref().is_some_and(|p| {
+                            p.available()
+                                && authority.current_read(stamp, p.incarnation(), boottime_ns())
+                        });
+                    if !current {
+                        connection.pending = serde_json::to_vec(&Reply::Denied).ok();
+                        connection.read_stamp = None;
+                    }
+                }
                 if let Some(bytes) = &connection.pending {
                     return match ipc::send(&connection.fd, bytes) {
                         Ok(()) => {
                             connection.pending = None;
+                            connection.read_stamp = None;
                             connection.deadline = boottime_ns().saturating_add(30_000_000_000);
                             true
                         }
-                        Err(e) if matches!(e.raw_os_error(), Some(4 | 11)) => true,
+                        Err(e) if matches!(e.raw_os_error(), Some(4 | 11)) => {
+                            if e.raw_os_error() == Some(11) && connection.read_stamp.is_some() {
+                                read_backpressure = read_backpressure.saturating_add(1);
+                            }
+                            true
+                        }
                         Err(_) => false,
                     };
                 }
@@ -377,17 +532,68 @@ pub fn run(
                     Err(e) if e.raw_os_error() == Some(4) => return true,
                     Err(_) => return false,
                 };
-                let reply = if connection.admin {
+                let reply = if connection.desktop {
+                    if cred.uid.as_raw() != crate::messages::DESKTOP_UID
+                        || stopping
+                        || serde_json::from_slice::<crate::messages::DesktopRequest>(&bytes)
+                            .is_err()
+                    {
+                        Reply::Denied
+                    } else if let Some(p) = profiles.iter().find(|p| p.app == crate::messages::APP)
+                    {
+                        let reply = launch_registered(entry, p, &mut children, &mut authority);
+                        if reply == Reply::Ok
+                            && let Some(provider) = messages.as_deref()
+                        {
+                            local_recovery = Some(LocalRecovery {
+                                source: provider.incarnation().into(),
+                                until: boottime_ns().saturating_add(2_000_000_000),
+                            });
+                        }
+                        reply
+                    } else {
+                        Reply::Unavailable
+                    }
+                } else if connection.admin {
                     if cred.uid.as_raw() != 0 {
                         Reply::Denied
                     } else {
                         match serde_json::from_slice::<AdminRequest>(&bytes) {
                             Err(_) => Reply::Denied,
+                            Ok(AdminRequest::MessagesStatus {}) => match messages.as_deref() {
+                                Some(p) => Reply::MessagesStorage {
+                                    occupied: p.occupied(),
+                                    busy: p.busy(),
+                                    available: p.available(),
+                                    pending_publications,
+                                    backpressure: read_backpressure,
+                                },
+                                None => Reply::Unavailable,
+                            },
+                            Ok(AdminRequest::MessagesRestart {}) => {
+                                if stopping {
+                                    Reply::Unavailable
+                                } else {
+                                    match messages.as_deref_mut() {
+                                        Some(p) => {
+                                            if p.restart().is_ok() {
+                                                Reply::Ok
+                                            } else {
+                                                Reply::Unavailable
+                                            }
+                                        }
+                                        _ => Reply::Unavailable,
+                                    }
+                                }
+                            }
                             Ok(AdminRequest::Snapshot {}) => {
                                 authority.snapshot(storage.occupied(), storage.busy())
                             }
                             Ok(AdminRequest::Stop {}) => {
                                 stopping = true;
+                                if let Some(p) = messages.as_deref_mut() {
+                                    p.stop();
+                                }
                                 cleanup_until.get_or_insert_with(|| {
                                     boottime_ns().saturating_add(2_000_000_000)
                                 });
@@ -422,47 +628,11 @@ pub fn run(
                             }
                             Ok(_) if stopping => Reply::Unavailable,
                             Ok(AdminRequest::Launch { app }) => {
-                                if authority.is_degraded() {
-                                    Reply::Unavailable
-                                } else if let std::collections::btree_map::Entry::Vacant(slot) =
-                                    children.entry(app.clone())
-                                {
-                                    if let Some(p) = profiles.iter().find(|p| p.app == app) {
-                                        match launch(entry, p) {
-                                            Err(_) => Reply::Unavailable,
-                                            Ok(mut child) => {
-                                                let pid = child.id();
-                                                let registration = Pid::from_raw(pid as i32)
-                                                    .ok_or_else(|| {
-                                                        io::Error::from(io::ErrorKind::InvalidInput)
-                                                    })
-                                                    .and_then(|p| {
-                                                        rustix::process::pidfd_open(
-                                                            p,
-                                                            PidfdFlags::NONBLOCK,
-                                                        )
-                                                        .map_err(Into::into)
-                                                    })
-                                                    .and_then(|fd| {
-                                                        authority.register(&app, pid, fd)
-                                                    });
-                                                if registration.is_err() {
-                                                    authority.revoke(&app);
-                                                    let _ = child.kill();
-                                                }
-                                                slot.insert(child);
-                                                if registration.is_ok() {
-                                                    Reply::Ok
-                                                } else {
-                                                    Reply::Unavailable
-                                                }
-                                            }
-                                        }
-                                    } else {
-                                        Reply::Denied
+                                match profiles.iter().find(|p| p.app == app) {
+                                    Some(p) => {
+                                        launch_registered(entry, p, &mut children, &mut authority)
                                     }
-                                } else {
-                                    Reply::Denied
+                                    None => Reply::Denied,
                                 }
                             }
                             Ok(AdminRequest::Terminate { app }) => {
@@ -554,6 +724,40 @@ pub fn run(
                     }
                 } else {
                     match serde_json::from_slice::<AppRequest>(&bytes) {
+                        Ok(AppRequest::MessagesRead { request }) if !stopping => {
+                            if operation.is_some() {
+                                Reply::Unavailable
+                            } else if let Some(p) = messages.as_deref_mut() {
+                                if !p.available() || p.busy() {
+                                    Reply::Unavailable
+                                } else {
+                                    let now = boottime_ns();
+                                    match authority.begin_read(
+                                        cred.pid.as_raw_nonzero().get() as u32,
+                                        cred.uid.as_raw(),
+                                        p.incarnation(),
+                                        request.ttl_ms,
+                                        now,
+                                    ) {
+                                        Err(r) => r,
+                                        Ok(stamp) => match p.start(
+                                            request.query,
+                                            now.saturating_add(request.ttl_ms * 1_000_000),
+                                        ) {
+                                            Ok(token) => {
+                                                connection.reading = Some((token, stamp));
+                                                connection.deadline =
+                                                    now.saturating_add(request.ttl_ms * 1_000_000);
+                                                return true;
+                                            }
+                                            Err(_) => Reply::Unavailable,
+                                        },
+                                    }
+                                }
+                            } else {
+                                Reply::Unavailable
+                            }
+                        }
                         Ok(r) if !stopping => {
                             if operation.is_some() && !matches!(r, AppRequest::Query {}) {
                                 authority.refuse_busy(
@@ -602,6 +806,34 @@ pub fn run(
                 connection.deadline = boottime_ns().saturating_add(1_000_000_000);
                 connection.pending.is_some()
             });
+            // A successful fixed launch records one source-bound local intent.
+            // Decide only after every connection retirement in this pass: an
+            // older desktop connection can precede the dead app's read socket.
+            if let Some(intent) = &local_recovery {
+                if let Some(provider) = messages.as_deref_mut() {
+                    let now = boottime_ns();
+                    let invalid_read = connections.iter().any(|c| {
+                        c.reading.as_ref().is_some_and(|(_, stamp)| {
+                            !authority.current_read(stamp, provider.incarnation(), now)
+                        })
+                    });
+                    if stopping
+                        || !authority.ready()
+                        || now >= intent.until
+                        || provider.incarnation() != intent.source
+                        || (provider.available() && !invalid_read)
+                    {
+                        local_recovery = None;
+                    } else if !provider.occupied() {
+                        // Consume before the single attempt, and never replace
+                        // an occupied child or replay the old read request.
+                        local_recovery = None;
+                        let _ = provider.restart();
+                    }
+                } else {
+                    local_recovery = None;
+                }
+            }
         }
         if startup_failed {
             Err(io::ErrorKind::InvalidData.into())
@@ -615,6 +847,9 @@ pub fn run(
     for (name, child) in &mut children {
         authority.revoke(name);
         let _ = child.kill();
+    }
+    if messages.is_some_and(|p| !p.drain_until(until)) {
+        std::process::abort();
     }
     if !storage.drain_until(until) {
         std::process::abort();
@@ -643,6 +878,11 @@ pub fn run(
         if fs::symlink_metadata(path).is_ok_and(|m| (m.dev(), m.ino()) == identity) {
             fs::remove_file(path)?;
         }
+    }
+    if desktop_identity.is_some_and(|identity| {
+        fs::symlink_metadata(&desktop_path).is_ok_and(|m| (m.dev(), m.ino()) == identity)
+    }) {
+        fs::remove_file(desktop_path)?;
     }
     outcome
 }

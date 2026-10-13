@@ -1,6 +1,7 @@
 //! Linux credentials are authority; app labels are trusted installation metadata.
 pub mod authority;
 pub mod ipc;
+pub mod messages;
 pub mod service;
 pub mod storage;
 use serde::{Deserialize, Serialize};
@@ -15,6 +16,7 @@ pub const MAX_RECEIPTS: usize = 128;
 pub enum Permission {
     Capture,
     SendMessage,
+    MessagesRead,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
@@ -34,6 +36,7 @@ pub struct Profile {
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(tag = "op", rename_all = "snake_case", deny_unknown_fields)]
 pub enum AppRequest {
+    MessagesRead { request: messages::ReadRequest },
     Query {},
     Prepare { permission: Permission, ttl_ms: u64 },
     Admit { permit: String },
@@ -63,11 +66,20 @@ pub enum AdminRequest {
         suspended: bool,
     },
     Snapshot {},
+    MessagesStatus {},
+    MessagesRestart {},
     Stop {},
 }
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 #[serde(tag = "result", rename_all = "snake_case", deny_unknown_fields)]
 pub enum Reply {
+    MessagesStorage {
+        occupied: bool,
+        busy: bool,
+        available: bool,
+        pending_publications: usize,
+        backpressure: u64,
+    },
     Ok,
     Denied,
     Unavailable,

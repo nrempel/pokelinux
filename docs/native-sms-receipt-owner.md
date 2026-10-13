@@ -94,3 +94,10 @@ The guest checks final selection, Cargo artifact, implementation/test hashes and
 full test counts. Its root disk uses a disposable snapshot, project export is
 read-only and the VM has no NIC. Existing status-report and superseded receipt
 proofs remain unchanged.
+
+The separately qualified [installed Messages local-history path](native-messages-service.md)
+now composes this existing storage component with one current lifecycle authority
+and an actual native Qt window in original Omarchy. Historical component evidence
+remains unchanged. Startup/pre-read reconciliation of precommitted occurrences
+does not qualify ongoing incoming Binder admission, ACK, notifications or wake.
+The service explicitly refuses partial projection above32 raw receipts.

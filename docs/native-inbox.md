@@ -111,3 +111,10 @@ real ARM64 kernel proof. The guest verifies the original qualified binary
 snapshots and restored-builder metadata selections before executing all tests.
 The VM has no NIC, uses a disposable root-disk snapshot and exports the project
 read-only. Existing original receipt/status evidence remains unchanged.
+
+The separately qualified [installed Messages local-history path](native-messages-service.md)
+now composes this existing storage component with one current lifecycle authority
+and an actual native Qt window in original Omarchy. Historical component evidence
+remains unchanged. Startup/pre-read reconciliation of precommitted occurrences
+does not qualify ongoing incoming Binder admission, ACK, notifications or wake.
+The service explicitly refuses partial projection above32 raw receipts.
