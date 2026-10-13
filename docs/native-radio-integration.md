@@ -255,3 +255,12 @@ It is not connected to response publication. A semantic response adapter must
 qualify complete layouts and producer/method/error/slot identity, enforce full
 packet completion, and pass the owner gate before exposing state. Raw snapshots
 and successful getters alone remain insufficient.
+
+## Exact factory adapter boundary
+
+The current [factory recovery trace](native-radio-recovery-contract.md) separates
+the original generated native V1 binding from the actual `libril-aidl.so` service
+adapter and `libril_sitril.so` manager/producers. Their static identity/flags are
+qualified separately from this synthetic peer. An original adapter fixture cannot
+prove manager deletion or pending modem cleanup if it replaces those collaborators;
+the report defines distinct adapter, manager/producer and pending/reset gates.

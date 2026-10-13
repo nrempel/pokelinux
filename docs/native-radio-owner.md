@@ -276,3 +276,12 @@ managed pending modem requests. One-way clear and local reaping establish no
 acknowledged remote reset. The durable uncertainty fence remains unchanged.
 See [cleanup contract](native-radio-cleanup.md) and
 [provenance](evidence/vendor-radio-cleanup-provenance.json).
+
+## Factory recovery evidence
+
+The [factory recovery contract](native-radio-recovery-contract.md) identifies the
+actual native V1 service adapter and manager/complete producers through static
+REA evidence. Its scoped locks and one-way clear do not establish remote drain,
+pending modem cleanup, safe successor registration or all-path producer identity.
+No original vendor code was executed. Retain current uncertainty and fragmented
+semantic-publication fences until the specified original runtime gates qualify.

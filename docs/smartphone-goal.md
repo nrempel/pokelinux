@@ -189,3 +189,10 @@ refusals. Eight focused tests plus all prior checks pass on x86/ARM64 user-QEMU,
 24 per target. Complete immutable wire fields do not establish producer identity,
 IMS state, bearer/call/media, installed ownership or carrier operation. See
 [registration payload](native-ims-registration.md).
+
+Factory radio service/manager/producer recovery now records 52 static REA
+observations against seven hash-verified targets. Actual native V1 identity and
+scoped locking/death paths are known; whole producer identity and acknowledged
+remote cleanup/reset remain unqualified. No vendor runtime, successor retry or
+semantic publication follows from this static work. See
+[radio recovery contract](native-radio-recovery-contract.md).

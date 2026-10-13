@@ -1,0 +1,2556 @@
+{
+  "schema": 1,
+  "recorded_utc": "2026-10-13T01:22:44.204844+00:00",
+  "host": "Harbour",
+  "scope": "Bounded factory radioExternal adapter, cleanup, registration overlap and complete producer contract recovery",
+  "evidence_class": "static shipped-artifact and public source inspection; provider execution only",
+  "original_vendor_code_executed": false,
+  "vendor_service_installed_or_started": false,
+  "physical_phone_accessed": false,
+  "host_radio_or_power_operations": false,
+  "rust_behavior_changed": false,
+  "new_original_or_synthetic_runtime_fixture": false,
+  "new_red_green_result": null,
+  "factory": {
+    "device": "Pixel 10 frankel",
+    "build": "CP3A.261005.005",
+    "android_api": 37,
+    "official_archive": "https://dl.google.com/dl/android/aosp/frankel-cp3a.261005.005-factory-3721e6ac.zip",
+    "inner_member": "frankel-cp3a.261005.005/image-frankel-cp3a.261005.005.zip",
+    "vendor_partition_sha256": "0f6fa174fd21791357af40d7c21ab10d6538ef0ba1910655ac1d06ff7f25ee7e",
+    "vendor_partition_bytes": 1080197120,
+    "archive_acquisition_in_this_increment": false,
+    "existing_partition_record_sha256": "192449613ca19fae8a6e46a95352282e9333774c82041ee1900e7ef9fad83e7b",
+    "extraction": "debugfs read-only dump of two selected files; no filesystem mount or target execution",
+    "version_comparison": "Only this exact factory tuple; legacy public HIDL is a separate interface family"
+  },
+  "targets": [
+    {
+      "factory_path": "/vendor/lib64/libril_sitril.so",
+      "retained_path": "artifacts/telephony-audit/input/vendor/lib64/libril_sitril.so",
+      "size_bytes": 2356016,
+      "sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "role": "manager, factory service publication and complete AIDL producers",
+      "matches_prior_native_inventory": true
+    },
+    {
+      "factory_path": "/vendor/lib64/libril-aidl.so",
+      "retained_path": "artifacts/radio-recovery-rea/libril-aidl.so",
+      "size_bytes": 266624,
+      "sha256": "05bfb97b08b0647317b4b4a144dfe02d77e104df8f2b7700b46d58c06aa714d4",
+      "role": "actual RadioExternal service adapter and native callback wrappers",
+      "matches_prior_native_inventory": true
+    },
+    {
+      "factory_path": "/vendor/lib64/vendor.samsung_slsi.telephony.hardware.radioExternal-V1-ndk.so",
+      "retained_path": "artifacts/radio-recovery-rea/radioExternal-V1-ndk.so",
+      "size_bytes": 101696,
+      "sha256": "a1cf6afc435d3b0e31b8ded4ae0bd9f4601c4938a66394eb3a27419b7c2ce59a",
+      "role": "generated native AIDL protocol",
+      "matches_prior_native_inventory": true
+    },
+    {
+      "factory_path": "/vendor/lib64/libsitril.so",
+      "retained_path": "artifacts/telephony-audit/input/vendor/lib64/libsitril.so",
+      "size_bytes": 2520752,
+      "sha256": "a92bebfa7152356f27a925960ddd11736a0ad55cff9786997550d4d2a49105cd",
+      "role": "upstream modem implementation; identity only in this increment",
+      "matches_prior_native_inventory": true
+    },
+    {
+      "factory_path": "/vendor/bin/hw/rild_exynos",
+      "retained_path": "artifacts/telephony-audit/input/vendor/bin/hw/rild_exynos",
+      "size_bytes": 51560,
+      "sha256": "ada9ad36ef79ee787a0c122127a4d933301a839fbd15d523f47c5f1aa72bbbc3",
+      "role": "stock service host; symbol/metadata inspection only",
+      "matches_prior_native_inventory": true
+    },
+    {
+      "factory_path": "/vendor/etc/init/rild_exynos.rc",
+      "retained_path": "artifacts/telephony-audit/input/vendor/etc/init/rild_exynos.rc",
+      "size_bytes": 283,
+      "sha256": "baedd264642cd97fdd9f2a80f7f144213e5db9694302b3cd1ecaaebec07a996c",
+      "role": "init service and reset-property trigger",
+      "matches_prior_native_inventory": false
+    },
+    {
+      "factory_path": "/vendor/etc/vintf/manifest.xml",
+      "retained_path": "artifacts/telephony-audit/input/vendor/etc/vintf/manifest.xml",
+      "size_bytes": 5468,
+      "sha256": "1cfc70c2095ec46bba6c25df619578eb1026973c35015c0f60ee885780796338",
+      "role": "declared AIDL service instance",
+      "matches_prior_native_inventory": false
+    }
+  ],
+  "interface": {
+    "instance": "vendor.samsung_slsi.telephony.hardware.radioExternal.IOemSlsiRadioExternal/default",
+    "version": 1,
+    "hash": "62c86cf5f8f15456f451d2241b4f21b10627e514",
+    "identity_kind": "static generated binding values",
+    "clear": {
+      "transaction": 1,
+      "flags_hex": "0x10000001",
+      "reply": "none"
+    },
+    "registration": {
+      "transaction": 5,
+      "flags_hex": "0x10000000",
+      "reply": "status plus signed client ID"
+    },
+    "indication_segments": {
+      "transaction": 2,
+      "flags_hex": "0x10000001",
+      "message_instance_identity": false
+    }
+  },
+  "public_source_search": {
+    "date_utc": "2026-10-12",
+    "lineage_interfaces_commit": "a23ed82b3f3859aa9e0207036b0d0e98119b959b",
+    "lineage_exynos_commit": "11fa20fdd7fa165ab82fb903a14198f2e67e9691",
+    "tree_snapshots": [
+      {
+        "name": "lineage-interfaces-tree",
+        "url": "https://api.github.com/repos/LineageOS/android_hardware_samsung_slsi-linaro_interfaces/git/trees/lineage-23.2?recursive=1",
+        "sha256": "efc159b47438936e011f7652a2851995360df43113d1777731e8888d52f1a8d2",
+        "commit": "a23ed82b3f3859aa9e0207036b0d0e98119b959b",
+        "truncated": false
+      },
+      {
+        "name": "lineage-exynos-tree",
+        "url": "https://api.github.com/repos/LineageOS/android_hardware_samsung_slsi-linaro_exynos/git/trees/lineage-23.2?recursive=1",
+        "sha256": "86f03fe4e2efc1e0f0176a058c024cb51680cf387529f36c6d1773fa033b7c28",
+        "commit": "11fa20fdd7fa165ab82fb903a14198f2e67e9691",
+        "truncated": false
+      },
+      {
+        "name": "google-ril-ext-tree",
+        "url": "https://android.googlesource.com/platform/hardware/google/interfaces/+/refs/heads/main/ril_ext/?format=JSON",
+        "sha256": "adcdf36d321a08b74921027f4022cd63e32e95fe3605bdef3c0b2ac782ea3262",
+        "commit": null,
+        "truncated": null
+      }
+    ],
+    "bounded_repository_queries": [
+      {
+        "query": "samsung_slsi telephony",
+        "url": "https://api.github.com/search/repositories?q=samsung_slsi%20telephony&per_page=20",
+        "sha256": "4af480b8ee5b87b369a76c49bd22c9a783908272ebffbe97898f8ab0f0772a5f",
+        "total_count": 0,
+        "incomplete_results": false
+      },
+      {
+        "query": "exynos-ril",
+        "url": "https://api.github.com/search/repositories?q=exynos-ril&per_page=20",
+        "sha256": "4af480b8ee5b87b369a76c49bd22c9a783908272ebffbe97898f8ab0f0772a5f",
+        "total_count": 0,
+        "incomplete_results": false
+      },
+      {
+        "query": "sitril",
+        "url": "https://api.github.com/search/repositories?q=sitril&per_page=20",
+        "sha256": "4af480b8ee5b87b369a76c49bd22c9a783908272ebffbe97898f8ab0f0772a5f",
+        "total_count": 0,
+        "incomplete_results": false
+      }
+    ],
+    "files": [
+      {
+        "path": "telephony/radioExternal/1.0/IOemSlsiRadioExternal.hal",
+        "url": "https://raw.githubusercontent.com/LineageOS/android_hardware_samsung_slsi-linaro_interfaces/a23ed82b3f3859aa9e0207036b0d0e98119b959b/telephony/radioExternal/1.0/IOemSlsiRadioExternal.hal",
+        "sha256": "0d119c3e121ded7f3767e128855b6a99cba983128299466cd40f27799a6d758b",
+        "git_blob": "ca98aed994726daa8117a2fefe46119a1ec4e971"
+      },
+      {
+        "path": "telephony/radioExternal/1.0/IOemSlsiRadioExternalInd.hal",
+        "url": "https://raw.githubusercontent.com/LineageOS/android_hardware_samsung_slsi-linaro_interfaces/a23ed82b3f3859aa9e0207036b0d0e98119b959b/telephony/radioExternal/1.0/IOemSlsiRadioExternalInd.hal",
+        "sha256": "c21a939717421456bdc5cae9fbde8cc8c4eaee820a5791d8b2b2b6cd4bee5f8a",
+        "git_blob": "5842ab7a8f707a2cb18ea9f1a3dd21aac3fa4a2e"
+      },
+      {
+        "path": "telephony/radioExternal/1.0/IOemSlsiRadioExternalRes.hal",
+        "url": "https://raw.githubusercontent.com/LineageOS/android_hardware_samsung_slsi-linaro_interfaces/a23ed82b3f3859aa9e0207036b0d0e98119b959b/telephony/radioExternal/1.0/IOemSlsiRadioExternalRes.hal",
+        "sha256": "edefce75ee967012c75fc8c810dd804669f77e5198229ce4bb73d3673d637b56",
+        "git_blob": "ae3db3f694e9b77a1b82362faa719af4468ff66e"
+      },
+      {
+        "path": "telephony/radioExternal/1.0/types.hal",
+        "url": "https://raw.githubusercontent.com/LineageOS/android_hardware_samsung_slsi-linaro_interfaces/a23ed82b3f3859aa9e0207036b0d0e98119b959b/telephony/radioExternal/1.0/types.hal",
+        "sha256": "ca7551074a5032f85c7e8b038d9d593366837b9af8bf440e146d3206318877e4",
+        "git_blob": "d2818b9e59d9c6accc5c63440fc2f0f30dba7c16"
+      },
+      {
+        "path": "telephony/radioExternal/1.1/IOemSlsiRadioExternal.hal",
+        "url": "https://raw.githubusercontent.com/LineageOS/android_hardware_samsung_slsi-linaro_interfaces/a23ed82b3f3859aa9e0207036b0d0e98119b959b/telephony/radioExternal/1.1/IOemSlsiRadioExternal.hal",
+        "sha256": "4fbf74cb57667ad2f7da42b1d1ffd70930479598d00e84edc475e28d67cae6b2",
+        "git_blob": "00fb44586ff9a34bf478e7c433906080013ab59a"
+      },
+      {
+        "path": "telephony/radioExternal/1.1/IOemSlsiRadioExternalInd.hal",
+        "url": "https://raw.githubusercontent.com/LineageOS/android_hardware_samsung_slsi-linaro_interfaces/a23ed82b3f3859aa9e0207036b0d0e98119b959b/telephony/radioExternal/1.1/IOemSlsiRadioExternalInd.hal",
+        "sha256": "399fd22eca42e2b7a8529756334b548c4c00d96f23b41824e1a36245702b1921",
+        "git_blob": "8fd5d75d4c777e745cf947d64deb3b5934f8ee1e"
+      },
+      {
+        "path": "telephony/radioExternal/1.1/IOemSlsiRadioExternalRes.hal",
+        "url": "https://raw.githubusercontent.com/LineageOS/android_hardware_samsung_slsi-linaro_interfaces/a23ed82b3f3859aa9e0207036b0d0e98119b959b/telephony/radioExternal/1.1/IOemSlsiRadioExternalRes.hal",
+        "sha256": "504e45f34b5b03581ca28be5aa1ae85dc131fb68cede91e41acf33c706aadc94",
+        "git_blob": "e9b40a2ae21c8a285e9dc6f7bcdc262f4be1e440"
+      }
+    ],
+    "conclusion": "Older HIDL 1.0/1.1 interfaces found; matching current AIDL service/manager source not located within these queried trees/searches; no global absence claim",
+    "binder_threading_source": "https://source.android.com/docs/core/architecture/ipc/binder-threading",
+    "ndk_flag_source": "https://developer.android.com/ndk/reference/group/ndk-binder"
+  },
+  "rea": {
+    "package_version": "6.4.0",
+    "provider": "Ghidra",
+    "provider_version": "12.1.4",
+    "container": "pixel-android-framework:20261011-b472",
+    "controls": [
+      "network none",
+      "read-only project input mount",
+      "only dedicated ignored result directory writable",
+      "2 CPUs",
+      "4 GiB memory",
+      "256 process limit",
+      "all capabilities dropped",
+      "no-new-privileges",
+      "UID/GID 1000:1000"
+    ],
+    "opened_sessions_closed": true,
+    "existing_snapshots_reused_immutably": true
+  },
+  "findings": [
+    {
+      "id": "factory_service_chain",
+      "kind": "static shipped-artifact observation",
+      "claim": "The factory registerAidlService path creates the manager and callback implementation, imports RadioExternal::make defined in libril-aidl.so, and publishes the declared V1 AIDL instance. The V1-ndk library supplies generated protocol, not the manager.",
+      "evidence_ids": [
+        "ev_cbb82269146c2dd11fb42fb29174a93f52bff1490e673a061844ba23bcfd6f89",
+        "ev_6393517dd4a2ab376d53ddf85f166ab40d8e2cfc6882dd3ead43d9c8305b758e",
+        "ev_482fb3830fc27030a951962098e871fd74101c62fcb8ab623e6e0d868adbe8ed",
+        "ev_a72db9f7e927a30b739b542c9004081ed6c87841a2a70f562a94f852224a1fa9",
+        "ev_d5596dd42815ce5037c20b72ba87523c2dbc55dd1f0013e0a40b2e1ee90997ec",
+        "ev_b9fd218e6b8d712bba2fdba8a74943b18c89d24ffe612ec05a7f7c296e78c0e3"
+      ]
+    },
+    {
+      "id": "interface_identity",
+      "kind": "static shipped-artifact observation",
+      "claim": "Generated service version is 1 and hash is 62c86cf5f8f15456f451d2241b4f21b10627e514. No live lookup was performed.",
+      "evidence_ids": [
+        "ev_a62cc6b5cac9de949bc206710b1dd49b87e869557fa799529224f10028bb698e",
+        "ev_da21340e53cc02d1ddf6c9ce85eff4a2bb26c3ae5b72fb15c33fd8c6bffb0d2e"
+      ]
+    },
+    {
+      "id": "native_clear_and_registration",
+      "kind": "static shipped-artifact observation",
+      "claim": "Native clear transaction 1 uses flags 0x10000001 and no cleanup reply; registration transaction 5 uses flags 0x10000000 and reads status plus an int. The service clear delegates and creates a local OK status; generated one-way dispatch discards it.",
+      "evidence_ids": [
+        "ev_3d99a371726e942f6125b0b43e30a8a4f4846ac23552dc06371bc28519afdf69",
+        "ev_f59dfbb85400dd69ed1826389e875297c64b18f36add9c3ff9597f41214ad98d",
+        "ev_69919e9f4e695c4000cba1b264c17ea11733d8ef65f360470458a80f55447f05",
+        "ev_1547b32ee6ede0e38a06f14f36a4d8dc4634338e64b6740577f81566607b3346",
+        "ev_6860017b4e0402db698fb17ab11b5b99fe1d56c5b870b630cafd7b1e265836de",
+        "ev_0e58ccfe0cc18f0feccd6e276c5736f062dcab86cb6a068261470860ce227dea",
+        "ev_4677168fc26f13c6672c17f389af18062f1365e595834ae721f45d0d436d3a5e"
+      ]
+    },
+    {
+      "id": "current_callback_flags",
+      "kind": "static shipped-artifact observation",
+      "claim": "Current native raw/segmented indication and segmented response proxies are one-way. Indication segments carry message ID, slot, bytes, index and total length, with no producer-instance field.",
+      "evidence_ids": [
+        "ev_25dcf70df3e62aaebfeda34c64f1c10c498ad52784bb09939596cf67d12aaded",
+        "ev_8d69da051cc3042bb7da244a6bf5aed5c35e4ff9aeed0d6136bc3da5d732259f",
+        "ev_dcf73b2fb256abd7a3efdcd43e0d6879f0e21847c97c96af049fee312f07773b"
+      ]
+    },
+    {
+      "id": "scoped_registration_serialization",
+      "kind": "static observations with limited concurrency inference",
+      "claim": "Recovered RadioExternal constructor/registration and generated dispatch add no application mutex around delegated registration. Manager client allocation precedes its mutex; list insertion is locked; initial output follows unlock. Actual concurrent stock execution and duplicate-ID behavior remain untested.",
+      "evidence_ids": [
+        "ev_b9fd218e6b8d712bba2fdba8a74943b18c89d24ffe612ec05a7f7c296e78c0e3",
+        "ev_dea11d9221dfb5e52c32e4264673c858866dddbd21503c5c9504fdf03df98212",
+        "ev_69919e9f4e695c4000cba1b264c17ea11733d8ef65f360470458a80f55447f05",
+        "ev_1613e3672989f8a16b59b423cd1f036ebd177cb9ca30f56aea73b1be632a62bc",
+        "ev_785eb95a596aed7ac8c5c93bc4fce022af76c26d3701c91315f0fee0711421a0",
+        "ev_5663aa0f5e2e047fb7ca5cc1c104d965570f205c57841721bb7be73ba8e94a13",
+        "ev_c9d186bb6bb7ebf345bd4fd02ca550a19cd65137b9a75c87edc2c9d967410882"
+      ]
+    },
+    {
+      "id": "scoped_death_hooks",
+      "kind": "bounded closure and direct static-reference observation",
+      "claim": "Recovered RadioExternal constructor/registration, wrapper setters and destructors retain/release callback references but do not arm the shared death helper. Direct linkToDeath callers are other radio/RilExt wrappers. This is not global negative evidence or immediate client-death cleanup proof.",
+      "evidence_ids": [
+        "ev_b9fd218e6b8d712bba2fdba8a74943b18c89d24ffe612ec05a7f7c296e78c0e3",
+        "ev_dea11d9221dfb5e52c32e4264673c858866dddbd21503c5c9504fdf03df98212",
+        "ev_2331ede8de26cb95857f2d7b65fef48c3e6942a92f8d46868586ee29e82611f4",
+        "ev_9dc31b43c299902eda17c63290f1fd7b2e3ae6857e8f1a7639cc4638a80d5743",
+        "ev_295dd51c0a0cb77a1684b6ff1d60cc1cbf25d1bd5766eb36c0e22a7dde176864",
+        "ev_719599c40d6b948df51f3c69017b8914f257be5fab9767af66cc8b3a3151e292",
+        "ev_99b560e1b6fca3943a714c880a55e905fa229f3dd7d0c475ea6a7b84cc96b61c",
+        "ev_5c6c12f3a5caf20ad122922f7791acc181496e53c7995667d861237b2443fe1b",
+        "ev_482fb3830fc27030a951962098e871fd74101c62fcb8ab623e6e0d868adbe8ed",
+        "ev_c9d186bb6bb7ebf345bd4fd02ca550a19cd65137b9a75c87edc2c9d967410882"
+      ]
+    },
+    {
+      "id": "complete_native_segment_loops",
+      "kind": "static shipped-artifact observation",
+      "claim": "Both complete native AIDL split loops send consecutive bounded segments and preserve a full final segment at exact multiples; each stops on failed callback submission. No vendor loop was executed.",
+      "evidence_ids": [
+        "ev_5a6ab1bee9280c3bf322418d8ad4cc8dc57043d6b8cb40f3e220cae112c57208",
+        "ev_6d5d6cf3a7e62c7dfff4be4dc94b6dd01df83c0033da2e853113591d06244847",
+        "ev_62a76d79d0c3ca9fb6b025431ca6473b757b113e81ae91866969e7adbe7a740a",
+        "ev_53fca4cf2edadfe3b0312cdcca4c0816a8b1410ed2b8e6248bbb9f27ced3f12f",
+        "ev_1301d5285ad12a3fbffd21622150c3e82024153c89071b742e3baf531320c19e",
+        "ev_40f0067c4331f85106e4ff71d2ce08adda875ce26201d01c7f6087db012639ff",
+        "ev_5a654987c8fc3731a0c97fc0de44bbb0b20bd9636ce6cd58a1be252e95bb1f03"
+      ]
+    },
+    {
+      "id": "specific_locked_producers",
+      "kind": "static control-flow and ARM64 instruction observation",
+      "claim": "Raw broadcast and numeric-ID indication use the same manager mutex as clear and retain it through the delegated complete callback call. Pointer/list overloads have no internal lock; initial registration output bypasses that lock. Caller-held serialization and full producer closure remain unqualified.",
+      "evidence_ids": [
+        "ev_c26d30ae81f4c813dedd6a59f73dc4c7b428fa1ecfac785724067acb23b53d78",
+        "ev_f88abdb1df764575cbfaf41febaba61f65606bbceaa584eebb7ff75d3f7c1abc",
+        "ev_381fbe37f5cae5e851bfc377d7a287c326f86ecd34887df014a6e51a6af9cd40",
+        "ev_948631ef109e55ee38b8024e00516b8721d9072c7ef4dc06ad8ed7352b6d81c7",
+        "ev_6860017b4e0402db698fb17ab11b5b99fe1d56c5b870b630cafd7b1e265836de",
+        "ev_9dbb17a5db8f54b3abfb49ab988c291df61d3967e27d841a0ea62fe60b8533b6",
+        "ev_1613e3672989f8a16b59b423cd1f036ebd177cb9ca30f56aea73b1be632a62bc",
+        "ev_785eb95a596aed7ac8c5c93bc4fce022af76c26d3701c91315f0fee0711421a0",
+        "ev_77bd3e3725b347bccb429946c41acee76def37ffc9a5bb0c492cda2c68bd8809",
+        "ev_df354cb0104377e3ea53cae44649dfb7311e63574b4abbd0b5d3f958d7a67c5e"
+      ]
+    },
+    {
+      "id": "cleanup_is_not_reset",
+      "kind": "static evidence and explicit unresolved obligation",
+      "claim": "Client clear/removal, separate pending-request completion and modem reset are distinct. No reset/drain acknowledgement was recovered from the current Binder method inventory; no fence is relaxed.",
+      "evidence_ids": [
+        "ev_80137bb1ecc8cff5f6bfefbc2300d3107dc4ec0a7c5455f92fc6e064386a4435",
+        "ev_69919e9f4e695c4000cba1b264c17ea11733d8ef65f360470458a80f55447f05",
+        "ev_6860017b4e0402db698fb17ab11b5b99fe1d56c5b870b630cafd7b1e265836de",
+        "ev_ad654ab44181bfa162e5d40c88c69a073135637ddb227539dea30170dbd10426",
+        "ev_0dd98ad121d0b05cc5ae94b6e09803f3d0563c231bad1f0566544a2f53402ee2",
+        "ev_76dd1df6e49a3c87ac56144b2951d9211cc7f3c17e4725bdb04477d8eb52b8f9",
+        "ev_89313ef8b01c3a4e9e3532c5333dcf18432aa3661ed8040697ecdd07d6cb04ee"
+      ],
+      "prior_evidence_ids": [
+        "ev_8ed7eb22dd45fbe657fb74b19c85a9b6cd77ce06074195adec2ef121ca3db2cf",
+        "ev_0dd98ad121d0b05cc5ae94b6e09803f3d0563c231bad1f0566544a2f53402ee2"
+      ],
+      "prior_record": "docs/evidence/vendor-radio-cleanup-provenance.json"
+    }
+  ],
+  "evidence_records": [
+    {
+      "file": "artifacts/radio-recovery-rea/adapter-procedures.json",
+      "sha256": "be8f78488b15028734c0ddff9da15505d19bba92449c5ee917de1aebcaff2aa1",
+      "evidence_id": "ev_80137bb1ecc8cff5f6bfefbc2300d3107dc4ec0a7c5455f92fc6e064386a4435",
+      "subject_sha256": "a1cf6afc435d3b0e31b8ded4ae0bd9f4601c4938a66394eb3a27419b7c2ce59a",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "search_procedures",
+      "parameters": {
+        "pattern": "RadioExternal|_aidl_onTransact|binderDied|Death|clear|ResponseFunctions",
+        "mode": "regex",
+        "case_sensitive": false
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact"
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/adapter-clear-proxy.json",
+      "sha256": "108612a5f5ab917569132b1a01ab65115e2bdc96c4d09fc9bb05e2b8679af665",
+      "evidence_id": "ev_3d99a371726e942f6125b0b43e30a8a4f4846ac23552dc06371bc28519afdf69",
+      "subject_sha256": "a1cf6afc435d3b0e31b8ded4ae0bd9f4601c4938a66394eb3a27419b7c2ce59a",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x10c1e0"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x10c1e0",
+        "name": "aidl::vendor::samsung_slsi::telephony::hardware::radioExternal::BpOemSlsiRadioExternal::clearResponseFunctions",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x10c1e0",
+              "end": "0x10c27f"
+            }
+          ],
+          "total_bytes": 160,
+          "span_bytes": 160,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/adapter-set-proxy.json",
+      "sha256": "9b5bad6976fa33189e1e666af04388b741d00e572907e7ac83f0722d01be7692",
+      "evidence_id": "ev_f59dfbb85400dd69ed1826389e875297c64b18f36add9c3ff9597f41214ad98d",
+      "subject_sha256": "a1cf6afc435d3b0e31b8ded4ae0bd9f4601c4938a66394eb3a27419b7c2ce59a",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x10c590"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x10c590",
+        "name": "aidl::vendor::samsung_slsi::telephony::hardware::radioExternal::BpOemSlsiRadioExternal::setResponseFunctions",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x10c590",
+              "end": "0x10c6a3"
+            }
+          ],
+          "total_bytes": 276,
+          "span_bytes": 276,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/adapter-ontransact.json",
+      "sha256": "dccc9cca44cd748101e1f6c10e8c47e1cbea15122da941043d665887635f25f6",
+      "evidence_id": "ev_69919e9f4e695c4000cba1b264c17ea11733d8ef65f360470458a80f55447f05",
+      "subject_sha256": "a1cf6afc435d3b0e31b8ded4ae0bd9f4601c4938a66394eb3a27419b7c2ce59a",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x10d680"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x10d680",
+        "name": "aidl::vendor::samsung_slsi::telephony::hardware::radioExternal::_aidl_vendor_samsung_slsi_telephony_hardware_radioExternal_IOemSlsiRadioExternal_onTransact",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x10d680",
+              "end": "0x10dbc7"
+            }
+          ],
+          "total_bytes": 1352,
+          "span_bytes": 1352,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/adapter-raw-indication-proxy.json",
+      "sha256": "28503cd17a6a31868fc2add8c0976ac3cd03bb78dffbf336d80508cb1629ea49",
+      "evidence_id": "ev_25dcf70df3e62aaebfeda34c64f1c10c498ad52784bb09939596cf67d12aaded",
+      "subject_sha256": "a1cf6afc435d3b0e31b8ded4ae0bd9f4601c4938a66394eb3a27419b7c2ce59a",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x10e840"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x10e840",
+        "name": "aidl::vendor::samsung_slsi::telephony::hardware::radioExternal::BpOemSlsiRadioExternalInd::rilExternalRawIndication",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x10e840",
+              "end": "0x10e917"
+            }
+          ],
+          "total_bytes": 216,
+          "span_bytes": 216,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/adapter-seg-indication-proxy.json",
+      "sha256": "e8a2b347da36aca7d0362e3fee0e31a60c528936cec9833d2c036037f2675c33",
+      "evidence_id": "ev_8d69da051cc3042bb7da244a6bf5aed5c35e4ff9aeed0d6136bc3da5d732259f",
+      "subject_sha256": "a1cf6afc435d3b0e31b8ded4ae0bd9f4601c4938a66394eb3a27419b7c2ce59a",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x10e920"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x10e920",
+        "name": "aidl::vendor::samsung_slsi::telephony::hardware::radioExternal::BpOemSlsiRadioExternalInd::rilExternalRawIndicationSeg",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x10e920",
+              "end": "0x10ea27"
+            }
+          ],
+          "total_bytes": 264,
+          "span_bytes": 264,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/adapter-seg-response-proxy.json",
+      "sha256": "7ec4ee0754208191dad142a2d21c7b3ff9066cf72a382eda91b462c063d837e8",
+      "evidence_id": "ev_dcf73b2fb256abd7a3efdcd43e0d6879f0e21847c97c96af049fee312f07773b",
+      "subject_sha256": "a1cf6afc435d3b0e31b8ded4ae0bd9f4601c4938a66394eb3a27419b7c2ce59a",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x10fd00"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x10fd00",
+        "name": "aidl::vendor::samsung_slsi::telephony::hardware::radioExternal::BpOemSlsiRadioExternalRes::sendRequestRawResponseSeg",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x10fd00",
+              "end": "0x10fe07"
+            }
+          ],
+          "total_bytes": 264,
+          "span_bytes": 264,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/adapter-interface-version.json",
+      "sha256": "7e9ebd9ae832372c56bba966713a150e7521b0684cde0470a965da31e503733b",
+      "evidence_id": "ev_a62cc6b5cac9de949bc206710b1dd49b87e869557fa799529224f10028bb698e",
+      "subject_sha256": "a1cf6afc435d3b0e31b8ded4ae0bd9f4601c4938a66394eb3a27419b7c2ce59a",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x10ca90"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x10ca90",
+        "name": "aidl::vendor::samsung_slsi::telephony::hardware::radioExternal::BnOemSlsiRadioExternal::getInterfaceVersion",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x10ca90",
+              "end": "0x10cabf"
+            }
+          ],
+          "total_bytes": 48,
+          "span_bytes": 48,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/adapter-interface-hash.json",
+      "sha256": "72056f56e38cb55436aad636aa5540191b5ee88ae225b2e04918aeba423a3657",
+      "evidence_id": "ev_da21340e53cc02d1ddf6c9ce85eff4a2bb26c3ae5b72fb15c33fd8c6bffb0d2e",
+      "subject_sha256": "a1cf6afc435d3b0e31b8ded4ae0bd9f4601c4938a66394eb3a27419b7c2ce59a",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x10cac0"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x10cac0",
+        "name": "aidl::vendor::samsung_slsi::telephony::hardware::radioExternal::BnOemSlsiRadioExternal::getInterfaceHash",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x10cac0",
+              "end": "0x10cafb"
+            }
+          ],
+          "total_bytes": 60,
+          "span_bytes": 60,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/service-procedures.json",
+      "sha256": "f376d25cbe1188e42e5b3f1f5786286d7b734364747522ff9b585583d5c9a438",
+      "evidence_id": "ev_9fdebd5a5006ed65d6781f4a143a02500debd392f16d7b6284cca890ff8e627b",
+      "subject_sha256": "05bfb97b08b0647317b4b4a144dfe02d77e104df8f2b7700b46d58c06aa714d4",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "search_procedures",
+      "parameters": {
+        "pattern": "External|BinderDeath|BinderDied",
+        "mode": "regex",
+        "case_sensitive": false
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact"
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/service-function-124a40.json",
+      "sha256": "c5480b034da5c7f11456b81ea6843a587ae0b090fe397cf5ad862c3f02c77627",
+      "evidence_id": "ev_b9fd218e6b8d712bba2fdba8a74943b18c89d24ffe612ec05a7f7c296e78c0e3",
+      "subject_sha256": "05bfb97b08b0647317b4b4a144dfe02d77e104df8f2b7700b46d58c06aa714d4",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x124a40"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x124a40",
+        "name": "vendor::samsung_slsi::telephony::hardware::radio::external::impl::RadioExternal::RadioExternal",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x124a40",
+              "end": "0x124a97"
+            }
+          ],
+          "total_bytes": 88,
+          "span_bytes": 88,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/service-function-124aa0.json",
+      "sha256": "a7639050a3eabe2a433ee488abe5537c96bce5e58b519548e9aa4bdf3fc82cad",
+      "evidence_id": "ev_1547b32ee6ede0e38a06f14f36a4d8dc4634338e64b6740577f81566607b3346",
+      "subject_sha256": "05bfb97b08b0647317b4b4a144dfe02d77e104df8f2b7700b46d58c06aa714d4",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x124aa0"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x124aa0",
+        "name": "vendor::samsung_slsi::telephony::hardware::radio::external::impl::RadioExternal::clearResponseFunctions",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x124aa0",
+              "end": "0x124ad7"
+            }
+          ],
+          "total_bytes": 56,
+          "span_bytes": 56,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/service-function-124ba0.json",
+      "sha256": "9e1e960df864974907f88c284e9fbf0d00e61e20af5b5c68726547fe4eacc757",
+      "evidence_id": "ev_dea11d9221dfb5e52c32e4264673c858866dddbd21503c5c9504fdf03df98212",
+      "subject_sha256": "05bfb97b08b0647317b4b4a144dfe02d77e104df8f2b7700b46d58c06aa714d4",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x124ba0"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x124ba0",
+        "name": "vendor::samsung_slsi::telephony::hardware::radio::external::impl::RadioExternal::setResponseFunctions",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x124ba0",
+              "end": "0x124d17"
+            }
+          ],
+          "total_bytes": 376,
+          "span_bytes": 376,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/service-function-124d20.json",
+      "sha256": "dac8d9cd7d15236bc4d473f95157c215380d0dae6a6e04aa653a6d411d8279e1",
+      "evidence_id": "ev_d5596dd42815ce5037c20b72ba87523c2dbc55dd1f0013e0a40b2e1ee90997ec",
+      "subject_sha256": "05bfb97b08b0647317b4b4a144dfe02d77e104df8f2b7700b46d58c06aa714d4",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x124d20"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x124d20",
+        "name": "vendor::samsung_slsi::telephony::hardware::radio::external::impl::RadioExternal::make",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x124d20",
+              "end": "0x124dc7"
+            }
+          ],
+          "total_bytes": 168,
+          "span_bytes": 168,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/service-function-125200.json",
+      "sha256": "69db7e803e5629ffc1320d0912c59362876d0bf18d32fb22ee3daa751d04e364",
+      "evidence_id": "ev_2331ede8de26cb95857f2d7b65fef48c3e6942a92f8d46868586ee29e82611f4",
+      "subject_sha256": "05bfb97b08b0647317b4b4a144dfe02d77e104df8f2b7700b46d58c06aa714d4",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x125200"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x125200",
+        "name": "vendor::samsung_slsi::telephony::hardware::radio::external::impl::RadioExternalResponse::setResponseFunction",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x125200",
+              "end": "0x125273"
+            }
+          ],
+          "total_bytes": 116,
+          "span_bytes": 116,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/service-function-1253a0.json",
+      "sha256": "3a953bc90d485b2e1e6e71273d748cc2beaec230df5a795970483af31a705145",
+      "evidence_id": "ev_9dc31b43c299902eda17c63290f1fd7b2e3ae6857e8f1a7639cc4638a80d5743",
+      "subject_sha256": "05bfb97b08b0647317b4b4a144dfe02d77e104df8f2b7700b46d58c06aa714d4",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1253a0"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x1253a0",
+        "name": "vendor::samsung_slsi::telephony::hardware::radio::external::impl::RadioExternalIndication::setResponseFunction",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x1253a0",
+              "end": "0x125413"
+            }
+          ],
+          "total_bytes": 116,
+          "span_bytes": 116,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/service-function-125280.json",
+      "sha256": "3651d0982df1ad495ce647dbad81e7a3dc9e9c60b974d04a3ef801d5b8fc6575",
+      "evidence_id": "ev_8b0ab5cbcf1d6dc408cdaf31958dcd8aa8a70d7a766369b99b4fa398a4a20fce",
+      "subject_sha256": "05bfb97b08b0647317b4b4a144dfe02d77e104df8f2b7700b46d58c06aa714d4",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x125280"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x125280",
+        "name": "vendor::samsung_slsi::telephony::hardware::radio::external::impl::RadioExternalResponse::sendRequestRawResponse",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x125280",
+              "end": "0x125303"
+            }
+          ],
+          "total_bytes": 132,
+          "span_bytes": 132,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/service-function-125310.json",
+      "sha256": "a21a35a74ebbdc01cfbdffd830689a0a10094da7681c10da397f17f5e2615cc6",
+      "evidence_id": "ev_40f0067c4331f85106e4ff71d2ce08adda875ce26201d01c7f6087db012639ff",
+      "subject_sha256": "05bfb97b08b0647317b4b4a144dfe02d77e104df8f2b7700b46d58c06aa714d4",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x125310"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x125310",
+        "name": "vendor::samsung_slsi::telephony::hardware::radio::external::impl::RadioExternalResponse::sendRequestRawResponseSeg",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x125310",
+              "end": "0x125393"
+            }
+          ],
+          "total_bytes": 132,
+          "span_bytes": 132,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/service-function-125420.json",
+      "sha256": "5ab298cf1777b76c0083ac6eea5aa5089bfd1d2447c7023cac5b145e7ac9b08f",
+      "evidence_id": "ev_1251486aa61e66a4f4f5e783e2920f5d6978d0c0464dc1be8bd1bf73a447de7b",
+      "subject_sha256": "05bfb97b08b0647317b4b4a144dfe02d77e104df8f2b7700b46d58c06aa714d4",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x125420"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x125420",
+        "name": "vendor::samsung_slsi::telephony::hardware::radio::external::impl::RadioExternalIndication::rilExternalRawIndication",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x125420",
+              "end": "0x1254a3"
+            }
+          ],
+          "total_bytes": 132,
+          "span_bytes": 132,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/service-function-1254b0.json",
+      "sha256": "7e9caa06d5fd80fd97a75f8a96726850c7736919a912b1098707f3ea6e6293df",
+      "evidence_id": "ev_5a654987c8fc3731a0c97fc0de44bbb0b20bd9636ce6cd58a1be252e95bb1f03",
+      "subject_sha256": "05bfb97b08b0647317b4b4a144dfe02d77e104df8f2b7700b46d58c06aa714d4",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1254b0"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x1254b0",
+        "name": "vendor::samsung_slsi::telephony::hardware::radio::external::impl::RadioExternalIndication::rilExternalRawIndicationSeg",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x1254b0",
+              "end": "0x125533"
+            }
+          ],
+          "total_bytes": 132,
+          "span_bytes": 132,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/service-function-125540.json",
+      "sha256": "5d5fd852c2ccf63e5ae94c864d031664a2150f49b9f7734ac43ff135809545d4",
+      "evidence_id": "ev_295dd51c0a0cb77a1684b6ff1d60cc1cbf25d1bd5766eb36c0e22a7dde176864",
+      "subject_sha256": "05bfb97b08b0647317b4b4a144dfe02d77e104df8f2b7700b46d58c06aa714d4",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x125540"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x125540",
+        "name": "vendor::samsung_slsi::telephony::hardware::radio::external::impl::RadioExternalResponse::~RadioExternalResponse",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x125540",
+              "end": "0x1255a7"
+            }
+          ],
+          "total_bytes": 104,
+          "span_bytes": 104,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/service-function-125620.json",
+      "sha256": "f2b8d62c94e941888b1678ce0669de2c8cec1b0dc964b2c4c94f2e78e6a8b39d",
+      "evidence_id": "ev_719599c40d6b948df51f3c69017b8914f257be5fab9767af66cc8b3a3151e292",
+      "subject_sha256": "05bfb97b08b0647317b4b4a144dfe02d77e104df8f2b7700b46d58c06aa714d4",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x125620"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x125620",
+        "name": "vendor::samsung_slsi::telephony::hardware::radio::external::impl::RadioExternalIndication::~RadioExternalIndication",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x125620",
+              "end": "0x125687"
+            }
+          ],
+          "total_bytes": 104,
+          "span_bytes": 104,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/service-function-126a30.json",
+      "sha256": "ddae687dfcce0a16db4c43805acb0d730953c3dead916208eda18ad9d8eb9f7e",
+      "evidence_id": "ev_5c6c12f3a5caf20ad122922f7791acc181496e53c7995667d861237b2443fe1b",
+      "subject_sha256": "05bfb97b08b0647317b4b4a144dfe02d77e104df8f2b7700b46d58c06aa714d4",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x126a30"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x126a30",
+        "name": "BinderDeathRecipient::linkToDeath",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x126a30",
+              "end": "0x126a9f"
+            }
+          ],
+          "total_bytes": 112,
+          "span_bytes": 112,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/service-function-13a688.json",
+      "sha256": "76b5cc32caec7d7dee48a2d24fb580e38e1316021dd1f6b41b6a614b3c92c3ec",
+      "evidence_id": "ev_99b560e1b6fca3943a714c880a55e905fa229f3dd7d0c475ea6a7b84cc96b61c",
+      "subject_sha256": "05bfb97b08b0647317b4b4a144dfe02d77e104df8f2b7700b46d58c06aa714d4",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x13a688"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x13a688",
+        "name": "BinderDeathRecipient::linkToDeath",
+        "classification": {
+          "external": false,
+          "thunk": true,
+          "thunk_target": "0x126a30",
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x13a688",
+              "end": "0x13a697"
+            }
+          ],
+          "total_bytes": 16,
+          "span_bytes": 16,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/manager-raw-broadcast.json",
+      "sha256": "ca42022e09286b32d4b44167fab7c7fe5cbfe1d45b9eda93c7f9f55f1706ff4b",
+      "evidence_id": "ev_c26d30ae81f4c813dedd6a59f73dc4c7b428fa1ecfac785724067acb23b53d78",
+      "subject_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1df560"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x1df560",
+        "name": "RilExternalManager::broadcastIndication",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x1df560",
+              "end": "0x1df6d7"
+            }
+          ],
+          "total_bytes": 376,
+          "span_bytes": 376,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/manager-parsed-broadcast.json",
+      "sha256": "91613c1cd9284277cbec791ff98dfcf64b2658c5e263fcac19467762c99c6b2e",
+      "evidence_id": "ev_381fbe37f5cae5e851bfc377d7a287c326f86ecd34887df014a6e51a6af9cd40",
+      "subject_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1df6e0"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x1df6e0",
+        "name": "RilExternalManager::broadcastIndication",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x1df6e0",
+              "end": "0x1df77b"
+            }
+          ],
+          "total_bytes": 156,
+          "span_bytes": 156,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/manager-named-indication.json",
+      "sha256": "f0af87e8851cce7e788332cd1e4de8eb867bcac0382a3c3277482e32c99b1dc0",
+      "evidence_id": "ev_f88abdb1df764575cbfaf41febaba61f65606bbceaa584eebb7ff75d3f7c1abc",
+      "subject_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1df420"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x1df420",
+        "name": "RilExternalManager::rilExternalRawIndication",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x1df420",
+              "end": "0x1df4f3"
+            }
+          ],
+          "total_bytes": 212,
+          "span_bytes": 212,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/manager-single-indication.json",
+      "sha256": "a9edb00a2fcb3e5c814ed6eab7f241e52d81c30d8edf4870261d684f3dcf28f5",
+      "evidence_id": "ev_948631ef109e55ee38b8024e00516b8721d9072c7ef4dc06ad8ed7352b6d81c7",
+      "subject_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1df500"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x1df500",
+        "name": "RilExternalManager::rilExternalRawIndication",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x1df500",
+              "end": "0x1df55b"
+            }
+          ],
+          "total_bytes": 92,
+          "span_bytes": 92,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/manager-manager-getclient.json",
+      "sha256": "09cab04e1c44f221a65b786e6bd58c0a5c29e96a0e6a31e4ed3024336898000d",
+      "evidence_id": "ev_2ea66c31c5be77061f5426e710bdd495e4f55bfc557eb12c4dd9b55f02daf00b",
+      "subject_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1de980"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x1de980",
+        "name": "RilExternalManager::getClient",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x1de980",
+              "end": "0x1de9bb"
+            }
+          ],
+          "total_bytes": 60,
+          "span_bytes": 60,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/manager-service-registration.json",
+      "sha256": "de207433dec16e06a372d89185e6489f4e4fa89cde517f79768e32b1d9bdc655",
+      "evidence_id": "ev_cbb82269146c2dd11fb42fb29174a93f52bff1490e673a061844ba23bcfd6f89",
+      "subject_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1e2650"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x1e2650",
+        "name": "radioExternalService::registerService",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x1e2650",
+              "end": "0x1e279f"
+            }
+          ],
+          "total_bytes": 336,
+          "span_bytes": 336,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/manager-indication-split-loop.json",
+      "sha256": "596f56fc2d8cb67ad9b1b9be6a50afcfae5e73c39dedff0f9be07d9ea87e8ce4",
+      "evidence_id": "ev_5a6ab1bee9280c3bf322418d8ad4cc8dc57043d6b8cb40f3e220cae112c57208",
+      "subject_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1e31e0"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x1e31e0",
+        "name": "vendor::samsung_slsi::telephony::hardware::radio::external::impl::RadioExternalAidlIndication::onIndicationSeg",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x1e31e0",
+              "end": "0x1e3317"
+            }
+          ],
+          "total_bytes": 312,
+          "span_bytes": 312,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/manager-response-split-loop.json",
+      "sha256": "52048b218aadb88dab5ff9ebee150fe1117518c0750c30886ccc6c5de8309999",
+      "evidence_id": "ev_6d5d6cf3a7e62c7dfff4be4dc94b6dd01df83c0033da2e853113591d06244847",
+      "subject_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1e2fe0"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x1e2fe0",
+        "name": "vendor::samsung_slsi::telephony::hardware::radio::external::impl::RadioExternalAidlResponse::onResponseSeg",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x1e2fe0",
+              "end": "0x1e3057"
+            },
+            {
+              "start": "0x1e3060",
+              "end": "0x1e3127"
+            }
+          ],
+          "total_bytes": 320,
+          "span_bytes": 328,
+          "non_contiguous": true,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/manager-registration-initial-output.json",
+      "sha256": "eb72ab24f3db3dcc7f48f422b3217e612d7b3f278e63250eaceb2e520c9dae5a",
+      "evidence_id": "ev_785eb95a596aed7ac8c5c93bc4fce022af76c26d3701c91315f0fee0711421a0",
+      "subject_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1ded90"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x1ded90",
+        "name": "RilExternalManager::onNewCommandConnect",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x1ded90",
+              "end": "0x1df0c3"
+            }
+          ],
+          "total_bytes": 820,
+          "span_bytes": 820,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/manager-client-indication.json",
+      "sha256": "c7962f61e6e0692a662662143bc7e20230e6d22351aaa58b8cdd271bb9324fbe",
+      "evidence_id": "ev_62a76d79d0c3ca9fb6b025431ca6473b757b113e81ae91866969e7adbe7a740a",
+      "subject_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1ddb90"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x1ddb90",
+        "name": "RilExternalClient::rilExternalRawIndication",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x1ddb90",
+              "end": "0x1ddbff"
+            }
+          ],
+          "total_bytes": 112,
+          "span_bytes": 112,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/manager-client-segment-indication.json",
+      "sha256": "e2c509a59206a07d05f2d6cb3186d3b02c548dfb760d121cdb5e215db4c8211c",
+      "evidence_id": "ev_53fca4cf2edadfe3b0312cdcca4c0816a8b1410ed2b8e6248bbb9f27ced3f12f",
+      "subject_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1ddc00"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x1ddc00",
+        "name": "RilExternalClient::rilExternalRawIndicationSeg",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x1ddc00",
+              "end": "0x1ddc5b"
+            }
+          ],
+          "total_bytes": 92,
+          "span_bytes": 92,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/manager-client-segment-response.json",
+      "sha256": "6c2df541b8bad6efd680720b799c0ffa61303ab00c41f1967afdc6acdf0ba26b",
+      "evidence_id": "ev_1301d5285ad12a3fbffd21622150c3e82024153c89071b742e3baf531320c19e",
+      "subject_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1ddb40"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x1ddb40",
+        "name": "RilExternalClient::sendRequestRawResponseSeg",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x1ddb40",
+              "end": "0x1ddb8f"
+            }
+          ],
+          "total_bytes": 80,
+          "span_bytes": 80,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/manager-client-id-allocation.json",
+      "sha256": "4e2f6826d6bf01e277ab3d8569fd815655b314404da3283482f75ad37335310c",
+      "evidence_id": "ev_5663aa0f5e2e047fb7ca5cc1c104d965570f205c57841721bb7be73ba8e94a13",
+      "subject_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1dd390"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x1dd390",
+        "name": "RilExternalClient::getNextClientId",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x1dd390",
+              "end": "0x1dd3bb"
+            }
+          ],
+          "total_bytes": 44,
+          "span_bytes": 44,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/manager-newclient-connect.json",
+      "sha256": "32131de2b9d21ad706280f66792146a94ebf74bcbf5fc23d427dab91b9cbc3c4",
+      "evidence_id": "ev_1613e3672989f8a16b59b423cd1f036ebd177cb9ca30f56aea73b1be632a62bc",
+      "subject_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1deb70"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x1deb70",
+        "name": "RilExternalManager::onNewClientConnect",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x1deb70",
+              "end": "0x1ded87"
+            }
+          ],
+          "total_bytes": 536,
+          "span_bytes": 536,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/manager-manager-clear.json",
+      "sha256": "9fc59a816c952063d8258c3591632f017cacaf3e7c3f20d1b06038da2756b9f1",
+      "evidence_id": "ev_6860017b4e0402db698fb17ab11b5b99fe1d56c5b870b630cafd7b1e265836de",
+      "subject_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1df0d0"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x1df0d0",
+        "name": "RilExternalManager::clearResponseFunctions",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x1df0d0",
+              "end": "0x1df167"
+            }
+          ],
+          "total_bytes": 152,
+          "span_bytes": 152,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/manager-manager-reset.json",
+      "sha256": "fe094e08ccf8f7f6ba034d08cefd0559c80470c50e7a419353a6d91a290f93f5",
+      "evidence_id": "ev_ad654ab44181bfa162e5d40c88c69a073135637ddb227539dea30170dbd10426",
+      "subject_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1df200"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x1df200",
+        "name": "RilExternalManager::reset",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x1df200",
+              "end": "0x1df237"
+            },
+            {
+              "start": "0x1df240",
+              "end": "0x1df35b"
+            }
+          ],
+          "total_bytes": 340,
+          "span_bytes": 348,
+          "non_contiguous": true,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/manager-manager-lock-identity.json",
+      "sha256": "5b372ce18ac6769cbda0d886c5bf8a151667963fcd7c86960a9eb3cc99149334",
+      "evidence_id": "ev_9dbb17a5db8f54b3abfb49ab988c291df61d3967e27d841a0ea62fe60b8533b6",
+      "subject_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1de840"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x1de840",
+        "name": "RilExternalManager::RilExternalManager",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x1de840",
+              "end": "0x1de8a3"
+            }
+          ],
+          "total_bytes": 100,
+          "span_bytes": 100,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/all-external-producers.json",
+      "sha256": "9feb6a96cb63e288be5ece37ea677011989dc55cb280a6d4070f24dedf9d1896",
+      "evidence_id": "ev_77bd3e3725b347bccb429946c41acee76def37ffc9a5bb0c492cda2c68bd8809",
+      "subject_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "search_procedures",
+      "parameters": {
+        "pattern": "RadioExternal[A-Za-z]*::.*(Indication|Response)|BaseIndication::|registerAidlService",
+        "mode": "regex",
+        "case_sensitive": true
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact"
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/manager-factory-aidl-register-direct.json",
+      "sha256": "50ecf825244ac2967fe5a07710dc1ece2a0cef5dd1b375f7f0166f679ec5353a",
+      "evidence_id": "ev_6393517dd4a2ab376d53ddf85f166ab40d8e2cfc6882dd3ead43d9c8305b758e",
+      "subject_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1e49e0"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x1e49e0",
+        "name": "vendor::samsung_slsi::telephony::hardware::radio::external::impl::registerAidlService",
+        "classification": {
+          "external": false,
+          "provenance": "ghidra-function-manager",
+          "thunk": false,
+          "thunk_target": null
+        },
+        "body": {
+          "available": true,
+          "contains_entry": true,
+          "non_contiguous": false,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "end": "0x1e4e1f",
+              "start": "0x1e49e0"
+            }
+          ],
+          "span_bytes": 1088,
+          "total_bytes": 1088
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/manager-factory-direct-1e33a0.json",
+      "sha256": "4804d5aebf54d36b64bf35358986dd1f5ace2897c53122086ebd132f2868c547",
+      "evidence_id": "ev_482fb3830fc27030a951962098e871fd74101c62fcb8ab623e6e0d868adbe8ed",
+      "subject_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1e33a0"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x1e33a0",
+        "name": "vendor::samsung_slsi::telephony::hardware::radio::external::impl::RadioExternalCallbackImpl::RadioExternalCallbackImpl",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x1e33a0",
+              "end": "0x1e3487"
+            }
+          ],
+          "total_bytes": 232,
+          "span_bytes": 232,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-recovery-rea/manager-factory-direct-1de7d0.json",
+      "sha256": "788ad2966d2b666ac2a61fb680956ee012783724790424cca566192a5184dee8",
+      "evidence_id": "ev_a72db9f7e927a30b739b542c9004081ed6c87841a2a70f562a94f852224a1fa9",
+      "subject_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1de7d0"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "procedure": {
+        "address": "0x1de7d0",
+        "name": "RilExternalManager::make",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x1de7d0",
+              "end": "0x1de837"
+            }
+          ],
+          "total_bytes": 104,
+          "span_bytes": 104,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-native-audit/cleanup-callback-set.json",
+      "sha256": "77a8f6a4fab04251ac19c6571463e21d083758737754db3eb2052c302d43d22d",
+      "evidence_id": "ev_c9d186bb6bb7ebf345bd4fd02ca550a19cd65137b9a75c87edc2c9d967410882",
+      "subject_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1e3d90"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "retained_prior_record": true,
+      "procedure": {
+        "address": "0x1e3d90",
+        "name": "vendor::samsung_slsi::telephony::hardware::radio::external::impl::RadioExternalCallbackImpl::setResponseFunctions",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x1e3d90",
+              "end": "0x1e3f87"
+            }
+          ],
+          "total_bytes": 504,
+          "span_bytes": 504,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-native-audit/cleanup-callback-clear.json",
+      "sha256": "09abf394ecbd5f82272671aa1142580093eefa5fa5720a60d9ad794f58b5abcb",
+      "evidence_id": "ev_0e58ccfe0cc18f0feccd6e276c5736f062dcab86cb6a068261470860ce227dea",
+      "subject_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1e3490"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "retained_prior_record": true,
+      "procedure": {
+        "address": "0x1e3490",
+        "name": "vendor::samsung_slsi::telephony::hardware::radio::external::impl::RadioExternalCallbackImpl::clearResponseFunctions",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x1e3490",
+              "end": "0x1e349b"
+            }
+          ],
+          "total_bytes": 12,
+          "span_bytes": 12,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-native-audit/cleanup-manager-response.json",
+      "sha256": "cb0c86e95e4177ce97d5a3642f586fc725e4cfe662521faf46c9a347be7785df",
+      "evidence_id": "ev_df354cb0104377e3ea53cae44649dfb7311e63574b4abbd0b5d3f958d7a67c5e",
+      "subject_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1df360"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "retained_prior_record": true,
+      "procedure": {
+        "address": "0x1df360",
+        "name": "RilExternalManager::sendRequestRawResponse",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x1df360",
+              "end": "0x1df41b"
+            }
+          ],
+          "total_bytes": 188,
+          "span_bytes": 188,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-native-audit/cleanup-client-clear.json",
+      "sha256": "24cc5493cd8453fd8b693e5575ed6572ea4997d147afe80d453ff3428e6800f2",
+      "evidence_id": "ev_4677168fc26f13c6672c17f389af18062f1365e595834ae721f45d0d436d3a5e",
+      "subject_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1dd530"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "retained_prior_record": true,
+      "procedure": {
+        "address": "0x1dd530",
+        "name": "RilExternalClient::clear",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x1dd530",
+              "end": "0x1dd60f"
+            }
+          ],
+          "total_bytes": 224,
+          "span_bytes": 224,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-native-audit/cleanup-external-onrequestcomplete.json",
+      "sha256": "0ffe50d0d43a682f67ed489db57ca335b081cb4ee703c16e33310f6cb3186d14",
+      "evidence_id": "ev_0dd98ad121d0b05cc5ae94b6e09803f3d0563c231bad1f0566544a2f53402ee2",
+      "subject_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1e2400"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "retained_prior_record": true,
+      "procedure": {
+        "address": "0x1e2400",
+        "name": "RIL_External_onRequestComplete",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x1e2400",
+              "end": "0x1e24cb"
+            }
+          ],
+          "total_bytes": 204,
+          "span_bytes": 204,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-native-audit/cleanup-requestlist-add.json",
+      "sha256": "0a48582c534240b960e41ecb9e3c684857d5e9b682ce4dcfb9215ab5e83f0ca5",
+      "evidence_id": "ev_76dd1df6e49a3c87ac56144b2951d9211cc7f3c17e4725bdb04477d8eb52b8f9",
+      "subject_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1dcb20"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "retained_prior_record": true,
+      "procedure": {
+        "address": "0x1dcb20",
+        "name": "radioExternalService::RadioExternalRequestList::add",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x1dcb20",
+              "end": "0x1dcb93"
+            }
+          ],
+          "total_bytes": 116,
+          "span_bytes": 116,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    },
+    {
+      "file": "artifacts/radio-native-audit/cleanup-requestlist-remove.json",
+      "sha256": "3687d97f72928e0851d1b249251d80fad80975e02e32ab15b9cf42fb97a2f800",
+      "evidence_id": "ev_89313ef8b01c3a4e9e3532c5333dcf18432aa3661ed8040697ecdd07d6cb04ee",
+      "subject_sha256": "6774fe671c3cce9bc4c35b97f170efad30e466336e90321584df1d35e934802c",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analysis_profile_digest": "c2de5952f36c9f6c4505b3684f77f8703ebb45773f43b10a1be10cd031907472",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1dcba0"
+      },
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "retained_prior_record": true,
+      "procedure": {
+        "address": "0x1dcba0",
+        "name": "radioExternalService::RadioExternalRequestList::remove",
+        "classification": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null,
+          "provenance": "ghidra-function-manager"
+        },
+        "body": {
+          "available": true,
+          "provenance": "ghidra-function-body-address-set",
+          "ranges": [
+            {
+              "start": "0x1dcba0",
+              "end": "0x1dcc43"
+            }
+          ],
+          "total_bytes": 164,
+          "span_bytes": 164,
+          "non_contiguous": false,
+          "contains_entry": true
+        }
+      }
+    }
+  ],
+  "existing_execution_records": [
+    {
+      "path": "docs/evidence/vendor-radio-cleanup-provenance.json",
+      "sha256": "d20534bfd9dfd3e0044cc4d59c63055916032bd84c3cffa39aa613b246f7951c",
+      "rerun_in_this_increment": false
+    },
+    {
+      "path": "docs/evidence/binder-provenance.json",
+      "sha256": "a709f18831b8c0bcb7db94808950fc80676f250d699c021ca2997907648a78ad",
+      "rerun_in_this_increment": false
+    },
+    {
+      "path": "docs/evidence/radio-indication-provenance.json",
+      "sha256": "47956ae392d72115ed032be2f97edc8d4e10e88424b976f3ca4c7f32621434c4",
+      "rerun_in_this_increment": false
+    },
+    {
+      "path": "docs/evidence/radio-request-provenance.json",
+      "sha256": "b6805aae4bfaccd139ae672e77de1bc419d4d3ca2b314ce656f7b654cf9ebddf",
+      "rerun_in_this_increment": false
+    },
+    {
+      "path": "docs/evidence/radio-supervisor-provenance.json",
+      "sha256": "0b918127636e84c6ce3d51a9486955683a093a8cfa5495cd3c198335521faf1d",
+      "rerun_in_this_increment": false
+    }
+  ],
+  "smallest_callable_boundaries": [
+    {
+      "boundary": "RadioExternal::make with controlled RadioExternalCallback and V1 Binder protocol",
+      "can_qualify": "actual adapter delegation/flags when executed with verified ABI",
+      "cannot_qualify": [
+        "manager deletion",
+        "pending work cancellation",
+        "complete producer serialization"
+      ]
+    },
+    {
+      "boundary": "original factory RadioExternalCallbackImpl/RilExternalManager plus complete AIDL splitters and controlled upstream callbacks in isolated ARM64 guest",
+      "can_qualify": "executed client membership, all producer entries, callback failure and registration overlap",
+      "requires": [
+        "source-supported or independently verified ABI",
+        "actual original manager code",
+        "barriers and controlled upstream collaborators",
+        "no guessed object layout",
+        "no host radio device paths"
+      ]
+    },
+    {
+      "boundary": "original pending-request admission/completion plus an acknowledged incarnation-bound reset",
+      "can_qualify": "request cleanup versus late completion, then safe successor if a real reset receipt is established",
+      "status": "unresolved; current recovered Binder methods provide no reset/drain receipt"
+    }
+  ],
+  "remaining_gates": [
+    "Executed native factory adapter/manager boundary",
+    "Every reached producer entry, partial segment failure and callback alias",
+    "Concurrent registration and ID allocation",
+    "ID reuse and callback behavior across service restart",
+    "Callback death cleanup timing",
+    "Pending response after clear",
+    "Qualified vendor/request/modem reset acknowledgement",
+    "Matched kernel/Binder/policy integration",
+    "Carrier and physical-device operation"
+  ],
+  "production_effect": "No retry/reset or fragmented semantic publication enabled; durable uncertainty marker and one-attempt refusal retained",
+  "raw_artifacts_published": false,
+  "raw_artifact_retention": "artifacts/radio-recovery-rea/ remains ignored",
+  "prior_private_inputs_preserved": true
+}

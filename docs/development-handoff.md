@@ -272,6 +272,16 @@ null kernel/module/firmware-set pins. Complete factory integrity, transitive ABI
 init/SELinux/backend/service closure remain offline work. Original21-test evidence
 is preserved separately from correction evidence. See `native-deployment.md`.
 
+Factory radio recovery now identifies the actual `libril-aidl.so` adapter and
+native V1 bindings, separately from `libril_sitril.so` manager/producers. Fifty-two
+static REA records and seven target hashes qualify scoped clear/death/locking
+facts. Clear is one-way; version/hash lookup is not a manager cleanup barrier.
+Locked producer paths do not establish complete serialization across unlocked
+registration output and other caller paths. No vendor code was executed and no
+retry/publication fence was relaxed. The next original runtime boundaries are
+adapter, actual manager/producers, then pending work/reset, kept separate. See
+`native-radio-recovery-contract.md`.
+
 ## Next work
 
 1. Complete the installed native Messages service/window vertical slice first,
