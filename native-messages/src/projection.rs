@@ -25,12 +25,16 @@ pub struct Store {
     status: StorageStatus,
     scan: Option<ReceiptScan>,
     completed: Option<ReceiptCheckpoint>,
+    view: pokelinux_inbox::ReadOnly,
 }
 impl Store {
     pub fn open(raw: &Path, inbox: &Path) -> Result<Self, &'static str> {
         let directory = raw.to_path_buf();
         let raw = ReceiptOwner::open(raw).map_err(|_| "raw storage unavailable")?;
+        let view_directory = inbox;
         let inbox = Inbox::open(inbox).map_err(|_| "projection storage unavailable")?;
+        let view = pokelinux_inbox::ReadOnly::open(view_directory)
+            .map_err(|_| "readonly projection unavailable")?;
         let control = inbox.control();
         // Service-owned projection is separate from current app read authority.
         control
@@ -52,6 +56,7 @@ impl Store {
             status: StorageStatus::LocalStorageUnavailable,
             scan: None,
             completed: None,
+            view,
         })
     }
     /// Durable test-source attempt only. Presence never authorizes reattachment.
@@ -197,6 +202,14 @@ impl Store {
         }
         Ok(self.status)
     }
+    pub fn completed_upper(&self) -> Result<u64, &'static str> {
+        if self.status != StorageStatus::Ready {
+            return Err("projection unavailable");
+        }
+        self.view
+            .upper_sequence()
+            .map_err(|_| "completed projection sequence unavailable")
+    }
     fn conversation(&self, key: &DataId) -> Result<ConversationId, &'static str> {
         let mut after = None;
         // A bounded lookup avoids converting external data identifiers into authority.
@@ -279,5 +292,112 @@ impl Store {
     }
     pub fn status(&self) -> StorageStatus {
         self.status
+    }
+}
+
+/// Independent read process component; never opens ReceiptOwner or Inbox writer ownership.
+pub struct Reader {
+    #[cfg(feature = "isolated-fixture")]
+    hold_next: bool,
+    view: pokelinux_inbox::ReadOnly,
+}
+impl Reader {
+    pub fn open(inbox: &Path) -> Result<Self, &'static str> {
+        Ok(Self {
+            #[cfg(feature = "isolated-fixture")]
+            hold_next: false,
+            view: pokelinux_inbox::ReadOnly::open(inbox)
+                .map_err(|_| "readonly projection unavailable")?,
+        })
+    }
+    #[cfg(feature = "isolated-fixture")]
+    pub fn hold_next_snapshot(&mut self) {
+        self.hold_next = true;
+    }
+    pub fn query(&mut self, query: &Query, upper: u64) -> Result<Page, &'static str> {
+        query.validate()?;
+        let snapshot = self
+            .view
+            .snapshot(upper)
+            .map_err(|_| "completed projection prefix unavailable")?;
+        #[cfg(feature = "isolated-fixture")]
+        if self.hold_next && matches!(query, Query::Messages { .. }) {
+            self.hold_next = false;
+            rustix::process::kill_process(rustix::process::getpid(), rustix::process::Signal::STOP)
+                .map_err(|_| "fixture snapshot stop failed")?;
+        }
+        let lookup = |key: &DataId| -> Result<ConversationId, &'static str> {
+            let mut after = None;
+            for _ in 0..16 {
+                let page = snapshot
+                    .conversations(after, 32)
+                    .map_err(|_| "conversation lookup unavailable")?;
+                if let Some(c) = page.iter().find(|c| c.id.to_string() == key.as_str()) {
+                    return Ok(c.id);
+                }
+                if page.len() < 32 {
+                    break;
+                }
+                after = page.last().map(|c| c.id);
+            }
+            Err("unknown completed conversation")
+        };
+        let page = match query {
+            Query::Conversations { after, limit } => {
+                let after = after.as_ref().map(lookup).transpose()?;
+                let values = snapshot
+                    .conversations(after, *limit)
+                    .map_err(|_| "conversation page unavailable")?;
+                Ok(Page::Conversations {
+                    items: values
+                        .into_iter()
+                        .map(|c| {
+                            Ok(ConversationView {
+                                id: DataId::parse(&c.id.to_string())?,
+                                sender: c.sender,
+                                slot: c.slot.0,
+                                sender_kind: c.sender_kind as u8,
+                                messages: c.messages,
+                            })
+                        })
+                        .collect::<Result<_, &'static str>>()?,
+                })
+            }
+            Query::Messages {
+                conversation,
+                after_ordinal,
+                limit,
+            } => {
+                let values = snapshot
+                    .messages(lookup(conversation)?, *after_ordinal, *limit)
+                    .map_err(|_| "message page unavailable")?;
+                Ok(Page::Messages {
+                    items: values
+                        .into_iter()
+                        .map(|m| {
+                            Ok(MessageView {
+                                receipt: DataId::parse(&m.receipt.to_string())?,
+                                ordinal: m.ordinal,
+                                sender: m.sender,
+                                text: m.text,
+                                timestamp_millis: m.timestamp_millis,
+                                reply_path: m.reply_path,
+                                concat_width: m.concatenation.as_ref().map(|c| match c.width {
+                                    ReferenceWidth::Eight => 8,
+                                    ReferenceWidth::Sixteen => 16,
+                                }),
+                                concat_reference: m.concatenation.as_ref().map(|c| c.reference),
+                                concat_total: m.concatenation.as_ref().map(|c| c.total),
+                                concat_sequence: m.concatenation.as_ref().map(|c| c.sequence),
+                            })
+                        })
+                        .collect::<Result<_, &'static str>>()?,
+                })
+            }
+        }?;
+        snapshot
+            .finish()
+            .map_err(|_| "readonly transaction completion unavailable")?;
+        Ok(page)
     }
 }

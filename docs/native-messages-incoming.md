@@ -2,8 +2,10 @@
 
 The separately built incoming fixture connects actual frozen messaging V3 callbacks
 on an ARM64 Linux Binder kernel to the existing supervised Messages storage child.
-That child commits each raw occurrence through `ReceiptOwner` and immediately
-reconciles `Inbox` while no app window exists. A later installed native client
+That writer commits each raw occurrence through `ReceiptOwner` and reconciles
+`Inbox` under its exact parent projection permit while no app window exists.
+The [read isolation correction](native-messages-receive-isolation.md) separates
+a supervised readonly child and preserves the same live source on held-read close. A later installed native client
 reads the exact committed IDs through the existing current lifecycle authority.
 The normal installed `messages-service` still opens local history only: it has no
 Binder dependency, backend selector, registration, incoming ACK or send operation.
@@ -25,8 +27,8 @@ Before any Binder initialization, the sole child exclusively creates a private
 `incoming-attempt-<generation>` marker, writes its exact bytes, fsyncs the file
 and fsyncs the raw directory. Existing valid evidence means history-only startup;
 partial or invalid evidence means unavailable. At most eight attempt markers may
-exist; uncertainty is never evicted or refunded. Child recovery discards incoming
-arguments. Whole-service and actual systemd restart with the same generation also
+exist; uncertainty is never evicted or refunded. Writer recovery discards incoming
+arguments; readonly child recovery leaves the live writer and source intact. Whole-service and actual systemd restart with the same generation also
 open history without another registration attempt. A local UUID, a stopped child
 or its successful reap does not authorize another remote attachment.
 
@@ -67,10 +69,13 @@ Clean app close leaves the source and child active. Policy lock, suspension and
 background denial fence data release while source projection continues. The
 unchanged read stamp still binds current kernel principal identity, launched
 pidfd generation, policy/lifecycle revisions, storage incarnation and deadline
-at every nonblocking send attempt. Closing an app during a held read currently
-stops the shared provider and therefore explicitly fails the source. Its later
-local recovery opens history only; this increment does not promise continuous
-receiving across held-read cancellation.
+at every nonblocking send attempt. The frozen incoming milestone stopped its
+shared provider on held-read close and then recovered history only. The separate
+[read isolation correction](native-messages-receive-isolation.md) now cancels and
+reaps only the readonly child, preserving the same writer/source/generation. Its
+occurrence permit waits for completed readonly work or actual reap before
+projection; an unresolved child still fences receiving at the original arrival
+deadline. Earlier incoming evidence remains selected for its historical source.
 
 A raw commit followed by projection loss or completion loss survives as the exact
 existing receipt ID. Restart reconciles those IDs without recreating an arrival.

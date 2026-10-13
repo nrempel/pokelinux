@@ -822,35 +822,7 @@ impl Inbox {
         limit: usize,
     ) -> Result<Vec<Conversation>> {
         self.control.check_read(lease)?;
-        let limit = page(limit)?;
-        let mut q=self.db.prepare("SELECT c.id,c.slot,c.sender_kind,CASE WHEN length(CAST(c.sender AS BLOB))<=64 THEN c.sender ELSE NULL END,count(r.id) FROM conversations c JOIN records r ON r.conversation=c.id WHERE c.id>?1 GROUP BY c.id ORDER BY c.id LIMIT ?2")?;
-        let mut rows = q.query(params![
-            after.map(|id| id.to_string()).unwrap_or_default(),
-            limit
-        ])?;
-        let mut out = Vec::with_capacity(limit as usize);
-        while let Some(r) = rows.next()? {
-            let slot: u8 = r.get(1)?;
-            let sender: String = r.get(3)?;
-            let messages: u32 = r.get(4)?;
-            if slot > 7
-                || sender.is_empty()
-                || sender.len() > MAX_SENDER_BYTES
-                || messages == 0
-                || messages > MAX_TEXT_MESSAGES as u32
-            {
-                return Err(Error::Refused("conversation outside bounds"));
-            }
-            out.push(Conversation {
-                id: ConversationId(uuid(&r.get::<_, String>(0)?)?),
-                slot: Slot(slot),
-                sender_kind: SenderKind::parse(r.get(2)?)?,
-                sender,
-                messages: messages as usize,
-            })
-        }
-        drop(rows);
-        drop(q);
+        let out = query_conversations(&self.db, after, limit, i64::MAX)?;
         self.control.check_read(lease)?;
         Ok(out)
     }
@@ -862,23 +834,7 @@ impl Inbox {
         limit: usize,
     ) -> Result<Vec<Message>> {
         self.control.check_read(lease)?;
-        let limit = page(limit)?;
-        let after =
-            i64::try_from(after_ordinal).map_err(|_| Error::Refused("ordinal outside bound"))?;
-        let mut q = self.db.prepare(&format!(
-            "{RECORD_QUERY} WHERE r.conversation=?1 AND r.seq>?2 ORDER BY r.seq LIMIT ?3"
-        ))?;
-        let mut rows = q.query(params![conversation.to_string(), after, limit])?;
-        let mut out = Vec::with_capacity(limit as usize);
-        while let Some(r) = rows.next()? {
-            let r = Record::read(r)?;
-            if r.validate()? != ProjectionState::Text {
-                return Err(Error::Refused("conversation contains excluded receipt"));
-            }
-            out.push(r.message()?)
-        }
-        drop(rows);
-        drop(q);
+        let out = query_messages(&self.db, conversation, after_ordinal, limit, i64::MAX)?;
         self.control.check_read(lease)?;
         Ok(out)
     }
@@ -1054,5 +1010,184 @@ mod generation_exhaustion_test {
             "exhausted generation must revoke old authority"
         );
         assert!(c.snapshot().unwrap().stopped);
+    }
+}
+
+// Shared row validation for the writer's local queries and independent read-only views.
+fn query_conversations(
+    db: &Connection,
+    after: Option<ConversationId>,
+    limit: usize,
+    upper: i64,
+) -> Result<Vec<Conversation>> {
+    let limit = page(limit)?;
+    let mut q=db.prepare("SELECT c.id,c.slot,c.sender_kind,CASE WHEN length(CAST(c.sender AS BLOB))<=64 THEN c.sender ELSE NULL END,count(r.id) FROM conversations c JOIN records r ON r.conversation=c.id WHERE c.id>?1 AND r.seq<=?3 GROUP BY c.id ORDER BY c.id LIMIT ?2")?;
+    let mut rows = q.query(params![
+        after.map(|id| id.to_string()).unwrap_or_default(),
+        limit,
+        upper
+    ])?;
+    let mut out = Vec::with_capacity(limit as usize);
+    while let Some(r) = rows.next()? {
+        let slot: u8 = r.get(1)?;
+        let sender: String = r.get(3)?;
+        let messages: u32 = r.get(4)?;
+        if slot > 7
+            || sender.is_empty()
+            || sender.len() > MAX_SENDER_BYTES
+            || messages == 0
+            || messages > MAX_TEXT_MESSAGES as u32
+        {
+            return Err(Error::Refused("conversation outside bounds"));
+        }
+        out.push(Conversation {
+            id: ConversationId(uuid(&r.get::<_, String>(0)?)?),
+            slot: Slot(slot),
+            sender_kind: SenderKind::parse(r.get(2)?)?,
+            sender,
+            messages: messages as usize,
+        })
+    }
+    Ok(out)
+}
+fn query_messages(
+    db: &Connection,
+    conversation: ConversationId,
+    after_ordinal: u64,
+    limit: usize,
+    upper: i64,
+) -> Result<Vec<Message>> {
+    let limit = page(limit)?;
+    let after =
+        i64::try_from(after_ordinal).map_err(|_| Error::Refused("ordinal outside bound"))?;
+    let mut q = db.prepare(&format!(
+        "{RECORD_QUERY} WHERE r.conversation=?1 AND r.seq>?2 AND r.seq<=?4 ORDER BY r.seq LIMIT ?3"
+    ))?;
+    let mut rows = q.query(params![conversation.to_string(), after, limit, upper])?;
+    let mut out = Vec::with_capacity(limit as usize);
+    while let Some(r) = rows.next()? {
+        let r = Record::read(r)?;
+        if r.validate()? != ProjectionState::Text {
+            return Err(Error::Refused("conversation contains excluded receipt"));
+        }
+        out.push(r.message()?)
+    }
+    Ok(out)
+}
+
+/// Existing private projection only: no owner lock, raw journal, creation or repair.
+pub struct ReadOnly {
+    db: Connection,
+}
+impl ReadOnly {
+    pub fn open(directory: &Path) -> Result<Self> {
+        let metadata = fs::symlink_metadata(directory)?;
+        if !directory.is_absolute()
+            || !metadata.is_dir()
+            || metadata.uid() != rustix::process::geteuid().as_raw()
+            || metadata.mode() & 0o777 != 0o700
+            || fs::canonicalize(directory)? != directory
+        {
+            return Err(Error::Refused(
+                "private existing projection directory required",
+            ));
+        }
+        let path = directory.join("inbox.sqlite3");
+        let file = OpenOptions::new()
+            .read(true)
+            .custom_flags(
+                (rustix::fs::OFlags::NOFOLLOW | rustix::fs::OFlags::NONBLOCK).bits() as i32,
+            )
+            .open(&path)?;
+        let before = file.metadata()?;
+        if !before.is_file()
+            || before.uid() != rustix::process::geteuid().as_raw()
+            || before.mode() & 0o777 != 0o600
+            || before.nlink() != 1
+        {
+            return Err(Error::Refused("private existing projection file required"));
+        }
+        let db = Connection::open_with_flags(
+            &path,
+            OpenFlags::SQLITE_OPEN_READ_ONLY
+                | OpenFlags::SQLITE_OPEN_NO_MUTEX
+                | OpenFlags::SQLITE_OPEN_NOFOLLOW,
+        )?;
+        db.busy_timeout(std::time::Duration::ZERO)?;
+        db.execute_batch(
+            "PRAGMA query_only=ON; PRAGMA trusted_schema=OFF; PRAGMA foreign_keys=ON;",
+        )?;
+        if db.pragma_query_value(None, "user_version", |r| r.get::<_, u32>(0))? != 1
+            || db.pragma_query_value(None, "query_only", |r| r.get::<_, u32>(0))? != 1
+            || db.pragma_query_value(None, "journal_mode", |r| r.get::<_, String>(0))? != "delete"
+        {
+            return Err(Error::Refused(
+                "existing readonly projection configuration required",
+            ));
+        }
+        let after = fs::symlink_metadata(path)?;
+        if (before.dev(), before.ino(), before.len()) != (after.dev(), after.ino(), after.len()) {
+            return Err(Error::Refused("projection changed while opening"));
+        }
+        Ok(Self { db })
+    }
+    /// Explicit Inbox record sequence domain, never a raw receipt count or permission.
+    pub fn upper_sequence(&self) -> Result<u64> {
+        counts(&self.db)?;
+        let upper = self.db.query_row(
+            "SELECT coalesce(max(seq),0) FROM (SELECT seq FROM records LIMIT 4097)",
+            [],
+            |r| r.get::<_, i64>(0),
+        )?;
+        if !(0..=MAX_KEYS as i64).contains(&upper) {
+            return Err(Error::Refused("projection sequence outside bound"));
+        }
+        Ok(upper as u64)
+    }
+    pub fn snapshot(&mut self, upper: u64) -> Result<ReadSnapshot<'_>> {
+        if upper > MAX_KEYS as u64 {
+            return Err(Error::Refused("projection sequence outside bound"));
+        }
+        let tx = self.db.transaction()?;
+        counts(&tx)?;
+        let actual = tx.query_row(
+            "SELECT coalesce(max(seq),0) FROM (SELECT seq FROM records LIMIT 4097)",
+            [],
+            |r| r.get::<_, i64>(0),
+        )?;
+        if actual < upper as i64 || actual > MAX_KEYS as i64 {
+            return Err(Error::Refused("completed projection prefix unavailable"));
+        }
+        Ok(ReadSnapshot {
+            tx,
+            upper: upper as i64,
+        })
+    }
+}
+/// One actual SQLite read transaction over the writer-qualified immutable upper.
+pub struct ReadSnapshot<'a> {
+    tx: rusqlite::Transaction<'a>,
+    upper: i64,
+}
+impl ReadSnapshot<'_> {
+    /// Successful completion explicitly releases the actual SQLite transaction.
+    pub fn finish(self) -> Result<()> {
+        self.tx.commit()?;
+        Ok(())
+    }
+    pub fn conversations(
+        &self,
+        after: Option<ConversationId>,
+        limit: usize,
+    ) -> Result<Vec<Conversation>> {
+        query_conversations(&self.tx, after, limit, self.upper)
+    }
+    pub fn messages(
+        &self,
+        conversation: ConversationId,
+        after: u64,
+        limit: usize,
+    ) -> Result<Vec<Message>> {
+        query_messages(&self.tx, conversation, after, limit, self.upper)
     }
 }

@@ -268,3 +268,181 @@ fn paged_reconstruction_keeps_deleted_retained_and_excluded_receipt_keys() {
     assert_eq!(stats.keys, 35);
     assert_eq!(stats.text_messages, 30);
 }
+
+#[test]
+fn readonly_completed_prefix_excludes_partial_tail_and_derived_counts() {
+    use pokelinux_messages::projection::Reader;
+    let (d, first) = fixture();
+    let mut store = Store::open(&d.0.join("raw"), &d.0.join("inbox")).unwrap();
+    assert_eq!(store.reconcile().unwrap(), StorageStatus::Ready);
+    let upper = store.completed_upper().unwrap();
+    assert_eq!(upper, 1);
+    let mut reader = Reader::open(&d.0.join("inbox")).unwrap();
+    let source = store.attach_test_incoming(Slot(0)).unwrap();
+    let bytes: Vec<_> = (0.."000008915155100000006201213141510005e8329bfd06".len())
+        .step_by(2)
+        .map(|n| {
+            u8::from_str_radix(
+                &"000008915155100000006201213141510005e8329bfd06"[n..n + 2],
+                16,
+            )
+            .unwrap()
+        })
+        .collect();
+    for _ in 0..32 {
+        store
+            .admit_incoming(source, IncomingKind::Deliver, &bytes)
+            .unwrap();
+    }
+    assert_eq!(
+        store.reconcile().unwrap(),
+        StorageStatus::ProjectionBacklogUnavailable
+    );
+    assert!(store.completed_upper().is_err());
+    let q = Query::Conversations {
+        after: None,
+        limit: 8,
+    };
+    let Page::Conversations { items } = reader.query(&q, upper).unwrap() else {
+        panic!("page")
+    };
+    assert_eq!(
+        items[0].messages, 1,
+        "summary counts must derive only from qualified prefix"
+    );
+    let Page::Messages { items } = reader
+        .query(
+            &Query::Messages {
+                conversation: items[0].id.clone(),
+                after_ordinal: 0,
+                limit: 2,
+            },
+            upper,
+        )
+        .unwrap()
+    else {
+        panic!("page")
+    };
+    assert_eq!(items.len(), 1);
+    assert_eq!(items[0].receipt.as_str(), first.to_string());
+    for _ in 0..5 {
+        if store.reconcile().unwrap() == StorageStatus::Ready {
+            break;
+        }
+    }
+    let next = store.completed_upper().unwrap();
+    assert_eq!(next, 33);
+    let Page::Conversations { items } = reader.query(&q, upper).unwrap() else {
+        panic!("page")
+    };
+    assert_eq!(items[0].messages, 1);
+    let Page::Conversations { items } = reader.query(&q, next).unwrap() else {
+        panic!("page")
+    };
+    assert_eq!(items[0].messages, 33);
+    assert!(reader.query(&q, next + 1).is_err());
+}
+#[test]
+fn readonly_open_preserves_writer_lock_and_creates_no_missing_storage() {
+    use pokelinux_messages::projection::Reader;
+    let (d, _) = fixture();
+    assert!(Reader::open(&d.0.join("missing")).is_err());
+    assert!(!d.0.join("missing").exists());
+    let mut store = Store::open(&d.0.join("raw"), &d.0.join("inbox")).unwrap();
+    store.reconcile().unwrap();
+    let mut reader = Reader::open(&d.0.join("inbox")).unwrap();
+    assert!(
+        pokelinux_inbox::Inbox::open(&d.0.join("inbox")).is_err(),
+        "reader must not take or release writer ownership"
+    );
+    assert!(
+        reader
+            .query(
+                &Query::Conversations {
+                    after: None,
+                    limit: 8
+                },
+                store.completed_upper().unwrap()
+            )
+            .is_ok()
+    );
+    drop(reader);
+    assert!(pokelinux_inbox::Inbox::open(&d.0.join("inbox")).is_err());
+}
+
+#[test]
+fn fixed_read_prefix_never_exposes_a_new_partial_conversation() {
+    use pokelinux_messages::projection::Reader;
+    let (d, _) = fixture();
+    let mut store = Store::open(&d.0.join("raw"), &d.0.join("inbox")).unwrap();
+    assert_eq!(store.reconcile().unwrap(), StorageStatus::Ready);
+    let upper = store.completed_upper().unwrap();
+    let mut reader = Reader::open(&d.0.join("inbox")).unwrap();
+    let q = Query::Conversations {
+        after: None,
+        limit: 8,
+    };
+    let Page::Conversations { items: original } = reader.query(&q, upper).unwrap() else {
+        panic!("page")
+    };
+    let source = store.attach_test_incoming(Slot(1)).unwrap();
+    let bytes: Vec<_> = (0.."000008915155100000006201213141510005e8329bfd06".len())
+        .step_by(2)
+        .map(|n| {
+            u8::from_str_radix(
+                &"000008915155100000006201213141510005e8329bfd06"[n..n + 2],
+                16,
+            )
+            .unwrap()
+        })
+        .collect();
+    for _ in 0..32 {
+        store
+            .admit_incoming(source, IncomingKind::Deliver, &bytes)
+            .unwrap();
+    }
+    assert_eq!(
+        store.reconcile().unwrap(),
+        StorageStatus::ProjectionBacklogUnavailable
+    );
+    let Page::Conversations { items } = reader.query(&q, upper).unwrap() else {
+        panic!("page")
+    };
+    assert_eq!(items.len(), 1);
+    assert_eq!(items[0].id.as_str(), original[0].id.as_str());
+    assert_eq!(items[0].messages, 1);
+    for _ in 0..5 {
+        if store.reconcile().unwrap() == StorageStatus::Ready {
+            break;
+        }
+    }
+    let Page::Conversations { items } = reader.query(&q, store.completed_upper().unwrap()).unwrap()
+    else {
+        panic!("page")
+    };
+    let tail = items.iter().find(|c| c.slot == 1).unwrap();
+    assert_eq!(tail.messages, 32);
+    assert!(
+        reader
+            .query(
+                &Query::Messages {
+                    conversation: tail.id.clone(),
+                    after_ordinal: 0,
+                    limit: 2
+                },
+                upper
+            )
+            .is_err()
+    );
+    assert!(
+        reader
+            .query(
+                &Query::Conversations {
+                    after: Some(tail.id.clone()),
+                    limit: 8
+                },
+                upper
+            )
+            .is_err()
+    );
+}

@@ -1,5 +1,10 @@
 # Bounded complete raw receipt enumeration
 
+The later [receive/read lifetime correction](native-messages-receive-isolation.md)
+retains this enumeration and verifies full4096 SQLite coverage plus33 live Binder
+IDs with one writer and an independent readonly child. Its proof is separate
+from this frozen enumeration selection.
+
 The receipt journal has an additive owner-bound page API over a fixed sequence
 upper bound. Equal raw PDUs keep distinct existing receipt IDs. The legacy
 latest32 snapshot API remains unchanged; Messages projection now consumes the

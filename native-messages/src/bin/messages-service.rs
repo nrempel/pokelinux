@@ -4,6 +4,9 @@ fn main() -> std::io::Result<()> {
     if args.first().is_some_and(|a| a == "--storage-worker") {
         return pokelinux_lifecycle::storage::worker(&args[1..]);
     }
+    if args.first().is_some_and(|a| a == "--messages-read-worker") {
+        return pokelinux_messages::worker::reader_entry(&args[1..]);
+    }
     if args.first().is_some_and(|a| a == "--messages-worker") {
         return pokelinux_messages::worker::entry(&args[1..]);
     }

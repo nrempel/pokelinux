@@ -494,7 +494,7 @@ pub fn run_with_messages_and_session(
                     if connection.reading.is_some()
                         && let Some(p) = messages.as_deref_mut()
                     {
-                        p.stop();
+                        p.cancel_read(connection.reading.as_ref().unwrap().0);
                     }
                     if connection.awaiting.is_some() {
                         authority.invalidate();
@@ -511,7 +511,7 @@ pub fn run_with_messages_and_session(
                         Err(e) if e.raw_os_error() == Some(4) => return true,
                         _ => {
                             if let Some(p) = messages.as_deref_mut() {
-                                p.stop();
+                                p.cancel_read(connection.reading.as_ref().unwrap().0);
                             }
                             return false;
                         }
@@ -865,7 +865,7 @@ pub fn run_with_messages_and_session(
                         || (provider.available() && !invalid_read)
                     {
                         local_recovery = None;
-                    } else if !provider.occupied() {
+                    } else if !provider.read_occupied() && !provider.busy() {
                         // Consume before the single attempt, and never replace
                         // an occupied child or replay the old read request.
                         local_recovery = None;

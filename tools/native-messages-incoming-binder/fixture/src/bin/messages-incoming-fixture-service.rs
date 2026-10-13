@@ -6,6 +6,15 @@ fn main() -> io::Result<()> {
     if args.first().is_some_and(|a| a == "--storage-worker") {
         return pokelinux_lifecycle::storage::worker(&args[1..]);
     }
+    if args
+        .first()
+        .is_some_and(|a| a == "--messages-held-read-fixture-worker")
+    {
+        return pokelinux_messages::worker::held_reader_entry(&args[1..]);
+    }
+    if args.first().is_some_and(|a| a == "--messages-read-worker") {
+        return pokelinux_messages::worker::reader_entry(&args[1..]);
+    }
     if args.first().is_some_and(|a| a == "--messages-worker") {
         return pokelinux_messages::worker::entry(&args[1..]);
     }
@@ -26,7 +35,11 @@ fn main() -> io::Result<()> {
             .to_owned();
         let backend = native_messages_incoming_binder_fixture::receiver::Synthetic::new(
             generation.clone(),
-            fault,
+            if fault == "hold-read-snapshot" {
+                "none".into()
+            } else {
+                fault
+            },
         )?;
         return pokelinux_messages::worker::entry_with_backend(
             &args[1..6],

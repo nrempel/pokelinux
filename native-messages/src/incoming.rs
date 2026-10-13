@@ -149,12 +149,18 @@ impl Control {
             receipt,
         })
     }
-    pub(crate) fn complete(&self, arrival: &Arrival, receipt: String) -> io::Result<()> {
+    pub(crate) fn complete(
+        &self,
+        arrival: &Arrival,
+        receipt: String,
+        upper: u64,
+    ) -> io::Result<()> {
         if self.failed() || boottime_ns() >= arrival.until {
             self.fail("arrival_deadline");
             return Err(io::ErrorKind::TimedOut.into());
         }
         self.send(&Response::ArrivalComplete {
+            upper,
             source: self.0.worker.clone(),
             occurrence: arrival.occurrence,
             binding: Binding {

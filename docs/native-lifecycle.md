@@ -172,3 +172,10 @@ reaping. The storage child holds no app read authority; new app/worker generatio
 need fresh stamps. The [native client worker](native-messages-ui-worker.md) keeps
 thread ownership until confirmed exit. Trusted compositor lock/focus/session
 ingress and hardware effect composition remain separate open gates.
+
+The later [Messages receive/read correction](native-messages-receive-isolation.md)
+uses a required exact-token read cancellation method and explicit read-only
+occupancy. Those two pending-read EOF/deadline sites preserve the separate live
+receiver. Aggregate service occupancy and terminal Stop still own every child
+until actual reap. Its ARM Binder qualification uses no session Provider; joint
+session/installed app integration remains separately selected.

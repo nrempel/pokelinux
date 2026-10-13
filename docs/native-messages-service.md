@@ -1,7 +1,7 @@
 # Installed native Messages read path
 
 The normal installed native Messages service reconciles committed local receipts
-at startup and reopen with its window closed, and before reads. It releases bounded history to an installed
+at writer startup and whole-writer reopen with its window closed. It releases bounded history to an installed
 native Qt window through the existing lifecycle actor. The final disposable
 ARM64 desktop run passed eleven groups, including an actual systemd unit, a
 registered UID-11010 Wayland window, plain SMS text, two original Omarchy themes,
@@ -24,25 +24,29 @@ nine-service greens describe the earlier source, before this recovery-order and
 ## Ownership and current read authority
 
 One lifecycle actor owns policy, launched principals and publication. Its
-optional Messages provider owns one persistent child containing `ReceiptOwner`
-and `Inbox`; the actor never accesses the raw or projection database. Projection
-runs at child startup and before reads, independently of app read permission.
-The normal installed entrypoint has no ongoing new-arrival source; desktop
-reopen reaches pre-read reconciliation or qualified local worker recovery.
-There is no production raw-admission, ACK or send endpoint. The frozen `ac57dd6`
-desktop/UI milestone used receipts precommitted by its separately built
-`isolated-fixture` helper. The subsequent [synthetic incoming composition](native-messages-incoming.md)
-connects a separately built actual frozen-V3 Binder peer to this same sole
-supervised raw/inbox child and projects each committed arrival with no window.
-Its source messages are supervised independently of reads, its durable
-one-attempt marker prevents implicit attachment after local or whole-service
-restart, and its read publication uses the existing authority unchanged.
-That separate test entrypoint is absent from the normal installed service.
+optional Messages provider owns one persistent `ReceiptOwner`/`Inbox` writer
+and a separately supervised readonly child; the actor opens neither database.
+The [receive/read isolation correction](native-messages-receive-isolation.md)
+qualifies this split on an actual ARM Binder kernel without a session Provider.
+App reads use an immutable writer-qualified Inbox sequence prefix and explicit
+readonly transaction completion. Exact occurrence-bound projection grants keep
+a held SQLite reader from blocking writer commits; initialization and new reads
+wait until that writer phase completes.
+
+The normal installed entrypoint has no ongoing new-arrival source and no
+production raw-admission, ACK or send endpoint. The frozen `ac57dd6` desktop/UI
+milestone used receipts precommitted by its separately built `isolated-fixture`
+helper. The subsequent [synthetic incoming composition](native-messages-incoming.md)
+connects an authored frozen-V3 NDK Binder peer to the sole writer and projects
+committed arrivals with no window. Its durable one-attempt marker prevents
+implicit source attachment after writer or whole-service restart. The normal
+installed binary retains no synthetic incoming selector. Historical desktop
+proof continues to describe its exact earlier selected binaries.
 
 `MessagesRead` is a current data-release permission. It cannot be prepared or
 admitted as a historical transferable permit. A private, non-cloneable read stamp
 binds the packet's actual kernel PID/UID, launched pidfd generation, policy and
-lifecycle revisions, storage child incarnation and absolute BOOTTIME deadline.
+lifecycle revisions, readonly child incarnation and absolute BOOTTIME deadline.
 The worker request also has an exact source/token association with the owning
 connection. Immediately before each nonblocking send attempt, including every
 retry after actual EAGAIN, the actor rechecks current policy, lifecycle, principal
@@ -67,7 +71,8 @@ The joint original-compositor/app path and retained-kernel identity remain open.
 
 ## Local storage, recovery and bounds
 
-The child is the sole raw and projection owner. Re-import of the same exact local
+The writer is the sole raw and projection owner. The readonly child owns no raw
+journal or writer lock. Re-import of the same exact local
 receipt ID is idempotent; equal payloads under distinct IDs remain distinct
 messages. Sender, address kind and slot are display grouping only. Malformed,
 unsupported and status-report receipts do not become text. Original raw evidence
@@ -90,9 +95,10 @@ record limit, not a promise to grant all three permissions to every one of16 app
 The window stores bounded pages and supports chat/message paging.
 
 Data-release cancellation or deadline invalidates publication. A lost reply is
-not a remote effect. A stopped, failed or timed-out local worker keeps occupied
-capacity until actual `try_wait` reaping. A successful fixed desktop launch may
-request one local recovery attempt, bound to the old worker source and a two-second
+not a remote effect. A stopped, failed or timed-out readonly child keeps occupied
+read capacity until actual `try_wait` reaping. A successful fixed desktop launch may
+request one local readonly recovery attempt, bound to the old reader incarnation
+and a two-second
 absolute deadline. It can start a successor only after that exact child is reaped;
 stop, authority failure, source change, valid availability or expiry clears the intent.
 The actor records that intent at every successful fixed launch and evaluates it
@@ -105,19 +111,21 @@ before the single restart attempt. It does not outlive the two-second bound.
 Closing during a held read therefore permits ordinary desktop reopen without a
 root restart command. The old connection, query and stamp are discarded; the new
 registered app begins background-denied and needs fresh current read authorization.
-Explicit root recovery obeys the same reap-before-restart rule. Recovery reopens
-and validates the same private SQLite journals and re-imports exact existing IDs.
-For the synthetic incoming composition, every such local restart opens history
-only; app close during a held read explicitly fails that source. Ordinary app
-close with no held read preserves receiving. Recovery never recreates raw arrivals or
-replays a modem operation. Ordinary clean service restart and valid hot-journal
+Explicit root recovery obeys the same reap-before-restart rule. Readonly recovery
+reopens only the existing projection after the writer phase ends; the same live
+writer/source/generation continue receiving through held-read close or expiry.
+Writer or whole-service recovery validates both private journals and re-imports
+exact existing IDs, remaining history-only for a previously attempted synthetic
+generation. Neither recovery recreates raw arrivals or replays a modem operation.
+Ordinary clean service restart and valid hot-journal
 rollback recover normally; unresolved ownership, invalid permissions, corrupt
 schema/data or failed recovery remain unavailable. Policy-storage uncertainty
 keeps the separate existing authority fence; it is not copied onto local reads.
 The tested foreign descriptor holder never submits a request; its actual socket
 retention is a cancellation fixture, not a general process-tree containment proof.
 
-The SQLite/storage objects are synchronous components running inside the child.
+The SQLite/storage objects are synchronous components inside their owned writer
+or reader child.
 Process supervision keeps the tested controls responsive under actual SIGSTOP;
 it does not prove that every filesystem or process-launch syscall can be
 interrupted or that an uninterruptible kernel task can be reaped. Failure to
