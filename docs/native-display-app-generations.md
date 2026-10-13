@@ -110,6 +110,18 @@ actually wait adopted children after required owner abort. No unkillable syscall
 original compositor, Source-terminal or held Messages read qualification follows
 from these27 headless groups.
 
+A separate versioned [current readonly wrapper](../tools/native-current-readonly-authority/README.md)
+qualifies15 current host authority groups. It retains the exact readonly child
+pidfd and observes SIGSTOP/T-state, rather than stopping the independent writer.
+Original heartbeat/held-read assertions preserve the100ms deadline. Source
+expiry/EOF/death now require actual app retirement, principal removal and
+refusal of a new launch while the actor remains responsive. Fourteen v1 passes
+and one narrow v2 pass qualify the distinct groups; v1's missing actor signal
+handle and the archived11pass/4fail suite stay failed. Root verifies443 private
+bindings in the [proof](evidence/native-current-readonly-authority-provenance.json).
+These are actual host Rust Observer/process tests with synthetic session facts,
+separate from original-compositor, ARM, incoming Binder and hardware evidence.
+
 ## Separately pinned failure diagnosis
 
 One new diagnostic-only ARM cancellation/successor epoch changes only a frozen

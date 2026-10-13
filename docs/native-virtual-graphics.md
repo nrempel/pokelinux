@@ -6,6 +6,13 @@ rendering. It exposes no physical GPU, phone, network interface or KVM device.
 This extends the Arch userspace package tests to a real guest kernel, DRM device,
 compositor and Wayland window. It does not test Pixel PowerVR or Android.
 
+The runs below are historical evidence at their recorded geometry. Future UI
+runs and previews must first qualify the [Pixel 10 display profile](native-phone-display-profile.md):
+1080 ×2424 native portrait pixels,422PPI and logical density420. The previous
+320/800 fixtures are not suitable for a new preview. Capture the native output
+buffer without resizing and keep virtual physical dimensions separate from
+measured device hardware.
+
 ## Build and run
 
 Run from the project root. Build `sim/Dockerfile.arch-local` and

@@ -301,3 +301,12 @@ lifetime groups and one held-init Stop group pass. Pending EOF passes narrowly,
 but the successor aggregate fails after Source InvalidData of unknown predicate.
 The Source100ms lease is unchanged. Metadata grants no data/exclusive PID authority;
 accepted clients, secure frames, installed PAM restoration and wake remain gates.
+
+The [current readonly authority selection](../tools/native-current-readonly-authority/README.md)
+adds15 host groups against this exact actor/Observer code. Genuine held-reader
+tests signal the retained readonly pidfd and observe T-state; the independent
+writer is not the held-read boundary. Source expiry/EOF/death retire the actual
+app and refuse a successor while Snapshot/Stop respond. This uses synthetic
+credentialed session facts, not the original compositor. Archived test failures
+and the v1 fixture error are retained separately; see the
+[independently verified proof](evidence/native-current-readonly-authority-provenance.json).

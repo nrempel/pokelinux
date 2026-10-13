@@ -32,11 +32,25 @@ A separate exact-code host selection passes27 distinct headless process groups:
 18 installed lifecycle, seven storage and two cleanup. Root verifies93 bindings;
 the unsupported admin.sock-only startup attempt remains preserved. See
 [evidence](evidence/native-display-app-headless-regression.json).
+Another current-code host selection qualifies15 readonly/Source authority groups:
+14 v1 passes plus one narrow v2 coalesced-transition pass. Actual retained readonly
+pidfd-directed SIGSTOP holds the reader; expiry/EOF/death retire the app while
+Snapshot/Stop remain available. Root independently verifies443 bindings. The
+archived11pass/4fail suite and v1 fixture error remain failed. See the
+[current wrapper](../tools/native-current-readonly-authority/README.md) and
+[proof](evidence/native-current-readonly-authority-provenance.json).
 See [per-app display](native-display-app-generations.md) and its provenance.
 A separately pinned diagnostic-only epoch identifies its own103.208749ms
 publisher sample-chain gap, exceeding the unchanged100ms limit by3.208749ms.
 Authenticated trace closure has zero drops; this does not retroactively diagnose
 the old failure or establish scheduling causality. Production Source is unchanged.
+
+Future UI runs/previews must use the [Pixel 10 display profile](native-phone-display-profile.md),
+1080 ×2424 at422PPI with matched logical density420. A fresh actual ARM measurement
+at the correct resolution exposes incorrect virtual physical dimensions; its
+negative evidence is preserved. The simulation-only physical-size adapter and
+native-buffer capture remain unqualified until their actual positive selection.
+Do not resume historical320/800 preview geometry or resize an image to qualify.
 
 The native raw-response publication gate, absolute suspend-aware session expiry,
 owned registration worker/death watch, and local process reclamation are implemented.
