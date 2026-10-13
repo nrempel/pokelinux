@@ -1,10 +1,79 @@
 # Installed native appearance boundary
 
-The native appearance publisher is not implemented yet. A newly executed RED
-qualifies the problem: normal installed UID11010 Messages cannot read Omarchy's
-private UID1000 home and renders its fallback palette. Historical same-UID theme
-comparisons and the phone tracer's immutable public theme copy do not establish
-a live production appearance owner.
+The [native Rust publisher](../native-appearance/README.md) now implements an
+owned collector and typed public palette. Seventeen actual host component groups
+and two separate held-exec/descriptor controls pass. These are synthetic Linux
+boundaries; the original installed desktop RED below remains open. Historical
+same-UID theme comparisons and the tracer's immutable public copy do not establish
+a live installed owner. The partial typed Qt prototype remains a private worktree
+change; the public application's full typography/font/settings path is preserved
+until that migration is qualified.
+
+## Implemented owner and component evidence
+
+Snapshot-only mode0666 `appearance.sock` and root-only mode0600
+`appearance-control.sock` have separate client capacity and500ms idle/reply
+budgets. One owned UID1000 collector performs source IO and retains the original
+theme-set shared lock/generation through publication ACK. Completion requires
+actual packet credentials, exact PID/pidfd, incarnation/token and the original
+one-second `CLOCK_BOOTTIME` deadline. Stop withdraws output before killing;
+occupancy persists through actual wait. Read-only recollection cannot retry a
+radio registration or imply vendor cleanup.
+
+The final single-thread launcher retains a forked child without waiting for exec,
+uses the startup-selected trusted ELF through `execveat`, sanitizes descriptors,
+establishes waitable SIGCHLD disposition and signals through the retained pidfd.
+No blocked worker is detached. Executable/config ancestry must be root owned.
+An exclusive root filesystem lock protects socket-node recovery and refuses a
+second live owner. It does not establish a crashed predecessor's process-tree
+closure: the restart test independently subreaps the orphan before restarting.
+
+Eleven real process groups pass, including actual UID11010 public access/private
+control denial, held collector/Stop responsiveness, expiry/reap-before-recovery,
+input symlink/hardlink refusal and owner restart/exclusion. Four real SEQPACKET
+controls exercise the production flush method with directly established
+same-process owner state. They prove exact-wire EAGAIN, retained queue, invalidation
+by expiry/revision/Stop, writable transport and refused output/EOF; the positive
+reply sends exactly once. They are not whole-service controls or a chronological
+new defect. The ignored app-role helper executes as the real UID11010 child of
+its parent group and is not counted as an extra standalone pass.
+
+Two actual kernel controls observe UID1000, empty groups, zero effective
+capabilities and an added architecture-checked seccomp filter. New content opens,
+networking, clone/exec and other unlisted syscalls are refused. The x86 incompatible
+architecture case terminates with SIGSYS. Path metadata remains observable; this
+is not whole-filesystem privacy. Actual ARM filtering, matched Google kernel
+capabilities and the installed service capability profile remain unqualified.
+
+Chronological REDs precede the public-client starvation and executable-ancestry
+repairs. Abrupt-restart RED1 has weak pathname readiness; fresh RED2 requires actual
+status readiness and records EADDRINUSE before endpoint recovery is repaired.
+The first held-exec run fails tracer cleanup; fresh chronological RED2 records
+the owner stuck in `kernel_clone`, three200ms request timeouts and inherited root
+mode0600 FD198 after UID1000/filter transition, with actual parent reap. The fork
+launcher/descriptor repair follows. A new argv0 fixture preflight launches no
+container; corrected-v2 baseline RED3 is explicitly a post-fix replay, not the
+chronological RED. Inherited SIGCHLD ignore is a later genuine RED: one collection
+then permanently occupied reaping state. Signal normalization/pidfd fencing
+precedes the final seventeen-group GREEN. All failed labels remain unchanged.
+
+Final unchanged-v2 held-exec GREEN3 binds the final Rust ELF: status/snapshot/Stop
+take6.39/6.47/6.17ms while its actual child is stopped before execveat. Stop kills
+it before successful exec and parent wait4 actually reaps it. The unrelated FD
+is absent after credential/filter transition. Root independently checks fifteen
+input bindings, current source against the frozen compiler selection, exact
+public control bytes and parent reaps. Actual compiler/container waits, separate
+exact-CID absence and input closure pass. The ptrace fixture has Docker default
+capabilities plus test-only SYS_PTRACE; it is not the production profile.
+Other fixture capabilities are listed in the Rust README. Raw homes/logs/captures
+remain private; [bounded provenance](evidence/native-appearance-owner-provenance.json)
+and the [authored control](../tools/native-appearance-owner/process-control.py)
+are public.
+
+The final Rust source cross-compiles to static AArch64 GNU code. A separate normal
+Qt6.12 Messages build executes its compiler under Arch ARM7.1.6 without the isolated
+observer define. Neither compiler selection qualifies new service/app runtime,
+original live theme behavior, desktop admission or current Source/lock integration.
 
 ## Genuine installed RED
 
@@ -50,12 +119,12 @@ This reuses the tracer's pre-lock service closure compiled from `052c63c`,
 published at `9804b02`. It does not qualify newer joint lock/camera runtime,
 Google kernel boot, a production modem, native IMS or any physical phone.
 
-## Next implementation and acceptance gates
+## Remaining installed acceptance gates
 
-The selected design is an independent installed Rust appearance service with a
-bounded root-authenticated SEQPACKET presentation interface. It will export typed
-palette values rather than raw desktop files/XML, use an appearance incarnation
-and revision, and qualify availability with `CLOCK_BOOTTIME` expiry. Cached
+The component is an independent Rust appearance service with a bounded
+root-authenticated SEQPACKET presentation interface. It exports typed palette
+values rather than raw desktop files/XML, uses an appearance incarnation/revision,
+and qualifies availability with `CLOCK_BOOTTIME` expiry. Cached
 last-known colors must be distinguishable from live available publication.
 Appearance revisions confer no Source, focus, permission or lock authority.
 
@@ -73,13 +142,15 @@ theme writers, not arbitrary same-UID mutation. Font-family resolution and
 independently changed user settings need their own consistency and confinement
 qualification; neither raw XML copying nor a pure parser test closes those gates.
 
-GREEN requires the normal installed app to follow actual original Tokyo Night
+Installed GREEN requires the normal app to follow actual original Tokyo Night
 and Catppuccin Latte changes in the same window, with private-home isolation.
 Then replay receiving, close/reap and fresh reopen with the current lock graph,
 unchanged Source cadence and independently classified captures. Test expired and
 late completion, held collectors, malformed packets, owner death/restart and
-unsupported kernel capabilities at actual process boundaries. No GREEN or full
-phone completion is claimed by this RED or design.
+unsupported kernel capabilities at actual process boundaries. A direct-launch
+palette control can qualify an intermediate consumer composition but cannot close
+desktop/display-owner admission or current lock behavior. No installed GREEN or
+full phone completion is claimed by these component tests.
 
 The [Omarchy Mobile review](omarchy-mobile-reuse.md) identifies public desktop
 components for the later mobile-shell/input slice; it does not replace this

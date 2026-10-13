@@ -1,0 +1,276 @@
+{
+  "schema": 1,
+  "boundary": "synthetic x86 Linux Rust appearance owner; separate ARM compilation only",
+  "production_app_migration": false,
+  "original_installed_RED_closed": false,
+  "phone_accessed": false,
+  "proprietary_inputs": false,
+  "host": {
+    "component_groups": {
+      "real_process": 11,
+      "same_process_kernel_seqpacket": 4,
+      "kernel_confinement": 2
+    },
+    "passed": true,
+    "fixture_caps": [
+      "SETUID",
+      "SETGID",
+      "KILL",
+      "CHOWN",
+      "FOWNER",
+      "DAC_OVERRIDE"
+    ],
+    "production_capability_profile_qualified": false,
+    "compiler_image": "sha256:0b4b956502a9f55d992eaced6975737b523be19bd2034078983b36bbcfd7aee6",
+    "labels": {
+      "draft-4-controls-2": {
+        "role": "chronological public-idle RED",
+        "actual_CLI_exit": 101,
+        "exact_CID_absent": true,
+        "records": {
+          "command.json": "131243017193bf2566adb0ed91b0d06033d94f20a9fcd46f028ae61d8adcf7fc",
+          "execution.json": "b2f4d469fbe35bb2e695010a16149b23eaf3822d892991cab4963d0a3dfba9f9",
+          "console.log": "10439c2ec9317131aac6c5be50b6693a619aa60bdc0c934247f923bc7b137393"
+        }
+      },
+      "trust-red-1": {
+        "role": "chronological writable-ancestor RED; repeats idle RED",
+        "actual_CLI_exit": 101,
+        "exact_CID_absent": true,
+        "records": {
+          "command.json": "d6e183ef6467df9a89ef35beb8db82a79433606239c0b9b32d215c1332a3d429",
+          "execution.json": "941d6270bd82018e0d7f20692f8285952ac261a22f5f80cb5e66f7a590e65092",
+          "console.log": "25df8fb13b7a31adf4a608ad914df8457422bb6f622e62f74d759e367dc49c0b"
+        }
+      },
+      "restart-red-1": {
+        "role": "weaker failed stale-path readiness fixture",
+        "actual_CLI_exit": 101,
+        "exact_CID_absent": true,
+        "records": {
+          "command.json": "189c634883ebf28cc62d8d5c9eadb783712094c937e06b809f7fe5f458240ac9",
+          "execution.json": "327fb5b2027339fe678bd9da220f5da895bf7b43ffc598c015ef432809dda8da",
+          "console.log": "1a8c7493c7b857bbc78de1f49792b5440f59c55ba2b1c1c438f7fb3d738795de"
+        }
+      },
+      "restart-red-2": {
+        "role": "chronological actual-status-ready EADDRINUSE RED",
+        "actual_CLI_exit": 101,
+        "exact_CID_absent": true,
+        "records": {
+          "command.json": "a99e6763d5e7e2b1efe150b8eeaf36c1f013c045b5662e81120bd4e682500b7a",
+          "execution.json": "b69a3756ebc635b7872a1bcb4f38a86a4f24988506590e56f5b33c35528fb1b9",
+          "console.log": "91e3088af4704377128ac3f419f1c1d7083c40b8bb7037e3ec88fc86fdd54a85"
+        }
+      },
+      "sigchld-red-1": {
+        "role": "chronological inherited SIGCHLD RED",
+        "actual_CLI_exit": 101,
+        "exact_CID_absent": true,
+        "records": {
+          "command.json": "5daa75c9b1a936831b34ecc7adb5d7cf1b5ba89da8b9c2764ab127bfe2f22afb",
+          "execution.json": "a40989ca0ab3f6d42f96030f8123d9df9d0692a5749e2cd05f5a450591e784fc",
+          "console.log": "14747a9a16628befb58202c4ffd500818931eeaf6f0f07f209c0c7669188d52d"
+        }
+      },
+      "sigchld-green-1": {
+        "role": "final17-group GREEN",
+        "actual_CLI_exit": 0,
+        "exact_CID_absent": true,
+        "records": {
+          "command.json": "5d836df1612474e152a3a73a60c5e8f63973c1518cc516e2c1696bd865098f44",
+          "execution.json": "f978a4b6102c6628491b7235ab310a0344ef56383ec7e6ca680e688e1448399e",
+          "console.log": "6a85fac2f7bb5ccfec4994faff23efe7734404e8a9033917aa94618d0d045b25"
+        }
+      }
+    },
+    "final_build": {
+      "format_and_all_target_clippy_pass": true,
+      "actual_CLI_exit": 0,
+      "exact_CID_absent": true,
+      "records": {
+        "command.json": "8297e86dc56305f6c0077ece9d4337e5a9697f9d32cfee2dc500a2d7bbccff30",
+        "execution.json": "920b1cf966c90f7f3b3af959fbeaf004f8ccbf8f880a17e9d37ca8d3396085c5",
+        "artifacts.jsonl": "214239de426c374c40491ea3b5a2fd6b4ab57541a0690437b3e3ae0450df2308"
+      }
+    },
+    "binaries": [
+      {
+        "path": "/target/debug/deps/pokelinux_appearance-acd5377612d58ad7",
+        "test": true,
+        "target": "pokelinux_appearance",
+        "sha256": "32c589aca8756780fbac861aa2c1b625474a1c5d339d39796a2741063418572d"
+      },
+      {
+        "path": "/target/debug/deps/pokelinux_appearance-e5d63a983bcd3d25",
+        "test": true,
+        "target": "pokelinux-appearance",
+        "sha256": "7be72bdc5ed036c68f2b520a0f74d39b266931670fd3c5c02d101859da0d1c04"
+      },
+      {
+        "path": "/target/debug/pokelinux-appearance",
+        "test": false,
+        "target": "pokelinux-appearance",
+        "sha256": "1234efa60794fd7c24ef19b69087128441d93c790253913b8917b788a88315c0"
+      },
+      {
+        "path": "/target/debug/deps/confinement-b6f95c71e832554c",
+        "test": true,
+        "target": "confinement",
+        "sha256": "2d9d75366db435d4ab5050e15ae832fe5f0a170f6a6076ea4c19a51abacd8a33"
+      },
+      {
+        "path": "/target/debug/deps/process-015cdc80367a4edd",
+        "test": true,
+        "target": "process",
+        "sha256": "99fa456bce69186137127579b8dfc0e126c673ad12d2b4332048a4b38c56f70a"
+      }
+    ]
+  },
+  "chronology": [
+    {
+      "label": "ptrace-red-1",
+      "role": "failed tracer cleanup, incomplete; preserved"
+    },
+    {
+      "label": "ptrace-red-2",
+      "role": "genuine chronological held-exec/inherited-FD RED before launcher edit",
+      "records": {
+        "command.json": "ea3e01483126fb71c5d6a1b1114d3fed9a1458b02d6699bc6426d1b59437a2a6",
+        "result.json": "0af4f31a70218a5122ac6b01c03233a82f354ad71369fddce56d0240c7bf7822",
+        "execution.json": "d44ec97adca80552d0ae4f6502ce255ceee8348095c0b2ea7d93bbf472df1a7b"
+      },
+      "setup_and_cleanup": true,
+      "aggregate_passed": false
+    },
+    {
+      "label": "ptrace-red-3",
+      "role": "corrected-v2 old-binary replay after edit, not chronological RED"
+    },
+    {
+      "label": "ptrace-green-1",
+      "role": "argv0 preflight mismatch; no container launched"
+    },
+    {
+      "label": "ptrace-green-2",
+      "role": "intermediate async-fork GREEN before SIGCHLD repair"
+    },
+    {
+      "label": "ptrace-green-3",
+      "role": "unchanged-v2 final-binary GREEN after signal repair"
+    }
+  ],
+  "compiled_source_pins": {
+    "Cargo.lock": "896419e12fd91147c2dfbcb2faaddce4e0cd0bce659304dfd76418770e99c74d",
+    "Cargo.toml": "b3b94fb217636e554a9904ac77f5c8862435df2f064391cabc43038f8866b0f6",
+    "README.md": "3d5af8945c11305d6557df7207d937194c46f83185ab03ace37f7dc96c4baa3d",
+    "src/collector.rs": "a520f7339d07aeade15dada3f65b51a1140dd9d98dc20d7e3e3c0b2370394609",
+    "src/ipc.rs": "6472b1d52036448a92cac4a5cfd7bcbc504f5e2d02f0f7f20a8710cfa862fc1b",
+    "src/lib.rs": "e81dce254280a79c95fe873a79070d87fa45660dab265a6872d5e5b1d73018b5",
+    "src/main.rs": "b58bfc5255505bfd134cffba0e34633b9e6863c07f4f682c4027d413759369cc",
+    "src/palette.rs": "b9efb2231be62656e77dfe433eccea11c07dec0cc75297f7393da4d81e57b419",
+    "src/sandbox.rs": "6a06b9fed5ffe795a2deb6dbdd3d124499f0ee97707bc4a158c3e858eb919912",
+    "src/service.rs": "df707bbd6f4cd3dade6882e6d3f35c2ce023d2f32391fb2ec85dc174e1d87e67",
+    "tests/confinement.rs": "1dddd6aeddb24caab07d28877e16aac3e521b6f4c0a1c8bc324d922ca308be7b",
+    "tests/process.rs": "a328b4a8cb86bd5d2dc0082e4040033fbe326aa5818aa3b78cb72b901811ec72"
+  },
+  "held_exec_and_inherited_fd": {
+    "passed": true,
+    "final_binary_sha256": "1234efa60794fd7c24ef19b69087128441d93c790253913b8917b788a88315c0",
+    "public_control_sha256": "2330797489eb46b579fe566ac2f387013f9b5f3b62b255c3bea17f4bcb255640",
+    "records": {
+      "inputs.json": "8b16aeae3c9068e6ac0573ee33f06d8faab96162dd143ae179018406433b9cb1",
+      "command.json": "4c50321ca81de27c3490597ff327046e3c48a8ecb559338a2d6ccbad99a10a11",
+      "result.json": "909265d531ecfaf0a6318eb7bb7020b68679a4a1ee891ae74d21de77a078d084",
+      "execution.json": "23111b1c821fcdc271048db2ba41903e95e406338890d2ed5c3c9e8fdf4527ff",
+      "root-independent-review.json": "e1df18b3f853cc23f2ce8cfd9d3addc6fb6b0d63914560e6e86e289a37dca02b"
+    },
+    "actual_parent_wait4_reaps": true,
+    "actual_CLI_and_container_exit": 0,
+    "exact_CID_absent": true,
+    "input_closure": true,
+    "fixture_capabilities": "Docker default14 plus SYS_PTRACE, network none, NNP; not production profile",
+    "cases": {
+      "preexec": {
+        "status_snapshot_stop_ms": {
+          "status": 6.392221,
+          "snapshot": 6.474986,
+          "stop": 6.166669
+        },
+        "passed": true
+      },
+      "inherited-fd": {
+        "status_snapshot_stop_ms": {
+          "status": 4.676666,
+          "snapshot": 6.529387,
+          "stop": 7.226911
+        },
+        "passed": true
+      }
+    }
+  },
+  "ARM_cross_compile": {
+    "architecture": "AArch64",
+    "link": "static GNU ELF, no PT_INTERP",
+    "runtime_execution": false,
+    "actual_CLI_exit": 0,
+    "exact_CID_absent": true,
+    "records": {
+      "command.json": "52ade49839d7ef75a88b2fd54138cd16cf3455bb16fdc72e76296f955376a652",
+      "execution.json": "713e1c1da17f1f741bb132a39b07b771f8fceeaa9a53e600fefb7acbea57ee13",
+      "artifacts.jsonl": "b2a1f1e75b4eda43789eeb982e7d554d0c2c30986aebc47e3f41daeee91f7493",
+      "elf-header.txt": "5c233320ff7efd43d9a2fcd09ccb242b8be01ed82b15d4786c60d9938a328b0b",
+      "elf-programs.txt": "a8db57e5f9f29e9ad8d738d4e82fc99011142deae8ca516e4f6ee0e652976f10"
+    },
+    "binaries": [
+      {
+        "path": "/target/aarch64-unknown-linux-gnu/debug/deps/pokelinux_appearance-3c9d735a51d229b4",
+        "target": "pokelinux-appearance",
+        "test": true,
+        "sha256": "5b23391791b5b0cc66722676d36f9584f935913c42efe3d41e1a5eb7207c80e3"
+      },
+      {
+        "path": "/target/aarch64-unknown-linux-gnu/debug/pokelinux-appearance",
+        "target": "pokelinux-appearance",
+        "test": false,
+        "sha256": "bf3c8f1b90ee32fc8870406f1abb2aab5ed22ef4240e3f1f640cff032e2b18a9"
+      },
+      {
+        "path": "/target/aarch64-unknown-linux-gnu/debug/deps/pokelinux_appearance-a9361b2679c3e65e",
+        "target": "pokelinux_appearance",
+        "test": true,
+        "sha256": "122816d93cfed018116e4559f6a35ece0ea203f422e56935bb7c3861d7ae7415"
+      },
+      {
+        "path": "/target/aarch64-unknown-linux-gnu/debug/deps/confinement-6a9e90decb51e7fe",
+        "target": "confinement",
+        "test": true,
+        "sha256": "8bc06db38213ff61496d3312e3d063658b0355d6262de2f7530cc7f8e480cdd3"
+      },
+      {
+        "path": "/target/aarch64-unknown-linux-gnu/debug/deps/process-c950dcf767059e88",
+        "target": "process",
+        "test": true,
+        "sha256": "7cb4d7d1154853e5d3006f0da756fa1d97d8261d1347e38bbcf5ea95acf1bce7"
+      }
+    ]
+  },
+  "separate_Qt_ARM_compile": {
+    "normal_ELF_sha256": "703ba9f77e40e8af627236ca0250bb7cc2249f35e53894bfa04b730ec9af3391",
+    "runtime_GUI_executed": false,
+    "normal_isolated_observer_defined": false,
+    "handoff_sha256": "85ec37ff1b4be2d66de95ca2fcd99a0faf446efc9c284fd3dac90fdb268f0c20",
+    "kernel": "Arch ARM7.1.6-1-aarch64-ARCH",
+    "Qt": "6.12.0",
+    "scope": "actual compiler execution only; typed reader remains private uncommitted prototype"
+  },
+  "remaining": [
+    "original live two-theme consumer composition",
+    "actual desktop/display-owner and current Source/lock integration",
+    "complete user overrides, alpha, font resolution, typography and spacing port",
+    "installed supervision proving predecessor process-tree closure before restart",
+    "actual ARM and matched Google kernel capability/confinement qualification",
+    "actual suspend and uninterruptible-task behavior",
+    "full smartphone and physical Pixel hardware gates"
+  ]
+}

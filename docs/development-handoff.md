@@ -18,15 +18,30 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
-The next appearance boundary now has a genuine installed RED. Fresh `red-2`
+The native Rust appearance owner passes seventeen host component groups plus two
+separate actual held-exec/inherited-FD controls. Chronological REDs expose public
+client starvation, executable ancestry, stale socket restart, blocking exec
+handshake, inherited descriptors and ignored SIGCHLD. The final owner retains
+an asynchronous forked child, trusted FD-bound exec, pidfd signaling and actual
+wait; it sanitizes descriptors, normalizes waitable-child signals and reserves
+owner controls. Real EAGAIN exercises queued output revalidation. Root binds
+final inputs/reaps; actual container waits/absence and input closure pass.
+Rust static ARM cross-build and normal Qt ARM compile pass without new installed
+runtime qualification. The partial typed Qt prototype remains private; the
+public app's complete font/settings/typography path is preserved until migration.
+Next: original two-theme ARM consumer composition, actual desktop/current
+Source/lock replay, full appearance features and installed supervision.
+See [native appearance](native-appearance-service.md) and bounded provenance.
+
+The installed appearance boundary retains its genuine RED. Fresh `red-2`
 launches unchanged UID11010 Messages against private UID1000/mode0700 HOME;
 actual original Tokyo Night and its read-only oracle report `#1a1b26`, while
 the normal app gets `EACCES` and renders `#101315` in its preselected native
 interior patch. Root independently decodes the1080×2424 PNG and binds171 files;
 owned guest cleanup, CLI0, independent exact-CID absence and input closure pass.
 Aggregates remain failed. `red-1` remains a setup failure, not a palette RED.
-The Source adapter is not loaded during this assertion. The Rust appearance
-publisher/typed consumer is the next implementation, with no GREEN claimed.
+The Source adapter is not loaded during this assertion. Typed consumer/installed
+owner composition remains open, with no installed GREEN claimed.
 See [appearance boundary](native-appearance-service.md). A pinned source-only
 [Omarchy Mobile review](omarchy-mobile-reuse.md) identifies mobile shell,
 keyboard and rotation reuse; its Pixel7/mainline backends do not qualify Pixel10
