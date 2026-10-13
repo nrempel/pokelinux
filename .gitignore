@@ -19,3 +19,6 @@ artifacts/
 *.keystore
 .env
 .env.*
+
+# macOS resource-fork metadata is never a public source artifact.
+._*

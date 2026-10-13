@@ -328,8 +328,7 @@ and Wayland/device policy remain open. See `native-messages-service.md`,
    and genuine Omarchy integration in the full smartphone matrix.
 
 An advisory Pro worker-lifecycle consultation was stopped at the user's handoff
-request before a terminal answer. It is not a completed review or accepted design:
-https://chatgpt.com/c/6acd2fad-19c0-83e8-b059-f88452119b16
+request before a terminal answer. It is not a completed review or accepted design.
 Earlier completed owner reviews are recorded in `native-radio-owner.md`.
 
 ## Verification and publication

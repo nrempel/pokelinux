@@ -84,6 +84,8 @@ Dashed connections are work still required, not working hardware paths. “Rust 
 
 Historical reports refer to local `artifacts/` paths. Those files are not all published. A source test or old report is not a current hardware qualification certificate.
 
+Public-source publication excludes proprietary inputs, raw decompilation, credentials, private runtime artifacts and macOS resource-fork sidecars. The [public audit](docs/publication-audit.md) checked current files, all reachable history and GitHub attachment surfaces: no validated credentials, proprietary input binaries or raw decompilation dumps were found. Benign historical metadata and removed private conversation references remain in old commits; source/log hashes were validated as scanner false positives.
+
 ## Real UI evidence
 
 These are captures from an **Arch ARM virtual machine**, showing the same phone app under two Omarchy themes. The bridge is deliberately unavailable in this test. They demonstrate theme integration, not a working cellular phone.

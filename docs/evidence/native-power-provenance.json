@@ -178,9 +178,9 @@
     }
   },
   "private_validation_artifacts": [
-    "/home/ubuntu/Projects/pokelinux/artifacts/native-power/red-tests.log",
-    "/home/ubuntu/Projects/pokelinux/artifacts/native-power/red-dispatch-state-tests.log",
-    "/home/ubuntu/Projects/pokelinux/artifacts/native-power/full-validation.log",
-    "/home/ubuntu/Projects/pokelinux/artifacts/native-power/reference/reference.tsv"
+    "native-power/red-tests.log",
+    "native-power/red-dispatch-state-tests.log",
+    "native-power/full-validation.log",
+    "native-power/reference/reference.tsv"
   ]
 }

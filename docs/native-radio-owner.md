@@ -169,7 +169,7 @@ the same production owner through the independent synthetic Binder peer.
 
 ## Review and independent checks
 
-[ChatGPT Pro review](https://chatgpt.com/c/6acd2549-3fc0-83e8-b79b-50860e459bdc)
+An advisory ChatGPT Pro review
 completed in Chat mode at Pro power 5/5, marker
 `PRO-BRIDGE-20261012-owner-c842`, zero context rounds. The completed response had
 Copy/Regenerate controls with Stop absent. It is advisory, not execution evidence.
@@ -187,7 +187,7 @@ reacquires the gate. This follows the independently checked
 [Rust drop-scope rules](https://doc.rust-lang.org/reference/destructors.html#scopes-of-function-parameters)
 and is also exercised by failed publication and wrong-owner tests.
 
-A focused [implementation review](https://chatgpt.com/c/6acd2a5b-1b24-83e8-8e49-d7edc95e19cb)
+A focused implementation review
 completed at Pro power 5/5 with one context round, marker
 `PRO-BRIDGE-20261012-owner-diff-a8d1`. Copy/Regenerate controls were present and
 Stop was absent. The review found no remaining concrete ownership or concurrency
