@@ -6,6 +6,7 @@ publish = false
 
 [dependencies]
 pokelinux-kernel-identity = { path = "../native-kernel-identity" }
+pokelinux-camera = { path = "../native-camera" }
 serde = { version = "=1.0.229", features = ["derive"] }
 serde_json = "=1.0.154"
 rustix = { version = "=1.1.5", features = ["net", "process", "thread", "fs", "event", "time", "rand"] }

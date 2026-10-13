@@ -95,6 +95,18 @@ removes owned resources on success or failure. Rust formatting, Clippy with
 warnings denied, static ELF checks, shell syntax and Python compilation pass.
 There is no physical-phone access, vendor execution or shared ARM64 VM change.
 
+## Native actor/process integration update
+
+The separate [native camera service checkpoint](native-camera-service.md) now
+composes this owner with a typed current Capture route and retained backend child.
+Two actual integration REDs precede17 passing Arch ARM7.1.6 kernel groups using
+public generated Rust/Rust Binder, real app PID/UID, held calls, actual Supervisor
+channel EAGAIN, permission/lifecycle fencing, original deadlines and actual reaping.
+It uses synthetic Root controls and no Source, vendor runtime or original NDK rerun.
+The ordinary installed production backend, media/image publication, containment,
+qualified reset/reopen and device work remain open. The original checkpoint below
+retains its evidence class; the new ARM result does not establish captured images.
+
 ## Remaining gates
 
 The owner exposes policy eligibility, not a media publication or storage API.
@@ -117,4 +129,5 @@ Actual sync_file acquire/release semantics, gralloc/dma-buf layout/import,
 Wayland/PipeWire/media integration, mapper validation, completed DMA, matching
 factory interface/dependency closure, sensor capabilities, preview/photo/video,
 privacy indicators, storage durability and later authorized device tests remain
-unqualified. No ARM64 camera runtime or captured image is claimed.
+unqualified. The original NDK checkpoint remains separate from the newer ARM
+synthetic service runtime above; neither claims a captured image.

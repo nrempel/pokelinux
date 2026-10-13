@@ -23,8 +23,20 @@ pub(crate) struct ReadStamp {
     policy: u64,
     lifecycle: u64,
     backend: String,
+    permission: Permission,
     until: u64,
     session: Option<SessionRead>,
+}
+/// Effect authority stays inside this actor, separate from durable history.
+/// It is neither cloneable nor serializable and cannot be reconstructed by an app.
+pub(crate) struct CaptureStamp {
+    authority: ReadStamp,
+    intent: crate::camera::Intent,
+}
+impl CaptureStamp {
+    pub(crate) fn intent(&self) -> crate::camera::Intent {
+        self.intent
+    }
 }
 struct SessionRead {
     source: String,
@@ -434,6 +446,17 @@ impl Authority {
         ttl_ms: u64,
         now: u64,
     ) -> Result<ReadStamp, Reply> {
+        self.begin_stamp(pid, uid, backend, Permission::MessagesRead, ttl_ms, now)
+    }
+    fn begin_stamp(
+        &mut self,
+        pid: u32,
+        uid: u32,
+        backend: &str,
+        permission: Permission,
+        ttl_ms: u64,
+        now: u64,
+    ) -> Result<ReadStamp, Reply> {
         let _ = self.reap_dead();
         if !self.ready() {
             return Err(Reply::Unavailable);
@@ -445,7 +468,7 @@ impl Authority {
         else {
             return Err(Reply::Denied);
         };
-        if !(1..=1000).contains(&ttl_ms) || !self.allowed(app, Permission::MessagesRead) {
+        if !(1..=1000).contains(&ttl_ms) || !self.allowed(app, permission) {
             return Err(Reply::Denied);
         }
         Ok(ReadStamp {
@@ -456,6 +479,7 @@ impl Authority {
             policy: self.policy,
             lifecycle: self.lifecycle,
             backend: backend.into(),
+            permission,
             until: now.saturating_add(ttl_ms * 1_000_000),
             session: if self.session_required {
                 let s = self.fresh_session(now).ok_or(Reply::Denied)?;
@@ -470,6 +494,9 @@ impl Authority {
         })
     }
     pub(crate) fn current_read(&self, stamp: &ReadStamp, backend: &str, now: u64) -> bool {
+        stamp.permission == Permission::MessagesRead && self.current_stamp(stamp, backend, now)
+    }
+    fn current_stamp(&self, stamp: &ReadStamp, backend: &str, now: u64) -> bool {
         self.ready()
             && now < stamp.until
             && self.policy == stamp.policy
@@ -482,7 +509,7 @@ impl Authority {
                             s.source == stamp.source && s.revision == stamp.revision
                         })
                 }))
-            && self.allowed(&stamp.app, Permission::MessagesRead)
+            && self.allowed(&stamp.app, stamp.permission)
             && self.principals.get(&stamp.app).is_some_and(|p| {
                 p.pid == stamp.pid
                     && p.uid == stamp.uid
@@ -495,6 +522,70 @@ impl Authority {
                     .session
                     .as_ref()
                     .is_some_and(|s| crate::boottime_ns() < s.until))
+    }
+    pub(crate) fn begin_capture(
+        &mut self,
+        pid: u32,
+        uid: u32,
+        backend: &str,
+        generation: pokelinux_camera::Generation,
+        ttl_ms: u64,
+        now: u64,
+    ) -> Result<(CaptureStamp, WriteIntent), Reply> {
+        if generation.session == 0 || generation.configuration == 0 {
+            return Err(Reply::Unavailable);
+        }
+        let stamp = self.begin_stamp(pid, uid, backend, Permission::Capture, ttl_ms, now)?;
+        if self.durable.receipts.len() >= MAX_RECEIPTS {
+            return Err(Reply::Unavailable);
+        }
+        let Some(receipt) = self.id() else {
+            self.invalidate();
+            return Err(Reply::Unavailable);
+        };
+        let until = stamp
+            .session
+            .as_ref()
+            .map_or(stamp.until, |s| stamp.until.min(s.until));
+        let intent = crate::camera::Intent {
+            capture: pokelinux_camera::CaptureId(self.sequence),
+            generation,
+            until_ns: until,
+        };
+        let mut next = self.durable.clone();
+        next.receipts.push(receipt.clone());
+        let write = WriteIntent {
+            next,
+            until,
+            policy: stamp.policy,
+            lifecycle: stamp.lifecycle,
+            gate: Gate::Admit {
+                app: stamp.app.clone(),
+                generation: stamp.generation,
+                permission: Permission::Capture,
+                receipt,
+            },
+        };
+        Ok((
+            CaptureStamp {
+                authority: stamp,
+                intent,
+            },
+            write,
+        ))
+    }
+    pub(crate) fn current_capture(
+        &self,
+        stamp: &CaptureStamp,
+        backend: &str,
+        generation: pokelinux_camera::Generation,
+        now: u64,
+    ) -> bool {
+        stamp.intent.generation == generation
+            && stamp.authority.permission == Permission::Capture
+            && now < stamp.intent.until_ns
+            && self.current_stamp(&stamp.authority, backend, now)
+            && crate::boottime_ns() < stamp.intent.until_ns
     }
     fn id(&mut self) -> Option<String> {
         self.sequence = self.sequence.checked_add(1)?;
@@ -539,7 +630,9 @@ impl Authority {
             return immediate(Reply::Denied);
         };
         match request {
-            AppRequest::MessagesRead { .. } => immediate(Reply::Unavailable),
+            AppRequest::MessagesRead { .. } | AppRequest::CameraCapture { .. } => {
+                immediate(Reply::Unavailable)
+            }
             AppRequest::Query {} => immediate(Reply::Ok),
             AppRequest::Prepare { permission, ttl_ms } => {
                 if permission == Permission::MessagesRead

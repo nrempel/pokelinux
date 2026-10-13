@@ -18,6 +18,17 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The native camera actor/process route now qualifies17 actual ARM Binder groups
+after a genuine missing-route RED and an actual Supervisor-channel EAGAIN revoke
+RED. Durable history is separate from the retained current stamp; every actual
+submit/retry and final reply rechecks authority. Pre-dispatch cancellation stops
+the ready worker, and local waits never imply remote cleanup. Protected markers
+survive healthy restart; no implicit reopen follows. Root independently verifies
+198 GREEN,80 EAGAIN RED and95 first-route bindings. This is public Rust/Rust Binder
+with synthetic Root lifecycle controls and no Source/UI/vendor runtime. Installed
+Source/Camera/media/containment/reset/device integration remains required. See
+[service](native-camera-service.md) and [proof](evidence/native-camera-service-provenance.json).
+
 First native early boot now has a separate RAM-only checkpoint. A genuine
 missing-`/init` ARM RED precedes the Rust root-PID1 probe. Native child actual wait
 and controlled poweroff pass, and a missing-helper failure powers down separately.

@@ -1,0 +1,99 @@
+{
+  "scope": "Authored safe summary of native Rust camera actor/process-owner integration; raw runtime and generated artifacts remain private",
+  "worktree": "/tmp/pokelinux-camera-actor-root",
+  "base": "2134c62a06fe46a2a4ecbe4526653a9824822924",
+  "chronological_actual_integration": [
+    {
+      "class": "pre-boot harness failure",
+      "label": "camera-missing-route-red-20261013-1",
+      "cause": "QEMU implicit snapshot temporary file targeted read-only /var/tmp",
+      "route_claim": false
+    },
+    {
+      "class": "pre-boot harness failure",
+      "label": "camera-missing-route-red-20261013-2",
+      "cause": "Pinned QEMU ignored QEMU-only TMPDIR for implicit snapshot temporary file",
+      "route_claim": false
+    },
+    {
+      "class": "genuine missing-route RED",
+      "label": "camera-missing-route-red-20261013-3",
+      "selection_sha256": "edc4fef66b5fa4cea565ca26bfa86f4a44a49ae8eee36ed4da1b7e398efb2375",
+      "harness_selection_sha256": "d01228e5925a37f4a7baf77607ff252e94aa3fa1cfbe09fc7e2e5c24f9ed4e33",
+      "result_sha256": "3520e7c8358ea99e20e6e54d263b3e9d8ef1ec7fec4fbf51ee49654abd76bc50",
+      "receipt_sha256": "8f79bf54fe81d50e68c5e112c76915a6b1df28a625874fe7eafe8debfe405890",
+      "observed": "Real current UID 11020 typed app request denied; fresh public remote submitted 0 versus expected 1; separate FD/Owner smoke succeeded",
+      "docker_wait": 1,
+      "qemu_wait": 0,
+      "input_and_lock_closure": true
+    },
+    {
+      "class": "genuine actual Supervisor socket EAGAIN cancellation RED",
+      "label": "camera-eagain-revoke-red-20261013-1",
+      "selection_sha256": "930f5328521bedb16ae252b80a391d685e455945189b3fd1ae794d37908945c8",
+      "result_sha256": "1c58a5dc195539790041df346b2085d216e4c7e482c2b1bacda86d7fbe6c2290",
+      "receipt_sha256": "525a0011feda0d0e727ff7192f207e9b5baa6f5966b9a362ce659352f709a9d2",
+      "observed": "Actual retained parent SEQPACKET filled 11 packets to errno 11 while exact ready worker was pidfd-stopped. Durable capture admission completed. Grant revoke removed actor pending but left stopped worker alive/occupied/available; remote registered 0/submitted 0",
+      "fix_after_red": "Root revoke_capture clears stamp first; Persisting/Dispatching stop provider, later phases revoke exact CaptureId",
+      "docker_wait": 1,
+      "qemu_wait": 0,
+      "input_and_lock_closure": true
+    },
+    {
+      "class": "actual composed ARM Binder GREEN",
+      "label": "camera-owned-service-green-20261013-1",
+      "selection_sha256": "06ad3ece40cee7244074918764f09de05f1216518f488bcd1a977fa8471fe99d",
+      "result_sha256": "32770ca3bd6cacb9eef97cac3e7f700fb32995c17ab1234b2d6f37a6c1b89fd6",
+      "receipt_sha256": "ae8d3a5e1b6f2312b125ecb0a28b58662e9aa3caae8166348508eaced1222fb0",
+      "passed_groups": 17,
+      "docker_wait": 0,
+      "qemu_wait": 0,
+      "input_and_lock_closure": true,
+      "owned_container_absent": true
+    }
+  ],
+  "green_checks": [
+    "Separate public generated frozen CameraV4 FD/core-Owner/pipe-fence smoke in fresh real Binder realm",
+    "Bootstrap and wrong independent grant produce zero callback registrations/submissions; current Capture app permission produces exactly 1 each and a bounded Accepted receipt with returned/completion/fence false; second attempt refused",
+    "Post-receipt revocation rejects late callback; retained marker prevents healthy whole-service restart from registering or submitting",
+    "Held actual Binder request: grant, lock, background, suspend, app EOF, app death, original expiry, Stop; each actual backend Child reaped while remote retains original count 1",
+    "Actual Supervisor socket EAGAIN: grant, exact app EOF, original deadline; each worker reaped without registration/submission or output flush",
+    "Original effect deadline expires before selected delayed Binder lookup; zero registration/submission",
+    "Retained peer death fences/reaps actual backend without reset inference",
+    "Actual actor SIGKILL after worker UID drop; isolated fixture subreaper performs 3 actual orphan waits"
+  ],
+  "final_code_sha256": {
+    "native-lifecycle/src/camera.rs": "d113da936e0e1cf14158d9cb52c9fb364e5cbd8c25de9c7245cae9ddcc568365",
+    "native-lifecycle/src/service.rs": "2362d02ae86d9594780c69df8c6a9e213fbc470ff7a03bd4caee1ad34b2278df",
+    "native-camera-service/src/worker.rs": "8019362dfd4c615d87b259638b53b0bc946a869bd87288520a4a2683b01aaa8c",
+    "authored_adapter": "ce6dc3cc03730555d4b22f70320969da4c6a3a6830b7692b0a8521bda80aba6d",
+    "camera-composed-service_binary": "f7e0605e4a1005bff23020a156098da1c302ed90f0f3ca17e96e7fe58d27e45f"
+  },
+  "checks": "Fresh immutable RAM source snapshots; exact Rust 1.98.1 image; readonly registry; offline locked ARM builds; fmt-check; all-target fixture and standalone service clippy -Dwarnings; Root existing 8 host lifecycle tests separately passed",
+  "runtime_realm": "Arch ARM full-system QEMU TCG, kernel 7.1.6-1-aarch64-ARCH, real Binder; public generated Rust/Rust peer; no NIC/no GUI; synthetic pipe buffer/fence; app UID 11020 and configured backend UID 11030; root synthetic foreground/lock/grant controls, no Source provider",
+  "input_lock_scope": "Shared canonical native-arm64-binder/vm.lock retained through actual Docker wait, posthash and receipt; historical VM reader exclusive, historical prepare refuses a present backing separately. Read-only raw input plus explicit bounded tmpfs QCOW2 overlay, no backing clone or mutation",
+  "remaining_gates": [
+    "Installed production service/app composition",
+    "Original peer factory/schema/backend ABI qualification",
+    "Vendor backend/resource containment",
+    "FMQ, gralloc/DMA, actual sync_file",
+    "Image/media storage and current-authority publication",
+    "Native Omarchy camera UI",
+    "Physical phone behavior"
+  ],
+  "excluded_claims": [
+    "Original NDK rerun",
+    "Original or closed vendor library execution",
+    "Fresh Source/compositor authority",
+    "Hard latency guarantee",
+    "Media or success publication",
+    "DMA-safe remote cleanup or reset",
+    "Physical phone access"
+  ],
+  "root_independent_verification": {
+    "missing_route_bindings": 95,
+    "actual_eagain_bindings": 80,
+    "green_bindings": 198,
+    "all_counts_are_per_selection_not_aggregate_unique_paths": true
+  }
+}

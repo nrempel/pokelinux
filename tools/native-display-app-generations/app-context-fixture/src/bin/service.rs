@@ -268,6 +268,7 @@ fn main() -> io::Result<()> {
         Some(&mut messages),
         Some(&mut session),
         Some(&mut factory),
+        None,
     );
     // No app Context exists before the actor adopts the factory. The actor is
     // its sole actual-wait owner; its original cleanup budget retires all slots.

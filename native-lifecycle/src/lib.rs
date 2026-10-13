@@ -1,6 +1,7 @@
 //! Linux credentials are authority; app labels are trusted installation metadata.
 mod apps;
 pub mod authority;
+pub mod camera;
 pub mod display;
 pub mod ipc;
 pub mod messages;
@@ -38,6 +39,7 @@ pub struct Profile {
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(tag = "op", rename_all = "snake_case", deny_unknown_fields)]
 pub enum AppRequest {
+    CameraCapture { request: camera::Request },
     MessagesRead { request: messages::ReadRequest },
     Query {},
     Prepare { permission: Permission, ttl_ms: u64 },
@@ -70,11 +72,21 @@ pub enum AdminRequest {
     Snapshot {},
     MessagesStatus {},
     MessagesRestart {},
+    CameraStatus {},
     Stop {},
 }
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 #[serde(tag = "result", rename_all = "snake_case", deny_unknown_fields)]
 pub enum Reply {
+    CameraState {
+        state: camera::State,
+    },
+    CameraStatus {
+        occupied: bool,
+        busy: bool,
+        available: bool,
+        pending: usize,
+    },
     MessagesStorage {
         incoming_started: u64,
         incoming_raw_committed: u64,

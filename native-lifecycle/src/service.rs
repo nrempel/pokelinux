@@ -1,6 +1,6 @@
 use crate::{
     AdminRequest, AppRequest, Profile, Reply,
-    authority::{Authority, Decision, ReadStamp, WriteIntent},
+    authority::{Authority, CaptureStamp, Decision, ReadStamp, WriteIntent},
     boottime_ns, ipc,
     storage::{Event, Worker},
 };
@@ -81,6 +81,7 @@ struct Operation {
     until: u64,
     retired: bool,
     shutdown: bool,
+    camera: bool,
 }
 struct Connection {
     id: u64,
@@ -93,6 +94,55 @@ struct Connection {
     deadline: u64,
     pending: Option<Vec<u8>>,
     launching: Option<String>,
+}
+#[derive(PartialEq)]
+enum CapturePhase {
+    Persisting,
+    Dispatching,
+    Submitted,
+    ReplyReady,
+    Published,
+}
+struct Capture {
+    connection: u64,
+    stamp: CaptureStamp,
+    phase: CapturePhase,
+}
+fn revoke_capture(
+    capture: &mut Option<Capture>,
+    camera: &mut Option<&mut dyn crate::camera::Provider>,
+) {
+    if let Some(capture) = capture.take()
+        && let Some(provider) = camera.as_deref_mut()
+    {
+        // Fence the actor's publication first. Actual child occupancy belongs
+        // to the provider until its parent wait; no reset/cleanup follows.
+        match capture.phase {
+            // The backend has no accepted capture ID yet. Retire the owned
+            // ready child even if persistence or the actual send is blocked.
+            CapturePhase::Persisting | CapturePhase::Dispatching => provider.stop(),
+            _ => provider.revoke(capture.stamp.intent().capture),
+        }
+    }
+}
+fn current_capture(
+    capture: &Capture,
+    authority: &Authority,
+    camera: &Option<&mut dyn crate::camera::Provider>,
+) -> bool {
+    camera.as_deref().is_some_and(|provider| {
+        authority.current_capture(
+            &capture.stamp,
+            provider.incarnation(),
+            provider.generation(),
+            boottime_ns(),
+        ) && match capture.phase {
+            CapturePhase::Persisting | CapturePhase::Dispatching => {
+                provider.available() && !provider.busy()
+            }
+            _ => provider.current(capture.stamp.intent().capture),
+        }
+    })
 }
 fn complete_launches(
     completed: Vec<crate::apps::Completion>,
@@ -175,6 +225,7 @@ pub fn run_with_messages_and_session(
         messages,
         session,
         None,
+        None,
     )
 }
 #[allow(clippy::too_many_arguments)]
@@ -187,6 +238,7 @@ pub fn run_with_services(
     mut messages: Option<&mut dyn crate::messages::Provider>,
     mut session: Option<&mut dyn crate::session::Provider>,
     mut display: Option<&mut dyn crate::display::Factory>,
+    mut camera: Option<&mut dyn crate::camera::Provider>,
 ) -> io::Result<()> {
     if rustix::process::getuid().as_raw() != 0 || rustix::process::geteuid().as_raw() != 0 {
         return Err(io::ErrorKind::PermissionDenied.into());
@@ -231,6 +283,7 @@ pub fn run_with_services(
         until: initial_until,
         retired: false,
         shutdown: false,
+        camera: false,
     });
     let mut connection_id = 0u64;
     let mut startup_failed = false;
@@ -240,6 +293,7 @@ pub fn run_with_services(
     let mut cleanup_until = None;
     let mut read_backpressure = 0u64;
     let mut local_recovery: Option<LocalRecovery> = None;
+    let mut capture: Option<Capture> = None;
     let mut outcome = (|| {
         loop {
             // Never block on child wait, request IO, or an idle client.
@@ -251,6 +305,19 @@ pub fn run_with_services(
                 &mut local_recovery,
                 &messages,
             )?;
+            if capture.as_ref().is_some_and(|active| {
+                stopping
+                    || !current_capture(active, &authority, &camera)
+                    || !connections.iter().any(|c| c.id == active.connection)
+            }) {
+                let connection = capture.as_ref().unwrap().connection;
+                revoke_capture(&mut capture, &mut camera);
+                if let Some(c) = connections.iter_mut().find(|c| c.id == connection)
+                    && c.awaiting.is_none()
+                {
+                    c.pending = Some(serde_json::to_vec(&Reply::Denied)?);
+                }
+            }
             if let Some(op) = &mut operation
                 && !op.retired
                 && boottime_ns() >= op.until
@@ -310,8 +377,35 @@ pub fn run_with_services(
                                         && c.awaiting == Some(token)
                                     {
                                         c.awaiting = None;
-                                        c.pending = Some(serde_json::to_vec(&reply)?);
-                                        c.deadline = boottime_ns().saturating_add(1_000_000_000);
+                                        if let Some(active) = &mut capture
+                                            && op.camera
+                                            && active.connection == c.id
+                                            && active.phase == CapturePhase::Persisting
+                                            && matches!(reply, Reply::AdmittedUncertain { .. })
+                                        {
+                                            // Durable history is retained, but only the
+                                            // still-owned stamp can authorize dispatch.
+                                            active.phase = CapturePhase::Dispatching;
+                                            c.deadline = active
+                                                .stamp
+                                                .intent()
+                                                .until_ns
+                                                .saturating_add(1_000_000_000);
+                                        } else {
+                                            c.pending = Some(serde_json::to_vec(&if op.camera {
+                                                Reply::Unavailable
+                                            } else {
+                                                reply.clone()
+                                            })?);
+                                            c.deadline =
+                                                boottime_ns().saturating_add(1_000_000_000);
+                                            if capture
+                                                .as_ref()
+                                                .is_some_and(|s| s.connection == c.id)
+                                            {
+                                                revoke_capture(&mut capture, &mut camera);
+                                            }
+                                        }
                                     }
                                 }
                                 if authority.is_degraded() {
@@ -383,6 +477,37 @@ pub fn run_with_services(
                     }
                 }
             }
+            if let Some(provider) = camera.as_deref_mut() {
+                let event = match provider.poll() {
+                    Ok(event) => event,
+                    Err(_) => {
+                        provider.stop();
+                        None
+                    }
+                };
+                if let Some(event) = event {
+                    let (id, state) = match event {
+                        crate::camera::Event::Complete { capture, state } => (capture, Some(state)),
+                        crate::camera::Event::Failed { capture } => (capture, None),
+                    };
+                    if let Some(active) = &mut capture
+                        && active.phase == CapturePhase::Submitted
+                        && active.stamp.intent().capture == id
+                    {
+                        if let Some(c) = connections.iter_mut().find(|c| c.id == active.connection)
+                        {
+                            c.pending = Some(serde_json::to_vec(&match state {
+                                Some(state) => Reply::CameraState { state },
+                                None => Reply::Unavailable,
+                            })?);
+                            active.phase = CapturePhase::ReplyReady;
+                        }
+                    } else {
+                        // Old/unsolicited callbacks never establish a new stamp.
+                        provider.stop();
+                    }
+                }
+            }
             if !storage.occupied() && operation.as_ref().is_some_and(|o| o.retired) {
                 operation = None;
             }
@@ -390,6 +515,10 @@ pub fn run_with_services(
                 authority.invalidate();
                 apps.stop(&mut authority)?;
                 if let Some(provider) = session.as_deref_mut() {
+                    provider.stop();
+                }
+                revoke_capture(&mut capture, &mut camera);
+                if let Some(provider) = camera.as_deref_mut() {
                     provider.stop();
                 }
                 let until = *cleanup_until
@@ -403,6 +532,7 @@ pub fn run_with_services(
                 && !storage.occupied()
                 && messages.as_deref().is_none_or(|p| !p.occupied())
                 && session.as_deref().is_none_or(|p| !p.occupied())
+                && camera.as_deref().is_none_or(|p| !p.occupied())
                 && connections
                     .iter()
                     .all(|c| c.pending.is_none() && c.awaiting.is_none())
@@ -543,6 +673,42 @@ pub fn run_with_services(
                         }
                     }
                 }
+                if capture.as_ref().is_some_and(|active| {
+                    active.connection == connection.id
+                        && matches!(
+                            active.phase,
+                            CapturePhase::Dispatching | CapturePhase::Submitted
+                        )
+                }) {
+                    // Exact owning-client EOF/extra input is observed before any
+                    // effect send; a general provider poll never dispatches.
+                    match ipc::receive(&connection.fd) {
+                        Ok(None) => {}
+                        Err(e) if e.raw_os_error() == Some(4) => return true,
+                        _ => {
+                            revoke_capture(&mut capture, &mut camera);
+                            return false;
+                        }
+                    }
+                    let active = capture.as_ref().unwrap();
+                    if stopping || !current_capture(active, &authority, &camera) {
+                        revoke_capture(&mut capture, &mut camera);
+                        connection.pending = serde_json::to_vec(&Reply::Denied).ok();
+                        return true;
+                    }
+                    if active.phase == CapturePhase::Dispatching {
+                        let intent = active.stamp.intent();
+                        match camera.as_deref_mut().unwrap().submit(&intent) {
+                            Ok(true) => capture.as_mut().unwrap().phase = CapturePhase::Submitted,
+                            Ok(false) => {} // Recheck the same stamp/deadline on every retry.
+                            Err(_) => {
+                                revoke_capture(&mut capture, &mut camera);
+                                connection.pending = serde_json::to_vec(&Reply::Unavailable).ok();
+                            }
+                        }
+                    }
+                    return true;
+                }
                 if connection.pending.is_none() && connection.launching.is_some() {
                     return match ipc::receive(&connection.fd) {
                         Ok(None) => {
@@ -591,11 +757,25 @@ pub fn run_with_services(
                         connection.read_stamp = None;
                     }
                 }
+                if capture.as_ref().is_some_and(|active| {
+                    active.connection == connection.id && active.phase == CapturePhase::ReplyReady
+                }) && (stopping
+                    || !current_capture(capture.as_ref().unwrap(), &authority, &camera))
+                {
+                    revoke_capture(&mut capture, &mut camera);
+                    connection.pending = serde_json::to_vec(&Reply::Denied).ok();
+                }
                 if let Some(bytes) = &connection.pending {
                     return match ipc::send(&connection.fd, bytes) {
                         Ok(()) => {
                             connection.pending = None;
                             connection.read_stamp = None;
+                            if let Some(active) = &mut capture
+                                && active.connection == connection.id
+                                && active.phase == CapturePhase::ReplyReady
+                            {
+                                active.phase = CapturePhase::Published;
+                            }
                             if let Some(instance) = connection.launching.take() {
                                 apps.acknowledge(&instance);
                             }
@@ -651,6 +831,15 @@ pub fn run_with_services(
                     } else {
                         match serde_json::from_slice::<AdminRequest>(&bytes) {
                             Err(_) => Reply::Denied,
+                            Ok(AdminRequest::CameraStatus {}) => match camera.as_deref() {
+                                Some(p) => Reply::CameraStatus {
+                                    occupied: p.occupied(),
+                                    busy: p.busy(),
+                                    available: p.available(),
+                                    pending: usize::from(capture.is_some()),
+                                },
+                                None => Reply::Unavailable,
+                            },
                             Ok(AdminRequest::MessagesStatus {}) => match messages.as_deref() {
                                 Some(p) => Reply::MessagesStorage {
                                     incoming_started: p.incoming_progress().0,
@@ -709,6 +898,7 @@ pub fn run_with_services(
                                             until,
                                             retired: false,
                                             shutdown: true,
+                                            camera: false,
                                         });
                                     } else {
                                         storage.stop();
@@ -780,6 +970,7 @@ pub fn run_with_services(
                                                         intent: Some(intent),
                                                         retired: false,
                                                         shutdown: false,
+                                                        camera: false,
                                                     });
                                                     return true;
                                                 }
@@ -822,6 +1013,57 @@ pub fn run_with_services(
                     }
                 } else {
                     match serde_json::from_slice::<AppRequest>(&bytes) {
+                        Ok(AppRequest::CameraCapture { request }) if !stopping => {
+                            if operation.is_some() || capture.is_some() {
+                                Reply::Unavailable
+                            } else if let Some(p) = camera.as_deref() {
+                                if !p.available() || p.busy() {
+                                    Reply::Unavailable
+                                } else {
+                                    match authority.begin_capture(
+                                        cred.pid.as_raw_nonzero().get() as u32,
+                                        cred.uid.as_raw(),
+                                        p.incarnation(),
+                                        p.generation(),
+                                        request.ttl_ms,
+                                        boottime_ns(),
+                                    ) {
+                                        Err(reply) => reply,
+                                        Ok((stamp, intent)) => match storage
+                                            .start_write(intent.next.clone(), intent.until)
+                                        {
+                                            Ok(token) => {
+                                                connection.awaiting = Some(token);
+                                                connection.deadline =
+                                                    intent.until.saturating_add(1_000_000_000);
+                                                capture = Some(Capture {
+                                                    connection: connection.id,
+                                                    stamp,
+                                                    phase: CapturePhase::Persisting,
+                                                });
+                                                operation = Some(Operation {
+                                                    token,
+                                                    connection: Some(connection.id),
+                                                    until: intent.until,
+                                                    intent: Some(intent),
+                                                    retired: false,
+                                                    shutdown: false,
+                                                    camera: true,
+                                                });
+                                                return true;
+                                            }
+                                            Err(_) => {
+                                                authority.invalidate();
+                                                storage.stop();
+                                                Reply::Unavailable
+                                            }
+                                        },
+                                    }
+                                }
+                            } else {
+                                Reply::Unavailable
+                            }
+                        }
                         Ok(AppRequest::MessagesRead { request }) if !stopping => {
                             if operation.is_some() {
                                 Reply::Unavailable
@@ -885,6 +1127,7 @@ pub fn run_with_services(
                                                 intent: Some(intent),
                                                 retired: false,
                                                 shutdown: false,
+                                                camera: false,
                                             });
                                             return true;
                                         }
@@ -955,6 +1198,10 @@ pub fn run_with_services(
     if let Some(provider) = session.as_deref_mut() {
         provider.stop();
     }
+    revoke_capture(&mut capture, &mut camera);
+    if let Some(provider) = camera.as_deref_mut() {
+        provider.stop();
+    }
     // Fence every app pathname before draining any other process owner.
     if let Err(e) = apps.stop(&mut authority) {
         outcome = Err(e);
@@ -963,6 +1210,9 @@ pub fn run_with_services(
         std::process::abort();
     }
     if !storage.drain_until(until) {
+        std::process::abort();
+    }
+    if camera.is_some_and(|p| !p.drain_until(until)) {
         std::process::abort();
     }
     if let Some(provider) = session {

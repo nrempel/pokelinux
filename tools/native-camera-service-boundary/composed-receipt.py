@@ -1,0 +1,14 @@
+#!/usr/bin/env python3
+"""Actual Docker wait, canonical shared-lock observations and immutable input closure."""
+import hashlib,json,sys
+from pathlib import Path
+base=Path('/workspace')/sys.argv[1];out=base/'runtime'/sys.argv[2]
+def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
+selected=json.loads((base/'freeze/selection.json').read_text());before=json.loads((out/'input-before.json').read_text()) if (out/'input-before.json').exists() else {};after={Path(line.split(maxsplit=1)[1]).name:line.split(maxsplit=1)[0] for line in (out/'input-after.sha256').read_text().splitlines()};expected={name:row['sha256'] for name,row in selected['inputs'].items()}
+locks=[]
+for phase in ['before','after']:
+    value=(out/('canonical-lock-'+phase+'.txt')).read_text();fields={line.split(':',1)[0]:line.split(':',1)[1].strip() for line in value.splitlines() if ':' in line};locks.append({'phase':phase,'inode':fields.get('ino'),'shared_read':'FLOCK' in fields.get('lock','') and 'READ' in fields.get('lock','')})
+guest=json.loads((out/'result.json').read_text()) if (out/'result.json').exists() else {};exit_code=int((out/'docker-exit-code.txt').read_text());command=(out/'docker-command.argv0').read_bytes().split(b'\0');assert command[-1]==b''
+receipt={'scope':selected['scope'],'selection_sha256':digest(base/'freeze/selection.json'),'docker_command':[part.decode() for part in command[:-1]],'docker_exit_after_actual_wait':exit_code,'qemu_exit_after_actual_wait':int((out/'qemu-exit-code.txt').read_text()) if (out/'qemu-exit-code.txt').exists() else None,'canonical_lock_observations':locks,'canonical_lock_held_through_wait_and_input_closure':all(row['shared_read'] for row in locks) and locks[0]['inode']==locks[1]['inode'],'input_before':before,'input_after':after,'selected_inputs':expected,'input_closure_passed':before==expected and after==expected,'guest':guest,'files':{str(path.relative_to(out)):digest(path) for path in out.rglob('*') if path.is_file() and path.name!='runtime-receipt.json'},'Source_claim':False,'original_ndk_claim':False,'vendor_execution':False,'physical_phone_accessed':False}
+receipt['valid']=receipt['canonical_lock_held_through_wait_and_input_closure'] and receipt['input_closure_passed'] and guest.get('fixture_cleanup_passed',False) and receipt['qemu_exit_after_actual_wait']==0 and ((selected['expected']=='red' and exit_code==1 and guest.get('expected_red',False)) or (selected['expected']=='green' and exit_code==0 and guest.get('passed',False)))
+(out/'runtime-receipt.json').write_text(json.dumps(receipt,indent=2)+'\n');print(json.dumps({key:receipt[key] for key in ['valid','docker_exit_after_actual_wait','qemu_exit_after_actual_wait','canonical_lock_held_through_wait_and_input_closure','input_closure_passed']},indent=2));assert receipt['valid']
