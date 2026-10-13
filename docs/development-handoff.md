@@ -46,11 +46,15 @@ Authenticated trace closure has zero drops; this does not retroactively diagnose
 the old failure or establish scheduling causality. Production Source is unchanged.
 
 Future UI runs/previews must use the [Pixel 10 display profile](native-phone-display-profile.md),
-1080 ×2424 at422PPI with matched logical density420. A fresh actual ARM measurement
-at the correct resolution exposes incorrect virtual physical dimensions; its
-negative evidence is preserved. The simulation-only physical-size adapter and
-native-buffer capture remain unqualified until their actual positive selection.
-Do not resume historical320/800 preview geometry or resize an image to qualify.
+1080 ×2424 at422PPI with matched logical density420. The actual wrong-density RED
+and a separate compiler prerequisite failure remain preserved. Fresh GREEN3 passes
+three actual ARM groups: matching public physical-size API propagation, native
+1080 ×2424 SHM/PNG pixel equality without resizing, and normal unload restoration.
+Root independently verifies93 private bindings; five guest children and the
+container are actually waited. The mapped measurement surface qualifies this
+profile/capture boundary, not a phone-app/Source/PAM preview. Exact authored tools
+and reusable private ELF pins are linked in the report. Do not resume historical
+320/800 preview geometry or resize an image to qualify.
 
 The native raw-response publication gate, absolute suspend-aware session expiry,
 owned registration worker/death watch, and local process reclamation are implemented.

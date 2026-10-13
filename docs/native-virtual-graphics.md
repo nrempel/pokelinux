@@ -13,7 +13,15 @@ runs and previews must first qualify the [Pixel 10 display profile](native-phone
 buffer without resizing and keep virtual physical dimensions separate from
 measured device hardware.
 
-## Build and run
+The separately selected Pixel10 profile now passes three actual ARM groups:
+nominal physical metadata reaches Wayland/Qt, a native1080 ×2424 SHM buffer matches
+its decoded PNG without resize, and normal adapter unload restores the original
+virtual extent. The selected surface is a measurement probe; these groups do not
+qualify a new phone-app/Source/PAM preview. See the
+[profile report](native-phone-display-profile.md) and
+[tools](../tools/native-phone-display-profile/README.md) for the current run path.
+
+## Historical build and run
 
 Run from the project root. Build `sim/Dockerfile.arch-local` and
 `sim/Dockerfile.omarchy-local` first, following their existing local image inputs.

@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "hyprland": {
+    "version": "0.56.2",
+    "commit": "efb50993780079460b0cbed1363e2166a2de1d9f",
+    "guest_elf_sha256": "ae9a9e4129263e74df3f8a0a62beefd00f9bf4224caf51e96ebf0482ab74a85a",
+    "public_sources": {
+      "src/output/Monitor.cpp": "9cf88e154eb5dae676c79d37b5b055ca6134838857cecdbb89a3b747a6821927",
+      "src/protocols/core/Output.cpp": "74ab6553e39c3587eb5b3850dbc8eb69b85e4a2aa738ca2353ea2837739c0f35",
+      "protocols/wlr-screencopy-unstable-v1.xml": "0f50f6187965b02782a12ba346ad950d6031454f6af6e1ac5b341a279ef16d56"
+    },
+    "primary_source_base": "https://github.com/hyprwm/Hyprland/blob/efb50993780079460b0cbed1363e2166a2de1d9f/"
+  },
+  "aquamarine_version": "0.15.1",
+  "installed_public_sdk": {
+    "/usr/include/hyprland/src/output/Monitor.hpp": "4e9d88475f614f83015ed799d31425e35b47eb796dd91a4d8ec8f8ae88442621",
+    "/usr/include/hyprland/src/state/MonitorState.hpp": "cf04c62fe25a86fc3e17d5abdd6aad87e18d86fd4c327e68745108ec83d39488",
+    "/usr/include/hyprland/src/protocols/core/Output.hpp": "d6388b58409bc3437a92152cd355fdcda2dba8d6083b9bf5ea1a7a2f42f0f97f",
+    "/usr/include/hyprland/src/plugins/PluginAPI.hpp": "6a47b6bf31e781bf40297f7385ff7a18082812f252f5039961c2dae26a5ef740",
+    "/usr/include/aquamarine/output/Output.hpp": "1568dcf54e01fc42079b5d68d7189d135f3a2c57aceed9cd0d3f58c964a5a37d",
+    "/usr/include/hyprland/src/version.h": "dbedffa593494a4f610d8a8eaac5a32c2daed3e2e0998f47d875587370397c58",
+    "/usr/include/hyprland/src/desktop/DesktopTypes.hpp": "f56ae989653c5d9be2fd97a9f5febc4c4e3cc8c2012bb8932d6714cb4dbf5731",
+    "/usr/include/hyprland/src/helpers/signal/Signal.hpp": "967b79dfb8ae4d74e6076ba5b3338ae9c4233e7b5c171d3dbd2e59b58d9670c3",
+    "/usr/share/pkgconfig/hyprland.pc": "1d3af9baa15f0b04a023246afe66070d8e98c97bf117c17ef605ed084cd65868"
+  },
+  "qt": {
+    "version": "6.12.0",
+    "primary_source_base": "https://github.com/qt/qtbase/blob/v6.12.0/",
+    "public_sources": {
+      "src/gui/kernel/qscreen.cpp": "6ef80d60d720d4e824bfcc07b203ea506059d1ef98240fd7d357f3db342f3cc1",
+      "src/gui/kernel/qplatformscreen.cpp": "c62927f3be07516c3b097494f22d5098bfed80438bf911d8fde908f07e279fdd",
+      "src/plugins/platforms/wayland/qwaylandscreen.cpp": "45f2f45e977ba0668b926b3bb6c33283b3906bd4061b6471f2ead01f9c9383ff",
+      "src/plugins/platforms/wayland/qwaylandscreen_p.h": "d6d3ff0682af9df51f25fe2511544772dd2653b2329faf0564529ae3ae5360df"
+    }
+  },
+  "scope": "Public installed SDK and matching upstream source pins from immutable simulation guest; no vendor runtime or physical-device evidence"
+}

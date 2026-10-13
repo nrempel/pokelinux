@@ -28,11 +28,34 @@ pixel of rounding per axis. The mismatched screen-DPR product remains diagnostic
 A corrected versioned consumer still rejects the same frozen negative observation
 before any producer change; it does not relabel the original result.
 
-The proposed simulation-only adapter supplies the nominal extent through the
-matching compositor's public output API. Actual DRM/EDID dimensions remain
-recorded separately; no Pixel kernel/display qualification follows. The positive
-metadata boundary and native-buffer capture are still pending. User previews
-require a compositor-announced native1080 ×2424 capture buffer encoded directly,
-with no resize or guessed fractional export scale. Older screenshots remain
-historical at their original resolution/density. Deliberately wrong-density
-negative measurements remain private test evidence.
+The simulation-only adapter now supplies the nominal extent through the matching
+compositor's normal public output API, guarded by its exact SDK/ABI identity and
+single selected virtual output. Actual DRM/base EDID remains270 ×610mm and its
+preferred detailed timing reports274 ×615mm; these values are preserved separately.
+No Pixel kernel/display qualification follows from the virtual metadata change.
+
+The positive GREEN3 selection passes three actual ARM groups: physical metadata
+propagation, native capture pixel equality, and normal unload restoration to the
+same output's original270 ×610mm. Wayland/Qt reports65 ×146mm and WindowDPR2.625.
+Native axis densities are422.03077/421.70959PPI; Qt's rounded logical/window basis
+gives421.59115/421.51387PPI. Integer ScreenDPR3 and its481.8PPI product remain
+diagnostic. A separate earlier compile fails before adapter load because of the
+Qt/Hyprland HANDLE macro; the minimal include-order fix precedes GREEN3. That
+prerequisite failure is not a behavioral density failure.
+
+The actual standard screencopy protocol announces1080 ×2424 with stride4320.
+The helper encodes this SHM buffer directly and verifies decoded PNG pixels
+against the native pixel representation. No resize/export scale/orientation
+correction was used in this selected run. Five directly owned guest children
+and the container are actually waited, with immutable input rechecks under the
+same readonly lock. Root independently verifies93 private bindings and the PNG's
+native dimensions/CRC/hash, and views the mapped measurement surface. See the
+[provenance](evidence/native-phone-display-profile-provenance.json),
+[authored evidence](../tools/native-phone-display-profile/observed-evidence.json)
+and [reusable tools](../tools/native-phone-display-profile/README.md).
+
+This is a measurement surface, not a phone app preview. Each future UI fixture
+must retain the selected adapter, run actual metadata checks before Source/app
+focus begins, and encode its native output buffer without resizing. Older
+screenshots remain historical at their original resolution/density. Deliberately
+wrong-density negative measurements and raw measurement captures stay private.

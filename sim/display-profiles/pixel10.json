@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "id": "pixel10",
+  "model": "Google Pixel 10",
+  "orientation": "portrait",
+  "native_pixels": { "width": 1080, "height": 2424 },
+  "physical": {
+    "published_ppi": 422,
+    "published_diagonal_inches": 6.3,
+    "nominal_mm": { "width": 65, "height": 146 },
+    "ppi_tolerance": 1.0,
+    "mm_origin": "Nominal millimetres derived from native pixels and published PPI; not measured OEM panel dimensions",
+    "source": "https://store.google.com/product/pixel_10_specs?hl=en-US"
+  },
+  "native_ui": {
+    "requested_device_pixel_ratio": 2.625,
+    "dpr_tolerance": 0.001,
+    "reference_density": 420,
+    "reference_density_basis": 160,
+    "reference_kind": "Matched retained Pixel 10 build property scalar ro.sf.lcd_density",
+    "reference_build": "CP3A.261005.005",
+    "reference_input_sha256": "2413a1d9fe481f1b7ceb8d3243355a4b8d07172976fc53c38e181c9c2ba0e1c6",
+    "scope": "Selected native Qt surface DPR, independently measured; Android dp and Qt logical units are not asserted equivalent",
+    "fractional_logical_bounds": "Supported debug.disable_scale_checks=true selected in the simulation compositor; integer Wayland/Qt logical bounds recorded without changing native pixels"
+  },
+  "simulation": {
+    "device": "virtio-gpu-gl-pci",
+    "preferred_refresh_hz": 60,
+    "hardware_verified": false,
+    "measurement_required_before_ui_capture": true,
+    "physical_size_authority": "Reviewed simulation profile, propagated through public compositor output metadata API; raw DRM/EDID size recorded separately"
+  }
+}
