@@ -18,6 +18,20 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The next appearance boundary now has a genuine installed RED. Fresh `red-2`
+launches unchanged UID11010 Messages against private UID1000/mode0700 HOME;
+actual original Tokyo Night and its read-only oracle report `#1a1b26`, while
+the normal app gets `EACCES` and renders `#101315` in its preselected native
+interior patch. Root independently decodes the1080×2424 PNG and binds171 files;
+owned guest cleanup, CLI0, independent exact-CID absence and input closure pass.
+Aggregates remain failed. `red-1` remains a setup failure, not a palette RED.
+The Source adapter is not loaded during this assertion. The Rust appearance
+publisher/typed consumer is the next implementation, with no GREEN claimed.
+See [appearance boundary](native-appearance-service.md). A pinned source-only
+[Omarchy Mobile review](omarchy-mobile-reuse.md) identifies mobile shell,
+keyboard and rotation reuse; its Pixel7/mainline backends do not qualify Pixel10
+or change the matched-Google-kernel/native-Rust architecture.
+
 The vertical phone tracer now qualifies eight actual ARM groups: authored SMS
 commits to native storage while the window is closed, genuine Omarchy launches
 unchanged UID11010 Qt Messages, actual keyboard submission precedes a normal history read, close
