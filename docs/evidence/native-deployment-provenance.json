@@ -1,0 +1,383 @@
+{
+  "schema": 1,
+  "date_utc": "2026-10-12",
+  "scope": "Read-only native staging admission; explicit requested Pixel factory profile, not installed or physical deployment",
+  "repository_head_at_index": "26c9bc9235efad643a797f206b351a3d78b15034",
+  "source_sha256": {
+    "docs/native-deployment.md": "502b2a56a3bd504b60de642aae23c7cfb94c5d51d88b2fe4041b1615a120746a",
+    "native-deployment/Cargo.lock": "8d192a66f0f888013b4d58fc58556309585a1ff19241143980778172a359a3ae",
+    "native-deployment/Cargo.toml": "16d4270a733430b374c1cca1be70c0b89e6af04658c67e6c145fbe749f1e126b",
+    "native-deployment/fixtures/elf-probe.rs": "722399afe113871a2b1cbd35443bde220a737748a8d1c1ac77d07f0726bfef72",
+    "native-deployment/profiles/pixel10-frankel.json": "dd195120477ed4d9f490e3d6e3023461147e13adcf2ba9009d18de103c08dd0b",
+    "native-deployment/profiles/pixel10-recorded-inputs.json": "5ea025b6e53f7e3ea39b600f4fe02d3d938b650392a3e953324424048743f081",
+    "native-deployment/src/lib.rs": "638c787d09155d6aefd78c6d3f349edec535c0a2125e761ad627abde22107e34",
+    "native-deployment/src/main.rs": "8c2e7466b8811f126e723fd6860e4d1bab6498ad101a82e1fb6c9ed89ac2a78c",
+    "native-deployment/tests/admission.rs": "b1ad25d81a3a7689fcfe79b21c302d86e8526ff56d76928cd8c929d9627ea5e8",
+    "tools/build-native-deployment.sh": "88ba9d43e5ba28f7db10e5b1280924d4109a4d014af1f08a27c9ae9af68807f9",
+    "tools/index-native-deployment.py": "f14486023095e09ce23d10e5d66c61a6c02d197a955219e8d10e42e49bc61d86",
+    "tools/native-deployment-evidence.py": "2a56bd4fa70edd9cab84bf0669721fd0aaf5a27503e8c589bfd825fd0899a26b"
+  },
+  "executed_reds": {
+    "admission": {
+      "behavior_failures": 19,
+      "initial_authored_fixture_length_error": true,
+      "corrected_full_behavior_red_rerun": true
+    },
+    "required_service_contracts": {
+      "behavior_failures": 2,
+      "prior_checks_still_passed": 19
+    },
+    "cli_manifest_bound": {
+      "behavior_failures": 1
+    }
+  },
+  "final_validation": {
+    "admission_groups_per_target": 21,
+    "targets": [
+      "x86_64-unknown-linux-gnu",
+      "aarch64-unknown-linux-gnu (user-QEMU)"
+    ],
+    "fmt": "pass",
+    "clippy_warnings_denied": "pass",
+    "release_builds": "pass",
+    "actual_temp_package_metadata_per_fixture": 2,
+    "fixture_origin": "Authored temp device/set/kernel/metadata/contracts; actual compiled target Rust ELF probe payloads",
+    "original_rehash_matches": 6,
+    "cli_pixel_deployment_admitted": false,
+    "cli_unknown_and_oversized_input": "refused",
+    "cli_staging_mutation": false
+  },
+  "artifacts_sha256": {
+    "red-admission-initial.log": "c910cbe5602aa42d4ce4f900e1c920d64fa825f303995af4048b91dab2d67f25",
+    "red-admission.log": "33053674cb27719ad736b250b24d188aee6fae45329b1ba9521ea5c4396f174b",
+    "red-service-contract.log": "5c1ac824d1480e51a2ef34f106262ecc732a6fbd09f622fb765b80b55a499641",
+    "red-cli-bound.log": "1623352c44531d60e924588d84475b6e5c6a18a9bc5078d10e21833ce342d502",
+    "green-final-build.log": "2854bc8f6ce3ed8ac0e48459ae04c04f838e0805148ee662789e3c4093d181d2",
+    "reference-and-cli-evidence.json": "6d695b2ce56b2b97049a0c5fc2a8667bf7fc4df042f17bce07c02d7a28938a75"
+  },
+  "binary_sha256": {
+    "x86_64-unknown-linux-gnu": "9752553182c460ea51562da73ed65c4285e32efc927ff9f9842e0cfa3f706ee9",
+    "aarch64-unknown-linux-gnu": "a35107112d2e44e67f0d98204d6e435f81b50828ec99b1b805b320d1670f4ab6"
+  },
+  "compiled_rust_elf_fixture_sha256": {
+    "x86_64-unknown-linux-gnu": "04329400a56d0d4c8f70a7247794d0aa43d3b2447e1d44209d9298bddbd44a28",
+    "aarch64-unknown-linux-gnu": "58105ff5aa88f97bbebb0e35dc1b2a1cc091ee06bd446f654a4d62733949499b"
+  },
+  "original_reference_and_cli_evidence": {
+    "schema": 1,
+    "original_reference_scope": "Recorded private original audit files independently rehashed; no vendor execution, raw contents or payload copies",
+    "original_references": [
+      {
+        "path": "/system_ext/priv-app/ShannonIms/ShannonIms.apk",
+        "sha256": "8b017599727398e80df5ab618d648890dcdc34b5fe2ba71fb2331e51bd8b8879",
+        "size": 3972353,
+        "original_record_match": true
+      },
+      {
+        "path": "/vendor/etc/init/android.hardware.camera.provider@2.7-service-google-apex.rc",
+        "sha256": "6cf5b9ecfc12f3deae4b7860cf1045ebfed20dfdc08f4edb88665889e8233ce9",
+        "size": 684,
+        "original_record_match": true
+      },
+      {
+        "path": "/vendor/etc/init/android.hardware.power-service.pixel-libperfmgr.rc",
+        "sha256": "b46ee33a65b48d00dd1495cd7c561271a97c12b442399774b5cc13f67b24903b",
+        "size": 1541,
+        "original_record_match": true
+      },
+      {
+        "path": "/vendor/etc/init/hw/init.laguna.rc",
+        "sha256": "555ac2ec19840d36ee4760860b3d56ce42fac383fa99366f6c8e5d2193723a5a",
+        "size": 37218,
+        "original_record_match": true
+      },
+      {
+        "path": "/vendor/lib64/libsitril.so",
+        "sha256": "a92bebfa7152356f27a925960ddd11736a0ad55cff9786997550d4d2a49105cd",
+        "size": 2520752,
+        "original_record_match": true
+      },
+      {
+        "path": "/vendor/firmware/rgx.fw.signed.71.2.2448.1212",
+        "sha256": "a7de905f5254c2dc37fa72e0443561538514a767b640ed317e6e50ad1843835c",
+        "size": 356356,
+        "original_record_match": true
+      }
+    ],
+    "original_audit_record_sha256": {
+      "artifacts/telephony-audit/results/evidence.json": "81b843818018fd09c0efc6978c8152b9b4214943e0db80aba6d9ce735694c427",
+      "artifacts/runtime/runtime-manifest.json": "e4290ec9c8a5bf4c6ccdb5c23d36756ccbdb38949b90ad5cf9277393187dbd46"
+    },
+    "cli": {
+      "binary_sha256": "9752553182c460ea51562da73ed65c4285e32efc927ff9f9842e0cfa3f706ee9",
+      "profile_sha256": "dd195120477ed4d9f490e3d6e3023461147e13adcf2ba9009d18de103c08dd0b",
+      "recorded_inputs_sha256": "5ea025b6e53f7e3ea39b600f4fe02d3d938b650392a3e953324424048743f081",
+      "pixel_refusal_exit_code": 1,
+      "pixel_report": {
+        "inventory_valid": false,
+        "deployment_admitted": false,
+        "issues": [
+          {
+            "code": "empty-inventory",
+            "subject": "required collection",
+            "scope": "inventory"
+          },
+          {
+            "code": "unresolved-gate",
+            "subject": "factory-integrity",
+            "scope": "offline"
+          },
+          {
+            "code": "unresolved-gate",
+            "subject": "kernel-kmi",
+            "scope": "offline"
+          },
+          {
+            "code": "unresolved-gate",
+            "subject": "vendor-userspace-reduction",
+            "scope": "offline"
+          },
+          {
+            "code": "unresolved-gate",
+            "subject": "bionic-abi",
+            "scope": "offline"
+          },
+          {
+            "code": "unresolved-gate",
+            "subject": "native-init",
+            "scope": "offline"
+          },
+          {
+            "code": "unresolved-gate",
+            "subject": "selinux",
+            "scope": "offline"
+          },
+          {
+            "code": "unresolved-gate",
+            "subject": "backend-discovery",
+            "scope": "offline"
+          },
+          {
+            "code": "unresolved-gate",
+            "subject": "permissions",
+            "scope": "offline"
+          },
+          {
+            "code": "unresolved-gate",
+            "subject": "native-service-integration",
+            "scope": "offline"
+          },
+          {
+            "code": "unresolved-gate",
+            "subject": "physical-device",
+            "scope": "physical"
+          },
+          {
+            "code": "unpinned-artifact",
+            "subject": "google-kernel",
+            "scope": "offline"
+          },
+          {
+            "code": "unpinned-artifact",
+            "subject": "google-modules-complete",
+            "scope": "offline"
+          },
+          {
+            "code": "unpinned-artifact",
+            "subject": "google-firmware-complete",
+            "scope": "offline"
+          },
+          {
+            "code": "missing-artifact",
+            "subject": "google-firmware-complete",
+            "scope": "inventory"
+          },
+          {
+            "code": "missing-artifact",
+            "subject": "google-gpu-firmware",
+            "scope": "inventory"
+          },
+          {
+            "code": "missing-artifact",
+            "subject": "google-kernel",
+            "scope": "inventory"
+          },
+          {
+            "code": "missing-artifact",
+            "subject": "google-modules-complete",
+            "scope": "inventory"
+          },
+          {
+            "code": "resource-owner",
+            "subject": "audio",
+            "scope": "inventory"
+          },
+          {
+            "code": "resource-owner",
+            "subject": "calls",
+            "scope": "inventory"
+          },
+          {
+            "code": "resource-owner",
+            "subject": "camera",
+            "scope": "inventory"
+          },
+          {
+            "code": "resource-owner",
+            "subject": "connectivity",
+            "scope": "inventory"
+          },
+          {
+            "code": "resource-owner",
+            "subject": "contacts",
+            "scope": "inventory"
+          },
+          {
+            "code": "resource-owner",
+            "subject": "display-input",
+            "scope": "inventory"
+          },
+          {
+            "code": "resource-owner",
+            "subject": "durable-storage",
+            "scope": "inventory"
+          },
+          {
+            "code": "resource-owner",
+            "subject": "messages",
+            "scope": "inventory"
+          },
+          {
+            "code": "resource-owner",
+            "subject": "notifications",
+            "scope": "inventory"
+          },
+          {
+            "code": "resource-owner",
+            "subject": "permissions",
+            "scope": "inventory"
+          },
+          {
+            "code": "resource-owner",
+            "subject": "radio-ims",
+            "scope": "inventory"
+          },
+          {
+            "code": "resource-owner",
+            "subject": "sensors-location",
+            "scope": "inventory"
+          },
+          {
+            "code": "resource-owner",
+            "subject": "suspend-power",
+            "scope": "inventory"
+          },
+          {
+            "code": "service-contract",
+            "subject": "permissions",
+            "scope": "inventory"
+          },
+          {
+            "code": "service-contract",
+            "subject": "durable-storage",
+            "scope": "inventory"
+          },
+          {
+            "code": "service-contract",
+            "subject": "radio-ims",
+            "scope": "inventory"
+          },
+          {
+            "code": "service-contract",
+            "subject": "calls",
+            "scope": "inventory"
+          },
+          {
+            "code": "service-contract",
+            "subject": "messages",
+            "scope": "inventory"
+          },
+          {
+            "code": "service-contract",
+            "subject": "notifications",
+            "scope": "inventory"
+          },
+          {
+            "code": "service-contract",
+            "subject": "contacts",
+            "scope": "inventory"
+          },
+          {
+            "code": "service-contract",
+            "subject": "camera",
+            "scope": "inventory"
+          },
+          {
+            "code": "service-contract",
+            "subject": "suspend-power",
+            "scope": "inventory"
+          },
+          {
+            "code": "service-contract",
+            "subject": "audio",
+            "scope": "inventory"
+          },
+          {
+            "code": "service-contract",
+            "subject": "connectivity",
+            "scope": "inventory"
+          },
+          {
+            "code": "service-contract",
+            "subject": "sensors-location",
+            "scope": "inventory"
+          },
+          {
+            "code": "service-contract",
+            "subject": "display-input",
+            "scope": "inventory"
+          }
+        ]
+      },
+      "unknown_field_exit_code": 2,
+      "staging_mutated": false,
+      "oversized_manifest_exit_code": 2
+    },
+    "limits": [
+      "No actual matched deployment image/package set exists here.",
+      "Kernel/module digests and complete firmware set are unavailable.",
+      "Factory model association, whole ZIP SHA256, AVB, KMI and runtime ownership are not established.",
+      "Nine offline deployment gates remain distinct from the physical-device gate.",
+      "No original vendor service executed, physical phone accessed or privileged service configuration changed."
+    ]
+  },
+  "qualification_limits": {
+    "factory_model_association": "Recorded/requested association, not independently reverified",
+    "complete_kernel_module_firmware_set": "Unresolved; three required artifact pins remain null",
+    "whole_factory_zip_sha256": false,
+    "avb_signature": false,
+    "kernel_kmi_matching": false,
+    "offline_requirements_unresolved": 9,
+    "physical_requirements_unresolved": 1,
+    "installed_native_services_and_runtime_ownership": false,
+    "arm64_guest_kernel": false,
+    "arm64_binder": false,
+    "original_vendor_service_execution": false,
+    "physical_phone_accessed": false,
+    "privileged_host_services_changed": false,
+    "proprietary_payload_or_raw_audit_publication": false,
+    "backwards_compatibility_or_additional_backend": false,
+    "deployment_report_is_launch_authority": false
+  },
+  "build_toolchain": {
+    "image_tag": "pixel-phone-rust:20261012-b472",
+    "image_id": "sha256:0b4b956502a9f55d992eaced6975737b523be19bd2034078983b36bbcfd7aee6",
+    "rustc_version": "1.98.1",
+    "rustc_commit": "48a229ceaefd4985c50990b14116b6d856af0985",
+    "rustc_commit_date": "2026-09-01",
+    "llvm_version": "22.1.8",
+    "host": "x86_64-unknown-linux-gnu",
+    "network": "none",
+    "original_vendor_execution": false
+  }
+}

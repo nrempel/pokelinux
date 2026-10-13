@@ -254,6 +254,15 @@ injected wait faults are not uninterruptible-task evidence. Installed native
 service composition, complete desktop provisioning and hardware remain open.
 See `native-theme.md` and `native-theme-worker.md`.
 
+Native deployment admission now passes29 groups on x86/ARM64 user-QEMU after
+independent review exposed and corrected ELF load geometry and cumulative payload
+retention. Actual192 MiB authored inventory conforms under a96 MiB process limit;
+recorded RSS is an observation, not a universal service budget. Current profile
+refuses deployment with nine offline requirements, one physical gate and three
+null kernel/module/firmware-set pins. Complete factory integrity, transitive ABI,
+init/SELinux/backend/service closure remain offline work. Original21-test evidence
+is preserved separately from correction evidence. See `native-deployment.md`.
+
 ## Next work
 
 1. Complete the installed native Messages service/window vertical slice first,

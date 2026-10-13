@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "factory_record": "frankel CP3A.261005.005 (selected recorded audit set; exact build/set not independently authenticated here)",
+  "references": [
+    {
+      "audit": "artifacts/telephony-audit/results/evidence.json",
+      "root": "artifacts/telephony-audit/input",
+      "path": "system_ext/priv-app/ShannonIms/ShannonIms.apk",
+      "sha256": "8b017599727398e80df5ab618d648890dcdc34b5fe2ba71fb2331e51bd8b8879",
+      "size": 3972353
+    },
+    {
+      "audit": "artifacts/telephony-audit/results/evidence.json",
+      "root": "artifacts/telephony-audit/input",
+      "path": "vendor/etc/init/android.hardware.camera.provider@2.7-service-google-apex.rc",
+      "sha256": "6cf5b9ecfc12f3deae4b7860cf1045ebfed20dfdc08f4edb88665889e8233ce9",
+      "size": 684
+    },
+    {
+      "audit": "artifacts/telephony-audit/results/evidence.json",
+      "root": "artifacts/telephony-audit/input",
+      "path": "vendor/etc/init/android.hardware.power-service.pixel-libperfmgr.rc",
+      "sha256": "b46ee33a65b48d00dd1495cd7c561271a97c12b442399774b5cc13f67b24903b",
+      "size": 1541
+    },
+    {
+      "audit": "artifacts/telephony-audit/results/evidence.json",
+      "root": "artifacts/telephony-audit/input",
+      "path": "vendor/etc/init/hw/init.laguna.rc",
+      "sha256": "555ac2ec19840d36ee4760860b3d56ce42fac383fa99366f6c8e5d2193723a5a",
+      "size": 37218
+    },
+    {
+      "audit": "artifacts/telephony-audit/results/evidence.json",
+      "root": "artifacts/telephony-audit/input",
+      "path": "vendor/lib64/libsitril.so",
+      "sha256": "a92bebfa7152356f27a925960ddd11736a0ad55cff9786997550d4d2a49105cd",
+      "size": 2520752
+    },
+    {
+      "audit": "artifacts/runtime/runtime-manifest.json",
+      "root": "artifacts/runtime",
+      "path": "vendor/firmware/rgx.fw.signed.71.2.2448.1212",
+      "sha256": "a7de905f5254c2dc37fa72e0443561538514a767b640ed317e6e50ad1843835c",
+      "size": 356356
+    }
+  ],
+  "limits": [
+    "Hashes qualify retained file identity only. No proprietary code executes in this checkpoint.",
+    "References are original comparison inputs, not a production runtime inventory.",
+    "Kernel/module/full firmware matching, outer ZIP digest and AVB remain unresolved."
+  ],
+  "public_model_codename_source": {
+    "url": "https://source.android.com/docs/setup/reference/build-numbers",
+    "checked_date_utc": "2026-10-12",
+    "claim": "AOSP device table lists Pixel 10: frankel",
+    "limit": "Does not authenticate CP3A.261005.005, whole factory archive, KMI or AVB."
+  }
+}

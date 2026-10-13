@@ -1,0 +1,525 @@
+{
+  "schema": 1,
+  "date_utc": "2026-10-12",
+  "scope": "Corrected read-only native staging admission: ELF structural load geometry and bounded resident payload inspection",
+  "repository_head_at_index": "6c4b753d3992502f9c574d279430171336b457e9",
+  "supersedes": {
+    "reason": "Independent review found malformed PT_LOAD/entry acceptance and cumulative whole-payload retention in the prior 21-test source",
+    "previous_groups_per_target": 21,
+    "previous_index_sha256": "2345588fa096d142ab917ef69db97aef8f04fe64c038f196213461acfc278b40",
+    "previous_clean_provenance_sha256": "2345588fa096d142ab917ef69db97aef8f04fe64c038f196213461acfc278b40",
+    "previous_clean_provenance": "docs/evidence/native-deployment-provenance.json",
+    "previous_binary_sha256": {
+      "x86_64-unknown-linux-gnu": "9752553182c460ea51562da73ed65c4285e32efc927ff9f9842e0cfa3f706ee9",
+      "aarch64-unknown-linux-gnu": "a35107112d2e44e67f0d98204d6e435f81b50828ec99b1b805b320d1670f4ab6"
+    },
+    "previous_source_snapshot_matches": 12,
+    "historical_index_provenance_logs_and_binaries_unchanged": true
+  },
+  "source_sha256": {
+    "docs/native-deployment.md": "0a0bf0f553a153e2035ed1fd4fdfb82bdb70107dad7852e09d4473af15f3acc9",
+    "native-deployment/Cargo.lock": "8d192a66f0f888013b4d58fc58556309585a1ff19241143980778172a359a3ae",
+    "native-deployment/Cargo.toml": "16d4270a733430b374c1cca1be70c0b89e6af04658c67e6c145fbe749f1e126b",
+    "native-deployment/fixtures/elf-probe.rs": "722399afe113871a2b1cbd35443bde220a737748a8d1c1ac77d07f0726bfef72",
+    "native-deployment/profiles/pixel10-frankel.json": "4707941f698f5620301976ddee91eccc65556d18250fd9f8caea68b87db37d81",
+    "native-deployment/profiles/pixel10-recorded-inputs.json": "fb445736192ba24310908ff431648ed0c0abbc20ca2c5fbe5d726574207050ba",
+    "native-deployment/src/lib.rs": "79ca3ec1b89770524c49d779c8c07a1f2e314d1a2cd5b17806a31d1066f8f3a1",
+    "native-deployment/src/main.rs": "8c2e7466b8811f126e723fd6860e4d1bab6498ad101a82e1fb6c9ed89ac2a78c",
+    "native-deployment/tests/admission.rs": "e5c291810ce3ff60bc17c2c00076272291bee861afc04596547fbbbdb69f5325",
+    "tools/build-native-deployment-correction.sh": "34c32db9c457461431d895edc5598912dd5e6879cfc914053be504462f514ff6",
+    "tools/build-native-deployment.sh": "3c1431a9e7ec82d92ee59ef8fab6607e4463a5f636431e3b57af7304051fb5a7",
+    "tools/index-native-deployment.py": "a98246dc27849fc95942c8c8c972afe5539e8bd5f5e7e7aabc714894cf3a99cc",
+    "tools/native-deployment-evidence.py": "874a694d5879fbdb86044878b0fbbe3dc31792abdadbdf881a070b65c8c1fa9c",
+    "tools/native-deployment-resident-suite.py": "a23df11bb684b25f69683980c432e4c888bd535e13ee354ad21e33c4d6816b6e"
+  },
+  "executed_reds": {
+    "actual_compiled_elf_mutations": {
+      "groups_failed": 7,
+      "prior_groups_passed": 21,
+      "covers": [
+        "file extent beyond actual payload and overflow",
+        "file bytes exceed memory extent",
+        "virtual extent overflow",
+        "non-power-of-two alignment",
+        "address/offset incongruence",
+        "entry outside file-backed executable loads",
+        "malformed non-executable load"
+      ]
+    },
+    "excessive_valid_package_metadata": {
+      "groups_failed": 1
+    },
+    "actual_constrained_resident_load": {
+      "schema": 1,
+      "phase": "red",
+      "binary_sha256": "9752553182c460ea51562da73ed65c4285e32efc927ff9f9842e0cfa3f706ee9",
+      "fixture_origin": "Authored ordinary staged files/package/profile; actual compiled Rust ELF probe",
+      "ordinary_resource_bytes": 201326592,
+      "ordinary_resource_count": 12,
+      "bytes_per_resource": 16777216,
+      "manifest_bytes": 3433,
+      "child_address_space_limit_bytes": 100663296,
+      "child_peak_rss_kib": 51712,
+      "returncode": 1,
+      "stderr": "",
+      "report": {
+        "inventory_valid": false,
+        "deployment_admitted": false,
+        "issues": [
+          {
+            "code": "fixture-evidence",
+            "subject": "authored-resident-fixture",
+            "scope": "qualification"
+          },
+          {
+            "code": "unreadable-file",
+            "subject": "usr/share/messages/ordinary-data-02",
+            "scope": "inventory"
+          },
+          {
+            "code": "unreadable-file",
+            "subject": "usr/share/messages/ordinary-data-03",
+            "scope": "inventory"
+          },
+          {
+            "code": "unreadable-file",
+            "subject": "usr/share/messages/ordinary-data-04",
+            "scope": "inventory"
+          },
+          {
+            "code": "unreadable-file",
+            "subject": "usr/share/messages/ordinary-data-05",
+            "scope": "inventory"
+          },
+          {
+            "code": "unreadable-file",
+            "subject": "usr/share/messages/ordinary-data-06",
+            "scope": "inventory"
+          },
+          {
+            "code": "unreadable-file",
+            "subject": "usr/share/messages/ordinary-data-07",
+            "scope": "inventory"
+          },
+          {
+            "code": "unreadable-file",
+            "subject": "usr/share/messages/ordinary-data-08",
+            "scope": "inventory"
+          },
+          {
+            "code": "unreadable-file",
+            "subject": "usr/share/messages/ordinary-data-09",
+            "scope": "inventory"
+          },
+          {
+            "code": "unreadable-file",
+            "subject": "usr/share/messages/ordinary-data-10",
+            "scope": "inventory"
+          },
+          {
+            "code": "unreadable-file",
+            "subject": "usr/share/messages/ordinary-data-11",
+            "scope": "inventory"
+          }
+        ]
+      },
+      "stage_changed": false,
+      "limits": "Actual x86 child only; no guest-kernel/device or production-service evidence"
+    }
+  },
+  "final_validation": {
+    "admission_groups_per_target": 29,
+    "targets": [
+      "x86_64-unknown-linux-gnu",
+      "aarch64-unknown-linux-gnu (user-QEMU)"
+    ],
+    "fmt": "pass",
+    "clippy_warnings_denied": "pass",
+    "release_builds": "pass",
+    "fixture_origin": "Authored temporary devices/packages/resources/contracts; actual compiled target Rust ELF positives and explicit mutant negatives",
+    "actual_constrained_resident_load": {
+      "schema": 1,
+      "phase": "green",
+      "binary_sha256": "0d7decfd0df9a8e59be437651f339e4bfa0317bb9afd6752f647902ad1d3a34a",
+      "fixture_origin": "Authored ordinary staged files/package/profile; actual compiled Rust ELF probe",
+      "ordinary_resource_bytes": 201326592,
+      "ordinary_resource_count": 12,
+      "bytes_per_resource": 16777216,
+      "manifest_bytes": 3433,
+      "child_address_space_limit_bytes": 100663296,
+      "child_peak_rss_kib": 11272,
+      "returncode": 1,
+      "stderr": "",
+      "report": {
+        "inventory_valid": true,
+        "deployment_admitted": false,
+        "issues": [
+          {
+            "code": "fixture-evidence",
+            "subject": "authored-resident-fixture",
+            "scope": "qualification"
+          }
+        ]
+      },
+      "stage_changed": false,
+      "limits": "Actual x86 child only; no guest-kernel/device or production-service evidence"
+    },
+    "stream_chunk_bytes": 65536,
+    "metadata_body_limit_bytes": 1048576,
+    "retained_payload_body_map": false,
+    "original_rehash_matches": 6,
+    "cli_pixel_deployment_admitted": false,
+    "cli_unknown_and_oversized_input": "refused",
+    "cli_staging_mutation": false
+  },
+  "artifacts_sha256": {
+    "red-elf-loads.log": "915f8694433aaae65e47aef7bedfbe51b4decceb0ecbe694404f8e1dc7d4c100",
+    "red-metadata-bound.log": "1753492ff4a4a7152ad42b7ca4b80b3a56435b7e4cd4bf3e7fb550e917f75261",
+    "red-resident.log": "1163a626bd1b1ab01ba7a223a381eb3c1ad8f73b41be461e76ef1a939e0a239f",
+    "red-resident.json": "9f3871ca8e75c3a122d01e8e593059db0dc9c6e87e8b1997f8f983c3b2e63262",
+    "green-build.log": "1063e33a514582d5cf4755c7b3340f5dad53170d276b55eb1fa9fca6185a807b",
+    "green-resident.json": "afa0156f54106545a9a9e832dc6b44401bb079902ba0ee3677bd5c79a5320075",
+    "green-cli-reference.log": "d33dc94b6f0e85beadea09c665d4c7d1f5553c9930d594a71c1857ffeb5ce637",
+    "reference-and-cli-evidence.json": "c9561dbf71a098003d509d51028197e8a0d26c02e40abf54add361d07924b0b8"
+  },
+  "binary_sha256": {
+    "x86_64-unknown-linux-gnu": "0d7decfd0df9a8e59be437651f339e4bfa0317bb9afd6752f647902ad1d3a34a",
+    "aarch64-unknown-linux-gnu": "90f6676dbfd7b437fb96cd774bcf6164fe9283eec6a333c6d293a680aecce1a9"
+  },
+  "compiled_rust_elf_fixture_sha256": {
+    "x86_64-unknown-linux-gnu": "04329400a56d0d4c8f70a7247794d0aa43d3b2447e1d44209d9298bddbd44a28",
+    "aarch64-unknown-linux-gnu": "58105ff5aa88f97bbebb0e35dc1b2a1cc091ee06bd446f654a4d62733949499b"
+  },
+  "original_reference_and_cli_evidence": {
+    "schema": 1,
+    "original_reference_scope": "Recorded private original audit files independently rehashed; no vendor execution, raw contents or payload copies",
+    "original_references": [
+      {
+        "path": "/system_ext/priv-app/ShannonIms/ShannonIms.apk",
+        "sha256": "8b017599727398e80df5ab618d648890dcdc34b5fe2ba71fb2331e51bd8b8879",
+        "size": 3972353,
+        "original_record_match": true
+      },
+      {
+        "path": "/vendor/etc/init/android.hardware.camera.provider@2.7-service-google-apex.rc",
+        "sha256": "6cf5b9ecfc12f3deae4b7860cf1045ebfed20dfdc08f4edb88665889e8233ce9",
+        "size": 684,
+        "original_record_match": true
+      },
+      {
+        "path": "/vendor/etc/init/android.hardware.power-service.pixel-libperfmgr.rc",
+        "sha256": "b46ee33a65b48d00dd1495cd7c561271a97c12b442399774b5cc13f67b24903b",
+        "size": 1541,
+        "original_record_match": true
+      },
+      {
+        "path": "/vendor/etc/init/hw/init.laguna.rc",
+        "sha256": "555ac2ec19840d36ee4760860b3d56ce42fac383fa99366f6c8e5d2193723a5a",
+        "size": 37218,
+        "original_record_match": true
+      },
+      {
+        "path": "/vendor/lib64/libsitril.so",
+        "sha256": "a92bebfa7152356f27a925960ddd11736a0ad55cff9786997550d4d2a49105cd",
+        "size": 2520752,
+        "original_record_match": true
+      },
+      {
+        "path": "/vendor/firmware/rgx.fw.signed.71.2.2448.1212",
+        "sha256": "a7de905f5254c2dc37fa72e0443561538514a767b640ed317e6e50ad1843835c",
+        "size": 356356,
+        "original_record_match": true
+      }
+    ],
+    "original_audit_record_sha256": {
+      "artifacts/telephony-audit/results/evidence.json": "81b843818018fd09c0efc6978c8152b9b4214943e0db80aba6d9ce735694c427",
+      "artifacts/runtime/runtime-manifest.json": "e4290ec9c8a5bf4c6ccdb5c23d36756ccbdb38949b90ad5cf9277393187dbd46"
+    },
+    "cli": {
+      "binary_sha256": "0d7decfd0df9a8e59be437651f339e4bfa0317bb9afd6752f647902ad1d3a34a",
+      "profile_sha256": "4707941f698f5620301976ddee91eccc65556d18250fd9f8caea68b87db37d81",
+      "recorded_inputs_sha256": "fb445736192ba24310908ff431648ed0c0abbc20ca2c5fbe5d726574207050ba",
+      "pixel_refusal_exit_code": 1,
+      "pixel_report": {
+        "inventory_valid": false,
+        "deployment_admitted": false,
+        "issues": [
+          {
+            "code": "empty-inventory",
+            "subject": "required collection",
+            "scope": "inventory"
+          },
+          {
+            "code": "unresolved-gate",
+            "subject": "factory-integrity",
+            "scope": "offline"
+          },
+          {
+            "code": "unresolved-gate",
+            "subject": "kernel-kmi",
+            "scope": "offline"
+          },
+          {
+            "code": "unresolved-gate",
+            "subject": "vendor-userspace-reduction",
+            "scope": "offline"
+          },
+          {
+            "code": "unresolved-gate",
+            "subject": "bionic-abi",
+            "scope": "offline"
+          },
+          {
+            "code": "unresolved-gate",
+            "subject": "native-init",
+            "scope": "offline"
+          },
+          {
+            "code": "unresolved-gate",
+            "subject": "selinux",
+            "scope": "offline"
+          },
+          {
+            "code": "unresolved-gate",
+            "subject": "backend-discovery",
+            "scope": "offline"
+          },
+          {
+            "code": "unresolved-gate",
+            "subject": "permissions",
+            "scope": "offline"
+          },
+          {
+            "code": "unresolved-gate",
+            "subject": "native-service-integration",
+            "scope": "offline"
+          },
+          {
+            "code": "unresolved-gate",
+            "subject": "physical-device",
+            "scope": "physical"
+          },
+          {
+            "code": "unpinned-artifact",
+            "subject": "google-kernel",
+            "scope": "offline"
+          },
+          {
+            "code": "unpinned-artifact",
+            "subject": "google-modules-complete",
+            "scope": "offline"
+          },
+          {
+            "code": "unpinned-artifact",
+            "subject": "google-firmware-complete",
+            "scope": "offline"
+          },
+          {
+            "code": "missing-artifact",
+            "subject": "google-firmware-complete",
+            "scope": "inventory"
+          },
+          {
+            "code": "missing-artifact",
+            "subject": "google-gpu-firmware",
+            "scope": "inventory"
+          },
+          {
+            "code": "missing-artifact",
+            "subject": "google-kernel",
+            "scope": "inventory"
+          },
+          {
+            "code": "missing-artifact",
+            "subject": "google-modules-complete",
+            "scope": "inventory"
+          },
+          {
+            "code": "resource-owner",
+            "subject": "audio",
+            "scope": "inventory"
+          },
+          {
+            "code": "resource-owner",
+            "subject": "calls",
+            "scope": "inventory"
+          },
+          {
+            "code": "resource-owner",
+            "subject": "camera",
+            "scope": "inventory"
+          },
+          {
+            "code": "resource-owner",
+            "subject": "connectivity",
+            "scope": "inventory"
+          },
+          {
+            "code": "resource-owner",
+            "subject": "contacts",
+            "scope": "inventory"
+          },
+          {
+            "code": "resource-owner",
+            "subject": "display-input",
+            "scope": "inventory"
+          },
+          {
+            "code": "resource-owner",
+            "subject": "durable-storage",
+            "scope": "inventory"
+          },
+          {
+            "code": "resource-owner",
+            "subject": "messages",
+            "scope": "inventory"
+          },
+          {
+            "code": "resource-owner",
+            "subject": "notifications",
+            "scope": "inventory"
+          },
+          {
+            "code": "resource-owner",
+            "subject": "permissions",
+            "scope": "inventory"
+          },
+          {
+            "code": "resource-owner",
+            "subject": "radio-ims",
+            "scope": "inventory"
+          },
+          {
+            "code": "resource-owner",
+            "subject": "sensors-location",
+            "scope": "inventory"
+          },
+          {
+            "code": "resource-owner",
+            "subject": "suspend-power",
+            "scope": "inventory"
+          },
+          {
+            "code": "service-contract",
+            "subject": "permissions",
+            "scope": "inventory"
+          },
+          {
+            "code": "service-contract",
+            "subject": "durable-storage",
+            "scope": "inventory"
+          },
+          {
+            "code": "service-contract",
+            "subject": "radio-ims",
+            "scope": "inventory"
+          },
+          {
+            "code": "service-contract",
+            "subject": "calls",
+            "scope": "inventory"
+          },
+          {
+            "code": "service-contract",
+            "subject": "messages",
+            "scope": "inventory"
+          },
+          {
+            "code": "service-contract",
+            "subject": "notifications",
+            "scope": "inventory"
+          },
+          {
+            "code": "service-contract",
+            "subject": "contacts",
+            "scope": "inventory"
+          },
+          {
+            "code": "service-contract",
+            "subject": "camera",
+            "scope": "inventory"
+          },
+          {
+            "code": "service-contract",
+            "subject": "suspend-power",
+            "scope": "inventory"
+          },
+          {
+            "code": "service-contract",
+            "subject": "audio",
+            "scope": "inventory"
+          },
+          {
+            "code": "service-contract",
+            "subject": "connectivity",
+            "scope": "inventory"
+          },
+          {
+            "code": "service-contract",
+            "subject": "sensors-location",
+            "scope": "inventory"
+          },
+          {
+            "code": "service-contract",
+            "subject": "display-input",
+            "scope": "inventory"
+          }
+        ]
+      },
+      "unknown_field_exit_code": 2,
+      "staging_mutated": false,
+      "oversized_manifest_exit_code": 2
+    },
+    "limits": [
+      "No actual matched deployment image/package set exists here.",
+      "Kernel/module digests and complete firmware set are unavailable.",
+      "AOSP confirms Pixel 10/frankel; exact CP3A set, whole ZIP SHA256, AVB, KMI and runtime ownership remain unqualified.",
+      "Nine offline deployment gates remain distinct from the physical-device gate.",
+      "No original vendor service executed, physical phone accessed or privileged service configuration changed."
+    ]
+  },
+  "public_sources": [
+    {
+      "url": "https://source.android.com/docs/setup/reference/build-numbers",
+      "checked_date_utc": "2026-10-12",
+      "supports": "AOSP lists Pixel 10 with codename frankel; does not authenticate CP3A selected factory set"
+    },
+    {
+      "url": "https://gabi.xinuos.com/elf/07-pheader.html",
+      "checked_date_utc": "2026-10-12",
+      "supports": "ELF program-header file/memory sizes, alignment/congruence, load ordering and interpreter placement"
+    }
+  ],
+  "qualification_limits": {
+    "model_codename_association": "Verified from authoritative AOSP table",
+    "exact_selected_factory_build_set_authentication": false,
+    "complete_kernel_module_firmware_set": "Unresolved; three required artifact pins remain null",
+    "whole_factory_zip_sha256": false,
+    "avb_signature": false,
+    "kernel_kmi_matching": false,
+    "offline_requirements_unresolved": 9,
+    "physical_requirements_unresolved": 1,
+    "elf_system_loader_execution_and_transitive_abi_closure": false,
+    "target_kernel_page_size_or_virtual_address_qualification": false,
+    "universal_process_rss_or_storage_latency_guarantee": false,
+    "installed_native_services_and_runtime_ownership": false,
+    "arm64_guest_kernel": false,
+    "arm64_binder": false,
+    "original_vendor_service_execution": false,
+    "physical_phone_accessed": false,
+    "privileged_host_services_changed": false,
+    "proprietary_payload_or_raw_audit_publication": false,
+    "deployment_report_is_launch_authority": false
+  },
+  "build_toolchain": {
+    "image_tag": "pixel-phone-rust:20261012-b472",
+    "image_id": "sha256:0b4b956502a9f55d992eaced6975737b523be19bd2034078983b36bbcfd7aee6",
+    "rustc_version": "1.98.1",
+    "rustc_commit": "48a229ceaefd4985c50990b14116b6d856af0985",
+    "rustc_commit_date": "2026-09-01",
+    "llvm_version": "22.1.8",
+    "host": "x86_64-unknown-linux-gnu",
+    "network": "none",
+    "original_vendor_execution": false
+  }
+}

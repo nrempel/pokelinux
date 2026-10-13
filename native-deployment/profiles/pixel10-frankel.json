@@ -1,0 +1,319 @@
+{
+  "schema": 1,
+  "id": "pixel10-frankel-cp3a-261005-005",
+  "device": "pixel10-frankel-requested-first-target",
+  "architecture": "aarch64",
+  "component_set": "google-frankel-CP3A.261005.005",
+  "evidence": "recorded-original",
+  "kernel_release": "6.6.127-android15-8-gee206ffe8752-ab16254410-4k",
+  "artifacts": [
+    {
+      "id": "google-kernel",
+      "kind": "kernel",
+      "sha256": null,
+      "source": "Original factory partition index records kernel_16k; exact chosen kernel image/hash/config and compatibility with the observed 4k graphics modules remain unresolved. Do not substitute the ARM VM kernel."
+    },
+    {
+      "id": "google-modules-complete",
+      "kind": "module",
+      "sha256": null,
+      "source": "Original graphics audit records module release; complete selected Google system/vendor module set and dependency closure are unavailable in this checkpoint."
+    },
+    {
+      "id": "google-firmware-complete",
+      "kind": "firmware",
+      "sha256": null,
+      "source": "Original vendor inventory contains GPU/AoC/radio/Wi-Fi/BT/calibration inputs. Complete device firmware/calibration inventory and initialization are unresolved."
+    },
+    {
+      "id": "google-gpu-firmware",
+      "kind": "firmware",
+      "sha256": "a7de905f5254c2dc37fa72e0443561538514a767b640ed317e6e50ad1843835c",
+      "source": "artifacts/runtime/runtime-manifest.json: /vendor/firmware/rgx.fw.signed.71.2.2448.1212; recorded file hash only, not matched kernel/driver or GPU execution proof."
+    }
+  ],
+  "resources": [
+    "permissions",
+    "durable-storage",
+    "radio-ims",
+    "calls",
+    "messages",
+    "notifications",
+    "contacts",
+    "camera",
+    "suspend-power",
+    "audio",
+    "connectivity",
+    "sensors-location",
+    "display-input"
+  ],
+  "gates": [
+    {
+      "id": "factory-integrity",
+      "scope": "offline",
+      "state": "unresolved",
+      "evidence": "Selected vendor member size/CRC was checked in the original audit; whole outer ZIP SHA256 and AVB verification are unresolved. AOSP lists Pixel 10 with codename frankel (https://source.android.com/docs/setup/reference/build-numbers, checked 2026-10-12); this does not independently authenticate the selected CP3A.261005.005 factory build/set."
+    },
+    {
+      "id": "kernel-kmi",
+      "scope": "offline",
+      "state": "unresolved",
+      "evidence": "Keep the Google matched kernel/modules/firmware. Observed graphics module release is 6.6.127-android15-8-gee206ffe8752-ab16254410-4k; exact kernel image/config/source/KMI and complete module/firmware set hashes are unavailable here. A digest or release string alone cannot qualify KMI compatibility."
+    },
+    {
+      "id": "vendor-userspace-reduction",
+      "scope": "offline",
+      "state": "unresolved",
+      "evidence": "Factory camera/audio/power/sensors/radio userspace dependencies are not a completed native replacement. Shannon APK remains original comparison infrastructure. Native IMS/calls/modem ACK and recovery semantics are unresolved."
+    },
+    {
+      "id": "bionic-abi",
+      "scope": "offline",
+      "state": "unresolved",
+      "evidence": "Factory Bionic libraries, Android properties, Binder, APEX and dynamic dependency closure are not qualified for native glibc services. ELF interpreter checks do not prove transitive ABI closure."
+    },
+    {
+      "id": "native-init",
+      "scope": "offline",
+      "state": "unresolved",
+      "evidence": "Native Arch boot/init and service-manager supervision/order/restart integration remain offline work; no phone boot or privileged host service mutation is permitted."
+    },
+    {
+      "id": "selinux",
+      "scope": "offline",
+      "state": "unresolved",
+      "evidence": "Matched Pixel policy/service contexts/device-node labels and native-domain enforcement remain offline integration work. Enforcing synthetic Binder fixtures do not prove installed Pixel policy."
+    },
+    {
+      "id": "backend-discovery",
+      "scope": "offline",
+      "state": "unresolved",
+      "evidence": "Standard Pixel Binder service discovery, current interface/hash checks, backend process death/reset identities and node availability are unresolved; synthetic fixture discovery is not a production binding."
+    },
+    {
+      "id": "permissions",
+      "scope": "offline",
+      "state": "unresolved",
+      "evidence": "Installed per-service Linux principals, authenticated authorization, device-node access and lock/revoke ingress must be closed independently of manifest declarations."
+    },
+    {
+      "id": "native-service-integration",
+      "scope": "offline",
+      "state": "unresolved",
+      "evidence": "Declared single owners/dependency order are desired deployment constraints, not proof of running native services. Radio/IMS/calls/camera/audio/connectivity/sensors/notifications/contact/media and background state still need installed integration."
+    },
+    {
+      "id": "physical-device",
+      "scope": "physical",
+      "state": "unresolved",
+      "evidence": "No phone accessed. Later authorized device boot, carrier, GPU/display, input, camera/DMA, audio/AoC, sensors, charging/thermal and suspend/wake qualification remain physical gates."
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "calls",
+      "available": false,
+      "qualification": "unavailable",
+      "detail": "Native vendor registration/request ownership and bounded IMS reader components exist; production call/IMS/carrier/media semantics and installed Phone service are unresolved."
+    },
+    {
+      "id": "sms",
+      "available": false,
+      "qualification": "unavailable",
+      "detail": "Native codecs, durable outbox/receipt/inbox and synthetic frozen-V3 transport exist; production receive identity/ACK reset, delivery and modem qualification remain unresolved."
+    },
+    {
+      "id": "camera",
+      "available": false,
+      "qualification": "unavailable",
+      "detail": "Frozen AIDL4 ownership/error/FD fixtures exist; buffer/DMA/fence/publication/storage, exact factory interface hash and capture remain unresolved."
+    },
+    {
+      "id": "power",
+      "available": false,
+      "qualification": "unavailable",
+      "detail": "Native arbiter/suspend coordinator components exist; installed authority, vendor wake accounting, Pixel nodes/thermal/charging remain unresolved."
+    },
+    {
+      "id": "audio",
+      "available": false,
+      "qualification": "unavailable",
+      "detail": "Original PipeWire virtual graph ownership is tested; Pixel AoC/DSP/carrier routing, PCM brokerage and installed streams remain unresolved."
+    },
+    {
+      "id": "connectivity",
+      "available": false,
+      "qualification": "unavailable",
+      "detail": "Read-only isolated NetworkManager boundary is tested; mutation, BlueZ, Pixel Wi-Fi/BT/coexistence/USB/tethering remain unresolved."
+    },
+    {
+      "id": "sensors-location",
+      "available": false,
+      "qualification": "unavailable",
+      "detail": "Original FMQ/EventFlag/frozen-suspend fixtures exist; source wake obligations, calibration, GNSS/haptics and installed delivery remain unresolved."
+    },
+    {
+      "id": "graphics-input",
+      "available": false,
+      "qualification": "unavailable",
+      "detail": "ARM VM Omarchy/Hyprland work is separate; Pixel PowerVR/DRM scanout, allocator/fences/input/display ownership and boot remain unresolved."
+    },
+    {
+      "id": "background-lock",
+      "available": false,
+      "qualification": "unavailable",
+      "detail": "Native lifecycle/storage components and current Messages work do not establish complete phone background notification or Pixel suspend/wake behavior."
+    },
+    {
+      "id": "mms",
+      "available": false,
+      "qualification": "unavailable",
+      "detail": "Carrier dependencies and native implementation are unqualified."
+    },
+    {
+      "id": "esim",
+      "available": false,
+      "qualification": "unavailable",
+      "detail": "Provisioning and native carrier/device integration are unqualified."
+    },
+    {
+      "id": "advanced-camera",
+      "available": false,
+      "qualification": "unavailable",
+      "detail": "Retaining a provider does not establish Pixel Camera app feature/image-quality parity."
+    }
+  ],
+  "service_contracts": [
+    {
+      "id": "permissions",
+      "owns": [
+        "permissions"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "durable-storage",
+      "owns": [
+        "durable-storage"
+      ],
+      "dependencies": [
+        "permissions"
+      ]
+    },
+    {
+      "id": "radio-ims",
+      "owns": [
+        "radio-ims"
+      ],
+      "dependencies": [
+        "permissions",
+        "suspend-power"
+      ]
+    },
+    {
+      "id": "calls",
+      "owns": [
+        "calls"
+      ],
+      "dependencies": [
+        "permissions",
+        "radio-ims",
+        "audio",
+        "notifications",
+        "contacts"
+      ]
+    },
+    {
+      "id": "messages",
+      "owns": [
+        "messages"
+      ],
+      "dependencies": [
+        "permissions",
+        "durable-storage",
+        "radio-ims",
+        "notifications"
+      ]
+    },
+    {
+      "id": "notifications",
+      "owns": [
+        "notifications"
+      ],
+      "dependencies": [
+        "permissions",
+        "suspend-power"
+      ]
+    },
+    {
+      "id": "contacts",
+      "owns": [
+        "contacts"
+      ],
+      "dependencies": [
+        "permissions",
+        "durable-storage"
+      ]
+    },
+    {
+      "id": "camera",
+      "owns": [
+        "camera"
+      ],
+      "dependencies": [
+        "permissions",
+        "durable-storage",
+        "suspend-power"
+      ]
+    },
+    {
+      "id": "suspend-power",
+      "owns": [
+        "suspend-power"
+      ],
+      "dependencies": [
+        "permissions"
+      ]
+    },
+    {
+      "id": "audio",
+      "owns": [
+        "audio"
+      ],
+      "dependencies": [
+        "permissions",
+        "suspend-power"
+      ]
+    },
+    {
+      "id": "connectivity",
+      "owns": [
+        "connectivity"
+      ],
+      "dependencies": [
+        "permissions",
+        "suspend-power"
+      ]
+    },
+    {
+      "id": "sensors-location",
+      "owns": [
+        "sensors-location"
+      ],
+      "dependencies": [
+        "permissions",
+        "suspend-power"
+      ]
+    },
+    {
+      "id": "display-input",
+      "owns": [
+        "display-input"
+      ],
+      "dependencies": [
+        "permissions",
+        "suspend-power"
+      ]
+    }
+  ]
+}

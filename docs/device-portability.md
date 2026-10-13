@@ -53,3 +53,10 @@ The emulator validates IPC and synthetic behavior. ARM64 user-mode QEMU validate
 CPU/runtime behavior. Neither proves a backend works on another physical device.
 
 The [native device contracts](native-device-contracts.md) keep exact Pixel AIDL/FMQ, firmware and calibration details in backends while shared Rust services own policy, permissions, leases and lifecycle. Static hash/source agreement does not qualify live hardware or make retained userspace a completed native architecture.
+
+The [current deployment profile](native-deployment.md) binds an explicit device,
+component set, required resource owners/dependencies and unavailable capabilities
+before checking actual staged package/file identity. The authoritative AOSP table
+confirms Pixel10's frankel codename; it does not authenticate the selected factory
+build or kernel/KMI. Missing set pins and unresolved offline requirements refuse
+deployment. Runtime ownership and device qualification require their own evidence.

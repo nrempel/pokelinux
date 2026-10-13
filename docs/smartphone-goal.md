@@ -175,3 +175,10 @@ components from installed service/app composition and concrete remaining backend
 evidence. Native Messages is the next composed path; contacts, notifications,
 media, settings and deployment remain offline implementation work as well as
 later hardware qualification.
+
+Native deployment admission now checks current declarations and staged identity
+with29 groups on x86/ARM64 user-QEMU, including actual compiled ELF load geometry
+and bounded resident inspection. The selected Pixel profile refuses deployment:
+nine offline requirements, one physical gate and three missing artifact pins
+remain. This does not qualify native boot, installed ownership, transitive ABI or
+Pixel KMI. See [deployment admission](native-deployment.md).
