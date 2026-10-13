@@ -385,6 +385,17 @@ whole Stop. Normal conversation screenshots and diagnostic literal-body evidence
 remain separate. See `native-session-receive-read-combined.md`. This local-history
 replay does not attach Binder; the incoming proof remains independent.
 
+Native display containment now uses open-source Rust security-context-v1 bindings
+through the unchanged original compositor filter. Fifteen actual ARM protocol/
+normal Qt identity observations and22 supervised-owner observations in six ARM
+epochs pass. A held-helper responsiveness red ran before the native supervisor.
+The parent never dispatches the SDK;128MiB/64FD/core0 limits and kernel parent-death
+kill precede setup. Original initialization deadlines, current source/child watches,
+queued Ready fencing and actual reap ownership stay separate from remote close
+processing. Current actor/app-generation composition, production privileged runtime
+and Quickshell/PAM provisioning, complete data/protocol restrictions, secure frames
+and Pixel qualification remain open. See `native-display-containment.md`.
+
 ## Next work
 
 1. Continue the qualified synthetic incoming Messages path with raw retention/capacity
@@ -393,7 +404,8 @@ replay does not attach Binder; the incoming proof remains independent.
    history recovery never permits implicit backend reattachment. The transferred focus-peer handle now passes host/ARM interface checks; the joint
    original-compositor/current-authority/installed-app local-history path now passes separately. A fresh
    local-history replay combines the reader/writer split with that path. Next qualify
-   actual incoming Binder/session/Qt composition, trusted lock admission/restore,
+   actual incoming Binder/session/Qt composition and the restricted Wayland listener
+   with exact current app-generation ownership, then trusted lock admission/restore,
    notifications and wake. Producer/ACK/reset,
    sending and hardware gates remain separate. See `native-integration-map.md`,
    `native-messages-service.md` and `native-messages-incoming.md`.

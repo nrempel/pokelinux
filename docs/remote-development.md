@@ -85,3 +85,18 @@ plan and replacement journal remain under ignored artifacts. Never rebuild or
 write into those shared target inodes; every new build uses a new label and target.
 Active targets, VM images, source inputs and unrelated host workloads were untouched.
 Do not prune private inputs or other workloads to make space.
+
+Independent read-only VM epochs can share the same backing under a shared input
+lock and exclusive per-result-label locks. Each QEMU uses snapshot=on, private
+container writes, a distinct writable result mount and no NIC; backing preparation
+retains the exclusive input lock. The display-supervisor source/parent/normal
+epochs exercised this scheme without new VM clones.
+
+Later completed own FD-alias targets and display bin copies recovered a further
+1.25GiB and196MiB through byte-preserving deduplication. Every replacement retains
+its exact content hash, mode and owner; private journals preserve the original
+inode/link metadata. Future mutable display and incoming compilation caches now
+use separately copied RAM scratch where selected, while sources/executables remain
+frozen on disk. Their retired disk caches must never be written or rebuilt. RAM
+scratch is not the retained evidence or a VM input. No private input, VM image,
+reserved-block policy or unrelated workload was changed to reclaim this space.

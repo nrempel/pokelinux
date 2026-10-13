@@ -268,3 +268,11 @@ replay passes six groups with the writer/readonly split, plus ten separate
 diagnostic groups. These are distinct from full incoming Binder/session/Qt
 composition and production producer/ACK/reset. See [read isolation](native-messages-receive-isolation.md)
 and [combined local-history replay](native-session-receive-read-combined.md).
+
+Native display containment and supervised setup now pass separate original ARM
+checkpoints:15 protocol/normal Qt identity observations and22 owner observations
+across six epochs after an executed held-helper red. Rust uses the original
+open-source compositor filter and owned SDK child; app metadata remains separate
+from permission. Actor/app-generation composition, production privileged runtime
+and PAM ownership, secure frames, wake and Pixel qualification remain open. See
+[display containment](native-display-containment.md).

@@ -16,8 +16,12 @@ identity, observer, actor and original-compositor selections. Historical
 [native ingress prototypes](native-session-ingress.md) separately qualify17 prepared
 compositor/observer groups,13 synthetic-source/current-authority ARM groups,
 16 process/socket/exec cases and one typed policy regression. Production launch,
-retained-kernel identity, a joint compositor/app path, trusted locker containment,
-secure presentation and hardware remain separate gates. The static inspection's
+retained-kernel identity, trusted locker containment, secure presentation and
+hardware remain separate gates. The later [installed app](native-session-installed-app.md)
+and [current read split](native-session-receive-read-combined.md) qualify a joint
+local-history path. [Display containment](native-display-containment.md) separately
+qualifies the restricted listener and supervised SDK child; actor/app-generation
+composition and production privileged-runtime ownership remain open. The static inspection's
 unexecuted case records describe its original checkpoint, not these later runs.
 
 The existing [lifecycle authority](native-lifecycle.md) and

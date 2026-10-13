@@ -1,0 +1,423 @@
+{
+  "scope": "Actual original ARM compositor registry/bind/lifetime and unchanged normal production Qt direct socket identity; isolated Root protocol child only",
+  "selected_build": "original-context-build-4",
+  "helper_elf_sha256": "b3e64ef7a8d02fe99a85caaa15173b01f70cb0b9d508a472cdba435c4ed57057",
+  "build_selection_sha256": "e4989537fa5a76cc19891db0166177a32b5a171074d59f696a57d131a90c4a40",
+  "selected_green": "original-context-green-4",
+  "chronological_red": "original-direct-app-red-1",
+  "chronological_red_qualified_by": "Root executed before native-display existed; desired privileged advertisement absence failed on actual original ARM kernel",
+  "authored_files": {
+    "guest.py": "2e4648c0779c137e69439f316e0f6d549cb91d40bc2e5732206de2330c0555e4",
+    "registry-probe.py": "3826ee3b958e2e7ce5962bac5596d89c7b429211898afa37344197f2c172c52c",
+    "test-lane-notes.md": "35f78da3c89e3985ddf89d0583aa47ddf937855fa9cee8b15a9fc6344c46a93c"
+  },
+  "epochs": {
+    "original-direct-app-red-1": {
+      "selection_sha256": "0627bc8f3649f16ef954b2a1e3723ed711577bf4ddb37d9d6aa46a2e04097372",
+      "result_sha256": "9b1a158b36bd85c5e9ec7e2c2068faabf72ccc491d835f58eb01e320f53ed7bf",
+      "serial_sha256": "e7cdff3d10a0acb6bfca0e26711157f5db3ed43b16f0364a21f8207111f85f85",
+      "passed": false,
+      "red_detected": true,
+      "all_children_reaped": true,
+      "observation_groups": 1,
+      "tracked_reaped_children": 10,
+      "normal_Qt_window_qualified": false,
+      "normal_Qt_gate_error": null,
+      "error": null,
+      "frozen_source_sha256": {
+        "source/boot.sh": "724fa85b2b518cfd40c99c1ca38629bf59d7c448a111aba73a91a4c70a3dba9c",
+        "source/guest.py": "cf0a1643671e8e1848481e6a162727a39598cbce6c11d3f008152a2d0b8cc151",
+        "source/registry-probe.py": "8c1780d7971a47559f57dd5f522dfc2227e22d6a58ae7a7a1f6877528eb3bcb3",
+        "source/run.py": "73dae6bbbca0fd47f612c491d81312d3dcbbca979c5b56ea7c4691b43a207538"
+      },
+      "root_image_sha256": "31e3ccf69a5496f61284abdcd049e8273e70e840407bab4e744c778f21e25842",
+      "kernel_sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+      "hyprland_sha256": "ae9a9e4129263e74df3f8a0a62beefd00f9bf4224caf51e96ebf0482ab74a85a"
+    },
+    "original-context-green-1": {
+      "selection_sha256": "84813fc451ac5ba86aa1770b910f8b222f3cc4a72fc7d367799ad56365370703",
+      "result_sha256": "da30229eb272e873ffceba05a621868c397e2b64fd81ec850c4d6397c00143ca",
+      "serial_sha256": "1a641b0f171b917b1c66990519ec6f504f3eebd13bc48940f5cc2911ae5564f4",
+      "passed": false,
+      "red_detected": false,
+      "all_children_reaped": true,
+      "observation_groups": 3,
+      "tracked_reaped_children": 12,
+      "normal_Qt_window_qualified": false,
+      "normal_Qt_gate_error": null,
+      "error": "('forged-ext_session_lock_manager_v1.log', 'Traceback (most recent call last):\\n  File \"/results/source/registry-probe.py\", line 145, in <module>\\n    print(json.dumps(inspect(args.socket,forged,args.bind_allowed)),flush=True)\\n                     ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \"/results/source/registry-probe.py\", line 110, in inspect\\n    if forged is not None:result.update(probe.bind(registry,*forged))\\n                                        ~~~~~~~~~~^^^^^^^^^^^^^^^^^^\\n  File \"/results/source/registry-probe.py\", line 94, in bind\\n    completed=self.sync()\\n  File \"/results/source/registry-probe.py\", line 85, in sync\\n    callback=self.allocate();self.callbacks.add(callback);self.send(request(1,0,struct.pack(\\'=I\\',callback)))\\n                                                          ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \"/results/source/registry-probe.py\", line 39, in send\\n    try:sent+=self.connection.send(data[sent:])\\n              ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^\\nBrokenPipeError: [Errno 32] Broken pipe\\n')",
+      "frozen_source_sha256": {
+        "source/boot.sh": "724fa85b2b518cfd40c99c1ca38629bf59d7c448a111aba73a91a4c70a3dba9c",
+        "source/guest.py": "48301d81f0b3770a66a9e8a89648eebfb52aa27be639d1e9471c23625af83a9a",
+        "source/registry-probe.py": "bc011325954d0f2436a84096ad855b7e3ec3f23b5df5d861766dfdaef309dfd9",
+        "source/run.py": "73dae6bbbca0fd47f612c491d81312d3dcbbca979c5b56ea7c4691b43a207538"
+      },
+      "root_image_sha256": "31e3ccf69a5496f61284abdcd049e8273e70e840407bab4e744c778f21e25842",
+      "kernel_sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+      "hyprland_sha256": "ae9a9e4129263e74df3f8a0a62beefd00f9bf4224caf51e96ebf0482ab74a85a"
+    },
+    "original-context-green-2": {
+      "selection_sha256": "72b16c179856d7ec112fb423c1e11e270d72142eccf798e8fad49ec720c7397c",
+      "result_sha256": "791d775aa21c8e4b73ddc551f3121b58cbba93642d1e8ae89eecf509d0937cd8",
+      "serial_sha256": "1d1b59374bc942dacebde6e9f1c7cc22ebd5fdc5c59f2fa20dfcc2edddf7363a",
+      "passed": true,
+      "red_detected": false,
+      "all_children_reaped": true,
+      "observation_groups": 13,
+      "tracked_reaped_children": 16,
+      "normal_Qt_window_qualified": false,
+      "normal_Qt_gate_error": "[Errno 2] No such file or directory: '/usr/libexec/pokelinux-display-fixture'",
+      "error": null,
+      "frozen_source_sha256": {
+        "source/boot.sh": "724fa85b2b518cfd40c99c1ca38629bf59d7c448a111aba73a91a4c70a3dba9c",
+        "source/guest.py": "48301d81f0b3770a66a9e8a89648eebfb52aa27be639d1e9471c23625af83a9a",
+        "source/registry-probe.py": "3826ee3b958e2e7ce5962bac5596d89c7b429211898afa37344197f2c172c52c",
+        "source/run.py": "73dae6bbbca0fd47f612c491d81312d3dcbbca979c5b56ea7c4691b43a207538"
+      },
+      "root_image_sha256": "31e3ccf69a5496f61284abdcd049e8273e70e840407bab4e744c778f21e25842",
+      "kernel_sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+      "hyprland_sha256": "ae9a9e4129263e74df3f8a0a62beefd00f9bf4224caf51e96ebf0482ab74a85a"
+    },
+    "original-context-green-3": {
+      "selection_sha256": "d56c81f7e88d5960cb53188479adad4fabdbbd44bf70760457d431e76519a8b2",
+      "result_sha256": "3ff1ec8cb3e324f3304f233b0bd2809b138df9f5ba23d4b22ff61dedcde57ba0",
+      "serial_sha256": "6d5d6e6972b603e865d95c85b727dbae7c86b79b4f7521d0e6cb29a002f331c8",
+      "passed": true,
+      "red_detected": false,
+      "all_children_reaped": true,
+      "observation_groups": 15,
+      "tracked_reaped_children": 17,
+      "normal_Qt_window_qualified": true,
+      "normal_Qt_gate_error": null,
+      "error": null,
+      "frozen_source_sha256": {
+        "source/boot.sh": "724fa85b2b518cfd40c99c1ca38629bf59d7c448a111aba73a91a4c70a3dba9c",
+        "source/guest.py": "2e4648c0779c137e69439f316e0f6d549cb91d40bc2e5732206de2330c0555e4",
+        "source/registry-probe.py": "3826ee3b958e2e7ce5962bac5596d89c7b429211898afa37344197f2c172c52c",
+        "source/run.py": "73dae6bbbca0fd47f612c491d81312d3dcbbca979c5b56ea7c4691b43a207538"
+      },
+      "root_image_sha256": "31e3ccf69a5496f61284abdcd049e8273e70e840407bab4e744c778f21e25842",
+      "kernel_sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+      "hyprland_sha256": "ae9a9e4129263e74df3f8a0a62beefd00f9bf4224caf51e96ebf0482ab74a85a"
+    },
+    "original-context-green-4": {
+      "selection_sha256": "e282dad9cbf645bc6694696bba2ad954f69e7b3b367befbc2c225ffa52ee4cf4",
+      "result_sha256": "7bffb40e363b0d0164f8106d0bc082bcdf002b86c8087cccc2a6d20181a39018",
+      "serial_sha256": "b4c3e8ad5afb0d3d09ec1abb5d57fe2677ddc455c8544d9157c49d8c3e507436",
+      "passed": true,
+      "red_detected": false,
+      "all_children_reaped": true,
+      "observation_groups": 15,
+      "tracked_reaped_children": 17,
+      "normal_Qt_window_qualified": true,
+      "normal_Qt_gate_error": null,
+      "error": null,
+      "frozen_source_sha256": {
+        "source/boot.sh": "724fa85b2b518cfd40c99c1ca38629bf59d7c448a111aba73a91a4c70a3dba9c",
+        "source/guest.py": "2e4648c0779c137e69439f316e0f6d549cb91d40bc2e5732206de2330c0555e4",
+        "source/registry-probe.py": "3826ee3b958e2e7ce5962bac5596d89c7b429211898afa37344197f2c172c52c",
+        "source/run.py": "73dae6bbbca0fd47f612c491d81312d3dcbbca979c5b56ea7c4691b43a207538"
+      },
+      "root_image_sha256": "31e3ccf69a5496f61284abdcd049e8273e70e840407bab4e744c778f21e25842",
+      "kernel_sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+      "hyprland_sha256": "ae9a9e4129263e74df3f8a0a62beefd00f9bf4224caf51e96ebf0482ab74a85a"
+    }
+  },
+  "open_gates": [
+    "Messages actor/body/session authorization through this restricted listener",
+    "Production PAM/config original-runtime containment",
+    "Actor-safe SDK read/dispatch polling",
+    "Native Root supervisor memory/FD bounds, responsive control and bounded kill/reap",
+    "Privileged bind denial for every global beyond the three explicitly exercised"
+  ],
+  "no_new_vm_clone": true,
+  "existing_backing_readonly_snapshot_no_nic": true,
+  "selected_observations": [
+    {
+      "id": "distinct_UID_app_has_no_direct_original_runtime_or_socket_access",
+      "passed": true
+    },
+    {
+      "id": "native_Rust_context_commit_acknowledged_and_setup_transport_disconnected",
+      "passed": true
+    },
+    {
+      "id": "allowed_globals_bind_and_privileged_globals_absent",
+      "passed": true
+    },
+    {
+      "id": "forged_actual_original_global_ID_refused_at_bind_ext_session_lock_manager_v1",
+      "passed": true,
+      "error": {
+        "object": 2,
+        "code": 0,
+        "message": "global ext_session_lock_manager_v1 (27) is unavailable"
+      },
+      "actual_original_global": {
+        "name": 27,
+        "interface": "ext_session_lock_manager_v1",
+        "version": 1
+      }
+    },
+    {
+      "id": "forged_actual_original_global_ID_refused_at_bind_wp_security_context_manager_v1",
+      "passed": true,
+      "error": {
+        "object": 2,
+        "code": 0,
+        "message": "global wp_security_context_manager_v1 (45) is unavailable"
+      },
+      "actual_original_global": {
+        "name": 45,
+        "interface": "wp_security_context_manager_v1",
+        "version": 1
+      }
+    },
+    {
+      "id": "forged_actual_original_global_ID_refused_at_bind_zwlr_screencopy_manager_v1",
+      "passed": true,
+      "error": {
+        "object": 2,
+        "code": 0,
+        "message": "global zwlr_screencopy_manager_v1 (61) is unavailable"
+      },
+      "actual_original_global": {
+        "name": 61,
+        "interface": "zwlr_screencopy_manager_v1",
+        "version": 3
+      }
+    },
+    {
+      "id": "future_filtered_client_connects_after_protocol_creator_disconnect",
+      "passed": true
+    },
+    {
+      "id": "normal_production_Qt_window_through_filtered_listener_matches_actual_source_socket_peer",
+      "passed": true,
+      "window": {
+        "pid": 362,
+        "title": "Messages",
+        "class": "pokelinux-messages",
+        "mapped": true,
+        "xwayland": false
+      },
+      "original_probe": {
+        "reason": "query",
+        "seq": 2,
+        "locked": false,
+        "complete": false,
+        "pid": 362,
+        "uid": 11010,
+        "gid": 11010,
+        "type": 0,
+        "eligible": true,
+        "peer_pidfd_fd": 76,
+        "peer_pidfd_valid": true,
+        "peer_pidfd_live": true,
+        "peer_pidfd_errno": 0,
+        "peer_pidfs_dev": 6,
+        "peer_pidfs_ino": 12385,
+        "peer_pidfs_magic": 1346978886
+      },
+      "transferred": {
+        "frame": {
+          "source": "61a476c2f0b19a9b9d979fc987666dad",
+          "sequence": 1,
+          "sampled_at_ns": 31200685453,
+          "locked": false,
+          "lock_completed": false,
+          "focus": {
+            "pid": 362,
+            "uid": 11010,
+            "gid": 11010
+          }
+        },
+        "actual_received_socket_peer_pid": 362,
+        "owned_app_pidfd_live": true
+      }
+    },
+    {
+      "id": "retained_actual_accepted_client_is_filtered_and_allowed",
+      "passed": true
+    },
+    {
+      "id": "native_owner_status_ready_after_setup_connection_was_dropped",
+      "passed": true
+    },
+    {
+      "id": "native_owner_stopped_and_direct_child_reaped",
+      "passed": true
+    },
+    {
+      "id": "close_pipe_stop_prevents_future_listener_connections",
+      "passed": true
+    },
+    {
+      "id": "existing_accepted_client_remains_filtered_after_creator_and_listener_close",
+      "passed": true
+    },
+    {
+      "id": "existing_accepted_client_privileged_bind_still_refused_after_close",
+      "passed": true,
+      "error": {
+        "object": 8,
+        "code": 0,
+        "message": "global ext_session_lock_manager_v1 (27) is unavailable"
+      },
+      "actual_original_global": null
+    },
+    {
+      "id": "existing_normal_Qt_window_survives_context_creator_and_listener_close",
+      "passed": true
+    }
+  ],
+  "historical_selected_builds": {
+    "original-context-build-3": {
+      "helper_elf_sha256": "37a7c3fd50fa1e0e68b9be0bc5f4b9691efcf2ed3d115ffb4148a12a6690bd95",
+      "build_selection_sha256": "dfa52fae089eef585ffea1176ebb59f68c3ae6371c43c3c9f4dfa282c4ac28d3",
+      "selected_green": "original-context-green-3",
+      "scope": "Actual original ARM compositor registry/bind/lifetime and unchanged normal production Qt direct socket identity; isolated Root protocol child only"
+    }
+  },
+  "historical_selected_observations": {
+    "original-context-green-3": [
+      {
+        "id": "distinct_UID_app_has_no_direct_original_runtime_or_socket_access",
+        "passed": true
+      },
+      {
+        "id": "native_Rust_context_commit_acknowledged_and_setup_transport_disconnected",
+        "passed": true
+      },
+      {
+        "id": "allowed_globals_bind_and_privileged_globals_absent",
+        "passed": true
+      },
+      {
+        "id": "forged_actual_original_global_ID_refused_at_bind_ext_session_lock_manager_v1",
+        "passed": true,
+        "error": {
+          "object": 2,
+          "code": 0,
+          "message": "global ext_session_lock_manager_v1 (27) is unavailable"
+        },
+        "actual_original_global": {
+          "name": 27,
+          "interface": "ext_session_lock_manager_v1",
+          "version": 1
+        }
+      },
+      {
+        "id": "forged_actual_original_global_ID_refused_at_bind_wp_security_context_manager_v1",
+        "passed": true,
+        "error": {
+          "object": 2,
+          "code": 0,
+          "message": "global wp_security_context_manager_v1 (45) is unavailable"
+        },
+        "actual_original_global": {
+          "name": 45,
+          "interface": "wp_security_context_manager_v1",
+          "version": 1
+        }
+      },
+      {
+        "id": "forged_actual_original_global_ID_refused_at_bind_zwlr_screencopy_manager_v1",
+        "passed": true,
+        "error": {
+          "object": 2,
+          "code": 0,
+          "message": "global zwlr_screencopy_manager_v1 (61) is unavailable"
+        },
+        "actual_original_global": {
+          "name": 61,
+          "interface": "zwlr_screencopy_manager_v1",
+          "version": 3
+        }
+      },
+      {
+        "id": "future_filtered_client_connects_after_protocol_creator_disconnect",
+        "passed": true
+      },
+      {
+        "id": "normal_production_Qt_window_through_filtered_listener_matches_actual_source_socket_peer",
+        "passed": true,
+        "window": {
+          "pid": 359,
+          "title": "Messages",
+          "class": "pokelinux-messages",
+          "mapped": true,
+          "xwayland": false
+        },
+        "original_probe": {
+          "reason": "query",
+          "seq": 2,
+          "locked": false,
+          "complete": false,
+          "pid": 359,
+          "uid": 11010,
+          "gid": 11010,
+          "type": 0,
+          "eligible": true,
+          "peer_pidfd_fd": 77,
+          "peer_pidfd_valid": true,
+          "peer_pidfd_live": true,
+          "peer_pidfd_errno": 0,
+          "peer_pidfs_dev": 6,
+          "peer_pidfs_ino": 111,
+          "peer_pidfs_magic": 1346978886
+        },
+        "transferred": {
+          "frame": {
+            "source": "1c34bc0f6cbe3ed6e355b81f8e3501c8",
+            "sequence": 1,
+            "sampled_at_ns": 31402246830,
+            "locked": false,
+            "lock_completed": false,
+            "focus": {
+              "pid": 359,
+              "uid": 11010,
+              "gid": 11010
+            }
+          },
+          "actual_received_socket_peer_pid": 359,
+          "owned_app_pidfd_live": true
+        }
+      },
+      {
+        "id": "retained_actual_accepted_client_is_filtered_and_allowed",
+        "passed": true
+      },
+      {
+        "id": "native_owner_status_ready_after_setup_connection_was_dropped",
+        "passed": true
+      },
+      {
+        "id": "native_owner_stopped_and_direct_child_reaped",
+        "passed": true
+      },
+      {
+        "id": "close_pipe_stop_prevents_future_listener_connections",
+        "passed": true
+      },
+      {
+        "id": "existing_accepted_client_remains_filtered_after_creator_and_listener_close",
+        "passed": true
+      },
+      {
+        "id": "existing_accepted_client_privileged_bind_still_refused_after_close",
+        "passed": true,
+        "error": {
+          "object": 8,
+          "code": 0,
+          "message": "global ext_session_lock_manager_v1 (27) is unavailable"
+        },
+        "actual_original_global": null
+      },
+      {
+        "id": "existing_normal_Qt_window_survives_context_creator_and_listener_close",
+        "passed": true
+      }
+    ]
+  }
+}

@@ -28,7 +28,8 @@ qualification. No physical phone has been accessed.
 
 The installed local-history Messages path is qualified separately from continuous
 receiving. One existing lifecycle actor owns current read authority and every
-actual send/EAGAIN retry; one supervised child owns receipt/inbox IO. The native
+actual send/EAGAIN retry; one supervised writer owns receipt/inbox IO and a separate
+readonly child owns each history transaction. The native
 window is installed in original Omarchy. Root fixture focus/lock controls and
 appearance ACL setup remain explicit test infrastructure.
 
@@ -40,8 +41,11 @@ appearance ACL setup remain explicit test infrastructure.
    including installed systemd restart. Only local history recovers; actual reap
    and authenticated stop-to-service-exit never grant reattachment or vendor cleanup.
    Explicit synthetic successors require fresh independent peers and reset context.
-   Decouple held-read cancellation from shared source ownership before promising
-   receiving across every app close. No production ACK/send is enabled.
+   The [owned read split](native-messages-receive-isolation.md) preserves the same
+   qualified receiver through close, expiry and actual SQLite-lock contention.
+   Exact-occurrence permits and original deadlines still govern projection;
+   production attachment and every app/session composition remain separate.
+   No production ACK/send is enabled.
 3. Complete receipt retention/capacity and cold-backlog availability. The
    [bounded enumeration](native-messages-enumeration.md) now qualifies every ID
    within the append-only4096 bound using fixed-upper pages/eight-import turns;
@@ -69,6 +73,9 @@ appearance ACL setup remain explicit test infrastructure.
    production Qt groups and three separate10-group diagnostic source epochs for
    local synthetic history. The writer/readonly split now passes a fresh six-group normal Qt replay and
    ten separately labeled diagnostic groups; see [combined reads](native-session-receive-read-combined.md).
+   The [display primitive](native-display-containment.md) now qualifies original
+   privileged bind filtering and supervised SDK ownership separately. Compose its
+   restricted listener with the current actor and exact launched app generation.
    Full incoming Binder/session/Qt composition remains next. Actual locked
    graphics can expire the original100ms lease and restoration remains unavailable.
    Protected procfs/common namespaces and matched Pixel kernel remain gates.

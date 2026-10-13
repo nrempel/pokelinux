@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "boundary": "open-source generated Rust Wayland client; original compositor filter unchanged; no closed input published",
+  "direct_dependencies": {
+    "wayland-client": "0.31.15",
+    "wayland-protocols": "0.32.13",
+    "rustix": "1.1.5"
+  },
+  "security_context_xml": {
+    "crate_path": "wayland-protocols-0.32.13/protocols/staging/security-context/security-context-v1.xml",
+    "sha256": "f4f8ba15ebd2df62db611b1de32e992f660a4aeeea83250cb88fa468da42ffcb",
+    "upstream": "https://gitlab.freedesktop.org/wayland/wayland-protocols/-/blob/main/staging/security-context/security-context-v1.xml"
+  },
+  "original_compositor_public_source": {
+    "commit": "efb50993780079460b0cbed1363e2166a2de1d9f",
+    "paths": [
+      "src/Compositor.cpp",
+      "src/protocols/SecurityContext.cpp",
+      "src/managers/ProtocolManager.cpp"
+    ],
+    "upstream": "https://github.com/hyprwm/Hyprland"
+  },
+  "lockfile_sha256": "dd376c75a1e1d9955959562893c6b7c2dc66d99129e97bcc9f0786c06999ee5b",
+  "kernel_reference": [
+    "https://man7.org/linux/man-pages/man2/PR_SET_PDEATHSIG.2const.html",
+    "https://man7.org/linux/man-pages/man2/getrlimit.2.html"
+  ],
+  "public_source_only": true,
+  "source_review_alone_qualifies_runtime": false
+}

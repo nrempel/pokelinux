@@ -1,0 +1,1060 @@
+{
+  "scope": "Actual original ARM chronological current-held-SDK responsiveness RED followed by six selected isolated native Root supervisor control/deadline/resource/source-death/parent-death/normal epochs; not deployed PAM or Messages actor composition",
+  "red_label": "original-supervisor-control-red-1",
+  "result_sha256": "7e304a773a80bfb23c5c73b52bda33e889157eabb2aaf0093216c924489e2c88",
+  "selection_sha256": "31207a14482c8b931e6a21bcfef1bbe485e1a118a08a26d1b67f0d9ac266c2a5",
+  "serial_sha256": "3c7f29007c7386571a1bd56651c520be822542dd276d75044c399657f80db930",
+  "baseline_protocol_elf_sha256": "b3e64ef7a8d02fe99a85caaa15173b01f70cb0b9d508a472cdba435c4ed57057",
+  "supervisor_binary_source_existed": false,
+  "response_budget_ns": 250000000,
+  "red_detected": true,
+  "all_children_reaped": true,
+  "tracked_children_reaped": 7,
+  "desired_control_observations": [
+    {
+      "id": "actual_current_protocol_child_ready_then_kernel_SIGSTOP",
+      "passed": true,
+      "pid": 339,
+      "kernel_state": "State:\tT (stopped)",
+      "ready": {
+        "event": "ready",
+        "state": "ready",
+        "protocol_creator_disconnected": true
+      }
+    },
+    {
+      "id": "Root_owner_status_responds_with_SDK_child_held_within_250ms",
+      "passed": false,
+      "observed": {
+        "command": "status",
+        "response": null,
+        "began_at_ns": 23688893572,
+        "observed_at_ns": 23940281968,
+        "elapsed_ns": 251388396,
+        "within_budget": false
+      }
+    },
+    {
+      "id": "Root_owner_stop_fences_with_SDK_child_held_within_250ms",
+      "passed": false,
+      "observed": {
+        "command": "stop",
+        "response": null,
+        "began_at_ns": 23941345665,
+        "observed_at_ns": 24193133167,
+        "elapsed_ns": 251787502,
+        "within_budget": false
+      }
+    },
+    {
+      "id": "held_baseline_owned_child_actually_killed_and_reaped",
+      "passed": true,
+      "pid": 339,
+      "returncode": -9,
+      "signals": [
+        "SIGSTOP",
+        "SIGKILL"
+      ]
+    }
+  ],
+  "frozen_files": {
+    "bins/display-context-fixture": "b3e64ef7a8d02fe99a85caaa15173b01f70cb0b9d508a472cdba435c4ed57057",
+    "source/boot.sh": "724fa85b2b518cfd40c99c1ca38629bf59d7c448a111aba73a91a4c70a3dba9c",
+    "source/guest.py": "537c024a8b31f90f8f50fa9ad3fffe21230b68cab9db4629e2edf1bb5c80392c",
+    "source/native-display/Cargo.lock": "dd376c75a1e1d9955959562893c6b7c2dc66d99129e97bcc9f0786c06999ee5b",
+    "source/native-display/Cargo.toml": "f534ffc577240e55baa8cf589c8cedacf27952c3c3aa33037b7c3f0263b93124",
+    "source/native-display/src/bin/display-context-fixture.rs": "905f9a3b5338e4afe092332d4346011a68def02a7e8219c98e59d8cb20801554",
+    "source/native-display/src/lib.rs": "f73b1e4945577b111efd22fa1468a84bb3f93ba417c09ef7a83ef29bcac5033e",
+    "source/native-display/tests/descriptor.rs": "1c71ff07b1ab544bad7aae1148ae2dc98d4bffaf385d416ced360fbf05631192",
+    "source/supervisor-run.py": "9a5d282bc0a24db5f4a652596c378b6240408dd57c16136476d6da527844583f",
+    "source/supervisor-test-notes.md": "ffcd4af733bd6db88a8c47f093e57ad6932980fa73850d3b7c09a1aa6f4e0234"
+  },
+  "executed_green_epochs": {
+    "original-supervisor-held-control-green-1": {
+      "case": "held-control",
+      "result_sha256": "ab12170146aceb6ba4756f2e650d9b50d938629b34e6ac23c401e686b5dfee6c",
+      "selection_sha256": "e227a30e8feaa6785ef3063836547b92cecd51ee48bb4066df6a2a661384d983",
+      "serial_sha256": "86c8a249c6554590ed1710c4e4e41d40a8224d5ea06460555eb560e1e947280b",
+      "passed": true,
+      "observation_groups": 5,
+      "direct_child_reap_records": 7,
+      "all_children_reaped": true,
+      "worker_reap": {
+        "pid": 341,
+        "proc_absent": true,
+        "pidfd_dead": true
+      },
+      "spawned": {
+        "event": "spawned",
+        "state": "initializing",
+        "worker_pid": 341,
+        "occupied": true,
+        "admission": false,
+        "until_ns": 29214828616,
+        "memory_bytes": 134217728,
+        "fd_limit": 64
+      },
+      "groups": [
+        {
+          "id": "actual_original_source_held_before_native_owner_spawn",
+          "passed": true,
+          "pid": 334,
+          "kernel_state": "State:\tT (stopped)"
+        },
+        {
+          "id": "actual_SDK_worker_initializing_held_with_enforced_resource_bounds",
+          "passed": true,
+          "pid": 341,
+          "kernel_state": "State:\tT (stopped)",
+          "observed": {
+            "limits": {
+              "Max address space": {
+                "soft": 134217728,
+                "hard": 134217728
+              },
+              "Max open files": {
+                "soft": 64,
+                "hard": 64
+              },
+              "Max core file size": {
+                "soft": 0,
+                "hard": 0
+              }
+            },
+            "actual_parent_pid": 340,
+            "NoNewPrivs": 1
+          }
+        },
+        {
+          "id": "native_parent_status_responds_with_actual_SDK_worker_held_within_250ms",
+          "passed": true,
+          "observed": {
+            "command": "status",
+            "response": {
+              "event": "status",
+              "state": "initializing",
+              "worker_pid": 341,
+              "occupied": true,
+              "admission": false,
+              "until_ns": 29214828616,
+              "memory_bytes": 134217728,
+              "fd_limit": 64
+            },
+            "began_at_ns": 24241163401,
+            "observed_at_ns": 24245088093,
+            "elapsed_ns": 3924692,
+            "within_budget": true
+          }
+        },
+        {
+          "id": "native_parent_stop_fences_held_worker_within_250ms",
+          "passed": true,
+          "observed": {
+            "command": "stop",
+            "response": {
+              "event": "stop_requested",
+              "state": "stopping",
+              "worker_pid": 341,
+              "occupied": true,
+              "admission": false,
+              "until_ns": 29214828616,
+              "memory_bytes": 134217728,
+              "fd_limit": 64
+            },
+            "began_at_ns": 24246629553,
+            "observed_at_ns": 24251152502,
+            "elapsed_ns": 4522949,
+            "within_budget": true
+          }
+        },
+        {
+          "id": "occupied_clears_only_after_actual_held_SDK_worker_reap",
+          "passed": true,
+          "final": {
+            "event": "stopped",
+            "state": "stopped",
+            "worker_pid": 341,
+            "occupied": false,
+            "admission": false,
+            "until_ns": 29214828616,
+            "memory_bytes": 134217728,
+            "fd_limit": 64
+          },
+          "worker_pidfd_dead": true,
+          "worker_proc_absent": true
+        }
+      ],
+      "frozen_files": {
+        "bins/display-supervisor-fixture": "2acc1b6c94484085e63d94c5567c9dfb8a914b929ced0815174843ae2018e3b6",
+        "build-selection.json": "4a20d22ac8ef5d7799bea743ad653ccecbc82b8a9e516e49e0c14b12004aa1e5",
+        "source/boot.sh": "724fa85b2b518cfd40c99c1ca38629bf59d7c448a111aba73a91a4c70a3dba9c",
+        "source/guest.py": "9630f32204e27d4dc41ab13c1391596ed94789da1f9f4dca0cbf2e75733f784d",
+        "source/native-display/Cargo.lock": "dd376c75a1e1d9955959562893c6b7c2dc66d99129e97bcc9f0786c06999ee5b",
+        "source/native-display/Cargo.toml": "0d9306f3389c6c93f204ccac1ddf2f93c6d9af7513890110a51607d2760d2b09",
+        "source/native-display/src/bin/display-context-fixture.rs": "905f9a3b5338e4afe092332d4346011a68def02a7e8219c98e59d8cb20801554",
+        "source/native-display/src/bin/display-supervisor-fixture.rs": "6114f2f18288dc5341587895a6d925dea9bed50f6c26511013efc155ccc486d6",
+        "source/native-display/src/lib.rs": "1556ce9bd3b5edfbb58e779f70e9a6d80e00140ece7def69e88f8c6bb8946c8c",
+        "source/native-display/src/supervisor.rs": "310a928c0e9341328d05ceeb1fea2b3d720c97c314f0cb27d8e26c199a248829",
+        "source/native-display/tests/descriptor.rs": "1c71ff07b1ab544bad7aae1148ae2dc98d4bffaf385d416ced360fbf05631192",
+        "source/registry-probe.py": "3826ee3b958e2e7ce5962bac5596d89c7b429211898afa37344197f2c172c52c",
+        "source/supervisor-run.py": "7a00ed20f05f75ada092e1279e96ebf393ecf434672c5dfffbb52dabea133296",
+        "source/supervisor-test-notes.md": "2bf3ac764fd77da5d209f5de7802b8e7ddb23d2fd3d7d1d0469801a2140035d5"
+      },
+      "input_vm_lock_mode": "exclusive",
+      "root_image_sha256": "31e3ccf69a5496f61284abdcd049e8273e70e840407bab4e744c778f21e25842",
+      "kernel_sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+      "hyprland_sha256": "ae9a9e4129263e74df3f8a0a62beefd00f9bf4224caf51e96ebf0482ab74a85a"
+    },
+    "original-supervisor-initialization-deadline-green-1": {
+      "case": "initialization-deadline",
+      "result_sha256": "d5ce7fed756db21011e9337d70b848b9d7b5b85b0ebfb969d4e2b4a71a0de219",
+      "selection_sha256": "64982d821d7993bf5aeff97253e05c3245b7d3029b9cd5a714f06d4eb28e22d3",
+      "serial_sha256": "454c736a72e823e4af56c3b215db461a22e48fdee552dc83c93021b7d6082013",
+      "passed": true,
+      "observation_groups": 3,
+      "direct_child_reap_records": 7,
+      "all_children_reaped": true,
+      "worker_reap": {
+        "pid": 336,
+        "proc_absent": true,
+        "pidfd_dead": true
+      },
+      "spawned": {
+        "event": "spawned",
+        "state": "initializing",
+        "worker_pid": 336,
+        "occupied": true,
+        "admission": false,
+        "until_ns": 28790765774,
+        "memory_bytes": 134217728,
+        "fd_limit": 64
+      },
+      "groups": [
+        {
+          "id": "actual_original_source_held_before_native_owner_spawn",
+          "passed": true,
+          "pid": 329,
+          "kernel_state": "State:\tT (stopped)"
+        },
+        {
+          "id": "actual_SDK_worker_initializing_held_with_enforced_resource_bounds",
+          "passed": true,
+          "pid": 336,
+          "kernel_state": "State:\tT (stopped)",
+          "observed": {
+            "limits": {
+              "Max address space": {
+                "soft": 134217728,
+                "hard": 134217728
+              },
+              "Max open files": {
+                "soft": 64,
+                "hard": 64
+              },
+              "Max core file size": {
+                "soft": 0,
+                "hard": 0
+              }
+            },
+            "actual_parent_pid": 335,
+            "NoNewPrivs": 1
+          }
+        },
+        {
+          "id": "held_initialization_rejects_readiness_at_original_five_second_deadline_and_reaps",
+          "passed": true,
+          "original_until_ns": 28790765774,
+          "last_status_before_until": {
+            "command": "status",
+            "response": {
+              "event": "status",
+              "state": "initializing",
+              "worker_pid": 336,
+              "occupied": true,
+              "admission": false,
+              "until_ns": 28790765774,
+              "memory_bytes": 134217728,
+              "fd_limit": 64
+            },
+            "began_at_ns": 28781173477,
+            "observed_at_ns": 28793681874,
+            "elapsed_ns": 12508397,
+            "within_budget": true
+          },
+          "observed": {
+            "responses": [
+              {
+                "command": "status",
+                "response": {
+                  "event": "status",
+                  "state": "failed",
+                  "worker_pid": 336,
+                  "occupied": false,
+                  "admission": false,
+                  "until_ns": 28790765774,
+                  "memory_bytes": 134217728,
+                  "fd_limit": 64
+                },
+                "began_at_ns": 28839423636,
+                "observed_at_ns": 28844137051,
+                "elapsed_ns": 4713415,
+                "within_budget": true
+              }
+            ],
+            "worker_dead_and_reaped": true
+          }
+        }
+      ],
+      "frozen_files": {
+        "bins/display-supervisor-fixture": "2acc1b6c94484085e63d94c5567c9dfb8a914b929ced0815174843ae2018e3b6",
+        "build-selection.json": "4a20d22ac8ef5d7799bea743ad653ccecbc82b8a9e516e49e0c14b12004aa1e5",
+        "source/boot.sh": "724fa85b2b518cfd40c99c1ca38629bf59d7c448a111aba73a91a4c70a3dba9c",
+        "source/guest.py": "9630f32204e27d4dc41ab13c1391596ed94789da1f9f4dca0cbf2e75733f784d",
+        "source/native-display/Cargo.lock": "dd376c75a1e1d9955959562893c6b7c2dc66d99129e97bcc9f0786c06999ee5b",
+        "source/native-display/Cargo.toml": "0d9306f3389c6c93f204ccac1ddf2f93c6d9af7513890110a51607d2760d2b09",
+        "source/native-display/src/bin/display-context-fixture.rs": "905f9a3b5338e4afe092332d4346011a68def02a7e8219c98e59d8cb20801554",
+        "source/native-display/src/bin/display-supervisor-fixture.rs": "6114f2f18288dc5341587895a6d925dea9bed50f6c26511013efc155ccc486d6",
+        "source/native-display/src/lib.rs": "1556ce9bd3b5edfbb58e779f70e9a6d80e00140ece7def69e88f8c6bb8946c8c",
+        "source/native-display/src/supervisor.rs": "310a928c0e9341328d05ceeb1fea2b3d720c97c314f0cb27d8e26c199a248829",
+        "source/native-display/tests/descriptor.rs": "1c71ff07b1ab544bad7aae1148ae2dc98d4bffaf385d416ced360fbf05631192",
+        "source/registry-probe.py": "3826ee3b958e2e7ce5962bac5596d89c7b429211898afa37344197f2c172c52c",
+        "source/supervisor-run.py": "7a00ed20f05f75ada092e1279e96ebf393ecf434672c5dfffbb52dabea133296",
+        "source/supervisor-test-notes.md": "2bf3ac764fd77da5d209f5de7802b8e7ddb23d2fd3d7d1d0469801a2140035d5"
+      },
+      "input_vm_lock_mode": "exclusive",
+      "root_image_sha256": "31e3ccf69a5496f61284abdcd049e8273e70e840407bab4e744c778f21e25842",
+      "kernel_sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+      "hyprland_sha256": "ae9a9e4129263e74df3f8a0a62beefd00f9bf4224caf51e96ebf0482ab74a85a"
+    },
+    "original-supervisor-queued-late-ready-green-2": {
+      "case": "queued-late-ready",
+      "result_sha256": "2d6c8ff18767461182066272562f8dfb17b008c759331ddc7d959763eec2d945",
+      "selection_sha256": "c5f9269911cb939788fff6921b5b78d42735ce97b10b1fa149cc3e34d7b29434",
+      "serial_sha256": "77c0ac7bc6185ed18bf3a5ae0fc04316e7c2b6da7f88e74acfce6f1f2b1b2cf5",
+      "passed": true,
+      "observation_groups": 5,
+      "direct_child_reap_records": 8,
+      "all_children_reaped": true,
+      "worker_reap": {
+        "pid": 342,
+        "proc_absent": true,
+        "pidfd_dead": true
+      },
+      "spawned": {
+        "event": "spawned",
+        "state": "initializing",
+        "worker_pid": 342,
+        "occupied": true,
+        "admission": false,
+        "until_ns": 30695904017,
+        "memory_bytes": 134217728,
+        "fd_limit": 64
+      },
+      "groups": [
+        {
+          "id": "actual_original_source_held_before_native_owner_spawn",
+          "passed": true,
+          "pid": 334,
+          "kernel_state": "State:\tT (stopped)"
+        },
+        {
+          "id": "native_parent_first_poll_transfers_bootstrap_before_parent_hold",
+          "passed": true,
+          "observed": {
+            "command": "status",
+            "response": {
+              "event": "status",
+              "state": "initializing",
+              "worker_pid": 342,
+              "occupied": true,
+              "admission": false,
+              "until_ns": 30695904017,
+              "memory_bytes": 134217728,
+              "fd_limit": 64
+            },
+            "began_at_ns": 25720091343,
+            "observed_at_ns": 25724340090,
+            "elapsed_ns": 4248747,
+            "within_budget": true
+          }
+        },
+        {
+          "id": "actual_SDK_worker_resource_bounds_before_protocol_setup",
+          "passed": true,
+          "observed": {
+            "limits": {
+              "Max address space": {
+                "soft": 134217728,
+                "hard": 134217728
+              },
+              "Max open files": {
+                "soft": 64,
+                "hard": 64
+              },
+              "Max core file size": {
+                "soft": 0,
+                "hard": 0
+              }
+            },
+            "actual_parent_pid": 341,
+            "NoNewPrivs": 1
+          }
+        },
+        {
+          "id": "actual_original_context_accepts_filtered_client_while_native_parent_held",
+          "passed": true,
+          "pid": 341,
+          "probe": {
+            "globals": [
+              {
+                "name": 1,
+                "interface": "wl_seat",
+                "version": 9
+              },
+              {
+                "name": 2,
+                "interface": "wl_data_device_manager",
+                "version": 3
+              },
+              {
+                "name": 3,
+                "interface": "wl_compositor",
+                "version": 6
+              },
+              {
+                "name": 4,
+                "interface": "wl_subcompositor",
+                "version": 1
+              },
+              {
+                "name": 5,
+                "interface": "wl_shm",
+                "version": 2
+              },
+              {
+                "name": 6,
+                "interface": "wp_viewporter",
+                "version": 1
+              },
+              {
+                "name": 7,
+                "interface": "wp_tearing_control_manager_v1",
+                "version": 1
+              },
+              {
+                "name": 8,
+                "interface": "wp_fractional_scale_manager_v1",
+                "version": 1
+              },
+              {
+                "name": 10,
+                "interface": "wp_cursor_shape_manager_v1",
+                "version": 2
+              },
+              {
+                "name": 11,
+                "interface": "zwp_idle_inhibit_manager_v1",
+                "version": 1
+              },
+              {
+                "name": 12,
+                "interface": "zwp_relative_pointer_manager_v1",
+                "version": 1
+              },
+              {
+                "name": 13,
+                "interface": "zxdg_decoration_manager_v1",
+                "version": 2
+              },
+              {
+                "name": 14,
+                "interface": "wp_alpha_modifier_v1",
+                "version": 1
+              },
+              {
+                "name": 17,
+                "interface": "zwp_pointer_gestures_v1",
+                "version": 3
+              },
+              {
+                "name": 19,
+                "interface": "zwp_keyboard_shortcuts_inhibit_manager_v1",
+                "version": 1
+              },
+              {
+                "name": 20,
+                "interface": "zwp_text_input_manager_v1",
+                "version": 1
+              },
+              {
+                "name": 21,
+                "interface": "zwp_text_input_manager_v3",
+                "version": 1
+              },
+              {
+                "name": 22,
+                "interface": "zwp_pointer_constraints_v1",
+                "version": 1
+              },
+              {
+                "name": 24,
+                "interface": "xdg_activation_v1",
+                "version": 1
+              },
+              {
+                "name": 25,
+                "interface": "ext_idle_notifier_v1",
+                "version": 2
+              },
+              {
+                "name": 32,
+                "interface": "org_kde_kwin_server_decoration_manager",
+                "version": 1
+              },
+              {
+                "name": 34,
+                "interface": "zwp_tablet_manager_v2",
+                "version": 1
+              },
+              {
+                "name": 36,
+                "interface": "wp_presentation",
+                "version": 2
+              },
+              {
+                "name": 37,
+                "interface": "xdg_wm_base",
+                "version": 7
+              },
+              {
+                "name": 39,
+                "interface": "zwp_primary_selection_device_manager_v1",
+                "version": 1
+              },
+              {
+                "name": 43,
+                "interface": "xdg_wm_dialog_v1",
+                "version": 1
+              },
+              {
+                "name": 44,
+                "interface": "wp_single_pixel_buffer_manager_v1",
+                "version": 1
+              },
+              {
+                "name": 48,
+                "interface": "hyprland_surface_manager_v1",
+                "version": 2
+              },
+              {
+                "name": 50,
+                "interface": "xdg_toplevel_tag_manager_v1",
+                "version": 1
+              },
+              {
+                "name": 51,
+                "interface": "xdg_system_bell_v1",
+                "version": 1
+              },
+              {
+                "name": 56,
+                "interface": "wp_fifo_manager_v1",
+                "version": 1
+              },
+              {
+                "name": 57,
+                "interface": "zxdg_exporter_v2",
+                "version": 1
+              },
+              {
+                "name": 58,
+                "interface": "zxdg_importer_v2",
+                "version": 1
+              },
+              {
+                "name": 59,
+                "interface": "ext_background_effect_manager_v1",
+                "version": 1
+              },
+              {
+                "name": 60,
+                "interface": "wp_commit_timing_manager_v1",
+                "version": 1
+              },
+              {
+                "name": 66,
+                "interface": "wp_color_manager_v1",
+                "version": 3
+              },
+              {
+                "name": 68,
+                "interface": "wp_linux_drm_syncobj_manager_v1",
+                "version": 1
+              },
+              {
+                "name": 69,
+                "interface": "wl_drm",
+                "version": 2
+              },
+              {
+                "name": 70,
+                "interface": "zwp_linux_dmabuf_v1",
+                "version": 5
+              },
+              {
+                "name": 71,
+                "interface": "wl_output",
+                "version": 4
+              }
+            ],
+            "forged_bind_error": null,
+            "forged_bind_completed": null,
+            "pid": 343,
+            "uid": 11010,
+            "gid": 11010,
+            "peer_credentials": [
+              341,
+              0,
+              0
+            ],
+            "allowed_bound": [
+              "wl_compositor",
+              "xdg_wm_base"
+            ]
+          },
+          "worker_pid": 342
+        },
+        {
+          "id": "queued_original_context_ready_cannot_admit_after_unchanged_absolute_deadline",
+          "passed": true,
+          "held_until_ns": 30716286066,
+          "original_until_ns": 30695904017,
+          "observed": {
+            "responses": [
+              {
+                "command": "status",
+                "response": {
+                  "event": "status",
+                  "state": "failed",
+                  "worker_pid": 342,
+                  "occupied": false,
+                  "admission": false,
+                  "until_ns": 30695904017,
+                  "memory_bytes": 134217728,
+                  "fd_limit": 64
+                },
+                "began_at_ns": 30720337635,
+                "observed_at_ns": 30725399241,
+                "elapsed_ns": 5061606,
+                "within_budget": true
+              }
+            ],
+            "worker_dead_and_reaped": true
+          }
+        }
+      ],
+      "frozen_files": {
+        "bins/display-supervisor-fixture": "2acc1b6c94484085e63d94c5567c9dfb8a914b929ced0815174843ae2018e3b6",
+        "build-selection.json": "4a20d22ac8ef5d7799bea743ad653ccecbc82b8a9e516e49e0c14b12004aa1e5",
+        "source/boot.sh": "724fa85b2b518cfd40c99c1ca38629bf59d7c448a111aba73a91a4c70a3dba9c",
+        "source/guest.py": "7509464b75ab98c0687d9c9216980322c6dbe636504a49130881e934602df9c9",
+        "source/native-display/Cargo.lock": "dd376c75a1e1d9955959562893c6b7c2dc66d99129e97bcc9f0786c06999ee5b",
+        "source/native-display/Cargo.toml": "0d9306f3389c6c93f204ccac1ddf2f93c6d9af7513890110a51607d2760d2b09",
+        "source/native-display/src/bin/display-context-fixture.rs": "905f9a3b5338e4afe092332d4346011a68def02a7e8219c98e59d8cb20801554",
+        "source/native-display/src/bin/display-supervisor-fixture.rs": "6114f2f18288dc5341587895a6d925dea9bed50f6c26511013efc155ccc486d6",
+        "source/native-display/src/lib.rs": "1556ce9bd3b5edfbb58e779f70e9a6d80e00140ece7def69e88f8c6bb8946c8c",
+        "source/native-display/src/supervisor.rs": "310a928c0e9341328d05ceeb1fea2b3d720c97c314f0cb27d8e26c199a248829",
+        "source/native-display/tests/descriptor.rs": "1c71ff07b1ab544bad7aae1148ae2dc98d4bffaf385d416ced360fbf05631192",
+        "source/registry-probe.py": "3826ee3b958e2e7ce5962bac5596d89c7b429211898afa37344197f2c172c52c",
+        "source/supervisor-run.py": "ee3787559f6ab1bb857b9967d37c953f90ed7246c3f196a45eb015ac2b3c6958",
+        "source/supervisor-test-notes.md": "a593f7ab9e3f686ee1ae571f85066dc4349f53ef0216f6d598340d79b40f921d"
+      },
+      "input_vm_lock_mode": "shared-readonly",
+      "root_image_sha256": "31e3ccf69a5496f61284abdcd049e8273e70e840407bab4e744c778f21e25842",
+      "kernel_sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+      "hyprland_sha256": "ae9a9e4129263e74df3f8a0a62beefd00f9bf4224caf51e96ebf0482ab74a85a"
+    },
+    "original-supervisor-source-death-green-1": {
+      "case": "source-death",
+      "result_sha256": "bb73f8a25d3ee63c6f187ca4bd873712270648015d1e469ae34c3cdf7bab6a0d",
+      "selection_sha256": "ced074f0da3cf5e8c3584fa0affcb59746b049297a649d855e07ebd859b8660f",
+      "serial_sha256": "ef3950de9be2b97d6dce4ee9f7f9378064399d1ff813e3af9ed147e5ad269061",
+      "passed": true,
+      "observation_groups": 3,
+      "direct_child_reap_records": 7,
+      "all_children_reaped": true,
+      "worker_reap": {
+        "pid": 354,
+        "proc_absent": true,
+        "pidfd_dead": true
+      },
+      "spawned": {
+        "event": "spawned",
+        "state": "initializing",
+        "worker_pid": 354,
+        "occupied": true,
+        "admission": false,
+        "until_ns": 31227273313,
+        "memory_bytes": 134217728,
+        "fd_limit": 64
+      },
+      "groups": [
+        {
+          "id": "native_owner_authentic_current_original_context_ready_with_resource_bounds",
+          "passed": true,
+          "ready": {
+            "event": "ready",
+            "state": "ready",
+            "worker_pid": 354,
+            "occupied": true,
+            "admission": true,
+            "until_ns": 31227273313,
+            "memory_bytes": 134217728,
+            "fd_limit": 64
+          },
+          "observed": {
+            "limits": {
+              "Max address space": {
+                "soft": 134217728,
+                "hard": 134217728
+              },
+              "Max open files": {
+                "soft": 64,
+                "hard": 64
+              },
+              "Max core file size": {
+                "soft": 0,
+                "hard": 0
+              }
+            },
+            "actual_parent_pid": 353,
+            "NoNewPrivs": 1
+          }
+        },
+        {
+          "id": "native_parent_ready_status_observed_within_250ms",
+          "passed": true,
+          "observed": {
+            "command": "status",
+            "response": {
+              "event": "status",
+              "state": "ready",
+              "worker_pid": 354,
+              "occupied": true,
+              "admission": true,
+              "until_ns": 31227273313,
+              "memory_bytes": 134217728,
+              "fd_limit": 64
+            },
+            "began_at_ns": 26305004059,
+            "observed_at_ns": 26307240136,
+            "elapsed_ns": 2236077,
+            "within_budget": true
+          }
+        },
+        {
+          "id": "actual_original_source_death_fences_admission_and_reaps_SDK_worker",
+          "passed": true,
+          "source_pid": 335,
+          "observed": {
+            "responses": [
+              {
+                "command": "status",
+                "response": {
+                  "event": "status",
+                  "state": "failed",
+                  "worker_pid": 354,
+                  "occupied": false,
+                  "admission": false,
+                  "until_ns": 31227273313,
+                  "memory_bytes": 134217728,
+                  "fd_limit": 64
+                },
+                "began_at_ns": 26490203526,
+                "observed_at_ns": 26495098180,
+                "elapsed_ns": 4894654,
+                "within_budget": true
+              }
+            ],
+            "worker_dead_and_reaped": true
+          }
+        }
+      ],
+      "frozen_files": {
+        "bins/display-supervisor-fixture": "2acc1b6c94484085e63d94c5567c9dfb8a914b929ced0815174843ae2018e3b6",
+        "build-selection.json": "4a20d22ac8ef5d7799bea743ad653ccecbc82b8a9e516e49e0c14b12004aa1e5",
+        "source/boot.sh": "724fa85b2b518cfd40c99c1ca38629bf59d7c448a111aba73a91a4c70a3dba9c",
+        "source/guest.py": "7509464b75ab98c0687d9c9216980322c6dbe636504a49130881e934602df9c9",
+        "source/native-display/Cargo.lock": "dd376c75a1e1d9955959562893c6b7c2dc66d99129e97bcc9f0786c06999ee5b",
+        "source/native-display/Cargo.toml": "0d9306f3389c6c93f204ccac1ddf2f93c6d9af7513890110a51607d2760d2b09",
+        "source/native-display/src/bin/display-context-fixture.rs": "905f9a3b5338e4afe092332d4346011a68def02a7e8219c98e59d8cb20801554",
+        "source/native-display/src/bin/display-supervisor-fixture.rs": "6114f2f18288dc5341587895a6d925dea9bed50f6c26511013efc155ccc486d6",
+        "source/native-display/src/lib.rs": "1556ce9bd3b5edfbb58e779f70e9a6d80e00140ece7def69e88f8c6bb8946c8c",
+        "source/native-display/src/supervisor.rs": "310a928c0e9341328d05ceeb1fea2b3d720c97c314f0cb27d8e26c199a248829",
+        "source/native-display/tests/descriptor.rs": "1c71ff07b1ab544bad7aae1148ae2dc98d4bffaf385d416ced360fbf05631192",
+        "source/registry-probe.py": "3826ee3b958e2e7ce5962bac5596d89c7b429211898afa37344197f2c172c52c",
+        "source/supervisor-run.py": "ee3787559f6ab1bb857b9967d37c953f90ed7246c3f196a45eb015ac2b3c6958",
+        "source/supervisor-test-notes.md": "a593f7ab9e3f686ee1ae571f85066dc4349f53ef0216f6d598340d79b40f921d"
+      },
+      "input_vm_lock_mode": "shared-readonly",
+      "root_image_sha256": "31e3ccf69a5496f61284abdcd049e8273e70e840407bab4e744c778f21e25842",
+      "kernel_sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+      "hyprland_sha256": "ae9a9e4129263e74df3f8a0a62beefd00f9bf4224caf51e96ebf0482ab74a85a"
+    },
+    "original-supervisor-parent-death-green-1": {
+      "case": "parent-death",
+      "result_sha256": "fb660cd4c2991eef39ec292edda6d1cf2e1add6175d97060970540836ca8c781",
+      "selection_sha256": "5395e9d54377907cc134641acd1d5a9fe757dee80844878559bbc200ffd61574",
+      "serial_sha256": "77036f281a53756e1530b6036ab765a762f17bcc70189a65a94f75c521ed7014",
+      "passed": true,
+      "observation_groups": 3,
+      "direct_child_reap_records": 7,
+      "all_children_reaped": true,
+      "worker_reap": {
+        "pid": 343,
+        "wait_status": 9,
+        "signal": 9,
+        "exitcode": -9
+      },
+      "spawned": {
+        "event": "spawned",
+        "state": "initializing",
+        "worker_pid": 343,
+        "occupied": true,
+        "admission": false,
+        "until_ns": 30227259561,
+        "memory_bytes": 134217728,
+        "fd_limit": 64
+      },
+      "groups": [
+        {
+          "id": "actual_original_source_held_before_native_owner_spawn",
+          "passed": true,
+          "pid": 335,
+          "kernel_state": "State:\tT (stopped)"
+        },
+        {
+          "id": "actual_SDK_worker_initializing_held_with_enforced_resource_bounds",
+          "passed": true,
+          "pid": 343,
+          "kernel_state": "State:\tT (stopped)",
+          "observed": {
+            "limits": {
+              "Max address space": {
+                "soft": 134217728,
+                "hard": 134217728
+              },
+              "Max open files": {
+                "soft": 64,
+                "hard": 64
+              },
+              "Max core file size": {
+                "soft": 0,
+                "hard": 0
+              }
+            },
+            "actual_parent_pid": 342,
+            "NoNewPrivs": 1
+          }
+        },
+        {
+          "id": "native_parent_death_kills_actual_held_SDK_worker_and_guest_subreaper_actually_reaps",
+          "passed": true,
+          "parent_pid": 342,
+          "parent_returncode": -9,
+          "worker_pid": 343,
+          "worker_wait": {
+            "pid": 343,
+            "wait_status": 9,
+            "signal": 9,
+            "exitcode": -9
+          },
+          "worker_pidfd_dead": true
+        }
+      ],
+      "frozen_files": {
+        "bins/display-supervisor-fixture": "2acc1b6c94484085e63d94c5567c9dfb8a914b929ced0815174843ae2018e3b6",
+        "build-selection.json": "4a20d22ac8ef5d7799bea743ad653ccecbc82b8a9e516e49e0c14b12004aa1e5",
+        "source/boot.sh": "724fa85b2b518cfd40c99c1ca38629bf59d7c448a111aba73a91a4c70a3dba9c",
+        "source/guest.py": "7509464b75ab98c0687d9c9216980322c6dbe636504a49130881e934602df9c9",
+        "source/native-display/Cargo.lock": "dd376c75a1e1d9955959562893c6b7c2dc66d99129e97bcc9f0786c06999ee5b",
+        "source/native-display/Cargo.toml": "0d9306f3389c6c93f204ccac1ddf2f93c6d9af7513890110a51607d2760d2b09",
+        "source/native-display/src/bin/display-context-fixture.rs": "905f9a3b5338e4afe092332d4346011a68def02a7e8219c98e59d8cb20801554",
+        "source/native-display/src/bin/display-supervisor-fixture.rs": "6114f2f18288dc5341587895a6d925dea9bed50f6c26511013efc155ccc486d6",
+        "source/native-display/src/lib.rs": "1556ce9bd3b5edfbb58e779f70e9a6d80e00140ece7def69e88f8c6bb8946c8c",
+        "source/native-display/src/supervisor.rs": "310a928c0e9341328d05ceeb1fea2b3d720c97c314f0cb27d8e26c199a248829",
+        "source/native-display/tests/descriptor.rs": "1c71ff07b1ab544bad7aae1148ae2dc98d4bffaf385d416ced360fbf05631192",
+        "source/registry-probe.py": "3826ee3b958e2e7ce5962bac5596d89c7b429211898afa37344197f2c172c52c",
+        "source/supervisor-run.py": "ee3787559f6ab1bb857b9967d37c953f90ed7246c3f196a45eb015ac2b3c6958",
+        "source/supervisor-test-notes.md": "a593f7ab9e3f686ee1ae571f85066dc4349f53ef0216f6d598340d79b40f921d"
+      },
+      "input_vm_lock_mode": "shared-readonly",
+      "root_image_sha256": "31e3ccf69a5496f61284abdcd049e8273e70e840407bab4e744c778f21e25842",
+      "kernel_sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+      "hyprland_sha256": "ae9a9e4129263e74df3f8a0a62beefd00f9bf4224caf51e96ebf0482ab74a85a"
+    },
+    "original-supervisor-normal-green-1": {
+      "case": "normal",
+      "result_sha256": "86cfc7dd03bfe977f2e1959d7fb9eb1a94da4cd5dcb75975dcd8df87fba274ad",
+      "selection_sha256": "aa7e26ceed651299e403a55fba5d4825d55ac641fa1d6ccf1b69a815b37577e6",
+      "serial_sha256": "36b24b93a82e2b54445b6c8eb6f881c0b9ba072cbf3ba3cfa935a2d140996ed9",
+      "passed": true,
+      "observation_groups": 3,
+      "direct_child_reap_records": 7,
+      "all_children_reaped": true,
+      "worker_reap": {
+        "pid": 349,
+        "proc_absent": true,
+        "pidfd_dead": true
+      },
+      "spawned": {
+        "event": "spawned",
+        "state": "initializing",
+        "worker_pid": 349,
+        "occupied": true,
+        "admission": false,
+        "until_ns": 30611926443,
+        "memory_bytes": 134217728,
+        "fd_limit": 64
+      },
+      "groups": [
+        {
+          "id": "native_owner_authentic_current_original_context_ready_with_resource_bounds",
+          "passed": true,
+          "ready": {
+            "event": "ready",
+            "state": "ready",
+            "worker_pid": 349,
+            "occupied": true,
+            "admission": true,
+            "until_ns": 30611926443,
+            "memory_bytes": 134217728,
+            "fd_limit": 64
+          },
+          "observed": {
+            "limits": {
+              "Max address space": {
+                "soft": 134217728,
+                "hard": 134217728
+              },
+              "Max open files": {
+                "soft": 64,
+                "hard": 64
+              },
+              "Max core file size": {
+                "soft": 0,
+                "hard": 0
+              }
+            },
+            "actual_parent_pid": 348,
+            "NoNewPrivs": 1
+          }
+        },
+        {
+          "id": "native_parent_ready_status_observed_within_250ms",
+          "passed": true,
+          "observed": {
+            "command": "status",
+            "response": {
+              "event": "status",
+              "state": "ready",
+              "worker_pid": 349,
+              "occupied": true,
+              "admission": true,
+              "until_ns": 30611926443,
+              "memory_bytes": 134217728,
+              "fd_limit": 64
+            },
+            "began_at_ns": 25694505989,
+            "observed_at_ns": 25698566315,
+            "elapsed_ns": 4060326,
+            "within_budget": true
+          }
+        },
+        {
+          "id": "normal_native_owner_stop_fences_then_actually_reaps_SDK_worker",
+          "passed": true,
+          "requested": {
+            "command": "stop",
+            "response": {
+              "event": "stop_requested",
+              "state": "stopping",
+              "worker_pid": 349,
+              "occupied": true,
+              "admission": false,
+              "until_ns": 30611926443,
+              "memory_bytes": 134217728,
+              "fd_limit": 64
+            },
+            "began_at_ns": 25699681127,
+            "observed_at_ns": 25704508325,
+            "elapsed_ns": 4827198,
+            "within_budget": true
+          },
+          "final": {
+            "event": "stopped",
+            "state": "stopped",
+            "worker_pid": 349,
+            "occupied": false,
+            "admission": false,
+            "until_ns": 30611926443,
+            "memory_bytes": 134217728,
+            "fd_limit": 64
+          }
+        }
+      ],
+      "frozen_files": {
+        "bins/display-supervisor-fixture": "2acc1b6c94484085e63d94c5567c9dfb8a914b929ced0815174843ae2018e3b6",
+        "build-selection.json": "4a20d22ac8ef5d7799bea743ad653ccecbc82b8a9e516e49e0c14b12004aa1e5",
+        "source/boot.sh": "724fa85b2b518cfd40c99c1ca38629bf59d7c448a111aba73a91a4c70a3dba9c",
+        "source/guest.py": "7509464b75ab98c0687d9c9216980322c6dbe636504a49130881e934602df9c9",
+        "source/native-display/Cargo.lock": "dd376c75a1e1d9955959562893c6b7c2dc66d99129e97bcc9f0786c06999ee5b",
+        "source/native-display/Cargo.toml": "0d9306f3389c6c93f204ccac1ddf2f93c6d9af7513890110a51607d2760d2b09",
+        "source/native-display/src/bin/display-context-fixture.rs": "905f9a3b5338e4afe092332d4346011a68def02a7e8219c98e59d8cb20801554",
+        "source/native-display/src/bin/display-supervisor-fixture.rs": "6114f2f18288dc5341587895a6d925dea9bed50f6c26511013efc155ccc486d6",
+        "source/native-display/src/lib.rs": "1556ce9bd3b5edfbb58e779f70e9a6d80e00140ece7def69e88f8c6bb8946c8c",
+        "source/native-display/src/supervisor.rs": "310a928c0e9341328d05ceeb1fea2b3d720c97c314f0cb27d8e26c199a248829",
+        "source/native-display/tests/descriptor.rs": "1c71ff07b1ab544bad7aae1148ae2dc98d4bffaf385d416ced360fbf05631192",
+        "source/registry-probe.py": "3826ee3b958e2e7ce5962bac5596d89c7b429211898afa37344197f2c172c52c",
+        "source/supervisor-run.py": "ee3787559f6ab1bb857b9967d37c953f90ed7246c3f196a45eb015ac2b3c6958",
+        "source/supervisor-test-notes.md": "a593f7ab9e3f686ee1ae571f85066dc4349f53ef0216f6d598340d79b40f921d"
+      },
+      "input_vm_lock_mode": "shared-readonly",
+      "root_image_sha256": "31e3ccf69a5496f61284abdcd049e8273e70e840407bab4e744c778f21e25842",
+      "kernel_sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+      "hyprland_sha256": "ae9a9e4129263e74df3f8a0a62beefd00f9bf4224caf51e96ebf0482ab74a85a"
+    }
+  },
+  "open_gates": [
+    "Deployed Root PAM/session configuration and SDK supervisor composition with Messages actor",
+    "Adversarial private-channel sender/frame/flood cases beyond actual trusted fixed SDK worker",
+    "Physical hardware and hard-real-time scheduling"
+  ],
+  "production_supervisor_qualified": false,
+  "selected_build": "original-supervisor-build-1",
+  "supervisor_elf_sha256": "2acc1b6c94484085e63d94c5567c9dfb8a914b929ced0815174843ae2018e3b6",
+  "build_selection_sha256": "4a20d22ac8ef5d7799bea743ad653ccecbc82b8a9e516e49e0c14b12004aa1e5",
+  "selected_green_labels": [
+    "original-supervisor-held-control-green-1",
+    "original-supervisor-initialization-deadline-green-1",
+    "original-supervisor-queued-late-ready-green-2",
+    "original-supervisor-source-death-green-1",
+    "original-supervisor-parent-death-green-1",
+    "original-supervisor-normal-green-1"
+  ],
+  "total_observation_groups_across_selected_epochs": 22,
+  "total_direct_child_reap_records_across_selected_epochs": 43,
+  "total_SDK_worker_reap_observations": 6,
+  "isolated_native_parent_mechanism_qualified": true,
+  "preserved_fixture_failure": {
+    "label": "original-supervisor-queued-late-ready-green-1",
+    "result_sha256": "27fd9a21c5471ab705f8fa462ba1bc3335b6d6243cb4b28a18683278f242b79e",
+    "selection_sha256": "758aa599bacc828e721b6d52453a83e960c5ce57499226be9aab12bc9702ce34",
+    "reason": "Parent held before first poll transferred bootstrap; no context setup completed, probe timed out; all direct children and adopted worker reaped"
+  },
+  "authored_files": {
+    "supervisor-run.py": "ee3787559f6ab1bb857b9967d37c953f90ed7246c3f196a45eb015ac2b3c6958",
+    "supervisor-guest.py": "7509464b75ab98c0687d9c9216980322c6dbe636504a49130881e934602df9c9",
+    "supervisor-test-notes.md": "b415da7053659f974e720a0d914e192d41c4fe45ffb4ae65c4d589d373c9a294"
+  }
+}

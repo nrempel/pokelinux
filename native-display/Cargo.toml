@@ -1,0 +1,27 @@
+[package]
+name = "pokelinux-display"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[features]
+isolated-fixture = []
+
+[dependencies]
+pokelinux-kernel-identity = { path = "../native-kernel-identity" }
+rustix = { version = "=1.1.5", features = ["net", "event", "time", "process", "pipe", "fs", "thread"] }
+wayland-client = "=0.31.15"
+wayland-protocols = { version = "=0.32.13", features = ["client", "staging"] }
+
+[[bin]]
+name = "display-context-fixture"
+path = "src/bin/display-context-fixture.rs"
+required-features = ["isolated-fixture"]
+
+[[bin]]
+name = "display-supervisor-fixture"
+path = "src/bin/display-supervisor-fixture.rs"
+required-features = ["isolated-fixture"]
+
+[lints.rust]
+unsafe_op_in_unsafe_fn = "deny"
