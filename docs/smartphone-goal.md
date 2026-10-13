@@ -182,3 +182,10 @@ and bounded resident inspection. The selected Pixel profile refuses deployment:
 nine offline requirements, one physical gate and three missing artifact pins
 remain. This does not qualify native boot, installed ownership, transitive ABI or
 Pixel KMI. See [deployment admission](native-deployment.md).
+
+The first whole native registration-indication payload decoder now qualifies 37
+complete populated-field cases from 121 original APK probes and 84 explicit local
+refusals. Eight focused tests plus all prior checks pass on x86/ARM64 user-QEMU,
+24 per target. Complete immutable wire fields do not establish producer identity,
+IMS state, bearer/call/media, installed ownership or carrier operation. See
+[registration payload](native-ims-registration.md).

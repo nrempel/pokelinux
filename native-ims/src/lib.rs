@@ -2,6 +2,7 @@
 //! Installed native IMS registration/state integration remains unimplemented.
 
 pub mod reader;
+pub mod registration;
 pub mod requests;
 
 /// Little-endian scalar encoding used by the audited Shannon DataWriter.

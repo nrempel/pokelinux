@@ -224,6 +224,15 @@ plus all prior codec tests pass on x86 and ARM64 user-QEMU after executed runtim
 reds. Whole response layouts/producer identity, semantic publication and native
 IMS/call/bearer/media integration remain open; see `native-ims-reader.md`.
 
+The first whole registration-indication payload decoder now matches populated
+fields from 37 complete ranges among 121 pure original APK probes. It explicitly
+refuses 84 malformed/over-limit ranges that the original returns from normally.
+Missing fields become None; opaque body bytes retain NUL/non-UTF8, without old
+object values, UNKNOWN text or lossy conversion. Eight runtime reds preceded
+implementation; all 24 native checks pass per x86/ARM64 user-QEMU target. Producer
+identity, semantic publication and installed IMS remain open. See
+`native-ims-registration.md` and its separate provenance.
+
 Native inbox projection now qualifies private durable conversation storage with
 20 actual SQLite/access/process tests on x86 and an ARM64 guest kernel and33
 recorded original AOSP fixture comparisons. Exact local occurrence IDs import

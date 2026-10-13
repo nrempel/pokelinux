@@ -60,7 +60,9 @@ internal-only network, and reaps its container/network on exit. It never invokes
 host adb or a physical phone. ARM64 user-QEMU checks portable decoder code only;
 there is no ARM64 Binder or hardware qualification in this checkpoint.
 
-Whole IMS response layouts, request/error/slot/producer identity, valid state/RAT
+The later [registration payload decoder](native-ims-registration.md) qualifies
+one complete original-compared layout with stricter malformed-input policy.
+Other IMS response layouts, request/error/slot/producer identity, valid state/RAT
 semantics, SIM authentication, bearer/registration/call sequencing, IMS media,
 carrier provisioning and remote cleanup/reset remain open. This component is
 not an installed IMS service or a production response publication path.

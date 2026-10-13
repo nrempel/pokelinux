@@ -56,7 +56,10 @@ and247 executed original pure reader probes. It matches148 valid scalar/opaque
 CP-field values and remaining counts;96 bounded refusals and3 oversized inputs
 are explicit policy differences. Ten native tests pass on x86 and ARM64 user-QEMU
 alongside all previous codec regression. Original CP "String" getters render byte
-arrays; they do not supply an IMS text encoding contract. Whole response layouts,
+arrays; they do not supply an IMS text encoding contract. The later
+[registration payload decoder](native-ims-registration.md) qualifies one complete
+layout against original update execution, with raw body bytes and strict refusal
+policy. Other response layouts,
 producer identity, semantic state and installed IMS integration remain open. See
 [separate reader provenance](evidence/native-ims-reader-provenance.json).
 

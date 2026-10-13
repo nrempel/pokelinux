@@ -1,0 +1,138 @@
+{
+  "schema": 1,
+  "scope": "Original-compared immutable bounded registration-indication wire payload, no IMS semantic authority",
+  "original": {
+    "apk_sha256": "8b017599727398e80df5ab618d648890dcdc34b5fe2ba71fb2331e51bd8b8879",
+    "class": "com.shannon.imsservice.network.adaptor.data.RilIndRegistration",
+    "methods_executed": [
+      "constructor(null channel)",
+      "update(synthetic bytes, length)",
+      "reflected fields"
+    ],
+    "parser_probes": 121,
+    "separate_metadata_records": 1,
+    "qualified_replay_identical": true,
+    "selinux": "Enforcing",
+    "vendor_service_or_modem_operations": false,
+    "message_dispatch_called": false,
+    "rea_version": "6.4.0",
+    "rea_provider_jar_sha256": "6e5eacf500b64292bfb73c49797c1958f6ee44646e43e868039ae7feb573ff75",
+    "rea_evidence_ids": {
+      "registration-class": "ev_b36ebf5f4b4121fc82a2cbc00faf23233b8a6215ab8d493e4b1df64f631c1a12",
+      "registration-constructor": "ev_0fed8068ff25880db7e5a3f247f5162b09fa1a70c41660794595a35d063c299b",
+      "registration-update": "ev_e7935f6400f8c1dbb0d7009f4b129a95005924b711292daea7951e503ddc6d67",
+      "base-constructor": "ev_635931714c9b5136e51e3f1f4929b0a6649573d92c4f84b655e0fcc72a649826"
+    },
+    "original_runtime_escaped_exceptions": 0
+  },
+  "environment": {
+    "framework_image": "sha256:fcc63fb8f191a5b15cd9a64d04a26bb06b009216a2cd4e4de0f6931b6c919838",
+    "rust_image": "sha256:0b4b956502a9f55d992eaced6975737b523be19bd2034078983b36bbcfd7aee6",
+    "sdk_api": "37.0",
+    "sdk_revision": 6,
+    "sdk_abi": "x86_64",
+    "sdk_source_properties_sha256": "bf15b0b43bd0155b258b3756cf523dd917735042633edbb645b34c285a45832d",
+    "native_targets": [
+      "x86_64-unknown-linux-gnu",
+      "aarch64-unknown-linux-gnu via user-QEMU"
+    ],
+    "native_decoder_arm64_kernel_executed": false,
+    "native_decoder_binder_integration_executed": false,
+    "physical_phone_accessed": false
+  },
+  "native_comparison": {
+    "admitted_complete_ranges": 37,
+    "refusals": {
+      "Truncated": 40,
+      "TrailingData": 30,
+      "ReasonTooLong": 7,
+      "UriTooLong": 4,
+      "InvalidRange": 2,
+      "InputTooLarge": 1
+    },
+    "refusals_are_native_policy_not_original_rejections": true,
+    "absent_extensions": "Option None; original seeded object retains old values",
+    "body": "Exact counted borrowed opaque slices; no original UNKNOWN sentinel or lossy UTF8 conversion",
+    "optional_numeric_boundary_limit": "Original dynamic extension probes positive; recovered direct scalar operations and prior scalar-reader tests support signedness, not exhaustive original extremes",
+    "semantic_state_published": false,
+    "refusal_total": 84
+  },
+  "tdd": {
+    "initial_actual_runtime_red_groups": 8,
+    "initial_red_source_hash_record": "artifacts/native-ims-registration/red/source-sha256.txt",
+    "exact_executed_red_stub_reconstructed_and_hash_verified": true,
+    "formatted_current_tests_frozen_red_replay_failures": 8,
+    "green_registration_tests_per_target": 8,
+    "green_reader_tests_per_target": 10,
+    "green_other_codec_request_unit_tests_per_target": 6,
+    "green_total_tests_per_target": 24,
+    "fmt": "pass",
+    "clippy_warnings_denied": "pass",
+    "release_builds_both_targets": "pass"
+  },
+  "setup_failures": {
+    "incomplete_original_trials": 3,
+    "process_exit_code": 137,
+    "traced_phase": "constant field reads",
+    "correction": "Original instance supplied for nonstatic limit-field reflection; later121 probes complete",
+    "original_vendor_rejection_or_registration_claim": false,
+    "captured_zero_parser_record_trials": 2,
+    "first_trial_stdout_retained": false
+  },
+  "source_sha256": {
+    "native-ims/Cargo.toml": "673a36e6e406492b7418c0fcf6b806327bae3061ab47fd91232a2d7eab8ffd6f",
+    "native-ims/Cargo.lock": "6aa52824cf4c8784c9ab049bceadc5e9fa60a9bee95e506d4804659f4fec2eb6",
+    "native-ims/src/lib.rs": "83a6f74531ca03f30fdc991d983013d2da8e9ac3bcd5ac27c9285f54d94873b3",
+    "native-ims/src/reader.rs": "65cf29526840c2d501adc527532360120e2eb5ee9e1b38eb1b08fc94b3bf118c",
+    "native-ims/src/registration.rs": "b6dc008bb82d5892a4f19e05c93e1cc8ca7b596e5b0947da8e04072a8c128cf4",
+    "native-ims/tests/registration.rs": "3caa587938c70691cd214e16deb9996659921d7ad672d09d5abbab22328c171d",
+    "native-ims/tests/fixtures/shannon-registration.tsv": "4acc479315733745ec7bfe62c82b029a9f45e914fe0ea6a5891a1229da214b83",
+    "framework/shannon-registration-oracle/RegistrationIndicationOracle.java": "7a3bd7ecd9ab18c2073acb355e317e9feac726561344a3b0afc65c925bed8a86",
+    "framework/tests/shannon_registration.py": "161a60017bdd5e386af7db3c2c4c627a2d0bcfb24e3ce1bea62902c541a31f17",
+    "tools/build-shannon-registration-oracle.sh": "812adee4dc6198da12e05fd815d1a912f3bd95018c99944670a4143b4794e4ce",
+    "tools/native-ims-registration-suite.sh": "4c6eca0281a6f82b9ff3d3ee0bc6784ff9082aab1c5f65832787b3f6df19b9a1",
+    "tools/native-ims-registration-tests.sh": "d48b466a55c92a2040e3043460161f9fa2c654f30c4be5ba053e39e069d48216",
+    "docs/native-ims-registration.md": "e07c00848296344a2f40e0f7cadc1d415167b967ac5330faf43d81a0078c5841"
+  },
+  "private_proof_sha256": {
+    "artifacts/ims-registration-rea/runtime/qualified-parser/result.json": "c65e8e1331959b719101b142ca3da535b21ec5791eccab3b760b9e8a22d7041d",
+    "artifacts/ims-registration-rea/runtime/qualified-parser/original-parser.json": "902e48429084538a1e996fbce8b259512804244baf208e393faeeb6340e307cd",
+    "artifacts/ims-registration-rea/runtime/qualified-parser/original-parser-output.txt": "c93d3f737c03efbfe6003812744279d5e6a385ac95047941bb12bc92f011fbf8",
+    "artifacts/ims-registration-rea/runtime/qualified-parser/runner-output.txt": "1d5616d59bdf84165e6a5a293cf6592b05f4ece441315e97d797ba5525dd5d1e",
+    "artifacts/ims-registration-rea/runtime/qualified-parser/emulator.log": "7a27346701093aa0d58111ccee1b95d563bec2ec07997d96b8813213e9c3d903",
+    "artifacts/ims-registration-rea/oracle/oracle.jar": "767ed50b7a598617d0eb41869f8665f71c54596fc0569a042251545014096135",
+    "artifacts/ims-registration-rea/native-green.log": "e0b666326047f3bdf0d9fd6caa4ffdfeb736595bfff747c64fb0407308f07aba",
+    "artifacts/ims-registration-rea/native-policy-summary.json": "f809724ce44fd1a6f5a8474230b50dbe66fcf373dd4e302ca0bb88147b3eb2c8",
+    "artifacts/native-ims-registration/red/test.log": "9dae7b518f3277b501fceb730fce841758c000a2f3e2b7683018a5f2674068d4",
+    "artifacts/native-ims-registration/red/source-sha256.txt": "0b3d4f851f2f97e59cddba1ea245e284562454b6aec811c6a47a144b6b463ffb",
+    "artifacts/native-ims-registration/red/reconstructed-stub-registration.rs": "15b6930da6c28b99bcdba51db1eda076cb79a30b9c8e725bd7fb22bb7aee2a1c",
+    "artifacts/native-ims-registration/red-replay/test.log": "a8c049fd5789f5f41d84bf374e47bb6928e9a3210e12fa15d75fac9648735e63",
+    "artifacts/native-ims-registration/red-replay/source/native-ims/src/registration.rs": "15b6930da6c28b99bcdba51db1eda076cb79a30b9c8e725bd7fb22bb7aee2a1c",
+    "artifacts/native-ims-registration/red-replay/source/native-ims/tests/registration.rs": "3caa587938c70691cd214e16deb9996659921d7ad672d09d5abbab22328c171d",
+    "artifacts/native-ims-registration/green/source-sha256.txt": "54b3dd5ce6b2318f43fed5c51e859ec21cd5b5e3d7f5cfc18c388123c3c4e8de",
+    "artifacts/native-ims-registration/green/x86_64-unknown-linux-gnu-test-build.json": "7d87cbcce355bfd3bdc2936d7f6e9e3c26b436202eabd02d96195ebae8fa727f",
+    "artifacts/native-ims-registration/green/aarch64-unknown-linux-gnu-test-build.json": "f5f5750d535f5a2030bb1b6305dd471fa8c74e7954238af3d24fec9ad0298dfc",
+    "artifacts/ims-registration-rea/runtime/parser/runner-output.txt": "2d6431facc7a41b8a3411bea88a2aadf499623dff8d0dea0fc834c362cc66b9e",
+    "artifacts/ims-registration-rea/runtime/parser-bounded/runner-output.txt": "3d8b09ae485d4674a707f2a30d76b22212e0c4d8acac404be019643931386341",
+    "artifacts/ims-registration-rea/runtime/parser-trace/original-parser-failed-output.txt": "641954e3990fb7f62df03bb60715d2a5dd5c01871d00186a8ef10e31ab668d6b",
+    "artifacts/ims-registration-rea/runtime/parser-trace/original-parser-failed-result.json": "1f1c47ba27275981701e3ed3eab6ba825af573fba3087e453045de3c717ff490"
+  },
+  "native_test_binaries": {
+    "x86_64-unknown-linux-gnu": {
+      "path": "artifacts/native-ims-registration/green/x86_64-unknown-linux-gnu/debug/deps/registration-51d13177fdaaf3e4",
+      "sha256": "e164fc6b888f5c1b431363cede5ad2f6faf544d844a6cabf0f5490a7a1225eea"
+    },
+    "aarch64-unknown-linux-gnu": {
+      "path": "artifacts/native-ims-registration/green/aarch64-unknown-linux-gnu/debug/deps/registration-4ac8e2b7b29a19b4",
+      "sha256": "b47838f0247ce67e89c7e7c5e3357940418b3e0e9c9b52ebebdd9e8b13d3a1b2"
+    }
+  },
+  "gates": [
+    "Producer/slot/message/reset identity and qualified whole-message delivery",
+    "Semantic registration/RAT/bearer/SIM/call/media/carrier and final error/response correlation",
+    "Installed native service, permissions/lifecycle and background",
+    "ARM64 Binder and matched Pixel kernel/policy",
+    "Later authorized physical hardware/carrier execution"
+  ],
+  "publication": "Own synthetic fixtures/source and clean hashes only; original inputs/provider output/decompilation/private raw artifacts remain ignored"
+}
