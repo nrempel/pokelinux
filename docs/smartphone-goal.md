@@ -269,6 +269,16 @@ diagnostic groups. These are distinct from full incoming Binder/session/Qt
 composition and production producer/ACK/reset. See [read isolation](native-messages-receive-isolation.md)
 and [combined local-history replay](native-session-receive-read-combined.md).
 
+Frozen incoming callbacks now compose original Hyprland, the owned-focus actor,
+the writer/readonly split and normal Qt in an actual ARM64 Binder guest. Two
+epochs qualify six narrow checks each; their full close/reopen matrices fail
+because cold Qt reopening expires the original100ms lease. A separate source-loss
+epoch passes eight groups, preserving the same receiver through held-read source
+unload/callback4 and fencing actual peer death. Normal conversation visibility
+is separate from database body evidence. No source revival, reattachment,
+production modem or hardware completion follows. See
+[incoming/session composition](native-incoming-session-installed-app.md).
+
 Native display containment and supervised setup now pass separate original ARM
 checkpoints:15 protocol/normal Qt identity observations and22 owner observations
 across six epochs after an executed held-helper red. Rust uses the original

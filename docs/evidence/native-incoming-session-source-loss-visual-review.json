@@ -1,0 +1,185 @@
+{
+  "scope": "separate manual review of normal Qt captures from dedicated SourceLoss epochs, including preserved harness failures",
+  "capture_count": 22,
+  "distinct_hashes": 11,
+  "screens": [
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-source-loss-green-arm-v1/green-background-incoming-denied.png",
+      "sha256": "8a42b48b19931a48443dd5232aeab76d5794ace1aacc75de28c727a86ca4efc2",
+      "visually_reviewed": true,
+      "observed": "Messages access denied; no conversation",
+      "qualification": "dedicated source-loss epoch; no close/reopen or body/secure presentation claim",
+      "attempt_passed": false
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-source-loss-green-arm-v1/green-focused-independent-grant-history.png",
+      "sha256": "2d1244cf9b8d50b9e975c83c5d08658714e4c64a61da0cb96aae7d1183e1a708",
+      "visually_reviewed": true,
+      "observed": "+15550100 conversation/local-history and unavailable-modem status; literal body not visible",
+      "qualification": "dedicated source-loss epoch; no close/reopen or body/secure presentation claim",
+      "attempt_passed": false
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-source-loss-green-arm-v1/green-grant-restored.png",
+      "sha256": "2d1244cf9b8d50b9e975c83c5d08658714e4c64a61da0cb96aae7d1183e1a708",
+      "visually_reviewed": true,
+      "observed": "+15550100 conversation/local-history and unavailable-modem status; literal body not visible",
+      "qualification": "dedicated source-loss epoch; no close/reopen or body/secure presentation claim",
+      "attempt_passed": false
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-source-loss-green-arm-v1/green-grant-revoked.png",
+      "sha256": "25cf47032548df09424c65e74184bb1c693bc671355cbe937034e4f5b4b710a5",
+      "visually_reviewed": true,
+      "observed": "Messages access denied; no conversation",
+      "qualification": "dedicated source-loss epoch; no close/reopen or body/secure presentation claim",
+      "attempt_passed": false
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-source-loss-green-arm-v1/green-refocused-two-slot-history.png",
+      "sha256": "c4fa0cfbd89ff7a57c0987ac97157cc6a5a26c60348a39acc6e074df6b608a96",
+      "visually_reviewed": true,
+      "observed": "+15550100 conversation/local-history and unavailable-modem status; literal body not visible",
+      "qualification": "dedicated source-loss epoch; no close/reopen or body/secure presentation claim",
+      "attempt_passed": false
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-source-loss-green-arm-v1/green-unknown-root-controls-denied.png",
+      "sha256": "84c7aa8dcff9d5b391c90554b1d560807a07bbdc64cf655f4ad0ccd3f072a181",
+      "visually_reviewed": true,
+      "observed": "Messages access denied; no conversation",
+      "qualification": "dedicated source-loss epoch; no close/reopen or body/secure presentation claim",
+      "attempt_passed": false
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-source-loss-green-arm-v1/green-unknown-source-denied.png",
+      "sha256": "84c7aa8dcff9d5b391c90554b1d560807a07bbdc64cf655f4ad0ccd3f072a181",
+      "visually_reviewed": true,
+      "observed": "Messages access denied; no conversation",
+      "qualification": "dedicated source-loss epoch; no close/reopen or body/secure presentation claim",
+      "attempt_passed": false
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-source-loss-green-arm-v2/green-background-incoming-denied.png",
+      "sha256": "1507085a49579dc806ea1f40d37ab375362f48930179b737120381b85ce135f8",
+      "visually_reviewed": true,
+      "observed": "Messages access denied; no conversation",
+      "qualification": "dedicated source-loss epoch; no close/reopen or body/secure presentation claim",
+      "attempt_passed": false
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-source-loss-green-arm-v2/green-focused-independent-grant-history.png",
+      "sha256": "6ada85905fc8ada057530be842fb53f5f96266c48e44ddf5bf6a46a1ee312b99",
+      "visually_reviewed": true,
+      "observed": "+15550100 conversation/local-history and unavailable-modem status; literal body not visible",
+      "qualification": "dedicated source-loss epoch; no close/reopen or body/secure presentation claim",
+      "attempt_passed": false
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-source-loss-green-arm-v2/green-grant-restored.png",
+      "sha256": "6ada85905fc8ada057530be842fb53f5f96266c48e44ddf5bf6a46a1ee312b99",
+      "visually_reviewed": true,
+      "observed": "+15550100 conversation/local-history and unavailable-modem status; literal body not visible",
+      "qualification": "dedicated source-loss epoch; no close/reopen or body/secure presentation claim",
+      "attempt_passed": false
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-source-loss-green-arm-v2/green-grant-revoked.png",
+      "sha256": "fb6e487d2a9a4539a66d0b7fc6e92cbb9914104f40df4c8d9d970b3916cdd00b",
+      "visually_reviewed": true,
+      "observed": "Messages access denied; no conversation",
+      "qualification": "dedicated source-loss epoch; no close/reopen or body/secure presentation claim",
+      "attempt_passed": false
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-source-loss-green-arm-v2/green-refocused-two-slot-history.png",
+      "sha256": "49c012fc1f3d6c6af3bcdb38b9da2a83c93adfc47efc161be605665f4f5b713d",
+      "visually_reviewed": true,
+      "observed": "+15550100 conversation/local-history and unavailable-modem status; literal body not visible",
+      "qualification": "dedicated source-loss epoch; no close/reopen or body/secure presentation claim",
+      "attempt_passed": false
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-source-loss-green-arm-v2/green-unknown-root-controls-denied.png",
+      "sha256": "fb6e487d2a9a4539a66d0b7fc6e92cbb9914104f40df4c8d9d970b3916cdd00b",
+      "visually_reviewed": true,
+      "observed": "Messages access denied; no conversation",
+      "qualification": "dedicated source-loss epoch; no close/reopen or body/secure presentation claim",
+      "attempt_passed": false
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-source-loss-green-arm-v2/green-unknown-source-denied.png",
+      "sha256": "fb6e487d2a9a4539a66d0b7fc6e92cbb9914104f40df4c8d9d970b3916cdd00b",
+      "visually_reviewed": true,
+      "observed": "Messages access denied; no conversation",
+      "qualification": "dedicated source-loss epoch; no close/reopen or body/secure presentation claim",
+      "attempt_passed": false
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-source-loss-green-arm-v3/green-background-incoming-denied.png",
+      "sha256": "1507085a49579dc806ea1f40d37ab375362f48930179b737120381b85ce135f8",
+      "visually_reviewed": true,
+      "observed": "Messages access denied; no conversation",
+      "qualification": "dedicated source-loss epoch; no close/reopen or body/secure presentation claim",
+      "attempt_passed": true
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-source-loss-green-arm-v3/green-focused-independent-grant-history.png",
+      "sha256": "6ada85905fc8ada057530be842fb53f5f96266c48e44ddf5bf6a46a1ee312b99",
+      "visually_reviewed": true,
+      "observed": "+15550100 conversation/local-history and unavailable-modem status; literal body not visible",
+      "qualification": "dedicated source-loss epoch; no close/reopen or body/secure presentation claim",
+      "attempt_passed": true
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-source-loss-green-arm-v3/green-grant-restored.png",
+      "sha256": "6ada85905fc8ada057530be842fb53f5f96266c48e44ddf5bf6a46a1ee312b99",
+      "visually_reviewed": true,
+      "observed": "+15550100 conversation/local-history and unavailable-modem status; literal body not visible",
+      "qualification": "dedicated source-loss epoch; no close/reopen or body/secure presentation claim",
+      "attempt_passed": true
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-source-loss-green-arm-v3/green-grant-revoked.png",
+      "sha256": "fb6e487d2a9a4539a66d0b7fc6e92cbb9914104f40df4c8d9d970b3916cdd00b",
+      "visually_reviewed": true,
+      "observed": "Messages access denied; no conversation",
+      "qualification": "dedicated source-loss epoch; no close/reopen or body/secure presentation claim",
+      "attempt_passed": true
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-source-loss-green-arm-v3/green-refocused-two-slot-history.png",
+      "sha256": "49c012fc1f3d6c6af3bcdb38b9da2a83c93adfc47efc161be605665f4f5b713d",
+      "visually_reviewed": true,
+      "observed": "+15550100 conversation/local-history and unavailable-modem status; literal body not visible",
+      "qualification": "dedicated source-loss epoch; no close/reopen or body/secure presentation claim",
+      "attempt_passed": true
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-source-loss-green-arm-v3/green-terminal-session-loss-future-incoming-denied.png",
+      "sha256": "d4011a4594ebfb19a5f079bd37714c024b22aa49699fe1773c3465980619e829",
+      "visually_reviewed": true,
+      "observed": "Messages unavailable; no conversation; literal body not visible",
+      "qualification": "dedicated source-loss epoch; no close/reopen or body/secure presentation claim",
+      "attempt_passed": true
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-source-loss-green-arm-v3/green-unknown-root-controls-denied.png",
+      "sha256": "4364bfd4eb2e3dca2e7769756c2abd34a705fc3832c035dd4e0a084a9bb0a3e9",
+      "visually_reviewed": true,
+      "observed": "Messages access denied; no conversation",
+      "qualification": "dedicated source-loss epoch; no close/reopen or body/secure presentation claim",
+      "attempt_passed": true
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-source-loss-green-arm-v3/green-unknown-source-denied.png",
+      "sha256": "4364bfd4eb2e3dca2e7769756c2abd34a705fc3832c035dd4e0a084a9bb0a3e9",
+      "visually_reviewed": true,
+      "observed": "Messages access denied; no conversation",
+      "qualification": "dedicated source-loss epoch; no close/reopen or body/secure presentation claim",
+      "attempt_passed": true
+    }
+  ],
+  "body_visible": false,
+  "phone_accessed": false
+}

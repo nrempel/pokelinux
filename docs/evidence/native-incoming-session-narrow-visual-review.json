@@ -1,0 +1,128 @@
+{
+  "scope": "independent manual review of actual normal Qt captures; all10 distinct hashes inspected, matching duplicate files inherit the same byte-bound observation",
+  "screens": [
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-boundary-red-arm-v1/red-unknown-source-denied.png",
+      "sha256": "84c7aa8dcff9d5b391c90554b1d560807a07bbdc64cf655f4ad0ccd3f072a181",
+      "visually_reviewed": true,
+      "observed": "Messages access denied; no conversation",
+      "qualification": "normal production320x240 capture; no body/secure-presentation claim"
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-boundary-red-arm-v1/red-unknown-source-root-controls-incoming-history.png",
+      "sha256": "f590d17f7595816f5284380ed3d533b1dc2702d7d1464481eea01a8d16154ec8",
+      "visually_reviewed": true,
+      "observed": "+15550100 conversation and local-history/unavailable modem status; literal body not visible",
+      "qualification": "normal production320x240 capture; no body/secure-presentation claim"
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-composed-green-arm-v1/green-background-incoming-denied.png",
+      "sha256": "207ce9ed4227c2f826e9c1987d11775c49eef237e349eef69ac077c900c8911f",
+      "visually_reviewed": true,
+      "observed": "Messages access denied; no conversation",
+      "qualification": "normal production320x240 capture; no body/secure-presentation claim"
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-composed-green-arm-v1/green-focused-independent-grant-history.png",
+      "sha256": "3e18f2f4a869ac30943ec8752077185a3c9d7d72e08274e0e6c61e3d5d3fc1d3",
+      "visually_reviewed": true,
+      "observed": "+15550100 conversation and local-history/unavailable modem status; literal body not visible",
+      "qualification": "normal production320x240 capture; no body/secure-presentation claim"
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-composed-green-arm-v1/green-grant-restored.png",
+      "sha256": "3e18f2f4a869ac30943ec8752077185a3c9d7d72e08274e0e6c61e3d5d3fc1d3",
+      "visually_reviewed": true,
+      "observed": "+15550100 conversation and local-history/unavailable modem status; literal body not visible",
+      "qualification": "normal production320x240 capture; no body/secure-presentation claim"
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-composed-green-arm-v1/green-grant-revoked.png",
+      "sha256": "2d2c389bca98e1dbbb3a660155cbdce40679f405d5c63a54eedf9680224183a7",
+      "visually_reviewed": true,
+      "observed": "Messages access denied; no conversation",
+      "qualification": "normal production320x240 capture; no body/secure-presentation claim"
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-composed-green-arm-v1/green-refocused-two-slot-history.png",
+      "sha256": "6f571a6f383a53bd12a55ab2a0764fd82d29e3e17991e3476697df144fc17cf8",
+      "visually_reviewed": true,
+      "observed": "+15550100 conversation and local-history/unavailable modem status; literal body not visible",
+      "qualification": "normal production320x240 capture; no body/secure-presentation claim"
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-composed-green-arm-v1/green-reopened-same-receiver-history.png",
+      "sha256": "4cda01bab2edff65f9158792a1a959ba63acd1dc2c535bae5966c93b08869fbf",
+      "visually_reviewed": true,
+      "observed": "Messages access denied; no conversation",
+      "qualification": "v1 reopened group disqualified: denied despite runner boolean"
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-composed-green-arm-v1/green-unknown-root-controls-denied.png",
+      "sha256": "2d2c389bca98e1dbbb3a660155cbdce40679f405d5c63a54eedf9680224183a7",
+      "visually_reviewed": true,
+      "observed": "Messages access denied; no conversation",
+      "qualification": "normal production320x240 capture; no body/secure-presentation claim"
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-composed-green-arm-v1/green-unknown-source-denied.png",
+      "sha256": "2d2c389bca98e1dbbb3a660155cbdce40679f405d5c63a54eedf9680224183a7",
+      "visually_reviewed": true,
+      "observed": "Messages access denied; no conversation",
+      "qualification": "normal production320x240 capture; no body/secure-presentation claim"
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-composed-green-arm-v2/green-background-incoming-denied.png",
+      "sha256": "8a42b48b19931a48443dd5232aeab76d5794ace1aacc75de28c727a86ca4efc2",
+      "visually_reviewed": true,
+      "observed": "Messages access denied; no conversation",
+      "qualification": "normal production320x240 capture; no body/secure-presentation claim"
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-composed-green-arm-v2/green-focused-independent-grant-history.png",
+      "sha256": "f590d17f7595816f5284380ed3d533b1dc2702d7d1464481eea01a8d16154ec8",
+      "visually_reviewed": true,
+      "observed": "+15550100 conversation and local-history/unavailable modem status; literal body not visible",
+      "qualification": "normal production320x240 capture; no body/secure-presentation claim"
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-composed-green-arm-v2/green-grant-restored.png",
+      "sha256": "f590d17f7595816f5284380ed3d533b1dc2702d7d1464481eea01a8d16154ec8",
+      "visually_reviewed": true,
+      "observed": "+15550100 conversation and local-history/unavailable modem status; literal body not visible",
+      "qualification": "normal production320x240 capture; no body/secure-presentation claim"
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-composed-green-arm-v2/green-grant-revoked.png",
+      "sha256": "25cf47032548df09424c65e74184bb1c693bc671355cbe937034e4f5b4b710a5",
+      "visually_reviewed": true,
+      "observed": "Messages access denied; no conversation",
+      "qualification": "normal production320x240 capture; no body/secure-presentation claim"
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-composed-green-arm-v2/green-refocused-two-slot-history.png",
+      "sha256": "2901f730f6913025a852a8e77a94b6ff3fc0ffd6a9b7461e1d50773015405936",
+      "visually_reviewed": true,
+      "observed": "+15550100 conversation and local-history/unavailable modem status; literal body not visible",
+      "qualification": "normal production320x240 capture; no body/secure-presentation claim"
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-composed-green-arm-v2/green-unknown-root-controls-denied.png",
+      "sha256": "84c7aa8dcff9d5b391c90554b1d560807a07bbdc64cf655f4ad0ccd3f072a181",
+      "visually_reviewed": true,
+      "observed": "Messages access denied; no conversation",
+      "qualification": "normal production320x240 capture; no body/secure-presentation claim"
+    },
+    {
+      "path": "artifacts/native-incoming-session-app/incoming-session-composed-green-arm-v2/green-unknown-source-denied.png",
+      "sha256": "84c7aa8dcff9d5b391c90554b1d560807a07bbdc64cf655f4ad0ccd3f072a181",
+      "visually_reviewed": true,
+      "observed": "Messages access denied; no conversation",
+      "qualification": "normal production320x240 capture; no body/secure-presentation claim"
+    }
+  ],
+  "capture_count": 17,
+  "distinct_hashes": 10,
+  "body_visible": false,
+  "phone_accessed": false
+}

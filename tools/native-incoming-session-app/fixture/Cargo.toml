@@ -1,0 +1,19 @@
+[package]
+name = "native-incoming-session-app-fixture"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[workspace]
+
+[dependencies]
+pokelinux-lifecycle = { path = "../../../native-lifecycle" }
+pokelinux-messages = { path = "../../../native-messages" }
+pokelinux-session = { path = "../../../native-session" }
+native-messages-incoming-binder-fixture = { path = "../../native-messages-incoming-binder/fixture" }
+rustix = { version = "=1.1.5", features = ["net", "process", "fs"] }
+serde_json = "=1.0.154"
+
+[[bin]]
+name = "messages-session-incoming-fixture"
+path = "src/bin/service.rs"

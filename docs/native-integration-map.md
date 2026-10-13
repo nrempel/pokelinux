@@ -44,7 +44,7 @@ appearance ACL setup remain explicit test infrastructure.
    The [owned read split](native-messages-receive-isolation.md) preserves the same
    qualified receiver through close, expiry and actual SQLite-lock contention.
    Exact-occurrence permits and original deadlines still govern projection;
-   production attachment and every app/session composition remain separate.
+   production attachment and successful cold app/session reopen remain separate.
    No production ACK/send is enabled.
 3. Complete receipt retention/capacity and cold-backlog availability. The
    [bounded enumeration](native-messages-enumeration.md) now qualifies every ID
@@ -76,7 +76,10 @@ appearance ACL setup remain explicit test infrastructure.
    The [display primitive](native-display-containment.md) now qualifies original
    privileged bind filtering and supervised SDK ownership separately. Compose its
    restricted listener with the current actor and exact launched app generation.
-   Full incoming Binder/session/Qt composition remains next. Actual locked
+   [Incoming/session/normal Qt](native-incoming-session-installed-app.md) now
+   qualifies six narrow groups in each of two epochs and eight separate source-loss
+   groups. Both full close/reopen matrices fail cold reopening under the unchanged
+   lease; successful current-source reopen remains next. Actual locked
    graphics can expire the original100ms lease and restoration remains unavailable.
    Protected procfs/common namespaces and matched Pixel kernel remain gates.
 5. Add one authorized outbound operation through the same authority to the frozen

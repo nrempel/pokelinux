@@ -385,6 +385,19 @@ whole Stop. Normal conversation screenshots and diagnostic literal-body evidence
 remain separate. See `native-session-receive-read-combined.md`. This local-history
 replay does not attach Binder; the incoming proof remains independent.
 
+A separate frozen incoming/session/normal-Qt composition now attaches authored V3
+callbacks to the same writer/readonly and owned-focus actor. Two epochs qualify
+six narrow checks each, including background commit without an app and actual held
+read plus normal close/reap with receiving preserved. Both full matrices fail on
+cold Qt reopening under the unchanged100ms source lease. A later source-loss-only
+epoch passes eight groups: actual plugin unload denies reads and reaps the held
+reader while the same receiver commits callback4; actual retained Binder peer
+death then fences receiving. No source revival or reattachment occurs. These
+runtime selections remain based on518954b; normal conversation screenshots,
+database bodies and failed reopen groups retain separate scope. See
+`native-incoming-session-installed-app.md`. Cold availability remains offline work,
+alongside production transport/ACK/reset, privileged display and trusted restore.
+
 Native display containment now uses open-source Rust security-context-v1 bindings
 through the unchanged original compositor filter. Fifteen actual ARM protocol/
 normal Qt identity observations and22 supervised-owner observations in six ARM
@@ -404,7 +417,7 @@ and Pixel qualification remain open. See `native-display-containment.md`.
    history recovery never permits implicit backend reattachment. The transferred focus-peer handle now passes host/ARM interface checks; the joint
    original-compositor/current-authority/installed-app local-history path now passes separately. A fresh
    local-history replay combines the reader/writer split with that path. Next qualify
-   actual incoming Binder/session/Qt composition and the restricted Wayland listener
+   successful cold incoming/session/Qt reopen and the restricted Wayland listener
    with exact current app-generation ownership, then trusted lock admission/restore,
    notifications and wake. Producer/ACK/reset,
    sending and hardware gates remain separate. See `native-integration-map.md`,
