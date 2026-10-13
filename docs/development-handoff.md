@@ -256,16 +256,17 @@ See `native-theme.md` and `native-theme-worker.md`.
 
 ## Next work
 
-1. Recover and test the actual vendor cleanup/reset and registration-overlap
+1. Complete the installed native Messages service/window vertical slice first,
+   composing receipt/inbox storage with the single current lifecycle authority
+   and service supervision. Authenticate current read authorization at the actual
+   bounded reply send, including delayed/EAGAIN attempts; qualify closed-window
+   projection, local recovery, lock/revoke and distinct-UID installed Omarchy UI.
+   See `native-integration-map.md`. Production modem identity and hardware stay
+   separate from that local service qualification.
+2. Recover and test the actual vendor cleanup/reset and registration-overlap
    contract. `clear` is one-way. Do not remove uncertainty markers, retry, use a
    recycled numeric registration ID for delayed cleanup, or call local reaping
    vendor cleanup. Keep registration unavailable without proven remote recovery.
-2. Complete the installed native Messages service/window vertical slice first,
-   composing receipt/inbox storage with the single current lifecycle authority
-   and service supervision. Define authenticated permissions and observer IPC with process/session
-   fencing, bounded output, safe durable admission and bounded diagnostics.
-   Qualify ARM64 Binder and matched Pixel kernel/policy separately; the owned
-   ARM64 system-QEMU process gate now passes.
 3. Extend the existing single-attempt request transport to durable operation
    receipts, safe subsequent operations, assembly candidate deadlines, notification
    watches and aggregate budgets. Recover producer identity before enabling fragmented semantic output.

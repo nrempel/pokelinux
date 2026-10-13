@@ -169,3 +169,9 @@ and failure before uncertain child ownership is relinquished. Installed native
 service/app composition in that session, complete desktop provisioning and physical
 rendering remain separate gates. See [appearance](native-theme.md) and
 [font worker](native-theme-worker.md).
+
+The [current integration map](native-integration-map.md) separates existing
+components from installed service/app composition and concrete remaining backend
+evidence. Native Messages is the next composed path; contacts, notifications,
+media, settings and deployment remain offline implementation work as well as
+later hardware qualification.
