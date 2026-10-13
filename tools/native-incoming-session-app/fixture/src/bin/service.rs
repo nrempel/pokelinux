@@ -31,6 +31,12 @@ struct TracedObserver {
     maximum_sample_gap: u64,
 }
 impl SessionProvider for TracedObserver {
+    fn stop(&mut self) {
+        SessionProvider::stop(&mut self.observer);
+    }
+    fn occupied(&self) -> bool {
+        SessionProvider::occupied(&self.observer)
+    }
     fn poll(&mut self) -> io::Result<Option<Snapshot>> {
         let reply = SessionProvider::poll(&mut self.observer);
         match &reply {

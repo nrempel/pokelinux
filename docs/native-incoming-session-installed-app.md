@@ -148,3 +148,13 @@ and its [visual review](evidence/native-incoming-session-source-loss-visual-revi
 bind all three dedicated attempts, preserve their failures, and select only v3 as
 the8-group source-loss pass. This case does not qualify successful Qt reopen,
 normal literal body visualization, a production modem backend or any phone.
+
+## Later required source lifecycle API
+
+The selected runtime epochs above retain their518954b core and original service
+ELF. A later actor change requires every session provider to implement local
+`stop` and owned-resource `occupied`. This incoming wrapper now delegates both
+to its plain observer. An actual missing-method compile failure precedes the
+delegation's clean build; this is a current API check, without replaying the
+historical incoming/session/Qt results or reclassifying their frozen66 hashes.
+See [owned display composition](native-session-display-composition.md).

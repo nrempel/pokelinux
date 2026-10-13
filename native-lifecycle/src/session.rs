@@ -55,4 +55,8 @@ pub struct Snapshot {
 /// the actor retains policy and must match its exact launched app pidfd.
 pub trait Provider {
     fn poll(&mut self) -> io::Result<Option<Snapshot>>;
+    /// Fence this source's local admission and signal any owned helper.
+    fn stop(&mut self);
+    /// True until owned helpers have actually been reaped, even after failure.
+    fn occupied(&self) -> bool;
 }

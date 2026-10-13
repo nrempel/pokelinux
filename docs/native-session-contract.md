@@ -20,8 +20,11 @@ retained-kernel identity, trusted locker containment, secure presentation and
 hardware remain separate gates. The later [installed app](native-session-installed-app.md)
 and [current read split](native-session-receive-read-combined.md) qualify a joint
 local-history path. [Display containment](native-display-containment.md) separately
-qualifies the restricted listener and supervised SDK child; actor/app-generation
-composition and production privileged-runtime ownership remain open. The static inspection's
+qualifies the restricted listener and supervised SDK child. The
+[service-epoch actor composition](native-session-display-composition.md) now owns
+source stop/occupied and qualifies exact app-focus/independent-grant data through
+that listener. Per-app context generations/relaunch and production privileged
+runtime ownership remain open. The static inspection's
 unexecuted case records describe its original checkpoint, not these later runs.
 
 The existing [lifecycle authority](native-lifecycle.md) and

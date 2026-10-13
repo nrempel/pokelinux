@@ -405,9 +405,21 @@ epochs pass. A held-helper responsiveness red ran before the native supervisor.
 The parent never dispatches the SDK;128MiB/64FD/core0 limits and kernel parent-death
 kill precede setup. Original initialization deadlines, current source/child watches,
 queued Ready fencing and actual reap ownership stay separate from remote close
-processing. Current actor/app-generation composition, production privileged runtime
+processing. Per-app context generations/relaunch, production privileged runtime
 and Quickshell/PAM provisioning, complete data/protocol restrictions, secure frames
 and Pixel qualification remain open. See `native-display-containment.md`.
+
+A new service-epoch display composition now joins the supervised Rust SDK child
+to the current session actor. Two executed integration reds precede required source
+stop/occupied, admission fencing and actual reaping under the same original actor
+cleanup deadline. Two original ARM/normal Qt epochs pass25 groups: filtered binds,
+actual focus plus independent grants, held-policy Stop and held-SDK death with
+writer preservation. Current host observer/lifecycle checks pass26+8 cases.
+An independent syscall-traced preflight red establishes SDK fencing after Messages
+drain; the fixture correction fences first and shares one fallback deadline.
+Runtime selections and current API build adaptations remain distinct. See
+`native-session-display-composition.md`. Per-app display contexts, production
+privileged source/configuration, PAM/restore and secure presentation remain open.
 
 ## Next work
 
@@ -417,8 +429,8 @@ and Pixel qualification remain open. See `native-display-containment.md`.
    history recovery never permits implicit backend reattachment. The transferred focus-peer handle now passes host/ARM interface checks; the joint
    original-compositor/current-authority/installed-app local-history path now passes separately. A fresh
    local-history replay combines the reader/writer split with that path. Next qualify
-   successful cold incoming/session/Qt reopen and the restricted Wayland listener
-   with exact current app-generation ownership, then trusted lock admission/restore,
+   successful cold incoming/session/Qt reopen and per-app restricted display context
+   generations/relaunch beyond the qualified service-epoch listener, then trusted lock admission/restore,
    notifications and wake. Producer/ACK/reset,
    sending and hardware gates remain separate. See `native-integration-map.md`,
    `native-messages-service.md` and `native-messages-incoming.md`.

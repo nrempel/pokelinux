@@ -1,0 +1,73 @@
+{
+  "scope": "Root independent visual review of final selected1a4d normal composition replays",
+  "capture_count": 9,
+  "distinct_hashes": 5,
+  "screens": [
+    {
+      "path": "artifacts/native-session-display-app/original-composite-held-policy-final-green-1/normal-composite-before-source.png",
+      "sha256": "6aadd2428e46c71c233a80692812d2a1b8a29abab969a34d3ba81124d0f672c2",
+      "visually_reviewed": true,
+      "observed": "Messages access denied; no conversation",
+      "scope": "actual normal Qt frame; no secure presentation/immediate queued-byte withdrawal claim"
+    },
+    {
+      "path": "artifacts/native-session-display-app/original-composite-held-policy-final-green-1/normal-composite-focus-grant-conversation.png",
+      "sha256": "e62adc62a6aded3549a9a7834b03d4f4363af0719b851a1d96fe9d282ad6a307",
+      "visually_reviewed": true,
+      "observed": "+15550100 conversation and unavailable-modem status; literal body not visible",
+      "scope": "actual normal Qt frame; no secure presentation/immediate queued-byte withdrawal claim"
+    },
+    {
+      "path": "artifacts/native-session-display-app/original-composite-held-policy-final-green-1/normal-composite-independent-grant-restored.png",
+      "sha256": "e62adc62a6aded3549a9a7834b03d4f4363af0719b851a1d96fe9d282ad6a307",
+      "visually_reviewed": true,
+      "observed": "+15550100 conversation and unavailable-modem status; literal body not visible",
+      "scope": "actual normal Qt frame; no secure presentation/immediate queued-byte withdrawal claim"
+    },
+    {
+      "path": "artifacts/native-session-display-app/original-composite-held-policy-final-green-1/normal-composite-independent-grant-revoked.png",
+      "sha256": "f3199c2f271fcbaa2fea0cac6a3f1ea8343a2d3d315984140bb26b8d65180715",
+      "visually_reviewed": true,
+      "observed": "Messages access denied; no conversation",
+      "scope": "actual normal Qt frame; no secure presentation/immediate queued-byte withdrawal claim"
+    },
+    {
+      "path": "artifacts/native-session-display-app/original-composite-held-sdk-loss-final-green-1/normal-composite-before-source.png",
+      "sha256": "85ac7457c9dbdc26ec5183a117f6ac11c6f27647e1fe033d732282f4d564a529",
+      "visually_reviewed": true,
+      "observed": "Messages access denied; no conversation",
+      "scope": "actual normal Qt frame; no secure presentation/immediate queued-byte withdrawal claim"
+    },
+    {
+      "path": "artifacts/native-session-display-app/original-composite-held-sdk-loss-final-green-1/normal-composite-focus-grant-conversation.png",
+      "sha256": "e62adc62a6aded3549a9a7834b03d4f4363af0719b851a1d96fe9d282ad6a307",
+      "visually_reviewed": true,
+      "observed": "+15550100 conversation and unavailable-modem status; literal body not visible",
+      "scope": "actual normal Qt frame; no secure presentation/immediate queued-byte withdrawal claim"
+    },
+    {
+      "path": "artifacts/native-session-display-app/original-composite-held-sdk-loss-final-green-1/normal-composite-held-SDK-death-denied.png",
+      "sha256": "4d3bcb79a214aa7534a6d14c8ff3bcd6fa5839cd9182f76c1792a67868effe7e",
+      "visually_reviewed": true,
+      "observed": "Messages unavailable; no conversation",
+      "scope": "actual normal Qt frame; no secure presentation/immediate queued-byte withdrawal claim"
+    },
+    {
+      "path": "artifacts/native-session-display-app/original-composite-held-sdk-loss-final-green-1/normal-composite-independent-grant-restored.png",
+      "sha256": "e62adc62a6aded3549a9a7834b03d4f4363af0719b851a1d96fe9d282ad6a307",
+      "visually_reviewed": true,
+      "observed": "+15550100 conversation and unavailable-modem status; literal body not visible",
+      "scope": "actual normal Qt frame; no secure presentation/immediate queued-byte withdrawal claim"
+    },
+    {
+      "path": "artifacts/native-session-display-app/original-composite-held-sdk-loss-final-green-1/normal-composite-independent-grant-revoked.png",
+      "sha256": "f3199c2f271fcbaa2fea0cac6a3f1ea8343a2d3d315984140bb26b8d65180715",
+      "visually_reviewed": true,
+      "observed": "Messages access denied; no conversation",
+      "scope": "actual normal Qt frame; no secure presentation/immediate queued-byte withdrawal claim"
+    }
+  ],
+  "normal_literal_body_qualified": false,
+  "ui_queue_withdrawal_qualified": false,
+  "secure_presentation_qualified": false
+}

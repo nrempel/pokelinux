@@ -265,6 +265,16 @@ fn receive(fd: &OwnedFd) -> io::Result<Option<SourcePacket>> {
 }
 
 impl pokelinux_lifecycle::session::Provider for Observer {
+    fn stop(&mut self) {
+        self.failed = true;
+        self.current = None;
+        self.focus = None;
+        self.fd = None;
+    }
+    fn occupied(&self) -> bool {
+        // The compositor is externally owned. Only retained local handles exist.
+        false
+    }
     fn poll(&mut self) -> io::Result<Option<pokelinux_lifecycle::session::Snapshot>> {
         Observer::poll(self)?;
         Ok(self

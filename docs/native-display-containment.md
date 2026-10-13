@@ -7,12 +7,13 @@ identity. The Rust supervisor owns one limited SDK process and keeps steady-stat
 status and Stop independent of Wayland read/dispatch.
 
 This is a supervised primitive and an original-compositor integration checkpoint.
-The current Messages lifecycle actor does not yet consume it. Production locker
+The later [actor composition](native-session-display-composition.md) now consumes
+it through required source stop/occupancy and one service-epoch context. Production locker
 admission, PAM restoration, app-generation lifetime, secure frames and Pixel
 deployment remain separate requirements. No physical phone was accessed.
 
 [Clean provenance](evidence/native-display-containment-provenance.json) pins the
-current compiled sources and284 retained proof files. Original protocol/Qt,
+selected checkpoint sources and284 retained proof files. Original protocol/Qt,
 supervisor and host component selections remain distinct.
 
 ## Original source and protocol
@@ -173,8 +174,8 @@ client filtering retain their separate meanings.
 
 ## Remaining integration
 
-Next compose the restricted listener and supervised owner with the existing
-current-authority actor and its exact launched app generation. Root must own
+The service-epoch actor composition now passes separately. Next join per-app
+display contexts and relaunch to exact launched app generations. Root must own
 source/executable/listener provisioning and app UID isolation, deny direct
 privileged runtime access, and retain app/context/resource lifetimes together.
 Existing accepted clients and previously released data require their own

@@ -1,0 +1,17 @@
+{
+  "review": "Visual inspection of actual original-compositor screencopy frames",
+  "epoch": "original-composite-held-policy-stop-resource-red-1",
+  "scope": "Unchanged normal production Qt conversation capture only, through filtered listener; literal body not qualified",
+  "frames": {
+    "normal-composite-before-source.png": {
+      "sha256": "ef5c81521357c000dfda903d1137dc2925070bbdc4c60b1877426c157e824596",
+      "observed": "Messages access denied; no local conversation phone visible"
+    },
+    "normal-composite-focus-grant-conversation.png": {
+      "sha256": "e62adc62a6aded3549a9a7834b03d4f4363af0719b851a1d96fe9d282ad6a307",
+      "observed": "Local receipt history; modem receive and send unavailable; +15550100 conversation visible"
+    }
+  },
+  "conversation_visible": true,
+  "literal_body_qualified": false
+}

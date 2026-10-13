@@ -1,0 +1,56 @@
+{
+  "review": "Visual inspection of actual original-compositor screencopy frames",
+  "scope": "Unchanged normal production Qt local conversation and current denial through restricted service-epoch realm; no literal-body or immediate secure-presentation claim",
+  "epochs": {
+    "original-composite-held-policy-stop-green-1": {
+      "frames": {
+        "normal-composite-before-source.png": {
+          "sha256": "383fba2895caadbc54029758d3977c5717eb19a54253409830827d7ba5cf435c",
+          "observed": "Messages access denied; no conversation phone visible"
+        },
+        "normal-composite-focus-grant-conversation.png": {
+          "sha256": "a6a7c6d9d4345a62b1dc3e0fac76a8c546317c20c98ed2ae492a3f043f9cef46",
+          "observed": "Local receipt history and +15550100 conversation visible; modem receive/send unavailable"
+        },
+        "normal-composite-independent-grant-revoked.png": {
+          "sha256": "25cf47032548df09424c65e74184bb1c693bc671355cbe937034e4f5b4b710a5",
+          "observed": "Messages access denied; conversation removed"
+        },
+        "normal-composite-independent-grant-restored.png": {
+          "sha256": "a6a7c6d9d4345a62b1dc3e0fac76a8c546317c20c98ed2ae492a3f043f9cef46",
+          "observed": "Same local +15550100 conversation restored with new independent grant"
+        }
+      },
+      "conversation_visible_when_admitted": true,
+      "conversation_absent_after_revoke": true,
+      "literal_body_qualified": false
+    },
+    "original-composite-held-sdk-loss-green-1": {
+      "frames": {
+        "normal-composite-before-source.png": {
+          "sha256": "1c1000a6f59a21352b51ec677d670eabc01a80e9ff610fc86586a689d6798b98",
+          "observed": "Messages access denied; no conversation phone visible"
+        },
+        "normal-composite-focus-grant-conversation.png": {
+          "sha256": "e62adc62a6aded3549a9a7834b03d4f4363af0719b851a1d96fe9d282ad6a307",
+          "observed": "Local receipt history and +15550100 conversation visible; modem receive/send unavailable"
+        },
+        "normal-composite-independent-grant-revoked.png": {
+          "sha256": "f3199c2f271fcbaa2fea0cac6a3f1ea8343a2d3d315984140bb26b8d65180715",
+          "observed": "Messages access denied; conversation removed"
+        },
+        "normal-composite-independent-grant-restored.png": {
+          "sha256": "e62adc62a6aded3549a9a7834b03d4f4363af0719b851a1d96fe9d282ad6a307",
+          "observed": "Same local +15550100 conversation restored with new independent grant"
+        },
+        "normal-composite-held-SDK-death-denied.png": {
+          "sha256": "4d3bcb79a214aa7534a6d14c8ff3bcd6fa5839cd9182f76c1792a67868effe7e",
+          "observed": "Messages unavailable; conversation removed while same accepted normal Qt remains alive"
+        }
+      },
+      "conversation_visible_when_admitted": true,
+      "conversation_absent_after_revoke": true,
+      "literal_body_qualified": false
+    }
+  }
+}

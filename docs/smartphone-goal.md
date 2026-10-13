@@ -283,6 +283,16 @@ Native display containment and supervised setup now pass separate original ARM
 checkpoints:15 protocol/normal Qt identity observations and22 owner observations
 across six epochs after an executed held-helper red. Rust uses the original
 open-source compositor filter and owned SDK child; app metadata remains separate
-from permission. Actor/app-generation composition, production privileged runtime
+from permission. Per-app context generations/relaunch, production privileged runtime
 and PAM ownership, secure frames, wake and Pixel qualification remain open. See
 [display containment](native-display-containment.md).
+
+The current actor now owns source stop and occupancy, composing the restricted
+display listener with original Hyprland and normal Qt. Two integration reds
+precede25 actual ARM observation groups covering independent grants, prompt Stop
+and held-SDK loss while the Messages writer remains independent. A separate actual
+preflight signal-order red precedes fallback fencing correction. Host26 observer
+and eight lifecycle checks remain separate evidence. This checkpoint uses one
+service-epoch display context, with per-app contexts, incoming plus restricted
+display, cold availability, production trusted source/PAM and hardware still open.
+See [owned display composition](native-session-display-composition.md).

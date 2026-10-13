@@ -87,7 +87,7 @@
     "tools/native-incoming-session-app/build.py": "09f23decfa93ae1198f16be7f13f96ed8b366aa5d380092cce44bd2b232d45d9",
     "tools/native-incoming-session-app/fixture/Cargo.lock": "5be8ec2f7c3dd1f140297f04348dc5d9dd3ddd0138cf1416228e51fa4b411fca",
     "tools/native-incoming-session-app/fixture/Cargo.toml": "e01a09216c6d776bc40cfd37d71872d32a2de4d617428a5ac528c3b7bee00446",
-    "tools/native-incoming-session-app/fixture/src/bin/service.rs": "10ee8de5e141a7d5f99018783ddd311068c15567dc2f080e973f8ebd58020b95",
+    "tools/native-incoming-session-app/fixture/src/bin/service.rs": "9e5ab464155fb11b4547fab21807b0d4fd8c78291fb71e9cf865061c920a07ea",
     "tools/native-incoming-session-app/guest.py": "f17688926c800d1386f5835da0dee4909d1b55ca608df74704d825000f43e398",
     "tools/native-incoming-session-app/run.py": "bfba85d14740fbe7945c7f7339dd82357e99c80c65be5b55cadda470821440f6",
     "tools/.gitignore": "862263fa1f46c20f0d1e4dac5ffcc75abd55c08211b2c3864c5f8764b9d87793"
@@ -764,7 +764,7 @@
   },
   "report": {
     "path": "docs/native-incoming-session-installed-app.md",
-    "sha256": "5c9a980602412b1ae4832d06597f05bfb530ef45215d2b4952336878bf67be4b"
+    "sha256": "8a8fc9fbf4a1d55688d83476a1c67387654fbee1cfbd8b056c6e61f1f4db32fe"
   },
   "original_runtime_identity": {
     "verified_after_runs_against_prior_clean_provenance": true,
@@ -828,6 +828,21 @@
       "tools/native-incoming-session-app/README.md": "70aa6b377b77ba2d122a341eafbda5e18bcdce294b12fb8ff8e2831472b47bff",
       "tools/.gitignore": "862263fa1f46c20f0d1e4dac5ffcc75abd55c08211b2c3864c5f8764b9d87793",
       "docs/native-incoming-session-installed-app.md": "5c9a980602412b1ae4832d06597f05bfb530ef45215d2b4952336878bf67be4b"
+    }
+  },
+  "post_selection_source_lifecycle_api": {
+    "scope": "required stop/occupied delegation and build check only; historical runtime sources/ELF/proofs unchanged",
+    "runtime_replay_claimed": false,
+    "core_source_checksums_scope": "selected518954b runtime; not current shared-core hashes after source lifecycle API change",
+    "red": {
+      "path": "artifacts/native-incoming-session-app/source-stop-api-compile-red-v1",
+      "exit_code": 101,
+      "actual_failure": "E0046 missing stop/occupied"
+    },
+    "green": {
+      "path": "artifacts/native-incoming-session-app/source-stop-api-compile-green-v1",
+      "exit_code": 0,
+      "service_elf_sha256": "7cfb0c279728a79aae122c3ebd358d17e9b232dbcb761ca783a07dc723f85b7f"
     }
   }
 }

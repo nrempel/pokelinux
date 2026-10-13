@@ -1,0 +1,17 @@
+{
+  "review": "Visual inspection of actual original-compositor screencopy frames",
+  "epoch": "original-current-actor-direct-realm-red-1",
+  "scope": "Unchanged normal production Qt conversation capture only; literal body not visible/qualified",
+  "frames": {
+    "normal-current-actor-before-source.png": {
+      "sha256": "e76627b817e5a9aa60a7d2146bb9e6131d05ad0d3a3c235e5c5d20a905bd7add",
+      "observed": "Messages access denied; no local conversation phone visible"
+    },
+    "normal-current-actor-focus-grant-conversation.png": {
+      "sha256": "3bbe20494a0390114d108a4b23825594f3082a675ec7352a16f77769d9c35131",
+      "observed": "Local receipt history; modem receive and send unavailable; +15550100 conversation visible"
+    }
+  },
+  "conversation_visible": true,
+  "literal_body_qualified": false
+}

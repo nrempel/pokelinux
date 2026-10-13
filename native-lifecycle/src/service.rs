@@ -177,7 +177,10 @@ fn refresh_session(
         match provider.poll() {
             Ok(Some(s)) => authority.observe_session(s, boottime_ns())?,
             Ok(None) => authority.missing_session()?,
-            Err(_) => authority.fail_session()?,
+            Err(_) => {
+                authority.fail_session()?;
+                provider.stop();
+            }
         }
     }
     Ok(())
@@ -397,6 +400,10 @@ pub fn run_with_messages_and_session(
                 operation = None;
             }
             if stopping || startup_failed {
+                authority.invalidate();
+                if let Some(provider) = session.as_deref_mut() {
+                    provider.stop();
+                }
                 let until = *cleanup_until
                     .get_or_insert_with(|| boottime_ns().saturating_add(2_000_000_000));
                 if boottime_ns() >= until {
@@ -407,6 +414,7 @@ pub fn run_with_messages_and_session(
                 && children.is_empty()
                 && !storage.occupied()
                 && messages.as_deref().is_none_or(|p| !p.occupied())
+                && session.as_deref().is_none_or(|p| !p.occupied())
                 && connections
                     .iter()
                     .all(|c| c.pending.is_none() && c.awaiting.is_none())
@@ -641,6 +649,9 @@ pub fn run_with_messages_and_session(
                                 let clean =
                                     authority.ready() && operation.is_none() && !storage.busy();
                                 authority.invalidate();
+                                if let Some(provider) = session.as_deref_mut() {
+                                    provider.stop();
+                                }
                                 if clean {
                                     let until = boottime_ns().saturating_add(1_000_000_000);
                                     if let Ok(token) = storage.start_shutdown(until) {
@@ -884,6 +895,9 @@ pub fn run_with_messages_and_session(
     })();
     authority.invalidate();
     let until = cleanup_until.unwrap_or_else(|| boottime_ns().saturating_add(2_000_000_000));
+    if let Some(provider) = session.as_deref_mut() {
+        provider.stop();
+    }
     // Fence before every signal, and retain both child sets through actual reaping.
     for (name, child) in &mut children {
         authority.revoke(name);
@@ -894,6 +908,19 @@ pub fn run_with_messages_and_session(
     }
     if !storage.drain_until(until) {
         std::process::abort();
+    }
+    if let Some(provider) = session.as_deref_mut() {
+        while provider.occupied() {
+            if boottime_ns() >= until {
+                std::process::abort();
+            }
+            // Terminal facts still drive resource reaping. An error never
+            // clears occupancy or substitutes for actual helper completion.
+            let _ = provider.poll();
+            if provider.occupied() {
+                std::thread::sleep(std::time::Duration::from_millis(2));
+            }
+        }
     }
     while !children.is_empty() {
         if boottime_ns() >= until {

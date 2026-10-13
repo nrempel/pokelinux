@@ -75,7 +75,10 @@ appearance ACL setup remain explicit test infrastructure.
    ten separately labeled diagnostic groups; see [combined reads](native-session-receive-read-combined.md).
    The [display primitive](native-display-containment.md) now qualifies original
    privileged bind filtering and supervised SDK ownership separately. Compose its
-   restricted listener with the current actor and exact launched app generation.
+   restricted listener with per-app context generations/relaunch. The
+   [service-epoch actor composition](native-session-display-composition.md) now
+   passes25 ARM observations after two integration reds, with source admission
+   fencing and actual SDK reaping within the original actor cleanup budget.
    [Incoming/session/normal Qt](native-incoming-session-installed-app.md) now
    qualifies six narrow groups in each of two epochs and eight separate source-loss
    groups. Both full close/reopen matrices fail cold reopening under the unchanged
