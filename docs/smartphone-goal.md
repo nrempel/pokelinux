@@ -71,10 +71,13 @@ Track each feature as designed, built, component-tested, installed-integration-t
 
 The fixed native Rust PAM worker passes actual wrong/matching password controls
 on an Arch ARM kernel after a closed-worker RED, preserved initial PAM failure
-and original-helper capability comparison. This is a private-conversation component;
-helper-tree supervision, installed broker/containment, actor-owned receipts,
-exact unlock and synced durable restoration remain open. No physical model is
-qualified. See [worker boundary](native-pam-worker.md).
+and original-helper capability comparison. A separate safe Rust
+[worker-tree scope](native-auth-scope.md) passes two actual synthetic cancellation/
+Stop and original-deadline controls with the supervisor held, after a genuine
+detached-descendant RED. Setup-error responsiveness, original PAM+scope composition,
+installed broker/containment, actor-owned receipts, exact unlock and synced durable
+restoration remain open. No physical model is qualified. See
+[worker boundary](native-pam-worker.md).
 
 ## Native messaging checkpoint
 

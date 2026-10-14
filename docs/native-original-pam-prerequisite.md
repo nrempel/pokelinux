@@ -87,7 +87,9 @@ supervisor remains safe Rust. A fixed root-owned service and account resolved to
 UID1000 accept responses only, never caller-selected policy or a success flag.
 The root bootstrap drops directly to protected UID1000 before PAM. Its native
 credential transition and narrow helper capability profile have separate evidence;
-generic helper-tree supervision and production provisioning remain open. Keep the
+the separate [synthetic scope controls](native-auth-scope.md) now pass normal-
+admission cancellation/deadline cleanup. Original-helper composition, parent
+setup-error repair and production provisioning remain open. Keep the
 initial policy authentication-only, including successful `pam_end`. Account,
 credential establishment and session APIs require separate policy and lifecycle.
 
@@ -97,9 +99,10 @@ retires the attempt before killing the scope. Actual waits, final ECHILD and an
 empty cgroup must precede slot release; worker exit alone does not prove helper
 cleanup. Provisioning must prevent workload migration. Buffer typed success until
 clean worker exit and scope closure, within the original absolute BOOTTIME bound.
-Test an actual blocked conversation and a separate synthetic PAM module with
-session-detached child/grandchild; cancellation and Stop must remain responsive.
-These controls are planned, not passing evidence.
+The separate synthetic PAM module with session-detached child/grandchild now
+passes cancellation/Stop and deadline cleanup while its owned supervisor is held.
+Actual original-PAM blocked conversation composition and setup-error responsiveness
+remain unqualified; successful-admission synthetic controls do not establish them.
 
 Bind an attempt and one-shot internal receipt to actor/Source incarnation,
 accepted operation, retained live locker and a lock-admission epoch. Recheck

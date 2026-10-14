@@ -124,8 +124,11 @@ No NIC, host device, phone, host account/PAM or host sysctl change is selected.
 
 A fixed Cargo-feature-gated synthetic ownership worker selects only an isolated
 root-owned test policy under `/run/pokelinux-auth-scope-test`. Its stderr readiness
-records are not authentication authority. It prepares actual blocked PAM, fork,
-setsid and descendant cleanup controls; compilation alone qualifies no cleanup.
+records are not authentication authority. The separate
+[worker-tree scope](native-auth-scope.md) now passes actual synthetic fork/setsid
+Cancel/Stop and original-deadline controls after a detached-descendant RED.
+It does not compose the original wrong/correct authentication worker with scope
+cleanup, and its separately identified parent setup-error path still needs repair.
 
 The per-attempt supervisor must run outside a workload cgroup, admit the worker
 before START/NSS/PAM and retain occupancy through recursive kill plus actual waits

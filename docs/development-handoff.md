@@ -18,6 +18,19 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The safe Rust native authentication scope now passes two actual Arch ARM
+synthetic controls after a preserved wait-scope defect and detached-descendant
+RED. Cancel/Stop and the original15s deadline retire locally while the exact owned
+supervisor is stopped; after resume, recursive termination closes all three actual
+workload waits, ECHILD, EOF and the empty leaf without independent SIGKILL. Both
+controls close five retained pidfds/proc entries, native supervisor/parent waits0
+and all127 frozen input bindings. The component remains isolated-feature-only.
+A source review finds a separate parent setup-error blocking-pipe path; qualify a
+bounded injected-unavailable-handle RED and fix it next, before namespace containment,
+original PAM composition and production broker/actor receipts. See
+[scope report](native-auth-scope.md) and
+[proof](evidence/native-auth-scope-provenance.json).
+
 The native Rust PAM worker now passes actual wrong/matching password controls
 through the installed public ABI on Arch ARM7.1.6. The closed-worker missing-prompt
 RED and first correct-denied failure remain preserved. Direct original-helper

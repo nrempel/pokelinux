@@ -1,0 +1,19 @@
+[package]
+name = "pokelinux-auth-scope"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[features]
+isolated-fixture = []
+
+[dependencies]
+rustix = { version = "=1.1.5", features = ["fs", "process", "event", "time", "thread", "pipe"] }
+
+[[bin]]
+name = "auth-scope-fixture"
+path = "src/bin/auth-scope-fixture.rs"
+required-features = ["isolated-fixture"]
+
+[lints.rust]
+unsafe_code = "forbid"

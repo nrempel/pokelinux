@@ -1,0 +1,202 @@
+{
+  "schema": 1,
+  "scope": "safe Rust isolated synthetic PAM worker-tree ownership; successful admission cancellation and original deadline only",
+  "evidence_class": "actual Arch ARM7.1.6 kernel in QEMU, separate host component tests and ARM64 GNU crosscompilation; no physical or matched-Google scope evidence",
+  "authored_executed_test_files_sha256": {
+    "tools/native-auth-scope/guest.py": "c3d9d8290e524b0578d5d15d6ef87020d48251de99ac343880b1121f82983aa0",
+    "tools/native-auth-scope/delegated.py": "c35a308147d235be7d231b24c74a2aa4e774117d851a8fa8b4b2a2a3d4f51e3e",
+    "tools/native-auth-scope/pam_owned_descendants.c": "6cd213a88114958f19f601443749ea3e72e7e98720c6cb8728dc856f13b925e6",
+    "tools/native-auth-scope/fixture_contract.h": "13c9a8b4bcd2baae70294d14e2eb5ed99220b0640639d6057deab4b29eb4c3c2"
+  },
+  "production_profile_enabled": false,
+  "all_code_requires_feature": "isolated-fixture",
+  "scope_ELF_sha256": "afd50cd7b71f6f21dcb218d336db3437735ddb3dfdcdd5a7d63857667e73d950",
+  "selected_ownership_worker_ELF_sha256": "ab6c6f2a518909894c9614af73a49468aa1e50639a6a9e1ea078df65b119cf5d",
+  "build": {
+    "selection_sha256": "937ee6b3ca1344b0d622ad0e28ee8c9cdec6c100829aeed1c7cf52b8cf0c31ce",
+    "execution_sha256": "8fcc47ecd90b9b9c00c72e2fff74ffc849fc94ff154b7105a879a5a8d1cea44e",
+    "corrected_receipt_sha256": "ec9f6e1d47b0e1696fe08b34ba4d4a04c3bfe7ed02e868f19c10497dfabe77ad",
+    "preserved_original_receipt_sha256": "8b573e5f3cfdbb801aeb5d58bd983a3aa29ab7b4cb78abab0e74a837d7fdfdeb",
+    "receipt_metadata_correction_only": "original handoff description reused wait-only wording; separate correction binds unchanged recursive source/ELF/actual build checks",
+    "host_component_tests_passed": 7,
+    "strict_default_and_fixture_Clippy_passed": true,
+    "ARM64_GNU_crossbuild_passed": true,
+    "actual_CLI_wait0_and_exact_CID_absence": true
+  },
+  "chronological_unrun_preparations": [
+    "root0700 policy ancestry would prevent UID1000 module loading",
+    "module predicate rejected fixed FD2; corrected before first actual run",
+    "first GREEN observer recorded elapsed values without explicit250ms rejection; fresh successor adds three immediate assertions before execution"
+  ],
+  "preserved_first_actual_failure": {
+    "classification": "aggregate FAILED; process-group-only ECHILD defect; intended descendant RED unqualified",
+    "records_sha256": {
+      "selection.json": "8ff3a9671da7de75469964c9c2344775f5c9e97b271d07fba467bfd54cb4afdb",
+      "result.json": "59134b9e60de91c745ebf1075492d9360050585435a6036411baa32cc7ad2eea",
+      "execution.json": "5285133a7177e611185fcaead86275cc259f3a8f8060fa0c82551439816561a0",
+      "completion.json": "b63ca3e332cae3e33a6869801b6ec474f1c67b0f4debe30e18e10cd42989cdfc"
+    },
+    "Root_review_sha256": "2bbddae2e5f8d27f12f37b9c0cd8315cb12b7ac4388be7dacc5df49384681270",
+    "Root_independently_rehashed_bindings": 110,
+    "worker_actual_wait": 9,
+    "wrong_global_ECHILD_while_leaf_populated": true,
+    "native_adopted_waits": 0,
+    "outer_adopted_waits_after_failure_cleanup": 2,
+    "intended_descendant_RED_qualified": false
+  },
+  "intended_detached_descendant_RED": {
+    "classification": "aggregate FAILED; intended detached-descendant RED qualified after wait-all-only repair",
+    "records_sha256": {
+      "selection.json": "ae4f5e21b20038261f010804a1b850207c826f769495035f007463029950e399",
+      "result.json": "83cf2b6824eac66ea74465a47c2eaca474a08fb6a5b9931cc73c277e4fa7e834",
+      "execution.json": "46d8c64e1a317ea82f46dc435bd9762402dfbb606c26719aa80da224ea3a96bf",
+      "completion.json": "de9e74f2098cd867ee5ed98dd589b531f19ba264689a4c5aff6243bbf3fece16"
+    },
+    "Root_review_sha256": "6310f5aee8f7c96bf0d929d23a62d43a5a382f246e1cde314da86657008e262c",
+    "Root_independently_rehashed_bindings": 118,
+    "worker_actual_wait": 9,
+    "live_detached_survivors": 2,
+    "global_ECHILD_before_fallback": false,
+    "populated_before_fallback": 1,
+    "Stop_snapshot_response_ns": 2009966,
+    "failure_frozen_before_independent_SIGKILL": true,
+    "native_adopted_waits_after_external_cleanup": [
+      9,
+      9
+    ],
+    "actual_supervisor_and_parent_waits": [
+      0,
+      0
+    ],
+    "final_ECHILD_populated0_EOF": true,
+    "outer_adopted_waits": 0,
+    "external_cleanup_is_core_recursive_GREEN": false
+  },
+  "passing_recursive_scope": {
+    "records_sha256": {
+      "selection.json": "f8d1a705eba46c6f99c64b2ff23c2740293626da2705ee3d592b22f0b3fd26b5",
+      "command.json": "942243ea2ac442f40570d8a1d79c247b5f83b3146a3a00e9475ec5a60b25958c",
+      "result.json": "b48b5f9b06b58bfdbd739ca21c275314707c317a807fd7e1b2c3efdad7b759c4",
+      "delegated-result.json": "2a9acc34e06bf68976ae0aa8f60be05cc8580c4a19d3962617cdcf054ace3065",
+      "execution.json": "69cb54a05708dcfc1e2044fc86c7f56ed6b9cc0dc62354dfaa7015237d41774b",
+      "completion.json": "e81ac1c30719250f26a87787977f7e01ca090624c65a730d4d03a8805bd302d2",
+      "postrun-independent-audit.json": "5771f595554e3be6aeaae46e4c25a92a2a6e4b029aef74d2fef5d71382c0248e"
+    },
+    "Root_preflight_sha256": "1b428a69cff56c3c9ce98622d0afac56e383e0a1b0b10be0d1862a7cad3eb895",
+    "Root_independent_review_sha256": "36bdcb11713e8bdb9214634a4122a3e4f41fb090198d44409a34c3148a8edeb3",
+    "Root_independently_rehashed_bindings": 127,
+    "actual_groups": [
+      {
+        "case": "cancel_held_executor",
+        "actual_worker_wait": 9,
+        "actual_native_adopted_waits": [
+          9,
+          9
+        ],
+        "actual_native_parent_wait": 0,
+        "final_parent_flags": 56,
+        "final_scope_flags": 8092,
+        "five_processes_dead_and_proc_absent": true,
+        "global_ECHILD_empty_leaf_EOF": true,
+        "independent_SIGKILL": false,
+        "cancel_response_ns": 820914,
+        "Stop_snapshot_response_ns": 2084795
+      },
+      {
+        "case": "deadline_held_executor",
+        "actual_worker_wait": 9,
+        "actual_native_adopted_waits": [
+          9,
+          9
+        ],
+        "actual_native_parent_wait": 0,
+        "final_parent_flags": 56,
+        "final_scope_flags": 8092,
+        "five_processes_dead_and_proc_absent": true,
+        "global_ECHILD_empty_leaf_EOF": true,
+        "independent_SIGKILL": false,
+        "snapshot_response_ns": 2501323
+      }
+    ],
+    "exact_held_supervisor_T_then_SIGCONT": true,
+    "second_attempt_only_after_full_first_closure": true,
+    "original_deadline_retirement_local_while_occupied": true,
+    "deadline_executor_held_at_least100ms_after_original_expiry": true,
+    "native_parent_deadline_reason": "Deadline",
+    "inner_deadline_cleanup_reason": "Cancel from existing parent forwarding",
+    "outer_guest_direct_waits0": [
+      "authored C module compiler",
+      "systemd-run CLI"
+    ],
+    "guest_final_ECHILD": true,
+    "actual_Docker_CLI_wait0": true,
+    "fresh_same_daemon_exact_CID_absence": true,
+    "all_selected_inputs_unchanged": true,
+    "independent_SIGKILL_used": false
+  },
+  "bounds": {
+    "original_per_attempt_BOOTTIME_seconds": 15,
+    "maximum_attempt_seconds": 30,
+    "delegated_driver_seconds": 30,
+    "delegated_service_CLI_seconds": 35,
+    "guest_seconds": 80,
+    "QEMU_seconds": 110,
+    "QEMU_termination_grace_seconds": 5,
+    "outer_seconds": 120,
+    "guest_CPUs": 2,
+    "guest_memory_MiB": 1024,
+    "container_CPUs": 2,
+    "container_memory_GiB": 2,
+    "RAM_overlay_MiB": 512,
+    "response_limit_ns": 250000000,
+    "network": "none",
+    "host_devices": false,
+    "phone_access": false
+  },
+  "limitations": [
+    "parent setup failure before NONBLOCK can leave blocking pipes; conditional source finding, not an actual resource failure; separate actual fault-injection RED and repair pending",
+    "selected trusted fork/SIGCHLD workload only; non-SIGCHLD clone wait coverage unqualified",
+    "controlled supervisor SIGSTOP is not uninterruptible kernel blocking or actual suspend",
+    "no original wrong/correct PAM plus scope composition, credential bridge or account/session policy",
+    "root-owned controls alone do not confine EUID0 helper; namespace/proc aliases, descriptor policy and dependency/resource provisioning pending",
+    "no production NNP0 broker, actor/Source/locker receipt, genuine exact unlock or synced durable restoration",
+    "matched Google kernel scope, installed secure frames/suspend/wake, full native phone services and physical models unqualified",
+    "process reaping does not undo PAM audit/faillock or vendor/daemon effects and never authorizes implicit retry"
+  ],
+  "executed_delegated_driver_sha256": "46c540112911bd832b25e5d237972ae1c80d4f9205c71e4cd829cfd3bce32662",
+  "public_delegated_driver_normalization": "Only one extra terminal newline removed to satisfy git diff --check; otherwise byte-identical to executed driver, no behavior change",
+  "source_files": [
+    {
+      "path": "native-auth/Cargo.lock",
+      "sha256": "67007ace7e0c6c928d44191a812e78ae58b4d49cbd4300cf314f90382254b14e"
+    },
+    {
+      "path": "native-auth/Cargo.toml",
+      "sha256": "9d886d56c401a6d9dcd6ccb84f703a716adcfa877fb1cd59ac305d8f33dcaa69"
+    },
+    {
+      "path": "native-auth/src/bin/auth-scope-fixture.rs",
+      "sha256": "4992a3e184851b613dda04f1a7c7d2d33bced649588190534568b35741a32e9a"
+    },
+    {
+      "path": "native-auth/src/cgroup.rs",
+      "sha256": "543bf0a64565c469bc00ebd33dbb8652cba20eaf08bbfbe3856f564a174ebc45"
+    },
+    {
+      "path": "native-auth/src/lib.rs",
+      "sha256": "d538ed589dc6627950d96cf7fe4c44a67226c35c47d3c7355caa3db149bb4c34"
+    },
+    {
+      "path": "native-auth/src/owner.rs",
+      "sha256": "4042e2f3f82f70f36258b83dcb15b605754cea69076add1c27e3d454909987b0"
+    },
+    {
+      "path": "native-auth/src/parent.rs",
+      "sha256": "9844ca26cef14a6aa13e690bc22b821514c55fc553d2cffcd8749ec529edb075"
+    },
+    {
+      "path": "native-auth/src/record.rs",
+      "sha256": "efb256415cf8da749cda847ae18cc5e71ff73a16db04f5fde3a8bee987fe6a7a"
+    }
+  ]
+}
