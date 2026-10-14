@@ -135,6 +135,28 @@ This closes the generic ARM component/filter boundary only. Matched Google kerne
 external crash supervision, current Source/lock and full phone gates remain.
 See [bounded ARM kernel evidence](evidence/native-appearance-arm-kernel-provenance.json).
 
+## Chronological original full-style RED
+
+A later frozen generic ARM run executes the original text-size command and an
+owned atomic user-shell override before any style repair. An independent Qt
+QObject probe reads the real Rust socket as UID11010; the normal app remains
+uninstrumented in the same PID/window. Actual original observations are stable
+before comparison. All8font/6spacing tokens plus fontScale match at the12px
+baseline, then all15 differ after original size18 and after user body23/display45,
+control-gap17/panel-padding31. The native reader stays at12/24 and8/18 while the
+original reports18/36 and12/27, then23/45 and17/31. Actual palette colors remain
+correct, with private UID1000/mode0700 HOME and UID11010 EACCES preserved.
+
+Compiler setup succeeds with eight actual direct child waits0. Both guest and
+runner contract aggregates remain FAILED. Root rehashes49 frozen files, decodes
+all three complete1080×2424 rasters and verifies normalized RGBA against the
+native buffers. Controlled Rust Stop/direct wait0,44 direct guest cleanup rows,
+actual Docker CLI0, separate exact-CID absence and input closure pass. This epoch
+records zero collector pidfd rows; its all-observed flag is vacuous and supplies
+no independent collector reaping proof. No Source, desktop ingress, current lock,
+normal QWindow font/DPR, concrete font-resource or alpha migration is qualified.
+See [bounded style RED](evidence/native-appearance-style-red-provenance.json).
+
 ## Genuine installed RED
 
 The fresh `native-appearance-private-home-red-2` label uses unchanged normal

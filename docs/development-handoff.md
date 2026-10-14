@@ -59,9 +59,14 @@ An independent pinned-source style contract identifies all8font/6spacing tokens,
 user-overlay deletion, distinct Color/Border alpha behavior and separately
 observed user/font consistency. A family name does not prove UID11010 access to
 private font assets. Expanded Original oracle and actual Rust-socket/Qt-QObject
-style RED are being prepared privately; neither is executed or qualified yet.
-Root production style and the partial consumer remain unchanged pending that
-genuine comparison. Contract:
+style RED now execute under generic ARM: baseline matches, then all15 font-scale,
+font/spacing observations differ after original size18 and owned user overrides.
+Palette/private HOME remain correct in the same normal PID/window. Compiler setup,
+44 direct child waits, controlled Rust Stop/wait0, actual CLI0 and independent
+exact-CID absence pass. Zero collector pidfd rows means no independent collector
+reaping proof in this epoch. Both contract aggregates remain FAILED. Root is now
+repairing typed style/user input collection privately; full consumer migration
+remains open. See [bounded RED](evidence/native-appearance-style-red-provenance.json). Contract:
 `/tmp/pokelinux-appearance-style-contract-sol/contract.txt` (source review only).
 
 The installed appearance boundary retains its genuine RED. Fresh `red-2`
