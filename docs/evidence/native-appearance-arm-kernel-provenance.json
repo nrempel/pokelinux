@@ -1,0 +1,122 @@
+{
+  "schema": 1,
+  "boundary": "generic Arch ARM actual guest-kernel component controls, separate from Original UI/runtime and hardware",
+  "passed": true,
+  "core_commit": "8795ef465927c07b47ac20498b2146869afd720b",
+  "kernel": "Linux alarm 7.1.6-1-aarch64-ARCH #1 SMP PREEMPT_DYNAMIC Wed Aug  5 00:20:13 UTC 2026 aarch64 GNU/Linux",
+  "groups": {
+    "actual_process": 11,
+    "same_process_kernel_seqpacket": 4,
+    "actual_ARM_confinement": 1
+  },
+  "x86_wrong_architecture_control_compiled": false,
+  "ignored_UID11010_helper_counted_only_through_parent": true,
+  "installed_service_capability_profile_qualified": false,
+  "guest_root_capabilities": "fixture only; six provisioning/credential/signal prerequisites verified; production collector separately UID1000/groups[]/CapEff0/NNP1/filter_added1",
+  "ARM_production_filter_denials_actually_executed": true,
+  "actual_harnesses": [
+    {
+      "role": "main-harness",
+      "ELF_sha256": "5b23391791b5b0cc66722676d36f9584f935913c42efe3d41e1a5eb7207c80e3",
+      "summary": {
+        "status": "ok",
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered_out": 0
+      },
+      "log_sha256": "df166913f47ff1f04202cae9b31df67ed272d692d99a0023a8117dc3029100dd",
+      "actual_direct_wait": true
+    },
+    {
+      "role": "library-harness",
+      "ELF_sha256": "122816d93cfed018116e4559f6a35ece0ea203f422e56935bb7c3861d7ae7415",
+      "summary": {
+        "status": "ok",
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered_out": 0
+      },
+      "log_sha256": "2f246f40d391265af716286e19ca2929c16a36052980deaa53d897dceb418b1e",
+      "actual_direct_wait": true
+    },
+    {
+      "role": "confinement",
+      "ELF_sha256": "8bc06db38213ff61496d3312e3d063658b0355d6262de2f7530cc7f8e480cdd3",
+      "summary": {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered_out": 0
+      },
+      "log_sha256": "9d23b8a74c340fea76bb4d35eb12790ff551d5e1c9f8d5c65dc358e12e6ce9e9",
+      "actual_direct_wait": true
+    },
+    {
+      "role": "process",
+      "ELF_sha256": "7cb4d7d1154853e5d3006f0da756fa1d97d8261d1347e38bbcf5ea95acf1bce7",
+      "summary": {
+        "status": "ok",
+        "passed": 11,
+        "failed": 0,
+        "ignored": 1,
+        "measured": 0,
+        "filtered_out": 0
+      },
+      "log_sha256": "458654d50e65371536b13a10cda4164f51627a1b00f6a7022c42dc444e5c60cd",
+      "actual_direct_wait": true
+    }
+  ],
+  "records": {
+    "selection.json": "dcc97b65e2c0ce064427f031200ae0e0b3dc9cdf745fb85cbae8896804a851af",
+    "command.json": "7c386c4cc1c88767b1e2900c7a2dccbe5330393a8df082f65dd458aa5196ad4b",
+    "result.json": "6ac91d664cb6e6ad9a012d49423ddc8cd3f2289a634b7c5d08a8fa0e5aea719c",
+    "execution.json": "9a8bc09cc0f8bbcf9d30adc5540a46839b0d6023e8d158d143baf1ab8b42b87e",
+    "root-independent-review.json": "a17f40751d2bf1d1c8c410080af6615982f1859c9ce52693cbdd9fd145783997",
+    "completion-handoff.json": "715f862e0fb96dc37bac1e719d37dc48eb5f923ed27e5c1cf6fdbd6221493a16"
+  },
+  "Root_independent_review": {
+    "schema": 1,
+    "passed": true,
+    "checked_hash_bindings": 57,
+    "whole_harness_summaries_verified": true,
+    "actual_root_0555_observed_before_assertion": true,
+    "actual_direct_waits_and_independent_exact_CID_absence": true,
+    "unexpected_orphans": false,
+    "result_sha256": "6ac91d664cb6e6ad9a012d49423ddc8cd3f2289a634b7c5d08a8fa0e5aea719c",
+    "execution_sha256": "9a8bc09cc0f8bbcf9d30adc5540a46839b0d6023e8d158d143baf1ab8b42b87e"
+  },
+  "preserved_first_failure": {
+    "role": "zero-test fixture preflight, not production behavior RED",
+    "result_sha256": "3a054172dcd06ca7b16036fcf5d1bea2b47a8d9eac4c32f3b1523d4c2599ae83",
+    "execution_sha256": "bf0cfa6b66373455cb0272c3f6cd5659761a87183ad70a414a950f5d8fb51427",
+    "runtime_root_metadata_not_recorded_before_failed_assertion": true,
+    "root_0555_later_probe_class": "separate read-only backing metadata; not retroactive guest observation"
+  },
+  "successor_root_metadata": {
+    "UID": 0,
+    "GID": 0,
+    "mode": "0555",
+    "recorded_before_assertion": true,
+    "existing_check_matches_service": "directory/nonsymlink UID0 mode&022==0",
+    "new_dirs_and_ELFs": "exact0:0/0755"
+  },
+  "cleanup": {
+    "all_harness_direct_waits_exit0": true,
+    "owned_descendants_absent": true,
+    "actual_Docker_CLI_wait_exit0": true,
+    "independent_exact_CID_absence": true,
+    "all_selected_and_original_inputs_unchanged": true,
+    "no_timeouts": true
+  },
+  "UI_or_OriginalOmarchy_executed": false,
+  "Source_lock_integration": false,
+  "Google_kernel_booted": false,
+  "phone_accessed": false,
+  "hardware_qualified": false
+}

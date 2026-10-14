@@ -29,8 +29,8 @@ final inputs/reaps; actual container waits/absence and input closure pass.
 Rust static ARM cross-build and normal Qt ARM compile pass without new installed
 runtime qualification. The partial typed Qt prototype remains private; the
 public app's complete font/settings/typography path is preserved until migration.
-Next: original two-theme ARM consumer composition, actual desktop/current
-Source/lock replay, full appearance features and installed supervision.
+Next: full appearance features, actual desktop/current Source/lock replay and
+installed supervision; later palette/kernel selections are recorded below.
 See [native appearance](native-appearance-service.md) and bounded provenance.
 
 A separate later ARM composition control passes five actual groups with genuine
@@ -42,8 +42,27 @@ The backend is unavailable and no Source/actor/desktop ingress/per-app display
 owner participates; the original installed RED remains open. Two reviewed clean
 captures and [bounded evidence](evidence/native-appearance-palette-arm-provenance.json)
 are public. Fonts/settings/alpha and normal QWindow DPR remain unqualified.
-Next run actual headless ARM lifecycle/filter controls, then full theme features
-and desktop/current Source/lock composition without widening the100ms lease.
+Next: full theme features and desktop/current Source/lock composition without
+widening the100ms lease.
+
+A later headless actual Arch ARM kernel selection passes sixteen groups:
+eleven real process, four same-process kernel SEQPACKET and one confinement.
+Root independently verifies57 bindings and full harness summaries, actual child
+waits, no adopted descendants, CLI0, exact-CID absence and input closure. The first
+label remains a zero-test fixture failure: existing root0555 violated the test's
+excessive0755 assertion. Fresh successor records metadata before matching the
+actual service ancestry rule; ELFs/source/deadlines remain unchanged. Google kernel
+and installed capability profile are unqualified. See
+[ARM kernel evidence](evidence/native-appearance-arm-kernel-provenance.json).
+
+An independent pinned-source style contract identifies all8font/6spacing tokens,
+user-overlay deletion, distinct Color/Border alpha behavior and separately
+observed user/font consistency. A family name does not prove UID11010 access to
+private font assets. Expanded Original oracle and actual Rust-socket/Qt-QObject
+style RED are being prepared privately; neither is executed or qualified yet.
+Root production style and the partial consumer remain unchanged pending that
+genuine comparison. Contract:
+`/tmp/pokelinux-appearance-style-contract-sol/contract.txt` (source review only).
 
 The installed appearance boundary retains its genuine RED. Fresh `red-2`
 launches unchanged UID11010 Messages against private UID1000/mode0700 HOME;

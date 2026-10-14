@@ -42,8 +42,9 @@ Two actual kernel controls observe UID1000, empty groups, zero effective
 capabilities and an added architecture-checked seccomp filter. New content opens,
 networking, clone/exec and other unlisted syscalls are refused. The x86 incompatible
 architecture case terminates with SIGSYS. Path metadata remains observable; this
-is not whole-filesystem privacy. Actual ARM filtering, matched Google kernel
-capabilities and the installed service capability profile remain unqualified.
+is not whole-filesystem privacy. Later actual ARM filtering is qualified separately
+below; matched Google kernel capabilities and the installed service capability
+profile remain unqualified.
 
 Chronological REDs precede the public-client starvation and executable-ancestry
 repairs. Abrupt-restart RED1 has weak pathname readiness; fresh RED2 requires actual
@@ -108,6 +109,31 @@ The typed consumer stays private pending full feature migration. See
 | Tokyo Night | Catppuccin Latte |
 | --- | --- |
 | ![Direct-launch normal Messages with Tokyo Night, backend unavailable](assets/native-appearance-palette-dark.png) | ![Same window with Catppuccin Latte, backend unavailable](assets/native-appearance-palette-light.png) |
+
+## Separate actual ARM kernel component controls
+
+A later headless generic Arch ARM7.1.6 guest runs the exact Cargo-selected static
+ELFs, without Original Omarchy/UI, Android peers or vendor inputs. Eleven process,
+four same-process kernel SEQPACKET and one actual ARM confinement group pass.
+The ignored UID11010 helper runs through its parent group; the x86 wrong-architecture
+case is not compiled. Real kernel denials, UID1000/groups[]/CapEff0/NNP1, added
+production filter and direct wait are observed. Guest Root capabilities are fixture
+provisioning permissions, not an installed service profile.
+
+The first label remains a zero-test fixture failure: its overly strict mode0755
+check rejects existing root `/`. A later read-only backing probe reports0555;
+that is separate static metadata, not a retroactive guest observation. Fresh
+successor keeps identical ELFs/source/deadlines and records actual UID0/GID0/0555
+before checking the service's real nonsymlink/UID0/no022 ancestry rule. New copied
+directories/ELFs still require exact0:0/0755. No production repair or behavior RED
+is claimed from this fixture correction.
+
+Root independently verifies57 hash bindings, all complete harness summaries,
+direct waits, no unexpected adopted descendants and separate exact-CID absence.
+Guest and runner aggregates pass; all selected/original inputs remain unchanged.
+This closes the generic ARM component/filter boundary only. Matched Google kernel,
+external crash supervision, current Source/lock and full phone gates remain.
+See [bounded ARM kernel evidence](evidence/native-appearance-arm-kernel-provenance.json).
 
 ## Genuine installed RED
 
