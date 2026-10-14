@@ -3,8 +3,10 @@
 The same Rust lifecycle actor now accepts fixed session UID1000 lock intent before
 the original Omarchy locker starts. Native data authority remains denied across a
 healthy actor replacement using the same root policy directory and a changed
-original compositor/display/Source epoch. Trusted unlock, PAM authentication and
-secure presentation are still unqualified.
+original compositor/display/Source epoch. Trusted unlock, native owned PAM
+authentication and secure presentation are still unqualified. A separate
+[Original PAM reference prerequisite](native-original-pam-prerequisite.md)
+passes typed wrong/correct outcomes without clearing native lock intent.
 
 ## Runtime order
 

@@ -84,4 +84,7 @@ This qualifies prepared first attachment to an existing mapped lock. It does not
 qualify continuous lock transitions, Source recovery, original PAM, protocol
 unlock, secure frames, a normal Messages window or Google6.6/physical Pixel
 operation. No phone has been accessed. Trusted unlock and production session
-provisioning remain open.
+provisioning remain open. A separate headless
+[Original PAM reference prerequisite](native-original-pam-prerequisite.md) now
+passes wrong/correct typed results. It does not add an exact lock-protocol
+generation, native owned worker or restoration authority to these facts.

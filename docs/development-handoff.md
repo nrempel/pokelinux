@@ -24,8 +24,11 @@ process groups plus five original compositor groups pass. The prior functional
 pass remains an aggregate failure at the256MiB overlay guard; a fresh fixture
 stages component ELFs on `/run` tmpfs and passes within the unchanged cap. The required tagged locker state
 and retained SCM_RIGHTS pidfd add no unlock capability or permission. Next bind
-an actually observed lock-protocol generation and exact-object unlock, qualify
-original PAM, then implement supervised authentication and durable restoration.
+an actually observed lock-protocol generation and exact-object unlock, then
+implement supervised native authentication and durable restoration. The separate
+[Original PAM prerequisite](native-original-pam-prerequisite.md) now passes wrong
+and correct typed outcomes under an actual Arch ARM kernel; it does not supply
+an actor-owned authentication receipt or qualify restoration.
 Do not use mapped PID, observer revision, global unlock or a renewed expired
 Source as a restoration receipt. See [owned locker facts](native-session-owned-locker.md).
 
