@@ -1,0 +1,267 @@
+{
+  "schema": 1,
+  "scope": "Unchanged isolated native-auth library tests on generic actual Arch ARM64 kernel; no authentication fixture entry",
+  "source_commit": "a020e993c24acf8f0ce64ee7e7943adb96662884",
+  "root_review": {
+    "schema": 1,
+    "classification": "UNCHANGED_59_LIBRARY_TESTS_GENERIC_ARCH_ARM64_KERNEL_UID1000",
+    "passed": true,
+    "code_commit": "a020e993c24acf8f0ce64ee7e7943adb96662884",
+    "root_rehashed_unique_bindings": 132,
+    "source_bindings": 22,
+    "frozen_source_copies_and_current_at_seal_match": true,
+    "test_names_exactly_match_host": 62,
+    "passed_tests": 59,
+    "explicit_ignored_helpers": 3,
+    "helper_assertion_boundary_checks": 10,
+    "nested_raw_markers_captured_not_independently_printed": true,
+    "unprivileged_identity_and_actual_test_waits_EOF_procabsence": true,
+    "QEMU_actual_wait0_original360s_bound": true,
+    "CLI_container_wait0_and_fresh_both_exact_CIDs_absent_same_daemon": true,
+    "test_ELF_sha256": "7b82b1a84d88d7e09ca5f1b7d0c42bc4922715bfd5a21da02af536f5e808ae35",
+    "selection_sha256": "4477167becf6248fe78997ba8e81cbf571553412c101bbae5b1665c9eb62b7bb",
+    "host_inventory_sha256": "eef8507efc3394360ace70a99360cef1d7a64da1151064e656296fadfb56199c",
+    "evidence_bindings_sha256": "c5b62b5fee526fb6cb58af1ceb890cd927e99b8b08f73015bfc93f9e934ccda7",
+    "result_sha256": "b516c4dee1ffc3a1d8ea344bcfc3ad5b3e044a30f5718e83c6f376825e22383b",
+    "test_log_sha256": "06f2e90a6e5cc64d08a6cc8b102b351666ddc79c429ea7a1260958da1d30dafc",
+    "execution_sha256": "2858490a2a19da28edd38fe5a32c903bd81774cac5358dae9f618b002755d1cf",
+    "qemu_wait_sha256": "cd528612a4b8015459f5415974eaf356d56e8d749da1a8956ebf3051b4e50e56",
+    "original_PAM_fixture_Attempt_Terminal_cgroup_actor_unlock_phone_executed": false,
+    "sealed_ns": 5955718241372437
+  },
+  "root_review_sha256": "dab6965232dc610866b89bf999988599b00529f7c1a9e8af1c58afbab8b9394f",
+  "root_rehashed_bindings_sha256": "2ede3d86efa1db9d7f68d37da65e9cb394882383234af452ee106c526112f693",
+  "delegated_handoff_sha256": "f7abb3ef134bb986c73c8bb0c8835ac731ef0706e593b53764beacffb76b1f5b",
+  "delegated_evidence_bindings_sha256": "c5b62b5fee526fb6cb58af1ceb890cd927e99b8b08f73015bfc93f9e934ccda7",
+  "tool_terminals": [
+    {
+      "stage": "compile_only",
+      "session": 65245,
+      "chunk": "82d2a3",
+      "exit": 0
+    },
+    {
+      "stage": "clone_payload_preparation",
+      "session": 94201,
+      "chunk": "cb8d38",
+      "exit": 0
+    },
+    {
+      "stage": "ordinary_ARM_guest",
+      "session": 81793,
+      "chunk": "5f3509",
+      "exit": 0
+    }
+  ],
+  "kernel": {
+    "machine": "aarch64",
+    "release": "7.1.6-1-aarch64-ARCH",
+    "version": "#1 SMP PREEMPT_DYNAMIC Wed Aug  5 00:20:13 UTC 2026"
+  },
+  "execution_identities": [
+    {
+      "cap_eff": "0000000000000000",
+      "egid": 1000,
+      "euid": 1000,
+      "gid": 1000,
+      "groups": [],
+      "pid": 298,
+      "uid": 1000
+    },
+    {
+      "cap_eff": "0000000000000000",
+      "egid": 1000,
+      "euid": 1000,
+      "gid": 1000,
+      "groups": [],
+      "pid": 299,
+      "uid": 1000
+    },
+    {
+      "cap_eff": "0000000000000000",
+      "egid": 1000,
+      "euid": 1000,
+      "gid": 1000,
+      "groups": [],
+      "pid": 300,
+      "uid": 1000
+    }
+  ],
+  "actual_test_process_waits": [
+    {
+      "pid": 298,
+      "exit": 0,
+      "stdout_eof": true,
+      "proc_absent_after_wait": true,
+      "log": "test-list.log"
+    },
+    {
+      "pid": 299,
+      "exit": 0,
+      "stdout_eof": true,
+      "proc_absent_after_wait": true,
+      "log": "ignored-test-list.log"
+    },
+    {
+      "pid": 300,
+      "exit": 0,
+      "stdout_eof": true,
+      "proc_absent_after_wait": true,
+      "log": "components.log"
+    }
+  ],
+  "actual_qemu_wait": {
+    "passed": true,
+    "bound_seconds": 360,
+    "timed_out": false,
+    "actual_qemu_pid": 7,
+    "actual_qemu_wait": 0,
+    "elapsed_seconds": 29.527983563952148
+  },
+  "host_and_ARM_test_names_exactly_match": true,
+  "explicit_ignored_helpers": [
+    "owner::conversation_io_tests::failed_initialize_blocking_stdout_helper",
+    "parent::parent_process_tests::private_parent_pipe_peer",
+    "parent::parent_process_tests::private_terminal_quarantine_owner"
+  ],
+  "helper_evidence": {
+    "pinned_boundary_checks": 10,
+    "original_conversation_boundary_is_actual_output": true,
+    "parent_pass_lines_are_final_assertions_bound_to_source_and_ELF": true,
+    "nested_markers_captured_inside_tests_not_independently_printed": true,
+    "nested_timeout_cleanup_qualified": false
+  },
+  "sources": [
+    {
+      "path": "native-auth/Cargo.lock",
+      "sha256": "59a7f877d2aa1ff2b0a25c6bd31d12201b0af1053716e398436a251972d25d29"
+    },
+    {
+      "path": "native-auth/Cargo.toml",
+      "sha256": "965972df3b99936141b603c67c80931aee4dee831fde6662794bbdbbcf42d88b"
+    },
+    {
+      "path": "native-auth/README.md",
+      "sha256": "38f8d918aa94304c8138f2b545d09b51c661198415781e59c786919ed8b90af6"
+    },
+    {
+      "path": "native-auth/src/bin/auth-scope-fixture.rs",
+      "sha256": "7392b3846e2e67336ee7a1740e77b429fc2c97b73fa0fcda1c9cbc5528fdec1a"
+    },
+    {
+      "path": "native-auth/src/cgroup.rs",
+      "sha256": "543bf0a64565c469bc00ebd33dbb8652cba20eaf08bbfbe3856f564a174ebc45"
+    },
+    {
+      "path": "native-auth/src/command.rs",
+      "sha256": "bd7dc8ed1f2fc6eff5a9f4d480f3ea6854c0a9b41d0bf3d717fc8186fd3cc1c6"
+    },
+    {
+      "path": "native-auth/src/command_tests.rs",
+      "sha256": "4a783d469aefb4450541746e90c5f124ff9408e952829340cb4b7da5263007ae"
+    },
+    {
+      "path": "native-auth/src/conversation.rs",
+      "sha256": "9189ed35ab460ff9178f609b496b432018fd2ecbf80cefc806255f473d295ba7"
+    },
+    {
+      "path": "native-auth/src/conversation_io_tests.rs",
+      "sha256": "884620aa6b41fd42dd1645e9f39637181ac35a15261420995a2f6fa66f017e54"
+    },
+    {
+      "path": "native-auth/src/conversation_lifetime_tests.rs",
+      "sha256": "268aecc9dd2c7a4853077229ebeb7aa6bc77e72f1429e5d72518fa57d45c5a6f"
+    },
+    {
+      "path": "native-auth/src/conversation_tests.rs",
+      "sha256": "5f8489ee78c6e66b5b600c1dec4d6ad9b1b9f584c00510bcaaab00d657ffcfe3"
+    },
+    {
+      "path": "native-auth/src/lib.rs",
+      "sha256": "1fa9c23b1039c80b6c53b07dae0339adb15c0459ee2c7fd0f74da44f9be9d43b"
+    },
+    {
+      "path": "native-auth/src/outcome.rs",
+      "sha256": "2ed28576ca8351cad9d6ca7fae8e18a4d92f434e7bbc7ea997223272fdbc5c8c"
+    },
+    {
+      "path": "native-auth/src/owner.rs",
+      "sha256": "1a4a536bc740914f23004f2c31d453d4c1d21215b6b33cfa1ade4f9e6500719a"
+    },
+    {
+      "path": "native-auth/src/parent.rs",
+      "sha256": "87dbc77e98c86a5ce454ee558410ebc98c3168e3924a49fe55a11e686e1ccce1"
+    },
+    {
+      "path": "native-auth/src/parent_process_tests.rs",
+      "sha256": "d483a1c383799cb55620b0633ad5b98de391ddc471987e254652263a9b9e8305"
+    },
+    {
+      "path": "native-auth/src/parent_prompt.rs",
+      "sha256": "57995ac2df00b5cdce3209e88b864659f3a2548dd80864a2b045546d44fbf1f5"
+    },
+    {
+      "path": "native-auth/src/parent_prompt_tests.rs",
+      "sha256": "c2a9471a84f9200e6576a918475be2afd3d180a6c77b0efd6e0ec5036db4703a"
+    },
+    {
+      "path": "native-auth/src/record.rs",
+      "sha256": "df9be4c23909948f3b4822dda371f6cfd797f85d02fb47b1a2f067a5d9897d65"
+    },
+    {
+      "path": "native-pam/src/wire.rs",
+      "sha256": "91b0b974c21e4d775caca8273e1a6ee4898764b3f88a41117b33185bd741702e"
+    },
+    {
+      "path": "tools/native-auth-scope/delegated.py",
+      "sha256": "872d8417da67ab541c1296b7a931753178dc0a5b3824156d7ae71f490d1d4d04"
+    },
+    {
+      "path": "tools/native-auth-setup/delegated.py",
+      "sha256": "22d202c58a385a1c62cc5ad703c85c06f8360e110f115a659a0624c27793f648"
+    }
+  ],
+  "external_inputs": [
+    {
+      "name": "Image",
+      "sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b"
+    },
+    {
+      "name": "initramfs-linux.img",
+      "sha256": "a9bb29d29abda94748c9948f903c3c1704f829eea477652b9a4201a61f36a647"
+    },
+    {
+      "name": "rootfs.img",
+      "sha256": "45708297654600f524ae74f76d18f96313af1b4a5db15fe6b503c2e0cd285478"
+    }
+  ],
+  "private_clone_sha256": "9d92c8bbebae84fe7daaf6cf0af18b0a2dd38d92f507617a8644f077b763a57f",
+  "adapter_pins": [
+    {
+      "name": "guest.py",
+      "sha256": "11ffbb77829487c512898d3c7d582856ae33985b491451383e4149d1afb41922"
+    },
+    {
+      "name": "exec-tests.py",
+      "sha256": "ec21048d46f58b92d62a648c1a695dbd63890d6bd67a4bb6c661a6568a82dcf1"
+    },
+    {
+      "name": "qemu-owner.py",
+      "sha256": "29730408bda1c5a17b1a8fa6fca13b3588cebb8d0ae166da145af99709bcccc5"
+    }
+  ],
+  "limits": [
+    "Only the unchanged library test ELF ran; no auth fixture bin, actual Attempt, worker, original PAM, authentication cgroup workload, actor or unlock flow executed.",
+    "Parent ScopeChild tests own ordinary unprivileged authored peers; their worker/cgroup records remain synthetic.",
+    "Worker extraction, Issuer and outcome predicates remain component/model evidence, not actual whole-owner authentication closure.",
+    "No NIC; actual UID/GID1000 groups[] CapEff0 direct Python identity drop, no runuser/PAM session.",
+    "Generic Arch ARM64 TCG system guest; no Google/Pixel or physical-device qualification.",
+    "No Rust source/test/deadline changes, no test filters or silent exclusions, no repository/Root edits.",
+    "Actual ScopeChild constructor is cfg-test only; root/provisioning constructor does not execute",
+    "Raw worker records and worker/issuer models do not establish whole-owner or original PAM cleanup",
+    "Expected-length public response prefix does not exclude additional trailing bytes",
+    "Nested timeout teardown supplies no independent inner wait receipt and cannot pass",
+    "Source and all original test deadlines remain unchanged; actor Source100ms constraint is separate",
+    "Public documentation is updated after sealing; unchanged code/snapshot evidence is bound to a020e99"
+  ]
+}

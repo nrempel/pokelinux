@@ -97,6 +97,13 @@ not actual Attempt/PAM/cgroup runtime evidence. Strict Clippy and separate ARM64
 compilation pass; the earlier ARM40 snapshot cannot qualify these changes. No
 actor result/receipt/unlock ingress is added. See [closed outcomes](native-auth-closed-outcome.md)
 and [proof](evidence/native-auth-closed-outcome-provenance.json).
+The unchanged59 library tests now separately pass under an actual Arch ARM64
+kernel as UID/GID1000, groups[]/CapEff0. All62 host/ARM names and3 explicit ignored
+helpers match, with no source/deadline changes. Root rehashes132 unique bindings;
+actual test/QEMU/CLI/container waits0 and fresh both-CID absence close. Parent
+nested wait assertions remain source/ELF-bound, not an independent raw journal;
+no actual Attempt/Terminal/PAM/cgroup/actor/unlock executes. See [ARM59](native-auth-closed-outcome-arm.md)
+and [proof](evidence/native-auth-closed-outcome-arm-provenance.json).
 Next: runtime qualification of actual parent/Attempt forwarding and original PAM+scope, including retained
 faillock and remaining fixed alias/filter routes, then broker/actor one-shot
 synced restoration and a normal Messages reopen. Keep Source100ms/no-revival and all hardware gates.

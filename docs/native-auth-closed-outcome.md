@@ -78,7 +78,10 @@ this test alone does not exclude extra trailing bytes. Worker PID100, worker wai
 ECHILD, worker EOF, empty cgroup and candidate records are synthetic. Worker gate
 models and raw outcome records prove no actual PAM/descendant cleanup. The older
 [ARM40 selection](native-auth-components-arm.md) keeps its older source; new ARM64
-cross-compilation supplies no runtime evidence.
+cross-compilation supplies no runtime evidence. A later unchanged library
+selection separately passes59 on an [actual Arch ARM64 kernel](native-auth-closed-outcome-arm.md),
+with all62 names matching; its actual Attempt/Terminal/PAM/cgroup boundaries remain
+unexecuted.
 
 ## Remaining composition
 

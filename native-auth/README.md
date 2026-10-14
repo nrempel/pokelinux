@@ -69,7 +69,11 @@ clock and revocation at consumption. Stop/expiry after physical closure revoke
 results without changing the terminal snapshot or reoccupying capacity. Raw
 records are observations, never opaque tickets. Worker extraction and terminal
 serializer are wired in source; their real Attempt/PAM/cgroup composition remains
-unqualified. No broker/actor unlock ingress is added.
+unqualified. No broker/actor unlock ingress is added. The unchanged59 library
+tests also pass as UID1000 under an actual generic Arch ARM64 kernel, with all62
+names matching the host and three explicit helpers invoked by their parents;
+see [ARM59 evidence](../docs/native-auth-closed-outcome-arm.md). This executes no
+actual Attempt/Terminal/PAM/cgroup/actor/unlock path.
 Full forwarding and original PAM+scope
 remain runtime gates. A candidate is not authentication authority. See the
 [current forwarding report](../docs/native-auth-parent-forwarding.md),

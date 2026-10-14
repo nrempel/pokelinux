@@ -88,8 +88,10 @@ The later [closed-outcome selection](native-auth-closed-outcome.md) passes59 hos
 tests after actual event7 refusal, with live-peer wait/EOF gating, one-time
 classification, issued-token stop/expiry refusal and five malformed-stream
 quarantine cases. Worker extraction and terminal forwarding compile but remain
-unexecuted; no actor result or unlock authority is added. The ARM40 snapshot
-retains its older source.
+unexecuted; no actor result or unlock authority is added. The unchanged59 library tests now separately pass on an
+[actual Arch ARM64 kernel](native-auth-closed-outcome-arm.md) as UID1000, with
+all62 names matching. This runs no actual Attempt/Terminal/PAM/cgroup or actor
+restoration; ARM40 retains its older source.
 Original PAM+scope composition, installed broker/containment, actor-owned receipts,
 exact unlock and synced durable restoration remain open. No physical model is qualified. See
 [worker boundary](native-pam-worker.md).
