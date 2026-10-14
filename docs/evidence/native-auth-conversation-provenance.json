@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "scope": "ordinary host existing Rust wire -> parser and standalone frame, real private pipes; not PAM or complete Attempt",
+  "base_commit": "35b8790c5f80edced61d46fd791adb9db76fd25f",
+  "RED": {
+    "schema": 1,
+    "classification": "QUALIFIED_HOST_ORIGINAL_RUST_WIRE_TO_SCOPE_PARSER_PROMPT_RED",
+    "aggregate_passed": false,
+    "actual_tool_session": 10638,
+    "actual_terminal_chunk": "50968b",
+    "actual_terminal_exit": 1,
+    "actual_test_exit": 101,
+    "tests_passed": 8,
+    "tests_failed": 1,
+    "source_bindings": 11,
+    "selection_sha256": "a3e4672a0bdc34f4a9dfadd78ce5e55bb0dd7147e24ddd20d1fa470a24b59d91",
+    "execution_sha256": "bde00333acc70e8be8107a2bdca04826f9411ae61d5985fa83f104d833acf8ee",
+    "test_log_sha256": "3de119a622b4add5a9f6253bf6b0012fdcdcc6bf505d97459aa032072c928584",
+    "original_wire_sha256": "91b0b974c21e4d775caca8273e1a6ee4898764b3f88a41117b33185bd741702e",
+    "scope_parser_refactored_without_behavior_repair": true,
+    "actual_private_kernel_pipes_and_joined_thread": true,
+    "PAM_or_worker_or_scope_or_VM_executed": false,
+    "exact_CID_absence": true,
+    "sealed_ns": 5944683726322151
+  },
+  "GREEN": {
+    "schema": 1,
+    "classification": "HOST_RUST_WIRE_PARSER_AND_STANDALONE_FRAME_GREEN",
+    "aggregate_passed": true,
+    "actual_tool_session": 57410,
+    "actual_terminal_chunk": "e384f2",
+    "actual_terminal_exit": 0,
+    "actual_test_exit": 0,
+    "tests_passed": 13,
+    "tests_failed": 0,
+    "source_bindings": 11,
+    "all_frozen_sources_match": true,
+    "selection_sha256": "7a52d52953ea7d80c96b3a848c9c9c289afe2f242d0afdaf8c5888d98faa1644",
+    "execution_sha256": "220f0e3ed3e81e30cb0917b13db24fe9d1ae3c3231d2358cfedaeb671b3219da",
+    "test_log_sha256": "41d97654d8207f727f51a064c6df1089a03a56921f04c6cd7f7971dd1f6274a2",
+    "retained_test_ELF_sha256": "1a8c3bac85b4dd69c110506004d25cb4cf6f6caef93e7adcae31198db02f45e4",
+    "source_peer_review_sha256": "625ef4d8d578d73b0dc73fc8b335fe4dab603ea4efa06f5f6bd20281c2a14f7f",
+    "actual_private_pipes_and_joined_thread": true,
+    "actual_queued_frame_EAGAIN_then_complete_write": true,
+    "fresh_exact_CID_absent": true,
+    "PAM_or_worker_or_Attempt_or_VM_executed": false,
+    "sealed_ns": 5945041588431573
+  },
+  "sources": [
+    {
+      "path": "native-auth/Cargo.toml",
+      "sha256": "965972df3b99936141b603c67c80931aee4dee831fde6662794bbdbbcf42d88b"
+    },
+    {
+      "path": "native-auth/Cargo.lock",
+      "sha256": "59a7f877d2aa1ff2b0a25c6bd31d12201b0af1053716e398436a251972d25d29"
+    },
+    {
+      "path": "native-auth/src/owner.rs",
+      "sha256": "8cd81b9dbc68a051668c2846428c4f7e742e746d5fd966c99735706fdd832f29"
+    },
+    {
+      "path": "native-auth/src/conversation_tests.rs",
+      "sha256": "889b7c117d332db65223991d27a6fb84861a90267153839c7870aea7fdff71c0"
+    },
+    {
+      "path": "native-pam/src/wire.rs",
+      "sha256": "91b0b974c21e4d775caca8273e1a6ee4898764b3f88a41117b33185bd741702e"
+    }
+  ],
+  "preserved_first_GREEN": {
+    "classification": "Clippy collapsible_if compile failure before tests",
+    "execution_sha256": "a066d5d89eabac0e020ad01e8ba16744fae982f8bb9cc0c1da3c52e0655098f6",
+    "test_log_sha256": "ed9442054a91c4299e083772e5b01893ecd3391db1d61c720d2770927af6b7a1",
+    "actual_test_ELF_executed": false
+  },
+  "limits": [
+    "Attempt::pending_hidden_prompt/respond_hidden_prompt and actual write_pending response branch not executed by these host tests",
+    "No actual queued-response Attempt cancellation/deadline/Drop or second-prompt composition",
+    "EAGAIN observed at offset0; no actual partial write, EINTR or write-error injection",
+    "Zeroizing Drop is source/RAII ownership reasoning, not an allocator-scrubbing experiment",
+    "No supervisor/parent protocol forwarding or broker/actor ingress/result/receipt authority added",
+    "No PAM, original helper, actual cgroup scope, ARM/VM, installed unlock or Messages reopen in this selection",
+    "Previous ARM scope and helper-profile evidence retain their separate earlier source selections",
+    "No physical phone access or hardware qualification"
+  ]
+}

@@ -36,8 +36,14 @@ private mount/root direct-path GREEN on Arch ARM, preserving the real helper IDs
 audit-only capabilities and NNP0. Owned cgroup kill, wait9, EOF, empty leaves and
 ECHILD close without fallback. [Containment report](native-auth-containment.md).
 This is an authored direct-path fixture, not original PAM or native scope cleanup.
-Next: qualify remaining fixed alias/filter routes and original PAM+scope, then
-broker/actor one-shot synced restoration and a normal Messages reopen. Keep Source100ms/no-revival and all hardware gates.
+A later ordinary host wire/parser RED now precedes13 passing host components and
+strict Clippy for hidden-prompt parsing and a standalone zeroizing response frame
+under actual pipe EAGAIN. Internal Attempt response APIs remain unexercised and
+the parent/supervisor transport is unwired; no PAM/scope or ARM result is added.
+See [conversation primitives](native-auth-conversation.md).
+Next: actual Attempt forwarding and original PAM+scope, including retained
+faillock and remaining fixed alias/filter routes, then broker/actor one-shot
+synced restoration and a normal Messages reopen. Keep Source100ms/no-revival and all hardware gates.
 
 The native Rust PAM worker now passes actual wrong/matching password controls
 through the installed public ABI on Arch ARM7.1.6. The closed-worker missing-prompt

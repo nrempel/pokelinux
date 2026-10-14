@@ -9,6 +9,7 @@ isolated-fixture = []
 setup-fault-fixture = ["isolated-fixture"]
 
 [dependencies]
+zeroize = "=1.9.1"
 rustix = { version = "=1.1.5", features = ["fs", "process", "event", "time", "thread", "pipe"] }
 
 [[bin]]

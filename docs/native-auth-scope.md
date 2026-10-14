@@ -119,3 +119,13 @@ requires the initial-report barrier and passes. A separate normal two-group
 regression also passes with the new normal ELF. These records do not rewrite the
 earlier scope source selection or claim real kernel resource/syscall failure.
 See [separate provenance](evidence/native-auth-setup-provenance.json).
+
+## Later host conversation selection
+
+A separate actual host private-pipe RED precedes prompt parsing and a standalone
+zeroizing response-frame GREEN across13 components. It changes the scope source
+but runs no actual Attempt/PAM/cgroup/ARM integration. New Attempt response APIs
+remain unexercised and the parent/supervisor bridge remains unwired. The earlier
+ARM qualifications above retain their exact frozen source/ELF selections; they
+do not qualify this newer conversation behavior. See
+[conversation report](native-auth-conversation.md).
