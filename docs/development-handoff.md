@@ -205,8 +205,18 @@ OpenSSL exit0/actual wait4 reaps. See [AVB admission](native-boot-avb.md). No
 external device trust anchor, rollback state, bootloader/RAM selection, vendor
 userspace, Pixel board, retained-log retrieval or usable hardware diagnostic
 path is qualified. Effective phone console/RNG/kmsg policy and recovery remain
-gates. Next: narrow the closed-loader selection/admission contract, qualify
-recoverable diagnostics, then carry the native service tracer onto this kernel.
+gates. A later [closed-loader static review](native-boot-loader-admission.md)
+rehashes the complete factory archive and agrees with original FBPK metadata.
+Its reviewed ordinary v4 path can request `init_boot` using a current-slot token
+and prefer that qualifying generic ramdisk over downloaded generic data. A
+separate peer checks766 actual instruction words and seven raw calls; no
+contradiction is found in this conditional chain. Two tool prerequisite failures
+remain failed, and runtime reachability/slot helpers/selectors remain open. The
+whole vendor-boot span includes both fragments and projected helper padding; the
+earlier chosen-three-frame overlay proves neither this layout nor loader selection.
+See [bounded proof](evidence/native-boot-loader-provenance.json). Next: the exact
+RAM request/context selecting authored init, recoverable diagnostics, then the
+native service tracer on this kernel. No physical phone is accessed.
 
 The original native early boot has a separate RAM-only checkpoint. A genuine
 missing-`/init` ARM RED precedes the Rust root-PID1 probe. Native child actual wait

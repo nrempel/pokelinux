@@ -55,7 +55,12 @@ vendor-kernel platform, vendor-boot platform and generic LZ4 frames with generic
 last and no intervening padding. Final `/init` must be the exact native regular
 ELF, replacing the vendor symlink; final `dev/kmsg` must come from the authored
 generic frame. This is an offline overlay calculation, not Pixel extraction
-or execution.
+or execution. The later [bounded static loader review](../docs/native-boot-loader-admission.md)
+identifies a conditional full-span path including both vendor_boot fragments,
+with projected helper padding; this chosen-three-frame check does not qualify
+that path. It also finds that qualifying loaded stock init_boot can supersede a
+downloaded v4 generic ramdisk. This package alone establishes no temporary
+native-init request.
 
 The suite retains two-build byte reproducibility and all eight real refusal
 groups: changed init, changed child, actual stock Android init supplied as

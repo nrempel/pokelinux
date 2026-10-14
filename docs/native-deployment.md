@@ -27,7 +27,11 @@ compatibility nor incompatibility. Full dependency/symbol-CRC/signature/module
 loading and complete firmware qualification remain unresolved. Complete module
 and firmware artifact pins remain null. Complete AVB/bootloader admission
 remains unverified; [partial original AVB checks](native-boot-avb.md) now identify
-the signed chain and unsigned-candidate refusal. All nine offline
+the signed chain and unsigned-candidate refusal. A later
+[bounded static loader review](native-boot-loader-admission.md) finds that a
+reviewed v4 path can prefer qualifying loaded init_boot generic data over the
+downloaded archive. It establishes no temporary native-init procedure or runtime
+admission. All nine offline
 requirements and the later physical gate are still unresolved; deployment is
 still refused. The separate [RAM-only native PID1 guest probe](native-phone-boot-probe.md)
 does not qualify Pixel boot or installed Arch supervision.

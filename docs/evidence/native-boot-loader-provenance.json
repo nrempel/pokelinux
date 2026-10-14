@@ -1,0 +1,194 @@
+{
+  "schema": 1,
+  "date_UTC": "2026-10-14",
+  "base_commit": "d145d1cc70f6dc0190feceffc7193a3b83591b02",
+  "evidence_class": "authenticated proprietary loader: bounded static analysis and independent byte/instruction review",
+  "bounded_static_review_passed": true,
+  "production_RED_or_GREEN_claimed": false,
+  "factory": {
+    "whole_archive_bytes": 11378664978,
+    "whole_archive_sha256": "3721e6accc2e87d851ee7966d794318078ec74c7cc32343daa10968264d6bb62",
+    "new_metadata_reads_rebound_to_complete_stream": 6,
+    "bootloader_version": "deepspace-17.4-16119390",
+    "bootloader_bytes": 20043164,
+    "bootloader_sha256": "ecf3ac959f64a1a82bbda70eed4382ee3e3a797268a941398d65f7e90c6fb39a",
+    "ABL_bytes": 3219456,
+    "ABL_sha256": "bb64a515c65825da6423a133882835f6839482e51a83f1cffa75e48fd1441eba",
+    "original_FBPK_entry_metadata_agreements": 30,
+    "installed_phone_firmware_known": false
+  },
+  "static_method": {
+    "tools": {
+      "Ghidra": "12.1.4",
+      "REA_available": "6.4.0",
+      "REA_used_for_this_analysis": false,
+      "Node": "24.11.1"
+    },
+    "analysis_container_actual_CLI_wait_exits": [
+      2,
+      2,
+      0,
+      0,
+      0
+    ],
+    "analysis_driver_actual_wait_exits": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    "final_selected_decompilations": 33,
+    "final_selected_cross_references": 85,
+    "inferred_address_and_function_mapping": true,
+    "all5_owned_containers_independently_absent": true,
+    "raw_decompilation_or_inputs_published": false
+  },
+  "conditional_contract": {
+    "scope": "Reviewed ordinary boot callback, shared loading and v4 assembly with qualifying present nonempty init_boot; preceding admission and later handoff remain required.",
+    "host_one_buffer_download_then_boot": true,
+    "formed_Android_image_plus_extra_ramdisk_refused_by_host_source": true,
+    "ordinary_dispatch_has_lock_state_and_query_failure_gate": true,
+    "initial_init_boot_context_pointer_length_skip_cleared": true,
+    "absent_not_skipped_init_boot_lookup_request_with_current_slot_token": true,
+    "loaded_image_mapping_can_fill_same_init_boot_fields": true,
+    "qualifying_present_init_boot_generic_supersedes_downloaded_v4_generic": true,
+    "vendor_kernel_copy_conditional_on_skip_and_valid_header": true,
+    "vendor_boot_copy_uses_declared_whole_span_in_reviewed_branch": true,
+    "selected_vendor_boot_fragments": 2,
+    "three_frame_offline_overlay_is_actual_loader_selection_proof": false,
+    "aligned_destination_static_zero_prefix_bytes": {
+      "before_whole_vendor_boot": 17,
+      "before_generic": 4
+    },
+    "full_four_frame_overlay_executed_at_this_checkpoint": false
+  },
+  "independent_peer_review": {
+    "conclusion": "No contradiction in narrow conditional chain; no universal temporary-boot refusal or complete reachability claim.",
+    "bounded_instruction_windows": 12,
+    "actual_raw_byte_matched_instruction_words": 766,
+    "separately_checked_raw_direct_call_words": 7,
+    "actual_tool_child_wait_exit": 0,
+    "actual_outer_CLI_wait_exit": 0,
+    "fresh_same_daemon_exact_CID_absence": true,
+    "prior338_files_hash_mode_inode_nlink_size_mtime_unchanged": true,
+    "workspace_hash_bindings_rechecked": 15,
+    "external_hash_bindings_rechecked": 5575,
+    "review_sha256": "6d7769ae90461adabf553cc2c127dd49b0af3c54e664f5b469c1ddabd3c08f4d",
+    "closure_sha256": "388748ecd81ee49cd4953bc1116d59c7c45794204737f7e54df0d43b5458c81e"
+  },
+  "Root_independent_review": {
+    "prior_private_files_rehashed": 338,
+    "stock_and_candidate_identities_rehashed": 15,
+    "original_FBPK_metadata_entries_checked": 30,
+    "analysis_driver_actual_waits_reviewed": 14,
+    "original_analysis_exact_owned_CIDs_independently_absent": 5,
+    "focused_workspace_hashes_rechecked": 15,
+    "actual_raw_instruction_words_checked": 766,
+    "raw_direct_call_words_checked": 7,
+    "focused_tool_actual_wait_exit": 0,
+    "focused_fresh_same_daemon_exact_CID_absence": true,
+    "all5575_external_rows_independently_rehashed_by_Root": false,
+    "prior_review_sha256": "aeb8420876dd4d53c2d42341626451fbcd24e354074b352ba9b54af7d16b9e3a",
+    "focused_review_sha256": "b8b4f286a7146afb66247fb9e9f8a242ebee988c0fe1b4d889e25e47348fb18a"
+  },
+  "private_record_sha256": {
+    "authored_admission_map": "db3e7d090d00ad1bd3e1ab5d5e79ba8b3970c4261acd1171785586f5c043f1c0",
+    "bounded_metadata": "df61dacb07358820b33dac6619bb0436b2743019721a0e161406fe8d24978630",
+    "private_original_freeze": "1fb2e48f4f39861d502e69bf953f04d0c267dd5878c47c08cf6963c571ae8ae9",
+    "final_analysis_execution": "b2aa07de0381778e5565445030850b93948b5f47b865f66bc770c9e64809b45e",
+    "final_analysis_result": "98e7d32a1df350ed6e711d9d4e9e1e96275688d66399783d2d392e09d142d92a",
+    "focused_selection": "89c090e03650870c4f1e313b1a2976979e4b4b93e120941ca1881808771873af",
+    "focused_execution": "8fb8460cbc734e7f52d1607711ce7b2375c29abe8d396d35ebc5279c1cf40501",
+    "focused_result": "57566988933863496a23dfed9eab6ba3208326844c6fb3bde3538f6eaa8e6296",
+    "focused_instruction_report": "0a35930f5f6b1db453e67ae61c4ed1d2d1e0b7eb448c405015eb5f2254f609e4"
+  },
+  "public_source_bindings": [
+    {
+      "repository": "platform/system/core",
+      "commit": "a3b721a32242006b59cb12bd62c9133632af3a2d",
+      "path": "fastboot/fastboot.cpp",
+      "url": "https://android.googlesource.com/platform/system/core/+/a3b721a32242006b59cb12bd62c9133632af3a2d/fastboot/fastboot.cpp",
+      "bytes": 103011,
+      "sha256": "be263735f35c02e0f8f6a6ea719d1d6585560d9d98531c0e63f310959163db74",
+      "executed": false
+    },
+    {
+      "repository": "platform/system/core",
+      "commit": "a3b721a32242006b59cb12bd62c9133632af3a2d",
+      "path": "fastboot/fastboot_driver.cpp",
+      "url": "https://android.googlesource.com/platform/system/core/+/a3b721a32242006b59cb12bd62c9133632af3a2d/fastboot/fastboot_driver.cpp",
+      "bytes": 22448,
+      "sha256": "7ff6f646dd0dfd16bdcb40595573a4b62a3ff895b2d70489aa1e9d73bfb2b7a0",
+      "executed": false
+    },
+    {
+      "repository": "platform/system/core",
+      "commit": "a3b721a32242006b59cb12bd62c9133632af3a2d",
+      "path": "fastboot/README.md",
+      "url": "https://android.googlesource.com/platform/system/core/+/a3b721a32242006b59cb12bd62c9133632af3a2d/fastboot/README.md",
+      "bytes": 23313,
+      "sha256": "80ec86800f94715c70b69d4bb60b0d15b8e0684276dff3ac22fe8227ec5a9093",
+      "executed": false
+    },
+    {
+      "repository": "platform/external/avb",
+      "commit": "761178607206f4cb2af79ed9eec52d8cbd814adb",
+      "path": "README.md",
+      "url": "https://android.googlesource.com/platform/external/avb/+/761178607206f4cb2af79ed9eec52d8cbd814adb/README.md",
+      "bytes": 56448,
+      "sha256": "ecabf282c5a3bad0b29c1c4fb20bf57d27e7757821dd1ce0af0813adf42e2940",
+      "executed": false
+    },
+    {
+      "repository": "platform/external/avb",
+      "commit": "761178607206f4cb2af79ed9eec52d8cbd814adb",
+      "path": "libavb/avb_chain_partition_descriptor.h",
+      "url": "https://android.googlesource.com/platform/external/avb/+/761178607206f4cb2af79ed9eec52d8cbd814adb/libavb/avb_chain_partition_descriptor.h",
+      "bytes": 3184,
+      "sha256": "50d29e5c5ec59b50467cd8e3b372c92c3aff26c1f6fd0ea08e8c0176ae73bcf9",
+      "executed": false
+    },
+    {
+      "repository": "platform/external/avb",
+      "commit": "761178607206f4cb2af79ed9eec52d8cbd814adb",
+      "path": "libavb/avb_hash_descriptor.h",
+      "url": "https://android.googlesource.com/platform/external/avb/+/761178607206f4cb2af79ed9eec52d8cbd814adb/libavb/avb_hash_descriptor.h",
+      "bytes": 3127,
+      "sha256": "61811399ac8e4ca0392a87039de9edfcaab72d165a346337e87b5fb5c3a4d602",
+      "executed": false
+    }
+  ],
+  "remaining_gates": [
+    "Actual accepted RAM request/header/context selecting authored generic while preserving board resources.",
+    "Slot/suffix constructors, partition-I/O/AVB callbacks, selectors and complete path reachability.",
+    "Actual device firmware/lock policy, external trust anchor and rollback state.",
+    "Complete full-span/padded overlay and original kernel unpack behavior.",
+    "Selected DTB/DTBO, effective arguments/bootconfig, vendor modules/KMI, firmware and board startup.",
+    "Observable/retrievable phone diagnostics, independent recovery, watchdog/thermal safety and all physical hardware."
+  ],
+  "target_firmware_executed": false,
+  "new_kernel_or_VM_executed_by_this_static_checkpoint": false,
+  "phone_accessed": false,
+  "temporary_native_boot_procedure_established": false,
+  "phone_or_full_smartphone_qualified": false
+}

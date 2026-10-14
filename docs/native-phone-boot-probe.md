@@ -52,6 +52,11 @@ consistent signed metadata blocks, four child key/rollback-slot agreements and
 16 available descriptor checks. Another27 payload checks remain unavailable. The
 unsigned candidate has no parseable VBMeta and fails the stock init_boot
 descriptor. This establishes a concrete admission gate, not phone acceptance.
+A later [bounded loader review](native-boot-loader-admission.md) corroborates a
+conditional v4 path that can prefer loaded stock init_boot generic data over a
+downloaded generic archive. A kernel-bearing download alone therefore provides
+no established native-init route. Header modes, slot helpers, board selectors
+and runtime admission remain open.
 
 The effective Pixel console is unknown: compiled `ttynull` with EXTEND and no
 FORCE does not establish bootloader-supplied arguments. Empty INITRAMFS_SOURCE

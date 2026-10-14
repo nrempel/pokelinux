@@ -67,7 +67,12 @@ Authenticated frankel `CP3A.261005.005` has the following static layout:
 The generic CPIO `/init` is a regular ARM64 ELF. The vendor platform CPIO `/init`
 is a symlink to `/system/bin/init`. AOSP specifies generic ramdisk extraction last;
 a native generic `/init` must replace that symlink. The factory fragment selection
-and the behavior of a RAM-boot command across these partitions remain untested.
+and the behavior of a RAM-boot command across these partitions remain untested
+at runtime. A later [bounded ABL static review](../docs/native-boot-loader-admission.md)
+identifies a conditional path that requests init_boot using a current-slot token
+and prefers qualifying loaded generic data. Its vendor_boot copy uses the full
+declared span, including both fragments. This is neither observed phone selection
+nor a demonstrated temporary override.
 The external `ramdisk_16k.img` equals the `16K` fragment byte-for-byte. The default
 kernel is 4 KiB and the external alternative 16 KiB; both ARM64 Image flags and
 embedded configs agree. This does not establish bootloader selection policy.
