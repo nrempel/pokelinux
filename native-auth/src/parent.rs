@@ -496,3 +496,7 @@ mod tests {
 #[cfg(test)]
 #[path = "parent_prompt_tests.rs"]
 mod parent_prompt_tests;
+
+#[cfg(test)]
+#[path = "parent_process_tests.rs"]
+mod parent_process_tests;

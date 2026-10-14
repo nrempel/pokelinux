@@ -57,7 +57,12 @@ ordinary helper's natural wait/EOF control. This is separate from the unexecuted
 ARM fixture binary; see the [ARM report](../docs/native-auth-components-arm.md).
 Exact parent queue/command codec
 composition crosses real pipes, but neither actual owner nor either complete
-fixture loop runs in those controls. Actual forwarding and original PAM+scope
+fixture loop runs in those40-component controls. A later41-test host selection
+constructs actual ScopeChild around one owned ordinary peer and exercises prompt,
+response, production polling and actual peer wait0/EOF. Its workload observations
+are synthetic, and it bypasses normal root/provisioning construction. See
+[parent process evidence](../docs/native-auth-parent-process.md).
+Full forwarding and original PAM+scope
 remain runtime gates. A candidate is not authentication authority. See the
 [current forwarding report](../docs/native-auth-parent-forwarding.md),
 [earlier I/O report](../docs/native-auth-conversation-io.md) and
@@ -81,8 +86,8 @@ not native cleanup. A new normal two-group regression also passes. The explicit
 absent from the selected normal ELF. See [setup report](../docs/native-auth-setup.md)
 and [proof](../docs/evidence/native-auth-setup-provenance.json).
 
-Run the forty host component tests with `cargo test --features isolated-fixture`
+Run the forty-one host component tests with `cargo test --features isolated-fixture`
 from this crate. The actual cgroup fixture needs the separately provisioned
 disposable guest; do not run its root entry on the Harbour host.
-One additional ignored helper entry runs only as the exact subprocess of its
-parent regression.
+Two additional ignored helper entries run only as the exact subprocesses of
+their respective parent regressions.

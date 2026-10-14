@@ -9,6 +9,9 @@ keeps that limit separate from the actual real-pipe component execution.
 A later [ordinary ARM component selection](native-auth-components-arm.md) executes
 the unchanged40 library components under an actual Arch ARM64 kernel as UID1000.
 It does not run either complete forwarding loop or promote the compiled fixture.
+A later [host parent process control](native-auth-parent-process.md) adds actual
+ScopeChild APIs against one owned ordinary peer. The host suite becomes41 tests;
+its synthetic workload facts do not qualify Attempt or full scope cleanup.
 
 The production record decoder first accepts a synthetic healthy state through a
 real pipe, then refuses the authored credential-free prompt event. Nineteen

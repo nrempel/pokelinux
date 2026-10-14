@@ -72,6 +72,16 @@ compile/postprocessing and no-boot temporary-directory attempts remain separate
 zero-test failures. No fixture binary, ScopeChild/Attempt, PAM, cgroup workload,
 unlock or physical phone executes. See [ARM components](native-auth-components-arm.md)
 and [proof](evidence/native-auth-components-arm-provenance.json).
+A later positive host process regression now constructs actual ScopeChild from
+one ordinary Child/pidfd and private pipes. Production pending/respond/poll APIs
+transfer the expected-length public response prefix to that peer. Native parent
+poll observes actual peer wait0/EOF, dead pidfd/proc absence and reconciles closed
+bookkeeping. Worker/cgroup observations are synthetic; normal root construction,
+Attempt and complete fixture loops remain unexecuted. All41 host tests, both
+explicit ignored helper invocations, strict Clippy and ARM64 compilation pass.
+The earlier ARM40 selection does not qualify the new test. See
+[parent process report](native-auth-parent-process.md) and
+[proof](evidence/native-auth-parent-process-provenance.json).
 Next: runtime qualification of actual parent/Attempt forwarding and original PAM+scope, including retained
 faillock and remaining fixed alias/filter routes, then broker/actor one-shot
 synced restoration and a normal Messages reopen. Keep Source100ms/no-revival and all hardware gates.

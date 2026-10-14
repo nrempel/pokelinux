@@ -1,0 +1,131 @@
+{
+  "schema": 1,
+  "scope": "Positive actual ScopeChild parent API regression over real owned peer pipes; workload facts synthetic, no production behavior changed",
+  "base_commit": "ea969610d55d17930424672017cdad637ec838e3",
+  "review": {
+    "schema": 1,
+    "classification": "HOST_ACTUAL_SCOPECHILD_APIS_WITH_ONE_OWNED_AUTHORED_PEER",
+    "passed": true,
+    "actual_tool_session": 28645,
+    "actual_terminal_chunk": "897657",
+    "actual_terminal_exit": 0,
+    "actual_test_exit": 0,
+    "tests_passed": 41,
+    "tests_failed": 0,
+    "explicit_ignored_helpers": 2,
+    "both_helpers_invoked_by_their_parent_tests": true,
+    "actual_parent_poll_pending_respond_and_scope_snapshot": true,
+    "peer_natural_wait0_stdout_EOF_pidfd_dead_proc_absent": true,
+    "facts_established_by_passing_final_assertions_bound_to_executed_ELF": true,
+    "parent_occupied_false_reconciles_synthetic_scope_records_with_actual_peer_closure": true,
+    "response_capture_is_expected_length_prefix_only": true,
+    "normal_root_provisioning_constructor_executed": false,
+    "Attempt_or_supervisor_loop_or_PAM_or_actual_cgroup_scope_executed": false,
+    "source_bindings": 21,
+    "all_frozen_and_current_bindings_match": true,
+    "format_and_strict_default_and_all_feature_all_target_Clippy": true,
+    "ARM64_fixture_compiled_only": true,
+    "fresh_same_daemon_exact_CID_absent": true,
+    "selection_sha256": "4c64806b1e3305ecd972048dfca6529e33e8277c9b5dfa240c41c4bba2f32db4",
+    "execution_sha256": "84f9d18bc06264ff289ef32bbdfad49ea1f0b2c3a034e5dae718d56c8b93c274",
+    "test_log_sha256": "a394f3ef1a80f306dd265ad1bb782902854701d3a00ec14f9c3003a08291336a",
+    "host_test_ELF_sha256": "2d15090f147267697415ea88e4d90ab6990f98c4deb40045f11db3694155931c",
+    "ARM64_fixture_ELF_sha256": "c0f0c79d9440a9b1a5172d249ba509bcda72c8022208b20632e633d7370c9573",
+    "peer_source_review_sha256": "eb67c72dac0dde99d5781164dc316d4f46982d965f5595bff10eb69fcd14680d",
+    "sealed_ns": 5953591561496294
+  },
+  "root_review_sha256": "50da353c50132fed9256b51f3ec5a2da379b5286223002a7251d9ef04d01721d",
+  "sources": [
+    {
+      "path": "native-auth/Cargo.lock",
+      "sha256": "59a7f877d2aa1ff2b0a25c6bd31d12201b0af1053716e398436a251972d25d29"
+    },
+    {
+      "path": "native-auth/Cargo.toml",
+      "sha256": "965972df3b99936141b603c67c80931aee4dee831fde6662794bbdbbcf42d88b"
+    },
+    {
+      "path": "native-auth/src/bin/auth-scope-fixture.rs",
+      "sha256": "02fc1b96af27ffef902c4fa6fcb63227748b829407b8c66108d85efd0b498600"
+    },
+    {
+      "path": "native-auth/src/cgroup.rs",
+      "sha256": "543bf0a64565c469bc00ebd33dbb8652cba20eaf08bbfbe3856f564a174ebc45"
+    },
+    {
+      "path": "native-auth/src/command.rs",
+      "sha256": "0208732f37115f5576a10b11855782d67e48d86f71ab3ad6f99f1fe41442d3b6"
+    },
+    {
+      "path": "native-auth/src/command_tests.rs",
+      "sha256": "4a783d469aefb4450541746e90c5f124ff9408e952829340cb4b7da5263007ae"
+    },
+    {
+      "path": "native-auth/src/conversation.rs",
+      "sha256": "e70ec1c725a6be34c48f1c8dd00fe02b3bde15fc22e08e507685436b2c60d6f1"
+    },
+    {
+      "path": "native-auth/src/conversation_io_tests.rs",
+      "sha256": "884620aa6b41fd42dd1645e9f39637181ac35a15261420995a2f6fa66f017e54"
+    },
+    {
+      "path": "native-auth/src/conversation_lifetime_tests.rs",
+      "sha256": "268aecc9dd2c7a4853077229ebeb7aa6bc77e72f1429e5d72518fa57d45c5a6f"
+    },
+    {
+      "path": "native-auth/src/conversation_tests.rs",
+      "sha256": "5f8489ee78c6e66b5b600c1dec4d6ad9b1b9f584c00510bcaaab00d657ffcfe3"
+    },
+    {
+      "path": "native-auth/src/lib.rs",
+      "sha256": "b3d80c8bcbaf0b75e59b403612fc72192a0796799aac44328db9ef54ad2a22ba"
+    },
+    {
+      "path": "native-auth/src/owner.rs",
+      "sha256": "8c9e2ee6cb8e564a139c6f4fad55b444693f761f7f2288d15017ac7551491223"
+    },
+    {
+      "path": "native-auth/src/parent.rs",
+      "sha256": "8598e2f50c85529b6dac349713e9634c12537145d548ca52f59d9df53b4a0d71"
+    },
+    {
+      "path": "native-auth/src/parent_process_tests.rs",
+      "sha256": "1955aaa5746eab2a19bf5878462d5d93f47124844b0c67292ae685487d820da2"
+    },
+    {
+      "path": "native-auth/src/parent_prompt.rs",
+      "sha256": "dc6736b231e2a1e7b29762ae6c6bc3e027888875eb376597346bb7e7ef26c400"
+    },
+    {
+      "path": "native-auth/src/parent_prompt_tests.rs",
+      "sha256": "a16087e69bf681944a8fdf9122de66336f58cb8061ffd745511dcd27bb4578db"
+    },
+    {
+      "path": "native-auth/src/record.rs",
+      "sha256": "63302aa97760b7c4be9e74ca9eac96c7785f97a185b1d255ab646d1d9bb8215d"
+    },
+    {
+      "path": "native-pam/src/wire.rs",
+      "sha256": "91b0b974c21e4d775caca8273e1a6ee4898764b3f88a41117b33185bd741702e"
+    },
+    {
+      "path": "tools/native-auth-scope/delegated.py",
+      "sha256": "ac1fb8d8d39de3cc0c66068b55b1a44abf192d1623077d90598428cf5d67be52"
+    },
+    {
+      "path": "tools/native-auth-setup/delegated.py",
+      "sha256": "e77cfe021f87b4e85dfd5a0d22d5bccf8e165cfb26f86a8a7fe02d222f349296"
+    }
+  ],
+  "limits": [
+    "Test directly constructs the actual ScopeChild from a private ordinary Child/pidfd and pipes; no normal root/provisioning constructor",
+    "Worker PID100, worker wait, ECHILD, worker EOF, populated0 and State/CLOSED are synthetic protocol facts",
+    "Actual peer wait0 and stdout EOF are observed by production poll; parent occupied=false is not actual cgroup closure",
+    "Expected-length public response prefix is compared; this test alone does not exclude trailing or duplicate outbound bytes",
+    "Emergency timeout kill/wait cannot count as success; unrecoverable kernel wait/EOF failures remain infrastructure failure",
+    "Adds only a positive integration regression; separate prior record/command runtime REDs remain historical",
+    "Earlier40-component actual ARM kernel evidence keeps its earlier source and cannot qualify this new test",
+    "No Attempt, complete supervisor/parent loop, original PAM/helper, effective faillock, broker/actor result, unlock, durable clear or normal Messages reopen",
+    "ARM fixture crosscompilation only in this selection; no phone or hardware access"
+  ]
+}

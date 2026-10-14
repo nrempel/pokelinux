@@ -81,6 +81,9 @@ host components over real pipes after record/command REDs; actual full-owner
 forwarding remains unqualified. The unchanged40 library components separately
 pass under an [actual Arch ARM64 kernel](native-auth-components-arm.md) as UID1000;
 that selection runs no complete owner or PAM.
+A later [host parent process regression](native-auth-parent-process.md) exercises
+actual ScopeChild APIs and real peer wait/EOF; its worker/cgroup facts remain
+synthetic. The host suite now passes41 tests, separately from the ARM40 selection.
 Original PAM+scope composition, installed broker/containment, actor-owned receipts,
 exact unlock and synced durable restoration remain open. No physical model is qualified. See
 [worker boundary](native-pam-worker.md).
