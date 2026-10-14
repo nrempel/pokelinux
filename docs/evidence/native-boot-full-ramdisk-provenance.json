@@ -1,0 +1,148 @@
+{
+  "schema": 1,
+  "date_UTC": "2026-10-14",
+  "base_commit": "bc2a546ea28676e50cf9b6ccf7d773f690720813",
+  "evidence_classes": {
+    "four_frame_data_control": "original public parsers plus authored source-bound selection/namespace projection",
+    "runtime": "unchanged authenticated Google kernel on synthetic QEMU virt; explicitly chosen authored-generic counterfactual",
+    "Pixel_loader_request_or_hardware_qualified": false,
+    "production_defect_RED_or_repair_claimed": false
+  },
+  "unchanged_inputs": {
+    "kernel_sha256": "0226c3be4224b02884d4f9b332aee58ec06c65b2263265e80f2498332ef15c06",
+    "native_init_ELF_sha256": "8f97c746cc8ef20eb4d3f2f981f1a24ad6e96b5d88f0d327ca80cf5627847d1d",
+    "native_child_ELF_sha256": "3b15eb4a9fd289e6664c917861f98bbe385e117e26b28abb149b3021e4b19e63",
+    "exact_initrd_sha256": "b997eddd05a5b0000b8c9b5e0432879284b035bae26c00fbf38014ba56cc7faa",
+    "initrd_bytes": 46794223,
+    "expected_kernel_release": "6.6.127-android15-8-g91d825611104-ab16252310-4k",
+    "compiled_cmdline": "console=ttynull stack_depot_disable=on cgroup_disable=pressure kasan.stacktrace=off kvm-arm.mode=protected bootconfig ioremap_guard",
+    "test_cmdline_append": "console=ttyAMA0,115200n8 earlycon=pl011,0x9000000 rdinit=/init panic=1"
+  },
+  "data_control": {
+    "actual_complete_frames_across_two_cases": 8,
+    "actual_nontrailer_records_across_cases": 2301,
+    "all_raw_records_compared_with_original_libarchive": true,
+    "public_parsers": {
+      "liblz4": "1.9.4",
+      "libarchive": "3.7.2",
+      "AOSP_unpack_commit": "d2bb0af5ba6d3198a3e99529c97eda1be0b5a093"
+    },
+    "separate_source_model_vectors": 7,
+    "real_archive_regular_hardlink_entries": 0,
+    "aligned_initial_destination_assumed": true,
+    "zero_prefix_bytes": [
+      0,
+      17,
+      4
+    ],
+    "whole_vendor_boot_fragments": 2,
+    "copy_bound_bytes": 67108864,
+    "stock_generic_case": {
+      "bytes": 48023604,
+      "final_init_sha256": "67e58e501941ff52f7c1b409af6c1a29e4872763d1b32940db3bde7739ed3b41",
+      "final_kmsg": "root character1:11 mode0755",
+      "kernel_or_firmware_executed_for_this_case": false
+    },
+    "native_counterfactual_case": {
+      "bytes": 46794223,
+      "final_init_sha256": "8f97c746cc8ef20eb4d3f2f981f1a24ad6e96b5d88f0d327ca80cf5627847d1d",
+      "final_child_sha256": "3b15eb4a9fd289e6664c917861f98bbe385e117e26b28abb149b3021e4b19e63",
+      "final_kmsg": "root character1:11 mode0600",
+      "supported_loader_request_established": false
+    },
+    "result_sha256": "0264168930197734edfa2cbcce2097e2dc5ca8ad2858e35f3a38155f1ddc3911",
+    "independent_data_review_sha256": "aaae5ce8c90564e45948be34fd95ebffda3fd7858182719442b823421f73917b",
+    "whole75_frozen_metadata_records_rechecked_before_runtime_by_Root": true
+  },
+  "actual_256MiB_failure": {
+    "passed": false,
+    "kernel_unpack_write_error_observed": true,
+    "fallback_initrd_image_ENOSPC_minus28_observed": true,
+    "partial_vendor_init_and_module_loading_observed": true,
+    "vendor_scheduler_module_kernel_panic_observed": true,
+    "native_ACKs_observed": 0,
+    "actual_Docker_CLI_wait_exit": 0,
+    "exact_CID_and_input_closure_passed": true,
+    "record_sha256": {
+      "selection.json": "2512af59170ee0f4bbba47791f83f68d2d0e91859f270336432d107280a4338e",
+      "execution.json": "f7619f709441b51a114ca6cd2d6702ddd8ac3c0cb6cfe561953744e87c01df76",
+      "result.json": "2196a8d456dfd9f77246237ba8312200d7f89d9f4f632a12014df905494b4425",
+      "console.log": "78d2c9abd3ac42a9c2c183726bf7dc559f94bf98cf05e12f922933e2c61e44a4"
+    }
+  },
+  "actual_512MiB_result": {
+    "passed": true,
+    "guest_RAM_MiB": 512,
+    "container_RAM_MiB": 1024,
+    "guest_and_container_CPUs": 2,
+    "container_pids_limit": 64,
+    "outer_seconds": 45,
+    "QMP_setup_seconds": 5,
+    "native_child_seconds": 2,
+    "native_readback_ms": 100,
+    "kernel_ELFs_archive_flags_CPU_PID_deadlines_same_as_failed256_case": true,
+    "precont_actual4RAM_blob_and_effective_kernel_bounds_passed": true,
+    "actual_ACK_events": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "all_ACKs_same_epoch_and_increasing_kernel_sequences": true,
+    "actual_matching_child_wait_exit": 37,
+    "actual_QMP_guest_shutdown": true,
+    "actual_Docker_CLI_wait_exit": 0,
+    "native_init_reached_before_any_vendor_init_log": true,
+    "all_kernel_usermode_helpers_or_module_loads_independently_traced": false,
+    "record_sha256": {
+      "selection.json": "e9babca97df020b8d29b1e6e62a21d6f1894dc8ef79a8d6e34b82432be3819c0",
+      "command.json": "5cf613965e16a2a0c45007ebb0a5e80fe6f7c239b555f8376130fb1b5a9161bc",
+      "run-frozen.py": "9a9d3b316805a5331476607507079b350f59bcae09d69c3aad0b7e84f36d6a02",
+      "execution.json": "5ccc46fa4077beaab8b929ea96ae4bfef542de89784b6dc76e25724c9d38fe89",
+      "result.json": "3c935e251e409a046082d0a4d610520554d047471e37a37a35e62bfddad1f1d1",
+      "console.log": "f9e3f481f12dd708b7648842f485ebf1fc78987054572d9177796b7791bd2619",
+      "qmp-records.json": "4a09c867b44b96be3ea8e7f9134dbae03c30a9d27e54f18f38ecce7fb9152095"
+    }
+  },
+  "capacity_interpretation": {
+    "matched_public_source_selects_default_tmpfs_rootfs": true,
+    "default_tmpfs_block_limit": "totalram_pages()/2",
+    "only_resource_envelope_changed": "guest RAM256\u2192512MiB and container512MiB\u21921GiB, plus corresponding RAM-bound assertion",
+    "inference": "Actual fallback ENOSPC and memory-only successor support capacity diagnosis; first failing initramfs xwrite was not independently traced.",
+    "public_source_bindings": [
+      {
+        "path": "init/do_mounts.c",
+        "url": "https://android.googlesource.com/kernel/common/+/91d825611104e75e1a9e0e0f6b25580eddb68828/init/do_mounts.c?format=TEXT",
+        "bytes": 11226,
+        "sha256": "9962f0566d2128fc25ee45a593289ffd20bb7548bdecb9cafe3cc93105f9d4f9"
+      },
+      {
+        "path": "fs/ramfs/inode.c",
+        "url": "https://android.googlesource.com/kernel/common/+/91d825611104e75e1a9e0e0f6b25580eddb68828/fs/ramfs/inode.c?format=TEXT",
+        "bytes": 7222,
+        "sha256": "418f084d4931bbb79cdc17c3534f6bd4d103cc1c0a57bf1eeac8d6c26898172c"
+      },
+      {
+        "path": "mm/shmem.c",
+        "url": "https://android.googlesource.com/kernel/common/+/91d825611104e75e1a9e0e0f6b25580eddb68828/mm/shmem.c?format=TEXT",
+        "bytes": 131838,
+        "sha256": "4abac0ca771a83228e72018a43663807e69c310bd3cedff72b43c1b6a041cc42"
+      }
+    ]
+  },
+  "Root_runtime_review": {
+    "passed": true,
+    "review_sha256": "cc3261c79e1ab180bb3d6701515aeb5443bf079067df290597bdd501c18d0f75",
+    "positive_external_bindings_rehashed": 151,
+    "negative_external_bindings_rehashed": 143,
+    "whole_raw_console_ACKs_QMP_ROMs_checked": true,
+    "fresh_same_daemon_exact_CID_absence_both": true
+  },
+  "retained_pre_runtime_failure": "First fresh-label command kept the old container name; rejected before a container or kernel started. Preserved, then fixed in a new label.",
+  "remaining_gates": [
+    "Concrete loader request/context selecting authored generic instead of qualifying loaded stock init_boot.",
+    "Actual selected Pixel DTB/DTBO, board startup, module KMI/loading and firmware.",
+    "Phone diagnostics/retrieval/recovery, watchdog/thermal behavior and all physical device gates.",
+    "Full native smartphone init and installed persistent service/desktop closure."
+  ]
+}

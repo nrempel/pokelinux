@@ -98,3 +98,11 @@ References: [pinned host request implementation](https://android.googlesource.co
 [pinned transport implementation](https://android.googlesource.com/platform/system/core/+/a3b721a32242006b59cb12bd62c9133632af3a2d/fastboot/fastboot_driver.cpp),
 [generic boot](https://source.android.com/docs/core/architecture/partitions/generic-boot),
 [vendor boot](https://source.android.com/docs/core/architecture/partitions/vendor-boot-partitions).
+
+## Later full-span control
+
+The [four-frame data and original-kernel result](native-boot-full-ramdisk.md)
+now includes both vendor_boot fragments and projected copy padding. The chosen
+authored-generic stream reaches native init with512MiB guest RAM; its256MiB
+unpack/vendor-panic failure remains separate. This qualifies neither a request
+that realizes that selection nor a change to the static loader findings above.

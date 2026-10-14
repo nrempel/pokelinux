@@ -233,7 +233,26 @@ whole vendor-boot span includes both fragments and projected helper padding; the
 earlier chosen-three-frame overlay proves neither this layout nor loader selection.
 See [bounded proof](evidence/native-boot-loader-provenance.json). Next: the exact
 RAM request/context selecting authored init, usable phone diagnostics, and the
-normal Messages service tracer on this kernel. The subsequent trusted lock→PAM
+normal Messages service tracer on this kernel. A later
+[full ramdisk result](native-boot-full-ramdisk.md) executes the complete padded
+four-frame authored-generic counterfactual:512MiB guest/1GiB container reaches
+native init, four ACKs, child wait37 and QMP shutdown. Its original256MiB run has
+actual unpack write error/fallback ENOSPC, partial vendor init/module loading and
+scheduler panic; it remains failed. The memory-only successor preserves all
+input bytes/flags/CPU/PID/deadline limits. This is not a realized loader request.
+
+The current normal Messages service now also passes three
+[Google-kernel history groups](evidence/native-google-kernel-messages-history-provenance.json):
+two equal locally seeded PDUs retain distinct exact IDs, project before the first
+app launcher, read through current authority, deny after revocation with the
+reader T-held, and reopen the same journal with fresh authority. Root checks226
+bindings,33 response SCM generations, five direct waits and six worker
+pidfd-dead/proc-absent observations. No independent native-worker wait trace,
+live receiving, normal Qt or reboot/power-loss persistence is claimed. The
+fixture adds actual random/urandom nodes after the retained UUID ENOENT failure;
+full native init must provision them.
+
+The subsequent trusted lock→PAM
 unlock→reopen transaction must preserve policy/history, establish current Source
 and app authority, and never infer recovery from unlocked facts or deleted seals. No physical phone is accessed.
 

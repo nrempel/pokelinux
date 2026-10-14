@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "date_UTC": "2026-10-14",
+  "base_commit": "bc2a546ea28676e50cf9b6ccf7d773f690720813",
+  "passed": true,
+  "evidence_class": "current normal native Messages history-only service under unchanged authenticated Google kernel on synthetic QEMU virt",
+  "kernel_sha256": "0226c3be4224b02884d4f9b332aee58ec06c65b2263265e80f2498332ef15c06",
+  "kernel_release": "6.6.127-android15-8-g91d825611104-ab16252310-4k",
+  "normal_service_ELF_sha256": "a4e3879c954df75b7b8e6038986af9eab94471e409364430089e209676563ab7",
+  "unchanged_production_source_files": 89,
+  "groups": 3,
+  "actual_observations": {
+    "local_seed_actual_wait_exit": 0,
+    "distinct_equal_PDU_raw_occurrences": 2,
+    "projected_rows": 2,
+    "principal_count_sampled_before_projection": 0,
+    "projection_observed_before_first_launcher": true,
+    "zero_principals_at_projection_is_from_owned_spawn_order_not_atomic_SQL_sample": true,
+    "current_authority_pages_and_clean_reopen_preserve_exact_receipt_IDs": true,
+    "default_reads_denied": true,
+    "held_reader_observed_T": true,
+    "post_revocation_reply": "denied",
+    "held_storage_snapshot_ns": 1558045,
+    "direct_service_Stop_waits": [
+      0,
+      0
+    ],
+    "actual_direct_child_waits": 5,
+    "worker_pidfd_dead_and_proc_absent": 6,
+    "native_worker_wait_syscalls_independently_traced": false,
+    "final_wait_all_ECHILD": true,
+    "actual_QMP_guest_shutdown": true,
+    "actual_Docker_CLI_wait_exit": 0,
+    "fresh_same_daemon_exact_CID_absence": true
+  },
+  "fixture_nodes": {
+    "random": "root0666 character1:8",
+    "urandom": "root0666 character1:9",
+    "actual_metadata_qualified": true,
+    "UUID_backed_seed_success_qualifies_kernel_entropy_use_not_quality_or_independent_syscall_trace": true
+  },
+  "Root_independent_review": {
+    "passed": true,
+    "review_sha256": "7969edcefce76aab24ff80b4cf19229d8157133601f914444e20f8e810b96b1e",
+    "local_bindings_rehashed": 119,
+    "external_bindings_rehashed": 107,
+    "actual_response_SCM_generations_checked": 33,
+    "raw_rows_exact_IDs_waits_and_closure_checked": true
+  },
+  "private_record_sha256": {
+    "selection.json": "9e49b2ce29978a304bce8cfccef28c12258a0d82d866c98e5107b6efaa111a51",
+    "command.json": "b01799137b96bd32024b1afe27b528782e444665adabf4e983bb7dece998f4e6",
+    "execution.json": "7b43bb983d429e0be425e6d4c5fc60b5d51c71648b1cde691c0fa150d7ae678b",
+    "result.json": "11111ba7fb8647c9e69c543c6dc693610e68a14fb7325cc7d46dd446054dc2d2",
+    "console.log": "425057eeff3d0e153d691ef1ab4099f024c42bfe09265af20a73a938c2b8ac52",
+    "terminal-independent-audit.json": "69fe18fdf9ea57473a2733a0dd84a29a090833454e4346712b676f74f7d2cb63",
+    "completion-handoff.json": "6324126bc6855f2d870254da83237fc3a31e8bd0ae41fa355dd0de593bb4576c",
+    "projection-measurement-clarification.json": "bba8af98c12734e52c54de75014eee8f19bbcd486e2916d2ab0b2273c2a8c446"
+  },
+  "retained_failures": [
+    "Inventory/preparation failure before execution.",
+    "Fixture dependency placed under profile.release: compiler failure before kernel.",
+    "First actual seed panic had wait101 but no retained panic text; no service ran.",
+    "Diagnostic epoch records missing random/urandom and actual UUID entropy ENOENT panic; no service ran.",
+    "Fresh node-only successor uses exact same compiled bytes and passes."
+  ],
+  "scope_limits": [
+    "Same-boot tmpfs durable acknowledgement and clean process reopen, no power-loss persistence",
+    "App UID10000 is a configured real lifecycle qualification client; no normal UID11010 Qt/window claim",
+    "Real kernel random character nodes were fixture-provisioned; future production native-init/service closure must provision baseline nodes",
+    "UUID source-bound successful kernel entropy read, no independent syscall trace or entropy-quality claim",
+    "No live Binder receiver or modem/ACK/send/carrier path in the normal history-only binary",
+    "No root disk/NIC/hostdevices/phone; unchanged protected kernel defaults and production restricted bootprobe",
+    "Terminal report precedes final serial drain; complete external records and actual guest shutdown observed"
+  ],
+  "live_Binder_receive_or_modem_carrier_qualified": false,
+  "normal_Qt_UI_or_Original_Omarchy_session_qualified": false,
+  "power_loss_or_phone_qualified": false,
+  "production_defect_RED_or_repair_claimed": false,
+  "runtime": {
+    "guest_RAM_MiB": 256,
+    "container_memory": "512m",
+    "guest_CPUs": 2,
+    "separate_test_PID1_ELF_sha256": "4fcc17debbd3c98374fa719f79bbc3119242b2bda7be6fac9f54b68f68b1a68b",
+    "same_four_frame_archive_or_PID1_as_boot_probe_selected": false,
+    "compiled_kernel_defaults_preserved": true
+  }
+}

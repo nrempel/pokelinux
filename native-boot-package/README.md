@@ -188,3 +188,12 @@ References: [AOSP vendor ramdisk concatenation and selection](https://source.and
 [boot header v4](https://source.android.com/docs/core/architecture/bootloader/boot-image-header),
 [Linux initramfs format](https://docs.kernel.org/driver-api/early-userspace/buffer-format.html),
 [LZ4 legacy framing](https://github.com/lz4/lz4/blob/v1.10.0/doc/lz4_Frame_format.md#legacy-frame).
+
+## Later complete-span kernel control
+
+The [full four-frame experiment](../docs/native-boot-full-ramdisk.md) separately
+retains both vendor_boot fragments and projected helper padding. Its explicit
+authored-generic counterfactual reaches native init under the unchanged Google
+kernel with512MiB guest RAM; the256MiB partial-unpack/vendor-panic failure is
+preserved. This does not modify this package's chosen-three-frame calculation
+or establish the loader request needed to select authored generic data.

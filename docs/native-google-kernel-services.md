@@ -54,3 +54,25 @@ radio traffic. An installed normal Qt/Omarchy session, full font resources,
 trusted unlock and source restoration, persistent storage/reboot recovery and
 production service supervision remain required. Native modem/carrier, board
 startup, display/input, audio, camera and suspend/wake retain their hardware gates.
+
+## Later current normal Messages history composition
+
+Three groups now execute the unchanged current89-source normal Messages service
+in a separate256MiB RAM-only guest with an authored test PID1, under this Google
+kernel. Local seed writes two equal PDUs with distinct receipt
+IDs. The service projects both before any app launcher; actual UID10000 reads
+require current authority, and exact IDs survive a clean same-journal reopen.
+With the actual reader T-held, revocation yields denied and Stop remains
+responsive; six workers are pidfd-dead/proc-absent, with five direct fixture
+child waits0 and final ECHILD. Native-worker wait syscalls are not independently
+traced. Root separately checks226 bindings and33 SCM app-generation replies.
+See [history proof](evidence/native-google-kernel-messages-history-provenance.json).
+
+The principal-count sample0 precedes the two-row projection and the first
+launcher; it is not a zero-row result or an atomic SQLite/principal sample.
+The fixture's real random1:8 and urandom1:9 nodes resolve an actual retained
+UUID entropy ENOENT setup failure; kernel bytes and compiled service/fixture
+bytes remain unchanged. Full native init must provision this baseline.
+This is locally seeded, same-boot tmpfs history with an actual qualification
+client. Live Binder receiving, normal UID11010 Qt/Omarchy, persistent reboot
+recovery and phone evidence remain separate.

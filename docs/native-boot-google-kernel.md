@@ -98,3 +98,8 @@ The [native service prerequisite result](native-google-kernel-services.md)
 qualifies14 existing identity and three standalone lifecycle controls using a
 separate test PID1. Neither result repins this original single-boot proof or
 qualifies Pixel board, admission or physical recovery.
+
+A later [complete four-frame counterfactual](native-boot-full-ramdisk.md) also
+reaches native init under this kernel with512MiB guest RAM. The256MiB partial
+unpack/vendor-panic failure is retained. The original single-generic run's
+no-vendor-execution scope remains specific to its own selection.
