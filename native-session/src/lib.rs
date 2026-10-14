@@ -13,7 +13,7 @@ use std::{
 pub const SAMPLE_BUDGET_NS: u64 = pokelinux_lifecycle::session::SAMPLE_BUDGET_NS;
 pub const MAX_FRAME: usize = 1024;
 pub const MAX_DRAIN: usize = 16;
-pub use pokelinux_lifecycle::session::NativeFocus;
+pub use pokelinux_lifecycle::session::{NativeFocus, ProtocolUnlock};
 /// Mapped lock-surface peer facts. Neither mapping nor protocol completion is
 /// proof of a secure frame, authentication or authority to unlock.
 #[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize)]
@@ -40,6 +40,19 @@ pub struct Frame {
     pub lock_completed: bool,
     pub focus: Option<NativeFocus>,
     pub locker: Locker,
+    #[serde(deserialize_with = "required_option")]
+    pub lock_generation: Option<u64>,
+    #[serde(deserialize_with = "required_option")]
+    pub protocol_unlock: Option<ProtocolUnlock>,
+}
+// An explicit null is required. Serde's implicit missing-Option default must not
+// silently accept earlier wire revisions.
+fn required_option<'de, D, T>(deserializer: D) -> Result<Option<T>, D::Error>
+where
+    D: serde::Deserializer<'de>,
+    T: Deserialize<'de>,
+{
+    Option::<T>::deserialize(deserializer)
 }
 pub struct Observer {
     fd: Option<OwnedFd>,
@@ -53,6 +66,8 @@ pub struct Observer {
     view: ProcessView,
     sequence: u64,
     revision: u64,
+    accepted_generation: u64,
+    unlock_eligible: Option<u64>,
     failed: bool,
 }
 fn canonical(source: &str) -> bool {
@@ -98,6 +113,8 @@ impl Observer {
             view,
             sequence: 0,
             revision: 0,
+            accepted_generation: 0,
+            unlock_eligible: None,
             failed: false,
         })
     }
@@ -115,6 +132,58 @@ impl Observer {
                 .sampled_at_ns
                 .checked_add(SAMPLE_BUDGET_NS)
                 .is_some_and(|until| now < until)
+    }
+    fn accept_protocol(&mut self, frame: &Frame) -> bool {
+        if !pokelinux_lifecycle::session::valid_protocol_facts(
+            frame.locked,
+            frame.sequence,
+            frame.sampled_at_ns,
+            frame.lock_generation,
+            frame.protocol_unlock.as_ref(),
+        ) {
+            return false;
+        }
+        let previous_unlock = self
+            .current
+            .as_ref()
+            .and_then(|old| old.protocol_unlock.as_ref());
+        if let Some(generation) = frame.lock_generation {
+            let previous_generation = self.current.as_ref().and_then(|old| old.lock_generation);
+            if previous_generation != Some(generation) {
+                if self.accepted_generation.checked_add(1) != Some(generation) {
+                    return false;
+                }
+                self.accepted_generation = generation;
+            }
+            self.unlock_eligible = Some(generation);
+        } else if frame.locked {
+            // A new unknown lock or destroyed association retires the earlier
+            // operation even if its accepted successor has not mapped yet.
+            self.unlock_eligible = None;
+        }
+        if let Some(event) = &frame.protocol_unlock {
+            if let Some(previous) = previous_unlock {
+                if previous != event {
+                    return false;
+                }
+            } else {
+                if self.unlock_eligible != Some(event.generation)
+                    || event.generation != self.accepted_generation
+                    || event.sequence != frame.sequence
+                    || self
+                        .current
+                        .as_ref()
+                        .is_none_or(|old| event.observed_at_ns < old.sampled_at_ns)
+                {
+                    return false;
+                }
+                self.unlock_eligible = None;
+            }
+        } else if previous_unlock.is_some() && !frame.locked {
+            // Exact occurrences cannot disappear on ordinary unlocked heartbeats.
+            return false;
+        }
+        true
     }
     pub fn poll(&mut self) -> io::Result<()> {
         if self.failed {
@@ -196,6 +265,9 @@ impl Observer {
                 (None, None, None) => (None, None),
                 _ => return self.fail(io::ErrorKind::InvalidData),
             };
+            if !self.accept_protocol(&frame) {
+                return self.fail(io::ErrorKind::InvalidData);
+            }
             let same_focus = match (&self.focus, &focus) {
                 (None, None) => true,
                 (Some(left), Some(right)) => left.equivalent(right, &self.view),
@@ -211,6 +283,8 @@ impl Observer {
             if self.current.as_ref().is_none_or(|previous| {
                 previous.locked != frame.locked
                     || previous.lock_completed != frame.lock_completed
+                    || previous.lock_generation != frame.lock_generation
+                    || previous.protocol_unlock != frame.protocol_unlock
                     || !same_focus
                     || !same_locker
             }) {
@@ -347,6 +421,8 @@ impl pokelinux_lifecycle::session::Provider for Observer {
             locked: frame.locked,
             focus: self.focus.clone(),
             locker: self.locker.clone(),
+            lock_generation: frame.lock_generation,
+            protocol_unlock: frame.protocol_unlock.clone(),
         }))
     }
 }

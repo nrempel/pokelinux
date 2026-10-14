@@ -1,0 +1,143 @@
+{
+  "schema": 1,
+  "date_UTC": "2026-10-14",
+  "publication_base_commit": "e44f72d26f0d05c169c2b443b48026cb3d1e7fdc",
+  "scope": "exact accepted-object generation and historical protocol unlock facts; no native authentication or restoration authority",
+  "production_and_test_sources": {
+    "native-lifecycle/src/session.rs": "59ef191233213deb4dac8c50b3f1e72beb5fd4f8b63ff2aa555d4a71a5dd6bfb",
+    "native-lifecycle/src/authority.rs": "ca9755fb8cdbfe0fe94949da4cfd517ea5974015eee45231134b2c191fc1feb5",
+    "native-session/src/lib.rs": "eead20709fa5e45ad3c4f69567e7c54eea6a091a5b04937d42f4341831242872",
+    "native-session/src/bin/session-peer-fixture.rs": "52f10c2ed7f5cf9d0929845cd90df1a0df5865d86326e9cbae37185a56d42b82",
+    "native-session/src/bin/session-observer-fixture.rs": "ba62ad6b752788aa7f018a1b10bc63c421af538784a08c50dbfe342c9ca68fe3",
+    "native-session/tests/process.rs": "7159219f13204b10c971c32dd33575b13f94178ff4b832eff52f891492372afd",
+    "native-session/tests/support/protocol_generation.rs": "75f79ec8bfcec2cf70d4b5810b7007db4411621849cf74fdfdfa1a878cdca740",
+    "tools/native-session-compositor/adapter.cpp": "b525e1cbeabcb622aaf742931eaa5c764cc815ac2b47cd7a8f0920701d73e899"
+  },
+  "strict_chronology": {
+    "original_producer_only_RED": {
+      "prerequisite_groups_passed": 3,
+      "required_generation_cause_equivalence_failed": true,
+      "aggregate_passed": false,
+      "supervisor_exit": 1,
+      "Rust_Observer_executed": false,
+      "Root_review_sha256": "bfab30dae836bd65e12216e63385d62cbc0c79f7da6991f7a44802ce27afe5fd",
+      "selection_sha256": "218d6753e72391f000089f1bbc3c7eef440a4066b0d64ae5e4bde546de923598",
+      "execution_sha256": "3a2f05a9ffcfe8e6af3adeab3dc72b803dc488fa28db150ceb427080635fe412",
+      "result_sha256": "ae4bc43e0d2a16b84df7e4697e6653f2019cde900e6eb53cfeb44dd82898a6a8",
+      "command_sha256": "f98a75ae57eae7edcac472c1b3c02035795257f7357e30df19297a237aeff878"
+    },
+    "host_packet_RED": {
+      "actual_compilation_completed": true,
+      "actual_passed": 2,
+      "actual_failed": 15,
+      "four_required_positive_admissions_failed": true,
+      "original_qualifier_false_preserved": true,
+      "separate_postrun_classification_sha256": "f3e81add714e837ec8fd06db9d3ec4dd45c1db3123f1bf29d79dd51f9e0f0382",
+      "negatives_failing_at_valid_prefix_not_semantic_proof": true,
+      "selection_sha256": "0b0ae91c276300b835b3820cb96ae7314f99e90d791b0e8e90fc9522ea16af1a",
+      "execution_sha256": "eeee8f333e21455e929431486524a5b630dd6d53d06bd8af4910a845a257d8f1",
+      "command_sha256": "30801eb356e9d4577f4fb404c441065e64a3de5e75e7d587095e994936fd0a65"
+    },
+    "host_checks_in_failed_build_aggregate": {
+      "actual_packet_groups_passed": 55,
+      "actual_fixture_peer_waits_exit0": 72,
+      "both_crates_fmt_clippy_passed": true,
+      "whole_aggregate_passed": false,
+      "whole_aggregate_failure": "extra lifecycle library invocation under UID1000 fails seven explicit root prerequisites; five pass",
+      "actual_CLI_exit": 101,
+      "selection_sha256": "f77d32611d751bbb027168f645f5039f42b458fcec4619999a915c0887e4bbb2",
+      "execution_sha256": "667c368db7f9e6d1de787ba6738f5196e0e5d273fad0d85108be262fa0bba75f",
+      "command_sha256": "2aa28e48e03a46d1ce5a52b4a8ccb0c25f0908b13603e9c9bc0d758892eb40ea"
+    },
+    "static_ARM_compile": {
+      "same_source_files": 37,
+      "static_AArch64_ELFs": 5,
+      "actual_CLI_exit": 0,
+      "ARM_execution_in_compile_phase": false,
+      "Root_component_review_sha256": "24d4fc522e223cad539eeedb1434f70fba5c166d2c9c95498c2d96b4525aa92d",
+      "selection_sha256": "7685dc53b249e534d4938fdf5033c808a78f3ef860a5a3d37c9a4a1e6b1383da",
+      "execution_sha256": "e0eaabf872b3f51023b312f1437157f8d94769215b872373c62dce7ab07eb0cc",
+      "command_sha256": "e51c5c0a7aba29600fe12bea3ea04c2ab2a99438d2c2c41b50d03e31fd505e44"
+    },
+    "actual_Original_to_Rust_ARM_GREEN": {
+      "aggregate_passed": true,
+      "actual_groups_passed": 8,
+      "actual_ARM_session_process_cases": 55,
+      "actual_ARM_lifecycle_components": 12,
+      "actual_same_owned_process_generations": [
+        1,
+        2
+      ],
+      "exact_event_sticky_heartbeats": 3,
+      "force_then_later_real_inert_object_request_no_exact_event": true,
+      "late_attachment_generation_unknown_through_actual_protocol_unlock": true,
+      "actual_CLI_exit": 0,
+      "kernel": "7.1.6-1-aarch64-ARCH",
+      "current_Source_adapter_ELF_sha256": "78863c8a2396a40eba7b0ce4e5cc0626ee9788da1a586945dad69364111ccbf5",
+      "native_observer_ELF_sha256": "773de33898f194113e40a7c51f3706ddb80ef6322959c26d81941973f4b9cb87",
+      "Root_final_review_sha256": "b070f6ccc30291daf473d304c5d65c9c0e489bf7a1675d25556e722c285552aa",
+      "selection_sha256": "aed2afe0f463225e26a76f8055e5f64944136ef94bf78bb2ade44c08a4ea9e64",
+      "execution_sha256": "efcc2d8c45c6f7ddfa98d0208caf1d78bd104b6bee1d794794682cd67757b0b2",
+      "result_sha256": "9248f5e2d9372352568d0d611101731bdb31dfc4990967b0686bd50738d030b6",
+      "command_sha256": "d55cbcbdbe48aa7aae4194d6a4b24a6adf2905cf760aa4475085bca4ac7dc740"
+    }
+  },
+  "current_wire": {
+    "required_nullable_fields": [
+      "lock_generation",
+      "protocol_unlock"
+    ],
+    "occurrence_fields": [
+      "generation",
+      "sequence",
+      "observed_at_ns"
+    ],
+    "nonzero_Source_scoped_checked_accepted_counter": true,
+    "observed_candidate_surface_equals_actual_current_manager_surface": true,
+    "weak_protocol_references_only": true,
+    "bounded_candidates": 16,
+    "bounded_surfaces_per_candidate": 16,
+    "sticky_immutable_occurrence_across_unlocked_heartbeats": true,
+    "no_PID_pointer_sequence_or_observer_revision_as_generation": true,
+    "old_omitted_fields_refused": true,
+    "sample_budget_ns_unchanged": 100000000,
+    "cadence_ms_unchanged": 25,
+    "max_frame_bytes_unchanged": 1024,
+    "max_drain_packets_unchanged": 16,
+    "authority_added": false
+  },
+  "actual_joint_ownership": {
+    "separate_fresh_compositor_Source_epochs": 2,
+    "exclusive_actual_Rust_Observer_receivers": 2,
+    "Python_Source_recvmsg_or_relay": false,
+    "actual_original_public_headers_hashed": 508,
+    "actual_native_compiler_waits_exit0": 4,
+    "actual_direct_guest_waits_exit0": 29,
+    "actual_component_peer_waits_exit0": 72,
+    "adopted_descendants": 0,
+    "final_subreaper_ECHILD": true,
+    "Source_terminal_error_during_each_owned_shutdown": "timed out",
+    "failure_observed_before_explicit_closing": false,
+    "independently_timestamped_Source_death_causality_claimed": false,
+    "same_daemon_fresh_exact_CID_absence": true,
+    "Root_selected_local_and_host_hashes_checked": 93,
+    "Root_external_hashes_checked": 93,
+    "qcow_logical_file_bytes": 27459584,
+    "unchanged_overlay_cap_bytes": 268435456
+  },
+  "separate_evidence_classes": {
+    "original_code": "original Hyprland with authored native Wayland protocol client; not original Quickshell/PAM",
+    "synthetic_IPC": "real credentials/pidfds/SCM_RIGHTS with authored packet peers",
+    "actual_ARM_kernel": "unchanged Arch7.1 guest, not ARM user-mode emulation or Google6.6",
+    "physical_phone": false
+  },
+  "remaining_gates": [
+    "actor-owned authentication attempts and liveness/result consumption checks",
+    "supervised native PAM worker and trusted locker conversation",
+    "one-shot exact-operation receipt and synced durable restoration followed by normal Messages read",
+    "accepted replacement/refused-candidate/counter-exhaustion actual compositor controls",
+    "production privileged launcher/procfs/runtime containment and secure presentation",
+    "Google6.6 compositor integration and physical Pixel hardware"
+  ],
+  "proprietary_binaries_raw_decompilation_credentials_or_raw_private_audit_artifacts_published": false
+}

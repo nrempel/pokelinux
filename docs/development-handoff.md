@@ -18,20 +18,23 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
-The owned mapped-locker fact wire is implemented after a qualified original
-compositor RED and separate host process RED. All38 host and38 actual Arch ARM
-process groups plus five original compositor groups pass. The prior functional
-pass remains an aggregate failure at the256MiB overlay guard; a fresh fixture
-stages component ELFs on `/run` tmpfs and passes within the unchanged cap. The required tagged locker state
-and retained SCM_RIGHTS pidfd add no unlock capability or permission. Next bind
-an actually observed lock-protocol generation and exact-object unlock, then
-implement supervised native authentication and durable restoration. The separate
-[Original PAM prerequisite](native-original-pam-prerequisite.md) now passes wrong
-and correct typed outcomes under an actual Arch ARM kernel; it does not supply
-an actor-owned authentication receipt or qualify restoration.
-Do not use mapped PID, observer revision, global unlock or a renewed expired
-Source as a restoration receipt. See [owned locker facts](native-session-owned-locker.md).
+The current Source now supplies an observed accepted lock-operation counter and
+an exact-object protocol-unlock occurrence, retained in Rust internal snapshots.
+Original producer and separate actual-packet REDs precede the repair. All55 host
+packet cases pass. The joint original-compositor→Rust observer run passes eight
+groups, including55 actual Arch ARM packet cases and12 lifecycle components. One live client establishes
+successive generations; real exact unlock stays sticky, forced unlock plus a
+later inert-object request supplies no positive cause, and late first attachment
+stays generation-unknown. No authentication or restoration authority is added.
+See [contract and bounded provenance](native-session-lock-generation.md).
 
+Next implement actor-owned attempts and supervised native authentication, then
+one-shot exact-operation restoration, synced durable policy and a normal Messages
+read. The separate [Original PAM prerequisite](native-original-pam-prerequisite.md)
+passes typed wrong/correct responses but supplies no actor-owned receipt. Do not
+use a mapped PID, observer revision, global unlock, process death, or a renewed
+expired Source as restoration authority. Preserve the earlier
+[owned-locker selections](native-session-owned-locker.md) separately.
 The actor now terminally refuses locker changes without a corresponding sequence/
 semantic revision and unlocked snapshots with a locker. Three actual typed-
 Provider tests fail before the repair; all four focused controls and all12
@@ -49,6 +52,14 @@ aggregates remain failed. Font resources, full parser/Border/normal-window
 rendering and installed Source/lock/supervision remain open; the partial Qt app
 migration stays private. See [alpha checkpoint](native-appearance-alpha.md) and
 [proof](evidence/native-appearance-alpha-provenance.json).
+
+Private font-resource attempts have not qualified a resource RED: an initial
+setup failure precedes a reproducible Original/native baseline pixel mismatch.
+A later getter-only observation run completes two capture pairs and owned cleanup
+but keeps the pixel-equivalence aggregate failed. Font data, recorded geometry
+and renderer API agree; application defaults differ and cause remains unproven.
+The backend is absent in that authored component host; no normal Messages font
+or full installed-theme result is claimed.
 
 The historical preceding schema2 owner publishes exact typed style,
 with generated/user overlays, all8font/6spacing tokens and full-payload revision/

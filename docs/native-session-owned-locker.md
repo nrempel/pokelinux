@@ -43,8 +43,10 @@ task remains admissible without a policy fence. These checks do not turn a
 cached locker into authentication authority.
 
 Mapped ownership is distinct from protocol completion. Hyprland's completion
-flag can be set after a timeout without secure frames. Neither flag identifies
-an exact accepted lock-protocol generation. Late first attachment can establish
+flag can be set after a timeout without secure frames. Neither flag alone identifies
+an exact accepted lock-protocol generation. The later [operation facts](native-session-lock-generation.md)
+add a separately observed accepted-object counter and exact protocol event; they
+still add no authentication or restoration authority. Late first attachment can establish
 the mapped process but cannot reconstruct an earlier protocol object. Trusted
 PAM, exact-generation unlock evidence, Source restoration and durable policy
 completion remain required before an unlock may restore native reads.

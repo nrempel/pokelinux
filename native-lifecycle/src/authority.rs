@@ -825,6 +825,8 @@ mod tests {
                 locked: false,
                 focus: None,
                 locker: None,
+                lock_generation: None,
+                protocol_unlock: None,
             },
             crate::boottime_ns(),
         )
@@ -844,6 +846,8 @@ mod tests {
                 locked: false,
                 focus: None,
                 locker: None,
+                lock_generation: None,
+                protocol_unlock: None,
             },
             crate::boottime_ns(),
         )
@@ -864,6 +868,8 @@ mod tests {
             locked: true,
             focus: None,
             locker,
+            lock_generation: None,
+            protocol_unlock: None,
         }
     }
     fn own_locker() -> crate::session::OwnedFocus {

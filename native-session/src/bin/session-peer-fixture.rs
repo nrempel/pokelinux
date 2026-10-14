@@ -13,6 +13,8 @@ fn wire(source: &str, mode: &str, sequence: u64) -> Vec<u8> {
         locked: false,
         lock_completed: false,
         locker: Locker::Unavailable,
+        lock_generation: None,
+        protocol_unlock: None,
         focus: Some(NativeFocus {
             pid: std::process::id(),
             uid: 11010,
@@ -186,6 +188,71 @@ fn locker_packet(fd: &OwnedFd, source: &str, mode: &str, sequence: u64) -> io::R
     }
     packet_with_rights(fd, &serde_json::to_vec(&frame).unwrap(), &[owned.as_fd()])
 }
+/// Authored wire-only inputs. These are synthetic real packets, not protocol facts.
+fn generation_packets(
+    fd: &OwnedFd,
+    source: &str,
+    commands: &str,
+    sequence: &mut u64,
+    sticky: &mut Option<serde_json::Value>,
+    previous_sample: &mut u64,
+) -> io::Result<()> {
+    let specs: Vec<serde_json::Value> = serde_json::from_str(commands)?;
+    if specs.is_empty() || specs.len() > 16 {
+        return Err(io::ErrorKind::InvalidInput.into());
+    }
+    for spec in specs {
+        *sequence = sequence.checked_add(1).ok_or(io::ErrorKind::InvalidInput)?;
+        let sampled = boottime_ns();
+        let mut frame = serde_json::json!({
+            "source":source,"sequence":*sequence,"sampled_at_ns":sampled,
+            "locked":spec["locked"],"lock_completed":spec["locked"],"focus":null,
+            "locker":{"state":"unavailable"}
+        });
+        if let Some(value) = spec.get("lock_generation") {
+            frame["lock_generation"] = value.clone();
+        }
+        if let Some(value) = spec.get("protocol_unlock") {
+            let mut event = value.clone();
+            if event == "repeat" {
+                event = sticky.clone().ok_or(io::ErrorKind::InvalidInput)?;
+            } else if event.is_object() {
+                if event["sequence"] == "this" {
+                    event["sequence"] = (*sequence).into();
+                } else if event["sequence"] == "future" {
+                    event["sequence"] = sequence.checked_add(1).unwrap().into();
+                }
+                if event["observed_at_ns"] == "sample" {
+                    event["observed_at_ns"] = sampled.into();
+                } else if event["observed_at_ns"] == "future" {
+                    event["observed_at_ns"] = sampled.checked_add(1).unwrap().into();
+                } else if event["observed_at_ns"] == "before-previous" {
+                    event["observed_at_ns"] = previous_sample.saturating_sub(1).into();
+                }
+                *sticky = Some(event.clone());
+            }
+            frame["protocol_unlock"] = event;
+        }
+        let mapped = spec["mapped"] == true;
+        if mapped {
+            frame["locker"] = serde_json::json!({"state":"mapped","pid":std::process::id(),
+                "uid":rustix::process::getuid().as_raw(),"gid":rustix::process::getgid().as_raw()});
+        }
+        let bytes = serde_json::to_vec(&frame)?;
+        eprintln!("ACTUAL_GENERATION_WIRE_SEND {frame}");
+        if mapped {
+            let peer = rustix::process::pidfd_open(
+                rustix::process::getpid(),
+                rustix::process::PidfdFlags::empty(),
+            )?;
+            packet_with_rights(fd, &bytes, &[peer.as_fd()])?;
+        } else {
+            plain_packet(fd, &bytes)?;
+        }
+        *previous_sample = sampled;
+    }
+    Ok(())
+}
 fn main() -> io::Result<()> {
     let args: Vec<_> = std::env::args().collect();
     if args.len() == 4 && args[1] == "--expect-source-fd-closed" {
@@ -215,6 +282,8 @@ fn main() -> io::Result<()> {
     let until = boottime_ns() + 10_000_000_000;
     let mut own_sequence = 0;
     let mut focus_child = None::<(std::process::Child, OwnedFd, u32)>;
+    let mut generation_event = None;
+    let mut generation_previous_sample = 0;
     while boottime_ns() < until {
         match ipc::receive(&command)? {
             Some((bytes, _)) => {
@@ -226,7 +295,16 @@ fn main() -> io::Result<()> {
                     }
                     return Ok(());
                 }
-                if mode.starts_with("focus-child-") || mode.starts_with("locker-child-") {
+                if let Some(specs) = mode.strip_prefix("generation-wire:") {
+                    generation_packets(
+                        &fd,
+                        source,
+                        specs,
+                        &mut own_sequence,
+                        &mut generation_event,
+                        &mut generation_previous_sample,
+                    )?;
+                } else if mode.starts_with("focus-child-") || mode.starts_with("locker-child-") {
                     let locker = mode.starts_with("locker-child-");
                     let action = mode
                         .strip_prefix("locker-child-")

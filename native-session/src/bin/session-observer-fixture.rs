@@ -63,6 +63,9 @@ fn main() -> io::Result<()> {
             let focused = snapshot.as_ref().and_then(|s| s.focus.as_ref());
             let locker = snapshot.as_ref().and_then(|s| s.locker.as_ref());
             emit(json!({"event":"sample","frame":frame,
+                "revision":snapshot.as_ref().map(|s| s.revision),
+                "snapshot_lock_generation":snapshot.as_ref().and_then(|s| s.lock_generation),
+                "snapshot_protocol_unlock":snapshot.as_ref().and_then(|s| s.protocol_unlock.as_ref()),
                 "has_owned_focus":focused.is_some(),
                 "has_owned_locker":locker.is_some(),
                 "locker_peer_matches_metadata":locker.map(|f| view.matches(f.pidfd(), f.pidfd(), f.metadata.pid).unwrap_or(false)),

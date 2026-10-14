@@ -24,6 +24,9 @@
 #include <limits>
 #include <stdexcept>
 #include <string>
+#include <memory>
+#include <optional>
+#include <vector>
 
 namespace {
 int output = -1;
@@ -36,6 +39,25 @@ wl_event_source* timer = nullptr;
 CHyprSignalListener focusListener, lockListener, unlockListener, admissionListener;
 constexpr int PERIOD_MS = 25;
 constexpr size_t MAX_FRAME = 1024;
+constexpr size_t MAX_CANDIDATES = 16;
+constexpr size_t MAX_LOCK_SURFACES = 16;
+struct LockCandidate {
+    WP<CSessionLock> object;
+    std::vector<WP<CSessionLockSurface>> surfaces;
+    CHyprSignalListener surfaceListener, unlockListener, destroyListener;
+    uint64_t generation = 0;
+    bool eligible = true, destroyed = false;
+};
+struct ProtocolUnlock {
+    uint64_t generation, sequence, observedAt;
+};
+std::vector<std::unique_ptr<LockCandidate>> candidates;
+LockCandidate* currentLock = nullptr;
+LockCandidate* pendingUnlock = nullptr;
+uint64_t acceptedGeneration = 0;
+std::optional<ProtocolUnlock> protocolUnlock;
+void emit();
+
 void closeOutput() {
     if (output >= 0) { close(output); output = -1; }
 }
@@ -111,6 +133,87 @@ NativePeer nativeLocker(bool locked) {
     // Mapped ownership and clientLocked remain distinct from secure presentation.
     return nativePeer(owner, true);
 }
+// Exact public protocol objects, never PIDs or addresses, establish which
+// observed candidate the manager accepted. Late attachment has no candidate.
+bool currentlyMapped(const LockCandidate& candidate) {
+    size_t active = 0;
+    for (const auto& monitor : State::monitorState()->monitors()) {
+        if (!monitor->m_enabled || !monitor->m_dpmsStatus) continue;
+        ++active;
+        const auto wrapper = g_pSessionLockManager->getSessionLockSurfaceForMonitor(monitor->m_id).lock();
+        const auto surface = wrapper ? wrapper->surface.lock() : SP<CSessionLockSurface>{};
+        if (!wrapper || !wrapper->mapped || !surface) return false;
+        bool belongs = false;
+        for (const auto& observed : candidate.surfaces) {
+            const auto selected = observed.lock();
+            if (selected && selected == surface) belongs = true;
+        }
+        if (!belongs) return false;
+    }
+    return active > 0;
+}
+void abandonAssociation() {
+    for (auto& candidate : candidates) candidate->eligible = false;
+    currentLock = nullptr;
+    pendingUnlock = nullptr;
+}
+void reconcileProtocol(bool locked, bool mappedPeer) {
+    // An old replaced object's request can clear the global protocol flag
+    // without the current manager's unlock listener. That supplies no cause.
+    // Preserve a genuine pending association for the synchronous exact listener.
+    if (!PROTO::sessionLock->isLocked()) {
+        if (currentLock) currentLock->eligible = false;
+        currentLock = nullptr;
+        return;
+    }
+    if (!locked || !mappedPeer || currentLock || pendingUnlock) return;
+    for (auto& candidate : candidates) {
+        if (!candidate->eligible || candidate->destroyed || candidate->object.expired()
+            || candidate->generation != 0 || !currentlyMapped(*candidate)) continue;
+        if (acceptedGeneration == std::numeric_limits<uint64_t>::max()) { closeOutput(); return; }
+        candidate->generation = ++acceptedGeneration;
+        currentLock = candidate.get();
+        return;
+    }
+}
+void observeLock(const SP<CSessionLock>& lock) {
+    // Even a refused new request cannot preserve an earlier authentication
+    // association. It never mints a generation without actual manager mapping.
+    abandonAssociation();
+    protocolUnlock.reset();
+    admissionDenied = true;
+    if (candidates.size() >= MAX_CANDIDATES) { closeOutput(); return; }
+    auto candidate = std::make_unique<LockCandidate>();
+    auto* selected = candidate.get();
+    selected->object = lock;
+    selected->surfaceListener = lock->m_events.newLockSurface.listen([selected](const SP<CSessionLockSurface>& surface) {
+        if (selected->surfaces.size() >= MAX_LOCK_SURFACES) { closeOutput(); return; }
+        selected->surfaces.emplace_back(surface);
+    });
+    selected->unlockListener = lock->m_events.unlockAndDestroy.listen([selected] {
+        // The manager's earlier listener emits generic unlock before this exact
+        // object's listener. A forced unlock makes the original object inert;
+        // its later request cannot emit this event. Replaced objects are ineligible.
+        if (pendingUnlock != selected || !selected->eligible || selected->destroyed
+            || selected->generation == 0 || PROTO::sessionLock->isLocked()) return;
+        uint64_t observed = 0;
+        if (!boottime(observed) || sequence == std::numeric_limits<uint64_t>::max()) { closeOutput(); return; }
+        protocolUnlock = ProtocolUnlock{selected->generation, sequence + 1, observed};
+        selected->eligible = false;
+        pendingUnlock = nullptr;
+        emit();
+    });
+    selected->destroyListener = lock->m_events.destroyed.listen([selected] {
+        selected->destroyed = true;
+        selected->eligible = false;
+        if (currentLock == selected) currentLock = nullptr;
+        if (pendingUnlock == selected) pendingUnlock = nullptr;
+        // Destruction supplies no positive cause; preserve a prior exact event.
+        emit();
+    });
+    candidates.push_back(std::move(candidate));
+    emit();
+}
 void emit() {
     if (output < 0) return;
     uint64_t sampled = 0;
@@ -119,13 +222,22 @@ void emit() {
     const bool complete = locked && g_pSessionLockManager->clientLocked();
     const auto focus = nativeFocus(locked);
     const auto locker = nativeLocker(locked);
+    reconcileProtocol(locked, locker.pidfd >= 0);
+    if (output < 0) return;
+    const std::string generation = currentLock ? std::to_string(currentLock->generation) : "null";
+    std::string unlock = "null";
+    if (protocolUnlock) {
+        unlock = "{\"generation\":" + std::to_string(protocolUnlock->generation)
+            + ",\"sequence\":" + std::to_string(protocolUnlock->sequence)
+            + ",\"observed_at_ns\":" + std::to_string(protocolUnlock->observedAt) + "}";
+    }
     const int peerFd = locked ? locker.pidfd : focus.pidfd;
     char frame[MAX_FRAME];
     const int n = snprintf(frame, sizeof(frame),
-        "{\"source\":\"%s\",\"sequence\":%llu,\"sampled_at_ns\":%llu,\"locked\":%s,\"lock_completed\":%s,\"focus\":%s,\"locker\":%s}",
+        "{\"source\":\"%s\",\"sequence\":%llu,\"sampled_at_ns\":%llu,\"locked\":%s,\"lock_completed\":%s,\"focus\":%s,\"locker\":%s,\"lock_generation\":%s,\"protocol_unlock\":%s}",
         incarnation.c_str(), static_cast<unsigned long long>(++sequence), static_cast<unsigned long long>(sampled),
         locked ? "true" : "false", complete ? "true" : "false", focus.metadata.c_str(),
-        locker.pidfd >= 0 ? locker.metadata.c_str() : "{\"state\":\"unavailable\"}");
+        locker.pidfd >= 0 ? locker.metadata.c_str() : "{\"state\":\"unavailable\"}", generation.c_str(), unlock.c_str());
     if (n <= 0 || static_cast<size_t>(n) >= sizeof(frame)) { closeOutput(); return; }
     // One nonblocking atomic packet attempt. No queue, retries, detached worker
     // or renewed incarnation on failure; receiver expiration fences old facts.
@@ -152,6 +264,13 @@ int tick(void*) {
     // Timer reconciliation runs after the original onLock callback has returned.
     // Clearing this local latch is not clearing any trusted actor lock intent.
     admissionDenied = false;
+    if (pendingUnlock) pendingUnlock->eligible = false;
+    pendingUnlock = nullptr;
+    // Reclaim listener storage only outside signal callbacks. Protocol objects
+    // are weak references; Source never extends their lifetime.
+    std::erase_if(candidates, [](const auto& c) {
+        return c.get() != currentLock && (!c->eligible || c->destroyed || c->object.expired());
+    });
     emit();
     if (output >= 0 && wl_event_source_timer_update(timer, PERIOD_MS) != 0) closeOutput();
     return 0;
@@ -188,9 +307,13 @@ APICALL EXPORT PLUGIN_DESCRIPTION_INFO PLUGIN_INIT(HANDLE) {
         throw std::runtime_error("exact installed compositor API mismatch");
     output = provisionedFd();
     focusListener = g_pSeatManager->m_events.keyboardFocusChange.listen([] { emit(); });
-    lockListener = g_pSessionLockManager->m_events.lock.listen([] { admissionDenied = true; emit(); });
-    unlockListener = g_pSessionLockManager->m_events.unlock.listen([] { emit(); });
-    admissionListener = PROTO::sessionLock->m_events.newLock.listen([](const SP<CSessionLock>&) { admissionDenied = true; emit(); });
+    lockListener = g_pSessionLockManager->m_events.lock.listen([] {
+        abandonAssociation(); protocolUnlock.reset(); admissionDenied = true; emit();
+    });
+    unlockListener = g_pSessionLockManager->m_events.unlock.listen([] {
+        pendingUnlock = currentLock; currentLock = nullptr; admissionDenied = false; emit();
+    });
+    admissionListener = PROTO::sessionLock->m_events.newLock.listen(observeLock);
     timer = wl_event_loop_add_timer(g_pCompositor->m_wlEventLoop, tick, nullptr);
     if (!timer) { closeOutput(); throw std::runtime_error("session timer unavailable"); }
     emit();
@@ -200,5 +323,6 @@ APICALL EXPORT PLUGIN_DESCRIPTION_INFO PLUGIN_INIT(HANDLE) {
 APICALL EXPORT void PLUGIN_EXIT() {
     focusListener.reset(); lockListener.reset(); unlockListener.reset(); admissionListener.reset();
     if (timer) { wl_event_source_remove(timer); timer = nullptr; }
+    currentLock = nullptr; pendingUnlock = nullptr; candidates.clear(); protocolUnlock.reset();
     closeOutput();
 }

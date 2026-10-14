@@ -102,3 +102,10 @@ separate provenance. Earlier17-group results above remain historical selections;
 they do not establish the new locker wire or a trusted unlock. The legacy small
 monitor recipe above describes its historical fixture; future UI qualification
 uses the Pixel10 profile required by AGENTS.md.
+
+The current nine-field wire also requires [exact operation facts](../../docs/native-session-lock-generation.md).
+Its current original-compositor→Rust observer qualification uses a separate
+Pixel10-profile fixture with same-process generations, forced/inert negative and
+late-attachment controls. The historical small-monitor recipe and seven-key
+parser above are not a qualification of this newer wire. Keep historical selected
+results frozen; native authentication and restoration remain separate gates.

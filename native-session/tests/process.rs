@@ -51,7 +51,13 @@ impl Drop for Peer {
         let until = boottime_ns() + 2_000_000_000;
         loop {
             match self.child.try_wait() {
-                Ok(Some(_)) => return,
+                Ok(Some(status)) => {
+                    eprintln!(
+                        "ACTUAL_SESSION_PEER_WAIT pid={} status={status}",
+                        self.child.id()
+                    );
+                    return;
+                }
                 Ok(None) if boottime_ns() < until => std::thread::sleep(Duration::from_millis(1)),
                 _ => {
                     let _ = self.child.kill();
@@ -62,7 +68,13 @@ impl Drop for Peer {
         let until = boottime_ns() + 2_000_000_000;
         loop {
             match self.child.try_wait() {
-                Ok(Some(_)) => return,
+                Ok(Some(status)) => {
+                    eprintln!(
+                        "ACTUAL_SESSION_PEER_WAIT pid={} status={status}",
+                        self.child.id()
+                    );
+                    return;
+                }
                 Ok(None) if boottime_ns() < until => std::thread::sleep(Duration::from_millis(1)),
                 _ => std::process::abort(),
             }
@@ -692,3 +704,6 @@ fn dead_locker_packet_cannot_keep_or_reactivate_owned_locker_state() {
     assert!(Provider::poll(&mut o).is_err());
     assert!(o.snapshot().is_none());
 }
+
+#[path = "support/protocol_generation.rs"]
+mod protocol_generation;

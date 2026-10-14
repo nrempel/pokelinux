@@ -41,6 +41,33 @@ impl OwnedFocus {
         self.metadata == other.metadata && Arc::ptr_eq(&self.pidfd, &other.pidfd)
     }
 }
+/// Exact accepted-object protocol request, scoped to this Source incarnation.
+/// This is historical fact, not authentication or permission to restore reads.
+#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ProtocolUnlock {
+    pub generation: u64,
+    pub sequence: u64,
+    pub observed_at_ns: u64,
+}
+pub fn valid_protocol_facts(
+    locked: bool,
+    sequence: u64,
+    sampled_at_ns: u64,
+    generation: Option<u64>,
+    unlock: Option<&ProtocolUnlock>,
+) -> bool {
+    !generation.is_some_and(|value| value == 0 || !locked)
+        && !unlock.is_some_and(|event| {
+            locked
+                || generation.is_some()
+                || event.generation == 0
+                || event.sequence == 0
+                || event.sequence > sequence
+                || event.observed_at_ns == 0
+                || event.observed_at_ns > sampled_at_ns
+        })
+}
 #[derive(Debug, Clone)]
 pub struct Snapshot {
     pub source: String,
@@ -53,6 +80,9 @@ pub struct Snapshot {
     /// Retained mapped-locker peer from the same sample. This is not an unlock
     /// capability. Consumers must revalidate live owned identity when using it.
     pub locker: Option<OwnedFocus>,
+    /// Unknown for a lock already present when Source first attaches.
+    pub lock_generation: Option<u64>,
+    pub protocol_unlock: Option<ProtocolUnlock>,
 }
 /// Poll is bounded and nonblocking. None/Err supplies no positive authority;
 /// the actor retains policy and must match its exact launched app pidfd.
