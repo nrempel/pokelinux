@@ -196,6 +196,23 @@ live identity plus fresh same-daemon exact-CID absence. Compiled protected-mode
 arguments remain unchanged; synthetic EL2/PL011/DTB differs from Pixel hardware.
 See [Google-kernel proof](evidence/native-boot-google-kernel-provenance.json).
 
+A later [warm-reset experiment](native-boot-warm-reset.md) recovers the exact
+162-byte PMSG canary and21,362-byte previous console under that unchanged kernel.
+Two distinct boot/native epochs, the successful owned QMP reset, previous native
+markers and second child wait37/shutdown qualify synthetic console/PMSG retention.
+The first child is reset, not waited. Same-witness no-backend refusal and five
+saved-output controls remain separate. Root rehashes90 positive/92 negative/78
+failed-paused bindings and checks whole recovered bytes and fresh exact-CID absence.
+This leaves Pixel retention/retrieval, pre-backend failure and panic records open.
+
+Seventeen [native service prerequisites](native-google-kernel-services.md) now
+pass on the same unchanged Google kernel:14 existing identity groups plus actual
+distinct-UID admission/revocation, held-storage responsive Stop/reap and unclean
+same-policy restart refusal. Root verifies287 bindings, seven SCM app-generation
+checks, nine direct waits and six ECHILD observations. This is a RAM-only test
+PID1 and standalone service, with same-boot tmpfs acknowledgement; Messages, UI,
+persistent reboot recovery and trusted unlock/restoration remain separate.
+
 Separate original AOSP AVB execution qualifies five internally self-consistent
 signed metadata blocks, four expected child key/rollback-slot agreements and16
 available descriptor checks;27 payload checks remain unavailable. The unsigned
@@ -215,8 +232,10 @@ remain failed, and runtime reachability/slot helpers/selectors remain open. The
 whole vendor-boot span includes both fragments and projected helper padding; the
 earlier chosen-three-frame overlay proves neither this layout nor loader selection.
 See [bounded proof](evidence/native-boot-loader-provenance.json). Next: the exact
-RAM request/context selecting authored init, recoverable diagnostics, then the
-native service tracer on this kernel. No physical phone is accessed.
+RAM request/context selecting authored init, usable phone diagnostics, and the
+normal Messages service tracer on this kernel. The subsequent trusted lock→PAM
+unlock→reopen transaction must preserve policy/history, establish current Source
+and app authority, and never infer recovery from unlocked facts or deleted seals. No physical phone is accessed.
 
 The original native early boot has a separate RAM-only checkpoint. A genuine
 missing-`/init` ARM RED precedes the Rust root-PID1 probe. Native child actual wait

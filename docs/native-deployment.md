@@ -51,6 +51,10 @@ missing-console expectation remain historical evidence. See
 These observations leave the full profile, all nine offline requirements and
 the physical gate refused; neither format checks nor either kernel/QEMU result
 establishes Google's bootloader/AVB acceptance or recoverable phone diagnostics.
+Later separate [synthetic console/PMSG warm-reset retrieval](native-boot-warm-reset.md)
+and [17 native service prerequisite groups](native-google-kernel-services.md)
+use the unchanged Google kernel. They add neither physical retention/retrieval
+nor installed persistent service/desktop closure; the full profile remains refused.
 
 The following paragraphs retain the original2026-10-12 audit checkpoint; their
 missing kernel/whole-ZIP facts are superseded by the update above, while runtime,

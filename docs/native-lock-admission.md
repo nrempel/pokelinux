@@ -78,6 +78,12 @@ independently verified the latter. Only authored
 metadata, hashes and tools are public; packages, ELFs, traces, logs and frames stay
 private.
 
+The later [unchanged-Google-kernel prerequisites](native-google-kernel-services.md)
+use this current standalone lifecycle build for three permission/storage controls.
+They qualify no original Omarchy locker/PAM runtime or trusted unlock. Trusted
+lock→authenticated unlock→reopen and positive crash recovery remain implementation
+work; permanent refusal is not the finished phone lifecycle.
+
 ## Retained failures and remaining gates
 
 Ingress `arm-green-2` lacked `strace`; `arm-green-3` failed the bounded original

@@ -30,8 +30,10 @@ the observed kernel sequence. The release-matched
 [original kernel writer](https://android.googlesource.com/kernel/common/+/91d825611104e75e1a9e0e0f6b25580eddb68828/kernel/printk/printk.c)
 can return a full write count while discarding a rate-limited or disabled message.
 This is same-boot occurrence correlation with trusted restricted writers;
-privileged-writer authentication, every kernel/console call's latency, silent
-same-FD drop/overflow controls, cross-reset retention and retrieval remain open.
+privileged-writer authentication, every kernel/console call's latency and silent
+same-FD drop/overflow controls remain open. A later separate
+[Google-kernel warm-reset experiment](native-boot-warm-reset.md) qualifies synthetic
+console/PMSG retrieval; Pixel retention/retrieval remains open.
 
 The current unsigned candidate is1,462,272 bytes and binds the repaired init.
 Its independently decoded generic archive supplies `/dev/kmsg` as a0600
@@ -63,7 +65,8 @@ FORCE does not establish bootloader-supplied arguments. Empty INITRAMFS_SOURCE
 selects the kernel's built-in default archive, which supplies `/dev/console`;
 DEVTMPFS being disabled alone does not establish its absence. Actual base DTBs
 describe ramoops memory, but selected DTBOs, backend registration, warm retention
-and retrieval are unqualified. Same-boot kmsg, console, PMSG and retained crash
+and retrieval on physical Pixel hardware are unqualified. Synthetic console/PMSG
+retention has the separate proof above. Same-boot kmsg, console, PMSG and retained crash
 logs are separate paths. A useful phone experiment still needs observable early
 success and failure, bootloader/AVB admission and a recoverable shutdown/reset.
 

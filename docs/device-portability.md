@@ -72,7 +72,10 @@ and transfers the actual Wayland socket peer pidfd, comparing it with the alread
 owned app-generation handle through one pinned protected procfs view and joint
 final liveness. Host6.8 shared anon-inode and ARM7.1 kernel tests pass; scalar
 pidfs equality and the earlier wire are removed. Common protected PID/user
-namespace deployment remains a gate. Pixel's matched6.6 image/config/KMI remains
-unqualified by those tests; keep matched assets unchanged. Original compositor,
+namespace deployment remains a gate. Those Arch tests do not qualify Pixel's matched6.6 image/config/KMI. A later
+[Google-kernel prerequisite run](native-google-kernel-services.md) separately
+passes14 existing identity tests and three standalone lifecycle groups under the
+unchanged authenticated6.6 image. It still qualifies no physical model or vendor
+module KMI; keep matched assets unchanged. Original compositor,
 synthetic actor and joint installed-app evidence remain distinct. Trusted locker/
 configuration provisioning and physical hardware have separate gates.

@@ -1,0 +1,151 @@
+{
+  "schema": 1,
+  "status": "QUALIFIED_NARROW_SYNTHETIC_WARM_RESET_RETENTION",
+  "evidence_classes": {
+    "actual_original_Google4K_kernel_execution": true,
+    "synthetic_QEMU_memory_and_reset": true,
+    "actual_authored_native_init_and_Rust_witness": true,
+    "physical_Pixel_or_bootloader_admission": false,
+    "vendor_runtime": false,
+    "production_defect_RED_or_repair": false
+  },
+  "unchanged_kernel_sha256": "0226c3be4224b02884d4f9b332aee58ec06c65b2263265e80f2498332ef15c06",
+  "unchanged_production_init_sha256": "8f97c746cc8ef20eb4d3f2f981f1a24ad6e96b5d88f0d327ca80cf5627847d1d",
+  "independent_witness_ELF_sha256": "8844a0c278908f73754919e843d6327f7fbe99324a893596f4787570eb73b6ef",
+  "independent_witness_source_sha256": "635058af1b7eb53d4d09d013c3ebb2aca3a4ce29f5c5701064376de00517c2b8",
+  "independent_observer_sha256": "9aebfcb106f471e65eed87e42ecd99ce34da301cb2b4eab714cee015fcccf352",
+  "QEMU_image": "sha256:561177a4305051567b1d28d67ba9a95e0ce0ad32a8815b49da42fe71aa5a3dd6",
+  "actual_kernel_release": "6.6.127-android15-8-g91d825611104-ab16252310-4k",
+  "actual_QEMU_version": "10.0.13 Debian 1:10.0.13+ds-0+deb13u1",
+  "positive": {
+    "selection_sha256": "361c0002e833ddd994d1aaf22eabff0ba14b6f2c290396670a8436d863130e81",
+    "command_sha256": "fcd76bb418f8d380400ab9aa60758a4dcc662036266c93375db0df35bf1d6323",
+    "execution_sha256": "6fccdef8025d0a3704d62c4cdf44e496e43ccc28e815183c545b5000f13ee9db",
+    "result_sha256": "8c9c75a325d5b479caa78d4a9370a3bf0e2d57fc307d63f6e6f3541ca731b86b",
+    "actual_runtime_seconds": 2.190347108,
+    "retained_pmsg_bytes": 162,
+    "retained_pmsg_sha256": "d5fbf15aac77b0666b58c47f5224a0b15b196f3e292b548629658ee3b9a2d3aa",
+    "retained_console_bytes": 21362,
+    "retained_console_sha256": "5ec655f85babe5f2ece6724914bee7c84c21ae9194beba1203f44c9152c84b5a",
+    "recovered_previous_native_marker_count": 2,
+    "different_actual_native_epochs_and_boot_UUIDs": true,
+    "actual_native_ACK_events": [
+      1,
+      2,
+      1,
+      2,
+      3,
+      4
+    ],
+    "first_phase_actual_child_wait": false,
+    "second_phase_actual_child_wait_exit": 37,
+    "authenticated_system_reset_count": 1,
+    "actual_successful_reset_reply": true,
+    "RESET_before_final_guest_SHUTDOWN": true,
+    "actual_Docker_CLI_wait_exit": 0,
+    "exact_CID_absence_same_daemon_input_closure": true,
+    "selected_file_count": 54,
+    "external_file_count": 36
+  },
+  "precont_memory_safety": {
+    "kernel_effective_bytes": 37486592,
+    "kernel_start": "0x40200000",
+    "kernel_effective_end_exclusive": "0x425c0000",
+    "initrd_start": "0x48000000",
+    "initrd_end_exclusive": "0x48165ff9",
+    "DTB_start": "0x48200000",
+    "DTB_end_exclusive": "0x48300000",
+    "reserved_start": "0x4fc00000",
+    "reserved_end_exclusive": "0x50000000",
+    "addressed_RAM_boot_blob_count": 4,
+    "all_effective_blob_ends_below_reserved_start": true,
+    "fixed_info_roms_readonly_query": true,
+    "known_addressless_fw_cfg_regions_separately_classified": 3
+  },
+  "actual_no_backend_negative": {
+    "passed": true,
+    "positive_retention_aggregate_passed": false,
+    "negative_result_sha256": "093a9c992df52155ed1bc4c2e5bad66edc8778db4aa7e328c5c3853ad8148f17",
+    "execution_sha256": "8dc44faa4e952d12cb2a92219a9f6d3e4eb687caae246e3e27d698ab11f7c72a",
+    "actual_child_wait_exit": 3,
+    "actual_witness_refusal": "NotFound errno2",
+    "READY_retrieval_reset_COMPLETE_present": false,
+    "actual_Docker_CLI_wait_exit": 0,
+    "exact_CID_absence_same_daemon_input_closure": true
+  },
+  "saved_output_component_controls": {
+    "passed": true,
+    "case_count": 5,
+    "result_sha256": "ad5a8037a4870844ef7dd80452e31a434e88dcb6795d9075c584fd592c8e8ce7",
+    "stale_canary_rejected": true,
+    "stale_saved_native_epoch_rejected": true,
+    "missing_reset_reply_rejected": true,
+    "shutdown_before_reset_rejected": true,
+    "new_kernel_runtime": false
+  },
+  "preserved_failures": [
+    {
+      "label": "warm-epoch1",
+      "classification": "paused prerequisite parser refused original addressless firmware MR row before cont; no guest/reset or backend inference",
+      "actual_Docker_CLI_wait_exit": 137,
+      "exact_CID_absent_and_input_closure": true
+    },
+    {
+      "classification": "optional host readelf unavailable; no process spawned; independently parsed exact ELF bytes instead"
+    }
+  ],
+  "limits": [
+    "Synthetic reserved RAM/ramoops parameters, not selected Pixel DTB/address or hardware reset retention",
+    "No bootloader/AVB/request admission, phone, vendor service/module or USB retrieval evidence",
+    "No power-loss persistence, watchdog/thermal safety or pre-backend-registration log recovery",
+    "record_size0 qualifies console/PMSG, not panic records",
+    "Canary correlation does not authenticate privileged writers",
+    "First child was reset; only second child actual wait37 observed",
+    "No production repair/defect RED claimed"
+  ],
+  "date_UTC": "2026-10-14",
+  "base_commit": "37bd37a59ad77af448b11950ed6d1e0c8756d9b3",
+  "published_source_sha256": {
+    "tools/native-boot-pstore-witness/Cargo.toml": "2c18ef04afeeb7acc2c47e147eef20c5014c5312d9b5af7ff1aaf18896e75b81",
+    "tools/native-boot-pstore-witness/Cargo.lock": "5b144a0e0a5fd4daeddd1b88e15c504cd1fd4bfaea779bdfaa65f66ca825b8f9",
+    "tools/native-boot-pstore-witness/src/main.rs": "635058af1b7eb53d4d09d013c3ebb2aca3a4ce29f5c5701064376de00517c2b8",
+    "tools/native-boot-pstore-witness/observer.py": "9aebfcb106f471e65eed87e42ecd99ce34da301cb2b4eab714cee015fcccf352"
+  },
+  "Root_independent_review": {
+    "passed": true,
+    "review_sha256": "b9db8602ed94dab6b54c1d9e13fb668f69be89ea96702699e2e4f1868717c4d7",
+    "positive_bindings_rehashed": 90,
+    "negative_bindings_rehashed": 92,
+    "failed_paused_epoch_bindings_rehashed": 78,
+    "whole_retrieved_pmsg_and_console_checked": true,
+    "actual_ACK_QMP_reply_reset_order_and_ROM_extents_checked": true,
+    "fresh_same_daemon_exact_CID_absence_all3": true,
+    "saved_component_input_bindings_rehashed": true
+  },
+  "runtime_bounds": {
+    "guest_CPUs": 2,
+    "guest_RAM_MiB": 256,
+    "Linux_RAM_MiB": 252,
+    "reserved_ramoops_MiB": 4,
+    "console_MiB": 2,
+    "PMSG_MiB": 2,
+    "panic_record_bytes": 0,
+    "container_CPUs": 2,
+    "container_memory_MiB": 512,
+    "outer_seconds": 45,
+    "QMP_setup_seconds": 5,
+    "native_child_seconds": 2,
+    "native_readback_ms": 100,
+    "production_kernel_init_and_security_flags_unchanged": true
+  },
+  "public_primary_sources": [
+    {
+      "url": "https://android.googlesource.com/kernel/common/+/91d825611104e75e1a9e0e0f6b25580eddb68828/Documentation/admin-guide/ramoops.rst",
+      "sha256": "7a34b72884b06789348992731331058472867957c8c0924b7ea7dde05d1fcd0e"
+    },
+    {
+      "url": "https://gitlab.com/qemu-project/qemu/-/blob/v10.0.13/hw/core/loader.c",
+      "sha256": "bf0c1acbfa8100c90b6bb26942a1d8c15a9e260eced301ead0e8cf149f21919f"
+    }
+  ]
+}

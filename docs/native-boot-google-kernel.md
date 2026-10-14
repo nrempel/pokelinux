@@ -89,3 +89,12 @@ private. Public provenance contains bounded facts, hashes and limitations.
 
 References: [matched kernel boot protocol](https://android.googlesource.com/kernel/common/+/91d825611104e75e1a9e0e0f6b25580eddb68828/Documentation/arch/arm64/booting.rst),
 [QEMU Arm virt machine](https://www.qemu.org/docs/master/system/arm/virt.html).
+
+## Later separate kernel experiments
+
+The [warm-reset result](native-boot-warm-reset.md) qualifies actual console/PMSG
+retrieval across a controlled synthetic reset with a separate authored child.
+The [native service prerequisite result](native-google-kernel-services.md)
+qualifies14 existing identity and three standalone lifecycle controls using a
+separate test PID1. Neither result repins this original single-boot proof or
+qualifies Pixel board, admission or physical recovery.

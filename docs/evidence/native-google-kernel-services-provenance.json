@@ -1,0 +1,149 @@
+{
+  "schema": 1,
+  "scope": "Authenticated Google Pixel10 public4K kernel bytes executing actual existing native identity and current standalone lifecycle/permission/storage controls on synthetic QEMU virt with authored RAM-only test PID1; no physical Pixel or full Messages vertical",
+  "passed": true,
+  "groups": {
+    "existing_kernel_identity": 14,
+    "actual_distinct_UID_SEQPACKET_durable_permission_admission_revocation": 1,
+    "actual_SIGSTOP_storage_responsive_Stop_reap": 1,
+    "actual_unclean_same_policy_restart_refused": 1,
+    "total": 17
+  },
+  "kernel_sha256": "0226c3be4224b02884d4f9b332aee58ec06c65b2263265e80f2498332ef15c06",
+  "actual_kernel_release": "6.6.127-android15-8-g91d825611104-ab16252310-4k",
+  "kernel_compiled_defaults_and_security_flags_preserved": true,
+  "actual_optional_PROC_CHILDREN_errno": 2,
+  "actual_cleanup_authority": "all9 retained direct children waited, followed by PID1 waitpid(-1,WNOHANG) ECHILD10; no adopted descendants observed",
+  "actual_service_outcomes": {
+    "configured_app_UIDs": [
+      10000,
+      10001
+    ],
+    "registered_app_queries": "ok",
+    "unregistered_Root_query": "denied",
+    "cross_principal_permit_admit": "denied",
+    "same_principal_admit": "admitted_uncertain",
+    "durable_same_boot_receipts": 1,
+    "permit_replay": "denied",
+    "after_revocation_prepare": "denied",
+    "held_storage_actual_state": "T",
+    "control_snapshot_ns": 1182830,
+    "healthy_Stop_direct_daemon_waits": [
+      0,
+      0
+    ],
+    "unclean_same_policy_restart_direct_wait": 1,
+    "unclean_restart_error": "InvalidData",
+    "owner_live_unchanged": true
+  },
+  "actual_Docker_CLI_wait_exit": 0,
+  "actual_QMP_guest_shutdown": true,
+  "exact_CID_absence": true,
+  "selected_ELFs": [
+    {
+      "name": "kernel-lib-tests",
+      "sha256": "4833c412cda74f693dcceeeabd10c3fa47b3b69926293521b3caca7ac1ae812c",
+      "bytes": 2056232,
+      "role": "unchanged existing identity harness",
+      "expected_passed": 5,
+      "ELF_type": "ET_EXEC",
+      "machine": "AArch64",
+      "PT_INTERP": false,
+      "PT_DYNAMIC": false
+    },
+    {
+      "name": "kernel-pidfd-tests",
+      "sha256": "1c2ac9f55a29b1e2fc6dbb078d2915710c41e6124ca3dc2c15c31e4c017ef0d2",
+      "bytes": 2129608,
+      "role": "unchanged existing identity harness",
+      "expected_passed": 7,
+      "ELF_type": "ET_EXEC",
+      "machine": "AArch64",
+      "PT_INTERP": false,
+      "PT_DYNAMIC": false
+    },
+    {
+      "name": "kernel-socket-tests",
+      "sha256": "4476be9e5a6854c333a87f949d380533a042de9793f8905175c75615c20e3ce7",
+      "bytes": 2051680,
+      "role": "unchanged existing identity harness",
+      "expected_passed": 2,
+      "ELF_type": "ET_EXEC",
+      "machine": "AArch64",
+      "PT_INTERP": false,
+      "PT_DYNAMIC": false
+    },
+    {
+      "name": "lifecycle-daemon",
+      "sha256": "f2c872be5b0e0400b6a9ddb4388739ff9881d468a45647179ad25ae5392d72b3",
+      "bytes": 18663224,
+      "role": "unchanged current standalone production/installed client",
+      "ELF_type": "ET_EXEC",
+      "machine": "AArch64",
+      "PT_INTERP": false,
+      "PT_DYNAMIC": false
+    },
+    {
+      "name": "lifecycle-launcher",
+      "sha256": "45e84c4c2270c54bec7b15323997ee3e2747bcbd465a44823e25bd28b93e4d18",
+      "bytes": 16710360,
+      "role": "unchanged current standalone production/installed client",
+      "ELF_type": "ET_EXEC",
+      "machine": "AArch64",
+      "PT_INTERP": false,
+      "PT_DYNAMIC": false
+    },
+    {
+      "name": "lifecycle-client",
+      "sha256": "08ff207efe85d9ba8bcffefe5d5a9a3ca17ab5dd1024cb4bf11ecd54104b48bf",
+      "bytes": 16793032,
+      "role": "unchanged current standalone production/installed client",
+      "ELF_type": "ET_EXEC",
+      "machine": "AArch64",
+      "PT_INTERP": false,
+      "PT_DYNAMIC": false
+    }
+  ],
+  "source_input_closure": {
+    "local": 144,
+    "external": 143,
+    "all_unchanged": true
+  },
+  "retained_failures": [
+    "label1 public helper exit127; stderr/proc errno unobserved",
+    "label2 actual missing libcrypt.so.2 loader stderr and PROC_CHILDREN ENOENT; zero tests",
+    "label3 fixture Root-only ipc::call misuse;14identity tests passed then driver control failure; actual adopted cleanup forced aggregate failure"
+  ],
+  "limitations": [
+    "Same-boot tmpfs durable-write acknowledgement only; no persistence across power loss",
+    "Test PID1/Root provisioning and driver endpoints are private fixture infrastructure",
+    "No Messages import/commit/read or live Binder receiving composition executed yet",
+    "No UI/normal window/session/Hyprland/Android vendor or phone access",
+    "Final serial report precedes tcdrain; external complete records and QMP shutdown observed, final drain syscall not independently observed"
+  ],
+  "date_UTC": "2026-10-14",
+  "base_commit": "37bd37a59ad77af448b11950ed6d1e0c8756d9b3",
+  "evidence_class": "unchanged authenticated Google kernel; synthetic QEMU hardware; actual native identity and standalone lifecycle services",
+  "private_record_sha256": {
+    "selection.json": "4c43bc74bdc784fc8bb26b00976c10bc3709e4fe6d2ee7ad5e4de92dbd9d86ad",
+    "command.json": "b926ec5fcf0d68a5bc4344cc685aed388d2e934e8921993f1e76f417440053a0",
+    "run-frozen.py": "b90c6031b0727dd27e42e5a13995c17056c52b053801ae74122793a06f214b95",
+    "result.json": "e98d9510e47c4abfb38df202c1c7467cfdd9e7363d537afbd37c74d9bf96f928",
+    "execution.json": "a5af8e082656a03fdbdf09fad9e273318434456bd0f3ba0c76ddb4981072cc4d",
+    "console.log": "fc2dc2aa8044a8fd87fc2094f4789f9cf296796275378721e13b554a180d5211",
+    "completion-handoff.json": "916d0d1bfc6a833e19b77cc0b070e0cbf8045dfd46cfe09fdeac74f1e2ca320c",
+    "terminal-independent-audit.json": "929eeb97fcd41c4d31d595b3f5223e6cddeffff85063c322705b6713e68028cf"
+  },
+  "Root_independent_review": {
+    "passed": true,
+    "review_sha256": "b9db8602ed94dab6b54c1d9e13fb668f69be89ea96702699e2e4f1868717c4d7",
+    "local_bindings_rehashed": 144,
+    "external_bindings_rehashed": 143,
+    "whole_raw_structured_records_reviewed": true,
+    "actual_direct_child_waits": 9,
+    "actual_response_SCM_PID_UID_GID_generation_checks": 7,
+    "actual_ECHILD_observations": 6,
+    "fresh_same_daemon_exact_CID_absence": true
+  },
+  "production_implementation_defect_RED_or_repair_claimed": false
+}
