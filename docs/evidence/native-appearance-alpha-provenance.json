@@ -1,0 +1,269 @@
+{
+  "schema": 1,
+  "date_UTC": "2026-10-14",
+  "base_commit": "c234025c90215782583c57b1ad86cc657f0dfeb2",
+  "scope": "native Rust schema3 RGBA16 owner; actual Original/Rust/private Qt component comparison and separate synthetic regression boundaries",
+  "production_Rust_source_sha256": {
+    "Cargo.lock": "896419e12fd91147c2dfbcb2faaddce4e0cd0bce659304dfd76418770e99c74d",
+    "Cargo.toml": "b3b94fb217636e554a9904ac77f5c8862435df2f064391cabc43038f8866b0f6",
+    "src/collector.rs": "f1f196b4d84ea8d0e009cf466a1d109cb76d3260c4e1c036a3e3802447d5ef48",
+    "src/ipc.rs": "6472b1d52036448a92cac4a5cfd7bcbc504f5e2d02f0f7f20a8710cfa862fc1b",
+    "src/lib.rs": "095127e999a84709a5644720ebab7e4ebb3fcb4c480d478942c8e88260818d12",
+    "src/main.rs": "b58bfc5255505bfd134cffba0e34633b9e6863c07f4f682c4027d413759369cc",
+    "src/palette.rs": "2cb147cddb6da8d6908de372d3851f69f87a96b449b6252882bc38d7576597e0",
+    "src/sandbox.rs": "6a06b9fed5ffe795a2deb6dbdd3d124499f0ee97707bc4a158c3e858eb919912",
+    "src/service.rs": "02def65405f9256fe3c2a786a3c42c534b4ce81815317401b1d40fa5e2ee13bb",
+    "src/style.rs": "ea937e13dcd7aa0da3fc439b538500b7f56a4c877c72a0fb1b88e1b56a509ce6",
+    "tests/colors.rs": "2c0417d90d87c8b53499b2be729d633d60be89092c29c9c5dff1dcbfe6b81778",
+    "tests/confinement.rs": "1dddd6aeddb24caab07d28877e16aac3e521b6f4c0a1c8bc324d922ca308be7b",
+    "tests/process.rs": "3896464b2533c05426dc5eb5874f3d507448e8a34678913d77fac0c85c7ff518"
+  },
+  "production_ARM_ELF_sha256": "4af8686cfd5763eef222049385cb5141bc62021f5fde1a531eee0fe49e8c14f3",
+  "current_wire": {
+    "schema": 3,
+    "palette_roles": 9,
+    "channels_per_role": [
+      "r",
+      "g",
+      "b",
+      "a"
+    ],
+    "channel_range": [
+      0,
+      65535
+    ],
+    "opaque_8bit_expansion": 257,
+    "half_companion_alpha": 32768,
+    "qualified_direct_ARGB_text_alpha": 32896,
+    "font_tokens": 8,
+    "spacing_tokens": 6,
+    "publication_lease_seconds": 1,
+    "production_compatibility_reader": false
+  },
+  "chronological_Original_RED": {
+    "aggregate_passed": false,
+    "qualified_before_Rust_repair": true,
+    "opaque_prerequisites_restores_and_final_recovery_passed": true,
+    "mandatory_failures": [
+      {
+        "phase": "case-1-surface-companion-half",
+        "case": "surface-companion-half",
+        "differing_RGBA_pixels": 184338,
+        "difference_categories": [
+          "live-availability",
+          "popup",
+          "flat-render-RGBA"
+        ]
+      },
+      {
+        "phase": "case-3-intrinsic-and-companion",
+        "case": "intrinsic-and-companion",
+        "differing_RGBA_pixels": 240786,
+        "difference_categories": [
+          "live-availability",
+          "popup",
+          "flat-render-RGBA"
+        ]
+      },
+      {
+        "phase": "case-4-direct-text-alpha-ignored-companion",
+        "case": "direct-text-alpha-ignored-companion",
+        "differing_RGBA_pixels": 13230,
+        "difference_categories": [
+          "live-availability",
+          "popup",
+          "flat-render-RGBA"
+        ]
+      }
+    ],
+    "phases": 17,
+    "full_native_captures": 34,
+    "comparison_plane_pixels_each": 592704,
+    "Root_rehashed_input_bindings": 192,
+    "Root_independent_complete_PNG_and_every_plane_review": true,
+    "private_record_sha256": {
+      "selection.json": "29955e14218aa82a0acc1e5ed435bc2d657e479f3bfdc9b53551f1eeef6de1eb",
+      "command.json": "e14cecc87f80daef58ed135d122957bbdcf4ca86ca4e0789d5ea967ec15f8b1c",
+      "result.json": "61ab6f69cb27dba3d9671042d891eee6891f70b1314b8e94facca4e09f2b30a0",
+      "execution.json": "d7c117f745cfe70a3bf1bb576d46edc1567c458a449c5118a6c07eafdff96e4a",
+      "root-independent-review.json": "07e0ed18a95cd57af2de2cc81e882fff37f15a12ff73aaca3b17604dcf415e2c"
+    }
+  },
+  "chronological_Qt_current_wire_RED": {
+    "qualified_before_CPP_repair": true,
+    "old_schema2_baseline_passed": true,
+    "actual_new_schema3_packet_rejected_by_old_reader": true,
+    "aggregate_passed": false,
+    "private_record_sha256": {
+      "selection.json": "f3812500ae809499dd71af168274c2c6fe727f0c8252167d72a827b76552c501",
+      "execution.json": "084d71aa5db50d384f288e7aa79790cbb0eee8a1244fee927d80b574faa3c36c",
+      "runtime-output/result.json": "4966780760caab96bbe8bf97ac20851ef91f356e501c24e55580191ecba9b5ba",
+      "root-independent-review.json": "504837b65840c211968ce22620b9b1dae2dec923de66a0c449d118f7bfe50a13"
+    }
+  },
+  "Original_ARM_GREEN": {
+    "passed": true,
+    "actual_kernel": "Arch ARM7.1.6 under ARM64 system QEMU",
+    "Original_Qt_realm": "6.12",
+    "instrumented_readonly_component_host": true,
+    "normal_app_executed": false,
+    "phases": 17,
+    "full_native_captures": 34,
+    "actual_pixels": [
+      1080,
+      2424
+    ],
+    "comparison_plane_pixels_each": 592704,
+    "every_plane_differing_pixels": 0,
+    "all_mandatory_popup_RGBA_fonts_spacing_scale_available_match": true,
+    "stable_observations_each_phase": 2,
+    "private_HOME_UID1000_mode0700_UID11010_EACCES": true,
+    "actual_direct_guest_child_waits": 294,
+    "actual_native_collector_pidfd_dead_and_proc_absent_count": 665,
+    "host_and_broker_actual_wait0": true,
+    "Docker_CLI_wait0": true,
+    "exact_owned_CID_absence_and_same_daemon": true,
+    "Root_rehashed_input_bindings": 223,
+    "Root_full_PNG_and_every_plane_comparison": true,
+    "Border_and_malformed_quotes_diagnostic_only": true,
+    "private_consumer_source_sha256": {
+      "native-app/PhoneTheme.qml": "705ab25799cba18095a76f4fb47e70eb10099ca035426d7e4400fa9cef8452bc",
+      "native-app/PhoneThemeFiles.cpp": "fe9d291a8bbc24ebf9cce9cf12a2988b21ab27c051d5cf28e1988903f9393aaf",
+      "native-app/PhoneThemeFiles.h": "0094f6e1e082c268f62ff97e9f425a209ca91c48aa5dc559986d919709bd7ed9"
+    },
+    "private_component_host_ELF_sha256": "922cb2e0c197008ff1ebb60aa22938702161442f816b33236671ae49f9a67d50",
+    "private_record_sha256": {
+      "selection.json": "ffbc0c97e780c71dd4959b40a17bac47ba4f8095ccaf397ff2467e7dd3eca210",
+      "command.json": "7ecdd63bddd97776d31f08e4b7c662ee8f9d6fb19c2a3169af00ccc70624004d",
+      "result.json": "318c8045c6c0c20f389bc5de41765f5dcf4b846958daa422f68c4e7aa6e875de",
+      "execution.json": "6cb77a38891c148da5feb3c4975fccf3aa0f8e98fd8f015bcd53a5481388f595",
+      "runtime-handoff.json": "90c63fe1cd0ece079e197003153dcd2bc2b8b9670c267d6c184082771a038d0f",
+      "independent-terminal-review.json": "e9c7f035c37579e5daba9376632820bb92910d23ae8f033c69b8d17c8d926283",
+      "root-independent-review.json": "145f899cfd537f4c3bd14ea1b29865dd35de638ecc4902763b4f83c1eb1299de"
+    }
+  },
+  "separate_regressions": {
+    "host": {
+      "actual_passed_groups": 23,
+      "actual_process_groups": 13,
+      "actual_same_process_SEQPACKET_groups": 4,
+      "captured_value_scalar_tests": 4,
+      "architecture_specific_confinement_groups": 2,
+      "ignored_helper_not_counted_as_extra_pass": true,
+      "Root_rehashed_bindings": 58,
+      "actual_harness_waits_and_complete_summaries_reviewed": true,
+      "fresh_same_daemon_exact_CID_absence": true,
+      "private_record_sha256": {
+        "selection.json": "fbb0e3e1555daec021ce36ebdf96e70662ac296f3eba58e0f6172005f80b1a1f",
+        "command.json": "89683e38d5661c25e86582d178cd1c33caa4025e1fbaf08912dddb46f8074381",
+        "execution.json": "9496af0bf0a73bc13144f77c1d89c647a6296128eb5c9ef8be930f9dabcaa8d7",
+        "result.json": "021d960a71ce1e485d7572f1ef8058903ec339362c4d095fa8e96a60c68fb6a3",
+        "completion-handoff.json": "5e0010edfcfde8bf35c32dcf2831b6ba11305854824269895c2cb1e0b47a20ea",
+        "root-independent-review.json": "f4048e1127535aabd1c3e7ed9686276d0cce6124c63496d368e5d218aad34c8e"
+      }
+    },
+    "ARM_kernel": {
+      "actual_passed_groups": 22,
+      "actual_process_groups": 13,
+      "actual_same_process_SEQPACKET_groups": 4,
+      "captured_value_scalar_tests": 4,
+      "architecture_specific_confinement_groups": 1,
+      "ignored_helper_not_counted_as_extra_pass": true,
+      "Root_rehashed_bindings": 73,
+      "actual_harness_waits_and_complete_summaries_reviewed": true,
+      "fresh_same_daemon_exact_CID_absence": true,
+      "private_record_sha256": {
+        "selection.json": "ef34b5414b6abfcd013abd095d5ecdab930731c958b19f89d5d5cf4d47d1ac59",
+        "command.json": "cec40d79912eebe50f560624ba2bdfc873ad00b73d6b6b31d23a1968602c6a1c",
+        "execution.json": "139425042551a6af4b7083302dcc6ca239b7ffde3d3fde44c39ad5d30f792f89",
+        "result.json": "710a93e8b36be87b217945a6836c57f1f6db9ff50f9cdd2c6138cbd14ab2551f",
+        "completion-handoff.json": "f4f752adf3217a66ae12cd7e398441f47bf1199825cc6153153ee2598d276689",
+        "root-independent-review.json": "48e7e33c92c6539db2b302a0ed7a59137ec7f64d0e92a5c27f198fdf26fc6ece"
+      }
+    },
+    "private_host_Qt": {
+      "passed": true,
+      "version": "6.8.2",
+      "synthetic_actual_kernel_peer_CPP_QML_cases": 505,
+      "actual_case_counts": {
+        "total": 505,
+        "passed": 505,
+        "failed": 0,
+        "fixture_setup_failures": 0,
+        "original154_preserved": 154,
+        "new_channel_refusal_controls": 288,
+        "new_role_shape_refusal_controls": 54,
+        "explicit_schema2_refusal": 1,
+        "precision_revision_liveness_controls": 8
+      },
+      "actual_exact_RGBA16_properties": {
+        "roles": 9,
+        "channels_per_role": 4,
+        "semantic_integer_range": [
+          0,
+          65535
+        ],
+        "exact_background_alpha": 32768,
+        "exact_foreground_alpha": 32896,
+        "CPP_QColor_and_QML_exact_16bit": true,
+        "zero_and_65535_boundaries": true,
+        "integral_decimal_and_exponent_accepted": true,
+        "alpha_only_same_revision_refused": true,
+        "alpha_only_new_revision_accepted": true,
+        "one16bit_unit_update_accepted": true,
+        "malformed_to_new_valid_publication": true,
+        "prior_schema_compatibility": false
+      },
+      "actual_test_direct_waits": 505,
+      "actual_final_peer_waits": 505,
+      "no_adopted_descendants": true,
+      "selected_sources": 8,
+      "external_inputs": 13,
+      "Root_hash_reference_count_including_6_selected_source_aliases": 27,
+      "Root_all505_case_output_and_peer_wait_records_reviewed": true,
+      "fresh_same_daemon_exact_CID_absence": true,
+      "private_record_sha256": {
+        "selection.json": "73801bb4d261200b57026597955b116d8a1035db81d49289256c8d9cd1eed420",
+        "command.json": "073ec5739553e6000d82729e7866479870026fdb663b5e8af2e395ff9d592e98",
+        "execution.json": "b012fea774eb41747a6b6c143e5cb3a8bc988fe69a01fc7828ea5b9f45981fc1",
+        "runtime-output/result.json": "1eab03ae46bebbd24be14739341f7450306367bfd39271348aab380454de0967",
+        "bounded-result.json": "0998202a6a6acf317959ce4ac4484eacc52a78de68bbe8af2aa3c0ab3d14553b",
+        "handoff.json": "b0107b46d82402435764ca2e4b3daba2f67224d3d06273b11d257dd1e117054a",
+        "root-independent-review.json": "d898e7d40232ad94b5c413af1e88831655ee398542f905c0eb2d7b2d328f1a2d"
+      }
+    },
+    "current_wire_held_input_control": {
+      "passed": true,
+      "schema": 3,
+      "new_production_RED_claimed": false,
+      "helper_sha256": "3f7c45d137e59a10c50f539f954992f2cc579575356291e5a667e353a609f482",
+      "unchanged_base_tracer_sha256": "2330797489eb46b579fe566ac2f387013f9b5f3b62b255c3bea17f4bcb255640",
+      "host_production_ELF_sha256": "6c866f35b1e289c122af5570638650b3cf7e9a082762e2997eafe454a7d026b5",
+      "input_bindings": 46,
+      "actual_credentialled_null_candidate_ACK_and_parent_wait4": true,
+      "atomic_exchange_and_null_completion_before_original_deadline": true,
+      "actual_withdrawal_and_fresh_revision3_typed_collection": true,
+      "obsolete_input_renewal_accepted": false,
+      "actual_CLI_wait0_and_exact_owned_CID_absence": true,
+      "Root_independent_review_sha256": "a3a8481a6c96acd0cc9d23cbe70db2cbf9ac710c2fd2dda0d4880ca43e656958",
+      "private_record_sha256": {
+        "selection.json": "6eee561925cf5b34b600733ebc0eed39277b0fda0df5b11bb5a694563d5fbb93",
+        "command.json": "a28ed66da30f13e5134c31b2fa5eb89653ee5b86ba3506beb83064a919a10819",
+        "result.json": "6f334ec7b6cdd28e6b367cac08b9f350953d594e27b752dd8ba375c4328b98fe",
+        "execution.json": "c9e4098777418fbe066925e129cfe66359502052256fd6b882380a46a7f1fd6e",
+        "bounded-handoff.json": "832b1acb1cd4bfd3a5b97162769391ce2a3fbaef365325872ac5e2dabb8376b4",
+        "independent-closure.json": "796f1ebca8e34817a923812c608a909e193a3b6225816c6292de6c3b4c738a57"
+      }
+    }
+  },
+  "limits": [
+    "Only Rust producer/source and its tests are published in this checkpoint. The incomplete Qt app migration, component suite and raw runtime artifacts remain private.",
+    "Full font-family/resource resolution, actual glyphs, normal-window font/DPR and large-font layout remain open.",
+    "Selected flat Color cases do not qualify arbitrary gradients/named colors, full JavaScript Number grammar, Border rendering or Qt overflow coercions.",
+    "Original malformed-quote behavior is diagnostic only, never an asserted supported contract.",
+    "Collector pidfd death/absence is not an independent grandchild wait claim; direct guest waits are counted separately.",
+    "No installed external supervisor, actor/Source/current lock/per-app display ownership, Google-kernel appearance runtime or physical phone is qualified.",
+    "Earlier setup/runtime/audit failures remain failed, including ARM stale-schema fixture, host missing Python/ABI selector and Root audit field/path assumptions.",
+    "The full smartphone and public normal-app theme migration remain incomplete."
+  ]
+}

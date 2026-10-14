@@ -34,9 +34,9 @@ pathname; no hardlink or cooperating theme writer is used. Mutation is by the
 fixture root, not an observed UID1000 writer.
 
 Invoke it with the same selected ELF arguments plus `--expected-base-sha256`
-for `process-control.py` and explicit `--wire-schema 1` or `--wire-schema 2`.
-This fixture schema selection is test infrastructure, not a production
-compatibility reader. It observes real Job/Completion bytes, packet credentials,
+for `process-control.py`. The current fixture accepts only schema3 RGBA16; no
+wire-schema selector or historical palette reader remains. Frozen prior scripts
+retain their original RED/GREEN evidence. It observes real Job/Completion bytes, packet credentials,
 pidfd, ACK and parent wait4 without rewriting syscalls, registers or replies.
 A successor is held before exec so its newer collection cannot hide the selected
 completion. After release a fresh actual collection must reflect the replacement.
@@ -47,3 +47,8 @@ failed assertion remains `passed:false`; there is no anticipated-RED conversion.
 Preserve setup failures under their own fresh labels. The host still owns exact
 container/CLI waits and independent exact-CID absence; no installed desktop,
 Original Omarchy, Google kernel or phone behavior is qualified by this control.
+
+A fresh current-wire regression passes the same held-acquisition, atomic exchange,
+null/withdrawal, fresh recollection and actual reap predicates against the exact
+current host ELF. No production behavior or original deadline changed; see the
+[alpha checkpoint](../../docs/native-appearance-alpha.md).

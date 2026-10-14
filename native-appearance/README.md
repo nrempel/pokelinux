@@ -22,15 +22,18 @@ and original500ms idle/reply budgets keep public idle clients from consuming
 owner-control capacity.
 
 Snapshots contain exactly `schema`, `owner`, `revision`, `until_ns`, `available`
-and `appearance`. The schema is2; the incarnation is32 lowercase hexadecimal
+and `appearance`. The schema is3; the incarnation is32 lowercase hexadecimal
 characters. `until_ns` is a canonical decimal string preserving exact u64
 `CLOCK_BOOTTIME` nanoseconds. Available `appearance` has exactly `palette` and `style`. The
-palette has exactly nine RGB fields:
+palette has exactly nine color roles:
 background, foreground, surface, border, accent, muted, urgent, positive and ink.
+Each is exactly `{r,g,b,a}` with unsigned integer channels0–65535. Opaque8-bit
+channels expand by257. Qualified flat popup companion alpha replaces intrinsic
+alpha; direct text preserves QColor ARGB alpha and ignores its companion.
 Style has exactly `base_size`, eight `font_tokens` and six `spacing_tokens`.
 Base/font values are positive signed-int32-range integers; spacing also permits
 zero. The family/resource resolver is still separate unfinished work. Unavailable
-publication has `appearance:null`; no schema1 reader is retained. The whole typed
+publication has `appearance:null`; no schema1/2 production reader is retained. The whole typed
 payload participates in revision equality and final queued-send validation. A
 cached presentation is not a current lease.
 
@@ -68,7 +71,16 @@ runtime logs, synthetic private homes and captures remain private. See the
 [boundary and evidence](../docs/native-appearance-service.md) for chronology and
 the separate evidence classes.
 
-Nineteen actual host groups pass, including user token replacement/deletion,
+The current source passes23 actual host groups and22 separate Arch ARM kernel
+groups, including4 captured-value alpha regressions. A later actual Original/
+Rust/private Qt component RED→GREEN qualifies17 phases and34 full captures with
+all592704 measured plane pixels equal, exact alpha and typed style. A separate
+private Qt suite passes505 actual peer/QML cases. See
+[alpha checkpoint](../docs/native-appearance-alpha.md) and
+[proof](../docs/evidence/native-appearance-alpha-provenance.json). Concrete font
+resources and normal app migration remain open.
+
+The historical schema2 source passes19 host groups, including user token replacement/deletion,
 style revisions, unsafe user file types/content and absence recovery. A separate
 actual held-acquisition control exposes obsolete colors renewal before this repair;
 the unchanged control now observes a null candidate, withdrawal, fresh collection
@@ -82,11 +94,12 @@ original kill/reap/restart assertion. Qt schema2 controls remain private synthet
 consumer evidence, not complete app migration. Visible large-font clipping,
 concrete font resources and normal-window font/DPR remain open.
 
-This projection covers selected opaque colors and integer font/spacing tokens.
-Concrete font resolution/resources, translucent colors, original parser edge cases
-and Qt signed-int overflow coercions remain unqualified. Unsupported out-of-range
+This projection covers selected flat colors/alpha and integer font/spacing tokens.
+Concrete font resolution/resources, the complete color/JavaScript Number language,
+Border rendering, original parser edges and Qt signed-int overflow coercions
+remain unqualified. Unsupported out-of-range
 sizes are refused, never silently clamped; original Style defines no upper cap.
-The full original font/settings/alpha behavior is not yet preserved. The existing
+The full original font/settings/rendering behavior is not yet preserved. The existing
 public application's full theme path must not be replaced by this partial projection until those features and installed integration
 are qualified. ARM compilation alone is not runtime, original Omarchy or phone
 evidence. Physical Pixel hardware, real suspend, current Source/lock composition

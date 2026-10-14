@@ -553,7 +553,7 @@ pub fn run(path: &Path, config: Configuration, executable: &Path) -> io::Result<
                         !stopping && current.as_ref().is_some_and(|(_, until)| now < *until);
                     let reply = match request {
                         Request::Snapshot => serde_json::to_vec(&Snapshot {
-                            schema: 2,
+                            schema: 3,
                             owner: owner.clone(),
                             revision,
                             until_ns: if available {
@@ -680,7 +680,7 @@ mod queued_reply_controls {
                 queued_ns + publication_lifetime_ns,
             );
             let wire = serde_json::to_vec(&Snapshot {
-                schema: 2,
+                schema: 3,
                 owner: OWNER.into(),
                 revision: REVISION,
                 until_ns: current.1.to_string(),
@@ -781,7 +781,8 @@ mod queued_reply_controls {
                 }
                 "revision_change" => {
                     revision += 1;
-                    current.as_mut().unwrap().0.palette.background = "#eff1f5".into();
+                    current.as_mut().unwrap().0.palette.background =
+                        crate::palette::Color::opaque(0xef, 0xf1, 0xf5);
                 }
                 "stop" => {
                     stopping = true;

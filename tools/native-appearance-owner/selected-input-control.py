@@ -37,9 +37,8 @@ spec.loader.exec_module(original)
 
 
 class HeldColors(original.Realm):
-    def __init__(self, binary, schema, result):
-        self.schema = schema
-        self.key = "palette" if schema == 1 else "appearance"
+    def __init__(self, binary, result):
+        self.key = "appearance"
         self.job = None
         self.sent_candidate = None
         self.received_candidate = None
@@ -56,7 +55,7 @@ class HeldColors(original.Realm):
         value = payload[self.key]
         if value is None:
             return None
-        return value["background"] if self.schema == 1 else value["palette"]["background"]
+        return value["palette"]["background"]
 
     def launch(self):
         super().launch()
@@ -246,8 +245,8 @@ class HeldColors(original.Realm):
                     s = self.request(self.control, "status")
                     p = self.request(self.socket, "snapshot")
                     if (s["received"] and p["received"] and s["reply"]["completed"] > 0
-                            and p["reply"]["schema"] == self.schema and p["reply"]["available"]
-                            and self.background(p["reply"]) == "#1a1b26"
+                            and p["reply"]["schema"] == 3 and p["reply"]["available"]
+                            and self.background(p["reply"]) == {"r": 6682, "g": 6939, "b": 9766, "a": 65535}
                             and self.warmup_uid_transitions and self.warmup_seccomp):
                         healthy = {"status": s, "snapshot": p}
                         break
@@ -308,7 +307,7 @@ class HeldColors(original.Realm):
                 s = self.request(self.control, "status")
                 p = self.request(self.socket, "snapshot")
                 if (s["received"] and p["received"] and p["reply"]["available"]
-                        and self.background(p["reply"]) == "#faf4e8"
+                        and self.background(p["reply"]) == {"r": 64250, "g": 62708, "b": 59624, "a": 65535}
                         and s["reply"]["completed"] >= old_status["reply"]["completed"] + 2
                         and p["reply"]["revision"] > old_snapshot["reply"]["revision"]):
                     latest = {"status": s, "snapshot": p}
@@ -405,7 +404,6 @@ def main():
     parser.add_argument("--binary", required=True)
     parser.add_argument("--expected-sha256", required=True)
     parser.add_argument("--expected-base-sha256", required=True)
-    parser.add_argument("--wire-schema", required=True, type=int, choices=[1, 2])
     parser.add_argument("--output", required=True)
     args = parser.parse_args()
     assert sha(args.binary) == args.expected_sha256
@@ -413,7 +411,7 @@ def main():
     output = Path(args.output)
     output.mkdir(exist_ok=True)
     assert not (output / "result.json").exists(), "result label already used"
-    result = {"schema": 1, "wire_schema_selection": args.wire_schema,
+    result = {"schema": 1, "wire_schema": 3,
         "scope": "actual synthetic x86 owned held-colors consistency control; no Original desktop/Google kernel/phone",
         "input_binary": original.fingerprint(args.binary), "base_control": original.fingerprint(BASE),
         "control": original.fingerprint(__file__), "started_ns": time.monotonic_ns(),
@@ -422,7 +420,7 @@ def main():
             "registers_or_syscalls_rewritten": False, "injected_replies": False,
             "fixture_capabilities": "Docker defaults plus test-only SYS_PTRACE; no production capability claim"}}
     try:
-        HeldColors(args.binary, args.wire_schema, result).run()
+        HeldColors(args.binary, result).run()
     except BaseException:
         result["setup_passed"] = False
         result["passed"] = False

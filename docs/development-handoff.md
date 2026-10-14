@@ -18,7 +18,17 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
-The native Rust appearance owner now publishes exact schema2 typed style,
+The native Rust appearance owner now publishes schema3 exact RGBA16 and typed
+style. An actual Original/Rust/private Qt alpha RED precedes the repair; fresh
+GREEN passes17 phases/34 full captures with every592704-pixel plane equal. Root
+rehashes223 bindings and independently decodes every image. Separate23 host/22
+Arch ARM kernel groups and505 private Qt peer/QML cases pass. Prior failed
+aggregates remain failed. Font resources, full parser/Border/normal-window
+rendering and installed Source/lock/supervision remain open; the partial Qt app
+migration stays private. See [alpha checkpoint](native-appearance-alpha.md) and
+[proof](evidence/native-appearance-alpha-provenance.json).
+
+The historical preceding schema2 owner publishes exact typed style,
 with generated/user overlays, all8font/6spacing tokens and full-payload revision/
 queued-send fences. Nineteen host groups pass; actual user replacement/deletion,
 unsafe inputs and absence recovery are covered after a genuine user-style RED.

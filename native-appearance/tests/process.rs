@@ -1,6 +1,6 @@
 //! Actual Linux processes/socket credentials, filesystem locks and kernel filters.
 //! These are component controls, not original Omarchy or physical phone evidence.
-use pokelinux_appearance::{Snapshot, boottime_ns, ipc};
+use pokelinux_appearance::{Snapshot, boottime_ns, ipc, palette::Color};
 use rustix::{
     fd::OwnedFd,
     net,
@@ -16,6 +16,15 @@ use std::{
     process::{Child, Command, Stdio},
     time::{Duration, Instant},
 };
+
+fn expected_rgb(value: &str) -> Color {
+    assert_eq!(value.len(), 7);
+    Color::opaque(
+        u8::from_str_radix(&value[1..3], 16).unwrap(),
+        u8::from_str_radix(&value[3..5], 16).unwrap(),
+        u8::from_str_radix(&value[5..7], 16).unwrap(),
+    )
+}
 
 struct Realm {
     root: PathBuf,
@@ -184,7 +193,7 @@ impl Realm {
         until(
             || {
                 let s = self.snapshot();
-                s.available && s.appearance.unwrap().palette.background == background
+                s.available && s.appearance.unwrap().palette.background == expected_rgb(background)
             },
             4,
         );
@@ -349,7 +358,10 @@ fn actual_palette_private_home_and_live_changes() {
     let mut r = Realm::new("palette");
     r.healthy("#1a1b26");
     let old = r.snapshot();
-    assert_eq!(old.appearance.unwrap().palette.urgent, "#f7768e");
+    assert_eq!(
+        old.appearance.unwrap().palette.urgent,
+        Color::opaque(0xf7, 0x76, 0x8e)
+    );
     assert_eq!(r.home.metadata().unwrap().mode() & 0o777, 0o700);
     let guard = r.lock();
     r.theme("#eff1f5");
@@ -420,7 +432,7 @@ fn actual_user_style_replacement_deletion_and_revision() {
         observed["appearance"]["style"], expected_user,
         "actual service omitted the qualified user style: {observed}"
     );
-    assert_eq!(observed["schema"], 2);
+    assert_eq!(observed["schema"], 3);
     let revision = observed["revision"].as_u64().unwrap();
     fs::remove_file(&user).unwrap();
     until(
@@ -447,7 +459,10 @@ fn actual_user_style_replacement_deletion_and_revision() {
         },
         4,
     );
-    assert_eq!(observed["appearance"]["palette"]["background"], "#1a1b26");
+    assert_eq!(
+        observed["appearance"]["palette"]["background"],
+        json!({"r":6682,"g":6939,"b":9766,"a":65535})
+    );
     r.stop();
 }
 #[test]
@@ -644,7 +659,10 @@ fn app_role_protocol_probe() {
     let snapshot: Snapshot =
         serde_json::from_value(call(&public, json!({"op":"snapshot"})).unwrap()).unwrap();
     assert!(snapshot.available);
-    assert_eq!(snapshot.appearance.unwrap().palette.background, "#1a1b26");
+    assert_eq!(
+        snapshot.appearance.unwrap().palette.background,
+        Color::opaque(0x1a, 0x1b, 0x26)
+    );
     let fd = net::socket_with(
         net::AddressFamily::UNIX,
         net::SocketType::SEQPACKET,

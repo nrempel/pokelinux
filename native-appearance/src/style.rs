@@ -1,5 +1,5 @@
 //! Typed presentation from independently observed generated and user shell inputs.
-//! Concrete font resolution/resources and translucent colors are separate gates.
+//! Concrete font resolution/resources are a separate gate.
 use crate::palette::{self, Palette};
 use serde::{Deserialize, Serialize};
 use std::{collections::BTreeMap, io};
@@ -46,8 +46,7 @@ impl Appearance {
     pub fn valid(&self) -> bool {
         let f = &self.style.font_tokens;
         let s = &self.style.spacing_tokens;
-        self.palette.valid()
-            && supported(self.style.base_size, 1)
+        supported(self.style.base_size, 1)
             && [
                 f.caption,
                 f.body_small,

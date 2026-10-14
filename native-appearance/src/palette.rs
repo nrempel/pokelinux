@@ -1,4 +1,4 @@
-//! Selected opaque public Omarchy Color contract, not arbitrary TOML or Qt colors.
+//! Selected public Omarchy Color contract with exact bounded RGBA16 channels.
 //! See docs/native-appearance-service.md for original-code qualification gates.
 use serde::{Deserialize, Serialize};
 use std::{collections::BTreeMap, io};
@@ -6,39 +6,69 @@ use std::{collections::BTreeMap, io};
 #[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize)]
 #[serde(deny_unknown_fields)]
 pub struct Palette {
-    pub background: String,
-    pub foreground: String,
-    pub surface: String,
-    pub border: String,
-    pub accent: String,
-    pub muted: String,
-    pub urgent: String,
-    pub positive: String,
-    pub ink: String,
+    pub background: Color,
+    pub foreground: Color,
+    pub surface: Color,
+    pub border: Color,
+    pub accent: Color,
+    pub muted: Color,
+    pub urgent: Color,
+    pub positive: Color,
+    pub ink: Color,
+}
+/// QColor's integer RGBA precision, independent of any consumer's hex syntax.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Deserialize, Serialize)]
+#[serde(deny_unknown_fields)]
+pub struct Color {
+    pub r: u16,
+    pub g: u16,
+    pub b: u16,
+    pub a: u16,
+}
+impl Color {
+    pub fn opaque(r: u8, g: u8, b: u8) -> Self {
+        Self {
+            r: u16::from(r) * 257,
+            g: u16::from(g) * 257,
+            b: u16::from(b) * 257,
+            a: u16::MAX,
+        }
+    }
 }
 fn invalid() -> io::Error {
     io::ErrorKind::InvalidData.into()
 }
-fn rgb(s: &str) -> Option<String> {
-    (s.len() == 7 && s.starts_with('#') && s.as_bytes()[1..].iter().all(u8::is_ascii_hexdigit))
-        .then(|| s.to_ascii_lowercase())
-}
-impl Palette {
-    pub fn valid(&self) -> bool {
-        [
-            &self.background,
-            &self.foreground,
-            &self.surface,
-            &self.border,
-            &self.accent,
-            &self.muted,
-            &self.urgent,
-            &self.positive,
-            &self.ink,
-        ]
-        .iter()
-        .all(|s| rgb(s).is_some())
+fn rgb(s: &str) -> Option<Color> {
+    if s.len() != 7 || !s.starts_with('#') || !s.as_bytes()[1..].iter().all(u8::is_ascii_hexdigit) {
+        return None;
     }
+    Some(Color::opaque(
+        u8::from_str_radix(&s[1..3], 16).ok()?,
+        u8::from_str_radix(&s[3..5], 16).ok()?,
+        u8::from_str_radix(&s[5..7], 16).ok()?,
+    ))
+}
+fn text_color(s: &str) -> Option<Color> {
+    if let Some(color) = rgb(s) {
+        return Some(color);
+    }
+    // Direct popup text is QColor's #AARRGGBB, unlike the surface parser's
+    // trailing-alpha syntax. Its text-alpha companion is not consumed.
+    if s.len() != 9 || !s.starts_with('#') || !s.as_bytes()[1..].iter().all(u8::is_ascii_hexdigit) {
+        return None;
+    }
+    let mut color = rgb(&format!("#{}", &s[3..]))?;
+    color.a = u16::from(u8::from_str_radix(&s[1..3], 16).ok()?) * 257;
+    Some(color)
+}
+fn alpha(value: Option<&String>) -> u16 {
+    let value = value
+        .and_then(|v| v.trim().parse::<f64>().ok())
+        .filter(|v| v.is_finite())
+        .unwrap_or(1.0);
+    // Original Util.alpha replaces intrinsic alpha through Qt.rgba's float
+    // interface; it does not multiply or round the companion to an 8-bit byte.
+    ((value.clamp(0.0, 1.0) as f32) * 65535.0).round() as u16
 }
 fn key(s: &str) -> bool {
     !s.is_empty()
@@ -111,10 +141,10 @@ fn first_color(value: &str) -> Option<&str> {
 }
 fn flat(
     value: &str,
-    roles: &BTreeMap<String, String>,
+    roles: &BTreeMap<String, Color>,
     shell: &BTreeMap<String, String>,
     depth: usize,
-) -> io::Result<String> {
+) -> io::Result<Color> {
     if depth >= 16 {
         return Err(invalid());
     }
@@ -124,7 +154,7 @@ fn flat(
         return flat(next, roles, shell, depth + 1);
     }
     if let Some(color) = roles.get(&lower) {
-        return Ok(color.clone());
+        return Ok(*color);
     }
     if let Some(color) = rgb(token) {
         return Ok(color);
@@ -141,7 +171,7 @@ fn flat(
             && matches!(hex.len(), 6 | 8)
             && hex.bytes().all(|b| b.is_ascii_hexdigit())
         {
-            return Ok(format!("#{}", &hex[..6]));
+            return rgb(&format!("#{}", &hex[..6])).ok_or_else(invalid);
         }
     }
     Err(invalid())
@@ -173,22 +203,22 @@ pub(crate) fn project_values(
         {
             continue;
         }
-        let color = v[..7].to_ascii_lowercase();
+        let color = rgb(&v[..7]).ok_or_else(invalid)?;
         if matches!(k, "red" | "color1") {
-            urgent = Some(color.clone());
+            urgent = Some(color);
         }
         base.insert(k.to_string(), color);
     }
     let choose = |name, alias| {
         base.get(name)
             .or_else(|| base.get(alias))
-            .cloned()
+            .copied()
             .ok_or_else(invalid)
     };
     let background = choose("background", "color0")?;
     let foreground = choose("foreground", "color7")?;
     let accent = choose("accent", "color4")?;
-    let muted = choose("muted", "color8").unwrap_or_else(|_| foreground.clone());
+    let muted = choose("muted", "color8").unwrap_or(foreground);
     let urgent = urgent.ok_or_else(invalid)?;
     let mut roles = BTreeMap::new();
     for (k, v) in [
@@ -199,47 +229,39 @@ pub(crate) fn project_values(
         ("muted", &muted),
         ("urgent", &urgent),
     ] {
-        roles.insert(k.into(), v.clone());
+        roles.insert(k.into(), *v);
     }
-    // Unsupported translucency is refused until actual original alpha/pixel tests.
-    for k in ["popups.background-alpha", "popups.border-alpha"] {
-        if shell
-            .get(k)
-            .is_some_and(|v| v.parse::<f64>().ok() != Some(1.0))
-        {
-            return Err(invalid());
-        }
-    }
-    let surface = flat(
+    let mut surface = flat(
         shell
             .get("popups.background")
             .map(String::as_str)
-            .unwrap_or(&background),
+            .unwrap_or("background"),
         &roles,
         shell,
         0,
     )?;
-    let border = flat(
+    surface.a = alpha(shell.get("popups.background-alpha"));
+    let mut border = flat(
         shell
             .get("popups.border")
             .map(String::as_str)
-            .unwrap_or(&accent),
+            .unwrap_or("accent"),
         &roles,
         shell,
         0,
     )?;
+    border.a = alpha(shell.get("popups.border-alpha"));
     // Original popup text is a direct color pick, not surface-alpha composition.
-    let popup_text = shell
-        .get("popups.text")
-        .map(String::as_str)
-        .unwrap_or(&foreground);
-    let foreground = rgb(popup_text).ok_or_else(invalid)?;
+    let foreground = match shell.get("popups.text") {
+        Some(value) => text_color(value).ok_or_else(invalid)?,
+        None => foreground,
+    };
     Ok(Palette {
-        background: background.clone(),
+        background,
         foreground,
         surface,
         border,
-        accent: accent.clone(),
+        accent,
         muted,
         urgent,
         positive: choose("green", "color2").unwrap_or(accent),

@@ -1,8 +1,13 @@
 # Installed native appearance boundary
 
 The [native Rust publisher](../native-appearance/README.md) now implements an
-owned collector and typed public presentation. The schema2 extension passes
-nineteen actual host component groups plus the separate held-input control below.
+owned collector and typed public presentation. Current schema3 carries exact
+RGBA16 colors;23 host groups,22 separate Arch ARM kernel groups and an actual
+Original/Rust/private Qt17-phase comparison pass after a genuine alpha RED.
+All34 full captures match every measured plane pixel; a separate private Qt suite
+passes505 actual peer/QML cases. See [alpha checkpoint](native-appearance-alpha.md)
+and [proof](evidence/native-appearance-alpha-provenance.json). The historical
+schema2 extension passes19 host groups plus the separate held-input control below.
 The preceding palette-only selection passes17 host groups and two separate
 held-exec/descriptor controls; its later ARM evidence retains that exact selection. These are synthetic Linux
 boundaries; the original installed desktop RED below remains open. Historical
@@ -139,7 +144,8 @@ See [bounded ARM kernel evidence](evidence/native-appearance-arm-kernel-provenan
 
 ## Typed user style and selected-input repair
 
-Schema2 publishes one nullable `appearance` with an exact9RGB palette and typed
+This historical schema2 checkpoint publishes one nullable `appearance` with
+an exact9RGB palette and typed
 base size,8font and6spacing tokens. Generated and user shell maps are independent;
 user keys win, and removal reveals generated/default values. The whole payload
 participates in revision equality and final queued-send validation. No production
