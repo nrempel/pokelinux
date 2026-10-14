@@ -1342,3 +1342,7 @@ pub fn entry(args: &[String]) -> io::Result<()> {
         .current_dir("/")
         .exec())
 }
+
+#[cfg(test)]
+#[path = "service_auth_attempt_tests.rs"]
+mod auth_attempt_tests;

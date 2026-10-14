@@ -108,7 +108,16 @@ causal Source-death transition. Actual Docker wait0, fresh same-daemon exact-CID
 absence and93 local/host plus93 external hash bindings pass. The256MiB overlay
 cap is unchanged. See [bounded provenance](evidence/native-session-lock-generation-provenance.json).
 
-Native owned authentication, actor-side attempt/result checks, exact one-shot
+An unwired internal actor-attempt primitive now retains one inert handle with
+actor/Source identity, accepted generation, live exact locker, lock-admission epoch
+and an original absolute BOOTTIME deadline. Retirement is sticky across observed
+context excursions and never frees the occupied slot. A missing-API compile RED
+precedes33 passing host components and strict Clippy; see the bounded selection in
+[the lifecycle README](../native-lifecycle/README.md). This is typed Provider and
+real-pidfd evidence only, without Source IPC, PAM or a broker result. No closure,
+candidate, unlock, reset or durable-clear operation is provided.
+
+Native owned authentication, broker/actor result binding, exact one-shot
 restoration authority, synced durable policy restoration and a subsequent normal
 Messages read remain open. Neither protocol completion nor a mapped frame proves
 secure presentation. Production launcher/procfs/namespace provisioning, Google6.6

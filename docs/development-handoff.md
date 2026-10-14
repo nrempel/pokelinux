@@ -63,7 +63,13 @@ later inert-object request supplies no positive cause, and late first attachment
 stays generation-unknown. No authentication or restoration authority is added.
 See [contract and bounded provenance](native-session-lock-generation.md).
 
-Next implement actor-owned attempts and supervised native authentication, then
+The internal actor-attempt primitive now retains a single occupied slot with sticky
+retirement, exact live locker/Source/actor binding, lock epoch and an original
+BOOTTIME deadline. The missing-API RED is compile-only;33 host components and strict
+Clippy pass. [Bounded proof](evidence/native-auth-actor-attempt-provenance.json).
+It remains unwired, with no authentication result, closure/reuse or unlock API.
+
+Next compose supervised native authentication with actor-owned attempts, then
 one-shot exact-operation restoration, synced durable policy and a normal Messages
 read. The separate [Original PAM prerequisite](native-original-pam-prerequisite.md)
 passes typed wrong/correct responses but supplies no actor-owned receipt. Do not

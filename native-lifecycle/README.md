@@ -30,6 +30,28 @@ see [protocol actor evidence](../docs/evidence/native-session-protocol-actor-pro
 Generation/event facts remain observations, with no authentication or restoration
 capability added.
 
+The private actor-attempt admission/lifetime primitive is internal and unwired.
+Its opaque non-Clone handle grants no authentication or restoration authority.
+One occupied slot retains its exact actor/attempt identity, Source incarnation,
+accepted nonzero lock generation, live locker pidfd, checked lock-admission epoch
+and original absolute BOOTTIME deadline of at most30s. Every accepted new lock
+advances that epoch even when pending intent is already durable. Observed context
+excursions, Source loss/expiry, locker death, explicit lock/suspend and degradation
+retire the slot permanently. Matching live kernel tasks requires ProcessView even
+for shared references. Retirement never frees occupancy; no broker-closure API is
+present. Stable heartbeats and unrelated lifecycle revisions do not renew time.
+
+The frozen API-prerequisite RED exits101 with21 missing-method `E0599` errors and
+executes no attempt cases. After implementation,33 host lifecycle components pass,
+including17 new controls, with formatting and strict normal/all-target Clippy.
+The preceding one-test Provider control remains separate. The initial127 runner
+setup failure and32/33 aggregate missing the existing storage helper remain failed;
+fresh complete runs supply the exact same-build daemon helper. These are typed
+Provider/real-pidfd component results, without Source IPC, PAM or broker dispatch.
+No authentication result, candidate, restoration receipt, unlock, reset or durable
+clearing is enabled.
+No installed authentication or ARM/device result is claimed by this selection.
+
 [Per-app ARM evidence](../docs/native-display-app-generations.md) qualifies
 lifetime/relaunch and held-init Stop. Pending EOF passes its narrow boundary;
 its successor aggregate is failed after Source InvalidData of unknown predicate.

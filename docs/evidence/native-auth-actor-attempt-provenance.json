@@ -1,0 +1,76 @@
+{
+  "schema": 1,
+  "scope": "unwired actor-owned authentication attempt admission/lifetime component only; typed Provider and real retained pidfds",
+  "base_head": "2635ce65eaea155d72e81736c9826d6651ee5a5d",
+  "selected_patch_sha256": "0c44671d71f69909e4e4948df4f75d437c3fccb98ed2c5d09cac1746bd8b604b",
+  "component_evidence_only": true,
+  "compile_RED": {
+    "execution": "/tmp/pokelinux-auth-actor-attempt-red-api-1/execution.json",
+    "execution_sha256": "bc925538992ab547a818d90caa549c98b267341c72b0074b594b510b0680a030",
+    "selection_sha256": "263ad657c46a425e29ff2ef16ef8d7edde5351c3f6e6bb109ec5cd04493ca30a",
+    "test_log_sha256": "93b45bbc3b55164f03ecbd866a8ab9686f3774b3020fe737534cda9df0d80d59",
+    "actual_cli_wait_exit": 101,
+    "input_closure_reverified": true,
+    "exact_cid_absence_receipt": true,
+    "classification": "missing-API compile prerequisite only: 21 E0599; zero attempt bodies executed; no behavioral authentication RED"
+  },
+  "final_host": {
+    "execution": "/tmp/pokelinux-auth-actor-attempt-host-4/execution.json",
+    "execution_sha256": "06801aaef184f93b56cc1cefab4f2ef0d4ea43d382a393190a91fb6f6e72b739",
+    "selection_sha256": "1289768d5e1727b372a88c459c01368c332fb9cfece93d5f4eb7cb6497a74f65",
+    "test_log_sha256": "fd2961b4e560d30ca87ffb7776681f6ae94818250672d581e628d7d63e4e975a",
+    "actual_cli_wait_exit": 0,
+    "input_closure_reverified": true,
+    "exact_cid_absence_receipt": true,
+    "classification": "33/33 plus strict default/all-target Clippy passed; final Rust source revision with post-pidfd time checks and restored wrong-task descriptor case"
+  },
+  "host_tests": {
+    "passed": 33,
+    "failed": 0,
+    "new_controls": 17,
+    "existing_components": 16,
+    "fmt": true,
+    "strict_normal_clippy": true,
+    "strict_all_targets_clippy": true,
+    "actual_cli_wait_exit": 0,
+    "actual_terminal_container_exit": 0,
+    "profile": "UID0, NNP1, all five capability sets0",
+    "original_source_budget_ns": 100000000,
+    "deadline_cap_ns": 30000000000,
+    "test_elf_sha256": "7321ed7d559e84bd3c11b501a04763c63f85fab32bd8aa8bd28342ebf944df0d",
+    "daemon_helper_sha256": "020ef7f2d4f5f310e40e102e4be2edfad8c2f07ea14de78b1fe166b888c0b534",
+    "exact_elf_hashes_recorded_before_container_removal": true,
+    "ephemeral_test_elf_retained": false
+  },
+  "source_bindings": [
+    {
+      "path": "native-lifecycle/src/authority.rs",
+      "sha256": "e821f14c330405f2970c703f7f0782394d41e2babee0324784a49c8c760d8037"
+    },
+    {
+      "path": "native-lifecycle/src/service.rs",
+      "sha256": "b3ae15428e8dab3c0b7261c33ab9b5d62b268fa6cf648e9d38b76f8dd0c29880"
+    },
+    {
+      "path": "native-lifecycle/src/service_auth_attempt_tests.rs",
+      "sha256": "2766af6e8a4ee0f3f42a8d17fa573fe32bbe4f0a8fdb47dfadcff8a9c9d073fd"
+    }
+  ],
+  "root_review": {
+    "actual_records_read": true,
+    "all_31_frozen_source_hashes_match": true,
+    "script_and_log_match": true,
+    "fresh_exact_CID_absent": true,
+    "peer_review_sha256": "21f8183abdfd6425d64a1da6042612a13774dcd73216a7a9d78edc1bb2a7fd65"
+  },
+  "limitations": [
+    "component Provider fixture only; not Source IPC or original compositor execution",
+    "no PAM, authentication worker, privileged broker or workload dispatch",
+    "no authentication success, candidate, restoration receipt, unlock, reset, durable-clear or broker-closure API",
+    "no complete authentication or normal Messages reopen result",
+    "no ARM/VM or physical device execution in this selection",
+    "no runtime test for a deliberately held procfs identity read; source rechecks BOOTTIME after the final liveness poll",
+    "Source wire and actor external IPC are unchanged; production primitive remains unwired",
+    "existing protected receipt/grant vectors remain retained; this is not whole Messages-history body integration"
+  ]
+}

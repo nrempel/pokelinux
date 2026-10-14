@@ -72,6 +72,24 @@ pub(crate) enum Decision {
     Immediate(Reply),
     Persist(WriteIntent),
 }
+const MAX_AUTHENTICATION_ATTEMPT_NS: u64 = 30_000_000_000;
+/// Inert, non-cloneable identity for one actor-owned attempt. It supplies no
+/// worker dispatch, authentication result, receipt or restoration authority.
+// Unwired internal primitive until an independently qualified broker exists.
+#[allow(dead_code)]
+pub(crate) struct AuthenticationAttempt {
+    actor: String,
+    id: u64,
+}
+struct AuthenticationSlot {
+    id: u64,
+    source: String,
+    generation: u64,
+    locker: crate::session::OwnedFocus,
+    lock_epoch: u64,
+    until: u64,
+    retired: bool,
+}
 pub struct Authority {
     profiles: Vec<AppProfile>,
     principals: BTreeMap<String, Principal>,
@@ -93,6 +111,9 @@ pub struct Authority {
     root_lock_intent: bool,
     reconcile_after: u64,
     session_view: Option<pokelinux_kernel_identity::ProcessView>,
+    lock_admission_epoch: u64,
+    authentication_sequence: u64,
+    authentication: Option<AuthenticationSlot>,
 }
 impl Authority {
     pub(crate) fn loading(profiles: Vec<AppProfile>) -> io::Result<Self> {
@@ -117,6 +138,9 @@ impl Authority {
             root_lock_intent: true,
             reconcile_after: 0,
             session_view: None,
+            lock_admission_epoch: 0,
+            authentication_sequence: 0,
+            authentication: None,
         })
     }
     pub(crate) fn require_session(&mut self) -> io::Result<()> {
@@ -132,6 +156,139 @@ impl Authority {
         self.session.as_ref().filter(|s| {
             !self.session_failed && s.sampled_at_ns > self.reconcile_after && now < s.until
         })
+    }
+    fn retire_authentication_attempt(&mut self) {
+        if let Some(attempt) = &mut self.authentication {
+            // Retirement is sticky and never supplies proof of broker closure.
+            // Keep the retained slot and locker; no reuse/reset API exists.
+            attempt.retired = true;
+        }
+    }
+    fn authentication_context_current(
+        &self,
+        attempt: &AuthenticationSlot,
+        sample: &crate::session::Snapshot,
+        now: u64,
+    ) -> bool {
+        self.ready()
+            && self.session_required
+            && !self.suspended
+            && self.locked
+            && self.root_lock_intent
+            && self.durable.lock_pending
+            && !self.session_failed
+            && !attempt.retired
+            && self.lock_admission_epoch == attempt.lock_epoch
+            && now < attempt.until
+            && sample.sampled_at_ns > self.reconcile_after
+            && now < sample.until
+            && sample.source == attempt.source
+            && sample.locked
+            && sample.lock_generation == Some(attempt.generation)
+            && sample.protocol_unlock.is_none()
+            && sample.locker.as_ref().is_some_and(|locker| {
+                // Shared Arc identity or matching metadata alone cannot prove
+                // that either retained descriptor still names this live task.
+                attempt.locker.metadata == locker.metadata
+                    && self.session_view.as_ref().is_some_and(|view| {
+                        view.matches(
+                            attempt.locker.pidfd(),
+                            locker.pidfd(),
+                            attempt.locker.metadata.pid,
+                        )
+                        .unwrap_or(false)
+                    })
+            })
+            // Identity reads/polls may consume time. Recheck both absolute
+            // limits after the final kernel liveness check as well.
+            && crate::boottime_ns() < attempt.until
+            && crate::boottime_ns() < sample.until
+    }
+    fn refresh_authentication_lifetime(&mut self, now: u64) {
+        if self.authentication.is_none() {
+            return;
+        }
+        let now = now.max(crate::boottime_ns());
+        if self.authentication.as_ref().is_some_and(|attempt| {
+            self.session
+                .as_ref()
+                .is_none_or(|sample| !self.authentication_context_current(attempt, sample, now))
+        }) {
+            self.retire_authentication_attempt();
+        }
+    }
+    /// Reserve one inert handle with its original absolute BOOTTIME deadline.
+    /// Occupancy persists after expiry/retirement until future actual broker
+    /// closure can be proven; this primitive provides no closure operation.
+    #[allow(dead_code)] // Deliberately not wired to production actor ingress yet.
+    pub(crate) fn begin_authentication_attempt(
+        &mut self,
+        now: u64,
+        until: u64,
+    ) -> Result<AuthenticationAttempt, Reply> {
+        if !self.ready() || self.authentication.is_some() {
+            return Err(Reply::Unavailable);
+        }
+        let actual_now = crate::boottime_ns();
+        if now > actual_now
+            || actual_now >= until
+            || until
+                .checked_sub(now)
+                .is_none_or(|budget| budget == 0 || budget > MAX_AUTHENTICATION_ATTEMPT_NS)
+        {
+            return Err(Reply::Denied);
+        }
+        let id = match self.authentication_sequence.checked_add(1) {
+            Some(id) => id,
+            None => {
+                self.invalidate();
+                return Err(Reply::Unavailable);
+            }
+        };
+        let sample = self.fresh_session(actual_now).ok_or(Reply::Denied)?;
+        let attempt = AuthenticationSlot {
+            id,
+            source: sample.source.clone(),
+            generation: sample
+                .lock_generation
+                .filter(|g| *g != 0)
+                .ok_or(Reply::Denied)?,
+            locker: sample.locker.clone().ok_or(Reply::Denied)?,
+            lock_epoch: self.lock_admission_epoch,
+            until,
+            retired: false,
+        };
+        if !self.authentication_context_current(&attempt, sample, actual_now) {
+            return Err(Reply::Denied);
+        }
+        self.authentication_sequence = attempt.id;
+        let handle = AuthenticationAttempt {
+            actor: self.incarnation.clone(),
+            id: attempt.id,
+        };
+        self.authentication = Some(attempt);
+        Ok(handle)
+    }
+    /// Check and latch lifetime only. A current handle is not an authentication
+    /// result and cannot arm a candidate or clear durable pending intent.
+    #[allow(dead_code)] // Deliberately not wired to production actor ingress yet.
+    pub(crate) fn current_authentication_attempt(
+        &mut self,
+        attempt: &AuthenticationAttempt,
+        now: u64,
+    ) -> bool {
+        if attempt.actor != self.incarnation
+            || self
+                .authentication
+                .as_ref()
+                .is_none_or(|slot| slot.id != attempt.id)
+        {
+            return false;
+        }
+        self.refresh_authentication_lifetime(now);
+        self.authentication
+            .as_ref()
+            .is_some_and(|slot| !slot.retired)
     }
     fn matches_focus(&self, p: &Principal, focus: &crate::session::OwnedFocus) -> bool {
         let metadata = &focus.metadata;
@@ -161,6 +318,7 @@ impl Authority {
         }
     }
     pub(crate) fn fail_session(&mut self) -> io::Result<()> {
+        self.retire_authentication_attempt();
         if !self.session_failed {
             self.session_failed = true;
             self.session = None;
@@ -189,6 +347,9 @@ impl Authority {
         s: crate::session::Snapshot,
         now: u64,
     ) -> io::Result<()> {
+        // Check the previous lease/liveness before a later observation can
+        // replace it, even when no independent timer or current query ran.
+        self.refresh_authentication_lifetime(now);
         if self.session_failed {
             return self.fail_session();
         }
@@ -244,12 +405,18 @@ impl Authority {
         // Explicit resume/session reconciliation needs a newly sampled packet.
         // Cached but otherwise fresh pre-resume facts cannot restore authority.
         if s.sampled_at_ns <= self.reconcile_after {
+            self.retire_authentication_attempt();
             self.session = None;
             self.locked = true;
             for p in self.principals.values_mut() {
                 p.background = true;
             }
             return Ok(());
+        }
+        if self.authentication.as_ref().is_some_and(|attempt| {
+            !self.authentication_context_current(attempt, &s, now.max(crate::boottime_ns()))
+        }) {
+            self.retire_authentication_attempt();
         }
         let locked = self.root_lock_intent || s.locked;
         let selected = if !locked {
@@ -280,6 +447,7 @@ impl Authority {
         Ok(())
     }
     pub(crate) fn activate(&mut self, durable: Durable) {
+        self.retire_authentication_attempt();
         // Load the pending intent before ready can authorize any Source fact.
         self.root_lock_intent = durable.lock_pending;
         self.locked |= durable.lock_pending;
@@ -292,6 +460,13 @@ impl Authority {
         if self.lifecycle(Some(true), None, None).is_err() || !self.ready() {
             return Decision::Immediate(Reply::Unavailable);
         }
+        self.lock_admission_epoch = match self.lock_admission_epoch.checked_add(1) {
+            Some(epoch) => epoch,
+            None => {
+                self.invalidate();
+                return Decision::Immediate(Reply::Unavailable);
+            }
+        };
         if self.durable.lock_pending {
             return Decision::Immediate(Reply::Ok);
         }
@@ -306,6 +481,7 @@ impl Authority {
         })
     }
     pub(crate) fn invalidate(&mut self) {
+        self.retire_authentication_attempt();
         self.degraded = true;
         self.permits.clear();
     }
@@ -327,8 +503,7 @@ impl Authority {
         self.generation = match self.generation.checked_add(1) {
             Some(v) => v,
             None => {
-                self.degraded = true;
-                self.permits.clear();
+                self.invalidate();
                 return Err(io::ErrorKind::Other.into());
             }
         };
@@ -378,8 +553,7 @@ impl Authority {
         self.policy = match self.policy.checked_add(1) {
             Some(v) => v,
             None => {
-                self.degraded = true;
-                self.permits.clear();
+                self.invalidate();
                 return Err(io::ErrorKind::Other.into());
             }
         };
@@ -412,11 +586,13 @@ impl Authority {
         suspended: Option<bool>,
         background: Option<(&str, bool)>,
     ) -> io::Result<()> {
+        if locked.is_some() || suspended.is_some() {
+            self.retire_authentication_attempt();
+        }
         self.lifecycle = match self.lifecycle.checked_add(1) {
             Some(v) => v,
             None => {
-                self.degraded = true;
-                self.permits.clear();
+                self.invalidate();
                 return Err(io::ErrorKind::Other.into());
             }
         };
@@ -1172,6 +1348,65 @@ mod tests {
             .unwrap();
         assert!(!authority.session_failed);
         assert_eq!(authority.lifecycle, lifecycle);
+    }
+    #[test]
+    fn auth_attempt_lock_epoch_overflow_retires_and_keeps_slot() {
+        let mut authority = session_authority();
+        authority.activate(Durable {
+            lock_pending: true,
+            ..Durable::default()
+        });
+        let mut sample = locker_snapshot(Some(own_locker()));
+        sample.lock_generation = Some(1);
+        authority
+            .observe_session(sample.clone(), crate::boottime_ns())
+            .unwrap();
+        authority.lock_admission_epoch = u64::MAX;
+        let now = crate::boottime_ns();
+        let until = now + 20_000_000_000;
+        let attempt = authority.begin_authentication_attempt(now, until).unwrap();
+        assert!(authority.current_authentication_attempt(&attempt, crate::boottime_ns()));
+        assert!(matches!(
+            authority.plan_lock(crate::boottime_ns()),
+            Decision::Immediate(Reply::Unavailable)
+        ));
+        assert!(crate::boottime_ns() < sample.until);
+        assert!(crate::boottime_ns() < until);
+        assert!(!authority.current_authentication_attempt(&attempt, crate::boottime_ns()));
+        assert!(authority.is_degraded());
+        assert_eq!(authority.lock_admission_epoch, u64::MAX);
+        assert!(authority.authentication.as_ref().unwrap().retired);
+        assert!(
+            authority
+                .begin_authentication_attempt(crate::boottime_ns(), until)
+                .is_err()
+        );
+        assert!(authority.durable.lock_pending);
+    }
+    #[test]
+    fn auth_attempt_id_overflow_fails_closed_before_any_slot() {
+        let mut authority = session_authority();
+        authority.activate(Durable {
+            lock_pending: true,
+            ..Durable::default()
+        });
+        let mut sample = locker_snapshot(Some(own_locker()));
+        sample.lock_generation = Some(1);
+        authority
+            .observe_session(sample.clone(), crate::boottime_ns())
+            .unwrap();
+        authority.authentication_sequence = u64::MAX;
+        let now = crate::boottime_ns();
+        assert!(crate::boottime_ns() < sample.until);
+        assert!(
+            authority
+                .begin_authentication_attempt(now, now + 20_000_000_000)
+                .is_err()
+        );
+        assert!(authority.is_degraded());
+        assert!(authority.authentication.is_none());
+        assert_eq!(authority.authentication_sequence, u64::MAX);
+        assert!(authority.durable.lock_pending);
     }
     struct Harness {
         core: Authority,
