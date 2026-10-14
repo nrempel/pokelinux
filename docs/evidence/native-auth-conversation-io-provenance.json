@@ -1,0 +1,148 @@
+{
+  "schema": 1,
+  "scope": "Exact private Rust conversation methods over real host pipes; actual helper lifetime, no full Attempt, PAM, cgroup or VM",
+  "base_commit": "df739650a5e409c1767aa05bef09480dfef5568e",
+  "RED": {
+    "schema": 1,
+    "classification": "HOST_CONVERSATION_INITIALIZATION_AND_LIFETIME_GUARD_RED",
+    "aggregate_passed": false,
+    "tests_passed": 16,
+    "tests_failed": 3,
+    "helper_ignored_in_parent_suite": 1,
+    "actual_tool_session": 5245,
+    "actual_tool_terminal_chunk": "143e7c",
+    "actual_terminal_exit": 1,
+    "actual_test_exit": 101,
+    "source_bindings": 14,
+    "all_frozen_bindings_match": true,
+    "actual_owned_helper_timeout_kill9_wait_EOF_pidfd_dead_proc_absent": true,
+    "after_deadline_public_test_bytes_written": 22,
+    "after_deadline_candidate_buffered_in_pure_protocol_state": true,
+    "full_PAM_or_Attempt_or_scope_or_VM_executed": false,
+    "selection_sha256": "ddb764df9d26661ffb6c7f7f8dd349252840902221f7ecf2d67e30eb697d71c8",
+    "execution_sha256": "a5a46d109027dc8f0847ea2c263c4489db69ffdd55d817f5702b5d35ac074733",
+    "test_log_sha256": "f52d6704a9e20551dd36d12dbb3806256c634c6029ed5d19e6a00a0689c0d0af",
+    "sealed_ns": 5951202795861655
+  },
+  "GREEN": {
+    "schema": 1,
+    "classification": "HOST_CONVERSATION_INITIALIZATION_AND_LIFETIME_GUARD_GREEN",
+    "aggregate_passed": true,
+    "tests_passed": 19,
+    "tests_failed": 0,
+    "helper_ignored_in_parent_suite": 1,
+    "actual_tool_session": 46154,
+    "actual_tool_terminal_chunk": "f34044",
+    "actual_terminal_exit": 0,
+    "actual_test_exit": 0,
+    "source_bindings": 14,
+    "all_frozen_bindings_and_current_sources_match": true,
+    "actual_owned_helper_natural_wait0_EOF_pidfd_dead_proc_absent": true,
+    "expired_call_public_test_bytes_written": 0,
+    "expired_call_candidate_buffered": false,
+    "two_prompt_response_rounds_actual_Rust_wire": true,
+    "cancel_under_real_pipe_EAGAIN": true,
+    "format_and_default_and_all_feature_all_target_Clippy_passed": true,
+    "fresh_exact_CID_absent": true,
+    "same_daemon": true,
+    "full_PAM_or_Attempt_or_scope_or_VM_executed": false,
+    "ARM64_compiled_only": true,
+    "selection_sha256": "1881ac3e0ad4fc0ab1873216f83e12870875149eeb5cd9ee579efb999c76ffd0",
+    "execution_sha256": "a4108041e82dbe36e2966fbec2dbe6af0c66e9b440e5c4ddb6934fa18b64f229",
+    "test_log_sha256": "3b158576fe085d8c879bb51bf9df8cde04e813ddd2aa44e7ffd2c74d1da09770",
+    "host_test_ELF_sha256": "ec55760958c97ff006c20a3c158547a780411fa1572bbba2640688f4bf7451aa",
+    "ARM64_ELF_sha256": "1438e9af690783be2e1b75c23bdad49cc72097efc410a50a10a4db05c4e8e1dc",
+    "peer_source_review_sha256": "2b256b232cbe8b485eb1f6be40040d953c88221029a145135b30accf8442567f",
+    "sealed_ns": 5951630548410566
+  },
+  "sources": [
+    {
+      "path": "native-auth/Cargo.lock",
+      "sha256": "59a7f877d2aa1ff2b0a25c6bd31d12201b0af1053716e398436a251972d25d29"
+    },
+    {
+      "path": "native-auth/Cargo.toml",
+      "sha256": "965972df3b99936141b603c67c80931aee4dee831fde6662794bbdbbcf42d88b"
+    },
+    {
+      "path": "native-auth/src/bin/auth-scope-fixture.rs",
+      "sha256": "e4b4df8254e64f0c95c101dfcb95d33ff3a262fe7f15123f1a773218e9f1259d"
+    },
+    {
+      "path": "native-auth/src/cgroup.rs",
+      "sha256": "543bf0a64565c469bc00ebd33dbb8652cba20eaf08bbfbe3856f564a174ebc45"
+    },
+    {
+      "path": "native-auth/src/conversation.rs",
+      "sha256": "2eccc676ead69bc9ac1c74c06d4f928fb81ee0f339bd7c17d6cd35d2c1b1dfac"
+    },
+    {
+      "path": "native-auth/src/conversation_io_tests.rs",
+      "sha256": "884620aa6b41fd42dd1645e9f39637181ac35a15261420995a2f6fa66f017e54"
+    },
+    {
+      "path": "native-auth/src/conversation_lifetime_tests.rs",
+      "sha256": "268aecc9dd2c7a4853077229ebeb7aa6bc77e72f1429e5d72518fa57d45c5a6f"
+    },
+    {
+      "path": "native-auth/src/conversation_tests.rs",
+      "sha256": "5f8489ee78c6e66b5b600c1dec4d6ad9b1b9f584c00510bcaaab00d657ffcfe3"
+    },
+    {
+      "path": "native-auth/src/lib.rs",
+      "sha256": "d538ed589dc6627950d96cf7fe4c44a67226c35c47d3c7355caa3db149bb4c34"
+    },
+    {
+      "path": "native-auth/src/owner.rs",
+      "sha256": "705c5edc8ee98fef7cc7b467212b8d392dc95f2d55f90b5f3a0bf65704905fe7"
+    },
+    {
+      "path": "native-auth/src/parent.rs",
+      "sha256": "8908e750206646052dcceb427d960003f0a8a6b088caf7397ca4261dcf24b9dd"
+    },
+    {
+      "path": "native-auth/src/record.rs",
+      "sha256": "efb256415cf8da749cda847ae18cc5e71ff73a16db04f5fde3a8bee987fe6a7a"
+    },
+    {
+      "path": "native-pam/src/wire.rs",
+      "sha256": "91b0b974c21e4d775caca8273e1a6ee4898764b3f88a41117b33185bd741702e"
+    }
+  ],
+  "preserved_preparation_failures": [
+    {
+      "classification": "Clippy duplicate_mod failure before runtime tests",
+      "execution_sha256": "0c7a32f5d8f0b154191a204e09f50659f1a509373e23bf16b9ee680c534f8420",
+      "test_log_sha256": "def37f02c1af1fd7a62b2c0791d4d28f59830a784cc4cfc3eef16cc171e51081",
+      "aggregate_passed": false,
+      "host_test_ELF_executed": false
+    },
+    {
+      "classification": "format check failure before runtime tests",
+      "execution_sha256": "74282d33485af48793b88bbe6fb6b4ff242dc3f3d2e2e7ed3acea2190b311cb5",
+      "test_log_sha256": "032ffe2c3d6795ae3950d45767d0336cb6d303b3c273faf1259a51f3ea5f5805",
+      "aggregate_passed": false,
+      "host_test_ELF_executed": false
+    },
+    {
+      "classification": "format check failure before runtime tests",
+      "execution_sha256": "73ea4d006da36e5f93588eabdaabe3c7a2f9e0d8df38daef5f18cb81a7524341",
+      "test_log_sha256": "850d72e5fa3aa0792d96e8f94123e6d008d8083f797923f432e28647a34f6958",
+      "aggregate_passed": false,
+      "host_test_ELF_executed": false
+    }
+  ],
+  "limits": [
+    "Six new controls execute Conversation methods with real pipes and pure Barrier state, not actual Attempt or Leaf",
+    "Failed setup control uses an ordinary unprivileged test subprocess, not PAM or the privileged helper",
+    "Expiry controls begin after expiry; they do not force suspend or prove atomic deadline timing across syscalls",
+    "A post-write expiry check cannot retract already written bytes; AGAIN/INTR read adds no candidate and returns before the second clock sample",
+    "No actual partial response write, EINTR, missing-FD write, fcntl failure or write-error injection",
+    "Zeroizing Drop is an ownership/source property, not an allocator-scrubbing experiment",
+    "Parent/supervisor prompt-response forwarding, original PAM+scope and effective faillock remain open",
+    "ARM64 release ELF compilation only; no ARM user-mode or kernel execution of this source selection",
+    "No broker/actor authentication result, exact-unlock receipt, durable clear or Messages reopen",
+    "Earlier ARM scope/containment results retain their preceding source selections; matched Google and physical hardware remain unqualified",
+    "No phone accessed"
+  ]
+}

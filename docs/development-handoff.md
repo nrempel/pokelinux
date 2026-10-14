@@ -36,11 +36,20 @@ private mount/root direct-path GREEN on Arch ARM, preserving the real helper IDs
 audit-only capabilities and NNP0. Owned cgroup kill, wait9, EOF, empty leaves and
 ECHILD close without fallback. [Containment report](native-auth-containment.md).
 This is an authored direct-path fixture, not original PAM or native scope cleanup.
-A later ordinary host wire/parser RED now precedes13 passing host components and
-strict Clippy for hidden-prompt parsing and a standalone zeroizing response frame
-under actual pipe EAGAIN. Internal Attempt response APIs remain unexercised and
-the parent/supervisor transport is unwired; no PAM/scope or ARM result is added.
-See [conversation primitives](native-auth-conversation.md).
+A later ordinary host wire/parser RED precedes13 passing host components for
+hidden prompts and a standalone zeroizing response frame. A new extracted
+Conversation selection reproduces three actual host failures before repair:
+failed initialization reads a retained blocking pipe, an expired direct call
+writes22 public dummy bytes, and a late candidate reaches pure protocol state.
+Nineteen host components now pass, including two existing-wire prompt rounds,
+queued-response cancellation under real EAGAIN and invalid response admission.
+The blocked ordinary helper is actually killed/waited before RED failure; GREEN
+exits0 naturally. Strict Clippy and separate ARM64 compilation pass. Local
+deadline checks do not prove atomic timing across syscalls. Attempt retains real
+custody, but no actual Attempt/cgroup, original PAM or ARM runtime executes in
+this selection. Parent/supervisor forwarding is still unwired. See
+[current conversation I/O](native-auth-conversation-io.md) and the historical
+[primitives](native-auth-conversation.md).
 Next: actual Attempt forwarding and original PAM+scope, including retained
 faillock and remaining fixed alias/filter routes, then broker/actor one-shot
 synced restoration and a normal Messages reopen. Keep Source100ms/no-revival and all hardware gates.

@@ -39,12 +39,19 @@ an executable, account, PAM policy or cgroup. Ordinary isolated entries are
 original deadline. PKSCOPE2 provides48-byte credential-free records with separate
 recursive-write and direct-signal observations; no historical decoder is retained.
 The synthetic PAM module uses a checked nonblocking writable FIFO at stderr FD2.
-The historical fixture rejected hidden prompts. A later host-only parser and
-standalone zeroizing frame now pass13 components after an actual private-pipe
-RED. Internal Attempt prompt/response APIs are implemented but not exercised by
-those tests or wired through this fixture's command/observation channels. Thus
-actual original-PAM/scope forwarding remains open. A candidate is not
-authentication authority. See [conversation scope](../docs/native-auth-conversation.md).
+The historical fixture rejected hidden prompts. The later host-only parser and
+standalone zeroizing frame passed13 components after an actual private-pipe RED.
+A new extraction exercises the exact private Conversation methods through real
+pipes: two prompt/response rounds, cancellation under EAGAIN, invalid responses,
+failed setup and calls begun after expiry. Three runtime failures precede19
+passing components. Both endpoints must become nonblocking before use; local
+expiry checks surround I/O and precede parsing. They do not make syscall timing
+atomic. Attempt retains every actual child, pipe, cgroup and wait; these tests do
+not construct it. Strict Clippy and separate ARM64 compilation pass, without ARM
+execution. Parent/supervisor forwarding and original PAM+scope remain open. A
+candidate is not authentication authority. See the
+[current I/O report](../docs/native-auth-conversation-io.md) and
+[earlier primitives](../docs/native-auth-conversation.md).
 
 Root-owned controls exclude UID1000 writes but do not prevent an EUID0 helper
 from using owner permissions or proc-root aliases to migrate. A separate authored direct-path
@@ -64,6 +71,8 @@ not native cleanup. A new normal two-group regression also passes. The explicit
 absent from the selected normal ELF. See [setup report](../docs/native-auth-setup.md)
 and [proof](../docs/evidence/native-auth-setup-provenance.json).
 
-Run the thirteen host component tests with `cargo test --features isolated-fixture`
+Run the nineteen host component tests with `cargo test --features isolated-fixture`
 from this crate. The actual cgroup fixture needs the separately provisioned
 disposable guest; do not run its root entry on the Harbour host.
+One additional ignored helper entry runs only as the exact subprocess of its
+parent regression.

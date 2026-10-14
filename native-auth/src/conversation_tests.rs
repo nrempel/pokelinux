@@ -2,7 +2,7 @@
 //! No worker, PAM, cgroup, namespace, broker, candidate authority or unlock.
 #[path = "../../native-pam/src/wire.rs"]
 #[allow(dead_code)]
-mod original_wire;
+pub(super) mod original_wire;
 use super::{Barrier, Candidate, ResponseFrame, Retired, parse_worker_protocol};
 use std::{fs::File, io::Read};
 

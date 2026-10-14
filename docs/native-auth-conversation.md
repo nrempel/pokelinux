@@ -1,5 +1,10 @@
 # Native scope conversation primitives
 
+This report retains the13-component selection published at `df73965`. The later
+[conversation I/O selection](native-auth-conversation-io.md) exercises the exact
+extracted transport methods and passes19 host components. It adds separate
+ARM64 compilation, without actual Attempt, PAM, cgroup or ARM runtime evidence.
+
 The existing Rust PAM wire emits Ready plus a hidden prompt through real private
 Linux pipes, while the scope parser rejects that valid prompt. This actual host
 RED has8 passes and1 runtime failure; the terminal-candidate control and seven
@@ -31,7 +36,7 @@ correction precedes this fresh selection. Actual test/container waits, same-daem
 exact container absence and all11 frozen source bindings close. The test ELF is
 retained. See [bounded proof](evidence/native-auth-conversation-provenance.json).
 
-The tests call the parser, Barrier::retire and standalone ResponseFrame directly.
+The13 tests in this selection call the parser, Barrier::retire and standalone ResponseFrame directly.
 They do not construct an actual Attempt or call pending_hidden_prompt,
 respond_hidden_prompt, write_pending's response branch, or queued-response
 Attempt cancellation/deadline cleanup. They do not run a second prompt after a

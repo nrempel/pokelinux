@@ -129,11 +129,8 @@ impl DedicatedSupervisor {
             input,
             output,
             leaf,
-            until,
+            conversation: Conversation::new(until),
             barrier: Barrier::new(pid),
-            pending: Vec::new(),
-            response: None,
-            protocol: Vec::new(),
             receipts: Vec::new(),
         };
         if attempt.initialize().is_err() {
@@ -260,107 +257,11 @@ impl Barrier {
     }
 }
 
-const MAX_PROMPTS: u16 = 32;
-const MAX_RESPONSE: usize = 512;
-
-fn parse_worker_protocol(
-    protocol: &mut Vec<u8>,
-    barrier: &mut Barrier,
-    pending: &mut Vec<u8>,
-) -> io::Result<()> {
-    if barrier.retired.is_some() {
-        return Ok(());
-    }
-    if protocol.is_empty() {
-        return Ok(());
-    }
-    if !barrier.start_released {
-        return Err(io::ErrorKind::InvalidData.into());
-    }
-    if !barrier.worker_ready && protocol.first() == Some(&0x10) {
-        protocol.remove(0);
-        barrier.worker_ready = true;
-    }
-    if protocol.is_empty() {
-        return Ok(());
-    }
-    if !barrier.worker_ready || barrier.candidate.is_some() || barrier.hidden_prompt.is_some() {
-        return Err(io::ErrorKind::InvalidData.into());
-    }
-    match protocol[0] {
-        0x11 => {
-            if protocol.len() < 3 {
-                return Ok(());
-            }
-            let sequence = u16::from_le_bytes([protocol[1], protocol[2]]);
-            if protocol.len() != 3
-                || sequence == 0
-                || sequence > MAX_PROMPTS
-                || sequence != barrier.prompts + 1
-            {
-                return Err(io::ErrorKind::InvalidData.into());
-            }
-            barrier.prompts = sequence;
-            barrier.hidden_prompt = Some(sequence);
-            protocol.clear();
-        }
-        0x30 => {
-            if protocol.len() == 1 {
-                return Ok(());
-            }
-            if protocol.len() != 2 {
-                return Err(io::ErrorKind::InvalidData.into());
-            }
-            let candidate = match protocol[1] {
-                0 => Candidate::Authenticated,
-                1 => Candidate::Denied,
-                2 => Candidate::Unavailable,
-                _ => return Err(io::ErrorKind::InvalidData.into()),
-            };
-            protocol.clear();
-            barrier.candidate = Some(candidate);
-            pending.push(0x40);
-        }
-        _ => return Err(io::ErrorKind::InvalidData.into()),
-    }
-    Ok(())
-}
-
-// No formatting/Debug/Clone. Keep the complete frame until release so prefix
-// writes never leave forgotten response bytes in a drained Vec's spare memory.
-struct ResponseFrame {
-    bytes: zeroize::Zeroizing<Vec<u8>>,
-    offset: usize,
-}
-impl ResponseFrame {
-    fn new(sequence: u16, value: zeroize::Zeroizing<Vec<u8>>) -> io::Result<Self> {
-        if !(1..=MAX_PROMPTS).contains(&sequence)
-            || value.is_empty()
-            || value.len() > MAX_RESPONSE
-            || value.contains(&0)
-        {
-            return Err(io::ErrorKind::InvalidInput.into());
-        }
-        let mut bytes = zeroize::Zeroizing::new(Vec::with_capacity(5 + value.len()));
-        bytes.push(0x20);
-        bytes.extend_from_slice(&sequence.to_le_bytes());
-        bytes.extend_from_slice(&(value.len() as u16).to_le_bytes());
-        bytes.extend_from_slice(&value);
-        Ok(Self { bytes, offset: 0 })
-    }
-    fn write_once(&mut self, fd: &impl AsFd) -> io::Result<bool> {
-        if self.offset == self.bytes.len() {
-            return Ok(true);
-        }
-        match rustix::io::write(fd, &self.bytes[self.offset..]) {
-            Ok(0) => return Err(io::ErrorKind::WriteZero.into()),
-            Ok(count) => self.offset += count,
-            Err(rustix::io::Errno::AGAIN | rustix::io::Errno::INTR) => {}
-            Err(error) => return Err(error.into()),
-        }
-        Ok(self.offset == self.bytes.len())
-    }
-}
+#[path = "conversation.rs"]
+mod conversation;
+use conversation::Conversation;
+#[cfg(test)]
+use conversation::{ResponseFrame, parse_worker_protocol};
 
 /// Owns every worker handle until actual direct/adopted waits and cgroup-empty
 /// closure. The parent must own this dedicated supervisor process separately:
@@ -371,19 +272,16 @@ pub struct Attempt {
     input: Option<ChildStdin>,
     output: Option<ChildStdout>,
     leaf: Leaf,
-    until: u64,
+    conversation: Conversation,
     barrier: Barrier,
-    pending: Vec<u8>,
-    response: Option<ResponseFrame>,
-    protocol: Vec<u8>,
     receipts: Vec<WaitReceipt>,
 }
 
 impl Attempt {
     fn initialize(&mut self) -> io::Result<()> {
         let alive = self.alive.as_ref().ok_or(io::ErrorKind::Other)?;
-        nonblocking(self.input.as_ref().ok_or(io::ErrorKind::Other)?)?;
-        nonblocking(self.output.as_ref().ok_or(io::ErrorKind::Other)?)?;
+        self.conversation
+            .initialize(self.input.as_ref(), self.output.as_ref())?;
         if !pidfd_living(alive)? {
             return Err(io::ErrorKind::BrokenPipe.into());
         }
@@ -393,9 +291,8 @@ impl Attempt {
         if !pidfd_living(alive)? {
             return Err(io::ErrorKind::BrokenPipe.into());
         }
-        self.pending.extend_from_slice(b"PKPA");
-        self.pending.extend_from_slice(&self.until.to_le_bytes());
-        self.write_pending()?;
+        self.conversation
+            .release_start(self.input.as_ref(), &mut self.barrier)?;
         Ok(())
     }
 
@@ -404,17 +301,14 @@ impl Attempt {
     }
 
     pub fn deadline(&self) -> u64 {
-        self.until
+        self.conversation.deadline()
     }
 
     /// Retire synchronously before touching the workload. A successful kill
     /// write or direct signal grants no cleanup/result authority.
     pub fn retire(&mut self, reason: Retired) {
-        self.barrier.retire(reason);
         // Release plaintext before any potentially blocked cgroup operation.
-        self.response = None;
-        self.pending.clear();
-        self.protocol.clear();
+        self.conversation.retire(&mut self.barrier, reason);
         if self.barrier.scope_kill_attempted {
             return;
         }
@@ -442,108 +336,37 @@ impl Attempt {
 
     /// Observation only. The original deadline is never replaced or renewed.
     pub fn pending_hidden_prompt(&self) -> Option<u16> {
-        (self.barrier.retired.is_none() && boottime_ns() < self.until)
-            .then_some(self.barrier.hidden_prompt)
-            .flatten()
+        self.conversation.pending_hidden_prompt(&self.barrier)
     }
 
-    /// Queue one matching response; all pipe writes remain nonblocking.
-    /// Called only in the dedicated supervisor. This isolated API is not wired
-    /// into a broker or app ingress; its outside parent retains responsiveness.
+    /// Queue only in the dedicated supervisor; its parent retains responsiveness.
     pub fn respond_hidden_prompt(
         &mut self,
         sequence: u16,
         value: zeroize::Zeroizing<Vec<u8>>,
     ) -> io::Result<()> {
-        if boottime_ns() >= self.until {
-            drop(value);
-            self.retire(Retired::Deadline);
-            return Err(io::ErrorKind::TimedOut.into());
+        let result = self
+            .conversation
+            .respond_hidden_prompt(&mut self.barrier, sequence, value);
+        if result.is_err() {
+            self.retire(self.barrier.retired.unwrap_or(Retired::Protocol));
         }
-        if self.barrier.retired.is_some()
-            || self.barrier.hidden_prompt != Some(sequence)
-            || self.response.is_some()
-            || self.barrier.candidate.is_some()
-            || !self.pending.is_empty()
-        {
-            drop(value);
-            self.retire(Retired::Protocol);
-            return Err(io::ErrorKind::InvalidInput.into());
-        }
-        let frame = match ResponseFrame::new(sequence, value) {
-            Ok(frame) => frame,
-            Err(error) => {
-                self.retire(Retired::Protocol);
-                return Err(error);
-            }
-        };
-        if boottime_ns() >= self.until {
-            drop(frame);
-            self.retire(Retired::Deadline);
-            return Err(io::ErrorKind::TimedOut.into());
-        }
-        self.response = Some(frame);
-        Ok(())
-    }
-
-    fn write_pending(&mut self) -> io::Result<()> {
-        if self.pending.is_empty() && self.response.is_none() {
-            return Ok(());
-        }
-        let input = self.input.as_ref().ok_or(io::ErrorKind::BrokenPipe)?;
-        if !self.pending.is_empty() {
-            match rustix::io::write(input, &self.pending) {
-                Ok(0) => return Err(io::ErrorKind::WriteZero.into()),
-                Ok(count) => {
-                    self.pending.drain(..count);
-                    if self.pending.is_empty() && !self.barrier.start_released {
-                        self.barrier.start_released = true;
-                    }
-                }
-                Err(rustix::io::Errno::AGAIN | rustix::io::Errno::INTR) => {}
-                Err(error) => return Err(error.into()),
-            }
-            return Ok(());
-        }
-        if let Some(frame) = &mut self.response
-            && frame.write_once(input)?
-        {
-            self.response = None;
-            self.barrier.hidden_prompt = None;
-        }
-        Ok(())
-    }
-
-    fn read_protocol(&mut self) -> io::Result<()> {
-        let output = self.output.as_ref().ok_or(io::ErrorKind::BrokenPipe)?;
-        let mut bytes = [0; 16];
-        match rustix::io::read(output, &mut bytes) {
-            Ok(0) => {
-                self.barrier.worker_stdout_eof = true;
-                if self.barrier.retired.is_none() && self.barrier.candidate.is_none() {
-                    return Err(io::ErrorKind::UnexpectedEof.into());
-                }
-            }
-            Ok(count) => {
-                if self.barrier.retired.is_none() {
-                    self.protocol.extend_from_slice(&bytes[..count]);
-                }
-            }
-            Err(rustix::io::Errno::AGAIN | rustix::io::Errno::INTR) => return Ok(()),
-            Err(error) => return Err(error.into()),
-        }
-        parse_worker_protocol(&mut self.protocol, &mut self.barrier, &mut self.pending)
+        result
     }
 
     /// At most one bounded protocol read/write, one direct wait and sixteen
     /// adopted WNOHANG waits. No wait-for-exit loop runs on an actor thread.
     pub fn poll(&mut self) {
-        if boottime_ns() >= self.until {
+        if boottime_ns() >= self.conversation.deadline() {
             self.retire(Retired::Deadline);
         }
         if self
-            .write_pending()
-            .and_then(|()| self.read_protocol())
+            .conversation
+            .write_pending(self.input.as_ref(), &mut self.barrier)
+            .and_then(|()| {
+                self.conversation
+                    .read_protocol(self.output.as_ref(), &mut self.barrier)
+            })
             .is_err()
         {
             self.retire(Retired::Protocol);
@@ -676,3 +499,11 @@ mod tests {
 #[cfg(test)]
 #[path = "conversation_tests.rs"]
 mod conversation_tests;
+
+#[cfg(test)]
+#[path = "conversation_io_tests.rs"]
+mod conversation_io_tests;
+
+#[cfg(test)]
+#[path = "conversation_lifetime_tests.rs"]
+mod conversation_lifetime_tests;
