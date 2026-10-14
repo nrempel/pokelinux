@@ -12,7 +12,9 @@ This does not qualify Pixel's exact retained kernel or production session launch
 ## Ownership and authority
 
 A focused frame contains only PID/UID/GID metadata and exactly one actual
-`SCM_RIGHTS` pidfd. Null or locked focus carries no descriptor. A dedicated
+`SCM_RIGHTS` pidfd. The current wire also carries [mapped-locker facts](native-session-owned-locker.md):
+locked frames have null focus and may transfer the one locker handle instead.
+With neither focused app nor mapped locker, no descriptor is allowed. A dedicated
 credentialed source receiver checks packet size, truncation, source PID/UID,
 incarnation, exact sequence, descriptor cardinality and the actual kernel pidfd
 type. General app/policy IPC continues to reject every descriptor. All received

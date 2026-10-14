@@ -14,6 +14,22 @@ pub const SAMPLE_BUDGET_NS: u64 = pokelinux_lifecycle::session::SAMPLE_BUDGET_NS
 pub const MAX_FRAME: usize = 1024;
 pub const MAX_DRAIN: usize = 16;
 pub use pokelinux_lifecycle::session::NativeFocus;
+/// Mapped lock-surface peer facts. Neither mapping nor protocol completion is
+/// proof of a secure frame, authentication or authority to unlock.
+#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize)]
+#[serde(tag = "state", rename_all = "snake_case", deny_unknown_fields)]
+pub enum Locker {
+    Unavailable,
+    Mapped { pid: u32, uid: u32, gid: u32 },
+}
+impl Locker {
+    fn metadata(&self) -> Option<NativeFocus> {
+        match *self {
+            Self::Unavailable => None,
+            Self::Mapped { pid, uid, gid } => Some(NativeFocus { pid, uid, gid }),
+        }
+    }
+}
 #[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Frame {
@@ -23,6 +39,7 @@ pub struct Frame {
     pub locked: bool,
     pub lock_completed: bool,
     pub focus: Option<NativeFocus>,
+    pub locker: Locker,
 }
 pub struct Observer {
     fd: Option<OwnedFd>,
@@ -32,6 +49,7 @@ pub struct Observer {
     source: String,
     current: Option<Frame>,
     focus: Option<OwnedFocus>,
+    locker: Option<OwnedFocus>,
     view: ProcessView,
     sequence: u64,
     revision: u64,
@@ -76,6 +94,7 @@ impl Observer {
             source,
             current: None,
             focus: None,
+            locker: None,
             view,
             sequence: 0,
             revision: 0,
@@ -86,6 +105,7 @@ impl Observer {
         self.failed = true;
         self.current = None;
         self.focus = None;
+        self.locker = None;
         self.fd = None;
         Err(kind.into())
     }
@@ -130,10 +150,11 @@ impl Observer {
                 Ok(frame) => frame,
                 Err(_) => return self.fail(io::ErrorKind::InvalidData),
             };
+            let locker_metadata = frame.locker.metadata();
             if frame.source != self.source
                 || self.sequence.checked_add(1) != Some(frame.sequence)
                 || (frame.locked && frame.focus.is_some())
-                || (!frame.locked && frame.lock_completed)
+                || (!frame.locked && (frame.lock_completed || locker_metadata.is_some()))
                 || frame
                     .focus
                     .as_ref()
@@ -152,19 +173,35 @@ impl Observer {
             {
                 return self.fail(io::ErrorKind::InvalidData);
             }
-            if frame.focus.is_some() != peer.is_some()
+            if (frame.focus.is_some() || locker_metadata.is_some()) != peer.is_some()
                 || peer
                     .as_ref()
                     .is_some_and(|fd| !self.view.is_pidfd(fd).unwrap_or(false))
             {
                 return self.fail(io::ErrorKind::InvalidData);
             }
-            let focus = frame
-                .focus
-                .clone()
-                .zip(peer)
-                .map(|(metadata, fd)| OwnedFocus::new(metadata, fd));
+            // A mapped locker must name the actual live task behind the received
+            // handle in this pinned procfs namespace. Focus keeps its existing
+            // fact-only death/replacement semantics; actor grants revalidate it.
+            if let Some(metadata) = &locker_metadata
+                && !peer
+                    .as_ref()
+                    .is_some_and(|fd| self.view.matches(fd, fd, metadata.pid).unwrap_or(false))
+            {
+                return self.fail(io::ErrorKind::InvalidData);
+            }
+            let (focus, locker) = match (frame.focus.clone(), locker_metadata, peer) {
+                (Some(metadata), None, Some(fd)) => (Some(OwnedFocus::new(metadata, fd)), None),
+                (None, Some(metadata), Some(fd)) => (None, Some(OwnedFocus::new(metadata, fd))),
+                (None, None, None) => (None, None),
+                _ => return self.fail(io::ErrorKind::InvalidData),
+            };
             let same_focus = match (&self.focus, &focus) {
+                (None, None) => true,
+                (Some(left), Some(right)) => left.equivalent(right, &self.view),
+                _ => false,
+            };
+            let same_locker = match (&self.locker, &locker) {
                 (None, None) => true,
                 (Some(left), Some(right)) => left.equivalent(right, &self.view),
                 _ => false,
@@ -175,6 +212,7 @@ impl Observer {
                 previous.locked != frame.locked
                     || previous.lock_completed != frame.lock_completed
                     || !same_focus
+                    || !same_locker
             }) {
                 let Some(revision) = self.revision.checked_add(1) else {
                     return self.fail(io::ErrorKind::InvalidData);
@@ -184,6 +222,7 @@ impl Observer {
             self.sequence = frame.sequence;
             self.current = Some(frame);
             self.focus = focus;
+            self.locker = locker;
         }
         if !living(&self.alive).unwrap_or(false) {
             return self.fail(io::ErrorKind::NotConnected);
@@ -283,6 +322,7 @@ impl pokelinux_lifecycle::session::Provider for Observer {
         self.failed = true;
         self.current = None;
         self.focus = None;
+        self.locker = None;
         self.fd = None;
     }
     fn occupied(&self) -> bool {
@@ -306,6 +346,7 @@ impl pokelinux_lifecycle::session::Provider for Observer {
             until: frame.sampled_at_ns + SAMPLE_BUDGET_NS,
             locked: frame.locked,
             focus: self.focus.clone(),
+            locker: self.locker.clone(),
         }))
     }
 }

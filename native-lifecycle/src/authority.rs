@@ -821,6 +821,7 @@ mod tests {
                 until: sample + crate::session::SAMPLE_BUDGET_NS,
                 locked: false,
                 focus: None,
+                locker: None,
             },
             crate::boottime_ns(),
         )
@@ -839,6 +840,7 @@ mod tests {
                 until: sample + crate::session::SAMPLE_BUDGET_NS,
                 locked: false,
                 focus: None,
+                locker: None,
             },
             crate::boottime_ns(),
         )

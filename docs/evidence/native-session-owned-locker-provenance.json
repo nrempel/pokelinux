@@ -1,0 +1,159 @@
+{
+  "schema": 1,
+  "date_UTC": "2026-10-14",
+  "publication_base_commit": "df844b1cc348b51317497317e2c7af8826da5300",
+  "scope": "owned mapped-locker Source facts only; no authentication or unlock capability",
+  "production_sources": {
+    "native-session/src/lib.rs": "cf0ed246c6b81626c542ddfc01fe1c71961a68b085d14fddf7355e55d1e11222",
+    "native-session/src/bin/session-peer-fixture.rs": "478e345ad7ef7563b2bcb1108bc33f962813e09a964b54949086b1300b34c796",
+    "native-session/src/bin/session-observer-fixture.rs": "c29c306d5a6209426e3ed1024723e239479c6bfe7e41d9c0e06943498b2091f4",
+    "native-session/tests/process.rs": "d7f53f315ee0c079ad124ca0c240d3b44ba382587d3e723dca07a3698535b3ba",
+    "native-session/Cargo.lock": "f4f8849aa8f9cf3242f3f2d24278851d6c2dace3bbe64d6823da2703e5461498",
+    "native-lifecycle/src/session.rs": "f4a51b52d9a08d6d4d7c19751665baa246af241fe661074ab1901b1578722573",
+    "native-lifecycle/src/authority.rs": "e01af31a5313770f207fbdf9e9a472953c8cdd55b1aac83b289cf9cdf77d255e",
+    "tools/native-session-compositor/adapter.cpp": "4576f1f8b3c53a80b8f669b6735cc754f3d92dcf3365f6707b22b80f9637b05f"
+  },
+  "strict_chronology": {
+    "original_compositor_RED": {
+      "selection_sha256": "9901ca2890f4f9e2edd561bae296155e293710a51e77be6c69d372a1eca7fd4e",
+      "result_sha256": "5582d6df64d17e74aec70bdba90a34fd1619c0aada682573ae50d4317706e2a0",
+      "execution_sha256": "2413590d47c0f22a687ec6140174db241a9cb081c7cae5456fbe94915f2d1826",
+      "owner_witness_sha256": "4802d9b99a9493376fcd90a3aa37573c95152839d84a176f11f990acacebc3d5",
+      "Root_review_sha256": "9d36270862c8b24d419b03be902b4b5e9b87722c3e9e72acddb86a92526ba7a2",
+      "prerequisite_groups_passed": 4,
+      "desired_missing_locker_group_failed": true,
+      "first_attachment_after_actual_Original_mapped_complete_lock": true,
+      "PAM_selected": false
+    },
+    "host_process_RED": {
+      "selection_sha256": "5fab07ef6874006b7c99d366e811f5467adc3fabe7199ce68d8f124fdb143c41",
+      "execution_sha256": "2406e64f480e2c3f98bc8e6c995986d5d182619de6b4e16f06f4aa0c28a3719f",
+      "actual_test_failed": 1,
+      "failure": "actual mapped-owner packet with live matching transferred pidfd refused by old wire",
+      "prior_two_failed_builds_are_prerequisites_only": true
+    },
+    "final_exact_host_GREEN": {
+      "selection_sha256": "9ece692f2693e51dea0b60cbc70de3ad39edc5e7d3ea9ea09b763ebb33ca6879",
+      "execution_sha256": "62e4e3c45b37519a459c41c0431da5b2ecef5481605e22ce9ed1438ec9a13478",
+      "actual_process_tests_passed": 38,
+      "actual_CLI_wait_exit": 0,
+      "exact_CID_absence": true
+    },
+    "actual_Arch_ARM_GREEN": {
+      "selection_sha256": "36c3fac65a711bcb2df40ce2280be5e92318c76c609d1130fa544f803adb5f94",
+      "command_sha256": "89521284a1c4367b3368de6a8e2abca6f41f98689e1ed548ab8b49cf94b8c811",
+      "execution_sha256": "e0fcd9e44e23f95ca78f8b84a29228eb2489991177045880fc7e7ec31f579dba",
+      "result_sha256": "d1594e2d305755b4aced16a490bd6c789cd2573026d1bc5ed55776ea63905efd",
+      "owner_witness_sha256": "c9ea488ed01ec97fe929d2113542b6703fa8bbc4d88af839405017d351731434",
+      "Root_independent_review_sha256": "94f9c362263657cc5726870b7fbef07bb9cff8f9069c8ea1d4b66ae3df8cd69a",
+      "actual_component_process_tests_passed": 38,
+      "actual_original_compositor_groups_passed": 5,
+      "aggregate_passed": true,
+      "actual_CLI_wait_exit": 0,
+      "exact_CID_absence": true
+    }
+  },
+  "wire": {
+    "required_locker_tag": [
+      "unavailable",
+      "mapped"
+    ],
+    "mapped_locker_fields": [
+      "state",
+      "pid",
+      "uid",
+      "gid"
+    ],
+    "mapped_locker_requires_locked_null_focus_and_one_actual_pidfd": true,
+    "unlocked_requires_unavailable_locker": true,
+    "old_missing_locker_frames_refused": true,
+    "general_app_IPC_rejects_all_descriptors": true,
+    "production_PID_reopen_or_pidfs_scalar_identity": false,
+    "mapped_live_PID_validated_with_protected_ProcessView": true,
+    "semantic_revision_includes_locker_changes": true,
+    "authority_or_unlock_added": false,
+    "sample_budget_ns": 100000000,
+    "cadence_ms": 25,
+    "max_frame_bytes": 1024,
+    "max_drain_packets": 16
+  },
+  "actual_components": {
+    "new_control_groups": 4,
+    "locker_contradictions_with_actual_packets": 11,
+    "same_owner_heartbeats": 100,
+    "unchanged_handle_count_and_CLOEXEC_exec_control": true,
+    "queued_unavailable_then_mapped_changes_retained": true,
+    "dead_locker_packet_terminal_and_late_valid_refused": true,
+    "existing_dead_focus_and_replacement_semantics_preserved": true
+  },
+  "actual_original_boundary": {
+    "same_original_lock_and_independently_owned_Quickshell_process": true,
+    "first_Source_attachment_after_two_mapped_owner_observations": true,
+    "fresh_accepted_locked_completed_null_focus_frame": true,
+    "exactly_one_actual_SCM_RIGHTS_locker_pidfd": true,
+    "accepted_retained_PID_CLOEXEC_and_original_owner_match": true,
+    "actual_GCC_compile_wait_exit": 0,
+    "adapter_source_sha256": "4576f1f8b3c53a80b8f669b6735cc754f3d92dcf3365f6707b22b80f9637b05f",
+    "adapter_ELF_sha256": "94719f877d525b839bccaaeb14c8f4daa81b6eb1b1fedf62e3fda71d52f62ae6",
+    "compiler_ELF_sha256": "4adcbd630a7bbbb043a38aaa5545b0322a183938ea5fb9a737398a796e131836",
+    "pidfs_tuple_comparison": "independent diagnostic on Arch7.1 only; never Google6.6 production identity",
+    "Source_failures_before_owned_Stop": 0,
+    "native_display_pixels": [
+      1080,
+      2424
+    ],
+    "actual_QWindow_DPR": 2.625,
+    "logical_density": 420,
+    "nominal_PPI": 422,
+    "native_capture_or_normal_Messages_app_selected": false
+  },
+  "build": {
+    "selection_sha256": "602b286e007383218d26d5a3892d0293deeac955b77155211aa515573cbece4c",
+    "command_sha256": "a2721aa5b9d4be9ee30999a3697883234909f1fe611e0b0d0329dd085dc8f2d0",
+    "result_sha256": "f434d71f1341a3219c04218100da1b349a67667e479168a5a7653da6db8ee6db",
+    "actual_fmt_clippy_host_and_ARM_compile": true,
+    "actual_CLI_wait_exit": 0,
+    "failed_build2_missing_image_python3_preserved": true,
+    "build3_only_uses_shell_for_executable_copy": true,
+    "unrun_build1_preserved": true
+  },
+  "ownership": {
+    "actual_direct_guest_waits": 31,
+    "direct_exit_histogram": {
+      "0": 25,
+      "1": 5,
+      "SIGTERM": 1
+    },
+    "exit1_scope": "Original status polls report not-ready before Source attachment; individually checked actual logs",
+    "SIGTERM_scope": "directly owned Original shell teardown",
+    "service_worker_and_actor_pidfd_dead_proc_absent": 4,
+    "independent_worker_wait_syscall_trace_claimed": false,
+    "same_daemon_exact_CID_absence": true,
+    "Root_rehashed_local_bindings": 163,
+    "Root_rehashed_external_bindings": 111
+  },
+  "preserved_failed_aggregate": {
+    "selection_sha256": "7fbb19421d1460d27c4d0cc790f1ce7f245f54224d8a467d3358e11e03cae9e5",
+    "result_sha256": "bf6e4c7206bea51464c513e8983c2332cdf5d3f162aae03fffd088ab75e93952",
+    "execution_sha256": "135fa89a69a65bb3bfe6ec30c5c12a032f87b50360989098e52059a483bc393c",
+    "Root_review_sha256": "ae4c4b63d6ebd1044e041d2daa109f17e8fb32433cc52b79d01a2529be388a4e",
+    "narrow_components_and_five_owner_groups_passed": true,
+    "aggregate_passed": false,
+    "actual_CLI_wait_exit": 1,
+    "failure": "unchanged256MiB overlay guard exceeded by component-only ELF copies",
+    "actual_qemu_img_allocated_bytes": 280563712,
+    "successor_only_stages_components_on_qualified_guest_run_tmpfs": true,
+    "overlay_cap_bytes_unchanged": 268435456,
+    "successor_overlay_logical_bytes": 263323648,
+    "production_source_or_deadlines_changed_between_runs": false
+  },
+  "remaining_gates": [
+    "exact accepted lock-protocol generation and exact-object unlock evidence",
+    "original PAM prerequisite and supervised native authentication",
+    "fresh still-valid Source plus durable policy restoration and Messages reopen",
+    "continuous actual lock transition, Source expiry/recovery and secure-frame qualification",
+    "production privileged launcher/procfs/runtime containment",
+    "Google6.6 locker/compositor integration and physical Pixel hardware"
+  ],
+  "proprietary_inputs_raw_decompilation_credentials_or_raw_private_logs_published": false
+}

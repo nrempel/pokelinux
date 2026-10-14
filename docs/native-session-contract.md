@@ -34,6 +34,11 @@ principals and current read checks. The desktop fixture manually changes trusted
 root lifecycle controls after reading the compositor's active-window PID. That
 fixture does not qualify production lock/focus/session ingress.
 
+The current Source wire also requires [owned mapped-locker state](native-session-owned-locker.md).
+Its retained kernel handle is a fact about the mapped peer, distinct from
+protocol completion, secure presentation and authentication. It introduces no
+permission or trusted restoration path.
+
 ## Exact original selection
 
 | Original | Selection |

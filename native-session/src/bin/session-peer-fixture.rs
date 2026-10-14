@@ -1,6 +1,6 @@
 //! Separately built synthetic sender; production library contains no fixture entrypoint.
 use pokelinux_lifecycle::{boottime_ns, ipc};
-use pokelinux_session::{Frame, NativeFocus};
+use pokelinux_session::{Frame, Locker, NativeFocus};
 use rustix::fd::{AsFd, BorrowedFd, FromRawFd, OwnedFd};
 use rustix::net::{SendAncillaryBuffer, SendAncillaryMessage, SendFlags, sendmsg};
 use std::{io, process::Command};
@@ -12,6 +12,7 @@ fn wire(source: &str, mode: &str, sequence: u64) -> Vec<u8> {
         sampled_at_ns: boottime_ns(),
         locked: false,
         lock_completed: false,
+        locker: Locker::Unavailable,
         focus: Some(NativeFocus {
             pid: std::process::id(),
             uid: 11010,
@@ -132,6 +133,59 @@ fn owned_packet(fd: &OwnedFd, source: &str, mode: &str, sequence: u64) -> io::Re
         _ => Err(io::ErrorKind::InvalidInput.into()),
     }
 }
+fn locker_packet(fd: &OwnedFd, source: &str, mode: &str, sequence: u64) -> io::Result<()> {
+    let mut frame: serde_json::Value =
+        serde_json::from_slice(&wire(source, "valid", sequence)).unwrap();
+    frame["locked"] = true.into();
+    frame["lock_completed"] = true.into();
+    frame["focus"] = serde_json::Value::Null;
+    frame["locker"] = serde_json::json!({"state":"mapped","pid":std::process::id(),
+        "uid":rustix::process::getuid().as_raw(),"gid":rustix::process::getgid().as_raw()});
+    let owned = rustix::process::pidfd_open(
+        rustix::process::getpid(),
+        rustix::process::PidfdFlags::empty(),
+    )?;
+    match mode {
+        "owned-locker" | "owned-locker-heartbeat" => {}
+        "owned-locker-missing" => return plain_packet(fd, &serde_json::to_vec(&frame).unwrap()),
+        "owned-locker-two" => {
+            return packet_with_rights(
+                fd,
+                &serde_json::to_vec(&frame).unwrap(),
+                &[owned.as_fd(), owned.as_fd()],
+            );
+        }
+        "owned-locker-file" => {
+            let file = std::fs::File::open("/dev/null")?;
+            return packet_with_rights(fd, &serde_json::to_vec(&frame).unwrap(), &[file.as_fd()]);
+        }
+        "owned-locker-wrong-pid" => {
+            frame["locker"]["pid"] = std::process::id().saturating_add(1).into()
+        }
+        "owned-locker-zero-pid" => frame["locker"]["pid"] = 0.into(),
+        "owned-locker-unlocked" => {
+            frame["locked"] = false.into();
+            frame["lock_completed"] = false.into();
+        }
+        "owned-locker-and-focus" => {
+            frame["focus"] = serde_json::json!({"pid":std::process::id(),"uid":11010,"gid":11010})
+        }
+        "owned-locker-unknown-field" => frame["locker"]["trusted"] = true.into(),
+        "owned-locker-null" => frame["locker"] = serde_json::Value::Null,
+        "owned-locker-unavailable" => {
+            frame["locker"] = serde_json::json!({"state":"unavailable"});
+            return plain_packet(fd, &serde_json::to_vec(&frame).unwrap());
+        }
+        "owned-locker-unavailable-rights" => {
+            frame["locker"] = serde_json::json!({"state":"unavailable"})
+        }
+        "owned-locker-legacy-wire" => {
+            frame.as_object_mut().unwrap().remove("locker");
+        }
+        _ => return Err(io::ErrorKind::InvalidInput.into()),
+    }
+    packet_with_rights(fd, &serde_json::to_vec(&frame).unwrap(), &[owned.as_fd()])
+}
 fn main() -> io::Result<()> {
     let args: Vec<_> = std::env::args().collect();
     if args.len() == 4 && args[1] == "--expect-source-fd-closed" {
@@ -172,9 +226,14 @@ fn main() -> io::Result<()> {
                     }
                     return Ok(());
                 }
-                if mode.starts_with("focus-child-") {
+                if mode.starts_with("focus-child-") || mode.starts_with("locker-child-") {
+                    let locker = mode.starts_with("locker-child-");
+                    let action = mode
+                        .strip_prefix("locker-child-")
+                        .or_else(|| mode.strip_prefix("focus-child-"))
+                        .unwrap();
                     own_sequence += 1;
-                    if mode == "focus-child-live" {
+                    if action == "live" {
                         let child = Command::new("/bin/sleep").arg("30").spawn()?;
                         let pid = child.id();
                         let peer = rustix::process::pidfd_open(
@@ -182,11 +241,11 @@ fn main() -> io::Result<()> {
                             rustix::process::PidfdFlags::empty(),
                         )?;
                         focus_child = Some((child, peer, pid));
-                    } else if mode == "focus-child-dead" {
+                    } else if action == "dead" {
                         let (child, _, _) = focus_child.as_mut().unwrap();
                         child.kill()?;
                         child.wait()?;
-                    } else if mode == "focus-child-new-same-metadata" {
+                    } else if action == "new-same-metadata" {
                         let (_, _, old_pid) = focus_child.take().unwrap();
                         let child = Command::new("/bin/sleep").arg("30").spawn()?;
                         let peer = rustix::process::pidfd_open(
@@ -205,8 +264,22 @@ fn main() -> io::Result<()> {
                     let (_, peer, metadata_pid) = focus_child.as_ref().unwrap();
                     let mut frame: Frame =
                         serde_json::from_slice(&wire(source, "valid", own_sequence)).unwrap();
-                    frame.focus.as_mut().unwrap().pid = *metadata_pid;
+                    if locker {
+                        frame.focus = None;
+                        frame.locked = true;
+                        frame.lock_completed = true;
+                        frame.locker = Locker::Mapped {
+                            pid: *metadata_pid,
+                            uid: rustix::process::getuid().as_raw(),
+                            gid: rustix::process::getgid().as_raw(),
+                        };
+                    } else {
+                        frame.focus.as_mut().unwrap().pid = *metadata_pid;
+                    }
                     packet_with_rights(&fd, &serde_json::to_vec(&frame).unwrap(), &[peer.as_fd()])?;
+                } else if mode.starts_with("owned-locker") {
+                    own_sequence += 1;
+                    locker_packet(&fd, source, mode, own_sequence)?;
                 } else if mode.starts_with("owned-focus") {
                     own_sequence += 1;
                     owned_packet(&fd, source, mode, own_sequence)?;

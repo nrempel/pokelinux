@@ -120,13 +120,18 @@ class Epoch:
     reply.extend(data);assert len(reply)<=65536
   raise TimeoutError('owned compositor control deadline')
  def accept(self,frame):
-  assert set(frame)=={'source','sequence','sampled_at_ns','locked','lock_completed','focus'}
+  assert set(frame)=={'source','sequence','sampled_at_ns','locked','lock_completed','focus','locker'}
   assert frame['source']==self.source and type(frame['sequence']) is int and frame['sequence']>self.sequence
   if not self.rust:assert frame['sequence']==self.sequence+1
   assert type(frame['sampled_at_ns']) is int and 0<=frame['sampled_at_ns']<=now()
   assert type(frame['locked']) is bool and type(frame['lock_completed']) is bool
   assert not frame['lock_completed'] or frame['locked']
   assert not frame['locked'] or frame['focus'] is None
+  locker=frame['locker'];assert type(locker) is dict and locker.get('state') in ('unavailable','mapped')
+  if locker['state']=='unavailable':assert set(locker)=={'state'}
+  else:
+   assert frame['locked'] and set(locker)=={'state','pid','uid','gid'}
+   assert all(type(locker[k]) is int and locker[k]>=0 for k in ('pid','uid','gid')) and 0<locker['pid']<=2147483647
   if frame['focus'] is not None:
    f=frame['focus'];assert set(f)=={'pid','uid','gid'}
    assert all(type(x) is int and x>=0 for x in f.values()) and 0<f['pid']<=2147483647
@@ -147,6 +152,8 @@ class Epoch:
      frame=event['frame'];assert event['has_owned_focus']==(frame['focus'] is not None)
      self.focus_peer_qualified=event['focused_peer_matches_metadata'] is True and event['focused_peer_cloexec'] is True
      if frame['focus'] is not None:assert self.focus_peer_qualified,'Rust focused metadata lacks live retained CLOEXEC peer'
+     assert event['has_owned_locker']==(frame['locker']['state']=='mapped')
+     if event['has_owned_locker']:assert event['locker_peer_matches_metadata'] is True and event['locker_peer_cloexec'] is True
      self.accept(frame)
     elif event['event']=='failed':
      assert event['positive_state'] is False
@@ -171,15 +178,19 @@ class Epoch:
     assert not flags&(socket.MSG_TRUNC|socket.MSG_CTRUNC) and not unexpected
     assert credentials==[(self.child.pid,1000,1000)],credentials
     frame=json.loads(data)
-    assert len(rights)==(1 if frame['focus'] is not None else 0),'ACTUAL_OWNED_FOCUS_RED: focused metadata requires exactly one pidfd'
+    mapped_locker=frame['locker']['state']=='mapped'
+    metadata=frame['focus'] if frame['focus'] is not None else (frame['locker'] if mapped_locker else None)
+    assert len(rights)==(1 if metadata is not None else 0),'actual focused or mapped-locker metadata requires exactly one pidfd'
     self.focus_peer_qualified=False
+    peer_qualified=False
     if rights:
      owned=rights[0];assert os.readlink(f'/proc/self/fd/{owned}')=='anon_inode:[pidfd]'
      assert fcntl.fcntl(owned,fcntl.F_GETFD)&fcntl.FD_CLOEXEC
      text=Path(f'/proc/self/fdinfo/{owned}').read_text();peer_pid=int(next(line.split()[1] for line in text.splitlines() if line.startswith('Pid:')))
-     self.focus_peer_qualified=live(owned) and peer_pid==frame['focus']['pid']
-     assert self.focus_peer_qualified
-    self.events.append({'event':'packet','received_at_ns':now(),'credentials':list(credentials[0]),'bytes':len(data),'frame':frame,'retained_peer_live_matches_metadata':self.focus_peer_qualified})
+     peer_qualified=live(owned) and peer_pid==metadata['pid']
+     assert peer_qualified
+     self.focus_peer_qualified=peer_qualified and frame['focus'] is not None
+    self.events.append({'event':'packet','received_at_ns':now(),'credentials':list(credentials[0]),'bytes':len(data),'frame':frame,'retained_peer_live_matches_metadata':peer_qualified})
     self.accept(frame)
     if self.current_peer_fd is not None:os.close(self.current_peer_fd);self.current_peer_fd=None
     if rights:self.current_peer_fd=rights.pop()

@@ -95,3 +95,10 @@ all reaped, with one bounded SIGKILL fallback. The current observer/actor source
 is selected independently; this producer run does not compose the actor or app.
 See [owned focus](../../docs/native-session-owned-focus.md). Earlier admission/
 scalar selections above remain frozen historical records.
+
+The current wire additionally requires [owned mapped-locker state](../../docs/native-session-owned-locker.md).
+Its five fresh original-compositor groups and38 host/38 ARM process groups have
+separate provenance. Earlier17-group results above remain historical selections;
+they do not establish the new locker wire or a trusted unlock. The legacy small
+monitor recipe above describes its historical fixture; future UI qualification
+uses the Pixel10 profile required by AGENTS.md.

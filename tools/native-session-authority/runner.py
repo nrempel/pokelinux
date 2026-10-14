@@ -185,7 +185,7 @@ def source_entry(output_raw, control_raw, source_name):
                  'sampled_at_ns': state.get('sampled_at_ns', boot()),
                  'locked': state.get('locked', False),
                  'lock_completed': state.get('lock_completed', False),
-                 'focus': state.get('focus')}
+                 'focus': state.get('focus'), 'locker': {'state': 'unavailable'}}
         rights = [] if focus_fd is None else [(socket.SOL_SOCKET, socket.SCM_RIGHTS, array.array('i', [focus_fd]))]
         assert (frame['focus'] is not None) == (focus_fd is not None)
         assert output.sendmsg([wire(frame)], rights) == len(wire(frame))

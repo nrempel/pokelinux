@@ -18,6 +18,17 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The owned mapped-locker fact wire is implemented after a qualified original
+compositor RED and separate host process RED. All38 host and38 actual Arch ARM
+process groups plus five original compositor groups pass. The prior functional
+pass remains an aggregate failure at the256MiB overlay guard; a fresh fixture
+stages component ELFs on `/run` tmpfs and passes within the unchanged cap. The required tagged locker state
+and retained SCM_RIGHTS pidfd add no unlock capability or permission. Next bind
+an actually observed lock-protocol generation and exact-object unlock, qualify
+original PAM, then implement supervised authentication and durable restoration.
+Do not use mapped PID, observer revision, global unlock or a renewed expired
+Source as a restoration receipt. See [owned locker facts](native-session-owned-locker.md).
+
 The native Rust appearance owner now publishes schema3 exact RGBA16 and typed
 style. An actual Original/Rust/private Qt alpha RED precedes the repair; fresh
 GREEN passes17 phases/34 full captures with every592704-pixel plane equal. Root

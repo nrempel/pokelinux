@@ -50,6 +50,9 @@ pub struct Snapshot {
     pub until: u64,
     pub locked: bool,
     pub focus: Option<OwnedFocus>,
+    /// Retained mapped-locker peer from the same sample. This is not an unlock
+    /// capability. Consumers must revalidate live owned identity when using it.
+    pub locker: Option<OwnedFocus>,
 }
 /// Poll is bounded and nonblocking. None/Err supplies no positive authority;
 /// the actor retains policy and must match its exact launched app pidfd.

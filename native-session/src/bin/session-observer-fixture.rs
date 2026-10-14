@@ -61,8 +61,12 @@ fn main() -> io::Result<()> {
         {
             sequence = frame.sequence;
             let focused = snapshot.as_ref().and_then(|s| s.focus.as_ref());
+            let locker = snapshot.as_ref().and_then(|s| s.locker.as_ref());
             emit(json!({"event":"sample","frame":frame,
                 "has_owned_focus":focused.is_some(),
+                "has_owned_locker":locker.is_some(),
+                "locker_peer_matches_metadata":locker.map(|f| view.matches(f.pidfd(), f.pidfd(), f.metadata.pid).unwrap_or(false)),
+                "locker_peer_cloexec":locker.map(|f| rustix::io::fcntl_getfd(f.pidfd()).is_ok_and(|flags| flags.contains(rustix::io::FdFlags::CLOEXEC))),
                 "focused_peer_matches_metadata":focused.map(|f| view.matches(f.pidfd(), f.pidfd(), f.metadata.pid).unwrap_or(false)),
                 "focused_peer_cloexec":focused.map(|f| rustix::io::fcntl_getfd(f.pidfd()).is_ok_and(|flags| flags.contains(rustix::io::FdFlags::CLOEXEC)))}))?;
         }

@@ -589,3 +589,106 @@ fn exactly_contiguous_actual_wire_leases_do_not_extend_old_deadline() {
     assert_eq!(observer.snapshot().unwrap().sampled_at_ns, until);
     assert!(boottime_ns() >= until);
 }
+
+#[test]
+fn actual_mapped_locker_is_admitted_with_its_owned_kernel_handle() {
+    let (mut p, mut o) = start(0);
+    p.command("owned-locker");
+    o.poll()
+        .expect("fresh mapped locker with an actual live matching pidfd must be admitted");
+    let frame = serde_json::to_value(o.snapshot().unwrap()).unwrap();
+    assert_eq!(frame["locker"]["state"], "mapped");
+    assert_eq!(frame["locker"]["pid"], p.child.id());
+    assert!(frame["focus"].is_null());
+    assert_eq!(frame["locked"], true);
+}
+#[test]
+fn actual_locker_shape_and_handle_contradictions_are_terminal() {
+    for mode in [
+        "owned-locker-missing",
+        "owned-locker-two",
+        "owned-locker-file",
+        "owned-locker-wrong-pid",
+        "owned-locker-zero-pid",
+        "owned-locker-unlocked",
+        "owned-locker-and-focus",
+        "owned-locker-unknown-field",
+        "owned-locker-null",
+        "owned-locker-unavailable-rights",
+        "owned-locker-legacy-wire",
+    ] {
+        invalid_packet(mode);
+    }
+}
+
+#[test]
+fn owned_locker_heartbeats_retain_one_cloexec_handle_and_unavailable_releases_it() {
+    use pokelinux_lifecycle::session::Provider;
+    let (mut p, mut o) = start(0);
+    p.command("owned-locker");
+    let snapshot = Provider::poll(&mut o).unwrap().unwrap();
+    let locker = snapshot.locker.as_ref().unwrap();
+    assert_eq!(locker.metadata.pid, p.child.id());
+    assert!(
+        pokelinux_kernel_identity::ProcessView::open()
+            .unwrap()
+            .matches(locker.pidfd(), locker.pidfd(), p.child.id())
+            .unwrap()
+    );
+    assert!(
+        rustix::io::fcntl_getfd(locker.pidfd())
+            .unwrap()
+            .contains(rustix::io::FdFlags::CLOEXEC)
+    );
+    let mut inspector = Command::new(env!("CARGO_BIN_EXE_session-peer-fixture"))
+        .args([
+            "--expect-source-fd-closed",
+            &locker.pidfd().as_raw_fd().to_string(),
+            &p.child.id().to_string(),
+        ])
+        .spawn()
+        .unwrap();
+    assert!(inspector.wait().unwrap().success());
+    drop(snapshot);
+    let before = std::fs::read_dir("/proc/self/fd").unwrap().count();
+    for _ in 0..100 {
+        p.command("owned-locker-heartbeat");
+        let current = Provider::poll(&mut o).unwrap().unwrap();
+        assert!(current.focus.is_none());
+        assert_eq!(current.locker.as_ref().unwrap().metadata.pid, p.child.id());
+        assert_eq!(current.revision, 1);
+    }
+    assert_eq!(std::fs::read_dir("/proc/self/fd").unwrap().count(), before);
+    p.command("owned-locker-unavailable");
+    p.command("owned-locker");
+    let current = Provider::poll(&mut o).unwrap().unwrap();
+    assert_eq!(
+        current.revision, 3,
+        "queued owner disappearance cannot be coalesced away"
+    );
+    drop(current);
+    p.command("owned-locker-unavailable");
+    let current = Provider::poll(&mut o).unwrap().unwrap();
+    assert!(current.locker.is_none());
+    assert_eq!(current.revision, 4);
+    assert_eq!(
+        std::fs::read_dir("/proc/self/fd").unwrap().count() + 1,
+        before
+    );
+    Provider::stop(&mut o);
+    assert!(o.snapshot().is_none());
+    assert!(Provider::poll(&mut o).is_err());
+}
+#[test]
+fn dead_locker_packet_cannot_keep_or_reactivate_owned_locker_state() {
+    use pokelinux_lifecycle::session::Provider;
+    let (mut p, mut o) = start(0);
+    p.command("locker-child-live");
+    assert!(Provider::poll(&mut o).unwrap().unwrap().locker.is_some());
+    p.command("locker-child-dead");
+    assert!(Provider::poll(&mut o).is_err());
+    assert!(o.snapshot().is_none());
+    p.command("owned-locker");
+    assert!(Provider::poll(&mut o).is_err());
+    assert!(o.snapshot().is_none());
+}
