@@ -1,0 +1,121 @@
+{
+  "schema": 1,
+  "date_UTC": "2026-10-14",
+  "base_commit": "a70f2487bf3f9c1b0d7ac7d029f406f5a9c2403b",
+  "evidence_class": "authenticated original Google4K kernel on synthetic ARM64 QEMU virt",
+  "result": {
+    "schema": 1,
+    "passed": true,
+    "classification": "original-Google4K-kernel-native-RAM-probe-observed",
+    "scope": "Exact authenticated Google4K kernel on synthetic QEMU virt hardware; current authored generic RAM-only payload.",
+    "original_raw_kernel_sha256": "0226c3be4224b02884d4f9b332aee58ec06c65b2263265e80f2498332ef15c06",
+    "authenticated_boot_image_sha256": "f68a58f2d4fd591beaca0e569713006a593644ffda4e2fb580339677d867d403",
+    "current_candidate_sha256": "b2ba46ec4eaf8c4398ae7eb6033fed179c1cc030f4bdbcb753f30717738359a8",
+    "exact_generic_LZ4_sha256": "0896081a31d739a466b7cd124335808c6641c70ca6df8ce20d0b1a7101ecd0f8",
+    "native_init_ELF_sha256": "8f97c746cc8ef20eb4d3f2f981f1a24ad6e96b5d88f0d327ca80cf5627847d1d",
+    "native_child_ELF_sha256": "3b15eb4a9fd289e6664c917861f98bbe385e117e26b28abb149b3021e4b19e63",
+    "actual_kernel_release": "6.6.127-android15-8-g91d825611104-ab16252310-4k",
+    "actual_native_PID": 1,
+    "actual_native_UID": 0,
+    "actual_child_PID": 56,
+    "actual_child_PPID": 1,
+    "actual_source_bound_child_wait_exit": 37,
+    "actual_post_readback_ACK_events": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "actual_post_readback_ACK_kernel_sequences": [
+      284,
+      285,
+      286,
+      287
+    ],
+    "same_epoch": true,
+    "actual_QMP_guest_shutdown": true,
+    "actual_Docker_CLI_wait_exit": 0,
+    "actual_outer_runner_wait_exit": 0,
+    "exact_owned_CID_absent": true,
+    "all52_frozen_bindings_unchanged": true,
+    "budgets_and_caps_unchanged": true,
+    "new_userspace_compile": false,
+    "single_experiment_no_retry": true,
+    "limitations": [
+      "QEMU virt is synthetic hardware, not Pixel hardware, bootloader, DTB, AVB, USB or pstore qualification.",
+      "ACK3 is an independently captured, source-bound production report of its actual wait; no separate syscall tracer observed guest waitpid.",
+      "No Pixel bootloader command line was observed; selected compiled defaults and explicit serial test arguments both appear in this run.",
+      "Protected nVHE initialization does not qualify confidential workloads; actual no-IOMMU warning is retained.",
+      "The initial header file-length assertion was a data-only preflight error, preserved unchanged; no prior kernel run occurred."
+    ],
+    "Pixel_hardware_or_AVB_pstore_USB_qualified": false,
+    "independent_audit_sha256": "162e7716d397b578f1c255d2840ac48832f9f0b79ea6c35d8e6af17fc977736b"
+  },
+  "kernel_identity": {
+    "compressed_payload_sha256": "e43d13d5b8e2657e27437bc59d8d5abd2131f255dfca26354d96e02ce43115d1",
+    "raw_Image_bytes": 36866560,
+    "raw_Image_sha256": "0226c3be4224b02884d4f9b332aee58ec06c65b2263265e80f2498332ef15c06",
+    "embedded_config_sha256": "f3be4cd72a437f07d1c804f2127c72f60ff1474d6acf370e5c969618ed6388d0",
+    "ARM64_header_effective_memory_bytes": 37486592,
+    "kernel_page_bytes": 4096,
+    "original_payload_authenticated_by_factory_archive": true,
+    "independent_pinned_AOSP_unpack_and_public_liblz4_derivation_match": true,
+    "source_rebuilt_or_upstream_binary_equivalence_claimed": false
+  },
+  "runtime": {
+    "QEMU_image": "sha256:561177a4305051567b1d28d67ba9a95e0ce0ad32a8815b49da42fe71aa5a3dd6",
+    "machine": "virt-10.0,gic-version=3,virtualization=on",
+    "accelerator": "tcg,thread=multi",
+    "CPU": "max",
+    "guest_CPUs": 2,
+    "guest_memory_MiB": 256,
+    "container_CPUs": 2,
+    "container_memory_MiB": 512,
+    "container_pids_limit": 64,
+    "outer_deadline_seconds": 45,
+    "QMP_setup_deadline_seconds": 5,
+    "retained_child_deadline_seconds": 2,
+    "retained_readback_deadline_ms": 100,
+    "compiled_cmdline": "console=ttynull stack_depot_disable=on cgroup_disable=pressure kasan.stacktrace=off kvm-arm.mode=protected bootconfig ioremap_guard",
+    "test_cmdline_append": "console=ttyAMA0,115200n8 earlycon=pl011,0x9000000 rdinit=/init panic=1",
+    "actual_compiled_and_appended_tokens_observed": true,
+    "actual_protected_nVHE_initialized": true,
+    "actual_no_IOMMU_warning_retained": true,
+    "actual_missing_bootconfig_and_synthetic_watchdog_limitations_retained": true,
+    "QMP_commands": [
+      "qmp_capabilities",
+      "query-status",
+      "cont"
+    ],
+    "actual_paused_QMP_peer_matches_owned_live_container_init": true,
+    "no_root_disk_NIC_host_device_vendor_userspace_or_phone": true
+  },
+  "Root_independent_review": {
+    "passed": true,
+    "frozen_bindings_rehashed": 52,
+    "raw_console_four_ACKs_and_matching_echoes_reviewed": true,
+    "raw_QMP_guest_shutdown_reviewed": true,
+    "actual_live_container_name_image_and_QMP_peer_agree": true,
+    "fresh_same_daemon_exact_CID_absence_after_actual_CLI_wait": true,
+    "private_review_sha256": "983ffd05a8867f99145941098d0fc08674aff95fef6b5295ca7d94993a01cb61"
+  },
+  "private_record_sha256": {
+    "selection.json": "9d75abdd0568106a0d4d6730622f6abdd584cd2564545d098a1688c50c77bce5",
+    "command.json": "db4de2e4d23233580cb3c7f463e0c24382521c3d88351dbd603359a77cae7208",
+    "run-frozen.py": "317a1b199225caa3da60468fa7935a04802112b91a4f8f0e114432692035693a",
+    "derived-input-provenance.json": "72287317687402450b8f43c272139a6ffa9f1c5d1abcc526a0a40626f26d8a3a",
+    "ARM64-header-pin.json": "c4f59631433a75d3451b5cbb7a2608b82b16fc1b35ac9d3d70b18c2e15f0a91d",
+    "execution.json": "632227e6580e9c69c9eb4c8efa582c2b156f8ffede719c607d1297a4272b9347",
+    "result.json": "7428bd052bad8a53b119c94bf560d8896628c223ad2a8e626f1cc293fb12708e",
+    "console.log": "86aef4b3047a20f7a74ffa7e8b01f4a478315489fbcb87f1a95047654735f629",
+    "qmp-records.json": "a43c433e75895e13a72fd3a5c8899ac77f57cc8cb7fe7fddbff1ccffa5155b93",
+    "terminal-handoff.json": "c2b8fabeb0ebce0f2b8f0efb1fb942c27530b8ba2b3a899e6d90f237bd33956f",
+    "terminal-independent-audit.json": "162e7716d397b578f1c255d2840ac48832f9f0b79ea6c35d8e6af17fc977736b"
+  },
+  "chronology": [
+    "An overly strict preflight file-length/effective-Image-size assertion failed before any kernel execution; preserved separately.",
+    "One frozen unchanged-kernel/unchanged-userspace runtime passed; no retry or kernel-mode disabling flags.",
+    "An audit-only case-sensitive Docker error assertion failed after successful runtime; fresh terminal audit corrected classification without changing runtime predicates or inputs."
+  ],
+  "full_smartphone_or_physical_device_qualification": false
+}

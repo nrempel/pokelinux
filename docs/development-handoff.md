@@ -179,9 +179,24 @@ unpack/Rust/three-frame-overlay/eight-refusal checks and executes its exact gene
 LZ4 under Arch ARM7.1.6 with four ACKs and owned-CID closure. See
 [current diagnostic proof](evidence/native-boot-diagnostics-provenance.json) and
 [package](../native-boot-package/README.md). The simpler RAM runner establishes
-only direct Docker CLI wait. No Google kernel, vendor userspace, phone, retained
-log retrieval or usable hardware diagnostic path is qualified. Effective console,
-early RNG/kmsg policy, AVB/bootloader/ramdisk selection and recovery remain gates.
+only direct Docker CLI wait. A later separate exact-Google4K-kernel/QEMU run
+executes the same current generic LZ4 and unchanged native ELFs: four ACKs, child
+wait37 and QMP guest shutdown pass; Root rehashes52 bindings and checks owned
+live identity plus fresh same-daemon exact-CID absence. Compiled protected-mode
+arguments remain unchanged; synthetic EL2/PL011/DTB differs from Pixel hardware.
+See [Google-kernel proof](evidence/native-boot-google-kernel-provenance.json).
+
+Separate original AOSP AVB execution qualifies five internally self-consistent
+signed metadata blocks, four expected child key/rollback-slot agreements and16
+available descriptor checks;27 payload checks remain unavailable. The unsigned
+compact candidate lacks parseable VBMeta and fails the stock init_boot descriptor.
+Root independently reviews26 input identities,27 outer waits and42 nested
+OpenSSL exit0/actual wait4 reaps. See [AVB admission](native-boot-avb.md). No
+external device trust anchor, rollback state, bootloader/RAM selection, vendor
+userspace, Pixel board, retained-log retrieval or usable hardware diagnostic
+path is qualified. Effective phone console/RNG/kmsg policy and recovery remain
+gates. Next: narrow the closed-loader selection/admission contract, qualify
+recoverable diagnostics, then carry the native service tracer onto this kernel.
 
 The original native early boot has a separate RAM-only checkpoint. A genuine
 missing-`/init` ARM RED precedes the Rust root-PID1 probe. Native child actual wait
@@ -202,7 +217,7 @@ signal policy remain open. These authored control ramdisks do not inherit Pixel
 candidate evidence. No probe change was needed. See
 [failure proof](evidence/native-boot-probe-failure-provenance.json).
 
-That experimental candidate now exists offline: a reproducible1,454,080-byte
+The historical first candidate was built offline: a reproducible1,454,080-byte
 unsigned v4 `init_boot` owns generic `/init` with the exact native ELF. Pinned AOSP
 unpacking, Rust geometry, independent actual vendor-fragment overlay and eight
 input/output refusal groups pass. Its exact extracted generic LZ4 also executes
@@ -211,9 +226,10 @@ missing startup device nodes would abort init was falsified; the original
 consumer's failed RED expectation/exit1 remain preserved. No runtime defect or
 node repair is claimed. Public tooling and clean metadata are in
 [native boot package](../native-boot-package/README.md). Candidate images and
-original inputs remain private. This does not qualify Pixel kernel startup,
+original inputs remain private. That earlier epoch does not qualify the Google
+kernel; later Google-kernel/QEMU evidence is recorded above. Pixel board startup,
 vendor-overlay runtime, AVB, bootloader selection, temporary multi-partition boot
-or diagnostic/watchdog/thermal behavior. Full deployment stays refused.
+and diagnostic/watchdog/thermal behavior remain unqualified. Full deployment stays refused.
 
 The full original frankelCP3A.261005.005 factory archive now matches Google's
 published SHA256, with38 index reads rebound to the authenticated stream and14

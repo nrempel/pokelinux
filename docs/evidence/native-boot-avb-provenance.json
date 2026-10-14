@@ -1,0 +1,246 @@
+{
+  "schema": 1,
+  "date_UTC": "2026-10-14",
+  "base_commit": "a70f2487bf3f9c1b0d7ac7d029f406f5a9c2403b",
+  "evidence_class": "original open-source AOSP AVB tool/API execution on authenticated selected factory files",
+  "classification": "partial internally consistent stock graph; current unsigned candidate refused; no complete chain or phone admission",
+  "original_reference": {
+    "repository": "platform/external/avb",
+    "commit": "761178607206f4cb2af79ed9eec52d8cbd814adb",
+    "source_url": "https://android.googlesource.com/platform/external/avb/+/761178607206f4cb2af79ed9eec52d8cbd814adb/avbtool.py",
+    "git_blob_sha1": "595936c88d24b6e571b303a23a0e7cfe2e185bc7",
+    "sha256": "e5a664a38db623da00f080219bc0ee60a640a9dc4a872803616fae4938ac749b",
+    "bytes": 207502
+  },
+  "original_source_unmodified": true,
+  "selected_inputs": {
+    "vbmeta.img": {
+      "bytes": 16384,
+      "sha256": "b8bd852e4ff03d8c0bb6bb6e5633b041e1c687a49f83f8e2d5f8982b672f9e32"
+    },
+    "vbmeta_system.img": {
+      "bytes": 8192,
+      "sha256": "a42cc65cc9076ebe64a911f441a0e8d5eba1a9b0b718ca7872d950878029fa3c"
+    },
+    "vbmeta_vendor.img": {
+      "bytes": 4096,
+      "sha256": "ae657ff21df8163182f71d5e26443c52d4f5759e8f526b055fe11a6ae98b3420"
+    },
+    "boot.img": {
+      "bytes": 67108864,
+      "sha256": "f68a58f2d4fd591beaca0e569713006a593644ffda4e2fb580339677d867d403"
+    },
+    "init_boot.img": {
+      "bytes": 8388608,
+      "sha256": "8ce3679285604688cea9c358d449a31db5fb7c0f0b49ef16c0f8c2c807f8425d"
+    },
+    "vendor_boot.img": {
+      "bytes": 67108864,
+      "sha256": "8062043c15ad497690e71429194de4e358846db3752cf33342e6b325f2e6522e"
+    },
+    "vendor_kernel_boot.img": {
+      "bytes": 67108864,
+      "sha256": "44ad13534c7575b8d3d23a6db9bfdcb3ef33918dfd8fce61e14ecf686da269a8"
+    },
+    "dtbo.img": {
+      "bytes": 16777216,
+      "sha256": "4f7fb4e5cbacc1fc494fd3b0aa0cd80ec34c207d88272a5e82083148ca679fd0"
+    },
+    "system_dlkm.img": {
+      "bytes": 11173888,
+      "sha256": "c9da4e00ca20436e5c407f2849dc1389e8501533917bf6350fc0b3e6d2eeb311"
+    },
+    "vendor_dlkm.img": {
+      "bytes": 43810816,
+      "sha256": "a41db39a1ffbb91b7176ddfc3a4bd1a424200961cd806fa2a3dfa250c32b038a"
+    }
+  },
+  "current_unsigned_candidate": {
+    "bytes": 1462272,
+    "sha256": "b2ba46ec4eaf8c4398ae7eb6033fed179c1cc030f4bdbcb753f30717738359a8"
+  },
+  "signed_metadata": {
+    "vbmeta.img": {
+      "algorithm": "SHA256_RSA4096",
+      "signature_self_consistent": true,
+      "embedded_key_bytes": 1032,
+      "embedded_AVB_key_sha256": "757c626a2a91fe852536546048d7ca3f50df6c745c026db9ff89cc4703c59481",
+      "rollback_index": 1791158400,
+      "header_rollback_index_location": 0,
+      "flags": 0
+    },
+    "vbmeta_system.img": {
+      "algorithm": "SHA256_RSA4096",
+      "signature_self_consistent": true,
+      "embedded_key_bytes": 1032,
+      "embedded_AVB_key_sha256": "c3cdf0a539c33c0555ab4c261aabdeb9d648dd90cb51c4c237018b3846e372bf",
+      "rollback_index": 1791158400,
+      "header_rollback_index_location": 0,
+      "flags": 0
+    },
+    "vbmeta_vendor.img": {
+      "algorithm": "SHA256_RSA4096",
+      "signature_self_consistent": true,
+      "embedded_key_bytes": 1032,
+      "embedded_AVB_key_sha256": "757c626a2a91fe852536546048d7ca3f50df6c745c026db9ff89cc4703c59481",
+      "rollback_index": 1791158400,
+      "header_rollback_index_location": 0,
+      "flags": 0
+    },
+    "boot.img": {
+      "algorithm": "SHA256_RSA4096",
+      "signature_self_consistent": true,
+      "embedded_key_bytes": 1032,
+      "embedded_AVB_key_sha256": "757c626a2a91fe852536546048d7ca3f50df6c745c026db9ff89cc4703c59481",
+      "rollback_index": 1791158400,
+      "header_rollback_index_location": 0,
+      "flags": 0
+    },
+    "init_boot.img": {
+      "algorithm": "SHA256_RSA4096",
+      "signature_self_consistent": true,
+      "embedded_key_bytes": 1032,
+      "embedded_AVB_key_sha256": "757c626a2a91fe852536546048d7ca3f50df6c745c026db9ff89cc4703c59481",
+      "rollback_index": 1791158400,
+      "header_rollback_index_location": 0,
+      "flags": 0
+    }
+  },
+  "algorithm_NONE_local_metadata": [
+    "vendor_boot.img",
+    "vendor_kernel_boot.img",
+    "dtbo.img",
+    "system_dlkm.img",
+    "vendor_dlkm.img"
+  ],
+  "actual_chain_key_and_rollback_slot_checks": [
+    {
+      "parent": "vbmeta",
+      "child": "boot",
+      "declared_rollback_index_location": 2,
+      "parent_declared_AVB_key_sha256": "757c626a2a91fe852536546048d7ca3f50df6c745c026db9ff89cc4703c59481",
+      "actual_child_AVB_key_sha256": "757c626a2a91fe852536546048d7ca3f50df6c745c026db9ff89cc4703c59481",
+      "key_and_slot_original_verifier_passed": true
+    },
+    {
+      "parent": "vbmeta",
+      "child": "init_boot",
+      "declared_rollback_index_location": 4,
+      "parent_declared_AVB_key_sha256": "757c626a2a91fe852536546048d7ca3f50df6c745c026db9ff89cc4703c59481",
+      "actual_child_AVB_key_sha256": "757c626a2a91fe852536546048d7ca3f50df6c745c026db9ff89cc4703c59481",
+      "key_and_slot_original_verifier_passed": true
+    },
+    {
+      "parent": "vbmeta",
+      "child": "vbmeta_system",
+      "declared_rollback_index_location": 1,
+      "parent_declared_AVB_key_sha256": "c3cdf0a539c33c0555ab4c261aabdeb9d648dd90cb51c4c237018b3846e372bf",
+      "actual_child_AVB_key_sha256": "c3cdf0a539c33c0555ab4c261aabdeb9d648dd90cb51c4c237018b3846e372bf",
+      "key_and_slot_original_verifier_passed": true
+    },
+    {
+      "parent": "vbmeta",
+      "child": "vbmeta_vendor",
+      "declared_rollback_index_location": 3,
+      "parent_declared_AVB_key_sha256": "757c626a2a91fe852536546048d7ca3f50df6c745c026db9ff89cc4703c59481",
+      "actual_child_AVB_key_sha256": "757c626a2a91fe852536546048d7ca3f50df6c745c026db9ff89cc4703c59481",
+      "key_and_slot_original_verifier_passed": true
+    }
+  ],
+  "descriptor_checks": {
+    "available_original_checks": 16,
+    "counts_by_type": {
+      "AvbChainPartitionDescriptor": 4,
+      "AvbHashDescriptor": 8,
+      "AvbHashtreeDescriptor": 4
+    },
+    "all_available_checks_passed": true,
+    "duplicates_include_parent_and_local_coverage_of_same_target": true,
+    "unavailable_payload_checks": 27,
+    "unavailable_by_owner": {
+      "vbmeta.img": 22,
+      "vbmeta_system.img": 4,
+      "vbmeta_vendor.img": 1
+    },
+    "full_transitive_stock_verification_passed": false,
+    "FEC_and_module_signature_KMI_qualified": false
+  },
+  "stock_init_boot": {
+    "file_bytes": 8388608,
+    "child_VBMeta_offset": 2691072,
+    "child_VBMeta_bytes": 2432,
+    "salted_SHA256_covered_bytes": 2691072,
+    "declared_parent_rollback_slot": 4
+  },
+  "current_candidate_refusals": {
+    "direct_original_info_image_exit": 1,
+    "direct_original_verify_image_exit": 1,
+    "reason": "Given image does not look like a vbmeta image.",
+    "actual_stock_descriptor_comparison": [
+      {
+        "target": "stock",
+        "original_descriptor_verify": true,
+        "declared_covered_bytes": 2691072,
+        "target_file_bytes": 8388608,
+        "target_sha256": "8ce3679285604688cea9c358d449a31db5fb7c0f0b49ef16c0f8c2c807f8425d"
+      },
+      {
+        "target": "current_unsigned_candidate",
+        "original_descriptor_verify": false,
+        "declared_covered_bytes": 2691072,
+        "target_file_bytes": 1462272,
+        "target_sha256": "b2ba46ec4eaf8c4398ae7eb6033fed179c1cc030f4bdbcb753f30717738359a8"
+      }
+    ],
+    "read_only_candidate_view_follow_chain_exit": 1,
+    "physical_partition_write_erase_padding_or_bootloader_behavior_qualified": false
+  },
+  "processes": {
+    "actual_original_CLI_invocations": 26,
+    "actual_original_API_driver_invocations": 1,
+    "outer_actual_waits": 27,
+    "traced_main_Python_terminal_exits": 27,
+    "nested_OpenSSL_execs": 42,
+    "nested_OpenSSL_exit0_and_actual_wait4_reaps": 42,
+    "all_nested_OpenSSL_terminal_and_reaped": true,
+    "original_tool_exit_counts": {
+      "0": 18,
+      "1": 9
+    },
+    "interpretation": "nonzero AVB exits are retained refusals or incomplete coverage; not process supervision failures",
+    "all_input_hash_mode_inode_closures": true,
+    "no_independent_pidfd_or_postwait_proc_absence_claim": true
+  },
+  "Root_independent_review": {
+    "exact_hash_mode_inode_identity_bindings_rechecked": 26,
+    "actual_outer_waits_and_matching_traced_Python_exits": 27,
+    "actual_nested_OpenSSL_exit0_and_positive_parent_wait4_reaps": 42,
+    "original_API_report_and_bounded_metadata_agree": true,
+    "private_review_sha256": "207013ac288211bbfe06743950cb817b15f3904364f0311edfaeac48be877033",
+    "new_original_tool_invocation_or_independent_crypto_implementation": false
+  },
+  "private_record_sha256": {
+    "plan.json": "792354080de7c2b32f475582115519901deededd36da29d8109c70cb85a36515",
+    "source-pin.json": "a3a472adfcbef1e05691958a75856e463e4551e2bc6b2ca46c1bdf8070e32249",
+    "final-handoff.json": "e71a759b1a9b1fc302f6151343043fe80d646d33683a0db12060fff005d9af12",
+    "bounded-avb-metadata.json": "d7ba9f1025f23a3bb41b16da617c7f125d156ed03a19af556e86988da4873f74",
+    "avb-admission-review.md": "b95a443ec5f6dc5189e2ea759d1c0efe6007d817b17fa18acc0d2e4e8eb4a446",
+    "process-wait-audit-derived.json": "c0fd9142626b1a74c47902e2063fccea22db7cf4005baba387fb2b84e85f3305",
+    "initial-execution.json": "a4b1aaf1d2f4d924264bae3448f98712b97d98772c8ecde737a931123722375c",
+    "graph-execution.json": "8290c077da36dfd06bdecc5ee0d1958bd33789cae95863604615e45622280306",
+    "chain-execution.json": "53a30dfb74383b7c2986b76c87f459d2c84adc24940cac89d407b10fc66ab952",
+    "metadata-driver.py": "4ce3553ced2c71bb94f81497a83913f03ff012a784f59daf0a2bbf5b2c7ce5e9",
+    "run-commands.py": "eea6a3156d2810f15b0de2f4a4638053edc8eb7a519d061964640423883de71a"
+  },
+  "limits": [
+    "Embedded-key signature self-consistency and declared child key/slot agreement do not establish the external Google bootloader trust anchor or stored rollback state.",
+    "Original verification returns true for algorithm NONE; those five local metadata records are explicitly unsigned.",
+    "Follow-chain without expected data skips expected key/slot comparison; separate actual expected-key/slot checks were executed.",
+    "The candidate lacks parseable AVB metadata; this is not a failed RSA signature comparison.",
+    "Stock descriptor refusal compares changed bytes and a compact file shorter than its protected range, not a qualified 8MiB physical partition replacement.",
+    "Nine original nonzero exits remain refusal or incomplete coverage; no whole-graph green is claimed.",
+    "No image/footer/key modification, signing, physical partition write, erase/padding qualification, bootloader execution or phone access.",
+    "Raw logs, traces, key bytes, original binaries and private filesystem paths are not published."
+  ],
+  "bootloader_temporary_RAM_boot_or_full_Pixel_deployment_admitted": false
+}

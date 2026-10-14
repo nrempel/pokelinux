@@ -39,8 +39,19 @@ character1:11 node; the selected two vendor fragments plus generic frame retain
 the final native `/init`. Two actual builds, original unpacking/Rust geometry and
 eight refusal groups pass. Its exact extracted LZ4 executes four ACKs, matching
 child wait37 and powerdown under Arch ARM7.1.6, with separate live owned-CID
-identity and terminal absence checks. No selected vendor userspace or Google
-kernel executes. Earlier images and their evidence below remain historical.
+identity and terminal absence checks. A separate later run executes that same
+generic LZ4 and unchanged native ELFs under the exact authenticated Google4K
+kernel on synthetic QEMU virt. All four ACKs, child wait37 and QMP guest shutdown
+pass; Root rehashes52 bindings and independently checks owned identity/absence.
+See [Google-kernel execution](native-boot-google-kernel.md) and its
+[proof](evidence/native-boot-google-kernel-provenance.json). No selected vendor
+userspace or Pixel board executes. Earlier images and evidence remain historical.
+
+The separate [original AVB checks](native-boot-avb.md) qualify five internally
+consistent signed metadata blocks, four child key/rollback-slot agreements and
+16 available descriptor checks. Another27 payload checks remain unavailable. The
+unsigned candidate has no parseable VBMeta and fails the stock init_boot
+descriptor. This establishes a concrete admission gate, not phone acceptance.
 
 The effective Pixel console is unknown: compiled `ttynull` with EXTEND and no
 FORCE does not establish bootloader-supplied arguments. Empty INITRAMFS_SOURCE
@@ -69,8 +80,9 @@ AOSP producers/unpacker. Actual factory metadata identifies separate4K/16K
 kernels and ramdisks, and puts DTBs in `vendor_kernel_boot`. The4K base kernel
 banner is `6.6.127-android15-8-g91d825611104-ab16252310-4k`; many vendor module
 vermagic strings differ. With modversions/protected signatures present, strings
-alone establish neither KMI compatibility nor incompatibility. No Google kernel
-or vendor module was executed. See [clean metadata](../native-boot-inputs/evidence/factory-metadata.json).
+alone establish neither KMI compatibility nor incompatibility. That static
+inspection executed no kernel or module; the later Google-kernel/QEMU checkpoint
+above is separate. See [clean metadata](../native-boot-inputs/evidence/factory-metadata.json).
 
 A genuine missing-`/init` ARM RED precedes implementation: the kernel reports
 ENOENT for `rdinit=/init`, falls through to unavailable root storage and panics.
@@ -102,7 +114,7 @@ implementation RED and no probe change. See
 [failure provenance](evidence/native-boot-probe-failure-provenance.json).
 These fixture ramdisks are separate from the Pixel candidate below.
 
-The first experimental Pixel candidate is now built offline. The
+The historical first experimental Pixel candidate was built offline. The
 [packager](../native-boot-package/README.md) produces a reproducible1,454,080-byte
 unsigned v4 `init_boot` containing the exact native init and diagnostic child.
 Pinned unchanged AOSP unpacking and the Rust inspector agree on its extents.
@@ -114,14 +126,15 @@ pass. The images and original payloads stay private.
 The exact candidate's extracted generic LZ4 also runs under the retained Arch
 ARM7.1.6 kernel: root PID1 executes and actually waits child exit37, then powers
 down in1.987s with actual container wait0. This observation uses only the authored
-generic ramdisk. Google's kernel and the selected vendor overlay are not executed.
+generic ramdisk. That historical epoch executed neither Google's kernel nor
+the selected vendor overlay; the later Google-kernel result is separate.
 The original consumer expected startup failure from missing initial device nodes;
 that expectation was falsified. Its recorded aggregate exit1 and `passed=false`
 remain unchanged beside the successful native execution observation. No runtime
 RED or device-node repair is claimed. See the
 [runtime record](../native-boot-package/evidence/runtime-verification.json).
 
-The restricted RAM probe precedes the full Omarchy session. Pixel kernel startup,
+The restricted RAM probe precedes the full Omarchy session. Pixel board startup,
 bootloader fragment selection, AVB acceptance and recovery, a usable diagnostic
 path, and watchdog/thermal behavior remain unresolved. Module KMI/loading is a
 separate gate where modules are required. A later authorized physical test must

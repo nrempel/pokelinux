@@ -18,8 +18,12 @@ Two fresh actual builds are byte-identical. Independent original unpacking,
 Rust inspection, the three-frame overlay and all eight refusal groups passed;
 all14 selected originals remained unchanged. Its separate generic-only Arch
 runtime also passed the actual diagnostic ACK and owned-closure contract below.
-The [current verification](evidence/diagnostic-verification.json) records those
-fresh results separately from the original candidate.
+A separately frozen run of the same generic LZ4 and unchanged native ELFs also
+passes under the authenticated Google4K kernel on synthetic QEMU virt; see
+[Google-kernel execution](../docs/native-boot-google-kernel.md).
+The [current package/Arch verification](evidence/diagnostic-verification.json)
+records the fresh packaging and Arch results separately from the original
+candidate; the Google-kernel run has its own provenance linked above.
 The historical records remain unchanged. The candidate is still explicitly
 `UNQUALIFIED_PIXEL_NATIVE_BOOT_PROBE_CANDIDATE`, unsigned and local only.
 
@@ -28,8 +32,10 @@ The historical records remain unchanged. The candidate is still explicitly
 All14 authenticated selected originals are checked before and after packaging.
 Their whole11,378,664,978-byte official factory archive authentication and38
 rebound index reads are inherited; the packager does not rehash that entire
-archive. Google kernel, vendor ramdisks, DTB, DTBO and module images remain
-unchanged and unexecuted. Original payloads, native ELFs and generated images
+archive. Packaging leaves Google kernel, vendor ramdisks, DTB, DTBO and module
+images unchanged and executes none of them. The later separate Google-kernel
+experiment above does not execute vendor fragments/modules or a Pixel board.
+Original payloads, native ELFs and generated images
 remain private; only authored tools and bounded metadata are public.
 
 Unchanged AOSP mkbootimg/unpack_bootimg at
@@ -137,8 +143,10 @@ Actual bootloader selection, DTBO application and vendor-plus-generic runtime
 are unqualified. The tool provides no deployment commands and does not establish
 that temporary RAM boot can replace all required partitions.
 
-AVB/signing and bootloader admission, multi-partition temporary boot, actual
-Pixel-kernel runtime, module KMI/signature/dependency admission, USB or warm-pstore
+The [original AVB review](../docs/native-boot-avb.md) confirms partial stock
+metadata/descriptor consistency and refuses this unsigned compact candidate.
+Complete AVB/signing and bootloader admission, multi-partition temporary boot,
+actual Pixel board runtime, module KMI/signature/dependency admission, USB or warm-pstore
 retrieval, bounded shutdown and watchdog/thermal/charging behavior, complete
 native init/SELinux/services and authorized physical validation remain open.
 A generic-kernel same-boot marker readback cannot establish those properties.

@@ -100,8 +100,12 @@ refused and both release builds passed. Exact reproduced x86 and ARM64 CLIs also
 identical geometry for all four authenticated images. Seven exact original-code comparisons
 cover three authored producer fixtures and four authenticated factory images.
 
-No Pixel kernel was booted, no vendor module loaded, no original vendor userspace
-executed and no physical phone accessed. These are original static-format/config
+This inspector checkpoint booted no kernel, loaded no vendor module, executed
+no original vendor userspace and accessed no physical phone. A later independent
+[Google-kernel/QEMU experiment](../docs/native-boot-google-kernel.md) executes the
+exact authenticated4K kernel with the authored RAM-only init. Separate
+[original AVB checks](../docs/native-boot-avb.md) do not change this geometry
+inspector into a signature verifier. These are original static-format/config
 observations and original public-format execution plus user-mode CPU/runtime tests.
 The separate RAM-resident native PID1 guest probe has its own evidence.
 

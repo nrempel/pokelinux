@@ -14,7 +14,8 @@ authenticated stream and14 selected boot/module members are size/CRC/hash checke
 The [new v4 Rust inspector](../native-boot-inputs/README.md) adds seven exact-byte
 comparisons with pinned unchanged AOSP tools; the [clean metadata](../native-boot-inputs/evidence/factory-metadata.json)
 records the actual4K/16K kernels, configs, ramdisks, DTBs and module inventories.
-Original payloads remain private and are not executed.
+Original payloads remain private. That input inspection executes none of them;
+the separate retained-kernel experiment below has its own evidence class.
 
 The live profile now pins the exact legacy-LZ4 kernel payload extracted from
 authenticated `boot.img`, SHA256`e43d13d5b8e2657e27437bc59d8d5abd2131f255dfca26354d96e02ce43115d1`,
@@ -24,18 +25,28 @@ module release below is a distinct observed build. MODVERSIONS and protected
 module signatures are enabled; different release strings prove neither KMI
 compatibility nor incompatibility. Full dependency/symbol-CRC/signature/module
 loading and complete firmware qualification remain unresolved. Complete module
-and firmware artifact pins remain null. AVB remains unverified. All nine offline
+and firmware artifact pins remain null. Complete AVB/bootloader admission
+remains unverified; [partial original AVB checks](native-boot-avb.md) now identify
+the signed chain and unsigned-candidate refusal. All nine offline
 requirements and the later physical gate are still unresolved; deployment is
 still refused. The separate [RAM-only native PID1 guest probe](native-phone-boot-probe.md)
 does not qualify Pixel boot or installed Arch supervision.
 
 An [experimental unsigned `init_boot` candidate](../native-boot-package/README.md)
-now packages the exact native probe in a reproducible1,454,080-byte container.
-Original AOSP unpacking and independent actual vendor/generic overlay checks
-qualify its offline format. The exact generic LZ4 executes under the Arch guest
-kernel, with no vendor overlay loaded. That observation leaves the full profile,
-all nine offline requirements and the physical gate refused; neither a valid
-container nor an Arch PID1 result establishes Google's bootloader/AVB acceptance.
+now packages the repaired native diagnostic probe in a reproducible1,462,272-byte
+container. Fresh original AOSP unpacking, Rust geometry, actual vendor/generic
+overlay and eight refusal groups qualify its offline format. Its exact generic
+LZ4 executes four correlated readback ACKs, matching child wait37 and controlled
+powerdown under the Arch guest kernel, with separate owned-CID closure. A
+separate [Google-kernel/QEMU run](native-boot-google-kernel.md) executes that same
+generic LZ4 under the unchanged authenticated4K kernel, with four ACKs, matching
+child wait37, QMP guest shutdown and independent exact-CID closure. No Pixel
+board, vendor overlay, module or original vendor userspace executes. The earlier1,454,080-byte candidate and its falsified
+missing-console expectation remain historical evidence. See
+[current diagnostic verification](../native-boot-package/evidence/diagnostic-verification.json).
+These observations leave the full profile, all nine offline requirements and
+the physical gate refused; neither format checks nor either kernel/QEMU result
+establishes Google's bootloader/AVB acceptance or recoverable phone diagnostics.
 
 The following paragraphs retain the original2026-10-12 audit checkpoint; their
 missing kernel/whole-ZIP facts are superseded by the update above, while runtime,
