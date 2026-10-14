@@ -18,6 +18,16 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The native Rust PAM worker now passes actual wrong/matching password controls
+through the installed public ABI on Arch ARM7.1.6. The closed-worker missing-prompt
+RED and first correct-denied failure remain preserved. Direct original-helper
+controls establish the narrow audit-only bounding requirement while worker active
+capability sets stay0. Root independently verifies all156 passing-run inputs,
+actual waits/deaths, final ECHILD and exact-container absence. Helper-tree ownership
+and a separate NNP0 broker remain in progress; the Messages actor keeps NNP1.
+No actor unlock receipt or durable restoration is enabled. See
+[worker boundary](native-pam-worker.md) and [proof](evidence/native-pam-worker-provenance.json).
+
 The actor now independently refuses impossible exact-operation fact shapes and
 changed generation/unlock records without a matching semantic revision. Three
 negative RED groups execute18 mutations; four focused GREEN controls and all16

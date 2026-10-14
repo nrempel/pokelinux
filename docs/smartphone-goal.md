@@ -67,6 +67,15 @@ Prioritise native replacement contracts and original-code comparison tests acros
 
 Track each feature as designed, built, component-tested, installed-integration-tested or hardware-verified. Existing call emulator proof does not prove SMS, camera, GPU, carrier IMS, physical audio or power behavior. The project is not complete merely because the bridge or an emulator suite passes. If all offline work is complete, report the exact remaining physical-device gates without touching the phone.
 
+## Native authentication checkpoint
+
+The fixed native Rust PAM worker passes actual wrong/matching password controls
+on an Arch ARM kernel after a closed-worker RED, preserved initial PAM failure
+and original-helper capability comparison. This is a private-conversation component;
+helper-tree supervision, installed broker/containment, actor-owned receipts,
+exact unlock and synced durable restoration remain open. No physical model is
+qualified. See [worker boundary](native-pam-worker.md).
+
 ## Native messaging checkpoint
 
 The SMS payload encoder and multipart planner are built and component-tested,

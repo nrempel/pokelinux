@@ -1,0 +1,206 @@
+{
+  "schema": 1,
+  "scope": "native Rust fixed PAM private-conversation component; no unlock or production broker authority",
+  "evidence_class": "actual Arch ARM7.1.6 kernel/QEMU and separate offline crosscompilation; not Google matched kernel or physical hardware",
+  "source_files_sha256": {
+    "native-pam/Cargo.lock": "a713e91c6ac83dbed91a055fc7ae9a32f553a2b710240f73f78602672b9127cd",
+    "native-pam/Cargo.toml": "3bbea0401f5c67d296542547d576d07e5e692c9a322fe1c7fd0d95487a27cb86",
+    "native-pam/src/lib.rs": "b8659bbd59f9a31e85978f3102ad25607f1254b7598d88c8b21cc3fe19a2f649",
+    "native-pam/src/wire.rs": "91b0b974c21e4d775caca8273e1a6ee4898764b3f88a41117b33185bd741702e",
+    "native-pam/src/entry.rs": "ec8cfae7f0231e9e7d6b44702eef9794c5261adae3a697bf89fb8a4d531d9962",
+    "native-pam/src/pam.rs": "f4e01570a325591054fc468c079b27a2e301381bb430ca9551872e3298f97e3d",
+    "native-pam/src/bin/pam-worker.rs": "b31c6140ddff16f93fd0060b1f66d446f86c4596e39411cf3cec4f25e5433caa",
+    "native-pam/src/bin/pam-ownership-fixture.rs": "e1e76f014a6e5d01ee67e2472086e1d47bd1aa1f58699f5b50bb6eeb00f86eea"
+  },
+  "default_production_worker_ELF_sha256": "1c22cf355e6587a7fdfcb5739b7b31fa0265d1810f95030db27c3d4dd9fd84d8",
+  "build": {
+    "selection_sha256": "27b95f4c7bb30fa30544e7d1121ba94589981afb26ab455d2c8d95428b58d7a5",
+    "execution_sha256": "9831375a6d7d318bfc02beb7c57a341322d29eba56890db0ef4d3c10dc477904",
+    "postformat_source_pins_sha256": "48db4ad2acb7e81b62051577daa6d9b31222375b57540eb022bc204e8997a116",
+    "default_features": true,
+    "actual_CLI_wait_exit": 0,
+    "exact_owned_CID_absent": true,
+    "strict_Clippy_passed": true
+  },
+  "chronological_closed_RED": {
+    "records_sha256": {
+      "selection.json": "13ca4a0b724dea330cb3fb0b82b1ea98ae5375f318b2df88b64be40fbc3a33d2",
+      "result.json": "29cc748f1dca537f5981aa3dd32b067a3db05f5f586afc1ed453902e4ebd605c",
+      "execution.json": "955048f61f4203ca0e45fe4f9f31f80958a53549669653ea48326b75c51a4ef4",
+      "completion.json": "7b12e8c032eff6537038acd5b5da0d859208ad8e17cc14743336674a667cccd7"
+    },
+    "Root_review_sha256": "f982a94dfc8125fd5a0a84e56db1609512d3e5b543d788df9976b04677fe5118",
+    "Root_independently_rehashed_bindings": 69,
+    "classification": "qualified actual closed-worker missing-required-hidden-prompt RED; aggregate FAILED",
+    "actual_cases": 2,
+    "hidden_prompts_each": 0,
+    "typed_outcomes": [
+      "Unavailable",
+      "Unavailable"
+    ],
+    "direct_waits": 3,
+    "adopted_waits": 0,
+    "final_ECHILD": true,
+    "exact_owned_container_absent": true,
+    "PAM_executed": false
+  },
+  "preserved_first_real_PAM_failure": {
+    "records_sha256": {
+      "selection.json": "ff6e33d16676a9e732a5edb4674a10566daddd2e4eb5f6e4917b75eea181d54e",
+      "result.json": "0d894e41f97dc7702aeb4372e0a209fe05414e961210cc5c2ed2c2115a525692",
+      "execution.json": "522fb0bb248a24b52e27f6d443fe2cac4220473ada469bb1388b16be4a1d4389",
+      "completion.json": "420ee6db5b651eec0637c0d9f1dee3f19d7afa49019e8bf7547a2f0b065a9c41"
+    },
+    "Root_review_sha256": "b26e9aa7f3db2f2aa6e4338653f51cd9211995445c552be8485ae01f695cd4d5",
+    "Root_independently_rehashed_bindings": 101,
+    "classification": "actual PAM positive authentication contract FAILED",
+    "actual_cases": 2,
+    "hidden_prompts_each": 1,
+    "typed_outcomes": [
+      "Denied",
+      "Denied"
+    ],
+    "expected_outcomes": [
+      "Denied",
+      "Authenticated"
+    ],
+    "actual_PAM_and_pam_unix_maps_before_secret": true,
+    "worker_UID_GID": 1000,
+    "worker_active_capability_sets": "E/P/I/A0",
+    "worker_bounding_mask": 0,
+    "NNP": 0,
+    "direct_waits": 3,
+    "adopted_waits": 0,
+    "final_ECHILD": true,
+    "exact_owned_container_absent": true
+  },
+  "original_helper_counterfactual": {
+    "records_sha256": {
+      "selection.json": "8179f7e2f79eee71f47b445276940663caa4f83c4aa90f8857498059f735bab1",
+      "result.json": "9bfcabd269ebb049331e96fa98cd21c70d95523885437f7f37823a5feddb8221",
+      "execution.json": "29b6fa2cccebe670bc7ba03632a4779fe5baf1db070b315f7892b6aa45255222",
+      "completion.json": "b3c63259c689df29fb0261a9b3c1933bdc88fd294a34d4854287cf013b427dda"
+    },
+    "Root_review_sha256": "fb15ee23682574f686ee676b2ef1149fd7f24545b2e864ec03a1626b7b551bfc",
+    "Root_independently_rehashed_bindings": 120,
+    "classification": "qualified direct original-helper bounding comparison; unchanged native full-PAM baseline still FAILED",
+    "controls": [
+      {
+        "response": "correct",
+        "bounding_mask": 0,
+        "actual_helper_wait_exit": 7
+      },
+      {
+        "response": "correct",
+        "bounding_mask": 536870912,
+        "actual_helper_wait_exit": 0
+      },
+      {
+        "response": "wrong",
+        "bounding_mask": 536870912,
+        "actual_helper_wait_exit": 7
+      }
+    ],
+    "before_secret": {
+      "actual_helper_executable_and_generation_verified": true,
+      "actual_ARM_read_syscall": 63,
+      "actual_stdin_FD": 0,
+      "real_UID_GID": 1000,
+      "effective_saved_filesystem_UID_GID": 0,
+      "helper_E_P_Bnd": "exact selected mask",
+      "helper_I_A": 0,
+      "direct_parent_E_P_I_A": 0,
+      "NNP": 0,
+      "CORE_limits": 0
+    },
+    "Root_fixture_direct_waits": 6,
+    "direct_helper_waits_by_three_owned_parents": 3,
+    "total_waits_across_two_layers": 9,
+    "captured_processes_pidfd_dead_and_proc_absent": 8,
+    "adopted_waits": 0,
+    "final_ECHILD": true,
+    "exact_owned_container_absent": true,
+    "precise_audit_errno_or_syscall_independently_observed": false
+  },
+  "selected_bounds": {
+    "guest_CPUs": 2,
+    "guest_memory_MiB": 1024,
+    "container_CPUs": 2,
+    "container_memory_GiB": 2,
+    "container_tmpfs_overlay_MiB": 512,
+    "conversation_BOOTTIME_seconds": 30,
+    "guest_seconds": 80,
+    "QEMU_seconds": 110,
+    "QEMU_termination_grace_seconds": 5,
+    "outer_seconds": 120,
+    "network": "none",
+    "host_devices_attached": false,
+    "raw_backing_clones": false,
+    "host_PAM_accounts_or_sysctls_changed": false
+  },
+  "native_prerequisite": {
+    "fs.suid_dumpable": 0,
+    "actual_Arch_guest_prior": 2,
+    "scope": "disposable guest only; installed policy remains a gate"
+  },
+  "public_source": {
+    "Linux_PAM_commit": "28fce1fd55b003fec90f34e5bc785e9439b216f2",
+    "audit_c_sha256": "bf5a0fd2ef025338dd14c5a54b3589c4cbb7619fd64bcac304c9bb60962ee15d",
+    "audit_h_sha256": "4e1991850e951f77090c18d40b7035ea7c4b05fefc43d031bd42906937c0f499",
+    "source_to_installed_package_reproduction_claimed": false
+  },
+  "limits": {
+    "production_broker_enabled": false,
+    "generic_helper_cgroup_cleanup_qualified": false,
+    "malicious_privileged_helper_migration_containment_qualified": false,
+    "actor_attempt_or_receipt_enabled": false,
+    "durable_restoration_or_normal_Messages_reopen_qualified": false,
+    "PAM_account_session_or_setcred_executed": false,
+    "suspend_or_secure_frames_qualified": false,
+    "Google_kernel_or_physical_device_qualified": false,
+    "phone_accessed": false,
+    "raw_credentials_shadow_overlay_decompilation_or_proprietary_inputs_published": false
+  },
+  "current_native_PAM_GREEN": {
+    "records_sha256": {
+      "selection.json": "18188bcd9b616cead2a5dbab5463958726761a8c9eb4b430ae80d7046c3c6f2b",
+      "result.json": "37a43a550cf39abe865acd48ef7cc6d19ee18b0ba39745010c7978f243849b63",
+      "execution.json": "91fd1949efab199eb55b94459589d1675afe7e587e489aaf13e4d024fcdc1d6a",
+      "completion.json": "6e0c87f491fa01a26b4f5a93129d145229c5549018f1161b554f985a2353af78"
+    },
+    "Root_review_sha256": "e8ce9457ff1917edb55f73eaebe3de92e49277f6874089545b3176040bb08700",
+    "Root_independently_rehashed_bindings": 156,
+    "classification": "qualified native fixed PAM wrong/correct component interoperability",
+    "actual_cases": 2,
+    "typed_outcomes": [
+      "Denied",
+      "Authenticated"
+    ],
+    "expected_outcomes": [
+      "Denied",
+      "Authenticated"
+    ],
+    "hidden_prompts_each": 1,
+    "private_responses_each": 1,
+    "actual_PAM_and_pam_unix_maps_before_secret": true,
+    "worker_UID_GID": 1000,
+    "groups": [],
+    "worker_active_E_P_I_A": 0,
+    "worker_bounding_mask": 536870912,
+    "NNP": 0,
+    "CORE_limits": 0,
+    "default_production_features": true,
+    "parent_ACK_actual_wait0_EOF_and_death": true,
+    "direct_guest_waits": 3,
+    "adopted_waits": 0,
+    "final_ECHILD": true,
+    "exact_owned_container_absent": true,
+    "internal_PAM_helper_wait_syscalls_independently_traced": false
+  },
+  "published_actual_integration_driver": {
+    "path": "tools/native-pam-worker/guest.py",
+    "sha256": "58ab8835e227c219279b85f8f1f4212769925f76edb2edc15c466b824ecb41ae",
+    "matches_actual_executed_guest_bytes": true,
+    "raw_results_and_inputs_published": false
+  }
+}

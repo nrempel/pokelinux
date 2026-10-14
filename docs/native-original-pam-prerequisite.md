@@ -77,13 +77,17 @@ clear, same-UID success forwarding or a renewed expired Source cannot provide
 that receipt. Secure frames, installed supervision and physical hardware remain
 separate. This reference run selects no 100ms Source lease or restoration path.
 
-## Native implementation constraints, not yet executed
+## Native implementation and remaining integration
 
-The lifecycle supervisor remains safe Rust; isolate the Linux-PAM C ABI in a
-separate native Rust worker. A fixed root-owned service and account resolved to
+The [native Rust worker](native-pam-worker.md) now isolates the Linux-PAM C ABI
+and passes actual wrong/matching controls after a preserved first failure and
+an original-helper capability comparison. That native evidence remains separate
+from the passing original reference above. The lifecycle
+supervisor remains safe Rust. A fixed root-owned service and account resolved to
 UID1000 accept responses only, never caller-selected policy or a success flag.
-A root worker protects result integrity but changes the Original privilege path;
-its own dependency and authentication behavior must be qualified. Keep the
+The root bootstrap drops directly to protected UID1000 before PAM. Its native
+credential transition and narrow helper capability profile have separate evidence;
+generic helper-tree supervision and production provisioning remain open. Keep the
 initial policy authentication-only, including successful `pam_end`. Account,
 credential establishment and session APIs require separate policy and lifecycle.
 
@@ -106,4 +110,4 @@ checking current publication authority and cannot safely be reused unchanged.
 An intervening lock increments the epoch even when already pending; serialize
 clear and new admission. If clear may have committed before invalidation, retain
 denial and prohibit clean reopening until a newer synced pending-lock write wins.
-Preserve grants/history. No such clear or native authentication is enabled yet.
+Preserve grants/history. No such clear or production native authentication is enabled yet.
