@@ -1,5 +1,56 @@
 # First native boot probe
 
+2026-10-14UTC checkpoint: the restricted native PID1 now requires kernel-ring
+readback for its diagnostics. An actual-kernel absence RED against the original
+init precedes the first reporter. A stronger, separately frozen witness then
+observes the intermediate static messages but fails their missing execution
+epoch/event correlation. After repair, that exact unchanged witness passes:
+native event1 and kernel event2 share an epoch, followed by its own canary in a
+complete sequence0–311 stream. The deliberately quiet `console=ttynull` guest
+uses a separate actual PL011 observer and owned QMP shutdown. Root independently
+rehashes all55 selected inputs and verifies exact-CID absence after actual wait0.
+This witness declares its final child-exit intention; it does not independently
+observe the final exit or parent wait, or the stdout acknowledgement.
+
+Separate ordinary serial RAM runs qualify four ordered readback ACKs and actual
+child execution/wait37, plus a missing-child run with three ACKs and explicit
+NotFound/ENOENT failure before powerdown. Each observed wrapper takes1.744s.
+An unchanged-init control with `printk.devkmsg=off` observes diagnostic-open
+EPERM, no ACK/child/completion, and controlled powerdown; its ordinary healthy
+aggregate remains failed. These are actual generic-kernel executions. A separate
+component replay fixes the old console consumer's acceptance of preserved actual
+PID1-panic output; that replay is not a fresh kernel or missing-child measurement.
+See [diagnostic provenance](evidence/native-boot-diagnostics-provenance.json).
+
+The reporter retains verified character1:11 descriptors across the new `/dev`
+mount, uses nonblocking entropy for a128-bit epoch, consumes each event ordinal,
+and writes at most512 bytes including framing. Exact readback has a100ms BOOTTIME
+and128-record observation bound. Only then does a distinct raw stdout ACK carry
+the observed kernel sequence. The release-matched
+[original kernel writer](https://android.googlesource.com/kernel/common/+/91d825611104e75e1a9e0e0f6b25580eddb68828/kernel/printk/printk.c)
+can return a full write count while discarding a rate-limited or disabled message.
+This is same-boot occurrence correlation with trusted restricted writers;
+privileged-writer authentication, every kernel/console call's latency, silent
+same-FD drop/overflow controls, cross-reset retention and retrieval remain open.
+
+The current unsigned candidate is1,462,272 bytes and binds the repaired init.
+Its independently decoded generic archive supplies `/dev/kmsg` as a0600
+character1:11 node; the selected two vendor fragments plus generic frame retain
+the final native `/init`. Two actual builds, original unpacking/Rust geometry and
+eight refusal groups pass. Its exact extracted LZ4 executes four ACKs, matching
+child wait37 and powerdown under Arch ARM7.1.6, with separate live owned-CID
+identity and terminal absence checks. No selected vendor userspace or Google
+kernel executes. Earlier images and their evidence below remain historical.
+
+The effective Pixel console is unknown: compiled `ttynull` with EXTEND and no
+FORCE does not establish bootloader-supplied arguments. Empty INITRAMFS_SOURCE
+selects the kernel's built-in default archive, which supplies `/dev/console`;
+DEVTMPFS being disabled alone does not establish its absence. Actual base DTBs
+describe ramoops memory, but selected DTBOs, backend registration, warm retention
+and retrieval are unqualified. Same-boot kmsg, console, PMSG and retained crash
+logs are separate paths. A useful phone experiment still needs observable early
+success and failure, bootloader/AVB admission and a recoverable shutdown/reset.
+
 2026-10-13. A native Rust `/init` now runs as root PID1 under the actual retained
 Arch ARM7.1.6 guest kernel. It creates a RAM runtime, starts and actually waits an
 authored native child with exit37, then powers down. A separate missing-helper

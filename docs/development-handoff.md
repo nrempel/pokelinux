@@ -167,7 +167,23 @@ with synthetic Root lifecycle controls and no Source/UI/vendor runtime. Installe
 Source/Camera/media/containment/reset/device integration remains required. See
 [service](native-camera-service.md) and [proof](evidence/native-camera-service-provenance.json).
 
-First native early boot now has a separate RAM-only checkpoint. A genuine
+The current native boot diagnostic checkpoint adds retained character1:11 kmsg
+descriptors, nonblocking random execution epochs and consumed event ordinals,
+exact bounded readback, and distinct post-readback stdout ACKs. A stronger actual
+kernel correlation RED then unchanged-witness GREEN qualifies the startup pair;
+separate serial healthy/missing-child runs and a real kmsg-disabled admission
+refusal pass their intended controls. The quiet witness's child final exit/wait
+remains intention-only, separate from ordinary serial child execution/wait.
+The repaired1,462,272-byte unsigned candidate passes fresh two-build/original
+unpack/Rust/three-frame-overlay/eight-refusal checks and executes its exact generic
+LZ4 under Arch ARM7.1.6 with four ACKs and owned-CID closure. See
+[current diagnostic proof](evidence/native-boot-diagnostics-provenance.json) and
+[package](../native-boot-package/README.md). The simpler RAM runner establishes
+only direct Docker CLI wait. No Google kernel, vendor userspace, phone, retained
+log retrieval or usable hardware diagnostic path is qualified. Effective console,
+early RNG/kmsg policy, AVB/bootloader/ramdisk selection and recovery remain gates.
+
+The original native early boot has a separate RAM-only checkpoint. A genuine
 missing-`/init` ARM RED precedes the Rust root-PID1 probe. Native child actual wait
 and controlled poweroff pass, and a missing-helper failure powers down separately.
 The non-Pixel Arch ARM7.1.6 kernel is unchanged; no root disk, NIC, vendor service

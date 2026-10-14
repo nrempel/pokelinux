@@ -3,6 +3,9 @@
 Decision, 12 October 2026: build shared smartphone services with separate hardware
 backends. Pixel 10 is the first test target. Do not encode Pixel identities,
 Samsung message IDs or vendor Binder parcels in apps or shared phone policy.
+Zero physical phone models are currently qualified. Kernel/HAL commonality makes
+shared implementations possible; each additional model still requires matched
+assets, an explicit hardware backend/profile and its own hardware evidence.
 
 ```mermaid
 flowchart TD

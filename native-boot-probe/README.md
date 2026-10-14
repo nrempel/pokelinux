@@ -7,6 +7,24 @@ mounts restricted proc/sysfs, starts one authored diagnostic child, actually
 waits its termination, then powers down. It mounts no persistent storage or
 starts phone backends. A missing helper produces failure and controlled shutdown.
 
+The authored initial archive must provide `/dev/kmsg` (character device1:11).
+PID1 verifies and retains separate nonblocking read/write descriptors before
+replacing `/dev`. Each bounded record carries a random128-bit execution epoch
+and a consumed event ordinal. A full write count is insufficient: Linux can
+silently discard it. The reporter requires exact matching kernel-ring readback
+within100ms and128 records, then writes a distinct stdout acknowledgement with
+the observed kernel sequence. Console consumers require the ordered ACKs, a
+matching executed/waited child, and controlled powerdown; kernel console text
+alone cannot establish readback. This is trusted-writer occurrence correlation,
+not authenticated PID provenance or protection against another privileged writer.
+The whole kernel write, including priority and newline, is at most512 bytes.
+
+Entropy uses one nonblocking kernel RNG call and refuses short/unavailable
+results. The readback deadline uses suspend-aware BOOTTIME. These bounds cover
+userspace observation and retries; they cannot bound every kernel call, mount,
+console write or shutdown. Same-boot kernel admission also establishes neither
+PSTORE/USB delivery nor retention/retrieval across a phone reset.
+
 The explicit tmpfs/nodes path also avoids assuming DEVTMPFS support: the selected
 Google4K configuration disables it. Execution is qualified only on the retained
 Arch ARM7.1.6 kernel, not Google's kernel or a phone. No Pixel image has booted.

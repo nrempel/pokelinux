@@ -128,11 +128,11 @@ def native(path, pin):
     return body
 
 
-def cpio_entry(name, mode, body, inode):
+def cpio_entry(name, mode, body, inode, major=0, minor=0):
     encoded = name.encode('ascii') + b'\0'
     # All non-directory entries have one link; separate unique inodes avoid
     # carrying hard-link ownership between independently concatenated archives.
-    fields = [inode, mode, 0, 0, 1, 0, len(body), 0, 0, 0, 0, len(encoded), 0]
+    fields = [inode, mode, 0, 0, 1, 0, len(body), 0, 0, major, minor, len(encoded), 0]
     record = b'070701' + ''.join(f'{value:08x}' for value in fields).encode('ascii') + encoded
     record += b'\0' * (-len(record) % 4)
     record += body
@@ -140,11 +140,15 @@ def cpio_entry(name, mode, body, inode):
 
 
 def ramdisk(init, child):
-    records = [('dev', stat.S_IFDIR | 0o755, b''), ('proc', stat.S_IFDIR | 0o755, b''),
-               ('sys', stat.S_IFDIR | 0o755, b''), ('init', stat.S_IFREG | 0o755, init),
-               ('probe-child', stat.S_IFREG | 0o755, child), ('TRAILER!!!', 0, b'')]
-    body = b''.join(cpio_entry(name, mode, content, inode)
-                    for inode, (name, mode, content) in enumerate(records, 1))
+    records = [('dev', stat.S_IFDIR | 0o755, b'', 0, 0),
+               ('dev/kmsg', stat.S_IFCHR | 0o600, b'', 1, 11),
+               ('proc', stat.S_IFDIR | 0o755, b'', 0, 0),
+               ('sys', stat.S_IFDIR | 0o755, b'', 0, 0),
+               ('init', stat.S_IFREG | 0o755, init, 0, 0),
+               ('probe-child', stat.S_IFREG | 0o755, child, 0, 0),
+               ('TRAILER!!!', 0, b'', 0, 0)]
+    body = b''.join(cpio_entry(name, mode, content, inode, major, minor)
+                    for inode, (name, mode, content, major, minor) in enumerate(records, 1))
     return body + b'\0' * (-len(body) % 512)
 
 
@@ -302,7 +306,7 @@ def run(args):
             digest(args.native_child) != pins['native_payload']['probe-child']['sha256']):
         raise ValueError('native payload inputs changed during packaging')
     manifest = {
-        'schema': 1, 'candidate_class': pins['candidate_class'], 'unsigned': True, 'local_only': True,
+        'schema': 2, 'candidate_class': pins['candidate_class'], 'unsigned': True, 'local_only': True,
         'factory_archive': {**pins['factory_archive'], 'authentication_evidence': 'inherited-whole-archive-plus-38-rebound-index-reads',
                             'whole_archive_rehashed_by_this_tool': False},
         'immutable_selected_inputs': originals, 'immutable_components': components,
@@ -315,8 +319,11 @@ def run(args):
         'generic_ramdisk': {'cpio_sha256': sha(raw), 'cpio_bytes': len(raw),
                             'compressed_sha256': sha(compressed), 'compressed_bytes': len(compressed),
                             'compression': 'legacy-lz4-8MiB-blocks-implicit-EOF', 'liblz4_version_number': lz4_version,
-                            'paths': ['dev', 'proc', 'sys', 'init', 'probe-child'], 'uid': 0, 'gid': 0,
-                            'mtime': 0, 'hard_links': False},
+                            'paths': ['dev', 'dev/kmsg', 'proc', 'sys', 'init', 'probe-child'], 'uid': 0, 'gid': 0,
+                            'mtime': 0, 'hard_links': False,
+                            'device_nodes': [{'path': 'dev/kmsg', 'type': 'character',
+                                              'mode': '0020600', 'uid': 0, 'gid': 0, 'bytes': 0,
+                                              'rdev_major': 1, 'rdev_minor': 11}]},
         'root_init': {**pins['native_payload']['init'], 'path': '/init', 'mode': '0100755', 'uid': 0, 'gid': 0,
                       'owner': 'native-rust-pid1-probe', 'replaces_vendor_symlink': '/system/bin/init',
                       'no_interpreter_or_dynamic_segment': True},

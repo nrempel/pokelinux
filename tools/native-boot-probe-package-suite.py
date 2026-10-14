@@ -11,13 +11,12 @@ import ctypes.util
 import hashlib
 import json
 import pathlib
+import re
 import stat
 import struct
 import subprocess
 import sys
 
-INIT_SHA = 'cbf938d20127b02dc84afe2bd0e1fc4c66bd6f2d33d33c436e7a8c9fe37d205c'
-CHILD_SHA = '3b15eb4a9fd289e6664c917861f98bbe385e117e26b28abb149b3021e4b19e63'
 MAGIC = bytes.fromhex('02214c18')
 BLOCK = 8 * 1024 * 1024
 REPO = pathlib.Path(__file__).resolve().parent.parent
@@ -30,6 +29,12 @@ def digest(path):
 
 def sha(body):
     return hashlib.sha256(body).hexdigest()
+
+
+def native_pins():
+    path = REPO / 'native-boot-package/input-pins.json'
+    assert path.stat().st_size <= 1024 * 1024, 'bounded current pin metadata'
+    return json.loads(path.read_text())['native_payload']
 
 
 def decode_stream(body):
@@ -89,11 +94,39 @@ def archive(body, strict=False):
         if strict:
             assert name not in records, 'no duplicate paths in the new native archive'
         assert name and not name.startswith('/') and '..' not in name.split('/'), 'safe path'
-        records[name] = {'mode': values[1], 'uid': values[2], 'gid': values[3],
+        records[name] = {'inode': values[0], 'mode': values[1], 'uid': values[2], 'gid': values[3],
                          'nlink': values[4], 'mtime': values[5], 'bytes': size,
+                         'dev_major': values[7], 'dev_minor': values[8],
+                         'rdev_major': values[9], 'rdev_minor': values[10],
                          'sha256': sha(data), 'data': data}
         assert len(records) <= 10000, 'entry bound'
     raise AssertionError('required actual CPIO trailer')
+
+
+
+def check_generic(entries, pins):
+    """Verify the actual newc entries, independently of the producer encoder."""
+    assert set(entries) == {'dev', 'dev/kmsg', 'proc', 'sys', 'init', 'probe-child'}, 'exact current native archive'
+    assert len({entry['inode'] for entry in entries.values()}) == len(entries), 'distinct native archive inodes'
+    for name, entry in entries.items():
+        if name in {'dev', 'proc', 'sys'}:
+            expected_mode = stat.S_IFDIR | 0o755
+        elif name == 'dev/kmsg':
+            expected_mode = stat.S_IFCHR | 0o600
+        else:
+            expected_mode = stat.S_IFREG | 0o755
+        assert entry['mode'] == expected_mode and entry['uid'] == entry['gid'] == 0
+        assert entry['mtime'] == 0 and entry['nlink'] == 1, 'deterministic ownership and no hard links'
+        assert entry['dev_major'] == entry['dev_minor'] == 0
+        assert (entry['rdev_major'], entry['rdev_minor']) == ((1, 11) if name == 'dev/kmsg' else (0, 0))
+        if name not in {'init', 'probe-child'}:
+            assert entry['bytes'] == 0 and entry['data'] == b'', 'directories and device have no payload'
+    assert stat.S_ISCHR(entries['dev/kmsg']['mode']), 'kmsg is a character device, not a regular file'
+    for name in ['init', 'probe-child']:
+        assert stat.S_ISREG(entries[name]['mode']) and entries[name]['data'][:4] == b'\x7fELF'
+        assert entries[name]['bytes'] == pins[name]['bytes'] and entries[name]['sha256'] == pins[name]['sha256']
+    return {'path': 'dev/kmsg', 'type': 'character', 'mode': '0020600', 'uid': 0, 'gid': 0,
+            'bytes': 0, 'rdev_major': 1, 'rdev_minor': 11}
 
 
 def boot_ramdisk(path):
@@ -109,6 +142,7 @@ def boot_ramdisk(path):
 
 
 def factory_red(args):
+    init_sha = native_pins()['init']['sha256']
     path = args.authenticated_selection.parent / 'selected/init_boot.img'
     proof = json.loads(args.authenticated_selection.read_text())
     record = next(record for record in proof['selected'] if record['name'] == 'init_boot.img')
@@ -120,10 +154,10 @@ def factory_red(args):
     assert stat.S_ISREG(init['mode']) and init['data'][:4] == b'\x7fELF'
     actual = init['sha256']
     print(json.dumps({'boundary': 'actual-authenticated-factory-init-boot-CPIO-init',
-                      'stock_init_sha256': actual, 'required_native_init_sha256': INIT_SHA,
-                      'stock_init_bytes': init['bytes'], 'native_init_present': actual == INIT_SHA,
+                      'stock_init_sha256': actual, 'required_native_init_sha256': init_sha,
+                      'stock_init_bytes': init['bytes'], 'native_init_present': actual == init_sha,
                       'phone_accessed': False}), flush=True)
-    assert actual == INIT_SHA, 'actual stock /init does not implement pinned native PID1'
+    assert actual == init_sha, 'actual stock /init does not implement pinned native PID1'
 
 
 def invoke(args, output, extra=None):
@@ -138,6 +172,8 @@ def invoke(args, output, extra=None):
 
 
 def check_candidate(args, output):
+    pins = native_pins()
+    init_sha, child_sha = pins['init']['sha256'], pins['probe-child']['sha256']
     image = output / 'init_boot.img'
     header, compressed = boot_ramdisk(image)
     stock_header, stock_compressed = boot_ramdisk(
@@ -153,16 +189,9 @@ def check_candidate(args, output):
     frames = decode_stream(compressed)
     assert len(frames) == 1 and frames[0]['body'] == (output / 'ramdisk.cpio').read_bytes()
     entries = archive(frames[0]['body'], strict=True)
-    assert set(entries) == {'dev', 'proc', 'sys', 'init', 'probe-child'}, 'minimal native archive'
-    for name, entry in entries.items():
-        expected_mode = (stat.S_IFDIR | 0o755) if name in {'dev', 'proc', 'sys'} else (stat.S_IFREG | 0o755)
-        assert entry['mode'] == expected_mode and entry['uid'] == entry['gid'] == 0
-        assert entry['mtime'] == 0 and entry['nlink'] == 1, 'deterministic ownership and no hard links'
-        assert not stat.S_ISLNK(entry['mode']), 'no generic Android init symlink'
+    node = check_generic(entries, pins)
     assert entries['init']['data'] == args.native_init.read_bytes()
-    assert entries['init']['sha256'] == INIT_SHA
     assert entries['probe-child']['data'] == args.native_child.read_bytes()
-    assert entries['probe-child']['sha256'] == CHILD_SHA
     original = subprocess.run([sys.executable, str(args.private_reference_root / 'unpack_bootimg.py'),
                                '--boot_img', str(image), '--out', str(output / 'independent-original-unpack')],
                               check=True, capture_output=True, text=True)
@@ -201,10 +230,15 @@ def check_candidate(args, output):
             vendor_init = current['init']
             assert stat.S_ISLNK(vendor_init['mode']) and vendor_init['data'] == b'/system/bin/init'
         overlay.update({name: {**record, 'source_frame': index} for name, record in current.items()})
-    assert stat.S_ISREG(overlay['init']['mode']) and overlay['init']['sha256'] == INIT_SHA
+    assert stat.S_ISREG(overlay['init']['mode']) and overlay['init']['sha256'] == init_sha
     assert overlay['init']['source_frame'] == 2 and overlay['init']['uid'] == 0
-    assert overlay['probe-child']['source_frame'] == 2 and overlay['probe-child']['sha256'] == CHILD_SHA
+    assert overlay['probe-child']['source_frame'] == 2 and overlay['probe-child']['sha256'] == child_sha
     manifest = json.loads((output / 'manifest.json').read_text())
+    assert manifest['schema'] == 2, 'current candidate manifest required'
+    assert manifest['generic_ramdisk']['paths'] == ['dev', 'dev/kmsg', 'proc', 'sys', 'init', 'probe-child']
+    assert manifest['generic_ramdisk']['device_nodes'] == [node], 'manifest matches actual character node'
+    assert stat.S_ISCHR(overlay['dev/kmsg']['mode']) and overlay['dev/kmsg']['source_frame'] == 2
+    assert overlay['dev/kmsg']['rdev_major'] == 1 and overlay['dev/kmsg']['rdev_minor'] == 11
     assert manifest['candidate_class'] == 'UNQUALIFIED_PIXEL_NATIVE_BOOT_PROBE_CANDIDATE'
     for flag in ['avb_verified', 'bootloader_accepted', 'kernel_kmi_qualified',
                  'pixel_kernel_runtime_verified', 'physical_device_accessed', 'deployment_admitted',
@@ -212,12 +246,13 @@ def check_candidate(args, output):
         assert manifest['qualifications'][flag] is False, 'no qualification escalation: ' + flag
     assert manifest['unsigned'] is True and manifest['local_only'] is True
     assert manifest['immutable_inputs_unchanged'] is True
-    assert manifest['root_init']['sha256'] == INIT_SHA and manifest['root_init']['owner'] == 'native-rust-pid1-probe'
+    assert manifest['root_init']['sha256'] == init_sha and manifest['root_init']['owner'] == 'native-rust-pid1-probe'
     assert manifest['image']['sha256'] == digest(image)
     assert manifest['fragment_choice']['bootloader_behavior_qualified'] is False
     assert len(manifest['remaining_gates']) >= 7
     return {'image_sha256': digest(image), 'image_bytes': image.stat().st_size,
-            'generic_init_sha256': INIT_SHA, 'generic_child_sha256': CHILD_SHA,
+            'generic_init_sha256': init_sha, 'generic_child_sha256': child_sha,
+            'generic_kmsg_device': node, 'generic_kmsg_replaces_any_prior_path': True,
             'independent_original_unpack_and_rust_inspector': True,
             'actual_three_frame_overlay': True, 'vendor_init_target': vendor_init['data'].decode(),
             'generic_init_replaces_vendor_symlink': True, 'full_deployment_refused': True}
@@ -230,7 +265,11 @@ def green(args):
     red_text = args.private_red_log.read_text()
     red = json.loads(red_text.splitlines()[0])
     assert red['boundary'] == 'actual-authenticated-factory-init-boot-CPIO-init'
-    assert red['stock_init_sha256'] != INIT_SHA and red['required_native_init_sha256'] == INIT_SHA
+    assert args.private_red_suite.stat().st_size <= 1024 * 1024, 'bounded historical verifier'
+    historical_pin = re.search(rb"^INIT_SHA = '([0-9a-f]{64})'$", args.private_red_suite.read_bytes(), re.M)
+    assert historical_pin is not None, 'original pre-implementation verifier pin required'
+    assert red['stock_init_sha256'] != red['required_native_init_sha256']
+    assert red['required_native_init_sha256'] == historical_pin[1].decode(), 'historical RED bound to its historical verifier'
     assert red['native_init_present'] is False
     assert 'AssertionError: actual stock /init does not implement pinned native PID1' in red_text
     args.private_evidence_dir.mkdir(mode=0o700, parents=True, exist_ok=True)
@@ -275,7 +314,10 @@ def green(args):
     result = invoke(args, args.private_evidence_dir / 'first')
     assert result.returncode == 2 and 'output label already exists' in result.stderr
     assert digest(args.private_evidence_dir / 'first/init_boot.img') == results[0]['image_sha256']
-    rejected = REPO / 'native-boot-package-forbidden-output'
+    git_fixture = args.private_evidence_dir / 'git-output-fixture'
+    initialized = subprocess.run(['git', 'init', '--quiet', str(git_fixture)], capture_output=True, text=True)
+    assert initialized.returncode == 0 and (git_fixture / '.git').is_dir(), 'actual private Git fixture'
+    rejected = git_fixture / 'native-boot-package-forbidden-output'
     result = invoke(args, rejected)
     assert result.returncode == 2 and 'outside every Git worktree' in result.stderr
     assert not rejected.exists()
@@ -310,8 +352,9 @@ def green(args):
     assert not rejected.exists()
     after = {record['name']: digest(selected / record['name']) for record in proof['selected']}
     assert before == after, 'all original selected inputs unchanged'
-    report = {'schema': 1, 'actual_original_red_precedes_implementation': True,
-              'actual_original_red': {**red, 'log_sha256': digest(args.private_red_log),
+    report = {'schema': 2, 'historical_factory_red_precedes_original_packager': True,
+              'current_native_diagnostic_RED_qualified_by_this_suite': False,
+              'historical_original_factory_red': {**red, 'log_sha256': digest(args.private_red_log),
                                      'frozen_pre_implementation_verifier_sha256': digest(args.private_red_suite)},
               'candidate_checks': results[0], 'reproducible_two_actual_builds': True,
               'negative_groups': ['changed-native-init', 'changed-native-child', 'actual-stock-Android-init',

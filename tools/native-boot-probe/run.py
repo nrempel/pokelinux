@@ -11,6 +11,7 @@ from pathlib import Path
 import subprocess
 import sys
 import time
+from diagnostics import validate
 
 ROOT = Path(__file__).resolve().parents[2]
 MAIN = Path('/home/ubuntu/Projects/pokelinux')
@@ -45,8 +46,10 @@ if __name__ == '__main__':
     out.mkdir(parents=True,mode=0o700)
     assert digest(KERNEL)==KERNEL_SHA
     entries=[('dev',0o040755,b'',0,0),('proc',0o040755,b'',0,0),('sys',0o040755,b'',0,0),
-             ('dev/console',0o020600,b'',5,1),('dev/null',0o020666,b'',1,3)]
-    selected={'kernel':KERNEL_SHA,'runner':digest(Path(__file__))}
+             ('dev/console',0o020600,b'',5,1),('dev/null',0o020666,b'',1,3),
+             ('dev/kmsg',0o020600,b'',1,11)]
+    selected={'kernel':KERNEL_SHA,'runner':digest(Path(__file__)),
+              'diagnostics':digest(Path(__file__).with_name('diagnostics.py'))}
     if mode!='red':
         target=Path(os.environ['NATIVE_BOOT_PROBE_TARGET'])/'aarch64-unknown-linux-gnu/release'
         for name,archive in [('pokelinux-boot-probe','init'),('pokelinux-boot-child','probe-child')]:
@@ -78,6 +81,9 @@ if __name__ == '__main__':
             code=process.wait(timeout=5)
     console=(out/'console.log').read_text(errors='replace')
     assert digest(KERNEL)==KERNEL_SHA and digest(initramfs)==selected['initramfs']
+    assert digest(Path(__file__))==selected['runner']
+    assert digest(Path(__file__).with_name('diagnostics.py'))==selected['diagnostics']
+    diagnostic_result=None
     if mode=='red':
         passed=False
         expected_red=(not timed_out and code==0 and 'check access for rdinit=/init failed: -2' in console
@@ -85,13 +91,14 @@ if __name__ == '__main__':
                       and 'POKELINUX_NATIVE_PID1' not in console)
     else:
         expected_red=False
-        passed=not timed_out and code==0 and 'POKELINUX_NATIVE_PID1 pid=1 uid=0' in console
-        passed=passed and ('POKELINUX_PROBE_COMPLETE' in console if mode=='green' else 'POKELINUX_PROBE_FAILURE phase=child-spawn' in console)
+        diagnostic_result=validate(console, mode)
+        passed=not timed_out and code==0 and diagnostic_result['passed']
     result={'evidence':'authored RAM initramfs on actual Arch ARM guest kernel; not Pixel boot',
             'kernel_sha256':KERNEL_SHA,'qemu_mode':'system','mode':mode,'passed':passed,'expected_red':expected_red,
             'docker_actual_wait':True,'docker_exit':code,'timed_out':timed_out,
             'elapsed_seconds':round(time.monotonic()-started,3),'phone_accessed':False,'vendor_userspace_executed':False,
-            'root_disk_attached':False,'console_sha256':digest(out/'console.log')}
+            'root_disk_attached':False,'console_sha256':digest(out/'console.log'),
+            'diagnostic_acceptance':diagnostic_result}
     (out/'result.json').write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps(result),flush=True)
     raise SystemExit(0 if passed else 1)

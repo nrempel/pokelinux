@@ -1,0 +1,97 @@
+{
+  "schema": 2,
+  "classification": "offline format/overlay and standalone generic-only Arch kernel diagnostic readback; Pixel unqualified",
+  "candidate_checks": {
+    "image_sha256": "b2ba46ec4eaf8c4398ae7eb6033fed179c1cc030f4bdbcb753f30717738359a8",
+    "image_bytes": 1462272,
+    "generic_init_sha256": "8f97c746cc8ef20eb4d3f2f981f1a24ad6e96b5d88f0d327ca80cf5627847d1d",
+    "generic_child_sha256": "3b15eb4a9fd289e6664c917861f98bbe385e117e26b28abb149b3021e4b19e63",
+    "generic_kmsg_device": {
+      "path": "dev/kmsg",
+      "type": "character",
+      "mode": "0020600",
+      "uid": 0,
+      "gid": 0,
+      "bytes": 0,
+      "rdev_major": 1,
+      "rdev_minor": 11
+    },
+    "generic_kmsg_replaces_any_prior_path": true,
+    "independent_original_unpack_and_rust_inspector": true,
+    "actual_three_frame_overlay": true,
+    "vendor_init_target": "/system/bin/init",
+    "generic_init_replaces_vendor_symlink": true,
+    "full_deployment_refused": true
+  },
+  "reproducible_two_actual_builds": true,
+  "negative_groups": [
+    "changed-native-init",
+    "changed-native-child",
+    "actual-stock-Android-init",
+    "existing-output-label",
+    "Git-output",
+    "unauthenticated-selection",
+    "changed-original-AOSP-source",
+    "changed-Rust-inspector"
+  ],
+  "immutable_selected_files_rechecked": 14,
+  "historical_factory_red_provenance": {
+    "boundary": "actual-authenticated-factory-init-boot-CPIO-init",
+    "stock_init_sha256": "67e58e501941ff52f7c1b409af6c1a29e4872763d1b32940db3bde7739ed3b41",
+    "required_native_init_sha256": "cbf938d20127b02dc84afe2bd0e1fc4c66bd6f2d33d33c436e7a8c9fe37d205c",
+    "stock_init_bytes": 2942024,
+    "native_init_present": false,
+    "phone_accessed": false,
+    "log_sha256": "e1a80d99ce67b1724e074c8e1dc5003d5c1045becd483822333f35dd4645e800",
+    "frozen_pre_implementation_verifier_sha256": "84ea1d38dcfdd7ebb8f6643f6b5e4bcd2d0f9d91d8e13e039586cac8a62c2f97"
+  },
+  "historical_missing_console_RED_falsified": true,
+  "current_native_diagnostic_RED_qualified_by_packaging_suite": false,
+  "runtime": {
+    "passed": true,
+    "kernel": "7.1.6-1-aarch64-ARCH",
+    "kernel_sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+    "candidate_manifest_sha256": "44768fee3ffac5e74ada92e96bccb8e6ea318569eed3dbd91b8e2fce13db80b3",
+    "exact_extracted_lz4_sha256": "0896081a31d739a466b7cd124335808c6641c70ca6df8ce20d0b1a7101ecd0f8",
+    "diagnostic_checker_sha256": "e5021893640110dde0a80b82967f9760ec4bbe46dd3711a04bc3e24e8ecd6ffd",
+    "readback_ACK_count": 4,
+    "events": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "kernel_sequence_ids": [
+      312,
+      313,
+      314,
+      315
+    ],
+    "single_epoch": true,
+    "child_exec_pid_matches_acknowledged_wait": true,
+    "actual_child_wait_exit": 37,
+    "actual_Docker_CLI_wait_exit": 0,
+    "actual_consumer_CLI_wait_exit": 0,
+    "live_exact_CID_identity_verified": true,
+    "exact_owned_CID_absent": true,
+    "same_daemon": true,
+    "all_runtime_inputs_unchanged": true,
+    "runtime_input_count": 15,
+    "frozen_sources_count": 7,
+    "external_input_count": 32,
+    "elapsed_wrapper_seconds": 1.923,
+    "timed_out": false,
+    "private_result_sha256": "f30f10d3b76e5c605d6616b6666e16121948d2d52edd8c562229109f08f44f72",
+    "private_execution_sha256": "d6dd54d2122ebe5dc5b6f2bda8f9f5474e80671b7f2c6cb6b2dbbc81acfedbaa"
+  },
+  "qualifications": {
+    "Pixel_kernel_runtime": false,
+    "phone_accessed": false,
+    "vendor_executable_execution": false,
+    "vendor_plus_generic_runtime": false,
+    "AVB_or_bootloader_admission": false,
+    "temporary_multi_partition_boot": false,
+    "pstore_retention_or_phone_diagnostic_retrieval": false,
+    "full_phone_deployment": false
+  }
+}

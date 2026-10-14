@@ -1,0 +1,363 @@
+{
+  "schema": 1,
+  "scope": "restricted native PID1 same-boot kernel-ring admission and occurrence correlation on actual non-Pixel Arch ARM7.1.6 QEMU; no phone or Google-kernel execution",
+  "base_commit": "ae92c339cb3309503f2c75424bb4e9917c333709",
+  "source_sha256": {
+    "native-boot-probe/Cargo.toml": "8922dd69d814fd5f4f508e0ff5874568d8abdb8c6265ca75be20592b4e2842b2",
+    "native-boot-probe/Cargo.lock": "a62e6e33b94c42f380421526cffc60855b22cbf0e1e9730deac582f45c5a2b38",
+    "native-boot-probe/src/main.rs": "2870d1db62b16d561fb071853536e6ac1c74a173430e809b4dce685776ee61dc",
+    "native-boot-probe/src/diagnostic.rs": "3547f0e25069cc59ce17a3c37bf45fc58d504751b48b29bba35bb04d07fb8f48",
+    "native-boot-probe/src/child.rs": "fa2b8705383a20add37f2a3fbecfa619849bf586901ee7dc90e96535502e87ca",
+    "tools/native-boot-probe/run.py": "f1212ab9ac2829c3296ef17ed71179b78b327628b83d5c99a94e87f4802816cb",
+    "tools/native-boot-probe/diagnostics.py": "e5021893640110dde0a80b82967f9760ec4bbe46dd3711a04bc3e24e8ecd6ffd"
+  },
+  "final_build": {
+    "passed": true,
+    "ELFs": {
+      "pokelinux-boot-probe": {
+        "bytes": 1190352,
+        "sha256": "8f97c746cc8ef20eb4d3f2f981f1a24ad6e96b5d88f0d327ca80cf5627847d1d",
+        "static_AArch64_GNU": true
+      },
+      "pokelinux-boot-child": {
+        "bytes": 993728,
+        "sha256": "3b15eb4a9fd289e6664c917861f98bbe385e117e26b28abb149b3021e4b19e63",
+        "static_AArch64_GNU": true
+      }
+    },
+    "source_pins": {
+      "Cargo.lock": "a62e6e33b94c42f380421526cffc60855b22cbf0e1e9730deac582f45c5a2b38",
+      "Cargo.toml": "8922dd69d814fd5f4f508e0ff5874568d8abdb8c6265ca75be20592b4e2842b2",
+      "README.md": "527ca5c2965ad8f217e15c8891018ab01671887288abbe9577f14bff6136b330",
+      "src/child.rs": "fa2b8705383a20add37f2a3fbecfa619849bf586901ee7dc90e96535502e87ca",
+      "src/diagnostic.rs": "3547f0e25069cc59ce17a3c37bf45fc58d504751b48b29bba35bb04d07fb8f48",
+      "src/main.rs": "2870d1db62b16d561fb071853536e6ac1c74a173430e809b4dce685776ee61dc"
+    },
+    "source_unchanged_through_actual_compiler_wait": true,
+    "kernel_runtime_started": false,
+    "compiler_execution_sha256": "0ff795190bf1e237caba13d3252086fcf6874037e3416e0cfd87a7bdd22dad7a",
+    "compiler_command_sha256": "e0639f3516a2825a078b9e6b53ffe43302e2d1874c2c2a22d57c91c601214b6c"
+  },
+  "chronology": [
+    {
+      "label": "pokelinux-native-boot-kmsg-red-sol-2",
+      "role": "original missing-kernel-marker RED; complete sequence-zero history and own canary",
+      "summary": {
+        "schema": 1,
+        "scope": "actual generic Arch ARM7.1.6 kernel, RAM-only, independent synthetic diagnostic witness; not Pixel/phone observability",
+        "passed": false,
+        "expected_RED": true,
+        "classification": "actual missing PID1 kmsg startup marker with complete positive independent kernel-record and observer baseline",
+        "prechange_native_init_ELF_sha256": "cbf938d20127b02dc84afe2bd0e1fc4c66bd6f2d33d33c436e7a8c9fe37d205c",
+        "witness_ELF_sha256": "79636cebd336b03d78b2976567c3b17a231aca55e1044e951b93a002a6ecc83a",
+        "witness_source_sha256": "a6de3acb29c5a59436aa0ee8bf1b72f7384298b2154e3d93b9fe4a651066fbb5",
+        "production_main_source_sha256": "e0a40097a35b4ef3558c2b9e0fa56f2f679bcdc5dc4d19973e63ce2b728c1b60",
+        "original_budget_ns": 2000000000,
+        "witness_actual_observation_ns": 6663147,
+        "kernel_release": "7.1.6-1-aarch64-ARCH",
+        "actual_kmsg_rdev": "1:11",
+        "actual_fixture_PL011_rdev": "204:64",
+        "canary_roundtrip": true,
+        "first_sequence": 0,
+        "canary_sequence": 309,
+        "consecutive_records": 310,
+        "producer_marker_observed": false,
+        "complete_direct_tty_proof_observed": true,
+        "actual_QMP_guest_shutdown": true,
+        "guest_initially_paused_until_owned_observer_ready": true,
+        "child_exit_and_parent_wait_limitation": "declared exit intention before final drain; final child exit and parent wait syscall not independently observed; QMP observes guest shutdown",
+        "Docker_CLI_wait_exit": 0,
+        "outer_aggregate_wait_exit": 1,
+        "independent_exact_CID_absence": true,
+        "all50_frozen_input_hashes_unchanged": true,
+        "production_changes": false,
+        "predecessor_label1": "compiler-only superseded by pre-runtime fixture review; unchanged, no behavior RED",
+        "Pixel_console_note": "deliberate generic console=ttynull; Google compiled default with EXTEND/FORCE does not establish effective hardware console",
+        "phone_Google_kernel_vendor_pstore_persistence_USB_or_Pixelserial_qualified": false,
+        "physical_phone_accessed": false,
+        "result_sha256": "e13da53a71062cfdb22f8fca7baa08352ea4ad684b70f4716ef56123b1027d53",
+        "execution_sha256": "7c9b1b683a5aca8216e0d514374859680415bab55489c9cf00b5a262392645e7",
+        "independent_audit_sha256": "1cd2bc815759f382a493bd70d7a33f586b8baf6628aa322b9054f9b93cbafb46"
+      },
+      "private_bindings": {
+        "selection.json": "acd98f41d5e8cead96dfea8381b558f41a413e53da208ec9f3cc8d7d71f94ec4",
+        "command.json": "0ba9bb720b454b096989c3cb42b2d60a2f63b1c3eee2709aad83bd9c32bff3fa",
+        "result.json": "e13da53a71062cfdb22f8fca7baa08352ea4ad684b70f4716ef56123b1027d53",
+        "execution.json": "7c9b1b683a5aca8216e0d514374859680415bab55489c9cf00b5a262392645e7",
+        "bounded-evidence.json": "5fb984982f2621cef7618aea2b9e4efe1729243b573448ecf24e473e75b2e76a",
+        "console.log": "8279da70bae5c9381d10f91ca2228e2eb7af09adbc6d16e04b3636aa2ef7177a",
+        "qmp-records.json": "3b7d10c3202689f940dc55701f80750733257eb118dae3ea1814fdb87ca5a4e4"
+      }
+    },
+    {
+      "label": "pokelinux-native-boot-kmsg-correlation-red-sol-1",
+      "role": "new stronger chronological correlation RED against static prototype1, before identity repair",
+      "summary": {
+        "schema": 1,
+        "scope": "actual generic Arch ARM7.1.6 kernel, RAM-only, new chronological occurrence-correlation contract against exact static Reporter prototype1; not authenticated PID or Pixel/phone observability",
+        "passed": false,
+        "expected_RED": true,
+        "qualified_new_chronological_correlation_RED": true,
+        "selected_prototype1_ELF_sha256": "7aab58b775aca30f9e3efa235776100159310bdf4ba4d5899337bd486cff4531",
+        "witness_ELF_sha256": "55508706898a02caa28ed09d6e51c53200df4711a8a8a8d936b98847f030c56e",
+        "witness_source_sha256": "aa3471b3f04bcd744c052288595f2263a8a46bb7a0fdc58ae3155fd1f536d5b8",
+        "actual_native_payload": "POKELINUX_NATIVE_PID1 pid=1 uid=0 version=0.1.0",
+        "actual_native_sequence": 309,
+        "actual_kernel_payload": "POKELINUX_PROBE_KERNEL release=7.1.6-1-aarch64-ARCH",
+        "actual_kernel_sequence": 310,
+        "required_same_epoch_event1_then2_missing": true,
+        "old_static_producer_pair_actually_seen": true,
+        "canary_roundtrip": true,
+        "first_sequence": 0,
+        "canary_sequence": 311,
+        "consecutive_records": 312,
+        "actual_kmsg_device": "1:11",
+        "actual_fixture_PL011": "204:64",
+        "actual_owned_QMP_guest_shutdown": true,
+        "actual_observation_ns": 8220935,
+        "unchanged_witness_budget_ns": 2000000000,
+        "Docker_CLI_actual_wait_exit": 0,
+        "failed_aggregate_actual_wait_exit": 1,
+        "all49_input_hashes_unchanged_through_terminal_closure": true,
+        "independent_exact_CID_absence": true,
+        "oldRED2_preserved": true,
+        "prototype1_full_GREEN_claimed": false,
+        "writer_assumption": "trusted restricted probe writer; no authenticated PID provenance or protection from another privileged writer",
+        "limits": "actual static payloads omit occurrence epoch/event suffixes; does not establish malformed/reused epoch rejection or uniqueness across boots",
+        "child_exit_wait_limit": "declared exit intention before final drain; final child exit and parent wait syscall not independently observed; QMP observes guest shutdown",
+        "stdout_ACK_not_required_for_this_kmsg_only_test": true,
+        "production_edits_or_phone_access": false,
+        "result_sha256": "ea0f42d01b66e36af51b250cdda0e4ddb61c066d66fb1c30c864db79a0e6edbb",
+        "execution_sha256": "4bcaea5144466531982b6f20aa00598bb64a29a2aef50f08b3373d723fa90006",
+        "independent_audit_sha256": "7754a9bfead7adf9b3a44f0b4c57446933208bcf6a15f3809fa28a51b3d53eac"
+      },
+      "private_bindings": {
+        "selection.json": "764fa52765cd3995765f2af4b88532d5f73e26e4783cc2c9b7b9513bf7836cac",
+        "command.json": "8141904ef25752b9ca0808b8084770e7fd27a527816c40083b098e1f03a3bfce",
+        "result.json": "ea0f42d01b66e36af51b250cdda0e4ddb61c066d66fb1c30c864db79a0e6edbb",
+        "execution.json": "4bcaea5144466531982b6f20aa00598bb64a29a2aef50f08b3373d723fa90006",
+        "bounded-evidence.json": "3bcbc1c149583f9fc69cd5c36b9fc6d919f963d5f3d60db704cb2a234cece130",
+        "console.log": "5f29b35e70a9820ee3399a3f7a99334d51e9800c94cbfb4df989f4546322c86c",
+        "qmp-records.json": "842ab076de4aadb1b5b6473d4a29e277dbcf408fc5569646f4e716ea7a90ec52"
+      }
+    },
+    {
+      "label": "pokelinux-native-boot-kmsg-correlation-green-sol-1",
+      "role": "GREEN for exact unchanged stronger witness/source/assertions after identity repair",
+      "summary": {
+        "schema": 1,
+        "scope": "exact final restricted native PID1 startup-record correlation under actual generic Arch ARM7.1.6 kernel, authored RAM-only fixture",
+        "passed": true,
+        "chronological_correlation_GREEN_after_qualified_RED": true,
+        "final_producer_ELF_sha256": "8f97c746cc8ef20eb4d3f2f981f1a24ad6e96b5d88f0d327ca80cf5627847d1d",
+        "unchanged_witness_ELF_sha256": "55508706898a02caa28ed09d6e51c53200df4711a8a8a8d936b98847f030c56e",
+        "unchanged_witness_source_sha256": "aa3471b3f04bcd744c052288595f2263a8a46bb7a0fdc58ae3155fd1f536d5b8",
+        "actual_native_payload": "POKELINUX_NATIVE_PID1 pid=1 uid=0 version=0.1.0 epoch=af9a5137b6f9af458b88ae2dfd75c5f4 event=1",
+        "actual_native_sequence": 309,
+        "actual_kernel_payload": "POKELINUX_PROBE_KERNEL release=7.1.6-1-aarch64-ARCH epoch=af9a5137b6f9af458b88ae2dfd75c5f4 event=2",
+        "actual_kernel_sequence": 310,
+        "actual_same_epoch": "af9a5137b6f9af458b88ae2dfd75c5f4",
+        "event_ordinals": [
+          1,
+          2
+        ],
+        "complete_own_canary_roundtrip": true,
+        "first_sequence": 0,
+        "canary_sequence": 311,
+        "gapless_records": 312,
+        "real_kmsg_rdev": "1:11",
+        "real_fixture_PL011_rdev": "204:64",
+        "complete_direct_observer_line": true,
+        "actual_QMP_guest_shutdown": true,
+        "actual_observation_ns": 7748514,
+        "unchanged_witness_budget_ns": 2000000000,
+        "Docker_CLI_and_outer_actual_waits": [
+          0,
+          0
+        ],
+        "independent_exact_CID_absence": true,
+        "all55_original_and_selected_input_hashes_unchanged": true,
+        "all_RED_and_prototype1_inputs_unchanged": true,
+        "test_predicates_and_resources_unchanged": true,
+        "production_source_edits_by_this_agent": false,
+        "limits": {
+          "child_exit_parent_wait": "declared exit intention before final drain; final child exit and parent wait syscall not independently observed; QMP observes guest shutdown",
+          "stdout_postreadback_ACK": "not observed or required by this deliberate ttynull kmsg-only test",
+          "epoch": "same-epoch occurrence correlation observed in this one boot; no authenticated PID/root-attacker or cross-boot uniqueness qualification",
+          "negative_admission_paths": "rate-drop/disabled/lost-record/short-write refusal not exercised by this positive test",
+          "hardware": "no Google kernel/vendor/phone/pstore persistence/USB/Pixel serial or hardware IO latency qualification",
+          "inherited_raw_result_key": "same_selected_prototype1_ELF is the unchanged historical reader key; current selection/CPIO bind final8f97c746\u2026, not prototype1; prototype1 remains RED"
+        },
+        "result_sha256": "e0d563dc4b003725e95c56cc35bcc00b019111f69e74d63a7699bc8a4acbbe1c",
+        "execution_sha256": "dd21a8a32a3ef3212749c45f9ed1181466b4ab26a64cf6ac23ce6815efd1a956",
+        "independent_audit_sha256": "1b5f50cb041771dce05ca69fdbe67b353640ec53e3320051f908643fbc5cc2bd"
+      },
+      "private_bindings": {
+        "selection.json": "3c18643d4317428665fb2ff5107a620d795b05dd61bbc99c8cb77581ff6a5f4f",
+        "command.json": "dbbb673264dd656f0ddada7d4e32b1cc4e6dff6cb563e4faca1b322663c61508",
+        "result.json": "e0d563dc4b003725e95c56cc35bcc00b019111f69e74d63a7699bc8a4acbbe1c",
+        "execution.json": "dd21a8a32a3ef3212749c45f9ed1181466b4ab26a64cf6ac23ce6815efd1a956",
+        "bounded-evidence.json": "895cbdde0be21a82648d91d88011ca258f461c6df099cb4017a71fdf66dd3c6f",
+        "console.log": "4caccc2e53bac9a21378c00cd1c28f29e7e9ebe95027b70b1a148f8797935ad9",
+        "qmp-records.json": "419b01ab38693577c9ded44b06fad0c620ea57412c4207f7532f1cf93ffbdd1d"
+      },
+      "root_post_terminal_review_sha256": "2c05f8a97c98cd61b08d685fd4d8e33dbffa63540b930eb1ee74a32afeaadb45",
+      "root_independently_rehashed_inputs": 55
+    }
+  ],
+  "normal_serial_RAM_runs": [
+    {
+      "label": "diagnostic-ack-green-root-1",
+      "mode": "green",
+      "passed": true,
+      "acknowledged_events": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "observed_kernel_sequences": [
+        312,
+        313,
+        314,
+        315
+      ],
+      "one_epoch_observed": true,
+      "actual_Docker_CLI_wait_exit": 0,
+      "observed_wrapper_seconds": 1.744,
+      "selection": {
+        "kernel": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+        "runner": "f1212ab9ac2829c3296ef17ed71179b78b327628b83d5c99a94e87f4802816cb",
+        "diagnostics": "e5021893640110dde0a80b82967f9760ec4bbe46dd3711a04bc3e24e8ecd6ffd",
+        "init": "8f97c746cc8ef20eb4d3f2f981f1a24ad6e96b5d88f0d327ca80cf5627847d1d",
+        "probe-child": "3b15eb4a9fd289e6664c917861f98bbe385e117e26b28abb149b3021e4b19e63",
+        "initramfs": "cec8ca86dea1dc8e7de0292d5dc86a7b461c7de0c6a531ac2641fab7adf9a301"
+      },
+      "private_bindings": {
+        "selection.json": "353d82b31023b57bb8c881c3cc95bd789a7fd062f20578e701b6e59e9bb2095f",
+        "command.json": "24193188a2a6c42656b75cff8b95a13b30351c616be334495e9828b6d6a40856",
+        "result.json": "407ce1d84b2f9c173f99d0ede9f2dc47a69ce9012476ae63441532cee764bb3c",
+        "console.log": "ce66cfbacd8f332bd7be22b10156d93c6507c81e0a0fee16028652908adf4174",
+        "probe.cpio.gz": "cec8ca86dea1dc8e7de0292d5dc86a7b461c7de0c6a531ac2641fab7adf9a301"
+      },
+      "lifecycle_scope": "original RAM runner direct CLI wait; no live exact-CID identity proof claimed"
+    },
+    {
+      "label": "diagnostic-ack-missing-child-root-1",
+      "mode": "missing-child",
+      "passed": true,
+      "acknowledged_events": [
+        1,
+        2,
+        3
+      ],
+      "observed_kernel_sequences": [
+        312,
+        313,
+        314
+      ],
+      "one_epoch_observed": true,
+      "actual_Docker_CLI_wait_exit": 0,
+      "observed_wrapper_seconds": 1.744,
+      "selection": {
+        "kernel": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+        "runner": "f1212ab9ac2829c3296ef17ed71179b78b327628b83d5c99a94e87f4802816cb",
+        "diagnostics": "e5021893640110dde0a80b82967f9760ec4bbe46dd3711a04bc3e24e8ecd6ffd",
+        "init": "8f97c746cc8ef20eb4d3f2f981f1a24ad6e96b5d88f0d327ca80cf5627847d1d",
+        "initramfs": "45e27dcaf9c3a29bfe1232893651d18382b2d3f21c2eb7eb14c75e84633ec011"
+      },
+      "private_bindings": {
+        "selection.json": "bbd5290483a6eb4b1010b4e509d82672838678bdfdd537dcc894c92462f32d72",
+        "command.json": "b2b1eb4cd2f0154aade6b8eeaa5314c51a642f66bd0891f85cedd1b34393b482",
+        "result.json": "ce0a2a4b342056ed88159c5d86b851eb62c0b258d553d60a5a3db29391dc592d",
+        "console.log": "fdc98efd4df117a77171b078fd6812e4cfb2b14f01d8b67875c24a897fc08eca",
+        "probe.cpio.gz": "45e27dcaf9c3a29bfe1232893651d18382b2d3f21c2eb7eb14c75e84633ec011"
+      },
+      "lifecycle_scope": "original RAM runner direct CLI wait; no live exact-CID identity proof claimed"
+    }
+  ],
+  "disabled_before_open_control": {
+    "classification": {
+      "scope": "actual generic kernel disabled-before-open admission refusal; not same-FD silent-drop test",
+      "passed": true,
+      "unchanged_final_init_sha256": "8f97c746cc8ef20eb4d3f2f981f1a24ad6e96b5d88f0d327ca80cf5627847d1d",
+      "raw_aggregate_retained_false": true,
+      "actual_failure": "POKELINUX_PROBE_FAILURE phase=diagnostic-open kind=PermissionDenied errno=Some(1) reason=Operation not permitted (os error 1)",
+      "actual_Docker_CLI_wait_exit": 0,
+      "no_child_or_ACK_or_completion": true,
+      "controlled_powerdown_observed": true,
+      "console_sha256": "dcbafd12c6dc70fbb9e103c21cc6dc700dd0e8ce53159bf2e59fcec6c17dd552"
+    },
+    "raw_aggregate_retained_false": true,
+    "private_bindings": {
+      "result.json": "3d95f356a8d34933ab530e2fc88d47aca9e80ea2b9e6456b5f4478ea1dce980f",
+      "selection.json": "1a1d93687d4bfec7b4da0e3b397ccecda0be97974b74b39bb299a87d3698bb45",
+      "command.json": "982effae1b586b14a50ee5c36a7952d217816f2bdcae0cafe6bd1cc6e7784b5d",
+      "console.log": "dcbafd12c6dc70fbb9e103c21cc6dc700dd0e8ce53159bf2e59fcec6c17dd552"
+    }
+  },
+  "console_consumer_component_replay": {
+    "scope": "old production acceptance branch replayed against preserved actual held-child/denied-poweroff guest panic output; not a fresh kernel run or original missing-child measurement",
+    "RED": {
+      "schema": 1,
+      "classification": "production console-consumer component executed on preserved actual kernel panic; no new kernel run",
+      "producer_fixture": "held-child-denied-poweroff-trace-1",
+      "consumer_mode": "missing-child",
+      "current_predicate_passed": true,
+      "expected_passed": false,
+      "whole_CLI_or_new_kernel_qualified": false,
+      "source_sha256": "5278126568bd33a9797c897a012ccfc86fe17b1c0173ad7e995ca0839e7aabd2",
+      "actual_console_sha256": "832c23b621abb7333b3c0ec57560bd45ec06df9b045eccdac265bccfe44abca1"
+    },
+    "GREEN": {
+      "scope": "component replay of preserved actual guest panic output, not a fresh kernel run",
+      "passed": true,
+      "actual_current_acceptance": {
+        "passed": false,
+        "reason": "panic, refusal or diagnostic failure",
+        "acks": []
+      },
+      "checker_sha256": "e5021893640110dde0a80b82967f9760ec4bbe46dd3711a04bc3e24e8ecd6ffd",
+      "actual_console_sha256": "832c23b621abb7333b3c0ec57560bd45ec06df9b045eccdac265bccfe44abca1",
+      "preceding_RED_sha256": "f650e861d28591846a49e59df3c75de44b4ea12bf4254c0c1691fd51b225d809"
+    },
+    "private_bindings": {
+      "result.json": "f650e861d28591846a49e59df3c75de44b4ea12bf4254c0c1691fd51b225d809",
+      "green-result.json": "76e6176a3cd9820ee5bbc2cee6b12abd78d95cd668e457a7efbafbc8c3f46104",
+      "run.py": "5278126568bd33a9797c897a012ccfc86fe17b1c0173ad7e995ca0839e7aabd2",
+      "diagnostics-green.py": "e5021893640110dde0a80b82967f9760ec4bbe46dd3711a04bc3e24e8ecd6ffd",
+      "actual-kernel-console.log": "832c23b621abb7333b3c0ec57560bd45ec06df9b045eccdac265bccfe44abca1",
+      "check.py": "f38f734384210c7d06c431875660eb23c75aac36814f82b8bdfa8bf58e5408aa"
+    }
+  },
+  "contract": {
+    "epoch": "one128-bit nonblocking kernel getrandom result, failure closed on unavailable/short result",
+    "ordinal": "monotonic consumed u64 per emit, no uncertain reuse; Cell prevents sharing Reporter across threads",
+    "maximum_complete_kmsg_write_bytes": 512,
+    "BOOTTIME_readback_budget_ns": 100000000,
+    "maximum_observed_kernel_records_per_emit": 128,
+    "readback": "exact whole epoch/event-bearing payload, contiguous sequence observations; write count alone is insufficient",
+    "stdout_acceptance": "distinct ordered post-readback raw ACKs plus matching child exec/wait and controlled powerdown",
+    "wire_evolution": "original static marker protocol is historical; stronger epoch/event witness was frozen and failed before repair, then passed unchanged",
+    "writer_model": "restricted trusted probe writers, not PID authentication against privileged writers"
+  },
+  "limits": {
+    "full_smartphone_or_phone_boot_admitted": false,
+    "google_kernel_executed": false,
+    "phone_accessed": false,
+    "vendor_userspace_executed": false,
+    "persistent_root_disk_or_network_attached": false,
+    "pstore_retention_retrieval_or_USB_qualified": false,
+    "effective_Pixel_console_or_serial_qualified": false,
+    "hardware_kernel_call_mount_console_or_shutdown_latency_bounded": false,
+    "same_FD_silent_rate_drop_disabled_after_open_overflow_short_write_controls_qualified": false,
+    "cross_boot_epoch_uniqueness_experiment_qualified": false,
+    "witness_final_child_exit_and_parent_wait_independently_observed": false,
+    "full_pid1_signal_or_uninterruptible_cleanup_qualified": false
+  },
+  "original_source_basis": {
+    "Google_common_commit": "91d825611104e75e1a9e0e0f6b25580eddb68828",
+    "printk_source_url": "https://android.googlesource.com/kernel/common/+/91d825611104e75e1a9e0e0f6b25580eddb68828/kernel/printk/printk.c",
+    "finding": "devkmsg_write can return full count while discarding on rate-limit or disabled-after-open; actual admitted record must be observed"
+  }
+}
