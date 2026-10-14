@@ -12,6 +12,9 @@ setup-fault-fixture = ["isolated-fixture"]
 zeroize = "=1.9.1"
 rustix = { version = "=1.1.5", features = ["fs", "process", "event", "time", "thread", "pipe"] }
 
+[dev-dependencies]
+rustix = { version = "=1.1.5", features = ["param"] }
+
 [[bin]]
 name = "auth-scope-fixture"
 path = "src/bin/auth-scope-fixture.rs"

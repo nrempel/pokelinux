@@ -85,7 +85,11 @@ unexecuted.
 
 ## Remaining composition
 
-Real Attempt/Terminal backpressure, EINTR/error ordering and contained original
+A later [exact writer selection](native-auth-terminal-writer.md) adds4 host
+real-pipe backpressure/revocation tests with an authored source. It qualifies
+that private writer method, not the actual Attempt bridge or full fixture loop.
+
+Real Attempt/full-fixture backpressure, EINTR/error ordering and contained original
 PAM with effective retained faillock still need runtime qualification. Local
 clock/revocation samples are not an atomic cutoff against unread cancellation or
 a deadline crossing a syscall. Callers must apply/drop locally decoded intent

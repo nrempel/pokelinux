@@ -1,0 +1,191 @@
+{
+  "schema": 1,
+  "scope": "Exact Terminal writer method over actual host nonblocking pipes with an authored classification/current source; no whole authentication owner",
+  "code_parent_commit": "a020e993c24acf8f0ce64ee7e7943adb96662884",
+  "integration_base_commit": "e4b163137e469230f2a9b12605c4156d99285399",
+  "compile_prerequisite_RED": {
+    "schema": 1,
+    "classification": "TERMINAL_PRIVATE_SOURCE_TEST_SEAM_COMPILE_PREREQUISITE_RED_ONLY",
+    "passed": false,
+    "runtime_defect_demonstrated": false,
+    "test_bodies_executed": 0,
+    "actual_Cargo_exit": 101,
+    "actual_tool_session": 98824,
+    "actual_terminal_chunk": "e9b48a",
+    "actual_terminal_exit": 1,
+    "error": "E0432 unresolved super::TerminalSource",
+    "production_logic_unchanged_before_RED": true,
+    "only_cfg_test_module_wiring_added": true,
+    "frozen_source_pins": 23,
+    "all_frozen_and_prep_pins_match_at_seal": true,
+    "owned_CLI_actual_wait_and_fresh_same_daemon_CID_absent": true,
+    "selection_sha256": "85831caf6783083840eb5440c60157eee5d62d356a9e4616c9d5e7e9ff66ff5a",
+    "execution_sha256": "f3fe802aa336b24dad4050f40397135a2e70999635f90651f5ad385b24cbbf5b",
+    "build_log_sha256": "263c15d8f7b708e6629fd4f5736d65d25a77305fc3e2fceef216baacfd096922",
+    "sealed_ns": 5955874362991313
+  },
+  "compile_RED_root_review_sha256": "23160f50b5cb38e4c202c532758a4e54efd2f7bf775ceab3560629e7bc766edd",
+  "preserved_zero_test_lint_failure": {
+    "actual_tool_session": 10426,
+    "actual_terminal_chunk": "7e4d1c",
+    "actual_terminal_exit": 1,
+    "Cargo_exit": 101,
+    "test_bodies_executed": 0,
+    "runtime_defect_demonstrated": false,
+    "lint": "chunks_exact_to_as_chunks",
+    "selection_sha256": "92da79c41d32bacef3d0866003dc8d432580443090a3db316cfcd89bc30479a2",
+    "execution_sha256": "7b5da2bae62911f1b7fc250ff03d203660399de9d9e84f821e18cb9507e11560",
+    "log_sha256": "8f2a4803dcf4088991031d7ca3ab3aede984dc7490db9cd63174e156976a851b",
+    "all_frozen_source_pins_verified": true,
+    "owned_CLI_actual_wait_and_fresh_same_daemon_CID_absent_recorded": true
+  },
+  "green": {
+    "schema": 1,
+    "classification": "HOST_EXACT_TERMINAL_WRITER_WITH_AUTHORED_SOURCE_OVER_ACTUAL_NONBLOCKING_PIPES",
+    "passed": true,
+    "actual_tool_session": 35267,
+    "actual_terminal_chunk": "8b9909",
+    "actual_terminal_exit": 0,
+    "library_passed": 59,
+    "terminal_binary_test_passed": 4,
+    "library_explicit_helpers": 3,
+    "all_helpers_invoked_by_parent_tests": true,
+    "actual_full_pipe_and_outcome_only_capacity_EAGAIN": true,
+    "one_decision_and_no_duplicate_after_closed_backpressure": true,
+    "pending_outcome_revocation_and_original_model_clock_expiry": true,
+    "source_classification_is_authored_test_model": true,
+    "actual_Attempt_bridge_or_fixture_main_loop_PAM_cgroup_actor_unlock_executed": false,
+    "source_bindings": 23,
+    "all_frozen_and_prep_bindings_match_at_seal": true,
+    "strict_format_default_all_target_all_feature_Clippy": true,
+    "ARM_fixture_compiled_only": true,
+    "selection_sha256": "5d35df875ed3c376e37dcfb06d0fc3bb36d739101efa8adca225b3333846c2f2",
+    "execution_sha256": "b8b1436e2febe2972a2e8363d3ea4ec3e1927ab4185099342d798d8e4fba1bd1",
+    "test_log_sha256": "67481886f33eff314500e6e0d1e248e8c303ac7736698710194ba895c6445599",
+    "host_test_ELFs": [
+      {
+        "name": "pokelinux_auth_scope-c412d13fa7603947",
+        "sha256": "f9978ecf22665b8ac99daf2f6238bcaab1f4f26f189a02c5216a47ba78994a22"
+      },
+      {
+        "name": "auth_scope_fixture-98bf602d2191d841",
+        "sha256": "6e57276ae3a2a66bed1bdc2a800a00f8eb9d714159aad1873ef4952b2e391891"
+      }
+    ],
+    "ARM_fixture_ELF_sha256": "941aa1aa7cb9ec445dcbfb681727fdf21b8758293a86a521df9107cadf2e3dbb",
+    "fresh_same_daemon_exact_CID_absent": true,
+    "sealed_ns": 5956078081197338
+  },
+  "green_root_review_sha256": "df816eba192c58400dc9cad5cce2fd968080a2f0a83693b24f6ec98c9d855d57",
+  "terminal_test_listing_sha256": "4a3804526b5cb059b173557b771dc9aa43438d21eebe572bd5c44633e1c928af",
+  "source_review_sha256": "b9fd19999e300da378e78f1695ed4e08db1e56e45ef29e5723c7c1ad12eb500e",
+  "Astra_medium_next_step_review_sha256": "ed6952796fa78c6d66bbf4c62284203cf0f7bafd43d26c96309b056f453792b8",
+  "sources": [
+    {
+      "path": "native-auth/Cargo.lock",
+      "sha256": "59a7f877d2aa1ff2b0a25c6bd31d12201b0af1053716e398436a251972d25d29"
+    },
+    {
+      "path": "native-auth/Cargo.toml",
+      "sha256": "be456d963f5dfc4e268a8571ec29ef25f4d91fed97612c109eb1831f2ff2a7af"
+    },
+    {
+      "path": "native-auth/README.md",
+      "sha256": "38f8d918aa94304c8138f2b545d09b51c661198415781e59c786919ed8b90af6"
+    },
+    {
+      "path": "native-auth/src/bin/auth-scope-fixture.rs",
+      "sha256": "d8e489416dadeda7efe5b7e69971d25c1c67a48e52884fdf53eb0555bfbb563d"
+    },
+    {
+      "path": "native-auth/src/cgroup.rs",
+      "sha256": "543bf0a64565c469bc00ebd33dbb8652cba20eaf08bbfbe3856f564a174ebc45"
+    },
+    {
+      "path": "native-auth/src/command.rs",
+      "sha256": "bd7dc8ed1f2fc6eff5a9f4d480f3ea6854c0a9b41d0bf3d717fc8186fd3cc1c6"
+    },
+    {
+      "path": "native-auth/src/command_tests.rs",
+      "sha256": "4a783d469aefb4450541746e90c5f124ff9408e952829340cb4b7da5263007ae"
+    },
+    {
+      "path": "native-auth/src/conversation.rs",
+      "sha256": "9189ed35ab460ff9178f609b496b432018fd2ecbf80cefc806255f473d295ba7"
+    },
+    {
+      "path": "native-auth/src/conversation_io_tests.rs",
+      "sha256": "884620aa6b41fd42dd1645e9f39637181ac35a15261420995a2f6fa66f017e54"
+    },
+    {
+      "path": "native-auth/src/conversation_lifetime_tests.rs",
+      "sha256": "268aecc9dd2c7a4853077229ebeb7aa6bc77e72f1429e5d72518fa57d45c5a6f"
+    },
+    {
+      "path": "native-auth/src/conversation_tests.rs",
+      "sha256": "5f8489ee78c6e66b5b600c1dec4d6ad9b1b9f584c00510bcaaab00d657ffcfe3"
+    },
+    {
+      "path": "native-auth/src/lib.rs",
+      "sha256": "1fa9c23b1039c80b6c53b07dae0339adb15c0459ee2c7fd0f74da44f9be9d43b"
+    },
+    {
+      "path": "native-auth/src/outcome.rs",
+      "sha256": "2ed28576ca8351cad9d6ca7fae8e18a4d92f434e7bbc7ea997223272fdbc5c8c"
+    },
+    {
+      "path": "native-auth/src/owner.rs",
+      "sha256": "1a4a536bc740914f23004f2c31d453d4c1d21215b6b33cfa1ade4f9e6500719a"
+    },
+    {
+      "path": "native-auth/src/parent.rs",
+      "sha256": "87dbc77e98c86a5ce454ee558410ebc98c3168e3924a49fe55a11e686e1ccce1"
+    },
+    {
+      "path": "native-auth/src/parent_process_tests.rs",
+      "sha256": "d483a1c383799cb55620b0633ad5b98de391ddc471987e254652263a9b9e8305"
+    },
+    {
+      "path": "native-auth/src/parent_prompt.rs",
+      "sha256": "57995ac2df00b5cdce3209e88b864659f3a2548dd80864a2b045546d44fbf1f5"
+    },
+    {
+      "path": "native-auth/src/parent_prompt_tests.rs",
+      "sha256": "c2a9471a84f9200e6576a918475be2afd3d180a6c77b0efd6e0ec5036db4703a"
+    },
+    {
+      "path": "native-auth/src/record.rs",
+      "sha256": "df9be4c23909948f3b4822dda371f6cfd797f85d02fb47b1a2f067a5d9897d65"
+    },
+    {
+      "path": "native-auth/src/terminal_tests.rs",
+      "sha256": "402c5b466de6ef76180ff130b56d6953a994063593e59352782be1428aebaa14"
+    },
+    {
+      "path": "native-pam/src/wire.rs",
+      "sha256": "91b0b974c21e4d775caca8273e1a6ee4898764b3f88a41117b33185bd741702e"
+    },
+    {
+      "path": "tools/native-auth-scope/delegated.py",
+      "sha256": "872d8417da67ab541c1296b7a931753178dc0a5b3824156d7ae71f490d1d4d04"
+    },
+    {
+      "path": "tools/native-auth-setup/delegated.py",
+      "sha256": "22d202c58a385a1c62cc5ad703c85c06f8360e110f115a659a0624c27793f648"
+    }
+  ],
+  "integration_code_bindings_match_excluding_documentation": 22,
+  "limits": [
+    "E0432 RED and first strict-Clippy failure execute zero bodies and demonstrate no runtime defect",
+    "The only runtime private trait implementation is Attempt, consuming sealed WorkerOutcome through record::outcome; that bridge is compiled only",
+    "The test trait implementation authors credential-free raw outcome bytes and models revocation/currentness",
+    "Four tests execute the actual Terminal writer and actual nonblocking pipe EAGAIN, not the root fixture entry or whole owner",
+    "The same host selection passes59 library tests with3 explicit helpers invoked through their owning regressions",
+    "No actual Attempt, complete supervisor/parent loop, original PAM/helper/cgroup cleanup, retained faillock, actor binding, unlock, durable clear or Messages reopen",
+    "ARM64 fixture compilation only; earlier actual ARM59 keeps its own source/Cargo snapshot and does not qualify the four binary tests",
+    "Existing writer decision/current/write order retained; private seam and dev-only page-size support added, no production auth ingress",
+    "No new BrokenPipe/EINTR, atomic cutoff, suspend, matched Google or physical-device evidence",
+    "Frozen documentation is the a020 snapshot; current affected docs updated after runtime qualification",
+    "No phone accessed"
+  ]
+}

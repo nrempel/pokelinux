@@ -104,6 +104,16 @@ actual test/QEMU/CLI/container waits0 and fresh both-CID absence close. Parent
 nested wait assertions remain source/ELF-bound, not an independent raw journal;
 no actual Attempt/Terminal/PAM/cgroup/actor/unlock executes. See [ARM59](native-auth-closed-outcome-arm.md)
 and [proof](evidence/native-auth-closed-outcome-arm-provenance.json).
+A later bounded host selection passes59 library +4 exact Terminal writer tests.
+New tests first fail the missing private-adapter compile prerequisite, with0
+bodies; a separate zero-test strict-Clippy failure remains preserved. The final
+writer tests use actual pipe EAGAIN before outcome and after outcome/before
+CLOSED, then pending revocation/original model clock expiry. One decision and
+identical terminal snapshots persist; only the classification source is modeled.
+The private Attempt adapter compiles, but actual Attempt and full fixture loops
+remain unexecuted. ARM fixture compilation is separate; earlier ARM59 does not
+qualify these new binary tests. See [writer report](native-auth-terminal-writer.md)
+and [proof](evidence/native-auth-terminal-writer-provenance.json).
 Next: runtime qualification of actual parent/Attempt forwarding and original PAM+scope, including retained
 faillock and remaining fixed alias/filter routes, then broker/actor one-shot
 synced restoration and a normal Messages reopen. Keep Source100ms/no-revival and all hardware gates.

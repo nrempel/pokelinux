@@ -91,7 +91,10 @@ quarantine cases. Worker extraction and terminal forwarding compile but remain
 unexecuted; no actor result or unlock authority is added. The unchanged59 library tests now separately pass on an
 [actual Arch ARM64 kernel](native-auth-closed-outcome-arm.md) as UID1000, with
 all62 names matching. This runs no actual Attempt/Terminal/PAM/cgroup or actor
-restoration; ARM40 retains its older source.
+restoration; ARM40 retains its older source. A later host-only
+[terminal writer selection](native-auth-terminal-writer.md) adds4 actual-pipe
+backpressure/revocation tests alongside59 library passes. Its classification
+source is modeled and the full Attempt/fixture/PAM path remains unexecuted.
 Original PAM+scope composition, installed broker/containment, actor-owned receipts,
 exact unlock and synced durable restoration remain open. No physical model is qualified. See
 [worker boundary](native-pam-worker.md).

@@ -73,7 +73,12 @@ unqualified. No broker/actor unlock ingress is added. The unchanged59 library
 tests also pass as UID1000 under an actual generic Arch ARM64 kernel, with all62
 names matching the host and three explicit helpers invoked by their parents;
 see [ARM59 evidence](../docs/native-auth-closed-outcome-arm.md). This executes no
-actual Attempt/Terminal/PAM/cgroup/actor/unlock path.
+actual Attempt/full fixture/PAM/cgroup/actor/unlock path. A later host selection
+adds4 exact Terminal writer tests over real nonblocking pipes to59 library
+passes: one decision under EAGAIN, no repeated outcome while CLOSED waits,
+and pending revocation/original model clock expiry. The classification source
+is authored test data; actual Attempt extraction and the complete fixture loops
+remain separate. See [writer evidence](../docs/native-auth-terminal-writer.md).
 Full forwarding and original PAM+scope
 remain runtime gates. A candidate is not authentication authority. See the
 [current forwarding report](../docs/native-auth-parent-forwarding.md),

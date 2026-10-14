@@ -30,6 +30,22 @@ fn read_commands(
 
 // Capture the terminal Snapshot once. After its STATE has drained, only one
 // outcome and the identical CLOSED Snapshot may follow. No result is timeless.
+// Private adapter keeps the actual writer testable through ordinary pipes.
+// The sole runtime implementation still consumes the actual owner's token.
+trait TerminalSource {
+    fn take_record(&mut self) -> Option<[u8; record::SIZE]>;
+    fn current(&self) -> bool;
+}
+impl TerminalSource for pokelinux_auth_scope::owner::Attempt {
+    fn take_record(&mut self) -> Option<[u8; record::SIZE]> {
+        self.take_worker_outcome()
+            .and_then(|value| record::outcome(value).ok())
+    }
+    fn current(&self) -> bool {
+        self.worker_outcome_current()
+    }
+}
+
 struct Terminal {
     snapshot: pokelinux_auth_scope::owner::Snapshot,
     outcome_decided: bool,
@@ -47,19 +63,17 @@ impl Terminal {
 
     fn write_once(
         &mut self,
-        attempt: &mut pokelinux_auth_scope::owner::Attempt,
+        attempt: &mut impl TerminalSource,
         output: &impl rustix::fd::AsFd,
     ) -> io::Result<bool> {
         if !self.outcome_decided {
             self.outcome_decided = true;
-            self.pending_outcome = attempt
-                .take_worker_outcome()
-                .and_then(|outcome| record::outcome(outcome).ok());
+            self.pending_outcome = attempt.take_record();
         }
         // The opaque token was consumed by the serializer. Credential-free
         // bytes can wait on EAGAIN, but retirement/expiry discards them before
         // another write. Already delivered bytes still need parent checks.
-        if !attempt.worker_outcome_current() {
+        if !attempt.current() {
             self.pending_outcome = None;
         }
         if let Some(bytes) = &self.pending_outcome {
@@ -313,3 +327,7 @@ fn main() {
         std::process::exit(1);
     }
 }
+
+#[cfg(test)]
+#[path = "../terminal_tests.rs"]
+mod terminal_tests;
