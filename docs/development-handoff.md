@@ -63,6 +63,15 @@ work; fixture read buffers drop before decoded intent is applied. No actual
 ScopeChild/Attempt or complete forwarding loop runs in this selection. See
 [forwarding report](native-auth-parent-forwarding.md) and
 [bounded proof](evidence/native-auth-parent-forwarding-provenance.json).
+A separate unchanged library selection now passes the same40 components on an
+actual Arch ARM7.1.6 kernel as UID/GID1000, groups[] and CapEff0. All41 entries are
+listed; its one ignored helper is explicitly invoked by the parent regression
+and reaches natural wait0/EOF/dead pidfd/proc absence. Guest test, QEMU, CLI and
+container waits0, fresh exact-CID absence and frozen input closure pass. Earlier
+compile/postprocessing and no-boot temporary-directory attempts remain separate
+zero-test failures. No fixture binary, ScopeChild/Attempt, PAM, cgroup workload,
+unlock or physical phone executes. See [ARM components](native-auth-components-arm.md)
+and [proof](evidence/native-auth-components-arm-provenance.json).
 Next: runtime qualification of actual parent/Attempt forwarding and original PAM+scope, including retained
 faillock and remaining fixed alias/filter routes, then broker/actor one-shot
 synced restoration and a normal Messages reopen. Keep Source100ms/no-revival and all hardware gates.

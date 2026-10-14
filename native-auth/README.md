@@ -51,7 +51,11 @@ atomic. Attempt retains every actual child, pipe, cgroup and wait; these tests d
 not construct it. Strict Clippy and separate ARM64 compilation pass, without ARM
 execution. That19-component selection is historical. The current parent and
 supervisor loops forward prompts/responses in source, with40 passing host
-components and separate ARM64 compilation. Exact parent queue/command codec
+components and separate ARM64 compilation. A later unchanged40-component library
+suite also passes as UID1000 under an actual Arch ARM64 kernel, including the
+ordinary helper's natural wait/EOF control. This is separate from the unexecuted
+ARM fixture binary; see the [ARM report](../docs/native-auth-components-arm.md).
+Exact parent queue/command codec
 composition crosses real pipes, but neither actual owner nor either complete
 fixture loop runs in those controls. Actual forwarding and original PAM+scope
 remain runtime gates. A candidate is not authentication authority. See the

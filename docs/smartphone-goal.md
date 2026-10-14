@@ -78,7 +78,9 @@ detached-descendant RED. A later actual injected setup-error RED precedes respon
 faulted quarantine and a normal cleanup regression; see [setup](native-auth-setup.md).
 The isolated [prompt-forwarding source](native-auth-parent-forwarding.md) passes40
 host components over real pipes after record/command REDs; actual full-owner
-forwarding and ARM runtime remain unqualified in that selection.
+forwarding remains unqualified. The unchanged40 library components separately
+pass under an [actual Arch ARM64 kernel](native-auth-components-arm.md) as UID1000;
+that selection runs no complete owner or PAM.
 Original PAM+scope composition, installed broker/containment, actor-owned receipts,
 exact unlock and synced durable restoration remain open. No physical model is qualified. See
 [worker boundary](native-pam-worker.md).

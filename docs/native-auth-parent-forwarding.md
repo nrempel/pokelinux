@@ -6,6 +6,9 @@ REDs, with formatting, strict default/all-target/all-feature Clippy and separate
 ARM64 release compilation. The full ScopeChild/Attempt process path is not run
 here. [Bounded provenance](evidence/native-auth-parent-forwarding-provenance.json)
 keeps that limit separate from the actual real-pipe component execution.
+A later [ordinary ARM component selection](native-auth-components-arm.md) executes
+the unchanged40 library components under an actual Arch ARM64 kernel as UID1000.
+It does not run either complete forwarding loop or promote the compiled fixture.
 
 The production record decoder first accepts a synthetic healthy state through a
 real pipe, then refuses the authored credential-free prompt event. Nineteen

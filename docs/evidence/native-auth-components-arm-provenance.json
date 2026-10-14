@@ -1,0 +1,177 @@
+{
+  "schema": 1,
+  "scope": "Forty unchanged native-auth library components under an actual generic Arch ARM64 kernel as UID1000; no original PAM or full owner forwarding",
+  "review": {
+    "schema": 1,
+    "classification": "ACTUAL_ARCH_ARM64_KERNEL_UNPRIVILEGED_AUTH_LIBRARY_COMPONENTS",
+    "passed": true,
+    "qualified_Rust_source_commit": "785011522db303f067e72eb3c2b66766ef63e354",
+    "source_bindings": 20,
+    "independently_rehashed_bindings": 56,
+    "actual_guest_tool_session": 16603,
+    "actual_guest_tool_exit": 0,
+    "tests_passed": 40,
+    "tests_failed": 0,
+    "explicit_ignored_helpers": 1,
+    "helper_executed_by_parent_regression": true,
+    "actual_helper_natural_wait0_EOF_pidfd_dead_proc_absent": true,
+    "actual_guest_test_wait": 0,
+    "actual_QEMU_wait": 0,
+    "actual_CLI_wait": 0,
+    "actual_container_wait": 0,
+    "fresh_all_five_exact_CIDs_absent": true,
+    "same_daemon": true,
+    "unchanged_sources_deadlines_and_external_inputs": true,
+    "kernel": {
+      "machine": "aarch64",
+      "release": "7.1.6-1-aarch64-ARCH",
+      "version": "#1 SMP PREEMPT_DYNAMIC Wed Aug  5 00:20:13 UTC 2026"
+    },
+    "execution_identity": {
+      "cap_eff": "0000000000000000",
+      "egid": 1000,
+      "euid": 1000,
+      "gid": 1000,
+      "groups": [],
+      "pid": 299,
+      "uid": 1000
+    },
+    "test_ELF_sha256": "d257e216dcacf901e8e63aeafe6c7e6b609e4bafcc71b2f37449bf1cb492f8f5",
+    "selection_sha256": "e14c5e9160dde16f95d9eb95f3429ce54270ad9f7a826f55995f8a01c73abfe6",
+    "execution_sha256": "6a05b819f3bb6e87d2e4aa5bb80a0bfb1dfe59353c51007119754110f4eec5d6",
+    "guest_result_sha256": "69cf6300a5d1b103e2c1358200106c624dd3f404071ef9a43718bc618f53fd36",
+    "test_log_sha256": "0840894bff389f95d180c63dac96d82ccc1019aaacb44a1b3d5a8aa6cf632174",
+    "QEMU_wait_record_sha256": "e55a665b2ca9b28172877ba9b0b101d9d36fec21e39bb31d94327312ea55ad1a",
+    "ScopeChild_or_Attempt_or_PAM_or_actual_cgroup_scope_executed": false,
+    "phone_accessed": false,
+    "sealed_ns": 5953328582198266
+  },
+  "root_review_sha256": "c2c8c0f4e472b137418d0a7262bb3efc406fe96a4d6cd6b5eea8722c1c925a90",
+  "sources": [
+    {
+      "path": "native-auth/Cargo.lock",
+      "sha256": "59a7f877d2aa1ff2b0a25c6bd31d12201b0af1053716e398436a251972d25d29"
+    },
+    {
+      "path": "native-auth/Cargo.toml",
+      "sha256": "965972df3b99936141b603c67c80931aee4dee831fde6662794bbdbbcf42d88b"
+    },
+    {
+      "path": "native-auth/src/bin/auth-scope-fixture.rs",
+      "sha256": "02fc1b96af27ffef902c4fa6fcb63227748b829407b8c66108d85efd0b498600"
+    },
+    {
+      "path": "native-auth/src/cgroup.rs",
+      "sha256": "543bf0a64565c469bc00ebd33dbb8652cba20eaf08bbfbe3856f564a174ebc45"
+    },
+    {
+      "path": "native-auth/src/command.rs",
+      "sha256": "0208732f37115f5576a10b11855782d67e48d86f71ab3ad6f99f1fe41442d3b6"
+    },
+    {
+      "path": "native-auth/src/command_tests.rs",
+      "sha256": "4a783d469aefb4450541746e90c5f124ff9408e952829340cb4b7da5263007ae"
+    },
+    {
+      "path": "native-auth/src/conversation.rs",
+      "sha256": "e70ec1c725a6be34c48f1c8dd00fe02b3bde15fc22e08e507685436b2c60d6f1"
+    },
+    {
+      "path": "native-auth/src/conversation_io_tests.rs",
+      "sha256": "884620aa6b41fd42dd1645e9f39637181ac35a15261420995a2f6fa66f017e54"
+    },
+    {
+      "path": "native-auth/src/conversation_lifetime_tests.rs",
+      "sha256": "268aecc9dd2c7a4853077229ebeb7aa6bc77e72f1429e5d72518fa57d45c5a6f"
+    },
+    {
+      "path": "native-auth/src/conversation_tests.rs",
+      "sha256": "5f8489ee78c6e66b5b600c1dec4d6ad9b1b9f584c00510bcaaab00d657ffcfe3"
+    },
+    {
+      "path": "native-auth/src/lib.rs",
+      "sha256": "b3d80c8bcbaf0b75e59b403612fc72192a0796799aac44328db9ef54ad2a22ba"
+    },
+    {
+      "path": "native-auth/src/owner.rs",
+      "sha256": "8c9e2ee6cb8e564a139c6f4fad55b444693f761f7f2288d15017ac7551491223"
+    },
+    {
+      "path": "native-auth/src/parent.rs",
+      "sha256": "aba209f05d30ca76f139fd23dd6550e64de2cd62e05836e3724fb8b955203c49"
+    },
+    {
+      "path": "native-auth/src/parent_prompt.rs",
+      "sha256": "dc6736b231e2a1e7b29762ae6c6bc3e027888875eb376597346bb7e7ef26c400"
+    },
+    {
+      "path": "native-auth/src/parent_prompt_tests.rs",
+      "sha256": "a16087e69bf681944a8fdf9122de66336f58cb8061ffd745511dcd27bb4578db"
+    },
+    {
+      "path": "native-auth/src/record.rs",
+      "sha256": "63302aa97760b7c4be9e74ca9eac96c7785f97a185b1d255ab646d1d9bb8215d"
+    },
+    {
+      "path": "native-pam/src/wire.rs",
+      "sha256": "91b0b974c21e4d775caca8273e1a6ee4898764b3f88a41117b33185bd741702e"
+    },
+    {
+      "path": "tools/native-auth-scope/delegated.py",
+      "sha256": "ac1fb8d8d39de3cc0c66068b55b1a44abf192d1623077d90598428cf5d67be52"
+    },
+    {
+      "path": "tools/native-auth-setup/delegated.py",
+      "sha256": "e77cfe021f87b4e85dfd5a0d22d5bccf8e165cfb26f86a8a7fe02d222f349296"
+    }
+  ],
+  "preserved_preparation_failures": [
+    {
+      "label": "build",
+      "tool_exit": 1,
+      "container_wait": 127,
+      "tests_executed": 0,
+      "cause": "Library compile completed; Rust image lacked Python for postprocessing."
+    },
+    {
+      "label": "build-2",
+      "tool_exit": 1,
+      "container_wait": 0,
+      "tests_executed": 0,
+      "cause": "Library compile completed; host readelf unavailable. Replaced inspection with direct standard ELF-header parsing for fresh build-3."
+    },
+    {
+      "label": "run-1",
+      "tool_exit": 1,
+      "container_wait": 1,
+      "qemu_wait": 1,
+      "tests_executed": 0,
+      "cause": "QEMU snapshot temporary file required writable /var/tmp; no guest boot. run-2 added bounded tmpfs and TMPDIR=/tmp."
+    }
+  ],
+  "limits": [
+    "QEMU system emulation with a real generic Arch ARM64 kernel, not ARM user-mode emulation or matched Google/Pixel hardware",
+    "Only the library test ELF executes; no auth-scope fixture binary, worker, original PAM/helper, cgroup workload or complete ScopeChild/Attempt/fixture loops",
+    "Ignored helper remains explicit; its exact ordinary child control is executed and actually waited by its parent regression",
+    "No deadlines, test threads, counts or source behaviors rescaled to make ARM pass",
+    "Calls begun after expiry do not establish an atomic syscall-time cutoff or physical suspend/wake behavior",
+    "Component portability adds no broker/actor result, receipt, exact unlock, synced durable clear or normal Messages reopen",
+    "Base rootfs remains untouched; disposable clone and snapshot only",
+    "No phone access or hardware qualification"
+  ],
+  "independent_review_execution": {
+    "actual_tool_session": 35719,
+    "actual_terminal_chunk": "5e56a9",
+    "actual_terminal_exit": 0,
+    "review_script_sha256": "f03ee112c5c7eb269890dac93ae8ebdb7579d138a3d81a7adde54d1b46621ae7",
+    "preserved_first_review_failure": {
+      "classification": "independent-review container-inspect error wording mismatch; no public success record written",
+      "actual_tool_session": 3941,
+      "actual_terminal_chunk": "213ad6",
+      "actual_terminal_exit": 1,
+      "script_sha256": "f3cd7f55ec30272b7204bcf2a975d59606f84d4ffabb34fa29709ee057be691e",
+      "runtime_test_rerun": false
+    },
+    "repair": "Fresh inspect accepts only exact-ID no-such-object or no-such-container diagnostics; runtime tests unchanged"
+  }
+}
