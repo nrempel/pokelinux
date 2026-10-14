@@ -44,3 +44,14 @@ death, with zero ACK/send/response-ACK/other counts. Its independent peer and
 manager were actually reaped. `scaffold-provenance.json` remains historical and
 makes no storage/authority claim. Earlier failed setup attempts and all pre-fix
 source/ELF selections remain preserved separately.
+
+A later independent [RAM-only Google4K-kernel checkpoint](../../docs/native-google-kernel-services.md#later-current-source-binder-composition)
+uses the same receiver source with current native dependencies and qualifies
+three actual receiving/storage/current-authority groups, separately from the
+root-disk harness above. Its [public provenance](../../docs/evidence/native-google-kernel-messages-binder-provenance.json)
+records actual waits, worker closure and preserved setup failures. The tested
+fixture Cargo.lock adds the current local `pokelinux-camera` dependency only;
+all 165 registry package tuples are unchanged. The successful static ARM build
+uses `--locked --offline`; an earlier stale-lock refusal and an incomplete offline
+all-platform metadata attempt remain failed. No normal production incoming
+selector is added.

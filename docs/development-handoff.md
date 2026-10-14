@@ -252,6 +252,21 @@ live receiving, normal Qt or reboot/power-loss persistence is claimed. The
 fixture adds actual random/urandom nodes after the retained UUID ENOENT failure;
 full native init must provision them.
 
+Three later [current-source Binder groups](native-google-kernel-services.md#later-current-source-binder-composition)
+pass on the same kernel with the existing synthetic V3 receiver. Two equal
+callbacks create distinct raw IDs and project before the first app launcher;
+a third commits while the actual reader is T-held before its query. Revocation
+denies that read; release projects all three through the same writer/source.
+Clean same-generation reopen preserves IDs but stays history-only with fresh
+authority and no new registration. The record separates 16 direct PID1 waits
+(14 exit 0, two intentional SIGKILLs) from six service-worker pidfd-dead/proc-absent
+observations; final wait-all returns ECHILD. No independent worker-wait trace is
+claimed. The fixture lock adds only the current local camera dependency; 165
+registry tuples stay unchanged. The prior locked-build and offline metadata
+failures remain setup failures, with no VM. See [bounded proof](evidence/native-google-kernel-messages-binder-provenance.json).
+Normal production incoming, Qt/session, persistent reboot recovery and physical
+phone gates remain open.
+
 The subsequent trusted lock→PAM
 unlock→reopen transaction must preserve policy/history, establish current Source
 and app authority, and never infer recovery from unlocked facts or deleted seals. No physical phone is accessed.

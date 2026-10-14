@@ -15,6 +15,13 @@ later compositor/session composition. The normal production Messages entrypoint
 still has no incoming backend, Binder dependency, ACK or send endpoint. No phone
 was accessed and no vendor modem executable ran.
 
+A later [Google4K-kernel checkpoint](native-google-kernel-services.md#later-current-source-binder-composition)
+executes the current native sources through this existing synthetic receiver:
+three callbacks commit three raw occurrences, held-reader revocation preserves
+the same writer/source, and clean reopen retains exact IDs without reattaching.
+Its reader is stopped before the query; the older actual SQLite-transaction
+controls below remain separate. The normal daemon remains history-only.
+
 ## Ownership and publication
 
 `Provider::incarnation()` names the readonly child, while source packets retain

@@ -41,7 +41,10 @@ connects an authored frozen-V3 NDK Binder peer to the sole writer and projects
 committed arrivals with no window. Its durable one-attempt marker prevents
 implicit source attachment after writer or whole-service restart. The normal
 installed binary retains no synthetic incoming selector. Historical desktop
-proof continues to describe its exact earlier selected binaries.
+proof continues to describe its exact earlier selected binaries. Three later
+[current-source synthetic Binder groups](native-google-kernel-services.md#later-current-source-binder-composition)
+qualify raw commit, held-reader revocation and history-only reopen on the exact
+Google4K kernel in RAM-only QEMU; they add no production incoming selector.
 
 `MessagesRead` is a current data-release permission. It cannot be prepared or
 admitted as a historical transferable permit. A private, non-cloneable read stamp

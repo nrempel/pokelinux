@@ -1,0 +1,195 @@
+{
+  "schema": 1,
+  "date_UTC": "2026-10-14",
+  "publication_base_commit": "2456a5e6b5e68371e6780faa96d70df0cf6f5744",
+  "passed": true,
+  "evidence_class": "current native sources with existing authored V3 receiver and public NDK peer under authenticated Google kernel on synthetic QEMU virt",
+  "kernel": {
+    "sha256": "0226c3be4224b02884d4f9b332aee58ec06c65b2263265e80f2498332ef15c06",
+    "release": "6.6.127-android15-8-g91d825611104-ab16252310-4k",
+    "embedded_config_sha256": "f3be4cd72a437f07d1c804f2127c72f60ff1474d6acf370e5c969618ed6388d0",
+    "compiled_defaults_preserved": true,
+    "security_or_protected_flags_disabled": false
+  },
+  "source_and_build": {
+    "production_snapshot_entries": 89,
+    "existing_receiver_source_edited": false,
+    "receiver_source_sha256": "8789cc50779e1871b80f1c30db0d6e181014edf88db538b2e7510000a0bed389",
+    "fixture_entrypoint_source_sha256": "56f0a7c0e879b0fb6fb89caae36f55a2fa2650a4028a7944b4c461a6fadf20b7",
+    "fixture_lock_sha256": "0d8a70254aa8a8bd53e9ebd9d2bd70abd1478b5a9c0bfe318886cd5d3354a3b6",
+    "lock_changes": "local pokelinux-camera package and lifecycle dependency only",
+    "registry_name_version_source_checksum_tuples_unchanged": 165,
+    "actual_locked_offline_ARM_compiler_wait_exit": 0,
+    "compiler_CID_absence": true,
+    "normal_history_only_service_selected_in_this_run": false,
+    "Rust_target": "aarch64-unknown-linux-gnu",
+    "RUSTFLAGS": "-C target-feature=+crt-static -C linker=aarch64-linux-gnu-gcc -C link-arg=-fuse-ld=bfd"
+  },
+  "selected_ELF_sha256": {
+    "incoming-manager": "6508d62feeb3f8a31e959fc260cc56924c8d3e3416e85db640429f004e4f4361",
+    "incoming-probe": "9337aea68c6ec5b437d123b6f3a19dcb7b9619c4f907109bad5f514d10ab8563",
+    "messages-incoming-fixture-service": "e2d6dfba4888a91e8b9818093521a80d5d2e91e6e7f0aa5c3754232255ca1892",
+    "binder-control": "84e59ea8429b7874d400cb7bc41e9086e02e7a8221a4cff5b45a14faa843d2df"
+  },
+  "public_runtime": {
+    "selected_ELFs": 15,
+    "runtime_bytes": 7640720,
+    "incoming_peer_ELF_sha256": "d3ace7cd833d10aa81217bae20d7a8765d06c3160167dbf69d848a9ce72560f4",
+    "libbinder_ndk_sha256": "04b980f8c8f61052f69d1f32f451f558e14da4685c80ef2499227eafaaf802f8",
+    "Bionic_libc_sha256": "ff418def7a55466ed696b7aa3a2ecac7d3a56715111f128e87b2ac6657f72c8d",
+    "linker64_sha256": "09105dda9253238d125dc9be82c68a2b54819d03f92177348ef7211288001941",
+    "actual_peer_mapping_qualified": true,
+    "link_stubs_used_at_runtime": false
+  },
+  "runtime": {
+    "QEMU_image": "sha256:561177a4305051567b1d28d67ba9a95e0ce0ad32a8815b49da42fe71aa5a3dd6",
+    "machine": "virt-10.0,gic-version=3,virtualization=on",
+    "guest_CPUs": 2,
+    "guest_RAM_MiB": 256,
+    "container_CPUs": 2,
+    "container_memory": "512m",
+    "container_PID_limit": 64,
+    "test_PID1_BOOTTIME_seconds": 35,
+    "shared_failure_cleanup_seconds": 3,
+    "outer_deadline_seconds": 45,
+    "QMP_setup_deadline_seconds": 5,
+    "separate_authored_test_PID1_sha256": "22c8a4350286342ca9e30769dbfb1e0cd44d776457de87a33a0c5aae0cca2793",
+    "production_boot_probe_changed": false,
+    "production_service_deadlines_changed": false,
+    "root_disk_NIC_hostdevices_phone": false
+  },
+  "actual_setup": {
+    "binderfs_mounted": true,
+    "BINDER_CTL_ADD_allocated_character_rdev": [
+      507,
+      4
+    ],
+    "device_UID_GID": [
+      1000,
+      1000
+    ],
+    "device_permissions": "0600",
+    "manager_peer_UID_GID": [
+      1000,
+      1000
+    ],
+    "manager_peer_supplementary_groups": [],
+    "manager_peer_CapEff": 0,
+    "manager_peer_NoNewPrivs": 1
+  },
+  "actual_groups": [
+    {
+      "name": "Binder callbacks, background raw/projection and current authority",
+      "equal_payload_distinct_occurrences": 2,
+      "raw_rows_before_first_app_launcher": 2,
+      "projected_rows_before_first_app_launcher": 2,
+      "default_read_denied": true,
+      "authorized_pages_match_exact_IDs": true
+    },
+    {
+      "name": "held reader, continuing raw admission and revocation",
+      "reader_observed_T_before_query": true,
+      "stopped_inside_SQLite_transaction_claimed": false,
+      "raw_rows_while_held": 3,
+      "projection_rows_while_held": 2,
+      "post_revocation_reply": "denied",
+      "reader_live_at_resume": true,
+      "same_writer_source_generation": true,
+      "projected_rows_after_release": 3,
+      "actor_snapshot_ns": 1393568
+    },
+    {
+      "name": "Stop and same-generation history-only reopen",
+      "direct_service_Stop_exits": [
+        0,
+        0
+      ],
+      "raw_ID_count_retained": 3,
+      "exact_page_IDs_match_raw": true,
+      "fresh_authority_required": true,
+      "reopen_receiving": false,
+      "reopen_incoming_started": 0,
+      "registrations_per_slot": 1,
+      "ACK_send_response_ACK_other_calls": 0
+    }
+  ],
+  "ownership_and_closure": {
+    "actual_app_response_SCM_generation_checks": 36,
+    "actual_PID1_direct_child_waits": 16,
+    "direct_child_exit0": 14,
+    "intentional_manager_peer_SIGKILL_waits": 2,
+    "service_workers_pidfd_dead_and_proc_absent": 6,
+    "native_worker_wait_syscalls_independently_traced": false,
+    "actual_child_logs_and_waits_recorded_before_success_assertions": true,
+    "final_waitpid_minus1_WNOHANG": "ECHILD10",
+    "unexpected_adopted_children": 0,
+    "actual_QMP_guest_shutdown": true,
+    "actual_Docker_CLI_wait_exit": 0,
+    "fresh_same_daemon_exact_CID_absence": true,
+    "local_bindings_rehashed": 192,
+    "external_bindings_rehashed": 156,
+    "inputs_unchanged_at_completed_audit_UTC": "2026-10-14T05:08:24.219483+00:00",
+    "final_serial_drain_syscall_independently_observed": false
+  },
+  "private_record_sha256": {
+    "selection.json": "7a0cf528c16d5c0a3ae308fd4fda1dad4174940f0ae71ac049449250e944382f",
+    "command.json": "a001dfc51c37b63db3223af7ba51cb5caa60f5908448b26d1a32129fc8c71571",
+    "run-frozen.py": "02b3419d643b9231cf3830b5eeeb4a30264f7fc5ac85959cf0b04961939c08fe",
+    "observe.py": "514ac23c8eb5fb7b41ed3fcfd96c662337e6e139bf30b13e6c9969bd800dc541",
+    "execution.json": "62a31755b87aa85c3223d766f1a0564dcdcdb8a551dd8d84328da151452d814d",
+    "result.json": "7520b6f69ef9df420b41eb957b3655c9498b413abb54fb47e0f925b1e3af262e",
+    "console.log": "b9cda849c30cf27e1dfc36c5fad86b98a17b4e910335547fc65708a8c958a6f3",
+    "terminal-independent-audit.json": "73d4f544378e3ad2e7073247a3c0fb3fa4af822cceb8edfb180c84261ec58ccb",
+    "bounded-proof.json": "0ca642d814795cd084eaacd9428e75caff03d12e884bf4284c0318d594b5040a",
+    "completion-handoff.json": "ecc339029ceb2f3dc56107435ac0728242ceffa926143b6a92102e820fef6ed6",
+    "tested-lock-publication-handoff.json": "60d48b9e2811f6ca0c5375ebd59f242c97a20806efc2bceff870a6456dae8301",
+    "input-inventory.json": "8cf7ad1e83cf20ecf06e2b798f85dda9e202cd8f1567080afc18ec996d8c989f",
+    "incoming-fixture-source-pins.json": "5ecac51005574b15ca9eb24705412d1863fd8071cef8faeef730c0df3c743224",
+    "fixture-compiler-source-pins.json": "63fb4e4d7267232e4063df88026f019242334bc934b44a4f5ff52b6132865a24",
+    "infrastructure-source-pins.json": "dd191c2371435c63738eab620679425ee59923dc7f96009052298a62a92c6ecf",
+    "public-runtime-ELF-closure.json": "6dcc0c3a059b826fd5b7717df9e806e585a4f3505d99ec81ac32eef3a4488725",
+    "service-build-handoff.json": "af597972d485673a9b033cca60504be45db9a8fe2a4b739a5107df6730ce89df",
+    "infrastructure-build-handoff.json": "319dde6cd1c8a43913f0dce2c2224386afa487e0ef836382019e819c863be691"
+  },
+  "preserved_build_labels": [
+    {
+      "label": "binder1",
+      "compiler_exit": 101,
+      "kernel_started": false,
+      "classification": "stale tracked fixture lock refuses --locked; missing current local camera dependency"
+    },
+    {
+      "label": "binder2",
+      "metadata_exit": 101,
+      "kernel_started": false,
+      "classification": "private minimal lock generated, but offline all-platform metadata refuses uncached r-efi5.3.0; not successful resolution"
+    },
+    {
+      "label": "binder3",
+      "compiler_exit": 0,
+      "kernel_started": true,
+      "actual_groups_passed": 3
+    }
+  ],
+  "scope_limits": [
+    "Authored frozen V3 public NDK peer/receiver; normal installed production Messages daemon remains history-only",
+    "One-way submission is IPC progress; raw commit and projection were observed separately, with no modem/vendor ACK/send/carrier claim",
+    "Same-boot tmpfs durable acknowledgement and clean process reopen only, no power-loss or reboot persistence",
+    "Reader held before query; older SQLite SHARED-transaction controls are separate evidence",
+    "Guest Root, allocation/credential helpers and test PID1 are synthetic fixture infrastructure, not intended production service privileges",
+    "Complete external report and actual QMP shutdown observed; report precedes final tcdrain, whose syscall is not independently observed",
+    "No new original AOSP decoder comparison, normal Qt/Omarchy/session, vendor executable, physical Pixel, AVB, pstore or hardware qualification"
+  ],
+  "production_behavior_RED_or_repair_claimed": false,
+  "groups": 3,
+  "Root_independent_review": {
+    "passed": true,
+    "review_sha256": "00f40165e2400986b25b73a2c8965671330f56260068b4e721c441ce93460466",
+    "local_bindings_rehashed": 192,
+    "external_bindings_rehashed": 156,
+    "raw_console_records_parsed": 263,
+    "direct_waits_and_worker_death_and_ECHILD_checked": true,
+    "fresh_same_daemon_exact_CID_absence": true,
+    "raw_result_groups_exact": 3
+  }
+}
