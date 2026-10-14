@@ -6,6 +6,7 @@
 #![cfg(feature = "isolated-fixture")]
 
 mod cgroup;
+pub mod command;
 pub mod owner;
 pub mod parent;
 pub mod record;

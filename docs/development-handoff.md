@@ -47,10 +47,23 @@ The blocked ordinary helper is actually killed/waited before RED failure; GREEN
 exits0 naturally. Strict Clippy and separate ARM64 compilation pass. Local
 deadline checks do not prove atomic timing across syscalls. Attempt retains real
 custody, but no actual Attempt/cgroup, original PAM or ARM runtime executes in
-this selection. Parent/supervisor forwarding is still unwired. See
+this historical selection. See
 [current conversation I/O](native-auth-conversation-io.md) and the historical
 [primitives](native-auth-conversation.md).
-Next: actual Attempt forwarding and original PAM+scope, including retained
+
+The current isolated parent/supervisor forwarding loops now compile, using
+PKSCOPE3 credential-free prompt records and bounded zeroizing command frames.
+A real-pipe production record-decoder RED passes19/fails1 after an accepted
+baseline. A separate new-API legacy-command extraction passes1/fails11 before
+the codec repair; it is not original full-fixture execution. The final frozen
+host suite passes40 components and strict Clippy, plus separate ARM64 compilation.
+Exact parent queue/command composition crosses real pipes. Both owners retain
+their ingress decoder so retirement drops partial response bodies before cgroup
+work; fixture read buffers drop before decoded intent is applied. No actual
+ScopeChild/Attempt or complete forwarding loop runs in this selection. See
+[forwarding report](native-auth-parent-forwarding.md) and
+[bounded proof](evidence/native-auth-parent-forwarding-provenance.json).
+Next: runtime qualification of actual parent/Attempt forwarding and original PAM+scope, including retained
 faillock and remaining fixed alias/filter routes, then broker/actor one-shot
 synced restoration and a normal Messages reopen. Keep Source100ms/no-revival and all hardware gates.
 

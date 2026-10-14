@@ -76,6 +76,9 @@ and original-helper capability comparison. A separate safe Rust
 Stop and original-deadline controls with the supervisor held, after a genuine
 detached-descendant RED. A later actual injected setup-error RED precedes responsive
 faulted quarantine and a normal cleanup regression; see [setup](native-auth-setup.md).
+The isolated [prompt-forwarding source](native-auth-parent-forwarding.md) passes40
+host components over real pipes after record/command REDs; actual full-owner
+forwarding and ARM runtime remain unqualified in that selection.
 Original PAM+scope composition, installed broker/containment, actor-owned receipts,
 exact unlock and synced durable restoration remain open. No physical model is qualified. See
 [worker boundary](native-pam-worker.md).

@@ -13,6 +13,21 @@ fn duplicate_nonblocking(fd: impl rustix::fd::AsFd) -> io::Result<OwnedFd> {
     Ok(result)
 }
 
+// Return local intent only. The zeroizing read buffer drops before the caller
+// applies any command that can reach a potentially blocked cgroup operation.
+fn read_commands(
+    input: &impl rustix::fd::AsFd,
+    mut decode: impl FnMut(&[u8]) -> pokelinux_auth_scope::command::Batch,
+) -> io::Result<Option<pokelinux_auth_scope::command::Batch>> {
+    let mut bytes = zeroize::Zeroizing::new([0; 64]);
+    match rustix::io::read(input, &mut bytes[..]) {
+        Ok(0) => Err(io::ErrorKind::UnexpectedEof.into()),
+        Ok(count) => Ok(Some(decode(&bytes[..count]))),
+        Err(Errno::AGAIN | Errno::INTR) => Ok(None),
+        Err(error) => Err(error.into()),
+    }
+}
+
 fn run(parent: u32, until: u64) -> io::Result<()> {
     let supervisor = DedicatedSupervisor::enter(parent)?;
     let input = duplicate_nonblocking(std::io::stdin())?;
@@ -21,27 +36,23 @@ fn run(parent: u32, until: u64) -> io::Result<()> {
     let mut queue = VecDeque::new();
     let mut previous = None;
     let mut parent_gone = false;
+    let mut last_prompt = None;
     loop {
         // This child may block in a cgroup syscall. Its parent never performs
         // those syscalls: it owns this Child/pidfd and polls private pipes only.
         if !parent_gone {
-            let mut commands = [0; 64];
-            match rustix::io::read(&input, &mut commands) {
-                Ok(0) => {
-                    parent_gone = true;
-                    attempt.retire(Retired::ParentGone);
-                }
-                Ok(count) => {
-                    for command in &commands[..count] {
-                        match command {
-                            b'C' => attempt.retire(Retired::Cancel),
-                            b'S' => attempt.retire(Retired::Stop),
-                            b'?' => previous = None,
-                            _ => attempt.retire(Retired::Protocol),
-                        }
+            match read_commands(&input, |bytes| attempt.decode_commands(bytes)) {
+                Ok(Some(batch)) => {
+                    if batch.snapshot {
+                        previous = None;
+                    }
+                    if let Some(reason) = batch.retired {
+                        attempt.retire(reason);
+                    } else if let Some((sequence, value)) = batch.response {
+                        let _ = attempt.respond_hidden_prompt(sequence, value);
                     }
                 }
-                Err(Errno::AGAIN | Errno::INTR) => {}
+                Ok(None) => {}
                 Err(_) => {
                     parent_gone = true;
                     attempt.retire(Retired::ParentGone);
@@ -60,6 +71,20 @@ fn run(parent: u32, until: u64) -> io::Result<()> {
         if previous != Some(state) && queue.len() < 64 {
             queue.push_back(record::state(state, record::STATE));
             previous = Some(state);
+        }
+        if state.retired.is_some() {
+            queue.retain(|bytes| {
+                u32::from_le_bytes(bytes[8..12].try_into().unwrap()) != record::HIDDEN_PROMPT
+            });
+        } else if let Some(sequence) = attempt.pending_hidden_prompt()
+            && last_prompt != Some(sequence)
+        {
+            if queue.len() >= 64 {
+                attempt.retire(Retired::Protocol);
+            } else {
+                queue.push_back(record::hidden_prompt(state.worker_pid, sequence));
+                last_prompt = Some(sequence);
+            }
         }
         // Each write is a complete <= PIPE_BUF record to the private pipe.
         // Full output queues cannot make the parent wait or release occupancy.
@@ -120,23 +145,18 @@ fn run_parent(parent: u32, until: u64, missing_pidfd_fixture: bool) -> io::Resul
     let mut parent_gone = false;
     loop {
         if !parent_gone {
-            let mut commands = [0; 64];
-            match rustix::io::read(&input, &mut commands) {
-                Ok(0) => {
-                    parent_gone = true;
-                    owner.retire(Retired::ParentGone);
-                }
-                Ok(count) => {
-                    for command in &commands[..count] {
-                        match command {
-                            b'C' => owner.retire(Retired::Cancel),
-                            b'S' => owner.retire(Retired::Stop),
-                            b'?' => previous = None,
-                            _ => owner.retire(Retired::Protocol),
-                        }
+            match read_commands(&input, |bytes| owner.decode_commands(bytes)) {
+                Ok(Some(batch)) => {
+                    if batch.snapshot {
+                        previous = None;
+                    }
+                    if let Some(reason) = batch.retired {
+                        owner.retire(reason);
+                    } else if let Some((sequence, value)) = batch.response {
+                        let _ = owner.respond_hidden_prompt(sequence, value);
                     }
                 }
-                Err(Errno::AGAIN | Errno::INTR) => {}
+                Ok(None) => {}
                 Err(_) => {
                     parent_gone = true;
                     owner.retire(Retired::ParentGone);
@@ -152,6 +172,11 @@ fn run_parent(parent: u32, until: u64, missing_pidfd_fixture: bool) -> io::Resul
             }
         }
         let state = owner.snapshot();
+        if state.retired.is_some() {
+            queue.retain(|bytes| {
+                u32::from_le_bytes(bytes[8..12].try_into().unwrap()) != record::HIDDEN_PROMPT
+            });
+        }
         if previous != Some(state) && queue.len() < 128 {
             queue.push_back(record::parent(state));
             previous = Some(state);

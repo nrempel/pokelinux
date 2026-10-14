@@ -4,6 +4,8 @@ This report retains the13-component selection published at `df73965`. The later
 [conversation I/O selection](native-auth-conversation-io.md) exercises the exact
 extracted transport methods and passes19 host components. It adds separate
 ARM64 compilation, without actual Attempt, PAM, cgroup or ARM runtime evidence.
+Current source also implements the [parent forwarding path](native-auth-parent-forwarding.md),
+whose40 host components do not qualify complete process or original PAM execution.
 
 The existing Rust PAM wire emits Ready plus a hidden prompt through real private
 Linux pipes, while the scope parser rejects that valid prompt. This actual host
@@ -45,8 +47,8 @@ paths require their own actual composition controls. This is host component
 progress, not original PAM, full native scope or ARM integration evidence.
 
 The crate remains isolated-feature-only; default builds expose no authentication
-implementation. The supervisor/parent command and observation channels stay
-unchanged, so the fixture cannot yet forward this prompt/response from its
+implementation. In this historical selection the supervisor/parent command and
+observation channels stay unchanged, so the fixture cannot forward this prompt/response from its
 outside caller. Candidate buffering remains separate from result authority.
 Original PAM with owned scope, preserved effective faillock, the fixed broker,
 actor one-shot exact-unlock restoration, synced durable clear and a normal

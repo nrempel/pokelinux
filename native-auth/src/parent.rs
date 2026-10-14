@@ -13,6 +13,10 @@ use std::{
     process::{Child, ChildStdin, ChildStdout, Command, Stdio},
 };
 
+#[path = "parent_prompt.rs"]
+mod parent_prompt;
+use parent_prompt::{PromptQueue, live_scope};
+
 const SUPERVISOR: &str = "/run/pokelinux-auth-scope-test/auth-scope-fixture";
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -96,6 +100,8 @@ pub struct ScopeChild {
     incoming: Vec<u8>,
     records: Vec<[u8; record::SIZE]>,
     waits: WaitJournal,
+    prompts: PromptQueue,
+    commands: crate::command::Decoder,
 }
 
 enum IsolatedProfile {
@@ -191,6 +197,8 @@ impl ScopeChild {
             incoming: Vec::new(),
             records: Vec::new(),
             waits: WaitJournal::default(),
+            prompts: PromptQueue::default(),
+            commands: crate::command::Decoder::new(),
         };
         let setup = || -> io::Result<()> {
             if owner._alive.is_none() {
@@ -226,11 +234,62 @@ impl ScopeChild {
     /// Retire before any future IPC. A stopped/uninterruptible supervisor never
     /// delays this operation and never releases the occupied parent slot.
     pub fn retire(&mut self, reason: Retired) {
+        self.commands.retire();
+        // Release any queued plaintext before future IPC or observation.
+        self.prompts.clear();
         if !self.state.occupied || self.state.retired.is_some() {
             return;
         }
         self.state.retired = Some(reason);
         self.pending_cancel = Some(if reason == Retired::Stop { b'S' } else { b'C' });
+    }
+
+    /// Parse local intent only; no pipe write, wait or target retirement.
+    pub fn decode_commands(&mut self, bytes: &[u8]) -> crate::command::Batch {
+        if self.state.retired.is_some() || self.state.cleanup_fault {
+            self.commands.retire();
+            crate::command::Batch::retired_snapshot()
+        } else {
+            self.commands.batch(bytes)
+        }
+    }
+
+    fn conversation_live(&self) -> bool {
+        self.state.occupied
+            && self.state.retired.is_none()
+            && !self.state.cleanup_fault
+            && !self.state.scope_reported_closed
+            && self.state.supervisor_wait.is_none()
+            && !self.state.stdout_eof
+            && self.last_scope.is_some_and(live_scope)
+    }
+
+    /// Observation only; a prompt is never an authentication result.
+    pub fn pending_hidden_prompt(&self) -> Option<u16> {
+        self.conversation_live()
+            .then(|| self.prompts.pending(self.until))
+            .flatten()
+    }
+
+    pub fn respond_hidden_prompt(
+        &mut self,
+        sequence: u16,
+        value: zeroize::Zeroizing<Vec<u8>>,
+    ) -> io::Result<()> {
+        if !self.conversation_live() {
+            drop(value);
+            self.retire(Retired::Protocol);
+            return Err(io::ErrorKind::NotConnected.into());
+        }
+        let result = self.prompts.respond(self.until, sequence, value);
+        if let Err(error) = &result {
+            self.retire(if error.kind() == io::ErrorKind::TimedOut {
+                Retired::Deadline
+            } else {
+                Retired::Protocol
+            });
+        }
+        result
     }
 
     pub fn poll(&mut self) {
@@ -245,6 +304,23 @@ impl ScopeChild {
                     self.retire(Retired::ParentGone);
                 }
             }
+        }
+        if self.conversation_live()
+            && let Some(input) = &self.input
+            && let Err(error) = self.prompts.flush(self.until, input)
+        {
+            let expired = error.kind() == io::ErrorKind::TimedOut;
+            if !expired {
+                // Disarm an uncertain/partial command stream, retaining Child,
+                // pidfd and quarantine. EOF is not a successful native cleanup.
+                self.input = None;
+                self.state.cleanup_fault = true;
+            }
+            self.retire(if expired {
+                Retired::Deadline
+            } else {
+                Retired::Protocol
+            });
         }
         if let Some(output) = &self.output {
             let mut bytes = [0; record::SIZE * 16];
@@ -283,10 +359,27 @@ impl ScopeChild {
                     } else if closed {
                         self.state.cleanup_fault = true;
                     }
+                    if !live_scope(snapshot) {
+                        self.prompts.clear();
+                    }
                     self.last_scope = Some(snapshot);
                     self.state.scope_reported_closed |= closed;
                     if snapshot.cleanup_fault {
                         self.state.cleanup_fault = true;
+                    }
+                }
+                Ok(record::Decoded::HiddenPrompt {
+                    worker_pid,
+                    sequence,
+                }) => {
+                    let retired = self.state.retired.is_some();
+                    if self
+                        .prompts
+                        .observe(self.last_scope, worker_pid, sequence, retired)
+                        .is_err()
+                    {
+                        self.state.cleanup_fault = true;
+                        self.retire(Retired::Protocol);
                     }
                 }
                 Ok(record::Decoded::Wait(receipt)) => {
@@ -319,6 +412,9 @@ impl ScopeChild {
                 Ok(None) => {}
                 Err(_) => self.state.cleanup_fault = true,
             }
+        }
+        if self.state.cleanup_fault {
+            self.retire(Retired::Observation);
         }
         self.state.reconcile();
     }
@@ -396,3 +492,7 @@ mod tests {
         assert!(waited.occupied);
     }
 }
+
+#[cfg(test)]
+#[path = "parent_prompt_tests.rs"]
+mod parent_prompt_tests;

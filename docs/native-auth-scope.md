@@ -52,11 +52,14 @@ Retirement clears any candidate before writing `1\n` through the retained anchor
 cgroup.kill FD, checking the exact write length. The original exact-worker signal
 remains for setup failure before admission. Successful write/signal acknowledgments
 carry no authentication or cleanup authority. Native actual waits, ECHILD, empty
-leaf and EOF barriers remain mandatory. The current matched fixture uses PKSCOPE2,
+leaf and EOF barriers remain mandatory. The fixture selected by these controls uses PKSCOPE2,
 with explicit recursive-kill observations and no old-format decoder. Seven
 host component tests, strict default/fixture Clippy and actual ARM crosscompilation
 pass. The entire component is still selected only by `isolated-fixture`; default
 builds expose no authentication implementation.
+Current source uses PKSCOPE3 with credential-free prompt records; its separate
+[forwarding components](native-auth-parent-forwarding.md) do not requalify these
+historical ARM scope controls.
 
 The first prepared GREEN observer remains UNRUN: it recorded elapsed times without
 explicitly rejecting an overshoot of250ms. Its fresh successor adds only three

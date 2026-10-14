@@ -1,5 +1,10 @@
 # Native scope conversation I/O
 
+This report retains the19-component selection published at `4ca9a97`. The later
+[parent forwarding selection](native-auth-parent-forwarding.md) passes40 host
+components and implements both fixture forwarding loops in source. Their full
+process composition and original PAM remain unexecuted in that selection.
+
 Nineteen ordinary host components now pass after three actual runtime failures.
 The exact private conversation implementation uses real Linux pipes; the full
 Attempt, cgroup workload, PAM and ARM guest do not execute. The earlier
@@ -50,8 +55,8 @@ also compiles and has a qualified AArch64 ELF header; it is not executed.
 
 The six new controls call Conversation with real pipes and pure Barrier state.
 They do not construct Attempt or establish actual workload closure. The crate
-remains isolated-feature-only and the parent/supervisor prompt-response channel
-is unwired. Actual Attempt composition, original PAM with preserved effective
+remains isolated-feature-only; the parent/supervisor prompt-response channel was
+unwired in this historical selection. Actual Attempt composition, original PAM with preserved effective
 faillock, broker/actor one-shot receipts, exact-object unlock, synced durable clear
 and a normal Messages reopen remain open. Earlier ARM scope and helper-profile
 results retain their earlier source selections. Matched Google policy, secure

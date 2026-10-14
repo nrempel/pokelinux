@@ -2,16 +2,18 @@
 use crate::owner::{Snapshot, WaitReceipt};
 
 pub const SIZE: usize = 48;
-pub const MAGIC: &[u8; 8] = b"PKSCOPE2";
+pub const MAGIC: &[u8; 8] = b"PKSCOPE3";
 pub const STATE: u32 = 1;
 pub const DIRECT_WAIT: u32 = 2;
 pub const ADOPTED_WAIT: u32 = 3;
 pub const CLOSED: u32 = 4;
 pub const PARENT: u32 = 5;
+pub const HIDDEN_PROMPT: u32 = 6;
 
 pub enum Decoded {
     State(Snapshot, bool),
     Wait(WaitReceipt),
+    HiddenPrompt { worker_pid: u32, sequence: u16 },
 }
 
 pub fn decode(bytes: &[u8; SIZE]) -> std::io::Result<Decoded> {
@@ -21,6 +23,20 @@ pub fn decode(bytes: &[u8; SIZE]) -> std::io::Result<Decoded> {
         return Err(invalid());
     }
     let event = value(8);
+    if event == HIDDEN_PROMPT {
+        if value(12) != 0
+            || !(2..=i32::MAX as u32).contains(&value(16))
+            || !(1..=32).contains(&value(20))
+            || value(24) != 0
+            || value(28) != 0
+        {
+            return Err(invalid());
+        }
+        return Ok(Decoded::HiddenPrompt {
+            worker_pid: value(16),
+            sequence: value(20) as u16,
+        });
+    }
     if matches!(event, DIRECT_WAIT | ADOPTED_WAIT) {
         if value(12) != 0
             || value(24) != 0
@@ -118,6 +134,16 @@ pub fn parent(snapshot: crate::parent::Snapshot) -> [u8; SIZE] {
 
 fn put(record: &mut [u8; SIZE], at: usize, value: u32) {
     record[at..at + 4].copy_from_slice(&value.to_le_bytes());
+}
+
+pub fn hidden_prompt(worker_pid: u32, sequence: u16) -> [u8; SIZE] {
+    let mut result = [0; SIZE];
+    result[..8].copy_from_slice(MAGIC);
+    put(&mut result, 8, HIDDEN_PROMPT);
+    put(&mut result, 16, worker_pid);
+    put(&mut result, 20, u32::from(sequence));
+    result[32..40].copy_from_slice(&crate::boottime_ns().to_le_bytes());
+    result
 }
 
 pub fn state(snapshot: Snapshot, event: u32) -> [u8; SIZE] {

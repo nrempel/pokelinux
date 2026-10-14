@@ -1,0 +1,218 @@
+{
+  "schema": 1,
+  "scope": "Ordinary host real-pipe prompt record decoder and parent queue/command components; actual owner/fixture forwarding callsites compiled, not executed",
+  "base_commit": "4ca9a97538986a050ecd86a90245bf9db39a6ab3",
+  "record_RED": {
+    "schema": 1,
+    "classification": "HOST_REAL_PIPE_PROMPT_RECORD_DECODER_RED",
+    "aggregate_passed": false,
+    "actual_tool_session": 42480,
+    "actual_terminal_chunk": "7bea15",
+    "actual_terminal_exit": 1,
+    "actual_test_exit": 101,
+    "tests_passed": 19,
+    "tests_failed": 1,
+    "ignored_helpers": 1,
+    "source_bindings": 15,
+    "all_frozen_and_current_inputs_match": true,
+    "accepted_baseline_before_prompt_event": true,
+    "actual_pipe_EOF_before_assertion": true,
+    "ScopeChild_poll_or_Attempt_or_PAM_or_cgroup_or_VM_executed": false,
+    "selection_sha256": "674edfe0b2aa85be1d5c1665a89418ac840d201351ed44601d6c24a2f37e9c64",
+    "execution_sha256": "b2614af2e837a4bff256fdfc14468bedf3dce1cb5729d2dede68102776af2575",
+    "test_log_sha256": "01c2b6850daa45256154a065efd5f688b6d63814e223b6ac613a5739ad544122",
+    "sealed_ns": 5951978491411954
+  },
+  "standalone_codec_selections": [
+    {
+      "classification": "STANDALONE_LEGACY_BYTE_DISPATCH_EXTRACTION_RED",
+      "aggregate_passed": false,
+      "tests_passed": 1,
+      "tests_failed": 11,
+      "actual_start_CLI_wait": 101,
+      "actual_container_wait": 101,
+      "fresh_exact_CID_absent": true,
+      "source_bindings": 4,
+      "all_frozen_bindings_match": true,
+      "result_sha256": "7f73d395f471a020c2d4a2ba3a68da7746fc42c200b07171ed7d052a23e601c6",
+      "stdout_sha256": "9c4a6c799c0403b84e47e8dc80bdbb988ef72cb22bd8df60bf9b360250d29066",
+      "stderr_sha256": "67745d594156fbb384c56ae1c9ccfead116122ec74f3e6167cabf9b1ab8a4e15",
+      "sources": [
+        {
+          "path": "command.rs",
+          "sha256": "c6a92200ae639afe1804fd3b185d0a79aec4ec9b9b9551f8ebeb449b47852625"
+        },
+        {
+          "path": "command_tests.rs",
+          "sha256": "2df3b12cc2697f1c4adfd337b523a2650e0a6aeecfd84f2f3072ab4cf1b60098"
+        },
+        {
+          "path": "Cargo.lock",
+          "sha256": "59a7f877d2aa1ff2b0a25c6bd31d12201b0af1053716e398436a251972d25d29"
+        },
+        {
+          "path": "Cargo.toml",
+          "sha256": "c35ed418f43301425032d63184d2ee80e516ec6642f812bc58470592d9366e6b"
+        }
+      ],
+      "original_full_fixture_executed": false
+    },
+    {
+      "classification": "STANDALONE_COMMAND_CODEC_GREEN",
+      "aggregate_passed": true,
+      "tests_passed": 12,
+      "tests_failed": 0,
+      "actual_start_CLI_wait": 0,
+      "actual_container_wait": 0,
+      "fresh_exact_CID_absent": true,
+      "source_bindings": 4,
+      "all_frozen_bindings_match": true,
+      "result_sha256": "768cfb0ac08a75861eb80409c87f994b34ccf4a4c507273e5bbb5be51db5d03e",
+      "stdout_sha256": "97d812782333f70141cb69cf6df21a4dc7c13f4d5415e5e73adf289ecf128894",
+      "stderr_sha256": "73c88d7f8dc65767c81bf09de04100640b4ee2b5dc442aa5f99ca7cd32b8145d",
+      "sources": [
+        {
+          "path": "command.rs",
+          "sha256": "a1524fe8ce837507b7e3be38e5667d8a065dfd55e9b6074a8a0907e091163d02"
+        },
+        {
+          "path": "command_tests.rs",
+          "sha256": "2df3b12cc2697f1c4adfd337b523a2650e0a6aeecfd84f2f3072ab4cf1b60098"
+        },
+        {
+          "path": "Cargo.lock",
+          "sha256": "59a7f877d2aa1ff2b0a25c6bd31d12201b0af1053716e398436a251972d25d29"
+        },
+        {
+          "path": "Cargo.toml",
+          "sha256": "c35ed418f43301425032d63184d2ee80e516ec6642f812bc58470592d9366e6b"
+        }
+      ],
+      "original_full_fixture_executed": false
+    }
+  ],
+  "GREEN": {
+    "schema": 1,
+    "classification": "HOST_PARENT_PROMPT_QUEUE_AND_COMMAND_CODEC_COMPONENT_GREEN",
+    "aggregate_passed": true,
+    "actual_tool_session": 58993,
+    "actual_terminal_chunk": "7ed183",
+    "actual_terminal_exit": 0,
+    "actual_test_exit": 0,
+    "tests_passed": 40,
+    "tests_failed": 0,
+    "ignored_helpers": 1,
+    "source_bindings": 20,
+    "all_frozen_and_current_inputs_match": true,
+    "real_parent_queue_to_command_decoder_private_pipes": true,
+    "format_and_default_and_all_feature_all_target_Clippy_passed": true,
+    "fresh_exact_CID_absent": true,
+    "same_daemon": true,
+    "ScopeChild_poll_or_Attempt_or_PAM_or_cgroup_or_VM_executed": false,
+    "ARM64_compiled_only": true,
+    "selection_sha256": "aa783811194997bb6ce29f83fc2256632dff12f63ddf3a61076d7bcd3096c07b",
+    "execution_sha256": "9da4154eff7042552fcadd894852a1bda80d55279128aaa69a704eb074b34e0f",
+    "test_log_sha256": "3b9d947de38fbf1429ba9fd75ee12016468fb50cfa2ce8a9ba4450f8413f68d6",
+    "host_test_ELF_sha256": "7e822aba19fa91aa9f458bb8d064a4ae267da5dba53babeea65197389c8f5ffd",
+    "ARM64_ELF_sha256": "209c3fd4f24ed0a8fe958fb37eb9cfdf3ee71a440bd849bc000931c9349091bf",
+    "peer_source_review_sha256": "6b36b503584aa7fa8cb136fd84cc4ea8d82f75648c65402603ca7fc3194a63ce",
+    "sealed_ns": 5952648009123261
+  },
+  "sources": [
+    {
+      "path": "native-auth/Cargo.lock",
+      "sha256": "59a7f877d2aa1ff2b0a25c6bd31d12201b0af1053716e398436a251972d25d29"
+    },
+    {
+      "path": "native-auth/Cargo.toml",
+      "sha256": "965972df3b99936141b603c67c80931aee4dee831fde6662794bbdbbcf42d88b"
+    },
+    {
+      "path": "native-auth/src/bin/auth-scope-fixture.rs",
+      "sha256": "02fc1b96af27ffef902c4fa6fcb63227748b829407b8c66108d85efd0b498600"
+    },
+    {
+      "path": "native-auth/src/cgroup.rs",
+      "sha256": "543bf0a64565c469bc00ebd33dbb8652cba20eaf08bbfbe3856f564a174ebc45"
+    },
+    {
+      "path": "native-auth/src/command.rs",
+      "sha256": "0208732f37115f5576a10b11855782d67e48d86f71ab3ad6f99f1fe41442d3b6"
+    },
+    {
+      "path": "native-auth/src/command_tests.rs",
+      "sha256": "4a783d469aefb4450541746e90c5f124ff9408e952829340cb4b7da5263007ae"
+    },
+    {
+      "path": "native-auth/src/conversation.rs",
+      "sha256": "e70ec1c725a6be34c48f1c8dd00fe02b3bde15fc22e08e507685436b2c60d6f1"
+    },
+    {
+      "path": "native-auth/src/conversation_io_tests.rs",
+      "sha256": "884620aa6b41fd42dd1645e9f39637181ac35a15261420995a2f6fa66f017e54"
+    },
+    {
+      "path": "native-auth/src/conversation_lifetime_tests.rs",
+      "sha256": "268aecc9dd2c7a4853077229ebeb7aa6bc77e72f1429e5d72518fa57d45c5a6f"
+    },
+    {
+      "path": "native-auth/src/conversation_tests.rs",
+      "sha256": "5f8489ee78c6e66b5b600c1dec4d6ad9b1b9f584c00510bcaaab00d657ffcfe3"
+    },
+    {
+      "path": "native-auth/src/lib.rs",
+      "sha256": "b3d80c8bcbaf0b75e59b403612fc72192a0796799aac44328db9ef54ad2a22ba"
+    },
+    {
+      "path": "native-auth/src/owner.rs",
+      "sha256": "8c9e2ee6cb8e564a139c6f4fad55b444693f761f7f2288d15017ac7551491223"
+    },
+    {
+      "path": "native-auth/src/parent.rs",
+      "sha256": "aba209f05d30ca76f139fd23dd6550e64de2cd62e05836e3724fb8b955203c49"
+    },
+    {
+      "path": "native-auth/src/parent_prompt.rs",
+      "sha256": "dc6736b231e2a1e7b29762ae6c6bc3e027888875eb376597346bb7e7ef26c400"
+    },
+    {
+      "path": "native-auth/src/parent_prompt_tests.rs",
+      "sha256": "a16087e69bf681944a8fdf9122de66336f58cb8061ffd745511dcd27bb4578db"
+    },
+    {
+      "path": "native-auth/src/record.rs",
+      "sha256": "63302aa97760b7c4be9e74ca9eac96c7785f97a185b1d255ab646d1d9bb8215d"
+    },
+    {
+      "path": "native-pam/src/wire.rs",
+      "sha256": "91b0b974c21e4d775caca8273e1a6ee4898764b3f88a41117b33185bd741702e"
+    },
+    {
+      "path": "tools/native-auth-scope/delegated.py",
+      "sha256": "ac1fb8d8d39de3cc0c66068b55b1a44abf192d1623077d90598428cf5d67be52"
+    },
+    {
+      "path": "tools/native-auth-setup/delegated.py",
+      "sha256": "e77cfe021f87b4e85dfd5a0d22d5bccf8e165cfb26f86a8a7fe02d222f349296"
+    }
+  ],
+  "preserved_first_full_GREEN": {
+    "classification": "Clippy byte_char_slices stops before runtime tests",
+    "aggregate_passed": false,
+    "execution_sha256": "2c6c9d8756bf7b1447425c9881e3b9ba387f7149048ac619965ce1cd44fdca31",
+    "test_log_sha256": "37b2a3ec0aa7d5e446b3f51e9f670593b26a01c5edb4bd58fe42287f616cdba5",
+    "host_test_ELF_executed": false
+  },
+  "limits": [
+    "Record RED uses synthetic scope fields and no ScopeChild, Attempt or cgroup",
+    "Standalone codec RED adds API scaffolding around legacy C/S/? selection; not original full fixture execution",
+    "Full GREEN exercises exact PromptQueue, Decoder/Batch and worker Conversation components with real pipes, not full owner/fixture composition",
+    "Both fixture loops and owner integrations compile; actual child-pipe forwarding and error/retirement closure remain unexecuted",
+    "Local snapshots/retirement do not preempt an in-band incomplete declared response body; targets independently retire and clear decoder state",
+    "Expiry tests begin after expiry; no atomic cutoff across syscalls, real suspend or allocator-memory scrubbing measurement",
+    "Unexpected partial-write/fault disarming is source-reviewed, not injected runtime evidence",
+    "ARM64 release compilation only; no ARM runtime, original PAM/retained faillock, broker/actor receipt, exact unlock, durable clear or Messages reopen",
+    "Earlier scope/containment evidence retains its exact earlier source selection and PKSCOPE2 format",
+    "No phone access; matched Google policy, secure frames and physical hardware remain gates"
+  ]
+}

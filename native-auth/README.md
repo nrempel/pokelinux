@@ -36,8 +36,9 @@ leaf. See [scope report](../docs/native-auth-scope.md) and
 and actual membership under `pokelinux-auth-scope-test.service`; no caller chooses
 an executable, account, PAM policy or cgroup. Ordinary isolated entries are
 `--isolated-parent` and `--isolated-supervisor`, each with exact parent PID and
-original deadline. PKSCOPE2 provides48-byte credential-free records with separate
-recursive-write and direct-signal observations; no historical decoder is retained.
+original deadline. PKSCOPE3 provides48-byte credential-free state, wait and hidden-
+prompt records; no historical decoder is retained. Response bytes travel only on
+the private command pipe, in bounded zeroizing frames.
 The synthetic PAM module uses a checked nonblocking writable FIFO at stderr FD2.
 The historical fixture rejected hidden prompts. The later host-only parser and
 standalone zeroizing frame passed13 components after an actual private-pipe RED.
@@ -48,9 +49,14 @@ passing components. Both endpoints must become nonblocking before use; local
 expiry checks surround I/O and precede parsing. They do not make syscall timing
 atomic. Attempt retains every actual child, pipe, cgroup and wait; these tests do
 not construct it. Strict Clippy and separate ARM64 compilation pass, without ARM
-execution. Parent/supervisor forwarding and original PAM+scope remain open. A
-candidate is not authentication authority. See the
-[current I/O report](../docs/native-auth-conversation-io.md) and
+execution. That19-component selection is historical. The current parent and
+supervisor loops forward prompts/responses in source, with40 passing host
+components and separate ARM64 compilation. Exact parent queue/command codec
+composition crosses real pipes, but neither actual owner nor either complete
+fixture loop runs in those controls. Actual forwarding and original PAM+scope
+remain runtime gates. A candidate is not authentication authority. See the
+[current forwarding report](../docs/native-auth-parent-forwarding.md),
+[earlier I/O report](../docs/native-auth-conversation-io.md) and
 [earlier primitives](../docs/native-auth-conversation.md).
 
 Root-owned controls exclude UID1000 writes but do not prevent an EUID0 helper
@@ -71,7 +77,7 @@ not native cleanup. A new normal two-group regression also passes. The explicit
 absent from the selected normal ELF. See [setup report](../docs/native-auth-setup.md)
 and [proof](../docs/evidence/native-auth-setup-provenance.json).
 
-Run the nineteen host component tests with `cargo test --features isolated-fixture`
+Run the forty host component tests with `cargo test --features isolated-fixture`
 from this crate. The actual cgroup fixture needs the separately provisioned
 disposable guest; do not run its root entry on the Harbour host.
 One additional ignored helper entry runs only as the exact subprocess of its

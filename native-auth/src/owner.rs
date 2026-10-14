@@ -130,6 +130,7 @@ impl DedicatedSupervisor {
             output,
             leaf,
             conversation: Conversation::new(until),
+            commands: crate::command::Decoder::new(),
             barrier: Barrier::new(pid),
             receipts: Vec::new(),
         };
@@ -260,8 +261,9 @@ impl Barrier {
 #[path = "conversation.rs"]
 mod conversation;
 use conversation::Conversation;
+pub(crate) use conversation::ResponseFrame;
 #[cfg(test)]
-use conversation::{ResponseFrame, parse_worker_protocol};
+use conversation::parse_worker_protocol;
 
 /// Owns every worker handle until actual direct/adopted waits and cgroup-empty
 /// closure. The parent must own this dedicated supervisor process separately:
@@ -273,6 +275,7 @@ pub struct Attempt {
     output: Option<ChildStdout>,
     leaf: Leaf,
     conversation: Conversation,
+    commands: crate::command::Decoder,
     barrier: Barrier,
     receipts: Vec<WaitReceipt>,
 }
@@ -307,6 +310,7 @@ impl Attempt {
     /// Retire synchronously before touching the workload. A successful kill
     /// write or direct signal grants no cleanup/result authority.
     pub fn retire(&mut self, reason: Retired) {
+        self.commands.retire();
         // Release plaintext before any potentially blocked cgroup operation.
         self.conversation.retire(&mut self.barrier, reason);
         if self.barrier.scope_kill_attempted {
@@ -331,6 +335,16 @@ impl Attempt {
                 self.barrier.direct_kill_returned = true;
             }
             Err(_) => self.barrier.cleanup_fault = true,
+        }
+    }
+
+    /// Parse local intent only; the fixture drops its read buffer before apply.
+    pub fn decode_commands(&mut self, bytes: &[u8]) -> crate::command::Batch {
+        if self.barrier.retired.is_some() {
+            self.commands.retire();
+            crate::command::Batch::retired_snapshot()
+        } else {
+            self.commands.batch(bytes)
         }
     }
 

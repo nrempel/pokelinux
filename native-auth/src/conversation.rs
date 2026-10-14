@@ -71,12 +71,12 @@ pub(super) fn parse_worker_protocol(
 
 // No formatting/Debug/Clone. Keep the complete frame until release so prefix
 // writes never leave forgotten response bytes in a drained Vec's spare memory.
-pub(super) struct ResponseFrame {
+pub(crate) struct ResponseFrame {
     pub(super) bytes: zeroize::Zeroizing<Vec<u8>>,
     pub(super) offset: usize,
 }
 impl ResponseFrame {
-    pub(super) fn new(sequence: u16, value: zeroize::Zeroizing<Vec<u8>>) -> io::Result<Self> {
+    pub(crate) fn new(sequence: u16, value: zeroize::Zeroizing<Vec<u8>>) -> io::Result<Self> {
         if !(1..=MAX_PROMPTS).contains(&sequence)
             || value.is_empty()
             || value.len() > MAX_RESPONSE
@@ -91,7 +91,7 @@ impl ResponseFrame {
         bytes.extend_from_slice(&value);
         Ok(Self { bytes, offset: 0 })
     }
-    pub(super) fn write_once(&mut self, fd: &impl AsFd) -> io::Result<bool> {
+    pub(crate) fn write_once(&mut self, fd: &impl AsFd) -> io::Result<bool> {
         if self.offset == self.bytes.len() {
             return Ok(true);
         }
@@ -102,6 +102,9 @@ impl ResponseFrame {
             Err(error) => return Err(error.into()),
         }
         Ok(self.offset == self.bytes.len())
+    }
+    pub(crate) fn has_started(&self) -> bool {
+        self.offset != 0
     }
 }
 
