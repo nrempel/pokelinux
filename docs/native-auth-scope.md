@@ -111,9 +111,11 @@ No reaping observation proves vendor/daemon cleanup or permits implicit retry.
 Versioned synced durable clear, normal Messages reopening, secure frames, actual
 suspend/resume and physical hardware remain gates under the full smartphone goal.
 
-A later source review also identifies a parent setup-error availability defect.
-If supervisor pidfd setup fails before NONBLOCK conversion, the retained pipes
-can stay blocking and the next parent read can stall. This is conditional source
-evidence, not an observed resource-exhaustion occurrence. Separate actual syscall-
-denial fault injection and repair remain required; normal admission controls
-cannot qualify setup-error responsiveness.
+The later [setup-error checkpoint](native-auth-setup.md) reproduces that separate
+blocking-pipe path with an explicit missing-handle injection, then repairs it by
+disarming unqualified child endpoints while retaining faulted occupancy. A first
+actual GREEN exposes a latent observer scheduling gap; a hardened fresh selection
+requires the initial-report barrier and passes. A separate normal two-group
+regression also passes with the new normal ELF. These records do not rewrite the
+earlier scope source selection or claim real kernel resource/syscall failure.
+See [separate provenance](evidence/native-auth-setup-provenance.json).

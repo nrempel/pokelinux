@@ -98,9 +98,27 @@ pub struct ScopeChild {
     waits: WaitJournal,
 }
 
+enum IsolatedProfile {
+    Normal,
+    #[cfg(feature = "setup-fault-fixture")]
+    MissingPidfd,
+}
+
 impl ScopeChild {
     #[cfg(feature = "isolated-fixture")]
     pub fn spawn_isolated(until: u64) -> io::Result<Self> {
+        Self::spawn_isolated_profile(until, IsolatedProfile::Normal)
+    }
+
+    /// Fixed test-only injection after a real spawn and pidfd acquisition.
+    /// It exercises the existing unavailable-handle setup branch; it does not
+    /// assert that the kernel denied a syscall or exhausted resources.
+    #[cfg(feature = "setup-fault-fixture")]
+    pub fn spawn_isolated_missing_pidfd_fixture(until: u64) -> io::Result<Self> {
+        Self::spawn_isolated_profile(until, IsolatedProfile::MissingPidfd)
+    }
+
+    fn spawn_isolated_profile(until: u64, profile: IsolatedProfile) -> io::Result<Self> {
         let now = boottime_ns();
         if process::getuid().as_raw() != 0
             || process::geteuid().as_raw() != 0
@@ -120,8 +138,13 @@ impl ScopeChild {
                 return Err(io::ErrorKind::PermissionDenied.into());
             }
         }
+        let mode = match profile {
+            IsolatedProfile::Normal => "--isolated-supervisor",
+            #[cfg(feature = "setup-fault-fixture")]
+            IsolatedProfile::MissingPidfd => "--held-supervisor-no-workload",
+        };
         let mut child = Command::new(SUPERVISOR)
-            .arg("--isolated-supervisor")
+            .arg(mode)
             .arg("--parent")
             .arg(std::process::id().to_string())
             .arg("--until")
@@ -135,11 +158,22 @@ impl ScopeChild {
         let alive = Pid::from_raw(pid as i32)
             .ok_or(rustix::io::Errno::INVAL)
             .and_then(|pid| process::pidfd_open(pid, PidfdFlags::NONBLOCK));
+        let alive = alive.ok();
+        #[cfg(feature = "setup-fault-fixture")]
+        let alive = match profile {
+            IsolatedProfile::Normal => alive,
+            IsolatedProfile::MissingPidfd => {
+                // Drop any actual acquired handle, then run the unchanged error
+                // path. The independently owned Child is never detached.
+                drop(alive);
+                None
+            }
+        };
         let input = child.stdin.take();
         let output = child.stdout.take();
         let mut owner = Self {
             child,
-            _alive: alive.ok(),
+            _alive: alive,
             input,
             output,
             until,
@@ -171,6 +205,11 @@ impl ScopeChild {
         if setup().is_err() {
             owner.state.cleanup_fault = true;
             owner.retire(Retired::Setup);
+            // Flags may never have been established on either child pipe.
+            // Disarm transport before poll can use it. This is not closure:
+            // retain Child/pidfd, occupied fault and actual-wait requirements.
+            owner.input = None;
+            owner.output = None;
         }
         Ok(owner)
     }

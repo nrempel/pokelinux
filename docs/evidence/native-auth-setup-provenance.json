@@ -1,0 +1,204 @@
+{
+  "schema": 1,
+  "scope": "native Rust parent setup-fault responsive occupied quarantine, plus separate normal synthetic worker-tree cleanup regression",
+  "evidence_class": "actual Arch ARM7.1.6 QEMU kernel; separate host components and ARM64 GNU crossbuild; no Android, original PAM, Google-kernel or phone runtime in setup test",
+  "production_broker_or_authentication_enabled": false,
+  "source_files": [
+    {
+      "path": "native-auth/Cargo.toml",
+      "sha256": "0748036f7752ae74c8dccb32f3c0ce700cd0518bf0fb02ef8adc80789164250f"
+    },
+    {
+      "path": "native-auth/Cargo.lock",
+      "sha256": "67007ace7e0c6c928d44191a812e78ae58b4d49cbd4300cf314f90382254b14e"
+    },
+    {
+      "path": "native-auth/src/lib.rs",
+      "sha256": "d538ed589dc6627950d96cf7fe4c44a67226c35c47d3c7355caa3db149bb4c34"
+    },
+    {
+      "path": "native-auth/src/owner.rs",
+      "sha256": "4042e2f3f82f70f36258b83dcb15b605754cea69076add1c27e3d454909987b0"
+    },
+    {
+      "path": "native-auth/src/cgroup.rs",
+      "sha256": "543bf0a64565c469bc00ebd33dbb8652cba20eaf08bbfbe3856f564a174ebc45"
+    },
+    {
+      "path": "native-auth/src/record.rs",
+      "sha256": "efb256415cf8da749cda847ae18cc5e71ff73a16db04f5fde3a8bee987fe6a7a"
+    },
+    {
+      "path": "native-auth/src/parent.rs",
+      "sha256": "8908e750206646052dcceb427d960003f0a8a6b088caf7397ca4261dcf24b9dd"
+    },
+    {
+      "path": "native-auth/src/bin/auth-scope-fixture.rs",
+      "sha256": "e4b4df8254e64f0c95c101dfcb95d33ff3a262fe7f15123f1a773218e9f1259d"
+    }
+  ],
+  "authored_driver_files": [
+    {
+      "path": "tools/native-auth-setup/guest.py",
+      "sha256": "b2ae88d1922df445f6fc53f4245f2fb0b35734691002a2a01134ab57394eafd5",
+      "executed_sha256": "b2ae88d1922df445f6fc53f4245f2fb0b35734691002a2a01134ab57394eafd5",
+      "terminal_newlines_only_normalized": false
+    },
+    {
+      "path": "tools/native-auth-setup/delegated.py",
+      "sha256": "9b71ad678f4fdc84a6d6a9adef116b0b85f4833ba10e6c606f4b823705301ebb",
+      "executed_sha256": "9b71ad678f4fdc84a6d6a9adef116b0b85f4833ba10e6c606f4b823705301ebb",
+      "terminal_newlines_only_normalized": false
+    }
+  ],
+  "build": {
+    "receipt_sha256": "4c52afe67a925bd329821ca504dfdb6f9295437dec1bb648f527fb35a9a25317",
+    "normal_receipt_sha256": "01de74c9c67825f82478cc42100493fe9ac07318909df0a85073700c608d9af4",
+    "execution_sha256": "af336b5b5c56b46e16118315c8a392b8a2cf3d2dca96732829a51c5e43748749",
+    "Root_review_sha256": "9a9095f32dcf8d6ab1d9d659bdaeedb6f1a9a526afc2434b4a893201f1f4d83f",
+    "host_components_passed_with_setup_feature": 7,
+    "strict_default_isolated_and_setup_Clippy": true,
+    "separate_normal_and_setup_ARM_crossbuilds": true,
+    "setup_ELF_sha256": "6f6873a434fb69a74021111b9279a3191d7190da4426cee6a8dd7d77f5429b31",
+    "normal_ELF_sha256": "0a49e005f7f2ad0f40e3b4a78f09856aacd500347ec1e19a4a6ca667cc9b0c11"
+  },
+  "preserved_actual_RED": {
+    "records_sha256": {
+      "selection.json": "b3620fb44c8df61dcf8ef12fd9ec733465f4337082284d8072b40fb1f9de98ab",
+      "command.json": "22fd5c97613edcbf3b4ed04bef60a38ed63dbbec9e0ae8f53301d647fc40fc15",
+      "result.json": "7b84dffd2db6befa8a23cc4bcad2d4e93d05e9243e7ad86c9ad428482a1e2278",
+      "delegated-result.json": "61c5ac4760e5ca9ad66c3f1da29bf322fe0204c9d54b4ebcff9e3c1a4475fa1d",
+      "execution.json": "5bc0a0cf1bf81cb922ce2226064cd4f4d1dec402d43b61be77c0fec2756e5db7",
+      "completion.json": "ceef71329de72d9c3311d9f4fbe23c96259bae860e967b5b91a4b4ea988cde69",
+      "postrun-independent-audit.json": "d28dbb6e23cd03e65bf6b2ea1cca5dbc0bfaf2a3c221082aeb587dc471b874b2"
+    },
+    "Root_review_sha256": "4a357d312ca202434c8a1372ff3b4a2292a7bcc7ee2e51f9f6a0092c41a8b4d8",
+    "Root_adoption_review_sha256": "6b7d1dbfbdba89b68ee3bcab65ba0d1aec284a43396b792ae9c7498a7dfba28e",
+    "binding_count": 39,
+    "baseline_ELF_sha256": "14c97554f234de3803532d593084c7894ddd24f064c1c71c9f0a1bd8cd4848ec",
+    "aggregate_passed": false,
+    "qualified_RED": true,
+    "probe_elapsed_ns": 293510421,
+    "before_and_after_actual_ARM_read63_matching_blocking_pipe": true,
+    "response_frames": 0,
+    "fault_injection": "real child spawn and pidfd_open attempt followed by discarding any acquired handle; pidfd_open success is not independently traced and no kernel syscall denial or resource exhaustion is claimed",
+    "failure_frozen_before_driver_teardown": true
+  },
+  "minimal_repair_after_actual_RED": "on failed setup retire Setup with sticky cleanup_fault, then disarm child input/output Options before poll; retain Child/pidfd, actual wait requirement and occupied fault; never manufacture EOF or closure",
+  "first_actual_GREEN_and_observer_review": {
+    "records_sha256": {
+      "selection.json": "6f826237f2e12ed1c65e8ab03a3f415df646d84326966caff8acc77a93814cce",
+      "command.json": "f47b46faa815e5d5fce5424f1fb2d6740022d80e0403f4b3317cfe40be39a76e",
+      "result.json": "f86d907530fe35c4d37723e2d4fc99a51198769bbd552dbae3162843e8204098",
+      "delegated-result.json": "b8e91fc19978674fa448b5d655c25e62e5b99e1630277da970e576e41f8ce907",
+      "execution.json": "0c0cb7e93c8479a96dade1d3cecfd63230c27978c959d9b7c24f4030717d3f19",
+      "completion.json": "bc541871019386443100f687b54fbd74acb3016307f11505338b38567eaf1bfa",
+      "postrun-independent-audit.json": "3d71b3730b97de6cdd472f33c7b5e1eea7db796f040c2b225cf28d800c35cb59"
+    },
+    "Root_actual_case_review_sha256": "fc968bee2d060bf3862babbc45e5972c574122000e0b9fee2cb776023516fecf",
+    "binding_count": 53,
+    "aggregate_passed": true,
+    "actual_initial_report_drained_before_command": true,
+    "actual_response_ns": 1909163,
+    "source_reviewer_receipt_sha256": "69bf4f122890230b3626b08228ef9a525aebb97113bc55b8b7a422e36a994738",
+    "preserved_harness_finding": "observer did not require initial report before command; postwindow FIONREAD alone cannot time-bound command consumption. Actual record has initial report drained before command and a new identical report; generic unfavorable schedules were not qualified."
+  },
+  "hardened_actual_setup_GREEN": {
+    "records_sha256": {
+      "selection.json": "4835fc852dab66cb0d31550f4e9e48bd5b46d28830bf046de8c2d4a58e07c90d",
+      "command.json": "b809e694b88d30a0ca1dc47be0cd2358146543fe3d51b1cd9b34e4604fd215dd",
+      "result.json": "c111e65c46b302073e6b64ccf6a986cd389eec8fa42e0bccf6490d2d38e8b5ba",
+      "delegated-result.json": "c07a8f1031f76044122b1cb86db7d69bdd411854f90a994908d8a94d4c96e824",
+      "execution.json": "4f663977ee421d944323fba74d98d22733b0025ed133fcd4ebee2906df43004b",
+      "completion.json": "0585da52d89d1660ec98e47dbfd457674de33b45b9496419991fe03d74731960",
+      "postrun-independent-audit.json": "d3a46e795f3b38e7c7eed3e79c19a2fadf54e9ab0060ecfa0a0317fc325cce54"
+    },
+    "Root_review_sha256": "aee6dde599ced7bcbe336cfe0014fe378a3b66f2cb5d1d85392e22059bf47bd0",
+    "binding_count": 57,
+    "response_ns": 1329625,
+    "probe_elapsed_ns": 285992865,
+    "initial_report_barrier_required": true,
+    "same_primary_response_bound_ns": 250000000,
+    "parent_flags": 65,
+    "retired": "Setup6",
+    "original_deadline_renewed": false,
+    "held_supervisor_T_and_live_parent": true,
+    "no_PAM_or_worker": true,
+    "postwindow_matching_command_pipe_FIONREAD": 0,
+    "proof_frozen_before_independent_driver_teardown": true,
+    "actual_driver_parent_and_adopted_supervisor_waits": [
+      -9,
+      9
+    ],
+    "both_pidfds_dead_proc_absent_EOF_empty_leaf_ECHILD": true,
+    "driver_teardown_is_native_cleanup_success": false
+  },
+  "separate_normal_regression": {
+    "records_sha256": {
+      "selection.json": "9bafb0e9f5ffdf33dad0e8e1a0e5322a857089e83b1fcf12535f06aa5b8d9a97",
+      "command.json": "88bfaa212091f97a708670b07fdf2e3eae349e6ebe689c7afc21f057dd951bd2",
+      "result.json": "5813fa88aac52fb0d2359eaae466bc1db25d5dadce6d01da3f302e725aa0119f",
+      "delegated-result.json": "7b28c9917f87662becf0b66c51574e536404e115206f69158d0f5853a61e2197",
+      "execution.json": "6dbde2c608e1200526f299b91c783b448231485be9b18f1c7aceeecb079dbb67",
+      "completion.json": "e8a05e3a756975b17670a95326c70a0e86767d6e71f02b41a2c8fa0346316fea",
+      "postrun-independent-audit.json": "ee90cbc7caa4b87f408bbdf645ed26db9800f4dba1817f32a3b16056a060c8cf"
+    },
+    "Root_review_sha256": "d3381a1d1eae1d22e661d6f0f5e42539e3fc3e91b147722c8e8cf2d8697ecbd8",
+    "binding_count": 111,
+    "normal_feature": "isolated-fixture; setup fault modes excluded",
+    "guest_delegated_boot_bytes_identical_to_prior_normal_GREEN2": true,
+    "actual_groups": [
+      {
+        "case": "cancel_held_executor",
+        "cancel_response_ns": 2704973,
+        "Stop_snapshot_response_ns": 2117303
+      },
+      {
+        "case": "deadline_held_executor",
+        "snapshot_response_ns": 1109046
+      }
+    ],
+    "per_group_worker_and_adopted_waits": [
+      9,
+      9,
+      9
+    ],
+    "per_group_native_parent_supervisor_waits": [
+      0,
+      0
+    ],
+    "scope_flags": 8092,
+    "parent_flags": 56,
+    "five_deaths_proc_absence_ECHILD_EOF_empty_leaf_each": true,
+    "independent_SIGKILL_or_outer_adoption": false
+  },
+  "all_actual_runs_single_invocations_with_owned_CLI_wait0_fresh_same_daemon_exact_CID_absence_and_all_bindings_unchanged": true,
+  "bounds": {
+    "original_attempt_BOOTTIME_seconds": 15,
+    "maximum_attempt_seconds": 30,
+    "driver_seconds": 30,
+    "service_CLI_seconds": 35,
+    "guest_seconds": 80,
+    "QEMU_seconds": 110,
+    "QEMU_grace_seconds": 5,
+    "outer_seconds": 120,
+    "guest_CPUs": 2,
+    "guest_memory_MiB": 1024,
+    "container_CPUs": 2,
+    "container_memory_GiB": 2,
+    "overlay_MiB": 512,
+    "network": "none",
+    "host_devices": false,
+    "phone_access": false
+  },
+  "limitations": [
+    "explicit missing-handle injection, not an observed real kernel resource/syscall failure",
+    "setup-fault result is responsive occupied quarantine, not native cleanup/slot reuse",
+    "normal scope result remains trusted synthetic fork/SIGCHLD workload, not privileged-helper migration containment",
+    "no original wrong/correct PAM plus scope composition, production NNP0 broker, actor receipt, exact unlock or synced durable restoration",
+    "non-SIGCHLD clones, proc aliases/namespaces/descriptor policy and installed resource/dependency policy remain gates",
+    "controlled supervisor SIGSTOP is not uninterruptible kernel blocking or actual suspend",
+    "matched Google kernel, full phone services, secure frames/wake and physical hardware unqualified; zero phone models qualified",
+    "reaping never undoes PAM or vendor effects and never permits uncertain implicit retry"
+  ]
+}

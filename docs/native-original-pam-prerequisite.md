@@ -88,8 +88,9 @@ UID1000 accept responses only, never caller-selected policy or a success flag.
 The root bootstrap drops directly to protected UID1000 before PAM. Its native
 credential transition and narrow helper capability profile have separate evidence;
 the separate [synthetic scope controls](native-auth-scope.md) now pass normal-
-admission cancellation/deadline cleanup. Original-helper composition, parent
-setup-error repair and production provisioning remain open. Keep the
+admission cancellation/deadline cleanup. A separate [setup-error repair](native-auth-setup.md)
+now qualifies responsive occupied quarantine. Original-helper composition and
+production provisioning remain open. Keep the
 initial policy authentication-only, including successful `pam_end`. Account,
 credential establishment and session APIs require separate policy and lifecycle.
 
@@ -101,8 +102,9 @@ cleanup. Provisioning must prevent workload migration. Buffer typed success unti
 clean worker exit and scope closure, within the original absolute BOOTTIME bound.
 The separate synthetic PAM module with session-detached child/grandchild now
 passes cancellation/Stop and deadline cleanup while its owned supervisor is held.
-Actual original-PAM blocked conversation composition and setup-error responsiveness
-remain unqualified; successful-admission synthetic controls do not establish them.
+Actual original-PAM blocked conversation composition remains unqualified. The
+separate injected setup control establishes responsive faulted occupancy only;
+its driver teardown is not native cleanup or original-helper containment.
 
 Bind an attempt and one-shot internal receipt to actor/Source incarnation,
 accepted operation, retained live locker and a lock-admission epoch. Recheck

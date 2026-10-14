@@ -74,9 +74,10 @@ on an Arch ARM kernel after a closed-worker RED, preserved initial PAM failure
 and original-helper capability comparison. A separate safe Rust
 [worker-tree scope](native-auth-scope.md) passes two actual synthetic cancellation/
 Stop and original-deadline controls with the supervisor held, after a genuine
-detached-descendant RED. Setup-error responsiveness, original PAM+scope composition,
-installed broker/containment, actor-owned receipts, exact unlock and synced durable
-restoration remain open. No physical model is qualified. See
+detached-descendant RED. A later actual injected setup-error RED precedes responsive
+faulted quarantine and a normal cleanup regression; see [setup](native-auth-setup.md).
+Original PAM+scope composition, installed broker/containment, actor-owned receipts,
+exact unlock and synced durable restoration remain open. No physical model is qualified. See
 [worker boundary](native-pam-worker.md).
 
 ## Native messaging checkpoint

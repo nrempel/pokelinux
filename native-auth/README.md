@@ -34,7 +34,7 @@ leaf. See [scope report](../docs/native-auth-scope.md) and
 
 `isolated-fixture` selects the fixed `/run/pokelinux-auth-scope-test/pam-worker`
 and actual membership under `pokelinux-auth-scope-test.service`; no caller chooses
-an executable, account, PAM policy or cgroup. Current private entries are
+an executable, account, PAM policy or cgroup. Ordinary isolated entries are
 `--isolated-parent` and `--isolated-supervisor`, each with exact parent PID and
 original deadline. PKSCOPE2 provides48-byte credential-free records with separate
 recursive-write and direct-signal observations; no historical decoder is retained.
@@ -51,11 +51,14 @@ a separate fixed-policy NNP0 root broker must be provisioned. Account/session
 APIs, actor receipts, exact unlock, synced durable restoration, actual suspend,
 Google matched-kernel scope and physical devices remain unqualified.
 
-A separate source review identifies an unqualified setup-error path: failed
-supervisor pidfd setup can leave the parent pipes blocking before their flags are
-set. The next poll can then stall before servicing Stop/snapshots. Successful
-admission controls do not qualify that path; an actual injected-syscall-failure
-RED and repair are required before production integration.
+A separate actual missing-handle setup RED reproduces blocking parent pipes.
+After repair, the parent disarms both child endpoints while retaining its Child,
+sticky Setup fault and occupied state. The hardened ARM control proves a fresh
+Stop/snapshot response while the child stays held; separate driver teardown is
+not native cleanup. A new normal two-group regression also passes. The explicit
+`setup-fault-fixture` feature adds only fixed no-workload test entries and is
+absent from the selected normal ELF. See [setup report](../docs/native-auth-setup.md)
+and [proof](../docs/evidence/native-auth-setup-provenance.json).
 
 Run the seven host component tests with `cargo test --features isolated-fixture`
 from this crate. The actual cgroup fixture needs the separately provisioned

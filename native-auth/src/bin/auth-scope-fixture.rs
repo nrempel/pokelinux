@@ -97,13 +97,24 @@ fn run(parent: u32, until: u64) -> io::Result<()> {
     }
 }
 
-fn run_parent(parent: u32, until: u64) -> io::Result<()> {
+fn run_parent(parent: u32, until: u64, missing_pidfd_fixture: bool) -> io::Result<()> {
     // The outer fixture also has an exact parent guard. It never touches the
     // workload cgroup; all such operations occur in its separately owned child.
     let _guard = DedicatedSupervisor::enter(parent)?;
     let input = duplicate_nonblocking(std::io::stdin())?;
     let output = duplicate_nonblocking(std::io::stdout())?;
-    let mut owner = pokelinux_auth_scope::parent::ScopeChild::spawn_isolated(until)?;
+    let mut owner = if missing_pidfd_fixture {
+        #[cfg(feature = "setup-fault-fixture")]
+        {
+            pokelinux_auth_scope::parent::ScopeChild::spawn_isolated_missing_pidfd_fixture(until)?
+        }
+        #[cfg(not(feature = "setup-fault-fixture"))]
+        {
+            return Err(io::ErrorKind::PermissionDenied.into());
+        }
+    } else {
+        pokelinux_auth_scope::parent::ScopeChild::spawn_isolated(until)?
+    };
     let mut queue = VecDeque::new();
     let mut previous = None;
     let mut parent_gone = false;
@@ -167,14 +178,33 @@ fn run_parent(parent: u32, until: u64) -> io::Result<()> {
     }
 }
 
+/// The injected setup failure owns a child that can never launch PAM, even if
+/// accidentally resumed. Its stdout pipe remains open until actual termination.
+#[cfg(feature = "setup-fault-fixture")]
+fn hold_supervisor_no_workload(parent: u32, until: u64) -> io::Result<()> {
+    let _guard = DedicatedSupervisor::enter(parent)?;
+    let now = pokelinux_auth_scope::boottime_ns();
+    if until <= now || until - now > pokelinux_auth_scope::owner::MAX_ATTEMPT_NS {
+        return Err(io::ErrorKind::InvalidInput.into());
+    }
+    rustix::process::kill_process(rustix::process::getpid(), rustix::process::Signal::STOP)?;
+    loop {
+        std::thread::park();
+    }
+}
+
 fn main() {
     let args: Vec<_> = std::env::args().collect();
     let parsed = || {
         if args.len() != 6
-            || !matches!(
+            || !(matches!(
                 args[1].as_str(),
                 "--isolated-supervisor" | "--isolated-parent"
-            )
+            ) || cfg!(feature = "setup-fault-fixture")
+                && matches!(
+                    args[1].as_str(),
+                    "--missing-pidfd-parent" | "--held-supervisor-no-workload"
+                ))
             || args[2] != "--parent"
             || args[4] != "--until"
         {
@@ -185,11 +215,16 @@ fn main() {
         (parent >= 2 && parent <= i32::MAX as u32).then_some((parent, until))
     };
     if parsed().is_none_or(|(parent, until)| {
-        if args[1] == "--isolated-parent" {
-            run_parent(parent, until).is_err()
-        } else {
-            run(parent, until).is_err()
-        }
+        let result = match args[1].as_str() {
+            "--isolated-parent" => run_parent(parent, until, false),
+            "--isolated-supervisor" => run(parent, until),
+            #[cfg(feature = "setup-fault-fixture")]
+            "--missing-pidfd-parent" => run_parent(parent, until, true),
+            #[cfg(feature = "setup-fault-fixture")]
+            "--held-supervisor-no-workload" => hold_supervisor_no_workload(parent, until),
+            _ => Err(io::ErrorKind::PermissionDenied.into()),
+        };
+        result.is_err()
     }) {
         std::process::exit(1);
     }

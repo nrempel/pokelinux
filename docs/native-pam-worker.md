@@ -128,7 +128,9 @@ records are not authentication authority. The separate
 [worker-tree scope](native-auth-scope.md) now passes actual synthetic fork/setsid
 Cancel/Stop and original-deadline controls after a detached-descendant RED.
 It does not compose the original wrong/correct authentication worker with scope
-cleanup, and its separately identified parent setup-error path still needs repair.
+cleanup. Its separate [setup-error repair](native-auth-setup.md) now passes injected
+responsive-quarantine and normal regression controls, with original composition
+still unqualified.
 
 The per-attempt supervisor must run outside a workload cgroup, admit the worker
 before START/NSS/PAM and retain occupancy through recursive kill plus actual waits

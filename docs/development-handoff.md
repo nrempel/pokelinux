@@ -25,11 +25,15 @@ supervisor is stopped; after resume, recursive termination closes all three actu
 workload waits, ECHILD, EOF and the empty leaf without independent SIGKILL. Both
 controls close five retained pidfds/proc entries, native supervisor/parent waits0
 and all127 frozen input bindings. The component remains isolated-feature-only.
-A source review finds a separate parent setup-error blocking-pipe path; qualify a
-bounded injected-unavailable-handle RED and fix it next, before namespace containment,
-original PAM composition and production broker/actor receipts. See
-[scope report](native-auth-scope.md) and
-[proof](evidence/native-auth-scope-provenance.json).
+A later actual missing-handle setup RED proves the parent can block on its child
+pipe before NONBLOCK conversion. The minimal repair disarms both endpoints while
+retaining Child/pidfd and sticky occupied Setup fault. The first actual GREEN's
+initial-report scheduling gap is preserved; a hardened fresh control now passes,
+as does the new normal two-group regression. Driver9/9 teardown in the setup
+control is not native cleanup. See [setup report](native-auth-setup.md) and
+[proof](evidence/native-auth-setup-provenance.json). Next: fixed privileged-helper
+containment, original PAM+scope, then broker/actor one-shot synced restoration and
+a normal Messages reopen. Keep Source100ms/no-revival and all hardware gates.
 
 The native Rust PAM worker now passes actual wrong/matching password controls
 through the installed public ABI on Arch ARM7.1.6. The closed-worker missing-prompt

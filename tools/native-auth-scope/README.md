@@ -32,6 +32,7 @@ an uninterruptible kernel task or actual system suspend.
 The owning launcher supplies the shared readonly backing lock, bounded RAM-only
 overlay, no-network/device VM, actual Docker CLI wait and independent fresh exact-
 container absence/input closure. Running these drivers alone proves none of those
-outer ownership checks. See the [checkpoint and open setup-error boundary](../../docs/native-auth-scope.md).
+outer ownership checks. See the [scope checkpoint](../../docs/native-auth-scope.md) and separately qualified
+[setup-error boundary](../../docs/native-auth-setup.md).
 Original PAM composition, privileged-helper containment, production receipts,
 restoration, matched Google kernel and hardware remain separate gates.

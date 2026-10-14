@@ -6,6 +6,7 @@ publish = false
 
 [features]
 isolated-fixture = []
+setup-fault-fixture = ["isolated-fixture"]
 
 [dependencies]
 rustix = { version = "=1.1.5", features = ["fs", "process", "event", "time", "thread", "pipe"] }
