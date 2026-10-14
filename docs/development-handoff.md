@@ -18,6 +18,14 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The actor now independently refuses impossible exact-operation fact shapes and
+changed generation/unlock records without a matching semantic revision. Three
+negative RED groups execute18 mutations; four focused GREEN controls and all16
+lifecycle components pass on host and actual Arch ARM. Cached exact samples and
+sticky heartbeats remain accepted. This is a typed Provider/actor selection,
+with no Source IPC, PAM or restoration execution. See
+[actor provenance](evidence/native-session-protocol-actor-provenance.json).
+
 The current Source now supplies an observed accepted lock-operation counter and
 an exact-object protocol-unlock occurrence, retained in Rust internal snapshots.
 Original producer and separate actual-packet REDs precede the repair. All55 host

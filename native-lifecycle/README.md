@@ -23,6 +23,13 @@ four focused GREEN controls and12 component passes on host and actual Arch ARM
 kernels. This is separate from Source IPC, authentication and trusted unlock;
 see [scope and provenance](../docs/native-session-owned-locker.md).
 
+The actor also validates exact-operation fact shapes and immutable repeated
+sequence/revision values. Three failing protocol groups precede four focused
+passes and16 full lifecycle passes on each host and actual Arch ARM kernel;
+see [protocol actor evidence](../docs/evidence/native-session-protocol-actor-provenance.json).
+Generation/event facts remain observations, with no authentication or restoration
+capability added.
+
 [Per-app ARM evidence](../docs/native-display-app-generations.md) qualifies
 lifetime/relaunch and held-init Stop. Pending EOF passes its narrow boundary;
 its successor aggregate is failed after Source InvalidData of unknown predicate.

@@ -76,3 +76,34 @@ while preserving existing policy, grants and history. Global unlock, root test
 clear, same-UID success forwarding or a renewed expired Source cannot provide
 that receipt. Secure frames, installed supervision and physical hardware remain
 separate. This reference run selects no 100ms Source lease or restoration path.
+
+## Native implementation constraints, not yet executed
+
+The lifecycle supervisor remains safe Rust; isolate the Linux-PAM C ABI in a
+separate native Rust worker. A fixed root-owned service and account resolved to
+UID1000 accept responses only, never caller-selected policy or a success flag.
+A root worker protects result integrity but changes the Original privilege path;
+its own dependency and authentication behavior must be qualified. Keep the
+initial policy authentication-only, including successful `pam_end`. Account,
+credential establishment and session APIs require separate policy and lifecycle.
+
+Generic descendant ownership needs a dedicated per-attempt subreaper supervisor
+outside a private cgroup containing the worker and every helper. Cancellation
+retires the attempt before killing the scope. Actual waits, final ECHILD and an
+empty cgroup must precede slot release; worker exit alone does not prove helper
+cleanup. Provisioning must prevent workload migration. Buffer typed success until
+clean worker exit and scope closure, within the original absolute BOOTTIME bound.
+Test an actual blocked conversation and a separate synthetic PAM module with
+session-detached child/grandchild; cancellation and Stop must remain responsive.
+These controls are planned, not passing evidence.
+
+Bind an attempt and one-shot internal receipt to actor/Source incarnation,
+accepted operation, retained live locker and a lock-admission epoch. Recheck
+liveness and freshness at admission and result consumption. The genuine exact
+unlock must follow receipt arming. Restoration needs its own versioned durable
+clear: generic history completion installs a known committed snapshot before
+checking current publication authority and cannot safely be reused unchanged.
+An intervening lock increments the epoch even when already pending; serialize
+clear and new admission. If clear may have committed before invalidation, retain
+denial and prohibit clean reopening until a newer synced pending-lock write wins.
+Preserve grants/history. No such clear or native authentication is enabled yet.

@@ -206,6 +206,13 @@ impl Authority {
             || now >= s.until
             || (s.locked && s.focus.is_some())
             || (!s.locked && s.locker.is_some())
+            || !crate::session::valid_protocol_facts(
+                s.locked,
+                s.sequence,
+                s.sampled_at_ns,
+                s.lock_generation,
+                s.protocol_unlock.as_ref(),
+            )
             || self
                 .session_source
                 .as_ref()
@@ -220,12 +227,16 @@ impl Authority {
                             || s.until != old.until
                             || s.locked != old.locked
                             || !self.same_peer(s.focus.as_ref(), old.focus.as_ref())
-                            || !self.same_peer(s.locker.as_ref(), old.locker.as_ref())))
+                            || !self.same_peer(s.locker.as_ref(), old.locker.as_ref())
+                            || s.lock_generation != old.lock_generation
+                            || s.protocol_unlock != old.protocol_unlock))
                     || (s.revision == old.revision
                         && (s.locked != old.locked
                             || s.focus.as_ref().map(|f| &f.metadata)
                                 != old.focus.as_ref().map(|f| &f.metadata)
-                            || !self.same_peer(s.locker.as_ref(), old.locker.as_ref())))
+                            || !self.same_peer(s.locker.as_ref(), old.locker.as_ref())
+                            || s.lock_generation != old.lock_generation
+                            || s.protocol_unlock != old.protocol_unlock))
             })
         {
             return self.fail_session();
@@ -983,6 +994,184 @@ mod tests {
             authority.lifecycle, lifecycle,
             "same living task heartbeat fenced policy"
         );
+    }
+    fn protocol_event(sample: &crate::session::Snapshot) -> crate::session::ProtocolUnlock {
+        crate::session::ProtocolUnlock {
+            generation: 7,
+            sequence: sample.sequence,
+            observed_at_ns: sample.sampled_at_ns,
+        }
+    }
+    #[test]
+    fn protocol_invalid_shapes_fail_the_actor_terminally() {
+        let mut refused = Vec::new();
+        for case in 0..8 {
+            let mut authority = session_authority();
+            let mut snapshot = locker_snapshot(None);
+            snapshot.locked = false;
+            let mut event = protocol_event(&snapshot);
+            match case {
+                0 => {
+                    snapshot.locked = true;
+                    snapshot.lock_generation = Some(0);
+                }
+                1 => snapshot.lock_generation = Some(7),
+                2 => {
+                    snapshot.locked = true;
+                    snapshot.protocol_unlock = Some(event);
+                }
+                3 => {
+                    event.generation = 0;
+                    snapshot.protocol_unlock = Some(event);
+                }
+                4 => {
+                    event.sequence = 0;
+                    snapshot.protocol_unlock = Some(event);
+                }
+                5 => {
+                    event.sequence += 1;
+                    snapshot.protocol_unlock = Some(event);
+                }
+                6 => {
+                    event.observed_at_ns = 0;
+                    snapshot.protocol_unlock = Some(event);
+                }
+                7 => {
+                    event.observed_at_ns += 1;
+                    snapshot.protocol_unlock = Some(event);
+                }
+                _ => unreachable!(),
+            }
+            authority
+                .observe_session(snapshot, crate::boottime_ns())
+                .unwrap();
+            refused
+                .push(authority.session_failed && authority.session.is_none() && authority.locked);
+            if *refused.last().unwrap() {
+                authority
+                    .observe_session(locker_snapshot(None), crate::boottime_ns())
+                    .unwrap();
+                assert!(authority.session_failed && authority.session.is_none());
+            }
+        }
+        assert!(
+            refused.iter().all(|refused| *refused),
+            "invalid shape admission results: {refused:?}"
+        );
+    }
+    #[test]
+    fn protocol_generation_changes_require_a_new_actor_revision() {
+        let mut refused = Vec::new();
+        for sequence in [1, 2] {
+            let mut authority = session_authority();
+            let mut initial = locker_snapshot(Some(own_locker()));
+            initial.lock_generation = Some(7);
+            authority
+                .observe_session(initial.clone(), crate::boottime_ns())
+                .unwrap();
+            assert!(!authority.session_failed);
+            let mut changed = initial.clone();
+            changed.sequence = sequence;
+            changed.lock_generation = Some(8);
+            authority
+                .observe_session(changed, crate::boottime_ns())
+                .unwrap();
+            refused.push(authority.session_failed && authority.session.is_none());
+            if *refused.last().unwrap() {
+                authority
+                    .observe_session(initial, crate::boottime_ns())
+                    .unwrap();
+                assert!(authority.session_failed && authority.session.is_none());
+            }
+        }
+        assert!(
+            refused.iter().all(|refused| *refused),
+            "generation mutation admission results: {refused:?}"
+        );
+    }
+    #[test]
+    fn protocol_unlock_changes_require_a_new_actor_revision() {
+        let mut refused = Vec::new();
+        for sequence in [1, 2] {
+            for case in 0..4 {
+                let mut authority = session_authority();
+                let mut initial = locker_snapshot(None);
+                initial.locked = false;
+                initial.sequence = 2;
+                let mut event = protocol_event(&initial);
+                event.sequence = 1;
+                event.observed_at_ns -= 1;
+                if case != 0 {
+                    initial.protocol_unlock = Some(event.clone());
+                }
+                authority
+                    .observe_session(initial.clone(), crate::boottime_ns())
+                    .unwrap();
+                assert!(!authority.session_failed);
+                let mut changed = initial.clone();
+                changed.sequence += sequence - 1;
+                match case {
+                    0 => changed.protocol_unlock = Some(event),
+                    1 => changed.protocol_unlock = None,
+                    2 => changed.protocol_unlock.as_mut().unwrap().generation += 1,
+                    3 => changed.protocol_unlock.as_mut().unwrap().observed_at_ns += 1,
+                    _ => unreachable!(),
+                }
+                authority
+                    .observe_session(changed, crate::boottime_ns())
+                    .unwrap();
+                refused.push(authority.session_failed && authority.session.is_none());
+                if *refused.last().unwrap() {
+                    authority
+                        .observe_session(initial, crate::boottime_ns())
+                        .unwrap();
+                    assert!(authority.session_failed && authority.session.is_none());
+                }
+            }
+        }
+        assert!(
+            refused.iter().all(|refused| *refused),
+            "unlock mutation admission results: {refused:?}"
+        );
+    }
+    #[test]
+    fn protocol_cached_samples_and_sticky_heartbeats_preserve_actor_revision() {
+        let mut authority = session_authority();
+        let mut sample = locker_snapshot(Some(own_locker()));
+        sample.lock_generation = Some(7);
+        authority
+            .observe_session(sample.clone(), crate::boottime_ns())
+            .unwrap();
+        let lifecycle = authority.lifecycle;
+        authority
+            .observe_session(sample.clone(), crate::boottime_ns())
+            .unwrap();
+        sample.sequence += 1;
+        authority
+            .observe_session(sample.clone(), crate::boottime_ns())
+            .unwrap();
+        assert!(!authority.session_failed);
+        assert_eq!(authority.lifecycle, lifecycle);
+        sample.sequence += 1;
+        sample.revision += 1;
+        sample.locked = false;
+        sample.locker = None;
+        sample.lock_generation = None;
+        sample.protocol_unlock = Some(protocol_event(&sample));
+        authority
+            .observe_session(sample.clone(), crate::boottime_ns())
+            .unwrap();
+        assert!(!authority.session_failed);
+        let lifecycle = authority.lifecycle;
+        authority
+            .observe_session(sample.clone(), crate::boottime_ns())
+            .unwrap();
+        sample.sequence += 1;
+        authority
+            .observe_session(sample, crate::boottime_ns())
+            .unwrap();
+        assert!(!authority.session_failed);
+        assert_eq!(authority.lifecycle, lifecycle);
     }
     struct Harness {
         core: Authority,

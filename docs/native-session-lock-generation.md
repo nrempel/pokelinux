@@ -55,6 +55,15 @@ intermediate transitions drained in one turn. Later ordinary heartbeats preserve
 that revision. Source expiry/death remains terminal. General app IPC still
 rejects descriptors and has no protocol-unlock operation.
 
+The lifecycle actor independently checks the typed Provider boundary. Impossible
+protocol facts, changed generations or changed unlock records at a repeated
+sequence or unchanged semantic revision fail the Source terminally. Cached exact
+samples and stable generation/sticky-event heartbeats remain accepted. Three
+negative RED groups execute18 mutations before the repair; four focused controls
+and all16 lifecycle components pass on host and an actual Arch ARM kernel.
+This selection runs no Source IPC or authentication. See
+[actor provenance](evidence/native-session-protocol-actor-provenance.json).
+
 ## Evidence and remaining work
 
 The independent original-compositor RED qualifies an accepted mapped object,

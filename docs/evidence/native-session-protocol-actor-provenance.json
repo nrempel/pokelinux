@@ -1,0 +1,84 @@
+{
+  "schema": 1,
+  "date_UTC": "2026-10-14",
+  "publication_base_commit": "b11572cc4c713e5fba4744df6fe90c06fb4bfe97",
+  "scope": "typed Provider/actor exact lock-operation fact consistency with actual owned kernel handles; host and actual Arch ARM components",
+  "production_sources": {
+    "native-lifecycle/src/authority.rs": "2c7ebfbe2bd3edbe26292888a2ca5970f318094602c6b502bdf39ce62980fdb2"
+  },
+  "Root_review_sha256": "803b697235bd07f0ae42894bc1a65fe831bd3315efdd8050177ad2058143307f",
+  "strict_chronology": {
+    "red": {
+      "selection_sha256": "56be8a318587e506ce385a4477c4da236238949729502fe7aa6e9fd618b8ee57",
+      "execution_sha256": "22dc124563aa921fa83f7141010af649102f3cc024bb953840433e2de73151e8",
+      "actual_CLI_wait_exit": 101
+    },
+    "green": {
+      "selection_sha256": "6cd91c31b01e014750118bd255ddb65da4f50b0906a2c2d53a7f86363dc711e5",
+      "execution_sha256": "03cdf6c51ef52802c0b4bab42d85e6663e35f7b9ce9f68a7096f143bde826902",
+      "actual_CLI_wait_exit": 0
+    },
+    "build": {
+      "selection_sha256": "343af765a4b9cab79e29f66be6b5301e3936d666e6100145138046a0c80658b6",
+      "execution_sha256": "5f6fb00f08cfd822120380c0a5d29aef3437453cc54401ff8571287c84cc6684",
+      "actual_CLI_wait_exit": 0
+    },
+    "host": {
+      "selection_sha256": "adf47c9678914916dd82f69663092bae0bf3d81eab89d460ccd5b9cf602a2469",
+      "execution_sha256": "bcc6aa6b6b7df81acd4d7accd555640ff100b730edf3ef27b0617b157f72d150",
+      "actual_CLI_wait_exit": 0
+    },
+    "arm": {
+      "selection_sha256": "cfdd94788858ed8513b83093ef1bcc771ea34411fc885eddffbf6bf8d2427415",
+      "execution_sha256": "9f41a4c6fe5a7877a23e27b2e1df7790a5c00042c7110562bcb1c724f6f778bb",
+      "actual_CLI_wait_exit": 0
+    }
+  },
+  "RED": {
+    "negative_failed": 3,
+    "positive_passed": 1,
+    "generation_mutations_executed": 2,
+    "invalid_shapes_executed": 8,
+    "unlock_mutations_executed": 8,
+    "all18_mutations_incorrectly_accepted_before_repair": true,
+    "production_guards_equal_base": true
+  },
+  "GREEN": {
+    "focused_host": 4,
+    "full_host": 16,
+    "full_Arch_ARM": 16,
+    "Arch_ARM_kernel": "7.1.6-1-aarch64-ARCH",
+    "Arch_ARM_result_sha256": "785346904bbf76bf417f5f8f02cbabd95d8effdc829adafe248b8677e535f2d5",
+    "Arch_ARM_components_log_sha256": "6c281f02cb594c5a164d096feec8be63e7b89fa6681c064b5099379cb5b08831",
+    "actual_direct_test_wait_exit": 0,
+    "guest_final_ECHILD": true,
+    "fmt_clippy_and_host_static_ARM_builds_passed": true,
+    "all_five_owned_runs_CID_absent_and_input_closure": true
+  },
+  "controls": [
+    "impossible generation/unlock shape fails Source terminally",
+    "generation cannot change at repeated sequence or unchanged semantic revision",
+    "unlock appearance, loss, generation mutation and timestamp rewrite require a new semantic revision",
+    "cached exact sample and stable generation/sticky event heartbeats do not fence policy",
+    "valid later observations cannot revive a terminally rejected Source"
+  ],
+  "preserved_failed_fixture": {
+    "selection_sha256": "86fdfb3c7ccc9e6aeeaf8a9ba3173ded113295f5e2648843749355d86ff6bf73",
+    "execution_sha256": "8e14c92c307e75dc5a064ec8442421dcca5d4dcfd8f370ee97209bf6d7399922",
+    "classification": "superseded replay assertion failure; not the qualified feature RED",
+    "correction": "only check persistent terminality after an actual initial rejection; run every mutation before the aggregate assertion"
+  },
+  "unchanged": {
+    "Source_budget_ns": 100000000,
+    "Source_wire_or_producer_changed": false,
+    "PAM_or_restoration_authority_added": false
+  },
+  "not_qualified": [
+    "Source IPC or original compositor integration in this selection",
+    "native authentication worker or actor-owned attempt/receipt",
+    "durable unlock restoration or fresh normal Messages read",
+    "Google kernel compositor integration or physical hardware"
+  ],
+  "phone_accessed": false,
+  "private_raw_inputs_or_credentials_published": false
+}
