@@ -126,6 +126,13 @@ impl Conversation {
             protocol: Vec::new(),
         }
     }
+    pub(super) fn outcome_ready(&self, barrier: &Barrier) -> bool {
+        self.initialized
+            && self.pending.is_empty()
+            && self.response.is_none()
+            && self.protocol.is_empty()
+            && barrier.hidden_prompt.is_none()
+    }
     fn require_initialized(&mut self, barrier: &mut Barrier) -> io::Result<()> {
         if !self.initialized {
             self.retire(barrier, Retired::Setup);
@@ -165,11 +172,14 @@ impl Conversation {
         self.pending.extend_from_slice(&self.until.to_le_bytes());
         self.write_pending(input, barrier)
     }
-    pub(super) fn retire(&mut self, barrier: &mut Barrier, reason: Retired) {
-        barrier.retire(reason);
+    pub(super) fn discard(&mut self) {
         self.response = None;
         self.pending.clear();
         self.protocol.clear();
+    }
+    pub(super) fn retire(&mut self, barrier: &mut Barrier, reason: Retired) {
+        barrier.retire(reason);
+        self.discard();
     }
     /// Observation only. The original deadline is never replaced or renewed.
     pub(super) fn pending_hidden_prompt(&self, barrier: &Barrier) -> Option<u16> {

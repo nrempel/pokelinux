@@ -155,7 +155,7 @@ def pump(seconds=0):
         magic, event, flags, pid, status, adopted, retired, observed, reserved = struct.unpack(
             '<8sIIIIIIQQ', bytes(frames[:48]))
         del frames[:48]
-        require(magic == b'PKSCOPE3' and reserved == 0 and event == 5,
+        require(magic == b'PKSCOPE4' and reserved == 0 and event == 5,
                 'only_parent_records_in_no_workload_case')
         require(flags & ~0x79 == 0 and 2 <= pid <= 2147483647 and adopted == 0,
                 'current_parent_record_encoding')

@@ -1,0 +1,266 @@
+{
+  "schema": 1,
+  "scope": "Isolated one-time closed classifications with actual ScopeChild owned ordinary peer and malformed terminal stream integration; synthetic worker/cgroup facts",
+  "base_commit": "baf7b792abcbba841cd37bf2fad8ea5c74c3774a",
+  "red": {
+    "schema": 1,
+    "classification": "HOST_ACTUAL_SCOPECHILD_DENIED_OUTCOME_RECORD_REFUSAL_RED",
+    "aggregate_passed": false,
+    "actual_tool_session": 55041,
+    "actual_terminal_chunk": "57b94e",
+    "actual_terminal_exit": 1,
+    "actual_Cargo_test_exit": 101,
+    "actual_test_ELF_signal": 6,
+    "tests_passed_before_abort": 31,
+    "full_test_summary_completed": false,
+    "actual_peer_natural_wait0_stdout_EOF_pidfd_dead_proc_absent_before_abort": true,
+    "protocol_quarantine_preserved_after_unknown_outcome_event7": true,
+    "source_bindings": 21,
+    "all_frozen_and_current_bindings_match": true,
+    "fresh_same_daemon_exact_CID_absence_recorded": true,
+    "Attempt_or_PAM_or_actual_cgroup_scope_executed": false,
+    "selection_sha256": "7a47b4349047118207089a510c2f1c58bc6739e49acbbcbef6621f12aaa8fa3d",
+    "execution_sha256": "5c90dd4ec56fc38c4c60fa37a20e01183047bac8332009d9aa4d7a95aa422c93",
+    "test_log_sha256": "470f6f61c467471e8058ed4d3b78b8bae1688a0a24838926084052f6731b9b10",
+    "source_only_architecture_advice_sha256": "d33b8ec1fcb87b409b4bbb535e5d2880edea814f8640ac2417c8ca751dc1d3f4",
+    "sealed_ns": 5953923091232136
+  },
+  "red_root_review_sha256": "d92fe6aef478f5c34bebe78bdf730294ce69c95f083bc26bce4245a6af81ce87",
+  "red_test_ELF_sha256": "fac6d928d56cf5c8f9fd6bc06f10e8607a018f5b234c5f97b5bb08d2ea0c76cd",
+  "green": {
+    "schema": 1,
+    "classification": "HOST_ACTUAL_SCOPECHILD_CLOSED_OUTCOME_AND_MALFORMED_STREAM_QUARANTINE",
+    "passed": true,
+    "actual_tool_session": 18891,
+    "actual_terminal_chunk": "fbf67a",
+    "actual_terminal_exit": 0,
+    "tests_passed": 59,
+    "tests_failed": 0,
+    "explicit_ignored_helpers": 3,
+    "all_helpers_invoked_by_their_parent_regressions": true,
+    "actual_parent_issuance_after_peer_wait0_and_EOF": true,
+    "issued_token_Stop_and_original_deadline_consumption_refusal": true,
+    "five_malformed_stream_nested_helpers_require_actual_peer_closure_before_occupied_Drop_abort6": true,
+    "qualification_via_final_assertions_bound_to_executed_ELF": true,
+    "worker_extraction_and_issuer_controls_are_models": true,
+    "actual_Attempt_Terminal_PAM_cgroup_actor_unlock_executed": false,
+    "source_bindings": 22,
+    "all_frozen_and_current_bindings_match": true,
+    "format_strict_default_all_target_all_feature_Clippy": true,
+    "ARM64_fixture_compiled_only": true,
+    "host_test_ELF_sha256": "f0dece7e2eceafbb4a3bdebdeca0852dd136465e7487bf656d9cae6cc79b25e6",
+    "ARM64_fixture_ELF_sha256": "a9025537e99a432ae395281f7b3a8a2f735664ff27525d160ea9a98abc1cd2bb",
+    "selection_sha256": "ef1e1da68b6c844f24c29803003e0832232b6afa644cccba5fbdb5638605d4b3",
+    "execution_sha256": "2472f0a936b1118d1f8fde9ff16e044ee9810f0c4ee7df2d13b6787e438c41c5",
+    "test_log_sha256": "fdc37a4498c5830239b8e4e9718b183fadc19995e94b8c3463ec785b9f47de93",
+    "host_test_list_sha256": "8e230fdfb721e003a12865436996684ec15de17e30452d387f4a46b5cfc077a4",
+    "fresh_exact_CID_absent_same_daemon": true,
+    "sealed_ns": 5955219499257965
+  },
+  "green_root_review_sha256": "baae303d2a486cd3cf169167b70866b3683bc2a1331d8524b4d700e7bf3a4bbc",
+  "initial_54_pass_green_root_review_sha256": "837791bb5559f8064b0fd7b3e42423301b67a1bca2fa35d9095383de54c7e6c6",
+  "source_reviews": [
+    {
+      "kind": "Sol6.1 xhigh closed-outcome source correctness",
+      "sha256": "d02af8138568310b328f05b29adf95bf62c01f5c4dffcf4407f9fa8e70f28d5f"
+    },
+    {
+      "kind": "Sol6.1 xhigh five negative controls and evidence limits",
+      "sha256": "d37378ef31ea80eeeab807f6ca995c1d1cecd9fb4b79232b1a6c32d03ad78471"
+    },
+    {
+      "kind": "Astra medium architecture contract sanity check, source only",
+      "sha256": "d33b8ec1fcb87b409b4bbb535e5d2880edea814f8640ac2417c8ca751dc1d3f4"
+    }
+  ],
+  "sources": [
+    {
+      "path": "native-auth/Cargo.lock",
+      "sha256": "59a7f877d2aa1ff2b0a25c6bd31d12201b0af1053716e398436a251972d25d29"
+    },
+    {
+      "path": "native-auth/Cargo.toml",
+      "sha256": "965972df3b99936141b603c67c80931aee4dee831fde6662794bbdbbcf42d88b"
+    },
+    {
+      "path": "native-auth/README.md",
+      "sha256": "38f8d918aa94304c8138f2b545d09b51c661198415781e59c786919ed8b90af6"
+    },
+    {
+      "path": "native-auth/src/bin/auth-scope-fixture.rs",
+      "sha256": "7392b3846e2e67336ee7a1740e77b429fc2c97b73fa0fcda1c9cbc5528fdec1a"
+    },
+    {
+      "path": "native-auth/src/cgroup.rs",
+      "sha256": "543bf0a64565c469bc00ebd33dbb8652cba20eaf08bbfbe3856f564a174ebc45"
+    },
+    {
+      "path": "native-auth/src/command.rs",
+      "sha256": "bd7dc8ed1f2fc6eff5a9f4d480f3ea6854c0a9b41d0bf3d717fc8186fd3cc1c6"
+    },
+    {
+      "path": "native-auth/src/command_tests.rs",
+      "sha256": "4a783d469aefb4450541746e90c5f124ff9408e952829340cb4b7da5263007ae"
+    },
+    {
+      "path": "native-auth/src/conversation.rs",
+      "sha256": "9189ed35ab460ff9178f609b496b432018fd2ecbf80cefc806255f473d295ba7"
+    },
+    {
+      "path": "native-auth/src/conversation_io_tests.rs",
+      "sha256": "884620aa6b41fd42dd1645e9f39637181ac35a15261420995a2f6fa66f017e54"
+    },
+    {
+      "path": "native-auth/src/conversation_lifetime_tests.rs",
+      "sha256": "268aecc9dd2c7a4853077229ebeb7aa6bc77e72f1429e5d72518fa57d45c5a6f"
+    },
+    {
+      "path": "native-auth/src/conversation_tests.rs",
+      "sha256": "5f8489ee78c6e66b5b600c1dec4d6ad9b1b9f584c00510bcaaab00d657ffcfe3"
+    },
+    {
+      "path": "native-auth/src/lib.rs",
+      "sha256": "1fa9c23b1039c80b6c53b07dae0339adb15c0459ee2c7fd0f74da44f9be9d43b"
+    },
+    {
+      "path": "native-auth/src/outcome.rs",
+      "sha256": "2ed28576ca8351cad9d6ca7fae8e18a4d92f434e7bbc7ea997223272fdbc5c8c"
+    },
+    {
+      "path": "native-auth/src/owner.rs",
+      "sha256": "1a4a536bc740914f23004f2c31d453d4c1d21215b6b33cfa1ade4f9e6500719a"
+    },
+    {
+      "path": "native-auth/src/parent.rs",
+      "sha256": "87dbc77e98c86a5ce454ee558410ebc98c3168e3924a49fe55a11e686e1ccce1"
+    },
+    {
+      "path": "native-auth/src/parent_process_tests.rs",
+      "sha256": "d483a1c383799cb55620b0633ad5b98de391ddc471987e254652263a9b9e8305"
+    },
+    {
+      "path": "native-auth/src/parent_prompt.rs",
+      "sha256": "57995ac2df00b5cdce3209e88b864659f3a2548dd80864a2b045546d44fbf1f5"
+    },
+    {
+      "path": "native-auth/src/parent_prompt_tests.rs",
+      "sha256": "c2a9471a84f9200e6576a918475be2afd3d180a6c77b0efd6e0ec5036db4703a"
+    },
+    {
+      "path": "native-auth/src/record.rs",
+      "sha256": "df9be4c23909948f3b4822dda371f6cfd797f85d02fb47b1a2f067a5d9897d65"
+    },
+    {
+      "path": "native-pam/src/wire.rs",
+      "sha256": "91b0b974c21e4d775caca8273e1a6ee4898764b3f88a41117b33185bd741702e"
+    },
+    {
+      "path": "tools/native-auth-scope/delegated.py",
+      "sha256": "872d8417da67ab541c1296b7a931753178dc0a5b3824156d7ae71f490d1d4d04"
+    },
+    {
+      "path": "tools/native-auth-setup/delegated.py",
+      "sha256": "22d202c58a385a1c62cc5ad703c85c06f8360e110f115a659a0624c27793f648"
+    }
+  ],
+  "limits": [
+    "Actual parent APIs use a cfg-test constructor around an ordinary exact Child/pidfd and private pipes; no normal root/provisioning constructor",
+    "All worker PID100/wait/ECHILD/EOF/candidate/populated facts and the outcome event are authored synthetic records",
+    "Actual Attempt whole-owner extraction, Terminal output backpressure/EINTR/error, original PAM/cgroup/helper and effective retained faillock are not executed by this selection",
+    "Issued-token stop and original-clock refusal require Some token before mutation; closed snapshots stay unchanged",
+    "Five malformed-stream passing assertions require actual inner natural wait0/EOF/deadpidfd/procabsence before production occupied Drop abort6, and outer exact wait6/EOF/death",
+    "Outer timeout fallback has no independent inner wait receipt, cannot pass and supplies no direct nested-reaping claim; enclosing Docker PID namespace remains owned through closure",
+    "Expected-length public response prefix is compared; these process controls alone do not exclude additional trailing outbound bytes",
+    "The final 59 tests and three ignored helper entries are listed exactly; each ignored entry is invoked only through an owning regression",
+    "No atomic cancellation or deadline cutoff across syscalls; local decoded intent must be applied/dropped before extraction",
+    "Raw observations and Candidate enum supply no actor/connection/Source/locker authority; no broker/actor result, armed receipt, unlock, durable clear or normal Messages reopen",
+    "Separate ARM64 fixture cross-compilation only; earlier ARM40 source cannot qualify these new changes",
+    "No physical phone or matched Google kernel, suspend or hardware qualification"
+  ],
+  "red_sources": [
+    {
+      "path": "native-auth/Cargo.lock",
+      "sha256": "59a7f877d2aa1ff2b0a25c6bd31d12201b0af1053716e398436a251972d25d29"
+    },
+    {
+      "path": "native-auth/Cargo.toml",
+      "sha256": "965972df3b99936141b603c67c80931aee4dee831fde6662794bbdbbcf42d88b"
+    },
+    {
+      "path": "native-auth/README.md",
+      "sha256": "6f5d61307b0ac600a4e8c0417a6c6a1150e4aee52c399c3224c442bc1c3ad5df"
+    },
+    {
+      "path": "native-auth/src/bin/auth-scope-fixture.rs",
+      "sha256": "02fc1b96af27ffef902c4fa6fcb63227748b829407b8c66108d85efd0b498600"
+    },
+    {
+      "path": "native-auth/src/cgroup.rs",
+      "sha256": "543bf0a64565c469bc00ebd33dbb8652cba20eaf08bbfbe3856f564a174ebc45"
+    },
+    {
+      "path": "native-auth/src/command.rs",
+      "sha256": "0208732f37115f5576a10b11855782d67e48d86f71ab3ad6f99f1fe41442d3b6"
+    },
+    {
+      "path": "native-auth/src/command_tests.rs",
+      "sha256": "4a783d469aefb4450541746e90c5f124ff9408e952829340cb4b7da5263007ae"
+    },
+    {
+      "path": "native-auth/src/conversation.rs",
+      "sha256": "e70ec1c725a6be34c48f1c8dd00fe02b3bde15fc22e08e507685436b2c60d6f1"
+    },
+    {
+      "path": "native-auth/src/conversation_io_tests.rs",
+      "sha256": "884620aa6b41fd42dd1645e9f39637181ac35a15261420995a2f6fa66f017e54"
+    },
+    {
+      "path": "native-auth/src/conversation_lifetime_tests.rs",
+      "sha256": "268aecc9dd2c7a4853077229ebeb7aa6bc77e72f1429e5d72518fa57d45c5a6f"
+    },
+    {
+      "path": "native-auth/src/conversation_tests.rs",
+      "sha256": "5f8489ee78c6e66b5b600c1dec4d6ad9b1b9f584c00510bcaaab00d657ffcfe3"
+    },
+    {
+      "path": "native-auth/src/lib.rs",
+      "sha256": "b3d80c8bcbaf0b75e59b403612fc72192a0796799aac44328db9ef54ad2a22ba"
+    },
+    {
+      "path": "native-auth/src/owner.rs",
+      "sha256": "8c9e2ee6cb8e564a139c6f4fad55b444693f761f7f2288d15017ac7551491223"
+    },
+    {
+      "path": "native-auth/src/parent.rs",
+      "sha256": "8598e2f50c85529b6dac349713e9634c12537145d548ca52f59d9df53b4a0d71"
+    },
+    {
+      "path": "native-auth/src/parent_process_tests.rs",
+      "sha256": "b40de5620fc80dfc640145cef04d585cb1101b8a7dfdaefc40d8e257fe963167"
+    },
+    {
+      "path": "native-auth/src/parent_prompt.rs",
+      "sha256": "dc6736b231e2a1e7b29762ae6c6bc3e027888875eb376597346bb7e7ef26c400"
+    },
+    {
+      "path": "native-auth/src/parent_prompt_tests.rs",
+      "sha256": "a16087e69bf681944a8fdf9122de66336f58cb8061ffd745511dcd27bb4578db"
+    },
+    {
+      "path": "native-auth/src/record.rs",
+      "sha256": "63302aa97760b7c4be9e74ca9eac96c7785f97a185b1d255ab646d1d9bb8215d"
+    },
+    {
+      "path": "native-pam/src/wire.rs",
+      "sha256": "91b0b974c21e4d775caca8273e1a6ee4898764b3f88a41117b33185bd741702e"
+    },
+    {
+      "path": "tools/native-auth-scope/delegated.py",
+      "sha256": "ac1fb8d8d39de3cc0c66068b55b1a44abf192d1623077d90598428cf5d67be52"
+    },
+    {
+      "path": "tools/native-auth-setup/delegated.py",
+      "sha256": "e77cfe021f87b4e85dfd5a0d22d5bccf8e165cfb26f86a8a7fe02d222f349296"
+    }
+  ]
+}

@@ -83,7 +83,13 @@ pass under an [actual Arch ARM64 kernel](native-auth-components-arm.md) as UID10
 that selection runs no complete owner or PAM.
 A later [host parent process regression](native-auth-parent-process.md) exercises
 actual ScopeChild APIs and real peer wait/EOF; its worker/cgroup facts remain
-synthetic. The host suite now passes41 tests, separately from the ARM40 selection.
+synthetic. That historical host suite passes41 tests, separately from ARM40.
+The later [closed-outcome selection](native-auth-closed-outcome.md) passes59 host
+tests after actual event7 refusal, with live-peer wait/EOF gating, one-time
+classification, issued-token stop/expiry refusal and five malformed-stream
+quarantine cases. Worker extraction and terminal forwarding compile but remain
+unexecuted; no actor result or unlock authority is added. The ARM40 snapshot
+retains its older source.
 Original PAM+scope composition, installed broker/containment, actor-owned receipts,
 exact unlock and synced durable restoration remain open. No physical model is qualified. See
 [worker boundary](native-pam-worker.md).

@@ -1,6 +1,10 @@
 //! Dedicated worker-tree ownership. Recursive termination never substitutes
 //! for actual worker/adopted waits, EOF and an empty anchored workload.
-use crate::{boottime_ns, cgroup::Leaf};
+use crate::{
+    boottime_ns,
+    cgroup::Leaf,
+    outcome::{Issuer, WorkerOutcome},
+};
 use rustix::{
     event::{self, PollFd, PollFlags},
     fd::{AsFd, OwnedFd},
@@ -131,6 +135,8 @@ impl DedicatedSupervisor {
             leaf,
             conversation: Conversation::new(until),
             commands: crate::command::Decoder::new(),
+            issuer: Issuer::new(until),
+            outcome_taken: false,
             barrier: Barrier::new(pid),
             receipts: Vec::new(),
         };
@@ -265,6 +271,41 @@ pub(crate) use conversation::ResponseFrame;
 #[cfg(test)]
 use conversation::parse_worker_protocol;
 
+// Pure gate shared by the actual owner and ordinary model tests. Synthetic
+// test facts do not establish actual process/cgroup closure.
+fn extract_worker_outcome(
+    barrier: &Barrier,
+    conversation_ready: bool,
+    ingress_idle: bool,
+    receipts_empty: bool,
+    issuer: &Issuer,
+    taken: &mut bool,
+) -> Option<WorkerOutcome> {
+    if *taken
+        || !barrier.closed()
+        || !(2..=i32::MAX as u32).contains(&barrier.worker_pid)
+        || barrier.retired.is_some()
+        || barrier.worker_wait != Some(0)
+        || !barrier.worker_ready
+        || !barrier.start_released
+        || barrier.direct_kill_attempted
+        || barrier.scope_kill_attempted
+        || !conversation_ready
+        || !ingress_idle
+        || !receipts_empty
+    {
+        return None;
+    }
+    let candidate = barrier.candidate?;
+    // Fresh original clock sample follows every identity/closure validation.
+    if !issuer.current() {
+        return None;
+    }
+    *taken = true;
+    // A deadline crossing here cannot create a ticket; the memo stays taken.
+    issuer.worker(barrier.worker_pid, candidate)
+}
+
 /// Owns every worker handle until actual direct/adopted waits and cgroup-empty
 /// closure. The parent must own this dedicated supervisor process separately:
 /// filesystem/kill syscalls here never run in the lifecycle actor's poll path.
@@ -276,6 +317,8 @@ pub struct Attempt {
     leaf: Leaf,
     conversation: Conversation,
     commands: crate::command::Decoder,
+    issuer: Issuer,
+    outcome_taken: bool,
     barrier: Barrier,
     receipts: Vec<WaitReceipt>,
 }
@@ -304,13 +347,45 @@ impl Attempt {
     }
 
     pub fn deadline(&self) -> u64 {
-        self.conversation.deadline()
+        self.issuer.deadline()
+    }
+
+    /// One sealed classification after actual whole-owner closure. Callers must
+    /// first apply/drop every local decoded Batch and drain the wait receipts.
+    /// Idle decoding is not an atomic cutoff against unread pipe cancellation.
+    pub fn take_worker_outcome(&mut self) -> Option<WorkerOutcome> {
+        extract_worker_outcome(
+            &self.barrier,
+            self.conversation.outcome_ready(&self.barrier),
+            self.commands.is_idle(),
+            self.receipts.is_empty(),
+            &self.issuer,
+            &mut self.outcome_taken,
+        )
+    }
+
+    /// Observation for pending serialized fixture output. It creates no token
+    /// and cannot retract bytes already delivered to the independently checking
+    /// parent. The original deadline is never replaced or renewed.
+    pub fn worker_outcome_current(&self) -> bool {
+        self.outcome_taken
+            && self.commands.is_idle()
+            && self.conversation.outcome_ready(&self.barrier)
+            && self.issuer.current()
     }
 
     /// Retire synchronously before touching the workload. A successful kill
     /// write or direct signal grants no cleanup/result authority.
     pub fn retire(&mut self, reason: Retired) {
+        // Revoke even after physical closure, before any other retirement work.
+        self.issuer.revoke();
         self.commands.retire();
+        if self.barrier.closed() {
+            // A terminal Snapshot is immutable. Result revocation never rewrites
+            // it or sends a new signal/kill to an already closed workload.
+            self.conversation.discard();
+            return;
+        }
         // Release plaintext before any potentially blocked cgroup operation.
         self.conversation.retire(&mut self.barrier, reason);
         if self.barrier.scope_kill_attempted {
@@ -350,6 +425,9 @@ impl Attempt {
 
     /// Observation only. The original deadline is never replaced or renewed.
     pub fn pending_hidden_prompt(&self) -> Option<u16> {
+        if self.barrier.closed() {
+            return None;
+        }
         self.conversation.pending_hidden_prompt(&self.barrier)
     }
 
@@ -359,6 +437,11 @@ impl Attempt {
         sequence: u16,
         value: zeroize::Zeroizing<Vec<u8>>,
     ) -> io::Result<()> {
+        if self.barrier.closed() {
+            drop(value);
+            self.retire(Retired::Protocol);
+            return Err(io::ErrorKind::InvalidInput.into());
+        }
         let result = self
             .conversation
             .respond_hidden_prompt(&mut self.barrier, sequence, value);
@@ -371,6 +454,12 @@ impl Attempt {
     /// At most one bounded protocol read/write, one direct wait and sixteen
     /// adopted WNOHANG waits. No wait-for-exit loop runs on an actor thread.
     pub fn poll(&mut self) {
+        if self.barrier.closed() {
+            if boottime_ns() >= self.issuer.deadline() {
+                self.retire(Retired::Deadline);
+            }
+            return;
+        }
         if boottime_ns() >= self.conversation.deadline() {
             self.retire(Retired::Deadline);
         }
@@ -453,6 +542,7 @@ impl Attempt {
 
 impl Drop for Attempt {
     fn drop(&mut self) {
+        self.issuer.revoke();
         if !self.barrier.closed() {
             // Never detach an occupied tree merely because its owner returned.
             std::process::abort();
@@ -462,7 +552,7 @@ impl Drop for Attempt {
 
 #[cfg(test)]
 mod tests {
-    use super::{Barrier, Candidate, Retired};
+    use super::{Barrier, Candidate, Issuer, Retired, extract_worker_outcome};
 
     #[test]
     fn success_candidate_cannot_release_a_live_or_unreaped_tree() {
@@ -507,6 +597,122 @@ mod tests {
         barrier.populated = false;
         barrier.cleanup_fault = true;
         assert!(barrier.snapshot().occupied);
+    }
+    fn healthy_closed(candidate: Candidate) -> Barrier {
+        let mut barrier = Barrier::new(100);
+        barrier.candidate = Some(candidate);
+        barrier.worker_ready = true;
+        barrier.start_released = true;
+        barrier.worker_wait = Some(0);
+        barrier.worker_stdout_eof = true;
+        barrier.echild = true;
+        barrier.populated = false;
+        barrier
+    }
+
+    #[test]
+    fn closed_outcome_gate_accepts_each_classification_once_without_snapshot_mutation() {
+        for candidate in [
+            Candidate::Authenticated,
+            Candidate::Denied,
+            Candidate::Unavailable,
+        ] {
+            let barrier = healthy_closed(candidate);
+            let before = barrier.snapshot();
+            let issuer = Issuer::new(crate::boottime_ns() + super::MAX_ATTEMPT_NS);
+            let mut taken = false;
+            let outcome = extract_worker_outcome(&barrier, true, true, true, &issuer, &mut taken)
+                .expect("healthy model emits one sealed classification");
+            assert!(outcome.into_parts() == Some((100, candidate, issuer.deadline())));
+            assert!(taken && barrier.snapshot() == before);
+            assert!(
+                extract_worker_outcome(&barrier, true, true, true, &issuer, &mut taken).is_none()
+            );
+        }
+    }
+
+    #[test]
+    fn dropping_first_worker_outcome_never_allows_a_second_extraction() {
+        let barrier = healthy_closed(Candidate::Authenticated);
+        let issuer = Issuer::new(crate::boottime_ns() + super::MAX_ATTEMPT_NS);
+        let mut taken = false;
+        drop(extract_worker_outcome(&barrier, true, true, true, &issuer, &mut taken).unwrap());
+        assert!(taken);
+        assert!(extract_worker_outcome(&barrier, true, true, true, &issuer, &mut taken).is_none());
+    }
+
+    #[test]
+    fn worker_outcome_gate_refuses_each_missing_closure_and_health_condition() {
+        let baseline = healthy_closed(Candidate::Authenticated);
+        let mutations: [fn(&mut Barrier); 12] = [
+            |barrier| barrier.worker_wait = None,
+            |barrier| barrier.worker_wait = Some(9),
+            |barrier| barrier.worker_stdout_eof = false,
+            |barrier| barrier.echild = false,
+            |barrier| barrier.populated = true,
+            |barrier| barrier.cleanup_fault = true,
+            |barrier| barrier.worker_ready = false,
+            |barrier| barrier.start_released = false,
+            |barrier| barrier.retired = Some(Retired::Cancel),
+            |barrier| barrier.candidate = None,
+            |barrier| barrier.direct_kill_attempted = true,
+            |barrier| barrier.scope_kill_attempted = true,
+        ];
+        for mutate in mutations {
+            let mut barrier = baseline;
+            mutate(&mut barrier);
+            let issuer = Issuer::new(crate::boottime_ns() + super::MAX_ATTEMPT_NS);
+            let mut taken = false;
+            assert!(
+                extract_worker_outcome(&barrier, true, true, true, &issuer, &mut taken).is_none()
+            );
+            assert!(!taken);
+        }
+    }
+
+    #[test]
+    fn worker_outcome_gate_refuses_transport_ingress_or_unforwarded_receipts() {
+        let barrier = healthy_closed(Candidate::Authenticated);
+        for (conversation, ingress, receipts) in [
+            (false, true, true),
+            (true, false, true),
+            (true, true, false),
+        ] {
+            let issuer = Issuer::new(crate::boottime_ns() + super::MAX_ATTEMPT_NS);
+            let mut taken = false;
+            assert!(
+                extract_worker_outcome(
+                    &barrier,
+                    conversation,
+                    ingress,
+                    receipts,
+                    &issuer,
+                    &mut taken
+                )
+                .is_none()
+            );
+            assert!(!taken);
+        }
+    }
+
+    #[test]
+    fn worker_outcome_revocation_and_expiry_preserve_closed_snapshot() {
+        let barrier = healthy_closed(Candidate::Denied);
+        let before = barrier.snapshot();
+        let issuer = Issuer::new(crate::boottime_ns() + super::MAX_ATTEMPT_NS);
+        let mut taken = false;
+        let outcome =
+            extract_worker_outcome(&barrier, true, true, true, &issuer, &mut taken).unwrap();
+        issuer.revoke();
+        assert!(outcome.into_parts().is_none());
+        assert!(barrier.snapshot() == before);
+        let expired = Issuer::new(crate::boottime_ns());
+        let mut expired_taken = false;
+        assert!(
+            extract_worker_outcome(&barrier, true, true, true, &expired, &mut expired_taken)
+                .is_none()
+        );
+        assert!(!expired_taken && barrier.snapshot() == before);
     }
 }
 

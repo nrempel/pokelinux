@@ -51,7 +51,7 @@ this historical selection. See
 [current conversation I/O](native-auth-conversation-io.md) and the historical
 [primitives](native-auth-conversation.md).
 
-The current isolated parent/supervisor forwarding loops now compile, using
+The earlier isolated parent/supervisor forwarding loops compile, using
 PKSCOPE3 credential-free prompt records and bounded zeroizing command frames.
 A real-pipe production record-decoder RED passes19/fails1 after an accepted
 baseline. A separate new-API legacy-command extraction passes1/fails11 before
@@ -82,6 +82,21 @@ explicit ignored helper invocations, strict Clippy and ARM64 compilation pass.
 The earlier ARM40 selection does not qualify the new test. See
 [parent process report](native-auth-parent-process.md) and
 [proof](evidence/native-auth-parent-process-provenance.json).
+The current PKSCOPE4 source adds opaque one-time local closed classifications.
+An actual event7 refusal RED first preserves31 earlier passes, peer natural
+wait0/EOF/dead pidfd/proc absence, sticky Protocol quarantine and test abort6
+(Cargo101), without a complete suite summary. The final host suite passes59
+with3 explicit ignored helpers invoked by their parents. Actual ScopeChild waits
+for the live peer's exit/EOF before issuance; already-issued tokens are refused
+after Stop or original deadline without rewriting terminal snapshots. Five
+malformed-stream controls require inner actual closure before occupied Drop
+abort, then outer wait6/EOF. Timeout fallback supplies no independent inner wait
+receipt and cannot pass; the owned container remains enclosed until closure.
+Worker extraction and terminal serialization are wired/model-tested/compiled,
+not actual Attempt/PAM/cgroup runtime evidence. Strict Clippy and separate ARM64
+compilation pass; the earlier ARM40 snapshot cannot qualify these changes. No
+actor result/receipt/unlock ingress is added. See [closed outcomes](native-auth-closed-outcome.md)
+and [proof](evidence/native-auth-closed-outcome-provenance.json).
 Next: runtime qualification of actual parent/Attempt forwarding and original PAM+scope, including retained
 faillock and remaining fixed alias/filter routes, then broker/actor one-shot
 synced restoration and a normal Messages reopen. Keep Source100ms/no-revival and all hardware gates.

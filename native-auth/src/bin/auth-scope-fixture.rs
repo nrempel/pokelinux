@@ -28,6 +28,55 @@ fn read_commands(
     }
 }
 
+// Capture the terminal Snapshot once. After its STATE has drained, only one
+// outcome and the identical CLOSED Snapshot may follow. No result is timeless.
+struct Terminal {
+    snapshot: pokelinux_auth_scope::owner::Snapshot,
+    outcome_decided: bool,
+    pending_outcome: Option<[u8; record::SIZE]>,
+}
+
+impl Terminal {
+    fn new(snapshot: pokelinux_auth_scope::owner::Snapshot) -> Self {
+        Self {
+            snapshot,
+            outcome_decided: false,
+            pending_outcome: None,
+        }
+    }
+
+    fn write_once(
+        &mut self,
+        attempt: &mut pokelinux_auth_scope::owner::Attempt,
+        output: &impl rustix::fd::AsFd,
+    ) -> io::Result<bool> {
+        if !self.outcome_decided {
+            self.outcome_decided = true;
+            self.pending_outcome = attempt
+                .take_worker_outcome()
+                .and_then(|outcome| record::outcome(outcome).ok());
+        }
+        // The opaque token was consumed by the serializer. Credential-free
+        // bytes can wait on EAGAIN, but retirement/expiry discards them before
+        // another write. Already delivered bytes still need parent checks.
+        if !attempt.worker_outcome_current() {
+            self.pending_outcome = None;
+        }
+        if let Some(bytes) = &self.pending_outcome {
+            match rustix::io::write(output, bytes) {
+                Ok(record::SIZE) => self.pending_outcome = None,
+                Err(Errno::AGAIN | Errno::INTR) => return Ok(false),
+                _ => return Err(io::ErrorKind::BrokenPipe.into()),
+            }
+        }
+        match rustix::io::write(output, &record::state(self.snapshot, record::CLOSED)) {
+            Ok(record::SIZE) => Ok(true),
+            Err(Errno::AGAIN | Errno::INTR) => Ok(false),
+            _ => Err(io::ErrorKind::BrokenPipe.into()),
+        }
+    }
+}
+
 fn run(parent: u32, until: u64) -> io::Result<()> {
     let supervisor = DedicatedSupervisor::enter(parent)?;
     let input = duplicate_nonblocking(std::io::stdin())?;
@@ -37,6 +86,7 @@ fn run(parent: u32, until: u64) -> io::Result<()> {
     let mut previous = None;
     let mut parent_gone = false;
     let mut last_prompt = None;
+    let mut terminal = None;
     loop {
         // This child may block in a cgroup syscall. Its parent never performs
         // those syscalls: it owns this Child/pidfd and polls private pipes only.
@@ -68,11 +118,14 @@ fn run(parent: u32, until: u64) -> io::Result<()> {
             }
         }
         let state = attempt.snapshot();
-        if previous != Some(state) && queue.len() < 64 {
+        if terminal.is_none() && previous != Some(state) && queue.len() < 64 {
             queue.push_back(record::state(state, record::STATE));
             previous = Some(state);
+            if !state.occupied {
+                terminal = Some(Terminal::new(state));
+            }
         }
-        if state.retired.is_some() {
+        if state.retired.is_some() || terminal.is_some() {
             queue.retain(|bytes| {
                 u32::from_le_bytes(bytes[8..12].try_into().unwrap()) != record::HIDDEN_PROMPT
             });
@@ -104,18 +157,24 @@ fn run(parent: u32, until: u64) -> io::Result<()> {
             }
         }
         if !state.occupied {
-            if !parent_gone {
-                // The driver still independently waits this supervisor. A
-                // CLOSED record or its pidfd death alone is never that wait.
-                if queue.is_empty() {
-                    match rustix::io::write(&output, &record::state(state, record::CLOSED)) {
-                        Ok(record::SIZE) => return Ok(()),
-                        Err(Errno::AGAIN | Errno::INTR) => {}
-                        _ => return Ok(()),
+            if parent_gone {
+                return Ok(());
+            }
+            // The driver still independently waits this supervisor. A CLOSED
+            // record or pidfd death alone never substitutes for that wait.
+            // Every locally read Batch was applied and its read buffer dropped
+            // above. An unread pipe cancellation can still race this boundary.
+            if queue.is_empty()
+                && let Some(terminal) = &mut terminal
+            {
+                match terminal.write_once(&mut attempt, &output) {
+                    Ok(true) => return Ok(()),
+                    Ok(false) => {}
+                    Err(_) => {
+                        attempt.retire(Retired::ParentGone);
+                        return Ok(());
                     }
                 }
-            } else {
-                return Ok(());
             }
         }
         std::thread::sleep(std::time::Duration::from_millis(2));

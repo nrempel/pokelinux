@@ -11,6 +11,10 @@ pub(super) struct PromptQueue {
 }
 
 impl PromptQueue {
+    pub(super) fn is_empty(&self) -> bool {
+        self.pending.is_none() && self.response.is_none()
+    }
+
     pub(super) fn clear(&mut self) {
         self.response = None;
         self.pending = None;

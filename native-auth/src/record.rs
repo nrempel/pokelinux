@@ -2,18 +2,27 @@
 use crate::owner::{Snapshot, WaitReceipt};
 
 pub const SIZE: usize = 48;
-pub const MAGIC: &[u8; 8] = b"PKSCOPE3";
+pub const MAGIC: &[u8; 8] = b"PKSCOPE4";
 pub const STATE: u32 = 1;
 pub const DIRECT_WAIT: u32 = 2;
 pub const ADOPTED_WAIT: u32 = 3;
 pub const CLOSED: u32 = 4;
 pub const PARENT: u32 = 5;
 pub const HIDDEN_PROMPT: u32 = 6;
+pub const OUTCOME: u32 = 7;
 
 pub enum Decoded {
     State(Snapshot, bool),
     Wait(WaitReceipt),
-    HiddenPrompt { worker_pid: u32, sequence: u16 },
+    HiddenPrompt {
+        worker_pid: u32,
+        sequence: u16,
+    },
+    Outcome {
+        worker_pid: u32,
+        value: crate::owner::Candidate,
+        until: u64,
+    },
 }
 
 pub fn decode(bytes: &[u8; SIZE]) -> std::io::Result<Decoded> {
@@ -23,6 +32,26 @@ pub fn decode(bytes: &[u8; SIZE]) -> std::io::Result<Decoded> {
         return Err(invalid());
     }
     let event = value(8);
+    if event == OUTCOME {
+        if value(12) != 0 || !(2..=i32::MAX as u32).contains(&value(16)) {
+            return Err(invalid());
+        }
+        let outcome = match value(20) {
+            0 => crate::owner::Candidate::Authenticated,
+            1 => crate::owner::Candidate::Denied,
+            2 => crate::owner::Candidate::Unavailable,
+            _ => return Err(invalid()),
+        };
+        let until = u64::from_le_bytes(bytes[24..32].try_into().unwrap());
+        if until == 0 {
+            return Err(invalid());
+        }
+        return Ok(Decoded::Outcome {
+            worker_pid: value(16),
+            value: outcome,
+            until,
+        });
+    }
     if event == HIDDEN_PROMPT {
         if value(12) != 0
             || !(2..=i32::MAX as u32).contains(&value(16))
@@ -136,6 +165,19 @@ fn put(record: &mut [u8; SIZE], at: usize, value: u32) {
     record[at..at + 4].copy_from_slice(&value.to_le_bytes());
 }
 
+/// Serialize only a consumed opaque worker token, never a raw candidate enum.
+pub fn outcome(value: crate::WorkerOutcome) -> std::io::Result<[u8; SIZE]> {
+    let (worker_pid, value, until) = value.into_parts().ok_or(std::io::ErrorKind::TimedOut)?;
+    let mut result = [0; SIZE];
+    result[..8].copy_from_slice(MAGIC);
+    put(&mut result, 8, OUTCOME);
+    put(&mut result, 16, worker_pid);
+    put(&mut result, 20, value as u32);
+    result[24..32].copy_from_slice(&until.to_le_bytes());
+    result[32..40].copy_from_slice(&crate::boottime_ns().to_le_bytes());
+    Ok(result)
+}
+
 pub fn hidden_prompt(worker_pid: u32, sequence: u16) -> [u8; SIZE] {
     let mut result = [0; SIZE];
     result[..8].copy_from_slice(MAGIC);
@@ -198,6 +240,58 @@ pub fn wait(receipt: WaitReceipt) -> [u8; SIZE] {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn outcome_wire_fields_are_strict_and_raw_decoding_grants_no_ticket() {
+        let issuer =
+            crate::outcome::Issuer::new(crate::boottime_ns() + crate::owner::MAX_ATTEMPT_NS);
+        for kind in [
+            crate::owner::Candidate::Authenticated,
+            crate::owner::Candidate::Denied,
+            crate::owner::Candidate::Unavailable,
+        ] {
+            let bytes = outcome(issuer.worker(100, kind).unwrap()).unwrap();
+            assert!(
+                matches!(decode(&bytes), Ok(Decoded::Outcome { worker_pid: 100, value, until })
+                if value == kind && until == issuer.deadline())
+            );
+            for (at, value) in [
+                (12, 1_u64),
+                (16, 0),
+                (16, 1),
+                (16, u32::MAX as u64),
+                (20, 3),
+                (24, 0),
+                (40, 1),
+            ] {
+                let mut invalid = bytes;
+                if at == 24 || at == 40 {
+                    invalid[at..at + 8].copy_from_slice(&value.to_le_bytes());
+                } else {
+                    invalid[at..at + 4].copy_from_slice(&(value as u32).to_le_bytes());
+                }
+                assert!(decode(&invalid).is_err(), "invalid outcome at {at}");
+            }
+        }
+        for pid in [0, 1, u32::MAX] {
+            assert!(
+                issuer
+                    .worker(pid, crate::owner::Candidate::Denied)
+                    .is_none()
+            );
+        }
+    }
+
+    #[test]
+    fn serializer_refuses_revoked_worker_token() {
+        let issuer =
+            crate::outcome::Issuer::new(crate::boottime_ns() + crate::owner::MAX_ATTEMPT_NS);
+        let token = issuer
+            .worker(100, crate::owner::Candidate::Authenticated)
+            .unwrap();
+        issuer.revoke();
+        assert!(outcome(token).is_err());
+    }
 
     fn closed() -> Snapshot {
         Snapshot {

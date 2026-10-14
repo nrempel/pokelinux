@@ -36,8 +36,8 @@ leaf. See [scope report](../docs/native-auth-scope.md) and
 and actual membership under `pokelinux-auth-scope-test.service`; no caller chooses
 an executable, account, PAM policy or cgroup. Ordinary isolated entries are
 `--isolated-parent` and `--isolated-supervisor`, each with exact parent PID and
-original deadline. PKSCOPE3 provides48-byte credential-free state, wait and hidden-
-prompt records; no historical decoder is retained. Response bytes travel only on
+original deadline. PKSCOPE4 provides48-byte credential-free state, wait, hidden-
+prompt and closed-classification records; no historical decoder is retained. Response bytes travel only on
 the private command pipe, in bounded zeroizing frames.
 The synthetic PAM module uses a checked nonblocking writable FIFO at stderr FD2.
 The historical fixture rejected hidden prompts. The later host-only parser and
@@ -62,6 +62,14 @@ constructs actual ScopeChild around one owned ordinary peer and exercises prompt
 response, production polling and actual peer wait0/EOF. Its workload observations
 are synthetic, and it bypasses normal root/provisioning construction. See
 [parent process evidence](../docs/native-auth-parent-process.md).
+The later [closed-outcome selection](../docs/native-auth-closed-outcome.md) adds
+sealed one-time classifications. The parent requires matching closed scope
+records plus its actual peer wait0/EOF, then rechecks the exact owner, original
+clock and revocation at consumption. Stop/expiry after physical closure revoke
+results without changing the terminal snapshot or reoccupying capacity. Raw
+records are observations, never opaque tickets. Worker extraction and terminal
+serializer are wired in source; their real Attempt/PAM/cgroup composition remains
+unqualified. No broker/actor unlock ingress is added.
 Full forwarding and original PAM+scope
 remain runtime gates. A candidate is not authentication authority. See the
 [current forwarding report](../docs/native-auth-parent-forwarding.md),
@@ -86,8 +94,9 @@ not native cleanup. A new normal two-group regression also passes. The explicit
 absent from the selected normal ELF. See [setup report](../docs/native-auth-setup.md)
 and [proof](../docs/evidence/native-auth-setup-provenance.json).
 
-Run the forty-one host component tests with `cargo test --features isolated-fixture`
+Run the host component tests with `cargo test --features isolated-fixture`
 from this crate. The actual cgroup fixture needs the separately provisioned
 disposable guest; do not run its root entry on the Harbour host.
-Two additional ignored helper entries run only as the exact subprocesses of
-their respective parent regressions.
+Explicit ignored helper entries run only as the exact subprocesses of their
+respective parent regressions. Expected protocol quarantine controls require
+actual peer cleanup before exercising the occupied-owner abort.

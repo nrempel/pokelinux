@@ -1,5 +1,8 @@
 # Native authentication parent process boundary
 
+This report records the historical41-test selection committed as `baf7b79`.
+Later PKSCOPE4 behavior and results are in [closed outcomes](native-auth-closed-outcome.md).
+
 The actual Rust ScopeChild now passes a host prompt/response regression against
 one owned ordinary peer process. The complete host suite passes41 tests, with
 formatting and strict default/all-target/all-feature Clippy. This adds a positive

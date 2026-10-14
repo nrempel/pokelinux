@@ -172,7 +172,7 @@ class Attempt:
             data = bytes(self.scope_buffer[:48])
             del self.scope_buffer[:48]
             magic, event, flags, pid, status, adopted, retired, observed, reserved = struct.unpack('<8sIIIIIIQQ', data)
-            require(magic == b'PKSCOPE3' and reserved == 0 and event in (1, 2, 3, 4, 5), 'current_scope_frame')
+            require(magic == b'PKSCOPE4' and reserved == 0 and event in (1, 2, 3, 4, 5), 'current_scope_frame')
             require(flags & ~(0x1fff if event != 5 else 0x79) == 0, 'current_scope_flags')
             require(2 <= pid <= 2147483647, 'scope_pid')
             if event in (2, 3):

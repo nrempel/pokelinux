@@ -39,6 +39,21 @@ impl Snapshot {
     }
 }
 
+fn healthy_closed(scope: crate::owner::Snapshot) -> bool {
+    !scope.occupied
+        && scope.retired.is_none()
+        && scope.candidate_buffered
+        && scope.worker_ready
+        && scope.start_released
+        && scope.worker_wait == Some(0)
+        && scope.worker_stdout_eof
+        && scope.final_echild
+        && !scope.populated
+        && !scope.cleanup_fault
+        && !scope.direct_kill_attempted
+        && !scope.scope_kill_attempted
+}
+
 fn scope_follows(previous: crate::owner::Snapshot, next: crate::owner::Snapshot) -> bool {
     previous.worker_pid == next.worker_pid
         && (!previous.worker_ready || next.worker_ready)
@@ -102,6 +117,9 @@ pub struct ScopeChild {
     waits: WaitJournal,
     prompts: PromptQueue,
     commands: crate::command::Decoder,
+    outcome_issuer: crate::outcome::Issuer,
+    outcome_taken: bool,
+    outcome: Option<crate::owner::Candidate>,
 }
 
 enum IsolatedProfile {
@@ -199,6 +217,9 @@ impl ScopeChild {
             waits: WaitJournal::default(),
             prompts: PromptQueue::default(),
             commands: crate::command::Decoder::new(),
+            outcome_issuer: crate::outcome::Issuer::new(until),
+            outcome_taken: false,
+            outcome: None,
         };
         let setup = || -> io::Result<()> {
             if owner._alive.is_none() {
@@ -234,6 +255,8 @@ impl ScopeChild {
     /// Retire before any future IPC. A stopped/uninterruptible supervisor never
     /// delays this operation and never releases the occupied parent slot.
     pub fn retire(&mut self, reason: Retired) {
+        // Result revocation applies even after physical capacity is closed.
+        self.outcome_issuer.revoke();
         self.commands.retire();
         // Release any queued plaintext before future IPC or observation.
         self.prompts.clear();
@@ -292,6 +315,47 @@ impl ScopeChild {
         result
     }
 
+    fn closed_outcome_current(&self) -> bool {
+        !self.state.occupied
+            && self.state.retired.is_none()
+            && !self.state.cleanup_fault
+            && self.state.supervisor_wait == Some(0)
+            && self.state.stdout_eof
+            && self.state.scope_reported_closed
+            && self.incoming.is_empty()
+            && self.commands.is_idle()
+            && self.prompts.is_empty()
+            && self
+                .last_scope
+                .is_some_and(|scope| healthy_closed(scope) && self.waits.matches(scope))
+            && self.outcome.is_some()
+            && self.outcome_issuer.deadline() == self.until
+            && self.outcome_issuer.current()
+    }
+
+    /// Mint once from this owner's closure, never from a caller's snapshot.
+    /// This local classification does not authorize actor restoration.
+    pub fn take_closed_outcome(&mut self) -> Option<crate::ClosedOutcome> {
+        if self.outcome_taken || !self.closed_outcome_current() {
+            return None;
+        }
+        self.outcome_taken = true;
+        self.outcome_issuer.parent(self.outcome?)
+    }
+
+    /// Consume by value against this exact live owner and original deadline.
+    /// The returned classification alone is not actor/connection authority.
+    pub fn consume_closed_outcome(
+        &self,
+        value: crate::ClosedOutcome,
+    ) -> Option<crate::owner::Candidate> {
+        if !self.outcome_taken || !self.closed_outcome_current() {
+            return None;
+        }
+        let kind = self.outcome_issuer.consume(value)?;
+        (self.outcome == Some(kind)).then_some(kind)
+    }
+
     pub fn poll(&mut self) {
         if boottime_ns() >= self.until {
             self.retire(Retired::Deadline);
@@ -347,6 +411,17 @@ impl ScopeChild {
             }
             match record::decode(&bytes) {
                 Ok(record::Decoded::State(snapshot, closed)) => {
+                    if self.outcome.is_some() && !closed {
+                        self.state.cleanup_fault = true;
+                    }
+                    if closed
+                        && snapshot.candidate_buffered
+                        && self.outcome.is_none()
+                        && self.state.retired.is_none()
+                        && boottime_ns() < self.until
+                    {
+                        self.state.cleanup_fault = true;
+                    }
                     if !self.waits.matches(snapshot) {
                         self.state.cleanup_fault = true;
                     }
@@ -368,6 +443,26 @@ impl ScopeChild {
                         self.state.cleanup_fault = true;
                     }
                 }
+                Ok(record::Decoded::Outcome {
+                    worker_pid,
+                    value,
+                    until,
+                }) => {
+                    let valid = self.outcome.is_none()
+                        && !self.state.scope_reported_closed
+                        && until == self.until
+                        && self.last_scope.is_some_and(|scope| {
+                            healthy_closed(scope)
+                                && scope.worker_pid == worker_pid
+                                && self.waits.matches(scope)
+                        });
+                    if valid {
+                        self.outcome = Some(value);
+                    } else {
+                        self.state.cleanup_fault = true;
+                        self.retire(Retired::Protocol);
+                    }
+                }
                 Ok(record::Decoded::HiddenPrompt {
                     worker_pid,
                     sequence,
@@ -383,7 +478,7 @@ impl ScopeChild {
                     }
                 }
                 Ok(record::Decoded::Wait(receipt)) => {
-                    if !self.waits.observe(receipt) {
+                    if self.outcome.is_some() || !self.waits.observe(receipt) {
                         self.state.cleanup_fault = true;
                     }
                 }
@@ -426,6 +521,7 @@ impl ScopeChild {
 
 impl Drop for ScopeChild {
     fn drop(&mut self) {
+        self.outcome_issuer.revoke();
         if self.state.occupied {
             std::process::abort();
         }

@@ -92,6 +92,10 @@ impl Decoder {
         }
     }
 
+    pub(crate) fn is_idle(&self) -> bool {
+        matches!(self.state, State::Opcode)
+    }
+
     /// Drop an incomplete command. This does not revive an unusable decoder.
     /// The caller must also discard its unread input before reusing the stream.
     pub fn discard(&mut self) {

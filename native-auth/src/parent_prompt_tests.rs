@@ -41,7 +41,7 @@ fn credential_free_prompt_crosses_real_pipe_after_an_accepted_state() {
     ));
 
     // Emit the next event only after the baseline was actually decoded. Use
-    // current MAGIC so the same test follows the planned PKSCOPE3 revision.
+    // current MAGIC so the test follows the current private protocol revision.
     let mut prompt = [0; record::SIZE];
     prompt[..8].copy_from_slice(record::MAGIC);
     prompt[8..12].copy_from_slice(&6_u32.to_le_bytes());
@@ -297,7 +297,9 @@ fn hidden_prompt_record_checks_every_non_timestamp_field_and_rejects_old_magic()
         bytes[at..at + 4].copy_from_slice(&value.to_le_bytes());
         assert!(record::decode(&bytes).is_err());
     }
-    let mut historical = valid;
-    historical[..8].copy_from_slice(b"PKSCOPE2");
-    assert!(record::decode(&historical).is_err());
+    for magic in [b"PKSCOPE2", b"PKSCOPE3"] {
+        let mut historical = valid;
+        historical[..8].copy_from_slice(magic);
+        assert!(record::decode(&historical).is_err());
+    }
 }

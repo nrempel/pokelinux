@@ -7,6 +7,8 @@
 
 mod cgroup;
 pub mod command;
+mod outcome;
+pub use outcome::{ClosedOutcome, WorkerOutcome};
 pub mod owner;
 pub mod parent;
 pub mod record;
