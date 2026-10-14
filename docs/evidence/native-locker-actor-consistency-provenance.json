@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "date_UTC": "2026-10-14",
+  "publication_base_commit": "7c19f48dcf414c434d94e5bee8dcd80925b32554",
+  "scope": "actual typed Provider/actor boundary with owned pidfds, host and Arch ARM lifecycle component runtime; no Source IPC/authentication/unlock",
+  "production_sources": {
+    "native-lifecycle/src/authority.rs": "fb3e702287b32e4b2b81b86032c13a059e5ce7d8e4db48e0bfc7bb463387e71e"
+  },
+  "Root_review_sha256": "d01c16689ca98a1f61dadbf9550bb15db2f1678c3e3007ef9382ddbfcddafa7d",
+  "strict_chronology": {
+    "red": {
+      "selection_sha256": "9a9e31c228e8617d003f6fb10840c6ff6ce93b859a89c6a6f838ac63a6e5d2c6",
+      "execution_sha256": "86b57763c55c202ed4d7322902f3ebe1314b2060d7dcc775fca8b1eca6571804",
+      "actual_CLI_wait_exit": 101
+    },
+    "green": {
+      "selection_sha256": "bd1673d02f85f03d77b9edb98e01d903c5c79ceb82d20dfa395d009326b99921",
+      "execution_sha256": "219f0ab36740bf10fba62f5b85378a76ffc18d679fdb65071b7d64058dd78afe",
+      "actual_CLI_wait_exit": 0
+    },
+    "build": {
+      "selection_sha256": "1a3c18d367936e863e235e05ffd352ff0be810cf2bec96352a344edfaa6a33c5",
+      "execution_sha256": "827e642431d75b7e792d586f6dff5951688733d34c1281faa52340bc75f45600",
+      "actual_CLI_wait_exit": 0
+    },
+    "host": {
+      "selection_sha256": "322befbe436b33f5a71e03c3f286a7c5a6324a4f9df31f667651da251e466d24",
+      "execution_sha256": "34a85e467bafcde713e7e03cc1da44fa8fe75d4f491d4cf815a497f66e833e6c",
+      "actual_CLI_wait_exit": 0
+    },
+    "arm": {
+      "selection_sha256": "9d199caf1564e0b33deb910a4c44346481003502561db6bc04b37e54fb1ba8f4",
+      "execution_sha256": "f0dd665531590103feb388750e8d4d8b7f36ba31987941662538a392ad9b9de6",
+      "actual_CLI_wait_exit": 0
+    }
+  },
+  "actual_RED": {
+    "failed": 3,
+    "positive_passed": 1,
+    "test_assertions_unchanged_except_rustfmt": true
+  },
+  "actual_GREEN": {
+    "focused_host_passed": 4,
+    "full_host_passed": 12,
+    "full_Arch_ARM_passed": 12,
+    "Arch_ARM_kernel": "7.1.6-1-aarch64-ARCH",
+    "Arch_ARM_result_sha256": "b4a6c54921bd71c4c985379d1a56859c765104acdf440c957df1f56efff5e4d8",
+    "Arch_ARM_component_log_sha256": "4a6e3a8c81a427d2cd7b42474fd84ddd1c03c65695a8f6e3c66a1b69c5d1eb0e",
+    "Arch_ARM_command_sha256": "0e418848dc55f6a6deee169870cebb7324aea22d66eedcf6ab5e69bc54458959",
+    "Arch_ARM_tests_ELF_sha256": "df673386ff058d3d99176043fa442bb765cec05b11eb16d576232ade503e753d",
+    "actual_fmt_clippy_host_and_static_ARM_build_passed": true,
+    "actual_direct_test_wait_exit": 0,
+    "guest_final_ECHILD": true,
+    "all_five_owned_runs_fresh_same_daemon_CID_absent": true
+  },
+  "controls": [
+    "changed locker at repeated sequence is terminal",
+    "changed locker at successor sequence without revision is terminal",
+    "same metadata with a different actual kernel task cannot hide replacement",
+    "unlocked provider snapshot cannot supply a locker",
+    "terminal refusal cannot be reactivated by a later valid snapshot",
+    "cached same reference and a fresh handle for the same live task remain accepted without a policy fence"
+  ],
+  "unchanged": {
+    "Source_budget_ns": 100000000,
+    "Source_wire_or_producer_changed": false,
+    "PAM_or_unlock_authority_added": false
+  },
+  "not_qualified": [
+    "Source IPC or continuous original compositor transitions in this run",
+    "exact accepted protocol generation or exact-object unlock evidence",
+    "native authentication or durable restoration",
+    "Google6.6 compositor integration or any physical phone"
+  ],
+  "phone_accessed": false,
+  "private_raw_inputs_or_credentials_published": false
+}

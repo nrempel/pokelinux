@@ -32,6 +32,14 @@ an actor-owned authentication receipt or qualify restoration.
 Do not use mapped PID, observer revision, global unlock or a renewed expired
 Source as a restoration receipt. See [owned locker facts](native-session-owned-locker.md).
 
+The actor now terminally refuses locker changes without a corresponding sequence/
+semantic revision and unlocked snapshots with a locker. Three actual typed-
+Provider tests fail before the repair; all four focused controls and all12
+lifecycle components pass afterward on host and actual Arch ARM kernels. Handles
+and the replacement child are real; no Source IPC, PAM or unlock runs in this
+selection. The earlier Original integration remains separately frozen. See
+[actor consistency provenance](evidence/native-locker-actor-consistency-provenance.json).
+
 The native Rust appearance owner now publishes schema3 exact RGBA16 and typed
 style. An actual Original/Rust/private Qt alpha RED precedes the repair; fresh
 GREEN passes17 phases/34 full captures with every592704-pixel plane equal. Root

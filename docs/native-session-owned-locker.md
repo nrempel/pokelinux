@@ -33,6 +33,15 @@ observer's retained reference. Snapshot copies own their references; consuming
 one later requires a fresh liveness/identity check. Source acceptance establishes
 sample-time identity, not future authorization.
 
+The lifecycle actor also checks locker consistency at its typed Provider boundary.
+An unlocked snapshot cannot contain a locker. Repeating a sequence must repeat
+its owned locker identity; changing that identity requires a new semantic
+revision even at a newer sequence. Equal PID/UID/GID cannot hide a different
+actual kernel task. A violation terminally fails the Source and later valid
+facts cannot reactivate it. A cached reference or a new handle for the same live
+task remains admissible without a policy fence. These checks do not turn a
+cached locker into authentication authority.
+
 Mapped ownership is distinct from protocol completion. Hyprland's completion
 flag can be set after a timeout without secure frames. Neither flag identifies
 an exact accepted lock-protocol generation. Late first attachment can establish
@@ -78,6 +87,18 @@ Source, compiler flags, policy and deadlines are unchanged. The actual Rust buil
 also retains a failed final-copy step because its image lacks Python; its fresh
 successor uses an exact-one executable shell copy. These are fixture failures,
 not production behavior REDs.
+
+A later typed Provider/actor RED fails three locker checks while its same-task
+positive control passes. The minimal actor repair passes all four, then all12
+lifecycle components on the host and an actual Arch ARM7.1 kernel. The replacement
+control owns a real child pidfd and explicitly terminates and waits for that
+child. The ARM driver waits for the actual test process and reaches final
+subreaper ECHILD. All five owned test/build runs have actual CLI waits and fresh
+same-daemon exact-CID absence. This selection does not execute Source IPC,
+Original compositor transitions, PAM or unlock. Its
+[separate bounded provenance](evidence/native-locker-actor-consistency-provenance.json)
+binds the changed actor source and actual results; it does not relabel the older
+Original integration as a run of the newer actor.
 
 See [bounded provenance](evidence/native-session-owned-locker-provenance.json).
 This qualifies prepared first attachment to an existing mapped lock. It does not

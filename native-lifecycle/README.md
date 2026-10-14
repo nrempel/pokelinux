@@ -14,6 +14,15 @@ independent of app context retirement. Metadata is not permission, pathname
 withdrawal does not disconnect accepted clients, and local reap is not vendor
 cleanup.
 
+Owned locker facts are checked at the typed session Provider boundary. Repeated
+sequence/revision values cannot hide changed locker ownership, and unlocked
+snapshots cannot carry a locker. Inconsistency fails the established Source
+terminally. The same cached reference or independently opened handle for the same
+live task remains valid without a policy fence. Three actual RED failures precede
+four focused GREEN controls and12 component passes on host and actual Arch ARM
+kernels. This is separate from Source IPC, authentication and trusted unlock;
+see [scope and provenance](../docs/native-session-owned-locker.md).
+
 [Per-app ARM evidence](../docs/native-display-app-generations.md) qualifies
 lifetime/relaunch and held-init Stop. Pending EOF passes its narrow boundary;
 its successor aggregate is failed after Source InvalidData of unknown predicate.

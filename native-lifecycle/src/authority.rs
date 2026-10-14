@@ -143,7 +143,7 @@ impl Authority {
                     .unwrap_or(false)
             })
     }
-    fn same_focus(
+    fn same_peer(
         &self,
         left: Option<&crate::session::OwnedFocus>,
         right: Option<&crate::session::OwnedFocus>,
@@ -205,6 +205,7 @@ impl Authority {
                 != Some(s.until)
             || now >= s.until
             || (s.locked && s.focus.is_some())
+            || (!s.locked && s.locker.is_some())
             || self
                 .session_source
                 .as_ref()
@@ -218,11 +219,13 @@ impl Authority {
                             || s.sampled_at_ns != old.sampled_at_ns
                             || s.until != old.until
                             || s.locked != old.locked
-                            || !self.same_focus(s.focus.as_ref(), old.focus.as_ref())))
+                            || !self.same_peer(s.focus.as_ref(), old.focus.as_ref())
+                            || !self.same_peer(s.locker.as_ref(), old.locker.as_ref())))
                     || (s.revision == old.revision
                         && (s.locked != old.locked
                             || s.focus.as_ref().map(|f| &f.metadata)
-                                != old.focus.as_ref().map(|f| &f.metadata)))
+                                != old.focus.as_ref().map(|f| &f.metadata)
+                            || !self.same_peer(s.locker.as_ref(), old.locker.as_ref())))
             })
         {
             return self.fail_session();
@@ -249,7 +252,7 @@ impl Authority {
             None
         };
         let changed = self.session.as_ref().is_none_or(|old| {
-            old.revision != s.revision || !self.same_focus(old.focus.as_ref(), s.focus.as_ref())
+            old.revision != s.revision || !self.same_peer(old.focus.as_ref(), s.focus.as_ref())
         }) || self.locked != locked
             || self.principals.iter().any(|(app, p)| {
                 p.background != (p.background_intent || selected.as_ref() != Some(app))
@@ -848,6 +851,131 @@ mod tests {
         assert!(
             a.locked,
             "fresh facts reactivated lost source after resume cleared current sample"
+        );
+    }
+    fn locker_snapshot(locker: Option<crate::session::OwnedFocus>) -> crate::session::Snapshot {
+        let sampled_at_ns = crate::boottime_ns();
+        crate::session::Snapshot {
+            source: "22222222222222222222222222222222".into(),
+            revision: 1,
+            sequence: 1,
+            sampled_at_ns,
+            until: sampled_at_ns + crate::session::SAMPLE_BUDGET_NS,
+            locked: true,
+            focus: None,
+            locker,
+        }
+    }
+    fn own_locker() -> crate::session::OwnedFocus {
+        crate::session::OwnedFocus::new(
+            crate::session::NativeFocus {
+                pid: std::process::id(),
+                uid: rustix::process::getuid().as_raw(),
+                gid: rustix::process::getgid().as_raw(),
+            },
+            rustix::process::pidfd_open(
+                rustix::process::getpid(),
+                rustix::process::PidfdFlags::empty(),
+            )
+            .unwrap(),
+        )
+    }
+    fn session_authority() -> Authority {
+        let mut authority = Authority::loading(vec![]).unwrap();
+        authority.activate(Durable::default());
+        authority.require_session().unwrap();
+        authority
+    }
+    #[test]
+    fn locker_changes_without_a_new_revision_are_terminal() {
+        // Provider/actor boundary with actual owned kernel handles, not Source IPC.
+        for sequence in [1, 2] {
+            let mut authority = session_authority();
+            let initial = locker_snapshot(None);
+            authority
+                .observe_session(initial.clone(), crate::boottime_ns())
+                .unwrap();
+            let mut changed = initial.clone();
+            changed.sequence = sequence;
+            changed.locker = Some(own_locker());
+            authority
+                .observe_session(changed, crate::boottime_ns())
+                .unwrap();
+            assert!(
+                authority.session_failed && authority.session.is_none(),
+                "changed locker was accepted with unchanged revision at sequence {sequence}"
+            );
+            authority
+                .observe_session(initial, crate::boottime_ns())
+                .unwrap();
+            assert!(authority.session_failed && authority.session.is_none());
+        }
+    }
+    #[test]
+    fn locker_equal_metadata_cannot_hide_a_different_kernel_task() {
+        let mut child = std::process::Command::new("/bin/sleep")
+            .arg("30")
+            .spawn()
+            .unwrap();
+        let child_handle = rustix::process::pidfd_open(
+            rustix::process::Pid::from_raw(child.id() as i32).unwrap(),
+            rustix::process::PidfdFlags::empty(),
+        )
+        .unwrap();
+        let mut authority = session_authority();
+        let initial = locker_snapshot(Some(own_locker()));
+        let metadata = initial.locker.as_ref().unwrap().metadata.clone();
+        authority
+            .observe_session(initial.clone(), crate::boottime_ns())
+            .unwrap();
+        let mut changed = initial;
+        changed.sequence += 1;
+        changed.locker = Some(crate::session::OwnedFocus::new(metadata, child_handle));
+        authority
+            .observe_session(changed, crate::boottime_ns())
+            .unwrap();
+        let refused = authority.session_failed && authority.session.is_none();
+        child.kill().unwrap();
+        assert!(!child.wait().unwrap().success());
+        assert!(
+            refused,
+            "same metadata hid a different retained task without a new revision"
+        );
+    }
+    #[test]
+    fn locker_unlocked_provider_snapshot_is_refused() {
+        let mut authority = session_authority();
+        let mut snapshot = locker_snapshot(Some(own_locker()));
+        snapshot.locked = false;
+        authority
+            .observe_session(snapshot, crate::boottime_ns())
+            .unwrap();
+        assert!(
+            authority.session_failed && authority.session.is_none() && authority.locked,
+            "unlocked provider supplied mapped locker facts"
+        );
+    }
+    #[test]
+    fn locker_cached_sample_and_same_task_heartbeat_do_not_fail_source() {
+        let mut authority = session_authority();
+        let initial = locker_snapshot(Some(own_locker()));
+        authority
+            .observe_session(initial.clone(), crate::boottime_ns())
+            .unwrap();
+        authority
+            .observe_session(initial.clone(), crate::boottime_ns())
+            .unwrap();
+        let lifecycle = authority.lifecycle;
+        let mut heartbeat = initial;
+        heartbeat.sequence += 1;
+        heartbeat.locker = Some(own_locker());
+        authority
+            .observe_session(heartbeat, crate::boottime_ns())
+            .unwrap();
+        assert!(!authority.session_failed && authority.session.is_some());
+        assert_eq!(
+            authority.lifecycle, lifecycle,
+            "same living task heartbeat fenced policy"
         );
     }
     struct Harness {
