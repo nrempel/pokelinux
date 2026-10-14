@@ -17,9 +17,10 @@ newly executed renderer REDs. User-shell/font updates do not share theme-set's
 lock, so their consistency cannot be called an atomic theme transaction. A
 resolved font family also does not establish UID11010 access to private font
 assets: actual QFontInfo/metrics and separately owned resource access are needed.
-Fonts, all eight/six tokens, settings deletion/override, alpha and worker
-confinement remain acceptance gates. Never promote the nine-RGB prototype by
-silently dropping these features.
+Typed transfer of all eight/six tokens and settings deletion/override now has
+separate Rust/process evidence below. Original composition, concrete fonts and
+resources, alpha and font-worker confinement remain acceptance gates. Never
+promote the partial prototype by silently dropping these features.
 
 ## Historical full-theme implementation and evidence
 
@@ -40,6 +41,8 @@ Runtime status and precise remaining gates are recorded in [the provenance repor
 The newer Rust schema2 owner adds typed font/spacing tokens and user overlay
 observations, with19 host groups and an actual held-file RED/GREEN. The private
 Qt reader passes154 synthetic process/QML controls. New normal ARM compilation
-passes, while original new-style runtime, concrete font resources and alpha remain
-open. The complete public reader above is retained pending that migration;
+passes; seven original ARM style groups now match all15 values twice per phase.
+Eighteen separate generic ARM kernel groups pass after a test-only stopped-child
+identity repair. Concrete font resources, alpha, large-font layout and installed
+composition remain open. The complete public reader above is retained pending that migration;
 see [current boundary](native-appearance-service.md).

@@ -1,0 +1,109 @@
+{
+  "schema": 1,
+  "boundary": "synthetic native appearance component controls under actual generic ARM kernel",
+  "passed": true,
+  "kernel": "Arch ARM7.1.6; not matched Google kernel",
+  "selection_sha256": "d52fb3fe78ee511ae3dd9334932717e08106a9404dba2aad732f15848cb7f68d",
+  "command_sha256": "1aecf1299278ff8156e057d9ad07c091af8ca30bbf15b6ed2eeec0b29ef55b3f",
+  "result_sha256": "4ef972e51bab1531e58153547d1f21171665420d535fb56e7b99553b4b65f518",
+  "execution_sha256": "975eb2e5f2554ae1855e82732f66da362dd158255dd1750a74302dc75a20a90b",
+  "Root_independent_review_sha256": "f549206402a910918939273d08d7f25b85929e137b7696d579c37fe3a7d00ae5",
+  "Root_rehashed_bindings": 59,
+  "producer_ELF_sha256": "c256593b962c19ec4fcba92a42fdbc9da80f500b422abda1091dd1ec4664cd5a",
+  "producer_unchanged_by_fixture_repair": true,
+  "process_harness_ELF_sha256": "983078f43b8470979e8ec5638abe0f5fd4a8b1560806f8c6a139f7fa8a36489f",
+  "authored_process_source_sha256": "78359ae3bf4b30cfd63c8d1b4afcd0c82c703f1c29d51d3a4ff0300212ae2b35",
+  "actual_groups": {
+    "process": 13,
+    "same_process_real_SEQPACKET": 4,
+    "ARM_confinement": 1,
+    "ignored_role_helper_counted_as_standalone": false
+  },
+  "harnesses": [
+    {
+      "role": "main-harness",
+      "actual_exit": 0,
+      "actual_direct_wait": true,
+      "summary": {
+        "status": "ok",
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered_out": 0
+      }
+    },
+    {
+      "role": "library-harness",
+      "actual_exit": 0,
+      "actual_direct_wait": true,
+      "summary": {
+        "status": "ok",
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered_out": 0
+      }
+    },
+    {
+      "role": "confinement",
+      "actual_exit": 0,
+      "actual_direct_wait": true,
+      "summary": {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered_out": 0
+      }
+    },
+    {
+      "role": "process",
+      "actual_exit": 0,
+      "actual_direct_wait": true,
+      "summary": {
+        "status": "ok",
+        "passed": 13,
+        "failed": 0,
+        "ignored": 1,
+        "measured": 0,
+        "filtered_out": 0
+      }
+    }
+  ],
+  "fixture_repair": {
+    "prior_aggregate_failed": true,
+    "prior_process_summary": "12 passed; 1 failed; 1 ignored",
+    "prior_failure": "SIGSTOP selected PID returned ESRCH before intended abrupt publisher kill; exact old child state was not captured",
+    "prior_candidate_name_list_is_not_pass_evidence": true,
+    "successor_excludes_initial_post_EX_lock_PID": true,
+    "successor_checks_parent_start_identity_UID_and_original_deadline": true,
+    "successor_retains_pidfd_and_observes_actual_T": true,
+    "no_retarget_after_selection": true,
+    "production_deadline_unchanged": true,
+    "fixture_precondition_budget_seconds": 3,
+    "actual_stopped_original_budget_remaining_ns": [
+      983356058,
+      986407259,
+      984387001
+    ],
+    "actual_three_excluded_PIDs_nonzero": true,
+    "same_repaired_host_suite_groups": 19
+  },
+  "cleanup": {
+    "all_four_harness_actual_waits_exit0": true,
+    "no_adopted_children": true,
+    "Docker_CLI_actual_wait_exit0": true,
+    "Root_independent_exact_CID_absence": true,
+    "input_closure": true
+  },
+  "excluded": {
+    "Original_Omarchy_UI": false,
+    "phone_accessed": false,
+    "Google_kernel_booted": false,
+    "installed_service_profile_qualified": false,
+    "full_smartphone_qualified": false
+  }
+}

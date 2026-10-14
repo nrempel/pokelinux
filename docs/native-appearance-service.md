@@ -152,8 +152,8 @@ colors omit the actual user size/token settings. The repaired host suite passes
 User replacement/deletion, style-only revision changes, unsafe user input refusal
 and absence recovery are exercised. Format/build/Clippy, actual CLI waits and
 independent exact-CID absence pass. One intermediate moved-field compiler failure
-is preserved as setup failure. New static ARM compilation succeeds; new original
-ARM composition is pending. See [style evidence](evidence/native-appearance-style-provenance.json).
+is preserved as setup failure. New static ARM compilation and the separate original
+ARM style composition below pass. See [style evidence](evidence/native-appearance-style-provenance.json).
 
 A separate chronological held-input RED stops the real UID1000 collector after
 input acquisition/filter installation. Fixture Root atomically exchanges two
@@ -197,7 +197,7 @@ control-gap17/panel-padding31. The native reader stays at12/24 and8/18 while the
 original reports18/36 and12/27, then23/45 and17/31. Actual palette colors remain
 correct, with private UID1000/mode0700 HOME and UID11010 EACCES preserved.
 
-Compiler setup succeeds with eight actual direct child waits0. Both guest and
+Compiler setup succeeds with seven actual direct child waits0. Both guest and
 runner contract aggregates remain FAILED. Root rehashes49 frozen files, decodes
 all three complete1080×2424 rasters and verifies normalized RGBA against the
 native buffers. Controlled Rust Stop/direct wait0,44 direct guest cleanup rows,
@@ -206,6 +206,47 @@ records zero collector pidfd rows; its all-observed flag is vacuous and supplies
 no independent collector reaping proof. No Source, desktop ingress, current lock,
 normal QWindow font/DPR, concrete font-resource or alpha migration is qualified.
 See [bounded style RED](evidence/native-appearance-style-red-provenance.json).
+
+## Separate original ARM style composition
+
+A later exact schema2 selection passes seven groups against executed Original.
+All8font/6spacing tokens and fontScale agree twice per phase at baseline, after
+the real size18 command and after user body23/display45/gap17/padding31 overrides.
+The same normal UID11010 app PID/window remains open; HOME remains UID1000/0700
+and actual app access gets EACCES. The independent QObject probe uses the real
+Rust socket; its QFontInfo is separate from the uninstrumented normal window.
+
+Root verifies76 frozen and74 external bindings, independently decodes all three
+whole1080×2424 PNGs and matches every normalized RGBA byte to the native buffers.
+Seven actual observer compiler waits,61 direct guest cleanup waits, Rust Stop/wait0,
+owned watcher wait0,569 observed direct native collector pidfd deaths/proc absence,
+actual CLI0 and independent exact-CID absence pass. The watcher does not directly
+wait the service's children. There is no Source, actor, desktop ingress or current
+lock in this control. Original bar missing glyphs/overlap and normal large-font
+button clipping are visible; full mobile layout remains open. Concrete fonts,
+resources, alpha and normal QWindow font/DPR remain unqualified. See
+[bounded style ARM evidence](evidence/native-appearance-style-arm-provenance.json).
+
+The first preparation label has an incorrect selected QML path and starts no VM.
+The second actual run fails on UID11010 helper EACCES before the size setter;
+it is a setup failure, not a style behavior RED. The fresh successful successor
+installs only that exact reader root-owned0644 under existing public libexec,
+without changing HOME/results permissions. Both failed labels remain intact.
+
+The same production Rust ELF separately passes18 generic ARM kernel groups:
+13process,4same-process real SEQPACKET and1ARM confinement. Its first later label
+has12process passes and one ESRCH failure before the intended abrupt owner kill.
+The old fixture accepted any listed UID1000 PID; an ACK-exiting child could still
+be listed after releasing SH. The exact old child's state was not captured.
+The repaired test excludes the first post-EX-lock PID, verifies a fresh child's
+parent/start/UID/deadline with a retained pidfd, sends STOP through that pidfd,
+and observes actual T before proceeding. It never retargets after selection.
+All three ARM cases actually exclude nonzero initial PIDs. Production deadlines
+and the three-second fixture precondition stay unchanged. Root verifies59 input
+bindings, complete harness results, all actual waits, no adopted descendants and
+exact-CID absence. Nineteen repaired host groups also pass. A failed test's start
+line is not a pass; the successor parser handles complete trailing results.
+See [component evidence](evidence/native-appearance-style-arm-kernel-provenance.json).
 
 ## Genuine installed RED
 

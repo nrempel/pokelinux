@@ -32,8 +32,24 @@ See [style proof](evidence/native-appearance-style-provenance.json) and
 The private schema2 Qt reader passes154 actual kernel-peer/QML controls after a
 genuine schema2 baseline RED; malformed/revision controls execute only after
 accepted baseline. Root independently reviews records and exact-CID absence.
-New Rust static ARM and normal Qt6.12 compilation pass. The normal app remains
-uninstrumented; original-style ARM GREEN is being prepared, not yet executed.
+New Rust static ARM and normal Qt6.12 compilation pass. Seven later original
+ARM style groups pass: all15 observations match twice per phase after the real
+size18 command and user overrides, in the same normal PID/window with private
+HOME0700/EACCES. Root rehashes150 bindings and independently decodes all three
+whole1080×2424 captures. Actual waits,569 observed native collector pidfd deaths,
+exact-CID absence and input closure pass. The normal app stays uninstrumented.
+Large-font buttons visibly clip; Original bar fonts/overlap remain incomplete.
+See [style ARM proof](evidence/native-appearance-style-arm-provenance.json).
+
+The repaired selection separately passes18 generic ARM kernel groups after a
+fixture race: the first process aggregate remains12pass/1fail because SIGSTOP
+finds the selected child gone before the intended publisher-kill assertion.
+The fixture now excludes the initial post-lock PID, retains its successor's
+pidfd/parent/start identity, requires a live original deadline and observes T.
+All three ARM cases exclude actual nonzero initial PIDs. Production Rust and its
+ELF are unchanged;19 host groups also pass. Root independently verifies59
+bindings, all actual waits/no adopted children and exact-CID absence. See
+[component proof](evidence/native-appearance-style-arm-kernel-provenance.json).
 Concrete family/resources, alpha and original parser/overflow edges remain open;
 do not promote the partial consumer and remove the public app's full theme path.
 Historical17 host/two held-exec-FD and16 generic ARM kernel controls retain their
@@ -71,9 +87,9 @@ font/spacing observations differ after original size18 and owned user overrides.
 Palette/private HOME remain correct in the same normal PID/window. Compiler setup,
 44 direct child waits, controlled Rust Stop/wait0, actual CLI0 and independent
 exact-CID absence pass. Zero collector pidfd rows means no independent collector
-reaping proof in this epoch. Both contract aggregates remain FAILED. Root is now
-repairing typed style/user input collection privately; full consumer migration
-remains open. See [bounded RED](evidence/native-appearance-style-red-provenance.json). Contract:
+reaping proof in this epoch. Both contract aggregates remain FAILED. The typed
+Rust repair is published; full consumer migration remains open. See
+[bounded RED](evidence/native-appearance-style-red-provenance.json). Contract:
 `/tmp/pokelinux-appearance-style-contract-sol/contract.txt` (source review only).
 
 The installed appearance boundary retains its genuine RED. Fresh `red-2`

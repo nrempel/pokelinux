@@ -1,0 +1,164 @@
+{
+  "schema": 1,
+  "boundary": "executed original Omarchy versus native Rust schema2 and actual Qt QObject under generic ARM kernel",
+  "passed": true,
+  "chronological_RED": "native-appearance-style-red-provenance.json",
+  "kernel": "Arch ARM7.1.6; not matched Google kernel",
+  "producer_ELF_sha256": "c256593b962c19ec4fcba92a42fdbc9da80f500b422abda1091dd1ec4664cd5a",
+  "normal_Messages_ELF_sha256": "c5b4a7695c0e26533392322b2fc03559b09a1bd835bde7073a96f5f06fc528a8",
+  "private_Qt_reader_sha256": "f963583c5cabcb0f3bf6ef0f2ccb9337a50b258b8747135bdd2681d34bc27cc3",
+  "selection_sha256": "27c61169d3440f62a94942b70ede5fd7452a900fb5cc60f07634a4f18fe7fae5",
+  "command_sha256": "5ce14dfcc9475cdec25ffa5e48750fb0eabdc73b7c49bbf9f3c55d2679005b49",
+  "result_sha256": "ca747bfc37192934166fde5a994ba9ec43351cfeade1db5474e250300ef812a9",
+  "execution_sha256": "d2d0e06d6935e21752d6bd3e22500decd7723d1cb0f85daeb0fc09a1191a5b9e",
+  "Root_independent_review_sha256": "d84f734bd84a732f8ee4b84408144431f5d23a5509b8bb2c386ce51ae51da33b",
+  "Root_visual_review_sha256": "3849b4b7016fa4ac0e029f5991873813031b99e4e014158ec63d89d7d0619a2b",
+  "Root_rehashed_frozen_files": 76,
+  "Root_rehashed_external_inputs": 74,
+  "actual_groups": 7,
+  "phases": [
+    {
+      "phase": "style-0-before-setter",
+      "Original_and_native_equal": {
+        "fontScale": 1,
+        "fonts": {
+          "caption": 10,
+          "bodySmall": 11,
+          "body": 12,
+          "subtitle": 13,
+          "title": 14,
+          "heading": 16,
+          "display": 24,
+          "displayLarge": 28
+        },
+        "spacing": {
+          "controlGap": 8,
+          "panelPadding": 18,
+          "panelGap": 14,
+          "rowGap": 8,
+          "controlPaddingX": 10,
+          "controlPaddingY": 6
+        }
+      },
+      "actual_stable_equal_observations": 2,
+      "actual_style_difference_count": 0,
+      "same_normal_PID_window": true,
+      "private_HOME_UID1000_mode0700_actual_UID11010_EACCES": true,
+      "capture": {
+        "PNG_sha256": "674fa1e0e868963b5ddad4f1e70a026ec587e766ecaadf8ba011711d7ad50139",
+        "native_pixels": [
+          1080,
+          2424
+        ],
+        "Root_whole_RGBA_matches_native_buffer": true,
+        "resize_or_crop": false
+      }
+    },
+    {
+      "phase": "style-1-after-Original-size-18",
+      "Original_and_native_equal": {
+        "fontScale": 1.5,
+        "fonts": {
+          "caption": 15,
+          "bodySmall": 17,
+          "body": 18,
+          "subtitle": 19,
+          "title": 21,
+          "heading": 24,
+          "display": 36,
+          "displayLarge": 42
+        },
+        "spacing": {
+          "controlGap": 12,
+          "panelPadding": 27,
+          "panelGap": 21,
+          "rowGap": 12,
+          "controlPaddingX": 15,
+          "controlPaddingY": 9
+        }
+      },
+      "actual_stable_equal_observations": 2,
+      "actual_style_difference_count": 0,
+      "same_normal_PID_window": true,
+      "private_HOME_UID1000_mode0700_actual_UID11010_EACCES": true,
+      "capture": {
+        "PNG_sha256": "af38ce9263b2d24c193d2a27df2e8e7672e7fdb8dc3bc3f01a8d9092afb09939",
+        "native_pixels": [
+          1080,
+          2424
+        ],
+        "Root_whole_RGBA_matches_native_buffer": true,
+        "resize_or_crop": false
+      }
+    },
+    {
+      "phase": "style-2-after-owned-user-token-override",
+      "Original_and_native_equal": {
+        "fontScale": 1.5,
+        "fonts": {
+          "caption": 15,
+          "bodySmall": 17,
+          "body": 23,
+          "subtitle": 19,
+          "title": 21,
+          "heading": 24,
+          "display": 45,
+          "displayLarge": 42
+        },
+        "spacing": {
+          "controlGap": 17,
+          "panelPadding": 31,
+          "panelGap": 21,
+          "rowGap": 12,
+          "controlPaddingX": 15,
+          "controlPaddingY": 9
+        }
+      },
+      "actual_stable_equal_observations": 2,
+      "actual_style_difference_count": 0,
+      "same_normal_PID_window": true,
+      "private_HOME_UID1000_mode0700_actual_UID11010_EACCES": true,
+      "capture": {
+        "PNG_sha256": "901cdbd0a603b690930247ae2bd5e6df9f71481e01a55cf7360af4df21132aa6",
+        "native_pixels": [
+          1080,
+          2424
+        ],
+        "Root_whole_RGBA_matches_native_buffer": true,
+        "resize_or_crop": false
+      }
+    }
+  ],
+  "cleanup": {
+    "direct_guest_rows_actually_waited": 61,
+    "independent_probe_compiler_commands_actually_waited_exit0": 7,
+    "controlled_Rust_Stop_direct_wait_exit0": true,
+    "owned_observer_direct_wait_exit0": true,
+    "actual_observed_direct_native_Rust_collectors": 569,
+    "all_observed_collector_pidfds_dead_and_proc_absent": true,
+    "independent_collector_direct_wait_claimed": false,
+    "Docker_CLI_actual_wait_exit0": true,
+    "Root_independent_exact_CID_absence": true,
+    "input_closure": true
+  },
+  "preserved_prior_failures": {
+    "preparation1": "incorrect normal-selected QML path; no VM or behavior RED",
+    "runtime2": "UID11010 helper EACCES before size setter; no style behavior RED/GREEN",
+    "successor_change": "exact selected reader installed root-owned0644 under existing public libexec; HOME and results permissions unchanged"
+  },
+  "observed_visual_limitations": [
+    "normal right button column clips at large user override",
+    "Original bar missing icon glyphs and large-font overlap"
+  ],
+  "excluded": {
+    "phone_accessed": false,
+    "Google_kernel_booted": false,
+    "Source_loaded": false,
+    "desktop_ingress_exercised": false,
+    "current_lock_exercised": false,
+    "normal_QWindow_font_DPR_observed": false,
+    "concrete_fonts_resources_alpha_qualified": false,
+    "full_migration_or_mobile_usability_qualified": false,
+    "new_screenshots_published": false
+  }
+}

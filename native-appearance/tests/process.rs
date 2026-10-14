@@ -2,8 +2,9 @@
 //! These are component controls, not original Omarchy or physical phone evidence.
 use pokelinux_appearance::{Snapshot, boottime_ns, ipc};
 use rustix::{
+    fd::OwnedFd,
     net,
-    process::{Pid, Signal},
+    process::{Pid, PidfdFlags, Signal},
 };
 use serde_json::{Value, json};
 use std::{
@@ -206,24 +207,99 @@ impl Realm {
         rustix::fs::flock(&f, rustix::fs::FlockOperation::LockExclusive).unwrap();
         f
     }
-    fn held_worker(&self, lock: &File) -> u32 {
+    fn stopped_worker(&self, lock: &File) -> (u32, OwnedFd) {
         let _ = lock;
-        let mut pid = 0;
-        until(
-            || {
-                let s = self.status();
-                pid = s["worker_pid"].as_u64().unwrap_or(0) as u32;
-                pid != 0
-                    && fs::read_to_string(format!("/proc/{pid}/status")).is_ok_and(|s| {
-                        s.lines().any(|l| {
-                            l.starts_with("Uid:")
-                                && l.split_whitespace().skip(1).all(|u| u == "1000")
-                        })
+        // An ACK-exiting child can remain listed after releasing its SH lock.
+        // Exclude the first post-EX-lock PID; its successor cannot have acquired
+        // SH before this fixture's lock. Never retarget after retaining a child.
+        let excluded = self.status()["worker_pid"].as_u64().unwrap_or(0) as u32;
+        let parent = self.child.as_ref().unwrap().id();
+        let end = Instant::now() + Duration::from_secs(3);
+        let identity = |pid| -> Option<(char, u32, u64)> {
+            let stat = fs::read_to_string(format!("/proc/{pid}/stat")).ok()?;
+            let fields: Vec<_> = stat.rsplit_once(") ")?.1.split_whitespace().collect();
+            Some((
+                fields.first()?.chars().next()?,
+                fields.get(1)?.parse().ok()?,
+                fields.get(19)?.parse().ok()?,
+            ))
+        };
+        let (pid, watch, start, deadline) = loop {
+            assert!(
+                Instant::now() < end,
+                "fresh held collector selection timed out"
+            );
+            let status = self.status();
+            let pid = status["worker_pid"].as_u64().unwrap_or(0) as u32;
+            let deadline = status["worker_until_ns"]
+                .as_str()
+                .and_then(|v| v.parse::<u64>().ok())
+                .unwrap_or(0);
+            if pid != 0
+                && pid != excluded
+                && status["state"] == "collecting"
+                && deadline > boottime_ns().saturating_add(500_000_000)
+                && let Some((state, ppid, start)) = identity(pid)
+                && !matches!(state, 'Z' | 'X')
+                && ppid == parent
+                && let Ok(watch) = rustix::process::pidfd_open(
+                    Pid::from_raw(pid as i32).unwrap(),
+                    PidfdFlags::NONBLOCK,
+                )
+                && ipc::living(&watch).unwrap()
+                && fs::read_to_string(format!("/proc/{pid}/status")).is_ok_and(|s| {
+                    s.lines().any(|l| {
+                        l.starts_with("Uid:") && l.split_whitespace().skip(1).all(|u| u == "1000")
                     })
-            },
-            3,
-        );
-        pid
+                })
+                && identity(pid).is_some_and(|(state, ppid, ticks)| {
+                    !matches!(state, 'Z' | 'X') && ppid == parent && ticks == start
+                })
+                && ipc::living(&watch).unwrap()
+            {
+                break (pid, watch, start, deadline);
+            }
+            std::thread::sleep(Duration::from_millis(3));
+        };
+        let selected_at = boottime_ns();
+        let proof = self.root.join("held-worker.json");
+        fs::write(
+            &proof,
+            serde_json::to_vec(&json!({"pid":pid,"parent":parent,
+            "start_ticks":start,"excluded_post_lock_pid":excluded,
+            "original_until_ns":deadline.to_string(),"selected_at_ns":selected_at.to_string(),
+            "pidfd_living_before_signal":ipc::living(&watch).unwrap(),
+            "stopped":false}))
+            .unwrap(),
+        )
+        .unwrap();
+        rustix::process::pidfd_send_signal(&watch, Signal::STOP).unwrap();
+        loop {
+            assert!(
+                Instant::now() < end && boottime_ns() < deadline,
+                "selected collector expired before its stopped state was observed"
+            );
+            assert!(
+                ipc::living(&watch).unwrap(),
+                "selected collector died before hold"
+            );
+            if identity(pid).is_some_and(|(state, ppid, ticks)| {
+                state == 'T' && ppid == parent && ticks == start
+            }) {
+                break;
+            }
+            std::thread::sleep(Duration::from_millis(1));
+        }
+        fs::write(
+            &proof,
+            serde_json::to_vec(&json!({"pid":pid,"parent":parent,
+            "start_ticks":start,"excluded_post_lock_pid":excluded,
+            "original_until_ns":deadline.to_string(),"selected_at_ns":selected_at.to_string(),
+            "stopped_at_ns":boottime_ns().to_string(),"stopped":true}))
+            .unwrap(),
+        )
+        .unwrap();
+        (pid, watch)
     }
     fn stop(&mut self) {
         if self.child.is_none() {
@@ -435,8 +511,7 @@ fn stopped_real_collector_keeps_snapshot_and_stop_responsive() {
     let mut r = Realm::new("held");
     r.healthy("#1a1b26");
     let guard = r.lock();
-    let pid = r.held_worker(&guard);
-    rustix::process::kill_process(Pid::from_raw(pid as i32).unwrap(), Signal::STOP).unwrap();
+    let (pid, watch) = r.stopped_worker(&guard);
     for _ in 0..12 {
         let start = Instant::now();
         let _ = r.status();
@@ -444,6 +519,7 @@ fn stopped_real_collector_keeps_snapshot_and_stop_responsive() {
         assert!(start.elapsed() < Duration::from_millis(150));
     }
     r.stop();
+    assert!(!ipc::living(&watch).unwrap());
     assert!(!Path::new(&format!("/proc/{pid}")).exists());
     drop(guard);
 }
@@ -452,9 +528,9 @@ fn original_deadline_expires_held_collection_and_recovers_only_after_reap() {
     let mut r = Realm::new("expiry");
     r.healthy("#1a1b26");
     let guard = r.lock();
-    let pid = r.held_worker(&guard);
-    rustix::process::kill_process(Pid::from_raw(pid as i32).unwrap(), Signal::STOP).unwrap();
+    let (pid, watch) = r.stopped_worker(&guard);
     until(|| !Path::new(&format!("/proc/{pid}")).exists(), 3);
+    assert!(!ipc::living(&watch).unwrap());
     until(|| !r.snapshot().available, 2);
     drop(guard);
     r.healthy("#1a1b26");
@@ -513,8 +589,7 @@ fn killed_publisher_reaps_collector_and_restarts_same_paths() {
     r.healthy("#1a1b26");
     let owner = r.snapshot().owner;
     let guard = r.lock();
-    let collector = r.held_worker(&guard);
-    rustix::process::kill_process(Pid::from_raw(collector as i32).unwrap(), Signal::STOP).unwrap();
+    let (collector, watch) = r.stopped_worker(&guard);
     let mut publisher = r.child.take().unwrap();
     publisher.kill().unwrap();
     let publisher_status = publisher.wait().unwrap();
@@ -523,6 +598,7 @@ fn killed_publisher_reaps_collector_and_restarts_same_paths() {
     until(|| unsafe { libc::waitpid(collector as i32, &mut collector_status, libc::WNOHANG) } == collector as i32, 3);
     assert!(libc::WIFSIGNALED(collector_status));
     assert_eq!(libc::WTERMSIG(collector_status), libc::SIGKILL);
+    assert!(!ipc::living(&watch).unwrap());
     assert!(!Path::new(&format!("/proc/{collector}")).exists());
     assert_eq!(
         unsafe { libc::prctl(libc::PR_SET_CHILD_SUBREAPER, 0, 0, 0, 0) },

@@ -73,8 +73,14 @@ style revisions, unsafe user file types/content and absence recovery. A separate
 actual held-acquisition control exposes obsolete colors renewal before this repair;
 the unchanged control now observes a null candidate, withdrawal, fresh collection
 and actual reaps. Original full-style ARM comparison has a genuine pre-change RED;
-new original composition remains pending. Qt schema2 controls are private synthetic
-consumer evidence, not complete app migration.
+seven later original ARM composition groups now pass. All15 token/scale observations
+match twice per phase in the same normal app/window with private HOME/EACCES. The
+repaired process fixture also passes18 separate generic ARM kernel groups while
+the production ELF stays unchanged. Its prior ESRCH aggregate remains failed;
+the test now retains a fresh pidfd and observes actual stopped state before the
+original kill/reap/restart assertion. Qt schema2 controls remain private synthetic
+consumer evidence, not complete app migration. Visible large-font clipping,
+concrete font resources and normal-window font/DPR remain open.
 
 This projection covers selected opaque colors and integer font/spacing tokens.
 Concrete font resolution/resources, translucent colors, original parser edge cases
