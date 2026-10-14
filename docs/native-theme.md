@@ -1,5 +1,28 @@
 # Native Omarchy appearance integration
 
+## Current migration qualification
+
+The [new Rust appearance owner](native-appearance-service.md) has separate host
+process/kernel and original ARM palette-composition evidence. Its partial typed
+Qt prototype remains private; this document's historical full theme path is
+still the public application's implementation. The palette control does not
+qualify complete typography/settings migration, desktop admission or Source/lock.
+
+A later independent pinned-source review identifies distinctions requiring fresh
+actual controls before the full port. Original Color popup alpha replaces
+intrinsic alpha, whereas original Border rendering multiplies it; direct popup
+text differs from surface-role projection. The current JavaScript must not be
+used as the oracle for those cases. These are static contract differences, not
+newly executed renderer REDs. User-shell/font updates do not share theme-set's
+lock, so their consistency cannot be called an atomic theme transaction. A
+resolved font family also does not establish UID11010 access to private font
+assets: actual QFontInfo/metrics and separately owned resource access are needed.
+Fonts, all eight/six tokens, settings deletion/override, alpha and worker
+confinement remain acceptance gates. Never promote the nine-RGB prototype by
+silently dropping these features.
+
+## Historical full-theme implementation and evidence
+
 This boundary follows Omarchy v4.0.4, commit `c668141e9c42b13c80c9ca4ea108e11708c5e8a5`, through its original generated current-theme files, live user shell settings and canonical fontconfig alias. The public archive and selected script/template digests are pinned in [the manifest](../native-theme/public-manifest.json). Upstream files stay in ignored storage; published code contains the own observer, renderer probe and runners.
 
 The production Qt application uses `PhoneThemeFiles`, `ThemePalette.js`, `PhoneTheme.qml` and `PhoneView.qml`. Appearance is independent of Rust call/permission/service ownership. It carries no enrollment or action authority. The reader follows `~/.local/state/omarchy/current/theme/{colors,shell}.toml`, `~/.config/omarchy/shell.toml`, and `~/.config/fontconfig/fonts.conf`. Original `omarchy-theme-set` replaces the generated directory, `omarchy-display-text-size` writes the user base size, and `omarchy-font-set` updates fontconfig and restarts the shell. The native window itself should remain open.

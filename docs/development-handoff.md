@@ -33,6 +33,18 @@ Next: original two-theme ARM consumer composition, actual desktop/current
 Source/lock replay, full appearance features and installed supervision.
 See [native appearance](native-appearance-service.md) and bounded provenance.
 
+A separate later ARM composition control passes five actual groups with genuine
+Omarchy and directly launched normal UID11010 Qt: Tokyo→Latte→Tokyo follows the
+Rust public palette in the same app/window while private HOME0700/EACCES remains.
+Root independently decodes all three native1080×2424 captures and verifies87
+bindings. Owned guest/broker waits, CLI0, exact-CID absence and input closure pass.
+The backend is unavailable and no Source/actor/desktop ingress/per-app display
+owner participates; the original installed RED remains open. Two reviewed clean
+captures and [bounded evidence](evidence/native-appearance-palette-arm-provenance.json)
+are public. Fonts/settings/alpha and normal QWindow DPR remain unqualified.
+Next run actual headless ARM lifecycle/filter controls, then full theme features
+and desktop/current Source/lock composition without widening the100ms lease.
+
 The installed appearance boundary retains its genuine RED. Fresh `red-2`
 launches unchanged UID11010 Messages against private UID1000/mode0700 HOME;
 actual original Tokyo Night and its read-only oracle report `#1a1b26`, while

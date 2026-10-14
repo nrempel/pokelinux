@@ -75,6 +75,40 @@ Qt6.12 Messages build executes its compiler under Arch ARM7.1.6 without the isol
 observer define. Neither compiler selection qualifies new service/app runtime,
 original live theme behavior, desktop admission or current Source/lock integration.
 
+## Separate original ARM palette composition
+
+A later fresh control now executes the exact Rust ARM ELF and normal Qt prototype
+under generic Arch ARM7.1.6 with genuine pinned Omarchy. All five narrow groups
+pass: actual original setters/oracle, authenticated public palette at UID11010,
+same normal app/window recoloring, private HOME isolation and whole native output
+capture/decode equality. Tokyo Night → Catppuccin Latte → Tokyo Night changes
+background `#1a1b26` → `#eff1f5` → `#1a1b26` and foreground `#a9b1d6` → `#4c4f69`
+→ `#a9b1d6`. The same app PID/window survives all three changes; appearance revisions
+are1→2→3. HOME remains UID1000/mode0700; actual UID11010 read returns EACCES each time.
+No copied theme home is created.
+
+Root independently decodes each complete1080×2424 PNG, compares every normalized
+RGBA byte hash with the native output buffer, checks the preselected nine-pixel
+background patch and1619 exact original foreground pixels, and verifies87 input
+bindings. The virtual422PPI/420 logical profile is qualified separately through
+its measurement surface; the normal app's own QWindow DPR/buffer equality remains
+unobserved. No capture is resized or cropped. Broker controlled Stop/direct wait0,
+all guest direct children, observed collector pidfd death/proc absence, actual
+Docker CLI0, independent exact-CID absence and unchanged input closure pass.
+
+This control directly launches the root-installed normal UID11010 ELF with two
+narrow Wayland ancestor/socket ACLs. Its Messages backend is absent, so the normal
+UI says unavailable. No actor, Source, desktop ingress, per-app display owner or
+lock integration participates. It does not close the original desktop-installed
+RED, qualify complete font/settings/alpha migration or establish production
+supervision. Missing Omarchy bar icon fonts remain a fixture provisioning gap.
+The typed consumer stays private pending full feature migration. See
+[bounded ARM provenance](evidence/native-appearance-palette-arm-provenance.json).
+
+| Tokyo Night | Catppuccin Latte |
+| --- | --- |
+| ![Direct-launch normal Messages with Tokyo Night, backend unavailable](assets/native-appearance-palette-dark.png) | ![Same window with Catppuccin Latte, backend unavailable](assets/native-appearance-palette-light.png) |
+
 ## Genuine installed RED
 
 The fresh `native-appearance-private-home-red-2` label uses unchanged normal

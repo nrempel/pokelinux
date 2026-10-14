@@ -1,0 +1,136 @@
+{
+  "schema": 1,
+  "boundary": "actual generic Arch ARM kernel, original Omarchy, Rust publisher and directly launched normal UID11010 Qt palette composition",
+  "passed": true,
+  "original_desktop_RED_closed": false,
+  "normal_app_instrumented": false,
+  "normal_ELF_sha256": "703ba9f77e40e8af627236ca0250bb7cc2249f35e53894bfa04b730ec9af3391",
+  "Rust_ELF_sha256": "bf3c8f1b90ee32fc8870406f1abb2aab5ed22ef4240e3f1f640cff032e2b18a9",
+  "core_commit": "8795ef465927c07b47ac20498b2146869afd720b",
+  "kernel": "Linux alarm 7.1.6-1-aarch64-ARCH #1 SMP PREEMPT_DYNAMIC Wed Aug  5 00:20:13 UTC 2026 aarch64 GNU/Linux",
+  "original_omarchy_commit": "c668141e9c42b13c80c9ca4ea108e11708c5e8a5",
+  "groups": [
+    "real_Original_theme_setters_and_oracle",
+    "authenticated_native_Rust_palette_to_UID11010",
+    "same_uninstrumented_normal_app_live_recolors_three_themes",
+    "private_HOME_0700_and_UID11010_EACCES_retained",
+    "unscaled_1080x2424_native_output_capture_and_direct_buffer_decode_equality"
+  ],
+  "records": {
+    "selection.json": "2dc0b5dd084ee59b4962164a99daf95f89552fe582cfa0842276c9cad40f0230",
+    "command.json": "9137e7159b144e9abc4e0a09209f1e9af27d6ce143c86b2d0cec06fc5578f1e6",
+    "result.json": "cbea6f110a05ddb4b0ee4528a7a86720bc0c0d2f7858c5c1add293036d7739f0",
+    "execution.json": "6efecff359aeebfd764b7630e55e16de1e4952f9e6cd8c88955b5752f1ee9f37",
+    "root-independent-review.json": "fa2a757d0363312c4c18a006e3d21c3973e08f71eca8541de70d9bc15da824e0",
+    "runtime-handoff.json": "b5b26eb6d250daf4c15949319caf1b8e65db09afd27d3951c1cf3cb9976b83bc"
+  },
+  "Root_independent_checked_input_bindings": 87,
+  "same_app_PID": 2072,
+  "same_window_all_themes": true,
+  "frames": [
+    {
+      "theme": "tokyo-night",
+      "PNG_sha256": "b3bd36a1eae88f1365e12c8b4e98416a6bd5620553f30e4c9d64f29ac9362782",
+      "native_geometry": [
+        1080,
+        2424
+      ],
+      "whole_RGBA_matches_native_buffer": true,
+      "whole_RGB_matches_guest_independent_decoder": true,
+      "patch_RGB": "#1a1b26",
+      "foreground_pixels": 1619,
+      "same_PID": 2072,
+      "same_window": "0xaaaad5f81b80"
+    },
+    {
+      "theme": "catppuccin-latte",
+      "PNG_sha256": "1cd9d55bc0e7ddac50c7bfc0e8f08c83caf7c212d0a28f44751a3a265dd2a76d",
+      "native_geometry": [
+        1080,
+        2424
+      ],
+      "whole_RGBA_matches_native_buffer": true,
+      "whole_RGB_matches_guest_independent_decoder": true,
+      "patch_RGB": "#eff1f5",
+      "foreground_pixels": 1619,
+      "same_PID": 2072,
+      "same_window": "0xaaaad5f81b80"
+    },
+    {
+      "theme": "tokyo-night",
+      "PNG_sha256": "a74164d3697a339d4af94da0b0ca95bb0894cac83f8e7aa053ae22db77596c99",
+      "native_geometry": [
+        1080,
+        2424
+      ],
+      "whole_RGBA_matches_native_buffer": true,
+      "whole_RGB_matches_guest_independent_decoder": true,
+      "patch_RGB": "#1a1b26",
+      "foreground_pixels": 1619,
+      "same_PID": 2072,
+      "same_window": "0xaaaad5f81b80"
+    }
+  ],
+  "actual_Original_values": [
+    {
+      "theme": "tokyo-night",
+      "background": "#1a1b26",
+      "foreground": "#a9b1d6",
+      "appearance_revision": 1
+    },
+    {
+      "theme": "catppuccin-latte",
+      "background": "#eff1f5",
+      "foreground": "#4c4f69",
+      "appearance_revision": 2
+    },
+    {
+      "theme": "tokyo-night",
+      "background": "#1a1b26",
+      "foreground": "#a9b1d6",
+      "appearance_revision": 3
+    }
+  ],
+  "private_HOME": {
+    "uid": 1000,
+    "mode": "0700",
+    "actual_UID11010_EACCES_each_theme": true,
+    "copied_theme_home": false
+  },
+  "display_profile": {
+    "native_pixels": [
+      1080,
+      2424
+    ],
+    "physical_ppi": 422,
+    "matched_logical_density": 420,
+    "measurement_surface_DPR": 2.625,
+    "normal_QWindow_DPR_observed": false,
+    "resized_capture": false,
+    "normal_window_buffer_equality_qualified": false,
+    "whole_native_output_buffer_equality": true
+  },
+  "cleanup": {
+    "native_broker_Stop_and_direct_wait_exit0": true,
+    "all_guest_direct_children_waited": true,
+    "observed_collector_pidfds_dead_and_proc_absent": true,
+    "actual_owned_Docker_CLI_wait_exit0": true,
+    "independent_exact_CID_absence": true,
+    "input_closure": true
+  },
+  "Source_loaded": false,
+  "Messages_backend_available": false,
+  "desktop_ingress_exercised": false,
+  "per_app_display_ownership_qualified": false,
+  "lock_integration_qualified": false,
+  "full_fonts_settings_alpha_migration_qualified": false,
+  "production_service_capability_profile_qualified": false,
+  "missing_bar_icon_fonts": "fixture provisioning gap",
+  "phone_accessed": false,
+  "Google_kernel_booted": false,
+  "full_phone_qualified": false,
+  "public_captures": [
+    "docs/assets/native-appearance-palette-dark.png",
+    "docs/assets/native-appearance-palette-light.png"
+  ]
+}
