@@ -1,0 +1,110 @@
+{
+  "schema": 1,
+  "classification": "UNRUN authored helper-profile migration fixture; offline compile preparation only",
+  "base_commit": "78e9d469c57025c4027693a924ecd6c2ab7a1008",
+  "source_files_sha256": [
+    {
+      "path": "tools/native-auth-helper-profile/README.md",
+      "sha256": "46915351391f315b58752df251f8de109336c8687411d2254ad3aa83c0b3980e"
+    },
+    {
+      "path": "tools/native-auth-helper-profile/fixture/Cargo.lock",
+      "sha256": "fe2d3b11f866a905b356af3f891a32d6f4fb6c33339e8d19da89d403a129084b"
+    },
+    {
+      "path": "tools/native-auth-helper-profile/fixture/Cargo.toml",
+      "sha256": "c3f2501f108a3dd42cf0bcc9aa13a95d3c0835db6a6aeaef53317bf7dc9cc7e5"
+    },
+    {
+      "path": "tools/native-auth-helper-profile/fixture/entry-copy.rs",
+      "sha256": "ec8cfae7f0231e9e7d6b44702eef9794c5261adae3a697bf89fb8a4d531d9962"
+    },
+    {
+      "path": "tools/native-auth-helper-profile/fixture/src/launcher.rs",
+      "sha256": "3eab3cbf71f14c23761521eb261a5ea9bfc5c90bc4ea1693b679edf8f558ab97"
+    },
+    {
+      "path": "tools/native-auth-helper-profile/fixture/src/lib.rs",
+      "sha256": "c98a2135ab7903e74ffb8380fbdc72566fbf3f8fb188ff63639b05bdd1682652"
+    },
+    {
+      "path": "tools/native-auth-helper-profile/fixture/src/probe.rs",
+      "sha256": "476616c313ff26ba7906f6bcc10e33753bab2990be156cd2d08765e03f3bc500"
+    }
+  ],
+  "immutable_entry_copy": {
+    "source": "native-pam/src/entry.rs",
+    "sha256": "ec8cfae7f0231e9e7d6b44702eef9794c5261adae3a697bf89fb8a4d531d9962",
+    "byte_equality_checked": true
+  },
+  "prior_original_helper_profile_reference": {
+    "path": "docs/evidence/native-pam-worker-provenance.json",
+    "sha256": "32016caf53c1f496a2cd7488f9981857c8c8c703a842bcaf88cb22d97e0bf887",
+    "section": "original_helper_counterfactual.before_secret",
+    "original_helper_execution_by_this_fixture": false
+  },
+  "offline_build": {
+    "image": "sha256:0b4b956502a9f55d992eaced6975737b523be19bd2034078983b36bbcfd7aee6",
+    "commands": [
+      "cargo generate-lockfile --offline",
+      "cargo fmt --all",
+      "cargo clippy --locked --offline --all-targets -- -D warnings",
+      "cargo build --locked --offline --release --bins --target aarch64-unknown-linux-gnu"
+    ],
+    "local_Docker_socket": "unix:///var/run/docker.sock",
+    "DOCKER_endpoint_context_TLS_selectors_unset": true,
+    "network": "none",
+    "capabilities": "drop ALL",
+    "NNP": 1,
+    "user": "1000:1000",
+    "CPUs": 2,
+    "memory_GiB": 2,
+    "shared_registry": "read-only",
+    "build_container": {
+      "CID": "9f4f3c2a9194a462a488f27f23db1e14a9f4a59a670c5091eed862d8f0ca1de4",
+      "start_CLI_exit": 0,
+      "wait_CLI_exit": 0,
+      "container_wait": "0",
+      "remove_CLI_exit": 0,
+      "fresh_same_daemon_absence_query_CLI_exit": 0,
+      "exact_CID_absent": true
+    },
+    "compiled_ELFs_sha256": {
+      "helper-profile-launcher": "16c1a367e5671434ce392bf646c60f5c8a17aefd32e4211e86c46d66d038f2ce",
+      "helper-profile-probe": "a0ea998f48beef15beeefe995a89211e7445cf8ef59e0e0c73be8837fb8c733f"
+    },
+    "binaries_executed": false,
+    "earlier_failed_preparation_compiles": [
+      {
+        "container_wait": 101,
+        "cause": "unavailable rustix cgroup2 constant import",
+        "owned_CID_wait_remove_fresh_absence": true
+      },
+      {
+        "container_wait": 101,
+        "cause": "incorrect rustix PID accessor name",
+        "owned_CID_wait_remove_fresh_absence": true
+      }
+    ]
+  },
+  "runtime_evidence": {
+    "VM_executed": false,
+    "protected_06755_exec_observed": false,
+    "original_helper_profile_observed": false,
+    "self_migration_observed": false,
+    "workload_kill_escape_observed": false,
+    "containment_repair_claimed": false,
+    "host_cgroups_PAM_accounts_sysctls_or_namespaces_changed": false,
+    "phone_accessed": false
+  },
+  "Root_review_remaining": [
+    "immutable source and dependency pins",
+    "future exact fork/pidfd/admission gate",
+    "disposable guest installation and mount/dependency metadata",
+    "fixed delegated service ownership and only owned target membership",
+    "independent held exact-process profile/membership oracle",
+    "absolute deadline and every-path exact teardown plus actual wait/EOF/ECHILD and outer closure"
+  ],
+  "historical_only": true,
+  "superseded_by": "docs/evidence/native-auth-containment-provenance.json"
+}

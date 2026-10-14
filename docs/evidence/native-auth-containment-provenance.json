@@ -1,0 +1,205 @@
+{
+  "schema": 1,
+  "scope": "actual Arch ARM authored helper-profile fixed direct-path containment; no PAM or unlock authority",
+  "evidence_class": "synthetic authored code under an actual ARM64 Linux kernel",
+  "base_commit": "341b124ac8c55a0c4628312f75c58050f11d5827",
+  "sources": [
+    {
+      "path": "native-pam/src/containment.rs",
+      "sha256": "e08295817b14a155691da9eaed75a88570f9ea0eb63ada1c44fe03f5efe2b7c8"
+    },
+    {
+      "path": "tools/native-auth-helper-profile/fixture/Cargo.toml",
+      "sha256": "fd059f21a6413d9c9ce6e3821069350cf1ec77b1fb15657d3fea921c1b7efe66"
+    },
+    {
+      "path": "tools/native-auth-helper-profile/fixture/Cargo.lock",
+      "sha256": "fe2d3b11f866a905b356af3f891a32d6f4fb6c33339e8d19da89d403a129084b"
+    },
+    {
+      "path": "tools/native-auth-helper-profile/fixture/entry-copy.rs",
+      "sha256": "ec8cfae7f0231e9e7d6b44702eef9794c5261adae3a697bf89fb8a4d531d9962"
+    },
+    {
+      "path": "tools/native-auth-helper-profile/fixture/src/lib.rs",
+      "sha256": "97e13ab7421c85101278713a68f916abc458a8e991b3f342e47f891965841b8c"
+    },
+    {
+      "path": "tools/native-auth-helper-profile/fixture/src/launcher.rs",
+      "sha256": "70cab1131f1fe76dfc51370ad71577bfd3d62b0d61bee6f96f2b3eed89f4c8d7"
+    },
+    {
+      "path": "tools/native-auth-helper-profile/fixture/src/probe.rs",
+      "sha256": "cd212fe96e856e88669d518009141d9f10638a73db5419e463222df04c5e7a67"
+    }
+  ],
+  "uncontained_RED": {
+    "classification": "QUALIFIED_ROOT_DAC_SELF_MIGRATION_RED",
+    "aggregate_passed": false,
+    "runtime_runs": 1,
+    "tool_session": 14223,
+    "tool_terminal_chunk": "d1d8c3",
+    "tool_exit": 1,
+    "Docker_CLI_exit": 0,
+    "input_bindings": 26,
+    "binding_rehashes_passed": true,
+    "audit_checks": 81,
+    "independent_audit_sha256": "de591201daff5d706d14e0d8caaf83ff89309697d11762832151207ce4be4251",
+    "owner_completion_sha256": "b6c0f55f4cf118785bde34573221c87477f3220ae9d1216c81940e8a2bd7b313",
+    "record_bindings": [
+      {
+        "path": "selection.json",
+        "sha256": "e0b1704d41a4eeded78f601c44ba616557a16fd76bb4673cd7b08be6b3e72135"
+      },
+      {
+        "path": "command.json",
+        "sha256": "2ecbfb963b536be8f36198db42a20c6210152da3c743334d67f4958dbdca207d"
+      },
+      {
+        "path": "execution.json",
+        "sha256": "13ebe90f3fa8b9d554cbb2db06441f1f641848e7a5d52087b91343846dd866b0"
+      },
+      {
+        "path": "result.json",
+        "sha256": "2fdb12b408b645b745ad457767654944b9a7bcff51bf088dcfd7b6970645a750"
+      },
+      {
+        "path": "delegated-result.json",
+        "sha256": "8fd13825ae81c6f2797b03bb2314a552ca62f92aa68ccc8ef0aa35400e90d5bc"
+      },
+      {
+        "path": "feature-red-before-cleanup.json",
+        "sha256": "0c374195e2d9e30de15746cbfd566bc1ca2c4bf75a70bbd661920d1fa3458c90"
+      },
+      {
+        "path": "root-preflight.json",
+        "sha256": "decee9c6f9e44934dcd06615d7d3d64637ca5ae5dea2824d51fd544a00daa92c"
+      }
+    ],
+    "exact_CID": "94d145b81b1e1fe11d099e1ed47ba1f39e8be13a47fd4f726956b5210a9d34bb",
+    "live_then_fresh_same_daemon_exact_absence": true
+  },
+  "contained_GREEN": {
+    "classification": "AUTHORED_DIRECT_PATH_CONTAINMENT_GREEN",
+    "aggregate_passed": true,
+    "runtime_runs": 1,
+    "tool_session": 84276,
+    "tool_terminal_chunk": "6e3dc7",
+    "tool_exit": 0,
+    "Docker_CLI_exit": 0,
+    "input_bindings": 25,
+    "binding_rehashes_passed": true,
+    "audit_checks": 73,
+    "independent_audit_sha256": "71908d942445f2aafedd88a636ab3a7824374d4d31f1d09855f93d6d400c06c3",
+    "owner_completion_sha256": "a7facb47a2490e1e92452ba660654dc806773f9762f825db71f6c935189cc499",
+    "record_bindings": [
+      {
+        "path": "selection.json",
+        "sha256": "6c9c94ca895da66dc53a43eff70fe57fda68532892efa675b23c22b91cbcf4b3"
+      },
+      {
+        "path": "command.json",
+        "sha256": "538ee95f1e12e3c0eb8150c939dc2722ecbf2eeacf22a9131680aa3a902f64d7"
+      },
+      {
+        "path": "execution.json",
+        "sha256": "23c2a9b9a6960e052ae84bc867bc37b06bea11f975064af450e36fdc91770221"
+      },
+      {
+        "path": "result.json",
+        "sha256": "10aaabae1a1c2cc6f33d67a47157650432248375abf2eae2e3ca2de3ffa1ece0"
+      },
+      {
+        "path": "delegated-result.json",
+        "sha256": "1cd14aa2baa26fc0acc895a1c684a3bd24075598b73e531718cbbf125669bfcd"
+      },
+      {
+        "path": "feature-green-before-cleanup.json",
+        "sha256": "b8feee759148b23d622d3bab040c91f55fba3e4e39a73b58e9aaf08f4e8661a9"
+      }
+    ],
+    "exact_CID": "a5a253a29ac078a1be255be29d3d75df25fb107ef41bfb2da5de557b1216a82e",
+    "live_then_fresh_same_daemon_exact_absence": true
+  },
+  "contained_observations": {
+    "pid": 288,
+    "parent": 286,
+    "start_ticks": 2344,
+    "uid_gid": [
+      1000,
+      0,
+      0,
+      0
+    ],
+    "groups": [],
+    "capabilities": {
+      "CapInh": 0,
+      "CapPrm": 536870912,
+      "CapEff": 536870912,
+      "CapBnd": 536870912,
+      "CapAmb": 0
+    },
+    "NNP": 0,
+    "seccomp_mode": 2,
+    "filter_count": 1,
+    "root_identity": [
+      56,
+      1
+    ],
+    "private_mount_namespace_same_PID_namespace": true,
+    "only_private_stdio_descriptors": true,
+    "typed_packet": {
+      "outcome": 1,
+      "stage": 10,
+      "errno_class": 5,
+      "reserved": 0,
+      "flags": 135
+    },
+    "membership": "/system.slice/pokelinux-auth-containment-test.service/workload",
+    "original_until_BOOTTIME_ns": 38441114327,
+    "workload_kill_BOOTTIME_ns": 23524780805,
+    "actual_wait": {
+      "pid": 288,
+      "raw_status": 9,
+      "at_BOOTTIME_ns": 23536773128
+    },
+    "stdout_EOF": true,
+    "extra_output_bytes": 0,
+    "both_owned_leaves_empty": true,
+    "inner_and_outer_ECHILD": true,
+    "fallback_pidfd_kills": 0,
+    "inner_complete_BOOTTIME_ns": 23541821844
+  },
+  "build": {
+    "image": "sha256:0b4b956502a9f55d992eaced6975737b523be19bd2034078983b36bbcfd7aee6",
+    "handoff_sha256": "1706d97475684308c2d3a31a0bb32212554bc6c31d0a90be39a8827a92967d23",
+    "execution_sha256": "72507801f6bcad9bc67365b2cdd84b207b28bd80b4ceb678594e89a7e1f3fd3d",
+    "fmt_default_and_contained_alltargets_strict_Clippy_ARM_build": true,
+    "earlier_format_and_API_compile_failures_preserved": true
+  },
+  "matched_kernel_source_contract": {
+    "commit": "91d825611104e75e1a9e0e0f6b25580eddb68828",
+    "both_full_config_flags": {
+      "PID_NS": false,
+      "USER_NS": false,
+      "CGROUP_PIDS": false,
+      "SECURITY_LANDLOCK": false,
+      "NAMESPACES": true,
+      "CGROUPS": true,
+      "SECCOMP_FILTER": true
+    },
+    "source_contract_sha256": "f648115ebeeb5826b206d80c1c2614f9cfce2f15fb3fbb45da95baad93f51e54",
+    "runtime_qualification_by_this_selection": false
+  },
+  "limits": [
+    "authored helper profile only; original PAM/unix_chkpwd not executed",
+    "contained probe replaces proc-dependent preconditions with direct readbacks and outside retained-process observations",
+    "fixed direct cgroup target only; every alias/direct-process route and each filter denial not qualified",
+    "outside fixture cgroup.kill/wait is not native ScopeChild cleanup",
+    "network and outbound signalling not isolated; fixed dependencies remain trusted",
+    "full original PAM NSS/module/config/helper/device closure and retained effective faillock still required",
+    "no broker/actor receipt, exact unlock, synced durable clear or normal Messages reopen",
+    "Arch7.1.6 is not matched Google kernel/LSM/delegation or hardware proof",
+    "no physical phone access; zero physical models qualified"
+  ]
+}

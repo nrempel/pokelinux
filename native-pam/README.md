@@ -49,6 +49,11 @@ entry retains its one fixed policy even when this test feature is compiled. The
 fixture uses stderr FD2 for synthetic module readiness; it is not authentication
 or unlock authority. Default builds do not include that entry.
 
+The explicit `containment-fixture` feature exposes only the fixed private-root
+bootstrap. Its authored helper-profile ARM direct-path control passes after a
+real uncontained RED; [report](../docs/native-auth-containment.md). It does not
+run this original PAM worker or enable production authentication.
+
 The original closed-worker RED and failed first real PAM attempt are preserved.
 A subsequent original-helper comparison qualifies the narrow audit-only bounding
 requirement, then the default production worker passes actual wrong→Denied and

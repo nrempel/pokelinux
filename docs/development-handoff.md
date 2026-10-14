@@ -31,9 +31,13 @@ retaining Child/pidfd and sticky occupied Setup fault. The first actual GREEN's
 initial-report scheduling gap is preserved; a hardened fresh control now passes,
 as does the new normal two-group regression. Driver9/9 teardown in the setup
 control is not native cleanup. See [setup report](native-auth-setup.md) and
-[proof](evidence/native-auth-setup-provenance.json). Next: fixed privileged-helper
-containment, original PAM+scope, then broker/actor one-shot synced restoration and
-a normal Messages reopen. Keep Source100ms/no-revival and all hardware gates.
+[proof](evidence/native-auth-setup-provenance.json). An actual privileged-helper-profile self-migration RED now precedes a
+private mount/root direct-path GREEN on Arch ARM, preserving the real helper IDs,
+audit-only capabilities and NNP0. Owned cgroup kill, wait9, EOF, empty leaves and
+ECHILD close without fallback. [Containment report](native-auth-containment.md).
+This is an authored direct-path fixture, not original PAM or native scope cleanup.
+Next: qualify remaining fixed alias/filter routes and original PAM+scope, then
+broker/actor one-shot synced restoration and a normal Messages reopen. Keep Source100ms/no-revival and all hardware gates.
 
 The native Rust PAM worker now passes actual wrong/matching password controls
 through the installed public ABI on Arch ARM7.1.6. The closed-worker missing-prompt

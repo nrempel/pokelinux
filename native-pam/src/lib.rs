@@ -1,4 +1,6 @@
 //! Private native authentication worker. Not an app API or unlock authority.
+#[cfg(feature = "containment-fixture")]
+pub mod containment;
 mod entry;
 mod pam;
 pub mod wire;

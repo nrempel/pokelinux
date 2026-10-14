@@ -7,6 +7,8 @@ publish = false
 [features]
 # Isolated integration fixture; the production binary still has one fixed policy.
 ownership-fixture = []
+# Fixed private-root bootstrap; isolated composition only until qualified.
+containment-fixture = []
 
 [[bin]]
 name = "pam-ownership-fixture"
