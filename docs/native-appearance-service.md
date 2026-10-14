@@ -1,8 +1,10 @@
 # Installed native appearance boundary
 
 The [native Rust publisher](../native-appearance/README.md) now implements an
-owned collector and typed public palette. Seventeen actual host component groups
-and two separate held-exec/descriptor controls pass. These are synthetic Linux
+owned collector and typed public presentation. The schema2 extension passes
+nineteen actual host component groups plus the separate held-input control below.
+The preceding palette-only selection passes17 host groups and two separate
+held-exec/descriptor controls; its later ARM evidence retains that exact selection. These are synthetic Linux
 boundaries; the original installed desktop RED below remains open. Historical
 same-UID theme comparisons and the tracer's immutable public copy do not establish
 a live installed owner. The partial typed Qt prototype remains a private worktree
@@ -134,6 +136,54 @@ Guest and runner aggregates pass; all selected/original inputs remain unchanged.
 This closes the generic ARM component/filter boundary only. Matched Google kernel,
 external crash supervision, current Source/lock and full phone gates remain.
 See [bounded ARM kernel evidence](evidence/native-appearance-arm-kernel-provenance.json).
+
+## Typed user style and selected-input repair
+
+Schema2 publishes one nullable `appearance` with an exact9RGB palette and typed
+base size,8font and6spacing tokens. Generated and user shell maps are independent;
+user keys win, and removal reveals generated/default values. The whole payload
+participates in revision equality and final queued-send validation. No production
+schema1 reader is retained. Concrete font family/resources and translucent colors
+remain open; the existing public app's full theme path is preserved.
+
+A genuine real-process user-style RED precedes the repair: available schema1
+colors omit the actual user size/token settings. The repaired host suite passes
+19 groups:13 processes,4 same-process real SEQPACKET and2 kernel confinement.
+User replacement/deletion, style-only revision changes, unsafe user input refusal
+and absence recovery are exercised. Format/build/Clippy, actual CLI waits and
+independent exact-CID absence pass. One intermediate moved-field compiler failure
+is preserved as setup failure. New static ARM compilation succeeds; new original
+ARM composition is pending. See [style evidence](evidence/native-appearance-style-provenance.json).
+
+A separate chronological held-input RED stops the real UID1000 collector after
+input acquisition/filter installation. Fixture Root atomically exchanges two
+owned0600/single-link colors files without taking the theme lock. The directory
+generation and lock remain identical, yet the old collector returns old colors
+and renews their lease to the held job's exact deadline. Actual send/receive,
+SCM PID/UID/GID, job/token/ACK, pidfd and parent wait4 are independently observed.
+The failed aggregate remains failed. An earlier capability spelling classifier
+failure starts no service and supplies no behavior RED.
+
+The repaired collector retains fixed ancestor chains and present/absent input
+observations; it rechecks acquired metadata, selected path identities and bounded
+content before completion and through its ACK loop. The unchanged held-input
+control now returns a null candidate, withdraws availability and publishes the
+fresh replacement only from a later collection. Actual reaps, shutdown, CLI waits,
+separate exact-CID absence and13 source bindings pass. The default-deny filter is
+unchanged. Original user writers do not share the theme lock: these are separately
+qualified observations and convergence, without an atomic cross-file transaction
+claim. See [input proof](evidence/native-appearance-input-provenance.json) and
+[authored control](../tools/native-appearance-owner/selected-input-control.py).
+
+The private typed Qt reader passes154 actual synthetic peer/QML controls after
+its genuine rejected-schema2 RED. All valid baselines are accepted;130 new malformed
+style/schema1 injections occur after accepted baselines, plus14 retained transport
+negative cases. Actual all-token QML/functions/scale and same/new-revision behavior
+pass, with real probe/peer waits, actual CLI0, exact-CID absence and input closure.
+Its first label remains a zero-test OCI working-directory setup failure. This is
+not original Omarchy, normal-window typography or font-resource qualification.
+The new normal ARM Qt6.12 compiler selection excludes observer instrumentation;
+its actual14 compiler/helper waits and terminal closure pass separately.
 
 ## Chronological original full-style RED
 

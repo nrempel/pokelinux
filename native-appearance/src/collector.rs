@@ -1,5 +1,5 @@
 //! All source IO runs in the exact supervised child, never the service loop.
-use crate::{Ack, Completion, DESKTOP_UID, Job, boottime_ns, ipc, palette, sandbox};
+use crate::{Ack, Completion, DESKTOP_UID, Job, boottime_ns, ipc, sandbox, style};
 use rustix::{
     fd::{AsFd, OwnedFd},
     fs::{self, Mode, OFlags},
@@ -7,7 +7,7 @@ use rustix::{
 };
 use std::{
     fs::File,
-    io::{self, Read},
+    io::{self, Read, Seek},
     os::unix::fs::MetadataExt,
     path::{Component, Path},
     time::Duration,
@@ -105,6 +105,188 @@ fn read(f: &mut File) -> io::Result<String> {
     }
     String::from_utf8(bytes).map_err(|_| io::ErrorKind::InvalidData.into())
 }
+
+fn same(a: &fs::Stat, b: &fs::Stat) -> bool {
+    a.st_dev == b.st_dev
+        && a.st_ino == b.st_ino
+        && a.st_mode == b.st_mode
+        && a.st_uid == b.st_uid
+        && a.st_gid == b.st_gid
+        && a.st_nlink == b.st_nlink
+        && a.st_size == b.st_size
+        && a.st_mtime == b.st_mtime
+        && a.st_mtime_nsec == b.st_mtime_nsec
+        && a.st_ctime == b.st_ctime
+        && a.st_ctime_nsec == b.st_ctime_nsec
+}
+// Fixed chains retain each component so replacing an ancestor cannot make an
+// obsolete opened generation look current. Missing optional components are
+// observations too; creation before completion invalidates that collection.
+struct Chain {
+    fds: Vec<OwnedFd>,
+    names: Vec<&'static str>,
+    missing: Option<&'static str>,
+}
+impl Chain {
+    fn acquire(home: impl AsFd, names: &[&'static str], optional: bool) -> io::Result<Self> {
+        let mut value = Self {
+            fds: vec![home.as_fd().try_clone_to_owned()?],
+            names: Vec::new(),
+            missing: None,
+        };
+        for &name in names {
+            match child_dir(value.fds.last().unwrap(), name) {
+                Ok(fd) => {
+                    value.fds.push(fd);
+                    value.names.push(name);
+                }
+                Err(e) if optional && e.raw_os_error() == Some(libc::ENOENT) => {
+                    value.missing = Some(name);
+                    break;
+                }
+                Err(e) => return Err(e),
+            }
+        }
+        Ok(value)
+    }
+    fn leaf(&self) -> &OwnedFd {
+        self.fds.last().unwrap()
+    }
+    fn verify(&self) -> io::Result<()> {
+        for fd in &self.fds {
+            let retained = fs::fstat(fd)?;
+            if retained.st_uid != DESKTOP_UID || retained.st_mode & 0o022 != 0 {
+                return Err(denied());
+            }
+        }
+        for (index, name) in self.names.iter().enumerate() {
+            let observed = fs::statat(&self.fds[index], *name, fs::AtFlags::SYMLINK_NOFOLLOW)?;
+            let retained = fs::fstat(&self.fds[index + 1])?;
+            if (
+                observed.st_dev,
+                observed.st_ino,
+                observed.st_mode,
+                observed.st_uid,
+                observed.st_gid,
+            ) != (
+                retained.st_dev,
+                retained.st_ino,
+                retained.st_mode,
+                retained.st_uid,
+                retained.st_gid,
+            ) || retained.st_uid != DESKTOP_UID
+                || retained.st_mode & 0o022 != 0
+            {
+                return Err(denied());
+            }
+        }
+        if let Some(name) = self.missing {
+            match fs::statat(self.leaf(), name, fs::AtFlags::SYMLINK_NOFOLLOW) {
+                Err(rustix::io::Errno::NOENT) => {}
+                _ => return Err(denied()),
+            }
+        }
+        Ok(())
+    }
+}
+struct Input {
+    parent: OwnedFd,
+    name: &'static str,
+    file: Option<File>,
+    stamp: Option<fs::Stat>,
+    text: String,
+}
+impl Input {
+    fn acquire(parent: impl AsFd, name: &'static str, optional: bool) -> io::Result<Self> {
+        let file = match regular(&parent, name, OFlags::RDONLY) {
+            Ok(file) => Some(file),
+            Err(e) if optional && e.raw_os_error() == Some(libc::ENOENT) => None,
+            Err(e) => return Err(e),
+        };
+        let stamp = file.as_ref().map(fs::fstat).transpose()?;
+        Ok(Self {
+            parent: parent.as_fd().try_clone_to_owned()?,
+            name,
+            file,
+            stamp,
+            text: String::new(),
+        })
+    }
+    fn verify_node(&self) -> io::Result<()> {
+        match (&self.file, &self.stamp) {
+            (Some(file), Some(stamp)) => {
+                if !same(stamp, &fs::fstat(file)?)
+                    || !same(
+                        stamp,
+                        &fs::statat(&self.parent, self.name, fs::AtFlags::SYMLINK_NOFOLLOW)?,
+                    )
+                {
+                    return Err(denied());
+                }
+            }
+            (None, None) => {
+                match fs::statat(&self.parent, self.name, fs::AtFlags::SYMLINK_NOFOLLOW) {
+                    Err(rustix::io::Errno::NOENT) => {}
+                    _ => return Err(denied()),
+                }
+            }
+            _ => return Err(denied()),
+        }
+        Ok(())
+    }
+    fn load(&mut self) -> io::Result<()> {
+        self.verify_node()?;
+        if let Some(file) = &mut self.file {
+            self.text = read(file)?;
+        }
+        self.verify_node()
+    }
+    fn verify(&mut self) -> io::Result<()> {
+        self.verify_node()?;
+        if let Some(file) = &mut self.file {
+            file.rewind()?;
+            if read(file)? != self.text {
+                return Err(denied());
+            }
+        }
+        self.verify_node()
+    }
+}
+struct Guards {
+    lock: File,
+    runtime: OwnedFd,
+    theme: Chain,
+    user: Chain,
+    inputs: Vec<Input>,
+}
+impl Guards {
+    fn verify(&mut self) -> io::Result<()> {
+        self.theme.verify()?;
+        self.user.verify()?;
+        let runtime = fs::fstat(&self.runtime)?;
+        if runtime.st_uid != DESKTOP_UID || runtime.st_mode & 0o022 != 0 {
+            return Err(denied());
+        }
+        let lock = fs::fstat(&self.lock)?;
+        if !same(
+            &lock,
+            &fs::statat(
+                &self.runtime,
+                "omarchy-theme-set.lock",
+                fs::AtFlags::SYMLINK_NOFOLLOW,
+            )?,
+        ) || lock.st_uid != DESKTOP_UID
+            || lock.st_mode & 0o022 != 0
+            || lock.st_nlink != 1
+        {
+            return Err(denied());
+        }
+        for input in &mut self.inputs {
+            input.verify()?;
+        }
+        Ok(())
+    }
+}
 pub fn run(parent: u32) -> io::Result<()> {
     let channel = std::io::stdin();
     let peer_pid = Pid::from_raw(parent as i32).ok_or_else(denied)?;
@@ -178,56 +360,56 @@ pub fn run(parent: u32) -> io::Result<()> {
                 Err(e) => return Err(e.into()),
             }
         }
-        let local = child_dir(&home, ".local")?;
-        let state = child_dir(&local, "state")?;
-        let omarchy = child_dir(&state, "omarchy")?;
-        let current = child_dir(&omarchy, "current")?;
-        let generation = child_dir(&current, "theme")?;
-        let identity = fs::fstat(&generation)?;
-        let mut colors = regular(&generation, "colors.toml", OFlags::RDONLY)?;
-        let mut shell = match regular(&generation, "shell.toml", OFlags::RDONLY) {
-            Ok(f) => Some(f),
-            Err(e) if e.raw_os_error() == Some(libc::ENOENT) => None,
-            Err(e) => return Err(e),
-        };
-        // Ancestor handles are not needed for reading. Retain only explicit
-        // generation/lock identity guards and selected regular input handles.
-        drop((home, local, state, omarchy));
-        sandbox::restrict()?;
-        let colors = read(&mut colors)?;
-        let shell = match &mut shell {
-            Some(f) => read(f)?,
-            None => String::new(),
-        };
-        let palette = palette::project(&colors, &shell)?;
-        let now = boottime_ns();
-        let still_current = fs::statat(&current, "theme", fs::AtFlags::SYMLINK_NOFOLLOW)?;
-        let still_lock = fs::statat(
-            &runtime,
-            "omarchy-theme-set.lock",
-            fs::AtFlags::SYMLINK_NOFOLLOW,
+        let theme = Chain::acquire(
+            &home,
+            &[".local", "state", "omarchy", "current", "theme"],
+            false,
         )?;
-        let lock_meta = lock.metadata()?;
-        if now >= job.until_ns
-            || (still_current.st_dev, still_current.st_ino) != (identity.st_dev, identity.st_ino)
-            || (still_lock.st_dev as u64, still_lock.st_ino as u64)
-                != (lock_meta.dev(), lock_meta.ino())
-        {
+        let user = Chain::acquire(&home, &[".config", "omarchy"], true)?;
+        let mut inputs = vec![
+            Input::acquire(theme.leaf(), "colors.toml", false)?,
+            Input::acquire(theme.leaf(), "shell.toml", true)?,
+        ];
+        if user.missing.is_none() {
+            inputs.push(Input::acquire(user.leaf(), "shell.toml", true)?);
+        }
+        drop(home);
+        sandbox::restrict()?;
+        for input in &mut inputs {
+            input.load()?;
+        }
+        let appearance = style::project(
+            &inputs[0].text,
+            &inputs[1].text,
+            inputs.get(2).map_or("", |v| v.text.as_str()),
+        )?;
+        let mut retained = Guards {
+            lock,
+            runtime,
+            theme,
+            user,
+            inputs,
+        };
+        retained.verify()?;
+        if boottime_ns() >= job.until_ns {
             return Err(denied());
         }
-        guards = Some((lock, current, generation, runtime));
-        Ok(palette)
+        guards = Some(retained);
+        Ok(appearance)
     })();
     let response = Completion {
         owner: job.owner.clone(),
         token: job.token,
         until_ns: job.until_ns,
-        palette: collected.ok(),
+        appearance: collected.ok(),
     };
     let wire = serde_json::to_vec(&response)?;
     loop {
         if boottime_ns() >= job.until_ns || !ipc::living(&parent_watch)? {
             return Err(io::ErrorKind::TimedOut.into());
+        }
+        if let Some(retained) = &mut guards {
+            retained.verify()?;
         }
         match ipc::send(&channel, &wire) {
             Ok(()) => break,
@@ -240,6 +422,9 @@ pub fn run(parent: u32) -> io::Result<()> {
     loop {
         if boottime_ns() >= job.until_ns || !ipc::living(&parent_watch)? {
             return Err(io::ErrorKind::TimedOut.into());
+        }
+        if let Some(retained) = &mut guards {
+            retained.verify()?;
         }
         if let Some((wire, cred)) = ipc::receive(&channel)? {
             let ack: Ack = serde_json::from_slice(&wire)?;

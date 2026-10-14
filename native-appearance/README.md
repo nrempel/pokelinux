@@ -1,7 +1,8 @@
 # Native appearance owner
 
-This Rust service publishes a bounded public palette from the desktop user's
-private Omarchy theme. It supplies presentation only: an appearance revision
+This Rust service publishes bounded typed colors, font sizes and spacing from
+the desktop user's private Omarchy theme and user shell settings. It supplies
+presentation only: an appearance revision
 never grants focus, service access, permission, or lock authority.
 
 The root-installed executable accepts
@@ -21,19 +22,29 @@ and original500ms idle/reply budgets keep public idle clients from consuming
 owner-control capacity.
 
 Snapshots contain exactly `schema`, `owner`, `revision`, `until_ns`, `available`
-and `palette`. The schema is1; the incarnation is32 lowercase hexadecimal
+and `appearance`. The schema is2; the incarnation is32 lowercase hexadecimal
 characters. `until_ns` is a canonical decimal string preserving exact u64
-`CLOCK_BOOTTIME` nanoseconds. An available palette has exactly nine RGB fields:
+`CLOCK_BOOTTIME` nanoseconds. Available `appearance` has exactly `palette` and `style`. The
+palette has exactly nine RGB fields:
 background, foreground, surface, border, accent, muted, urgent, positive and ink.
-Unavailable publication has `palette:null`. A cached color is not a current
-lease. Queued replies are revalidated before every actual send.
+Style has exactly `base_size`, eight `font_tokens` and six `spacing_tokens`.
+Base/font values are positive signed-int32-range integers; spacing also permits
+zero. The family/resource resolver is still separate unfinished work. Unavailable
+publication has `appearance:null`; no schema1 reader is retained. The whole typed
+payload participates in revision equality and final queued-send validation. A
+cached presentation is not a current lease.
 
 Source traversal and parsing run in one owned UID1000 collector. Completion
 requires actual packet PID/UID/GID, retained pidfd liveness, incarnation/token
 and the original one-second BOOTTIME deadline. The collector holds the original
 theme-set shared lock and selected directory generation through publication ACK.
-This qualifies cooperating writers only. The owner retains a terminated worker
-slot until actual wait; collection retry is read-only and cannot retry a radio
+Generated and user shell maps are parsed independently and user keys win;
+removal reveals generated settings/defaults. Input handles, fixed ancestor chains,
+selected path identity, acquisition/read metadata, retained bytes and optional
+absence are rechecked before completion and through the ACK loop. Original user
+settings writers do not use the theme-set lock: these are separately qualified
+observations and convergence, not an atomic transaction across files. The owner
+retains a terminated worker slot until actual wait; collection retry is read-only and cannot retry a radio
 registration or imply vendor cleanup.
 
 Input traversal uses bounded regular files, no-follow component opens, ownership
@@ -57,10 +68,27 @@ runtime logs, synthetic private homes and captures remain private. See the
 [boundary and evidence](../docs/native-appearance-service.md) for chronology and
 the separate evidence classes.
 
-This initial projection covers selected opaque colors. It does not yet preserve
-all previously qualified font resolution, user overrides, typography, spacing or
-alpha projection. The existing public application's full theme path must not be
-replaced by this partial projection until those features and installed integration
+Nineteen actual host groups pass, including user token replacement/deletion,
+style revisions, unsafe user file types/content and absence recovery. A separate
+actual held-acquisition control exposes obsolete colors renewal before this repair;
+the unchanged control now observes a null candidate, withdrawal, fresh collection
+and actual reaps. Original full-style ARM comparison has a genuine pre-change RED;
+new original composition remains pending. Qt schema2 controls are private synthetic
+consumer evidence, not complete app migration.
+
+This projection covers selected opaque colors and integer font/spacing tokens.
+Concrete font resolution/resources, translucent colors, original parser edge cases
+and Qt signed-int overflow coercions remain unqualified. Unsupported out-of-range
+sizes are refused, never silently clamped; original Style defines no upper cap.
+The full original font/settings/alpha behavior is not yet preserved. The existing
+public application's full theme path must not be replaced by this partial projection until those features and installed integration
 are qualified. ARM compilation alone is not runtime, original Omarchy or phone
 evidence. Physical Pixel hardware, real suspend, current Source/lock composition
 and the complete smartphone remain open.
+
+The Color/Style behavioral reference is pinned
+[Omarchy v4.0.4](https://github.com/omacom/omarchy/tree/c668141e9c42b13c80c9ca4ea108e11708c5e8a5),
+copyright David Heinemeier Hansson, under its
+[MIT license](https://github.com/omacom/omarchy/blob/c668141e9c42b13c80c9ca4ea108e11708c5e8a5/LICENSE).
+The Rust projection is checked against executed original observations; no
+upstream tree, private home or raw runtime evidence is published here.

@@ -18,20 +18,27 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
-The native Rust appearance owner passes seventeen host component groups plus two
-separate actual held-exec/inherited-FD controls. Chronological REDs expose public
-client starvation, executable ancestry, stale socket restart, blocking exec
-handshake, inherited descriptors and ignored SIGCHLD. The final owner retains
-an asynchronous forked child, trusted FD-bound exec, pidfd signaling and actual
-wait; it sanitizes descriptors, normalizes waitable-child signals and reserves
-owner controls. Real EAGAIN exercises queued output revalidation. Root binds
-final inputs/reaps; actual container waits/absence and input closure pass.
-Rust static ARM cross-build and normal Qt ARM compile pass without new installed
-runtime qualification. The partial typed Qt prototype remains private; the
-public app's complete font/settings/typography path is preserved until migration.
-Next: full appearance features, actual desktop/current Source/lock replay and
-installed supervision; later palette/kernel selections are recorded below.
-See [native appearance](native-appearance-service.md) and bounded provenance.
+The native Rust appearance owner now publishes exact schema2 typed style,
+with generated/user overlays, all8font/6spacing tokens and full-payload revision/
+queued-send fences. Nineteen host groups pass; actual user replacement/deletion,
+unsafe inputs and absence recovery are covered after a genuine user-style RED.
+A separate held-input RED exposes obsolete colors renewal across an atomic file
+exchange with unchanged generation/lock. Retained inputs/chains/absence and final
+content/path checks repair it; unchanged control observes null/withdrawal, fresh
+collection and actual reaps. Every failed aggregate/setup label remains private.
+See [style proof](evidence/native-appearance-style-provenance.json) and
+[input proof](evidence/native-appearance-input-provenance.json).
+
+The private schema2 Qt reader passes154 actual kernel-peer/QML controls after a
+genuine schema2 baseline RED; malformed/revision controls execute only after
+accepted baseline. Root independently reviews records and exact-CID absence.
+New Rust static ARM and normal Qt6.12 compilation pass. The normal app remains
+uninstrumented; original-style ARM GREEN is being prepared, not yet executed.
+Concrete family/resources, alpha and original parser/overflow edges remain open;
+do not promote the partial consumer and remove the public app's full theme path.
+Historical17 host/two held-exec-FD and16 generic ARM kernel controls retain their
+preceding palette-only source selection. External supervision, actual desktop/
+current Source/lock and full smartphone gates remain. Source stays25ms/100ms.
 
 A separate later ARM composition control passes five actual groups with genuine
 Omarchy and directly launched normal UID11010 Qt: Tokyo→Latte→Tokyo follows the

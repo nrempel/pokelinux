@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "scope": "native Rust schema2 typed style; synthetic host process/files/SEQPACKET/filter only",
+  "production_service_ELF_sha256": "9c676b5e8dac52afb9be5bda9cbae08d1facd4447f82f9560a03b0a1dc833f4e",
+  "chronological_user_style_red": {
+    "contract_passed": false,
+    "service_ELF_sha256": "1234efa60794fd7c24ef19b69087128441d93c790253913b8917b788a88315c0",
+    "actual_result": "available palette remains schema1; requested user style absent",
+    "new_process_case": "actual_user_style_replacement_deletion_and_revision",
+    "existing_host_groups_passed": 17,
+    "actual_test_wait_exit": 101,
+    "execution_sha256": "4e1a922d092c4791b2731eaa29373e876d5219694e92be4dc55f7bac75f542ab"
+  },
+  "green": {
+    "host_groups": 19,
+    "real_process_groups": 13,
+    "same_process_real_SEQPACKET_groups": 4,
+    "actual_kernel_confinement_groups": 2,
+    "ignored_role_helper_executed_through_parent": true,
+    "actual_CLI_wait_exit": 0,
+    "exact_CID_absence": true,
+    "format_build_clippy_passed": true,
+    "build_execution_sha256": "8e69d24c81faac06d3a70a3d5ad8f0d0bcab4448ba0c4a309897e0a0ac98ab12",
+    "test_execution_sha256": "89b23141bfca1be86a816f6584e2cbb6e054d250b8dc158b054cc734e5859f40",
+    "sources_sha256": "fbc65220bb763568a372da5b0e4c2294d09c647d31d53a8621102b970040cf8f",
+    "binaries_sha256": "5c626ec64984c5b164f349ab993bf1b443dad87269e7dd80878e65b1bb610b00",
+    "new_qualifications": [
+      "actual atomic user replacement/deletion and generated fallback",
+      "style-only presentation revision changes",
+      "user symlink/FIFO/hardlink/invalid UTF8/wrong-owner refusal",
+      "absence recovery"
+    ]
+  },
+  "wire": {
+    "schema": 2,
+    "top_fields": [
+      "schema",
+      "owner",
+      "revision",
+      "until_ns",
+      "available",
+      "appearance"
+    ],
+    "appearance_fields": [
+      "palette",
+      "style"
+    ],
+    "style_fields": [
+      "base_size",
+      "font_tokens",
+      "spacing_tokens"
+    ],
+    "font_token_count": 8,
+    "spacing_token_count": 6,
+    "no_production_schema1_reader": true,
+    "style_participates_in_revision_and_final_send_fences": true
+  },
+  "compiler_setup_failure_preserved": "style-draft-1 queue fixture referenced moved background field; no runtime behavior RED",
+  "separate_generic_ARM_compile": {
+    "service_ELF_sha256": "c256593b962c19ec4fcba92a42fdbc9da80f500b422abda1091dd1ec4664cd5a",
+    "static_AArch64": true,
+    "runtime_qualified": false
+  },
+  "original_style_ARM_GREEN_pending": true,
+  "private_partial_Qt_consumer_not_promoted": true,
+  "font_resources_and_alpha_qualified": false,
+  "physical_phone_accessed": false
+}

@@ -4,6 +4,7 @@ pub mod ipc;
 pub mod palette;
 pub mod sandbox;
 pub mod service;
+pub mod style;
 
 use serde::{Deserialize, Serialize};
 use std::io;
@@ -44,7 +45,7 @@ pub struct Snapshot {
     /// Canonical decimal preserves exact u64 nanoseconds across JSON/Qt.
     pub until_ns: String,
     pub available: bool,
-    pub palette: Option<palette::Palette>,
+    pub appearance: Option<style::Appearance>,
 }
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(deny_unknown_fields)]
@@ -60,7 +61,7 @@ pub(crate) struct Completion {
     owner: String,
     token: u64,
     until_ns: u64,
-    palette: Option<palette::Palette>,
+    appearance: Option<style::Appearance>,
 }
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(deny_unknown_fields)]

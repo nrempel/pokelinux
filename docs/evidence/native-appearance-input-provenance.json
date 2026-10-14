@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "scope": "synthetic x86 real-process/files/SEQPACKET/ptrace; no Original/ARM/phone",
+  "control_sha256": "e1cec658f22e46a0cb72b0fd710d9eaa800633129ab00638f790ec69d8bcf8be",
+  "base_control_sha256": "2330797489eb46b579fe566ac2f387013f9b5f3b62b255c3bea17f4bcb255640",
+  "unchanged_control_and_runner_before_after_repair": true,
+  "fixture_mutator_UID": 0,
+  "fixture_inputs_UID": 1000,
+  "fixture_inputs_mode": "0600",
+  "uncooperative_writer_scope": "owned synthetic root exchange without theme lock; not actual UID1000 mutator",
+  "Root_independently_reviewed_actual_causal_chain": true,
+  "cases": {
+    "red": {
+      "service_ELF_sha256": "1234efa60794fd7c24ef19b69087128441d93c790253913b8917b788a88315c0",
+      "wire_schema": 1,
+      "contract_passed": false,
+      "obsolete_input_renewed": true,
+      "same_generation_atomic_file_exchange": true,
+      "selected_file_single_links": true,
+      "acquired_FD_position_zero": true,
+      "actual_SCM_exact_child_UID_GID_1000": true,
+      "actual_matching_job_token_deadline_and_ACK": true,
+      "actual_parent_reaps": 3,
+      "owner_Stop_wait_exit0": true,
+      "exact_CID_absence": true,
+      "all_source_inputs_unchanged_during_execution": true,
+      "result_sha256": "afa524f43184a5c057cab2d23b0cb3d2fd79310a1ae98192eeba7079759b6815",
+      "execution_sha256": "92dcf5ed3873c3ad9ae7c2c7edf0933b82a6f77397080f0eb3baf7db8d73e137"
+    },
+    "green": {
+      "service_ELF_sha256": "9c676b5e8dac52afb9be5bda9cbae08d1facd4447f82f9560a03b0a1dc833f4e",
+      "wire_schema": 2,
+      "contract_passed": true,
+      "obsolete_input_renewed": false,
+      "same_generation_atomic_file_exchange": true,
+      "selected_file_single_links": true,
+      "acquired_FD_position_zero": true,
+      "actual_SCM_exact_child_UID_GID_1000": true,
+      "actual_matching_job_token_deadline_and_ACK": true,
+      "actual_parent_reaps": 3,
+      "owner_Stop_wait_exit0": true,
+      "exact_CID_absence": true,
+      "all_source_inputs_unchanged_during_execution": true,
+      "result_sha256": "d6828ea2a3e41185d980217fac7e1a17fba24bc33a35393763df386d1afc18e5",
+      "execution_sha256": "dac0b714ab7f0e5fc93713f7e3751f8dac40d3488907ac9e8532e508119bd182"
+    }
+  },
+  "earlier_red1": "pre-start capability spelling classifier setup failure; no behavior RED",
+  "remaining": [
+    "separately qualified observations, not atomic transaction across uncooperative settings writers",
+    "private font resources and resolution",
+    "Original style ARM replay",
+    "installed desktop/current Source/lock",
+    "Google kernel capability profile and physical hardware"
+  ]
+}

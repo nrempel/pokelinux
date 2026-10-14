@@ -1,7 +1,7 @@
 //! Independent responsive presentation owner. No lifecycle/grant/focus mutations.
 use crate::{
     Ack, COLLECTION_BUDGET_NS, Completion, Configuration, DESKTOP_UID, Job, REFRESH_NS, Snapshot,
-    boottime_ns, fresh_id, ipc, palette::Palette,
+    boottime_ns, fresh_id, ipc, style::Appearance,
 };
 use rustix::{
     fd::OwnedFd,
@@ -251,7 +251,7 @@ impl Worker {
                 || completion.token != self.job.token
                 || completion.until_ns != self.job.until_ns
                 || boottime_ns() >= self.job.until_ns
-                || completion.palette.as_ref().is_some_and(|p| !p.valid())
+                || completion.appearance.as_ref().is_some_and(|p| !p.valid())
             {
                 self.fence();
                 return Err(io::ErrorKind::PermissionDenied.into());
@@ -300,7 +300,7 @@ impl Client {
         &mut self,
         owner: &str,
         revision: u32,
-        current: Option<&(Palette, u64)>,
+        current: Option<&(Appearance, u64)>,
         stopping: bool,
     ) -> io::Result<bool> {
         if let Some((wire, until)) = &self.reply {
@@ -315,7 +315,7 @@ impl Client {
                     || snapshot.revision != revision
                     || snapshot.available != available
                     || (snapshot.available
-                        && (snapshot.palette.as_ref() != current.map(|(p, _)| p)
+                        && (snapshot.appearance.as_ref() != current.map(|(p, _)| p)
                             || !snapshot.until_ns.parse::<u64>().is_ok_and(|t| now < t)))
                 {
                     return Ok(false);
@@ -441,7 +441,7 @@ pub fn run(path: &Path, config: Configuration, executable: &Path) -> io::Result<
     let mut revision = 0u32;
     let mut token = 0u64;
     let mut completed = 0u64;
-    let mut current: Option<(Palette, u64)> = None;
+    let mut current: Option<(Appearance, u64)> = None;
     let mut worker: Option<Worker> = None;
     let mut clients: Vec<Client> = Vec::new();
     let mut refresh = 0;
@@ -463,7 +463,7 @@ pub fn run(path: &Path, config: Configuration, executable: &Path) -> io::Result<
             match w.poll() {
                 Ok(Some(Event::Candidate(candidate))) => {
                     let new_revision =
-                        if current.as_ref().map(|(p, _)| p) != candidate.palette.as_ref() {
+                        if current.as_ref().map(|(p, _)| p) != candidate.appearance.as_ref() {
                             revision.checked_add(1)
                         } else {
                             Some(revision)
@@ -474,7 +474,7 @@ pub fn run(path: &Path, config: Configuration, executable: &Path) -> io::Result<
                     {
                         revision = new_revision;
                         current = candidate
-                            .palette
+                            .appearance
                             .map(|palette| (palette, candidate.until_ns));
                         completed += 1;
                     } else {
@@ -553,7 +553,7 @@ pub fn run(path: &Path, config: Configuration, executable: &Path) -> io::Result<
                         !stopping && current.as_ref().is_some_and(|(_, until)| now < *until);
                     let reply = match request {
                         Request::Snapshot => serde_json::to_vec(&Snapshot {
-                            schema: 1,
+                            schema: 2,
                             owner: owner.clone(),
                             revision,
                             until_ns: if available {
@@ -563,7 +563,7 @@ pub fn run(path: &Path, config: Configuration, executable: &Path) -> io::Result<
                             }
                             .to_string(),
                             available,
-                            palette: if available {
+                            appearance: if available {
                                 Some(current.as_ref().unwrap().0.clone())
                             } else {
                                 None
@@ -649,7 +649,7 @@ mod queued_reply_controls {
     struct HeldReply {
         client: Client,
         peer: OwnedFd,
-        current: (Palette, u64),
+        current: (Appearance, u64),
         wire: Vec<u8>,
         filler: Vec<u8>,
         filled: usize,
@@ -671,20 +671,21 @@ mod queued_reply_controls {
             net::sockopt::set_socket_send_buffer_size(&fd, 4096).unwrap();
             let queued_ns = boottime_ns();
             let current = (
-                crate::palette::project(
+                crate::style::project(
                     "background = '#1a1b26'\nforeground = '#a9b1d6'\naccent = '#7aa2f7'\nred = '#f7768e'\n",
+                    "",
                     "",
                 )
                 .unwrap(),
                 queued_ns + publication_lifetime_ns,
             );
             let wire = serde_json::to_vec(&Snapshot {
-                schema: 1,
+                schema: 2,
                 owner: OWNER.into(),
                 revision: REVISION,
                 until_ns: current.1.to_string(),
                 available: true,
-                palette: Some(current.0.clone()),
+                appearance: Some(current.0.clone()),
             })
             .unwrap();
             let transport_until_ns = queued_ns + 500_000_000;
@@ -780,7 +781,7 @@ mod queued_reply_controls {
                 }
                 "revision_change" => {
                     revision += 1;
-                    current.as_mut().unwrap().0.background = "#eff1f5".into();
+                    current.as_mut().unwrap().0.palette.background = "#eff1f5".into();
                 }
                 "stop" => {
                     stopping = true;

@@ -56,7 +56,7 @@ fn decimal(s: &str) -> bool {
             .is_none_or(|p| !p.is_empty() && p.bytes().all(|c| c.is_ascii_digit()))
         && parts.next().is_none()
 }
-fn shell(raw: &str) -> BTreeMap<String, String> {
+pub(crate) fn shell(raw: &str) -> BTreeMap<String, String> {
     let mut result = BTreeMap::new();
     let mut section = "";
     for line in raw.lines().map(str::trim) {
@@ -150,6 +150,12 @@ pub fn project(colors: &str, appearance: &str) -> io::Result<Palette> {
     if colors.len() > 64 * 1024 || appearance.len() > 64 * 1024 {
         return Err(invalid());
     }
+    project_values(colors, &shell(appearance))
+}
+pub(crate) fn project_values(
+    colors: &str,
+    shell: &BTreeMap<String, String>,
+) -> io::Result<Palette> {
     let mut base = BTreeMap::new();
     let mut urgent = None;
     for line in colors.lines() {
@@ -195,7 +201,6 @@ pub fn project(colors: &str, appearance: &str) -> io::Result<Palette> {
     ] {
         roles.insert(k.into(), v.clone());
     }
-    let shell = shell(appearance);
     // Unsupported translucency is refused until actual original alpha/pixel tests.
     for k in ["popups.background-alpha", "popups.border-alpha"] {
         if shell
@@ -211,7 +216,7 @@ pub fn project(colors: &str, appearance: &str) -> io::Result<Palette> {
             .map(String::as_str)
             .unwrap_or(&background),
         &roles,
-        &shell,
+        shell,
         0,
     )?;
     let border = flat(
@@ -220,7 +225,7 @@ pub fn project(colors: &str, appearance: &str) -> io::Result<Palette> {
             .map(String::as_str)
             .unwrap_or(&accent),
         &roles,
-        &shell,
+        shell,
         0,
     )?;
     // Original popup text is a direct color pick, not surface-alpha composition.

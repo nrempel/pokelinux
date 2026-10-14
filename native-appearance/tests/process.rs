@@ -183,7 +183,7 @@ impl Realm {
         until(
             || {
                 let s = self.snapshot();
-                s.available && s.palette.unwrap().background == background
+                s.available && s.appearance.unwrap().palette.background == background
             },
             4,
         );
@@ -273,13 +273,161 @@ fn actual_palette_private_home_and_live_changes() {
     let mut r = Realm::new("palette");
     r.healthy("#1a1b26");
     let old = r.snapshot();
-    assert_eq!(old.palette.unwrap().urgent, "#f7768e");
+    assert_eq!(old.appearance.unwrap().palette.urgent, "#f7768e");
     assert_eq!(r.home.metadata().unwrap().mode() & 0o777, 0o700);
     let guard = r.lock();
     r.theme("#eff1f5");
     drop(guard);
     r.healthy("#eff1f5");
     assert!(r.snapshot().revision > old.revision);
+    r.stop();
+}
+
+#[test]
+fn actual_user_style_replacement_deletion_and_revision() {
+    let mut r = Realm::new("user-style");
+    r.healthy("#1a1b26");
+    let write = |path: &Path, text: &str| {
+        let temporary = path.with_extension("new");
+        fs::write(&temporary, text).unwrap();
+        rustix::fs::chown(
+            &temporary,
+            Some(rustix::process::Uid::from_raw(1000)),
+            Some(rustix::process::Gid::from_raw(1000)),
+        )
+        .unwrap();
+        fs::set_permissions(&temporary, fs::Permissions::from_mode(0o600)).unwrap();
+        fs::rename(temporary, path).unwrap();
+    };
+    let generated = r.colors().with_file_name("shell.toml");
+    write(
+        &generated,
+        "[font]\nbase-size = 14\nbody = 20\n[spacing]\npanel-gap = 19\n",
+    );
+    for path in [r.home.join(".config"), r.home.join(".config/omarchy")] {
+        fs::create_dir(&path).unwrap();
+        rustix::fs::chown(
+            &path,
+            Some(rustix::process::Uid::from_raw(1000)),
+            Some(rustix::process::Gid::from_raw(1000)),
+        )
+        .unwrap();
+        fs::set_permissions(path, fs::Permissions::from_mode(0o700)).unwrap();
+    }
+    let user = r.home.join(".config/omarchy/shell.toml");
+    write(
+        &user,
+        "[font]\nbase-size = 18\nbody = 23\ndisplay = 45\n[spacing]\ncontrol-gap = 17\npanel-padding = 31\n",
+    );
+    let expected_user = json!({
+        "base_size":18,
+        "font_tokens":{"caption":15,"bodySmall":17,"body":23,"subtitle":19,
+            "title":21,"heading":24,"display":45,"displayLarge":42},
+        "spacing_tokens":{"controlGap":17,"panelPadding":31,"panelGap":19,"rowGap":12,
+            "controlPaddingX":15,"controlPaddingY":9}
+    });
+    let mut observed = Value::Null;
+    let end = Instant::now() + Duration::from_secs(4);
+    while Instant::now() < end {
+        observed = call(&r.socket, json!({"op":"snapshot"})).unwrap();
+        if observed["available"] == true && observed["appearance"]["style"] == expected_user {
+            break;
+        }
+        std::thread::sleep(Duration::from_millis(3));
+    }
+    fs::write(
+        r.root.join("actual-user-style-snapshot.json"),
+        serde_json::to_vec(&observed).unwrap(),
+    )
+    .unwrap();
+    assert_eq!(
+        observed["appearance"]["style"], expected_user,
+        "actual service omitted the qualified user style: {observed}"
+    );
+    assert_eq!(observed["schema"], 2);
+    let revision = observed["revision"].as_u64().unwrap();
+    fs::remove_file(&user).unwrap();
+    until(
+        || {
+            observed = call(&r.socket, json!({"op":"snapshot"})).unwrap();
+            observed["available"] == true
+                && observed["appearance"]["style"]["base_size"] == 14
+                && observed["appearance"]["style"]["font_tokens"]["body"] == 20
+                && observed["appearance"]["style"]["spacing_tokens"]["panelGap"] == 19
+                && observed["revision"].as_u64().unwrap() > revision
+        },
+        4,
+    );
+    let revision = observed["revision"].as_u64().unwrap();
+    fs::remove_file(generated).unwrap();
+    until(
+        || {
+            observed = call(&r.socket, json!({"op":"snapshot"})).unwrap();
+            observed["available"] == true
+                && observed["appearance"]["style"]["base_size"] == 12
+                && observed["appearance"]["style"]["font_tokens"]["body"] == 12
+                && observed["appearance"]["style"]["spacing_tokens"]["panelGap"] == 14
+                && observed["revision"].as_u64().unwrap() > revision
+        },
+        4,
+    );
+    assert_eq!(observed["appearance"]["palette"]["background"], "#1a1b26");
+    r.stop();
+}
+#[test]
+fn actual_unsafe_user_shell_refusal_and_absence_recovery() {
+    let mut r = Realm::new("unsafe-user-shell");
+    r.healthy("#1a1b26");
+    for path in [r.home.join(".config"), r.home.join(".config/omarchy")] {
+        fs::create_dir(&path).unwrap();
+        rustix::fs::chown(
+            &path,
+            Some(rustix::process::Uid::from_raw(1000)),
+            Some(rustix::process::Gid::from_raw(1000)),
+        )
+        .unwrap();
+        fs::set_permissions(path, fs::Permissions::from_mode(0o700)).unwrap();
+    }
+    let user = r.home.join(".config/omarchy/shell.toml");
+    let auxiliary = r.home.join("unrelated-synthetic-settings");
+    for kind in ["symlink", "hardlink", "fifo", "invalid-utf8", "wrong-owner"] {
+        match kind {
+            "symlink" => std::os::unix::fs::symlink(r.colors(), &user).unwrap(),
+            "hardlink" => {
+                fs::write(&auxiliary, "[font]\nbase-size=18\n").unwrap();
+                fs::hard_link(&auxiliary, &user).unwrap();
+            }
+            "fifo" => rustix::fs::mknodat(
+                rustix::fs::CWD,
+                &user,
+                rustix::fs::FileType::Fifo,
+                rustix::fs::Mode::from_raw_mode(0o600),
+                0,
+            )
+            .unwrap(),
+            "invalid-utf8" => fs::write(&user, [0xff]).unwrap(),
+            "wrong-owner" => fs::write(&user, "[font]\nbase-size=18\n").unwrap(),
+            _ => unreachable!(),
+        }
+        if !matches!(kind, "symlink" | "wrong-owner") {
+            rustix::fs::chown(
+                &user,
+                Some(rustix::process::Uid::from_raw(1000)),
+                Some(rustix::process::Gid::from_raw(1000)),
+            )
+            .unwrap();
+        }
+        until(|| !r.snapshot().available, 3);
+        assert!(
+            r.status()["state"].is_string(),
+            "owner stays responsive for {kind}"
+        );
+        fs::remove_file(&user).unwrap();
+        if kind == "hardlink" {
+            fs::remove_file(&auxiliary).unwrap();
+        }
+        r.healthy("#1a1b26");
+    }
     r.stop();
 }
 #[test]
@@ -420,7 +568,7 @@ fn app_role_protocol_probe() {
     let snapshot: Snapshot =
         serde_json::from_value(call(&public, json!({"op":"snapshot"})).unwrap()).unwrap();
     assert!(snapshot.available);
-    assert_eq!(snapshot.palette.unwrap().background, "#1a1b26");
+    assert_eq!(snapshot.appearance.unwrap().palette.background, "#1a1b26");
     let fd = net::socket_with(
         net::AddressFamily::UNIX,
         net::SocketType::SEQPACKET,
