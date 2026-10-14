@@ -68,6 +68,10 @@ but keeps the pixel-equivalence aggregate failed. Font data, recorded geometry
 and renderer API agree; application defaults differ and cause remains unproven.
 The backend is absent in that authored component host; no normal Messages font
 or full installed-theme result is claimed.
+A subsequent single-default-alpha counterfactual compiles, but its GUI run fails
+native positive readiness before a complete capture pair. The public broker is
+available while the sampled native cache is unavailable. No rendering cause or
+font-resource RED is established; the failed selection and cleanup are retained.
 
 The historical preceding schema2 owner publishes exact typed style,
 with generated/user overlays, all8font/6spacing tokens and full-payload revision/
