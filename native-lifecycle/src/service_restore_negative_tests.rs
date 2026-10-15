@@ -91,7 +91,7 @@ fn retained_denial(case: &mut Case, before: &Value) -> io::Result<()> {
     Ok(())
 }
 
-fn actual_idle_lock(case: &mut Case) -> io::Result<()> {
+pub(super) fn actual_idle_lock(case: &mut Case) -> io::Result<()> {
     let mut child = Command::new(&case.python)
         .arg("-I")
         .arg(case.install.join("app.py"))

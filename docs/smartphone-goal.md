@@ -104,7 +104,7 @@ arming or unlock ingress is added. The unchanged22 actor cases also pass on an
 explicitly filtered; full40 inventory is enumeration only. No ARM storage or
 authentication scope/PAM execution is inferred.
 A later [downstream restoration selection](native-session-restoration.md) passes53
-default host tests plus6 separately selected actual service cases. Private cfgtest
+default host tests plus8 separately selected actual service cases. Private cfgtest
 completion retains Armed context; a later exact typed Source event causes real
 worker clear and an actual UID11010 read. A new UID1000 lock during held clear wins
 through the same worker true sync and clean restart denial. Additional actual-loop
@@ -112,9 +112,12 @@ cases qualify forced/expired Source and late-completion refusal plus held-clear
 Stop with fresh storage-worker unclean reopen refusal. These coverage additions
 retain identical production daemon/launcher bytes. Queued acknowledgements
 also reject completed intervening writes in a real Worker/socket component.
-Authentication, Source and history remain authored; no production completion
-constructor/ingress exists. Original PAM+scope composition, installed broker/
-containment, real retained history/normal Qt reopening, remaining negative service
+Two later [retained-history cases](native-session-restoration-history.md) use the
+actual Messages writer/readonly children and return identical receipt IDs after
+relock/clean reopen/fresh restoration without reseeding. The preceding6 stress
+cases retain authored history. Authentication, Source and SMS seed remain authored;
+no production completion constructor/ingress exists. Original PAM+scope composition, installed broker/
+containment, normal Qt/original compositor reopening, remaining real-history-specific negative service
 combinations, full-actor unclean reopen and trusted authentication remain open. No physical model is qualified. See
 [worker boundary](native-pam-worker.md).
 The actual headless [lock storage barrier](native-lock-storage-barrier.md) now

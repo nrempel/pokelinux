@@ -121,7 +121,7 @@ constructor/ingress exists. Genuine authentication, real Messages history/normal
 Qt composition, negative service matrix, secure presentation and phone gates
 remain open.
 
-A later coverage-only selection now passes all53 default tests with6 explicitly
+The preceding coverage-only selection passed all53 default tests with6 explicitly
 ignored cases separately selected and passing. It includes the original positives
 and actual-loop forced/expired Source, late completion after a new idle lock, and
 held-clear Stop with failed fresh-storage-worker reopen. A capacity-bounded
@@ -131,3 +131,13 @@ AArch64 daemon bytes match the preceding selection. See the
 [additional provenance](../docs/evidence/native-session-restoration-negative-provenance.json).
 The full actor's unclean reopen, remaining negative combinations, real history/Qt
 composition, genuine authentication and physical gates remain separate.
+
+The newest [retained-history tracer](../docs/native-session-restoration-history.md)
+adds a dev-only facade around the real Projector writer/readonly child, preserving
+its full Provider contract and original deadlines. Two actual cases now obtain
+native Messages pages through UID11010 and retain identical message receipt IDs
+through actual relock, clean actor reopen and fresh restoration without reseeding.
+53 default tests pass with8 explicitly ignored integrations separately passing;
+strict checks and AArch64 compilation are separate from runtime. The earlier6
+stress cases still use authored history. Auth/Source/SMS seed remain authored;
+normal Qt/original compositor, genuine authentication and hardware remain open.

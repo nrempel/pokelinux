@@ -9,14 +9,20 @@ import shutil
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--daemon', type=Path, required=True)
 parser.add_argument('--launcher', type=Path, required=True)
+parser.add_argument('--messages', type=Path)
+parser.add_argument('--seed', type=Path)
 parser.add_argument('--install', type=Path, default=Path('/opt/service-restoration'))
 args = parser.parse_args()
 assert os.getuid() == os.geteuid() == 0
 assert os.environ.get('NATIVE_LIFECYCLE_ISOLATED') == '1'
 assert args.install.is_absolute() and args.install.parent == Path('/opt')
 args.install.mkdir(mode=0o755)
-for source, name in [(args.daemon, 'lifecycle-daemon'), (args.launcher, 'lifecycle-launcher'),
-                     (Path(__file__).with_name('app.py'), 'app.py')]:
+assert (args.messages is None) == (args.seed is None)
+helpers = [(args.daemon, 'lifecycle-daemon'), (args.launcher, 'lifecycle-launcher'),
+           (Path(__file__).with_name('app.py'), 'app.py')]
+if args.messages is not None:
+    helpers += [(args.messages, 'messages-service'), (args.seed, 'messages-seed-fixture')]
+for source, name in helpers:
     target = args.install / name
     shutil.copyfile(source.resolve(strict=True), target)
     target.chmod(0o755 if name != 'app.py' else 0o644)

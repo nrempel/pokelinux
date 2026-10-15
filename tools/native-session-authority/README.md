@@ -147,3 +147,12 @@ unobserved external transition, a joint installed production session launch,
 actual Binder/session composition, phone hardware, modem behavior or physical
 suspend. The normal installed Messages entrypoint still has no production source
 selector. No physical phone, proprietary executable or vendor input is used.
+
+The fixture package also supplies a dev-only `History` library facade for
+[native lifecycle retained-history tests](../../docs/native-session-restoration-history.md).
+It owns the existing Projector and delegates the complete Provider contract through
+inherent methods plus neutral token/packet events, avoiding lifecycle unit-test
+crate identity mismatches. It adds no successful-auth constructor, feature or IPC.
+The normal lifecycle public API remains unchanged. Actual retained native pages
+and clean same-ID reopen pass in the separate headless restoration selection;
+normal Qt/original compositor and genuine authentication remain separate gates.

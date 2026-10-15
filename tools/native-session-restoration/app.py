@@ -60,8 +60,12 @@ elif mode == '--app':
                     request = json.loads(packet)
                     if request == {'op': 'identity'}:
                         reply = actual
-                    elif request == {'op': 'read'}:
-                        service.send(b'{"op":"messages_read","request":{"query":{"fixture":"history"},"ttl_ms":500}}')
+                    elif request.get('op') == 'read' and set(request) <= {'op', 'query'}:
+                        query = request.get('query', {'fixture': 'history'})
+                        assert isinstance(query, dict)
+                        message = json.dumps({'op': 'messages_read', 'request': {'query': query, 'ttl_ms': 500}}).encode()
+                        assert len(message) <= 4096
+                        service.send(message)
                         reply = json.loads(service.recv(4096))
                     else:
                         raise ValueError('unexpected private fixture command')

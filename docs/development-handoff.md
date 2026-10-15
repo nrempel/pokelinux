@@ -18,7 +18,25 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
-The downstream restoration milestone now passes53 default host tests, with6
+The newest headless tracer now uses the actual native Messages Projector writer
+and independent readonly child after a preserved real-query behavioral RED.
+53 default tests pass with8 explicitly ignored integrations separately selected
+and passing. Native pages reach the actual UID11010 app only after the real policy
+worker clear. A relock/clean-close/reopen over the same raw/inbox paths requires
+fresh admission/attempt/later Source and returns exactly the same two receipt IDs,
+without reseeding. There are8 actual test-parent waits0 and10 successful actor
+reports. Source/auth/SMS seed are authored; no production auth constructor/ingress
+or normal Qt is added. The dev-only facade bridges crate identity while delegating
+full Provider ownership/deadlines. A linker resource prerequisite failure is kept
+separate; corrected affinity/PID capacity preserves all original deadlines.
+Strict lifecycle/facade checks and AArch64 compilation pass; no new ARM execution
+is claimed. Astra finds no blocking architectural issue and keeps early-error
+Drop source-reviewed. See [retained history](native-session-restoration-history.md).
+The preceding6 stress cases use authored history and do not become real-history-
+specific held-clear qualification. Normal UI/genuine authentication/device gates
+remain open; no phone was accessed.
+
+The preceding downstream restoration milestone passes53 default host tests, with6
 explicitly ignored root integrations selected separately and passing. A private
 cfgtest authenticated-and-closed completion atomically retains Armed context;
 only its later exact Source event requests a real sole-worker synced clear.
@@ -1045,8 +1063,10 @@ Continue the existing Messages lock→restore tracer from the qualified downstre
 actor/storage path. Continue the remaining wrong-event/attempt-deadline and
 uncertain-clear-expiry combinations plus full-actor unclean reopen; the current
 six service cases now cover forced/expired Source, new-lock late completion and
-held-clear Stop/storage reopen refusal. Compose real retained Messages history and the normal
-installed app. Keep authentication construction/ingress test-only until genuine
+held-clear Stop/storage reopen refusal. Real retained history now composes behind
+the private test auth/Source; continue that path into the normal installed Qt app
+and original compositor. Keep the real-history-specific stress and early-failure
+gates separate. Keep authentication construction/ingress test-only until genuine
 whole-owner completion provenance and trusted locker handoff are independently
 qualified. Do not substitute models or ARM harness passes for authentication.
 Preserve the queued ARM setup failure without relaxing its predicate. Complete

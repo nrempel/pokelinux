@@ -15,3 +15,6 @@ sha2 = "=0.10.9"
 
 [lints.rust]
 unsafe_code = "forbid"
+
+[dev-dependencies]
+native-session-authority-fixture = { path = "../tools/native-session-authority/fixture" }

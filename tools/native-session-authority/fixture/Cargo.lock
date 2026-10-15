@@ -316,6 +316,7 @@ dependencies = [
  "pokelinux-messages",
  "pokelinux-session",
  "rustix",
+ "serde_json",
 ]
 
 [[package]]
@@ -426,6 +427,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f6b464fbc74e149a392436b17d523f769e057cb6877f6a5c4618bc6f11800548"
 
 [[package]]
+name = "pokelinux-camera"
+version = "0.1.0"
+
+[[package]]
 name = "pokelinux-inbox"
 version = "0.1.0"
 dependencies = [
@@ -447,6 +452,7 @@ dependencies = [
 name = "pokelinux-lifecycle"
 version = "0.1.0"
 dependencies = [
+ "pokelinux-camera",
  "pokelinux-kernel-identity",
  "rustix",
  "serde",

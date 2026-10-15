@@ -143,3 +143,10 @@ The earlier queued ARM setup failure stays failed; no retry or relaxed predicate
 is implied. Generic ARM execution of this selection, matched Google-kernel
 composition, secure frame/configuration provisioning, suspend/wake and all
 physical Pixel gates remain open. No phone was accessed or modified.
+
+The subsequent [retained-history checkpoint](native-session-restoration-history.md)
+now passes two additional actual Projector writer/readonly cases, including same
+message IDs after relock/clean actor reopen/fresh restoration. Its current default
+suite is53 pass/8 ignored, with8 exact cases separately passing. This advances real
+history composition while keeping the preceding6 stress cases' authored provider,
+normal Qt/original compositor, genuine auth and hardware boundaries separate.

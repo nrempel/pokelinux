@@ -288,6 +288,11 @@ impl Drop for Locker {
     }
 }
 
+#[derive(Clone)]
+struct RetainedHistory {
+    raw: PathBuf,
+    inbox: PathBuf,
+}
 struct Case {
     runtime: PathBuf,
     policy: PathBuf,
@@ -303,12 +308,30 @@ struct Case {
     locker: Locker,
     app: Option<OwnedFocus>,
     worker: Option<(u32, OwnedFd)>,
+    real_history: bool,
+    messages_children: Vec<(u32, OwnedFd)>,
     observations: Vec<Value>,
     closed: bool,
 }
 
 impl Case {
     fn new(existing_policy: Option<PathBuf>, pause: bool) -> io::Result<Self> {
+        Self::new_with_history(existing_policy, pause, None)
+    }
+    fn new_with_history(
+        existing_policy: Option<PathBuf>,
+        pause: bool,
+        retained: Option<RetainedHistory>,
+    ) -> io::Result<Self> {
+        if let Some(paths) = &retained {
+            check(
+                paths.raw.is_absolute()
+                    && paths.raw.is_dir()
+                    && paths.inbox.is_absolute()
+                    && paths.inbox.is_dir(),
+                "retained history paths required",
+            )?;
+        }
         check(
             rustix::process::getuid().as_raw() == 0 && rustix::process::geteuid().as_raw() == 0,
             "isolated root fixture required",
@@ -431,6 +454,7 @@ impl Case {
         let service_policy = policy.clone();
         let service_install = install.clone();
         let service_facts = facts.clone();
+        let real_history = retained.is_some();
         let service = thread::spawn(move || {
             let observed_revision = Arc::new(AtomicU64::new(0));
             let mut source = Facts {
@@ -439,7 +463,21 @@ impl Case {
                 observed_revision: observed_revision.clone(),
                 stopped: false,
             };
-            let mut history = History::default();
+            let mut history: Box<dyn messages::Provider> = match retained {
+                Some(paths) => match retained_history_tests::RealHistory::spawn(
+                    &service_runtime,
+                    &paths.raw,
+                    &paths.inbox,
+                    &service_install.join("messages-service"),
+                ) {
+                    Ok(history) => Box::new(history),
+                    Err(error) => {
+                        let _ = service_tx.try_send(Err(error));
+                        return;
+                    }
+                },
+                None => Box::new(History::default()),
+            };
             let mut control = ActorControl {
                 inbox,
                 attempt: None,
@@ -453,7 +491,7 @@ impl Case {
                 &profile,
                 &service_install.join("lifecycle-launcher"),
                 if pause { Some("pause:1") } else { None },
-                Some(&mut history),
+                Some(history.as_mut()),
                 Some(&mut source),
                 None,
                 None,
@@ -476,6 +514,8 @@ impl Case {
             locker,
             app: None,
             worker: None,
+            real_history,
+            messages_children: vec![],
             observations: vec![],
             closed: false,
         };
@@ -495,6 +535,11 @@ impl Case {
                 }
             })?;
             case.find_worker()?;
+            if case.real_history {
+                wait_until(boottime_ns().saturating_add(WAIT_NS), || {
+                    Ok(case.admin(json!({"op":"messages_status"}))?["available"] == true)
+                })?;
+            }
             check(
                 case.admin(json!({"op":"launch","app":APP}))? == json!({"result":"ok"}),
                 "actual app launch failed",
@@ -738,6 +783,13 @@ impl Case {
                 "app child closure missing after service-owned drain",
             )?;
         }
+        for (pid, alive) in &self.messages_children {
+            check(
+                !crate::authority::living(alive)? && !Path::new(&format!("/proc/{pid}")).exists(),
+                "Messages child remains after service-owned drain",
+            )?;
+        }
+        self.observations.push(json!({"actual_Messages_children_dead_and_proc_absent":self.messages_children.len(),"Messages_numeric_wait_independently_observed":false}));
         self.observations.push(json!({"normal_service_result":true,"service_thread_joined":true,
             "storage_death_and_proc_absence":self.worker.is_some(),"storage_wait_owned_by_service":true,
             "locker_actual_parent_wait":locker_status.code(),"locker_proc_absent":!Path::new(&format!("/proc/{}",self.locker.0.id())).exists()}));
@@ -746,7 +798,7 @@ impl Case {
     fn report(&self, label: &str, body: &io::Result<()>, closed: &io::Result<()>) {
         let record = json!({"case":label,"passed":body.is_ok()&&closed.is_ok(),"body_error":body.as_ref().err().map(ToString::to_string),
             "closure_error":closed.as_ref().err().map(ToString::to_string),"observations":self.observations,
-            "actual_policy_worker":true,"auth_and_Source_and_history_authored":true,"production_auth_ingress":false,"phone_accessed":false});
+            "actual_policy_worker":true,"auth_and_Source_authored":true,"history_provider_authored":!self.real_history,"actual_retained_history_provider":self.real_history,"history_seed_authored":self.real_history,"production_auth_ingress":false,"phone_accessed":false});
         if let Some(root) = std::env::var_os("NATIVE_LIFECYCLE_RESTORE_RESULTS") {
             let path = PathBuf::from(root).join(format!("{label}.json"));
             if fs::write(path, serde_json::to_vec_pretty(&record).unwrap()).is_err() {
@@ -891,3 +943,6 @@ mod storage_negative;
 
 #[path = "service_restore_negative_tests.rs"]
 mod negative_tests;
+
+#[path = "service_restore_history_tests.rs"]
+mod retained_history_tests;
