@@ -34,6 +34,7 @@ struct State {
 struct Shared {
     state: Mutex<State>,
     changed: Condvar,
+    named_permanent: bool,
 }
 impl Shared {
     fn wait(&self, predicate: impl FnMut(&mut State) -> bool) -> Result<()> {
@@ -136,11 +137,20 @@ impl Remotable for Radio {
                 if client == "die-register" {
                     std::process::exit(0);
                 }
-                if client == "hold" || client == "permanent" {
+                let named_permanent = self.0.named_permanent && client == "pokelinux-radio";
+                if client == "hold" || client == "permanent" || named_permanent {
                     let mut state = self.0.state.lock().unwrap();
                     state.registration_entered = true;
                     self.0.changed.notify_all();
-                    if client == "permanent" {
+                    if client == "permanent" || named_permanent {
+                        if named_permanent {
+                            println!(
+                                "PERMANENT-REGISTRATION-ENTERED pid={} uid={}",
+                                thread_state::get_calling_pid(),
+                                thread_state::get_calling_uid()
+                            );
+                            std::io::Write::flush(&mut std::io::stdout())?;
+                        }
                         // No timeout and no release control for this branch. Guest owns peer teardown.
                         loop {
                             state = self.0.changed.wait(state).unwrap();
@@ -282,8 +292,12 @@ impl Remotable for Radio {
 }
 fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     let process = ProcessState::init("/dev/binderfs/radio", 4)?;
-    let radio = Binder::new(Radio(Arc::new(Shared::default())));
-    if std::env::args().nth(1).as_deref() == Some("named") {
+    let mode = std::env::args().nth(1);
+    let radio = Binder::new(Radio(Arc::new(Shared {
+        named_permanent: mode.as_deref() == Some("named-permanent"),
+        ..Shared::default()
+    })));
+    if matches!(mode.as_deref(), Some("named" | "named-permanent")) {
         use rsbinder::{
             Proxy,
             hub::android_16::{BpServiceManager, IServiceManager},

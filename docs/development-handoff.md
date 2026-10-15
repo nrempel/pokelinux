@@ -18,6 +18,16 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+An additional [permanently held registration control](native-radio-service-blocked.md)
+now keeps the same installed production ELF bytes responsive: three real
+Initializing statuses finish in343.15ms while Binder registration stays held.
+Normal Stop has native worker wait9 in5.56ms, systemd Main exit0 and empty cgroup;
+unchanged-journal restart exits78 while the peer remains alive and held. All45 host
+regressions and full ARM guest/outer/input closure pass. Local reaping grants no
+vendor cleanup or retry authority. Next recover exact original IMS indication
+routing before connecting the existing decoder; remaining discovery/pressure,
+producer/reset, device policy and hardware gates stay open.
+
 The installed production radio service/status tracer now passes on an actual
 generic ARM kernel after a genuine missing-history-projection RED. A one-line
 service repair preserves all five other ELF bytes and the outer oracle. The
@@ -27,7 +37,7 @@ history. Native worker wait9, systemd Main exit0, empty unit cgroup and same-jou
 restart exit78 qualify separately; no new registration occurs. All45 host tests,
 strict checks and full guest/outer/input closure pass. This is public synthetic
 Binder and operator diagnostics, not native IMS or hardware qualification.
-Exact installed blocked-call/pressure, device policy/producer/reset and phone
+Remaining discovery/output pressure, device policy/producer/reset and phone
 gates remain. See [installed service](native-radio-service.md) and the preceding
 [production worker tracer](native-radio-production-worker.md).
 

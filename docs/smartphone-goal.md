@@ -10,7 +10,10 @@ The [installed native radio service](native-radio-service.md) now carries one
 authored raw Binder observation through a production worker and restricted status
 client under an actual ARM systemd unit, with peer-loss withdrawal, native wait,
 clean Main exit and durable restart refusal. This is transport diagnostics;
-producer/reset, native IMS/calls/SMS and hardware requirements remain open.
+producer/reset, native IMS/calls/SMS and hardware requirements remain open. The same
+production binaries now separately pass [responsive status and owned Stop during
+permanently held registration](native-radio-service-blocked.md), with durable
+restart refusal and no vendor-cleanup claim.
 
 ## Product and architecture
 

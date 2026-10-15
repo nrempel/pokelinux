@@ -86,8 +86,9 @@ A later [installed service selection](native-radio-service.md) connects the
 production supervisor and status client through the actual packaged unit. Its
 separate RED/repair, peer-loss withdrawal, native wait, Main exit0 and restart
 refusal do not change this earlier four-executable evidence. Next qualify the
-exact installed worker under permanently blocked lookup/registration and output
-backpressure.
+exact installed worker under blocked lookup and output backpressure. The later
+[held-registration control](native-radio-service-blocked.md) separately qualifies
+normal installed status/Stop with the registration call permanently held.
 Production discovery identity and permissions, recovered producer semantics,
 requests/ACK/reset, native IMS/calls/SMS, actual suspend and Pixel kernel policy
 remain gates. The full smartphone matrix also still requires device graphics,

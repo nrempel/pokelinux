@@ -133,9 +133,10 @@ authentication path or physical phone. Prior emulator, original-code, user-mode
 ARM and Google-kernel evidence retain their separate scopes. Zero phone models
 are qualified.
 
-Next qualify permanently blocked registration in this exact installed service,
-then remaining discovery/output pressure, installed principal negatives and
-startup filesystem stalls. Synchronous startup metadata/journal fsync can stall;
+A later [permanently held registration control](native-radio-service-blocked.md)
+qualifies responsive Initializing status, normal native Stop and durable refusal
+with identical production ELF bytes. Blocked discovery/output pressure, installed
+principal negatives and startup filesystem stalls remain separate. Synchronous startup metadata/journal fsync can stall;
 the event-loop budgets do not make those filesystem operations bounded. Actual
 suspend/wake, unkillable tasks and manager fallback remain open.
 

@@ -1,0 +1,127 @@
+{
+  "schema": 1,
+  "scope": "Additional actual generic ARM installed-service control: ordinary production Binder registration held permanently by a public peer; responsive local status, owned Stop and durable same-journal refusal.",
+  "base_commit": "67f7a844e73aa3243ef8e05ebfb63322d5193936",
+  "additional_coverage_not_manufactured_RED": true,
+  "normal_service_reference": {
+    "report": "native-radio-service.md",
+    "public_provenance_sha256": "955435346ef037216401a0acf1c715e418946d302cf11992a2c7a43acfb01cd8",
+    "runtime_label": "pokelinux-radio-service-arm-green-root-1",
+    "selection_sha256": "b36eeb53e1637c6ac62ca05958dbaa8d7aa6efdff4724d5592b598464dff4d45",
+    "execution_sha256": "913485c664098be91914705144175fb1135cade821c4d64aebf354ad6be1b26d"
+  },
+  "source_change_only": [
+    {
+      "path": "tools/native-arm64-binder/fixture/src/bin/peer.rs",
+      "previous_sha256": "045a86a01bdc5e24dd62ece1134747c4ba6f57fdaed0ab2addd148be600c2789",
+      "current_sha256": "378631ee296968b6bf932b8d429021c1c203f4fa313d3847d85eabcdefeea843"
+    }
+  ],
+  "normal_source_closure_reused_except_peer": true,
+  "unchanged_production_ELFs_and_manager": {
+    "radio-service": "a8afaf8c7f9b5319c5dca37c824a0003b410df78535f50dc7a95c0ac4dc9891e",
+    "radio-status": "b970a71ca515ed87b502f0a6fb690ac37809736e7584724367baaab89c1eebac",
+    "radio-worker": "cda685be2e4fc1359496e66dafda3c8be0f9aa61a9eb705021113a6de53a0b95",
+    "manager": "54a7f0fbfe9e9c74a5b88303b01c63d86e1d3ad065a911c244aa64243f276072"
+  },
+  "selected_peer_ELF_sha256": "701696b9bb98d6e98fe02426e92c2039db2d3ae9e15052fb4ad8a2606aeccc88",
+  "build": {
+    "label": "pokelinux-radio-service-blocked-build-root-1",
+    "proof_sha256": {
+      "selection.json": "5f45740c3abbb0e44a1b490c4e50b8f64e60515910140a64f83324cb6d4d29e4",
+      "execution.json": "1346170e464c40ce331e0ee4696b95fbf2432ff8e87c6e60a1da12e28021cbaf",
+      "build.sh": "f3e93af8794f985e5716b00402ce207fa6744a46789c5d8dcba375159cc6b60b",
+      "build.log": "750353ad71827441af232a59376d94a06948497eee89a9d98ab07ce809f93b35",
+      "arm-cargo.jsonl": "12a33fe7ba2565dac1c00cfba28f3d703019519c2f0f54d2296bd45bea10d8f6",
+      "service-arm-cargo.jsonl": "c4b357b82130352f3ebca518aa344693c66b4bc0fc79e41c9db7ef0adc144255"
+    },
+    "source_files": 76,
+    "strict_checks_passed": true,
+    "host_library_tests": 45,
+    "host_library_failures": 0,
+    "actual_CLI_wait_exit": 0,
+    "fresh_CID_absence_same_daemon_inputs_unchanged": true
+  },
+  "runtime": {
+    "label": "pokelinux-radio-service-blocked-arm-root-1",
+    "selection_sha256": "f0869e7956400074ccdc3cb0fa6972cd8497b4e06647d063e120e46221f3cee0",
+    "command_sha256": "b0b22d020336e3f70dd36db5a6105ea9cc6eacc72fa55e1e6e50c26ca00c0b20",
+    "execution_sha256": "34d5151f7d5fdd89341448a8815bbd60db1a7e87896bbbd1e0d55e75920b7320",
+    "guest_result_sha256": "489a055011098851b12e90be1296ca18cffc368fb0d6ebe2fe7145a31b1d5092",
+    "kernel": {
+      "machine": "aarch64",
+      "release": "7.1.6-1-aarch64-ARCH",
+      "version": "#1 SMP PREEMPT_DYNAMIC Wed Aug  5 00:20:13 UTC 2026"
+    },
+    "dedicated_uid_gid": 1500,
+    "actual_Main_worker_peer_manager_ELF_parent_principal_bindings": true,
+    "original_unit_sysusers_bytes_installed": true,
+    "exact_lookup_registration_hold_counts": [
+      1,
+      1,
+      1
+    ],
+    "callback_Active_Raw_counts": [
+      0,
+      0,
+      0
+    ],
+    "initializing_status_snapshots": 3,
+    "status_window_original_ms": 3000.0,
+    "status_window_elapsed_ms": 343.146502,
+    "requested_gap_ms": 100,
+    "status_client_actual_wait0_and_pipe_EOF_before_original_cutoff": true,
+    "worker_wait_signal": 9,
+    "worker_wait_after_retirement_ms": 5.557536,
+    "worker_wait_before_original_2s_cleanup_cutoff": true,
+    "systemd_Main_exit": 0,
+    "bound_unit_cgroup_empty_after_Stop": true,
+    "same_journal_restart_Main_exit": 78,
+    "distinct_systemd_invocations": true,
+    "peer_held_and_alive_through_Stop_and_restart_refusal": true,
+    "journal_unchanged_no_new_child_or_registration": true,
+    "actual_peer_wait_after_case": -9,
+    "actual_manager_wait_after_case": -9,
+    "actual_journal_reader_wait_after_case": 0,
+    "case_elapsed_ms": 1948.524462,
+    "case_original_ms": 29000,
+    "actual_Docker_CLI_wait_exit": 0,
+    "guest_and_outer_closure_qualified": true,
+    "inputs_unchanged": true
+  },
+  "outer_source_sha256": {
+    "guest.py": "c9f6f949d1fb7a50a5a57380b0963761767dab9cded8827a504becf685442ec7",
+    "plan.py": "78e3d9d219b112e12833535cc4d046e5e11b0c9cdc5903dacf44def5e98c548a",
+    "boot.sh": "81aee371a860a0ac0f157bcf87292eebfdbbfd4baa87d5e1dcc557716f84de5a",
+    "run-selected.py": "3fbc0c41f794667ade0867e30c05dc78f110a228ff811f1493fcedc7f6185063",
+    "systemd-exit-observer.py": "cc42e387fc92d1d967a1aa54310f392d94fdc7f2044e0d1af8e184e39b166764"
+  },
+  "root_independent_rehash": {
+    "source_files": 76,
+    "runtime_input_bindings": 360,
+    "only_peer_source_changed": true,
+    "normal_production_and_manager_ELFs_unchanged": true
+  },
+  "ownership_limits": [
+    "Rust Supervisor owns worker wait; guest only observes it",
+    "systemd owns Main wait, private ExecStopPost only records outcome",
+    "Stop client observes exact server pidfd exit after ACK; not a reaper",
+    "no vendor cleanup/reset, callback drain or safe retry inferred from process reaping"
+  ],
+  "evidence_classes": {
+    "actual_generic_ARM_kernel_Binder_installed_service": true,
+    "new_original_vendor_or_Android_runtime": false,
+    "new_private_REA_inputs": false,
+    "ARM_usermode_execution": false,
+    "physical_phone": false,
+    "UI_or_authentication": false,
+    "actual_suspend": false
+  },
+  "remaining_gates": [
+    "blocked service discovery, output/client pressure and installed principal-negative controls",
+    "startup filesystem stalls, unkillable tasks and manager fallback",
+    "exact original registration-indication dispatch, slot/message/complete-payload routing and decoded state meanings",
+    "producer/reset cleanup acknowledgment and safe successor registration",
+    "production device identity/access policy, matched Pixel kernel, suspend/wake and full smartphone hardware qualification"
+  ]
+}
