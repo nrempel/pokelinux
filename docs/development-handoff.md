@@ -18,6 +18,19 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The [native SIT codec](native-sit-codec.md) now matches six complete983-byte
+format-2 packets from the corrected original Bionic ARM64 user-QEMU reference.
+A compiled/linted host baseline has two controls pass and six `Unsupported`
+failures; only encoder source changes, then eight host and eight ARM64
+user-QEMU tests pass with fixed tests/fixtures. Original reference has one load
+check, six format-2 outputs and a638-byte format-1 control, all eight children
+actually waited with stdout EOF before their original cutoffs. These are pure
+serialization observations. Initial token0/radio14/carrier0/context type0 and
+other declared zero/null/default premises remain fixed; the factory scalar1 is
+unresolved. Response parsing, context/channel/subscription binding, dispatch,
+APN lifecycle, deactivate/reset and actual kernel/modem/carrier qualification
+remain the next backend gates. The earlier format-0 run supplies no fixture.
+
 The [native Data service tracer](native-cellular-service.md) now records one
 complete generic ARM production Main/worker/operator integration pass.24 service
 and nine shared host tests pass. Its34 guest direct waits/EOF include Main0,

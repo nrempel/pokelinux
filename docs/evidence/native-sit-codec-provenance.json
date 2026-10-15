@@ -1,0 +1,317 @@
+{
+  "schema": 1,
+  "base_commit": "722064dc6ea6d0dd0c091d567ab4f7cce4fdc012",
+  "scope": "Pure bounded initial token-zero SIT format-2 setup encoder; original Bionic ARM64 user-QEMU reference, native host RED and host/ARM64 user-QEMU GREEN; no transport or hardware qualification",
+  "qualified": true,
+  "root_original_final_review_sha256": "a6b6049af58eef49b53d03bf558f2b8466d4811039d3da996ef8831a0a7cfe58",
+  "independent_original_reference_review_sha256": "cfb1a54730b8ad14109ca9337dfbe03eac5e5debd1a30f0aaa8097b993c65358",
+  "source_inventory": [
+    {
+      "path": "native-sit-codec/Cargo.lock",
+      "sha256": "8fd8f204e8bdfd40b9b61544193dc0d5a264136e60398ed1de07525ad4bba17d"
+    },
+    {
+      "path": "native-sit-codec/Cargo.toml",
+      "sha256": "e015735268c5e4d4200c97685e448086999603f515ee5365dcd85bc9c075cc7e"
+    },
+    {
+      "path": "native-sit-codec/src/lib.rs",
+      "sha256": "691faf99c8472eed09f4aa50d139a337555489ff6a0a660535c0d57ce4f61fdb"
+    },
+    {
+      "path": "native-sit-codec/src/tests.rs",
+      "sha256": "b72194d0c4675aa754aefd61883043c976e7663f1b237c84bf237c3c9a422e35"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-dual-index0.hex",
+      "sha256": "c39b53c39dddbb218eee8127a39b8d9baea3af84697ac0494ea55428ac920c41"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-dual-index17.hex",
+      "sha256": "c39b53c39dddbb218eee8127a39b8d9baea3af84697ac0494ea55428ac920c41"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-ip.hex",
+      "sha256": "e87202bd3d3260a089c4904c25dfbe71539fede952a2c1ed0cb15039c7312d08"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-ipv6.hex",
+      "sha256": "e9218ba592977d2729098bafa1614a6974bd9f45310980f3b255cdb9957dd5ea"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-nonip.hex",
+      "sha256": "28801a1b1ea26dcfa68599e49319d8cb175fb1f290053fb759af54bb531ede76"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-other-apn.hex",
+      "sha256": "31a5605a08478b13601c6c166eb3a215e462b55d10caa2811589382136453b52"
+    }
+  ],
+  "original_reference": {
+    "run": "pokelinux-sit-setup-original-root-2",
+    "execution_class": "Original unmodified Bionic library code under ARM64 user-mode QEMU; authored bounded direct-call helper",
+    "selection_sha256": "ee13dc0a9ea44a884b5af557176b57bb54ff073b4053130d0fc1e2d46985e8b8",
+    "command_sha256": "9b16b95089812fc9b7f61454119df91d284d5541fd46251df7c78f5d70eba9ab",
+    "execution_sha256": "8cf10a9e035de0cf08fc319fd2d7ca21223e634a11ab8ee89ffad61a29b25f42",
+    "result_sha256": "6bf447dfa895572e9a358ddbb9b31ce7cd3f175969d0214fab425aeb071dd532",
+    "probe_source_sha256": "eabe66aa299ea0a751c8f78e6be2349618dfbae00aaed6ba955283d41efa5dad",
+    "selected_runtime_files": 19,
+    "children": 8,
+    "load_checks": 1,
+    "complete_serializer_outputs": 7,
+    "format_2_outputs": 6,
+    "format_2_bytes": 983,
+    "format_2_byte_245": 2,
+    "format_1_control_bytes": 638,
+    "format_1_control_byte_245": 1,
+    "format_1_control_token": 1,
+    "each_child_actual_wait_exit": 0,
+    "each_child_stdout_EOF": true,
+    "each_wait_before_original_child_cutoff": true,
+    "original_whole_budget_ns": 90000000000,
+    "actual_outer_CLI_wait_exit": 0,
+    "same_daemon": true,
+    "live_exact_CID_registered": true,
+    "fresh_exact_CID_absent": true,
+    "selected_inputs_unchanged": true,
+    "callable_and_vtable_symbol_offsets_checked": true,
+    "direct_extended_serializer_only": true,
+    "context_activation_or_service_handler_invoked": false,
+    "historical_format_0_root1_used_as_native_fixture": false,
+    "separate_constructor_reference": {
+      "run": "pokelinux-sit-context-original-root-1",
+      "cases": 9,
+      "independent_review_sha256": "52260e6fe01e58a709dae54ebc9b25ba59af40768082843a5de52bdc71268f10",
+      "modem_channel_binding_qualified": false
+    },
+    "probe_build_root_review_sha256": "c5efc2e4b79c3f8d6652edcf96fda07d1bc0eda32e7cb9100674cf1421099ce2",
+    "Root_rehashed_original_factory_files": 19,
+    "ambient_original_observations": {
+      "failed_UNIX_connects_per_case": 1,
+      "missing_property_accesses_per_case": 4,
+      "zero_socket_activity_claimed": false,
+      "does_not_qualify_modem_transport": true
+    },
+    "published_authored_helper": {
+      "path": "tools/native-sit-codec/original-setup-probe.c",
+      "sha256": "eabe66aa299ea0a751c8f78e6be2349618dfbae00aaed6ba955283d41efa5dad",
+      "executed_ARM_Bionic_ELF_sha256": "056af271530532b6abc96825a0f874f523a3599af845717d78c11b76349d260e",
+      "source_identical_to_selected_original_run": true,
+      "runtime_vendor_libraries_or_raw_audits_published": false
+    }
+  },
+  "declared_reference_premises": {
+    "token": 0,
+    "radio_argument": 14,
+    "carrier": 0,
+    "opaque_original_context_type": 0,
+    "MCC_MNC": "00101",
+    "APN_bitmap": 1,
+    "credentials": "empty",
+    "protocol_and_roaming_protocol_equal": true,
+    "optional_address_text": null,
+    "other_scalar_arguments": 0,
+    "traffic_descriptor": null,
+    "boolean_arguments": [
+      false,
+      false
+    ],
+    "properties": "absent; original missing-property/default branch",
+    "handover": false,
+    "factory_scalar_bytes_241_through_244": {
+      "value_le32": 1,
+      "meaning": "unresolved; no policy label"
+    },
+    "format_byte_245": 2
+  },
+  "native_input_policy": {
+    "APN_min_bytes": 1,
+    "APN_max_bytes": 99,
+    "APN_characters": "ASCII a-z, 0-9, dot, hyphen",
+    "context_type": "NonZeroU8",
+    "context_wire_width_is_modem_CID_range_or_authority": false,
+    "protocols": [
+      "Ipv4",
+      "Ipv6",
+      "Ipv4v6",
+      "NonIp"
+    ],
+    "encoded_bytes": 983,
+    "dependencies": 0,
+    "unsafe_code_forbidden": true,
+    "all_accepted_inputs_equivalent_to_original_or_modem_accepted": false
+  },
+  "cases": [
+    {
+      "case_id": "v3-ip",
+      "packet_bytes": 983,
+      "packet_sha256": "f8ada5285cd6f01ce0631a59f7222dce4a53e0dfe32e172f5d6a1d38471bb145",
+      "original_stdout_sha256": "979dd03f80876bf3a3e78abc877a1535553d8ce213951a69cf9357b61e54a329",
+      "context_byte": 1,
+      "original_constructor_index": 0,
+      "protocol_input": "IP",
+      "apn": "pokelinux.invalid",
+      "carrier": 0,
+      "format_byte": 2,
+      "initial_token": 0
+    },
+    {
+      "case_id": "v3-ipv6",
+      "packet_bytes": 983,
+      "packet_sha256": "9fd3afafb78624b33b6e10911b76dc3575c0723d7286595ee71bdfb94a32925c",
+      "original_stdout_sha256": "a43e3a3a65fe83339e352aa182523661f1ec39e4715ebb287d6568afc14e2ac5",
+      "context_byte": 9,
+      "original_constructor_index": 17,
+      "protocol_input": "IPV6",
+      "apn": "pokelinux.invalid",
+      "carrier": 0,
+      "format_byte": 2,
+      "initial_token": 0
+    },
+    {
+      "case_id": "v3-dual-index0",
+      "packet_bytes": 983,
+      "packet_sha256": "8de403cff8f0a0757a50816f4435524bb16c2f25ab7786a30b80230389f77298",
+      "original_stdout_sha256": "47a5615a33e2485f8f8f831589551cce4c7285d13ab8a2d203241b223b7b35e8",
+      "context_byte": 9,
+      "original_constructor_index": 0,
+      "protocol_input": "IPV4V6",
+      "apn": "pokelinux.invalid",
+      "carrier": 0,
+      "format_byte": 2,
+      "initial_token": 0
+    },
+    {
+      "case_id": "v3-dual-index17",
+      "packet_bytes": 983,
+      "packet_sha256": "8de403cff8f0a0757a50816f4435524bb16c2f25ab7786a30b80230389f77298",
+      "original_stdout_sha256": "2eaee36851560dbfb5e05fc675ebcfc277ff53d2ebaea585b040d7ba2cdab19f",
+      "context_byte": 9,
+      "original_constructor_index": 17,
+      "protocol_input": "IPV4V6",
+      "apn": "pokelinux.invalid",
+      "carrier": 0,
+      "format_byte": 2,
+      "initial_token": 0
+    },
+    {
+      "case_id": "v3-nonip",
+      "packet_bytes": 983,
+      "packet_sha256": "97a2324468addcc4d99f08918eda11321ca389e7bf143e7ed54d0913326d023a",
+      "original_stdout_sha256": "f114ec8036a8bf114aaf13c4c704264f26dada8c23064a67d3d9fe5cd5853df0",
+      "context_byte": 2,
+      "original_constructor_index": 7,
+      "protocol_input": "NON-IP",
+      "apn": "pokelinux.invalid",
+      "carrier": 0,
+      "format_byte": 2,
+      "initial_token": 0
+    },
+    {
+      "case_id": "v3-other-apn",
+      "packet_bytes": 983,
+      "packet_sha256": "9f46fa4c99e3df4de16dba8eb87802071b6d184680e577598b9ce1a13069f89c",
+      "original_stdout_sha256": "9468ce1ff202c37bb9745b2fc53cc6de249b23fb361bb373e138c5a69f22d5d1",
+      "context_byte": 1,
+      "original_constructor_index": 0,
+      "protocol_input": "IP",
+      "apn": "x.invalid",
+      "carrier": 0,
+      "format_byte": 2,
+      "initial_token": 0
+    }
+  ],
+  "red_before_green": {
+    "genuine_missing_encoder_host_RED": true,
+    "RED_returned": "Unsupported for each of six full-packet comparisons",
+    "only_repair_source": [
+      "native-sit-codec/src/lib.rs"
+    ],
+    "tests_fixtures_manifest_and_lock_identical": true,
+    "native_complete_original_comparisons_per_GREEN_target": 6,
+    "RED_ARM_compile_only": true,
+    "RED": {
+      "run": "pokelinux-sit-codec-build-baseline-root-2",
+      "root_behavioral_review_sha256": "b5e61ba901bf45d1c4940a7393dd816e680b01af91cda0bd0be58db20243472e",
+      "build_script_sha256": "89bdb572d1d851c05d1f122e382ea023273f047b18afc198250523eb83a55508",
+      "host_test_log_sha256": "b882ce4a0467aabb5599a9ebc50b2f1aaaab1dd1069ff7c0b774431a00884d56",
+      "ARM_user_QEMU_test_log_sha256": null,
+      "host_test_exit": 101,
+      "host_passed": 2,
+      "host_failed": 6,
+      "host_ignored": 0,
+      "ARM_user_QEMU_passed": null,
+      "ARM_behavioral_RED_executed": false,
+      "host_fmt_and_strict_all_targets_Clippy_passed": true,
+      "ARM_test_compile_passed": true,
+      "exact_build_CID_absent": true,
+      "target_artifacts": [
+        {
+          "target": "x86_64-unknown-linux-gnu",
+          "test_elf_sha256": "1d5230ccc476e38d803cd43e1e3c79d9ac6da4cf33685ffacbcb1ced58434aed",
+          "machine": 62,
+          "executed": true
+        },
+        {
+          "target": "aarch64-unknown-linux-gnu",
+          "test_elf_sha256": "786cc82de8b0799d105c10f19725ffcfa16056b6fbc667c5e62d7cc69c77803c",
+          "machine": 183,
+          "executed": false
+        }
+      ]
+    },
+    "GREEN": {
+      "run": "pokelinux-sit-codec-build-repair-root-1",
+      "root_behavioral_review_sha256": "5716fa706ae97633674253c68f4994a99a0e7ffa168ffed91a1dc36d4acac27f",
+      "build_script_sha256": "dec4ec44d60a91d0d5d61c2a02abf718c386233260b9c81d8ed78d6316c60d66",
+      "host_test_log_sha256": "a8eb73d20f9b24fdb31e09e1170e662c42d610845dc99309a19d738da84d6626",
+      "ARM_user_QEMU_test_log_sha256": "476b3e52f0069c1e3daf582d053fb1596d275d5819bd5c0e1b54d99a4bcd3c47",
+      "host_test_exit": 0,
+      "host_passed": 8,
+      "host_failed": 0,
+      "host_ignored": 0,
+      "ARM_user_QEMU_passed": 8,
+      "ARM_behavioral_RED_executed": false,
+      "host_fmt_and_strict_all_targets_Clippy_passed": true,
+      "ARM_test_compile_passed": true,
+      "exact_build_CID_absent": true,
+      "target_artifacts": [
+        {
+          "target": "x86_64-unknown-linux-gnu",
+          "test_elf_sha256": "078e1a05c4bb3d911c35d9c75ea36dcf50b785ea12c3dfa8be6fae074f1445b2",
+          "machine": 62,
+          "executed": true
+        },
+        {
+          "target": "aarch64-unknown-linux-gnu",
+          "test_elf_sha256": "7b04bb1cb31cf5b9834fe6afa4d432965dec50322b5c712068cffa8e849b66a8",
+          "machine": 183,
+          "executed": true
+        }
+      ]
+    }
+  },
+  "boundaries": {
+    "pure_serialization_only": true,
+    "original_ARM_user_QEMU_is_actual_ARM_kernel_execution": false,
+    "native_ARM_user_QEMU_is_actual_ARM_kernel_execution": false,
+    "existing_actual_ARM_Binder_kernel_proofs_changed": false,
+    "V2_encoder_implemented": false,
+    "response_parser_qualified": false,
+    "transport_or_dispatch_qualified": false,
+    "normal_vendor_handler_request_mapping_qualified": false,
+    "context_channel_slot_subscription_binding_qualified": false,
+    "APN_readiness_or_acquisition_qualified": false,
+    "provider_or_kernel_link_authority_qualified": false,
+    "deactivate_reset_retry_qualified": false,
+    "modem_carrier_or_physical_Pixel_qualified": false,
+    "phone_accessed": false,
+    "raw_proprietary_libraries_decompilation_and_traces_published": false
+  },
+  "remaining_gates": [
+    "Response framing, bounded parsing, token/error correlation and uncertain outcomes",
+    "Context/channel/subscription identity and qualified modem transport",
+    "Provider and APN lifecycle ownership, deactivation/reset and safe retry",
+    "Actual kernel/modem integration and matched Pixel/carrier qualification"
+  ]
+}
