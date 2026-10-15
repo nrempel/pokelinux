@@ -20,10 +20,16 @@ pub enum DecodeError {
     UnsupportedSelector,
 }
 #[derive(Clone, Debug, PartialEq, Eq)]
-pub struct IpParameters<const N: usize> {
+pub struct AddressInfo<const N: usize> {
     pub address: [u8; N],
     pub dns: [[u8; N]; 2],
     pub pcscf: [[u8; N]; 3],
+}
+/// Selector presence is independent of address bytes being all zero.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct ServerFamilies<const COUNT: usize> {
+    pub ipv4: Option<[[u8; 4]; COUNT]>,
+    pub ipv6: Option<[[u8; 16]; COUNT]>,
 }
 /// Parsed observations only. Numeric activity is the original parser's output;
 /// neither it nor an address establishes a live network or permission to use it.
@@ -35,9 +41,13 @@ pub struct BaseSetupResponse {
     pub protocol: Protocol,
     pub dns_selector: u8,
     pub pcscf_selector: u8,
-    pub ipv4: Option<IpParameters<4>>,
-    pub ipv6: Option<IpParameters<16>>,
-    pub opaque_u32_at_127: u32,
+    pub ipv4: Option<[u8; 4]>,
+    pub ipv6: Option<[u8; 16]>,
+    pub dns: ServerFamilies<2>,
+    pub pcscf: ServerFamilies<3>,
+    /// Original base item127 -> DataCall124 -> modern report MTUV4.
+    /// A wire observation, without a range check or network configuration policy.
+    pub reported_mtu_v4: u32,
     pub opaque_u8_at_131: u8,
 }
 impl BaseSetupResponse {
@@ -63,14 +73,35 @@ impl BaseSetupResponse {
             protocol,
             dns_selector: body[25],
             pcscf_selector: body[66],
-            ipv4: matches!(protocol, Protocol::Ipv4 | Protocol::Ipv4v6)
-                .then(|| family(body, 1, 5, [26, 46], 67)),
-            ipv6: matches!(protocol, Protocol::Ipv6 | Protocol::Ipv4v6)
-                .then(|| family(body, 2, 9, [30, 50], 79)),
-            // These two tail fields have observed copy behavior; their policy
-            // meaning is deliberately unresolved at this boundary.
-            opaque_u32_at_127: u32::from_le_bytes(octets(body, 127)),
+            ipv4: matches!(protocol, Protocol::Ipv4 | Protocol::Ipv4v6).then(|| octets(body, 5)),
+            ipv6: matches!(protocol, Protocol::Ipv6 | Protocol::Ipv4v6).then(|| octets(body, 9)),
+            dns: ServerFamilies {
+                ipv4: (body[25] & 1 != 0).then(|| [26, 46].map(|offset| octets(body, offset))),
+                ipv6: (body[25] & 2 != 0).then(|| [30, 50].map(|offset| octets(body, offset))),
+            },
+            pcscf: ServerFamilies {
+                ipv4: (body[66] & 1 != 0)
+                    .then(|| std::array::from_fn(|i| octets(body, 67 + i * 4))),
+                ipv6: (body[66] & 2 != 0)
+                    .then(|| std::array::from_fn(|i| octets(body, 79 + i * 16))),
+            },
+            reported_mtu_v4: u32::from_le_bytes(octets(body, 127)),
             opaque_u8_at_131: body[131],
+        })
+    }
+    /// The original getter omits a family when its local-address protocol is absent.
+    pub fn address_info_v4(&self) -> Option<AddressInfo<4>> {
+        self.ipv4.map(|address| AddressInfo {
+            address,
+            dns: self.dns.ipv4.unwrap_or([[0; 4]; 2]),
+            pcscf: self.pcscf.ipv4.unwrap_or([[0; 4]; 3]),
+        })
+    }
+    pub fn address_info_v6(&self) -> Option<AddressInfo<16>> {
+        self.ipv6.map(|address| AddressInfo {
+            address,
+            dns: self.dns.ipv6.unwrap_or([[0; 16]; 2]),
+            pcscf: self.pcscf.ipv6.unwrap_or([[0; 16]; 3]),
         })
     }
 }
@@ -120,25 +151,4 @@ fn octets<const N: usize>(body: &[u8], offset: usize) -> [u8; N] {
     body[offset..offset + N]
         .try_into()
         .expect("fixed base item bounds")
-}
-fn family<const N: usize>(
-    body: &[u8],
-    selector: u8,
-    address_offset: usize,
-    dns_offsets: [usize; 2],
-    pcscf_offset: usize,
-) -> IpParameters<N> {
-    IpParameters {
-        address: octets(body, address_offset),
-        dns: if body[25] & selector != 0 {
-            dns_offsets.map(|offset| octets(body, offset))
-        } else {
-            [[0; N]; 2]
-        },
-        pcscf: if body[66] & selector != 0 {
-            std::array::from_fn(|i| octets(body, pcscf_offset + i * N))
-        } else {
-            [[0; N]; 3]
-        },
-    }
 }

@@ -3,8 +3,9 @@
 `pokelinux-sit-codec` encodes one initial token-zero,983-byte Samsung SIT setup
 request and parses the measured144-byte base response subset. Six request
 comparisons and six response/getter comparisons match separately executed
-original Bionic code under ARM64 user-QEMU. All22 native tests pass on the host
-and ARM64 user-QEMU after separate missing-encoder and missing-decoder host REDs.
+original Bionic code under ARM64 user-QEMU. All23 native tests pass on the host
+and ARM64 user-QEMU after separate encoder/decoder REDs and a compiled
+independent-server data-loss RED.
 The crate has no dependencies and forbids unsafe Rust.
 
 `InitialLteSetupV3::new` accepts a `NonZeroU8` context identifier, an APN of1–99
@@ -24,10 +25,14 @@ meaning remains unresolved.
 `response::BaseSetupResponse::parse(packet, expected_token)` returns owned typed
 observations only after exact length, header, message, declared length, token,
 error/status and field-policy checks. A nonzero CID is a wire byte; activity
-preserves the original numeric1/2 translation. Optional IPv4/IPv6 parameters
-contain an address, two DNS and three P-CSCF values. Family presence follows the
-PDP selector; separate DNS/P-CSCF selectors determine copied or zero fields.
-The two observed tail fields stay opaque. Token equality grants no dispatch,
+preserves the original numeric1/2 translation. Local address options follow the
+PDP protocol. DNS and P-CSCF each have independent optional IPv4/IPv6 arrays;
+selector presence remains distinct from all-zero addresses. Explicit
+`address_info_v4()`/`address_info_v6()` derive the original getter projection,
+including its local-family omission and zero fill, without losing servers from
+the canonical observation. The uint32 tail becomes `reported_mtu_v4` through the
+selected original modern-report/logger mapping; the final byte remains opaque.
+No MTU configuration policy is implied. Token equality grants no dispatch,
 provider or APN authority. Broader response formats are refused.
 
 From the repository root:
@@ -43,3 +48,7 @@ index does not select a modem channel. See the [report](../docs/native-sit-codec
 and the [encoder](../docs/evidence/native-sit-codec-provenance.json) and
 [response](../docs/evidence/native-sit-response-provenance.json) provenance for the exact
 reference, RED/GREEN and remaining gates.
+
+The [independent-family repair](../docs/native-sit-codec.md#independent-server-families)
+records the pre-RED API/getter test adaptation, unchanged original getter fixture
+bytes and fixed-test23/23 repair. Earlier provenance records its historical source.

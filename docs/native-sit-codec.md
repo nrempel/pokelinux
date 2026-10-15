@@ -5,7 +5,8 @@ packet in the measured format-2 subset. Six original packet comparisons pass
 on the host and ARM64 user-QEMU. All eight fixed tests pass per target; formatting
 and host all-targets strict Clippy pass, and the ARM64 test executable compiles.
 That encoder checkpoint remains unchanged. The later base-response decoder
-below adds14 tests, for22 per target. These are pure codec observations; modem
+below initially adds14 tests, for22 per target. The later independent-family
+repair brings the current total to23 per target. These are pure codec observations; modem
 communication and APN acquisition remain unqualified.
 
 ## Original reference and fixed comparisons
@@ -107,14 +108,48 @@ These are explicit native policy checks, not broader original acceptance or
 failure-remap equivalence.
 
 Returned activity maps wire1→2 and2→1, leaving0 unchanged; no connected/readiness
-meaning is assigned. Protocol selects optional IPv4/IPv6 families. Each family
-holds numeric octets for an address, two DNS and three P-CSCF values; independent
-DNS/P-CSCF selector bits select copied values or zeros. Non-IP has no IP family.
-The observed body-tail uint32 at127 and byte at131 remain opaque, without MTU
-or policy labels. Token equality is local wire correlation, not an owned
+meaning is assigned. The initial getter-shaped representation was subsequently
+replaced by the complete typed base observation described below. Non-IP has no
+local IP address. The final body byte at131 remains opaque. Token equality is local wire correlation, not an owned
 operation, provider, subscription or APN authorization. No partial result is
 returned on refusal. Original binaries, decompilation and raw runtime/audit
 records remain private.
+
+## Independent server families
+
+The original complete parser→fresh-context-copy→modern version22 report pipeline
+exposed a real data-loss case: local protocol IPv4 with DNS/P-CSCF selector2 still
+reports IPv6 servers, although its IPv6 address getter is absent. All nineteen
+emitted report fields in eleven original cases have independent post-run
+qualification; this is not complete264-byte ABI equivalence. Root rehashes the
+reference and explicitly rechecks those209 fields. The bounded original run is
+ARM64 user-QEMU, with no handler, activation, modem or physical phone.
+
+Before the new regression run, the API was changed to separate local address
+options from `ServerFamilies<2>` DNS and `ServerFamilies<3>` P-CSCF arrays, and
+the old test harness was adapted to explicit getter projections. That baseline
+retained the existing lossy protocol gating. The six original getter fixture
+files remain byte-identical. After compilation, formatting and strict Clippy,
+all22 prior tests pass while the new cross-selector test fails with IPv6 DNS
+`None` versus the captured original servers, actual host exit101. ARM64 is
+compile-only in that RED. Only `src/response.rs` changes afterward: server
+selection follows each server selector, independently of local protocol. Fixed
+tests/fixtures pass23 host and23 ARM64 user-QEMU tests. Local setup/controller
+failures are retained privately and are not behavioral RED evidence.
+
+Canonical server `Some` preserves selector presence even when all selected octets
+are zero. `address_info_v4()` and `address_info_v6()` reproduce the narrower
+original getter view, with zeros for disabled servers and `None` for an absent
+local family. There is one packet parser; projections do not independently
+reinterpret raw bytes. No compatibility alias is retained.
+
+The body uint32LE at127 is now `reported_mtu_v4`: selected original parser copy
+and modern-report conversion reach the field consumed by the original logger's
+MTUV4 label. This identifies a reported scalar, without a range check, route
+configuration, IPv6 MTU inference or permission to configure a link. The byte
+at131 remains opaque. [Repair provenance](evidence/native-sit-server-families-provenance.json)
+pins the new RED/GREEN, original reference and exact source inventory. Historical
+encoder/initial-decoder receipts retain their original source and test scope.
 
 ## Remaining backend gates
 

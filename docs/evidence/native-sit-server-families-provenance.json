@@ -1,0 +1,171 @@
+{
+  "schema": 1,
+  "base_commit": "f0affa1bc7254fc975a97f6e6ddc5be45ba10388",
+  "scope": "Canonical typed base144B local addresses and independent DNS/PCSCF families, explicit original-getter projection; no report port, transport, provider/APN or hardware claim",
+  "qualified": true,
+  "original_reference": {
+    "run": "pokelinux-sit-report-original-root-1",
+    "execution_class": "Genuine matched original Bionic ARM64 user-QEMU parser/context-memory-copy/modern22 report, no handler/activation/transport",
+    "selection_sha256": "32238ab77b55a379e14e306e038e800a6519b76e3fedf3c794278c7420359337",
+    "execution_sha256": "08847d162ff575deb5a9b5693dfbd0a8b79d201f2e4a3b4665582304f73b7d40",
+    "result_sha256": "26d490cd83f59aedc1213b740fd96fc371d507f306b25ad29fcad23f9003a8c2",
+    "root_review_sha256": "65a6857f198f731ff8b434de8b72286e10d50033ab2e87eb1482719cd71aa45c",
+    "independent_review_sha256": "5aee694fb0ab11de372cc0fa59f5e44eac82bffe3c9b0e86245ebc39a0f0c3cb",
+    "independent_memo_sha256": "699a314e033b3727b3c47a196144ba497db6b36bb40de75d2e383a352a75115c",
+    "original_children_wait0_EOF": 12,
+    "all_emitted_fields_compared_post_run": 209,
+    "entire264B_ABI_equivalence_claimed": false,
+    "cross_stdout_sha256": "8b58d16647591cd13bf2e5cb189a8c8ce29665f4e32e38c2c56107737c1641c6",
+    "cross_original_observation": "IPv4 local address192.0.2.7; absent IPv6 getter; independent IPv6 DNS andPCSCF retained in modern report",
+    "original_deadlines": "host CLOCK_MONOTONIC, not suspend-aware"
+  },
+  "native_RED": {
+    "run": "pokelinux-sit-server-families-baseline-root-2",
+    "root_review_sha256": "a18ebc3a23ae4b0963402a8fc2a953b2aecb3043c31b23764ca92c3eb559d8f0",
+    "pre_RED_API_getter_harness_adaptation_explicit": true,
+    "prior_test_pass": 22,
+    "new_data_loss_test_fail": 1,
+    "actual_host_test_exit": 101,
+    "strict_fmt_Clippy_passed": true,
+    "ARM_compile_only": true,
+    "host_log_sha256": "83194217cb1bb1b724931c7560f4c07768cdd02ecfd071a4b8ee4b6728306a44",
+    "contract_sha256": "3ee99e6189495c31b6214dc8c191c805d04bd78fd53239377f84276e15ebcb31"
+  },
+  "native_GREEN": {
+    "run": "pokelinux-sit-server-families-repair-root-2",
+    "root_review_sha256": "b19d844cec8c37784d536acd840edfffd340becca90a5991ba679ad38ac2b3f8",
+    "host_tests_passed": 23,
+    "ARM_user_QEMU_tests_passed": 23,
+    "strict_fmt_Clippy_passed": true,
+    "only_repair_source_paths": [
+      "native-sit-codec/src/response.rs"
+    ],
+    "tests_fixtures_manifest_lock_unchanged_after_new_RED": true,
+    "six_prior_getter_fixture_files_byte_identical": true,
+    "host_log_sha256": "84f76cca2fe4fa51735adb801f426480d1843a15a730a151f15f1495dc64feb2",
+    "ARM_log_sha256": "e7b1bafb0d66f11c991d689e2630d881136fd9a72d17236e8277ce63bd9fdb3b",
+    "ARM_test_executables": [
+      {
+        "target": "pokelinux_sit_codec",
+        "path": "target/aarch64-unknown-linux-gnu/debug/deps/pokelinux_sit_codec-a30e547c46631f05",
+        "sha256": "f62213c99c9fc3703458005614a1dddb908343e904bf23e03909513d55055ae7"
+      },
+      {
+        "target": "base_server_families",
+        "path": "target/aarch64-unknown-linux-gnu/debug/deps/base_server_families-bfd5fc3c213df8b9",
+        "sha256": "7a946cd9f8e7da68255e9945bcab8e2f3ee3b79ff23459f898b6f70441834a86"
+      },
+      {
+        "target": "base_response",
+        "path": "target/aarch64-unknown-linux-gnu/debug/deps/base_response-7ecbfcc82ff420d2",
+        "sha256": "ec61af5c6fc52cd62f620cb07dd2ff8853ef41ed4a2f4802bee278a68f8fa019"
+      }
+    ],
+    "build_container_CIDs_reaped": true
+  },
+  "source_inventory": [
+    {
+      "path": "native-sit-codec/Cargo.lock",
+      "sha256": "8fd8f204e8bdfd40b9b61544193dc0d5a264136e60398ed1de07525ad4bba17d"
+    },
+    {
+      "path": "native-sit-codec/Cargo.toml",
+      "sha256": "e015735268c5e4d4200c97685e448086999603f515ee5365dcd85bc9c075cc7e"
+    },
+    {
+      "path": "native-sit-codec/src/lib.rs",
+      "sha256": "0d87cf8779c018c1e6066a7110d4e17dd36c16bb8425e9209e220d69cd637b42"
+    },
+    {
+      "path": "native-sit-codec/src/response.rs",
+      "sha256": "403a2212401e6bcadc7666ae60b8a7f4e3d08a536e693cc98a19a211b56120c4"
+    },
+    {
+      "path": "native-sit-codec/src/tests.rs",
+      "sha256": "b72194d0c4675aa754aefd61883043c976e7663f1b237c84bf237c3c9a422e35"
+    },
+    {
+      "path": "native-sit-codec/tests/base_response.rs",
+      "sha256": "457aecfd96e85daeae8ec49f2fb6c5219723e5065f36498e6e1dbc36a8217445"
+    },
+    {
+      "path": "native-sit-codec/tests/base_server_families.rs",
+      "sha256": "2838064c3f5ae882da3314e417bc50488ad2ad47183697791b534074ddf4c7e9"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-dual-index0.hex",
+      "sha256": "c39b53c39dddbb218eee8127a39b8d9baea3af84697ac0494ea55428ac920c41"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-dual-index17.hex",
+      "sha256": "c39b53c39dddbb218eee8127a39b8d9baea3af84697ac0494ea55428ac920c41"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-ip.hex",
+      "sha256": "e87202bd3d3260a089c4904c25dfbe71539fede952a2c1ed0cb15039c7312d08"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-ipv6.hex",
+      "sha256": "e9218ba592977d2729098bafa1614a6974bd9f45310980f3b255cdb9957dd5ea"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-nonip.hex",
+      "sha256": "28801a1b1ea26dcfa68599e49319d8cb175fb1f290053fb759af54bb531ede76"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-other-apn.hex",
+      "sha256": "31a5605a08478b13601c6c166eb3a215e462b55d10caa2811589382136453b52"
+    },
+    {
+      "path": "native-sit-codec/tests/response-fixtures/cross-selectors.txt",
+      "sha256": "78ecd96491b1147d1371ae7ef4bd179e4bce22272ed6e6f416cb27d63c1311ca"
+    },
+    {
+      "path": "native-sit-codec/tests/response-fixtures/dual.txt",
+      "sha256": "7a434c6b61a44a613a040b306ca58a65340ac59c89307e0affca05b79647c1ae"
+    },
+    {
+      "path": "native-sit-codec/tests/response-fixtures/inactive.txt",
+      "sha256": "3b8bbe558351a3edbd44caedfba967523e2ff694b7c495755fd8e99cd862c360"
+    },
+    {
+      "path": "native-sit-codec/tests/response-fixtures/nonip.txt",
+      "sha256": "9b3e7d40769f078ba428f5d5dcb9029e316270058f98d1c78a72f844eb488541"
+    },
+    {
+      "path": "native-sit-codec/tests/response-fixtures/v4.txt",
+      "sha256": "29ce5943c46ae83a0b9881d1ba17144a7841d63e72062ffda240d64cd1a3b0a4"
+    },
+    {
+      "path": "native-sit-codec/tests/response-fixtures/v6.txt",
+      "sha256": "47dc4d0a9c390b9b1903ef352f5db094a5892b7cc6639880280b6f15cd172224"
+    }
+  ],
+  "representation": {
+    "one_raw_packet_parser": true,
+    "local_address_presence": "PDP protocol",
+    "server_family_presence": "Each DNS/PCSCF selector independently of local protocol; Some allzero differs from None",
+    "getter_projection": "Local protocol gates getters, disabled servers zero-filled",
+    "uint32LE_body127": "reported_mtu_v4 via selected original DataCall124 -> modern90 -> MTUV4 logger chain, not MTU policy",
+    "byte_body131": "opaque"
+  },
+  "MTUV4_label_evidence": {
+    "selected_static_label_review_sha256": "53c296b00927477ee23334c9bf5ed309b54483fc3b0bbc1611e5c3d1a6026e4e",
+    "modern_builder_static_facts_sha256": "4884711cbfce9a3389c1716a740eda17854e2b5029610e20f934c87befc4567f"
+  },
+  "boundaries": {
+    "physical_phone_accessed": false,
+    "ARM_user_QEMU_is_actual_ARM_kernel_execution": false,
+    "server_observations_grant_connectivity_or_APN_readiness": false,
+    "modern_report_native_formatter_implemented_by_this_checkpoint": false,
+    "dispatch_incarnation_attempt_deadline_context_channel_provider_bound": false,
+    "proprietary_inputs_raw_decompilation_credentials_published": false
+  },
+  "remaining_gates": [
+    "Native modern-report projection",
+    "Owned pending attempt/source incarnation/deadline and one-time response admission",
+    "Normal caller/context/channel/slot/subscription/provider identity",
+    "Modem transport/APN lifecycle/deactivation/reset/uncertain recovery",
+    "Matched kernel/modem/carrier/physical hardware and full smartphone matrix"
+  ]
+}

@@ -8,7 +8,7 @@ Build and test everything possible offline on temporary Harbour capacity. Do not
 
 The [native SIT codec](native-sit-codec.md) separately matches six complete
 format-2 requests and six supported base144-byte response/getter observations.
-After separate missing-encoder/decoder host REDs,22 host and22 ARM64 user-QEMU
+After separate missing-encoder/decoder host REDs, the initial22 host/22 ARM64 user-QEMU
 tests pass with fixed fixtures. A fresh original load plus nine parser controls
 has ten owned waits0/stdout EOF, separate from the earlier constructor9 and
 encoder8. The original parser reference also has independent bounded qualification. Original Bionic and native ARM tests use user-mode emulation;
@@ -16,6 +16,15 @@ ARM kernel/Binder evidence remains separate. Numeric activity, token equality
 and parsed addresses grant no APN readiness, dispatch or channel/provider
 identity. Extended response/error semantics, owned context/lifecycle/reset and
 real modem/carrier/Pixel qualification remain open.
+
+The subsequent [independent-server repair](native-sit-codec.md#independent-server-families)
+passes23 tests per host/ARM64 user-QEMU target after a real cross-selector
+regression: original modern reports retain IPv6 DNS/P-CSCF for IPv4-local data.
+Canonical server families now preserve those observations while the explicit
+getter projection keeps the six unchanged original fixtures. API/harness changes
+precede this new RED; only decoder source changes for GREEN. The uint32 tail is
+now an observed MTUV4 mapping, while its final byte stays opaque. These are still
+codec results without native modem/APN authority or hardware qualification.
 
 A separate [original context memory probe](native-sit-context-application.md)
 now composes that parser with original PdpContext update in seven controls,

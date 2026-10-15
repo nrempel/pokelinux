@@ -24,17 +24,27 @@ host/ARM64 user-QEMU target. The original constructor9 and encoder8 children
 remain their own evidence. Earlier format0 supplies no current fixture.
 
 The new [base144-byte response decoder](native-sit-codec.md#base144-byte-response-decoder)
-now passes22 tests per host/ARM64 user-QEMU target after genuine compiled/linted
+initially passed22 tests per host/ARM64 user-QEMU target after genuine compiled/linted
 host RED (16pass/six missing comparisons). Only response source changes; tests
 and fixtures stay fixed. A separate original load plus nine complete parser
 controls has ten actual QEMU waits0/stdout EOF; native tests compare six full
 response/getter observations and eight refusal groups. Root qualifies the native RED/GREEN receipts; the original parser reference
 also has separate independent bounded qualification.
-Tokens and reported activity are local wire observations, and both tail fields
-remain opaque. These are user-mode codec tests, not ARM kernel/modem execution.
+Tokens and reported activity are local wire observations. The later independent-family
+repair below identifies the uint32 MTUV4 mapping; the final byte remains opaque. These are user-mode codec tests, not ARM kernel/modem execution.
 Original CLOCK_MONOTONIC cutoffs do not qualify suspend. Extended/error-remap
 behavior, owned dispatch correlation, context/channel/subscription binding,
 provider/APN lifecycle, deactivate/reset and hardware/carrier remain open.
+
+The [independent-server repair](native-sit-codec.md#independent-server-families)
+now passes23 host and23 ARM64 user-QEMU tests after genuine data-loss RED:
+22 prior tests pass, but IPv6 DNS is lost for an IPv4-local cross-selector case.
+A complete original modern report retains those servers. Pre-RED API/getter
+harness adaptation is explicit; all six original getter fixture bytes stay fixed.
+Only decoder source changes for GREEN. Canonical local/DNS/P-CSCF families are
+independent, with explicit narrower getter projections and no compatibility alias.
+This remains pure wire observation; the modern report port and owned dispatch/
+provider/APN/channel lifecycle are not established by it.
 
 The separate [original context-application probe](native-sit-context-application.md)
 now closes seven memory-only context controls/14 update calls plus a load check:

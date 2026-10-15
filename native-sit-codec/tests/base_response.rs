@@ -1,6 +1,6 @@
 use pokelinux_sit_codec::{
     Protocol,
-    response::{BaseSetupResponse, DecodeError, IpParameters},
+    response::{AddressInfo, BaseSetupResponse, DecodeError},
 };
 fn bytes(text: &str) -> Vec<u8> {
     assert_eq!(text.len() % 2, 0);
@@ -17,7 +17,7 @@ fn v4() -> Vec<u8> {
             .unwrap(),
     )
 }
-fn getter<const N: usize>(family: &Option<IpParameters<N>>) -> [u8; 193] {
+fn getter<const N: usize>(family: &Option<AddressInfo<N>>) -> [u8; 193] {
     let mut out = [0; 193];
     if let Some(p) = family {
         out[0] = 1;
@@ -55,12 +55,18 @@ fn compare(text: &str) {
             _ => panic!("original protocol outside fixed subset"),
         }
     );
-    assert_eq!(parsed.opaque_u32_at_127, n[4]);
+    assert_eq!(parsed.reported_mtu_v4, n[4]);
     assert_eq!(u32::from(parsed.opaque_u8_at_131), n[5]);
     assert_eq!(parsed.dns_selector, input[37]);
     assert_eq!(parsed.pcscf_selector, input[78]);
-    assert_eq!(getter(&parsed.ipv4).as_slice(), bytes(lines[2]));
-    assert_eq!(getter(&parsed.ipv6).as_slice(), bytes(lines[3]));
+    assert_eq!(
+        getter(&parsed.address_info_v4()).as_slice(),
+        bytes(lines[2])
+    );
+    assert_eq!(
+        getter(&parsed.address_info_v6()).as_slice(),
+        bytes(lines[3])
+    );
 }
 #[test]
 fn original_v4() {
