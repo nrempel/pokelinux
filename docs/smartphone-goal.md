@@ -106,6 +106,11 @@ authentication scope/PAM execution is inferred.
 Original PAM+scope composition, installed broker/containment, actor-owned receipts,
 exact unlock and synced durable restoration remain open. No physical model is qualified. See
 [worker boundary](native-pam-worker.md).
+The actual headless [lock storage barrier](native-lock-storage-barrier.md) now
+refuses cached success when storage is busy at planning after a genuine socket RED;
+two held-child cases and all 40 host lifecycle regressions pass. This is an
+ordinary grant boundary, not authenticated clear or a completed unlock tracer.
+Queued-success send-time exclusion remains the next regression.
 
 ## Native messaging checkpoint
 

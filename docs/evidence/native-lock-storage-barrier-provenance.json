@@ -1,0 +1,285 @@
+{
+  "schema": 1,
+  "scope": "Actual headless host daemon lock.sock decision-time busy-storage refusal; no authentication or clear",
+  "base_commit": "e6dc5134725d7a010a8095369a46e75e4dbe9674",
+  "red_source_commit": "8296587ed703830fb41c53398d3da41457e26425",
+  "host_full_tests": 40,
+  "host_ignored": 0,
+  "host_filtered": 0,
+  "actual_RED_cases": {
+    "pending_true": "undesired ok while actual ready nondegraded busy child held",
+    "pending_false": "existing unavailable control passes"
+  },
+  "actual_GREEN_cases": {
+    "pending_true": "unavailable; idle alreadydurable ok retained",
+    "pending_false": "unavailable; immediate memorylock retained"
+  },
+  "strict_fmt_default_alltarget_allfeature_Clippy": true,
+  "source_pins": [
+    {
+      "path": "native-lifecycle/Cargo.lock",
+      "sha256": "82e19ca615ad8c45528b2da75978f49910c510004c1561ec2a9a07816a50142f"
+    },
+    {
+      "path": "native-lifecycle/Cargo.toml",
+      "sha256": "339c2dc5fa8846b08f2b97ddc32c1c4f850bfd818038175c8f8ea64cf689417e"
+    },
+    {
+      "path": "native-lifecycle/README.md",
+      "sha256": "1dd5987e581f5c62f4d7edad16d1b280c1dd8747f67ac9053a437d7971c9fe5b"
+    },
+    {
+      "path": "native-lifecycle/packaging/omarchy-system-lock",
+      "sha256": "312331cbb790ed634e345c32c292768b36fbce78de6d32c09a19eab590085781"
+    },
+    {
+      "path": "native-lifecycle/src/apps.rs",
+      "sha256": "77b338e8d54255577c2fbb11969faa9ed7d106960e012e25042290e7cd25ba5f"
+    },
+    {
+      "path": "native-lifecycle/src/authority.rs",
+      "sha256": "1d03425a412f4a18be74279d05293966ec45bdf6d1d83a87223dd1738d3f4369"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-client.rs",
+      "sha256": "6dd1f2c86a96bca4364b5ee2e85fd39fecaf10bc68b8f7b727bd3e65f86bc9bf"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-daemon.rs",
+      "sha256": "ee33d2d77a8fc98ce56b582d9b9c96d0f2f8240e3fda182ec9bdeba8f6af4f01"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-launcher.rs",
+      "sha256": "49a0e279b381a45ed49242a74c94b202ebebb81bc42bd8b61cfd58f8bb80a923"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-lock.rs",
+      "sha256": "169bc0b6f9745b3109bcb44b4f23eeed54e523ed115220d1c8ed809a38ecedad"
+    },
+    {
+      "path": "native-lifecycle/src/camera.rs",
+      "sha256": "d113da936e0e1cf14158d9cb52c9fb364e5cbd8c25de9c7245cae9ddcc568365"
+    },
+    {
+      "path": "native-lifecycle/src/display.rs",
+      "sha256": "8003328560796eedc3e9f20c8878ab39e36ed96300a104152d5928954172631c"
+    },
+    {
+      "path": "native-lifecycle/src/ipc.rs",
+      "sha256": "3777ef70117c8a37078e6c25ecaa21f17c2de094604877d433c6b69b8f0a90c9"
+    },
+    {
+      "path": "native-lifecycle/src/lib.rs",
+      "sha256": "b13cd5350c87d7296fae3318a643362a7b3d7315c0ee58bb154d32fdcd696005"
+    },
+    {
+      "path": "native-lifecycle/src/lock.rs",
+      "sha256": "ddb658781c03d6620ea269035044ff953c2f548ccc67409f0063dcb6ed3998e5"
+    },
+    {
+      "path": "native-lifecycle/src/messages.rs",
+      "sha256": "2e446fa1eef820b14510f60ce88b880637d84daf90cec8909639d0ec97f2c657"
+    },
+    {
+      "path": "native-lifecycle/src/service.rs",
+      "sha256": "73f981e7af5651e15b4531ee391622f95faeb1730e9c19a5c9fa701a352ca5b8"
+    },
+    {
+      "path": "native-lifecycle/src/service_auth_attempt_tests.rs",
+      "sha256": "0b1170f812ccdb51fc7745796f110936efde862b5c3299818a077692f42e2470"
+    },
+    {
+      "path": "native-lifecycle/src/session.rs",
+      "sha256": "59ef191233213deb4dac8c50b3f1e72beb5fd4f8b63ff2aa555d4a71a5dd6bfb"
+    },
+    {
+      "path": "native-lifecycle/src/storage.rs",
+      "sha256": "5131630bdc3e4056472720a72d7c728d0cb0586995ae1505cc0b26b32713fc7c"
+    },
+    {
+      "path": "native-kernel-identity/Cargo.lock",
+      "sha256": "ea2dd27ddd1bf8c00b3bf15d5fface7d5bddd6e20b5d1e89fbc1fc10172ff592"
+    },
+    {
+      "path": "native-kernel-identity/Cargo.toml",
+      "sha256": "5cab2f22141987e4f1470b0fb575107b5c3ad134829bd2b92d5b7ccb3ef12431"
+    },
+    {
+      "path": "native-kernel-identity/README.md",
+      "sha256": "07ff5508164058ad2d51f449e91b06b0a02d2373b2d33d8885274d044c84d19a"
+    },
+    {
+      "path": "native-kernel-identity/public-api-inputs.json",
+      "sha256": "21981ee4e529ce04afc90453b5e9215d5d71eeb3dc758e32731deaa3fb9d6197"
+    },
+    {
+      "path": "native-kernel-identity/src/lib.rs",
+      "sha256": "464a5e2a96dd99f127cce5b32514ff4a9a7340f8bee2581e941685e6df82cbcd"
+    },
+    {
+      "path": "native-kernel-identity/src/pidfd.rs",
+      "sha256": "caf4b44738fc53093a32ef96c2e639c1a376935ad29fa17a42091a56180b11ff"
+    },
+    {
+      "path": "native-kernel-identity/tests/pidfd.rs",
+      "sha256": "ed310e5152426ae8a3d723ca2869cdcd3fda50e0552cdc16938c638d308cc3b3"
+    },
+    {
+      "path": "native-kernel-identity/tests/socket.rs",
+      "sha256": "2e9d134e7913ddadb564939bf241538690698a9ca7b660213479d843c638fd08"
+    },
+    {
+      "path": "native-camera/Cargo.lock",
+      "sha256": "2f6ea0f2ca832a4a133fcc62f3bfefd4521333133620f5936af353bf8985fe7b"
+    },
+    {
+      "path": "native-camera/Cargo.toml",
+      "sha256": "129897f013103c6e97c177fb100ebcab246a81f6a0c3f71e6d1e749b16adeea5"
+    },
+    {
+      "path": "native-camera/src/lib.rs",
+      "sha256": "3ceb27d000194de361bdac7667d5b49660db0d3598f5c95f1961bcab406542ba"
+    }
+  ],
+  "host_daemon_ELF_sha256": "be7241fb238419a0f8949cb559c55737f1c0fb678c659cec958da7f22317a088",
+  "AArch64_daemon_ELF_sha256": "22db6001217412474f8464f2484de41e4051bffca5ee054d316310c384c4f7c5",
+  "AArch64_daemon_executed": false,
+  "fixture_sha256": "9ce1c1420894094ef44e657e72bfa47bd05bb44a6c57abdf86f36540105948e4",
+  "published_runner_sha256": "b7ab7fcd008102de8bc9457ce1d6210dc7f04219ea045bdbf1900c548760ac47",
+  "root_review_sha256": "aa4c9afbc3570805501c29e9c6f20fd1ec0b6efb3bfd9293734af4d2fd9f2658",
+  "tool_terminals": [
+    {
+      "label": "failed_setup",
+      "chunk": "469395",
+      "exit": 1
+    },
+    {
+      "label": "actual_behavioral_RED",
+      "chunk": "6f12f9",
+      "exit": 1
+    },
+    {
+      "label": "build",
+      "session": 77323,
+      "chunk": "06105c",
+      "exit": 0
+    },
+    {
+      "label": "actual_GREEN",
+      "chunk": "41ba87",
+      "exit": 0
+    }
+  ],
+  "artifacts": [
+    {
+      "label": "build",
+      "file": "selection.json",
+      "sha256": "0d269001defe2262349bb7fdae8b00f8b97f905b2b91c0b99ec663c6b4003244"
+    },
+    {
+      "label": "build",
+      "file": "execution.json",
+      "sha256": "40642492701629b5034dce31f513b85e0738480fac7414ed14a8968a1d4f3e18"
+    },
+    {
+      "label": "build",
+      "file": "build.log",
+      "sha256": "f8c51500fe361d83f52a4927530f8fd351c15bfdbb69cc448062db5b66e1baaa"
+    },
+    {
+      "label": "build",
+      "file": "root-review.json",
+      "sha256": "aa4c9afbc3570805501c29e9c6f20fd1ec0b6efb3bfd9293734af4d2fd9f2658"
+    },
+    {
+      "label": "red",
+      "file": "selection.json",
+      "sha256": "6e5060ccc8312cd099906d19a3c636f2e5a7a8ed943676836c10a749e0d99de6"
+    },
+    {
+      "label": "red",
+      "file": "execution.json",
+      "sha256": "a7f74ccd8520b8d031fb7f69b4a6820556a0f3f40b49507d0c73631457292e3e"
+    },
+    {
+      "label": "red",
+      "file": "results/result.json",
+      "sha256": "47eee41310d63d257e440f3f328f36f5bfe03fbaccadf8a3a7341d087f3d74c5"
+    },
+    {
+      "label": "red",
+      "file": "root-final-review.json",
+      "sha256": "7c3b00c2d3e725842db7725776cfa6090c44295ff2b06cde0bab6f166914e873"
+    },
+    {
+      "label": "red",
+      "file": "runner-executed.py",
+      "sha256": "f139b337e520b2da66e87450e4655b830ebb7b9d2027f2567898211a7c47435d"
+    },
+    {
+      "label": "green",
+      "file": "selection.json",
+      "sha256": "d2447a7e93c2a3f32ef2fe24d7db834efe07b0c5760d144f308355796288c2de"
+    },
+    {
+      "label": "green",
+      "file": "execution.json",
+      "sha256": "8753152621542b370c825b03de15904685035f62499c61256e7f31777baf2bb2"
+    },
+    {
+      "label": "green",
+      "file": "results/result.json",
+      "sha256": "55a48d13483d936b6f910c5d035c67804abe3d1e146854b277a575ae21dd38ff"
+    },
+    {
+      "label": "green",
+      "file": "root-final-review.json",
+      "sha256": "404dc434cc78386a0e27c6e9b56c9c030d5bcd6031f67c6152b416803a62bd9e"
+    },
+    {
+      "label": "green",
+      "file": "runner-executed.py",
+      "sha256": "b7ab7fcd008102de8bc9457ce1d6210dc7f04219ea045bdbf1900c548760ac47"
+    },
+    {
+      "label": "failed_setup",
+      "file": "selection.json",
+      "sha256": "970998f6e0505e9ba561baccc4f89acc9ea6b2ee9825d198e84b046dca89d6d4"
+    },
+    {
+      "label": "failed_setup",
+      "file": "execution.json",
+      "sha256": "e26df80b7abad1a6452ecaeda745542c65a797cbc05fe89810803a9a53776cad"
+    },
+    {
+      "label": "failed_setup",
+      "file": "root-failure-closure.json",
+      "sha256": "9fea6242bfb84ee43ac7dc224eb86af294de7069891cc3a1ce96e4a805dcaf49"
+    }
+  ],
+  "actual_UID1000_GID1000_groups_empty_CapEff0": true,
+  "normal_actor_waits0_each_selection": 2,
+  "storage_death_observed": true,
+  "storage_numeric_waits_independently_recorded": false,
+  "exact_live_CID_actual_CLIwait_and_fresh_same_daemon_absence": true,
+  "independent_container_wait_claimed": false,
+  "failed_setup": {
+    "container_never_started": true,
+    "exact_nonce_qualified_created_CID_removed": true,
+    "fresh_absence": true,
+    "actual_CLI_parent_wait_missing": true,
+    "test_executed": false,
+    "behavioral_RED": false,
+    "green": false
+  },
+  "limits": [
+    "Guard is at planning time; idle queued Ok can still send after a later write starts. Send-time exclusion remains open.",
+    "Direct JSON clients, headless daemon, ordinary grant write; no Source, Messages UI, native-lock executable or original effect.",
+    "No authentication scope, original PAM, broker, armed receipt, unlock or clear.",
+    "SIGSTOP-held storage process after actual ordinary sync, not uninterruptible filesystem IO.",
+    "Stopping unresolved storage is unclean; no healthy same-directory restart proof.",
+    "No Source/deadline extension; no suspend, matched Google kernel or phone evidence.",
+    "AArch64 compilation only in this host selection.",
+    "Root reads source pins before later documentation changes; no proprietary/raw inputs published."
+  ]
+}

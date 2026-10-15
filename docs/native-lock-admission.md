@@ -34,7 +34,11 @@ original one-second storage deadline: exclusive pending file, write, file sync,
 rename and directory sync. Success ACK requires confirmed durable completion.
 `Gate::Lock` is monotonic, supplies no effect stamp and tolerates irrelevant focus
 revisions during sync. Already durable pending intent can ACK again without a new
-write. Refused or uncertain admission retains denial.
+write only when no actor storage operation is unresolved at planning time. The
+[storage barrier](native-lock-storage-barrier.md) now refuses cached successful
+ACKs while busy, after a genuine actual-daemon/socket RED. Refused or uncertain
+admission retains denial. A queued successful reply can still outlive this check;
+send-time exclusion and complete authenticated-clear serialization remain open.
 
 Pending intent is restored before Ready. Fresh Source `locked:false`, root admin
 `locked:false`, locker/UI death and display/Source replacement cannot clear it.

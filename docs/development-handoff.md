@@ -18,6 +18,20 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The actual headless lifecycle lock socket now refuses a cached successful ACK
+if an actor/storage operation remains unresolved at planning time. A genuine production-daemon
+RED returns `ok` with a ready actor and exact storage child held after an ordinary
+grant sync; the unchanged pending-true/false fixture passes after the guard.
+Memory is fenced before refusal, idle already-durable ACK stays successful,
+snapshot/Stop remain responsive and normal actor waits/storage death close.
+All 40 host regressions and strict Clippy pass; AArch64 daemon compilation is
+separate from execution. A pre-start empty-CID runner failure is preserved with
+its missing CLI wait explicitly unqualified. See [storage barrier](native-lock-storage-barrier.md).
+An idle queued successful reply can still be sent after another write starts;
+that separate publication guard is the next actual regression. This implements
+no authentication result or clear. Atomic arming, exact unlock
+and serialized synced clear/new-lock handling remain open; no phone was accessed.
+
 The safe Rust native authentication scope now passes two actual Arch ARM
 synthetic controls after a preserved wait-scope defect and detached-descendant
 RED. Cancel/Stop and the original15s deadline retire locally while the exact owned

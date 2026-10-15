@@ -824,6 +824,14 @@ pub fn run_with_services(
                         Reply::Unavailable
                     } else {
                         match authority.plan_lock(boottime_ns()) {
+                            // Fence memory/attempts first, but do not acknowledge
+                            // cached pending intent across an unresolved write.
+                            // A later clear may already be changing disk state.
+                            Decision::Immediate(Reply::Ok)
+                                if operation.is_some() || storage.busy() =>
+                            {
+                                Reply::Unavailable
+                            }
                             Decision::Immediate(reply) => reply,
                             Decision::Persist(_) if operation.is_some() || storage.busy() => {
                                 Reply::Unavailable

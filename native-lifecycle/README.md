@@ -75,7 +75,12 @@ its successor aggregate is failed after Source InvalidData of unknown predicate.
 The [native lock entry](../docs/native-lock-admission.md) now accepts only a fixed
 UID1000 `{"op":"lock"}` request on the actor's `lock.sock`, using kernel credentials
 on every packet. Memory authority is revoked before owned storage work; successful
-ACK requires synced required-schema `Durable.lock_pending`. That intent is restored
+ACK requires synced required-schema `Durable.lock_pending`. A repeated cached
+pending lock also requires no unresolved actor/storage operation at planning time. The actual
+[storage-barrier regression](../docs/native-lock-storage-barrier.md) now passes
+both held-child cases after a behavioral RED; all 40 host regressions pass.
+Refusal still fences memory immediately. Complete authenticated-clear ordering
+and queued-success send-time checks remain open. That intent is restored
 before Ready and cannot be cleared by unlocked Source facts or root admin false.
 `Gate::Lock` remains monotonic through irrelevant focus revisions. The fixed Rust
 client verifies the connected root actor's reply within the original two-second

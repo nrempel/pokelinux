@@ -42,3 +42,17 @@ The restart GREEN qualifies fresh normal Qt-page denial after healthy replacemen
 whole SIGKILL qualifies unclean-history refusal. Trusted unlock, PAM, secure frames,
 same-Source continuation, production install, camera plus new-lock runtime, Pixel
 kernel and physical devices remain unqualified. Use no physical phone.
+
+`storage-barrier-run.py --binary EXPLICIT_HOST_DAEMON --output NEW` freezes and
+runs `storage-barrier.py` in a bounded network-free container. It tests actual
+UID1000 lock packets with pending-true/false and an ordinary grant write whose
+owned storage child is SIGSTOP-held after sync. The fixture keeps the grant
+connection open, checks ready/busy/nondegraded state, and closes normal actor/
+storage ownership before asserting the intended refusal. Idle pending locks and
+invalid-packet/UID denials are controls. The runner requires the pinned local
+Python image; only SETUID/SETGID/KILL are added for changed-UID test clients and
+exceptional owned cleanup. Actual CLI wait and exact same-daemon CID absence
+are recorded separately from fixture results. Empty transient CID files are
+treated as startup in progress. Read the [report](../../docs/native-lock-storage-barrier.md)
+for the preserved failed runner prerequisite and evidence limits. No Source,
+Messages UI, original effect, authentication or clear is exercised.
