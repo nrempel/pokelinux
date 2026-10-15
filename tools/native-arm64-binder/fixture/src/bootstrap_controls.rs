@@ -23,6 +23,7 @@ use std::{
 
 pub const CANARY_ENV: &str = "POKELINUX_BOOTSTRAP_CANARY";
 const REFUSED: &[u8] = b"BOOTSTRAP-REFUSED PermissionDenied\n";
+const TIMED_OUT: &[u8] = b"BOOTSTRAP-REFUSED TimedOut\n";
 const CANARY: &[u8] = b"BOOTSTRAP-BODY-ENTERED";
 const SETUP_NS: u64 = 3_000_000_000;
 const CLEANUP_NS: u64 = 2_000_000_000;
@@ -124,6 +125,10 @@ impl OwnedChild {
             let _ = self.child.kill();
             while now() < self.cleanup_until {
                 if self.poll()?.is_some() {
+                    require(
+                        now() < self.cleanup_until,
+                        "error disposal actual wait crossed original cutoff",
+                    )?;
                     return Ok(());
                 }
                 std::thread::sleep(Duration::from_millis(1));
@@ -146,6 +151,11 @@ impl Drop for OwnedChild {
 pub fn child_canary() -> TestResult {
     match BoundParent::from_stdin() {
         Ok(bound) => {
+            // Private parent-policy body: its first deliberate action is an
+            // unmistakable successful-entry status, with no fallible output IO.
+            if std::env::args().nth(2).as_deref() == Some("bootstrap-canary") {
+                std::process::exit(42);
+            }
             writeln!(
                 io::stdout(),
                 "BOOTSTRAP-BODY-ENTERED {}",
@@ -157,6 +167,9 @@ pub fn child_canary() -> TestResult {
         Err(error) => {
             if error.kind() == io::ErrorKind::PermissionDenied {
                 io::stderr().write_all(REFUSED)?;
+                io::stderr().flush()?;
+            } else if error.kind() == io::ErrorKind::TimedOut {
+                io::stderr().write_all(TIMED_OUT)?;
                 io::stderr().flush()?;
             }
             Err(error.into())
@@ -253,6 +266,10 @@ pub fn wrong_parent(peer: &SIBinder, peer_pid: u32) -> TestResult {
                 }
             }
             if let Some(status) = owned.poll()? {
+                require(
+                    now() < until,
+                    "wrong-parent actual wait crossed original setup cutoff",
+                )?;
                 if !closed && let Receive::Packet(bytes) = receive(&parent, child_pid)? {
                     require(bytes == ready, "unexpected final bootstrap reply")?;
                     saw_ready = true;
@@ -311,5 +328,341 @@ pub fn wrong_parent(peer: &SIBinder, peer_pid: u32) -> TestResult {
     cleanup?;
     body?;
     marker("bootstrap-rejects-live-wrong-parent-before-binder");
+    Ok(())
+}
+
+fn stopped(pid: u32) -> io::Result<bool> {
+    let stat = std::fs::read_to_string(format!("/proc/{pid}/stat"))?;
+    let (_, fields) = stat
+        .rsplit_once(") ")
+        .ok_or_else(|| io::Error::from(io::ErrorKind::InvalidData))?;
+    Ok(fields.split_whitespace().next() == Some("T"))
+}
+fn bounded_output(mut input: impl Read) -> io::Result<Vec<u8>> {
+    let mut bytes = Vec::new();
+    input.by_ref().take(4097).read_to_end(&mut bytes)?;
+    require(bytes.len() <= 4096, "bounded worker output exceeded")?;
+    Ok(bytes)
+}
+
+/// Correct actual parent handoff; GO is queued while the child is kernel-stopped.
+/// This qualifies child-side absolute expiry separately from parent READY policy.
+pub fn late_go(peer: &SIBinder) -> TestResult {
+    require(
+        report(peer)?[0] == 0,
+        "late-GO needs a fresh unregistered peer",
+    )?;
+    let actual_parent =
+        rustix::process::pidfd_open(rustix::process::getpid(), PidfdFlags::NONBLOCK)?;
+    let (parent, child) = net::socketpair(
+        net::AddressFamily::UNIX,
+        net::SocketType::SEQPACKET,
+        SocketFlags::CLOEXEC | SocketFlags::NONBLOCK,
+        None,
+    )?;
+    for fd in [&parent, &child] {
+        net::sockopt::set_socket_passcred(fd, true)?;
+    }
+    let mut identity = [0; 16];
+    File::open("/dev/urandom")?.read_exact(&mut identity)?;
+    let incarnation: String = identity.iter().map(|byte| format!("{byte:02x}")).collect();
+    let until = now()
+        .checked_add(SETUP_NS)
+        .ok_or_else(|| io::Error::from(io::ErrorKind::InvalidInput))?;
+    let cleanup_until = until
+        .checked_add(CLEANUP_NS)
+        .ok_or_else(|| io::Error::from(io::ErrorKind::InvalidInput))?;
+    let resume_at = until
+        .checked_add(25_000_000)
+        .ok_or_else(|| io::Error::from(io::ErrorKind::InvalidInput))?;
+    // Reserve the final second of the original cleanup window for error disposal.
+    let refusal_until = until
+        .checked_add(1_000_000_000)
+        .ok_or_else(|| io::Error::from(io::ErrorKind::InvalidInput))?;
+    let mut boot = vec![1, 1];
+    boot.extend(identity);
+    boot.extend(until.to_le_bytes());
+    let mut ready = boot.clone();
+    ready[1] = 2;
+    let mut go = boot.clone();
+    go[1] = 3;
+    let child = Command::new(std::env::current_exe()?)
+        .arg("--pokelinux-radio-worker")
+        .env_clear()
+        .env("POKELINUX_OWNER_INCARNATION", incarnation)
+        .env(CANARY_ENV, "1")
+        .stdin(Stdio::from(child))
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .spawn()?;
+    let child_pid = child.id();
+    let mut owned = OwnedChild {
+        child,
+        status: None,
+        cleanup_until,
+    };
+    let body = (|| -> TestResult {
+        let pid = i32::try_from(child_pid)
+            .ok()
+            .and_then(Pid::from_raw)
+            .ok_or_else(|| io::Error::from(io::ErrorKind::InvalidInput))?;
+        let child_watch = rustix::process::pidfd_open(pid, PidfdFlags::NONBLOCK)?;
+        send(&parent, &boot, Some(&actual_parent))?;
+        let ready_at = loop {
+            require(
+                now() < until,
+                "late-GO setup missed original READY deadline",
+            )?;
+            require(owned.poll()?.is_none(), "child exited before actual READY")?;
+            match receive(&parent, child_pid)? {
+                Receive::Packet(bytes) => {
+                    require(bytes == ready, "late-GO actual READY differs")?;
+                    let at = now();
+                    require(at < until, "actual READY consumed after original deadline")?;
+                    break at;
+                }
+                Receive::Closed => return Err(io::Error::other("child closed before READY").into()),
+                Receive::Idle => std::thread::sleep(Duration::from_millis(1)),
+            }
+        };
+        rustix::process::pidfd_send_signal(&child_watch, rustix::process::Signal::STOP)?;
+        let stopped_at = loop {
+            require(
+                now() < until,
+                "actual stop not observed before original deadline",
+            )?;
+            require(owned.poll()?.is_none(), "child exited before actual stop")?;
+            if stopped(child_pid)? {
+                break now();
+            }
+            std::thread::sleep(Duration::from_millis(1));
+        };
+        require(now() < until, "GO was not queued before original deadline")?;
+        send(&parent, &go, None)?;
+        let queued_at = now();
+        require(queued_at < until, "GO submission crossed original deadline")?;
+        while now() < resume_at {
+            require(
+                owned.poll()?.is_none(),
+                "stopped child exited before resume",
+            )?;
+            std::thread::sleep(Duration::from_millis(1));
+        }
+        require(
+            stopped(child_pid)?,
+            "child did not remain kernel-stopped across expiry",
+        )?;
+        let resumed_at = now();
+        require(
+            resumed_at >= resume_at && resumed_at < refusal_until,
+            "resume missed the fixed observation window",
+        )?;
+        rustix::process::pidfd_send_signal(&child_watch, rustix::process::Signal::CONT)?;
+        let (status, waited_at) = loop {
+            if let Some(status) = owned.poll()? {
+                let observed = now();
+                require(
+                    observed < refusal_until,
+                    "late-GO actual wait crossed fixed observation cutoff",
+                )?;
+                break (status, observed);
+            }
+            require(
+                now() < refusal_until,
+                "late GO did not refuse before fixed disposal reserve",
+            )?;
+            std::thread::sleep(Duration::from_millis(1));
+        };
+        let stdout = bounded_output(
+            owned
+                .child
+                .stdout
+                .take()
+                .ok_or_else(|| io::Error::from(io::ErrorKind::BrokenPipe))?,
+        )?;
+        let stderr = bounded_output(
+            owned
+                .child
+                .stderr
+                .take()
+                .ok_or_else(|| io::Error::from(io::ErrorKind::BrokenPipe))?,
+        )?;
+        require(
+            status.code() == Some(1),
+            "late GO needs actual refusal exit1",
+        )?;
+        require(
+            !stdout.windows(CANARY.len()).any(|part| part == CANARY),
+            "late GO entered the canary body",
+        )?;
+        require(
+            stderr
+                .windows(TIMED_OUT.len())
+                .any(|part| part == TIMED_OUT),
+            "late GO lacked typed TimedOut; setup/refusal cause differs",
+        )?;
+        require(
+            report(peer)?[0] == 0,
+            "late-GO worker registered with actual peer",
+        )?;
+        println!(
+            "LATE-GO child_pid={child_pid} actual_wait={status} until_ns={until} ready_at_ns={ready_at} stopped_at_ns={stopped_at} queued_at_ns={queued_at} resumed_at_ns={resumed_at} waited_at_ns={waited_at} body=false peer_registers=0"
+        );
+        Ok(())
+    })();
+    let cleanup = owned.close();
+    cleanup?;
+    body?;
+    marker("bootstrap-refuses-queued-go-after-original-deadline");
+    Ok(())
+}
+
+/// Actual production parent policy with a cooperative canary child. Withholding
+/// polling does not assert that a READY packet was already queued; late-GO's
+/// separate control is the exact queued-frame observation.
+pub fn policy_control(peer: &SIBinder, withhold: bool) -> TestResult {
+    use pokelinux_radio::{
+        bootstrap::{WorkerCommand, WorkerState},
+        supervisor::{StartError, Supervisor},
+    };
+    use std::os::unix::{
+        fs::{DirBuilderExt, PermissionsExt},
+        process::ExitStatusExt,
+    };
+    require(
+        report(peer)?[0] == 0,
+        "parent policy needs unregistered actual peer",
+    )?;
+    let mode = if withhold {
+        "withheld-poll"
+    } else {
+        "stop-initializing"
+    };
+    let home = std::env::temp_dir().join(format!(
+        "radio-bootstrap-policy-{}-{mode}",
+        std::process::id()
+    ));
+    std::fs::DirBuilder::new().mode(0o700).create(&home)?;
+    let journal = home.join("admission");
+    let mut owner = Supervisor::new(journal.clone());
+    let mut command = WorkerCommand::new(&std::env::current_exe()?)?;
+    command.arg("bootstrap-canary");
+    // Fix the complete test disposal cutoff before creation; never renew it.
+    let cleanup_until = now()
+        .checked_add(if withhold {
+            6_000_000_000
+        } else {
+            2_000_000_000
+        })
+        .ok_or_else(|| io::Error::from(io::ErrorKind::InvalidInput))?;
+    let attempt = owner
+        .start_worker(&mut command)
+        .map_err(|e| io::Error::other(format!("bootstrap start {e:?}")))?;
+    let body = (|| -> TestResult {
+        require(
+            owner.occupied() && !owner.admits(attempt),
+            "initialization already admitted",
+        )?;
+        if withhold {
+            // An after-start cutoff necessarily exceeds the parent's earlier
+            // immutable three-second cutoff; this test does not supply its clock.
+            let observe_at = now()
+                .checked_add(3_050_000_000)
+                .ok_or_else(|| io::Error::from(io::ErrorKind::InvalidInput))?;
+            require(
+                observe_at + 1_000_000_000 < cleanup_until,
+                "setup exhausted fixed disposal reserve",
+            )?;
+            while now() < observe_at {
+                require(
+                    owner.occupied() && !owner.admits(attempt),
+                    "withheld bootstrap readmitted",
+                )?;
+                std::thread::sleep(Duration::from_millis(1));
+            }
+            let error = owner
+                .poll_worker()
+                .expect_err("expired original parent deadline admitted worker");
+            require(
+                error.kind() == io::ErrorKind::TimedOut,
+                "parent expiry failed for another cause",
+            )?;
+        } else {
+            owner.stop()?;
+        }
+        require(
+            owner.poll_worker()? == WorkerState::Terminal && !owner.admits(attempt),
+            "terminal bootstrap readmitted",
+        )?;
+        let (status, waited_at) = loop {
+            if let Some(status) = owner.poll_reap()? {
+                let observed = now();
+                require(
+                    observed < cleanup_until,
+                    "parent policy actual wait crossed original disposal cutoff",
+                )?;
+                break (status, observed);
+            }
+            require(
+                owner.occupied() && !owner.admits(attempt),
+                "unreaped child lost or readmitted",
+            )?;
+            require(
+                now() < cleanup_until,
+                "parent policy actual wait missed original cutoff",
+            )?;
+            std::thread::sleep(Duration::from_millis(1));
+        };
+        require(
+            status.code() == Some(1) || status.signal() == Some(9),
+            "unexpected terminal child status",
+        )?;
+        require(
+            !owner.occupied() && !owner.admits(attempt),
+            "actual wait failed to close child custody",
+        )?;
+        require(
+            std::fs::read_to_string(&journal)? == format!("admission-v1\n{}\n1\n", attempt.hex()),
+            "journal changed",
+        )?;
+        require(
+            std::fs::metadata(&journal)?.permissions().mode() & 0o777 == 0o600,
+            "journal mode changed",
+        )?;
+        require(
+            owner.start_worker(&mut command) == Err(StartError::RegistrationUncertain),
+            "same parent retried",
+        )?;
+        let mut restarted = Supervisor::new(journal);
+        require(
+            restarted.start_worker(&mut command) == Err(StartError::RegistrationUncertain),
+            "new parent retried",
+        )?;
+        require(!restarted.occupied(), "restart launched child")?;
+        require(report(peer)?[0] == 0, "parent policy child registered")?;
+        // Success never sends GO; actual child can only refuse or be killed.
+        println!(
+            "POLICY-CONTROL mode={mode} actual_wait={status} waited_at_ns={waited_at} cleanup_until_ns={cleanup_until} admitted=false body=false peer_registers=0 journal_retained=true"
+        );
+        Ok(())
+    })();
+    if owner.occupied() {
+        let _ = owner.stop();
+        while owner.occupied() && now() < cleanup_until {
+            let _ = owner.poll_reap();
+            if owner.occupied() {
+                std::thread::sleep(Duration::from_millis(1));
+            }
+        }
+        if owner.occupied() {
+            std::process::abort();
+        }
+    }
+    body?;
+    marker(if withhold {
+        "bootstrap-parent-original-deadline-with-poll-withheld"
+    } else {
+        "bootstrap-stop-initializing-never-admits"
+    });
     Ok(())
 }

@@ -6,6 +6,9 @@ first demonstrates the new requirement missing from ordinary process launch,
 then passes with the cooperative entry. This is local process custody. A complete
 production radio worker, installed service supervision and native IMS remain open.
 [Bounded execution record](evidence/native-radio-bootstrap-provenance.json).
+A later [four-control selection](native-radio-bootstrap-policy.md) qualifies
+actual queued-GO expiry, withheld parent polling and Stop during Initializing,
+with37 host tests and unchanged production runtime source.
 
 `WorkerCommand` selects a trusted executable and prepends the fixed
 `--pokelinux-radio-worker` selector. `Supervisor::start_worker` requires the
@@ -13,7 +16,7 @@ process main thread and inherits equal real/effective UID/GID. Its owner is
 explicitly non-Send/non-Sync and must retain that spawning thread through actual
 child wait. The caller protects executable provisioning, procfs and the common
 PID namespace. This profile supplies no credential transitions, supplementary
-Group policy, containment or service installation.
+group policy, containment or service installation.
 
 Before spawn, the existing exclusive mode-0600 admission marker is synced with
 its private service-owned directory. It survives every spawn/bootstrap failure,
@@ -97,9 +100,10 @@ nine-scenario runner is separate historical qualification, not this new oracle.
 
 ## Remaining gates
 
-Queued READY after the original deadline, Stop during Initializing with queued
-READY, and actual late-GO refusal still need their own runtime controls. Deadline
-checks are source-level here; this selection performs no actual suspend/wake.
+The later [bootstrap policy controls](native-radio-bootstrap-policy.md) execute
+late queued GO, parent expiry with polling withheld and Stop during Initializing.
+Exact READY queued across parent expiry/Stop remains unobserved. Neither selection
+performs actual suspend/wake.
 Installed service-manager/cgroup and descendant cleanup, stronger containment,
 matched Google kernel/policy and unkillable kernel work remain separate gates.
 

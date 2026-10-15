@@ -351,7 +351,10 @@ mod supervised;
 fn main() -> TestResult {
     let cooperative =
         std::env::args().nth(1).as_deref() == Some(pokelinux_radio::bootstrap::WORKER_SELECTOR);
-    if cooperative && std::env::var(bootstrap_controls::CANARY_ENV).as_deref() == Ok("1") {
+    if cooperative
+        && (std::env::var(bootstrap_controls::CANARY_ENV).as_deref() == Ok("1")
+            || std::env::args().nth(2).as_deref() == Some("bootstrap-canary"))
+    {
         return bootstrap_controls::child_canary();
     }
     let _parent = if cooperative {
@@ -380,6 +383,9 @@ fn main() -> TestResult {
     let scenario = scenario.strip_prefix("ndk-").unwrap_or(&scenario);
     let peer = peer(ndk)?;
     match scenario {
+        "bootstrap-late-go" => bootstrap_controls::late_go(&peer),
+        "bootstrap-withheld-poll" => bootstrap_controls::policy_control(&peer, true),
+        "bootstrap-stop-initializing" => bootstrap_controls::policy_control(&peer, false),
         "bootstrap-wrong-parent" => bootstrap_controls::wrong_parent(
             &peer,
             std::env::args()

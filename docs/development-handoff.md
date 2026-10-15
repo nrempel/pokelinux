@@ -18,6 +18,23 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+Four additional actual ARM bootstrap policy controls now pass against one retained
+public Rust Binder peer: live wrong-parent refusal, actual READY/STOP/T/queued GO
+before expiry then CONT after expiry with typed TimedOut/wait1, parent polling
+withheld past its deadline, and Stop during Initializing. Parent actual waits are
+exit1 and SIGKILL9; durable same/recreated-owner refusal remains. Recorded actual
+wait cutoffs and external parser checks close; late GO wait is29.715879ms after
+its original deadline. All37 host tests and strict/ARM compile checks pass. Root
+checks67 source bindings and production runtime source unchanged from9b1948b.
+All four guest clients wait0, the peer stays live with registrations0, and actual
+outer wait/exact-CID/frozen-input closure passes. These are additional coverage,
+not a new manufactured RED or actual suspend. Exact queued READY at parent
+expiry/Stop remains open, alongside production worker/discovery, installed
+supervision, vendor/IMS and hardware. No phone, vendor/Android runtime, private
+REA or authentication/PAM executes. See [policy controls](native-radio-bootstrap-policy.md).
+
+The preceding cooperative bootstrap implementation follows.
+
 The production radio library now has a selected cooperative worker bootstrap
 before Binder setup. A genuine new-requirement ARM baseline leaves its held worker
 orphaned after supervisor death; the repaired selection uses the unchanged outer

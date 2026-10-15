@@ -357,6 +357,28 @@ mod tests {
         assert!(owner.occupied());
     }
     #[test]
+    fn cooperative_non_main_thread_refuses_before_child_or_admission() {
+        use std::os::unix::fs::DirBuilderExt;
+        std::thread::spawn(|| {
+            let path = std::env::temp_dir().join(format!(
+                "radio-main-thread-{}-{}",
+                std::process::id(),
+                ProcessIdentity::new().unwrap().hex()
+            ));
+            fs::DirBuilder::new().mode(0o700).create(&path).unwrap();
+            let journal = path.join("admission");
+            let mut owner = Supervisor::new(journal.clone());
+            let mut worker =
+                crate::bootstrap::WorkerCommand::new(std::path::Path::new("/bin/true")).unwrap();
+            assert_eq!(owner.start_worker(&mut worker), Err(StartError::Io));
+            assert!(!owner.occupied());
+            assert!(!journal.exists());
+            fs::remove_dir(path).unwrap();
+        })
+        .join()
+        .unwrap();
+    }
+    #[test]
     fn frame_requires_connection_owner_and_attempt_identity() {
         let live = ProcessIdentity([8; 16]);
         let old = ProcessIdentity([7; 16]);
