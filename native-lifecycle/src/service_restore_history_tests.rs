@@ -387,3 +387,136 @@ fn retained_message_ids_survive_relock_clean_restart_and_fresh_restore() {
     );
     assert!(body.is_ok(), "{body:?}");
 }
+
+// The actual production client is linked unchanged into a private QCore host.
+// The normal GUI, QML and original compositor are separate evidence boundaries.
+fn qt_case(policy: Option<PathBuf>, paths: RetainedHistory) -> io::Result<Case> {
+    Case::new_with_app(policy, false, Some(paths), true)
+}
+
+fn qt_model(case: &mut Case) -> io::Result<Value> {
+    let model = rpc(
+        &case.runtime.join("app/driver.sock"),
+        json!({"op":"model"}),
+        11010,
+    )?;
+    check(
+        model["client_kind"] == "actual_production_MessagesClient",
+        "composition RED: current app driver has no actual production Qt client/model",
+    )?;
+    Ok(model)
+}
+
+fn qt_denied(case: &mut Case, phase: &str) -> io::Result<()> {
+    let mut observed = None;
+    wait_until(boottime_ns() + WAIT_NS, || {
+        let model = qt_model(case)?;
+        let denied = model["status"] == "Messages access denied"
+            && model["conversations"] == json!([])
+            && model["messages"] == json!([]);
+        observed = Some(model);
+        Ok(denied)
+    })?;
+    case.observations
+        .push(json!({"actual_Qt_denied_model":observed,"phase":phase,
+        "poll_observed_denial_not_immediate_pixel_withdrawal":true}));
+    Ok(())
+}
+
+fn qt_restore(case: &mut Case) -> io::Result<Vec<String>> {
+    qt_denied(case, "initial pending lock")?;
+    case.arm_only()?;
+    qt_denied(case, "armed before later Source event")?;
+    case.unlock()?;
+    wait_until(boottime_ns() + 900_000_000, || {
+        let snapshot = case.admin(json!({"op":"snapshot"}))?;
+        Ok(case.policy()?["lock_pending"] == false
+            && snapshot["ready"] == true
+            && snapshot["locked"] == false
+            && snapshot["storage_busy"] == false)
+    })?;
+    let mut admitted = None;
+    wait_until(boottime_ns() + WAIT_NS, || {
+        let model = qt_model(case)?;
+        let ready = model["status"] == "Local receipt history · modem receive and send unavailable"
+            && model["conversations"]
+                .as_array()
+                .is_some_and(|v| v.len() == 1)
+            && model["messages"].as_array().is_some_and(|v| v.len() == 2);
+        admitted = Some(model);
+        Ok(ready)
+    })?;
+    let model = admitted.ok_or(io::ErrorKind::InvalidData)?;
+    let items = model["messages"]
+        .as_array()
+        .ok_or(io::ErrorKind::InvalidData)?;
+    check(
+        items.iter().all(|v| v["text"] == "hello"),
+        "actual Qt decoded bodies differ",
+    )?;
+    let ids = items
+        .iter()
+        .map(|v| {
+            v["receipt"]
+                .as_str()
+                .map(str::to_owned)
+                .ok_or(io::ErrorKind::InvalidData)
+        })
+        .collect::<Result<Vec<_>, _>>()?;
+    check(
+        ids[0] != ids[1] && ids.iter().all(|v| v.len() == 32),
+        "actual Qt distinct receipt IDs required",
+    )?;
+    case.observations
+        .push(json!({"actual_Qt_admitted_model":model,
+        "production_client_source_linked_unchanged":true,"GUI_or_QML_executed":false}));
+    case.retain_messages_children()?;
+    check_policy_owner(case)?;
+    Ok(ids)
+}
+
+#[test]
+#[ignore = "requires disposable root fixture, actual Qt Core client, retained Messages helpers and explicit capabilities"]
+fn actual_qt_client_models_deny_restore_relock_and_same_id_reopen() {
+    let (paths, seeded) = seed_history().expect("actual once-only retained history seed");
+    let mut first = qt_case(None, paths.clone()).expect("first actual Qt client owner");
+    first.observations.push(seeded);
+    let policy = first.policy.clone();
+    let mut first_ids = None;
+    let body = (|| {
+        let ids = qt_restore(&mut first)?;
+        super::negative_tests::actual_idle_lock(&mut first)?;
+        check(
+            first.policy()?["lock_pending"] == true,
+            "Qt relock did not sync true",
+        )?;
+        qt_denied(&mut first, "after actual relock")?;
+        first_ids = Some(ids);
+        Ok(())
+    })();
+    let closed = first.close();
+    first.report("actual-qt-retained-history-relock", &body, &closed);
+    assert!(closed.is_ok(), "first Qt owner closure: {closed:?}");
+    assert!(body.is_ok(), "{body:?}");
+    assert!(
+        policy.join("owner.clean").is_file(),
+        "clean actor seal missing"
+    );
+    let mut reopened = qt_case(Some(policy), paths).expect("fresh Qt over same retained data");
+    let body = (|| {
+        qt_denied(&mut reopened, "clean reopen before fresh admission")?;
+        super::negative_tests::actual_idle_lock(&mut reopened)?;
+        let ids = qt_restore(&mut reopened)?;
+        check(
+            Some(&ids) == first_ids.as_ref(),
+            "actual Qt reopen changed retained IDs",
+        )?;
+        reopened.observations.push(json!({"same_Qt_message_receipt_ids_after_restart":ids,
+            "raw_and_inbox_paths_retained":true,"reseeded":false,"fresh_actual_lock_and_private_attempt":true}));
+        Ok(())
+    })();
+    let closed = reopened.close();
+    reopened.report("actual-qt-retained-history-reopen", &body, &closed);
+    assert!(closed.is_ok(), "reopened Qt owner closure: {closed:?}");
+    assert!(body.is_ok(), "{body:?}");
+}

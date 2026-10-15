@@ -60,6 +60,8 @@ elif mode == '--app':
                     request = json.loads(packet)
                     if request == {'op': 'identity'}:
                         reply = actual
+                    elif request == {'op': 'model'}:
+                        reply = {'result': 'unavailable', 'client_kind': 'authored_headless_driver'}
                     elif request.get('op') == 'read' and set(request) <= {'op', 'query'}:
                         query = request.get('query', {'fixture': 'history'})
                         assert isinstance(query, dict)

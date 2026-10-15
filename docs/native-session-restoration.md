@@ -150,3 +150,8 @@ message IDs after relock/clean actor reopen/fresh restoration. Its current defau
 suite is53 pass/8 ignored, with8 exact cases separately passing. This advances real
 history composition while keeping the preceding6 stress cases' authored provider,
 normal Qt/original compositor, genuine auth and hardware boundaries separate.
+
+The later [actual Qt client selection](native-session-restoration-qt-client.md)
+links unchanged production client code into a private QCore app and passes9
+selected service cases. Model denial/restoration/relock and same-ID clean reopen
+remain separate from normal GUI, graceful app shutdown and genuine authentication.

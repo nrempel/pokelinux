@@ -141,3 +141,11 @@ through actual relock, clean actor reopen and fresh restoration without reseedin
 strict checks and AArch64 compilation are separate from runtime. The earlier6
 stress cases still use authored history. Auth/Source/SMS seed remain authored;
 normal Qt/original compositor, genuine authentication and hardware remain open.
+
+The subsequent [actual Qt consumer](../docs/native-session-restoration-qt-client.md)
+adds a trusted private QCore app profile linked to unchanged production client
+sources.53 default tests and9 separately selected service cases pass. The actual
+client decodes retained bodies, empties models after relock and returns the same
+IDs after fresh actor restore. No production source/ingress changes. Normal Stop
+kills the app, so Qt graceful destruction remains unqualified; normal GUI/original
+compositor and genuine authentication remain separate.

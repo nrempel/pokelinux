@@ -1,0 +1,442 @@
+{
+  "schema": 1,
+  "source_parent_commit": "d8efd99e0118cbf8382f55f9e618baa22f51e6b5",
+  "scope": "Unchanged production Qt client/thread/credentialed IPC/decoded models in private QCore host through actual retained Messages and policy worker",
+  "auth_Source_SMS_seed_authored": true,
+  "no_production_auth_constructor_or_ingress": true,
+  "production_client_authority_service_storage_apps_sources_unchanged": true,
+  "Qt_version": "6.8.2",
+  "host_default": {
+    "passed": 53,
+    "failed": 0,
+    "explicitly_ignored": 9,
+    "filtered": 0
+  },
+  "separately_selected": {
+    "passed": 9,
+    "failed": 0,
+    "successful_actor_reports": 12,
+    "names": [
+      "service::restore_tests::authenticated_completion_then_later_source_restores_actual_service_read",
+      "service::restore_tests::new_lock_during_known_false_clear_restores_true_and_clean_restart_denies",
+      "service::restore_tests::negative_tests::forced_unlock_without_event_then_later_event_cannot_restore_service_read",
+      "service::restore_tests::negative_tests::actual_source_lease_expiry_then_fresh_event_cannot_restore_service",
+      "service::restore_tests::negative_tests::old_completion_after_actual_idle_uid1000_lock_cannot_arm_service",
+      "service::restore_tests::storage_negative::held_clear_stop_leaves_unclean_history_and_fresh_worker_refuses",
+      "service::restore_tests::retained_history_tests::exact_restore_releases_real_retained_messages_pages",
+      "service::restore_tests::retained_history_tests::retained_message_ids_survive_relock_clean_restart_and_fresh_restore",
+      "service::restore_tests::retained_history_tests::actual_qt_client_models_deny_restore_relock_and_same_id_reopen"
+    ],
+    "actual_test_parent_waits": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "EOF_proc_absence": true
+  },
+  "Qt_model_test": {
+    "tests": 1,
+    "actor_epochs": 2,
+    "actual_uid_gid": 11010,
+    "supplementary_groups": [],
+    "CapEff": "0000000000000000",
+    "initial_and_armed_models_denied_empty": true,
+    "after_synced_clear_two_real_hello_bodies": true,
+    "actual_relock_models_eventually_denied_empty": true,
+    "same_distinct_receipt_IDs_after_clean_restart_fresh_restore": true,
+    "seeded_once": true,
+    "same_sole_policy_worker_kernel_identity_each_epoch": true,
+    "armed_observation_proves_fresh_post_arm_exchange": false
+  },
+  "behavioral_RED": {
+    "classification": "Missing actual-client test composition; no claimed production defect",
+    "test_bodies": 1,
+    "actual_test_wait": 101,
+    "body_error": "composition RED: current app driver has no actual production Qt client/model",
+    "normal_fixture_closure": true,
+    "assertions_unchanged_after_RED": true
+  },
+  "compile_prerequisite_failure": {
+    "test_bodies": 0,
+    "error": "New test Result collect ErrorKind versus Error type",
+    "actual_CLI_wait": 101,
+    "exact_CID_absent": true
+  },
+  "Qt_helper_has_injections_or_service_proxy": false,
+  "driver_operations": [
+    "identity",
+    "model"
+  ],
+  "packet_capacity": 4096,
+  "Qt_model_immediate_pixel_withdrawal_qualified": false,
+  "GUI_QML_Wayland_original_Source_executed": false,
+  "new_capture": false,
+  "actor_Stop_signal": "SIGKILL via Child::kill",
+  "helper_SIGTERM_path_source_only": true,
+  "Qt_destructor_or_QThread_join_runtime_qualified": false,
+  "independent_app_storage_Messages_numeric_waits": false,
+  "service_owned_pidfd_death_proc_absence": true,
+  "strict_fmt_Clippy_and_Cpp_warnings_pass": true,
+  "ARM64_daemon_library_compile_only": true,
+  "new_ARM_runtime": false,
+  "Source_lease_ns": 100000000,
+  "policy_IO_budget_ns": 1000000000,
+  "test_attempt_ns": 20000000000,
+  "Qt_exchange_budget_ns": 1000000000,
+  "Qt_poll_interval_ms": 250,
+  "Qt_destructor_budget_ns": 500000000,
+  "per_test_seconds": 15,
+  "outer_seconds": 40,
+  "rust_build_image": "sha256:0b4b956502a9f55d992eaced6975737b523be19bd2034078983b36bbcfd7aee6",
+  "Qt_build_runtime_image": "sha256:301351bc3c526ab54e07ad284f117f95021a2c339171a050386cc5a6c620883d",
+  "network": "none",
+  "read_only_root": true,
+  "runtime_capabilities": [
+    "SETUID",
+    "SETGID",
+    "CHOWN",
+    "KILL",
+    "DAC_OVERRIDE"
+  ],
+  "same_daemon_actual_CLI_wait0_and_fresh_exact_CID_absence": true,
+  "current_code_source_pins": [
+    {
+      "path": "native-lifecycle/Cargo.lock",
+      "sha256": "f8562de20a76c4f90727ce168aeb27de3c8169d85dbec1f2d165722ff7c4980d"
+    },
+    {
+      "path": "native-lifecycle/Cargo.toml",
+      "sha256": "82d39344550b534f1bed9fc8d0c013dda7cafc92fe01d03dba6cb525b2f91875"
+    },
+    {
+      "path": "native-lifecycle/src/apps.rs",
+      "sha256": "77b338e8d54255577c2fbb11969faa9ed7d106960e012e25042290e7cd25ba5f"
+    },
+    {
+      "path": "native-lifecycle/src/authority.rs",
+      "sha256": "bdc877c7cfc8c669f391067b6ec6378a0f63b423591e38c6cc8296da53686ee7"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-client.rs",
+      "sha256": "6dd1f2c86a96bca4364b5ee2e85fd39fecaf10bc68b8f7b727bd3e65f86bc9bf"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-daemon.rs",
+      "sha256": "ee33d2d77a8fc98ce56b582d9b9c96d0f2f8240e3fda182ec9bdeba8f6af4f01"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-launcher.rs",
+      "sha256": "49a0e279b381a45ed49242a74c94b202ebebb81bc42bd8b61cfd58f8bb80a923"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-lock.rs",
+      "sha256": "169bc0b6f9745b3109bcb44b4f23eeed54e523ed115220d1c8ed809a38ecedad"
+    },
+    {
+      "path": "native-lifecycle/src/camera.rs",
+      "sha256": "d113da936e0e1cf14158d9cb52c9fb364e5cbd8c25de9c7245cae9ddcc568365"
+    },
+    {
+      "path": "native-lifecycle/src/display.rs",
+      "sha256": "8003328560796eedc3e9f20c8878ab39e36ed96300a104152d5928954172631c"
+    },
+    {
+      "path": "native-lifecycle/src/ipc.rs",
+      "sha256": "3777ef70117c8a37078e6c25ecaa21f17c2de094604877d433c6b69b8f0a90c9"
+    },
+    {
+      "path": "native-lifecycle/src/lib.rs",
+      "sha256": "b13cd5350c87d7296fae3318a643362a7b3d7315c0ee58bb154d32fdcd696005"
+    },
+    {
+      "path": "native-lifecycle/src/lock.rs",
+      "sha256": "ddb658781c03d6620ea269035044ff953c2f548ccc67409f0063dcb6ed3998e5"
+    },
+    {
+      "path": "native-lifecycle/src/messages.rs",
+      "sha256": "2e446fa1eef820b14510f60ce88b880637d84daf90cec8909639d0ec97f2c657"
+    },
+    {
+      "path": "native-lifecycle/src/service.rs",
+      "sha256": "2e2ea34730d1475354ab8a9a650156e91a30324d434e486b60b8de7a84043411"
+    },
+    {
+      "path": "native-lifecycle/src/service_auth_attempt_tests.rs",
+      "sha256": "2143c599e9db4ae47f19223faf2fe10b690b01521dbec1b3eeab88a57630ac35"
+    },
+    {
+      "path": "native-lifecycle/src/service_lock_ack_tests.rs",
+      "sha256": "6579bfe8d54a035a53d9ab02256fc57dfdfd432335dea923473c34c35bc627d6"
+    },
+    {
+      "path": "native-lifecycle/src/service_restore_history_tests.rs",
+      "sha256": "e89b49248b9e7100c32ab8b04bc62e1cf3a90f26ad794296bf473c3a3a653c28"
+    },
+    {
+      "path": "native-lifecycle/src/service_restore_negative_tests.rs",
+      "sha256": "f32009116d81522eef6c0c9c9ec38b852290463578cc0be5c36639047b4a3229"
+    },
+    {
+      "path": "native-lifecycle/src/service_restore_storage_tests.rs",
+      "sha256": "9fa1fe452ec816bde571732324eb6185f2a6beb609df57a92070c3ca6f50a4b1"
+    },
+    {
+      "path": "native-lifecycle/src/service_restore_tests.rs",
+      "sha256": "6751f35089f7f23090582192ae92e7b866f515f6c092471dd57240bef1ae24d2"
+    },
+    {
+      "path": "native-lifecycle/src/session.rs",
+      "sha256": "59ef191233213deb4dac8c50b3f1e72beb5fd4f8b63ff2aa555d4a71a5dd6bfb"
+    },
+    {
+      "path": "native-lifecycle/src/storage.rs",
+      "sha256": "6ddeefb3b24a72f728651d36b332ee843684b20c597a4cd17ed5b45887065c13"
+    },
+    {
+      "path": "native-kernel-identity/Cargo.lock",
+      "sha256": "ea2dd27ddd1bf8c00b3bf15d5fface7d5bddd6e20b5d1e89fbc1fc10172ff592"
+    },
+    {
+      "path": "native-kernel-identity/Cargo.toml",
+      "sha256": "5cab2f22141987e4f1470b0fb575107b5c3ad134829bd2b92d5b7ccb3ef12431"
+    },
+    {
+      "path": "native-kernel-identity/src/lib.rs",
+      "sha256": "464a5e2a96dd99f127cce5b32514ff4a9a7340f8bee2581e941685e6df82cbcd"
+    },
+    {
+      "path": "native-kernel-identity/src/pidfd.rs",
+      "sha256": "caf4b44738fc53093a32ef96c2e639c1a376935ad29fa17a42091a56180b11ff"
+    },
+    {
+      "path": "native-camera/Cargo.lock",
+      "sha256": "2f6ea0f2ca832a4a133fcc62f3bfefd4521333133620f5936af353bf8985fe7b"
+    },
+    {
+      "path": "native-camera/Cargo.toml",
+      "sha256": "129897f013103c6e97c177fb100ebcab246a81f6a0c3f71e6d1e749b16adeea5"
+    },
+    {
+      "path": "native-camera/src/lib.rs",
+      "sha256": "3ceb27d000194de361bdac7667d5b49660db0d3598f5c95f1961bcab406542ba"
+    },
+    {
+      "path": "native-messages/Cargo.lock",
+      "sha256": "fb742a89d573f167650fce96fd3e02b0c632d0848b686cf1ebd760e87965bf0a"
+    },
+    {
+      "path": "native-messages/Cargo.toml",
+      "sha256": "8502b6bd0693869827833f52fcdde13d17658e4123607ca905d633d96db5240b"
+    },
+    {
+      "path": "native-messages/src/bin/messages-launch.rs",
+      "sha256": "2b2b413307ae51814b44a4cede235218871f9a459ee9e8fd38f2d576c0067976"
+    },
+    {
+      "path": "native-messages/src/bin/messages-service.rs",
+      "sha256": "8c7319e12f1f9ceee6f516df172d60fbf78849442aadd86f9474d73ce089cb02"
+    },
+    {
+      "path": "native-messages/src/bin/messages-stop.rs",
+      "sha256": "82b16a187b295d60623f6a8c6da86b944ac78390810a99616b705158bebc7990"
+    },
+    {
+      "path": "native-messages/src/incoming.rs",
+      "sha256": "2144bb80bd8211ae1c241ce5b8c8931e3b91ab1f8d6b2f0ffb81a7f8eb679d90"
+    },
+    {
+      "path": "native-messages/src/lib.rs",
+      "sha256": "faa6df0140ea61301b84e35a8ff664fa4cfe1f13159ab4ea6c1d2395ca82550c"
+    },
+    {
+      "path": "native-messages/src/projection.rs",
+      "sha256": "ea45ff7a36e385bc366ba458bf00a40169707c1834c7c8a673530585f7ed89d7"
+    },
+    {
+      "path": "native-messages/src/protocol.rs",
+      "sha256": "aac4405329604affa079074a6c7317570882384f6164fdf6ae6f05a831d17c8e"
+    },
+    {
+      "path": "native-messages/src/worker.rs",
+      "sha256": "d30150ff9bc2f7e3bf461af53f9f7e4dc16e77255c20a984ca73583d41866a8a"
+    },
+    {
+      "path": "native-messaging/Cargo.lock",
+      "sha256": "e7cb16fc3e8c6abb7fbbc7a52d8f73f07c934a7a103de1cef5a0c414f3bd375f"
+    },
+    {
+      "path": "native-messaging/Cargo.toml",
+      "sha256": "d2fdf280609b6b9b2743315ccf4dc4216e38b3a60ed70bc4199e20fe4a4c40d0"
+    },
+    {
+      "path": "native-messaging/src/lib.rs",
+      "sha256": "b291059cbed5d33fd69e6437e41e85aa82e94004c147eec634a09bf8cf86925d"
+    },
+    {
+      "path": "native-messaging/src/outbox.rs",
+      "sha256": "b910f78d0b48386e055535d24e44c0985f019657e232695f89fa7f522ab596eb"
+    },
+    {
+      "path": "native-messaging/src/receipt.rs",
+      "sha256": "09718ae9ccbad56ef697da7fe1ce1e3100890097e6695361360e05923bbd6091"
+    },
+    {
+      "path": "native-messaging/src/receive.rs",
+      "sha256": "55f2cf7da7feca551297526a14fff1216e5a798d3b41d44d9bfea8b033877acc"
+    },
+    {
+      "path": "native-messaging/src/status_report.rs",
+      "sha256": "6ac6ad437f2e9dbec9c7beb0e614c910f03a161f07583ebdf7ebb0d629888595"
+    },
+    {
+      "path": "native-messaging/src/transport.rs",
+      "sha256": "1602a7ed81b01433793296a873fbfa5ec1ee9faf5899da9a808d7f673dd1ae67"
+    },
+    {
+      "path": "native-inbox/Cargo.lock",
+      "sha256": "713ed0a0f107c2bb0586de2a0453e8ff0e0c2fb5a2dd9097fadc5e8d16efb729"
+    },
+    {
+      "path": "native-inbox/Cargo.toml",
+      "sha256": "9ef2b7baf22a760b96700730f7edcb78301b82c98b29914444a966e8ab708c5c"
+    },
+    {
+      "path": "native-inbox/src/lib.rs",
+      "sha256": "e0811dcd8e29a1d01afc2b2c9e0965724539965f935a3e4c5c8d383aea0e02dc"
+    },
+    {
+      "path": "native-session/Cargo.lock",
+      "sha256": "f4f8849aa8f9cf3242f3f2d24278851d6c2dace3bbe64d6823da2703e5461498"
+    },
+    {
+      "path": "native-session/Cargo.toml",
+      "sha256": "ea4f943b4b34e053c9d19cc91f2c62e2aea37abfa91318d11fa2800f86993f45"
+    },
+    {
+      "path": "native-session/src/bin/session-observer-fixture.rs",
+      "sha256": "ba62ad6b752788aa7f018a1b10bc63c421af538784a08c50dbfe342c9ca68fe3"
+    },
+    {
+      "path": "native-session/src/bin/session-peer-fixture.rs",
+      "sha256": "52f10c2ed7f5cf9d0929845cd90df1a0df5865d86326e9cbae37185a56d42b82"
+    },
+    {
+      "path": "native-session/src/lib.rs",
+      "sha256": "eead20709fa5e45ad3c4f69567e7c54eea6a091a5b04937d42f4341831242872"
+    },
+    {
+      "path": "tools/native-session-authority/fixture/Cargo.lock",
+      "sha256": "02fc25882db97e7618d745a17f7133fb004b973015d8b26032831df044ce6c28"
+    },
+    {
+      "path": "tools/native-session-authority/fixture/Cargo.toml",
+      "sha256": "149753c461f15658586d2b9993f39b6192ade0c6fff7254e9ecbaa51c50966bd"
+    },
+    {
+      "path": "tools/native-session-authority/fixture/src/bin/service.rs",
+      "sha256": "a163e544f7612954d96e99e94bfbbc65ea5ba91d55105f6c9da618760ad54e41"
+    },
+    {
+      "path": "tools/native-session-authority/fixture/src/lib.rs",
+      "sha256": "ce0ddf0f272f8107d09b83bcc25dedcf30c6279f822ff29e8036828535994d33"
+    },
+    {
+      "path": "native-messages-ui/MessagesClient.cpp",
+      "sha256": "22fbd7c8e15969b3f1d59ac8b53d73e426068dfc47558c5f342d810342deb969"
+    },
+    {
+      "path": "native-messages-ui/MessagesClient.h",
+      "sha256": "6f70b0ae3552f44c97a27ada54c4b903d9ee8c6ad23973b345173e1ec646a4ae"
+    },
+    {
+      "path": "tools/native-session-restoration/qt-client/main.cpp",
+      "sha256": "e556f8ae1e137edc60747d0aad54c14a2cdeafc3f2afeab3bd4907b6cf4c362d"
+    },
+    {
+      "path": "tools/native-session-restoration/qt-client/CMakeLists.txt",
+      "sha256": "9810748814ae724f69c651a69af112e8c4bfa6edfc62ae9a0972deffd8cd15a9"
+    }
+  ],
+  "helper_pins": {
+    "app.py": "27806abaae713d5c28066b350cb36f2c01bb5f192a9e22bedecd06a01a167844",
+    "prepare-root.py": "dd6946072d868d2d8452f98ca3827c7fa6a0806c61e6030fa5fc4c1585005c1d"
+  },
+  "artifacts": {
+    "library-tests": {
+      "sha256": "874cdcefd4b3097137c42504fddd99851c93aa3107721592f3cf2a6b8e7167cd",
+      "ELF_machine": 62
+    },
+    "lifecycle-daemon": {
+      "sha256": "da7a6426faeea43d00c1a3e3568b1ff70036a428f7f6f516218c2d89b5447b36",
+      "ELF_machine": 62
+    },
+    "lifecycle-launcher": {
+      "sha256": "98382d0e30d094d30dd6e8b9533cd40364f7ce1aa99c276874741c7b61fcda36",
+      "ELF_machine": 62
+    },
+    "messages-service": {
+      "sha256": "11b961a5cc198e62d5ce3b87ca52e678ea014b16ddcf225fd85930e9577abe57",
+      "ELF_machine": 62
+    },
+    "messages-seed-fixture": {
+      "sha256": "568652a4ea0565c016359473aa91ca1f39323375305207709cb7b53266dd60e1",
+      "ELF_machine": 62
+    },
+    "messages-client-model": {
+      "sha256": "c9a6650214039a4a02561f4d8f8b7becaec3b94a503ce13e81ef64d08c2fe50d",
+      "ELF_machine": 62
+    },
+    "aarch64-library-tests": {
+      "sha256": "09c49d848d1b8b5ad5eafd9054846a44257345c7abcb6d5c14413922fdb37c53",
+      "ELF_machine": 183,
+      "executed": false
+    },
+    "aarch64-lifecycle-daemon": {
+      "sha256": "06fecdc3b9532f94581e7799ac30c330e92e1b67c62ef9c6e7032649dc0bbedc",
+      "ELF_machine": 183,
+      "executed": false
+    }
+  },
+  "private_binding_receipts": {
+    "/tmp/pokelinux-restore-qt-build-green-root-1/selection.json": "0406941e21d1f9c551a6af8d1047ba2bdd74962f6db56c2d304d14ca2ae76614",
+    "/tmp/pokelinux-restore-qt-build-green-root-1/execution.json": "2733a2a9a9f4f2b76722185da07898960c55866dffee1f649371bdd29c92b260",
+    "/tmp/pokelinux-restore-qt-build-green-root-1/build.log": "983ac93ac03f13cc3f272caae75dc92773e3d8b6961979f72e253cc5794936a4",
+    "/tmp/pokelinux-restore-qt-client-build-root-1/selection.json": "6ac497de7a74936a5a26ba3975bb79557f31a79a0b03ba6af0f6f89f16930ee5",
+    "/tmp/pokelinux-restore-qt-client-build-root-1/execution.json": "dfba7cdd4c7bbac3d07b8a069ec30002edd40873fc866dc8cc93c48e160a9540",
+    "/tmp/pokelinux-restore-qt-client-build-root-1/build.log": "90173dc1b0bd7e8916e49b3fe665a2f9979364969efa87117ab64fff43ad26b4",
+    "/tmp/pokelinux-restore-qt-client-build-root-1/build/qt-version.txt": "19d6bcb0cc5efdb8bd64d0d75efee79f03b627d11de15ef628125c013a21c5ce",
+    "/tmp/pokelinux-restore-qt-runtime-green-root-1/selection.json": "3048e8a56d2a27602f0b1d00eaf5308336958fd972f3ab34dcd759530f383108",
+    "/tmp/pokelinux-restore-qt-runtime-green-root-1/execution.json": "12cb36410412a7aad894ba77fee70d28143fb59fb9852c2a042e78dc31aec21f",
+    "/tmp/pokelinux-restore-qt-runtime-green-root-1/inner-execution.json": "b08857338117259a9adf5e4b485c130b334e4edb46c502111a7485d0894ad18b",
+    "/tmp/pokelinux-restore-qt-runtime-red-root-1/selection.json": "7e9f46f123e8d9c52d8dddf9b37a1ce47cec5811d08ed823fde6ef3d3f847a4f",
+    "/tmp/pokelinux-restore-qt-runtime-red-root-1/execution.json": "9c3b95b4fd7dc377d6291a0415aece3d1bb1d77ab626d10484fadd3ed9a3f511",
+    "/tmp/pokelinux-restore-qt-runtime-red-root-1/inner-execution.json": "d7e845bcdf9cc87e0c8b6340bcb900f40e8653c3198bd4a8da2a1b5a16164a60",
+    "/tmp/pokelinux-restore-qt-runtime-red-root-1/actual-qt-retained-history-relock.json": "8ab10ec2ee3e276d6b57aadd65ce1808ddbf4cb9eeefe629ec046ed58fe0d8f8",
+    "/tmp/pokelinux-restore-qt-runtime-green-root-1/completion-source-read.json": "5cfde4b262b059deb3e491e67e68c528367d857d0a1033ca26ab855f76e16679",
+    "/tmp/pokelinux-restore-qt-runtime-green-root-1/new-lock-clear-repair.json": "49ac991c6b2ffa4eec469d7343435df0ac04d6e08a11dc6d29a89b1dea91087b",
+    "/tmp/pokelinux-restore-qt-runtime-green-root-1/clean-restart-denial.json": "0dcc34dd5d90a005f4c1b8c92a366ff831834e0e439ecb2d830f4f23427d1616",
+    "/tmp/pokelinux-restore-qt-runtime-green-root-1/forced-unlock-late-event-denial.json": "7997b136d8a7194e6878d600c1acc1f8c2b0f45b615c05cfec3712371cee19db",
+    "/tmp/pokelinux-restore-qt-runtime-green-root-1/actual-source-expiry-late-event-denial.json": "1fb9bcdaed148e1354244cee3876fa22f33035b2ee20b08c1f7368565c19d143",
+    "/tmp/pokelinux-restore-qt-runtime-green-root-1/old-completion-new-idle-lock-denial.json": "8893eeec206e6122937b5644fdb3936133a6de0527b9df7e941060fe61feeb84",
+    "/tmp/pokelinux-restore-qt-runtime-green-root-1/held-clear-stop-restart.json": "fa44831625c90c4dcaa244483b1f66c23b0a94e73a07a193914d91835725d516",
+    "/tmp/pokelinux-restore-qt-runtime-green-root-1/real-retained-history-read.json": "169f3bf5c6a4a56a08f913560adb80b078f467f52ac2b790c38e2152af3f979e",
+    "/tmp/pokelinux-restore-qt-runtime-green-root-1/retained-history-relock-before-restart.json": "6a1da9822bfea3dc0454f148b13132e96ff105e2941bcca24bd87bd5cf3e5303",
+    "/tmp/pokelinux-restore-qt-runtime-green-root-1/retained-history-reopen-fresh-restore.json": "f77d8f2aab492959a6c0bf47b1673b7dc2f4acd89d90c80264c6b52482db6b38",
+    "/tmp/pokelinux-restore-qt-runtime-green-root-1/actual-qt-retained-history-relock.json": "fbdb25cfd5a481b7f69f76fdcff4c853249120272475a52fbd72bed9ff6e0c2e",
+    "/tmp/pokelinux-restore-qt-runtime-green-root-1/actual-qt-retained-history-reopen.json": "bdfb78f6a7dc5de647f3b7b8c843e7ee8c5c1a08c899f72da4064ad105c3badb",
+    "/tmp/pokelinux-restore-qt-runtime-green-root-1/root-review.json": "e41e031462dc6ec85819ca3a2af10d39bc719c5e9e0b659e7fd6899b9f93bb1d"
+  },
+  "remaining": [
+    "normal installed QtQuick/QML/Wayland/original compositor and genuine whole-owner auth/broker",
+    "graceful actual app shutdown and secure presentation",
+    "actual Qt held-clear/Source expiry/uncertain Stop and full actor unclean reopen",
+    "new ARM/Google-kernel/suspend-wake and all physical hardware gates"
+  ],
+  "phone_accessed": false
+}

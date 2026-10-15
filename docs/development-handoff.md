@@ -18,7 +18,22 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
-The newest headless tracer now uses the actual native Messages Projector writer
+The latest consumer tracer links the unchanged production MessagesClient into a
+private lifecycle-owned UID11010 QCore process. It actually decodes two retained
+Messages bodies after clear, clears its lists after real relock, then returns the
+same receipt IDs from a fresh actor/Qt process over unchanged paths without reseed.
+53 default tests and9 separately selected actual service tests pass, with12 actor
+reports and9 actual test-parent waits0/EOF/proc absence. The missing-client baseline
+RED and a zero-body compile prerequisite failure remain separate. Root rehashes98
+source and18 runtime bindings. Strict C++/Rust checks and separate ARM compilation
+pass. The normal actor Stop uses SIGKILL, so the helper's signalfd/destructor path
+is source-only; Qt graceful shutdown is not claimed. No QML/Wayland/original Source,
+production authentication ingress, new ARM runtime or capture is added. Auth,
+typed Source and SMS seed remain authored. Continue into normal installed Qt and
+original compositor composition, keeping graceful lifecycle and secure presentation
+open. [Current Qt client report](native-session-restoration-qt-client.md).
+
+The preceding headless tracer uses the actual native Messages Projector writer
 and independent readonly child after a preserved real-query behavioral RED.
 53 default tests pass with8 explicitly ignored integrations separately selected
 and passing. Native pages reach the actual UID11010 app only after the real policy

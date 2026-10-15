@@ -104,7 +104,7 @@ arming or unlock ingress is added. The unchanged22 actor cases also pass on an
 explicitly filtered; full40 inventory is enumeration only. No ARM storage or
 authentication scope/PAM execution is inferred.
 A later [downstream restoration selection](native-session-restoration.md) passes53
-default host tests plus8 separately selected actual service cases. Private cfgtest
+default host tests plus9 separately selected actual service cases. Private cfgtest
 completion retains Armed context; a later exact typed Source event causes real
 worker clear and an actual UID11010 read. A new UID1000 lock during held clear wins
 through the same worker true sync and clean restart denial. Additional actual-loop
@@ -396,3 +396,11 @@ A separately pinned diagnostic-only epoch identifies its own103.208749ms
 publisher sample-chain gap, exceeding the unchanged100ms limit by3.208749ms.
 Authenticated trace closure has zero drops; this does not retroactively diagnose
 the old failure or establish scheduling causality. Production Source is unchanged.
+
+The [actual Qt client tracer](native-session-restoration-qt-client.md) separately
+adds the unchanged production MessagesClient in a UID11010 QCore host, with real
+retained pages, observed model denial after relock and same IDs after clean reopen.
+The full selection passes53 default plus9 separately selected service tests. It
+runs no normal QtQuick/QML/Wayland/original compositor or genuine auth; actor Stop
+uses SIGKILL and does not qualify the helper's graceful destructor path. New visual
+runs still require the actual Pixel10 profile before native unscaled capture.

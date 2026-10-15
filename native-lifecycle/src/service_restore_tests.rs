@@ -309,6 +309,7 @@ struct Case {
     app: Option<OwnedFocus>,
     worker: Option<(u32, OwnedFd)>,
     real_history: bool,
+    qt_client: bool,
     messages_children: Vec<(u32, OwnedFd)>,
     observations: Vec<Value>,
     closed: bool,
@@ -322,6 +323,14 @@ impl Case {
         existing_policy: Option<PathBuf>,
         pause: bool,
         retained: Option<RetainedHistory>,
+    ) -> io::Result<Self> {
+        Self::new_with_app(existing_policy, pause, retained, false)
+    }
+    fn new_with_app(
+        existing_policy: Option<PathBuf>,
+        pause: bool,
+        retained: Option<RetainedHistory>,
+        qt_client: bool,
     ) -> io::Result<Self> {
         if let Some(paths) = &retained {
             check(
@@ -384,10 +393,18 @@ impl Case {
         fs::set_permissions(&driver_dir, fs::Permissions::from_mode(0o700))?;
         std::os::unix::fs::chown(&driver_dir, Some(11010), Some(11010))?;
         let profile = install.join(format!("profile-{}.json", &id[..10]));
+        let configured_app = if qt_client {
+            let executable = install.join("messages-client-model");
+            super::trusted_executable(&executable)?;
+            json!({"app":APP,"uid":11010,"executable":executable,
+                "args":[runtime.join("app.sock"),driver_dir.join("driver.sock")]})
+        } else {
+            json!({"app":APP,"uid":11010,"executable":python,
+                "args":[install.join("app.py"),"--app",runtime.join("app.sock"),driver_dir.join("driver.sock")]})
+        };
         fs::write(
             &profile,
-            serde_json::to_vec(&json!({"apps":[{"app":APP,"uid":11010,
-            "executable":python,"args":[install.join("app.py"),"--app",runtime.join("app.sock"),driver_dir.join("driver.sock")]}]}))?,
+            serde_json::to_vec(&json!({"apps":[configured_app]}))?,
         )?;
         fs::set_permissions(&profile, fs::Permissions::from_mode(0o600))?;
         let locker = Locker(
@@ -515,6 +532,7 @@ impl Case {
             app: None,
             worker: None,
             real_history,
+            qt_client,
             messages_children: vec![],
             observations: vec![],
             closed: false,
@@ -593,7 +611,7 @@ impl Case {
             self.policy.join("policy.json"),
         )?)?)
     }
-    fn arm(&mut self) -> io::Result<()> {
+    fn arm_only(&mut self) -> io::Result<()> {
         for complete in [false, true] {
             let (reply, receive) = mpsc::sync_channel(1);
             self.commands
@@ -618,7 +636,10 @@ impl Case {
         check(
             self.policy()?["lock_pending"] == true,
             "arming changed disk before later Source event",
-        )?;
+        )
+    }
+    fn arm(&mut self) -> io::Result<()> {
+        self.arm_only()?;
         check(
             self.read()? == json!({"result":"denied"}),
             "arming released actual read without later Source event",
@@ -798,7 +819,7 @@ impl Case {
     fn report(&self, label: &str, body: &io::Result<()>, closed: &io::Result<()>) {
         let record = json!({"case":label,"passed":body.is_ok()&&closed.is_ok(),"body_error":body.as_ref().err().map(ToString::to_string),
             "closure_error":closed.as_ref().err().map(ToString::to_string),"observations":self.observations,
-            "actual_policy_worker":true,"auth_and_Source_authored":true,"history_provider_authored":!self.real_history,"actual_retained_history_provider":self.real_history,"history_seed_authored":self.real_history,"production_auth_ingress":false,"phone_accessed":false});
+            "actual_policy_worker":true,"auth_and_Source_authored":true,"history_provider_authored":!self.real_history,"actual_retained_history_provider":self.real_history,"history_seed_authored":self.real_history,"actual_Qt_client_model":self.qt_client,"normal_Qt_GUI_executed":false,"production_auth_ingress":false,"phone_accessed":false});
         if let Some(root) = std::env::var_os("NATIVE_LIFECYCLE_RESTORE_RESULTS") {
             let path = PathBuf::from(root).join(format!("{label}.json"));
             if fs::write(path, serde_json::to_vec_pretty(&record).unwrap()).is_err() {

@@ -70,7 +70,7 @@ profile uses explicit16-CPU affinity and1024 PID capacity within the unchanged
 120-second build deadline. It passes; no runtime deadline or assertion is relaxed.
 The subsequent same-ID reopen is additional coverage of the existing real provider.
 
-| Current selection | Result |
+| Retained-history checkpoint selection | Result |
 |---|---|
 | Default lifecycle host suite |53 pass,8 explicitly ignored,0 filtered |
 | Separately selected actual service cases |8 pass,10 successful actor case reports including the clean restart subcases |
@@ -103,3 +103,9 @@ suspend/wake remain separate. The older queued ARM setup failure stays failed.
 No modem producer/ACK, carrier, call/audio/camera/GPU or physical Pixel gate is
 closed by these headless history tests. No phone was accessed or modified, and
 the full Omarchy smartphone goal remains incomplete.
+
+The subsequent [Qt client checkpoint](native-session-restoration-qt-client.md)
+adds the unchanged production client/thread/decoded models through a private
+QCore app. Its53 default plus9 separately selected cases retain the same IDs after
+clean restart. This advances the actual consumer boundary without normal GUI,
+genuine authentication, graceful Qt destruction or new display/hardware evidence.

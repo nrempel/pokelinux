@@ -11,6 +11,7 @@ parser.add_argument('--daemon', type=Path, required=True)
 parser.add_argument('--launcher', type=Path, required=True)
 parser.add_argument('--messages', type=Path)
 parser.add_argument('--seed', type=Path)
+parser.add_argument('--qt-client', type=Path)
 parser.add_argument('--install', type=Path, default=Path('/opt/service-restoration'))
 args = parser.parse_args()
 assert os.getuid() == os.geteuid() == 0
@@ -22,6 +23,9 @@ helpers = [(args.daemon, 'lifecycle-daemon'), (args.launcher, 'lifecycle-launche
            (Path(__file__).with_name('app.py'), 'app.py')]
 if args.messages is not None:
     helpers += [(args.messages, 'messages-service'), (args.seed, 'messages-seed-fixture')]
+if args.qt_client is not None:
+    assert args.messages is not None
+    helpers += [(args.qt_client, 'messages-client-model')]
 for source, name in helpers:
     target = args.install / name
     shutil.copyfile(source.resolve(strict=True), target)
