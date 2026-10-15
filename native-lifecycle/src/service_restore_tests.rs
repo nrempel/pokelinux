@@ -18,7 +18,7 @@ use std::{
     process::{Child, Command, ExitStatus, Stdio},
     sync::{
         Arc, Mutex,
-        atomic::{AtomicBool, Ordering},
+        atomic::{AtomicBool, AtomicU64, Ordering},
         mpsc::{self, Receiver, SyncSender},
     },
     thread::{self, JoinHandle},
@@ -38,13 +38,25 @@ fn check(value: bool, text: &str) -> io::Result<()> {
 }
 
 enum ControlCommand {
-    Begin { until: u64, reply: SyncSender<bool> },
-    Complete { reply: SyncSender<bool> },
+    Begin {
+        until: u64,
+        reply: SyncSender<bool>,
+    },
+    Complete {
+        reply: SyncSender<bool>,
+    },
+    SourceBarrier {
+        expected_revision: u64,
+        until: u64,
+        reply: SyncSender<bool>,
+    },
 }
 
 pub(super) struct ActorControl {
     inbox: Receiver<ControlCommand>,
     attempt: Option<(AuthenticationAttempt, u64)>,
+    observed_revision: Arc<AtomicU64>,
+    source_barrier: Option<(u64, u64, SyncSender<bool>)>,
     pub(super) storage_executable: PathBuf,
 }
 
@@ -55,11 +67,40 @@ impl ActorControl {
         busy: bool,
         stopping: bool,
     ) -> io::Result<()> {
+        // Normal refresh_session ran immediately before this cfgtest poll.
+        // A pending observation barrier never blocks the actor or mints authority.
+        if let Some((expected, until, reply)) = self.source_barrier.take() {
+            if !stopping
+                && boottime_ns() < until
+                && self.observed_revision.load(Ordering::Acquire) < expected
+            {
+                self.source_barrier = Some((expected, until, reply));
+                return Ok(());
+            }
+            return reply
+                .try_send(!stopping && boottime_ns() < until)
+                .map_err(|_| io::ErrorKind::BrokenPipe.into());
+        }
         let command = match self.inbox.try_recv() {
             Ok(command) => command,
             Err(mpsc::TryRecvError::Empty | mpsc::TryRecvError::Disconnected) => return Ok(()),
         };
         let (reply, accepted) = match command {
+            ControlCommand::SourceBarrier {
+                expected_revision,
+                until,
+                reply,
+            } => {
+                let observed = self.observed_revision.load(Ordering::Acquire);
+                if !stopping && boottime_ns() < until && observed < expected_revision {
+                    self.source_barrier = Some((expected_revision, until, reply));
+                    return Ok(());
+                }
+                (
+                    reply,
+                    !stopping && boottime_ns() < until && observed >= expected_revision,
+                )
+            }
             ControlCommand::Begin { until, reply } => {
                 let accepted = if stopping || busy || self.attempt.is_some() {
                     false
@@ -94,6 +135,7 @@ impl ActorControl {
 struct Facts {
     shared: Arc<Mutex<Snapshot>>,
     cached: Snapshot,
+    observed_revision: Arc<AtomicU64>,
     stopped: bool,
 }
 impl crate::session::Provider for Facts {
@@ -106,6 +148,8 @@ impl crate::session::Provider for Facts {
             Err(std::sync::TryLockError::WouldBlock) => {}
             Err(_) => return Err(io::Error::other("authored Source mutex poisoned")),
         }
+        self.observed_revision
+            .store(self.cached.revision, Ordering::Release);
         Ok(Some(self.cached.clone()))
     }
     fn stop(&mut self) {
@@ -388,15 +432,19 @@ impl Case {
         let service_install = install.clone();
         let service_facts = facts.clone();
         let service = thread::spawn(move || {
+            let observed_revision = Arc::new(AtomicU64::new(0));
             let mut source = Facts {
                 shared: service_facts,
                 cached: sample,
+                observed_revision: observed_revision.clone(),
                 stopped: false,
             };
             let mut history = History::default();
             let mut control = ActorControl {
                 inbox,
                 attempt: None,
+                observed_revision,
+                source_barrier: None,
                 storage_executable: service_install.join("lifecycle-daemon"),
             };
             let result = super::run_with_services_inner(
@@ -837,3 +885,9 @@ fn new_lock_during_known_false_clear_restores_true_and_clean_restart_denies() {
     );
     assert!(restored.is_ok(), "{restored:?}");
 }
+
+#[path = "service_restore_storage_tests.rs"]
+mod storage_negative;
+
+#[path = "service_restore_negative_tests.rs"]
+mod negative_tests;

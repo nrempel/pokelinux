@@ -18,7 +18,7 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
-The downstream restoration milestone now passes53 default host tests, with2
+The downstream restoration milestone now passes53 default host tests, with6
 explicitly ignored root integrations selected separately and passing. A private
 cfgtest authenticated-and-closed completion atomically retains Armed context;
 only its later exact Source event requests a real sole-worker synced clear.
@@ -34,6 +34,17 @@ pass. No new ARM execution is inferred. Authentication/Source/history inputs are
 models; there is no production success constructor or ingress, real history/Qt
 unlock tracer, whole-owner auth composition or phone proof. See
 [restoration](native-session-restoration.md) and its bounded provenance.
+
+Four additional actual-loop cases now preserve forced-sample-before-later-event
+ordering, actual100ms expiry with responsive Snapshot and app retirement, old
+completion refusal after an actual successful idle UID1000 new lock, and normal
+Stop during held synced false. The latter leaves no clean seal and a fresh actual
+storage worker refuses the unchanged policy/live-owner bytes; a full unclean
+actor reopen is not executed. A bounded private Source-observation barrier carries
+no auth authority. All6 cases and the clean full-actor restart subcase pass with
+actual test waits0/EOF/proc closure. Host daemon/launcher and AArch64 daemon bytes
+match the preceding selection exactly; these are coverage additions, not a new
+production repair. New ARM runtime and genuine authentication remain unqualified.
 
 The preceding production source `90ced3a` now runs all 40 lifecycle library tests and
 both planning socket cases under the actual generic Arch ARM kernel. The combined
@@ -1031,9 +1042,10 @@ See `native-session-freshness-chain.md` and its publication provenance.
 ## Next work
 
 Continue the existing Messages lock→restore tracer from the qualified downstream
-actor/storage path. Add actual service negative coverage for stale/forced Source,
-late completion and uncertain clear Stop/restart; the present negative lifetime
-checks are authority models. Compose real retained Messages history and the normal
+actor/storage path. Continue the remaining wrong-event/attempt-deadline and
+uncertain-clear-expiry combinations plus full-actor unclean reopen; the current
+six service cases now cover forced/expired Source, new-lock late completion and
+held-clear Stop/storage reopen refusal. Compose real retained Messages history and the normal
 installed app. Keep authentication construction/ingress test-only until genuine
 whole-owner completion provenance and trusted locker handoff are independently
 qualified. Do not substitute models or ARM harness passes for authentication.

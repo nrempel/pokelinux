@@ -120,3 +120,14 @@ are compile-only; no new ARM execution is implied. No production completion
 constructor/ingress exists. Genuine authentication, real Messages history/normal
 Qt composition, negative service matrix, secure presentation and phone gates
 remain open.
+
+A later coverage-only selection now passes all53 default tests with6 explicitly
+ignored cases separately selected and passing. It includes the original positives
+and actual-loop forced/expired Source, late completion after a new idle lock, and
+held-clear Stop with failed fresh-storage-worker reopen. A capacity-bounded
+Source-observation barrier has an absolute2s deadline and no auth authority.
+Source100ms and all production deadlines stay unchanged. Host daemon/launcher and
+AArch64 daemon bytes match the preceding selection. See the
+[additional provenance](../docs/evidence/native-session-restoration-negative-provenance.json).
+The full actor's unclean reopen, remaining negative combinations, real history/Qt
+composition, genuine authentication and physical gates remain separate.

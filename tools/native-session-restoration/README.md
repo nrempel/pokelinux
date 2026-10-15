@@ -1,6 +1,6 @@
 # Isolated service restoration integration
 
-The two ignored `service::restore_tests::` library tests run the actual lifecycle
+The six ignored `service::restore_tests::` library tests run the actual lifecycle
 event loop, policy storage child, launcher and a persistent UID11010 app read
 connection. Source facts, authenticated-and-closed completion and history bytes
 are authored test inputs. There is no production authentication producer or new
@@ -23,10 +23,10 @@ Set `NATIVE_LIFECYCLE_ISOLATED=1`,
 execute the exact recorded library-test ELF with:
 
 ```text
---ignored service::restore_tests:: --test-threads=1 --nocapture
+--ignored --exact RECORDED_TEST_NAME --test-threads=1 --nocapture
 ```
 
-Both integration tests are explicitly ignored by default. Record their exact
+All six integration tests are explicitly ignored by default. Record their exact
 inventory and selected execution separately from ordinary unit tests. The root
 profile needs SETUID, SETGID, CHOWN, KILL and DAC_OVERRIDE after dropping all other
 capabilities, a read-only root/source and private writable `/opt`, `/run`,
@@ -47,6 +47,14 @@ Each case writes a private JSON receipt and prints `RESTORE_SERVICE_BOUNDARY`.
 Receipts distinguish body failures from closure failures and retain real app
 identity/read packets. Storage pidfd death/proc absence are observed after the
 service's owned drain; these do not independently expose a storage wait status.
-Failed or unclosed ownership never becomes a passing case. The two cases pass
+Failed or unclosed ownership never becomes a passing case. The six cases pass
 under the [recorded host selection](../../docs/native-session-restoration.md);
 production authentication and full installed-app composition remain open.
+
+The later coverage-only selection adds three ordered Source/completion lifetime
+cases and one held-clear Stop/storage-reopen case. A private observation barrier
+confirms normal Provider→Authority processing without adding auth authority.
+Actual Source100ms expiry does not prevent Snapshot response; the loop retires
+and reaps the app. Stop owns the stopped worker without driver resume/kill; its
+unclean history is refused by a fresh actual storage worker. That final reopen
+is not a full actor restart. Production daemon/launcher bytes are unchanged.

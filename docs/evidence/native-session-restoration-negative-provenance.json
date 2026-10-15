@@ -1,0 +1,258 @@
+{
+  "schema": 1,
+  "scope": "Coverage-only actual lifecycle service negatives; successful authentication, typed Source and history remain authored",
+  "source_parent_commit": "c815f4156afc34e626037452994bbf6cb5bc1f8a",
+  "production_behavior_changed": false,
+  "new_behavioral_RED_claimed": false,
+  "default_host_tests": {
+    "passed": 53,
+    "failed": 0,
+    "explicitly_ignored": 6,
+    "filtered": 0
+  },
+  "separately_selected_actual_service_tests": {
+    "passed": 6,
+    "failed": 0,
+    "names": [
+      "service::restore_tests::authenticated_completion_then_later_source_restores_actual_service_read",
+      "service::restore_tests::new_lock_during_known_false_clear_restores_true_and_clean_restart_denies",
+      "service::restore_tests::negative_tests::forced_unlock_without_event_then_later_event_cannot_restore_service_read",
+      "service::restore_tests::negative_tests::actual_source_lease_expiry_then_fresh_event_cannot_restore_service",
+      "service::restore_tests::negative_tests::old_completion_after_actual_idle_uid1000_lock_cannot_arm_service",
+      "service::restore_tests::storage_negative::held_clear_stop_leaves_unclean_history_and_fresh_worker_refuses"
+    ],
+    "actual_parent_waits": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "EOF_and_proc_absence": true
+  },
+  "positive_full_actor_clean_restart": true,
+  "uncertain_fresh_storage_worker_reopen_refused": true,
+  "uncertain_full_actor_restart_executed": false,
+  "Source_lease_ns": 100000000,
+  "cfgtest_observation_barrier_budget_ns": 2000000000,
+  "barrier_is_authentication_authority": false,
+  "production_success_constructor": false,
+  "production_auth_ingress": false,
+  "strict_fmt_default_alltarget_allfeature_Clippy": true,
+  "ARM64_daemon_library_crosscompiled_only": true,
+  "new_ARM_runtime": false,
+  "production_binaries_identical_to_prior_selection": {
+    "debug/lifecycle-daemon": true,
+    "debug/lifecycle-launcher": true,
+    "aarch64-unknown-linux-gnu/debug/lifecycle-daemon": true
+  },
+  "code_source_pins": [
+    {
+      "path": "native-lifecycle/Cargo.lock",
+      "sha256": "82e19ca615ad8c45528b2da75978f49910c510004c1561ec2a9a07816a50142f"
+    },
+    {
+      "path": "native-lifecycle/Cargo.toml",
+      "sha256": "339c2dc5fa8846b08f2b97ddc32c1c4f850bfd818038175c8f8ea64cf689417e"
+    },
+    {
+      "path": "native-lifecycle/src/apps.rs",
+      "sha256": "77b338e8d54255577c2fbb11969faa9ed7d106960e012e25042290e7cd25ba5f"
+    },
+    {
+      "path": "native-lifecycle/src/authority.rs",
+      "sha256": "bdc877c7cfc8c669f391067b6ec6378a0f63b423591e38c6cc8296da53686ee7"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-client.rs",
+      "sha256": "6dd1f2c86a96bca4364b5ee2e85fd39fecaf10bc68b8f7b727bd3e65f86bc9bf"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-daemon.rs",
+      "sha256": "ee33d2d77a8fc98ce56b582d9b9c96d0f2f8240e3fda182ec9bdeba8f6af4f01"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-launcher.rs",
+      "sha256": "49a0e279b381a45ed49242a74c94b202ebebb81bc42bd8b61cfd58f8bb80a923"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-lock.rs",
+      "sha256": "169bc0b6f9745b3109bcb44b4f23eeed54e523ed115220d1c8ed809a38ecedad"
+    },
+    {
+      "path": "native-lifecycle/src/camera.rs",
+      "sha256": "d113da936e0e1cf14158d9cb52c9fb364e5cbd8c25de9c7245cae9ddcc568365"
+    },
+    {
+      "path": "native-lifecycle/src/display.rs",
+      "sha256": "8003328560796eedc3e9f20c8878ab39e36ed96300a104152d5928954172631c"
+    },
+    {
+      "path": "native-lifecycle/src/ipc.rs",
+      "sha256": "3777ef70117c8a37078e6c25ecaa21f17c2de094604877d433c6b69b8f0a90c9"
+    },
+    {
+      "path": "native-lifecycle/src/lib.rs",
+      "sha256": "b13cd5350c87d7296fae3318a643362a7b3d7315c0ee58bb154d32fdcd696005"
+    },
+    {
+      "path": "native-lifecycle/src/lock.rs",
+      "sha256": "ddb658781c03d6620ea269035044ff953c2f548ccc67409f0063dcb6ed3998e5"
+    },
+    {
+      "path": "native-lifecycle/src/messages.rs",
+      "sha256": "2e446fa1eef820b14510f60ce88b880637d84daf90cec8909639d0ec97f2c657"
+    },
+    {
+      "path": "native-lifecycle/src/service.rs",
+      "sha256": "2e2ea34730d1475354ab8a9a650156e91a30324d434e486b60b8de7a84043411"
+    },
+    {
+      "path": "native-lifecycle/src/service_auth_attempt_tests.rs",
+      "sha256": "2143c599e9db4ae47f19223faf2fe10b690b01521dbec1b3eeab88a57630ac35"
+    },
+    {
+      "path": "native-lifecycle/src/service_lock_ack_tests.rs",
+      "sha256": "6579bfe8d54a035a53d9ab02256fc57dfdfd432335dea923473c34c35bc627d6"
+    },
+    {
+      "path": "native-lifecycle/src/service_restore_negative_tests.rs",
+      "sha256": "65f81a1e5760f414c4afa271cbab5a903a5389faad2c26d2ecab030d024922f6"
+    },
+    {
+      "path": "native-lifecycle/src/service_restore_storage_tests.rs",
+      "sha256": "9fa1fe452ec816bde571732324eb6185f2a6beb609df57a92070c3ca6f50a4b1"
+    },
+    {
+      "path": "native-lifecycle/src/service_restore_tests.rs",
+      "sha256": "79dd0d798e676daa3f0125981260b253dc7e28cef2bcbbe05def0afe20c3b98d"
+    },
+    {
+      "path": "native-lifecycle/src/session.rs",
+      "sha256": "59ef191233213deb4dac8c50b3f1e72beb5fd4f8b63ff2aa555d4a71a5dd6bfb"
+    },
+    {
+      "path": "native-lifecycle/src/storage.rs",
+      "sha256": "6ddeefb3b24a72f728651d36b332ee843684b20c597a4cd17ed5b45887065c13"
+    },
+    {
+      "path": "native-kernel-identity/Cargo.lock",
+      "sha256": "ea2dd27ddd1bf8c00b3bf15d5fface7d5bddd6e20b5d1e89fbc1fc10172ff592"
+    },
+    {
+      "path": "native-kernel-identity/Cargo.toml",
+      "sha256": "5cab2f22141987e4f1470b0fb575107b5c3ad134829bd2b92d5b7ccb3ef12431"
+    },
+    {
+      "path": "native-kernel-identity/src/lib.rs",
+      "sha256": "464a5e2a96dd99f127cce5b32514ff4a9a7340f8bee2581e941685e6df82cbcd"
+    },
+    {
+      "path": "native-kernel-identity/src/pidfd.rs",
+      "sha256": "caf4b44738fc53093a32ef96c2e639c1a376935ad29fa17a42091a56180b11ff"
+    },
+    {
+      "path": "native-camera/Cargo.lock",
+      "sha256": "2f6ea0f2ca832a4a133fcc62f3bfefd4521333133620f5936af353bf8985fe7b"
+    },
+    {
+      "path": "native-camera/Cargo.toml",
+      "sha256": "129897f013103c6e97c177fb100ebcab246a81f6a0c3f71e6d1e749b16adeea5"
+    },
+    {
+      "path": "native-camera/src/lib.rs",
+      "sha256": "3ceb27d000194de361bdac7667d5b49660db0d3598f5c95f1961bcab406542ba"
+    }
+  ],
+  "helper_pins": {
+    "app.py": "32ac6551bb1c7d52fb6f02761b40f31d8509047bc584d567cbfbd969b0ba7323",
+    "prepare-root.py": "8571946358ee6c6567cc595b0769d9b60d7d3e27fc2c0985309f526e92d2bd4f"
+  },
+  "build_image": "sha256:0b4b956502a9f55d992eaced6975737b523be19bd2034078983b36bbcfd7aee6",
+  "runtime_image": "sha256:07b2b220c62ebe15a90af7e10d703297b511508891492a292ae986f0521c448a",
+  "runtime_profile_capabilities": [
+    "SETUID",
+    "SETGID",
+    "CHOWN",
+    "KILL",
+    "DAC_OVERRIDE"
+  ],
+  "network": "none",
+  "read_only_root": true,
+  "outer_actual_CLI_wait": 0,
+  "fresh_same_daemon_exact_CID_absence": true,
+  "storage_numeric_wait_independently_observed": false,
+  "bound_private_receipts": {
+    "/tmp/pokelinux-restore-negative-build-root-1/root-review.json": {
+      "sha256": "d1393c9e0f869d9dab911926e1be03a8c0c09c193c571ac322e9cb07291e06a3"
+    },
+    "/tmp/pokelinux-restore-negative-runtime-root-1/root-review.json": {
+      "sha256": "cfcdbd0177946588dc78301df848c092e4184c053bbf7f9ba8f249db3272c830"
+    },
+    "/tmp/pokelinux-restore-negative-build-root-1/selection.json": {
+      "sha256": "9c7e417a85d638e6c229c9fb3c156230a5f4f00cf314f56294c544074daae42a"
+    },
+    "/tmp/pokelinux-restore-negative-build-root-1/execution.json": {
+      "sha256": "d47bf28ee1a5ce7ec693b81301aa2677d90196221321f9a6333e0ca0a9d811b7"
+    },
+    "/tmp/pokelinux-restore-negative-runtime-root-1/selection.json": {
+      "sha256": "e26bd6c75e52b7175e330f16d0e95c86036236ca874a49202401b1252ea510a6"
+    },
+    "/tmp/pokelinux-restore-negative-runtime-root-1/execution.json": {
+      "sha256": "f731afe19f142d8108298f9ea92b353afc68095abe2a9dd4b232f9bee043f610"
+    },
+    "/tmp/pokelinux-restore-negative-runtime-root-1/inner-execution.json": {
+      "sha256": "a2a4670900f0d2a4e455e2c9f733f35794e22a6ec158fe1fd14f9d80074311f3"
+    },
+    "/tmp/pokelinux-restore-negative-runtime-root-1/completion-source-read.json": {
+      "sha256": "381f0ce3cc4a713829df8c1a28af7efc516c49c3a02dfb657ba5369259c28dc5"
+    },
+    "/tmp/pokelinux-restore-negative-runtime-root-1/new-lock-clear-repair.json": {
+      "sha256": "48c79d729a3fddc514111c14b2466dee2aa75ef7f0b9872eacb53c2d8db545fd"
+    },
+    "/tmp/pokelinux-restore-negative-runtime-root-1/clean-restart-denial.json": {
+      "sha256": "5baf27abee492e1def2add3340ac83b831f46cdcb04038350614c9266cb1e11a"
+    },
+    "/tmp/pokelinux-restore-negative-runtime-root-1/forced-unlock-late-event-denial.json": {
+      "sha256": "613d3a538ae67d0c2e261893b858f7d871187b4d8f0975ed3a77def8dd4caa70"
+    },
+    "/tmp/pokelinux-restore-negative-runtime-root-1/actual-source-expiry-late-event-denial.json": {
+      "sha256": "763c36f664aa571414b293b852559dc8112ba9ee8181b05e3bf5563031cd1234"
+    },
+    "/tmp/pokelinux-restore-negative-runtime-root-1/old-completion-new-idle-lock-denial.json": {
+      "sha256": "1a3d428c7fa75dfb9d157a26c2600be4853a8ffb91e2c856940f52f5d1915f7f"
+    },
+    "/tmp/pokelinux-restore-negative-runtime-root-1/held-clear-stop-restart.json": {
+      "sha256": "a713cbc77f06b04e1dcec0c853eaca4571d8628748dcb825d9590523cf0a1ee2"
+    }
+  },
+  "remaining": [
+    "genuine whole-owner authentication/production broker and trusted locker handoff",
+    "real retained Messages history and normal installed Qt app",
+    "remaining negative service combinations, uncertain-clear expiry and full actor unclean reopen",
+    "whole-actor EAGAIN/completed-intervening-write timing",
+    "new ARM/Google-kernel composition, secure frames and suspend/wake",
+    "all physical Pixel/backend/carrier gates"
+  ],
+  "phone_accessed": false,
+  "artifacts": {
+    "library-tests": {
+      "sha256": "e7295536987c27c30581f42087e4bdb54d0041fd199038bc1c5a9f1cfee86c1f",
+      "ELF_machine": 62
+    },
+    "lifecycle-daemon": {
+      "sha256": "da7a6426faeea43d00c1a3e3568b1ff70036a428f7f6f516218c2d89b5447b36",
+      "ELF_machine": 62
+    },
+    "lifecycle-launcher": {
+      "sha256": "98382d0e30d094d30dd6e8b9533cd40364f7ce1aa99c276874741c7b61fcda36",
+      "ELF_machine": 62
+    },
+    "aarch64-library-tests": {
+      "sha256": "3f3f679aecada455f5d1603458a3b0585bdd295f4369cb171f5c25fa2ebd9c22",
+      "ELF_machine": 183,
+      "executed": false
+    }
+  }
+}

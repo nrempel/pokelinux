@@ -64,8 +64,8 @@ storage is idle again. A changed sequence permanently replaces success with
 | Formatting prerequisite | Exit1, zero bodies | Preserved separately from behavioral RED |
 | Queued acknowledgement across completed real Replace | One behavioral failure | Real worker load/replace, idle pre-send check and actual socket packet still returned `Ok`; worker drained before assertion |
 | Missing normal service scheduling | Two separately selected behavioral failures | Actual app remains denied; no clear dispatched or post-sync pause reached; normal cleanup precedes assertions |
-| Current default host suite |53 pass,2 explicitly ignored | Strict formatting and default/all-target/all-feature Clippy pass |
-| Current separately selected service cases |2 pass, plus clean restart subcase | Actual loop/storage/app boundary below |
+| Initial default host suite |53 pass,2 explicitly ignored | Strict formatting and default/all-target/all-feature Clippy pass |
+| Initial separately selected service cases |2 pass, plus clean restart subcase | Actual loop/storage/app boundary below |
 | AArch64 daemon/library | Compile only | No new ARM execution or physical-device claim |
 
 The first service case observes actual UID11010/GID11010, empty supplementary
@@ -92,14 +92,49 @@ close the separate outer boundary. No fallback cleanup supplies a passing case.
 The runtime has no network, a read-only root and only SETUID, SETGID, CHOWN, KILL
 and DAC_OVERRIDE capabilities for the explicit isolated fixture.
 
+## Additional actual service lifetime coverage
+
+The next selection changes only private cfgtest fixtures and documentation.
+Production host daemon/launcher and AArch64 daemon bytes are identical to the
+preceding selection. All53 default tests pass, with6 explicitly ignored root
+integrations separately selected and passing; the original two positives are
+included. Strict checks and AArch64 test compilation pass. These are additional
+coverage of existing behavior, with no invented RED or production repair.
+[Negative provenance](evidence/native-session-restoration-negative-provenance.json)
+binds this later source independently.
+
+| Additional case | Actual observed boundary |
+|---|---|
+| Forced unlocked sample without an event, then a later exact event | Both samples pass the real loop in order; disk remains true and the same UID11010 app receives `denied` |
+| Actual100ms Source lease expiry, then fresh later event | Source mutex is held outside the actor; its nonblocking Provider retains the original lease. Snapshot responds after actual BOOTTIME expiry; the loop retires/reaps the app, later facts do not change disk or restore a principal |
+| Old completion after a new idle lock | A real UID1000 client receives durable `ok`; the old completion then fails to arm and the later event cannot restore the actual app read |
+| Stop during a synced but unacknowledged false clear | Snapshot and app refusal remain responsive while the exact storage child is stopped. Normal Stop owns its termination/drain; false bytes get no clean seal. A fresh real storage worker returns an exact token-matched failed Load without changing policy/live-owner bytes |
+
+A capacity-bounded, nonblocking cfgtest barrier acknowledges only that the normal
+Provider→Authority observation ran before its reply. It has its own absolute
+two-second observation deadline and supplies no authentication or restoration
+result. This prevents the forced sample from being coalesced with a later event.
+The Source lease and all production storage/authentication deadlines stay unchanged.
+
+All six selected test processes have actual parent waits0, output EOF and proc
+absence. Existing service/heartbeat/ordinary-child ownership checks remain in
+force, and the fresh failed-Load worker is drained before assertion. Storage wait
+status is still not independently exposed. The earlier standalone held-Stop case
+also passed; the final six-case selection covers the changed test instrumentation.
+The uncertain-history restart is a **fresh storage worker**, not a new full actor;
+the earlier *clean* restart remains the separately executed full-actor case.
+No new ARM runtime, Source IPC, genuine auth, normal Messages UI or phone proof
+is inferred.
+
 ## Remaining gates
 
 The normal installed daemon has no successful authentication producer or new
 success socket. Genuine whole-owner authentication composition, trusted broker
 and locker handoff remain unqualified. Source expiry/forced-event/late-result
-refusals have authority-model coverage; the full negative service matrix,
-uncertain-clear Stop/restart, EAGAIN and complete-intervening-write timing through
-the whole actor still need their own selections. The completed-write guard above
+refusals now include the four actual service cases above; wrong-event/attempt-
+deadline combinations, uncertain-clear expiry and a full actor's unclean reopen
+still need their own selections. EAGAIN and complete-intervening-write timing
+through the whole actor also remain separate. The completed-write guard above
 is a real Worker/socket component test, not a full actor or EAGAIN result.
 
 Compose the qualified downstream path with real retained Messages history and
