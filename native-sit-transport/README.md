@@ -26,3 +26,18 @@ Ten real Linux descriptor tests pass on host and ARM64 user-QEMU after compiled
 missing-dispatch and missing-read REDs. The existing Main/worker fixture also
 uses this primitive; its process integration has a separate evidence class.
 See [qualification and remaining gates](../docs/native-sit-owned-transport.md).
+
+Three additional real-syscall controls pass on host and ARM64 user-QEMU: readonly
+file EBADF, actual RLIMIT_FSIZE16 partial write, and a blocked read released
+past its original deadline. The last checks peer EOF while the helper and
+transport remain alive. These direct helper tests do not exercise Main's natural
+worker-exit handling or qualify native ARM kernel/CPIF behavior.
+
+```sh
+cargo build --offline --locked --manifest-path native-sit-transport/Cargo.toml --example syscall_boundaries
+python3 native-sit-transport/tests/syscall_boundaries.py -- native-sit-transport/target/debug/examples/syscall_boundaries
+```
+
+The controller requires readable `/proc/<owned-child>/syscall` and enabled
+Python assertions. ARM user-QEMU uses an explicit runner/sysroot before the ARM
+helper path; no binfmt or silent prerequisite skip is assumed.

@@ -614,8 +614,7 @@
     "local close and actual process wait grant no vendor cleanup or successor admission"
   ],
   "open_gates": [
-    "actual partial/error-write controls",
-    "actual blocked read returning after original deadline",
+    "native ARM kernel and CPIF-specific partial/error/late-return syscall controls",
     "expiry during copying",
     "allocation failure control",
     "natural terminal worker-exit recovery integration",
@@ -629,5 +628,140 @@
   "proprietary_inputs_published": false,
   "physical_phone_accessed": false,
   "physical_models_qualified": 0,
-  "matched_Google_kernel_modules_firmware_retained": true
+  "matched_Google_kernel_modules_firmware_retained": true,
+  "additional_syscall_controls": {
+    "classification": "Additional current-semantics controls; no new pre-implementation RED. ARM user-QEMU uses host kernel, not a native ARM kernel.",
+    "source_files": [
+      {
+        "path": "native-sit-transport/examples/syscall_boundaries.rs",
+        "sha256": "b31460f0595c644f58a5a7139c7bdf619bd9663de343377a0d6343d5dbe0829d"
+      },
+      {
+        "path": "native-sit-transport/tests/syscall_boundaries.py",
+        "sha256": "4cf4d43e1e037cfba98ca2f2bb0ea0ace095115d9f56695698ec49a28f9a1fd3"
+      }
+    ],
+    "actual_pass": {
+      "host": 3,
+      "ARM64_user_QEMU": 3
+    },
+    "controls": [
+      "real readonly regular-file EBADF, terminalWrite, OutcomeUnknown, no redispatch/read",
+      "real child-only RLIMIT_FSIZE16, exactly16 persisted request-prefix bytes, terminalWrite, OutcomeUnknown, no continuation/retry",
+      "actual blocked read descriptor/count witnessed before original BOOTTIME cutoff; positive reply released after cutoff; ErrorDeadline/no chunk; peer EOF while helper/transport alive; acknowledged exit0 and both PIPE EOFs"
+    ],
+    "production_and_original_tests_unchanged": true,
+    "build": [
+      {
+        "path": "selection.json",
+        "sha256": "09ccf3a2a477cc2c35d83d74902912557cb526d1f0ed1026aa5d5b3a03f91649"
+      },
+      {
+        "path": "execution.json",
+        "sha256": "7bc2b0cc756d8b3e55cb00fa6984f94d169c91cf90194d28bdf9b8826683d4f7"
+      },
+      {
+        "path": "build-review-root.json",
+        "sha256": "1c5fdf98ecb1cbd41ae874e7b46bf18be7bb4ef9da6b44e191ef3bd3e5871370"
+      },
+      {
+        "path": "build.sh",
+        "sha256": "71977935a8f49217707f2a566c322cab81c47389c54447374a64bb9e5a73700c"
+      }
+    ],
+    "host": [
+      {
+        "path": "command.json",
+        "sha256": "c4060186d78b3d3a60ac9e9fcb85ed57b35c48e6598428208d0b749044d36b42"
+      },
+      {
+        "path": "execution.json",
+        "sha256": "3af46a3456b69675ded2e4be3adc1ffe024dfab5e888a981ec6c27eb746a912b"
+      },
+      {
+        "path": "root-review.json",
+        "sha256": "c96ccea6c7b39a87d2b3b08df0af2ff0176256db88044c7a924ec1897f0e6c84"
+      },
+      {
+        "path": "stdout.log",
+        "sha256": "ce167324751ac6ce71f8b0b3c18a00fb3fda51510b0fdf40d73ec423a85eb52a"
+      },
+      {
+        "path": "stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "ARM_user_QEMU": [
+      {
+        "path": "selection.json",
+        "sha256": "365b5a148fa3afe9645aab5d71fdf2891e4788e31613c9d3d4102c9f4335dad8"
+      },
+      {
+        "path": "command.json",
+        "sha256": "9de718ec17a573b05bd10ac8fa76db948efaa22dd491d1c7c1ba7f0320852e66"
+      },
+      {
+        "path": "execution.json",
+        "sha256": "647f965057f958d71f215e39ffeb4936dd8f9d7a30a857caa2c43a1418f1c4b8"
+      },
+      {
+        "path": "root-review.json",
+        "sha256": "7a770736582a229b9f7181f285d1f96088dbfcb83da251e0995860039050a028"
+      },
+      {
+        "path": "controls-stdout.log",
+        "sha256": "5708e20be1636a29725184786d2d51c6e2781c50393f649bea78cf630e60e04d"
+      },
+      {
+        "path": "controls-stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "initial_ARM_user_prerequisite_failure_excluded_from_RED": {
+      "actual_helper_signal": 25,
+      "target_bytes": 0,
+      "stage": "first clock/runtime probe after RLIMIT before target request write",
+      "fixed_test_prerequisite": "sample original deadline before setting file limit; no renewal or production change",
+      "files": [
+        {
+          "path": "selection.json",
+          "sha256": "0580b7b5e64be9fc32cc05bf379ac3e0e2c7d6f056a23429fd836a5037728bea"
+        },
+        {
+          "path": "execution.json",
+          "sha256": "3255bf24d439a2e73dbc3304fd2bbf595891b6df7aea1d8768dc371952e92df3"
+        },
+        {
+          "path": "controls-stdout.log",
+          "sha256": "4a0e8cd255ccf72b044a1025b3396bf38b0b874a38012612dea20eba17a18ce6"
+        },
+        {
+          "path": "controls-stderr.log",
+          "sha256": "f287de90e937fafb103b87fc994da3876449037b5037fdd62a872c9e8a6286a3"
+        },
+        {
+          "path": "result.json",
+          "sha256": "a78ca62f7781076faafc484e26b4857b0584413152407d2c2be01154ccdf89cf"
+        },
+        {
+          "path": "guest-strace.stderr",
+          "sha256": "357553fd9dc6f5584a9b0f1d61e9ff50051d58b4d8f4fca121f5010b1e5e2f15"
+        }
+      ]
+    },
+    "initial_host_passes_preserved": [
+      {
+        "path": "root-review.json",
+        "sha256": "73af0d2b52f396aa659d151ee7733bc1a2e5cac20594e33c192e2338391214b8"
+      },
+      {
+        "path": "execution.json",
+        "sha256": "a8fb4235968647282e0c1d46259a66570fc1af654676aee9a25f198a4f2b5932"
+      },
+      {
+        "path": "stdout.log",
+        "sha256": "0bd76a70644780953916681a9a87f005d31a1cb53489eb7c7424fc3080ad408b"
+      }
+    ]
+  }
 }

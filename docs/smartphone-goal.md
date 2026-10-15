@@ -11,8 +11,10 @@ one-shot native Rust writes and owned raw reads beneath the attempt/process
 owner. Strict missing-dispatch and missing-read REDs precede75 component passes
 per host/ARM user-QEMU architecture and actual host/generic ARM kernel
 completion/expiry/cancel process integration. The primitive exposes no descriptor or retry, retains
-uncertainty, and uses the original BOOTTIME deadline. Short/error-write and
-late-read-return controls, CPIF/provider/APN/IMS and hardware remain open.
+uncertainty, and uses the original BOOTTIME deadline. Three additional direct
+syscall controls pass on host/ARM user-QEMU: actual write error, partial16 and
+late-read refusal. CPIF record/source admission, natural worker termination
+within Main, provider/APN/IMS and hardware remain open.
 
 One [current diagnostic bundle](native-boot-ack-and-current-bundle.md) now joins
 the native build, complete8MiB image, exact original-unpacked generic and normal

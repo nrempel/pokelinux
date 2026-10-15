@@ -90,13 +90,39 @@ is qualified. Root rehashes125 selected and308 external inputs. Actual QEMU
 wait0, guest closure and exact CID absence after the foreground container wait
 pass. This generic kernel evidence qualifies no Pixel driver/module KMI.
 
+## Additional real syscall controls
+
+A separate Rust example and fixed Python controller now exercise three
+actual OS boundaries against the already implemented source. Host and ARM64
+user-QEMU each pass readonly-file EBADF, child-only RLIMIT_FSIZE16 partial write,
+and a positive read returned after the original BOOTTIME deadline. File bytes
+must equal exactly the request's first16 bytes. Every case retains uncertainty
+and terminal refusal, with actual child wait0 and bounded stdout/stderr EOF.
+
+The late-read control observes the owned child's actual blocked read syscall,
+matching its descriptor and65,568-byte count before expiry and again before
+releasing144 bytes after expiry. It requires ErrorDeadline and no chunk, then
+checks peer EOF while the helper and transport value remain alive; a separate
+stdin acknowledgement permits exit. No mock result, request retry or exit-time
+fd-drop substitute is used. These are direct helper controls, separate from
+Main's worker-exit/journal integration and from native ARM kernel evidence.
+
+The initial ARM user-QEMU partial case exits with SIGXFSZ before the target
+request write, leaving the target file empty. A bounded guest trace stops in
+first-use clock/runtime probing after the file limit. That unqualified helper
+prerequisite failure and the original host passes are preserved. The helper now
+samples its one original5s deadline before setting the child-only file limit;
+all write/prefix/terminal oracles and production source remain unchanged. The
+revised helper passes all three controls on host and ARM user-QEMU. No detailed
+QEMU cause or new pre-implementation RED is claimed.
+
 ## Remaining boundaries
 
-These component and process controls do not yet qualify actual partial/error
-writes, a blocked read returning after its original deadline, expiry during
-copying or allocation failure, process termination following those natural terminal paths, or physical
-suspend/wake. The pre/post deadline checks are implemented; current expiry
-integration exercises Main's held candidate, not a late raw-read return.
+The new direct syscall controls do not yet qualify native ARM kernel or CPIF
+partial/error/late-return behavior. Expiry during copying, allocation failure,
+Main's handling of natural terminal worker exits and physical suspend/wake
+remain open. Main's existing expiry integration holds a timely candidate; the
+separate helper now qualifies a late raw-read return on the host kernel.
 
 Complete-record framing and ordinary runtime identity, CPIF/channel/slot binding,
 provider/APN acquisition, deactivate/reset and independently acknowledged vendor
