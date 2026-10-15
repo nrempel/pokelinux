@@ -6,8 +6,8 @@ use crate::{
     owner::{Observation, Phase, Snapshot},
     receiver::ReceiverFailure,
     response::ResponseKind,
-    supervisor::ProcessIdentity,
 };
+use pokelinux_process_owner::supervisor::ProcessIdentity;
 use std::io;
 
 pub const MAX_PAYLOAD: usize = 2048;
@@ -231,7 +231,7 @@ impl Frame {
         bytes.extend(MAGIC);
         bytes.extend([VERSION, kind, 0, 0]);
         bytes.extend((length as u32).to_le_bytes());
-        bytes.extend(self.identity.0);
+        bytes.extend(self.identity.as_bytes());
         bytes.extend(self.attempt.to_le_bytes());
         bytes.extend(self.revision.to_le_bytes());
         match &self.kind {
@@ -320,7 +320,9 @@ pub fn decode(bytes: &[u8]) -> io::Result<Option<(Frame, usize)>> {
     };
     Ok(Some((
         Frame {
-            identity: ProcessIdentity(bytes[12..28].try_into().map_err(|_| malformed())?),
+            identity: ProcessIdentity::from_bytes(
+                bytes[12..28].try_into().map_err(|_| malformed())?,
+            ),
             attempt: ATTEMPT,
             revision: u64_at(bytes, 36),
             kind,

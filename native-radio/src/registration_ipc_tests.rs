@@ -5,7 +5,7 @@ use crate::registration::RegistrationWire;
 use std::sync::Arc;
 
 fn identity() -> ProcessIdentity {
-    ProcessIdentity([0x12; 16])
+    ProcessIdentity::from_bytes([0x12; 16])
 }
 fn wire(uri: &[u8], reason: &[u8]) -> RegistrationWire {
     RegistrationWire::new(omarchy_ims::registration::RegistrationWire {

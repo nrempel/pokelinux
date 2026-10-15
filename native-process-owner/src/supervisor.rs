@@ -1,4 +1,4 @@
-//! Local process reclamation never establishes remote registration cleanup.
+//! Local process reclamation never establishes remote cleanup.
 use std::{
     fs::{self, File, OpenOptions},
     io::{self, Read, Write},
@@ -58,8 +58,16 @@ impl Drop for NativeChild {
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub struct ProcessIdentity(pub(crate) [u8; 16]);
+pub struct ProcessIdentity([u8; 16]);
 impl ProcessIdentity {
+    /// Codec data only. Constructing an identity does not transfer custody.
+    pub fn from_bytes(bytes: [u8; 16]) -> Self {
+        Self(bytes)
+    }
+    pub fn as_bytes(&self) -> &[u8; 16] {
+        &self.0
+    }
+
     fn new() -> io::Result<Self> {
         let mut bytes = [0; 16];
         File::open("/dev/urandom")?.read_exact(&mut bytes)?;
@@ -82,7 +90,7 @@ impl ProcessIdentity {
 #[derive(Debug, PartialEq, Eq)]
 pub enum StartError {
     Occupied,
-    RegistrationUncertain,
+    AdmissionUncertain,
     Io,
 }
 /// Owns a single potentially registering process. The durable admission marker
@@ -135,7 +143,7 @@ impl Supervisor {
             .open(&self.journal)
             .map_err(|error| {
                 if error.kind() == io::ErrorKind::AlreadyExists {
-                    StartError::RegistrationUncertain
+                    StartError::AdmissionUncertain
                 } else {
                     StartError::Io
                 }
@@ -149,13 +157,13 @@ impl Supervisor {
         Ok(())
     }
     /// Low-level explicit-Stop process ownership only. Arbitrary commands have
-    /// no parent-death/bootstrap guarantee. Radio workers use start_worker.
+    /// no parent-death/bootstrap guarantee. Cooperative workers use start_worker.
     pub fn start(&mut self, command: &mut Command) -> Result<ProcessIdentity, StartError> {
         if self.child.is_some() {
             return Err(StartError::Occupied);
         }
         if self.admitted {
-            return Err(StartError::RegistrationUncertain);
+            return Err(StartError::AdmissionUncertain);
         }
         let id = ProcessIdentity::new().map_err(|_| StartError::Io)?;
         self.record_admission(id)?;
@@ -196,7 +204,7 @@ impl Supervisor {
             return Err(StartError::Occupied);
         }
         if self.admitted {
-            return Err(StartError::RegistrationUncertain);
+            return Err(StartError::AdmissionUncertain);
         }
         let pending = crate::bootstrap::Prepared::new()
             .and_then(|p| p.install(worker))
@@ -431,7 +439,7 @@ mod tests {
         let mut restarted = Supervisor::new(journal.clone());
         assert_eq!(
             restarted.start(&mut command),
-            Err(StartError::RegistrationUncertain)
+            Err(StartError::AdmissionUncertain)
         );
         fs::remove_file(journal).unwrap();
         fs::remove_dir(path).unwrap();
@@ -460,7 +468,7 @@ mod tests {
         let mut restarted = Supervisor::new(journal.clone());
         assert_eq!(
             restarted.start(&mut Command::new("unreachable")),
-            Err(StartError::RegistrationUncertain)
+            Err(StartError::AdmissionUncertain)
         );
         fs::remove_file(journal).unwrap();
         fs::remove_dir(path).unwrap();
@@ -489,7 +497,7 @@ mod tests {
         assert!(supervisor.poll_reap().unwrap().is_some());
         assert_eq!(
             supervisor.start(&mut Command::new("unreachable")),
-            Err(StartError::RegistrationUncertain)
+            Err(StartError::AdmissionUncertain)
         );
     }
     #[test]

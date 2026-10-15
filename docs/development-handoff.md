@@ -18,6 +18,14 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The [shared process-custody mechanism](native-process-custody.md) now lives in
+`native-process-owner`, with direct radio imports and no compatibility aliases.
+Eight shared plus 59 radio host tests and an additional actual ARM normal worker
+regression pass; the existing bootstrap-policy and installed executions retain
+their historical scope. Next, one supervised Data worker must add durable
+admission and current authorization without treating a controlled association
+as permission or remote cleanup.
+
 The [native Data/kernel owner](native-cellular-data-owner.md) retains its fixed
 actual ARM Binder/kernel RED→GREEN: wrong-serial refusal, accepted provider
 history, a fresh same-observer join and real link-loss withdrawal. Three later

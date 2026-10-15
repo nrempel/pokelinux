@@ -1,7 +1,6 @@
 //! Fixed conditional contract; prerequisite injection exists only in lib tests.
 use super::*;
 use crate::{
-    deadline::{BootClock, Clock, Deadline},
     indication::{IndicationKind, RadioIndication},
     owner::{Observation, OwnerError, Phase, RadioOwner, SessionKey},
     receiver::{CallbackQueue, RadioEvent, ReceiverFailure},
@@ -9,6 +8,7 @@ use crate::{
     worker::TransportSession,
 };
 use pokelinux_phone_state::{RegistrationAvailability as Availability, RegistrationObservation};
+use pokelinux_process_owner::deadline::{BootClock, Clock, Deadline};
 use std::{
     num::NonZeroUsize,
     sync::{

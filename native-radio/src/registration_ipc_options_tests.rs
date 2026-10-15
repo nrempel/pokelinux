@@ -18,7 +18,7 @@ fn every_valid_zero_option_combination_roundtrips_without_inventing_present_fiel
         )
         .unwrap();
         let frame = Frame {
-            identity: ProcessIdentity([0x12; 16]),
+            identity: ProcessIdentity::from_bytes([0x12; 16]),
             attempt: 1,
             revision: 9,
             kind: Kind::RegistrationWire {

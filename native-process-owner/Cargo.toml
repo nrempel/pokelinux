@@ -1,0 +1,12 @@
+[package]
+name = "pokelinux-process-owner"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+pokelinux-kernel-identity = { path = "../native-kernel-identity" }
+rustix = { version = "=1.1.5", features = ["time", "fs", "process", "net", "event", "thread", "stdio"] }
+
+[lints.rust]
+unsafe_code = "forbid"

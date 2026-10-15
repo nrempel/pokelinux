@@ -5,6 +5,7 @@ edition = "2024"
 publish = false
 
 [dependencies]
+pokelinux-process-owner = { path = "../native-process-owner" }
 pokelinux-phone-state = { path = "../native-phone-state" }
 pokelinux-kernel-identity = { path = "../native-kernel-identity" }
 omarchy-ims = { path = "../native-ims" }

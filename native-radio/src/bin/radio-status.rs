@@ -1,9 +1,7 @@
 //! Local service-account diagnostics only. Stop observes server exit, not reaping.
 #![forbid(unsafe_code)]
-use pokelinux_radio::{
-    deadline::{BootClock, Clock},
-    status::{Client, Command, Reply},
-};
+use pokelinux_process_owner::deadline::{BootClock, Clock};
+use pokelinux_radio::status::{Client, Command, Reply};
 use rustix::{
     event::{PollFd, PollFlags, Timespec, poll},
     fd::AsFd,

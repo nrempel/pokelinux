@@ -19,15 +19,9 @@ pub mod indication;
 pub mod owner;
 pub mod registration;
 
-pub mod deadline;
-
 pub mod worker;
 
-pub mod supervisor;
-
 pub mod request;
-
-pub mod bootstrap;
 
 pub mod observation;
 

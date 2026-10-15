@@ -1,6 +1,5 @@
 //! Fixed actual ARM Binder typed-add-PDN transport contract. No APN readiness injection.
 use crate::{
-    deadline::{BootClock, Clock, Deadline},
     owner::{OwnerError, Phase},
     receiver::{RadioEvent, ReceiverFailure},
     request::{Outcome, RequestFailure},
@@ -8,6 +7,7 @@ use crate::{
     worker::{AddPdnFailure, LifecycleError, TransportSession},
 };
 use omarchy_ims::add_pdn::{AddPdn, EncodeError, WireTime, encode};
+use pokelinux_process_owner::deadline::{BootClock, Clock, Deadline};
 use rsbinder::{FLAG_ONEWAY, Parcel, ProcessState, SIBinder, Status};
 use std::{
     io::Write,

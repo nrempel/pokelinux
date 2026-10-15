@@ -31,11 +31,11 @@ impl<T> Drop for OwnedWorker<T> {
 }
 
 use crate::{
-    deadline::{BootClock, Clock, Deadline},
     owner::{OwnerError, RadioOwner, SessionKey, Snapshot},
     receiver::ReceiverFailure,
     transport::{RadioDeathWatch, RadioTransport},
 };
+use pokelinux_process_owner::deadline::{BootClock, Clock, Deadline};
 use rsbinder::{Interface, Status, StatusCode};
 use std::{num::NonZeroUsize, sync::Arc};
 

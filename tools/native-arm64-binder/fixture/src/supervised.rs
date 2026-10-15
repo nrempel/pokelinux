@@ -1,6 +1,6 @@
 //! Production Supervisor owns a child permanently held in actual guest-kernel Binder.
 use crate::*;
-use pokelinux_radio::{
+use pokelinux_process_owner::{
     bootstrap::{WorkerCommand, WorkerState},
     supervisor::{ProcessIdentity, StartError, Supervisor},
 };
@@ -116,12 +116,12 @@ pub fn parent() -> TestResult {
     assert_eq!(fs::metadata(&journal)?.permissions().mode() & 0o777, 0o600);
     assert_eq!(
         supervisor.start_worker(&mut command),
-        Err(StartError::RegistrationUncertain)
+        Err(StartError::AdmissionUncertain)
     );
     let mut restarted = Supervisor::new(journal);
     assert_eq!(
         restarted.start_worker(&mut command),
-        Err(StartError::RegistrationUncertain)
+        Err(StartError::AdmissionUncertain)
     );
     marker("permanent-binder-registration-sigkill-actual-reap-old-output-fenced");
     marker("durable-uncertainty-refuses-restart-after-local-reap");
@@ -175,7 +175,7 @@ pub fn parent_death_supervisor() -> TestResult {
     assert!(supervisor.occupied());
     assert!(supervisor.admits_frame(identity, identity, 1));
     println!(
-        "{{\"schema\":1,\"supervisor_pid\":{},\"worker_pid\":{},\"incarnation\":\"{}\",\"attempt\":1,\"binder_hold_confirmed\":true,\"worker_argv\":[\"{}\",\"--pokelinux-radio-worker\",\"permanent-child\"]}}",
+        "{{\"schema\":1,\"supervisor_pid\":{},\"worker_pid\":{},\"incarnation\":\"{}\",\"attempt\":1,\"binder_hold_confirmed\":true,\"worker_argv\":[\"{}\",\"--pokelinux-process-worker\",\"permanent-child\"]}}",
         std::process::id(),
         worker,
         identity.hex(),
@@ -192,14 +192,14 @@ pub fn parent_death_refuse() -> TestResult {
     let mut supervisor = Supervisor::new(journal);
     assert_eq!(
         supervisor.start(&mut Command::new("unreachable")),
-        Err(StartError::RegistrationUncertain)
+        Err(StartError::AdmissionUncertain)
     );
     assert!(!supervisor.occupied());
     let mut worker = WorkerCommand::new(&std::env::current_exe()?)?;
     worker.arg("permanent-child");
     assert_eq!(
         supervisor.start_worker(&mut worker),
-        Err(StartError::RegistrationUncertain)
+        Err(StartError::AdmissionUncertain)
     );
     assert!(!supervisor.occupied());
     println!(

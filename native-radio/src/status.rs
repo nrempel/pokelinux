@@ -5,9 +5,9 @@
 use crate::{
     observation::{self, Frame, Kind},
     receiver::ReceiverFailure,
-    supervisor::ProcessIdentity,
 };
 use pokelinux_kernel_identity::socket_peer_pidfd;
+use pokelinux_process_owner::supervisor::ProcessIdentity;
 use rustix::{
     fd::{AsFd, BorrowedFd, OwnedFd},
     net::{
@@ -242,7 +242,7 @@ impl Reply {
                     u8::from(status.identity.is_some()),
                     0,
                 ]);
-                bytes.extend(status.identity.map_or([0; 16], |id| id.0));
+                bytes.extend(status.identity.map_or([0; 16], |id| *id.as_bytes()));
                 bytes.extend(status.revision.to_le_bytes());
                 bytes.extend((raw.as_ref().map_or(0, Vec::len) as u32).to_le_bytes());
                 if let Some(raw) = raw {
@@ -282,7 +282,7 @@ pub fn decode_reply(bytes: &[u8]) -> io::Result<Reply> {
             };
             let identity = match bytes[14] {
                 0 if bytes[16..32] == [0; 16] => None,
-                1 => Some(ProcessIdentity(
+                1 => Some(ProcessIdentity::from_bytes(
                     bytes[16..32].try_into().map_err(|_| invalid())?,
                 )),
                 _ => return Err(invalid()),

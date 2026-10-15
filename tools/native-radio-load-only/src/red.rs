@@ -1,5 +1,5 @@
 //! Genuine missing-containment selection against the unchanged production owner.
-use pokelinux_radio::supervisor::Supervisor;
+use pokelinux_process_owner::supervisor::Supervisor;
 use std::{
     fs,
     io::{self, Read},
@@ -85,7 +85,7 @@ fn main() {
     let retry = owner.start(&mut Command::new(&args[2]));
     let retained_uncertainty = matches!(
         retry,
-        Err(pokelinux_radio::supervisor::StartError::RegistrationUncertain)
+        Err(pokelinux_process_owner::supervisor::StartError::AdmissionUncertain)
     );
     let genuine_missing_containment = observation["outside_read"] == true
         && observation["unix_connect"] == true

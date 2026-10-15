@@ -1,6 +1,6 @@
 //! Actual native radio owner/worker through guest kernel Binder to synthetic native peer.
+use pokelinux_process_owner::deadline::{BootClock, Clock, Deadline};
 use pokelinux_radio::{
-    deadline::{BootClock, Clock, Deadline},
     owner::{OwnerError, Phase},
     receiver::{RadioEvent, ReceiverFailure, new_radio_callbacks},
     request::Outcome,
@@ -373,8 +373,8 @@ mod registration;
 #[path = "../supervised.rs"]
 mod supervised;
 fn main() -> TestResult {
-    let cooperative =
-        std::env::args().nth(1).as_deref() == Some(pokelinux_radio::bootstrap::WORKER_SELECTOR);
+    let cooperative = std::env::args().nth(1).as_deref()
+        == Some(pokelinux_process_owner::bootstrap::WORKER_SELECTOR);
     if cooperative
         && (std::env::var(bootstrap_controls::CANARY_ENV).as_deref() == Ok("1")
             || std::env::args().nth(2).as_deref() == Some("bootstrap-canary"))
@@ -382,7 +382,7 @@ fn main() -> TestResult {
         return bootstrap_controls::child_canary();
     }
     let _parent = if cooperative {
-        Some(pokelinux_radio::bootstrap::BoundParent::from_stdin()?)
+        Some(pokelinux_process_owner::bootstrap::BoundParent::from_stdin()?)
     } else {
         None
     };

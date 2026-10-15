@@ -1,10 +1,10 @@
 //! Actual selected production executable, public named Binder service, and owned output.
 use crate::*;
-use pokelinux_radio::{
+use pokelinux_process_owner::{
     bootstrap::{WorkerCommand, WorkerState},
-    observation::{self, Frame, Kind},
     supervisor::{ProcessIdentity, StartError, Supervisor},
 };
+use pokelinux_radio::observation::{self, Frame, Kind};
 use std::{
     fs,
     io::{self, Write},
@@ -148,7 +148,7 @@ pub fn run() -> TestResult {
         let worker_pid = registers[3];
         require(worker_pid > 1, "missing actual registering worker PID")?;
         println!(
-            "{{\"schema\":1,\"phase\":\"active\",\"supervisor_pid\":{},\"worker_pid\":{},\"incarnation\":\"{}\",\"attempt\":1,\"until_ns\":{},\"registration_count\":1,\"client_id\":42,\"device\":\"/dev/binderfs/radio\",\"service\":\"org.pokelinux.fixture.arm64-radio\",\"lookup\":\"IServiceManager.checkService\",\"registration_active\":true,\"worker_argv\":[\"{}\",\"--pokelinux-radio-worker\",\"--device\",\"/dev/binderfs/radio\",\"--service\",\"org.pokelinux.fixture.arm64-radio\",\"--until-ns\",\"{}\"]}}",
+            "{{\"schema\":1,\"phase\":\"active\",\"supervisor_pid\":{},\"worker_pid\":{},\"incarnation\":\"{}\",\"attempt\":1,\"until_ns\":{},\"registration_count\":1,\"client_id\":42,\"device\":\"/dev/binderfs/radio\",\"service\":\"org.pokelinux.fixture.arm64-radio\",\"lookup\":\"IServiceManager.checkService\",\"registration_active\":true,\"worker_argv\":[\"{}\",\"--pokelinux-process-worker\",\"--device\",\"/dev/binderfs/radio\",\"--service\",\"org.pokelinux.fixture.arm64-radio\",\"--slot\",\"0\",\"--until-ns\",\"{}\"]}}",
             std::process::id(),
             worker_pid,
             identity.hex(),
@@ -256,12 +256,12 @@ pub fn run() -> TestResult {
         "production journal changed",
     )?;
     require(
-        owner.start_worker(&mut command) == Err(StartError::RegistrationUncertain),
+        owner.start_worker(&mut command) == Err(StartError::AdmissionUncertain),
         "same owner retried production registration",
     )?;
     let mut restarted = Supervisor::new(journal);
     require(
-        restarted.start_worker(&mut command) == Err(StartError::RegistrationUncertain)
+        restarted.start_worker(&mut command) == Err(StartError::AdmissionUncertain)
             && !restarted.occupied(),
         "recreated owner retried production registration",
     )?;

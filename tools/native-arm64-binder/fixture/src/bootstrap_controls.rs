@@ -3,7 +3,7 @@
 //! No credentials, pidfd identity or production bootstrap result is mocked.
 #![forbid(unsafe_code)]
 use super::{TestResult, marker, report};
-use pokelinux_radio::bootstrap::BoundParent;
+use pokelinux_process_owner::bootstrap::BoundParent;
 use rsbinder::SIBinder;
 use rustix::{
     fd::{AsFd, OwnedFd},
@@ -233,7 +233,7 @@ pub fn wrong_parent(peer: &SIBinder, peer_pid: u32) -> TestResult {
     let mut go = boot.clone();
     go[1] = 3;
     let child = Command::new(std::env::current_exe()?)
-        .arg("--pokelinux-radio-worker")
+        .arg(pokelinux_process_owner::bootstrap::WORKER_SELECTOR)
         .env_clear()
         .env("POKELINUX_OWNER_INCARNATION", incarnation)
         .env(CANARY_ENV, "1")
@@ -387,7 +387,7 @@ pub fn late_go(peer: &SIBinder) -> TestResult {
     let mut go = boot.clone();
     go[1] = 3;
     let child = Command::new(std::env::current_exe()?)
-        .arg("--pokelinux-radio-worker")
+        .arg(pokelinux_process_owner::bootstrap::WORKER_SELECTOR)
         .env_clear()
         .env("POKELINUX_OWNER_INCARNATION", incarnation)
         .env(CANARY_ENV, "1")
@@ -521,7 +521,7 @@ pub fn late_go(peer: &SIBinder) -> TestResult {
 /// polling does not assert that a READY packet was already queued; late-GO's
 /// separate control is the exact queued-frame observation.
 pub fn policy_control(peer: &SIBinder, withhold: bool) -> TestResult {
-    use pokelinux_radio::{
+    use pokelinux_process_owner::{
         bootstrap::{WorkerCommand, WorkerState},
         supervisor::{StartError, Supervisor},
     };
@@ -630,12 +630,12 @@ pub fn policy_control(peer: &SIBinder, withhold: bool) -> TestResult {
             "journal mode changed",
         )?;
         require(
-            owner.start_worker(&mut command) == Err(StartError::RegistrationUncertain),
+            owner.start_worker(&mut command) == Err(StartError::AdmissionUncertain),
             "same parent retried",
         )?;
         let mut restarted = Supervisor::new(journal);
         require(
-            restarted.start_worker(&mut command) == Err(StartError::RegistrationUncertain),
+            restarted.start_worker(&mut command) == Err(StartError::AdmissionUncertain),
             "new parent retried",
         )?;
         require(!restarted.occupied(), "restart launched child")?;

@@ -1,12 +1,14 @@
 //! Installed owner for one radio transport process and private operator diagnostics.
 //! Historical transport data is never a cellular/IMS state or operation receipt.
-use pokelinux_radio::{
+use pokelinux_process_owner::{
     bootstrap::{WorkerCommand, WorkerState},
     deadline::{BootClock, Clock},
+    supervisor::{ProcessIdentity, StartError, Supervisor},
+};
+use pokelinux_radio::{
     observation::{self, Frame, Kind},
     receiver::ReceiverFailure,
     status::{Command, Connection, Listener, Phase, Reply, Status},
-    supervisor::{ProcessIdentity, StartError, Supervisor},
 };
 use rustix::fs::{FileType, OFlags, fcntl_getfl, fcntl_setfl, fstat};
 use std::{
@@ -273,7 +275,7 @@ fn run(config: Config) -> io::Result<i32> {
     let identity = match owner.start_worker(&mut worker) {
         Ok(identity) => identity,
         Err(error) => {
-            if error == StartError::RegistrationUncertain && !owner.occupied() {
+            if error == StartError::AdmissionUncertain && !owner.occupied() {
                 event("\"event\":\"start-refused\",\"journal_retained\":true,\"child_spawned\":false,\"reason\":\"registration-uncertain\"".into());
                 return Ok(78);
             }

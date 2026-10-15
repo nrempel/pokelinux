@@ -1,12 +1,12 @@
 //! Session publication authority. Historical callback observations are not phone state.
 use crate::{
-    deadline::{BootClock, Clock, Deadline},
     receiver::{
         self, CallbackControl, CallbackInbox, CallbackQueue, RadioEndpoints, RadioEvent,
         ReceiverFailure,
     },
     response::{RadioResponse, ResponseKind},
 };
+use pokelinux_process_owner::deadline::{BootClock, Clock, Deadline};
 use std::{
     num::NonZeroUsize,
     sync::{Arc, Mutex, MutexGuard, Weak},
@@ -605,7 +605,7 @@ mod tests {
         })
     }
     struct TestClock(std::sync::atomic::AtomicU64);
-    impl crate::deadline::Clock for TestClock {
+    impl pokelinux_process_owner::deadline::Clock for TestClock {
         fn now(&self) -> std::time::Duration {
             std::time::Duration::from_nanos(self.0.load(std::sync::atomic::Ordering::SeqCst))
         }
@@ -624,7 +624,9 @@ mod tests {
             .begin_until(
                 None,
                 NonZeroUsize::new(2).unwrap(),
-                crate::deadline::Deadline::at(std::time::Duration::from_nanos(20)),
+                pokelinux_process_owner::deadline::Deadline::at(std::time::Duration::from_nanos(
+                    20,
+                )),
             )
             .unwrap();
         clock.0.store(20, std::sync::atomic::Ordering::SeqCst);
@@ -648,7 +650,9 @@ mod tests {
             .begin_until(
                 None,
                 NonZeroUsize::new(2).unwrap(),
-                crate::deadline::Deadline::at(std::time::Duration::from_nanos(20)),
+                pokelinux_process_owner::deadline::Deadline::at(std::time::Duration::from_nanos(
+                    20,
+                )),
             )
             .unwrap();
         owner.activate(&registration.key, 42).unwrap();
@@ -672,7 +676,9 @@ mod tests {
             .begin_until(
                 None,
                 NonZeroUsize::new(2).unwrap(),
-                crate::deadline::Deadline::at(std::time::Duration::from_nanos(20)),
+                pokelinux_process_owner::deadline::Deadline::at(std::time::Duration::from_nanos(
+                    20,
+                )),
             )
             .unwrap();
         owner.activate(&old.key, 42).unwrap();
@@ -685,7 +691,9 @@ mod tests {
             .begin_until(
                 Some(&old.key),
                 NonZeroUsize::new(2).unwrap(),
-                crate::deadline::Deadline::at(std::time::Duration::from_nanos(30)),
+                pokelinux_process_owner::deadline::Deadline::at(std::time::Duration::from_nanos(
+                    30,
+                )),
             )
             .unwrap();
         owner.activate(&fresh.key, 42).unwrap();
@@ -699,7 +707,9 @@ mod tests {
             .begin_until(
                 None,
                 NonZeroUsize::new(2).unwrap(),
-                crate::deadline::Deadline::at(std::time::Duration::from_nanos(20)),
+                pokelinux_process_owner::deadline::Deadline::at(std::time::Duration::from_nanos(
+                    20,
+                )),
             )
             .unwrap();
         owner.activate(&current.key, 42).unwrap();
@@ -707,7 +717,9 @@ mod tests {
             owner.begin_until(
                 Some(&current.key),
                 NonZeroUsize::new(2).unwrap(),
-                crate::deadline::Deadline::at(std::time::Duration::from_nanos(10))
+                pokelinux_process_owner::deadline::Deadline::at(std::time::Duration::from_nanos(
+                    10
+                ))
             ),
             Err(OwnerError::Failed(ReceiverFailure::Expired))
         ));

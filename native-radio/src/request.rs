@@ -1,10 +1,10 @@
 //! One bounded request attempt. Binder submission never proves modem acceptance.
 use crate::{
-    deadline::Deadline,
     owner::{OwnerError, SessionKey, Shared},
     transport::RadioTransport,
 };
 use omarchy_ims::requests::RequestParts;
+use pokelinux_process_owner::deadline::Deadline;
 use rsbinder::StatusCode;
 use std::sync::Arc;
 
@@ -188,7 +188,8 @@ impl Drop for PreparedRequest {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{deadline::Clock, owner::RadioOwner, receiver::ReceiverFailure};
+    use crate::{owner::RadioOwner, receiver::ReceiverFailure};
+    use pokelinux_process_owner::deadline::Clock;
     use std::{
         num::NonZeroUsize,
         sync::atomic::{AtomicU64, Ordering},

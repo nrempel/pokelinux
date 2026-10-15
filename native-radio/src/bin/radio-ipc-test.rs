@@ -693,7 +693,7 @@ fn cancelled_registration(
     peer: &SIBinder,
     expire: bool,
 ) -> std::result::Result<(), Box<dyn std::error::Error>> {
-    use pokelinux_radio::deadline::{Clock, Deadline};
+    use pokelinux_process_owner::deadline::{Clock, Deadline};
     use pokelinux_radio::owner::{OwnerError, Phase};
     use pokelinux_radio::worker::{LifecycleError, TransportSession};
     use std::sync::{
@@ -797,8 +797,8 @@ fn cancelled_registration(
     Ok(())
 }
 
-fn owner_deadline() -> pokelinux_radio::deadline::Deadline {
-    use pokelinux_radio::deadline::{BootClock, Clock, Deadline};
+fn owner_deadline() -> pokelinux_process_owner::deadline::Deadline {
+    use pokelinux_process_owner::deadline::{BootClock, Clock, Deadline};
     Deadline::at(BootClock.now() + Duration::from_secs(60))
 }
 
@@ -880,8 +880,8 @@ fn owned_death(
 }
 
 fn permanent_registration(peer: &SIBinder) -> std::result::Result<(), Box<dyn std::error::Error>> {
+    use pokelinux_process_owner::supervisor::ProcessIdentity;
     use pokelinux_radio::owner::Phase;
-    use pokelinux_radio::supervisor::ProcessIdentity;
     use pokelinux_radio::worker::{LifecycleError, TransportSession};
     use std::io::Write;
     let identity = std::env::var("POKELINUX_OWNER_INCARNATION")?;
@@ -922,7 +922,7 @@ fn permanent_registration(peer: &SIBinder) -> std::result::Result<(), Box<dyn st
     }
 }
 fn supervised_registration() -> std::result::Result<(), Box<dyn std::error::Error>> {
-    use pokelinux_radio::supervisor::{StartError, Supervisor};
+    use pokelinux_process_owner::supervisor::{StartError, Supervisor};
     use std::{os::unix::fs::DirBuilderExt, process::Command};
     let directory = std::path::PathBuf::from(format!(
         "/data/local/tmp/pokelinux-supervisor-{}",
@@ -990,13 +990,13 @@ fn supervised_registration() -> std::result::Result<(), Box<dyn std::error::Erro
     println!("radio-supervisor-reaped\tPASS");
     if supervisor.admits_frame(id, id, 1)
         || supervisor.occupied()
-        || supervisor.start(&mut command) != Err(StartError::RegistrationUncertain)
+        || supervisor.start(&mut command) != Err(StartError::AdmissionUncertain)
     {
         return Err("reaping was confused with vendor cleanup".into());
     }
     println!("radio-supervisor-retry-refused\tPASS");
     let mut restarted = Supervisor::new(journal);
-    if restarted.start(&mut command) != Err(StartError::RegistrationUncertain) {
+    if restarted.start(&mut command) != Err(StartError::AdmissionUncertain) {
         return Err("supervisor restart forgot uncertain registration".into());
     }
     println!("radio-supervisor-restart-refused\tPASS");
@@ -1004,11 +1004,8 @@ fn supervised_registration() -> std::result::Result<(), Box<dyn std::error::Erro
 }
 
 fn expire_before_request(peer: &SIBinder) -> std::result::Result<(), Box<dyn std::error::Error>> {
-    use pokelinux_radio::{
-        deadline::{Clock, Deadline},
-        request::Outcome,
-        worker::TransportSession,
-    };
+    use pokelinux_process_owner::deadline::{Clock, Deadline};
+    use pokelinux_radio::{request::Outcome, worker::TransportSession};
     use std::sync::{
         Arc,
         atomic::{AtomicU64, Ordering},
@@ -1110,8 +1107,8 @@ fn owned_request_scenario(
     peer: &SIBinder,
     scenario: &str,
 ) -> std::result::Result<(), Box<dyn std::error::Error>> {
+    use pokelinux_process_owner::deadline::{BootClock, Clock, Deadline};
     use pokelinux_radio::{
-        deadline::{BootClock, Clock, Deadline},
         owner::{OwnerError, Phase},
         request::Outcome,
         worker::{LifecycleError, TransportSession},

@@ -1,17 +1,22 @@
 # Cooperative native radio bootstrap
 
-The production radio library now provides an explicit cooperative worker entry
-before Binder initialization. An actual generic Arch ARM64 kernel Binder test
-first demonstrates the new requirement missing from ordinary process launch,
-then passes with the cooperative entry. This is local process custody. A complete
-production radio worker, installed service supervision and native IMS remain open.
-[Bounded execution record](evidence/native-radio-bootstrap-provenance.json).
-A later [four-control selection](native-radio-bootstrap-policy.md) qualifies
-actual queued-GO expiry, withheld parent polling and Stop during Initializing,
-with37 host tests and unchanged production runtime source.
+The current cooperative bootstrap, supervisor and deadline API lives in
+`native-process-owner::{bootstrap,supervisor,deadline}`. Radio and fixtures use
+direct imports; the former radio-local modules and selector aliases are absent.
+Durable refusal is `StartError::AdmissionUncertain`; explicit identity codecs
+carry data without granting custody or publication admission.
+The [shared-custody extraction](native-process-custody.md) passes 67 selected host
+tests and the normal actual ARM production-worker lookup/RAW/death/Stop/wait and
+journal-refusal regression. It does not rerun the earlier controls below.
+
+The [original parent-death record](evidence/native-radio-bootstrap-provenance.json)
+and later [four-control selection](native-radio-bootstrap-policy.md) retain their
+then-selected radio-local sources, selector and scope. Their RED/GREEN, 37-test
+policy checkpoint and historical remaining gates are recorded below, rather
+than relabeled as executions of the extracted crate.
 
 `WorkerCommand` selects a trusted executable and prepends the fixed
-`--pokelinux-radio-worker` selector. `Supervisor::start_worker` requires the
+`--pokelinux-process-worker` selector. `Supervisor::start_worker` requires the
 process main thread and inherits equal real/effective UID/GID. Its owner is
 explicitly non-Send/non-Sync and must retain that spawning thread through actual
 child wait. The caller protects executable provisioning, procfs and the common
@@ -50,7 +55,9 @@ Socketpair peer credentials identify its creator, so parent-side READY uses
 message credentials rather than treating its socket-origin pidfd as the child.
 See [Unix socket credentials](https://man7.org/linux/man-pages/man7/unix.7.html).
 
-## Executed evidence
+## Historical executed evidence
+
+The following records the earlier selections; none was rerun for the extraction.
 
 The test worker body is public Rust/manual-peer infrastructure in
 `tools/native-arm64-binder/fixture`; its main enters production `BoundParent`
@@ -98,7 +105,7 @@ with exact orphan custody; it deliberately parks and must not be run unowned.
 The separate private frozen guest envelope supplies that ownership. The older
 nine-scenario runner is separate historical qualification, not this new oracle.
 
-## Remaining gates
+## Remaining gates at the bootstrap checkpoint
 
 The later [bootstrap policy controls](native-radio-bootstrap-policy.md) execute
 late queued GO, parent expiry with polling withheld and Stop during Initializing.

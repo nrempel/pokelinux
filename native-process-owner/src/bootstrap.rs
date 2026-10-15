@@ -24,7 +24,7 @@ use std::{
     time::Duration,
 };
 
-pub const WORKER_SELECTOR: &str = "--pokelinux-radio-worker";
+pub const WORKER_SELECTOR: &str = "--pokelinux-process-worker";
 const SETUP_NS: u64 = 3_000_000_000;
 const SIZE: usize = 26;
 const BOOT: u8 = 1;
@@ -82,7 +82,7 @@ fn packet(kind: u8, identity: ProcessIdentity, until: u64) -> [u8; SIZE] {
     let mut bytes = [0; SIZE];
     bytes[0] = 1;
     bytes[1] = kind;
-    bytes[2..18].copy_from_slice(&identity.0);
+    bytes[2..18].copy_from_slice(identity.as_bytes());
     bytes[18..].copy_from_slice(&until.to_le_bytes());
     bytes
 }
@@ -323,7 +323,8 @@ impl BoundParent {
         if boot.bytes[0..2] != [1, BOOT] || boot.handles.len() != 1 || boot.credentials != creator {
             return Err(invalid());
         }
-        let identity = ProcessIdentity(boot.bytes[2..18].try_into().map_err(|_| invalid())?);
+        let identity =
+            ProcessIdentity::from_bytes(boot.bytes[2..18].try_into().map_err(|_| invalid())?);
         let until = u64::from_le_bytes(boot.bytes[18..].try_into().map_err(|_| invalid())?);
         if until > local_until
             || std::env::var("POKELINUX_OWNER_INCARNATION").ok().as_deref()

@@ -358,6 +358,7 @@ dependencies = [
 name = "native-arm64-binder-fixture"
 version = "0.1.0"
 dependencies = [
+ "pokelinux-process-owner",
  "pokelinux-radio",
  "rsbinder",
  "rustix",
@@ -439,12 +440,21 @@ name = "pokelinux-phone-state"
 version = "0.1.0"
 
 [[package]]
+name = "pokelinux-process-owner"
+version = "0.1.0"
+dependencies = [
+ "pokelinux-kernel-identity",
+ "rustix",
+]
+
+[[package]]
 name = "pokelinux-radio"
 version = "0.1.0"
 dependencies = [
  "omarchy-ims",
  "pokelinux-kernel-identity",
  "pokelinux-phone-state",
+ "pokelinux-process-owner",
  "rsbinder",
  "rsbinder-aidl",
  "rustix",
