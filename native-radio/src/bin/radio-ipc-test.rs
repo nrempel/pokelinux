@@ -517,9 +517,10 @@ fn owner_initial(
     if responses != 1
         || owner
             .snapshot()
-            .response
+            .observation
             .as_ref()
-            .map(|r| r.payload.as_slice())
+            .and_then(|value| value.kind.raw_response())
+            .map(|response| response.payload.as_slice())
             != Some(&[7][..])
     {
         return Err("owner initial response mismatch".into());
@@ -546,7 +547,7 @@ fn owner_ipc(
     peer: &SIBinder,
 ) -> std::result::Result<(), Box<dyn std::error::Error>> {
     use pokelinux_radio::owner::{OwnerError, Phase, RadioOwner};
-    let mut owner = RadioOwner::new(NonZeroUsize::new(4).unwrap());
+    let mut owner = RadioOwner::new(NonZeroUsize::new(4).unwrap(), 0);
     let first = owner
         .begin_until(None, NonZeroUsize::new(4).unwrap(), owner_deadline())
         .map_err(|e| format!("owner begin: {e:?}"))?;
@@ -577,7 +578,7 @@ fn owner_ipc(
     }
     first.endpoints.control.cancel();
     if owner.publish(prepared) != Err(OwnerError::Failed(ReceiverFailure::Cancelled))
-        || owner.snapshot().response.is_some()
+        || owner.snapshot().observation.is_some()
     {
         return Err("consumed event survived cancellation".into());
     }
@@ -661,7 +662,7 @@ fn owner_ipc(
     owner
         .stop(&third.key)
         .map_err(|e| format!("owner stop: {e:?}"))?;
-    if owner.snapshot().response.is_some()
+    if owner.snapshot().observation.is_some()
         || owner.snapshot().phase != Phase::Failed(ReceiverFailure::Cancelled)
     {
         return Err("owner stop retained current response".into());
@@ -706,7 +707,7 @@ fn cancelled_registration(
         }
     }
     let clock = Arc::new(ControlledClock(AtomicU64::new(10)));
-    let mut session = TransportSession::with_clock(NonZeroUsize::new(2).unwrap(), clock.clone());
+    let mut session = TransportSession::with_clock(NonZeroUsize::new(2).unwrap(), 0, clock.clone());
     let terminal = if expire {
         ReceiverFailure::Expired
     } else {
@@ -731,7 +732,7 @@ fn cancelled_registration(
         session.stop(&key).map_err(|e| format!("stop: {e:?}"))?;
     }
     if session.snapshot().phase != Phase::Failed(terminal)
-        || session.snapshot().response.is_some()
+        || session.snapshot().observation.is_some()
         || session.poll_registration().is_some()
         || !session.worker_occupied()
     {
@@ -777,7 +778,7 @@ fn cancelled_registration(
     if !report.dispatched
         || !matches!(report.result, Ok(42))
         || report.activation != Err(OwnerError::Failed(terminal))
-        || session.snapshot().response.is_some()
+        || session.snapshot().observation.is_some()
         || session.worker_occupied()
     {
         return Err("late registration completion violated lifecycle".into());
@@ -807,7 +808,7 @@ fn owned_death(
 ) -> std::result::Result<(), Box<dyn std::error::Error>> {
     use pokelinux_radio::owner::{OwnerError, Phase};
     use pokelinux_radio::worker::{RegistrationFailure, TransportSession};
-    let mut session = TransportSession::new(NonZeroUsize::new(2).unwrap());
+    let mut session = TransportSession::new(NonZeroUsize::new(2).unwrap(), 0);
     session
         .start(
             RadioTransport::from_binder(peer.clone())?,
@@ -864,7 +865,7 @@ fn owned_death(
         }
         std::thread::yield_now();
     }
-    if session.worker_occupied() || session.snapshot().response.is_some() {
+    if session.worker_occupied() || session.snapshot().observation.is_some() {
         return Err("owned death retained state or worker".into());
     }
     println!(
@@ -885,7 +886,7 @@ fn permanent_registration(peer: &SIBinder) -> std::result::Result<(), Box<dyn st
     use std::io::Write;
     let identity = std::env::var("POKELINUX_OWNER_INCARNATION")?;
     ProcessIdentity::from_hex(&identity).ok_or("missing owner incarnation")?;
-    let mut session = TransportSession::new(NonZeroUsize::new(2).unwrap());
+    let mut session = TransportSession::new(NonZeroUsize::new(2).unwrap(), 0);
     let key = session
         .start(
             RadioTransport::from_binder(peer.clone())?,
@@ -1019,7 +1020,7 @@ fn expire_before_request(peer: &SIBinder) -> std::result::Result<(), Box<dyn std
         }
     }
     let clock = Arc::new(Controlled(AtomicU64::new(10)));
-    let mut session = TransportSession::with_clock(NonZeroUsize::new(2).unwrap(), clock.clone());
+    let mut session = TransportSession::with_clock(NonZeroUsize::new(2).unwrap(), 0, clock.clone());
     let key = session
         .start(
             RadioTransport::from_binder(peer.clone())?,
@@ -1115,7 +1116,7 @@ fn owned_request_scenario(
         request::Outcome,
         worker::{LifecycleError, TransportSession},
     };
-    let mut session = TransportSession::new(NonZeroUsize::new(2).unwrap());
+    let mut session = TransportSession::new(NonZeroUsize::new(2).unwrap(), 0);
     let key = session
         .start(
             RadioTransport::from_binder(peer.clone())?,
@@ -1248,7 +1249,16 @@ fn owned_request_scenario(
                 assert!(Instant::now() < end);
             }
             let snapshot = session.snapshot();
-            assert_eq!(snapshot.response.unwrap().payload, [9, 8]);
+            assert_eq!(
+                snapshot
+                    .observation
+                    .unwrap()
+                    .kind
+                    .raw_response()
+                    .unwrap()
+                    .payload,
+                [9, 8]
+            );
             assert_eq!(snapshot.request.unwrap().outcome, Outcome::OutcomeUnknown);
         }
     }

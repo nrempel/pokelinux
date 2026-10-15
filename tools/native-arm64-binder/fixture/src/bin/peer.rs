@@ -8,6 +8,8 @@ use std::{
     sync::{Arc, Condvar, Mutex},
     time::Duration,
 };
+#[path = "../registration_vectors.rs"]
+mod registration_vectors;
 const RADIO: &str = "vendor.samsung_slsi.telephony.hardware.radioExternal.IOemSlsiRadioExternal";
 const RESPONSE: &str =
     "vendor.samsung_slsi.telephony.hardware.radioExternal.IOemSlsiRadioExternalRes";
@@ -16,6 +18,7 @@ const INDICATION: &str =
 #[derive(Default)]
 struct State {
     response: Option<SIBinder>,
+    indication: Option<SIBinder>,
     registers: i32,
     raw: i32,
     segments: i32,
@@ -124,6 +127,7 @@ impl Remotable for Radio {
                     let mut state = self.0.state.lock().unwrap();
                     state.registers += 1;
                     state.response = Some(res.clone());
+                    state.indication = Some(ind.clone());
                     state.calling_pid = thread_state::get_calling_pid();
                     state.calling_uid = thread_state::get_calling_uid() as i32;
                     println!(
@@ -280,6 +284,43 @@ impl Remotable for Radio {
                     199 => {}
                     _ => unreachable!(),
                 }
+                ack(reply)
+            }
+            registration_vectors::VALID..=registration_vectors::TRAILING => {
+                if data.data_avail() != 0 {
+                    return Err(StatusCode::BadValue);
+                }
+                let (message, slot, fragment, payload) =
+                    registration_vectors::callback(code).ok_or(StatusCode::BadValue)?;
+                let (callback, target_pid, target_uid) = {
+                    let state = self.0.state.lock().unwrap();
+                    (
+                        state.indication.clone().ok_or(StatusCode::UnexpectedNull)?,
+                        state.calling_pid,
+                        state.calling_uid,
+                    )
+                };
+                let remote = callback.as_remote().ok_or(StatusCode::BadType)?;
+                let mut input = remote.prepare_transact(true)?;
+                input.write_i32(message)?;
+                input.write_i32(slot)?;
+                input.write(&payload[..])?;
+                if fragment {
+                    input.write_i32(0)?;
+                    input.write_i32(payload.len() as i32)?;
+                }
+                remote.submit_transact(if fragment { 2 } else { 1 }, &input, FLAG_ONEWAY)?;
+                println!(
+                    "REGISTRATION-WIRE-SUBMITTED target_pid={} target_uid={} control={} message={} slot={} fragment={} bytes={}",
+                    target_pid,
+                    target_uid,
+                    code,
+                    message,
+                    slot,
+                    fragment,
+                    payload.len()
+                );
+                std::io::Write::flush(&mut std::io::stdout())?;
                 ack(reply)
             }
             107 => std::process::exit(0),

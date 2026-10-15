@@ -202,7 +202,7 @@ mod tests {
     }
     fn prepared() -> (RadioOwner, PreparedRequest, Arc<Controlled>) {
         let clock = Arc::new(Controlled(AtomicU64::new(10)));
-        let mut owner = RadioOwner::with_clock(NonZeroUsize::new(2).unwrap(), clock.clone());
+        let mut owner = RadioOwner::with_clock(NonZeroUsize::new(2).unwrap(), 0, clock.clone());
         let reg = owner
             .begin_until(
                 None,
@@ -256,7 +256,7 @@ mod tests {
     #[test]
     fn permissions_and_receipts_are_bound_to_exact_owner_allocation() {
         let (owner, request, _) = prepared();
-        let foreign = RadioOwner::new(NonZeroUsize::new(2).unwrap());
+        let foreign = RadioOwner::new(NonZeroUsize::new(2).unwrap(), 0);
         assert!(owner.owns_request(&request));
         assert!(!foreign.owns_request(&request));
     }

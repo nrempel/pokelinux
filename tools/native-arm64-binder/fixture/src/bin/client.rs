@@ -127,7 +127,7 @@ impl Clock for Controlled {
 fn held(peer: &SIBinder, expire: bool) -> TestResult {
     latch(peer, 199)?; // Executed fixture-capability red before held controls existed.
     let clock = Arc::new(Controlled(AtomicU64::new(10)));
-    let mut session = TransportSession::with_clock(n(2), clock.clone());
+    let mut session = TransportSession::with_clock(n(2), 0, clock.clone());
     let key = session
         .start(
             RadioTransport::from_binder(peer.clone())?,
@@ -149,7 +149,7 @@ fn held(peer: &SIBinder, expire: bool) -> TestResult {
     let before = Instant::now();
     for _ in 0..16 {
         assert_eq!(session.snapshot().phase, Phase::Failed(terminal));
-        assert!(session.snapshot().response.is_none());
+        assert!(session.snapshot().observation.is_none());
         assert!(session.poll_registration().is_none());
         assert!(session.worker_occupied());
         assert_eq!(
@@ -174,7 +174,7 @@ fn held(peer: &SIBinder, expire: bool) -> TestResult {
     assert!(matches!(completion.result, Ok(42)));
     assert_eq!(completion.activation, Err(OwnerError::Failed(terminal)));
     assert!(!session.worker_occupied());
-    assert!(session.snapshot().response.is_none());
+    assert!(session.snapshot().observation.is_none());
     assert_eq!(
         session.start(
             RadioTransport::from_binder(peer.clone())?,
@@ -195,7 +195,7 @@ fn held(peer: &SIBinder, expire: bool) -> TestResult {
     Ok(())
 }
 fn death(peer: &SIBinder, during: bool) -> TestResult {
-    let mut session = TransportSession::new(n(2));
+    let mut session = TransportSession::new(n(2), 0);
     session
         .start(
             RadioTransport::from_binder(peer.clone())?,
@@ -217,7 +217,17 @@ fn death(peer: &SIBinder, during: bool) -> TestResult {
         assert!(matches!(result.result, Ok(42)));
         assert_eq!(result.activation, Ok(()));
         publish(&mut session);
-        assert_eq!(session.snapshot().response.unwrap().payload, vec![7]);
+        assert_eq!(
+            session
+                .snapshot()
+                .observation
+                .unwrap()
+                .kind
+                .raw_response()
+                .unwrap()
+                .payload,
+            vec![7]
+        );
         assert_eq!(control(peer, 107).err(), Some(StatusCode::DeadObject));
     }
     let end = end();
@@ -226,7 +236,7 @@ fn death(peer: &SIBinder, during: bool) -> TestResult {
         std::thread::yield_now();
     }
     assert!(!session.worker_occupied());
-    assert!(session.snapshot().response.is_none());
+    assert!(session.snapshot().observation.is_none());
     marker(if during {
         "owned-registration-death"
     } else {
@@ -236,7 +246,7 @@ fn death(peer: &SIBinder, during: bool) -> TestResult {
 }
 fn requests(peer: &SIBinder, scenario: &str) -> TestResult {
     let clock = Arc::new(Controlled(AtomicU64::new(10)));
-    let mut session = TransportSession::with_clock(n(2), clock.clone());
+    let mut session = TransportSession::with_clock(n(2), 0, clock.clone());
     let key = session
         .start(
             RadioTransport::from_binder(peer.clone())?,
@@ -295,7 +305,17 @@ fn requests(peer: &SIBinder, scenario: &str) -> TestResult {
             latch(peer, 113)?;
         }
         publish(&mut session);
-        assert_eq!(session.snapshot().response.unwrap().payload, bytes);
+        assert_eq!(
+            session
+                .snapshot()
+                .observation
+                .unwrap()
+                .kind
+                .raw_response()
+                .unwrap()
+                .payload,
+            bytes
+        );
         assert_eq!(
             session.snapshot().request.unwrap().outcome,
             Outcome::OutcomeUnknown
@@ -311,7 +331,7 @@ fn requests(peer: &SIBinder, scenario: &str) -> TestResult {
         });
     }
     session.stop(&key).unwrap();
-    assert!(session.snapshot().response.is_none());
+    assert!(session.snapshot().observation.is_none());
     assert_eq!(report(peer)?[5], 0);
     Ok(())
 }
@@ -348,6 +368,8 @@ fn peer(service_manager: bool) -> Result<SIBinder, Box<dyn std::error::Error>> {
 mod bootstrap_controls;
 #[path = "../production_worker.rs"]
 mod production_worker;
+#[path = "../registration.rs"]
+mod registration;
 #[path = "../supervised.rs"]
 mod supervised;
 fn main() -> TestResult {
@@ -373,6 +395,10 @@ fn main() -> TestResult {
         assert_eq!(control(&endpoint, 107).err(), Some(StatusCode::DeadObject));
         marker("named-peer-exit-without-registration");
         return Ok(());
+    }
+    if scenario == "registration-wire" {
+        let endpoint = peer(false)?;
+        return registration::run(&endpoint);
     }
     if scenario == "production-worker" {
         return production_worker::run();

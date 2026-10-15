@@ -1,12 +1,21 @@
 # Native radio session owner
 
+The [native registration-wire owner](native-radio-registration-owner.md) now
+passes a genuine actual ARM Binder receipt→Unsupported RED→typed publication
+GREEN. One immutable selected slot, exact raw3012 route, whole-packet decoding
+and the existing post-decode owner/deadline/revision gate produce one latest
+historical observation.52 host tests pass; raw↔typed replacement, five refused
+controls and consumed-valid cancellation pass with identical peer/fixture/oracle
+and full closure. Installed typed IPC/status, packaged slot configuration and
+semantic IMS remain the next gates; no phone result is claimed.
+
 The [original raw registration route](native-ims-registration-routing.md) now
 passes17 dispatch cases and8 separate parser calls in a fresh SDK37 x86 emulator:
 class wire code3012, exact configured-slot filtering and full-array delivery.
 Generic forwarding of other IDs and malformed parser behavior stay distinct from
 native acceptance policy. Original helper/channel semantics and producer/reset
-remain open. Next connect the complete decoder through the native owner and
-installed service using a real ARM Binder publication RED; no new native runtime
+remain open. The native owner is now connected above; carry its typed observation through
+the installed service next; no new native runtime
 or phone qualification is claimed by this original-reference checkpoint.
 
 An additional [permanently held registration control](native-radio-service-blocked.md)
@@ -94,10 +103,11 @@ replacement, then updates authoritative state and revision before unlocking.
 - Never drop the death watch under this lock: its destructor cancels and unlinks.
 
 Current callers read point-in-time snapshots under the gate. A snapshot contains
-a raw response, not a successful operation receipt or call model. Publication of
-indications and segmented responses is rejected. This does not discard those
-protocols from scope: semantic decoding and sound instance attribution remain
-required before they can change phone state.
+one revision-tagged historical raw response or complete registration-wire
+observation, separate from its uncertain request receipt. Exact selected-slot
+raw3012 indications use the whole-packet decoder before the same gate checks;
+other indications and segmented responses remain unsupported. These fields do
+not establish successful operations, semantic IMS state or a call model.
 
 The callback sender has a storage mutex always taken after the publication gate;
 there is no reverse lock path. All state validity decisions use the shared gate.

@@ -17,6 +17,7 @@ pub mod assembly;
 pub mod indication;
 
 pub mod owner;
+pub mod registration;
 
 pub mod deadline;
 

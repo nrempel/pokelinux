@@ -87,7 +87,9 @@ fn main() {
         .unwrap_or_else(|| fatal());
     let transport =
         pokelinux_radio::transport::RadioTransport::from_binder(binder).unwrap_or_else(|_| fatal());
-    let mut session = TransportSession::new(NonZeroUsize::new(2).unwrap());
+    // API baseline only: Root will replace this explicit zero with required
+    // service-to-worker slot configuration before the new production tracer.
+    let mut session = TransportSession::new(NonZeroUsize::new(2).unwrap(), 0);
     let _key = session
         .start(
             transport,

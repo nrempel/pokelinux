@@ -1,0 +1,301 @@
+{
+  "schema": 1,
+  "scope": "Original-qualified complete raw registration indication through real generic ARM Binder into the native TransportSession/RadioOwner historical observation; installed typed IPC is a later gate",
+  "base_commit": "826b82036deed10ed494964c5b363eb335af4ecf",
+  "original_route_public_proof_sha256": "11b6751fd67c6cfc4fefca9cd7aa560489c936d1123668ef2cd79fb2dbfca661",
+  "behavior": {
+    "exact_kind": "raw indication",
+    "message_id": 3012,
+    "slot_is_explicit_immutable_owner_configuration": true,
+    "all_bytes_decoded_before_publication": true,
+    "unknown_values_and_opaque_URI_reason_bytes_preserved": true,
+    "publication_gate_rechecked_after_decode": [
+      "same owner allocation",
+      "current SessionKey",
+      "active nonterminal phase",
+      "CLOCK_BOOTTIME deadline",
+      "base revision",
+      "private preparation token"
+    ],
+    "one_latest_commit_revision_tagged_variant": [
+      "RawResponse",
+      "RegistrationWire"
+    ],
+    "request_receipt_is_separate": true,
+    "no_semantic_IMS_state_or_registration_authority": true,
+    "invalid_selected_payload": "InvalidIndication with unchanged phase/history/revision",
+    "unselected_ID_slot_or_segment": "Unsupported with unchanged history"
+  },
+  "builds": [
+    {
+      "label": "pokelinux-registration-owner-build-baseline-root-1",
+      "source_files": 79,
+      "host_library_passes": 45,
+      "strict_checks_passed": true,
+      "ARM_ELFs_compile_only": 6,
+      "actual_CLI_wait_exit": 0,
+      "fresh_CID_absence_same_daemon_inputs_unchanged": true,
+      "receipts": [
+        {
+          "name": "selection.json",
+          "sha256": "3094b203364a0fbbaf1fdde698623301e533e00bc552386a7b374bfddebfade8"
+        },
+        {
+          "name": "execution.json",
+          "sha256": "6379ae76f8c0b34b66dff1d9ae2c55a090d402b7e51d0584c16f9657e1bcb40f"
+        },
+        {
+          "name": "build.log",
+          "sha256": "50413d7695f251805ec876e0cd820d8ec7b2a203826ad8986c04e1ec592142e1"
+        },
+        {
+          "name": "arm-cargo.jsonl",
+          "sha256": "b0aeb1de37580d175fbebee423c2062179f281fd25637d8669341795915e6198"
+        },
+        {
+          "name": "service-arm-cargo.jsonl",
+          "sha256": "bbed6e9d4c664172b762433ef4d3ff895c00a1760c281685746c20736983b1b5"
+        }
+      ]
+    },
+    {
+      "label": "pokelinux-registration-owner-build-repair-root-1",
+      "source_files": 80,
+      "host_library_passes": 52,
+      "strict_checks_passed": true,
+      "ARM_ELFs_compile_only": 6,
+      "actual_CLI_wait_exit": 0,
+      "fresh_CID_absence_same_daemon_inputs_unchanged": true,
+      "receipts": [
+        {
+          "name": "selection.json",
+          "sha256": "9493eb5c0d7f7786815333149e90a4bb70a8cd0fe8168727d7bf869f1b21311f"
+        },
+        {
+          "name": "execution.json",
+          "sha256": "0ae2c4edc4fba4f54f55007d00c37c97d7d9da96867b3981209bfd6a85c5a2f4"
+        },
+        {
+          "name": "build.log",
+          "sha256": "1f299f6440365fd6d0b684f18287e35ddf9dc4dce521cf9647620f596e1ec8eb"
+        },
+        {
+          "name": "arm-cargo.jsonl",
+          "sha256": "4da298ee9220df0f881e0c66068a965490bf49ed41b7e18939e8b06c34cfa5cc"
+        },
+        {
+          "name": "service-arm-cargo.jsonl",
+          "sha256": "05f077bce0d1fb7b2129659236ecfeb4d6c0ee67e95374a7fa9499d033cbf6f5"
+        }
+      ]
+    }
+  ],
+  "component_RED": {
+    "label": "pokelinux-registration-owner-gates-red-root-1",
+    "source_test_sha256": "5333fda1ee8668ed080f045ac68655b84427c974ff44a50434b30368dde94a41",
+    "passes": 47,
+    "failures": 5,
+    "actual_Cargo_CLI_exit": 101,
+    "expected_actual_assertion_failure": "Unsupported rather than successful typed publication or the required stale/terminal refusal",
+    "wrapper_passed": false,
+    "wrapper_classification_error": "expected exit1 although cargo test uses101; preserved unchanged, Root independently checks exact assertions and owned closure",
+    "owned_wait_CID_absence_same_daemon_inputs_unchanged": true,
+    "execution_sha256": "7639e79b013cc58f4491968c9fbe55aee88c782156328dd95d7a492de9457fa7",
+    "build_log_sha256": "433fe85a8d7951c271a2563f208843a68aa9a665a1fb83f9ed8ea40513dd1ee1"
+  },
+  "actual_ARM_runtime": [
+    {
+      "label": "pokelinux-registration-owner-arm-baseline-root-2",
+      "outcome": "baseline",
+      "selection_sha256": "b665a5103ac7bc15be9eeb6b866c1fe17e2c6350f0267d3f3294c913673c0d5b",
+      "command_sha256": "c59dbcd90ee26dab321e4e4e0a1f4673365cf0f0483751cb00e9744b976eb7a5",
+      "execution_sha256": "eb2df7ab90f6ab523d2c63a4b9c38af9e2395b7feb7053b4d2a82ba08bd47758",
+      "guest_result_sha256": "f7de1a000d9c1ba9d21bd6e38b1ed2bb8b989ca20cacd99e2dd4b3f89804f83a",
+      "client_sha256": "970d315ce82ca4fe9f6af15d81576928dfbe229fe7410b0dfb0197ea4cca3dee",
+      "peer_sha256": "86a3ed7de37adb3c1243b22ff110e7ff84c9cd031359127d9546e2ba364f94d2",
+      "source_files": 79,
+      "actual_client_wait_exit": 1,
+      "actual_peer_wait_signal": 9,
+      "actual_container_CLI_wait_exit": 0,
+      "exact_callback_receipts": 1,
+      "qualified_missing_publication_RED": true,
+      "qualified_requirement_GREEN": false,
+      "Rust_worker_empty_and_watch_dropped_before_client_wait": true,
+      "client_wait_and_EOF_before_Rust_original_2s_cleanup_cutoff": true,
+      "all_original_and_selected_inputs_unchanged": true,
+      "guest_and_outer_closure_qualified": true
+    },
+    {
+      "label": "pokelinux-registration-owner-arm-repair-root-2",
+      "outcome": "repair",
+      "selection_sha256": "5242a541de59fd3ffdb96df26ef7cb3217979354351f3f23678f6ff7ae7a3fb0",
+      "command_sha256": "299aad14cae353f9910eec46442c1f2ca673e7bfacca8ddf13dc49e94eaff10b",
+      "execution_sha256": "5505548e483e8abc44772fd6b4d15a931106797d7e0a171be599e901b640e839",
+      "guest_result_sha256": "f0f3d223de667fb422a6a20c5e3f1ad2c900f40aff55c5b57ba8496ce743fa57",
+      "client_sha256": "493196c7cae9f9ac2f2a6499a4910c79d651430446efc68d68b3368d1602831d",
+      "peer_sha256": "86a3ed7de37adb3c1243b22ff110e7ff84c9cd031359127d9546e2ba364f94d2",
+      "source_files": 80,
+      "actual_client_wait_exit": 0,
+      "actual_peer_wait_signal": 9,
+      "actual_container_CLI_wait_exit": 0,
+      "exact_callback_receipts": 3,
+      "qualified_missing_publication_RED": false,
+      "qualified_requirement_GREEN": true,
+      "Rust_worker_empty_and_watch_dropped_before_client_wait": true,
+      "client_wait_and_EOF_before_Rust_original_2s_cleanup_cutoff": true,
+      "all_original_and_selected_inputs_unchanged": true,
+      "guest_and_outer_closure_qualified": true
+    }
+  ],
+  "frozen_fixture_and_peer_unchanged_RED_to_GREEN": true,
+  "frozen_oracle_and_outer_unchanged_RED_to_GREEN": true,
+  "repaired_existing_sources": [
+    "native-radio/src/owner.rs",
+    "native-radio/src/registration.rs"
+  ],
+  "new_gate_tests": "native-radio/src/registration_tests.rs",
+  "source": [
+    {
+      "path": "native-radio/src/assembly.rs",
+      "sha256": "d9030c3041294576e44b20563f8d953c27da6dd695aa44dd9da72b958979ef16"
+    },
+    {
+      "path": "native-radio/src/bin/radio-ipc-test.rs",
+      "sha256": "6debcb79c7f5ea07d733d21a858279c22b067ae6eabe4c24ba879be257a3da6c"
+    },
+    {
+      "path": "native-radio/src/bin/radio-service.rs",
+      "sha256": "95598f211791ef35027a0a37e7cde536bdea65f6af2acbfda9de00ea295b3477"
+    },
+    {
+      "path": "native-radio/src/bin/radio-status.rs",
+      "sha256": "1f0f68e00e3b1dd028c66028b4bf6810e92ba238617a9d0c34f062774a7c1d97"
+    },
+    {
+      "path": "native-radio/src/bin/radio-worker.rs",
+      "sha256": "bdd38b7adcf348b43a85ba5c3484ffb2a9a4f87bbc61a32d8cd7ee42068b99e9"
+    },
+    {
+      "path": "native-radio/src/bootstrap.rs",
+      "sha256": "9c414623f5d0c74920f4c1a459808273a90f6fabf80d235d4e0c61a8a9177cfb"
+    },
+    {
+      "path": "native-radio/src/deadline.rs",
+      "sha256": "abc2a3f23284402fe3bc34abfb380bdf1f84a1f6d15cbd90b38a09bf5450c2ee"
+    },
+    {
+      "path": "native-radio/src/indication.rs",
+      "sha256": "cf645e64492034bee2ae22e27537bdd4b99aa04bcf6183e7a7841af806660456"
+    },
+    {
+      "path": "native-radio/src/lib.rs",
+      "sha256": "70a17bfffe5af2b1e984e8e8f69324bb61976517c6722c52e6abcf36bdfd2799"
+    },
+    {
+      "path": "native-radio/src/main.rs",
+      "sha256": "c27968c70082183e2ed629b462b7d245b3fab8c3d4d0e225fc8555d8dedebe29"
+    },
+    {
+      "path": "native-radio/src/observation.rs",
+      "sha256": "9e05763fb7e95445e9f5b91a84542e0af8ca8ee70e889925cf9110c76fd43dd3"
+    },
+    {
+      "path": "native-radio/src/owner.rs",
+      "sha256": "44fb4a90f707c48ac4aeb8371e2406ff58571aa5e445ef3048869fb6715e302d"
+    },
+    {
+      "path": "native-radio/src/receiver.rs",
+      "sha256": "eb638f48378753d5a1f8188c2f6bd889118ca844a54be7165b7dd84209f68678"
+    },
+    {
+      "path": "native-radio/src/registration.rs",
+      "sha256": "984aa3196f086275c5f50c7f5e6db9df760c54b3342491acdcd7c21149ac1faa"
+    },
+    {
+      "path": "native-radio/src/registration_tests.rs",
+      "sha256": "5333fda1ee8668ed080f045ac68655b84427c974ff44a50434b30368dde94a41"
+    },
+    {
+      "path": "native-radio/src/request.rs",
+      "sha256": "b2b86a72dd849af58a7c739b0f3d4d32bd241079a3ec0ba7388da1f3f7b2045a"
+    },
+    {
+      "path": "native-radio/src/response.rs",
+      "sha256": "69c81928998b9399c2b9085bf713403f747bffdcbfd457a9c358b4eef1f37589"
+    },
+    {
+      "path": "native-radio/src/status.rs",
+      "sha256": "613fcd1d592d4f090bc91b58d960ba34dda404188389aa133e2edff5c132fd42"
+    },
+    {
+      "path": "native-radio/src/supervisor.rs",
+      "sha256": "7ebfa3fa9e5332d8ac1857d45b202e56c355186d98723dbc5145fb99c9ce94a8"
+    },
+    {
+      "path": "native-radio/src/transport.rs",
+      "sha256": "f01d1ec1d543ed667f3b8d06366d909eb02168235a41ab58a831ebed2a11e455"
+    },
+    {
+      "path": "native-radio/src/worker.rs",
+      "sha256": "7953971c92857456154a4fc8e38c959a03184c11944266a522d8aa4214a1c808"
+    },
+    {
+      "path": "tools/native-arm64-binder/fixture/src/registration.rs",
+      "sha256": "6e0f4851cf35b5c7afc1fd2d4d0ef0cf280cc085af61a817164fb4db720afd82"
+    },
+    {
+      "path": "tools/native-arm64-binder/fixture/src/registration_vectors.rs",
+      "sha256": "36894a3c2669dc2c739774903b1c6a6d8029899ad79fe80f91dd7284f8f66ad2"
+    }
+  ],
+  "GREEN_controls": {
+    "positive_typed_publications": 2,
+    "raw_response_replacement_between_typed": true,
+    "request_only_receipt_did_not_republish_callback": true,
+    "refused_controls": [
+      "wrong slot",
+      "adjacent ID",
+      "fragment",
+      "truncated header",
+      "trailing byte"
+    ],
+    "third_consumed_valid_indication_cancelled": true,
+    "exact_registration_count": 1,
+    "clear_count": 0,
+    "implicit_retry": false,
+    "unknown_outcome_request_not_success_receipt": true
+  },
+  "preserved_failed_repair_validation": {
+    "label": "pokelinux-registration-owner-arm-repair-root-1",
+    "client_requirement_and_normal_Rust_cleanup_passed": true,
+    "guest_qualification": false,
+    "reason": "peer callback diagnostic reports current incoming calling PID, which is0 for the authored oneway request; validator incorrectly expected client PID",
+    "actual_inputs_ELFs_source_unchanged_in_selected_repair": true,
+    "correction_only": "guest validator serial1 caller-PID expectation made exact0",
+    "fresh_baseline_and_repair_replayed_with_same_corrected_oracle": true,
+    "execution_sha256": "51a513c89d2b78c4eaaf987e8ca704c2e63648a8c51aa66009a6027917bba087",
+    "guest_result_sha256": "4e81b90c8161b402e725b1064976a06121c227d87659ae06fc4f49154a6d5a52",
+    "failure_only_peer_disposal_wait9_and_outer_CID_input_closure": true,
+    "primary_contract": "https://android.googlesource.com/platform/frameworks/native/+/refs/tags/aml_ads_331814200/libs/binder/include/binder/IPCThreadState.h"
+  },
+  "root_independent_rehash": {
+    "current_repair_source_files": 80,
+    "runtime_input_bindings": 392,
+    "all_current_repair_source_matches_executed_source": true
+  },
+  "evidence_classes": {
+    "new_actual_generic_ARM_kernel_Binder": true,
+    "new_original_vendor_runtime": false,
+    "new_ARM_usermode_execution": false,
+    "installed_radio_typed_service": false,
+    "physical_phone": false,
+    "actual_suspend": false,
+    "UI": false
+  },
+  "remaining_gates": [
+    "typed production worker IPC, terminal-phase priority and explicit packaged SLOT_ID",
+    "installed status history, peer-loss withdrawal and deliberate InvalidIndication worker policy",
+    "full original helper/channel semantics, producer/reset cleanup and safe successor registration",
+    "device access policy, native IMS/calls/SMS/media/suspend and full smartphone hardware qualification"
+  ]
+}

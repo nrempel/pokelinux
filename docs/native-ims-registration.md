@@ -10,7 +10,10 @@ The later [original raw routing qualification](native-ims-registration-routing.m
 adds17 dispatch cases and8 separate parser calls: exact class wire code3012,
 configured-slot filtering and complete-array delivery. It does not rerun the121
 parser comparisons below, execute full semantic channel dispatch or connect the
-native owner. Producer/reset and decoded domain meanings remain open.
+native owner in that original-reference run. The later
+[native owner](native-radio-registration-owner.md) now separately qualifies real
+ARM Binder typed publication; installed typed IPC, producer/reset and decoded
+domain meanings remain open.
 
 ## Original execution and native policy
 

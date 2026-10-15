@@ -5,7 +5,7 @@ by the native registration decoder. In a fresh SDK37 x86 emulator,17 raw dispatc
 cases and8 separately selected parser calls complete. Original
 `RilIndRegistration.getMessageId().getCode()` returns3012 for
 `RILC_UNSOL_AIMS_REGISTRATION`; observed enum ordinal106 is not a wire identifier.
-This adds original-reference evidence. Native publication remains the next gate.
+This adds original-reference evidence. Installed typed publication remains the next gate.
 
 ## Executed boundary
 
@@ -48,14 +48,12 @@ user-QEMU target are not rerun or enlarged by this checkpoint. Truncated/trailin
 payload refusal is deliberate native policy; original normal return does not
 make a partial packet valid. Unknown wire values remain opaque.
 
-The next actual ARM Binder test will prove that an exact raw3012 indication for
-an explicitly configured slot reaches the production owner's PreparedEvent,
-then require complete typed historical publication. Current production accepts
-raw responses and returns `Unsupported` for indications. Decoding must precede
-revalidation of current session, source revision, preparation token, terminal
-state and suspend-aware deadline. Fragments must not enter this complete-array
-path. The installed service will retain one revision-tagged diagnostic observation,
-with peer loss withdrawing availability independently of retained history.
+The later [native owner checkpoint](native-radio-registration-owner.md) now
+connects this route through actual ARM Binder PreparedEvent receipt and complete
+typed publication, preserving session/revision/deadline/terminal checks. It has a
+genuine Unsupported RED followed by GREEN with an unchanged peer and oracle.
+Installed typed worker/service/status composition is the next gate. Fragments
+remain excluded and fields remain historical wire data.
 
 Full original helper/channel routing, producer identity, fragment serialization,
 reset/cleanup acknowledgement, safe successor registration, state/RAT/features,

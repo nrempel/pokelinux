@@ -84,12 +84,16 @@ pub struct TransportSession {
     transport: Option<RadioTransport>,
 }
 impl TransportSession {
-    pub fn new(retained_limit: NonZeroUsize) -> Self {
-        Self::with_clock(retained_limit, Arc::new(BootClock))
+    pub fn new(retained_limit: NonZeroUsize, selected_slot: i32) -> Self {
+        Self::with_clock(retained_limit, selected_slot, Arc::new(BootClock))
     }
-    pub fn with_clock(retained_limit: NonZeroUsize, clock: Arc<dyn Clock>) -> Self {
+    pub fn with_clock(
+        retained_limit: NonZeroUsize,
+        selected_slot: i32,
+        clock: Arc<dyn Clock>,
+    ) -> Self {
         Self {
-            owner: RadioOwner::with_clock(retained_limit, clock),
+            owner: RadioOwner::with_clock(retained_limit, selected_slot, clock),
             worker: None,
             watch: None,
             attempted: false,
@@ -99,6 +103,9 @@ impl TransportSession {
     }
     pub fn snapshot(&self) -> Snapshot {
         self.owner.snapshot()
+    }
+    pub fn selected_slot(&self) -> i32 {
+        self.owner.selected_slot()
     }
     pub fn worker_occupied(&self) -> bool {
         self.worker.as_ref().is_some_and(OwnedWorker::occupied)
@@ -296,7 +303,7 @@ mod tests {
     use std::sync::mpsc;
     #[test]
     fn dead_object_completion_preserves_service_death_before_watch_delivery() {
-        let mut session = TransportSession::new(NonZeroUsize::new(2).unwrap());
+        let mut session = TransportSession::new(NonZeroUsize::new(2).unwrap(), 0);
         let registration = session
             .owner
             .begin_until(

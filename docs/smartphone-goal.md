@@ -17,8 +17,13 @@ restart refusal and no vendor-cleanup claim.
 
 The narrow [original registration route](native-ims-registration-routing.md) is
 now qualified separately:17 raw dispatch cases and8 parser calls establish
-code3012, slot filtering and full-array delivery. Native typed publication,
+code3012, slot filtering and full-array delivery. Installed typed publication,
 full semantic routing and producer/reset remain unfinished.
+
+The [native historical registration owner](native-radio-registration-owner.md)
+now passes actual ARM Binder RED→GREEN with the original-qualified complete
+payload decoder and post-decode publication fences.52 host tests pass. Installed
+typed IPC/status, explicit packaged slot, semantic IMS and hardware remain open.
 
 ## Product and architecture
 

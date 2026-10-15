@@ -13,7 +13,7 @@ use std::{
 pub fn child(peer: &SIBinder) -> TestResult {
     let id = ProcessIdentity::from_hex(&std::env::var("POKELINUX_OWNER_INCARNATION")?)
         .ok_or("bad incarnation")?;
-    let mut session = TransportSession::new(n(2));
+    let mut session = TransportSession::new(n(2), 0);
     let key = session
         .start(
             RadioTransport::from_binder(peer.clone())?,
@@ -32,7 +32,7 @@ pub fn child(peer: &SIBinder) -> TestResult {
             session.snapshot().phase,
             Phase::Failed(ReceiverFailure::Cancelled)
         );
-        assert!(session.snapshot().response.is_none());
+        assert!(session.snapshot().observation.is_none());
         assert_eq!(
             session.start(
                 RadioTransport::from_binder(peer.clone())?,

@@ -3,7 +3,7 @@
 //! source connection and current Supervisor admission. This codec grants nothing.
 #![forbid(unsafe_code)]
 use crate::{
-    owner::{Phase, Snapshot},
+    owner::{Observation, Phase, Snapshot},
     receiver::ReceiverFailure,
     response::ResponseKind,
     supervisor::ProcessIdentity,
@@ -212,37 +212,44 @@ pub fn decode_exact(bytes: &[u8]) -> io::Result<Frame> {
 /// declared_length is preserved independently of actual payload size; recovered
 /// response fixtures permit those fields to differ. No new semantic rule is added.
 pub fn from_snapshot(identity: ProcessIdentity, snapshot: &Snapshot) -> io::Result<Option<Frame>> {
-    if snapshot
-        .response
-        .as_ref()
-        .is_some_and(|response| response.kind != ResponseKind::Raw)
-    {
-        return Err(io::ErrorKind::Unsupported.into());
-    }
-    let kind = match snapshot.phase {
+    // This API baseline encodes only the existing raw-response variant. New
+    // indication decoding and IPC kinds remain unimplemented until actual RED.
+    let response = match &snapshot.observation {
+        None => None,
+        Some(observed) => match &observed.kind {
+            Observation::RawResponse(response) if response.kind == ResponseKind::Raw => {
+                Some((observed.revision, response))
+            }
+            _ => return Err(io::ErrorKind::Unsupported.into()),
+        },
+    };
+    let (kind, revision) = match snapshot.phase {
         Phase::Idle | Phase::Registering => return Ok(None),
-        Phase::Failed(reason) => Kind::Failed(reason),
-        Phase::Active { client_id } => match &snapshot.response {
-            None => Kind::Active { client_id },
-            Some(response) => {
+        Phase::Failed(reason) => (Kind::Failed(reason), snapshot.revision),
+        Phase::Active { client_id } => match response {
+            None => (Kind::Active { client_id }, snapshot.revision),
+            Some((revision, response)) => {
                 if response.payload.len() > MAX_PAYLOAD {
                     return Err(malformed());
                 }
-                Kind::Raw {
-                    slot_id: response.info.slotId,
-                    serial: response.info.serial,
-                    rilc_msg_id: response.info.rilcMsgId,
-                    declared_length: response.info.length,
-                    error: response.info.error,
-                    payload: response.payload.clone(),
-                }
+                (
+                    Kind::Raw {
+                        slot_id: response.info.slotId,
+                        serial: response.info.serial,
+                        rilc_msg_id: response.info.rilcMsgId,
+                        declared_length: response.info.length,
+                        error: response.info.error,
+                        payload: response.payload.clone(),
+                    },
+                    revision,
+                )
             }
         },
     };
     Ok(Some(Frame {
         identity,
         attempt: ATTEMPT,
-        revision: snapshot.revision,
+        revision,
         kind,
     }))
 }
@@ -329,16 +336,19 @@ mod tests {
             session: None,
             revision: 7,
             phase: Phase::Active { client_id: 42 },
-            response: Some(Arc::new(crate::response::RadioResponse {
-                info: crate::RadioExternalResponseInfo {
-                    slotId: 0,
-                    serial: 7,
-                    rilcMsgId: 137,
-                    length: 1,
-                    error: 0,
-                },
-                payload: vec![7],
-                kind: ResponseKind::Segmented { parameters: [0, 1] },
+            observation: Some(Arc::new(crate::owner::CommittedObservation {
+                revision: 7,
+                kind: Observation::RawResponse(crate::response::RadioResponse {
+                    info: crate::RadioExternalResponseInfo {
+                        slotId: 0,
+                        serial: 7,
+                        rilcMsgId: 137,
+                        length: 1,
+                        error: 0,
+                    },
+                    payload: vec![7],
+                    kind: ResponseKind::Segmented { parameters: [0, 1] },
+                }),
             })),
             request: None,
         };
@@ -347,7 +357,10 @@ mod tests {
             from_snapshot(identity, &snapshot).unwrap_err().kind(),
             io::ErrorKind::Unsupported
         );
-        let response = Arc::get_mut(snapshot.response.as_mut().unwrap()).unwrap();
+        let observed = Arc::get_mut(snapshot.observation.as_mut().unwrap()).unwrap();
+        let Observation::RawResponse(response) = &mut observed.kind else {
+            unreachable!("authored raw-response snapshot")
+        };
         response.kind = ResponseKind::Raw;
         response.payload = vec![7; MAX_PAYLOAD + 1];
         assert!(from_snapshot(identity, &snapshot).is_err());
