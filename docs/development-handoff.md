@@ -18,6 +18,11 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The [original add-PDN codec probe](native-ims-add-pdn.md) now qualifies seven
+complete getBytes returns with40 typed setter inputs each and actual code105 in
+SDK37 x86. It sends no request and adds no APN ownership/acquisition authority;
+a native byte-for-byte port remains the next codec gate.
+
 The [native registration observation](native-registration-state.md) now has a
 data-only shared type, production Gate mapper and a private actual ARM Binder
 RED→GREEN test. Library67pass/1ignored and full host78pass/7ignored qualify the

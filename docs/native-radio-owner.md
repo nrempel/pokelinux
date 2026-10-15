@@ -1,5 +1,10 @@
 # Native radio session owner
 
+The [original add-PDN codec probe](native-ims-add-pdn.md) now qualifies seven
+complete getBytes returns with40 typed setter inputs each and actual code105 in
+SDK37 x86. It sends no request and adds no APN ownership/acquisition authority;
+a native byte-for-byte port remains the next codec gate.
+
 The [native registration observation](native-registration-state.md) now combines
 a data-only shared type with the production radio Gate mapper and passes a private
 conditional ARM Binder RED→GREEN test. Origin pairs are local to one RadioOwner.

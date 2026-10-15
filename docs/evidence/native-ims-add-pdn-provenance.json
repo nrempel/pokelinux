@@ -1,0 +1,2277 @@
+{
+  "SDK_file_inventory": [
+    {
+      "path": "build-tools/android-37.0/d8",
+      "sha256": "b773a721be3d4988dea9660815a9e441b76100e5b0f5c72b5893cfadadc76c6f"
+    },
+    {
+      "path": "build-tools/android-37.0/lib/d8.jar",
+      "sha256": "a26ee56252adcff6752c379ae255a0ad538ebec60189e078ec6855487107637d"
+    },
+    {
+      "path": "build-tools/android-37.0/source.properties",
+      "sha256": "fbd87c8567afbc6dc78e140097fcde234f4a61fa7065e85081d43e442ccd3d24"
+    },
+    {
+      "path": "emulator/LICENSE",
+      "sha256": "f2afd2180c83fc2b9faad741599dfe2095fd2557df2e479873bf87af62cf111d"
+    },
+    {
+      "path": "emulator/NOTICE.csv",
+      "sha256": "883d10e93ef118f8bfb5f9b36068bb59e2d72b042d00886d0e90e7c429b43dec"
+    },
+    {
+      "path": "emulator/NOTICE.txt",
+      "sha256": "6610523aca90eb584743760c3d0791578f644c7d5a8a71c89439fefe1ee53657"
+    },
+    {
+      "path": "emulator/bin64/e2fsck",
+      "sha256": "0373e5bfd914dcca287b40f85d6358d04fa57145321870c2ccddff145501c0f4"
+    },
+    {
+      "path": "emulator/bin64/fsck.ext4",
+      "sha256": "ee265627626a5a7bdebfd697a7db34e39cfc18d99d50c09bcfd84aac29d22257"
+    },
+    {
+      "path": "emulator/bin64/mkfs.ext4",
+      "sha256": "ba14d80078a807d5dcc5074d929f557ae78652c2d17e07b247f014eb9aa35759"
+    },
+    {
+      "path": "emulator/bin64/resize2fs",
+      "sha256": "9165842ef534e740cf6392261082bec99bfc57f40708d9f18d2d8cebfa7925fb"
+    },
+    {
+      "path": "emulator/bin64/tune2fs",
+      "sha256": "54d81d124a1e1833469ebaf000f9a8af90e950f8132c943bc28913d23fa46714"
+    },
+    {
+      "path": "emulator/crashpad_handler",
+      "sha256": "0353a04d83164f6732148a993a7e3df1cb87baae51d844725e1c541523cfc5f1"
+    },
+    {
+      "path": "emulator/crashreport",
+      "sha256": "54bee8f84deede9a2150c6a3779e6baffa3e11f59364cc0d87477593237c5464"
+    },
+    {
+      "path": "emulator/emulator",
+      "sha256": "27e9a8cbd545529ba2c1aca973e5bc060f50b36a68d2c03296b0162291a16b83"
+    },
+    {
+      "path": "emulator/emulator-check",
+      "sha256": "002714dbefbb6e30aa708fdefe09443050b24aa478aec2960715db6d9ec56938"
+    },
+    {
+      "path": "emulator/include/flatbuffers/allocator.h",
+      "sha256": "19b1e7e9439ed7c7fdc61c04c99a14d33fc11295b590b6d0b1557ffcae4e4a59"
+    },
+    {
+      "path": "emulator/include/flatbuffers/array.h",
+      "sha256": "7a2111cc9670a5ed62502e5cc89216867e81df952dbfb7b3179c17ed2d5425fd"
+    },
+    {
+      "path": "emulator/include/flatbuffers/base.h",
+      "sha256": "b37c21af8a35cff08702496aee90471e8451f7454c9873b7d73e544ed51e0575"
+    },
+    {
+      "path": "emulator/include/flatbuffers/buffer.h",
+      "sha256": "10c1e7db57f0a291eb48fbfc718a0ff0ee3b7a3f226c38168a361c1d9c32a39c"
+    },
+    {
+      "path": "emulator/include/flatbuffers/buffer_ref.h",
+      "sha256": "e846dd9096c4c66b649811e63797770e240b0d2a8d5e7cfdd9be805f956080ba"
+    },
+    {
+      "path": "emulator/include/flatbuffers/code_generator.h",
+      "sha256": "01eb3d35c58f4eed0c5d463e04924fd231b789cfe1935eb9f6fb79d6f434c7a5"
+    },
+    {
+      "path": "emulator/include/flatbuffers/code_generators.h",
+      "sha256": "d3a38cb5a981113d12a0ff045dd9f91557bda6ae24b6ce5d069072a786cedb11"
+    },
+    {
+      "path": "emulator/include/flatbuffers/default_allocator.h",
+      "sha256": "51bd4a216a795323af2cf98811bc2910264081a2eac7e6cc980b25e7d54c47fb"
+    },
+    {
+      "path": "emulator/include/flatbuffers/detached_buffer.h",
+      "sha256": "85dfd3113aad26671e8e9a39cc922b1b0ee2725d7fb298f2fecd1e62da71528b"
+    },
+    {
+      "path": "emulator/include/flatbuffers/file_manager.h",
+      "sha256": "fa0c6e689b7550098990a78cc1e2ed96ee5e72e2dc33771f3f35e2fc8680816a"
+    },
+    {
+      "path": "emulator/include/flatbuffers/flatbuffer_builder.h",
+      "sha256": "8ebd8cd6d32889f957d6bc7c17d1e21c0eb500c00f206a2fa3d28c76dde7993f"
+    },
+    {
+      "path": "emulator/include/flatbuffers/flatbuffers.h",
+      "sha256": "dee86570da5c2a6f1bbf090f7717d3279d8d7a94691ae20626c552673a766b39"
+    },
+    {
+      "path": "emulator/include/flatbuffers/flatc.h",
+      "sha256": "7cdf9618206ed257abfa91f14b34e35adc5ac25669430ed1df6cc1e7966fc55f"
+    },
+    {
+      "path": "emulator/include/flatbuffers/flex_flat_util.h",
+      "sha256": "96de66fbed8d2d46350429455d68c117fe08c566edf48491257a7cbf4539266e"
+    },
+    {
+      "path": "emulator/include/flatbuffers/flexbuffers.h",
+      "sha256": "2c4d667994225897c72dc2c4abe9e420f8648f053ef91577f07b4bf505eb3b74"
+    },
+    {
+      "path": "emulator/include/flatbuffers/grpc.h",
+      "sha256": "1f70c3d9717d5730cdcf6a40a393d5e3e9d7670e14b113c5df3244554e7b38c6"
+    },
+    {
+      "path": "emulator/include/flatbuffers/hash.h",
+      "sha256": "c8ef6b8b751f7f180fe773644f3075d43a4e2d8e57d2d2ee4c283cae387e0169"
+    },
+    {
+      "path": "emulator/include/flatbuffers/idl.h",
+      "sha256": "a77ce48c585a93cac9a25bc9c42365fcc4f4bb6d4ab604242d6d8fa66b96bfcd"
+    },
+    {
+      "path": "emulator/include/flatbuffers/minireflect.h",
+      "sha256": "ea5b81759194cf8d63dd17b7c182ca498ba3b495357ef3bef9fd803ed6d23504"
+    },
+    {
+      "path": "emulator/include/flatbuffers/pch/flatc_pch.h",
+      "sha256": "37195f7b266d7fe3c22f4c9f9ac24312cfd531bae348286617dd0ca07a11cd29"
+    },
+    {
+      "path": "emulator/include/flatbuffers/pch/pch.h",
+      "sha256": "5d5d75331e551c125476f0ee7e5deb75952783b5042c520116c433a8d9d8fadc"
+    },
+    {
+      "path": "emulator/include/flatbuffers/reflection.h",
+      "sha256": "7fa3873b1781d738f1ddddeea095c0df7481b9395ec6bc08a6993362eca749d0"
+    },
+    {
+      "path": "emulator/include/flatbuffers/reflection_generated.h",
+      "sha256": "66b75dc1a85f96c0093db829a0766f42afd1942ae84f9c89dcaf3b71ac05c575"
+    },
+    {
+      "path": "emulator/include/flatbuffers/registry.h",
+      "sha256": "229fc098bc2cb65d3abf991f25695e151220115587a4078ec7591742bf9d109c"
+    },
+    {
+      "path": "emulator/include/flatbuffers/stl_emulation.h",
+      "sha256": "a6a8033b4738e18b1e0fc0fb4a1e18b446d25799b9769e6d20ffe25395051882"
+    },
+    {
+      "path": "emulator/include/flatbuffers/string.h",
+      "sha256": "b2ce182c22bae4b85ab9593c0c4969b1ed2eabd606063b5df3198a16ba60b7fe"
+    },
+    {
+      "path": "emulator/include/flatbuffers/struct.h",
+      "sha256": "6a799f26e99ca576ef2c9f4b06ce1993eccfe43821025a041224d3c7c2b11bda"
+    },
+    {
+      "path": "emulator/include/flatbuffers/table.h",
+      "sha256": "6e08518accda07f5abba53fc86132264a579597b97f02dcfa4b9130188e1c6ee"
+    },
+    {
+      "path": "emulator/include/flatbuffers/util.h",
+      "sha256": "208506db1108e0f837b8f9aa6fd8f137f769a3fe446c6e59a7022e347a3f9ece"
+    },
+    {
+      "path": "emulator/include/flatbuffers/vector.h",
+      "sha256": "1af3513e1e4ce81947411588ecbc508bb4bcc20c02467dcd9912615712ee412b"
+    },
+    {
+      "path": "emulator/include/flatbuffers/vector_downward.h",
+      "sha256": "7bccddc6f48718a9457f71ece5542f90f7f8674134c92e8f5f5261d5333d3f33"
+    },
+    {
+      "path": "emulator/include/flatbuffers/verifier.h",
+      "sha256": "9eaf61e1d68f67545b816ef3c92f4ee7d88b582cfeca0f178dd024dab73d4a0e"
+    },
+    {
+      "path": "emulator/lib/adb_service.proto",
+      "sha256": "10d5a120f68f05d094eac6d9b2a6aca9527712b38338858625250508a20f9355"
+    },
+    {
+      "path": "emulator/lib/advancedFeatures.ini",
+      "sha256": "0f4532724ad5d666139607ab64bfb3eb42af140343ffb69c97afe72cb686d5f8"
+    },
+    {
+      "path": "emulator/lib/ca-bundle.pem",
+      "sha256": "0f119da204025da7808273fab42ed8e030cafb5c7ea4e1deda4e75f066f528fb"
+    },
+    {
+      "path": "emulator/lib/cmake/flatbuffers/BuildFlatBuffers.cmake",
+      "sha256": "27334ab7a7bc7f35fc01cfa99670c63511486125180b99d9161afdcfc0512ca8"
+    },
+    {
+      "path": "emulator/lib/cmake/flatbuffers/FlatBuffersTargets-release.cmake",
+      "sha256": "5414bb54c851f469c31e64955abe649d87addfec25bec3a05bff1800770f1b0f"
+    },
+    {
+      "path": "emulator/lib/cmake/flatbuffers/FlatBuffersTargets.cmake",
+      "sha256": "4905518ebdb3257edd8c4e9200fb1cd65c81a3d90896a8c67942ff943024731f"
+    },
+    {
+      "path": "emulator/lib/cmake/flatbuffers/flatbuffers-config-version.cmake",
+      "sha256": "ff8c1a9b6ad24dc91cde5c4e9b95838cf9e3064400a0a76378281a7eb6fc8109"
+    },
+    {
+      "path": "emulator/lib/cmake/flatbuffers/flatbuffers-config.cmake",
+      "sha256": "3a6a3c94c870e6c9bfcf4a29790bf60daafbbb4f1e72730e1aaa62fe174174a7"
+    },
+    {
+      "path": "emulator/lib/control_socket.proto",
+      "sha256": "dd9bad5ab22dd5753eaba524034b1d8b3125ab6d8cc6f80f57a1623a350af9b0"
+    },
+    {
+      "path": "emulator/lib/emu-original-feature-flags.protobuf",
+      "sha256": "8f724ff9fd5803637a24711bf7d8bde86fe0e88db6378be9ffd6954be19ff9fe"
+    },
+    {
+      "path": "emulator/lib/emulated_bluetooth.proto",
+      "sha256": "f59389735fc2e74fd4617c14ecef6702ac68354afa6a5eed96b75686a6d17f16"
+    },
+    {
+      "path": "emulator/lib/emulated_bluetooth_device.proto",
+      "sha256": "8fafd7fe1f54d30d105ce71875bd5d50c26e03b20c22b9a47ff78f84417e1fdc"
+    },
+    {
+      "path": "emulator/lib/emulator_access.json",
+      "sha256": "c70a962250289c5840c3fd414a63382048de93a0e97cade9bef3d60257004fc3"
+    },
+    {
+      "path": "emulator/lib/emulator_controller.proto",
+      "sha256": "564e00a929e7e4a7af78269a738ea715f32d88c0fc9f92659bb8a1251c9d558f"
+    },
+    {
+      "path": "emulator/lib/emulator_stats.proto",
+      "sha256": "5b87475e665984dd15b046e2763429be7010a2f60dc3b9358dd3ef52e15779ad"
+    },
+    {
+      "path": "emulator/lib/grpc_endpoint_description.proto",
+      "sha256": "766cc29cb9683e4e90e825e78769a616d8de024e456bc90c6b87bd97a85d60bf"
+    },
+    {
+      "path": "emulator/lib/hardware-properties.ini",
+      "sha256": "13a89cc7cfa84c5fe48cd7eb8d296bca321dcd0d90f7bcb751efd963ae2c653d"
+    },
+    {
+      "path": "emulator/lib/hostapd.conf",
+      "sha256": "ec59f9e548f8abac42bfa45f466646e57d4e61231a6f2256d3a9952086a9ffd6"
+    },
+    {
+      "path": "emulator/lib/ice_config.proto",
+      "sha256": "e4358b85754b95a1ded6f571f1fd72188e3f433655314b2465d78c0cd7b209fa"
+    },
+    {
+      "path": "emulator/lib/libflatbuffers.a",
+      "sha256": "97ce0c85454dcd91cf3b281fe5ca4f82cd6c941d065d59ed2f3517c0e32198bf"
+    },
+    {
+      "path": "emulator/lib/pc-bios/bios-256k.bin",
+      "sha256": "fae6e5c734757b1ba3424c0d78b39147610b738402b04ddfd6cf9f99a1523c86"
+    },
+    {
+      "path": "emulator/lib/pc-bios/bios.bin",
+      "sha256": "8d9b43b9a1631980487183feee0db866f2587e86cd97623e10e17cfbf314a389"
+    },
+    {
+      "path": "emulator/lib/pc-bios/efi-e1000.rom",
+      "sha256": "db2344767bb7b496f1b8741913b480dad8ce6f826244611aa6e5cdc5579784a3"
+    },
+    {
+      "path": "emulator/lib/pc-bios/efi-e1000e.rom",
+      "sha256": "ccfecb84f8120d1433ebb89188d1aea8310da79a36ca7ea46c0047a9c2ae16b0"
+    },
+    {
+      "path": "emulator/lib/pc-bios/efi-virtio.rom",
+      "sha256": "ba7dac7b2af9bb08e1c1d5bf3123b1f1c59a7aba6ed55a0445d23980d9b7ffb9"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/Makefile",
+      "sha256": "d56661825a549ad83390aafa11881eeb3d0f8b55febeeeb5c7b5f13c297bb738"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/ar",
+      "sha256": "0ce160bedfc412d71a5c9f0083c7224296c150439bfd6063ad7dafb962331603"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/bepo",
+      "sha256": "ee683d00b9758d88cf4f50154188ecf7e5a3f81d5d684a83fb22e69df124f1de"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/common",
+      "sha256": "a0cc3f3721bb11df45348baa879072ab373ecfe92a7fd1e45541ed902adc7074"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/cz",
+      "sha256": "d5f6a644729ba9bb5da4d83d699fe433fc8c5e7d7e60218bef8cce09d89627ad"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/da",
+      "sha256": "f8dd3484dfb5617f96fd87c9564e18f16dc19824e9e1e6f698d4d206378b7c23"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/de",
+      "sha256": "7c18ff304868a3611874792318f82da2a62aab46521e43897162f9f6d50ada4b"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/de-ch",
+      "sha256": "bd096e27852d4dab5827e3bfeeca9353554a1bd0538be787b5e1f386eb35bfd3"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/en-gb",
+      "sha256": "7429d2cc9ce055da9ef5b20144db459285a62b0cd33a8d4eada9ada638f674f7"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/en-us",
+      "sha256": "b487efae070850c1edc651c5a72c5f31eaf6b0d72640b4f1515acd9bfffd3564"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/es",
+      "sha256": "63927c650cef2ccd6fdcb7a8f4da53de23126a24c0d3b73b5ad7fa2da9db748d"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/et",
+      "sha256": "abca485e8b4752f37aa9b315a0c8af7481878d4d9efab1c8940d8876c8670695"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/fi",
+      "sha256": "905486ffce53aca5bff69821ad14e15fc6d3f9054f67a4fb5dc33834c0721948"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/fo",
+      "sha256": "9f13f8af355921d91c390f0945902dd5f93f09f72690f47d86cefb6832570ed2"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/fr",
+      "sha256": "5f656b7504d85be95e51d93161904f40be0c201d23782c135cc6bc7583d9ac6c"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/fr-be",
+      "sha256": "0f915ed333321390967b3043ca519f3d684b9e715162061e7c8ad61ca8ec93e9"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/fr-ca",
+      "sha256": "7b946ab38f0bc5d992b71a73793858d688408a2c37601e6de9311dfa39789088"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/fr-ch",
+      "sha256": "c64dc95002d93a74515d9d7632b5661c7aa89e585962ff147e335fbf92dacc42"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/hr",
+      "sha256": "05bac1ef2b94794e9d77905f6960f0af190bace7607ebd17705094efe331a047"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/hu",
+      "sha256": "ef53e3162c420c74c1adcf9eed9e59435ca4258e3806c217ee46d0a06273bff3"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/is",
+      "sha256": "096e635b078e3f635c6aa5851b70b360fe511a054e2f469f1a664266273624ad"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/it",
+      "sha256": "1e917ee38a18e93ea3b6234c13615e771451ca833349410409ee3cc4cce18949"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/ja",
+      "sha256": "076e0bc30c928c0b528fb687623850e829f22f5486bf1d51f693aafcd25f5bfc"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/lt",
+      "sha256": "2f237f9724fc4a3b9801b391079078aa0f019a54abbec988a881307aee4348f4"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/lv",
+      "sha256": "391c46335d2d06f503c88fcd468225192f9ac06e59f9983a68638c214c20d8e5"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/mk",
+      "sha256": "076dd9aa5a9f4468087fc83adb071a6eb4c1ab6b8c12a3d0c6080cb9edc39303"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/modifiers",
+      "sha256": "7714afcbbc888df1db09ba7e329cc0415bdc0594bf3622b2edd9ca10512f52bd"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/nl",
+      "sha256": "ed8b82551b1776f7f21eb4ae331c128773969a249c95f427448281778e283683"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/nl-be",
+      "sha256": "5e9664de1730b593dd2a5096cde16d37a265d16f659231a88c59a0ebe9151e0c"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/no",
+      "sha256": "ed52d795be968fc2892ea9d3f29caeafbce47d6b5f5f80da2da55e003faea2e6"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/pl",
+      "sha256": "b7588b8d461ea09aa41ea0942f99902b7eaba89e16184d290fa1654c69f227ea"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/pt",
+      "sha256": "21ff17368b2e3b15f4b677a115c1d190924f59a0bf52328359704629c68f979b"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/pt-br",
+      "sha256": "2c199c0b905e51970baf1a13d459a15a12a454653757c024cccac60d107caed8"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/ru",
+      "sha256": "3283cf206340af4d5f2bfbe304bba4ef721529b530b47f9123c82fc60734499e"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/sl",
+      "sha256": "260e63359a991493a76589da8d76b143a7415b1f59f9782cba0381f4dfd26541"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/sv",
+      "sha256": "36f7e8de76d5ad57aca36a07be7f3e6edeec4dbc478538cf33251045837e8ac4"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/th",
+      "sha256": "de4fdfe7466b06dac19cb130966294bab9f56cc3dc03f6a798184c684f099550"
+    },
+    {
+      "path": "emulator/lib/pc-bios/keymaps/tr",
+      "sha256": "f6de025aa8c4e1d2305fb5c445b74ead4279edeef2753dec1d22b1d11bbd3520"
+    },
+    {
+      "path": "emulator/lib/pc-bios/kvmvapic.bin",
+      "sha256": "cdf057a71b07e3b52b19cbe210bdefa59250d01a9810b960f7fe1f98eed95a27"
+    },
+    {
+      "path": "emulator/lib/pc-bios/linuxboot.bin",
+      "sha256": "72e0d9f4f1c280c8deb0f21a075f2e312ff00a969117c4155fc3a4f6eb20ead4"
+    },
+    {
+      "path": "emulator/lib/pc-bios/linuxboot_dma.bin",
+      "sha256": "9c49e255340c78fc12e54ed043462bca02fb7fca29b7cfab62ff88a5344b6950"
+    },
+    {
+      "path": "emulator/lib/pc-bios/multiboot.bin",
+      "sha256": "502944f1158be61a6315ee5f84588185433cbf5c5cea2f50ef098ac31e529777"
+    },
+    {
+      "path": "emulator/lib/pc-bios/vgabios-cirrus.bin",
+      "sha256": "e890de8e603b518cc3f2e4f094d33eda44915638b2cb33fdd914093b46812cb1"
+    },
+    {
+      "path": "emulator/lib/pc-bios/vgabios-stdvga.bin",
+      "sha256": "6f939e75651ce4fe99ee9326bd9e5561d92e17ade1e75c8f7e8cfa47a4ec197b"
+    },
+    {
+      "path": "emulator/lib/pc-bios/vgabios-virtio.bin",
+      "sha256": "58506fd17a02f7a70fc64f225bb842c9ca53f7262874159f4a58121b8e101569"
+    },
+    {
+      "path": "emulator/lib/pkgconfig/flatbuffers.pc",
+      "sha256": "b4e9d7285447320c3acbd27c18dea77b56e87ce46a2efcef7d9343d83cadb437"
+    },
+    {
+      "path": "emulator/lib/rtc_service.proto",
+      "sha256": "9849157c02485da64a999ea071570558b2b7eeff2833dd31788735fbeabb6641"
+    },
+    {
+      "path": "emulator/lib/rtc_service_v2.proto",
+      "sha256": "d90934956562216ea19bf7f921b0e46c5a48e3101a256ffe668abb41af0e8276"
+    },
+    {
+      "path": "emulator/lib/snapshot.proto",
+      "sha256": "7b5c7907ec96d7ab35932466894cb285b4fada2ba276b09b726cbc77b890c14c"
+    },
+    {
+      "path": "emulator/lib/snapshot_service.proto",
+      "sha256": "0aacf854e1e774f6a054e0112a9210ab71bca29906f8db06255b29d6af11b531"
+    },
+    {
+      "path": "emulator/lib/ui_controller_service.proto",
+      "sha256": "cfc3a635cbb5fdfa55090aaab8c6dc0bf61c31938ed3ed2bf0fd9b9853d0945a"
+    },
+    {
+      "path": "emulator/lib/waterfall.proto",
+      "sha256": "efe47c46e7becba6c717df4fac02598ebef166765845b2e2853271e68985a4fc"
+    },
+    {
+      "path": "emulator/lib64/gles_angle/libEGL.so",
+      "sha256": "47c86444df8aa5309e98ecd2946760281bfd1a036be22b8a61fa1a10886e2902"
+    },
+    {
+      "path": "emulator/lib64/gles_angle/libGLESv2.so",
+      "sha256": "8286cae2fec6022fcd6f5c73fbc9e5713291691b1fef87622366541c89da2cc8"
+    },
+    {
+      "path": "emulator/lib64/gles_angle/libvk_swiftshader.so",
+      "sha256": "9490e93f308615aa9fb5731f4c4889439cbec012041eddaead1b956e968301c3"
+    },
+    {
+      "path": "emulator/lib64/gles_angle/libvulkan.so",
+      "sha256": "c137499ef642212970b94f332d1b8a172f815952c2d6cbe227c6811453c5d1d1"
+    },
+    {
+      "path": "emulator/lib64/gles_angle/libvulkan.so.1",
+      "sha256": "27bf47e258e00653eef414882168caf0178031f1bb4ec8325f0477f15dde4994"
+    },
+    {
+      "path": "emulator/lib64/gles_angle/vk_swiftshader_icd.json",
+      "sha256": "c9eef28b6b984fec220ef0abfecc40b502d46946706e47bfe97707027cb818bd"
+    },
+    {
+      "path": "emulator/lib64/gles_llvmpipe/dri/kms_swrast_dri.so",
+      "sha256": "ae7e9e037376da0042f1589e81094c1709397e03f929f184d99bc0c378d08ba4"
+    },
+    {
+      "path": "emulator/lib64/gles_llvmpipe/dri/libdril_dri.so",
+      "sha256": "7fec43f8a0148ea7ae536145c605d68ffcbdba9f5eae8dc12a78512989568bd1"
+    },
+    {
+      "path": "emulator/lib64/gles_llvmpipe/dri/swrast_dri.so",
+      "sha256": "eda8f5827447c9e4e8be16a1014f85d1fe7ced90f23ac1455217b785ddb13688"
+    },
+    {
+      "path": "emulator/lib64/gles_llvmpipe/gbm/dri_gbm.so",
+      "sha256": "4f7e42d9f43db32864b5267603c04bf55f7cf64176d303fa744c256817b399fa"
+    },
+    {
+      "path": "emulator/lib64/gles_llvmpipe/libEGL.so",
+      "sha256": "8f8399fe99282ac1f88eb33be96395235b13613f33c9f87c617bd7ebace48c67"
+    },
+    {
+      "path": "emulator/lib64/gles_llvmpipe/libGL.so",
+      "sha256": "11ab2fa266894dae97f7915edc92255bc13fbc5694812ea11825edc54538df64"
+    },
+    {
+      "path": "emulator/lib64/gles_llvmpipe/libGLES_CM.so",
+      "sha256": "56cd7015744687460bcdde44202cb13470a5fc28c9d2ee6d2bc90b6bd1294adf"
+    },
+    {
+      "path": "emulator/lib64/gles_llvmpipe/libGLESv2.so",
+      "sha256": "748c211be929d13d9ceb3006aee9efb58d88af0b30f0ef1f3c0fb856cd68a0fe"
+    },
+    {
+      "path": "emulator/lib64/gles_llvmpipe/libgallium-25.2.4.so",
+      "sha256": "beabdd03cdb29583929627525188f7de70946e654fd96d375fa423b35012ab83"
+    },
+    {
+      "path": "emulator/lib64/gles_llvmpipe/libgbm.so",
+      "sha256": "e082115dcfe543f8b3227a8c4616f32e93ddebe2d74bf51f0f01f2f1f16fd99f"
+    },
+    {
+      "path": "emulator/lib64/gles_swiftshader/libEGL.so",
+      "sha256": "481c137b6d8fe7480f3e74374d4fd002e33c9250dffd66a05684f5494982e012"
+    },
+    {
+      "path": "emulator/lib64/gles_swiftshader/libGLES_CM.so",
+      "sha256": "f0488371cd5ad063831e6d6572fcd1d49935688ef86150269e545f6c30003c79"
+    },
+    {
+      "path": "emulator/lib64/gles_swiftshader/libGLESv2.so",
+      "sha256": "9471a220fd966c629278b1b6b99227dbe292e57c6374a59132a410370e795b06"
+    },
+    {
+      "path": "emulator/lib64/libabseil_dll.so",
+      "sha256": "5717aeff2a2d5f55fa4b0b6c07bf6ca164ff0cc2396bb568b1b25cff3506c523"
+    },
+    {
+      "path": "emulator/lib64/libandroid-emu-agents.so",
+      "sha256": "1647143422ce1a2c4e43c2c2606e241c01c0f062684b5cd722b9aa3cd86692ae"
+    },
+    {
+      "path": "emulator/lib64/libandroid-emu-base-logging.so",
+      "sha256": "b53d1d27e395291bb24cee004439482893d9d986ad8fc88553489b74a45597a4"
+    },
+    {
+      "path": "emulator/lib64/libandroid-emu-curl.so",
+      "sha256": "b1640b76bc8381e24fa694a60c9493062403e2d46b071de4620fcc901e9a3890"
+    },
+    {
+      "path": "emulator/lib64/libandroid-emu-metrics.so",
+      "sha256": "eaab15889cadc916b580ba028cf23600e9a0401c571b5e6397668bd19abe7384"
+    },
+    {
+      "path": "emulator/lib64/libandroid-emu-protos.so",
+      "sha256": "8b1532718d3dbe53be5aca95f1703907b97e39927a1af1fcce6935b978b8bee7"
+    },
+    {
+      "path": "emulator/lib64/libandroid-emu-shared.so",
+      "sha256": "36e553efca4cc897347d29a4625cbc9ced7655e95d99b1460e056bf41e1a75f7"
+    },
+    {
+      "path": "emulator/lib64/libandroid-emu-tracing.so",
+      "sha256": "e5da961decb00a1205392e16fd05bf4d2598e38c3b4391071d9b989371da99ae"
+    },
+    {
+      "path": "emulator/lib64/libandroid-webrtc.so",
+      "sha256": "ee708f8bdfa84202d24fb2f224a85d2d6e264edfc80189630f10543d47c08822"
+    },
+    {
+      "path": "emulator/lib64/libc++.so",
+      "sha256": "bd6e61007f7cb72c4e9e68901d9fff64e3d61fe41d96f38b1fc9c08237f94c93"
+    },
+    {
+      "path": "emulator/lib64/libc++.so.1",
+      "sha256": "a5e5c904291a01d2f0b7a3d04e53a0aa210da3a881ad6d120445ad2d4f16f185"
+    },
+    {
+      "path": "emulator/lib64/libemugl_common.so",
+      "sha256": "5ccabb9e3099b282267cad4275b038fb6c862f304a11cf019162404b595f0050"
+    },
+    {
+      "path": "emulator/lib64/libgfxstream_backend.so",
+      "sha256": "56be2b2c9db645d8277893cc7919b16f2862d72f6b98831ac60f334ef08c6d32"
+    },
+    {
+      "path": "emulator/lib64/libglib2_linux-x86_64.so",
+      "sha256": "8914e2de2abf5998a8a2b39171a07b9328358430a2cafb3eb0c061bf3186c2a2"
+    },
+    {
+      "path": "emulator/lib64/libimage_converter.so",
+      "sha256": "36ed82bc66e9fd6432dc8a0be8b5368ca6bc544e27450ff4691a3f7197072522"
+    },
+    {
+      "path": "emulator/lib64/libprotobuf.so",
+      "sha256": "130638ffe4d71c2c285902b6453b22ed9ede68daff19144a435abf31650c2c10"
+    },
+    {
+      "path": "emulator/lib64/libprotobuf.so.28.4.0",
+      "sha256": "130638ffe4d71c2c285902b6453b22ed9ede68daff19144a435abf31650c2c10"
+    },
+    {
+      "path": "emulator/lib64/libshadertranslator.so",
+      "sha256": "a8832f3f2d8f900b77d2e894b659c71ef5093afd514543bba3b398baa450804e"
+    },
+    {
+      "path": "emulator/lib64/libtcmalloc_minimal.so.4",
+      "sha256": "747aa105754329be0d771999ab4c1ae6d0201b8e9a419e3a80b694f5d9c295b1"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libQt6CoreAndroidEmu.so.6",
+      "sha256": "db7efa4ee372ec6c148aec41af8afb1c7ab83cac7d1d1b728f322778956003d3"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libQt6DBusAndroidEmu.so.6",
+      "sha256": "2b10488e18f56037a6ebced6a83ce4c01a2a94a0580ec3230098eacc971b594b"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libQt6GuiAndroidEmu.so.6",
+      "sha256": "7cf8296f375259ab877d7696803a7ad9c0703d86ca960925a84c694a14a79bf3"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libQt6NetworkAndroidEmu.so.6",
+      "sha256": "098dd5bfbba7eb9048200a3cc3e4196bce291726232cc3d0ea294de5e822ba47"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libQt6PositioningAndroidEmu.so.6",
+      "sha256": "b904283ef85d1664c24720b02d3a946eae539798a7f8621eef4b05c99abf4b1e"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libQt6QmlAndroidEmu.so.6",
+      "sha256": "1e852b46a9735bb3ee873b4bc0a5ccd348c9788ac274024a45f99f7af8533852"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libQt6QmlModelsAndroidEmu.so.6",
+      "sha256": "9715f2b8057dd73a41c82d25cf13ebb31ae827938418ab6e9f3804c108edcb7a"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libQt6QuickAndroidEmu.so.6",
+      "sha256": "a227099cc8de6462d7fbec39e5e46706c7f615e3d8331e3ec44e83e6977b7be3"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libQt6QuickWidgetsAndroidEmu.so.6",
+      "sha256": "b7f656b0f56db111a9f26f7fca99c67305bc9629d61c3e279fb870ac76469584"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libQt6SvgAndroidEmu.so.6",
+      "sha256": "ed6cd8cc610f768c3f9c28565b37b2ebc3395d02cacd12cb246700c1776be255"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libQt6SvgWidgetsAndroidEmu.so.6",
+      "sha256": "7890d68af1c58b6325906f5031623b76cd3ea46931d52217a8905762b349def2"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libQt6WebChannelAndroidEmu.so.6",
+      "sha256": "e0486c38edc5af2062537d3ca3c8ee2e074a4aa8f05bc6258ab16f2fe11344ac"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libQt6WebEngineCoreAndroidEmu.so.6",
+      "sha256": "47f6811889157b12cc3337a7eb73aeb2eae9c9e8cf7125d120cf6c027a3d1c13"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libQt6WebEngineWidgetsAndroidEmu.so.6",
+      "sha256": "942f299e589ceee2658df46d70fc94c7d6da9d0ffc85d5d3834d7d001e54d5e1"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libQt6WebSocketsAndroidEmu.so.6",
+      "sha256": "bf1987ce0126c41167b76a5b7d907021f68f7cc3d1ea1869b6e89bdb2cdb8e44"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libQt6WidgetsAndroidEmu.so.6",
+      "sha256": "8344d3b0c4325dc5bdaef2d30a2b0a8bc741ef066ec9941243cface8499950ab"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libQt6XcbQpaAndroidEmu.so.6",
+      "sha256": "fef34bf716206798cc34e903c92eb1743aa89dbed50ffade4f3af13e71be3b9b"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libX11-xcb.so.1",
+      "sha256": "7638e9f043ba4fcf0a219e782c286b47b17785b0029f3cf15e9e510529bb1745"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libXau.so.6",
+      "sha256": "abb13281838478b5d47463c0c512a655e339e4886c323f9758dc81bef561a326"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libXdmcp.so.6",
+      "sha256": "814381cc28f9f83da24680f5e928b60a3b5b677a2cc7813add54c82911e1f8bb"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libfontconfig.so.1",
+      "sha256": "6db38ead1abccfd689634eb31aec66a4f25a08614656bf464f8f730b319ff5d0"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libfreetype.so.6",
+      "sha256": "89feb98ff85153f98c5024265bfe363520e52023dc78cf0856c5920d2fa8c154"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libjpeg.so.8",
+      "sha256": "971e25b4aadae8acbc904e16a2648d8b3e85e586a0e64bb90466a5c69ea8f209"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libpcre2-16.so.0",
+      "sha256": "aa33679f88088dbd0029860383d04a967b84b7f362b63a3eacbde17f8b07637b"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libxcb-cursor.so.0",
+      "sha256": "35794978fa1ea695c093011fdeed874616dea6c4e5a0165336ebbdc1ce676025"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libxcb-icccm.so.4",
+      "sha256": "2aec38b627f628601fc983a09cdf011adb70e47fa9b6caa1a059171b35e2d16d"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libxcb-image.so.0",
+      "sha256": "db7872901e19a94c9a46d4edf0456339e5beb8fecc7ec975b8f721267e579c0f"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libxcb-keysyms.so.1",
+      "sha256": "93f90ad2a68babd8eefd8683e697b6093fac5d81972e0abdd0d67960a810155f"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libxcb-randr.so.0",
+      "sha256": "0bc6750337a92a05505c4c1b8c6bdc6bd435fa2d15a28ec83e6b3e1574c11aa0"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libxcb-render-util.so.0",
+      "sha256": "1a68ddff64183fd0f1a59ce32839d60d8aff0fbec92c7d77e90974379be22181"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libxcb-render.so.0",
+      "sha256": "b13fcf08f0ad021e78de568f961160b5c8c4d5528962f1ff4e11ca2d8b329411"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libxcb-shape.so.0",
+      "sha256": "fcad45fcac5e11accb0df5e7ecd4d56feb9d4767b087667679dbe57f939c6faf"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libxcb-shm.so.0",
+      "sha256": "ac8e6e9439477ae569d63cde45b29359713693cb8f8fc2175425b76223d86853"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libxcb-sync.so.1",
+      "sha256": "09ef738e005a9023b2b6b9cffc7e970dd29363043f59a234f52924f151d1a4f1"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libxcb-util.so.1",
+      "sha256": "a82b3804e54bd319e95b229ac395be3ee5381434cabc00810b628f43d6289f95"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libxcb-xfixes.so.0",
+      "sha256": "873cdf29c0f0bba264662c5b8df618994538a9a7c5e471c081cecf7dd82446a1"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libxcb-xkb.so.1",
+      "sha256": "bbf3eb7abab1e0e1f72ada13cd8d765c9bce074b630488621277dc988235cd90"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libxkbcommon-x11.so.0",
+      "sha256": "b3723e018efa10e40ce992df5cbfcfe5430a33b3547122e7382af0c992e5f97e"
+    },
+    {
+      "path": "emulator/lib64/qt/lib/libxkbcommon.so.0",
+      "sha256": "ad6f1dc6b5a3cf94db5f935b900e74ca2bc8c9954af6929a20c2a79a86ff1355"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/QtWebEngineProcess",
+      "sha256": "cac415fb684c0fdbd0ac61b5a2771b60ea104658ae007e27c057b31417bf5bfc"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/icudtl.dat",
+      "sha256": "97b978a19edd4746e9a44d9a44bb4bc519e127a203c247837ec0922f573449e3"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_devtools_resources.pak",
+      "sha256": "b054e879f5a04e41f933fd8d6d6656b8b6500f190acac903b96e10d046173243"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/am.pak",
+      "sha256": "ffdfe1e2c1f1ff50927d879408628ea4132b535560d249d1c95b00f965bfe2d3"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/ar.pak",
+      "sha256": "3aa3c1ede83af201e6d02191dc018dc2ad7b78718852dfdf946d7c72d5c9fd2b"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/bg.pak",
+      "sha256": "9740efec847d9202a2c3c49ec9bea2cd0343d553225e608274cb468e08a1e0e9"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/bn.pak",
+      "sha256": "212a271f95f578d051b534b62938c48f3f0bb155fe622d51e7f682a7cda90ebf"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/ca.pak",
+      "sha256": "795918620c810a398ce571dc5c588fa3678186a4b8278d40f1eaf6500594feed"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/cs.pak",
+      "sha256": "bcc9893ce3e2c5df628169c664d50fbdc6f932152c992e2d5e8c7d3edcb1b09e"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/da.pak",
+      "sha256": "9abaff82cecb120008cf9da8321c7ce91a37a3c636e00a1b6eed5c089a9ee2f8"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/de.pak",
+      "sha256": "d6605d266ff5c6b7b9f5fc85e105032b69be34e3523d305c7604931b1b9f08f3"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/el.pak",
+      "sha256": "8c3924552e0eb6a9c44654a74eb7fb403551be4d90a24a5a79bafd9bfce5565c"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/en-GB.pak",
+      "sha256": "d8de206b4a85f97a5612923e48cbf6ca10bd4afa6a68c7f689f9daad483049b6"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/en-US.pak",
+      "sha256": "91fcbcb706b8122f185ba0532eb0338e39083b57757feeb701797ab3012cef5e"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/es-419.pak",
+      "sha256": "26c05fb6ab9690f262ce75d6b2f08255e66dc4fa0c0f487d503a3dd88d60c147"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/es.pak",
+      "sha256": "faafd4c56200d41649efc212439acb50e297802ddb4a96bf1c5771ae199d8012"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/et.pak",
+      "sha256": "5a62db28d1169968aceba8fe7ab6218dd30f8660751b8007bbbf75ed05eda9c7"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/fa.pak",
+      "sha256": "decbb71d0f4b6db256ad28f5b891266e994972f7a91025273544cbeec1084666"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/fi.pak",
+      "sha256": "a2bdff292ba9f2f31adb514b1a5ab556c1b2f6f0a312c2c78e872b63fa96e72a"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/fil.pak",
+      "sha256": "17ddc3800c3da69348e2719d65d8d8e226b649ce46c06da054a21dd596224547"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/fr.pak",
+      "sha256": "ac126aa2c96424a61e58b412d1e0481b608f8ba73770e9fff0c67644c0f0dd37"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/gu.pak",
+      "sha256": "535a66456b9d6de242249c0b2e37382ea58168d6a3b3f3a2018ca2b118a8df81"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/he.pak",
+      "sha256": "1a6adc11247e30da4da82db2bcbc00e5256319c5f3de45c0f306894bf0c6d56b"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/hi.pak",
+      "sha256": "c41129846bb8dbc9e581d98eee1f5a8c20fd04dcbdea39bf65a8157e6624f3c8"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/hr.pak",
+      "sha256": "6ec81326f68ebaac4de0dfecb34c22372f5b45078797ce645a20d63316769a59"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/hu.pak",
+      "sha256": "7453d92670b30b341b05ffc8e5bbc752b97ca33a79d48df6ad85da7b943e14a8"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/id.pak",
+      "sha256": "28d0974049405f500af28d026143e7c82d08f88d2f0c9e9ed1e1bf92d765b9f1"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/it.pak",
+      "sha256": "e5751480d31220e417c31ed88b0e70b8f2cd078d35d66fef3e0819e0f9743b03"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/ja.pak",
+      "sha256": "ed2d262a74a25496dc4a0cd30a4530be420c051111bb65973334b755e154caf2"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/kn.pak",
+      "sha256": "0f834fb71a92fe29b856259a64488a5535a6b314e876461d11a5ca4a1e690fd6"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/ko.pak",
+      "sha256": "9408932915e2ae5c29e937e3b668c718d3edaea5248f359136e77c8925446d34"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/lt.pak",
+      "sha256": "319ab7b8d90804071b4cd4ca945acc4119e2b4613f7b9d8b731df65ca64acc86"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/lv.pak",
+      "sha256": "4a8097c1102aadb8e2cbf721c8eef491f863c2968ffc4551336277f6f1597ac3"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/ml.pak",
+      "sha256": "87ce8283bee3b47841b29be7e5c23ba2d74b21b2e822b9ed1fd87c8363e07620"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/mr.pak",
+      "sha256": "db479eb311736f450a18b517ef14720c7c9219bc6c60278017cc3ab03d22b01a"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/ms.pak",
+      "sha256": "dded8d90baf509fb14eceaeb62b6949d6ee6e52c52e04467095d63d348e9daaa"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/nb.pak",
+      "sha256": "8e8033de4c3c1ba94025a0330082d353e32c5124682d4cdb434dfc81b38ca796"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/nl.pak",
+      "sha256": "37136ab089b30d9160b3dba3bfd790ac81630666cfff29c9f9c7813b8d437c0f"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/pl.pak",
+      "sha256": "b36fdb5bc39e17775f280548bc58b63de2898ac9829c42286fea6ab6b85d996d"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/pt-BR.pak",
+      "sha256": "3b3f801bc519e919c9d83eb55e976b51114dae888ff3133985c5348c95dbe4c7"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/pt-PT.pak",
+      "sha256": "f654b4d30574d9d480d4deb4a6cf52b675d0b9ebc2ac7ac0a4dca75cbbb68af6"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/ro.pak",
+      "sha256": "98707003995d0184e5a7d8310ee30ecf73a628f1a1a5e41b6f74349142967c95"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/ru.pak",
+      "sha256": "c0252c05cf47748bea08dda4c198dd95925e384ad302b6360abb33d166f7d201"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/sk.pak",
+      "sha256": "f8e7222937834e07d7cfd60d3dbdd0831f9e6954e74a13e59534b375f8b5281a"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/sl.pak",
+      "sha256": "ab178fb8fcbb49f352011d115ff064ec226bc14d21840c94351e73d353ae4683"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/sr.pak",
+      "sha256": "9107439affd03a6b6f2b2dc569ddbf6ec5031377249f94ee0e1a74c45a9d6165"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/sv.pak",
+      "sha256": "3ae6edd26094c92aadead5557ee2728c6a3a2ad0347e5a4b4f8fd645f6d586da"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/sw.pak",
+      "sha256": "73bf5e419c3b7ccd9dfa3b9909530fa2c6d5943464823885ff12ed0fabd01652"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/ta.pak",
+      "sha256": "1399bd5bd5637258e5e8900b5827ed351663fada220b1da757a5e79eaa0d76eb"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/te.pak",
+      "sha256": "870e06d4c73237bee6b12e9358e025cef936228c0d62c83d5e746134da8da184"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/th.pak",
+      "sha256": "37cc84f428ab14729567d2e20a4b7201ec7afb635e6a35af6c7a88c79c7a3dc2"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/tr.pak",
+      "sha256": "fc4c9bde9e79f194a5c4d8bec5cb7604b1b65f22bbd15f3baa19a7f9ac6a82d5"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/uk.pak",
+      "sha256": "6aa330e819c42c1e961ad066096ee4e75d4e43cda26f1281bcc7b283ef3559f8"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/vi.pak",
+      "sha256": "b88f2e13cc9b73df383c155a4ec01a261db01afa8f91200bf8b3eeee94efbcf2"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/zh-CN.pak",
+      "sha256": "b8d714877926bc09cae272f433a02a1df3b87a52087a03096799bc543fd2f2af"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_locales/zh-TW.pak",
+      "sha256": "eed7ed446ccb73be88e6fe6a1a2c831dc01cd2e7c9ba257c6570adb41bb2fdef"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_resources.pak",
+      "sha256": "1c0ff352106d9a33aea6cfc2aa1a86894cf14bab6fa92ca6fde86654a001a8ca"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_resources_100p.pak",
+      "sha256": "b0071eb3bb8384f57c8ef6d26e09b2627db00140be04eb0f5244b4246fcda7ce"
+    },
+    {
+      "path": "emulator/lib64/qt/libexec/qtwebengine_resources_200p.pak",
+      "sha256": "7be3efb6fece4049b2be9d823e248c33d909b10edf56534844fa8d0244c40bfc"
+    },
+    {
+      "path": "emulator/lib64/qt/plugins/iconengines/libqsvgiconAndroidEmu.so",
+      "sha256": "f632d5c175b058583bb5bb15d12e6698c0131ae9d458e026bd8efce5caf3b20b"
+    },
+    {
+      "path": "emulator/lib64/qt/plugins/imageformats/libqgifAndroidEmu.so",
+      "sha256": "05d7dfa9c12cdfc5b18210e681bab88356e5658a63b782a5772ba20df818ff39"
+    },
+    {
+      "path": "emulator/lib64/qt/plugins/imageformats/libqicnsAndroidEmu.so",
+      "sha256": "473d5c13027006b680901047dc631329b5cbf3169644b682bfb1fd46d8654b5e"
+    },
+    {
+      "path": "emulator/lib64/qt/plugins/imageformats/libqicoAndroidEmu.so",
+      "sha256": "7ae5fe79646de0540e1f599542fcb74aac52bd06e73432af2aa57b036a4c2cc3"
+    },
+    {
+      "path": "emulator/lib64/qt/plugins/imageformats/libqjpegAndroidEmu.so",
+      "sha256": "7d243b52183a22e635dcc25ae5488dd1bdf682c915208c20e04c4e83cf5c3d6a"
+    },
+    {
+      "path": "emulator/lib64/qt/plugins/imageformats/libqsvgAndroidEmu.so",
+      "sha256": "848f436daecf60270b966311fd234a15f5a5d57c6ad8c5ad08aba0eaa208fa88"
+    },
+    {
+      "path": "emulator/lib64/qt/plugins/imageformats/libqtgaAndroidEmu.so",
+      "sha256": "d51c4fcb998cec260a166e175419b3d831e1bc96652a31cf0e3542fb49e70175"
+    },
+    {
+      "path": "emulator/lib64/qt/plugins/imageformats/libqtiffAndroidEmu.so",
+      "sha256": "20ff70d23339c0d4efa9f20f3d76aa2bce2f78af10c1bdb906637dcb16a246ff"
+    },
+    {
+      "path": "emulator/lib64/qt/plugins/imageformats/libqwbmpAndroidEmu.so",
+      "sha256": "6df51442ea4e12a9969e36c6864dc10ed5b1ddeeaa7e4eaa6f4b713c82c847cd"
+    },
+    {
+      "path": "emulator/lib64/qt/plugins/imageformats/libqwebpAndroidEmu.so",
+      "sha256": "00f6804b1858aefffba9396fecd0eb92c694d35cad9b24587fae602e28755c74"
+    },
+    {
+      "path": "emulator/lib64/qt/plugins/platforminputcontexts/libcomposeplatforminputcontextpluginAndroidEmu.so",
+      "sha256": "27580e743f788616274f33f3b117c0e9f803a5ca5602ce86df0b340329632e5e"
+    },
+    {
+      "path": "emulator/lib64/qt/plugins/platforminputcontexts/libibusplatforminputcontextpluginAndroidEmu.so",
+      "sha256": "0a19e7788e0beb507cdd346c658a059a741f63f341cf070218080a9a41403cae"
+    },
+    {
+      "path": "emulator/lib64/qt/plugins/platforms/libqlinuxfbAndroidEmu.so",
+      "sha256": "8ffc7b4f0f0899e398ce2e842217e34bb0b3bc4a28a44458da4c1012416dfc30"
+    },
+    {
+      "path": "emulator/lib64/qt/plugins/platforms/libqminimalAndroidEmu.so",
+      "sha256": "836666076529c02571e19b8aad98886fee245155ccfe66475c5931788fc165a7"
+    },
+    {
+      "path": "emulator/lib64/qt/plugins/platforms/libqoffscreenAndroidEmu.so",
+      "sha256": "b24dacd1920bbc62c33fa0d55a039dca788d17b103288df21f8968215b8c9f72"
+    },
+    {
+      "path": "emulator/lib64/qt/plugins/platforms/libqvncAndroidEmu.so",
+      "sha256": "6eccd5f4fa78dc00417b1d2dfffd7e109f65e068f6f5a4ebf30e1313fec6da3c"
+    },
+    {
+      "path": "emulator/lib64/qt/plugins/platforms/libqxcbAndroidEmu.so",
+      "sha256": "f677452c7e5724a02c9846df496cc30334aff0a26674db59ab0e6f524c52f304"
+    },
+    {
+      "path": "emulator/lib64/qt/resources/icudtl.dat",
+      "sha256": "97b978a19edd4746e9a44d9a44bb4bc519e127a203c247837ec0922f573449e3"
+    },
+    {
+      "path": "emulator/lib64/qt/resources/qtwebengine_devtools_resources.pak",
+      "sha256": "b054e879f5a04e41f933fd8d6d6656b8b6500f190acac903b96e10d046173243"
+    },
+    {
+      "path": "emulator/lib64/qt/resources/qtwebengine_resources.pak",
+      "sha256": "1c0ff352106d9a33aea6cfc2aa1a86894cf14bab6fa92ca6fde86654a001a8ca"
+    },
+    {
+      "path": "emulator/lib64/qt/resources/qtwebengine_resources_100p.pak",
+      "sha256": "b0071eb3bb8384f57c8ef6d26e09b2627db00140be04eb0f5244b4246fcda7ce"
+    },
+    {
+      "path": "emulator/lib64/qt/resources/qtwebengine_resources_200p.pak",
+      "sha256": "7be3efb6fece4049b2be9d823e248c33d909b10edf56534844fa8d0244c40bfc"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/am.pak",
+      "sha256": "ffdfe1e2c1f1ff50927d879408628ea4132b535560d249d1c95b00f965bfe2d3"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/ar.pak",
+      "sha256": "3aa3c1ede83af201e6d02191dc018dc2ad7b78718852dfdf946d7c72d5c9fd2b"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/bg.pak",
+      "sha256": "9740efec847d9202a2c3c49ec9bea2cd0343d553225e608274cb468e08a1e0e9"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/bn.pak",
+      "sha256": "212a271f95f578d051b534b62938c48f3f0bb155fe622d51e7f682a7cda90ebf"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/ca.pak",
+      "sha256": "795918620c810a398ce571dc5c588fa3678186a4b8278d40f1eaf6500594feed"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/cs.pak",
+      "sha256": "bcc9893ce3e2c5df628169c664d50fbdc6f932152c992e2d5e8c7d3edcb1b09e"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/da.pak",
+      "sha256": "9abaff82cecb120008cf9da8321c7ce91a37a3c636e00a1b6eed5c089a9ee2f8"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/de.pak",
+      "sha256": "d6605d266ff5c6b7b9f5fc85e105032b69be34e3523d305c7604931b1b9f08f3"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/el.pak",
+      "sha256": "8c3924552e0eb6a9c44654a74eb7fb403551be4d90a24a5a79bafd9bfce5565c"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/en-GB.pak",
+      "sha256": "d8de206b4a85f97a5612923e48cbf6ca10bd4afa6a68c7f689f9daad483049b6"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/en-US.pak",
+      "sha256": "91fcbcb706b8122f185ba0532eb0338e39083b57757feeb701797ab3012cef5e"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/es-419.pak",
+      "sha256": "26c05fb6ab9690f262ce75d6b2f08255e66dc4fa0c0f487d503a3dd88d60c147"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/es.pak",
+      "sha256": "faafd4c56200d41649efc212439acb50e297802ddb4a96bf1c5771ae199d8012"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/et.pak",
+      "sha256": "5a62db28d1169968aceba8fe7ab6218dd30f8660751b8007bbbf75ed05eda9c7"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/fa.pak",
+      "sha256": "decbb71d0f4b6db256ad28f5b891266e994972f7a91025273544cbeec1084666"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/fi.pak",
+      "sha256": "a2bdff292ba9f2f31adb514b1a5ab556c1b2f6f0a312c2c78e872b63fa96e72a"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/fil.pak",
+      "sha256": "17ddc3800c3da69348e2719d65d8d8e226b649ce46c06da054a21dd596224547"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/fr.pak",
+      "sha256": "ac126aa2c96424a61e58b412d1e0481b608f8ba73770e9fff0c67644c0f0dd37"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/gu.pak",
+      "sha256": "535a66456b9d6de242249c0b2e37382ea58168d6a3b3f3a2018ca2b118a8df81"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/he.pak",
+      "sha256": "1a6adc11247e30da4da82db2bcbc00e5256319c5f3de45c0f306894bf0c6d56b"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/hi.pak",
+      "sha256": "c41129846bb8dbc9e581d98eee1f5a8c20fd04dcbdea39bf65a8157e6624f3c8"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/hr.pak",
+      "sha256": "6ec81326f68ebaac4de0dfecb34c22372f5b45078797ce645a20d63316769a59"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/hu.pak",
+      "sha256": "7453d92670b30b341b05ffc8e5bbc752b97ca33a79d48df6ad85da7b943e14a8"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/id.pak",
+      "sha256": "28d0974049405f500af28d026143e7c82d08f88d2f0c9e9ed1e1bf92d765b9f1"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/it.pak",
+      "sha256": "e5751480d31220e417c31ed88b0e70b8f2cd078d35d66fef3e0819e0f9743b03"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/ja.pak",
+      "sha256": "ed2d262a74a25496dc4a0cd30a4530be420c051111bb65973334b755e154caf2"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/kn.pak",
+      "sha256": "0f834fb71a92fe29b856259a64488a5535a6b314e876461d11a5ca4a1e690fd6"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/ko.pak",
+      "sha256": "9408932915e2ae5c29e937e3b668c718d3edaea5248f359136e77c8925446d34"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/lt.pak",
+      "sha256": "319ab7b8d90804071b4cd4ca945acc4119e2b4613f7b9d8b731df65ca64acc86"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/lv.pak",
+      "sha256": "4a8097c1102aadb8e2cbf721c8eef491f863c2968ffc4551336277f6f1597ac3"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/ml.pak",
+      "sha256": "87ce8283bee3b47841b29be7e5c23ba2d74b21b2e822b9ed1fd87c8363e07620"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/mr.pak",
+      "sha256": "db479eb311736f450a18b517ef14720c7c9219bc6c60278017cc3ab03d22b01a"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/ms.pak",
+      "sha256": "dded8d90baf509fb14eceaeb62b6949d6ee6e52c52e04467095d63d348e9daaa"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/nb.pak",
+      "sha256": "8e8033de4c3c1ba94025a0330082d353e32c5124682d4cdb434dfc81b38ca796"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/nl.pak",
+      "sha256": "37136ab089b30d9160b3dba3bfd790ac81630666cfff29c9f9c7813b8d437c0f"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/pl.pak",
+      "sha256": "b36fdb5bc39e17775f280548bc58b63de2898ac9829c42286fea6ab6b85d996d"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/pt-BR.pak",
+      "sha256": "3b3f801bc519e919c9d83eb55e976b51114dae888ff3133985c5348c95dbe4c7"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/pt-PT.pak",
+      "sha256": "f654b4d30574d9d480d4deb4a6cf52b675d0b9ebc2ac7ac0a4dca75cbbb68af6"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/ro.pak",
+      "sha256": "98707003995d0184e5a7d8310ee30ecf73a628f1a1a5e41b6f74349142967c95"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/ru.pak",
+      "sha256": "c0252c05cf47748bea08dda4c198dd95925e384ad302b6360abb33d166f7d201"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/sk.pak",
+      "sha256": "f8e7222937834e07d7cfd60d3dbdd0831f9e6954e74a13e59534b375f8b5281a"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/sl.pak",
+      "sha256": "ab178fb8fcbb49f352011d115ff064ec226bc14d21840c94351e73d353ae4683"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/sr.pak",
+      "sha256": "9107439affd03a6b6f2b2dc569ddbf6ec5031377249f94ee0e1a74c45a9d6165"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/sv.pak",
+      "sha256": "3ae6edd26094c92aadead5557ee2728c6a3a2ad0347e5a4b4f8fd645f6d586da"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/sw.pak",
+      "sha256": "73bf5e419c3b7ccd9dfa3b9909530fa2c6d5943464823885ff12ed0fabd01652"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/ta.pak",
+      "sha256": "1399bd5bd5637258e5e8900b5827ed351663fada220b1da757a5e79eaa0d76eb"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/te.pak",
+      "sha256": "870e06d4c73237bee6b12e9358e025cef936228c0d62c83d5e746134da8da184"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/th.pak",
+      "sha256": "37cc84f428ab14729567d2e20a4b7201ec7afb635e6a35af6c7a88c79c7a3dc2"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/tr.pak",
+      "sha256": "fc4c9bde9e79f194a5c4d8bec5cb7604b1b65f22bbd15f3baa19a7f9ac6a82d5"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/uk.pak",
+      "sha256": "6aa330e819c42c1e961ad066096ee4e75d4e43cda26f1281bcc7b283ef3559f8"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/vi.pak",
+      "sha256": "b88f2e13cc9b73df383c155a4ec01a261db01afa8f91200bf8b3eeee94efbcf2"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/zh-CN.pak",
+      "sha256": "b8d714877926bc09cae272f433a02a1df3b87a52087a03096799bc543fd2f2af"
+    },
+    {
+      "path": "emulator/lib64/qt/translations/qtwebengine_locales/zh-TW.pak",
+      "sha256": "eed7ed446ccb73be88e6fe6a1a2c831dc01cd2e7c9ba257c6570adb41bb2fdef"
+    },
+    {
+      "path": "emulator/lib64/vulkan/glslangValidator",
+      "sha256": "77e00bf683895f62f8d330690885f00ca308320f6caf47f050ee8ea936b59326"
+    },
+    {
+      "path": "emulator/lib64/vulkan/layers/VkLayer_khronos_validation.json",
+      "sha256": "57000962461c9b1f664a4bd67298cee74daa52bb01b40b6df89bed3dda1185e3"
+    },
+    {
+      "path": "emulator/lib64/vulkan/layers/libVkLayer_khronos_validation.so",
+      "sha256": "ff74c47ef0b86146015c8cbe7f55b27877d5c42c833d3ea479a209a4d67d31e5"
+    },
+    {
+      "path": "emulator/lib64/vulkan/libLLVM.so",
+      "sha256": "c94801c39ddb7ae09eef3feda2c45dc8fc023b0f40256c3de1b9bd272dd894d2"
+    },
+    {
+      "path": "emulator/lib64/vulkan/libedit.so.0",
+      "sha256": "5332e7b68129374d572133d43b78c5745bf88ea99da65c3392677d63ae8d5cf0"
+    },
+    {
+      "path": "emulator/lib64/vulkan/libncurses.so.6",
+      "sha256": "48bb1e9b4a211f12cb07cceb25c5727a0110922be3afcc64c029db732a2a9bcf"
+    },
+    {
+      "path": "emulator/lib64/vulkan/libvk_swiftshader.so",
+      "sha256": "9e2cebc35ffd7f0dd234c219f6b3a1150801b4675ccc26498fcdfce8c79064e7"
+    },
+    {
+      "path": "emulator/lib64/vulkan/libvulkan.so",
+      "sha256": "c137499ef642212970b94f332d1b8a172f815952c2d6cbe227c6811453c5d1d1"
+    },
+    {
+      "path": "emulator/lib64/vulkan/libvulkan.so.1",
+      "sha256": "27bf47e258e00653eef414882168caf0178031f1bb4ec8325f0477f15dde4994"
+    },
+    {
+      "path": "emulator/lib64/vulkan/libvulkan_lvp.so",
+      "sha256": "307b9efb94cd4431988268d8a2e2df38d31c71641e4c1ef5a171f94c5866bc15"
+    },
+    {
+      "path": "emulator/lib64/vulkan/libxcb-aemu.so",
+      "sha256": "67e9b459abb9cea13cb529fdaa770bd18152c6de72a4fc0738c38cc4a6142045"
+    },
+    {
+      "path": "emulator/lib64/vulkan/libxml2.so.2",
+      "sha256": "aa8c008f4de635cdcc1d507aaca4375e69926afa38ca4583afcd48336dd035b8"
+    },
+    {
+      "path": "emulator/lib64/vulkan/lvp_icd.json",
+      "sha256": "e284e282ddd24778665e7567661af9da43a2a8fa0a7fab41bef61b2bada4b3fd"
+    },
+    {
+      "path": "emulator/lib64/vulkan/vk_swiftshader_icd.json",
+      "sha256": "c0b871d345fda719a548c208d0265b8675151d640d80edec3c78c4d31c30bbb3"
+    },
+    {
+      "path": "emulator/mksdcard",
+      "sha256": "22ed09344d35d3722f7d787e4182526c1a76578874554c6dcfefc33a6540f134"
+    },
+    {
+      "path": "emulator/netsimd",
+      "sha256": "b32f5ff232b86e2b4bd43e0245b04f72a8c19851ba6087b041a770bd24157088"
+    },
+    {
+      "path": "emulator/nimble_bridge",
+      "sha256": "8384f089884467b75c38a5b92f22c98f085c6aba56ebb0f7cd30d40ef69ef99d"
+    },
+    {
+      "path": "emulator/qemu-img",
+      "sha256": "7d3ff90024b99afab84f4c15322f1f0d9a6baf1ca89c1158ab8e48fc273c305c"
+    },
+    {
+      "path": "emulator/qemu/linux-x86_64/qemu-system-aarch64",
+      "sha256": "13f163e4a384c7d4cc0ae1e40c59c372b97faaa3a077dcdef20df5b826f9b24c"
+    },
+    {
+      "path": "emulator/qemu/linux-x86_64/qemu-system-aarch64-headless",
+      "sha256": "e85ab5c7ed7608d78cd3a2c1c9a6f6fbb0939d75d6449ef64eac3483009312d2"
+    },
+    {
+      "path": "emulator/qemu/linux-x86_64/qemu-system-armel",
+      "sha256": "b721ce2fcab8202d026161268bc62b50e786d622fd9af598ad406db91ddbe0d9"
+    },
+    {
+      "path": "emulator/qemu/linux-x86_64/qemu-system-armel-headless",
+      "sha256": "194dc0260f0b7a24ec2c8c0d0e4d6778d0b44a172b917471d1ccda25a0a6c0d0"
+    },
+    {
+      "path": "emulator/qemu/linux-x86_64/qemu-system-i386",
+      "sha256": "f9c5fefb542be121ad46b9729146bd99bce94ec08317e0cd72bae0498963360f"
+    },
+    {
+      "path": "emulator/qemu/linux-x86_64/qemu-system-i386-headless",
+      "sha256": "5d63b9bbb1576c25ff481312d02369ef62a6250586e95095ea2f182fdf7f0ed0"
+    },
+    {
+      "path": "emulator/qemu/linux-x86_64/qemu-system-x86_64",
+      "sha256": "2924da89cef31402e0379b643a73e4d60097239323095730fc8a78aa55b082f6"
+    },
+    {
+      "path": "emulator/qemu/linux-x86_64/qemu-system-x86_64-headless",
+      "sha256": "23b788a3b87b3228558924de4cb5477e2818b3b9415d6ce27d6438cf3e462b98"
+    },
+    {
+      "path": "emulator/qsn",
+      "sha256": "71ff4579f81cd090895c8f2b09f5a91f6c895bf2f00e169d38b87dd7233a92f9"
+    },
+    {
+      "path": "emulator/resources/Toren1BD.mtl",
+      "sha256": "e8ac9e5f35aa6cb2d7eacaf407a328324f925587c12e093dcb6efef775bcc438"
+    },
+    {
+      "path": "emulator/resources/Toren1BD.obj",
+      "sha256": "2e1884867d1aa0c332f7e4a353de0feb3b56ce6e0234ce1994c44b6af79f492a"
+    },
+    {
+      "path": "emulator/resources/Toren1BD.posters",
+      "sha256": "76df35d81794eb16636209d9d51759464a4fae51e4a9a454061ab29e4cf3039f"
+    },
+    {
+      "path": "emulator/resources/Toren1BD_Decor.png",
+      "sha256": "12dd7b5496b5f839da200388cb1bb8c3103eb718a1b5cf146a54b2b9f6051376"
+    },
+    {
+      "path": "emulator/resources/Toren1BD_Main.png",
+      "sha256": "3684940df1a01acd0a698550fbfc7f645c4b02597f5444d2286d39414f59a0f4"
+    },
+    {
+      "path": "emulator/resources/default.jpg",
+      "sha256": "e5831817a8c8b4f82583501fdc0b48d9e8d16557ffd8e997a7074d1847c7d810"
+    },
+    {
+      "path": "emulator/resources/default.mp4",
+      "sha256": "2bc1cdd0a57d16d0c995d912e310751c3b44525822c8c1fe130cca463d90debf"
+    },
+    {
+      "path": "emulator/resources/default360.jpg",
+      "sha256": "fae25b1eb03fb34424028beb4d1c908e93b36dd35c19ccb8ca7eea6d092ead04"
+    },
+    {
+      "path": "emulator/resources/default360.mp4",
+      "sha256": "4e1b24c71799249fa3d9bb5c1d55a5979507a3694f9f7b975419a6b958bec37d"
+    },
+    {
+      "path": "emulator/resources/macroPreviews/Reset_position.mp4",
+      "sha256": "8bdc6c977cd38168281b6751ee4ead48e6a4fa937de91eec0dd6036d39e5925c"
+    },
+    {
+      "path": "emulator/resources/macroPreviews/Track_horizontal_plane.mp4",
+      "sha256": "d8bd23d3ac6bbd7a9932da20bc6e6cb3b1de3cc3a6ec722acdd440edfdcab063"
+    },
+    {
+      "path": "emulator/resources/macroPreviews/Track_vertical_plane.mp4",
+      "sha256": "cedfde80f46a8e64638653d44e99971eca9603dc235004acb108a1213bfed7b4"
+    },
+    {
+      "path": "emulator/resources/macroPreviews/Walk_to_image_room.mp4",
+      "sha256": "7b10ef6070e8798b62881a972c7e80565fe08961ef100fa37bd8b798b9262475"
+    },
+    {
+      "path": "emulator/resources/macros/Reset_position",
+      "sha256": "dc8cca7cf6a5293cc6b577a4fd0b6d3339d52117e57f3a8dcd5d5f5a5928d862"
+    },
+    {
+      "path": "emulator/resources/macros/Track_horizontal_plane",
+      "sha256": "7690a7b85173fa45215b8810c3e5b4994196191a5be4105f1f145eb843870c84"
+    },
+    {
+      "path": "emulator/resources/macros/Track_vertical_plane",
+      "sha256": "626498bdc8882365093e7a38dbea66cf9a2a812d3c31ad7355435d7e564a2324"
+    },
+    {
+      "path": "emulator/resources/macros/Walk_to_image_room",
+      "sha256": "b0a7017912cab2023e40d2d7de7773632342ba2832fd334496f0b3aaa714fda5"
+    },
+    {
+      "path": "emulator/resources/poster.png",
+      "sha256": "2d92ce9c1674b01e6409cd0b9e5d905dee4785075abbb976e56afe97606df5e9"
+    },
+    {
+      "path": "emulator/resources/skins/android-36/data/misc/pixel_10_pro_fold/devicestate/device_state_configuration.xml",
+      "sha256": "86e021141048b6b957b021c3478c3e74a76ac0ec4e7312bceae74a81dcf3c8b9"
+    },
+    {
+      "path": "emulator/resources/skins/android-36/data/misc/pixel_10_pro_fold/display_settings.xml",
+      "sha256": "2adca8f98a2c8ee0f780e10ca16587ac92641df5e93ab4437c3c47ad41b0041d"
+    },
+    {
+      "path": "emulator/resources/skins/android-36/data/misc/pixel_10_pro_fold/displayconfig/display_layout_configuration.xml",
+      "sha256": "a64e2eca65bc2f9196215fb72a88c9035a584319f8b3da3606fff161be642be8"
+    },
+    {
+      "path": "emulator/resources/skins/android-36/data/misc/pixel_10_pro_fold/extra_feature.xml",
+      "sha256": "ba27b7a61457027e2a77917f8b07d716d3e918097901a14833749252b15aa38f"
+    },
+    {
+      "path": "emulator/resources/skins/android-36/user/pixel_10/EmulationPixel10Overlay.apk",
+      "sha256": "e064dfe79d70973446a05818f46706863b6514143f00bf66ea7dfce691a0f5ea"
+    },
+    {
+      "path": "emulator/resources/skins/android-36/user/pixel_10/SystemUIEmulationPixel10Overlay.apk",
+      "sha256": "0e9c97448e3a2f600cd2cc9278f2317b1276e12a06739ea482dacda6106de9f4"
+    },
+    {
+      "path": "emulator/resources/skins/android-36/user/pixel_10_pro/EmulationPixel10ProOverlay.apk",
+      "sha256": "701c27c4853280330dfa8339e6b32e5a2b4b141fb3b61ac28d5d2b2d8bf80c6a"
+    },
+    {
+      "path": "emulator/resources/skins/android-36/user/pixel_10_pro/SystemUIEmulationPixel10ProOverlay.apk",
+      "sha256": "cc8e353c3e53f111cf09b8433eb205dbaab1576a6ccab879f51c2f099af1c1f0"
+    },
+    {
+      "path": "emulator/resources/skins/android-36/user/pixel_10_pro_fold/EmulationPixel10ProFoldOverlay.apk",
+      "sha256": "b1cdbe7b45a6ac8400bce2c5a1e233481be10564cb500444bf68cbba865c76e0"
+    },
+    {
+      "path": "emulator/resources/skins/android-36/user/pixel_10_pro_fold/SystemUIEmulationPixel10ProFoldOverlay.apk",
+      "sha256": "3a5cb7398a0a7a8439c63f743d12ce15e73248969659915d4c9a14f95ad27709"
+    },
+    {
+      "path": "emulator/resources/skins/android-36/user/pixel_10_pro_xl/EmulationPixel10ProXLOverlay.apk",
+      "sha256": "02f09ac5ad0a9ea8339fd729843a4d6efae073c925407672e96c3a53a7cb8e06"
+    },
+    {
+      "path": "emulator/resources/skins/android-36/user/pixel_10_pro_xl/SystemUIEmulationPixel10ProXLOverlay.apk",
+      "sha256": "501073488c04c22ad5dabec08b22bc4a936db7cde407d2efadc1d8bee321dda6"
+    },
+    {
+      "path": "emulator/resources/skins/android-36/userdebug/pixel_10/EmulationPixel10Overlay.apk",
+      "sha256": "b8e7242ddb14feba8c9239026c518f112aeef942d638da4715492fc71be61a82"
+    },
+    {
+      "path": "emulator/resources/skins/android-36/userdebug/pixel_10/SystemUIEmulationPixel10Overlay.apk",
+      "sha256": "f225123a8b970943787d466cdb4449a361bfcd5b68cd8e66744cf622cf889c36"
+    },
+    {
+      "path": "emulator/resources/skins/android-36/userdebug/pixel_10_pro/EmulationPixel10ProOverlay.apk",
+      "sha256": "8dfeef3440b549bbb9ec8946c8b040f4e3591ce20d689d01a1345ca2c0a4fa5a"
+    },
+    {
+      "path": "emulator/resources/skins/android-36/userdebug/pixel_10_pro/SystemUIEmulationPixel10ProOverlay.apk",
+      "sha256": "ae48b0d2f2b9ed49bb8929ea7dc05bb630b83eb6acf210cbe9d0ddcf5f383fed"
+    },
+    {
+      "path": "emulator/resources/skins/android-36/userdebug/pixel_10_pro_fold/EmulationPixel10ProFoldOverlay.apk",
+      "sha256": "f6cdb777249a693d29b008f201db62cb45329448c4f9def0c3a494426f522b3f"
+    },
+    {
+      "path": "emulator/resources/skins/android-36/userdebug/pixel_10_pro_fold/SystemUIEmulationPixel10ProFoldOverlay.apk",
+      "sha256": "83fddb604f55eaebf8575287fa7849cb73d572f3a4d2ff138568efa599ac3c7c"
+    },
+    {
+      "path": "emulator/resources/skins/android-36/userdebug/pixel_10_pro_xl/EmulationPixel10ProXLOverlay.apk",
+      "sha256": "8a5de141eb996dd339e5e7e4cfccacd563697c943e69c35a067fff2f03edc0e1"
+    },
+    {
+      "path": "emulator/resources/skins/android-36/userdebug/pixel_10_pro_xl/SystemUIEmulationPixel10ProXLOverlay.apk",
+      "sha256": "3465cff51a49676771de16af07aeb385cea5cca22bb31366e9588695d6209579"
+    },
+    {
+      "path": "emulator/source.properties",
+      "sha256": "ba13085f647fb8389a4d06a1de0e4104ac4e841733e50f67223ac230e1ce685a"
+    },
+    {
+      "path": "platform-tools/NOTICE.txt",
+      "sha256": "c29da8f704720fa1d3d802b834b86d9c023f20ae2596a8f2a4e17ed5490b17ae"
+    },
+    {
+      "path": "platform-tools/adb",
+      "sha256": "a902be8f45c6c62e76c9efaf6947a0fa747c9cabd89a2ac8e0d16ecb30b3ed01"
+    },
+    {
+      "path": "platform-tools/etc1tool",
+      "sha256": "1057739318002324f12e468fe22bc0a0533f3ca3428b4b7dc79855a3053428b9"
+    },
+    {
+      "path": "platform-tools/fastboot",
+      "sha256": "a686e2c7e8dc9cf4cba0cb8a2eef05f7b2bd682c925abd032fe203215d80b618"
+    },
+    {
+      "path": "platform-tools/hprof-conv",
+      "sha256": "f0b41063a4420667d52689cf7739899a23d5a88653037be12d9106023f670e02"
+    },
+    {
+      "path": "platform-tools/lib64/libc++.so",
+      "sha256": "6cb165d671ced6a719b153b72e5d1b0a9cfd488badccc92d0aee55eda294f8ff"
+    },
+    {
+      "path": "platform-tools/make_f2fs",
+      "sha256": "16d06d185b62c7401e1b1468c1b7830c35f18f1cd78be21333cf340c1fe78a4c"
+    },
+    {
+      "path": "platform-tools/make_f2fs_casefold",
+      "sha256": "ddf5bdad689a9af9314865868e0fe9310b52f8dc0369ee3f01b8ffbb3b89a90f"
+    },
+    {
+      "path": "platform-tools/mke2fs",
+      "sha256": "78d622cb0bf46409e2c040b729bcbda9f986e162cfd1fe8f98dd2b4efeac6ee9"
+    },
+    {
+      "path": "platform-tools/mke2fs.conf",
+      "sha256": "ad58a58dcdd24d85055814ca9cac67db89d4e67c434e96774bdce0d0a007d067"
+    },
+    {
+      "path": "platform-tools/source.properties",
+      "sha256": "2dccd788c0234d8cf7f7457377e57f57527a86a629c6ed54feb8af0f549dac38"
+    },
+    {
+      "path": "platform-tools/sqlite3",
+      "sha256": "2e903ef0a08117c6c25016732047ee9905123cf235e10ff36a99e57c5ccc4496"
+    },
+    {
+      "path": "platform/android-37.0/android.jar",
+      "sha256": "bf1b4387cc7ca94fc6ef684f040d9d16fbf16248e181819f020736ea2053f177"
+    },
+    {
+      "path": "platform/android-37.0/source.properties",
+      "sha256": "fa89029fc0cee414cb5e44a37cd3033771217eeecb5086577bb6d9b1b03b5b5f"
+    },
+    {
+      "path": "system-image/x86_64/NOTICE.txt",
+      "sha256": "498bb8ab48e116d20862f18c5331a48eb3314b2561ac0f4ebcaf16a81b3f2713"
+    },
+    {
+      "path": "system-image/x86_64/VerifiedBootParams.textproto",
+      "sha256": "865d3c5d05591f695bfdb091bc1a3828f675f4e75d41f467b6cea400370423b5"
+    },
+    {
+      "path": "system-image/x86_64/advancedFeatures.ini",
+      "sha256": "7e0d7d2acf0ded1bc4b445356d93fd6759c99956620c4141cd63f7363c326149"
+    },
+    {
+      "path": "system-image/x86_64/build.prop",
+      "sha256": "9a7e1122391cf8e23674d8c293b81faa3be4163886c976a478864be062ffe5ba"
+    },
+    {
+      "path": "system-image/x86_64/data/empty_data_disk",
+      "sha256": "e4dc7c33a83013f3d9eb9b5a5693c912e83a9c7f978933b5c7600039dbfde903"
+    },
+    {
+      "path": "system-image/x86_64/data/local.prop",
+      "sha256": "49b05d093a46d35d85df01fb99133f077fcc725cc49efe1a1bedae884d24e20b"
+    },
+    {
+      "path": "system-image/x86_64/data/misc/GoldfishSkinConfig",
+      "sha256": "763b66cad27dc57354f456bb763e27acf8859059890e6515daba90e77c906b75"
+    },
+    {
+      "path": "system-image/x86_64/data/misc/emulator/config/radioconfig.xml",
+      "sha256": "534a81b662ad62fc70ec0ea22715670524a05a066afc9fdac8e7c0f5a7789cd7"
+    },
+    {
+      "path": "system-image/x86_64/data/misc/emulator/version.txt",
+      "sha256": "5473738546fe1e52dd625dffa4ac1d8f9fb4964e4be9e159bbae8212d0a2c03d"
+    },
+    {
+      "path": "system-image/x86_64/data/misc/modem_simulator/etc/modem_simulator/files/numeric_operator.xml",
+      "sha256": "c2557e604beea20b67642cdbb14ae7b792f804e4476b3f6cf47035690234f436"
+    },
+    {
+      "path": "system-image/x86_64/data/misc/modem_simulator/iccprofile_for_carrierapitests.xml",
+      "sha256": "dc4b5f5344f084fc44f89250bbcf2b12e452eb98c104e4ef3ec115366eb6ce32"
+    },
+    {
+      "path": "system-image/x86_64/data/misc/modem_simulator/iccprofile_for_sim0.xml",
+      "sha256": "a2744726a306b18d7547251026201aa5c6a9e120aa1555992eeb8b0a3b4aa6d9"
+    },
+    {
+      "path": "system-image/x86_64/data/misc/modem_simulator/iccprofile_for_sim_tel_alaska.xml",
+      "sha256": "462cc26ddaa9d6c470a2d9415771c80e323b526b1863f099accb298955b14db3"
+    },
+    {
+      "path": "system-image/x86_64/data/misc/pixel_10_pro_fold/devicestate/device_state_configuration.xml",
+      "sha256": "86e021141048b6b957b021c3478c3e74a76ac0ec4e7312bceae74a81dcf3c8b9"
+    },
+    {
+      "path": "system-image/x86_64/data/misc/pixel_10_pro_fold/display_settings.xml",
+      "sha256": "2adca8f98a2c8ee0f780e10ca16587ac92641df5e93ab4437c3c47ad41b0041d"
+    },
+    {
+      "path": "system-image/x86_64/data/misc/pixel_10_pro_fold/displayconfig/display_layout_configuration.xml",
+      "sha256": "a64e2eca65bc2f9196215fb72a88c9035a584319f8b3da3606fff161be642be8"
+    },
+    {
+      "path": "system-image/x86_64/data/misc/pixel_10_pro_fold/extra_feature.xml",
+      "sha256": "ba27b7a61457027e2a77917f8b07d716d3e918097901a14833749252b15aa38f"
+    },
+    {
+      "path": "system-image/x86_64/data/misc/pixel_9_pro_fold/devicestate/device_state_configuration.xml",
+      "sha256": "86e021141048b6b957b021c3478c3e74a76ac0ec4e7312bceae74a81dcf3c8b9"
+    },
+    {
+      "path": "system-image/x86_64/data/misc/pixel_9_pro_fold/display_settings.xml",
+      "sha256": "2adca8f98a2c8ee0f780e10ca16587ac92641df5e93ab4437c3c47ad41b0041d"
+    },
+    {
+      "path": "system-image/x86_64/data/misc/pixel_9_pro_fold/displayconfig/display_layout_configuration.xml",
+      "sha256": "a64e2eca65bc2f9196215fb72a88c9035a584319f8b3da3606fff161be642be8"
+    },
+    {
+      "path": "system-image/x86_64/data/misc/pixel_9_pro_fold/extra_feature.xml",
+      "sha256": "ba27b7a61457027e2a77917f8b07d716d3e918097901a14833749252b15aa38f"
+    },
+    {
+      "path": "system-image/x86_64/data/misc/pixel_fold/devicestate/device_state_configuration.xml",
+      "sha256": "86e021141048b6b957b021c3478c3e74a76ac0ec4e7312bceae74a81dcf3c8b9"
+    },
+    {
+      "path": "system-image/x86_64/data/misc/pixel_fold/display_settings.xml",
+      "sha256": "2adca8f98a2c8ee0f780e10ca16587ac92641df5e93ab4437c3c47ad41b0041d"
+    },
+    {
+      "path": "system-image/x86_64/data/misc/pixel_fold/displayconfig/display_layout_configuration.xml",
+      "sha256": "a64e2eca65bc2f9196215fb72a88c9035a584319f8b3da3606fff161be642be8"
+    },
+    {
+      "path": "system-image/x86_64/data/misc/pixel_fold/extra_feature.xml",
+      "sha256": "ba27b7a61457027e2a77917f8b07d716d3e918097901a14833749252b15aa38f"
+    },
+    {
+      "path": "system-image/x86_64/encryptionkey.img",
+      "sha256": "522bd0b6a2c92e37de465059bb9487bb9597a9aae032b469a8ebe0b38146d8c3"
+    },
+    {
+      "path": "system-image/x86_64/kernel-ranchu",
+      "sha256": "4b8a752539c967c3959af6768c1e118a0e41b36b53dcf03a122a011725c14896"
+    },
+    {
+      "path": "system-image/x86_64/kernel_cmdline.txt",
+      "sha256": "ec34f1f155caa37116a3396e454beefab1eed40b66d95027450a1e4dbb95b2ff"
+    },
+    {
+      "path": "system-image/x86_64/ramdisk.img",
+      "sha256": "1a3822e981bd07308b48882d205e91e893eff40a27e566a84b597180f2ad426b"
+    },
+    {
+      "path": "system-image/x86_64/source.properties",
+      "sha256": "bf15b0b43bd0155b258b3756cf523dd917735042633edbb645b34c285a45832d"
+    },
+    {
+      "path": "system-image/x86_64/system.img",
+      "sha256": "ca98470938276fbdf5501dfda3c276a5b43e32514900f2ceeec808bdc7711d17"
+    },
+    {
+      "path": "system-image/x86_64/vendor.img",
+      "sha256": "fb76b3cb619100e5d63f5147be982bb31afeb9beb726e82ce9239d295487ad9b"
+    }
+  ],
+  "authored_source_inventory": [
+    {
+      "path": "framework/shannon-add-pdn-oracle/RegistrationAddPdnCodecOracle.java",
+      "sha256": "2bf4e066a7c5a44d57e67e34a48c0e2383a9dc0118e9cd009026b882047d7057"
+    }
+  ],
+  "base_commit": "5b455059d7c53023446d77ef05b191928f90a672",
+  "claims": {
+    "authored_Java_only_copied": true,
+    "no_original_method_changes": true,
+    "no_predeclared_output_vectors": true,
+    "original_getBytes_only": true,
+    "outward_normal_codec_returns": true,
+    "private_pins_notes_raw_inputs_APK_not_copied": true
+  },
+  "compiler": {
+    "D8_argv": [
+      "/workspace/android-framework/sdk/build-tools/android-37.0/d8",
+      "--lib",
+      "/workspace/android-framework/sdk/platform/android-37.0/android.jar",
+      "--min-api",
+      "31",
+      "--output",
+      "/results/build/dex",
+      "/results/build/classes/org/omarchy/audit/RegistrationAddPdnCodecOracle$Input.class",
+      "/results/build/classes/org/omarchy/audit/RegistrationAddPdnCodecOracle.class"
+    ],
+    "artifact_inventory": [
+      {
+        "path": "classes.dex",
+        "sha256": "46f8455fa514f3d8181d55d283ea39a9cc18a277f4f8f9c08ca17d9d9f294272"
+      },
+      {
+        "path": "oracle.jar",
+        "sha256": "3548474e8b1d75ff3fa353799054c72acb29865a5e518d77ae7916edc2fc5cc8"
+      }
+    ],
+    "class_definitions": [
+      "org.omarchy.audit.RegistrationAddPdnCodecOracle",
+      "org.omarchy.audit.RegistrationAddPdnCodecOracle$Input"
+    ],
+    "compile_only_stubs": [],
+    "compiler_metadata_definitions": [],
+    "generated_class_inventory": [
+      {
+        "path": "classes/org/omarchy/audit/RegistrationAddPdnCodecOracle$Input.class",
+        "sha256": "3eb5212eae2683fb749a056f3e770de22336d475338e42bff625d4f5baa7e396"
+      },
+      {
+        "path": "classes/org/omarchy/audit/RegistrationAddPdnCodecOracle.class",
+        "sha256": "6c37e470143932627873ede09ea0afa5d6a8a5046b0b14bdf529e02b11eb00ce"
+      }
+    ],
+    "javac_argv": [
+      "javac",
+      "-cp",
+      "/workspace/android-framework/sdk/platform/android-37.0/android.jar",
+      "-source",
+      "8",
+      "-target",
+      "8",
+      "-Xlint:-options",
+      "-sourcepath",
+      "/results/build/sourcepath-empty",
+      "-implicit:none",
+      "-proc:none",
+      "-d",
+      "/results/build/classes",
+      "/inputs/runtime-src/org/omarchy/audit/RegistrationAddPdnCodecOracle.java"
+    ],
+    "runtime_classpath": "/data/local/tmp/pokelinux-add-pdn/oracle.jar:/data/local/tmp/pokelinux-add-pdn/input.apk"
+  },
+  "finite_count_observations": {
+    "ipv4_count8_count9_byte_identical": true,
+    "ipv4_input9_stored8": true,
+    "ipv6_input9_stored9_length807": true
+  },
+  "input_binding_inventory": [
+    {
+      "category": "closed-run-receipt",
+      "path": "/tmp/pokelinux-add-pdn-sdk37-root-1/inputs/selection.json",
+      "sha256": "4a869cff551de4d50a6b8591972d09d29b221573c74f7ac6ea79d854168467f2"
+    },
+    {
+      "category": "closed-run-receipt",
+      "path": "/tmp/pokelinux-add-pdn-sdk37-root-1/inputs/command.json",
+      "sha256": "dc68234e9ca468cc398fd2280b51d1f2982f5a986269cd3c8c3cb62a4396bf40"
+    },
+    {
+      "category": "closed-run-receipt",
+      "path": "/tmp/pokelinux-add-pdn-sdk37-root-1/outputs/result.json",
+      "sha256": "ff8bb30897987aa66534358222d29178f3061ea2d320cb458456ca5ece34d2ce"
+    },
+    {
+      "category": "closed-run-receipt",
+      "path": "/tmp/pokelinux-add-pdn-sdk37-root-1/outputs/execution.json",
+      "sha256": "0785b9171ec19435d0924d7008046e44904a98103cfd552ecb67ea06c1277795"
+    },
+    {
+      "category": "closed-run-receipt",
+      "path": "/tmp/pokelinux-add-pdn-sdk37-root-1/outputs/original-records.json",
+      "sha256": "82199769805ebb81ade10cc5b6cab6dcba13e13d7b6fa308642b89350167975a"
+    },
+    {
+      "category": "selected-input",
+      "path": "/tmp/pokelinux-add-pdn-sdk37-root-1/inputs/CONTRACT.json",
+      "sha256": "ca249d3bfa760956b5950fad36dbe1b97a0c9bc3f9928d40a9d5d1a405375e6b"
+    },
+    {
+      "category": "selected-input",
+      "path": "/tmp/pokelinux-add-pdn-sdk37-root-1/inputs/ORIGINAL_METHOD_PINS.json",
+      "sha256": "ee9b89d6e2c1f09ef9bf1cd7158fb43f1a10d22577b5a6be323f0056f7e86f87"
+    },
+    {
+      "category": "selected-input",
+      "path": "/tmp/pokelinux-add-pdn-sdk37-root-1/inputs/README.md",
+      "sha256": "874bbb4a2afd324ad87d060e3fe2081af37a31a77e5fe10aa36d9fb733e7db99"
+    },
+    {
+      "category": "selected-input",
+      "path": "/tmp/pokelinux-add-pdn-sdk37-root-1/inputs/avd-config.ini",
+      "sha256": "2a482ada338b2db6bd379c10ad74ef170055df92a6d3abf7dd07a0734d1314a6"
+    },
+    {
+      "category": "selected-input",
+      "path": "/tmp/pokelinux-add-pdn-sdk37-root-1/inputs/compile-only-api/README.txt",
+      "sha256": "61fd9d5668a1e962698951d391cfc35d1dc58128abc559f89fec8c84312c89c6"
+    },
+    {
+      "category": "selected-input",
+      "path": "/tmp/pokelinux-add-pdn-sdk37-root-1/inputs/compiler.py",
+      "sha256": "5c99af10ab9b18b4fae7cc7c31a2451f51d70decaaa729131b22400beea2cfe1"
+    },
+    {
+      "category": "selected-input",
+      "path": "/tmp/pokelinux-add-pdn-sdk37-root-1/inputs/container.py",
+      "sha256": "ebfacc366803d8afe9c57753bcc13f3fe17b9781f886f63a1e126072e26d4924"
+    },
+    {
+      "category": "selected-input",
+      "path": "/tmp/pokelinux-add-pdn-sdk37-root-1/inputs/dex_inventory.py",
+      "sha256": "bc80edae2d20453f8c000cc6b4396b247b45bc2742bbb59cadca1a654dda40f5"
+    },
+    {
+      "category": "selected-input",
+      "path": "/tmp/pokelinux-add-pdn-sdk37-root-1/inputs/input.apk",
+      "sha256": "8b017599727398e80df5ab618d648890dcdc34b5fe2ba71fb2331e51bd8b8879"
+    },
+    {
+      "category": "selected-input",
+      "path": "/tmp/pokelinux-add-pdn-sdk37-root-1/inputs/oracle-hashes.json",
+      "sha256": "02df88466b725eab32d6948cc52fc215d4d436be82f6e8ac501e018c22d8afc6"
+    },
+    {
+      "category": "selected-input",
+      "path": "/tmp/pokelinux-add-pdn-sdk37-root-1/inputs/oracle-launch.sh",
+      "sha256": "abbdc3e2ba68758c3142602ea3103818964f0806f0b6a586e772a1a581e65599"
+    },
+    {
+      "category": "selected-input",
+      "path": "/tmp/pokelinux-add-pdn-sdk37-root-1/inputs/oracle-manifest.json",
+      "sha256": "8a0a64b48a201d3885c730869979eb01686b9414662365b3176e0ea99d195e0a"
+    },
+    {
+      "category": "selected-input",
+      "path": "/tmp/pokelinux-add-pdn-sdk37-root-1/inputs/owned.py",
+      "sha256": "156ea16b3bbc672923bba4873c1d10ef58127fe41572f68896e33696816e05fe"
+    },
+    {
+      "category": "selected-input",
+      "path": "/tmp/pokelinux-add-pdn-sdk37-root-1/inputs/plan.py",
+      "sha256": "c956be6dc27926035b72a8ae9a285812a2ac05dd88deb0b927ded6f6bd9f901a"
+    },
+    {
+      "category": "selected-input",
+      "path": "/tmp/pokelinux-add-pdn-sdk37-root-1/inputs/run-selected.py",
+      "sha256": "bdc345139409b36b10295a9653caa5a7830456d3a616e76f6b900f1c31e98fa2"
+    },
+    {
+      "category": "selected-input",
+      "path": "/tmp/pokelinux-add-pdn-sdk37-root-1/inputs/runtime-src/org/omarchy/audit/RegistrationAddPdnCodecOracle.java",
+      "sha256": "2bf4e066a7c5a44d57e67e34a48c0e2383a9dc0118e9cd009026b882047d7057"
+    },
+    {
+      "category": "selected-input",
+      "path": "/tmp/pokelinux-add-pdn-sdk37-root-1/inputs/sdk-files.json",
+      "sha256": "70a54b456ea3b581e5f073f1a9495d1ad2bc454579734673d14d7d56d045fb48"
+    },
+    {
+      "category": "original-source-or-tool-input",
+      "path": "/tmp/pokelinux-registration-route-sdk37-root-2/inputs/sdk-files.json",
+      "sha256": "70a54b456ea3b581e5f073f1a9495d1ad2bc454579734673d14d7d56d045fb48"
+    },
+    {
+      "category": "original-source-or-tool-input",
+      "path": "/home/ubuntu/Projects/pokelinux/artifacts/telephony-audit/input/system_ext/priv-app/ShannonIms/ShannonIms.apk",
+      "sha256": "8b017599727398e80df5ab618d648890dcdc34b5fe2ba71fb2331e51bd8b8879"
+    },
+    {
+      "category": "original-source-or-tool-input",
+      "path": "/tmp/pokelinux-add-pdn-oracle-sol/source-manifest.json",
+      "sha256": "8a0a64b48a201d3885c730869979eb01686b9414662365b3176e0ea99d195e0a"
+    },
+    {
+      "category": "original-source-or-tool-input",
+      "path": "/tmp/pokelinux-add-pdn-oracle-sol/hashes.json",
+      "sha256": "02df88466b725eab32d6948cc52fc215d4d436be82f6e8ac501e018c22d8afc6"
+    },
+    {
+      "category": "original-source-or-tool-input",
+      "path": "/tmp/pokelinux-add-pdn-oracle-sol/runtime-src/org/omarchy/audit/RegistrationAddPdnCodecOracle.java",
+      "sha256": "2bf4e066a7c5a44d57e67e34a48c0e2383a9dc0118e9cd009026b882047d7057"
+    },
+    {
+      "category": "original-source-or-tool-input",
+      "path": "/tmp/pokelinux-add-pdn-oracle-sol/CONTRACT.json",
+      "sha256": "ca249d3bfa760956b5950fad36dbe1b97a0c9bc3f9928d40a9d5d1a405375e6b"
+    },
+    {
+      "category": "original-source-or-tool-input",
+      "path": "/tmp/pokelinux-add-pdn-oracle-sol/ORIGINAL_METHOD_PINS.json",
+      "sha256": "ee9b89d6e2c1f09ef9bf1cd7158fb43f1a10d22577b5a6be323f0056f7e86f87"
+    },
+    {
+      "category": "original-source-or-tool-input",
+      "path": "/tmp/pokelinux-add-pdn-oracle-sol/README.md",
+      "sha256": "874bbb4a2afd324ad87d060e3fe2081af37a31a77e5fe10aa36d9fb733e7db99"
+    },
+    {
+      "category": "original-source-or-tool-input",
+      "path": "/tmp/pokelinux-add-pdn-oracle-sol/compile-only-api/README.txt",
+      "sha256": "61fd9d5668a1e962698951d391cfc35d1dc58128abc559f89fec8c84312c89c6"
+    },
+    {
+      "category": "original-source-or-tool-input",
+      "path": "/tmp/pokelinux-add-pdn-sdk-envelope-sol/plan.py",
+      "sha256": "c956be6dc27926035b72a8ae9a285812a2ac05dd88deb0b927ded6f6bd9f901a"
+    },
+    {
+      "category": "original-source-or-tool-input",
+      "path": "/tmp/pokelinux-add-pdn-sdk-envelope-sol/run-selected.py",
+      "sha256": "bdc345139409b36b10295a9653caa5a7830456d3a616e76f6b900f1c31e98fa2"
+    },
+    {
+      "category": "original-source-or-tool-input",
+      "path": "/tmp/pokelinux-add-pdn-sdk-envelope-sol/container.py",
+      "sha256": "ebfacc366803d8afe9c57753bcc13f3fe17b9781f886f63a1e126072e26d4924"
+    },
+    {
+      "category": "original-source-or-tool-input",
+      "path": "/tmp/pokelinux-add-pdn-sdk-envelope-sol/owned.py",
+      "sha256": "156ea16b3bbc672923bba4873c1d10ef58127fe41572f68896e33696816e05fe"
+    },
+    {
+      "category": "original-source-or-tool-input",
+      "path": "/tmp/pokelinux-add-pdn-sdk-envelope-sol/oracle-launch.sh",
+      "sha256": "abbdc3e2ba68758c3142602ea3103818964f0806f0b6a586e772a1a581e65599"
+    },
+    {
+      "category": "original-source-or-tool-input",
+      "path": "/tmp/pokelinux-add-pdn-sdk-envelope-sol/compiler.py",
+      "sha256": "5c99af10ab9b18b4fae7cc7c31a2451f51d70decaaa729131b22400beea2cfe1"
+    },
+    {
+      "category": "original-source-or-tool-input",
+      "path": "/tmp/pokelinux-add-pdn-sdk-envelope-sol/dex_inventory.py",
+      "sha256": "bc80edae2d20453f8c000cc6b4396b247b45bc2742bbb59cadca1a654dda40f5"
+    },
+    {
+      "category": "javac-class",
+      "path": "/tmp/pokelinux-add-pdn-sdk37-root-1/outputs/build/classes/org/omarchy/audit/RegistrationAddPdnCodecOracle$Input.class",
+      "sha256": "3eb5212eae2683fb749a056f3e770de22336d475338e42bff625d4f5baa7e396"
+    },
+    {
+      "category": "javac-class",
+      "path": "/tmp/pokelinux-add-pdn-sdk37-root-1/outputs/build/classes/org/omarchy/audit/RegistrationAddPdnCodecOracle.class",
+      "sha256": "6c37e470143932627873ede09ea0afa5d6a8a5046b0b14bdf529e02b11eb00ce"
+    },
+    {
+      "category": "D8-DEX",
+      "path": "/tmp/pokelinux-add-pdn-sdk37-root-1/outputs/build/dex/classes.dex",
+      "sha256": "46f8455fa514f3d8181d55d283ea39a9cc18a277f4f8f9c08ca17d9d9f294272"
+    },
+    {
+      "category": "runtime-JAR",
+      "path": "/tmp/pokelinux-add-pdn-sdk37-root-1/outputs/build/oracle.jar",
+      "sha256": "3548474e8b1d75ff3fa353799054c72acb29865a5e518d77ae7916edc2fc5cc8"
+    }
+  ],
+  "observed_association": {
+    "actual_original_bindings": 61,
+    "message_code": 105,
+    "message_enum": "RILC_REQ_AIMS_ADD_PDN_INFO",
+    "setters_per_case": 40
+  },
+  "observed_cases": [
+    {
+      "case_id": "numeric-v4-v6-pcscf1-wire0-fixed-time",
+      "complete_typed_input_sha256": "961cc7595894556bc05a0993d7f33313e5eb81ac110b110a57e65a34d5980cd1",
+      "length": 683,
+      "message_code": 105,
+      "outward_normal_return": true,
+      "setter_count": 40,
+      "stored_pcscf_ipv4_count": 1,
+      "stored_pcscf_ipv6_count": 1,
+      "vector_sha256": "fae186e9907c2af18aa995fb51ffedca38cab03a9627098adf7852a1a0f73608"
+    },
+    {
+      "case_id": "empty-pcscf-wire2-fixed-time",
+      "complete_typed_input_sha256": "8df8cff832c98d423b3bc0e2ea9db62f6b4b80aa6f028e21515c255e77d88f94",
+      "length": 663,
+      "message_code": 105,
+      "outward_normal_return": true,
+      "setter_count": 40,
+      "stored_pcscf_ipv4_count": 0,
+      "stored_pcscf_ipv6_count": 0,
+      "vector_sha256": "c306d3ac2875a1938c8ba8f91362fc29cc5e504f3eb7b254347e6a11050ab02d"
+    },
+    {
+      "case_id": "empty-pcscf-wire2-null-optionals",
+      "complete_typed_input_sha256": "1bd93684c4d9b1b32aed32ab6235c5415285c00a475a369a0992898c47c35dec",
+      "length": 663,
+      "message_code": 105,
+      "outward_normal_return": true,
+      "setter_count": 40,
+      "stored_pcscf_ipv4_count": 0,
+      "stored_pcscf_ipv6_count": 0,
+      "vector_sha256": "88a31e8c6654b5bef886ea90126e66e39b15e78e3e8cc2fda54cd2349cbd5ef0"
+    },
+    {
+      "case_id": "pcscf-v4-count8",
+      "complete_typed_input_sha256": "19d728a054029e729faad1a90dd8b89e69b8868e47062d10eb9f2fb0146b4a79",
+      "length": 695,
+      "message_code": 105,
+      "outward_normal_return": true,
+      "setter_count": 40,
+      "stored_pcscf_ipv4_count": 8,
+      "stored_pcscf_ipv6_count": 0,
+      "vector_sha256": "5852500692b3176e53aadf4344e749cca1be07cd7dce700e4678b1c290e03b42"
+    },
+    {
+      "case_id": "pcscf-v4-count9",
+      "complete_typed_input_sha256": "7455f64ff8700d123d30eecd48672d94f6900206447a1d957ac0bdd35373db0b",
+      "length": 695,
+      "message_code": 105,
+      "outward_normal_return": true,
+      "setter_count": 40,
+      "stored_pcscf_ipv4_count": 8,
+      "stored_pcscf_ipv6_count": 0,
+      "vector_sha256": "5852500692b3176e53aadf4344e749cca1be07cd7dce700e4678b1c290e03b42"
+    },
+    {
+      "case_id": "pcscf-v6-count8",
+      "complete_typed_input_sha256": "39d47c26f3ccee16a4d15ae465830832da0e6723be5b1806c73e363292bb7ff9",
+      "length": 791,
+      "message_code": 105,
+      "outward_normal_return": true,
+      "setter_count": 40,
+      "stored_pcscf_ipv4_count": 0,
+      "stored_pcscf_ipv6_count": 8,
+      "vector_sha256": "9214df2beff0139b46529f9dadab3957e500f789552d7dca35c79a14a589e091"
+    },
+    {
+      "case_id": "pcscf-v6-count9",
+      "complete_typed_input_sha256": "6cbae79add827ed6384dcd4794a5f59e27c9657c83a9a5bf00daa93cf82c3b31",
+      "length": 807,
+      "message_code": 105,
+      "outward_normal_return": true,
+      "setter_count": 40,
+      "stored_pcscf_ipv4_count": 0,
+      "stored_pcscf_ipv6_count": 9,
+      "vector_sha256": "bf98362b6cf9f61dd4fabe9b881b22334f0f730e847a073698c38a6f36d80e1b"
+    }
+  ],
+  "original_thread": {
+    "actual_join_called": true,
+    "after": {
+      "alive": false,
+      "java_id": 9,
+      "looper_identity": true,
+      "looper_thread_identity": true,
+      "name": "SolicitedMessageHandler",
+      "proc_task_present": false,
+      "source": "com.shannon.imsservice.network.adaptor.SolicitedMessage.mHandlerThread",
+      "static_field_identity": true,
+      "tid": 1959
+    },
+    "before": {
+      "alive": true,
+      "java_id": 9,
+      "looper_identity": true,
+      "looper_thread_identity": true,
+      "name": "SolicitedMessageHandler",
+      "proc_task_present": true,
+      "source": "com.shannon.imsservice.network.adaptor.SolicitedMessage.mHandlerThread",
+      "static_field_identity": true,
+      "tid": 1959
+    },
+    "capture_exception": null,
+    "case_id": "original-thread-closure",
+    "clock": "CLOCK_BOOTTIME/SystemClock.elapsedRealtimeNanos",
+    "joined_at_ns": 24586893700,
+    "original_case_until_ns": 44564687217,
+    "original_cleanup_until_ns": 49564687217,
+    "quit_accepted": true,
+    "quit_at_ns": 24576669063,
+    "quit_requested": true,
+    "record": "thread_closure",
+    "schema": 1,
+    "task_absence_observed_at_ns": 24586950608
+  },
+  "passed": true,
+  "raw_output": {
+    "authored_JSON_records": 10,
+    "bytes": 49604,
+    "log_path": "adb-117-original-app-process.log",
+    "other_diagnostic_lines": 0,
+    "retained_privately": true,
+    "sha256": "160389dce9c79d88bcd6a022f5e363c43e92fa514d7ce96505c6cd1a06743711",
+    "shell_markers": 2
+  },
+  "remaining": {
+    "actual_suspend_qualified": false,
+    "native_encoder_qualified": false,
+    "physical_phone_or_GUI_qualified": false,
+    "protocol_validity_or_defect_claim": false,
+    "remote_acceptance_cleanup_retry_or_carrier_claim": false,
+    "request_dispatch_or_APN_acquisition_qualified": false
+  },
+  "run_receipt_inventory": [
+    {
+      "path": "inputs/selection.json",
+      "sha256": "4a869cff551de4d50a6b8591972d09d29b221573c74f7ac6ea79d854168467f2"
+    },
+    {
+      "path": "inputs/command.json",
+      "sha256": "dc68234e9ca468cc398fd2280b51d1f2982f5a986269cd3c8c3cb62a4396bf40"
+    },
+    {
+      "path": "outputs/result.json",
+      "sha256": "ff8bb30897987aa66534358222d29178f3061ea2d320cb458456ca5ece34d2ce"
+    },
+    {
+      "path": "outputs/execution.json",
+      "sha256": "0785b9171ec19435d0924d7008046e44904a98103cfd552ecb67ea06c1277795"
+    },
+    {
+      "path": "outputs/original-records.json",
+      "sha256": "82199769805ebb81ade10cc5b6cab6dcba13e13d7b6fa308642b89350167975a"
+    }
+  ],
+  "runtime": {
+    "ADB_actual_wait_exit": 0,
+    "APK_installed": false,
+    "SDK_files": 447,
+    "all_actual_waits_and_EOF_before_original_cutoffs": true,
+    "all_input_pins_rehashed": true,
+    "app_proc_absent_after_wait": true,
+    "app_shell_actual_wait_exit": 0,
+    "direct_container_children": 122,
+    "emulator_actual_wait_exit": 0,
+    "final_boot_poll_observed_completed_before_original_probe": true,
+    "foreground_ADB_server_actual_wait_signal": 15,
+    "fresh_HOME_AVD": true,
+    "guest_metadata": {
+      "abi": "x86_64",
+      "avd_name": "add-pdn-sdk37\r\nOK",
+      "density": "Physical density: 420",
+      "qemu": "1",
+      "sdk": "37",
+      "selinux": "Enforcing",
+      "size": "Physical size: 1080x2424"
+    },
+    "image": "sha256:fcc63fb8f191a5b15cd9a64d04a26bb06b009216a2cd4e4de0f6931b6c919838",
+    "network": "none",
+    "nonzero_initial_discovery_or_offline_polls": 30,
+    "only_host_device": "/dev/kvm",
+    "owned_Docker_CLI_actual_wait_exit": 0,
+    "same_daemon": true,
+    "same_live_CID_then_fresh_exact_absence": true,
+    "setup_boot_polls": 102
+  },
+  "schema": 1,
+  "scope": "original add-PDN getBytes codec on seven explicit authored inputs; SDK37 x86 reference only",
+  "verified_binding_records": 942
+}

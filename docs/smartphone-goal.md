@@ -6,6 +6,11 @@ Build and test everything possible offline on temporary Harbour capacity. Do not
 
 **No backwards compatibility:** build one target implementation and matching component set. Do not add legacy adapters, dual production runtimes, old-format migrations or downgrade support for earlier iterations. Test required behavior and restart recovery within the target version. Prior code and artifacts provide evidence, not a requirement to preserve old formats.
 
+The [original add-PDN codec probe](native-ims-add-pdn.md) now qualifies seven
+complete getBytes returns with40 typed setter inputs each and actual code105 in
+SDK37 x86. It sends no request and adds no APN ownership/acquisition authority;
+a native byte-for-byte port remains the next codec gate.
+
 The [installed slot1 registration tracer](native-radio-registration-installed.md)
 now carries one original-qualified complete wire payload through actual ARM
 Binder, the native owner, typed worker IPC and restricted status under the
