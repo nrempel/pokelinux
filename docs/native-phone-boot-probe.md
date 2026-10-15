@@ -1,16 +1,24 @@
 # First native boot probe
 
-A separate [offline development diagnostic bundle](native-boot-development-bundle.md)
-now contains a reproducible complete8MiB `init_boot`, fresh unsigned NONE metadata,
-exact stock restoration asset and four unchanged boot/vendor/DTBO reference
-images. A real successful-compact/missing-full-image RED precedes fixed-witness
-GREEN with original AOSP unpack/AVB, Rust geometry and exact native payload
-checks. Local NONE integrity is not stock trust or Pixel loader acceptance.
-The retained stock file is not a current-phone backup; slot, actual policy,
-retrievable diagnostics and independent recovery remain unqualified. No phone
-operation or new kernel run occurs. The next first-boot work is native PID1 PMSG
-reporting and synthetic reset retrieval; full IMS/graphics are not prerequisites
-for that diagnostic experiment. Full smartphone deployment remains refused.
+The [native PID1 PMSG checkpoint](native-boot-native-pmsg.md) now retains exact
+success and child-failure diagnostics through synthetic post-PowerOff reset
+under the authenticated Google4K kernel. Compiled Unsupported RED precedes a
+single-file backend repair and fixed-witness GREEN; actual missing PMSG still
+completes ordinary boot. Five GREEN boots produce20 correlated ACKs.
+
+The [complete offline diagnostic bundle](native-boot-development-bundle.md)
+now pins that native init in a reproducible8MiB image, with unsigned NONE metadata,
+exact stock restoration and four unchanged reference assets. A separate actual
+metadata RED precedes the corrected PMSG integration flag. Two current-package
+Arch replays remain failed because console output interleaves inside ACKs;
+child37, powerdown and owned closure do not turn those checks green. Historical
+Arch/full-ramdisk evidence keeps its original binary bindings.
+
+Pixel loader admission/selection, current-state restoration, independently
+accessible recovery, physical diagnostics retrieval and board/shutdown/watchdog/
+thermal/charging remain first-device gates. No phone was accessed. Full IMS and
+graphics are separate from that diagnostic experiment; full smartphone deployment
+remains refused.
 
 2026-10-14UTC checkpoint: the restricted native PID1 now requires kernel-ring
 readback for its diagnostics. An actual-kernel absence RED against the original
@@ -47,7 +55,8 @@ same-FD drop/overflow controls remain open. A later separate
 [Google-kernel warm-reset experiment](native-boot-warm-reset.md) qualifies synthetic
 console/PMSG retrieval; Pixel retention/retrieval remains open.
 
-The current unsigned candidate is1,462,272 bytes and binds the repaired init.
+The preceding unsigned candidate is1,462,272 bytes and binds the earlier
+kmsg reporter init; its following evidence retains that exact payload.
 Its independently decoded generic archive supplies `/dev/kmsg` as a0600
 character1:11 node; the selected two vendor fragments plus generic frame retain
 the final native `/init`. Two actual builds, original unpacking/Rust geometry and
@@ -64,7 +73,7 @@ userspace or Pixel board executes. Earlier images and evidence remain historical
 The separate [original AVB checks](native-boot-avb.md) qualify five internally
 consistent signed metadata blocks, four child key/rollback-slot agreements and
 16 available descriptor checks. Another27 payload checks remain unavailable. The
-unsigned candidate has no parseable VBMeta and fails the stock init_boot
+then-selected compact unsigned candidate has no parseable VBMeta and fails the stock init_boot
 descriptor. This establishes a concrete admission gate, not phone acceptance.
 A later [bounded loader review](native-boot-loader-admission.md) corroborates a
 conditional v4 path that can prefer loaded stock init_boot generic data over a

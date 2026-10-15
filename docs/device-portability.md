@@ -27,6 +27,24 @@ PID1 remains shared Rust; selecting a different device requires its own matched
 assets, loader/diagnostic/recovery evidence and backend profile. Zero models
 are hardware-qualified.
 
+## Kernel choice
+
+The Android-derived kernel is an initial device-support choice, not a requirement
+of Rust services or Omarchy. Keep Google's matched kernel/modules/firmware for
+the first Pixel target; keep kernel/vendor operations behind explicit backends.
+This retains existing Linux drivers rather than rewriting the kernel in Rust.
+[Android GKI](https://source.android.com/docs/core/architecture/kernel/generic-kernel-image)
+separates the common Linux kernel from board/SoC vendor modules. Changing the
+kernel alone does not replace Android userspace, modem control or firmware.
+
+The September2026 [Pixel10 upstream series](https://patchew.org/linux/20260918-contrib-pg-pixel10-initial-dts-v4-0-745eaca28b1a@linaro.org/)
+explicitly establishes basic initramfs-shell boot. That is useful alternative
+bring-up evidence, not complete display/camera/modem/power qualification. Moving
+to upstream would require separately qualified device support; current synthetic
+virt boots prove neither kernel's full Pixel hardware behavior. Do not execute
+a public author's flash recipe or assume its partition/policy choices fit this
+project. The matched-kernel strategy remains in effect.
+
 ## Boundaries
 
 | Layer | Owns | Must not assume |

@@ -1,16 +1,24 @@
 # Native deployment admission checkpoint
 
-A separate [offline development diagnostic bundle](native-boot-development-bundle.md)
-now contains a reproducible complete8MiB `init_boot`, fresh unsigned NONE metadata,
-exact stock restoration asset and four unchanged boot/vendor/DTBO reference
-images. A real successful-compact/missing-full-image RED precedes fixed-witness
-GREEN with original AOSP unpack/AVB, Rust geometry and exact native payload
-checks. Local NONE integrity is not stock trust or Pixel loader acceptance.
-The retained stock file is not a current-phone backup; slot, actual policy,
-retrievable diagnostics and independent recovery remain unqualified. No phone
-operation or new kernel run occurs. The next first-boot work is native PID1 PMSG
-reporting and synthetic reset retrieval; full IMS/graphics are not prerequisites
-for that diagnostic experiment. Full smartphone deployment remains refused.
+The [native PID1 PMSG checkpoint](native-boot-native-pmsg.md) now retains exact
+success and child-failure diagnostics through synthetic post-PowerOff reset
+under the authenticated Google4K kernel. Compiled Unsupported RED precedes a
+single-file backend repair and fixed-witness GREEN; actual missing PMSG still
+completes ordinary boot. Five GREEN boots produce20 correlated ACKs.
+
+The [complete offline diagnostic bundle](native-boot-development-bundle.md)
+now pins that native init in a reproducible8MiB image, with unsigned NONE metadata,
+exact stock restoration and four unchanged reference assets. A separate actual
+metadata RED precedes the corrected PMSG integration flag. Two current-package
+Arch replays remain failed because console output interleaves inside ACKs;
+child37, powerdown and owned closure do not turn those checks green. Historical
+Arch/full-ramdisk evidence keeps its original binary bindings.
+
+Pixel loader admission/selection, current-state restoration, independently
+accessible recovery, physical diagnostics retrieval and board/shutdown/watchdog/
+thermal/charging remain first-device gates. No phone was accessed. Full IMS and
+graphics are separate from that diagnostic experiment; full smartphone deployment
+remains refused.
 
 2026-10-12, corrected after independent review. The `native-deployment` Rust component checks a reviewed device
 profile against an actual immutable staging tree and its current inventory.
@@ -49,7 +57,7 @@ still refused. The separate [RAM-only native PID1 guest probe](native-phone-boot
 does not qualify Pixel boot or installed Arch supervision.
 
 An [experimental unsigned `init_boot` candidate](../native-boot-package/README.md)
-now packages the repaired native diagnostic probe in a reproducible1,462,272-byte
+previously packaged the kmsg diagnostic probe in a reproducible1,462,272-byte
 container. Fresh original AOSP unpacking, Rust geometry, actual vendor/generic
 overlay and eight refusal groups qualify its offline format. Its exact generic
 LZ4 executes four correlated readback ACKs, matching child wait37 and controlled
@@ -59,7 +67,7 @@ generic LZ4 under the unchanged authenticated4K kernel, with four ACKs, matching
 child wait37, QMP guest shutdown and independent exact-CID closure. No Pixel
 board, vendor overlay, module or original vendor userspace executes. The earlier1,454,080-byte candidate and its falsified
 missing-console expectation remain historical evidence. See
-[current diagnostic verification](../native-boot-package/evidence/diagnostic-verification.json).
+[historical diagnostic verification](../native-boot-package/evidence/diagnostic-verification.json).
 These observations leave the full profile, all nine offline requirements and
 the physical gate refused; neither format checks nor either kernel/QEMU result
 establishes Google's bootloader/AVB acceptance or recoverable phone diagnostics.

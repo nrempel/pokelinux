@@ -1,11 +1,14 @@
 # Offline development diagnostic boot bundle
 
-2026-10-15: a separate host producer now turns the qualified compact native
+2026-10-15: a separate host producer turns the pinned compact native
 payload into a complete8,388,608-byte `init_boot` image and private restoration
 bundle. A successful compact producer followed by an actual missing-full-image
 RED precedes the producer repair. Two real builds pass the same fixed witness.
 This closes an offline format gap; it does not qualify a Pixel boot or admit
-full smartphone deployment. [Bounded provenance](evidence/native-boot-development-bundle-provenance.json).
+full smartphone deployment. [Original format provenance](evidence/native-boot-development-bundle-provenance.json)
+retains its earlier payload. The current image below contains the
+[native PMSG init](native-boot-native-pmsg.md), with fresh two-build format checks
+and metadata RED→GREEN in [current provenance](evidence/native-boot-native-pmsg-provenance.json).
 
 ## Artifact and exact scope
 
@@ -14,7 +17,7 @@ The [producer](../tools/native-boot-development-bundle.py) calls the unchanged
 unchanged AOSP `avbtool.py` to add fresh unsigned metadata. It emits:
 
 - `candidate/init_boot.img`: complete raw8MiB image, SHA256
-  `05343c9e1eb89e48c1474804b35e8d7d4e5b5207e6e47a34b5004dfe9b451b11`.
+  `80cd815edf5205679b15f253552cf060928aaa3c038f57e36807a8182432923e`.
 - `restore/init_boot.img`: independent exact stock copy, SHA256
   `8ce3679285604688cea9c358d449a31db5fb7c0f0b49ef16c0f8c2c807f8425d`.
 - `unchanged/`: exact authenticated `boot`, `vendor_boot`, `vendor_kernel_boot`
@@ -23,13 +26,14 @@ unchanged AOSP `avbtool.py` to add fresh unsigned metadata. It emits:
 - `compact/`: the current payload package and its original manifest; root
   `manifest.json` binds candidate, restoration, source, tools and unresolved gates.
 
-The first1,462,272bytes are exactly the existing compact image. Its unchanged
-legacy-LZ4 ramdisk and static native Rust init/child retain their qualified
-identities. Fresh algorithmNONE metadata contains one salted SHA256 descriptor
+The first1,466,368bytes are exactly the current compact image. Its new legacy-LZ4
+ramdisk pins the PMSG-capable static native init and unchanged normal child.
+Current native/bundle hashes are recorded in the PMSG provenance. Fresh
+algorithmNONE metadata contains one salted SHA256 descriptor
 covering that whole prefix. Flags and header rollback location are0, with no
 key, signature, policy modification or copied OEM footer. The rollback field
 1791158400 comes from retained factory metadata, not a device measurement.
-VBMeta occupies512bytes at1462272; the new64-byte footer ends at8388608.
+VBMeta occupies512bytes at1466368; the new64-byte footer ends at8388608.
 All unused gap/padding bytes are zero. Logical zero bytes do not establish how a
 future physical write or erase behaves.
 
@@ -41,7 +45,9 @@ The host Rust inspector does execute. All14 selected original inputs and48
 bounded tool/input files are rehashed unchanged around each qualified host run.
 Whole-factory-archive authentication is inherited, not repeated here.
 
-## Actual red and green
+## Original format red and green
+
+The following format RED→GREEN retains its preceding native payload and witness.
 
 The frozen baseline completes the real compact producer successfully, then
 fails `MISSING_COMPLETE_INIT_BOOT_8MIB`:1462272bytes instead of8388608. Python
@@ -68,6 +74,25 @@ size RED is preserved. The final publication witness also clarifies host versus
 native ELF execution and removes a duplicate comparison; its fresh RED/GREEN
 runs are the published checkpoint. No setup error is counted as a production RED.
 
+## Current native PMSG package
+
+The new native init first passes the separate Google-kernel retention RED→GREEN.
+An unchanged bundle-suite replay passes format checks but still emits the old
+false PMSG flag. A new fixed artifact assertion then fails with
+`MISSING_NATIVE_PMSG_PROFILE_METADATA` after producing a complete8MiB image.
+Only that producer flag changes to true; the same suite then exits0. It still
+requires phone retrieval and synthetic-address-added flags to be false. Two
+complete images/manifests agree; original unpack, Rust geometry, native archive,
+NONE integrity, restoration/reference assets and both original AVB tamper
+refusals pass with all48 bounded external inputs unchanged.
+
+This host replay executes no ARM payload. Separate Google-kernel tests use the
+exact new init with a read-only witness. Two exact-current-package Arch runs with
+the normal child fail ACK validation because kernel console output interleaves
+inside an ACK; both actual child37/powerdown/Docker0 and owned/input closures
+remain observed, without qualifying current Arch ACKs. No observer is relaxed.
+Earlier exact-generic/full-ramdisk runtime successes keep their old identities.
+
 ## Trust and first-device experiment gates
 
 Local NONE verification is unsigned payload integrity, not Google's signature,
@@ -92,16 +117,16 @@ Before any separately authorized phone experiment:
    execution-correlated success/failure record, and bounded board/shutdown,
    watchdog, thermal and charging observations.
 
-The next offline increment is opportunistic PMSG reporting in the exact native
-PID1, with actual Google-kernel reset retrieval and a no-backend control. The
-current bundled init requests PowerOff and has same-boot kmsg readback; PMSG
-integration and a supported Pixel return path are still open. No synthetic
-ramoops addresses or guessed reboot target are added to the phone artifact.
+Native PID1 now submits its records to optional PMSG, with whole-record synthetic
+Google-kernel reset retrieval and an actual no-backend control. The bundled init
+still requests PowerOff; a supported physical return/recovery path remains open.
+No synthetic ramoops address or guessed reboot target enters the phone artifact.
 
 The [retained Google-kernel generic](native-boot-google-kernel.md) and
 [full selected ramdisk](native-boot-full-ramdisk.md) QEMU runs remain separate
-prior evidence. The new image's extracted native ramdisk is byte-identical;
-this checkpoint starts no new kernel. Temporary RAM override remains
+prior evidence for their earlier native payload. The current image has a new
+ramdisk identity; offline packaging starts no new kernel. Temporary RAM override
+remains
 unestablished and is not a prerequisite of this scoped future development
 partition experiment. The [full deployment validator](native-deployment.md),
 all smartphone services and every physical phone qualification remain separate.

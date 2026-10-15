@@ -1,0 +1,427 @@
+{
+  "schema": 1,
+  "date_UTC": "2026-10-15",
+  "base_commit": "84a9a7e4be7961088ed05afff3302c49687e23e1",
+  "scope": "native PID1 PMSG diagnostics and current offline diagnostic bundle; no physical-device qualification",
+  "evidence_classes": {
+    "native_implementation": "Rust static AArch64 build; formatting and all-target Clippy pass",
+    "kernel_integration": "authenticated original Google4K kernel on synthetic QEMU virt, post-PowerOff reset",
+    "bundle_format": "host original AOSP mkbootimg/unpack/avbtool plus host Rust inspector and independent byte/geometry checks",
+    "Arch_runtime": "two actual current generic-only kernel executions; ACK acceptance failed",
+    "original_vendor_userspace_execution": false,
+    "physical_device_access": false
+  },
+  "native_RED": {
+    "compiled_Unsupported_baseline": true,
+    "fixed_positive_goal_exit": 1,
+    "reason": "MISSING_NATIVE_PID1_PMSG_RECORDS",
+    "all_three_actual_case_prerequisites_closed": true,
+    "ordinary_ACKs": 20,
+    "both_positive_cases_recover_prior_console_but_no_native_PMSG": true,
+    "earlier_receiver_failures_counted_as_RED": false
+  },
+  "native_GREEN": {
+    "fixed_positive_goal_exit": 0,
+    "only_source_changed_from_compiled_RED": "src/pmsg.rs",
+    "same_witness_observer_QMP_profile_runner_and_goal": true,
+    "only_fixture_CPIO_content_changed": "init",
+    "same_normal_child_ELF": true,
+    "success_children": [
+      37,
+      37
+    ],
+    "controlled_failure_children": [
+      3,
+      37
+    ],
+    "actual_no_backend_child": 37,
+    "success_retained_bytes": 445,
+    "failure_retained_bytes": 473,
+    "whole_first_epoch_PMSG_equals_all4_ACK_derived_records": true,
+    "actual_boots": 5,
+    "actual_ACKs": 20,
+    "actual_SUBMITTED_markers": 16,
+    "SUBMITTED_is_retention_proof": false,
+    "known_direct_helper_waits": 28,
+    "actual_Docker_CLI_waits": 3,
+    "actual_Docker_CLI_exits": [
+      0,
+      0,
+      0
+    ],
+    "Root_driver_waits_and_both_EOF": 3,
+    "original_outer_seconds": 45,
+    "original_QMP_setup_seconds": 5,
+    "all_known_closure_before_original_cutoffs": true,
+    "each_case_local_and_external_inputs_rehashed": [
+      11,
+      31
+    ],
+    "cases": [
+      {
+        "case_id": "native-success-retention",
+        "selection_sha256": "83a72ddf9c8e7cd80b1d028f1fab45fffcfa964b203f9ccc75c1fdbbae426a6c",
+        "command_sha256": "13ce51499b305f5b68aa322f97700b1b9dc9f8e9bfa7e937b1c9eb2910668de2",
+        "execution_sha256": "a7c9c68e5dd030058f6eb89c9fcc042079246142989d56b1ea25a15e1af7e182",
+        "result_sha256": "f7a36cc82d36df91fc286e2f2879e943a762184e947e022f28c90c684b9e505d",
+        "root_driver_execution_sha256": "e5b2a4248b2ef7a83139a8f02ade75705bc0c2f148189246325ff06b71b0954a",
+        "local_files_rehashed": 11,
+        "external_files_rehashed": 31,
+        "native_ACK_count": 8,
+        "recovered_previous_native_console_marker_count": 4,
+        "native_pmsg_goal": "whole-first-native-epoch-retained",
+        "qmp_terminal": "ECONNRESET",
+        "all_known_participant_waits_observed": true,
+        "direct_helper_wait_count": 10,
+        "actual_Docker_CLI_exit": 0,
+        "fresh_exact_CID_absent": true,
+        "actual_post_reset_status": {
+          "status": "prelaunch",
+          "running": false
+        }
+      },
+      {
+        "case_id": "native-child-failure-retention",
+        "selection_sha256": "195ae4f6935b5534f408ae6db1b982a99cdfc8a8e0f0df251cd71b8d0821139b",
+        "command_sha256": "da8b9ffb3267dac933f17c0d8a7d37f454ca22b951eedcbc11536d4601e1dd8e",
+        "execution_sha256": "2f78f1978a7233f42e88982d1f05bbf936ffbc435a0a9af16788a88f11fa65e5",
+        "result_sha256": "3bcdab44c5dc002abd2f203bc3247e2844a7fd06ae6b6c31cf56ffa5fdc5b4c7",
+        "root_driver_execution_sha256": "ee85b41a7aec0bc1c67758ea214225f3d99572a2c2225f5bd09a750295dfc436",
+        "local_files_rehashed": 11,
+        "external_files_rehashed": 31,
+        "native_ACK_count": 8,
+        "recovered_previous_native_console_marker_count": 4,
+        "native_pmsg_goal": "whole-first-native-epoch-retained",
+        "qmp_terminal": "ECONNRESET",
+        "all_known_participant_waits_observed": true,
+        "direct_helper_wait_count": 10,
+        "actual_Docker_CLI_exit": 0,
+        "fresh_exact_CID_absent": true,
+        "actual_post_reset_status": {
+          "status": "prelaunch",
+          "running": false
+        }
+      },
+      {
+        "case_id": "actual-no-backend-optional-control",
+        "selection_sha256": "17d06896403110c6dd5e9502c2facb60694bc2871d5af64b82a9255e437120a5",
+        "command_sha256": "b14c8f240ad55b8949c3f7af89fd82eb38f2fb2a2e9de064c6b018016afa0bf2",
+        "execution_sha256": "57751d85593afaae6433a0bf5a0ee56ff8788f365ff93b942bf11701f0ceb0e2",
+        "result_sha256": "9c9feac699c09927726a0f71ffd53a6eecc4cabb6e46ed9aa16e18ef85f18f3a",
+        "root_driver_execution_sha256": "9b69df3a6fc363dc711709aa9eab4f349a90da820203c2c63e0f69bab792e9ec",
+        "local_files_rehashed": 11,
+        "external_files_rehashed": 31,
+        "native_ACK_count": 4,
+        "recovered_previous_native_console_marker_count": 0,
+        "native_pmsg_goal": "actual-no-backend-ordinary-native-child37",
+        "qmp_terminal": "ECONNRESET",
+        "all_known_participant_waits_observed": true,
+        "direct_helper_wait_count": 8,
+        "actual_Docker_CLI_exit": 0,
+        "fresh_exact_CID_absent": true,
+        "actual_post_reset_status": null
+      }
+    ]
+  },
+  "native_policy": {
+    "optional_sink": true,
+    "dynamic_sysfs_major_minor": true,
+    "checked_sysfs_tmpfs_char_device_identity": true,
+    "retained_descriptor": "single CLOEXEC NONBLOCK NOFOLLOW OwnedFd",
+    "only_deferred_record": "original event1 canonical startup",
+    "maximum_attempts": 8,
+    "maximum_canonical_bytes": 512,
+    "single_write_per_attempt": true,
+    "short_or_error": "disable without retry or replay",
+    "required_kmsg_readback_ms": 100,
+    "required_kmsg_scan_records": 128,
+    "unchanged_child_budget_seconds": 2,
+    "completion_action": "PowerOff; no restart target",
+    "kernel_call_latency_bounded_on_hardware": false
+  },
+  "kernel": {
+    "sha256": "0226c3be4224b02884d4f9b332aee58ec06c65b2263265e80f2498332ef15c06",
+    "release": "6.6.127-android15-8-g91d825611104-ab16252310-4k",
+    "synthetic_guest_memory_MiB": 256,
+    "guest_and_container_CPUs": 2,
+    "container_memory_MiB": 512,
+    "ramoops": "synthetic last4MiB,2MiB console+2MiB PMSG; no panic-record buffer",
+    "all_boot_blob_extents_checked_before_cont": true,
+    "Pixel_addresses_inferred": false
+  },
+  "current_bundle": {
+    "metadata_RED_exit": 1,
+    "metadata_RED_reason": "MISSING_NATIVE_PMSG_PROFILE_METADATA",
+    "metadata_GREEN_exit": 0,
+    "only_producer_change_after_metadata_RED": "persistent_message_reporting_integrated false to true",
+    "same_fixed_suite": true,
+    "two_complete_images_and_manifests_identical": true,
+    "all48_bounded_external_inputs_unchanged": true,
+    "all14_selected_originals_rehashed": true,
+    "whole_factory_archive_rehashed": false,
+    "current_image": {
+      "path": "candidate/init_boot.img",
+      "bytes": 8388608,
+      "sha256": "80cd815edf5205679b15f253552cf060928aaa3c038f57e36807a8182432923e",
+      "header_version": 4,
+      "container_page_size": 4096,
+      "compact_prefix_bytes": 1466368,
+      "compact_prefix_sha256": "01e004e27e569d3b28bf2e500ca0828ed0de12181d402970465f814b2f33567f",
+      "native_payload": {
+        "init": {
+          "bytes": 1190352,
+          "sha256": "75e38222781c8b7ae9ab950b0caf697acb04c318419cd6c4e2f2f0f6bfd04115"
+        },
+        "probe-child": {
+          "bytes": 993728,
+          "sha256": "3b15eb4a9fd289e6664c917861f98bbe385e117e26b28abb149b3021e4b19e63"
+        }
+      },
+      "ramdisk_lz4_sha256": "56baaf87543a415025d7b48699b12127b7c4b1d36f6326d561f17b8aeba30592"
+    },
+    "manifest_sha256": "546e12676b9fc1a0c4ce057490e042cb0d591686dc19bc4416696ddbd0bac990",
+    "AVB": {
+      "algorithm": "NONE",
+      "signed": false,
+      "flags": 0,
+      "rollback_index": 1791158400,
+      "header_rollback_index_location": 0,
+      "rollback_index_origin": "retained factory metadata; device stored index unknown",
+      "salt_hex": "412ae6b8e93ccac888d3368b26254e6672c42a0b876e4aa4df00cfe0da45402b",
+      "protected_bytes": 1466368,
+      "salted_payload_sha256": "8c31b2b88eb769629737b64edfaae4c80255733fa862da22f6bb680b90e11b45",
+      "footer_offset": 8388544,
+      "vbmeta_offset": 1466368,
+      "vbmeta_bytes": 512,
+      "copied_OEM_signature_or_footer": false,
+      "original_info_and_local_hash_verify_passed": true,
+      "original_NONE_helper_success_is_not_signature_verification": true,
+      "verification_policy_changed": false,
+      "actual_unlocked_device_error_policy": "unqualified"
+    },
+    "restoration": {
+      "path": "restore/init_boot.img",
+      "bytes": 8388608,
+      "sha256": "8ce3679285604688cea9c358d449a31db5fb7c0f0b49ef16c0f8c2c807f8425d",
+      "origin": "exact authenticated retained factory member",
+      "is_verified_backup_of_current_phone_state": false
+    },
+    "unchanged_reference_assets": [
+      {
+        "path": "unchanged/boot.img",
+        "bytes": 67108864,
+        "sha256": "f68a58f2d4fd591beaca0e569713006a593644ffda4e2fb580339677d867d403"
+      },
+      {
+        "path": "unchanged/vendor_boot.img",
+        "bytes": 67108864,
+        "sha256": "8062043c15ad497690e71429194de4e358846db3752cf33342e6b325f2e6522e"
+      },
+      {
+        "path": "unchanged/vendor_kernel_boot.img",
+        "bytes": 67108864,
+        "sha256": "44ad13534c7575b8d3d23a6db9bfdcb3ef33918dfd8fce61e14ecf686da269a8"
+      },
+      {
+        "path": "unchanged/dtbo.img",
+        "bytes": 16777216,
+        "sha256": "4f7fb4e5cbacc1fc494fd3b0aa0cd80ec34c207d88272a5e82083148ca679fd0"
+      }
+    ],
+    "original_unpack_Rust_geometry_independent_archive": true,
+    "original_AVB_two_tamper_refusals_exit1": true,
+    "existing_eight_compact_refusal_groups_rerun": false,
+    "phone_trust_or_deployment_admitted": false
+  },
+  "failed_current_Arch_checks": {
+    "all_failures_preserved": true,
+    "checker_relaxed": false,
+    "repeat_payload_and_checker_changed": false,
+    "current_ACK_qualification_passed": false,
+    "attempts": [
+      {
+        "attempt": 1,
+        "actual_consumer_exit": 1,
+        "actual_Docker_CLI_exit": 0,
+        "child_wait": 37,
+        "raw_ACK_count": 4,
+        "passed": false,
+        "reason": "wrong kernel acknowledgement",
+        "kernel_console_interleaves_inside_ACK": true,
+        "powerdown_observed": true,
+        "exact_CID_fresh_absent": true,
+        "all15_inputs_rehashed": true,
+        "result_sha256": "bc91f495877f34e08e2d716c3d8333847cc5a9014ca891d28b4e2abafd06d22e",
+        "execution_sha256": "53c2ce5dc0b26cc68c09668c7d018e7c3c2aae879f1c9626c277aa37b6eaee62",
+        "outer_execution_sha256": "73912b6549de62ddeaa016cc162befdb9b115083c259274e2244a8fcb79f69ae"
+      },
+      {
+        "attempt": 2,
+        "actual_consumer_exit": 1,
+        "actual_Docker_CLI_exit": 0,
+        "child_wait": 37,
+        "raw_ACK_count": 4,
+        "passed": false,
+        "reason": "failure or missing matching child/completion evidence",
+        "kernel_console_interleaves_inside_ACK": true,
+        "powerdown_observed": true,
+        "exact_CID_fresh_absent": true,
+        "all15_inputs_rehashed": true,
+        "result_sha256": "d7a8bc732e1e4c1a2ff092130e07df7ab66bf09bad65b671ba31d56f0cb7de54",
+        "execution_sha256": "8e0e69c13ca313f185ea7a694ec7e8d3511c5c43707190c80781309530b41248",
+        "outer_execution_sha256": "de6dff21ed3bd9aec12ddbeac5859c23e349114f3f1426e6f6df6d86f8c71f96"
+      }
+    ]
+  },
+  "remaining_gates": [
+    "early RNG/mount/backend failures have no promised retained record",
+    "physical Pixel loader policy, slot and selected ramdisk",
+    "verified current-state restoration and independent recovery access even before PID1",
+    "physical diagnostics retention/retrieval, USB and supported shutdown/return path",
+    "actual board, modules, KMI, firmware and display/input",
+    "watchdog, thermal, charging and stuck-kernel-call behavior",
+    "current exact-package Arch serial ACK integrity; no new full vendor-ramdisk execution",
+    "all full smartphone service/app/permission/lifecycle/Omarchy hardware requirements"
+  ],
+  "publication": {
+    "authored_sources_only": true,
+    "raw_private_logs_retained_bytes_original_inputs_and_binaries_published": false,
+    "historical_evidence_rewritten": false
+  },
+  "source_sha256": [
+    {
+      "path": "native-boot-probe/Cargo.toml",
+      "sha256": "8922dd69d814fd5f4f508e0ff5874568d8abdb8c6265ca75be20592b4e2842b2"
+    },
+    {
+      "path": "native-boot-probe/Cargo.lock",
+      "sha256": "a62e6e33b94c42f380421526cffc60855b22cbf0e1e9730deac582f45c5a2b38"
+    },
+    {
+      "path": "native-boot-probe/src/main.rs",
+      "sha256": "599fbd87c1e15367b60f00e86e0d1380a3e6fbafa88f1798bedfa8c05e375295"
+    },
+    {
+      "path": "native-boot-probe/src/diagnostic.rs",
+      "sha256": "705fefc3d5493ffe861197dbd5aba0098e47088947f645bad76547a5795feac0"
+    },
+    {
+      "path": "native-boot-probe/src/pmsg.rs",
+      "sha256": "faf86f6f25ced952d40ce4236bf096656bba4788914e522da418ba50f0103a5a"
+    },
+    {
+      "path": "native-boot-probe/src/child.rs",
+      "sha256": "fa2b8705383a20add37f2a3fbecfa619849bf586901ee7dc90e96535502e87ca"
+    },
+    {
+      "path": "tools/native-boot-pstore-witness/Cargo.toml",
+      "sha256": "2c18ef04afeeb7acc2c47e147eef20c5014c5312d9b5af7ff1aaf18896e75b81"
+    },
+    {
+      "path": "tools/native-boot-pstore-witness/Cargo.lock",
+      "sha256": "5b144a0e0a5fd4daeddd1b88e15c504cd1fd4bfaea779bdfaa65f66ca825b8f9"
+    },
+    {
+      "path": "tools/native-boot-pstore-witness/src/main.rs",
+      "sha256": "04219aab375330e51321720585ebc94def603c3c94ecc211035288c65baa68b2"
+    },
+    {
+      "path": "tools/native-boot-pstore-witness/observer.py",
+      "sha256": "da063eae4a07e50a411b5d6451d4456dc122aa3f03854b11685782e5e1deb103"
+    },
+    {
+      "path": "tools/native-boot-pstore-witness/qmp-profile.py",
+      "sha256": "592520cc2805f29b1bc43567c2ce33ae3f1a425984350eae398e3ccb1a64a310"
+    },
+    {
+      "path": "tools/native-boot-pstore-witness/run-native-pmsg-case.py",
+      "sha256": "a2ab4fe05458f8dda6a22f0fbdb19de0adfa8f53cdc37adb6113b12e730a9cd8"
+    },
+    {
+      "path": "tools/native-boot-pstore-witness/native-pmsg-goal.py",
+      "sha256": "45e60e00f8bdc5559da306035796983b3316cd0e24e9fbab21433a8280e9e63a"
+    },
+    {
+      "path": "native-boot-package/input-pins.json",
+      "sha256": "109c86d03ab2738d17b97e401984fa92c5d3fc36e4483a7c7f93eb830ae63ec7"
+    },
+    {
+      "path": "tools/native-boot-development-bundle.py",
+      "sha256": "4869389e402ddd88f6e90bcb05166c49d457b2bda3bd76d8cc935ce73abd0a0e"
+    },
+    {
+      "path": "tools/native-boot-development-bundle-suite.py",
+      "sha256": "1459efda93a302ce942a88d7fd5800db39fcc070306dc733f04187cb8383e9c4"
+    },
+    {
+      "path": "tools/native-boot-probe-package.py",
+      "sha256": "5579558a34649b34477387f09db58f68068d5cf63ada5ed5439f1ca5d3d12c89"
+    },
+    {
+      "path": "tools/native-boot-probe-package-suite.py",
+      "sha256": "5858931d7ebdfce9ccf4ca582b5614d09daee4713c72d22443b04701aa00c5e0"
+    },
+    {
+      "path": "tools/native-boot-probe-package-runtime.py",
+      "sha256": "0fc4df0ed41c63d4f3d265a2520489741fe77c00c19dd1a7f0c3790c56309c1a"
+    },
+    {
+      "path": "tools/native-boot-probe/diagnostics.py",
+      "sha256": "e5021893640110dde0a80b82967f9760ec4bbe46dd3711a04bc3e24e8ecd6ffd"
+    }
+  ],
+  "private_qualification_receipt_sha256": [
+    {
+      "label": "Root qualified native RED",
+      "sha256": "468328850b064d83d82f93c56708fa6a753e0c02387bee81485fdbe0e4fffd2b"
+    },
+    {
+      "label": "Independent native RED qualification",
+      "sha256": "4405c78f2f343502b72c261dcf1f657d92c2bbf76ca08e7925ca96a14befed32"
+    },
+    {
+      "label": "Root native GREEN qualification",
+      "sha256": "98ffd05d89ac1ddc451ee121dd1ea8eb3f37375daf991e27789784da3d04a373"
+    },
+    {
+      "label": "Independent native GREEN qualification",
+      "sha256": "381771faaf5397525b9c9c3def17bda46503ee1baabc6f171cc8bdcda1463919"
+    },
+    {
+      "label": "Same fixed positive goal baseline actual exit1",
+      "sha256": "bc87c8c2d79449770ad5bbe12a5d223b6046b111d0bf1a78a486cdea85950cfa"
+    },
+    {
+      "label": "Same fixed positive goal GREEN actual exit0",
+      "sha256": "b367122672b584f7e6eccf74858eef789f02250e5edeac02c780173cbc815623"
+    },
+    {
+      "label": "Only pmsg.rs source and only init CPIO content change",
+      "sha256": "40ea497ed7b6b0138eff562700e5f4ffb9d4749c4dd15128d2066a3e62cd5234"
+    },
+    {
+      "label": "Native GREEN formatting Clippy cross-build",
+      "sha256": "d3a8b3cd024ea00bc355b08d05e53087c4ddc66eba500e2ea94441d331e866df"
+    },
+    {
+      "label": "Fixed read-only witness cross-build",
+      "sha256": "740d070ad37693fcb550abd93188a491836828d9307844aeaf2d3c36d5bc63f8"
+    },
+    {
+      "label": "Bundle metadata RED actual exit1",
+      "sha256": "c94b886ffc912ab395a077a6eec474526e683045c218ae0af88bf2b049bde919"
+    },
+    {
+      "label": "Bundle metadata GREEN actual exit0",
+      "sha256": "aa546e99aab77f2a3375822a851d244d1bfa6ba510bd77ac9a2b70661fb8d0b8"
+    },
+    {
+      "label": "Root package/failed Arch qualification",
+      "sha256": "48945480dae9c50f8c34960305d9b7bbdd6a9b3c25b2a184bcbf5a18c66c0434"
+    },
+    {
+      "label": "Current bundle two-build summary",
+      "sha256": "570168f526fe1aba9a9324a1aa07aa32b669ed1e56800d7d9a31b575d65f8b87"
+    }
+  ]
+}

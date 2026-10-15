@@ -1,5 +1,9 @@
 # Native RAM probe on the retained Google kernel
 
+This page preserves the preceding kmsg-only init and exact generic archive. The
+[current native PMSG checkpoint](native-boot-native-pmsg.md) has its own execution
+and package identities; earlier successes are not reruns of that payload.
+
 2026-10-14UTC: the exact authenticated Pixel10 Google4K kernel executes the
 unchanged native Rust RAM-only PID1 and diagnostic child on synthetic QEMU virt.
 Four correlated kernel-readback ACKs, matching child execution/wait37 and QMP

@@ -187,7 +187,7 @@ def run(args):
                                'child_actual_wait_success_exit': 37,
                                'kernel_ring_readback_ACKs_required': True,
                                'completion_action': 'PowerOff request; physical behavior unqualified',
-                               'persistent_message_reporting_integrated': False,
+                               'persistent_message_reporting_integrated': True,
                                'phone_diagnostic_retrieval_qualified': False,
                                'synthetic_ramoops_addresses_added': False},
         'qualifications': {name: False for name in [

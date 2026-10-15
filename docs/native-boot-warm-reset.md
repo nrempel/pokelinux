@@ -1,5 +1,9 @@
 # Retained diagnostics across synthetic warm reset
 
+This page retains the original canary experiment. The later
+[native PID1 record checkpoint](native-boot-native-pmsg.md) separately qualifies
+whole native success/failure records after actual child wait and PowerOff.
+
 The unchanged authenticated Google4K kernel and unchanged production native init
 recover the exact162-byte first-boot PMSG canary and21,362-byte prior console
 after one controlled QEMU reset. Both previous native startup markers survive.

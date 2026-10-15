@@ -108,6 +108,9 @@ def candidate(args, bundle, label, suite, pins):
         assert result.returncode == 0, 'original AVB ' + action + ' must accept local NONE structure/hash'
     manifest = json.loads((bundle / 'manifest.json').read_text())
     assert manifest['schema'] == 1 and manifest['bundle_format_verified'] is True
+    assert manifest['diagnostic_profile']['persistent_message_reporting_integrated'] is True, 'MISSING_NATIVE_PMSG_PROFILE_METADATA'
+    assert manifest['diagnostic_profile']['phone_diagnostic_retrieval_qualified'] is False
+    assert manifest['diagnostic_profile']['synthetic_ramoops_addresses_added'] is False
     assert all((manifest['qualifications'][k] is False for k in QUALIFICATIONS))
     assert manifest['avb']['algorithm'] == 'NONE' and manifest['avb']['signed'] is False and (manifest['avb']['flags'] == 0)
     assert manifest['image']['bytes'] == CAPACITY and manifest['image']['sha256'] == digest(image)

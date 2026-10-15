@@ -1,11 +1,11 @@
 # Unsigned native Pixel boot probe candidate
 
 The separate [development bundle](../docs/native-boot-development-bundle.md)
-now consumes this unchanged compact producer and emits a full8MiB unsigned
+now consumes this unchanged compact producer with current native pins and emits a full8MiB unsigned
 `init_boot`, exact stock restore image and unchanged boot/vendor/DTBO reference
 assets. Original-tool format/hash checks and two-build reproducibility pass after
 a real missing-full-image RED. Pixel admission and recovery remain unqualified;
-this is not full smartphone deployment. The compact contract below is unchanged.
+this is not full smartphone deployment. The compact format contract below is unchanged; current runtime limits are explicit.
 
 This offline producer authors only the generic ramdisk in `init_boot`, using
 one exact pinned native Rust PID1 and diagnostic child. The current archive
@@ -15,23 +15,30 @@ payload bytes. Directories are mode0755; both static ARM64 ELFs are mode0755.
 All entries have deterministic ownership, timestamps and distinct inodes.
 There is no Android init, vendor service, module loader or phone backend.
 
-The current compact image is1,462,272bytes with SHA256
-`b2ba46ec4eaf8c4398ae7eb6033fed179c1cc030f4bdbcb753f30717738359a8`.
-Its native init SHA256 is
-`8f97c746cc8ef20eb4d3f2f981f1a24ad6e96b5d88f0d327ca80cf5627847d1d`;
-the child remains
+The current compact image is1,466,368bytes with SHA256
+`01e004e27e569d3b28bf2e500ca0828ed0de12181d402970465f814b2f33567f`.
+Its PMSG-capable native init SHA256 is
+`75e38222781c8b7ae9ab950b0caf697acb04c318419cd6c4e2f2f0f6bfd04115`;
+the normal child remains
 `3b15eb4a9fd289e6664c917861f98bbe385e117e26b28abb149b3021e4b19e63`.
-Two fresh actual builds are byte-identical. Independent original unpacking,
-Rust inspection, the three-frame overlay and all eight refusal groups passed;
-all14 selected originals remained unchanged. Its separate generic-only Arch
-runtime also passed the actual diagnostic ACK and owned-closure contract below.
-A separately frozen run of the same generic LZ4 and unchanged native ELFs also
-passes under the authenticated Google4K kernel on synthetic QEMU virt; see
-[Google-kernel execution](../docs/native-boot-google-kernel.md).
-The [current package/Arch verification](evidence/diagnostic-verification.json)
-records the fresh packaging and Arch results separately from the original
-candidate; the Google-kernel run has its own provenance linked above.
-The historical records remain unchanged. The candidate is still explicitly
+Two fresh full-bundle builds contain the exact same compact prefix and manifest.
+Original AOSP unpack/Rust geometry, independent native archive bytes and unsigned
+integrity/restoration/reference checks pass. See
+[current PMSG/package provenance](../docs/evidence/native-boot-native-pmsg-provenance.json).
+
+The exact current init separately passes five Google-kernel PMSG boots with a
+read-only witness. Two current exact-package Arch consumer attempts with the
+normal child remain failed: console output interrupts event2 or event4 ACKs.
+Both execute/wait child37 and power down with Docker0, exact-CID and input closure,
+but the unchanged checker refuses them. Current Arch ACK qualification remains
+open. No new full vendor-ramdisk runtime pass is claimed.
+
+The preceding1,462,272-byte compact image and earlier native init retain their
+successful two-build/original-tool/three-frame/eight-refusal and Arch/Google-kernel
+executions. [Earlier package/Arch verification](evidence/diagnostic-verification.json)
+and [Google-kernel proof](../docs/native-boot-google-kernel.md) keep those exact
+bindings. This revision does not rewrite historical evidence or accept old
+native pins as current. The current candidate remains
 `UNQUALIFIED_PIXEL_NATIVE_BOOT_PROBE_CANDIDATE`, unsigned and local only.
 
 ## Current verification contract
@@ -40,8 +47,8 @@ All14 authenticated selected originals are checked before and after packaging.
 Their whole11,378,664,978-byte official factory archive authentication and38
 rebound index reads are inherited; the packager does not rehash that entire
 archive. Packaging leaves Google kernel, vendor ramdisks, DTB, DTBO and module
-images unchanged and executes none of them. The later separate Google-kernel
-experiment above does not execute vendor fragments/modules or a Pixel board.
+images unchanged and executes none of them. The earlier separate Google-kernel
+experiment does not execute vendor fragments/modules or a Pixel board.
 Original payloads, native ELFs and generated images
 remain private; only authored tools and bounded metadata are public.
 
@@ -78,7 +85,7 @@ immutable; this is not a hostile concurrent-filesystem snapshot authority.
 The current native diagnostic RED is established separately by the diagnostic
 harness; a historical stock-init mismatch does not prove that new boundary.
 
-## Current standalone Arch consumer
+## Standalone Arch consumer and retained prior success
 
 The [runtime consumer](../tools/native-boot-probe-package-runtime.py) accepts
 only a schema2 candidate whose image, manifest, actual archive and native hashes
@@ -99,7 +106,7 @@ refusal, failure, missing/malformed/reordered ACKs or missing powerdown cannot
 pass. A kernel console echo or successful `/dev/kmsg` write count is insufficient.
 Same-boot readback does not qualify pstore retention or phone diagnostics.
 
-The actual current run observed events1–4 with kernel sequence IDs312–315 in
+The successful preceding-payload run observed events1–4 with kernel sequence IDs312–315 in
 one epoch. Its actual child-exec PID matched the acknowledged wait37, followed
 by COMPLETE and controlled powerdown. No panic, refusal or probe/diagnostic
 failure was present. Actual Docker and consumer CLI waits were0; live exact-CID

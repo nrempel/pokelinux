@@ -18,17 +18,25 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
-A separate [offline development diagnostic bundle](native-boot-development-bundle.md)
-now contains a reproducible complete8MiB `init_boot`, fresh unsigned NONE metadata,
-exact stock restoration asset and four unchanged boot/vendor/DTBO reference
-images. A real successful-compact/missing-full-image RED precedes fixed-witness
-GREEN with original AOSP unpack/AVB, Rust geometry and exact native payload
-checks. Local NONE integrity is not stock trust or Pixel loader acceptance.
-The retained stock file is not a current-phone backup; slot, actual policy,
-retrievable diagnostics and independent recovery remain unqualified. No phone
-operation or new kernel run occurs. The next first-boot work is native PID1 PMSG
-reporting and synthetic reset retrieval; full IMS/graphics are not prerequisites
-for that diagnostic experiment. Full smartphone deployment remains refused.
+The [native PID1 PMSG checkpoint](native-boot-native-pmsg.md) now retains exact
+success and child-failure diagnostics through synthetic post-PowerOff reset
+under the authenticated Google4K kernel. Compiled Unsupported RED precedes a
+single-file backend repair and fixed-witness GREEN; actual missing PMSG still
+completes ordinary boot. Five GREEN boots produce20 correlated ACKs.
+
+The [complete offline diagnostic bundle](native-boot-development-bundle.md)
+now pins that native init in a reproducible8MiB image, with unsigned NONE metadata,
+exact stock restoration and four unchanged reference assets. A separate actual
+metadata RED precedes the corrected PMSG integration flag. Two current-package
+Arch replays remain failed because console output interleaves inside ACKs;
+child37, powerdown and owned closure do not turn those checks green. Historical
+Arch/full-ramdisk evidence keeps its original binary bindings.
+
+Pixel loader admission/selection, current-state restoration, independently
+accessible recovery, physical diagnostics retrieval and board/shutdown/watchdog/
+thermal/charging remain first-device gates. No phone was accessed. Full IMS and
+graphics are separate from that diagnostic experiment; full smartphone deployment
+remains refused.
 
 The [owned SIT receive copy](native-sit-received-chunk.md) now bridges raw
 receive storage to the strict attempt parser. Twelve original Bionic/user-QEMU
@@ -740,7 +748,7 @@ with synthetic Root lifecycle controls and no Source/UI/vendor runtime. Installe
 Source/Camera/media/containment/reset/device integration remains required. See
 [service](native-camera-service.md) and [proof](evidence/native-camera-service-provenance.json).
 
-The current native boot diagnostic checkpoint adds retained character1:11 kmsg
+The earlier native boot diagnostic checkpoint adds retained character1:11 kmsg
 descriptors, nonblocking random execution epochs and consumed event ordinals,
 exact bounded readback, and distinct post-readback stdout ACKs. A stronger actual
 kernel correlation RED then unchanged-witness GREEN qualifies the startup pair;
@@ -753,7 +761,7 @@ LZ4 under Arch ARM7.1.6 with four ACKs and owned-CID closure. See
 [current diagnostic proof](evidence/native-boot-diagnostics-provenance.json) and
 [package](../native-boot-package/README.md). The simpler RAM runner establishes
 only direct Docker CLI wait. A later separate exact-Google4K-kernel/QEMU run
-executes the same current generic LZ4 and unchanged native ELFs: four ACKs, child
+executes that earlier generic LZ4 and its unchanged native ELFs: four ACKs, child
 wait37 and QMP guest shutdown pass; Root rehashes52 bindings and checks owned
 live identity plus fresh same-daemon exact-CID absence. Compiled protected-mode
 arguments remain unchanged; synthetic EL2/PL011/DTB differs from Pixel hardware.

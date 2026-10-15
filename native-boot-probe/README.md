@@ -19,6 +19,18 @@ alone cannot establish readback. This is trusted-writer occurrence correlation,
 not authenticated PID provenance or protection against another privileged writer.
 The whole kernel write, including priority and newline, is at most512 bytes.
 
+PMSG is an optional second sink after mounts. PID1 discovers the actual dynamic
+sysfs major/minor, validates the sysfs/tmpfs/opened character-device identities,
+and retains one nonblocking descriptor. Only the startup record is deferred
+until attachment; it keeps its existing epoch/event. Later canonical records
+submit directly, with at most eight one-shot attempts and no replay after a
+short write or error. Missing PMSG never changes required kmsg admission, child
+ownership or PowerOff. SUBMITTED means a full write count, not retention.
+[Actual native-PMSG proof](../docs/native-boot-native-pmsg.md) separately compares
+whole retrieved first-boot records after post-PowerOff reset: success37→37,
+controlled failure3→37, and an actual no-backend37 control. The fixed Unsupported
+baseline goal exited1; changing only pmsg.rs made the same goal exit0.
+
 Entropy uses one nonblocking kernel RNG call and refuses short/unavailable
 results. The readback deadline uses suspend-aware BOOTTIME. These bounds cover
 userspace observation and retries; they cannot bound every kernel call, mount,
@@ -26,11 +38,23 @@ console write or shutdown. Same-boot kernel admission also establishes neither
 PSTORE/USB delivery nor retention/retrieval across a phone reset.
 
 The explicit tmpfs/nodes path also avoids assuming DEVTMPFS support: the selected
-Google4K configuration disables it. Separate RAM-only executions qualify both
-the retained Arch ARM7.1.6 kernel and the exact authenticated Google4K kernel on
-synthetic QEMU virt. The latter uses unchanged native ELFs and the exact current
-candidate generic LZ4; four correlated ACKs, matching child wait37 and QMP guest
-shutdown pass. See [Google-kernel execution](../docs/native-boot-google-kernel.md).
+Google4K configuration disables it. Earlier separate RAM-only executions
+qualified the retained Arch ARM7.1.6 kernel and exact authenticated Google4K
+kernel on synthetic QEMU virt. Those selections used their then-frozen native
+ELFs and candidate generic LZ4; four correlated ACKs, matching child wait37 and
+QMP guest shutdown passed. See
+[Google-kernel execution](../docs/native-boot-google-kernel.md). The new PMSG
+payload has its own five-boot Google-kernel evidence and is now packaged in two
+reproducible8MiB development bundles. A fixed metadata assertion first failed
+with `MISSING_NATIVE_PMSG_PROFILE_METADATA`; only the producer's PMSG-profile
+boolean changed for suite GREEN. This was metadata TDD, not a new format RED.
+Two exact-current-package Arch attempts both failed the unchanged ACK checker:
+kernel console interleaved into event2 in the first and event4 in the second.
+Both still had normal child37, PowerOff, Docker CLI0 and CID/input closure.
+Current Arch ACK qualification remains open, with no checker relaxation or
+third retry. Earlier Arch success and full-ramdisk evidence retain historical
+bindings; no new full-ramdisk runtime is claimed. See the
+[current package boundary](../docs/native-boot-native-pmsg.md#current-bundle-and-arch-consumer).
 No Pixel board, bootloader, vendor module or phone is qualified.
 The native executable has no ELF interpreter or dynamic section. The static GNU
 libc build emits std-library NSS link warnings; the exercised no-network paths

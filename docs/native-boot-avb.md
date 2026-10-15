@@ -1,19 +1,27 @@
 # Native boot candidate and the retained AVB contract
 
-A separate [offline development diagnostic bundle](native-boot-development-bundle.md)
-now contains a reproducible complete8MiB `init_boot`, fresh unsigned NONE metadata,
-exact stock restoration asset and four unchanged boot/vendor/DTBO reference
-images. A real successful-compact/missing-full-image RED precedes fixed-witness
-GREEN with original AOSP unpack/AVB, Rust geometry and exact native payload
-checks. Local NONE integrity is not stock trust or Pixel loader acceptance.
-The retained stock file is not a current-phone backup; slot, actual policy,
-retrievable diagnostics and independent recovery remain unqualified. No phone
-operation or new kernel run occurs. The next first-boot work is native PID1 PMSG
-reporting and synthetic reset retrieval; full IMS/graphics are not prerequisites
-for that diagnostic experiment. Full smartphone deployment remains refused.
+The [native PID1 PMSG checkpoint](native-boot-native-pmsg.md) now retains exact
+success and child-failure diagnostics through synthetic post-PowerOff reset
+under the authenticated Google4K kernel. Compiled Unsupported RED precedes a
+single-file backend repair and fixed-witness GREEN; actual missing PMSG still
+completes ordinary boot. Five GREEN boots produce20 correlated ACKs.
+
+The [complete offline diagnostic bundle](native-boot-development-bundle.md)
+now pins that native init in a reproducible8MiB image, with unsigned NONE metadata,
+exact stock restoration and four unchanged reference assets. A separate actual
+metadata RED precedes the corrected PMSG integration flag. Two current-package
+Arch replays remain failed because console output interleaves inside ACKs;
+child37, powerdown and owned closure do not turn those checks green. Historical
+Arch/full-ramdisk evidence keeps its original binary bindings.
+
+Pixel loader admission/selection, current-state restoration, independently
+accessible recovery, physical diagnostics retrieval and board/shutdown/watchdog/
+thermal/charging remain first-device gates. No phone was accessed. Full IMS and
+graphics are separate from that diagnostic experiment; full smartphone deployment
+remains refused.
 
 2026-10-14UTC: unchanged original AOSP AVB tools qualify a partial stock metadata
-graph and refuse the current unsigned native `init_boot` candidate. These are
+graph and refuse the then-selected unsigned compact native `init_boot` candidate. These are
 offline original-code results on authenticated selected files, without bootloader
 or phone execution. See [bounded provenance](evidence/native-boot-avb-provenance.json).
 
@@ -67,7 +75,7 @@ does not turn those aggregates green.
 
 ## Actual candidate refusal
 
-The compact native candidate is1,462,272bytes, SHA256
+The historical compact candidate selected for these AVB runs is1,462,272bytes, SHA256
 `b2ba46ec4eaf8c4398ae7eb6033fed179c1cc030f4bdbcb753f30717738359a8`.
 Both original `info_image` and `verify_image` return1 because it has no parseable
 VBMeta. This is an absent valid metadata/footer result, not a failed RSA comparison.

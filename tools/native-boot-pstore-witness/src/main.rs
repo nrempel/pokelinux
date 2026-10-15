@@ -38,7 +38,107 @@ fn bytes(path: &str, maximum: usize, fs_magic: u64) -> io::Result<Vec<u8>> {
 fn hex(value: &[u8]) -> String {
     value.iter().map(|b| format!("{b:02x}")).collect()
 }
-fn run() -> io::Result<()> {
+
+// This branch is independent test infrastructure. It never opens or writes PMSG.
+fn native_profile() -> io::Result<Option<String>> {
+    let fd = match openat(
+        CWD,
+        "/native-pmsg-profile",
+        OFlags::RDONLY | OFlags::CLOEXEC | OFlags::NOFOLLOW,
+        Mode::empty(),
+    ) {
+        Ok(fd) => fd,
+        Err(error) if error == rustix::io::Errno::NOENT => return Ok(None),
+        Err(error) => return Err(error.into()),
+    };
+    let info = fstat(&fd)?;
+    if FileType::from_raw_mode(info.st_mode) != FileType::RegularFile
+        || info.st_uid != 0
+        || info.st_size > 32
+    {
+        return Err(invalid());
+    }
+    let mut value = String::new();
+    File::from(fd).take(33).read_to_string(&mut value)?;
+    if !matches!(value.as_str(), "success\n" | "failure\n" | "no-backend\n") {
+        return Err(invalid());
+    }
+    Ok(Some(value.trim_end().to_owned()))
+}
+fn optional_bytes(path: &str, maximum: usize) -> io::Result<Option<Vec<u8>>> {
+    match bytes(path, maximum, 0x6165_676c) {
+        Ok(value) => Ok(Some(value)),
+        Err(error) if error.kind() == io::ErrorKind::NotFound => Ok(None),
+        Err(error) => Err(error),
+    }
+}
+fn native_read_only(profile: &str, boot: &str) -> io::Result<i32> {
+    let device = match bytes("/sys/class/pmsg/pmsg0/dev", 64, 0x6265_6572) {
+        Ok(value) => {
+            let text = std::str::from_utf8(&value).map_err(|_| invalid())?;
+            let (major_text, minor_text) = text.trim().split_once(':').ok_or_else(invalid)?;
+            if major_text.is_empty()
+                || minor_text.is_empty()
+                || !major_text.bytes().all(|b| b.is_ascii_digit())
+                || !minor_text.bytes().all(|b| b.is_ascii_digit())
+            {
+                return Err(invalid());
+            }
+            let ma = major_text.parse::<u32>().map_err(|_| invalid())?;
+            let mi = minor_text.parse::<u32>().map_err(|_| invalid())?;
+            if ma == 0 || major(makedev(ma, mi)) != ma || minor(makedev(ma, mi)) != mi {
+                return Err(invalid());
+            }
+            Some((ma, mi))
+        }
+        Err(error) if error.kind() == io::ErrorKind::NotFound => None,
+        Err(error) => return Err(error),
+    };
+    if (profile == "no-backend") != device.is_none() {
+        return Err(invalid());
+    }
+    let console = optional_bytes("/pstore/console-ramoops-0", 65536)?;
+    let pmsg = optional_bytes("/pstore/pmsg-ramoops-0", 4096)?;
+    if console.as_ref().is_some_and(|value| value.is_empty())
+        || (console.is_none() && pmsg.is_some())
+    {
+        return Err(invalid());
+    }
+    if profile == "no-backend" && (console.is_some() || pmsg.is_some()) {
+        return Err(invalid());
+    }
+    let stage = if console.is_some() {
+        "retained"
+    } else {
+        "first"
+    };
+    let backend = if device.is_some() {
+        "present"
+    } else {
+        "absent"
+    };
+    let (ma, mi) = device.unwrap_or((0, 0));
+    let pmsg_status = if pmsg.is_some() { "present" } else { "missing" };
+    let old_pmsg = pmsg.as_deref().unwrap_or_default();
+    let old_console = console.as_deref().unwrap_or_default();
+    println!(
+        "POKELINUX_NATIVE_PSTORE_PHASE profile={profile} current_boot={boot} stage={stage} backend={backend} major={ma} minor={mi} pmsg_status={pmsg_status} pmsg_bytes={} pmsg_hex={} console_bytes={} console_hex={}",
+        old_pmsg.len(),
+        hex(old_pmsg),
+        old_console.len(),
+        hex(old_console)
+    );
+    io::stdout().flush()?;
+    // Actual retained console, rather than missing PMSG, selects the second boot.
+    // This intentional child-status control is not a native PID1 failure injector.
+    Ok(if console.is_none() && profile == "failure" {
+        3
+    } else {
+        37
+    })
+}
+
+fn run() -> io::Result<i32> {
     let pid = getpid().as_raw_nonzero().get();
     if pid <= 1
         || getppid().map(|p| p.as_raw_nonzero().get()) != Some(1)
@@ -61,6 +161,9 @@ fn run() -> io::Result<()> {
     if boot.len() != 36 || !boot.bytes().all(|c| c.is_ascii_hexdigit() || c == b'-') {
         return Err(invalid());
     }
+    if let Some(profile) = native_profile()? {
+        return native_read_only(&profile, boot);
+    }
     let old = match bytes("/pstore/pmsg-ramoops-0", 512, 0x6165_676c) {
         Ok(value) => Some(value),
         Err(e) if e.kind() == io::ErrorKind::NotFound => None,
@@ -79,7 +182,7 @@ fn run() -> io::Result<()> {
             hex(&console)
         );
         io::stdout().flush()?;
-        return Ok(());
+        return Ok(37);
     }
     let dev = String::from_utf8(bytes("/sys/class/pmsg/pmsg0/dev", 64, 0x6265_6572)?)
         .map_err(|_| invalid())?;
@@ -129,7 +232,7 @@ fn run() -> io::Result<()> {
 }
 fn main() {
     match run() {
-        Ok(()) => std::process::exit(37),
+        Ok(exit) => std::process::exit(exit),
         Err(error) => {
             eprintln!(
                 "POKELINUX_PSTORE_WITNESS_FAILURE kind={:?} errno={:?} reason={error}",

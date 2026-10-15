@@ -5,16 +5,29 @@ use rustix::{
     io::{Errno, read, write},
     rand::{GetRandomFlags, getrandom},
 };
-use std::{cell::Cell, fmt, io, time::Duration};
+use std::{
+    cell::{Cell, RefCell},
+    fmt, io,
+    time::Duration,
+};
 
 const BUDGET_NS: u64 = 100_000_000;
 const MAX_RECORDS: usize = 128;
+const MAX_PMSG_ATTEMPTS: u8 = 8;
+
+// Exactly one deferred startup record; this is not a diagnostic backlog.
+enum PmsgState {
+    Pending { startup: Option<Vec<u8>> },
+    Active { fd: OwnedFd, attempts: u8 },
+    Disabled,
+}
 
 pub struct Reporter {
     reader: OwnedFd,
     writer: OwnedFd,
     epoch: String,
     event: Cell<u64>,
+    pmsg: RefCell<PmsgState>,
 }
 impl Reporter {
     pub fn open() -> io::Result<Self> {
@@ -47,7 +60,90 @@ impl Reporter {
             writer: device(OFlags::WRONLY)?,
             epoch: random.iter().map(|byte| format!("{byte:02x}")).collect(),
             event: Cell::new(0),
+            pmsg: RefCell::new(PmsgState::Pending { startup: None }),
         })
+    }
+
+    /// Try once after sysfs/dev mounts. Optional failure never changes boot policy.
+    pub fn attach_pmsg(&self) {
+        let startup = match self.pmsg.replace(PmsgState::Disabled) {
+            PmsgState::Pending { startup } => startup,
+            state => {
+                *self.pmsg.borrow_mut() = state;
+                return;
+            }
+        };
+        match crate::pmsg::discover() {
+            Ok(fd) => {
+                *self.pmsg.borrow_mut() = PmsgState::Active { fd, attempts: 0 };
+                // Take ownership before attempting; never replay this occurrence.
+                if let Some(record) = startup {
+                    self.pmsg_record(1, &record);
+                }
+            }
+            Err(error) => self.pmsg_unavailable("discover", &error),
+        }
+    }
+
+    fn pmsg_record(&self, event: u64, record: &[u8]) {
+        // The caller has already validated the canonical record and its512-byte
+        // kmsg bound. Its three-byte priority prefix is not part of these bytes.
+        match self.pmsg.replace(PmsgState::Disabled) {
+            PmsgState::Pending { mut startup } => {
+                // main's fixed first event is startup. Later events cannot replace it.
+                if event == 1 && startup.is_none() {
+                    startup = Some(record.to_vec());
+                }
+                *self.pmsg.borrow_mut() = PmsgState::Pending { startup };
+            }
+            PmsgState::Active { fd, attempts } => {
+                if attempts == MAX_PMSG_ATTEMPTS {
+                    // State is already disabled; drop only the local descriptor.
+                    drop(fd);
+                    self.pmsg_unavailable("budget", &io::Error::other("pmsg-attempt-budget"));
+                    return;
+                }
+                // Consume the attempt before I/O. An uncertain failure stays disabled.
+                let attempts = attempts + 1;
+                match crate::pmsg::submit(&fd, record) {
+                    Ok(count) if count == record.len() => {
+                        *self.pmsg.borrow_mut() = PmsgState::Active { fd, attempts };
+                        use io::Write;
+                        let mut output = io::stdout().lock();
+                        let _ = writeln!(
+                            output,
+                            "POKELINUX_PMSG_SUBMITTED epoch={} event={event} bytes={count}",
+                            self.epoch
+                        );
+                        let _ = output.flush();
+                    }
+                    Ok(_) => {
+                        drop(fd);
+                        self.pmsg_unavailable(
+                            "submit",
+                            &io::Error::new(io::ErrorKind::WriteZero, "incomplete-pmsg-submit"),
+                        );
+                    }
+                    Err(error) => {
+                        drop(fd);
+                        self.pmsg_unavailable("submit", &error);
+                    }
+                }
+            }
+            PmsgState::Disabled => {}
+        }
+    }
+
+    fn pmsg_unavailable(&self, phase: &str, error: &io::Error) {
+        use io::Write;
+        // Even a status-output error is optional; do not recurse into emit or panic.
+        let _ = writeln!(
+            io::stderr().lock(),
+            "POKELINUX_PMSG_UNAVAILABLE epoch={} phase={phase} kind={:?} errno={:?} reason={error}",
+            self.epoch,
+            error.kind(),
+            error.raw_os_error()
+        );
     }
 
     pub fn emit(&self, args: fmt::Arguments<'_>) -> io::Result<()> {
@@ -75,6 +171,7 @@ impl Reporter {
                 "record-too-long",
             ));
         }
+        self.pmsg_record(event, &record.as_bytes()[3..]);
         // Keep serial-console observations available, but its success cannot
         // establish kernel-ring admission. Neither does a full kmsg write count:
         // the kernel can silently discard messages on rate limits or disable.

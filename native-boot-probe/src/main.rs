@@ -1,6 +1,7 @@
 //! Restricted native PID1 probe, not a phone init or service manager.
 //! Runs solely from the authored RAM image; mounts no persistent storage.
 mod diagnostic;
+mod pmsg;
 use diagnostic::Reporter;
 use rustix::{
     fs::{CWD, FileType, Mode, makedev, mknodat},
@@ -160,6 +161,7 @@ fn main() {
         failed(Some(&report), Failure::at("mount", error));
         poweroff(Some(&report));
     }
+    report.attach_pmsg();
     if let Err(error) = report.emit(format_args!(
         "POKELINUX_PROBE_KERNEL release={}",
         uname().release().to_string_lossy()
