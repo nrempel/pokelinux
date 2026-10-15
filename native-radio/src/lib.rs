@@ -34,3 +34,6 @@ pub mod observation;
 pub mod status;
 
 mod registration_state;
+
+#[cfg(test)]
+mod add_pdn_transport_tests;

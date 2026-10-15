@@ -55,6 +55,12 @@ pub enum LifecycleError {
     InvalidClient,
     SpawnFailed,
 }
+/// Typed request preparation is not bearer acquisition or a final modem receipt.
+#[derive(Debug, PartialEq, Eq)]
+pub enum AddPdnFailure {
+    Encode(omarchy_ims::add_pdn::EncodeError),
+    Lifecycle(LifecycleError),
+}
 struct Completion {
     key: SessionKey,
     dispatched: bool,
@@ -199,6 +205,24 @@ impl TransportSession {
                 Err(LifecycleError::SpawnFailed)
             }
         }
+    }
+    /// Prepare request105 for this owner's selected slot. Authored wire inputs
+    /// carry no acquired-network authority; dispatch still needs an owned worker.
+    pub fn prepare_add_pdn(
+        &mut self,
+        key: &SessionKey,
+        config: &omarchy_ims::add_pdn::AddPdn<'_>,
+        deadline: Deadline,
+    ) -> Result<crate::request::PreparedRequest, AddPdnFailure> {
+        let payload = omarchy_ims::add_pdn::encode(config).map_err(AddPdnFailure::Encode)?;
+        self.prepare_request(
+            key,
+            omarchy_ims::add_pdn::MESSAGE_ID,
+            self.selected_slot(),
+            payload,
+            deadline,
+        )
+        .map_err(AddPdnFailure::Lifecycle)
     }
     pub fn prepare_request(
         &mut self,

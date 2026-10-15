@@ -8,6 +8,8 @@ use std::{
     sync::{Arc, Condvar, Mutex},
     time::Duration,
 };
+#[path = "../add_pdn_capture.rs"]
+mod add_pdn_capture;
 #[path = "../registration_vectors.rs"]
 mod registration_vectors;
 const RADIO: &str = "vendor.samsung_slsi.telephony.hardware.radioExternal.IOemSlsiRadioExternal";
@@ -17,6 +19,7 @@ const INDICATION: &str =
     "vendor.samsung_slsi.telephony.hardware.radioExternal.IOemSlsiRadioExternalInd";
 #[derive(Default)]
 struct State {
+    add_pdn: add_pdn_capture::Capture,
     response: Option<SIBinder>,
     indication: Option<SIBinder>,
     registers: i32,
@@ -184,10 +187,29 @@ impl Remotable for Radio {
             }
             2 | 3 => {
                 let serial = data.read_i32()?;
-                if data.read_i32()? != 42 || data.read_i32()? != 137 || data.read_i32()? != 0 {
+                let client = data.read_i32()?;
+                let request = data.read_i32()?;
+                let slot = data.read_i32()?;
+                let bytes: Vec<u8> = data.read()?;
+                if request == 105 {
+                    if code != 2 || bytes.len() > 2048 || data.data_avail() != 0 {
+                        return Err(StatusCode::BadValue);
+                    }
+                    let mut state = self.0.state.lock().unwrap();
+                    let owner = [state.calling_pid, state.calling_uid];
+                    return state.add_pdn.record(
+                        [serial, client, request, slot],
+                        bytes,
+                        owner,
+                        [
+                            thread_state::get_calling_pid(),
+                            thread_state::get_calling_uid() as i32,
+                        ],
+                    );
+                }
+                if client != 42 || request != 137 || slot != 0 {
                     return Err(StatusCode::BadValue);
                 }
-                let bytes: Vec<u8> = data.read()?;
                 if bytes.len() > 2048 {
                     return Err(StatusCode::BadValue);
                 }
@@ -322,6 +344,36 @@ impl Remotable for Radio {
                 );
                 std::io::Write::flush(&mut std::io::stdout())?;
                 ack(reply)
+            }
+            add_pdn_capture::RESET => {
+                if data.data_avail() != 0 {
+                    return Err(StatusCode::BadValue);
+                }
+                let mut state = self.0.state.lock().unwrap();
+                let owner = [state.calling_pid, state.calling_uid];
+                state.add_pdn.reset_preflight(
+                    owner,
+                    [
+                        thread_state::get_calling_pid(),
+                        thread_state::get_calling_uid() as i32,
+                    ],
+                )?;
+                ack(reply)
+            }
+            add_pdn_capture::QUERY => {
+                if data.data_avail() != 0 {
+                    return Err(StatusCode::BadValue);
+                }
+                let mut state = self.0.state.lock().unwrap();
+                let owner = [state.calling_pid, state.calling_uid];
+                state.add_pdn.query(
+                    reply,
+                    owner,
+                    [
+                        thread_state::get_calling_pid(),
+                        thread_state::get_calling_uid() as i32,
+                    ],
+                )
             }
             107 => std::process::exit(0),
             _ => Err(StatusCode::UnknownTransaction),

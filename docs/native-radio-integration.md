@@ -1,11 +1,16 @@
 # Native radio integration: next execution gate
 
-The [native add-PDN encoder](native-ims-add-pdn-native.md) now matches five
-complete original code105 vectors on x86 and ARM64 user-QEMU after genuine
-missing-serialization RED. All35 tests pass per target, with two explicit native
-count9 refusals. The separate [original probe](native-ims-add-pdn.md) retains its
-seven SDK37 cases. Encoding grants no APN ownership/readiness; current-session
-request transport, response identity, acquisition and hardware remain gates.
+The [typed add-PDN transport tracer](native-radio-add-pdn.md) now composes the
+original-qualified encoder, current-session native owner and actual ARM Binder.
+A genuine Unsupported RED precedes exact code105/slot1/663-byte receipt and two
+pre-dispatch controls in three fresh VMs. Dispatch remains OutcomeUnknown through
+post-dispatch cancellation, peer death and subsequent Stop; cancellation or real
+BOOTTIME expiry before dispatch is
+NotSent. All78 host radio tests pass, with8 ignored. Registration stays unavailable.
+The [pure encoder](native-ims-add-pdn-native.md) retains its separate five-vector
+x86/ARM user-QEMU qualification. Installed dispatch needs durable uncertainty and
+current permissions; response meaning, APN/network acquisition and hardware remain
+gates. The synthetic fixture reset clears only its preflight capture table.
 
 The [native registration observation](native-registration-state.md) now combines
 a data-only shared type with the production radio Gate mapper and passes a private

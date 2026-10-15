@@ -67,15 +67,18 @@ backing array. Empty/null fields produce explicit zeros; no previous request's
 optional data is cached. The finite comparisons do not qualify every possible
 accepted input or combined maximum address lists.
 
-## Next integration gate
+## Later Binder composition and remaining gates
 
-Connect this encoder to a typed current-session request adapter and an actual
-ARM Binder peer that independently captures code105, selected slot and exact
-payload. Keep pre-dispatch refusal NotSent and dispatched operations
-OutcomeUnknown until separately qualified response meaning exists. A returned
-Binder transaction or captured payload cannot establish APN acquisition or IMS
-readiness. Installed command ingress also needs durable uncertainty and current
-permissions before dispatch.
+The later [typed transport tracer](native-radio-add-pdn.md) now connects this
+encoder through a typed current-session adapter and actual ARM Binder to an
+independent exact code105/slot1/663-byte capture. Three fresh VM groups qualify
+owned dispatch, cancellation and real BOOTTIME expiry after genuine Unsupported
+RED. Its kernel/Binder evidence is separate from this pure component checkpoint.
+Pre-dispatch refusal remains NotSent; dispatched operations remain OutcomeUnknown
+through cancellation, peer death and subsequent Stop. A returned transaction or
+captured payload cannot
+establish APN acquisition or IMS readiness. Installed command ingress still needs
+durable uncertainty and current permissions before dispatch.
 
 Real APN/network ownership must supply these fields. Subscription/provider and
 worker incarnation, original response/reset semantics, installed services/apps,
