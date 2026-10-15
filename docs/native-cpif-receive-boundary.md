@@ -123,7 +123,9 @@ and boundary evidence. Preserve one descriptor generation, the original
 BOOTTIME deadline and terminal uncertainty. Never copy the original unbounded
 retry/reopen policy into native recovery.
 
-The next receive vertical must also observe natural worker termination before
+The later [local I/O policy](native-sit-cpif-policy.md) implements readiness/idle
+behavior and separately tests natural worker termination. A production receive
+vertical must observe natural worker termination before
 cancellation, withdraw current state, preserve only previously committed history
 and retain durable successor refusal. These are additional integration checks,
 not a claim that the current attempt library already loses committed history.

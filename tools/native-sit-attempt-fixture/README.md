@@ -27,7 +27,8 @@ The final source does not select behavior from that phase argument.
 
 Three cases cover completion, a held candidate past its original BOOTTIME
 cutoff without timer delivery, and cancellation. Each observes100 snapshots
-while the worker blocks in its second receive, then actual Stop/worker wait9,
+before the controller captures its actual blocked second receive, then actual
+Stop/worker wait9,
 unchanged-journal `AdmissionUncertain`, parent wait/both PIPE EOFs and ECHILD.
 Full prepared report fields and committed source/record/report are checked.
 
@@ -53,3 +54,12 @@ controller's actual blocked-read capture; Stop follows that capture. The expiry
 case delays Main commit, not the first transport read. No late-return deadline
 proof is claimed. Wait failure still records independent journal refusal before
 returning failure. See [owned transport](../../docs/native-sit-owned-transport.md).
+
+The natural-terminal extension adds `natural_controller.py BUILD ABS_NEW_OUTPUT`
+with two separately ordered cases. Worker0 before commit leaves no history;
+actual peer half-close after live commit causes generic ZeroRead/worker70 and
+withdrawal retaining exact history. Main retains and reuses the one actual wait
+receipt during cleanup. Both cases keep the journal and refuse a successor.
+The original controller and its exact signal9 assertions remain unchanged.
+[Policy and lifecycle evidence](../../docs/native-sit-cpif-policy.md) distinguishes
+this generic-record fixture from the new CPIF local policy and device gates.

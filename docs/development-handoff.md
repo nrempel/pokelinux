@@ -18,13 +18,29 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The [native CPIF local policy](native-sit-cpif-policy.md) now adds bounded
+poll/read work, an absolute BOOTTIME timer and idle-zero handling. A compiled
+2-pass/9-missing-policy RED precedes86 host/86 ARM user-QEMU component passes.
+Separate actual host/generic ARM natural-worker0/70 cases pass after the fixture's lost-wait
+repair, with exact history and journal refusal; original three controls retain
+worker9. All11 policy tests and all five process cases also pass in one actual
+generic ARM epoch with23 owned waits and input/container closure. The proofs
+remain distinct; CPIF source/record custody, production admission and hardware
+remain open.
+
+After this finite local policy/lifecycle checkpoint, continue the installed
+native media-output selector: existing Rust audio owner through normal Qt to
+actual PipeWire/WirePlumber virtual links and sample flow, including close/loss
+and a live Omarchy theme switch. Keep physical audio and CPIF custody gates
+explicit; do not reopen a broad static/diagnostic or auth/PAM campaign.
+
 The [retained CPIF checkpoint](native-cpif-receive-boundary.md) now binds a fresh
 4K module extraction to the authenticated selected image and qualifies exact
 read/poll, selected FMT queue producers and ordinary static factory paths. Reads
-can retain a
-packet tail or return zero on an empty queue. This advances the native receive
+can retain a packet tail or return zero on an empty queue. This advances the native receive
 contract; complete-record/channel custody, source/KMI, provider/APN/IMS and
-hardware remain open. No new native behavior or phone execution is claimed.
+hardware remain open. That static checkpoint changes no native behavior; no
+phone execution is claimed.
 
 The [owned SIT descriptor transport](native-sit-owned-transport.md) now adds
 one-shot native Rust writes and owned raw reads beneath the attempt/process

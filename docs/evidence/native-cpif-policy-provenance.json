@@ -1,0 +1,209 @@
+{
+  "schema": 1,
+  "date": "2026-10-15",
+  "scope": "Native CPIF local I/O policy and separately selected generic-record natural-exit fixture",
+  "source_hashes": [
+    {
+      "path": "native-sit-transport/Cargo.toml",
+      "sha256": "e1bd27fa0ebb4dedbf64364732c41ff234ceece03b340c3334c0858a755352e5"
+    },
+    {
+      "path": "native-sit-transport/src/lib.rs",
+      "sha256": "9788dde44040b40c222374e6d18fd6a21c37c15bd6cc2efbb01a7d10664dd26b"
+    },
+    {
+      "path": "native-sit-transport/src/cpif.rs",
+      "sha256": "882e425e66cd9198d88624e08a321e17089877aeb539edcd8899ce17eea74aea"
+    },
+    {
+      "path": "native-sit-transport/tests/cpif.rs",
+      "sha256": "4310530e7dae83926d13386c33233ceea60d94d0b9e6975846238d922314c849"
+    },
+    {
+      "path": "tools/native-sit-attempt-fixture/src/main.rs",
+      "sha256": "3acf7e01f86e01245dbab12bc6e2903081c80876834c1286921253ab4ec05a21"
+    },
+    {
+      "path": "tools/native-sit-attempt-fixture/controller.py",
+      "sha256": "1f304b2248decb5718fa29df0bd26f37e0c56791ccebeb00c3a5a846b1acc69d"
+    },
+    {
+      "path": "tools/native-sit-attempt-fixture/natural_controller.py",
+      "sha256": "c0a54b1c985ce81112c5eae27aa61f8c3c2183c50613d2276807748022909d2d"
+    },
+    {
+      "path": "tools/native-sit-attempt-fixture/contract.json",
+      "sha256": "b05b4559ced5a929a54a888d3661bb078c577825ded9349f2aab212261e75366"
+    }
+  ],
+  "private_receipt_hashes_only": [
+    {
+      "path": "policy-RED/selection",
+      "sha256": "9a0fb813e9e4c30548f3071bff6d72e3d5027b0650a50e62aa391822e2bc2794"
+    },
+    {
+      "path": "policy-RED/execution",
+      "sha256": "20bbcc7f2dfc0245498e0dcad90bc1d6e4dcbcabf893fec58815c62c549b247a"
+    },
+    {
+      "path": "policy-RED/test-log",
+      "sha256": "888a87557e9ba7aa50e52c70b59afb01655525e6af5cf76492cf748be6860f43"
+    },
+    {
+      "path": "policy-final-GREEN/selection",
+      "sha256": "e099722875c0239a784cf219b8e394a7590423778eb06e38422935772f0f5616"
+    },
+    {
+      "path": "policy-final-GREEN/Root-review",
+      "sha256": "802a9a82d623ff0e7a36a7003508819ce735574e72f2627ab91570cc50ef196c"
+    },
+    {
+      "path": "policy/independent-source-review",
+      "sha256": "12260fbe7ddc45f85520ded3284cc9cc2073f4d7078551d311c622418ea960e7"
+    },
+    {
+      "path": "natural/Root-review",
+      "sha256": "7187475449fc0d7c9892d18490d74fc7e00a3dd7b8cda12b68681079af0fd08b"
+    },
+    {
+      "path": "natural/RED-GREEN-review",
+      "sha256": "8f323b072fd0c46cdecd0ff34e3c044b63f9e7fd46ca591742a89b8a4389719f"
+    },
+    {
+      "path": "natural/scaffolding",
+      "sha256": "10946ce64849e5e9e9bfc1659bc81aecf3c8300b0285a7b79318a117d9e98ce2"
+    },
+    {
+      "path": "natural/final-composition",
+      "sha256": "66520215b82cf354663fe473b7541c5c50cdeb09e160934fd40827c436c34758"
+    },
+    {
+      "path": "natural/final-build",
+      "sha256": "e678107b477aaf17d38a08ad4066c3abf755175d7aaa6118fe79370b02461a34"
+    },
+    {
+      "path": "ARM-final/Root-review",
+      "sha256": "260c43ac8f00a8e118b03a66d4f6665bcd595710ad914421e64fe2c85c499216"
+    },
+    {
+      "path": "ARM-final/independent-review",
+      "sha256": "f1c649376afd25ff0d6bb605340de2999e51300e0c7a42dca07a63f7a15d199c"
+    },
+    {
+      "path": "ARM-final/selection",
+      "sha256": "4ad92af1a903146a608b77c6949eba9a79abdec8ab3857c62c3cde2ce4dbfe77"
+    },
+    {
+      "path": "ARM-final/command",
+      "sha256": "1eb4deb8c2dce18627536d786d6be48f29a313fd465d191184365b5dd2cf3d24"
+    },
+    {
+      "path": "ARM-final/execution",
+      "sha256": "7e428386bec5605d78a9430fc8b61c66ab7c948e241f185f04159a5a30018be3"
+    },
+    {
+      "path": "ARM-final/guest-result",
+      "sha256": "df91774b10a39b56bdac8037c7253888786597a08244c15d7f017d8f506d973f"
+    },
+    {
+      "path": "ARM-final/boot-result",
+      "sha256": "8aaf4ee5ec55c8fb5e7d40fa78c38b4cb477a151866491d069a9066391d4bdfb"
+    },
+    {
+      "path": "ARM-final/Root-driver",
+      "sha256": "8b9f3c280fcdd43d519dc180b2f3e7fb3e3b927a9a922f404df8da7a33dfb170"
+    },
+    {
+      "path": "ARM-failed/independent-review",
+      "sha256": "63a55afb0b4842304b0c6df859bad6350748361fd98be23ccd2c59e062b37e1e"
+    },
+    {
+      "path": "ARM-failed/separate-fresh-CID-closure",
+      "sha256": "da3d9c43201c79869fc5f0ea2005110bcca21f7d6699b485cff0b34510401f2c"
+    }
+  ],
+  "policy_RED": {
+    "strict_compile_fmt_clippy_passed": true,
+    "passed": 2,
+    "missing_policy_failures": 9,
+    "actual_test_exit": 101,
+    "scaffolding": "API and real absolute timer, observe returns Unsupported after preflight"
+  },
+  "policy_GREEN": {
+    "only_repaired_source": "native-sit-transport/src/cpif.rs",
+    "fixed_tests_and_fixtures_unchanged": true,
+    "passes_each_host_and_ARM_user_QEMU": {
+      "policy": 11,
+      "raw_transport": 10,
+      "codec": 50,
+      "attempt": 15,
+      "total": 86
+    },
+    "source_pins_per_stage": 62,
+    "prior_GREEN_preserved": true,
+    "final_review_corrections": "Precise budget doc and unconditional post-copy deadline check"
+  },
+  "natural_fixture": {
+    "RED": "Two actual natural waits discarded before cleanup, after correct withdrawal/history; Main70/cleanup TimedOut",
+    "GREEN": "Same tests, Main-only retained actual wait receipt; worker0 or70, Main0",
+    "precommit0_history": false,
+    "postcommit70_exact_history_retained": true,
+    "postloss_snapshots": 100,
+    "snapshot_and_Stop_after_reap_limit_ns": 200000000,
+    "original3_worker_signal_exactly": 9,
+    "same_journal_successor": "AdmissionUncertain",
+    "fixed_new_controller_unchanged": true,
+    "original_controller_unchanged": true,
+    "final_combined_source_files": 68,
+    "matching_shared_policy_files": 60,
+    "executes_CpifReadPolicy": false,
+    "ARM_compile_only": false,
+    "actual_generic_ARM_kernel_cases_passed": 5
+  },
+  "native_ARM_kernel": {
+    "status": "qualified generic ARM kernel, two distinct proofs",
+    "release": "7.1.6-1-aarch64-ARCH",
+    "cpif_policy_tests": 11,
+    "original_process_cases_signal9": 3,
+    "natural_process_cases_worker0_or70": 2,
+    "actual_owned_waits": {
+      "host": 7,
+      "boot": 2,
+      "guest": 4,
+      "native_parents": 5,
+      "native_workers": 5,
+      "total": 23
+    },
+    "required_EOFs_original_cutoffs_and_input_closure": true,
+    "selected_inputs_rehashed": 177,
+    "external_inputs_rehashed": 187,
+    "fresh_exact_CID_absent_after_CLI_wait": true,
+    "same_daemon": true,
+    "QEMU_and_Root_driver_waits": 0,
+    "CPIF_driver_or_hardware_executed": false,
+    "natural_fixture_executes_CpifReadPolicy": false
+  },
+  "original_or_vendor_module_executed": false,
+  "CPIF_device_acquisition_or_attempt_admission": false,
+  "physical_phone_accessed": false,
+  "physical_models_qualified": 0,
+  "raw_private_artifacts_proprietary_inputs_or_credentials_published": false,
+  "remaining_gates": [
+    "Selected queue/channel-to-worker/request custody, stale bytes and competing readers",
+    "Matched source/KMI/DT and device acquisition",
+    "Authority-bearing production attempt, provider/APN/IMS and installed lifecycle",
+    "Physical suspend/wake and modem/carrier hardware"
+  ],
+  "setup_failures_excluded_from_RED": [
+    "Initial natural-fixture Clippy style failure",
+    "Initial natural runtime image lacked Python",
+    "First ARM epoch witness did not strip proc State whitespace; individual cases passed but overall epoch unqualified"
+  ],
+  "first_ARM_epoch_preserved": {
+    "qualified": false,
+    "Rust_controllers_artifacts_or_semantic_oracles_changed_for_retry": false,
+    "witness_only_repair": "Two State fields strip whitespace before preserving existing Z/S predicates",
+    "failed_unresolved_handle_field_preserved": true,
+    "separate_fresh_same_daemon_exact_CID_absence_confirmed": true
+  }
+}

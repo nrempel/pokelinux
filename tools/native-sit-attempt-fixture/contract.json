@@ -19,7 +19,7 @@
   "strict_review_file": "BUILD/build-review-root.json",
   "artifact_selection": "Select unique compiled_executables record target=pokelinux-sit-attempt-tracer and ELF_machine matching actual uname. Canonical artifact path may differ from runtime alias; full digest must match.",
   "runtime_executable_alias": "BUILD/target/debug/pokelinux-sit-attempt-tracer",
-  "frozen_protocol_source_sha256": "85e20d3209157e9433580d06078fa094ff91d9476678755938b89242601894e2",
+  "frozen_protocol_source_sha256": "3acf7e01f86e01245dbab12bc6e2903081c80876834c1286921253ab4ec05a21",
   "public_request_file_sha256": "e87202bd3d3260a089c4904c25dfbe71539fede952a2c1ed0cb15039c7312d08",
   "public_report_TSV_sha256": "6b25c6f2d761875703dee84c50f4c0fb6f2a045378e32c3375a302de0e72c206",
   "fixed_original_TSV_case": "v4",
@@ -115,7 +115,7 @@
     "green"
   ],
   "owned_descriptor_transport": {
-    "source_sha256": "996ae847f650083b2bf04f6de454f5c42c289fe8dc483655baa1fa959a3e7d55",
+    "source_sha256": "9788dde44040b40c222374e6d18fd6a21c37c15bd6cc2efbb01a7d10664dd26b",
     "component_RED_review_sha256": "007d6636f5fa8e8ec877b85db2aeee7efef5357342535188d70e0d81bfec1e6d",
     "dispatch_only_RED_review_sha256": "ce2ba563d4903bdcb644019aafb2adaa997c714515d75de310cf47dcc6a9a3e7",
     "component_GREEN_review_sha256": "1cca30833af13b96585b2bd9f5c3ef04dfa780011b721cc4a51ec58324cd7727",

@@ -11,6 +11,10 @@ The [exact retained CPIF checkpoint](native-cpif-receive-boundary.md) separately
 qualifies static read/poll and path construction; it does not upgrade these Unix
 fixture runs into matched-driver execution.
 
+The [CPIF-specific local policy](native-sit-cpif-policy.md) adds separate
+readiness/idle handling; generic zero-read termination remains unchanged. Its
+natural-exit fixture checks and policy tests have distinct evidence.
+
 ## Local contract
 
 A transport consumes one `OwnedFd` and the original absolute BOOTTIME deadline.
@@ -124,8 +128,9 @@ QEMU cause or new pre-implementation RED is claimed.
 
 The new direct syscall controls do not yet qualify native ARM kernel or CPIF
 partial/error/late-return behavior. Expiry during copying, allocation failure,
-Main's handling of natural terminal worker exits and physical suspend/wake
-remain open. Main's existing expiry integration holds a timely candidate; the
+and physical suspend/wake remain open. The later
+[natural-exit fixture](native-sit-cpif-policy.md#natural-process-exits) qualifies
+Main handling of the two selected natural worker outcomes separately. Main's existing expiry integration holds a timely candidate; the
 separate helper now qualifies a late raw-read return on the host kernel.
 
 Complete-record framing and ordinary runtime identity, CPIF/channel/slot binding,

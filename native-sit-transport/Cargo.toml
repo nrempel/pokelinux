@@ -8,4 +8,4 @@ publish = false
 [dependencies]
 pokelinux-sit-codec = { path = "../native-sit-codec" }
 pokelinux-process-owner = { path = "../native-process-owner" }
-rustix = { version = "=1.1.5", features = ["net"] }
+rustix = { version = "=1.1.5", features = ["net", "event", "time"] }

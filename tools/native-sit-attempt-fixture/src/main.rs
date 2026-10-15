@@ -15,6 +15,7 @@ use std::{
     num::NonZeroU8,
     os::unix::process::ExitStatusExt,
     path::Path,
+    process::ExitStatus,
     sync::Arc,
     time::Duration,
 };
@@ -101,7 +102,7 @@ fn report(value: &ModernSetupReport22) -> serde_json::Value {
         "QoS_TD_vectors_empty":value.qos_sessions.is_empty() && value.traffic_descriptors.is_empty()})
 }
 fn worker(args: &[String]) -> io::Result<()> {
-    if args.len() != 9
+    if !(args.len() == 9 || (args.len() == 10 && args[9] == "--return-after-response"))
         || args[1] != "--peer"
         || args[3] != "--packet"
         || args[5] != "--peer-pid"
@@ -151,6 +152,9 @@ fn worker(args: &[String]) -> io::Result<()> {
         hex(chunk.as_bytes())
     )?;
     io::stdout().flush()?;
+    if args.len() == 10 {
+        return Ok(());
+    }
     // Deliberately block only this supervised fixture worker until Stop kills it.
     // This separate read is the post-response fixture hold, not dispatch retry
     // or response accumulation. No second record is sent by the controller.
@@ -191,6 +195,20 @@ fn receive(owner: &mut Supervisor, until: u64) -> io::Result<Vec<u8>> {
         std::thread::sleep(Duration::from_millis(1));
     }
 }
+// Fixture diagnostic only: preserves evidence of the actual wait, not cleanup custody.
+fn natural_wait_event(
+    owner: &Supervisor,
+    identity: ProcessIdentity,
+    status: ExitStatus,
+    until: u64,
+) -> io::Result<u64> {
+    let observed = now();
+    event(json!({"event":"natural-wait","actual_wait":true,
+        "worker_code":status.code(),"worker_signal":status.signal(),
+        "occupied":owner.occupied(),"admitted":owner.admits(identity),
+        "waited_at_ns":observed,"original_until_ns":until}))?;
+    Ok(observed)
+}
 fn dispose(owner: &mut Supervisor, identity: ProcessIdentity) -> io::Result<()> {
     let start = now();
     let cutoff = start.checked_add(2_000_000_000).ok_or_else(invalid)?;
@@ -216,6 +234,27 @@ fn dispose(owner: &mut Supervisor, identity: ProcessIdentity) -> io::Result<()> 
         std::thread::sleep(Duration::from_millis(1));
     }
 }
+// Consume the receipt of the one actual wait; never wait for that child twice.
+fn dispose_reaped(
+    owner: &mut Supervisor,
+    identity: ProcessIdentity,
+    reaped: (ExitStatus, u64),
+) -> io::Result<()> {
+    let (status, waited_at) = reaped;
+    let start = now();
+    owner.stop()?;
+    let elapsed = now() - start;
+    event(
+        json!({"event":"worker-wait","actual_wait":true,"already_reaped":true,
+        "worker_signal":status.signal(),"worker_code":status.code(),
+        "occupied":owner.occupied(),"admitted":owner.admits(identity),
+        "stop_started_ns":start,"stop_elapsed_ns":elapsed,"waited_at_ns":waited_at}),
+    )?;
+    if owner.occupied() || owner.admits(identity) || waited_at > start || elapsed >= 200_000_000 {
+        return Err(invalid());
+    }
+    Ok(())
+}
 fn parent(args: &[String]) -> io::Result<i32> {
     if args.len() != 8
         || args[0] != "--runtime"
@@ -230,7 +269,14 @@ fn parent(args: &[String]) -> io::Result<i32> {
     let mode = args[5].as_str();
     if !runtime.is_absolute()
         || !peer.is_absolute()
-        || !["completion", "expiry", "cancel"].contains(&mode)
+        || ![
+            "completion",
+            "expiry",
+            "cancel",
+            "natural-before-commit",
+            "terminal-after-commit",
+        ]
+        .contains(&mode)
     {
         return Err(invalid());
     }
@@ -255,6 +301,9 @@ fn parent(args: &[String]) -> io::Result<i32> {
         .arg(expected_peer.to_string())
         .arg("--until-ns")
         .arg(until.to_string());
+    if mode == "natural-before-commit" {
+        command.arg("--return-after-response");
+    }
     let mut owner = Supervisor::new(journal.clone());
     let identity = match owner.start_worker(&mut command) {
         Ok(id) => id,
@@ -276,6 +325,7 @@ fn parent(args: &[String]) -> io::Result<i32> {
         }
     };
     let worker_pid = owner.child_pid().ok_or_else(invalid)?;
+    let mut natural_reaped = None;
     let result = (|| -> io::Result<bool> {
         let setup = checked(Setup::new(context, "pokelinux.invalid", Protocol::Ipv4, 0))?;
         let attempt = checked(Attempt::new(
@@ -339,7 +389,16 @@ fn parent(args: &[String]) -> io::Result<i32> {
         if mode == "cancel" {
             checked(attempt.cancel())?;
         }
-        if owner.poll_reap()?.is_some() || !owner.admits(identity) {
+        let observed_wait = owner.poll_reap()?;
+        if let Some(status) = observed_wait
+            && mode == "natural-before-commit"
+        {
+            if status.code() != Some(0) || status.signal().is_some() {
+                return Err(invalid());
+            }
+            natural_reaped = Some((status, natural_wait_event(&owner, identity, status, until)?));
+        }
+        if observed_wait.is_some() || !owner.admits(identity) {
             checked(attempt.source_lost(identity))?;
         }
         let expected_source = candidate.source();
@@ -347,7 +406,7 @@ fn parent(args: &[String]) -> io::Result<i32> {
         let expected_report = candidate.report().clone();
         let committed = attempt.commit(candidate);
         let expected = match mode {
-            "completion" => match committed {
+            "completion" | "terminal-after-commit" => match committed {
                 Ok(snapshot) => match (&snapshot.current, &snapshot.history) {
                     (Some(current), Some(history)) => {
                         Arc::ptr_eq(current, history)
@@ -360,6 +419,12 @@ fn parent(args: &[String]) -> io::Result<i32> {
                 Err(AttemptError::Unsupported) => false,
                 Err(e) => return Err(io::Error::other(format!("commit: {e:?}"))),
             },
+            "natural-before-commit" => {
+                if !matches!(committed, Err(AttemptError::SourceLost)) {
+                    return Err(invalid());
+                }
+                true
+            }
             "expiry" => {
                 if !matches!(committed, Err(AttemptError::Deadline)) {
                     return Err(invalid());
@@ -381,17 +446,71 @@ fn parent(args: &[String]) -> io::Result<i32> {
             "withdrawal":format!("{:?}",snapshot.withdrawal),"sampled_ns":now(),"original_until_ns":until,
             "capability_present":expected}),
         )?;
-        checked(attempt.cancel())?;
-        let withdrawn = checked(attempt.snapshot())?;
-        if withdrawn.current.is_some()
-            || withdrawn.history.is_some() != (mode == "completion" && expected)
-        {
-            return Err(invalid());
+        if mode == "terminal-after-commit" {
+            let cutoff = until.min(now() + 2_000_000_000);
+            loop {
+                if let Some(status) = owner.poll_reap()? {
+                    if status.code() != Some(70) || status.signal().is_some() {
+                        return Err(invalid());
+                    }
+                    natural_reaped =
+                        Some((status, natural_wait_event(&owner, identity, status, until)?));
+                    checked(attempt.source_lost(identity))?;
+                    break;
+                }
+                let _ = checked(attempt.snapshot())?;
+                if now() >= cutoff {
+                    return Err(io::ErrorKind::TimedOut.into());
+                }
+                std::thread::sleep(Duration::from_millis(1));
+            }
+        }
+        if ["natural-before-commit", "terminal-after-commit"].contains(&mode) {
+            let start = now();
+            for _ in 0..100 {
+                let _ = checked(attempt.snapshot())?;
+            }
+            let elapsed = now() - start;
+            let withdrawn = checked(attempt.snapshot())?;
+            let same_history = match (&snapshot.history, &withdrawn.history) {
+                (Some(before), Some(after)) => Arc::ptr_eq(before, after),
+                (None, None) => true,
+                _ => false,
+            };
+            event(json!({"event":"withdrawn","case":mode,
+                "disposition":format!("{:?}",withdrawn.disposition),
+                "withdrawal":format!("{:?}",withdrawn.withdrawal),
+                "current_present":withdrawn.current.is_some(),
+                "history_present":withdrawn.history.is_some(),"same_history":same_history,
+                "history_source":withdrawn.history.as_ref().map(|h|h.source().hex()),
+                "history_record_hex":withdrawn.history.as_ref().map(|h|hex(h.record())),
+                "history_report":withdrawn.history.as_ref().map(|h|report(h.report())),
+                "snapshot_count":100,"snapshot_elapsed_ns":elapsed,
+                "sampled_ns":now(),"original_until_ns":until}))?;
+            if withdrawn.current.is_some()
+                || !same_history
+                || elapsed >= 200_000_000
+                || withdrawn.history.is_some() != (mode == "terminal-after-commit")
+                || withdrawn.withdrawal != Some(pokelinux_sit_attempt::Withdrawal::SourceLost)
+            {
+                return Err(invalid());
+            }
+        } else {
+            checked(attempt.cancel())?;
+            let withdrawn = checked(attempt.snapshot())?;
+            if withdrawn.current.is_some()
+                || withdrawn.history.is_some() != (mode == "completion" && expected)
+            {
+                return Err(invalid());
+            }
         }
         Ok(expected)
     })();
     // Cleanup and durable refusal occur before a deliberately missing-capability RED.
-    let cleanup = dispose(&mut owner, identity);
+    let cleanup = match natural_reaped {
+        Some(reaped) => dispose_reaped(&mut owner, identity, reaped),
+        None => dispose(&mut owner, identity),
+    };
     let mut restart = Supervisor::new(journal);
     let refused = restart.start_worker(&mut command);
     if refused != Err(StartError::AdmissionUncertain) || restart.occupied() {
@@ -401,6 +520,9 @@ fn parent(args: &[String]) -> io::Result<i32> {
         json!({"event":"successor-refused","reason":"AdmissionUncertain","occupied":restart.occupied()}),
     )?;
     // Record independent durable refusal even if the actual worker wait failed.
+    if let Err(error) = &cleanup {
+        event(json!({"event":"cleanup-failure","error":format!("{error:?}")}))?;
+    }
     cleanup?;
     let capability = match result {
         Ok(value) => value,

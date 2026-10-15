@@ -50,6 +50,11 @@ only the selected4K module and conditional factory path. Its static queue facts
 do not apply automatically to the16K variant, another phone or a different CPIF
 build. Channel, DT, KMI and physical qualification remain per profile.
 
+The [native CPIF local policy](native-sit-cpif-policy.md) remains inside the
+Samsung backend and exposes local syntax, without a qualified source or device
+acquisition path. Common services gain no CPIF node names, numeric states or
+assumed modem authority from it.
+
 ## Boundaries
 
 | Layer | Owns | Must not assume |

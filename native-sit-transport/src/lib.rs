@@ -5,6 +5,8 @@
 #[cfg(not(target_os = "linux"))]
 compile_error!("pokelinux-sit-transport requires Linux");
 
+pub mod cpif;
+
 use pokelinux_process_owner::deadline::{BootClock, Clock, Deadline};
 use pokelinux_sit_codec::{
     INITIAL_LTE_SETUP_V3_BYTES,
@@ -29,6 +31,9 @@ pub enum StopReason {
     Read,
     ZeroRead,
     Copy,
+    Poll,
+    Readiness,
+    WorkLimit,
 }
 
 /// Recorded local state only; this value grants no current liveness or authority.

@@ -5,6 +5,10 @@ implements one-shot writes and owned raw reads using these findings while
 keeping conservative terminal uncertainty. Its real descriptor tests and
 process integration are separate from the static/original evidence below.
 
+The [native CPIF local policy](native-sit-cpif-policy.md) now implements bounded
+readiness/idle handling with local syntax observations; source/record and device
+admission remain unavailable.
+
 These are author-reasoned static contracts from selected matched factory methods,
 with independent method/assembly/ELF review. The later
 [retained CPIF and construction checkpoint](native-cpif-receive-boundary.md) adds
