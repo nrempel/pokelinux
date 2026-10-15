@@ -87,6 +87,17 @@ impl ProcessIdentity {
         Some(Self(bytes))
     }
 }
+/// Stored successful sync completion, captured before the spawn attempt.
+/// A diagnostic fact only: neither power-loss proof nor remote cleanup authority.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct AdmissionReceipt {
+    pub identity: ProcessIdentity,
+    pub sync_completed_before_spawn_at_boottime_ns: u64,
+    pub journal_device: u64,
+    pub journal_inode: u64,
+    pub journal_uid: u32,
+    pub journal_mode: u32,
+}
 #[derive(Debug, PartialEq, Eq)]
 pub enum StartError {
     Occupied,
@@ -105,6 +116,7 @@ pub struct Supervisor {
     live: Option<ProcessIdentity>,
     admitted: bool,
     journal: PathBuf,
+    admission_receipt: Option<AdmissionReceipt>,
 }
 impl Supervisor {
     /// The admission path must reside in an existing private directory owned by
@@ -117,7 +129,13 @@ impl Supervisor {
             live: None,
             admitted: false,
             journal,
+            admission_receipt: None,
         }
+    }
+    /// Receipt from this owner's successful file and directory sync only.
+    /// A recreated owner never fabricates a receipt for a pre-existing marker.
+    pub fn admission_receipt(&self) -> Option<AdmissionReceipt> {
+        self.admission_receipt
     }
     pub fn occupied(&self) -> bool {
         self.child.is_some()
@@ -154,6 +172,21 @@ impl Supervisor {
         File::open(directory)
             .and_then(|dir| dir.sync_all())
             .map_err(|_| StartError::Io)?;
+        let metadata = file.metadata().map_err(|_| StartError::Io)?;
+        use crate::deadline::{BootClock, Clock};
+        let sync_completed_before_spawn_at_boottime_ns = BootClock
+            .now()
+            .as_nanos()
+            .try_into()
+            .map_err(|_| StartError::Io)?;
+        self.admission_receipt = Some(AdmissionReceipt {
+            identity: id,
+            sync_completed_before_spawn_at_boottime_ns,
+            journal_device: metadata.dev(),
+            journal_inode: metadata.ino(),
+            journal_uid: metadata.uid(),
+            journal_mode: metadata.mode(),
+        });
         Ok(())
     }
     /// Low-level explicit-Stop process ownership only. Arbitrary commands have
@@ -338,6 +371,7 @@ mod tests {
             live: Some(id),
             admitted: true,
             journal: PathBuf::from("unused-test-journal"),
+            admission_receipt: None,
         };
         assert!(supervisor.stop().is_err());
         assert!(!supervisor.admits(id));
@@ -358,6 +392,7 @@ mod tests {
             live: Some(identity),
             admitted: true,
             journal: PathBuf::from("unused-test-journal"),
+            admission_receipt: None,
         };
         assert!(owner.admits(identity));
         assert!(owner.poll_reap().is_err());
@@ -402,6 +437,7 @@ mod tests {
             live: Some(live),
             admitted: true,
             journal: PathBuf::from("unused-test-journal"),
+            admission_receipt: None,
         };
         assert!(supervisor.admits_frame(live, live, 1));
         assert!(!supervisor.admits_frame(old, old, 1));
@@ -484,6 +520,7 @@ mod tests {
             live: Some(id),
             admitted: true,
             journal: std::path::PathBuf::from("unused-test-journal"),
+            admission_receipt: None,
         };
         assert!(supervisor.admits(id));
         supervisor.stop().unwrap();
@@ -509,8 +546,73 @@ mod tests {
             live: Some(ProcessIdentity([7; 16])),
             admitted: true,
             journal: std::path::PathBuf::from("unused-test-journal"),
+            admission_receipt: None,
         };
         assert!(supervisor.poll_reap().unwrap().is_none());
         assert!(supervisor.child.is_some(), "unreaped process was discarded");
+    }
+    #[test]
+    #[cfg_attr(
+        target_arch = "aarch64",
+        ignore = "requires native kernel process execution"
+    )]
+    fn synced_receipt_survives_failed_spawn_without_fabricating_restart_receipt() {
+        use crate::deadline::{BootClock, Clock};
+        use std::os::unix::fs::DirBuilderExt;
+        let path = std::env::temp_dir().join(format!(
+            "pokelinux-sync-receipt-{}-{}",
+            std::process::id(),
+            ProcessIdentity::new().unwrap().hex()
+        ));
+        fs::DirBuilder::new().mode(0o700).create(&path).unwrap();
+        let journal = path.join("admission");
+        let mut owner = Supervisor::new(journal.clone());
+        assert_eq!(owner.admission_receipt(), None);
+        let before: u64 = BootClock.now().as_nanos().try_into().unwrap();
+        assert_eq!(
+            owner.start(&mut Command::new(path.join("missing-executable"))),
+            Err(StartError::Io)
+        );
+        let after: u64 = BootClock.now().as_nanos().try_into().unwrap();
+        assert!(!owner.occupied());
+        let metadata = fs::symlink_metadata(&journal).unwrap();
+        assert!(metadata.is_file());
+        assert_eq!(metadata.uid(), rustix::process::geteuid().as_raw());
+        assert_eq!(metadata.permissions().mode() & 0o777, 0o600);
+        assert_eq!(metadata.nlink(), 1);
+        let marker = fs::read_to_string(&journal).unwrap();
+        let fields: Vec<_> = marker.lines().collect();
+        assert_eq!(fields.len(), 3);
+        assert_eq!(fields[0], "admission-v1");
+        assert_eq!(fields[2], "1");
+        let identity = ProcessIdentity::from_hex(fields[1]).unwrap();
+        println!("RECEIPT-CONTROL actual private0600 journal/valid marker, failed spawn, no child");
+        let receipt = owner
+            .admission_receipt()
+            .expect("MISSING_POST_SYNC_ADMISSION_RECEIPT");
+        assert_eq!(receipt.identity, identity);
+        assert!(before <= receipt.sync_completed_before_spawn_at_boottime_ns);
+        assert!(receipt.sync_completed_before_spawn_at_boottime_ns <= after);
+        assert_eq!(receipt.journal_device, metadata.dev());
+        assert_eq!(receipt.journal_inode, metadata.ino());
+        assert_eq!(receipt.journal_uid, metadata.uid());
+        assert_eq!(receipt.journal_mode, metadata.mode());
+        assert_eq!(
+            owner.start(&mut Command::new("unreachable")),
+            Err(StartError::AdmissionUncertain)
+        );
+        assert_eq!(owner.admission_receipt(), Some(receipt));
+        owner.stop().unwrap();
+        assert_eq!(owner.poll_reap().unwrap(), None);
+        assert_eq!(owner.admission_receipt(), Some(receipt));
+        let mut restarted = Supervisor::new(journal.clone());
+        assert_eq!(
+            restarted.start(&mut Command::new("unreachable")),
+            Err(StartError::AdmissionUncertain)
+        );
+        assert_eq!(restarted.admission_receipt(), None);
+        assert_eq!(fs::read_to_string(&journal).unwrap(), marker);
+        fs::remove_file(journal).unwrap();
+        fs::remove_dir(path).unwrap();
     }
 }

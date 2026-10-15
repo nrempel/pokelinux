@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "device": "/dev/binderfs/data",
+  "service": "android.hardware.radio.data.IRadioData/slot1",
+  "expected_callback_uid": 1000,
+  "request": {
+    "serial": 713,
+    "accessNetwork": 6,
+    "dataProfileInfo": {
+      "profileId": 2,
+      "apn": "interop.invalid",
+      "protocol": 2,
+      "roamingProtocol": 0,
+      "authType": 0,
+      "user": "",
+      "password": "",
+      "type": 1,
+      "maxConnsTime": 11,
+      "maxConns": 3,
+      "waitTime": 13,
+      "enabled": true,
+      "supportedApnTypesBitmap": 64,
+      "bearerBitmap": 16384,
+      "mtuV4": 1400,
+      "mtuV6": 1400,
+      "preferred": false,
+      "persistent": true,
+      "alwaysOn": false,
+      "trafficDescriptor": {
+        "dnn": "interop.invalid",
+        "osAppId": [
+          1,
+          2,
+          0,
+          255
+        ]
+      },
+      "infrastructureBitmap": 1
+    },
+    "roamingAllowed": false,
+    "reason": 1,
+    "addresses": [
+      {
+        "address": "192.0.2.2/32",
+        "addressProperties": 0,
+        "deprecationTime": 9223372036854775807,
+        "expirationTime": 9223372036854775807
+      },
+      {
+        "address": "2001:db8:1::2/64",
+        "addressProperties": 0,
+        "deprecationTime": 9223372036854775807,
+        "expirationTime": 9223372036854775807
+      }
+    ],
+    "dnses": [
+      "192.0.2.53",
+      "2001:db8::53"
+    ],
+    "pduSessionId": 7,
+    "sliceInfo": {
+      "sliceServiceType": 1,
+      "sliceDifferentiator": 66051,
+      "mappedHplmnSst": 2,
+      "mappedHplmnSd": 263430,
+      "status": 2
+    },
+    "matchAllRuleAllowed": true
+  }
+}

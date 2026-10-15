@@ -1,0 +1,17 @@
+# Source-only placement: tools/native-cellular-data/named-endpoint-probe/
+[package]
+name = "pokelinux-cellular-named-endpoint-probe"
+version = "0.1.0"
+edition = "2024"
+publish = false
+[[bin]]
+name = "cellular-named-endpoint-probe"
+path = "src/main.rs"
+[workspace]
+[dependencies]
+pokelinux-cellular-boundary = { path = "../../../native-cellular-boundary", features = ["test-fixture"] }
+rsbinder = { version = "=0.12.0", default-features = false }
+rustix = { version = "=1.1.5", features = ["time", "fs", "process"] }
+serde_json = "=1.0.154"
+[lints.rust]
+unsafe_code = "forbid"

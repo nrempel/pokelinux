@@ -67,8 +67,23 @@ is not a behavioral pass.
 bindings' authored control feature enabled by the development dependency.
 No host behavioral test result is claimed.
 
-Process-global Binder pools, local `stop`/drop and process waits do not qualify
-owned-worker/pool joins, responsive installed Stop, remote cleanup, durable
-permissions, journal/persistence or recovery. Target modem/slot/SIM/APN,
+These owner-library runs use process-global Binder pools. Local `stop`/drop and
+process waits do not qualify pool/worker joins, responsive installed Stop,
+remote cleanup or durable permissions. Journal/persistence and recovery are
+outside this library; the separate service selection below qualifies its own
+conservative attempt fence and actual process disposal. Target modem/slot/SIM/APN,
 provider-to-link authority, ACK_EXP, installed services and matched Google/Pixel
 kernel/policy/hardware remain open. No physical phone was accessed.
+
+## Separate supervised Data integration
+
+The [production Data service tracer](../docs/native-cellular-service.md) adds one selected generic ARM
+Main/worker/operator execution around this unchanged owner. It qualifies its own
+conservative admission journal, exact full report through worker/status, real
+controlled link-loss withdrawal, native child actual wait, Main exit0 and
+same-journal refusal78, with34 separately counted direct waits/EOF. It is
+additional integration after separate component REDs. The earlier owner/ABI
+proofs above retain their old sources and scopes. A process wait is not a Binder
+pool/thread join, modem deactivation, vendor cleanup or successor authorization;
+no APN/provider-created link/current app grant or normal installed unit is proved.
+Broader queued/structural negatives and hardware gates remain as recorded above.

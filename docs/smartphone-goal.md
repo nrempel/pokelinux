@@ -6,6 +6,15 @@ Build and test everything possible offline on temporary Harbour capacity. Do not
 
 **No backwards compatibility:** build one target implementation and matching component set. Do not add legacy adapters, dual production runtimes, old-format migrations or downgrade support for earlier iterations. Test required behavior and restart recovery within the target version. Prior code and artifacts provide evidence, not a requirement to preserve old formats.
 
+The [native Data service tracer](native-cellular-service.md) separately passes
+one generic ARM production Main/owned worker/restricted operator path with
+conservative synced admission, full historical report, controlled real kernel
+association/loss, native worker wait and unchanged-journal refusal78.24 service
+plus nine shared host tests and34 guest direct waits/EOF qualify; the full trace
+is additional integration after separate component/fixture REDs. Normal installed
+policy/current authorization, APN/provider identity, cleanup/retry and hardware
+remain open.
+
 The [native Data/kernel owner](native-cellular-data-owner.md) retains its fixed
 actual ARM Binder/kernel RED→GREEN: wrong-serial refusal, accepted provider
 history, a fresh same-observer join and real link-loss withdrawal. Three later
@@ -18,9 +27,10 @@ history remains intact. The earlier 42 waits/EOF and the additional 71
 [Public-poll evidence](evidence/native-cellular-data-public-poll-provenance.json).
 
 This controlled fixture association does not prove the provider owns or created
-the link or acquires an APN. Unknown-serial ordinary dispatch, durable dispatch,
-permissions, installed service/worker lifecycle and matched Pixel/carrier
-behavior remain open.
+the link or acquires an APN. Unknown-serial ordinary dispatch, current authorized
+dispatch/normal deployment and matched Pixel/carrier behavior remain open. The
+separate service tracer above qualifies a conservative attempt fence and local
+process lifecycle; it does not alter the older owner evidence pins.
 
 The [public Data V3 ABI](native-cellular-data-abi.md) now composes generated Rust
 bindings, a dedicated Rust fixture manager and an independently generated NDK

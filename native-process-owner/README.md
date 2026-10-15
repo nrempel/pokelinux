@@ -30,5 +30,21 @@ shared and 59 radio host tests (two radio tests ignored), then the existing
 production radio-worker oracle through actual generic ARM Binder. This new
 selection qualifies normal lookup/RAW/death/Stop/wait/refusal; it does not rerun
 the earlier parent-death or four bootstrap-policy controls. Local process death
-and wait prove no vendor cleanup and authorize no retry. A supervised Data
-worker/service, APN acquisition and physical hardware remain separate work.
+and wait prove no vendor cleanup and authorize no retry. The later Data
+selection below is separately qualified; APN acquisition, normal deployment and
+physical hardware remain separate work.
+
+## Later Data consumer
+
+A host actual failed-spawn admission-receipt RED→GREEN passes nine shared tests
+and exposes readonly metadata for returned file/directory sync before spawn.
+This does not simulate power loss or clear the admission fence. The historical
+eight-shared/59-radio proof above remains byte-for-byte separate.
+
+The [Data service tracer](../docs/native-cellular-service.md) then runs the three unchanged final-core
+production executables through actual generic ARM Binder and an independently
+controlled TUN. Main actually waits its worker9 before guest-owned Main0, and
+unchanged-journal restart78 starts no new worker/setup. All34 guest direct
+waits/EOF are separately counted from that nested native wait. No Binder pool
+join, remote provider cleanup, safe successor operation, permission/APN grant
+or normal systemd installation is inferred; manager fallback remains untested.

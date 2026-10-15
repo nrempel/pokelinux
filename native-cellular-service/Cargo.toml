@@ -1,0 +1,20 @@
+[package]
+name = "pokelinux-cellular-service"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+pokelinux-cellular-boundary = { path = "../native-cellular-boundary" }
+pokelinux-cellular-owner = { path = "../native-cellular-owner" }
+pokelinux-network-state = { path = "../native-network-state" }
+pokelinux-process-owner = { path = "../native-process-owner" }
+pokelinux-kernel-identity = { path = "../native-kernel-identity" }
+rsbinder = { version = "=0.12.0", default-features = false }
+rustix = { version = "=1.1.5", features = ["time", "fs", "process", "net", "event", "stdio", "pipe"] }
+serde_json = "=1.0.154"
+sha2 = "=0.10.9"
+serde = { version = "=1.0.229", features = ["derive"] }
+
+[lints.rust]
+unsafe_code = "forbid"

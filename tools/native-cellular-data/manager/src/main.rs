@@ -1,11 +1,20 @@
-//! One fixed Data fixture transfer, not a general/installed service manager.
+//! Two fixed Data fixture transfers, not a general/installed service manager.
 use rsbinder::{
     Binder, Interface, Parcel, ProcessState, Remotable, Result, SIBinder, Status, StatusCode,
 };
 use std::{io::Write, sync::Mutex};
 const NAME: &str = "org.pokelinux.fixture.cellular-data";
 const DESCRIPTOR: &str = "org.pokelinux.datatest.IDataFixture";
-struct Manager(Mutex<Option<SIBinder>>);
+const DATA_NAME: &str = "android.hardware.radio.data.IRadioData/slot1";
+const DATA_DESCRIPTOR: &str = "android.hardware.radio.data.IRadioData";
+fn service_slot(name: &str) -> Result<usize> {
+    match name {
+        NAME => Ok(0),
+        DATA_NAME => Ok(1),
+        _ => Err(StatusCode::BadValue),
+    }
+}
+struct Manager([Mutex<Option<SIBinder>>; 2]);
 impl Remotable for Manager {
     fn descriptor() -> &'static str {
         "android.os.IServiceManager"
@@ -13,9 +22,7 @@ impl Remotable for Manager {
     fn on_transact(&self, code: u32, data: &mut Parcel, reply: &mut Parcel) -> Result<()> {
         match code {
             5 => {
-                if data.read::<String>()? != NAME {
-                    return Err(StatusCode::BadValue);
-                }
+                let slot = service_slot(&data.read::<String>()?)?;
                 let service: SIBinder = data.read()?;
                 let allow_isolated = data.read::<bool>()?;
                 let priority = data.read_i32()?;
@@ -23,16 +30,28 @@ impl Remotable for Manager {
                 {
                     return Err(StatusCode::BadValue);
                 }
-                if service.descriptor() != DESCRIPTOR {
+                let descriptor = if slot == 0 {
+                    DESCRIPTOR
+                } else {
+                    DATA_DESCRIPTOR
+                };
+                if service.descriptor() != descriptor {
                     return Err(StatusCode::BadType);
                 }
-                let mut current = self.0.lock().map_err(|_| StatusCode::FailedTransaction)?;
+                let mut current = self.0[slot]
+                    .lock()
+                    .map_err(|_| StatusCode::FailedTransaction)?;
                 if current.is_some() {
                     return Err(StatusCode::InvalidOperation);
                 }
                 *current = Some(service);
                 println!(
-                    "DATA-FIXTURE-TRANSFERRED pid={} uid={}",
+                    "{}-TRANSFERRED pid={} uid={}",
+                    if slot == 0 {
+                        "DATA-FIXTURE"
+                    } else {
+                        "DATA-STANDARD"
+                    },
                     rsbinder::thread_state::get_calling_pid(),
                     rsbinder::thread_state::get_calling_uid()
                 );
@@ -42,16 +61,21 @@ impl Remotable for Manager {
                 reply.write(&Status::from(StatusCode::Ok))
             }
             3 => {
-                if data.read::<String>()? != NAME || data.data_avail() != 0 {
+                let slot = service_slot(&data.read::<String>()?)?;
+                if data.data_avail() != 0 {
                     return Err(StatusCode::BadValue);
                 }
-                let service = self
-                    .0
+                let service = self.0[slot]
                     .lock()
                     .map_err(|_| StatusCode::FailedTransaction)?
                     .clone();
                 println!(
-                    "DATA-FIXTURE-LOOKUP pid={} uid={} found={}",
+                    "{}-LOOKUP pid={} uid={} found={}",
+                    if slot == 0 {
+                        "DATA-FIXTURE"
+                    } else {
+                        "DATA-STANDARD"
+                    },
                     rsbinder::thread_state::get_calling_pid(),
                     rsbinder::thread_state::get_calling_uid(),
                     service.is_some()
@@ -78,7 +102,8 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
         return Err("explicit absolute private Binder device required".into());
     }
     let process = ProcessState::init(&device, 3)?;
-    process.become_context_manager(Binder::new(Manager(Mutex::new(None))).as_binder())?;
+    let manager = Manager([Mutex::new(None), Mutex::new(None)]);
+    process.become_context_manager(Binder::new(manager).as_binder())?;
     println!(
         "READY-DATA-MANAGER pid={} device={}",
         std::process::id(),

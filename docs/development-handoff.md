@@ -18,13 +18,24 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
-The [shared process-custody mechanism](native-process-custody.md) now lives in
-`native-process-owner`, with direct radio imports and no compatibility aliases.
-Eight shared plus 59 radio host tests and an additional actual ARM normal worker
-regression pass; the existing bootstrap-policy and installed executions retain
-their historical scope. Next, one supervised Data worker must add durable
-admission and current authorization without treating a controlled association
-as permission or remote cleanup.
+The [native Data service tracer](native-cellular-service.md) now records one
+complete generic ARM production Main/worker/operator integration pass.24 service
+and nine shared host tests pass. Its34 guest direct waits/EOF include Main0,
+Stop0 and unchanged-journal restart78; Main separately actually waits worker9.
+One standard named Data endpoint/one setup yields exact historical18-field
+provider report, a fresh same-observer association with an independently created
+TUN, then real sole-close/independent-absence withdrawal retaining history.
+All eight phases and outer CID/input closure pass. This is additional integration,
+not a manufactured full-tracer RED; preceding host components and natural named
+fixture RED→GREEN remain separate. Root independently rehashes all264 selected
+and1247 original inputs and qualifies the raw phase/wait/kernel evidence.
+
+Shared `native-process-owner` supplies final-credential cooperative bootstrap,
+actual one-child wait and conservative synced admission. The new host receipt
+checkpoint passes nine shared tests separately from its historical eight-shared/
+59-radio result. No grant, vendor cleanup or automatic retry follows from reaping.
+Normal installation/current authorization, provider/slot/APN identity, hardware,
+blocked/output-pressure/expiry controls and service-manager fallback remain open.
 
 The [native Data/kernel owner](native-cellular-data-owner.md) retains its fixed
 actual ARM Binder/kernel RED→GREEN: wrong-serial refusal, accepted provider
@@ -38,9 +49,10 @@ history remains intact. The earlier 42 waits/EOF and the additional 71
 [Public-poll evidence](evidence/native-cellular-data-public-poll-provenance.json).
 
 This controlled fixture association does not prove the provider owns or created
-the link or acquires an APN. Unknown-serial ordinary dispatch, durable dispatch,
-permissions, installed service/worker lifecycle and matched Pixel/carrier
-behavior remain open.
+the link or acquires an APN. Unknown-serial ordinary dispatch, current permissions/normal installation and
+matched Pixel/carrier behavior remain open. The separately selected Data service
+above adds its own conservative journal and process lifecycle qualification; it
+does not upgrade these old owner evidence pins.
 
 The [public Data V3 ABI](native-cellular-data-abi.md) now composes generated Rust
 bindings, a dedicated Rust fixture manager and an independently generated NDK

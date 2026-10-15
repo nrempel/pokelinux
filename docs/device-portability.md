@@ -53,6 +53,13 @@ public-poll setup and separate link/list/death withdrawal; list/death withdraw
 while the independent controller still observes the same positive kernel link.
 [Evidence](evidence/native-cellular-data-public-poll-provenance.json).
 
+The [supervised Data tracer](native-cellular-service.md) now carries those local
+observations through an actual native worker and restricted operator diagnostics
+with a conservative synced attempt journal and native child wait. It remains
+one authored public endpoint and independently created TUN on generic ARM; no
+production Data-instance/SIM/vendor slot mapping, acquired APN or additional
+qualified phone model follows.
+
 These observations are local to each retained endpoint, observer and VM boot.
 Namespace device/inode numbers may repeat across separate VMs, as they do in
 the list/death cases; namespace/ifindex/lifetime values are not durable global

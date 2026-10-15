@@ -1,0 +1,176 @@
+{
+  "schema": 1,
+  "roles": {
+    "service_uid": 1500,
+    "service_gid": 1500,
+    "worker_uid": 1500,
+    "worker_gid": 1500,
+    "operator_uid": 1500,
+    "operator_gid": 1500,
+    "peer_uid": 1000,
+    "manager_uid": 1000,
+    "controller_uid": 1000,
+    "supplementary_groups": [],
+    "effective_capabilities": "0000000000000000"
+  },
+  "data_metadata": {
+    "service": "android.hardware.radio.data.IRadioData/slot1",
+    "descriptor": "android.hardware.radio.data.IRadioData",
+    "version": 3,
+    "hash": "cd8913a3f9d39f1cc0a5fcf9e90257be94ec38df"
+  },
+  "fixture_metadata": {
+    "service": "org.pokelinux.fixture.cellular-data",
+    "descriptor": "org.pokelinux.datatest.IDataFixture",
+    "version": 1,
+    "hash": "b74bae7e2fba9b8fbb574174a24e7431dbb6281b"
+  },
+  "request": {
+    "serial": 713,
+    "accessNetwork": 6,
+    "dataProfileInfo": {
+      "profileId": 2,
+      "apn": "interop.invalid",
+      "protocol": 2,
+      "roamingProtocol": 0,
+      "authType": 0,
+      "user": "",
+      "password": "",
+      "type": 1,
+      "maxConnsTime": 11,
+      "maxConns": 3,
+      "waitTime": 13,
+      "enabled": true,
+      "supportedApnTypesBitmap": 64,
+      "bearerBitmap": 16384,
+      "mtuV4": 1400,
+      "mtuV6": 1400,
+      "preferred": false,
+      "persistent": true,
+      "alwaysOn": false,
+      "trafficDescriptor": {
+        "dnn": "interop.invalid",
+        "osAppId": [
+          1,
+          2,
+          0,
+          255
+        ]
+      },
+      "infrastructureBitmap": 1
+    },
+    "roamingAllowed": false,
+    "reason": 1,
+    "addresses": [
+      {
+        "address": "192.0.2.2/32",
+        "addressProperties": 0,
+        "deprecationTime": 9223372036854775807,
+        "expirationTime": 9223372036854775807
+      },
+      {
+        "address": "2001:db8:1::2/64",
+        "addressProperties": 0,
+        "deprecationTime": 9223372036854775807,
+        "expirationTime": 9223372036854775807
+      }
+    ],
+    "dnses": [
+      "192.0.2.53",
+      "2001:db8::53"
+    ],
+    "pduSessionId": 7,
+    "sliceInfo": {
+      "sliceServiceType": 1,
+      "sliceDifferentiator": 66051,
+      "mappedHplmnSst": 2,
+      "mappedHplmnSd": 263430,
+      "status": 2
+    },
+    "matchAllRuleAllowed": true
+  },
+  "response_info": {
+    "type": 0,
+    "serial": 713,
+    "error": 0
+  },
+  "response": {
+    "cause": 0,
+    "suggestedRetryTime": -1,
+    "cid": 9,
+    "active": 2,
+    "type": 2,
+    "ifname": "pklabi0",
+    "addresses": [
+      {
+        "address": "192.0.2.2/32",
+        "addressProperties": 0,
+        "deprecationTime": 9223372036854775807,
+        "expirationTime": 9223372036854775807
+      },
+      {
+        "address": "2001:db8:1::2/64",
+        "addressProperties": 0,
+        "deprecationTime": 9223372036854775807,
+        "expirationTime": 9223372036854775807
+      }
+    ],
+    "dnses": [
+      "192.0.2.53",
+      "2001:db8::53"
+    ],
+    "gateways": [
+      "192.0.2.1"
+    ],
+    "pcscf": [
+      "192.0.2.20",
+      "2001:db8::20"
+    ],
+    "mtuV4": 1400,
+    "mtuV6": 1400,
+    "defaultQos": {
+      "noinit": false
+    },
+    "qosSessions": [],
+    "handoverFailureMode": 0,
+    "pduSessionId": 7,
+    "sliceInfo": {
+      "sliceServiceType": 1,
+      "sliceDifferentiator": 66051,
+      "mappedHplmnSst": 2,
+      "mappedHplmnSd": 263430,
+      "status": 2
+    },
+    "trafficDescriptors": [
+      {
+        "dnn": "interop.invalid",
+        "osAppId": [
+          1,
+          2,
+          0,
+          255
+        ]
+      }
+    ]
+  },
+  "kernel": {
+    "ifname": "pklabi0",
+    "mtu": 1400,
+    "IPv4": {
+      "local": "192.0.2.2",
+      "address": "192.0.2.1",
+      "prefixlen": 32
+    },
+    "IPv6": {
+      "local": "2001:db8:1::2",
+      "prefixlen": 64,
+      "nodad": true
+    },
+    "required_flags": [
+      "UP",
+      "POINTOPOINT"
+    ],
+    "sole_TUN_FD": true,
+    "TUNSETPERSIST": false
+  }
+}

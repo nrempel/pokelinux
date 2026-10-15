@@ -209,12 +209,14 @@ no general raw-address uniqueness claim is made. Unknown-serial handling through
 ordinary queued-event dispatch remains open; the earlier wrong-serial result
 was fed directly to the production reducer.
 
-Process-global Binder pools are fixture infrastructure. Local owner/watch drop
-and process waits do not qualify pool or owned-worker joins, responsive Stop,
-remote deactivation or vendor cleanup. A cached `last_association` is not current
+Process-global Binder pools are fixture infrastructure. In these owner-library
+runs, local owner/watch drop and process waits do not qualify pool/worker joins
+or a supervised service Stop. No run proves remote deactivation or vendor cleanup. A cached `last_association` is not current
 permission. Expected UID and endpoint discovery/version/hash are external
-premises; production permission policy and installed service/lifecycle,
-persistence/journal/recovery are unqualified.
+premises. These owner-library runs do not qualify production permission policy,
+installed lifecycle or journal/recovery. The separately pinned supervised service
+below adds its own conservative journal and local process-Stop qualification,
+without installing a normal unit or granting current authority.
 
 Actual modem endpoint/slot/subscription/registration mapping, provider ownership
 of the kernel link, carrier/SIM/APN policy and acquisition, ACK_EXP/wake handling,
@@ -223,3 +225,16 @@ hardware qualification remain open. No APN-ready context is injected. The
 controller's netns/TUN privileges and guest Binder/property setup are disposable
 fixture powers, not production authority. No vendor endpoint, normal installed
 app, authentication or physical phone is exercised.
+
+## Separate supervised Data integration
+
+The [production Data service tracer](native-cellular-service.md) adds one selected generic ARM
+Main/worker/operator execution around this unchanged owner. It qualifies its own
+conservative admission journal, exact full report through worker/status, real
+controlled link-loss withdrawal, native child actual wait, Main exit0 and
+same-journal refusal78, with34 separately counted direct waits/EOF. It is
+additional integration after separate component REDs. The earlier owner/ABI
+proofs above retain their old sources and scopes. A process wait is not a Binder
+pool/thread join, modem deactivation, vendor cleanup or successor authorization;
+no APN/provider-created link/current app grant or normal installed unit is proved.
+Broader queued/structural negatives and hardware gates remain as recorded above.

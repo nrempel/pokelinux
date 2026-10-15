@@ -56,8 +56,21 @@ Its new hash is inventoried separately from the old collector pinned in the
 The earlier [parent-death bootstrap](native-radio-bootstrap.md),
 [four policy controls](native-radio-bootstrap-policy.md), permanently blocked
 registration and installed-service runs keep their original sources and scope;
-they were not rerun here. No Data worker/service, APN acquisition, vendor cleanup,
-safe successor admission, matched Pixel policy, modem/carrier or hardware is
-qualified. The next composition is one supervised Data worker with durable
-admission and current authorization, using this local mechanism without
-promoting controlled Data observations into authority.
+they were not rerun by this historical Radio selection, which executed no Data
+worker/service. Its APN, vendor cleanup, safe-successor and hardware limits are
+unchanged. A later separately pinned Data selection is described below.
+
+## Later Data consumer
+
+A host actual failed-spawn admission-receipt RED→GREEN passes nine shared tests
+and exposes readonly metadata for returned file/directory sync before spawn.
+This does not simulate power loss or clear the admission fence. The historical
+eight-shared/59-radio proof above remains byte-for-byte separate.
+
+The [Data service tracer](native-cellular-service.md) then runs the three unchanged final-core
+production executables through actual generic ARM Binder and an independently
+controlled TUN. Main actually waits its worker9 before guest-owned Main0, and
+unchanged-journal restart78 starts no new worker/setup. All34 guest direct
+waits/EOF are separately counted from that nested native wait. No Binder pool
+join, remote provider cleanup, safe successor operation, permission/APN grant
+or normal systemd installation is inferred; manager fallback remains untested.

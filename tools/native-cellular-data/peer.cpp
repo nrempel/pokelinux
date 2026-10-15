@@ -256,6 +256,9 @@ int main(int argc, char** argv) {
     startPool();
     auto fixture = ndk::SharedRefBase::make<Fixture>(generation, static_cast<int64_t>(untilValue));
     if (addService(fixture->asBinder().get(), "org.pokelinux.fixture.cellular-data") != EX_NONE) return 4;
+    std::shared_ptr<IRadioData> data;
+    if (!fixture->endpoint(&data).isOk() || !data) return 5;
+    if (addService(data->asBinder().get(), "android.hardware.radio.data.IRadioData/slot1") != EX_NONE) return 5;
     std::printf("READY-DATA generation=%s pid=%d until_boottime_ns=%lld\n", generation.c_str(),
                 getpid(), untilValue); std::fflush(stdout);
     joinPool(); return 0; // Parent retains exact process custody; no detached cleanup owner.
