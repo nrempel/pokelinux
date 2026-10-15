@@ -6,8 +6,10 @@ kernel Binder test first receives the exact37-byte indication and fails at the
 existing `Unsupported` result. The repaired owner passes the same frozen test,
 peer ELF and outer oracle, including history replacement, refusals and cancellation.
 All52 host library tests and strict checks pass; six ARM binaries compile.
-This checkpoint connects the decoder to its owner. Installed typed IPC/status
-and semantic IMS registration remain unfinished.
+This checkpoint connects the decoder to its owner. The later
+[installed slot1 tracer](native-radio-registration-installed.md) separately
+qualifies typed IPC/status and packaged slot selection with59 host tests.
+Semantic IMS registration remains unfinished.
 
 ## Production change
 
@@ -94,20 +96,23 @@ runtime results and closure receipts. Raw logs and private original inputs remai
 outside Git. This is actual generic ARM kernel/Binder evidence, without new
 original vendor execution, actual suspend, visual or physical-phone qualification.
 
-## Next installed tracer
+## Installed composition and remaining gates
 
-The current production observation codec still supports only raw responses, and
-its unqualified registration variant must not suppress a terminal failure frame.
-The worker has temporary explicit slot0 wiring, without a packaged slot selector;
-its catch-all error does not yet define continued behavior after
-`InvalidIndication`. These are open integration gates, not completed production
-registration support.
+Required profile `SLOT_ID` now reaches the service, worker `--slot` and immutable
+TransportSession selector. The current observation codec carries a bounded typed
+Frame, and status exposes one tagged `last_observation`. The separately executed
+[installed slot1 tracer](native-radio-registration-installed.md) receives and
+accepts registration R4, demonstrates stale RAW R3 history as a genuine RED, then
+passes after one service history assignment. Typed R4 survives unavailable R5;
+native worker wait9, Main0, cgroup closure and durable refusal78 also pass.
 
-Next carry one revision-tagged typed frame through explicit packaged SLOT_ID,
-the native worker, installed service and restricted status client. Use configured
-slot1 in that actual unit test, retain typed history across peer-loss withdrawal,
-and preserve normal native wait, Main exit and durable restart refusal. The
-single latest status variant must keep the existing bounded IPC/output contract.
+Terminal phase selection precedes history projection, so retained typed history
+cannot suppress a Failed frame. The worker now explicitly skips
+`InvalidIndication` while retaining transport/history. This is source policy;
+the installed malformed-indication continuation scenario remains unexecuted.
+The earlier owner refusal controls above do not qualify that worker path.
+
 Full original helper/channel dispatch, producer identity, reset/cleanup
-acknowledgement, safe successor registration, semantic IMS/calls/SMS/media and
-matched Pixel hardware remain open. No physical phone was accessed.
+acknowledgement, safe successor registration, semantic IMS/calls/SMS/media,
+installed pressure/principal negatives and matched Pixel hardware remain open.
+No physical phone was accessed.

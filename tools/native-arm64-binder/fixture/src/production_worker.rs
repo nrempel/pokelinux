@@ -85,6 +85,8 @@ pub fn run() -> TestResult {
         "/dev/binderfs/radio",
         "--service",
         "org.pokelinux.fixture.arm64-radio",
+        "--slot",
+        "0",
         "--until-ns",
         &until_text,
     ] {

@@ -5,7 +5,8 @@ by the native registration decoder. In a fresh SDK37 x86 emulator,17 raw dispatc
 cases and8 separately selected parser calls complete. Original
 `RilIndRegistration.getMessageId().getCode()` returns3012 for
 `RILC_UNSOL_AIMS_REGISTRATION`; observed enum ordinal106 is not a wire identifier.
-This adds original-reference evidence. Installed typed publication remains the next gate.
+This adds original-reference evidence. The later [installed slot1 tracer](native-radio-registration-installed.md)
+separately qualifies typed publication with authored public ARM peers.
 
 ## Executed boundary
 
@@ -52,13 +53,15 @@ The later [native owner checkpoint](native-radio-registration-owner.md) now
 connects this route through actual ARM Binder PreparedEvent receipt and complete
 typed publication, preserving session/revision/deadline/terminal checks. It has a
 genuine Unsupported RED followed by GREEN with an unchanged peer and oracle.
-Installed typed worker/service/status composition is the next gate. Fragments
-remain excluded and fields remain historical wire data.
+The later [installed slot1 checkpoint](native-radio-registration-installed.md)
+qualifies typed worker/service/status composition with required packaged slot
+selection and retained history across peer-loss withdrawal. Fragments remain
+excluded and fields remain historical wire data.
 
 Full original helper/channel routing, producer identity, fragment serialization,
 reset/cleanup acknowledgement, safe successor registration, state/RAT/features,
 URI identity, native IMS/calls/media and physical hardware remain unqualified.
-There is no new Rust runtime, ARM kernel runtime, screenshot or phone result here.
+This original-reference run adds no Rust/ARM kernel runtime, screenshot or phone result.
 
 ## Runtime and closure
 

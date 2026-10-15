@@ -7,6 +7,7 @@ pub const WRONG_ID: u32 = 116;
 pub const FRAGMENT: u32 = 117;
 pub const TRUNCATED: u32 = 118;
 pub const TRAILING: u32 = 119;
+pub const INSTALLED_SLOT1: u32 = 120;
 
 pub fn valid() -> Vec<u8> {
     let mut bytes = vec![255, 128];
@@ -27,7 +28,7 @@ pub fn callback(control: u32) -> Option<(i32, i32, bool, Vec<u8>)> {
     let fragment = control == FRAGMENT;
     match control {
         VALID | FRAGMENT => {}
-        WRONG_SLOT => slot = 1,
+        WRONG_SLOT | INSTALLED_SLOT1 => slot = 1,
         WRONG_ID => message += 1,
         TRUNCATED => bytes.truncate(11),
         TRAILING => bytes.push(0x7e),

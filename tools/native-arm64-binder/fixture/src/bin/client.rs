@@ -396,6 +396,22 @@ fn main() -> TestResult {
         marker("named-peer-exit-without-registration");
         return Ok(());
     }
+    if scenario == "registration-slot1" {
+        let endpoint = peer(true)?;
+        let before = report(&endpoint)?;
+        assert_eq!(before[0], 1);
+        assert!(before[3] > 1 && before[3] != std::process::id() as i32);
+        assert_eq!(before[4], 1500);
+        assert_eq!(before[5], 0);
+        println!(
+            "REGISTRATION-SLOT1-OWNER pid={} uid={}",
+            before[3], before[4]
+        );
+        latch(&endpoint, 120)?;
+        assert_eq!(report(&endpoint)?, before);
+        marker("named-registration-slot1-without-registration");
+        return Ok(());
+    }
     if scenario == "registration-wire" {
         let endpoint = peer(false)?;
         return registration::run(&endpoint);

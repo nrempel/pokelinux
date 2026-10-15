@@ -13,15 +13,18 @@ directories, runs without capabilities, and uses `Restart=no` and
 retains and actually waits its own worker before normal exit. Manager fallback
 and process exit never establish remote vendor cleanup.
 
-A root-provisioned `/etc/pokelinux/radio.conf` must select all three values:
+A root-provisioned `/etc/pokelinux/radio.conf` must select all four values:
 
 ```text
 BINDER_DEVICE=/absolute/path/to/the/selected/binder/device
 BINDER_SERVICE=the.selected.service.name
 LEASE_MS=30000
+SLOT_ID=1
 ```
 
-These are placeholders, not Pixel defaults. The device profile must establish the
+These are placeholders, not Pixel defaults. SLOT_ID must be an explicit
+nonnegative i32 selected by the device profile; there is no inferred slot or
+modem topology. The device profile must establish the
 actual service identity, interface and access policy, grant the service account
 access to that device, and order the endpoint provider before this unit. No
 Android/vendor producer is installed by this package. The selected lease is
@@ -33,7 +36,7 @@ or recovery policy.
 Run `radio-status /run/pokelinux/radio/status.sock status` as the service account
 for private diagnostics. Each packet is checked against its connected Linux
 principal. The JSON distinguishes `observed-active` transport history from
-`unavailable` or `stopping`, and retains an optional historical raw observation.
+`unavailable` or `stopping`, and retains one optional historical raw or registration-wire observation.
 It does not expose app permissions or cellular/IMS state. `stop` uses the same
 restricted socket and observes the exact server process exit after acknowledgement;
 that client is not a reaper. Systemd separately owns the service's actual wait.

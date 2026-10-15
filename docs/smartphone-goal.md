@@ -6,24 +6,21 @@ Build and test everything possible offline on temporary Harbour capacity. Do not
 
 **No backwards compatibility:** build one target implementation and matching component set. Do not add legacy adapters, dual production runtimes, old-format migrations or downgrade support for earlier iterations. Test required behavior and restart recovery within the target version. Prior code and artifacts provide evidence, not a requirement to preserve old formats.
 
-The [installed native radio service](native-radio-service.md) now carries one
-authored raw Binder observation through a production worker and restricted status
-client under an actual ARM systemd unit, with peer-loss withdrawal, native wait,
-clean Main exit and durable restart refusal. This is transport diagnostics;
-producer/reset, native IMS/calls/SMS and hardware requirements remain open. The same
-production binaries now separately pass [responsive status and owned Stop during
-permanently held registration](native-radio-service-blocked.md), with durable
-restart refusal and no vendor-cleanup claim.
+The [installed slot1 registration tracer](native-radio-registration-installed.md)
+now carries one original-qualified complete wire payload through actual ARM
+Binder, the native owner, typed worker IPC and restricted status under the
+packaged unit. Required `SLOT_ID=1`, tagged `last_observation`, peer-loss withdrawal
+with typed history retained, native worker wait9, Main exit0, empty cgroup and
+same-journal refusal78 pass after a genuine stale-RAW-history RED. All59 host
+tests and full closure pass. This is historical transport diagnostics, without
+semantic IMS, carrier, remote-cleanup or hardware authority.
 
-The narrow [original registration route](native-ims-registration-routing.md) is
-now qualified separately:17 raw dispatch cases and8 parser calls establish
-code3012, slot filtering and full-array delivery. Installed typed publication,
-full semantic routing and producer/reset remain unfinished.
-
-The [native historical registration owner](native-radio-registration-owner.md)
-now passes actual ARM Binder RED→GREEN with the original-qualified complete
-payload decoder and post-decode publication fences.52 host tests pass. Installed
-typed IPC/status, explicit packaged slot, semantic IMS and hardware remain open.
+The separate [original route](native-ims-registration-routing.md) retains17
+SDK37 x86 dispatch cases and8 parser calls. Earlier [owner](native-radio-registration-owner.md),
+[RAW service](native-radio-service.md) and [held-registration](native-radio-service-blocked.md)
+runs keep their recorded component versions and evidence classes. Installed
+malformed-indication continuation, producer/reset, full semantic routing and
+physical phone qualification remain open.
 
 ## Product and architecture
 

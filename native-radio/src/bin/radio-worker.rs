@@ -20,22 +20,25 @@ use std::{num::NonZeroUsize, path::PathBuf, time::Duration};
 struct Endpoint {
     device: PathBuf,
     service: String,
+    slot: i32,
     until: Duration,
 }
 impl Endpoint {
     fn arguments() -> Result<Self, ()> {
         let args: Vec<_> = std::env::args().skip(1).collect();
-        if args.len() != 7
+        if args.len() != 9
             || args[0] != WORKER_SELECTOR
             || args[1] != "--device"
             || args[3] != "--service"
-            || args[5] != "--until-ns"
+            || args[5] != "--slot"
+            || args[7] != "--until-ns"
         {
             return Err(());
         }
         let device = PathBuf::from(&args[2]);
         let service = &args[4];
-        let until: u64 = args[6].parse().map_err(|_| ())?;
+        let slot: i32 = args[6].parse().map_err(|_| ())?;
+        let until: u64 = args[8].parse().map_err(|_| ())?;
         if !device.is_absolute()
             || args[2].len() > 256
             || service.is_empty()
@@ -43,6 +46,7 @@ impl Endpoint {
             || !service
                 .bytes()
                 .all(|b| b.is_ascii_alphanumeric() || b"._-/".contains(&b))
+            || slot < 0
             || until == 0
         {
             return Err(());
@@ -50,6 +54,7 @@ impl Endpoint {
         Ok(Self {
             device,
             service: service.clone(),
+            slot,
             until: Duration::from_nanos(until),
         })
     }
@@ -87,9 +92,7 @@ fn main() {
         .unwrap_or_else(|| fatal());
     let transport =
         pokelinux_radio::transport::RadioTransport::from_binder(binder).unwrap_or_else(|_| fatal());
-    // API baseline only: Root will replace this explicit zero with required
-    // service-to-worker slot configuration before the new production tracer.
-    let mut session = TransportSession::new(NonZeroUsize::new(2).unwrap(), 0);
+    let mut session = TransportSession::new(NonZeroUsize::new(2).unwrap(), endpoint.slot);
     let _key = session
         .start(
             transport,
@@ -108,6 +111,7 @@ fn main() {
         if snapshot.revision > sent_revision
             && let Some(frame) =
                 observation::from_snapshot(parent.identity(), &snapshot).unwrap_or_else(|_| fatal())
+            && frame.revision > sent_revision
         {
             let bytes = frame.encode().unwrap_or_else(|_| fatal());
             // Every complete frame is smaller than Linux PIPE_BUF. Nonblock
@@ -115,7 +119,7 @@ fn main() {
             // detached writer can restore an obsolete snapshot later.
             match rustix::io::write(&output, &bytes) {
                 Ok(count) if count == bytes.len() => {
-                    sent_revision = snapshot.revision;
+                    sent_revision = frame.revision;
                     announced |= matches!(frame.kind, observation::Kind::Active { .. });
                 }
                 Err(Errno::AGAIN | Errno::INTR) => {}
@@ -128,7 +132,15 @@ fn main() {
         if announced {
             match session.prepare_callback_until(std::time::Instant::now()) {
                 Ok(Some(event)) => match session.publish_callback(event) {
-                    Ok(_) | Err(OwnerError::Unsupported | OwnerError::Failed(_)) => {}
+                    // Packet refusal preserves historical data; it does not fail the
+                    // transport or authorize a new attempt. Terminal failures are
+                    // still emitted from the current owner snapshot next turn.
+                    Ok(_)
+                    | Err(
+                        OwnerError::Unsupported
+                        | OwnerError::InvalidIndication
+                        | OwnerError::Failed(_),
+                    ) => {}
                     Err(_) => fatal(),
                 },
                 Ok(None) | Err(OwnerError::Failed(_)) => {}

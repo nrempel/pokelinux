@@ -40,8 +40,8 @@ pub struct Status {
     pub identity: Option<ProcessIdentity>,
     pub revision: u64,
     pub failure: Option<ReceiverFailure>,
-    /// Historical raw transport only, retained independently of local phase.
-    pub last_raw: Option<Frame>,
+    /// One historical transport observation, retained independently of local phase.
+    pub last_observation: Option<Frame>,
 }
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum Command {
@@ -105,9 +105,21 @@ impl Phase {
         }
     }
 }
+fn hex(bytes: &[u8]) -> String {
+    const HEX: &[u8; 16] = b"0123456789abcdef";
+    let mut text = String::with_capacity(bytes.len() * 2);
+    for byte in bytes {
+        text.push(HEX[(byte >> 4) as usize] as char);
+        text.push(HEX[(byte & 15) as usize] as char);
+    }
+    text
+}
+fn optional<T: std::fmt::Display>(value: Option<T>) -> String {
+    value.map_or_else(|| "null".into(), |value| value.to_string())
+}
 impl Status {
     fn validate(&self) -> io::Result<()> {
-        if (self.identity.is_none() && (self.revision != 0 || self.last_raw.is_some()))
+        if (self.identity.is_none() && (self.revision != 0 || self.last_observation.is_some()))
             || (self.phase == Phase::ObservedActive
                 && (self.identity.is_none() || self.revision == 0))
             || (self.failure.is_some()
@@ -115,14 +127,19 @@ impl Status {
         {
             return Err(invalid());
         }
-        if let Some(raw) = &self.last_raw
-            && (!matches!(&raw.kind, Kind::Raw { .. })
-                || Some(raw.identity) != self.identity
-                || raw.attempt != 1
-                || raw.revision == 0
-                || raw.revision > self.revision)
-        {
-            return Err(invalid());
+        if let Some(observed) = &self.last_observation {
+            if !matches!(
+                &observed.kind,
+                Kind::Raw { .. } | Kind::RegistrationWire { .. }
+            ) || Some(observed.identity) != self.identity
+                || observed.attempt != 1
+                || observed.revision == 0
+                || observed.revision > self.revision
+            {
+                return Err(invalid());
+            }
+            // The same bounded canonical representation governs binary and JSON.
+            let _ = observed.encode()?;
         }
         Ok(())
     }
@@ -136,7 +153,7 @@ impl Status {
             || "null".into(),
             |reason| format!("\"{}\"", failure_name(reason)),
         );
-        let raw = match &self.last_raw {
+        let observed = match &self.last_observation {
             None => "null".into(),
             Some(frame) => match &frame.kind {
                 Kind::Raw {
@@ -146,29 +163,52 @@ impl Status {
                     declared_length,
                     error,
                     payload,
-                } if payload.len() <= observation::MAX_PAYLOAD => {
-                    const HEX: &[u8; 16] = b"0123456789abcdef";
-                    let mut hex = String::with_capacity(payload.len() * 2);
-                    for byte in payload {
-                        hex.push(HEX[(byte >> 4) as usize] as char);
-                        hex.push(HEX[(byte & 15) as usize] as char);
-                    }
-                    format!(
-                        "{{\"revision\":{},\"slot_id\":{},\"serial\":{},\"rilc_msg_id\":{},\"declared_length\":{},\"error\":{},\"payload_hex\":\"{}\"}}",
-                        frame.revision, slot_id, serial, rilc_msg_id, declared_length, error, hex
-                    )
-                }
+                } => format!(
+                    "{{\"kind\":\"raw\",\"revision\":{},\"attempt\":{},\"slot_id\":{},\"serial\":{},\"rilc_msg_id\":{},\"declared_length\":{},\"error\":{},\"payload_hex\":\"{}\"}}",
+                    frame.revision,
+                    frame.attempt,
+                    slot_id,
+                    serial,
+                    rilc_msg_id,
+                    declared_length,
+                    error,
+                    hex(payload)
+                ),
+                Kind::RegistrationWire {
+                    slot_id,
+                    message_id,
+                    wire,
+                } => format!(
+                    concat!(
+                        "{{\"kind\":\"registration-wire\",\"revision\":{},\"attempt\":{},\"slot_id\":{},\"message_id\":{},\"wire\":{{",
+                        "\"registration_state_wire\":{},\"feature_wire\":{},\"feature_mask_wire\":{},\"status_code_wire\":{},",
+                        "\"uri_hex\":\"{}\",\"reason_hex\":\"{}\",\"feature_mask_ext_wire\":{},\"sip_delegate_mask_wire\":{},\"feature_ext_wire\":{}}}}}"
+                    ),
+                    frame.revision,
+                    frame.attempt,
+                    slot_id,
+                    message_id,
+                    wire.registration_state_wire,
+                    wire.feature_wire,
+                    wire.feature_mask_wire,
+                    wire.status_code_wire,
+                    hex(wire.uri_bytes()),
+                    hex(wire.reason_bytes()),
+                    optional(wire.feature_mask_ext_wire),
+                    optional(wire.sip_delegate_mask_wire),
+                    optional(wire.feature_ext_wire)
+                ),
                 _ => return Err(invalid()),
             },
         };
         let json = format!(
-            "{{\"server_pid\":{},\"phase\":\"{}\",\"failure\":{},\"incarnation\":{},\"revision\":{},\"last_raw\":{}}}\n",
+            "{{\"server_pid\":{},\"phase\":\"{}\",\"failure\":{},\"incarnation\":{},\"revision\":{},\"last_observation\":{}}}\n",
             server_pid,
             self.phase.name(),
             failure,
             incarnation,
             self.revision,
-            raw
+            observed
         );
         if json.len() > 5120 {
             return Err(invalid());
@@ -176,10 +216,11 @@ impl Status {
         Ok(json)
     }
 }
+
 impl Reply {
     /// Header magic/version1/type/reserved00/total-u32LE. Status body contains
     /// phase/failure/identity-present/reserved0, incarnation16, revision-u64LE,
-    /// raw-frame-length-u32LE, and at most one exact existing Raw Frame.
+    /// observation-frame-length-u32LE, and at most one exact Raw/Registration Frame.
     pub fn encode(&self) -> io::Result<Vec<u8>> {
         let mut bytes = Vec::with_capacity(MAX_PACKET);
         bytes.extend(MAGIC);
@@ -190,7 +231,11 @@ impl Reply {
             Self::Status(status) => {
                 status.validate()?;
                 bytes[5] = 1;
-                let raw = status.last_raw.as_ref().map(Frame::encode).transpose()?;
+                let raw = status
+                    .last_observation
+                    .as_ref()
+                    .map(Frame::encode)
+                    .transpose()?;
                 bytes.extend([
                     status.phase.code(),
                     status.failure.map_or(0, |r| r as u8),
@@ -255,7 +300,7 @@ pub fn decode_reply(bytes: &[u8]) -> io::Result<Reply> {
                 identity,
                 revision: u64::from_le_bytes(bytes[32..40].try_into().map_err(|_| invalid())?),
                 failure: failure(bytes[13])?,
-                last_raw: if raw_len == 0 {
+                last_observation: if raw_len == 0 {
                     None
                 } else {
                     Some(observation::decode_exact(&bytes[FIXED..])?)
@@ -483,7 +528,7 @@ mod tests {
             identity: Some(identity),
             revision: 9,
             failure: Some(ReceiverFailure::ServiceDied),
-            last_raw: Some(Frame {
+            last_observation: Some(Frame {
                 identity,
                 attempt: 1,
                 revision: 7,
@@ -583,10 +628,10 @@ mod tests {
     #[test]
     fn mismatched_history_or_live_terminal_contradiction_is_rejected() {
         let mut value = status();
-        value.last_raw.as_mut().unwrap().revision = 10;
+        value.last_observation.as_mut().unwrap().revision = 10;
         assert!(Reply::Status(value).encode().is_err());
         let mut value = status();
-        value.last_raw.as_mut().unwrap().kind = Kind::Active { client_id: 42 };
+        value.last_observation.as_mut().unwrap().kind = Kind::Active { client_id: 42 };
         assert!(Reply::Status(value).encode().is_err());
         let mut value = status();
         value.identity = None;
@@ -595,7 +640,11 @@ mod tests {
         value.phase = Phase::ObservedActive;
         assert!(Reply::Status(value).encode().is_err());
         let mut value = status();
-        value.last_raw.as_mut().unwrap().attempt = 2;
+        value.last_observation.as_mut().unwrap().attempt = 2;
         assert!(Reply::Status(value).encode().is_err());
     }
 }
+
+#[cfg(test)]
+#[path = "registration_status_tests.rs"]
+mod registration_status_tests;

@@ -286,7 +286,7 @@ impl Remotable for Radio {
                 }
                 ack(reply)
             }
-            registration_vectors::VALID..=registration_vectors::TRAILING => {
+            registration_vectors::VALID..=registration_vectors::INSTALLED_SLOT1 => {
                 if data.data_avail() != 0 {
                     return Err(StatusCode::BadValue);
                 }

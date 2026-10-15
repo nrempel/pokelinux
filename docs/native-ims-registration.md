@@ -12,8 +12,10 @@ configured-slot filtering and complete-array delivery. It does not rerun the121
 parser comparisons below, execute full semantic channel dispatch or connect the
 native owner in that original-reference run. The later
 [native owner](native-radio-registration-owner.md) now separately qualifies real
-ARM Binder typed publication; installed typed IPC, producer/reset and decoded
-domain meanings remain open.
+ARM Binder typed publication. The separate [installed slot1 tracer](native-radio-registration-installed.md)
+now qualifies typed IPC/status, explicit packaged slot and retained history after
+peer-loss withdrawal. Original producer/reset and decoded domain meanings remain
+open.
 
 ## Original execution and native policy
 
@@ -80,8 +82,9 @@ separately from the first red source hash.
 All eight registration tests, ten reader tests and six prior codec/request/unit
 checks pass on x86 and ARM64 user-QEMU: 24 checks per target. Formatting, Clippy
 with warnings denied and both target release builds pass. Compiler-selected test
-executable hashes and source snapshots are retained privately. This provides no
-ARM64 guest-kernel/Binder or hardware execution for this decoder.
+executable hashes and source snapshots are retained privately. That decoder-only checkpoint provided no
+ARM64 guest-kernel/Binder or hardware execution. The later installed report
+qualifies one authored complete payload through the actual ARM path separately.
 
 Three incomplete original harness trials exited 137 without a completed result.
 The first trial stdout was not captured. The two captured trials have no parser
@@ -101,9 +104,9 @@ Clean current identities and precise limits are in
 [evidence/native-ims-registration-provenance.json](evidence/native-ims-registration-provenance.json).
 The generic reader remains documented in [native-ims-reader.md](native-ims-reader.md).
 
-Production producer/slot/message/reset identity, final response/error correlation,
-registration/RAT/bearer/SIM semantics, call/media/carrier operation, installed service
-permission/lifecycle composition, ARM64 Binder, matched Pixel kernel/policy and
-physical execution remain open. A complete wire payload is not an authenticated
+Original production producer/reset identity and endpoint policy, final response/error
+correlation, registration/RAT/bearer/SIM semantics, call/media/carrier operation,
+wider app permission/lifecycle composition, matched Pixel policy and physical
+execution remain open. A complete wire payload is not an authenticated
 phone-state event. The existing raw owner and durable uncertainty fences remain
 required; this decoder changes none of their recovery guarantees.

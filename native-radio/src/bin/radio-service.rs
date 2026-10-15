@@ -50,16 +50,19 @@ struct Config {
     worker: PathBuf,
     device: String,
     service: String,
+    slot: i32,
     until: Duration,
 }
 impl Config {
     fn arguments() -> io::Result<Self> {
         let args: Vec<_> = std::env::args().skip(1).collect();
-        if args.len() != 6 {
+        if args.len() != 7 {
             return Err(io::ErrorKind::InvalidInput.into());
         }
         let lease: u64 = args[5].parse().map_err(|_| io::ErrorKind::InvalidInput)?;
-        if !(1_000..=86_400_000).contains(&lease)
+        let slot: i32 = args[6].parse().map_err(|_| io::ErrorKind::InvalidInput)?;
+        if slot < 0
+            || !(1_000..=86_400_000).contains(&lease)
             || args[..4].iter().any(|s| !Path::new(s).is_absolute())
             || args[3].len() > 256
             || args[4].is_empty()
@@ -76,6 +79,7 @@ impl Config {
             worker: args[2].clone().into(),
             device: args[3].clone(),
             service: args[4].clone(),
+            slot,
             until: now()
                 .checked_add(Duration::from_millis(lease))
                 .ok_or(io::ErrorKind::InvalidInput)?,
@@ -91,6 +95,7 @@ struct Service {
     owner: Supervisor,
     identity: ProcessIdentity,
     worker_pid: u32,
+    slot: i32,
     state: Status,
     input: Vec<u8>,
     cleanup_until: Option<Duration>,
@@ -162,6 +167,15 @@ impl Service {
         {
             return Err(io::ErrorKind::InvalidData.into());
         }
+        if let Kind::RegistrationWire {
+            slot_id,
+            message_id,
+            ..
+        } = &frame.kind
+            && (*slot_id != self.slot || *message_id != pokelinux_radio::registration::MESSAGE_ID)
+        {
+            return Err(io::ErrorKind::InvalidData.into());
+        }
         self.state.revision = frame.revision;
         match &frame.kind {
             Kind::Active { client_id } if self.state.phase == Phase::Initializing => {
@@ -182,7 +196,21 @@ impl Service {
                         frame.revision
                     ));
                 }
-                self.state.last_raw = Some(frame);
+                self.state.last_observation = Some(frame);
+            }
+            Kind::RegistrationWire {
+                slot_id,
+                message_id,
+                ..
+            } if self.state.phase == Phase::ObservedActive => {
+                event(format!(
+                    "\"event\":\"registration-observed\",\"incarnation\":\"{}\",\"attempt\":1,\"revision\":{},\"slot_id\":{},\"message_id\":{}",
+                    self.identity.hex(),
+                    frame.revision,
+                    slot_id,
+                    message_id
+                ));
+                self.state.last_observation = Some(frame);
             }
             Kind::Failed(reason) => self.retire(*reason, false),
             _ => return Err(io::ErrorKind::InvalidData.into()),
@@ -229,11 +257,14 @@ fn run(config: Config) -> io::Result<i32> {
     let mut owner = Supervisor::new(config.journal);
     let mut worker = WorkerCommand::new(&config.worker)?;
     let until_text = ns(config.until).to_string();
+    let slot_text = config.slot.to_string();
     for value in [
         "--device",
         &config.device,
         "--service",
         &config.service,
+        "--slot",
+        &slot_text,
         "--until-ns",
         &until_text,
     ] {
@@ -263,22 +294,24 @@ fn run(config: Config) -> io::Result<i32> {
     };
     let worker_pid = owner.child_pid().expect("owned worker PID");
     event(format!(
-        "\"event\":\"worker-start\",\"main_pid\":{},\"worker_pid\":{},\"incarnation\":\"{}\",\"until_ns\":{}",
+        "\"event\":\"worker-start\",\"main_pid\":{},\"worker_pid\":{},\"incarnation\":\"{}\",\"until_ns\":{},\"selected_slot\":{}",
         std::process::id(),
         worker_pid,
         identity.hex(),
-        ns(config.until)
+        ns(config.until),
+        config.slot
     ));
     let mut service = Service {
         owner,
         identity,
         worker_pid,
+        slot: config.slot,
         state: Status {
             phase: Phase::Initializing,
             identity: Some(identity),
             revision: 0,
             failure: None,
-            last_raw: None,
+            last_observation: None,
         },
         input: Vec::new(),
         cleanup_until: None,

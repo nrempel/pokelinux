@@ -1,45 +1,39 @@
 # Native radio integration: next execution gate
 
-The [native registration-wire owner](native-radio-registration-owner.md) now
-passes a genuine actual ARM Binder receipt→Unsupported RED→typed publication
-GREEN. One immutable selected slot, exact raw3012 route, whole-packet decoding
-and the existing post-decode owner/deadline/revision gate produce one latest
-historical observation.52 host tests pass; raw↔typed replacement, five refused
-controls and consumed-valid cancellation pass with identical peer/fixture/oracle
-and full closure. Installed typed IPC/status, packaged slot configuration and
-semantic IMS remain the next gates; no phone result is claimed.
+The [installed slot1 registration history tracer](native-radio-registration-installed.md)
+now qualifies actual ARM Binder callback→native owner→typed worker IPC→restricted
+status after a genuine missing-projection RED. Required `SLOT_ID=1` reaches the
+worker and owner. One current `last_observation` is tagged `raw` or
+`registration-wire`; typed revision4 remains historical when peer loss makes
+status unavailable at revision5. Native worker wait9, systemd Main exit0, empty
+cgroup and unchanged-journal refusal78 pass without another registration. All59
+host library tests, strict checks and guest/outer/input closure pass. This is
+public synthetic Binder evidence, without semantic IMS or phone qualification.
 
-The [original raw registration route](native-ims-registration-routing.md) now
-passes17 dispatch cases and8 separate parser calls in a fresh SDK37 x86 emulator:
-class wire code3012, exact configured-slot filtering and full-array delivery.
-Generic forwarding of other IDs and malformed parser behavior stay distinct from
-native acceptance policy. Original helper/channel semantics and producer/reset
-remain open. The native owner is now connected above; carry its typed observation through
-the installed service next; no new native runtime
-or phone qualification is claimed by this original-reference checkpoint.
+The earlier [registration-wire owner checkpoint](native-radio-registration-owner.md)
+qualified exact raw3012 receipt→Unsupported RED→typed publication GREEN with52
+host tests, raw↔typed replacement, five refusals and consumed-valid cancellation.
+Its identical peer/fixture/oracle and full closure remain component evidence.
 
-An additional [permanently held registration control](native-radio-service-blocked.md)
-now keeps the same installed production ELF bytes responsive: three real
-Initializing statuses finish in343.15ms while Binder registration stays held.
-Normal Stop has native worker wait9 in5.56ms, systemd Main exit0 and empty cgroup;
-unchanged-journal restart exits78 while the peer remains alive and held. All45 host
-regressions and full ARM guest/outer/input closure pass. Local reaping grants no
-vendor cleanup or retry authority. The narrow original raw route is now qualified above; connect the existing
-decoder through the current owner next; remaining discovery/pressure,
-producer/reset, device policy and hardware gates stay open.
+The [original raw registration route](native-ims-registration-routing.md) separately
+qualifies17 dispatch cases and8 parser calls in SDK37 x86: class code3012, exact
+slot filtering and full-array delivery. Its original-code scope stays separate
+from the authored ARM peers above. Full helper/channel semantics, producer/reset,
+remote cleanup acknowledgement, endpoint policy, semantic IMS and hardware remain
+open. Installed malformed-indication continuation has not run; the explicit
+worker `InvalidIndication` skip is source policy.
 
-The installed production radio service/status tracer now passes on an actual
-generic ARM kernel after a genuine missing-history-projection RED. A one-line
-service repair preserves all five other ELF bytes and the outer oracle. The
-packaged unit, native worker and real restricted status client carry one raw
-callback into diagnostics, then peer loss becomes unavailable with retained
-history. Native worker wait9, systemd Main exit0, empty unit cgroup and same-journal
-restart exit78 qualify separately; no new registration occurs. All45 host tests,
-strict checks and full guest/outer/input closure pass. This is public synthetic
-Binder and operator diagnostics, not native IMS or hardware qualification.
-Remaining discovery/output pressure, device policy/producer/reset and phone
-gates remain. See [installed service](native-radio-service.md) and the preceding
-[production worker tracer](native-radio-production-worker.md).
+The earlier [permanently held registration control](native-radio-service-blocked.md)
+qualified three responsive Initializing statuses, native Stop/wait9, Main exit0,
+empty cgroup and unchanged-journal refusal78 with its then-identical production
+ELFs and45 host regressions. That historical execution is not a rerun of the
+current typed component set and grants no remote-cleanup or retry authority.
+
+The earlier [installed RAW service tracer](native-radio-service.md) qualified
+raw callback diagnostics after a separate one-line history repair, with45 host
+tests, peer-loss withdrawal, native/PID1 waits and durable refusal. Its old schema
+and evidence remain historical. The preceding [production worker tracer](native-radio-production-worker.md)
+retains its own narrower boundary; neither is relabeled as the new slot1 run.
 
 A later [cooperative bootstrap checkpoint](native-radio-bootstrap.md) adds a new
 production-library parent-bound worker entry before Binder, qualified separately

@@ -13,6 +13,11 @@ use std::io;
 pub const MAX_PAYLOAD: usize = 2048;
 pub const HEADER_LEN: usize = 44;
 const RAW_FIXED_LEN: usize = 24;
+const REGISTRATION_FIXED_LEN: usize = 40;
+const MAX_REGISTRATION_LEN: usize = HEADER_LEN
+    + REGISTRATION_FIXED_LEN
+    + crate::registration::MAX_URI_BYTES
+    + crate::registration::MAX_REASON_BYTES;
 pub const MAX_FRAME_LEN: usize = HEADER_LEN + RAW_FIXED_LEN + MAX_PAYLOAD;
 const MAGIC: &[u8; 4] = b"RADO";
 const VERSION: u8 = 1;
@@ -30,6 +35,11 @@ pub enum Kind {
         declared_length: i32,
         error: i32,
         payload: Vec<u8>,
+    },
+    RegistrationWire {
+        slot_id: i32,
+        message_id: i32,
+        wire: crate::registration::RegistrationWire,
     },
     Failed(ReceiverFailure),
 }
@@ -64,6 +74,96 @@ fn u64_at(bytes: &[u8], at: usize) -> u64 {
             .expect("validated frame bounds"),
     )
 }
+// This is the current local transport representation, not a vendor parcel.
+// Exact flags retain absent fields independently of a present numeric zero.
+fn registration_body(
+    slot: i32,
+    message: i32,
+    wire: &crate::registration::RegistrationWire,
+) -> io::Result<Vec<u8>> {
+    let uri = wire.uri_bytes();
+    let reason = wire.reason_bytes();
+    if slot < 0
+        || message != crate::registration::MESSAGE_ID
+        || uri.len() > crate::registration::MAX_URI_BYTES
+        || reason.len() > crate::registration::MAX_REASON_BYTES
+        || (wire.sip_delegate_mask_wire.is_some() && wire.feature_mask_ext_wire.is_none())
+    {
+        return Err(io::ErrorKind::InvalidInput.into());
+    }
+    let mut bytes = Vec::with_capacity(REGISTRATION_FIXED_LEN + uri.len() + reason.len());
+    bytes.extend(slot.to_le_bytes());
+    bytes.extend(message.to_le_bytes());
+    bytes.extend([wire.registration_state_wire, wire.feature_wire]);
+    bytes.extend(wire.status_code_wire.to_le_bytes());
+    bytes.extend(wire.feature_mask_wire.to_le_bytes());
+    bytes.extend((uri.len() as u16).to_le_bytes());
+    bytes.extend((reason.len() as u16).to_le_bytes());
+    let flags = u8::from(wire.feature_mask_ext_wire.is_some())
+        | (u8::from(wire.sip_delegate_mask_wire.is_some()) << 1)
+        | (u8::from(wire.feature_ext_wire.is_some()) << 2);
+    bytes.extend([flags, 0, 0, 0]);
+    bytes.extend(wire.feature_mask_ext_wire.unwrap_or(0).to_le_bytes());
+    bytes.extend(wire.sip_delegate_mask_wire.unwrap_or(0).to_le_bytes());
+    bytes.extend(wire.feature_ext_wire.unwrap_or(0).to_le_bytes());
+    bytes.extend([0, 0]);
+    bytes.extend(uri);
+    bytes.extend(reason);
+    Ok(bytes)
+}
+fn u16_at(bytes: &[u8], at: usize) -> u16 {
+    u16::from_le_bytes(
+        bytes[at..at + 2]
+            .try_into()
+            .expect("validated frame bounds"),
+    )
+}
+fn registration_kind(body: &[u8]) -> io::Result<Kind> {
+    if body.len() < REGISTRATION_FIXED_LEN {
+        return Err(malformed());
+    }
+    let slot = i32_at(body, 0);
+    let message = i32_at(body, 4);
+    let uri_len = usize::from(u16_at(body, 16));
+    let reason_len = usize::from(u16_at(body, 18));
+    let flags = body[20];
+    if slot < 0
+        || message != crate::registration::MESSAGE_ID
+        || uri_len > crate::registration::MAX_URI_BYTES
+        || reason_len > crate::registration::MAX_REASON_BYTES
+        || body.len() != REGISTRATION_FIXED_LEN + uri_len + reason_len
+        || flags & !7 != 0
+        || (flags & 2 != 0 && flags & 1 == 0)
+        || body[21..24] != [0; 3]
+        || body[38..40] != [0; 2]
+        || (flags & 1 == 0 && body[24..28] != [0; 4])
+        || (flags & 2 == 0 && body[28..36] != [0; 8])
+        || (flags & 4 == 0 && body[36..38] != [0; 2])
+    {
+        return Err(malformed());
+    }
+    let wire =
+        crate::registration::RegistrationWire::new(omarchy_ims::registration::RegistrationWire {
+            registration_state_wire: body[8],
+            feature_wire: body[9],
+            status_code_wire: u16_at(body, 10),
+            feature_mask_wire: i32_at(body, 12),
+            uri_bytes: &body[REGISTRATION_FIXED_LEN..REGISTRATION_FIXED_LEN + uri_len],
+            reason_bytes: &body[REGISTRATION_FIXED_LEN + uri_len..],
+            feature_mask_ext_wire: (flags & 1 != 0).then(|| i32_at(body, 24)),
+            sip_delegate_mask_wire: (flags & 2 != 0).then(|| {
+                i64::from_le_bytes(body[28..36].try_into().expect("validated frame bounds"))
+            }),
+            feature_ext_wire: (flags & 4 != 0).then(|| u16_at(body, 36)),
+        })
+        .map_err(|_| malformed())?;
+    Ok(Kind::RegistrationWire {
+        slot_id: slot,
+        message_id: message,
+        wire,
+    })
+}
+
 fn failure_code(reason: ReceiverFailure) -> u8 {
     match reason {
         ReceiverFailure::MalformedCallback => 1,
@@ -96,12 +196,21 @@ impl Frame {
     /// Header: magic[0..4], version[4], kind[5], zero reserved[6..8],
     /// total length[8..12], incarnation[12..28], attempt[28..36], revision[36..44].
     /// Integers are LE. Raw body is five i32 fields, u32 payload size, then bytes.
-    /// Max2116 bytes fits Linux PIPE_BUF4096; the writer must separately arrange
+    /// Registration kind4 has a40-byte fixed body and at most1000+256 bytes.
+    /// Max2116 bytes (registration1340) fits Linux PIPE_BUF4096; the writer must separately arrange
     /// a nonblocking pipe and one whole-frame write. This codec performs no IO.
     pub fn encode(&self) -> io::Result<Vec<u8>> {
         if self.attempt != ATTEMPT {
             return Err(io::ErrorKind::InvalidInput.into());
         }
+        let registration = match &self.kind {
+            Kind::RegistrationWire {
+                slot_id,
+                message_id,
+                wire,
+            } => Some(registration_body(*slot_id, *message_id, wire)?),
+            _ => None,
+        };
         let (kind, body_len) = match &self.kind {
             Kind::Active { .. } => (1, 4),
             Kind::Raw { payload, .. } if payload.len() <= MAX_PAYLOAD => {
@@ -109,6 +218,13 @@ impl Frame {
             }
             Kind::Raw { .. } => return Err(io::ErrorKind::InvalidInput.into()),
             Kind::Failed(_) => (3, 1),
+            Kind::RegistrationWire { .. } => (
+                4,
+                registration
+                    .as_ref()
+                    .expect("selected registration body")
+                    .len(),
+            ),
         };
         let length = HEADER_LEN + body_len;
         let mut bytes = Vec::with_capacity(length);
@@ -135,6 +251,9 @@ impl Frame {
                 bytes.extend(payload);
             }
             Kind::Failed(reason) => bytes.push(failure_code(*reason)),
+            Kind::RegistrationWire { .. } => {
+                bytes.extend(registration.expect("selected registration body"))
+            }
         }
         Ok(bytes)
     }
@@ -160,11 +279,22 @@ pub fn decode(bytes: &[u8]) -> io::Result<Option<(Frame, usize)>> {
         1 if length == HEADER_LEN + 4 => {}
         2 if (HEADER_LEN + RAW_FIXED_LEN..=MAX_FRAME_LEN).contains(&length) => {}
         3 if length == HEADER_LEN + 1 => {}
+        4 if (HEADER_LEN + REGISTRATION_FIXED_LEN..=MAX_REGISTRATION_LEN).contains(&length) => {}
         _ => return Err(malformed()),
     }
     if bytes[5] == 2 && bytes.len() >= HEADER_LEN + RAW_FIXED_LEN {
         let payload_len = u32_at(bytes, HEADER_LEN + 20) as usize;
         if payload_len > MAX_PAYLOAD || length != HEADER_LEN + RAW_FIXED_LEN + payload_len {
+            return Err(malformed());
+        }
+    }
+    if bytes[5] == 4 && bytes.len() >= HEADER_LEN + REGISTRATION_FIXED_LEN {
+        let uri_len = usize::from(u16_at(bytes, HEADER_LEN + 16));
+        let reason_len = usize::from(u16_at(bytes, HEADER_LEN + 18));
+        if uri_len > crate::registration::MAX_URI_BYTES
+            || reason_len > crate::registration::MAX_REASON_BYTES
+            || length != HEADER_LEN + REGISTRATION_FIXED_LEN + uri_len + reason_len
+        {
             return Err(malformed());
         }
     }
@@ -185,6 +315,7 @@ pub fn decode(bytes: &[u8]) -> io::Result<Option<(Frame, usize)>> {
             payload: body[RAW_FIXED_LEN..].to_vec(),
         },
         3 => Kind::Failed(failure(body[0])?),
+        4 => registration_kind(body)?,
         _ => return Err(malformed()),
     };
     Ok(Some((
@@ -212,37 +343,45 @@ pub fn decode_exact(bytes: &[u8]) -> io::Result<Frame> {
 /// declared_length is preserved independently of actual payload size; recovered
 /// response fixtures permit those fields to differ. No new semantic rule is added.
 pub fn from_snapshot(identity: ProcessIdentity, snapshot: &Snapshot) -> io::Result<Option<Frame>> {
-    // This API baseline encodes only the existing raw-response variant. New
-    // indication decoding and IPC kinds remain unimplemented until actual RED.
-    let response = match &snapshot.observation {
-        None => None,
-        Some(observed) => match &observed.kind {
-            Observation::RawResponse(response) if response.kind == ResponseKind::Raw => {
-                Some((observed.revision, response))
-            }
-            _ => return Err(io::ErrorKind::Unsupported.into()),
-        },
-    };
+    // Terminal lifecycle always takes precedence over historical body decoding.
     let (kind, revision) = match snapshot.phase {
         Phase::Idle | Phase::Registering => return Ok(None),
         Phase::Failed(reason) => (Kind::Failed(reason), snapshot.revision),
-        Phase::Active { client_id } => match response {
+        Phase::Active { client_id } => match &snapshot.observation {
             None => (Kind::Active { client_id }, snapshot.revision),
-            Some((revision, response)) => {
-                if response.payload.len() > MAX_PAYLOAD {
+            Some(observed) => {
+                if observed.revision == 0 || observed.revision > snapshot.revision {
                     return Err(malformed());
                 }
-                (
-                    Kind::Raw {
-                        slot_id: response.info.slotId,
-                        serial: response.info.serial,
-                        rilc_msg_id: response.info.rilcMsgId,
-                        declared_length: response.info.length,
-                        error: response.info.error,
-                        payload: response.payload.clone(),
-                    },
-                    revision,
-                )
+                let kind = match &observed.kind {
+                    Observation::RawResponse(response) if response.kind == ResponseKind::Raw => {
+                        if response.payload.len() > MAX_PAYLOAD {
+                            return Err(malformed());
+                        }
+                        Kind::Raw {
+                            slot_id: response.info.slotId,
+                            serial: response.info.serial,
+                            rilc_msg_id: response.info.rilcMsgId,
+                            declared_length: response.info.length,
+                            error: response.info.error,
+                            payload: response.payload.clone(),
+                        }
+                    }
+                    Observation::RegistrationWire {
+                        slot_id,
+                        message_id,
+                        wire,
+                    } => {
+                        // Encoding checks the bounded canonical local representation.
+                        Kind::RegistrationWire {
+                            slot_id: *slot_id,
+                            message_id: *message_id,
+                            wire: wire.clone(),
+                        }
+                    }
+                    _ => return Err(io::ErrorKind::Unsupported.into()),
+                };
+                (kind, observed.revision)
             }
         },
     };
@@ -366,3 +505,11 @@ mod tests {
         assert!(from_snapshot(identity, &snapshot).is_err());
     }
 }
+
+#[cfg(test)]
+#[path = "registration_ipc_tests.rs"]
+mod registration_ipc_tests;
+
+#[cfg(test)]
+#[path = "registration_ipc_options_tests.rs"]
+mod registration_ipc_options_tests;

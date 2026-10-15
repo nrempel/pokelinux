@@ -1,14 +1,20 @@
 # Installed native radio service
 
-The packaged `radio-service` now owns the production `radio-worker` and serves a
-restricted local `radio-status` client. An actual installed systemd unit on a
-generic ARM kernel completes named Binder discovery, one registration, raw
-callback receipt, status publication, peer-loss withdrawal, normal Stop and
-same-journal restart refusal. This is the Samsung radioExternal transport backend
-with public synthetic inputs. It does not provide native IMS, cellular state or
-a verified phone deployment.
+The packaged service now exposes one current `last_observation`, tagged `raw` or
+`registration-wire`, with required explicit `SLOT_ID` carried to its worker and
+owner. The later [installed slot1 tracer](native-radio-registration-installed.md)
+qualifies typed history after a genuine stale-RAW projection RED: accepted R4
+becomes typed status R4, then survives peer-loss unavailable R5. All59 host tests
+and complete native/PID1/guest/outer closure pass.
 
-## Integration RED and repair
+The original RAW-only tracer below remains historical evidence for its recorded
+component set and `last_raw` schema. Its45-test result and the later
+[held-registration control](native-radio-service-blocked.md) are not current-source
+replays. The matching current service/status set uses only `last_observation`,
+without a legacy schema adapter. All inputs remain authored public transport
+fixtures, without semantic IMS or physical-phone qualification.
+
+## Historical RAW integration RED and repair
 
 The baseline reaches the installed unit's actual Main process and worker. The
 guest independently checks their selected ELF bytes, argv, parent relationship,
@@ -53,7 +59,7 @@ Exact source, executable and execution bindings are in the
 
 ## State and local interface
 
-Installation paths, selected device/service/lease and account provisioning are
+Installation paths, selected device/service/lease/slot and account provisioning are
 specified in [packaging](../native-radio/packaging/README.md). The unit requests
 private0700 runtime/state directories and a0600 status socket/journal, an empty
 capability bounding set, `NoNewPrivileges=yes`, `Restart=no` and
@@ -65,7 +71,7 @@ The nonblocking Unix SEQPACKET interface accepts only the service account's
 UID/GID. Each packet must carry credentials matching the connected peer's
 PID/UID/GID. The client retains the actual socket-origin server pidfd. Commands
 are Status and Stop; status is one bounded packet with one optional historical
-Raw frame. Unknown shapes, truncation, passed descriptors and credential
+Raw or RegistrationWire frame. Unknown shapes, truncation, passed descriptors and credential
 mismatches are rejected. This is an operator diagnostic interface, not an app
 permission or phone-state API. Cross-UID installed refusal still needs its own
 runtime control; source checks and component coverage do not replace it.
@@ -76,14 +82,21 @@ runtime control; source checks and component coverage do not replace it.
 | `incarnation` | The one admitted process identity |
 | `revision` | Latest accepted worker revision; local phase changes need not increment it |
 | `failure` | First terminal reason, retained through later cleanup |
-| `last_raw` | Optional historical metadata/payload; never current carrier state or a final request receipt |
+| `last_observation` | One optional tagged `raw` or `registration-wire` historical frame, with its own revision and attempt1; never current carrier state or a final request receipt |
 
 Frames must match the actual owned stream, current admission, incarnation,
 attempt1 and increasing worker revision. Revocation clears buffered input and
 prevents later frames from restoring availability. Retained history survives a
-terminal phase. Raw revisions may coalesce under pressure, so this is not lossless
+terminal phase. Historical worker revisions may coalesce under pressure, so this is not lossless
 callback delivery. `observed-active` records transport activation; it does not
 independently prove continuing remote liveness or IMS registration.
+
+The current registration Frame kind4 carries bounded opaque fields and byte
+strings, with a1340-byte maximum including its header. Raw frames remain bounded
+at2116 bytes, status packets at2160 and JSON output at5120. There is one current
+codec and tagged history schema. Required profile `SLOT_ID` becomes immutable
+`--slot` configuration; the executed installed profile selects1. See the
+[slot1 report](native-radio-registration-installed.md) for the complete path.
 
 ## Ownership and bounded work
 
@@ -139,6 +152,9 @@ with identical production ELF bytes. Blocked discovery/output pressure, installe
 principal negatives and startup filesystem stalls remain separate. Synchronous startup metadata/journal fsync can stall;
 the event-loop budgets do not make those filesystem operations bounded. Actual
 suspend/wake, unkillable tasks and manager fallback remain open.
+The current worker explicitly skips `InvalidIndication` without withdrawing
+transport or replacing history. That is source policy here: an installed
+malformed-indication continuation scenario has not executed.
 
 Production endpoint identity/version/access policy, original producer and decoded
 IMS/call/SMS semantics, acknowledged remote cleanup/reset and safe successor
