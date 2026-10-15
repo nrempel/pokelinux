@@ -1,11 +1,13 @@
 # Isolated service restoration integration
 
-The nine ignored `service::restore_tests::` library tests run the actual lifecycle
+The thirteen ignored `service::restore_tests::` library tests run the actual lifecycle
 event loop, policy storage child, launcher and a persistent UID11010 app read
 connection. Source facts and authenticated-and-closed completion are authored test
 inputs. The initial six use authored history; two later cases use the actual
 Messages Projector with an authored SMS seed. A ninth case launches the unchanged
-production Qt client in a private QCore model host. There is no production
+production Qt client in a private QCore model host. Four further cases qualify
+normal Stop, TERM-ignore escalation, forced Terminate and held authored Context.
+There is no production
 authentication producer or new success socket, and no Source IPC, actual locker,
 normal QtQuick GUI, PAM or phone claim.
 
@@ -73,7 +75,7 @@ crate identities; successful auth remains private cfgtest. That checkpoint inven
 [history report](../../docs/native-session-restoration-history.md) for exact scope;
 the earlier6 stress cases still use the authored history provider.
 
-The current [actual Qt client selection](../../docs/native-session-restoration-qt-client.md)
+The preceding [actual Qt client selection](../../docs/native-session-restoration-qt-client.md)
 passes53 default plus9 separately selected cases. Build `qt-client` with Qt6::Core
 against frozen unchanged `MessagesClient.cpp/.h`, then install its
 `messages-restoration-qt-client` ELF with
@@ -88,3 +90,14 @@ helper implements graceful SIGTERM through signalfd, but actual actor Stop sends
 SIGKILL, so current tests qualify process closure rather than Qt destruction.
 Current model denial is polling-observed, not immediate secure pixel withdrawal.
 No new screenshot is produced; future GUI runs require the actual Pixel10 profile.
+
+The latest [normal app Stop](../../docs/native-app-stop.md) selection passes53
+default plus13 separately selected cases. The same Qt helper ELF now reaches
+normal destruction/owner wait0 through production TERM grace; the real
+`--ignore-term-app` Python mode qualifies responsive fenced grace/escalation and
+forced Terminate. A private capacity4 witness records the actor's actual normal
+Child::try_wait PID/status; it does not give the driver wait ownership. The
+additional held Context is an authored Ready→Terminal/occupied contract with an
+actual Qt child, no SDK/Wayland/pathname. Initial two runtime REDs and the final
+unchanged contract assertions remain separately bound. No new auth ingress,
+normal GUI, ARM execution, screenshot or phone access is introduced.

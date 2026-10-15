@@ -1,0 +1,468 @@
+{
+  "schema": 1,
+  "source_parent_commit": "15aca3987a588e1c0512b7aa5ceaf48fa801eb88",
+  "scope": "Owned native Rust explicit normal app Stop with actual Qt client and TERM-ignoring process controls",
+  "host_default": {
+    "passed": 53,
+    "failed": 0,
+    "explicitly_ignored": 13,
+    "filtered": 0
+  },
+  "selected_service_tests": {
+    "passed": 13,
+    "failed": 0,
+    "successful_actor_reports": 16,
+    "names": [
+      "service::restore_tests::authenticated_completion_then_later_source_restores_actual_service_read",
+      "service::restore_tests::new_lock_during_known_false_clear_restores_true_and_clean_restart_denies",
+      "service::restore_tests::negative_tests::forced_unlock_without_event_then_later_event_cannot_restore_service_read",
+      "service::restore_tests::negative_tests::actual_source_lease_expiry_then_fresh_event_cannot_restore_service",
+      "service::restore_tests::negative_tests::old_completion_after_actual_idle_uid1000_lock_cannot_arm_service",
+      "service::restore_tests::storage_negative::held_clear_stop_leaves_unclean_history_and_fresh_worker_refuses",
+      "service::restore_tests::retained_history_tests::exact_restore_releases_real_retained_messages_pages",
+      "service::restore_tests::retained_history_tests::retained_message_ids_survive_relock_clean_restart_and_fresh_restore",
+      "service::restore_tests::retained_history_tests::actual_qt_client_models_deny_restore_relock_and_same_id_reopen",
+      "service::restore_tests::retained_history_tests::normal_stop_reaches_actual_qt_destructor_and_owned_wait_zero",
+      "service::restore_tests::normal_stop_keeps_term_ignoring_app_owned_until_original_grace_escalation",
+      "service::restore_tests::explicit_terminate_remains_forced_for_actual_term_ignoring_app",
+      "service::restore_tests::retained_history_tests::normal_stop_drains_terminal_owned_context_after_qt_child_wait_zero"
+    ],
+    "actual_enclosing_parent_waits": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "EOF_proc_absence": true
+  },
+  "production": {
+    "Running_normal_Stop_only_grace": true,
+    "BOOTTIME_grace_ns": 500000000,
+    "absolute_grace_cap": "min(now+500ms, original_actor_cleanup_until-500ms)",
+    "actor_cleanup_budget_ns": 2000000000,
+    "TERM_attempt_once_source_property": true,
+    "repeated_Stop_does_not_renew_or_restart_storage_shutdown": true,
+    "first_Stop_reply_memoized": true,
+    "forced_upgrade_sticky": true,
+    "capacity_released_only_after_actual_wait_and_Context_unoccupied": true,
+    "final_fallback_forces_before_other_owner_drains": true,
+    "Forced_latch_is_attempt_not_signal_receipt": true,
+    "later_direct_Ok_after_signal_error_possible_without_retry": true
+  },
+  "actual_host": {
+    "Qt_owner_wait0_epochs": 4,
+    "normal_Qt_destructor_and_QThread_wait_executed_in_private_QCore_host": true,
+    "TERM_ignorer_living_first200ms": true,
+    "actual_protected_reads_denied_during_grace": true,
+    "repeated_Stop_probe_count": 34,
+    "TERM_ignorer_death_observed_ns": 511570189,
+    "max_successful_Stop_probe_gap_ns": 16248268,
+    "death_observation_bound_ns": 850000000,
+    "probe_gap_bound_ns": 100000000,
+    "TERM_ignorer_actual_owner_wait_signal": 9,
+    "explicit_Terminate_owner_wait_signal": 9,
+    "explicit_Terminate_death_observed_ns": 4130655,
+    "held_Context_Qt_child_death_observed_ns": 24606408,
+    "held_Context_retained_after_child_and_policy_worker_closed": true,
+    "held_Context_authored_no_SDK_or_Wayland": true,
+    "exact_500ms_kernel_signal_timestamp_or_TERM_count_measured": false,
+    "app_waits_witnessed_from_normal_Apps_try_wait": true,
+    "bounded_witness_capacity": 4,
+    "driver_second_reaper": false
+  },
+  "final_RED": {
+    "test_bodies": 2,
+    "actual_parent_waits": [
+      101,
+      101
+    ],
+    "both_actual_app_owner_wait_signal": 9,
+    "normal_fixture_closure": true,
+    "contract_assertions_unchanged_to_GREEN": true,
+    "classification": "Actual premature forced retirement and skipped cooperative Qt shutdown"
+  },
+  "coverage_addition_production_unchanged_between_12_and_13_cases": true,
+  "strict_format_Clippy_passed": true,
+  "ARM64_daemon_library_crosscompiled_only": true,
+  "new_ARM_runtime_or_Qt_ARM_build": false,
+  "production_Qt_client_helper_ELF_unchanged": true,
+  "normal_GUI_original_Source_or_compositor": false,
+  "new_capture": false,
+  "new_production_auth_constructor_or_ingress": false,
+  "auth_Source_SMS_seed_in_restoration_cases_authored": true,
+  "Source_lease_ns": 100000000,
+  "policy_IO_ns": 1000000000,
+  "test_attempt_ns": 20000000000,
+  "Qt_destructor_ns": 500000000,
+  "per_test_seconds": 15,
+  "outer_seconds": 40,
+  "network": "none",
+  "read_only_root": true,
+  "runtime_image": "sha256:301351bc3c526ab54e07ad284f117f95021a2c339171a050386cc5a6c620883d",
+  "rust_image": "sha256:0b4b956502a9f55d992eaced6975737b523be19bd2034078983b36bbcfd7aee6",
+  "runtime_capabilities": [
+    "SETUID",
+    "SETGID",
+    "CHOWN",
+    "KILL",
+    "DAC_OVERRIDE"
+  ],
+  "same_daemon_actual_CLI_wait0_and_fresh_exact_CID_absence": true,
+  "code_source_pins": [
+    {
+      "path": "native-lifecycle/Cargo.lock",
+      "sha256": "f8562de20a76c4f90727ce168aeb27de3c8169d85dbec1f2d165722ff7c4980d"
+    },
+    {
+      "path": "native-lifecycle/Cargo.toml",
+      "sha256": "82d39344550b534f1bed9fc8d0c013dda7cafc92fe01d03dba6cb525b2f91875"
+    },
+    {
+      "path": "native-lifecycle/src/apps.rs",
+      "sha256": "43d2dcfce6d21a5c1e0863696cc572df5321f49a4b592791c38f440970c1e154"
+    },
+    {
+      "path": "native-lifecycle/src/authority.rs",
+      "sha256": "bdc877c7cfc8c669f391067b6ec6378a0f63b423591e38c6cc8296da53686ee7"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-client.rs",
+      "sha256": "6dd1f2c86a96bca4364b5ee2e85fd39fecaf10bc68b8f7b727bd3e65f86bc9bf"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-daemon.rs",
+      "sha256": "ee33d2d77a8fc98ce56b582d9b9c96d0f2f8240e3fda182ec9bdeba8f6af4f01"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-launcher.rs",
+      "sha256": "49a0e279b381a45ed49242a74c94b202ebebb81bc42bd8b61cfd58f8bb80a923"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-lock.rs",
+      "sha256": "169bc0b6f9745b3109bcb44b4f23eeed54e523ed115220d1c8ed809a38ecedad"
+    },
+    {
+      "path": "native-lifecycle/src/camera.rs",
+      "sha256": "d113da936e0e1cf14158d9cb52c9fb364e5cbd8c25de9c7245cae9ddcc568365"
+    },
+    {
+      "path": "native-lifecycle/src/display.rs",
+      "sha256": "8003328560796eedc3e9f20c8878ab39e36ed96300a104152d5928954172631c"
+    },
+    {
+      "path": "native-lifecycle/src/ipc.rs",
+      "sha256": "3777ef70117c8a37078e6c25ecaa21f17c2de094604877d433c6b69b8f0a90c9"
+    },
+    {
+      "path": "native-lifecycle/src/lib.rs",
+      "sha256": "b13cd5350c87d7296fae3318a643362a7b3d7315c0ee58bb154d32fdcd696005"
+    },
+    {
+      "path": "native-lifecycle/src/lock.rs",
+      "sha256": "ddb658781c03d6620ea269035044ff953c2f548ccc67409f0063dcb6ed3998e5"
+    },
+    {
+      "path": "native-lifecycle/src/messages.rs",
+      "sha256": "2e446fa1eef820b14510f60ce88b880637d84daf90cec8909639d0ec97f2c657"
+    },
+    {
+      "path": "native-lifecycle/src/service.rs",
+      "sha256": "e68151d26ea43aa708bcc5b6304ad75f0a2e1bbe91b1c23eb389a496a6bf9cdf"
+    },
+    {
+      "path": "native-lifecycle/src/service_auth_attempt_tests.rs",
+      "sha256": "2143c599e9db4ae47f19223faf2fe10b690b01521dbec1b3eeab88a57630ac35"
+    },
+    {
+      "path": "native-lifecycle/src/service_lock_ack_tests.rs",
+      "sha256": "6579bfe8d54a035a53d9ab02256fc57dfdfd432335dea923473c34c35bc627d6"
+    },
+    {
+      "path": "native-lifecycle/src/service_restore_history_tests.rs",
+      "sha256": "507051dc62425c32b636b419b1b6619ffb468ffe346f208e1115bcff87837f83"
+    },
+    {
+      "path": "native-lifecycle/src/service_restore_negative_tests.rs",
+      "sha256": "f32009116d81522eef6c0c9c9ec38b852290463578cc0be5c36639047b4a3229"
+    },
+    {
+      "path": "native-lifecycle/src/service_restore_storage_tests.rs",
+      "sha256": "9fa1fe452ec816bde571732324eb6185f2a6beb609df57a92070c3ca6f50a4b1"
+    },
+    {
+      "path": "native-lifecycle/src/service_restore_tests.rs",
+      "sha256": "920746ec6059b808d1c71f174fb8c9a1cb89ef9018bf025b8b2f8024d2f1523c"
+    },
+    {
+      "path": "native-lifecycle/src/session.rs",
+      "sha256": "59ef191233213deb4dac8c50b3f1e72beb5fd4f8b63ff2aa555d4a71a5dd6bfb"
+    },
+    {
+      "path": "native-lifecycle/src/storage.rs",
+      "sha256": "6ddeefb3b24a72f728651d36b332ee843684b20c597a4cd17ed5b45887065c13"
+    },
+    {
+      "path": "native-kernel-identity/Cargo.lock",
+      "sha256": "ea2dd27ddd1bf8c00b3bf15d5fface7d5bddd6e20b5d1e89fbc1fc10172ff592"
+    },
+    {
+      "path": "native-kernel-identity/Cargo.toml",
+      "sha256": "5cab2f22141987e4f1470b0fb575107b5c3ad134829bd2b92d5b7ccb3ef12431"
+    },
+    {
+      "path": "native-kernel-identity/src/lib.rs",
+      "sha256": "464a5e2a96dd99f127cce5b32514ff4a9a7340f8bee2581e941685e6df82cbcd"
+    },
+    {
+      "path": "native-kernel-identity/src/pidfd.rs",
+      "sha256": "caf4b44738fc53093a32ef96c2e639c1a376935ad29fa17a42091a56180b11ff"
+    },
+    {
+      "path": "native-camera/Cargo.lock",
+      "sha256": "2f6ea0f2ca832a4a133fcc62f3bfefd4521333133620f5936af353bf8985fe7b"
+    },
+    {
+      "path": "native-camera/Cargo.toml",
+      "sha256": "129897f013103c6e97c177fb100ebcab246a81f6a0c3f71e6d1e749b16adeea5"
+    },
+    {
+      "path": "native-camera/src/lib.rs",
+      "sha256": "3ceb27d000194de361bdac7667d5b49660db0d3598f5c95f1961bcab406542ba"
+    },
+    {
+      "path": "native-messages/Cargo.lock",
+      "sha256": "fb742a89d573f167650fce96fd3e02b0c632d0848b686cf1ebd760e87965bf0a"
+    },
+    {
+      "path": "native-messages/Cargo.toml",
+      "sha256": "8502b6bd0693869827833f52fcdde13d17658e4123607ca905d633d96db5240b"
+    },
+    {
+      "path": "native-messages/src/bin/messages-launch.rs",
+      "sha256": "2b2b413307ae51814b44a4cede235218871f9a459ee9e8fd38f2d576c0067976"
+    },
+    {
+      "path": "native-messages/src/bin/messages-service.rs",
+      "sha256": "8c7319e12f1f9ceee6f516df172d60fbf78849442aadd86f9474d73ce089cb02"
+    },
+    {
+      "path": "native-messages/src/bin/messages-stop.rs",
+      "sha256": "82b16a187b295d60623f6a8c6da86b944ac78390810a99616b705158bebc7990"
+    },
+    {
+      "path": "native-messages/src/incoming.rs",
+      "sha256": "2144bb80bd8211ae1c241ce5b8c8931e3b91ab1f8d6b2f0ffb81a7f8eb679d90"
+    },
+    {
+      "path": "native-messages/src/lib.rs",
+      "sha256": "faa6df0140ea61301b84e35a8ff664fa4cfe1f13159ab4ea6c1d2395ca82550c"
+    },
+    {
+      "path": "native-messages/src/projection.rs",
+      "sha256": "ea45ff7a36e385bc366ba458bf00a40169707c1834c7c8a673530585f7ed89d7"
+    },
+    {
+      "path": "native-messages/src/protocol.rs",
+      "sha256": "aac4405329604affa079074a6c7317570882384f6164fdf6ae6f05a831d17c8e"
+    },
+    {
+      "path": "native-messages/src/worker.rs",
+      "sha256": "d30150ff9bc2f7e3bf461af53f9f7e4dc16e77255c20a984ca73583d41866a8a"
+    },
+    {
+      "path": "native-messaging/Cargo.lock",
+      "sha256": "e7cb16fc3e8c6abb7fbbc7a52d8f73f07c934a7a103de1cef5a0c414f3bd375f"
+    },
+    {
+      "path": "native-messaging/Cargo.toml",
+      "sha256": "d2fdf280609b6b9b2743315ccf4dc4216e38b3a60ed70bc4199e20fe4a4c40d0"
+    },
+    {
+      "path": "native-messaging/src/lib.rs",
+      "sha256": "b291059cbed5d33fd69e6437e41e85aa82e94004c147eec634a09bf8cf86925d"
+    },
+    {
+      "path": "native-messaging/src/outbox.rs",
+      "sha256": "b910f78d0b48386e055535d24e44c0985f019657e232695f89fa7f522ab596eb"
+    },
+    {
+      "path": "native-messaging/src/receipt.rs",
+      "sha256": "09718ae9ccbad56ef697da7fe1ce1e3100890097e6695361360e05923bbd6091"
+    },
+    {
+      "path": "native-messaging/src/receive.rs",
+      "sha256": "55f2cf7da7feca551297526a14fff1216e5a798d3b41d44d9bfea8b033877acc"
+    },
+    {
+      "path": "native-messaging/src/status_report.rs",
+      "sha256": "6ac6ad437f2e9dbec9c7beb0e614c910f03a161f07583ebdf7ebb0d629888595"
+    },
+    {
+      "path": "native-messaging/src/transport.rs",
+      "sha256": "1602a7ed81b01433793296a873fbfa5ec1ee9faf5899da9a808d7f673dd1ae67"
+    },
+    {
+      "path": "native-inbox/Cargo.lock",
+      "sha256": "713ed0a0f107c2bb0586de2a0453e8ff0e0c2fb5a2dd9097fadc5e8d16efb729"
+    },
+    {
+      "path": "native-inbox/Cargo.toml",
+      "sha256": "9ef2b7baf22a760b96700730f7edcb78301b82c98b29914444a966e8ab708c5c"
+    },
+    {
+      "path": "native-inbox/src/lib.rs",
+      "sha256": "e0811dcd8e29a1d01afc2b2c9e0965724539965f935a3e4c5c8d383aea0e02dc"
+    },
+    {
+      "path": "native-session/Cargo.lock",
+      "sha256": "f4f8849aa8f9cf3242f3f2d24278851d6c2dace3bbe64d6823da2703e5461498"
+    },
+    {
+      "path": "native-session/Cargo.toml",
+      "sha256": "ea4f943b4b34e053c9d19cc91f2c62e2aea37abfa91318d11fa2800f86993f45"
+    },
+    {
+      "path": "native-session/src/bin/session-observer-fixture.rs",
+      "sha256": "ba62ad6b752788aa7f018a1b10bc63c421af538784a08c50dbfe342c9ca68fe3"
+    },
+    {
+      "path": "native-session/src/bin/session-peer-fixture.rs",
+      "sha256": "52f10c2ed7f5cf9d0929845cd90df1a0df5865d86326e9cbae37185a56d42b82"
+    },
+    {
+      "path": "native-session/src/lib.rs",
+      "sha256": "eead20709fa5e45ad3c4f69567e7c54eea6a091a5b04937d42f4341831242872"
+    },
+    {
+      "path": "tools/native-session-authority/fixture/Cargo.lock",
+      "sha256": "02fc25882db97e7618d745a17f7133fb004b973015d8b26032831df044ce6c28"
+    },
+    {
+      "path": "tools/native-session-authority/fixture/Cargo.toml",
+      "sha256": "149753c461f15658586d2b9993f39b6192ade0c6fff7254e9ecbaa51c50966bd"
+    },
+    {
+      "path": "tools/native-session-authority/fixture/src/bin/service.rs",
+      "sha256": "a163e544f7612954d96e99e94bfbbc65ea5ba91d55105f6c9da618760ad54e41"
+    },
+    {
+      "path": "tools/native-session-authority/fixture/src/lib.rs",
+      "sha256": "ce0ddf0f272f8107d09b83bcc25dedcf30c6279f822ff29e8036828535994d33"
+    },
+    {
+      "path": "native-messages-ui/MessagesClient.cpp",
+      "sha256": "22fbd7c8e15969b3f1d59ac8b53d73e426068dfc47558c5f342d810342deb969"
+    },
+    {
+      "path": "native-messages-ui/MessagesClient.h",
+      "sha256": "6f70b0ae3552f44c97a27ada54c4b903d9ee8c6ad23973b345173e1ec646a4ae"
+    },
+    {
+      "path": "tools/native-session-restoration/qt-client/main.cpp",
+      "sha256": "e556f8ae1e137edc60747d0aad54c14a2cdeafc3f2afeab3bd4907b6cf4c362d"
+    },
+    {
+      "path": "tools/native-session-restoration/qt-client/CMakeLists.txt",
+      "sha256": "9810748814ae724f69c651a69af112e8c4bfa6edfc62ae9a0972deffd8cd15a9"
+    }
+  ],
+  "helper_pins": {
+    "app.py": "2e7e631096bf3104ea8926f6c15e3a4e27701114362c922f075186bb5e29f72a",
+    "prepare-root.py": "dd6946072d868d2d8452f98ca3827c7fa6a0806c61e6030fa5fc4c1585005c1d"
+  },
+  "artifacts": {
+    "library-tests": {
+      "sha256": "af9259aa4ac7a77b4aad0cf70237c42d406ee61a046d6852623b86fa8ab5fb06",
+      "ELF_machine": 62
+    },
+    "lifecycle-daemon": {
+      "sha256": "6afcdd6181fe5101be30ddfbc54f6b072eb2b3da8d49abb66cdbeb2296925222",
+      "ELF_machine": 62
+    },
+    "lifecycle-launcher": {
+      "sha256": "0a76ce2ff0c598ff055e6cdf6afa324cedd6707cf906eb18363008a4c2d2bbf2",
+      "ELF_machine": 62
+    },
+    "messages-service": {
+      "sha256": "e449287ce20efb7d9597e4301d4c6d1a01f0478737221a769b61668892f761fc",
+      "ELF_machine": 62
+    },
+    "messages-seed-fixture": {
+      "sha256": "568652a4ea0565c016359473aa91ca1f39323375305207709cb7b53266dd60e1",
+      "ELF_machine": 62
+    },
+    "messages-client-model": {
+      "sha256": "c9a6650214039a4a02561f4d8f8b7becaec3b94a503ce13e81ef64d08c2fe50d",
+      "ELF_machine": 62
+    },
+    "aarch64-library-tests": {
+      "sha256": "8a6f43fe6a09384767f34b4cb78dad0ca3252c7d34744497e2834705b6aa63c3",
+      "ELF_machine": 183,
+      "executed": false
+    },
+    "aarch64-lifecycle-daemon": {
+      "sha256": "0e3df7fe7f8fc0661a28cece92bf682fecf97d387471e54ad58c4431e569deff",
+      "ELF_machine": 183,
+      "executed": false
+    }
+  },
+  "private_binding_receipts": {
+    "/tmp/pokelinux-app-stop-build-green-root-2/selection.json": "0e29d9e12deef0e73552dd70ca16b18addabf3ee13483170f70ce42d91f6dd39",
+    "/tmp/pokelinux-app-stop-build-green-root-2/execution.json": "8b5ad1f4fb9816616569e82dc0ddaf65d97887103a4118be68101db2793c4401",
+    "/tmp/pokelinux-app-stop-build-green-root-2/build.log": "4bed05cb0605a39573232c78450ba12901a22fa94b7f63c3b930a650259a7198",
+    "/tmp/pokelinux-app-stop-build-green-root-2/host-list.log": "904d5dfdffe19e88b315edcb1eff92801d81996d3c2218025ece70a190fe9033",
+    "/tmp/pokelinux-app-stop-build-green-root-2/host-cargo.jsonl": "3073d897ee378700754a745e1156821c80d622504d179d37cca22d7443011501",
+    "/tmp/pokelinux-app-stop-build-green-root-2/arm-cargo.jsonl": "4fba2a37199fc0f0c4844ed1a25b12083be7053cf268f574c81a92dbb30eeebc",
+    "/tmp/pokelinux-restore-qt-client-build-root-1/selection.json": "6ac497de7a74936a5a26ba3975bb79557f31a79a0b03ba6af0f6f89f16930ee5",
+    "/tmp/pokelinux-restore-qt-client-build-root-1/execution.json": "dfba7cdd4c7bbac3d07b8a069ec30002edd40873fc866dc8cc93c48e160a9540",
+    "/tmp/pokelinux-restore-qt-client-build-root-1/build.log": "90173dc1b0bd7e8916e49b3fe665a2f9979364969efa87117ab64fff43ad26b4",
+    "/tmp/pokelinux-app-stop-runtime-green-root-2/selection.json": "e9ebad70ba7f0b5dbdf9db14f3e20bb12c704db6b961016fffe9fa706926700c",
+    "/tmp/pokelinux-app-stop-runtime-green-root-2/execution.json": "9da4c8f83f6c1a989a3d7043fb1a14dd2baf4b5164ae33d6c3718caf59be5d93",
+    "/tmp/pokelinux-app-stop-runtime-green-root-2/inner-execution.json": "bd41235e04b28081d562af978edd52c5b059cf1e5ff25ffd2e5880ff34071524",
+    "/tmp/pokelinux-app-stop-runtime-green-root-2/completion-source-read.json": "15e37e3648b607962b7486ef60dadd7a93f103a0953f4ea9092aae52e3119f68",
+    "/tmp/pokelinux-app-stop-runtime-green-root-2/new-lock-clear-repair.json": "701af196c1ea2277dd78ab46a7c9c73df60f3d92a292d2dff211b7833b02eae0",
+    "/tmp/pokelinux-app-stop-runtime-green-root-2/clean-restart-denial.json": "45fc34a907cb510a5e693f754746c94383c22f18a06dbd01ae77ced17779c94d",
+    "/tmp/pokelinux-app-stop-runtime-green-root-2/forced-unlock-late-event-denial.json": "43f39d071d1ef8a508153f97d048c9ff26f8ab0ca9bcfe44017a3357b127ad9f",
+    "/tmp/pokelinux-app-stop-runtime-green-root-2/actual-source-expiry-late-event-denial.json": "85536ae520602ba08a32c077c84c93d56d3e014834dd6041f6ce080cabdd5860",
+    "/tmp/pokelinux-app-stop-runtime-green-root-2/old-completion-new-idle-lock-denial.json": "905b1f07aaf81d4996cbdd8b2425a3642ec21208a076edc1c19aef25e040dd01",
+    "/tmp/pokelinux-app-stop-runtime-green-root-2/held-clear-stop-restart.json": "109af9820a41c228844994c7bd1a293f172713c525df2e1907250baac5a41e52",
+    "/tmp/pokelinux-app-stop-runtime-green-root-2/real-retained-history-read.json": "a7a4005983ab916f9c03696d34e198cea9cfa46c8c783b927bca59188b622366",
+    "/tmp/pokelinux-app-stop-runtime-green-root-2/retained-history-relock-before-restart.json": "030e1fe9d9aad4a325a01e399d1d31e543cce3a2792492bfaa5cefda6093155a",
+    "/tmp/pokelinux-app-stop-runtime-green-root-2/retained-history-reopen-fresh-restore.json": "0b7621133a05e24c038232cc6d23e0d450145800f892e0051b537936d6536790",
+    "/tmp/pokelinux-app-stop-runtime-green-root-2/actual-qt-retained-history-relock.json": "b5be85d38b4b122618a279794d80068596c70a8727b07b14c767935b9806e6ed",
+    "/tmp/pokelinux-app-stop-runtime-green-root-2/actual-qt-retained-history-reopen.json": "f025eb567b6d61e7a0e3bf5373f70fe973afd18bdb263070e18b4cb12d81fddd",
+    "/tmp/pokelinux-app-stop-runtime-green-root-2/normal-stop-actual-qt-join.json": "1b5d54d5bf611acd5b4a4e7d25591a7beec7f14c9d32b38c170858c56630bf32",
+    "/tmp/pokelinux-app-stop-runtime-green-root-2/normal-stop-term-ignore-escalation.json": "6b99222cdb08c65910abf30ee4ecb944e88b71c2f7124457f5aa2f0ca42629ad",
+    "/tmp/pokelinux-app-stop-runtime-green-root-2/explicit-terminate-term-ignore-forced.json": "e401247009214e595e712dc2c9f0799ff810c04047053cd7e49a4d99f50b5bf1",
+    "/tmp/pokelinux-app-stop-runtime-green-root-2/normal-stop-held-terminal-context.json": "c11c710b6b8986f194398e7afc890db1d86e3ed5def42f66545e0f3bd7f98d84",
+    "/tmp/pokelinux-app-stop-qt-runtime-red-root-3/selection.json": "447db54be4006ef1354e2a733b23ed119291fc5baed584cf3e17fdafede8e86a",
+    "/tmp/pokelinux-app-stop-qt-runtime-red-root-3/execution.json": "743cd80e6d0a2ea3796108f90c6b0f874bd276b64daa39be77f909183982dd7b",
+    "/tmp/pokelinux-app-stop-qt-runtime-red-root-3/inner-execution.json": "cfdfc190e520770a84d2df993da7b2cc0143b94319e8fe349744d6a8c60176fe",
+    "/tmp/pokelinux-app-stop-qt-runtime-red-root-3/normal-stop-actual-qt-join.json": "5a5772aa0d0a6da25bedca30520bede370fd34cdd10cba0b4841cc07ce210d1f",
+    "/tmp/pokelinux-app-stop-ignore-runtime-red-root-3/selection.json": "d31eeb27ff4d076103c946b48984193224d02bf8098897c205c1c75fc1e8f402",
+    "/tmp/pokelinux-app-stop-ignore-runtime-red-root-3/execution.json": "6868830bac2b2ba9db85425f850e3d136ce5b1785d6d3155302298f655444f6d",
+    "/tmp/pokelinux-app-stop-ignore-runtime-red-root-3/inner-execution.json": "485aa7a240ae1cd0bc3632126862ed5393104ca3228c13d9eea4282f59bb8dbe",
+    "/tmp/pokelinux-app-stop-ignore-runtime-red-root-3/normal-stop-term-ignore-escalation.json": "ac99d29270679a3fe6bd98b38ce8130440c376c145150a5b4f2a2d4155bd24b9",
+    "/tmp/pokelinux-app-stop-runtime-green-root-2/root-review.json": "85c70a3df6db01f8e747b6091617bb90ff6700b76d8ac47535959f58090dbbb0",
+    "/tmp/pokelinux-graceful-app-stop-advisor-astra.md": "3fc52b951aeb0739a3571f82735a2ccf1a01e27d685688ad31981b6d634fcaea",
+    "/tmp/pokelinux-graceful-app-stop-patch-review-astra.md": "7f0b06f85551fc65f6a3ecb7c8a3a689a585b7a026a0c5784e69621a5d1dfb12",
+    "/tmp/pokelinux-app-stop-final-review-sol.md": "7e241b8383921a05866de9af9e25a4a33db7e619f325fb3ad6befc9215e8ada5",
+    "/tmp/pokelinux-app-stop-red-review-sol.md": "1cec8149e4a00bef266f19abe5d526918f197931dd035fb2ed5584e1aa7e55a5"
+  },
+  "remaining": [
+    "preparing Stop, Grace forced upgrade, context/signal errors and real hung Context runtime",
+    "normal QtQuick/QML/Wayland/original display SDK and compositor secure frames",
+    "genuine auth/production broker/Source IPC",
+    "new ARM/Google-kernel/suspend-wake and all physical hardware gates"
+  ],
+  "phone_accessed": false
+}

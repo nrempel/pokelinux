@@ -40,8 +40,10 @@ The daemon polls pidfds and `try_wait`; it never joins a worker or blocks on a
 child wait in its request loop. Death removes the principal and prepared work,
 even when another process retains the app's actual connection. Termination
 revokes before signalling. A successor cannot launch until the previous owned
-child has been reaped. Stop kills and reaps all owned children before normal
-exit. Stop and fatal cleanup share one absolute two-second boot-time budget and abort
+child has been reaped. The later [normal app Stop](native-app-stop.md) now fences
+and withdraws first, permits one bounded TERM grace for Running apps, and retains
+all children/contexts until actual wait/drain; failure/cancel paths remain forced.
+Stop and fatal cleanup share one absolute two-second boot-time budget and abort
 before relinquishing unreaped children. An uninterruptible kernel task still
 requires an external supervisor/cgroup. Process reaping establishes
 no remote backend cleanup.

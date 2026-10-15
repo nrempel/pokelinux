@@ -103,9 +103,10 @@ arming or unlock ingress is added. The unchanged22 actor cases also pass on an
 [actual generic ARM kernel](native-auth-actor-capacity-arm.md) as UID1000, with18
 explicitly filtered; full40 inventory is enumeration only. No ARM storage or
 authentication scope/PAM execution is inferred.
-A later [downstream restoration selection](native-session-restoration.md) passes53
-default host tests plus9 separately selected actual service cases. Private cfgtest
-completion retains Armed context; a later exact typed Source event causes real
+The [restoration/client checkpoint](native-session-restoration-qt-client.md) passes53
+default host tests plus9 separately selected actual service cases. The later
+[normal app Stop selection](native-app-stop.md) extends the selected cases to13.
+Private cfgtest completion retains Armed context; a later exact typed Source event causes real
 worker clear and an actual UID11010 read. A new UID1000 lock during held clear wins
 through the same worker true sync and clean restart denial. Additional actual-loop
 cases qualify forced/expired Source and late-completion refusal plus held-clear
@@ -404,3 +405,9 @@ The full selection passes53 default plus9 separately selected service tests. It
 runs no normal QtQuick/QML/Wayland/original compositor or genuine auth; actor Stop
 uses SIGKILL and does not qualify the helper's graceful destructor path. New visual
 runs still require the actual Pixel10 profile before native unscaled capture.
+
+The [owned normal app Stop](native-app-stop.md) now qualifies cooperative Qt
+shutdown/actual owner wait0, fenced responsive TERM-ignore grace then wait9, prompt
+forced Terminate and retained authored Terminal Context after real Qt child wait.
+53 default plus13 selected service cases pass. This QCore/host evidence leaves
+normal GUI/original display SDK, new ARM runtime and physical gates separate.

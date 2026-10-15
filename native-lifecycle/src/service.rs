@@ -395,8 +395,13 @@ fn run_with_services_inner(
     let mut connection_id = 0u64;
     let mut startup_failed = false;
     let mut apps = crate::apps::Apps::default();
+    #[cfg(test)]
+    if let Some(control) = restore.as_ref() {
+        apps.wait_observer = Some(control.app_wait_observer.clone());
+    }
     let mut connections: Vec<Connection> = Vec::new();
     let mut stopping = false;
+    let mut stop_reply: Option<Reply> = None;
     let mut cleanup_until = None;
     let mut read_backpressure = 0u64;
     let mut local_recovery: Option<LocalRecovery> = None;
@@ -638,7 +643,13 @@ fn run_with_services_inner(
             }
             if stopping || startup_failed {
                 authority.invalidate();
-                apps.stop(&mut authority)?;
+                let until = *cleanup_until
+                    .get_or_insert_with(|| boottime_ns().saturating_add(2_000_000_000));
+                if startup_failed {
+                    apps.stop(&mut authority)?;
+                } else {
+                    apps.normal_stop(&mut authority, until)?;
+                }
                 if let Some(provider) = session.as_deref_mut() {
                     provider.stop();
                 }
@@ -646,8 +657,6 @@ fn run_with_services_inner(
                 if let Some(provider) = camera.as_deref_mut() {
                     provider.stop();
                 }
-                let until = *cleanup_until
-                    .get_or_insert_with(|| boottime_ns().saturating_add(2_000_000_000));
                 if boottime_ns() >= until {
                     break;
                 }
@@ -1055,46 +1064,62 @@ fn run_with_services_inner(
                                 authority.snapshot(storage.occupied(), storage.busy())
                             }
                             Ok(AdminRequest::Stop {}) => {
-                                stopping = true;
-                                if let Some(p) = messages.as_deref_mut() {
-                                    p.stop();
-                                }
-                                cleanup_until.get_or_insert_with(|| {
-                                    boottime_ns().saturating_add(2_000_000_000)
-                                });
-                                let clean = authority.ready()
-                                    && operation.is_none()
-                                    && !storage.busy()
-                                    && !authority.required_lock_write_pending();
-                                authority.invalidate();
-                                if let Some(provider) = session.as_deref_mut() {
-                                    provider.stop();
-                                }
-                                if clean {
-                                    let until = boottime_ns().saturating_add(1_000_000_000);
-                                    if let Ok(token) = storage.start_shutdown(until) {
-                                        operation = Some(Operation {
-                                            token,
-                                            connection: None,
-                                            intent: None,
-                                            until,
-                                            retired: false,
-                                            shutdown: true,
-                                            camera: false,
-                                        });
+                                if let Some(reply) = &stop_reply {
+                                    // The first Stop owns the shutdown operation,
+                                    // original deadlines and acknowledgement truth.
+                                    reply.clone()
+                                } else {
+                                    stopping = true;
+                                    let cleanup = *cleanup_until.get_or_insert_with(|| {
+                                        boottime_ns().saturating_add(2_000_000_000)
+                                    });
+                                    if let Some(p) = messages.as_deref_mut() {
+                                        p.stop();
+                                    }
+                                    let clean = !startup_failed
+                                        && authority.ready()
+                                        && operation.is_none()
+                                        && !storage.busy()
+                                        && !authority.required_lock_write_pending();
+                                    authority.invalidate();
+                                    let app_stop = if startup_failed {
+                                        apps.stop(&mut authority)
                                     } else {
+                                        apps.normal_stop(&mut authority, cleanup)
+                                    };
+                                    if let Some(provider) = session.as_deref_mut() {
+                                        provider.stop();
+                                    }
+                                    if clean {
+                                        let until = boottime_ns()
+                                            .saturating_add(1_000_000_000)
+                                            .min(cleanup);
+                                        if let Ok(token) = storage.start_shutdown(until) {
+                                            operation = Some(Operation {
+                                                token,
+                                                connection: None,
+                                                intent: None,
+                                                until,
+                                                retired: false,
+                                                shutdown: true,
+                                                camera: false,
+                                            });
+                                        } else {
+                                            storage.stop();
+                                        }
+                                    } else {
+                                        if let Some(op) = &mut operation {
+                                            op.retired = true;
+                                        }
                                         storage.stop();
                                     }
-                                } else {
-                                    if let Some(op) = &mut operation {
-                                        op.retired = true;
-                                    }
-                                    storage.stop();
-                                }
-                                if apps.stop(&mut authority).is_ok() {
-                                    Reply::Ok
-                                } else {
-                                    Reply::Unavailable
+                                    let reply = if app_stop.is_ok() {
+                                        Reply::Ok
+                                    } else {
+                                        Reply::Unavailable
+                                    };
+                                    stop_reply = Some(reply.clone());
+                                    reply
                                 }
                             }
                             Ok(_) if stopping => Reply::Unavailable,
@@ -1395,7 +1420,8 @@ fn run_with_services_inner(
     if let Some(provider) = camera.as_deref_mut() {
         provider.stop();
     }
-    // Fence every app pathname before draining any other process owner.
+    // Normal grace completes/escalates inside the main loop. On any fallback,
+    // force every retained app before another owner's drain can spend the budget.
     if let Err(e) = apps.stop(&mut authority) {
         outcome = Err(e);
     }

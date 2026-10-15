@@ -58,6 +58,7 @@ pub(super) struct ActorControl {
     observed_revision: Arc<AtomicU64>,
     source_barrier: Option<(u64, u64, SyncSender<bool>)>,
     pub(super) storage_executable: PathBuf,
+    pub(super) app_wait_observer: SyncSender<(u32, ExitStatus)>,
 }
 
 impl ActorControl {
@@ -310,9 +311,64 @@ struct Case {
     worker: Option<(u32, OwnedFd)>,
     real_history: bool,
     qt_client: bool,
+    held_context: Option<Arc<AtomicBool>>,
+    app_waits: Receiver<(u32, ExitStatus)>,
+    observed_app_waits: Vec<(u32, ExitStatus)>,
+    stop_requested: bool,
     messages_children: Vec<(u32, OwnedFd)>,
     observations: Vec<Value>,
     closed: bool,
+}
+
+// Authored display contract only: no SDK, pathname or helper process exists.
+struct HeldTerminalFactory {
+    occupied: Arc<AtomicBool>,
+}
+struct HeldTerminalContext {
+    arguments: Vec<String>,
+    occupied: Arc<AtomicBool>,
+    stopped: bool,
+}
+impl crate::display::Factory for HeldTerminalFactory {
+    fn start(
+        &mut self,
+        profile: &crate::AppProfile,
+        _instance: &str,
+        _until: u64,
+    ) -> io::Result<Box<dyn crate::display::Context>> {
+        Ok(Box::new(HeldTerminalContext {
+            arguments: profile.args.clone(),
+            occupied: self.occupied.clone(),
+            stopped: false,
+        }))
+    }
+}
+impl crate::display::Context for HeldTerminalContext {
+    fn poll(&mut self) -> io::Result<crate::display::State> {
+        Ok(if self.stopped {
+            crate::display::State::Terminal
+        } else {
+            crate::display::State::Ready
+        })
+    }
+    fn arguments(&self) -> &[String] {
+        &self.arguments
+    }
+    fn stop(&mut self) -> io::Result<()> {
+        self.stopped = true;
+        Ok(())
+    }
+    fn occupied(&self) -> bool {
+        self.occupied.load(Ordering::Acquire)
+    }
+}
+
+#[derive(Clone, Copy)]
+enum TestApp {
+    Python,
+    Qt,
+    QtHeldContext,
+    IgnoreTerm,
 }
 
 impl Case {
@@ -332,6 +388,24 @@ impl Case {
         retained: Option<RetainedHistory>,
         qt_client: bool,
     ) -> io::Result<Self> {
+        Self::new_with_mode(
+            existing_policy,
+            pause,
+            retained,
+            if qt_client {
+                TestApp::Qt
+            } else {
+                TestApp::Python
+            },
+        )
+    }
+    fn new_with_mode(
+        existing_policy: Option<PathBuf>,
+        pause: bool,
+        retained: Option<RetainedHistory>,
+        app_mode: TestApp,
+    ) -> io::Result<Self> {
+        let qt_client = matches!(app_mode, TestApp::Qt | TestApp::QtHeldContext);
         if let Some(paths) = &retained {
             check(
                 paths.raw.is_absolute()
@@ -400,7 +474,9 @@ impl Case {
                 "args":[runtime.join("app.sock"),driver_dir.join("driver.sock")]})
         } else {
             json!({"app":APP,"uid":11010,"executable":python,
-                "args":[install.join("app.py"),"--app",runtime.join("app.sock"),driver_dir.join("driver.sock")]})
+                "args":[install.join("app.py").into_os_string().into_string().map_err(|_|io::ErrorKind::InvalidData)?,
+                    if matches!(app_mode, TestApp::IgnoreTerm) {"--ignore-term-app"} else {"--app"}.to_owned(),
+                    runtime.join("app.sock").display().to_string(),driver_dir.join("driver.sock").display().to_string()]})
         };
         fs::write(
             &profile,
@@ -465,7 +541,11 @@ impl Case {
             }
             let _ = beat_tx.try_send(());
         });
+        let held_context =
+            matches!(app_mode, TestApp::QtHeldContext).then(|| Arc::new(AtomicBool::new(true)));
+        let service_held_context = held_context.clone();
         let (commands, inbox) = mpsc::sync_channel(1);
+        let (app_wait_observer, app_waits) = mpsc::sync_channel(4);
         let (service_tx, service_done) = mpsc::sync_channel(1);
         let service_runtime = runtime.clone();
         let service_policy = policy.clone();
@@ -501,7 +581,10 @@ impl Case {
                 observed_revision,
                 source_barrier: None,
                 storage_executable: service_install.join("lifecycle-daemon"),
+                app_wait_observer,
             };
+            let mut held_factory =
+                service_held_context.map(|occupied| HeldTerminalFactory { occupied });
             let result = super::run_with_services_inner(
                 &service_runtime,
                 &service_policy,
@@ -510,7 +593,9 @@ impl Case {
                 if pause { Some("pause:1") } else { None },
                 Some(history.as_mut()),
                 Some(&mut source),
-                None,
+                held_factory
+                    .as_mut()
+                    .map(|factory| factory as &mut dyn crate::display::Factory),
                 None,
                 Some(&mut control),
             );
@@ -533,6 +618,10 @@ impl Case {
             worker: None,
             real_history,
             qt_client,
+            held_context,
+            app_waits,
+            observed_app_waits: vec![],
+            stop_requested: false,
             messages_children: vec![],
             observations: vec![],
             closed: false,
@@ -754,11 +843,28 @@ impl Case {
         self.observations.push(json!({"actual_uid1000_lock":value,"actual_parent_wait":status.code(),"stdout_eof":true,"proc_absent":true}));
         Ok(())
     }
+    fn request_stop(&mut self) -> io::Result<()> {
+        check(
+            self.admin(json!({"op":"stop"}))? == json!({"result":"ok"}),
+            "normal Stop did not acknowledge",
+        )?;
+        self.stop_requested = true;
+        Ok(())
+    }
     fn close(&mut self) -> io::Result<()> {
+        // Error cleanup must never leave an authored occupied Context pinning
+        // the actor. The explicit test requests Stop before releasing this hold.
+        if let Some(held) = &self.held_context {
+            held.store(false, Ordering::Release);
+        }
         if self.closed {
             return Ok(());
         }
-        let stopped = self.admin(json!({"op":"stop"}));
+        let stopped = if self.stop_requested {
+            Ok(())
+        } else {
+            self.request_stop()
+        };
         let service_result = self.service_done.recv_timeout(Duration::from_secs(3));
         if service_result.is_err() {
             std::process::abort();
@@ -782,11 +888,17 @@ impl Case {
         }
         let locker_status = child_wait(&mut self.locker.0, boottime_ns() + WAIT_NS)?;
         self.closed = true;
-        check(
-            stopped? == json!({"result":"ok"}),
-            "normal Stop did not acknowledge",
-        )?;
+        stopped?;
         service_result.unwrap()?;
+        self.observed_app_waits.extend(self.app_waits.try_iter());
+        use std::os::unix::process::ExitStatusExt;
+        for (pid, status) in &self.observed_app_waits {
+            self.observations
+                .push(json!({"actual_actor_owned_app_wait":{
+                "pid":pid,"exit_code":status.code(),"signal":status.signal()},
+                "private_bounded_witness_of_normal_Apps_try_wait":true,
+                "driver_independently_reaped_app":false}));
+        }
         check(
             locker_status.success(),
             "owned ordinary locker fixture did not exit0",
@@ -967,3 +1079,160 @@ mod negative_tests;
 
 #[path = "service_restore_history_tests.rs"]
 mod retained_history_tests;
+
+#[test]
+#[ignore = "requires disposable root fixture and actual TERM-ignoring UID11010 app"]
+fn normal_stop_keeps_term_ignoring_app_owned_until_original_grace_escalation() {
+    use std::os::unix::process::ExitStatusExt;
+    let mut case = Case::new_with_mode(None, false, None, TestApp::IgnoreTerm)
+        .expect("actual TERM-ignoring app fixture");
+    let app_pid = case.app.as_ref().unwrap().metadata.pid;
+    let mut began = None;
+    let body = (|| {
+        check(
+            case.read()? == json!({"result":"denied"}),
+            "locked read prerequisite",
+        )?;
+        let first_stop_at = boottime_ns();
+        began = Some(first_stop_at);
+        case.request_stop()?;
+        let mut successful_stop_observations = vec![first_stop_at, boottime_ns()];
+        let until = first_stop_at + 200_000_000;
+        let mut snapshots = 0;
+        while boottime_ns() < until {
+            check(
+                crate::authority::living(case.app.as_ref().unwrap().pidfd())?,
+                "behavioral RED: normal Stop killed the TERM-ignoring child before grace",
+            )?;
+            let snapshot = case.admin(json!({"op":"snapshot"}))?;
+            check(
+                snapshot["ready"] == false,
+                "Stop did not fence authority before grace",
+            )?;
+            check(
+                case.read()? == json!({"result":"denied"}),
+                "actual protected read escaped Stop grace",
+            )?;
+            case.request_stop()?;
+            successful_stop_observations.push(boottime_ns());
+            snapshots += 1;
+            thread::sleep(Duration::from_millis(10));
+        }
+        check(
+            snapshots >= 2,
+            "responsive repeated Stop/Snapshot observations missing",
+        )?;
+        // Keep repeated Stop active across the original 500ms grace. A buggy
+        // renewal on every request now stays living until this bound and fails.
+        let observation_until = first_stop_at + 850_000_000;
+        while crate::authority::living(case.app.as_ref().unwrap().pidfd())? {
+            check(
+                boottime_ns() < observation_until,
+                "repeated Stop renewed original grace or failed escalation",
+            )?;
+            let probe = (|| {
+                let snapshot = case.admin(json!({"op":"snapshot"}))?;
+                check(
+                    snapshot["ready"] == false,
+                    "stopping actor regained readiness",
+                )?;
+                case.request_stop()
+            })();
+            if let Err(error) = probe {
+                if !crate::authority::living(case.app.as_ref().unwrap().pidfd())? {
+                    break;
+                }
+                return Err(error);
+            }
+            successful_stop_observations.push(boottime_ns());
+            snapshots += 1;
+            thread::sleep(Duration::from_millis(10));
+        }
+        let observed_dead_at = boottime_ns();
+        check(
+            observed_dead_at < observation_until,
+            "child death was not observed within original escalation bound",
+        )?;
+        successful_stop_observations.push(observed_dead_at);
+        let max_probe_gap_ns = successful_stop_observations
+            .windows(2)
+            .map(|pair| pair[1] - pair[0])
+            .max()
+            .unwrap_or(u64::MAX);
+        check(
+            max_probe_gap_ns < 100_000_000,
+            "repeated Stop observation gaps cannot qualify deadline nonrenewal",
+        )?;
+        case.observations
+            .push(json!({"responsive_snapshots_and_repeated_Stop":snapshots,
+            "TERM_ignoring_child_remained_living_first_200ms":true,
+            "repeated_Stop_continued_until_exact_child_death":true,
+            "elapsed_from_first_Stop_ns":boottime_ns()-first_stop_at,
+            "original_observation_bound_ns":850_000_000,
+            "successful_stop_observations_ns":successful_stop_observations,
+            "max_probe_gap_ns":max_probe_gap_ns}));
+        Ok(())
+    })();
+    let closed = case.close();
+    let body = body.and_then(|_| {
+        check(
+            case.observed_app_waits.len() == 1
+                && case.observed_app_waits[0].0 == app_pid
+                && case.observed_app_waits[0].1.signal() == Some(9),
+            "actual owned SIGKILL wait missing",
+        )?;
+        check(
+            began.is_some_and(|at| boottime_ns() - at < 1_500_000_000),
+            "repeated Stop renewed original grace or consumed outer cleanup budget",
+        )
+    });
+    case.report("normal-stop-term-ignore-escalation", &body, &closed);
+    assert!(
+        closed.is_ok(),
+        "actual escalation owner closure: {closed:?}"
+    );
+    assert!(body.is_ok(), "{body:?}");
+}
+
+#[test]
+#[ignore = "requires disposable root fixture and actual TERM-ignoring UID11010 app"]
+fn explicit_terminate_remains_forced_for_actual_term_ignoring_app() {
+    use std::os::unix::process::ExitStatusExt;
+    let mut case = Case::new_with_mode(None, false, None, TestApp::IgnoreTerm)
+        .expect("actual forced-retirement app fixture");
+    let app_pid = case.app.as_ref().unwrap().metadata.pid;
+    let body = (|| {
+        let began = boottime_ns();
+        check(
+            case.admin(json!({"op":"terminate","app":APP}))? == json!({"result":"ok"}),
+            "actual forced terminate refused",
+        )?;
+        wait_until(began + 300_000_000, || {
+            Ok(!crate::authority::living(
+                case.app.as_ref().unwrap().pidfd(),
+            )?)
+        })?;
+        let snapshot = case.admin(json!({"op":"snapshot"}))?;
+        check(
+            snapshot["ready"] == true,
+            "forced app retirement stopped healthy actor",
+        )?;
+        case.observations.push(
+            json!({"actual_explicit_terminate_without_normal_Stop_grace":true,
+            "elapsed_ns":boottime_ns()-began,"observation_bound_ns":300_000_000}),
+        );
+        Ok(())
+    })();
+    let closed = case.close();
+    let body = body.and_then(|_| {
+        check(
+            case.observed_app_waits.len() == 1
+                && case.observed_app_waits[0].0 == app_pid
+                && case.observed_app_waits[0].1.signal() == Some(9),
+            "forced actual child wait9 missing",
+        )
+    });
+    case.report("explicit-terminate-term-ignore-forced", &body, &closed);
+    assert!(closed.is_ok(), "actual forced owner closure: {closed:?}");
+    assert!(body.is_ok(), "{body:?}");
+}

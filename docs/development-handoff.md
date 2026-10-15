@@ -18,7 +18,25 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
-The latest consumer tracer links the unchanged production MessagesClient into a
+Explicit normal app Stop now gives Running apps one immutable BOOTTIME TERM
+grace capped inside the original2s actor cleanup; other retirement stays forced.
+Actual Qt wait9 and premature TERM-ignore kill REDs precede53 default tests plus13
+selected service cases passing (16 actor reports). Repeated Stop preserves its
+first reply/storage shutdown and cannot renew grace; actual protected reads deny,
+snapshots respond, and the TERM-ignoring app has owner wait9 after death observed
+511.570189ms with34 probes/maxgap16.248268ms. Explicit Terminate remains prompt
+wait9. A held authored Terminal Context retains the actor after actual Qt wait0
+and policy-worker closure until explicit fixture release. Four Qt epochs have
+normal owner wait0; the unchanged production client destructor/thread wait now
+executes in the private QCore host. Actual waits come from a bounded cfgtest witness
+of normal Apps::poll, not a second reaper. Strict checks and ARM compilation pass;
+there is no new ARM runtime/GUI/original SDK/capture/auth ingress or phone access.
+Root rehashes98 source and18 runtime bindings. Source-level500ms/TERM-once and the
+Forced-latch error caveat remain distinct from measured bounds. Preparing Stop,
+forced upgrade/error controls and real GUI/compositor/hardware remain open.
+[Current app Stop report](native-app-stop.md).
+
+The preceding consumer checkpoint links the unchanged production MessagesClient into a
 private lifecycle-owned UID11010 QCore process. It actually decodes two retained
 Messages bodies after clear, clears its lists after real relock, then returns the
 same receipt IDs from a fresh actor/Qt process over unchanged paths without reseed.

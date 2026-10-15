@@ -144,8 +144,18 @@ normal Qt/original compositor, genuine authentication and hardware remain open.
 
 The subsequent [actual Qt consumer](../docs/native-session-restoration-qt-client.md)
 adds a trusted private QCore app profile linked to unchanged production client
-sources.53 default tests and9 separately selected service cases pass. The actual
+sources. That checkpoint passes53 default tests and9 selected service cases. The actual
 client decodes retained bodies, empties models after relock and returns the same
-IDs after fresh actor restore. No production source/ingress changes. Normal Stop
-kills the app, so Qt graceful destruction remains unqualified; normal GUI/original
+IDs after fresh actor restore. It changes no production source/ingress. That
+selection killed the app on Stop, leaving Qt graceful destruction unqualified;
+normal GUI/original
 compositor and genuine authentication remain separate.
+
+The latest [normal app Stop](../docs/native-app-stop.md) adds one absolute500ms
+BOOTTIME TERM grace only for Running apps, capped within the original actor2s
+budget; failure/cancel/Preparing remains forced. First-Stop reply/storage shutdown
+is memoized, repeated Stop cannot renew grace, and actual Child/context ownership
+persists through wait/drain.53 default tests and13 separately selected cases pass:
+actual Qt owner wait0, TERM-ignore responsive fenced grace then wait9, forced
+Terminate and an authored held Terminal Context with an actual Qt child. Strict
+checks and ARM compilation are separate. No GUI/original SDK/phone proof follows.

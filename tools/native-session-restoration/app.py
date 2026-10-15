@@ -4,6 +4,7 @@ import json
 import os
 from pathlib import Path
 import socket
+import signal
 import struct
 import sys
 
@@ -37,7 +38,9 @@ elif mode == '--lock':
         peer.send(b'{"op":"lock"}')
         reply = json.loads(peer.recv(4096))
     print(json.dumps({'identity': identity(), 'reply': reply}), flush=True)
-elif mode == '--app':
+elif mode in ('--app', '--ignore-term-app'):
+    if mode == '--ignore-term-app':
+        signal.signal(signal.SIGTERM, signal.SIG_IGN)
     actual = identity()
     assert actual['uid'] == actual['gid'] == 11010 and actual['groups'] == []
     assert int(actual['cap_eff'], 16) == 0

@@ -69,7 +69,7 @@ only the app composition constructor changes in that test module. No production
 client, authority, service, storage or app lifecycle source changes. The earlier
 eight cases also pass in the same pinned Qt runtime image.
 
-| Current selection | Result |
+| Preceding Qt client checkpoint | Result |
 |---|---|
 | Default lifecycle host tests |53 pass,9 explicitly ignored,0 filtered |
 | Separately selected actual service tests |9 pass,12 successful actor case reports |
@@ -100,3 +100,9 @@ reopen and whole-actor EAGAIN/completed-write timing need separate evidence.
 New ARM/Google-kernel execution, suspend/wake, physical modem/carrier/audio/camera/
 GPU and all Pixel hardware gates remain separate. No phone was accessed or modified;
 the full smartphone goal remains incomplete.
+
+The subsequent [normal app Stop](native-app-stop.md) changes production retirement
+and qualifies the private QCore client's real destructor/thread wait through actual
+owner wait0. Its53 default plus13 selected cases keep normal GUI/original SDK,
+error controls and hardware separate. The earlier SIGKILL selection above remains
+historical evidence; it is not relabeled as graceful execution.

@@ -520,3 +520,94 @@ fn actual_qt_client_models_deny_restore_relock_and_same_id_reopen() {
     assert!(closed.is_ok(), "reopened Qt owner closure: {closed:?}");
     assert!(body.is_ok(), "{body:?}");
 }
+
+#[test]
+#[ignore = "requires disposable root fixture, actual Qt Core client and retained Messages helpers"]
+fn normal_stop_reaches_actual_qt_destructor_and_owned_wait_zero() {
+    let (paths, seeded) = seed_history().expect("once-only actual retained seed");
+    let mut case = qt_case(None, paths).expect("actual Qt app owner");
+    case.observations.push(seeded);
+    let app_pid = case.app.as_ref().unwrap().metadata.pid;
+    let body = qt_denied(&mut case, "actual client before normal Stop");
+    let closed = case.close();
+    let body = body.and_then(|_| check(case.observed_app_waits.len() == 1
+        && case.observed_app_waits[0].0 == app_pid
+        && case.observed_app_waits[0].1.code() == Some(0),
+        "behavioral RED: normal Stop bypassed actual Qt quit/destructor with forced child death"));
+    case.report("normal-stop-actual-qt-join", &body, &closed);
+    assert!(closed.is_ok(), "actual Qt Stop owner closure: {closed:?}");
+    assert!(body.is_ok(), "{body:?}");
+}
+
+#[test]
+#[ignore = "requires disposable root fixture, actual Qt client and authored held display Context"]
+fn normal_stop_drains_terminal_owned_context_after_qt_child_wait_zero() {
+    let mut case = Case::new_with_mode(None, false, None, TestApp::QtHeldContext)
+        .expect("actual Qt app with authored held Context");
+    let app_pid = case.app.as_ref().unwrap().metadata.pid;
+    let body = (|| {
+        qt_denied(&mut case, "actual client before held-context Stop")?;
+        let held = case.held_context.clone().ok_or(io::ErrorKind::NotFound)?;
+        check(
+            held.load(Ordering::Acquire),
+            "Context was not initially occupied",
+        )?;
+        let stop_at = boottime_ns();
+        case.request_stop()?;
+        let child_until = stop_at + 300_000_000;
+        wait_until(child_until, || {
+            Ok(
+                !crate::authority::living(case.app.as_ref().unwrap().pidfd())?
+                    && !Path::new(&format!("/proc/{app_pid}")).exists(),
+            )
+        })?;
+        let observed_dead_at = boottime_ns();
+        check(
+            observed_dead_at < child_until,
+            "Qt child closure exceeded300ms",
+        )?;
+        // Wait out the sole policy worker too, so another process owner cannot
+        // substitute for the authored Context keeping the actor occupied.
+        let mut held_snapshot = None;
+        wait_until(stop_at + 900_000_000, || {
+            check(
+                held.load(Ordering::Acquire) && !case.service.as_ref().unwrap().is_finished(),
+                "actor relinquished occupied terminal Context",
+            )?;
+            let snapshot = case.admin(json!({"op":"snapshot"}))?;
+            check(snapshot["ready"] == false, "held Stop regained authority")?;
+            let ready = snapshot["storage_occupied"] == false;
+            held_snapshot = Some(snapshot);
+            Ok(ready)
+        })?;
+        check(
+            held.load(Ordering::Acquire) && !case.service.as_ref().unwrap().is_finished(),
+            "terminal Context was released before the driver release",
+        )?;
+        case.observations.push(json!({
+            "authored_Context_terminal_and_occupied_after_Qt_child_reap": true,
+            "actual_Qt_child_dead_and_proc_absent": true,
+            "Qt_child_observed_dead_elapsed_ns": observed_dead_at - stop_at,
+            "actor_thread_still_running_with_held_Context": true,
+            "snapshot_while_Context_held": held_snapshot,
+            "actual_display_SDK_or_Wayland_executed": false,
+            "driver_independently_signalled_or_reaped_Qt_child": false
+        }));
+        Ok(())
+    })();
+    if let Some(held) = &case.held_context {
+        held.store(false, Ordering::Release);
+    }
+    let closed = case.close();
+    let body = body.and_then(|_| {
+        check(
+            case.observed_app_waits.len() == 1
+                && case.observed_app_waits[0].0 == app_pid
+                && case.observed_app_waits[0].1.code() == Some(0),
+            "normal Stop did not reach actual Qt destructor/owned wait0 with terminal Context",
+        )
+    });
+    case.report("normal-stop-held-terminal-context", &body, &closed);
+    assert!(closed.is_ok(), "held Context owner closure: {closed:?}");
+    assert!(body.is_ok(), "{body:?}");
+}

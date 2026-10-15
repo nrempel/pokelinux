@@ -3,7 +3,7 @@ use crate::{
     AppProfile, Reply, authority::Authority, boottime_ns, display, fresh_id,
     service::trusted_executable,
 };
-use rustix::process::{Pid, PidfdFlags};
+use rustix::process::{Pid, PidfdFlags, Signal};
 use std::{
     collections::BTreeMap,
     io,
@@ -17,12 +17,19 @@ enum Phase {
     Running,
     Retiring,
 }
+const NORMAL_STOP_GRACE_NS: u64 = 500_000_000;
+#[derive(Clone, Copy)]
+enum Retirement {
+    Grace { until: u64 },
+    Forced,
+}
 struct Slot {
     profile: AppProfile,
     instance: String,
     child: Option<Child>,
     context: Option<Box<dyn display::Context>>,
     phase: Phase,
+    retirement: Option<Retirement>,
     until: u64,
     connection: Option<u64>,
     reported: bool,
@@ -31,11 +38,69 @@ impl Slot {
     fn retire(&mut self, authority: &mut Authority) -> io::Result<()> {
         // Data fencing precedes pathname withdrawal and every child signal.
         authority.revoke(&self.profile.app);
+        if matches!(self.retirement, Some(Retirement::Forced)) {
+            return Ok(());
+        }
         self.phase = Phase::Retiring;
+        // Latch before fallible withdrawal/signalling. Forced cannot regain grace.
+        self.retirement = Some(Retirement::Forced);
         let context = self.context.as_mut().map(|c| c.stop()).transpose();
         let child = self.child.as_mut().map(|c| c.kill()).transpose();
         context?;
         child?;
+        Ok(())
+    }
+    fn normal_stop(&mut self, authority: &mut Authority, cleanup_until: u64) -> io::Result<()> {
+        authority.revoke(&self.profile.app);
+        if self.retirement.is_some() {
+            return self.poll_retirement(authority);
+        }
+        if self.phase != Phase::Running {
+            return self.retire(authority);
+        }
+        let now = boottime_ns();
+        // Leave at least 500ms inside the existing actor budget for KILL/waits.
+        let until = now
+            .saturating_add(NORMAL_STOP_GRACE_NS)
+            .min(cleanup_until.saturating_sub(NORMAL_STOP_GRACE_NS));
+        if now >= until {
+            return self.retire(authority);
+        }
+        self.phase = Phase::Retiring;
+        self.retirement = Some(Retirement::Grace { until });
+        // Withdrawal is attempted before TERM or an error-path KILL.
+        if let Some(context) = self.context.as_mut()
+            && let Err(error) = context.stop()
+        {
+            self.retirement = Some(Retirement::Forced);
+            if let Some(child) = self.child.as_mut() {
+                let _ = child.kill();
+            }
+            return Err(error);
+        }
+        let signalled = self
+            .child
+            .as_ref()
+            .map(|child| {
+                // This sole owner retains the unreaped Child, preventing PID reuse.
+                let pid = Pid::from_raw(child.id() as i32)
+                    .ok_or_else(|| io::Error::from(io::ErrorKind::InvalidInput))?;
+                rustix::process::kill_process(pid, Signal::TERM).map_err(io::Error::from)
+            })
+            .transpose();
+        if let Err(error) = signalled {
+            self.retirement = Some(Retirement::Forced);
+            if let Some(child) = self.child.as_mut() {
+                let _ = child.kill();
+            }
+            return Err(error);
+        }
+        Ok(())
+    }
+    fn poll_retirement(&mut self, authority: &mut Authority) -> io::Result<()> {
+        if matches!(self.retirement, Some(Retirement::Grace { until }) if boottime_ns() >= until) {
+            self.retire(authority)?;
+        }
         Ok(())
     }
     fn occupied(&self) -> bool {
@@ -80,6 +145,8 @@ pub(crate) enum Start {
 #[derive(Default)]
 pub(crate) struct Apps {
     slots: BTreeMap<String, Slot>,
+    #[cfg(test)]
+    pub(crate) wait_observer: Option<std::sync::mpsc::SyncSender<(u32, std::process::ExitStatus)>>,
 }
 impl Apps {
     pub fn start(
@@ -117,6 +184,7 @@ impl Apps {
                 child: None,
                 context,
                 phase: Phase::Preparing,
+                retirement: None,
                 until,
                 connection: Some(connection),
                 reported: false,
@@ -130,10 +198,20 @@ impl Apps {
             // Observe actual app wait before consuming a display state. A dead
             // app's pathname is withdrawn even if its SDK is held or still Ready.
             if let Some(child) = slot.child.as_mut()
-                && child.try_wait()?.is_some()
+                && let Some(status) = child.try_wait()?
             {
+                #[cfg(test)]
+                if let Some(observer) = &self.wait_observer {
+                    observer
+                        .try_send((child.id(), status))
+                        .map_err(|_| io::Error::other("bounded app wait witness unavailable"))?;
+                }
+                #[cfg(not(test))]
+                let _ = status;
                 slot.child = None;
-                slot.retire(authority)?;
+                if slot.phase != Phase::Retiring {
+                    slot.retire(authority)?;
+                }
             }
             if slot.phase != Phase::Retiring
                 && (authority.session_terminal()
@@ -146,11 +224,17 @@ impl Apps {
                 .context
                 .as_mut()
                 .map_or(Ok(display::State::Ready), |c| c.poll());
-            if !matches!(state, Ok(display::State::Ready | display::State::Preparing))
-                || (slot.phase == Phase::Running && !matches!(state, Ok(display::State::Ready)))
+            if state.is_err()
+                || (slot.phase != Phase::Retiring
+                    && (!matches!(state, Ok(display::State::Ready | display::State::Preparing))
+                        || (slot.phase == Phase::Running
+                            && !matches!(state, Ok(display::State::Ready)))))
             {
                 slot.retire(authority)?;
             }
+            // Intentional Context::stop may report Terminal while still owning
+            // helpers. Keep polling/draining it; only an error forces grace.
+            slot.poll_retirement(authority)?;
             if let Some(completion) = slot.completion() {
                 completions.push(completion);
             }
@@ -271,6 +355,15 @@ impl Apps {
             }
             None => Reply::Denied,
         }
+    }
+    pub fn normal_stop(&mut self, authority: &mut Authority, cleanup_until: u64) -> io::Result<()> {
+        let mut failed = None;
+        for slot in self.slots.values_mut() {
+            if let Err(error) = slot.normal_stop(authority, cleanup_until) {
+                failed.get_or_insert(error);
+            }
+        }
+        failed.map_or(Ok(()), Err)
     }
     pub fn stop(&mut self, authority: &mut Authority) -> io::Result<()> {
         let mut failed = None;
