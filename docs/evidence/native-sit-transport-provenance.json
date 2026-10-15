@@ -1,11 +1,15 @@
 {
   "schema": 1,
   "date": "2026-10-15",
-  "scope": "Eight static matched factory IoChannel/RadioControlMessageMgr methods; no new original execution/native transport completion",
+  "scope": "Twenty-three static matched factory transport/receive/classifier methods, separately reviewed; original C1/D1 memory execution has its own provenance; no native modem transport completion",
   "input_hashes": [
     {
       "path": "private/libsitril.so",
       "sha256": "a92bebfa7152356f27a925960ddd11736a0ad55cff9786997550d4d2a49105cd"
+    },
+    {
+      "path": "private/vendor.radio.protocol.sit.base.so",
+      "sha256": "c279c7c4cb2c4d81a93f93894f366f75226d081786f464d74247f4c48eff0f3e"
     }
   ],
   "private_receipt_hashes_only": [
@@ -52,6 +56,66 @@
     {
       "path": "Root-static-pin-closure-review",
       "sha256": "ab918665e76cc6a96746a11617c3a4ae36bc76a20429d004bdcd87eef1c894cd"
+    },
+    {
+      "path": "receive-owner/manifest.json",
+      "sha256": "9e7ffb67474f93810bf7ccd8c1db61d0f41278584b521e7c3dac31b24e4e7566"
+    },
+    {
+      "path": "receive-owner/facts.json",
+      "sha256": "82668fbfefdb4707a4ae533386156dc5e15f80486c2784a29920472ffbd81e26"
+    },
+    {
+      "path": "receive-owner/verification.json",
+      "sha256": "06a8ffba2d5e9cb5952fc9645f6e8ff5f20321a04d325f53f2f7f44df463afdb"
+    },
+    {
+      "path": "modemdata-send/manifest.json",
+      "sha256": "f7e65f05b3ddad2160a18b01cad3791cf673d888a15a002c6ab18da0a2203a16"
+    },
+    {
+      "path": "modemdata-send/facts.json",
+      "sha256": "d0ea0fe10c805236ebbf00be6caf35bc50d0081557546a7eb6c33a8eb22f2860"
+    },
+    {
+      "path": "modemdata-send/verification.json",
+      "sha256": "fef7911d2c536a0a97d7bd08d7ca42ceac9c9f779f7f83ff17a37e7a755595cb"
+    },
+    {
+      "path": "modemdata-getters/manifest.json",
+      "sha256": "e93e71d09619ca401cbc60db6f39c9f0baff0f26975f7d593908d7cde56921e1"
+    },
+    {
+      "path": "modemdata-getters/facts.json",
+      "sha256": "5596c1ce9d2787a8e1cd811f2424544ae2ae04d0c0fd8bce481392f3b4f9415b"
+    },
+    {
+      "path": "modemdata-getters/verification.json",
+      "sha256": "9e39556417da61c4f6b0595001136aeead5ec47fabe30e25bb60781e9a228e45"
+    },
+    {
+      "path": "protocol-base/manifest.json",
+      "sha256": "4fbb533c844215aebe868391bd30971ab01096b117e632e26549f356c7405052"
+    },
+    {
+      "path": "protocol-base/facts.json",
+      "sha256": "8fbec636fd16069107d8e94d25385d343754bd3b1a0b903b91ff7df951ed9acd"
+    },
+    {
+      "path": "protocol-base/verification.json",
+      "sha256": "48397878137a5b05b7634edce569d381ac36f3efa8ba5718beff867c993f2358"
+    },
+    {
+      "path": "receive-owner/independent-review.json",
+      "sha256": "0eac401a771361ab323252eb78ab6d394d2264a969fccb6b4cc4304406d868d4"
+    },
+    {
+      "path": "modemdata-send/independent-review.json",
+      "sha256": "9f2593fe0f5c184f9d45a8ba4362f709ba499f8b40959873b4210e799c8752d3"
+    },
+    {
+      "path": "classifiers/independent-review.json",
+      "sha256": "2efeac0928d8cff5866c1525113af5857623f2d3bd49b8747e656a9c6b6bf79f"
     }
   ],
   "sessions": [
@@ -82,7 +146,6 @@
       "live_wire_transcript": true
     }
   ],
-  "Root_private_pins_rehashed": 97,
   "methods": [
     {
       "name": "IoChannel::Open",
@@ -123,6 +186,81 @@
       "name": "RadioControlMessageMgr::Write",
       "elf_rva": "0x1ef1e0",
       "exported_span_bytes": 116
+    },
+    {
+      "name": "RadioControlMessageMgr::constructor",
+      "elf_rva": "0x1eeba0",
+      "exported_span_bytes": 44
+    },
+    {
+      "name": "RadioControlMessageMgr::nondeleting-destructor",
+      "elf_rva": "0x1eebd0",
+      "exported_span_bytes": 120
+    },
+    {
+      "name": "DumpData",
+      "elf_rva": "0x1f4340",
+      "exported_span_bytes": 52
+    },
+    {
+      "name": "RilContextWrapper::ProcessModemData",
+      "elf_rva": "0x11b940",
+      "exported_span_bytes": 212
+    },
+    {
+      "name": "ModemData::C1/C2",
+      "elf_rva": "0xc030",
+      "exported_span_bytes": 140
+    },
+    {
+      "name": "ModemData::D1/D2",
+      "elf_rva": "0xc150",
+      "exported_span_bytes": 76
+    },
+    {
+      "name": "RilContextWrapper::SendMessage",
+      "elf_rva": "0x11ba20",
+      "exported_span_bytes": 944
+    },
+    {
+      "name": "ModemData::GetType",
+      "elf_rva": "0xc250",
+      "exported_span_bytes": 52
+    },
+    {
+      "name": "ModemData::IsSolicitedResponse",
+      "elf_rva": "0xc460",
+      "exported_span_bytes": 56
+    },
+    {
+      "name": "ModemData::IsUnsolicitedResponse",
+      "elf_rva": "0xc420",
+      "exported_span_bytes": 56
+    },
+    {
+      "name": "ModemData::GetToken",
+      "elf_rva": "0xc210",
+      "exported_span_bytes": 52
+    },
+    {
+      "name": "ProtocolBaseAdapter::GetType",
+      "elf_rva": "0xf240",
+      "exported_span_bytes": 36
+    },
+    {
+      "name": "ProtocolBaseAdapter::GetToken",
+      "elf_rva": "0xf2d0",
+      "exported_span_bytes": 48
+    },
+    {
+      "name": "ProtocolBaseAdapter::IsUnsolicitedResponse",
+      "elf_rva": "0xf3b0",
+      "exported_span_bytes": 40
+    },
+    {
+      "name": "ProtocolBaseAdapter::IsSolicitedResponse",
+      "elf_rva": "0xf3e0",
+      "exported_span_bytes": 40
     }
   ],
   "body_span_limits": [
@@ -142,7 +280,7 @@
     }
   ],
   "not_established": [
-    "Concrete dynamic receiver/frame/queue/copy contract",
+    "Concrete runtime wrapper identity, complete-record/framing contract and queue delivery",
     "Opaque DumpData side effects or unchanged callback bytes",
     "Actual modem path/source incarnation/exclusivity",
     "Stop wakeup/join and close/reopen ordering",
@@ -150,5 +288,30 @@
     "APN/channel/subscription/provider/modem/carrier/hardware"
   ],
   "phone_accessed": false,
-  "raw_private_artifacts_or_proprietary_inputs_published": false
+  "raw_private_artifacts_or_proprietary_inputs_published": false,
+  "initial_eight_method_Root_private_pins_rehashed": 97,
+  "later_independent_pin_scopes": [
+    {
+      "name": "receive-owner",
+      "total": 51,
+      "current": 45,
+      "historical_document_Git_blobs": 6,
+      "historical_commit": "77c46eb6d00f0cb2da249a785cb6d45600b2f96d"
+    },
+    {
+      "name": "modemdata-send",
+      "current": 97
+    },
+    {
+      "name": "modemdata-getters",
+      "current": 82
+    },
+    {
+      "name": "protocol-base",
+      "current": 87
+    }
+  ],
+  "original_memory_reference": "native-sit-received-chunk-provenance.json",
+  "classifier_getters_executed_on_short_inputs": false,
+  "pin_freshness_scope": "At each recorded review; later commits do not imply equality to the current working tree. Historical document inputs remain bound by archived Git blobs."
 }

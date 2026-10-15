@@ -5,7 +5,9 @@ use pokelinux_process_owner::{
     supervisor::{ProcessIdentity, StartError, Supervisor},
 };
 use pokelinux_sit_attempt::{Attempt, Error as AttemptError, Setup};
-use pokelinux_sit_codec::{InitialLteSetupV3, Protocol, modern_report::ModernSetupReport22};
+use pokelinux_sit_codec::{
+    InitialLteSetupV3, Protocol, modern_report::ModernSetupReport22, received_chunk::ReceivedChunk,
+};
 use rustix::net::{
     self, AddressFamily, RecvFlags, SendFlags, SocketAddrUnix, SocketFlags, SocketType,
 };
@@ -147,12 +149,21 @@ fn worker(args: &[String]) -> io::Result<()> {
     if count != 144 || total != 144 {
         return Err(invalid());
     }
+    // Copy the accepted Unix record before reusing its receive storage.
+    let chunk = checked(ReceivedChunk::copy_from(&input[..count]))?;
+    input.fill(0xa5);
+    if std::hint::black_box(&input)
+        .iter()
+        .any(|byte| *byte != 0xa5)
+    {
+        return Err(invalid());
+    }
     writeln!(
         io::stdout().lock(),
         "{}:{}:{}",
         parent.identity().hex(),
         peer_pid,
-        hex(&input[..count])
+        hex(chunk.as_bytes())
     )?;
     io::stdout().flush()?;
     // Deliberately block only this supervised fixture worker until Stop kills it.

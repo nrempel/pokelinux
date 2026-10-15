@@ -119,3 +119,11 @@ actual generic ARM kernel Unix-record fixture qualifies no device backend,
 CPIF framing, slot/channel identity or matched Pixel KMI. Factory-specific I/O
 and cleanup semantics remain behind a separate backend; decoded CID and report
 presentation index cannot select a network interface or hardware owner.
+
+
+The [owned SIT receive copy](native-sit-received-chunk.md) separates Rust byte
+lifetime from validation and hardware custody. Its65,568-byte ingress bound and
+factory classifier observations belong to the SIT backend; apps and shared phone
+state acquire no Samsung fields, C++ layouts or device-node assumptions. Original
+Bionic execution, native ARM user-QEMU components and generic ARM kernel Unix
+fixtures remain separate evidence, with zero physical models qualified.

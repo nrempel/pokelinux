@@ -18,6 +18,18 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The [owned SIT receive copy](native-sit-received-chunk.md) now bridges raw
+receive storage to the strict attempt parser. Twelve original Bionic/user-QEMU
+children qualify full source-overwrite/free comparisons. A compiled42-pass/eight
+missing-copy RED precedes50 codec and15 attempt passes per x86/ARM user-QEMU
+architecture. Additional actual host and generic ARM kernel completion/expiry/
+cancel controls pass with unchanged983/144-byte/report and lifecycle oracles;
+the worker copies before overwriting/checking its entire reusable buffer. This
+is opaque byte ownership, not complete-record framing, runtime modem identity,
+provider/APN acquisition, production CPIF transport or Pixel/carrier proof.
+
+Earlier codec and attempt milestones below retain their recorded evidence.
+
 The [native SIT codec](native-sit-codec.md) retains its six complete983-byte
 format-2 encoder comparisons, earlier host RED and eight encoder tests per
 host/ARM64 user-QEMU target. The original constructor9 and encoder8 children
@@ -65,7 +77,7 @@ RED precede a source-only completion repair:15 host and15 ARM user-QEMU tests,
 then identical actual host/ARM kernel0/0/0 completion/expiry/cancel controls pass.
 Held-worker snapshots remain responsive; Stop actually waits worker9 and the
 unchanged journal refuses a successor. Current/history are local observations,
-not APN/provider authority. Factory framing/buffer retention, channel/driver
+not APN/provider authority. Factory complete-record/runtime owner identity, channel/driver
 binding, installed deployment and Pixel/carrier remain open.
 
 The separate [original context-application probe](native-sit-context-application.md)

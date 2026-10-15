@@ -3,9 +3,9 @@
 `pokelinux-sit-codec` encodes one initial token-zero,983-byte Samsung SIT setup
 request and parses the measured144-byte base response subset. Six request
 comparisons and six response/getter comparisons match separately executed
-original Bionic code under ARM64 user-QEMU. All40 native tests pass on the host
-and ARM64 user-QEMU after separate encoder/decoder REDs and a compiled
-independent-server data-loss RED and modern-report missing-behavior RED.
+original Bionic code under ARM64 user-QEMU. The earlier40-test codec checkpoint is followed by owned receive copying: all50
+native tests pass on the host and ARM64 user-QEMU after separate encoder/decoder,
+independent-server, modern-report and missing-copy REDs.
 The crate has no dependencies and forbids unsafe Rust.
 
 `InitialLteSetupV3::new` accepts a `NonZeroU8` context identifier, an APN of1–99
@@ -44,6 +44,15 @@ original. Explicit index0–99 supplies presentation only. Invalid public input
 consistency is refused. Fixed empty arrays do not implement unmeasured dynamic
 ABI fields. See the [report projection](../docs/native-sit-report-projection.md)
 and [provenance](../docs/evidence/native-sit-report-projection-provenance.json).
+
+`received_chunk::ReceivedChunk::copy_from` owns a nonempty raw slice up to65,568
+bytes through fallible allocation. Its readonly bytes grant no header, token,
+length or record validity. Seven full original C1/D1 comparisons include short,
+coalesced, opaque and maximum-bound inputs; source overwrite/drop preserves the
+native copy. Null/signed-count/boolean C++ ABI behavior remains reference-only.
+The bound is native ingress policy, not a protocol or kernel maximum. See
+[receive ownership](../docs/native-sit-received-chunk.md) for strict RED/GREEN,
+separate original-code evidence and supervised process integration.
 
 From the repository root:
 

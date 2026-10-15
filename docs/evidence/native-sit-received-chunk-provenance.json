@@ -1,0 +1,458 @@
+{
+  "schema": 1,
+  "date": "2026-10-15",
+  "scope": "Original guarded ModemData memory-only comparison; strict native received-copy RED/GREEN; additional host and generic ARM kernel Unix-record integration. No native modem transport or smartphone completion.",
+  "base_commit": "aaa9aac35dea88de7b67c72b73004f029fc015ec",
+  "public_source_hashes": [
+    {
+      "path": "native-sit-codec/src/lib.rs",
+      "sha256": "bb5fe3436920e3c705566146a1616e38f0dc32c9b329e435b5ddb9bff3788e3d"
+    },
+    {
+      "path": "native-sit-codec/src/received_chunk.rs",
+      "sha256": "7a1687652de483508d545cea7ce56e56872709b60566cdfabd98d7ecdf49647c"
+    },
+    {
+      "path": "native-sit-codec/tests/received_chunk.rs",
+      "sha256": "c76260dcb4e43b26547868090da02e88c2a07074193f6a1f8f1800ee197b86ae"
+    },
+    {
+      "path": "tools/native-sit-codec/original-modemdata-memory-probe.c",
+      "sha256": "bc6cd0fb6fb6712d1b0c4bdce22256ca39d2d1ad2a356791cbfac47630bfe159"
+    },
+    {
+      "path": "tools/native-sit-attempt-fixture/src/main.rs",
+      "sha256": "9385f8b080fb7124e68bffe263fe0dd2de062facdca5a24820bb1f54ef3f39e5"
+    },
+    {
+      "path": "tools/native-sit-attempt-fixture/controller.py",
+      "sha256": "1f304b2248decb5718fa29df0bd26f37e0c56791ccebeb00c3a5a846b1acc69d"
+    },
+    {
+      "path": "tools/native-sit-attempt-fixture/contract.json",
+      "sha256": "337558ad55b1c9c836128eb6a1e38cd445bb015dcde6acbfe3e2deea6bc80d6b"
+    }
+  ],
+  "original_inputs_hashes_only": [
+    {
+      "path": "private/libsitril.so",
+      "sha256": "a92bebfa7152356f27a925960ddd11736a0ad55cff9786997550d4d2a49105cd"
+    },
+    {
+      "path": "private/vendor.radio.protocol.sit.base.so",
+      "sha256": "c279c7c4cb2c4d81a93f93894f366f75226d081786f464d74247f4c48eff0f3e"
+    },
+    {
+      "path": "private/Bionic-linker64",
+      "sha256": "09105dda9253238d125dc9be82e68a2b54819d03f92177348ef7211288001941"
+    }
+  ],
+  "private_receipt_hashes_only": [
+    {
+      "path": "helper-build/root-review.json",
+      "sha256": "5cc505cd86816b7028349f936d22be5618fb45f5a3cb7f347334703ce52384de"
+    },
+    {
+      "path": "original/selection.json",
+      "sha256": "b10608c8c8d0de1147264d43d702b4591701eb79178329fe5bb4ca956e10d5d2"
+    },
+    {
+      "path": "original/command.json",
+      "sha256": "2d96765a7c737ac6a49b4e7b3d7248c60dbcd426d610fbb6d3fd6f11c224cd56"
+    },
+    {
+      "path": "original/execution.json",
+      "sha256": "7b8d9c24a7df031b1509fb42e7a25f170c8eb2abb663580dc7987a7dfd1e792e"
+    },
+    {
+      "path": "original/results/result.json",
+      "sha256": "cd3fba0761c84bf91057318ed01d593e2aca304188a9edcc7006d645c998211d"
+    },
+    {
+      "path": "original/root-review.json",
+      "sha256": "88358d1e54711064a751fd9308d8ea0eee46e959705310f612f21f4776255ae6"
+    },
+    {
+      "path": "original-independent/receipt.json",
+      "sha256": "9726957d4ded0322f4b6bd5a6c40cec3ab611f488d82a8af3ca56bd4ca80b64f"
+    },
+    {
+      "path": "staging/staging-receipt.json",
+      "sha256": "ade1b3d228e23f0d6b3aaeb405b6dff5a89ed3516e2671a90be60a3ecec8c6ff"
+    },
+    {
+      "path": "staging/execution.json",
+      "sha256": "10134bc4139ad4453c4254e10a3b1c95987443b81086e7e0c69061ddb7b680fc"
+    },
+    {
+      "path": "component-RED/selection.json",
+      "sha256": "e11c2fe71c2936d05be9bb4e330b16b2c0e515fb6cdb5ecd97677e38db23acf0"
+    },
+    {
+      "path": "component-RED/execution.json",
+      "sha256": "1e10aa6a56171e2957e16f5bd57e00dbd7d1e4eb345d650a168d262ae6ee7bdd"
+    },
+    {
+      "path": "component-RED/root-review.json",
+      "sha256": "621ec97d20f8e8cbc33b840f11ba0404ecb99345d5bdbad772629677ac69eb5f"
+    },
+    {
+      "path": "component-RED/codec-tests.log",
+      "sha256": "c7ebb870619d13d988e58fae39526fb60a2a0340f6ccd88fa8914201ec1ee4c9"
+    },
+    {
+      "path": "component-GREEN/selection.json",
+      "sha256": "2d862f166d853695085e88aee53e65b549ad25d2c7c4fad3b2fceb21e5fd5871"
+    },
+    {
+      "path": "component-GREEN/execution.json",
+      "sha256": "4262ddaf389218119203ff15e814b1711723aa40bb487b0be616ab010faea010"
+    },
+    {
+      "path": "component-GREEN/root-review.json",
+      "sha256": "24b3214631a05d18d3e198317848eb089ee9ba8d19ca95babcf20622400a9481"
+    },
+    {
+      "path": "component-GREEN/codec-tests.log",
+      "sha256": "a0ffa8199e64174e6658c3da079225e6e40bc2233809d8763a023666a2bfbd29"
+    },
+    {
+      "path": "component-GREEN/codec-arm-user-tests.log",
+      "sha256": "d6cafbe3add2e48eb640cdf6a2be11ea3aebbce558fb5049253cb392857f9a74"
+    },
+    {
+      "path": "component-GREEN/attempt-tests.log",
+      "sha256": "dfb69d573a38d4b81ee464bc2c610dfccf548fc16c5aeb4cddc3504737bb6677"
+    },
+    {
+      "path": "component-GREEN/attempt-arm-user-tests.log",
+      "sha256": "b248407bc86e9c23b40e29ba69645298740765395032d0e123b51287d6d9132f"
+    },
+    {
+      "path": "worker-build/selection.json",
+      "sha256": "f11db29cadc40a05b9e5995116aec3621bf6bf2836396e59c4c749355b55847c"
+    },
+    {
+      "path": "worker-build/execution.json",
+      "sha256": "38525625fe2c75a926195ef2bf32dfe2bb9dd7b5a2477e1c239fc6db11db8d51"
+    },
+    {
+      "path": "worker-build/build-review-root.json",
+      "sha256": "145514b4ed63f2bf5a8b06f39f5d0f534ceea53f957ab66625f332b9c84120d0"
+    },
+    {
+      "path": "controller-V5/pin-manifest.json",
+      "sha256": "54ecc18dcbf733a68facd2d62c8a6555ef1cbc4770dea41394f081e188b1d398"
+    },
+    {
+      "path": "host/result.json",
+      "sha256": "da4d16a1ec2fa4d758ab8f1b4613f8940edb3c66baa4deab6d404893ed45ea60"
+    },
+    {
+      "path": "host/root-review.json",
+      "sha256": "5435a3dbe6321986245c72c90271b60affc5ba0423ccdb6a7fc17569e9a32b50"
+    },
+    {
+      "path": "ARM-kernel/selection.json",
+      "sha256": "d97d60d038ba543d6049340e9f86ff4833a0756e75e218d4d05b4f6a382f9c75"
+    },
+    {
+      "path": "ARM-kernel/command.json",
+      "sha256": "60324449a4ad0bb83f039ac4527c0b3763e784ee6ee8dc0094b11876712f7121"
+    },
+    {
+      "path": "ARM-kernel/execution.json",
+      "sha256": "5812285ed372b917fdf88f61aa0b0d9b6fe6b047eca83f2eef28fddf6452940d"
+    },
+    {
+      "path": "ARM-kernel/result.json",
+      "sha256": "875d15b126b21ac50127782ede6d7bdce54cd82cb7b422816df5ac663f5881da"
+    },
+    {
+      "path": "ARM-kernel/boot-result.json",
+      "sha256": "f0c70daf27e9515ea88b61b94f15804be11c578fe4a9980134f667bcd5b76aa2"
+    },
+    {
+      "path": "ARM-kernel/root-review.json",
+      "sha256": "5b11538e4762ecd51e380dbdd82fb0f1562b73630f88b0115998a30394bc7377"
+    },
+    {
+      "path": "static-copy/receipt.json",
+      "sha256": "9f2593fe0f5c184f9d45a8ba4362f709ba499f8b40959873b4210e799c8752d3"
+    },
+    {
+      "path": "static-receiver/receipt.json",
+      "sha256": "0eac401a771361ab323252eb78ab6d394d2264a969fccb6b4cc4304406d868d4"
+    },
+    {
+      "path": "static-classifiers/receipt.json",
+      "sha256": "2efeac0928d8cff5866c1525113af5857623f2d3bd49b8747e656a9c6b6bf79f"
+    }
+  ],
+  "original_execution": {
+    "mode": "matched Bionic ARM64 user-QEMU, not ARM kernel",
+    "selected_original_files": 39,
+    "actual_owned_QEMU_children": 12,
+    "explicit_C1_D1_helper_calls": 22,
+    "constructor_cases": 11,
+    "native_false_nonempty_cases": 7,
+    "source_and_owned_full_snapshot_arrays_per_case": 6,
+    "actual_child_waits0_and_both_PIPE_EOFs": 12,
+    "actual_host_waits_and_both_PIPE_EOFs": 12,
+    "cutoffs_from_one_original_T0_seconds": [
+      20,
+      60,
+      90
+    ],
+    "outer_MONOTONIC_seconds": 180,
+    "maximum_simultaneous_QEMU_children": 1,
+    "mapped_regular_files_per_child": 36,
+    "ARM_mapped_files": 35,
+    "x86_QEMU_mapped_files": 1,
+    "selected_files_rehashed": 60,
+    "external_inputs_rehashed": 166,
+    "semantic_supplementary_groups": [
+      1000
+    ],
+    "raw_supplementary_groups": [
+      1000,
+      1000
+    ],
+    "UID_GID_all1000_capsets0_NNP1": true,
+    "exact_provider_symbol_bindings_per_constructor_case": 5,
+    "actual_receiver_vptr_and_D1_slot_authority": "frozen helper assertions, no controller child-memory read",
+    "full_24byte_CXX_ABI_equivalence": false,
+    "original_payload_cleanup": "qualified named nondeleting D1; never D0 or helper-free of payload",
+    "dlclose_scope": "return0 only",
+    "ambient_attempts": "natural property/sysfs/UNIX socket attempts match actual load control",
+    "helpers_invoke_parser_getters_SendMessage_or_transport": false,
+    "same_daemon_exact_CID_absent": true
+  },
+  "fixtures": [
+    {
+      "case_id": "base-v4-144",
+      "supplied_bytes": 144,
+      "full_source_bytes": 144,
+      "opaque_flag": false,
+      "files": [
+        {
+          "path": "native-sit-codec/tests/received-chunk-fixtures/base-v4-144.input.hex",
+          "sha256": "e3c1d4d170af9a7bd92742f702a0d96373eaf07fc7c08c6ec8dc9eb8be6177a5",
+          "decoded_bytes_sha256": "bab9dfe7aa085d243f9a165c314e4ffee08ec0d99ebcb9f56a4ac810e1dee9a3",
+          "bytes": 144
+        },
+        {
+          "path": "native-sit-codec/tests/received-chunk-fixtures/base-v4-144.owned-after-overwrite.hex",
+          "sha256": "e3c1d4d170af9a7bd92742f702a0d96373eaf07fc7c08c6ec8dc9eb8be6177a5",
+          "decoded_bytes_sha256": "bab9dfe7aa085d243f9a165c314e4ffee08ec0d99ebcb9f56a4ac810e1dee9a3",
+          "bytes": 144
+        }
+      ]
+    },
+    {
+      "case_id": "request-983",
+      "supplied_bytes": 983,
+      "full_source_bytes": 983,
+      "opaque_flag": false,
+      "files": [
+        {
+          "path": "native-sit-codec/tests/received-chunk-fixtures/request-983.input.hex",
+          "sha256": "fc0f74cc6af3f1a69bef6ef245788a2e1efb5c3ac60158cfb01163b997e4bbc3",
+          "decoded_bytes_sha256": "f8ada5285cd6f01ce0631a59f7222dce4a53e0dfe32e172f5d6a1d38471bb145",
+          "bytes": 983
+        },
+        {
+          "path": "native-sit-codec/tests/received-chunk-fixtures/request-983.owned-after-overwrite.hex",
+          "sha256": "fc0f74cc6af3f1a69bef6ef245788a2e1efb5c3ac60158cfb01163b997e4bbc3",
+          "decoded_bytes_sha256": "f8ada5285cd6f01ce0631a59f7222dce4a53e0dfe32e172f5d6a1d38471bb145",
+          "bytes": 983
+        }
+      ]
+    },
+    {
+      "case_id": "declared-length-mismatch-144",
+      "supplied_bytes": 144,
+      "full_source_bytes": 144,
+      "opaque_flag": false,
+      "files": [
+        {
+          "path": "native-sit-codec/tests/received-chunk-fixtures/declared-length-mismatch-144.input.hex",
+          "sha256": "a948afb05e12b431c199c54dfa8f610d749e57b47c6cba35e2a4e8c75d00b9ed",
+          "decoded_bytes_sha256": "18007d35b3a6eae9704ede47089308877243c32065923e280a952f9a9374c7d6",
+          "bytes": 144
+        },
+        {
+          "path": "native-sit-codec/tests/received-chunk-fixtures/declared-length-mismatch-144.owned-after-overwrite.hex",
+          "sha256": "a948afb05e12b431c199c54dfa8f610d749e57b47c6cba35e2a4e8c75d00b9ed",
+          "decoded_bytes_sha256": "18007d35b3a6eae9704ede47089308877243c32065923e280a952f9a9374c7d6",
+          "bytes": 144
+        }
+      ]
+    },
+    {
+      "case_id": "provided-count-16-from-v4-144",
+      "supplied_bytes": 16,
+      "full_source_bytes": 144,
+      "opaque_flag": false,
+      "files": [
+        {
+          "path": "native-sit-codec/tests/received-chunk-fixtures/provided-count-16-from-v4-144.input.hex",
+          "sha256": "ebde92cdcdf4589a8504372b0a8c648b96f5b60d7479784a5994cb8229d99449",
+          "decoded_bytes_sha256": "6ad83eb3e09c0b4045d8e3860681134f417df9caf2a22755e2a18ef28cf06203",
+          "bytes": 16
+        },
+        {
+          "path": "native-sit-codec/tests/received-chunk-fixtures/provided-count-16-from-v4-144.owned-after-overwrite.hex",
+          "sha256": "ebde92cdcdf4589a8504372b0a8c648b96f5b60d7479784a5994cb8229d99449",
+          "decoded_bytes_sha256": "6ad83eb3e09c0b4045d8e3860681134f417df9caf2a22755e2a18ef28cf06203",
+          "bytes": 16
+        }
+      ]
+    },
+    {
+      "case_id": "coalesced-v4-288",
+      "supplied_bytes": 288,
+      "full_source_bytes": 288,
+      "opaque_flag": false,
+      "files": [
+        {
+          "path": "native-sit-codec/tests/received-chunk-fixtures/coalesced-v4-288.input.hex",
+          "sha256": "dc77eee4d9ba16fe019b48b646f720be29d4fe231aca3e1b1801053347b2fc38",
+          "decoded_bytes_sha256": "cbd00aa4c3f014fcde159cbb06f2f67f21f70159cc6111fa92ecfaea38f92945",
+          "bytes": 288
+        },
+        {
+          "path": "native-sit-codec/tests/received-chunk-fixtures/coalesced-v4-288.owned-after-overwrite.hex",
+          "sha256": "dc77eee4d9ba16fe019b48b646f720be29d4fe231aca3e1b1801053347b2fc38",
+          "decoded_bytes_sha256": "cbd00aa4c3f014fcde159cbb06f2f67f21f70159cc6111fa92ecfaea38f92945",
+          "bytes": 288
+        }
+      ]
+    },
+    {
+      "case_id": "opaque-32",
+      "supplied_bytes": 32,
+      "full_source_bytes": 32,
+      "opaque_flag": false,
+      "files": [
+        {
+          "path": "native-sit-codec/tests/received-chunk-fixtures/opaque-32.input.hex",
+          "sha256": "daeb6d76977a4393342bae7f6f1fdc21ce0c7a000d10c68eb4f98f03648ccecb",
+          "decoded_bytes_sha256": "83b7a8ed859053c81d818870fab1f8b1ae44d06a98a9665d369a8fd7d2838ded",
+          "bytes": 32
+        },
+        {
+          "path": "native-sit-codec/tests/received-chunk-fixtures/opaque-32.owned-after-overwrite.hex",
+          "sha256": "daeb6d76977a4393342bae7f6f1fdc21ce0c7a000d10c68eb4f98f03648ccecb",
+          "decoded_bytes_sha256": "83b7a8ed859053c81d818870fab1f8b1ae44d06a98a9665d369a8fd7d2838ded",
+          "bytes": 32
+        }
+      ]
+    },
+    {
+      "case_id": "max-pattern-65568",
+      "supplied_bytes": 65568,
+      "full_source_bytes": 65568,
+      "opaque_flag": false,
+      "files": [
+        {
+          "path": "native-sit-codec/tests/received-chunk-fixtures/max-pattern-65568.input.hex",
+          "sha256": "573682a5177c41a3f4bac40ce03075f9a0966df965da845c07785400bd6b8426",
+          "decoded_bytes_sha256": "2a7065f1f1b01534171ae95a6a030cfb04b850c34c722345c24eed7c7772bbda",
+          "bytes": 65568
+        },
+        {
+          "path": "native-sit-codec/tests/received-chunk-fixtures/max-pattern-65568.owned-after-overwrite.hex",
+          "sha256": "573682a5177c41a3f4bac40ce03075f9a0966df965da845c07785400bd6b8426",
+          "decoded_bytes_sha256": "2a7065f1f1b01534171ae95a6a030cfb04b850c34c722345c24eed7c7772bbda",
+          "bytes": 65568
+        }
+      ]
+    }
+  ],
+  "native_policy": {
+    "min_chunk_bytes": 1,
+    "max_chunk_bytes": 65568,
+    "bound_is_protocol_or_KMI_maximum": false,
+    "CXX_layout_bool_null_signed_count_API": false,
+    "forced_allocation_failure_tested": false,
+    "copy_grants_framing_or_response_admission": false
+  },
+  "strict_RED": {
+    "codec_pass": 42,
+    "missing_copy_Unsupported_fail": 8,
+    "actual_test_exit": 101,
+    "attempt_pass": 15,
+    "fmt_and_Clippy_pass": true,
+    "pre_RED_adaptation": "test formatting only, after lossless actual-fixture admission"
+  },
+  "strict_GREEN": {
+    "host_codec_pass": 50,
+    "ARM64_user_QEMU_codec_pass": 50,
+    "host_attempt_pass": 15,
+    "ARM64_user_QEMU_attempt_pass": 15,
+    "only_implementation_delta": "native-sit-codec/src/received_chunk.rs",
+    "other_source_files_fixed": 51,
+    "all_14_fixtures_and_tests_fixed": true,
+    "ARM_test_executables_machine183": 7
+  },
+  "additional_process_integration": {
+    "classification": "additional GREEN after component RED/GREEN; no manufactured E2E RED",
+    "source_files": 64,
+    "modified_prior_source_files": 2,
+    "added_prior_source_files": 16,
+    "prior_source_files_unchanged": 46,
+    "controller_bytes_unchanged": true,
+    "host_parent_exits": [
+      0,
+      0,
+      0
+    ],
+    "ARM_kernel_parent_exits": [
+      0,
+      0,
+      0
+    ],
+    "kernel": "7.1.6-1-aarch64-ARCH, generic Arch, distinct from matched Pixel kernel",
+    "request_bytes": 983,
+    "response_bytes": 144,
+    "semantic_report_fields_compared": 14,
+    "source_copy_before_hex": true,
+    "reusable_buffer_overwritten_and_checked_bytes": 145,
+    "overwrite_byte": 165,
+    "source_ELF_bound_not_independent_heap_observer": true,
+    "snapshots_per_case": 100,
+    "snapshot_upper_bound_ns": 200000000,
+    "original_worker_BOOTTIME_seconds": 5,
+    "original_stop_wait_seconds": 2,
+    "actual_worker_wait_signal": 9,
+    "journal_successor": "AdmissionUncertain, unchanged journal",
+    "actual_Main_PIPE_EOFs_and_final_ECHILD": true,
+    "ARM_host_waits_both_PIPE_EOF": 7,
+    "ARM_boot_waits_merged_PIPE_EOF": 2,
+    "ARM_guest_waits_merged_PIPE_EOF": 2,
+    "ARM_controller_Main_waits_both_PIPE_EOF": 3,
+    "ARM_Main_worker_separate_actual_waits9": 3,
+    "separate_worker_output_EOF_claimed": false,
+    "same_daemon_exact_CID_absent": true,
+    "selected_files_rehashed": 103,
+    "external_inputs_rehashed": 106
+  },
+  "setup_failures_not_RED": [
+    "Initial supplementary group list predicate refused duplicate1000 before any QEMU child",
+    "Copied original loader lost executable mode; load-only failure before C1/D1",
+    "Worker stage copied readonly lockfile before permissions were restored; no build",
+    "Worker strict formatting refusal; no new behavioral RED",
+    "Unused pre-format V5 source-only contract preserved without execution"
+  ],
+  "not_established": [
+    "Runtime factory wrapper creation/identity",
+    "Complete-record boundary and matched driver read/KMI semantics",
+    "Broader header/token/response formats or safe unchecked scalar getters",
+    "Production CPIF descriptor/channel/subscription/provider/APN transport and ownership",
+    "Queue delivery, remote cleanup and implicit retry authority",
+    "Installed phone service, complete IMS/carrier operation, Pixel hardware or full smartphone"
+  ],
+  "phone_accessed": false,
+  "proprietary_inputs_raw_decompilation_credentials_or_raw_audits_published": false
+}

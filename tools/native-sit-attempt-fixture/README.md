@@ -31,6 +31,14 @@ while the worker blocks in its second receive, then actual Stop/worker wait9,
 unchanged-journal `AdmissionUncertain`, parent wait/both PIPE EOFs and ECHILD.
 Full prepared report fields and committed source/record/report are checked.
 
+The V5 source additionally copies the accepted receive slice into
+`ReceivedChunk`, overwrites/checks the entire145-byte reusable buffer and emits
+only the owned bytes through the same source/peer/hex frame. Its controller and
+full request/reply/report/lifecycle oracle are unchanged. This is additional
+integration after the separate missing-copy component RED/GREEN, with a new
+source-bound contract; no second missing-completion RED is claimed. See
+[receive ownership](../../docs/native-sit-received-chunk.md).
+
 The frozen reviewed build and disposable-VM envelopes are private provenance,
 not a general published bundle-builder or VM provisioning command. See
 [qualification and limits](../../docs/native-sit-attempt.md). Local status,

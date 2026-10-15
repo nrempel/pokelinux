@@ -5,6 +5,12 @@ supplements the [completion matrix](smartphone-goal.md); a passing component or
 synthetic transport does not qualify a complete service, app or hardware backend.
 Android framework/Java peers remain reference and test infrastructure.
 
+The separate [SIT receive/attempt path](native-sit-received-chunk.md) now composes
+owned receive bytes, strict144-byte parsing and one supervised source through
+actual host and generic ARM kernel Unix fixtures. Full source-buffer overwrite
+preserves the same report and lifecycle oracle. It remains a fixture boundary;
+no installed CPIF worker, runtime modem identity or APN-context writer follows.
+
 | Function | Existing native component or boundary | Installed service and app composition | Backend and evidence still required |
 | --- | --- | --- | --- |
 | Permission/lifecycle | One Rust principal/policy actor; exact per-packet Linux credentials, pidfds, generations; owned policy-storage child | Distinct-UID launcher and controls pass installed process fixtures on x86 and an ARM64 kernel. Local Messages reads compose this actor with its own storage child. Fixed UID1000 lock-only entry now precedes the exact original Omarchy action; durable pending intent survives healthy actor and changed display/Source replacement in the same policy directory. A later private synthetic-auth selection qualifies actual sole-worker clear/current app read and new-lock true sync/clean restart denial; production auth ingress remains absent | Trusted unlock/restore and secure frames, complete process-tree supervision, startup/launch IO, hardware dispatch and device SELinux. [Authority](native-lifecycle.md), [storage](native-lifecycle-storage.md), [lock admission](native-lock-admission.md) |

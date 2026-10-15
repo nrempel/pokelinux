@@ -1,7 +1,8 @@
 # Factory SIT transport findings
 
-These are author-reasoned static contracts from eight matched factory methods,
-with independent method/assembly/ELF review. No new vendor code ran. They guide
+These are author-reasoned static contracts from twenty-three matched factory methods,
+with independent method/assembly/ELF review. These static sessions execute no vendor methods. A separate memory-only original
+comparison is recorded in [receive ownership](native-sit-received-chunk.md). They guide
 the Rust backend; the separate [owned attempt fixture](native-sit-attempt.md)
 qualifies actual host/generic ARM process composition through Unix records.
 Neither evidence class establishes a live modem transport.
@@ -25,8 +26,9 @@ The actual `RadioControlMessageMgr::Run` caller waits in select with no timeout,
 checks modem status, clears a retained65,568-byte buffer and performs one raw
 read. Each positive chunk passes the same pointer/count synchronously through
 owner vtable slot+0xa0. Run establishes no local framing, reassembly or owned
-queue copy. The virtual receiver, its concrete runtime identity and copy/retention
-contract remain open. The next iteration can overwrite the buffer.
+queue copy. A later static vtable binding identifies a candidate receiver and
+copy contract below; the concrete runtime owner remains unproven. The next
+iteration can overwrite the buffer.
 
 The caller **does** reopen after zero or terminal-negative read: close,20ms sleep,
 then open with the result ignored. Negative modem status sleeps3s. `Start` can
@@ -38,6 +40,48 @@ side-effect-free, and unchanged callback bytes cannot be inferred here.
 These bodies supply no proven select wakeup, thread join, source fence,
 auto-reopen cleanup acknowledgement or safe native retry. The matched library's
 existing policy is a reference to understand, not a policy to reproduce blindly.
+
+## Candidate receive owner and copying
+
+The manager constructor stores its supplied owner pointer without establishing
+its dynamic type. The `RilContextWrapper` vtable's slot+0xa0 binds to the static
+`ProcessModemData` candidate. That body requires a nonnull source and nonzero
+unsigned count, allocates a24-byte `ModemData`, invokes the imported constructor
+with the supplied signed count and false flag, and calls `SendMessage`. A negative
+result deletes the object; the callback itself returns0. This static binding
+establishes neither the ordinary runtime wrapper creation chain nor delivery.
+
+The separately bound protocol provider's C1/C2 copies exactly the positive supplied
+count when the source is nonnull, including when the boolean is false. It does
+not validate the inner header, token or declared length. Null/zero/negative input
+leaves empty payload state. The named nondeleting D1/D2 releases the original
+payload through sized scalar delete, clears pointer/count/flag and retains the
+receiver. These allocator/layout facts guide original test cleanup; Rust imports
+no C++ ABI. Original memory-only tests and the native owned copy are recorded
+[separately](native-sit-received-chunk.md).
+
+The candidate `SendMessage` performs lookup/removal and routing before enqueue.
+The AArch64 hidden aggregate result and adjacent copied route words require
+assembly interpretation; the decompiler loses that branch. A queue error can
+still leave return0. Neither callback0 nor local memory copying proves queue
+admission, delivery, source identity or APN authority. The manager destructor
+closes its channel before opaque thread Stop/delete; join and concurrent ordering
+remain unproven. `DumpDataStatic` remains opaque.
+
+## Scalar classification is not complete-record admission
+
+Four `ModemData` getters delegate through a stack adapter. Four corresponding
+`ProtocolBaseAdapter` bodies establish pointer guards, then byte0 as the type;
+solicited/unsolicited compare1/2 through the bound virtual GetType slot. GetToken
+reads little-endian bytes6–9 when type is0 or1; absent pointers or other types
+return `0xffffffff`. None of these selected bodies checks the stored payload
+length, inner declared length or complete-record size before those reads.
+
+These are static facts, not getter execution on short buffers. Native code keeps
+its stricter complete144-byte response admission and does not reproduce unchecked
+reads. Copying short, opaque or coalesced bytes grants no validity. The next
+unexamined length/message-ID getters and the transport's complete-record premise
+remain explicit; no receive assembler is inferred from these bodies.
 
 ## Public driver evidence stays separate
 
@@ -54,10 +98,11 @@ A generic release hook therefore establishes neither SIT remote cleanup nor a
 required modem INIT_END exchange. Keep Google's matched kernel/modules/firmware;
 these public sources do not license replacing their matched set.
 
-Next resolve the concrete receiver at the call RVA0x1ef068, manager+8/vtable+0xa0,
-and qualify how buffers become complete records and owned work. Then test that
-boundary through the supervised Rust path, including its actual split/short or
-record rules, queue limits, original deadlines and known-source loss. Keep one
+Next qualify the runtime owner creation chain and where complete records are
+established before classification, including the unresolved length/message-ID
+getters and actual read boundaries. The owned-copy integration proves only the
+selected Unix-record path. Broader transport rules, queue limits, original
+deadlines and known-source loss still need their own qualification. Keep one
 descriptor generation and terminal uncertainty. Reaping, local status0 and
 factory reopen grant no retry, provider/APN ownership, channel/subscription
 mapping or physical modem/carrier readiness.

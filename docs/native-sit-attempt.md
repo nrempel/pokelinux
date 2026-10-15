@@ -6,6 +6,12 @@ only the local observation lifecycle. Its explicit Unix `SOCK_SEQPACKET` fixture
 supplies actual Linux process custody through `native-process-owner`; it is not
 a factory device adapter or installed phone service.
 
+The later [receive ownership](native-sit-received-chunk.md) checkpoint adds a
+bounded raw copy at the fixture worker's actual receive buffer, before full
+storage overwrite/check and serialization. Its new source-bound contract keeps
+the controller, bytes,14-field report and lifecycle oracle fixed. The original
+attempt RED/GREEN evidence below remains historical and unchanged.
+
 ## Contract
 
 An attempt fixes one validated setup, initial token0, source generation and

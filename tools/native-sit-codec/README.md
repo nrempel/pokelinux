@@ -85,3 +85,26 @@ from the earlier parser/encoder runs. This adds original integration only,
 without native behavior changes or a native test rerun. Independent review qualifies this bounded original run; see the [report](../../docs/native-sit-context-application.md) and
 [context evidence](../../docs/evidence/native-sit-context-application-provenance.json).
 Raw prefixes and proprietary artifacts remain private.
+
+## Raw receive memory helper
+
+`original-modemdata-memory-probe.c` is authored memory-only test infrastructure:
+
+```text
+PROBE LIB SOURCE_FILE SIGNED_PROVIDED_COUNT OPAQUE_BOOL USE_NULL
+```
+
+The fixed helper bounds source/count at65,568, accepts the original-only−1/0
+controls and flag/null0/1. It binds exact provider/RVAs/aliases and invokes named
+C1 and nondeleting D1 only. Full guarded source/owned snapshots before and after
+XOR0x5a and helper-source free qualify byte ownership; D1 releases the original
+payload before the helper frees its guarded receiver. It calls no parser/getter,
+SendMessage, queue, handler or modem transport. Readonly binary inputs and raw
+original captures stay private; published native fixtures are independently
+converted synthetic hex. The same strict NDK flags above compile it.
+
+The separate twelve-child run records actual wait0 and both PIPE EOFs, original
+fixed cutoffs and container closure. Live credentials/maps and exact provider
+symbol binding remain independent of helper `held`/`closed` output. See
+[receive ownership](../../docs/native-sit-received-chunk.md) and its
+[provenance](../../docs/evidence/native-sit-received-chunk-provenance.json).

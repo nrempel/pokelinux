@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "execution_authorization": "Controller prepared/frozen only; Root inspects then separately executes or explicitly authorizes execution. No target has been launched by preparation.",
+  "execution_authorization": "Prepared and frozen only. Root independently qualifies the strict fixture build, executes/qualifies Host GREEN, then separately authorizes one actual ARM integration GREEN. No target has run during this bundle preparation.",
   "CLI": [
     "BUILD",
     "ABS_NEW_OUTPUT",
@@ -19,7 +19,7 @@
   "strict_review_file": "BUILD/build-review-root.json",
   "artifact_selection": "Select unique compiled_executables record target=pokelinux-sit-attempt-tracer and ELF_machine matching actual uname. Canonical artifact path may differ from runtime alias; full digest must match.",
   "runtime_executable_alias": "BUILD/target/debug/pokelinux-sit-attempt-tracer",
-  "frozen_protocol_source_sha256": "eef41d315fc66e78bbb7f313a6fb9c82bc749e1a06cb31d56eb9e3ef2a592fae",
+  "frozen_protocol_source_sha256": "9385f8b080fb7124e68bffe263fe0dd2de062facdca5a24820bb1f54ef3f39e5",
   "public_request_file_sha256": "e87202bd3d3260a089c4904c25dfbe71539fede952a2c1ed0cb15039c7312d08",
   "public_report_TSV_sha256": "6b25c6f2d761875703dee84c50f4c0fb6f2a045378e32c3375a302de0e72c206",
   "fixed_original_TSV_case": "v4",
@@ -110,5 +110,24 @@
     "request_golden_bytes_modified": false,
     "original_TSV_modified": false
   },
-  "version_note": "Fresh V4/token0 bundle before valid integration RED. Prior dual/tokenFFFFFFFF mismatch remains a prerequisite failure, never integration RED."
+  "version_note": "V5 source-bound opaque receive-copy composition: unchanged controller/request/reply/report/lifecycle assertions; additional GREEN only after separately qualified component RED/GREEN. Old RED metadata describes the unchanged generic controller history, not a new integration RED authorization.",
+  "received_chunk_integration": {
+    "fixture_source_sha256": "9385f8b080fb7124e68bffe263fe0dd2de062facdca5a24820bb1f54ef3f39e5",
+    "received_chunk_source_sha256": "7a1687652de483508d545cea7ce56e56872709b60566cdfabd98d7ecdf49647c",
+    "component_red_root_review_sha256": "621ec97d20f8e8cbc33b840f11ba0404ecb99345d5bdbad772629677ac69eb5f",
+    "component_green_root_review_sha256": "24b3214631a05d18d3e198317848eb089ee9ba8d19ca95babcf20622400a9481",
+    "receive_buffer_bytes": 145,
+    "accepted_reply_bytes": 144,
+    "native_policy_max_received_chunk_bytes": 65568,
+    "full_buffer_overwrite_byte": 165,
+    "copy_before_any_hex_or_projection": true,
+    "full_buffer_runtime_check_before_output": true,
+    "frame_source": "ReceivedChunk::as_bytes",
+    "integration_classification": "additional-GREEN-only",
+    "proof_limit": "Immutable compiled source+actual ELF/maps and exact144-byte output after source-ordered copy/full145 overwrite/runtime check; no direct heap observer or additional original execution.",
+    "wire_and_provider_authority": "Opaque received byte ownership only; no record framing/token/header/status/CPIF/provider/APN authority."
+  },
+  "authorized_integration_phases": [
+    "green"
+  ]
 }
