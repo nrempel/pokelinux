@@ -1,0 +1,392 @@
+{
+  "schema": 1,
+  "date_utc": "2026-10-15",
+  "host": "Harbour",
+  "scope": "Read-only native Rust link/address observation and witnessed lifetime withdrawal under an actual generic ARM VM kernel",
+  "observer_RED_GREEN_qualified": true,
+  "production_connectivity_complete": false,
+  "hardware_qualified": false,
+  "phone_accessed": false,
+  "actual_kernel": {
+    "machine": "aarch64",
+    "release": "7.1.6-1-aarch64-ARCH",
+    "version": "#1 SMP PREEMPT_DYNAMIC Wed Aug  5 00:20:13 UTC 2026"
+  },
+  "execution_kind": "Actual AArch64 VM kernel; separate from host tests and ARM user-mode emulation",
+  "source_files": [
+    {
+      "path": "native-network-state/Cargo.lock",
+      "sha256": "12565a60a4784458741f00572db6e484e8c60887b11316de1d6b8b61457791ec"
+    },
+    {
+      "path": "native-network-state/Cargo.toml",
+      "sha256": "7221e02625d30c473a2042f53734eae36bc941b86f5db3c0e449ea4e4a608a08"
+    },
+    {
+      "path": "native-network-state/src/kernel_tests.rs",
+      "sha256": "d0d6900ec8686cc3205f6520da8c8af6eaee5437c09ee6209deba8e0185be5d6"
+    },
+    {
+      "path": "native-network-state/src/lib.rs",
+      "sha256": "55b6e15060445e1949ccb4a10a27019be620356a327af6114be1938fd8f06ebf"
+    }
+  ],
+  "qualified_baseline_source_files": [
+    {
+      "path": "native-network-state/Cargo.lock",
+      "sha256": "12565a60a4784458741f00572db6e484e8c60887b11316de1d6b8b61457791ec"
+    },
+    {
+      "path": "native-network-state/Cargo.toml",
+      "sha256": "7221e02625d30c473a2042f53734eae36bc941b86f5db3c0e449ea4e4a608a08"
+    },
+    {
+      "path": "native-network-state/src/kernel_tests.rs",
+      "sha256": "d0d6900ec8686cc3205f6520da8c8af6eaee5437c09ee6209deba8e0185be5d6"
+    },
+    {
+      "path": "native-network-state/src/lib.rs",
+      "sha256": "efa322532409fdc9d1aa54ff3dde74f9b9ac343bc957fb03b93941cc8dbe0299"
+    }
+  ],
+  "only_changed_native_source_paths": [
+    "native-network-state/src/lib.rs"
+  ],
+  "fixed_test": {
+    "name": "kernel_tests::actual_kernel_link_lifetime",
+    "source_sha256": "d0d6900ec8686cc3205f6520da8c8af6eaee5437c09ee6209deba8e0185be5d6",
+    "ignored_by_default": true,
+    "explicit_executions_per_qualifying_VM": 1,
+    "arguments": [
+      "--ignored",
+      "--exact",
+      "kernel_tests::actual_kernel_link_lifetime",
+      "--nocapture",
+      "--test-threads=1"
+    ]
+  },
+  "unchanged_private_custody_envelope_inventory": [
+    {
+      "path": "boot.sh",
+      "sha256": "f095e588cec77941491b3f61568d29e648a6ac79c8a3a4f95431e61ba69e41c9"
+    },
+    {
+      "path": "guest.py",
+      "sha256": "5e6eef531866df71d5e69a6c96481944cbe9f67f18cc010bc9a2bf0ed91d8f81"
+    },
+    {
+      "path": "owned.py",
+      "sha256": "8aac5e689ae532d07ee65ca4a76b99ef48dd9cbbc4ad9be67e969c0680accfe5"
+    },
+    {
+      "path": "plan.py",
+      "sha256": "e812672912fad0319da4a5a1bac300778f9a0beea7cdbbcf07ed690c5670ff53"
+    },
+    {
+      "path": "run-selected.py",
+      "sha256": "a5f53e4acb2ca70a6b647af67cea9c3904b29120caf0ca6fa0137d668cfd5351"
+    }
+  ],
+  "custody_inventory_scope": "Five unchanged private helper file identities only; helper code and raw audits are not published",
+  "observer_cases": [
+    {
+      "audit_label": "pokelinux-network-observer-arm-baseline-root-1",
+      "qualification": "qualified missing-capability RED",
+      "test_exit": 101,
+      "wrapper_requirement_passed": false,
+      "expected_outcome_observed": true,
+      "audit_records": [
+        {
+          "path": "selection.json",
+          "sha256": "9174d7e7a9a3746274d59ca3b35664e53752e910b184592717c287690157a414"
+        },
+        {
+          "path": "execution.json",
+          "sha256": "087810b64b2e1cd5df6e5feee8c00276936f4307033467015ba5ad402fe78963"
+        },
+        {
+          "path": "result.json",
+          "sha256": "ae46e4734a5e20673fb194c2b6a071243e327809d167c0dcdf54b84157fd1afa"
+        }
+      ],
+      "direct_child_wait_and_EOF_count": 16,
+      "zero_exit_children": 15,
+      "nonzero_child_exits": [
+        {
+          "role": "actual kernel libtest",
+          "exit": 101
+        }
+      ],
+      "all_waits_and_EOF_before_original_cutoffs": true,
+      "actual_proc_exe_credentials_and_network_namespace_verified": true,
+      "actual_mapped_ELF_inventory": [
+        {
+          "path": "/opt/network-observer/kernel-test",
+          "sha256": "4101046a3d896eccda5ebe67dcc8e78b9890adc824fc60066b0a51bcf1de2feb",
+          "ELF_machine": 183
+        },
+        {
+          "path": "/usr/lib/ld-linux-aarch64.so.1",
+          "sha256": "b1f2738bdb51e6419d7062f96c8a44bd68853698dc5ac624fa6ca9f9b03d456d",
+          "ELF_machine": 183
+        },
+        {
+          "path": "/usr/lib/libc.so.6",
+          "sha256": "6ab264fb4e8df9942b0fb75b48fcd5c30b2f081d8dfaa6c25d7be1d3fce5b2ab",
+          "ELF_machine": 183
+        },
+        {
+          "path": "/usr/lib/libgcc_s.so.1",
+          "sha256": "ac598673a4bf67c0295b6609e46b1fafd0d4adf3f80a513d61ac49ecff772e48",
+          "ELF_machine": 183
+        }
+      ],
+      "mapped_bytes_unchanged_after_actual_wait": true,
+      "namespace_restored": true,
+      "controller_owned_namespace_FDs_closed": true,
+      "sole_TUN_FD_closed_and_link_addresses_absent": true,
+      "module_unloaded": true,
+      "poweroff_wait_and_EOF": true,
+      "owned_outer_CLI_wait_exact_CID_absence_same_daemon_input_closure": true
+    },
+    {
+      "audit_label": "pokelinux-network-observer-arm-repair-root-2",
+      "qualification": "qualified GREEN",
+      "test_exit": 0,
+      "wrapper_requirement_passed": true,
+      "expected_outcome_observed": true,
+      "audit_records": [
+        {
+          "path": "selection.json",
+          "sha256": "e871a9078a5e2bcb4e354736ed52e71db2f82bfe5ba2ffa9815f5d35522ea6ba"
+        },
+        {
+          "path": "execution.json",
+          "sha256": "c5cd74b0f78aa20c6b4dd24b47959833afe3f341d4c0b57916ac8cb8d22683a3"
+        },
+        {
+          "path": "result.json",
+          "sha256": "ce2d61e92eb0823a426d41517807c0b14061b84d2a946333104ea3ce9fe93520"
+        }
+      ],
+      "direct_child_wait_and_EOF_count": 16,
+      "zero_exit_children": 16,
+      "nonzero_child_exits": [],
+      "all_waits_and_EOF_before_original_cutoffs": true,
+      "actual_proc_exe_credentials_and_network_namespace_verified": true,
+      "actual_mapped_ELF_inventory": [
+        {
+          "path": "/opt/network-observer/kernel-test",
+          "sha256": "42f29b35adf1010b938dbe0308de35cb0ca23a0eb51ceb268c000a91e466a203",
+          "ELF_machine": 183
+        },
+        {
+          "path": "/usr/lib/ld-linux-aarch64.so.1",
+          "sha256": "b1f2738bdb51e6419d7062f96c8a44bd68853698dc5ac624fa6ca9f9b03d456d",
+          "ELF_machine": 183
+        },
+        {
+          "path": "/usr/lib/libc.so.6",
+          "sha256": "6ab264fb4e8df9942b0fb75b48fcd5c30b2f081d8dfaa6c25d7be1d3fce5b2ab",
+          "ELF_machine": 183
+        },
+        {
+          "path": "/usr/lib/libgcc_s.so.1",
+          "sha256": "ac598673a4bf67c0295b6609e46b1fafd0d4adf3f80a513d61ac49ecff772e48",
+          "ELF_machine": 183
+        }
+      ],
+      "mapped_bytes_unchanged_after_actual_wait": true,
+      "namespace_restored": true,
+      "controller_owned_namespace_FDs_closed": true,
+      "sole_TUN_FD_closed_and_link_addresses_absent": true,
+      "module_unloaded": true,
+      "poweroff_wait_and_EOF": true,
+      "owned_outer_CLI_wait_exact_CID_absence_same_daemon_input_closure": true
+    }
+  ],
+  "observer_direct_child_actual_wait_and_EOF_total": 32,
+  "actual_process_credentials": {
+    "uid": 1000,
+    "gid": 1000,
+    "supplementary_groups": [],
+    "effective_capabilities": "0000000000000000",
+    "verified_from_actual_proc": true
+  },
+  "native_positive": {
+    "address_dump_sequence": 4,
+    "at_boottime_ns": 22059192436,
+    "ifindex": 2,
+    "ifname": "pklcap0",
+    "lifetime": 1,
+    "link_dump_sequence": 3,
+    "network_namespace": {
+      "dev": 5,
+      "ino": 4026532307
+    },
+    "revision": 5
+  },
+  "native_withdrawn": {
+    "address_dump_sequence": 6,
+    "at_boottime_ns": 22203407270,
+    "link_dump_sequence": 5,
+    "network_namespace": {
+      "dev": 5,
+      "ino": 4026532307
+    },
+    "retired_ifindex": 2,
+    "retired_lifetime": 1,
+    "revision": 9
+  },
+  "independent_controls": {
+    "original_tun_module_loaded": true,
+    "isolated_retained_network_namespace": true,
+    "sole_controller_TUN_FD_CLOEXEC": true,
+    "test_inherited_TUN_FD": false,
+    "TUNSETPERSIST_called": false,
+    "MTU": 1400,
+    "IPv4": {
+      "local": "192.0.2.2",
+      "peer": "192.0.2.1",
+      "prefix_length": 32,
+      "local_and_peer_distinct": true
+    },
+    "IPv6": {
+      "local": "2001:db8:1::2",
+      "prefix_length": 64,
+      "explicit_nodad": true,
+      "DAD_exercised": false
+    },
+    "independent_link_and_address_absence_after_actual_sole_FD_close": true,
+    "observer_dropped_before_final_receipt": true,
+    "observer_individual_FD_EBADF_independently_asserted": false
+  },
+  "multicast_demultiplexing": {
+    "actual_metadata_message_count": 21,
+    "IPv4_multicast_with_nonzero_originating_request_sequence_and_header_port_count": 1,
+    "IPv4_multicast_group_mask": 16,
+    "kernel_sender_PID_from_recvmsg": 0,
+    "unicast_dump_sequence_and_port_matching": true,
+    "metadata_trace_cfg_test_only": true,
+    "raw_payloads_or_guest_logs_published": false
+  },
+  "separate_TUN_prerequisite": {
+    "audit_label": "pokelinux-cellular-tun-arm-root-2",
+    "passed": true,
+    "scope": "Original TUN lifetime/IP/netns prerequisite, separate from observer RED/GREEN",
+    "qualifier_sha256": "5af57c5a78376809623e0472410031d10c428dbbfecea58d8931d9536a5b47b8",
+    "audit_records": [
+      {
+        "path": "selection.json",
+        "sha256": "849a9f0642eaaf4a03af276365bb2282e49902728c3297a17f54b257aae3c3d2"
+      },
+      {
+        "path": "execution.json",
+        "sha256": "7af01cb82b8afdebf8478e9ee728c8ad42a9d34b6996c3e320a66a06cbc43903"
+      },
+      {
+        "path": "result.json",
+        "sha256": "da11d2d94d8535eb334c7fc142a7a7a14571bc4acea16ebd421a3053d7668291"
+      }
+    ],
+    "module_inventory": [
+      {
+        "path": "/usr/lib/modules/7.1.6-1-aarch64-ARCH/kernel/drivers/net/tun.ko",
+        "sha256": "d9c262aa9c584256344d9da333998c8f35aa6ed664a62fa8932e5db21466bbc5"
+      }
+    ],
+    "direct_child_actual_wait0_and_EOF_count": 15,
+    "included_in_observer_32_wait_count": false,
+    "module_namespace_TUN_FD_absence_restore_unload_poweroff_exact_CID_daemon_input_closure_qualified": true,
+    "native_behavioral_RED": false
+  },
+  "compile_prerequisites": {
+    "build_passed": true,
+    "formatting_and_Clippy_D_warnings_passed": true,
+    "host_libtest_compiled_only": true,
+    "ARM64_libtest_compiled": true,
+    "ARM64_release_compiled": true,
+    "host_behavioral_tests_executed": false,
+    "compile_is_behavioral_RED_or_GREEN": false,
+    "build_review_sha256": "9b92507b2c700c5bb5969b58de2ec7f97f9c5feb30f80d47e6b6991101df8ae8"
+  },
+  "retained_failed_attempts_separate": [
+    {
+      "audit_label": "pokelinux-cellular-tun-arm-root-1",
+      "outcome": "Failed fixture prerequisite: missing peer JSON key; actual P2P schema uses local/address",
+      "qualified_observer_RED": false
+    },
+    {
+      "audit_label": "pokelinux-network-observer-arm-repair-root-1",
+      "outcome": "Failed GREEN after healthy controls: InvalidData for kernel multicast carrying originating request header fields",
+      "qualified_observer_RED": false
+    },
+    {
+      "scope": "Earlier source/build attempts",
+      "outcome": "Preserved separately; compile/wrapper failures are not the observer capability RED"
+    }
+  ],
+  "source_review_contract": {
+    "retained_namespace_and_owned_nonblocking_CLOEXEC_socket_constructed_together": true,
+    "successful_refresh_requires_complete_matching_GETLINK_and_GETADDR": true,
+    "preexisting_link_has_no_witnessed_creation_lifetime": true,
+    "link_or_address_mutation_by_observer": false,
+    "limits": {
+      "links": 64,
+      "addresses_per_link": 16,
+      "datagram_bytes": 65536,
+      "messages_per_refresh": 256,
+      "datagrams_per_refresh": 256,
+      "received_bytes_per_refresh": 1048576
+    },
+    "deadline_clock": "CLOCK_BOOTTIME",
+    "caller_absolute_deadline_checked_before_publication": true,
+    "hard_scheduler_or_suspend_return_bound_qualified": false,
+    "only_retryable_error": "ConcurrentChange",
+    "all_other_errors_including_Deadline_terminal": true,
+    "qualification": "Error/concurrency/bound refusal paths source reviewed; executed negative controls remain open"
+  },
+  "unqualified": [
+    "Actual malformed/error negative controls, ifindex reuse, rename and concurrent churn",
+    "Actual overflow, suspend/deadline and load tests",
+    "Matched Google/Pixel kernel and policy",
+    "Actual modem Data endpoint, version/hash, slot/subscription mapping and carrier/APN/SIM admission",
+    "Native provider-to-kernel association and durable permissions",
+    "Installed service/lifecycle integration, responsive Stop and persistence",
+    "Data/Binder/APN acquisition, route/carrier/internet reachability and normal installed provider grants",
+    "Independent EBADF checks of observer individual descriptors"
+  ],
+  "primary_source_references": [
+    {
+      "role": "Netlink dump/notification framing",
+      "url": "https://docs.kernel.org/userspace-api/netlink/intro.html"
+    },
+    {
+      "role": "Version-pinned IPv4 multicast source may retain originating request sequence/port",
+      "version": "v6.12",
+      "url": "https://github.com/torvalds/linux/blob/adc218676eef25575469234709c2d87185ca223a/net/ipv4/devinet.c#L1814-L1839",
+      "commit": "adc218676eef25575469234709c2d87185ca223a"
+    },
+    {
+      "role": "Version-pinned recvmsg source provides sender port/group in receive address",
+      "version": "v6.12",
+      "url": "https://github.com/torvalds/linux/blob/adc218676eef25575469234709c2d87185ca223a/net/netlink/af_netlink.c#L1831-L1837",
+      "commit": "adc218676eef25575469234709c2d87185ca223a"
+    }
+  ],
+  "source_reference_scope": "Linux6.12 source review is distinct from actual Linux7.1.6 ARM execution; no Google/Pixel/phone proof",
+  "public_summary_only": true,
+  "raw_private_audits_guest_logs_library_bytes_helper_code_or_credentials_published": false,
+  "final_qualifier_sha256": "5f92165f3c04cbd0dfd8a6119d115ebc989208c498c15a31daf9eac191fc2d88",
+  "report_files": [
+    {
+      "path": "docs/native-network-observer.md",
+      "sha256": "97722ba1aee10e7d9fc2db5e65644b7741157a6adc4d0719015a6ff7ef8241fa"
+    },
+    {
+      "path": "native-network-state/README.md",
+      "sha256": "a66703fb5b63e466e84373adf61012660364f59e2d94e674fd927e376403eea1"
+    }
+  ],
+  "vendor_or_private_runtime_inputs_selected": false
+}

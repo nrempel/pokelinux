@@ -75,6 +75,13 @@ python3 tools/native-connectivity-suite.py --client-arch aarch64_user --output a
 
 ## Remaining integration
 
+A separate [native kernel network observer](native-network-observer.md) now
+qualifies complete link/address observations and actual TUN-loss withdrawal on
+an ARM kernel. Its retained namespace and continuously observed local lifetime
+are independent of the NetworkManager owner. Neither observation activates a
+link or establishes Data-provider/APN association; composing those sources under
+one installed authority remains work.
+
 Implement the authenticated Rust connectivity authority, bounded responsive
 observer/stop IPC, supervised backend execution, subscriptions, permissions,
 revocation, installed service lifecycle and native Settings/shell integration.

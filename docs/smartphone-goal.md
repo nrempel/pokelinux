@@ -6,6 +6,17 @@ Build and test everything possible offline on temporary Harbour capacity. Do not
 
 **No backwards compatibility:** build one target implementation and matching component set. Do not add legacy adapters, dual production runtimes, old-format migrations or downgrade support for earlier iterations. Test required behavior and restart recovery within the target version. Prior code and artifacts provide evidence, not a requirement to preserve old formats.
 
+The [native kernel network observer](native-network-observer.md) now passes an
+actual ARM kernel RED→GREEN with one fixed oracle: UID1000 Rust observes an
+independently created TUN link, its IPv4 local/peer and IPv6 addresses, then
+withdraws after actual sole-descriptor closure. Namespace retention, continuous
+local lifetime, complete matching dumps and all32 direct child waits/EOF qualify
+on the generic Arch kernel. Only the observer implementation changes; no Data
+provider result is associated with this link and no APN readiness is granted.
+Next compose the public Data V3 boundary with kernel observations under one
+owner. Error/reuse/overflow/suspend controls, installed permissions/lifecycle and
+matched Pixel kernel/policy remain open.
+
 The [typed add-PDN transport tracer](native-radio-add-pdn.md) now composes the
 original-qualified encoder, current-session native owner and actual ARM Binder.
 A genuine Unsupported RED precedes exact code105/slot1/663-byte receipt and two
