@@ -1,5 +1,17 @@
 # Native deployment admission checkpoint
 
+A separate [offline development diagnostic bundle](native-boot-development-bundle.md)
+now contains a reproducible complete8MiB `init_boot`, fresh unsigned NONE metadata,
+exact stock restoration asset and four unchanged boot/vendor/DTBO reference
+images. A real successful-compact/missing-full-image RED precedes fixed-witness
+GREEN with original AOSP unpack/AVB, Rust geometry and exact native payload
+checks. Local NONE integrity is not stock trust or Pixel loader acceptance.
+The retained stock file is not a current-phone backup; slot, actual policy,
+retrievable diagnostics and independent recovery remain unqualified. No phone
+operation or new kernel run occurs. The next first-boot work is native PID1 PMSG
+reporting and synthetic reset retrieval; full IMS/graphics are not prerequisites
+for that diagnostic experiment. Full smartphone deployment remains refused.
+
 2026-10-12, corrected after independent review. The `native-deployment` Rust component checks a reviewed device
 profile against an actual immutable staging tree and its current inventory.
 The selected Pixel profile refuses deployment. Nine offline requirements and

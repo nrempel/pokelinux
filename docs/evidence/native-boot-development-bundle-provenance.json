@@ -1,0 +1,315 @@
+{
+  "schema": 1,
+  "date_UTC": "2026-10-15",
+  "base_commit": "4b39ec2978050cfb827b603c511e1a621bbfe0cf",
+  "evidence_class": "host original AOSP boot-format/AVB execution plus independent byte/geometry verification; separate source-only libavb policy analysis",
+  "qualified": true,
+  "scope": "complete offline development diagnostic bundle; Pixel unqualified",
+  "RED": {
+    "successful_baseline_compact_producer": true,
+    "candidate_bytes": 1462272,
+    "required_bytes": 8388608,
+    "actual_suite_exit": 1,
+    "failure": "MISSING_COMPLETE_INIT_BOOT_8MIB",
+    "source_compilation_passed": true,
+    "setup_failure_counted_as_RED": false
+  },
+  "GREEN": {
+    "actual_suite_exit": 0,
+    "both_output_streams_EOF": true,
+    "only_producer_changed": true,
+    "all_five_other_selected_files_identical": true,
+    "two_complete_images_and_manifests_identical": true,
+    "all48_bounded_external_input_files_unchanged": true,
+    "whole_archive_rehashed": false,
+    "all14_selected_originals_rehashed": true,
+    "original_AOSP_unpack_and_Rust_inspector_agree": true,
+    "independent_full_prefix_footer_header_descriptor_LZ4_newc_native_bytes": true,
+    "exact_independent_stock_restore_copy": true,
+    "four_exact_unchanged_reference_assets": true,
+    "two_original_AVB_tamper_controls_exit1": [
+      "isolated payload-flip/init_boot.img",
+      "isolated truncated-footer/init_boot.img"
+    ],
+    "old_compact_eight_refusal_groups_rerun": false
+  },
+  "image": {
+    "bytes": 8388608,
+    "sha256": "05343c9e1eb89e48c1474804b35e8d7d4e5b5207e6e47a34b5004dfe9b451b11",
+    "header_version": 4,
+    "container_page_size": 4096,
+    "compact_prefix_bytes": 1462272,
+    "compact_prefix_sha256": "b2ba46ec4eaf8c4398ae7eb6033fed179c1cc030f4bdbcb753f30717738359a8",
+    "ramdisk_lz4_sha256": "0896081a31d739a466b7cd124335808c6641c70ca6df8ce20d0b1a7101ecd0f8",
+    "native_payload": {
+      "init": {
+        "bytes": 1190352,
+        "sha256": "8f97c746cc8ef20eb4d3f2f981f1a24ad6e96b5d88f0d327ca80cf5627847d1d"
+      },
+      "probe-child": {
+        "bytes": 993728,
+        "sha256": "3b15eb4a9fd289e6664c917861f98bbe385e117e26b28abb149b3021e4b19e63"
+      }
+    },
+    "vbmeta_offset": 1462272,
+    "vbmeta_bytes": 512,
+    "footer_offset": 8388544,
+    "unused_gap_padding_zero": true
+  },
+  "AVB": {
+    "algorithm": "NONE",
+    "signed": false,
+    "flags": 0,
+    "rollback_index": 1791158400,
+    "header_rollback_index_location": 0,
+    "salt_hex": "412ae6b8e93ccac888d3368b26254e6672c42a0b876e4aa4df00cfe0da45402b",
+    "protected_bytes": 1462272,
+    "salted_payload_sha256": "169270a355db7187a18df846f94e8ce495a452013494e214b675e569dc046e3d",
+    "original_local_info_and_hash_verify_pass": true,
+    "NONE_helper_True_is_not_signature_or_stock_trust": true,
+    "copied_OEM_signature_or_footer": false,
+    "verification_policy_modified": false,
+    "actual_unlocked_Pixel_policy_qualified": false,
+    "libavb_C_or_firmware_executed": false,
+    "source_policy_distinction": "well-formed unsigned verification errors require explicit platform continuation policy; malformed metadata differs; actual Pixel policy unobserved"
+  },
+  "restoration": {
+    "path": "restore/init_boot.img",
+    "bytes": 8388608,
+    "sha256": "8ce3679285604688cea9c358d449a31db5fb7c0f0b49ef16c0f8c2c807f8425d",
+    "origin": "exact authenticated retained factory member",
+    "is_verified_backup_of_current_phone_state": false,
+    "phone_current_state_backup_verified": false
+  },
+  "unchanged_reference_assets": [
+    {
+      "path": "unchanged/boot.img",
+      "bytes": 67108864,
+      "sha256": "f68a58f2d4fd591beaca0e569713006a593644ffda4e2fb580339677d867d403"
+    },
+    {
+      "path": "unchanged/vendor_boot.img",
+      "bytes": 67108864,
+      "sha256": "8062043c15ad497690e71429194de4e358846db3752cf33342e6b325f2e6522e"
+    },
+    {
+      "path": "unchanged/vendor_kernel_boot.img",
+      "bytes": 67108864,
+      "sha256": "44ad13534c7575b8d3d23a6db9bfdcb3ef33918dfd8fce61e14ecf686da269a8"
+    },
+    {
+      "path": "unchanged/dtbo.img",
+      "bytes": 16777216,
+      "sha256": "4f7fb4e5cbacc1fc494fd3b0aa0cd80ec34c207d88272a5e82083148ca679fd0"
+    }
+  ],
+  "qualifications": {
+    "physical_device_accessed": false,
+    "bootloader_accepted": false,
+    "deployment_admitted": false,
+    "phone_current_state_backup_verified": false,
+    "stock_trust_chain_accepted": false,
+    "unlocked_device_policy_qualified": false,
+    "phone_kernel_runtime_verified": false,
+    "phone_ramdisk_selection_qualified": false,
+    "phone_recovery_qualified": false,
+    "full_smartphone_system_qualified": false
+  },
+  "runtime": {
+    "native_PID1_payload_changed": false,
+    "new_kernel_or_VM_run": false,
+    "host_Rust_inspector_executed": true,
+    "native_ARM_payload_executed": false,
+    "new_PMSG_integration": false,
+    "shutdown_policy_changed": false,
+    "phone_accessed": false
+  },
+  "review": {
+    "schema": 1,
+    "qualified": true,
+    "publication_six_sources_equal_final_frozen_GREEN": true,
+    "all48_external_inputs_rehashed": true,
+    "only_producer_changes_between_final_RED_GREEN": true,
+    "final_witness_byte_identical": true,
+    "source_study17_rows_rehashed_and_snapshotted_before_Main_documentation_changes": true,
+    "source_study_snapshot_manifest_sha256": "f7bfb176499269b106d52c37fc33ca25e2124f26c8a97107103ea92fa74ca6c2",
+    "independent_review_receipt_sha256": "2008bae009f27d91955bdcfbc219799eef254fc344324d5de4ed0d95bc82fa32",
+    "full_profile_runtime_and_physical_gates_unchanged": true,
+    "new_kernel_VM_or_phone_execution": false
+  },
+  "witness_corrections": {
+    "first_valid_size_RED_preserved": true,
+    "zero_size_key_offsets_bounded_after_pinned_original_source_check": true,
+    "fresh_corrected_baseline_RED_before_first_GREEN": true,
+    "final_docstring_and_duplicate_comparison_cleanup_followed_by_fresh_RED_GREEN": true
+  },
+  "source_bindings": [
+    {
+      "path": "tools/native-boot-development-bundle.py",
+      "bytes": 13854,
+      "sha256": "d1c075a61fd123006cbf4ae4ea3930a99067d8fab30a559943ea3b95ed8be55c"
+    },
+    {
+      "path": "tools/native-boot-development-bundle-suite.py",
+      "bytes": 13420,
+      "sha256": "ae3f8144b529975bc925d609bc0fc7e5411dcbd3af67547bd47c7b34d9c7a778"
+    },
+    {
+      "path": "tools/native-boot-probe-package.py",
+      "bytes": 20359,
+      "sha256": "5579558a34649b34477387f09db58f68068d5cf63ada5ed5439f1ca5d3d12c89"
+    },
+    {
+      "path": "tools/native-boot-probe-package-suite.py",
+      "bytes": 22971,
+      "sha256": "5858931d7ebdfce9ccf4ca582b5614d09daee4713c72d22443b04701aa00c5e0"
+    },
+    {
+      "path": "tools/native-boot-inputs-reference.py",
+      "bytes": 7646,
+      "sha256": "9d18de2397e2203156e6788774122cdf4e31691570a835feed09bd085071500f"
+    },
+    {
+      "path": "native-boot-package/input-pins.json",
+      "bytes": 2929,
+      "sha256": "b8b46ec8048e67462daf78228a48f479b29a6016ff64496ed0f21186c5b94a50"
+    }
+  ],
+  "source_only_primary_AOSP_inputs": [
+    {
+      "path": "libavb/avb_slot_verify.c",
+      "bytes": 68562,
+      "sha256": "a94280664bfa734e21202f714f26784591f3f02790c0c5ad70cccc7f8172bba4",
+      "url": "https://android.googlesource.com/platform/external/avb/+/761178607206f4cb2af79ed9eec52d8cbd814adb/libavb/avb_slot_verify.c"
+    },
+    {
+      "path": "libavb/avb_slot_verify.h",
+      "bytes": 18573,
+      "sha256": "59caa4ae7be9a16a6d43973778669eb78a8d1a45112519c680b9b8ba4944e0dc",
+      "url": "https://android.googlesource.com/platform/external/avb/+/761178607206f4cb2af79ed9eec52d8cbd814adb/libavb/avb_slot_verify.h"
+    },
+    {
+      "path": "libavb/avb_vbmeta_image.c",
+      "bytes": 10548,
+      "sha256": "7d31dd9f0157d966e034e42de94066a242bb745e993904fe3f373d201a5a2c56",
+      "url": "https://android.googlesource.com/platform/external/avb/+/761178607206f4cb2af79ed9eec52d8cbd814adb/libavb/avb_vbmeta_image.c"
+    },
+    {
+      "path": "libavb/avb_vbmeta_image.h",
+      "bytes": 11913,
+      "sha256": "0979deac8902cbcbd0ec1d2f94af6692ab954fe698b1bd2e8b193b7eec3a3607",
+      "url": "https://android.googlesource.com/platform/external/avb/+/761178607206f4cb2af79ed9eec52d8cbd814adb/libavb/avb_vbmeta_image.h"
+    },
+    {
+      "path": "libavb/avb_footer.c",
+      "bytes": 2064,
+      "sha256": "5a1e26c38d2880ee43e86f2d4d040c567fb67c9c74262378b861a30644781df1",
+      "url": "https://android.googlesource.com/platform/external/avb/+/761178607206f4cb2af79ed9eec52d8cbd814adb/libavb/avb_footer.c"
+    },
+    {
+      "path": "libavb/avb_footer.h",
+      "bytes": 2869,
+      "sha256": "0704e9e6ef1a20f1bb0a1ba59e54155981f67e6d8889b5c59a034ce50465b900",
+      "url": "https://android.googlesource.com/platform/external/avb/+/761178607206f4cb2af79ed9eec52d8cbd814adb/libavb/avb_footer.h"
+    },
+    {
+      "path": "avbtool.py",
+      "bytes": 207502,
+      "sha256": "e5a664a38db623da00f080219bc0ee60a640a9dc4a872803616fae4938ac749b",
+      "url": "https://android.googlesource.com/platform/external/avb/+/761178607206f4cb2af79ed9eec52d8cbd814adb/avbtool.py"
+    },
+    {
+      "path": "README.md",
+      "bytes": 56448,
+      "sha256": "ecabf282c5a3bad0b29c1c4fb20bf57d27e7757821dd1ce0af0813adf42e2940",
+      "url": "https://android.googlesource.com/platform/external/avb/+/761178607206f4cb2af79ed9eec52d8cbd814adb/README.md"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 3306,
+      "sha256": "7b64210dc457e50fdcdf49c44d3efa19d78d6f49aa141862592ac31b700c19d2",
+      "url": "https://android.googlesource.com/platform/external/avb/+/761178607206f4cb2af79ed9eec52d8cbd814adb/LICENSE"
+    }
+  ],
+  "private_record_sha256": [
+    {
+      "record": "first-size-RED",
+      "sha256": "691ab672043c4e17c599c2a6798a2decb19620db1490619d2669ff4d420e33cc"
+    },
+    {
+      "record": "corrected-witness-RED",
+      "sha256": "282c1b9eadd26d5d82eab77443c05f00703de46792476b17230549bab198e327"
+    },
+    {
+      "record": "corrected-witness-GREEN",
+      "sha256": "9f2f23157bb11c2599d3ee93ae12349d83e5e8d73353ca094a6913bbc59e230c"
+    },
+    {
+      "record": "final-RED-selection",
+      "sha256": "a8e877df1304f31057371979afeae0a8fc0a9fc7ede7ccda7d6351e81d13a6cc"
+    },
+    {
+      "record": "final-RED-command",
+      "sha256": "1ca9c74f7c58094f123b546b73fce2c57135165bb242ca6ffc0ade97d472e344"
+    },
+    {
+      "record": "final-RED-execution",
+      "sha256": "9b6a31fcf19e8f3dade95f3a383d6d67b44b625c78b63d6234c49c72963410cc"
+    },
+    {
+      "record": "final-GREEN-selection",
+      "sha256": "feeabeba49483d80fd36e05f3b3d43e8755ad3051f2f6066c9dcfb87de569242"
+    },
+    {
+      "record": "final-GREEN-command",
+      "sha256": "a8d64ae2039926785c35a9f9dd6cda59bf715789686ade4e1945bed4ae80f5d6"
+    },
+    {
+      "record": "final-GREEN-execution",
+      "sha256": "4fbac5424dafdcba035abcc356db4112693e8451c577773f8d4bdca9eb2799b4"
+    },
+    {
+      "record": "final-summary",
+      "sha256": "bc917f4c6fc63c0869b259b5b20a17778644bf6546260b1afc7f88267b4cde0d"
+    },
+    {
+      "record": "external48-inventory",
+      "sha256": "f766ab5c1836f613ad0132a7d88f6769c4c1248b831bce61e1479dd9d37d0a94"
+    },
+    {
+      "record": "Root-review",
+      "sha256": "47ea40e64176bdfbd1fb508b7d136c7b2bc3ae30f5665c9152f3f4a92495750d"
+    },
+    {
+      "record": "independent-review",
+      "sha256": "2008bae009f27d91955bdcfbc219799eef254fc344324d5de4ed0d95bc82fa32"
+    },
+    {
+      "record": "independent-memo",
+      "sha256": "209529de12d7e79b8ef767bc908116039eed6304817fd9ddb1101f710efc3281"
+    },
+    {
+      "record": "AOSP-format-source-index",
+      "sha256": "ca94ca90e3ffc9acf2232d00b39cec17a5d0c57cb89ecff65f422750247cf26f"
+    },
+    {
+      "record": "AOSP-format-memo",
+      "sha256": "ea3979f28534884f2b004dfe09946b283b61e1fa61e723dd34c2b9fcf312c6d8"
+    },
+    {
+      "record": "AOSP-source-study-snapshot",
+      "sha256": "f7bfb176499269b106d52c37fc33ca25e2124f26c8a97107103ea92fa74ca6c2"
+    }
+  ],
+  "remaining_experiment_gates": [
+    "separate authorization for any physical access or partition change",
+    "verify actual device/build/slot/partition geometry and rollback constraints",
+    "establish actual development-device loader policy and ramdisk selection",
+    "independent recovery access and exact matching current-state restoration set",
+    "retrievable execution-correlated diagnostics including early failure",
+    "board startup, bounded shutdown, watchdog, thermal and charging observations"
+  ],
+  "full_smartphone_complete": false,
+  "full_deployment_validator_modified_or_admitted": false,
+  "private_material_published": false
+}

@@ -19,6 +19,14 @@ flowchart TD
   Radio -. future independently qualified backend .-> Other[Other modem interfaces]
 ```
 
+The [offline diagnostic boot bundle](native-boot-development-bundle.md) is
+explicitly bound to the retained frankelCP3A.261005.005 factory inputs and8MiB
+init_boot geometry. Exact restoration files do not establish the current phone's
+state, another model's partition layout or any bootloader acceptance. Native
+PID1 remains shared Rust; selecting a different device requires its own matched
+assets, loader/diagnostic/recovery evidence and backend profile. Zero models
+are hardware-qualified.
+
 ## Boundaries
 
 | Layer | Owns | Must not assume |

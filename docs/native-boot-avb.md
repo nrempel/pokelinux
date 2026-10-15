@@ -1,5 +1,17 @@
 # Native boot candidate and the retained AVB contract
 
+A separate [offline development diagnostic bundle](native-boot-development-bundle.md)
+now contains a reproducible complete8MiB `init_boot`, fresh unsigned NONE metadata,
+exact stock restoration asset and four unchanged boot/vendor/DTBO reference
+images. A real successful-compact/missing-full-image RED precedes fixed-witness
+GREEN with original AOSP unpack/AVB, Rust geometry and exact native payload
+checks. Local NONE integrity is not stock trust or Pixel loader acceptance.
+The retained stock file is not a current-phone backup; slot, actual policy,
+retrievable diagnostics and independent recovery remain unqualified. No phone
+operation or new kernel run occurs. The next first-boot work is native PID1 PMSG
+reporting and synthetic reset retrieval; full IMS/graphics are not prerequisites
+for that diagnostic experiment. Full smartphone deployment remains refused.
+
 2026-10-14UTC: unchanged original AOSP AVB tools qualify a partial stock metadata
 graph and refuse the current unsigned native `init_boot` candidate. These are
 offline original-code results on authenticated selected files, without bootloader

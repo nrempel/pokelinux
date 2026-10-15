@@ -1,5 +1,12 @@
 # Pixel native-init bootloader admission
 
+Update2026-10-15: the [complete offline development bundle](native-boot-development-bundle.md)
+now has fresh unsigned metadata, an exact factory restoration image and explicit
+unknown device/slot/recovery gates. It establishes no loader acceptance. The
+conditional temporary-load findings below remain unchanged. A temporary RAM
+override is not required for the selected future development partition experiment;
+no physical access or partition operation is performed or authorized here.
+
 The unsigned native `init_boot` is a RAM payload candidate, not an established
 temporary boot request. It contains no kernel. A focused static recovery of the
 authenticated factory ABL also identifies a reviewed v4 path that requests

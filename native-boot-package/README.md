@@ -1,5 +1,12 @@
 # Unsigned native Pixel boot probe candidate
 
+The separate [development bundle](../docs/native-boot-development-bundle.md)
+now consumes this unchanged compact producer and emits a full8MiB unsigned
+`init_boot`, exact stock restore image and unchanged boot/vendor/DTBO reference
+assets. Original-tool format/hash checks and two-build reproducibility pass after
+a real missing-full-image RED. Pixel admission and recovery remain unqualified;
+this is not full smartphone deployment. The compact contract below is unchanged.
+
 This offline producer authors only the generic ramdisk in `init_boot`, using
 one exact pinned native Rust PID1 and diagnostic child. The current archive
 contains `dev`, `dev/kmsg`, `proc`, `sys`, `init`, and `probe-child`. The initial
