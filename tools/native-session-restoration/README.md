@@ -86,8 +86,8 @@ request reports unavailable and never manufactures a Qt model.
 
 The private Qt driver exposes only identity/current public models, not a service
 read proxy or auth ingress. This is QCore, not normal QtQuick/QML/Wayland. The
-helper implements graceful SIGTERM through signalfd, but actual actor Stop sends
-SIGKILL, so current tests qualify process closure rather than Qt destruction.
+helper implements graceful SIGTERM through signalfd, but at that checkpoint actor
+Stop sent SIGKILL, so those tests qualified process closure rather than Qt destruction.
 Current model denial is polling-observed, not immediate secure pixel withdrawal.
 No new screenshot is produced; future GUI runs require the actual Pixel10 profile.
 
