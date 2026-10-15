@@ -94,6 +94,9 @@ struct Connection {
     read_stamp: Option<ReadStamp>,
     deadline: u64,
     pending: Option<Vec<u8>>,
+    // Set only with a serialized typed Ok on the lock-only route. Successful
+    // admission is rechecked on every send, including retries after EAGAIN.
+    lock_ack: bool,
     launching: Option<String>,
 }
 #[derive(PartialEq)]
@@ -401,6 +404,7 @@ pub fn run_with_services(
                                             } else {
                                                 reply.clone()
                                             })?);
+                                            c.lock_ack = c.lock && reply == Reply::Ok;
                                             c.deadline =
                                                 boottime_ns().saturating_add(1_000_000_000);
                                             if capture
@@ -612,6 +616,7 @@ pub fn run_with_services(
                             read_stamp: None,
                             deadline: now.saturating_add(30_000_000_000),
                             pending: None,
+                            lock_ack: false,
                             launching: None,
                         });
                     }
@@ -775,10 +780,19 @@ pub fn run_with_services(
                     revoke_capture(&mut capture, &mut camera);
                     connection.pending = serde_json::to_vec(&Reply::Denied).ok();
                 }
+                if connection.lock_ack
+                    && (stopping || !authority.ready() || operation.is_some() || storage.busy())
+                {
+                    // Fence once before the send. A blocked Unavailable reply
+                    // must never turn back into Ok when storage later clears.
+                    connection.pending = serde_json::to_vec(&Reply::Unavailable).ok();
+                    connection.lock_ack = false;
+                }
                 if let Some(bytes) = &connection.pending {
                     return match ipc::send(&connection.fd, bytes) {
                         Ok(()) => {
                             connection.pending = None;
+                            connection.lock_ack = false;
                             connection.read_stamp = None;
                             if let Some(active) = &mut capture
                                 && active.connection == connection.id
@@ -1200,6 +1214,8 @@ pub fn run_with_services(
                     }
                 };
                 connection.pending = serde_json::to_vec(&reply).ok();
+                connection.lock_ack =
+                    connection.lock && reply == Reply::Ok && connection.pending.is_some();
                 connection.deadline = boottime_ns().saturating_add(1_000_000_000);
                 connection.pending.is_some()
             });

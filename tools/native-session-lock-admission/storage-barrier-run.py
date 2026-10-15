@@ -33,6 +33,7 @@ def main():
     parser.add_argument('--binary', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--fixture', type=Path, default=FIXTURE)
+    parser.add_argument('--common', type=Path)
     args = parser.parse_args()
     binary, fixture = args.binary.resolve(strict=True), args.fixture.resolve(strict=True)
     if not binary.is_file() or not fixture.is_file():
@@ -47,8 +48,10 @@ def main():
     results.mkdir(mode=0o777)
     results.chmod(0o777)  # Container root has no DAC_OVERRIDE over this UID1000-owned bind.
     inputs = {}
-    for name, original, mode in [('storage-barrier.py', fixture, 0o444),
-                                 ('lifecycle-daemon', binary, 0o555)]:
+    freeze = [('storage-barrier.py', fixture, 0o444), ('lifecycle-daemon', binary, 0o555)]
+    if args.common:
+        freeze.append(('storage-barrier-common.py', args.common.resolve(strict=True), 0o444))
+    for name, original, mode in freeze:
         before = sha(original)
         target = frozen / name
         shutil.copyfile(original, target)
@@ -88,9 +91,12 @@ def main():
 
     container_env = {'PATH': '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
                      'TMPDIR': '/tmp', 'NATIVE_LIFECYCLE_ISOLATED': '1'}
+    fixture_args = ['-I', '/source/storage-barrier.py', '--binary', '/bins/lifecycle-daemon',
+                    '--results', '/results']
+    if args.common:
+        fixture_args += ['--common', '/source/storage-barrier-common.py']
     launch = ('import os,sys;os.environ.clear();os.environ.update(' + repr(container_env) +
-              ');os.execv(sys.executable,[sys.executable,"-I","/source/storage-barrier.py",'
-              '"--binary","/bins/lifecycle-daemon","--results","/results"])')
+              ');os.execv(sys.executable,[sys.executable]+' + repr(fixture_args) + ')')
     cidfile = output / 'cid'
     command = DOCKER + ['run', '--rm', '--pull=never', '--name', name, '--label', LABEL + '=' + nonce,
                        '--cidfile', str(cidfile), '--network', 'none', '--user', '0:0',
@@ -99,9 +105,12 @@ def main():
                        '--cpus', '2', '--memory', '512m', '--pids-limit', '128']
     for target, mode in [('/opt', '0755'), ('/run', '0755'), ('/var/lib', '0755'), ('/tmp', '0700')]:
         command += ['--tmpfs', f'{target}:rw,exec,nosuid,nodev,size=64m,mode={mode},uid=0,gid=0']
-    for source, target, readonly in [(frozen / 'storage-barrier.py', '/source/storage-barrier.py', True),
+    mounts = [(frozen / 'storage-barrier.py', '/source/storage-barrier.py', True),
                                      (frozen / 'lifecycle-daemon', '/bins/lifecycle-daemon', True),
-                                     (results, '/results', False)]:
+                                     (results, '/results', False)]
+    if args.common:
+        mounts.append((frozen / 'storage-barrier-common.py', '/source/storage-barrier-common.py', True))
+    for source, target, readonly in mounts:
         command += ['--mount', f'type=bind,src={source},dst={target}' + (',readonly' if readonly else '')]
     command += ['--entrypoint', 'python3', IMAGE, '-I', '-c', launch]
     write(output / 'selection.json', {'image': IMAGE, 'inputs': inputs, 'runner_sha256': sha(Path(__file__)),

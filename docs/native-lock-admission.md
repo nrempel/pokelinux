@@ -37,8 +37,10 @@ revisions during sync. Already durable pending intent can ACK again without a ne
 write only when no actor storage operation is unresolved at planning time. The
 [storage barrier](native-lock-storage-barrier.md) now refuses cached successful
 ACKs while busy, after a genuine actual-daemon/socket RED. Refused or uncertain
-admission retains denial. A queued successful reply can still outlive this check;
-send-time exclusion and complete authenticated-clear serialization remain open.
+admission retains denial. The later [queued-reply repair](native-lock-queued-storage.md)
+also downgrades queued success when storage becomes busy before send, after a
+separate actual socket RED. EAGAIN, a complete intervening write and complete
+authenticated-clear serialization remain separately unqualified.
 
 Pending intent is restored before Ready. Fresh Source `locked:false`, root admin
 `locked:false`, locker/UI death and display/Source replacement cannot clear it.

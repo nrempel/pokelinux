@@ -18,6 +18,20 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The queued lock-success timing hole now has its own actual host socket RED and
+repair. A poll-phase-qualified actor queues an idle UID1000 lock before a later
+ordinary grant; the old binary sends `ok` while storage is held. Current code
+marks typed queued lock success and rechecks before every nonblocking send,
+permanently downgrading to unavailable on busy/unavailable/Stop. The unchanged
+queued fixture, two planning controls and all 40 host regressions pass; strict
+Clippy and AArch64 compilation pass. A formatting-only zero-test build failure
+is retained. [Queued report](native-lock-queued-storage.md).
+The older planning code `1106ab2` separately passes two actual Arch ARM cases,
+with normal fixture/actor/QEMU/CLI/container waits and unchanged read-only image;
+no later queued-repair ARM runtime is inferred. No send EAGAIN or complete
+intervening write is induced. Atomic arming and real authentication/clear/normal
+Messages reopening remain open, with no phone accessed.
+
 The actual headless lifecycle lock socket now refuses a cached successful ACK
 if an actor/storage operation remains unresolved at planning time. A genuine production-daemon
 RED returns `ok` with a ready actor and exact storage child held after an ordinary
@@ -27,8 +41,8 @@ snapshot/Stop remain responsive and normal actor waits/storage death close.
 All 40 host regressions and strict Clippy pass; AArch64 daemon compilation is
 separate from execution. A pre-start empty-CID runner failure is preserved with
 its missing CLI wait explicitly unqualified. See [storage barrier](native-lock-storage-barrier.md).
-An idle queued successful reply can still be sent after another write starts;
-that separate publication guard is the next actual regression. This implements
+That earlier source still allowed idle queued success after another write began;
+the later publication guard above qualifies its own separate regression. It implements
 no authentication result or clear. Atomic arming, exact unlock
 and serialized synced clear/new-lock handling remain open; no phone was accessed.
 

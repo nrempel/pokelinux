@@ -1,0 +1,222 @@
+{
+  "passed": true,
+  "code_commit": "1106ab2ffd6f289280feae854dbbfe4b99456742",
+  "root_files_rehashed": 80,
+  "historical_commit_source_matches": 30,
+  "source_pins": [
+    {
+      "path": "native-lifecycle/Cargo.lock",
+      "sha256": "82e19ca615ad8c45528b2da75978f49910c510004c1561ec2a9a07816a50142f"
+    },
+    {
+      "path": "native-lifecycle/Cargo.toml",
+      "sha256": "339c2dc5fa8846b08f2b97ddc32c1c4f850bfd818038175c8f8ea64cf689417e"
+    },
+    {
+      "path": "native-lifecycle/README.md",
+      "sha256": "1dd5987e581f5c62f4d7edad16d1b280c1dd8747f67ac9053a437d7971c9fe5b"
+    },
+    {
+      "path": "native-lifecycle/packaging/omarchy-system-lock",
+      "sha256": "312331cbb790ed634e345c32c292768b36fbce78de6d32c09a19eab590085781"
+    },
+    {
+      "path": "native-lifecycle/src/apps.rs",
+      "sha256": "77b338e8d54255577c2fbb11969faa9ed7d106960e012e25042290e7cd25ba5f"
+    },
+    {
+      "path": "native-lifecycle/src/authority.rs",
+      "sha256": "1d03425a412f4a18be74279d05293966ec45bdf6d1d83a87223dd1738d3f4369"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-client.rs",
+      "sha256": "6dd1f2c86a96bca4364b5ee2e85fd39fecaf10bc68b8f7b727bd3e65f86bc9bf"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-daemon.rs",
+      "sha256": "ee33d2d77a8fc98ce56b582d9b9c96d0f2f8240e3fda182ec9bdeba8f6af4f01"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-launcher.rs",
+      "sha256": "49a0e279b381a45ed49242a74c94b202ebebb81bc42bd8b61cfd58f8bb80a923"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-lock.rs",
+      "sha256": "169bc0b6f9745b3109bcb44b4f23eeed54e523ed115220d1c8ed809a38ecedad"
+    },
+    {
+      "path": "native-lifecycle/src/camera.rs",
+      "sha256": "d113da936e0e1cf14158d9cb52c9fb364e5cbd8c25de9c7245cae9ddcc568365"
+    },
+    {
+      "path": "native-lifecycle/src/display.rs",
+      "sha256": "8003328560796eedc3e9f20c8878ab39e36ed96300a104152d5928954172631c"
+    },
+    {
+      "path": "native-lifecycle/src/ipc.rs",
+      "sha256": "3777ef70117c8a37078e6c25ecaa21f17c2de094604877d433c6b69b8f0a90c9"
+    },
+    {
+      "path": "native-lifecycle/src/lib.rs",
+      "sha256": "b13cd5350c87d7296fae3318a643362a7b3d7315c0ee58bb154d32fdcd696005"
+    },
+    {
+      "path": "native-lifecycle/src/lock.rs",
+      "sha256": "ddb658781c03d6620ea269035044ff953c2f548ccc67409f0063dcb6ed3998e5"
+    },
+    {
+      "path": "native-lifecycle/src/messages.rs",
+      "sha256": "2e446fa1eef820b14510f60ce88b880637d84daf90cec8909639d0ec97f2c657"
+    },
+    {
+      "path": "native-lifecycle/src/service.rs",
+      "sha256": "73f981e7af5651e15b4531ee391622f95faeb1730e9c19a5c9fa701a352ca5b8"
+    },
+    {
+      "path": "native-lifecycle/src/service_auth_attempt_tests.rs",
+      "sha256": "0b1170f812ccdb51fc7745796f110936efde862b5c3299818a077692f42e2470"
+    },
+    {
+      "path": "native-lifecycle/src/session.rs",
+      "sha256": "59ef191233213deb4dac8c50b3f1e72beb5fd4f8b63ff2aa555d4a71a5dd6bfb"
+    },
+    {
+      "path": "native-lifecycle/src/storage.rs",
+      "sha256": "5131630bdc3e4056472720a72d7c728d0cb0586995ae1505cc0b26b32713fc7c"
+    },
+    {
+      "path": "native-kernel-identity/Cargo.lock",
+      "sha256": "ea2dd27ddd1bf8c00b3bf15d5fface7d5bddd6e20b5d1e89fbc1fc10172ff592"
+    },
+    {
+      "path": "native-kernel-identity/Cargo.toml",
+      "sha256": "5cab2f22141987e4f1470b0fb575107b5c3ad134829bd2b92d5b7ccb3ef12431"
+    },
+    {
+      "path": "native-kernel-identity/README.md",
+      "sha256": "07ff5508164058ad2d51f449e91b06b0a02d2373b2d33d8885274d044c84d19a"
+    },
+    {
+      "path": "native-kernel-identity/public-api-inputs.json",
+      "sha256": "21981ee4e529ce04afc90453b5e9215d5d71eeb3dc758e32731deaa3fb9d6197"
+    },
+    {
+      "path": "native-kernel-identity/src/lib.rs",
+      "sha256": "464a5e2a96dd99f127cce5b32514ff4a9a7340f8bee2581e941685e6df82cbcd"
+    },
+    {
+      "path": "native-kernel-identity/src/pidfd.rs",
+      "sha256": "caf4b44738fc53093a32ef96c2e639c1a376935ad29fa17a42091a56180b11ff"
+    },
+    {
+      "path": "native-kernel-identity/tests/pidfd.rs",
+      "sha256": "ed310e5152426ae8a3d723ca2869cdcd3fda50e0552cdc16938c638d308cc3b3"
+    },
+    {
+      "path": "native-kernel-identity/tests/socket.rs",
+      "sha256": "2e9d134e7913ddadb564939bf241538690698a9ca7b660213479d843c638fd08"
+    },
+    {
+      "path": "native-camera/Cargo.lock",
+      "sha256": "2f6ea0f2ca832a4a133fcc62f3bfefd4521333133620f5936af353bf8985fe7b"
+    },
+    {
+      "path": "native-camera/Cargo.toml",
+      "sha256": "129897f013103c6e97c177fb100ebcab246a81f6a0c3f71e6d1e749b16adeea5"
+    },
+    {
+      "path": "native-camera/src/lib.rs",
+      "sha256": "3ceb27d000194de361bdac7667d5b49660db0d3598f5c95f1961bcab406542ba"
+    }
+  ],
+  "actual_ARM_cases": 2,
+  "actual_tool_session": 87113,
+  "actual_terminal_chunk": "25ddd2",
+  "actual_tool_exit": 0,
+  "kernel": {
+    "machine": "aarch64",
+    "release": "7.1.6-1-aarch64-ARCH",
+    "version": "#1 SMP PREEMPT_DYNAMIC Wed Aug  5 00:20:13 UTC 2026"
+  },
+  "actual_fixture_wait": {
+    "pid": 297,
+    "forced_cleanup": false,
+    "stdout_eof": true,
+    "actual_parent_wait": 0,
+    "proc_absent": true
+  },
+  "normal_actor_waits0": 2,
+  "actual_UID1000_records": 3,
+  "actual_QEMU_wait": {
+    "passed": true,
+    "bound_seconds": 360,
+    "timed_out": false,
+    "actual_qemu_pid": 7,
+    "actual_qemu_wait": 0,
+    "elapsed_seconds": 26.16070364508778
+  },
+  "actual_CLI_wait": 0,
+  "actual_container_wait": "0",
+  "fresh_same_daemon_exact_CID_absence": true,
+  "source_scope": "Planning-time1106ab2; newer queued-reply repair not executed here",
+  "artifacts": [
+    {
+      "path": "preparation.json",
+      "sha256": "db11b6884f27cc43ef57fac425602b9436f9c6e032da37cb6ffb9ec833b70e40"
+    },
+    {
+      "path": "execution-approved.json",
+      "sha256": "167a966399a7303f611b1f8844b9a126169bd9e0c3fbfedc77ce997a1fdfa1fd"
+    },
+    {
+      "path": "payload/selection.json",
+      "sha256": "323243abe8a886b7a9aaeedea4373ffe7fc31514f25a9c065156b399922c8cd9"
+    },
+    {
+      "path": "adapter-diff.patch",
+      "sha256": "ab312bdafcc13d664166c89688edf49bb3398117a070eec523b75185dfcc986a"
+    },
+    {
+      "path": "run-1/execution.json",
+      "sha256": "9f1d789a68ffd8a178c3b53b9781b272f7fad65eb68f17cbd86e15a94125dd07"
+    },
+    {
+      "path": "run-1/result.json",
+      "sha256": "f3a936c74ecb6381104f00ebede15bd2ca0dcb729073b950e21e1be268856c75"
+    },
+    {
+      "path": "run-1/fixture/result.json",
+      "sha256": "3b046183e97654da0758913ecc5601da42b98c3209f4f3bc05234cf842d78e9b"
+    },
+    {
+      "path": "run-1/qemu-exit.json",
+      "sha256": "b08ed088f0feee9d8ce7514cf329e9470067281f195c98ec8df97ff36a913e39"
+    },
+    {
+      "path": "run-1/storage-barrier.log",
+      "sha256": "3b046183e97654da0758913ecc5601da42b98c3209f4f3bc05234cf842d78e9b"
+    },
+    {
+      "path": "run-1/console.log",
+      "sha256": "e8778e690e1ecc3882284c5bc26105a922fe02fd342920fa7662ca774d391d6b"
+    },
+    {
+      "path": "run-1/state.json",
+      "sha256": "d66814905b7fcb8db9c9d9dac02f13d8b358d968d0bbb4294650fd2f34967c5d"
+    },
+    {
+      "path": "run-1/absence.log",
+      "sha256": "f919fc1507953b0e8c716d9b66b78f322bd4340f44b0bc7e8bc3efcb781ac1ee"
+    }
+  ],
+  "limits": [
+    "Ordinary headless daemon/Grant/SIGSTOP storage only, no Source/UI/authentication/PAM/clear/phone",
+    "Fixture observes storage death; numeric storage waits belong to actor",
+    "No queued-reply send-time or current later-code ARM execution inferred"
+  ],
+  "schema": 1,
+  "root_review_sha256": "d8979c370813bccd1bb0c412f5a993b196fc174f264b9f83a88234c6afd634e4",
+  "scope": "Unchanged planning-time1106ab2 ordinary two-case fixture under actual generic Arch ARM kernel; newer queued repair excluded",
+  "daemon_ELF_sha256": "22db6001217412474f8464f2484de41e4051bffca5ee054d316310c384c4f7c5",
+  "fixture_sha256": "9ce1c1420894094ef44e657e72bfa47bd05bb44a6c57abdf86f36540105948e4"
+}

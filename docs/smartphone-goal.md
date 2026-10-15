@@ -110,7 +110,11 @@ The actual headless [lock storage barrier](native-lock-storage-barrier.md) now
 refuses cached success when storage is busy at planning after a genuine socket RED;
 two held-child cases and all 40 host lifecycle regressions pass. This is an
 ordinary grant boundary, not authenticated clear or a completed unlock tracer.
-Queued-success send-time exclusion remains the next regression.
+The later [queued-success send guard](native-lock-queued-storage.md) also passes
+an actual host socket RED→GREEN, with all 40 regressions and both planning cases
+preserved. The older planning code separately passes two actual generic ARM
+kernel cases. Neither selection qualifies authentication, an EAGAIN send, a
+complete intervening write or serialized durable restoration.
 
 ## Native messaging checkpoint
 

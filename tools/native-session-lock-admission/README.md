@@ -56,3 +56,12 @@ are recorded separately from fixture results. Empty transient CID files are
 treated as startup in progress. Read the [report](../../docs/native-lock-storage-barrier.md)
 for the preserved failed runner prerequisite and evidence limits. No Source,
 Messages UI, original effect, authentication or clear is exercised.
+
+For the later queued publication boundary, use `storage-barrier-run.py --binary
+HOST_DAEMON --fixture queued-storage-barrier.py --common storage-barrier.py
+--output NEW`, with absolute file paths. The runner freezes both fixture files
+separately. The x86_64 fixture requires a stopped main poll syscall with at least
+five fds, then queues a retained UID1000 lock before a later ordinary grant.
+It does not retry a failed stop. Its actual reply is asserted after normal
+ownership closure. See [queued report](../../docs/native-lock-queued-storage.md)
+for execution and the remaining EAGAIN/complete-intervening-write/clear gates.

@@ -39,10 +39,20 @@ neither behavioral RED nor GREEN. The corrected runner owns actual CLI waits,
 freezes inputs outside the writable results bind and checks fresh exact-CID
 absence on the same daemon. No independent container wait is claimed here.
 
-This is a decision-time check, not complete send-time exclusion. A successful
-reply queued while idle can still be published after another connection starts
-a write. That separate publication gate needs its own actual regression and
-repair; these held-before-request cases cannot qualify it.
+This selection is a decision-time check. Its source still allowed a successful
+reply queued while idle to publish after another connection started a write.
+A later [queued-reply regression and repair](native-lock-queued-storage.md)
+qualify the held-busy send boundary separately; these held-before-request cases
+cannot qualify it.
+
+The unchanged planning-time source from `1106ab2` later passes both cases under
+an actual generic Arch ARM kernel7.1.6-1-aarch64-ARCH. The same fixture and supplied
+ELF execute with root-owned policy and actual UID1000 clients, groups[]/CapEff0.
+Fixture/actor waits0, exact child death, QEMU wait0 after26.161s within360s, and
+CLI/container wait0 close without fallback. Root rehashes80 frozen/external files
+and matches30 historical commit source bindings after later local edits; the
+existing read-only VM image is unchanged. [ARM provenance](evidence/native-lock-storage-barrier-arm-provenance.json)
+supplies no newer queued-reply, Source/UI, authentication or hardware result.
 
 This advances the boundary needed before authenticated durable clear exists.
 It does not implement clear serialization: a future in-flight clear must resolve

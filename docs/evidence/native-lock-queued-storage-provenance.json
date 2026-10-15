@@ -1,0 +1,287 @@
+{
+  "schema": 1,
+  "scope": "Actual headless x86_64 queued lock acknowledgement versus later held ordinary Grant",
+  "source_parent_commit": "1106ab2ffd6f289280feae854dbbfe4b99456742",
+  "actual_behavioral_RED": {
+    "reply": "ok",
+    "poll_phase_qualified": true,
+    "exact_main_ppoll_syscall": 271,
+    "nfds": 5,
+    "normal_actor_peer_waits0": true,
+    "actual_tool_chunk": "61ceb7",
+    "exit": 1
+  },
+  "actual_GREEN": {
+    "reply": "unavailable",
+    "poll_phase_qualified": true,
+    "queued_cases": 1,
+    "preceding_planning_cases": 2,
+    "normal_closure": true,
+    "tool_chunks": [
+      "fa940b",
+      "66449d"
+    ],
+    "exit": 0
+  },
+  "host_tests": 40,
+  "ignored": 0,
+  "filtered": 0,
+  "strict_fmt_default_alltarget_allfeature_Clippy": true,
+  "source_pins": [
+    {
+      "path": "native-lifecycle/Cargo.lock",
+      "sha256": "82e19ca615ad8c45528b2da75978f49910c510004c1561ec2a9a07816a50142f"
+    },
+    {
+      "path": "native-lifecycle/Cargo.toml",
+      "sha256": "339c2dc5fa8846b08f2b97ddc32c1c4f850bfd818038175c8f8ea64cf689417e"
+    },
+    {
+      "path": "native-lifecycle/README.md",
+      "sha256": "341d8d4ca9f6344eee1f85a13cff3744e8e13bdffea0950ac0a54370e0823c26"
+    },
+    {
+      "path": "native-lifecycle/packaging/omarchy-system-lock",
+      "sha256": "312331cbb790ed634e345c32c292768b36fbce78de6d32c09a19eab590085781"
+    },
+    {
+      "path": "native-lifecycle/src/apps.rs",
+      "sha256": "77b338e8d54255577c2fbb11969faa9ed7d106960e012e25042290e7cd25ba5f"
+    },
+    {
+      "path": "native-lifecycle/src/authority.rs",
+      "sha256": "1d03425a412f4a18be74279d05293966ec45bdf6d1d83a87223dd1738d3f4369"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-client.rs",
+      "sha256": "6dd1f2c86a96bca4364b5ee2e85fd39fecaf10bc68b8f7b727bd3e65f86bc9bf"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-daemon.rs",
+      "sha256": "ee33d2d77a8fc98ce56b582d9b9c96d0f2f8240e3fda182ec9bdeba8f6af4f01"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-launcher.rs",
+      "sha256": "49a0e279b381a45ed49242a74c94b202ebebb81bc42bd8b61cfd58f8bb80a923"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-lock.rs",
+      "sha256": "169bc0b6f9745b3109bcb44b4f23eeed54e523ed115220d1c8ed809a38ecedad"
+    },
+    {
+      "path": "native-lifecycle/src/camera.rs",
+      "sha256": "d113da936e0e1cf14158d9cb52c9fb364e5cbd8c25de9c7245cae9ddcc568365"
+    },
+    {
+      "path": "native-lifecycle/src/display.rs",
+      "sha256": "8003328560796eedc3e9f20c8878ab39e36ed96300a104152d5928954172631c"
+    },
+    {
+      "path": "native-lifecycle/src/ipc.rs",
+      "sha256": "3777ef70117c8a37078e6c25ecaa21f17c2de094604877d433c6b69b8f0a90c9"
+    },
+    {
+      "path": "native-lifecycle/src/lib.rs",
+      "sha256": "b13cd5350c87d7296fae3318a643362a7b3d7315c0ee58bb154d32fdcd696005"
+    },
+    {
+      "path": "native-lifecycle/src/lock.rs",
+      "sha256": "ddb658781c03d6620ea269035044ff953c2f548ccc67409f0063dcb6ed3998e5"
+    },
+    {
+      "path": "native-lifecycle/src/messages.rs",
+      "sha256": "2e446fa1eef820b14510f60ce88b880637d84daf90cec8909639d0ec97f2c657"
+    },
+    {
+      "path": "native-lifecycle/src/service.rs",
+      "sha256": "53366701d0b0926b5cf1fe9dd33119730c15b224e98c4c9306202f4e66c8c226"
+    },
+    {
+      "path": "native-lifecycle/src/service_auth_attempt_tests.rs",
+      "sha256": "0b1170f812ccdb51fc7745796f110936efde862b5c3299818a077692f42e2470"
+    },
+    {
+      "path": "native-lifecycle/src/session.rs",
+      "sha256": "59ef191233213deb4dac8c50b3f1e72beb5fd4f8b63ff2aa555d4a71a5dd6bfb"
+    },
+    {
+      "path": "native-lifecycle/src/storage.rs",
+      "sha256": "5131630bdc3e4056472720a72d7c728d0cb0586995ae1505cc0b26b32713fc7c"
+    },
+    {
+      "path": "native-kernel-identity/Cargo.lock",
+      "sha256": "ea2dd27ddd1bf8c00b3bf15d5fface7d5bddd6e20b5d1e89fbc1fc10172ff592"
+    },
+    {
+      "path": "native-kernel-identity/Cargo.toml",
+      "sha256": "5cab2f22141987e4f1470b0fb575107b5c3ad134829bd2b92d5b7ccb3ef12431"
+    },
+    {
+      "path": "native-kernel-identity/README.md",
+      "sha256": "07ff5508164058ad2d51f449e91b06b0a02d2373b2d33d8885274d044c84d19a"
+    },
+    {
+      "path": "native-kernel-identity/public-api-inputs.json",
+      "sha256": "21981ee4e529ce04afc90453b5e9215d5d71eeb3dc758e32731deaa3fb9d6197"
+    },
+    {
+      "path": "native-kernel-identity/src/lib.rs",
+      "sha256": "464a5e2a96dd99f127cce5b32514ff4a9a7340f8bee2581e941685e6df82cbcd"
+    },
+    {
+      "path": "native-kernel-identity/src/pidfd.rs",
+      "sha256": "caf4b44738fc53093a32ef96c2e639c1a376935ad29fa17a42091a56180b11ff"
+    },
+    {
+      "path": "native-kernel-identity/tests/pidfd.rs",
+      "sha256": "ed310e5152426ae8a3d723ca2869cdcd3fda50e0552cdc16938c638d308cc3b3"
+    },
+    {
+      "path": "native-kernel-identity/tests/socket.rs",
+      "sha256": "2e9d134e7913ddadb564939bf241538690698a9ca7b660213479d843c638fd08"
+    },
+    {
+      "path": "native-camera/Cargo.lock",
+      "sha256": "2f6ea0f2ca832a4a133fcc62f3bfefd4521333133620f5936af353bf8985fe7b"
+    },
+    {
+      "path": "native-camera/Cargo.toml",
+      "sha256": "129897f013103c6e97c177fb100ebcab246a81f6a0c3f71e6d1e749b16adeea5"
+    },
+    {
+      "path": "native-camera/src/lib.rs",
+      "sha256": "3ceb27d000194de361bdac7667d5b49660db0d3598f5c95f1961bcab406542ba"
+    }
+  ],
+  "fixture_sha256": "e61d48769ffbea2a08cab18b72f8c43b7531a6c2dd4ae48936b9a31e05a1fb96",
+  "common_fixture_sha256": "9ce1c1420894094ef44e657e72bfa47bd05bb44a6c57abdf86f36540105948e4",
+  "runner_sha256": "d630cbea8e8a6be8278cf25c9023a3cd44759c766b58f53002e6f695918668af",
+  "host_ELF_sha256": "72fc38b611665749e292cb91dd8b45478ddacdc977b903bc40c6a31c107e5153",
+  "AArch64_ELF_sha256": "419f25008b3f09b809401abddb19085431ac449aec06ecccab01fd9d08fc2518",
+  "AArch64_current_ELF_executed": false,
+  "root_review_sha256": "95d88a226fb05451f881f3563097dd46abdced885bac3c44ae3fc33fb38e9fc1",
+  "actual_build_tool": {
+    "session": 77480,
+    "chunk": "76cd8e",
+    "exit": 0
+  },
+  "failed_build": {
+    "kind": "formatting prerequisite before tests",
+    "test_bodies_executed": 0,
+    "directory": "pokelinux-lock-queued-storage-build-green-root-1",
+    "chunk": "862d89",
+    "exit": 1
+  },
+  "artifacts": [
+    {
+      "label": "red",
+      "file": "selection.json",
+      "sha256": "56fadce0641d89f45d9ff6be0712af44ea08de437509791d2f88eb66626dabba"
+    },
+    {
+      "label": "red",
+      "file": "execution.json",
+      "sha256": "17154221b84f3c57ff4076cdda5f4ca138f11d68f7c200e08f3e4518284b13af"
+    },
+    {
+      "label": "red",
+      "file": "results/result.json",
+      "sha256": "7f6f969977b3c254d21a85a01dbcb28eedb0b455995a01b025a969620abc70b6"
+    },
+    {
+      "label": "red",
+      "file": "root-review.json",
+      "sha256": "c8841697a3a9a5390601eefdceadeb224b2df1139fa8ab614ee8943d05cb2b36"
+    },
+    {
+      "label": "red",
+      "file": "runner-executed.py",
+      "sha256": "d630cbea8e8a6be8278cf25c9023a3cd44759c766b58f53002e6f695918668af"
+    },
+    {
+      "label": "build",
+      "file": "selection.json",
+      "sha256": "204eeedd9c13df634762d3df1fbd9ad78f05bb4b59a9a3e4718a9800d4d3651c"
+    },
+    {
+      "label": "build",
+      "file": "execution.json",
+      "sha256": "88d194f5d4b089b322d748f38bc537ee6173de6192c51293082bfebe11664fff"
+    },
+    {
+      "label": "build",
+      "file": "build.log",
+      "sha256": "d82c6b27b5deabd1e48cc7e0059f9c50c649b80dba00073c4f7750633ef73e58"
+    },
+    {
+      "label": "build",
+      "file": "root-review.json",
+      "sha256": "95d88a226fb05451f881f3563097dd46abdced885bac3c44ae3fc33fb38e9fc1"
+    },
+    {
+      "label": "failed_fmt",
+      "file": "selection.json",
+      "sha256": "9e3634db5332581acda2311e62fc17f7000222c0b702271513de3334f71bc9c3"
+    },
+    {
+      "label": "failed_fmt",
+      "file": "execution.json",
+      "sha256": "24418e568c4c6eff012fee97d09a9b0fbbb4cd29547bb4685c7e23cad6f024ac"
+    },
+    {
+      "label": "failed_fmt",
+      "file": "build.log",
+      "sha256": "bf85392e42afea8e0a6671c28e9ece5b20e281128f1e609424ea38d791b016a6"
+    },
+    {
+      "label": "queued",
+      "file": "selection.json",
+      "sha256": "aca6ed6fa13b424df04aaa6addf26cdad83946fd1fd705641b1fa2ac263fec59"
+    },
+    {
+      "label": "queued",
+      "file": "execution.json",
+      "sha256": "0c14502026cf77fa9008837b140478f7ca09990106d8f3e8433cc2bdae64f0af"
+    },
+    {
+      "label": "queued",
+      "file": "results/result.json",
+      "sha256": "867aa4365a22a2cbd7949548661215380c3161796daea02a08e3e64d9cd6926c"
+    },
+    {
+      "label": "queued",
+      "file": "runner-executed.py",
+      "sha256": "d630cbea8e8a6be8278cf25c9023a3cd44759c766b58f53002e6f695918668af"
+    },
+    {
+      "label": "planning",
+      "file": "selection.json",
+      "sha256": "beaed639c15166d71f7c92525e1d90553c8f9492fde8f4755d9a3ac8e3422d8f"
+    },
+    {
+      "label": "planning",
+      "file": "execution.json",
+      "sha256": "c274feb31f5b8f47b8f85f0eff1a85c11e5b063cdd01ae9cf58e715a64af2d3e"
+    },
+    {
+      "label": "planning",
+      "file": "results/result.json",
+      "sha256": "16b716a05e20b34af3845312d230988845f395ead6d2e1155d00d0fec94bc4de"
+    },
+    {
+      "label": "planning",
+      "file": "runner-executed.py",
+      "sha256": "d630cbea8e8a6be8278cf25c9023a3cd44759c766b58f53002e6f695918668af"
+    }
+  ],
+  "fresh_four_exact_CIDs_absent_same_daemon": true,
+  "claims_no_independent_container_wait_for_host": true,
+  "limits": [
+    "Host x86_64 headless actual daemon, retained credential-qualified JSON clients and ordinary Grant/SIGSTOP storage only.",
+    "No forced fallback counts as success; storage numeric Child waits belong to actor, fixture observes death.",
+    "No actual send EAGAIN, completed intervening write, authenticated clear, Source/UI, original effect, PAM, auth scope, broker, armed receipt or phone.",
+    "Future clear needs epoch and serialized durable ordering beyond a busy check.",
+    "Older1106ab2 planning source has separate actual ARM evidence; current queued repair cross-compiles only.",
+    "Source100ms and original deadlines unchanged; raw logs/images/ELFs stay private."
+  ]
+}

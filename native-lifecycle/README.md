@@ -79,8 +79,13 @@ ACK requires synced required-schema `Durable.lock_pending`. A repeated cached
 pending lock also requires no unresolved actor/storage operation at planning time. The actual
 [storage-barrier regression](../docs/native-lock-storage-barrier.md) now passes
 both held-child cases after a behavioral RED; all 40 host regressions pass.
-Refusal still fences memory immediately. Complete authenticated-clear ordering
-and queued-success send-time checks remain open. That intent is restored
+Refusal still fences memory immediately. A later
+[queued-reply guard](../docs/native-lock-queued-storage.md) also rechecks success
+at every send and permanently downgrades it when storage is busy. A genuine
+queued-socket RED precedes its host GREEN, two planning controls and all 40
+regressions. The older planning source separately passes two actual generic ARM
+kernel cases; newer send-time source only cross-compiles there. Complete
+authenticated-clear ordering remains open. That intent is restored
 before Ready and cannot be cleared by unlocked Source facts or root admin false.
 `Gate::Lock` remains monotonic through irrelevant focus revisions. The fixed Rust
 client verifies the connected root actor's reply within the original two-second
