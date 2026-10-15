@@ -1,0 +1,304 @@
+{
+  "schema": 1,
+  "scope": "Original SDK37 x86 in-process raw indication dispatch, exact registration class code association, and separate null-channel parser observations; no native publication or full channel dispatch",
+  "base_commit": "1f80a098809e5dc919d3cea4a11864a8d051f1f3",
+  "original_apk": {
+    "sha256": "8b017599727398e80df5ab618d648890dcdc34b5fe2ba71fb2331e51bd8b8879",
+    "published": false
+  },
+  "authored_source": {
+    "path": "framework/shannon-registration-oracle/RegistrationRouteOracle.java",
+    "sha256": "0f93d6e04bff72c204bdc562ea299c4a98963c9ae675957e97b6bd1f7c914966"
+  },
+  "runtime": {
+    "label": "pokelinux-registration-route-sdk37-root-2",
+    "image": "sha256:fcc63fb8f191a5b15cd9a64d04a26bb06b009216a2cd4e4de0f6931b6c919838",
+    "sdk_selected_files": 447,
+    "oracle_jar_sha256": "09223607c5335c04f9fe965d6e137d78a5e082abbb0ae7845b45cf0efef83fb0",
+    "metadata": {
+      "avd_name": "route-sdk37\r\nOK",
+      "sdk": "37",
+      "abi": "x86_64",
+      "qemu": "1",
+      "selinux": "Enforcing",
+      "size": "Physical size: 1080x2424",
+      "density": "Physical density: 420"
+    },
+    "fresh_AVD_and_HOME": true,
+    "SDK_and_original_inputs_readonly": true,
+    "only_host_device": "/dev/kvm",
+    "network": "none",
+    "input_files": 10,
+    "external_input_bindings": 455,
+    "private_result_sha256": "e2936104eec1666debbe45e6faa7b1aa1c7b57550ef015a89ffe5709b776e1f0",
+    "receipts": [
+      {
+        "name": "inputs/selection.json",
+        "sha256": "8ae05c6b0fa76eb12bb400c781938a46b4fac1870084bbaa137b95e9dd1f4cde"
+      },
+      {
+        "name": "inputs/command.json",
+        "sha256": "559f8da44807e0a4e558221c2734248b9643c49bace5b348225c324ee709374b"
+      },
+      {
+        "name": "outputs/result.json",
+        "sha256": "4edf85101621183c90ddd28682009cfcb531d9e88301be2b01f8be01cde60ade"
+      },
+      {
+        "name": "outputs/execution.json",
+        "sha256": "7bbb5764a0524818514c0b968d5d9a063514988540bb9c600b2553e757f80b4f"
+      }
+    ],
+    "source": [
+      {
+        "name": "plan.py",
+        "sha256": "a1fa8a9617affc78a73033fb6a65df628c1b201f90e657e55e00d0319d2c38b3"
+      },
+      {
+        "name": "run-selected.py",
+        "sha256": "917ca008c18b6348d7cc6a41bc2813336bd56fcc9be56845d77123a2b89a318d"
+      },
+      {
+        "name": "container.py",
+        "sha256": "a9a9c9caed8171ad53bb349a826fe5e5002fbd1f9131cb8c88f8c803cdf871d3"
+      },
+      {
+        "name": "owned.py",
+        "sha256": "156ea16b3bbc672923bba4873c1d10ef58127fe41572f68896e33696816e05fe"
+      },
+      {
+        "name": "oracle-launch.sh",
+        "sha256": "67e8cbd3599278a8d7394f5ce2357f2e09bf3b5407c65b0fd45fb77d0c52ef36"
+      }
+    ],
+    "original_app_process_shell_wait_exit": 0,
+    "original_app_process_absent_after_wait": true,
+    "app_wait_evidence": "fixed shell parent wait builtin and actual receipt, not syscall tracing",
+    "adb_oracle_CLI_wait_exit": 0,
+    "emulator_wait_exit": 0,
+    "foreground_adb_server_wait_signal": 15,
+    "container_CLI_wait_exit": 0,
+    "direct_children_waited": 129,
+    "all_waits_and_EOF_within_original_phase_cutoffs": true,
+    "all_output_bounds_passed": true,
+    "fresh_exact_CID_absence_same_daemon": true,
+    "all_selected_and_original_inputs_unchanged": true
+  },
+  "observed_association": {
+    "class": "RilIndRegistration",
+    "enum": "RILC_UNSOL_AIMS_REGISTRATION",
+    "wire_code": 3012,
+    "ordinal_recorded_only": 106
+  },
+  "original_dispatch": {
+    "transaction_code": 1,
+    "authored_flags": 1,
+    "driver_or_producer_flags_qualified": false,
+    "captured_type": 2,
+    "captured_serial": -1,
+    "captured_status": 0,
+    "metadata_values_not_domain_meanings": true
+  },
+  "raw_cases": [
+    {
+      "case": "slot0-complete-minimal",
+      "configured_slot": 0,
+      "incoming_slot": 0,
+      "message_id": 3012,
+      "payload_length": 12,
+      "listener_entries": 1,
+      "parser_executed": true,
+      "dispatch_exception_class": null
+    },
+    {
+      "case": "slot0-complete-extended",
+      "configured_slot": 0,
+      "incoming_slot": 0,
+      "message_id": 3012,
+      "payload_length": 37,
+      "listener_entries": 1,
+      "parser_executed": true,
+      "dispatch_exception_class": null
+    },
+    {
+      "case": "slot1-complete-extended",
+      "configured_slot": 1,
+      "incoming_slot": 1,
+      "message_id": 3012,
+      "payload_length": 37,
+      "listener_entries": 1,
+      "parser_executed": true,
+      "dispatch_exception_class": null
+    },
+    {
+      "case": "slot1-to-configured0",
+      "configured_slot": 0,
+      "incoming_slot": 1,
+      "message_id": 3012,
+      "payload_length": 37,
+      "listener_entries": 0,
+      "parser_executed": false,
+      "dispatch_exception_class": null
+    },
+    {
+      "case": "slot0-to-configured1",
+      "configured_slot": 1,
+      "incoming_slot": 0,
+      "message_id": 3012,
+      "payload_length": 37,
+      "listener_entries": 0,
+      "parser_executed": false,
+      "dispatch_exception_class": null
+    },
+    {
+      "case": "negative-slot-to-configured0",
+      "configured_slot": 0,
+      "incoming_slot": -1,
+      "message_id": 3012,
+      "payload_length": 37,
+      "listener_entries": 0,
+      "parser_executed": false,
+      "dispatch_exception_class": null
+    },
+    {
+      "case": "adjacent-message-below",
+      "configured_slot": 0,
+      "incoming_slot": 0,
+      "message_id": 3011,
+      "payload_length": 37,
+      "listener_entries": 1,
+      "parser_executed": false,
+      "dispatch_exception_class": null
+    },
+    {
+      "case": "adjacent-message-above",
+      "configured_slot": 0,
+      "incoming_slot": 0,
+      "message_id": 3013,
+      "payload_length": 37,
+      "listener_entries": 1,
+      "parser_executed": false,
+      "dispatch_exception_class": null
+    },
+    {
+      "case": "unknown-message-id",
+      "configured_slot": 0,
+      "incoming_slot": 0,
+      "message_id": -1234567,
+      "payload_length": 37,
+      "listener_entries": 1,
+      "parser_executed": false,
+      "dispatch_exception_class": null
+    },
+    {
+      "case": "empty-array",
+      "configured_slot": 0,
+      "incoming_slot": 0,
+      "message_id": 3012,
+      "payload_length": 0,
+      "listener_entries": 1,
+      "parser_executed": true,
+      "dispatch_exception_class": null
+    },
+    {
+      "case": "null-array-matching-slot",
+      "configured_slot": 0,
+      "incoming_slot": 0,
+      "message_id": 3012,
+      "payload_length": null,
+      "listener_entries": 0,
+      "parser_executed": false,
+      "dispatch_exception_class": "java.lang.NullPointerException"
+    },
+    {
+      "case": "null-array-wrong-slot",
+      "configured_slot": 0,
+      "incoming_slot": 1,
+      "message_id": 3012,
+      "payload_length": null,
+      "listener_entries": 0,
+      "parser_executed": false,
+      "dispatch_exception_class": null
+    },
+    {
+      "case": "truncated-header",
+      "configured_slot": 0,
+      "incoming_slot": 0,
+      "message_id": 3012,
+      "payload_length": 11,
+      "listener_entries": 1,
+      "parser_executed": true,
+      "dispatch_exception_class": null
+    },
+    {
+      "case": "truncated-body",
+      "configured_slot": 0,
+      "incoming_slot": 0,
+      "message_id": 3012,
+      "payload_length": 22,
+      "listener_entries": 1,
+      "parser_executed": true,
+      "dispatch_exception_class": null
+    },
+    {
+      "case": "trailing-after-minimal",
+      "configured_slot": 0,
+      "incoming_slot": 0,
+      "message_id": 3012,
+      "payload_length": 13,
+      "listener_entries": 1,
+      "parser_executed": true,
+      "dispatch_exception_class": null
+    },
+    {
+      "case": "trailing-after-extended",
+      "configured_slot": 0,
+      "incoming_slot": 0,
+      "message_id": 3012,
+      "payload_length": 38,
+      "listener_entries": 1,
+      "parser_executed": true,
+      "dispatch_exception_class": null
+    },
+    {
+      "case": "extra-parcel-int",
+      "configured_slot": 0,
+      "incoming_slot": 0,
+      "message_id": 3012,
+      "payload_length": 37,
+      "listener_entries": 0,
+      "parser_executed": false,
+      "dispatch_exception_class": "android.os.BadParcelableException"
+    }
+  ],
+  "parser_cases": 8,
+  "full_positive_parser_fields_independently_checked": true,
+  "all_eight_original_parser_calls_returned_normally": true,
+  "prior_121_decoder_probes_rerun": false,
+  "preserved_setup_failure": {
+    "label": "pokelinux-registration-route-sdk37-root-1",
+    "stage": "foreground ADB listener before emulator/original execution",
+    "compiler_d8_zip_exit": 0,
+    "adb_server_wait_signal": 6,
+    "original_code_executed": false,
+    "behavioral_RED": false,
+    "correction": "numeric listener hostname changed to documented localhost form in fresh frozen container driver",
+    "other_selected_source_inputs_unchanged": true,
+    "receipt_sha256": "adafd706ab92a469c7f5f0347e0c2fd877b2fb9bf2fce079ce52a0bb53f292b7",
+    "result_sha256": "d4ca8c0af0effc4f2a16477f7a11bd502e5cb7eb11a9e343d27fcb6bca727921",
+    "actual_wait_CID_absence_same_daemon_inputs_unchanged": true
+  },
+  "evidence_classes": {
+    "original_APK_in_process_SDK_x86": true,
+    "new_native_Rust_runtime": false,
+    "new_ARM_kernel_Binder_runtime": false,
+    "physical_phone": false,
+    "screenshot_or_visual_qualification": false
+  },
+  "remaining_gates": [
+    "connect entire-array decoder through current native owner and installed service",
+    "full original helper/channel semantic dispatch and state/RAT/features/URI identity",
+    "original producer identity, fragmentation serialization, cleanup/reset and safe successor registration",
+    "carrier IMS/calls/SMS/media, matched Pixel policy, suspend and physical hardware"
+  ]
+}

@@ -1,13 +1,22 @@
 # Native radio session owner
 
+The [original raw registration route](native-ims-registration-routing.md) now
+passes17 dispatch cases and8 separate parser calls in a fresh SDK37 x86 emulator:
+class wire code3012, exact configured-slot filtering and full-array delivery.
+Generic forwarding of other IDs and malformed parser behavior stay distinct from
+native acceptance policy. Original helper/channel semantics and producer/reset
+remain open. Next connect the complete decoder through the native owner and
+installed service using a real ARM Binder publication RED; no new native runtime
+or phone qualification is claimed by this original-reference checkpoint.
+
 An additional [permanently held registration control](native-radio-service-blocked.md)
 now keeps the same installed production ELF bytes responsive: three real
 Initializing statuses finish in343.15ms while Binder registration stays held.
 Normal Stop has native worker wait9 in5.56ms, systemd Main exit0 and empty cgroup;
 unchanged-journal restart exits78 while the peer remains alive and held. All45 host
 regressions and full ARM guest/outer/input closure pass. Local reaping grants no
-vendor cleanup or retry authority. Next recover exact original IMS indication
-routing before connecting the existing decoder; remaining discovery/pressure,
+vendor cleanup or retry authority. The narrow original raw route is now qualified above; connect the existing
+decoder through the current owner next; remaining discovery/pressure,
 producer/reset, device policy and hardware gates stay open.
 
 The installed production radio service/status tracer now passes on an actual

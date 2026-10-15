@@ -15,6 +15,11 @@ production binaries now separately pass [responsive status and owned Stop during
 permanently held registration](native-radio-service-blocked.md), with durable
 restart refusal and no vendor-cleanup claim.
 
+The narrow [original registration route](native-ims-registration-routing.md) is
+now qualified separately:17 raw dispatch cases and8 parser calls establish
+code3012, slot filtering and full-array delivery. Native typed publication,
+full semantic routing and producer/reset remain unfinished.
+
 ## Product and architecture
 
 Nicholas updated the target on 12 October 2026: implement the required phone

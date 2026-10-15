@@ -6,6 +6,12 @@ only after the complete selected range validates. It does not publish IMS state,
 interpret state/RAT/features, validate a URI identity or activate a session.
 The Shannon-specific layout stays in this backend, outside shared phone policy.
 
+The later [original raw routing qualification](native-ims-registration-routing.md)
+adds17 dispatch cases and8 separate parser calls: exact class wire code3012,
+configured-slot filtering and complete-array delivery. It does not rerun the121
+parser comparisons below, execute full semantic channel dispatch or connect the
+native owner. Producer/reset and decoded domain meanings remain open.
+
 ## Original execution and native policy
 
 The exact retained Shannon APK is pinned by SHA256 in the provenance report.
