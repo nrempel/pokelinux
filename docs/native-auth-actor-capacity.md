@@ -7,7 +7,10 @@ receipt or restoration authority. All40 lifecycle tests pass in the required
 root-owned storage profile; the22 actor tests separately pass as UID1000.
 Strict formatting/default/all-target/all-feature Clippy and separate ARM64
 library-test compilation pass. [Bounded provenance](evidence/native-auth-actor-capacity-provenance.json)
-keeps those profiles and the failed prerequisites separate.
+keeps those profiles and the failed prerequisites separate. The unchanged22
+actor tests later pass on an [actual Arch ARM64 kernel](native-auth-actor-capacity-arm.md)
+as UID1000;18 other tests are explicitly filtered, with all40 names enumerated
+only. This reuses the same ELF and does not qualify full40 ARM execution.
 
 ClosedAuthenticationAttempt has private actor-incarnation, non-reused attempt-ID
 and original-deadline fields, with no Clone, Debug, serialization or production
@@ -58,7 +61,7 @@ capacity-only consumer cannot provide that context afterward.
 Contained original PAM/scope with effective retained faillock, broker ownership,
 actor result arming, ordered locker release, exact-object unlock, serialized
 synced durable clear and normal Messages reopening remain gates. Source stays
-100ms without renewal/revival; neither this host selection nor ARM compilation
-qualifies actual suspend, the matched Google kernel or hardware. No phone was
+100ms without renewal/revival; neither the host selection nor the focused generic
+ARM kernel run qualifies actual suspend, the matched Google kernel or hardware. No phone was
 accessed. The earlier [attempt admission proof](evidence/native-auth-actor-attempt-provenance.json)
 retains its earlier no-release source.

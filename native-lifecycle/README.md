@@ -64,6 +64,10 @@ cannot remove a successor; original expiry and Source loss permit only capacity
 reclamation, never handle/Source revival or policy clearing. Fresh explicit begin
 still performs its own admission. Strict Clippy and separate AArch64 test-ELF
 compilation pass; no Source IPC, broker, PAM/scope or unlock is enabled.
+The unchanged22 actor cases separately pass on an
+[actual generic ARM kernel](../docs/native-auth-actor-capacity-arm.md), with18
+explicitly filtered. Full40 inventory is listing only; no ARM root-storage,
+production stamp producer or authentication composition is qualified.
 
 [Per-app ARM evidence](../docs/native-display-app-generations.md) qualifies
 lifetime/relaunch and held-init Stop. Pending EOF passes its narrow boundary;

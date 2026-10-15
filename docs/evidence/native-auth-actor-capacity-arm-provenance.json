@@ -1,0 +1,445 @@
+{
+  "schema": 1,
+  "scope": "Unchanged22 lifecycle actor capacity controls under generic actual Arch ARM64 kernel;18 explicitly filtered",
+  "source_commit": "8296587ed703830fb41c53398d3da41457e26425",
+  "classification": "TYPED_PROVIDER_REAL_PIDFD_COMPONENTS_WITH_CFG_TEST_CLOSURE_FACTS",
+  "root_review": {
+    "passed": true,
+    "code_commit": "8296587ed703830fb41c53398d3da41457e26425",
+    "independent_root_hashed_paths": 209,
+    "frozen_source_pins": 31,
+    "current_source_matches": 30,
+    "document_snapshot_difference": "native-lifecycle/README.md updated after sealing; all other30 pins match current code",
+    "full_inventory_only": 40,
+    "executed_focused": 22,
+    "explicit_filtered": 18,
+    "ignored": 0,
+    "uid": 1000,
+    "gid": 1000,
+    "groups": [],
+    "cap_eff": 0,
+    "actual_process_waits": 5,
+    "actual_qemu_wait": {
+      "passed": true,
+      "bound_seconds": 360,
+      "timed_out": false,
+      "actual_qemu_pid": 7,
+      "actual_qemu_wait": 0,
+      "elapsed_seconds": 26.763054055161774
+    },
+    "actual_CLI_wait": 0,
+    "actual_container_wait": "0",
+    "daemon_id": "9eb48589-8b75-49a3-94ce-51d9212ff634",
+    "actual_agent_tool_terminal": {
+      "session": 85800,
+      "chunk": "eaa4d6",
+      "exit": 0
+    },
+    "limits": [
+      "cfg(test) closure stamps only; no production completion producer",
+      "No broker, PAM, authentication scope, actor unlock or Messages reopening",
+      "Generic Arch ARM kernel; no matched Google kernel or phone evidence"
+    ]
+  },
+  "root_review_sha256": "b3d1b9b9cfc1b60149b39d0d479f23f6a976493ba5cfe7aba71827c3cbd3fb51",
+  "test_ELF_sha256": "76a7781b06805abb95c1034175792e60c67d29198ac8a7f6cc8be5b060d541e3",
+  "full_library_executed": false,
+  "full_inventory_only": [
+    "authority::tests::auth_attempt_id_overflow_fails_closed_before_any_slot",
+    "authority::tests::auth_attempt_lock_epoch_overflow_retires_and_keeps_slot",
+    "authority::tests::exhausted_lifecycle_revision_fences_prepared_work",
+    "authority::tests::failed_admission_write_never_recovers_or_retries",
+    "authority::tests::late_durable_success_grants_no_current_admission",
+    "authority::tests::locker_cached_sample_and_same_task_heartbeat_do_not_fail_source",
+    "authority::tests::locker_changes_without_a_new_revision_are_terminal",
+    "authority::tests::locker_equal_metadata_cannot_hide_a_different_kernel_task",
+    "authority::tests::locker_unlocked_provider_snapshot_is_refused",
+    "authority::tests::protocol_cached_samples_and_sticky_heartbeats_preserve_actor_revision",
+    "authority::tests::protocol_generation_changes_require_a_new_actor_revision",
+    "authority::tests::protocol_invalid_shapes_fail_the_actor_terminally",
+    "authority::tests::protocol_unlock_changes_require_a_new_actor_revision",
+    "authority::tests::resume_does_not_erase_established_source_loss_history",
+    "authority::tests::suspended_time_jump_expires_without_timer_delivery",
+    "service::auth_attempt_tests::auth_attempt_belongs_to_exact_actor_incarnation",
+    "service::auth_attempt_tests::auth_attempt_exact_live_lock_admits_only_one_inert_handle",
+    "service::auth_attempt_tests::auth_attempt_expired_deadline_is_sticky_and_slot_stays_occupied",
+    "service::auth_attempt_tests::auth_attempt_explicit_lifecycle_and_degrade_retire_without_reuse",
+    "service::auth_attempt_tests::auth_attempt_new_accepted_operation_retires_same_process_handle",
+    "service::auth_attempt_tests::auth_attempt_new_lock_admission_retires_handle_even_if_already_pending",
+    "service::auth_attempt_tests::auth_attempt_observed_context_excursion_cannot_revive_when_facts_return",
+    "service::auth_attempt_tests::auth_attempt_provider_control_preserves_exact_lock_and_durable_denial",
+    "service::auth_attempt_tests::auth_attempt_provider_loss_is_terminal_without_handle_revival",
+    "service::auth_attempt_tests::auth_attempt_rejects_invalid_deadlines_without_occupying_slot",
+    "service::auth_attempt_tests::auth_attempt_retained_locker_death_retires_before_next_source_poll",
+    "service::auth_attempt_tests::auth_attempt_shared_reference_cannot_hide_a_wrong_kernel_task",
+    "service::auth_attempt_tests::auth_attempt_source_lease_expires_without_timer_and_never_frees_slot",
+    "service::auth_attempt_tests::auth_attempt_stable_heartbeat_cannot_extend_original_deadline",
+    "service::auth_attempt_tests::auth_attempt_unknown_accepted_generation_never_admits_a_handle",
+    "service::auth_attempt_tests::auth_closed_capacity_after_actual_source_expiry_keeps_locked_policy",
+    "service::auth_attempt_tests::auth_closed_capacity_after_new_lock_keeps_new_epoch_and_policy",
+    "service::auth_attempt_tests::auth_closed_capacity_after_original_attempt_expiry_allows_only_a_new_deadline",
+    "service::auth_attempt_tests::auth_closed_capacity_after_terminal_provider_loss_cannot_restore_the_source",
+    "service::auth_attempt_tests::auth_closed_capacity_allows_one_fresh_explicit_attempt_without_unlock",
+    "service::auth_attempt_tests::auth_closed_capacity_does_not_release_an_absent_or_successor_slot",
+    "service::auth_attempt_tests::auth_closed_capacity_refuses_other_actor_and_changed_original_deadline",
+    "storage::tests::clean_seal_binds_exact_policy_and_unclean_owner_never_reopens",
+    "storage::tests::clean_seal_rejects_changed_policy_without_overwriting_owner",
+    "storage::tests::terminated_worker_slot_remains_owned_until_actual_reap"
+  ],
+  "executed_focus": [
+    "service::auth_attempt_tests::auth_attempt_belongs_to_exact_actor_incarnation",
+    "service::auth_attempt_tests::auth_attempt_exact_live_lock_admits_only_one_inert_handle",
+    "service::auth_attempt_tests::auth_attempt_expired_deadline_is_sticky_and_slot_stays_occupied",
+    "service::auth_attempt_tests::auth_attempt_explicit_lifecycle_and_degrade_retire_without_reuse",
+    "service::auth_attempt_tests::auth_attempt_new_accepted_operation_retires_same_process_handle",
+    "service::auth_attempt_tests::auth_attempt_new_lock_admission_retires_handle_even_if_already_pending",
+    "service::auth_attempt_tests::auth_attempt_observed_context_excursion_cannot_revive_when_facts_return",
+    "service::auth_attempt_tests::auth_attempt_provider_control_preserves_exact_lock_and_durable_denial",
+    "service::auth_attempt_tests::auth_attempt_provider_loss_is_terminal_without_handle_revival",
+    "service::auth_attempt_tests::auth_attempt_rejects_invalid_deadlines_without_occupying_slot",
+    "service::auth_attempt_tests::auth_attempt_retained_locker_death_retires_before_next_source_poll",
+    "service::auth_attempt_tests::auth_attempt_shared_reference_cannot_hide_a_wrong_kernel_task",
+    "service::auth_attempt_tests::auth_attempt_source_lease_expires_without_timer_and_never_frees_slot",
+    "service::auth_attempt_tests::auth_attempt_stable_heartbeat_cannot_extend_original_deadline",
+    "service::auth_attempt_tests::auth_attempt_unknown_accepted_generation_never_admits_a_handle",
+    "service::auth_attempt_tests::auth_closed_capacity_after_actual_source_expiry_keeps_locked_policy",
+    "service::auth_attempt_tests::auth_closed_capacity_after_new_lock_keeps_new_epoch_and_policy",
+    "service::auth_attempt_tests::auth_closed_capacity_after_original_attempt_expiry_allows_only_a_new_deadline",
+    "service::auth_attempt_tests::auth_closed_capacity_after_terminal_provider_loss_cannot_restore_the_source",
+    "service::auth_attempt_tests::auth_closed_capacity_allows_one_fresh_explicit_attempt_without_unlock",
+    "service::auth_attempt_tests::auth_closed_capacity_does_not_release_an_absent_or_successor_slot",
+    "service::auth_attempt_tests::auth_closed_capacity_refuses_other_actor_and_changed_original_deadline"
+  ],
+  "explicit_filtered_out": [
+    "authority::tests::auth_attempt_id_overflow_fails_closed_before_any_slot",
+    "authority::tests::auth_attempt_lock_epoch_overflow_retires_and_keeps_slot",
+    "authority::tests::exhausted_lifecycle_revision_fences_prepared_work",
+    "authority::tests::failed_admission_write_never_recovers_or_retries",
+    "authority::tests::late_durable_success_grants_no_current_admission",
+    "authority::tests::locker_cached_sample_and_same_task_heartbeat_do_not_fail_source",
+    "authority::tests::locker_changes_without_a_new_revision_are_terminal",
+    "authority::tests::locker_equal_metadata_cannot_hide_a_different_kernel_task",
+    "authority::tests::locker_unlocked_provider_snapshot_is_refused",
+    "authority::tests::protocol_cached_samples_and_sticky_heartbeats_preserve_actor_revision",
+    "authority::tests::protocol_generation_changes_require_a_new_actor_revision",
+    "authority::tests::protocol_invalid_shapes_fail_the_actor_terminally",
+    "authority::tests::protocol_unlock_changes_require_a_new_actor_revision",
+    "authority::tests::resume_does_not_erase_established_source_loss_history",
+    "authority::tests::suspended_time_jump_expires_without_timer_delivery",
+    "storage::tests::clean_seal_binds_exact_policy_and_unclean_owner_never_reopens",
+    "storage::tests::clean_seal_rejects_changed_policy_without_overwriting_owner",
+    "storage::tests::terminated_worker_slot_remains_owned_until_actual_reap"
+  ],
+  "full_ignored": [],
+  "focused_ignored": [],
+  "actual_test_process_waits": [
+    {
+      "pid": 303,
+      "exit": 0,
+      "stdout_eof": true,
+      "proc_absent_after_wait": true,
+      "log": "full-test-list.log"
+    },
+    {
+      "pid": 304,
+      "exit": 0,
+      "stdout_eof": true,
+      "proc_absent_after_wait": true,
+      "log": "focused-test-list.log"
+    },
+    {
+      "pid": 305,
+      "exit": 0,
+      "stdout_eof": true,
+      "proc_absent_after_wait": true,
+      "log": "full-ignored-test-list.log"
+    },
+    {
+      "pid": 306,
+      "exit": 0,
+      "stdout_eof": true,
+      "proc_absent_after_wait": true,
+      "log": "focused-ignored-test-list.log"
+    },
+    {
+      "pid": 307,
+      "exit": 0,
+      "stdout_eof": true,
+      "proc_absent_after_wait": true,
+      "log": "focused-components.log"
+    }
+  ],
+  "exec_identities": [
+    {
+      "cap_eff": "0000000000000000",
+      "egid": 1000,
+      "euid": 1000,
+      "gid": 1000,
+      "groups": [],
+      "pid": 303,
+      "uid": 1000
+    },
+    {
+      "cap_eff": "0000000000000000",
+      "egid": 1000,
+      "euid": 1000,
+      "gid": 1000,
+      "groups": [],
+      "pid": 304,
+      "uid": 1000
+    },
+    {
+      "cap_eff": "0000000000000000",
+      "egid": 1000,
+      "euid": 1000,
+      "gid": 1000,
+      "groups": [],
+      "pid": 305,
+      "uid": 1000
+    },
+    {
+      "cap_eff": "0000000000000000",
+      "egid": 1000,
+      "euid": 1000,
+      "gid": 1000,
+      "groups": [],
+      "pid": 306,
+      "uid": 1000
+    },
+    {
+      "cap_eff": "0000000000000000",
+      "egid": 1000,
+      "euid": 1000,
+      "gid": 1000,
+      "groups": [],
+      "pid": 307,
+      "uid": 1000
+    }
+  ],
+  "kernel": {
+    "machine": "aarch64",
+    "release": "7.1.6-1-aarch64-ARCH",
+    "version": "#1 SMP PREEMPT_DYNAMIC Wed Aug  5 00:20:13 UTC 2026"
+  },
+  "source_pins": [
+    {
+      "path": "native-lifecycle/Cargo.lock",
+      "sha256": "82e19ca615ad8c45528b2da75978f49910c510004c1561ec2a9a07816a50142f"
+    },
+    {
+      "path": "native-lifecycle/Cargo.toml",
+      "sha256": "339c2dc5fa8846b08f2b97ddc32c1c4f850bfd818038175c8f8ea64cf689417e"
+    },
+    {
+      "path": "native-lifecycle/README.md",
+      "sha256": "df1f09068cf29541fc2c415c9a6f57b4b52e3c0408a0f33b18c27e13ef7ad5a4"
+    },
+    {
+      "path": "native-lifecycle/packaging/omarchy-system-lock",
+      "sha256": "312331cbb790ed634e345c32c292768b36fbce78de6d32c09a19eab590085781"
+    },
+    {
+      "path": "native-lifecycle/src/apps.rs",
+      "sha256": "77b338e8d54255577c2fbb11969faa9ed7d106960e012e25042290e7cd25ba5f"
+    },
+    {
+      "path": "native-lifecycle/src/authority.rs",
+      "sha256": "1d03425a412f4a18be74279d05293966ec45bdf6d1d83a87223dd1738d3f4369"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-client.rs",
+      "sha256": "6dd1f2c86a96bca4364b5ee2e85fd39fecaf10bc68b8f7b727bd3e65f86bc9bf"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-daemon.rs",
+      "sha256": "ee33d2d77a8fc98ce56b582d9b9c96d0f2f8240e3fda182ec9bdeba8f6af4f01"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-launcher.rs",
+      "sha256": "49a0e279b381a45ed49242a74c94b202ebebb81bc42bd8b61cfd58f8bb80a923"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-lock.rs",
+      "sha256": "169bc0b6f9745b3109bcb44b4f23eeed54e523ed115220d1c8ed809a38ecedad"
+    },
+    {
+      "path": "native-lifecycle/src/camera.rs",
+      "sha256": "d113da936e0e1cf14158d9cb52c9fb364e5cbd8c25de9c7245cae9ddcc568365"
+    },
+    {
+      "path": "native-lifecycle/src/display.rs",
+      "sha256": "8003328560796eedc3e9f20c8878ab39e36ed96300a104152d5928954172631c"
+    },
+    {
+      "path": "native-lifecycle/src/ipc.rs",
+      "sha256": "3777ef70117c8a37078e6c25ecaa21f17c2de094604877d433c6b69b8f0a90c9"
+    },
+    {
+      "path": "native-lifecycle/src/lib.rs",
+      "sha256": "b13cd5350c87d7296fae3318a643362a7b3d7315c0ee58bb154d32fdcd696005"
+    },
+    {
+      "path": "native-lifecycle/src/lock.rs",
+      "sha256": "ddb658781c03d6620ea269035044ff953c2f548ccc67409f0063dcb6ed3998e5"
+    },
+    {
+      "path": "native-lifecycle/src/messages.rs",
+      "sha256": "2e446fa1eef820b14510f60ce88b880637d84daf90cec8909639d0ec97f2c657"
+    },
+    {
+      "path": "native-lifecycle/src/service.rs",
+      "sha256": "b3ae15428e8dab3c0b7261c33ab9b5d62b268fa6cf648e9d38b76f8dd0c29880"
+    },
+    {
+      "path": "native-lifecycle/src/service_auth_attempt_tests.rs",
+      "sha256": "0b1170f812ccdb51fc7745796f110936efde862b5c3299818a077692f42e2470"
+    },
+    {
+      "path": "native-lifecycle/src/session.rs",
+      "sha256": "59ef191233213deb4dac8c50b3f1e72beb5fd4f8b63ff2aa555d4a71a5dd6bfb"
+    },
+    {
+      "path": "native-lifecycle/src/storage.rs",
+      "sha256": "5131630bdc3e4056472720a72d7c728d0cb0586995ae1505cc0b26b32713fc7c"
+    },
+    {
+      "path": "native-kernel-identity/Cargo.lock",
+      "sha256": "ea2dd27ddd1bf8c00b3bf15d5fface7d5bddd6e20b5d1e89fbc1fc10172ff592"
+    },
+    {
+      "path": "native-kernel-identity/Cargo.toml",
+      "sha256": "5cab2f22141987e4f1470b0fb575107b5c3ad134829bd2b92d5b7ccb3ef12431"
+    },
+    {
+      "path": "native-kernel-identity/README.md",
+      "sha256": "07ff5508164058ad2d51f449e91b06b0a02d2373b2d33d8885274d044c84d19a"
+    },
+    {
+      "path": "native-kernel-identity/public-api-inputs.json",
+      "sha256": "21981ee4e529ce04afc90453b5e9215d5d71eeb3dc758e32731deaa3fb9d6197"
+    },
+    {
+      "path": "native-kernel-identity/src/lib.rs",
+      "sha256": "464a5e2a96dd99f127cce5b32514ff4a9a7340f8bee2581e941685e6df82cbcd"
+    },
+    {
+      "path": "native-kernel-identity/src/pidfd.rs",
+      "sha256": "caf4b44738fc53093a32ef96c2e639c1a376935ad29fa17a42091a56180b11ff"
+    },
+    {
+      "path": "native-kernel-identity/tests/pidfd.rs",
+      "sha256": "ed310e5152426ae8a3d723ca2869cdcd3fda50e0552cdc16938c638d308cc3b3"
+    },
+    {
+      "path": "native-kernel-identity/tests/socket.rs",
+      "sha256": "2e9d134e7913ddadb564939bf241538690698a9ca7b660213479d843c638fd08"
+    },
+    {
+      "path": "native-camera/Cargo.lock",
+      "sha256": "2f6ea0f2ca832a4a133fcc62f3bfefd4521333133620f5936af353bf8985fe7b"
+    },
+    {
+      "path": "native-camera/Cargo.toml",
+      "sha256": "129897f013103c6e97c177fb100ebcab246a81f6a0c3f71e6d1e749b16adeea5"
+    },
+    {
+      "path": "native-camera/src/lib.rs",
+      "sha256": "3ceb27d000194de361bdac7667d5b49660db0d3598f5c95f1961bcab406542ba"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "handoff.json",
+      "sha256": "196c388882037322adf69989da033e10a7a51f342bdb71dd508beb3750f48dd5"
+    },
+    {
+      "path": "evidence-bindings.json",
+      "sha256": "2253b47aaae67b092c5325ea428caa56deac4f27ec7fd5e8243391be73b00817"
+    },
+    {
+      "path": "host-inventory.json",
+      "sha256": "c36060f3208de75d8c3ab3bfdb3cfb9d09db1a8c55346ed1a6580035abe4c7b3"
+    },
+    {
+      "path": "payload/selection.json",
+      "sha256": "39707d03175667ffec1902489b41a6008f7d7ed296479a7912a4bb4e4f5c58da"
+    },
+    {
+      "path": "adapter-changes.patch",
+      "sha256": "b81889bda904ec7abb24a086b48af1675eb9582ad236e4458bfa3f4ee21c7a4c"
+    },
+    {
+      "path": "run-1/execution.json",
+      "sha256": "88c0df7765683af7feca1003266da08e53082062047f49ac8471a14b516e6845"
+    },
+    {
+      "path": "run-1/result.json",
+      "sha256": "8a4c1cf8b551f289e20638edac629e851fa687873079fac9ff67891d9e91e4c6"
+    },
+    {
+      "path": "run-1/qemu-exit.json",
+      "sha256": "6fc56911244453fb4dcb22efcece2ea170b3c40c417144d2990fee1ed3c29ad9"
+    },
+    {
+      "path": "run-1/focused-components.log",
+      "sha256": "94084cd482e05f45c79100f8e03b1e77a50a3904f347f1b1e9fbfb9780fa9864"
+    },
+    {
+      "path": "run-1/full-test-list.log",
+      "sha256": "8cd6a55dfa9c487808be76f467a5939e1a1277451e5e3d1027e492cc6912a9b0"
+    },
+    {
+      "path": "run-1/focused-test-list.log",
+      "sha256": "ee0f0ba9b05f8fae7011732f73118d291433a796c2d7e23e9fae0a59424c1a6b"
+    },
+    {
+      "path": "run-1/full-ignored-test-list.log",
+      "sha256": "4fe9fd0eb7caef075057cd8920e6f0941bffb5e3dfa380c623d656477a9412be"
+    },
+    {
+      "path": "run-1/focused-ignored-test-list.log",
+      "sha256": "c88976207cea56a2c3f9decc9dad86c8d169268a44d22e16201718bf0bfbc1d5"
+    }
+  ],
+  "adapters": [
+    {
+      "name": "guest.py",
+      "sha256": "4f0dc7f6b6ee263557b2a8f0e10f58a10e4a57ea857084cf678f3f4e25751afc"
+    },
+    {
+      "name": "exec-tests.py",
+      "sha256": "ec21048d46f58b92d62a648c1a695dbd63890d6bd67a4bb6c661a6568a82dcf1"
+    },
+    {
+      "name": "qemu-owner.py",
+      "sha256": "29730408bda1c5a17b1a8fa6fca13b3588cebb8d0ae166da145af99709bcccc5"
+    }
+  ],
+  "external_inputs": [
+    {
+      "name": "Image",
+      "sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b"
+    },
+    {
+      "name": "initramfs-linux.img",
+      "sha256": "a9bb29d29abda94748c9948f903c3c1704f829eea477652b9a4201a61f36a647"
+    }
+  ],
+  "reused_VM": {
+    "sha256": "9d92c8bbebae84fe7daaf6cf0af18b0a2dd38d92f507617a8644f077b763a57f",
+    "read_only_bind": true,
+    "qemu_snapshot": true,
+    "new_copy_or_mutation": false
+  },
+  "host_provenance": "native-auth-actor-capacity-provenance.json",
+  "no_new_build": true,
+  "no_phone_access": true,
+  "limits": [
+    "cfg(test) closure stamps only; no production completion producer",
+    "No broker, PAM, authentication scope, actor unlock or Messages reopening",
+    "Generic Arch ARM kernel; no matched Google kernel or phone evidence",
+    "Full40 enumerated only;18 explicitly filtered. Separate full40 root-storage run is host evidence.",
+    "No source, test, filter or deadline changes; Source remains100ms without renewal/revival.",
+    "Passing final assertions are source/ELF bound, not independent scope-closure journal."
+  ]
+}

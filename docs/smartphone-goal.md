@@ -99,7 +99,10 @@ The private [actor capacity consumer](native-auth-actor-capacity.md) now passes
 40 host lifecycle tests and22 separately selected UID1000 actor tests. It can
 remove one exactly matched slot without changing locked/durable policy, while
 its closure producer remains a cfg-test model. No production producer, result
-arming or unlock ingress is added; AArch64 compilation is separate from runtime.
+arming or unlock ingress is added. The unchanged22 actor cases also pass on an
+[actual generic ARM kernel](native-auth-actor-capacity-arm.md) as UID1000, with18
+explicitly filtered; full40 inventory is enumeration only. No ARM storage or
+authentication scope/PAM execution is inferred.
 Original PAM+scope composition, installed broker/containment, actor-owned receipts,
 exact unlock and synced durable restoration remain open. No physical model is qualified. See
 [worker boundary](native-pam-worker.md).

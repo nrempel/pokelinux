@@ -164,6 +164,15 @@ closure after expired result authority needs an independent qualified broker
 producer; do not infer it from this stamp. See [capacity report](native-auth-actor-capacity.md)
 and [proof](evidence/native-auth-actor-capacity-provenance.json).
 
+The unchanged22 actor capacity cases from8296587 now separately pass on an
+[actual Arch ARM64 kernel](native-auth-actor-capacity-arm.md), UID/GID1000,
+groups[]/CapEff0. All40 names are enumerated only;18 other authority/storage
+tests are explicitly filtered and both ignored lists empty. The host-built ELF
+and existing read-only VM image are reused without rebuild/mutation. Root
+rehashes209 paths and verifies actual process/QEMU/CLI/container waits and fresh
+guest/upstream CID absence. This remains typed Provider/pidfd component evidence,
+with synthetic closure facts, no production producer, PAM/scope or actor unlock.
+
 Next compose supervised native authentication with actor-owned attempts, then
 one-shot exact-operation restoration, synced durable policy and a normal Messages
 read. The separate [Original PAM prerequisite](native-original-pam-prerequisite.md)
