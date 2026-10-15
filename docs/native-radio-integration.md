@@ -1,9 +1,9 @@
 # Native radio integration: next execution gate
 
-The [original message notification probe](native-ims-registration-notifications.md)
-now records12 SDK37 x86 updates and20 Proxy callbacks. Constructor-bypassed
-objects stop before the concrete APN/StackControl manager; its conditional
-connected/loss reduction remains the next semantic gate. No Rust state is added.
+The [conditional original admission probe](native-ims-registration-admission.md)
+now completes four admission gates and three connected cases in SDK37 x86.
+Only the authored live-entity/request-membership case advances original state;
+physical connectivity and PDN-ready remain false. This adds no Rust or ARM result.
 
 The [installed slot1 registration history tracer](native-radio-registration-installed.md)
 now qualifies actual ARM Binder callback→native owner→typed worker IPC→restricted

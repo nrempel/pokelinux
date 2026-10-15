@@ -96,8 +96,10 @@ logs, original APK/SDK and proprietary inputs are not published. No new original
 vendor runtime, authentication/PAM, UI, modem or physical phone executes here.
 
 The later [original notification reference](native-ims-registration-notifications.md)
-separately observes direct message→Proxy callbacks. It adds no Rust state or new
-ARM result; concrete manager admission and connected/loss reduction remain open.
+and [conditional admission run](native-ims-registration-admission.md) add separate
+SDK37 original-code evidence. Authored APN/request priors qualify connected state,
+while normal acquisition and asynchronous loss remain open. They add no Rust or
+ARM result to this installed wire-history checkpoint.
 
 Discovery/output pressure, installed principal negatives, malformed continuation,
 startup filesystem stalls, suspend/wake and manager fallback remain separate.

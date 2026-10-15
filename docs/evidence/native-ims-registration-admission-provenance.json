@@ -1,0 +1,527 @@
+{
+  "schema": 1,
+  "scope": "Conditional original concrete registration admission and connected reduction with explicit APN/request priors, captured external effects and owned original HandlerThread; no native acquisition or loss qualification",
+  "base_commit": "6591713f22ba29561fffe4bfea5431db7c0f2a43",
+  "source": [
+    {
+      "path": "framework/shannon-registration-oracle/connected/runtime-src/com/shannon/imsservice/call/OracleCallManager.java",
+      "sha256": "6c66b32211b7d69a5b4bdf4a02f4c428f46c21ecc9de53c395b3bbefbede3fb5",
+      "role": "authored oracle runtime"
+    },
+    {
+      "path": "framework/shannon-registration-oracle/connected/runtime-src/com/shannon/imsservice/conn/OracleConnectivityMgr.java",
+      "sha256": "ab17b0bcb84c94e2841d8be2c041df81c7eb5e5d266d9a9de96d70fe8f618ff0",
+      "role": "authored oracle runtime"
+    },
+    {
+      "path": "framework/shannon-registration-oracle/connected/runtime-src/org/omarchy/audit/RegistrationConnectedOracle.java",
+      "sha256": "005780409e16c7a9d8e44c02e978112652333e925e6aacff0ee1c2944efcb82d",
+      "role": "authored oracle runtime"
+    },
+    {
+      "path": "framework/shannon-registration-oracle/connected/compile-only-api/com/shannon/imsservice/call/ImsCallManager.java",
+      "sha256": "8e988caa56ffc8f938a014c1c1e8978514bd6022b122970283ab7d390afceb11",
+      "role": "compile-only API declaration; forbidden in runtime DEX/classpath"
+    },
+    {
+      "path": "framework/shannon-registration-oracle/connected/compile-only-api/com/shannon/imsservice/conn/ApnNetType.java",
+      "sha256": "21bab871c960fed625ae8ff7b63ad698b79388f025f648752a3fda6209c36e7a",
+      "role": "compile-only API declaration; forbidden in runtime DEX/classpath"
+    },
+    {
+      "path": "framework/shannon-registration-oracle/connected/compile-only-api/com/shannon/imsservice/conn/ImsConnectivityMgr.java",
+      "sha256": "7c3717e8bcbe64f395686a054482d239b80a531091bd806281d9a3affc7c05cb",
+      "role": "compile-only API declaration; forbidden in runtime DEX/classpath"
+    }
+  ],
+  "original_APK_sha256": "8b017599727398e80df5ab618d648890dcdc34b5fe2ba71fb2331e51bd8b8879",
+  "prior_notification_public_proof_sha256": "adb62dfea9eca4b83f885084860e24b725047499f9da727f634b3d4f41d0a2cc",
+  "selected_boundary": {
+    "selected_slot": 1,
+    "original_method_bindings": [
+      {
+        "declaring_class": "com.shannon.imsservice.conn.ImsConnectivityMgr$RegistrationListener",
+        "method": "isExistPreviousRequest",
+        "parameter_types": [
+          "com.shannon.imsservice.conn.ApnEntity",
+          "com.shannon.imsservice.conn.ApnNetType"
+        ],
+        "return_type": "boolean",
+        "same_loader": true
+      },
+      {
+        "declaring_class": "com.shannon.imsservice.conn.ImsConnectivityMgr$RegistrationListener",
+        "method": "registrationConnected",
+        "parameter_types": [
+          "com.shannon.imsservice.conn.ApnNetType",
+          "com.shannon.imsservice.conn.RegistrationReason"
+        ],
+        "return_type": "void",
+        "same_loader": true
+      },
+      {
+        "declaring_class": "com.shannon.imsservice.conn.ImsConnectivityMgr$RegistrationListener",
+        "method": "registrationConnected",
+        "parameter_types": [
+          "com.shannon.imsservice.conn.ApnNetType",
+          "com.shannon.imsservice.conn.RegistrationReason",
+          "boolean"
+        ],
+        "return_type": "void",
+        "same_loader": true
+      },
+      {
+        "declaring_class": "com.shannon.imsservice.conn.ApnManager",
+        "method": "getApnEntity",
+        "parameter_types": [
+          "com.shannon.imsservice.conn.ApnNetType"
+        ],
+        "return_type": "com.shannon.imsservice.conn.ApnEntity",
+        "same_loader": true
+      },
+      {
+        "declaring_class": "com.shannon.imsservice.conn.ApnManager",
+        "method": "getRegistrationState",
+        "parameter_types": [
+          "com.shannon.imsservice.conn.ApnNetType"
+        ],
+        "return_type": "com.shannon.imsservice.conn.ApnEntity$ImsServiceState",
+        "same_loader": true
+      },
+      {
+        "declaring_class": "com.shannon.imsservice.conn.ApnEntity",
+        "method": "getServiceState",
+        "parameter_types": [],
+        "return_type": "com.shannon.imsservice.conn.ApnEntity$ImsServiceState",
+        "same_loader": true
+      },
+      {
+        "declaring_class": "com.shannon.imsservice.conn.ApnEntity",
+        "method": "getConnectivity",
+        "parameter_types": [],
+        "return_type": "com.shannon.imsservice.conn.rule.RatConnectivity",
+        "same_loader": true
+      },
+      {
+        "declaring_class": "com.shannon.imsservice.conn.rule.CellConnectivity",
+        "method": "isConnected",
+        "parameter_types": [],
+        "return_type": "boolean",
+        "same_loader": true
+      },
+      {
+        "declaring_class": "com.shannon.imsservice.conn.ImsConnectivityMgr",
+        "method": "isCellRegistered",
+        "parameter_types": [],
+        "return_type": "boolean",
+        "same_loader": true
+      },
+      {
+        "declaring_class": "com.shannon.imsservice.conn.ImsConnectivityMgr",
+        "method": "isWiFiRegistered",
+        "parameter_types": [],
+        "return_type": "boolean",
+        "same_loader": true
+      },
+      {
+        "declaring_class": "com.shannon.imsservice.conn.ImsConnectivityMgr",
+        "method": "isImsRegistered",
+        "parameter_types": [],
+        "return_type": "boolean",
+        "same_loader": true
+      },
+      {
+        "declaring_class": "com.shannon.imsservice.network.adaptor.SolicitedMessage",
+        "method": "getMessageId",
+        "parameter_types": [],
+        "return_type": "com.shannon.imsservice.network.oem.helper.ImsRilHelper$RilMessageId",
+        "same_loader": true
+      },
+      {
+        "declaring_class": "com.shannon.imsservice.network.adaptor.data.RilReqSetImsRegistrationState",
+        "method": "getRegistrationState",
+        "parameter_types": [],
+        "return_type": "int",
+        "same_loader": true
+      },
+      {
+        "declaring_class": "com.shannon.imsservice.network.adaptor.data.RilReqSetImsRegistrationState",
+        "method": "getRegisteredRat",
+        "parameter_types": [],
+        "return_type": "int",
+        "same_loader": true
+      },
+      {
+        "declaring_class": "com.shannon.imsservice.network.NetworkAdaptor$INetworkHelper",
+        "method": "sendRequest",
+        "parameter_types": [
+          "com.shannon.imsservice.network.adaptor.SolicitedMessage"
+        ],
+        "return_type": "void",
+        "same_loader": true
+      }
+    ],
+    "original_targets_preserved": [
+      "RegistrationListener admission and both connected overloads",
+      "ApnEntity service state/private notification",
+      "ApnManager direct state getters and state update",
+      "StackControl membership and registration notification",
+      "RegistrationAdaptor original request construction",
+      "original owner cell/WiFi/IMS predicates"
+    ],
+    "authored_peripheral_overrides": [
+      "owner isRcsEnabled captured false",
+      "owner triggerRegistering captured false",
+      "call-manager updateAllCalls captured",
+      "call-manager handover notification captured; unused on this RAT_UNKNOWN branch"
+    ],
+    "network_helper": "only original registration-state request captured, never forwarded",
+    "constructor_bypass": true,
+    "normal_pure_original_constructors": [
+      "ApnManager",
+      "CellConnectivity/RatConnectivity",
+      "SolicitedMessage request and Handler"
+    ],
+    "live_original_static_HandlerThread": true,
+    "local_request_membership_is_not_remote_acceptance": true,
+    "CellConnectivity_physical_state": 0,
+    "mIsAddPdnReady": false,
+    "RCS_selector": false,
+    "WiFi_entity_absent": true,
+    "initial_entity_and_manager_state": "IMS_DEREGISTERED",
+    "initial_PSFB": "UNKNOWN",
+    "initial_handover_RAT": "RAT_UNKNOWN"
+  },
+  "actual_cases": [
+    {
+      "case_id": "admission-entity-0-request-0",
+      "entity_prior": false,
+      "local_request_membership": false,
+      "actual_admission": false,
+      "connected_called": false,
+      "entity_state": null,
+      "manager_stored_state": "IMS_DEREGISTERED",
+      "manager_APN_state": "IMS_DEREGISTERED",
+      "cell_registered_predicate": false,
+      "IMS_registered_predicate": false,
+      "WiFi_registered_predicate": false,
+      "physical_cell_connected": false,
+      "mIsAddPdnReady": null,
+      "captured_outbound_requests": 0,
+      "normal_completion": true
+    },
+    {
+      "case_id": "admission-entity-0-request-1",
+      "entity_prior": false,
+      "local_request_membership": true,
+      "actual_admission": false,
+      "connected_called": false,
+      "entity_state": null,
+      "manager_stored_state": "IMS_DEREGISTERED",
+      "manager_APN_state": "IMS_DEREGISTERED",
+      "cell_registered_predicate": false,
+      "IMS_registered_predicate": false,
+      "WiFi_registered_predicate": false,
+      "physical_cell_connected": false,
+      "mIsAddPdnReady": null,
+      "captured_outbound_requests": 0,
+      "normal_completion": true
+    },
+    {
+      "case_id": "admission-entity-1-request-0",
+      "entity_prior": true,
+      "local_request_membership": false,
+      "actual_admission": false,
+      "connected_called": false,
+      "entity_state": "IMS_DEREGISTERED",
+      "manager_stored_state": "IMS_DEREGISTERED",
+      "manager_APN_state": "IMS_DEREGISTERED",
+      "cell_registered_predicate": false,
+      "IMS_registered_predicate": false,
+      "WiFi_registered_predicate": false,
+      "physical_cell_connected": false,
+      "mIsAddPdnReady": false,
+      "captured_outbound_requests": 0,
+      "normal_completion": true
+    },
+    {
+      "case_id": "admission-entity-1-request-1",
+      "entity_prior": true,
+      "local_request_membership": true,
+      "actual_admission": true,
+      "connected_called": false,
+      "entity_state": "IMS_DEREGISTERED",
+      "manager_stored_state": "IMS_DEREGISTERED",
+      "manager_APN_state": "IMS_DEREGISTERED",
+      "cell_registered_predicate": false,
+      "IMS_registered_predicate": false,
+      "WiFi_registered_predicate": false,
+      "physical_cell_connected": false,
+      "mIsAddPdnReady": false,
+      "captured_outbound_requests": 0,
+      "normal_completion": true
+    },
+    {
+      "case_id": "connected-no-entity",
+      "entity_prior": false,
+      "local_request_membership": true,
+      "actual_admission": false,
+      "connected_called": true,
+      "entity_state": null,
+      "manager_stored_state": "IMS_DEREGISTERED",
+      "manager_APN_state": "IMS_DEREGISTERED",
+      "cell_registered_predicate": false,
+      "IMS_registered_predicate": false,
+      "WiFi_registered_predicate": false,
+      "physical_cell_connected": false,
+      "mIsAddPdnReady": null,
+      "captured_outbound_requests": 0,
+      "normal_completion": true
+    },
+    {
+      "case_id": "connected-no-request",
+      "entity_prior": true,
+      "local_request_membership": false,
+      "actual_admission": false,
+      "connected_called": true,
+      "entity_state": "IMS_DEREGISTERED",
+      "manager_stored_state": "IMS_DEREGISTERED",
+      "manager_APN_state": "IMS_DEREGISTERED",
+      "cell_registered_predicate": false,
+      "IMS_registered_predicate": false,
+      "WiFi_registered_predicate": false,
+      "physical_cell_connected": false,
+      "mIsAddPdnReady": false,
+      "captured_outbound_requests": 0,
+      "normal_completion": true
+    },
+    {
+      "case_id": "connected-admitted",
+      "entity_prior": true,
+      "local_request_membership": true,
+      "actual_admission": true,
+      "connected_called": true,
+      "entity_state": "IMS_REGISTERED",
+      "manager_stored_state": "IMS_REGISTERED",
+      "manager_APN_state": "IMS_REGISTERED",
+      "cell_registered_predicate": true,
+      "IMS_registered_predicate": true,
+      "WiFi_registered_predicate": false,
+      "physical_cell_connected": false,
+      "mIsAddPdnReady": false,
+      "captured_outbound_requests": 1,
+      "normal_completion": true
+    }
+  ],
+  "actual_admitted_effects": {
+    "captured_request_enum": "RILC_REQ_SET_IMS_REGISTRATION_STATE",
+    "message_code": 48,
+    "state": 1,
+    "RAT": 1,
+    "request_count": 1,
+    "forwarded": false,
+    "trigger": "REG_CONNECT",
+    "call_update_APN": "APN_IMS",
+    "handover_effect_count": 0
+  },
+  "original_thread": {
+    "name": "SolicitedMessageHandler",
+    "exact_static_Thread_Looper_TID_binding": true,
+    "original_case_budget_ns": 20000000000,
+    "original_whole_cutoff_including_cleanup_ns": 25000000000,
+    "cutoffs_sampled_before_class_initialization": true,
+    "actual_quit_accepted_and_join_called": true,
+    "quit_to_join_ms": 57.587042,
+    "join_to_task_absence_ms": 1.125622,
+    "both_actual_join_and_separate_exact_task_absence_before_original_cutoff": true,
+    "no_detach_or_new_budget": true
+  },
+  "compilation": {
+    "separate_runtime_sources": 3,
+    "separate_compile_only_API_sources": 3,
+    "runtime_javac_classes": 5,
+    "compile_only_classes": 4,
+    "all_runtime_classes_enter_D8_program_inputs": true,
+    "stub_JAR_only_compile_classpath": true,
+    "stub_JAR_or_classes_in_runtime": false,
+    "DEX_inventory": {
+      "schema": 1,
+      "format": "DEX039",
+      "file_bytes": 31412,
+      "dex_sha256": "bc6a1266a70f9877132078786f7fdb6a1d04d3cc044e28dde34d84eb5516102a",
+      "class_def_count": 7,
+      "class_def_names": [
+        "com.android.tools.r8.annotations.LambdaMethod",
+        "com.shannon.imsservice.call.OracleCallManager",
+        "com.shannon.imsservice.conn.OracleConnectivityMgr",
+        "org.omarchy.audit.RegistrationConnectedOracle",
+        "org.omarchy.audit.RegistrationConnectedOracle$Graph",
+        "org.omarchy.audit.RegistrationConnectedOracle$Graph$0",
+        "org.omarchy.audit.RegistrationConnectedOracle$Singleton"
+      ],
+      "authored_class_def_names": [
+        "com.shannon.imsservice.call.OracleCallManager",
+        "com.shannon.imsservice.conn.OracleConnectivityMgr",
+        "org.omarchy.audit.RegistrationConnectedOracle",
+        "org.omarchy.audit.RegistrationConnectedOracle$Graph",
+        "org.omarchy.audit.RegistrationConnectedOracle$Graph$0",
+        "org.omarchy.audit.RegistrationConnectedOracle$Singleton"
+      ],
+      "compiler_synthetic_metadata_definitions": [
+        {
+          "class_name": "com.android.tools.r8.annotations.LambdaMethod",
+          "descriptor": "Lcom/android/tools/r8/annotations/LambdaMethod;",
+          "access_flags": 13825,
+          "class_data_counts": [
+            0,
+            0,
+            0,
+            3
+          ],
+          "members": [
+            {
+              "method_index": 7,
+              "access_flags": 1025,
+              "code_offset": 0
+            },
+            {
+              "method_index": 8,
+              "access_flags": 1025,
+              "code_offset": 0
+            },
+            {
+              "method_index": 9,
+              "access_flags": 1025,
+              "code_offset": 0
+            }
+          ],
+          "non_executable_annotation_metadata_only": true
+        }
+      ],
+      "class_def_descriptors": [
+        "Lcom/android/tools/r8/annotations/LambdaMethod;",
+        "Lcom/shannon/imsservice/call/OracleCallManager;",
+        "Lcom/shannon/imsservice/conn/OracleConnectivityMgr;",
+        "Lorg/omarchy/audit/RegistrationConnectedOracle$Graph$0;",
+        "Lorg/omarchy/audit/RegistrationConnectedOracle$Graph;",
+        "Lorg/omarchy/audit/RegistrationConnectedOracle$Singleton;",
+        "Lorg/omarchy/audit/RegistrationConnectedOracle;"
+      ],
+      "positive_authored_roots": [
+        "org.omarchy.audit.RegistrationConnectedOracle",
+        "com.shannon.imsservice.conn.OracleConnectivityMgr",
+        "com.shannon.imsservice.call.OracleCallManager"
+      ],
+      "all_other_or_original_target_class_definitions_rejected": true,
+      "referenced_original_types_are_not_definitions": true,
+      "scope": "bounded ASCII class_defs inventory only, not full DEX verification"
+    },
+    "oracle_JAR_members": [
+      "classes.dex"
+    ],
+    "runtime_classpath": "oracle.jar:matched original APK only",
+    "receipts": [
+      {
+        "name": "outputs/build/oracle.jar",
+        "sha256": "cd675e51a3dc74a93e733c73a024c68aeddcd46cb6e62dc7780b77718205bdfe"
+      },
+      {
+        "name": "outputs/build/stubs.jar",
+        "sha256": "48fe7e3866bfa1a8a66a09d3d9452f3d8c59d983e885efbc6a13aaff27304f7b"
+      },
+      {
+        "name": "outputs/build/dex/classes.dex",
+        "sha256": "bc6a1266a70f9877132078786f7fdb6a1d04d3cc044e28dde34d84eb5516102a"
+      }
+    ]
+  },
+  "DEX_guard_qualification": {
+    "earlier_Oracle_only_guard_failed_on_actual_pinned_D8_metadata": true,
+    "failed_receipt_sha256": "44f827217cac1801c64618a6a626aefc9cd2095463b6da488fc410363f723bad",
+    "repair": "only exact non-executable LambdaMethod annotation metadata permitted separately; original/stub definitions remain forbidden",
+    "same_actual_prior_D8_input_rechecked": true,
+    "refused_negative_controls": 8,
+    "repaired_receipt_sha256": "b2445748cfaa7ee3a738552b93a59e71fa068b907c58ecb12e8b83e21cda70bf",
+    "production_behavioral_RED_claim": false
+  },
+  "runtime": {
+    "label": "pokelinux-registration-concrete-sdk37-root-1",
+    "SDK": 37,
+    "ABI": "x86_64",
+    "QEMU": true,
+    "SELinux": "Enforcing",
+    "display_pixels": [
+      1080,
+      2424
+    ],
+    "logical_density": 420,
+    "headless": true,
+    "fresh_HOME_AVD": true,
+    "SDK_file_pins": 447,
+    "network": "none",
+    "only_host_device": "/dev/kvm",
+    "direct_container_child_waits": 110,
+    "original_app_process_shell_wait_exit": 0,
+    "original_ADB_wait_exit": 0,
+    "all_waits_and_EOF_before_original_cutoffs": true,
+    "emulator_wait_exit": 0,
+    "foreground_ADB_server_wait_signal": 15,
+    "owned_Docker_CLI_wait_exit": 0,
+    "fresh_exact_CID_absence_same_daemon": true,
+    "all_inputs_unchanged": true,
+    "root_independent_input_bindings": 484
+  },
+  "receipts": [
+    {
+      "name": "inputs/selection.json",
+      "sha256": "3f6899a175b073d8ac2475fe7962c7ec3934871967ec8aed2e43d8f8996667a6"
+    },
+    {
+      "name": "inputs/command.json",
+      "sha256": "39b3ff645e8e3d8a55ab3163cc59dee47576ef430b1d408a661f777578b553cb"
+    },
+    {
+      "name": "outputs/execution.json",
+      "sha256": "4d3d5fc806d6bc9e8b626f43adce9b0638a54062ed5389a9822d69ad478b0bb7"
+    },
+    {
+      "name": "outputs/result.json",
+      "sha256": "f340fc60dc714d30584b5c87946e5c75957348eeaa5656493c0639c4f4036c31"
+    },
+    {
+      "name": "outputs/original-records.json",
+      "sha256": "502a404a5d86291afbf626c34f859c183b5e35eec78b12eeb4db0632ec0071ca"
+    }
+  ],
+  "evidence_classes": {
+    "new_original_SDK_runtime": true,
+    "conditional_connected_admission": true,
+    "new_Rust_runtime": false,
+    "new_ARM_kernel_or_usermode": false,
+    "actual_APN_acquisition": false,
+    "wire_callback_chain": false,
+    "original_disconnected_or_recovery": false,
+    "carrier_or_physical_phone": false,
+    "UI": false
+  },
+  "next_native_policy": {
+    "implemented": false,
+    "positive": "conditional RegistrationObserved after qualified APN/request priors for exact admitted source generation",
+    "loss": "deliberate native Unavailable on disconnected/unknown/expired/dead, retain history",
+    "does_not_mean": [
+      "deregistered",
+      "APN removed",
+      "vendor cleanup complete",
+      "retry or reset permitted",
+      "call availability"
+    ],
+    "authored_priors": "private test seam only until production APN ownership exists; no assume-ready production switch"
+  },
+  "remaining_gates": [
+    "Rust bounded reducer and actual installed conditional tracer with source/deadline/slot/revision fences",
+    "production APN context acquisition and ownership, SIM/bearer/subscription association",
+    "full helper/channel path, provider replacement and producer/reset cleanup",
+    "original async disconnect/recovery before operations depending on it",
+    "native IMS/calls/media/carrier and matched hardware qualification"
+  ]
+}

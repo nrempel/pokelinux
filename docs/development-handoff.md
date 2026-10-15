@@ -18,14 +18,19 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
-The [original message notification probe](native-ims-registration-notifications.md)
-now records12 SDK37 x86 updates and20 Proxy callbacks. Constructor-bypassed
-objects stop before the concrete APN/StackControl manager; its conditional
-connected/loss reduction remains the next semantic gate. No Rust state is added.
-Source-only REA also identifies an add-PDN-ready early return on the observed
-reason0 loss path and a live HandlerThread initializer in original request
-construction. The next conditional oracle must bind those priors and own the
-thread through bounded quit/join; neither is runtime-qualified by this probe.
+The [conditional original admission probe](native-ims-registration-admission.md)
+now completes four admission gates and three connected cases in SDK37 x86.
+Only the authored live-entity/request-membership case advances original state;
+physical connectivity and PDN-ready remain false. This adds no Rust or ARM result.
+The planned read-only native policy withdraws to Unavailable on disconnected,
+unknown, expired or dead input, retaining history without claiming deregistration
+or cleanup. Full original asynchronous loss/retry policy is deferred to operations
+that need it. Test-authored APN/request priors must remain a private seam until
+production ownership exists; no production assume-ready configuration is allowed.
+Source-only REA still identifies an add-PDN-ready early return on the reason0
+loss path. The new admission probe explicitly fixes PDN-readyfalse and closes the
+original live request HandlerThread through actual quit/join and task absence.
+The original asynchronous disconnected/loss path remains unexecuted.
 
 The [installed slot1 registration history tracer](native-radio-registration-installed.md)
 now qualifies actual ARM Binder callback→native owner→typed worker IPC→restricted

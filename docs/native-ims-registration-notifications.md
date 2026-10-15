@@ -83,23 +83,30 @@ selected. The [bounded provenance](evidence/native-ims-registration-notification
 pins the source, actual records and closure; private raw audit files and APK stay
 outside Git.
 
-## Concrete reducer remains the next gate
+## Current gate after conditional admission
 
-Source-only recovery identifies an original manager guard requiring both a live
-APN entity and StackControl APN membership before the connected listener can
-advance service state. That static prerequisite is not runtime admission proof.
-The complete conditional manager connected and loss paths, prior-request controls,
-entity/manager state and predicates, APN/subscription/slot association, collaborator
-effects and withdrawal behavior still need original execution before a shared
-native phone-state model is justified. A direct setter or isolated guard result
-would not complete those listener paths. No concrete reducer execution is added
-by this capture Proxy.
+The later [conditional admission probe](native-ims-registration-admission.md)
+executes the original live-entity/StackControl membership guard and complete
+connected continuation at slot1: four pure gates, two refused connected controls
+and one admitted case. Entity/manager state and inherited cellular/IMS predicates
+advance only under those authored priors, while physical connectivity and
+PDN-ready remain false. That is separate original execution; this earlier
+message-to-Proxy capture retains its narrower boundary.
 
-Further source-only REA identifies an add-PDN-ready guard that can return from
-the observed reason0 disconnected path before state withdrawal. The next oracle
-must make that prior explicit. Preserving original request construction also
-starts an original static HandlerThread; its exact quit/join and fixed cleanup
-cutoff need their own receipt. Neither path executes in this notification probe.
+The first read-only native reducer will deliberately withdraw to Unavailable on
+disconnected, unknown, expired or dead input while retaining history. This policy
+does not assert deregistration, APN removal, remote cleanup or retry permission.
+Full original asynchronous loss/retry behavior remains required for operations
+that depend on it, rather than for this conservative read. Authored APN/request
+priors belong only in a private conditional test seam until production ownership
+is implemented; there will be no production assume-ready switch. This reducer
+and its installed tracer are planned, not implemented by the current checkpoint.
+
+Source-only REA identifies an add-PDN-ready guard that can return from the
+reason0 disconnected path before withdrawal. That loss branch remains unexecuted.
+The later admission probe explicitly fixes PDN-readyfalse and preserves original
+request construction, including the original static HandlerThread's actual
+quit/join and native-task absence before its unchanged cleanup cutoff.
 
 The pinned [AOSP registration API](https://android.googlesource.com/platform/frameworks/base/+/a890d7b328dc436999d7de4f8a1dc3337b5c7944/telephony/java/android/telephony/ims/stub/ImsRegistrationImplBase.java)
 separates framework registration callbacks, cached registration/URI observations

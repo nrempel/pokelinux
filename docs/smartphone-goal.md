@@ -15,10 +15,12 @@ same-journal refusal78 pass after a genuine stale-RAW-history RED. All59 host
 tests and full closure pass. This is historical transport diagnostics, without
 semantic IMS, carrier, remote-cleanup or hardware authority.
 
-The later [original notification probe](native-ims-registration-notifications.md)
-records20 callbacks from12 updates using constructor-bypassed collaborators.
-Concrete manager admission/reduction, native phone state and carrier behavior
-remain unqualified; no new Rust/ARM or hardware result is added.
+The [original notification probe](native-ims-registration-notifications.md)
+retains its12 updates/20 callbacks. The later [conditional admission probe](native-ims-registration-admission.md)
+qualifies seven original slot1 cases with authored APN/request priors, while
+physical connectivity and PDN-ready remain false. Next is a private conditional
+native observation with conservative Unavailable policy; production APN ownership
+and acquisition remain gates. No new Rust, ARM or hardware result is added.
 
 The separate [original route](native-ims-registration-routing.md) retains17
 SDK37 x86 dispatch cases and8 parser calls. Earlier [owner](native-radio-registration-owner.md),

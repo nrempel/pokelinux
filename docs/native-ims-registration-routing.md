@@ -62,10 +62,11 @@ qualifies typed worker/service/status composition with required packaged slot
 selection and retained history across peer-loss withdrawal. Fragments remain
 excluded and fields remain historical wire data.
 
-The later notification report qualifies only the direct original message-to-Proxy
-boundary. Static recovery identifies live APN entity plus StackControl membership
-as a concrete manager admission prerequisite; that conditional connected/loss
-reducer has not executed. Full helper/channel routing, producer identity,
+The later notification report qualifies only direct original message-to-Proxy
+calls. A separate [conditional admission run](native-ims-registration-admission.md)
+now executes the original live-entity/membership guard and connected continuation
+under authored priors; loss and normal APN acquisition remain open. These separate
+runs do not compose full helper/channel routing. Producer identity,
 fragment serialization, reset/cleanup acknowledgement, safe successor registration,
 state/RAT/features, URI identity, native IMS/calls/media and hardware remain open.
 This original-reference run adds no Rust/ARM kernel runtime, screenshot or phone result.
