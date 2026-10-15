@@ -48,10 +48,16 @@ actual endpoint version/hash and carrier policy still need backend qualification
 
 The [Data/kernel owner](native-cellular-data-owner.md) additionally joins a
 controlled provider report to numeric local addresses and a continuously
-witnessed link lifetime. This is local to its retained endpoint and observer;
-namespace/ifindex/lifetime values are not durable global identities. Matching
-a fixture name/address does not establish that a production provider owns or
-created that link, and adds no qualified phone model.
+witnessed link lifetime. Three further actual generic ARM runs qualify ordinary
+public-poll setup and separate link/list/death withdrawal; list/death withdraw
+while the independent controller still observes the same positive kernel link.
+[Evidence](evidence/native-cellular-data-public-poll-provenance.json).
+
+These observations are local to each retained endpoint, observer and VM boot.
+Namespace device/inode numbers may repeat across separate VMs, as they do in
+the list/death cases; namespace/ifindex/lifetime values are not durable global
+identities. Matching a fixture name/address does not establish that a production
+provider owns or created that link, and adds no qualified phone model.
 
 Design the device-neutral service contract from user-visible behavior and real
 backend evidence. Do not prebuild speculative adapters or a universal protocol.

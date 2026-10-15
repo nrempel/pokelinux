@@ -29,13 +29,26 @@ also retire it without rewriting accepted provider history. Provider-reported
 DNS/P-CSCF/gateway/name/address values do not establish link ownership or APN
 readiness. Structural policy/error negative controls remain unqualified.
 
-The fixed actual-kernel test receives real private-inbox Binder events and calls
-the production reducer directly. It does not execute ordinary `poll` queued
-Setup/List/Died dispatch. The repaired run checks ordinary polling for a fresh
-join and real kernel-loss withdrawal; its later list/death events occur after
-withdrawal, so do not independently prove withdrawal from a positive state.
-See the [report](../docs/native-cellular-data-owner.md) and
-[provenance](../docs/evidence/native-cellular-data-owner-provenance.json).
+The earlier fixed RED/GREEN test receives real private-inbox Binder events and
+calls the production reducer directly. Its later list/death events follow
+kernel-loss withdrawal. That evidence and its original source pins remain in
+[RED/GREEN provenance](../docs/evidence/native-cellular-data-owner-provenance.json).
+
+Three additional actual ARM tests use public owner methods throughout. Ordinary
+`poll()` consumes the matching setup callback before any TUN exists, then joins
+a freshly created controlled link. Separate runs withdraw on actual sole-FD
+link loss, empty-list indication and endpoint death. List/death start from a
+fresh positive association and withdraw while the controller independently
+confirms the same kernel link and addresses remain. The list peer stays live;
+the death peer is actually waited with exit 0 and EOF before that confirmation.
+Accepted CID 9 and the complete provider report survive every withdrawal.
+
+All three pass against unchanged production code, with 71 additional direct
+child waits/EOF (21/25/25); this is additional coverage, not a new RED or repair.
+Only test code is appended, retaining the earlier fixed test as an exact prefix.
+Unknown-serial ordinary `poll()` dispatch and the other negative controls remain
+open. See the [report](../docs/native-cellular-data-owner.md) and
+[new provenance](../docs/evidence/native-cellular-data-public-poll-provenance.json).
 
 From the repository root, compile checks only:
 
@@ -47,9 +60,10 @@ cargo test --locked --offline --manifest-path native-cellular-owner/Cargo.toml -
 cargo build --locked --offline --manifest-path native-cellular-owner/Cargo.toml --release --target aarch64-unknown-linux-gnu
 ```
 
-The actual test is ignored by default and needs its isolated ARM Binder/TUN
-controller and complete owned custody; compiling or skipping it is not a pass.
-`fixture.rs` and the fixed kernel test compile only under `cfg(test)`, with the
+The four actual tests are ignored by default and need their isolated ARM
+Binder/TUN controllers and complete owned custody; compiling or skipping them
+is not a behavioral pass.
+`fixture.rs` and the kernel tests compile only under `cfg(test)`, with the
 bindings' authored control feature enabled by the development dependency.
 No host behavioral test result is claimed.
 

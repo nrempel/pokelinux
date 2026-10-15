@@ -81,9 +81,12 @@ an ARM kernel. Its retained namespace and continuously observed local lifetime
 are independent of the NetworkManager owner. Neither observation activates a
 link or establishes APN readiness. A separate
 [Data/kernel owner](native-cellular-data-owner.md) now qualifies controlled
-provider-report/link association and actual sole-FD link-loss withdrawal through
-its own retained observer. It neither proves provider ownership of that link nor
-composes NetworkManager under an installed connectivity authority.
+provider-report/link association through its own retained observer. Three later
+actual ARM runs qualify ordinary public-poll setup and independent link/list/
+death withdrawal; list/death withdraw while the controller still confirms the
+same positive kernel context. [Evidence](evidence/native-cellular-data-public-poll-provenance.json).
+This neither proves provider ownership of that link nor composes NetworkManager
+under an installed connectivity authority.
 
 Implement the authenticated Rust connectivity authority, bounded responsive
 observer/stop IPC, supervised backend execution, subscriptions, permissions,

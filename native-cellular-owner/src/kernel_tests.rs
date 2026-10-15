@@ -444,3 +444,333 @@ fn actual_binder_kernel_join() {
         until,
     );
 }
+
+// Additional actual-boundary coverage against the unchanged repaired library.
+// These cases exercise only public DataOwner methods, never its inbox/reducer.
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum PublicCase {
+    Link,
+    List,
+    Death,
+}
+impl PublicCase {
+    fn label(self) -> &'static str {
+        match self {
+            Self::Link => "setup-link-loss",
+            Self::List => "empty-list-loss",
+            Self::Death => "endpoint-loss",
+        }
+    }
+    fn test(self) -> &'static str {
+        match self {
+            Self::Link => "kernel_tests::actual_public_poll_setup_and_link_loss",
+            Self::List => "kernel_tests::actual_public_poll_empty_list_loss",
+            Self::Death => "kernel_tests::actual_public_poll_endpoint_loss",
+        }
+    }
+}
+fn public_history(owner: &DataOwner, expected: &Value) {
+    assert_eq!(
+        owner.disposition(),
+        Disposition::ProviderAccepted { cid: 9 }
+    );
+    assert_eq!(
+        fixture::result_json(owner.provider_report().unwrap()),
+        *expected
+    );
+}
+fn public_control_link(value: &Value, ns: NamespaceIdentity) -> u32 {
+    assert_eq!(value["network_namespace"], ns_json(ns));
+    let links = value["links"].as_array().unwrap();
+    let selected: Vec<_> = links.iter().filter(|v| v["ifname"] == "pklabi0").collect();
+    assert_eq!(selected.len(), 1);
+    let link = selected[0];
+    assert_eq!(link["mtu"], 1400);
+    let flags = link["flags"].as_array().unwrap();
+    assert!(flags.contains(&json!("UP")) && flags.contains(&json!("POINTOPOINT")));
+    let ifindex = u32::try_from(link["ifindex"].as_u64().unwrap()).unwrap();
+    assert!(ifindex > 1);
+    let devices = value["addresses"].as_array().unwrap();
+    let records = devices
+        .iter()
+        .find(|v| v["ifindex"] == ifindex && v["ifname"] == "pklabi0")
+        .unwrap()["addr_info"]
+        .as_array()
+        .unwrap();
+    assert!(records.iter().any(|v| v["family"] == "inet"
+        && v["local"] == "192.0.2.2"
+        && v["address"] == "192.0.2.1"
+        && v["prefixlen"] == 32));
+    assert!(
+        records.iter().any(|v| v["family"] == "inet6"
+            && v["local"] == "2001:db8:1::2"
+            && v["prefixlen"] == 64)
+    );
+    ifindex
+}
+fn public_join(owner: &mut DataOwner, until: u64) -> Association {
+    loop {
+        before(until);
+        let started = boot_ns();
+        match owner.poll() {
+            Ok(Some(v)) => {
+                let v = v.clone();
+                assert!(v.observed_at_boottime_ns >= started && v.observed_at_boottime_ns < until);
+                return v;
+            }
+            Ok(None) | Err(Error::Kernel(ObserveError::ConcurrentChange)) => {
+                thread::sleep(Duration::from_millis(1))
+            }
+            Err(e) => panic!("public poll join failed {e:?}"),
+        }
+    }
+}
+fn actual_public_poll_case(case: PublicCase) {
+    let control = std::env::var_os("POKELINUX_DATA_OWNER_CONTROL").unwrap();
+    let control = Path::new(&control);
+    let until: u64 = std::env::var("POKELINUX_DATA_INTEROP_UNTIL_NS")
+        .unwrap()
+        .parse()
+        .unwrap();
+    before(until);
+    let generation = std::env::var("POKELINUX_DATA_INTEROP_GENERATION").unwrap();
+    assert_eq!(generation.len(), 32);
+    assert!(
+        generation
+            .bytes()
+            .all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b))
+    );
+    let status = fs::read_to_string("/proc/self/status").unwrap();
+    for line in [
+        "Uid:\t1000\t1000\t1000\t1000",
+        "Gid:\t1000\t1000\t1000\t1000",
+        "CapEff:\t0000000000000000",
+    ] {
+        assert!(status.lines().any(|v| v == line));
+    }
+    let ns = namespace();
+    let device = std::env::var("POKELINUX_DATA_INTEROP_DEVICE").unwrap();
+    let process = ProcessState::init(&device, 4).unwrap();
+    ProcessState::start_thread_pool();
+    let context = process.context_object().unwrap();
+    assert!(context.is_remote());
+    assert_eq!(context.descriptor(), "android.os.IServiceManager");
+    let manager = BpServiceManager::from_binder(context).unwrap();
+    before(until);
+    let transferred = manager
+        .checkService("org.pokelinux.fixture.cellular-data")
+        .unwrap()
+        .unwrap();
+    assert!(transferred.is_remote());
+    assert_eq!(
+        transferred.descriptor(),
+        "org.pokelinux.datatest.IDataFixture"
+    );
+    let fixture: Strong<dyn IDataFixture> = FromIBinder::try_from(transferred).unwrap();
+    assert_eq!(fixture.getInterfaceVersion().unwrap(), 1);
+    assert_eq!(fixture.getInterfaceHash().unwrap(), FIXTURE_HASH);
+    assert_eq!(fixture.generation().unwrap(), generation);
+    let endpoint = fixture.endpoint().unwrap();
+    assert!(endpoint.as_binder().is_remote());
+    assert_eq!(endpoint.getInterfaceVersion().unwrap(), 3);
+    assert_eq!(endpoint.getInterfaceHash().unwrap(), DATA_HASH);
+    before(until);
+    let mut owner = DataOwner::new(endpoint, 1000, SERIAL, until).unwrap();
+    let (response, indication) = owner.callbacks();
+    owner
+        .endpoint()
+        .setResponseFunctions(response, indication)
+        .unwrap();
+    assert_eq!(owner.mark_may_have_submitted().unwrap(), SERIAL);
+    let profile = fixture::profile();
+    let addresses = fixture::addresses();
+    let dnses = fixture::dnses();
+    let slice = fixture::slice();
+    owner
+        .endpoint()
+        .setupDataCall(
+            SERIAL,
+            AccessNetwork::NGRAN,
+            &profile,
+            false,
+            DataRequestReason::NORMAL,
+            &addresses,
+            &dnses,
+            7,
+            Some(&slice),
+            true,
+        )
+        .unwrap();
+    barrier(&fixture, 0, 0, until);
+    let captured = fixture.capture().unwrap();
+    counts(&captured, 0, 0);
+    assert_eq!(
+        (
+            captured.attachmentCallingPid,
+            captured.setupCallingPid,
+            captured.attachmentCallingUid,
+            captured.setupCallingUid
+        ),
+        (0, 0, 1000, 1000)
+    );
+    let request = json!({"serial":captured.serial,"accessNetwork":captured.accessNetwork.0,"dataProfileInfo":fixture::profile_json(&captured.dataProfileInfo),
+        "roamingAllowed":captured.roamingAllowed,"reason":captured.reason.0,"addresses":fixture::addresses_json(&captured.addresses),"dnses":captured.dnses,
+        "pduSessionId":captured.pduSessionId,"sliceInfo":fixture::slice_json(captured.sliceInfo.as_ref()),"matchAllRuleAllowed":captured.matchAllRuleAllowed});
+    assert_eq!(
+        request,
+        json!({"serial":SERIAL,"accessNetwork":6,"dataProfileInfo":fixture::profile_json(&profile),"roamingAllowed":false,"reason":1,
+        "addresses":fixture::addresses_json(&addresses),"dnses":dnses,"pduSessionId":7,"sliceInfo":fixture::slice_json(Some(&slice)),"matchAllRuleAllowed":true})
+    );
+    assert_eq!(owner.disposition(), Disposition::OutcomeUnknown);
+    assert!(owner.provider_report().is_none());
+    assert!(owner.poll().unwrap().is_none());
+    let info = RadioResponseInfo {
+        r#type: RadioResponseType::SOLICITED,
+        serial: SERIAL,
+        error: RadioError::NONE,
+    };
+    fixture.setupResponse(&info, &fixture::result()).unwrap();
+    barrier(&fixture, 1, 0, until);
+    let provider_result = fixture::result_json(&fixture::result());
+    loop {
+        before(until);
+        assert!(
+            owner.poll().unwrap().is_none(),
+            "no actual TUN exists before native ready"
+        );
+        if owner.disposition() == (Disposition::ProviderAccepted { cid: 9 }) {
+            break;
+        }
+        assert_eq!(owner.disposition(), Disposition::OutcomeUnknown);
+        thread::sleep(Duration::from_millis(1));
+    }
+    public_history(&owner, &provider_result);
+    assert!(owner.last_association().is_none());
+    counts(&fixture.capture().unwrap(), 1, 0);
+    write_once(
+        control,
+        "owner-ready.json",
+        json!({"event":"data-public-poll-ready","case":case.label(),"test":case.test(),"network_namespace":ns_json(ns),
+        "pid":std::process::id(),"uid":1000,"at_boottime_ns":boot_ns(),"original_until_ns":until,"generation":generation,"request":request,
+        "provider_result":provider_result,"provider_disposition":"ProviderAccepted","provider_cid":9,"association_present":false,
+        "setup_via_public_poll":true,"attachment_attempts":1,"setup_attempts":1,"response_attempts":1}),
+        until,
+    );
+    let configured = wait_json(control, "configured.json", until);
+    let ifindex = public_control_link(&configured, ns);
+    let joined = public_join(&mut owner, until);
+    assert_eq!(joined.namespace, ns);
+    assert_eq!(joined.ifindex, ifindex);
+    assert!(joined.lifetime > 0);
+    public_history(&owner, &provider_result);
+    write_once(
+        control,
+        "associated.json",
+        json!({"event":"data-public-poll-associated","case":case.label(),"test":case.test(),"network_namespace":ns_json(ns),
+        "ifindex":ifindex,"lifetime":joined.lifetime,"revision":joined.revision,"observed_at_boottime_ns":joined.observed_at_boottime_ns,
+        "provider_cid":9,"serial":SERIAL,"provider_disposition":"ProviderAccepted","original_until_ns":until,"at_boottime_ns":boot_ns()}),
+        until,
+    );
+    let withdrawn_at;
+    let mut confirmed_at = None;
+    if case == PublicCase::Link {
+        let removed = wait_json(control, "removed.json", until);
+        assert_eq!(removed["network_namespace"], ns_json(ns));
+        for key in ["links", "addresses"] {
+            assert!(
+                !removed[key]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .any(|v| v["ifname"] == "pklabi0" || v["ifindex"] == ifindex)
+            );
+        }
+        assert!(owner.poll().unwrap().is_none());
+        withdrawn_at = boot_ns();
+        public_history(&owner, &provider_result);
+        counts(&fixture.capture().unwrap(), 1, 0);
+    } else {
+        let allowed = wait_json(control, "loss-allowed.json", until);
+        assert_eq!(public_control_link(&allowed, ns), ifindex);
+        let before_loss = public_join(&mut owner, until);
+        assert_eq!(
+            (
+                before_loss.namespace,
+                before_loss.ifindex,
+                before_loss.lifetime
+            ),
+            (ns, ifindex, joined.lifetime)
+        );
+        public_history(&owner, &provider_result);
+        if case == PublicCase::List {
+            fixture.listChanged(&[]).unwrap();
+            barrier(&fixture, 1, 1, until);
+        } else {
+            let _ = fixture.die();
+        }
+        loop {
+            before(until);
+            let absent = owner.poll().unwrap().is_none();
+            public_history(&owner, &provider_result);
+            if absent {
+                break;
+            }
+            thread::sleep(Duration::from_millis(1));
+        }
+        withdrawn_at = boot_ns();
+        assert!(owner.last_association().is_none());
+        write_once(
+            control,
+            "provider-withdrawn.json",
+            json!({"event":"data-public-poll-provider-withdrawn","case":case.label(),"test":case.test(),
+            "network_namespace":ns_json(ns),"ifindex":ifindex,"lifetime":joined.lifetime,"provider_cid":9,"serial":SERIAL,
+            "provider_disposition":"ProviderAccepted","association_present":false,"provider_result":provider_result,
+            "original_until_ns":until,"at_boottime_ns":withdrawn_at}),
+            until,
+        );
+        let confirmed = wait_json(control, "provider-loss-confirmed.json", until);
+        assert_eq!(public_control_link(&confirmed, ns), ifindex);
+        let observed = confirmed["observed_at_ns"].as_u64().unwrap();
+        assert!(observed >= withdrawn_at && observed < until);
+        confirmed_at = Some(observed);
+        assert!(owner.poll().unwrap().is_none());
+        public_history(&owner, &provider_result);
+        if case == PublicCase::List {
+            counts(&fixture.capture().unwrap(), 1, 1);
+        }
+    }
+    // Explicit peer termination is fixture cleanup, not vendor deactivation.
+    if case != PublicCase::Death {
+        let _ = fixture.die();
+    }
+    public_history(&owner, &provider_result);
+    drop(owner);
+    drop(fixture);
+    assert_eq!(namespace(), ns);
+    write_once(
+        control,
+        "outcome.json",
+        json!({"event":"data-public-poll-outcome","case":case.label(),"test":case.test(),"network_namespace":ns_json(ns),
+        "requirement_passed":true,"provider_disposition":"ProviderAccepted","provider_cid":9,"serial":SERIAL,"provider_result":provider_result,
+        "association_present":false,"setup_via_public_poll":true,"loss_via_public_poll":true,
+        "kernel_loss_withdrawn":case==PublicCase::Link,"provider_loss_from_positive":case!=PublicCase::Link,
+        "provider_loss_kernel_confirmed_at_ns":confirmed_at,"withdrawn_at_ns":withdrawn_at,"owner_dropped_before_result":true,
+        "original_until_ns":until,"closed_at_ns":boot_ns()}),
+        until,
+    );
+}
+#[test]
+#[ignore = "requires owned actual ARM Binder/TUN public-poll controller"]
+fn actual_public_poll_setup_and_link_loss() {
+    actual_public_poll_case(PublicCase::Link);
+}
+#[test]
+#[ignore = "requires owned actual ARM Binder/TUN public-poll controller"]
+fn actual_public_poll_empty_list_loss() {
+    actual_public_poll_case(PublicCase::List);
+}
+#[test]
+#[ignore = "requires owned actual ARM Binder/TUN public-poll controller"]
+fn actual_public_poll_endpoint_loss() {
+    actual_public_poll_case(PublicCase::Death);
+}

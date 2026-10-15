@@ -1,18 +1,20 @@
 # Native radio integration: next execution gate
 
-The [native Data/kernel owner](native-cellular-data-owner.md) now passes one
-fixed actual ARM Binder/kernel RED→GREEN. Real callbacks with serials714 and713
-reach the retained callback inbox and production reducer; the wrong
-serial leaves history empty, and matching success settles provider-reported
-history once. A fresh observation joins its numeric local addresses to a
-continuously witnessed kernel link lifetime. Actual sole-TUN-FD closure and
-independent absence withdraw the current association while accepted history
-survives subsequent empty-list and endpoint-death observations. All42 child
-waits/EOF and source/container closure qualify. This is controlled fixture
-association, without proof the provider owns/created the link or APN readiness.
-Ordinary queued poll dispatch, independent positive-state list/death withdrawal,
-durable dispatch, permissions, installed service/worker lifecycle and matched
-Pixel/carrier behavior remain open.
+The [native Data/kernel owner](native-cellular-data-owner.md) retains its fixed
+actual ARM Binder/kernel RED→GREEN: wrong-serial refusal, accepted provider
+history, a fresh same-observer join and real link-loss withdrawal. Three later
+actual ARM runs of unchanged production code now exercise ordinary public
+`poll()` setup dispatch and separate link, empty-list and endpoint-death loss.
+The list/death cases withdraw a positive association while an independent
+controller confirms the same kernel link and addresses still present; accepted
+history remains intact. The earlier 42 waits/EOF and the additional 71
+(21/25/25) qualify separately, with input/container closure.
+[Public-poll evidence](evidence/native-cellular-data-public-poll-provenance.json).
+
+This controlled fixture association does not prove the provider owns or created
+the link or acquires an APN. Unknown-serial ordinary dispatch, durable dispatch,
+permissions, installed service/worker lifecycle and matched Pixel/carrier
+behavior remain open.
 
 The [public Data V3 ABI](native-cellular-data-abi.md) now composes generated Rust
 bindings, a dedicated Rust fixture manager and an independently generated NDK

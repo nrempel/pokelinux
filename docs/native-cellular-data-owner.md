@@ -2,8 +2,10 @@
 
 One fixed actual ARM Binder/kernel test first reached a qualified missing
 consume/join RED, then passed on the first repaired run. Root's final qualifier
-closes both cases and all 42 direct child waits/EOF. Independent source and
-actual-outcome review also passes, with the coverage limits below.
+closes both cases and all 42 direct child waits/EOF. Three later actual ARM
+runs qualify ordinary public-poll setup and independent link/list/death loss
+against unchanged production code, adding 71 separately counted waits/EOF.
+Root and independent review pass each checkpoint, with the coverage limits below.
 
 `native-cellular-owner` keeps one retained Data endpoint, fresh callback pair and
 one retained `KernelObserver` together. It separates an in-memory provider
@@ -81,12 +83,13 @@ name/address fields to an independently created TUN does not prove that the
 provider owns or created that link. Origin is the same owner and its continuously
 retained observer, not a modem/provider-to-kernel authority witness.
 
-## Execution coverage boundary
+## Initial RED/GREEN coverage boundary
 
 The fixed test takes actual owned events from the private callback inbox and
 calls the production `reduce` method used by public `poll`. It is not a
 constructed-event replay. It nevertheless bypasses `poll`'s queued Setup/List/
-Died dispatch. That ordinary dispatch path is not executed by this test.
+Died dispatch. That ordinary dispatch path is not executed by this initial
+test; the later three-run qualification below covers it separately.
 
 The repaired execution checks wrong 714 ignored without history, matching 713
 accepted as `ProviderAccepted { cid: 9 }`, then an ordinary `poll` obtains a
@@ -129,6 +132,68 @@ receipt/process wait; individual native FDs have no independent `EBADF` check.
 Missing Bionic linker-config warnings remain preserved; Android linker namespace/
 configuration and SELinux are not qualified by this fixture.
 
+## Additional ordinary public-poll qualification
+
+Three separately owned actual ARM runs pass against the unchanged repaired
+production owner, callbacks, bounded copies, bindings and kernel observer.
+Only `src/kernel_tests.rs` is appended; its earlier 16,983-byte test remains an
+exact prefix with its original digest. The new tests are ignored by default.
+This adds execution coverage; no new behavioral RED or production repair is
+claimed. The [earlier provenance](evidence/native-cellular-data-owner-provenance.json)
+remains unchanged, while [public-poll provenance](evidence/native-cellular-data-public-poll-provenance.json)
+records the new test source and three actual runs.
+
+Every new case uses public owner methods, without taking events from the private
+inbox or calling `reduce` directly. One actual NDK attachment and setup preserve
+all 10 arguments, 21 profile fields and the full 18-field provider result.
+Ordinary `poll()` consumes the normal matching `SOLICITED` response for serial
+713, records `ProviderAccepted { cid: 9 }`, and has no association before the
+controller creates any TUN. The independent controller then creates the sole
+nonpersistent CLOEXEC TUN, with IPv4 local distinct from peer, IPv6 `nodad`,
+UP/point-to-point flags and MTU 1400. Public `poll()` obtains a fresh association
+from that same owner's retained observer.
+
+| Actual case | Withdrawal control | Direct child waits/EOF |
+| --- | --- | --- |
+| Setup and link loss | Controller closes the sole TUN FD and independently observes absence before public-poll withdrawal | 21 |
+| Empty list | Public-poll empty-list dispatch withdraws a fresh positive association while the TUN FD remains held and the peer remains live | 25 |
+| Endpoint death | Actual peer exit 0/EOF and public-poll death dispatch withdraw a fresh positive association while the TUN FD remains held | 25 |
+
+For both provider-loss cases, independent full kernel snapshots before and after
+withdrawal confirm the same namespace-local ifindex, UP/point-to-point flags,
+MTU, local/peer IPv4 and IPv6 addresses. The after-snapshot follows native
+withdrawal; in the death case it also follows actual peer wait 0 and EOF. Both
+native clients then exit 0 with EOF before the controller closes the sole TUN FD.
+Thus their withdrawal is independent of kernel link loss. Accepted history and
+the exact complete provider report remain unchanged. Subsequent actual TUN
+closure and independent absence qualify cleanup separately.
+
+The 71 additional direct child waits/EOF comprise 21/25/25, with every native
+test and peer exiting 0 and each owned manager killed for cleanup and waited as
+−9. Every wait/EOF is observed before its original absolute BOOTTIME cutoff.
+Actual UID/GID 1000, empty groups, zero effective capabilities, four GNU/native
+ELF maps, 15 genuine Bionic peer/loader/library ELF maps and three separate
+property maps are bound in each case. The Binder device remains a separate
+mapping; compile stubs are not runtime substitutes. Namespace restoration,
+controller FD closure, module unload, Binder/property teardown, poweroff and
+outer CLI 0/exact-CID fresh absence on the same daemon qualify. Root rehashes all
+selected and original inputs, including the backing image; independent review
+rehashes all selected and remaining small original bindings. Missing Bionic
+linker-config warnings remain preserved.
+
+The list and death VM boots happen to use identical numeric namespace device/
+inode values. They are local identities inside independently owned fresh VMs,
+not proof of identity across boots. New fixture generations differ by run;
+namespace numbers, ifindices and local lifetime counters are not durable tokens.
+
+Build prerequisites pass formatting, Clippy with warnings denied, host/ARM64
+libtest compilation and ordinary ARM64 release compilation. No host behavioral
+test is run. A skipped ignored test or a successful compile is not an actual
+behavioral pass. Unknown-serial processing through ordinary public-poll dispatch
+remains unqualified; the earlier direct-reducer wrong-serial check remains
+separate. Worker/pool joins, responsive installed Stop, production permissions,
+APN acquisition and provider-to-kernel authority remain open.
+
 ## Remaining boundaries
 
 The compile prerequisite passes formatting, Clippy with warnings denied, host
@@ -140,8 +205,9 @@ Runtime negative controls for UID/shape/errors, duplicates, broader stale source
 retirement races, IP/MTU/prefix/flags/lifetime policy, rename/reuse, overflow,
 concurrency, deadline/suspend and load remain open. Raw duplicate local addresses
 with different peers or ineligible scope/flags are outside the qualified subset;
-no general raw-address uniqueness claim is made. So do ordinary queued-event
-dispatch and independent list/death withdrawal from positive state.
+no general raw-address uniqueness claim is made. Unknown-serial handling through
+ordinary queued-event dispatch remains open; the earlier wrong-serial result
+was fed directly to the production reducer.
 
 Process-global Binder pools are fixture infrastructure. Local owner/watch drop
 and process waits do not qualify pool or owned-worker joins, responsive Stop,
