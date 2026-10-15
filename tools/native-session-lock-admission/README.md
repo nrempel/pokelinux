@@ -60,8 +60,14 @@ Messages UI, original effect, authentication or clear is exercised.
 For the later queued publication boundary, use `storage-barrier-run.py --binary
 HOST_DAEMON --fixture queued-storage-barrier.py --common storage-barrier.py
 --output NEW`, with absolute file paths. The runner freezes both fixture files
-separately. The x86_64 fixture requires a stopped main poll syscall with at least
+separately. The native ABI map covers x86_64 poll7/ppoll271 and ARM64 ppoll73;
+the fixture requires a stopped main poll syscall with at least
 five fds, then queues a retained UID1000 lock before a later ordinary grant.
 It does not retry a failed stop. Its actual reply is asserted after normal
 ownership closure. See [queued report](../../docs/native-lock-queued-storage.md)
 for execution and the remaining EAGAIN/complete-intervening-write/clear gates.
+The current ARM aggregate fails that stopped-syscall prerequisite before the test
+packets, despite passing all 40 library and both planning cases. ARM signal-stop
+semantics can remove that syscall witness; do not accept a negative syscall
+number, retry the stop, or count outer shutdown as native cleanup. Read the
+[ARM report](../../docs/native-lock-storage-arm.md) before proposing another control.

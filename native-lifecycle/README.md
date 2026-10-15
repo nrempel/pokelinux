@@ -84,7 +84,10 @@ Refusal still fences memory immediately. A later
 at every send and permanently downgrades it when storage is busy. A genuine
 queued-socket RED precedes its host GREEN, two planning controls and all 40
 regressions. The older planning source separately passes two actual generic ARM
-kernel cases; newer send-time source only cross-compiles there. Complete
+kernel cases. A later [current-code ARM run](../docs/native-lock-storage-arm.md)
+passes all 40 library tests and both planning cases, but its aggregate fails the
+queued fixture's main-poll setup before the test packets. Queued ARM behavior
+remains unqualified; no guard is relaxed or stop retried. Complete
 authenticated-clear ordering remains open. That intent is restored
 before Ready and cannot be cleared by unlocked Source facts or root admin false.
 `Gate::Lock` remains monotonic through irrelevant focus revisions. The fixed Rust

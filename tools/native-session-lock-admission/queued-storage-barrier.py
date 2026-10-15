@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Actual queued lock reply versus a later ordinary Grant; isolated host only.
+"""Actual queued lock reply versus a later ordinary Grant; isolated kernels only.
 
 Import --common from a separately frozen published storage-barrier.py. This
-fixture requires x86_64 /proc syscall observations and never retries a bad stop.
+fixture requires native /proc syscall observations and never retries a bad stop.
 """
 import argparse
 import hashlib
@@ -105,10 +105,13 @@ def run(common, binary, results):
         fields = stopped.split()
         record.update(pre_stop_wchan=wchan, stopped_syscall=stopped,
                       stopped_at_ns=common.now())
-        # Local x86_64 unistd_64.h: poll=7, ppoll=271. Main actor poll has
+        # Linux unistd_64.h: poll=7, ppoll=271; arm64 asm-generic: ppoll=73.
+        # Main actor poll has
         # three listeners and at least these two retained connections. One-FD
         # pidfd liveness polls cannot establish the required loop boundary.
-        assert int(fields[0], 0) in (7, 271) and int(fields[2], 0) >= 5, 'failed setup: actor not in main poll'
+        poll_numbers = {'x86_64': (7, 271), 'aarch64': (73,)}[platform.machine()]
+        assert int(fields[0], 0) in poll_numbers and int(fields[2], 0) >= 5, 'failed setup: actor not in main poll'
+        record['poll_syscall_arch'] = platform.machine()
         record['poll_phase_qualified'] = True
         instruct(peer, 'send')
         record['peer_sent'] = peer_phase(peer, 'sent')
@@ -195,7 +198,7 @@ def main():
     parser.add_argument('--common', type=Path, required=True)
     args = parser.parse_args()
     assert os.getuid() == os.geteuid() == 0 and os.environ.get('NATIVE_LIFECYCLE_ISOLATED') == '1'
-    assert platform.machine() == 'x86_64', 'host syscall qualification is x86_64 only'
+    assert platform.machine() in ('x86_64', 'aarch64'), 'unsupported native syscall qualification'
     common_path = args.common.resolve(strict=True)
     assert common_path != Path(__file__).resolve()
     spec = importlib.util.spec_from_file_location('storage_barrier_common', common_path)
@@ -210,7 +213,7 @@ def main():
     result = {'passed': record['passed'], 'case': record,
               'common_sha256': hashlib.sha256(common_path.read_bytes()).hexdigest(),
               'limits': ['direct credential-qualified JSON lock IPC; no original action execution',
-                         'headless x86_64 host; no Source, Messages, authentication, clear or PAM',
+                         'headless native kernel; no Source, Messages, authentication, clear or PAM',
                          'one required poll-phase stop; failed setup is not retried or filtered',
                          'ordinary Grant fsync followed by SIGSTOP; not uninterruptible filesystem IO',
                          'storage Child wait belongs to daemon; forced fallbacks cannot pass',

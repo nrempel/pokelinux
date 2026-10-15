@@ -37,7 +37,12 @@ separate from execution. The older planning-time code from `1106ab2` separately
 passes both ordinary cases on an actual Arch ARM kernel; that does not execute
 this newer queued-reply repair. See the [ARM proof](evidence/native-lock-storage-barrier-arm-provenance.json).
 
-The new queued case is x86_64 host evidence. It induces no send EAGAIN, actual
+The new queued case is qualified x86_64 host evidence. A later
+[current-code ARM selection](native-lock-storage-arm.md) passes all 40 library
+tests and both planning cases but fails the queued main-poll setup before its
+test packets. Its aggregate is failed; no queued ARM pass is claimed. The test
+ABI map alone cannot establish ARM's stopped-syscall observation semantics.
+It induces no send EAGAIN, actual
 suspend, authenticated clear or intervening write that starts and completes
 before the send. A future clear needs stronger epoch/serialization rules and
 truthful durable history; a busy check alone cannot qualify those transitions.

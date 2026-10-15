@@ -115,6 +115,10 @@ an actual host socket RED→GREEN, with all 40 regressions and both planning cas
 preserved. The older planning code separately passes two actual generic ARM
 kernel cases. Neither selection qualifies authentication, an EAGAIN send, a
 complete intervening write or serialized durable restoration.
+Current code later passes all 40 library tests and both planning cases on an
+[actual generic ARM kernel](native-lock-storage-arm.md), but that aggregate
+fails its queued-poll setup before sending the test packets. Queued ARM behavior
+remains unqualified; outer VM closure is not native failed-case storage cleanup.
 
 ## Native messaging checkpoint
 

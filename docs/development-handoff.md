@@ -18,6 +18,17 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+Current production source `90ced3a` now runs all 40 lifecycle library tests and
+both planning socket cases under the actual generic Arch ARM kernel. The combined
+run is failed: the later queued fixture sees stopped syscall-1 without nfds and
+refuses setup before sending either test packet. A source-supported ARM64 signal
+explanation is an inference, not qualification. Actor/peer fallback waits-9 and
+storage pidfd death do not establish storage reaping; its proc entry was still
+present. Actual QEMU/CLI/container wait0 and fresh CID absence close only the
+outer boundary. Root rehashes120 inputs. No rerun or weakened guard occurs.
+The native-ABI fixture still passes its separate host case. See
+[current ARM report](native-lock-storage-arm.md).
+
 The queued lock-success timing hole now has its own actual host socket RED and
 repair. A poll-phase-qualified actor queues an idle UID1000 lock before a later
 ordinary grant; the old binary sends `ok` while storage is held. Current code
@@ -999,6 +1010,17 @@ normal frames. Historical failures and earlier25 display groups remain frozen.
 See `native-session-freshness-chain.md` and its publication provenance.
 
 ## Next work
+
+Prioritize the existing Messages lock→restore tracer. Implement one coherent
+private atomic completion→armed context→later exact-object unlock→versioned synced
+clear through the real actor/storage path. Keep the authentication source test-only
+and production construction/ingress absent until actual whole-owner completion
+provenance is independently qualified. New lock during clear must retain denial
+and win on disk/restart; stale Source cannot restore reads. Do not substitute more
+local models or ARM harness passes for genuine authentication. Actual whole-owner
+composition remains unqualified. Keep the queued ARM setup failure separate rather than
+relaxing its predicate. Then finish real authentication binding and normal Messages
+reopening before broadening the smartphone matrix.
 
 1. Continue the qualified synthetic incoming Messages path with raw retention/capacity
    and cold backlog availability. Held-read cancellation now preserves shared
