@@ -95,6 +95,10 @@ pins both59-test builds, source/ELF selections and runtime closure. Private raw
 logs, original APK/SDK and proprietary inputs are not published. No new original
 vendor runtime, authentication/PAM, UI, modem or physical phone executes here.
 
+The later [original notification reference](native-ims-registration-notifications.md)
+separately observes direct message→Proxy callbacks. It adds no Rust state or new
+ARM result; concrete manager admission and connected/loss reduction remain open.
+
 Discovery/output pressure, installed principal negatives, malformed continuation,
 startup filesystem stalls, suspend/wake and manager fallback remain separate.
 Original producer/reset identity, acknowledged remote cleanup, safe successor

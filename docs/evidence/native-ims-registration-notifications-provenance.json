@@ -1,0 +1,309 @@
+{
+  "schema": 1,
+  "scope": "Original direct registration data update/onMessage to captured connectivity listener, with explicit constructor-bypassed collaborators; callback observations only",
+  "base_commit": "470407d8c4915465c328cebbd4b193a9cc5884fe",
+  "source": [
+    {
+      "path": "framework/shannon-registration-oracle/RegistrationSemanticOracle.java",
+      "sha256": "24809dfbd7deb00c360c8421c0a5f49aaa2cb624b214d36641dd7f6a15544086"
+    }
+  ],
+  "original_input": {
+    "APK_sha256": "8b017599727398e80df5ab618d648890dcdc34b5fe2ba71fb2331e51bd8b8879",
+    "APK_installed": false,
+    "public_original_bytes": false
+  },
+  "SDK_runtime": {
+    "label": "pokelinux-registration-semantic-sdk37-root-1",
+    "image": "sha256:fcc63fb8f191a5b15cd9a64d04a26bb06b009216a2cd4e4de0f6931b6c919838",
+    "sdk": 37,
+    "abi": "x86_64",
+    "QEMU": true,
+    "SELinux": "Enforcing",
+    "display_pixels": [
+      1080,
+      2424
+    ],
+    "logical_density": 420,
+    "GUI_claim": false,
+    "fresh_HOME_and_AVD": true,
+    "host_ADB": false,
+    "network": "none",
+    "only_host_device": "/dev/kvm",
+    "unchanged_SDK_file_pins": 447,
+    "SDK_manifest_sha256": "70a54b456ea3b581e5f073f1a9495d1ad2bc454579734673d14d7d56d045fb48"
+  },
+  "selected_original_boundary": {
+    "actual_message_code": 3012,
+    "actual_enum_name": "RILC_UNSOL_AIMS_REGISTRATION",
+    "methods": [
+      "RilIndRegistration original data/base constructors",
+      "update(full12bytes,12)",
+      "onMessage(actual getMessageId enum)"
+    ],
+    "constructor_bypassed_original_classes": [
+      "com.shannon.imsservice.network.NetworkAdaptor",
+      "com.shannon.imsservice.network.adaptor.RegistrationAdaptor"
+    ],
+    "original_class_initializers_may_execute": true,
+    "authored_proxy": "IImsConnectivityNetworkListener",
+    "exact_injected_original_network_listener_identity_and_slot_checked": true,
+    "slots": [
+      0,
+      1
+    ],
+    "original_message_instances": 10,
+    "updates": 12,
+    "authored_records": 14,
+    "observed_callback_entries": 20,
+    "message_ID_filter_test": false,
+    "full_helper_channel_dispatch": false,
+    "concrete_registration_listener_or_manager": false
+  },
+  "observations": [
+    {
+      "case_id": "slot-0-reused-state-2",
+      "slot": 0,
+      "owner": 1,
+      "wire_state": 2,
+      "reused_message": false,
+      "ordered_callbacks": [
+        "registrationAssociatedUriChanged",
+        "registrationConnected",
+        "registrationFeatureCapabilityChanged"
+      ],
+      "escaped_exception": false
+    },
+    {
+      "case_id": "slot-0-reused-state-1",
+      "slot": 0,
+      "owner": 1,
+      "wire_state": 1,
+      "reused_message": true,
+      "ordered_callbacks": [
+        "registrationDisconnected",
+        "registrationFeatureCapabilityChanged"
+      ],
+      "escaped_exception": false
+    },
+    {
+      "case_id": "slot-0-fresh-state-1",
+      "slot": 0,
+      "owner": 2,
+      "wire_state": 1,
+      "reused_message": false,
+      "ordered_callbacks": [
+        "registrationDisconnected",
+        "registrationFeatureCapabilityChanged"
+      ],
+      "escaped_exception": false
+    },
+    {
+      "case_id": "slot-0-fresh-state-2",
+      "slot": 0,
+      "owner": 3,
+      "wire_state": 2,
+      "reused_message": false,
+      "ordered_callbacks": [
+        "registrationAssociatedUriChanged",
+        "registrationConnected",
+        "registrationFeatureCapabilityChanged"
+      ],
+      "escaped_exception": false
+    },
+    {
+      "case_id": "slot-0-fresh-state-255",
+      "slot": 0,
+      "owner": 4,
+      "wire_state": 255,
+      "reused_message": false,
+      "ordered_callbacks": [],
+      "escaped_exception": false
+    },
+    {
+      "case_id": "slot-0-fresh-state-3",
+      "slot": 0,
+      "owner": 5,
+      "wire_state": 3,
+      "reused_message": false,
+      "ordered_callbacks": [],
+      "escaped_exception": false
+    },
+    {
+      "case_id": "slot-1-reused-state-2",
+      "slot": 1,
+      "owner": 6,
+      "wire_state": 2,
+      "reused_message": false,
+      "ordered_callbacks": [
+        "registrationAssociatedUriChanged",
+        "registrationConnected",
+        "registrationFeatureCapabilityChanged"
+      ],
+      "escaped_exception": false
+    },
+    {
+      "case_id": "slot-1-reused-state-1",
+      "slot": 1,
+      "owner": 6,
+      "wire_state": 1,
+      "reused_message": true,
+      "ordered_callbacks": [
+        "registrationDisconnected",
+        "registrationFeatureCapabilityChanged"
+      ],
+      "escaped_exception": false
+    },
+    {
+      "case_id": "slot-1-fresh-state-1",
+      "slot": 1,
+      "owner": 7,
+      "wire_state": 1,
+      "reused_message": false,
+      "ordered_callbacks": [
+        "registrationDisconnected",
+        "registrationFeatureCapabilityChanged"
+      ],
+      "escaped_exception": false
+    },
+    {
+      "case_id": "slot-1-fresh-state-2",
+      "slot": 1,
+      "owner": 8,
+      "wire_state": 2,
+      "reused_message": false,
+      "ordered_callbacks": [
+        "registrationAssociatedUriChanged",
+        "registrationConnected",
+        "registrationFeatureCapabilityChanged"
+      ],
+      "escaped_exception": false
+    },
+    {
+      "case_id": "slot-1-fresh-state-255",
+      "slot": 1,
+      "owner": 9,
+      "wire_state": 255,
+      "reused_message": false,
+      "ordered_callbacks": [],
+      "escaped_exception": false
+    },
+    {
+      "case_id": "slot-1-fresh-state-3",
+      "slot": 1,
+      "owner": 10,
+      "wire_state": 3,
+      "reused_message": false,
+      "ordered_callbacks": [],
+      "escaped_exception": false
+    }
+  ],
+  "shared_callback_values": {
+    "state2_URI_notification": [
+      "UNKNOWN"
+    ],
+    "APN_enum": "APN_IMS",
+    "reason_enum": "IMS_SERVICE_REGISTER_SUCCESS",
+    "reason_getCpReason": 0,
+    "state1_additional_int": 0,
+    "state1_reason_string": "UNKNOWN",
+    "feature_and_all_masks_and_extensions": 0,
+    "capability_RegState_getCode_matches_wire_1_or_2": true,
+    "fresh_and_reused_same_state_callback_arguments_and_postfields_equal": true,
+    "post_onMessage_fields_equal_post_update_for_this_input_set": true,
+    "UNKNOWN_is_original_sentinel_not_native_identity": true
+  },
+  "harness_policy": {
+    "callback_counts_order_or_meaning_prescribed_before_run": false,
+    "behavioral_RED_intended": false,
+    "Java_harness_assertions": "input parse, association, explicit collaborator identity, bounded capture shape and complete finite case set",
+    "Root_post_run_checks": "exact observed callback order, enums, arguments, fresh/reused equality and full ownership/input closure",
+    "partial_throw_or_reflection_failure_qualifies": false
+  },
+  "owned_closure": {
+    "container_direct_child_waits": 109,
+    "shell_app_process_actual_wait_exit": 0,
+    "app_process_proc_absent_after_shell_wait": true,
+    "ADB_original_invocation_actual_wait_exit": 0,
+    "all_direct_waits_and_EOF_before_original_cutoffs": true,
+    "emulator_actual_wait_exit": 0,
+    "foreground_ADB_server_actual_wait_signal": 15,
+    "Docker_CLI_actual_wait_exit": 0,
+    "fresh_exact_CID_absence_same_daemon": true,
+    "all_selected_and_original_inputs_unchanged": true,
+    "root_rehashed_input_bindings": 468,
+    "normal_boundary_and_outer_qualified": true
+  },
+  "receipts": [
+    {
+      "name": "inputs/selection.json",
+      "sha256": "5d8070126dbfe794e380876dbee979e11b29d262077cbe0540f532464c379aa0"
+    },
+    {
+      "name": "inputs/command.json",
+      "sha256": "bc52ee4c767c3d67436a81b8416c4cb840ad75080d3b52aa5096e1fb556e94b4"
+    },
+    {
+      "name": "outputs/execution.json",
+      "sha256": "4a8ac6bcc1b4ab0dc347b76d2d6a7480336ce52bffcda4bd048307097ff1654f"
+    },
+    {
+      "name": "outputs/result.json",
+      "sha256": "c27067e178eecc4ef1a14e4f98b5f28d2d79b3a8e6225377bf9af45f0d896d50"
+    },
+    {
+      "name": "outputs/original-records.json",
+      "sha256": "21b02a4d9ce6b7715cfe463e5de788703a9c40a0575b9c165d06faba758d4eb0"
+    },
+    {
+      "name": "outputs/build/oracle.jar",
+      "sha256": "a73ffce4d5ded06ecbc4120709202fa14ca52f04de96c15836efa92d1ac036a7"
+    }
+  ],
+  "frozen_envelope": [
+    {
+      "name": "plan.py",
+      "sha256": "e2e7c116cd4fefdfd2c33e1e0a2e3af1c0dc184f38d4775e3a7e934c29a034d3"
+    },
+    {
+      "name": "container.py",
+      "sha256": "aa7e47df16ba4d82fb0dac321675bda9d02bc23e4cbe8f6033cef7fd3db8a779"
+    },
+    {
+      "name": "run-selected.py",
+      "sha256": "96fc59b1d90438c84c16324a7e4f23437ed826af32e035621552535947f78406"
+    },
+    {
+      "name": "owned.py",
+      "sha256": "156ea16b3bbc672923bba4873c1d10ef58127fe41572f68896e33696816e05fe"
+    },
+    {
+      "name": "oracle-launch.sh",
+      "sha256": "e65558839fd5b5bd063cc4d34a25b582dda564a5f78da8455ce9148b29e019fd"
+    }
+  ],
+  "evidence_classes": {
+    "new_original_SDK_emulator_execution": true,
+    "new_Rust_runtime": false,
+    "new_ARM64_kernel_or_usermode": false,
+    "physical_phone": false,
+    "modem_or_carrier": false
+  },
+  "remaining_gates": [
+    "conditional original concrete RegistrationListener APN/entity/request/StackControl prerequisites and normal connected/loss reduction",
+    "normal helper/channel delivery and producer/reset identity",
+    "native shared registration domain model and admitted installed reducer; callback alone does not establish manager registered state",
+    "APN acquisition, SIM/bearer/IMS/calls/media/carrier, provider replacement and hardware qualification"
+  ],
+  "source_only_next_gate": {
+    "executed": false,
+    "source": "retained matched APK and private DEX/REA inspections",
+    "original_APK_sha256": "8b017599727398e80df5ab618d648890dcdc34b5fe2ba71fb2331e51bd8b8879",
+    "facts_requiring_conditional_runtime_qualification": [
+      "APN entity and local StackControl membership gate before connected state reduction",
+      "observed reason0 disconnected path can return early while add-PDN-ready is true",
+      "preserved original SolicitedMessage initialization starts HandlerThread requiring explicit bounded quit/join"
+    ],
+    "not_claimed": "normal setup, APN acquisition, complete connected/loss reduction, native IMS or thread lifecycle execution"
+  }
+}

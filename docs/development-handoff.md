@@ -18,6 +18,15 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The [original message notification probe](native-ims-registration-notifications.md)
+now records12 SDK37 x86 updates and20 Proxy callbacks. Constructor-bypassed
+objects stop before the concrete APN/StackControl manager; its conditional
+connected/loss reduction remains the next semantic gate. No Rust state is added.
+Source-only REA also identifies an add-PDN-ready early return on the observed
+reason0 loss path and a live HandlerThread initializer in original request
+construction. The next conditional oracle must bind those priors and own the
+thread through bounded quit/join; neither is runtime-qualified by this probe.
+
 The [installed slot1 registration history tracer](native-radio-registration-installed.md)
 now qualifies actual ARM Binder callback→native owner→typed worker IPC→restricted
 status after a genuine missing-projection RED. Required `SLOT_ID=1` reaches the

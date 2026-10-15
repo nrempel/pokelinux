@@ -7,6 +7,10 @@ cases and8 separately selected parser calls complete. Original
 `RILC_UNSOL_AIMS_REGISTRATION`; observed enum ordinal106 is not a wire identifier.
 This adds original-reference evidence. The later [installed slot1 tracer](native-radio-registration-installed.md)
 separately qualifies typed publication with authored public ARM peers.
+A later [direct message notification probe](native-ims-registration-notifications.md)
+separately executes original `update`→`onMessage` to a capture Proxy with
+constructor-bypassed network/adaptor objects. It does not combine these runs into
+full helper/channel routing or qualify the concrete manager reducer.
 
 ## Executed boundary
 
@@ -19,7 +23,7 @@ not a recovered producer flag or a Binder-driver interoperability result.
 
 Separately, a fresh original registration message with a null adaptor channel
 provides its ID association and parses the entire captured byte array. No
-`OemRIL`, helper/channel dispatch or semantic `onMessage` executes. The probe
+`OemRIL`, helper/channel dispatch or message `onMessage` executes in this earlier route probe. It
 never constructs `NetworkAdaptor`, installs the APK, activates a vendor service
 or accesses a modem or physical phone.
 
@@ -58,9 +62,12 @@ qualifies typed worker/service/status composition with required packaged slot
 selection and retained history across peer-loss withdrawal. Fragments remain
 excluded and fields remain historical wire data.
 
-Full original helper/channel routing, producer identity, fragment serialization,
-reset/cleanup acknowledgement, safe successor registration, state/RAT/features,
-URI identity, native IMS/calls/media and physical hardware remain unqualified.
+The later notification report qualifies only the direct original message-to-Proxy
+boundary. Static recovery identifies live APN entity plus StackControl membership
+as a concrete manager admission prerequisite; that conditional connected/loss
+reducer has not executed. Full helper/channel routing, producer identity,
+fragment serialization, reset/cleanup acknowledgement, safe successor registration,
+state/RAT/features, URI identity, native IMS/calls/media and hardware remain open.
 This original-reference run adds no Rust/ARM kernel runtime, screenshot or phone result.
 
 ## Runtime and closure
