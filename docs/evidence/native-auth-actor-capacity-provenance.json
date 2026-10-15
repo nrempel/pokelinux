@@ -1,0 +1,274 @@
+{
+  "schema": 1,
+  "scope": "Private capacity-only actor completion consumer with typed Provider facts, real locker pidfds and synthetic closure stamps; no production producer",
+  "base_commit": "e964a6ef334b8efe91b096764191fe42abb4beba",
+  "compile_prerequisite_RED": {
+    "schema": 1,
+    "classification": "ACTOR_CLOSED_CAPACITY_MISSING_PRIVATE_API_COMPILE_PREREQUISITE_RED",
+    "runtime_defect_demonstrated": false,
+    "test_bodies_executed": 0,
+    "actual_Cargo_exit": 101,
+    "actual_tool_session": 16319,
+    "actual_terminal_chunk": "da35f0",
+    "actual_terminal_exit": 1,
+    "source_bindings": 31,
+    "all_frozen_and_current_bindings_match_at_seal": true,
+    "owned_CLI_actual_wait_and_fresh_same_daemon_CID_absent": true,
+    "production_changes_before_RED": false,
+    "selection_sha256": "668bacf127b32c0d424b788326299736bb22b20989dd3d9d68e295f78dbeccb7",
+    "execution_sha256": "aa95cc88310163b1ff1f17aeaa1abca1df722ba6a43b8015b66493a997f5bb00",
+    "log_sha256": "63c277ec6d8337fc4113d06d581d0d11bbc2f4e875fdaad68b6c0f027aeb981d",
+    "sealed_ns": 5962560478691498
+  },
+  "compile_RED_review_sha256": "2df5913b8f728d1e1d1885fcf7823c2ab61a73207acd48adb92839695a4d6333",
+  "preserved_failed_profile_labels": [
+    {
+      "label": "pokelinux-actor-capacity-green-root-1",
+      "actual_tool_session": 26004,
+      "actual_terminal_chunk": "d8f783",
+      "Cargo_exit": 101,
+      "test_passed": 33,
+      "test_failed": 7,
+      "runtime_defect_demonstrated": false,
+      "reason": "Wrong UID1000 profile for existing root-owned storage fixtures",
+      "source_unchanged_for_fresh_correct_profile": true,
+      "actual_CLI_wait_and_fresh_same_daemon_CID_absent_recorded": true,
+      "selection_sha256": "87a3dfedc304604c6c82c6de6062bfc905e553c94afe9ce453dcdda1e7a04ecb",
+      "execution_sha256": "6a9f74d530f17cd6dfc99b7b51ef66c52dcefc2b4d63ba322dfd3a85cb295745",
+      "log_sha256": "fe3fd98b93a9b4ccf935455e9ff8495635ef1160dcf30708749c62a9b8fdaf1d"
+    },
+    {
+      "label": "pokelinux-actor-capacity-root-profile-green-root-1",
+      "actual_tool_session": null,
+      "actual_terminal_chunk": "e46ca1",
+      "Cargo_exit": 101,
+      "test_passed": 0,
+      "test_failed": 0,
+      "runtime_defect_demonstrated": false,
+      "reason": "Root output directory group write removed by umask; zero tests",
+      "source_unchanged_for_fresh_correct_profile": true,
+      "actual_CLI_wait_and_fresh_same_daemon_CID_absent_recorded": true,
+      "selection_sha256": "fa1464324a225fa809a7a2631a3c8bb02bebc8006294e72e0fba2016760e1a2a",
+      "execution_sha256": "f2335ba606a18c4ee598e0e28d3927d0313af306343e7825f77ec867162ead9e",
+      "log_sha256": "eb4cd6dca03aa76fb1b39c77497e9512c001469962809d3ddab59aca5401617b"
+    }
+  ],
+  "full_root_profile": {
+    "schema": 1,
+    "classification": "HOST_FULL_LIFECYCLE_ROOT_PROFILE",
+    "passed": true,
+    "actual_tool_session": 43339,
+    "actual_terminal_chunk": "3914f2",
+    "actual_terminal_exit": 0,
+    "UID": 0,
+    "test_passed": 40,
+    "test_failed": 0,
+    "test_filtered": 0,
+    "explicit_filter": null,
+    "new_capacity_cases": 7,
+    "source_bindings": 31,
+    "all_frozen_and_current_match_at_seal": true,
+    "strict_fmt_default_all_target_all_feature_Clippy": true,
+    "source_closure_stamp_is_test_only_model": true,
+    "production_completion_producer_or_broker_PAM_scope_unlock_enabled": false,
+    "source_100ms_and_original_deadlines_unchanged": true,
+    "ARM64_library_test_ELF_compiled_not_run": true,
+    "host_test_ELF_sha256": "e632804e6614436ae197b4f67ebdd5f4ed06cf24344797a31479b411140db471",
+    "ARM64_test_ELF_sha256": "76a7781b06805abb95c1034175792e60c67d29198ac8a7f6cc8be5b060d541e3",
+    "selection_sha256": "00ca8b07bef6aa6a777289e76f4856a313305c5c712818990afce3716ee1afaa",
+    "execution_sha256": "2ae6c477bf372b6a19f53f9c14cfc6b40c821230cf7b009f8a0b23265ce2a690",
+    "test_log_sha256": "346ba3057d2c472fbf9a5e79038255aeb3cff7d327ba4601e5e066af2e01ae81",
+    "test_list_sha256": "743501a227a5ccc5299e982fcb7ae3d3687ebf6c34078737ba3d68dd2840ba8b",
+    "fresh_same_daemon_exact_CID_absent": true,
+    "root_supplementary_group1000_only_for_writing_owned_results": true,
+    "sealed_ns": 5962897345695106
+  },
+  "full_root_review_sha256": "226240566d54fecea485fa2bc8cabb860dadd8dfe16ed22747a3050c4f771030",
+  "focused_UID1000_profile": {
+    "schema": 1,
+    "classification": "HOST_FOCUSED_ACTOR_CAPACITY_UID1000",
+    "passed": true,
+    "actual_tool_session": 79303,
+    "actual_terminal_chunk": "5d50f5",
+    "actual_terminal_exit": 0,
+    "UID": 1000,
+    "test_passed": 22,
+    "test_failed": 0,
+    "test_filtered": 18,
+    "explicit_filter": "service::auth_attempt_tests::",
+    "new_capacity_cases": 7,
+    "source_bindings": 31,
+    "all_frozen_and_current_match_at_seal": true,
+    "strict_fmt_default_all_target_all_feature_Clippy": true,
+    "source_closure_stamp_is_test_only_model": true,
+    "production_completion_producer_or_broker_PAM_scope_unlock_enabled": false,
+    "source_100ms_and_original_deadlines_unchanged": true,
+    "ARM64_library_test_ELF_compiled_not_run": true,
+    "host_test_ELF_sha256": "e632804e6614436ae197b4f67ebdd5f4ed06cf24344797a31479b411140db471",
+    "ARM64_test_ELF_sha256": "76a7781b06805abb95c1034175792e60c67d29198ac8a7f6cc8be5b060d541e3",
+    "selection_sha256": "32e9db02a4a7a45f6e498abb8817d9d3ad58952db1d61c1dbec5b8918875ff94",
+    "execution_sha256": "fdb682700bad64beff31be3620fffec48224c4fd1cca69174df156996174dcd0",
+    "test_log_sha256": "49050ab0c67fe3f8f8550baf3d2936c5e8ac6e650e177ea3de2e878ec91eade3",
+    "test_list_sha256": "299ecda52879e63502bb98e25e701c4e4a4f5cdf54e6701c2f5c2cc1860b9b9f",
+    "fresh_same_daemon_exact_CID_absent": true,
+    "root_supplementary_group1000_only_for_writing_owned_results": false,
+    "sealed_ns": 5962897393896759
+  },
+  "focused_user_review_sha256": "3611055c9e3c166e8cafc15f431147f3b5bb0f29989d50d23b8147152b8fbcc7",
+  "byte_identical_host_and_ARM_test_ELFs_across_profiles": true,
+  "source_reviews": [
+    {
+      "kind": "Sol6.1xhigh contract",
+      "sha256": "aa5a8073817c47cc2c31fb9c863f9ae83d9d3256940641c45dc1cd909e161f0a"
+    },
+    {
+      "kind": "Sol6.1xhigh actual source",
+      "sha256": "48d59bfdca7261f2b940ba0ba67b72de393186f66e5a3a5b6cf40afed07e28b2"
+    },
+    {
+      "kind": "Astra medium architecture",
+      "sha256": "70834a2b25261cf9fdb0cedb79235754d5cf2955e0ec114a10b959c313ca205a"
+    }
+  ],
+  "sources": [
+    {
+      "path": "native-lifecycle/Cargo.lock",
+      "sha256": "82e19ca615ad8c45528b2da75978f49910c510004c1561ec2a9a07816a50142f"
+    },
+    {
+      "path": "native-lifecycle/Cargo.toml",
+      "sha256": "339c2dc5fa8846b08f2b97ddc32c1c4f850bfd818038175c8f8ea64cf689417e"
+    },
+    {
+      "path": "native-lifecycle/README.md",
+      "sha256": "df1f09068cf29541fc2c415c9a6f57b4b52e3c0408a0f33b18c27e13ef7ad5a4"
+    },
+    {
+      "path": "native-lifecycle/packaging/omarchy-system-lock",
+      "sha256": "312331cbb790ed634e345c32c292768b36fbce78de6d32c09a19eab590085781"
+    },
+    {
+      "path": "native-lifecycle/src/apps.rs",
+      "sha256": "77b338e8d54255577c2fbb11969faa9ed7d106960e012e25042290e7cd25ba5f"
+    },
+    {
+      "path": "native-lifecycle/src/authority.rs",
+      "sha256": "1d03425a412f4a18be74279d05293966ec45bdf6d1d83a87223dd1738d3f4369"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-client.rs",
+      "sha256": "6dd1f2c86a96bca4364b5ee2e85fd39fecaf10bc68b8f7b727bd3e65f86bc9bf"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-daemon.rs",
+      "sha256": "ee33d2d77a8fc98ce56b582d9b9c96d0f2f8240e3fda182ec9bdeba8f6af4f01"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-launcher.rs",
+      "sha256": "49a0e279b381a45ed49242a74c94b202ebebb81bc42bd8b61cfd58f8bb80a923"
+    },
+    {
+      "path": "native-lifecycle/src/bin/lifecycle-lock.rs",
+      "sha256": "169bc0b6f9745b3109bcb44b4f23eeed54e523ed115220d1c8ed809a38ecedad"
+    },
+    {
+      "path": "native-lifecycle/src/camera.rs",
+      "sha256": "d113da936e0e1cf14158d9cb52c9fb364e5cbd8c25de9c7245cae9ddcc568365"
+    },
+    {
+      "path": "native-lifecycle/src/display.rs",
+      "sha256": "8003328560796eedc3e9f20c8878ab39e36ed96300a104152d5928954172631c"
+    },
+    {
+      "path": "native-lifecycle/src/ipc.rs",
+      "sha256": "3777ef70117c8a37078e6c25ecaa21f17c2de094604877d433c6b69b8f0a90c9"
+    },
+    {
+      "path": "native-lifecycle/src/lib.rs",
+      "sha256": "b13cd5350c87d7296fae3318a643362a7b3d7315c0ee58bb154d32fdcd696005"
+    },
+    {
+      "path": "native-lifecycle/src/lock.rs",
+      "sha256": "ddb658781c03d6620ea269035044ff953c2f548ccc67409f0063dcb6ed3998e5"
+    },
+    {
+      "path": "native-lifecycle/src/messages.rs",
+      "sha256": "2e446fa1eef820b14510f60ce88b880637d84daf90cec8909639d0ec97f2c657"
+    },
+    {
+      "path": "native-lifecycle/src/service.rs",
+      "sha256": "b3ae15428e8dab3c0b7261c33ab9b5d62b268fa6cf648e9d38b76f8dd0c29880"
+    },
+    {
+      "path": "native-lifecycle/src/service_auth_attempt_tests.rs",
+      "sha256": "0b1170f812ccdb51fc7745796f110936efde862b5c3299818a077692f42e2470"
+    },
+    {
+      "path": "native-lifecycle/src/session.rs",
+      "sha256": "59ef191233213deb4dac8c50b3f1e72beb5fd4f8b63ff2aa555d4a71a5dd6bfb"
+    },
+    {
+      "path": "native-lifecycle/src/storage.rs",
+      "sha256": "5131630bdc3e4056472720a72d7c728d0cb0586995ae1505cc0b26b32713fc7c"
+    },
+    {
+      "path": "native-kernel-identity/Cargo.lock",
+      "sha256": "ea2dd27ddd1bf8c00b3bf15d5fface7d5bddd6e20b5d1e89fbc1fc10172ff592"
+    },
+    {
+      "path": "native-kernel-identity/Cargo.toml",
+      "sha256": "5cab2f22141987e4f1470b0fb575107b5c3ad134829bd2b92d5b7ccb3ef12431"
+    },
+    {
+      "path": "native-kernel-identity/README.md",
+      "sha256": "07ff5508164058ad2d51f449e91b06b0a02d2373b2d33d8885274d044c84d19a"
+    },
+    {
+      "path": "native-kernel-identity/public-api-inputs.json",
+      "sha256": "21981ee4e529ce04afc90453b5e9215d5d71eeb3dc758e32731deaa3fb9d6197"
+    },
+    {
+      "path": "native-kernel-identity/src/lib.rs",
+      "sha256": "464a5e2a96dd99f127cce5b32514ff4a9a7340f8bee2581e941685e6df82cbcd"
+    },
+    {
+      "path": "native-kernel-identity/src/pidfd.rs",
+      "sha256": "caf4b44738fc53093a32ef96c2e639c1a376935ad29fa17a42091a56180b11ff"
+    },
+    {
+      "path": "native-kernel-identity/tests/pidfd.rs",
+      "sha256": "ed310e5152426ae8a3d723ca2869cdcd3fda50e0552cdc16938c638d308cc3b3"
+    },
+    {
+      "path": "native-kernel-identity/tests/socket.rs",
+      "sha256": "2e9d134e7913ddadb564939bf241538690698a9ca7b660213479d843c638fd08"
+    },
+    {
+      "path": "native-camera/Cargo.lock",
+      "sha256": "2f6ea0f2ca832a4a133fcc62f3bfefd4521333133620f5936af353bf8985fe7b"
+    },
+    {
+      "path": "native-camera/Cargo.toml",
+      "sha256": "129897f013103c6e97c177fb100ebcab246a81f6a0c3f71e6d1e749b16adeea5"
+    },
+    {
+      "path": "native-camera/src/lib.rs",
+      "sha256": "3ceb27d000194de361bdac7667d5b49660db0d3598f5c95f1961bcab406542ba"
+    }
+  ],
+  "snapshot_pins_match_current_except_later_updated_crate_README": 30,
+  "limits": [
+    "Compile prerequisite and output permission failure execute zero test bodies; neither demonstrates a runtime defect",
+    "Closure facts come only from cfg-test fixture builder; no production constructor/caller/listener, broker or cleanup producer",
+    "Release consumes exact actor/id/original-until and only removes the matching slot; no result kind/success request/receipt/clear",
+    "Source, original deadlines, monotonic authentication_sequence and durable pending/grants/history remain unchanged",
+    "Actual Source/attempt clock expiry are exercised without renewal; locked-policy assertions are not installed Messages reads",
+    "Full40 host suite uses UID0/GID0 and same-build storage helper with root-owned temp files; group1000 only grants owned results-directory write",
+    "UID1000 actor selection explicitly filters18 other lifecycle cases; all22 selected actor cases pass, none ignored",
+    "Host and AArch64 test ELFs are byte-identical across profiles; AArch64 compilation supplies no runtime evidence",
+    "Root reviews bind CLI actualwait0, immutable inputs and fresh exact-CID absence; container closure is not actual PAM/cgroup cleanup",
+    "No Source IPC, actual scope/contained original PAM/retained faillock, broker provenance, actor result/arming, exact unlock, durable clear or Messages reopen",
+    "Future positive transition must move validated retained context into an armed receipt before removing the slot, and block competing attempts",
+    "No physical phone, matched Google kernel, suspend or hardware evidence; docs updated after source sealing"
+  ]
+}

@@ -81,6 +81,26 @@ pub(crate) struct AuthenticationAttempt {
     actor: String,
     id: u64,
 }
+/// Capacity-only closure stamp, never an authentication result. Its fields and
+/// construction are private; there is no production producer before the actual
+/// bound broker/whole-owner closure boundary is independently qualified.
+#[allow(dead_code)]
+pub(crate) struct ClosedAuthenticationAttempt {
+    actor: String,
+    id: u64,
+    until: u64,
+}
+#[cfg(test)]
+impl ClosedAuthenticationAttempt {
+    /// Authored closure facts only. This verifies no broker/process cleanup.
+    pub(crate) fn fixture(attempt: &AuthenticationAttempt, until: u64) -> Self {
+        Self {
+            actor: attempt.actor.clone(),
+            id: attempt.id,
+            until,
+        }
+    }
+}
 struct AuthenticationSlot {
     id: u64,
     source: String,
@@ -160,7 +180,7 @@ impl Authority {
     fn retire_authentication_attempt(&mut self) {
         if let Some(attempt) = &mut self.authentication {
             // Retirement is sticky and never supplies proof of broker closure.
-            // Keep the retained slot and locker; no reuse/reset API exists.
+            // Keep the slot and locker until the separate matched closure path.
             attempt.retired = true;
         }
     }
@@ -218,8 +238,8 @@ impl Authority {
         }
     }
     /// Reserve one inert handle with its original absolute BOOTTIME deadline.
-    /// Occupancy persists after expiry/retirement until future actual broker
-    /// closure can be proven; this primitive provides no closure operation.
+    /// Occupancy persists after expiry/retirement until a separate trusted
+    /// closure stamp releases it; this primitive creates no cleanup evidence.
     #[allow(dead_code)] // Deliberately not wired to production actor ingress yet.
     pub(crate) fn begin_authentication_attempt(
         &mut self,
@@ -268,6 +288,28 @@ impl Authority {
         };
         self.authentication = Some(attempt);
         Ok(handle)
+    }
+    /// Release only matching, independently closed capacity. Expiry or a lost
+    /// Source cannot keep already proven resources occupied, but release never
+    /// renews Source, starts an attempt, arms unlock or changes durable policy.
+    /// A future producer must prove whole-owner closure even after the original
+    /// result authority expires; an expiring result token alone is insufficient.
+    #[allow(dead_code)] // No production completion producer or ingress yet.
+    pub(crate) fn release_closed_authentication(
+        &mut self,
+        closed: ClosedAuthenticationAttempt,
+    ) -> bool {
+        let matches = closed.actor == self.incarnation
+            && self
+                .authentication
+                .as_ref()
+                .is_some_and(|slot| slot.id == closed.id && slot.until == closed.until);
+        if matches {
+            // Preserve sequence, lock epoch, retirement/Source state, grants,
+            // history and pending intent. New begin performs its own admission.
+            self.authentication = None;
+        }
+        matches
     }
     /// Check and latch lifetime only. A current handle is not an authentication
     /// result and cannot arm a candidate or clear durable pending intent.

@@ -3,7 +3,7 @@
 use super::refresh_session;
 use crate::{
     Permission, Reply,
-    authority::Authority,
+    authority::{Authority, ClosedAuthenticationAttempt},
     boottime_ns,
     session::{NativeFocus, OwnedFocus, Provider, SAMPLE_BUDGET_NS, Snapshot},
     storage::{Durable, Grant},
@@ -494,4 +494,178 @@ fn auth_attempt_explicit_lifecycle_and_degrade_retire_without_reuse() {
         );
         assert_policy_retained(&mut authority);
     }
+}
+
+// The cfg-test-only builder authors trusted closure data. These tests exercise
+// actor capacity handling, not an actual broker/scope/PAM cleanup proof. There
+// is no production completion constructor or success/unlock ingress.
+#[test]
+fn auth_closed_capacity_allows_one_fresh_explicit_attempt_without_unlock() {
+    let mut facts = facts(own_locker());
+    let mut authority = authority(&mut facts);
+    let now = boottime_ns();
+    let until = now + ATTEMPT_BUDGET_NS;
+    let old = authority.begin_authentication_attempt(now, until).unwrap();
+    let closed = ClosedAuthenticationAttempt::fixture(&old, until);
+    let duplicate = ClosedAuthenticationAttempt::fixture(&old, until);
+    assert!(authority.begin_authentication_attempt(now, until).is_err());
+    assert!(authority.release_closed_authentication(closed));
+    assert!(!authority.current_authentication_attempt(&old, boottime_ns()));
+    assert_policy_retained(&mut authority);
+    let now = boottime_ns();
+    let fresh = authority
+        .begin_authentication_attempt(now, now + ATTEMPT_BUDGET_NS)
+        .unwrap();
+    assert!(!authority.release_closed_authentication(duplicate));
+    assert!(authority.current_authentication_attempt(&fresh, boottime_ns()));
+    assert!(!authority.current_authentication_attempt(&old, boottime_ns()));
+    assert_policy_retained(&mut authority);
+}
+
+#[test]
+fn auth_closed_capacity_refuses_other_actor_and_changed_original_deadline() {
+    let locker = own_locker();
+    let mut first_facts = facts(locker.clone());
+    let mut second_facts = facts(locker);
+    let mut first = authority(&mut first_facts);
+    let mut second = authority(&mut second_facts);
+    let now = boottime_ns();
+    let until = now + ATTEMPT_BUDGET_NS;
+    let first_handle = first.begin_authentication_attempt(now, until).unwrap();
+    let second_handle = second.begin_authentication_attempt(now, until).unwrap();
+    assert!(
+        !first.release_closed_authentication(ClosedAuthenticationAttempt::fixture(
+            &second_handle,
+            until
+        ))
+    );
+    assert!(
+        !first.release_closed_authentication(ClosedAuthenticationAttempt::fixture(
+            &first_handle,
+            until + 1
+        ))
+    );
+    assert!(first.current_authentication_attempt(&first_handle, boottime_ns()));
+    assert!(second.current_authentication_attempt(&second_handle, boottime_ns()));
+    assert_policy_retained(&mut first);
+    assert_policy_retained(&mut second);
+}
+
+#[test]
+fn auth_closed_capacity_does_not_release_an_absent_or_successor_slot() {
+    let mut facts = facts(own_locker());
+    let mut authority = authority(&mut facts);
+    let now = boottime_ns();
+    let until = now + ATTEMPT_BUDGET_NS;
+    let old = authority.begin_authentication_attempt(now, until).unwrap();
+    let first = ClosedAuthenticationAttempt::fixture(&old, until);
+    let absent = ClosedAuthenticationAttempt::fixture(&old, until);
+    let replay = ClosedAuthenticationAttempt::fixture(&old, until);
+    assert!(authority.release_closed_authentication(first));
+    assert!(!authority.release_closed_authentication(absent));
+    let fresh = authority
+        .begin_authentication_attempt(boottime_ns(), until)
+        .unwrap();
+    assert!(!authority.release_closed_authentication(replay));
+    assert!(authority.current_authentication_attempt(&fresh, boottime_ns()));
+    assert_policy_retained(&mut authority);
+}
+
+#[test]
+fn auth_closed_capacity_after_terminal_provider_loss_cannot_restore_the_source() {
+    let mut facts = facts(own_locker());
+    let mut authority = authority(&mut facts);
+    let now = boottime_ns();
+    let until = now + ATTEMPT_BUDGET_NS;
+    let old = authority.begin_authentication_attempt(now, until).unwrap();
+    let closed = ClosedAuthenticationAttempt::fixture(&old, until);
+    let original = facts.0.take().unwrap();
+    poll(&mut authority, &mut facts);
+    assert!(authority.session_terminal());
+    assert!(authority.release_closed_authentication(closed));
+    facts.0 = Some(original);
+    poll(&mut authority, &mut facts);
+    assert!(authority.session_terminal());
+    assert!(!authority.current_authentication_attempt(&old, boottime_ns()));
+    assert!(
+        authority
+            .begin_authentication_attempt(boottime_ns(), until)
+            .is_err()
+    );
+    assert_policy_retained(&mut authority);
+}
+
+#[test]
+fn auth_closed_capacity_after_actual_source_expiry_keeps_locked_policy() {
+    let mut facts = facts(own_locker());
+    let mut authority = authority(&mut facts);
+    let now = boottime_ns();
+    let until = now + ATTEMPT_BUDGET_NS;
+    let old = authority.begin_authentication_attempt(now, until).unwrap();
+    let closed = ClosedAuthenticationAttempt::fixture(&old, until);
+    let source_until = facts.0.as_ref().unwrap().until;
+    std::thread::sleep(
+        std::time::Duration::from_nanos(source_until.saturating_sub(boottime_ns()))
+            + std::time::Duration::from_millis(2),
+    );
+    assert!(boottime_ns() >= source_until);
+    assert!(!authority.current_authentication_attempt(&old, boottime_ns()));
+    assert!(authority.release_closed_authentication(closed));
+    assert!(
+        authority
+            .begin_authentication_attempt(boottime_ns(), until)
+            .is_err()
+    );
+    poll(&mut authority, &mut facts);
+    assert!(authority.session_terminal());
+    assert_eq!(facts.0.as_ref().unwrap().until, source_until);
+    assert_policy_retained(&mut authority);
+}
+
+#[test]
+fn auth_closed_capacity_after_original_attempt_expiry_allows_only_a_new_deadline() {
+    let mut facts = facts(own_locker());
+    let mut authority = authority(&mut facts);
+    let now = boottime_ns();
+    let until = now + 20_000_000;
+    let old = authority.begin_authentication_attempt(now, until).unwrap();
+    let closed = ClosedAuthenticationAttempt::fixture(&old, until);
+    std::thread::sleep(
+        std::time::Duration::from_nanos(until.saturating_sub(boottime_ns()))
+            + std::time::Duration::from_millis(2),
+    );
+    assert!(!authority.current_authentication_attempt(&old, boottime_ns()));
+    assert!(authority.release_closed_authentication(closed));
+    assert!(authority.begin_authentication_attempt(now, until).is_err());
+    assert_fresh(facts.0.as_ref().unwrap(), boottime_ns() + ATTEMPT_BUDGET_NS);
+    let now = boottime_ns();
+    let fresh = authority
+        .begin_authentication_attempt(now, now + ATTEMPT_BUDGET_NS)
+        .unwrap();
+    assert!(authority.current_authentication_attempt(&fresh, boottime_ns()));
+    assert!(!authority.current_authentication_attempt(&old, boottime_ns()));
+    assert_policy_retained(&mut authority);
+}
+
+#[test]
+fn auth_closed_capacity_after_new_lock_keeps_new_epoch_and_policy() {
+    let mut facts = facts(own_locker());
+    let mut authority = authority(&mut facts);
+    let now = boottime_ns();
+    let until = now + ATTEMPT_BUDGET_NS;
+    let old = authority.begin_authentication_attempt(now, until).unwrap();
+    let closed = ClosedAuthenticationAttempt::fixture(&old, until);
+    assert!(matches!(
+        authority.plan_lock(boottime_ns()),
+        crate::authority::Decision::Immediate(Reply::Ok)
+    ));
+    assert!(!authority.current_authentication_attempt(&old, boottime_ns()));
+    assert!(authority.release_closed_authentication(closed));
+    assert_policy_retained(&mut authority);
+    let fresh = authority
+        .begin_authentication_attempt(boottime_ns(), until)
+        .unwrap();
+    assert!(authority.current_authentication_attempt(&fresh, boottime_ns()));
+    assert!(!authority.current_authentication_attempt(&old, boottime_ns()));
+    assert_policy_retained(&mut authority);
 }

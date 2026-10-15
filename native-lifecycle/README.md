@@ -38,8 +38,10 @@ and original absolute BOOTTIME deadline of at most30s. Every accepted new lock
 advances that epoch even when pending intent is already durable. Observed context
 excursions, Source loss/expiry, locker death, explicit lock/suspend and degradation
 retire the slot permanently. Matching live kernel tasks requires ProcessView even
-for shared references. Retirement never frees occupancy; no broker-closure API is
-present. Stable heartbeats and unrelated lifecycle revisions do not renew time.
+for shared references. Retirement alone never frees occupancy. A private
+capacity-only consumer now removes only the exactly matched actor/attempt/original-
+deadline slot; no production closure producer is present. Stable heartbeats and
+unrelated lifecycle revisions do not renew time.
 
 The frozen API-prerequisite RED exits101 with21 missing-method `E0599` errors and
 executes no attempt cases. After implementation,33 host lifecycle components pass,
@@ -51,6 +53,17 @@ Provider/real-pidfd component results, without Source IPC, PAM or broker dispatc
 No authentication result, candidate, restoration receipt, unlock, reset or durable
 clearing is enabled.
 No installed authentication or ARM/device result is claimed by this selection.
+
+A later [capacity-consumer selection](../docs/native-auth-actor-capacity.md) adds
+seven controls after a missing-private-API compile prerequisite. All40 lifecycle
+tests pass with the existing root-owned storage fixtures and same-build daemon;
+22 actor tests separately pass as UID1000 with18 explicitly filtered. Actual
+Authority/Provider/pidfd behavior is exercised, while closed-capacity stamps are
+cfg-test authored data with no production constructor. Invalid/replayed stamps
+cannot remove a successor; original expiry and Source loss permit only capacity
+reclamation, never handle/Source revival or policy clearing. Fresh explicit begin
+still performs its own admission. Strict Clippy and separate AArch64 test-ELF
+compilation pass; no Source IPC, broker, PAM/scope or unlock is enabled.
 
 [Per-app ARM evidence](../docs/native-display-app-generations.md) qualifies
 lifetime/relaunch and held-init Stop. Pending EOF passes its narrow boundary;

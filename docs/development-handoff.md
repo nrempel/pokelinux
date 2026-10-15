@@ -150,7 +150,19 @@ The internal actor-attempt primitive now retains a single occupied slot with sti
 retirement, exact live locker/Source/actor binding, lock epoch and an original
 BOOTTIME deadline. The missing-API RED is compile-only;33 host components and strict
 Clippy pass. [Bounded proof](evidence/native-auth-actor-attempt-provenance.json).
-It remains unwired, with no authentication result, closure/reuse or unlock API.
+That historical selection remains unwired and supplies no result or unlock API.
+A later private capacity consumer matches exact actor incarnation, non-reused
+attempt ID and original deadline, then removes only the slot. Its sole constructor
+is cfg-test authored closure data; no production producer/listener exists. Seven
+new controls pass among40 full UID0 lifecycle tests and22 separately selected
+UID1000 actor tests (18 explicitly filtered there). Strict Clippy and AArch64
+library-test compilation pass. The initial missing-API compile RED,33/7 failed
+wrong-UID aggregate and zero-test root-output permission failure remain separate.
+Release cannot change durable pending/grants/history, revive a Source/old handle
+or arm unlock; a fresh explicit begin still validates its own context. Actual
+closure after expired result authority needs an independent qualified broker
+producer; do not infer it from this stamp. See [capacity report](native-auth-actor-capacity.md)
+and [proof](evidence/native-auth-actor-capacity-provenance.json).
 
 Next compose supervised native authentication with actor-owned attempts, then
 one-shot exact-operation restoration, synced durable policy and a normal Messages
