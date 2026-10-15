@@ -6,14 +6,16 @@ Build and test everything possible offline on temporary Harbour capacity. Do not
 
 **No backwards compatibility:** build one target implementation and matching component set. Do not add legacy adapters, dual production runtimes, old-format migrations or downgrade support for earlier iterations. Test required behavior and restart recovery within the target version. Prior code and artifacts provide evidence, not a requirement to preserve old formats.
 
-The [native SIT setup codec](native-sit-codec.md) separately matches six
-complete original format-2 packets after genuine missing-encoder host RED.
-Eight host and eight ARM64 user-QEMU tests pass with fixed fixtures. Original
-Bionic code and native ARM tests both run in user-mode emulation; the existing
-ARM kernel/Binder proofs remain separate. This initial token-zero subset adds
-no APN readiness, transport, channel/slot identity or completed phone backend.
-Response parsing, context binding, lifecycle/reset and real modem/carrier/Pixel
-qualification remain open.
+The [native SIT codec](native-sit-codec.md) separately matches six complete
+format-2 requests and six supported base144-byte response/getter observations.
+After separate missing-encoder/decoder host REDs,22 host and22 ARM64 user-QEMU
+tests pass with fixed fixtures. A fresh original load plus nine parser controls
+has ten owned waits0/stdout EOF, separate from the earlier constructor9 and
+encoder8. The original parser reference also has independent bounded qualification. Original Bionic and native ARM tests use user-mode emulation;
+ARM kernel/Binder evidence remains separate. Numeric activity, token equality
+and parsed addresses grant no APN readiness, dispatch or channel/provider
+identity. Extended response/error semantics, owned context/lifecycle/reset and
+real modem/carrier/Pixel qualification remain open.
 
 The [native Data service tracer](native-cellular-service.md) separately passes
 one generic ARM production Main/owned worker/restricted operator path with

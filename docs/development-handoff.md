@@ -18,18 +18,23 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
-The [native SIT codec](native-sit-codec.md) now matches six complete983-byte
-format-2 packets from the corrected original Bionic ARM64 user-QEMU reference.
-A compiled/linted host baseline has two controls pass and six `Unsupported`
-failures; only encoder source changes, then eight host and eight ARM64
-user-QEMU tests pass with fixed tests/fixtures. Original reference has one load
-check, six format-2 outputs and a638-byte format-1 control, all eight children
-actually waited with stdout EOF before their original cutoffs. These are pure
-serialization observations. Initial token0/radio14/carrier0/context type0 and
-other declared zero/null/default premises remain fixed; the factory scalar1 is
-unresolved. Response parsing, context/channel/subscription binding, dispatch,
-APN lifecycle, deactivate/reset and actual kernel/modem/carrier qualification
-remain the next backend gates. The earlier format-0 run supplies no fixture.
+The [native SIT codec](native-sit-codec.md) retains its six complete983-byte
+format-2 encoder comparisons, earlier host RED and eight encoder tests per
+host/ARM64 user-QEMU target. The original constructor9 and encoder8 children
+remain their own evidence. Earlier format0 supplies no current fixture.
+
+The new [base144-byte response decoder](native-sit-codec.md#base144-byte-response-decoder)
+now passes22 tests per host/ARM64 user-QEMU target after genuine compiled/linted
+host RED (16pass/six missing comparisons). Only response source changes; tests
+and fixtures stay fixed. A separate original load plus nine complete parser
+controls has ten actual QEMU waits0/stdout EOF; native tests compare six full
+response/getter observations and eight refusal groups. Root qualifies the native RED/GREEN receipts; the original parser reference
+also has separate independent bounded qualification.
+Tokens and reported activity are local wire observations, and both tail fields
+remain opaque. These are user-mode codec tests, not ARM kernel/modem execution.
+Original CLOCK_MONOTONIC cutoffs do not qualify suspend. Extended/error-remap
+behavior, owned dispatch correlation, context/channel/subscription binding,
+provider/APN lifecycle, deactivate/reset and hardware/carrier remain open.
 
 The [native Data service tracer](native-cellular-service.md) now records one
 complete generic ARM production Main/worker/operator integration pass.24 service

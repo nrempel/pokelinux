@@ -1,6 +1,8 @@
-//! Bounded Samsung SIT request codecs. Encoding is not transport admission.
+//! Bounded Samsung SIT codecs. Wire observations grant no transport or APN authority.
 #![forbid(unsafe_code)]
 use std::num::NonZeroU8;
+
+pub mod response;
 
 pub const INITIAL_LTE_SETUP_V3_BYTES: usize = 983;
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]

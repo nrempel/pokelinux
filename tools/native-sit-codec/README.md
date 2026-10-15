@@ -1,4 +1,4 @@
-# Original SIT codec comparison helper
+# Original SIT codec comparison helpers
 
 `original-setup-probe.c` is authored test infrastructure for one exact factory
 library ABI. It calls the original APN factory, context constructor, inline
@@ -41,3 +41,22 @@ an APN. Normal properties/logging and Android linker namespaces remain separate:
 the qualified isolated runtime records missing property/linker configuration
 and a failed UNIX connection. See [the report](../../docs/native-sit-codec.md)
 for the finite contract and remaining gates.
+
+## Base response helper
+
+`original-response-probe.c` is a separate authored parser-only helper. Its CLI is:
+
+```text
+PROBE ABSOLUTE_STREAM_LIBRARY COMPLETE_144_BYTE_HEX
+```
+
+It uses actual ModemData/adapter constructors, verifies original vtable/error and
+non-deleting destructor identities, records scalar observations and separate
+193-byte IPv4/IPv6 getter outputs, then follows the same held/release and owned
+cleanup contract. C1 supplies the sole Init call. Original heap-copy and guarded
+outer allocations are distinguished. No handler, PdpContext update, NetIf or
+transport is invoked. The new run has one load and nine parser controls, with
+ten direct child waits0/stdout EOF and outer CLI wait0; earlier encoder evidence
+is unchanged. It uses CLOCK_MONOTONIC cutoffs, without suspend qualification.
+[Response provenance](../../docs/evidence/native-sit-response-provenance.json)
+records Root and independent qualification of this original reference. Proprietary libraries, raw traces and analysis remain private.

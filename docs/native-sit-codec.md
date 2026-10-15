@@ -1,11 +1,12 @@
-# Bounded native SIT setup serialization
+# Bounded native SIT setup codecs
 
 `native-sit-codec` now emits one complete initial token-zero,983-byte SIT setup
 packet in the measured format-2 subset. Six original packet comparisons pass
 on the host and ARM64 user-QEMU. All eight fixed tests pass per target; formatting
 and host all-targets strict Clippy pass, and the ARM64 test executable compiles.
-This is a pure codec checkpoint. No modem communication or APN acquisition is
-qualified.
+That encoder checkpoint remains unchanged. The later base-response decoder
+below adds14 tests, for22 per target. These are pure codec observations; modem
+communication and APN acquisition remain unqualified.
 
 ## Original reference and fixed comparisons
 
@@ -65,10 +66,61 @@ digits, dots or hyphens. These restrictions and finite vectors do not establish
 modem acceptance of all allowed values. `NonZeroU8` supplies a nonzero wire byte,
 not a modem CID range or authority to use an existing context.
 
+## Base144-byte response decoder
+
+A separate original Bionic ARM64 user-QEMU run now covers one load control and
+nine complete144-byte parser inputs. Six supported cases cover IPv4, IPv6,
+dual-family, inactive, crossed address selectors and Non-IP observations. Three
+further original controls record header error2, unsigned PDP status65535 and a
+wrong message ID. The wrong-ID original leaves default fields; native code
+refuses it explicitly. These are parser observations, not modem outcomes.
+The earlier constructor9 and encoder8 child counts remain separate.
+
+The authored helper uses guarded original24-byte ModemData and10912-byte adapter
+storage, actual constructors and two separate193-byte original address getters.
+The adapter constructor naturally calls Init once. Verified non-deleting
+original destructors release nested allocations before the outer guarded
+allocations are freed. It invokes no service handler, PdpContext update,
+context activation, NetIf or transport. All ten owned QEMU children have actual
+wait0 and stdout EOF before their original cutoffs. The enclosing CLI has
+actual wait0, exact container/fresh absence, same-daemon and unchanged-input
+receipts; no separate outer-CLI EOF field is claimed. Those original bounds use
+host CLOCK_MONOTONIC and do not qualify suspend behavior.
+
+After strict compilation/lint, the new native baseline has16 host tests pass
+(the eight prior encoder tests and eight new refusal groups) and six supported
+comparisons fail with `Unsupported`, exit101. ARM64 is compile-only in that RED.
+Only `src/response.rs` changes for repair; fixed tests, six response fixtures,
+prior encoder and other source remain identical. All22 host tests and22 ARM64
+user-QEMU tests then pass, including all six complete input/original-getter
+comparisons per target. Root has qualified the native RED/GREEN receipts. A separate independent audit
+qualifies the original parser reference within its declared input/lifecycle scope.
+[Response evidence](evidence/native-sit-response-provenance.json).
+
+`BaseSetupResponse::parse(packet, expected_token)` accepts exactly144 bytes:
+packet type1, header bytes1/11 zero, message0x0600, declared length144 and the
+expected32-bit token. Nonzero raw header errors return `HeaderError(u8)`;
+nonzero unsigned PDP status returns `PdpStatus(u16)`, without success fields.
+CID must be nonzero, activity0–2, protocol1/2/3/5, and both address selectors0–3.
+The decoder refuses every other length, including extensions and truncations.
+These are explicit native policy checks, not broader original acceptance or
+failure-remap equivalence.
+
+Returned activity maps wire1→2 and2→1, leaving0 unchanged; no connected/readiness
+meaning is assigned. Protocol selects optional IPv4/IPv6 families. Each family
+holds numeric octets for an address, two DNS and three P-CSCF values; independent
+DNS/P-CSCF selector bits select copied values or zeros. Non-IP has no IP family.
+The observed body-tail uint32 at127 and byte at131 remain opaque, without MTU
+or policy labels. Token equality is local wire correlation, not an owned
+operation, provider, subscription or APN authorization. No partial result is
+returned on refusal. Original binaries, decompilation and raw runtime/audit
+records remain private.
+
 ## Remaining backend gates
 
-This crate is not a completed phone backend. Response framing, bounded parsing,
-error/token correlation and uncertain dispatch outcomes remain open. So do
+This crate is not a completed phone backend. Extended responses, broader
+error/remap semantics, correlation to an owned dispatched operation and uncertain
+outcomes remain open. So do
 context-to-channel/slot/subscription binding, modem transport, provider identity,
 APN lifecycle ownership, deactivation/reset and safe retry. Integration must then
 qualify actual kernel/modem behavior, carrier policy and matched Pixel hardware.

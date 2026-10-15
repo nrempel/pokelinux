@@ -1,9 +1,10 @@
 # Bounded native SIT setup codec
 
-`pokelinux-sit-codec` encodes one initial token-zero, 983-byte Samsung SIT setup
-request in the measured format-2 subset. Six complete outputs match original
-Bionic code executed under ARM64 user-QEMU. The fixed Rust tests pass eight cases
-on the host and eight under ARM64 user-QEMU after a genuine missing-encoder RED.
+`pokelinux-sit-codec` encodes one initial token-zero,983-byte Samsung SIT setup
+request and parses the measured144-byte base response subset. Six request
+comparisons and six response/getter comparisons match separately executed
+original Bionic code under ARM64 user-QEMU. All22 native tests pass on the host
+and ARM64 user-QEMU after separate missing-encoder and missing-decoder host REDs.
 The crate has no dependencies and forbids unsafe Rust.
 
 `InitialLteSetupV3::new` accepts a `NonZeroU8` context identifier, an APN of1–99
@@ -20,15 +21,25 @@ area is absent, so its missing-property/default branch is part of the reference
 premise. The factory-produced scalar at bytes241–244 is preserved as1; its
 meaning remains unresolved.
 
+`response::BaseSetupResponse::parse(packet, expected_token)` returns owned typed
+observations only after exact length, header, message, declared length, token,
+error/status and field-policy checks. A nonzero CID is a wire byte; activity
+preserves the original numeric1/2 translation. Optional IPv4/IPv6 parameters
+contain an address, two DNS and three P-CSCF values. Family presence follows the
+PDP selector; separate DNS/P-CSCF selectors determine copied or zero fields.
+The two observed tail fields stay opaque. Token equality grants no dispatch,
+provider or APN authority. Broader response formats are refused.
+
 From the repository root:
 
 ```sh
-cargo test --locked --offline --manifest-path native-sit-codec/Cargo.toml --lib
+cargo test --locked --offline --manifest-path native-sit-codec/Cargo.toml
 ```
 
-This is serialization evidence. There is no request submission, response parser,
-provider or kernel-link association, APN-readiness grant, reset/deactivation,
+These are pure serialization and parsing observations. There is no request
+submission, provider or kernel-link association, APN-readiness grant, reset/deactivation,
 automatic retry or physical-phone qualification. The constructor's interface
 index does not select a modem channel. See the [report](../docs/native-sit-codec.md)
-and [provenance](../docs/evidence/native-sit-codec-provenance.json) for the exact
+and the [encoder](../docs/evidence/native-sit-codec-provenance.json) and
+[response](../docs/evidence/native-sit-response-provenance.json) provenance for the exact
 reference, RED/GREEN and remaining gates.

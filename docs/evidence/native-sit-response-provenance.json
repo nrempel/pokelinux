@@ -1,0 +1,329 @@
+{
+  "schema": 1,
+  "base_commit": "fad1f2ff9393b569e6a54f5c0426c8e9b933568a",
+  "scope": "Bounded native144-byte SIT base setup success-response decoder; original Bionic ARM user-QEMU comparison, host genuineRED and host/ARM user-QEMU GREEN. No transport, context/channel binding or hardware qualification.",
+  "qualified": true,
+  "root_original_final_review_sha256": "289a6f87e587cecf4ae186840ed263e2d37f402c1ceaff285a79b1d8ddca7c6f",
+  "independent_original_reference_review_sha256": "9bfd98f007a01c43ffe06625562f5f53e496afea3bfa2d8cec9f99fbd6d9c8d1",
+  "source_inventory": [
+    {
+      "path": "native-sit-codec/Cargo.lock",
+      "sha256": "8fd8f204e8bdfd40b9b61544193dc0d5a264136e60398ed1de07525ad4bba17d"
+    },
+    {
+      "path": "native-sit-codec/Cargo.toml",
+      "sha256": "e015735268c5e4d4200c97685e448086999603f515ee5365dcd85bc9c075cc7e"
+    },
+    {
+      "path": "native-sit-codec/README.md",
+      "sha256": "00d14e0493e74f4c805b3ba917bf05609c8e64ade30a8cd26819e7faff042f35"
+    },
+    {
+      "path": "native-sit-codec/src/lib.rs",
+      "sha256": "0d87cf8779c018c1e6066a7110d4e17dd36c16bb8425e9209e220d69cd637b42"
+    },
+    {
+      "path": "native-sit-codec/src/response.rs",
+      "sha256": "aca9ba851ab9353ff1ea2852b396b7c114561106c4a23323e521aad4187e309a"
+    },
+    {
+      "path": "native-sit-codec/src/tests.rs",
+      "sha256": "b72194d0c4675aa754aefd61883043c976e7663f1b237c84bf237c3c9a422e35"
+    },
+    {
+      "path": "native-sit-codec/tests/base_response.rs",
+      "sha256": "9fdad0905f7b59a08efea306063b3705198b9a4ecde544caa7fd343472b0241f"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-dual-index0.hex",
+      "sha256": "c39b53c39dddbb218eee8127a39b8d9baea3af84697ac0494ea55428ac920c41"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-dual-index17.hex",
+      "sha256": "c39b53c39dddbb218eee8127a39b8d9baea3af84697ac0494ea55428ac920c41"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-ip.hex",
+      "sha256": "e87202bd3d3260a089c4904c25dfbe71539fede952a2c1ed0cb15039c7312d08"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-ipv6.hex",
+      "sha256": "e9218ba592977d2729098bafa1614a6974bd9f45310980f3b255cdb9957dd5ea"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-nonip.hex",
+      "sha256": "28801a1b1ea26dcfa68599e49319d8cb175fb1f290053fb759af54bb531ede76"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-other-apn.hex",
+      "sha256": "31a5605a08478b13601c6c166eb3a215e462b55d10caa2811589382136453b52"
+    },
+    {
+      "path": "native-sit-codec/tests/response-fixtures/cross-selectors.txt",
+      "sha256": "78ecd96491b1147d1371ae7ef4bd179e4bce22272ed6e6f416cb27d63c1311ca"
+    },
+    {
+      "path": "native-sit-codec/tests/response-fixtures/dual.txt",
+      "sha256": "7a434c6b61a44a613a040b306ca58a65340ac59c89307e0affca05b79647c1ae"
+    },
+    {
+      "path": "native-sit-codec/tests/response-fixtures/inactive.txt",
+      "sha256": "3b8bbe558351a3edbd44caedfba967523e2ff694b7c495755fd8e99cd862c360"
+    },
+    {
+      "path": "native-sit-codec/tests/response-fixtures/nonip.txt",
+      "sha256": "9b3e7d40769f078ba428f5d5dcb9029e316270058f98d1c78a72f844eb488541"
+    },
+    {
+      "path": "native-sit-codec/tests/response-fixtures/v4.txt",
+      "sha256": "29ce5943c46ae83a0b9881d1ba17144a7841d63e72062ffda240d64cd1a3b0a4"
+    },
+    {
+      "path": "native-sit-codec/tests/response-fixtures/v6.txt",
+      "sha256": "47dc4d0a9c390b9b1903ef352f5db094a5892b7cc6639880280b6f15cd172224"
+    }
+  ],
+  "authored_probe": {
+    "path": "tools/native-sit-codec/original-response-probe.c",
+    "sha256": "1afb91fae237254e9dbf280496557a9eadae68aaa468a11b7618bfef44ac089b",
+    "executed_Bionic_ARM_ELF_sha256": "45882905d07ea25b15c3ac1578ba924f96f3085731cbe0dc8f44d0b1dd4c266b",
+    "build_review_sha256": "1543c5d9e9d33568fd840615dd1ed604da12e1f4958c1a7d8cbf72fad1dadcea",
+    "source_identical_to_selected_run": true,
+    "proprietary_runtime_or_decompiled_code_published": false
+  },
+  "original_reference": {
+    "run": "pokelinux-sit-response-original-root-1",
+    "execution_class": "Genuine matched Bionic original parser/getters under ARM64 user-mode QEMU; complete authored synthetic records",
+    "selection_sha256": "273ffaa63b6038f3dab5c4bc5da8cb7670c7adfb5ffe052e8ee7b572c3e6395d",
+    "command_sha256": "03f98f4b05f4dd73a331914da6150e3867435ae7f1ff897deda204c3fe28dd03",
+    "execution_sha256": "1f850531e18cb5030442f12f90b963b6dfe3e537ed6f74b8d5d51080675fa581",
+    "result_sha256": "29ea72902542b8b20c6148c5225de566ad09e8a0f3c78c3a5a86d44c73204e4d",
+    "selected_runtime_files": 19,
+    "mapped_original_files_per_case": 17,
+    "mapped_guest_and_helper_segments_per_case": 65,
+    "mapped_guest_and_helper_unique_files_per_case": 18,
+    "full_host_image_rootfs_audited": false,
+    "children": 10,
+    "load_control": 1,
+    "complete_parser_controls": 9,
+    "native_positive_fixture_controls": 6,
+    "error_observation_controls": [
+      "header_error2: originalerror2/defaultfields",
+      "PDP_status65535: originalstatus65535/parsedfields",
+      "wrong_message0x601: originalerror0/defaultfields"
+    ],
+    "each_child_actual_wait_exit": 0,
+    "each_child_stdout_EOF": true,
+    "each_wait_before_original_cutoff": true,
+    "original_child_deadlines_clock": "host CLOCK_MONOTONIC; no suspend qualification",
+    "actual_outer_CLI_wait_exit": 0,
+    "separate_outer_CLI_stdout_EOF_recorded": false,
+    "same_daemon": true,
+    "live_exact_CID_registered": true,
+    "fresh_exact_CID_absent": true,
+    "original_and_staged_selected_inputs_rehashed_unchanged": true,
+    "actual_UID_GID_all_four": 1000,
+    "actual_supplementary_groups": [
+      1000
+    ],
+    "effective_capabilities": 0,
+    "no_new_privileges": 1,
+    "network_disabled": true,
+    "opaque_packet_allocation_bytes": 24,
+    "opaque_adapter_allocation_bytes": 10912,
+    "getter_bytes_per_family": 193,
+    "getters_called_separately_with_selectors": [
+      1,
+      2
+    ],
+    "actual_loaded_vtable_and_non_deleting_destructor_checked": true,
+    "original_adapter_Init_automatically_called_by_C1_once": true,
+    "helper_direct_Init_calls": 0,
+    "destructor_ownership": "Original non-deleting D1 for guarded packet/adapter interior allocations; helper frees each outer allocation after original cleanup; guards intact",
+    "empty_QoS_TD_state_premise": true,
+    "ambient_original_observations": {
+      "failed_UNIX_socket_connects_per_case": 1,
+      "missing_property_accesses_per_case": 4,
+      "same_attempt_classes_in_load_control": true,
+      "zero_socket_activity_claimed": false,
+      "UNIX_peer_path_established": false
+    },
+    "handler_context_update_OnActivated_transport_invoked": false
+  },
+  "native_policy": {
+    "input_bytes_exactly": 144,
+    "packet_type": 1,
+    "header_bytes_1_and_11": 0,
+    "message_id": 1536,
+    "declared_length_matches_actual": true,
+    "expected_token_compared": true,
+    "success_header_error": 0,
+    "success_PDP_status": 0,
+    "PDP_status_wire_width": "unsigned16",
+    "context": "NonZeroU8 parsed value, not requested context/channel identity",
+    "wire_activity_codes": [
+      0,
+      1,
+      2
+    ],
+    "original_reported_activity_translation": [
+      {
+        "wire": 0,
+        "reported": 0
+      },
+      {
+        "wire": 1,
+        "reported": 2
+      },
+      {
+        "wire": 2,
+        "reported": 1
+      }
+    ],
+    "protocol_codes": [
+      1,
+      2,
+      3,
+      5
+    ],
+    "DNS_and_PCSCF_selector_codes": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "absent_families": "None, selected by PDP protocol",
+    "disabled_DNS_PCSCF": "zero-filled normalized getter observations; selectors retained",
+    "opaque_tail_fields": [
+      "u32LE at132-byte item offset127",
+      "u8 at132-byte item offset131"
+    ],
+    "opaque_tail_semantics_qualified": false,
+    "all_admitted_values_original_or_modem_qualified": false,
+    "malformed_refusals_are_native_policy_not_original_refusal_proofs": true,
+    "dependencies": 0,
+    "unsafe_code_forbidden": true
+  },
+  "native_RED_GREEN": {
+    "RED": {
+      "run": "pokelinux-sit-response-decoder-baseline-root-1",
+      "root_review_sha256": "4b7a9452859db2a32a74ab27f3b1ff8d8aa9a828d53d531dc59bca2053c30cd7",
+      "strict_format_Clippy_passed": true,
+      "actual_host_test_exit": 101,
+      "host_existing_encoder_passed": 8,
+      "host_response_policy_controls_passed": 8,
+      "host_original_response_comparisons_Unsupported": 6,
+      "ARM_compilation_only": true,
+      "ARM_behavioral_RED": false,
+      "host_log_sha256": "5e9474051f225644f87899739b370b4fbc00cfb9aa66d29c858fc2f92c36da51"
+    },
+    "GREEN": {
+      "run": "pokelinux-sit-response-decoder-repair-root-1",
+      "root_review_sha256": "c525defae86a36aed44d728ca4c405dbe66edd7bb4b37e11bfbb27fec36c361e",
+      "strict_format_Clippy_passed": true,
+      "host_tests_passed": 22,
+      "ARM_user_QEMU_tests_passed": 22,
+      "new_response_tests_per_target": 14,
+      "original_full_response_getter_comparisons_per_target": 6,
+      "host_log_sha256": "babfde7b4848d1f57b52bd63e9b8027110c5e8fa3831412fc9d8c3c142d78713",
+      "ARM_user_QEMU_log_sha256": "4cc02a331a2ef7f813d7bfbcbe20f9ae967844757c131d7aba4ae989618b67b3",
+      "ARM_test_executables": [
+        {
+          "target": "pokelinux_sit_codec",
+          "path": "target/aarch64-unknown-linux-gnu/debug/deps/pokelinux_sit_codec-a30e547c46631f05",
+          "sha256": "f62213c99c9fc3703458005614a1dddb908343e904bf23e03909513d55055ae7"
+        },
+        {
+          "target": "base_response",
+          "path": "target/aarch64-unknown-linux-gnu/debug/deps/base_response-7ecbfcc82ff420d2",
+          "sha256": "658e54454dcb5a7389c0e69607aab0ec4b662ad3bba16ccd9ed0c5b00d34aa92"
+        }
+      ]
+    },
+    "only_repair_source_paths": [
+      "native-sit-codec/src/response.rs"
+    ],
+    "tests_original_fixtures_manifest_and_lock_identical": true,
+    "cases": [
+      {
+        "case": "v4",
+        "original_stdout_sha256": "2bb14c4abe03be0a04d9d868fc42229ce9f02e37f2ab5016f3d66194cb6bbea2",
+        "fixture_path": "native-sit-codec/tests/response-fixtures/v4.txt",
+        "fixture_sha256": "29ce5943c46ae83a0b9881d1ba17144a7841d63e72062ffda240d64cd1a3b0a4",
+        "input_sha256": "bab9dfe7aa085d243f9a165c314e4ffee08ec0d99ebcb9f56a4ac810e1dee9a3"
+      },
+      {
+        "case": "v6",
+        "original_stdout_sha256": "ffa38b5379d84ed687dc2fb7bdb578553d8ea36c6a495d2bafea2cd9c8d817a9",
+        "fixture_path": "native-sit-codec/tests/response-fixtures/v6.txt",
+        "fixture_sha256": "47dc4d0a9c390b9b1903ef352f5db094a5892b7cc6639880280b6f15cd172224",
+        "input_sha256": "9dafb6fbd916ccdd72e2df93880ecf98154269745b75ccfd16b2bea38ff2d7e2"
+      },
+      {
+        "case": "dual",
+        "original_stdout_sha256": "4b299218711285bb1481778f53f6c249fef7e73c7a35c10688af87a453bf8546",
+        "fixture_path": "native-sit-codec/tests/response-fixtures/dual.txt",
+        "fixture_sha256": "7a434c6b61a44a613a040b306ca58a65340ac59c89307e0affca05b79647c1ae",
+        "input_sha256": "04bac1f29082cc48504cb7ffe9326ac9dbb7ee99f0ad968c27f606731a507231"
+      },
+      {
+        "case": "inactive",
+        "original_stdout_sha256": "3e0dd7c141dfb216a8502c27e217f420111e658a518d859dfb5cd2016d5ec3c5",
+        "fixture_path": "native-sit-codec/tests/response-fixtures/inactive.txt",
+        "fixture_sha256": "3b8bbe558351a3edbd44caedfba967523e2ff694b7c495755fd8e99cd862c360",
+        "input_sha256": "3e6d1aa83adfeb2b3ed5308f164c027e14e1b2b223cce6b7b06941c46cdf42ff"
+      },
+      {
+        "case": "cross-selectors",
+        "original_stdout_sha256": "504771ee003f76fed83d2576e4dd3c79d1bacd580f6a6befebec34a3c427048c",
+        "fixture_path": "native-sit-codec/tests/response-fixtures/cross-selectors.txt",
+        "fixture_sha256": "78ecd96491b1147d1371ae7ef4bd179e4bce22272ed6e6f416cb27d63c1311ca",
+        "input_sha256": "1e20d0c9a9df8ade052880651e48bdbf6f6203d142c3413f03ec0b1c929e7f1f"
+      },
+      {
+        "case": "nonip",
+        "original_stdout_sha256": "ef2eb2f74f10ed6bd202bb6db87b6b269ccae0ae742b49f923287c799bc17786",
+        "fixture_path": "native-sit-codec/tests/response-fixtures/nonip.txt",
+        "fixture_sha256": "9b3e7d40769f078ba428f5d5dcb9029e316270058f98d1c78a72f844eb488541",
+        "input_sha256": "e950146d8bc4cb453fdedce8a3cd65bee73d06c19fd3bdf85a7c073935f3c9bd"
+      }
+    ],
+    "exact_build_CIDs_absent": true
+  },
+  "architecture_review": {
+    "reviewer": "Astra medium",
+    "private_memo_sha256": "932791c61ebd7a1283e8276a230849d0475747c48e4cda377c12c560f48ad6df",
+    "scope": "Read-only design review, not independent runtime requalification",
+    "blocking_decoder_defect_reported": false
+  },
+  "boundaries": {
+    "original_and_native_ARM_user_QEMU_are_actual_ARM_kernel_execution": false,
+    "existing_actual_ARM_Binder_kernel_evidence_changed": false,
+    "token_is_pending_attempt_generation_or_deadline_authority": false,
+    "nonzero_CID_is_context_channel_netdev_or_subscription_binding": false,
+    "reported_activity_is_APN_or_link_readiness": false,
+    "pure_parse_success_is_provider_acceptance": false,
+    "normal_vendor_handler_and_test_hooks_qualified": false,
+    "transport_modem_APN_deactivate_reset_recovery_qualified": false,
+    "physical_phone_accessed": false,
+    "raw_proprietary_inputs_and_decompilation_published": false
+  },
+  "remaining_gates": [
+    "Original response-to-context application and normal caller context selection",
+    "Transport/source incarnation, outstanding attempt/deadline and one-time completion ownership",
+    "Actual context/channel/netdev/slot/subscription/provider identity",
+    "Extended responses and failure-status remap beyond selected controls",
+    "Deactivate/reset/late-response invalidation and uncertain recovery",
+    "Matched kernel/modem/carrier/physical hardware and full native IMS"
+  ],
+  "independent_original_reference_review_scope": "Read-only rehash of100 frozen files,19 current selected originals/native-index,650 selected guest/helper mapping segments,10 direct waits/EOF,60 explicit scalar comparisons,18 getter returns and18 complete193B arrays; same-daemon/exactCIDabsence refreshed; full host-image rootfs and separate outer CLI EOF not qualified",
+  "post_test_documentation_changes": [
+    {
+      "path": "native-sit-codec/README.md",
+      "executed_closure_sha256": "87c1d380b0cf6c79dbef3c73fc4549dffc0424e80717505b2938580f6f5d6975",
+      "published_sha256": "00d14e0493e74f4c805b3ba917bf05609c8e64ade30a8cd26819e7faff042f35",
+      "change": "Post-test documentation update only; production/test/fixture/manifest/lock unchanged"
+    }
+  ],
+  "documentation_proposal_manifest_sha256": "779273b7383b6fd4ab281aaf40a316258d8580d702e986e5297b8d420d7eb74d"
+}
