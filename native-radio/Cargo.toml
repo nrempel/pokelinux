@@ -5,6 +5,7 @@ edition = "2024"
 publish = false
 
 [dependencies]
+pokelinux-phone-state = { path = "../native-phone-state" }
 pokelinux-kernel-identity = { path = "../native-kernel-identity" }
 omarchy-ims = { path = "../native-ims" }
 rustix = { version = "=1.1.5", features = ["time", "fs", "process", "net", "event", "thread", "stdio", "termios"] }

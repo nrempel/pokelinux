@@ -426,11 +426,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "pokelinux-phone-state"
+version = "0.1.0"
+
+[[package]]
 name = "pokelinux-radio"
 version = "0.1.0"
 dependencies = [
  "omarchy-ims",
  "pokelinux-kernel-identity",
+ "pokelinux-phone-state",
  "rsbinder",
  "rsbinder-aidl",
  "rustix",

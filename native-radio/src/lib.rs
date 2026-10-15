@@ -32,3 +32,5 @@ pub mod bootstrap;
 pub mod observation;
 
 pub mod status;
+
+mod registration_state;

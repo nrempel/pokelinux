@@ -18,15 +18,19 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
-The [conditional original admission probe](native-ims-registration-admission.md)
-now completes four admission gates and three connected cases in SDK37 x86.
-Only the authored live-entity/request-membership case advances original state;
-physical connectivity and PDN-ready remain false. This adds no Rust or ARM result.
-The planned read-only native policy withdraws to Unavailable on disconnected,
-unknown, expired or dead input, retaining history without claiming deregistration
-or cleanup. Full original asynchronous loss/retry policy is deferred to operations
-that need it. Test-authored APN/request priors must remain a private seam until
-production ownership exists; no production assume-ready configuration is allowed.
+The [native registration observation](native-registration-state.md) now has a
+data-only shared type, production Gate mapper and a private actual ARM Binder
+RED→GREEN test. Library67pass/1ignored and full host78pass/7ignored qualify the
+component; no installed shared phone-state delivery is added. Source origin pairs
+are local to one RadioOwner and require provider/worker-incarnation/subscription
+binding plus current permission checks before any future export.
+APN readiness injection is cfg(test)-only, with no production context writer or
+assume-ready configuration, so ordinary owners cannot affirm RegistrationView.
+Existing installed status remains transport/wire diagnostics (including its
+ObservedActive phase); new view export and APN ownership/acquisition remain gates.
+The separate [original admission probe](native-ims-registration-admission.md)
+retains its conditional SDK37 scope; native conservative Unavailable/history
+policy is explicit, without original loss/retry equivalence or cleanup authority.
 Source-only REA still identifies an add-PDN-ready early return on the reason0
 loss path. The new admission probe explicitly fixes PDN-readyfalse and closes the
 original live request HandlerThread through actual quit/join and task absence.

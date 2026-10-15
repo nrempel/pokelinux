@@ -104,6 +104,20 @@ impl TransportSession {
     pub fn snapshot(&self) -> Snapshot {
         self.owner.snapshot()
     }
+    pub fn registration_view(&self) -> pokelinux_phone_state::RegistrationView {
+        self.owner.registration_view()
+    }
+    #[cfg(test)]
+    pub(crate) fn test_registration_context(
+        &mut self,
+        key: &SessionKey,
+        slot: i32,
+        live_entity: bool,
+        request_membership: bool,
+    ) -> Result<(), OwnerError> {
+        self.owner
+            .test_registration_context(key, slot, live_entity, request_membership)
+    }
     pub fn selected_slot(&self) -> i32 {
         self.owner.selected_slot()
     }

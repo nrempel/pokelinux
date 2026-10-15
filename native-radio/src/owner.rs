@@ -90,6 +90,7 @@ pub(crate) struct Gate {
     preparing: Option<Arc<()>>,
     deadline: Option<Deadline>,
     pub(crate) request: Option<crate::request::RequestState>,
+    pub(crate) registration: crate::registration_state::Projection,
 }
 impl Default for Gate {
     fn default() -> Self {
@@ -102,6 +103,7 @@ impl Default for Gate {
             preparing: None,
             deadline: None,
             request: None,
+            registration: Default::default(),
         }
     }
 }
@@ -112,6 +114,7 @@ impl Gate {
     pub(crate) fn invalidate(&mut self, key: &SessionKey, reason: ReceiverFailure) {
         if self.is_current(key) && !matches!(self.phase, Phase::Failed(_)) {
             self.phase = Phase::Failed(reason);
+            self.registration.retire();
             self.observation = None;
             self.preparing = None;
             if let Some(request) = &mut self.request {
@@ -265,6 +268,52 @@ impl RadioOwner {
             request: gate.request.as_ref().map(|request| request.receipt.clone()),
         }
     }
+    /// Current conditional observation, sampled through the same failure and
+    /// absolute BOOTTIME gate as transport snapshots. Returned copies are history.
+    pub fn registration_view(&self) -> pokelinux_phone_state::RegistrationView {
+        self.shared.lock().registration.view()
+    }
+    #[cfg(test)]
+    pub(crate) fn test_registration_context(
+        &mut self,
+        key: &SessionKey,
+        slot: i32,
+        live_entity: bool,
+        request_membership: bool,
+    ) -> Result<(), OwnerError> {
+        let mut gate = self.shared.lock();
+        if !gate.is_current(key) {
+            return Err(OwnerError::StaleSession);
+        }
+        gate.active()?;
+        if gate.preparing.is_some() {
+            return Err(OwnerError::Preparing);
+        }
+        gate.registration.retire();
+        gate.registration.context = Some(crate::registration_state::Context {
+            session: key.clone(),
+            slot,
+            live_entity,
+            request_membership,
+        });
+        Ok(())
+    }
+    fn withdraw_invalid_registration(&self, prepared: &PreparedEvent) {
+        let mut gate = self.shared.lock();
+        if prepared.shared.ptr_eq(&Arc::downgrade(&self.shared))
+            && gate.is_current(&prepared.key)
+            && matches!(gate.phase, Phase::Active { .. })
+            && gate.revision == prepared.base_revision
+            && gate
+                .preparing
+                .as_ref()
+                .is_some_and(|token| Arc::ptr_eq(token, &prepared.token))
+        {
+            // A matching malformed indication cannot retain an affirmative
+            // semantic view. Wire history/revision and transport phase are kept.
+            gate.registration.withdraw();
+        }
+    }
     fn begin_queue(
         &mut self,
         expected: Option<&SessionKey>,
@@ -308,6 +357,8 @@ impl RadioOwner {
             gate.current = Some(key.clone());
             gate.queue = Arc::downgrade(&queue);
             gate.phase = Phase::Registering;
+            gate.registration.retire();
+            gate.registration.generation = gate.revision;
             gate.deadline = Some(deadline);
             gate.observation = None;
             gate.preparing = None;
@@ -466,8 +517,13 @@ impl RadioOwner {
                     && indication.message_id == crate::registration::MESSAGE_ID
                     && indication.slot_id == self.selected_slot =>
             {
-                let decoded = omarchy_ims::registration::decode(&indication.payload)
-                    .map_err(|_| OwnerError::InvalidIndication)?;
+                let decoded = match omarchy_ims::registration::decode(&indication.payload) {
+                    Ok(decoded) => decoded,
+                    Err(_) => {
+                        self.withdraw_invalid_registration(&prepared);
+                        return Err(OwnerError::InvalidIndication);
+                    }
+                };
                 let wire = crate::registration::RegistrationWire::new(decoded)
                     .map_err(|_| OwnerError::InvalidIndication)?;
                 Observation::RegistrationWire {
@@ -498,6 +554,10 @@ impl RadioOwner {
         }
         gate.bump()?;
         let revision = gate.revision;
+        if let Observation::RegistrationWire { slot_id, wire, .. } = &observed.kind {
+            gate.registration
+                .commit(&prepared.key, *slot_id, revision, wire);
+        }
         Arc::get_mut(&mut observed)
             .expect("new observation is not shared before commit")
             .revision = revision;

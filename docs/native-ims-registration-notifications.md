@@ -93,14 +93,14 @@ advance only under those authored priors, while physical connectivity and
 PDN-ready remain false. That is separate original execution; this earlier
 message-to-Proxy capture retains its narrower boundary.
 
-The first read-only native reducer will deliberately withdraw to Unavailable on
-disconnected, unknown, expired or dead input while retaining history. This policy
-does not assert deregistration, APN removal, remote cleanup or retry permission.
-Full original asynchronous loss/retry behavior remains required for operations
-that depend on it, rather than for this conservative read. Authored APN/request
-priors belong only in a private conditional test seam until production ownership
-is implemented; there will be no production assume-ready switch. This reducer
-and its installed tracer are planned, not implemented by the current checkpoint.
+The later [native observation component](native-registration-state.md) now
+implements conservative Unavailable on disconnected, unknown, unqualified,
+malformed matching, expired or dead input, retaining positive history. This is
+explicit native policy, without original deregistration, APN removal, cleanup or
+retry equivalence. Full original asynchronous loss/retry remains required for
+operations depending on it. APN/request priors are cfg(test)-only and no production
+context writer or assume-ready switch exists; installed shared service/app
+delivery and normal APN ownership/acquisition remain unimplemented gates.
 
 Source-only REA identifies an add-PDN-ready guard that can return from the
 reason0 disconnected path before withdrawal. That loss branch remains unexecuted.

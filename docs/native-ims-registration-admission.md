@@ -77,14 +77,17 @@ outside Git.
 
 ## Next native boundary
 
-Next is a private conditional RegistrationObserved reducer plus deliberate native
-Unavailable on disconnected, unknown, expired or dead input, retaining history.
-That conservative policy would not assert deregistration, APN removal, remote
-cleanup or retry authority. It is planned, not implemented by this checkpoint.
-Authored readiness priors remain private test inputs; no production assume-ready
-configuration is permitted. Full native APN ownership/acquisition is a production
-gate. Original asynchronous loss/retry and the add-PDN-ready early return remain
-unexecuted; operations depending on them need their own qualification.
+The later [native registration observation](native-registration-state.md) now
+qualifies the private conditional RegistrationObserved mapper and deliberate
+Unavailable/history policy through component and actual ARM Binder tests.
+That is separate native evidence; it does not add original loss/retry equivalence,
+deregistration, APN removal, cleanup or retry authority to this SDK reference.
+Readiness injection is cfg(test)-only, with no production context writer or
+assume-ready configuration, so ordinary owners cannot affirm the new view.
+Installed status remains transport/wire diagnostics; new shared-view export
+and APN ownership/acquisition remain gates. Original asynchronous loss/retry and
+the add-PDN-ready early return remain unexecuted; dependent operations still need
+qualification.
 
 The earlier [message notifications](native-ims-registration-notifications.md) and
 [installed wire history](native-radio-registration-installed.md) retain their

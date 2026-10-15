@@ -8,6 +8,12 @@ pub const FRAGMENT: u32 = 117;
 pub const TRUNCATED: u32 = 118;
 pub const TRAILING: u32 = 119;
 pub const INSTALLED_SLOT1: u32 = 120;
+pub const STATE_CONNECTED: u32 = 121;
+pub const STATE_DISCONNECTED: u32 = 122;
+pub const STATE_UNKNOWN: u32 = 123;
+pub const STATE_UNQUALIFIED: u32 = 124;
+pub const STATE_MALFORMED: u32 = 125;
+pub const STATE_WRONG_SLOT: u32 = 126;
 
 pub fn valid() -> Vec<u8> {
     let mut bytes = vec![255, 128];
@@ -32,6 +38,21 @@ pub fn callback(control: u32) -> Option<(i32, i32, bool, Vec<u8>)> {
         WRONG_ID => message += 1,
         TRUNCATED => bytes.truncate(11),
         TRAILING => bytes.push(0x7e),
+        STATE_CONNECTED..=STATE_WRONG_SLOT => {
+            bytes = vec![0; 12];
+            bytes[0] = match control {
+                STATE_DISCONNECTED => 1,
+                STATE_UNKNOWN => 255,
+                _ => 2,
+            };
+            slot = if control == STATE_WRONG_SLOT { 0 } else { 1 };
+            if control == STATE_UNQUALIFIED {
+                bytes[1] = 1;
+            }
+            if control == STATE_MALFORMED {
+                bytes.truncate(11);
+            }
+        }
         _ => return None,
     }
     Some((message, slot, fragment, bytes))

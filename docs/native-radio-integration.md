@@ -1,5 +1,12 @@
 # Native radio integration: next execution gate
 
+The [native registration observation](native-registration-state.md) now combines
+a data-only shared type with the production radio Gate mapper and passes a private
+conditional ARM Binder RED→GREEN test. Origin pairs are local to one RadioOwner.
+Ordinary owners lack a production APN-context writer and cannot affirm this view.
+Installed status remains transport/wire diagnostics; shared service/app delivery
+and APN ownership/acquisition are still next gates.
+
 The [conditional original admission probe](native-ims-registration-admission.md)
 now completes four admission gates and three connected cases in SDK37 x86.
 Only the authored live-entity/request-membership case advances original state;

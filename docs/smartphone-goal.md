@@ -18,9 +18,13 @@ semantic IMS, carrier, remote-cleanup or hardware authority.
 The [original notification probe](native-ims-registration-notifications.md)
 retains its12 updates/20 callbacks. The later [conditional admission probe](native-ims-registration-admission.md)
 qualifies seven original slot1 cases with authored APN/request priors, while
-physical connectivity and PDN-ready remain false. Next is a private conditional
-native observation with conservative Unavailable policy; production APN ownership
-and acquisition remain gates. No new Rust, ARM or hardware result is added.
+physical connectivity and PDN-ready remain false in that original reference.
+The later [native observation component](native-registration-state.md) now passes
+private conditional ARM Binder RED→GREEN and host regressions. Ordinary owners
+cannot affirm the new view without a production APN-context writer; installed
+status remains transport/wire diagnostics. New shared-view delivery,
+provider/incarnation/subscription binding and APN ownership/acquisition remain
+gates. This adds no physical phone or carrier qualification.
 
 The separate [original route](native-ims-registration-routing.md) retains17
 SDK37 x86 dispatch cases and8 parser calls. Earlier [owner](native-radio-registration-owner.md),
