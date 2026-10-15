@@ -1,5 +1,15 @@
 # Native radio integration: next execution gate
 
+The [initial native SIT attempt](native-sit-attempt.md) now composes the983-byte
+request,144-byte reply and owned modern report with one supervised source.
+A compiled13-pass/two-missing-completion baseline and actual host/ARM process
+RED precede a source-only completion repair:15 host and15 ARM user-QEMU tests,
+then identical actual host/ARM kernel0/0/0 completion/expiry/cancel controls pass.
+Held-worker snapshots remain responsive; Stop actually waits worker9 and the
+unchanged journal refuses a successor. Current/history are local observations,
+not APN/provider authority. Factory framing/buffer retention, channel/driver
+binding, installed deployment and Pixel/carrier remain open.
+
 The [native Data service tracer](native-cellular-service.md) separately passes
 one generic ARM production Main/owned worker/restricted operator path with
 conservative synced admission, full historical report, controlled real kernel

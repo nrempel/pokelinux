@@ -1,0 +1,154 @@
+{
+  "schema": 1,
+  "date": "2026-10-15",
+  "scope": "Eight static matched factory IoChannel/RadioControlMessageMgr methods; no new original execution/native transport completion",
+  "input_hashes": [
+    {
+      "path": "private/libsitril.so",
+      "sha256": "a92bebfa7152356f27a925960ddd11736a0ad55cff9786997550d4d2a49105cd"
+    }
+  ],
+  "private_receipt_hashes_only": [
+    {
+      "path": "iochannel/manifest.json",
+      "sha256": "024ff5a792b2a3fdd5df7b8f64c028f6fb9002f89d6262f8c56f4a044659c46b"
+    },
+    {
+      "path": "iochannel/execution.json",
+      "sha256": "31b892ca0f99aa59a90c931652d86721ba9a79629359840327cd0c53ed7ebebe"
+    },
+    {
+      "path": "iochannel/facts.json",
+      "sha256": "9d08e3272621f016fd14efafec7f13991d2af0bd553a49e80a00dc110171a8f0"
+    },
+    {
+      "path": "iochannel/verification.json",
+      "sha256": "5548f17d2271ce4235265d2b92a43e7b4bed6269b676ae5be2216e0883201580"
+    },
+    {
+      "path": "iochannel/independent-review.json",
+      "sha256": "273701ba93f55098b0ccf01148fe8ea39c4c67ede87339e59c84d17db10d50c7"
+    },
+    {
+      "path": "rcm-manager/manifest.json",
+      "sha256": "ce4a4b3ca713ee031d70335e59068fae958020a00015b189eef6d107f7e36c47"
+    },
+    {
+      "path": "rcm-manager/execution.json",
+      "sha256": "76034b1a4e42af3ab83ecf64eb83fa2d538c4d764cb80e6c04e1281569356e85"
+    },
+    {
+      "path": "rcm-manager/facts.json",
+      "sha256": "7c82355a44fc0945bcdb5e0dddafc7e6a85c8aa109286bcdf09f1560959dd8ec"
+    },
+    {
+      "path": "rcm-manager/verification.json",
+      "sha256": "3029326a34aacb3dd6331fea2d224c78ad6e3f9bdb7776b139bfdabed8c55bf7"
+    },
+    {
+      "path": "rcm-manager/independent-review.json",
+      "sha256": "31ee14f1da03c9b1010adc8d7876c4da92b06c84c0b430f83a49651a6d0408c0"
+    },
+    {
+      "path": "Root-static-pin-closure-review",
+      "sha256": "ab918665e76cc6a96746a11617c3a4ae36bc76a20429d004bdcd87eef1c894cd"
+    }
+  ],
+  "sessions": [
+    {
+      "name": "iochannel",
+      "selected_methods": 4,
+      "private_pins": 55,
+      "actual_RPC_responses": 8,
+      "actual_CLI_wait_exit": 0,
+      "both_CLI_PIPE_EOF": true,
+      "same_daemon_exact_CID_absent": true,
+      "original_cutoff_observed": true,
+      "original_code_execution": false,
+      "claims": "Author-reasoned static method facts independently checked against assembly/ELF/closed snapshot",
+      "live_wire_transcript": false
+    },
+    {
+      "name": "rcm-manager",
+      "selected_methods": 4,
+      "private_pins": 42,
+      "actual_RPC_responses": 8,
+      "actual_CLI_wait_exit": 0,
+      "both_CLI_PIPE_EOF": true,
+      "same_daemon_exact_CID_absent": true,
+      "original_cutoff_observed": true,
+      "original_code_execution": false,
+      "claims": "Author-reasoned static method facts independently checked against assembly/ELF/closed snapshot",
+      "live_wire_transcript": true
+    }
+  ],
+  "Root_private_pins_rehashed": 97,
+  "methods": [
+    {
+      "name": "IoChannel::Open",
+      "elf_rva": "0x1f3f10",
+      "exported_span_bytes": 228
+    },
+    {
+      "name": "IoChannel::Read",
+      "elf_rva": "0x1f4000",
+      "exported_span_bytes": 204
+    },
+    {
+      "name": "IoChannel::Write",
+      "elf_rva": "0x1f40d0",
+      "exported_span_bytes": 308
+    },
+    {
+      "name": "IoChannel::Close",
+      "elf_rva": "0x1f3e80",
+      "exported_span_bytes": 120
+    },
+    {
+      "name": "RadioControlMessageMgr::Run",
+      "elf_rva": "0x1eeea0",
+      "exported_span_bytes": 792
+    },
+    {
+      "name": "RadioControlMessageMgr::Start",
+      "elf_rva": "0x1eec80",
+      "exported_span_bytes": 544
+    },
+    {
+      "name": "RadioControlMessageMgr::Read",
+      "elf_rva": "0x1ef1c0",
+      "exported_span_bytes": 24
+    },
+    {
+      "name": "RadioControlMessageMgr::Write",
+      "elf_rva": "0x1ef1e0",
+      "exported_span_bytes": 116
+    }
+  ],
+  "body_span_limits": [
+    "IoChannel Write selected300instruction-body bytes within308export span, two4byteholes excluded",
+    "ManagerRun selected788bodybytes within792export span, one4bytehole excluded"
+  ],
+  "public_source_revisions": [
+    {
+      "repository": "GrapheneOS kernel_pixel_6.6",
+      "commit": "66529eed85e8f3ccbda7f74911b125e7d6df7efc",
+      "qualified_to_factory_KMI": false
+    },
+    {
+      "repository": "Google s5400 radio modules",
+      "commit": "42c515afbe75b28ee10a756e69b30ff89783b9ff",
+      "qualified_to_factory_KMI": false
+    }
+  ],
+  "not_established": [
+    "Concrete dynamic receiver/frame/queue/copy contract",
+    "Opaque DumpData side effects or unchanged callback bytes",
+    "Actual modem path/source incarnation/exclusivity",
+    "Stop wakeup/join and close/reopen ordering",
+    "Driver/KMI/permissions, remote cleanup and safe retry",
+    "APN/channel/subscription/provider/modem/carrier/hardware"
+  ],
+  "phone_accessed": false,
+  "raw_private_artifacts_or_proprietary_inputs_published": false
+}

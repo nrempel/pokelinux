@@ -48,3 +48,18 @@ unchanged-journal restart78 starts no new worker/setup. All34 guest direct
 waits/EOF are separately counted from that nested native wait. No Binder pool
 join, remote provider cleanup, safe successor operation, permission/APN grant
 or normal systemd installation is inferred; manager fallback remains untested.
+
+## Initial SIT attempt consumer
+
+The [initial SIT attempt gate](../docs/native-sit-attempt.md) consumes source-
+generation identity while actual custody stays here. Its explicit Unix-record
+fixture binds the worker through parent bootstrap, accepted peer credentials and
+the retained supervisor. Compiled13-pass/two-missing-completion baseline plus
+actual host/ARM kernel RED precede15host/15ARM user-QEMU GREEN and identical
+host/ARM process completion/expiry/cancel passes. The40 codec tests remain
+separately qualified unchanged prerequisites.
+
+Stop revokes admission and retains the child through actual signal9 wait. The
+durable `AdmissionUncertain` fence survives and blocks a successor. Attempt
+snapshots and identity codecs clear no journal and establish no vendor cleanup,
+safe retry, provider/APN readiness or CPIF/physical-phone compatibility.

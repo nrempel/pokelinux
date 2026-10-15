@@ -112,3 +112,10 @@ unchanged authenticated6.6 image. It still qualifies no physical model or vendor
 module KMI; keep matched assets unchanged. Original compositor,
 synthetic actor and joint installed-app evidence remain distinct. Trusted locker/
 configuration provisioning and physical hardware have separate gates.
+
+The [initial SIT attempt gate](native-sit-attempt.md) keeps request/report policy
+and one-source lifecycle in shared Rust, with transport custody external. Its
+actual generic ARM kernel Unix-record fixture qualifies no device backend,
+CPIF framing, slot/channel identity or matched Pixel KMI. Factory-specific I/O
+and cleanup semantics remain behind a separate backend; decoded CID and report
+presentation index cannot select a network interface or hardware owner.

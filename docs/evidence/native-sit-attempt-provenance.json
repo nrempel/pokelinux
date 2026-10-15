@@ -1,0 +1,256 @@
+{
+  "schema": 1,
+  "date": "2026-10-15",
+  "scope": "One initial-token-zero native SIT attempt and explicitly authored Unix SOCK_SEQPACKET owned-process fixture; no factory transport/APN/IMS/hardware qualification",
+  "base_commit": "77c46eb6d00f0cb2da249a785cb6d45600b2f96d",
+  "public_authored_sources_and_references": [
+    {
+      "path": "native-sit-attempt/Cargo.lock",
+      "sha256": "fcd470fe65607795c4a9aa3e8777e1e18c1890ef304fa0719f86dce91b0d5516"
+    },
+    {
+      "path": "native-sit-attempt/Cargo.toml",
+      "sha256": "31b57de7686c2eadd83fae268b0d5a7a97fb42cab458a085432876f14a5315d4"
+    },
+    {
+      "path": "native-sit-attempt/src/lib.rs",
+      "sha256": "3973d8e694957465e494b5b8a70ac6f7e5e6515791edef873d6f2b2b097f8a39"
+    },
+    {
+      "path": "native-sit-attempt/tests/attempt.rs",
+      "sha256": "f1cbc6c50c3f74aa4ebe835c604c03ef35e53e610baefc5f01ed5c191e6994e8"
+    },
+    {
+      "path": "native-sit-attempt/tests/fixtures/base-v4.hex",
+      "sha256": "ca8c7178841288bb7645a2f8e3ffe99c881445032184861ced48dac68f1c8eaa"
+    },
+    {
+      "path": "native-sit-attempt/tests/fixtures/initial-v4.hex",
+      "sha256": "e87202bd3d3260a089c4904c25dfbe71539fede952a2c1ed0cb15039c7312d08"
+    },
+    {
+      "path": "tools/native-sit-attempt-fixture/Cargo.lock",
+      "sha256": "cbcb6cd964c6ffda145d6b0c17f318ec3e51338cc808a15e60c21182bb10071b"
+    },
+    {
+      "path": "tools/native-sit-attempt-fixture/Cargo.toml",
+      "sha256": "a0a33434a53a1bfa6c86079e0c9670a27b91e5084ed9665ff199814e8f62343a"
+    },
+    {
+      "path": "tools/native-sit-attempt-fixture/contract.json",
+      "sha256": "ab8f8bb8015fc2f3aada80cf0c83f4932f796f1ca8d334173756f46f475a30f3"
+    },
+    {
+      "path": "tools/native-sit-attempt-fixture/controller.py",
+      "sha256": "1f304b2248decb5718fa29df0bd26f37e0c56791ccebeb00c3a5a846b1acc69d"
+    },
+    {
+      "path": "tools/native-sit-attempt-fixture/references/v22.tsv",
+      "sha256": "6b25c6f2d761875703dee84c50f4c0fb6f2a045378e32c3375a302de0e72c206"
+    },
+    {
+      "path": "tools/native-sit-attempt-fixture/references/v3-ip.hex",
+      "sha256": "e87202bd3d3260a089c4904c25dfbe71539fede952a2c1ed0cb15039c7312d08"
+    },
+    {
+      "path": "tools/native-sit-attempt-fixture/src/main.rs",
+      "sha256": "eef41d315fc66e78bbb7f313a6fb9c82bc749e1a06cb31d56eb9e3ef2a592fae"
+    }
+  ],
+  "private_receipt_hashes_only": [
+    {
+      "path": "component-baseline-build-review",
+      "sha256": "6f5b99c9e14c5d5b5ea5fbb89f4abe464c997e5916f1cc0096a4f340cb006569"
+    },
+    {
+      "path": "component-repair-build-review",
+      "sha256": "d83b470afbec042e6af964810805ea68ca1a1917bf3fa74be2af6317a7f01f0a"
+    },
+    {
+      "path": "component-ARM-user-QEMU-review",
+      "sha256": "db93f692c12901219fd535d579bb689d3ef87e7b3a3d76371cfe92d1a66994b0"
+    },
+    {
+      "path": "host-RED-result",
+      "sha256": "e7f8a5090bdd5c21d92e5dba6835a47769b242d00e97846dd4d975dad75e007c"
+    },
+    {
+      "path": "host-RED-Root-review",
+      "sha256": "3df11b4cd044ae1a5208545ecabd73217fbbf4e1f6996e464056a5226da5733d"
+    },
+    {
+      "path": "host-GREEN-result",
+      "sha256": "bf0c8a9376a10b71e16f17a169eeb17ac8d07e497355ae058a286289bc08a6c6"
+    },
+    {
+      "path": "host-GREEN-Root-review",
+      "sha256": "18ac078440a8f3c1d9944adcb69792260edaf9b57e8a66d08ab93a3a42252295"
+    },
+    {
+      "path": "frozen-ARM-envelope-manifest",
+      "sha256": "fa0b618470c33587ecba4881d4e808b025cfeaf0964725b47aef49cfbb610c1d"
+    },
+    {
+      "path": "frozen-V4-controller-manifest",
+      "sha256": "056bc0fad287e3dcdfa0b867798fe94192f70761b198be5f966beda163a41658"
+    },
+    {
+      "path": "ARM-RED/selection.json",
+      "sha256": "8e2c96f4e1fff6b8f0bd78ca1545ab6ef2ac455d7b356f3f585c58ffede87a7e"
+    },
+    {
+      "path": "ARM-RED/command.json",
+      "sha256": "36776a6ca31edf21e6128af31d4ac617c8fdccd45377a82b831d8cf722c1b2e6"
+    },
+    {
+      "path": "ARM-RED/execution.json",
+      "sha256": "5d238b769a7ebaeab4c5009757277f99296fbea53c3559213383bb91d4f0e701"
+    },
+    {
+      "path": "ARM-RED/result.json",
+      "sha256": "ca66df7760d1d85c66c8f814eedce7f1b5afa5f7e820bc18f1a55f586142c791"
+    },
+    {
+      "path": "ARM-RED/boot-result.json",
+      "sha256": "adddad51ca879ac61ecfb5a557bbf81b46009880a3b4a9609cc09103ee6396e9"
+    },
+    {
+      "path": "ARM-RED/root-review.json",
+      "sha256": "e9524ec8b2fa19f6ca8da5c642eb6361d5d22d70a4ef1d4236f402f51b98c696"
+    },
+    {
+      "path": "ARM-RED/qualification-proposal.json",
+      "sha256": "24345407835d95c0a0c72901677e5d2c9cdf4ad7d27036d3635f237adaf53af3"
+    },
+    {
+      "path": "ARM-GREEN/selection.json",
+      "sha256": "8007ddf5f7589ef5929d85a7fc73069bfaec9ce7256095afe33baa93f26c20e8"
+    },
+    {
+      "path": "ARM-GREEN/command.json",
+      "sha256": "f0795955767ccb319ccc3172121a5b86dfe9e8f2abe51b38ba67d524c077d1f4"
+    },
+    {
+      "path": "ARM-GREEN/execution.json",
+      "sha256": "0be3be6d54d8e1839f13301c4e4fc4456387bc4430659e6f9fe39b1899a0b5f7"
+    },
+    {
+      "path": "ARM-GREEN/result.json",
+      "sha256": "7bae5a061f11df6caf3586197f2f2f98138f66e52c3095f103fdec3774aa5c2c"
+    },
+    {
+      "path": "ARM-GREEN/boot-result.json",
+      "sha256": "31b7108c655e0b17d17d3f384f77509bc7bb2453355150d20713108ff4beb0c6"
+    },
+    {
+      "path": "ARM-GREEN/root-review.json",
+      "sha256": "4f8fa140290fc38021e866bdfd37aae6b9e6cfa91c53c767a04c09a334618e42"
+    },
+    {
+      "path": "ARM-GREEN/qualification-proposal.json",
+      "sha256": "bf2888b7a8d2c028daebdad48594033d12f98af378a1ca493ad390482028a468"
+    }
+  ],
+  "TDD": {
+    "baseline_strict_fmt_Clippy": true,
+    "baseline_host_pass": 13,
+    "baseline_missing_completion_fail": 2,
+    "baseline_test_exit": 101,
+    "actual_host_RED_parent_exits": [
+      101,
+      0,
+      0
+    ],
+    "actual_ARM_kernel_RED_parent_exits": [
+      101,
+      0,
+      0
+    ],
+    "only_selected_source_delta": "native-sit-attempt/src/lib.rs",
+    "fixed_other_source_files": 47,
+    "repair_host_pass": 15,
+    "repair_ARM_user_QEMU_pass": 15,
+    "actual_host_GREEN_parent_exits": [
+      0,
+      0,
+      0
+    ],
+    "actual_ARM_kernel_GREEN_parent_exits": [
+      0,
+      0,
+      0
+    ],
+    "cases": [
+      "completion",
+      "expiry",
+      "cancel"
+    ],
+    "fixtures_and_process_oracle_changed_after_valid_RED": false,
+    "publication_READMEs_docs_added_after_execution": true
+  },
+  "integration": {
+    "exact_request_bytes": 983,
+    "exact_response_bytes": 144,
+    "reference_case": "v4",
+    "token": 0,
+    "context": 1,
+    "presentation_index": 0,
+    "prepared_semantic_report_fields_per_case": 14,
+    "committed_full_source_record_report_compared": true,
+    "current_history_same_Arc_required": true,
+    "dispatch_remains": "OutcomeUnknown",
+    "snapshots_per_case": 100,
+    "snapshot_budget_ns_exclusive": 200000000,
+    "worker_blocked_in_fixture_recv_observed": true,
+    "Stop_original_worker_wait_budget_ns": 2000000000,
+    "worker_actual_wait_signal": 9,
+    "successor": "AdmissionUncertain with unchanged journal",
+    "final_controller_children": "ECHILD/no adopted waits",
+    "original_operation_deadline": "absolute CLOCK_BOOTTIME before launch; no renewal",
+    "controller_per_case_outer_clock": "CLOCK_MONOTONIC",
+    "controller_per_case_outer_ns": 20000000000,
+    "actual_suspend_wake_experiment": false,
+    "current_means": "valid against locally recorded custody state, no atomic external process liveness"
+  },
+  "ARM_kernel": {
+    "kernel": "7.1.6-1-aarch64-ARCH",
+    "uid": 1000,
+    "gid": 1000,
+    "groups": [
+      1000
+    ],
+    "all_capability_sets": 0,
+    "NoNewPrivs": 1,
+    "owned_waits_per_run": 17,
+    "host_waits_with_both_PIPE_EOF": 7,
+    "boot_waits_with_merged_PIPE_EOF": 2,
+    "guest_waits_with_merged_PIPE_EOF": 2,
+    "controller_Main_waits_with_both_PIPE_EOF": 3,
+    "separate_Main_worker_actual_waits_no_independent_output_EOF_claim": 3,
+    "RED_Root_selected_hashes": 75,
+    "RED_Root_external_hashes": 77,
+    "GREEN_Root_selected_hashes": 76,
+    "GREEN_Root_external_hashes": 79,
+    "Root_rehashed_readonly_backing": true,
+    "dynamic_map_hashes_captured_and_rehashed_by_controller_guest": "Root reviews captured GNU ELF/mapping identity; no post-destruction fresh guest-file read",
+    "exact_CID_absent_same_daemon": true
+  },
+  "prior_failures_not_valid_RED": [
+    "Clippy/setup/fixture-hex/cache ownership errors",
+    "Dual response token0xffffffff paired with initial request token0; correct TokenMismatch refusal",
+    "Repair1 copied read-only source permission failure before edit/build",
+    "ARM user runner1 output groupwrite masked by umask before QEMU launch"
+  ],
+  "original_vendor_code_executed_by_new_fixture": false,
+  "unchanged_40_codec_tests": "Separately qualified prerequisite; not rerun in this selection",
+  "phone_accessed": false,
+  "proprietary_inputs_or_raw_decompilation_published": false,
+  "remaining": [
+    "Factory receive callback/framing and owned buffer/queue contract",
+    "Descriptor generation, channel/subscription/slot/provider identity",
+    "Matched CPIF zero/short I/O, driver/KMI and policy",
+    "Complete provider/APN/IMS and ordinary installed deployment",
+    "Remote cleanup acknowledgement and any safe successor/retry/token reuse",
+    "Physical Pixel modem/carrier and complete smartphone matrix"
+  ]
+}

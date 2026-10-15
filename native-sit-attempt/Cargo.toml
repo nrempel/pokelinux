@@ -1,0 +1,13 @@
+[package]
+name = "pokelinux-sit-attempt"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+publish = false
+
+[dependencies]
+pokelinux-sit-codec = { path = "../native-sit-codec" }
+pokelinux-process-owner = { path = "../native-process-owner" }
+
+[lints.rust]
+unsafe_code = "forbid"

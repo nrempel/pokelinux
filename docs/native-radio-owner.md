@@ -1,12 +1,23 @@
 # Native radio session owner
 
+The [initial native SIT attempt](native-sit-attempt.md) now composes the983-byte
+request,144-byte reply and owned modern report with one supervised source.
+A compiled13-pass/two-missing-completion baseline and actual host/ARM process
+RED precede a source-only completion repair:15 host and15 ARM user-QEMU tests,
+then identical actual host/ARM kernel0/0/0 completion/expiry/cancel controls pass.
+Held-worker snapshots remain responsive; Stop actually waits worker9 and the
+unchanged journal refuses a successor. Current/history are local observations,
+not APN/provider authority. Factory framing/buffer retention, channel/driver
+binding, installed deployment and Pixel/carrier remain open.
+
 The [shared process-custody mechanism](native-process-custody.md) now lives in
 `native-process-owner`, with direct radio imports and no compatibility aliases.
 Eight shared plus 59 radio host tests and an additional actual ARM normal worker
 regression pass; the existing bootstrap-policy and installed executions retain
-their historical scope. Next, one supervised Data worker must add durable
-admission and current authorization without treating a controlled association
-as permission or remote cleanup.
+their historical scope. The later [Data service tracer](native-cellular-service.md)
+separately qualifies durable worker admission; current installed authorization
+and provider/APN ownership remain open. A controlled association grants no
+permission or remote cleanup.
 
 The [native Data/kernel owner](native-cellular-data-owner.md) retains its fixed
 actual ARM Binder/kernel RED→GREEN: wrong-serial refusal, accepted provider

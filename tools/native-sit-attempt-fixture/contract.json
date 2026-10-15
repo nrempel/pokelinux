@@ -1,0 +1,114 @@
+{
+  "schema": 1,
+  "execution_authorization": "Controller prepared/frozen only; Root inspects then separately executes or explicitly authorizes execution. No target has been launched by preparation.",
+  "CLI": [
+    "BUILD",
+    "ABS_NEW_OUTPUT",
+    "red|green"
+  ],
+  "native_kernel_ELF_machine_profiles": [
+    {
+      "kernel_machine": "x86_64",
+      "ELF_machine": 62
+    },
+    {
+      "kernel_machine": "aarch64",
+      "ELF_machine": 183
+    }
+  ],
+  "strict_review_file": "BUILD/build-review-root.json",
+  "artifact_selection": "Select unique compiled_executables record target=pokelinux-sit-attempt-tracer and ELF_machine matching actual uname. Canonical artifact path may differ from runtime alias; full digest must match.",
+  "runtime_executable_alias": "BUILD/target/debug/pokelinux-sit-attempt-tracer",
+  "frozen_protocol_source_sha256": "eef41d315fc66e78bbb7f313a6fb9c82bc749e1a06cb31d56eb9e3ef2a592fae",
+  "public_request_file_sha256": "e87202bd3d3260a089c4904c25dfbe71539fede952a2c1ed0cb15039c7312d08",
+  "public_report_TSV_sha256": "6b25c6f2d761875703dee84c50f4c0fb6f2a045378e32c3375a302de0e72c206",
+  "fixed_original_TSV_case": "v4",
+  "fixed_request_bytes": 983,
+  "fixed_request_payload_sha256": "f8ada5285cd6f01ce0631a59f7222dce4a53e0dfe32e172f5d6a1d38471bb145",
+  "fixed_response_bytes": 144,
+  "fixed_response_payload_sha256": "bab9dfe7aa085d243f9a165c314e4ffee08ec0d99ebcb9f56a4ac810e1dee9a3",
+  "expected_semantic_report": {
+    "cause": 0,
+    "opaque_i64_at_8": 0,
+    "cid": 1,
+    "active": 2,
+    "protocol_code": 0,
+    "mtu_v4": 1420,
+    "mtu_v6": 0,
+    "ifname": "rmnet0",
+    "address_text": "192.0.2.7",
+    "dnses": [
+      "192.0.2.53",
+      "198.51.100.53"
+    ],
+    "gateways": [
+      "0.0.0.0"
+    ],
+    "pcscf": [
+      "203.0.113.1",
+      "203.0.113.2",
+      "203.0.113.3"
+    ],
+    "structured_address_vector_empty": true,
+    "QoS_TD_vectors_empty": true
+  },
+  "semantic_fields_compared": 14,
+  "original_instrumentation_fields_not_in_native_report": [
+    "schema",
+    "stage",
+    "bytes",
+    "borrowed_interior_getter_verified",
+    "guards_intact"
+  ],
+  "cases": [
+    "completion",
+    "expiry",
+    "cancel"
+  ],
+  "phase_parent_exits": {
+    "red": [
+      101,
+      0,
+      0
+    ],
+    "green": [
+      0,
+      0,
+      0
+    ]
+  },
+  "red_marker": "MISSING_OWNED_SIT_COMPLETION only after actual worker SIGKILL/wait and successor AdmissionUncertain refusal",
+  "post_completion_current_and_history": {
+    "red": false,
+    "green": true
+  },
+  "expiry_and_cancel_current_and_history": false,
+  "successor_refusal": "AdmissionUncertain with occupied=false",
+  "snapshot_count": 100,
+  "snapshot_max_elapsed_ns_exclusive": 200000000,
+  "original_per_case_CLOCK_MONOTONIC_budget_ns": 20000000000,
+  "reserved_failure_cleanup_ns": 2000000000,
+  "native_parent_original_worker_deadline": "CLOCK_BOOTTIME now+5s established before worker launch and passed exactly in worker argv; never renewed",
+  "native_parent_Stop_cleanup_budget_ns": 2000000000,
+  "barrier": "After dispatch/prepared/snapshots and live parent/worker proc capture, write exactly G then close stdin. Keep fixture peer open through actual parent wait plus both stdout/stderr EOF. Only then recv peer EOF/no extra request.",
+  "ownership": "Python Popen start_new_session, subreaper, accepted SO_PEERCRED worker PID/UID/GID, worker PPid/group/session bound to Rust parent, worker observed blocked in explicit Unix fixture recv. Same actual UID/GID; no credential transitions.",
+  "failure_cleanup": "SIGKILL only new owned parent process group while unreaped, or same group with previously captured matching worker start identity. Actual parent/adopted waits. Any budget overrun is failure, with mandatory containment reaping never counted as passing.",
+  "final_normal_child_state": "ECHILD with no adopted waits",
+  "input_preservation": "Every selected source, executable, controller, contract, review and public reference pinned before/after each case; runtime evidence preserved separately.",
+  "scope": "Ordinary owned process/Unix record fixture on actual native Linux kernel. Source incarnation binds only the owned read channel, without provider, CPIF, modem, APN, authentication or physical-phone authority.",
+  "nullable_TSV_text_sentinel": "<null>",
+  "child_environment": {
+    "PATH": "/usr/bin:/bin",
+    "LANG": "C"
+  },
+  "fixed_pairing": {
+    "context": 1,
+    "protocol": "IPv4",
+    "presentation_index": 0,
+    "initial_request_token": 0,
+    "captured_response_expected_token": 0,
+    "request_golden_bytes_modified": false,
+    "original_TSV_modified": false
+  },
+  "version_note": "Fresh V4/token0 bundle before valid integration RED. Prior dual/tokenFFFFFFFF mismatch remains a prerequisite failure, never integration RED."
+}
