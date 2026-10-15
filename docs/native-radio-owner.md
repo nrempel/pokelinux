@@ -1,9 +1,11 @@
 # Native radio session owner
 
-The [original add-PDN codec probe](native-ims-add-pdn.md) now qualifies seven
-complete getBytes returns with40 typed setter inputs each and actual code105 in
-SDK37 x86. It sends no request and adds no APN ownership/acquisition authority;
-a native byte-for-byte port remains the next codec gate.
+The [native add-PDN encoder](native-ims-add-pdn-native.md) now matches five
+complete original code105 vectors on x86 and ARM64 user-QEMU after genuine
+missing-serialization RED. All35 tests pass per target, with two explicit native
+count9 refusals. The separate [original probe](native-ims-add-pdn.md) retains its
+seven SDK37 cases. Encoding grants no APN ownership/readiness; current-session
+request transport, response identity, acquisition and hardware remain gates.
 
 The [native registration observation](native-registration-state.md) now combines
 a data-only shared type with the production radio Gate mapper and passes a private

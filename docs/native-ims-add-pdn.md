@@ -20,8 +20,10 @@ Inputs use numeric documentation addresses, explicit matching address arrays,
 fixed Gregorian calendars/timezones and source-guarded null optional values.
 Names distinguish address-vector families. The IMS-net-type wire selector uses
 values 0/2; the actual IP-type input is 3. These authored inputs do not establish
-acquired connectivity or protocol validity. Complete input maps and returned vectors stay
-private, with bounded hashes in the provenance.
+acquired connectivity or protocol validity. Complete raw input maps and original
+run records stay private. The later [native comparison](native-ims-add-pdn-native.md)
+publishes only the seven selected authored-input-derived byte vectors as test
+fixtures, with their original hashes bound here.
 
 | Authored case | Returned bytes |
 | --- | --- |
@@ -60,8 +62,9 @@ attachment do not qualify visual output, actual suspend or physical hardware.
 
 The [bounded provenance](evidence/native-ims-add-pdn-provenance.json) retains these
 scopes without copying private method pins, notes, raw inputs, APK or raw logs.
-Next is a native port and byte-for-byte comparison against these actual vectors.
-Real APN ownership, permission/subscription association, submission, responses,
+The later [native encoder comparison](native-ims-add-pdn-native.md) now matches
+five complete vectors and explicitly refuses the two count9 inputs; its x86 and
+ARM user-QEMU evidence is separate from this original run. Real APN ownership, permission/subscription association, submission, responses,
 remote cleanup/retry, carrier operation and hardware remain separate gates. The
 [owner-local registration view](native-registration-state.md) is not made ready
 by encoding a request.

@@ -41,3 +41,5 @@ pub fn encode_registration_state(state: i32, rat: i32) -> Vec<u8> {
     writer.write_int(rat);
     writer.into_bytes()
 }
+
+pub mod add_pdn;

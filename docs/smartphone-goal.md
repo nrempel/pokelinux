@@ -6,10 +6,12 @@ Build and test everything possible offline on temporary Harbour capacity. Do not
 
 **No backwards compatibility:** build one target implementation and matching component set. Do not add legacy adapters, dual production runtimes, old-format migrations or downgrade support for earlier iterations. Test required behavior and restart recovery within the target version. Prior code and artifacts provide evidence, not a requirement to preserve old formats.
 
-The [original add-PDN codec probe](native-ims-add-pdn.md) now qualifies seven
-complete getBytes returns with40 typed setter inputs each and actual code105 in
-SDK37 x86. It sends no request and adds no APN ownership/acquisition authority;
-a native byte-for-byte port remains the next codec gate.
+The [native add-PDN encoder](native-ims-add-pdn-native.md) now matches five
+complete original code105 vectors on x86 and ARM64 user-QEMU after genuine
+missing-serialization RED. All35 tests pass per target, with two explicit native
+count9 refusals. The separate [original probe](native-ims-add-pdn.md) retains its
+seven SDK37 cases. Encoding grants no APN ownership/readiness; current-session
+request transport, response identity, acquisition and hardware remain gates.
 
 The [installed slot1 registration tracer](native-radio-registration-installed.md)
 now carries one original-qualified complete wire payload through actual ARM

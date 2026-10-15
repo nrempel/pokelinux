@@ -1,0 +1,386 @@
+{
+  "schema": 1,
+  "base_commit": "57c3bc140aa8bfdb071bf59893047900f7f700c1",
+  "scope": "Bounded native Rust add-PDN serialization; original SDK37 x86 vectors separately qualified; x86 and ARM64 user-QEMU pure component tests only",
+  "original_reference": {
+    "path": "docs/evidence/native-ims-add-pdn-provenance.json",
+    "sha256": "2ee70d9cf87abf3ba4f86a11d5f883a0c4f6aba6f060015d4294d0bba2fd955c",
+    "message_code": 105,
+    "APK_executed_in_this_native_run": false
+  },
+  "source_inventory": [
+    {
+      "path": "native-ims/Cargo.lock",
+      "sha256": "6aa52824cf4c8784c9ab049bceadc5e9fa60a9bee95e506d4804659f4fec2eb6"
+    },
+    {
+      "path": "native-ims/Cargo.toml",
+      "sha256": "673a36e6e406492b7418c0fcf6b806327bae3061ab47fd91232a2d7eab8ffd6f"
+    },
+    {
+      "path": "native-ims/src/add_pdn.rs",
+      "sha256": "277ca2fc7bc98efea568ddf27c7c285010f17452929f127b4da9ab9ee41bf71f"
+    },
+    {
+      "path": "native-ims/src/lib.rs",
+      "sha256": "128ca597e60635aa85f20f9ca3026f10f86e7f75d012a853ca843418bacd0a3a"
+    },
+    {
+      "path": "native-ims/src/reader.rs",
+      "sha256": "65cf29526840c2d501adc527532360120e2eb5ee9e1b38eb1b08fc94b3bf118c"
+    },
+    {
+      "path": "native-ims/src/registration.rs",
+      "sha256": "b6dc008bb82d5892a4f19e05c93e1cc8ca7b596e5b0947da8e04072a8c128cf4"
+    },
+    {
+      "path": "native-ims/src/requests.rs",
+      "sha256": "ad0b411f0f385d620df18a7a206034199e9cf9d390b13c13925f19e347cba26f"
+    },
+    {
+      "path": "native-ims/tests/add_pdn.rs",
+      "sha256": "aa691ecc4761b7f4a5afa9797bab77d35a2f0f0d9235e3ada337ea39e3889ccd"
+    },
+    {
+      "path": "native-ims/tests/data_reader.rs",
+      "sha256": "a3418023f044d068ef109ce17b76fe4423aec317616cd8f1050fe70ecd4a35d3"
+    },
+    {
+      "path": "native-ims/tests/data_writer.rs",
+      "sha256": "8778d58a1717329810e7a15dd19a28edcef9d20556fa803ce220170e3428993c"
+    },
+    {
+      "path": "native-ims/tests/fixtures/shannon-add-pdn.tsv",
+      "sha256": "d5bd8106f83b3cc260a04dfa4087f35fe6d65adc4abd8c0afb0c45359f66465c"
+    },
+    {
+      "path": "native-ims/tests/fixtures/shannon-data-writer.tsv",
+      "sha256": "0a2a0a7616fe06285c148e8c471fc92f5d6222cd9a0e2c94915a85173571bde2"
+    },
+    {
+      "path": "native-ims/tests/fixtures/shannon-messages.tsv",
+      "sha256": "c2973e5bebfa93756a0bbf70b682e380cc943195ae7ee534df366fa67b53a28d"
+    },
+    {
+      "path": "native-ims/tests/fixtures/shannon-reader.tsv",
+      "sha256": "a0d9ce3523a378982f69a7e6f09ea8f00672033179aa2a2805e9dc14c9b5a2ea"
+    },
+    {
+      "path": "native-ims/tests/fixtures/shannon-registration.tsv",
+      "sha256": "4acc479315733745ec7bfe62c82b029a9f45e914fe0ea6a5891a1229da214b83"
+    },
+    {
+      "path": "native-ims/tests/messages.rs",
+      "sha256": "a07ddade5e60c67009d424c156f19b735c5325654ace746518db698f609166c0"
+    },
+    {
+      "path": "native-ims/tests/registration.rs",
+      "sha256": "3caa587938c70691cd214e16deb9996659921d7ad672d09d5abbab22328c171d"
+    },
+    {
+      "path": "native-ims/tests/request_parts.rs",
+      "sha256": "fa924efa9333150cf9842e7dad36babf67b6c7432ea5b811d0ba5673f078eb3e"
+    }
+  ],
+  "red_before_green": {
+    "only_repair_source": [
+      "native-ims/src/add_pdn.rs"
+    ],
+    "test_and_fixture_byte_identical": true,
+    "per_target_RED_passed": 6,
+    "per_target_RED_failed": 5,
+    "sole_RED_failure": "Missing serialization returned UnsupportedSelector for each of five supported original-byte comparisons",
+    "per_target_GREEN_passed": 35,
+    "per_target_GREEN_failed": 0,
+    "per_target_GREEN_ignored": 0,
+    "focused_add_pdn_tests_per_target": 11,
+    "all_previous_tests_per_target": 24,
+    "fmt_and_strict_Clippy": true,
+    "release_builds_both_targets": true
+  },
+  "cases": [
+    {
+      "case_id": "numeric-v4-v6-pcscf1-wire0-fixed-time",
+      "ims_net_type_wire": 0,
+      "input_ipv4_count": 1,
+      "input_ipv6_count": 1,
+      "absent_optionals": false,
+      "original_length": 683,
+      "original_vector_sha256": "fae186e9907c2af18aa995fb51ffedca38cab03a9627098adf7852a1a0f73608",
+      "native_expectation": "exact_complete_bytes"
+    },
+    {
+      "case_id": "empty-pcscf-wire2-fixed-time",
+      "ims_net_type_wire": 2,
+      "input_ipv4_count": 0,
+      "input_ipv6_count": 0,
+      "absent_optionals": false,
+      "original_length": 663,
+      "original_vector_sha256": "c306d3ac2875a1938c8ba8f91362fc29cc5e504f3eb7b254347e6a11050ab02d",
+      "native_expectation": "exact_complete_bytes"
+    },
+    {
+      "case_id": "empty-pcscf-wire2-null-optionals",
+      "ims_net_type_wire": 2,
+      "input_ipv4_count": 0,
+      "input_ipv6_count": 0,
+      "absent_optionals": true,
+      "original_length": 663,
+      "original_vector_sha256": "88a31e8c6654b5bef886ea90126e66e39b15e78e3e8cc2fda54cd2349cbd5ef0",
+      "native_expectation": "exact_complete_bytes"
+    },
+    {
+      "case_id": "pcscf-v4-count8",
+      "ims_net_type_wire": 0,
+      "input_ipv4_count": 8,
+      "input_ipv6_count": 0,
+      "absent_optionals": false,
+      "original_length": 695,
+      "original_vector_sha256": "5852500692b3176e53aadf4344e749cca1be07cd7dce700e4678b1c290e03b42",
+      "native_expectation": "exact_complete_bytes"
+    },
+    {
+      "case_id": "pcscf-v4-count9",
+      "ims_net_type_wire": 0,
+      "input_ipv4_count": 9,
+      "input_ipv6_count": 0,
+      "absent_optionals": false,
+      "original_length": 695,
+      "original_vector_sha256": "5852500692b3176e53aadf4344e749cca1be07cd7dce700e4678b1c290e03b42",
+      "native_expectation": "TooManyIpv4"
+    },
+    {
+      "case_id": "pcscf-v6-count8",
+      "ims_net_type_wire": 0,
+      "input_ipv4_count": 0,
+      "input_ipv6_count": 8,
+      "absent_optionals": false,
+      "original_length": 791,
+      "original_vector_sha256": "9214df2beff0139b46529f9dadab3957e500f789552d7dca35c79a14a589e091",
+      "native_expectation": "exact_complete_bytes"
+    },
+    {
+      "case_id": "pcscf-v6-count9",
+      "ims_net_type_wire": 0,
+      "input_ipv4_count": 0,
+      "input_ipv6_count": 9,
+      "absent_optionals": false,
+      "original_length": 807,
+      "original_vector_sha256": "bf98362b6cf9f61dd4fabe9b881b22334f0f730e847a073698c38a6f36d80e1b",
+      "native_expectation": "TooManyIpv6"
+    }
+  ],
+  "native_policy": {
+    "maximum_addresses_per_family": 8,
+    "maximum_encoded_bytes": 823,
+    "selectors": [
+      0,
+      2
+    ],
+    "count_source": "slice lengths only",
+    "numeric_IPs_only": true,
+    "text": "six ASCII numeric MCC/MNC digits; country up to two ASCII bytes; E911 aid up to32 ASCII bytes; nulls zero padded",
+    "time": "explicit valid Gregorian components year2000..2255, whole-minute signed16 UTC offset; no conversion or lossy narrowing",
+    "validate_ignored_fields": true,
+    "count9_refusals_are_original_equivalence": false,
+    "full_additional_backing_array_bytes": 500,
+    "logical_additional_lengths": [
+      12,
+      48
+    ]
+  },
+  "runs": [
+    {
+      "run": "pokelinux-add-pdn-native-build-baseline-root-1",
+      "selection_sha256": "2b371948f5246b39786cc02c7a36fd0f11260f278b2a4c82d9d99b0c96e3c712",
+      "build_script_sha256": "fda08cc6b877f8cba2c438b3fad06cfad206989146035e50298aa3fa62ec4e3c",
+      "execution_sha256": "c176972d16951b9baef9b356dc32b279f23f4cc1b303bada3b1de30b87835f27",
+      "behavioral_review_sha256": "93d17d904d5b67c4e53d64182cc4ca6c6298f17e17b37bebe679084b3395fe5f",
+      "image": "sha256:0b4b956502a9f55d992eaced6975737b523be19bd2034078983b36bbcfd7aee6",
+      "read_only_source": true,
+      "network": "none",
+      "cpus": 16,
+      "actual_CLI_wait_exit": 0,
+      "live_exact_CID_then_fresh_absence": true,
+      "same_daemon": true,
+      "unchanged_input_closure": true,
+      "targets": [
+        {
+          "target": "x86_64-unknown-linux-gnu",
+          "test_exit": 101,
+          "passed": 6,
+          "failed": 5,
+          "ignored": 0,
+          "failures": [
+            "original_empty_pcscf_wire2_fixed_time",
+            "original_empty_pcscf_wire2_null_optionals",
+            "original_ipv4_count8",
+            "original_ipv6_count8",
+            "original_mixed_addresses_wire0"
+          ],
+          "sole_observed_failure": "positive encoder returned UnsupportedSelector instead of complete original bytes",
+          "test_elf_sha256": "9329f287890aefff722a6741f8832ec973d539ab81e1d4ca9ab02f015fed5c84",
+          "machine": 62
+        },
+        {
+          "target": "aarch64-unknown-linux-gnu",
+          "test_exit": 101,
+          "passed": 6,
+          "failed": 5,
+          "ignored": 0,
+          "failures": [
+            "original_empty_pcscf_wire2_fixed_time",
+            "original_empty_pcscf_wire2_null_optionals",
+            "original_ipv4_count8",
+            "original_ipv6_count8",
+            "original_mixed_addresses_wire0"
+          ],
+          "sole_observed_failure": "positive encoder returned UnsupportedSelector instead of complete original bytes",
+          "test_elf_sha256": "fc4d4b38788fde183556a442062e660ff0331eecdbe52e782e149dbfdfe0f77b",
+          "machine": 183
+        }
+      ]
+    },
+    {
+      "run": "pokelinux-add-pdn-native-build-repair-root-1",
+      "selection_sha256": "302e668b900a5186e3c77507f6070d885ebbed2c830c3a82387f7d402a9e8709",
+      "build_script_sha256": "de0aa7c0411005497be6e1c15931c746d66d6f592cf8cdceac2a0c9278feb1ff",
+      "execution_sha256": "46f36733d20ebf281234f1a0e4b39f0f8a88450a14d11afd6228af9c8f11ac2a",
+      "behavioral_review_sha256": "c59f8205eb6d06c554667ad01fe2d54dbfc191c241acd3299b16effc011fb2c0",
+      "image": "sha256:0b4b956502a9f55d992eaced6975737b523be19bd2034078983b36bbcfd7aee6",
+      "read_only_source": true,
+      "network": "none",
+      "cpus": 16,
+      "actual_CLI_wait_exit": 0,
+      "live_exact_CID_then_fresh_absence": true,
+      "same_daemon": true,
+      "unchanged_input_closure": true,
+      "targets": [
+        {
+          "target": "x86_64-unknown-linux-gnu",
+          "test_exit": 0,
+          "passed": 35,
+          "failed": 0,
+          "ignored": 0,
+          "focused_add_pdn": 11,
+          "original_byte_matches": 5,
+          "native_count9_refusals": 2,
+          "test_artifacts": [
+            {
+              "test": "omarchy_ims",
+              "sha256": "c7f81adc7f7f1952f5a010eb042a2e6c647c56ebe97f770e6edebd722fafd2f9",
+              "machine": 62
+            },
+            {
+              "test": "messages",
+              "sha256": "cb718bb8d1174cfccaac97597de181e081160e582f010204b871861b85fda2dc",
+              "machine": 62
+            },
+            {
+              "test": "data_writer",
+              "sha256": "a1cc73cf45ae81a5387907bccefef323ef523a2cc02965681cee551cae6bc78d",
+              "machine": 62
+            },
+            {
+              "test": "request_parts",
+              "sha256": "a51ae071abd241930ddc5748a511a9aba0e542168507842f82258d64317c2113",
+              "machine": 62
+            },
+            {
+              "test": "add_pdn",
+              "sha256": "bba08255acd62cd1078a57006b51f750d7d0a520ce9d8bbf95e88fa5b347153e",
+              "machine": 62
+            },
+            {
+              "test": "registration",
+              "sha256": "f3cbe812d3c4cd8dc6ece8e742e83aca7179d760171784b778a4b945ff839a95",
+              "machine": 62
+            },
+            {
+              "test": "data_reader",
+              "sha256": "2a437d9381ff792f8da96819e49e2134274e709eaff5a05695e38ed5149b9f24",
+              "machine": 62
+            }
+          ],
+          "release_artifacts": [
+            {
+              "name": "libomarchy_ims.rlib",
+              "sha256": "f54d5698194a7cff64d90f473baf76ce0ee76ba004c1759515c8bc9e1f721b0c"
+            },
+            {
+              "name": "libomarchy_ims-c2f84b9e1d7a3cff.rmeta",
+              "sha256": "0e4b324f7849949356867423f0d49646ea005a035e11f57ad38a2fc59e7ba487"
+            }
+          ]
+        },
+        {
+          "target": "aarch64-unknown-linux-gnu",
+          "test_exit": 0,
+          "passed": 35,
+          "failed": 0,
+          "ignored": 0,
+          "focused_add_pdn": 11,
+          "original_byte_matches": 5,
+          "native_count9_refusals": 2,
+          "test_artifacts": [
+            {
+              "test": "omarchy_ims",
+              "sha256": "a96841583d5aec235ace3daef32bc8b49d0ba2b64eadea2bf420307c25f1aeea",
+              "machine": 183
+            },
+            {
+              "test": "messages",
+              "sha256": "b5f64445f90192e81992c786d2cf8f505d9bfed639980a3633a40ca6e94b02de",
+              "machine": 183
+            },
+            {
+              "test": "data_writer",
+              "sha256": "d1165d02cdb7bd0ac9d6678b17e7524fa322a33d56abedcaff6b8e4ba28beee0",
+              "machine": 183
+            },
+            {
+              "test": "request_parts",
+              "sha256": "0ef85e9f2d5a490160d03704b453dece42e998cd1001b9ce0d10989aa918c767",
+              "machine": 183
+            },
+            {
+              "test": "add_pdn",
+              "sha256": "9fcd2b58274cac4c72f0847088afa1d9237a1fbfaafee8b3cbb4a5da57133190",
+              "machine": 183
+            },
+            {
+              "test": "registration",
+              "sha256": "c01fd42a56e5776c90775576eaabea745f2dc52aeac20c45f35dbae76b9794eb",
+              "machine": 183
+            },
+            {
+              "test": "data_reader",
+              "sha256": "0ca3b14088e52ef6401174e9f5f07c2d30baa0fc160330e73651790f63134516",
+              "machine": 183
+            }
+          ],
+          "release_artifacts": [
+            {
+              "name": "libomarchy_ims.rlib",
+              "sha256": "f3eacb3e1b7718dd86f08499c89d370a600e128ab6f35a712d6f070404a33029"
+            },
+            {
+              "name": "libomarchy_ims-f92d5cf034612647.rmeta",
+              "sha256": "48dc7bf3e2ac9c5b3de495fa6e04e7de62e43ecf04d5d69c8056ae9200b4f7fb"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "remaining": {
+    "APN_acquisition_or_context_authority": false,
+    "request_dispatch_or_response_meaning_qualified": false,
+    "installed_service_or_app_integration": false,
+    "kernel_Binder_or_actual_suspend_in_this_run": false,
+    "Pixel_or_carrier_qualified": false,
+    "vendor_userspace_replaced": false
+  },
+  "private_raw_audit_APK_decompilation_or_credentials_copied": false,
+  "passed": true
+}
