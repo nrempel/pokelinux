@@ -29,3 +29,5 @@ pub mod request;
 pub mod bootstrap;
 
 pub mod observation;
+
+pub mod status;

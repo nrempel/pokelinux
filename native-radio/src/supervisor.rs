@@ -114,6 +114,11 @@ impl Supervisor {
     pub fn occupied(&self) -> bool {
         self.child.is_some()
     }
+    /// Diagnostic PID of the retained child. This is not a process capability
+    /// and must not be used to transfer ownership or authorize an operation.
+    pub fn child_pid(&self) -> Option<u32> {
+        self.child.as_ref().and_then(|child| child.pid())
+    }
     fn record_admission(&mut self, id: ProcessIdentity) -> Result<(), StartError> {
         let directory = self.journal.parent().ok_or(StartError::Io)?;
         let metadata = fs::symlink_metadata(directory).map_err(|_| StartError::Io)?;

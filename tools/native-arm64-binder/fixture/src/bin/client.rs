@@ -367,6 +367,13 @@ fn main() -> TestResult {
     let scenario = std::env::args()
         .nth(if cooperative { 2 } else { 1 })
         .ok_or("missing scenario")?;
+    if scenario == "peer-exit" {
+        let endpoint = peer(true)?;
+        assert_eq!(report(&endpoint)?[0], 1);
+        assert_eq!(control(&endpoint, 107).err(), Some(StatusCode::DeadObject));
+        marker("named-peer-exit-without-registration");
+        return Ok(());
+    }
     if scenario == "production-worker" {
         return production_worker::run();
     }

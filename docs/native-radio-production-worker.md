@@ -55,7 +55,7 @@ Raw or Failed data. A reader must bind the actual owned source connection,
 check current Supervisor admission and increasing revision, bound its incremental
 buffer, and reject malformed/truncated frames. The actual reader in this
 qualification is test infrastructure around the production Supervisor primitive;
-an installed production observer service remains open.
+installed observation belongs to the later [service selection](native-radio-service.md).
 
 These are historical latest-snapshot observations. Multiple raw revisions can
 coalesce under pressure; receipt does not establish current peer liveness,
@@ -82,8 +82,12 @@ original-code execution, private REA inputs, UI, authentication or phone access.
 Earlier emulator, original-code, ARM user-mode and Google-kernel results retain
 their separately documented scopes. Zero physical phone models are qualified.
 
-Next connect an installed native supervisor/observer and qualify this exact
-worker under permanently blocked lookup/registration and output backpressure.
+A later [installed service selection](native-radio-service.md) connects the
+production supervisor and status client through the actual packaged unit. Its
+separate RED/repair, peer-loss withdrawal, native wait, Main exit0 and restart
+refusal do not change this earlier four-executable evidence. Next qualify the
+exact installed worker under permanently blocked lookup/registration and output
+backpressure.
 Production discovery identity and permissions, recovered producer semantics,
 requests/ACK/reset, native IMS/calls/SMS, actual suspend and Pixel kernel policy
 remain gates. The full smartphone matrix also still requires device graphics,

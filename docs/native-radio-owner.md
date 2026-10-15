@@ -1,16 +1,17 @@
 # Native radio session owner
 
-The production Samsung radioExternal worker now completes a narrow actual ARM
-tracer: cooperative parent bootstrap, explicit named Binder discovery, one owned
-registration and fenced raw callback publication. A genuine missing-publication
-RED precedes a worker-only repair; client/peer/manager ELF bytes and the outer
-oracle remain identical. GREEN receives the authored raw packet, observes retained
-watch ServiceDied, then actual worker wait 9 and durable same/recreated-owner retry
-refusal. Client/peer waits 0 and full guest/outer/input closure pass; all 41 host
-library tests and strict checks pass. This is public synthetic Binder on a generic
-ARM kernel, not vendor/IMS or hardware qualification. Installed supervision,
-blockage/pressure in this executable, production identity/policy, decoded semantics and
-phone gates remain. See [production worker tracer](native-radio-production-worker.md).
+The installed production radio service/status tracer now passes on an actual
+generic ARM kernel after a genuine missing-history-projection RED. A one-line
+service repair preserves all five other ELF bytes and the outer oracle. The
+packaged unit, native worker and real restricted status client carry one raw
+callback into diagnostics, then peer loss becomes unavailable with retained
+history. Native worker wait9, systemd Main exit0, empty unit cgroup and same-journal
+restart exit78 qualify separately; no new registration occurs. All45 host tests,
+strict checks and full guest/outer/input closure pass. This is public synthetic
+Binder and operator diagnostics, not native IMS or hardware qualification.
+Exact installed blocked-call/pressure, device policy/producer/reset and phone
+gates remain. See [installed service](native-radio-service.md) and the preceding
+[production worker tracer](native-radio-production-worker.md).
 
 A later [cooperative bootstrap checkpoint](native-radio-bootstrap.md) adds a new
 production-library parent-bound worker entry before Binder, qualified separately

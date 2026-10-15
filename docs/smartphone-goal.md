@@ -6,6 +6,12 @@ Build and test everything possible offline on temporary Harbour capacity. Do not
 
 **No backwards compatibility:** build one target implementation and matching component set. Do not add legacy adapters, dual production runtimes, old-format migrations or downgrade support for earlier iterations. Test required behavior and restart recovery within the target version. Prior code and artifacts provide evidence, not a requirement to preserve old formats.
 
+The [installed native radio service](native-radio-service.md) now carries one
+authored raw Binder observation through a production worker and restricted status
+client under an actual ARM systemd unit, with peer-loss withdrawal, native wait,
+clean Main exit and durable restart refusal. This is transport diagnostics;
+producer/reset, native IMS/calls/SMS and hardware requirements remain open.
+
 ## Product and architecture
 
 Nicholas updated the target on 12 October 2026: implement the required phone

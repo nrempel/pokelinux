@@ -1,0 +1,25 @@
+[Unit]
+Description=Pokelinux native radio transport owner and private diagnostics
+After=local-fs.target
+[Service]
+Type=simple
+User=pokelinux-radio
+Group=pokelinux-radio
+EnvironmentFile=/etc/pokelinux/radio.conf
+ExecStart=/usr/libexec/pokelinux/radio-service /run/pokelinux/radio /var/lib/pokelinux/radio/admission /usr/libexec/pokelinux/radio-worker ${BINDER_DEVICE} ${BINDER_SERVICE} ${LEASE_MS}
+ExecStop=/usr/libexec/pokelinux/radio-status /run/pokelinux/radio/status.sock stop
+RuntimeDirectory=pokelinux/radio
+RuntimeDirectoryMode=0700
+StateDirectory=pokelinux/radio
+StateDirectoryMode=0700
+UMask=0077
+NoNewPrivileges=yes
+CapabilityBoundingSet=
+TasksMax=64
+MemoryMax=128M
+LimitCORE=0
+KillMode=control-group
+TimeoutStopSec=5
+Restart=no
+[Install]
+WantedBy=multi-user.target
