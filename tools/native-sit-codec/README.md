@@ -60,3 +60,28 @@ ten direct child waits0/stdout EOF and outer CLI wait0; earlier encoder evidence
 is unchanged. It uses CLOCK_MONOTONIC cutoffs, without suspend qualification.
 [Response provenance](../../docs/evidence/native-sit-response-provenance.json)
 records Root and independent qualification of this original reference. Proprietary libraries, raw traces and analysis remain private.
+
+## Context application helper
+
+`original-context-application-probe.c` adds direct original memory-context
+application after the same complete base parser. Its CLI is:
+
+```text
+PROBE LIB FULL144HEX CONTEXT_CID INDEX USE_NULL
+```
+
+The authored wrapper requires exactly288 lowercase hex characters, context
+CID1–30, index0–99 and USE_NULL0/1. Those ranges are test input bounds, not modem
+or channel policy. Actual C1 supplies state0 with null APN/TD/controller pointers;
+no fields are patched. It calls UpdateDataCallInfo twice, records the complete
+352-byte before/source/first fixed prefixes, and reports a real full `memcmp`
+for the second call without emitting a second raw array. The return bit is
+reported without a copy-success/readiness interpretation.
+
+After the held/release boundary, context D1/guard check/free runs first, then
+adapter D1 and packet D1, their guard checks and outer frees. No handler, OnActivated, NetIf or transport is
+invoked. Seven controls plus load have eight actual waits0/stdout EOF, separate
+from the earlier parser/encoder runs. This adds original integration only,
+without native behavior changes or a native test rerun. Independent review qualifies this bounded original run; see the [report](../../docs/native-sit-context-application.md) and
+[context evidence](../../docs/evidence/native-sit-context-application-provenance.json).
+Raw prefixes and proprietary artifacts remain private.

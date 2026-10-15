@@ -36,6 +36,17 @@ Original CLOCK_MONOTONIC cutoffs do not qualify suspend. Extended/error-remap
 behavior, owned dispatch correlation, context/channel/subscription binding,
 provider/APN lifecycle, deactivate/reset and hardware/carrier remain open.
 
+The separate [original context-application probe](native-sit-context-application.md)
+now closes seven memory-only context controls/14 update calls plus a load check:
+eight actual QEMU waits0/stdout EOF. Matching dual/inactive/PDP-failure cases
+copy the complete352-byte fixed DataCall prefix with bit1; matched Non-IP copies
+with bit0, while CID mismatch/null leave it unchanged. Every identical second
+call returns0 and the actual full-prefix memcmp is unchanged. State0 and null
+APN/TD/controller pointers persist; original destructors and guards close.
+Root and independent review qualify this additional original integration. No native behavior changes or22-test rerun are claimed. Handler/test
+hooks, normal context/channel selection, activation, populated state and
+APN/provider/kernel/modem/carrier qualification remain open.
+
 The [native Data service tracer](native-cellular-service.md) now records one
 complete generic ARM production Main/worker/operator integration pass.24 service
 and nine shared host tests pass. Its34 guest direct waits/EOF include Main0,

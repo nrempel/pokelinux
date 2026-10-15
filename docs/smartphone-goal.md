@@ -17,6 +17,15 @@ and parsed addresses grant no APN readiness, dispatch or channel/provider
 identity. Extended response/error semantics, owned context/lifecycle/reset and
 real modem/carrier/Pixel qualification remain open.
 
+A separate [original context memory probe](native-sit-context-application.md)
+now composes that parser with original PdpContext update in seven controls,
+14 calls and eight actual QEMU waits0/stdout EOF. It measures fixed-prefix copy
+and address-change bits while context state0 and null APN/TD/controller pointers
+remain unchanged. Return0 can accompany a copy. Root and independent review qualify this additional
+original integration. No native behavior change,
+activation, acquired APN, normal channel/slot/provider identity or working modem
+is established; hardware and full phone gates remain open.
+
 The [native Data service tracer](native-cellular-service.md) separately passes
 one generic ARM production Main/owned worker/restricted operator path with
 conservative synced admission, full historical report, controlled real kernel
