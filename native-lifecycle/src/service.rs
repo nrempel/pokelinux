@@ -94,11 +94,79 @@ struct Connection {
     read_stamp: Option<ReadStamp>,
     deadline: u64,
     pending: Option<Vec<u8>>,
-    // Set only with a serialized typed Ok on the lock-only route. Successful
-    // admission is rechecked on every send, including retries after EAGAIN.
-    lock_ack: bool,
+    // Set only with typed Ok on the lock-only route. Retain storage admission
+    // identity even if an intervening write finishes before the next send.
+    lock_ack: Option<u64>,
     launching: Option<String>,
 }
+fn revalidate_lock_ack(
+    connection: &mut Connection,
+    stopping: bool,
+    authority: &Authority,
+    operation: &Option<Operation>,
+    storage: &Worker,
+) {
+    if let Some(admission) = connection.lock_ack
+        && (stopping
+            || !authority.ready()
+            || operation.is_some()
+            || storage.busy()
+            || authority.required_lock_write_pending()
+            || admission != storage.admission_sequence())
+    {
+        // Fence once before the send. A blocked Unavailable reply
+        // must never turn back into Ok when storage later clears.
+        connection.pending = serde_json::to_vec(&Reply::Unavailable).ok();
+        connection.lock_ack = None;
+    }
+}
+
+// One scheduler uses the sole Worker. A known superseded false commit gives
+// priority to its required true successor before any other publication/ingress.
+fn schedule_restoration(
+    authority: &mut Authority,
+    storage: &mut Worker,
+    operation: &mut Option<Operation>,
+    stopping: bool,
+) -> bool {
+    if stopping || !authority.ready() || operation.is_some() || storage.busy() {
+        return true;
+    }
+    let now = boottime_ns();
+    let intent = authority.take_required_lock_write(now).or_else(|| {
+        match authority.plan_authenticated_clear(now) {
+            Decision::Persist(intent) => Some(intent),
+            Decision::Immediate(_) => None,
+        }
+    });
+    if !authority.ready() {
+        storage.stop();
+        return false;
+    }
+    let Some(intent) = intent else {
+        return true;
+    };
+    match storage.start_write(intent.next.clone(), intent.until) {
+        Ok(token) => {
+            *operation = Some(Operation {
+                token,
+                connection: None,
+                until: intent.until,
+                intent: Some(intent),
+                retired: false,
+                shutdown: false,
+                camera: false,
+            });
+            true
+        }
+        Err(_) => {
+            authority.invalidate();
+            storage.stop();
+            false
+        }
+    }
+}
+
 #[derive(PartialEq)]
 enum CapturePhase {
     Persisting,
@@ -239,10 +307,37 @@ pub fn run_with_services(
     profile_path: &Path,
     entry: &Path,
     test: Option<&str>,
+    messages: Option<&mut dyn crate::messages::Provider>,
+    session: Option<&mut dyn crate::session::Provider>,
+    display: Option<&mut dyn crate::display::Factory>,
+    camera: Option<&mut dyn crate::camera::Provider>,
+) -> io::Result<()> {
+    run_with_services_inner(
+        runtime,
+        policy,
+        profile_path,
+        entry,
+        test,
+        messages,
+        session,
+        display,
+        camera,
+        #[cfg(test)]
+        None,
+    )
+}
+#[allow(clippy::too_many_arguments)]
+fn run_with_services_inner(
+    runtime: &Path,
+    policy: &Path,
+    profile_path: &Path,
+    entry: &Path,
+    test: Option<&str>,
     mut messages: Option<&mut dyn crate::messages::Provider>,
     mut session: Option<&mut dyn crate::session::Provider>,
     mut display: Option<&mut dyn crate::display::Factory>,
     mut camera: Option<&mut dyn crate::camera::Provider>,
+    #[cfg(test)] mut restore: Option<&mut restore_tests::ActorControl>,
 ) -> io::Result<()> {
     if rustix::process::getuid().as_raw() != 0 || rustix::process::geteuid().as_raw() != 0 {
         return Err(io::ErrorKind::PermissionDenied.into());
@@ -277,7 +372,12 @@ pub fn run_with_services(
         .iter()
         .map(|p| fs::symlink_metadata(p).map(|m| (m.dev(), m.ino())))
         .collect::<io::Result<_>>()?;
-    let mut storage = Worker::spawn(runtime, policy, &std::env::current_exe()?, test)?;
+    let storage_executable = std::env::current_exe()?;
+    #[cfg(test)]
+    let storage_executable = restore.as_ref().map_or(storage_executable, |control| {
+        control.storage_executable.clone()
+    });
+    let mut storage = Worker::spawn(runtime, policy, &storage_executable, test)?;
     let initial_until = boottime_ns().saturating_add(1_000_000_000);
     let initial_token = storage.start_load(
         profiles.iter().map(|p| p.app.clone()).collect(),
@@ -306,6 +406,14 @@ pub fn run_with_services(
             // Never block on child wait, request IO, or an idle client.
             authority.reap_dead()?;
             refresh_session(&mut authority, &mut session)?;
+            #[cfg(test)]
+            if let Some(control) = restore.as_deref_mut() {
+                control.poll(
+                    &mut authority,
+                    operation.is_some() || storage.busy(),
+                    stopping,
+                )?;
+            }
             complete_launches(
                 apps.poll(&mut authority)?,
                 &mut connections,
@@ -404,7 +512,8 @@ pub fn run_with_services(
                                             } else {
                                                 reply.clone()
                                             })?);
-                                            c.lock_ack = c.lock && reply == Reply::Ok;
+                                            c.lock_ack = (c.lock && reply == Reply::Ok)
+                                                .then(|| storage.admission_sequence());
                                             c.deadline =
                                                 boottime_ns().saturating_add(1_000_000_000);
                                             if capture
@@ -457,6 +566,14 @@ pub fn run_with_services(
                         op.retired = true;
                     }
                 }
+            }
+            if !schedule_restoration(
+                &mut authority,
+                &mut storage,
+                &mut operation,
+                stopping || startup_failed,
+            ) {
+                startup_failed = true;
             }
             if let Some(provider) = messages.as_deref_mut() {
                 let event = match provider.poll() {
@@ -616,7 +733,7 @@ pub fn run_with_services(
                             read_stamp: None,
                             deadline: now.saturating_add(30_000_000_000),
                             pending: None,
-                            lock_ack: false,
+                            lock_ack: None,
                             launching: None,
                         });
                     }
@@ -780,19 +897,12 @@ pub fn run_with_services(
                     revoke_capture(&mut capture, &mut camera);
                     connection.pending = serde_json::to_vec(&Reply::Denied).ok();
                 }
-                if connection.lock_ack
-                    && (stopping || !authority.ready() || operation.is_some() || storage.busy())
-                {
-                    // Fence once before the send. A blocked Unavailable reply
-                    // must never turn back into Ok when storage later clears.
-                    connection.pending = serde_json::to_vec(&Reply::Unavailable).ok();
-                    connection.lock_ack = false;
-                }
+                revalidate_lock_ack(connection, stopping, &authority, &operation, &storage);
                 if let Some(bytes) = &connection.pending {
                     return match ipc::send(&connection.fd, bytes) {
                         Ok(()) => {
                             connection.pending = None;
-                            connection.lock_ack = false;
+                            connection.lock_ack = None;
                             connection.read_stamp = None;
                             if let Some(active) = &mut capture
                                 && active.connection == connection.id
@@ -952,8 +1062,10 @@ pub fn run_with_services(
                                 cleanup_until.get_or_insert_with(|| {
                                     boottime_ns().saturating_add(2_000_000_000)
                                 });
-                                let clean =
-                                    authority.ready() && operation.is_none() && !storage.busy();
+                                let clean = authority.ready()
+                                    && operation.is_none()
+                                    && !storage.busy()
+                                    && !authority.required_lock_write_pending();
                                 authority.invalidate();
                                 if let Some(provider) = session.as_deref_mut() {
                                     provider.stop();
@@ -1215,10 +1327,19 @@ pub fn run_with_services(
                 };
                 connection.pending = serde_json::to_vec(&reply).ok();
                 connection.lock_ack =
-                    connection.lock && reply == Reply::Ok && connection.pending.is_some();
+                    (connection.lock && reply == Reply::Ok && connection.pending.is_some())
+                        .then(|| storage.admission_sequence());
                 connection.deadline = boottime_ns().saturating_add(1_000_000_000);
                 connection.pending.is_some()
             });
+            if !schedule_restoration(
+                &mut authority,
+                &mut storage,
+                &mut operation,
+                stopping || startup_failed,
+            ) {
+                startup_failed = true;
+            }
             complete_launches(
                 launch_completions,
                 &mut connections,
@@ -1370,3 +1491,11 @@ pub fn entry(args: &[String]) -> io::Result<()> {
 #[cfg(test)]
 #[path = "service_auth_attempt_tests.rs"]
 mod auth_attempt_tests;
+
+#[cfg(test)]
+#[path = "service_restore_tests.rs"]
+mod restore_tests;
+
+#[cfg(test)]
+#[path = "service_lock_ack_tests.rs"]
+mod lock_ack_tests;

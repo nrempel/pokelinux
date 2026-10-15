@@ -30,7 +30,7 @@ see [protocol actor evidence](../docs/evidence/native-session-protocol-actor-pro
 Generation/event facts remain observations, with no authentication or restoration
 capability added.
 
-The private actor-attempt admission/lifetime primitive is internal and unwired.
+The private actor-attempt admission/lifetime primitive has no production authentication ingress.
 Its opaque non-Clone handle grants no authentication or restoration authority.
 One occupied slot retains its exact actor/attempt identity, Source incarnation,
 accepted nonzero lock generation, live locker pidfd, checked lock-admission epoch
@@ -50,8 +50,8 @@ The preceding one-test Provider control remains separate. The initial127 runner
 setup failure and32/33 aggregate missing the existing storage helper remain failed;
 fresh complete runs supply the exact same-build daemon helper. These are typed
 Provider/real-pidfd component results, without Source IPC, PAM or broker dispatch.
-No authentication result, candidate, restoration receipt, unlock, reset or durable
-clearing is enabled.
+That earlier selection enables no authentication result, restoration or durable
+clearing.
 No installed authentication or ARM/device result is claimed by this selection.
 
 A later [capacity-consumer selection](../docs/native-auth-actor-capacity.md) adds
@@ -87,8 +87,7 @@ regressions. The older planning source separately passes two actual generic ARM
 kernel cases. A later [current-code ARM run](../docs/native-lock-storage-arm.md)
 passes all 40 library tests and both planning cases, but its aggregate fails the
 queued fixture's main-poll setup before the test packets. Queued ARM behavior
-remains unqualified; no guard is relaxed or stop retried. Complete
-authenticated-clear ordering remains open. That intent is restored
+remains unqualified; no guard is relaxed or stop retried. Those earlier runs qualify no authenticated-clear ordering. That intent is restored
 before Ready and cannot be cleared by unlocked Source facts or root admin false.
 `Gate::Lock` remains monotonic through irrelevant focus revisions. The fixed Rust
 client verifies the connected root actor's reply within the original two-second
@@ -102,3 +101,22 @@ crash recovery. A fresh unlocked session needs an explicit root-owned fresh stor
 lifecycle. The full installed smartphone, trusted unlock/restore, PAM/secure frames,
 camera plus new-lock runtime, incoming restricted-display composition, suspend/wake
 and Pixel hardware gates remain open.
+
+The newer [downstream restoration](../docs/native-session-restoration.md) retains
+an exact completion's context atomically through Armed and one owned Clearing
+write. A later exact protocol event is necessary; arming, locker death or forced
+unlocked facts alone cannot clear. New lock during clear retains denial and
+reserves a bounded true replacement through the same worker. Stop cannot seal
+before that required write. Queued lock success now retains the worker admission
+sequence, rejecting an intervening write even after it finishes. Both clear and
+lock completion recheck actual BOOTTIME against their write deadlines.
+
+After behavioral ordering/clock/service/socket REDs,53 default host tests pass,
+with2 root integration tests explicitly ignored there and separately selected
+and passing. They exercise the real actor, sole worker, actual UID11010 app reads,
+held synced clear, actual UID1000 new lock and clean same-policy restart denial.
+Authentication, typed Source and history are authored test inputs. AArch64 builds
+are compile-only; no new ARM execution is implied. No production completion
+constructor/ingress exists. Genuine authentication, real Messages history/normal
+Qt composition, negative service matrix, secure presentation and phone gates
+remain open.

@@ -44,9 +44,12 @@ test packets. Its aggregate is failed; no queued ARM pass is claimed. The test
 ABI map alone cannot establish ARM's stopped-syscall observation semantics.
 It induces no send EAGAIN, actual
 suspend, authenticated clear or intervening write that starts and completes
-before the send. A future clear needs stronger epoch/serialization rules and
-truthful durable history; a busy check alone cannot qualify those transitions.
-Original scope/PAM composition, broker result provenance, atomic attempt-to-armed
-receipt, exact unlock, synced clear and normal Messages reopening remain gates.
+before the send. The later [downstream restoration](native-session-restoration.md) adds worker
+admission identity and serialized clear/new-lock storage. Its completed-write
+regression exercises the actual Worker and socket guard, while its separate
+service tests use authored auth/Source/history. A busy check alone does not
+qualify these transitions.
+Original scope/PAM composition, production broker result provenance and normal
+Messages reopening remain gates; the later private restoration is separate.
 These headless controls run no Source, Messages UI, original action or phone.
 Source100ms and all original deadlines remain unchanged.

@@ -1,9 +1,10 @@
-//! Host actor/typed-Provider tests. No Source IPC, PAM, authentication result,
-//! unlock, storage write or restoration is exercised by this selection.
+//! Host actor/typed-Provider tests. Authentication/closure stamps and successful
+//! storage completion are authored models. No Source IPC, PAM/broker scope,
+//! durable storage write or installed restoration is exercised here.
 use super::refresh_session;
 use crate::{
     Permission, Reply,
-    authority::{Authority, ClosedAuthenticationAttempt},
+    authority::{AuthenticatedCompletion, Authority, ClosedAuthenticationAttempt, Decision},
     boottime_ns,
     session::{NativeFocus, OwnedFocus, Provider, SAMPLE_BUDGET_NS, Snapshot},
     storage::{Durable, Grant},
@@ -668,4 +669,469 @@ fn auth_closed_capacity_after_new_lock_keeps_new_epoch_and_policy() {
     assert!(authority.current_authentication_attempt(&fresh, boottime_ns()));
     assert!(!authority.current_authentication_attempt(&old, boottime_ns()));
     assert_policy_retained(&mut authority);
+}
+
+// Whole-owner authenticated closure is authored only by the cfg-test fixture.
+// There is no production constructor or success IPC. These tests cover actor
+// authority; the one successful finish below models storage acknowledgement.
+fn unlock_facts(facts: &mut Facts, generation: u64) {
+    let sample = facts.0.as_mut().unwrap();
+    sample.sequence += 1;
+    sample.revision += 1;
+    sample.sampled_at_ns = boottime_ns();
+    sample.until = sample.sampled_at_ns + SAMPLE_BUDGET_NS;
+    sample.locked = false;
+    sample.locker = None;
+    sample.lock_generation = None;
+    sample.protocol_unlock = Some(crate::session::ProtocolUnlock {
+        generation,
+        sequence: sample.sequence,
+        observed_at_ns: sample.sampled_at_ns,
+    });
+}
+
+fn assert_no_authenticated_clear(authority: &mut Authority, now: u64) {
+    assert!(matches!(
+        authority.plan_authenticated_clear(now),
+        Decision::Immediate(Reply::Denied | Reply::Unavailable)
+    ));
+    assert_policy_retained(authority);
+}
+
+#[test]
+fn auth_restore_exact_completion_arms_atomically_without_freeing_capacity() {
+    let mut facts = facts(own_locker());
+    let mut authority = authority(&mut facts);
+    let now = boottime_ns();
+    let until = now + ATTEMPT_BUDGET_NS;
+    let attempt = authority.begin_authentication_attempt(now, until).unwrap();
+    let completion = AuthenticatedCompletion::fixture(&attempt, until);
+    let replay = AuthenticatedCompletion::fixture(&attempt, until);
+    let closed = ClosedAuthenticationAttempt::fixture(&attempt, until);
+    assert!(authority.arm_authentication(completion, boottime_ns()));
+    assert!(
+        authority
+            .begin_authentication_attempt(boottime_ns(), until)
+            .is_err()
+    );
+    assert!(!authority.release_closed_authentication(closed));
+    assert!(!authority.arm_authentication(replay, boottime_ns()));
+    assert!(
+        authority
+            .begin_authentication_attempt(boottime_ns(), until)
+            .is_err()
+    );
+    assert_fresh(facts.0.as_ref().unwrap(), until);
+    assert_no_authenticated_clear(&mut authority, boottime_ns());
+}
+
+#[test]
+fn auth_restore_completion_requires_exact_actor_and_original_deadline() {
+    let locker = own_locker();
+    let mut first_facts = facts(locker.clone());
+    let mut second_facts = facts(locker);
+    let mut first = authority(&mut first_facts);
+    let mut second = authority(&mut second_facts);
+    let now = boottime_ns();
+    let until = now + ATTEMPT_BUDGET_NS;
+    let first_attempt = first.begin_authentication_attempt(now, until).unwrap();
+    let second_attempt = second.begin_authentication_attempt(now, until).unwrap();
+    assert!(!first.arm_authentication(
+        AuthenticatedCompletion::fixture(&second_attempt, until),
+        boottime_ns()
+    ));
+    assert!(!first.arm_authentication(
+        AuthenticatedCompletion::fixture(&first_attempt, until + 1),
+        boottime_ns()
+    ));
+    assert!(first.current_authentication_attempt(&first_attempt, boottime_ns()));
+    assert!(second.current_authentication_attempt(&second_attempt, boottime_ns()));
+    assert!(first.arm_authentication(
+        AuthenticatedCompletion::fixture(&first_attempt, until),
+        boottime_ns()
+    ));
+    assert_fresh(first_facts.0.as_ref().unwrap(), until);
+    assert_policy_retained(&mut first);
+    assert_policy_retained(&mut second);
+}
+
+#[test]
+fn auth_restore_refuses_prearm_and_inexact_protocol_unlock_occurrences() {
+    for invalid in 0..4 {
+        let mut facts = facts(own_locker());
+        let mut authority = authority(&mut facts);
+        let now = boottime_ns();
+        let until = now + ATTEMPT_BUDGET_NS;
+        let attempt = authority.begin_authentication_attempt(now, until).unwrap();
+        let completion = AuthenticatedCompletion::fixture(&attempt, until);
+        let before_arm = facts.0.as_ref().unwrap().clone();
+        if invalid == 0 {
+            unlock_facts(&mut facts, 1);
+            poll(&mut authority, &mut facts);
+            assert!(!authority.arm_authentication(completion, boottime_ns()));
+        } else {
+            assert!(authority.arm_authentication(completion, boottime_ns()));
+            unlock_facts(&mut facts, 1);
+            let event = facts.0.as_mut().unwrap().protocol_unlock.as_mut().unwrap();
+            match invalid {
+                1 => event.observed_at_ns = before_arm.sampled_at_ns,
+                2 => event.sequence = before_arm.sequence,
+                3 => event.generation = 2,
+                _ => unreachable!(),
+            }
+            poll(&mut authority, &mut facts);
+        }
+        assert!(!authority.session_terminal());
+        assert_fresh(facts.0.as_ref().unwrap(), until);
+        assert_no_authenticated_clear(&mut authority, boottime_ns());
+    }
+}
+
+#[test]
+fn auth_restore_later_exact_unlock_plans_clear_but_waits_for_model_finish() {
+    let mut facts = facts(own_locker());
+    let mut authority = authority(&mut facts);
+    let now = boottime_ns();
+    let until = now + ATTEMPT_BUDGET_NS;
+    let attempt = authority.begin_authentication_attempt(now, until).unwrap();
+    assert!(authority.arm_authentication(
+        AuthenticatedCompletion::fixture(&attempt, until),
+        boottime_ns()
+    ));
+    assert_no_authenticated_clear(&mut authority, boottime_ns());
+    assert_fresh(facts.0.as_ref().unwrap(), until);
+    unlock_facts(&mut facts, 1);
+    poll(&mut authority, &mut facts);
+    assert!(!authority.session_terminal());
+    assert_fresh(facts.0.as_ref().unwrap(), until);
+    assert_policy_retained(&mut authority);
+    let Decision::Persist(intent) = authority.plan_authenticated_clear(boottime_ns()) else {
+        panic!("later exact protocol unlock must plan a durable clear");
+    };
+    assert!(!intent.next.lock_pending);
+    assert_eq!(intent.next.receipts, ["retained-history"]);
+    assert_eq!(intent.next.grants.len(), 1);
+    assert!(intent.next.grants[0].allowed);
+    assert!(intent.until <= until);
+    assert_policy_retained(&mut authority);
+    // A second plan cannot issue another write while the first owns completion.
+    assert_no_authenticated_clear(&mut authority, boottime_ns());
+    // Model acknowledgement only: no storage child or filesystem write runs.
+    assert_eq!(authority.finish(intent, true, boottime_ns()), Reply::Ok);
+    assert!(!authority.durable.lock_pending);
+    assert_eq!(authority.durable.receipts, ["retained-history"]);
+    assert_eq!(authority.durable.grants.len(), 1);
+    assert!(authority.durable.grants[0].allowed);
+    assert!(matches!(
+        authority.snapshot(false, false),
+        Reply::Snapshot { locked: false, .. }
+    ));
+    assert!(matches!(
+        authority.plan_authenticated_clear(boottime_ns()),
+        Decision::Immediate(Reply::Denied | Reply::Unavailable)
+    ));
+}
+
+#[test]
+fn auth_restore_forced_unlock_without_event_cannot_be_repaired_by_later_event() {
+    let mut facts = facts(own_locker());
+    let mut authority = authority(&mut facts);
+    let now = boottime_ns();
+    let until = now + ATTEMPT_BUDGET_NS;
+    let attempt = authority.begin_authentication_attempt(now, until).unwrap();
+    assert!(authority.arm_authentication(
+        AuthenticatedCompletion::fixture(&attempt, until),
+        boottime_ns()
+    ));
+    unlock_facts(&mut facts, 1);
+    facts.0.as_mut().unwrap().protocol_unlock = None;
+    poll(&mut authority, &mut facts);
+    assert!(!authority.session_terminal());
+    assert_no_authenticated_clear(&mut authority, boottime_ns());
+    // Source later supplies a well-shaped event; the observed forced excursion
+    // already retired this reservation and cannot become an authenticated cause.
+    unlock_facts(&mut facts, 1);
+    poll(&mut authority, &mut facts);
+    assert_fresh(facts.0.as_ref().unwrap(), until);
+    assert_no_authenticated_clear(&mut authority, boottime_ns());
+}
+
+#[test]
+fn auth_restore_new_lock_source_loss_and_original_expiries_never_revive() {
+    for retirement in 0..4 {
+        let mut facts = facts(own_locker());
+        let mut authority = authority(&mut facts);
+        let now = boottime_ns();
+        let until = now
+            + if retirement == 3 {
+                20_000_000
+            } else {
+                ATTEMPT_BUDGET_NS
+            };
+        let attempt = authority.begin_authentication_attempt(now, until).unwrap();
+        assert!(authority.arm_authentication(
+            AuthenticatedCompletion::fixture(&attempt, until),
+            boottime_ns()
+        ));
+        match retirement {
+            0 => assert!(matches!(
+                authority.plan_lock(boottime_ns()),
+                Decision::Immediate(Reply::Ok)
+            )),
+            1 => {
+                let retained = facts.0.take().unwrap();
+                poll(&mut authority, &mut facts);
+                assert!(authority.session_terminal());
+                facts.0 = Some(retained);
+            }
+            2 | 3 => {
+                let source_until = facts.0.as_ref().unwrap().until;
+                let expires = if retirement == 2 { source_until } else { until };
+                // Bounded actual expiration; the Source budget remains 100ms.
+                std::thread::sleep(
+                    std::time::Duration::from_nanos(expires.saturating_sub(boottime_ns()))
+                        + std::time::Duration::from_millis(2),
+                );
+                assert!(boottime_ns() >= expires);
+                if retirement == 3 {
+                    assert!(
+                        boottime_ns() < source_until,
+                        "Source expired before attempt control"
+                    );
+                }
+                assert_no_authenticated_clear(&mut authority, boottime_ns());
+            }
+            _ => unreachable!(),
+        }
+        // A later fresh sample keeps the same Source and exact historical
+        // generation; it cannot renew the retired reservation/deadline/epoch.
+        unlock_facts(&mut facts, 1);
+        poll(&mut authority, &mut facts);
+        assert_no_authenticated_clear(&mut authority, boottime_ns());
+    }
+}
+
+#[test]
+fn auth_restore_old_completion_cannot_arm_an_absent_or_successor_attempt() {
+    let mut facts = facts(own_locker());
+    let mut authority = authority(&mut facts);
+    let now = boottime_ns();
+    let until = now + ATTEMPT_BUDGET_NS;
+    let old = authority.begin_authentication_attempt(now, until).unwrap();
+    let absent = AuthenticatedCompletion::fixture(&old, until);
+    let replay = AuthenticatedCompletion::fixture(&old, until);
+    assert!(
+        authority.release_closed_authentication(ClosedAuthenticationAttempt::fixture(&old, until))
+    );
+    assert!(!authority.arm_authentication(absent, boottime_ns()));
+    let now = boottime_ns();
+    let next_until = now + ATTEMPT_BUDGET_NS;
+    let fresh = authority
+        .begin_authentication_attempt(now, next_until)
+        .unwrap();
+    assert!(!authority.arm_authentication(replay, boottime_ns()));
+    assert!(authority.current_authentication_attempt(&fresh, boottime_ns()));
+    assert!(authority.arm_authentication(
+        AuthenticatedCompletion::fixture(&fresh, next_until),
+        boottime_ns()
+    ));
+    assert_fresh(facts.0.as_ref().unwrap(), next_until);
+    assert_no_authenticated_clear(&mut authority, boottime_ns());
+}
+
+#[test]
+fn auth_restore_new_lock_during_clear_refuses_ack_and_keeps_synced_bytes_truthful() {
+    let mut facts = facts(own_locker());
+    let mut authority = authority(&mut facts);
+    let now = boottime_ns();
+    let until = now + ATTEMPT_BUDGET_NS;
+    let attempt = authority.begin_authentication_attempt(now, until).unwrap();
+    assert!(authority.arm_authentication(
+        AuthenticatedCompletion::fixture(&attempt, until),
+        boottime_ns()
+    ));
+    unlock_facts(&mut facts, 1);
+    poll(&mut authority, &mut facts);
+    let Decision::Persist(clear) = authority.plan_authenticated_clear(boottime_ns()) else {
+        panic!("exact later event must own a clear");
+    };
+    // Cached durable true cannot acknowledge a new lock while this owned clear
+    // may already have synced false bytes. This models a known completion only.
+    assert!(matches!(
+        authority.plan_lock(boottime_ns()),
+        Decision::Immediate(Reply::Unavailable)
+    ));
+    assert_eq!(
+        authority.finish(clear, true, boottime_ns()),
+        Reply::Unavailable
+    );
+    assert!(
+        !authority.durable.lock_pending,
+        "retain the known false commit truthfully"
+    );
+    assert!(
+        authority.ready(),
+        "known superseded commit must permit the newer true write"
+    );
+    assert!(matches!(
+        authority.snapshot(false, false),
+        Reply::Snapshot { locked: true, .. }
+    ));
+    assert_eq!(authority.durable.receipts, ["retained-history"]);
+    assert_eq!(authority.durable.grants.len(), 1);
+    assert!(authority.durable.grants[0].allowed);
+}
+
+#[test]
+fn auth_restore_source_expiry_after_clear_submission_never_publishes_unlock() {
+    let mut facts = facts(own_locker());
+    let mut authority = authority(&mut facts);
+    let now = boottime_ns();
+    let until = now + ATTEMPT_BUDGET_NS;
+    let attempt = authority.begin_authentication_attempt(now, until).unwrap();
+    assert!(authority.arm_authentication(
+        AuthenticatedCompletion::fixture(&attempt, until),
+        boottime_ns()
+    ));
+    unlock_facts(&mut facts, 1);
+    poll(&mut authority, &mut facts);
+    let Decision::Persist(clear) = authority.plan_authenticated_clear(boottime_ns()) else {
+        panic!("clear missing")
+    };
+    let expires = facts.0.as_ref().unwrap().until;
+    std::thread::sleep(
+        std::time::Duration::from_nanos(expires.saturating_sub(boottime_ns()))
+            + std::time::Duration::from_millis(2),
+    );
+    assert_eq!(
+        authority.finish(clear, true, boottime_ns()),
+        Reply::Unavailable
+    );
+    assert!(!authority.durable.lock_pending);
+    assert!(authority.is_degraded());
+    assert!(matches!(
+        authority.snapshot(false, false),
+        Reply::Snapshot { locked: true, .. }
+    ));
+    unlock_facts(&mut facts, 1);
+    poll(&mut authority, &mut facts);
+    assert!(matches!(
+        authority.plan_authenticated_clear(boottime_ns()),
+        Decision::Immediate(Reply::Denied | Reply::Unavailable)
+    ));
+    assert_eq!(authority.durable.receipts, ["retained-history"]);
+}
+
+#[test]
+fn auth_restore_required_true_is_owned_once_under_first_new_lock_deadline() {
+    let mut facts = facts(own_locker());
+    let mut authority = authority(&mut facts);
+    let now = boottime_ns();
+    let until = now + ATTEMPT_BUDGET_NS;
+    let attempt = authority.begin_authentication_attempt(now, until).unwrap();
+    assert!(authority.arm_authentication(
+        AuthenticatedCompletion::fixture(&attempt, until),
+        boottime_ns()
+    ));
+    unlock_facts(&mut facts, 1);
+    poll(&mut authority, &mut facts);
+    let Decision::Persist(clear) = authority.plan_authenticated_clear(boottime_ns()) else {
+        panic!("clear missing")
+    };
+    let first_lock = boottime_ns();
+    assert!(matches!(
+        authority.plan_lock(first_lock),
+        Decision::Immediate(Reply::Unavailable)
+    ));
+    assert!(
+        authority.take_required_lock_write(boottime_ns()).is_none(),
+        "clear still owns completion"
+    );
+    assert_eq!(
+        authority.finish(clear, true, boottime_ns()),
+        Reply::Unavailable
+    );
+    assert!(authority.ready());
+    assert!(matches!(
+        authority.plan_lock(boottime_ns()),
+        Decision::Immediate(Reply::Unavailable)
+    ));
+    let pending = authority
+        .take_required_lock_write(boottime_ns())
+        .expect("newer true must replace known false");
+    assert!(pending.next.lock_pending);
+    assert!(
+        pending.until <= first_lock + 1_000_000_000,
+        "later admission cannot renew first unresolved lock deadline"
+    );
+    assert_eq!(pending.next.receipts, ["retained-history"]);
+    assert_eq!(pending.next.grants.len(), 1);
+    assert!(pending.next.grants[0].allowed);
+    assert!(
+        authority.take_required_lock_write(boottime_ns()).is_none(),
+        "never duplicate owned write"
+    );
+    assert_eq!(authority.finish(pending, true, boottime_ns()), Reply::Ok);
+    assert_policy_retained(&mut authority);
+    assert!(authority.take_required_lock_write(boottime_ns()).is_none());
+    assert!(matches!(
+        authority.plan_lock(boottime_ns()),
+        Decision::Immediate(Reply::Ok)
+    ));
+}
+
+fn assert_actual_completion_deadline(required_true: bool) {
+    let mut facts = facts(own_locker());
+    let mut authority = authority(&mut facts);
+    let now = boottime_ns();
+    let until = now + ATTEMPT_BUDGET_NS;
+    let attempt = authority.begin_authentication_attempt(now, until).unwrap();
+    assert!(authority.arm_authentication(
+        AuthenticatedCompletion::fixture(&attempt, until),
+        boottime_ns()
+    ));
+    unlock_facts(&mut facts, 1);
+    poll(&mut authority, &mut facts);
+    let Decision::Persist(mut intent) = authority.plan_authenticated_clear(boottime_ns()) else {
+        panic!("clear missing")
+    };
+    if required_true {
+        assert!(matches!(
+            authority.plan_lock(boottime_ns()),
+            Decision::Immediate(Reply::Unavailable)
+        ));
+        assert_eq!(
+            authority.finish(intent, true, boottime_ns()),
+            Reply::Unavailable
+        );
+        intent = authority.take_required_lock_write(boottime_ns()).unwrap();
+    }
+    // Shorten only this modeled IO deadline, never the Source or attempt lease.
+    // A queued callback's stale time cannot resurrect an elapsed BOOTTIME budget.
+    let callback_sample = boottime_ns();
+    intent.until = callback_sample + 20_000_000;
+    std::thread::sleep(std::time::Duration::from_millis(22));
+    assert!(boottime_ns() >= intent.until);
+    assert_fresh(facts.0.as_ref().unwrap(), until);
+    assert_eq!(
+        authority.finish(intent, true, callback_sample),
+        Reply::Unavailable
+    );
+    assert!(authority.is_degraded());
+    assert!(matches!(
+        authority.snapshot(false, false),
+        Reply::Snapshot { locked: true, .. }
+    ));
+    assert_eq!(authority.durable.lock_pending, required_true);
+    assert_eq!(authority.durable.receipts, ["retained-history"]);
+}
+
+#[test]
+fn auth_restore_synced_completion_checks_actual_clear_deadline() {
+    assert_actual_completion_deadline(false);
+}
+
+#[test]
+fn auth_restore_synced_completion_checks_actual_required_true_deadline() {
+    assert_actual_completion_deadline(true);
 }

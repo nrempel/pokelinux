@@ -357,6 +357,11 @@ impl Worker {
     pub(crate) fn occupied(&self) -> bool {
         self.child.is_some()
     }
+    /// Monotonic admission identity, including a write that has already finished.
+    /// Queued acknowledgements must retain the identity at their own admission.
+    pub(crate) fn admission_sequence(&self) -> u64 {
+        self.sequence
+    }
     pub(crate) fn busy(&self) -> bool {
         self.pending.is_some()
     }

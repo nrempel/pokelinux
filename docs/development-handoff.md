@@ -18,7 +18,24 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
-Current production source `90ced3a` now runs all 40 lifecycle library tests and
+The downstream restoration milestone now passes53 default host tests, with2
+explicitly ignored root integrations selected separately and passing. A private
+cfgtest authenticated-and-closed completion atomically retains Armed context;
+only its later exact Source event requests a real sole-worker synced clear.
+The same UID11010 app stays denied before/after arm and reads the authored history
+packet only after completion. A held post-sync false clear remains denied and
+Snapshot-responsive; an actual UID1000 new lock refuses ACK, the same retained
+worker writes true, and a clean same-policy restart denies the fresh app.
+The first new lock's storage budget is not renewed. Queued lock success retains
+storage admission identity, including a complete intervening write. Separate
+actual service and Worker/socket REDs, authority ordering/clock REDs and zero-body
+compile/format prerequisites are preserved. Strict checks and AArch64 compilation
+pass. No new ARM execution is inferred. Authentication/Source/history inputs are
+models; there is no production success constructor or ingress, real history/Qt
+unlock tracer, whole-owner auth composition or phone proof. See
+[restoration](native-session-restoration.md) and its bounded provenance.
+
+The preceding production source `90ced3a` now runs all 40 lifecycle library tests and
 both planning socket cases under the actual generic Arch ARM kernel. The combined
 run is failed: the later queued fixture sees stopped syscall-1 without nfds and
 refuses setup before sending either test packet. A source-supported ARM64 signal
@@ -40,8 +57,9 @@ is retained. [Queued report](native-lock-queued-storage.md).
 The older planning code `1106ab2` separately passes two actual Arch ARM cases,
 with normal fixture/actor/QEMU/CLI/container waits and unchanged read-only image;
 no later queued-repair ARM runtime is inferred. No send EAGAIN or complete
-intervening write is induced. Atomic arming and real authentication/clear/normal
-Messages reopening remain open, with no phone accessed.
+intervening write is induced. Those earlier controls do not qualify arming or clear. The newer downstream
+selection above still leaves genuine authentication and normal Messages reopening
+open, with no phone accessed.
 
 The actual headless lifecycle lock socket now refuses a cached successful ACK
 if an actor/storage operation remains unresolved at planning time. A genuine production-daemon
@@ -54,8 +72,9 @@ separate from execution. A pre-start empty-CID runner failure is preserved with
 its missing CLI wait explicitly unqualified. See [storage barrier](native-lock-storage-barrier.md).
 That earlier source still allowed idle queued success after another write began;
 the later publication guard above qualifies its own separate regression. It implements
-no authentication result or clear. Atomic arming, exact unlock
-and serialized synced clear/new-lock handling remain open; no phone was accessed.
+no authentication result or clear. Those earlier tests qualify no authenticated clear. The newer private
+restoration selection above remains separate from genuine authentication; no
+phone was accessed.
 
 The safe Rust native authentication scope now passes two actual Arch ARM
 synthetic controls after a preserved wait-scope defect and detached-descendant
@@ -1011,16 +1030,16 @@ See `native-session-freshness-chain.md` and its publication provenance.
 
 ## Next work
 
-Prioritize the existing Messages lock→restore tracer. Implement one coherent
-private atomic completion→armed context→later exact-object unlock→versioned synced
-clear through the real actor/storage path. Keep the authentication source test-only
-and production construction/ingress absent until actual whole-owner completion
-provenance is independently qualified. New lock during clear must retain denial
-and win on disk/restart; stale Source cannot restore reads. Do not substitute more
-local models or ARM harness passes for genuine authentication. Actual whole-owner
-composition remains unqualified. Keep the queued ARM setup failure separate rather than
-relaxing its predicate. Then finish real authentication binding and normal Messages
-reopening before broadening the smartphone matrix.
+Continue the existing Messages lock→restore tracer from the qualified downstream
+actor/storage path. Add actual service negative coverage for stale/forced Source,
+late completion and uncertain clear Stop/restart; the present negative lifetime
+checks are authority models. Compose real retained Messages history and the normal
+installed app. Keep authentication construction/ingress test-only until genuine
+whole-owner completion provenance and trusted locker handoff are independently
+qualified. Do not substitute models or ARM harness passes for authentication.
+Preserve the queued ARM setup failure without relaxing its predicate. Complete
+real authentication binding and normal Messages reopening before broadening the
+smartphone matrix.
 
 1. Continue the qualified synthetic incoming Messages path with raw retention/capacity
    and cold backlog availability. Held-read cancellation now preserves shared

@@ -54,6 +54,11 @@ struct Permit {
 pub(crate) enum Gate {
     Grant,
     Lock,
+    RequiredLock,
+    Restore {
+        attempt: u64,
+        lock_epoch: u64,
+    },
     Admit {
         app: String,
         generation: u64,
@@ -101,6 +106,32 @@ impl ClosedAuthenticationAttempt {
         }
     }
 }
+/// Sealed authenticated-and-closed result. No production constructor or ingress
+/// exists until the real whole-owner authentication boundary is qualified.
+#[allow(dead_code)]
+pub(crate) struct AuthenticatedCompletion {
+    closed: ClosedAuthenticationAttempt,
+}
+#[cfg(test)]
+impl AuthenticatedCompletion {
+    /// Authored authentication/closure facts only; no PAM or cleanup evidence.
+    pub(crate) fn fixture(attempt: &AuthenticationAttempt, until: u64) -> Self {
+        Self {
+            closed: ClosedAuthenticationAttempt::fixture(attempt, until),
+        }
+    }
+}
+#[derive(PartialEq)]
+enum RestorationPhase {
+    Armed,
+    Clearing,
+}
+struct RestorationSlot {
+    context: AuthenticationSlot,
+    armed_at: u64,
+    after_sequence: u64,
+    phase: RestorationPhase,
+}
 struct AuthenticationSlot {
     id: u64,
     source: String,
@@ -134,6 +165,8 @@ pub struct Authority {
     lock_admission_epoch: u64,
     authentication_sequence: u64,
     authentication: Option<AuthenticationSlot>,
+    restoration: Option<RestorationSlot>,
+    required_lock: Option<(u64, bool)>,
 }
 impl Authority {
     pub(crate) fn loading(profiles: Vec<AppProfile>) -> io::Result<Self> {
@@ -161,6 +194,8 @@ impl Authority {
             lock_admission_epoch: 0,
             authentication_sequence: 0,
             authentication: None,
+            restoration: None,
+            required_lock: None,
         })
     }
     pub(crate) fn require_session(&mut self) -> io::Result<()> {
@@ -178,6 +213,18 @@ impl Authority {
         })
     }
     fn retire_authentication_attempt(&mut self) {
+        if self
+            .restoration
+            .as_ref()
+            .is_some_and(|r| r.phase == RestorationPhase::Armed)
+        {
+            // Authentication already proved closure. No physical owner remains;
+            // dropping this retired result never creates a new result or lease.
+            self.restoration = None;
+        } else if let Some(restoration) = &mut self.restoration {
+            // A submitted write stays owned until its actual completion.
+            restoration.context.retired = true;
+        }
         if let Some(attempt) = &mut self.authentication {
             // Retirement is sticky and never supplies proof of broker closure.
             // Keep the slot and locker until the separate matched closure path.
@@ -225,10 +272,14 @@ impl Authority {
             && crate::boottime_ns() < sample.until
     }
     fn refresh_authentication_lifetime(&mut self, now: u64) {
-        if self.authentication.is_none() {
-            return;
-        }
         let now = now.max(crate::boottime_ns());
+        if self.restoration.as_ref().is_some_and(|restoration| {
+            self.session
+                .as_ref()
+                .is_none_or(|sample| !self.restoration_context_current(restoration, sample, now))
+        }) {
+            self.retire_authentication_attempt();
+        }
         if self.authentication.as_ref().is_some_and(|attempt| {
             self.session
                 .as_ref()
@@ -246,7 +297,11 @@ impl Authority {
         now: u64,
         until: u64,
     ) -> Result<AuthenticationAttempt, Reply> {
-        if !self.ready() || self.authentication.is_some() {
+        if !self.ready()
+            || self.authentication.is_some()
+            || self.restoration.is_some()
+            || self.required_lock.is_some()
+        {
             return Err(Reply::Unavailable);
         }
         let actual_now = crate::boottime_ns();
@@ -331,6 +386,129 @@ impl Authority {
         self.authentication
             .as_ref()
             .is_some_and(|slot| !slot.retired)
+    }
+    fn restoration_context_current(
+        &self,
+        restoration: &RestorationSlot,
+        sample: &crate::session::Snapshot,
+        now: u64,
+    ) -> bool {
+        let attempt = &restoration.context;
+        self.ready()
+            && self.session_required
+            && !self.suspended
+            && self.locked
+            && self.root_lock_intent
+            && self.durable.lock_pending
+            && !self.session_failed
+            && !attempt.retired
+            && self.lock_admission_epoch == attempt.lock_epoch
+            && now < attempt.until
+            && sample.sampled_at_ns > self.reconcile_after
+            && now < sample.until
+            && sample.source == attempt.source
+            && if sample.locked {
+                sample.lock_generation == Some(attempt.generation)
+                    && sample.protocol_unlock.is_none()
+                    && sample.locker.as_ref().is_some_and(|locker| {
+                        // Historical retained identity permits the exact protocol
+                        // event to arrive after locker exit. Death is no event.
+                        attempt.locker.same_reference(locker)
+                            || self
+                                .session_view
+                                .as_ref()
+                                .is_some_and(|view| attempt.locker.equivalent(locker, view))
+                    })
+            } else {
+                Self::restoration_event_matches(restoration, sample)
+            }
+            && crate::boottime_ns() < attempt.until
+            && crate::boottime_ns() < sample.until
+    }
+    fn restoration_event_matches(
+        restoration: &RestorationSlot,
+        sample: &crate::session::Snapshot,
+    ) -> bool {
+        !sample.locked
+            && sample.protocol_unlock.as_ref().is_some_and(|event| {
+                event.generation == restoration.context.generation
+                    && event.sequence > restoration.after_sequence
+                    && event.observed_at_ns > restoration.armed_at
+            })
+    }
+    /// Consume the exact closed authenticated result and retain its original
+    /// context atomically. Capacity release is deliberately a separate type.
+    #[allow(dead_code)] // No qualified production producer or actor ingress yet.
+    pub(crate) fn arm_authentication(
+        &mut self,
+        completion: AuthenticatedCompletion,
+        now: u64,
+    ) -> bool {
+        let closed = completion.closed;
+        if closed.actor != self.incarnation
+            || self
+                .authentication
+                .as_ref()
+                .is_none_or(|slot| slot.id != closed.id || slot.until != closed.until)
+        {
+            return false;
+        }
+        self.refresh_authentication_lifetime(now);
+        let actual_now = crate::boottime_ns();
+        let accepted = now <= actual_now
+            && self.authentication.as_ref().is_some_and(|attempt| {
+                self.session.as_ref().is_some_and(|sample| {
+                    self.authentication_context_current(attempt, sample, actual_now)
+                })
+            });
+        // The matched completion owns whole-owner closure even when its authority
+        // expired. No release-then-relookup can lose the accepted context.
+        let context = self.authentication.take().unwrap();
+        if !accepted {
+            return false;
+        }
+        let sample = self.session.as_ref().unwrap();
+        let armed_at = crate::boottime_ns();
+        if armed_at >= context.until || armed_at >= sample.until {
+            return false;
+        }
+        self.restoration = Some(RestorationSlot {
+            context,
+            armed_at,
+            after_sequence: sample.sequence,
+            phase: RestorationPhase::Armed,
+        });
+        true
+    }
+    pub(crate) fn plan_authenticated_clear(&mut self, now: u64) -> Decision {
+        self.refresh_authentication_lifetime(now);
+        let Some(restoration) = self.restoration.as_mut() else {
+            return Decision::Immediate(Reply::Denied);
+        };
+        if restoration.phase != RestorationPhase::Armed
+            || !self
+                .session
+                .as_ref()
+                .is_some_and(|sample| Self::restoration_event_matches(restoration, sample))
+        {
+            return Decision::Immediate(Reply::Denied);
+        }
+        restoration.phase = RestorationPhase::Clearing;
+        let mut next = self.durable.clone();
+        next.lock_pending = false;
+        Decision::Persist(WriteIntent {
+            next,
+            until: restoration
+                .context
+                .until
+                .min(now.saturating_add(1_000_000_000)),
+            policy: self.policy,
+            lifecycle: self.lifecycle,
+            gate: Gate::Restore {
+                attempt: restoration.context.id,
+                lock_epoch: restoration.context.lock_epoch,
+            },
+        })
     }
     fn matches_focus(&self, p: &Principal, focus: &crate::session::OwnedFocus) -> bool {
         let metadata = &focus.metadata;
@@ -460,6 +638,11 @@ impl Authority {
         }) {
             self.retire_authentication_attempt();
         }
+        if self.restoration.as_ref().is_some_and(|restoration| {
+            !self.restoration_context_current(restoration, &s, now.max(crate::boottime_ns()))
+        }) {
+            self.retire_authentication_attempt();
+        }
         let locked = self.root_lock_intent || s.locked;
         let selected = if !locked {
             s.focus.as_ref().and_then(|focus| {
@@ -497,6 +680,10 @@ impl Authority {
         self.ready = true;
     }
     pub(crate) fn plan_lock(&mut self, now: u64) -> Decision {
+        let clearing = self
+            .restoration
+            .as_ref()
+            .is_some_and(|r| r.phase == RestorationPhase::Clearing);
         // Revoke current authority before considering owned storage capacity.
         // Refusal/uncertainty still denies; no successful ACK precedes a sync.
         if self.lifecycle(Some(true), None, None).is_err() || !self.ready() {
@@ -509,6 +696,13 @@ impl Authority {
                 return Decision::Immediate(Reply::Unavailable);
             }
         };
+        if clearing || self.required_lock.is_some() {
+            // The first unresolved new lock owns its own bounded storage budget.
+            // Further lock requests cannot extend it or acknowledge cached true.
+            self.required_lock
+                .get_or_insert((now.saturating_add(1_000_000_000), false));
+            return Decision::Immediate(Reply::Unavailable);
+        }
         if self.durable.lock_pending {
             return Decision::Immediate(Reply::Ok);
         }
@@ -520,6 +714,32 @@ impl Authority {
             policy: self.policy,
             lifecycle: self.lifecycle,
             gate: Gate::Lock,
+        })
+    }
+    pub(crate) fn required_lock_write_pending(&self) -> bool {
+        self.required_lock.is_some()
+    }
+    pub(crate) fn take_required_lock_write(&mut self, now: u64) -> Option<WriteIntent> {
+        if !self.ready() || self.restoration.is_some() {
+            return None;
+        }
+        let (until, dispatched) = self.required_lock?;
+        if dispatched {
+            return None;
+        }
+        if now >= until || crate::boottime_ns() >= until {
+            self.invalidate();
+            return None;
+        }
+        self.required_lock = Some((until, true));
+        let mut next = self.durable.clone();
+        next.lock_pending = true;
+        Some(WriteIntent {
+            next,
+            until,
+            policy: self.policy,
+            lifecycle: self.lifecycle,
+            gate: Gate::RequiredLock,
         })
     }
     pub(crate) fn invalidate(&mut self) {
@@ -960,14 +1180,61 @@ impl Authority {
             self.invalidate();
             return Reply::Unavailable;
         }
+        if let Gate::Restore {
+            attempt,
+            lock_epoch,
+        } = intent.gate
+        {
+            self.refresh_authentication_lifetime(now);
+            let current = now < intent.until
+                && self.policy == intent.policy
+                && self.restoration.as_ref().is_some_and(|restoration| {
+                    restoration.phase == RestorationPhase::Clearing
+                        && restoration.context.id == attempt
+                        && restoration.context.lock_epoch == lock_epoch
+                        && self.session.as_ref().is_some_and(|sample| {
+                            self.restoration_context_current(restoration, sample, now)
+                                && Self::restoration_event_matches(restoration, sample)
+                        })
+                })
+                && crate::boottime_ns() < intent.until;
+            // Never pretend a synced false replacement was still true merely
+            // because current publication was refused after the write.
+            self.durable = intent.next;
+            self.restoration = None;
+            if !current {
+                if self.required_lock.is_none()
+                    || !self.ready()
+                    || now >= intent.until
+                    || crate::boottime_ns() >= intent.until
+                {
+                    self.invalidate();
+                }
+                return Reply::Unavailable;
+            }
+            self.root_lock_intent = false;
+            if self
+                .observe_session(self.session.as_ref().unwrap().clone(), now)
+                .is_err()
+                || self.session_terminal()
+                || self.locked
+            {
+                self.invalidate();
+                return Reply::Unavailable;
+            }
+            return Reply::Ok;
+        }
         // A known durable commit is retained as history, even when current publication fails.
         self.durable = intent.next;
-        if matches!(intent.gate, Gate::Lock) {
+        if matches!(intent.gate, Gate::Lock | Gate::RequiredLock) {
+            if matches!(intent.gate, Gate::RequiredLock) {
+                self.required_lock = None;
+            }
             // Source focus/background revisions may advance during the sync.
             // They cannot weaken this monotonic lock; no effect stamp is issued.
             self.root_lock_intent = true;
             self.locked = true;
-            if self.ready() && now < intent.until {
+            if self.ready() && now < intent.until && crate::boottime_ns() < intent.until {
                 return Reply::Ok;
             }
             self.invalidate();
@@ -982,7 +1249,9 @@ impl Authority {
             return Reply::Unavailable;
         }
         match intent.gate {
-            Gate::Lock => unreachable!("monotonic lock completion handled above"),
+            Gate::Lock | Gate::RequiredLock | Gate::Restore { .. } => {
+                unreachable!("lock completion handled above")
+            }
             Gate::Grant => Reply::Ok,
             Gate::Admit {
                 app,
