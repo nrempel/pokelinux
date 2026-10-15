@@ -1,14 +1,28 @@
 # Native radio session owner
 
+The [native Data/kernel owner](native-cellular-data-owner.md) now passes one
+fixed actual ARM Binder/kernel RED→GREEN. Real callbacks with serials714 and713
+reach the retained callback inbox and production reducer; the wrong
+serial leaves history empty, and matching success settles provider-reported
+history once. A fresh observation joins its numeric local addresses to a
+continuously witnessed kernel link lifetime. Actual sole-TUN-FD closure and
+independent absence withdraw the current association while accepted history
+survives subsequent empty-list and endpoint-death observations. All42 child
+waits/EOF and source/container closure qualify. This is controlled fixture
+association, without proof the provider owns/created the link or APN readiness.
+Ordinary queued poll dispatch, independent positive-state list/death withdrawal,
+durable dispatch, permissions, installed service/worker lifecycle and matched
+Pixel/carrier behavior remain open.
+
 The [public Data V3 ABI](native-cellular-data-abi.md) now composes generated Rust
 bindings, a dedicated Rust fixture manager and an independently generated NDK
 C++ peer through actual ARM kernel Binder. One setup preserves all10 arguments,
 21 profile fields and18 result fields; held/wrong-serial/right-serial callbacks,
 populated/empty lists and actual endpoint death pass with eight child waits/EOF
 and complete input/container closure. This is an ABI prerequisite: wrong serial
-is copied, not owner-correlated. Kernel association, native Data ownership,
-APN acquisition, production slot/subscription mapping, permissions/lifecycle and
-matched Pixel/carrier behavior remain open.
+is copied, not owner-correlated in that ABI run. The later owner qualification
+above is separate; production APN acquisition, slot/subscription mapping,
+permissions/lifecycle and matched Pixel/carrier behavior remain open.
 
 The [typed add-PDN transport tracer](native-radio-add-pdn.md) now composes the
 original-qualified encoder, current-session native owner and actual ARM Binder.

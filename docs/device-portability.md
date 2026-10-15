@@ -46,6 +46,13 @@ a mapping between production Data instances, Android subscriptions and recovered
 radioExternal slot values from that exchange. Per-device discovery, permissions,
 actual endpoint version/hash and carrier policy still need backend qualification.
 
+The [Data/kernel owner](native-cellular-data-owner.md) additionally joins a
+controlled provider report to numeric local addresses and a continuously
+witnessed link lifetime. This is local to its retained endpoint and observer;
+namespace/ifindex/lifetime values are not durable global identities. Matching
+a fixture name/address does not establish that a production provider owns or
+created that link, and adds no qualified phone model.
+
 Design the device-neutral service contract from user-visible behavior and real
 backend evidence. Do not prebuild speculative adapters or a universal protocol.
 Multiple hardware backends implement the one current contract; this is not

@@ -1,0 +1,637 @@
+{
+  "schema": 1,
+  "date_utc": "2026-10-15",
+  "host": "Harbour",
+  "scope": "Actual generic ARM real Binder callback to production reducer and retained-observer kernel join/sole-FD-loss withdrawal; no APN/production authority",
+  "qualified_RED_before_library_repair": true,
+  "qualified_GREEN": true,
+  "actual_kernel": {
+    "machine": "aarch64",
+    "release": "7.1.6-1-aarch64-ARCH",
+    "version": "#1 SMP PREEMPT_DYNAMIC Wed Aug  5 00:20:13 UTC 2026"
+  },
+  "hardware_qualified": false,
+  "phone_accessed": false,
+  "owner_source_files": [
+    {
+      "path": "native-cellular-owner/Cargo.lock",
+      "sha256": "0e49478d87cf370d96829853d48d6a4f4d74b7edddbd3942c3864f36c21aa789"
+    },
+    {
+      "path": "native-cellular-owner/Cargo.toml",
+      "sha256": "43942af566b16b13975f7165eec8aad5edd4305027c37c969824477c62347cbb"
+    },
+    {
+      "path": "native-cellular-owner/src/bounded.rs",
+      "sha256": "d9b805ea1aec531a10ae66d20d39f22661d846d9a204c22b9c4d4e5dd123d3f6"
+    },
+    {
+      "path": "native-cellular-owner/src/callbacks.rs",
+      "sha256": "a5305153c8b65971c5c52842ede757f87adb1d5ac7c119cd6d24286071b2563d"
+    },
+    {
+      "path": "native-cellular-owner/src/fixture.rs",
+      "sha256": "9b841956b954aee6e4df7c1e8860aae17866d6a055a22af57e6889ccef534886"
+    },
+    {
+      "path": "native-cellular-owner/src/kernel_tests.rs",
+      "sha256": "097967cd01bccb183a04cb288e39d0c417ff15ddc3770788fd4d8ac4fb6156e8"
+    },
+    {
+      "path": "native-cellular-owner/src/lib.rs",
+      "sha256": "ba138775fed0fdfd8683393db4c923eb99090546732dc52be9394b1786d45f99"
+    }
+  ],
+  "baseline_owner_source_files": [
+    {
+      "path": "native-cellular-owner/Cargo.lock",
+      "sha256": "0e49478d87cf370d96829853d48d6a4f4d74b7edddbd3942c3864f36c21aa789"
+    },
+    {
+      "path": "native-cellular-owner/Cargo.toml",
+      "sha256": "43942af566b16b13975f7165eec8aad5edd4305027c37c969824477c62347cbb"
+    },
+    {
+      "path": "native-cellular-owner/src/bounded.rs",
+      "sha256": "d9b805ea1aec531a10ae66d20d39f22661d846d9a204c22b9c4d4e5dd123d3f6"
+    },
+    {
+      "path": "native-cellular-owner/src/callbacks.rs",
+      "sha256": "a5305153c8b65971c5c52842ede757f87adb1d5ac7c119cd6d24286071b2563d"
+    },
+    {
+      "path": "native-cellular-owner/src/fixture.rs",
+      "sha256": "9b841956b954aee6e4df7c1e8860aae17866d6a055a22af57e6889ccef534886"
+    },
+    {
+      "path": "native-cellular-owner/src/kernel_tests.rs",
+      "sha256": "097967cd01bccb183a04cb288e39d0c417ff15ddc3770788fd4d8ac4fb6156e8"
+    },
+    {
+      "path": "native-cellular-owner/src/lib.rs",
+      "sha256": "e7624a4d99240fec90213db0b239ea2193f8c9f2e724fd68663d20c874c2916e"
+    }
+  ],
+  "reused_dependency_source_files": [
+    {
+      "path": "native-cellular-boundary/Cargo.lock",
+      "sha256": "c7d21afabf6ed8a7bfc58cecd660a9354be32ddc4b83bbb30b2854a7fd5e4ee2"
+    },
+    {
+      "path": "native-cellular-boundary/Cargo.toml",
+      "sha256": "2d4a36dc820188595bc9dd8ca208a4ba7c65c3d0d6e2b54780007b542aefe192"
+    },
+    {
+      "path": "native-cellular-boundary/NOTICE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "native-cellular-boundary/SOURCE.json",
+      "sha256": "3cd888f1594e269c4838f50599a9b5d0168593ff65c7d0745bd250d36802b4b8"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/AccessNetwork.aidl",
+      "sha256": "ad2d5b7916a58d9cb32455c4277faf198a80a60bee2180b836caccdd0c42d30f"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/RadioAccessFamily.aidl",
+      "sha256": "15b8f633c16cf646e1cd68ae8ec8a40291a3033528427ff163aa5d1aeed5dbfd"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/RadioConst.aidl",
+      "sha256": "a6d98b4d5e54541396a6e732e18addb2b7d53e3d4b7c35ee2c88255b8cd4ba99"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/RadioError.aidl",
+      "sha256": "c673d85a79b4fec27125f55459ff8a2ff9a4f412e999c30c7f2626a1661dbc54"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/RadioIndicationType.aidl",
+      "sha256": "f299dc43c5f4997212765fe1bf9bc60e9b28fa26f2718b03affa279224ff9f5b"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/RadioResponseInfo.aidl",
+      "sha256": "fa9d5ccc53e9aa238fd3025680b5629d981352c1f5b6a5f09d65f3570a2ed201"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/RadioResponseInfoModem.aidl",
+      "sha256": "b88e4a8a2bd00fe578f96844e3ecda4589950260481712e78ac51541f8c00efd"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/RadioResponseType.aidl",
+      "sha256": "90ed071d9035b93e3fe240f03376774d310372c4813dec7a5080e7a1a24db567"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/RadioTechnology.aidl",
+      "sha256": "af985a167e7d37012f1b7e4c83fb321105e9102688ee058d67928ac0f3e70718"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/RadioTechnologyFamily.aidl",
+      "sha256": "820775a3c0bbf7058f4ad691b8d880212326146d48a80ff3c0450af339ea6012"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/ApnAuthType.aidl",
+      "sha256": "d388759a5821f704c1a7889b8053c783af6e9d194ebdfb6fc3ea644e9e77a8a2"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/ApnTypes.aidl",
+      "sha256": "12def93c9bc05db91789b1fc4565999a9c1d018764d7811d823da000cf589ae7"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/DataCallFailCause.aidl",
+      "sha256": "ab297a4e882c9d90d724202898cb8abafbb794a854976e19ebedf2a1c5c5cf02"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/DataProfileInfo.aidl",
+      "sha256": "7ae0587c73cb359eb7e9b0cd4cfe8274e03f9c614087288e78cd49007d5e8195"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/DataRequestReason.aidl",
+      "sha256": "b1f1d20eac5a3d87c4256bd1d32d79c3fd050aca70bc7caac454ac860e079bb7"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/DataThrottlingAction.aidl",
+      "sha256": "ee5b8c9173c6839c3841da86312d1d6a86eeb89d1a9956d0d2a5e803b82e66e3"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/EpsQos.aidl",
+      "sha256": "cda4326f5891880fc5207083d9961bf1f2b9edf3c3ce8a6d6cdeaf23dbbc3bc5"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/IRadioData.aidl",
+      "sha256": "267fdffc72fbf710f447a4178eeeae5e0c3e6003c4dcb9743a2dd75b9063d432"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/IRadioDataIndication.aidl",
+      "sha256": "bcd95a4f698dfd867491670c1f06ac9c15d1d302ce036845f2b6c8860fe220e6"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/IRadioDataResponse.aidl",
+      "sha256": "43b02f2705038851de201393eb831d213ab035364966534fe06ebf460dd91f20"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/KeepaliveRequest.aidl",
+      "sha256": "e03dfe1e5d4e809c02958bdd78aedb9629e30c7fff28532efb282896110154b4"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/KeepaliveStatus.aidl",
+      "sha256": "6b81eb59b7a33562bb47e34224709f20d3b5d66b2ee39b3fdc1011881faef9d6"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/LinkAddress.aidl",
+      "sha256": "12adfa556bbad7e872fd3b86e14cac2bc1f752a1d56e99970b8060fd5773655d"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/NrQos.aidl",
+      "sha256": "92f6a969a5e0c54891de177d6fb226c307c1e6b46a36d1a72542ec14de934699"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/OsAppId.aidl",
+      "sha256": "3212f20cb7900bb46f06e444eb353c1be16501b95e0931467579d7301ca7e5e0"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/PcoDataInfo.aidl",
+      "sha256": "895e1ce26b07c598939a4142c012b03a3b39cf643c1dbea47c3e4088a2707502"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/PdpProtocolType.aidl",
+      "sha256": "2ecca11a68ab3b8843429c5d871954853b1b7183c9da02cd8c0e980b5a86a34d"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/PortRange.aidl",
+      "sha256": "f5958d3f00c0fef2f71f1794e1c918eebc52514d5cab51d4ec908737004a53fb"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/Qos.aidl",
+      "sha256": "45951fd9abe97eb176c48e1227b0763e887dd32e783b068a1fc3d3fe6bb5195f"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/QosBandwidth.aidl",
+      "sha256": "c596394d2fa1d4c9e042dbacb17e5f0c4528d75d87531fd7e2115bc3cda44c4a"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/QosFilter.aidl",
+      "sha256": "fe723430770fccda925f1719de31f11561c1c7d57012402928af1e27251bb75f"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/QosFilterIpsecSpi.aidl",
+      "sha256": "5183afb23482332bcaa1f23b3972022fc3a066f3c1cc787b2208ba14ffeef3bf"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/QosFilterIpv6FlowLabel.aidl",
+      "sha256": "30887bb91ad8050a18ae3360d0a114498a510379f1e01723293ab0953c5bea52"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/QosFilterTypeOfService.aidl",
+      "sha256": "6d69bc461b73cbcfc3a54a5b75daffa47947a624cfcd81457c7c352c2ab7e1a2"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/QosSession.aidl",
+      "sha256": "e28b7044a904209e52c18ec2bd3fa32aa97276cb3e14b00ae0bda1b3e52bac82"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/RouteSelectionDescriptor.aidl",
+      "sha256": "d2ebf10d67e98d1d62ec6c094326af7cb381d626ae0394c6760a977070c2e38b"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/SetupDataCallResult.aidl",
+      "sha256": "19cafd4e517d86347bcecb4a9b1fad72ebd54f79209546a856bb35c719cd6b9b"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/SliceInfo.aidl",
+      "sha256": "dfc7f1c0084e66bbdef20a02fe9d9979d69ae2d458c39dec41a93859e05a6f9a"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/SlicingConfig.aidl",
+      "sha256": "a7f520f8100cee96255bceb3097898a5c1b860d4240022eda3095a2f53903fcc"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/TrafficDescriptor.aidl",
+      "sha256": "94c99e2a2423201361984a9df9a26c41175012398cb7a292cf91a0bb2fd12dd4"
+    },
+    {
+      "path": "native-cellular-boundary/aidl/android/hardware/radio/data/UrspRule.aidl",
+      "sha256": "fd00f3c328aee6bf0626eb1de265843aee18682a14fbb16751589de52652ea68"
+    },
+    {
+      "path": "native-cellular-boundary/build.rs",
+      "sha256": "eb3cf61b6976550cbc32a3e1d6dfb51953c88eb86bcfb61eb284345d4e97c893"
+    },
+    {
+      "path": "native-cellular-boundary/src/lib.rs",
+      "sha256": "849830b875367115f8bf47d5c3ca61663d47b9f8c139b2d510c9e39031bddfe3"
+    },
+    {
+      "path": "native-network-state/Cargo.lock",
+      "sha256": "12565a60a4784458741f00572db6e484e8c60887b11316de1d6b8b61457791ec"
+    },
+    {
+      "path": "native-network-state/Cargo.toml",
+      "sha256": "7221e02625d30c473a2042f53734eae36bc941b86f5db3c0e449ea4e4a608a08"
+    },
+    {
+      "path": "native-network-state/src/lib.rs",
+      "sha256": "55b6e15060445e1949ccb4a10a27019be620356a327af6114be1938fd8f06ebf"
+    },
+    {
+      "path": "tools/native-cellular-data/fixture-aidl/org/pokelinux/datatest/CaptureSetup.aidl",
+      "sha256": "22a585f535008d371b4600c96ed8f81c15ac609ca72caf0361feea208b8205ff"
+    },
+    {
+      "path": "tools/native-cellular-data/fixture-aidl/org/pokelinux/datatest/IDataFixture.aidl",
+      "sha256": "23a5facac0281e2eecf3e7e988fd2b8ee5ea01592630a101bd38b5e63389e349"
+    },
+    {
+      "path": "tools/native-cellular-data/fixture-interface-hash.txt",
+      "sha256": "f678b5e0746a602341fb02697d31e13d2c874656c93e6831ae80bfb8b228831b"
+    }
+  ],
+  "only_changed_native_source_paths": [
+    "native-cellular-owner/src/lib.rs"
+  ],
+  "selected_source_path_count": 60,
+  "fixed_test": {
+    "path": "native-cellular-owner/src/kernel_tests.rs",
+    "sha256": "097967cd01bccb183a04cb288e39d0c417ff15ddc3770788fd4d8ac4fb6156e8",
+    "name": "kernel_tests::actual_binder_kernel_join",
+    "ignored_by_default": true,
+    "explicit_case_executions": 2
+  },
+  "unchanged_private_envelope_inventory": [
+    {
+      "path": "guest.py",
+      "sha256": "1cf8c35c632e5525397e0cf171c9b1b2bcfc1a43aba91752ec917de24274ec45"
+    },
+    {
+      "path": "owned.py",
+      "sha256": "8aac5e689ae532d07ee65ca4a76b99ef48dd9cbbc4ad9be67e969c0680accfe5"
+    },
+    {
+      "path": "boot.sh",
+      "sha256": "09cd6fa0e69bce043d10f6e97ffa4e2b69a834feac501938dc8a8473dd21c850"
+    },
+    {
+      "path": "plan.py",
+      "sha256": "641fc9cf87bbf33cdfe0fc045be3469f597fe6b7babc4d26fb716d1b4392c195"
+    },
+    {
+      "path": "run-selected.py",
+      "sha256": "8e5262f948becf60f556784f7d01a3e48a1bd2fe05b9a6d1e00a7fd7eb31858d"
+    }
+  ],
+  "private_envelope_freeze_sha256": "f533b0444233bbf9247b2bfd7f0ad8f7c10054e3adcc6c48c298b029d418779b",
+  "same_fixture_generation_four_ELFs_and_runtime_selection": true,
+  "fixture_generation": "d53f8a72016b4cbb94efa301dc2e7085",
+  "unchanged_fixture_ELF_inventory": [
+    {
+      "path": "manager",
+      "sha256": "4f8351f1133baa12dcfa30caed5ef18a87649bbfc544a8d8c294188afaa3a5de"
+    },
+    {
+      "path": "data-peer",
+      "sha256": "67449d03638541a344d96a7c03328a1626de906b7beb2d767f1a295aed9f0d5a"
+    },
+    {
+      "path": "property-info",
+      "sha256": "7c81ebd6b1b2bde547675aed2f6ee4cdc0e0b2a4892160c5af08b92b0d0f4f85"
+    },
+    {
+      "path": "property-init",
+      "sha256": "27ba656934837f802ee05a7817ab83dd25fc1bbac57bd491a269dc5d338067a2"
+    }
+  ],
+  "cases": [
+    {
+      "audit_label": "pokelinux-cellular-data-owner-arm-baseline-root-1",
+      "qualification": "qualified missing consume/join RED",
+      "requirement_passed": false,
+      "native_test_exit": 101,
+      "audit_records": [
+        {
+          "path": "selection.json",
+          "sha256": "a262d4e44259bf7f9adc62df202ed25db99556d1378210123738f777c4333e24"
+        },
+        {
+          "path": "execution.json",
+          "sha256": "3fb8130ee9e227c244b1c71e9889fb819b2d509c0a0f5342be5bd37de80b8314"
+        },
+        {
+          "path": "result.json",
+          "sha256": "b81257a930e6b37b544e4283ef3b38ea2d18ede3139f906137fa38e10d813b09"
+        }
+      ],
+      "native_test_ELF": {
+        "path": "owner-test",
+        "sha256": "080f71eb0456eb378b2c421c566b6df917db6cad6713ad5f823b5479f34cff65"
+      },
+      "direct_child_actual_wait_and_EOF_count": 21,
+      "exit0_count": 18,
+      "nonzero_exit_records": [
+        {
+          "role": "client.log",
+          "exit": 101
+        },
+        {
+          "role": "peer.log",
+          "exit": -9
+        },
+        {
+          "role": "manager.log",
+          "exit": -9
+        }
+      ],
+      "all_wait_and_EOF_observations_before_original_cutoffs": true,
+      "raw_wrong_and_right_callback_copies_before_consume": true,
+      "complete_candidate_from_same_owner_retained_observer": true,
+      "actual_UID_GID1000_groups_empty_CapEff0": true,
+      "GNU_mapped_ELF_inventory": [
+        {
+          "path": "/opt/cellular-data-owner/owner-test",
+          "sha256": "080f71eb0456eb378b2c421c566b6df917db6cad6713ad5f823b5479f34cff65"
+        },
+        {
+          "path": "/usr/lib/ld-linux-aarch64.so.1",
+          "sha256": "b1f2738bdb51e6419d7062f96c8a44bd68853698dc5ac624fa6ca9f9b03d456d"
+        },
+        {
+          "path": "/usr/lib/libc.so.6",
+          "sha256": "6ab264fb4e8df9942b0fb75b48fcd5c30b2f081d8dfaa6c25d7be1d3fce5b2ab"
+        },
+        {
+          "path": "/usr/lib/libgcc_s.so.1",
+          "sha256": "ac598673a4bf67c0295b6609e46b1fafd0d4adf3f80a513d61ac49ecff772e48"
+        }
+      ],
+      "actual_Bionic_peer_ELF_count": 15,
+      "separate_property_map_count": 3,
+      "Binder_char_map_separate_from_ELFs": true,
+      "NDK_compile_stubs_mapped": false,
+      "installed_and_actual_mapped_bytes_identities_unchanged": true,
+      "normal_owner_drop_before_native_wait_EOF": true,
+      "namespace_restored_and_controller_namespace_FDs_closed": true,
+      "TUN_module_unloaded_after_link_and_process_closure": true,
+      "owned_outer_CLI_wait0_exact_CID_fresh_absence_same_daemon": true,
+      "selected_and_original_inputs_unchanged": true,
+      "poweroff_wait0_EOF": true
+    },
+    {
+      "audit_label": "pokelinux-cellular-data-owner-arm-repair-root-1",
+      "qualification": "first repaired GREEN",
+      "requirement_passed": true,
+      "native_test_exit": 0,
+      "audit_records": [
+        {
+          "path": "selection.json",
+          "sha256": "5b6c334e66e3dd8cd7280819623a21464864f513daaef85b94d83a84e9ca9f43"
+        },
+        {
+          "path": "execution.json",
+          "sha256": "97c9ba3da304d2e501f7940d0d2e732398374706acc287bad129236e0abcdb9b"
+        },
+        {
+          "path": "result.json",
+          "sha256": "3d531264ac613380d32cc5d0d6129a2d3c3e54e0a8ee7b9708cac86522f71eeb"
+        }
+      ],
+      "native_test_ELF": {
+        "path": "owner-test",
+        "sha256": "4f51985df925af00f61e61abd00c735311ccdbeb0043854c0354ad06ed637f8a"
+      },
+      "direct_child_actual_wait_and_EOF_count": 21,
+      "exit0_count": 20,
+      "nonzero_exit_records": [
+        {
+          "role": "manager.log",
+          "exit": -9
+        }
+      ],
+      "all_wait_and_EOF_observations_before_original_cutoffs": true,
+      "raw_wrong_and_right_callback_copies_before_consume": true,
+      "complete_candidate_from_same_owner_retained_observer": true,
+      "actual_UID_GID1000_groups_empty_CapEff0": true,
+      "GNU_mapped_ELF_inventory": [
+        {
+          "path": "/opt/cellular-data-owner/owner-test",
+          "sha256": "4f51985df925af00f61e61abd00c735311ccdbeb0043854c0354ad06ed637f8a"
+        },
+        {
+          "path": "/usr/lib/ld-linux-aarch64.so.1",
+          "sha256": "b1f2738bdb51e6419d7062f96c8a44bd68853698dc5ac624fa6ca9f9b03d456d"
+        },
+        {
+          "path": "/usr/lib/libc.so.6",
+          "sha256": "6ab264fb4e8df9942b0fb75b48fcd5c30b2f081d8dfaa6c25d7be1d3fce5b2ab"
+        },
+        {
+          "path": "/usr/lib/libgcc_s.so.1",
+          "sha256": "ac598673a4bf67c0295b6609e46b1fafd0d4adf3f80a513d61ac49ecff772e48"
+        }
+      ],
+      "actual_Bionic_peer_ELF_count": 15,
+      "separate_property_map_count": 3,
+      "Binder_char_map_separate_from_ELFs": true,
+      "NDK_compile_stubs_mapped": false,
+      "installed_and_actual_mapped_bytes_identities_unchanged": true,
+      "normal_owner_drop_before_native_wait_EOF": true,
+      "namespace_restored_and_controller_namespace_FDs_closed": true,
+      "TUN_module_unloaded_after_link_and_process_closure": true,
+      "owned_outer_CLI_wait0_exact_CID_fresh_absence_same_daemon": true,
+      "selected_and_original_inputs_unchanged": true,
+      "poweroff_wait0_EOF": true
+    }
+  ],
+  "direct_child_actual_wait_and_EOF_total": 42,
+  "baseline_missing_behavior": {
+    "actual_disposition": "OutcomeUnknown",
+    "provider_report_present": false,
+    "association_present": false,
+    "actual_reducer_result": "Unsupported",
+    "qualified_after_raw_callbacks_and_complete_kernel_candidate": true,
+    "already_settled_baseline_provider_history": false,
+    "RED_qualifier_sha256": "8f03039a6169580dce3772281dfc3924bd3d9ea8f19b3e46b44a643f3ac0ce53"
+  },
+  "repair_executed_sequence": {
+    "one_attachment": true,
+    "one_setup": true,
+    "setup_argument_count": 10,
+    "profile_field_count": 21,
+    "copied_result_field_count": 18,
+    "held_no_callback_100ms": true,
+    "actual_raw_wrong_serial": 714,
+    "actual_raw_matching_serial": 713,
+    "raw_private_inbox_events_fed_directly_to_production_reduce": true,
+    "wrong_serial_ignored_without_history": true,
+    "matching_response_records_ProviderAccepted_cid": 9,
+    "full_provider_report_retained_unchanged": true,
+    "ordinary_public_poll_fresh_same_observer_join": true,
+    "association": {
+      "network_namespace": {
+        "dev": 5,
+        "ino": 4026532307
+      },
+      "ifindex": 2,
+      "lifetime": 1,
+      "revision": 5,
+      "observed_at_boottime_ns": 26176732133,
+      "provider_cid": 9
+    },
+    "actual_sole_TUN_FD_closed_at_ns": 26243556387,
+    "independent_absence_observed_at_ns": 26297350660,
+    "ordinary_public_poll_after_link_loss_withdraws_association": true,
+    "historical_disposition_after_withdrawal": "ProviderAccepted",
+    "empty_list_actual_event_directly_reduced_after_withdrawal": true,
+    "actual_death_event_directly_reduced_after_withdrawal": true,
+    "death_observed_at_ns": 26359231559,
+    "final_outcome_at_ns": 26364338629,
+    "final_association_present": false,
+    "owner_dropped_before_receipt": true
+  },
+  "coverage_limits": {
+    "ordinary_public_poll_queued_Setup_List_Died_dispatch_qualified": false,
+    "independent_List_or_death_positive_state_withdrawal_qualified": false,
+    "provider_owns_or_created_kernel_link_qualified": false,
+    "APN_ready_context_injected": false,
+    "native_worker_or_Binder_pool_join_qualified": false,
+    "responsive_Stop_or_production_permission_qualified": false,
+    "individual_native_FD_EBADF_independently_asserted": false,
+    "durable_journal_persistence_or_recovery_qualified": false,
+    "raw_duplicate_local_with_different_peer_or_ineligible_flags_qualified": false
+  },
+  "source_policy_only": {
+    "single_attempt_local_history_vs_current_association": true,
+    "expected_UID_and_endpoint_discovery_external_premises": true,
+    "any_valid_List_retires_never_establishes_join": true,
+    "matching_interface_UP_nonzero_MTU_witnessed_lifetime": true,
+    "nonempty_IP_family_and_numeric_local_prefix_match": true,
+    "kernel_address_scope": 0,
+    "kernel_tentative_DAD_failed_deprecated_refused": true,
+    "provider_address_flags": 0,
+    "Android_lifetimes": "Explicit infinite sentinel only; no finite-time conversion",
+    "QoS_subset": "noinit and empty QoS sessions",
+    "bounds_checked_after_generated_decoder": true,
+    "negative_controls_for_policy_and_error_branches_qualified": false,
+    "ProviderAccepted_predicate": "RadioResponseInfo.error == RadioError::NONE and SetupDataCallResult.cause == DataCallFailCause::NONE; otherwise ProviderRejected",
+    "per_reported_address_join_count": "Exactly one eligible local/prefix match, scope0 and allowed flags; not uniqueness across all raw kernel records"
+  },
+  "compile_prerequisites": {
+    "passed": true,
+    "formatting_and_Clippy_D_warnings": true,
+    "host_and_ARM64_libtest_compile_only": true,
+    "ordinary_ARM64_release_compile": true,
+    "host_behavioral_tests_executed": false,
+    "test_only_fixture_excluded_from_ordinary_release": true,
+    "build_review_sha256": "47f882206efe9f47242f256325c5d8a52f41e88e2e8ab6b78ad6aca0accb316e"
+  },
+  "original_BOOTTIME_offsets_seconds": {
+    "setup": 20,
+    "shared_peer_and_test": 60,
+    "cleanup": 62,
+    "whole": 120
+  },
+  "Root_final_qualifier": {
+    "sha256": "0fcfe8c46d677cb15323edc60722894ed45ddae93f36673fa71f76dce7de8332",
+    "passed": true,
+    "all_selected_and_original_inputs_independently_rehashed": true,
+    "original_backing_kernel_and_initramfs_included": true,
+    "large_input_validation_deferred": false
+  },
+  "retained_prerequisites_separate": [
+    {
+      "scope": "Missing authored fixture hash/import and earlier compile prerequisites",
+      "classification": "Retained prerequisite failures, before qualified native RED; not native behavioral RED or failed GREEN"
+    }
+  ],
+  "unqualified": [
+    "Ordinary public poll queued Setup/List/Died dispatch",
+    "Independent List/death withdrawal from a positive association",
+    "Provider ownership/creation of the matching controlled kernel link and actual modem endpoint-slot-subscription-registration mapping",
+    "APN/SIM/carrier policy and acquisition, route/traffic/internet, P-CSCF provenance and readiness grants",
+    "Broader callback UID/shape/error/duplicate/stale-source/serial, retirement-race and join-policy refusal controls",
+    "Rename/reuse, MTU/IP-family/prefix/scope/flags/finite-lifetime, overflow/concurrency/deadline/suspend/load negative controls",
+    "ACK_EXP/wake ownership, other QoS variants and hostile generated-decoder allocation bounds",
+    "Owned transport-worker/pool joins, responsive installed Stop, remote deactivation and vendor cleanup",
+    "Production permissions and installed service/lifecycle, journal/persistence/recovery",
+    "Matched Google/Pixel kernel, VINTF/SELinux and Android linker namespace/configuration",
+    "Normal installed app, vendor/private code, authentication/PAM and physical phone",
+    "Raw duplicate local-address variants with different peers or ineligible scope/flags; general raw-address uniqueness"
+  ],
+  "public_summary_only": true,
+  "raw_private_audits_logs_payloads_helpers_proprietary_runtime_bytes_or_credentials_published": false,
+  "report_files": [
+    {
+      "path": "docs/native-cellular-data-owner.md",
+      "sha256": "c73b894e577dc0a41de504c43682f3e9c643f14d4d4c4d12bae95d6bf34231a9"
+    },
+    {
+      "path": "native-cellular-owner/README.md",
+      "sha256": "29a3db835c026ec68d0eba95efcde1e04b6d035b9883c0fba438995ce0736bd7"
+    }
+  ],
+  "fixture_generation_reused_across_fresh_VMs": true,
+  "fixture_generation_unique_across_runs": false,
+  "fresh_retained_Binder_callback_pairs_and_distinct_network_namespaces": true,
+  "qualification_status": "Root RED/GREEN qualified; independent source and actual-outcome review passed",
+  "independent_review": {
+    "passed": true,
+    "material_blocker_count": 0,
+    "artifact_inventory": [
+      {
+        "path": "private-owner-review/qualification-proposal.json",
+        "sha256": "f57f71a3f5780b8be2910868c4f9ed3019a2bbf16c6a362112539f9bc3623ce1"
+      },
+      {
+        "path": "private-owner-review/REVIEW.md",
+        "sha256": "f6b2a36f7c34eae7e7c62e6ff65fac7edb5cba5462c58beb2806b08d0d0394cb"
+      },
+      {
+        "path": "private-owner-review/hashes.json",
+        "sha256": "4a686845faba88e8782cedcd8dfecb30439f72ec99cda2ce289126b59b1f7380"
+      }
+    ],
+    "selected_files_rehashed": 315,
+    "remaining_original_small_input_files_rehashed": 319,
+    "source_closure_checks": 120,
+    "large_backing_rehash": "Completed separately by the pinned Root final qualifier",
+    "review_commands_execute_no_runtime_or_builds": true
+  }
+}
