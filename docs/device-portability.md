@@ -153,3 +153,9 @@ factory classifier observations belong to the SIT backend; apps and shared phone
 state acquire no Samsung fields, C++ layouts or device-node assumptions. Original
 Bionic execution, native ARM user-QEMU components and generic ARM kernel Unix
 fixtures remain separate evidence, with zero physical models qualified.
+
+The [owned SIT descriptor primitive](native-sit-owned-transport.md) keeps its
+65,568-byte ingress policy and raw I/O inside the hardware backend. Shared apps
+and phone state gain no descriptor, Samsung layout, channel identity or retry
+policy. Source custody, complete-record admission and provider/APN ownership
+remain independent; Unix fixture success qualifies no physical model.

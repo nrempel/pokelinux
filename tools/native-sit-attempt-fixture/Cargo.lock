@@ -73,6 +73,7 @@ dependencies = [
  "pokelinux-process-owner",
  "pokelinux-sit-attempt",
  "pokelinux-sit-codec",
+ "pokelinux-sit-transport",
  "rustix",
  "serde_json",
 ]
@@ -80,6 +81,15 @@ dependencies = [
 [[package]]
 name = "pokelinux-sit-codec"
 version = "0.1.0"
+
+[[package]]
+name = "pokelinux-sit-transport"
+version = "0.1.0"
+dependencies = [
+ "pokelinux-process-owner",
+ "pokelinux-sit-codec",
+ "rustix",
+]
 
 [[package]]
 name = "proc-macro2"

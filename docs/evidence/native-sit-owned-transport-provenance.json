@@ -1,0 +1,633 @@
+{
+  "schema": 1,
+  "scope": "Native one-generation SIT descriptor primitive and authored process composition; not production CPIF or full IMS",
+  "base_commit": "4ba8ea3a4c8b6c2938c0c93a54459be2a568cf33",
+  "source_files": [
+    {
+      "path": "native-kernel-identity/Cargo.toml",
+      "sha256": "5cab2f22141987e4f1470b0fb575107b5c3ad134829bd2b92d5b7ccb3ef12431"
+    },
+    {
+      "path": "native-kernel-identity/src/lib.rs",
+      "sha256": "464a5e2a96dd99f127cce5b32514ff4a9a7340f8bee2581e941685e6df82cbcd"
+    },
+    {
+      "path": "native-kernel-identity/src/pidfd.rs",
+      "sha256": "caf4b44738fc53093a32ef96c2e639c1a376935ad29fa17a42091a56180b11ff"
+    },
+    {
+      "path": "native-process-owner/Cargo.toml",
+      "sha256": "a671c9109e703f6779c143834435fba8793564b14d3dd4db9a15a822f0cec103"
+    },
+    {
+      "path": "native-process-owner/src/bootstrap.rs",
+      "sha256": "0f3503bd812201db1af39f0cd0e83b197194e5f6be24bb1fb8d2514038455950"
+    },
+    {
+      "path": "native-process-owner/src/deadline.rs",
+      "sha256": "abc2a3f23284402fe3bc34abfb380bdf1f84a1f6d15cbd90b38a09bf5450c2ee"
+    },
+    {
+      "path": "native-process-owner/src/lib.rs",
+      "sha256": "98be0831d3663f7a271e0fbdbee672e7eccfe63f5ae1b588a5e7c38fceff63f0"
+    },
+    {
+      "path": "native-process-owner/src/supervisor.rs",
+      "sha256": "9ef96e42a60d5077adda348c36f8cf70d013b7ebf0a9c03cc1a9843beb4dfbcd"
+    },
+    {
+      "path": "native-sit-attempt/Cargo.lock",
+      "sha256": "fcd470fe65607795c4a9aa3e8777e1e18c1890ef304fa0719f86dce91b0d5516"
+    },
+    {
+      "path": "native-sit-attempt/Cargo.toml",
+      "sha256": "31b57de7686c2eadd83fae268b0d5a7a97fb42cab458a085432876f14a5315d4"
+    },
+    {
+      "path": "native-sit-attempt/src/lib.rs",
+      "sha256": "3973d8e694957465e494b5b8a70ac6f7e5e6515791edef873d6f2b2b097f8a39"
+    },
+    {
+      "path": "native-sit-attempt/tests/attempt.rs",
+      "sha256": "f1cbc6c50c3f74aa4ebe835c604c03ef35e53e610baefc5f01ed5c191e6994e8"
+    },
+    {
+      "path": "native-sit-attempt/tests/fixtures/base-v4.hex",
+      "sha256": "ca8c7178841288bb7645a2f8e3ffe99c881445032184861ced48dac68f1c8eaa"
+    },
+    {
+      "path": "native-sit-attempt/tests/fixtures/initial-v4.hex",
+      "sha256": "e87202bd3d3260a089c4904c25dfbe71539fede952a2c1ed0cb15039c7312d08"
+    },
+    {
+      "path": "native-sit-codec/Cargo.lock",
+      "sha256": "8fd8f204e8bdfd40b9b61544193dc0d5a264136e60398ed1de07525ad4bba17d"
+    },
+    {
+      "path": "native-sit-codec/Cargo.toml",
+      "sha256": "e015735268c5e4d4200c97685e448086999603f515ee5365dcd85bc9c075cc7e"
+    },
+    {
+      "path": "native-sit-codec/src/lib.rs",
+      "sha256": "bb5fe3436920e3c705566146a1616e38f0dc32c9b329e435b5ddb9bff3788e3d"
+    },
+    {
+      "path": "native-sit-codec/src/modern_report.rs",
+      "sha256": "c42b94abdbb3c344b0b711e374a0a8e89953e2892bf33453dc2c0694b75c2716"
+    },
+    {
+      "path": "native-sit-codec/src/received_chunk.rs",
+      "sha256": "7a1687652de483508d545cea7ce56e56872709b60566cdfabd98d7ecdf49647c"
+    },
+    {
+      "path": "native-sit-codec/src/response.rs",
+      "sha256": "403a2212401e6bcadc7666ae60b8a7f4e3d08a536e693cc98a19a211b56120c4"
+    },
+    {
+      "path": "native-sit-codec/src/tests.rs",
+      "sha256": "b72194d0c4675aa754aefd61883043c976e7663f1b237c84bf237c3c9a422e35"
+    },
+    {
+      "path": "native-sit-codec/tests/base_response.rs",
+      "sha256": "457aecfd96e85daeae8ec49f2fb6c5219723e5065f36498e6e1dbc36a8217445"
+    },
+    {
+      "path": "native-sit-codec/tests/base_server_families.rs",
+      "sha256": "2838064c3f5ae882da3314e417bc50488ad2ad47183697791b534074ddf4c7e9"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-dual-index0.hex",
+      "sha256": "c39b53c39dddbb218eee8127a39b8d9baea3af84697ac0494ea55428ac920c41"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-dual-index17.hex",
+      "sha256": "c39b53c39dddbb218eee8127a39b8d9baea3af84697ac0494ea55428ac920c41"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-ip.hex",
+      "sha256": "e87202bd3d3260a089c4904c25dfbe71539fede952a2c1ed0cb15039c7312d08"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-ipv6.hex",
+      "sha256": "e9218ba592977d2729098bafa1614a6974bd9f45310980f3b255cdb9957dd5ea"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-nonip.hex",
+      "sha256": "28801a1b1ea26dcfa68599e49319d8cb175fb1f290053fb759af54bb531ede76"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-other-apn.hex",
+      "sha256": "31a5605a08478b13601c6c166eb3a215e462b55d10caa2811589382136453b52"
+    },
+    {
+      "path": "native-sit-codec/tests/modern-report-fixtures/v22.tsv",
+      "sha256": "6b25c6f2d761875703dee84c50f4c0fb6f2a045378e32c3375a302de0e72c206"
+    },
+    {
+      "path": "native-sit-codec/tests/modern_report.rs",
+      "sha256": "73b39da9ea74f6af02b4a4c27801b4d2df3f0ca39686524fab09f99e00084484"
+    },
+    {
+      "path": "native-sit-codec/tests/received-chunk-fixtures/base-v4-144.input.hex",
+      "sha256": "e3c1d4d170af9a7bd92742f702a0d96373eaf07fc7c08c6ec8dc9eb8be6177a5"
+    },
+    {
+      "path": "native-sit-codec/tests/received-chunk-fixtures/base-v4-144.owned-after-overwrite.hex",
+      "sha256": "e3c1d4d170af9a7bd92742f702a0d96373eaf07fc7c08c6ec8dc9eb8be6177a5"
+    },
+    {
+      "path": "native-sit-codec/tests/received-chunk-fixtures/coalesced-v4-288.input.hex",
+      "sha256": "dc77eee4d9ba16fe019b48b646f720be29d4fe231aca3e1b1801053347b2fc38"
+    },
+    {
+      "path": "native-sit-codec/tests/received-chunk-fixtures/coalesced-v4-288.owned-after-overwrite.hex",
+      "sha256": "dc77eee4d9ba16fe019b48b646f720be29d4fe231aca3e1b1801053347b2fc38"
+    },
+    {
+      "path": "native-sit-codec/tests/received-chunk-fixtures/declared-length-mismatch-144.input.hex",
+      "sha256": "a948afb05e12b431c199c54dfa8f610d749e57b47c6cba35e2a4e8c75d00b9ed"
+    },
+    {
+      "path": "native-sit-codec/tests/received-chunk-fixtures/declared-length-mismatch-144.owned-after-overwrite.hex",
+      "sha256": "a948afb05e12b431c199c54dfa8f610d749e57b47c6cba35e2a4e8c75d00b9ed"
+    },
+    {
+      "path": "native-sit-codec/tests/received-chunk-fixtures/max-pattern-65568.input.hex",
+      "sha256": "573682a5177c41a3f4bac40ce03075f9a0966df965da845c07785400bd6b8426"
+    },
+    {
+      "path": "native-sit-codec/tests/received-chunk-fixtures/max-pattern-65568.owned-after-overwrite.hex",
+      "sha256": "573682a5177c41a3f4bac40ce03075f9a0966df965da845c07785400bd6b8426"
+    },
+    {
+      "path": "native-sit-codec/tests/received-chunk-fixtures/opaque-32.input.hex",
+      "sha256": "daeb6d76977a4393342bae7f6f1fdc21ce0c7a000d10c68eb4f98f03648ccecb"
+    },
+    {
+      "path": "native-sit-codec/tests/received-chunk-fixtures/opaque-32.owned-after-overwrite.hex",
+      "sha256": "daeb6d76977a4393342bae7f6f1fdc21ce0c7a000d10c68eb4f98f03648ccecb"
+    },
+    {
+      "path": "native-sit-codec/tests/received-chunk-fixtures/provided-count-16-from-v4-144.input.hex",
+      "sha256": "ebde92cdcdf4589a8504372b0a8c648b96f5b60d7479784a5994cb8229d99449"
+    },
+    {
+      "path": "native-sit-codec/tests/received-chunk-fixtures/provided-count-16-from-v4-144.owned-after-overwrite.hex",
+      "sha256": "ebde92cdcdf4589a8504372b0a8c648b96f5b60d7479784a5994cb8229d99449"
+    },
+    {
+      "path": "native-sit-codec/tests/received-chunk-fixtures/request-983.input.hex",
+      "sha256": "fc0f74cc6af3f1a69bef6ef245788a2e1efb5c3ac60158cfb01163b997e4bbc3"
+    },
+    {
+      "path": "native-sit-codec/tests/received-chunk-fixtures/request-983.owned-after-overwrite.hex",
+      "sha256": "fc0f74cc6af3f1a69bef6ef245788a2e1efb5c3ac60158cfb01163b997e4bbc3"
+    },
+    {
+      "path": "native-sit-codec/tests/received_chunk.rs",
+      "sha256": "c76260dcb4e43b26547868090da02e88c2a07074193f6a1f8f1800ee197b86ae"
+    },
+    {
+      "path": "native-sit-codec/tests/response-fixtures/cross-selectors.txt",
+      "sha256": "78ecd96491b1147d1371ae7ef4bd179e4bce22272ed6e6f416cb27d63c1311ca"
+    },
+    {
+      "path": "native-sit-codec/tests/response-fixtures/dual.txt",
+      "sha256": "7a434c6b61a44a613a040b306ca58a65340ac59c89307e0affca05b79647c1ae"
+    },
+    {
+      "path": "native-sit-codec/tests/response-fixtures/inactive.txt",
+      "sha256": "3b8bbe558351a3edbd44caedfba967523e2ff694b7c495755fd8e99cd862c360"
+    },
+    {
+      "path": "native-sit-codec/tests/response-fixtures/nonip.txt",
+      "sha256": "9b3e7d40769f078ba428f5d5dcb9029e316270058f98d1c78a72f844eb488541"
+    },
+    {
+      "path": "native-sit-codec/tests/response-fixtures/v4.txt",
+      "sha256": "29ce5943c46ae83a0b9881d1ba17144a7841d63e72062ffda240d64cd1a3b0a4"
+    },
+    {
+      "path": "native-sit-codec/tests/response-fixtures/v6.txt",
+      "sha256": "47dc4d0a9c390b9b1903ef352f5db094a5892b7cc6639880280b6f15cd172224"
+    },
+    {
+      "path": "native-sit-transport/Cargo.lock",
+      "sha256": "ef52c27fbb2470ca2b504767633ec6c2203e074b349224cc7fb9141c80ab42d5"
+    },
+    {
+      "path": "native-sit-transport/Cargo.toml",
+      "sha256": "86e64bb05ebe86c994a02b9c307931f64e882707ce7f2cdc38913d9bddc69e46"
+    },
+    {
+      "path": "native-sit-transport/src/lib.rs",
+      "sha256": "996ae847f650083b2bf04f6de454f5c42c289fe8dc483655baa1fa959a3e7d55"
+    },
+    {
+      "path": "native-sit-transport/tests/fixtures/base-v4.hex",
+      "sha256": "ca8c7178841288bb7645a2f8e3ffe99c881445032184861ced48dac68f1c8eaa"
+    },
+    {
+      "path": "native-sit-transport/tests/fixtures/initial-v4.hex",
+      "sha256": "e87202bd3d3260a089c4904c25dfbe71539fede952a2c1ed0cb15039c7312d08"
+    },
+    {
+      "path": "native-sit-transport/tests/transport.rs",
+      "sha256": "9c9c5c7ef073244492a1c313c822a12bd869c8f1a2692f01acc2c2213e363871"
+    }
+  ],
+  "compiled_fixture_source_files": [
+    {
+      "path": "tools/native-sit-attempt-fixture/Cargo.lock",
+      "sha256": "171a49926312744af03be54a507bd1e7f989c43b173ad8ddbb4a0e4ea9096714"
+    },
+    {
+      "path": "tools/native-sit-attempt-fixture/Cargo.toml",
+      "sha256": "d426a81bcaa90e5c3e9fdab4272c5bb6b3d6131674c5c53d90d0fbbc6f20383e"
+    },
+    {
+      "path": "tools/native-sit-attempt-fixture/contract.json",
+      "sha256": "b6b6532a2892d68632a7425acfbdece623065dbbf73a6a22b96a0fd0b56c522e"
+    },
+    {
+      "path": "tools/native-sit-attempt-fixture/controller.py",
+      "sha256": "1f304b2248decb5718fa29df0bd26f37e0c56791ccebeb00c3a5a846b1acc69d"
+    },
+    {
+      "path": "tools/native-sit-attempt-fixture/references/v22.tsv",
+      "sha256": "6b25c6f2d761875703dee84c50f4c0fb6f2a045378e32c3375a302de0e72c206"
+    },
+    {
+      "path": "tools/native-sit-attempt-fixture/references/v3-ip.hex",
+      "sha256": "e87202bd3d3260a089c4904c25dfbe71539fede952a2c1ed0cb15039c7312d08"
+    },
+    {
+      "path": "tools/native-sit-attempt-fixture/src/main.rs",
+      "sha256": "85e20d3209157e9433580d06078fa094ff91d9476678755938b89242601894e2"
+    }
+  ],
+  "component_evidence": {
+    "classification": "Linux host and ARM64 user-QEMU components, host kernel; no ARM kernel claim",
+    "setup_failures_excluded_from_RED": [
+      {
+        "kind": "test-helper Clippy API warning",
+        "files": [
+          {
+            "path": "execution.json",
+            "sha256": "2e3b310bf13963ede5142e027d6460b93f9722601e244f19dede0bb4f52572cf"
+          },
+          {
+            "path": "clippy.log",
+            "sha256": "81bf6af58828543fbb7185a275aba8631fd615d8b0ccda7a2506a65bd748edd9"
+          }
+        ]
+      },
+      {
+        "kind": "test-helper rustfmt mismatch",
+        "files": [
+          {
+            "path": "execution.json",
+            "sha256": "eaecd8766ebe7e0ea73040f966283097efc85b9dc3d2355b2435c01664c9bff0"
+          },
+          {
+            "path": "fmt.log",
+            "sha256": "862f9b4359722172ea1e5f943bd8cb14b6ebdc8bb3c6b815426efc1cffeaabfd"
+          }
+        ]
+      }
+    ],
+    "dispatch_RED": {
+      "actual_pass": 2,
+      "actual_fail_Unsupported_dispatch": 8,
+      "read_boundary_reached": false,
+      "strict_fmt_clippy_pass": true,
+      "files": [
+        {
+          "path": "selection.json",
+          "sha256": "b1af9d7d1cade4ced59c033064b011aa461c7ade872fd372ac03a131d6da4263"
+        },
+        {
+          "path": "execution.json",
+          "sha256": "c434782debd510af51ec60b446085b9a8acc83a19cac1acb17c66ffeb3949373"
+        },
+        {
+          "path": "root-review.json",
+          "sha256": "007d6636f5fa8e8ec877b85db2aeee7efef5357342535188d70e0d81bfec1e6d"
+        },
+        {
+          "path": "tests.log",
+          "sha256": "700b3580806e2bb67d293f9e0c6edc196efd6c840b330da306b152ed58a73522"
+        }
+      ]
+    },
+    "read_RED": {
+      "actual_pass": 3,
+      "actual_fail_missing_read": 7,
+      "strict_fmt_clippy_pass": true,
+      "only_changed_source": "native-sit-transport/src/lib.rs",
+      "files": [
+        {
+          "path": "selection.json",
+          "sha256": "9aa362e7ba09fddb78fcc35b6be1b2093bfea6b025a8eabaede9ebcb9c02828e"
+        },
+        {
+          "path": "execution.json",
+          "sha256": "879c13cf4a3a56ee32eed741adc50015e58b1ce3be89e0ee77db523dba312c17"
+        },
+        {
+          "path": "root-review.json",
+          "sha256": "ce2ba563d4903bdcb644019aafb2adaa997c714515d75de310cf47dcc6a9a3e7"
+        },
+        {
+          "path": "tests.log",
+          "sha256": "5c79d1ba610377a1677b7249c8255ed889530e9b1e4332ed07e53632beeb4965"
+        }
+      ]
+    },
+    "GREEN": {
+      "actual_pass_per_architecture": {
+        "transport": 10,
+        "codec": 50,
+        "attempt": 15,
+        "total": 75
+      },
+      "tests_fixtures_locks_dependencies_unchanged": true,
+      "only_changed_source": "native-sit-transport/src/lib.rs",
+      "files": [
+        {
+          "path": "selection.json",
+          "sha256": "556ff70aa20051f322189476a84be9b1ae4776ee14685e2b42dfb6b0bf2b1ee6"
+        },
+        {
+          "path": "execution.json",
+          "sha256": "cb9c6b4417d8e7fafff23473958bb23222abf0d03cff962c6723430114d06836"
+        },
+        {
+          "path": "root-review.json",
+          "sha256": "1cca30833af13b96585b2bd9f5c3ef04dfa780011b721cc4a51ec58324cd7727"
+        },
+        {
+          "path": "compiler.txt",
+          "sha256": "778fbc643a806f0dd123c056e66201d7e8a56a61928ec0a33171be8d6c2d5a37"
+        },
+        {
+          "path": "transport-host-tests.log",
+          "sha256": "fef6e72d8ae91614e78cb22e0cc405a12eb26f72cb1362568680ec92db329f67"
+        },
+        {
+          "path": "transport-arm-user-tests.log",
+          "sha256": "02c11ef9cf87883c82577ee8e7b28ad57723c9c61873fa8053679f2a9709e13b"
+        },
+        {
+          "path": "codec-host-tests.log",
+          "sha256": "ffcdfc6260cc0a893f4eec6ca2e2054f8c1b6dff2e8d03d9729c9ab229119747"
+        },
+        {
+          "path": "codec-arm-user-tests.log",
+          "sha256": "4b65f1495c33691faa2ad8797b8b5aad08a8f697192d96271bcbf3f6c32fc3ee"
+        },
+        {
+          "path": "attempt-host-tests.log",
+          "sha256": "24bc3e3d70fb3d1ca997e1b4adf2feadd379248b275fb6b5a93891cb6066ccd4"
+        },
+        {
+          "path": "attempt-arm-user-tests.log",
+          "sha256": "0bc54fbdda500e035e1ea5e97668a1d8e92b1302e3d6fa44cc64051d6a028ac0"
+        }
+      ]
+    },
+    "independent_source_review": [
+      {
+        "path": "receipt.json",
+        "sha256": "1136c14d228eeb1ddc612f1a6ab8825a9fcfb5c9bf2aef00381c0360f9844553"
+      },
+      {
+        "path": "REVIEW.md",
+        "sha256": "01d074bf7feed41a954220f359f6244853cd5c3ac99b8481370e7d4e42172e2b"
+      }
+    ]
+  },
+  "fixture_build": {
+    "classification": "Compiled host and cross-compiled ARM ELF; execution separate",
+    "compiled_executables": [
+      {
+        "target": "pokelinux-sit-attempt-tracer",
+        "path": "target/debug/pokelinux-sit-attempt-tracer",
+        "sha256": "6a2c29b039663bb2197b254174ca3b1cf9ca11a7e144a068a224e976e0bae59c",
+        "ELF_machine": 62
+      },
+      {
+        "target": "pokelinux-sit-attempt-tracer",
+        "path": "target/aarch64-unknown-linux-gnu/debug/pokelinux-sit-attempt-tracer",
+        "sha256": "2a04b9ef1cb51a4771d423d228d183306b715266ee4eaad5253f09cec0cba971",
+        "ELF_machine": 183
+      }
+    ],
+    "files": [
+      {
+        "path": "selection.json",
+        "sha256": "4f7644f44f0d413a2242508f0aba3d37433534ca3d5a143ca8e02fb57817c988"
+      },
+      {
+        "path": "execution.json",
+        "sha256": "8568390457f689dbf56655b8957bd480df7bd8821c43d3b7bea450165ce909d1"
+      },
+      {
+        "path": "build-review-root.json",
+        "sha256": "d86396c7623cfad3a65698b33ba0d6cf107b977aceec772956f085ff9506b5fa"
+      },
+      {
+        "path": "build.sh",
+        "sha256": "1fc7a7e5119c6a40c12d485f93a49fcf86e2430e1058a4a6895e98078fcf3fc4"
+      }
+    ],
+    "independent_source_and_host_review": [
+      {
+        "path": "receipt.json",
+        "sha256": "3fe538a96d56fc18a42640a171a5d6fee12674ed19a8e45c40d52704377d8ae0"
+      },
+      {
+        "path": "REVIEW.md",
+        "sha256": "22d603ac6afa8e5e18a35d5d01de4aeff4311d3ae0b51737f6b7a3b6eddcf306"
+      }
+    ]
+  },
+  "host_process_integration": {
+    "classification": "Additional actual host native-process GREEN after component RED/GREEN; no new missing-completion RED",
+    "controller_unchanged": true,
+    "cases": [
+      {
+        "case": "completion",
+        "actual_parent_wait_exit": 0,
+        "worker_signal": 9,
+        "Main_snapshot_elapsed_ns": 7754,
+        "Stop_wait_elapsed_ns": 1099324,
+        "original_BOOTTIME_cutoff_preserved": true,
+        "PIPE_EOFs": true,
+        "peer_EOF_after_parent_wait": true,
+        "AdmissionUncertain": true,
+        "result_sha256": "83a320b0c617c5806b74d8317961b81e3e3063b12a67363f9a54f2b9f65312dd"
+      },
+      {
+        "case": "expiry",
+        "actual_parent_wait_exit": 0,
+        "worker_signal": 9,
+        "Main_snapshot_elapsed_ns": 7434,
+        "Stop_wait_elapsed_ns": 1086800,
+        "original_BOOTTIME_cutoff_preserved": true,
+        "PIPE_EOFs": true,
+        "peer_EOF_after_parent_wait": true,
+        "AdmissionUncertain": true,
+        "result_sha256": "834cbb08fc707cf9d843e9a5838ab6432b445665595e9c81ac948f3bc921ead4"
+      },
+      {
+        "case": "cancel",
+        "actual_parent_wait_exit": 0,
+        "worker_signal": 9,
+        "Main_snapshot_elapsed_ns": 7665,
+        "Stop_wait_elapsed_ns": 1087923,
+        "original_BOOTTIME_cutoff_preserved": true,
+        "PIPE_EOFs": true,
+        "peer_EOF_after_parent_wait": true,
+        "AdmissionUncertain": true,
+        "result_sha256": "ba1efcdf9452e9da63c469bbb649a6310edd142c486685db714ad9e2ec8db11b"
+      }
+    ],
+    "snapshot_timing_limit": "100 Main snapshots precede controller live blocked-read capture; this schedule does not prove the read was already blocked during every snapshot. Stop operates after actual blocked-read capture.",
+    "final_children": {
+      "ECHILD": true
+    },
+    "files": [
+      {
+        "path": "result.json",
+        "sha256": "3d0d7c5b63a08e7c9b6e854ebbcda9041e6d120b2858e30e33cdc9715ff63d7f"
+      },
+      {
+        "path": "root-review.json",
+        "sha256": "f92bbd35a7ad86fa0f0893d0c2ec13d1bca84a721fc82060782dcbc65c3d3bef"
+      },
+      {
+        "path": "driver-execution.json",
+        "sha256": "973fd67def1f78ae5329641e6b53eb899c3968ccf65af391dc17508806589717"
+      }
+    ]
+  },
+  "ARM_kernel_process_integration": {
+    "status": "qualified additional GREEN",
+    "classification": "Actual generic ARM kernel native ELF/process/Unix descriptor integration; separate from ARM user-QEMU, original-code and hardware evidence",
+    "kernel": {
+      "release": "7.1.6-1-aarch64-ARCH",
+      "machine": "aarch64"
+    },
+    "cases": [
+      {
+        "case": "completion",
+        "actual_parent_wait_exit": 0,
+        "worker_signal": 9,
+        "Main_snapshot_elapsed_ns": 376463,
+        "Stop_wait_elapsed_ns": 3963886,
+        "original_BOOTTIME_cutoff_preserved": true,
+        "PIPE_EOFs": true,
+        "peer_EOF_after_parent_wait": true,
+        "AdmissionUncertain": true,
+        "result_sha256": "ed99a197eb21fc8a3e7c66a40a0a13381165570bb45579727816e35c2046b65c"
+      },
+      {
+        "case": "expiry",
+        "actual_parent_wait_exit": 0,
+        "worker_signal": 9,
+        "Main_snapshot_elapsed_ns": 173154,
+        "Stop_wait_elapsed_ns": 3386217,
+        "original_BOOTTIME_cutoff_preserved": true,
+        "PIPE_EOFs": true,
+        "peer_EOF_after_parent_wait": true,
+        "AdmissionUncertain": true,
+        "result_sha256": "b2d0b8ac50c3a70f78892a9812b9c74d40edc3a4329c39b3c5b17503dfe5c2ea"
+      },
+      {
+        "case": "cancel",
+        "actual_parent_wait_exit": 0,
+        "worker_signal": 9,
+        "Main_snapshot_elapsed_ns": 172322,
+        "Stop_wait_elapsed_ns": 3368003,
+        "original_BOOTTIME_cutoff_preserved": true,
+        "PIPE_EOFs": true,
+        "peer_EOF_after_parent_wait": true,
+        "AdmissionUncertain": true,
+        "result_sha256": "d646919d8448deae6f585eb897bfe3e4e8884bee3a9408375bf00b628ee5e128"
+      }
+    ],
+    "actual_owned_waits": {
+      "host": 7,
+      "boot": 2,
+      "guest": 2,
+      "native_parents": 3,
+      "native_workers": 3,
+      "total": 17
+    },
+    "all_actual_waits_EOFs_and_original_cutoffs_qualified": true,
+    "selected_inputs_rehashed": 125,
+    "external_inputs_rehashed": 308,
+    "exact_CID_absence_after_actual_foreground_wait": true,
+    "snapshot_timing_limit": "100 Main snapshots precede controller live blocked-read capture; this schedule does not prove the read was already blocked during every snapshot. Stop operates after actual blocked-read capture.",
+    "files": [
+      {
+        "path": "selection.json",
+        "sha256": "a07e3ed61d55d77fc3c20709160df69527557116531ed92ee5700f588ccb0197"
+      },
+      {
+        "path": "command.json",
+        "sha256": "36ad52d509df5be8c7bddc9e27d859f2f6dd6527d63e3d9eb5dd6fa17fbd4444"
+      },
+      {
+        "path": "execution.json",
+        "sha256": "c1476a71f1cd114f45290759d17914a5e49b6265881407bfc05a81f0c027a23e"
+      },
+      {
+        "path": "boot-result.json",
+        "sha256": "c6a3ec479c71f7ae45888780131336973f8ff2398a6ae54e94ef08d8794a1b2a"
+      },
+      {
+        "path": "result.json",
+        "sha256": "5c49db4add199ad317f13b9fd843821e1ec405c1050e75a5fa8ab462321872dd"
+      },
+      {
+        "path": "controller-output/result.json",
+        "sha256": "7f099f93567912e613edd0059d657cc30bbe1e7d5ea5a7e3ca06069146c2acd4"
+      },
+      {
+        "path": "root-review.json",
+        "sha256": "0a75ddb1cf2b3d755a9e8d80c2dfc19e8b4fb227a842b011643fc7564dc32206"
+      },
+      {
+        "path": "Root-driver-execution.json",
+        "sha256": "408d69c96efa8f7fed0b9e6333f6d9e77764a9dc804c5e9af28a16bebc48a8dc"
+      }
+    ]
+  },
+  "implemented_contract": [
+    "one consumed descriptor handle; no borrow/clone/replacement/reopen/reset/retry API",
+    "original CLOCK_BOOTTIME checks before and after syscall and after receive copying",
+    "one983-byte write; uncertainty recorded before syscall and never cleared",
+    "one raw read per call into65568 bytes; positive slice copied and kept opaque",
+    "short/zero/error writes and zero/error/copy failures terminal locally",
+    "local close and actual process wait grant no vendor cleanup or successor admission"
+  ],
+  "open_gates": [
+    "actual partial/error-write controls",
+    "actual blocked read returning after original deadline",
+    "expiry during copying",
+    "allocation failure control",
+    "natural terminal worker-exit recovery integration",
+    "actual suspend/wake",
+    "complete-record framing/runtime source/channel/slot identity",
+    "CPIF/provider/APN acquisition and deactivate/reset/remote cleanup acknowledgement",
+    "installed service/device policy",
+    "modem/IMS/carrier and physical Pixel boot/display/input/recovery"
+  ],
+  "original_code_executed_for_this_checkpoint": false,
+  "proprietary_inputs_published": false,
+  "physical_phone_accessed": false,
+  "physical_models_qualified": 0,
+  "matched_Google_kernel_modules_firmware_retained": true
+}

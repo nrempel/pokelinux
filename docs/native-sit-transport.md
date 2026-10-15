@@ -1,5 +1,10 @@
 # Factory SIT transport findings
 
+The later [native owned descriptor primitive](native-sit-owned-transport.md)
+implements one-shot writes and owned raw reads using these findings while
+keeping conservative terminal uncertainty. Its real descriptor tests and
+process integration are separate from the static/original evidence below.
+
 These are author-reasoned static contracts from twenty-three matched factory methods,
 with independent method/assembly/ELF review. These static sessions execute no vendor methods. A separate memory-only original
 comparison is recorded in [receive ownership](native-sit-received-chunk.md). They guide

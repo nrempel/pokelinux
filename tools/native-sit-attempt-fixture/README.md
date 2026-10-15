@@ -44,3 +44,12 @@ not a general published bundle-builder or VM provisioning command. See
 [qualification and limits](../../docs/native-sit-attempt.md). Local status,
 packet/EOF behavior and reaping establish no factory transport, cleanup, retry,
 provider/APN ownership, IMS or hardware compatibility.
+
+V6 moves the peer-checked descriptor into `native-sit-transport`. It performs the
+single983-byte raw write, copies the first raw read into owned bytes, requires
+exact144 in this record fixture, then blocks in a separate second read on the
+same owned transport. The controller is unchanged.100 snapshots precede the
+controller's actual blocked-read capture; Stop follows that capture. The expiry
+case delays Main commit, not the first transport read. No late-return deadline
+proof is claimed. Wait failure still records independent journal refusal before
+returning failure. See [owned transport](../../docs/native-sit-owned-transport.md).

@@ -6,6 +6,14 @@ Build and test everything possible offline on temporary Harbour capacity. Do not
 
 **No backwards compatibility:** build one target implementation and matching component set. Do not add legacy adapters, dual production runtimes, old-format migrations or downgrade support for earlier iterations. Test required behavior and restart recovery within the target version. Prior code and artifacts provide evidence, not a requirement to preserve old formats.
 
+The [owned SIT descriptor transport](native-sit-owned-transport.md) now adds
+one-shot native Rust writes and owned raw reads beneath the attempt/process
+owner. Strict missing-dispatch and missing-read REDs precede75 component passes
+per host/ARM user-QEMU architecture and actual host/generic ARM kernel
+completion/expiry/cancel process integration. The primitive exposes no descriptor or retry, retains
+uncertainty, and uses the original BOOTTIME deadline. Short/error-write and
+late-read-return controls, CPIF/provider/APN/IMS and hardware remain open.
+
 One [current diagnostic bundle](native-boot-ack-and-current-bundle.md) now joins
 the native build, complete8MiB image, exact original-unpacked generic and normal
 child to actual Arch and full-stream Google-kernel consumers. Both pass four

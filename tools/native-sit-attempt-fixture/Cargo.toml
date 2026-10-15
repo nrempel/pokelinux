@@ -5,6 +5,7 @@ edition = "2024"
 publish = false
 
 [dependencies]
+pokelinux-sit-transport = { path = "../../native-sit-transport" }
 pokelinux-sit-attempt = { path = "../../native-sit-attempt" }
 pokelinux-sit-codec = { path = "../../native-sit-codec" }
 pokelinux-process-owner = { path = "../../native-process-owner" }

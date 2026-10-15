@@ -1,5 +1,13 @@
 # Native radio session owner
 
+The [owned SIT descriptor transport](native-sit-owned-transport.md) now adds
+one-shot native Rust writes and owned raw reads beneath the attempt/process
+owner. Strict missing-dispatch and missing-read REDs precede75 component passes
+per host/ARM user-QEMU architecture and actual host/generic ARM kernel
+completion/expiry/cancel process integration. The primitive exposes no descriptor or retry, retains
+uncertainty, and uses the original BOOTTIME deadline. Short/error-write and
+late-read-return controls, CPIF/provider/APN/IMS and hardware remain open.
+
 The [owned SIT receive copy](native-sit-received-chunk.md) now bridges raw
 receive storage to the strict attempt parser. Twelve original Bionic/user-QEMU
 children qualify full source-overwrite/free comparisons. A compiled42-pass/eight

@@ -5,12 +5,9 @@ use pokelinux_process_owner::{
     supervisor::{ProcessIdentity, StartError, Supervisor},
 };
 use pokelinux_sit_attempt::{Attempt, Error as AttemptError, Setup};
-use pokelinux_sit_codec::{
-    InitialLteSetupV3, Protocol, modern_report::ModernSetupReport22, received_chunk::ReceivedChunk,
-};
-use rustix::net::{
-    self, AddressFamily, RecvFlags, SendFlags, SocketAddrUnix, SocketFlags, SocketType,
-};
+use pokelinux_sit_codec::{InitialLteSetupV3, Protocol, modern_report::ModernSetupReport22};
+use pokelinux_sit_transport::WorkerTransport;
+use rustix::net::{self, AddressFamily, SocketAddrUnix, SocketFlags, SocketType};
 use serde_json::json;
 use std::{
     fmt::Debug,
@@ -112,10 +109,7 @@ fn worker(args: &[String]) -> io::Result<()> {
     {
         return Err(invalid());
     }
-    let request = unhex(&args[4])?;
-    if request.len() != 983 {
-        return Err(invalid());
-    }
+    let request: [u8; 983] = unhex(&args[4])?.try_into().map_err(|_| invalid())?;
     // Main thread/final credentials, before connecting the explicit fixture peer.
     let until: u64 = args[8].parse().map_err(|_| invalid())?;
     let parent = BoundParent::from_stdin()?;
@@ -141,21 +135,12 @@ fn worker(args: &[String]) -> io::Result<()> {
     if now() >= until {
         return Err(io::ErrorKind::TimedOut.into());
     }
-    if net::send(&socket, &request, SendFlags::NOSIGNAL)? != 983 {
-        return Err(invalid());
-    }
-    let mut input = [0u8; 145];
-    let (count, total) = net::recv(&socket, &mut input, RecvFlags::TRUNC)?;
-    if count != 144 || total != 144 {
-        return Err(invalid());
-    }
-    // Copy the accepted Unix record before reusing its receive storage.
-    let chunk = checked(ReceivedChunk::copy_from(&input[..count]))?;
-    input.fill(0xa5);
-    if std::hint::black_box(&input)
-        .iter()
-        .any(|byte| *byte != 0xa5)
-    {
+    // The peer-checked handle moves into the one-generation native transport.
+    let mut transport = WorkerTransport::new(socket, Deadline::at(Duration::from_nanos(until)));
+    checked(transport.dispatch(&request))?;
+    let chunk = checked(transport.read_chunk())?;
+    // Exact record admission belongs to this authored record fixture, not raw I/O.
+    if chunk.as_bytes().len() != 144 {
         return Err(invalid());
     }
     writeln!(
@@ -167,8 +152,9 @@ fn worker(args: &[String]) -> io::Result<()> {
     )?;
     io::stdout().flush()?;
     // Deliberately block only this supervised fixture worker until Stop kills it.
-    // Unix record/EOF semantics here make no CPIF read-zero or retry claim.
-    let _ = net::recv(&socket, &mut input, RecvFlags::empty())?;
+    // This separate read is the post-response fixture hold, not dispatch retry
+    // or response accumulation. No second record is sent by the controller.
+    let _ = checked(transport.read_chunk())?;
     Err(invalid())
 }
 fn receive(owner: &mut Supervisor, until: u64) -> io::Result<Vec<u8>> {
@@ -406,7 +392,6 @@ fn parent(args: &[String]) -> io::Result<i32> {
     })();
     // Cleanup and durable refusal occur before a deliberately missing-capability RED.
     let cleanup = dispose(&mut owner, identity);
-    cleanup?;
     let mut restart = Supervisor::new(journal);
     let refused = restart.start_worker(&mut command);
     if refused != Err(StartError::AdmissionUncertain) || restart.occupied() {
@@ -415,6 +400,8 @@ fn parent(args: &[String]) -> io::Result<i32> {
     event(
         json!({"event":"successor-refused","reason":"AdmissionUncertain","occupied":restart.occupied()}),
     )?;
+    // Record independent durable refusal even if the actual worker wait failed.
+    cleanup?;
     let capability = match result {
         Ok(value) => value,
         Err(error) => {

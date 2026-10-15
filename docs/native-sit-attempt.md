@@ -12,6 +12,12 @@ storage overwrite/check and serialization. Its new source-bound contract keeps
 the controller, bytes,14-field report and lifecycle oracle fixed. The original
 attempt RED/GREEN evidence below remains historical and unchanged.
 
+The [owned descriptor transport](native-sit-owned-transport.md) now replaces
+fixture-local send/recv/copy with the native one-generation primitive. The
+attempt's parser, report, source gate and historical evidence stay separate.
+The latest codec regression count is50; its receive ownership controls extend
+the earlier40-test report checkpoint.
+
 ## Contract
 
 An attempt fixes one validated setup, initial token0, source generation and
