@@ -27,3 +27,5 @@ pub mod supervisor;
 pub mod request;
 
 pub mod bootstrap;
+
+pub mod observation;

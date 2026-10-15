@@ -33,7 +33,7 @@ impl Remotable for Manager {
                     return Err(StatusCode::InvalidOperation);
                 }
                 *current = Some(service);
-                println!("NDK-SERVICE-TRANSFERRED");
+                println!("SERVICE-TRANSFERRED");
                 std::io::stdout().flush().unwrap();
                 reply.write(&Status::from(StatusCode::Ok))
             }
@@ -42,7 +42,15 @@ impl Remotable for Manager {
                     return Err(StatusCode::BadValue);
                 }
                 reply.write(&Status::from(StatusCode::Ok))?;
-                reply.write(&self.0.lock().unwrap().clone())
+                let service = self.0.lock().unwrap().clone();
+                println!(
+                    "SERVICE-LOOKUP pid={} uid={} found={}",
+                    rsbinder::thread_state::get_calling_pid(),
+                    rsbinder::thread_state::get_calling_uid(),
+                    service.is_some()
+                );
+                std::io::stdout().flush().unwrap();
+                reply.write(&service)
             }
             _ => Err(StatusCode::UnknownTransaction),
         }

@@ -1,10 +1,23 @@
 # Native radio session owner
 
+The production Samsung radioExternal worker now completes a narrow actual ARM
+tracer: cooperative parent bootstrap, explicit named Binder discovery, one owned
+registration and fenced raw callback publication. A genuine missing-publication
+RED precedes a worker-only repair; client/peer/manager ELF bytes and the outer
+oracle remain identical. GREEN receives the authored raw packet, observes retained
+watch ServiceDied, then actual worker wait 9 and durable same/recreated-owner retry
+refusal. Client/peer waits 0 and full guest/outer/input closure pass; all 41 host
+library tests and strict checks pass. This is public synthetic Binder on a generic
+ARM kernel, not vendor/IMS or hardware qualification. Installed supervision,
+blockage/pressure in this executable, production identity/policy, decoded semantics and
+phone gates remain. See [production worker tracer](native-radio-production-worker.md).
+
 A later [cooperative bootstrap checkpoint](native-radio-bootstrap.md) adds a new
 production-library parent-bound worker entry before Binder, qualified separately
 by actual generic ARM Binder parent-death and live wrong-parent refusal controls.
 It preserves durable uncertainty and the installed service-manager requirement;
-no complete production worker, vendor cleanup, IMS or phone qualification follows.
+that historical selection alone provides no complete production worker, vendor
+cleanup, IMS or phone qualification.
 The historical execution selections below retain their original scope.
 
 Status: the registration/publication authority is implemented in

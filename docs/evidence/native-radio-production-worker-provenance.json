@@ -1,0 +1,500 @@
+{
+  "schema": 1,
+  "scope": "Production Samsung radioExternal worker: cooperative bootstrap, explicitly selected named Binder lookup, one owned registration, bounded historical raw observation, retained death watch and Stop/retry fencing. Actual public synthetic peer under generic ARM kernel.",
+  "base_commit": "7275c4914a2aefa7cef5f268608057e1bd9007c8",
+  "new_capability_TDD": true,
+  "production_repair_only": [
+    "native-radio/src/bin/radio-worker.rs"
+  ],
+  "baseline_worker_source_sha256": "68810a9a706b81293c934cd31b579ec45d8f5f5d834a4619bed0b713dac1c370",
+  "builds": {
+    "baseline": {
+      "label": "pokelinux-radio-production-worker-build-baseline-root-3",
+      "proof_sha256": {
+        "selection.json": "8e36061a5598ad71129dc7d1c1bf2e12f781042ccc4ca4ce1ec895ac5437de0a",
+        "execution.json": "99531553528ec81ac7b5eca93a018405f2e91284835a2ffdf847859a85d41d50",
+        "build.sh": "a60e3d96cc9e06ad11023dd4c60d63dfbb8487936c72a5f4adc2661e960cb2b8",
+        "build.log": "761256ebb48d906f30f2bc720c6d434ef20d3de4bbd6f92a61394409165eaf48",
+        "arm-cargo.jsonl": "0e4139228ecaaa6e519a54e45d26a00d1fa9282a27b4319d7f72b665bf68dadb",
+        "worker-arm-cargo.jsonl": "c5ec3de7c2bb0a29f6d84971768ce8eeed326248d5dca77772c7e922a9a68d71"
+      },
+      "binaries": {
+        "client": "171e6e18ad57b0328afb56a48a0a9046c07732f1e1ab76eac87a07cfa1ad1a69",
+        "peer": "a9da8b0216c826b1ac302396a86a19426f805e55a511b12f9387ce667b39bfa6",
+        "manager": "18f0e34bf1368ea5be9c50319803d3c8a2049ecf2db10d14cffc8137b2f12559",
+        "radio-worker": "4617f08ff52afd1cc46742c24bb76db29a92f3392559fd8cc202d2b52bfe8f90"
+      },
+      "host_library_tests": 41,
+      "host_library_failures": 0,
+      "strict_checks_passed": true,
+      "actual_CLI_wait_exit": 0,
+      "fresh_exact_CID_absent": true,
+      "same_daemon_and_frozen_inputs": true
+    },
+    "repair": {
+      "label": "pokelinux-radio-production-worker-build-repair-root-1",
+      "proof_sha256": {
+        "selection.json": "99dbef7946c84012ec4b5371e6b002663b9d602683c58f4ca436d46357296e89",
+        "execution.json": "009549e635f0cf6bba4bf5f62ce999f78261e1ab0b3cbae0738890c127892f52",
+        "build.sh": "a60e3d96cc9e06ad11023dd4c60d63dfbb8487936c72a5f4adc2661e960cb2b8",
+        "build.log": "0e75d35b35b28a6492d57393b423c156465f6e15ad6f9987a64fd9503a00c45e",
+        "arm-cargo.jsonl": "44cb4b1501f91943ca4bbeff3a05d5617298cb1cef331eabbfd09b8e2cfc462b",
+        "worker-arm-cargo.jsonl": "b5534d86ce0df844290732a13ea4eb949e4cee163eb384bc1631e5c50a792d82"
+      },
+      "binaries": {
+        "client": "171e6e18ad57b0328afb56a48a0a9046c07732f1e1ab76eac87a07cfa1ad1a69",
+        "peer": "a9da8b0216c826b1ac302396a86a19426f805e55a511b12f9387ce667b39bfa6",
+        "manager": "18f0e34bf1368ea5be9c50319803d3c8a2049ecf2db10d14cffc8137b2f12559",
+        "radio-worker": "161f6f1a1776e079cbce2f06f6e47726f6c7710c00cd3fccfe96628294934808"
+      },
+      "host_library_tests": 41,
+      "host_library_failures": 0,
+      "strict_checks_passed": true,
+      "actual_CLI_wait_exit": 0,
+      "fresh_exact_CID_absent": true,
+      "same_daemon_and_frozen_inputs": true
+    }
+  },
+  "runtime": {
+    "baseline": {
+      "label": "pokelinux-radio-production-worker-arm-baseline-root-1",
+      "selection_sha256": "a6b14aa64ebe1f9b69f0109856695c9b8ea1822ac9b4818132ab1844bd8bc613",
+      "command_sha256": "8a9e5a9121aa6e0243553aeb3b7516001ab18376475dbde33d38a4c22fa9e36f",
+      "execution_sha256": "0f715253d28e5fdf1e97b61b19000d46ef48a6786aee1415d2b9ba532c06ef2e",
+      "guest_result_sha256": "57ffc8ee1faa88e4e3629462981c9159dec64de4e5ed06753ebe74f7d5b3634d",
+      "kernel": {
+        "machine": "aarch64",
+        "release": "7.1.6-1-aarch64-ARCH",
+        "version": "#1 SMP PREEMPT_DYNAMIC Wed Aug  5 00:20:13 UTC 2026"
+      },
+      "setup_complete": true,
+      "independently_verified_setup": [
+        "actual four post-exec ELF hashes and argv",
+        "worker parent PID and shared PID namespace",
+        "UID/GID1000, groups empty, CapEff0",
+        "one worker IServiceManager.checkService lookup",
+        "one registration by actual worker PID",
+        "one successful authored callback submission before Active ACK"
+      ],
+      "actual_client_wait_exit": 1,
+      "actual_worker_wait_signal": 9,
+      "actual_peer_wait_exit": -9,
+      "actual_manager_wait_exit": -9,
+      "native_worker_wait_before_original_cleanup_cutoff": true,
+      "guest_direct_waits_before_original_cutoffs": true,
+      "raw_received": false,
+      "peer_death_observed": false,
+      "durable_same_and_recreated_owner_refusal": true,
+      "old_output_fenced": true,
+      "journal_unchanged": true,
+      "desired_boundary_red": true,
+      "requirement_passed": false,
+      "actual_Docker_CLI_wait_exit": 0,
+      "exact_CID_absent_and_same_daemon": true,
+      "all_inputs_unchanged": true
+    },
+    "repair": {
+      "label": "pokelinux-radio-production-worker-arm-green-root-1",
+      "selection_sha256": "1f7c24473c7d559f563fee6165b3054fcfa6c797350d29fb1182b6c00ebe3c76",
+      "command_sha256": "6c1bbe3b0535f3ca46ccbdd02ff8745d86d7441db0f1104475f2f746129afccd",
+      "execution_sha256": "2b6b44ed7cd9c1b4ddc08ffac03191213b2232e5b3325b5f8f7824bb6c6d1fb0",
+      "guest_result_sha256": "d892e1db6e4af00221bd8fc397158c4f715988cdd42c86676ea09d24708d4982",
+      "kernel": {
+        "machine": "aarch64",
+        "release": "7.1.6-1-aarch64-ARCH",
+        "version": "#1 SMP PREEMPT_DYNAMIC Wed Aug  5 00:20:13 UTC 2026"
+      },
+      "setup_complete": true,
+      "independently_verified_setup": [
+        "actual four post-exec ELF hashes and argv",
+        "worker parent PID and shared PID namespace",
+        "UID/GID1000, groups empty, CapEff0",
+        "one worker IServiceManager.checkService lookup",
+        "one registration by actual worker PID",
+        "one successful authored callback submission before Active ACK"
+      ],
+      "actual_client_wait_exit": 0,
+      "actual_worker_wait_signal": 9,
+      "actual_peer_wait_exit": 0,
+      "actual_manager_wait_exit": -9,
+      "native_worker_wait_before_original_cleanup_cutoff": true,
+      "guest_direct_waits_before_original_cutoffs": true,
+      "raw_received": true,
+      "peer_death_observed": true,
+      "durable_same_and_recreated_owner_refusal": true,
+      "old_output_fenced": true,
+      "journal_unchanged": true,
+      "desired_boundary_red": false,
+      "requirement_passed": true,
+      "actual_Docker_CLI_wait_exit": 0,
+      "exact_CID_absent_and_same_daemon": true,
+      "all_inputs_unchanged": true
+    }
+  },
+  "shared_outer_oracle_sha256": {
+    "guest.py": "3e3f229e5a9220bfff164d01e3ff9594fea0dbeb7edbfd18e09ac803a3d9d81f",
+    "plan.py": "dee7cf114d50eccb4d8485f28c94ec55f836c792f2fb726dfb12e25366dc60fd",
+    "boot.sh": "19757075395810f847a40cab37796e547f92d8b15727d87627585e187f01376b",
+    "run-selected.py": "1c5b741c15cca8ca3e92b246592925741eb4c26fb1eddd83908c009589183449"
+  },
+  "build_prerequisite_failures": [
+    {
+      "label": "pokelinux-radio-production-worker-build-baseline-root-1",
+      "classification": "build prerequisite failure, not behavioral RED",
+      "reason": "BpServiceManager trait import; no tests or ARM runtime",
+      "execution_sha256": "d9d373a934c928d760c4bf7816b767b3f92d6ba7193017c009900bfc0408356c",
+      "actual_CLI_wait_exit": 101,
+      "test_execution": false,
+      "exact_CID_absent": true
+    },
+    {
+      "label": "pokelinux-radio-production-worker-build-baseline-root-2",
+      "classification": "build prerequisite failure, not behavioral RED",
+      "reason": "collapsible-if strict lint; no tests or ARM runtime",
+      "execution_sha256": "71489b7aec973c31e79a14f1c333b58146d9a881705669f23f01af2dee5721c1",
+      "actual_CLI_wait_exit": 101,
+      "test_execution": false,
+      "exact_CID_absent": true
+    }
+  ],
+  "root_independent_rehash": {
+    "runtime_input_bindings": 344,
+    "source_files_per_build": 70,
+    "identical_client_peer_manager_ELFs": true,
+    "all_current_source_matches_repair_build": true
+  },
+  "frame": {
+    "max_bytes": 2116,
+    "max_payload_bytes": 2048,
+    "integer_encoding": "little endian",
+    "provenance": [
+      "128-bit process incarnation",
+      "attempt1",
+      "increasing owner revision"
+    ],
+    "variants": [
+      "Active transport registration ID",
+      "Raw response metadata and bytes",
+      "Failed receiver reason"
+    ],
+    "semantics": "historical latest snapshots; raw revisions may coalesce under backpressure, not every callback delivery or current phone state",
+    "raw_fixture": {
+      "slot": 0,
+      "serial": 7,
+      "rilcMsgId": 137,
+      "declared_length": 1,
+      "error": 0,
+      "payload": [
+        7
+      ]
+    }
+  },
+  "deadlines": {
+    "clock": "CLOCK_BOOTTIME",
+    "session_from_setup_ns": 30000000000,
+    "raw_after_independent_active_ACK_ns": 1000000000,
+    "death_after_same_ACK_ns": 2000000000,
+    "original_worker_cleanup_after_same_ACK_ns": 3000000000,
+    "final_disposal_reserve_ns": 1000000000,
+    "actual_suspend_executed": false
+  },
+  "evidence_classes": {
+    "host_components": true,
+    "actual_generic_ARM_kernel_Binder_public_peer": true,
+    "new_original_vendor_or_Android_runtime": false,
+    "new_private_REA_inputs": false,
+    "ARM_usermode_execution": false,
+    "physical_phone": false,
+    "UI_or_authentication": false
+  },
+  "remaining_gates": [
+    "installed production supervisor/observer and service-manager containment",
+    "production device/service identity, interface version/hash and access policy",
+    "permanent discovery/registration blockage and output pressure in this exact executable",
+    "decoded IMS/call/SMS semantics, producer identity and request/ACK/reset recovery",
+    "actual suspend/wake and matched Pixel kernel/policy",
+    "modem/carrier, graphics, camera, audio, power and other physical smartphone qualification"
+  ],
+  "source_files_repair": [
+    {
+      "path": "native-radio/Cargo.lock",
+      "sha256": "5517d36e235f1eefda31ca5567cdd1a6260bd21f34c97b7ead3d3561c5991a73"
+    },
+    {
+      "path": "native-radio/Cargo.toml",
+      "sha256": "04dc15af2ae1ac5c5698b8125f2979363d3b808d96770663683b300e4c021b77"
+    },
+    {
+      "path": "native-radio/aidl/RadioExternalResponseInfo.aidl",
+      "sha256": "750c6a2251fa35e6b537eb3baa0d080d1f39964d5cbc92b6f77d4e5a0c945245"
+    },
+    {
+      "path": "native-radio/build.rs",
+      "sha256": "5118ea2f7e4878ffe1bea136e9cb3b2cf91b8b933b2061e6219e4e4de840ee31"
+    },
+    {
+      "path": "native-radio/src/assembly.rs",
+      "sha256": "d9030c3041294576e44b20563f8d953c27da6dd695aa44dd9da72b958979ef16"
+    },
+    {
+      "path": "native-radio/src/bin/radio-ipc-test.rs",
+      "sha256": "a944ea10531d6e094ae165a9f9da01bd76b2eaf395213524110a27823a3cd38f"
+    },
+    {
+      "path": "native-radio/src/bin/radio-worker.rs",
+      "sha256": "548c1754846ab3f577b5c61667afdeddf87fc6bf15c227c9458df3c4fdf7d690"
+    },
+    {
+      "path": "native-radio/src/bootstrap.rs",
+      "sha256": "9c414623f5d0c74920f4c1a459808273a90f6fabf80d235d4e0c61a8a9177cfb"
+    },
+    {
+      "path": "native-radio/src/deadline.rs",
+      "sha256": "abc2a3f23284402fe3bc34abfb380bdf1f84a1f6d15cbd90b38a09bf5450c2ee"
+    },
+    {
+      "path": "native-radio/src/indication.rs",
+      "sha256": "cf645e64492034bee2ae22e27537bdd4b99aa04bcf6183e7a7841af806660456"
+    },
+    {
+      "path": "native-radio/src/lib.rs",
+      "sha256": "4f7c66c80804877cf25f96e5d97f9b0a659a5543588adca2a5c44da9f816ce49"
+    },
+    {
+      "path": "native-radio/src/main.rs",
+      "sha256": "c27968c70082183e2ed629b462b7d245b3fab8c3d4d0e225fc8555d8dedebe29"
+    },
+    {
+      "path": "native-radio/src/observation.rs",
+      "sha256": "73b91365bfc956ad3e842baa44df01c6afe6e6b3ae820be9d1b9639b4cbca31d"
+    },
+    {
+      "path": "native-radio/src/owner.rs",
+      "sha256": "37ec8cc3f94bed8aa4abc5856fb51d5c94823daa821a69e7a1d86c04ed03f958"
+    },
+    {
+      "path": "native-radio/src/receiver.rs",
+      "sha256": "eb638f48378753d5a1f8188c2f6bd889118ca844a54be7165b7dd84209f68678"
+    },
+    {
+      "path": "native-radio/src/request.rs",
+      "sha256": "f9e1a3ee79a3d118314df617c51085006ab0d6738cbdf0ee4dd527cbfe374b76"
+    },
+    {
+      "path": "native-radio/src/response.rs",
+      "sha256": "69c81928998b9399c2b9085bf713403f747bffdcbfd457a9c358b4eef1f37589"
+    },
+    {
+      "path": "native-radio/src/supervisor.rs",
+      "sha256": "13436381577289a8b3fc12d365c76e11a9312f1ddf0e37de949d92ed1de3268b"
+    },
+    {
+      "path": "native-radio/src/transport.rs",
+      "sha256": "f01d1ec1d543ed667f3b8d06366d909eb02168235a41ab58a831ebed2a11e455"
+    },
+    {
+      "path": "native-radio/src/worker.rs",
+      "sha256": "ba9e55c6bc96a80962c1b1dca56b608b624df89d579844e186afde1615856313"
+    },
+    {
+      "path": "native-radio/tests/assembly.rs",
+      "sha256": "b5490262522a7f5872ed3a769345e683aed4b47ee44a382f6342e4f73df545d3"
+    },
+    {
+      "path": "native-radio/tests/fixtures/response-arguments.tsv",
+      "sha256": "1460c6865a971a96569305374062ffee923153075c421b49d6e70eb7345cd68e"
+    },
+    {
+      "path": "native-radio/tests/fixtures/response-info.tsv",
+      "sha256": "1c0031388c9ef428e14f1cbb070f17d44051a4b3cd659479c3a920ac8e7f32fd"
+    },
+    {
+      "path": "native-radio/tests/indication_arguments.rs",
+      "sha256": "f5cf476f870c3a79df53434b30aa2e94b30cb299220d910829ca07657089b157"
+    },
+    {
+      "path": "native-radio/tests/response_arguments.rs",
+      "sha256": "f98b32af369ae1571bf14e51acf7b6123702f893e4563c5abfdf370c2eaf8a65"
+    },
+    {
+      "path": "native-radio/tests/response_info.rs",
+      "sha256": "4ef1d2e1e281610280adff38cd64e51802ee871dba1acf09e72cf04ca334288e"
+    },
+    {
+      "path": "native-radio/tests/response_receiver.rs",
+      "sha256": "e1101126035ef5a964a248d1f43dd4ccfd473f22d2dc159700a5aa9f0276171b"
+    },
+    {
+      "path": "native-ims/Cargo.lock",
+      "sha256": "6aa52824cf4c8784c9ab049bceadc5e9fa60a9bee95e506d4804659f4fec2eb6"
+    },
+    {
+      "path": "native-ims/Cargo.toml",
+      "sha256": "673a36e6e406492b7418c0fcf6b806327bae3061ab47fd91232a2d7eab8ffd6f"
+    },
+    {
+      "path": "native-ims/src/lib.rs",
+      "sha256": "83a6f74531ca03f30fdc991d983013d2da8e9ac3bcd5ac27c9285f54d94873b3"
+    },
+    {
+      "path": "native-ims/src/reader.rs",
+      "sha256": "65cf29526840c2d501adc527532360120e2eb5ee9e1b38eb1b08fc94b3bf118c"
+    },
+    {
+      "path": "native-ims/src/registration.rs",
+      "sha256": "b6dc008bb82d5892a4f19e05c93e1cc8ca7b596e5b0947da8e04072a8c128cf4"
+    },
+    {
+      "path": "native-ims/src/requests.rs",
+      "sha256": "ad0b411f0f385d620df18a7a206034199e9cf9d390b13c13925f19e347cba26f"
+    },
+    {
+      "path": "native-ims/tests/data_reader.rs",
+      "sha256": "a3418023f044d068ef109ce17b76fe4423aec317616cd8f1050fe70ecd4a35d3"
+    },
+    {
+      "path": "native-ims/tests/data_writer.rs",
+      "sha256": "8778d58a1717329810e7a15dd19a28edcef9d20556fa803ce220170e3428993c"
+    },
+    {
+      "path": "native-ims/tests/fixtures/shannon-data-writer.tsv",
+      "sha256": "0a2a0a7616fe06285c148e8c471fc92f5d6222cd9a0e2c94915a85173571bde2"
+    },
+    {
+      "path": "native-ims/tests/fixtures/shannon-messages.tsv",
+      "sha256": "c2973e5bebfa93756a0bbf70b682e380cc943195ae7ee534df366fa67b53a28d"
+    },
+    {
+      "path": "native-ims/tests/fixtures/shannon-reader.tsv",
+      "sha256": "a0d9ce3523a378982f69a7e6f09ea8f00672033179aa2a2805e9dc14c9b5a2ea"
+    },
+    {
+      "path": "native-ims/tests/fixtures/shannon-registration.tsv",
+      "sha256": "4acc479315733745ec7bfe62c82b029a9f45e914fe0ea6a5891a1229da214b83"
+    },
+    {
+      "path": "native-ims/tests/messages.rs",
+      "sha256": "a07ddade5e60c67009d424c156f19b735c5325654ace746518db698f609166c0"
+    },
+    {
+      "path": "native-ims/tests/registration.rs",
+      "sha256": "3caa587938c70691cd214e16deb9996659921d7ad672d09d5abbab22328c171d"
+    },
+    {
+      "path": "native-ims/tests/request_parts.rs",
+      "sha256": "fa924efa9333150cf9842e7dad36babf67b6c7432ea5b811d0ba5673f078eb3e"
+    },
+    {
+      "path": "native-kernel-identity/Cargo.lock",
+      "sha256": "ea2dd27ddd1bf8c00b3bf15d5fface7d5bddd6e20b5d1e89fbc1fc10172ff592"
+    },
+    {
+      "path": "native-kernel-identity/Cargo.toml",
+      "sha256": "5cab2f22141987e4f1470b0fb575107b5c3ad134829bd2b92d5b7ccb3ef12431"
+    },
+    {
+      "path": "native-kernel-identity/README.md",
+      "sha256": "07ff5508164058ad2d51f449e91b06b0a02d2373b2d33d8885274d044c84d19a"
+    },
+    {
+      "path": "native-kernel-identity/public-api-inputs.json",
+      "sha256": "21981ee4e529ce04afc90453b5e9215d5d71eeb3dc758e32731deaa3fb9d6197"
+    },
+    {
+      "path": "native-kernel-identity/src/lib.rs",
+      "sha256": "464a5e2a96dd99f127cce5b32514ff4a9a7340f8bee2581e941685e6df82cbcd"
+    },
+    {
+      "path": "native-kernel-identity/src/pidfd.rs",
+      "sha256": "caf4b44738fc53093a32ef96c2e639c1a376935ad29fa17a42091a56180b11ff"
+    },
+    {
+      "path": "native-kernel-identity/tests/pidfd.rs",
+      "sha256": "ed310e5152426ae8a3d723ca2869cdcd3fda50e0552cdc16938c638d308cc3b3"
+    },
+    {
+      "path": "native-kernel-identity/tests/socket.rs",
+      "sha256": "2e9d134e7913ddadb564939bf241538690698a9ca7b660213479d843c638fd08"
+    },
+    {
+      "path": "tools/native-arm64-binder/fixture/Cargo.lock",
+      "sha256": "fdf96ab197d25e2c7a581d901990a5d8f89c0da6e96d4e0e6ddcbdec7bba0d48"
+    },
+    {
+      "path": "tools/native-arm64-binder/fixture/Cargo.toml",
+      "sha256": "1967d3444cc6572652862b5ffd9db9121b2150ec287f0e435aff9c42bb9f7650"
+    },
+    {
+      "path": "tools/native-arm64-binder/fixture/src/bin/client.rs",
+      "sha256": "5761eac1ed2b1f6a5e9f33da46474a4c439112e377f3901d7279dcf3cf55f476"
+    },
+    {
+      "path": "tools/native-arm64-binder/fixture/src/bin/manager.rs",
+      "sha256": "c4a27f6a05884f3c258b2af921ca8caa53db08d4e0d3d4cf6217f0bac515ceb8"
+    },
+    {
+      "path": "tools/native-arm64-binder/fixture/src/bin/peer.rs",
+      "sha256": "045a86a01bdc5e24dd62ece1134747c4ba6f57fdaed0ab2addd148be600c2789"
+    },
+    {
+      "path": "tools/native-arm64-binder/fixture/src/bootstrap_controls.rs",
+      "sha256": "ed142d2f38bf452808abda357ca9a1b9df9ff72a02d3766ab4a41a8bb0b35d09"
+    },
+    {
+      "path": "tools/native-arm64-binder/fixture/src/production_worker.rs",
+      "sha256": "721b875fca48bc6fc8b0c37753ee184a57e8b49001cf78e9a16523d910afed60"
+    },
+    {
+      "path": "tools/native-arm64-binder/fixture/src/supervised.rs",
+      "sha256": "6377ba63907c18573650a345b91a2ea612174f1bc2f34a8b6947f8394914c599"
+    },
+    {
+      "path": "tools/native-radio-load-only/Cargo.lock",
+      "sha256": "34074971573de46826d49ece780f80e273ea5ded607bc79ae174c15b83bd93c4"
+    },
+    {
+      "path": "tools/native-radio-load-only/Cargo.toml",
+      "sha256": "02e172591ae639d7b09dd289aa8d34f76d542dfec9bb24e12e6f45f31987fd52"
+    },
+    {
+      "path": "tools/native-radio-load-only/README.md",
+      "sha256": "4a184382b8613034311ba13cd8be88d20e0bc0405a01103d01f43d19ec1aa173"
+    },
+    {
+      "path": "tools/native-radio-load-only/freeze.py",
+      "sha256": "727fe9f0f4e35f84a7691d86a53e1a05b2316090891d575b4ff591044bbfac8e"
+    },
+    {
+      "path": "tools/native-radio-load-only/green.py",
+      "sha256": "54c43eb95f57c2a62662d7d0f8297631ce225b6dce037491d73dbdd2698a9729"
+    },
+    {
+      "path": "tools/native-radio-load-only/guest.py",
+      "sha256": "c127e39f5b0b65fb5f0551e1f4be19da2a929a66fce5e52231f5b8bc3a263855"
+    },
+    {
+      "path": "tools/native-radio-load-only/run.sh",
+      "sha256": "3f9797a39c0f7f7c5e98aad49f08060b96a09ce9b9663701871612590973b2bc"
+    },
+    {
+      "path": "tools/native-radio-load-only/src/child.rs",
+      "sha256": "cfe544f23ed99c58623357b174b24f41492c16a40378b1b697115f48e72a317e"
+    },
+    {
+      "path": "tools/native-radio-load-only/src/parent.rs",
+      "sha256": "b0df985b241b200d545a6e83c4908eda1111f5f0b9276b4394f3f4ec16fc9b14"
+    },
+    {
+      "path": "tools/native-radio-load-only/src/red.rs",
+      "sha256": "018f2edb5f9d236fbe5f5b7c45a6053b48a79bbe1ae2293c8213a1deac0e4004"
+    },
+    {
+      "path": "tools/native-radio-load-only/verify.py",
+      "sha256": "9e602ff22b08ae014e3ed5b244bf57a6ee3316d3a9d6501b2ee2ecd5eb360b84"
+    },
+    {
+      "path": "tools/native-radio-load-only/vm.py",
+      "sha256": "8a0cba968aed8bd7d73052e3167e73d6524654b530dc700575276bf21a4da92b"
+    }
+  ]
+}

@@ -61,6 +61,13 @@ fn response(callback: &SIBinder, serial: i32, bytes: &[u8]) -> Result<()> {
     }
     data.write(bytes)?;
     remote.submit_transact(1, &data, FLAG_ONEWAY)?;
+    println!(
+        "CALLBACK-SUBMITTED target_pid={} serial={} bytes={}",
+        thread_state::get_calling_pid(),
+        serial,
+        bytes.len()
+    );
+    std::io::Write::flush(&mut std::io::stdout())?;
     Ok(())
 }
 fn indication(callback: &SIBinder) -> Result<()> {
@@ -276,7 +283,23 @@ impl Remotable for Radio {
 fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     let process = ProcessState::init("/dev/binderfs/radio", 4)?;
     let radio = Binder::new(Radio(Arc::new(Shared::default())));
-    process.become_context_manager(Binder::new(Bootstrap(radio.as_binder())).as_binder())?;
+    if std::env::args().nth(1).as_deref() == Some("named") {
+        use rsbinder::{
+            Proxy,
+            hub::android_16::{BpServiceManager, IServiceManager},
+        };
+        let manager =
+            BpServiceManager::from_binder(process.context_object()?).ok_or(StatusCode::BadType)?;
+        ProcessState::start_thread_pool();
+        manager.addService(
+            "org.pokelinux.fixture.arm64-radio",
+            &radio.as_binder(),
+            false,
+            8,
+        )?;
+    } else {
+        process.become_context_manager(Binder::new(Bootstrap(radio.as_binder())).as_binder())?;
+    }
     println!("READY pid={}", std::process::id());
     use std::io::Write;
     std::io::stdout().flush()?;

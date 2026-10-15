@@ -346,6 +346,8 @@ fn peer(service_manager: bool) -> Result<SIBinder, Box<dyn std::error::Error>> {
 }
 #[path = "../bootstrap_controls.rs"]
 mod bootstrap_controls;
+#[path = "../production_worker.rs"]
+mod production_worker;
 #[path = "../supervised.rs"]
 mod supervised;
 fn main() -> TestResult {
@@ -365,6 +367,9 @@ fn main() -> TestResult {
     let scenario = std::env::args()
         .nth(if cooperative { 2 } else { 1 })
         .ok_or("missing scenario")?;
+    if scenario == "production-worker" {
+        return production_worker::run();
+    }
     if scenario == "parent-death-supervisor" {
         return supervised::parent_death_supervisor();
     }
