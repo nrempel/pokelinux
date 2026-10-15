@@ -18,6 +18,24 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The normal full QtQuick Messages tracer now passes on an actual Arch ARM kernel
+in original Hyprland/Omarchy, through the current Rust actor, retained native
+history and actual owned display SDK. Initial/armed denial, exact later authored
+Source clear, two hello pages and actual UID1000 durable relock denial reach the
+same mapped window. The real baseline closes natively but has app owner wait15;
+only production Qt main.cpp then gains early TERM masking/signalfd→normal quit.
+The unchanged test ELF/other helpers/assertions/harness pass with actual app
+owner wait0, complete native/guest/outer closure and frozen input checks.53 default
+host tests,13 selected host cases/16 reports, strict checks and full normal Qt
+host/ARM compilation pass. Six ARM compiler jobs finish in30.768s. Actual surface
+protocol/independent1080x2424 captures qualify narrowly; direct QWindow API,
+exact commit-to-capture association and source attestation remain separate. Auth,
+Source and SMS seed are authored, with no production auth ingress/PAM action or
+phone access. Live appearance, normal GUI same-ID reopen, secure presentation,
+production provisioning and hardware gates remain. See [GUI report](native-session-restoration-gui.md).
+
+The preceding normal app Stop checkpoint follows.
+
 Explicit normal app Stop now gives Running apps one immutable BOOTTIME TERM
 grace capped inside the original2s actor cleanup; other retirement stays forced.
 Actual Qt wait9 and premature TERM-ignore kill REDs precede53 default tests plus13

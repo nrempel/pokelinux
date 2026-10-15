@@ -159,3 +159,13 @@ persists through wait/drain.53 default tests and13 separately selected cases pas
 actual Qt owner wait0, TERM-ignore responsive fenced grace then wait9, forced
 Terminate and an authored held Terminal Context with an actual Qt child. Strict
 checks and ARM compilation are separate. No GUI/original SDK/phone proof follows.
+
+The subsequent [normal full Qt GUI tracer](../docs/native-session-restoration-gui.md)
+composes the actual display Listener/Supervisor and retained Messages in original
+Hyprland/Omarchy on Arch ARM. A dev-only primitive facade bridges trait identity;
+actual successful actor sends are observed through a bounded cfgtest witness,
+never a second reader/model proxy. The same Rust test ELF reaches three real GUI
+phases before a genuine Qt wait15 Stop RED and repaired normal main wait0 GREEN.
+53 default host tests and13 selected host cases still pass; one ARM GUI case is
+separately selected. Authentication/Source/SMS seed remain authored; direct Qt API,
+secure presentation, production provisioning and hardware remain open.

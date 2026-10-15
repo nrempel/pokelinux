@@ -12,6 +12,10 @@
 #include <QJsonObject>
 #include <QTimer>
 #include <QJSValue>
+#include <QSocketNotifier>
+#include <cerrno>
+#include <csignal>
+#include <sys/signalfd.h>
 #include <unistd.h>
 int main(int argc,char**argv){
 #ifdef MESSAGES_ISOLATED_OBSERVER
@@ -20,8 +24,26 @@ int main(int argc,char**argv){
  if(argc!=7)return 64;
 #endif
  if(getuid()!=11010||geteuid()!=11010)return 65;
+ // Block before QGuiApplication creates any platform/render/client threads.
+ // Normal actor TERM then requests event-loop exit and owned Qt destruction.
+ sigset_t termination;
+ if(::sigemptyset(&termination)||::sigaddset(&termination,SIGTERM)
+    ||::sigprocmask(SIG_BLOCK,&termination,nullptr))return 70;
+ struct TerminationFd {
+  int value;
+  ~TerminationFd(){if(value>=0)::close(value);}
+ } terminationFd{::signalfd(-1,&termination,SFD_NONBLOCK|SFD_CLOEXEC)};
+ if(terminationFd.value<0)return 70;
  qputenv("HOME",argv[1]);qputenv("XDG_RUNTIME_DIR",argv[2]);qputenv("WAYLAND_DISPLAY",argv[3]);qputenv("QT_QPA_PLATFORM","wayland");qputenv("PATH","/usr/bin");
  QGuiApplication app(argc,argv);QQuickStyle::setStyle("Basic");
+ QSocketNotifier terminate(terminationFd.value,QSocketNotifier::Read);
+ QObject::connect(&terminate,&QSocketNotifier::activated,&app,[&]{
+  signalfd_siginfo notification{};
+  const auto count=::read(terminationFd.value,&notification,sizeof(notification));
+  if(count<0&&(errno==EAGAIN||errno==EINTR))return;
+  if(count==ssize_t(sizeof(notification))&&notification.ssi_signo==SIGTERM)app.quit();
+  else app.exit(70);
+ });
  PhoneThemeFiles files(QString::fromLocal8Bit(argv[4]));QQuickView view;
  QQmlComponent component(view.engine(),QUrl::fromLocalFile(QString::fromLocal8Bit(argv[6])+"/PhoneTheme.qml"));
  QScopedPointer<QObject> theme(component.createWithInitialProperties({{"source",QVariant::fromValue(&files)}}));if(!theme)return 66;

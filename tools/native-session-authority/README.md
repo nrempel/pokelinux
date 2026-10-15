@@ -156,3 +156,12 @@ crate identity mismatches. It adds no successful-auth constructor, feature or IP
 The normal lifecycle public API remains unchanged. Actual retained native pages
 and clean same-ID reopen pass in the separate headless restoration selection;
 normal Qt/original compositor and genuine authentication remain separate gates.
+
+The dev-only library also exposes `display::{Factory,Context,State}` for the
+[normal GUI restoration test](../../docs/native-session-restoration-gui.md).
+It delegates the actual native display Listener/Supervisor using primitive paths,
+arguments and state mapping, without lifecycle DTO casts. The caller first checks
+the fixed helper with `trusted_executable`; construction binds the exact real
+compositor credential/pidfd identity, with no session or authentication authority.
+Each context retains its listener/SDK child through stop/poll/reap and aborts on
+occupied Drop. This does not add a production display provisioner or auth ingress.

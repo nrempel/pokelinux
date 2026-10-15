@@ -1,15 +1,15 @@
 # Isolated service restoration integration
 
-The thirteen ignored `service::restore_tests::` library tests run the actual lifecycle
+The fourteen ignored `service::restore_tests::` library tests run the actual lifecycle
 event loop, policy storage child, launcher and a persistent UID11010 app read
 connection. Source facts and authenticated-and-closed completion are authored test
 inputs. The initial six use authored history; two later cases use the actual
 Messages Projector with an authored SMS seed. A ninth case launches the unchanged
 production Qt client in a private QCore model host. Four further cases qualify
 normal Stop, TERM-ignore escalation, forced Terminate and held authored Context.
-There is no production
-authentication producer or new success socket, and no Source IPC, actual locker,
-normal QtQuick GUI, PAM or phone claim.
+There is no production authentication producer or new success socket. Genuine
+Source IPC, original locker/authentication, PAM and phone behavior remain open. The fourteenth test separately
+executes the normal QtQuick GUI in the recorded ARM graphics selection.
 
 Build the ordinary lifecycle daemon, launcher and library-test ELF from one
 frozen source selection; the private cfgtest service seam is included in the library tests.
@@ -31,8 +31,8 @@ execute the exact recorded library-test ELF with:
 --ignored --exact RECORDED_TEST_NAME --test-threads=1 --nocapture
 ```
 
-All nine integration tests are explicitly ignored by default. Record their exact
-inventory and selected execution separately from ordinary unit tests. The root
+All fourteen integration tests are explicitly ignored by default. Record their exact
+inventory and selected execution separately from ordinary unit tests. The headless host root
 profile needs SETUID, SETGID, CHOWN, KILL and DAC_OVERRIDE after dropping all other
 capabilities, a read-only root/source and private writable `/opt`, `/run`,
 `/var/lib` and `/tmp`. No privileged container or host directory is needed.
@@ -101,3 +101,33 @@ additional held Context is an authored Ready→Terminal/occupied contract with a
 actual Qt child, no SDK/Wayland/pathname. Initial two runtime REDs and the final
 unchanged contract assertions remain separately bound. No new auth ingress,
 normal GUI, ARM execution, screenshot or phone access is introduced.
+
+The [normal GUI selection](../../docs/native-session-restoration-gui.md) separately
+runs `normal_gui_tests::normal_gui_restores_history_and_stops_gracefully` on Arch
+ARM with original Hyprland/Omarchy. Its fixed root-trusted
+`/opt/service-restoration/normal-gui.json` contains `original_wayland`, `theme_home`,
+`appearance` (absolute bounded paths) and `normal_qt_sha256`. Install already-built
+normal Qt, `normal-gui-launch` and the selected current SDK worker as
+`pokelinux-messages`, `normal-gui-launch` and `display-context-worker`; validate
+these through the normal trusted executable check. The private worker selection
+uses only the current matching `--display-context-worker` dispatch. Earlier actor,
+Binder or Messages dispatches in that retained binary are never selected.
+
+The normal launcher still drops to UID/GID11010/groups[]. Six normal Qt arguments
+remain HOME, runtime, per-instance Wayland, narrow theme-files HOME, actor app
+socket and appearance QML directory. `normal-gui-launch.rs` creates one new0600
+private diagnostic sink in runtime0700, sets only WAYLAND_DEBUG and directly execs
+the fixed normal Qt path. It creates no child, authority API or signal behavior.
+It refuses an existing log; provision a fresh runtime per test case. Root binds
+postexec ELF SHA/inode, pidfd/credentials and stderr inode, then qualifies actual
+window protocol and independent native captures before any preview.
+
+The capacity32 cfgtest witness records exact peer/connection/time/bytes only after
+successful actual send, with sticky observer failure through closure. It does not
+prove decoding or pixels. The root observer acknowledges exact three-phase
+sequence records under the existing results directory while the test drains this
+queue. Its60s observation bound does not change any authority/cleanup deadline.
+The full normal app first has genuine owner wait15; after its production signalfd
+repair the same test/harness reaches owner wait0. All13 existing host cases and
+53 defaults still pass. Native captures use1080x2424; direct Qt API, live theme,
+secure presentation, GUI same-ID reopen, genuine auth/Source and phone remain open.

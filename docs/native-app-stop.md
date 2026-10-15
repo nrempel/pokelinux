@@ -14,6 +14,13 @@ consumer; it is not normal GUI/original compositor, genuine authentication or
 phone proof. [Bounded provenance](evidence/native-app-stop-provenance.json) separates
 source guarantees, actual host results and compile-only ARM artifacts.
 
+The subsequent [normal full GUI test](native-session-restoration-gui.md) separately
+executes the current actor/display SDK in original Hyprland on Arch ARM. A real
+normal Qt wait15 RED precedes the presentation entry-point repair and actual owner
+wait0, without changing actor budgets or the preceding thirteen host assertions.
+Authentication/Source remain authored; this closes only the cooperative normal
+GUI Stop subcase, with stalled helpers and secure presentation still open.
+
 ## One owned retirement
 
 Each slot retains its Child and display Context through Grace or sticky Forced

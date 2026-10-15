@@ -9,7 +9,9 @@ use rustix::{
     fd::OwnedFd,
     process::{Pid, PidfdFlags, Signal},
 };
+use serde::Deserialize;
 use serde_json::{Value, json};
+use sha2::{Digest, Sha256};
 use std::{
     fs,
     io::{self, Read, Write},
@@ -28,6 +30,8 @@ use std::{
 const APP: &str = messages::APP;
 const WAIT_NS: u64 = 2_000_000_000;
 const HISTORY: &[u8] = b"{\"history\":[\"restoration-fixture\"]}";
+const NORMAL_GUI_ROOT: &str = "/opt/service-restoration";
+const GUI_REPLY_LIMIT: usize = 65_536;
 
 fn check(value: bool, text: &str) -> io::Result<()> {
     if value {
@@ -52,6 +56,14 @@ enum ControlCommand {
     },
 }
 
+pub(super) struct GuiReply {
+    pub connection_id: u64,
+    pub pid: u32,
+    pub uid: u32,
+    pub sent_at_ns: u64,
+    pub bytes: Vec<u8>,
+}
+
 pub(super) struct ActorControl {
     inbox: Receiver<ControlCommand>,
     attempt: Option<(AuthenticationAttempt, u64)>,
@@ -59,9 +71,50 @@ pub(super) struct ActorControl {
     source_barrier: Option<(u64, u64, SyncSender<bool>)>,
     pub(super) storage_executable: PathBuf,
     pub(super) app_wait_observer: SyncSender<(u32, ExitStatus)>,
+    gui_replies: Option<SyncSender<GuiReply>>,
+    gui_observer_failed: Arc<AtomicBool>,
 }
 
 impl ActorControl {
+    /// Bounded witness called only after the actor's actual successful send.
+    /// It observes the socket peer and cannot authorize or delay publication.
+    pub(super) fn observe_gui_publication(
+        &mut self,
+        connection_id: u64,
+        fd: &OwnedFd,
+        bytes: &[u8],
+    ) {
+        let Some(replies) = &self.gui_replies else {
+            return;
+        };
+        let credentials = match rustix::net::sockopt::socket_peercred(fd) {
+            Ok(credentials) => credentials,
+            Err(_) => {
+                self.gui_observer_failed.store(true, Ordering::Release);
+                return;
+            }
+        };
+        if credentials.uid.as_raw() != 11010 {
+            return;
+        }
+        if bytes.len() > GUI_REPLY_LIMIT {
+            self.gui_observer_failed.store(true, Ordering::Release);
+            return;
+        }
+        if replies
+            .try_send(GuiReply {
+                connection_id,
+                pid: credentials.pid.as_raw_nonzero().get() as u32,
+                uid: credentials.uid.as_raw(),
+                sent_at_ns: boottime_ns(),
+                bytes: bytes.to_vec(),
+            })
+            .is_err()
+        {
+            self.gui_observer_failed.store(true, Ordering::Release);
+        }
+    }
+
     pub(super) fn poll(
         &mut self,
         authority: &mut Authority,
@@ -311,6 +364,10 @@ struct Case {
     worker: Option<(u32, OwnedFd)>,
     real_history: bool,
     qt_client: bool,
+    normal_gui: bool,
+    normal_gui_config: Option<NormalGuiConfig>,
+    gui_replies: Option<Receiver<GuiReply>>,
+    gui_observer_failed: Arc<AtomicBool>,
     held_context: Option<Arc<AtomicBool>>,
     app_waits: Receiver<(u32, ExitStatus)>,
     observed_app_waits: Vec<(u32, ExitStatus)>,
@@ -318,6 +375,122 @@ struct Case {
     messages_children: Vec<(u32, OwnedFd)>,
     observations: Vec<Value>,
     closed: bool,
+}
+
+#[derive(Clone, Deserialize)]
+#[serde(deny_unknown_fields)]
+struct NormalGuiConfig {
+    original_wayland: String,
+    theme_home: String,
+    appearance: String,
+    normal_qt_sha256: String,
+}
+impl NormalGuiConfig {
+    fn load() -> io::Result<Self> {
+        let root = Path::new(NORMAL_GUI_ROOT);
+        let path = root.join("normal-gui.json");
+        for directory in path.ancestors().skip(1) {
+            let metadata = fs::symlink_metadata(directory)?;
+            check(
+                metadata.is_dir() && metadata.uid() == 0 && metadata.mode() & 0o022 == 0,
+                "normal GUI configuration parent is not root-trusted",
+            )?;
+        }
+        let metadata = fs::symlink_metadata(&path)?;
+        check(
+            metadata.is_file() && metadata.uid() == 0 && metadata.mode() & 0o022 == 0,
+            "normal GUI configuration must be a root-trusted regular file",
+        )?;
+        let mut bytes = Vec::new();
+        fs::File::open(&path)?.take(4097).read_to_end(&mut bytes)?;
+        check(bytes.len() <= 4096, "normal GUI configuration too large")?;
+        let config: Self = serde_json::from_slice(&bytes)?;
+        for argument in [
+            &config.original_wayland,
+            &config.theme_home,
+            &config.appearance,
+        ] {
+            check(
+                Path::new(argument).is_absolute()
+                    && argument.len() <= 256
+                    && !argument.contains('\0'),
+                "normal GUI configured paths must be bounded absolute strings",
+            )?;
+        }
+        check(
+            config.normal_qt_sha256.len() == 64
+                && config
+                    .normal_qt_sha256
+                    .bytes()
+                    .all(|byte| byte.is_ascii_digit() || (b'a'..=b'f').contains(&byte)),
+            "normal GUI SHA256 must be canonical lowercase hex",
+        )?;
+        for name in [
+            "display-context-worker",
+            "normal-gui-launch",
+            "pokelinux-messages",
+        ] {
+            super::trusted_executable(&root.join(name))?;
+        }
+        check(
+            file_sha256(&root.join("pokelinux-messages"))? == config.normal_qt_sha256,
+            "installed normal GUI does not match frozen SHA256",
+        )?;
+        Ok(config)
+    }
+}
+
+fn file_sha256(path: &Path) -> io::Result<String> {
+    let mut file = fs::File::open(path)?;
+    let mut digest = Sha256::new();
+    let mut buffer = [0_u8; 8192];
+    loop {
+        let count = file.read(&mut buffer)?;
+        if count == 0 {
+            return Ok(format!("{:x}", digest.finalize()));
+        }
+        digest.update(&buffer[..count]);
+    }
+}
+
+// This wrapper translates traits and states explicitly; the neutral facade
+// retains every real Listener/Supervisor owner inside the actor's app context.
+struct NormalGuiFactory(native_session_authority_fixture::display::Factory);
+struct NormalGuiContext(native_session_authority_fixture::display::Context);
+impl crate::display::Factory for NormalGuiFactory {
+    fn start(
+        &mut self,
+        profile: &crate::AppProfile,
+        instance: &str,
+        until: u64,
+    ) -> io::Result<Box<dyn crate::display::Context>> {
+        Ok(Box::new(NormalGuiContext(self.0.start(
+            &profile.app,
+            profile.uid,
+            &profile.args,
+            instance,
+            until,
+        )?)))
+    }
+}
+impl crate::display::Context for NormalGuiContext {
+    fn poll(&mut self) -> io::Result<crate::display::State> {
+        use native_session_authority_fixture::display::State;
+        Ok(match self.0.poll()? {
+            State::Preparing => crate::display::State::Preparing,
+            State::Ready => crate::display::State::Ready,
+            State::Terminal => crate::display::State::Terminal,
+        })
+    }
+    fn arguments(&self) -> &[String] {
+        self.0.arguments()
+    }
+    fn stop(&mut self) -> io::Result<()> {
+        self.0.stop()
+    }
+    fn occupied(&self) -> bool {
+        self.0.occupied()
+    }
 }
 
 // Authored display contract only: no SDK, pathname or helper process exists.
@@ -366,6 +539,7 @@ impl crate::display::Context for HeldTerminalContext {
 #[derive(Clone, Copy)]
 enum TestApp {
     Python,
+    NormalGui,
     Qt,
     QtHeldContext,
     IgnoreTerm,
@@ -406,6 +580,7 @@ impl Case {
         app_mode: TestApp,
     ) -> io::Result<Self> {
         let qt_client = matches!(app_mode, TestApp::Qt | TestApp::QtHeldContext);
+        let normal_gui = matches!(app_mode, TestApp::NormalGui);
         if let Some(paths) = &retained {
             check(
                 paths.raw.is_absolute()
@@ -441,6 +616,11 @@ impl Case {
         ] {
             super::trusted_executable(executable)?;
         }
+        let normal_gui_config = if normal_gui {
+            Some(NormalGuiConfig::load()?)
+        } else {
+            None
+        };
         let id = crate::fresh_id()?;
         let runtime = PathBuf::from("/run").join(format!("restore-{}", &id[..10]));
         fs::create_dir(&runtime)?;
@@ -466,8 +646,24 @@ impl Case {
         fs::create_dir(&driver_dir)?;
         fs::set_permissions(&driver_dir, fs::Permissions::from_mode(0o700))?;
         std::os::unix::fs::chown(&driver_dir, Some(11010), Some(11010))?;
+        if normal_gui {
+            let home = driver_dir.join("home");
+            fs::create_dir(&home)?;
+            fs::set_permissions(&home, fs::Permissions::from_mode(0o700))?;
+            std::os::unix::fs::chown(&home, Some(11010), Some(11010))?;
+            let display = runtime.join("display");
+            fs::create_dir(&display)?;
+            // The app must traverse this root-owned parent to reach its
+            // facade-owned root:11010 instance directory and protected socket.
+            fs::set_permissions(&display, fs::Permissions::from_mode(0o755))?;
+        }
         let profile = install.join(format!("profile-{}.json", &id[..10]));
-        let configured_app = if qt_client {
+        let configured_app = if let Some(config) = &normal_gui_config {
+            json!({"app":APP,"uid":11010,
+                "executable":Path::new(NORMAL_GUI_ROOT).join("normal-gui-launch"),
+                "args":[driver_dir.join("home"),driver_dir,config.original_wayland,
+                    config.theme_home,runtime.join("app.sock"),config.appearance]})
+        } else if qt_client {
             let executable = install.join("messages-client-model");
             super::trusted_executable(&executable)?;
             json!({"app":APP,"uid":11010,"executable":executable,
@@ -544,6 +740,15 @@ impl Case {
         let held_context =
             matches!(app_mode, TestApp::QtHeldContext).then(|| Arc::new(AtomicBool::new(true)));
         let service_held_context = held_context.clone();
+        let service_normal_gui_config = normal_gui_config.clone();
+        let (gui_reply_sender, gui_replies) = if normal_gui {
+            let (sender, receiver) = mpsc::sync_channel(32);
+            (Some(sender), Some(receiver))
+        } else {
+            (None, None)
+        };
+        let gui_observer_failed = Arc::new(AtomicBool::new(false));
+        let service_gui_observer_failed = gui_observer_failed.clone();
         let (commands, inbox) = mpsc::sync_channel(1);
         let (app_wait_observer, app_waits) = mpsc::sync_channel(4);
         let (service_tx, service_done) = mpsc::sync_channel(1);
@@ -560,6 +765,27 @@ impl Case {
                 observed_revision: observed_revision.clone(),
                 stopped: false,
             };
+            // Construct the real facade on the owning actor thread; it is
+            // mutually exclusive with the authored held-context fixture.
+            let mut display_factory: Option<Box<dyn crate::display::Factory>> =
+                if let Some(occupied) = service_held_context {
+                    Some(Box::new(HeldTerminalFactory { occupied }))
+                } else if let Some(config) = service_normal_gui_config {
+                    match native_session_authority_fixture::display::Factory::new(
+                        &service_runtime.join("display"),
+                        Path::new(&config.original_wayland),
+                        &Path::new(NORMAL_GUI_ROOT).join("display-context-worker"),
+                        1000,
+                    ) {
+                        Ok(factory) => Some(Box::new(NormalGuiFactory(factory))),
+                        Err(error) => {
+                            let _ = service_tx.try_send(Err(error));
+                            return;
+                        }
+                    }
+                } else {
+                    None
+                };
             let mut history: Box<dyn messages::Provider> = match retained {
                 Some(paths) => match retained_history_tests::RealHistory::spawn(
                     &service_runtime,
@@ -582,9 +808,9 @@ impl Case {
                 source_barrier: None,
                 storage_executable: service_install.join("lifecycle-daemon"),
                 app_wait_observer,
+                gui_replies: gui_reply_sender,
+                gui_observer_failed: service_gui_observer_failed,
             };
-            let mut held_factory =
-                service_held_context.map(|occupied| HeldTerminalFactory { occupied });
             let result = super::run_with_services_inner(
                 &service_runtime,
                 &service_policy,
@@ -593,9 +819,9 @@ impl Case {
                 if pause { Some("pause:1") } else { None },
                 Some(history.as_mut()),
                 Some(&mut source),
-                held_factory
+                display_factory
                     .as_mut()
-                    .map(|factory| factory as &mut dyn crate::display::Factory),
+                    .map(|factory| factory.as_mut() as &mut dyn crate::display::Factory),
                 None,
                 Some(&mut control),
             );
@@ -618,6 +844,10 @@ impl Case {
             worker: None,
             real_history,
             qt_client,
+            normal_gui,
+            normal_gui_config,
+            gui_replies,
+            gui_observer_failed,
             held_context,
             app_waits,
             observed_app_waits: vec![],
@@ -651,6 +881,10 @@ impl Case {
                 case.admin(json!({"op":"launch","app":APP}))? == json!({"result":"ok"}),
                 "actual app launch failed",
             )?;
+            if case.normal_gui {
+                case.find_normal_gui_app()?;
+                return Ok(());
+            }
             let path = case.runtime.join("app/driver.sock");
             wait_until(boottime_ns().saturating_add(WAIT_NS), || Ok(path.exists()))?;
             let fd = ipc::connect(&path)?;
@@ -681,6 +915,147 @@ impl Case {
             return Err(error);
         }
         Ok(case)
+    }
+
+    fn drain_gui_replies(&mut self) -> io::Result<Vec<GuiReply>> {
+        check(
+            !self.gui_observer_failed.load(Ordering::Acquire),
+            "bounded successful-send GUI witness failed",
+        )?;
+        let replies = self
+            .gui_replies
+            .as_ref()
+            .map(|receiver| receiver.try_iter().collect())
+            .unwrap_or_default();
+        check(
+            !self.gui_observer_failed.load(Ordering::Acquire),
+            "bounded successful-send GUI witness failed while draining",
+        )?;
+        Ok(replies)
+    }
+
+    fn find_normal_gui_app(&mut self) -> io::Result<()> {
+        let config = self
+            .normal_gui_config
+            .as_ref()
+            .ok_or(io::ErrorKind::Unsupported)?;
+        let executable = Path::new(NORMAL_GUI_ROOT).join("pokelinux-messages");
+        let installed = fs::metadata(&executable)?;
+        let home = self.runtime.join("app/home");
+        let runtime = self.runtime.join("app");
+        let app_socket = self.runtime.join("app.sock");
+        let display_parent = self.runtime.join("display");
+        let mut found = None;
+        wait_until(boottime_ns().saturating_add(WAIT_NS), || {
+            let mut children = std::collections::BTreeSet::new();
+            for task in fs::read_dir("/proc/self/task")?.flatten() {
+                if let Ok(text) = fs::read_to_string(task.path().join("children")) {
+                    children.extend(
+                        text.split_whitespace()
+                            .filter_map(|pid| pid.parse::<u32>().ok()),
+                    );
+                }
+            }
+            for pid in children {
+                let proc_root = PathBuf::from(format!("/proc/{pid}"));
+                let bytes = match fs::read(proc_root.join("cmdline")) {
+                    Ok(bytes) => bytes,
+                    Err(error) if error.kind() == io::ErrorKind::NotFound => continue,
+                    Err(error) => return Err(error),
+                };
+                let mut arguments: Vec<_> = bytes.split(|byte| *byte == 0).collect();
+                if arguments.last() == Some(&b"".as_slice()) {
+                    arguments.pop();
+                }
+                if arguments.len() != 7
+                    || arguments[0] != executable.as_os_str().as_encoded_bytes()
+                    || arguments[1] != home.as_os_str().as_encoded_bytes()
+                    || arguments[2] != runtime.as_os_str().as_encoded_bytes()
+                    || arguments[4] != config.theme_home.as_bytes()
+                    || arguments[5] != app_socket.as_os_str().as_encoded_bytes()
+                    || arguments[6] != config.appearance.as_bytes()
+                {
+                    continue;
+                }
+                let wayland = Path::new(
+                    std::str::from_utf8(arguments[3]).map_err(|_| io::ErrorKind::InvalidData)?,
+                );
+                let instance = wayland
+                    .parent()
+                    .and_then(Path::file_name)
+                    .and_then(|name| name.to_str())
+                    .ok_or(io::ErrorKind::InvalidData)?;
+                check(
+                    wayland
+                        .file_name()
+                        .is_some_and(|name| name == "wayland.sock")
+                        && wayland.parent().and_then(Path::parent)
+                            == Some(display_parent.as_path())
+                        && instance.len() == 32
+                        && instance
+                            .bytes()
+                            .all(|byte| byte.is_ascii_digit() || (b'a'..=b'f').contains(&byte)),
+                    "normal GUI did not receive its exact per-instance display path",
+                )?;
+                check(found.is_none(), "more than one exact normal GUI child")?;
+                let alive = rustix::process::pidfd_open(
+                    Pid::from_raw(pid as i32).ok_or(io::ErrorKind::InvalidData)?,
+                    PidfdFlags::NONBLOCK,
+                )?;
+                let actual_executable = fs::metadata(proc_root.join("exe"))?;
+                check(
+                    (actual_executable.dev(), actual_executable.ino())
+                        == (installed.dev(), installed.ino())
+                        && fs::read_link(proc_root.join("exe"))? == executable
+                        && file_sha256(&proc_root.join("exe"))? == config.normal_qt_sha256,
+                    "normal GUI post-exec executable identity/SHA256 mismatch",
+                )?;
+                let status = fs::read_to_string(proc_root.join("status"))?;
+                let exact_ids = |field: &str| {
+                    status
+                        .lines()
+                        .find_map(|line| line.strip_prefix(field))
+                        .is_some_and(|values| {
+                            let ids: Vec<_> = values.split_whitespace().collect();
+                            ids == ["11010", "11010", "11010", "11010"]
+                        })
+                };
+                check(
+                    exact_ids("Uid:")
+                        && exact_ids("Gid:")
+                        && status.lines().any(|line| {
+                            line.strip_prefix("Groups:")
+                                .is_some_and(|groups| groups.split_whitespace().next().is_none())
+                        })
+                        && status.lines().any(|line| {
+                            line.strip_prefix("CapEff:")
+                                .is_some_and(|caps| caps.trim() == "0000000000000000")
+                        })
+                        && pokelinux_kernel_identity::ProcessView::open()?
+                            .matches(&alive, &alive, pid)?
+                        && crate::authority::living(&alive)?,
+                    "normal GUI actual kernel identity mismatch",
+                )?;
+                found = Some((pid, alive, wayland.to_owned()));
+            }
+            Ok(found.is_some())
+        })?;
+        let (pid, alive, wayland) = found.ok_or(io::ErrorKind::NotFound)?;
+        self.app = Some(OwnedFocus::new(
+            NativeFocus {
+                pid,
+                uid: 11010,
+                gid: 11010,
+            },
+            alive,
+        ));
+        self.observations.push(json!({"actual_normal_gui_identity":{
+            "pid":pid,"uid":11010,"gid":11010,"groups":[],
+            "cap_eff":"0000000000000000","post_exec_executable":executable,
+            "post_exec_sha256":config.normal_qt_sha256,"wayland":wayland},
+            "exact_direct_child_from_all_actor_tasks":true,
+            "driver_independently_reaped_app":false}));
+        Ok(())
     }
 
     fn admin(&self, request: Value) -> io::Result<Value> {
@@ -931,7 +1306,7 @@ impl Case {
     fn report(&self, label: &str, body: &io::Result<()>, closed: &io::Result<()>) {
         let record = json!({"case":label,"passed":body.is_ok()&&closed.is_ok(),"body_error":body.as_ref().err().map(ToString::to_string),
             "closure_error":closed.as_ref().err().map(ToString::to_string),"observations":self.observations,
-            "actual_policy_worker":true,"auth_and_Source_authored":true,"history_provider_authored":!self.real_history,"actual_retained_history_provider":self.real_history,"history_seed_authored":self.real_history,"actual_Qt_client_model":self.qt_client,"normal_Qt_GUI_executed":false,"production_auth_ingress":false,"phone_accessed":false});
+            "actual_policy_worker":true,"auth_and_Source_authored":true,"history_provider_authored":!self.real_history,"actual_retained_history_provider":self.real_history,"history_seed_authored":self.real_history,"actual_Qt_client_model":self.qt_client,"normal_Qt_GUI_executed":self.normal_gui,"production_auth_ingress":false,"phone_accessed":false});
         if let Some(root) = std::env::var_os("NATIVE_LIFECYCLE_RESTORE_RESULTS") {
             let path = PathBuf::from(root).join(format!("{label}.json"));
             if fs::write(path, serde_json::to_vec_pretty(&record).unwrap()).is_err() {
@@ -1236,3 +1611,6 @@ fn explicit_terminate_remains_forced_for_actual_term_ignoring_app() {
     assert!(closed.is_ok(), "actual forced owner closure: {closed:?}");
     assert!(body.is_ok(), "{body:?}");
 }
+
+#[path = "service_restore_gui_tests.rs"]
+mod normal_gui_tests;

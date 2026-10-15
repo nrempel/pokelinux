@@ -5,6 +5,8 @@ edition = "2024"
 publish = false
 
 [dependencies]
+pokelinux-display = { path = "../../../native-display" }
+pokelinux-kernel-identity = { path = "../../../native-kernel-identity" }
 pokelinux-lifecycle = { path = "../../../native-lifecycle" }
 pokelinux-messages = { path = "../../../native-messages" }
 pokelinux-session = { path = "../../../native-session" }

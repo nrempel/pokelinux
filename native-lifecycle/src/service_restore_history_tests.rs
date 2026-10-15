@@ -2,7 +2,7 @@
 //! cannot serve these native queries; actual auth/Source remain fixture inputs.
 use super::*;
 
-fn seed_history() -> io::Result<(RetainedHistory, Value)> {
+pub(super) fn seed_history() -> io::Result<(RetainedHistory, Value)> {
     let install = PathBuf::from(
         std::env::var_os("NATIVE_LIFECYCLE_RESTORE_INSTALL").ok_or(io::ErrorKind::NotFound)?,
     );
@@ -222,7 +222,7 @@ impl messages::Provider for RealHistory {
 }
 
 impl Case {
-    fn retain_messages_children(&mut self) -> io::Result<()> {
+    pub(super) fn retain_messages_children(&mut self) -> io::Result<()> {
         check(
             self.real_history && self.messages_children.is_empty(),
             "Messages child observation must occur once per real provider",

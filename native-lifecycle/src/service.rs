@@ -910,6 +910,14 @@ fn run_with_services_inner(
                 if let Some(bytes) = &connection.pending {
                     return match ipc::send(&connection.fd, bytes) {
                         Ok(()) => {
+                            #[cfg(test)]
+                            if let Some(control) = restore.as_deref_mut() {
+                                control.observe_gui_publication(
+                                    connection.id,
+                                    &connection.fd,
+                                    bytes,
+                                );
+                            }
                             connection.pending = None;
                             connection.lock_ack = None;
                             connection.read_stamp = None;

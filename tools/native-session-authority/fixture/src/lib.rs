@@ -7,6 +7,8 @@ use pokelinux_lifecycle::{
 use pokelinux_messages::worker::Projector;
 use std::{io, path::Path};
 
+pub mod display;
+
 const DROP_DRAIN_NS: u64 = 2_000_000_000;
 
 // No Debug/Clone: complete packets may contain private retained history.
