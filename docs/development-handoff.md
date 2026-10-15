@@ -18,6 +18,23 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The production radio library now has a selected cooperative worker bootstrap
+before Binder setup. A genuine new-requirement ARM baseline leaves its held worker
+orphaned after supervisor death; the repaired selection uses the unchanged outer
+oracle and has actual adopted SIGKILL wait7.528539ms without a driver worker signal.
+The peer stays live, uncertainty survives restart, and explicit Stop regresses
+successfully. A separate actual ARM control refuses a live wrong-parent pidfd
+before READY/body with child wait1 and peer registrations0. Review's reap-error
+readmission defect has its own35-pass/1-fail component RED, then36 host tests pass.
+Strict checks and ARM compilation pass; Root verifies67 source pins and three
+runtime selections with complete actual-wait/exact-CID/input closure. No phone,
+Android/vendor runtime, PAM or new authentication execution occurs. Queued READY
+expiry/Stop controls, late GO, installed service-manager/cgroup, complete worker,
+vendor cleanup/IMS and hardware remain. See [bootstrap report](native-radio-bootstrap.md).
+The generic start primitive retains only its existing explicit-Stop contract.
+
+The preceding normal GUI checkpoint follows.
+
 The normal full QtQuick Messages tracer now passes on an actual Arch ARM kernel
 in original Hyprland/Omarchy, through the current Rust actor, retained native
 history and actual owned display SDK. Initial/armed denial, exact later authored

@@ -1,5 +1,12 @@
 # Native ARM64 kernel Binder qualification
 
+A later [cooperative bootstrap checkpoint](native-radio-bootstrap.md) adds a new
+production-library parent-bound worker entry before Binder, qualified separately
+by actual generic ARM Binder parent-death and live wrong-parent refusal controls.
+It preserves durable uncertainty and the installed service-manager requirement;
+no complete production worker, vendor cleanup, IMS or phone qualification follows.
+The historical execution selections below retain their original scope.
+
 The actual Rust radio transport, publication owner, owned registration/request
 workers and process supervisor now execute through Binder under an ARM64 Linux
 kernel in system-QEMU. Nine scenarios use an independently authored synthetic

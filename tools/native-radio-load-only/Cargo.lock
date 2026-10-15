@@ -418,10 +418,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "pokelinux-kernel-identity"
+version = "0.1.0"
+dependencies = [
+ "libc",
+ "rustix",
+]
+
+[[package]]
 name = "pokelinux-radio"
 version = "0.1.0"
 dependencies = [
  "omarchy-ims",
+ "pokelinux-kernel-identity",
  "rsbinder",
  "rsbinder-aidl",
  "rustix",

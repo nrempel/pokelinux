@@ -1,5 +1,12 @@
 # Native radio integration: next execution gate
 
+A later [cooperative bootstrap checkpoint](native-radio-bootstrap.md) adds a new
+production-library parent-bound worker entry before Binder, qualified separately
+by actual generic ARM Binder parent-death and live wrong-parent refusal controls.
+It preserves durable uncertainty and the installed service-manager requirement;
+no complete production worker, vendor cleanup, IMS or phone qualification follows.
+The historical execution selections below retain their original scope.
+
 Status: bootstrap, native registration, raw/segmented requests, response delivery
 and observed teardown pass across processes on the owned x86 emulator. Raw and
 segmented indication delivery and shared inbox overflow now pass too. See

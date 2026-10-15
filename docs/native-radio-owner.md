@@ -1,5 +1,12 @@
 # Native radio session owner
 
+A later [cooperative bootstrap checkpoint](native-radio-bootstrap.md) adds a new
+production-library parent-bound worker entry before Binder, qualified separately
+by actual generic ARM Binder parent-death and live wrong-parent refusal controls.
+It preserves durable uncertainty and the installed service-manager requirement;
+no complete production worker, vendor cleanup, IMS or phone qualification follows.
+The historical execution selections below retain their original scope.
+
 Status: the registration/publication authority is implemented in
 `native-radio/src/owner.rs` and tested through real Binder on Harbour. It owns a
 private callback inbox and the latest raw vendor response observation. It now enforces an explicit absolute session deadline using Linux `CLOCK_BOOTTIME`

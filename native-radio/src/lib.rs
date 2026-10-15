@@ -25,3 +25,5 @@ pub mod worker;
 pub mod supervisor;
 
 pub mod request;
+
+pub mod bootstrap;

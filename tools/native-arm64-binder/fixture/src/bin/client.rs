@@ -344,10 +344,30 @@ fn peer(service_manager: bool) -> Result<SIBinder, Box<dyn std::error::Error>> {
     marker("real-kernel-binder-handle-transfer");
     Ok(peer)
 }
+#[path = "../bootstrap_controls.rs"]
+mod bootstrap_controls;
 #[path = "../supervised.rs"]
 mod supervised;
 fn main() -> TestResult {
-    let scenario = std::env::args().nth(1).ok_or("missing scenario")?;
+    let cooperative =
+        std::env::args().nth(1).as_deref() == Some(pokelinux_radio::bootstrap::WORKER_SELECTOR);
+    if cooperative && std::env::var(bootstrap_controls::CANARY_ENV).as_deref() == Ok("1") {
+        return bootstrap_controls::child_canary();
+    }
+    let _parent = if cooperative {
+        Some(pokelinux_radio::bootstrap::BoundParent::from_stdin()?)
+    } else {
+        None
+    };
+    let scenario = std::env::args()
+        .nth(if cooperative { 2 } else { 1 })
+        .ok_or("missing scenario")?;
+    if scenario == "parent-death-supervisor" {
+        return supervised::parent_death_supervisor();
+    }
+    if scenario == "parent-death-refuse" {
+        return supervised::parent_death_refuse();
+    }
     if scenario == "driver" {
         ProcessState::init("/dev/binderfs/radio", 3)?;
         marker("binder-driver-open");
@@ -360,6 +380,13 @@ fn main() -> TestResult {
     let scenario = scenario.strip_prefix("ndk-").unwrap_or(&scenario);
     let peer = peer(ndk)?;
     match scenario {
+        "bootstrap-wrong-parent" => bootstrap_controls::wrong_parent(
+            &peer,
+            std::env::args()
+                .nth(2)
+                .ok_or("missing actual independent peer PID")?
+                .parse()?,
+        ),
         "permanent-child" => supervised::child(&peer),
         "callbacks" => callbacks(&peer),
         "hold-cancel" => held(&peer, false),

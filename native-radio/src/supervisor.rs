@@ -9,6 +9,9 @@ use std::{
 
 trait ProcessControl {
     fn kill(&mut self) -> io::Result<()>;
+    fn pid(&self) -> Option<u32> {
+        None
+    }
     fn try_wait(&mut self) -> io::Result<Option<ExitStatus>>;
     fn read_output(&mut self, _buffer: &mut [u8]) -> io::Result<usize> {
         Err(io::ErrorKind::Unsupported.into())
@@ -23,6 +26,9 @@ struct NativeChild {
     reaped: bool,
 }
 impl ProcessControl for NativeChild {
+    fn pid(&self) -> Option<u32> {
+        Some(self.child.id())
+    }
     fn kill(&mut self) -> io::Result<()> {
         self.child.kill()
     }
@@ -52,7 +58,7 @@ impl Drop for NativeChild {
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub struct ProcessIdentity([u8; 16]);
+pub struct ProcessIdentity(pub(crate) [u8; 16]);
 impl ProcessIdentity {
     fn new() -> io::Result<Self> {
         let mut bytes = [0; 16];
@@ -85,6 +91,8 @@ pub enum StartError {
 /// Output is read without a reader thread; publication must call admits() with
 /// both this connection's source identity and the frame's identity/attempt.
 pub struct Supervisor {
+    bootstrap: Option<crate::bootstrap::ParentBootstrap>,
+    _same_thread: std::marker::PhantomData<std::rc::Rc<()>>,
     child: Option<Box<dyn ProcessControl>>,
     live: Option<ProcessIdentity>,
     admitted: bool,
@@ -95,6 +103,8 @@ impl Supervisor {
     /// this service UID. Service installation and journal reset are not supplied.
     pub fn new(journal: PathBuf) -> Self {
         Self {
+            bootstrap: None,
+            _same_thread: std::marker::PhantomData,
             child: None,
             live: None,
             admitted: false,
@@ -133,6 +143,8 @@ impl Supervisor {
             .map_err(|_| StartError::Io)?;
         Ok(())
     }
+    /// Low-level explicit-Stop process ownership only. Arbitrary commands have
+    /// no parent-death/bootstrap guarantee. Radio workers use start_worker.
     pub fn start(&mut self, command: &mut Command) -> Result<ProcessIdentity, StartError> {
         if self.child.is_some() {
             return Err(StartError::Occupied);
@@ -166,6 +178,63 @@ impl Supervisor {
         }
         Ok(id)
     }
+    /// Launch only a selected cooperative worker. The main spawning thread must
+    /// retain this non-Send/non-Sync owner through actual wait. Final credentials
+    /// are inherited; service-manager/procfs/executable provisioning remain required.
+    /// Returns Initializing, with no publication admission until poll_worker is Ready.
+    /// Post-spawn errors revoke and kill but retain occupancy until poll_reap.
+    pub fn start_worker(
+        &mut self,
+        worker: &mut crate::bootstrap::WorkerCommand,
+    ) -> Result<ProcessIdentity, StartError> {
+        if self.occupied() {
+            return Err(StartError::Occupied);
+        }
+        if self.admitted {
+            return Err(StartError::RegistrationUncertain);
+        }
+        let pending = crate::bootstrap::Prepared::new()
+            .and_then(|p| p.install(worker))
+            .map_err(|_| StartError::Io)?;
+        let launched = self.start(&mut worker.command);
+        worker.command.stdin(Stdio::null());
+        let identity = launched?;
+        self.live = None;
+        let pid = self
+            .child
+            .as_ref()
+            .and_then(|child| child.pid())
+            .expect("owned native child PID");
+        match pending.bind(pid, identity) {
+            Ok(bootstrap) => {
+                self.bootstrap = Some(bootstrap);
+                Ok(identity)
+            }
+            Err(_) => {
+                let _ = self.stop();
+                Err(StartError::Io)
+            }
+        }
+    }
+    /// One nonblocking bounded packet per poll. Setup timeout counts suspend and
+    /// never renews. Error still requires caller-owned Stop/poll_reap disposal.
+    pub fn poll_worker(&mut self) -> io::Result<crate::bootstrap::WorkerState> {
+        use crate::bootstrap::WorkerState;
+        let Some(bootstrap) = self.bootstrap.as_mut() else {
+            return Ok(WorkerState::Terminal);
+        };
+        match bootstrap.poll() {
+            Ok(WorkerState::Ready) => {
+                self.live = Some(bootstrap.identity);
+                Ok(WorkerState::Ready)
+            }
+            Ok(state) => Ok(state),
+            Err(error) => {
+                let _ = self.stop();
+                Err(error)
+            }
+        }
+    }
     /// This comparison is only provenance fencing. It does not authenticate an
     /// app or grant permission, decode vendor data or establish call state.
     pub fn admits(&self, source: ProcessIdentity) -> bool {
@@ -190,6 +259,7 @@ impl Supervisor {
     pub fn stop(&mut self) -> io::Result<()> {
         // Revocation precedes signal delivery, including kill failure.
         self.live = None;
+        self.bootstrap = None;
         if let Some(child) = &mut self.child {
             child.kill()?;
         }
@@ -202,12 +272,14 @@ impl Supervisor {
         match child.try_wait() {
             Ok(Some(status)) => {
                 self.live = None;
+                self.bootstrap = None;
                 self.child = None;
                 Ok(Some(status))
             }
             Ok(None) => Ok(None),
             Err(error) => {
                 self.live = None;
+                self.bootstrap = None;
                 Err(error)
             }
         }
@@ -247,6 +319,8 @@ mod tests {
     fn kill_and_reap_errors_revoke_output_but_keep_process_owned() {
         let id = ProcessIdentity([9; 16]);
         let mut supervisor = Supervisor {
+            bootstrap: None,
+            _same_thread: std::marker::PhantomData,
             child: Some(Box::new(FailedControl)),
             live: Some(id),
             admitted: true,
@@ -262,10 +336,33 @@ mod tests {
         );
     }
     #[test]
+    fn reap_error_permanently_revokes_cooperative_ready_admission() {
+        let identity = ProcessIdentity([6; 16]);
+        let mut owner = Supervisor {
+            bootstrap: Some(crate::bootstrap::ParentBootstrap::ready_fixture(identity)),
+            _same_thread: std::marker::PhantomData,
+            child: Some(Box::new(FailedControl)),
+            live: Some(identity),
+            admitted: true,
+            journal: PathBuf::from("unused-test-journal"),
+        };
+        assert!(owner.admits(identity));
+        assert!(owner.poll_reap().is_err());
+        assert!(!owner.admits(identity));
+        assert_eq!(
+            owner.poll_worker().unwrap(),
+            crate::bootstrap::WorkerState::Terminal
+        );
+        assert!(!owner.admits(identity));
+        assert!(owner.occupied());
+    }
+    #[test]
     fn frame_requires_connection_owner_and_attempt_identity() {
         let live = ProcessIdentity([8; 16]);
         let old = ProcessIdentity([7; 16]);
         let supervisor = Supervisor {
+            bootstrap: None,
+            _same_thread: std::marker::PhantomData,
             child: None,
             live: Some(live),
             admitted: true,
@@ -346,6 +443,8 @@ mod tests {
         let release = Arc::new(AtomicBool::new(false));
         let id = ProcessIdentity([7; 16]);
         let mut supervisor = Supervisor {
+            bootstrap: None,
+            _same_thread: std::marker::PhantomData,
             child: Some(Box::new(HeldReap(release.clone()))),
             live: Some(id),
             admitted: true,
@@ -369,6 +468,8 @@ mod tests {
     #[test]
     fn delayed_reap_never_discards_owned_process() {
         let mut supervisor = Supervisor {
+            bootstrap: None,
+            _same_thread: std::marker::PhantomData,
             child: Some(Box::new(HeldReap(Arc::new(AtomicBool::new(false))))),
             live: Some(ProcessIdentity([7; 16])),
             admitted: true,
