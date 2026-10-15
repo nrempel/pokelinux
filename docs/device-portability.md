@@ -40,6 +40,12 @@ local lifetime; each new observer/namespace needs its own evidence. This grants
 no modem context or physical connectivity and does not qualify the matched
 Google kernel, device namespace/policy or another phone model.
 
+The [frozen public Data V3 boundary](native-cellular-data-abi.md) qualifies one
+Rust/NDK ABI exchange on generic ARM. Its API has no slot argument. Do not infer
+a mapping between production Data instances, Android subscriptions and recovered
+radioExternal slot values from that exchange. Per-device discovery, permissions,
+actual endpoint version/hash and carrier policy still need backend qualification.
+
 Design the device-neutral service contract from user-visible behavior and real
 backend evidence. Do not prebuild speculative adapters or a universal protocol.
 Multiple hardware backends implement the one current contract; this is not

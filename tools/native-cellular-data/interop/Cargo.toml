@@ -1,0 +1,20 @@
+[package]
+name = "pokelinux-cellular-data-interop"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[[bin]]
+name = "cellular-data-interop"
+path = "src/main.rs"
+
+[workspace]
+
+[dependencies]
+pokelinux-cellular-boundary = { path = "../../../native-cellular-boundary", features = ["test-fixture"] }
+rsbinder = { version = "=0.12.0", default-features = false }
+rustix = { version = "=1.1.5", features = ["fs", "process", "time"] }
+serde_json = "=1.0.154"
+
+[lints.rust]
+unsafe_code = "forbid"

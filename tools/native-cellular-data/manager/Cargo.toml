@@ -1,0 +1,17 @@
+[package]
+name = "pokelinux-cellular-data-manager"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[[bin]]
+name = "cellular-data-manager"
+path = "src/main.rs"
+
+[workspace]
+
+[dependencies]
+rsbinder = { version = "=0.12.0", default-features = false }
+
+[lints.rust]
+unsafe_code = "forbid"

@@ -1,0 +1,275 @@
+{
+  "schema": 1,
+  "upstream_repository": "https://android.googlesource.com/platform/hardware/interfaces",
+  "commit": "488942f82bd1bc9ad1cb65a02c71421dc3a6a3d6",
+  "modules": [
+    {
+      "name": "android.hardware.radio.data",
+      "version": 3,
+      "interface_hash": "cd8913a3f9d39f1cc0a5fcf9e90257be94ec38df",
+      "imports": [
+        "android.hardware.radio-V3"
+      ],
+      "aidl_files": 31,
+      "git_package_tree": "37b6446d5bcde82d947fb5bbbffd947264c9e9f7"
+    },
+    {
+      "name": "android.hardware.radio",
+      "version": 3,
+      "interface_hash": "58d15e9e2c355be7b3dda6d4d34effd672bfd1cb",
+      "imports": [],
+      "aidl_files": 10,
+      "git_package_tree": "fa192eebd3c89ff33a1e7a1f37a0e71a60102b73"
+    }
+  ],
+  "source_inventory": [
+    {
+      "path": "aidl/android/hardware/radio/data/ApnAuthType.aidl",
+      "sha256": "d388759a5821f704c1a7889b8053c783af6e9d194ebdfb6fc3ea644e9e77a8a2",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/ApnAuthType.aidl",
+      "git_blob_sha1": "eed81701b8244ab0cf41808105a6346101a39a15"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/ApnTypes.aidl",
+      "sha256": "12def93c9bc05db91789b1fc4565999a9c1d018764d7811d823da000cf589ae7",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/ApnTypes.aidl",
+      "git_blob_sha1": "782dbbf0ceb9381c05e2d0f388028a41c8b23757"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/DataCallFailCause.aidl",
+      "sha256": "ab297a4e882c9d90d724202898cb8abafbb794a854976e19ebedf2a1c5c5cf02",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/DataCallFailCause.aidl",
+      "git_blob_sha1": "009b428273dac4e0405992b0407aafd0a7754d5a"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/DataProfileInfo.aidl",
+      "sha256": "7ae0587c73cb359eb7e9b0cd4cfe8274e03f9c614087288e78cd49007d5e8195",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/DataProfileInfo.aidl",
+      "git_blob_sha1": "7f3fdc7721c826b37719a0db12ebb3eabe26f3e5"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/DataRequestReason.aidl",
+      "sha256": "b1f1d20eac5a3d87c4256bd1d32d79c3fd050aca70bc7caac454ac860e079bb7",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/DataRequestReason.aidl",
+      "git_blob_sha1": "98ae53a080fd1807ab79c52f63f0fbaa35f682f8"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/DataThrottlingAction.aidl",
+      "sha256": "ee5b8c9173c6839c3841da86312d1d6a86eeb89d1a9956d0d2a5e803b82e66e3",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/DataThrottlingAction.aidl",
+      "git_blob_sha1": "e1fedb86c0b2c0d70e3b74ea06ff56e2070a0df3"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/EpsQos.aidl",
+      "sha256": "cda4326f5891880fc5207083d9961bf1f2b9edf3c3ce8a6d6cdeaf23dbbc3bc5",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/EpsQos.aidl",
+      "git_blob_sha1": "3a3f41d98e80ac7525c90e1e7646e56f56c416e9"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/IRadioData.aidl",
+      "sha256": "267fdffc72fbf710f447a4178eeeae5e0c3e6003c4dcb9743a2dd75b9063d432",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/IRadioData.aidl",
+      "git_blob_sha1": "3888c627e7a80bd41fa569867d95d60aa617419b"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/IRadioDataIndication.aidl",
+      "sha256": "bcd95a4f698dfd867491670c1f06ac9c15d1d302ce036845f2b6c8860fe220e6",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/IRadioDataIndication.aidl",
+      "git_blob_sha1": "6057d6af074ca72c6821112b615d2d9191431607"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/IRadioDataResponse.aidl",
+      "sha256": "43b02f2705038851de201393eb831d213ab035364966534fe06ebf460dd91f20",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/IRadioDataResponse.aidl",
+      "git_blob_sha1": "dc44454f3f1f9a3d3252885a4392676fac4a2d81"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/KeepaliveRequest.aidl",
+      "sha256": "e03dfe1e5d4e809c02958bdd78aedb9629e30c7fff28532efb282896110154b4",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/KeepaliveRequest.aidl",
+      "git_blob_sha1": "789ee863f2cd9e9ce9e41f29017b6be6615e119f"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/KeepaliveStatus.aidl",
+      "sha256": "6b81eb59b7a33562bb47e34224709f20d3b5d66b2ee39b3fdc1011881faef9d6",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/KeepaliveStatus.aidl",
+      "git_blob_sha1": "404b44a3e0b2260de0c7a7352a6658c575220488"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/LinkAddress.aidl",
+      "sha256": "12adfa556bbad7e872fd3b86e14cac2bc1f752a1d56e99970b8060fd5773655d",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/LinkAddress.aidl",
+      "git_blob_sha1": "bef4c736f8a940609331f04f5372454317e19f03"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/NrQos.aidl",
+      "sha256": "92f6a969a5e0c54891de177d6fb226c307c1e6b46a36d1a72542ec14de934699",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/NrQos.aidl",
+      "git_blob_sha1": "22bbe4293319fa23c65cbdf58c0c8c4973d8fc0f"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/OsAppId.aidl",
+      "sha256": "3212f20cb7900bb46f06e444eb353c1be16501b95e0931467579d7301ca7e5e0",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/OsAppId.aidl",
+      "git_blob_sha1": "e4bbf79126d95970c1bb9539625b8b55d678344b"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/PcoDataInfo.aidl",
+      "sha256": "895e1ce26b07c598939a4142c012b03a3b39cf643c1dbea47c3e4088a2707502",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/PcoDataInfo.aidl",
+      "git_blob_sha1": "ea7529cb34c86ed7c5701d6ae7bf9430a6fb8e2b"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/PdpProtocolType.aidl",
+      "sha256": "2ecca11a68ab3b8843429c5d871954853b1b7183c9da02cd8c0e980b5a86a34d",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/PdpProtocolType.aidl",
+      "git_blob_sha1": "3a7f82d40163695bcc9ff82acdd6ea483e52b327"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/PortRange.aidl",
+      "sha256": "f5958d3f00c0fef2f71f1794e1c918eebc52514d5cab51d4ec908737004a53fb",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/PortRange.aidl",
+      "git_blob_sha1": "45e2dc968706e9c2f2600bf45631b4ef28afcdd5"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/Qos.aidl",
+      "sha256": "45951fd9abe97eb176c48e1227b0763e887dd32e783b068a1fc3d3fe6bb5195f",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/Qos.aidl",
+      "git_blob_sha1": "4dac56c5d9fafe3d834f011b7f44ed7440c6e5e2"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/QosBandwidth.aidl",
+      "sha256": "c596394d2fa1d4c9e042dbacb17e5f0c4528d75d87531fd7e2115bc3cda44c4a",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/QosBandwidth.aidl",
+      "git_blob_sha1": "b59dee0d40e2c73f162cf36e3adae097b9c34ba7"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/QosFilter.aidl",
+      "sha256": "fe723430770fccda925f1719de31f11561c1c7d57012402928af1e27251bb75f",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/QosFilter.aidl",
+      "git_blob_sha1": "a3208d9b6c611eabaad6188486bbfd86f073a071"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/QosFilterIpsecSpi.aidl",
+      "sha256": "5183afb23482332bcaa1f23b3972022fc3a066f3c1cc787b2208ba14ffeef3bf",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/QosFilterIpsecSpi.aidl",
+      "git_blob_sha1": "50b52a49571b85a5f92d6da86c9c7e907b76ce2a"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/QosFilterIpv6FlowLabel.aidl",
+      "sha256": "30887bb91ad8050a18ae3360d0a114498a510379f1e01723293ab0953c5bea52",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/QosFilterIpv6FlowLabel.aidl",
+      "git_blob_sha1": "4913dcf07be9c7abf6a11567aeceb03eafce96d0"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/QosFilterTypeOfService.aidl",
+      "sha256": "6d69bc461b73cbcfc3a54a5b75daffa47947a624cfcd81457c7c352c2ab7e1a2",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/QosFilterTypeOfService.aidl",
+      "git_blob_sha1": "4f0d2605e1135436fff85587aca4c1746277603e"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/QosSession.aidl",
+      "sha256": "e28b7044a904209e52c18ec2bd3fa32aa97276cb3e14b00ae0bda1b3e52bac82",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/QosSession.aidl",
+      "git_blob_sha1": "89010a9feb7e34cf1fa6c27379b44dbd9d8eb780"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/RouteSelectionDescriptor.aidl",
+      "sha256": "d2ebf10d67e98d1d62ec6c094326af7cb381d626ae0394c6760a977070c2e38b",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/RouteSelectionDescriptor.aidl",
+      "git_blob_sha1": "8864c246d6ac1c236da9670ca37c7487610609c7"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/SetupDataCallResult.aidl",
+      "sha256": "19cafd4e517d86347bcecb4a9b1fad72ebd54f79209546a856bb35c719cd6b9b",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/SetupDataCallResult.aidl",
+      "git_blob_sha1": "6ae626eab71e18dc56ecfc2c7146e56a2c02206e"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/SliceInfo.aidl",
+      "sha256": "dfc7f1c0084e66bbdef20a02fe9d9979d69ae2d458c39dec41a93859e05a6f9a",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/SliceInfo.aidl",
+      "git_blob_sha1": "60df402a8116325a07cc0532e914be0e50de9200"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/SlicingConfig.aidl",
+      "sha256": "a7f520f8100cee96255bceb3097898a5c1b860d4240022eda3095a2f53903fcc",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/SlicingConfig.aidl",
+      "git_blob_sha1": "4d28737134ef0f9e5fae2ad344e2865f5b6400ac"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/TrafficDescriptor.aidl",
+      "sha256": "94c99e2a2423201361984a9df9a26c41175012398cb7a292cf91a0bb2fd12dd4",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/TrafficDescriptor.aidl",
+      "git_blob_sha1": "dc474a2d1d05f05968a3fb102227740bc531db74"
+    },
+    {
+      "path": "aidl/android/hardware/radio/data/UrspRule.aidl",
+      "sha256": "fd00f3c328aee6bf0626eb1de265843aee18682a14fbb16751589de52652ea68",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio.data/3/android/hardware/radio/data/UrspRule.aidl",
+      "git_blob_sha1": "6850f6a049277ed1c917b3e314a1cd9e69858a0e"
+    },
+    {
+      "path": "aidl/android/hardware/radio/AccessNetwork.aidl",
+      "sha256": "ad2d5b7916a58d9cb32455c4277faf198a80a60bee2180b836caccdd0c42d30f",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio/3/android/hardware/radio/AccessNetwork.aidl",
+      "git_blob_sha1": "73a267b6d036a97a6340a43f94f00b7c557997ff"
+    },
+    {
+      "path": "aidl/android/hardware/radio/RadioAccessFamily.aidl",
+      "sha256": "15b8f633c16cf646e1cd68ae8ec8a40291a3033528427ff163aa5d1aeed5dbfd",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio/3/android/hardware/radio/RadioAccessFamily.aidl",
+      "git_blob_sha1": "1298ab0f4cdb29edbc8d663ced67358e1ab6a050"
+    },
+    {
+      "path": "aidl/android/hardware/radio/RadioConst.aidl",
+      "sha256": "a6d98b4d5e54541396a6e732e18addb2b7d53e3d4b7c35ee2c88255b8cd4ba99",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio/3/android/hardware/radio/RadioConst.aidl",
+      "git_blob_sha1": "970cd1e0c832be80b3e2e1a417fe466fa1f73a65"
+    },
+    {
+      "path": "aidl/android/hardware/radio/RadioError.aidl",
+      "sha256": "c673d85a79b4fec27125f55459ff8a2ff9a4f412e999c30c7f2626a1661dbc54",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio/3/android/hardware/radio/RadioError.aidl",
+      "git_blob_sha1": "02c537055cc8b83574c9591a9af395f9ffb594b4"
+    },
+    {
+      "path": "aidl/android/hardware/radio/RadioIndicationType.aidl",
+      "sha256": "f299dc43c5f4997212765fe1bf9bc60e9b28fa26f2718b03affa279224ff9f5b",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio/3/android/hardware/radio/RadioIndicationType.aidl",
+      "git_blob_sha1": "316f92f876648256fe5746476cc3d78df759cb9f"
+    },
+    {
+      "path": "aidl/android/hardware/radio/RadioResponseInfo.aidl",
+      "sha256": "fa9d5ccc53e9aa238fd3025680b5629d981352c1f5b6a5f09d65f3570a2ed201",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio/3/android/hardware/radio/RadioResponseInfo.aidl",
+      "git_blob_sha1": "f03a73bfb15a6f88028442bfb985a519faaa0842"
+    },
+    {
+      "path": "aidl/android/hardware/radio/RadioResponseInfoModem.aidl",
+      "sha256": "b88e4a8a2bd00fe578f96844e3ecda4589950260481712e78ac51541f8c00efd",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio/3/android/hardware/radio/RadioResponseInfoModem.aidl",
+      "git_blob_sha1": "2e0c3154261ce2eb2e07e86e3dd0b0209e1379ee"
+    },
+    {
+      "path": "aidl/android/hardware/radio/RadioResponseType.aidl",
+      "sha256": "90ed071d9035b93e3fe240f03376774d310372c4813dec7a5080e7a1a24db567",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio/3/android/hardware/radio/RadioResponseType.aidl",
+      "git_blob_sha1": "8bdb45bfdf820df9ef6a99c7370d883b650cf0d2"
+    },
+    {
+      "path": "aidl/android/hardware/radio/RadioTechnology.aidl",
+      "sha256": "af985a167e7d37012f1b7e4c83fb321105e9102688ee058d67928ac0f3e70718",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio/3/android/hardware/radio/RadioTechnology.aidl",
+      "git_blob_sha1": "7c6a657bcd74497a74226cf104d01645b0da1286"
+    },
+    {
+      "path": "aidl/android/hardware/radio/RadioTechnologyFamily.aidl",
+      "sha256": "820775a3c0bbf7058f4ad691b8d880212326146d48a80ff3c0450af339ea6012",
+      "upstream_path": "radio/aidl/aidl_api/android.hardware.radio/3/android/hardware/radio/RadioTechnologyFamily.aidl",
+      "git_blob_sha1": "85e9850cad4ff83a246c508839805918d778ba1f"
+    }
+  ],
+  "license": "Apache-2.0; original source headers and upstream NOTICE retained",
+  "scope": "Public ABI generation prerequisite only; no provider/operation/kernel/APN behavior qualified"
+}

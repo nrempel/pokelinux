@@ -18,6 +18,16 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The [public Data V3 ABI](native-cellular-data-abi.md) now composes generated Rust
+bindings, a dedicated Rust fixture manager and an independently generated NDK
+C++ peer through actual ARM kernel Binder. One setup preserves all10 arguments,
+21 profile fields and18 result fields; held/wrong-serial/right-serial callbacks,
+populated/empty lists and actual endpoint death pass with eight child waits/EOF
+and complete input/container closure. This is an ABI prerequisite: wrong serial
+is copied, not owner-correlated. Kernel association, native Data ownership,
+APN acquisition, production slot/subscription mapping, permissions/lifecycle and
+matched Pixel/carrier behavior remain open.
+
 The [native kernel network observer](native-network-observer.md) now passes an
 actual ARM kernel RED→GREEN with one fixed oracle: UID1000 Rust observes an
 independently created TUN link, its IPv4 local/peer and IPv6 addresses, then
