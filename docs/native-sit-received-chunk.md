@@ -119,7 +119,9 @@ neither changes the accepted component RED/GREEN or the fixed process oracle.
 ## Remaining boundary
 
 [Factory static findings](native-sit-transport.md) identify a candidate wrapper
-callback that copies bytes, but its normal runtime creation chain is still open.
+callback that copies bytes. The later [construction and exact CPIF checkpoint](native-cpif-receive-boundary.md)
+closes its ordinary static owner chain; actual initialization, channel custody
+and complete-record admission remain open.
 Selected scalar classifiers have pointer checks and unchecked byte/word reads,
 not length/completeness checks. Native code keeps strict response admission;
 there is no inferred split/coalesced assembler, production CPIF worker, descriptor

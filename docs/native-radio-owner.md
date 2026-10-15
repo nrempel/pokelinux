@@ -1,5 +1,14 @@
 # Native radio session owner
 
+The [retained CPIF checkpoint](native-cpif-receive-boundary.md) now binds a fresh
+4K module extraction to the authenticated selected image and qualifies exact
+read/poll, selected FMT queue producers and ordinary static factory paths. Reads
+can retain a
+packet tail or return zero on an empty queue. This advances the native receive
+contract; complete-record/channel custody, source/KMI, provider/APN/IMS and
+hardware remain open. No new native behavior or phone execution is claimed.
+
+
 The [owned SIT descriptor transport](native-sit-owned-transport.md) now adds
 one-shot native Rust writes and owned raw reads beneath the attempt/process
 owner. Strict missing-dispatch and missing-read REDs precede75 component passes

@@ -45,6 +45,11 @@ virt boots prove neither kernel's full Pixel hardware behavior. Do not execute
 a public author's flash recipe or assume its partition/policy choices fit this
 project. The matched-kernel strategy remains in effect.
 
+The [retained CPIF receive checkpoint](native-cpif-receive-boundary.md) qualifies
+only the selected4K module and conditional factory path. Its static queue facts
+do not apply automatically to the16K variant, another phone or a different CPIF
+build. Channel, DT, KMI and physical qualification remain per profile.
+
 ## Boundaries
 
 | Layer | Owns | Must not assume |

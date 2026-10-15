@@ -313,5 +313,6 @@
   ],
   "original_memory_reference": "native-sit-received-chunk-provenance.json",
   "classifier_getters_executed_on_short_inputs": false,
-  "pin_freshness_scope": "At each recorded review; later commits do not imply equality to the current working tree. Historical document inputs remain bound by archived Git blobs."
+  "pin_freshness_scope": "At each recorded review; later commits do not imply equality to the current working tree. Historical document inputs remain bound by archived Git blobs.",
+  "later_exact_cpif_and_ordinary_construction": "native-cpif-receive-boundary-provenance.json"
 }

@@ -5,8 +5,11 @@ implements one-shot writes and owned raw reads using these findings while
 keeping conservative terminal uncertainty. Its real descriptor tests and
 process integration are separate from the static/original evidence below.
 
-These are author-reasoned static contracts from twenty-three matched factory methods,
-with independent method/assembly/ELF review. These static sessions execute no vendor methods. A separate memory-only original
+These are author-reasoned static contracts from selected matched factory methods,
+with independent method/assembly/ELF review. The later
+[retained CPIF and construction checkpoint](native-cpif-receive-boundary.md) adds
+exact-module read/poll, ordinary static owner creation and default path storage.
+These static sessions execute no vendor methods. A separate memory-only original
 comparison is recorded in [receive ownership](native-sit-received-chunk.md). They guide
 the Rust backend; the separate [owned attempt fixture](native-sit-attempt.md)
 qualifies actual host/generic ARM process composition through Unix records.
@@ -31,8 +34,10 @@ The actual `RadioControlMessageMgr::Run` caller waits in select with no timeout,
 checks modem status, clears a retained65,568-byte buffer and performs one raw
 read. Each positive chunk passes the same pointer/count synchronously through
 owner vtable slot+0xa0. Run establishes no local framing, reassembly or owned
-queue copy. A later static vtable binding identifies a candidate receiver and
-copy contract below; the concrete runtime owner remains unproven. The next
+queue copy. A later static vtable binding identifies a receiver and copy contract below;
+additional ordinary construction analysis now binds the supplied wrapper owner
+([scope](native-cpif-receive-boundary.md#ordinary-factory-path)). Actual runtime
+initialization, factory selection and channel custody remain unobserved. The next
 iteration can overwrite the buffer.
 
 The caller **does** reopen after zero or terminal-negative read: close,20ms sleep,
@@ -54,7 +59,8 @@ its dynamic type. The `RilContextWrapper` vtable's slot+0xa0 binds to the static
 unsigned count, allocates a24-byte `ModemData`, invokes the imported constructor
 with the supplied signed count and false flag, and calls `SendMessage`. A negative
 result deletes the object; the callback itself returns0. This static binding
-establishes neither the ordinary runtime wrapper creation chain nor delivery.
+alone establishes neither the ordinary creation chain nor delivery. The later
+construction checkpoint closes the static chain, with runtime/channel gates retained.
 
 The separately bound protocol provider's C1/C2 copies exactly the positive supplied
 count when the source is nonnull, including when the boolean is false. It does
@@ -103,9 +109,11 @@ A generic release hook therefore establishes neither SIT remote cleanup nor a
 required modem INIT_END exchange. Keep Google's matched kernel/modules/firmware;
 these public sources do not license replacing their matched set.
 
-Next qualify the runtime owner creation chain and where complete records are
-established before classification, including the unresolved length/message-ID
-getters and actual read boundaries. The owned-copy integration proves only the
+The ordinary static owner creation chain is now qualified separately. Next
+qualify where complete records are established before classification, including
+the unresolved length/message-ID getters and channel custody. Selected exact
+queue producers are now reviewed, but supply no complete inner-record premise.
+The owned-copy integration proves only the
 selected Unix-record path. Broader transport rules, queue limits, original
 deadlines and known-source loss still need their own qualification. Keep one
 descriptor generation and terminal uncertainty. Reaping, local status0 and

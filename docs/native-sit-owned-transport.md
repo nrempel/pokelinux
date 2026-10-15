@@ -7,6 +7,10 @@ receives owned raw bytes, then applies its existing strict144-byte admission
 and14-field report oracle. This advances the native backend; it is not a
 production CPIF adapter or complete cellular/IMS service.
 
+The [exact retained CPIF checkpoint](native-cpif-receive-boundary.md) separately
+qualifies static read/poll and path construction; it does not upgrade these Unix
+fixture runs into matched-driver execution.
+
 ## Local contract
 
 A transport consumes one `OwnedFd` and the original absolute BOOTTIME deadline.

@@ -1,0 +1,184 @@
+{
+  "schema": 1,
+  "date": "2026-10-15",
+  "scope": "Authored exact retained4K module origin/read/poll/FMT producer and conditional factory path facts; static evidence only",
+  "input_hashes": [
+    {
+      "path": "private/4k-cpif.ko",
+      "sha256": "95fffae6b7e3530cb6bc0622283bd6a360e8912ebc48aa9a529ca8fea8d634fe"
+    },
+    {
+      "path": "private/vendor_dlkm.img",
+      "sha256": "a41db39a1ffbb91b7176ddfc3a4bd1a424200961cd806fa2a3dfa250c32b038a"
+    },
+    {
+      "path": "private/libsitril.so",
+      "sha256": "a92bebfa7152356f27a925960ddd11736a0ad55cff9786997550d4d2a49105cd"
+    }
+  ],
+  "private_receipt_hashes_only": [
+    {
+      "path": "Root-independent-review",
+      "sha256": "d859a1627da96cce8e8fac06b0b7cc60b511f4eb78d4f31a07f59e6c467be988"
+    },
+    {
+      "path": "exact-cpif/execution",
+      "sha256": "8f2de3486ea00bdb355cb57a8a7841e43ba20c41856cdf73ed881262a713ff9f"
+    },
+    {
+      "path": "exact-cpif/selection",
+      "sha256": "2749ee7b0a211a5e0c19e224f013a7c3704bd9c2818d7b71aee4c73164815c1f"
+    },
+    {
+      "path": "exact-cpif/closed-snapshot",
+      "sha256": "f897a66eb990974cc2c26593712fa8f0d68ee47334a60502ed392884301c5d09"
+    },
+    {
+      "path": "default-channel/execution",
+      "sha256": "a452e5589e0c6d9e261cb85d0c239ea3305bc67da0f3c5603d57c202b3a99360"
+    },
+    {
+      "path": "default-channel/metadata-selection",
+      "sha256": "c29cfe5f3a28b345a928b4580841ef272dad5a34eb0bb60c9fd3903d46a09c2a"
+    },
+    {
+      "path": "default-channel/closed-snapshot",
+      "sha256": "e198fa8e9826d47f0d52e2d8c9ca6b2bf191eaa60ab271389403b260deed1fba"
+    },
+    {
+      "path": "module-origin/receipt",
+      "sha256": "431a5ad6c30776d2229a46c4684d444827e6844ae962bfaaa712936c4892799c"
+    },
+    {
+      "path": "module-origin/review",
+      "sha256": "057d18214dfc7377b57eade20b1c0bd470072a0e980bf76456e8eb20251feabc"
+    },
+    {
+      "path": "source-research/receipt",
+      "sha256": "147a177183a74c20a37cc134431a82ed67d6df3bc3a2757bfe452d58130ae341"
+    },
+    {
+      "path": "ordinary-creation/facts",
+      "sha256": "8ff30b32e9dd84de465a6afc965995d82c6f5e05569d1bfb90410b0ac20e6903"
+    },
+    {
+      "path": "ordinary-creation/manifest",
+      "sha256": "ea1e898ff3961d1e04c731baeb7a92ba23ba16a4e59dabd465657c30fba4b0cf"
+    },
+    {
+      "path": "ordinary-OnStart/facts",
+      "sha256": "a6fa0cc379baa3150833ecbeeb05b215ebd93adbc737a428c24cbc61249032f6"
+    },
+    {
+      "path": "ordinary-OnStart/manifest",
+      "sha256": "6f2e15a1abf1df6fb0ea549b7619a04c84ce08648ff95c4b0d28f72cbffdba40"
+    },
+    {
+      "path": "exact-cpif/independent-review",
+      "sha256": "2d5b90821db38d7129ce809f1b77b800b34f3b106a462be876a151a6e6218f14"
+    },
+    {
+      "path": "exact-cpif/authored-facts",
+      "sha256": "a55c3778fa8f40d0eaf46bef0ac055090549168e334956642e6cd766bd5c6350"
+    },
+    {
+      "path": "exact-producer/selection",
+      "sha256": "2e25645da12877b16661af566fb04b0d3b79a7cba9d8bd07e350ded7d56bbaab"
+    },
+    {
+      "path": "exact-producer/execution",
+      "sha256": "60630162ede26ed9045f4338ab31de81de7b49acf4f68b3fc17b39b1e22325cb"
+    },
+    {
+      "path": "exact-producer/closed-snapshot",
+      "sha256": "7776e4b6e98887adcc74d87ffca79e9a4e48635a482d7e848072ee4ee4074a6f"
+    },
+    {
+      "path": "exact-producer/Root-review",
+      "sha256": "1d9b4bc2b2599b8510dab80615e3bd3324672f314f61363231291e34d5d8b243"
+    },
+    {
+      "path": "exact-producer/independent-review",
+      "sha256": "92e491daa29efb56b5f1888a1a5af61c2465631c18f3fd61e3ff56c379a67523"
+    },
+    {
+      "path": "exact-producer/authored-facts",
+      "sha256": "c401912c1d56fb3cd921e4b45add9b4fb8c0b77b48399826f80812bfcafc271c"
+    }
+  ],
+  "static_sessions": {
+    "cpif": {
+      "unique_methods": 2,
+      "RPC_responses": 6,
+      "ELF_bytes": [
+        676,
+        408
+      ],
+      "Ghidra_body_bytes": [
+        572,
+        408
+      ],
+      "read_omitted_bytes_manual_review_required": false,
+      "original_code_executed": false,
+      "Root_rehashed_pins": 21,
+      "read_omitted_bytes_manually_reviewed": 104,
+      "independent_review_pins": 17
+    },
+    "default_channel": {
+      "unique_methods": 2,
+      "RPC_responses": 5,
+      "ELF_and_Ghidra_body_bytes": [
+        68,
+        44
+      ],
+      "original_code_executed": false,
+      "Root_rehashed_pins": 72
+    },
+    "producer": {
+      "unique_methods": 2,
+      "RPC_responses": 5,
+      "ELF_bytes": [
+        880,
+        472
+      ],
+      "Ghidra_body_bytes": [
+        880,
+        308
+      ],
+      "queue_omitted_bytes_manually_reviewed": 164,
+      "Root_rehashed_pins": 27,
+      "independent_review_pins": 15,
+      "original_code_executed": false
+    }
+  },
+  "origin": {
+    "owned_direct_waits": 3,
+    "actual_waits": 0,
+    "both_EOF_before_original_cutoffs": true,
+    "Root_rehashed_pins": 13,
+    "whole_archive_authentication_inherited": true,
+    "fresh_archive_or_AVB_authentication": false,
+    "16k_variant_excluded": true
+  },
+  "native_behavior_changed": false,
+  "new_RED_GREEN_claimed": false,
+  "module_loaded": false,
+  "phone_accessed": false,
+  "proprietary_inputs_raw_decompilation_or_credentials_published": false,
+  "remaining_gates": [
+    "Complete RCM record source/start/admission and native CPIF read policy",
+    "Matched channel/DT/subscription and exclusive source custody",
+    "Producing public project/revision/build manifest and KMI",
+    "Native receive vertical and natural-terminal Main checks",
+    "Provider/APN/IMS, installed policy, physical modem/carrier"
+  ],
+  "all_three_static_sessions": {
+    "actual_CLI_wait_exit": 0,
+    "stdout_EOF": true,
+    "stderr_EOF": true,
+    "fresh_exact_CID_absent": true,
+    "same_daemon": true,
+    "original_cutoffs_and_inputs_unchanged": true,
+    "wire_normalized_raw_closed_snapshot_agree": true
+  }
+}

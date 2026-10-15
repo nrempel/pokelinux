@@ -1,5 +1,14 @@
 # Omarchy smartphone goal
 
+The [retained CPIF checkpoint](native-cpif-receive-boundary.md) now binds a fresh
+4K module extraction to the authenticated selected image and qualifies exact
+read/poll, selected FMT queue producers and ordinary static factory paths. Reads
+can retain a
+packet tail or return zero on an empty queue. This advances the native receive
+contract; complete-record/channel custody, source/KMI, provider/APN/IMS and
+hardware remain open. No new native behavior or phone execution is claimed.
+
+
 This scope supersedes the earlier call-bridge-only completion target. It records Nicholas's expanded instruction: build a complete Omarchy smartphone system for Pixel 10, including SMS, camera, power and all phone functions that need special treatment, with genuine Omarchy plugin and theme integration.
 
 Build and test everything possible offline on temporary Harbour capacity. Do not access or modify the physical phone. Harbour must not be a runtime dependency. The active goal remains unfinished and now records this full smartphone scope.
