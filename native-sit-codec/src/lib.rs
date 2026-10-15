@@ -2,6 +2,7 @@
 #![forbid(unsafe_code)]
 use std::num::NonZeroU8;
 
+pub mod modern_report;
 pub mod response;
 
 pub const INITIAL_LTE_SETUP_V3_BYTES: usize = 983;

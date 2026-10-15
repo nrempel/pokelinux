@@ -1,0 +1,692 @@
+{
+  "original_reference": {
+    "execution_class": "Matched original Bionic ARM64 code under user-mode QEMU with authored synthetic complete144-byte inputs",
+    "run": "pokelinux-sit-report-original-root-1",
+    "independent_original_reference_qualified": true,
+    "root_original_reference_qualified": true,
+    "root_report_review_scope": "Fresh evidence/current-input rehash and complete emitted field comparisons; reuses independent exhaustive mapping/process audit rather than claiming a second full audit",
+    "receipt_path_kind": "Logical private receipt identifiers; receipt contents remain private",
+    "receipt_pins": [
+      {
+        "path": "original-report-run/selection.json",
+        "sha256": "32238ab77b55a379e14e306e038e800a6519b76e3fedf3c794278c7420359337"
+      },
+      {
+        "path": "original-report-run/command.json",
+        "sha256": "c5863e574147fc51e987171492109058dce439eb7346f071e2a69963feb2a0ab"
+      },
+      {
+        "path": "original-report-run/execution.json",
+        "sha256": "08847d162ff575deb5a9b5693dfbd0a8b79d201f2e4a3b4665582304f73b7d40"
+      },
+      {
+        "path": "original-report-run/results/result.json",
+        "sha256": "26d490cd83f59aedc1213b740fd96fc371d507f306b25ad29fcad23f9003a8c2"
+      },
+      {
+        "path": "original-report-run/final-review-root.json",
+        "sha256": "65a6857f198f731ff8b434de8b72286e10d50033ab2e87eb1482719cd71aa45c"
+      },
+      {
+        "path": "original-report-independent-review/qualification.json",
+        "sha256": "5aee694fb0ab11de372cc0fa59f5e44eac82bffe3c9b0e86245ebc39a0f0c3cb"
+      },
+      {
+        "path": "original-report-independent-review/post-run-report-expectations.json",
+        "sha256": "5aef99c9f6a0a4b7423bca73310ac78dcd8314aa15cc7eaf8db1a2d22016e3a6"
+      }
+    ],
+    "authored_probe": {
+      "source_pins": [
+        {
+          "path": "tools/native-sit-codec/original-report-probe.c",
+          "sha256": "8e500cb052f4cc39a5786d1e8b9920dc96fdfa5ac3f2c3ab6a9425818d7bd96b"
+        }
+      ],
+      "build_and_executed_ELF_pins": [
+        {
+          "path": "authored-report-helper-build/selection.json",
+          "sha256": "b482be37b2c4784286c80875604b77f690027e34b833ed6e8c563b1a9d3ffa16"
+        },
+        {
+          "path": "authored-report-helper-build/build.sh",
+          "sha256": "f212dd333d34dd44e6129e356b7c1c79b9e689c3f6b76d59b394a0d0a52063ca"
+        },
+        {
+          "path": "authored-report-helper-build/final-review-root.json",
+          "sha256": "d7300bd164518ae58e194ab0706580476c6797bca8683b6180248e9fb47c16a0"
+        },
+        {
+          "path": "authored-report-helper-executed-ELF/not-published",
+          "sha256": "6e3324a2391f26ba398c19a9623eb81b40a00a7bec300973389d2871ff2a80e7"
+        }
+      ],
+      "source_identical_to_selected_run": true,
+      "publication_eligible_copy": "Authored C comparison helper only; executed ELF and original runtime are not included"
+    },
+    "load_prerequisite": {
+      "run": "pokelinux-sit-builder-load-original-root-3",
+      "receipt_pins": [
+        {
+          "path": "original-load-prerequisite/selection.json",
+          "sha256": "7e576b899e80919aad4b11cfcdc788d0893b8e752855139fd2b4125423284776"
+        },
+        {
+          "path": "original-load-prerequisite/command.json",
+          "sha256": "77f3580201fa45b3cf91a5b95175175f8670126d091f466918b3e0ed71400fbb"
+        },
+        {
+          "path": "original-load-prerequisite/execution.json",
+          "sha256": "a1f26ef8da67a799c613ffe80def08e4951cda230f5c457ec8447a7ff370a3fe"
+        },
+        {
+          "path": "original-load-prerequisite/results/result.json",
+          "sha256": "5dd318f511005c96e1c0034832230204a147633e9d62f23e24ed3e29bd00e947"
+        },
+        {
+          "path": "original-load-prerequisite/final-review-root.json",
+          "sha256": "2d3d0414641df07584f883b57b4e09e9f851cfc0586ae66d9a30b2eeabe4211f"
+        },
+        {
+          "path": "original-load-independent-review/qualification.json",
+          "sha256": "e48387f3264927c02256ddaf7d89f17e31226fc72d9e78e4f0a529ff03beadf8"
+        }
+      ],
+      "root_and_independent_reviews_qualified": true,
+      "actual_child_wait_exit": 0,
+      "stdout_EOF": true,
+      "natural_original_global_dependency_initialization_occurs": true,
+      "resolver_and_finalizer_code_may_execute": true,
+      "all_initializer_resolver_bodies_exhaustively_audited": false,
+      "explicit_builder_context_constructor_handler_transport_calls_by_load_helper": 0,
+      "dlclose_returned_zero": true,
+      "all_finalizers_or_unmapping_proved": false,
+      "all_regular_mapped_files_captured_with_SHA_and_ELF_machine": true
+    },
+    "immutable_environment_pins": [
+      {
+        "path": "container-image",
+        "sha256": "fcc63fb8f191a5b15cd9a64d04a26bb06b009216a2cd4e4de0f6931b6c919838"
+      }
+    ],
+    "counts": {
+      "cases": 12,
+      "report_cases": 11,
+      "direct_actual_wait0_EOF": 12,
+      "selected_current_originals": 39,
+      "allowed_originals_and_helpers": 41,
+      "regular_mapped_file_observations": 432,
+      "regular_files_per_case": 36,
+      "ARM_files_per_case": 35,
+      "x86_files_per_case": 1,
+      "guest_helper_mapping_segments": 1476,
+      "guest_helper_segments_per_case": 123,
+      "held_processes_per_case": 2,
+      "controller_tasks_load": 1,
+      "controller_tasks_report": 2,
+      "QEMU_tasks_per_case": 2,
+      "actual_max_sequential_children": 1,
+      "authored_parser_scalar_comparisons": 76,
+      "complete193_getter_array_comparisons": 22,
+      "postrun_complete_report_field_comparisons": 209,
+      "context_updates": 22,
+      "first_prefix_copies": 9,
+      "first_no_copy": 2,
+      "first_return1": 8,
+      "first_return0": 3,
+      "second_return0": 11,
+      "adopted_children": 0,
+      "remaining_processes": 0
+    },
+    "case_labels": [
+      "load",
+      "v4",
+      "v6",
+      "dual-index17",
+      "dual-index0",
+      "cross-selectors",
+      "nonip",
+      "inactive",
+      "PDP-failure",
+      "mismatched-cid",
+      "null-update",
+      "v6-long-strings"
+    ],
+    "configuration": {
+      "original_reference_version": 22,
+      "status_override": 0,
+      "IPv4_first": false,
+      "context_or_builder_fields_patched": false,
+      "original_parser_Init_called_by_C1_once": true,
+      "helper_direct_Init_calls": 0,
+      "getters_called_separately_with_selectors": [
+        1,
+        2
+      ]
+    },
+    "input_and_context_comparison": {
+      "authored_synthetic_input_bytes": 144,
+      "packet_owned_copy_checked": true,
+      "each_complete_getter_array_bytes": 193,
+      "fixed_raw_DataCall_prefix_bytes": 352,
+      "first_complete_prefix_copies": 9,
+      "first_no_copy_controls": 2,
+      "first_address_change_return_one": 8,
+      "NonIP_copies_with_address_change_return_zero": true,
+      "all_eleven_repeat_updates_return_zero": true,
+      "actual_repeat_prefix_and_source_memcmp_checked": true,
+      "second_raw_prefix_array_emitted": false,
+      "pre_builder_context_state": 0,
+      "pre_builder_APN_TD_NetIf_related_pointers_null": true,
+      "post_builder_same_three_pointers_null_asserted": true,
+      "post_builder_context_state_recaptured": false
+    },
+    "report_projection": {
+      "all_emitted_field_names": [
+        "schema",
+        "stage",
+        "bytes",
+        "cause",
+        "opaque_i64_at_8",
+        "cid",
+        "active",
+        "protocol_code",
+        "mtu_v4",
+        "mtu_v6",
+        "ifname",
+        "address_text",
+        "dnses",
+        "gateways",
+        "pcscf",
+        "structured_address_vector_empty",
+        "QoS_TD_vectors_empty",
+        "borrowed_interior_getter_verified",
+        "guards_intact"
+      ],
+      "emitted_fields_per_case": 19,
+      "all_emitted_fields_compared_in_independent_post_run_review": true,
+      "post_run_field_comparisons": 209,
+      "complete_264_byte_field_equivalence_compared": false,
+      "borrowed_GetData_interior_offset": 1104,
+      "borrowed_GetLength_bytes": 264,
+      "structured_address_vector_empty_only": true,
+      "QoS_TD_vectors_empty_only": true,
+      "nonempty_structured_address_or_QoS_TD_element_decoder_qualified": false,
+      "C_string_fields": [
+        "ifname",
+        "address_text"
+      ],
+      "std_string_vector_fields": [
+        "dnses",
+        "gateways",
+        "pcscf"
+      ],
+      "std_string_item_bytes": 24,
+      "long_DNS_PCSCF_string_lengths": [
+        38,
+        38,
+        38,
+        38,
+        38
+      ],
+      "long_address_text_length": 41,
+      "long_vector_strings_force_heap_decoder_branch": true,
+      "short_item_SSO_representation_tags_recorded": false,
+      "IPv4_address_text_in_cases": "No suffix",
+      "IPv6_address_text_in_cases": "/64 suffix",
+      "dual_family_order_in_cases": "IPv6 before IPv4"
+    },
+    "ownership": {
+      "guard_bytes_each_side": 64,
+      "guarded_packet_bytes": 24,
+      "guarded_adapter_bytes": 10912,
+      "guarded_context_bytes": 11000,
+      "guarded_builder_bytes": 16,
+      "builder_actual_vtable_first_slot_bound_to_selected_non_deleting_D1": true,
+      "report_original_returned_object_uses_actual_vtable_deleting_D0": true,
+      "report_actual_GetData_GetLength_slots_verified": true,
+      "borrowed_GetData_pointer_freed_by_helper": false,
+      "declared_5240_byte_report_allocation_size_measured_by_runtime": false,
+      "cleanup_order": [
+        "report actual deleting D0",
+        "builder verified non-deleting D1 then outer free",
+        "context D1 then guard check/outer free",
+        "adapter D1 and packet D1 then guard checks/outer frees"
+      ],
+      "cleanup_guards_and_context_source_prefix_memcmp_passed": true,
+      "dlclose_returned_zero": true,
+      "all_finalizers_or_unmapping_proved": false
+    },
+    "bounded_observations": [
+      {
+        "case": "cross-selectors",
+        "local_PDP_selector": 1,
+        "reported_protocol_code": 0,
+        "reported_address_family": "IPv4",
+        "reported_DNS_and_PCSCF_family": "IPv6",
+        "original_IPv6_getter_all_zero": true,
+        "conclusion": "Family getter projection is not the full raw DataCall representation"
+      },
+      {
+        "cases": [
+          "inactive",
+          "PDP-failure"
+        ],
+        "reported_cause": 65535,
+        "parsed_CID_and_activity_retained": true,
+        "ifname_and_address_text_null": true,
+        "DNS_gateway_PCSCF_empty": true,
+        "MTUs_zero": true
+      },
+      {
+        "cases": [
+          "mismatched-cid",
+          "null-update"
+        ],
+        "reported_cause": 65535,
+        "reported_CID": 0,
+        "reported_activity": 0,
+        "opaque_i64_at_8": -1,
+        "ifname_and_address_text_null": true,
+        "DNS_gateway_PCSCF_empty": true
+      },
+      {
+        "case": "nonip",
+        "reported_protocol_code": 4,
+        "address_text_empty_string": true,
+        "DNS_gateway_PCSCF_empty": true,
+        "mtu_v4": 1420
+      }
+    ],
+    "runtime_identity_and_closure": {
+      "selected_current_originals_native_index_and_staged_copies_match": true,
+      "selected_original_runtime_files": 39,
+      "all_regular_mapped_files_per_case": 36,
+      "mapped_ARM_files_per_case": 35,
+      "mapped_original_files_per_case": 34,
+      "mapped_guest_helper_unique_files_per_case": 35,
+      "mapped_guest_helper_segments_per_case": 123,
+      "all_actual_ARM_files_bound_to_allowlist": true,
+      "all_guest_mapping_SHA_size_device_inode_rechecked": true,
+      "host_x86_QEMU_SHA_ELF_machine_captured_live": true,
+      "current_closed_container_host_image_files_rehashed": false,
+      "full_image_rootfs_audited": false,
+      "held_namespace_processes": [
+        "controller PID1",
+        "owned QEMU child"
+      ],
+      "controller_tasks_load": 1,
+      "controller_tasks_report_cases": 2,
+      "QEMU_tasks": 2,
+      "actual_maximum_sequential_QEMU_children": 1,
+      "after_each_actual_wait_adopted_children": 0,
+      "after_each_actual_wait_remaining_processes": 0,
+      "actual_UID_GID_all_four": 1000,
+      "actual_supplementary_groups": [
+        1000
+      ],
+      "all_capability_sets_zero": true,
+      "no_new_privileges": 1,
+      "seccomp_mode": 2,
+      "network_disabled": true,
+      "read_only_container_root": true,
+      "host_devices_passed": false,
+      "host_sysfs_hidden_by_empty_readonly_tmpfs": true,
+      "each_child_actual_wait_exit": 0,
+      "each_child_stdout_EOF": true,
+      "each_wait_before_original_cutoff": true,
+      "original_child_cutoffs_seconds": {
+        "load": 20,
+        "report_cases": 60
+      },
+      "whole_controller_cutoff_seconds": 90,
+      "outer_cutoff_seconds": 180,
+      "deadline_clock": "CLOCK_MONOTONIC; no suspend-aware qualification",
+      "actual_outer_CLI_wait_exit": 0,
+      "separate_outer_CLI_stdout_EOF_receipt": false,
+      "same_daemon": true,
+      "live_exact_CID_registered": true,
+      "fresh_exact_CID_absent": true,
+      "frozen_inputs_unchanged": true
+    },
+    "ambient_observations": {
+      "same_bounded_classes_as_own_load_control": true,
+      "successful_UNIX_datagram_sockets_per_case": 1,
+      "failed_ENOENT_UNIX_connects_per_case": 1,
+      "UNIX_peer_decoded": false,
+      "failed_property_opens_per_case": 2,
+      "failed_hidden_sysfs_opens_per_case": 2,
+      "guest_clone_fork_exec_ioctl_observed": false,
+      "listed_modem_Binder_node_attempt_observed": false,
+      "observed_guest_write_descriptors": [
+        1,
+        2
+      ],
+      "zero_socket_activity_or_global_purity_claimed": false
+    },
+    "boundaries": {
+      "original_reference_only": true,
+      "complete_original_264_byte_field_equivalence_claimed": false,
+      "native_formatter_or_TDD_qualified_by_this_object": false,
+      "AIDL_or_public_provider_ABI_qualified": false,
+      "normal_handler_or_context_selection_executed": false,
+      "activation_APN_transport_authority_qualified": false,
+      "channel_netdev_provider_identity_qualified": false,
+      "kernel_modem_carrier_or_physical_phone_qualified": false,
+      "production_namespace_equivalence_claimed": false,
+      "proprietary_runtime_raw_arrays_decompilation_or_credentials_included": false
+    }
+  },
+  "schema": 1,
+  "base_commit": "37e7a810518f5ec0554b88f1e712648bdeca015a",
+  "qualified": true,
+  "scope": "Modern22/base144 owned emitted report projection with14 original comparisons; genuine hostRED andhost/ARM USER-QEMU GREEN, not complete264B ABI/transport/APN/hardware",
+  "additional_original_edges": {
+    "run": "pokelinux-sit-report-edge-original-sol-1",
+    "execution_class": "Same genuine matched Bionic original parser/freshcontext/modern22 report under ARM USER-QEMU",
+    "selection_sha256": "90546cd809826ef31cc7e1586680cd92bd8a3d0de59f47e8f7786d01ca914154",
+    "execution_sha256": "a4130595da51292ba1853a516990500acb38497c2d5329521f9cda9248ea1db9",
+    "result_sha256": "75027852e2ae7af394a793cfc064c2751d79a264efc969955e82e4ab69e18612",
+    "owner_review_sha256": "b7419c480e85da43c537a50cc2d85edbd59c5a7ce7d940625dcac0903bc6d693",
+    "root_review_sha256": "bbc421aa596643019fba3a0467fb25526f4a1627eaae82c23b280a5cc5597828",
+    "independent_review_sha256": "4e0fef3b05e96fece198ca7f367991cd5f8d3e45ab613d6015feead1a4caa892",
+    "predeclared_complete144_and193getter_mutation_cases": 6,
+    "actual_wait0_stdout_EOF_children": 7,
+    "all_emitted_report_fields_compared_post_run": 114,
+    "current_and_staged_runtime_files_rehashed": 39,
+    "regular_mapped_file_observations": 252,
+    "guest_helper_mapping_segments": 861,
+    "all_ARM_mapped_files_allowlisted": true,
+    "actual_CLI_and5_Dockerhelper_waits_both_pipe_EOF": true,
+    "QEMU_strace_regular_file_not_pipe_EOF": true,
+    "same_helper_controller_as_first_report_run": true,
+    "original_deadlines_clock": "host CLOCK_MONOTONIC, not suspend-aware",
+    "scope_limitations": [
+      "Complete report field comparisons were authored during this independent post-run audit; they are observations/qualification, not pre-run Rust RED or GREEN.",
+      "This additional edge run observes zero-local text/gateway behavior, individual zero-server filtering and selected IPv6 compatible/mapped/zero-run formatting; no universal formatter equivalence is inferred.",
+      "Post-builder context state was not recaptured; only three pointer-null assertions, guards and later source/context prefix memcmp are qualified.",
+      "Structured-address vector is empty only; no nonempty element decoder or full AIDL/public provider ABI is qualified.",
+      "Original-returned report uses bound actual deleting D0 and interior264-byte borrowed GetData; runtime does not independently measure the declared5240-byte allocation size.",
+      "All edge DNS/gateway/PCSCF vector item strings fit the helper short-string bound; C-string fields use separate bounds. Per-item representation tags are not logged, so no independently logged SSO branch claim.",
+      "Natural original loader initialization/dependency/resolver/finalizer code can run; no full body audit or global purity claim.",
+      "dlclose returning0 does not prove every finalizer ran or unmapping.",
+      "Host QEMU full-file SHA and ELF machine were captured live; no current closed-image rootfs audit.",
+      "No normal caller/context selection, activation, APN/transport authority, kernel/modem/phone, native report port or cellular readiness qualification.",
+      "Original fixed MONOTONIC cutoffs are not suspend-aware."
+    ],
+    "independent_memo_sha256": "585231a734d3480a79f6c36a47c87bd0b9f2f42eff17ce5d30ae1033c0dfd779"
+  },
+  "native_RED": {
+    "run": "pokelinux-sit-modern-report-baseline-root-1",
+    "root_review_sha256": "bfa17ecea1dd1ddb87dcb9f4ecd0410c1c6674655407420c695ee9c706e0211a",
+    "host_prior_tests_passed": 23,
+    "host_new_controls_passed": 3,
+    "host_original_report_comparisons_failed_Unsupported": 14,
+    "actual_host_test_exit": 101,
+    "strict_fmt_Clippy_passed": true,
+    "ARM_compile_only": true,
+    "host_log_sha256": "3c71461c2329ff23899862eff8ecec1f4192958d168e69e32d90a04886c6d447",
+    "contract_sha256": "a5ceb6041c6be622176c3342812fdd26a88c993234ee71aeebe103f7320ea627"
+  },
+  "native_GREEN": {
+    "run": "pokelinux-sit-modern-report-repair-root-2",
+    "root_review_sha256": "fcb3ce621f30b753ec7d4fcba0dc8db748c72cd36ae865ce6faf96a37ddc5b5d",
+    "host_tests_passed": 40,
+    "ARM_user_QEMU_tests_passed": 40,
+    "original_emitted_report_comparisons_per_target": 14,
+    "only_repair_source_paths": [
+      "native-sit-codec/src/modern_report.rs"
+    ],
+    "tests_fixtures_source_prerequisites_manifest_lock_unchanged_after_RED": true,
+    "strict_fmt_Clippy_passed": true,
+    "host_log_sha256": "38c54349583a59b5f2b292ea1542cd19500f20dc516d436c86309cd93f4b136e",
+    "ARM_log_sha256": "40c7adaed1a7c63768862b5a945478b85a4c6de42041b7011ea3d2a82b505533",
+    "ARM_test_executables": [
+      {
+        "target": "pokelinux_sit_codec",
+        "path": "target/aarch64-unknown-linux-gnu/debug/deps/pokelinux_sit_codec-a30e547c46631f05",
+        "sha256": "da4f754b48b39423b236159f6783ac0c199583155222efd2c8ef18d92b3c05b5"
+      },
+      {
+        "target": "base_server_families",
+        "path": "target/aarch64-unknown-linux-gnu/debug/deps/base_server_families-bfd5fc3c213df8b9",
+        "sha256": "c5e3870bd0b239a63fa7aa3cff971c8caf023cc8397f6a1e4e38ae228f5d1d2f"
+      },
+      {
+        "target": "modern_report",
+        "path": "target/aarch64-unknown-linux-gnu/debug/deps/modern_report-a512ddbc3fd6de64",
+        "sha256": "0d6ed6584c25c77943d6a3a195f5d74dfddd7fe01eff245b0394d68345eda1e1"
+      },
+      {
+        "target": "base_response",
+        "path": "target/aarch64-unknown-linux-gnu/debug/deps/base_response-7ecbfcc82ff420d2",
+        "sha256": "045539511f4971d746948e27231c85412a3d01626b78d401946902a5a299d453"
+      }
+    ],
+    "exact_build_CIDs_reaped": true
+  },
+  "source_inventory": [
+    {
+      "path": "native-sit-codec/Cargo.lock",
+      "sha256": "8fd8f204e8bdfd40b9b61544193dc0d5a264136e60398ed1de07525ad4bba17d"
+    },
+    {
+      "path": "native-sit-codec/Cargo.toml",
+      "sha256": "e015735268c5e4d4200c97685e448086999603f515ee5365dcd85bc9c075cc7e"
+    },
+    {
+      "path": "native-sit-codec/src/lib.rs",
+      "sha256": "276ec8785a767f85cdb314a564dd1f239e21f4496f782e21400efb8f477c1d0b"
+    },
+    {
+      "path": "native-sit-codec/src/modern_report.rs",
+      "sha256": "c42b94abdbb3c344b0b711e374a0a8e89953e2892bf33453dc2c0694b75c2716"
+    },
+    {
+      "path": "native-sit-codec/src/response.rs",
+      "sha256": "403a2212401e6bcadc7666ae60b8a7f4e3d08a536e693cc98a19a211b56120c4"
+    },
+    {
+      "path": "native-sit-codec/src/tests.rs",
+      "sha256": "b72194d0c4675aa754aefd61883043c976e7663f1b237c84bf237c3c9a422e35"
+    },
+    {
+      "path": "native-sit-codec/tests/base_response.rs",
+      "sha256": "457aecfd96e85daeae8ec49f2fb6c5219723e5065f36498e6e1dbc36a8217445"
+    },
+    {
+      "path": "native-sit-codec/tests/base_server_families.rs",
+      "sha256": "2838064c3f5ae882da3314e417bc50488ad2ad47183697791b534074ddf4c7e9"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-dual-index0.hex",
+      "sha256": "c39b53c39dddbb218eee8127a39b8d9baea3af84697ac0494ea55428ac920c41"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-dual-index17.hex",
+      "sha256": "c39b53c39dddbb218eee8127a39b8d9baea3af84697ac0494ea55428ac920c41"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-ip.hex",
+      "sha256": "e87202bd3d3260a089c4904c25dfbe71539fede952a2c1ed0cb15039c7312d08"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-ipv6.hex",
+      "sha256": "e9218ba592977d2729098bafa1614a6974bd9f45310980f3b255cdb9957dd5ea"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-nonip.hex",
+      "sha256": "28801a1b1ea26dcfa68599e49319d8cb175fb1f290053fb759af54bb531ede76"
+    },
+    {
+      "path": "native-sit-codec/tests/fixtures/v3-other-apn.hex",
+      "sha256": "31a5605a08478b13601c6c166eb3a215e462b55d10caa2811589382136453b52"
+    },
+    {
+      "path": "native-sit-codec/tests/modern-report-fixtures/v22.tsv",
+      "sha256": "6b25c6f2d761875703dee84c50f4c0fb6f2a045378e32c3375a302de0e72c206"
+    },
+    {
+      "path": "native-sit-codec/tests/modern_report.rs",
+      "sha256": "73b39da9ea74f6af02b4a4c27801b4d2df3f0ca39686524fab09f99e00084484"
+    },
+    {
+      "path": "native-sit-codec/tests/response-fixtures/cross-selectors.txt",
+      "sha256": "78ecd96491b1147d1371ae7ef4bd179e4bce22272ed6e6f416cb27d63c1311ca"
+    },
+    {
+      "path": "native-sit-codec/tests/response-fixtures/dual.txt",
+      "sha256": "7a434c6b61a44a613a040b306ca58a65340ac59c89307e0affca05b79647c1ae"
+    },
+    {
+      "path": "native-sit-codec/tests/response-fixtures/inactive.txt",
+      "sha256": "3b8bbe558351a3edbd44caedfba967523e2ff694b7c495755fd8e99cd862c360"
+    },
+    {
+      "path": "native-sit-codec/tests/response-fixtures/nonip.txt",
+      "sha256": "9b3e7d40769f078ba428f5d5dcb9029e316270058f98d1c78a72f844eb488541"
+    },
+    {
+      "path": "native-sit-codec/tests/response-fixtures/v4.txt",
+      "sha256": "29ce5943c46ae83a0b9881d1ba17144a7841d63e72062ffda240d64cd1a3b0a4"
+    },
+    {
+      "path": "native-sit-codec/tests/response-fixtures/v6.txt",
+      "sha256": "47dc4d0a9c390b9b1903ef352f5db094a5892b7cc6639880280b6f15cd172224"
+    }
+  ],
+  "fixture_bindings": [
+    {
+      "case": "v4",
+      "original_run": "pokelinux-sit-report-original-root-1",
+      "stdout_sha256": "667fd622996cff783120569d3152315ec709429171adcd22e9bdba1266254d61",
+      "input_sha256": "bab9dfe7aa085d243f9a165c314e4ffee08ec0d99ebcb9f56a4ac810e1dee9a3"
+    },
+    {
+      "case": "v6",
+      "original_run": "pokelinux-sit-report-original-root-1",
+      "stdout_sha256": "3b9c6389a8c273791f30b838a7a5751b6a456af1a471f1d63e459a594ddea2b5",
+      "input_sha256": "9dafb6fbd916ccdd72e2df93880ecf98154269745b75ccfd16b2bea38ff2d7e2"
+    },
+    {
+      "case": "dual-index0",
+      "original_run": "pokelinux-sit-report-original-root-1",
+      "stdout_sha256": "2ccef3fd8718f3b5173f55a30d64924ce1330fc841c66c8fcb7d3cddba0b7f3c",
+      "input_sha256": "04bac1f29082cc48504cb7ffe9326ac9dbb7ee99f0ad968c27f606731a507231"
+    },
+    {
+      "case": "dual-index17",
+      "original_run": "pokelinux-sit-report-original-root-1",
+      "stdout_sha256": "c13d30bd5dc092b764c22c0d47a8b19213b4280a2084dbff2a588c4041d6246f",
+      "input_sha256": "04bac1f29082cc48504cb7ffe9326ac9dbb7ee99f0ad968c27f606731a507231"
+    },
+    {
+      "case": "cross-selectors",
+      "original_run": "pokelinux-sit-report-original-root-1",
+      "stdout_sha256": "8b58d16647591cd13bf2e5cb189a8c8ce29665f4e32e38c2c56107737c1641c6",
+      "input_sha256": "1e20d0c9a9df8ade052880651e48bdbf6f6203d142c3413f03ec0b1c929e7f1f"
+    },
+    {
+      "case": "nonip",
+      "original_run": "pokelinux-sit-report-original-root-1",
+      "stdout_sha256": "a186494f05df124100da3b22ef78903f30ec2e72715197a004583001beb30c41",
+      "input_sha256": "e950146d8bc4cb453fdedce8a3cd65bee73d06c19fd3bdf85a7c073935f3c9bd"
+    },
+    {
+      "case": "inactive",
+      "original_run": "pokelinux-sit-report-original-root-1",
+      "stdout_sha256": "75345a15a18c69946cc081ab71f0a92c1a7edcd8b60dc5a3a031ddb62b11099b",
+      "input_sha256": "3e6d1aa83adfeb2b3ed5308f164c027e14e1b2b223cce6b7b06941c46cdf42ff"
+    },
+    {
+      "case": "v6-long-strings",
+      "original_run": "pokelinux-sit-report-original-root-1",
+      "stdout_sha256": "2bf0df44ed22ad23f1bd31924e1902e8ea2ba92673adb03a64704345f52ca16f",
+      "input_sha256": "c66d1fa94577898dd4a85e3419feda1b0a538223ec1d757655ee033faa42dbf5"
+    },
+    {
+      "case": "v4-local-zero",
+      "original_run": "pokelinux-sit-report-edge-original-sol-1",
+      "stdout_sha256": "692ae5a2a0e06900d1c51e38a40d63b36908f2450f4470ce8a82d6ca645c6d21",
+      "input_sha256": "5058e735453d8ed6bdbf26ffd5d5337296db22f41ad80bb6bb1b67f210a398b4"
+    },
+    {
+      "case": "v6-local-zero",
+      "original_run": "pokelinux-sit-report-edge-original-sol-1",
+      "stdout_sha256": "9aa4db2655eed232686c4d8f84e7be7a34abca49d06ae125c35ce1ccbde7a983",
+      "input_sha256": "42f3d17e47ba929ce6c10f619983466018034aedb242e7156c2cd199c3b68d52"
+    },
+    {
+      "case": "dual-zero-first-dns-pcscf",
+      "original_run": "pokelinux-sit-report-edge-original-sol-1",
+      "stdout_sha256": "fbee7b37a729fe4c2d780201ab008c1d50cfbb742c1f95a2455eb54184477dc6",
+      "input_sha256": "a1fe571dff1b42d3127146b9c44f460488ebdcbe365b443265b7437a8f78eaf9"
+    },
+    {
+      "case": "v6-compatible",
+      "original_run": "pokelinux-sit-report-edge-original-sol-1",
+      "stdout_sha256": "93569c266e942431659b5c0f22568b038e6bc2493b9063ed7a54be9d7c072e96",
+      "input_sha256": "6b19c3b70169ae9ad364c00bfc0d9d7dbb469de949e43e0b99730bc6b0e9a426"
+    },
+    {
+      "case": "v6-mapped",
+      "original_run": "pokelinux-sit-report-edge-original-sol-1",
+      "stdout_sha256": "9c7996ce9640bc4dfe6bdbda53e0c6e70e7ef8418d08254a7196e0f114dacd12",
+      "input_sha256": "94ce65d4331bcd9c6f534ffff2f508ea43e8a9993c831c51cb9dea6c62505afe"
+    },
+    {
+      "case": "v6-zero-run-tie",
+      "original_run": "pokelinux-sit-report-edge-original-sol-1",
+      "stdout_sha256": "7a68ac20eefcd37fe523b3daa713e02c55dc8f2118c9edb259012f795e6c373e",
+      "input_sha256": "021aafa3ef02f7fdc07ff3c003d2b408664e773c49775517f63693ab8db1b0ed"
+    }
+  ],
+  "independent_implementation_readback": {
+    "scope": "Read-only exact source/fixed14fixture-to-original comparison; no target rerun/lifecycle requalification",
+    "receipt_sha256": "2635e664bd85fe22478a66c03a39bf23ca0114f60083c586535481c4741ad90f",
+    "memo_sha256": "6e05774635399b3f3f6ec5c4351f565224d940b99f2bece0a940b9c2efb6d273",
+    "reviewed_implementation_sha256": "c42b94abdbb3c344b0b711e374a0a8e89953e2892bf33453dc2c0694b75c2716",
+    "material_blockers": false
+  },
+  "native_contract": {
+    "input": "Canonical typed BaseSetupResponse, no second raw parser",
+    "fixed_shape": "Modern22/base144, override0/naturalIPv6first/freshmatchedcontext/emptydynamiccontainers",
+    "presentation_index": "Explicit0..99, rmnetN presentationonly, noCIDderivedbinding",
+    "native_refusals": [
+      "InvalidPresentationIndex",
+      "InvalidResponse consistency"
+    ],
+    "opaque_i64_at_8": "0 for selected parser-success observations, no retryauthority",
+    "reported_mtu_v4": "32bit observation copied as signed pattern, no range/configurationpolicy",
+    "mtu_v6": 0,
+    "inactive": "cause65535/CIDactivityretained/nulltexts/emptyvectors/zeroMTUs",
+    "zero_values": "Local addresses retainzero text; servers filterzero entries; gatewaydefaults onlynonzerolocals",
+    "IPv6_text": "Captured compatibleform preserved where prefix96zero and tailhigh16nonzero; other forms nativeRustdisplaypolicy, not arbitraryoriginalequivalence",
+    "empty_structured_QoS_TD_arrays": "Measuredemptyonly; no nonemptyelementmodel or whole264B equivalence"
+  },
+  "boundaries": {
+    "native_modern_projection_is_AIDL_or_public_DataV3_full_ABI": false,
+    "owned_pending_source_token_deadline_context_channel_provider_bound": false,
+    "reported_names_addresses_gateways_grant_connectivity_or_APN_readiness": false,
+    "uncertain_registration_or_APN_operation_retried": false,
+    "ARM_USER_QEMU_is_actual_ARM_kernel": false,
+    "physical_phone_accessed": false,
+    "raw_proprietary_inputs_decompilation_credentials_published": false
+  },
+  "remaining_gates": [
+    "One owned request/response attempt and one-time source/token/deadline admission",
+    "Established real transport framing/read-write/reopen/lifetime semantics",
+    "Normal handler/context selection and channel/slot/subscription/provider binding",
+    "Dynamic/extended response layouts and broader error/remap semantics",
+    "APN acquisition/deactivation/reset and uncertain recovery",
+    "Matched kernel/modem/carrier/physical hardware and full native smartphone matrix"
+  ],
+  "post_test_documentation_changes": [
+    {
+      "path": "native-sit-codec/README.md",
+      "executed_sha256": "5a70a29f9f62d99c24a07f3d37dbf045229d44632f29bc8d4071f37a8860cc6b",
+      "published_sha256": "7b36caa5ec1f5c888c91f3c7840541ab0e1f1f0a26c6fb2c6538056946383f56",
+      "scope": "Documentation only; exact tested production/test/fixture files unchanged"
+    }
+  ]
+}

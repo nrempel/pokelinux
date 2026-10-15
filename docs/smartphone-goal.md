@@ -26,6 +26,18 @@ precede this new RED; only decoder source changes for GREEN. The uint32 tail is
 now an observed MTUV4 mapping, while its final byte stays opaque. These are still
 codec results without native modem/APN authority or hardware qualification.
 
+The [native modern SIT report projection](native-sit-report-projection.md) now
+composes the canonical base parser with owned emitted report observations.
+Fourteen captured original cases match after compiled missing-report RED:
+23 prior tests plus three controls pass, fourteen comparisons failUnsupported;
+only the report source changes for fixed-test40 host/40 ARM64 user-QEMU GREEN.
+Separate original runs have12 and7 actual child waits0/EOF, with independent
+lifecycle/mapping reviews. The second run establishes zero-local/server filtering
+and compatible/mapped/tied-zero IPv6 presentation. Fixed empty containers do not
+establish complete264-byte ABI equivalence. Next is one owned pending attempt
+with established transport semantics, source/token/deadline/one-time admission;
+provider/channel/APN ownership and hardware remain open.
+
 A separate [original context memory probe](native-sit-context-application.md)
 now composes that parser with original PdpContext update in seven controls,
 14 calls and eight actual QEMU waits0/stdout EOF. It measures fixed-prefix copy

@@ -6,7 +6,9 @@ on the host and ARM64 user-QEMU. All eight fixed tests pass per target; formatti
 and host all-targets strict Clippy pass, and the ARM64 test executable compiles.
 That encoder checkpoint remains unchanged. The later base-response decoder
 below initially adds14 tests, for22 per target. The later independent-family
-repair brings the current total to23 per target. These are pure codec observations; modem
+repair brings its checkpoint to23 per target. The subsequent
+[modern report projection](native-sit-report-projection.md) adds seventeen tests,
+for the current40 per target. These are pure codec observations; modem
 communication and APN acquisition remain unqualified.
 
 ## Original reference and fixed comparisons

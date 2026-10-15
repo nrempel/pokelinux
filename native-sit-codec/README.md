@@ -3,9 +3,9 @@
 `pokelinux-sit-codec` encodes one initial token-zero,983-byte Samsung SIT setup
 request and parses the measured144-byte base response subset. Six request
 comparisons and six response/getter comparisons match separately executed
-original Bionic code under ARM64 user-QEMU. All23 native tests pass on the host
+original Bionic code under ARM64 user-QEMU. All40 native tests pass on the host
 and ARM64 user-QEMU after separate encoder/decoder REDs and a compiled
-independent-server data-loss RED.
+independent-server data-loss RED and modern-report missing-behavior RED.
 The crate has no dependencies and forbids unsafe Rust.
 
 `InitialLteSetupV3::new` accepts a `NonZeroU8` context identifier, an APN of1–99
@@ -34,6 +34,16 @@ the canonical observation. The uint32 tail becomes `reported_mtu_v4` through the
 selected original modern-report/logger mapping; the final byte remains opaque.
 No MTU configuration policy is implied. Token equality grants no dispatch,
 provider or APN authority. Broader response formats are refused.
+
+`modern_report::ModernSetupReport22::project(&response, presentation_index)`
+returns the modern-only owned scalar/text/vector observation for the fixed base
+subset. Fourteen captured original reports match; inactive/null text and Non-IP
+empty text remain distinct. Local and server zero filtering differ, independent
+server families survive, and compatible IPv6 spelling matches the measured
+original. Explicit index0–99 supplies presentation only. Invalid public input
+consistency is refused. Fixed empty arrays do not implement unmeasured dynamic
+ABI fields. See the [report projection](../docs/native-sit-report-projection.md)
+and [provenance](../docs/evidence/native-sit-report-projection-provenance.json).
 
 From the repository root:
 
