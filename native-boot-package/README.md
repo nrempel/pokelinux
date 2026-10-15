@@ -16,22 +16,27 @@ All entries have deterministic ownership, timestamps and distinct inodes.
 There is no Android init, vendor service, module loader or phone backend.
 
 The current compact image is1,466,368bytes with SHA256
-`01e004e27e569d3b28bf2e500ca0828ed0de12181d402970465f814b2f33567f`.
+`b9b3be959ac35c2de1290877a8acb8bc1a856f02b841e28195dd963fc55eefdd`.
 Its PMSG-capable native init SHA256 is
-`75e38222781c8b7ae9ab950b0caf697acb04c318419cd6c4e2f2f0f6bfd04115`;
+`c47752349f7df514708d6046904bac66782bfecc5cb7d7fce8ec69f5b49dd7ad`;
 the normal child remains
 `3b15eb4a9fd289e6664c917861f98bbe385e117e26b28abb149b3021e4b19e63`.
 Two fresh full-bundle builds contain the exact same compact prefix and manifest.
 Original AOSP unpack/Rust geometry, independent native archive bytes and unsigned
 integrity/restoration/reference checks pass. See
-[current PMSG/package provenance](../docs/evidence/native-boot-native-pmsg-provenance.json).
+[current bundle provenance](../docs/evidence/native-boot-current-bundle-provenance.json).
 
-The exact current init separately passes five Google-kernel PMSG boots with a
-read-only witness. Two current exact-package Arch consumer attempts with the
-normal child remain failed: console output interrupts event2 or event4 ACKs.
-Both execute/wait child37 and power down with Docker0, exact-CID and input closure,
-but the unchanged checker refuses them. Current Arch ACK qualification remains
-open. No new full vendor-ramdisk runtime pass is claimed.
+The exact current original-extracted generic passes the unchanged Arch consumer
+with four intact ACKs, matching normal child37, powerdown and owned/input closure.
+That same full-bundle generic joined to the unchanged complete vendor prefix
+passes the existing Google4K full-stream consumer at512MiB. Both vendor_boot
+fragments and all padding remain. The current init separately passes five PMSG
+regression boots with a read-only witness. See the
+[current checkpoint](../docs/native-boot-ack-and-current-bundle.md).
+
+Two Arch ACK failures from the preceding PMSG-only payload remain preserved.
+Its host packet controls already pass; the ACK change and current kernel passes
+do not establish universal serial atomicity or a proven corruption mechanism.
 
 The preceding1,462,272-byte compact image and earlier native init retain their
 successful two-build/original-tool/three-frame/eight-refusal and Arch/Google-kernel

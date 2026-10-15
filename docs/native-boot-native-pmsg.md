@@ -1,5 +1,10 @@
 # Native PID1 records retained through synthetic reset
 
+This page retains the initial PMSG implementation, its bundle and two failed Arch
+checks. The [current ACK/bundle checkpoint](native-boot-ack-and-current-bundle.md)
+uses a later init and separately passes current Arch/full-stream consumers and
+the same PMSG regression. Historical artifact hashes below are unchanged.
+
 The native RAM probe now submits its own canonical diagnostics to an optional,
 identity-checked PMSG device. Actual execution of the authenticated Google4K
 kernel on synthetic QEMU virt recovers all four first-boot native records after
@@ -107,7 +112,7 @@ PowerOff stays the requested action; no restart string or phone recovery path
 was introduced. The full [deployment profile](native-deployment.md) remains
 refused.
 
-## Current bundle and Arch consumer
+## Bundle and Arch consumer at the initial PMSG checkpoint
 
 The current PMSG payload is repacked into two reproducible complete8MiB
 [development diagnostic bundles](native-boot-development-bundle.md). An initial

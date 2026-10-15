@@ -175,7 +175,6 @@ impl Reporter {
         // Keep serial-console observations available, but its success cannot
         // establish kernel-ring admission. Neither does a full kmsg write count:
         // the kernel can silently discard messages on rate limits or disable.
-        use io::Write;
         let until = crate::now().saturating_add(BUDGET_NS);
         seek(&self.reader, SeekFrom::End(0))?;
         if write(&self.writer, record.as_bytes())? != record.len() {
@@ -207,13 +206,7 @@ impl Reporter {
                         // Only a distinct raw stdout ACK establishes readback.
                         // The kernel may console-print its payload before we
                         // successfully read it. Consumers must require this ACK.
-                        let mut output = io::stdout().lock();
-                        writeln!(
-                            output,
-                            "POKELINUX_DIAGNOSTIC_ACK epoch={} event={event} kernel_seq={sequence} {message}",
-                            self.epoch
-                        )?;
-                        output.flush()?;
+                        crate::ack::emit(&self.epoch, event, sequence, &message)?;
                         return Ok(());
                     }
                 }

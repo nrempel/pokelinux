@@ -80,8 +80,8 @@
   ],
   "native_payload": {
     "init": {
-      "bytes": 1190352,
-      "sha256": "75e38222781c8b7ae9ab950b0caf697acb04c318419cd6c4e2f2f0f6bfd04115"
+      "bytes": 1255888,
+      "sha256": "c47752349f7df514708d6046904bac66782bfecc5cb7d7fce8ec69f5b49dd7ad"
     },
     "probe-child": {
       "bytes": 993728,

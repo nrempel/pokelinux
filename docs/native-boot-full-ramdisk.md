@@ -1,5 +1,13 @@
 # Full vendor/native ramdisk under the original kernel
 
+The [current diagnostic bundle](native-boot-ack-and-current-bundle.md) separately
+passes this existing full-stream consumer with its exact new generic and normal
+child, retaining the complete vendor prefix and both vendor_boot fragments. Its
+46,799,452-byte stream has distinct current source/artifact provenance. The
+earlier full-stream checkpoint below retains its recorded init and bytes.
+
+## Earlier initial full-stream checkpoint
+
 The unchanged authenticated Google4K kernel now unpacks the complete padded
 four-frame native-generic counterfactual and reaches native Rust PID1. Four
 correlated diagnostic ACKs, the selected uname, matching child wait37, completion

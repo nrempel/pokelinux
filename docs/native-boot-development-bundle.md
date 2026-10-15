@@ -8,7 +8,7 @@ This closes an offline format gap; it does not qualify a Pixel boot or admit
 full smartphone deployment. [Original format provenance](evidence/native-boot-development-bundle-provenance.json)
 retains its earlier payload. The current image below contains the
 [native PMSG init](native-boot-native-pmsg.md), with fresh two-build format checks
-and metadata RED→GREEN in [current provenance](evidence/native-boot-native-pmsg-provenance.json).
+and metadata RED→GREEN in [preceding PMSG provenance](evidence/native-boot-native-pmsg-provenance.json).
 
 ## Artifact and exact scope
 
@@ -17,7 +17,7 @@ The [producer](../tools/native-boot-development-bundle.py) calls the unchanged
 unchanged AOSP `avbtool.py` to add fresh unsigned metadata. It emits:
 
 - `candidate/init_boot.img`: complete raw8MiB image, SHA256
-  `80cd815edf5205679b15f253552cf060928aaa3c038f57e36807a8182432923e`.
+  `9bf8d4ab99a9ef82fa6c82546517cf494d64855832a4f15422b898d9f82410e7`.
 - `restore/init_boot.img`: independent exact stock copy, SHA256
   `8ce3679285604688cea9c358d449a31db5fb7c0f0b49ef16c0f8c2c807f8425d`.
 - `unchanged/`: exact authenticated `boot`, `vendor_boot`, `vendor_kernel_boot`
@@ -74,7 +74,7 @@ size RED is preserved. The final publication witness also clarifies host versus
 native ELF execution and removes a duplicate comparison; its fresh RED/GREEN
 runs are the published checkpoint. No setup error is counted as a production RED.
 
-## Current native PMSG package
+## Preceding native PMSG package and current ACK successor
 
 The new native init first passes the separate Google-kernel retention RED→GREEN.
 An unchanged bundle-suite replay passes format checks but still emits the old
@@ -87,11 +87,21 @@ NONE integrity, restoration/reference assets and both original AVB tamper
 refusals pass with all48 bounded external inputs unchanged.
 
 This host replay executes no ARM payload. Separate Google-kernel tests use the
-exact new init with a read-only witness. Two exact-current-package Arch runs with
+exact new init with a read-only witness. Two then-current-package Arch runs with
 the normal child fail ACK validation because kernel console output interleaves
 inside an ACK; both actual child37/powerdown/Docker0 and owned/input closures
-remain observed, without qualifying current Arch ACKs. No observer is relaxed.
+remain observed, without qualifying that payload's Arch ACKs. No observer is relaxed.
 Earlier exact-generic/full-ramdisk runtime successes keep their old identities.
+
+The current ACK successor uses unchanged producers/suite with a new init pin.
+Two full images/manifests again reproduce. Its exact full-image generic passes
+the unchanged Arch checker and the retained full selected vendor/native
+Google-kernel consumer; five separate PMSG regression boots also pass. The full
+stream preserves both vendor_boot fragments and all45,338,032 vendor/padding
+prefix bytes. See the [current checkpoint](native-boot-ack-and-current-bundle.md)
+and [current provenance](evidence/native-boot-current-bundle-provenance.json).
+The earlier failed Arch checks remain failed; host packet controls already pass
+before repair, so no packet RED, causal mechanism or serial atomicity is claimed.
 
 ## Trust and first-device experiment gates
 
@@ -125,8 +135,8 @@ No synthetic ramoops address or guessed reboot target enters the phone artifact.
 The [retained Google-kernel generic](native-boot-google-kernel.md) and
 [full selected ramdisk](native-boot-full-ramdisk.md) QEMU runs remain separate
 prior evidence for their earlier native payload. The current image has a new
-ramdisk identity; offline packaging starts no new kernel. Temporary RAM override
-remains
+ramdisk identity; its separate current full-stream execution is linked above.
+Offline packaging itself starts no kernel. Temporary RAM override remains
 unestablished and is not a prerequisite of this scoped future development
 partition experiment. The [full deployment validator](native-deployment.md),
 all smartphone services and every physical phone qualification remain separate.

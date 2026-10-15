@@ -99,3 +99,8 @@ actual no-backend refusal and observer controls. Both experiments cover explicit
 synthetic reserved RAM. Neither qualifies Pixel addresses, hardware/power-loss
 retention, panic records, bootloader admission, USB retrieval or usable phone
 recovery.
+
+The later [current ACK/bundle checkpoint](../../docs/native-boot-ack-and-current-bundle.md)
+reruns the same native-record profiles with its exact current init. Those five
+regression boots pass separately from its normal-child Arch/full-stream consumers;
+the earlier initial-PMSG artifact hashes and failed Arch checks remain historical.

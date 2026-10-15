@@ -38,24 +38,36 @@ console write or shutdown. Same-boot kernel admission also establishes neither
 PSTORE/USB delivery nor retention/retrieval across a phone reset.
 
 The explicit tmpfs/nodes path also avoids assuming DEVTMPFS support: the selected
-Google4K configuration disables it. Earlier separate RAM-only executions
-qualified the retained Arch ARM7.1.6 kernel and exact authenticated Google4K
-kernel on synthetic QEMU virt. Those selections used their then-frozen native
-ELFs and candidate generic LZ4; four correlated ACKs, matching child wait37 and
-QMP guest shutdown passed. See
-[Google-kernel execution](../docs/native-boot-google-kernel.md). The new PMSG
-payload has its own five-boot Google-kernel evidence and is now packaged in two
-reproducible8MiB development bundles. A fixed metadata assertion first failed
-with `MISSING_NATIVE_PMSG_PROFILE_METADATA`; only the producer's PMSG-profile
-boolean changed for suite GREEN. This was metadata TDD, not a new format RED.
-Two exact-current-package Arch attempts both failed the unchanged ACK checker:
-kernel console interleaved into event2 in the first and event4 in the second.
-Both still had normal child37, PowerOff, Docker CLI0 and CID/input closure.
-Current Arch ACK qualification remains open, with no checker relaxation or
-third retry. Earlier Arch success and full-ramdisk evidence retain historical
-bindings; no new full-ramdisk runtime is claimed. See the
-[current package boundary](../docs/native-boot-native-pmsg.md#current-bundle-and-arch-consumer).
-No Pixel board, bootloader, vendor module or phone is qualified.
+Google4K configuration disables it. Earlier Arch/Google RAM-only, full-ramdisk
+and canary experiments retain their original binary/archive bindings. The two
+previous PMSG-package Arch failures remain the preserved integration RED:
+kernel console interleaved inside event2/event4 ACKs and the unchanged checker
+refused them, despite normal child37 and shutdown/closure.
+
+ACK output now formats the whole line before one direct write, refusing short
+counts/errors without replay. The extracted baseline helper preserved the old
+formatted-write semantics. Host packet controls and host strace each passed
+before and after, with one write for the traced control: there was no packet
+RED, and no syscall-causality or general TTY atomicity claim follows.
+
+The new current reproducible8MiB bundle's exact original-extracted generic now
+passes the unchanged Arch consumer: four intact ACKs, matching actual child
+wait37, powerdown and owned closure. The same current generic, joined to the
+complete selected vendor-kernel and both vendor_boot fragments/padding, passes
+the retained Google4K full-stream consumer at512MiB guest RAM. All151 historical
+external pins remain; only the runner ROOT literal changes, with no acceptance/
+ROM/QMP/deadline relaxation. The current native init also passes the separate
+five-boot PMSG regression; those retrieval fixtures do not establish phone
+retention or replace the normal packaged child. See the
+[current-bundle checkpoint](../docs/native-boot-ack-and-current-bundle.md) and
+[bounded proof](../docs/evidence/native-boot-current-bundle-provenance.json).
+
+These are synthetic actual-kernel results. Physical loader/AVB/slot/DT selection,
+observable diagnostics, independent recovery and current-state restoration
+remain open. Real PowerOff may lose DRAM; the first compatible recovery boot's
+snapshot must be exported before another initialization replaces old records.
+The current payload has no qualified RAM-preserving hardware recovery transition.
+No Pixel board, vendor module or phone is qualified.
 The native executable has no ELF interpreter or dynamic section. The static GNU
 libc build emits std-library NSS link warnings; the exercised no-network paths
 execute in the RAM image with no loader/shared libraries. This is not a universal

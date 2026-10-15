@@ -1,5 +1,6 @@
 //! Restricted native PID1 probe, not a phone init or service manager.
 //! Runs solely from the authored RAM image; mounts no persistent storage.
+mod ack;
 mod diagnostic;
 mod pmsg;
 use diagnostic::Reporter;

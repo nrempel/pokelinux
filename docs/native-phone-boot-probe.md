@@ -1,24 +1,26 @@
 # First native boot probe
 
-The [native PID1 PMSG checkpoint](native-boot-native-pmsg.md) now retains exact
-success and child-failure diagnostics through synthetic post-PowerOff reset
-under the authenticated Google4K kernel. Compiled Unsupported RED precedes a
-single-file backend repair and fixed-witness GREEN; actual missing PMSG still
-completes ordinary boot. Five GREEN boots produce20 correlated ACKs.
+One [current diagnostic bundle](native-boot-ack-and-current-bundle.md) now joins
+the native build, complete8MiB image, exact original-unpacked generic and normal
+child to actual Arch and full-stream Google-kernel consumers. Both pass four
+intact readback ACKs, matching child wait37, shutdown and owned/input closure.
+The complete selected vendor prefix, both vendor_boot fragments and padding
+are preserved. Current init also passes five separate PMSG regression boots.
 
-The [complete offline diagnostic bundle](native-boot-development-bundle.md)
-now pins that native init in a reproducible8MiB image, with unsigned NONE metadata,
-exact stock restoration and four unchanged reference assets. A separate actual
-metadata RED precedes the corrected PMSG integration flag. Two current-package
-Arch replays remain failed because console output interleaves inside ACKs;
-child37, powerdown and owned closure do not turn those checks green. Historical
-Arch/full-ramdisk evidence keeps its original binary bindings.
+Two preceding Arch ACK corruptions remain the actual integration RED. The new
+ACK helper makes one preformatted direct write and the unchanged Arch checker
+passes. Host packet controls and host syscall observations already pass before
+repair; they establish neither a packet RED nor a proven interleaving mechanism
+or universal serial atomicity. Earlier evidence keeps its original bindings.
 
-Pixel loader admission/selection, current-state restoration, independently
-accessible recovery, physical diagnostics retrieval and board/shutdown/watchdog/
-thermal/charging remain first-device gates. No phone was accessed. Full IMS and
-graphics are separate from that diagnostic experiment; full smartphone deployment
-remains refused.
+The [offline bundle](native-boot-development-bundle.md) remains unsigned and local.
+Pixel loader/slot/DT selection, current-state restoration and independent recovery
+remain open. Built-in PMSG/ramoops and both stock DTBs are favorable static facts;
+real PowerOff may lose DRAM. A RAM-preserving transition and first compatible
+recovery snapshot/export remain unqualified. No phone was accessed. Full IMS,
+graphics and all remaining smartphone services remain separate; full deployment
+is refused. Keep this diagnostic candidate frozen while continuing the native
+service matrix rather than adding more synthetic diagnostic variations.
 
 2026-10-14UTC checkpoint: the restricted native PID1 now requires kernel-ring
 readback for its diagnostics. An actual-kernel absence RED against the original
