@@ -56,9 +56,11 @@ before Sounds/PCM; skipped diagnostic collection supplies no qualified kernel
 timing. Root9's corrected capture localizes a long successful EXECBUFFER interval
 inside the EGL bracket, while full runtime still fails before Sounds/PCM. No
 avoidable-wait or cause is established. A bounded source review selects no
-concrete driver repair and closes that investigation. Next scope is actual
-control/render ownership separation, still unimplemented/unqualified. The original
-full functional, ARM and phone gates remain open.
+concrete driver repair and closes that investigation. A later
+[prepared rendering-stall component](native-render-authority.md) qualifies actual
+RED: three no-stall controls and an authority-stall negative pass, while three
+operations during entered rendering holds time out. Production ownership separation
+and GREEN remain open, alongside the original full functional, ARM and phone gates.
 
 The [native Rust session owner](native-session-owner.md) implements compositor
 Child custody; its original Sounds assembly has32 host boundary passes,

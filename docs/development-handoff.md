@@ -218,12 +218,15 @@ pairs (7 EXECBUFFER/4 WAIT) and one successful116.925–116.927ms EXECBUFFER int
 inside the116.959ms EGL bracket. Full runtime still fails at policy readiness
 before Sounds/PCM. The15 observed TIDs form a lineage, without same-TGID proof.
 A bounded source review finds no concrete avoidable wait or incorrect operation
-and selects no driver patch. That discrimination investigation is closed; next
-scope is the control/render ownership seam and an actual-compositor RED specification,
-with genuine focus, client-death and lock intent advancing during rendering stalls,
-while authority stalls remain terminal. This is preparation, unimplemented/unqualified;
-no exclusive-CPU or
-earlier-failure cause follows. Strict matching ARM64 owner/client compilation also passes separately,
+and selects no driver patch. That discrimination investigation is closed. A later
+[prepared rendering-stall baseline](native-render-authority.md) now qualifies actual
+RED: the three no-stall focus/death/lock controls and authority-stall negative pass;
+the same three operations under entered native EGL holds all time out with positive
+state false. All seven cases pass setup; five earlier attempts remain setup failures.
+Production control/render ownership separation and GREEN remain open. Source100ms,
+terminal authority expiry, real facts and fence/buffer lifetime remain required;
+no exclusive-CPU or earlier-failure cause follows. Strict matching ARM64 owner/client
+compilation also passes separately,
 without ARM execution.
 Messages history composition was excluded from that render-witness replay. The
 current integration described above preserves its Source-rejection changes;

@@ -109,7 +109,7 @@
     }
   },
   "remaining": [
-    "Scope actual control/render ownership separation with real render-stall versus authority-stall integration; source discrimination closed without a concrete driver repair",
+    "Production control/render ownership implementation and GREEN remain open after a separately qualified actual seven-case rendering-stall RED; see native-render-authority provenance",
     "Normal fixed Sounds four groups, final Pixel profile/capture/PCM",
     "Current-owner Messages grant/read/revoke/source-loss GUI",
     "ARM availability, matched Google kernel, full Omarchy startup and physical/carrier gates"
@@ -440,7 +440,7 @@
   },
   "inner_fence_runtime_observation_qualified": true,
   "next_planned_observation": {
-    "boundary": "Scope control/render ownership seam and an actual-compositor RED specification; preparation only, without implementation or runtime qualification",
+    "boundary": "Implement and qualify coherent real control/render ownership separation against the separately qualified actual rendering-stall RED; no production implementation or GREEN yet",
     "implementation_and_availability_qualified": false,
     "required_evidence": [
       "Actual rendering stall with genuine focus, client-death and lock-intent progress within unchanged Source100ms",
@@ -484,7 +484,7 @@
     "source_discrimination_investigation_closed": true,
     "no_further_driver_profiling_selected": true,
     "cached_state_heartbeat_refused": true,
-    "focused_RED_preparation_only": true,
+    "focused_RED_preparation_only": false,
     "focused_RED_required_prerequisites": [
       "Frozen identical selection",
       "Actual Source live",
@@ -493,7 +493,9 @@
       "Real focus/client-death/lock operations issued during the entered stall"
     ],
     "cold_failure_before_prerequisites_is_setup_not_RED": true,
-    "original_cold_full_selection_retained_as_separate_acceptance": true
+    "original_cold_full_selection_retained_as_separate_acceptance": true,
+    "focused_actual_RED_qualified": true,
+    "focused_actual_RED_provenance": "native-render-authority-provenance.json"
   },
   "prior_checkpoint_public_basis": "7aa605422aecb542f661250f0c1852d1e1725e4f",
   "ioctl_capability_probe": {

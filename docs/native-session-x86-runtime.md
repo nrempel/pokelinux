@@ -337,18 +337,21 @@ no more driver profiling is selected. Full original functional composition remai
 failed, and the interval establishes no exclusive-CPU, completion or earlier-run
 cause.
 
-The next scope is the control/render ownership seam and an actual-compositor RED
-specification, without an implementation or runtime qualification yet. Preserve genuine focus, lock and
+The control/render ownership seam now has a separate
+[prepared actual rendering-stall RED](native-render-authority.md): seven cases pass
+setup, with three no-stall controls and an authority-stall negative passing and
+three entered-rendering-hold operations timing out. Five earlier attempts remain
+setup failures. This is a baseline, without production ownership implementation
+or GREEN. Preserve genuine focus, lock and
 client-lifetime facts plus ordering, fences, buffer lifetime, render-context,
 command/completion and shutdown custody. Required integration must stall rendering
 while real focus, client death and lock intent advance within the unchanged100ms
 Source contract; authority stalls remain terminal. Cached heartbeats are refused.
 Keep the Source adapter, predicate order, ErrorKinds, real grants and every
-functional/Pixel/PCM guard unchanged. A future focused RED requires real Source
-live, ready clients, an entered render stall beyond100ms and real operations
-issued within it under a frozen identical selection. Cold failure before those
-prerequisites is setup failure, not RED; the original cold full selection remains
-separate acceptance.
+functional/Pixel/PCM guard unchanged. A future GREEN must retain the frozen
+actor/oracle bytes, real Source live, ready clients, entered render stalls beyond
+100ms and real operations issued within them. Cold failure before these prerequisites
+is setup failure; the original cold full selection remains separate acceptance.
 
 The complete four-step target remains denied quiet launch, current grant and real
 focused touch with PCM, null-focus background continuation with disabled touch,

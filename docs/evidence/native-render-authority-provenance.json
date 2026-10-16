@@ -1,0 +1,270 @@
+{
+  "schema": 1,
+  "public_source_base": "9cdbcd90e165447171dddbb719478e8df36b713b",
+  "scope": "Actual prepared native x86 rendering-stall RED for original Hyprland/current Source adapter/Rust Observer facts; no production ownership implementation or feature GREEN",
+  "actual_RED_qualified": true,
+  "feature_GREEN": false,
+  "production_render_ownership_implemented": false,
+  "Root_qualification_sha256": "22b1d24da81747fbcaf953b6b925341e1ceff1bc7298c33c031ae7f30475575c",
+  "native_Observer_compile": {
+    "qualification_sha256": "6b0bcf12618a950536b68d585f124836421a9188fd41c8aa424e6c4e073fbec8",
+    "scope": "Compile artifact only; later seven-case execution separate",
+    "artifact_sha256": "056a8a8eeca265decec235118fdb6b4aee7ae8d7c15600f0d038ad5c1f57da3c",
+    "artifact_bytes": 1850296,
+    "ELF_class": 64,
+    "ELF_machine": 62,
+    "features": [
+      "isolated-fixture"
+    ],
+    "profile": {
+      "opt_level": "0",
+      "debuginfo": 0,
+      "debug_assertions": true,
+      "overflow_checks": true,
+      "test": false
+    },
+    "selected_Cargo_path_closure_crates": 11,
+    "tracked_source_files": 125,
+    "source_manifest_sha256": "cf0753f7c0e0d451f766734ed3e7eb7d7dcac68c470508c80c83a8a8cd01b48e",
+    "all_selected_source_hashes_identical_before_after": true,
+    "behavioral_tests_run": 0,
+    "elapsed_ns": 6110647693,
+    "actual_direct_waits": 12,
+    "actual_PIPE_EOFs": 12,
+    "original_cutoffs_and_closure_qualified": true,
+    "independent_handoff_review_sha256": "268522dd7c5a3fe6726eae180c6a63cbb9afc16250f47d998e5c0deea34d20e8",
+    "independent_handoff_review_scope": "Read-only requalification of the same sealed compile handoff; no new compilation or runtime"
+  },
+  "boundary_actor_and_oracle_sha256": {
+    "tools/native-render-authority/render-stall-hook.cpp": "cd90e75a149366ff0679fbdead9205034b4f2aa1e479216e64a6c2723b7c9781",
+    "tools/native-render-authority/real-wayland-client.c": "0dad0f6775ca8b44302d2a9edcd4f20f3df36df37eab43626d84a7c3e7331052",
+    "tools/native-render-authority/send-focus-request.py": "ef69329a4e21b34a329578225aaf4d9779084cc6d4cb8251c48df39f105e93b1",
+    "tools/native-render-authority/render_epoch.py": "57a1a415a8761eb11bdaa87453d31037b93f41aa48369007a71d3642703c564b"
+  },
+  "actor_and_oracle_bytes_equal_actual_selected_RED_inputs": true,
+  "public_tool_scope": "Boundary actors and oracle only; requires owned provisioned finite driver; no controller, host stager or complete VM runner supplied",
+  "actual_RED": {
+    "Root_exec_session": 69384,
+    "Root_terminal_exit": 0,
+    "controller_actual_exit": 1,
+    "outer_success_means_expected_RED_and_custody_only": true,
+    "case_count": 7,
+    "no_stall_controls_pass": 3,
+    "rendering_feature_failures": 3,
+    "authority_stall_negative_pass": true,
+    "all_seven_case_setups_qualified": true,
+    "fresh_Source_epochs_are_separate_cases_not_retry": true,
+    "Source_packets_authored_or_relayed": false,
+    "Source_revival_attempted": false,
+    "Source_lease_ns": 100000000,
+    "cases": [
+      {
+        "case": "control-focus",
+        "setup_qualified": true,
+        "feature_passed": true,
+        "actual_Pixel10_profile_qualified": true,
+        "actual_facts_latency_ns": 129185
+      },
+      {
+        "case": "control-client-death",
+        "setup_qualified": true,
+        "feature_passed": true,
+        "actual_Pixel10_profile_qualified": true,
+        "actual_facts_latency_ns": 289549
+      },
+      {
+        "case": "control-lock",
+        "setup_qualified": true,
+        "feature_passed": true,
+        "actual_Pixel10_profile_qualified": true,
+        "actual_facts_latency_ns": 56096
+      },
+      {
+        "case": "render-focus",
+        "setup_qualified": true,
+        "feature_passed": false,
+        "actual_Pixel10_profile_qualified": true,
+        "original_EGL_result_nonnull": true,
+        "operation_to_release_minimum_ns": 170656630,
+        "first_failure_collection_observed_ns": 23362226336,
+        "expected_timeout_with_positive_state_false": true,
+        "actual_eventual_focus_reply_ok": true,
+        "actual_lock_configure_and_locked_events": null,
+        "actual_client_parent_wait0_pidfd_dead_proc_absent": null,
+        "preparation_Source_frame_age_ns": 1831729,
+        "actual_operation_inside_entered_hold": true,
+        "timeout_collected_inside_entered_hold": true,
+        "Source_samples_during_hold": 0,
+        "hook_reported_local_hold_ns": 200917911,
+        "conservative_ENTER_packet_to_Root_release_before_ns": 200905678
+      },
+      {
+        "case": "render-client-death",
+        "setup_qualified": true,
+        "feature_passed": false,
+        "actual_Pixel10_profile_qualified": true,
+        "original_EGL_result_nonnull": true,
+        "operation_to_release_minimum_ns": 199839007,
+        "first_failure_collection_observed_ns": 25830735933,
+        "expected_timeout_with_positive_state_false": true,
+        "actual_eventual_focus_reply_ok": null,
+        "actual_lock_configure_and_locked_events": null,
+        "actual_client_parent_wait0_pidfd_dead_proc_absent": true,
+        "preparation_Source_frame_age_ns": 26222661,
+        "actual_operation_inside_entered_hold": true,
+        "timeout_collected_inside_entered_hold": true,
+        "Source_samples_during_hold": 0,
+        "hook_reported_local_hold_ns": 200728853,
+        "conservative_ENTER_packet_to_Root_release_before_ns": 200699787
+      },
+      {
+        "case": "render-lock",
+        "setup_qualified": true,
+        "feature_passed": false,
+        "actual_Pixel10_profile_qualified": true,
+        "original_EGL_result_nonnull": true,
+        "operation_to_release_minimum_ns": 199758475,
+        "first_failure_collection_observed_ns": 28284573407,
+        "expected_timeout_with_positive_state_false": true,
+        "actual_eventual_focus_reply_ok": null,
+        "actual_lock_configure_and_locked_events": true,
+        "actual_client_parent_wait0_pidfd_dead_proc_absent": null,
+        "preparation_Source_frame_age_ns": 26648037,
+        "actual_operation_inside_entered_hold": true,
+        "timeout_collected_inside_entered_hold": true,
+        "Source_samples_during_hold": 0,
+        "hook_reported_local_hold_ns": 200706631,
+        "conservative_ENTER_packet_to_Root_release_before_ns": 200695399
+      },
+      {
+        "case": "control-owner-stall",
+        "setup_qualified": true,
+        "feature_passed": true,
+        "actual_Pixel10_profile_qualified": true,
+        "actual_stopped_state": "State:\tT (stopped)",
+        "retained_source_pidfd_live": true,
+        "hold_ns": 200710879,
+        "first_failure_collection_observed_ns": 30778323414,
+        "expected_timeout_with_positive_state_false": true
+      }
+    ]
+  },
+  "Pixel_profile": {
+    "selected_virtual_profile_only": true,
+    "all_seven_cases_qualified": true,
+    "native_width": 1080,
+    "native_height": 2424,
+    "target_PPI": 422,
+    "logical_density": 420,
+    "target_window_DPR": 2.625,
+    "read_only_metadata_probe_extra_group": 983,
+    "compositor_and_client_extra_groups": [],
+    "new_screenshot_presented": false,
+    "hardware_verified": false
+  },
+  "preserved_non_RED_setup_attempts": [
+    {
+      "stage": 1,
+      "runtime_started": false,
+      "reason": "copied sealed directory permissions",
+      "behavioral_RED_qualified": false
+    },
+    {
+      "stage": 2,
+      "runtime_started": true,
+      "reason": "hook namespace compiler setup",
+      "behavioral_RED_qualified": false
+    },
+    {
+      "stage": 3,
+      "runtime_started": true,
+      "reason": "IPC sun_path too long",
+      "behavioral_RED_qualified": false
+    },
+    {
+      "stage": 4,
+      "runtime_started": true,
+      "reason": "DRM profile unqualified",
+      "behavioral_RED_qualified": false
+    },
+    {
+      "stage": 5,
+      "runtime_started": true,
+      "reason": "obsolete focus syntax under current Lua configuration",
+      "behavioral_RED_qualified": false
+    }
+  ],
+  "custody": {
+    "elapsed_ns": 36866915733,
+    "actual_direct_nested_waits": 77,
+    "actual_PIPE_EOFs": 84,
+    "watched_descendants_dead_and_proc_absent": 10,
+    "actual_subreaper_ECHILD": true,
+    "original_wait_EOF_output_global_cutoffs_qualified": true,
+    "private_seatd_force_killed9_and_actually_waited": true,
+    "same_peer_QMP_KVM_guest_SHUTDOWN_socket_EOF_QEMU0": true,
+    "CLI0_exact_CID_absent_same_daemon": true,
+    "all_inputs_unchanged_under_shared_lock": true,
+    "cleanup_errors": [],
+    "wait_counts_by_level": {
+      "controller": 57,
+      "guest": 2,
+      "bootstrap": 4,
+      "boot": 5,
+      "host": 7,
+      "early_runtime_wait_masks": 2
+    },
+    "early_receipt_embedded_and_standalone_counted_once": true
+  },
+  "receipt_sha256": {
+    "selection.json": "9e8f7c258df9b59295a9d649b1d800a772a33ad10f314ef0db9ed24f30a0c427",
+    "command.json": "cf7d24204a5ec2682e821ea5423c08afa1239994895f8f5d76afd102efaf461e",
+    "execution.json": "04f9dd12d25e7dfacb992d341325aeeedf3dbaccd3ef524c40bc8c26476fe960",
+    "component/test-result.json": "8efe82f44a3a4d47ac7ca37aedfc2c99f6394f8310c2459f25df02e0543fe468",
+    "result.json": "093575b36a990bd15111e31c88deb4c4e9a1ece3fcbaf5d2062b73bf6509b3c3",
+    "boot-result.json": "0451fa46de25d46ca868e78a396c4dd4c333a4db6a798e41eb94e36170a4cd53",
+    "bootstrap-result.json": "f2c1ca5f2aa9c0cfff333809728c6b09a03e9c68082fcd49a8cb9704ef543aa3",
+    "source/controller.py": "f1511c4dd4e638e122c8389ed6447edee595fa28533620617fc8e163dac5db02",
+    "source/render_epoch.py": "57a1a415a8761eb11bdaa87453d31037b93f41aa48369007a71d3642703c564b",
+    "source/render-stall-hook.cpp": "cd90e75a149366ff0679fbdead9205034b4f2aa1e479216e64a6c2723b7c9781",
+    "source/real-wayland-client.c": "0dad0f6775ca8b44302d2a9edcd4f20f3df36df37eab43626d84a7c3e7331052",
+    "source/send-focus-request.py": "ef69329a4e21b34a329578225aaf4d9779084cc6d4cb8251c48df39f105e93b1",
+    "source/source-adapter.cpp": "7d78b090b4fac0701fa5926d5a5bb53789d01b9309296e4fa8103e0b7f5643a4",
+    "source/source_sampler.hpp": "73612325a597b71a4386d62a4a563477e78e1bd5e572e48784f005507600e845"
+  },
+  "limits": [
+    "Actual timeout collection observations are not hidden first-occurrence timestamps",
+    "Original successful EGLSync return is not GPU completion",
+    "Protocol locked/configured/mapped state is not secure-frame proof",
+    "Seven fresh explicit Source epochs are separate cases, not retry or Source revival",
+    "No new screenshot or normal phone app follows from this component",
+    "Hook local hold begins before ENTER packet time; conservative ENTER-to-release minimum is separate and neither is GPU execution time"
+  ],
+  "cold_full_owner_Root9_still_failed": true,
+  "cold_actor_permissions_GPU_completion_secure_presentation_ARM_Google_kernel_or_phone_qualified": false,
+  "Source_policy_lease_predicate_order_terminal_guards_changed": false,
+  "phone_accessed": false,
+  "remaining": [
+    "Implement and qualify coherent real control/render ownership separation against the frozen actual RED actors/oracle",
+    "Qualify real GL/context/command/buffer/fence/output lifetime, late completion and shutdown",
+    "Preserve terminal authority-stall negative without cached heartbeat",
+    "Original cold full-owner/Sounds/Pixel/grants/graph/PCM acceptance",
+    "ARM availability, matched Google kernel, complete shell/startup and physical phone/carrier gates"
+  ],
+  "predecessor_Root_summary": {
+    "sha256": "7645b742e114fa1e9d2cf1c2c9f61e6113c453f2f0aef4b35c8667358b3682d9",
+    "counts_scope": "Earlier75 waits/82 PIPE EOFs count controller, guest, bootstrap, boot and host; separate early2 waits/2 EOFs were omitted. No runtime/oracle change.",
+    "same_actual_epoch_no_rerun_or_oracle_change": true
+  },
+  "independent_RED_review_sha256": "7af8fc06ef80bb0687efe26b1f96e57a203c1b029a44c1b03b7b8f2fe6181193",
+  "independent_RED_review_scope": "Read-only review confirms the same seven behavioral cases, actual requests/timings and complete custody; no new behavioral execution",
+  "test_hook_scope": {
+    "actual_native_fence_eglCreateSyncKHR_entry_before_original_delegation": true,
+    "hook_reported_hold_excludes_later_original_call": true,
+    "original_arguments_call_return_and_errno_preserved_in_reviewed_source": true,
+    "valid_native_return_not_GPU_completion": true,
+    "RETURN_not_wrapper_quiescence": true,
+    "future_multi_owner_pointer_install_unload_quiescence_qualified": false
+  },
+  "Source_adapter_sampler_byte_equal_to_Root9": true
+}

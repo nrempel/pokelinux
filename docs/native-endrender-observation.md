@@ -405,15 +405,17 @@ a general kernel/Mesa correctness claim; package patches and build options were
 not equated to every upstream byte. The syscall-versus-userspace discrimination
 investigation is closed, with no further driver instrumentation selected.
 
-The next scope is the control/render ownership seam and an actual-compositor RED
-specification; this is preparation, without implementation or runtime qualification. Preserve genuine ordering, fences, buffer lifetime,
+The control/render ownership seam now has a separate
+[prepared actual rendering-stall RED](native-render-authority.md), without a production
+ownership implementation or GREEN. Preserve genuine ordering, fences, buffer lifetime,
 render-context/command/completion custody and shutdown. Required integration must
 stall rendering while real focus, client death and lock intent advance within the
 unchanged100ms Source contract. Stalling real authority must still fail terminally.
 Cached heartbeats remain refused, and all real-grant/functional/Pixel/PCM guards
-remain unchanged. A valid future RED needs a frozen identical selection with real
-Source live, clients ready, an entered render stall beyond100ms and real operations
-issued during that stall. Cold failure before those prerequisites is setup failure,
-not RED; the original cold full selection remains separate acceptance.
+remain unchanged. The actual seven-case RED qualifies those preparation/operation
+prerequisites; five earlier attempts remain setup failures. A future GREEN must
+retain the frozen actors/oracle and qualify real GL/context/buffer/fence/output
+lifetime, late completion and shutdown. The original cold full selection remains
+separate acceptance.
 [Hash-only provenance](evidence/native-endrender-observation-provenance.json) retains
 the decision and source metadata.

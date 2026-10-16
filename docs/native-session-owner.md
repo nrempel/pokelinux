@@ -388,9 +388,12 @@ one runtime gap to116.618ms around createSyncFDManager. Its later inner-fence
 component passes24 frozen-v2 tests and a separate full source build2 passes with
 matching499-file SDK. The new replay observes113.338ms around eglCreateSyncKHR
 inside a113.644ms Source gap, then still fails before Sounds/PCM. This establishes
-no driver or prior-failure cause and supplies no rendering repair. The next planned
-bounded EXECBUFFER ioctl observation remains unimplemented/unqualified; see the
-focused report for its owned-compositor/worker scope.
+no driver or prior-failure cause and supplies no rendering repair. A later
+[bounded Root9 capture](native-endrender-observation.md#corrected-four-request-capture)
+qualifies selected syscall intervals while full composition still fails. Source
+review closes that investigation without a justified driver patch. The separate
+[prepared rendering-stall component](native-render-authority.md) now qualifies RED;
+production control/render ownership separation and GREEN remain open.
 Matching ARM64 compilation passes separately, without ARM execution.
 
 Complete native CPU-speed execution of the current production owner and
