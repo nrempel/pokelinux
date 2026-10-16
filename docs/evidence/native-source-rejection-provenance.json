@@ -86,5 +86,51 @@
   "Root_integration_review_sha256": "b23505b470f6bb805e03d8a0698346dc0115185c769d7bf34a0ea67a70761d06",
   "selected_release_profile": "default features=[], opt_level3, debuginfo0, debug_assertions=false, overflow_checks=false",
   "prior_runtime_profile_difference": "Previously selected owner/client used debug opt0; subsequent runtime differences do not establish a timing cause.",
-  "independent_qualification_sha256": "44576971ebad4c59f4b1231593d90a3e67ac65e522ab7e4d466d4c565a3bc7ca"
+  "independent_qualification_sha256": "44576971ebad4c59f4b1231593d90a3e67ac65e522ab7e4d466d4c565a3bc7ca",
+  "ARM64_compile_only": {
+    "scope": "Strict matching-source default-feature release cross-compilation only, no runtime",
+    "source_count": 514,
+    "selected_source_manifest_sha256": "d44031f34a409f50ff13b0ebab35aaab26795203946dfe466848a291e90f9e68",
+    "qualification_sha256": "cb53de08bd7f39fd0dde86419c40fed844cd9bf0ee7a5bc0e13e91e6de51c416",
+    "Root_qualification_sha256": "1881ba0d35038ef43aeceb31909f7acba1a43c739443fa8d29fe52b028069b9a",
+    "artifacts": {
+      "owner": {
+        "name": "pokelinux-session-owner",
+        "sha256": "aea261ec83a9918f9d0b9acfe02e3a72b3682ac0e7e7150ca1b9cab52616061d",
+        "bytes": 2528304,
+        "ELF_class": 64,
+        "ELF_little_endian": true,
+        "ELF_machine": 183,
+        "Cargo_features": [],
+        "Cargo_profile": {
+          "opt_level": "3",
+          "debuginfo": 0,
+          "debug_assertions": false,
+          "overflow_checks": false,
+          "test": false
+        },
+        "Cargo_artifact_receipt_sha256": "a78c9fe9b0024f41186d93295a35fa54e387300e1b3465a54b8f74e04982e752"
+      },
+      "client": {
+        "name": "sounds-launch",
+        "sha256": "db7460b94213048f4e657a82080bd571bf01f9177f9d6f3f559a285599e08568",
+        "bytes": 899304,
+        "ELF_class": 64,
+        "ELF_little_endian": true,
+        "ELF_machine": 183,
+        "Cargo_features": [],
+        "Cargo_profile": {
+          "opt_level": "3",
+          "debuginfo": 0,
+          "debug_assertions": false,
+          "overflow_checks": false,
+          "test": false
+        },
+        "Cargo_artifact_receipt_sha256": "73d67eb4b57da3c7ffa2cb11dfa28f098aeaed0d33287b94295466e1ae992c98"
+      }
+    },
+    "actual_CLI_waits_and_merged_PIPE_EOFs": 10,
+    "original_cutoffs_exact_CID_same_daemon_ECHILD_qualified": true,
+    "QEMU_VM_or_phone_execution": false
+  }
 }

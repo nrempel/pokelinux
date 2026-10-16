@@ -33,8 +33,10 @@ actual native attempt. Its full composition fails at cold compositor startup:
 Source retains sequence1 then provider `InvalidData`, with cause unknown. No
 normal app/final profile/PCM follows. Bounded typed rejection observation now
 passes12 root-admin,57 Observer process and four lifecycle cases after eight
-missing-record REDs. Repeat the original composition before choosing a repair;
-retain Pixel/Source/focus/PCM guards. Native success
+missing-record REDs; matching ARM64 compilation passes separately. The original
+native replay now identifies a110.824ms producer sample gap, before normal app
+or PCM. The responsible compositor operation remains unknown. Measure bounded
+render stages in one full replay, retaining Pixel/Source/focus/PCM guards. Native success
 would not close ARM or phone gates.
 
 The [native Rust session owner](native-session-owner.md) now implements compositor

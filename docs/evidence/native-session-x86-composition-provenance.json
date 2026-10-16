@@ -118,5 +118,81 @@
   "phone_accessed": false,
   "hardware_qualified": false,
   "private_inputs_raw_logs_VM_images_or_credentials_published": false,
-  "next": "Prove bounded typed first-rejection observation with compiled actual-boundary RED/GREEN, then rerun the unchanged full original compositor composition once. Preserve ARM and all hardware gates."
+  "next": "Retain bounded render-stage observations in one full original replay, then choose a repair from the measured producer path. Preserve Source policy, all four app/focus/PCM/Pixel checks and every ARM/phone gate.",
+  "subsequent_typed_rejection_replay": {
+    "scope": "Actual native KVM original Source startup with typed first rejection; no normal app or four-step functional qualification",
+    "public_basis": "37182d13936512987cd4267294112c65b5db0faf",
+    "actual_Root_exec_session": 39461,
+    "actual_Root_exec_exit": 1,
+    "selection_sha256": "c4703a361949242bad90f5c57d98711af1995e8af2ec17a1c2c2088c9feb8f6f",
+    "command_sha256": "e4cd91fa1ede39e52edff75b283a97022bf5fb22b2c969da22fd735259d8f551",
+    "execution_sha256": "cf14929d20319bc6af820e31abf39179c50f24aeafa9fc99b57907f010b87fd4",
+    "boot-result_sha256": "9eec281870f7a3dc91e7fab47d46b50307120795dd2d29a9e9754ce392b014ee",
+    "bootstrap-result_sha256": "500243f4bd1ca3701b2842967b068f10bba0d1df65915b7184eec2c8fe0b6776",
+    "result_sha256": "146e549789551b0fd2d55ba964e51bbf7d94a53a3ae57c5018ef3bdc29d7dd61",
+    "Root_failed_qualification_sha256": "1bc9a343aacf08aa44f56250e301465b2c167b3399fdec10456cd49ca90de33d",
+    "independent_qualification_sha256": "bb7516d7bf0b4afa0fbc3de31bfd31209b7b4dec385cd8cfe183c32c7b750711",
+    "Root_source_review_sha256": "3939736c309f1de62c128af403e993f1aaf19343a6c38771eabb935e71905f75",
+    "Root_entry_sha256": "006995427a86d135b6a63eacddd9fbbacecdaccfbceb45fc60c901c6c91f2af9",
+    "five_role_payload_qualification_sha256": "abd03e309287b1ec28a582f37c6d9f1978c1e1379d73eaa893bd1ade5826e1e3",
+    "Source_before_Stop": {
+      "state": "failed",
+      "last_accepted": {
+        "sequence": 1,
+        "sampled_at_ns": 55903193306
+      },
+      "first_failure": {
+        "category": "provider_error",
+        "error_kind": "InvalidData",
+        "observed_at_boottime_ns": 56019597811,
+        "observer_rejection": {
+          "stage": "validation",
+          "reason": "sample_gap",
+          "drain_ordinal": 1,
+          "sequence": 2,
+          "sampled_at_ns": 56014017571,
+          "previous_accepted": {
+            "sequence": 1,
+            "sampled_at_ns": 55903193306
+          },
+          "validated_at_boottime_ns": 56019594004,
+          "receive": {
+            "received_bytes": 216,
+            "payload_truncated": false,
+            "control_truncated": false,
+            "errno": null
+          }
+        }
+      }
+    },
+    "actual_sample_gap_ns": 110824265,
+    "lease_limit_ns": 100000000,
+    "successor_age_at_failure_observation_ns": 5576433,
+    "actor_failure_observation_after_rejection_ns": 3807,
+    "freshness_predicate_not_reached": true,
+    "specific_compositor_operation_known": false,
+    "current_native_audio_behavior_cases": 30,
+    "current_native_audio_total_including_setup_cleanup": 32,
+    "current_native_appearance_cases": 29,
+    "full_functional_steps": 0,
+    "normal_app_launches": 0,
+    "PCM_windows": 0,
+    "final_profile_or_new_capture": false,
+    "actual_direct_waits": {
+      "guest": 78,
+      "bootstrap": 5,
+      "early": 2,
+      "boot": 5,
+      "host": 7
+    },
+    "actual_PIPE_EOFs": 104,
+    "all_original_wait_EOF_cutoffs_met": true,
+    "same_QMP_KVM_guest_SHUTDOWN_EOF_QEMUwait0": true,
+    "DockerCLI0_exact_CID_absent_same_daemon": true,
+    "all78selected_27external_inputs_unchanged_under_shared_lock": true,
+    "host_elapsed_ns": 62767288788,
+    "previous_false_unresolved_CID_label_fixed_in_runner": true,
+    "owner_client_profile": "Default-feature release opt3; previous native owner/client debug opt0, no timing causal comparison",
+    "earlier_failures_preserved_not_reclassified": true
+  }
 }

@@ -110,6 +110,18 @@ binds the changed sources, exact fixed tests, native artifacts and private
 receipts. This host cohort supplies a diagnostic for the next original replay;
 it establishes no new compositor, normal GUI/PCM, ARM or phone qualification.
 
+Matching ARM64 default-feature release owner/client compilation also passes
+strict formatting and selected Clippy. Both are ELF64 little-endian machine183.
+Its ten actual CLI waits/merged PIPE EOFs, original cutoffs, same-daemon exact
+container absence, source closure and ECHILD qualify separately. No ARM/QEMU/VM
+or phone execution occurs in that compile cohort.
+
+The following [original native replay](native-session-x86-runtime.md#typed-rejection-replay)
+uses the typed record at the real boundary: sequence2 is rejected for a110.824ms
+sample-chain gap while only5.576ms old at failure observation. This identifies a
+producer gap in that selection; the responsible compositor operation remains
+unknown. It supplies no normal GUI/PCM or physical qualification.
+
 ## Executed evidence
 
 Eight fixed host cases first fail at the missing Source field, then pass with

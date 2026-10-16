@@ -58,8 +58,9 @@ passes the current30 audio behaviors and29 appearance cases, but Source fails
 with `InvalidData` during compositor startup before Sounds/PCM. The rejection
 cause remains unknown. [Typed first-rejection status](docs/native-source-observation.md#first-observer-rejection-evidence)
 now passes12 actual admin cases after eight missing-record REDs, with57 Observer
-process and four lifecycle regression passes. The full original replay is next;
-ARM and phone gates stay open.
+process and four lifecycle regression passes. Its [original native replay](docs/native-session-x86-runtime.md#typed-rejection-replay)
+now identifies a110.824ms producer sample gap before Sounds/PCM. The particular
+compositor operation remains unknown; ARM availability and phone gates stay open.
 Earlier [permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
 passes four touch/graph/PCM groups using root-authored focus. Physical audio,
 production session completion and all phone gates remain open.

@@ -136,9 +136,19 @@ Clippy pass. The immutable record retains no packet, source token or peer identi
 The100ms lease, predicate order, ErrorKinds and terminal refusal stay unchanged.
 The compiled default owner/client use release opt3, replacing the previous debug
 opt0 artifacts in the next original replay; this adds no timing causal claim.
-Repeat the full four-step composition with all existing app/focus/PCM/Pixel guards
-before selecting any availability repair. Messages history composition remains
-in a separate worktree and is excluded from that replay.
+The following [original native replay](native-session-x86-runtime.md#typed-rejection-replay)
+now retains validation/sample_gap: sequence1 at55,903,193,306ns, then sequence2
+at56,014,017,571ns. The110,824,265ns gap exceeds100ms; the successor is only
+5,576,433ns old at failure observation. The freshness predicate is not reached
+because chain rejection comes first. This is a producer sample gap, without an
+identified compositor operation or retrospective diagnosis of earlier failures.
+No normal app, final profile, functional group or PCM runs. Actual current
+Qt32/appearance29 and97 waits/104 PIPE EOFs qualify separately; the62.77s native
+selection remains failed. Next add only bounded render-stage observations to one
+full replay, retaining every app/focus/PCM/Pixel and Source guard. Strict matching
+ARM64 owner/client compilation also passes separately, without ARM execution.
+Messages history composition remains in a separate worktree and is excluded
+from this replay; its component results do not qualify the normal Messages GUI.
 
 Preserve the ARM failure and stop speculative fixture changes. Continue
 matching-source native CPU-speed composition on Harbour, with the same Pixel

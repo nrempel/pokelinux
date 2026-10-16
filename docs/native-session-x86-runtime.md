@@ -146,21 +146,56 @@ that field remains preserved alongside the independently qualified exact absence
 keeps the current Qt passes separate from full session failure. This changes no
 production behavior and supplies no new behavioral RED/GREEN result.
 
+## Typed rejection replay
+
+A later fresh native KVM child selects the matching default-feature release
+owner/client and retains the new diagnostic in a real authenticated root reply
+before Stop. Source accepts sequence1 sampled at55,903,193,306ns, then rejects
+sequence2 sampled at56,014,017,571ns for `validation/sample_gap`, at drain ordinal1.
+The exact110,824,265ns producer sample gap exceeds the unchanged100ms limit by
+10,824,265ns. At rejection observation56,019,594,004ns, the successor is only
+5,576,433ns old. The receive contains216 bytes with both truncation flags false
+and no syscall errno. The freshness check is not reached because chain validation
+rejects first; the recorded time is that failure's observation, not an executed
+freshness decision. The actor records its failure3,807ns later.
+
+This identifies a producer sampling gap in this selection, without identifying
+which compositor operation occupied it. All13 existing configuration witness
+landmarks precede sequence1. The record supplies no operation duration, callback
+completion, empty-queue proof or diagnosis of earlier ARM/native failures. The
+two Rust roles also change from debug opt0 to release opt3; no timing causal
+comparison is claimed.
+
+The actual current Qt32 checks (30 behaviors) and29 appearance cases pass again,
+and every plugin/discovery build passes. The full selection remains failed before
+normal Sounds, final profile, all four functional groups, capture or PCM. All97
+direct waits/104 PIPE EOFs meet their original cutoffs. Authenticated QMP KVM,
+normal guest shutdown/socket EOF/QEMU0, CLI0/exact CID absence/same daemon and
+78 selected/27 external input hashes qualify separately. The envelope takes
+62.77 seconds. The runner's reporting repair leaves no contradictory unresolved
+CID field when exact absence is already qualified; the original raw receipt
+retains its old field unchanged.
+
+The [same attempt evidence](evidence/native-session-x86-composition-provenance.json)
+records this later selection separately from the first ambiguous `InvalidData`.
+No physical phone was accessed.
+
 ## Next integration
 
-The [bounded typed first-rejection record](native-source-observation.md#first-observer-rejection-evidence)
-now passes12 admin cases after eight actual missing-record REDs, plus57 Observer
-process and four lifecycle cases. Strict formatting/Clippy and default-feature
-native owner/client release builds pass. Its receive/sample decisions remain
-historical observations, with no raw frames or peer identities retained. The
-next replay selects release opt3 owner/client instead of the prior debug opt0
-artifacts; neither a changed result nor timing would establish a cause. Preserve
-the existing ErrorKind,100ms lease, sequence checks, terminal refusal and cleanup.
-Then run the unchanged four-step session composition once: denied quiet launch,
-current grant and real focused touch with PCM, null-focus background continuation with disabled
-touch, and terminal Source loss without app/audio revival. Preserve per-app
-Wayland, independent grants,1080×2424/422PPI/420 logical density, capture guards,
-all graph/PCM assertions and the100ms lease.
+Measure existing render-stage callbacks in the bounded cooperative witness during
+one full original replay. Keep the Source adapter,100ms lease, predicate order,
+ErrorKinds and terminal refusal unchanged. The [pinned plugin loader](https://github.com/hyprwm/Hyprland/blob/efb50993780079460b0cbed1363e2166a2de1d9f/src/plugins/PluginSystem.cpp#L121)
+queues a config reload after initialization. Its synchronous return therefore
+does not prove the end of deferred work. The [pinned render stages](https://github.com/hyprwm/Hyprland/blob/efb50993780079460b0cbed1363e2166a2de1d9f/src/render/Renderer.cpp#L1856)
+are partial boundaries, with early returns and output commit outside some stages;
+no stage alone proves presentation or completed output commit. Choose an availability repair only after that actual interval
+is known.
+
+The complete four-step target remains denied quiet launch, current grant and real
+focused touch with PCM, null-focus background continuation with disabled touch,
+and terminal Source loss without app/audio revival. Preserve per-app Wayland,
+independent grants,1080×2424/422PPI/420 logical density, capture guards and every
+graph/PCM assertion.
 
 Native x86 success would qualify that environment only. The earlier ARM Source
 expiry remains failed and does not establish a TCG cause. ARM availability,
