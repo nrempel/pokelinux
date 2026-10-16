@@ -232,9 +232,15 @@ setup failures and the component-RED/failed outer join remain preserved. A one-f
 repair gates recapture on the new state's buffer-update bit; its matching native
 rebuild and five FFI groups pass. The unchanged actual no-attach oracle then
 passes: identity stays7→7 with the same bytes, real client/clone facts and closure.
-This is CPU import identity GREEN only. GL ownership, the seven-case Source RED
-and original
-cold full-composition failure remain unchanged.
+This is CPU import identity GREEN only. A separate502-file SDK baseline build
+and actual padded ARGB Cairo-consumer RED now close: real pointer-role/cache
+controls pass, but stride128 consumption of stride144 bytes produces992 wrong
+pixels out of1,024. Two preceding focus/motion setup failures remain separate.
+The one-helper stride repair passes its matching native rebuild/five FFI groups
+and unchanged actual oracle: both live Cairo comparisons check1,024 pixels with
+zero mismatches. Separate post-client-exit checks retain raw Rust bytes, invoking
+no helper. This is CPU-consumer GREEN only. GL ownership, the seven-case Source RED
+and original cold full-composition failure remain unchanged.
 Production control/render ownership separation and GREEN remain open. Source100ms,
 terminal authority expiry, real facts and fence/buffer lifetime remain required;
 no exclusive-CPU or earlier-failure cause follows. Strict matching ARM64 owner/client

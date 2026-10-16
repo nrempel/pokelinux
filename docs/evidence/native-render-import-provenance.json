@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "scope": "Original Rust immutable CPU SHM build, separate initial/repaired native x86 C++ FFI/full compositor builds and actual one-case no-attach identity RED to GREEN; no rendering ownership, Source/cold/full-phone acceptance",
+  "scope": "Original immutable CPU SHM builds and no-attach identity RED to GREEN, separate cursor baseline/repaired native builds and unchanged actual padded-ARGB linked Cairo CPU consumer RED to GREEN. No complete cursor/GPU output, rendering ownership, Source/cold/full-phone acceptance.",
   "Rust_build": {
     "qualification_sha256": "0d4272d03e70c86bd05b518af8a330cafcf774a45a9d26986ad1fadadb6cb297",
     "original_driver_exit": 1,
@@ -62,7 +62,7 @@
     "network": "none",
     "compositor_executed": false
   },
-  "source_patch_sha256": "fdb628720ad9133c59e42c1db0f77f9defd01af6e419a9790160f596649d584f",
+  "source_patch_sha256": "d859ccb7d38d176c9b5adc0e89ca09d728bd03c0b0eab02afb49db4c7a09b425",
   "no_attach_behavior_RED_executed": true,
   "rendering_executor_implemented": false,
   "Source_rendering_GREEN": false,
@@ -151,9 +151,9 @@
   "remaining_limits": [
     "Infallible Box/Arc metadata allocation may abort despite fallible bulk pixel reserve",
     "Texture-object validity does not qualify actual GL upload success or GPU completion",
-    "Padded cursor consumer assumes tight AR24 rows and remains unqualified",
+    "Padded Cairo CPU row consumer GREEN does not qualify complete hardware/software cursor display, GPU upload or output readback/presentation",
     "Client exit plus retained clone bytes does not qualify server-resource retirement",
-    "Assigned SHM frame/cursor behavior and real output/presentation completion",
+    "Assigned SHM output readback/frame and complete cursor display/presentation completion",
     "Coherent Rust frame/executor/AQ-GL-output ownership and unchanged seven-case Source RED",
     "Original cold full owner/Sounds/Pixel/PCM, ARM/matched Google kernel/full smartphone matrix"
   ],
@@ -243,5 +243,227 @@
     "only_CPU_import_identity_qualified": true,
     "independent_GREEN_review_sha256": "c451cf3516f55472ec6cc63831c2ba892c64421a4ccb2f8c9f113658e769ac5b",
     "independent_review_is_not_new_behavioral_cases": true
+  },
+  "cursor_consumer_baseline_native_build": {
+    "Root_qualification_sha256": "8cedceb89d41391d053f6c5b88438669802ed428800e04db9c25292745d27443",
+    "independent_qualification_sha256": "56f727a1a0827a78edf976419f5661d9883dd7f14bb19d2f60d9e8ccc7529a31",
+    "selection_sha256": "92d87b36bff968c50ffaac7013073205a5ee3157d6ded061142115c9ee320843",
+    "command_sha256": "81e1688fea6f2dfc31cc3087a3ded9fa7607ca26072562d2ea11fe8817523c4f",
+    "actual_receipt_sha256": {
+      "execution.json": "b55fe5e8f97b3fe53f0dfdbc83bc5b787fd4fa0587ce23bd011f2be6b1ef4a5a",
+      "boot-result.json": "56ef2c2771a1730b221994a6d23fcaebadaef7d60f816bf602c548295c09f9f8",
+      "guest-out/guest-result.json": "f66663635af7b8f4283713948fda1b2ddbd26b59f3f98f39e8a40d4be3d146e2",
+      "guest-out/build-output/build-result.json": "42d572fe25c2be1815eaf22d9a5a11dc9d4c4942dad4b756c52d761465919da9"
+    },
+    "new_ELF": {
+      "bytes": 25082264,
+      "sha256": "1bc0aafb0b5ab101aae8e6800bda7c37d70bd992f972c7ee21ab660e0c1cf152"
+    },
+    "matching_SDK": {
+      "bytes": 2590720,
+      "sha256": "332bdbe42343e1cf9973254e1287a7dfe04e57355769bfd77a63a444f5a41739",
+      "regular_files": 502,
+      "C_header_sha256": "4a7a9a603fe6d7780ff071020f727c3eb7b0aba1c9bba56b682ddd219f995396",
+      "CursorImage_header_sha256": "fd0aa86d9717bad34fe8627b5b6e079c19af82a55f928132ad626c53a38ec067"
+    },
+    "source_payload_files": 21,
+    "actual_changed_CPP_units": 11,
+    "same_FFI_groups_not_aggregated": 5,
+    "Scope_waits": 33,
+    "Scope_PIPE_EOF": 33,
+    "FFI_producer_wait_and_thread_join_separate": true,
+    "early_counted_once": true,
+    "elapsed_ns": 174777423764,
+    "existing_tight_Cairo_stride_preserved": true,
+    "source_patch_sha256": "8080eb1d38dd8bb4b2863af90ca152d0e7ca96412b7435e292fa85dc67e0e50b",
+    "compositor_executed": false,
+    "same_peer_QMP_KVM_shutdown_EOF_QEMU0_CLI0_exact_CID_absence": true,
+    "original_cutoffs_and_locked_inputs_unchanged": true,
+    "local_source_build_not_signed_Arch_recipe_reproduction": true
+  },
+  "cursor_consumer_public_source_sha256": {
+    "tools/native-render-import/consumer/real-wayland-client.consumer.c": "614c9d0705b7ba7855c6a915dcb8fc9c5c64d1313313f7074eb856a02a5df30c",
+    "tools/native-render-import/consumer/shm-consumer-witness.cpp": "ef476b75ddcb03b0e652497d287e1f5cc6b4ac753ed1a065cf51809bd00a0038",
+    "tools/native-render-import/consumer/consumer_oracle.py": "87528cfacb704ae27351ea908a75be312942a75792294e7caf512fc0aba3d8dc",
+    "tools/native-render-import/consumer/consumer_epoch.py": "167ca485db6585d5bdcec81eb1cf0c429983153d610e4e17219e3f56d8d76476"
+  },
+  "cursor_consumer_actual_RED": {
+    "Root_qualification_sha256": "5a7b103920cef9b3e1a613880973f2beaf2790e36b4ef09288961552dcfb25d6",
+    "independent_qualification_sha256": "d809be96dc97bb4c704a9c8edf71336a9679064891d6de86753c08e8bf36fde3",
+    "independent_review_not_new_behavioral_cases": true,
+    "selection_sha256": "6fdece1b13880a87967db21bdc9a73bb0ef3d7ca8de2dc23f1809d32846ecc98",
+    "command_sha256": "d7f09e4c40fe97eb025e686a45bc1fcff1a9df77de57af458bc552f71b88a7c2",
+    "actual_receipt_sha256": {
+      "execution.json": "3e3c74fa76f7f08202557ed9c2dc48dcd941b9243ae76f4702883fe1713ba5c5",
+      "result.json": "8229a152fa6cf58f1f9702747aef431c829ddb236da16c4d910859b6419dc32a",
+      "bootstrap-result.json": "05428d029c31c878a51d9a659c537e83c5ff91f3c04cd41a2242bdb1c80d6d40",
+      "boot-result.json": "80fffce00cf27ad3ce0498753ea7cf87170eff27b9ea3dc6ebda48de5a06899d",
+      "component/test-result.json": "da13447d0ede4f47dd946401af334846b703454bfb1f010ed9a7c26a05cf33a8"
+    },
+    "case_count": 1,
+    "actual_controller_exit": 1,
+    "actual_outer_exit": 0,
+    "setup_qualified": true,
+    "semantic_oracle_sha256": "87528cfacb704ae27351ea908a75be312942a75792294e7caf512fc0aba3d8dc",
+    "witness_sha256": "ef476b75ddcb03b0e652497d287e1f5cc6b4ac753ed1a065cf51809bd00a0038",
+    "client_sha256": "614c9d0705b7ba7855c6a915dcb8fc9c5c64d1313313f7074eb856a02a5df30c",
+    "private_controller_hash_only": "79aa3961b90bf78a010e441ab1e0e50d7323859521a7e28ffbe32501766d6082",
+    "epoch_join_sha256": "167ca485db6585d5bdcec81eb1cf0c429983153d610e4e17219e3f56d8d76476",
+    "actual_public_virtual_pointer_enter_serial_and_selected_cursor": true,
+    "assigned_XRGB_bytes": 1300356,
+    "assigned_commit_release_sync_and_protocol_frame_callback": true,
+    "cursor_width_height_stride_bytes": [
+      32,
+      32,
+      144,
+      4608
+    ],
+    "source_cache_and_all_padding_bytes_exact": true,
+    "actual_linked_production_helper_CPU_Cairo_paint": true,
+    "consumer_input_stride": 128,
+    "consumer_output_stride": 128,
+    "each_live_observation_checked_pixels": 1024,
+    "each_live_observation_mismatched_pixels": 992,
+    "first_mismatch_xy": [
+      0,
+      1
+    ],
+    "first_mismatch_original_padding_pixel_hex": "0xa5a5a5a5",
+    "original_row_expectation_failed": true,
+    "retained_original_clones_after_actual_client_wait0": 2,
+    "witness_close_released_handles": 2,
+    "witness_close_held_handles": 0,
+    "actual_waits": 42,
+    "actual_PIPE_EOF": 49,
+    "early_counted_once": true,
+    "same_peer_QMP_KVM_shutdown_EOF_QEMU0_CLI0_exact_CID_absence": true,
+    "original_cutoffs_and_locked_inputs_unchanged": true,
+    "watched_descendants_dead_absent_ECHILD": true,
+    "Source_or_Observer_selected": false,
+    "server_resource_retirement_qualified": false,
+    "full_cursor_path_GPU_upload_output_readback_presentation_qualified": false,
+    "prior_setup_failures": [
+      {
+        "execution_sha256": "19b2016c25f0dfa61f7bcdd77e09f79721d477d5398cb4c6ec94111f27a8a2dc",
+        "component_sha256": "a26d7e7b3d98fd37631754198d1aaa9c3277738bcaca00877ac1156822cdb32a",
+        "actual_controller_exit": 2,
+        "semantic_RED_qualified": false,
+        "reason": "Obsolete focus dispatch syntax"
+      },
+      {
+        "execution_sha256": "e866077a0201a0993537cc17435486ed25d376b2b3454ea98eeb752d7a1b5dbc",
+        "component_sha256": "b8b8dd8068768587e52c7d1cd734acdad2fba5520d1896d503b357654dd3e89b",
+        "actual_controller_exit": 2,
+        "semantic_RED_qualified": false,
+        "reason": "Single center-motion request; no pointer enter before original setup cutoff"
+      }
+    ]
+  },
+  "cursor_consumer_stride_repair": {
+    "authored_after_actual_RED": true,
+    "production_file": "src/pointer/CursorImage.cpp",
+    "change": "Use the supplied actual row stride in the same Cairo input constructor",
+    "baseline_helper_cpp_sha256": "32b789185730fdab237f4040478932eac65ebfb5ffb93a2e2a0f8a7ae0d9b48e",
+    "fixed_helper_cpp_sha256": "eeb8d863ddb13a3c0ce3ac7cb2f015ebf2372e7039e8bab742dec19389ecd56d",
+    "other20_payload_hashes_unchanged": true,
+    "complete21_file_patch_sha256": "d859ccb7d38d176c9b5adc0e89ca09d728bd03c0b0eab02afb49db4c7a09b425",
+    "complete_map_sha256": "b1a983d211d1a59b833161871051a3784d3d9f76bed6ab9f6cc991146e3c490d",
+    "prerequisite_actual_RED_qualification_sha256": "5a7b103920cef9b3e1a613880973f2beaf2790e36b4ef09288961552dcfb25d6",
+    "native_rebuild_qualified": true,
+    "actual_unchanged_oracle_GREEN_qualified": true,
+    "status": "Matching native rebuilt cohort and unchanged actual CPU-consumer GREEN qualified",
+    "Source_rendering_GREEN": false,
+    "physical_phone_accessed": false,
+    "native_rebuild_Root_qualification_sha256": "c3648e2d7d6ef84b8d51ff1d962aaefd880d228d0cfc24a23fe7ee7977adcc95",
+    "actual_GREEN_Root_qualification_sha256": "c446a95667c2a08f6798778407a44dc620f3d0b923df08c6c5199671715911c1"
+  },
+  "cursor_consumer_repaired_native_build": {
+    "Root_qualification_sha256": "c3648e2d7d6ef84b8d51ff1d962aaefd880d228d0cfc24a23fe7ee7977adcc95",
+    "selection_sha256": "a2fe6595b65088b1b7bd06d33d5ea9db6fb04f25de4540c4ff5c624904448df7",
+    "command_sha256": "be8e430313694ec1b50309627a114f82f857e85eabc4b3cab5a12fd32eb9b35d",
+    "actual_receipt_sha256": {
+      "boot-result.json": "ffba3d20632da95dcbd143118642c9e27d22c35531efbf926042e34f17072b80",
+      "execution.json": "ba19602da1a4fdb570e4599eb48e918eeb59e214f8819b2836003deed7cbb42c",
+      "guest-out/build-output/build-result.json": "7b6312c0893152d10292f11b955b1a65dc9020cbb9b9ff77fa0714648e16837a",
+      "guest-out/guest-result.json": "5a97eaed5d957ab262647e7847566b5444fa92e264008104e22e86a940c5c775"
+    },
+    "new_ELF": {
+      "bytes": 25082264,
+      "sha256": "2a4bae6357d130d4a1d2e4a4d8229ab69f86088b47289675870a4101a6997864"
+    },
+    "matching_SDK": {
+      "C_header_sha256": "4a7a9a603fe6d7780ff071020f727c3eb7b0aba1c9bba56b682ddd219f995396",
+      "CursorImage_header_sha256": "fd0aa86d9717bad34fe8627b5b6e079c19af82a55f928132ad626c53a38ec067",
+      "bytes": 2590720,
+      "regular_files": 502,
+      "sha256": "b01c80e1fc439e487521ee9c26be5c77b43a5e8e847b21f575529f20dd45148c"
+    },
+    "source_payload_files": 21,
+    "actual_changed_CPP_units": 11,
+    "only_changed_production_file_from_baseline": "src/pointer/CursorImage.cpp",
+    "other20_payload_hashes_unchanged": true,
+    "same_five_FFI_groups_run_separately_not_aggregated": true,
+    "Scope_waits": 33,
+    "Scope_PIPE_EOF": 33,
+    "early_counted_once": true,
+    "FFI_producer_wait_and_thread_join_separate": true,
+    "elapsed_ns": 173902010707,
+    "source_patch_sha256": "d859ccb7d38d176c9b5adc0e89ca09d728bd03c0b0eab02afb49db4c7a09b425",
+    "compositor_executed": false,
+    "Source_UI_PCM_executed": false,
+    "same_peer_QMP_KVM_shutdown_EOF_QEMU0_CLI0_exact_CID_absence": true,
+    "original_cutoffs_and_locked_inputs_unchanged": true,
+    "independent_qualification_sha256": "fbc6d3406862dc4444a954b40f6cf84c8c820ad956b86e0f712cb36329b98a0a",
+    "independent_review_not_additional_behavioral_cases": true
+  },
+  "cursor_consumer_actual_GREEN": {
+    "Root_qualification_sha256": "c446a95667c2a08f6798778407a44dc620f3d0b923df08c6c5199671715911c1",
+    "prerequisite_actual_RED_qualification_sha256": "5a7b103920cef9b3e1a613880973f2beaf2790e36b4ef09288961552dcfb25d6",
+    "repaired_native_build_Root_qualification_sha256": "c3648e2d7d6ef84b8d51ff1d962aaefd880d228d0cfc24a23fe7ee7977adcc95",
+    "selection_sha256": "d40864a5e7f21b6b2871f23140f11ca912109b2c8e0c5e8bb31368a006a2f339",
+    "command_sha256": "aa024eb03f798c9d9b1c5b8062f865661bb1302adf80d2d39d447b93a7330884",
+    "actual_receipt_sha256": {
+      "boot-result.json": "53d967d42a22a33b583853a63ac84cd0cc70062f95afc22fb469e4d6a7270880",
+      "bootstrap-result.json": "9c1ba2c40ad4bbf1025ef4f0df6dba6a876ef8c28f4d99595d0d80854568f24c",
+      "component/test-result.json": "d83378ae5b62831db91acb3f62b1631405c3a15ecf10cefa016e8e0bce2a42d8",
+      "execution.json": "5480bd9d4093a3a2001681167ec61d38c12142cfd1fe31f5975ba8b73c1c597b",
+      "result.json": "516c0cf39e88a79a29db08f914a7b16474e47e1b097cd9757fa8f67d130fab39"
+    },
+    "actual_controller_exit": 0,
+    "actual_outer_exit": 0,
+    "case_count": 1,
+    "same_five_actor_controller_oracle_join_hashes_as_RED3": {
+      "consumer_epoch.py": "167ca485db6585d5bdcec81eb1cf0c429983153d610e4e17219e3f56d8d76476",
+      "consumer_oracle.py": "87528cfacb704ae27351ea908a75be312942a75792294e7caf512fc0aba3d8dc",
+      "controller.py": "79aa3961b90bf78a010e441ab1e0e50d7323859521a7e28ffbe32501766d6082",
+      "real-wayland-client.consumer.c": "614c9d0705b7ba7855c6a915dcb8fc9c5c64d1313313f7074eb856a02a5df30c",
+      "shm-consumer-witness.cpp": "ef476b75ddcb03b0e652497d287e1f5cc6b4ac753ed1a065cf51809bd00a0038"
+    },
+    "same_consumer_contract_as_RED3": true,
+    "two_live_pre_client_exit_Cairo_paints_checked_pixels_each": 1024,
+    "two_live_pre_client_exit_Cairo_paints_mismatched_pixels_each": 0,
+    "actual_source_stride": 144,
+    "actual_consumer_input_stride": 144,
+    "actual_consumer_output_stride": 128,
+    "assigned_XRGB_commit_release_sync_protocol_frame_callback_and_actual_selected_cursor": true,
+    "retained_original_raw_Rust_pixels_padding_after_actual_client_Q_wait0": true,
+    "Cairo_helper_invoked_after_client_exit": false,
+    "witness_close_released_handles": 2,
+    "witness_close_held_handles": 0,
+    "server_resource_retirement_qualified": false,
+    "actual_waits": 42,
+    "actual_PIPE_EOF": 49,
+    "early_counted_once": true,
+    "bounded_output_files": 23,
+    "bounded_output_bytes": 138031,
+    "elapsed_ns": 20731248350,
+    "same_peer_QMP_KVM_shutdown_EOF_QEMU0_CLI0_exact_CID_absence": true,
+    "watched_descendants_dead_absent_ECHILD": true,
+    "original_cutoffs_and_locked_inputs_unchanged": true,
+    "full_cursor_path_GPU_upload_output_readback_presentation_qualified": false,
+    "Source_or_Observer_selected": false,
+    "physical_phone_accessed": false,
+    "independent_qualification_sha256": "0259bd5a523d6eced7a0218bba9c63d2eb98b091dc28ee5f257c35c641ca9bae",
+    "independent_review_not_additional_behavioral_cases": true
   }
 }

@@ -42,8 +42,9 @@ witness, controller, semantic oracle and epoch join remain byte-identical to RED
 A retained clone after actual client exit does not prove server-resource
 retirement. Texture `ok()` is object validity, not upload or GPU
 completion. Assigned window/cursor branches in these files are not qualified by
-this one case; padded cursor consumption, real frames/presentation and secure
-lock display remain open. Source/Observer are not selected here, and the separate
+this one case. The separate [padded-cursor consumer case](../consumer/README.md)
+qualifies CPU-consumer RED→GREEN separately; complete cursor output, real output readback/
+presentation and secure lock display remain open. Source/Observer are not selected here, and the separate
 seven-case rendering-stall RED, cold full owner and ARM/Google-kernel/phone matrix
 remain unchanged. No binary, raw private receipt, process log or proprietary input
 is published here.

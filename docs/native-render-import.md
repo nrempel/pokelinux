@@ -24,10 +24,11 @@ is fallible; `Box`/`Arc` metadata allocation can still abort on exhaustion. Ther
 is no full process out-of-memory recovery guarantee.
 
 The public patch is complete against pinned upstream Hyprland
-`efb50993780079460b0cbed1363e2166a2de1d9f`. Its18-file before/after map combines the
-six preserved original render observations with13 import files; GLRenderer
-belongs to both. It contains no proprietary source or unpublished patch
-prerequisite. Every plugin must use the rebuilt SDK, including the exact C header.
+`efb50993780079460b0cbed1363e2166a2de1d9f`. Its21-file before/after map preserves
+the six original render observations, immutable import changes and later Cairo
+cursor consumer/helper. It contains no proprietary source or unpublished patch
+prerequisite. Every plugin must use the rebuilt SDK, including the exact C header
+and `CursorImage.hpp`. Earlier18-file import cohorts retain their own evidence.
 
 ## Executed builds and C++ lifetime boundary
 
@@ -120,9 +121,70 @@ The initial RED/build and repaired build/GREEN retain separate
 [hash-only provenance](evidence/native-render-import-provenance.json).
 
 `texture->ok()` checks returned texture-object validity rather than GL upload
-success. The existing pointer consumer also assumes tight AR24 rows despite
-retained snapshot stride. Neither source observation is a new behavioral RED;
-actual upload failure and padded-cursor output remain unqualified.
+success. Actual upload failure, completion and output pixels remain unqualified.
+
+## Actual padded cursor consumer RED
+
+A later behavior-preserving baseline extracts the existing Cairo input constructor
+into `Pointer::cursorCpuInputSurface`. The production `PointerManager` callsite
+passes the retained source stride, while the baseline helper still uses `width*4`.
+Its separate full native build and the same five FFI groups pass with a matching
+502-file SDK, including `CursorImage.hpp`. All11 changed C++ units have actual
+build lines;33 Scope waits/33 PIPE EOFs and the original owned closure pass. This
+174.777423764s build executes no compositor or Source and is a local source cohort,
+not a reproduction of the signed Arch package recipe.
+
+One later actual native case qualifies consumer RED. The real UID1000 Wayland
+client creates a public virtual pointer, receives a server-issued pointer-enter
+serial and selects its actual cursor role. Its assigned369×881 XRGB surface
+retains all1,300,356 original bytes after real commit/release/sync and a protocol
+frame callback. Its32×32 ARGB cursor retains every original pixel and row-padding
+byte: stride144,4,608 bytes, with the actual cursor CPU cache matching the snapshot.
+
+The [test witness](../tools/native-render-import/consumer/README.md) calls the
+linked production helper and paints its Cairo source into an owned CPU image.
+Both live observations use input stride128 and produce992 wrong pixels out of
+1,024. The first mismatch at `(0,1)` reads original padding `0xa5a5a5a5` rather
+than the expected row pixel. The frozen oracle always requires original rows;
+controller1 is the actual property failure and outer0 qualifies that RED. All42
+waits/49 PIPE EOFs meet original cutoffs with the same QMP/KVM/VM/container/input
+closure. After actual client wait0, both retained clones still hold their original
+bytes; explicit close releases two handles and leaves zero.
+
+Two prior attempts remain setup failures: obsolete focus-dispatch syntax, then a
+single center-motion request that yields no pointer enter before the original deadline.
+Correct current Lua focus syntax and a fixed real virtual-pointer zero→center
+motion sequence repair setup only. The semantic oracle and witness remain
+byte-identical. No cursor behavior is inferred from either failed setup.
+
+## Rebuilt stride repair and cursor CPU GREEN
+
+After that qualified RED, a one-helper repair uses the supplied stride; the other
+20 cohort payloads are unchanged. The complete cursor cohort has21 files. The
+matching repaired full native build and same five FFI groups pass in173.902010707s
+with a502-file SDK, all11 changed C++ units and33 Scope waits/33 PIPE EOFs. Only
+the helper differs from the baseline; compositor/Source/UI/PCM remain unexecuted
+in that build.
+
+A later actual native run passes the unchanged one-case contract and all five
+actor/controller/oracle/join source hashes from RED3. Both live pre-client-exit
+Cairo comparisons check1,024 pixels with zero mismatches: the source and input
+stride are144, and the owned CPU destination stride is128. Assigned SHM, real
+virtual-pointer/enter/selected-role and cache/padding controls still pass.
+Controller0 and outer0 qualify this CPU-consumer GREEN; all42 waits/49 PIPE EOFs,
+original cutoffs and the same QMP/KVM/VM/container/locked-input closure pass.
+
+After actual `Q` and client wait0, two retained Rust clones verify their original
+raw pixels/padding, then close releases two handles and leaves zero. This latter
+check invokes no Cairo helper and makes no live server-surface query. Separate
+[hash-only provenance](evidence/native-render-import-provenance.json) binds both
+builds, actual RED/GREEN and independent reviews.
+
+This checks the actual Cairo CPU row consumer used when preparing a hardware
+cursor buffer. It does not execute or qualify the complete hardware-cursor branch
+or software-cursor display path. Snapshot bytes, returned texture validity,
+protocol callbacks and this CPU image establish no GPU upload, output readback,
+presentation or server-resource retirement.
 
 A complete immutable scene/frame, Rust-owned executor, exclusive AQ/session/GL/
 output state, real fence/presentation completion and responsive terminal ownership

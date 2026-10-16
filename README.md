@@ -105,7 +105,12 @@ GL remains on the original owner. A later actual Wayland no-attach case qualifie
 RED: import identity changes7→8 while the same16,384 pixel bytes remain. A one-file
 incoming-buffer guard repair passes the matching full rebuild/five FFI groups and
 the unchanged actual no-attach oracle: identity stays7→7. This CPU identity GREEN
-leaves rendering ownership and Source GREEN open.
+leaves rendering ownership and Source GREEN open. A separate actual padded ARGB
+Cairo-consumer case now qualifies RED: intact stride144 source rows are consumed
+as stride128, producing992 wrong pixels out of1,024. The one-helper stride repair
+passes its matching native rebuild and unchanged actual oracle: both live Cairo
+comparisons check1,024 pixels with zero mismatches. Post-client-exit checks retain
+raw Rust snapshot bytes only. No complete cursor output or presentation is qualified.
 Earlier [permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
 passes four touch/graph/PCM groups using root-authored focus. Physical audio,
 production session completion and all phone gates remain open.

@@ -3,7 +3,7 @@
   "upstream": "https://github.com/hyprwm/Hyprland",
   "pinned_upstream_commit": "efb50993780079460b0cbed1363e2166a2de1d9f",
   "original_archive_sha256": "5b05ce7ba5296fa46e666852bf108ab5af121bf577f8043787e2d2c252d8f109",
-  "patch_sha256": "fdb628720ad9133c59e42c1db0f77f9defd01af6e419a9790160f596649d584f",
+  "patch_sha256": "d859ccb7d38d176c9b5adc0e89ca09d728bd03c0b0eab02afb49db4c7a09b425",
   "files": {
     "CMakeLists.txt": {
       "before_sha256": "97b8028aa342cf6ee6f04b5db2e67e6e4fe6adf5d3fd67bad18005193db36516",
@@ -94,9 +94,27 @@
       "before_sha256": "beee988c473126ada9a2f4519ab5cafc5bebde2ec4e289427f395f3c0acaa984",
       "after_sha256": "15d1787cb594aa0ef4f2a60c15a7ad33dc888cf211eeed08b61f1b460271b655",
       "bytes": 1949
+    },
+    "src/pointer/PointerManager.cpp": {
+      "before_sha256": "83c69d93f09088f1e2383a9c85a54cf3f55718d9506a1121058afef77911223a",
+      "after_sha256": "a280dde76e3d415efed122d3fc61261be8f34cfeea14ae2e2fcf3ccbc63c9bcd",
+      "bytes": 45168
+    },
+    "src/pointer/CursorImage.hpp": {
+      "before_sha256": null,
+      "after_sha256": "fd0aa86d9717bad34fe8627b5b6e079c19af82a55f928132ad626c53a38ec067",
+      "bytes": 327
+    },
+    "src/pointer/CursorImage.cpp": {
+      "before_sha256": null,
+      "after_sha256": "eeb8d863ddb13a3c0ce3ac7cb2f015ebf2372e7039e8bab742dec19389ecd56d",
+      "bytes": 232
     }
   },
   "Rust_C_header_sha256": "4a7a9a603fe6d7780ff071020f727c3eb7b0aba1c9bba56b682ddd219f995396",
-  "scope": "Connected Rust CPU SHM import prerequisite plus preserved original observations; GL still runs on original owner, not a rendering executor.",
-  "noattach_actual_RED_qualification_sha256": "468efc6ed392580c334af5efd74e96038a568d88e88d35dd5a36c6ac77c7903c"
+  "scope": "Connected Rust immutable CPU SHM import plus supplied-stride Cairo CPU consumer repair and preserved render observations; GL remains on the original owner, no rendering executor or Source GREEN.",
+  "noattach_actual_RED_qualification_sha256": "468efc6ed392580c334af5efd74e96038a568d88e88d35dd5a36c6ac77c7903c",
+  "cursor_actual_RED_qualification_sha256": "5a7b103920cef9b3e1a613880973f2beaf2790e36b4ef09288961552dcfb25d6",
+  "cursor_repaired_build_Root_qualification_sha256": "c3648e2d7d6ef84b8d51ff1d962aaefd880d228d0cfc24a23fe7ee7977adcc95",
+  "cursor_actual_GREEN_qualification_sha256": "c446a95667c2a08f6798778407a44dc620f3d0b923df08c6c5199671715911c1"
 }

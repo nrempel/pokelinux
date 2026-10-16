@@ -63,6 +63,15 @@ qualifies RED: a retained unassigned surface is unnecessarily reimported despite
 unchanged pixel bytes. A one-file incoming-buffer guard repair is authored;
 its matching full rebuild/five FFI groups and unchanged actual no-attach oracle
 pass. The repaired import identity remains stable7→7 with the same bytes. This
-does not repair the seven-case Source/rendering RED or qualify upload, padded
-cursor consumption,
+does not repair the seven-case Source/rendering RED or qualify upload,
 server-resource retirement or complete rendering/output ownership.
+
+A separate [actual padded-cursor consumer case](../docs/native-render-import.md#actual-padded-cursor-consumer-red)
+now qualifies RED on a behavior-preserving native baseline with a502-file SDK.
+The real retained cursor cache preserves stride144; the linked production Cairo
+helper consumes stride128 and paints992 wrong pixels out of1,024. Its one-helper
+stride repair passes its matching full native rebuild/five FFI groups and the
+unchanged actual oracle: both live pre-client-exit paints check1,024 pixels with
+zero mismatches. Later retained clones check original raw Rust pixels/padding
+after client wait0, without invoking Cairo. This CPU consumer boundary is separate from a complete hardware-
+or software-cursor output path, GPU upload and presentation.

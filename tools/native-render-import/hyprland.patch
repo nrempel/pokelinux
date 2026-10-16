@@ -858,3 +858,68 @@
          void bind() override;
          void unbind() override;
          void setTexParameter(GLenum pname, GLint param) override;
+diff --git a/src/pointer/PointerManager.cpp b/src/pointer/PointerManager.cpp
+--- a/src/pointer/PointerManager.cpp
++++ b/src/pointer/PointerManager.cpp
+@@ -1,4 +1,5 @@
+ #include "PointerManager.hpp"
++#include "CursorImage.hpp"
+ #include "../Compositor.hpp"
+ #include "../config/ConfigValue.hpp"
+ #include "../config/shared/actions/ConfigActions.hpp"
+@@ -511,6 +512,7 @@
+     if (shouldUseCpuBuffer) {
+         // get the texture data if available.
+         auto texData = texture->dataCopy();
++        int  texDataStride = static_cast<int>(texture->m_size.x) * 4;
+         if (texData.empty()) {
+             if (m_currentCursorImage.surface && m_currentCursorImage.surface->resource()->m_role->role() == SURFACE_ROLE_CURSOR) {
+                 const auto SURFACE   = m_currentCursorImage.surface->resource();
+@@ -531,9 +533,14 @@
+                     }
+                 }
+ 
+-                if (shmBuffer.data())
++                if (shmBuffer.data()) {
+                     texData = shmBuffer;
+-                else {
++                    const auto view = SURFACE->m_current.shmSnapshot.view();
++                    if (view && view->pixel_bytes == texData.size() && view->description.bytes_per_pixel == 4 &&
++                        view->description.width == static_cast<uint32_t>(texture->m_size.x) &&
++                        view->description.height == static_cast<uint32_t>(texture->m_size.y))
++                        texDataStride = static_cast<int>(view->description.stride);
++                } else {
+                     texData.resize(texture->m_size.x * 4 * texture->m_size.y);
+                     memset(texData.data(), 0x00, texData.size());
+                 }
+@@ -555,7 +562,7 @@
+         auto [data, fmt, size] = buf->beginDataPtr(0);
+ 
+         auto CAIROSURFACE     = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, DMABUF.size.x, DMABUF.size.y);
+-        auto CAIRODATASURFACE = cairo_image_surface_create_for_data(texData.data(), CAIRO_FORMAT_ARGB32, texture->m_size.x, texture->m_size.y, texture->m_size.x * 4);
++        auto CAIRODATASURFACE = Pointer::cursorCpuInputSurface(texData.data(), texture->m_size.x, texture->m_size.y, texDataStride);
+ 
+         auto CAIRO = cairo_create(CAIROSURFACE);
+ 
+diff --git a/src/pointer/CursorImage.hpp b/src/pointer/CursorImage.hpp
+--- /dev/null
++++ b/src/pointer/CursorImage.hpp
+@@ -0,0 +1,9 @@
++#pragma once
++#include <cairo/cairo.h>
++#include <cstdint>
++
++namespace Pointer {
++    // The caller owns the pixels until the returned Cairo surface is destroyed.
++    // The surface is owned by the caller and must be destroyed once.
++    cairo_surface_t* cursorCpuInputSurface(uint8_t* pixels, int width, int height, int stride);
++}
+diff --git a/src/pointer/CursorImage.cpp b/src/pointer/CursorImage.cpp
+--- /dev/null
++++ b/src/pointer/CursorImage.cpp
+@@ -0,0 +1,5 @@
++#include "CursorImage.hpp"
++
++cairo_surface_t* Pointer::cursorCpuInputSurface(uint8_t* pixels, int width, int height, int stride) {
++    return cairo_image_surface_create_for_data(pixels, CAIRO_FORMAT_ARGB32, width, height, stride);
++}

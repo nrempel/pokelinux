@@ -2,9 +2,10 @@
 
 `hyprland.patch` applies to upstream Hyprland
 [`efb50993780079460b0cbed1363e2166a2de1d9f`](https://github.com/hyprwm/Hyprland/tree/efb50993780079460b0cbed1363e2166a2de1d9f).
-`cohort.json` binds exact before/after bytes for all18 affected files. This combines
-the six preserved original endRender observation files with13 SHM import files;
-`GLRenderer.cpp` belongs to both. It does not require an unpublished source patch.
+`cohort.json` binds exact before/after bytes for all21 affected files. It preserves
+the six original endRender observation files and immutable SHM import, then adds
+`PointerManager.cpp` and `CursorImage.cpp/.hpp` for the actual Cairo row consumer.
+It does not require an unpublished source patch.
 The source remains subject to upstream licensing.
 
 The production path is `commitState` → `updateSynchronousTexture` → Rust capture
@@ -33,9 +34,16 @@ no-attach oracle pass. Identity remains7→7 with the same bytes. This is not
 complete production import acceptance. Existing `texture->ok()` checks object
 validity rather than
 proven GL upload success; actual upload failure/completion remains unqualified.
-The existing pointer consumer also assumes tight AR24 cursor rows despite the
-snapshot retaining actual stride. These limits must remain explicit until their
-actual behavior is tested and repaired.
+The [actual consumer actors and oracle](consumer/README.md) separately qualify
+padded ARGB Cairo-consumer RED on a behavior-preserving native baseline: source
+stride144 and exact cursor cache remain intact, while input stride128 paints992
+wrong pixels out of1,024. That baseline extends the18-file import cohort to21
+files with `PointerManager.cpp` and `CursorImage.cpp/.hpp`, and builds a matching
+502-file SDK. A one-helper stride repair passes its matching full native rebuild,
+five FFI groups and unchanged actual oracle: two live pre-client-exit Cairo paints
+check1,024 pixels each with zero mismatches. Post-exit clones verify raw Rust
+pixels/padding without invoking the helper. This is a CPU consumer result,
+not a complete hardware/software cursor-output, upload or presentation result.
 
 GL still executes on the original compositor owner. This is an immutable CPU
 handoff prerequisite, not an executor, complete frame/output ownership split,

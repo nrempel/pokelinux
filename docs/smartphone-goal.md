@@ -66,8 +66,13 @@ The [connected Rust SHM prerequisite](native-render-import.md) separately passes
 five actual C++/Rust lifetime groups and a complete native compositor/501-file SDK
 build. A separate actual no-attach identity case qualifies RED; a one-file
 incoming-buffer guard repair passes its matching rebuild and unchanged actual
-no-attach oracle, limited to CPU import identity GREEN.
-Coherent rendering ownership, the seven-case Source RED and full phone/runtime
+no-attach oracle, limited to CPU import identity GREEN. A separate actual padded
+ARGB Cairo-consumer case qualifies RED after its502-file SDK baseline build;
+real pointer-role/cache controls pass, but992 of1,024 CPU output pixels differ.
+Its one-helper stride repair passes the matching rebuild and unchanged actual
+oracle: both live Cairo paints have zero mismatches; post-exit clones verify raw
+Rust bytes only.
+Full cursor output and presentation remain unqualified. Coherent rendering ownership, the seven-case Source RED and full phone/runtime
 matrix remain open.
 
 The [native Rust session owner](native-session-owner.md) implements compositor
