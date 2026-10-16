@@ -18,11 +18,19 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The [normal direct-stream ARM Sounds tracer](native-audio-arm-ui.md) now passes
+all five groups,18 audio socket behaviors and seven paired PCM stages
+(336,000 measured frames), with native1080×2424/DPR2.625 captures and owned
+closure. Live themes use original theme code in an authored theme-only host.
+Keep this completed selection frozen. Next join normal Sounds to the newer
+lifecycle MediaRoute actor in the same closed ARM environment; Source/PAM,
+production provisioning and hardware remain open.
+
 The [Sounds input repair](native-audio-readonly-input.md) prevents read-only
 polls from cancelling a press. Seven real socket REDs precede18 behavioral host
 passes plus Qt setup/cleanup. One queued explicit choice retains its original
-deadline and fresh-state checks. The normal ARM tracer uses this exact cohort;
-its complete UI/audio/theme result remains separate from the host proof.
+deadline and fresh-state checks. The completed normal ARM tracer uses this exact cohort;
+its UI/audio/theme result remains separately bound from the host proof.
 
 The [media-only Rust audio client](native-audio-client.md) is now qualified as a
 standalone transport:24 default host passes/one root-only ignored case,25 in
@@ -34,8 +42,8 @@ Continue the finite ARM tracer and matching actor integration below.
 Sounds now uses the [current schema3 appearance client](native-audio-appearance-client.md),
 with11 unchanged audio/29 actual appearance IPC cases and an exact installed-QML
 Ready/create check. The candidate is one matching current cohort, without a
-private-HOME reader or old-schema fallback. Continue its normal ARM tracer; host
-component results do not qualify the normal GUI/audio/theme path.
+private-HOME reader or old-schema fallback. The later normal ARM tracer above qualifies this separate UI/audio/theme
+selection; its host component results retain their original scope.
 
 
 The [additional audio checkpoint](native-audio-pcm-arm-foundation.md) passes five

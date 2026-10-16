@@ -1,5 +1,9 @@
 # Actual audio samples and ARM socket foundation
 
+The later [complete normal ARM tracer](native-audio-arm-ui.md) qualifies the
+separately selected direct-stream UI/audio/theme path. Evidence and remaining
+gates below retain this checkpoint's own scope.
+
 The unchanged final Rust audio owner now has additional actual host PCM
 qualification. Separately, the native Sounds protocol client compiles and passes
 its eleven socket cases under a generic ARM kernel. These two proofs do not yet

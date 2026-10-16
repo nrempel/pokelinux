@@ -1,5 +1,9 @@
 # Sounds read-only polling and explicit input
 
+The later [complete normal ARM tracer](native-audio-arm-ui.md) qualifies the
+separately selected direct-stream UI/audio/theme path. Evidence and remaining
+gates below retain this checkpoint's own scope.
+
 Periodic status refreshes no longer disable output controls during a press.
 Previously each250ms read-only RPC made `canChoose` false; a response arriving
 mid-gesture could cancel the normal tap. Controls now retain the last trusted

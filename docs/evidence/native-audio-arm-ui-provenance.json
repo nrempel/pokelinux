@@ -1,0 +1,654 @@
+{
+  "schema": 1,
+  "scope": "one actual generic ARM kernel epoch: fresh root-installed normal Sounds Qt/current3 typed appearance, distinctUID native Rust audio/private originalPW+WP, genuine originaltheme in authored theme-only host, independent owned-source links and finite sink-monitor PCM; five groups only",
+  "source_cohort": "Historical direct-stream Sounds at03647c5, not lifecycle-permission integration",
+  "Root_review_sha256": "75f637bebdc8bdef7c6586f2fe9fa744b4d35af05de04f34fc86fbd63c4bdbfa",
+  "author_review_sha256": "0bfedcea773dd510c02034de790cbd4391f4b41ae08a5af4cdbb4335232cfbd9",
+  "independent_PCM_review_sha256": "3ab85dd9573aa61a662d741461b1832020f06710640ab78df4550673e412f4b0",
+  "result_sha256": "c09ffa0be20e7220728efc571df8cc51a1ae99adbb4048f9d63a22b75afeb454",
+  "execution_sha256": "430d6e7e18a58d29ed3dafbd72817adfdf082165375f2cf3eed62258fb9f9c60",
+  "boot_sha256": "a1ff126df20ee94fd7ed795a4c1ec713e47e807a5b85f1e142a06492d81e63eb",
+  "selection_sha256": "71168d903d5187dcc2030194dd5e79ca7e7e984711b070eba990f5742648b6b0",
+  "selected_inputs": [
+    {
+      "path": "source/appearance-source/Cargo.lock",
+      "sha256": "896419e12fd91147c2dfbcb2faaddce4e0cd0bce659304dfd76418770e99c74d"
+    },
+    {
+      "path": "source/appearance-source/Cargo.toml",
+      "sha256": "b3b94fb217636e554a9904ac77f5c8862435df2f064391cabc43038f8866b0f6"
+    },
+    {
+      "path": "source/appearance-source/README.md",
+      "sha256": "190510c57a2cfd733aab63fa709be30dfbdf5bbcb3eb38786af86a8d1ab4eae3"
+    },
+    {
+      "path": "source/appearance-source/src/collector.rs",
+      "sha256": "f1f196b4d84ea8d0e009cf466a1d109cb76d3260c4e1c036a3e3802447d5ef48"
+    },
+    {
+      "path": "source/appearance-source/src/ipc.rs",
+      "sha256": "6472b1d52036448a92cac4a5cfd7bcbc504f5e2d02f0f7f20a8710cfa862fc1b"
+    },
+    {
+      "path": "source/appearance-source/src/lib.rs",
+      "sha256": "095127e999a84709a5644720ebab7e4ebb3fcb4c480d478942c8e88260818d12"
+    },
+    {
+      "path": "source/appearance-source/src/main.rs",
+      "sha256": "b58bfc5255505bfd134cffba0e34633b9e6863c07f4f682c4027d413759369cc"
+    },
+    {
+      "path": "source/appearance-source/src/palette.rs",
+      "sha256": "2cb147cddb6da8d6908de372d3851f69f87a96b449b6252882bc38d7576597e0"
+    },
+    {
+      "path": "source/appearance-source/src/sandbox.rs",
+      "sha256": "6a06b9fed5ffe795a2deb6dbdd3d124499f0ee97707bc4a158c3e858eb919912"
+    },
+    {
+      "path": "source/appearance-source/src/service.rs",
+      "sha256": "02def65405f9256fe3c2a786a3c42c534b4ce81815317401b1d40fa5e2ee13bb"
+    },
+    {
+      "path": "source/appearance-source/src/style.rs",
+      "sha256": "ea937e13dcd7aa0da3fc439b538500b7f56a4c877c72a0fb1b88e1b56a509ce6"
+    },
+    {
+      "path": "source/appearance-source/tests/colors.rs",
+      "sha256": "2c0417d90d87c8b53499b2be729d633d60be89092c29c9c5dff1dcbfe6b81778"
+    },
+    {
+      "path": "source/appearance-source/tests/confinement.rs",
+      "sha256": "1dddd6aeddb24caab07d28877e16aac3e521b6f4c0a1c8bc324d922ca308be7b"
+    },
+    {
+      "path": "source/appearance-source/tests/process.rs",
+      "sha256": "3896464b2533c05426dc5eb5874f3d507448e8a34678913d77fac0c85c7ff518"
+    },
+    {
+      "path": "source/audio-source/native-audio/Cargo.lock",
+      "sha256": "78c727f75f9346652a3cac7a64ba7572f51ec93ecc41910cb5282510e856fafc"
+    },
+    {
+      "path": "source/audio-source/native-audio/Cargo.toml",
+      "sha256": "96db1b8d5ff48b13d116e4dde6b2e96e569abb9ab24217c5a2d26a77743c8a5a"
+    },
+    {
+      "path": "source/audio-source/native-audio/src/backend_process.rs",
+      "sha256": "6fa30b8477c4a438298a74d66fd36b01efd4ec71ffd6ae694cce30e20fe177be"
+    },
+    {
+      "path": "source/audio-source/native-audio/src/lib.rs",
+      "sha256": "61d69559374b052a1b21af22e480cfa97943d63a2dfdabd81044a7b92720af0b"
+    },
+    {
+      "path": "source/audio-source/native-audio/src/main.rs",
+      "sha256": "e62500d6e80935dc61b9678144b41c7130f8554170409680be9347255a172b60"
+    },
+    {
+      "path": "source/audio-source/native-audio/src/pipewire.rs",
+      "sha256": "0eea4cca56b7261e0b801a79c383dcd4470f0526f46e8788a15ca87b43dd4e27"
+    },
+    {
+      "path": "source/audio-source/native-audio/tests/authority.rs",
+      "sha256": "45e5a7749423db9022532df868d40c0ffeeb2e8d707f8f42d9e9310b26dcd637"
+    },
+    {
+      "path": "source/audio-source/native-audio/tests/profile.rs",
+      "sha256": "15a11f307aa60dec1c050e1c99f514632295c22c63f8ed1e4875ac974776f256"
+    },
+    {
+      "path": "source/audio-source/native-power/Cargo.lock",
+      "sha256": "65674be12771cbd56d3030ecec345554b3c5d2f7215aaffbe5b0ab0286dd42a1"
+    },
+    {
+      "path": "source/audio-source/native-power/Cargo.toml",
+      "sha256": "7f2ee64a94c00f0b15267af41bd76001fd6893897e0daff93df19b42ca2666b4"
+    },
+    {
+      "path": "source/audio-source/native-power/src/clock.rs",
+      "sha256": "cc32f4fe076606a46a1704cd42f6a161ae3c9a8809b1905223041b23d8eda5dd"
+    },
+    {
+      "path": "source/audio-source/native-power/src/lib.rs",
+      "sha256": "1f1ef69d79a7dc07f0106df5bd2b4d3949efe988a2c23a95520aec385dd9144f"
+    },
+    {
+      "path": "source/audio-source/native-power/tests/arbitration.rs",
+      "sha256": "58260e7bed11296f56307682bbfe0089bfb9ae1e9fa834042c01f116a6b581ef"
+    },
+    {
+      "path": "source/audio-source/native-power/tests/fixtures/public-node-reference.tsv",
+      "sha256": "6d89d20f3c61c3b7445867a69250751ff0fed53636a3dc985c470641171cb60e"
+    },
+    {
+      "path": "source/audio-source/native-power/tests/original_node.rs",
+      "sha256": "8b964163e2576b98fd626b2bd315ca4e32f359765f0a019a9136f014a767d887"
+    },
+    {
+      "path": "source/audio-source/native-power/tests/support/mod.rs",
+      "sha256": "6410fa7b244e5c89155d63a0344022043e8e76adb0d65ffbb8a9c90f7a31b7e5"
+    },
+    {
+      "path": "source/audio-source/tools/media-route-fixture.py",
+      "sha256": "101d90ba869c47078c8ad3422ecf49cc6e2e0082fcaf120b97b835625810c9a0"
+    },
+    {
+      "path": "source/audio-source/tools/native-audio-fixture.py",
+      "sha256": "62890732bfb1065b61c90dd157092098be89fd4e3868db19e6e5aed3f8296ade"
+    },
+    {
+      "path": "source/audio-source/tools/native-audio-suite.py",
+      "sha256": "5bd35707285be2ca3164704c6da073ea3b9d0a3fe6b8bae3cc32902bb8399dce"
+    },
+    {
+      "path": "source/audio_config.py",
+      "sha256": "b9c784d9e9245ccc29dc4127f71997582c7722db5fd012d5e5408db9a2cf6f88"
+    },
+    {
+      "path": "source/boot.py",
+      "sha256": "01133c6141bbac4377b0b730daf84350d67c0f561f7f0e5f1c192655bb9824d6"
+    },
+    {
+      "path": "source/boot.sh",
+      "sha256": "207d3ccd74828cd587df55bc95d7f2c4269e93a865b869fa4e13a8ea5c967274"
+    },
+    {
+      "path": "source/call-client.py",
+      "sha256": "6dd790590dad4a21d903f1fff96ff44597cf8e11a08f76c5f5c59406759c1560"
+    },
+    {
+      "path": "source/display.py",
+      "sha256": "25955be0b319733e8fe5f4c5677d00f178db885d8d17a20aff257504373e7ab2"
+    },
+    {
+      "path": "source/guest.py",
+      "sha256": "cf20d13c21f4192f50755243bdcdaaf1485f4fa0552d0998c8675a130105d96a"
+    },
+    {
+      "path": "source/measure.py",
+      "sha256": "da87b0c2885068ed97c310504a3929f433dc2884938783ddadd322bec09a2f55"
+    },
+    {
+      "path": "source/observer/BINDINGS.json",
+      "sha256": "9def02208694c537cc8aa55fae6f08483ef807e8ce4a8086f74caf7c4e90fa75"
+    },
+    {
+      "path": "source/observer/ORACLES.json",
+      "sha256": "241aeeb82a3fa43a3b5541d76d1e2d2563d88144377284d473133c7a763dbc39"
+    },
+    {
+      "path": "source/observer/SOURCE-BASIS.json",
+      "sha256": "58e4dddb40df3ae37fa1ab658146314dc08357a6807080d8bae4d5ca984f7ac2"
+    },
+    {
+      "path": "source/observer/monitor_fixture.py",
+      "sha256": "1bc8f485e07c37ca6d8263378685bf9771452b8035a55b75dd1d08056ba53fd4"
+    },
+    {
+      "path": "source/observer/pcm_observer.py",
+      "sha256": "e04e3cf638a56c6a800a1c8b8cab4a172acd99b218a93e711958e433d87ca271"
+    },
+    {
+      "path": "source/observer-original/pcm_observer.py",
+      "sha256": "21d332a912da789c43e8520b691838b454f8d04ccab812032927d48bec457eae"
+    },
+    {
+      "path": "source/omarchy-public-manifest.json",
+      "sha256": "af839db2c7e6c6d20de4db6a95f4fc55842a116746592b4932ed76d478f5d31f"
+    },
+    {
+      "path": "source/omarchy-public.tar.gz",
+      "sha256": "8cc6b1d9d903c606600395e3b3d80ad9f15bd3ab78f0f19b0f49041b1df82013"
+    },
+    {
+      "path": "source/omarchy-source-manifest.json",
+      "sha256": "89387ceedadd5a587b01b97ea288fa287d08b74afdbd70780c91d57d791a735c"
+    },
+    {
+      "path": "source/owned.py",
+      "sha256": "266024c425f92732c53c4b4ea1f06e90f4cd30cbc5cca0d19b8385e63921ae3f"
+    },
+    {
+      "path": "source/pixel10.json",
+      "sha256": "aa04d5fe8be3a257e644e9cebd36e3642fe288f1fb549b9efc7eed61bbac6272"
+    },
+    {
+      "path": "source/proofs/PCM-offline.json",
+      "sha256": "b8179d24c2a22b8a1e34703eb860527d9c3ec9b392b6abeee34646b3a7df1fea"
+    },
+    {
+      "path": "source/proofs/PCM.json",
+      "sha256": "84a54d45503a0d2d86713c095ab379aa5992b755db6990c2ec29616dee1157dd"
+    },
+    {
+      "path": "source/proofs/Qt-Root-review.json",
+      "sha256": "b1214839fb57e9489988dc3c0997a497b4472f625bcc1d1be6358a9bbcaa3089"
+    },
+    {
+      "path": "source/proofs/Qt-host-build.json",
+      "sha256": "4e0a185f673ea9807f7ce20fe16e5b931d27c5665b35850c4087a644ce54d4cc"
+    },
+    {
+      "path": "source/proofs/Qt-review.json",
+      "sha256": "1f5bb9fbf4664c35ecf8eee5fb5ac6f62a34cd949a60d9dd67b09666af30df73"
+    },
+    {
+      "path": "source/proofs/Qt-selection.json",
+      "sha256": "b9032fdbd4c98f8ec087ef1c521d700c28fddeeab0a6262214291d1107df5d78"
+    },
+    {
+      "path": "source/proofs/Qt-stream-GREEN-receipt.json",
+      "sha256": "20105a8fecd2783d378af0d675c6c11260f118c89f1dc8ab5511943f2e5bd7a7"
+    },
+    {
+      "path": "source/proofs/Qt-stream-RED-receipt.json",
+      "sha256": "c22dff0964f0529345ba27e2d305a14543ac10dc7ce8272c265fc625d4b5cc17"
+    },
+    {
+      "path": "source/proofs/Qt-stream-green.txt",
+      "sha256": "5e7af0d6d5edc70ee6613c9b07492012668cffef55b6b3020326806cdb9663f9"
+    },
+    {
+      "path": "source/proofs/Qt-stream-red.txt",
+      "sha256": "b63cd499458e2771468db676172263652dbc57eee41c8bdb8fdc6d37147413b3"
+    },
+    {
+      "path": "source/proofs/Qt-stream-review.json",
+      "sha256": "0e1fd310cf962731ad3b2ef4dd6f79c730d83cbf82f3cf634d461b813e1ce2a3"
+    },
+    {
+      "path": "source/proofs/Qt-stream-selection.json",
+      "sha256": "ef0672b6c48ff696fd4abbdaae0d2cbc1283b27daaaf02664342947855f2c338"
+    },
+    {
+      "path": "source/proofs/audio-build.json",
+      "sha256": "51853e161f7a4e57e906f9ba4406185dcd2da52ff3ed3db8d3e2e1e32d963603"
+    },
+    {
+      "path": "source/proofs/audio-independent-peer.json",
+      "sha256": "f53d0db04bf5bf1105de349326d5a993f4fcc651a96b30d526d9da60934eb5aa"
+    },
+    {
+      "path": "source/proofs/audio-publication-Root.json",
+      "sha256": "1a4aef2fa6302cd64efde46907f578de8cab4e0f272e8ee2218b7f036766f390"
+    },
+    {
+      "path": "source/proofs/audio-review.json",
+      "sha256": "4f6c2194e7b35f076da5ee070b42fc428c93628d200354e865ea1be4be4b7309"
+    },
+    {
+      "path": "source/proofs/current-appearance-build.json",
+      "sha256": "744897e5dd1800fb594b2cbfb997d4c5122950dd360aa921b643aebffeb07767"
+    },
+    {
+      "path": "source/proofs/current-appearance-reuse.json",
+      "sha256": "d3bfaa7057da56d394093aefb23fd5e986699e15b689d635bd3c67fed00aba96"
+    },
+    {
+      "path": "source/proofs/exact-root-inventory.json",
+      "sha256": "7d69b8c2faf3f4f1a66ecd59893ab7329374c8d3b1346ed2a50be91f87218b98"
+    },
+    {
+      "path": "source/proofs/installed-QML-handoff.json",
+      "sha256": "2602fd7a9b39359b9e89771ddcd93d0c187c6b884e60966ac78b5986164d9fe3"
+    },
+    {
+      "path": "source/proofs/installed-QML-review.json",
+      "sha256": "7f4e85fc40cc2b7ba8e5ede3e7efa07df7c8ca2233e86a1ce8aa9c1fb6dfe08f"
+    },
+    {
+      "path": "source/proofs/installed-packages.log",
+      "sha256": "7c7ced2cef5c584824773816a71ce6b6197198477d070e027dd6e0f3ef02b79b"
+    },
+    {
+      "path": "source/proofs/offline-boot.json",
+      "sha256": "e67866097bb27a025144ed536f76e61b93f795e96d6b07457913b761d5bd50e5"
+    },
+    {
+      "path": "source/proofs/offline-execution.json",
+      "sha256": "46c6307cdccac64825e9724d008ec3d2e87eb326d32e4a6e718c67522e79e729"
+    },
+    {
+      "path": "source/proofs/offline-result.json",
+      "sha256": "9db2e13ffc089392c89485a122e9f9c492f1f3f9c7527b7da7a8d782a821ca45"
+    },
+    {
+      "path": "source/proofs/offline-setup.json",
+      "sha256": "0cc27db65d9b2f25c6b7aa77f20deda5fde29cffc014f5be61856e659cf60728"
+    },
+    {
+      "path": "source/proofs/signed-packages.json",
+      "sha256": "4082abd85f4bbb37faff546d8d8ece8872dad7c8d532891596c22e9ce092cf5f"
+    },
+    {
+      "path": "source/public-api-pins.json",
+      "sha256": "56d7e35e65848eba01681a6f6505428fcfbb6c1659cb08cf59daac82d4c70161"
+    },
+    {
+      "path": "source/qt-source/native-app/PhoneAppearance.qml",
+      "sha256": "705ab25799cba18095a76f4fb47e70eb10099ca035426d7e4400fa9cef8452bc"
+    },
+    {
+      "path": "source/qt-source/native-app/PhoneAppearanceClient.cpp",
+      "sha256": "7a2a5d0d5f7a5012dd724596a1bf1f96d8fa9d3242c913933d8cf69fe9de34d9"
+    },
+    {
+      "path": "source/qt-source/native-app/PhoneAppearanceClient.h",
+      "sha256": "b7b12f9a1d335e9036dc065ea2218ca107d447f57e029fef674941e1520b4e92"
+    },
+    {
+      "path": "source/qt-source/native-app/PhoneTheme.qml",
+      "sha256": "67caaa853a01ac2108f16bff88009d026779da4df54961b11d3d82a1d2ed2fd1"
+    },
+    {
+      "path": "source/qt-source/native-app/PhoneThemeFiles.cpp",
+      "sha256": "57b39dcf95a8d28b65cced5d730a13e5eab8726edc2e889d936acdecac668664"
+    },
+    {
+      "path": "source/qt-source/native-app/PhoneThemeFiles.h",
+      "sha256": "9bfdbb38ed23e4b03491073038264596ec3825b91e83d3b05eafd941623ecc1a"
+    },
+    {
+      "path": "source/qt-source/native-app/ThemePalette.js",
+      "sha256": "677d9faa94873dd6aceee81a900f179600f7a699defe1c4304760beeccd26a33"
+    },
+    {
+      "path": "source/qt-source/native-app/appearance-client-tests/CMakeLists.txt",
+      "sha256": "287c36a3854a8bdef11d0d92f45a31892836ce19e2a004fb9aef23cbdd5d9579"
+    },
+    {
+      "path": "source/qt-source/native-app/appearance-client-tests/process.cpp",
+      "sha256": "95e5c11905062a891393f9ee7d0633cd8278f07f1d0fce82b7db1f2a9c81f5d7"
+    },
+    {
+      "path": "source/qt-source/native-audio-ui/AudioClient.cpp",
+      "sha256": "673d2113a5402b0de583b1f3e6bbb352ecd3ec2ef19b9628ac24309379e80095"
+    },
+    {
+      "path": "source/qt-source/native-audio-ui/AudioClient.h",
+      "sha256": "20981b5d40c3f0d2607c79db1f4c6cf33e3b5c1e1c3c7221ce468638f80a3801"
+    },
+    {
+      "path": "source/qt-source/native-audio-ui/AudioClientTest.cpp",
+      "sha256": "e2223d27b788a26eb115ff3b44b0858d904ca1d9561a39bd9bd917859bfa8d49"
+    },
+    {
+      "path": "source/qt-source/native-audio-ui/CMakeLists.txt",
+      "sha256": "0159c6fc40debd177032285889668b5c6d6bed5ef848c19b1bdd6ba5e3852df8"
+    },
+    {
+      "path": "source/qt-source/native-audio-ui/SoundsView.qml",
+      "sha256": "eaa651d226d0cfcc3df4c04d6888937110e3de2fdde362af664676eabf0c4635"
+    },
+    {
+      "path": "source/qt-source/native-audio-ui/main.cpp",
+      "sha256": "9e9bf5f403b18c30473083d388bf3e2ed44c46c27a71af53b1fbaebedaf0d1dd"
+    },
+    {
+      "path": "source/qt-source/native-audio-ui/resources.qrc",
+      "sha256": "1256d0136462e661632f17ede81f498f1d0b7c1081b38d9d41a29c5893a683ae"
+    },
+    {
+      "path": "source/qt_build.py",
+      "sha256": "259ee092c29d4c391c87ec2db595f4b34f438e909747478adbdca726702cbedc"
+    },
+    {
+      "path": "source/run-selected.py",
+      "sha256": "48cfcdad5ad3ce8c8b2d48f4f24c2910cea57211805909c953c02acf0140e01f"
+    },
+    {
+      "path": "source/theme-host.qml",
+      "sha256": "13a373e8e170d34a7041b862446e7b9a4445ea3ee400a45ebe511bedfef98ed4"
+    },
+    {
+      "path": "source/theme-selected-manifest.json",
+      "sha256": "9d8f932fafaad3e9e6ddb7cc4d2d5ad014a1f59ccb7e37c30cee3cffbf04d462"
+    },
+    {
+      "path": "source/theme.py",
+      "sha256": "d1d72cde420966a5dae9c7259dc26e93ecc1040d8ad2b3d0df95c36a6de6f826"
+    },
+    {
+      "path": "source/workspace/sim/guest/boot.sh",
+      "sha256": "adc9714993c07c35f7072262d1a21a543888da882e13ef1cf5469b0db00af40d"
+    },
+    {
+      "path": "bins/native-appearance",
+      "sha256": "4af8686cfd5763eef222049385cb5141bc62021f5fde1a531eee0fe49e8c14f3"
+    },
+    {
+      "path": "bins/pixel10-output-probe",
+      "sha256": "610f4654d639f16406f1559fadbc98e9ca32c386ca7a8dd924d8527cf6b9be64"
+    },
+    {
+      "path": "bins/pixel10-physical-size-adapter.so",
+      "sha256": "098b6a7c32090d74bad5af9c3cec899bf7ce24100159df5d1ddaed5182ba5c08"
+    },
+    {
+      "path": "bins/pixel10-raw-output-capture",
+      "sha256": "383a0a4448fa4a9dfd5202e57b8dd92cc46d93b52df7a127920d62517dcbe5c8"
+    },
+    {
+      "path": "bins/pokelinux-audio",
+      "sha256": "ca751531bdeb96f4902024b085bac58df19ab41b3330d2121c087c96fd909198"
+    }
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "name": "normal_input_two_virtual_routes",
+      "passed": true
+    },
+    {
+      "id": 2,
+      "name": "call_interrupt_restore",
+      "passed": true
+    },
+    {
+      "id": 5,
+      "name": "genuine_live_theme_same_session_no_route_mutation",
+      "passed": true
+    },
+    {
+      "id": 3,
+      "name": "backend_loss_unavailable_no_replay",
+      "passed": true
+    },
+    {
+      "id": 4,
+      "name": "normal_window_close_releases_lease",
+      "passed": true
+    }
+  ],
+  "actual_Qt_build": {
+    "binaries": {
+      "pokelinux-sounds": {
+        "sha256": "44e2584d18962d884ca451bfd6780a76ad44f61b28cf4b4ca291b7e2db137fb0",
+        "bytes": 455000,
+        "ELF_machine": 183
+      },
+      "audio-client-test": {
+        "sha256": "a9109632200217d84f43c066f50022f553f073ade0e3850590d6b774cf256485",
+        "bytes": 619120,
+        "ELF_machine": 183
+      }
+    },
+    "Qt_module_versions": "6.12.0\n6.12.0\n6.12.0\n6.12.0\n6.12.0\n",
+    "actual_audio_socket_cases": 18,
+    "actual_original_audio_socket_cases": 11,
+    "actual_new_held_readonly_intent_controls": 7,
+    "actual_Qt_test_case_names": [
+      "initTestCase",
+      "authenticatedCatalog",
+      "logicalAcquireWaitsForObservedApplication",
+      "routeUsesExactLeaseThenCallInterruptsAndRestores",
+      "backendLossDisablesMutationsWithoutReplay",
+      "connectionLossNeedsExplicitReconnectAndNeverReplays",
+      "destructorClosesTheLeaseConnection",
+      "wrongOwnerSendsNothing",
+      "lateMutationReplyAfterBlockedEventLoopIsRefused",
+      "oversizedReplyClosesConnection",
+      "catalogWithPrivateTargetIsRefused",
+      "decreasingGraphObservationIsRefused",
+      "readonlyGestureQueuesOneAcquire",
+      "readonlyQueuePreservesAppliedUntilSend",
+      "queuedChoiceCancelledByFreshUnavailable",
+      "queuedChoiceRechecksFreshCatalog",
+      "queuedChoiceExpiresWithoutSend",
+      "queuedChoiceDisconnectedNeverReplays",
+      "queuedEffectReplyKeepsOriginalInputDeadline",
+      "cleanupTestCase"
+    ],
+    "actual_setup_cleanup_cases": 2,
+    "appearance29cases_inherited": false,
+    "compiler_object_jobs_parallel": 7,
+    "legacy_reader_compiled_or_installed": false
+  },
+  "PCM": {
+    "paired_stages": 7,
+    "complete_windows": 14,
+    "frames_per_raw_window": 33600,
+    "discard_frames_per_window": 9600,
+    "measured_frames_per_window": 24000,
+    "total_measured_frames": 336000,
+    "fixed_oracles_sha256": "241aeeb82a3fa43a3b5541d76d1e2d2563d88144377284d473133c7a763dbc39",
+    "observer_original_sha256": "21d332a912da789c43e8520b691838b454f8d04ccab812032927d48bec457eae",
+    "observer_preparation_sha256": "e04e3cf638a56c6a800a1c8b8cab4a172acd99b218a93e711958e433d87ca271",
+    "sole_observer_change": "node.always-process True to False; no oracle/count/deadline change",
+    "actual_observer_waits": 72,
+    "independent_recomputation": true
+  },
+  "captures": [
+    {
+      "file": "docs/images/sounds-arm-tokyo-night.png",
+      "sha256": "24ae9a341fd752496227c6eb87897f71eb244745115f7c6ff770b6b961ec1f56",
+      "capture_guard_sha256": "295bb0859508611e6a0a67a57cfedbc423c796885ab171a37e330db541db015e",
+      "native_dimensions": [
+        1080,
+        2424
+      ],
+      "window_DPR": 2.625,
+      "capture": {
+        "hardware_verified": false,
+        "native_buffer_height": 2424,
+        "native_buffer_shm_format": 0,
+        "native_buffer_stride": 4320,
+        "native_buffer_width": 1080,
+        "oriented_rgba_pixels_sha256": "4c40486d255d788f4d34899f096565f7fbc5ddafa5180649c1af466b2f45c31a",
+        "output": "Virtual-1",
+        "png_decode_pixel_hash_matches_native_buffer": true,
+        "png_sha256": "24ae9a341fd752496227c6eb87897f71eb244745115f7c6ff770b6b961ec1f56",
+        "protocol": "zwlr_screencopy_manager_v1.capture_output",
+        "protocol_flags": 0,
+        "protocol_y_invert_corrected": false,
+        "raw_native_buffer_sha256": "b47cf9efe87150862fde32f28572506d8c175ac5b8f1e78009987f95e248c96b",
+        "raw_png_height": 2424,
+        "raw_png_width": 1080,
+        "ready_nanoseconds": 139508163,
+        "ready_seconds": "174",
+        "resize_or_export_scale_used": false
+      }
+    },
+    {
+      "file": "docs/images/sounds-arm-latte.png",
+      "sha256": "9905e0ae9d1ec23225d1d00f812895bc72ffbc0a8dab964ceff51182dd4b5acc",
+      "capture_guard_sha256": "fca5d36e502555a7d8b8dd597b98e8e76e07ef916542b1435dac1efe13f52fd7",
+      "native_dimensions": [
+        1080,
+        2424
+      ],
+      "window_DPR": 2.625,
+      "capture": {
+        "hardware_verified": false,
+        "native_buffer_height": 2424,
+        "native_buffer_shm_format": 0,
+        "native_buffer_stride": 4320,
+        "native_buffer_width": 1080,
+        "oriented_rgba_pixels_sha256": "1b3ab48820db3a1956de6b8e13fa5f2b2d64f9bfa9178d2f080c6afbf01924c4",
+        "output": "Virtual-1",
+        "png_decode_pixel_hash_matches_native_buffer": true,
+        "png_sha256": "9905e0ae9d1ec23225d1d00f812895bc72ffbc0a8dab964ceff51182dd4b5acc",
+        "protocol": "zwlr_screencopy_manager_v1.capture_output",
+        "protocol_flags": 0,
+        "protocol_y_invert_corrected": false,
+        "raw_native_buffer_sha256": "d5b527bcb40c51976ac76a4c5ef1657af47f4c4f1fe1d21c4261d9cdb4433ee1",
+        "raw_png_height": 2424,
+        "raw_png_width": 1080,
+        "ready_nanoseconds": 829717386,
+        "ready_seconds": "186",
+        "resize_or_export_scale_used": false
+      }
+    }
+  ],
+  "actual_window_metadata": {
+    "kind": "sounds_window_metadata",
+    "pid": 764,
+    "schema": 1,
+    "screen": {
+      "available_geometry": [
+        0,
+        0,
+        411,
+        923
+      ],
+      "dpr": 3,
+      "geometry": [
+        0,
+        0,
+        411,
+        923
+      ],
+      "logical_dpi": [
+        96,
+        96
+      ],
+      "name": "Virtual-1",
+      "physical_dpi": [
+        160.60615384615383,
+        160.57671232876712
+      ],
+      "physical_mm": [
+        65,
+        146
+      ]
+    },
+    "title": "Sounds",
+    "window": {
+      "dpr": 2.625,
+      "exposed": true,
+      "geometry": [
+        0,
+        0,
+        411,
+        923
+      ],
+      "visible": true
+    }
+  },
+  "original_theme": {
+    "commit": "c668141e9c42b13c80c9ca4ea108e11708c5e8a5",
+    "archive_sha256": "8cc6b1d9d903c606600395e3b3d80ad9f15bd3ab78f0f19b0f49041b1df82013",
+    "scope": "original upstream theme setter/templates and Color/Style singletons in authored theme-only host; full original shell not selected"
+  },
+  "actual_direct_waits": {
+    "host": 7,
+    "boot": 3,
+    "guest": 116,
+    "shutdown": 1
+  },
+  "descendant_pidfd_death_proc_absence_observations": 82,
+  "native_parent_waits_relabelled": false,
+  "recovered_tone_after_reconcile_sampled": false,
+  "claims_excluded": [
+    "Lifecycle actor or current Source integration",
+    "production desktop launcher",
+    "full original shell",
+    "full font/style fidelity",
+    "physical display/audio/phone",
+    "matched Google-kernel audio",
+    "authentication/PAM"
+  ],
+  "physical_phone_accessed": false
+}

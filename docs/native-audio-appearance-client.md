@@ -1,5 +1,9 @@
 # Sounds and the current native appearance service
 
+The later [complete normal ARM tracer](native-audio-arm-ui.md) qualifies the
+separately selected direct-stream UI/audio/theme path. Evidence and remaining
+gates below retain this checkpoint's own scope.
+
 Sounds now consumes the current Rust appearance service through a shared
 `PhoneAppearanceClient` and `PhoneAppearance.qml`. Its fourth launch argument is
 an absolute appearance socket, replacing the earlier appearance-HOME argument.

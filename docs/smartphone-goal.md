@@ -1,5 +1,11 @@
 # Omarchy smartphone goal
 
+The [normal ARM Sounds tracer](native-audio-arm-ui.md) now passes real touch,
+virtual output samples, call interruption, live palette changes, loss/no replay
+and window-close cleanup. Its direct-stream cohort is separate from the next
+current-permission actor join. Hardware, full shell and production Source remain
+open; this does not complete the smartphone goal.
+
 The [media-only Rust client](native-audio-client.md) adds owned nonblocking
 transport with original BOOTTIME deadlines, no automatic replay and distinct
 admitted/applied state. Actual host tests and ARM compilation qualify this

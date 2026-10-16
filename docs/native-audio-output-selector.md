@@ -1,5 +1,9 @@
 # Native media output selector: host foundation
 
+The later [complete normal ARM tracer](native-audio-arm-ui.md) qualifies the
+separately selected direct-stream UI/audio/theme path. Evidence and remaining
+gates below retain this checkpoint's own scope.
+
 The Rust audio owner now exposes configured logical Media choices and resolves
 selected IDs through its private PipeWire profile. A native Qt Sounds window and
 bounded Unix-socket client compile and pass their host protocol tests. This
