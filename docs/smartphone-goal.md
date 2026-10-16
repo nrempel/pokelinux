@@ -73,7 +73,9 @@ Its one-helper stride repair passes the matching rebuild and unchanged actual
 oracle: both live Cairo paints have zero mismatches; post-exit clones verify raw
 Rust bytes only.
 Full cursor output and presentation remain unqualified. Coherent rendering ownership, the seven-case Source RED and full phone/runtime
-matrix remain open.
+matrix remain open. A separate Rust commit-permit component passes eight
+Linux x86 thread/clock/admission cases after actual owner-drop RED and repair;
+this establishes neither an executor nor actual native commit/presentation.
 
 The [native Rust session owner](native-session-owner.md) implements compositor
 Child custody; its original Sounds assembly has32 host boundary passes,

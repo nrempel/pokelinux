@@ -111,6 +111,10 @@ as stride128, producing992 wrong pixels out of1,024. The one-helper stride repai
 passes its matching native rebuild and unchanged actual oracle: both live Cairo
 comparisons check1,024 pixels with zero mismatches. Post-client-exit checks retain
 raw Rust snapshot bytes only. No complete cursor output or presentation is qualified.
+A separate original Rust commit-permit component passes eight native Linux
+thread/clock/admission tests and formatted-source QA after an actual owner-drop
+RED and repair. It supplies one-shot attempt ordering and same-epoch invalidation;
+connected worker, AQ/GL and Source integration remain open.
 Earlier [permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
 passes four touch/graph/PCM groups using root-authored focus. Physical audio,
 production session completion and all phone gates remain open.

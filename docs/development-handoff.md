@@ -241,6 +241,10 @@ and unchanged actual oracle: both live Cairo comparisons check1,024 pixels with
 zero mismatches. Separate post-client-exit checks retain raw Rust bytes, invoking
 no helper. This is CPU-consumer GREEN only. GL ownership, the seven-case Source RED
 and original cold full-composition failure remain unchanged.
+A separate original Rust commit-permit component now passes eight Linux x86
+thread/clock/admission cases after a real control-owner-drop RED and repair.
+It orders grant-time intent/Stop and same-epoch revocation; actual native binding,
+worker/FD custody, AQ and output completion remain open.
 Production control/render ownership separation and GREEN remain open. Source100ms,
 terminal authority expiry, real facts and fence/buffer lifetime remain required;
 no exclusive-CPU or earlier-failure cause follows. Strict matching ARM64 owner/client

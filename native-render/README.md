@@ -1,4 +1,4 @@
-# Immutable SHM payload custody
+# Immutable SHM payloads and commit permits
 
 This original Rust library owns bounded immutable CPU pixel snapshots for the
 [connected Hyprland import](../tools/native-render-import/README.md). It copies
@@ -75,3 +75,37 @@ unchanged actual oracle: both live pre-client-exit paints check1,024 pixels with
 zero mismatches. Later retained clones check original raw Rust pixels/padding
 after client wait0, without invoking Cairo. This CPU consumer boundary is separate from a complete hardware-
 or software-cursor output path, GPU upload and presentation.
+
+## Commit-permit component
+
+The original Rust `commit` module is an executor prerequisite. A unique control
+owner issues a move-only ticket retaining the full nonzero u64 security/output/
+scene/session policy. A checked serial and one-shot CAS order sealing against
+new accepted intent and sticky Stop; dropping the control owner now fences unused
+tickets too. `invalidate_current` revokes unsealed work within the same security
+epoch, without granting a replacement operation. Real Linux CLOCK_BOOTTIME is
+read before and after the seal CAS. A sealed old-attempt record survives later
+intent/Stop, but proves no native call,
+submission or completion. Authentic policy values still require the real control
+owner; integer shape alone does not authenticate output/session/scene/device
+bindings. The future executor must reserve job/outcome custody before issuing.
+The deadline bounds the grant check only: preemption may place a later native
+entry or completion past it.
+
+Six initial native Linux x86 component tests pass. An earlier missing-implementation
+compile failure executes no tests and is not semantic RED. Adding a seventh,
+control-owner-drop test exposes a real failure: six pass and one fails with
+Cargo/CLI101. A `Drop` Stop fence repairs it; all seven then pass with the same
+drop-test expectation. An equivalent boolean assertion in an earlier test changes
+syntax, so the complete test source is not claimed byte-identical. An eighth
+case adds same-epoch invalidation; its earlier missing-API compile failure is also
+not semantic RED. Final formatted-source QA passes all eight tests, rustfmt,
+Clippy with warnings denied and the x86 release build. The new case exercises
+the API with authored policy, without a real device-pause event. The existing
+snapshot C ABI/header remains unchanged; its C++ FFI was not re-executed against
+this new release archive.
+
+Test-only OS threads are actually joined. The module implements no production
+worker/JoinHandle ownership, FD queue, C ABI export, AQ/GL/native output call or
+Source integration. These eight component tests are distinct from the seven
+rendering-stall cases; connected frame commit/presentation and hardware remain open.

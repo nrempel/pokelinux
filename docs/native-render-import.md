@@ -186,6 +186,41 @@ or software-cursor display path. Snapshot bytes, returned texture validity,
 protocol callbacks and this CPU image establish no GPU upload, output readback,
 presentation or server-resource retirement.
 
+## Rust commit-permit component
+
+A separate original Rust component now orders an individual attempt against
+accepted control intent and Stop. It retains a full nonzero u64 security/output/
+scene/session policy, checks serial exhaustion, and seals a move-only ticket
+with one CAS and real CLOCK_BOOTTIME reads before/after. New admitted work or
+security intent invalidates unused tickets; `invalidate_current` also revokes
+unsealed work without changing the security epoch or granting a replacement.
+Already sealed old-attempt records survive later intent/Stop without authorizing
+another attempt. Integer policy shape does not authenticate output/session/
+scene/device bindings; authentic policy and reserved outcome custody remain
+requirements of the future connected owner. The deadline bounds the grant-time
+check only: preemption may put native entry or completion after it.
+
+Six initial native Linux x86 thread/clock/admission cases pass. The earlier
+missing-implementation compile attempt runs no semantic test and is not behavioral
+RED. A seventh case then executes and exposes control-owner loss incorrectly
+allowing an unused ticket to seal: six pass/one fails, Cargo/CLI101. Adding the
+control owner's `Drop` Stop fence gives seven passes. The drop expectation is
+unchanged; one existing boolean assertion changes to equivalent syntax, so the
+whole test file is not claimed byte-identical. An eighth case adds same-epoch
+invalidation after a separate missing-API compile failure, also not semantic RED.
+Final formatted-source QA passes all eight tests, rustfmt, Clippy with warnings
+denied and the x86 release build. The new API case uses authored policy; actual
+device-pause integration is unqualified. The existing snapshot C ABI/header is
+unchanged, and its C++ FFI was not re-run against the new release archive.
+[Hash-only provenance](evidence/native-render-import-provenance.json) keeps those
+epochs separate.
+
+This is a Rust component on the host Linux kernel, separate from the earlier
+C++/Cairo native VM evidence. It implements no production worker or JoinHandle
+custody, FD queue, C ABI, AQ/render dispatch, native call or Source integration.
+Neither an issued ticket nor a sealed record establishes commit, GPU completion
+or presentation; the eight Rust cases do not turn the seven rendering cases GREEN.
+
 A complete immutable scene/frame, Rust-owned executor, exclusive AQ/session/GL/
 output state, real fence/presentation completion and responsive terminal ownership
 are still required. Queue acceptance or copied pixels cannot substitute for

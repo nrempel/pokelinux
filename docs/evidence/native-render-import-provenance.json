@@ -465,5 +465,128 @@
     "physical_phone_accessed": false,
     "independent_qualification_sha256": "0259bd5a523d6eced7a0218bba9c63d2eb98b091dc28ee5f257c35c641ca9bae",
     "independent_review_not_additional_behavioral_cases": true
+  },
+  "commit_permit_component": {
+    "scope": "Original Rust Linux x86 thread/clock/admission component; no production worker/queue/C ABI/AQ/GL/Source/frame/hardware acceptance",
+    "actual_component_epochs": {
+      "run-red-1": {
+        "result_sha256": "ee286ae4328010c9226c3d5ad252f5b4936b9df9ad6392dc4d8ee9b7cb5f5885",
+        "commit_module_sha256": "c37647c21ecf087cf3f5bc2adc475e66d8fd15d1e55b78b88322086f009750ff",
+        "actual_Cargo_CLI_exit": 101,
+        "semantic_tests_executed": false,
+        "actual_owned_waits": 6,
+        "actual_PIPE_EOF": 6,
+        "original_cutoffs_source_closure_exact_CID_absence_same_daemon": true,
+        "behavioral_RED": false,
+        "classification": "Compile missing implementation; no semantic test executed"
+      },
+      "run-green-1": {
+        "result_sha256": "7f2d696d7059808c132f71732f2c55ba7b6a79cbef7151fec348ca0a2e4cbecc",
+        "commit_module_sha256": "273473705480afbf7d80549472d8b818334a817373d97867249fc2674539a94a",
+        "actual_Cargo_CLI_exit": 0,
+        "semantic_tests_executed": true,
+        "actual_owned_waits": 6,
+        "actual_PIPE_EOF": 6,
+        "original_cutoffs_source_closure_exact_CID_absence_same_daemon": true,
+        "component_tests_passed": 6
+      },
+      "run-red-2": {
+        "result_sha256": "ed29832055246367bbffaf5c294a6a0bb550be0b0996a5dc8a3d5365d44000d9",
+        "commit_module_sha256": "272ad85fbfc0995da83b13fc28d4cae06a4983fa83aa9e4950bff7e23e51d423",
+        "actual_Cargo_CLI_exit": 101,
+        "semantic_tests_executed": true,
+        "actual_owned_waits": 6,
+        "actual_PIPE_EOF": 6,
+        "original_cutoffs_source_closure_exact_CID_absence_same_daemon": true,
+        "component_tests_passed": 6,
+        "component_tests_failed": 1,
+        "behavioral_RED": true,
+        "failure": "Control owner dropped but unused ticket seals successfully"
+      },
+      "run-green-2": {
+        "result_sha256": "44f074e87983dc087679db7c546ab42d728afa46d70187a132fc12524caeb65f",
+        "commit_module_sha256": "af31989698e34f931c9bf58dfe272f04a5ddb6ecc09126e4823fe450839b2877",
+        "actual_Cargo_CLI_exit": 0,
+        "semantic_tests_executed": true,
+        "actual_owned_waits": 6,
+        "actual_PIPE_EOF": 6,
+        "original_cutoffs_source_closure_exact_CID_absence_same_daemon": true,
+        "component_tests_passed": 7,
+        "component_tests_failed": 0,
+        "drop_test_expectation_unchanged": true,
+        "whole_test_source_byte_identical_to_RED": false,
+        "equivalent_earlier_assertion_syntax_change": true
+      },
+      "run-red-3": {
+        "result_sha256": "bb0e2b9070466effac4cb43376ec8ef246933a30473fd1586783805217eafabf",
+        "commit_module_sha256": "d331b7a20b72b86c69a801bff41c1f86bfeedd27c2e97b4130ab4c0e45caf480",
+        "actual_Cargo_CLI_exit": 101,
+        "semantic_tests_executed": false,
+        "actual_owned_waits": 6,
+        "actual_PIPE_EOF": 6,
+        "original_cutoffs_source_closure_exact_CID_absence_same_daemon": true,
+        "behavioral_RED": false,
+        "classification": "Compile missing same-epoch invalidation API; no semantic test executed"
+      },
+      "run-qa-1": {
+        "result_sha256": "17b81b69ce14fbabecfa4342a4d7c5dc3fd5ded5e2eac5ccd615465c5b9a310d",
+        "commit_module_sha256": "aafe65445772cb10c598affa97e8693bdf483934dd5f9710249762b64ce325cd",
+        "actual_Cargo_CLI_exit": 0,
+        "semantic_tests_executed": true,
+        "actual_owned_waits": 6,
+        "actual_PIPE_EOF": 6,
+        "original_cutoffs_source_closure_exact_CID_absence_same_daemon": true,
+        "component_tests_passed": 8,
+        "component_tests_failed": 0,
+        "rustfmt_check": true,
+        "Clippy_D_warnings": true,
+        "x86_64_release_build": true
+      }
+    },
+    "policy_fields_full_nonzero_u64": [
+      "security_generation",
+      "output_id",
+      "output_generation",
+      "scene_sequence",
+      "session_generation"
+    ],
+    "checked_serial_one_shot_CAS": true,
+    "sticky_Stop_and_control_owner_Drop_fence": true,
+    "CLOCK_BOOTTIME_before_and_after_seal_CAS": true,
+    "sealed_record_retained_old_attempt_not_submission_or_completion": true,
+    "authentic_control_policy_and_bounded_job_outcome_reservation_still_required": true,
+    "final_formatted_source_QA": {
+      "qualified": true,
+      "result_sha256": "17b81b69ce14fbabecfa4342a4d7c5dc3fd5ded5e2eac5ccd615465c5b9a310d",
+      "source_sha256": {
+        "native-render/Cargo.lock": "ba1141e2a968bbad02a5be018efa8f8e6b29c8006439bd6a7f7024de45398713",
+        "native-render/Cargo.toml": "e8c67650745ce2544ad8607b4525e3724f4da5204c41b9a37071c35a4ce099b3",
+        "native-render/src/commit.rs": "aafe65445772cb10c598affa97e8693bdf483934dd5f9710249762b64ce325cd",
+        "native-render/src/lib.rs": "31fb12ce557f36e1f8f60732644935a652ea1ddc4d31efd27e45718e1e4e7a70",
+        "native-render/tests/ffi.cpp": "8483338e25120ba986cca3224466fce32457f6c275d5aefde585925c75314e5a",
+        "native-render/include/pokelinux_render.h": "4a7a9a603fe6d7780ff071020f727c3eb7b0aba1c9bba56b682ddd219f995396"
+      },
+      "component_tests_passed": 8,
+      "rustfmt_check": true,
+      "Clippy_D_warnings": true,
+      "x86_64_release_build": true,
+      "Root_qualification_sha256": "7e78d4e52b03985e84d0ed7a18bdcfd61f0a4c666903b8ce2ac6557d5dcdf40b",
+      "release_archive": {
+        "sha256": "fe5aac70a6ca0fd84fc65b121e5684408190a7541443d0b6fda22f1a771d04db",
+        "bytes": 22632600
+      },
+      "rustc": "1.98.1 (48a229cea 2026-09-01)",
+      "cargo": "1.98.1 (797e8a9bc 2026-08-05)"
+    },
+    "production_worker_JoinHandle_or_FD_queue_implemented": false,
+    "C_ABI_or_AQ_render_Source_integration_qualified": false,
+    "connected_frame_commit_present_or_hardware_qualified": false,
+    "same_security_epoch_invalidate_current_without_replacement_grant": true,
+    "same_epoch_test_uses_authored_policy_not_real_device_pause": true,
+    "deadline_bound": "Grant-time check only; preemption may put native entry or completion after the deadline",
+    "full_u64_policy_shape_authenticates_output_session_scene_device_bindings": false,
+    "existing_snapshot_C_ABI_code_and_header_unchanged": true,
+    "CXX_FFI_reexecuted_with_new_release_archive": false,
+    "ARM_build_or_runtime_qualified": false
   }
 }
