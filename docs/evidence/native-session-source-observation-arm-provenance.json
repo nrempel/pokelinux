@@ -1,0 +1,258 @@
+{
+  "schema": 1,
+  "evidence_qualified": true,
+  "functional_epoch_passed": false,
+  "scope": "Generic ARM kernel original Hyprland and default native Rust owner, actual root-admin Source observation before Stop; metadata probe exits255 before normal Sounds/boundary/PCM. Not a cause or phone qualification.",
+  "public_source_base": "a68feecf093690bfc18f5ae2ed7b2a77fdb8ffd0",
+  "label": "pokelinux-audio-arm-installed-source-green-sol-10",
+  "production_owner_sha256": "252ad901562df9b41676ebe3c424afff34c5e2fff0e27461ea1f806aa5586a33",
+  "matching_fixed_client_sha256": "21e7f51c5e79ef3c66eb757e116b9521a8c847f3aa73113e01d1f5ef05c43096",
+  "private_diagnostic_owner_selected": false,
+  "normal_Sounds_ELF_sha256": "684057c40c05a26e69dfc175b125b5130deda0a29980b4505d7b1a58cdc5fadf",
+  "Source_adapter_sha256": "7d78b090b4fac0701fa5926d5a5bb53789d01b9309296e4fa8103e0b7f5643a4",
+  "Source_header_sha256": "73612325a597b71a4386d62a4a563477e78e1bd5e572e48784f005507600e845",
+  "probe_is_additional_fullscreen_raster_window": true,
+  "genuine_early_publication_RED_to_GREEN_proof_not_rerun": true,
+  "actual_initial_admin_snapshot": {
+    "result": "snapshot",
+    "source": {
+      "state": "observed",
+      "last_accepted": {
+        "sequence": 2,
+        "sampled_at_ns": 146740785057
+      },
+      "first_failure": null
+    },
+    "principals": 0,
+    "permits": 0,
+    "receipts": 0,
+    "locked": false,
+    "suspended": false,
+    "degraded": false,
+    "ready": true,
+    "storage_occupied": true,
+    "storage_busy": false
+  },
+  "initial_snapshot_peer": [
+    447,
+    0,
+    0
+  ],
+  "initial_snapshot_at_boottime_ns": 146770455968,
+  "preStop_snapshot_source": {
+    "state": "failed",
+    "last_accepted": {
+      "sequence": 37,
+      "sampled_at_ns": 147685962781
+    },
+    "first_failure": {
+      "category": "provider_error",
+      "error_kind": "TimedOut",
+      "observed_at_boottime_ns": 147800206442
+    }
+  },
+  "preStop_snapshot_peer": [
+    447,
+    0,
+    0
+  ],
+  "preStop_snapshot_at_boottime_ns": 148090183252,
+  "original_observation_until_boottime_ns": 150085332723,
+  "within_original_observation_and_work_cutoffs": true,
+  "computed_last_accepted_age_at_first_actor_failure_ns": 114243661,
+  "unchanged_sample_lease_ns": 100000000,
+  "first_failure_is_actor_observation_not_cause": true,
+  "probe_wait_receipt": {
+    "role": "032-pixel10-actual-metadata.log",
+    "pid": 538,
+    "argv": [
+      "/usr/libexec/pokelinux-fixture/pixel10-output-probe",
+      "/run/user/1000/pixel10-profile/metadata.json"
+    ],
+    "returncode": 255,
+    "actual_direct_parent_wait": true,
+    "waited_at_boottime_ns": 148027297369,
+    "original_cutoff_ns": 176872768233,
+    "spawn_admission_cutoff_ns": 176872768233,
+    "original_wait_cutoff_ns": 176872768233,
+    "wait_before_original_cutoff": true,
+    "stdin_pipe_present": false,
+    "stdin_pipe_closed": true,
+    "stdout_bytes": 0,
+    "stdout_limit": 1048576,
+    "output_overflow": false,
+    "stdout_EOF": true,
+    "stdout_EOF_at_ns": 147993311649,
+    "EOF_before_original_cutoff": true
+  },
+  "probe_admission_budget_established_boottime_ns_derived": 146872768233,
+  "probe_actual_spawn_time_exported": false,
+  "failure": "Metadata probe255 with empty merged output; real Source expiry observed, underlying publication-gap operation unknown",
+  "completed_boundary_steps": 0,
+  "PCM_invocations": 0,
+  "PCM_windows": 0,
+  "measured_PCM_frames": 0,
+  "native_Pixel10_metadata_qualified": false,
+  "native_capture_qualified": false,
+  "three_plugins_compiled_and_actual_wait0": true,
+  "new_plugin_outputs": [
+    {
+      "source": "source-adapter.cpp",
+      "source_sha256": "7d78b090b4fac0701fa5926d5a5bb53789d01b9309296e4fa8103e0b7f5643a4",
+      "output": "/usr/lib/pokelinux/session-source.so",
+      "output_sha256": "07ef4a752cce0b454bb29f8ddcd7974709fa4b7368f29dd83096a6b91c350112",
+      "argv": [
+        "/usr/bin/g++",
+        "-std=c++23",
+        "-O2",
+        "-shared",
+        "-fPIC",
+        "-I/usr/include/hyprland/protocols",
+        "-I/usr/include/hyprland",
+        "-I/usr/include/hyprland/src",
+        "-I/usr/include/libdrm",
+        "-I/usr/include/cairo",
+        "-I/usr/include/freetype2",
+        "-I/usr/include/libpng16",
+        "-I/usr/include/pixman-1",
+        "/results/source/source-adapter.cpp",
+        "-o",
+        "/usr/lib/pokelinux/session-source.so"
+      ],
+      "original_build_seconds": 180,
+      "new_build_not_inherited_old_binary_proof": true
+    },
+    {
+      "source": "focus-observer.cpp",
+      "source_sha256": "628521ed4f1c1a53ca50d8515878ee69e46f896647754aec691d845450fcf05d",
+      "output": "/usr/lib/pokelinux/audio-focus-observer.so",
+      "output_sha256": "51daa1e1ce570d5b4181e0d55eaf7cdeccfd65aa90fd722dde7a09506b014d36",
+      "argv": [
+        "/usr/bin/g++",
+        "-std=c++23",
+        "-O2",
+        "-shared",
+        "-fPIC",
+        "-I/usr/include/hyprland/protocols",
+        "-I/usr/include/hyprland",
+        "-I/usr/include/hyprland/src",
+        "-I/usr/include/libdrm",
+        "-I/usr/include/cairo",
+        "-I/usr/include/freetype2",
+        "-I/usr/include/libpng16",
+        "-I/usr/include/pixman-1",
+        "/results/source/focus-observer.cpp",
+        "-o",
+        "/usr/lib/pokelinux/audio-focus-observer.so"
+      ],
+      "original_build_seconds": 180,
+      "new_build_not_inherited_old_binary_proof": true
+    },
+    {
+      "source": "profile-ready-bootstrap.cpp",
+      "source_sha256": "21fc9ba536191d138d433649b6fc3f47dfe5e72d4cd2d14c4f51fd9d84622b93",
+      "output": "/usr/lib/pokelinux/profile-ready-bootstrap.so",
+      "output_sha256": "d545f04bea884bf02f8ad57875b605f9803a422f0766e77d3b4ac06662daee2b",
+      "argv": [
+        "/usr/bin/g++",
+        "-std=c++23",
+        "-O2",
+        "-shared",
+        "-fPIC",
+        "-I/usr/include/hyprland/protocols",
+        "-I/usr/include/hyprland",
+        "-I/usr/include/hyprland/src",
+        "-I/usr/include/libdrm",
+        "-I/usr/include/cairo",
+        "-I/usr/include/freetype2",
+        "-I/usr/include/libpng16",
+        "-I/usr/include/pixman-1",
+        "/results/source/profile-ready-bootstrap.cpp",
+        "-o",
+        "/usr/lib/pokelinux/profile-ready-bootstrap.so"
+      ],
+      "original_build_seconds": 180,
+      "new_build_not_inherited_old_binary_proof": true
+    }
+  ],
+  "native_owner_StopCLI_actual_wait0": true,
+  "native_owner_actual_wait0": true,
+  "Source_child_parent_wait_or_signal_exported": false,
+  "Source_pidfd_dead_and_proc_absent_before_Stop": true,
+  "all34_guest_direct_waits_mergedPIPE_EOF_original_cutoffs_passed_individually": true,
+  "guest_expected_exit_aggregate_passed": false,
+  "expected_exit_mismatch": "metadata255, expected0",
+  "guest_subreaper_actual_waits": [
+    {
+      "pid": 496,
+      "actual_guest_subreaper_wait_exit": 0,
+      "at_boottime_ns": 148471068452
+    },
+    {
+      "pid": 535,
+      "actual_guest_subreaper_wait_exit": 1,
+      "at_boottime_ns": 148471302098
+    },
+    {
+      "pid": 557,
+      "actual_guest_subreaper_wait_exit": -13,
+      "at_boottime_ns": 148471805958
+    }
+  ],
+  "boot_three_waits0_and_QEMU0": true,
+  "host_seven_actual_waits_bothPIPE_EOF_original_cutoffs": true,
+  "Docker_CLI_actual_wait0": true,
+  "Root_wrapper_actual_wait": "68910 exit1",
+  "same_daemon_exact_CID_absent_inputs_unchanged": true,
+  "raw_unresolved_handle_field_is_semantic_aggregate_failure_not_running_CID": "79eee56a12eecf564de457ac2ef3c8d97c68964d6a0dd0f58a808f6b87f0edae",
+  "cleanup_errors": {
+    "host": [],
+    "guest": [],
+    "boot": []
+  },
+  "proofs": [
+    {
+      "path": "selection.json",
+      "sha256": "89177cac7e1504304f4dec4a45c659d0b91d2631bf0176664905c8bef50ce86c"
+    },
+    {
+      "path": "command.json",
+      "sha256": "e11d5adfde75ba33d3c692de09cacaeb9314a2c755b7ca9877394f2b1626af29"
+    },
+    {
+      "path": "execution.json",
+      "sha256": "88db4acaa2be767086f1d7ca5b152121d025180253b4aaff85a6e4949f079149"
+    },
+    {
+      "path": "result.json",
+      "sha256": "032638ba4966031a523ee3a90a173eaf741dacbf5435cdc1661cdd0c6c3bfb54"
+    },
+    {
+      "path": "boot-result.json",
+      "sha256": "4fcede46607c0e0155649ff2f1f45f09f86b382b9399606d117bb8a42c22e761"
+    },
+    {
+      "path": "Root-prelaunch.json",
+      "sha256": "baa1aa4574d1827e1c197bb4be833e307095ba52435c226376ef09a8942864da"
+    },
+    {
+      "path": "Root-failed-qualification.json",
+      "sha256": "15a10a2483f844e4e2ea359ef31b4906193273cf12fde3cdb34f47467ef6e1b0"
+    },
+    {
+      "path": "no-pcm.json",
+      "sha256": "b8970c89af7ae3f72133e5cbbec74b4f24cec9c7da35eb9a3fde88d5de05330d"
+    },
+    {
+      "path": "author-failed-qualification.json",
+      "sha256": "5df5cd615479161973c08f2ee52d5021658b1e5d4e5cef677ece91c1f009f145"
+    }
+  ],
+  "existing_log_hash_only": "a476ebb21a9fbe311675e5ced10fb2538278edebaa7494dde304cd5ff025623b",
+  "exact_owned_PID_crash_report_absent": true,
+  "ordered_and_applied_raw_receipts_retained_before_failure": false,
+  "next_fixture_boundary": "Remove extra presenting measurement window; initial nonpresenting discovery followed by actual normal Sounds frame metadata qualification with original guards, output consistency and deadlines. No scheduler change justified or featureRED for fixture repair.",
+  "matched_Google_kernel_selected": false,
+  "physical_phone_accessed": false,
+  "hardware_qualified": false
+}

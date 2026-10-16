@@ -85,9 +85,16 @@ freshness, privilege or retry changes. Four actual host IPC and four local cases
 pass after eight missing-field RED failures; observed state is historical, not a
 health or cause claim. Matching default-owner/client host/ARM builds and the
 current default library68-pass/20-ignored regression qualify separately; the first
-regression runner's missing-directory failure remains preserved. Next replay the production owner/original
-Source/fixed desktop/normal Sounds path once, retaining a bounded pre-Stop Snapshot
-on failure when possible. Qualify
+regression runner's missing-directory failure remains preserved. A matching
+[production observation ARM replay](native-session-owner.md#production-source-observation-arm-replay)
+still fails at metadata Qt255 before Sounds/PCM. The initial root reply accepts
+sequence2; the pre-Stop reply retains sequence37 and first provider TimedOut at
+114.24ms sample age against100ms. Cause remains unknown; exact owned closure
+qualifies separately. Next remove the fixture's extra fullscreen raster probe,
+collect nonpresenting discovery and qualify every Pixel10/window guard against
+actual normal Sounds first-frame metadata before capture/PCM. Keep original
+deadlines, reject output changes and make no feature-RED claim for fixture repair.
+Then qualify
 null-focus background lease continuation, then terminal Source loss without
 app/audio revival. Preserve the earlier ARM selection and its authored-focus
 scope. Do not reopen auth/PAM or a broad static/diagnostic campaign. Hardware

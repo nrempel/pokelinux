@@ -282,8 +282,13 @@
     "native_Root_build_wait": "74294 exit0",
     "native_Root_regression_wait": "79725 exit0"
   },
-  "future_original_compositor_replay": null,
-  "placeholders_scope": "Future original replay is pending separately; default production builds and library regression are bound without original compositor/GUI/PCM/phone claims.",
+  "future_original_compositor_replay": {
+    "path": "docs/evidence/native-session-source-observation-arm-provenance.json",
+    "sha256": "155ecd94ab986344ba71381390012364a60022fb2a9668d7f6eca1d63e69420d",
+    "functional_epoch_passed": false,
+    "observed_root_Source_status_qualified": true
+  },
+  "placeholders_scope": "Matching production ARM replay now separately records observed Source expiry before GUI/PCM; focused host qualification and compilation retain their original scopes.",
   "original_Hyprland_runtime_qualified": false,
   "normal_GUI_PCM_qualified": false,
   "ARM_runtime_qualified": false,

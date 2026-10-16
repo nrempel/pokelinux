@@ -49,7 +49,9 @@ still fails at display metadata before Sounds/PCM; its cause remains unknown.
 [Bounded root-admin Source observation](docs/native-source-observation.md) now
 passes four actual host IPC and four local cases after a missing-field RED.
 Matching host/ARM production builds and the default68-pass/20-ignored regression
-also qualify; a matching original-compositor replay remains pending. The separate
+also qualify. The [matching ARM replay](docs/native-session-owner.md#production-source-observation-arm-replay)
+still fails before Sounds/PCM; it retains accepted sequence37 followed by a
+provider timeout beyond the100ms lease, without identifying the gap's cause. The separate
 [normal permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
 passes four groups with actual touch, independent virtual graph/PCM and unscaled
 Pixel10 captures using root-authored focus. Physical audio remains unverified.

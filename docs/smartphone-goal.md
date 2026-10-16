@@ -13,7 +13,10 @@ still fails at metadata probe255 before Sounds/PCM, with compositor death
 observed before Stop and cause unknown. [Bounded Source observations](native-source-observation.md)
 now pass four host IPC and four local cases after genuine RED, plus matching
 host/ARM production builds and68 default library passes/20 ignored. A matching
-original replay, combined runtime and all phone gates remain open.
+[original replay](native-session-owner.md#production-source-observation-arm-replay)
+now retains actual root Source status: sequence37 followed by provider TimedOut
+at114.24ms age against100ms, before Sounds/PCM. The gap's cause, combined
+functional runtime and all phone gates remain open.
 
 The [native Rust session owner](native-session-owner.md) now implements compositor
 Child custody and fixed Sounds session assembly.32 host boundary cases,

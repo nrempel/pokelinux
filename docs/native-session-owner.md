@@ -214,6 +214,50 @@ possible under the existing observation cutoff. The first record is not a causal
 diagnosis, and the service may exit before any post-Stop inspection. The preceding
 original-compositor failure remains failed and unexplained.
 
+## Production Source observation ARM replay
+
+A matching replay of the published observation feature still fails at the extra
+Pixel-profile metadata window: Qt exits255 with empty merged output before
+normal Sounds, all four boundary steps and PCM. Unlike the preceding unexplained
+selection, this epoch retains actual authenticated pre-Stop Source status.
+
+The initial root reply observes accepted sequence2 with no failure. The later
+reply retains sequence37, sampled at147685962781ns, and the first
+`provider_error / TimedOut` observed by the actor at147800206442ns. The computed
+sample age is114243661ns against the unchanged100000000ns lease. The same actor
+replies as root while `ready` is true and `locked` is true; policy readiness does
+not imply Source availability. The compositor pidfd is already dead and its proc
+entry absent before Stop. The snapshot fits the original shared2s observation
+cutoff and exports no raw Source channel or packets.
+
+The metadata probe's original30s budget begins, by derivation, at146872768233ns;
+its actual wait255 is at148027297369ns. It creates an additional fullscreen raster
+window. That overlap does not establish the cause of the publication gap, and
+neither this observation nor the earlier private diagnostic identifies a blocked
+operation. Do not retroactively diagnose the preceding selection.
+
+All34 guest direct waits and applicable merged PIPE EOFs meet their original
+cutoffs individually. Their expected-exit aggregate remains false on probe255.
+Three guest subreaper statuses0/1/-13 are retained separately. Native Stop and
+owner waits are0; the compositor Child's own wait/signal is not exported. Boot's
+three waits/QEMU0, host's seven waits/both PIPE EOFs, DockerCLI0, same-daemon exact
+container absence and complete input closure pass independently of functional
+failure. No metadata qualification, new native capture or PCM succeeds.
+
+The [hash-only replay evidence](evidence/native-session-source-observation-arm-provenance.json)
+binds the current production owner/client, plugin builds, exact failed selection,
+raw result hashes and independent qualification. Raw ordered/applied profile
+receipts were again not retained before the later failure; prerequisite checks
+must not be promoted to a final display qualification.
+
+Next remove the extra presenting measurement window from this fixture. Collect
+nonpresenting output metadata first, then retain every original Pixel10 guard
+against the actual normal Sounds first-frame/window metadata before captures or
+functional PCM. Reject output changes; preserve deadlines and the100ms lease.
+This is fixture correction, without a production-feature RED claim. A failure
+on actual Sounds rendering would be the next concrete integration boundary;
+no compositor scheduling repair is justified yet.
+
 ## Remaining integration
 
 Next run the production owner with original Hyprland/Source, the fixed desktop

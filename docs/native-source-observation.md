@@ -78,8 +78,13 @@ setup and selecting the built storage helper yields68 passes. That setup failure
 is preserved separately from feature RED. Neither compilation nor these host
 checks establish original-compositor execution.
 
-A matching original-compositor replay is pending. On failure, obtain a bounded
-authenticated Snapshot before cleanup Stop when possible,
+The [matching generic ARM replay](native-session-owner.md#production-source-observation-arm-replay)
+now retains actual authenticated Source status before Stop: initial accepted
+sequence2, then accepted sequence37 followed by provider TimedOut at114.24ms
+sample age against100ms. The extra fullscreen metadata probe exits255 before
+Sounds/PCM; the gap's cause remains unknown. This is separate runtime evidence
+for the observation contract, without functional GUI qualification. On failure,
+obtain a bounded authenticated Snapshot before cleanup Stop when possible,
 within the original observation cutoff. Its fields remain observations rather
 than a crash cause or health guarantee. No new original Hyprland runtime, normal
 GUI/PCM, ARM runtime or physical-phone qualification follows from this host cohort.
