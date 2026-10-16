@@ -86,7 +86,13 @@ and TRANSFER_FROM_HOST observations. A later14-case observer-absent baseline
 qualifies expected RED:6pass/8 missing-observer failures,0 errors or setup failures.
 A first observer attempt passes13/14; corrected timestamp decoding then passes
 the same14 component tests. This GREEN covers EXECBUFFER/VERSION helpers only;
-the planned four-request compositor replay remains open. The set is not exhaustive:
+Root8 then reaches policy readiness but discovery aborts before Sounds/PCM. Its
+diagnostic gate skips collection, so no kernel timing measurement qualifies. A
+corrected Root9 capture qualifies11 selected pairs and a long successful
+EXECBUFFER interval inside the EGL bracket, while full runtime still fails before
+Sounds/PCM. A bounded source review finds no concrete driver repair and closes
+that investigation; the next scope is actual control/render ownership separation.
+The interval proves no avoidable wait or cause. The selected set is not exhaustive:
 short or absent selected calls leave the delay unresolved and establish neither a
 userspace-only cause nor offload. ARM and phone gates stay open.
 Earlier [permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)

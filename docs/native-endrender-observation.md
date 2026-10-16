@@ -208,17 +208,15 @@ tail is zero. All101 direct waits and108 PIPE EOFs meet their original numeric
 cutoffs; normal owner wait0 and the60.587003003s outer selection remain distinct
 from the failed functional result. No Root execution handle remains live.
 
-## Next bounded observation
+## Bounded observation contract
 
-The next planned Root8 set is EXECBUFFER, WAIT, TRANSFER_TO_HOST and
-TRANSFER_FROM_HOST ioctl entry/exit across the owned compositor, including its
-workers. Numeric requests must come from the matched installed header; the
-component GREEN below covers EXECBUFFER/VERSION helpers only, leaving the full
-Root8 four-request/compositor runtime unqualified.
-Retain the same clock,
-request/FD identity, result, loss accounting and collection after closure. The
-separate capability probe below qualifies individual metadata/private controls;
-full Root8 observer operation remains unqualified.
+The selected Root8/9 set is EXECBUFFER, WAIT, TRANSFER_TO_HOST and
+TRANSFER_FROM_HOST ioctl entry/exit with matched installed-header values, the same
+clock, request/FD identity, result, loss accounting and collection after closure.
+Native component GREEN below covers EXECBUFFER/VERSION helpers only. Root8 later
+qualifies all four header constants but skips collection; Root9 separately
+qualifies bounded capture over the observed lineage. Neither is full functional,
+common-TGID coverage, repair or hardware qualification.
 
 A matched long selected interval chooses the next narrow boundary. Short or
 absent selected requests leave the delay unresolved. A short matched call rules
@@ -310,6 +308,112 @@ pass/four semantic failures precede7/7, zero-error GREEN on the same frozen inpu
 the final observer also passes those seven. They cover identity timestamps outside
 the syscall interval and unresolved positive-FD negatives, without adding DRM
 attribution. Their host ECHILD/original10s cutoffs do not qualify native coverage.
-No21-case aggregate is claimed. Root8's four-header-request compilation and actual
-matched compositor/all-worker timing replay remain open, followed by any measured
-repair and the full Sounds/PCM, Messages, ARM/Google-kernel/Pixel/carrier goal.
+No21-case aggregate is claimed. The later Root8 attempt below separately qualifies
+four-header-request compilation and setup, without a qualified kernel timing
+measurement or full Sounds/PCM, Messages, ARM/Google-kernel/Pixel/carrier result.
+
+## First four-request compositor attempt
+
+Root8 uses the same build2 ELF/499-file SDK, rebuilds all three plugins and passes
+current Qt32 (30 audio behaviors) and29 appearance cases. The actual installed
+header yields EXECBUFFER0xc0406442, WAIT0xc0086448, TRANSFER_TO_HOST0xc02c6447 and
+TRANSFER_FROM_HOST0xc02c6446; BTF setup and four diagnostic command waits0/EOF
+complete, with owned instance/probe cleanup. These setup facts do not qualify a
+kernel timing measurement.
+
+Policy readiness is reached, then discovery actually aborts with SIGABRT6 against
+its original allowed exit0. Full composition fails before final Pixel profile,
+normal Sounds, the four groups, capture or PCM. Source's last accepted sequence1
+is54,396,733,250ns; cached_sample/sample_expired rejects it at102,579,357ns age
+against the unchanged100ms lease. The57 valid zero-flag witness records end at
+invocation2 phase24 without25. A missing paired end supplies no elapsed duration,
+in-flight, blocked-call or cause claim.
+
+The diagnostic gate incorrectly requires the original functional expected-exit
+contract when admitting physical closure, so discovery6 skips finish despite
+timely actual wait/EOF and process disappearance. No capture is collected and0
+numeric pairs are retained. This is a collection gap, not evidence of absent or
+short ioctls. All106 physical direct waits/113 PIPE EOFs meet their original
+cutoffs; watched descendants are dead/absent, QMP normal shutdown/EOF/QEMU0, CLI0
+and exact
+same-daemon container/locked-input closure complete in60.860535017s. Discovery's
+functional exit remains failed and the separate guest subreaper exit1 is retained.
+
+A source-only correction separates actual wait, EOF, proc/pidfd death, ECHILD and
+original-cutoff custody from the original allowed-exit contract. It preserves that
+functional failure/pass formula. The corrected Root9 capture below separately
+qualifies kernel intervals without converting this failed Root8 selection to success.
+
+## Architecture advisory
+
+An advisory prepared before Root8 treats the corrected capture as one bounded
+discrimination step. A demonstrated avoidable wait can justify a narrow repair
+followed by the unchanged full original functional run. Otherwise, scope coherent
+separation of real focus/lock/client-lifetime authority from rendering, retaining
+render-context, command/buffer/fence completion and shutdown ownership. That work
+requires an actual render-stall plus genuine focus/lock integration test; stalling
+authority itself must still fail terminally. A cached-state heartbeat is refused.
+The100ms lease, terminal semantics, real grants and all functional/Pixel/PCM guards
+remain. This is architecture advice, without new runtime or deployment proof.
+The later source decision below closes that discrimination step and selects the
+ownership-separation scope.
+
+## Corrected four-request capture
+
+Root9's full runtime still fails at the live-actor/compositor assertion during
+policy readiness, before Sounds/PCM. Corrected physical closure and the unchanged
+original expected-exit contract both pass, so diagnostic collection now completes
+with no errors. It qualifies445 numeric events/19 fork records and11 selected
+pairs:7 EXECBUFFER,4 WAIT, all main TID966/FD34/device226:128/result0. No transfers
+occur in that selected window. The15 observed TIDs are a lineage, without proof
+of same-TGID membership or a global absence claim.
+
+One successful EXECBUFFER pair has native quantization bounds:
+
+| Interval | Earliest ns | Latest ns |
+|---|---:|---:|
+| Entry BOOTTIME | 54,602,013,500 | 54,602,014,499 |
+| Exit BOOTTIME | 54,718,939,500 | 54,718,940,499 |
+| Elapsed duration | 116,925,001 | 116,926,999 |
+
+The entire bounded syscall interval lies inside invocation2's EGL bracket at
+54,601,996,335→54,718,955,470ns (116,959,135ns). This localizes
+an observed syscall boundary, without proving an avoidable wait, exclusive CPU,
+GPU completion, a particular inner mechanism or a cause of earlier Arch/ARM runs.
+Return0 establishes the syscall result only. The265 probe hits count global
+`drm_ioctl` activity, not selected pairs; probe misses and loss are zero and the
+owned resources are removed after closure. All four diagnostic commands succeed.
+
+The previous accepted Source sample is sequence1 at54,601,829,279ns; sequence2
+is sampled at54,719,097,419ns. Validation at54,721,387,738ns rejects the117,268,140ns
+sample gap while the successor is2,290,319ns old; the actor observes failure3,035ns later. The unchanged chain rule
+rejects before freshness. All105 actual direct waits/112 PIPE EOFs meet the
+original numeric cutoffs in61.064927729s. Watched descendants are dead/absent;
+the separate guest subreaper exit1 remains. QMP same-peer KVM/guest shutdown/
+EOF/QEMU0, CLI0, exact same-daemon container absence and locked-input closure pass.
+The [Root and independent receipt hashes](evidence/native-endrender-observation-provenance.json)
+retain bounded capture qualification separately from the failed functional result.
+
+## Closed source investigation
+
+A bounded read-only review of the preserved upstream Linux7.2.9 virtgpu submission
+and Mesa26.2.4 guest fence/virgl paths demonstrates no concrete avoidable wait or
+incorrect operation, and justifies no driver patch. The successful long syscall
+does not distinguish dependencies, reservation locking, queue pressure or
+scheduling within that boundary. This is neither an unavoidable-wait finding nor
+a general kernel/Mesa correctness claim; package patches and build options were
+not equated to every upstream byte. The syscall-versus-userspace discrimination
+investigation is closed, with no further driver instrumentation selected.
+
+The next scope is the control/render ownership seam and an actual-compositor RED
+specification; this is preparation, without implementation or runtime qualification. Preserve genuine ordering, fences, buffer lifetime,
+render-context/command/completion custody and shutdown. Required integration must
+stall rendering while real focus, client death and lock intent advance within the
+unchanged100ms Source contract. Stalling real authority must still fail terminally.
+Cached heartbeats remain refused, and all real-grant/functional/Pixel/PCM guards
+remain unchanged. A valid future RED needs a frozen identical selection with real
+Source live, clients ready, an entered render stall beyond100ms and real operations
+issued during that stall. Cold failure before those prerequisites is setup failure,
+not RED; the original cold full selection remains separate acceptance.
+[Hash-only provenance](evidence/native-endrender-observation-provenance.json) retains
+the decision and source metadata.

@@ -287,25 +287,68 @@ process disappearance remain distinct; native-parent numeric wait is not exporte
 These observations identify no driver/thread/ioctl, exclusive CPU, frame or prior
 Arch/ARM cause. Exact timestamps and separate custody remain in the focused report.
 
+## First four-request compositor attempt
+
+Root8 compiles all four installed-header requests and completes BTF setup using
+the same local build2 ELF/SDK cohort. All three plugins and current Qt32/appearance29
+pass. Policy readiness is reached, then actual discovery dies with SIGABRT6 against
+its original allowed exit0. The original full selection fails before final Pixel
+profile, normal Sounds, four groups, capture or PCM. Source retains sequence1 at
+54,396,733,250ns and rejects cached_sample/sample_expired at102,579,357ns age.
+Its57 zero-flag witness records end at invocation2 phase24 without25, supplying
+no paired duration, in-flight or cause claim.
+
+All106 physical direct waits/113 PIPE EOFs meet their original numeric cutoffs,
+and watched descendants disappear, but the new diagnostic gate also requires functional
+expected exits and skips finish after discovery6. No capture is collected: its0
+pairs establish no timing or absence. Owned trace/probe cleanup and QMP shutdown/
+EOF/QEMU0, CLI0, exact-container/input closure qualify separately in60.860535017s.
+A source-only correction separates physical wait/EOF/proc/pidfd/ECHILD/cutoff
+closure from the unchanged functional-exit contract. Root9 below separately
+qualifies the corrected capture while preserving full functional failure.
+See the [focused report](native-endrender-observation.md#first-four-request-compositor-attempt).
+
+## Corrected four-request capture
+
+Root9 fails at the live-actor/compositor assertion during policy readiness before
+Sounds/PCM, but corrected physical closure and the original exit contract both
+qualify bounded capture. Eleven selected pairs are7 EXECBUFFER/4 WAIT on main
+TID966, FD34, device226:128, result0; no transfers occur in this selected window.
+The19 fork records/15-TID lineage do not establish common TGID membership.
+A successful EXECBUFFER duration is bounded by116,925,001–116,926,999ns wholly
+inside invocation2's116,959,135ns EGL bracket. This is syscall-boundary localization,
+without an avoidable-wait, exclusive-CPU, GPU-completion or earlier-failure cause.
+Source rejects the117,268,140ns seq1→2 sample gap before freshness.
+The four diagnostic commands, zero probe misses/loss and owned-resource removal
+qualify separately. All105 actual direct waits/112 PIPE EOFs meet the original
+numeric cutoffs in61.064927729s, with separate guest subreaper exit1 retained.
+QMP same-peer guest shutdown/EOF/QEMU0, CLI0, exact same-daemon container absence
+and unchanged locked inputs close separately. [Root and independent receipt hashes](evidence/native-endrender-observation-provenance.json)
+retain these scopes separately from the failed full functional result.
+
 ## Next integration
 
-Root8 plans bounded ioctl entry/exit observation across the owned compositor
-including workers for header-selected EXECBUFFER, WAIT, TRANSFER_TO_HOST and
-TRANSFER_FROM_HOST. Numeric requests must come from the matched compiled header;
-this is a plan, without implementation/test qualification. Retain same-clock
-request/FD identity, result, loss and after-closure evidence. A separate
-[capability probe](native-endrender-observation.md#kernel-capability-probe) qualifies
-individual metadata/private controls only. A separate unchanged14-case native
-EXECBUFFER/VERSION helper selection now passes after the initial RED and a13/14
-timestamp failure; the four-request Root8/compositor runtime remains unqualified.
-A matched long selected interval chooses the next narrow boundary. Short or
-absent selected calls leave the delay unresolved, including other ioctls,
-sync_wait, futex and scheduling; this set is not exhaustive and establishes no
-userspace-only cause or offload. Preserve original calls, branches, early returns,
-buffer custody and cleanup.
-Do not expand general startup/timer observation or add an activation gate. Keep
-the Source adapter,100ms lease, predicate order, ErrorKinds and terminal refusal
-unchanged. Choose a rendering repair only from actual measured phase evidence.
+The bounded Root9 capture separately qualifies selected syscall intervals after
+the preserved Root8 collection gap. The capability probe and unchanged14-case
+native EXECBUFFER/VERSION helper GREEN retain their narrower scopes. A bounded
+source review demonstrates no concrete avoidable wait or incorrect operation and
+selects no justified driver patch. That discrimination investigation is closed;
+no more driver profiling is selected. Full original functional composition remains
+failed, and the interval establishes no exclusive-CPU, completion or earlier-run
+cause.
+
+The next scope is the control/render ownership seam and an actual-compositor RED
+specification, without an implementation or runtime qualification yet. Preserve genuine focus, lock and
+client-lifetime facts plus ordering, fences, buffer lifetime, render-context,
+command/completion and shutdown custody. Required integration must stall rendering
+while real focus, client death and lock intent advance within the unchanged100ms
+Source contract; authority stalls remain terminal. Cached heartbeats are refused.
+Keep the Source adapter, predicate order, ErrorKinds, real grants and every
+functional/Pixel/PCM guard unchanged. A future focused RED requires real Source
+live, ready clients, an entered render stall beyond100ms and real operations
+issued within it under a frozen identical selection. Cold failure before those
+prerequisites is setup failure, not RED; the original cold full selection remains
+separate acceptance.
 
 The complete four-step target remains denied quiet launch, current grant and real
 focused touch with PCM, null-focus background continuation with disabled touch,

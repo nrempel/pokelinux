@@ -207,8 +207,23 @@ private implementation follows RED. Its first native attempt passes13/14 with
 only the printed-timestamp bracket failing. Source-supported nearest-microsecond
 decoding then passes unchanged14/14, limited to EXECBUFFER/VERSION helpers. A
 separate authored host7-case decoder RED4→GREEN0 remains separate. Actual full
-Root8 WAIT/transfer/compositor runtime remains unqualified. No inner-driver, exclusive-CPU
-or earlier-failure cause follows. Strict matching ARM64 owner/client compilation also passes separately,
+Root8 compiles all four actual header requests and completes BTF setup, but its
+full replay fails at discovery SIGABRT6 after policy readiness, before final Pixel/
+Sounds/groups/capture/PCM. Source expires its cached first sample at102.579357ms.
+The diagnostic gate conflates original expected-exit success with physical closure
+and skips collection:0 retained pairs supply no qualified timing or absence.
+A source-only correction separates physical custody from the unchanged functional
+exit contract. Root9's corrected bounded capture qualifies11 main-TID selected
+pairs (7 EXECBUFFER/4 WAIT) and one successful116.925–116.927ms EXECBUFFER interval
+inside the116.959ms EGL bracket. Full runtime still fails at policy readiness
+before Sounds/PCM. The15 observed TIDs form a lineage, without same-TGID proof.
+A bounded source review finds no concrete avoidable wait or incorrect operation
+and selects no driver patch. That discrimination investigation is closed; next
+scope is the control/render ownership seam and an actual-compositor RED specification,
+with genuine focus, client-death and lock intent advancing during rendering stalls,
+while authority stalls remain terminal. This is preparation, unimplemented/unqualified;
+no exclusive-CPU or
+earlier-failure cause follows. Strict matching ARM64 owner/client compilation also passes separately,
 without ARM execution.
 Messages history composition was excluded from that render-witness replay. The
 current integration described above preserves its Source-rejection changes;
