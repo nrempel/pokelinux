@@ -1,0 +1,18 @@
+{
+  "runtime": "/run/pokelinux/session",
+  "policy": "/var/lib/pokelinux/session/policy.json",
+  "profiles": "/etc/pokelinux/apps.json",
+  "app_entry": "/usr/libexec/pokelinux/pokelinux-session-owner",
+  "display_parent": "/run/pokelinux/displays",
+  "wayland": "/run/user/1000/wayland-1",
+  "audio_socket": "/run/pokelinux/audio.sock",
+  "compositor_executable": "/usr/bin/Hyprland",
+  "compositor_config": "/etc/pokelinux/hyprland.conf",
+  "environment": {
+    "HOME": "/home/omarchy",
+    "XDG_RUNTIME_DIR": "/run/user/1000",
+    "PATH": "/usr/bin",
+    "XDG_SESSION_TYPE": "wayland",
+    "XDG_CURRENT_DESKTOP": "Hyprland"
+  }
+}

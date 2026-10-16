@@ -36,13 +36,13 @@ Dashed connections are work still required, not working hardware paths. “Rust 
 
 ## What has been tested
 
-The [fixed Sounds desktop entry](docs/native-sounds-desktop.md) now passes six
-actual host socket/UID/child-ownership cases after a three-failure dispatch RED.
-A separate actual invocation of the public Rust client also passes. The
-[normal permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
-now passes four groups with actual touch, independent virtual graph/PCM and
-unscaled Pixel10 captures. Installed Source/audio session startup and physical
-audio remain open.
+The new [native Rust session owner](docs/native-session-owner.md) starts and
+retains the compositor Child and composes Source, lifecycle, per-app display and
+audio.32 actual host boundary cases, host/ARM64 compilation and six-file Make
+staging pass. Its combined original-compositor ARM session remains open. The
+separate [normal permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
+passes four groups with actual touch, independent virtual graph/PCM and unscaled
+Pixel10 captures using root-authored focus. Physical audio remains unverified.
 
 | Area | Evidence and scope | Still missing |
 |---|---|---|

@@ -1,0 +1,20 @@
+[Unit]
+Description=PokeLinux native compositor and Sounds session owner
+After=systemd-user-sessions.service
+ConditionPathExists=/etc/pokelinux/session.json
+
+[Service]
+Type=exec
+User=root
+Group=root
+ExecStart=/usr/libexec/pokelinux/pokelinux-session-owner /etc/pokelinux/session.json
+ExecStop=/usr/libexec/pokelinux/pokelinux-session-owner --stop /run/pokelinux/session
+KillMode=control-group
+TimeoutStopSec=5s
+SendSIGKILL=yes
+Restart=no
+NoNewPrivileges=yes
+UMask=0077
+
+[Install]
+WantedBy=graphical.target

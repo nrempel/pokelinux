@@ -1,5 +1,10 @@
 # Lifecycle-owned media routing
 
+The later [native session owner](native-session-owner.md) now composes this audio
+owner with Source, lifecycle and per-app display. Its32 host boundary cases,
+host/ARM64 compilation and Make staging pass; combined original-compositor ARM
+runtime remains separate from these audio results.
+
 The lifecycle actor now mediates logical Media selections through the existing
 Rust audio owner. Sounds connects to the actor rather than receiving direct
 native-audio mutation authority. The audio service remains the sole owner of

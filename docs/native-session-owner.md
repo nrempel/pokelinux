@@ -1,0 +1,105 @@
+# Native Sounds session owner
+
+The new `native-session-owner` Rust entry starts and owns the compositor, then
+composes the existing Source Observer, lifecycle actor, per-app Wayland supervisor
+and sole audio client. A fixed desktop request can launch the installed Sounds
+profile, but cannot grant permission, choose an executable or restore a failed
+Source. The host boundaries pass32 cases. Host and ARM64 binaries compile; the
+combined original-compositor ARM session remains the next runtime gate.
+
+## Ownership and installation
+
+SourceOwner retains the actual compositor Child before every fallible postspawn
+operation. Its credentialed private socket crosses a fixed internal bootstrap;
+root-parent credentials and pidfd are checked, supplementary groups are cleared,
+UID/GID become1000, parent-death signaling is rearmed, and the same PID executes
+the trusted compositor. Only the selected Source descriptor crosses that exec.
+There is no raw descriptor launch CLI or automatic compositor replacement.
+
+First valid Source readiness has one original BOOTTIME deadline, capped at120s.
+Bootstrap receive has a separate5s cap; later Source samples keep their existing
+100ms lease. The host startup test proves allowance admission, not cold Hyprland
+performance. Terminal Source observations cannot recover by later samples.
+
+The owner polls without blocking logging. Stop fences local facts and immediately
+signals KILL; occupancy clears only after actual child wait. Every returning outer
+setup path drains the same retained owner under one original cleanup cutoff.
+An unresolved occupied owner aborts rather than detaching. Existing actor/storage
+fail-stop paths are not graceful-return cleanup. This qualifies the direct leader
+Child, without claiming native reaping of all compositor descendants.
+
+The Sounds display Factory accepts its configured original Wayland path before
+it is bound. An admitted launch connects nonblocking, checks the actual peer
+against the retained compositor PID/UID/GID and pidfd, and starts the existing
+owned SDK. Only a fresh per-app listener is given to UID11042. Listener withdrawal
+precedes SDK termination even when withdrawal fails; occupancy lasts until reap.
+
+Root-installed strict configuration binds one Sounds profile, exact six app
+arguments, private UID1000/11042 HOME/runtime directories, protected installer
+paths and a bounded environment. Unknown permission, unlock and Source fields
+are refused. The same binary dispatches existing app-entry, storage and display
+workers. `--stop ABSOLUTE_RUNTIME` uses fixed typed bounded IPC directly, without
+reading session configuration, profiles or HOME files.
+
+The [crate instructions](../native-session-owner/README.md) describe building and
+staging. Actual Make install stages two native binaries, the desktop file, unit
+and two examples with exact hashes/modes. It activates no unit. Operational
+accounts, policy, matching Source plugin/compositor configuration, app assets,
+appearance and audio services still require provisioning. The unit's cgroup kill
+policy is metadata, without an executed systemd or native descendant-cleanup claim.
+
+## Executed boundaries
+
+| Boundary | Behavioral RED before source repair | Final host cases |
+| --- | --- | --- |
+| Source Child/Observer | Two controls pass, four Unsupported failures; later one original-startup-window InvalidInput failure |7 |
+| Fixed configuration | Six controls pass, valid selection Unsupported; later one missing display-environment-key failure |8 |
+| Returning outer cleanup | Three retained-child/drain failures |3 |
+| Sounds display Factory | Four controls pass, three missing Sounds-role failures; later actual cold-path ENOENT |8 |
+| Native Stop | Typed IPC control passes, native Stop fails before connection when configuration is absent |6 |
+
+Frozen behavioral cases precede their source-only repairs. Common extraction,
+existing app-entry dispatch and install metadata do not receive manufactured RED
+claims. The final display/Stop fixture constructors acquire Child custody before
+fallible descriptor setup; their14 functional test bodies remain unchanged.
+That partial-setup failure branch is source-reviewed, without forced execution.
+
+Final host tests use real Linux credentials, pidfds, child waits, filesystem roles
+and Unix sockets. The display peer receives actual SDK registry requests while
+remaining Preparing; no invented Ready or original Hyprland result is claimed.
+Stop executes the selected default native binary, including caller/reply UID
+refusal, strict arguments and held-reply timeout. Observed timeout completion
+slightly exceeds2s; the original admission deadline is not extended.
+
+The first final runtime passes configuration8, Source7 and cleanup3, then all
+eight display cases fail setup because `/run` is read-only; Stop is unreached.
+That aggregate remains failed. With unchanged source/artifacts and a writable
+private `/run`, only display8 and Stop6 run and pass. Thus32 cases pass across the
+two runs, without a claim that the first aggregate passed or rerunning its18 passes.
+All selected containers actually exit, are removed, and retain the same daemon;
+CLI waits and applicable PIPE EOFs finish before their original cutoffs. Source
+children use DEVNULL, so they have no child PIPE EOF claim. Display records nine
+actual peer waits and Stop records eleven child waits with both PIPE EOFs.
+
+Formatting, host all-target Clippy and strict ARM production Clippy pass. Host
+helpers/tests/default owner/client and ARM64 default owner/client builds succeed.
+The build aggregate then fails only because its Rust image lacks Make. Separate
+actual Make staging in the existing Qt build image passes. Both setup failures
+remain preserved, without behavioral RED or production repair claims.
+
+The [hash-only evidence](evidence/native-session-owner-provenance.json) binds
+final sources, artifacts, compiler messages, red/green qualifications, staged
+files and actual runtime receipts. Private binaries and raw artifacts are not
+published. Independent production-source review found no concrete blocker; it
+adds no runtime evidence.
+
+## Remaining integration
+
+Next run the production owner with original Hyprland/Source, the fixed desktop
+client, normal UID11042 Sounds, independent permission and real native focus,
+per-app Wayland, and independent virtual graph/PCM. Qualify null-focus background
+continuation and terminal Source loss without app/audio revival. Earlier ARM
+Sounds evidence uses root-authored focus and a separate selected actor cohort.
+Trusted lock/restoration, complete Omarchy shell/startup, the other smartphone
+services and matched Pixel graphics/audio/modem/camera/suspend/carrier operation
+remain separate gates. No physical phone has been accessed or qualified.

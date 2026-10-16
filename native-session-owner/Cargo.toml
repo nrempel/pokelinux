@@ -1,0 +1,50 @@
+[package]
+name = "pokelinux-session-owner"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[features]
+isolated-fixture = []
+
+[dependencies]
+pokelinux-display = { path = "../native-display" }
+pokelinux-session = { path = "../native-session" }
+pokelinux-lifecycle = { path = "../native-lifecycle" }
+pokelinux-kernel-identity = { path = "../native-kernel-identity" }
+serde = { version = "=1.0.229", features = ["derive"] }
+serde_json = "=1.0.154"
+rustix = { version = "=1.1.5", features = ["net", "process", "thread", "fs", "event", "time"] }
+
+[[bin]]
+name = "source-owner-fixture"
+path = "src/bin/source-owner-fixture.rs"
+required-features = ["isolated-fixture"]
+
+[[test]]
+name = "source"
+required-features = ["isolated-fixture"]
+
+[[bin]]
+name = "pokelinux-session-owner"
+path = "src/main.rs"
+
+[[bin]]
+name = "session-stop-test-fixture"
+path = "tests/support/stop-test-fixture.rs"
+required-features = ["isolated-fixture"]
+
+[[test]]
+name = "stop"
+path = "tests/stop.rs"
+required-features = ["isolated-fixture"]
+
+[[bin]]
+name = "session-display-test-fixture"
+path = "tests/support/display-test-fixture.rs"
+required-features = ["isolated-fixture"]
+
+[[test]]
+name = "display"
+path = "tests/display.rs"
+required-features = ["isolated-fixture"]

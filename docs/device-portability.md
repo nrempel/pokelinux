@@ -1,5 +1,10 @@
 # Device portability
 
+The new [native session owner](native-session-owner.md) keeps compositor Child
+custody and service composition outside hardware backends.32 host boundary cases,
+host/ARM64 compilation and Make staging add no qualified phone model; matched
+Pixel graphics, audio, modem, camera and suspend remain physical gates.
+
 Decision, 12 October 2026: build shared smartphone services with separate hardware
 backends. Pixel 10 is the first test target. Do not encode Pixel identities,
 Samsung message IDs or vendor Binder parcels in apps or shared phone policy.

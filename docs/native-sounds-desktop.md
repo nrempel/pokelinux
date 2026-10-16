@@ -26,12 +26,14 @@ selects `/run/pokelinux/session/launch-sounds.sock`. The Rust helper belongs at
 both the existing `lifecycle-lock` binary and this new client. No executable glob
 or dependency version change was added.
 
-These include compiled client and desktop metadata, with a later actual host
-native-client invocation below; an executed desktop install remains open.
-The installed session owner, compositor Child custody, trusted profile, Source,
-audio provider and independent policy provisioning remain required. The existing
-headless actor supplies no Source/audio provider automatically. A desktop request
-cannot grant `MediaRoute`, clear a durable lock or revive a failed Source.
+The later [native session owner](native-session-owner.md) now retains the
+compositor Child and composes the trusted Sounds profile, Source, per-app display
+and audio owner. Its32 host boundary cases and actual Make staging pass; staging
+includes this client and desktop file, without desktop activation or combined
+ARM runtime qualification. Independent policy/service provisioning remains required.
+The existing headless actor supplies no Source/audio provider automatically.
+A desktop request cannot grant `MediaRoute`, clear a durable lock or revive a
+failed Source.
 
 ## Executed host boundary
 

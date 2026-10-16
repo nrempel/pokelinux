@@ -1,5 +1,11 @@
 # Omarchy smartphone goal
 
+The [native Rust session owner](native-session-owner.md) now implements compositor
+Child custody and fixed Sounds session assembly.32 host boundary cases,
+host/ARM64 compilation and actual six-file Make staging pass. The full completion
+matrix below remains in force: combined original Source/normal app ARM execution,
+trusted restoration, full startup provisioning and all physical gates remain open.
+
 The [fixed Sounds desktop launch](native-sounds-desktop.md) now qualifies actual
 host credentials and actor-owned launch/duplicate/Stop behavior. Its native client
 and ARM builds remain separate from installed Source/audio. A later actual

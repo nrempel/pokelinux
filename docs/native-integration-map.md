@@ -1,5 +1,11 @@
 # Current native smartphone integration map
 
+The new [native session owner](native-session-owner.md) composes Source, lifecycle,
+per-app display and audio while retaining the actual compositor Child.32 host
+boundary cases, host/ARM64 compilation and actual Make staging pass. Combined
+production-owner/original-compositor ARM execution, trusted lock/restoration and
+full startup provisioning remain open; this adds no hardware qualification.
+
 This map identifies what is composed today and the next integration boundary. It
 supplements the [completion matrix](smartphone-goal.md); a passing component or
 synthetic transport does not qualify a complete service, app or hardware backend.

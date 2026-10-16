@@ -41,12 +41,19 @@ capture files in a separate8MiB tmpfs instead of constraining all app files.
 Functional assertions, sample thresholds and deadlines stay unchanged; this is
 fixture repair, without a production-bug TDD claim.
 
-Next implement the installed native session-owner/profile/desktop assembly using
-the existing Observer, per-app display supervisor and audio owner. Its parent
-must retain and actually wait the compositor Child; Observer owns handles only.
-Qualify genuine Source focus and independent grant, null-focus background lease
-continuation, then terminal Source loss without app/audio revival. Do not reopen
-an auth/PAM or broad static/diagnostic campaign. Hardware remains untested.
+The new [native session owner](native-session-owner.md) now implements that
+assembly and retains/actually waits its compositor Child.32 host cases pass
+across the unchanged-source18+14 runs; failed `/run` setup remains failed.
+Host/ARM64 compilation and actual six-file Make staging pass. Independent source
+review found no blocker. No combined original-compositor or ARM execution follows
+from those host results; the unit remains staged metadata.
+
+Next execute the combined production owner/original Source/fixed desktop/normal
+Sounds path in ARM with independent grant and real native focus. Qualify
+null-focus background lease continuation, then terminal Source loss without
+app/audio revival. Preserve the earlier ARM selection and its authored-focus
+scope. Do not reopen auth/PAM or a broad static/diagnostic campaign. Hardware
+remains untested.
 
 The [lifecycle MediaRoute boundary](native-audio-lifecycle.md) now owns current
 selection admission and background Media leases through the existing sole audio

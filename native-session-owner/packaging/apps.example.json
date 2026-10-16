@@ -1,0 +1,17 @@
+{
+  "apps": [
+    {
+      "app": "org.omarchy.Sounds",
+      "uid": 11042,
+      "executable": "/usr/libexec/pokelinux/pokelinux-sounds",
+      "args": [
+        "/var/lib/pokelinux/sounds",
+        "/run/pokelinux/apps/sounds",
+        "/run/user/1000/wayland-1",
+        "/run/pokelinux/appearance.sock",
+        "/run/pokelinux/session/app.sock",
+        "/usr/share/pokelinux/appearance"
+      ]
+    }
+  ]
+}

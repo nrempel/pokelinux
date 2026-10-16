@@ -1,0 +1,304 @@
+{
+  "schema": 1,
+  "qualified": true,
+  "scope": "Final native Rust Sounds session owner host boundaries and host/ARM64 compilation; no combined original compositor/ARM/GUI/PCM/systemd execution or phone qualification",
+  "public_base": "011ed0f12536cc69828e78d155c2b9341640e4e9",
+  "dependency_source_base": "b13a04aa0448f60410ae8c9e93d90d174477b9e1",
+  "source_files": [
+    {
+      "path": "native-session-owner/Cargo.lock",
+      "sha256": "379bb112188d81c302bcaa48deed1409b33121b671430c7e1e34321d1828ddcb"
+    },
+    {
+      "path": "native-session-owner/Cargo.toml",
+      "sha256": "3edbd92148c7b6f9aeac4d3bc3f8a292d2972040ec0cd5ab19fe36de591a6f31"
+    },
+    {
+      "path": "native-session-owner/Makefile",
+      "sha256": "1d5b3c3ce59f08471137ecfb73cae249b729e27abdcdee47ad76659217d562aa"
+    },
+    {
+      "path": "native-session-owner/README.md",
+      "sha256": "dc51265aa5b9b9ae15363d54a75f0a442e3ae74696ee4431af499f216ff4edda"
+    },
+    {
+      "path": "native-session-owner/packaging/apps.example.json",
+      "sha256": "39f580b3b4ea74603d04b4f496df81a7e41d0219838cfae671f2d9ca9b848124"
+    },
+    {
+      "path": "native-session-owner/packaging/pokelinux-session-owner.service",
+      "sha256": "906a050e764c87239f33f39682a77c1caa63ceec2ecd754fdf3aba40df398b0e"
+    },
+    {
+      "path": "native-session-owner/packaging/session.example.json",
+      "sha256": "a89cd16c3c5fae5cb1373b8504d12fb5f04a3e82cc8ee470439cc28f1f5da101"
+    },
+    {
+      "path": "native-session-owner/src/bin/source-owner-fixture.rs",
+      "sha256": "b49850e61f35a6cc9a5fd2757fb74cf27f108ea64817beff8b4cb2b7a7633303"
+    },
+    {
+      "path": "native-session-owner/src/bootstrap.rs",
+      "sha256": "51bcebff35e95746d5063df3b12a13d3febc3ff6eb26035e719d9a8b88ef62c8"
+    },
+    {
+      "path": "native-session-owner/src/config.rs",
+      "sha256": "0e5580389bd2ab24864a951223aa7ef99f8aade890d19dce6f6f95c0f1b629b9"
+    },
+    {
+      "path": "native-session-owner/src/display.rs",
+      "sha256": "a13c90114a24f95931cf143ef6bc19b3c64e49fac61f676163dcff6c0cf628d4"
+    },
+    {
+      "path": "native-session-owner/src/lib.rs",
+      "sha256": "468252960da87b1384e92202d04f3ca6963de3dd374688df721fabbdc7f2cb8b"
+    },
+    {
+      "path": "native-session-owner/src/main.rs",
+      "sha256": "3e133f7ce9d3fa0752f81ea4b87ca5dcbf34ebfa59b168cf8aab912f062b497f"
+    },
+    {
+      "path": "native-session-owner/src/runtime.rs",
+      "sha256": "c8746256678045bc499c443534919ebcbdfb578328d7c1fbdee8521ff11c851c"
+    },
+    {
+      "path": "native-session-owner/src/source.rs",
+      "sha256": "df276002abee8ea4357834a9b46987d76f60b4cfd7b970db9129409ba110afab"
+    },
+    {
+      "path": "native-session-owner/src/stop.rs",
+      "sha256": "e0ea9256637ffe73b5c8bb91238fd7cbf95f969e2b9336acc246b29cac36aaaf"
+    },
+    {
+      "path": "native-session-owner/tests/cleanup.rs",
+      "sha256": "1658822c301fa6b88ebb3e7c3fa04f7ec24d71a4882464dfc7bee1f5edc0e14f"
+    },
+    {
+      "path": "native-session-owner/tests/config.rs",
+      "sha256": "548c6ee8d58bf76a6b7157d219f1acdca6adb266ed1f67ee4903a28804a45da5"
+    },
+    {
+      "path": "native-session-owner/tests/display.rs",
+      "sha256": "bb269e61655e493218705b9f8eb49712b879fb6057369f3304483f505cf0c3b0"
+    },
+    {
+      "path": "native-session-owner/tests/source.rs",
+      "sha256": "816b13d9f822c99a924bd455eac4a6f540be7f2325b503dc7e17dfef10ad75db"
+    },
+    {
+      "path": "native-session-owner/tests/stop.rs",
+      "sha256": "c18948f52812e5035bf677b05a09e4aa1d9232267556a395c3acde76b277acee"
+    },
+    {
+      "path": "native-session-owner/tests/support/display-test-fixture.rs",
+      "sha256": "0b9c1bd132f5de88698d0bc835aab58059e44f734d0a50d06920b74c3d7ba826"
+    },
+    {
+      "path": "native-session-owner/tests/support/stop-test-fixture.rs",
+      "sha256": "f5cf3dc8dded9ee7523fcf07f0a0ec7c2b207c86e80b4c2c9d4513824506d3b9"
+    }
+  ],
+  "compiler_messages": [
+    {
+      "path": "ARM-launch.jsonl",
+      "sha256": "b9b2aa47f502a97938074a396ea3b7c97f5437b4d07164cece64731dbce6a28e",
+      "build_finished_success": true
+    },
+    {
+      "path": "ARM-production.jsonl",
+      "sha256": "211489a1cdbec9a9ecb0489e5229b65dfa6833438d1391038c87d9e1f9203419",
+      "build_finished_success": true
+    },
+    {
+      "path": "all-tests.jsonl",
+      "sha256": "80c4e9c51f56b9833f795b5de5613c23ca8d6bc27fa5255281d678597051b138",
+      "build_finished_success": true
+    },
+    {
+      "path": "host-feature-bins.jsonl",
+      "sha256": "9a278b674bcab8207eff13120025df46658f52207bf9b755f3ce841a591c3f82",
+      "build_finished_success": true
+    },
+    {
+      "path": "host-launch.jsonl",
+      "sha256": "b4bd44868c14a46c78a7050b32878005f63a974c6ff11fd96c69f3f00182abfc",
+      "build_finished_success": true
+    },
+    {
+      "path": "host-production.jsonl",
+      "sha256": "0b44330fb51e449f4dfa01a57f841cdfae982e6a376400ac4c34ddc595e66f12",
+      "build_finished_success": true
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "debug/pokelinux-session-owner",
+      "sha256": "fc384dacfa35dbce48527a8dd4dc3c388c978804d63b57874940bf62171f6e25",
+      "bytes": 6738976,
+      "ELF_machine": 62
+    },
+    {
+      "path": "lifecycle/debug/sounds-launch",
+      "sha256": "e0c2230e7201b452545f22467149b435297be78b4513fb50c26ee6ea7322fb1e",
+      "bytes": 1919832,
+      "ELF_machine": 62
+    },
+    {
+      "path": "aarch64-unknown-linux-gnu/debug/pokelinux-session-owner",
+      "sha256": "c93b136627c15d0f2370f1b545be312289ad703896e37e565ac06c3621a095a1",
+      "bytes": 6293944,
+      "ELF_machine": 183
+    },
+    {
+      "path": "lifecycle/aarch64-unknown-linux-gnu/debug/sounds-launch",
+      "sha256": "7b6960e4972e084d9939183f531b63ad9e30a8e95b93114c101c96f4af92affc",
+      "bytes": 1701976,
+      "ELF_machine": 183
+    }
+  ],
+  "host_cases": {
+    "configuration": 8,
+    "SourceOwner": 7,
+    "returning_cleanup": 3,
+    "display_Factory": 8,
+    "native_Stop": 6,
+    "total": 32,
+    "single_aggregate_all_passed": false,
+    "first_runtime": {
+      "passed": 18,
+      "display_setup_failures": 8,
+      "Stop_not_reached": true
+    },
+    "remaining_source_unchanged_runtime": {
+      "passed": 14,
+      "only_setup_delta": "Writable private /run tmpfs; no rerun of 18 passed cases"
+    }
+  },
+  "preserved_failures": {
+    "final-build-1": "All compiler steps passed; subsequent Make staging failed because Rust image lacked make; aggregate remains exit127/failed",
+    "final-runtime-1": "18 pass then8 display setup failures from read-only /run; Stop unreached; aggregate remains exit101/failed"
+  },
+  "actual_Make_staging": {
+    "files": [
+      {
+        "path": "usr/libexec/pokelinux/pokelinux-session-owner",
+        "sha256": "fc384dacfa35dbce48527a8dd4dc3c388c978804d63b57874940bf62171f6e25",
+        "mode": "0o755",
+        "uid": 0
+      },
+      {
+        "path": "usr/libexec/pokelinux/sounds-launch",
+        "sha256": "e0c2230e7201b452545f22467149b435297be78b4513fb50c26ee6ea7322fb1e",
+        "mode": "0o755",
+        "uid": 0
+      },
+      {
+        "path": "usr/share/applications/org.omarchy.Sounds.desktop",
+        "sha256": "42f4157e5edae04d0c57a8311cf2abeda518d395ca3ef2206f63216d54d03e1d",
+        "mode": "0o644",
+        "uid": 0
+      },
+      {
+        "path": "usr/lib/systemd/system/pokelinux-session-owner.service",
+        "sha256": "906a050e764c87239f33f39682a77c1caa63ceec2ecd754fdf3aba40df398b0e",
+        "mode": "0o644",
+        "uid": 0
+      },
+      {
+        "path": "usr/share/pokelinux/session-owner/session.example.json",
+        "sha256": "a89cd16c3c5fae5cb1373b8504d12fb5f04a3e82cc8ee470439cc28f1f5da101",
+        "mode": "0o644",
+        "uid": 0
+      },
+      {
+        "path": "usr/share/pokelinux/session-owner/apps.example.json",
+        "sha256": "39f580b3b4ea74603d04b4f496df81a7e41d0219838cfae671f2d9ca9b848124",
+        "mode": "0o644",
+        "uid": 0
+      }
+    ],
+    "unit_activated": false
+  },
+  "qualifications": [
+    {
+      "path": "Source core receipt.json",
+      "sha256": "9d5c366d8cf37c5651acc31354d727e63edff7762d245772b736600d01f8c40e"
+    },
+    {
+      "path": "Sounds cold display Factory receipt.json",
+      "sha256": "135494591b2022f6d5f587f9aa514dbb0dbb2e512378b2993611dbf700f0fc90"
+    },
+    {
+      "path": "configuration7 receipt.json",
+      "sha256": "c63efa52d965911f01e3fa61cc82a66ef628cfa14e499e4efd75e6d2f60ea09e"
+    },
+    {
+      "path": "display profile configuration8 receipt.json",
+      "sha256": "74cae88898747a56b8767338a17c20ba4d8f87f03d91f268d0d5b61f53205c8e"
+    },
+    {
+      "path": "returning cleanup3 receipt.json",
+      "sha256": "bf87114383ab86d21393fe5984a69c9f63339c134f26a2df02ad5ca3354adb91"
+    },
+    {
+      "path": "native Stop6 receipt.json",
+      "sha256": "5f278a06e931387a4f1dfd83151e1792fd63939e4b640ec01589e850f284f5eb"
+    },
+    {
+      "path": "fixture constructor custody receipt.json",
+      "sha256": "e0c10ffc857e3ebc37ed0de3ac41538c8bc76d084b8f98e36eb797c02f9bfb7f"
+    }
+  ],
+  "runtime_receipts": [
+    {
+      "path": "final-build-1/receipt.json",
+      "sha256": "c8841473049cdc445f1acedf0e78d43575a588f2c3e6c3661a7aa868e3bfce02",
+      "actual_container_exit": 127,
+      "all10CLIwaits_EOF_original_cutoffs": true,
+      "exact_container_absent_same_daemon": true,
+      "source_unchanged": true
+    },
+    {
+      "path": "final-runtime-1/receipt.json",
+      "sha256": "b8c454538b0ee819141b44931bbe6b6002e129e3e9914a00d281f35b264e54a2",
+      "actual_container_exit": 101,
+      "all10CLIwaits_EOF_original_cutoffs": true,
+      "exact_container_absent_same_daemon": true,
+      "source_unchanged": true
+    },
+    {
+      "path": "final-runtime-remaining-1/receipt.json",
+      "sha256": "59a4a2a8a029a9ef898ccc2694513d489be99b3a27cdf0de99d7949176ff336f",
+      "actual_container_exit": 0,
+      "all10CLIwaits_EOF_original_cutoffs": true,
+      "exact_container_absent_same_daemon": true,
+      "source_unchanged": true
+    },
+    {
+      "path": "install-stage-1/receipt.json",
+      "sha256": "e0d2f514fb771c84b995a24bfcd198718a46dd7710d14c5eb258b2534cc7f3cf",
+      "actual_container_exit": 0,
+      "all10CLIwaits_EOF_original_cutoffs": true,
+      "exact_container_absent_same_daemon": true,
+      "source_unchanged": true
+    }
+  ],
+  "ownership_limits": [
+    "SourceOwner actual leader Child only; DEVNULL streams do not claim child PIPE EOF",
+    "Final display9 peer waits and Stop11 child waits both have actual statuses and both PIPE EOFs",
+    "Existing fail-stop abort paths are not returning graceful cleanup; unit cgroup metadata has no execution claim",
+    "Source7 startup admission does not prove cold original compositor performance; no parentdeath race injection",
+    "Fixture partial-descriptor-setup cleanup source reviewed, not forced in runtime"
+  ],
+  "hardware_qualified": false,
+  "phone_accessed": false,
+  "remaining": [
+    "Combined production owner + original Hyprland Source + fixed desktop client + normal Sounds + independent virtual graph/PCM",
+    "Native trusted lock/restoration and full Omarchy shell startup/provisioning",
+    "Other services/apps and Pixel matched graphics/audio/modem/camera/suspend/carrier qualification"
+  ],
+  "qualification": {
+    "path": "Root-final-qualification.json",
+    "sha256": "e2e8acbee6f9a2cb182b939594a3d0b0bbdfb2acecf7a46a3deaa06374b44e47"
+  }
+}
