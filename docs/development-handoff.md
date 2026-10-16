@@ -168,10 +168,16 @@ LAST_MOMENT5/POST6 records are112,844,181ns apart inside that gap. Records carry
 no frame/monitor identity, and establish no particular blocked call, callback
 pair, presentation or cause. Current Qt32/appearance29 and97 waits/104 EOFs
 pass separately; the61.30s full selection still fails before normal Sounds,
-final Pixel profile, all four groups, capture or PCM. Next inspect only original
-endRender phases: render submission, OpenGL finalization, selected synchronization
-branch and return. No broad startup profiler, Source gate or lease change is
-justified. Strict matching ARM64 owner/client compilation also passes separately,
+final Pixel profile, all four groups, capture or PCM. The focused
+[endRender observation](native-endrender-observation.md) now passes13 component
+cases and a separate offline native source build with matching SDK. After distinct
+readonly-staging and SDK-probe setup failures, a fresh replay builds all plugins
+and passes current Qt32/appearance29. Its57 valid records bind116.618ms around
+fence creation in invocation2 inside a116.918ms Source gap. Full composition still
+fails at policy readiness before Sounds/PCM. Narrow further diagnosis to that
+measured span; no exclusive CPU/driver or earlier-failure cause follows. Preserve
+both setup failures and original Source/functional guards; no broad startup
+profiler, Source gate or lease change is justified. Strict matching ARM64 owner/client compilation also passes separately,
 without ARM execution.
 Messages history composition was excluded from that render-witness replay. The
 current integration described above preserves its Source-rejection changes;

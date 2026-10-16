@@ -227,15 +227,42 @@ closed failed selection takes61.30s and does not reclassify earlier failures.
 The [attempt evidence](evidence/native-session-x86-composition-provenance.json)
 records this selection separately. No phone was accessed.
 
+## Paired endRender build and replay setup
+
+The [focused endRender witness](native-endrender-observation.md) now carries
+bounded invocation IDs through draw/GL/sync and cleanup marks, with actual return
+recorded only after the original endRender call returns. Four controls/nine compiled
+missing-phase REDs precede13 component GREENs. A separate offline native source
+build produces a new GNU C++26/O3 default-feature Hyprland ELF and matching499-file
+SDK; it executes no compositor or Source. This is a new local build, not signed
+Arch package reproduction. Exact build/artifact hashes and limits are in the
+[new evidence](evidence/native-endrender-observation-provenance.json).
+
+Source-only staging first fails on copied0444 metadata, before a VM starts.
+Repaired staging reaches a fresh guest, whose SDK probe assumes an `includedir`
+variable absent from the generated `hyprland.pc`. The actual file declares
+`prefix=/usr/include`; immutable earlier prose saying `/usr` is not rewritten.
+That guest closes normally but the selection remains a setup failure before
+Qt/plugins/compositor/Source, app, final profile or PCM.
+
+A later fresh replay corrects only that probe, qualifies the installed SDK and all
+three plugin builds, and passes current Qt32/appearance29. Its57 valid records
+with zero flags pair116,618,089ns around createSyncFDManager in invocation2, inside
+a116,917,677ns Source sample gap. The explicit-valid branch and actual callsite
+return follow; this is a measured call span including observation overhead,
+without exclusive inner CPU/driver or earlier signed-Arch/ARM causal attribution.
+The original live-compositor assertion still fails at policy readiness before
+normal Sounds/final profile/groups/capture/PCM. Owned QMP shutdown/EOF/QEMU0,
+CLI0/exact CID absence/same daemon and input closure qualify separately.
+See the focused report for exact timestamps and scope.
+
 ## Next integration
 
-Limit the next original-code observation to endRender: one bounded invocation
-record for draw submission, OpenGL finalization, the actual synchronization branch
-and whole-function return. Preserve call order, early returns, buffer custody and
-cleanup; qualify instrumentation with controlled component RED/GREEN before a
-full replay. Do not expand general startup/timer observation or add an activation
-gate. Keep the Source adapter,100ms lease, predicate order, ErrorKinds and terminal
-refusal unchanged. Choose a rendering repair only from measured phase evidence.
+Limit further diagnosis to the measured fence-creation span, preserving original
+calls, branches, early returns, buffer custody and cleanup.
+Do not expand general startup/timer observation or add an activation gate. Keep
+the Source adapter,100ms lease, predicate order, ErrorKinds and terminal refusal
+unchanged. Choose a rendering repair only from actual measured phase evidence.
 
 The complete four-step target remains denied quiet launch, current grant and real
 focused touch with PCM, null-focus background continuation with disabled touch,

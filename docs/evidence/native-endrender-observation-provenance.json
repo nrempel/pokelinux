@@ -1,0 +1,194 @@
+{
+  "schema": 1,
+  "public_basis": "9f6090939abf1bfa677604cb70b448723eb90177",
+  "scope": "Paired original-code endRender component qualification, separate offline native x86 source build, two preserved setup failures and later actual paired runtime observation; full composition still fails before Sounds/PCM",
+  "component_qualified": true,
+  "native_source_build_qualified": true,
+  "actual_render_phase_runtime_qualified": true,
+  "full_session_composition_qualified": false,
+  "phone_accessed": false,
+  "source_policy_lease_gate_changed": false,
+  "component": {
+    "qualification_sha256": "f4ff330166fcf31bf12f4f48aac12a7482914991d9b82edc9826b853d62769b5",
+    "frozen_final_tests_sha256": "35de54ab043f75bea4a2d808d66e3f36bd42ae4203c4d6f93aafa0d73c122842",
+    "RED": {
+      "tests": 13,
+      "control_passes": 4,
+      "semantic_missing_phase_failures": 9,
+      "test_errors": 0,
+      "container_classifier_exit": 0,
+      "test_result_sha256": "4785d172b0f3124dbb53c0591899b06d3b94a79dd2b0fa5f3020ae08f4aaadb6",
+      "execution_receipt_sha256": "fff6fd30cebdd90b0d18a7c4329236ffad3579b37d41a0c233be1967a4f48892"
+    },
+    "GREEN": {
+      "tests": 13,
+      "passed": 13,
+      "same_frozen_tests": true,
+      "fixture_waits_and_EOF": 39,
+      "outer_CLI_waits_and_EOF": 10,
+      "test_result_sha256": "cfd055812efe21a341d5a5a73aaa96afca0cc1c020931d1eb7b685d110c6fb33",
+      "execution_receipt_sha256": "9aaf27d3611098eaa9b4d6fd14e8257613c7b5f62211e040cc7e5a1257e40e83"
+    },
+    "scope": "Verbatim selected function/caller/helper with controlled dependencies; real tmpfs mmap writer and selected actual guest parser, no compositor/EventBus/GL driver runtime",
+    "invocations": [
+      1,
+      128
+    ],
+    "phases": [
+      0,
+      23
+    ],
+    "file_bytes": 4096,
+    "record_capacity": 128,
+    "no_wrap": true,
+    "no_monitor_or_frame_identity": true
+  },
+  "native_source_build": {
+    "qualification_sha256": "1d0fb8cbf998f6abae274907a64d37c16e1bd66d33b79e5bc6d1231fb110d65d",
+    "Root_exec_session": 23402,
+    "actual_terminal_exit": 0,
+    "host_elapsed_ns": 167074658005,
+    "upstream_commit": "efb50993780079460b0cbed1363e2166a2de1d9f",
+    "compiler": "GCC16.2.1 GNU C++26",
+    "configuration": "CMake Release/O3 with default feature selection",
+    "signed_Arch_recipe_reproduction": false,
+    "core3_actual_build_logs": [
+      "src/render/EndRenderWitness.cpp",
+      "src/render/GLRenderer.cpp",
+      "src/render/Renderer.cpp"
+    ],
+    "compile_command_entries": 449,
+    "entries_are_not_executed_unit_count": true,
+    "named_waits_and_merged_PIPE_EOF": 30,
+    "normal_QMP_shutdown_EOF_QEMU0": true,
+    "CLI0_exact_CID_absence_same_daemon": true,
+    "selected_inputs_unchanged": true,
+    "compositor_Source_Qt_PCM_executed": false,
+    "new_ELF": {
+      "sha256": "2b2a1bd82e257ff02fc7c638bd7ce05f16bd66d745f7746a5f5826bee6dcae9b",
+      "bytes": 19536280,
+      "ELF_machine": 62
+    },
+    "matching_SDK": {
+      "sha256": "40078dae4d2dad9cf452342fd38b7ab261a7217c97d2b32dfd1d78d12c084a10",
+      "bytes": 2590720,
+      "verified_file_count": 499
+    },
+    "generated_hyprland_pc": {
+      "sha256": "1d3af9baa15f0b04a023246afe66070d8e98c97bf117c17ef605ed084cd65868",
+      "bytes": 500,
+      "prefix": "/usr/include",
+      "includedir_defined": false
+    },
+    "immutable_narrative_corrections": [
+      "Generated pc has prefix=/usr/include, despite old preparation/build-result prose saying /usr",
+      "449 compile_commands entries do not establish 449 executed compilation units"
+    ]
+  },
+  "preserved_setup_failures": {
+    "first_staging": {
+      "classification": "SOURCE_ONLY_SETUP_FAILURE",
+      "reason": "PermissionError on copied0444 metadata",
+      "VM_started": false,
+      "behavioral_RED_claim": false,
+      "source_review_sha256": "49fb74ec8f8566d4b48b258bb94c4f57cfc6c7396bf8b986306c4ef626ffbe8a",
+      "separate_execution_receipt_exists": false
+    },
+    "first_guest_replay": {
+      "classification": "SETUP_FAILURE",
+      "Root_exec_session": 54785,
+      "execution_sha256": "dee9c45a58a4a902d9bc25d3d2663507efbfb24eba1f29e33eb1d34e55cb0b5b",
+      "guest_result_sha256": "27043dfecefb01faa100f12225b87d6bd73c682f588e2e9a04b92e0e17dc13fb",
+      "reason": "SDK includedir probe assumes a variable absent from generated pc",
+      "boot_bootstrap_passed": true,
+      "Qt_plugins_compositor_Source_executed": false,
+      "normal_QMP_shutdown_EOF_QEMU0": true,
+      "CLI0_exact_CID_absence_same_daemon_input_closure": true,
+      "behavioral_RED_claim": false,
+      "source_review_sha256": "aaa59a5d30e1ceb3e9bf32f9b5cfdae4042034746bc45fb9f7e2027d58d7c8fe"
+    }
+  },
+  "remaining": [
+    "Diagnosis within the measured fence-creation span without changing render/Source policy",
+    "Normal fixed Sounds four groups, final Pixel profile/capture/PCM",
+    "Current-owner Messages grant/read/revoke/source-loss GUI",
+    "ARM availability, matched Google kernel, full Omarchy startup and physical/carrier gates"
+  ],
+  "private_artifacts_or_credentials_published": false,
+  "actual_phase_replay": {
+    "Root_exec_session": 10497,
+    "actual_Root_reaped_exit": 1,
+    "functional_passed": false,
+    "selection_sha256": "252770088811ca0803a0063eafa579d3614f06079ca925cec134f032c682baf4",
+    "command_sha256": "0556a8db31a910dfc3d1e6a43d1255f6bffdbc449f98c8c608323169274c2b49",
+    "execution_sha256": "1ad80bcbc71fd951643b055222cb16a2213a4d0dd05f60004731bcf0c7350a29",
+    "result_sha256": "26456c53aa2470a0c7547582c7a3dc991ffc66075cedd5edd3ee9fccd81635a7",
+    "boot_result_sha256": "817a4e5eeb6350a9408449a34c9de13eaea148e43eee9eaf0c2f1f69242d8275",
+    "bootstrap_result_sha256": "9e7e42605a1e8cb1f04bde894b10348b183d8cff07b0c95f9947b31728166eb4",
+    "local_SDK_file_count": 499,
+    "local_SDK_compiler_dependency_output_sha256": "de885fbd283601ea3520e419495ba992e0ec9df51602e95b06f19333077a6306",
+    "all_three_plugins_built": true,
+    "Qt_checks_including_setup_cleanup": 32,
+    "Qt_audio_behaviors": 30,
+    "appearance_cases": 29,
+    "all_actual_current_checks_passed": true,
+    "failure": "Live compositor assertion during policy_service_ready, compositor dead before Stop",
+    "normal_Sounds_final_Pixel_groups_capture_PCM_executed": false,
+    "raw_witness_sha256": "efea49b4f7136f436c56e9dd710270a2c5d893782f1a262405efbcc69c99f512",
+    "raw_witness_bytes": 4096,
+    "committed_records": 57,
+    "flags": 0,
+    "independent_decode_sha256": "d515126559765a1d963693304e7bef532a9cec1f0b7e7b9b323b233283a7abd0",
+    "complete_committed_prefix_matches_production_parser": true,
+    "Source": {
+      "previous_sequence": 1,
+      "previous_sampled_at_ns": 54251746635,
+      "rejected_sequence": 2,
+      "rejected_sampled_at_ns": 54368664312,
+      "sample_gap_ns": 116917677,
+      "reason": "validation/sample_gap",
+      "rejection_observed_at_ns": 54370092297,
+      "actor_failure_observed_at_ns": 54370095693,
+      "successor_age_at_observation_ns": 1427985
+    },
+    "invocation2": {
+      "fence_before": {
+        "ordinal": 50,
+        "boottime_ns": 54251928740,
+        "kind": 8,
+        "detail": 80,
+        "invocation": 2,
+        "phase": 16
+      },
+      "fence_after": {
+        "ordinal": 51,
+        "boottime_ns": 54368546829,
+        "kind": 8,
+        "detail": 81,
+        "invocation": 2,
+        "phase": 17
+      },
+      "fence_bracket_ns": 116618089,
+      "draw_bracket_ns": 64802,
+      "opengl_end_bracket_ns": 8756,
+      "explicit_valid_branch_observed": true,
+      "actual_callsite_return_observed": true,
+      "no_exclusive_inner_CPU_driver_or_prior_Arch_cause_inference": true
+    },
+    "invocation1_fence_bracket_ns": 30287,
+    "single_event_loop_cooperative_observation_including_overhead": true,
+    "monitor_frame_identity_or_exclusive_CPU_driver_prior_Arch_cause_inferred": false,
+    "normal_QMP_shutdown_EOF_QEMU0": true,
+    "CLI0_exact_CID_absence_same_daemon_input_closure": true,
+    "host_cleanup_errors": [],
+    "Root_qualification_sha256": "73b66a1086a4ba3d58269bd5ed8252e216b881a57c620623f7fc47fb784cd058",
+    "actual_direct_waits": 101,
+    "actual_PIPE_EOFs": 108,
+    "all_observed_original_cutoffs_met": true,
+    "host_elapsed_ns": 60569230356,
+    "separate_guest_subreaper_wait_exits": [
+      1
+    ],
+    "native_parent_compositor_numeric_wait_not_exported": true
+  }
+}

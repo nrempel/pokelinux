@@ -70,7 +70,12 @@ now identifies a110.824ms producer sample gap before Sounds/PCM. The particular
 compositor operation remains unknown. A later [render-witness replay](docs/native-session-x86-runtime.md#render-witness-replay)
 places a112.844ms separation between adjacent late-render landmarks inside a
 113.029ms producer gap. It still fails before Sounds/PCM; no particular call or
-rendering cause is established. ARM availability and phone gates stay open.
+rendering cause is established. A later paired [endRender observation](docs/native-endrender-observation.md),
+after13 component passes and a separate native source build, observes116.618ms
+around fence creation inside a116.918ms Source gap. Matching SDK/plugins and
+current Qt checks pass; full composition still fails before Sounds/PCM. This
+narrows the span without identifying an exclusive CPU/driver cause. ARM
+availability and phone gates stay open.
 Earlier [permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
 passes four touch/graph/PCM groups using root-authored focus. Physical audio,
 production session completion and all phone gates remain open.

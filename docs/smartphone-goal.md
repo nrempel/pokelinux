@@ -38,9 +38,13 @@ native replay now identifies a110.824ms producer sample gap, before normal app
 or PCM. The later [render-witness replay](native-session-x86-runtime.md#render-witness-replay)
 retains31 records and a112.844ms separation between adjacent late-render
 landmarks inside a113.029ms producer gap. No particular call or cause is
-established, and normal Sounds/PCM remains unreached. Narrow the next observation
-to original endRender phases while retaining Pixel/Source/focus/PCM guards.
-Native success would not close ARM or phone gates.
+established, and normal Sounds/PCM remains unreached. The focused
+[endRender observation](native-endrender-observation.md) now passes13 component
+cases and a separate native source build. A fresh matching-SDK/plugin replay
+observes116.618ms around fence creation inside a116.918ms Source gap, then still
+fails before Sounds/PCM. This narrows one call span without a CPU/driver diagnosis;
+earlier setup failures and Pixel/Source/focus/PCM guards remain intact. Native
+success would not close ARM or phone gates.
 
 The [native Rust session owner](native-session-owner.md) implements compositor
 Child custody; its original Sounds assembly has32 host boundary passes,
