@@ -120,7 +120,11 @@ The following [original native replay](native-session-x86-runtime.md#typed-rejec
 uses the typed record at the real boundary: sequence2 is rejected for a110.824ms
 sample-chain gap while only5.576ms old at failure observation. This identifies a
 producer gap in that selection; the responsible compositor operation remains
-unknown. It supplies no normal GUI/PCM or physical qualification.
+unknown. A later [render-witness replay](native-session-x86-runtime.md#render-witness-replay)
+retains a113.029ms producer gap while sequence2 is4.120ms old at rejection
+observation. Adjacent late-render landmarks lie within that gap, without
+identifying a call or cause. Neither replay supplies normal GUI/PCM or physical
+qualification.
 
 ## Executed evidence
 

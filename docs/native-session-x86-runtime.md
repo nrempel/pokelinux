@@ -180,16 +180,62 @@ The [same attempt evidence](evidence/native-session-x86-composition-provenance.j
 records this later selection separately from the first ambiguous `InvalidData`.
 No physical phone was accessed.
 
+## Render witness replay
+
+One further full native KVM replay changes exactly three private fixture files:
+the numeric witness header, its focus-plugin registrations and the guest decoder.
+It adds render preChecks/pre and numeric stage0..9 to the existing4096-byte,
+128-record committed prefix. Focus observation, Source adapter/sampler, Rust
+policy,100ms lease, grants, all four app/graph/PCM groups and Pixel guards remain
+unchanged. The authored compiled C++ writer and actual guest parser first produce
+five passes/two missing-decoding REDs, then seven GREENs with unchanged tests.
+Their13/15 actual writer waits and four separate ten-wait container epochs
+qualify component encoding/bounds only. Earlier compiler, classifier and readonly
+copy setup failures remain failed. No new production behavior is claimed.
+
+The full original replay compiles the modified plugin against the matched SDK
+and retains31 committed records after actual compositor death, with zero flags.
+Source sequence1 is sampled at54,820,104,470ns; sequence2 at54,933,133,260ns is
+rejected for validation/sample_gap. Their113,028,790ns gap exceeds100ms while
+sequence2 is only4,119,874ns old at rejection observation. Freshness is not reached
+because chain validation rejects first; the actor records failure3,466ns later.
+Two adjacent late-render landmarks fall inside that producer gap:
+
+| Observation | BOOTTIME ns |
+|---|---:|
+| Record30, LAST_MOMENT stage5 | 54,820,202,826 |
+| Record31, POST stage6 | 54,933,047,007 |
+| Separation | 112,844,181 |
+
+The first landmark follows sequence1 by98,356ns; sequence2 follows the last by
+86,253ns. These are cooperative landmark timestamps, without frame/monitor
+identity, guaranteed pairing, callback-body duration, listener-order, blocked-call
+or presentation proof. They narrow the next investigation without identifying a
+specific operation. The original [renderer tail](https://github.com/hyprwm/Hyprland/blob/efb50993780079460b0cbed1363e2166a2de1d9f/src/render/Renderer.cpp#L2015)
+contains endRender and later bookkeeping; output commit follows POST. The
+[OpenGL endRender implementation](https://github.com/hyprwm/Hyprland/blob/efb50993780079460b0cbed1363e2166a2de1d9f/src/render/GLRenderer.cpp#L79)
+contains draw submission, OpenGL finalization and different synchronization paths.
+The observations do not establish which path ran or justify changing it.
+
+Current Qt32 checks (30 audio behaviors),29 appearance cases and all plugin/helper
+builds pass again. Full composition still fails at the live-compositor assertion
+during policy-service readiness, before normal Sounds, final profile, all four
+functional groups, capture or PCM. All97 direct waits/104 PIPE EOFs meet their
+original cutoffs. QMP KVM/normal shutdown/socket EOF/QEMU0, CLI0/exact CID absence,
+same daemon and78 selected/27 external input hashes qualify separately. This
+closed failed selection takes61.30s and does not reclassify earlier failures.
+The [attempt evidence](evidence/native-session-x86-composition-provenance.json)
+records this selection separately. No phone was accessed.
+
 ## Next integration
 
-Measure existing render-stage callbacks in the bounded cooperative witness during
-one full original replay. Keep the Source adapter,100ms lease, predicate order,
-ErrorKinds and terminal refusal unchanged. The [pinned plugin loader](https://github.com/hyprwm/Hyprland/blob/efb50993780079460b0cbed1363e2166a2de1d9f/src/plugins/PluginSystem.cpp#L121)
-queues a config reload after initialization. Its synchronous return therefore
-does not prove the end of deferred work. The [pinned render stages](https://github.com/hyprwm/Hyprland/blob/efb50993780079460b0cbed1363e2166a2de1d9f/src/render/Renderer.cpp#L1856)
-are partial boundaries, with early returns and output commit outside some stages;
-no stage alone proves presentation or completed output commit. Choose an availability repair only after that actual interval
-is known.
+Limit the next original-code observation to endRender: one bounded invocation
+record for draw submission, OpenGL finalization, the actual synchronization branch
+and whole-function return. Preserve call order, early returns, buffer custody and
+cleanup; qualify instrumentation with controlled component RED/GREEN before a
+full replay. Do not expand general startup/timer observation or add an activation
+gate. Keep the Source adapter,100ms lease, predicate order, ErrorKinds and terminal
+refusal unchanged. Choose a rendering repair only from measured phase evidence.
 
 The complete four-step target remains denied quiet launch, current grant and real
 focused touch with PCM, null-focus background continuation with disabled touch,

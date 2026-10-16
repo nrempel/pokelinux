@@ -35,9 +35,12 @@ normal app/final profile/PCM follows. Bounded typed rejection observation now
 passes12 root-admin,57 Observer process and four lifecycle cases after eight
 missing-record REDs; matching ARM64 compilation passes separately. The original
 native replay now identifies a110.824ms producer sample gap, before normal app
-or PCM. The responsible compositor operation remains unknown. Measure bounded
-render stages in one full replay, retaining Pixel/Source/focus/PCM guards. Native success
-would not close ARM or phone gates.
+or PCM. The later [render-witness replay](native-session-x86-runtime.md#render-witness-replay)
+retains31 records and a112.844ms separation between adjacent late-render
+landmarks inside a113.029ms producer gap. No particular call or cause is
+established, and normal Sounds/PCM remains unreached. Narrow the next observation
+to original endRender phases while retaining Pixel/Source/focus/PCM guards.
+Native success would not close ARM or phone gates.
 
 The [native Rust session owner](native-session-owner.md) now implements compositor
 Child custody and fixed Sounds session assembly.32 host boundary cases,

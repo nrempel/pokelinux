@@ -118,7 +118,7 @@
   "phone_accessed": false,
   "hardware_qualified": false,
   "private_inputs_raw_logs_VM_images_or_credentials_published": false,
-  "next": "Retain bounded render-stage observations in one full original replay, then choose a repair from the measured producer path. Preserve Source policy, all four app/focus/PCM/Pixel checks and every ARM/phone gate.",
+  "next": "Bound one original endRender invocation by draw, GL finalization, actual synchronization branch and return; retain call order/early returns/cleanup. No broad startup/timer witness or speculative activation gate.",
   "subsequent_typed_rejection_replay": {
     "scope": "Actual native KVM original Source startup with typed first rejection; no normal app or four-step functional qualification",
     "public_basis": "37182d13936512987cd4267294112c65b5db0faf",
@@ -194,5 +194,167 @@
     "previous_false_unresolved_CID_label_fixed_in_runner": true,
     "owner_client_profile": "Default-feature release opt3; previous native owner/client debug opt0, no timing causal comparison",
     "earlier_failures_preserved_not_reclassified": true
+  },
+  "subsequent_render_witness_replay": {
+    "scope": "Actual native KVM original compositor with bounded cooperative numeric render landmarks; full functional session remains failed",
+    "public_source_basis": "37182d13936512987cd4267294112c65b5db0faf",
+    "actual_Root_exec_session": 33027,
+    "actual_Root_exec_exit": 1,
+    "actual_raw_hashes": {
+      "selection_sha256": "76e7605aa9d4112eeb276ac03264d3570802cdcc4e69f9b49917458e00526dfb",
+      "command_sha256": "a3b9cdce8b3c9d8dc42faa9ba1f394f7e15c35f197048ba4deec38cf3733e221",
+      "execution_sha256": "ecdc53b11e1ef4fae116c2b93132939fefe9ed7c6c7482a19d7b6458e66c48c1",
+      "boot-result_sha256": "f720dc93f8fcdc4977a9891bf6a30ff16fbfa8ac80793ba9686585a325c830f4",
+      "bootstrap-result_sha256": "1f5a446e598dee9f5885bbbe47a513b2985f7ccd13b424ba38f2e470238d92e2",
+      "result_sha256": "1d1c8890d59f5050b42685a7658402f1cecaaeb354bf2849ca89d4abc46a5936"
+    },
+    "Root_qualification_sha256": "bfc3b398a61fda7cb5c3c34554aea0b1b880b68cb28c22772c727371bbead88b",
+    "independent_qualification_sha256": "51bd00afb14e8164a941f98a9c66c84ca3b952668bdd649e4cb09ddca2ab9e33",
+    "Root_source_review_sha256": "a545457a2281d1d1519421f94e9f7e689d02364c1c6b5b350e7792240951eefe",
+    "Root_entry_sha256": "feb2ef33ad9f79b3fda0a90ccc0dc2c81047b3d447482a63aee7c46acd2c6e01",
+    "preparation_sha256": "5c3be5363bf0cf76a6bf6145b683a45765055091637693de34acd98017fcdf0d",
+    "unchanged_five_role_payload_sha256": "abd03e309287b1ec28a582f37c6d9f1978c1e1379d73eaa893bd1ade5826e1e3",
+    "numeric_writer_parser_component_tests": {
+      "proposal_sha256": "9ac8dfdb788fa84ef93fd92d8a23988de568cb7fe3cea780dc54a5cce5b69ec1",
+      "frozen_test_hashes": {
+        "emitter.cpp": "590b2004c5c8663206e8a77397ba6c878f2921d51df2e5287d5df60a3031353d",
+        "tests.py": "9a387459eadcaa8413beb5a9db2021955964d4fe77e3435a72a769280ccaa6fa"
+      },
+      "RED_cases": {
+        "passing_controls": 5,
+        "intended_failures": 2,
+        "actual_writer_waits_and_merged_EOFs": 13
+      },
+      "GREEN_cases": {
+        "passing": 7,
+        "failing": 0,
+        "actual_writer_waits_and_merged_EOFs": 15
+      },
+      "qualified_compile_runtime_receipt_hashes": {
+        "build-red-2": "d7505b8bdcde06c8b882cb2b2b849614601c9935ee6ad036bcd694f5de0afd1f",
+        "runtime-red-2": "6047022e7a024d19c74834614cbeeeb8d5bf05383518e44ddeeb87b9f036d429",
+        "build-green-2": "131826c420d5bcaa2f46979d84897f550c0e5d82bdb5f01747df92d0da7bd4f8",
+        "runtime-green-2": "ccf327cd161de1d284783771d6af0dd9595347839930928ed2b591764bf8ef12"
+      },
+      "four_distinct_outer_epochs_direct_waits_and_merged_EOFs_each": 10,
+      "preserved_setup_and_classifier_failures": [
+        {
+          "role": "build-red",
+          "classification": "SETUP_FAILURE",
+          "reason": "Admitted Rust image lacks g++ and native cc1plus; no package provisioning; existing admitted graphics image used instead",
+          "receipt_sha256": "a47854cd3832afb07abb68dd6215241c6c18627809c64d9b83d1505c61d58e9f"
+        },
+        {
+          "role": "runtime-red",
+          "classification": "POST_TEST_CLASSIFIER_FAILURE",
+          "reason": "Two real intended RED assertions ran and five controls passed; classifier counted repeated traceback markers; corrected classifier before final frozen baseline",
+          "receipt_sha256": "d75d42e90e04ada675a43b5aa7b8ecbdb9c48b8e2be07f9f7e349b5c52f64b27"
+        },
+        {
+          "role": "build-green/runtime-green",
+          "classification": "READONLY_COPY_EDIT_SETUP_FAILURE",
+          "reason": "Copied baseline was readonly so first proposal edit failed before any source modification; wrapper continued and tested unchanged baseline, yielding same two missing-decode assertions. Fresh writable candidate copy and unchanged tests then pass.",
+          "build_receipt_sha256": "26da125e12cc3801f10ccbfcddf3a63159261cf08f236fedca6987c8b6360e6a",
+          "runtime_receipt_sha256": "e63f2293e9358d479d27a8c035efef76b0e15020e67b751c9ff1d8c8aea32d53"
+        }
+      ],
+      "no_Hyprland_callback_execution_claim_from_component_tests": true
+    },
+    "actual_plugin_SDK_compile_and_callback_records_observed_in_full_replay": true,
+    "actual_modified_fixture_source_hashes": {
+      "focus-observer.cpp": "6aac3f6865a766e43babecd2f8cd60f73d392b7a5369a777a2605ffcf5ff4cc6",
+      "startup_event_ring.hpp": "beec6e225204245b711acd66906d16330698fc58cfd45371c117ace7e1fa54f1",
+      "guest.py": "9bab3610d8b575e66472371ae40b98041e50138f1e83c0bb775dfe09d00f162f"
+    },
+    "Source_before_Stop": {
+      "state": "failed",
+      "last_accepted": {
+        "sequence": 1,
+        "sampled_at_ns": 54820104470
+      },
+      "first_failure": {
+        "category": "provider_error",
+        "error_kind": "InvalidData",
+        "observed_at_boottime_ns": 54937256600,
+        "observer_rejection": {
+          "stage": "validation",
+          "reason": "sample_gap",
+          "drain_ordinal": 1,
+          "sequence": 2,
+          "sampled_at_ns": 54933133260,
+          "previous_accepted": {
+            "sequence": 1,
+            "sampled_at_ns": 54820104470
+          },
+          "validated_at_boottime_ns": 54937253134,
+          "receive": {
+            "received_bytes": 216,
+            "payload_truncated": false,
+            "control_truncated": false,
+            "errno": null
+          }
+        }
+      }
+    },
+    "sample_gap_ns": 113028790,
+    "successor_age_at_rejection_observation_ns": 4119874,
+    "actor_failure_after_rejection_observation_ns": 3466,
+    "freshness_predicate_not_reached": true,
+    "cooperative_witness": {
+      "raw_sha256": "b7ea6591854548fdb1475d6d460db6664dffedb8b1ac61943cfc75ee13c6aa2f",
+      "committed_count": 31,
+      "flags": 0,
+      "records_30_31": [
+        {
+          "ordinal": 30,
+          "boottime_ns": 54820202826,
+          "kind": 7,
+          "event": "render.stage",
+          "execd_as_scheduled": null,
+          "render_stage": 5
+        },
+        {
+          "ordinal": 31,
+          "boottime_ns": 54933047007,
+          "kind": 7,
+          "event": "render.stage",
+          "execd_as_scheduled": null,
+          "render_stage": 6
+        }
+      ],
+      "adjacent_late_render_landmark_interval_ns": 112844181,
+      "first_landmark_after_accepted_ns": 98356,
+      "successor_after_last_landmark_ns": 86253,
+      "no_frame_monitor_identity_or_pairing_guarantee": true,
+      "no_callback_order_blocked_call_output_commit_or_presentation_inference": true
+    },
+    "particular_operation_or_cause_known": false,
+    "current_native_audio_total": 32,
+    "current_native_audio_behaviors": 30,
+    "current_native_appearance_cases": 29,
+    "functional_steps": 0,
+    "normal_app_launches": 0,
+    "PCM_windows": 0,
+    "final_profile_or_new_capture": false,
+    "actual_direct_waits": {
+      "guest": 78,
+      "bootstrap": 5,
+      "early": 2,
+      "boot": 5,
+      "host": 7
+    },
+    "actual_PIPE_EOFs": 104,
+    "all_original_wait_EOF_cutoffs_met": true,
+    "guest_expected_exit_sets_met": true,
+    "same_QMP_KVM_guest_SHUTDOWN_EOF_QEMUwait0": true,
+    "CLIwait0_exactCIDabsent_sameDaemon": true,
+    "all78selected_27external_inputs_unchanged_under_shared_lock": true,
+    "host_elapsed_ns": 61300811504,
+    "fixed_four_step_block_sha256": "5bb83980a212411f5754ae37089b323f3d21ff8f7960ffb2cc60ed579d41538f",
+    "Source_adapter_sampler_Rust_policy_grants_PCM_Pixel_bounds_unchanged": true,
+    "earlier_failures_preserved": true,
+    "phone_accessed": false,
+    "hardware_qualified": false,
+    "next": "Bound one original endRender invocation by draw, GL finalization, actual synchronization branch and return; retain call order/early returns/cleanup. No broad startup/timer witness or speculative activation gate."
   }
 }

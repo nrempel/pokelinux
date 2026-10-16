@@ -144,9 +144,18 @@ because chain rejection comes first. This is a producer sample gap, without an
 identified compositor operation or retrospective diagnosis of earlier failures.
 No normal app, final profile, functional group or PCM runs. Actual current
 Qt32/appearance29 and97 waits/104 PIPE EOFs qualify separately; the62.77s native
-selection remains failed. Next add only bounded render-stage observations to one
-full replay, retaining every app/focus/PCM/Pixel and Source guard. Strict matching
-ARM64 owner/client compilation also passes separately, without ARM execution.
+selection remains failed. A later [render-witness replay](native-session-x86-runtime.md#render-witness-replay)
+now compiles the matching plugin and retains31 committed numeric records with
+zero flags. Source sequence1→2 has a113,028,790ns sample gap; adjacent
+LAST_MOMENT5/POST6 records are112,844,181ns apart inside that gap. Records carry
+no frame/monitor identity, and establish no particular blocked call, callback
+pair, presentation or cause. Current Qt32/appearance29 and97 waits/104 EOFs
+pass separately; the61.30s full selection still fails before normal Sounds,
+final Pixel profile, all four groups, capture or PCM. Next inspect only original
+endRender phases: render submission, OpenGL finalization, selected synchronization
+branch and return. No broad startup profiler, Source gate or lease change is
+justified. Strict matching ARM64 owner/client compilation also passes separately,
+without ARM execution.
 Messages history composition remains in a separate worktree and is excluded
 from this replay; its component results do not qualify the normal Messages GUI.
 

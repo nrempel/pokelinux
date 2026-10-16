@@ -360,9 +360,13 @@ now passes12 actual admin cases after eight missing-record REDs, with57 process
 and four lifecycle cases also passing. Its default release owner/client builds
 are ready. A separate [original native replay](native-session-x86-runtime.md#typed-rejection-replay)
 now retains a110.824ms sample-chain gap on sequence2, before normal Sounds/PCM.
-The particular compositor operation remains unknown; renderer observations are
-next, with no Source gate or lease change. Matching ARM64 compilation passes
-separately, without ARM execution.
+A later [render-witness replay](native-session-x86-runtime.md#render-witness-replay)
+retains31 committed landmarks with zero flags. A112.844ms separation between
+adjacent LAST_MOMENT/POST observations lies within its113.029ms producer gap;
+this identifies no particular call, matched frame or rendering cause. Full
+composition still fails before Sounds/PCM. Narrow the next observation to the
+original endRender function, preserving Source policy and every functional guard.
+Matching ARM64 compilation passes separately, without ARM execution.
 
 Complete native CPU-speed execution of the current production owner and
 original Hyprland/Source, fixed desktop client, normal UID11042 Sounds,

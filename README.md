@@ -60,7 +60,10 @@ cause remains unknown. [Typed first-rejection status](docs/native-source-observa
 now passes12 actual admin cases after eight missing-record REDs, with57 Observer
 process and four lifecycle regression passes. Its [original native replay](docs/native-session-x86-runtime.md#typed-rejection-replay)
 now identifies a110.824ms producer sample gap before Sounds/PCM. The particular
-compositor operation remains unknown; ARM availability and phone gates stay open.
+compositor operation remains unknown. A later [render-witness replay](docs/native-session-x86-runtime.md#render-witness-replay)
+places a112.844ms separation between adjacent late-render landmarks inside a
+113.029ms producer gap. It still fails before Sounds/PCM; no particular call or
+rendering cause is established. ARM availability and phone gates stay open.
 Earlier [permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
 passes four touch/graph/PCM groups using root-authored focus. Physical audio,
 production session completion and all phone gates remain open.
