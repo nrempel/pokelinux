@@ -36,25 +36,21 @@ Dashed connections are work still required, not working hardware paths. “Rust 
 
 ## What has been tested
 
-The new [native Rust session owner](docs/native-session-owner.md) starts and
-retains the compositor Child and composes Source, lifecycle, per-app display and
-audio. Its current15-case policy preflight, actual native storage-worker checks,
-host/ARM64 compilation and Make staging pass alongside the retained ownership
-tests. Its combined original-compositor ARM startup still fails before normal
-Qt/PCM. A separate private diagnostic observes the first Source sample expiring
-at120.9ms against its unchanged100ms lease. The [producer startup repair](docs/native-source-timer-startup.md)
-now passes two actual ARM Wayland/socket cases after an early-publication RED;
-the next [original-compositor replay](docs/native-session-owner.md#gated-original-compositor-replay)
-still fails at display metadata before Sounds/PCM; its cause remains unknown.
-[Bounded root-admin Source observation](docs/native-source-observation.md) now
-passes four actual host IPC and four local cases after a missing-field RED.
-Matching host/ARM production builds and the default68-pass/20-ignored regression
-also qualify. The [matching ARM replay](docs/native-session-owner.md#production-source-observation-arm-replay)
-still fails before Sounds/PCM; it retains accepted sequence37 followed by a
-provider timeout beyond the100ms lease, without identifying the gap's cause. The separate
-[normal permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
-passes four groups with actual touch, independent virtual graph/PCM and unscaled
-Pixel10 captures using root-authored focus. Physical audio remains unverified.
+The [native Rust session owner](docs/native-session-owner.md) retains the
+compositor Child and composes Source, lifecycle, per-app display and audio.
+Host ownership/storage checks, strict host/ARM builds and Make staging qualify
+within their recorded scopes. [Source observation](docs/native-source-observation.md)
+adds four actual IPC/four local passes after genuine RED. The separate default
+library run passes68 tests, including those four local cases, with20 ignored. The startup gate separately passes two real
+ARM Wayland/socket cases.
+
+The latest [non-presenting discovery replay](docs/native-session-owner.md#non-presenting-discovery-replay)
+still fails before Sounds/PCM: the new probe compiles, Source accepts sequence48,
+then observes a timeout beyond its unchanged100ms lease. The removed extra raster
+window is not necessary for that failure; the gap's cause remains unknown.
+Earlier [permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
+passes four touch/graph/PCM groups using root-authored focus. Physical audio,
+production session completion and all phone gates remain open.
 
 | Area | Evidence and scope | Still missing |
 |---|---|---|

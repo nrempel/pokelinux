@@ -90,11 +90,16 @@ regression runner's missing-directory failure remains preserved. A matching
 still fails at metadata Qt255 before Sounds/PCM. The initial root reply accepts
 sequence2; the pre-Stop reply retains sequence37 and first provider TimedOut at
 114.24ms sample age against100ms. Cause remains unknown; exact owned closure
-qualifies separately. Next remove the fixture's extra fullscreen raster probe,
-collect nonpresenting discovery and qualify every Pixel10/window guard against
-actual normal Sounds first-frame metadata before capture/PCM. Keep original
-deadlines, reject output changes and make no feature-RED claim for fixture repair.
-Then qualify
+qualifies separately. The [non-presenting discovery replay](native-session-owner.md#non-presenting-discovery-replay)
+then compiles the derived probe but also fails before Sounds/PCM. Source accepts
+sequence48 before provider TimedOut at113.76ms; early actual profile receipts
+are retained, but final measurement is unreached. Removed probe-window painting
+is not a necessary trigger; the gap's cause remains unknown. Stop fixture guesses
+and obtain one bounded public configuration/property-refresh event timing witness
+in the existing observer plugin, preserving production owner, Source and deadlines.
+Read timing only after retained compositor death; no exact private callback-entry
+or cause claim follows from completion events alone. Then choose the production
+repair and qualify
 null-focus background lease continuation, then terminal Source loss without
 app/audio revival. Preserve the earlier ARM selection and its authored-focus
 scope. Do not reopen auth/PAM or a broad static/diagnostic campaign. Hardware

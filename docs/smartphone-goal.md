@@ -16,7 +16,11 @@ host/ARM production builds and68 default library passes/20 ignored. A matching
 [original replay](native-session-owner.md#production-source-observation-arm-replay)
 now retains actual root Source status: sequence37 followed by provider TimedOut
 at114.24ms age against100ms, before Sounds/PCM. The gap's cause, combined
-functional runtime and all phone gates remain open.
+functional runtime and all phone gates remain open. A subsequent [non-presenting
+discovery replay](native-session-owner.md#non-presenting-discovery-replay) also
+expires after sequence48, before Sounds/PCM, despite creating no probe window.
+The derived probe compiles and retains early profile receipts; final display
+qualification remains unreached. One bounded startup-event witness is next.
 
 The [native Rust session owner](native-session-owner.md) now implements compositor
 Child custody and fixed Sounds session assembly.32 host boundary cases,

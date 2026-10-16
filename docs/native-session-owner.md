@@ -207,7 +207,7 @@ code. Local rejection/missing/reconciliation/Stopping cases retain that narrower
 scope. Actual waits, applicable PIPE EOFs and original cutoffs qualify separately.
 The [provenance](evidence/native-source-observation-provenance.json) keeps focused
 host evidence, matching strict host/ARM default-owner/client builds and the
-current default library68-pass/20-ignored regression separate from future ARM replay.
+current default library68-pass/20-ignored regression separate from composed ARM runtime.
 
 On a matching replay, retain an authenticated Snapshot before cleanup Stop when
 possible under the existing observation cutoff. The first record is not a causal
@@ -250,13 +250,49 @@ raw result hashes and independent qualification. Raw ordered/applied profile
 receipts were again not retained before the later failure; prerequisite checks
 must not be promoted to a final display qualification.
 
-Next remove the extra presenting measurement window from this fixture. Collect
-nonpresenting output metadata first, then retain every original Pixel10 guard
-against the actual normal Sounds first-frame/window metadata before captures or
-functional PCM. Reject output changes; preserve deadlines and the100ms lease.
-This is fixture correction, without a production-feature RED claim. A failure
-on actual Sounds rendering would be the next concrete integration boundary;
-no compositor scheduling repair is justified yet.
+The following fixture revision removes the extra presenting measurement window.
+It collects nonpresenting output metadata, then retains every original Pixel10
+guard against actual normal Sounds frame/window metadata before captures or PCM.
+It rejects output changes and preserves deadlines/the100ms lease. This is fixture
+correction, without a production-feature RED or scheduling-repair claim.
+
+## Non-presenting discovery replay
+
+The next unchanged-production replay removes the extra raster measurement window.
+The [derived discovery tool](../tools/native-phone-display-profile/qt-output-discovery.cpp)
+keeps actual QGuiApplication/QScreen, Wayland output and DRM observation, creates
+no QWindow, and compiles against the retained ARM SDK with strict warnings.
+The fixture defers every original Pixel10/window guard to the actual Sounds frame
+and current output before capture/PCM; the measurement consumer stays unchanged.
+This is fixture correction, without a production-feature RED claim.
+
+Discovery itself nevertheless exits255 with empty output before normal Sounds.
+The first root snapshot accepts sequence3; before Stop the same actor reports
+accepted sequence48 at183662962010ns and first provider TimedOut observed at
+183776721161ns, a113759151ns sample age against100ms. The compositor is already
+dead. The removed probe-window painting is therefore not a necessary trigger;
+this does not exclude other rendering or identify the unavailable operation.
+
+Early raw profile receipts are now retained: ready callback182146741813ns,
+physical-load completion182256753645ns, and actual1080×2424/65×146mm/scale2.625
+application. These receipts are setup evidence; final output/window measurement,
+new capture, all four steps and PCM remain unqualified. The derived probe's
+strict compile0 is separate from its failed runtime255.
+
+All36 guest direct waits/applicable merged PIPE EOFs, one shutdown wait, three
+boot waits/QEMU0 and seven host waits/both PIPE EOFs meet their original bounds.
+Expected-exit aggregates remain false on discovery255. Stop/owner waits0 and
+same-daemon exact container absence/input closure qualify separately; the
+compositor Child's numeric wait/signal is not exported. Adopted0/1/-9 waits retain
+their own scope. [Hash-only evidence](evidence/native-session-nonpresenting-discovery-provenance.json)
+binds these failed facts, sources, retained receipts and independent reviews.
+
+Stop fixture guesses here. Next obtain one bounded timing witness for the
+original public configuration/property-refresh events, without another plugin
+load, modified owner, Source packet access or lease change. Event landmarks can
+order startup work against expiry; they do not by themselves prove exact callback
+return, private refresh entry, an empty deferred queue or a cause. Choose a repair
+only from the resulting evidence.
 
 ## Remaining integration
 

@@ -1,0 +1,220 @@
+{
+  "schema": 1,
+  "evidence_qualified": true,
+  "functional_epoch_passed": false,
+  "scope": "Generic ARM kernel original Hyprland/default productionRust owner. Derived nonpresenting Qt probe compiles but exits255 before normalSounds. No finaldisplay/window/capture/PCM or phone result.",
+  "label": "pokelinux-audio-arm-installed-source-green-sol-11",
+  "public_source_base": "fc141d80be08c0b6e9cc82cf46e39eb044f976d8",
+  "production_owner_sha256": "252ad901562df9b41676ebe3c424afff34c5e2fff0e27461ea1f806aa5586a33",
+  "matching_client_sha256": "21e7f51c5e79ef3c66eb757e116b9521a8c847f3aa73113e01d1f5ef05c43096",
+  "normal_Sounds_ELF_sha256": "684057c40c05a26e69dfc175b125b5130deda0a29980b4505d7b1a58cdc5fadf",
+  "Source_adapter_sha256": "7d78b090b4fac0701fa5926d5a5bb53789d01b9309296e4fa8103e0b7f5643a4",
+  "Source_header_sha256": "73612325a597b71a4386d62a4a563477e78e1bd5e572e48784f005507600e845",
+  "final_cpp": {
+    "path": "tools/native-phone-display-profile/qt-output-discovery.cpp",
+    "sha256": "411b34d4a4185fd682640d60a1cbead873ed8bfe41982e965b1ac92ccb282d00"
+  },
+  "public_presenting_probe_basis": {
+    "path": "tools/native-phone-display-profile/qt-output-probe.cpp",
+    "sha256": "f568e474807b5c69da677a239f67aff30f189299f9604e0a5c816c26745369ac"
+  },
+  "new_strict_ARM_compile": {
+    "source_sha256": "411b34d4a4185fd682640d60a1cbead873ed8bfe41982e965b1ac92ccb282d00",
+    "output_sha256": "820015482aa87f33a9ff0f9ab2235539a9bff947aaafe992059fef545fe006b4",
+    "argv": [
+      "/usr/bin/g++",
+      "-std=c++23",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-O2",
+      "-g0",
+      "-fPIC",
+      "/results/source/qt-output-discovery.cpp",
+      "-I/usr/include/qt6/QtGui",
+      "-I/usr/include/qt6",
+      "-DQT_GUI_LIB",
+      "-I/usr/include/qt6/QtCore",
+      "-DQT_CORE_LIB",
+      "-I/usr/lib/qt6/mkspecs/linux-g++",
+      "-I/usr/include/libdrm",
+      "-lQt6Gui",
+      "-lQt6Core",
+      "-lwayland-client",
+      "-lm",
+      "-ldrm",
+      "-o",
+      "/usr/libexec/pokelinux-fixture/pixel10-output-discovery"
+    ],
+    "compiled_before_owner_spawn": true,
+    "runtime_qualification_inherited": false
+  },
+  "no_QWindow_raster_or_measurement_surface_created_by_derived_source": true,
+  "initial_Source": {
+    "state": "observed",
+    "last_accepted": {
+      "sequence": 3,
+      "sampled_at_ns": 182462422365
+    },
+    "first_failure": null
+  },
+  "initial_peer": [
+    453,
+    0,
+    0
+  ],
+  "initial_snapshot_at_boottime_ns": 182498513840,
+  "Source_preStop": {
+    "state": "failed",
+    "last_accepted": {
+      "sequence": 48,
+      "sampled_at_ns": 183662962010
+    },
+    "first_failure": {
+      "category": "provider_error",
+      "error_kind": "TimedOut",
+      "observed_at_boottime_ns": 183776721161
+    }
+  },
+  "preStop_peer": [
+    453,
+    0,
+    0
+  ],
+  "preStop_reply_at_boottime_ns": 184041981372,
+  "same_original_observation_cutoff_ns": 186037212505,
+  "same_original_cutoff_qualified": true,
+  "sample_age_at_first_actor_observation_ns": 113759151,
+  "unchanged_sample_budget_ns": 100000000,
+  "failure": "AssertionError: ('pixel10-actual-discovery.log', 255, b'')",
+  "probe_wait": {
+    "role": "034-pixel10-actual-discovery.log",
+    "pid": 542,
+    "argv": [
+      "/usr/libexec/pokelinux-fixture/pixel10-output-discovery",
+      "/run/user/1000/pixel10-profile/discovery.json"
+    ],
+    "returncode": 255,
+    "actual_direct_parent_wait": true,
+    "waited_at_boottime_ns": 183978563093,
+    "original_cutoff_ns": 212621869397,
+    "spawn_admission_cutoff_ns": 212621869397,
+    "original_wait_cutoff_ns": 212621869397,
+    "wait_before_original_cutoff": true,
+    "stdin_pipe_present": false,
+    "stdin_pipe_closed": true,
+    "stdout_bytes": 0,
+    "stdout_limit": 1048576,
+    "output_overflow": false,
+    "stdout_EOF": true,
+    "stdout_EOF_at_ns": 183978971326,
+    "EOF_before_original_cutoff": true
+  },
+  "probe_budget_established_at_boottime_ns_derived": 182621869397,
+  "actual_probe_spawn_time_exported": false,
+  "ordered_applied_profile_receipts": {
+    "ordered": {
+      "sha256": "1e24221938e5e9ce64495d671ef6380da979fa2d6644825c917863485af03216",
+      "bytes": 449,
+      "ready_callback_boottime_ns": 182146741813,
+      "physical_load_completed_boottime_ns": 182256753645
+    },
+    "applied": {
+      "sha256": "f0958e5f532e1a34392a30ba2750d0affd496043b9323d4d49db5bc18d0b624d",
+      "bytes": 643,
+      "actual_native_pixels": [
+        1080,
+        2424
+      ],
+      "actual_nominal_mm": [
+        65,
+        146
+      ],
+      "actual_scale": 2.625,
+      "simulation_only": true
+    }
+  },
+  "final_Pixel10_measure_qualified": false,
+  "new_capture_qualified": false,
+  "normal_Sounds_launched": false,
+  "completed_boundary_steps": 0,
+  "completed_PCM_invocations": 0,
+  "raw_PCM_windows": 0,
+  "measured_PCM_frames": 0,
+  "cause_known": false,
+  "removed_raster_probe_paint_not_a_necessary_trigger_of_this_expiry": true,
+  "compositor_rendering_otherwise_excluded": false,
+  "native_owner_StopCLI_actualwait0": true,
+  "native_owner_actualwait0": true,
+  "SourceChild_numericwait_signal_not_exported": true,
+  "guest36_actualwaits_mergedEOF_before_originalcutoffs": true,
+  "guest_expected_exit_aggregate_passed": false,
+  "unexpected_exit": "discovery255(expected0)",
+  "adopted_subreaper_waits": [
+    {
+      "pid": 502,
+      "actual_guest_subreaper_wait_exit": 0,
+      "at_boottime_ns": 184425306088
+    },
+    {
+      "pid": 539,
+      "actual_guest_subreaper_wait_exit": 1,
+      "at_boottime_ns": 184425529355
+    },
+    {
+      "pid": 564,
+      "actual_guest_subreaper_wait_exit": -9,
+      "at_boottime_ns": 184425740278
+    }
+  ],
+  "boot3waits0_QEMU0_host7waits_bothEOF_DockerCLI0": true,
+  "same_daemon_exactCIDabsent_inputclosure": true,
+  "raw_unresolved_handle_preserved_semanticaggregate_only": "c14ad07fffe839351b5fb99b42abc7800c5135a412169aa79d1ff077cde91a0c",
+  "Root_native_actualwait": "17464 exit1",
+  "proofs": [
+    {
+      "path": "selection.json",
+      "sha256": "938e1a176ecd52bf1cd1252e24d5183c2f0a5bdb137b98dd131673ec4aca9104"
+    },
+    {
+      "path": "command.json",
+      "sha256": "d0a6db4f5ba9703f2c30235aeb67551f77cc3f5bd07bb9947ce478c374cbb6e7"
+    },
+    {
+      "path": "result.json",
+      "sha256": "e33c70f49c39fdec1a1e62d337d7abfd03f9813184170bdb49b5dd12c03aad3e"
+    },
+    {
+      "path": "execution.json",
+      "sha256": "896c921bdbd9c13f6a5a465782aec9b9e42b72133286f6314adeaeb1528dd107"
+    },
+    {
+      "path": "boot-result.json",
+      "sha256": "0af1af0cdbad7f727e5182fab27c332658a04e6b39969c444a2fded1ddce81a8"
+    },
+    {
+      "path": "author-failed-qualification.json",
+      "sha256": "68d8b80372cea05fa60286263a707397d01c793ec3ff1b9aaa1a87d24ba732e1"
+    },
+    {
+      "path": "Root-failed-qualification.json",
+      "sha256": "fc6ba28650dacc4c456501ca21cca83e40d0909a3a1720f390263e4bce96b29b"
+    },
+    {
+      "path": "Root-source-review.json",
+      "sha256": "59e1efdae540ac4d70b2687caee8476b48c2d456f4eec29680ee918b24ff0746"
+    },
+    {
+      "path": "Root-prelaunch.json",
+      "sha256": "a42c4211dbf57fe055a41d5251baa22a254e816d8a66b2cfd579416b77ca400b"
+    },
+    {
+      "path": "no-pcm.json",
+      "sha256": "2849055f946cf1519ce60fdd22aa3939a0b1f5c2b29f379179d8b3c9f818ad19"
+    }
+  ],
+  "next": "One bounded public startup-event timing witness before choosing a repair; no further fixture guesses, lease relaxation or cached-fact heartbeat.",
+  "physical_phone_accessed": false,
+  "matched_Google_kernel_selected": false,
+  "hardware_qualified": false
+}

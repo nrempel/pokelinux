@@ -44,6 +44,20 @@ The captured measurement surface is not a phone app preview. The raw PNG and
 compiled authored ELFs remain private; `observed-evidence.json` exports only
 safe authored metadata, exact hashes and qualifications.
 
+## Discovery without a measurement window
+
+`qt-output-discovery.cpp` derives from the presenting probe below. It observes
+actual QScreen, wl_output and DRM metadata without constructing a QWindow or
+painting a measurement surface. It emits no `qt_window`; its output alone cannot
+pass `measure.py`. The composed fixture must retain all window/exposure/DPR guards
+using the identity-bound actual phone-app frame and current output before capture.
+
+It compiles strictly against the existing ARM Qt6Gui/Wayland/libdrm SDK. The
+[matching replay](../../docs/native-session-owner.md#non-presenting-discovery-replay)
+still fails at discovery255 before Sounds. Compile success is not runtime or
+Pixel-profile qualification. The original presenting probe and its historical
+qualification below remain separate; neither is an automatic fallback.
+
 ## Selection and execution
 
 `plan.py` freezes a fresh selection. It does not boot a VM:
