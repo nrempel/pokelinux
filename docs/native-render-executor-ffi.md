@@ -114,6 +114,11 @@ The passing Rust panic test separately SIGKILLs/actually reaps four authored
 quarantine children; their process disposal proves no native retirement. Failed
 functional aggregates are not made successful by outer closure receipts.
 
+The [executor GL lifecycle checkpoint](native-render-executor-gl.md) now qualifies an actual
+missing-handshake RED after all eight GL cases, 42 packets and six sync-file
+facts. Stop returns `unknown request`; no finalize, unload or Rust join/release
+occurs. Matching AQ15/current-ABI execution, Source GREEN and phone gates remain open.
+
 ## Next native and phone gates
 
 Build one matching AQ15/Hyprland/Rust/SDK/plugin cohort, then select this worker

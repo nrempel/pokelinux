@@ -150,6 +150,11 @@ cases pass with six real sync-file observations before exact pixel readbacks,
 owner/context/allocation refusals and EOF/unload/join. Explicit native plugin
 sources use the unchanged earlier Frame cohort. The production Rust executor,
 AQ output/presentation, unchanged Source7 and all phone gates remain open.
+The [executor GL lifecycle checkpoint](docs/native-render-executor-gl.md) now qualifies an actual
+missing-handshake RED after all eight GL cases, 42 packets and six sync-file
+facts. Stop returns `unknown request`; no finalize, unload or Rust join/release
+occurs. Matching AQ15/current-ABI execution, Source GREEN and phone gates remain open.
+
 Earlier [permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
 passes four touch/graph/PCM groups using root-authored focus. Physical audio,
 production session completion and all phone gates remain open.

@@ -121,6 +121,11 @@ quarantine/reaping in CPU tests proves
 neither real native drain nor blocked-driver recovery; all Source/full functional,
 ARM/Google-kernel/phone requirements below remain in force.
 
+The [executor GL lifecycle checkpoint](native-render-executor-gl.md) now qualifies an actual
+missing-handshake RED after all eight GL cases, 42 packets and six sync-file
+facts. Stop returns `unknown request`; no finalize, unload or Rust join/release
+occurs. Matching AQ15/current-ABI execution, Source GREEN and phone gates remain open.
+
 The [native Rust session owner](native-session-owner.md) implements compositor
 Child custody; its original Sounds assembly has32 host boundary passes,
 host/ARM64 compilation and actual six-file Make staging. The current

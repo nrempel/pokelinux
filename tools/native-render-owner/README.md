@@ -71,3 +71,9 @@ not native cleanup. GREEN needs real sync_file/POLLIN success before SHM readbac
 local retirement then context cleanup/DONE/EOF/unload/join/task absence. Do not
 unload the supplying plugin/library before actual worker join. The remaining
 Rust executor C ABI and matched AQ15/native cohort are separate required work.
+
+The [executor lifecycle checkpoint](../../docs/native-render-executor-gl.md)
+adds `executor-handshake-oracle.py`, the exact classifier frozen before the new
+worker actor. Its actual RED follows successful GL work with an unknown Stop
+request. The GREEN branch requires authenticated Stop/finalize, actual join,
+watch removal and release before unload; that branch remains unexecuted here.

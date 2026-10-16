@@ -1,0 +1,135 @@
+{
+  "schema": 1,
+  "scope": "Actual prepared native x86 KVM missing public Stop/finalize handshake RED; historical Frame GL cohort only",
+  "public_base": "f3be35a74d48245d41638f87b78847421f6dd0c0",
+  "epoch": "RED",
+  "actual_boundary": {
+    "GL_cases_passed": 8,
+    "authenticated_actor_packets": 42,
+    "actor_wire_bytes": 18002,
+    "correlated_sync_file_completion_facts": 6,
+    "exact_RGBA_readbacks": 6,
+    "RGBA_bytes_per_readback": 192,
+    "retained_pixel_and_padding_bytes_per_format": 96,
+    "command": "pokelinux-owner-gl stop",
+    "reply": "unknown request",
+    "finalize_calls": 0,
+    "plugin_unload_attempted": false,
+    "Rust_join_or_release_qualified": false,
+    "order": [
+      "all GL cases and fence/readback controls",
+      "worker local cleanup and DONE receipt",
+      "SEQPACKET EOF",
+      "public Stop request and unknown reply",
+      "fresh same-Source owned-focus sample",
+      "retained compositor SIGKILL and actual wait -9"
+    ]
+  },
+  "selected_historical_cohort": {
+    "source_base": "130a096d229a799450bbd69f3a780b553c4c74ce",
+    "ELF_sha256": "91848cff35e3d7425c487444bc251d685924c942e603cef427f004d350e584fe",
+    "SDK_sha256": "c1775e08aabb028b08904f37d78f8242b7791c5768a6c0994783c0d88b53d5d5",
+    "SDK_files": 507,
+    "recorded_existing_Rust_archive_sha256": "3cf0a142115bc2f261086cfbb9dbfc0d543d0988219f08b1c4988d70f5a36f9b",
+    "four_local_helper_sources_compiled_into_plugin": true,
+    "new_Rust_executor_selected": false,
+    "new_native_ELF_or_SDK_cohort_claimed": false
+  },
+  "actual_GL_profile": {
+    "vendor": "Mesa",
+    "renderer": "virgl (LLVMPIPE (LLVM 19.1.7, 256 bits))",
+    "version": "OpenGL ES 3.2 Mesa 26.2.4-arch1.1"
+  },
+  "actual_closure_each_attempt": {
+    "direct_waits": 50,
+    "PIPE_EOFs": 57,
+    "adopted_child_waits": 1,
+    "direct_waits_by_host_boot_guest_bootstrap_early_component": [
+      7,
+      5,
+      2,
+      4,
+      2,
+      30
+    ],
+    "merged_PIPE_EOFs": 43,
+    "host_stdout_and_stderr_EOFs": 14,
+    "ECHILD_and_watched_descendant_pidfd_dead_proc_absent": true,
+    "all_receipts_within_original_cutoffs": true,
+    "original_guest_work_close_QEMU_boot_close_outer_seconds": [
+      660,
+      700,
+      780,
+      800,
+      840
+    ],
+    "actual_QMP_peer_and_KVM_enabled_present": true,
+    "guest_SHUTDOWN_then_same_socket_EOF_QEMU0": true,
+    "foreground_CLI0_then_exact_CID_absence_same_daemon": true,
+    "process_disposal_does_not_qualify_native_cleanup": true
+  },
+  "Source_window": {
+    "lease_ns": 100000000,
+    "same_incarnation_owned_focus_before_and_after_Stop": true,
+    "sample_sequences": [
+      6,
+      14
+    ],
+    "authored_or_relayed_Source_packets": false,
+    "later_disconnect_after_intentional_teardown": true,
+    "Source_GREEN": false
+  },
+  "input_continuity": {
+    "actual_pre_and_post_closure_under_shared_lock": true,
+    "selected_file_pins_rechecked": 49,
+    "small_external_pins_rechecked": 15,
+    "base_images_rehashed_by_independent_reviewer": false
+  },
+  "retained_failed_attempt": {
+    "attempt": "Root1",
+    "aggregate_passed": false,
+    "execution_sha256": "82dcdf99318f2cfa184e148ab434aebdda3178f744db13aa81aa8f1d98cda33d",
+    "failure": "Copied/generated classifier bytecode input hash mismatch only; physical closure and target observations independently checked",
+    "Root2_correction": "Exclude7 cached inputs; disable bytecode writes before imports in6 entrypoints",
+    "classifier_actor_GL_oracles_runtime_requirements_unchanged": true
+  },
+  "Root2_artifact_sha256": {
+    "execution.json": "f129480dd9dc03cdfb3ba41e8f0baf4c398b4741200bd84ea6c0ed3a9772da1e",
+    "selection.json": "d1a37d4398191f3d3648eaf4fd31a0d9f0022d64f9cbe36fbad72962be3db3b9",
+    "command.json": "b3b11442339e2c331ace7e3904075e7ce7bcd05f5e6bb9c9d6401c87a009bad9",
+    "component/test-result.json": "d9f581b12e15656621260decdc0e7939d3aa207fd356b3a6299c040214e0be8d",
+    "result.json": "682b0dd5ec0d29d62f54caaf4af5f74457d19f8ba506225adf258261731158e6",
+    "boot-result.json": "a91db7c370c77d7a37de5ebfcf5bfc4226a38ed2dabf0102cdf9009e4148e0b1",
+    "bootstrap-result.json": "6810c109790f325e368e2595dccbb675d9bb4da3e18069bee17c91b7719a445b"
+  },
+  "executed_source_sha256": {
+    "source/controller.py": "bc0f24a1a02ec6eeeaf5a5b5b914df892117b01bf0c2f26c412543512c2a18ac",
+    "source/owner_gl_epoch.py": "d7fc7c6640891069e8ab725c2da45546307596def099cb43699f15012fb552a4",
+    "source/ngl-behavior-actor.cpp": "059886fd0dbadce23fa6f598528ee1116cf35001dc102a40315c666266da908c",
+    "source/run-selected.py": "6fab560b58d3353c95a60623015de5b290b4b5209f331fd990a92fb22f30ce9b",
+    "source/boot.py": "9d051392da7c148e1300279f39cffc946277ba77e95240eaf80b26de1c2aa1ac",
+    "source/guest.py": "8201244e536185a16699f9c5ba99c6d03a73274e6cc7871d98961ec7c00188e4",
+    "source/cloud-bootstrap.py": "4864609f3562c107e1868e36d8e15deaf15984a6c385de4b3af4fe9a69c56603",
+    "source/early.py": "2c77a86c6f4aff4a1c390a7e55e5a2ea42a7663d2b6b226f2dd7fdeb6cd87a8b"
+  },
+  "independent_qualification_sha256": "b9ebb5b54881e316e740e8c5326bcc40256e3d5fc36b37991f2ec4eb0fc9770e",
+  "pending_matching_AQ15_current_ABI_work": {
+    "authored_and_reviewed_source_only_in_this_checkpoint": true,
+    "completed_build_selected_or_executed": false,
+    "remaining": "One matching Hyprland/AQ15/Rust/SDK/plugin cohort; real worker-created holder, public Stop/nonblocking finalize and actual join/release before unload"
+  },
+  "not_qualified": [
+    "native Source GREEN",
+    "AQ output commit, scanout or presentation",
+    "GPU-wide or device retirement",
+    "blocked-driver recovery",
+    "cold normal app/PCM and full service/session composition",
+    "ARM or matched Google-kernel execution",
+    "physical phone or full smartphone completion"
+  ],
+  "public_frozen_classifier": {
+    "path": "tools/native-render-owner/executor-handshake-oracle.py",
+    "sha256": "d7fc7c6640891069e8ab725c2da45546307596def099cb43699f15012fb552a4",
+    "GREEN_executed": false
+  }
+}

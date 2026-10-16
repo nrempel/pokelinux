@@ -67,6 +67,11 @@ exact container absence and unchanged locked inputs. Authenticated live Source
 samples qualify the requested before/after windows only. Later terminal Observer
 records remain preserved; their exact time and cause are not inferred.
 
+The [executor GL lifecycle checkpoint](native-render-executor-gl.md) now qualifies an actual
+missing-handshake RED after all eight GL cases, 42 packets and six sync-file
+facts. Stop returns `unknown request`; no finalize, unload or Rust join/release
+occurs. Matching AQ15/current-ABI execution, Source GREEN and phone gates remain open.
+
 ## Selected boundary and remaining work
 
 These runs keep the earlier Frame ELF91848cff, matching 507-file SDKc1775 and
