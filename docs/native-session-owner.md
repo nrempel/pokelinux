@@ -132,6 +132,38 @@ also pass. The other24 original host cases and prior Qt32 are not rerun.
 binds this new source, fixed tests, actual worker results, artifacts and failed
 ARM selections separately. The corrected combined ARM runtime remains open.
 
+## Cold-start Source failure
+
+Two further generic ARM selections use the corrected production owner and
+original Hyprland/Source. Both reach the owned UID1000 compositor but fail at
+Pixel10 profile control before normal Qt or PCM. The second retains a dead
+compositor pidfd and absent process before any cleanup Stop. Policy readiness and
+the accepted Stop reply do not establish Source health. Actual owner wait0,
+QEMU/CLI exit0 and exact container absence are process closure, independent of
+these failed functional results. One guest audio-stop cleanup error is preserved.
+
+A separate private owner adds a bounded summary only after Source drain and its
+actual child wait. It records first terminal `TimedOut`, last returned sequence1
+and sample age120,921,124ns against the unchanged100,000,000ns lease; actual child
+exit is signal9. The selected owner fences and kills a failed Source. This
+instrumented epoch remains failed and does not qualify production behavior or
+retroactively diagnose the two preceding runs. Existing compositor logs end
+during graphics initialization; the exact blocking startup operation is unknown.
+
+The original adapter publishes synchronously during `PLUGIN_INIT`, then arms its
+25ms Wayland timer. Focus/lock callbacks can also publish before first dispatch.
+The next repair must gate every publication until an actual timer callback,
+while retaining conservative state observation. The fixture must complete heavy
+display-profile setup before Source activation. Test the shared production
+publisher through actual Wayland dispatch and its credentialed packet boundary,
+including permanent expiry after a real later stall, then replay original
+Hyprland with the unmodified production owner. The100ms freshness lease,
+original120s first-sample allowance and terminal failure remain unchanged.
+
+[Startup evidence](evidence/native-session-startup-provenance.json) binds the
+failed selections and diagnostic separately. No new normal-window capture,
+virtual PCM or physical phone qualification follows.
+
 ## Remaining integration
 
 Next run the production owner with original Hyprland/Source, the fixed desktop

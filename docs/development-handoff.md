@@ -57,8 +57,20 @@ native storage-worker groups, strict final host/ARM builds and Make staging.
 The example and validator require an existing root0700 policy directory.
 Original24 unrelated host cases are reused; no39-case current aggregate exists.
 
-Next execute the corrected combined production owner/original Source/fixed
-desktop/normal Sounds path in ARM with independent grant and real native focus. Qualify
+The corrected production owner reaches original Hyprland in two further ARM
+selections, but both fail during display-profile setup before Qt/PCM. A separate
+private owner diagnostic records first terminal `TimedOut`, sequence1 age120.9ms
+against the100ms lease, and actual compositor child SIGKILL9. That diagnostic is
+not a production GREEN and does not identify the blocking startup operation.
+The producer emits synchronously during plugin initialization before timer
+dispatch; all emission paths need first-dispatch gating. Complete heavy fixture
+display setup before Source activation. Preserve the original lease and terminal
+failure, and restore the unmodified owner for functional qualification. See
+[startup evidence](native-session-owner.md#cold-start-source-failure).
+
+Next qualify the producer repair through actual Wayland timer/socket boundaries,
+then execute the production owner/original Source/fixed desktop/normal Sounds
+path in ARM with independent grant and real native focus. Qualify
 null-focus background lease continuation, then terminal Source loss without
 app/audio revival. Preserve the earlier ARM selection and its authored-focus
 scope. Do not reopen auth/PAM or a broad static/diagnostic campaign. Hardware

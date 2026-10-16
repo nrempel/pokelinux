@@ -1,0 +1,152 @@
+{
+  "schema": 1,
+  "scope": "Failed original-compositor generic ARM startup and a separately modified private owner diagnostic; no functional GREEN, normal Qt, PCM or hardware qualification",
+  "public_base": "f63194a647d1bdfb413b125fc95f8a701d153aa2",
+  "original_adapter_sha256": "b525e1cbeabcb622aaf742931eaa5c764cc815ac2b47cd7a8f0920701d73e899",
+  "production_owner_sha256": "aa0feaa70afba61cb9e4d4ae08db1456bd3c19c2137047b89d679f0a350117dc",
+  "sample_lease_ns": 100000000,
+  "initial_source_allowance_ns": 120000000000,
+  "timer_period_ms": 25,
+  "epochs": [
+    {
+      "epoch": 5,
+      "scope": "production owner with original compositor",
+      "overall_passed": false,
+      "proofs": [
+        {
+          "path": "epoch-5/selection.json",
+          "sha256": "4e282fc023cdccba8f71f938c20cfcd4bd6387e2635a2d1b95946713f836437e"
+        },
+        {
+          "path": "epoch-5/command.json",
+          "sha256": "efabb0763b0ef002996e91268d6b68ca47fa6777d8d31177321a677fd86fe9d1"
+        },
+        {
+          "path": "epoch-5/result.json",
+          "sha256": "5d66b934b76deb49765a3b3d77b185c6b6c6d385f3657e443498303d80727b09"
+        },
+        {
+          "path": "epoch-5/boot-result.json",
+          "sha256": "3dd991afa55cd9c94fca16c423a739a1a95248686e4dfc0be2006a010c48f339"
+        },
+        {
+          "path": "epoch-5/execution.json",
+          "sha256": "d5fe38baa4c2036018a0507b7cf2caf5fc9aa241bb36123d3737193acbcba566"
+        },
+        {
+          "path": "epoch-5/author-qualification.json",
+          "sha256": "7be925afe5882226ec3c4d97d4b8111f450a8c84804e3c1b27a48fca0f234574"
+        }
+      ],
+      "error": "AssertionError: ('pixel10-profile-load.log', 6, b\"Couldn't read (6)\\n\")",
+      "actual_fixed_client_Stop_exit0": true,
+      "actual_owner_wait0": true,
+      "guest_cleanup_errors": [],
+      "Docker_CLI_actual_wait0": true,
+      "same_daemon_exact_CID_absent": true,
+      "driver_recorded_input_closure_unchanged": true,
+      "normal_Qt_or_PCM_qualified": false
+    },
+    {
+      "epoch": 6,
+      "scope": "production owner with original compositor",
+      "overall_passed": false,
+      "proofs": [
+        {
+          "path": "epoch-6/selection.json",
+          "sha256": "29cef243be758b4f61ad23ce366467325efb1d1f0f939fd8332bf5037311091f"
+        },
+        {
+          "path": "epoch-6/command.json",
+          "sha256": "e0962428ba842876dc2dd2c572158a672bf70760a2d61de0fd81ce7c6d05611f"
+        },
+        {
+          "path": "epoch-6/result.json",
+          "sha256": "78035260fcca903ed1ec25ce32de45ae91fa9d57b0a3d01d3bcd7956138d6a6e"
+        },
+        {
+          "path": "epoch-6/boot-result.json",
+          "sha256": "91ae31ac3695d6e582911a1c88f5b7a561442bbb76bfaaa453bfe4f3dfce9c2f"
+        },
+        {
+          "path": "epoch-6/execution.json",
+          "sha256": "7afb98e603cb9ab62e587967099bed5ce2aeaf980df57070610c30436e6d2cad"
+        },
+        {
+          "path": "epoch-6/author-qualification.json",
+          "sha256": "7bb087a197af9214dc003dcb6494b488a1fe12434f9bf83c03bc119d1b49c6d5"
+        }
+      ],
+      "error": "AssertionError: ('pixel10-profile-load.log', 4, b\"Couldn't connect to /run/user/1000/hypr/efb50993780079460b0cbed1363e2166a2de1d9f_1792126922_568624279/.socket.sock. (4)\\n\")",
+      "actual_fixed_client_Stop_exit0": true,
+      "actual_owner_wait0": true,
+      "guest_cleanup_errors": [
+        "audio-stop: ProcessLookupError(3, 'No such process')"
+      ],
+      "Docker_CLI_actual_wait0": true,
+      "same_daemon_exact_CID_absent": true,
+      "driver_recorded_input_closure_unchanged": true,
+      "normal_Qt_or_PCM_qualified": false,
+      "before_Stop_retained_Source_pidfd_dead_and_proc_absent": true
+    },
+    {
+      "epoch": 7,
+      "scope": "private modified-owner diagnostic",
+      "overall_passed": false,
+      "proofs": [
+        {
+          "path": "epoch-7/selection.json",
+          "sha256": "d2d9cbca8f8744eaba49c1855a319da9ced213686d5994c526f3b97a0a11db68"
+        },
+        {
+          "path": "epoch-7/command.json",
+          "sha256": "e9e1283d3a08ff83f14ab0dc83e97a6dd028a0791a2df2edc18f0aee277dcb5c"
+        },
+        {
+          "path": "epoch-7/result.json",
+          "sha256": "5046878951f4f9394eb24c02fe8e7464790e7f633578801e172b629c0a0c471e"
+        },
+        {
+          "path": "epoch-7/boot-result.json",
+          "sha256": "d066e7c2be1207da4dd50cf0211f7ae985a2c4c5db1e4e687d8391d1a2f13de2"
+        },
+        {
+          "path": "epoch-7/execution.json",
+          "sha256": "b3944a82f048fb81c31deef4ada73018e202b27005adb24a48f9022653d05cc1"
+        },
+        {
+          "path": "epoch-7/author-qualification.json",
+          "sha256": "87cf254da52f553f7ce1a975a0b69518ae39fe9c8a4525936320ce1f2b2bc54b"
+        }
+      ],
+      "error": "AssertionError: ('pixel10-profile-load.log', 6, b\"Couldn't read (6)\\n\")",
+      "actual_fixed_client_Stop_exit0": true,
+      "actual_owner_wait0": true,
+      "guest_cleanup_errors": [],
+      "Docker_CLI_actual_wait0": true,
+      "same_daemon_exact_CID_absent": true,
+      "driver_recorded_input_closure_unchanged": true,
+      "normal_Qt_or_PCM_qualified": false,
+      "before_Stop_retained_Source_pidfd_dead_and_proc_absent": true,
+      "diagnostic_summary": {
+        "initialized": true,
+        "first_terminal_kind": "TimedOut",
+        "first_terminal_boottime_ns": 121930665456,
+        "last_returned_sequence": 1,
+        "last_returned_sampled_at_ns": 121809744332,
+        "sample_age_at_first_terminal_ns": 120921124,
+        "fixed_sample_lease_ns": 100000000,
+        "actual_owned_Source_child_exit_code": null,
+        "actual_owned_Source_child_exit_signal": 9
+      },
+      "private_owner_sha256": "0782dd9918e5155f8950b1b27c83cc44d23cf26f59d9573981cee11239b89a1c"
+    }
+  ],
+  "interpretation": "The private diagnostic establishes first terminal TimedOut, sequence1 age120921124ns against100000000ns and actual child SIGKILL9. It does not identify the blocking startup operation or retroactively diagnose epochs5/6. The original adapter publishes synchronously during PLUGIN_INIT before its timer can dispatch.",
+  "limits": [
+    "Admin policy readiness and accepted Stop are not Source freshness evidence",
+    "Process closure is separate from failed functionality; epoch6 guest audio-stop cleanup error remains recorded",
+    "No proprietary input, raw journal, modified diagnostic source or binary is published",
+    "Keep all physical phone and matched Pixel runtime gates open"
+  ]
+}
