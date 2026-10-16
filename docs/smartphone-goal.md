@@ -2,20 +2,24 @@
 
 The [fixed Sounds desktop launch](native-sounds-desktop.md) now qualifies actual
 host credentials and actor-owned launch/duplicate/Stop behavior. Its native client
-and ARM builds are separate from installed Source/audio and normal UI evidence.
-The latter ARM join remains a setup failure under investigation, with no physical
-phone or complete smartphone qualification.
+and ARM builds remain separate from installed Source/audio. A later actual
+public native-client invocation passes on host, without desktop activation.
+The [normal permission-aware ARM join](native-audio-arm-lifecycle.md) now passes
+four touch/graph/PCM groups using root-authored grant/focus controls and native
+Pixel10 captures. Installed session startup and physical qualification remain
+open; this does not complete the smartphone goal.
 
 The [MediaRoute actor](native-audio-lifecycle.md) adds current permission admission,
 approved background leases and real connection withdrawal. Rust64-test/host
-integration and matching Qt component checks pass. Normal target ARM composition,
-trusted Source and installed provisioning remain open; historical direct-stream
-UI evidence below does not close those gates.
+integration and matching Qt component checks pass. Normal target ARM composition
+now qualifies separately above; trusted Source and installed provisioning remain
+open. Historical direct-stream UI evidence below retains its own selection.
 
 The [normal ARM Sounds tracer](native-audio-arm-ui.md) now passes real touch,
 virtual output samples, call interruption, live palette changes, loss/no replay
-and window-close cleanup. Its direct-stream cohort is separate from the next
-current-permission actor join. Hardware, full shell and production Source remain
+and window-close cleanup. Its direct-stream cohort is separate from the later
+current-permission actor join above. Hardware, full shell and production Source
+remain
 open; this does not complete the smartphone goal.
 
 The [media-only Rust client](native-audio-client.md) adds owned nonblocking

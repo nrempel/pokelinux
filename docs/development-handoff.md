@@ -21,33 +21,48 @@ acceptance, delivery, native call state or working physical hardware.
 The [fixed Sounds desktop endpoint](native-sounds-desktop.md) now passes six
 actual host UID/socket/owned-child cases after a genuine three-failure dispatch
 RED. The matching fixed Rust client, desktop metadata, default64-test suite and
-five ARM binary builds qualify within their recorded scopes. Source/audio session
-installation and actual native-client desktop invocation remain open.
+five ARM binary builds qualify within their recorded scopes. A separate actual
+public native-client invocation passes with the actor's actual child wait; it
+uses a sleep app, without desktop activation or Source/audio session installation.
 
-The normal permission-aware ARM join still fails during setup. Its32 component
-checks pass separately; passive observation binds the exact Qt ELF/capture FDs
-and early death. A private actual-parent-wait diagnostic records SIGXFSZ25 under
-the wrapper's global4MiB file limit; the specific file/write is unobserved. Keep
-that diagnostic private and distinct from production evidence. Next replace the
-global fixture limit with dedicated bounded captures, restore the original actor,
-and rerun the unchanged four groups before installed Source/desktop composition.
+The [normal permission-aware ARM join](native-audio-arm-lifecycle.md) now passes
+all four groups: denied quietness, current-grant normal touch and440Hz routing,
+explicit revoke/regrant/reconnect without replay, and fresh selection/call
+preemption/revoke without restored media followed by window close. Independent
+qualification recomputes14 PCM windows/336,000 measured frames. Original native
+captures qualify1080×2424 and QWindow DPR2.625. The selected d982 actor cohort
+predates the fixed desktop endpoint; root-authored grant/focus controls remain
+explicit. The32 prior component passes are reused, not rerun in this epoch.
+
+Earlier setup failures remain failed. A private actual-parent-wait diagnostic
+observed SIGXFSZ25 under a global4MiB file limit, without observing the particular
+file/write. The successful fixture repair restores the original actor and bounds
+capture files in a separate8MiB tmpfs instead of constraining all app files.
+Functional assertions, sample thresholds and deadlines stay unchanged; this is
+fixture repair, without a production-bug TDD claim.
+
+Next implement the installed native session-owner/profile/desktop assembly using
+the existing Observer, per-app display supervisor and audio owner. Its parent
+must retain and actually wait the compositor Child; Observer owns handles only.
+Qualify genuine Source focus and independent grant, null-focus background lease
+continuation, then terminal Source loss without app/audio revival. Do not reopen
+an auth/PAM or broad static/diagnostic campaign. Hardware remains untested.
 
 The [lifecycle MediaRoute boundary](native-audio-lifecycle.md) now owns current
 selection admission and background Media leases through the existing sole audio
 owner.64 library tests, strict Rust/ARM compilation, three caller builds and four
 actual host permission/audio groups pass. The matching target Sounds client
-passes30 socket behaviors plus setup/cleanup. Next execute the finite four-group
-normal ARM lifecycle join in the already closed Qt/PipeWire layer; preserve the
-completed historical direct-stream tracer below. Root-authored lifecycle controls
-qualify this next join only, with production Source/PAM and hardware still open.
+passes30 socket behaviors plus setup/cleanup. The finite four-group normal ARM
+join now qualifies separately above; preserve the historical direct-stream tracer
+below. Production Source/PAM and hardware remain open.
 
 The [normal direct-stream ARM Sounds tracer](native-audio-arm-ui.md) now passes
 all five groups,18 audio socket behaviors and seven paired PCM stages
 (336,000 measured frames), with native1080×2424/DPR2.625 captures and owned
 closure. Live themes use original theme code in an authored theme-only host.
-Keep this completed selection frozen. Next join normal Sounds to the newer
-lifecycle MediaRoute actor in the same closed ARM environment; Source/PAM,
-production provisioning and hardware remain open.
+Keep this completed selection frozen and distinct from the later lifecycle
+MediaRoute ARM join above. Source/PAM, production provisioning and hardware
+remain open.
 
 The [Sounds input repair](native-audio-readonly-input.md) prevents read-only
 polls from cancelling a press. Seven real socket REDs precede18 behavioral host

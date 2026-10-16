@@ -164,5 +164,24 @@
     "current Source/audio/independent policy assembly",
     "normal permission-aware ARM four-group tracer",
     "physical Pixel hardware and matched device policy"
-  ]
+  ],
+  "later_public_native_client_host_invocation": {
+    "public_commit": "b13a04aa0448f60410ae8c9e93d90d174477b9e1",
+    "native_ELF_sha256": "7b3ef113be7d43c0c2b3d6b21c0be742c9f9d26e584d7ee86c960e2feb31f5ec",
+    "receipt_sha256": "6066aabdfee5d9de3f095c6df759cce1881a079a978b14933bda3b9749f4bcea",
+    "review_sha256": "18f164390bd591003e51a020baf3aef1d93f151a58024d65c2fe4765e731f0ee",
+    "test_only_patch_sha256": "beb5307ac8c1375eb4aaed15c274a2cfa8dbcc841adfe81e022000691d443a01",
+    "passed": 1,
+    "filtered": 84,
+    "actual_UID": 1000,
+    "actor_App_UID": 11042,
+    "one_native_client_actual_wait_and_both_PIPE_EOF": true,
+    "one_actual_actor_App_wait_and_pidfd_dead": true,
+    "desktop_file_activation_Source_audio_normal_GUI_ARM_selected": false,
+    "earlier_cases_rerun": false
+  },
+  "later_normal_ARM_composition": {
+    "provenance": "native-audio-arm-lifecycle-provenance.json",
+    "scope": "separate d982 actor cohort; four groups pass; fixed b13 desktop endpoint not executed"
+  }
 }

@@ -43,9 +43,10 @@ transaction.
 
 The separate [fixed desktop launch](native-sounds-desktop.md) now reaches the
 existing actor-owned app path without depending on a Messages provider. Its host
-proof uses an actual UID11042 sleep child; installed Source/audio and normal
-permission-aware ARM UI remain separate. The latter has no qualified frame yet;
-its private startup diagnostic and capture-limit repair are recorded there.
+proof uses an actual UID11042 sleep child, with a later actual public native-client
+invocation. The [normal permission-aware ARM UI](native-audio-arm-lifecycle.md)
+separately passes all four touch/graph/PCM groups with native Pixel10 captures.
+Its root-authored lifecycle controls do not qualify installed Source/audio.
 
 The single target Sounds client uses nonblocking credentialed SEQPACKET to the
 root actor's `app.sock`. Its fifth argument now selects that actor socket; the
@@ -130,6 +131,8 @@ the exact selections and separate scopes. Production embedding must explicitly
 supply `audio::Owner` through `run_with_services`; the existing headless daemon
 and callers with `None` provide no audio service. Installed service/desktop
 provisioning and normal Sounds→current Source/permissions→audio composition
-remain open. Original CLOCK_BOOTTIME tests do not qualify real suspend behavior.
+remain open. The later normal ARM join above qualifies root-authored authority
+only; it does not install a production Source. Original CLOCK_BOOTTIME tests do
+not qualify real suspend behavior.
 Physical routes/AoC, app PCM brokerage, carrier audio, power and device gates
 remain open. No physical phone was accessed.

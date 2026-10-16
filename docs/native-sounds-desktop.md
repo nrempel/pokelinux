@@ -26,7 +26,8 @@ selects `/run/pokelinux/session/launch-sounds.sock`. The Rust helper belongs at
 both the existing `lifecycle-lock` binary and this new client. No executable glob
 or dependency version change was added.
 
-These are compiled client and desktop metadata, not an executed desktop install.
+These include compiled client and desktop metadata, with a later actual host
+native-client invocation below; an executed desktop install remains open.
 The installed session owner, compositor Child custody, trusted profile, Source,
 audio provider and independent policy provisioning remain required. The existing
 headless actor supplies no Source/audio provider automatically. A desktop request
@@ -56,8 +57,12 @@ changing any assertion body. With its required fixture root and built helpers,
 the default library suite passes64 tests with20 ignored, followed by all six
 explicit launch cases. Formatting, all-target Clippy, five host binary builds,
 ARM64 binary builds and ARM library-test compilation pass. ARM compilation is
-not ARM execution. The native fixed client itself is compiled, without a claimed
-actual desktop invocation in this selection.
+not ARM execution. That initial selection compiles the native fixed client.
+A later separate host test executes the exact public client as actual UID1000:
+it receives success, exits0 with both PIPE EOFs, and the actor owns/reaps the
+UID11042 sleep child. One added private test passes with84 filtered; no production
+source changes or earlier case reruns occur. This qualifies the client invocation,
+without desktop-file activation, normal GUI, Source/audio or ARM execution.
 
 Two earlier preparation failures remain excluded: one existing test literal
 needed the new private endpoint type, and the first runtime had insufficient
@@ -71,21 +76,14 @@ exact container removal and same-daemon closure qualify.
 [Hash-only provenance](evidence/native-sounds-desktop-provenance.json) separates
 the scaffold, genuine RED, source-only GREEN and packaging validation.
 
-## Normal ARM join remains open
+## Separate normal ARM composition
 
-The newer permission-aware normal Sounds binary separately passes30 ARM socket
-behaviors plus setup/cleanup. Its normal actor composition has produced no
-qualified frame or PCM group. A bounded passive replay binds the exact ELF,
-UID11042 and correct capture descriptors, then observes early app death. A
-separate private one-statement parent-wait diagnostic records `SIGXFSZ`25 with a
-matching current-boot/exact-PID journal signal, while the private capture wrapper
-imposes a global4MiB file-size limit. The particular write/file was not observed.
-No raw core, memory, backtrace or environment was read or published.
-
-The next controlled fixture repair replaces that global limit with dedicated
-bounded capture storage, retaining the existing capture and functional oracles.
-The diagnostic actor is not a production pass. Preserve the completed historical
-[direct-stream ARM tracer](native-audio-arm-ui.md) as its separate selection.
+The [permission-aware normal ARM Sounds join](native-audio-arm-lifecycle.md) now
+passes all four groups with the selected earlier d982 actor, normal UID11042 Qt,
+actual input and independent virtual graph/PCM. It does not execute this newer
+desktop endpoint or installed Source/audio. Prior setup failures and the private
+SIGXFSZ diagnostic remain preserved; replacing the global file cap with dedicated
+bounded captures repairs the fixture without changing functional oracles.
 
 Next qualify normal desktop launch through the installed Source/audio assembly:
 genuine focus plus an independent grant permits one selection; null focus denies

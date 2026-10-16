@@ -68,7 +68,10 @@ Source/audio deployment and physical-device support.
 The [MediaRoute lifecycle boundary](native-audio-lifecycle.md) likewise carries
 logical IDs and current app permission only. Its provider owns the existing audio
 connection, while the backend profile retains private physical routing. Neither
-host permission/PCM proofs nor generic ARM virtual UI qualify a phone model.
+host permission/PCM proofs nor the separately qualified four-group
+[generic ARM normal UI join](native-audio-arm-lifecycle.md) qualify a phone model.
+That join uses virtual routes and root-authored lifecycle controls; the current
+installed Source/audio session owner remains separate.
 
 ## Boundaries
 

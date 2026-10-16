@@ -1,0 +1,257 @@
+{
+  "schema": 1,
+  "scope": "Normal UID11042 Sounds through selected d982 lifecycle actor and sole native audio under generic ARM, Root-authored grants/focus; newer fixed desktop client is separate host evidence",
+  "selected_public_commit": "d982c3ab039fa67879af7232315e20c8c4c5fd52",
+  "hardware_qualified": false,
+  "phone_accessed": false,
+  "Source_PAM_full_shell_desktop_activation_selected": false,
+  "runtime_hashes": {
+    "selection.json": "5e817f7d24cc31f0aacf9dc09b65cd204974c0cdb72146dfefc562fb16f12dfe",
+    "command.json": "1dd277fb69133416e9b9086520a26b78c5b35f5077bfe0ad0bf045f1edcd4292",
+    "result.json": "3b890dea4a50be72028b2f89d8f7d9393de2a9cd63d1ce8e8493aed8d1998a0b",
+    "boot-result.json": "83a40e653dc547b3e1722baffb647dafb6c04edf25bb3d476e247baa16806620",
+    "execution.json": "b3336794625f3cd91de309d566c5d184e637bf427c87af2e081a5b8692b40ab9"
+  },
+  "qualifications": [
+    {
+      "path": "author-corrected-receipt.json",
+      "sha256": "3f7f2cc70dd8a62f5be75c6622ad2f174e3fbb3f2e127c836c05974cdba097a4"
+    },
+    {
+      "path": "independent-PCM-receipt.json",
+      "sha256": "ec144bbb3e101430dd5810622222a36279c4bdf397441a050c7ee9f7d22b8f4e"
+    },
+    {
+      "path": "Root-final-review.json",
+      "sha256": "8c364f580b4a0f875eaa3bca86c67649a2f2d92f3c3b587e01b804990d4a017e"
+    }
+  ],
+  "source_binding": [
+    {
+      "path": "native-lifecycle/src/apps.rs",
+      "sha256": "43d2dcfce6d21a5c1e0863696cc572df5321f49a4b592791c38f440970c1e154",
+      "selected_commit": "d982c3ab039fa67879af7232315e20c8c4c5fd52"
+    },
+    {
+      "path": "native-lifecycle/src/service.rs",
+      "sha256": "a54bce38b33a4795a765a032c5f48d3c9d3b236754bd9771845c713f79407701",
+      "selected_commit": "d982c3ab039fa67879af7232315e20c8c4c5fd52"
+    },
+    {
+      "path": "native-audio-ui/AudioClient.cpp",
+      "sha256": "26e1a3aa3e05f2cba5a0824ae219f000aec1fe4edc35b6c31492945b1c159b9a",
+      "selected_commit": "d982c3ab039fa67879af7232315e20c8c4c5fd52"
+    },
+    {
+      "path": "native-audio-ui/AudioClient.h",
+      "sha256": "04753b166c879ae2a0497202e294a75100dfe51c0b69f3231fa942bb1cce0e4d",
+      "selected_commit": "d982c3ab039fa67879af7232315e20c8c4c5fd52"
+    },
+    {
+      "path": "native-audio-ui/AudioClientTest.cpp",
+      "sha256": "8a23bb432f1cb05eea04386551b57502431884f36fee1d147381ba8cb5cb8b82",
+      "selected_commit": "d982c3ab039fa67879af7232315e20c8c4c5fd52"
+    },
+    {
+      "path": "native-audio-ui/main.cpp",
+      "sha256": "0ac78083b40d688dca5b3c771ff6338c25c100f9aedf74fdfb8957dfc5cd0f2a",
+      "selected_commit": "d982c3ab039fa67879af7232315e20c8c4c5fd52"
+    },
+    {
+      "path": "native-audio-ui/SoundsView.qml",
+      "sha256": "eaa651d226d0cfcc3df4c04d6888937110e3de2fdde362af664676eabf0c4635",
+      "selected_commit": "d982c3ab039fa67879af7232315e20c8c4c5fd52"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "bins/lifecycle-launcher",
+      "sha256": "3034b0f058c4e80814cd29003444b80a48e7535abb27802cf5ed674fe99b1867"
+    },
+    {
+      "path": "bins/permission-actor",
+      "sha256": "9c61b9e91c563093c08b9f69510b8a0795d5ac10796d7ecf5e58c96bce8285fa"
+    },
+    {
+      "path": "bins/pokelinux-audio",
+      "sha256": "a12466b32635d13fa8b0c5e593ace41e8cba9f4c3811b2d95b398837312f2f31"
+    },
+    {
+      "path": "bins/pokelinux-sounds",
+      "sha256": "684057c40c05a26e69dfc175b125b5130deda0a29980b4505d7b1a58cdc5fadf"
+    },
+    {
+      "path": "bins/sounds-exec",
+      "sha256": "c0d6e5220a57a8a0634234a3d93b6b4bd1d2d5c185d783613cfa02723321ecf3"
+    }
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "name": "actor_normal_UID_direct_denial_no_grant_disabled_tap_quiet",
+      "passed": true
+    },
+    {
+      "id": 2,
+      "name": "current_grant_foreground_normal_tap_actor_audio_PCM",
+      "passed": true
+    },
+    {
+      "id": 3,
+      "name": "explicit_revoke_regrant_one_normal_reconnect_no_replay",
+      "passed": true
+    },
+    {
+      "id": 4,
+      "name": "fresh_selection_call_preemption_revoke_no_restore_WMclose_actor_reap",
+      "passed": true
+    }
+  ],
+  "prior_Qt_components": {
+    "passed": 32,
+    "current_epoch_rerun": false,
+    "receipt_sha256": "adc797f76e8890d929b47c06ef3ba5f255ce5998aa770eda175f8e8a4072510c"
+  },
+  "PCM": {
+    "fixed_oracles_sha256": "241aeeb82a3fa43a3b5541d76d1e2d2563d88144377284d473133c7a763dbc39",
+    "observer_sha256": "e04e3cf638a56c6a800a1c8b8cab4a172acd99b218a93e711958e433d87ca271",
+    "raw_windows": 14,
+    "raw_frames_per_window": 33600,
+    "discard_frames_per_window": 9600,
+    "measured_frames_per_window": 24000,
+    "measured_frames_total": 336000,
+    "capture_deadline_seconds": 6,
+    "all_raw_windows_fixed_oracles_pass": true,
+    "observer_wait_stream_counts": {
+      "waits": 71,
+      "stdout_PIPE_EOF": 57,
+      "stderr_PIPE_EOF": 43,
+      "stdout_DEVNULL_excluded": 14,
+      "stderr_regular_file_excluded": 28
+    },
+    "all_seven_observer_ECHILD": true,
+    "selected_inputs_rehashed": 225,
+    "external_inputs_rehashed": 350
+  },
+  "capture_fixture_repair": {
+    "prior_observed_signal": 25,
+    "signal_name": "SIGXFSZ",
+    "exact_triggering_filename_observed": false,
+    "global_RLIMIT_FSIZE_override_selected": false,
+    "capture_tmpfs_hard_bytes": 8388608,
+    "accepted_metadata_bytes": 16392,
+    "accepted_stderr_bytes": 4194304,
+    "private_wait_instrumentation_selected": false,
+    "original_production_actor_selected": true,
+    "production_bug_or_TDD_RED_claimed": false,
+    "wrapper_source_sha256": "1c01a8662ff3af05e4866736d97cbe80d388dae47e12551da57fcba9f16d579d",
+    "wrapper_ELF_sha256": "c0d6e5220a57a8a0634234a3d93b6b4bd1d2d5c185d783613cfa02723321ecf3"
+  },
+  "ownership": {
+    "Root_native_runner_actual_wait_exit": 0,
+    "CLI_actual_wait_exit": 0,
+    "QEMU_actual_wait_exit": 0,
+    "exact_owned_container_absent": true,
+    "same_daemon": true,
+    "host_waits": 7,
+    "boot_waits": 3,
+    "guest_waits": 82,
+    "shutdown_waits": 1,
+    "observed_descendant_pidfds_separate_from_waits": 84,
+    "capture_tmpfs_unmount_actual_wait0": true,
+    "cleanup_errors": [],
+    "numeric_Qt_exit_or_generation_exported": false,
+    "Qt_reap_scope": "ordered source-backed inference after actual external pidfd death and authenticated principal0 snapshot; native actor Stop/wait0 drains retained slots"
+  },
+  "Pixel10_profile": {
+    "native_pixels": [
+      1080,
+      2424
+    ],
+    "target_QWindow_DPR": 2.625,
+    "nominal_PPI": 422,
+    "logical_density": 420,
+    "physical_mm": [
+      65,
+      146
+    ],
+    "resize_or_crop_used": false
+  },
+  "native_captures": [
+    {
+      "path": "Sounds-explicit-reconnect-attempt-1.png",
+      "sha256": "ef7198bd81b146954376c188e32183ba0dd3ef4bccaf8469fd157f282237b9a9",
+      "guard_sha256": "8c2ead6ddfadcec4a581aac503e714cbd2fb5b2018ce87245d9ac552b9e7915a",
+      "native_pixels": [
+        1080,
+        2424
+      ]
+    },
+    {
+      "path": "Sounds-fresh-selection-attempt-1.png",
+      "sha256": "8038867ba224c4d5b628d135067e65c1fab4a07e7aed2d8c6a40bd16e6eb6f16",
+      "guard_sha256": "9b3f505850acff45418ef25f81a8ca43e7ce661f1fe23d37180450c818ba1305",
+      "native_pixels": [
+        1080,
+        2424
+      ]
+    },
+    {
+      "path": "Sounds-granted-attempt-1.png",
+      "sha256": "8311818cb294c235ef414ae953ef0c07a0ade2558b294c40499a25248b3f2f4a",
+      "guard_sha256": "0700355ceec1ea9a07e8549e6b3e0aebf658941f584962a088c786c4328d1a61",
+      "native_pixels": [
+        1080,
+        2424
+      ]
+    },
+    {
+      "path": "Sounds-granted-attempt-2.png",
+      "sha256": "6ec85a4f517c2444de0c6160d41fd1d98a9377549075a8707a721b04bc38dc4d",
+      "guard_sha256": "9685c86d1ef8742e57b52be6bd13ed55bff5798911a92ab39fbbdec251eb7960",
+      "native_pixels": [
+        1080,
+        2424
+      ]
+    },
+    {
+      "path": "Sounds-no-grant-attempt-1.png",
+      "sha256": "6b499794e730679f5a52e33a92609cf6ad0161876c0a1bc13fe4eda8b20c763b",
+      "guard_sha256": "344ecc6420e8a243cbfe33f4bf8713847f7f3c3e0e118f92ef57ee4b32639e44",
+      "native_pixels": [
+        1080,
+        2424
+      ]
+    }
+  ],
+  "published_captures": [
+    {
+      "path": "docs/images/sounds-arm-actor-denied.png",
+      "sha256": "6b499794e730679f5a52e33a92609cf6ad0161876c0a1bc13fe4eda8b20c763b"
+    },
+    {
+      "path": "docs/images/sounds-arm-actor-tokyo-night.png",
+      "sha256": "8038867ba224c4d5b628d135067e65c1fab4a07e7aed2d8c6a40bd16e6eb6f16"
+    }
+  ],
+  "retained_prior_failures": [
+    {
+      "path": "first-startup-failed-facts.json",
+      "sha256": "663a0cd2eebaf7fcc275a189b6089fe019aaee2b8ec503f915ab97cf00be32b3"
+    },
+    {
+      "path": "passive-startup-failed-facts.json",
+      "sha256": "91e9449af5f04e8490d6e6b8b4c33c49661dff4cf144c91a824fd16bd90fc166"
+    },
+    {
+      "path": "private-SIGXFSZ-failed-facts.json",
+      "sha256": "bbf68d6b36c6e00ba9d327cf9a1710496d778f0771abc3fdf0f7d90fccee2c43"
+    },
+    {
+      "path": "first-retrospective-author-checker-failed.json",
+      "sha256": "dee47c58c4c65f49e31f0250a0783970f515519bc4b15c1bda4293076c3ef504"
+    }
+  ],
+  "checker_correction_scope": "Read-only checker corrected to frozen ordered_quiet observation admission before original endpoint; final completion113.5ms after endpoint within original command/work cutoffs. No runtime/oracle/deadline change or rerun.",
+  "raw_samples_journals_private_audit_published": false
+}
