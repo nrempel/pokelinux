@@ -381,8 +381,16 @@ A later [render-witness replay](native-session-x86-runtime.md#render-witness-rep
 retains31 committed landmarks with zero flags. A112.844ms separation between
 adjacent LAST_MOMENT/POST observations lies within its113.029ms producer gap;
 this identifies no particular call, matched frame or rendering cause. Full
-composition still fails before Sounds/PCM. Narrow the next observation to the
-original endRender function, preserving Source policy and every functional guard.
+composition still fails before Sounds/PCM; Source policy and every functional
+guard remain unchanged.
+The subsequent [paired fence observation](native-endrender-observation.md) narrows
+one runtime gap to116.618ms around createSyncFDManager. Its later inner-fence
+component passes24 frozen-v2 tests and a separate full source build2 passes with
+matching499-file SDK. The new replay observes113.338ms around eglCreateSyncKHR
+inside a113.644ms Source gap, then still fails before Sounds/PCM. This establishes
+no driver or prior-failure cause and supplies no rendering repair. The next planned
+bounded EXECBUFFER ioctl observation remains unimplemented/unqualified; see the
+focused report for its owned-compositor/worker scope.
 Matching ARM64 compilation passes separately, without ARM execution.
 
 Complete native CPU-speed execution of the current production owner and

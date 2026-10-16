@@ -1,10 +1,15 @@
 # Bounded endRender observation
 
-A fresh native x86 replay now observes116.618ms between marks around
+The preceding native x86 replay observes116.618ms between marks around
 `createSyncFDManager` in one paired endRender invocation, inside a116.918ms Source
 sample gap. The compositor dies before policy-service readiness; normal Sounds/PCM
 remains unreached. The preceding13-case component qualification and separate
-native source build remain distinct from this runtime failure.
+native source build remain distinct from this runtime failure. A later inner-fence
+component passes24 frozen-v2 cases after eight semantic failures, and source
+build2 passes with a complete matching499-file SDK. Its fresh matching replay
+observes113.338ms around eglCreateSyncKHR in invocation2 inside a113.644ms Source
+gap and still fails before Sounds/PCM. This establishes no inner driver/thread/
+ioctl, exclusive CPU, frame or prior Arch/ARM cause and supplies no repair.
 [Hash-only evidence](evidence/native-endrender-observation-provenance.json) binds
 each scope; earlier ARM and native composition failures remain failed.
 
@@ -25,8 +30,8 @@ carries a local ID1..128 through nested calls and cleanup. Pre-return intent and
 cleanup marks remain distinct from actual return, published only on the explicit
 subsequent line in the selected caller after its token was consumed at GL entry.
 
-The existing single event-loop writer retains the4096-byte,128-record committed
-prefix, with phase0..23 and no wrap. Allocation saturation sets overflow without
+The preceding paired epoch retains the4096-byte,128-record committed prefix in
+one event-loop writer, with phase0..23 and no wrap. Allocation saturation sets overflow without
 committing a zero ID; notification before listener registration may not be
 retained. IDs are not monitor/frame identities. Missing marks do not establish
 blocked calls, completion, listener order or presentation; bracket time includes
@@ -103,3 +108,113 @@ real focus and independent grants, Pixel10 native1080×2424/422PPI/420 logical
 density, and all capture/graph/PCM guards. Current-owner Messages GUI/session,
 ARM availability, matched Google-kernel integration, full Omarchy startup and
 physical/carrier gates remain open. No physical phone has been accessed.
+
+## Inner fence component
+
+The new component extends the closed numeric phase domain to0..29, retaining
+phase0..23 meanings. Within the original CEGLSync::create body,24/25 bracket
+`eglCreateSyncKHR`,26/27 the required `glFlush`, and28/29
+`eglDupNativeFenceFDANDROID`. An InvocationScope on the existing event loop
+saves/sets/restores the current invocation, including nested exception paths.
+A saturated nested ID0 masks inner publication before restoring its parent.
+Outside a current invocation, these marks allocate no ID and publish nothing;
+the scope destructor restores context without a return/completion mark.
+
+The new frozen-v2 epoch moves the prior invalid raw-phase24 negative to30 before
+RED2, because24 is now admitted. The prior13 checkpoint remains separate, not a
+literally unchanged aggregate. Compiled RED2 passes all13 revised-domain prior
+controls plus three inner original-call/FD/no-observation-context controls, and
+fails eight missing-inner-phase semantic assertions. Candidate instrumentation
+alone makes all24 pass with those identical frozen-v2 inputs. GREEN closes39
+prior-control and21 inner fixture waits/EOFs, plus10 outer waits/EOFs, with
+ECHILD, original cutoffs and exact same-daemon container closure.
+
+An initial lookup of absent `render/render/SyncFDManager.hpp` was corrected from
+the exact tree before compilation. RED1 then fails only scaffold compilation:
+a controlled GL type collides with the imported Render::GL namespace. It executes
+no tests and supplies no behavioral RED. Candidate generation separately stops
+after enum insertion on an ambiguous friend/top-level declaration match; the
+partial unqualified copy remains preserved before fresh narrowed generation.
+These setup notes do not replace the actual eight-failure RED2.
+
+The component selects exact original code with controlled EGL/context/EventBus
+seams and actual eventfd/dup/close, mmap files and the selected parser. It adds
+six core replacements and three witness replacements. Removing only the include
+and six mark lines recovers original OpenGL.cpp; removing the scope line recovers
+the prior paired GLRenderer. OpenGL.hpp and SyncFDManager.hpp/.cpp remain pinned
+unchanged. Original call order/arguments, errors, allocation/destructor/FD custody,
+required flush, rendering context and asynchronous completion behavior remain.
+There is no actual compositor/EGL-context/driver or presentation proof, new
+thread/queue/worker, rendering repair, Source-lease/gate/policy change or earlier
+failure diagnosis. Brackets and residuals include witness overhead and unmarked
+work; extra marks can fill the same128-record prefix sooner.
+
+## Second native source build
+
+A separate actual offline x86 KVM build selects those six core replacements and
+finishes in160.383778791s. GNU C++26/O3 Release and upstream default feature
+selection remain. Actual object-build lines now include EndRenderWitness.cpp,
+GLRenderer.cpp, Renderer.cpp and OpenGL.cpp. The449 configured command entries
+remain metadata, without a449-executed-unit claim. The new machine62 ELF is
+19,536,752 bytes; the2,590,720-byte matching SDK has an independently verified
+complete499-file map and exact new header bindings. Generated500-byte
+`hyprland.pc` truthfully records prefix=/usr/include and no includedir.
+
+Thirty named direct waits and merged PIPE EOFs, a separately retained early
+runtime-mask receipt, normal same-peer QMP shutdown/EOF/QEMU0, CLI0, exact-container
+absence and unchanged selected inputs meet original cutoffs. This is source
+compilation only, without compositor, Source, Qt or PCM execution, signed Arch
+recipe reproduction, ARM or phone qualification. The later fresh inner-phase
+replay below separately qualifies installation and matching plugin builds; those
+runtime results are not inferred from this successful source compilation.
+
+## Inner fence replay
+
+The fresh native replay installs the exact second ELF, verifies all499 installed
+SDK files and rebuilds all three plugins, the physical adapter and discovery
+helper. Current Qt32 checks including setup/cleanup (30 audio behaviors) and29
+appearance cases pass. The live-compositor assertion in `policy_service_ready`
+then fails before normal Sounds, final Pixel profile, the four functional groups,
+capture or PCM. The fixture records phase `setup` and `SETUP_FAILURE` after actual
+compositor/Source execution; the full functional selection remains failed.
+
+The4096-byte witness retains69 valid committed records with zero flags. Source
+accepts sequence1 at54,261,793,037ns and rejects sequence2 at54,375,436,642ns for
+validation/sample_gap:113,643,605ns against100ms. At rejection observation
+54,377,160,668ns the successor is1,724,026ns old. Chain validation rejects before
+freshness; the actor records failure3,457ns later. Invocation2 supplies:
+
+| Paired marks | Before BOOTTIME ns | After BOOTTIME ns | Elapsed ns |
+|---|---:|---:|---:|
+| Enclosing fence creation,16/17 | 54,261,967,298 | 54,375,321,544 | 113,354,246 |
+| eglCreateSyncKHR,24/25 | 54,261,967,448 | 54,375,305,915 | 113,338,467 |
+| Required glFlush,26/27 | 54,375,306,115 | 54,375,310,554 | 4,439 |
+| Native-fence FD duplication,28/29 | 54,375,310,584 | 54,375,319,811 | 9,227 |
+
+The2,113ns enclosing residual includes unmarked work and witness overhead. The
+explicit-valid branch, cleanup and actual callsite return follow. These cooperative
+single-event-loop brackets establish neither exclusive inner CPU time nor an
+EGL-driver/thread/ioctl, GPU/frame/presentation or earlier signed-Arch/ARM cause.
+They do not justify changing required flush, FD ownership or Source policy.
+
+Before Stop the retained compositor pidfd is dead while process disappearance is
+false. Final external closure observes both pidfd death and process absence; the
+native direct parent's numeric compositor wait remains unexported. The separate
+guest subreaper exit1 remains recorded. Normal same-peer QMP shutdown/EOF/QEMU0,
+CLI0, exact-container absence on the same daemon and locked unchanged inputs
+qualify separately from functional failure. Independent decoding agrees with all69
+records in the complete production-parser prefix and verifies the entire unused
+tail is zero. All101 direct waits and108 PIPE EOFs meet their original numeric
+cutoffs; normal owner wait0 and the60.587003003s outer selection remain distinct
+from the failed functional result. No Root execution handle remains live.
+
+## Next bounded observation
+
+The next planned boundary is actual EXECBUFFER ioctl entry/exit across the owned
+compositor, including its workers, using the same clock with request/FD identity,
+result, loss accounting and collection after closure. Its concrete implementation
+and availability remain unqualified. Complete matched evidence will choose
+submission/backpressure or userspace-drain investigation; missing/lost records
+establish neither absence nor a cause. Preserve required flush, FD custody, the
+100ms Source lease, real grants/focus and all functional/Pixel/PCM guards. No
+rendering repair, broad profiler or Mesa rebuild is selected by this checkpoint.

@@ -256,9 +256,44 @@ normal Sounds/final profile/groups/capture/PCM. Owned QMP shutdown/EOF/QEMU0,
 CLI0/exact CID absence/same daemon and input closure qualify separately.
 See the focused report for exact timestamps and scope.
 
+## Inner fence component and second source build
+
+A later [inner-fence checkpoint](native-endrender-observation.md#inner-fence-component)
+adds paired numeric marks around eglCreateSyncKHR, required glFlush and native-FD
+duplication, with one scoped current invocation on the existing event loop. The
+new frozen-v2 baseline passes13 revised-domain prior controls plus three inner
+controls and fails eight semantic assertions; instrumentation alone passes all24.
+The earlier invalid raw-phase24 negative moves to30 before RED2. Earlier13
+evidence, scaffold/source-lookup/candidate-generation setup notes and failed
+runtimes remain separate. Controlled EGL calls and actual FD/mmap/parser checks
+are component evidence, without an actual EGL context or driver conclusion.
+
+Source build2 completes in160.383778791s with GNU C++26/O3 Release and unchanged
+default features. Actual build lines include EndRenderWitness, GLRenderer,
+Renderer and OpenGL;449 configured command entries are not an executed-unit count.
+The new machine62 ELF and complete matching499-file SDK retain separate hashes.
+Thirty named waits/merged PIPE EOFs and separate early-mask custody, normal QMP
+shutdown/EOF/QEMU0, CLI0 and exact-container/input closure qualify the build only.
+Generated pkg-config declares prefix=/usr/include and no includedir. No compositor,
+Source, Qt or PCM executes in that build. The later fresh replay installs the exact
+new ELF/499-file SDK and rebuilds all plugins, physical adapter and discovery.
+Current Qt32/appearance29 pass. Its69 valid zero-flag records pair113,338,467ns
+around eglCreateSyncKHR in invocation2, within a113,354,246ns outer fence bracket
+and113,643,605ns Source gap. Required glFlush and FD duplication take4,439ns and
+9,227ns; the2,113ns residual includes unmarked work and witness overhead.
+The same live-compositor assertion still fails during policy readiness, before
+Sounds/final profile/four groups/capture/PCM. Pre-Stop pidfd death and later actual
+process disappearance remain distinct; native-parent numeric wait is not exported.
+These observations identify no driver/thread/ioctl, exclusive CPU, frame or prior
+Arch/ARM cause. Exact timestamps and separate custody remain in the focused report.
+
 ## Next integration
 
-Limit further diagnosis to the measured fence-creation span, preserving original
+The next planned boundary is one bounded actual EXECBUFFER ioctl entry/exit
+observation across the owned compositor including workers, with same-clock
+request/FD identity, result, loss and after-closure evidence. Implementation and
+availability remain unqualified; the result must select submission/backpressure
+or userspace-drain investigation before a rendering repair. Preserve original
 calls, branches, early returns, buffer custody and cleanup.
 Do not expand general startup/timer observation or add an activation gate. Keep
 the Source adapter,100ms lease, predicate order, ErrorKinds and terminal refusal

@@ -74,8 +74,12 @@ rendering cause is established. A later paired [endRender observation](docs/nati
 after13 component passes and a separate native source build, observes116.618ms
 around fence creation inside a116.918ms Source gap. Matching SDK/plugins and
 current Qt checks pass; full composition still fails before Sounds/PCM. This
-narrows the span without identifying an exclusive CPU/driver cause. ARM
-availability and phone gates stay open.
+narrows the span without identifying an exclusive CPU/driver cause. A later
+inner-fence component passes24 frozen-v2 cases after eight semantic REDs, and a
+second complete native source build passes with its matching499-file SDK. The
+new matching replay observes113.338ms around eglCreateSyncKHR inside a113.644ms
+Source gap, then still fails before Sounds/PCM. This supplies no inner driver or
+earlier-failure cause; ARM availability and phone gates stay open.
 Earlier [permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
 passes four touch/graph/PCM groups using root-authored focus. Physical audio,
 production session completion and all phone gates remain open.

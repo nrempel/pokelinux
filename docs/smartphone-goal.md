@@ -39,12 +39,17 @@ or PCM. The later [render-witness replay](native-session-x86-runtime.md#render-w
 retains31 records and a112.844ms separation between adjacent late-render
 landmarks inside a113.029ms producer gap. No particular call or cause is
 established, and normal Sounds/PCM remains unreached. The focused
-[endRender observation](native-endrender-observation.md) now passes13 component
+[endRender observation](native-endrender-observation.md) first passes13 component
 cases and a separate native source build. A fresh matching-SDK/plugin replay
 observes116.618ms around fence creation inside a116.918ms Source gap, then still
 fails before Sounds/PCM. This narrows one call span without a CPU/driver diagnosis;
-earlier setup failures and Pixel/Source/focus/PCM guards remain intact. Native
-success would not close ARM or phone gates.
+earlier setup failures and Pixel/Source/focus/PCM guards remain intact. Later
+inner-fence instrumentation passes24 frozen-v2 cases after eight semantic REDs;
+the prior malformed-phase control was revised before that RED, so the old13 proof
+is separate. A second full native source build and matching499-file SDK pass.
+The new matching replay observes113.338ms around eglCreateSyncKHR inside a
+113.644ms Source gap, with no driver/prior-failure cause established; it still
+fails before Sounds/PCM. Native success would not close ARM or phone gates.
 
 The [native Rust session owner](native-session-owner.md) implements compositor
 Child custody; its original Sounds assembly has32 host boundary passes,

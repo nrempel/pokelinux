@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "public_basis": "9f6090939abf1bfa677604cb70b448723eb90177",
-  "scope": "Paired original-code endRender component qualification, separate offline native x86 source build, two preserved setup failures and later actual paired runtime observation; full composition still fails before Sounds/PCM",
+  "public_basis": "7aa605422aecb542f661250f0c1852d1e1725e4f",
+  "scope": "Paired original-code endRender component qualification, separate offline native x86 source build, two preserved setup failures and later actual paired runtime observation; full composition still fails before Sounds/PCM; later inner-fence frozen-v2 component and separate second full source build, later actual inner-fence runtime observation; full composition still fails before Sounds/PCM",
   "component_qualified": true,
   "native_source_build_qualified": true,
   "actual_render_phase_runtime_qualified": true,
@@ -109,7 +109,7 @@
     }
   },
   "remaining": [
-    "Diagnosis within the measured fence-creation span without changing render/Source policy",
+    "Planned bounded owned-compositor/all-worker EXECBUFFER ioctl entry/exit observation; concrete implementation/availability unqualified, no rendering repair selected",
     "Normal fixed Sounds four groups, final Pixel profile/capture/PCM",
     "Current-owner Messages grant/read/revoke/source-loss GUI",
     "ARM availability, matched Google kernel, full Omarchy startup and physical/carrier gates"
@@ -190,5 +190,268 @@
       1
     ],
     "native_parent_compositor_numeric_wait_not_exported": true
+  },
+  "prior_public_basis": "9f6090939abf1bfa677604cb70b448723eb90177",
+  "inner_fence_component": {
+    "qualification_sha256": "f41a878667a3fdfcecff8fcc797aa589fe89a4e42e482de79a3001ef73357c79",
+    "qualified": true,
+    "upstream_commit": "efb50993780079460b0cbed1363e2166a2de1d9f",
+    "phase_manifest_sha256": "e81ef6e07601bc8dd6961c027b6bc4d118b4b98815ae69566c82d440491a6cd4",
+    "witness_manifest_sha256": "ac63039ba33c2eb88620b3145826b827903c78d1172b71fff740edbc2344cd2a",
+    "core6_after_sha256": {
+      "src/event/EventBus.hpp": "e2bb406757190f0fd65eace2ec5786a5588bb6333013cb5c6b41bfd30c318fd3",
+      "src/render/EndRenderWitness.cpp": "25185098f8068c33470292c4d44daeceb7ce13cc9af4160d0c767da47024e81b",
+      "src/render/EndRenderWitness.hpp": "0359b4d8c324f0c311b508a28a7e7c2208c6449132b35338aeb1ee8f887f7d73",
+      "src/render/GLRenderer.cpp": "ce08b9bed2f9f229b9e92e1d384723c7f8189bdfd1fd38643251084aee62a667",
+      "src/render/Renderer.cpp": "d52085528092386d6d47e0fb117d7c9b81f3c1dd41185d3fd3ee44042eaca1ef",
+      "src/render/OpenGL.cpp": "a09b6a54052a811476fbe4b93b82db18ffac81addbc99c0e0949d7f33bc555e1"
+    },
+    "witness3_after_sha256": {
+      "focus-observer.cpp": "e4c0927739cf7266a2ea10dd0172836f61135df7916a3482b2ba251605443aa5",
+      "startup_event_ring.hpp": "b409e90bc2613804bdf279f2edd79381f266ca1f8d1c05233a904af155269607",
+      "guest.py": "0836eef65643312ac3315db77435fb67cf5e7d3c6abd275715b6bec7e357a4bb"
+    },
+    "frozen_v2_inputs_sha256": "6077b55d34c404eeef2213ed1c312cc6c2cf02cd0aa8e876a6ca222401157324",
+    "test_epoch_note_sha256": "1fe103f76578610420363d08f747907724d77ea07a14d5537720c877b3516ceb",
+    "prior13_raw_invalid_phase_revised_before_RED2": {
+      "old": 24,
+      "new": 30
+    },
+    "prior13_not_literally_unchanged": true,
+    "RED1": {
+      "classification": "SCAFFOLD_COMPILE_SETUP_FAILURE",
+      "tests_executed": false,
+      "behavioral_RED": false,
+      "reason": "Controlled GL type collides with Render::GL namespace",
+      "receipt_sha256": "667833e7af3532dda1c96510e970f405f28c21ee26a8f09aca1e50192997466e"
+    },
+    "RED2": {
+      "revised_domain_prior_controls_pass": 13,
+      "inner_controls_pass": 3,
+      "semantic_missing_inner_phase_failures": 8,
+      "test_errors": 0,
+      "receipt_sha256": "d7699ea3b3867f335569842d89db37ba5c1e18ae1f03d7ddabd5ddef97888b96"
+    },
+    "GREEN": {
+      "tests": 24,
+      "passed": 24,
+      "same_frozen_v2_inputs": true,
+      "prior_fixture_waits_EOFs": 39,
+      "inner_fixture_waits_EOFs": 21,
+      "outer_waits_EOFs": 10,
+      "ECHILD_original_cutoffs_same_daemon_exact_CID_absence": true,
+      "receipt_sha256": "70196f60488ae9aaef122030b0c503bd07680450b6a39c209e09224f574f58b9"
+    },
+    "preserved_setup_notes": {
+      "source_lookup": "Absent render/render path corrected from exact tree before compilation",
+      "candidate_generation": "Ambiguous friend/top-level declaration match stopped partial copy after enum insertion; narrowed fresh candidate generated",
+      "implementation_setup_sha256": "e08ee86e3e3f7786348bed296b6a09759e88d5e43a36c2e72d8bfa7771c901a7",
+      "behavioral_RED_claim": false
+    },
+    "phase_codes": {
+      "24_25": "eglCreateSyncKHR",
+      "26_27": "required glFlush",
+      "28_29": "eglDupNativeFenceFDANDROID"
+    },
+    "InvocationScope": "Existing event-loop current ID save/set/restore; zero masks nested publication; parent restored on exception; no destructor mark or cross-thread permission",
+    "component_scope": "Exact selected original code with controlled EGL/context/EventBus seams; real eventfd/dup/close and mmap/file/parser; no actual compositor/EGL context/driver",
+    "source_preservation_sha256": "17de46c368d667665f064c6a978c87f236d7aaf33070a9387c14f0e490f7ced2",
+    "source_only_diff_sha256": "2f7ca45b509d2b07726a0c25d684f874aafba665a3af7c0ca3daed420cda4a17",
+    "OpenGL_header_and_SyncFDManager_sources_unchanged": true,
+    "new_rendering_repair_Source_policy_or_prior_cause_claim": false
+  },
+  "native_source_build2": {
+    "Root_qualification_sha256": "23d126500b9d2bffa0d3645c5a0ed0fd2afd92b797b2f36e2e31c138887ac3b6",
+    "qualified_offline_native_x86_source_build_only": true,
+    "Root_exec_session": 9800,
+    "actual_Root_terminal_exit": 0,
+    "host_elapsed_ns": 160383778791,
+    "compiler": "GCC16.2.1 GNU C++26",
+    "configuration": "CMake Release/O3, upstream default features unchanged",
+    "core4_actual_build_lines": [
+      "src/render/EndRenderWitness.cpp",
+      "src/render/GLRenderer.cpp",
+      "src/render/Renderer.cpp",
+      "src/render/OpenGL.cpp"
+    ],
+    "compile_command_entries": 449,
+    "entries_are_not_executed_unit_count": true,
+    "new_ELF": {
+      "bytes": 19536752,
+      "machine": 62,
+      "sha256": "6402b056837bcca2c21e9e77eb23a44ce83fd91b9ecff8fa273033067476d5b9"
+    },
+    "matching_SDK": {
+      "bytes": 2590720,
+      "file_count": 499,
+      "full_tar_file_manifest_independently_verified": true,
+      "sha256": "3be55fb738a3f3792a9196f914dbfe3fd299f13ddf2648403707b14e5465df65"
+    },
+    "generated_hyprland_pc": {
+      "bytes": 500,
+      "declared_variables": {
+        "prefix": "/usr/include"
+      },
+      "sha256": "1d3af9baa15f0b04a023246afe66070d8e98c97bf117c17ef605ed084cd65868",
+      "includedir_defined": false
+    },
+    "actual_receipt_sha256": {
+      "boot-result.json": "18442ed0a240001526ed5435b5cd954057a74d7588bde55e3099ca3ec2995ea4",
+      "execution.json": "be9c8e53a1428c1aad4a949f3829a37376df2c51daf7e275b1b82b89d5de9bea",
+      "guest-out/build-output/build-result.json": "18165927b8b08870c14c298723bd793f1d1abd9b30859119f446b3d447285bc2",
+      "guest-out/guest-result.json": "d148a3ffb9670bc43f8c9a7b66fdf82a67bf1c549434a7137cca4dbf4b1852d5"
+    },
+    "phase_component_qualification_sha256": "f41a878667a3fdfcecff8fcc797aa589fe89a4e42e482de79a3001ef73357c79",
+    "six_source_replacements_and_new_header_bindings_verified": true,
+    "named_direct_waits_and_merged_PIPE_EOFs": 30,
+    "early_runtime_mask_receipt_retained_separately": true,
+    "same_peer_QMP_shutdown_EOF_QEMU0": true,
+    "CLI0_exact_CID_absence_same_daemon": true,
+    "selected_inputs_unchanged": true,
+    "original_cutoffs_verified": true,
+    "compositor_Source_Qt_PCM_executed": false,
+    "signed_Arch_recipe_reproduction_ARM_phone_qualification": false
+  },
+  "inner_fence_replay_pending": false,
+  "actual_inner_fence_replay": {
+    "Root_exec_session": 14496,
+    "actual_Root_reaped_exit": 1,
+    "functional_passed": false,
+    "Root_qualification_sha256": "f296a7d1a92028ddaf1955df7d567b2e02744f8e98766db5eb127bb3c88dc13c",
+    "independent_full_prefix_decode_sha256": "78aa8b9c3aaf43985f1e49da69bce2776ffd30c334013c9cd934b11f787bc29e",
+    "selection_sha256": "7fc762a68e8c957a2ac649e821f524f7af04481b7eaec88d47f4b6cd7056fe01",
+    "command_sha256": "04b72fc157ef132f82a730f63800053423c2eeb43a5cfe27af074b8d8c09a531",
+    "runner_sha256": "a25d5867d1f9393bfec111acd142b0221c48c141099cbb524949b1c217a906f3",
+    "execution_sha256": "1eb70e201bc5be6bbf2bebcb5df4514802e30f2b941537a6498abf85544864c7",
+    "result_sha256": "78f0326778bd86392ee8d43396236abfb5a100b2b150e82a5387a96efdae5396",
+    "boot_result_sha256": "c398f1cdfe000d01ea54bb7c3c96d72d27b78ef015597172132c6efe81d392be",
+    "bootstrap_result_sha256": "14fef4693f3d5860cbcb92fa90b541bcf048aec3c68cc65075e26ec2cd996108",
+    "installed_ELF_sha256": "6402b056837bcca2c21e9e77eb23a44ce83fd91b9ecff8fa273033067476d5b9",
+    "installed_SDK_file_count": 499,
+    "all_three_plugins_physical_adapter_and_discovery_rebuilt": true,
+    "Qt_total_including_setup_cleanup": 32,
+    "Qt_audio_behaviors": 30,
+    "appearance_cases": 29,
+    "failure": "Live-compositor assertion in policy_service_ready",
+    "recorded_phase": "setup",
+    "recorded_failure_classification": "SETUP_FAILURE",
+    "normal_Sounds_final_Pixel_four_groups_capture_PCM_executed": false,
+    "raw_witness_sha256": "38251e2d2b386ede66f5e63e58a3a68c3493ebfad6e9a913723d7dc02ce2a68a",
+    "raw_witness_bytes": 4096,
+    "committed_records": 69,
+    "flags": 0,
+    "Source": {
+      "previous_sequence": 1,
+      "previous_sampled_at_ns": 54261793037,
+      "rejected_sequence": 2,
+      "rejected_sampled_at_ns": 54375436642,
+      "sample_gap_ns": 113643605,
+      "reason": "validation/sample_gap",
+      "rejection_observed_at_ns": 54377160668,
+      "actor_failure_observed_at_ns": 54377164125,
+      "successor_age_at_observation_ns": 1724026,
+      "actor_after_rejection_ns": 3457
+    },
+    "invocation2": {
+      "phase_marks": {
+        "16": {
+          "ordinal": 56,
+          "boottime_ns": 54261967298
+        },
+        "24": {
+          "ordinal": 57,
+          "boottime_ns": 54261967448
+        },
+        "25": {
+          "ordinal": 58,
+          "boottime_ns": 54375305915
+        },
+        "26": {
+          "ordinal": 59,
+          "boottime_ns": 54375306115
+        },
+        "27": {
+          "ordinal": 60,
+          "boottime_ns": 54375310554
+        },
+        "28": {
+          "ordinal": 61,
+          "boottime_ns": 54375310584
+        },
+        "29": {
+          "ordinal": 62,
+          "boottime_ns": 54375319811
+        },
+        "17": {
+          "ordinal": 63,
+          "boottime_ns": 54375321544
+        },
+        "18": {
+          "ordinal": 64,
+          "boottime_ns": 54375322065
+        },
+        "20": {
+          "ordinal": 65,
+          "boottime_ns": 54375330521
+        },
+        "21": {
+          "ordinal": 66,
+          "boottime_ns": 54375333587
+        },
+        "22": {
+          "ordinal": 67,
+          "boottime_ns": 54375336893
+        },
+        "23": {
+          "ordinal": 68,
+          "boottime_ns": 54375337695
+        }
+      },
+      "enclosing_16_17_ns": 113354246,
+      "eglCreateSyncKHR_24_25_ns": 113338467,
+      "required_glFlush_26_27_ns": 4439,
+      "native_fence_FD_dup_28_29_ns": 9227,
+      "enclosing_residual_ns": 2113,
+      "explicit_valid_branch_cleanup_and_actual_return_observed": true
+    },
+    "pre_Stop": {
+      "retained_pidfd_dead": true,
+      "process_absent": false
+    },
+    "final_external_closure": {
+      "retained_pidfd_dead": true,
+      "process_absent": true
+    },
+    "native_parent_numeric_compositor_wait_exported": false,
+    "separate_guest_subreaper_exits": [
+      1
+    ],
+    "QMP_normal_shutdown_EOF_QEMU0": true,
+    "CLI0_exact_CID_absence_same_daemon_locked_input_closure": true,
+    "host_elapsed_ns": 60587003003,
+    "no_inner_driver_thread_ioctl_exclusive_CPU_frame_prior_Arch_ARM_cause_or_repair_claim": true,
+    "independent_all69_records_equal_actual_guest_parser": true,
+    "entire_uncommitted_and_padding_tail_zero": true,
+    "actual_direct_waits": 101,
+    "actual_PIPE_EOFs": 108,
+    "all_observed_original_numeric_cutoffs_met": true,
+    "normal_owner_wait0": true,
+    "no_Root_execution_handles_live": true
+  },
+  "inner_fence_runtime_observation_qualified": true,
+  "next_planned_observation": {
+    "boundary": "Bounded actual EXECBUFFER ioctl entry/exit across owned compositor including workers",
+    "implementation_and_availability_qualified": false,
+    "required_evidence": [
+      "same clock",
+      "request/FD identity",
+      "result",
+      "loss accounting",
+      "after-closure collection"
+    ],
+    "purpose": "Choose submission/backpressure versus userspace-drain investigation from complete matched evidence",
+    "missing_or_lost_records_do_not_establish_absence_or_cause": true,
+    "rendering_repair_broad_profiler_or_Mesa_rebuild_selected": false,
+    "Source_lease_policy_grants_and_Pixel_PCM_guards_unchanged": true
   }
 }

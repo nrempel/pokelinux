@@ -177,7 +177,23 @@ fence creation in invocation2 inside a116.918ms Source gap. Full composition sti
 fails at policy readiness before Sounds/PCM. Narrow further diagnosis to that
 measured span; no exclusive CPU/driver or earlier-failure cause follows. Preserve
 both setup failures and original Source/functional guards; no broad startup
-profiler, Source gate or lease change is justified. Strict matching ARM64 owner/client compilation also passes separately,
+profiler, Source gate or lease change is justified. A later inner-fence component
+adds paired eglCreateSyncKHR/glFlush/native-FD-dup marks and passes24 frozen-v2
+cases after eight semantic REDs. Its prior13 controls revise the formerly invalid
+phase24 record to30 before RED2; the old13 proof is not relabeled unchanged.
+Source build2 completes GNU C++26/O3 with all four affected CPP object lines and
+a verified499-file matching SDK, without compositor execution in that build. The
+new matching replay retains69 zero-flag records and113.338ms around eglCreateSyncKHR
+in invocation2 inside a113.644ms Source gap; flush is4,439ns and FD duplication
+9,227ns. All plugins and current Qt32/appearance29 pass, but full composition still
+fails at the same live-compositor assertion before Sounds/PCM. Pre-Stop retained
+pidfd death does not include process disappearance; final external closure has
+both. Independent full-prefix decoding agrees;101 direct waits/108 PIPE EOFs and
+original cutoffs close the failed60.587s selection. The next planned boundary is
+one bounded owned-compositor/all-worker EXECBUFFER ioctl entry/exit observation
+with same-clock request/FD identity, result/loss and after-closure evidence; its
+implementation/availability are not yet qualified. No inner-driver, exclusive-CPU
+or earlier-failure cause follows. Strict matching ARM64 owner/client compilation also passes separately,
 without ARM execution.
 Messages history composition was excluded from that render-witness replay. The
 current integration described above preserves its Source-rejection changes;
