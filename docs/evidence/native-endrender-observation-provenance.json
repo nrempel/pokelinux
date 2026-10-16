@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "public_basis": "7aa605422aecb542f661250f0c1852d1e1725e4f",
-  "scope": "Paired original-code endRender component qualification, separate offline native x86 source build, two preserved setup failures and later actual paired runtime observation; full composition still fails before Sounds/PCM; later inner-fence frozen-v2 component and separate second full source build, later actual inner-fence runtime observation; full composition still fails before Sounds/PCM",
+  "public_basis": "a392808a147a023edd2061562037056f905f0380",
+  "scope": "Paired original-code endRender component qualification, separate offline native x86 source build, two preserved setup failures and later actual paired runtime observation; full composition still fails before Sounds/PCM; later inner-fence frozen-v2 component and separate second full source build, later actual inner-fence runtime observation; full composition still fails before Sounds/PCM; separate individual kernel capability observations only, actual observer operation still unqualified",
   "component_qualified": true,
   "native_source_build_qualified": true,
   "actual_render_phase_runtime_qualified": true,
@@ -109,7 +109,7 @@
     }
   },
   "remaining": [
-    "Planned bounded owned-compositor/all-worker EXECBUFFER ioctl entry/exit observation; concrete implementation/availability unqualified, no rendering repair selected",
+    "Planned Root8 bounded owned-compositor/all-worker EXECBUFFER, WAIT, TRANSFER_TO_HOST and TRANSFER_FROM_HOST entry/exit observation; non-exhaustive header-selected set, no implementation/test or rendering-repair claim",
     "Normal fixed Sounds four groups, final Pixel profile/capture/PCM",
     "Current-owner Messages grant/read/revoke/source-loss GUI",
     "ARM availability, matched Google kernel, full Omarchy startup and physical/carrier gates"
@@ -440,7 +440,7 @@
   },
   "inner_fence_runtime_observation_qualified": true,
   "next_planned_observation": {
-    "boundary": "Bounded actual EXECBUFFER ioctl entry/exit across owned compositor including workers",
+    "boundary": "Bounded actual Root8 selected ioctl entry/exit across owned compositor including workers",
     "implementation_and_availability_qualified": false,
     "required_evidence": [
       "same clock",
@@ -449,9 +449,129 @@
       "loss accounting",
       "after-closure collection"
     ],
-    "purpose": "Choose submission/backpressure versus userspace-drain investigation from complete matched evidence",
+    "purpose": "A matched long selected interval chooses the next narrow boundary; short or absent selected calls leave the delay unresolved",
     "missing_or_lost_records_do_not_establish_absence_or_cause": true,
     "rendering_repair_broad_profiler_or_Mesa_rebuild_selected": false,
-    "Source_lease_policy_grants_and_Pixel_PCM_guards_unchanged": true
+    "Source_lease_policy_grants_and_Pixel_PCM_guards_unchanged": true,
+    "individual_metadata_and_private_controls_qualified": true,
+    "planned_Root8_selected_requests": [
+      "EXECBUFFER",
+      "WAIT",
+      "TRANSFER_TO_HOST",
+      "TRANSFER_FROM_HOST"
+    ],
+    "request_values_source": "To be compiled from the matched installed header; no new compilation, implementation or test result claimed",
+    "selected_requests_exhaustive": false,
+    "short_absent_calls_do_not_establish_userspace_only_cause_or_offload": true,
+    "unresolved_alternatives_include": [
+      "other ioctl waits",
+      "sync_wait",
+      "futex",
+      "scheduling"
+    ],
+    "short_matched_call_excludes_only_long_duration_for_that_observed_call": true
+  },
+  "prior_checkpoint_public_basis": "7aa605422aecb542f661250f0c1852d1e1725e4f",
+  "ioctl_capability_probe": {
+    "Root_qualification_sha256": "cc85c5b1cce01424f21d93993a311cf25d92494ad832125373bf20e04646e65a",
+    "Root_source_review_sha256": "27c17f2411183918dc064a20d47239a75ff6487a11c34cd7add0affce89761a0",
+    "Root_exec_session": 89574,
+    "actual_Root_terminal_exit": 0,
+    "host_elapsed_ns": 13220809352,
+    "kernel_release": "7.2.9-arch1-1",
+    "scope": "Individual native x86 kernel metadata/private control availability only; no observer activation, DRM ioctl, GL/compositor/Source/Qt/PCM, behavioral RED/GREEN, ARM or phone proof",
+    "execution_sha256": "b571b454ea4da0915276c3c533f3bd85b4038c0e38977f8b6da1509f628b2088",
+    "receipt_sha256": {
+      "boot-result.json": "30352449861e3397cce96640ba01c36a409bbb514614d58bb40811f895184e69",
+      "bootstrap-result.json": "ddfdfec056942b33d37ca931fd85fecb98ac60eaa37a772a6eafffef8b56e729",
+      "command.json": "6ba9eddc8fd4eb20481631254a22f8cc78eb2d6be18ab4f6a9736934eb314864",
+      "early-receipt.json": "cd61510ded182ad44542eee6ac0837dd255dd41020317f337eac2a75e52b2066",
+      "execution.json": "b571b454ea4da0915276c3c533f3bd85b4038c0e38977f8b6da1509f628b2088",
+      "result.json": "c8d65d38657924eb73cde5b5cb8661200daec42d2c3c7d6a4fd3ee22f725a5ab",
+      "sched-sched_process_fork.format": "247ec4234b739c3577c15be6d4cefcf3d43470ee0c5343ae955f8caf54c3bee2",
+      "selection.json": "5bd1f2d2d671fd680921775800434456033232f7a97637e3278a9cb1a2ae7e76",
+      "syscalls-sys_enter_ioctl.format": "c5995923e6e8533a2b47adb982e5d5b5b4efed4d725737b1bed8cc7d073aaca0",
+      "syscalls-sys_exit_ioctl.format": "12accce8375f7592654ce898f1a80d23fdb1c36d20802038f4810aa8dfb99cc8"
+    },
+    "tracefs": {
+      "existing_mount_reused": "/sys/kernel/tracing",
+      "exclusive_instance_only": true,
+      "events_enable_before": 0,
+      "current_tracer": "nop",
+      "boot_clock_selected_readback": true,
+      "event_fork_write_readback": true,
+      "set_event_pid_write_readback": true,
+      "tracing_on_after": 0,
+      "owned_instance_removed": true,
+      "global_reset_or_mount_delete": false
+    },
+    "exact_event_formats_static_only": {
+      "sched/sched_process_fork": {
+        "available": true,
+        "bytes": 665,
+        "file": "sched-sched_process_fork.format",
+        "sha256": "247ec4234b739c3577c15be6d4cefcf3d43470ee0c5343ae955f8caf54c3bee2"
+      },
+      "syscalls/sys_enter_ioctl": {
+        "available": true,
+        "bytes": 642,
+        "file": "syscalls-sys_enter_ioctl.format",
+        "sha256": "c5995923e6e8533a2b47adb982e5d5b5b4efed4d725737b1bed8cc7d073aaca0"
+      },
+      "syscalls/sys_exit_ioctl": {
+        "available": true,
+        "bytes": 415,
+        "file": "syscalls-sys_exit_ioctl.format",
+        "sha256": "12accce8375f7592654ce898f1a80d23fdb1c36d20802038f4810aa8dfb99cc8"
+      }
+    },
+    "traceable_function_catalog": {
+      "exact_names_present": [
+        "drm_ioctl",
+        "drm_ioctl_kernel"
+      ],
+      "global_symbol_absence_inferred": false,
+      "probe_registration_or_attach_attempted": false
+    },
+    "development_metadata_present": [
+      "libbpf1.7",
+      "/usr/include/bpf/btf.h",
+      "/usr/include/libdrm/virtgpu_drm.h"
+    ],
+    "vmlinux_BTF": {
+      "bytes": 6530017,
+      "version": 1,
+      "header_len": 32,
+      "types_field_offsets_or_prototypes_derived": false
+    },
+    "DRM_module_BTF_present": false,
+    "observed_CONFIG_DRM": "y; built in",
+    "DRM_nodes_stat_only": [
+      {
+        "node": "card0",
+        "major": 226,
+        "minor": 0
+      },
+      {
+        "node": "renderD128",
+        "major": 226,
+        "minor": 128
+      }
+    ],
+    "observer_activated_or_DRM_device_open_ioctl_executed": false,
+    "production_TDD_RED_GREEN_claim": false,
+    "actual_direct_waits": 19,
+    "actual_PIPE_EOFs": 26,
+    "all_observed_original_numeric_cutoffs_met": true,
+    "same_peer_QMP_KVM_guest_SHUTDOWN_EOF_QEMU0": true,
+    "CLI0_exact_CID_absence_same_daemon": true,
+    "selected_inputs_unchanged_under_shared_lock": true,
+    "remaining": [
+      "Actual fork and worker-thread tracing coverage",
+      "Actual compiled header values for planned EXECBUFFER, WAIT, TRANSFER_TO_HOST and TRANSFER_FROM_HOST requests, kernel BTF field/prototype validation and probe registration/event-time DRM identity",
+      "Clock precision/loss/pairing/cleanup behavioral RED/GREEN",
+      "Bounded actual compositor observation of the non-exhaustive selected Root8 set; matched long intervals choose the next narrow boundary, while short/absent selected calls leave the delay unresolved",
+      "ARM/Google-kernel/Pixel/carrier/full smartphone gates"
+    ]
   }
 }

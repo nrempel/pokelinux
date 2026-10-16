@@ -79,7 +79,12 @@ inner-fence component passes24 frozen-v2 cases after eight semantic REDs, and a
 second complete native source build passes with its matching499-file SDK. The
 new matching replay observes113.338ms around eglCreateSyncKHR inside a113.644ms
 Source gap, then still fails before Sounds/PCM. This supplies no inner driver or
-earlier-failure cause; ARM availability and phone gates stay open.
+earlier-failure cause. A separate kernel capability probe qualifies specific
+tracefs metadata/private control readbacks, without observer activation or an
+ioctl/timing result. Root8 plans header-selected EXECBUFFER, WAIT, TRANSFER_TO_HOST
+and TRANSFER_FROM_HOST observations, without an implementation/test claim. This
+set is not exhaustive: short or absent selected calls leave the delay unresolved
+and establish neither a userspace-only cause nor offload. ARM and phone gates stay open.
 Earlier [permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
 passes four touch/graph/PCM groups using root-authored focus. Physical audio,
 production session completion and all phone gates remain open.

@@ -189,10 +189,18 @@ in invocation2 inside a113.644ms Source gap; flush is4,439ns and FD duplication
 fails at the same live-compositor assertion before Sounds/PCM. Pre-Stop retained
 pidfd death does not include process disappearance; final external closure has
 both. Independent full-prefix decoding agrees;101 direct waits/108 PIPE EOFs and
-original cutoffs close the failed60.587s selection. The next planned boundary is
-one bounded owned-compositor/all-worker EXECBUFFER ioctl entry/exit observation
-with same-clock request/FD identity, result/loss and after-closure evidence; its
-implementation/availability are not yet qualified. No inner-driver, exclusive-CPU
+original cutoffs close the failed60.587s selection. Root8 plans bounded
+owned-compositor/all-worker entry/exit observations for header-selected EXECBUFFER,
+WAIT, TRANSFER_TO_HOST and TRANSFER_FROM_HOST; implementation/tests remain
+unqualified. Same-clock request/FD identity, result/loss and after-closure evidence
+are required. A matched long selected interval chooses the next narrow boundary.
+Short or absent selected requests leave the delay unresolved: this non-exhaustive
+set excludes no other ioctl, sync_wait, futex or scheduling wait and establishes
+no userspace-only cause or offload. A separate native kernel capability probe
+qualifies private tracefs control write/readbacks, exact format availability and
+selected metadata only, without observer activation, DRM ioctl or timing evidence.
+Actual inheritance, BTF/probe/device identity and loss/pairing/cleanup behavior
+remain for observer TDD and replay. No inner-driver, exclusive-CPU
 or earlier-failure cause follows. Strict matching ARM64 owner/client compilation also passes separately,
 without ARM execution.
 Messages history composition was excluded from that render-witness replay. The

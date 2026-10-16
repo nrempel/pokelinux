@@ -210,11 +210,49 @@ from the failed functional result. No Root execution handle remains live.
 
 ## Next bounded observation
 
-The next planned boundary is actual EXECBUFFER ioctl entry/exit across the owned
-compositor, including its workers, using the same clock with request/FD identity,
-result, loss accounting and collection after closure. Its concrete implementation
-and availability remain unqualified. Complete matched evidence will choose
-submission/backpressure or userspace-drain investigation; missing/lost records
-establish neither absence nor a cause. Preserve required flush, FD custody, the
-100ms Source lease, real grants/focus and all functional/Pixel/PCM guards. No
-rendering repair, broad profiler or Mesa rebuild is selected by this checkpoint.
+The next planned Root8 set is EXECBUFFER, WAIT, TRANSFER_TO_HOST and
+TRANSFER_FROM_HOST ioctl entry/exit across the owned compositor, including its
+workers. Numeric requests must be compiled from the matched installed header;
+no observer implementation or test result is claimed. Retain the same clock,
+request/FD identity, result, loss accounting and collection after closure. The
+separate capability probe below qualifies individual metadata/private controls;
+actual observer operation remains unqualified.
+
+A matched long selected interval chooses the next narrow boundary. Short or
+absent selected requests leave the delay unresolved. A short matched call rules
+out only a long interval for that observed call. Other ioctl waits, sync_wait, futex
+and scheduling remain possible. The four-request set is not exhaustive and
+establishes no userspace-only cause or offload. Missing/lost records establish
+neither absence nor a cause. Preserve required flush, FD custody, the100ms Source
+lease, real grants/focus and all functional/Pixel/PCM guards. No rendering repair,
+broad profiler or Mesa rebuild is selected by this checkpoint.
+
+## Kernel capability probe
+
+A separate bounded native x86 KVM probe on kernel7.2.9-arch1-1 qualifies individual
+metadata/control observations only. It activates no observer, executes no DRM
+ioctl, GL, compositor, Source, Qt or PCM, and supplies no behavioral RED/GREEN or
+phone result. It reuses the existing `/sys/kernel/tracing` mount and creates one
+exclusive instance. Events are0 and the tracer is `nop`; actual `boot` clock,
+`event-fork` and `set_event_pid` writes/readbacks pass, tracing is left0 and the
+owned instance is removed. No global reset or mount deletion occurs.
+
+Exact `sys_enter_ioctl`, `sys_exit_ioctl` and `sched_process_fork` formats are read
+and retained without activation. The traceable-function catalog contains both
+`drm_ioctl` and `drm_ioctl_kernel`; this catalog does not establish global symbol
+absence. libbpf1.7, `bpf/btf.h` and the virtgpu UAPI header are present. The
+6,530,017-byte vmlinux BTF has version1/header length32; types, field offsets and
+prototypes are not derived. DRM module BTF is absent with observed `CONFIG_DRM=y`
+built in. No probe registration is attempted. `card0` and `renderD128` are only
+statted as character devices226:0 and226:128, without opening a device or proving
+event-time identity.
+
+Actual fork/worker inheritance, compiled values for the planned four-request set,
+BTF field/prototype derivation, probe/device identity, clock precision,
+loss/pairing/cleanup behavior
+and compositor timing replay remain open. The next work is actual observer TDD,
+not a rendering repair. The13.220809352s probe closes19 direct waits/26 PIPE EOFs
+within original numeric cutoffs, with same-peer KVM/guest shutdown/EOF/QEMU0,
+CLI0, exact-container absence on the same daemon and locked unchanged inputs.
+Earlier failed runtime selections and all Source/functional/ARM/phone gates retain
+their existing scope.

@@ -289,12 +289,18 @@ Arch/ARM cause. Exact timestamps and separate custody remain in the focused repo
 
 ## Next integration
 
-The next planned boundary is one bounded actual EXECBUFFER ioctl entry/exit
-observation across the owned compositor including workers, with same-clock
-request/FD identity, result, loss and after-closure evidence. Implementation and
-availability remain unqualified; the result must select submission/backpressure
-or userspace-drain investigation before a rendering repair. Preserve original
-calls, branches, early returns, buffer custody and cleanup.
+Root8 plans bounded ioctl entry/exit observation across the owned compositor
+including workers for header-selected EXECBUFFER, WAIT, TRANSFER_TO_HOST and
+TRANSFER_FROM_HOST. Numeric requests must come from the matched compiled header;
+this is a plan, without implementation/test qualification. Retain same-clock
+request/FD identity, result, loss and after-closure evidence. A separate
+[capability probe](native-endrender-observation.md#kernel-capability-probe) qualifies
+individual metadata/private controls only; full observer operation remains open.
+A matched long selected interval chooses the next narrow boundary. Short or
+absent selected calls leave the delay unresolved, including other ioctls,
+sync_wait, futex and scheduling; this set is not exhaustive and establishes no
+userspace-only cause or offload. Preserve original calls, branches, early returns,
+buffer custody and cleanup.
 Do not expand general startup/timer observation or add an activation gate. Keep
 the Source adapter,100ms lease, predicate order, ErrorKinds and terminal refusal
 unchanged. Choose a rendering repair only from actual measured phase evidence.
