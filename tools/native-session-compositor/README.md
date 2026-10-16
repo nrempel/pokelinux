@@ -1,5 +1,11 @@
 # Actual compositor session facts fixture
 
+The current adapter requires its adjacent `source_sampler.hpp`. The selected
+runner closes and copies both before compilation, with no older-source fallback.
+Publication begins only on actual timer dispatch; see the separately qualified
+[ARM timer/socket boundary](../../docs/native-source-timer-startup.md). Historical
+compositor results below retain their original source and scope.
+
 This fixture builds a selected adapter against the exact installed ARM64
 Hyprland package, launches the compositor directly as an owned UID1000 child,
 and authenticates actual inherited-channel packets by kernel SCM credentials.

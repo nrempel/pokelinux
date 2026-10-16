@@ -42,8 +42,9 @@ audio. Its current15-case policy preflight, actual native storage-worker checks,
 host/ARM64 compilation and Make staging pass alongside the retained ownership
 tests. Its combined original-compositor ARM startup still fails before normal
 Qt/PCM. A separate private diagnostic observes the first Source sample expiring
-at120.9ms against its unchanged100ms lease; the producer startup repair remains
-open. See [startup evidence](docs/native-session-owner.md#cold-start-source-failure). The
+at120.9ms against its unchanged100ms lease. The [producer startup repair](docs/native-source-timer-startup.md)
+now passes two actual ARM Wayland/socket cases after an early-publication RED;
+original-compositor replay remains open. The
 separate [normal permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
 passes four groups with actual touch, independent virtual graph/PCM and unscaled
 Pixel10 captures using root-authored focus. Physical audio remains unverified.

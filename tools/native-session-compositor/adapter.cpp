@@ -1,5 +1,6 @@
 // Matching Hyprland API glue exports facts to the Rust observer. No policy,
 // grants, launch, unlock command, file output or publication authority lives here.
+#include "source_sampler.hpp"
 #include <hyprland/src/plugins/PluginAPI.hpp>
 #include <hyprland/src/Compositor.hpp>
 #include <hyprland/src/managers/SeatManager.hpp>
@@ -32,13 +33,13 @@ namespace {
 int output = -1;
 std::string incarnation;
 uint64_t sequence = 0;
+pokelinux::source::Sampler sampler;
 // Signals run before the original protocol flag is assigned. Keep denial
 // throughout that callback stack, including its intervening null-focus event.
 bool admissionDenied = false;
 wl_event_source* timer = nullptr;
 CHyprSignalListener focusListener, lockListener, unlockListener, admissionListener;
 constexpr int PERIOD_MS = 25;
-constexpr size_t MAX_FRAME = 1024;
 constexpr size_t MAX_CANDIDATES = 16;
 constexpr size_t MAX_LOCK_SURFACES = 16;
 struct LockCandidate {
@@ -61,16 +62,7 @@ void emit();
 void closeOutput() {
     if (output >= 0) { close(output); output = -1; }
 }
-bool boottime(uint64_t& ns) {
-    timespec ts{};
-    if (clock_gettime(CLOCK_BOOTTIME, &ts) != 0 || ts.tv_sec < 0 || ts.tv_nsec < 0 || ts.tv_nsec >= 1000000000L)
-        return false;
-    const auto sec = static_cast<uint64_t>(ts.tv_sec);
-    if (sec > (std::numeric_limits<uint64_t>::max() - static_cast<uint64_t>(ts.tv_nsec)) / 1000000000ULL)
-        return false;
-    ns = sec * 1000000000ULL + static_cast<uint64_t>(ts.tv_nsec);
-    return true;
-}
+bool boottime(uint64_t& ns) { return pokelinux::source::boottime(ns); }
 struct NativePeer {
     std::string metadata = "null";
     int pidfd = -1;
@@ -215,7 +207,7 @@ void observeLock(const SP<CSessionLock>& lock) {
     emit();
 }
 void emit() {
-    if (output < 0) return;
+    if (output < 0 || !sampler.canPublish()) return;
     uint64_t sampled = 0;
     if (!boottime(sampled) || sequence == std::numeric_limits<uint64_t>::max()) { closeOutput(); return; }
     const bool locked = admissionDenied || PROTO::sessionLock->isLocked();
@@ -232,35 +224,14 @@ void emit() {
             + ",\"observed_at_ns\":" + std::to_string(protocolUnlock->observedAt) + "}";
     }
     const int peerFd = locked ? locker.pidfd : focus.pidfd;
-    char frame[MAX_FRAME];
-    const int n = snprintf(frame, sizeof(frame),
-        "{\"source\":\"%s\",\"sequence\":%llu,\"sampled_at_ns\":%llu,\"locked\":%s,\"lock_completed\":%s,\"focus\":%s,\"locker\":%s,\"lock_generation\":%s,\"protocol_unlock\":%s}",
-        incarnation.c_str(), static_cast<unsigned long long>(++sequence), static_cast<unsigned long long>(sampled),
-        locked ? "true" : "false", complete ? "true" : "false", focus.metadata.c_str(),
-        locker.pidfd >= 0 ? locker.metadata.c_str() : "{\"state\":\"unavailable\"}", generation.c_str(), unlock.c_str());
-    if (n <= 0 || static_cast<size_t>(n) >= sizeof(frame)) { closeOutput(); return; }
-    // One nonblocking atomic packet attempt. No queue, retries, detached worker
-    // or renewed incarnation on failure; receiver expiration fences old facts.
-    iovec bytes{frame, static_cast<size_t>(n)};
-    msghdr packet{};
-    packet.msg_iov = &bytes;
-    packet.msg_iovlen = 1;
-    alignas(cmsghdr) char control[CMSG_SPACE(sizeof(int))]{};
-    if (peerFd >= 0) {
-        packet.msg_control = control;
-        packet.msg_controllen = sizeof(control);
-        auto* rights = CMSG_FIRSTHDR(&packet);
-        rights->cmsg_level = SOL_SOCKET;
-        rights->cmsg_type = SCM_RIGHTS;
-        rights->cmsg_len = CMSG_LEN(sizeof(int));
-        std::memcpy(CMSG_DATA(rights), &peerFd, sizeof(peerFd));
-    }
-    // The selected NativePeer owns the exact socket-derived handle until this atomic send.
-    // Its temporary copy closes after success and every failure; the receiver
-    // owns the SCM_RIGHTS reference. No pidfs identity or PID reopening is used.
-    if (sendmsg(output, &packet, MSG_DONTWAIT | MSG_NOSIGNAL) != n) closeOutput();
+    sampler.publish(output, sequence, incarnation, sampled, {
+        locked, complete, focus.metadata.c_str(),
+        locker.pidfd >= 0 ? locker.metadata.c_str() : "{\"state\":\"unavailable\"}",
+        generation.c_str(), unlock.c_str(), peerFd,
+    });
 }
 int tick(void*) {
+    sampler.timerDispatched();
     // Timer reconciliation runs after the original onLock callback has returned.
     // Clearing this local latch is not clearing any trusted actor lock intent.
     admissionDenied = false;
@@ -275,31 +246,7 @@ int tick(void*) {
     if (output >= 0 && wl_event_source_timer_update(timer, PERIOD_MS) != 0) closeOutput();
     return 0;
 }
-int provisionedFd() {
-    const char* raw = getenv("POKELINUX_SESSION_FD");
-    const char* source = getenv("POKELINUX_SESSION_SOURCE");
-    if (!raw || !source) throw std::runtime_error("missing installed private session channel");
-    incarnation = source;
-    if (incarnation.size() != 32 || incarnation.find_first_not_of("0123456789abcdef") != std::string::npos)
-        throw std::runtime_error("invalid session incarnation");
-    int fd = -1;
-    const std::string number(raw);
-    const auto parsed = std::from_chars(number.data(), number.data() + number.size(), fd);
-    if (parsed.ec != std::errc{} || parsed.ptr != number.data() + number.size() || fd < 3)
-        throw std::runtime_error("invalid inherited descriptor");
-    int type = 0; socklen_t length = sizeof(type);
-    ucred creator{}; socklen_t creatorLength = sizeof(creator);
-    const int flags = fcntl(fd, F_GETFL);
-    if (flags < 0 || getsockopt(fd, SOL_SOCKET, SO_TYPE, &type, &length) != 0 || length != sizeof(type)
-        || type != SOCK_SEQPACKET
-        || getsockopt(fd, SOL_SOCKET, SO_PEERCRED, &creator, &creatorLength) != 0
-        || creatorLength != sizeof(creator) || creator.uid != 0
-        || fcntl(fd, F_SETFL, flags | O_NONBLOCK) != 0 || fcntl(fd, F_SETFD, FD_CLOEXEC) != 0) {
-        close(fd); throw std::runtime_error("invalid root-provisioned private channel");
-    }
-    unsetenv("POKELINUX_SESSION_FD"); unsetenv("POKELINUX_SESSION_SOURCE");
-    return fd;
-}
+int provisionedFd() { return pokelinux::source::provisionedFd(incarnation); }
 }
 APICALL EXPORT std::string PLUGIN_API_VERSION() { return HYPRLAND_API_VERSION; }
 APICALL EXPORT PLUGIN_DESCRIPTION_INFO PLUGIN_INIT(HANDLE) {

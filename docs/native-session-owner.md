@@ -152,12 +152,13 @@ during graphics initialization; the exact blocking startup operation is unknown.
 
 The original adapter publishes synchronously during `PLUGIN_INIT`, then arms its
 25ms Wayland timer. Focus/lock callbacks can also publish before first dispatch.
-The next repair must gate every publication until an actual timer callback,
-while retaining conservative state observation. The fixture must complete heavy
-display-profile setup before Source activation. Test the shared production
-publisher through actual Wayland dispatch and its credentialed packet boundary,
-including permanent expiry after a real later stall, then replay original
-Hyprland with the unmodified production owner. The100ms freshness lease,
+The [startup repair](native-source-timer-startup.md) now gates every publication
+until an actual timer callback, while retaining conservative state observation.
+A genuine early-publication RED precedes two unchanged real Wayland/socket ARM
+GREEN cases and matching adapter SDK compilation. The fixture must complete heavy
+display-profile setup before Source activation. The shared production publisher tests exercise actual Wayland dispatch and
+its credentialed packet boundary, including permanent expiry after a real later
+stall. Next replay original Hyprland with the unmodified production owner. The100ms freshness lease,
 original120s first-sample allowance and terminal failure remain unchanged.
 
 [Startup evidence](evidence/native-session-startup-provenance.json) binds the

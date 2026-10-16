@@ -226,7 +226,7 @@ try:
  r['packages']=command(['pacman','-Q','hyprland','gcc','binutils','pkgconf','wayland','wayland-protocols','quickshell','foot'],'packages.log')
  command(['readelf','-n','/usr/bin/Hyprland'],'hyprland-elf-notes.log');command(['nm','-D','--defined-only','--demangle','/usr/bin/Hyprland'],'hyprland-symbols.log')
  headers={str(p):sha(p) for p in sorted(Path('/usr/include/hyprland').rglob('*')) if p.is_file()};(O/'headers.json').write_text(json.dumps(headers,indent=2)+'\n')
- shutil.copyfile(S/'adapter.cpp',B/'adapter.cpp');shutil.copyfile(R/'bins/probe.so',B/'probe.so');(B/'probe.so').chmod(0o755);assert sha(B/'probe.so')==selection['expected_probe_sha256']
+ shutil.copyfile(S/'adapter.cpp',B/'adapter.cpp');shutil.copyfile(S/'source_sampler.hpp',B/'source_sampler.hpp');shutil.copyfile(R/'bins/probe.so',B/'probe.so');(B/'probe.so').chmod(0o755);assert sha(B/'probe.so')==selection['expected_probe_sha256']
  cflags=shlex.split(command(['pkg-config','--cflags','hyprland'],'pkgconfig.log'))
  r['adapter_compile_command']=['g++','-std=c++23','-fPIC','-shared','-O2','-g',*cflags,str(B/'adapter.cpp'),'-o',str(B/'adapter.so')]
  command(r['adapter_compile_command'],'adapter-build.log',timeout=420);shutil.copyfile(B/'adapter.so',O/'bins/adapter.so');r['adapter_elf_sha256']=sha(B/'adapter.so');command(['readelf','-n',str(B/'adapter.so')],'adapter-elf-notes.log')

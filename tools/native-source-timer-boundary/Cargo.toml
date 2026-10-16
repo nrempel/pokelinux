@@ -1,0 +1,18 @@
+[package]
+name = "pokelinux-source-timer-boundary"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[features]
+isolated-fixture = []
+
+[dependencies]
+pokelinux-session-owner = { path = "../../native-session-owner" }
+pokelinux-lifecycle = { path = "../../native-lifecycle" }
+rustix = { version = "=1.1.5", features = ["net", "process", "fs", "event"] }
+
+[[test]]
+name = "timer"
+path = "tests/timer.rs"
+required-features = ["isolated-fixture"]

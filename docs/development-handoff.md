@@ -62,14 +62,16 @@ selections, but both fail during display-profile setup before Qt/PCM. A separate
 private owner diagnostic records first terminal `TimedOut`, sequence1 age120.9ms
 against the100ms lease, and actual compositor child SIGKILL9. That diagnostic is
 not a production GREEN and does not identify the blocking startup operation.
-The producer emits synchronously during plugin initialization before timer
-dispatch; all emission paths need first-dispatch gating. Complete heavy fixture
+The [producer startup repair](native-source-timer-startup.md) now gates all
+publication until actual timer dispatch. A genuine early-publication RED precedes
+two unchanged real-Wayland/credentialed-socket ARM GREEN cases; matching adapter
+SDK compilation also passes. Rust SourceOwner/Observer and the100ms lease are
+unchanged. Complete heavy fixture
 display setup before Source activation. Preserve the original lease and terminal
 failure, and restore the unmodified owner for functional qualification. See
 [startup evidence](native-session-owner.md#cold-start-source-failure).
 
-Next qualify the producer repair through actual Wayland timer/socket boundaries,
-then execute the production owner/original Source/fixed desktop/normal Sounds
+Next execute the production owner/original Source/fixed desktop/normal Sounds
 path in ARM with independent grant and real native focus. Qualify
 null-focus background lease continuation, then terminal Source loss without
 app/audio revival. Preserve the earlier ARM selection and its authored-focus

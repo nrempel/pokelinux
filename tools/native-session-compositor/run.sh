@@ -22,6 +22,7 @@ out=Path(sys.argv[1]);source=out/'source';bins=out/'bins'
 for name in ['guest.py','run.sh','run-vm.sh','README.md']:
  shutil.copyfile(Path('tools/native-session-compositor')/name,source/name)
 shutil.copyfile(sys.argv[3],source/'adapter.cpp')
+shutil.copyfile(Path(sys.argv[3]).with_name('source_sampler.hpp'),source/'source_sampler.hpp')
 shutil.copyfile('artifacts/native-session-build-probe/run-4/source/lock-client.c',source/'lock-client-original.c')
 shutil.copyfile('artifacts/native-session-build-probe/run-4/probe.so',bins/'probe.so')
 if sys.argv[4]:

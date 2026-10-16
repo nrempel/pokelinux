@@ -1,0 +1,166 @@
+{
+  "schema": 1,
+  "qualified": true,
+  "scope": "Generic ARM kernel actual Wayland timer/credentialed packet/retained Rust SourceOwner component RED\u2192GREEN plus native adapter compilation only",
+  "public_base": "7176d7def891f1ff3bfb323d62c72772003fa9a1",
+  "baseline_source_extraction": "Existing packet serializer, clock and inherited descriptor validation extracted unchanged; no manufactured feature RED",
+  "baseline_header_sha256": "91d7debcb2d1e702b02193b345801d54b327de3f2b7e35ed91830db91c385eba",
+  "production_behavior_delta": "Shared publisher starts inactive and activates only at actual timer callback; early emit returns before sequence/lock reconciliation",
+  "final_sources": [
+    {
+      "path": "tools/native-session-compositor/adapter.cpp",
+      "sha256": "7d78b090b4fac0701fa5926d5a5bb53789d01b9309296e4fa8103e0b7f5643a4"
+    },
+    {
+      "path": "tools/native-session-compositor/guest.py",
+      "sha256": "24b2f625c421515057b16a756844d7eec18117cf9736f3c51c5d06875731a310"
+    },
+    {
+      "path": "tools/native-session-compositor/run.sh",
+      "sha256": "c39cec3adb9921c0997c843d1ac6cdf7cef72b9ae143dbf563de153aa476f7d5"
+    },
+    {
+      "path": "tools/native-session-compositor/source_sampler.hpp",
+      "sha256": "73612325a597b71a4386d62a4a563477e78e1bd5e572e48784f005507600e845"
+    },
+    {
+      "path": "tools/native-source-timer-boundary/Cargo.lock",
+      "sha256": "01de137260901ec424c41310b6704a60bd4d6544c465e2c0409f569df1b81ea4"
+    },
+    {
+      "path": "tools/native-source-timer-boundary/Cargo.toml",
+      "sha256": "4b6280f95bd6a6d3034b3fab923641241b7d0f150057b1185a881af5561ae505"
+    },
+    {
+      "path": "tools/native-source-timer-boundary/README.md",
+      "sha256": "e27ce69f7956ca2bfbf04801fbe62f7847b7c99a6e26fe05e8d9398650b0a27b"
+    },
+    {
+      "path": "tools/native-source-timer-boundary/tests/timer.rs",
+      "sha256": "03462f3f7c073e2dd8bb10f308f73b305a7fd906838570360d3158d8a73433d0"
+    },
+    {
+      "path": "tools/native-source-timer-boundary/timer-fixture.cpp",
+      "sha256": "c6abd8f2337371f24b2c2eab7225eae41d0a85307e511aad99b07705c94b4889"
+    }
+  ],
+  "Rust_test_ELF_sha256": "92662ad0079442ccdf510a2ab97bf9cfc490f98fb34a5df3925e6194a2d94e41",
+  "unchanged_production_owner_ELF_sha256": "aa0feaa70afba61cb9e4d4ae08db1456bd3c19c2137047b89d679f0a350117dc",
+  "gate_only_patch_sha256": "d0b3b5cf1b58087619b06665536bb7db99de77863874d8c9685118493e092c40",
+  "fixed_tests_CPP_and_Rust_production_unchanged": true,
+  "documentation_updated_after_runtime_only": [
+    "tools/native-source-timer-boundary/README.md"
+  ],
+  "RED": {
+    "actual_test_exit": 101,
+    "passed_cases": 1,
+    "behavioral_failures": 1,
+    "actual_early_snapshot_sequence": 2,
+    "before_first_timer_dispatch": true
+  },
+  "GREEN": {
+    "actual_test_exit": 0,
+    "passed_cases": 2,
+    "failed_cases": 0,
+    "first_sequences": [
+      1,
+      2
+    ],
+    "observed_sample_gap_ns": 25690904,
+    "precision_guarantee": false
+  },
+  "limits": {
+    "initial_fixture_Source_ns": 5000000000,
+    "production_Source_maximum_startup_ns": 120000000000,
+    "original_case_custody_ns": 8000000000,
+    "original_two_case_aggregate_ns": 20000000000,
+    "initial_silence_ns": 150000000,
+    "sample_lease_ns": 100000000,
+    "configured_timer_ms": 25
+  },
+  "native_adapter_compile": {
+    "source_sha256": "7d78b090b4fac0701fa5926d5a5bb53789d01b9309296e4fa8103e0b7f5643a4",
+    "header_sha256": "73612325a597b71a4386d62a4a563477e78e1bd5e572e48784f005507600e845",
+    "output_ELF_sha256": "f9d4e5814857073ec5bdd97ac654be6ed4b965308d9283ad012ede030c3e509f",
+    "actual_wait_exit": 0,
+    "original_Hyprland_runtime_executed": false
+  },
+  "proofs": [
+    {
+      "path": "RED/selection.json",
+      "sha256": "c8da4989bb32fb3d7ebba85ab02b23eca74d04b9342365dfacf6ed95d63c2e0b"
+    },
+    {
+      "path": "RED/command.json",
+      "sha256": "5eb76a8ab749aa0445d8c1a712d44fad76d798ce859b0a8ec926ba77328f3229"
+    },
+    {
+      "path": "RED/result.json",
+      "sha256": "f7d322b2a368782ebcc96a1ef181e69ab758e98ed16b63efddfdbca65ad35cae"
+    },
+    {
+      "path": "RED/boot-result.json",
+      "sha256": "bbaf7d4dfa552d8f2d9098209190379f7840704cff9a752515b5174892021d7d"
+    },
+    {
+      "path": "RED/execution.json",
+      "sha256": "f62abd7475999c8213690fb7abe826e689e9299942bf29ec1ca7c68dbb2097d0"
+    },
+    {
+      "path": "GREEN/selection.json",
+      "sha256": "dfb45fcb9022e26996f5a3707b33e4cd2e0d61b414a3c468a1b3952a14d9419e"
+    },
+    {
+      "path": "GREEN/command.json",
+      "sha256": "bb199644d0cc9cfc157ce420e2e81273bd43004e94549230e46627d048d65bcf"
+    },
+    {
+      "path": "GREEN/result.json",
+      "sha256": "c3d519459af8a29d7cee9d0738f12d4efdd30005643a8dfe0c7920e59771558b"
+    },
+    {
+      "path": "GREEN/boot-result.json",
+      "sha256": "faea2b634dc32e3ced27d1bdae7394b00fdca4644c54f32672ab018c3c67183e"
+    },
+    {
+      "path": "GREEN/execution.json",
+      "sha256": "c5f7f87370e9e1d2a7fd3ba4b1bc9f50777ad500f5f6b155b43b0634585e9dcd"
+    },
+    {
+      "path": "Root-red-qualification.json",
+      "sha256": "dae47add4d28e7a75c51c2a51979fa8d30605ac0714b1b3c5179e086e35e1bc5"
+    },
+    {
+      "path": "Root-green-qualification.json",
+      "sha256": "31f6ae3e710163a423c9fe5cf73a6971d884a3ff7cf3d210e09d58b5e7709bde"
+    },
+    {
+      "path": "ARM-author-qualification.json",
+      "sha256": "6fd9fd0b111a0fb94f2638852896ba06d715f75d9d4312c52aacb80e2615bb0a"
+    },
+    {
+      "path": "source-author-final-review.json",
+      "sha256": "b374c9ea1652c09a3dcb747ebb3ff9dfe0abd3060b7c7dd690951bba2779bbcd"
+    }
+  ],
+  "process_closure": {
+    "actual_Rust_Source_parent_waits_per_epoch": 2,
+    "Source_streams": "DEVNULL; no Source PIPE EOF claim",
+    "actual_guest_direct_waits_RED": 7,
+    "actual_guest_direct_waits_GREEN": 9,
+    "actual_outer_direct_waits_each_epoch": 7,
+    "all_applicable_waits_EOF_original_cutoffs": true,
+    "guest_ECHILD": true,
+    "actual_QEMU_and_CLI_exit0": true,
+    "same_daemon_exact_CID_absent": true,
+    "driver_recorded_input_closure_unchanged": true,
+    "Root_native_actual_wait_exits": [
+      0,
+      0
+    ]
+  },
+  "original_compositor_runtime_qualified": false,
+  "normal_Qt_PCM_or_new_capture_qualified": false,
+  "phone_accessed": false,
+  "hardware_qualified": false
+}
