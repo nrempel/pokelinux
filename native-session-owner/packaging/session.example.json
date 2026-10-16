@@ -1,6 +1,6 @@
 {
   "runtime": "/run/pokelinux/session",
-  "policy": "/var/lib/pokelinux/session/policy.json",
+  "policy": "/var/lib/pokelinux/session",
   "profiles": "/etc/pokelinux/apps.json",
   "app_entry": "/usr/libexec/pokelinux/pokelinux-session-owner",
   "display_parent": "/run/pokelinux/displays",

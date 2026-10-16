@@ -89,10 +89,10 @@ impl Config {
         for path in [&self.runtime, &self.display_parent] {
             protected_directory(path)?;
         }
-        for path in [&self.policy, &self.wayland, &self.audio_socket] {
+        for path in [&self.wayland, &self.audio_socket] {
             absolute(path)?;
         }
-        protected_directory(self.policy.parent().ok_or(io::ErrorKind::InvalidInput)?)?;
+        private_directory(&self.policy, 0)?;
         installed_file(&self.profiles)?;
         installed_file(&self.compositor_config)?;
         pokelinux_lifecycle::service::trusted_executable(&self.app_entry)?;

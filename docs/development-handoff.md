@@ -48,8 +48,17 @@ Host/ARM64 compilation and actual six-file Make staging pass. Independent source
 review found no blocker. No combined original-compositor or ARM execution follows
 from those host results; the unit remains staged metadata.
 
-Next execute the combined production owner/original Source/fixed desktop/normal
-Sounds path in ARM with independent grant and real native focus. Qualify
+The first actual combined ARM attempts remain failed: probe readiness setup,
+duplicate live-binary install, then native owner `InvalidData` before a usable
+compositor. That last selection passes a policy filename to an existing directory
+contract. The [policy-directory repair](native-session-owner.md#policy-directory-correction)
+now has a genuine2-pass/5-failure RED and15 preflight GREENs, plus two actual
+native storage-worker groups, strict final host/ARM builds and Make staging.
+The example and validator require an existing root0700 policy directory.
+Original24 unrelated host cases are reused; no39-case current aggregate exists.
+
+Next execute the corrected combined production owner/original Source/fixed
+desktop/normal Sounds path in ARM with independent grant and real native focus. Qualify
 null-focus background lease continuation, then terminal Source loss without
 app/audio revival. Preserve the earlier ARM selection and its authored-focus
 scope. Do not reopen auth/PAM or a broad static/diagnostic campaign. Hardware

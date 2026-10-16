@@ -1,5 +1,11 @@
 # Current native smartphone integration map
 
+The later [policy-directory correction](native-session-owner.md#policy-directory-correction)
+passes15 preflight cases after five actual acceptance failures and two separate
+native storage-worker groups. The example now selects an existing root0700
+directory. Failed combined ARM attempts remain failed; the corrected runtime
+and all phone gates remain open.
+
 The new [native session owner](native-session-owner.md) composes Source, lifecycle,
 per-app display and audio while retaining the actual compositor Child.32 host
 boundary cases, host/ARM64 compilation and actual Make staging pass. Combined

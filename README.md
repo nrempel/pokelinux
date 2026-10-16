@@ -38,8 +38,9 @@ Dashed connections are work still required, not working hardware paths. “Rust 
 
 The new [native Rust session owner](docs/native-session-owner.md) starts and
 retains the compositor Child and composes Source, lifecycle, per-app display and
-audio.32 actual host boundary cases, host/ARM64 compilation and six-file Make
-staging pass. Its combined original-compositor ARM session remains open. The
+audio. Its current15-case policy preflight, actual native storage-worker checks,
+host/ARM64 compilation and Make staging pass alongside the retained ownership
+tests. Its combined original-compositor ARM session remains open. The
 separate [normal permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
 passes four groups with actual touch, independent virtual graph/PCM and unscaled
 Pixel10 captures using root-authored focus. Physical audio remains unverified.

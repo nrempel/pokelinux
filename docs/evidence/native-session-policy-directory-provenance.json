@@ -1,0 +1,265 @@
+{
+  "schema": 1,
+  "qualified": true,
+  "scope": "Policy-directory preflight repair plus exact corrected host storage-worker IPC and host/ARM64 compilation/staging; no combined original Source/normal Qt/ARM runtime or phone qualification",
+  "public_base": "040053c0171efd18ecc57964cb5111de969df794",
+  "previous_root_qualification_sha256": "e2e8acbee6f9a2cb182b939594a3d0b0bbdfb2acecf7a46a3deaa06374b44e47",
+  "source_files": [
+    {
+      "path": "native-session-owner/Cargo.lock",
+      "sha256": "379bb112188d81c302bcaa48deed1409b33121b671430c7e1e34321d1828ddcb"
+    },
+    {
+      "path": "native-session-owner/Cargo.toml",
+      "sha256": "3edbd92148c7b6f9aeac4d3bc3f8a292d2972040ec0cd5ab19fe36de591a6f31"
+    },
+    {
+      "path": "native-session-owner/Makefile",
+      "sha256": "1d5b3c3ce59f08471137ecfb73cae249b729e27abdcdee47ad76659217d562aa"
+    },
+    {
+      "path": "native-session-owner/README.md",
+      "sha256": "ff978b8a810e227a7aea244684eed74bfb7feda8bb9030c975bf47fa62705fb1"
+    },
+    {
+      "path": "native-session-owner/packaging/apps.example.json",
+      "sha256": "39f580b3b4ea74603d04b4f496df81a7e41d0219838cfae671f2d9ca9b848124"
+    },
+    {
+      "path": "native-session-owner/packaging/pokelinux-session-owner.service",
+      "sha256": "906a050e764c87239f33f39682a77c1caa63ceec2ecd754fdf3aba40df398b0e"
+    },
+    {
+      "path": "native-session-owner/packaging/session.example.json",
+      "sha256": "c00131dcb05eba461f80ee2eef991981dd1ddb6b96bba5759f698e52f1d947c9"
+    },
+    {
+      "path": "native-session-owner/src/bin/source-owner-fixture.rs",
+      "sha256": "b49850e61f35a6cc9a5fd2757fb74cf27f108ea64817beff8b4cb2b7a7633303"
+    },
+    {
+      "path": "native-session-owner/src/bootstrap.rs",
+      "sha256": "51bcebff35e95746d5063df3b12a13d3febc3ff6eb26035e719d9a8b88ef62c8"
+    },
+    {
+      "path": "native-session-owner/src/config.rs",
+      "sha256": "59420060511193783e1c75c244f16c1d0924926f3a05cf1c9f4112c7d9b78b95"
+    },
+    {
+      "path": "native-session-owner/src/display.rs",
+      "sha256": "a13c90114a24f95931cf143ef6bc19b3c64e49fac61f676163dcff6c0cf628d4"
+    },
+    {
+      "path": "native-session-owner/src/lib.rs",
+      "sha256": "468252960da87b1384e92202d04f3ca6963de3dd374688df721fabbdc7f2cb8b"
+    },
+    {
+      "path": "native-session-owner/src/main.rs",
+      "sha256": "3e133f7ce9d3fa0752f81ea4b87ca5dcbf34ebfa59b168cf8aab912f062b497f"
+    },
+    {
+      "path": "native-session-owner/src/runtime.rs",
+      "sha256": "c8746256678045bc499c443534919ebcbdfb578328d7c1fbdee8521ff11c851c"
+    },
+    {
+      "path": "native-session-owner/src/source.rs",
+      "sha256": "df276002abee8ea4357834a9b46987d76f60b4cfd7b970db9129409ba110afab"
+    },
+    {
+      "path": "native-session-owner/src/stop.rs",
+      "sha256": "e0ea9256637ffe73b5c8bb91238fd7cbf95f969e2b9336acc246b29cac36aaaf"
+    },
+    {
+      "path": "native-session-owner/tests/cleanup.rs",
+      "sha256": "1658822c301fa6b88ebb3e7c3fa04f7ec24d71a4882464dfc7bee1f5edc0e14f"
+    },
+    {
+      "path": "native-session-owner/tests/config.rs",
+      "sha256": "54a54938bd6f62e2e52d1ed2ad5772b06e58187cd43eb5c15734d040b43c645c"
+    },
+    {
+      "path": "native-session-owner/tests/display.rs",
+      "sha256": "bb269e61655e493218705b9f8eb49712b879fb6057369f3304483f505cf0c3b0"
+    },
+    {
+      "path": "native-session-owner/tests/source.rs",
+      "sha256": "816b13d9f822c99a924bd455eac4a6f540be7f2325b503dc7e17dfef10ad75db"
+    },
+    {
+      "path": "native-session-owner/tests/stop.rs",
+      "sha256": "c18948f52812e5035bf677b05a09e4aa1d9232267556a395c3acde76b277acee"
+    },
+    {
+      "path": "native-session-owner/tests/support/display-test-fixture.rs",
+      "sha256": "0b9c1bd132f5de88698d0bc835aab58059e44f734d0a50d06920b74c3d7ba826"
+    },
+    {
+      "path": "native-session-owner/tests/support/stop-test-fixture.rs",
+      "sha256": "f5cf3dc8dded9ee7523fcf07f0a0ec7c2b207c86e80b4c2c9d4513824506d3b9"
+    }
+  ],
+  "source_only_production_delta": "Config::validate requires existing private_directory(policy,0) rather than validating only its parent; storage semantics unchanged",
+  "host_cases": {
+    "configuration": 15,
+    "new_policy_cases": 7,
+    "RED_controls_passed": 2,
+    "RED_invalid_policy_acceptance_failures": 5,
+    "prior_configuration_functional_bodies_unchanged": 8,
+    "prior_other_cases_reused": 24,
+    "total": 39,
+    "current_epoch_all39_aggregate": false,
+    "actual_current_epoch_configuration_cases": 15,
+    "actual_final_native_storage_groups": 2
+  },
+  "compiler_messages": [
+    {
+      "path": "ARM-launch.jsonl",
+      "sha256": "8cf6d4b0d0128008f5c203ec45e3705c190b80aec2b0d5f309639eaaea4a2460"
+    },
+    {
+      "path": "ARM-production.jsonl",
+      "sha256": "0d2ed39187e1fc58e0d0ad61d8c0889882d1e2d2050e5cb4f5e3c8d062da9bb2"
+    },
+    {
+      "path": "all-tests.jsonl",
+      "sha256": "1bd009c255ea5904080da54dff92dc89c3a15e2c1b219d4f1e362ff6abbe0340"
+    },
+    {
+      "path": "host-feature-bins.jsonl",
+      "sha256": "30fcbd8411d070a9b6ba0abb4522e1e7f607566f4437052f5f7761b20bacb972"
+    },
+    {
+      "path": "host-launch.jsonl",
+      "sha256": "1d128eff56e972cdf143ea65d5908fb24026e2d6beccb505410dd59469bd00be"
+    },
+    {
+      "path": "host-production.jsonl",
+      "sha256": "5f3fd65c1679efd7efa1e5976f8f336d12e76aa0efa5b85b3126d828216eb725"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "debug/pokelinux-session-owner",
+      "sha256": "b09422c0c05c3444b1b84db61e2a14311821e2cf106ce42dfee0c3f32388be39",
+      "bytes": 6738792,
+      "ELF_machine": 62
+    },
+    {
+      "path": "aarch64-unknown-linux-gnu/debug/pokelinux-session-owner",
+      "sha256": "aa0feaa70afba61cb9e4d4ae08db1456bd3c19c2137047b89d679f0a350117dc",
+      "bytes": 6293920,
+      "ELF_machine": 183
+    },
+    {
+      "path": "lifecycle/debug/sounds-launch",
+      "sha256": "e0c2230e7201b452545f22467149b435297be78b4513fb50c26ee6ea7322fb1e",
+      "bytes": 1919832,
+      "ELF_machine": 62
+    },
+    {
+      "path": "lifecycle/aarch64-unknown-linux-gnu/debug/sounds-launch",
+      "sha256": "7b6960e4972e084d9939183f531b63ad9e30a8e95b93114c101c96f4af92affc",
+      "bytes": 1701976,
+      "ELF_machine": 183
+    }
+  ],
+  "actual_Make_staging": {
+    "files": [
+      {
+        "path": "usr/lib/systemd/system/pokelinux-session-owner.service",
+        "sha256": "906a050e764c87239f33f39682a77c1caa63ceec2ecd754fdf3aba40df398b0e",
+        "mode": "0o644"
+      },
+      {
+        "path": "usr/libexec/pokelinux/pokelinux-session-owner",
+        "sha256": "b09422c0c05c3444b1b84db61e2a14311821e2cf106ce42dfee0c3f32388be39",
+        "mode": "0o755"
+      },
+      {
+        "path": "usr/libexec/pokelinux/sounds-launch",
+        "sha256": "e0c2230e7201b452545f22467149b435297be78b4513fb50c26ee6ea7322fb1e",
+        "mode": "0o755"
+      },
+      {
+        "path": "usr/share/applications/org.omarchy.Sounds.desktop",
+        "sha256": "42f4157e5edae04d0c57a8311cf2abeda518d395ca3ef2206f63216d54d03e1d",
+        "mode": "0o644"
+      },
+      {
+        "path": "usr/share/pokelinux/session-owner/apps.example.json",
+        "sha256": "39f580b3b4ea74603d04b4f496df81a7e41d0219838cfae671f2d9ca9b848124",
+        "mode": "0o644"
+      },
+      {
+        "path": "usr/share/pokelinux/session-owner/session.example.json",
+        "sha256": "c00131dcb05eba461f80ee2eef991981dd1ddb6b96bba5759f698e52f1d947c9",
+        "mode": "0o644"
+      }
+    ],
+    "unit_activated": false
+  },
+  "proofs": [
+    {
+      "path": "policy-red-runtime.json",
+      "sha256": "cc8104726c886798bd6c3f0b3f4ceb9f7ab99729b38fcb69153b61c17519d27b",
+      "actual_container_exit": 101
+    },
+    {
+      "path": "policy-green-runtime.json",
+      "sha256": "f9c8f292e31d7c1db3c0670048a9dc232d7bc3feb384e95fd951e23d532adb4b",
+      "actual_container_exit": 0
+    },
+    {
+      "path": "final-build-1/receipt.json",
+      "sha256": "23cece8678adc7398422b2a92b512aefa2f974b059c93c536c168828bb6ee08d"
+    },
+    {
+      "path": "storage-runtime-1/receipt.json",
+      "sha256": "445e4de5babf3ed31f38b6e338da72af11d2a71c322a5b05ca7107f77a11f873"
+    },
+    {
+      "path": "install-stage-1/receipt.json",
+      "sha256": "26b630c412a4c32ea4fe6f5ec496ec11067407e9cda68bcd2a1daf8397330c5b"
+    },
+    {
+      "path": "native-storage-result.json",
+      "sha256": "7a37651ddfc3204742832a982070607a1e6133130948960ff5bf5c2d12f19dc3"
+    },
+    {
+      "path": "fixed-before-first-build.json",
+      "sha256": "fbfc34467e0a45a0edacbdc0bc7448dc07734a28a27b2f32722df18a0d612f28"
+    }
+  ],
+  "preserved_ARM_failures": [
+    {
+      "epoch": 2,
+      "result_sha256": "52aae5915b94fc6e38df4561c9956326bb8eaa492ac14386dee21bd66a1607c4",
+      "overall_passed": false
+    },
+    {
+      "epoch": 3,
+      "result_sha256": "ef4efc2f75b85bfb027861354193e587155df02dfaa578e2ebe441f3d7432147",
+      "overall_passed": false
+    },
+    {
+      "epoch": 4,
+      "result_sha256": "725576a12c2e3fe3723c21b7aeee42f34309b3b8d757dc3b267f6858ed4fbdb0",
+      "overall_passed": false
+    }
+  ],
+  "all_selected_containers_closed_same_daemon": true,
+  "all_30_outer_actual_CLI_waits_EOF_original_cutoffs": true,
+  "actual_native_worker_waits": 2,
+  "native_worker_stderr": "Merged into stdout PIPE; no independent stderr EOF claim",
+  "full_installed_Source_runtime_qualified": false,
+  "hardware_qualified": false,
+  "phone_accessed": false,
+  "qualification": {
+    "path": "Root-policy-final-qualification.json",
+    "sha256": "bcc06e02f6daf350b537afc3298080c2646cba36f2ed2b37b45bfefa93bf711f"
+  },
+  "author_RED_GREEN_qualification": {
+    "path": "policy-directory-author-receipt.json",
+    "sha256": "d82b30bbafab2c6d4528d99c79b87617c08f8ce325363addb1cfbd0bc2ea15e2"
+  }
+}

@@ -42,6 +42,7 @@ impl Case {
             fs::create_dir(root.join(name)).unwrap();
             fs::set_permissions(root.join(name), fs::Permissions::from_mode(0o755)).unwrap();
         }
+        fs::set_permissions(root.join("policy"), fs::Permissions::from_mode(0o700)).unwrap();
         for (name, uid) in [
             ("desktop", 1000),
             ("home", 1000),
@@ -74,7 +75,7 @@ impl Case {
             root.join("appearance")
         ]);
         fs::write(root.join("apps.json"),serde_json::to_vec(&json!({"apps":[{"app":"org.omarchy.Sounds","uid":11042,"executable":root.join("sounds"),"args":args}]})).unwrap()).unwrap();
-        let data = json!({"runtime":root.join("runtime"),"policy":root.join("policy/state.json"),"profiles":root.join("apps.json"),"app_entry":root.join("entry"),"display_parent":root.join("display"),"wayland":root.join("desktop/wayland-1"),"audio_socket":root.join("audio.sock"),"compositor_executable":root.join("compositor"),"compositor_config":root.join("hyprland.conf"),"environment":{"HOME":root.join("home"),"XDG_RUNTIME_DIR":root.join("desktop"),"PATH":"/usr/bin"}});
+        let data = json!({"runtime":root.join("runtime"),"policy":root.join("policy"),"profiles":root.join("apps.json"),"app_entry":root.join("entry"),"display_parent":root.join("display"),"wayland":root.join("desktop/wayland-1"),"audio_socket":root.join("audio.sock"),"compositor_executable":root.join("compositor"),"compositor_config":root.join("hyprland.conf"),"environment":{"HOME":root.join("home"),"XDG_RUNTIME_DIR":root.join("desktop"),"PATH":"/usr/bin"}});
         let path = root.join("session.json");
         let c = Self { root, path, data };
         c.write();
@@ -224,4 +225,91 @@ fn root_installed_display_profile_environment_is_selected() {
             .to_str()
             .unwrap()
     );
+}
+
+#[test]
+#[ignore = "requires isolated root and protected fixture directory"]
+fn policy_directory_existing_root_private_control_is_selected() {
+    let c = Case::new();
+    let policy = c.root.join("policy");
+    let metadata = fs::symlink_metadata(&policy).unwrap();
+    use std::os::unix::fs::MetadataExt;
+    assert!(metadata.is_dir());
+    assert_eq!(metadata.uid(), 0);
+    assert_eq!(metadata.mode() & 0o7777, 0o700);
+    let config = Config::load(&c.path).expect("existing root-private policy directory");
+    assert_eq!(config.policy, policy);
+    assert_eq!(fs::read_dir(policy).unwrap().count(), 0);
+}
+#[test]
+#[ignore = "requires isolated root and protected fixture directory"]
+fn policy_directory_missing_filename_is_refused() {
+    let mut c = Case::new();
+    Config::load(&c.path).expect("valid common directory fixture before mutation");
+    let missing = c.root.join("policy/state.json");
+    assert!(!missing.exists());
+    c.data["policy"] = json!(missing);
+    c.write();
+    c.denied();
+}
+#[test]
+#[ignore = "requires isolated root and protected fixture directory"]
+fn policy_directory_regular_file_is_refused() {
+    let mut c = Case::new();
+    Config::load(&c.path).expect("valid common directory fixture before mutation");
+    let file = c.root.join("policy.json");
+    fs::write(&file, b"{}").unwrap();
+    fs::set_permissions(&file, fs::Permissions::from_mode(0o600)).unwrap();
+    c.data["policy"] = json!(file);
+    c.write();
+    c.denied();
+}
+#[test]
+#[ignore = "requires isolated root and protected fixture directory"]
+fn policy_directory_nonprivate_modes_are_refused() {
+    for mode in [0o755, 0o750, 0o770, 0o1700] {
+        let c = Case::new();
+        Config::load(&c.path).expect("valid common directory fixture before mutation");
+        fs::set_permissions(c.root.join("policy"), fs::Permissions::from_mode(mode)).unwrap();
+        c.denied();
+    }
+}
+#[test]
+#[ignore = "requires isolated root and protected fixture directory"]
+fn policy_directory_symlink_is_refused() {
+    let mut c = Case::new();
+    Config::load(&c.path).expect("valid common directory fixture before mutation");
+    let link = c.root.join("policy-link");
+    symlink(c.root.join("policy"), &link).unwrap();
+    c.data["policy"] = json!(link);
+    c.write();
+    c.denied();
+}
+#[test]
+#[ignore = "requires isolated root and protected fixture directory"]
+fn policy_directory_wrong_owner_is_refused() {
+    let c = Case::new();
+    Config::load(&c.path).expect("valid common directory fixture before mutation");
+    rustix::fs::chown(
+        c.root.join("policy"),
+        Some(rustix::process::Uid::from_raw(11042)),
+        Some(rustix::process::Gid::from_raw(11042)),
+    )
+    .unwrap();
+    c.denied();
+}
+#[test]
+#[ignore = "requires isolated root and protected fixture directory"]
+fn policy_directory_writable_ancestor_is_refused() {
+    let mut c = Case::new();
+    Config::load(&c.path).expect("valid common directory fixture before mutation");
+    let parent = c.root.join("unprotected");
+    let policy = parent.join("policy");
+    fs::create_dir(&parent).unwrap();
+    fs::create_dir(&policy).unwrap();
+    fs::set_permissions(&policy, fs::Permissions::from_mode(0o700)).unwrap();
+    fs::set_permissions(&parent, fs::Permissions::from_mode(0o777)).unwrap();
+    c.data["policy"] = json!(policy);
+    c.write();
+    c.denied();
 }

@@ -47,7 +47,17 @@ compositor configuration that loads that adapter. Full Omarchy shell setup and
 device graphics remain separate from a minimal Source composition.
 
 The deployment must create root-owned nonwritable runtime, display and policy
-parents, UID1000 compositor HOME/runtime0700 and UID11042 app HOME/runtime0700.
+ancestors, UID1000 compositor HOME/runtime0700 and UID11042 app HOME/runtime0700.
+The `policy` field names an existing root-owned directory with mode0700, such as
+`/var/lib/pokelinux/session`. It is the lifecycle storage directory, which owns
+its policy and durable owner files; a policy JSON filename is invalid. Prepare
+the selected directory before startup, for example as root:
+
+```sh
+install -d -o0 -g0 -m0700 -- /var/lib/pokelinux/session
+```
+
+Configuration validation does not create the directory or change storage data.
 The examples show the schema; choose actual trusted paths/accounts for the
 installed profile, keeping the unit Stop runtime equal to the configured
 runtime. The sole audio service at11040 and appearance feed must be

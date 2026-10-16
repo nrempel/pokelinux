@@ -4,8 +4,11 @@ The new `native-session-owner` Rust entry starts and owns the compositor, then
 composes the existing Source Observer, lifecycle actor, per-app Wayland supervisor
 and sole audio client. A fixed desktop request can launch the installed Sounds
 profile, but cannot grant permission, choose an executable or restore a failed
-Source. The host boundaries pass32 cases. Host and ARM64 binaries compile; the
-combined original-compositor ARM session remains the next runtime gate.
+Source. The initial host cohort passes32 cases; the later policy-directory
+repair passes15 current preflight cases and two actual native worker groups.
+The other24 original cases are reused, without a39-case current aggregate.
+Host and ARM64 binaries compile; the combined original-compositor ARM session
+remains the next runtime gate.
 
 ## Ownership and installation
 
@@ -36,8 +39,10 @@ precedes SDK termination even when withdrawal fails; occupancy lasts until reap.
 
 Root-installed strict configuration binds one Sounds profile, exact six app
 arguments, private UID1000/11042 HOME/runtime directories, protected installer
-paths and a bounded environment. Unknown permission, unlock and Source fields
-are refused. The same binary dispatches existing app-entry, storage and display
+paths and a bounded environment. The `policy` path must be an existing root-owned
+0700 directory, which the storage worker uses for its policy and owner seals.
+Missing paths and filenames are refused before compositor spawn. Unknown
+permission, unlock and Source fields are refused. The same binary dispatches existing app-entry, storage and display
 workers. `--stop ABSOLUTE_RUNTIME` uses fixed typed bounded IPC directly, without
 reading session configuration, profiles or HOME files.
 
@@ -92,6 +97,40 @@ final sources, artifacts, compiler messages, red/green qualifications, staged
 files and actual runtime receipts. Private binaries and raw artifacts are not
 published. Independent production-source review found no concrete blocker; it
 adds no runtime evidence.
+
+## Policy-directory correction
+
+The first composed ARM attempt to reach the owner exits with `InvalidData` before
+normal Qt or PCM. Its selected policy path ends in `state.json`, while existing
+`storage::Disk::open` requires a directory. Two preceding attempts fail only in
+the probe readiness and duplicate installer-write setup. All three remain failed;
+actual QEMU/CLI exits and exact container absence are recorded independently.
+There is no new ARM Source/window/audio qualification from these attempts.
+
+The original preflight checked only the policy parent, and the published example
+also selected a filename. Seven new fixed tests first produce two passing
+controls and five invalid-selection acceptance failures. Only two production
+lines change to reuse `private_directory(policy,0)`; all15 configuration cases then
+pass. The original eight functional bodies remain unchanged, with their common
+fixture corrected to a real root0700 directory before freezing the seven new
+cases. Package instructions and the example now use that directory contract.
+Storage semantics and unrelated Source/display/Stop code do not change.
+
+Two actual default-native-worker groups independently exercise the existing
+same-build `--storage-worker` entry over credentialed SEQPACKET. The directory
+loads an authored locked policy, holds its actual exclusive flock and writes
+matching live/clean epoch and policy-hash seals on Shutdown. A regular filename
+returns Load failure/state-null with no false readiness or owner markers; its
+Shutdown also fails as a request, while the worker itself normally exits0.
+Both real children are waited and reach their merged PIPE EOF within original
+cutoffs, followed by parent ECHILD. This is reuse integration, without a
+manufactured feature RED or Source/full-session claim. The corrected final host
+binary repeats these two cases; strict host/ARM64 builds and six-file Make staging
+also pass. The other24 original host cases and prior Qt32 are not rerun.
+
+[Correction evidence](evidence/native-session-policy-directory-provenance.json)
+binds this new source, fixed tests, actual worker results, artifacts and failed
+ARM selections separately. The corrected combined ARM runtime remains open.
 
 ## Remaining integration
 

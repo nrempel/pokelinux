@@ -1,5 +1,11 @@
 # Omarchy smartphone goal
 
+The later [policy-directory correction](native-session-owner.md#policy-directory-correction)
+passes15 preflight cases after five actual acceptance failures and two separate
+native storage-worker groups. The example now selects an existing root0700
+directory. Failed combined ARM attempts remain failed; the corrected runtime
+and all phone gates remain open.
+
 The [native Rust session owner](native-session-owner.md) now implements compositor
 Child custody and fixed Sounds session assembly.32 host boundary cases,
 host/ARM64 compilation and actual six-file Make staging pass. The full completion
