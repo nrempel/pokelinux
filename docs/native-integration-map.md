@@ -8,7 +8,10 @@ separate private diagnostic records first-sample expiry at120.9ms against the
 unchanged100ms lease and actual compositor child signal9; no production GREEN
 follows. The [startup repair](native-source-timer-startup.md) now passes two
 actual ARM Wayland/socket cases after an early-publication RED, plus matching
-adapter SDK compilation. Combined runtime and all phone gates remain open.
+adapter SDK compilation. The next [original replay](native-session-owner.md#gated-original-compositor-replay)
+still fails at metadata probe255 before Sounds/PCM, with compositor death
+observed before Stop and cause unknown. Combined runtime and all phone gates
+remain open.
 
 The new [native session owner](native-session-owner.md) composes Source, lifecycle,
 per-app display and audio while retaining the actual compositor Child.32 host

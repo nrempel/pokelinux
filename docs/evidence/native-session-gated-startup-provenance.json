@@ -1,0 +1,171 @@
+{
+  "schema": 1,
+  "overall_qualified": false,
+  "scope": "Failed original Hyprland/public SourceOwner/Sounds ARM startup after qualified timer gate; no UI/PCM/hardware success",
+  "public_source_commit": "971e26899d929dde2e57e2ab21b9e4171e596387",
+  "Root_native_runner_actual_wait_exit": 1,
+  "phase": "setup",
+  "error": "AssertionError: ('pixel10-actual-metadata.log', 255, b'')",
+  "failure_classification": "SETUP_FAILURE",
+  "completed_boundary_steps": 0,
+  "native_plugin_compiles": [
+    {
+      "source": "source-adapter.cpp",
+      "source_sha256": "7d78b090b4fac0701fa5926d5a5bb53789d01b9309296e4fa8103e0b7f5643a4",
+      "output": "/usr/lib/pokelinux/session-source.so",
+      "output_sha256": "07ef4a752cce0b454bb29f8ddcd7974709fa4b7368f29dd83096a6b91c350112",
+      "argv": [
+        "/usr/bin/g++",
+        "-std=c++23",
+        "-O2",
+        "-shared",
+        "-fPIC",
+        "-I/usr/include/hyprland/protocols",
+        "-I/usr/include/hyprland",
+        "-I/usr/include/hyprland/src",
+        "-I/usr/include/libdrm",
+        "-I/usr/include/cairo",
+        "-I/usr/include/freetype2",
+        "-I/usr/include/libpng16",
+        "-I/usr/include/pixman-1",
+        "/results/source/source-adapter.cpp",
+        "-o",
+        "/usr/lib/pokelinux/session-source.so"
+      ],
+      "original_build_seconds": 180,
+      "new_build_not_inherited_old_binary_proof": true
+    },
+    {
+      "source": "focus-observer.cpp",
+      "source_sha256": "628521ed4f1c1a53ca50d8515878ee69e46f896647754aec691d845450fcf05d",
+      "output": "/usr/lib/pokelinux/audio-focus-observer.so",
+      "output_sha256": "51daa1e1ce570d5b4181e0d55eaf7cdeccfd65aa90fd722dde7a09506b014d36",
+      "argv": [
+        "/usr/bin/g++",
+        "-std=c++23",
+        "-O2",
+        "-shared",
+        "-fPIC",
+        "-I/usr/include/hyprland/protocols",
+        "-I/usr/include/hyprland",
+        "-I/usr/include/hyprland/src",
+        "-I/usr/include/libdrm",
+        "-I/usr/include/cairo",
+        "-I/usr/include/freetype2",
+        "-I/usr/include/libpng16",
+        "-I/usr/include/pixman-1",
+        "/results/source/focus-observer.cpp",
+        "-o",
+        "/usr/lib/pokelinux/audio-focus-observer.so"
+      ],
+      "original_build_seconds": 180,
+      "new_build_not_inherited_old_binary_proof": true
+    },
+    {
+      "source": "profile-ready-bootstrap.cpp",
+      "source_sha256": "21fc9ba536191d138d433649b6fc3f47dfe5e72d4cd2d14c4f51fd9d84622b93",
+      "output": "/usr/lib/pokelinux/profile-ready-bootstrap.so",
+      "output_sha256": "d545f04bea884bf02f8ad57875b605f9803a422f0766e77d3b4ac06662daee2b",
+      "argv": [
+        "/usr/bin/g++",
+        "-std=c++23",
+        "-O2",
+        "-shared",
+        "-fPIC",
+        "-I/usr/include/hyprland/protocols",
+        "-I/usr/include/hyprland",
+        "-I/usr/include/hyprland/src",
+        "-I/usr/include/libdrm",
+        "-I/usr/include/cairo",
+        "-I/usr/include/freetype2",
+        "-I/usr/include/libpng16",
+        "-I/usr/include/pixman-1",
+        "/results/source/profile-ready-bootstrap.cpp",
+        "-o",
+        "/usr/lib/pokelinux/profile-ready-bootstrap.so"
+      ],
+      "original_build_seconds": 180,
+      "new_build_not_inherited_old_binary_proof": true
+    }
+  ],
+  "public_owner_ELF_sha256": "aa0feaa70afba61cb9e4d4ae08db1456bd3c19c2137047b89d679f0a350117dc",
+  "private_modified_owner_selected": false,
+  "source_adapter_sha256": "7d78b090b4fac0701fa5926d5a5bb53789d01b9309296e4fa8103e0b7f5643a4",
+  "source_sampler_header_sha256": "73612325a597b71a4386d62a4a563477e78e1bd5e572e48784f005507600e845",
+  "setup_scope": {
+    "one_shot_ready_profile_loader_selected": true,
+    "literal_fixed_path_plugin_permission": true,
+    "same_original_compositor_startup_wait_ns": 120000000000,
+    "completed_ordered_receipt_required_before_metadata_probe": true,
+    "raw_applied_and_ordered_receipts_retained": false,
+    "ordering_prerequisite_scope": "Source-bound executed setup checks reached later metadata probe; no invented receipt timestamps/content or native display qualification",
+    "unexecuted_sol8_preserved": true,
+    "readiness_only_fixture_repair_not_feature_RED": true
+  },
+  "observations": {
+    "metadata_probe_actual_exit": 255,
+    "metadata_probe_output_empty": true,
+    "Source_compositor_pidfd_dead_and_proc_absent_before_Stop": true,
+    "existing_owned_log_bytes": 10498,
+    "exact_owned_PID_crash_report": "ENOENT",
+    "terminal_cause_established": false,
+    "Stop_reply_not_Source_health": true,
+    "policy_ready_not_Source_health": true,
+    "actual_owner_parent_wait_exit": 0
+  },
+  "process_closure": {
+    "actual_guest_direct_waits": 34,
+    "applicable_merged_PIPE_EOF_and_original_wait_cutoffs": true,
+    "guest_expected_exit_aggregate": false,
+    "guest_case_closure_qualified": false,
+    "observed_adopted_subreaper_waits": [
+      {
+        "pid": 492,
+        "actual_guest_subreaper_wait_exit": 0,
+        "at_boottime_ns": 147968665320
+      },
+      {
+        "pid": 531,
+        "actual_guest_subreaper_wait_exit": 1,
+        "at_boottime_ns": 147968889950
+      }
+    ],
+    "subreaper_child_PIPE_EOF_claimed": false,
+    "actual_QEMU_exit": 0,
+    "actual_Docker_CLI_exit": 0,
+    "same_daemon_exact_CID_absent": true,
+    "driver_recorded_input_closure_unchanged": true,
+    "raw_unresolved_handle_field_preserved": "2eb60d58f50c7836d760c1bbd16c7d8d162ee02bb99523e26366cf08b115ff3e",
+    "raw_unresolved_handle_interpretation": "Failed semantic aggregate retains this field; exact container absence is separately observed, not an outstanding running-container claim"
+  },
+  "proofs": [
+    {
+      "path": "selection.json",
+      "sha256": "1888490dbcff253d17376b60e72dfa0ad7848fea5f98dac0ee866954992150ba"
+    },
+    {
+      "path": "command.json",
+      "sha256": "05d6b36313859e6c6a0b57b6df5d279462190d51deb4d2aed7a84b38e8d49bbb"
+    },
+    {
+      "path": "result.json",
+      "sha256": "e57cba7ea9b14d557ee44efc98012bb4c0d9c9ffbd0e56068ece3f63ae7d065a"
+    },
+    {
+      "path": "boot-result.json",
+      "sha256": "f24fe0963d7a3f559e75e459c2672264d15ea895248a0541575d7855128c5efa"
+    },
+    {
+      "path": "execution.json",
+      "sha256": "45897046435d6a963d08aa09f2dbd1850afa872a6fdf6073ccc9dbc545bb594d"
+    },
+    {
+      "path": "author-qualification.json",
+      "sha256": "66f0b70e79cba288b3bf79f59417ce9ea476160c85ba519725de68350a9c4e12"
+    }
+  ],
+  "normal_Qt_PCM_or_new_capture_qualified": false,
+  "phone_accessed": false,
+  "hardware_qualified": false,
+  "next_boundary": "Bounded root-admin observed Source state/first failure, without changing freshness or private diagnostic builds, before another original runtime replay"
+}

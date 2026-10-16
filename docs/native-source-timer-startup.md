@@ -46,11 +46,16 @@ binds source, fixed tests, native artifacts and RED/GREEN process evidence.
 
 ## Remaining integration
 
-Next replay the actual production owner/original Hyprland/normal Sounds path,
-with heavy virtual-display profile setup complete before Source's first timer
-activation. That fixture ordering repair is separate from this production gate;
-it adds no feature RED claim. Keep the initial120s limit,100ms sample lease and
-terminal failure unchanged. Normal GUI, genuine theme, permission/native focus,
+The next [original-compositor replay](native-session-owner.md#gated-original-compositor-replay)
+compiles all three plugins and reaches the display metadata probe, which exits255
+before Sounds or PCM. The compositor is dead before Stop; cause is unknown.
+Private profile ordering and readiness are fixture repairs, without a feature
+RED claim. Mandatory ordered-receipt prerequisites pass in executed setup, but
+the raw receipts are not retained before the later failure.
+
+Next expose bounded observed Source state/first failure through the existing
+root-admin snapshot before another exact replay. Keep the initial120s limit,
+100ms sample lease and terminal failure unchanged. Normal GUI, genuine theme, permission/native focus,
 per-app listener, background route, virtual graph/PCM and Source-loss effects
 must qualify in that full selection. No new screenshot or physical qualification
 follows from these component tests. All smartphone completion and hardware

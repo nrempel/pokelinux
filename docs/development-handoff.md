@@ -71,8 +71,18 @@ display setup before Source activation. Preserve the original lease and terminal
 failure, and restore the unmodified owner for functional qualification. See
 [startup evidence](native-session-owner.md#cold-start-source-failure).
 
-Next execute the production owner/original Source/fixed desktop/normal Sounds
-path in ARM with independent grant and real native focus. Qualify
+One [public-gate original replay](native-session-owner.md#gated-original-compositor-replay)
+now passes all three plugin builds and reaches the display metadata probe, which
+exits255. The compositor is dead before Stop, but its first terminal reason is
+not exposed. No boundary step, normal Sounds or PCM passes. Overall failure is
+preserved separately from actual waits/EOF and QEMU/CLI/container closure.
+The private ordered/applied receipts were not retained before the later failure;
+only the mandatory executed prerequisite checks are source-bound.
+
+Next add bounded observed Source status to the existing root-admin snapshot:
+retain first observed failure and last accepted sample without changing policy,
+freshness, privilege or retries. Then replay the production owner/original
+Source/fixed desktop/normal Sounds path once. Qualify
 null-focus background lease continuation, then terminal Source loss without
 app/audio revival. Preserve the earlier ARM selection and its authored-focus
 scope. Do not reopen auth/PAM or a broad static/diagnostic campaign. Hardware

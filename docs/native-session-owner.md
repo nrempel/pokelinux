@@ -165,6 +165,37 @@ original120s first-sample allowance and terminal failure remain unchanged.
 failed selections and diagnostic separately. No new normal-window capture,
 virtual PCM or physical phone qualification follows.
 
+## Gated original-compositor replay
+
+The first original Hyprland replay after the timer-gate component GREEN uses the
+unmodified public Rust owner and published adapter/header. All three native
+plugin builds pass. A private one-shot ready listener loads the fixed physical
+profile before loop entry, with an exact literal-path permission rule. The
+fixture's existing120s readiness wait additionally requires a bounded complete
+ordered receipt before measurement. The preceding selected fixture without that
+wait remains preserved and unexecuted; no feature RED is claimed for setup repair.
+
+The Pixel10 metadata probe exits255 with empty output before Sounds or PCM. The
+retained compositor pidfd is dead and its process absent before cleanup Stop;
+the cause remains unestablished. Mandatory ordered/applied-receipt prerequisite
+checks reached the probe, but those raw receipts were not copied to results
+before failure. No ordering timestamps, native display qualification or current
+Source health is inferred. The existing owned log has10,498 bytes and the exact
+PID crash report is absent; its tail does not establish the blocking operation.
+
+The run remains failed.34 actual guest direct waits and their applicable merged
+PIPE EOFs meet original cutoffs, while the aggregate enforcing expected exits
+fails on probe255. Two adopted subreaper waits retain their own statuses without
+PIPE claims. Actual owner wait0, Stop0, QEMU/CLI0, exact container absence and input
+closure qualify separately. They do not convert failed setup into success.
+[Failed replay evidence](evidence/native-session-gated-startup-provenance.json)
+records those distinctions; the two timer component GREENs retain their scope.
+
+Next add bounded observed Source status to the existing root-admin snapshot,
+retaining first observed failure and last accepted sample without policy or
+freshness changes. This is operational state, not a health guarantee or a claim
+to repair the latest failure. Then replay the exact production path once.
+
 ## Remaining integration
 
 Next run the production owner with original Hyprland/Source, the fixed desktop
