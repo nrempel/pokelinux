@@ -1,0 +1,188 @@
+{
+  "schema": 1,
+  "evidence_qualified": true,
+  "scope": "Offline native x86 KVM package provisioning and actual installed Hyprland binary/SDK binding only; no compositor session, Source, Qt build/app, profile, PCM, ARM or phone proof",
+  "public_basis": "8b7303b1ec62186450c632db2d8b7c553169ef86",
+  "production_behavior_changed": false,
+  "behavior_RED_GREEN_claim": false,
+  "packages": {
+    "signed_archives": 367,
+    "archive_bytes": 646702408,
+    "detached_signature_bytes": 99075,
+    "original_verified_archives": 338,
+    "supplement_verified_archives": 29,
+    "all_actual_detached_signature_checks": 367,
+    "resolver": "Native distro pacman, empty package-entry local DB and frozen original core/extra sync DBs; no hand version resolver",
+    "original_manifest_sha256": "e75d39c7a62595099d6428a132a35bd5a0c36d4049b00346e25e295d75cdbfe0",
+    "merged_manifest_sha256": "80c8d200e507c0daad1e6784bfc3f01b18b96813494c44725eb4cc228a2ac29e",
+    "merged_closure_receipt_sha256": "32fea518c57f388b859769130b1499a72742e11c6a9050c988ef807bc5b614e5",
+    "original_signature_closure_receipt_sha256": "1930eb807700e52fa916a9af4a456eb9885ae2619c7cd41ad6ba6acabed025ce",
+    "supplement_networknone_verification_receipt_sha256": "d7e3efcbb1766c3952139667aa1909a2266901030b3b0d630062d72cdedaf703",
+    "original_independent_review_sha256": "f656b5a3c39bf2524ae738e87727b958003d1a533404737c735869a551906f69",
+    "official_Arch_tool_image": "sha256:3c64b538588416593f69a1aebd2f2ec0f2541b29159f32556fa7def2167147a0",
+    "prior_setup_failures_preserved": [
+      "capdrop container could not traverse0700 input root; corrected dedicated0755 context",
+      "native pacman cached file URL rejected by a post-download HTTPS-only guard; archives retained and independently verified offline",
+      "ALPM_DB_VERSION metadata mistaken for an installed package entry; retained29 signatures verified offline"
+    ],
+    "pipewire_audio_required_provider": "pw-cat, pw-record and audio plugins; provider confirmed against official file lists and signed archives",
+    "no_original_bundle_mutation_or_supplement_redownload": true
+  },
+  "installed_guest": {
+    "actual_running_kernel": "7.2.9-arch1-1",
+    "architecture": "x86_64",
+    "actual_root_filesystem_bytes": 8273244160,
+    "package_inventory_count": 367,
+    "actual_offline_transaction_archives": 187,
+    "package_inventory_sha256": "d1a51fbcc848498321dbd5e53850a7da2fac4bdf5937cbd8d92acf20b6902f38",
+    "whole_actual_stock_upgrade_projected_before_mutation": true,
+    "missing_upgrade_archives": [],
+    "transaction_signatures_required_trusted_offline": true,
+    "actual_fixture_compositor_account": {
+      "name": "alarm",
+      "UID": 1000,
+      "GID": 1000,
+      "HOME": "/home/alarm",
+      "HOME_mode": "0700",
+      "password_or_PAM_change_selected": false
+    },
+    "actual_Hyprland_ELF_sha256": "55da553be71222566ee73b973d2f56dbb9939044d8f22f81aa54b66c83f2f6d1",
+    "actual_Hyprland_commit": "efb50993780079460b0cbed1363e2166a2de1d9f",
+    "actual_installed_files_match_signed_archive": [
+      {
+        "path": "/usr/bin/Hyprland",
+        "sha256": "55da553be71222566ee73b973d2f56dbb9939044d8f22f81aa54b66c83f2f6d1"
+      },
+      {
+        "path": "/usr/include/hyprland/src/version.h",
+        "sha256": "dbedffa593494a4f610d8a8eaac5a32c2daed3e2e0998f47d875587370397c58"
+      },
+      {
+        "path": "/usr/include/hyprland/src/plugins/PluginAPI.hpp",
+        "sha256": "6a47b6bf31e781bf40297f7385ff7a18082812f252f5039961c2dae26a5ef740"
+      },
+      {
+        "path": "/usr/include/hyprland/src/output/Monitor.hpp",
+        "sha256": "4e9d88475f614f83015ed799d31425e35b47eb796dd91a4d8ec8f8ae88442621"
+      },
+      {
+        "path": "/usr/include/hyprland/src/state/MonitorState.hpp",
+        "sha256": "cf04c62fe25a86fc3e17d5abdd6aad87e18d86fd4c327e68745108ec83d39488"
+      },
+      {
+        "path": "/usr/include/hyprland/src/protocols/core/Output.hpp",
+        "sha256": "d6388b58409bc3437a92152cd355fdcda2dba8d6083b9bf5ea1a7a2f42f0f97f"
+      },
+      {
+        "path": "/usr/include/hyprland/src/desktop/DesktopTypes.hpp",
+        "sha256": "f56ae989653c5d9be2fd97a9f5febc4c4e3cc8c2012bb8932d6714cb4dbf5731"
+      },
+      {
+        "path": "/usr/include/hyprland/src/helpers/signal/Signal.hpp",
+        "sha256": "967b79dfb8ae4d74e6076ba5b3338ae9c4233e7b5c171d3dbd2e59b58d9670c3"
+      },
+      {
+        "path": "/usr/include/hyprland/src/event/EventBus.hpp",
+        "sha256": "bfb8be17d84a0d8e7f10a0d61bcdc2b2e67378d139aaae8a484bebd96f62eede"
+      },
+      {
+        "path": "/usr/share/pkgconfig/hyprland.pc",
+        "sha256": "1d3af9baa15f0b04a023246afe66070d8e98c97bf117c17ef605ed084cd65868"
+      },
+      {
+        "path": "/usr/include/aquamarine/output/Output.hpp",
+        "sha256": "1568dcf54e01fc42079b5d68d7189d135f3a2c57aceed9cd0d3f58c964a5a37d"
+      }
+    ],
+    "actual_module_versions": {
+      "Hyprland": "0.56.2",
+      "QtGui": "6.12.0",
+      "Wayland": "1.26.0",
+      "libdrm": "2.4.134"
+    },
+    "actual_audio_tool_hashes": {
+      "/usr/bin/pipewire": "58b4443989f8ca0d566b8d3340060553f0766e8a34c448ac50d3d0e4891472a5",
+      "/usr/bin/wireplumber": "fb507a7214257f8a558c29514e5429de694fa0bc50fc947bd960e32635d9045d",
+      "/usr/bin/pw-dump": "3aedcb8ac6ab8d8c0da50e1f38812edc8e7a74d0a7cf3b8ab8c358760217b552",
+      "/usr/bin/pw-link": "3daea0215383d2b884c3bddd8cb69a11479b005b2f4618267465311a95aaf9f1",
+      "/usr/bin/pw-cli": "87bb14bc68b93cdb1f8a0a7fef60c4a1cccd83605142a0ab20eb32d32ec59970",
+      "/usr/bin/pw-cat": "5af9809a4d830851c50ac44956af9edb183d6871d470d94a920017e46568007b",
+      "/usr/bin/pw-record": "5af9809a4d830851c50ac44956af9edb183d6871d470d94a920017e46568007b"
+    },
+    "actual_audio_SPA_file_hashes": {
+      "/usr/lib/spa-0.2/audiotestsrc/libspa-audiotestsrc.so": "cfbf373559586948fa1a282ea41dca0e48b5fe5c9ccc1b38e03adc3255404aa6",
+      "/usr/lib/spa-0.2/audioconvert/libspa-audioconvert.so": "7356f533620ad663abea428040c4676d7e79afe2bc16f19b4f17ead9748d9e56",
+      "/usr/lib/spa-0.2/audiomixer/libspa-audiomixer.so": "a8e63b873ac62c77a519520febccf3bdfbc1b9c0cc01e4ba6524e474fbe2a228",
+      "/usr/lib/spa-0.2/support/libspa-support.so": "45bfbe6a4012d5f8425f770cc0653a7dd61fbc04ea44c303e38d37521eb7b3f3"
+    },
+    "version_query_private_root0700_XDG_runtime": true,
+    "Qt_build_component_cases_or_normal_app_executed": false,
+    "all367_installed_names_versions_equal_signed_manifest": true
+  },
+  "execution": {
+    "selection_sha256": "360601a9721070495d813052b38e3cb770e658ab6c4a6b227b2fcfde160cd3b5",
+    "command_sha256": "5923e3b357cf01c7d20f5532a1f152f435aca2a0d951294b6f411e60ce0aefaa",
+    "execution_sha256": "89e9416b126331f21951c2ea6fa17b96fd38a89f2bc886f7bf1dfb31503c9485",
+    "boot_result_sha256": "757c60ba3f41e7943773ba4e72ba6ca941fa6ca3347328097f001b95668afa1a",
+    "guest_result_sha256": "de951ddd3ab78e9320e26a52dc40b35cf626795a50d2dadb2bcce053964b1061",
+    "Root_qualification_sha256": "36b808a94ffc4e4c6b1a9d50709f66e44b3ef56a92daa67c3cd531a89489eee7",
+    "guest_source_sha256": "e08023c28a3e8d1290c1cf9dc10c965414c4f0e12fa6c727df41279b3d17c54f",
+    "Root_actual_exec_session": 49052,
+    "Root_actual_exec_exit": 0,
+    "original_cutoffs_met": true,
+    "direct_waits": {
+      "host": 7,
+      "boot": 5,
+      "guest": 18,
+      "early": 1
+    },
+    "host_actual_PIPE_EOFs": 14,
+    "nested_actual_merged_PIPE_EOFs": 24,
+    "native_KVM_authenticated_QMP_guest_shutdown_socketEOF_QEMUwait0": true,
+    "DockerCLI0_exact_CID_absent_same_daemon": true,
+    "actual_external_input_pre_post_hashes_under_shared_lock": 750,
+    "selected_small_source_files": 17,
+    "serial_guest_identity_result_hash_match": true,
+    "elapsed_host_ns": 36112487487,
+    "setup_deadlines_seconds": {
+      "guest_work": 420,
+      "guest_closure": 480,
+      "QEMU": 600,
+      "boot_closure": 630,
+      "host_work": 660,
+      "outer": 690
+    },
+    "independent_qualification_sha256": "620cb3e5364f0b1087a2bd381ca83ea1a02d4d134ef8ba89db2d78458ddf1b5b"
+  },
+  "closed_layer": {
+    "sha256": "529fc1ffbdb5f0edebe83e66a84716eb28774036e07a81bf8655119107ebf6e0",
+    "file_bytes": 1062862848,
+    "virtual_bytes": 8589934592,
+    "mode": "0444",
+    "backing_path": "/vm/stock-cloud.qcow2",
+    "original_cloud_sha256": "08754e28d91b1680086c6211ef4df13559e766fff7cdb4006489b14b5d281f08",
+    "original_cloud_readonly": true,
+    "guest_export_isolated_from_active_QCOW_and_host_selection": true,
+    "quiescent_hash_after_actual_QMP_shutdown_and_QEMUwait0": true
+  },
+  "failed_guest_setups": [
+    {
+      "cause": "Missing pw-cat from omitted split pipewire-audio package",
+      "actual_guest_waits": 15,
+      "all_guest_exits0": true,
+      "Root_qualification_sha256": "b28fbaacaf73a393852c057dc6ecb4eec5b8200d3c99f755af78d9b124747cc9"
+    },
+    {
+      "cause": "Version-only Hyprland process lacked XDG_RUNTIME_DIR",
+      "actual_guest_waits": 16,
+      "actual_version_query_exit": -6,
+      "Root_qualification_sha256": "3b8ef787d5464239dca1ac47ad0b8dd51af5626a79b775c1ece6ebac3ec2c879"
+    }
+  ],
+  "failed_layers_preserved_not_admitted_or_reused": true,
+  "fixture_runtime_time_and_network_wait_masks": true,
+  "phone_accessed": false,
+  "hardware_qualified": false,
+  "private_raw_logs_images_or_credentials_published": false,
+  "next": "Actual native Qt build then unchanged full four-step Source/real focus/grant/normal Sounds/Pixel geometry/graph+PCM composition. Preserve ARM expiry and all hardware gates."
+}

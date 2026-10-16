@@ -51,8 +51,9 @@ precedes the last accepted Source sample by1.35s; Source reaches sequence50 befo
 a119ms expiry against the unchanged100ms lease. This does not justify another
 startup gate or identify a cause. A [native x86 KVM runtime](docs/native-session-x86-runtime.md)
 now boots the authenticated stock Arch guest and shuts down normally; the matching
-Rust payload builds. Offline compositor/Qt provisioning and full composition are
-next. ARM availability and all phone gates stay open.
+Rust payload builds. A later [offline install](docs/native-session-x86-runtime.md#offline-installed-guest)
+qualifies the signed367-package cohort, actual Hyprland binary/SDK and audio tools.
+Native Qt build and full composition are next; ARM and phone gates stay open.
 Earlier [permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
 passes four touch/graph/PCM groups using root-authored focus. Physical audio,
 production session completion and all phone gates remain open.

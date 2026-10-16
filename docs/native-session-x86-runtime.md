@@ -68,12 +68,47 @@ is a Qt/CMake target and was not treated as a Rust binary. The earlier32 Qt
 checks are not current native-guest evidence. No production behavior changes,
 new behavioral RED/GREEN result or screenshot follows from this checkpoint.
 
+## Offline installed guest
+
+A later fresh native KVM child now qualifies the offline installed software
+cohort. Native pacman resolves against frozen repository databases;338 original
+and29 additional archives have actual trusted detached-signature checks. The
+lossless367-package cache preserves the original bundle. Package download/setup
+failures remain preserved; they are not production behavioral REDs.
+
+The first guest install misses `pw-cat`: Arch supplies it and `pw-record` in
+[pipewire-audio](https://archlinux.org/packages/extra/x86_64/pipewire-audio/files/).
+The corrected bundle adds29 missing archives for it and its dependencies. A second fresh
+guest reaches all seven tool and four SPA-file hashes, but its version-only
+Hyprland query aborts without XDG_RUNTIME_DIR. A private root0700 directory for
+that same-child version exec corrects the fixture environment. Both failed
+layers remain failed and are not reused.
+
+The third fresh child grows the Btrfs root to8,273,244,160 bytes. Native pacman
+projects the complete actual stock upgrade before mutation and finds no missing
+archive; its strict signed offline transaction applies187 archives. The actual
+installed inventory contains367 packages. Installed Hyprland and SDK bytes match
+the signed archive, and the actual version query plus version.h bind commit
+`efb50993780079460b0cbed1363e2166a2de1d9f`. QtGui6.12.0, Wayland1.26.0 and
+libdrm2.4.134 are observed. This executes a version query, not a compositor session.
+
+All18 guest commands, one early command, five boot children and seven host CLI
+waits meet their original cutoffs, with38 actual PIPE EOFs. The same authenticated
+QMP stream confirms KVM and normal guest shutdown, socket EOF and QEMU0; Docker
+CLI0, exact container absence and750 external input hashes close. The envelope
+takes36.11 seconds. Guest work/closure remains420/480 seconds, QEMU600/630 and
+host660/690. These are setup limits, not changes to the100ms Source lease.
+
+Only the fresh child receives disk writes. Its closed8GiB virtual QCOW2 is
+hashed after QEMU wait0 and sealed0444; the authenticated original remains
+read-only. The guest results export excludes the active disk and host selection.
+[Hash-only provisioning evidence](evidence/native-session-x86-provision-provenance.json)
+binds the archive/source/layer/SDK/inventory results and preserved failures. No Qt
+build, component cases, normal app, final display or PCM runs in this checkpoint.
+
 ## Next integration
 
-Acquire and verify an offline signed package closure for the original Hyprland,
-Qt, Quickshell, PipeWire and build dependencies. Bind the actual loaded Hyprland
-binary and SDK to the selected commit; a matching version label alone is
-insufficient. Build the normal Qt app and plugins against that guest, then run
+Build the normal Qt app and plugins against the qualified guest, then run
 the unchanged four-step session composition: denied quiet launch, current grant
 and real focused touch with PCM, null-focus background continuation with disabled
 touch, and terminal Source loss without app/audio revival. Preserve per-app

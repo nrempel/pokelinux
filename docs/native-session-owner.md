@@ -341,8 +341,10 @@ offline stock Arch kernel/bootstrap/poweroff selection. Authenticated same-QEMU
 QMP confirms KVM enabled/present and guest shutdown, then socket EOF and actual
 QEMU0. Serial identity/hash, all owned cutoffs and exact container/input closure
 qualify. Matching-source Rust payload builds pass separately; no Qt, compositor,
-Source or PCM executes in this checkpoint. Signed offline provisioning and exact
-actual Hyprland binary/SDK binding precede the full functional run.
+Source or PCM executes in this checkpoint. A later [offline guest install](native-session-x86-runtime.md#offline-installed-guest)
+now qualifies367 signed packages, exact actual Hyprland binary/SDK commit and
+audio tools/SPA files in a fresh closed layer. Native Qt build and the full
+functional run remain next.
 
 ## Remaining integration
 

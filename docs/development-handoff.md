@@ -110,8 +110,12 @@ The [native x86 runtime checkpoint](native-session-x86-runtime.md) now passes
 one actual offline KVM stock-kernel bootstrap and normal poweroff, with QMP,
 serial, owned waits/EOF and exact container/input closure. Matching-source native
 Rust payload builds pass separately. This runs no compositor, Qt app or PCM.
-Next acquire signed offline packages, bind the actual Hyprland binary/SDK, build
-Qt and run the full composition. No prior Qt tests are relabeled as current.
+The later [offline installed guest](native-session-x86-runtime.md#offline-installed-guest)
+now qualifies the signed367-package cohort, complete actual stock upgrade, exact
+installed Hyprland binary/SDK commit, seven audio tools and four SPA files. Two
+failed guest setups remain failed; the third fresh layer closes in36.11s with
+all31 direct waits/38 PIPE EOFs. Build native Qt and run the full composition
+next. No prior Qt tests are relabeled as current.
 
 Preserve the ARM failure and stop speculative fixture changes. Continue
 matching-source native CPU-speed composition on Harbour, with the same Pixel

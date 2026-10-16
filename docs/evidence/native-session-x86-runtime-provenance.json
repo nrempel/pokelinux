@@ -115,7 +115,6 @@
     "same_daemon_exact_CID_absent": true,
     "input_hashes_pre_post_under_shared_lock": true,
     "only_fresh_disposable_overlay_written": true,
-    "overlay_allocated_bytes": 154468352,
     "hashes": {
       "selection.json": "366a9780fb8b3902548c20fcde1af66bbbfb5e2b78ea457c747343a51211747d",
       "command.json": "81d99e4306b6a781e2637eaf9bd1e45145a6b907da38600a9a6b294deebd5156",
@@ -125,7 +124,8 @@
     },
     "Root_source_review_sha256": "01b32be81b83e9089a716f27fb7b92cea2726e37411a0038b62be50a42f23b2d",
     "Root_entry_review_sha256": "2deec3ad632f0cf282b75e9c7540bd03374d7d29bd1f36d317da1b5350aed6e5",
-    "Root_qualification_sha256": "06c76cf0a4647706a0d421c1416967a4ebc2e46053a2631ee3d273552bbede65"
+    "Root_qualification_sha256": "06c76cf0a4647706a0d421c1416967a4ebc2e46053a2631ee3d273552bbede65",
+    "overlay_file_bytes": 154468352
   },
   "native_Rust_payload": {
     "qualification_sha256": "cce266207b4569eaaf9946cdf29616c677aa0638b0782922a068840ee3bc3999",
