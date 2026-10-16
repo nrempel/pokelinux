@@ -90,6 +90,14 @@ SDK plus the same five FFI/four codec CPU groups. This authored CPU value bounda
 producer, GL primitive or production render worker and closes no Source, full
 functional, ARM or phone gate.
 
+A later [retained worker CPU component](native-render-worker.md) passes36 active
+Rust cases with authored native adapters and real kernel eventfds/threads. Its
+new archive is not linked into the earlier native Frame compositor/SDK. Genuine
+AQ/GL/DRM, worker C ABI, session/bootstrap/output discovery and authenticated
+Stop-retirement remain open. Whole-fixture quarantine/reaping in CPU tests proves
+neither real native drain nor blocked-driver recovery; all Source/full functional,
+ARM/Google-kernel/phone requirements below remain in force.
+
 The [native Rust session owner](native-session-owner.md) implements compositor
 Child custody; its original Sounds assembly has32 host boundary passes,
 host/ARM64 compilation and actual six-file Make staging. The current

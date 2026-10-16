@@ -90,6 +90,14 @@ keeps this replay separate. The new scene producer/GL primitives compile but are
 not called; this ELF retains the earlier snapshot-only Rust library. No worker,
 Source GREEN, output completion or phone result follows.
 
+A later [Rust worker CPU component](native-render-worker.md) separately passes36
+active cases with authored adapters and real threads/eventfds. It implements
+retained worker/job/record custody, not a real compositor owner. Its new worker
+archive is not selected by the earlier native Frame build, and no session/native
+C ABI, AQ/GL/bootstrap/discovery or authentic Stop-retirement scope is connected.
+These CPU results do not alter either measured seven-case RED epoch or qualify
+Source GREEN, native output completion or hardware.
+
 ## Custody and remaining work
 
 The original epoch closes in36.866915733s:77 direct nested waits/84 PIPE EOFs meet

@@ -94,3 +94,8 @@ output commit, presentation or secure lock frame is qualified. The unchanged
 Source7 rendering RED, original cold full-composition failure and full smartphone,
 ARM and phone gates remain open. The earlier no-attach/Cairo oracles were not
 rerun in these frame build/CPU epochs.
+
+The later [Rust worker CPU component](native-render-worker.md) has a new
+Rust-QA archive8067436b. This native Frame ELF/SDK selected3cf0a142 without that
+worker; neither the C++ groups nor native artifacts qualify the new archive.
+Its genuine native binding and a fresh matched runtime selection remain required.

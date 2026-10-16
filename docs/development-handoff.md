@@ -258,6 +258,15 @@ frame header contains only implemented capture/release/visitor functions and
 passes separate Rust QA. Its fresh matching native33 build/507-file SDK and the
 same five FFI/four codec CPU groups also pass. Authored plan values qualify CPU custody only; live producer,
 GL primitives and a production worker have not executed in these epochs.
+The later [Rust worker CPU component](native-render-worker.md) passes36 active
+cases:8 permit/14 worker plus14 Frame, with two owned-child modes invoked by parent
+tests. It retains the JoinHandle, separates live-frame/undelivered-fact capacity,
+and fixes a frozen final-retirement shutdown regression. Its new8067436b archive
+is CPU-QA only; the earlier native33/SDK result selects3cf0a142 without this worker.
+No worker C ABI, real AQ/GL binding, session ingress/bootstrap/discovery or genuine
+native/Stop-retirement scope is implemented by this checkpoint. The next binding
+needs a retained deferred holder before explicit bootstrap and output discovery;
+the current configuration-free factory has no session input.
 Production control/render ownership separation and GREEN remain open. Source100ms,
 terminal authority expiry, real facts and fence/buffer lifetime remain required;
 no exclusive-CPU or earlier-failure cause follows. Strict matching ARM64 owner/client

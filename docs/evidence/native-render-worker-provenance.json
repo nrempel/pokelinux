@@ -1,0 +1,197 @@
+{
+  "schema": 1,
+  "scope": "Original Rust retained-worker CPU component with authored NativeOwner adapters and actual threads/kernel eventfd poll; no production native renderer or Source result",
+  "public_source_base": "98dde4d099c27a22e6e907c279cd6f8829af41fe",
+  "published_source_hashes": {
+    "native-render/src/executor.rs": "73ed3e60a907b7be03b63d2e00354fc5d910796d584c625fa56b4a9e61a4a0fe",
+    "native-render/src/lib.rs": "b2d1dadeef6d23c93a280e47de31799bae02e867ad427947380fe3fb3066b7a5"
+  },
+  "historical_worker_series": {
+    "Root_qualification_sha256": "757e7f289c9c90ce7069fd4f9f11bce9264a44f404f2bf95ac0a3f487ace9efa",
+    "three_real_RED_GREEN_pairs": [
+      {
+        "GREEN": "green1-source",
+        "RED": "red2-source",
+        "behavior": "Pending retired prematurely, pending shutdown dropped owner, delivery freed live custody",
+        "exact_same_test_module_sha256": "a4bc43e585947d630c0b8d2f8a0028b81790b344144fc00b6e1da17f9fb2e784"
+      },
+      {
+        "GREEN": "green2-source",
+        "RED": "red3-source",
+        "behavior": "native ingress starved ready FD; native shutdown progress omitted while last entry live",
+        "exact_same_test_module_sha256": "3982ff54159d35c6f465be4c9da4c323fc6f3fc84269e9847dda575715c73622"
+      },
+      {
+        "GREEN": "green3-source",
+        "RED": "red4-source",
+        "behavior": "raw zero DRM sequence/timestamp wrongly rejected; explicit correlation and clock now retained",
+        "exact_same_test_module_sha256": "bb50c791bd63bd315f63d21a969b1b0f952871e3af7a99599a13c85d17b09b79"
+      }
+    ],
+    "earlier_fixture_attempt_sha256": "ce5431dfa65a7f5002257437ade76e7a77260094b5b98d292e3148afa7e8d913",
+    "GREEN3_supervisor_count_only_correction_no_rerun_sha256": "6ede0a86ec43fc486960cb44cfc93b88e5a2633b78b81356c8bcba836c0ffd85",
+    "active_QA_passes": 35,
+    "epoch_receipts": {
+      "format-1": {
+        "actual_Scope_waits_and_merged_EOF": 6,
+        "actual_cargo_exit": 0,
+        "driver_passed": true,
+        "result_sha256": "9d22feb0a4de742763cbe276704c86969e8bbaa080e80693e863009f8ea3c7bf"
+      },
+      "green-1": {
+        "actual_Scope_waits_and_merged_EOF": 6,
+        "actual_cargo_exit": 0,
+        "driver_passed": true,
+        "result_sha256": "ccae96bee17e4d05295d96e8b0789f49e6b926fd11c6b814d4da70b3e125337c"
+      },
+      "green-2": {
+        "actual_Scope_waits_and_merged_EOF": 6,
+        "actual_cargo_exit": 0,
+        "driver_passed": true,
+        "result_sha256": "1e124483e6e01e45071a9696ff6a42304e0e82e36f616cde1f732d749e17b342"
+      },
+      "green-3": {
+        "actual_Scope_waits_and_merged_EOF": 6,
+        "actual_cargo_exit": 0,
+        "driver_passed": false,
+        "result_sha256": "bb1cd55e7fcd577ad19cf1d816392803ae4273e14781996545c06bd330b8a64d"
+      },
+      "qa-1": {
+        "actual_Scope_waits_and_merged_EOF": 6,
+        "actual_cargo_exit": 0,
+        "driver_passed": true,
+        "result_sha256": "d4d8d0e08651af17e4c750e7dae61c3e058ab0ef36f645718f8c799aa52472e8"
+      },
+      "red-2": {
+        "actual_Scope_waits_and_merged_EOF": 6,
+        "actual_cargo_exit": 101,
+        "driver_passed": true,
+        "result_sha256": "f05581f61ece0d35410fecd92e55a0a558a25186b6da56d60c372596de8604a7"
+      },
+      "red-3": {
+        "actual_Scope_waits_and_merged_EOF": 6,
+        "actual_cargo_exit": 101,
+        "driver_passed": true,
+        "result_sha256": "4f3c6e3ea0bfffee207c526f196d97ba20241560d0ac79db6c93fd1f01fc3d90"
+      },
+      "red-4": {
+        "actual_Scope_waits_and_merged_EOF": 6,
+        "actual_cargo_exit": 101,
+        "driver_passed": true,
+        "result_sha256": "baf86d331d92ec525cbbe0997828781d86509d1ca0ede13215a01b11ef2351fc"
+      }
+    },
+    "archive": {
+      "bytes": 22793530,
+      "sha256": "3c81e52b9044fb35360eab8c4f84af18108bfca14bbf9bd49919658965e77747"
+    },
+    "eight_epochs_outer_direct_waits": 48,
+    "eight_epochs_outer_merged_PIPE_EOFs": 48
+  },
+  "current_worker_CPU": {
+    "Root_qualification_sha256": "14cb4fbca08c420dc1b7c2b5b02c6d1504920902a14454bc0a275ea97c85382b",
+    "new_final_retirement_RED_GREEN": {
+      "failure": "final retirement consumes last native readiness but stale Pending shutdown result enters impossible blocking wait",
+      "fixture_cleanup": "old RED explicitly sends another Stop wake then actually joins before assertion; no detach or process kill required",
+      "green_tests": {
+        "fail": 0,
+        "pass": 1
+      },
+      "red_tests": {
+        "fail": 1,
+        "pass": 0
+      },
+      "repair": "recheck aggregate shutdown after per-entry native drain before any blocking poll",
+      "same_whole_test_module_sha256": "cd607be4c88b8fe76bb68038fbbe36d9bfa74f9b291eab58682a3fa0f76f2f20",
+      "unchanged_production_baseline_from_prior_QA": true
+    },
+    "epoch_receipts": {
+      "format-1": {
+        "actual_Scope_waits_and_merged_EOF": 6,
+        "actual_cargo_exit": 0,
+        "result_sha256": "b3dd5540ac09b9eac340bef72a79b48caf5e103ed845b4475bc0d87b20409da7"
+      },
+      "green-1": {
+        "actual_Scope_waits_and_merged_EOF": 6,
+        "actual_cargo_exit": 0,
+        "result_sha256": "81fe69054482e1ab839894f971e1d0501b145138e31c4207b28b9c84de3777c2"
+      },
+      "qa-1": {
+        "actual_Scope_waits_and_merged_EOF": 6,
+        "actual_cargo_exit": 0,
+        "result_sha256": "f765a3ff2575fada929ea99660f9dc58d54415ceeb65fc1b4aed972e53be4f3a"
+      },
+      "red-1": {
+        "actual_Scope_waits_and_merged_EOF": 6,
+        "actual_cargo_exit": 101,
+        "result_sha256": "a44d27f2d1317ebedb7a919fc04defe298bee4f8677231a42ea3d1c509985d62"
+      }
+    },
+    "QA_root_terminal_exit": 0,
+    "library_cases": {
+      "ignored_owned_child_entries": 2,
+      "passed": 22,
+      "permit_tests": 8,
+      "worker_tests": 14
+    },
+    "Frame_cases": 14,
+    "total_active_cases": 36,
+    "fmt_strict_Clippy_release_passed": true,
+    "actual_archive": {
+      "bytes": 22794306,
+      "sha256": "8067436b3060f39d5979ed8941ffdfde968abb01d3fe6961a4a4e13a52599ef1"
+    },
+    "all_other_Frame_commit_SHM_Cargo_bytes_match_base": true,
+    "same_original_limits_cutoffs_readonly_inputs_daemon_exactCID_absence": true,
+    "outer_direct_waits_and_merged_PIPE_EOF_per_epoch": 6,
+    "separate_owned_child_closure_not_added_to_outer_six": true,
+    "independent_qualification_sha256": "25400df59334e71e767fb89cd9fefe9f94dd616fe3dc2219b27bdf908c216733",
+    "four_epochs_outer_direct_waits": 24,
+    "four_epochs_outer_merged_PIPE_EOFs": 24,
+    "QA_formatting": "Whitespace and two optional match-arm commas; RED/GREEN whole test module identical before later formatting, not whole formatted QA module byte identity.",
+    "noncompiled_README_exception": {
+      "QA_input_sha256": "ce504f119a41b32173ad39dd65a11e101e270391bd11181917c4513db9ca464f",
+      "public98_base_sha256": "4c92b1aaff3533fa437c02fe3ca988b0648ce11cf9577c04f487eba1021da695",
+      "QA_README_copied_to_publication": false,
+      "all_other_compiled_code_Cargo_headers_tests_match_public_base": true
+    }
+  },
+  "implemented_component_facts": {
+    "live_frame_credits": 3,
+    "completion_pool_records": 128,
+    "records_reserved_per_admission": 5,
+    "distinct_frame_custody_and_undelivered_completion_capacity": true,
+    "undrained_capacity_case": {
+      "accepted_completed_frames": 25,
+      "records_all_preserved": 125,
+      "refused_frame_retained": true
+    },
+    "normal_try_join_BUSY_retains_JoinHandle": true,
+    "fallback_Rust_Drop_can_block_and_never_detaches": true,
+    "real_kernel_eventfd_and_poll": true,
+    "finite_ingress_budget_one_before_native_dispatch": true,
+    "full_readiness_tuple_revalidation_source_reviewed": true,
+    "multi_source_generation_runtime_qualified": false,
+    "Pending_entry_and_aggregate_shutdown_progress": true,
+    "SubmissionOutcome_not_success": true,
+    "explicit_presentation_clock_and_raw_zero_preserved": true,
+    "panic_quarantine_child_parent_reap_not_vendor_drain_or_recovery": true,
+    "worker_C_ABI_exports_or_private_executor_header_published": false
+  },
+  "historical_Frame_native_selection": {
+    "Root_qualification_sha256": "01f18929c48ca043b9fa9243dc5f7b08795ae94a8cfbd2fb3b01279d4f3e01ed",
+    "independent_qualification_sha256": "2e11b4fda6073df32638573fd515081067b340b53450b8dfb97987e3044c36b9",
+    "selected_archive_sha256": "3cf0a142115bc2f261086cfbb9dbfc0d543d0988219f08b1c4988d70f5a36f9b",
+    "new_worker_archive_selected": false,
+    "FFI5_codec4_not_rerun_with_worker_archive": true,
+    "original_Frame14_postimplementation_chronology_unchanged": true
+  },
+  "open": [
+    "actual worker C ABI and worker-local AQ/GL/native adapter",
+    "bounded authenticated session/device FD transport and bootstrap/discovery",
+    "full genuine DRM routing/object/output generation scope and separate Stop-retirement ledger",
+    "real native descendant lifetime/drain, fence/output/presentation and blocked-call recovery",
+    "unchanged Source7 GREEN, cold full composition and normal app/PCM",
+    "ARM, matchedGoogle kernel, Pixel phone and full smartphone matrix"
+  ]
+}

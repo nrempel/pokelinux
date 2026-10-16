@@ -125,6 +125,11 @@ SDK passes five snapshot FFI and four real codec CPU groups using authored plan
 values. The implemented-only public frame header has fresh Rust QA and a separate
 successful native33 build/507-file SDK with the same five FFI/four codec groups. Live scene production, GL/worker execution and Source GREEN
 remain open.
+A separate [retained Rust worker CPU component](docs/native-render-worker.md) now
+passes36 active Rust cases (8 permit/14 worker/14 Frame), strict Clippy and release
+build. It uses real threads/eventfds with authored native adapters. This new
+worker archive is not linked into the earlier native Frame ELF/SDK; production
+AQ/GL/DRM, session/bootstrap, output authority and Source GREEN remain open.
 Earlier [permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
 passes four touch/graph/PCM groups using root-authored focus. Physical audio,
 production session completion and all phone gates remain open.

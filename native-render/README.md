@@ -1,4 +1,4 @@
-# Immutable SHM payloads, frame values and commit permits
+# Immutable SHM, frame values and worker components
 
 This original Rust library owns bounded immutable CPU pixel snapshots for the
 [connected Hyprland import](../tools/native-render-import/README.md). It copies
@@ -20,8 +20,10 @@ infallible allocation: allocator exhaustion can terminate the process rather
 than return `PR_ALLOCATION`. The capacity bound is a live pixel-byte budget,
 not a bound on allocator overhead or a complete out-of-memory recovery policy.
 
-This prerequisite does not implement the rendering executor or move GL/context,
-GPU buffers, fences, output commits or resource deletion to another owner.
+The snapshot/Frame APIs do not move GL/context, GPU buffers, fences, output
+commits or resource deletion to another owner. A separate
+[Rust worker CPU core](../docs/native-render-worker.md) is now implemented and
+tested; its genuine AQ/GL/native binding remains required.
 A successful snapshot does not establish upload, GPU completion, presentation,
 secure lock display, Source freshness or phone support. The prepared rendering
 [authority baseline remains RED](../docs/native-render-authority.md).
@@ -98,7 +100,8 @@ read before and after the seal CAS. A sealed old-attempt record survives later
 intent/Stop, but proves no native call,
 submission or completion. Authentic policy values still require the real control
 owner; integer shape alone does not authenticate output/session/scene/device
-bindings. The future executor must reserve job/outcome custody before issuing.
+bindings. A worker must reserve job/outcome custody before issuing; the separate CPU core
+below does so.
 The deadline bounds the grant check only: preemption may place a later native
 entry or completion past it.
 
@@ -149,3 +152,26 @@ five snapshot FFI and four codec CPU groups. The actor calls real capture/visito
 clone/adoption using authored plan values, without a live scene producer, native
 GL or production worker. See the [frame report](../docs/native-render-frame.md)
 for matching evidence and unchanged Source/full-runtime limits.
+
+## Retained worker CPU component
+
+The original [`executor` module](src/executor.rs) owns its worker `JoinHandle`,
+three admitted-frame credits and a separate128-record completion pool, reserving
+five records before each admission. Normal Busy join/refusal retains ownership;
+fallback Rust `Drop` stops and actually joins but can block indefinitely. Pending
+native retirement keeps frames, completion delivery does not free their custody,
+and native progress uses actual kernel eventfds/`poll` with finite ingress work.
+
+Actual CPU QA passes22 library cases (8 permit/14 worker) plus14 Frame cases,
+36 active total, with two ignored child modes invoked by their parent tests.
+Format-check, strict Clippy and release build pass. Recorded regressions include
+pending drain, readiness fairness/raw clock facts and the final-retirement shutdown
+recheck; see the [worker report](../docs/native-render-worker.md) and hash-only
+receipts. These authored-adapter tests qualify no real AQ/GL/DRM output or Source.
+
+The new worker archive8067436b is Rust CPU-QA only. The native Frame ELF/507-file
+SDK and five FFI/four codec groups selected earlier3cf0a142, without this worker.
+The configuration-free factory currently receives no session input: a genuine
+binding still needs retained deferred custody followed by explicit bootstrap/
+output discovery, authenticated session/FD transport and Stop-retirement scope.
+No worker C ABI or private proposed executor header is published.

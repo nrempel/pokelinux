@@ -77,3 +77,8 @@ actual joined-thread adoption and consume-on-entry transfer refusal. It requires
 the matched patched source, exact Rust archive/headers, native libraries and an
 owned finite driver; this directory supplies no complete VM runner. No live scene
 producer, GL primitive or production executor is executed by this actor.
+
+The later [Rust worker CPU component](../../docs/native-render-worker.md) has a new
+Rust-QA archive8067436b. This native Frame ELF/SDK selected3cf0a142 without that
+worker; neither the C++ groups nor native artifacts qualify the new archive.
+Its genuine native binding and a fresh matched runtime selection remain required.
