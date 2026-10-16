@@ -1,0 +1,258 @@
+{
+  "schema": 1,
+  "scope": "Dedicated test-hook AQ15 source/build/SDK only; no hook callback, native custody failure RED/GREEN, matching main or Rust-worker execution.",
+  "upstream": "https://github.com/hyprwm/aquamarine",
+  "upstream_commit": "f31c47a1b9d300847d8fc3108ad959448103dfc1",
+  "original_archive_sha256": "975a3479b458722ec2e34e5fed9cdd46f77fa70485431f70093693532f685ff3",
+  "apply_order": [
+    {
+      "file": "aquamarine.patch",
+      "sha256": "4428b5e292b096100b827c544b89e712f3cf886a64ce2bc1648b82e5803895ed"
+    },
+    {
+      "file": "aquamarine-initial-batch.patch",
+      "sha256": "9009a3ec4e9fa01f1f40dba5670cc9e8e2451ee5d662199bfb4c0485492ef75a"
+    },
+    {
+      "file": "aquamarine-retained-initialization.patch",
+      "sha256": "f1a11f3a7915f0e5f58febf221547c2d84780e449de4ce409530896d2a8465e7"
+    },
+    {
+      "file": "aquamarine-startup-custody-test-hooks.patch",
+      "sha256": "278a09007d8ae81fc6f2b571f7c0f69d6461c1d5361fdbf7491113580da05e78"
+    }
+  ],
+  "incremental_patch_sha256": "278a09007d8ae81fc6f2b571f7c0f69d6461c1d5361fdbf7491113580da05e78",
+  "changes": {
+    "include/aquamarine/backend/DRM.hpp": {
+      "before_sha256": "72de295077048bde83115393913df83696ea79763236161d5202bd31ee4f39f9",
+      "after_sha256": "8273251aedd372c513dc208f5ddd54b9701e8deb1674eb58547241714000d7f5",
+      "after_bytes": 28571
+    },
+    "include/aquamarine/backend/StartupCustodyTest.hpp": {
+      "before_sha256": null,
+      "after_sha256": "ac2e401575258708bb58ce4980f5b02159596bacca218661f3afb977aefd63ad",
+      "after_bytes": 3987
+    },
+    "src/backend/Backend.cpp": {
+      "before_sha256": "95034d007691825fe88ef918e9bf2d8f214c0e9077c9a67909055637fa86ebc5",
+      "after_sha256": "08be483dc1bf2b22fea4fdf43a026369457dfd5bfa6d4822b69ef14fd311902e",
+      "after_bytes": 15759
+    },
+    "src/backend/StartupCustodyTest.cpp": {
+      "before_sha256": null,
+      "after_sha256": "67b3cdd904eddfbe27f5f6299dfd0651bec915388dfbe849154fa1252ba4afdb",
+      "after_bytes": 2460
+    },
+    "src/backend/drm/DRM.cpp": {
+      "before_sha256": "fb1d52708a40a801c0749a7290bdf3e5e043c923da18a78bf49280198838d14a",
+      "after_sha256": "78ac7e195929b0e7d2f274cad9ade26eee580507cc1266e7e2ac6b76f354ad7e",
+      "after_bytes": 133563
+    }
+  },
+  "test_definition": "POKELINUX_STARTUP_CUSTODY_TEST",
+  "CMake_CXX_FLAGS": "-DPOKELINUX_STARTUP_CUSTODY_TEST",
+  "actual_configured_CPP_entries": 36,
+  "actual_required_CPP_objects": [
+    "src/backend/Backend.cpp",
+    "src/backend/DisplayAttempt.cpp",
+    "src/backend/Session.cpp",
+    "src/backend/SessionBroker.cpp",
+    "src/backend/StartupCustodyTest.cpp",
+    "src/backend/drm/DRM.cpp",
+    "src/backend/drm/impl/Atomic.cpp"
+  ],
+  "defined_global_default_function_symbols": 11,
+  "required_exported_interfaces": [
+    "Aquamarine::CDRMBackend::startupCustodyView(bool) const",
+    "Aquamarine::StartupCustodyTest::CProbeScope::CProbeScope(Aquamarine::StartupCustodyTest::IProbe&)",
+    "Aquamarine::StartupCustodyTest::CProbeScope::bound() const",
+    "Aquamarine::StartupCustodyTest::CProbeScope::current()",
+    "Aquamarine::StartupCustodyTest::CProbeScope::~CProbeScope()",
+    "Aquamarine::StartupCustodyTest::forceAfterImplementationStart(Aquamarine::StartupCustodyTest::SWeakGraphView const&, bool)",
+    "Aquamarine::StartupCustodyTest::forceAfterResourceScan(Aquamarine::StartupCustodyTest::SWeakGraphView const&)",
+    "Aquamarine::StartupCustodyTest::observeChildDestructorEntry(Aquamarine::CDRMBackend const*)",
+    "Aquamarine::StartupCustodyTest::probeStamp()"
+  ],
+  "link_only_probe": {
+    "file": "aq-startup-custody-hook-link-probe.cpp",
+    "bytes": 1209,
+    "sha256": "93f179cd3eed02b5369dff983cf6e4f0497601477e37aad9e4339ffc5c67beb7",
+    "compile_link_exit": 0,
+    "strict_flags": [
+      "-std=c++23",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-pedantic",
+      "-fPIC",
+      "-shared",
+      "-DPOKELINUX_STARTUP_CUSTODY_TEST",
+      "-Wl,-z,defs"
+    ],
+    "actual_matching_AQ15_relocations_checked": true,
+    "AQ14_selected": false,
+    "probe_functions_or_hook_callbacks_called": false,
+    "ELF": {
+      "bytes": 15984,
+      "sha256": "09e9755f2f204d7365b402c9f97a502041f5bd0f7bdb2e89bb71365f53038f6a"
+    }
+  },
+  "library": {
+    "bytes": 1848848,
+    "sha256": "8c24ed439c071be9e71605907f5387b45664d6d7ed1b60ab860384e78809eebe"
+  },
+  "SDK": {
+    "bytes": 2048000,
+    "sha256": "4b196fdf49c8e853454bbe07131d743238dbccb11914c7549025dc0215b8ad1e"
+  },
+  "matching_SDK_members": {
+    "usr/include/aquamarine/allocator/Allocator.hpp": {
+      "bytes": 1488,
+      "sha256": "083dbe1602b1a9689f9fb079faca3ba3638cb7d8adf756865536ff29bae60288"
+    },
+    "usr/include/aquamarine/allocator/DRMDumb.hpp": {
+      "bytes": 2708,
+      "sha256": "923a488b35c32e528c8672571b4ac371d3d158ae144a1dc82dff1b40daeabbba"
+    },
+    "usr/include/aquamarine/allocator/GBM.hpp": {
+      "bytes": 2756,
+      "sha256": "70bd4d1f69520bfaa2ed846f1e8789d60888894b8ee8089d0faef79b92f1ce6b"
+    },
+    "usr/include/aquamarine/allocator/Swapchain.hpp": {
+      "bytes": 2403,
+      "sha256": "2509a5fcf5109dbce99b1c1c0f5c620a17c9f5f508902e4f5124d4f56feb377b"
+    },
+    "usr/include/aquamarine/backend/Backend.hpp": {
+      "bytes": 9399,
+      "sha256": "4dc58de077c7604f42fa712ef1594dd94a8aba672f013dcbc7e490801626879c"
+    },
+    "usr/include/aquamarine/backend/DRM.hpp": {
+      "bytes": 28571,
+      "sha256": "8273251aedd372c513dc208f5ddd54b9701e8deb1674eb58547241714000d7f5"
+    },
+    "usr/include/aquamarine/backend/DisplayAttempt.hpp": {
+      "bytes": 2187,
+      "sha256": "e093180bb9498137d98196a4b2f8b232847c6c1ff8b35bf31e2521ddd963d021"
+    },
+    "usr/include/aquamarine/backend/FrameScheduler.hpp": {
+      "bytes": 2876,
+      "sha256": "ef1ab393a041c5e73fc24f26ecde35e9d1652ee75c0522e15822ae47f6ce4b13"
+    },
+    "usr/include/aquamarine/backend/Headless.hpp": {
+      "bytes": 4338,
+      "sha256": "ab02fb1acecab2b5eaedac49def423cd1a25e0dca91c59f5811b885be4615ad8"
+    },
+    "usr/include/aquamarine/backend/Misc.hpp": {
+      "bytes": 351,
+      "sha256": "03bea0ce8f119b997219601f542202173eeac9a17bf84021f78174f774b00ba5"
+    },
+    "usr/include/aquamarine/backend/Null.hpp": {
+      "bytes": 2288,
+      "sha256": "6a297475ee868fe6b55b135ea0976f22c77e543eb0fda9af3d791bbb058be113"
+    },
+    "usr/include/aquamarine/backend/Session.hpp": {
+      "bytes": 14403,
+      "sha256": "1ac721dd15715b3fdc55635240879ba9356a46e79f9d16c7be70278bab540c88"
+    },
+    "usr/include/aquamarine/backend/SessionEvents.hpp": {
+      "bytes": 2269,
+      "sha256": "dd925a34d308096af702cd8c752589bfc0d92a0b5a1945c517d9bc6bcc923d6a"
+    },
+    "usr/include/aquamarine/backend/StartupCustodyTest.hpp": {
+      "bytes": 3987,
+      "sha256": "ac2e401575258708bb58ce4980f5b02159596bacca218661f3afb977aefd63ad"
+    },
+    "usr/include/aquamarine/backend/Wayland.hpp": {
+      "bytes": 9205,
+      "sha256": "4d00fa81774657c6a39a8c777932540cb890f12e3b8056437a2b7b0fe7c638ed"
+    },
+    "usr/include/aquamarine/backend/drm/Atomic.hpp": {
+      "bytes": 4069,
+      "sha256": "c32a3312bf636fd1de6b388f0d59c977042fb19210b24cf1fd07dfa231fb46e0"
+    },
+    "usr/include/aquamarine/backend/drm/Legacy.hpp": {
+      "bytes": 887,
+      "sha256": "2fe3f31ce185d58bff66dca4223196a497105b961a58402e2dbd1556d9269b48"
+    },
+    "usr/include/aquamarine/buffer/Buffer.hpp": {
+      "bytes": 3138,
+      "sha256": "c69b31cb29e0f16bc374b637ed7cb8108280dcc0bf983967d7a8ebd5936e4f31"
+    },
+    "usr/include/aquamarine/input/Input.hpp": {
+      "bytes": 13156,
+      "sha256": "bf596322e8caf0411fe4ebed5222c783cb03a215191f7a5a617737e8fe0a64f9"
+    },
+    "usr/include/aquamarine/misc/Attachment.hpp": {
+      "bytes": 1741,
+      "sha256": "f6765ffab5093ba5d715a618b8a875bc61a2fa173ad7e410eca74f9fa515f517"
+    },
+    "usr/include/aquamarine/output/Output.hpp": {
+      "bytes": 15383,
+      "sha256": "1568dcf54e01fc42079b5d68d7189d135f3a2c57aceed9cd0d3f58c964a5a37d"
+    },
+    "usr/lib/libaquamarine.so": {
+      "symlink": "libaquamarine.so.15"
+    },
+    "usr/lib/libaquamarine.so.15": {
+      "symlink": "libaquamarine.so.15.0.0"
+    },
+    "usr/lib/libaquamarine.so.15.0.0": {
+      "bytes": 1848848,
+      "sha256": "8c24ed439c071be9e71605907f5387b45664d6d7ed1b60ab860384e78809eebe"
+    },
+    "usr/lib/pkgconfig/aquamarine.pc": {
+      "bytes": 329,
+      "sha256": "23e6699e2f2c83272ee6a4402950db8c4370b9a675124cfa00adf1382800347d"
+    }
+  },
+  "frozen_TUs": {
+    "retained_compile_control": {
+      "source": {
+        "bytes": 709,
+        "sha256": "82b43316940b2356d0146d6f05787aeeb5ce1b0f5ff8eeb64aceb8e6665bd8a1"
+      },
+      "actual_exit": 0,
+      "diagnostic_bytes": 0,
+      "dependency_file": {
+        "bytes": 13288,
+        "sha256": "355f479a2ee77dbf8b7a8680dc2a7e85d8d224fcf23e9d5112bee9a5d3c492c7"
+      }
+    },
+    "retained_compile_members": {
+      "source": {
+        "bytes": 1269,
+        "sha256": "871440874e3c4a2df0bcca4673fd03d840833a9c78408f9fc914df4c784141bd"
+      },
+      "actual_exit": 0,
+      "diagnostic_bytes": 0,
+      "dependency_file": {
+        "bytes": 13288,
+        "sha256": "f7dd3433b6b61c6e6976fa8914f65fda6e931d9c0dc1c61f62ba0fb6af7057fc"
+      }
+    }
+  },
+  "unchanged_CPU_groups_passed": 10,
+  "native_build_execution_sha256": "dc6127e5cab3b27459e141fed50c54d55391ad50972ca36bfb750b8f952a4f2a",
+  "native_build_result_sha256": "b1c260c51ab3ffcb7e50fe45ad8d2f70a7895d3af4efef47a645067f76be3b30",
+  "Root_build_qualification_sha256": "ce56c99c98054513628ff8a61df6ea80686edec304e4181019531acdf2ff14ca",
+  "independent_build_qualification_sha256": "cff9c62ad61554371868e0f77b9526f90add8b2f5ebc9605494b50926844eabf",
+  "public_reconstruction": {
+    "receipt_sha256": "9b3b40c197b59f129a95abcc63ff9fd7b0e59d9f0af024713b8f0064a247560a",
+    "public_source_files": 84,
+    "actual_qualified_source_files": 85,
+    "authored_compiled_CPP_paths_checked": 33,
+    "generated_protocol_CPP_entries_separate": 3,
+    "SDK_headers_byte_checked": 21,
+    "public_source_manifest_sha256": "f76d721c14be23fdb0426f494a1d2246ef85e9a48c1d01bc1d9c13c86eccb414",
+    "inherited_non_build_exceptions": "See aquamarine-cohort.json public_reconstruction_exceptions; upstream README retained and private planning note omitted. Every other authored source byte matches the actual build."
+  },
+  "direct_waits": 57,
+  "PIPE_EOFs": 57,
+  "original_cutoffs_and_closure_qualified": true,
+  "default_production_library_replaced": false,
+  "hook_callbacks_exercised": false,
+  "native_behavior_RED_or_GREEN": false,
+  "main_Rust_worker_Source_ARM_or_phone_qualified": false
+}

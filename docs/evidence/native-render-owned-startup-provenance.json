@@ -143,5 +143,84 @@
       "guest-out/guest-result.json": "ac8de29a4dea076d7d8d14b949eb1c17ff844cc22610bc288afdbd3f562cc1bb",
       "guest-out/build-output/build-result.json": "8694ee15491e2addb5a278469b533960c343a0d738ca934638d9fd0188248aaf"
     }
+  },
+  "dedicated_startup_custody_hook_build": {
+    "classification": "DEDICATED_TESTHOOK_BUILD_SDK_AND_LINK_ONLY_CLOSURE_ONLY",
+    "actual_selection_public_source_base": "6e2da15a39ebb6f6bbfc597af25abe772c32d4a9",
+    "pins": {
+      "execution.json": "dc6127e5cab3b27459e141fed50c54d55391ad50972ca36bfb750b8f952a4f2a",
+      "selection.json": "13af45e2c67f9e502fb2403aeccab35e6757d0ec6831a840cb086d3634a8ba0d",
+      "command.json": "d86644e6da87a3304746c5338db5dc407c8b04114ce13ad3f78418e4a5d5b37f",
+      "boot-result.json": "6a188dab93413976b56f00bac3beae9b4e47686564e2ab574e297488455a92d8",
+      "guest-out/guest-result.json": "0650c7f5950b754a829d1aa234de50b7580fb25c8dea676aee91ce21a2e23b56",
+      "guest-out/build-output/build-result.json": "b1c260c51ab3ffcb7e50fe45ad8d2f70a7895d3af4efef47a645067f76be3b30"
+    },
+    "Root_build_qualification_sha256": "ce56c99c98054513628ff8a61df6ea80686edec304e4181019531acdf2ff14ca",
+    "independent_build_qualification_sha256": "cff9c62ad61554371868e0f77b9526f90add8b2f5ebc9605494b50926844eabf",
+    "test_hook_patch_sha256": "278a09007d8ae81fc6f2b571f7c0f69d6461c1d5361fdbf7491113580da05e78",
+    "matching_cohort_file": "tools/native-render-owner/aquamarine-startup-custody-test-hooks-cohort.json",
+    "matching_cohort_sha256": "80f9e5dd8bdd70f7ee246b20ce05762b4d1e141773f7bf1792c06e06a576ecab",
+    "link_only_probe_source": {
+      "bytes": 1209,
+      "sha256": "93f179cd3eed02b5369dff983cf6e4f0497601477e37aad9e4339ffc5c67beb7"
+    },
+    "library": {
+      "bytes": 1848848,
+      "sha256": "8c24ed439c071be9e71605907f5387b45664d6d7ed1b60ab860384e78809eebe"
+    },
+    "SDK": {
+      "bytes": 2048000,
+      "sha256": "4b196fdf49c8e853454bbe07131d743238dbccb11914c7549025dc0215b8ad1e"
+    },
+    "SDK_regular_files": 23,
+    "SDK_symlinks": 2,
+    "actual_compile_entries_with_test_define": 36,
+    "actual_required_CPP_objects": 7,
+    "required_export_interfaces": 9,
+    "defined_GLOBAL_FUNC_DEFAULT_symbols": 11,
+    "actual_link_only_probe_exit": 0,
+    "actual_matching_AQ15_relocation_closure_exit": 0,
+    "AQ14_selected": false,
+    "unchanged_CPU_groups_passed": 10,
+    "CPU_fixture_changes": 0,
+    "frozen_TUs": {
+      "retained_compile_control": {
+        "source": {
+          "bytes": 709,
+          "sha256": "82b43316940b2356d0146d6f05787aeeb5ce1b0f5ff8eeb64aceb8e6665bd8a1"
+        },
+        "actual_exit": 0,
+        "diagnostic_bytes": 0,
+        "dependency_file": {
+          "bytes": 13288,
+          "sha256": "355f479a2ee77dbf8b7a8680dc2a7e85d8d224fcf23e9d5112bee9a5d3c492c7"
+        }
+      },
+      "retained_compile_members": {
+        "source": {
+          "bytes": 1269,
+          "sha256": "871440874e3c4a2df0bcca4673fd03d840833a9c78408f9fc914df4c784141bd"
+        },
+        "actual_exit": 0,
+        "diagnostic_bytes": 0,
+        "dependency_file": {
+          "bytes": 13288,
+          "sha256": "f7dd3433b6b61c6e6976fa8914f65fda6e931d9c0dc1c61f62ba0fb6af7057fc"
+        }
+      }
+    },
+    "public_reconstruction_receipt_sha256": "9b3b40c197b59f129a95abcc63ff9fd7b0e59d9f0af024713b8f0064a247560a",
+    "public_reconstruction_scope": "84 public files/85 actual files with the same two non-build note exceptions; all33authored compiled C++ inputs and21SDK headers byte-checked. Three generated protocol CPP entries remain separate.",
+    "direct_waits": 57,
+    "PIPE_EOFs": 57,
+    "all_original_cutoffs_and_closure_qualified": true,
+    "actual_QMP_KVM_shutdown_socket_EOF_QEMU0_CLI0_exact_CID_same_daemon_locked_inputs": true,
+    "default_production_library_replaced": false,
+    "hook_API_functions_or_callbacks_called": false,
+    "frozen_failure_consumer_executed": false,
+    "native_behavior_RED_or_GREEN": false,
+    "main_or_Rust_worker_executed": false,
+    "Source_GL_AQ_output_ARM_or_phone_qualified": false,
+    "phones_qualified": 0
   }
 }

@@ -113,3 +113,32 @@ post-acquisition and mandatory-start cases must observe genuine weak identities
 and destructor entry, without fixture strong references that hide early teardown.
 Retain the original failure paths until those failures are observed, then repair
 child custody. Normal rendering and every hardware gate above remain open.
+
+## Compiled test-hook prerequisite
+
+A separate [sealed test-hook patch](../tools/native-render-owner/aquamarine-startup-custody-test-hooks.patch)
+applies after the deferred-holder patch. The [matching cohort](../tools/native-render-owner/aquamarine-startup-custody-test-hooks-cohort.json)
+pins the full public patch order and requires
+`-DPOKELINUX_STARTUP_CUSTODY_TEST` for the dedicated build. This does not replace
+the default production library or publish an unqualified main implementation.
+
+Actual native x86 KVM compilation records all seven required C++ objects and the
+exact test definition on all 36 compiler entries. Its matching SDK contains 23
+regular files and two links, including the new test header. The library defines
+nine required interfaces as 11 global function symbols, including constructor
+and destructor variants. The [address probe](../tools/native-render-owner/aq-startup-custody-hook-link-probe.cpp)
+links with strict warnings and `-z defs`; actual relocation checks resolve the
+matching AQ15 library without missing symbols or AQ14. No probe function or hook
+callback is called. The ten unchanged CPU groups and both unchanged frozen API
+syntax contracts also pass.
+
+Independent qualification verifies 57 direct waits/57 merged PIPE EOFs within
+the original bounds, normal QMP shutdown, QEMU/CLI0, exact container absence and
+unchanged locked inputs. In-memory public reconstruction checks all 33 authored
+compiled C++ inputs and 21 SDK headers. Three generated protocol C++ entries and
+the two inherited non-build documentation exceptions remain distinct.
+
+This is a compiled test prerequisite. No actual post-acquisition or mandatory-start
+failure injection, native custody RED/GREEN, main or Rust native worker executes
+with this cohort. The child/start/subordinate-factory repair and every remaining
+runtime, Source and phone gate above stay open.

@@ -1,0 +1,300 @@
+diff --git a/include/aquamarine/backend/DRM.hpp b/include/aquamarine/backend/DRM.hpp
+--- a/include/aquamarine/backend/DRM.hpp
++++ b/include/aquamarine/backend/DRM.hpp
+@@ -13,6 +13,9 @@
+ #include <optional>
+ 
+ namespace Aquamarine {
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++    namespace StartupCustodyTest { struct SWeakGraphView; }
++#endif
+     class CDRMBackend;
+     class CDRMFB;
+     class CDRMOutput;
+@@ -493,6 +496,9 @@
+ 
+       private:
+         CDRMBackend(Hyprutils::Memory::CSharedPointer<CBackend> backend);
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++        StartupCustodyTest::SWeakGraphView startupCustodyView(bool primaryAllocatorPresent) const noexcept;
++#endif
+ 
+         static std::vector<Hyprutils::Memory::CSharedPointer<CDRMBackend>> attempt(Hyprutils::Memory::CSharedPointer<CBackend> backend);
+         static Hyprutils::Memory::CSharedPointer<CDRMBackend>              fromGpu(std::string path, Hyprutils::Memory::CSharedPointer<CBackend> backend,
+diff --git a/include/aquamarine/backend/StartupCustodyTest.hpp b/include/aquamarine/backend/StartupCustodyTest.hpp
+new file mode 100644
+--- /dev/null
++++ b/include/aquamarine/backend/StartupCustodyTest.hpp
+@@ -0,0 +1,92 @@
++#pragma once
++// Test infrastructure only. No declarations or ABI in an ordinary AQ build.
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++#include <hyprutils/memory/WeakPtr.hpp>
++#include <array>
++#include <cstddef>
++#include <cstdint>
++#include <thread>
++
++namespace Aquamarine {
++class CDRMBackend;
++class CDRMOutput;
++class CSessionDevice;
++class CDRMDumbAllocator;
++struct SDRMCRTC;
++struct SDRMPlane;
++namespace StartupCustodyTest {
++inline constexpr size_t MAX_OUTPUTS = 32, MAX_CRTCS = 32, MAX_PLANES = 128;
++enum class eCase : uint32_t { AFTER_REAL_RESOURCE_SCAN = 1, AFTER_REAL_IMPLEMENTATION_START = 2 };
++struct SProbeStamp {
++    uint64_t boottimeNs = 0, tid = 0;
++    bool valid = false;
++};
++SProbeStamp probeStamp() noexcept;
++
++// Worker-local only: these weak handles and the comparison-only address must
++// NEVER be copied to control/IPC. Main receives Root's copied numeric report.
++// No strong native reference, FD, callback, vector or allocation in this view.
++struct SWeakOutput {
++    Hyprutils::Memory::CWeakPointer<CDRMOutput> output;
++    uint32_t connectorID = 0;
++    uint64_t modeCount = 0;
++};
++struct SWeakGraphView {
++    const CDRMBackend* childIdentity = nullptr; // compare at actual dtor entry only
++    Hyprutils::Memory::CWeakPointer<CDRMBackend> child;
++    Hyprutils::Memory::CWeakPointer<CSessionDevice> device;
++    Hyprutils::Memory::CWeakPointer<CDRMDumbAllocator> dumbAllocator;
++    std::array<SWeakOutput, MAX_OUTPUTS> outputs{};
++    std::array<Hyprutils::Memory::CWeakPointer<SDRMCRTC>, MAX_CRTCS> crtcs{};
++    std::array<Hyprutils::Memory::CWeakPointer<SDRMPlane>, MAX_PLANES> planes{};
++    std::array<uint32_t, MAX_CRTCS> crtcIDs{};
++    std::array<uint32_t, MAX_PLANES> planeIDs{};
++    SProbeStamp stamp{};
++    uint64_t sessionGeneration = 0, deviceLeaseID = 0, deviceGeneration = 0, deviceRdev = 0;
++    uint64_t connectorCount = 0, crtcCount = 0, planeCount = 0;
++    uint32_t capturedOutputCount = 0, capturedCrtcCount = 0, capturedPlaneCount = 0;
++    bool overflow = false, atomic = false, nativeImplementationPresent = false;
++    bool dumbAllocatorPresent = false, primaryAllocatorPresent = false;
++    bool rendererAllocatorPresent = false, rendererPresent = false;
++};
++
++// Actual implementation is Root's retained NativeOwner member on the Rust
++// worker. It may retain SWeakGraphView, never a locked/strong observation ref.
++// Every callback catches exceptions before this noexcept boundary. No control
++// callback, display authorization, native acquisition or destructor in a probe.
++class IProbe {
++  public:
++    IProbe() noexcept = default;
++    virtual ~IProbe() = default;
++    IProbe(const IProbe&) = delete;
++    IProbe& operator=(const IProbe&) = delete;
++    bool onOwnerThread() const noexcept { return owner == std::this_thread::get_id(); }
++    virtual bool afterRealResourceScan(const SWeakGraphView&) noexcept = 0;
++    virtual bool afterRealImplementationStart(const SWeakGraphView&, bool actualResult) noexcept = 0;
++    virtual void childDestructorEntry(const CDRMBackend* identity, SProbeStamp) noexcept = 0;
++  private:
++    const std::thread::id owner = std::this_thread::get_id();
++};
++
++// Borrowed synchronous worker scope; no probe ownership and no hidden strong
++// native ref. Nested/foreign-owner scope shadows the previous scope, inactive.
++class CProbeScope final {
++  public:
++    explicit CProbeScope(IProbe&) noexcept;
++    ~CProbeScope();
++    CProbeScope(const CProbeScope&) = delete;
++    CProbeScope& operator=(const CProbeScope&) = delete;
++    bool bound() const noexcept;
++    static IProbe* current() noexcept;
++  private:
++    const std::thread::id owner = std::this_thread::get_id();
++    IProbe* probe = nullptr;
++    CProbeScope* previous = nullptr;
++    bool installed = false;
++};
++bool forceAfterResourceScan(const SWeakGraphView&) noexcept;
++bool forceAfterImplementationStart(const SWeakGraphView&, bool actualResult) noexcept;
++void observeChildDestructorEntry(const CDRMBackend*) noexcept;
++} // namespace StartupCustodyTest
++} // namespace Aquamarine
++#endif
+diff --git a/src/backend/Backend.cpp b/src/backend/Backend.cpp
+--- a/src/backend/Backend.cpp
++++ b/src/backend/Backend.cpp
+@@ -2,6 +2,9 @@
+ #include <aquamarine/backend/Wayland.hpp>
+ #include <aquamarine/backend/Headless.hpp>
+ #include <aquamarine/backend/DRM.hpp>
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++#include <aquamarine/backend/StartupCustodyTest.hpp>
++#endif
+ #include <aquamarine/backend/Null.hpp>
+ #include <aquamarine/allocator/GBM.hpp>
+ #include <hyprutils/os/FileDescriptor.hpp>
+@@ -179,7 +182,15 @@
+ 
+     for (size_t i = 0; i < implementations.size(); ++i) {
+         const auto& impl = implementations.at(i);
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++        const bool actualStartResult = impl->start(); // real call always occurs exactly once
++        const auto* drm = dynamic_cast<const CDRMBackend*>(impl.get());
++        const bool forceFailure = drm && StartupCustodyTest::CProbeScope::current() &&
++            StartupCustodyTest::forceAfterImplementationStart(drm->startupCustodyView(!!primaryAllocator), actualStartResult);
++        const bool ok = actualStartResult && !forceFailure;
++#else
+         const bool  ok   = impl->start();
++#endif
+ 
+         if (!ok) {
+             log(AQ_LOG_ERROR, std::format("Requested backend ({}) could not start, enabling fallbacks", backendTypeToName(impl->type())));
+diff --git a/src/backend/StartupCustodyTest.cpp b/src/backend/StartupCustodyTest.cpp
+new file mode 100644
+--- /dev/null
++++ b/src/backend/StartupCustodyTest.cpp
+@@ -0,0 +1,60 @@
++#include <aquamarine/backend/StartupCustodyTest.hpp>
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++#include <cerrno>
++#include <ctime>
++#include <exception>
++#include <sys/syscall.h>
++#include <unistd.h>
++
++using namespace Aquamarine::StartupCustodyTest;
++namespace { thread_local CProbeScope* currentScope = nullptr; }
++SProbeStamp Aquamarine::StartupCustodyTest::probeStamp() noexcept {
++    const int savedErrno = errno;
++    timespec now{};
++    SProbeStamp result{};
++    const auto tid = ::syscall(SYS_gettid);
++    if (::clock_gettime(CLOCK_BOOTTIME, &now) == 0 && now.tv_sec >= 0 && now.tv_nsec >= 0 &&
++        now.tv_nsec < 1000000000L && tid > 0) {
++        result.boottimeNs = static_cast<uint64_t>(now.tv_sec) * 1000000000ULL + static_cast<uint64_t>(now.tv_nsec);
++        result.tid = static_cast<uint64_t>(tid);
++        result.valid = true;
++    }
++    errno = savedErrno;
++    return result;
++}
++CProbeScope::CProbeScope(IProbe& value) noexcept : probe(&value), previous(currentScope) {
++    installed = !previous && value.onOwnerThread();
++    currentScope = this;
++}
++CProbeScope::~CProbeScope() {
++    if (owner != std::this_thread::get_id() || currentScope != this)
++        std::terminate();
++    currentScope = previous;
++}
++bool CProbeScope::bound() const noexcept {
++    return installed && owner == std::this_thread::get_id() && probe && probe->onOwnerThread();
++}
++IProbe* CProbeScope::current() noexcept {
++    return currentScope && currentScope->bound() ? currentScope->probe : nullptr;
++}
++bool Aquamarine::StartupCustodyTest::forceAfterResourceScan(const SWeakGraphView& view) noexcept {
++    const int savedErrno = errno;
++    auto* probe = CProbeScope::current();
++    const bool force = probe && probe->afterRealResourceScan(view);
++    errno = savedErrno;
++    return force;
++}
++bool Aquamarine::StartupCustodyTest::forceAfterImplementationStart(const SWeakGraphView& view, bool actualResult) noexcept {
++    const int savedErrno = errno;
++    auto* probe = CProbeScope::current();
++    const bool requested = probe && probe->afterRealImplementationStart(view, actualResult);
++    errno = savedErrno;
++    return actualResult && requested; // a false real start is never the selected injection
++}
++void Aquamarine::StartupCustodyTest::observeChildDestructorEntry(const Aquamarine::CDRMBackend* child) noexcept {
++    const int savedErrno = errno;
++    if (auto* probe = CProbeScope::current())
++        probe->childDestructorEntry(child, probeStamp());
++    errno = savedErrno;
++}
++#endif
+diff --git a/src/backend/drm/DRM.cpp b/src/backend/drm/DRM.cpp
+--- a/src/backend/drm/DRM.cpp
++++ b/src/backend/drm/DRM.cpp
+@@ -2,6 +2,9 @@
+ #include <algorithm>
+ #include <aquamarine/backend/DRM.hpp>
+ #include <aquamarine/backend/DisplayAttempt.hpp>
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++#include <aquamarine/backend/StartupCustodyTest.hpp>
++#endif
+ #include <aquamarine/backend/drm/Legacy.hpp>
+ #include <aquamarine/backend/drm/Atomic.hpp>
+ #include <aquamarine/allocator/GBM.hpp>
+@@ -253,6 +256,13 @@
+         drmBackend->grabFormats();
+ 
+         drmBackend->recheckOutputs();
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++        // Failure injection only AFTER actual resource scan, before primary /
++        // dumb allocator / returned-vector ownership. Preserve local-child drop.
++        if (StartupCustodyTest::CProbeScope::current() &&
++            StartupCustodyTest::forceAfterResourceScan(drmBackend->startupCustodyView(!!backend->primaryAllocator)))
++            continue;
++#endif
+ 
+         if (!newPrimary) {
+             backend->log(AQ_LOG_DEBUG, std::format("drm: gpu {} becomes primary drm", gpu->path));
+@@ -270,7 +280,58 @@
+     return backends;
+ }
+ 
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++Aquamarine::StartupCustodyTest::SWeakGraphView Aquamarine::CDRMBackend::startupCustodyView(bool primaryAllocatorPresent) const noexcept {
++    using namespace Aquamarine::StartupCustodyTest;
++    SWeakGraphView view{};
++    view.childIdentity = this;
++    view.child = self;
++    view.device = gpu;
++    view.dumbAllocator = dumbAllocator;
++    view.stamp = probeStamp();
++    view.atomic = atomic;
++    view.nativeImplementationPresent = !!impl;
++    view.primaryAllocatorPresent = primaryAllocatorPresent;
++    view.dumbAllocatorPresent = !!dumbAllocator;
++    view.rendererAllocatorPresent = !!rendererState.allocator;
++    view.rendererPresent = !!rendererState.renderer;
++    if (gpu) {
++        view.sessionGeneration = gpu->sessionGenerationTag;
++        view.deviceLeaseID = gpu->leaseID;
++        view.deviceGeneration = gpu->generation;
++        view.deviceRdev = static_cast<uint64_t>(gpu->dev);
++    }
++    view.connectorCount = connectors.size();
++    view.crtcCount = crtcs.size();
++    view.planeCount = planes.size();
++    view.overflow = connectors.size() > MAX_OUTPUTS || crtcs.size() > MAX_CRTCS || planes.size() > MAX_PLANES;
++    for (size_t i = 0; i < connectors.size() && i < MAX_OUTPUTS; ++i) {
++        const auto& connector = connectors[i];
++        if (!connector || !connector->output)
++            continue;
++        auto& output = view.outputs[view.capturedOutputCount++];
++        output.output = connector->output;
++        output.connectorID = connector->id;
++        output.modeCount = connector->output->modes.size();
++    }
++    for (size_t i = 0; i < crtcs.size() && i < MAX_CRTCS; ++i) {
++        view.crtcs[i] = crtcs[i];
++        view.crtcIDs[i] = crtcs[i] ? crtcs[i]->id : 0;
++        ++view.capturedCrtcCount;
++    }
++    for (size_t i = 0; i < planes.size() && i < MAX_PLANES; ++i) {
++        view.planes[i] = planes[i];
++        view.planeIDs[i] = planes[i] ? planes[i]->id : 0;
++        ++view.capturedPlaneCount;
++    }
++    return view; // only weak refs; no lock()/new native holder/FD acquisition
++}
++#endif
++
+ Aquamarine::CDRMBackend::~CDRMBackend() {
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++    StartupCustodyTest::observeChildDestructorEntry(this); // actual entry, before cleanup
++#endif
+     stopCommitThread();
+ 
+     for (auto& conn : connectors) {

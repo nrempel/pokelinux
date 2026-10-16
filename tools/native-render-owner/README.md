@@ -176,3 +176,16 @@ old factory without an alias and splits empty outer-holder creation from native
 initialization. The matching build passes the ten existing CPU groups and public
 API syntax checks. Actual partial-child, mandatory-start and subordinate-factory
 failure custody remain deliberately unqualified for the next behavioral RED.
+
+`aquamarine-startup-custody-test-hooks.patch` applies next, after the retained
+initialization patch. Its matching cohort pins the dedicated
+`POKELINUX_STARTUP_CUSTODY_TEST` build, seven affected C++ objects, nine interfaces
+(11 function symbols), the generated SDK and the address probe's actual AQ15
+relocation closure. `aq-startup-custody-hook-link-probe.cpp` is the exact compiled
+address-only probe; its functions and the hook callbacks were not invoked. Ten
+unchanged CPU groups and both frozen API syntax contracts pass, with 57 original
+waits/PIPE EOFs. This publishes test infrastructure and build evidence only;
+actual native failure RED, child/start/subordinate-factory custody and matching
+main/Rust worker execution remain open. Keep the inherited non-build source
+exceptions in `aquamarine-cohort.json`; no private planning note is needed to
+reconstruct the compiled sources or SDK headers.

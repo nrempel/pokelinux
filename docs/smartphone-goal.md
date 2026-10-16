@@ -2,7 +2,7 @@
 
 The latest [initial broker batch checkpoint](native-render-initial-batch.md) now passes real seatd/udev/virtio descriptor capture after actual structural compile RED and a matching native AQ15 build. Rust capture precedes queue admission and pending-duplicate closure; original service leases stay retained. Main worker startup, Source7 and all physical-phone requirements remain open.
 
-The [owned startup checkpoint](native-render-owned-startup.md) now includes the compiled deferred backend holder/initializer after actual missing-API RED. Both frozen API consumers compile against its matching SDK; ten unchanged CPU groups pass. Actual child/start failure custody, main worker startup, Source and all phone gates remain open.
+The [owned startup checkpoint](native-render-owned-startup.md) retains both missing-API structural REDs and the compiled deferred outer holder. A dedicated AQ15 test-hook library/SDK now builds seven affected units, exports nine interfaces and passes its address probe relocation check, ten unchanged CPU groups and both frozen syntax contracts. No hook callback or failure case executed; child/start/subordinate-factory custody, main and Rust worker startup, Source and all phone gates remain open.
 
 The later [policy-directory correction](native-session-owner.md#policy-directory-correction)
 passes15 preflight cases after five actual acceptance failures and two separate

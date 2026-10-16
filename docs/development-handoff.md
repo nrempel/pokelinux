@@ -20,7 +20,7 @@ acceptance, delivery, native call state or working physical hardware.
 
 The [initial broker batch peek](native-render-initial-batch.md) now passes unchanged-consumer real seatd/udev/virtio capture after a qualified missing-API compile RED and matching AQ15 source/SDK build. Three initial events reach Rust before queue admission; two pending duplicates close while original service leases remain open. Ten existing CPU groups also pass. Connect the actual main/control broker to Rust worker backend startup next; Source7 and all phone gates remain open.
 
-The [owned startup checkpoint](native-render-owned-startup.md) now includes the compiled deferred backend holder/initializer after actual missing-API RED. Both frozen API consumers compile against its matching SDK; ten unchanged CPU groups pass. Actual child/start failure custody, main worker startup, Source and all phone gates remain open.
+The [owned startup checkpoint](native-render-owned-startup.md) retains both missing-API structural REDs and the compiled deferred outer holder. A dedicated AQ15 test-hook library/SDK now builds seven affected units, exports nine interfaces and passes its address probe relocation check, ten unchanged CPU groups and both frozen syntax contracts. No hook callback or failure case executed; child/start/subordinate-factory custody, main and Rust worker startup, Source and all phone gates remain open.
 
 The current [Messages session assembly](native-messages-session-composition.md)
 selects explicit local history alongside Sounds, shares the actor and per-app
