@@ -174,6 +174,9 @@ impl SourceOwner {
     }
 }
 impl Provider for SourceOwner {
+    fn first_rejection(&self) -> Option<&pokelinux_lifecycle::session::SourceRejection> {
+        self.observer.as_ref().and_then(Provider::first_rejection)
+    }
     fn poll(&mut self) -> io::Result<Option<Snapshot>> {
         // Terminal state must never bypass actual child reaping.
         self.reap();

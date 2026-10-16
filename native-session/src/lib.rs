@@ -1,7 +1,10 @@
 #![forbid(unsafe_code)]
 //! Compositor facts only. No grants, app launch, unlock command or publication authority.
 use pokelinux_kernel_identity::ProcessView;
-use pokelinux_lifecycle::session::OwnedFocus;
+use pokelinux_lifecycle::session::{
+    AcceptedSourceSample, OwnedFocus, SourceReceiveObservation, SourceRejection,
+    SourceRejectionReason as Reason, SourceRejectionStage as Stage,
+};
 use pokelinux_lifecycle::{authority::living, boottime_ns};
 use rustix::net::{self, RecvAncillaryBuffer, RecvAncillaryMessage, RecvFlags, ReturnFlags, UCred};
 use rustix::{fd::OwnedFd, process::Pid};
@@ -69,6 +72,7 @@ pub struct Observer {
     accepted_generation: u64,
     unlock_eligible: Option<u64>,
     failed: bool,
+    first_rejection: Option<SourceRejection>,
 }
 fn canonical(source: &str) -> bool {
     source.len() == 32
@@ -116,9 +120,28 @@ impl Observer {
             accepted_generation: 0,
             unlock_eligible: None,
             failed: false,
+            first_rejection: None,
         })
     }
-    fn fail(&mut self, kind: io::ErrorKind) -> io::Result<()> {
+    fn fail(
+        &mut self,
+        kind: io::ErrorKind,
+        stage: Stage,
+        reason: Reason,
+        context: RejectionContext,
+    ) -> io::Result<()> {
+        if self.first_rejection.is_none() {
+            self.first_rejection = Some(SourceRejection {
+                stage,
+                reason,
+                drain_ordinal: context.drain_ordinal,
+                sequence: context.sample.as_ref().map(|sample| sample.sequence),
+                sampled_at_ns: context.sample.as_ref().map(|sample| sample.sampled_at_ns),
+                previous_accepted: self.current.as_ref().map(sample_metadata),
+                validated_at_boottime_ns: context.validated_at.unwrap_or_else(boottime_ns),
+                receive: context.receive,
+            });
+        }
         self.failed = true;
         self.current = None;
         self.focus = None;
@@ -190,83 +213,199 @@ impl Observer {
             return Err(io::ErrorKind::NotConnected.into());
         }
         if !living(&self.alive).unwrap_or(false) {
-            return self.fail(io::ErrorKind::NotConnected);
+            return self.fail(
+                io::ErrorKind::NotConnected,
+                Stage::Liveness,
+                Reason::SourceNotLiving,
+                RejectionContext::default(),
+            );
         }
         let mut count = 0;
         loop {
+            let mut context = RejectionContext {
+                drain_ordinal: count + 1,
+                ..Default::default()
+            };
             let packet = match receive(self.fd.as_ref().ok_or(io::ErrorKind::NotConnected)?) {
                 Ok(v) => v,
-                Err(e) if e.raw_os_error() == Some(4) => {
-                    return self.fail(io::ErrorKind::Interrupted);
+                Err(error) => {
+                    let kind = if error.observation.errno == Some(4) {
+                        io::ErrorKind::Interrupted
+                    } else {
+                        io::ErrorKind::InvalidData
+                    };
+                    context.receive = Some(error.observation);
+                    return self.fail(kind, Stage::Receive, error.reason, context);
                 }
-                Err(_) => return self.fail(io::ErrorKind::InvalidData),
             };
-            let Some(SourcePacket { bytes, cred, peer }) = packet else {
+            let Some(SourcePacket {
+                bytes,
+                cred,
+                peer,
+                observation,
+            }) = packet
+            else {
                 break;
             };
+            context.receive = Some(observation);
             count += 1;
-            if count > MAX_DRAIN {
-                return self.fail(io::ErrorKind::InvalidData);
+            if count > MAX_DRAIN as u32 {
+                return self.fail(
+                    io::ErrorKind::InvalidData,
+                    Stage::Drain,
+                    Reason::DrainLimit,
+                    context,
+                );
             }
-            if bytes.len() > MAX_FRAME
-                || cred.pid != self.pid
-                || cred.uid.as_raw() != self.uid
-                || !living(&self.alive).unwrap_or(false)
-            {
-                return self.fail(io::ErrorKind::PermissionDenied);
+            if bytes.len() > MAX_FRAME {
+                return self.fail(
+                    io::ErrorKind::PermissionDenied,
+                    Stage::Validation,
+                    Reason::FrameSize,
+                    context,
+                );
+            }
+            if cred.pid != self.pid || cred.uid.as_raw() != self.uid {
+                return self.fail(
+                    io::ErrorKind::PermissionDenied,
+                    Stage::Validation,
+                    Reason::SenderCredentials,
+                    context,
+                );
+            }
+            if !living(&self.alive).unwrap_or(false) {
+                return self.fail(
+                    io::ErrorKind::PermissionDenied,
+                    Stage::Liveness,
+                    Reason::SourceNotLiving,
+                    context,
+                );
             }
             let frame: Frame = match serde_json::from_slice(&bytes) {
                 Ok(frame) => frame,
-                Err(_) => return self.fail(io::ErrorKind::InvalidData),
+                Err(_) => {
+                    return self.fail(
+                        io::ErrorKind::InvalidData,
+                        Stage::Decode,
+                        Reason::MalformedFrame,
+                        context,
+                    );
+                }
             };
+            context.sample = Some(sample_metadata(&frame));
             let locker_metadata = frame.locker.metadata();
-            if frame.source != self.source
-                || self.sequence.checked_add(1) != Some(frame.sequence)
-                || (frame.locked && frame.focus.is_some())
+            if frame.source != self.source {
+                return self.fail(
+                    io::ErrorKind::InvalidData,
+                    Stage::Validation,
+                    Reason::SourceMismatch,
+                    context,
+                );
+            }
+            if self.sequence.checked_add(1) != Some(frame.sequence) {
+                return self.fail(
+                    io::ErrorKind::InvalidData,
+                    Stage::Validation,
+                    Reason::Sequence,
+                    context,
+                );
+            }
+            if (frame.locked && frame.focus.is_some())
                 || (!frame.locked && (frame.lock_completed || locker_metadata.is_some()))
                 || frame
                     .focus
                     .as_ref()
                     .is_some_and(|f| f.pid == 0 || f.pid > i32::MAX as u32)
-                // Timely authentic successors can already be queued when the
-                // actor resumes. Require an uninterrupted, monotonic sample
-                // chain before replacing its cached sample; never bridge a gap.
-                || self.current.as_ref().is_some_and(|previous| {
-                    frame.sampled_at_ns < previous.sampled_at_ns
-                        || previous
-                            .sampled_at_ns
-                            .checked_add(SAMPLE_BUDGET_NS)
-                            .is_none_or(|until| frame.sampled_at_ns > until)
-                })
-                || !Self::live_sample(&frame, boottime_ns())
             {
-                return self.fail(io::ErrorKind::InvalidData);
+                return self.fail(
+                    io::ErrorKind::InvalidData,
+                    Stage::Validation,
+                    Reason::FrameShape,
+                    context,
+                );
+            }
+            // Preserve the uninterrupted monotonic chain before checking current freshness.
+            if let Some(previous) = &self.current {
+                if frame.sampled_at_ns < previous.sampled_at_ns {
+                    return self.fail(
+                        io::ErrorKind::InvalidData,
+                        Stage::Validation,
+                        Reason::SampleBackwards,
+                        context,
+                    );
+                }
+                if previous
+                    .sampled_at_ns
+                    .checked_add(SAMPLE_BUDGET_NS)
+                    .is_none_or(|until| frame.sampled_at_ns > until)
+                {
+                    return self.fail(
+                        io::ErrorKind::InvalidData,
+                        Stage::Validation,
+                        Reason::SampleGap,
+                        context,
+                    );
+                }
+            }
+            let now = boottime_ns();
+            context.validated_at = Some(now);
+            if !Self::live_sample(&frame, now) {
+                let reason = if frame.sampled_at_ns > now {
+                    Reason::SampleFuture
+                } else {
+                    Reason::SampleExpired
+                };
+                return self.fail(
+                    io::ErrorKind::InvalidData,
+                    Stage::Validation,
+                    reason,
+                    context,
+                );
             }
             if (frame.focus.is_some() || locker_metadata.is_some()) != peer.is_some()
                 || peer
                     .as_ref()
                     .is_some_and(|fd| !self.view.is_pidfd(fd).unwrap_or(false))
             {
-                return self.fail(io::ErrorKind::InvalidData);
+                return self.fail(
+                    io::ErrorKind::InvalidData,
+                    Stage::Peer,
+                    Reason::PeerHandle,
+                    context,
+                );
             }
-            // A mapped locker must name the actual live task behind the received
-            // handle in this pinned procfs namespace. Focus keeps its existing
-            // fact-only death/replacement semantics; actor grants revalidate it.
             if let Some(metadata) = &locker_metadata
                 && !peer
                     .as_ref()
                     .is_some_and(|fd| self.view.matches(fd, fd, metadata.pid).unwrap_or(false))
             {
-                return self.fail(io::ErrorKind::InvalidData);
+                return self.fail(
+                    io::ErrorKind::InvalidData,
+                    Stage::Peer,
+                    Reason::LockerIdentity,
+                    context,
+                );
             }
             let (focus, locker) = match (frame.focus.clone(), locker_metadata, peer) {
                 (Some(metadata), None, Some(fd)) => (Some(OwnedFocus::new(metadata, fd)), None),
                 (None, Some(metadata), Some(fd)) => (None, Some(OwnedFocus::new(metadata, fd))),
                 (None, None, None) => (None, None),
-                _ => return self.fail(io::ErrorKind::InvalidData),
+                _ => {
+                    return self.fail(
+                        io::ErrorKind::InvalidData,
+                        Stage::Peer,
+                        Reason::PeerHandle,
+                        context,
+                    );
+                }
             };
             if !self.accept_protocol(&frame) {
-                return self.fail(io::ErrorKind::InvalidData);
+                return self.fail(
+                    io::ErrorKind::InvalidData,
+                    Stage::Protocol,
+                    Reason::ProtocolFacts,
+                    context,
+                );
             }
             let same_focus = match (&self.focus, &focus) {
                 (None, None) => true,
@@ -278,8 +417,7 @@ impl Observer {
                 (Some(left), Some(right)) => left.equivalent(right, &self.view),
                 _ => false,
             };
-            // Inspect every packet before coalescing. A lock/unlock or focus cycle
-            // cannot disappear merely because the final facts equal old facts.
+            // Inspect every packet before coalescing; preserve the existing semantic fence.
             if self.current.as_ref().is_none_or(|previous| {
                 previous.locked != frame.locked
                     || previous.lock_completed != frame.lock_completed
@@ -289,7 +427,12 @@ impl Observer {
                     || !same_locker
             }) {
                 let Some(revision) = self.revision.checked_add(1) else {
-                    return self.fail(io::ErrorKind::InvalidData);
+                    return self.fail(
+                        io::ErrorKind::InvalidData,
+                        Stage::Revision,
+                        Reason::RevisionOverflow,
+                        context,
+                    );
                 };
                 self.revision = revision;
             }
@@ -299,14 +442,28 @@ impl Observer {
             self.locker = locker;
         }
         if !living(&self.alive).unwrap_or(false) {
-            return self.fail(io::ErrorKind::NotConnected);
+            return self.fail(
+                io::ErrorKind::NotConnected,
+                Stage::Liveness,
+                Reason::SourceNotLiving,
+                RejectionContext::default(),
+            );
         }
-        if self
-            .current
-            .as_ref()
-            .is_some_and(|f| !Self::live_sample(f, boottime_ns()))
-        {
-            return self.fail(io::ErrorKind::TimedOut);
+        if let Some(frame) = &self.current {
+            let now = boottime_ns();
+            if !Self::live_sample(frame, now) {
+                let context = RejectionContext {
+                    sample: Some(sample_metadata(frame)),
+                    validated_at: Some(now),
+                    ..Default::default()
+                };
+                return self.fail(
+                    io::ErrorKind::TimedOut,
+                    Stage::CachedSample,
+                    Reason::SampleExpired,
+                    context,
+                );
+            }
         }
         Ok(())
     }
@@ -321,18 +478,45 @@ impl Observer {
             return None;
         }
         if !living(&self.alive).unwrap_or(false) {
-            let _ = self.fail(io::ErrorKind::NotConnected);
+            let _ = self.fail(
+                io::ErrorKind::NotConnected,
+                Stage::Liveness,
+                Reason::SourceNotLiving,
+                RejectionContext::default(),
+            );
             return None;
         }
-        if self
-            .current
-            .as_ref()
-            .is_some_and(|f| !Self::live_sample(f, boottime_ns()))
-        {
-            let _ = self.fail(io::ErrorKind::TimedOut);
-            return None;
+        if let Some(frame) = &self.current {
+            let now = boottime_ns();
+            if !Self::live_sample(frame, now) {
+                let context = RejectionContext {
+                    sample: Some(sample_metadata(frame)),
+                    validated_at: Some(now),
+                    ..Default::default()
+                };
+                let _ = self.fail(
+                    io::ErrorKind::TimedOut,
+                    Stage::CachedSample,
+                    Reason::SampleExpired,
+                    context,
+                );
+                return None;
+            }
         }
         self.current.as_ref()
+    }
+}
+#[derive(Default)]
+struct RejectionContext {
+    drain_ordinal: u32,
+    sample: Option<AcceptedSourceSample>,
+    receive: Option<SourceReceiveObservation>,
+    validated_at: Option<u64>,
+}
+fn sample_metadata(frame: &Frame) -> AcceptedSourceSample {
+    AcceptedSourceSample {
+        sequence: frame.sequence,
+        sampled_at_ns: frame.sampled_at_ns,
     }
 }
 
@@ -342,8 +526,13 @@ struct SourcePacket {
     bytes: Vec<u8>,
     cred: UCred,
     peer: Option<OwnedFd>,
+    observation: SourceReceiveObservation,
 }
-fn receive(fd: &OwnedFd) -> io::Result<Option<SourcePacket>> {
+struct ReceiveRejection {
+    reason: Reason,
+    observation: SourceReceiveObservation,
+}
+fn receive(fd: &OwnedFd) -> Result<Option<SourcePacket>, ReceiveRejection> {
     let mut bytes = [0; MAX_FRAME];
     let mut space = [MaybeUninit::uninit(); rustix::cmsg_space!(ScmCredentials(1), ScmRights(2))];
     let mut ancillary = RecvAncillaryBuffer::new(&mut space);
@@ -354,12 +543,26 @@ fn receive(fd: &OwnedFd) -> io::Result<Option<SourcePacket>> {
         RecvFlags::DONTWAIT | RecvFlags::CMSG_CLOEXEC,
     ) {
         Err(rustix::io::Errno::AGAIN) => return Ok(None),
-        result => result?,
+        Err(error) => {
+            return Err(ReceiveRejection {
+                reason: Reason::ReceiveError,
+                observation: SourceReceiveObservation {
+                    received_bytes: None,
+                    payload_truncated: None,
+                    control_truncated: None,
+                    errno: Some(error.raw_os_error()),
+                },
+            });
+        }
+        Ok(result) => result,
     };
-    let mut invalid = result.bytes == 0
-        || result
-            .flags
-            .intersects(ReturnFlags::TRUNC | ReturnFlags::CTRUNC);
+    let observation = SourceReceiveObservation {
+        received_bytes: Some(result.bytes as u64),
+        payload_truncated: Some(result.flags.contains(ReturnFlags::TRUNC)),
+        control_truncated: Some(result.flags.contains(ReturnFlags::CTRUNC)),
+        errno: None,
+    };
+    let mut invalid_ancillary = false;
     let mut credentials = None;
     let mut peer = None;
     let mut rights_messages = 0;
@@ -374,24 +577,44 @@ fn receive(fd: &OwnedFd) -> io::Result<Option<SourcePacket>> {
                     if peer.is_none() {
                         peer = Some(handle);
                     } else {
-                        invalid = true;
+                        invalid_ancillary = true;
                     }
                 }
             }
-            _ => invalid = true,
+            _ => invalid_ancillary = true,
         }
     }
-    if invalid || rights_messages > 1 {
-        return Err(io::ErrorKind::InvalidData.into());
+    let reason = if result.bytes == 0 {
+        Some(Reason::ReceiveZeroBytes)
+    } else if observation.payload_truncated == Some(true) {
+        Some(Reason::PayloadTruncated)
+    } else if observation.control_truncated == Some(true) {
+        Some(Reason::ControlTruncated)
+    } else if invalid_ancillary || rights_messages > 1 {
+        Some(Reason::InvalidAncillary)
+    } else if credentials.is_none() {
+        Some(Reason::MissingCredentials)
+    } else {
+        None
+    };
+    if let Some(reason) = reason {
+        return Err(ReceiveRejection {
+            reason,
+            observation,
+        });
     }
     Ok(Some(SourcePacket {
         bytes: bytes[..result.bytes].to_vec(),
-        cred: credentials.ok_or(io::ErrorKind::PermissionDenied)?,
+        cred: credentials.expect("validated Source credentials"),
         peer,
+        observation,
     }))
 }
 
 impl pokelinux_lifecycle::session::Provider for Observer {
+    fn first_rejection(&self) -> Option<&SourceRejection> {
+        self.first_rejection.as_ref()
+    }
     fn stop(&mut self) {
         self.failed = true;
         self.current = None;

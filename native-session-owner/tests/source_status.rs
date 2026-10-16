@@ -357,3 +357,189 @@ fn snapshot_actual_source_child_exit_reports_disconnect() {
             > 0
     );
 }
+
+struct ResumeActor(OwnedFd);
+impl Drop for ResumeActor {
+    fn drop(&mut self) {
+        // Restore the owned actor on every assertion path before Case cleanup.
+        let _ = rustix::process::pidfd_send_signal(&self.0, Signal::CONT);
+    }
+}
+// These assertions compile against the pre-diagnostic production Snapshot API.
+// Each case completes real failure controls and owned child cleanup before RED.
+fn actual_rejection(command: &str, stage: &str, reason: &str) {
+    let mut c = Case::new("diagnostic");
+    fs::set_permissions(&c.root, fs::Permissions::from_mode(0o777)).unwrap();
+    let initial = c.observed();
+    let actor = ResumeActor(
+        rustix::process::pidfd_open(
+            Pid::from_raw(c.child.id() as i32).unwrap(),
+            PidfdFlags::NONBLOCK,
+        )
+        .unwrap(),
+    );
+    rustix::process::pidfd_send_signal(&actor.0, Signal::STOP).unwrap();
+    // Wait until the owned actor is actually stopped before queueing wire inputs.
+    loop {
+        let status = fs::read_to_string(format!("/proc/{}/status", c.child.id())).unwrap();
+        if status
+            .lines()
+            .any(|line| line.starts_with("State:") && line.contains("T (stopped)"))
+        {
+            break;
+        }
+        assert!(boottime_ns() < c.until - 3_000_000_000);
+        tick();
+    }
+    let before = boottime_ns();
+    fs::write(c.root.join("reject"), command).unwrap();
+    while !c.root.join("rejected-input-ready").exists() {
+        assert!(boottime_ns() < c.until - 3_000_000_000);
+        c.pump();
+        tick();
+    }
+    rustix::process::pidfd_send_signal(&actor.0, Signal::CONT).unwrap();
+    let (failed, _, after) = c.wait_locked();
+    let repeated = c.snapshot();
+    c.close();
+    failure(&failed, "InvalidData", before, after);
+    assert_eq!(source(&failed), source(&repeated));
+    assert!(
+        source(&initial)["last_accepted"]["sequence"]
+            .as_u64()
+            .unwrap()
+            > 0
+    );
+    let rejection = &source(&failed)["first_failure"]["observer_rejection"];
+    assert!(
+        rejection.is_object(),
+        "MISSING_FIRST_OBSERVER_REJECTION: {command}"
+    );
+    assert_eq!(rejection["stage"], stage);
+    assert_eq!(rejection["reason"], reason);
+    let validated = rejection["validated_at_boottime_ns"].as_u64().unwrap();
+    assert!(before <= validated && validated <= after);
+    let ordinal = rejection["drain_ordinal"].as_u64().unwrap();
+    assert!((1..=17).contains(&ordinal));
+    let previous = &rejection["previous_accepted"];
+    assert!(
+        previous["sequence"].as_u64().unwrap()
+            >= source(&initial)["last_accepted"]["sequence"]
+                .as_u64()
+                .unwrap()
+    );
+    let sample = rejection["sampled_at_ns"].as_u64();
+    match command {
+        "queued_expired" => {
+            let sample = sample.unwrap();
+            assert!(sample + pokelinux_session::SAMPLE_BUDGET_NS <= validated);
+            assert!(sample >= previous["sampled_at_ns"].as_u64().unwrap());
+            assert!(
+                sample
+                    <= previous["sampled_at_ns"].as_u64().unwrap()
+                        + pokelinux_session::SAMPLE_BUDGET_NS
+            );
+            assert_eq!(
+                rejection["sequence"].as_u64().unwrap(),
+                previous["sequence"].as_u64().unwrap() + 1
+            );
+        }
+        "sample_gap" => {
+            let sample = sample.unwrap();
+            assert!(
+                sample
+                    > previous["sampled_at_ns"].as_u64().unwrap()
+                        + pokelinux_session::SAMPLE_BUDGET_NS
+            );
+            assert!(
+                sample <= validated && validated < sample + pokelinux_session::SAMPLE_BUDGET_NS
+            );
+        }
+        "sequence" => assert!(
+            rejection["sequence"].as_u64().unwrap() > previous["sequence"].as_u64().unwrap() + 1
+        ),
+        "eof" | "zero_bytes" => assert_eq!(rejection["receive"]["received_bytes"], 0),
+        "truncated" => assert_eq!(rejection["receive"]["payload_truncated"], true),
+        "malformed" => assert!(sample.is_none() && rejection["sequence"].is_null()),
+        "drain_limit" => assert_eq!(ordinal, 17),
+        _ => unreachable!(),
+    }
+    // Bounded structure has no packet, arbitrary parser/OS text or peer identity.
+    let keys: std::collections::BTreeSet<_> = rejection
+        .as_object()
+        .unwrap()
+        .keys()
+        .map(String::as_str)
+        .collect();
+    assert_eq!(
+        keys,
+        [
+            "stage",
+            "reason",
+            "drain_ordinal",
+            "sequence",
+            "sampled_at_ns",
+            "previous_accepted",
+            "validated_at_boottime_ns",
+            "receive"
+        ]
+        .into_iter()
+        .collect()
+    );
+    let text = rejection.to_string();
+    for forbidden in [
+        "private-frame-marker",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "focus",
+        "locker",
+        "uid",
+        "pid",
+        "source",
+    ] {
+        assert!(
+            !text.contains(forbidden),
+            "sensitive diagnostic: {forbidden}"
+        );
+    }
+}
+#[test]
+#[ignore = "isolated root, UID transitions, built actor/Source helpers"]
+fn rejection_queued_expired_frame_is_distinct_from_sample_gap() {
+    actual_rejection("queued_expired", "validation", "sample_expired");
+}
+#[test]
+#[ignore = "isolated root, UID transitions, built actor/Source helpers"]
+fn rejection_actual_sampling_gap_is_distinct_from_queued_expiry() {
+    actual_rejection("sample_gap", "validation", "sample_gap");
+}
+#[test]
+#[ignore = "isolated root, UID transitions, built actor/Source helpers"]
+fn rejection_actual_sequence_gap_retains_parsed_sample() {
+    actual_rejection("sequence", "validation", "sequence");
+}
+#[test]
+#[ignore = "isolated root, UID transitions, built actor/Source helpers"]
+fn rejection_actual_eof_is_distinct_from_malformed_frame() {
+    actual_rejection("eof", "receive", "receive_zero_bytes");
+}
+#[test]
+#[ignore = "isolated root, UID transitions, built actor/Source helpers"]
+fn rejection_actual_truncation_retains_bounded_receive_flags() {
+    actual_rejection("truncated", "receive", "payload_truncated");
+}
+#[test]
+#[ignore = "isolated root, UID transitions, built actor/Source helpers"]
+fn rejection_actual_malformed_frame_keeps_no_raw_data() {
+    actual_rejection("malformed", "decode", "malformed_frame");
+}
+#[test]
+#[ignore = "isolated root, UID transitions, built actor/Source helpers"]
+fn rejection_actual_drain_limit_retains_original_ordinal() {
+    actual_rejection("drain_limit", "drain", "drain_limit");
+}
+
+#[test]
+#[ignore = "isolated root, UID transitions, built actor/Source helpers"]
+fn rejection_actual_zero_length_packet_reports_only_zero_bytes() {
+    actual_rejection("zero_bytes", "receive", "receive_zero_bytes");
+}

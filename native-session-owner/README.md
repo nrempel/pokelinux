@@ -23,7 +23,9 @@ No production poll writes to a potentially blocked logging stream.
 
 The existing root-admin Snapshot reports bounded [Source observation history](../docs/native-source-observation.md):
 state, last actually accepted sample metadata and first categorized actor-observed
-failure. This is historical operational state; `ready` remains policy/storage
+failure, including a typed first Observer rejection when available. Its bounded
+facts distinguish receive, drain, frame, sample-chain and freshness decisions
+without retaining packet bytes or peer identity. This is historical operational state; `ready` remains policy/storage
 readiness. Collect a Snapshot before Stop if needed, since the actor may exit.
 The first failure survives cleanup; observation does not change authority or retries.
 

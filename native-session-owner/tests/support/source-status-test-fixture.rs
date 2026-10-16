@@ -58,7 +58,7 @@ fn main() -> io::Result<()> {
     let mut custody = if mode == "none" {
         None
     } else {
-        if !matches!(mode, "valid" | "quiet") {
+        if !matches!(mode, "valid" | "quiet" | "diagnostic") {
             return Err(io::ErrorKind::InvalidInput.into());
         }
         let spec = Compositor {
@@ -66,7 +66,11 @@ fn main() -> io::Result<()> {
             executable: PathBuf::from(
                 std::env::var_os("SOURCE_OWNER_FIXTURE").ok_or(io::ErrorKind::InvalidInput)?,
             ),
-            arguments: vec![mode.into()],
+            arguments: if mode == "diagnostic" {
+                vec![mode.into(), root.to_string_lossy().into_owned()]
+            } else {
+                vec![mode.into()]
+            },
             environment: BTreeMap::new(),
             source: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa".into(),
         };

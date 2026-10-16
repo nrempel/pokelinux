@@ -355,7 +355,12 @@ profile, all four groups and PCM remain unreached. The failed selection preserve
 
 ## Remaining integration
 
-Complete native CPU-speed execution of the same-source production owner and
+The [typed first Observer rejection](native-source-observation.md#first-observer-rejection-evidence)
+now passes12 actual admin cases after eight missing-record REDs, with57 process
+and four lifecycle cases also passing. Its default release owner/client builds
+are ready; no original compositor replay follows from those host checks.
+
+Complete native CPU-speed execution of the current production owner and
 original Hyprland/Source, fixed desktop client, normal UID11042 Sounds,
 independent permission and real native focus, then return to ARM availability. Keep
 per-app Wayland and independent virtual graph/PCM. Qualify null-focus background

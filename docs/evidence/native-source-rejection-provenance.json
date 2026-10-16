@@ -1,0 +1,90 @@
+{
+  "schema": "native-source-rejection-observation-v1",
+  "scope": "Bounded native host Source rejection diagnostics; authored credentialed producers only",
+  "baseline_public_commit": "a1cb94f9a5cc4b8c863792212a7e31f5af13620a",
+  "builder_image": "sha256:0b4b956502a9f55d992eaced6975737b523be19bd2034078983b36bbcfd7aee6",
+  "changed_source_sha256": {
+    "native-lifecycle/src/authority.rs": "6eea99dcee03ad9f33ea830f6af522bc75f863c104190769801ebca2d1581ddf",
+    "native-lifecycle/src/service.rs": "68f701e02193563a5698ec173b314298f185b2787bf8362d45d535b05de4455b",
+    "native-lifecycle/src/session.rs": "d3ef843dbd96f4b6341de1952ca15832f3f0f1484e8c22e75926692753dae240",
+    "native-session-owner/src/bin/source-owner-fixture.rs": "7ca31c239e0d4fffaa49054e5b6ca9b889db97f641cbfe056739bdb2dd0d6b94",
+    "native-session-owner/src/source.rs": "a4ca79ce84424cd3e093ccaa2ba33a36996a21076bbf8452166bdc770039454f",
+    "native-session-owner/tests/source_status.rs": "470a22bde63a876101de8fae153b0d30967b39c9d2ddd3c96d1ddd3f6f308b90",
+    "native-session-owner/tests/support/source-status-test-fixture.rs": "7cd29311b2bbc514895c4d94a9ef617ec0ecda19ef1940a2bc725755f6feb2d0",
+    "native-session/src/lib.rs": "20d804cac76dc35657a320eeb68c3a09145bcef18b191ad9c62d8932f86e012f",
+    "native-session/tests/process.rs": "10dd36cb6d3a9cd06ea3e3bd59340f94fbd564f34503bd885617fa282014c070"
+  },
+  "selected_source_count": 514,
+  "selected_source_manifest_sha256": "d44031f34a409f50ff13b0ebab35aaab26795203946dfe466848a291e90f9e68",
+  "frozen_root_admin_test_sha256": {
+    "native-session-owner/tests/source_status.rs": "470a22bde63a876101de8fae153b0d30967b39c9d2ddd3c96d1ddd3f6f308b90",
+    "native-session-owner/tests/support/source-status-test-fixture.rs": "7cd29311b2bbc514895c4d94a9ef617ec0ecda19ef1940a2bc725755f6feb2d0",
+    "native-session-owner/src/bin/source-owner-fixture.rs": "7ca31c239e0d4fffaa49054e5b6ca9b889db97f641cbfe056739bdb2dd0d6b94"
+  },
+  "red": {
+    "test_exit": 101,
+    "passed": 0,
+    "failed": 8,
+    "missing_diagnostic_failures": 8,
+    "actual_actor_waits": 8,
+    "actual_Source_waits": 8,
+    "receipt_sha256": "c4efabba61dec08b7105437c4f5747a8363345b2811b8a740127815cc08bfd7e",
+    "log_sha256": "aaa65824f02d3fde1ef7c95f007d2d5eda522fbda19989d2e65a100eaf3e5962"
+  },
+  "green": {
+    "tests": {
+      "actual-tests.log": 12,
+      "process-regression.log": 57,
+      "lifecycle-regression.log": 4
+    },
+    "actual_actor_waits": 12,
+    "actual_Source_waits": 11,
+    "strict_fmt_and_all_target_clippy": true,
+    "receipt_sha256": "e0a7a90b9be50cd6e74d4fd845a7f4e7485873b69b0966ff6feccf19c4c67bc8",
+    "log_sha256": "e11d8e307895fee2edccad54254b9debd3d15ecbafeb8bcaf4b27fb232afe62e",
+    "compiler_sha256": "778fbc643a806f0dd123c056e66201d7e8a56a61928ec0a33171be8d6c2d5a37",
+    "cargo_sha256": "9950bbb2d5c3417b1a068f0e81f6d3cac991a363193bdf2a22d447f5acf8b503"
+  },
+  "native_artifacts": {
+    "pokelinux-session-owner": {
+      "sha256": "866441b173ee93d61b37272905642e8b4d5491e0103311d4f2f8b36f47c71722",
+      "bytes": 2606640,
+      "ELF_machine": 62
+    },
+    "sounds-launch": {
+      "sha256": "34550c32c7a0a81182c400ae09f29b3ef98d1fd29433b47e562eba4ab1a21c50",
+      "bytes": 966624,
+      "ELF_machine": 62
+    }
+  },
+  "custody": {
+    "red_actor_wait0_and_two_pipe_EOFs": 8,
+    "red_Source_wait9_DEVNULL": 8,
+    "green_actor_wait0_and_two_pipe_EOFs": 12,
+    "green_Source_wait9_DEVNULL": 11,
+    "red_and_green_outer_cli_waits_each": 10,
+    "same_daemon_exact_container_absence": true,
+    "outer_ECHILD": true,
+    "selected_source_unchanged": true,
+    "all_recorded_outer_waits_and_EOFs_before_original_cutoffs": true
+  },
+  "preserved_failures": [
+    "red-1 missing python runner setup",
+    "red-2 missing required fixture env runner setup",
+    "red-final-1 zero-packet fixture used generic send rejecting empty; not full cohort RED",
+    "green-1 strict Clippy result_large_err before behavior; fixed by boxing one bounded diagnostic"
+  ],
+  "limits": [
+    "Seven initial feature cases reached missing-record assertion before production edits; final eight-case frozen baseline includes authored zero-length packet.",
+    "Feature RED reaches missing diagnostic; deeper value assertions execute only in GREEN.",
+    "Two new typed Observer stop checks are regression-only, without separate feature RED claim.",
+    "Existing ErrorKind, predicate order, 100ms lease and terminal refusal preserved; diagnostic is not a crash cause.",
+    "No original compositor, VM, normal app, PCM, ARM or phone runtime qualification in this cohort.",
+    "Receive-syscall errno and unavailable/null flag branch is source-reviewed; no injected syscall-error runtime control in this cohort."
+  ],
+  "qualification_receipt_sha256": "f8c817c85810b26a3d7600078bcbf87d2a9e1e5d5b8b69ed5ff953e1bfe650c9",
+  "Root_integration_review_sha256": "b23505b470f6bb805e03d8a0698346dc0115185c769d7bf34a0ea67a70761d06",
+  "selected_release_profile": "default features=[], opt_level3, debuginfo0, debug_assertions=false, overflow_checks=false",
+  "prior_runtime_profile_difference": "Previously selected owner/client used debug opt0; subsequent runtime differences do not establish a timing cause.",
+  "independent_qualification_sha256": "44576971ebad4c59f4b1231593d90a3e67ac65e522ab7e4d466d4c565a3bc7ca"
+}

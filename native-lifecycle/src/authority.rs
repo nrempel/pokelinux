@@ -564,10 +564,15 @@ impl Authority {
             _ => false,
         }
     }
-    pub(crate) fn source_provider_failed(&mut self, kind: io::ErrorKind) {
+    pub(crate) fn source_provider_failed(
+        &mut self,
+        kind: io::ErrorKind,
+        rejection: Option<crate::session::SourceRejection>,
+    ) {
         self.source_observation.fail(
             crate::session::SourceFailureCategory::ProviderError,
             Some(kind),
+            rejection,
         );
     }
     pub(crate) fn source_stopping(&mut self) {
@@ -576,6 +581,7 @@ impl Authority {
     pub(crate) fn fail_session(&mut self) -> io::Result<()> {
         self.source_observation.fail(
             crate::session::SourceFailureCategory::AuthorityRejected,
+            None,
             None,
         );
         self.retire_authentication_attempt();
@@ -596,6 +602,7 @@ impl Authority {
         if self.session_source.is_some() {
             self.source_observation.fail(
                 crate::session::SourceFailureCategory::MissingAfterEstablished,
+                None,
                 None,
             );
             return self.fail_session();

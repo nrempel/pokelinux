@@ -316,7 +316,7 @@ fn refresh_session(
             Ok(Some(s)) => authority.observe_session(s, boottime_ns())?,
             Ok(None) => authority.missing_session()?,
             Err(error) => {
-                authority.source_provider_failed(error.kind());
+                authority.source_provider_failed(error.kind(), provider.first_rejection().cloned());
                 authority.fail_session()?;
                 provider.stop();
             }

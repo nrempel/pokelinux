@@ -126,8 +126,19 @@ That error also covers EOF and multiple frame-validation failures; it establishe
 no rejected frame, sample gap or scheduling cause. No normal Sounds, final Pixel
 profile, functional group, capture or PCM executes. The60.82s selection remains
 failed;97 direct waits/104 PIPE EOFs and normal QMP shutdown/QEMU0/exact container
-closure qualify separately. Next add bounded first-rejection reasons with strict
-actual-boundary RED/GREEN, then repeat the unchanged full composition once.
+closure qualify separately.
+
+[Bounded first Observer rejection](native-source-observation.md#first-observer-rejection-evidence)
+now preserves typed receive/drain/frame/chain/freshness decisions before cleanup
+and exposes them through the existing root snapshot. Eight actual missing-record
+REDs precede12 admin,57 process and four lifecycle GREENs; strict formatting and
+Clippy pass. The immutable record retains no packet, source token or peer identity.
+The100ms lease, predicate order, ErrorKinds and terminal refusal stay unchanged.
+The compiled default owner/client use release opt3, replacing the previous debug
+opt0 artifacts in the next original replay; this adds no timing causal claim.
+Repeat the full four-step composition with all existing app/focus/PCM/Pixel guards
+before selecting any availability repair. Messages history composition remains
+in a separate worktree and is excluded from that replay.
 
 Preserve the ARM failure and stop speculative fixture changes. Continue
 matching-source native CPU-speed composition on Harbour, with the same Pixel

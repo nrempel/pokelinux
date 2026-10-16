@@ -31,7 +31,75 @@ fn main() -> io::Result<()> {
     }
     let source = std::env::var("POKELINUX_SESSION_SOURCE")
         .unwrap_or_else(|_| "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa".into());
+    let diagnostic_root = std::env::args().nth(2).map(std::path::PathBuf::from);
     for sequence in 1..=10000 {
+        if mode == "diagnostic" {
+            let root = diagnostic_root
+                .as_ref()
+                .ok_or(io::ErrorKind::InvalidInput)?;
+            if let Ok(command) = std::fs::read_to_string(root.join("reject")) {
+                if command == "eof" {
+                    drop(fd);
+                } else {
+                    let mut frame = Frame {
+                        source: source.clone(),
+                        sequence,
+                        sampled_at_ns: boottime_ns(),
+                        locked: false,
+                        lock_completed: false,
+                        focus: None,
+                        locker: Locker::Unavailable,
+                        lock_generation: None,
+                        protocol_unlock: None,
+                    };
+                    match command.as_str() {
+                        "queued_expired" => {
+                            ipc::send(&fd, &serde_json::to_vec(&frame)?)?;
+                            std::thread::sleep(Duration::from_millis(130));
+                            frame.sequence += 1;
+                            frame.sampled_at_ns = boottime_ns();
+                            ipc::send(&fd, &serde_json::to_vec(&frame)?)?;
+                        }
+                        "sample_gap" => {
+                            std::thread::sleep(Duration::from_millis(130));
+                            frame.sampled_at_ns = boottime_ns();
+                            ipc::send(&fd, &serde_json::to_vec(&frame)?)?;
+                        }
+                        "sequence" => {
+                            frame.sequence += 1;
+                            ipc::send(&fd, &serde_json::to_vec(&frame)?)?;
+                        }
+                        "zero_bytes" => {
+                            assert_eq!(
+                                rustix::net::send(
+                                    &fd,
+                                    b"",
+                                    rustix::net::SendFlags::DONTWAIT
+                                        | rustix::net::SendFlags::NOSIGNAL
+                                )?,
+                                0
+                            );
+                        }
+                        "truncated" => {
+                            ipc::send(&fd, &vec![b'x'; pokelinux_session::MAX_FRAME + 1])?
+                        }
+                        "malformed" => ipc::send(&fd, b"private-frame-marker-not-json")?,
+                        "drain_limit" => {
+                            for offset in 0..17 {
+                                frame.sequence = sequence + offset;
+                                frame.sampled_at_ns = boottime_ns();
+                                ipc::send(&fd, &serde_json::to_vec(&frame)?)?;
+                            }
+                        }
+                        _ => return Err(io::ErrorKind::InvalidInput.into()),
+                    }
+                }
+                std::fs::write(root.join("rejected-input-ready"), b"ready")?;
+                loop {
+                    std::thread::sleep(Duration::from_millis(10));
+                }
+            }
+        }
         let frame = Frame {
             source: source.clone(),
             sequence,
@@ -52,6 +120,14 @@ fn main() -> io::Result<()> {
         if mode == "unload" && sequence == 3 {
             rustix::io::fcntl_setfd(&fd, rustix::io::FdFlags::CLOEXEC)?;
             return Err(Command::new("/usr/bin/sleep").arg("30").exec());
+        }
+        if mode == "diagnostic" {
+            let root = diagnostic_root
+                .as_ref()
+                .ok_or(io::ErrorKind::InvalidInput)?;
+            while !root.join("reject").exists() {
+                std::thread::sleep(Duration::from_millis(1));
+            }
         }
         std::thread::sleep(Duration::from_millis(10));
     }

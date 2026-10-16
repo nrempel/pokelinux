@@ -88,6 +88,11 @@ pub struct Snapshot {
 /// the actor retains policy and must match its exact launched app pidfd.
 pub trait Provider {
     fn poll(&mut self) -> io::Result<Option<Snapshot>>;
+    /// Bounded first Observer rejection, when this Provider owns an Observer.
+    /// Diagnostic history only; stop and later errors must not replace it.
+    fn first_rejection(&self) -> Option<&SourceRejection> {
+        None
+    }
     /// Fence this source's local admission and signal any owned helper.
     fn stop(&mut self);
     /// True until owned helpers have actually been reaped, even after failure.
@@ -124,6 +129,70 @@ pub struct SourceFailure {
     pub error_kind: Option<String>,
     /// First actor observation, not producer fault time.
     pub observed_at_boottime_ns: u64,
+    pub observer_rejection: Option<Box<SourceRejection>>,
+}
+/// First terminal Observer decision. No Source token, packet bytes or peer identity.
+#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct SourceRejection {
+    pub stage: SourceRejectionStage,
+    pub reason: SourceRejectionReason,
+    /// One-based packet/receive attempt within this poll; zero outside the drain.
+    pub drain_ordinal: u32,
+    pub sequence: Option<u64>,
+    pub sampled_at_ns: Option<u64>,
+    /// Observer acceptance, which can precede Authority acceptance during a drain.
+    pub previous_accepted: Option<AcceptedSourceSample>,
+    /// Exact freshness-validation BOOTTIME if evaluated, otherwise failure observation.
+    pub validated_at_boottime_ns: u64,
+    pub receive: Option<SourceReceiveObservation>,
+}
+#[derive(Debug, Clone, Copy, Eq, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum SourceRejectionStage {
+    Liveness,
+    Receive,
+    Drain,
+    Decode,
+    Validation,
+    Peer,
+    Protocol,
+    Revision,
+    CachedSample,
+}
+#[derive(Debug, Clone, Copy, Eq, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum SourceRejectionReason {
+    SourceNotLiving,
+    ReceiveError,
+    ReceiveZeroBytes,
+    PayloadTruncated,
+    ControlTruncated,
+    InvalidAncillary,
+    MissingCredentials,
+    DrainLimit,
+    FrameSize,
+    SenderCredentials,
+    MalformedFrame,
+    SourceMismatch,
+    Sequence,
+    FrameShape,
+    SampleBackwards,
+    SampleGap,
+    SampleFuture,
+    SampleExpired,
+    PeerHandle,
+    LockerIdentity,
+    ProtocolFacts,
+    RevisionOverflow,
+}
+#[derive(Debug, Clone, Copy, Eq, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct SourceReceiveObservation {
+    pub received_bytes: Option<u64>,
+    pub payload_truncated: Option<bool>,
+    pub control_truncated: Option<bool>,
+    pub errno: Option<i32>,
 }
 #[derive(Debug, Clone, Copy, Eq, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
@@ -157,7 +226,12 @@ impl SourceObservation {
             sampled_at_ns,
         });
     }
-    pub(crate) fn fail(&mut self, category: SourceFailureCategory, kind: Option<io::ErrorKind>) {
+    pub(crate) fn fail(
+        &mut self,
+        category: SourceFailureCategory,
+        kind: Option<io::ErrorKind>,
+        observer_rejection: Option<SourceRejection>,
+    ) {
         if matches!(
             self.state,
             SourceState::NotConfigured | SourceState::Stopping
@@ -169,6 +243,7 @@ impl SourceObservation {
                 category,
                 error_kind: kind.map(|k| error_kind_label(k).into()),
                 observed_at_boottime_ns: crate::boottime_ns(),
+                observer_rejection: observer_rejection.map(Box::new),
             });
         }
         self.state = SourceState::Failed;

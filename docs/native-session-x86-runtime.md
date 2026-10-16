@@ -148,8 +148,13 @@ production behavior and supplies no new behavioral RED/GREEN result.
 
 ## Next integration
 
-Add a bounded typed first-rejection record to the existing root Source status,
-with strict compiled RED/GREEN tests at real transport/admin boundaries. Preserve
+The [bounded typed first-rejection record](native-source-observation.md#first-observer-rejection-evidence)
+now passes12 admin cases after eight actual missing-record REDs, plus57 Observer
+process and four lifecycle cases. Strict formatting/Clippy and default-feature
+native owner/client release builds pass. Its receive/sample decisions remain
+historical observations, with no raw frames or peer identities retained. The
+next replay selects release opt3 owner/client instead of the prior debug opt0
+artifacts; neither a changed result nor timing would establish a cause. Preserve
 the existing ErrorKind,100ms lease, sequence checks, terminal refusal and cleanup.
 Then run the unchanged four-step session composition once: denied quiet launch,
 current grant and real focused touch with PCM, null-focus background continuation with disabled

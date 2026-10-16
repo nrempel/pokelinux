@@ -56,7 +56,10 @@ qualifies the signed367-package cohort, actual Hyprland binary/SDK and audio too
 A later [native composition attempt](docs/native-session-x86-runtime.md#actual-native-qt-and-composition-attempt)
 passes the current30 audio behaviors and29 appearance cases, but Source fails
 with `InvalidData` during compositor startup before Sounds/PCM. The rejection
-cause remains unknown; ARM and phone gates stay open.
+cause remains unknown. [Typed first-rejection status](docs/native-source-observation.md#first-observer-rejection-evidence)
+now passes12 actual admin cases after eight missing-record REDs, with57 Observer
+process and four lifecycle regression passes. The full original replay is next;
+ARM and phone gates stay open.
 Earlier [permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
 passes four touch/graph/PCM groups using root-authored focus. Physical audio,
 production session completion and all phone gates remain open.

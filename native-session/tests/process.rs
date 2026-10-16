@@ -707,3 +707,54 @@ fn dead_locker_packet_cannot_keep_or_reactivate_owned_locker_state() {
 
 #[path = "support/protocol_generation.rs"]
 mod protocol_generation;
+
+// Regression checks for the new typed API; the root-admin feature RED uses only
+// the pre-existing Snapshot API and is established separately.
+#[test]
+fn first_rejection_survives_stop_repeated_poll_and_snapshot() {
+    use pokelinux_lifecycle::session::{Provider, SourceRejectionReason};
+    for (mode, reason) in [
+        ("gap", SourceRejectionReason::Sequence),
+        ("oversize", SourceRejectionReason::PayloadTruncated),
+        (
+            "owned-focus-truncated-rights",
+            SourceRejectionReason::ControlTruncated,
+        ),
+        ("expired-then-fresh", SourceRejectionReason::SampleExpired),
+    ] {
+        let (mut peer, mut observer) = start(0);
+        peer.command(mode);
+        assert_eq!(
+            observer.poll().unwrap_err().kind(),
+            io::ErrorKind::InvalidData
+        );
+        let first = Provider::first_rejection(&observer).unwrap().clone();
+        assert_eq!(first.reason, reason);
+        assert!(observer.snapshot().is_none());
+        Provider::stop(&mut observer);
+        for _ in 0..2 {
+            assert_eq!(
+                observer.poll().unwrap_err().kind(),
+                io::ErrorKind::NotConnected
+            );
+            assert!(observer.snapshot().is_none());
+            assert_eq!(Provider::first_rejection(&observer), Some(&first));
+        }
+    }
+}
+#[test]
+fn intentional_observer_stop_does_not_fabricate_rejection() {
+    use pokelinux_lifecycle::session::Provider;
+    let (mut peer, mut observer) = start(0);
+    peer.command("valid");
+    observer.poll().unwrap();
+    assert!(observer.snapshot().is_some());
+    assert!(Provider::first_rejection(&observer).is_none());
+    Provider::stop(&mut observer);
+    assert!(observer.snapshot().is_none());
+    assert_eq!(
+        observer.poll().unwrap_err().kind(),
+        io::ErrorKind::NotConnected
+    );
+    assert!(Provider::first_rejection(&observer).is_none());
+}
