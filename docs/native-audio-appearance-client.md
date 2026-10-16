@@ -16,8 +16,8 @@ The client accepts only current schema3. It verifies the root service's peer
 credentials and each packet's sender identity, bounds frames and ancillary data,
 checks absolute BOOTTIME request/publication deadlines and rejects old schemas,
 stale revisions and changed data at the same revision. Appearance supplies public
-presentation data, never session or route authority. The audio client and its
-connection-owned Media lease remain independent.
+presentation data, never session or route authority. The [current media client](native-audio-lifecycle.md) independently connects to
+the lifecycle actor; the actor owns its connection-scoped Media lease.
 
 Current RGBA16 colors, scale, font-size and spacing tokens feed the QML theme
 object directly. The new QML component imports QtQuick only: it needs neither

@@ -17,6 +17,30 @@ use std::{
     process::Command,
 };
 
+// Check the exact pending request stream before dispatch/publication. A successful
+// send alone cannot establish that the client kept its request half alive.
+fn media_client_input(
+    media: &mut crate::audio_session::Session,
+    connection: u64,
+    fd: &OwnedFd,
+    provider: &mut dyn crate::audio::Provider,
+) -> io::Result<()> {
+    if !media.pending_on(connection) {
+        return Ok(());
+    }
+    match ipc::receive(fd) {
+        Ok(None) => Ok(()),
+        Err(e) if e.raw_os_error() == Some(4) => Err(e),
+        result => {
+            media.retire(provider);
+            match result {
+                Err(e) => Err(e),
+                _ => Err(io::ErrorKind::InvalidData.into()),
+            }
+        }
+    }
+}
+
 pub fn trusted_executable(path: &Path) -> io::Result<()> {
     let meta = fs::symlink_metadata(path)?;
     if !meta.is_file()
@@ -99,6 +123,14 @@ struct Connection {
     lock_ack: Option<u64>,
     launching: Option<String>,
 }
+fn queue_media_reply(connections: &mut [Connection], id: u64, reply: Reply) -> io::Result<()> {
+    if let Some(connection) = connections.iter_mut().find(|c| c.id == id) {
+        connection.pending = Some(serde_json::to_vec(&reply)?);
+        connection.deadline = boottime_ns().saturating_add(1_000_000_000);
+    }
+    Ok(())
+}
+
 fn revalidate_lock_ack(
     connection: &mut Connection,
     stopping: bool,
@@ -298,6 +330,7 @@ pub fn run_with_messages_and_session(
         session,
         None,
         None,
+        None,
     )
 }
 #[allow(clippy::too_many_arguments)]
@@ -311,6 +344,7 @@ pub fn run_with_services(
     session: Option<&mut dyn crate::session::Provider>,
     display: Option<&mut dyn crate::display::Factory>,
     camera: Option<&mut dyn crate::camera::Provider>,
+    audio: Option<&mut dyn crate::audio::Provider>,
 ) -> io::Result<()> {
     run_with_services_inner(
         runtime,
@@ -322,6 +356,7 @@ pub fn run_with_services(
         session,
         display,
         camera,
+        audio,
         #[cfg(test)]
         None,
     )
@@ -337,6 +372,7 @@ fn run_with_services_inner(
     mut session: Option<&mut dyn crate::session::Provider>,
     mut display: Option<&mut dyn crate::display::Factory>,
     mut camera: Option<&mut dyn crate::camera::Provider>,
+    mut audio: Option<&mut dyn crate::audio::Provider>,
     #[cfg(test)] mut restore: Option<&mut restore_tests::ActorControl>,
 ) -> io::Result<()> {
     if rustix::process::getuid().as_raw() != 0 || rustix::process::geteuid().as_raw() != 0 {
@@ -406,6 +442,8 @@ fn run_with_services_inner(
     let mut read_backpressure = 0u64;
     let mut local_recovery: Option<LocalRecovery> = None;
     let mut capture: Option<Capture> = None;
+    let mut audio_inspected_at = 0u64;
+    let mut media = crate::audio_session::Session::default();
     let mut outcome = (|| {
         loop {
             // Never block on child wait, request IO, or an idle client.
@@ -425,6 +463,28 @@ fn run_with_services_inner(
                 &mut local_recovery,
                 &messages,
             )?;
+            if let Some(provider) = audio.as_deref_mut() {
+                if let Some((id, reply)) = media.fence(&authority, provider, stopping, |id| {
+                    connections.iter().any(|c| c.id == id)
+                }) {
+                    queue_media_reply(&mut connections, id, reply)?;
+                }
+                if let Some(event) = provider.poll()
+                    && let Some((id, reply)) = media.observe(event, &authority, provider)
+                {
+                    queue_media_reply(&mut connections, id, reply)?;
+                }
+                // Inspection never dispatches an effect. Do not starve an
+                // existing unsent selection by starting another read request.
+                if !stopping
+                    && !media.pending()
+                    && provider.state().connected
+                    && boottime_ns().saturating_sub(audio_inspected_at) >= 250_000_000
+                {
+                    audio_inspected_at = boottime_ns();
+                    let _ = provider.inspect(audio_inspected_at.saturating_add(1_000_000_000));
+                }
+            }
             if capture.as_ref().is_some_and(|active| {
                 stopping
                     || !current_capture(active, &authority, &camera)
@@ -814,6 +874,23 @@ fn run_with_services_inner(
                         }
                     }
                 }
+                if let Some(provider) = audio.as_deref_mut() {
+                    match media_client_input(&mut media, connection.id, &connection.fd, provider) {
+                        Ok(()) => {}
+                        Err(e) if e.raw_os_error() == Some(4) => return true,
+                        Err(_) => return false,
+                    }
+                }
+                if media.needs_drive(connection.id) {
+                    if !stopping
+                        && operation.is_none()
+                        && let Some(provider) = audio.as_deref_mut()
+                        && let Some(reply) = media.drive(connection.id, &authority, provider)
+                    {
+                        connection.pending = serde_json::to_vec(&reply).ok();
+                    }
+                    return true;
+                }
                 if capture.as_ref().is_some_and(|active| {
                     active.connection == connection.id
                         && matches!(
@@ -906,6 +983,12 @@ fn run_with_services_inner(
                     revoke_capture(&mut capture, &mut camera);
                     connection.pending = serde_json::to_vec(&Reply::Denied).ok();
                 }
+                if let Some(provider) = audio.as_deref_mut()
+                    && let Some(reply) =
+                        media.revalidate_reply(connection.id, &authority, provider, stopping)
+                {
+                    connection.pending = serde_json::to_vec(&reply).ok();
+                }
                 revalidate_lock_ack(connection, stopping, &authority, &operation, &storage);
                 if let Some(bytes) = &connection.pending {
                     return match ipc::send(&connection.fd, bytes) {
@@ -917,6 +1000,9 @@ fn run_with_services_inner(
                                     &connection.fd,
                                     bytes,
                                 );
+                            }
+                            if let Some(provider) = audio.as_deref_mut() {
+                                media.published(connection.id, &authority, provider);
                             }
                             connection.pending = None;
                             connection.lock_ack = None;
@@ -1228,6 +1314,96 @@ fn run_with_services_inner(
                     }
                 } else {
                     match serde_json::from_slice::<AppRequest>(&bytes) {
+                        Ok(AppRequest::MediaRoute { request }) if !stopping => {
+                            if operation.is_some() {
+                                Reply::Unavailable
+                            } else if let Some(provider) = audio.as_deref() {
+                                match media.begin(
+                                    connection.id,
+                                    cred.pid.as_raw_nonzero().get() as u32,
+                                    cred.uid.as_raw(),
+                                    request,
+                                    &mut authority,
+                                    provider,
+                                ) {
+                                    Ok(until) => {
+                                        connection.deadline = until.saturating_add(1_000_000_000);
+                                        return true;
+                                    }
+                                    Err(reply) => reply,
+                                }
+                            } else {
+                                Reply::Unavailable
+                            }
+                        }
+                        Ok(AppRequest::MediaStatus { offset }) if !stopping => {
+                            let authenticated = matches!(
+                                authority.plan_request(
+                                    cred.pid.as_raw_nonzero().get() as u32,
+                                    cred.uid.as_raw(),
+                                    AppRequest::Query {},
+                                    boottime_ns()
+                                ),
+                                Decision::Immediate(Reply::Ok)
+                            );
+                            if !authenticated {
+                                Reply::Denied
+                            } else if let Some(provider) = audio.as_deref() {
+                                let catalog = provider.routes();
+                                if offset > catalog.len()
+                                    || offset > 32
+                                    || offset % crate::audio::ROUTES_PER_PAGE != 0
+                                {
+                                    Reply::Denied
+                                } else {
+                                    let state = media.state(connection.id, provider);
+                                    let authorized = operation.is_none()
+                                        && media.available_to(connection.id)
+                                        && authority.media_allowed(
+                                            cred.pid.as_raw_nonzero().get() as u32,
+                                            cred.uid.as_raw(),
+                                            provider.incarnation(),
+                                        );
+                                    let end =
+                                        (offset + crate::audio::ROUTES_PER_PAGE).min(catalog.len());
+                                    let routes = catalog[offset..end].to_vec();
+                                    let next_offset = (end < catalog.len()).then_some(end);
+                                    Reply::MediaStatus {
+                                        can_choose: authorized && state.available,
+                                        can_reconnect: authorized && !state.connected,
+                                        state,
+                                        routes,
+                                        next_offset,
+                                    }
+                                }
+                            } else {
+                                Reply::Unavailable
+                            }
+                        }
+                        Ok(AppRequest::MediaReconnect {}) if !stopping => {
+                            if operation.is_some() || !media.available_to(connection.id) {
+                                Reply::Unavailable
+                            } else if let Some(provider) = audio.as_deref_mut() {
+                                if provider.state().connected
+                                    || !authority.media_allowed(
+                                        cred.pid.as_raw_nonzero().get() as u32,
+                                        cred.uid.as_raw(),
+                                        provider.incarnation(),
+                                    )
+                                {
+                                    Reply::Denied
+                                } else {
+                                    media.retire(provider);
+                                    match provider.reconnect() {
+                                        Ok(()) => Reply::Ok,
+                                        Err(_) => Reply::Unavailable,
+                                    }
+                                }
+                            } else {
+                                Reply::Unavailable
+                            }
+                        }
+
                         Ok(AppRequest::CameraCapture { request }) if !stopping => {
                             if operation.is_some() || capture.is_some() {
                                 Reply::Unavailable
@@ -1424,6 +1600,10 @@ fn run_with_services_inner(
     if let Some(provider) = session.as_deref_mut() {
         provider.stop();
     }
+    #[allow(clippy::needless_option_as_deref)]
+    if let Some(provider) = audio.as_deref_mut() {
+        media.retire(provider);
+    }
     revoke_capture(&mut capture, &mut camera);
     if let Some(provider) = camera.as_deref_mut() {
         provider.stop();
@@ -1533,3 +1713,7 @@ mod restore_tests;
 #[cfg(test)]
 #[path = "service_lock_ack_tests.rs"]
 mod lock_ack_tests;
+
+#[cfg(test)]
+#[path = "service_media_input_tests.rs"]
+mod media_input_tests;

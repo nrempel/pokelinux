@@ -60,6 +60,11 @@ and labels. Only the trusted audio profile maps them to private PipeWire nodes;
 shared UI code carries no Pixel device names. Host virtual routes qualify no
 physical audio backend or additional phone model.
 
+The [MediaRoute lifecycle boundary](native-audio-lifecycle.md) likewise carries
+logical IDs and current app permission only. Its provider owns the existing audio
+connection, while the backend profile retains private physical routing. Neither
+host permission/PCM proofs nor generic ARM virtual UI qualify a phone model.
+
 ## Boundaries
 
 | Layer | Owns | Must not assume |

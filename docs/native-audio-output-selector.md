@@ -59,6 +59,16 @@ intent/epoch and no extra acquire, route or reconcile.
 
 ## Sounds client
 
+The current single target is the [lifecycle client](native-audio-lifecycle.md):
+its fifth argument selects root actor `app.sock`, not the native-audio socket.
+Thirty host behavioral socket cases plus setup/cleanup pass. Actor embedding must
+supply `audio::Owner`; existing callers passing `None` provide no audio service.
+The direct-owner description and11-case evidence below are the historical
+foundation, preserved separately from this target. No old-protocol fallback is
+implemented.
+
+### Historical direct-owner selection
+
 The [read-only input repair](native-audio-readonly-input.md) now adds seven
 held-status controls:18 host behavioral cases plus Qt setup/cleanup pass.
 It preserves the normal press and original deadline; QML/main are unchanged.

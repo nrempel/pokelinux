@@ -1,5 +1,9 @@
 # Sounds read-only polling and explicit input
 
+The current [lifecycle client](native-audio-lifecycle.md) replaces this direct
+stream runtime and retains the same input/deadline principle, including explicit
+reconnect. The component evidence below remains the historical stream selection.
+
 The later [complete normal ARM tracer](native-audio-arm-ui.md) qualifies the
 separately selected direct-stream UI/audio/theme path. Evidence and remaining
 gates below retain this checkpoint's own scope.

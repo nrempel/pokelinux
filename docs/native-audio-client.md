@@ -61,6 +61,11 @@ a child as UID1000; it must be selected explicitly with `--include-ignored`.
 
 ## Remaining integration
 
+The later [lifecycle integration](native-audio-lifecycle.md) composes this client
+through an actor-owned provider in actual host permission/graph/PCM tests. Its
+matching Qt client remains a separately selected component; normal target ARM
+and production deployment remain open.
+
 This client milestone has no ARM runtime, normal Qt, current lifecycle permission
 or graph/PCM composition claim. Actual partial-write coverage is also open.
 Continue the separate normal ARM Sounds tracer and current-authority actor

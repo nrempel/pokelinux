@@ -18,6 +18,15 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The [lifecycle MediaRoute boundary](native-audio-lifecycle.md) now owns current
+selection admission and background Media leases through the existing sole audio
+owner.64 library tests, strict Rust/ARM compilation, three caller builds and four
+actual host permission/audio groups pass. The matching target Sounds client
+passes30 socket behaviors plus setup/cleanup. Next execute the finite four-group
+normal ARM lifecycle join in the already closed Qt/PipeWire layer; preserve the
+completed historical direct-stream tracer below. Root-authored lifecycle controls
+qualify this next join only, with production Source/PAM and hardware still open.
+
 The [normal direct-stream ARM Sounds tracer](native-audio-arm-ui.md) now passes
 all five groups,18 audio socket behaviors and seven paired PCM stages
 (336,000 measured frames), with native1080×2424/DPR2.625 captures and owned

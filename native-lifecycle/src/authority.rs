@@ -38,6 +38,28 @@ impl CaptureStamp {
         self.intent
     }
 }
+/// A pending media change: current foreground authority, never an app token.
+pub(crate) struct MediaStamp {
+    authority: ReadStamp,
+    intent: crate::audio::Intent,
+    revocation: u64,
+}
+pub(crate) type MediaIntent = crate::audio::Intent;
+/// Approved media may continue in the background. It still belongs to this
+/// exact live app generation, backend connection and unrevoked route grant.
+pub(crate) struct MediaLeaseStamp {
+    app: String,
+    generation: u64,
+    pid: u32,
+    uid: u32,
+    backend: String,
+    revocation: u64,
+}
+impl MediaStamp {
+    pub(crate) fn intent(&self) -> &MediaIntent {
+        &self.intent
+    }
+}
 struct SessionRead {
     source: String,
     revision: u64,
@@ -167,6 +189,7 @@ pub struct Authority {
     authentication: Option<AuthenticationSlot>,
     restoration: Option<RestorationSlot>,
     required_lock: Option<(u64, bool)>,
+    media_revocations: BTreeMap<String, u64>,
 }
 impl Authority {
     pub(crate) fn loading(profiles: Vec<AppProfile>) -> io::Result<Self> {
@@ -196,6 +219,7 @@ impl Authority {
             authentication: None,
             restoration: None,
             required_lock: None,
+            media_revocations: BTreeMap::new(),
         })
     }
     pub(crate) fn require_session(&mut self) -> io::Result<()> {
@@ -820,6 +844,15 @@ impl Authority {
             }
         };
         self.permits.clear();
+        if permission == Permission::MediaRoute && !allowed {
+            let old = self.media_revocations.get(app).copied().unwrap_or(0);
+            let Some(next) = old.checked_add(1) else {
+                self.invalidate();
+                return Err(io::ErrorKind::Other.into());
+            };
+            // Fence existing media before any durable write can block or fail.
+            self.media_revocations.insert(app.into(), next);
+        }
         let mut next = self.durable.clone();
         if let Some(g) = next
             .grants
@@ -1062,6 +1095,112 @@ impl Authority {
             && self.current_stamp(&stamp.authority, backend, now)
             && crate::boottime_ns() < stamp.intent.until_ns
     }
+    pub(crate) fn media_allowed(&mut self, pid: u32, uid: u32, backend: &str) -> bool {
+        match self.begin_stamp(
+            pid,
+            uid,
+            backend,
+            Permission::MediaRoute,
+            1000,
+            crate::boottime_ns(),
+        ) {
+            Ok(stamp) => self.current_stamp(&stamp, backend, crate::boottime_ns()),
+            Err(_) => false,
+        }
+    }
+    pub(crate) fn begin_media(
+        &mut self,
+        pid: u32,
+        uid: u32,
+        backend: &str,
+        route: &str,
+        ttl_ms: u64,
+        now: u64,
+    ) -> Result<MediaStamp, Reply> {
+        if route.is_empty()
+            || route.len() > 64
+            || !route
+                .bytes()
+                .all(|b| b.is_ascii_alphanumeric() || b"_.-".contains(&b))
+            || backend.is_empty()
+        {
+            return Err(Reply::Denied);
+        }
+        let authority = self.begin_stamp(pid, uid, backend, Permission::MediaRoute, ttl_ms, now)?;
+        let Some(id) = self.sequence.checked_add(1) else {
+            self.invalidate();
+            return Err(Reply::Unavailable);
+        };
+        self.sequence = id;
+        let until_ns = authority
+            .session
+            .as_ref()
+            .map_or(authority.until, |s| authority.until.min(s.until));
+        let revocation = self
+            .media_revocations
+            .get(&authority.app)
+            .copied()
+            .unwrap_or(0);
+        let stamp = MediaStamp {
+            authority,
+            intent: MediaIntent {
+                id,
+                route: route.into(),
+                until_ns,
+            },
+            revocation,
+        };
+        if !self.current_media(&stamp, backend, crate::boottime_ns()) {
+            return Err(Reply::Denied);
+        }
+        Ok(stamp)
+    }
+    pub(crate) fn current_media(&self, stamp: &MediaStamp, backend: &str, now: u64) -> bool {
+        stamp.authority.permission == Permission::MediaRoute
+            && now < stamp.intent.until_ns
+            && self
+                .media_revocations
+                .get(&stamp.authority.app)
+                .copied()
+                .unwrap_or(0)
+                == stamp.revocation
+            && self.current_stamp(&stamp.authority, backend, now)
+            && crate::boottime_ns() < stamp.intent.until_ns
+    }
+    pub(crate) fn approve_media(
+        &self,
+        stamp: &MediaStamp,
+        backend: &str,
+        now: u64,
+    ) -> Option<MediaLeaseStamp> {
+        if !self.current_media(stamp, backend, now) {
+            return None;
+        }
+        Some(MediaLeaseStamp {
+            app: stamp.authority.app.clone(),
+            generation: stamp.authority.generation,
+            pid: stamp.authority.pid,
+            uid: stamp.authority.uid,
+            backend: stamp.authority.backend.clone(),
+            revocation: stamp.revocation,
+        })
+    }
+    pub(crate) fn current_media_lease(&self, lease: &MediaLeaseStamp, backend: &str) -> bool {
+        self.ready()
+            && lease.backend == backend
+            && self.media_revocations.get(&lease.app).copied().unwrap_or(0) == lease.revocation
+            && self
+                .durable
+                .grants
+                .iter()
+                .any(|g| g.app == lease.app && g.permission == Permission::MediaRoute && g.allowed)
+            && self.principals.get(&lease.app).is_some_and(|p| {
+                p.pid == lease.pid
+                    && p.uid == lease.uid
+                    && p.generation == lease.generation
+                    && living(&p.alive).unwrap_or(false)
+            })
+    }
     fn id(&mut self) -> Option<String> {
         self.sequence = self.sequence.checked_add(1)?;
         Some(format!("{}-{:016x}", self.incarnation, self.sequence))
@@ -1105,13 +1244,17 @@ impl Authority {
             return immediate(Reply::Denied);
         };
         match request {
-            AppRequest::MessagesRead { .. } | AppRequest::CameraCapture { .. } => {
-                immediate(Reply::Unavailable)
-            }
+            AppRequest::MessagesRead { .. }
+            | AppRequest::CameraCapture { .. }
+            | AppRequest::MediaRoute { .. }
+            | AppRequest::MediaStatus { .. }
+            | AppRequest::MediaReconnect {} => immediate(Reply::Unavailable),
             AppRequest::Query {} => immediate(Reply::Ok),
             AppRequest::Prepare { permission, ttl_ms } => {
-                if permission == Permission::MessagesRead
-                    || !(1..=5000).contains(&ttl_ms)
+                if matches!(
+                    permission,
+                    Permission::MessagesRead | Permission::MediaRoute
+                ) || !(1..=5000).contains(&ttl_ms)
                     || !self.allowed(&app, permission)
                     || self.permits.len() >= MAX_PERMITS
                     || self.permits.values().filter(|p| p.app == app).count() >= 4
@@ -1875,3 +2018,7 @@ mod tests {
         );
     }
 }
+
+#[cfg(test)]
+#[path = "media_authority_tests.rs"]
+mod media_tests;

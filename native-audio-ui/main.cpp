@@ -47,7 +47,8 @@ int main(int argc,char**argv){
  PhoneAppearanceClient appearance(QString::fromLocal8Bit(argv[4]));QQuickView view;
  QQmlComponent component(view.engine(),QUrl::fromLocalFile(QString::fromLocal8Bit(argv[6])+"/PhoneAppearance.qml"));
  QScopedPointer<QObject> theme(component.createWithInitialProperties({{"source",QVariant::fromValue(&appearance)}}));if(!theme)return 66;
- AudioClient client(QString::fromLocal8Bit(argv[5]),11040);
+ // argv5 is the root actor app.sock, authenticated per packet.
+ AudioClient client(QString::fromLocal8Bit(argv[5]),0);
  view.setTitle("Sounds");view.setInitialProperties({{"theme",QVariant::fromValue(theme.data())},{"audioClient",QVariant::fromValue(&client)}});
  view.setResizeMode(QQuickView::SizeRootObjectToView);view.setSource(QUrl("qrc:/sounds/SoundsView.qml"));if(view.status()!=QQuickView::Ready)return 67;view.resize(390,844);
  // Bounded normal-app observation, with no input/control interface.

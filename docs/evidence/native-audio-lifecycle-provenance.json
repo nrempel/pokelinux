@@ -1,0 +1,271 @@
+{
+  "schema": 1,
+  "scope": "Lifecycle MediaRoute admission and single-target Qt migration; actual host actor/audio graph composition separate from Qt authored-peer tests and ARM compilation",
+  "core_review_sha256": "1010f4189f87f32f7bd57f37eaf429f6d4259490d0172cb2ad5d2465fb10f043",
+  "halfclose_Root_review_sha256": "cdb2d275d1420d6d48547444ddb4781a92b2c8a24b4970c44320b56cf9ea4342",
+  "strict_publication_receipt_sha256": "22236446a19afbf968975b10073297e8082f59b65bc3a5a2627a1a0a1eb394e6",
+  "strict_publication_review_sha256": "faf69d110ad7fb9731b8782b0b90293f2bede5091752f4a67b15a22bc5a02779",
+  "qualified_to_publication_mechanical_patch_sha256": "75c60cbf3b1ee546e9082689cebfd5d733dea3c06bf5db1faee366590a6ada68",
+  "selected_Rust_sources": [
+    {
+      "path": "native-camera-service/Cargo.lock",
+      "sha256": "9358308df93055ed326c4105e7c487cfb1924f236dba965399e6035e4ec74118"
+    },
+    {
+      "path": "native-lifecycle/Cargo.lock",
+      "sha256": "53c387ab83c3948718ce3c7371378ab003a40658e2f603c42673e664ff91cc84"
+    },
+    {
+      "path": "native-lifecycle/Cargo.toml",
+      "sha256": "eee262cdfdd886fee3f255fd3a38ca330df62ec003f59a652c934838056e1f2a"
+    },
+    {
+      "path": "native-lifecycle/src/audio.rs",
+      "sha256": "4af4416f3d4e4899eefc4ec0a004da7c869c2d2e6df87096f25d7a5575b018dd"
+    },
+    {
+      "path": "native-lifecycle/src/audio_owner.rs",
+      "sha256": "eaba7f661eca681e8217acda2e18af39ce7ef64796c9545228ea60c21fbe99ec"
+    },
+    {
+      "path": "native-lifecycle/src/audio_session.rs",
+      "sha256": "5ef15b40d1b2908dc4ec0d42c13379c1ab543cba547baa09af1274650be6f322"
+    },
+    {
+      "path": "native-lifecycle/src/authority.rs",
+      "sha256": "bb78fd8e9eb5bba9b343fd01020e8b5fc8b11165eb45ec4cf06cf2baa901c60e"
+    },
+    {
+      "path": "native-lifecycle/src/lib.rs",
+      "sha256": "04faf42340aca4435d745ee4f98e6deaf30ca5857baaea23bb24aac1a6079bdd"
+    },
+    {
+      "path": "native-lifecycle/src/media_authority_tests.rs",
+      "sha256": "2b4c94077f58b5f657f779ace12d1ae68d50fe2c2e38e21ec547dfae0ad23920"
+    },
+    {
+      "path": "native-lifecycle/src/service.rs",
+      "sha256": "a54bce38b33a4795a765a032c5f48d3c9d3b236754bd9771845c713f79407701"
+    },
+    {
+      "path": "native-lifecycle/src/service_media_input_tests.rs",
+      "sha256": "1f813fe31bf69a9875a199964f16ba4469dc21a95919a73f3ca7e4cb2f5bb70a"
+    },
+    {
+      "path": "native-lifecycle/src/service_restore_tests.rs",
+      "sha256": "c16ba3f40b40c1e4cd00467524c7edb1cf71b6e7ed24a727101d370a6782e80a"
+    },
+    {
+      "path": "native-messages/Cargo.lock",
+      "sha256": "c1c6c30c8d7d6dbd422e3e7a49bf62037a4f4b90e4a72956e81557775ec30683"
+    },
+    {
+      "path": "native-session/Cargo.lock",
+      "sha256": "722e73db5a796db7045b425e6ace0a906bd8cc784f823497620aff2479d78255"
+    },
+    {
+      "path": "tools/native-camera-service-boundary/fixture/Cargo.lock",
+      "sha256": "7422b25e87ca3b803552f09f5b7dc65c84871df599d8715266b06c923f028780"
+    },
+    {
+      "path": "tools/native-camera-service-boundary/fixture/src/bin/camera-composed-service.rs",
+      "sha256": "57b292b6966222915c113c9dafca1cd31ec57a2bcf84ac74f9b1516907d6526f"
+    },
+    {
+      "path": "tools/native-display-app-generations/app-context-fixture/Cargo.lock",
+      "sha256": "ca484f44443e78b3fea814181313bfed85c5af6684591b3f945fb599a7a6858c"
+    },
+    {
+      "path": "tools/native-display-app-generations/app-context-fixture/src/bin/service.rs",
+      "sha256": "2267ff6d6b08a2c23ab80b1f1614ea5e515dd78c8a0e14a6a564ba2dcbe2e6d5"
+    },
+    {
+      "path": "tools/native-incoming-cold-availability/current-fixture/Cargo.lock",
+      "sha256": "b1c7261af8ad787a711ea7970c2d15502e4e3059efb8e553cc1bebdad1dcda36"
+    },
+    {
+      "path": "tools/native-incoming-cold-availability/fixture/Cargo.lock",
+      "sha256": "dbab79777b9c30c8a3a614154c33a143d2e376994f89e6db3fe4c43653d05047"
+    },
+    {
+      "path": "tools/native-incoming-session-app/fixture/Cargo.lock",
+      "sha256": "b43cf059f8e3aba6fe9395f1afbba3ea57096c8cc6760b24d60d230dc6e0b141"
+    },
+    {
+      "path": "tools/native-messages-enumeration/fixture/Cargo.lock",
+      "sha256": "c6ed3c5fc22ff32579dfbfc1902135afd98768876b2e811e8d4d6b351969a9fb"
+    },
+    {
+      "path": "tools/native-messages-incoming-binder/fixture/Cargo.lock",
+      "sha256": "43dc8a14683f3765983342c11bd973f2c3c0c2031b3f4de24d6be4b690fc4436"
+    },
+    {
+      "path": "tools/native-phone-tracer/fixture/Cargo.lock",
+      "sha256": "b4eeb5a185964e1330ae26340f18547e04dcc26a5bb2dd93b54ad522a4f80539"
+    },
+    {
+      "path": "tools/native-phone-tracer/fixture/src/bin/service.rs",
+      "sha256": "5a5a848d0c901ff5bc96e369f671de28789c1113d1112d58506d98cf292d575a"
+    },
+    {
+      "path": "tools/native-session-authority/fixture/Cargo.lock",
+      "sha256": "38551923e8d29dc180608ea1f44dfa5c07c21871a0a123aed922dfd1448826b5"
+    },
+    {
+      "path": "tools/native-session-display-app/fixture/Cargo.lock",
+      "sha256": "19a375ee48132a04ec8c124ab8baf0466c967f3454896c592bfab57a95627e93"
+    },
+    {
+      "path": "tools/native-session-installed-app/fixture/Cargo.lock",
+      "sha256": "349b0214a87754550959193d455ebe56d69fa052339bd5bf9a010c3b068e7c78"
+    }
+  ],
+  "strict_checks": {
+    "fmt": true,
+    "all_target_clippy_warnings_denied": true,
+    "host_library_passed": 64,
+    "host_library_ignored": 14,
+    "host_bins_compiled": 4,
+    "ARM64_bins_compiled": 4,
+    "ARM64_library_test_compiled": true,
+    "existing_composed_callers_compiled": 3,
+    "lock_graphs_original_versions_preserved": 15,
+    "strict_scope": "actual ARM compilation only, no actor ARM runtime yet"
+  },
+  "actual_host_actor": {
+    "qualification_sha256": "700662af0900cfb31d63455a955e15a5346072751a0064b9529ff618436636e7",
+    "selection_sha256": "3c6c968b49165d541b4e2eb0122de827c283eac68de92623c5eae54bcbf2de16",
+    "result_sha256": "e6495ced3bce63fb65454ebf9fdded99ce14b87e399df762aa62a4208747a6a4",
+    "fixed_controller_sha256": "543f8ff1979840251bb196c3815bba6e70d07e706b11e6ee5aa41d0bce9ce7fb",
+    "groups": [
+      {
+        "name": "real_direct_UID_denial_and_no_grant_no_effect",
+        "passed": true
+      },
+      {
+        "name": "current_grant_foreground_typed_route_real_effect",
+        "passed": true
+      },
+      {
+        "name": "actual_EAGAIN_revoke_pressure_release_regrant_no_replay",
+        "passed": true
+      },
+      {
+        "name": "revoke_applied_media_during_call_no_restore_on_release",
+        "passed": true
+      }
+    ],
+    "actual_readonly_pressure_frames": 278,
+    "blocked_submit_results_all_false": true,
+    "no_submit_after_reconnect_until_fresh_explicit_intent": true,
+    "scope": "Real kernel appbridge credentials/owned actor and nativeaudio/private PW/WP/graph/PCM; Root-authored lifecycle/grants, no production Source/PAM or normal Qt",
+    "source_selection": "preformat half-close source; final strict publication mechanically bound separately"
+  },
+  "actual_host_chronology": {
+    "first_invalid_ttl_epochs_preserved": true,
+    "invalid_ttl_classification_superseded": true,
+    "corrected_baseline_replay_after_initial_implementation": true,
+    "chronological_test_first_proof": "Earlier authority components and real half-close controls retain their own chronology"
+  },
+  "halfclose_controls": {
+    "actual_SEQPACKET_RED_passed": 1,
+    "actual_SEQPACKET_RED_failed": 3,
+    "includes_real_reply_EAGAIN": true,
+    "GREEN_full_library_passed": 64,
+    "authority_and_provider": "modeled; socket/credentials/EOF/backpressure actual",
+    "atomicity_against_close_after_check_claimed": false
+  },
+  "initial_target_Qt_receipt_sha256": "ee7161c94cdea7391ef66304ffde9b8b22819edd92d28efe0a27e0a6fde02701",
+  "target_held_response_review_sha256": "cae4233283b65b91073c81c443c54ae2cdc236064106661b0ef1b86a91937813",
+  "target_reconnect_Root_review_sha256": "38c29f93c6eea86eed28b97d4784686d99c89e5def7188472c46f32ec19dc529",
+  "target_reconnect_independent_receipt_sha256": "7ae7f7a64088721c32eaeb678ea1bc73654f4e6bf3941d1ae718c9551dfad633",
+  "selected_Qt_sources": [
+    {
+      "path": "native-app/PhoneAppearance.qml",
+      "sha256": "705ab25799cba18095a76f4fb47e70eb10099ca035426d7e4400fa9cef8452bc"
+    },
+    {
+      "path": "native-app/PhoneAppearanceClient.cpp",
+      "sha256": "7a2a5d0d5f7a5012dd724596a1bf1f96d8fa9d3242c913933d8cf69fe9de34d9"
+    },
+    {
+      "path": "native-app/PhoneAppearanceClient.h",
+      "sha256": "b7b12f9a1d335e9036dc065ea2218ca107d447f57e029fef674941e1520b4e92"
+    },
+    {
+      "path": "native-app/PhoneTheme.qml",
+      "sha256": "67caaa853a01ac2108f16bff88009d026779da4df54961b11d3d82a1d2ed2fd1"
+    },
+    {
+      "path": "native-app/PhoneThemeFiles.cpp",
+      "sha256": "57b39dcf95a8d28b65cced5d730a13e5eab8726edc2e889d936acdecac668664"
+    },
+    {
+      "path": "native-app/PhoneThemeFiles.h",
+      "sha256": "9bfdbb38ed23e4b03491073038264596ec3825b91e83d3b05eafd941623ecc1a"
+    },
+    {
+      "path": "native-app/ThemePalette.js",
+      "sha256": "677d9faa94873dd6aceee81a900f179600f7a699defe1c4304760beeccd26a33"
+    },
+    {
+      "path": "native-app/appearance-client-tests/CMakeLists.txt",
+      "sha256": "287c36a3854a8bdef11d0d92f45a31892836ce19e2a004fb9aef23cbdd5d9579"
+    },
+    {
+      "path": "native-app/appearance-client-tests/process.cpp",
+      "sha256": "95e5c11905062a891393f9ee7d0633cd8278f07f1d0fce82b7db1f2a9c81f5d7"
+    },
+    {
+      "path": "native-audio-ui/AudioClient.cpp",
+      "sha256": "26e1a3aa3e05f2cba5a0824ae219f000aec1fe4edc35b6c31492945b1c159b9a"
+    },
+    {
+      "path": "native-audio-ui/AudioClient.h",
+      "sha256": "04753b166c879ae2a0497202e294a75100dfe51c0b69f3231fa942bb1cce0e4d"
+    },
+    {
+      "path": "native-audio-ui/AudioClientTest.cpp",
+      "sha256": "8a23bb432f1cb05eea04386551b57502431884f36fee1d147381ba8cb5cb8b82"
+    },
+    {
+      "path": "native-audio-ui/CMakeLists.txt",
+      "sha256": "0159c6fc40debd177032285889668b5c6d6bed5ef848c19b1bdd6ba5e3852df8"
+    },
+    {
+      "path": "native-audio-ui/SoundsView.qml",
+      "sha256": "eaa651d226d0cfcc3df4c04d6888937110e3de2fdde362af664676eabf0c4635"
+    },
+    {
+      "path": "native-audio-ui/main.cpp",
+      "sha256": "0ac78083b40d688dca5b3c771ff6338c25c100f9aedf74fdfb8957dfc5cd0f2a"
+    },
+    {
+      "path": "native-audio-ui/resources.qrc",
+      "sha256": "1256d0136462e661632f17ede81f498f1d0b7c1081b38d9d41a29c5893a683ae"
+    }
+  ],
+  "Qt_current": {
+    "behavioral_cases_passed": 30,
+    "setup_cleanup_passed": 2,
+    "actor_peer": "authored real credentialed SEQPACKET, not actual lifecycle actor",
+    "corrected_reconnect_regression_comparison": {
+      "baseline_passed": 27,
+      "baseline_failed": 5,
+      "GREEN_passed": 32,
+      "corrected_baseline_replay_after_initial_implementation": true
+    },
+    "prior_25_cases_unchanged": true,
+    "QML_main_appearance": "QML/appearance unchanged; main fifth arg now actor app.sock/rootUID0"
+  },
+  "claims_excluded": [
+    "Normal target Qt\u2192actor\u2192audio composition",
+    "actor ARM runtime in this checkpoint",
+    "production Source/PAM",
+    "installed service/desktop provisioning",
+    "physical output/AoC/carrier",
+    "real suspend/wake",
+    "full smartphone completion"
+  ],
+  "physical_phone_accessed": false
+}

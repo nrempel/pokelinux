@@ -53,6 +53,7 @@ fn main() -> io::Result<()> {
         None,
         None,
         Some(&mut camera),
+        None,
     );
     if !camera.drain_until(boottime_ns().saturating_add(2_000_000_000)) {
         std::process::abort();

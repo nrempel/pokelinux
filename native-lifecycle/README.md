@@ -1,5 +1,12 @@
 # Native lifecycle authority
 
+The actor also mediates [current MediaRoute selections](../docs/native-audio-lifecycle.md)
+through one `audio::Provider`, supplied explicitly to `run_with_services`.
+Foreground admission and an approved background Media lease have separate
+lifetimes. Revocation withdraws the actual owner connection, without claiming
+remote cleanup. The matching Sounds client uses the actor's credentialed
+`app.sock`; headless callers passing `None` expose no audio service.
+
 The actor owns app children, durable policy work, Messages reads and session
 facts. Display-enabled callers supply `display::Factory` through
 `service::run_with_services`; headless callers use the same app slot algorithm.

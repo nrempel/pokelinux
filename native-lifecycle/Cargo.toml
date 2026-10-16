@@ -5,6 +5,7 @@ edition = "2024"
 publish = false
 
 [dependencies]
+pokelinux-audio = { path = "../native-audio" }
 pokelinux-kernel-identity = { path = "../native-kernel-identity" }
 pokelinux-camera = { path = "../native-camera" }
 serde = { version = "=1.0.229", features = ["derive"] }

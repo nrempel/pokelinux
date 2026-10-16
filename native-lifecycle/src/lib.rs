@@ -1,5 +1,8 @@
 //! Linux credentials are authority; app labels are trusted installation metadata.
 mod apps;
+pub mod audio;
+mod audio_owner;
+mod audio_session;
 pub mod authority;
 pub mod camera;
 pub mod display;
@@ -21,6 +24,7 @@ pub enum Permission {
     Capture,
     SendMessage,
     MessagesRead,
+    MediaRoute,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
@@ -40,6 +44,9 @@ pub struct Profile {
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(tag = "op", rename_all = "snake_case", deny_unknown_fields)]
 pub enum AppRequest {
+    MediaRoute { request: audio::Request },
+    MediaStatus { offset: usize },
+    MediaReconnect {},
     CameraCapture { request: camera::Request },
     MessagesRead { request: messages::ReadRequest },
     Query {},
@@ -79,6 +86,16 @@ pub enum AdminRequest {
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 #[serde(tag = "result", rename_all = "snake_case", deny_unknown_fields)]
 pub enum Reply {
+    MediaSelected {
+        state: audio::State,
+    },
+    MediaStatus {
+        state: audio::State,
+        routes: Vec<audio::Route>,
+        next_offset: Option<usize>,
+        can_choose: bool,
+        can_reconnect: bool,
+    },
     CameraState {
         state: camera::State,
     },

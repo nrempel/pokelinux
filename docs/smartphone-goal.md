@@ -1,5 +1,11 @@
 # Omarchy smartphone goal
 
+The [MediaRoute actor](native-audio-lifecycle.md) adds current permission admission,
+approved background leases and real connection withdrawal. Rust64-test/host
+integration and matching Qt component checks pass. Normal target ARM composition,
+trusted Source and installed provisioning remain open; historical direct-stream
+UI evidence below does not close those gates.
+
 The [normal ARM Sounds tracer](native-audio-arm-ui.md) now passes real touch,
 virtual output samples, call interruption, live palette changes, loss/no replay
 and window-close cleanup. Its direct-stream cohort is separate from the next
