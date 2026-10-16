@@ -60,6 +60,11 @@ and labels. Only the trusted audio profile maps them to private PipeWire nodes;
 shared UI code carries no Pixel device names. Host virtual routes qualify no
 physical audio backend or additional phone model.
 
+The [fixed Sounds desktop request](native-sounds-desktop.md) selects only the
+installed app profile; it carries no device identity, route or vendor parcel.
+Host launch/ownership tests and ARM compilation qualify separately from normal
+Source/audio deployment and physical-device support.
+
 The [MediaRoute lifecycle boundary](native-audio-lifecycle.md) likewise carries
 logical IDs and current app permission only. Its provider owns the existing audio
 connection, while the backend profile retains private physical routing. Neither

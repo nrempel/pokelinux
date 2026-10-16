@@ -117,7 +117,7 @@ fn queued_lock_ok_is_revoked_after_complete_intervening_storage_write() {
         awaiting: None,
         fd,
         admin: false,
-        desktop: false,
+        desktop: None,
         lock: true,
         reading: None,
         read_stamp: None,

@@ -18,6 +18,20 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The [fixed Sounds desktop endpoint](native-sounds-desktop.md) now passes six
+actual host UID/socket/owned-child cases after a genuine three-failure dispatch
+RED. The matching fixed Rust client, desktop metadata, default64-test suite and
+five ARM binary builds qualify within their recorded scopes. Source/audio session
+installation and actual native-client desktop invocation remain open.
+
+The normal permission-aware ARM join still fails during setup. Its32 component
+checks pass separately; passive observation binds the exact Qt ELF/capture FDs
+and early death. A private actual-parent-wait diagnostic records SIGXFSZ25 under
+the wrapper's global4MiB file limit; the specific file/write is unobserved. Keep
+that diagnostic private and distinct from production evidence. Next replace the
+global fixture limit with dedicated bounded captures, restore the original actor,
+and rerun the unchanged four groups before installed Source/desktop composition.
+
 The [lifecycle MediaRoute boundary](native-audio-lifecycle.md) now owns current
 selection admission and background Media leases through the existing sole audio
 owner.64 library tests, strict Rust/ARM compilation, three caller builds and four

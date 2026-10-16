@@ -1615,3 +1615,6 @@ fn explicit_terminate_remains_forced_for_actual_term_ignoring_app() {
 
 #[path = "service_restore_gui_tests.rs"]
 mod normal_gui_tests;
+
+#[path = "service_sounds_desktop_tests.rs"]
+mod sounds_desktop_tests;

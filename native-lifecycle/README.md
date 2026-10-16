@@ -1,5 +1,13 @@
 # Native lifecycle authority
 
+A separate fixed `launch-sounds.sock` accepts only desktop UID1000 and
+`launch_sounds`, without requiring a Messages provider. It reuses existing app
+reservation/ownership and exposes no grants or arbitrary app selection. Six
+actual host cases pass after a compiled missing-dispatch RED; the matching Rust
+`sounds-launch` client and ARM builds compile. Installed session/Source/audio
+provisioning and normal desktop invocation remain open. See
+[fixed Sounds launch](../docs/native-sounds-desktop.md).
+
 The actor also mediates [current MediaRoute selections](../docs/native-audio-lifecycle.md)
 through one `audio::Provider`, supplied explicitly to `run_with_services`.
 Foreground admission and an approved background Media lease have separate

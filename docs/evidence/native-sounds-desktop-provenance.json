@@ -1,0 +1,168 @@
+{
+  "schema": 1,
+  "scope": "Authored host Linux fixed Sounds desktop credential/owned-child boundary; final native client/ARM compilation and desktop metadata are separate scopes",
+  "hardware_qualified": false,
+  "phone_accessed": false,
+  "Source_audio_normal_GUI_selected": false,
+  "baseline_preparation": "Strict independent launch-sounds listener returns Unavailable; no Apps reservation or spawn. This scaffold precedes compiled functional RED.",
+  "genuine_RED": {
+    "passed_controls": 3,
+    "failed_missing_dispatch_cases": 3,
+    "fixed_test_sha256": "6320a8a632a3be7f6435f9ce2c9c5fec26e77b7440984a260b497420892452d2",
+    "receipt_sha256": "af85112b73bc1e572294b6f1977db92b938a2e6b9e1eb6ae77ed97a737cf8410"
+  },
+  "source_only_GREEN": {
+    "passed": 6,
+    "failed": 0,
+    "service_sha256": "51ba2cf92e0f192c1e2e33409d1e3b47761285d21d27607e7f5b0a4f0151db7c",
+    "independent_receipt_sha256": "ee0c00f2e46220d7fafdaeb770d45f2ae69ad4c293df9b6ef5aa2a5f405f9f59"
+  },
+  "packaging": {
+    "only_test_change": "six explicit root-only ignore annotations; bodies identical",
+    "root_qualification_sha256": "3929d0c0851ea33db6e94aa22a05f68d5529b0232ecf98a4e8b8ec70114f1488",
+    "default_library": {
+      "passed": 64,
+      "ignored": 20,
+      "failed": 0
+    },
+    "explicit_root_launch": {
+      "passed": 6,
+      "failed": 0
+    },
+    "client_actual_waits_both_PIPE_EOF": 14,
+    "Apps_actual_try_wait_records": {
+      "Sounds": 3,
+      "Messages": 1,
+      "time_scope": "test observer receipt is an upper bound on actual wait, not a production timestamp"
+    },
+    "native_client_execution_claimed": false,
+    "desktop_runtime_install_claimed": false,
+    "ARM_execution_claimed": false,
+    "ARM_binary_artifacts": [
+      {
+        "name": "sounds-launch",
+        "sha256": "6065124ef2332a6b10c36db3eb99e8d9b9fd609abcfa51a40705c72a36811037",
+        "bytes": 23205440,
+        "ELF_machine": 183
+      },
+      {
+        "name": "lifecycle-launcher",
+        "sha256": "e981a485daeba9accb9c85bfb93b38b8189e326e141205db69345984114449f4",
+        "bytes": 23268880,
+        "ELF_machine": 183
+      },
+      {
+        "name": "lifecycle-lock",
+        "sha256": "779336c0947e7622447c12d7245de7afec9b5f8e774acbaaeda212c5a044471a",
+        "bytes": 23284712,
+        "ELF_machine": 183
+      },
+      {
+        "name": "lifecycle-client",
+        "sha256": "1c8bbf0c377ef91e079f49e231fb2968d31896ede660d6044bbe0398fe483e50",
+        "bytes": 23405784,
+        "ELF_machine": 183
+      },
+      {
+        "name": "lifecycle-daemon",
+        "sha256": "6d28e1562b808acdec1c2ccbbdb92a1ff1e5499d5fb1bb22c3ab33eb7d18cbdf",
+        "bytes": 25346928,
+        "ELF_machine": 183
+      }
+    ],
+    "setup_failure_record_sha256": "4bff5ab7b4fe8a10739966cd926c13b7570772c2dcef0b5f006e42f363829236",
+    "independent_receipt_sha256": "abd4d6ede7eff705cb0712524f5234a6ac74a442870a97c6bb092d165cdb8c61",
+    "artifact_index_scope": "Exact declared set matches actual host/ARM compiler artifacts; index itself was not executed against private /build records."
+  },
+  "production_source_inputs": [
+    {
+      "path": "native-lifecycle/src/service.rs",
+      "sha256": "51ba2cf92e0f192c1e2e33409d1e3b47761285d21d27607e7f5b0a4f0151db7c"
+    },
+    {
+      "path": "native-lifecycle/src/service_lock_ack_tests.rs",
+      "sha256": "4c7f254ab15aaa221fc7fb168f19c01fe894b0985a868123853080f47f15e028"
+    },
+    {
+      "path": "native-lifecycle/src/service_restore_tests.rs",
+      "sha256": "e79dba6a42080fbab10c79731e5cc3c37968f91970bbfb8633269e0185b72a04"
+    },
+    {
+      "path": "native-lifecycle/src/service_sounds_desktop_tests.rs",
+      "sha256": "ef334018a56eeb9da10d6f5318f2ff01fce8b1e0458031f895ad08bb4056aace"
+    },
+    {
+      "path": "native-lifecycle/src/bin/sounds-launch.rs",
+      "sha256": "365daf74280671a0e155f366f8f53cf515cd847302c178418648368f2ac31c11"
+    },
+    {
+      "path": "native-audio-ui/CMakeLists.txt",
+      "sha256": "9c50cf5a3b4545a461091517bb364428d3f7d867210e0fd9fb429c8aec2254bd"
+    },
+    {
+      "path": "native-audio-ui/org.omarchy.Sounds.desktop",
+      "sha256": "42f4157e5edae04d0c57a8311cf2abeda518d395ca3ef2206f63216d54d03e1d"
+    },
+    {
+      "path": "tools/index-native-lifecycle.py",
+      "sha256": "dcccc74d0588cadf43aeac6942b0bd324b1fad3c4a8e3495bb26b24688cb8897"
+    }
+  ],
+  "retained_scope_receipts": [
+    {
+      "path": "/tmp/pokelinux-audio-sounds-desktop-green-root-1/Root-RED-review.json",
+      "sha256": "f970fa223eba234816c259e08bea6ea0ec72b471581a5f881ca525252710576e"
+    },
+    {
+      "path": "/tmp/pokelinux-audio-sounds-desktop-green-root-1/runtime-selection.json",
+      "sha256": "010e769d8b09bcd3b5cda69ca6663b9595a7d892d599cac77327920c6ec0c90d"
+    },
+    {
+      "path": "/tmp/pokelinux-audio-sounds-desktop-green-root-1/build-1/receipt.json",
+      "sha256": "bf69290509f913b54e1348d9bf5447230fcda355ea86bf44f0c32f3408e95263"
+    },
+    {
+      "path": "/tmp/pokelinux-audio-sounds-desktop-green-root-1/actual-green-1/receipt.json",
+      "sha256": "c2c720e674d5357c71db9fa47019a7afe32466ac765c25e75201706994ab3b38"
+    },
+    {
+      "path": "/tmp/pokelinux-audio-sounds-desktop-green-root-1/publication-build-1/receipt.json",
+      "sha256": "c24d0326866c1576c79fe1d867fb61ca0e1cb3f51c59c3772774b2c1a57a38c0"
+    },
+    {
+      "path": "/tmp/pokelinux-audio-sounds-desktop-green-root-1/publication-runtime-1/receipt.json",
+      "sha256": "bb86e630d953a3a8fe9d042a5dffed9efd9bc99014b3f35410904eaea9579e17"
+    },
+    {
+      "path": "/tmp/pokelinux-audio-sounds-desktop-green-root-1/publication-arm-1/receipt.json",
+      "sha256": "b20c48f6c55c1ee7e929cab1bed54e88f7c69505b09332dc41767d8652c7dde7"
+    },
+    {
+      "path": "/tmp/pokelinux-audio-sounds-desktop-green-root-1/packaging-plan.json",
+      "sha256": "56d91aaac2e1b35ca9085bae2a29fb633dbf77f47108e3d7b15bec20b0fa6326"
+    }
+  ],
+  "normal_ARM_setup_failure": {
+    "prior_actual_Qt_component_total": 32,
+    "current_component_rerun_claimed": false,
+    "frames": 0,
+    "groups": 0,
+    "PCM": 0,
+    "production_pass_claimed": false,
+    "private_parent_wait_signal": 25,
+    "signal_name": "SIGXFSZ",
+    "private_wrapper_global_RLIMIT_FSIZE_bytes": 4194304,
+    "specific_file_or_write_observed": false,
+    "private_diagnostic_execution_sha256": "0ff7ac0b10d637af10663467c10777f2eef71bd2c54157814183a4cbc22fa7ac",
+    "private_diagnostic_result_sha256": "cfd376673d39bc3701263f344ad976171605d0757b4c41d16d83187f38a0371d",
+    "raw_core_memory_backtrace_environment_selected": false,
+    "private_diagnostic_facts_sha256": "bbf68d6b36c6e00ba9d327cf9a1710496d778f0771abc3fdf0f7d90fccee2c43"
+  },
+  "remaining": [
+    "installed compositor-owning session executable and trusted handles",
+    "normal fixed native desktop invocation",
+    "current Source/audio/independent policy assembly",
+    "normal permission-aware ARM four-group tracer",
+    "physical Pixel hardware and matched device policy"
+  ]
+}

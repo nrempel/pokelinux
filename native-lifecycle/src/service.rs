@@ -107,12 +107,22 @@ struct Operation {
     shutdown: bool,
     camera: bool,
 }
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum DesktopEndpoint {
+    Messages,
+    Sounds,
+}
+#[derive(serde::Deserialize)]
+#[serde(tag = "op", rename_all = "snake_case", deny_unknown_fields)]
+enum SoundsDesktopRequest {
+    LaunchSounds {},
+}
 struct Connection {
     id: u64,
     awaiting: Option<u64>,
     fd: OwnedFd,
     admin: bool,
-    desktop: bool,
+    desktop: Option<DesktopEndpoint>,
     lock: bool,
     reading: Option<(u64, ReadStamp)>,
     read_stamp: Option<ReadStamp>,
@@ -394,6 +404,13 @@ fn run_with_services_inner(
     let app = ipc::listener(&app_path, 0o666)?;
     // This route belongs to the lifecycle actor, independently of Messages.
     let lock = ipc::listener(&lock_path, 0o666)?;
+    // Fixed Sounds ingress exists independently of the optional Messages provider.
+    let sounds_path = runtime.join("launch-sounds.sock");
+    let sounds = ipc::listener(&sounds_path, 0o666)?;
+    let sounds_identity = {
+        let metadata = fs::symlink_metadata(&sounds_path)?;
+        (metadata.dev(), metadata.ino())
+    };
     let desktop_path = runtime.join("launch-messages.sock");
     let desktop = if messages.is_some() {
         Some(ipc::listener(&desktop_path, 0o666)?)
@@ -746,6 +763,7 @@ fn run_with_services_inner(
             if let Some(fd) = &desktop {
                 fds.push(PollFd::new(fd, PollFlags::IN));
             }
+            fds.push(PollFd::new(&sounds, PollFlags::IN));
             for c in &connections {
                 fds.push(PollFd::new(
                     &c.fd,
@@ -768,12 +786,13 @@ fn run_with_services_inner(
             }
             drop(fds);
             let mut listeners = vec![
-                (&admin, true, false, false, 4),
-                (&app, false, false, false, 12),
-                (&lock, false, false, true, 2),
+                (&admin, true, None, false, 4),
+                (&app, false, None, false, 12),
+                (&lock, false, None, true, 2),
+                (&sounds, false, Some(DesktopEndpoint::Sounds), false, 2),
             ];
             if let Some(fd) = &desktop {
-                listeners.push((fd, false, true, false, 2));
+                listeners.push((fd, false, Some(DesktopEndpoint::Messages), false, 2));
             }
             for (listener, is_admin, is_desktop, is_lock, limit) in listeners {
                 if connections
@@ -787,7 +806,7 @@ fn run_with_services_inner(
                 match net::accept_with(listener, SocketFlags::NONBLOCK | SocketFlags::CLOEXEC) {
                     Ok(fd) => {
                         net::sockopt::set_socket_passcred(&fd, true)?;
-                        if messages.is_some() && !is_admin && !is_desktop && !is_lock {
+                        if messages.is_some() && !is_admin && is_desktop.is_none() && !is_lock {
                             net::sockopt::set_socket_send_buffer_size(&fd, 8192)?;
                         }
                         connection_id = connection_id.checked_add(1).ok_or(io::ErrorKind::Other)?;
@@ -1088,7 +1107,25 @@ fn run_with_services_inner(
                             }
                         }
                     }
-                } else if connection.desktop {
+                } else if connection.desktop == Some(DesktopEndpoint::Sounds) {
+                    if cred.uid.as_raw() != crate::messages::DESKTOP_UID
+                        || stopping
+                        || serde_json::from_slice::<SoundsDesktopRequest>(&bytes).is_err()
+                    {
+                        Reply::Denied
+                    } else if let Some(p) = profiles.iter().find(|p| p.app == crate::audio::APP) {
+                        match apps.start(p, connection.id, &authority, &mut display) {
+                            crate::apps::Start::Rejected(reply) => reply,
+                            crate::apps::Start::Reserved { instance, until } => {
+                                connection.launching = Some(instance);
+                                connection.deadline = until.saturating_add(1_000_000_000);
+                                return true;
+                            }
+                        }
+                    } else {
+                        Reply::Unavailable
+                    }
+                } else if connection.desktop == Some(DesktopEndpoint::Messages) {
                     if cred.uid.as_raw() != crate::messages::DESKTOP_UID
                         || stopping
                         || serde_json::from_slice::<crate::messages::DesktopRequest>(&bytes)
@@ -1652,6 +1689,11 @@ fn run_with_services_inner(
         if fs::symlink_metadata(path).is_ok_and(|m| (m.dev(), m.ino()) == identity) {
             fs::remove_file(path)?;
         }
+    }
+    if fs::symlink_metadata(&sounds_path)
+        .is_ok_and(|metadata| (metadata.dev(), metadata.ino()) == sounds_identity)
+    {
+        fs::remove_file(&sounds_path)?;
     }
     if desktop_identity.is_some_and(|identity| {
         fs::symlink_metadata(&desktop_path).is_ok_and(|m| (m.dev(), m.ino()) == identity)

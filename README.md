@@ -36,6 +36,12 @@ Dashed connections are work still required, not working hardware paths. “Rust 
 
 ## What has been tested
 
+The [fixed Sounds desktop entry](docs/native-sounds-desktop.md) now passes six
+actual host socket/UID/child-ownership cases after a three-failure dispatch RED.
+The matching Rust client and ARM artifacts compile. Installed Source/audio
+assembly and normal permission-aware ARM UI remain open; a separate private
+startup diagnostic records SIGXFSZ under the capture fixture's global file limit.
+
 | Area | Evidence and scope | Still missing |
 |---|---|---|
 | Native SMS codecs and outbox | 27 encoder and 33 decoder comparisons with Android’s actual implementation; bounded multipart planning and durable SQLite admission pass Linux/ARM64 tests. SIGKILL/restart retains uncertainty under an actual ARM64 kernel. [Report](docs/native-messaging.md) · [Codec evidence](docs/evidence/sms-submit-provenance.json) · [Outbox evidence](docs/evidence/sms-outbox-provenance.json) · [Receive evidence](docs/evidence/sms-receive-provenance.json) | Installed sending and continuous incoming composition, qualified transport receipts, delivery, carrier and wake behavior |

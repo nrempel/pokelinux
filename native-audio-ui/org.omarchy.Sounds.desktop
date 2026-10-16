@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Sounds
+Comment=Choose media output
+Exec=/usr/libexec/pokelinux/sounds-launch /run/pokelinux/session/launch-sounds.sock
+Icon=audio-volume-high
+Terminal=false
+Categories=Settings;AudioVideo;
+StartupWMClass=org.omarchy.Sounds

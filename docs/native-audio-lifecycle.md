@@ -41,6 +41,12 @@ transaction.
 
 ## Matching Sounds client
 
+The separate [fixed desktop launch](native-sounds-desktop.md) now reaches the
+existing actor-owned app path without depending on a Messages provider. Its host
+proof uses an actual UID11042 sleep child; installed Source/audio and normal
+permission-aware ARM UI remain separate. The latter has no qualified frame yet;
+its private startup diagnostic and capture-limit repair are recorded there.
+
 The single target Sounds client uses nonblocking credentialed SEQPACKET to the
 root actor's `app.sock`. Its fifth argument now selects that actor socket; the
 appearance argument and QML remain unchanged. Every packet must match the

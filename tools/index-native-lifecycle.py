@@ -10,7 +10,7 @@ for filename,kind in [('arm64-bins-cargo.jsonl','binary'),('arm64-lib-cargo.json
     raw=(base/filename).read_bytes()
     records=[json.loads(line) for line in raw.decode().splitlines()]
     selected=[r for r in records if r.get('reason') == 'compiler-artifact' and r.get('executable') and bool(r.get('profile',{}).get('test')) == (kind == 'library_test')]
-    names={'lifecycle-daemon','lifecycle-launcher','lifecycle-client'} if kind == 'binary' else {'pokelinux_lifecycle'}
+    names={'lifecycle-daemon','lifecycle-launcher','lifecycle-client','lifecycle-lock','sounds-launch'} if kind == 'binary' else {'pokelinux_lifecycle'}
     assert {r['target']['name'] for r in selected} == names
     assert len(selected) == len(names)
     for record in selected:

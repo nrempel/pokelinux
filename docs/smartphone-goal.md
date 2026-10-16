@@ -1,5 +1,11 @@
 # Omarchy smartphone goal
 
+The [fixed Sounds desktop launch](native-sounds-desktop.md) now qualifies actual
+host credentials and actor-owned launch/duplicate/Stop behavior. Its native client
+and ARM builds are separate from installed Source/audio and normal UI evidence.
+The latter ARM join remains a setup failure under investigation, with no physical
+phone or complete smartphone qualification.
+
 The [MediaRoute actor](native-audio-lifecycle.md) adds current permission admission,
 approved background leases and real connection withdrawal. Rust64-test/host
 integration and matching Qt component checks pass. Normal target ARM composition,
