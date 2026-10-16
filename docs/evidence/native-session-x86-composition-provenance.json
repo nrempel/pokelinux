@@ -1,0 +1,122 @@
+{
+  "schema": 1,
+  "component_evidence_qualified": true,
+  "full_session_composition_qualified": false,
+  "scope": "Actual native x86 KVM current Qt build/component checks and separately failed original Source/session composition; no normal Sounds/final profile/PCM/ARM/phone proof",
+  "public_basis": "a1cb94f9a5cc4b8c863792212a7e31f5af13620a",
+  "production_behavior_changed": false,
+  "behavior_RED_GREEN_claim": false,
+  "actual_execution": {
+    "Root_exec_session": 14677,
+    "Root_exec_exit": 1,
+    "selection_sha256": "f6b6a4a132796e8cedf4f4349f4b126d18cfe795c7c06d7be6059938959572c5",
+    "command_sha256": "0bbe257ecf4b8b60a8891fbea7a7eb98f2d7eb365ceb10c16e218d1b32c0adc9",
+    "execution_sha256": "ffcfe71ff7d34745252efa15855e58e0d383b3093945a5b7722e282ee8bcc655",
+    "boot-result_sha256": "4274ac5cc744802e1d334b4c9881f6de0b492fc8a211dfb80b04e64064726e6e",
+    "bootstrap-result_sha256": "ddcc1a7be644be3fb94bbf45dfaed4f90706b65ff3a1fce5fab60f83fd229ac9",
+    "result_sha256": "f68f0b4c75012ea72043baad642ef0ae50fe1e02caa7a30cf8799d771fbce6e2",
+    "Root_source_review_sha256": "3a49aa133e0bccd20c4fccfcb572d73a72120144563121af761f7f25186def12",
+    "Root_entry_sha256": "b5dfe3b9af30f8a4a4ba2651d74b17aab997ee14065be749589caf162d4ff46c",
+    "Root_failed_qualification_sha256": "f176937788666a32d47c11a532b9b2ef51a50f981b6f083590b2b36ec0f11f85",
+    "elapsed_host_ns": 60822298961,
+    "independent_qualification_sha256": "9f70fa01a436de9ef778ea8466a10485fbc508dc1c09b9c30f7a85b290d831ca"
+  },
+  "native_Qt": {
+    "version": "6.12.0",
+    "actual_build_install": true,
+    "CXX_flags": "-Wall -Wextra -Werror",
+    "build_parallelism": 8,
+    "ELF_machine": 62,
+    "audio_total_including_setup_cleanup": 32,
+    "audio_behavior_cases": 30,
+    "appearance_behavior_cases": 29,
+    "all_actual_cases_passed": true,
+    "prior_ARM_results_inherited": false,
+    "normal_Sounds_started": false,
+    "binaries": [
+      {
+        "name": "pokelinux-sounds",
+        "sha256": "0db7bf8d454b4b95acc8005f28049f67122bed1774d386ad3d21217b8166a2b6",
+        "bytes": 167632,
+        "ELF_machine": 62
+      },
+      {
+        "name": "audio-client-test",
+        "sha256": "aabdae9131c370a3d843652663a023fe311ad8e9dab71abe538f890e98b26538",
+        "bytes": 325648,
+        "ELF_machine": 62
+      },
+      {
+        "name": "appearance-socket-probe",
+        "sha256": "83b7dfe7c84f4096b3f96b89aaed9615d5b2be5eb8e8fbca4ade6552f48188ea",
+        "bytes": 217368,
+        "ELF_machine": 62
+      }
+    ],
+    "source_files_before_after_bound": 17
+  },
+  "actual_composition_failure": {
+    "classification": "SETUP_FAILURE",
+    "message": "AssertionError: owned compositor died during cold startup",
+    "normal_Sounds_launched": false,
+    "functional_steps": 0,
+    "PCM_windows": 0,
+    "new_capture_qualified": false,
+    "final_Pixel_profile_qualified": false,
+    "Source_before_Stop": {
+      "state": "failed",
+      "last_accepted": {
+        "sequence": 1,
+        "sampled_at_ns": 54297771031
+      },
+      "first_failure": {
+        "category": "provider_error",
+        "error_kind": "InvalidData",
+        "observed_at_boottime_ns": 54409790650
+      }
+    },
+    "rejection_cause_known": false,
+    "observed_sample_to_failure_ns": 112019619,
+    "time_difference_is_not_rejected_sample_age_or_proven_producer_gap": true,
+    "cooperative_witness_committed_landmarks": 13,
+    "cooperative_witness_flags": 0,
+    "no_callback_return_inflight_queueempty_or_cause_inferred": true,
+    "compositor_pidfd_dead_before_Stop": true,
+    "numeric_native_parent_compositor_wait_not_exported": true,
+    "all_three_plugins_and_discovery_compiled": true
+  },
+  "separate_closure": {
+    "actual_direct_waits": {
+      "guest": 78,
+      "bootstrap": 5,
+      "early": 2,
+      "boot": 5,
+      "host": 7
+    },
+    "actual_PIPE_EOFs": 104,
+    "all_original_wait_EOF_cutoffs_met": true,
+    "guest_expected_exit_sets_met": true,
+    "guest_tone_exit1_is_declared_allowed": true,
+    "same_QMP_KVM_guest_SHUTDOWN_EOF_QEMUwait0": true,
+    "DockerCLI0_exact_CID_absent_same_daemon": true,
+    "all_selected_inputs_unchanged_under_shared_lock": true,
+    "selected_source_files": 78,
+    "external_inputs": 27,
+    "raw_driver_unresolved_CID_label_preserved_despite_independent_absence": true
+  },
+  "unchanged_guards": {
+    "Source_lease_ns": 100000000,
+    "expected_full_steps": 4,
+    "expected_full_PCM_windows": 8,
+    "expected_full_measured_frames": 192000,
+    "original_paired_PCM_observer_sha256": "e04e3cf638a56c6a800a1c8b8cab4a172acd99b218a93e711958e433d87ca271",
+    "fixed_PCM_oracles_sha256": "241aeeb82a3fa43a3b5541d76d1e2d2563d88144377284d473133c7a763dbc39",
+    "per_app_Wayland_independent_Root_grants_real_focus": true,
+    "Pixel_profile_and_capture_guards_selected_not_reached": true
+  },
+  "Astra_advisory": "InvalidData also covers transport EOF/truncation and multiple parsed-frame predicates; add bounded first-rejection facts before selecting a repair. No timing or TCG cause established.",
+  "phone_accessed": false,
+  "hardware_qualified": false,
+  "private_inputs_raw_logs_VM_images_or_credentials_published": false,
+  "next": "Prove bounded typed first-rejection observation with compiled actual-boundary RED/GREEN, then rerun the unchanged full original compositor composition once. Preserve ARM and all hardware gates."
+}

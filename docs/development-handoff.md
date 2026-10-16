@@ -117,6 +117,18 @@ failed guest setups remain failed; the third fresh layer closes in36.11s with
 all31 direct waits/38 PIPE EOFs. Build native Qt and run the full composition
 next. No prior Qt tests are relabeled as current.
 
+The actual [native composition attempt](native-session-x86-runtime.md#actual-native-qt-and-composition-attempt)
+now builds/installs the current Qt app and tools, passes32 audio checks including
+setup/cleanup (30 behaviors), and passes29 appearance cases. All three plugins
+and the discovery helper compile. The original compositor then dies during cold
+startup: root-admin Source retains sequence1 and first provider `InvalidData`.
+That error also covers EOF and multiple frame-validation failures; it establishes
+no rejected frame, sample gap or scheduling cause. No normal Sounds, final Pixel
+profile, functional group, capture or PCM executes. The60.82s selection remains
+failed;97 direct waits/104 PIPE EOFs and normal QMP shutdown/QEMU0/exact container
+closure qualify separately. Next add bounded first-rejection reasons with strict
+actual-boundary RED/GREEN, then repeat the unchanged full composition once.
+
 Preserve the ARM failure and stop speculative fixture changes. Continue
 matching-source native CPU-speed composition on Harbour, with the same Pixel
 geometry, real focus/grants, app/PCM guards and100ms lease. Existing TCG/virgl

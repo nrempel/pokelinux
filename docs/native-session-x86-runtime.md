@@ -2,8 +2,9 @@
 
 The native CPU execution environment on Harbour now passes one actual offline
 KVM boot. The production Rust payload also compiles for x86_64 from the current
-public source. This prepares the full session composition test; it does not
-qualify the compositor, normal Sounds app, Source, audio or phone hardware.
+public source. A later native Qt build and current component checks also pass;
+the full composition fails during original compositor startup before Sounds/PCM.
+No Source availability or phone hardware qualification follows.
 [Hash-only evidence](evidence/native-session-x86-runtime-provenance.json) binds the
 inputs, builds, execution and qualifications. Private logs and VM artifacts stay
 private.
@@ -106,11 +107,52 @@ read-only. The guest results export excludes the active disk and host selection.
 binds the archive/source/layer/SDK/inventory results and preserved failures. No Qt
 build, component cases, normal app, final display or PCM runs in this checkpoint.
 
+## Actual native Qt and composition attempt
+
+One fresh native KVM child now builds and installs the current normal Qt app and
+two test tools with `-Wall -Wextra -Werror`, using eight build jobs. All three
+binaries are x86 ELF machine62. Its actual32 audio checks include setup/cleanup
+and30 behaviors; all29 appearance cases also pass. These checks execute in this
+epoch against Qt6.12.0, rather than inheriting the earlier ARM receipts. All17
+selected Qt/desktop source files remain unchanged before/after. The component
+scope includes offscreen appearance checks, without a normal app or display claim.
+
+The matching SDK builds all three compositor plugins and the non-presenting
+discovery helper. The Rust owner starts the exact installed Hyprland binary as
+UID1000 with no supplementary groups. Its retained compositor pidfd becomes dead
+during cold startup, before normal Sounds launch or final profile qualification.
+The before-Stop authenticated root snapshot retains sequence1 sampled at
+54,297,771,031ns and first provider `InvalidData` observed at54,409,790,650ns.
+That112,019,619ns difference is neither a rejected-sample age nor a proven
+producer gap. `InvalidData` covers receive EOF/truncation and multiple parsed
+frame checks; no particular rejection or scheduling cause is known. The
+cooperative startup witness retains13 committed landmarks with zero flags,
+without proving callback return, in-flight work or an empty queue.
+
+The functional selection stays failed, with zero boundary groups, PCM windows
+or new captures. Its78 guest, five bootstrap, two early, five boot and seven
+host direct waits meet their original cutoffs, with104 actual PIPE EOFs. The
+finite tone child returns its declared-allowed1; the two host absence checks
+return their expected1. Original Source/compositor child custody is not relabeled
+as a numerical native-parent wait: the external pidfd is dead and the owner
+itself waits0. The authenticated QMP stream confirms KVM, normal guest shutdown,
+socket EOF and actual QEMU0; Docker CLI0 and exact CID absence on the same daemon
+qualify separately. All78 selected source and27 external input hashes remain
+unchanged under the shared lock. The complete envelope takes60.82 seconds.
+The raw driver also labels the CID unresolved in its functional-assertion handler;
+that field remains preserved alongside the independently qualified exact absence.
+
+[Hash-only attempt evidence](evidence/native-session-x86-composition-provenance.json)
+keeps the current Qt passes separate from full session failure. This changes no
+production behavior and supplies no new behavioral RED/GREEN result.
+
 ## Next integration
 
-Build the normal Qt app and plugins against the qualified guest, then run
-the unchanged four-step session composition: denied quiet launch, current grant
-and real focused touch with PCM, null-focus background continuation with disabled
+Add a bounded typed first-rejection record to the existing root Source status,
+with strict compiled RED/GREEN tests at real transport/admin boundaries. Preserve
+the existing ErrorKind,100ms lease, sequence checks, terminal refusal and cleanup.
+Then run the unchanged four-step session composition once: denied quiet launch,
+current grant and real focused touch with PCM, null-focus background continuation with disabled
 touch, and terminal Source loss without app/audio revival. Preserve per-app
 Wayland, independent grants,1080×2424/422PPI/420 logical density, capture guards,
 all graph/PCM assertions and the100ms lease.

@@ -53,7 +53,10 @@ startup gate or identify a cause. A [native x86 KVM runtime](docs/native-session
 now boots the authenticated stock Arch guest and shuts down normally; the matching
 Rust payload builds. A later [offline install](docs/native-session-x86-runtime.md#offline-installed-guest)
 qualifies the signed367-package cohort, actual Hyprland binary/SDK and audio tools.
-Native Qt build and full composition are next; ARM and phone gates stay open.
+A later [native composition attempt](docs/native-session-x86-runtime.md#actual-native-qt-and-composition-attempt)
+passes the current30 audio behaviors and29 appearance cases, but Source fails
+with `InvalidData` during compositor startup before Sounds/PCM. The rejection
+cause remains unknown; ARM and phone gates stay open.
 Earlier [permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
 passes four touch/graph/PCM groups using root-authored focus. Physical audio,
 production session completion and all phone gates remain open.

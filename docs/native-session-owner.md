@@ -343,8 +343,15 @@ QEMU0. Serial identity/hash, all owned cutoffs and exact container/input closure
 qualify. Matching-source Rust payload builds pass separately; no Qt, compositor,
 Source or PCM executes in this checkpoint. A later [offline guest install](native-session-x86-runtime.md#offline-installed-guest)
 now qualifies367 signed packages, exact actual Hyprland binary/SDK commit and
-audio tools/SPA files in a fresh closed layer. Native Qt build and the full
-functional run remain next.
+audio tools/SPA files in a fresh closed layer. The subsequent actual native
+composition builds/installs the current Qt app and tools and passes30 audio
+behaviors plus29 appearance cases. All three plugins/discovery compile, but
+Source fails during cold compositor startup after sequence1 with provider
+`InvalidData`. This broad error includes receive EOF and multiple validation
+paths; no specific rejection or scheduling cause is established. Sounds, final
+profile, all four groups and PCM remain unreached. The failed selection preserves
+97 direct waits/104 PIPE EOFs and separate normal VM/container closure. See the
+[attempt](native-session-x86-runtime.md#actual-native-qt-and-composition-attempt).
 
 ## Remaining integration
 
