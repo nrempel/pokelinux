@@ -10,8 +10,10 @@ follows. The [startup repair](native-source-timer-startup.md) now passes two
 actual ARM Wayland/socket cases after an early-publication RED, plus matching
 adapter SDK compilation. The next [original replay](native-session-owner.md#gated-original-compositor-replay)
 still fails at metadata probe255 before Sounds/PCM, with compositor death
-observed before Stop and cause unknown. Combined runtime and all phone gates
-remain open.
+observed before Stop and cause unknown. [Bounded Source observations](native-source-observation.md)
+now pass four host IPC and four local cases after genuine RED, plus matching
+host/ARM production builds and68 default library passes/20 ignored. A matching
+original replay, combined runtime and all phone gates remain open.
 
 The [native Rust session owner](native-session-owner.md) now implements compositor
 Child custody and fixed Sounds session assembly.32 host boundary cases,

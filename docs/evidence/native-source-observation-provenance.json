@@ -1,0 +1,292 @@
+{
+  "schema": 1,
+  "qualified": true,
+  "scope": "Actual host-kernel root-admin SEQPACKET Snapshot with real authored UID1000 SourceOwner/Observer, production run_with_services/native storage-worker code, plus four explicitly local typed Authority/Provider branches. No original Hyprland, normal GUI/audio, ARM, phone or causal failure diagnosis.",
+  "public_base": "1d0d52a8a1d7ee4ffacf55dd0e67542ff5e23a27",
+  "production_delta": "Bounded historical root-admin Snapshot Source observation only; accepted point and first failure category/kind/actor BOOTTIME retained without policy/control-flow changes",
+  "final_sources": [
+    {
+      "path": "native-lifecycle/src/session.rs",
+      "sha256": "67ac3178a2ee785b0deb65128e70560ef8ee99ea2475f6b983843d7a8326f16f"
+    },
+    {
+      "path": "native-lifecycle/src/authority.rs",
+      "sha256": "ba7246aaf26119873d8ea2541af5a8cfda9789cf21851d711c261fe3cdb8aa86"
+    },
+    {
+      "path": "native-lifecycle/src/service.rs",
+      "sha256": "000f222326226012461dcebebbd17db9b05847070b9e4e71d2410881d9439e89"
+    },
+    {
+      "path": "native-lifecycle/src/lib.rs",
+      "sha256": "debc4d2aebec3f0eab0e3f8953807af6e19935dc9330d6922990ec89f7f234d5"
+    },
+    {
+      "path": "native-lifecycle/src/service_source_observation_tests.rs",
+      "sha256": "677dfbc389d950d8c5133ceb69c984ea24f001b1a37c3c2f9dd83027776b4074"
+    },
+    {
+      "path": "native-session-owner/Cargo.toml",
+      "sha256": "675d2ae5fa43546060941c4b5279ed03fafb6902230f92637a5c4df5dcf69d10"
+    },
+    {
+      "path": "native-session-owner/tests/source_status.rs",
+      "sha256": "6bde60169f75ed71a4da12806b4b471a7b9427a219791bdd2336faa267a81479"
+    },
+    {
+      "path": "native-session-owner/tests/support/source-status-test-fixture.rs",
+      "sha256": "5182ae2727c30d1ccf28d5f0d13ee30dc9081236934ab1c2b45962cda862bc92"
+    }
+  ],
+  "fixed_test_helper_and_Cargo_pins_unchanged_RED_to_GREEN": {
+    "native-lifecycle/src/service_source_observation_tests.rs": "677dfbc389d950d8c5133ceb69c984ea24f001b1a37c3c2f9dd83027776b4074",
+    "native-session-owner/Cargo.toml": "675d2ae5fa43546060941c4b5279ed03fafb6902230f92637a5c4df5dcf69d10",
+    "native-session-owner/tests/source_status.rs": "6bde60169f75ed71a4da12806b4b471a7b9427a219791bdd2336faa267a81479",
+    "native-session-owner/tests/support/source-status-test-fixture.rs": "5182ae2727c30d1ccf28d5f0d13ee30dc9081236934ab1c2b45962cda862bc92"
+  },
+  "neutral_extraction": "Two existing intentional Source stop calls use one helper before observation marking; no feature RED for extraction",
+  "RED": {
+    "actual_test_exits": {
+      "IPC": 101,
+      "local": 101
+    },
+    "actual_IPC_cases": 4,
+    "local_cases": 4,
+    "passed": 0,
+    "failed": 8,
+    "failure": "MISSING_OBSERVED_SOURCE_STATUS only; deeper new-value assertions unreached",
+    "real_controls_and_native_cleanup_before_new_field_assertions": true
+  },
+  "GREEN": {
+    "actual_test_exits": {
+      "IPC": 0,
+      "local": 0
+    },
+    "actual_IPC_passed": 4,
+    "local_passed": 4,
+    "failed": 0
+  },
+  "actual_IPC_controls": [
+    "no Provider with independent policy/storage readiness",
+    "quiet UID1000 Source awaiting first sample then original startup timeout",
+    "accepted authored Source then real SIGSTOP and unchanged100ms lease expiry",
+    "accepted authored Source then actual child KILL/disconnect; first NotConnected or UnexpectedEof retained exactly"
+  ],
+  "local_only_controls": [
+    "authority rejection",
+    "missing after established",
+    "reconciliation ignore is not acceptance",
+    "intentional stopping does not create/replace failure; no postStop IPC promise"
+  ],
+  "static_ErrorKind_labels": [
+    "NotFound",
+    "PermissionDenied",
+    "ConnectionRefused",
+    "ConnectionReset",
+    "ConnectionAborted",
+    "NotConnected",
+    "AddrInUse",
+    "AddrNotAvailable",
+    "BrokenPipe",
+    "AlreadyExists",
+    "WouldBlock",
+    "InvalidInput",
+    "InvalidData",
+    "TimedOut",
+    "WriteZero",
+    "Interrupted",
+    "Unsupported",
+    "UnexpectedEof",
+    "OutOfMemory",
+    "Other",
+    "Unclassified"
+  ],
+  "Unclassified_scope": "All unmatched non-exhaustive std ErrorKind values use explicit static Unclassified; actual Other remains distinct. No arbitrary message/raw OS text.",
+  "first_failure_timestamp_scope": "Actor observed BOOTTIME, not producer causal fault time",
+  "last_accepted_scope": "Actual Authority acceptance only; historical metadata, not a current health/freshness/permission guarantee",
+  "state_values": [
+    "not_configured",
+    "awaiting_first",
+    "observed",
+    "failed",
+    "stopping"
+  ],
+  "ready_semantics_unchanged": "Policy/storage readiness",
+  "SourceOwner_Observer_Provider_protocol_bootstrap_grants_lease_unchanged": true,
+  "unchanged_receiver_owner_gate_files": [
+    {
+      "path": "native-session-owner/src/source.rs",
+      "sha256": "df276002abee8ea4357834a9b46987d76f60b4cfd7b970db9129409ba110afab"
+    },
+    {
+      "path": "native-session-owner/src/bootstrap.rs",
+      "sha256": "51bcebff35e95746d5063df3b12a13d3febc3ff6eb26035e719d9a8b88ef62c8"
+    },
+    {
+      "path": "native-session/src/lib.rs",
+      "sha256": "eead20709fa5e45ad3c4f69567e7c54eea6a091a5b04937d42f4341831242872"
+    },
+    {
+      "path": "tools/native-session-compositor/adapter.cpp",
+      "sha256": "7d78b090b4fac0701fa5926d5a5bb53789d01b9309296e4fa8103e0b7f5643a4"
+    },
+    {
+      "path": "tools/native-session-compositor/source_sampler.hpp",
+      "sha256": "73612325a597b71a4386d62a4a563477e78e1bd5e572e48784f005507600e845"
+    },
+    {
+      "path": "tools/native-session-compositor/run.sh",
+      "sha256": "c39cec3adb9921c0997c843d1ac6cdf7cef72b9ae143dbf563de153aa476f7d5"
+    },
+    {
+      "path": "tools/native-session-compositor/guest.py",
+      "sha256": "24b2f625c421515057b16a756844d7eec18117cf9736f3c51c5d06875731a310"
+    }
+  ],
+  "native_host_test_artifacts": [
+    {
+      "role": "ipc",
+      "sha256": "013e564384f072240ed53c7d986fc2b3116e19d7c66c5b206523045a0773474e"
+    },
+    {
+      "role": "actor",
+      "sha256": "1a46eef2dcaa66095cad4c4e8854d329bb14aced58af51b23daa1d381e637ded"
+    },
+    {
+      "role": "producer",
+      "sha256": "dab4400fc5505de6d6075a421832d67372669968c29249343edea679c4203fee"
+    },
+    {
+      "role": "local",
+      "sha256": "502a6aae5743759ce989767b56656e0a121151c5c83f7adc1729470463e3ad9d"
+    }
+  ],
+  "proofs": [
+    {
+      "path": "source-author-qualification.json",
+      "sha256": "19e022c85262c0b78ffeecd610c52b14417844724db54a217b4ed6c80a457963"
+    },
+    {
+      "path": "Root-independent-qualification.json",
+      "sha256": "c524d907e0b012dfdb0a4e76f5f6045c9778c48f1fec7124eb39d9029bfdbabe"
+    },
+    {
+      "path": "RED/outer_receipt.json",
+      "sha256": "5e912a4d3bd6f9a5f4f04e2655893cb6206a01eaa9457177b001d0aa81d8817a"
+    },
+    {
+      "path": "RED/native_result.json",
+      "sha256": "5f8a0fd3ba90d2687998d3bb92378988f2ad5e1455e9ba8dcc1ff98354b01a3d"
+    },
+    {
+      "path": "RED/IPC_log.log",
+      "sha256": "62e931dbca83cb9db5b24d7aade834951c7f70137f7f25676d38f6dc501202b2"
+    },
+    {
+      "path": "RED/local_log.log",
+      "sha256": "f92734497cabbbdc07e408d1fd50bd6bc0866c9f1b8d71bc70718b32e319a76b"
+    },
+    {
+      "path": "RED/strict-build-receipt.json",
+      "sha256": "222ca9b46cc9903e2e09c51e210d900f4800bb13f0328d4efb9fa97e77c8b3f6"
+    },
+    {
+      "path": "RED/selection.json",
+      "sha256": "c1018fe2ea25eb14c166a3375dd3975580d9b582ee69071cb74496f5a98a7587"
+    },
+    {
+      "path": "GREEN/outer_receipt.json",
+      "sha256": "92aeac330312e17be301578fa8d59a1d7ea9179b671e93a946e8cb5ab42e9d34"
+    },
+    {
+      "path": "GREEN/native_result.json",
+      "sha256": "fa9f63012a0d38cacfbe7e1be7d077eb2f924ac05b06aa0af18d86da390eea44"
+    },
+    {
+      "path": "GREEN/IPC_log.log",
+      "sha256": "52ffa9bb6fb4e07b722e3d5cf87e477b721d0a3d8b3c8914320a7f4eb45978eb"
+    },
+    {
+      "path": "GREEN/local_log.log",
+      "sha256": "0bc02cea6e710fb58769d8d2c719c1c87c93fab5f1259ab74cbe0864648fdd04"
+    },
+    {
+      "path": "GREEN/strict-build-receipt.json",
+      "sha256": "e3bb1a713a49072f0f10d51d9d643062808d3fb550265b3d99d9a83773c5f3a1"
+    },
+    {
+      "path": "GREEN/selection.json",
+      "sha256": "adedc62439531d9337c3fea6ffb0c3a5b38ca35731c9ea1e54afdc9b62f8c2eb"
+    }
+  ],
+  "process_closure_each_epoch": {
+    "actual_actor_waits0_with_both_PIPE_EOF": 4,
+    "actual_Source_waits9_observed_before_original8s": 3,
+    "Source_streams": "DEVNULL; no PIPE EOF claim",
+    "native_test_binary_waits": 2,
+    "outer_CLI_waits": 10,
+    "applicable_merged_PIPE_EOF_and_actual_waits_before_original_cutoffs": true,
+    "controller_ECHILD": true,
+    "exact_owned_CID_absent_same_daemon": true,
+    "reported_selected_source_closure_unchanged": true
+  },
+  "strict_focused_host_build_passed": true,
+  "setup_failures_preserved": [
+    "baseline-build-1: new local test wrong lifecycle argument slot, compile failure/no runtime",
+    "baseline-runtime-1: pre-container attempt to chmod root-owned immutable source, no child runtime",
+    "baseline-runtime-2: selected builder lacks Python, exit127 before tests; exact CID removed"
+  ],
+  "parent_default_build": {
+    "Root_final_qualification": {
+      "path": "Root/final-qualification.json",
+      "sha256": "549251a173d47a4e29a0e27265624c3417f2397efedb26ec7202caa2276fcc2d"
+    },
+    "build_receipt": {
+      "path": "Root/production-build-receipt.json",
+      "sha256": "4f64d097c64350af0915ed2e196531ba6ed3907e7c0091c0ddab13600881a779"
+    },
+    "artifacts": [
+      {
+        "role": "host-default-owner",
+        "sha256": "43fdc375a80e81e86873df8f4404a269027fd8184d40e58f397986fe964f8cfe"
+      },
+      {
+        "role": "ARM-default-owner",
+        "sha256": "252ad901562df9b41676ebe3c424afff34c5e2fff0e27461ea1f806aa5586a33"
+      },
+      {
+        "role": "host-sounds-launch",
+        "sha256": "57fabacf5e296c1779bd3af172adbc92361309d147d70cdcdcbc94aa5d46f27c"
+      },
+      {
+        "role": "ARM-sounds-launch",
+        "sha256": "21e7f51c5e79ef3c66eb757e116b9521a8c847f3aa73113e01d1f5ef05c43096"
+      }
+    ],
+    "default_lifecycle_regression": {
+      "passed": 68,
+      "failed": 0,
+      "ignored": 20,
+      "receipt_sha256": "00a9f05a1e9235c7725dc3bc13821acba197f2a6117999a6c5153aa144c5f2d4",
+      "log_sha256": "1e52680c329d6b959038e833aa16f20cfc83d272e524a09d3b76945eb7974ce1",
+      "first_setup_failure_preserved": {
+        "passed": 49,
+        "failed_NotFound": 19,
+        "ignored": 20,
+        "receipt_sha256": "b6428da9b17eb369bb6add5fc559ce8ac63975aa60225f69f03edf7d95cdb6be",
+        "log_sha256": "90c2e9cf0e391826b474c2d153838d9ef3d38042ec24233124e1623bff45307c"
+      },
+      "feature_RED_claim_for_setup": false
+    },
+    "all_original_cutoffs_actual_waits_applicable_EOFs_same_daemon_CID_absence": true,
+    "native_Root_build_wait": "74294 exit0",
+    "native_Root_regression_wait": "79725 exit0"
+  },
+  "future_original_compositor_replay": null,
+  "placeholders_scope": "Future original replay is pending separately; default production builds and library regression are bound without original compositor/GUI/PCM/phone claims.",
+  "original_Hyprland_runtime_qualified": false,
+  "normal_GUI_PCM_qualified": false,
+  "ARM_runtime_qualified": false,
+  "phone_accessed": false,
+  "hardware_qualified": false
+}

@@ -181,6 +181,7 @@ pub struct Authority {
     session: Option<crate::session::Snapshot>,
     session_source: Option<String>,
     session_failed: bool,
+    source_observation: crate::session::SourceObservation,
     root_lock_intent: bool,
     reconcile_after: u64,
     session_view: Option<pokelinux_kernel_identity::ProcessView>,
@@ -211,6 +212,7 @@ impl Authority {
             session: None,
             session_source: None,
             session_failed: false,
+            source_observation: crate::session::SourceObservation::default(),
             root_lock_intent: true,
             reconcile_after: 0,
             session_view: None,
@@ -225,6 +227,7 @@ impl Authority {
     pub(crate) fn require_session(&mut self) -> io::Result<()> {
         self.session_view = Some(pokelinux_kernel_identity::ProcessView::open()?);
         self.session_required = true;
+        self.source_observation.configure();
         self.locked = true;
         for p in self.principals.values_mut() {
             p.background = true;
@@ -561,7 +564,20 @@ impl Authority {
             _ => false,
         }
     }
+    pub(crate) fn source_provider_failed(&mut self, kind: io::ErrorKind) {
+        self.source_observation.fail(
+            crate::session::SourceFailureCategory::ProviderError,
+            Some(kind),
+        );
+    }
+    pub(crate) fn source_stopping(&mut self) {
+        self.source_observation.stopping();
+    }
     pub(crate) fn fail_session(&mut self) -> io::Result<()> {
+        self.source_observation.fail(
+            crate::session::SourceFailureCategory::AuthorityRejected,
+            None,
+        );
         self.retire_authentication_attempt();
         if !self.session_failed {
             self.session_failed = true;
@@ -578,6 +594,10 @@ impl Authority {
         // Explicit resume discards the current sample, not source establishment.
         // None after an established source is terminal even during reconciliation.
         if self.session_source.is_some() {
+            self.source_observation.fail(
+                crate::session::SourceFailureCategory::MissingAfterEstablished,
+                None,
+            );
             return self.fail_session();
         }
         self.locked = true;
@@ -692,6 +712,7 @@ impl Authority {
         }
         self.locked = locked;
         self.session_source.get_or_insert_with(|| s.source.clone());
+        self.source_observation.accept(s.sequence, s.sampled_at_ns);
         self.session = Some(s);
         Ok(())
     }
@@ -1419,6 +1440,7 @@ impl Authority {
     pub(crate) fn snapshot(&mut self, occupied: bool, busy: bool) -> Reply {
         let _ = self.reap_dead();
         Reply::Snapshot {
+            source: self.source_observation.clone(),
             principals: self.principals.len(),
             permits: self.permits.len(),
             receipts: self.durable.receipts.len(),

@@ -93,3 +93,116 @@ pub trait Provider {
     /// True until owned helpers have actually been reaped, even after failure.
     fn occupied(&self) -> bool;
 }
+
+/// Bounded actor-observed history for root diagnostics, never current authority.
+#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct SourceObservation {
+    pub state: SourceState,
+    pub last_accepted: Option<AcceptedSourceSample>,
+    pub first_failure: Option<SourceFailure>,
+}
+#[derive(Debug, Clone, Copy, Eq, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum SourceState {
+    NotConfigured,
+    AwaitingFirst,
+    Observed,
+    Failed,
+    Stopping,
+}
+#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct AcceptedSourceSample {
+    pub sequence: u64,
+    pub sampled_at_ns: u64,
+}
+#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct SourceFailure {
+    pub category: SourceFailureCategory,
+    pub error_kind: Option<String>,
+    /// First actor observation, not producer fault time.
+    pub observed_at_boottime_ns: u64,
+}
+#[derive(Debug, Clone, Copy, Eq, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum SourceFailureCategory {
+    ProviderError,
+    AuthorityRejected,
+    MissingAfterEstablished,
+}
+impl Default for SourceObservation {
+    fn default() -> Self {
+        Self {
+            state: SourceState::NotConfigured,
+            last_accepted: None,
+            first_failure: None,
+        }
+    }
+}
+impl SourceObservation {
+    pub(crate) fn configure(&mut self) {
+        if self.state == SourceState::NotConfigured {
+            self.state = SourceState::AwaitingFirst;
+        }
+    }
+    pub(crate) fn accept(&mut self, sequence: u64, sampled_at_ns: u64) {
+        if matches!(self.state, SourceState::Failed | SourceState::Stopping) {
+            return;
+        }
+        self.state = SourceState::Observed;
+        self.last_accepted = Some(AcceptedSourceSample {
+            sequence,
+            sampled_at_ns,
+        });
+    }
+    pub(crate) fn fail(&mut self, category: SourceFailureCategory, kind: Option<io::ErrorKind>) {
+        if matches!(
+            self.state,
+            SourceState::NotConfigured | SourceState::Stopping
+        ) {
+            return;
+        }
+        if self.first_failure.is_none() {
+            self.first_failure = Some(SourceFailure {
+                category,
+                error_kind: kind.map(|k| error_kind_label(k).into()),
+                observed_at_boottime_ns: crate::boottime_ns(),
+            });
+        }
+        self.state = SourceState::Failed;
+    }
+    pub(crate) fn stopping(&mut self) {
+        if !matches!(self.state, SourceState::NotConfigured | SourceState::Failed) {
+            self.state = SourceState::Stopping;
+        }
+    }
+}
+// Enum-only static labels: no arbitrary Error message or raw OS text is exported.
+fn error_kind_label(kind: io::ErrorKind) -> &'static str {
+    use io::ErrorKind::*;
+    match kind {
+        NotFound => "NotFound",
+        PermissionDenied => "PermissionDenied",
+        ConnectionRefused => "ConnectionRefused",
+        ConnectionReset => "ConnectionReset",
+        ConnectionAborted => "ConnectionAborted",
+        NotConnected => "NotConnected",
+        AddrInUse => "AddrInUse",
+        AddrNotAvailable => "AddrNotAvailable",
+        BrokenPipe => "BrokenPipe",
+        AlreadyExists => "AlreadyExists",
+        WouldBlock => "WouldBlock",
+        InvalidInput => "InvalidInput",
+        InvalidData => "InvalidData",
+        TimedOut => "TimedOut",
+        WriteZero => "WriteZero",
+        Interrupted => "Interrupted",
+        Unsupported => "Unsupported",
+        UnexpectedEof => "UnexpectedEof",
+        OutOfMemory => "OutOfMemory",
+        Other => "Other",
+        _ => "Unclassified",
+    }
+}

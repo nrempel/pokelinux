@@ -79,10 +79,15 @@ preserved separately from actual waits/EOF and QEMU/CLI/container closure.
 The private ordered/applied receipts were not retained before the later failure;
 only the mandatory executed prerequisite checks are source-bound.
 
-Next add bounded observed Source status to the existing root-admin snapshot:
-retain first observed failure and last accepted sample without changing policy,
-freshness, privilege or retries. Then replay the production owner/original
-Source/fixed desktop/normal Sounds path once. Qualify
+The [root-admin Source observation](native-source-observation.md) now retains
+first observed failure and last actually accepted sample without policy,
+freshness, privilege or retry changes. Four actual host IPC and four local cases
+pass after eight missing-field RED failures; observed state is historical, not a
+health or cause claim. Matching default-owner/client host/ARM builds and the
+current default library68-pass/20-ignored regression qualify separately; the first
+regression runner's missing-directory failure remains preserved. Next replay the production owner/original
+Source/fixed desktop/normal Sounds path once, retaining a bounded pre-Stop Snapshot
+on failure when possible. Qualify
 null-focus background lease continuation, then terminal Source loss without
 app/audio revival. Preserve the earlier ARM selection and its authored-focus
 scope. Do not reopen auth/PAM or a broad static/diagnostic campaign. Hardware

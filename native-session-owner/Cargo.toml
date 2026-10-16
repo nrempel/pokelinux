@@ -48,3 +48,13 @@ required-features = ["isolated-fixture"]
 name = "display"
 path = "tests/display.rs"
 required-features = ["isolated-fixture"]
+
+[[bin]]
+name = "source-status-test-fixture"
+path = "tests/support/source-status-test-fixture.rs"
+required-features = ["isolated-fixture"]
+
+[[test]]
+name = "source_status"
+path = "tests/source_status.rs"
+required-features = ["isolated-fixture"]

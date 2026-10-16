@@ -21,6 +21,12 @@ Every returning outer setup path drains the same owner with one original cleanup
 cutoff. Existing storage/actor fail-stop aborts are not graceful-return cleanup.
 No production poll writes to a potentially blocked logging stream.
 
+The existing root-admin Snapshot reports bounded [Source observation history](../docs/native-source-observation.md):
+state, last actually accepted sample metadata and first categorized actor-observed
+failure. This is historical operational state; `ready` remains policy/storage
+readiness. Collect a Snapshot before Stop if needed, since the actor may exit.
+The first failure survives cleanup; observation does not change authority or retries.
+
 The display Factory accepts a configured Wayland pathname before it exists.
 An admitted launch connects nonblocking and checks the actual peer against the
 retained compositor pidfd/PID/UID/GID before the owned SDK setup. Sounds gets

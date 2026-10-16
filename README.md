@@ -45,8 +45,12 @@ Qt/PCM. A separate private diagnostic observes the first Source sample expiring
 at120.9ms against its unchanged100ms lease. The [producer startup repair](docs/native-source-timer-startup.md)
 now passes two actual ARM Wayland/socket cases after an early-publication RED;
 the next [original-compositor replay](docs/native-session-owner.md#gated-original-compositor-replay)
-still fails at display metadata before Sounds/PCM; its cause remains unknown. The
-separate [normal permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
+still fails at display metadata before Sounds/PCM; its cause remains unknown.
+[Bounded root-admin Source observation](docs/native-source-observation.md) now
+passes four actual host IPC and four local cases after a missing-field RED.
+Matching host/ARM production builds and the default68-pass/20-ignored regression
+also qualify; a matching original-compositor replay remains pending. The separate
+[normal permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
 passes four groups with actual touch, independent virtual graph/PCM and unscaled
 Pixel10 captures using root-authored focus. Physical audio remains unverified.
 

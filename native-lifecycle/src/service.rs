@@ -302,6 +302,11 @@ pub fn run_with_messages(
 ) -> io::Result<()> {
     run_with_messages_and_session(runtime, policy, profile_path, entry, test, messages, None)
 }
+// Mark intentional retirement before the existing Source stop; no new failure cause.
+fn stop_session(authority: &mut Authority, provider: &mut dyn crate::session::Provider) {
+    authority.source_stopping();
+    provider.stop();
+}
 fn refresh_session(
     authority: &mut Authority,
     session: &mut Option<&mut dyn crate::session::Provider>,
@@ -310,7 +315,8 @@ fn refresh_session(
         match provider.poll() {
             Ok(Some(s)) => authority.observe_session(s, boottime_ns())?,
             Ok(None) => authority.missing_session()?,
-            Err(_) => {
+            Err(error) => {
+                authority.source_provider_failed(error.kind());
                 authority.fail_session()?;
                 provider.stop();
             }
@@ -1219,7 +1225,7 @@ fn run_with_services_inner(
                                         apps.normal_stop(&mut authority, cleanup)
                                     };
                                     if let Some(provider) = session.as_deref_mut() {
-                                        provider.stop();
+                                        stop_session(&mut authority, provider);
                                     }
                                     if clean {
                                         let until = boottime_ns()
@@ -1635,7 +1641,7 @@ fn run_with_services_inner(
     authority.invalidate();
     let until = cleanup_until.unwrap_or_else(|| boottime_ns().saturating_add(2_000_000_000));
     if let Some(provider) = session.as_deref_mut() {
-        provider.stop();
+        stop_session(&mut authority, provider);
     }
     #[allow(clippy::needless_option_as_deref)]
     if let Some(provider) = audio.as_deref_mut() {
@@ -1759,3 +1765,7 @@ mod lock_ack_tests;
 #[cfg(test)]
 #[path = "service_media_input_tests.rs"]
 mod media_input_tests;
+
+#[cfg(test)]
+#[path = "service_source_observation_tests.rs"]
+mod source_observation_tests;

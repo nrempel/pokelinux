@@ -127,6 +127,7 @@ pub enum Reply {
         receipt: String,
     },
     Snapshot {
+        source: session::SourceObservation,
         principals: usize,
         permits: usize,
         receipts: usize,

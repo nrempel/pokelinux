@@ -191,10 +191,28 @@ closure qualify separately. They do not convert failed setup into success.
 [Failed replay evidence](evidence/native-session-gated-startup-provenance.json)
 records those distinctions; the two timer component GREENs retain their scope.
 
-Next add bounded observed Source status to the existing root-admin snapshot,
-retaining first observed failure and last accepted sample without policy or
-freshness changes. This is operational state, not a health guarantee or a claim
-to repair the latest failure. Then replay the exact production path once.
+## Observed Source status
+
+The existing root-admin Snapshot now reports bounded [Source observation history](native-source-observation.md):
+state, last actually accepted sequence/sample BOOTTIME, and the first categorized
+failure with actor-observed BOOTTIME. `observed` is historical acceptance, not
+current health; `ready` remains policy/storage readiness. Static ErrorKind labels
+include an explicit `Unclassified` fallback. No raw facts, PID, permission,
+freshness or Source replacement behavior is added.
+
+Four actual host admin-IPC cases and four local Authority/Provider cases pass
+after eight missing-field RED failures with unchanged tests. The IPC cases use
+real SourceOwner/Observer, an authored UID1000 producer and production actor/storage
+code. Local rejection/missing/reconciliation/Stopping cases retain that narrower
+scope. Actual waits, applicable PIPE EOFs and original cutoffs qualify separately.
+The [provenance](evidence/native-source-observation-provenance.json) keeps focused
+host evidence, matching strict host/ARM default-owner/client builds and the
+current default library68-pass/20-ignored regression separate from future ARM replay.
+
+On a matching replay, retain an authenticated Snapshot before cleanup Stop when
+possible under the existing observation cutoff. The first record is not a causal
+diagnosis, and the service may exit before any post-Stop inspection. The preceding
+original-compositor failure remains failed and unexplained.
 
 ## Remaining integration
 
