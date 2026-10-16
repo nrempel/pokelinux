@@ -1,0 +1,247 @@
+{
+  "schema": 1,
+  "scope": "Original Rust immutable CPU SHM build, separate initial/repaired native x86 C++ FFI/full compositor builds and actual one-case no-attach identity RED to GREEN; no rendering ownership, Source/cold/full-phone acceptance",
+  "Rust_build": {
+    "qualification_sha256": "0d4272d03e70c86bd05b518af8a330cafcf774a45a9d26986ad1fadadb6cb297",
+    "original_driver_exit": 1,
+    "driver_location_failure_preserved": true,
+    "compiler_rerun_for_location_correction": false,
+    "actual_compiled_source": {
+      "Cargo.lock": "ba1141e2a968bbad02a5be018efa8f8e6b29c8006439bd6a7f7024de45398713",
+      "Cargo.toml": "e8c67650745ce2544ad8607b4525e3724f4da5204c41b9a37071c35a4ce099b3",
+      "include/pokelinux_render.h": "4a7a9a603fe6d7780ff071020f727c3eb7b0aba1c9bba56b682ddd219f995396",
+      "src/lib.rs": "3de4ed83db4a2332e222f5db8fd7c801571b9595ea5059c209313024b0f3bc28",
+      "tests/ffi.cpp": "8483338e25120ba986cca3224466fce32457f6c275d5aefde585925c75314e5a"
+    },
+    "staticlib": {
+      "bytes": 22627454,
+      "sha256": "69b812817c6ee2e090a31fe0179de1db9e2c89500e7eb4e184de5ba36126c46c"
+    },
+    "C_header": {
+      "bytes": 1988,
+      "sha256": "4a7a9a603fe6d7780ff071020f727c3eb7b0aba1c9bba56b682ddd219f995396"
+    },
+    "target_native_static_libs": [
+      "-lgcc_s",
+      "-lutil",
+      "-lrt",
+      "-lpthread",
+      "-lm",
+      "-ldl",
+      "-lc"
+    ]
+  },
+  "native_x86_build_and_FFI": {
+    "Root_qualification_sha256": "d2e92dd7271e9f8cbcd0f080164073320bfb42fa23c9ffe8e8f471e854df29de",
+    "selection_sha256": "82f6d0c64f769a534641587775ba80500f2d88204af5d7935d071c8a880ad60e",
+    "command_sha256": "b3fbc21d275ae88f2541621921c0b2cbb7d8b5b42d8f260523c4b045f77db179",
+    "receipt_sha256": {
+      "execution.json": "fec97bda83979057f266b5788c162a47fd2f2726a3d02c1c3a4bf0f6048ac0a4",
+      "boot-result.json": "6621ae852b1b54117efabcfd2728a0749b78066e5b4b162ea1eeba18c8b7699a",
+      "guest-out/guest-result.json": "f09510b836bd30e9d5de403941365f7fac1e75154bb11ada72279b6be751f979",
+      "guest-out/build-output/build-result.json": "582abaee04a82ee8e17c7cb2ec01816ebe0d7cda6bea7f98f257be75c3253ea3"
+    },
+    "new_ELF": {
+      "bytes": 25082160,
+      "sha256": "6d3536578b483bac08fc46ae9c162517c585037df96ad47dbb2e59c9a300f039"
+    },
+    "matching_SDK": {
+      "bytes": 2590720,
+      "sha256": "5e0411b730990b2dbdb14fd80b25ee17ba8ce6f78d9812720b162e3258e2bcf9",
+      "regular_files": 501,
+      "C_header_sha256": "4a7a9a603fe6d7780ff071020f727c3eb7b0aba1c9bba56b682ddd219f995396"
+    },
+    "actual_FFI_groups": 5,
+    "FFI_source_sha256": "8483338e25120ba986cca3224466fce32457f6c275d5aefde585925c75314e5a",
+    "Scope_waits": 33,
+    "Scope_PIPE_EOF": 33,
+    "early_mask_counted_once": true,
+    "FFI_producer_and_thread_custody_separate": true,
+    "elapsed_ns": 175325546004,
+    "only_host_device": "/dev/kvm",
+    "network": "none",
+    "compositor_executed": false
+  },
+  "source_patch_sha256": "fdb628720ad9133c59e42c1db0f77f9defd01af6e419a9790160f596649d584f",
+  "no_attach_behavior_RED_executed": true,
+  "rendering_executor_implemented": false,
+  "Source_rendering_GREEN": false,
+  "physical_phone_accessed": false,
+  "no_attach_behavior_GREEN_executed": true,
+  "no_attach_identity_RED": {
+    "Root_qualification_sha256": "468efc6ed392580c334af5efd74e96038a568d88e88d35dd5a36c6ac77c7903c",
+    "actual_controller_exit": 1,
+    "actual_outer_exit": 0,
+    "outer_success_means_expected_RED_and_custody_only": true,
+    "case_count": 1,
+    "stable_identity_property_failed": true,
+    "identity_fields": [
+      "resource_id",
+      "generation",
+      "commit_sequence",
+      "pixel_bytes"
+    ],
+    "actual_before": [
+      7,
+      7,
+      7,
+      16384
+    ],
+    "actual_after": [
+      8,
+      8,
+      8,
+      16384
+    ],
+    "same_original_pattern_every_pixel": true,
+    "real_Unassigned_U_sync_no_attach_U_sync": true,
+    "actual_UID": 1000,
+    "width": 64,
+    "height": 64,
+    "stride": 256,
+    "retained_bytes_after_actual_client_exit": true,
+    "server_resource_retirement_qualified": false,
+    "Source_or_Observer_selected": false,
+    "actual_waits": 42,
+    "actual_PIPE_EOFs": 49,
+    "early_counted_once": true,
+    "watched_descendants_dead_absent_ECHILD": true,
+    "same_peer_QMP_KVM_SHUTDOWN_EOF_QEMU0_CLI0_exact_CID_absence": true,
+    "locked_inputs_unchanged": true,
+    "selection_sha256": "e642e2fa7d5e3575ba32fbcccccda958821cdc1f1195218a72b5b058d62286da",
+    "command_sha256": "e50fc2fa59fdd80aa1a2ef480f7d2223d34f4e1dd95cb6a3d3e9704944b72f0c",
+    "actual_receipt_sha256": {
+      "execution.json": "2ae46a766b29769a01de41017a921be18de1c51d829df8912fb9ca5f608db69f",
+      "result.json": "690474b45028048e0e392e86a8a3cfa2eb374d6f4c2ad6736ca227db4280dc66",
+      "bootstrap-result.json": "9bacb51437efb9fda600946a6a1410223f8e8d0bc8d62b78eff651cbad4fdb34",
+      "boot-result.json": "4e4b978564cbb134361f921dec5af352eea14b6d072c700cdc301b036eb92e69",
+      "component/test-result.json": "abfe118631a104e50aa5c5e3e8bae49ccb9f582cab13bc947b96565924ca2cd4"
+    },
+    "semantic_identity_oracle_sha256": "cd27a87d9d41b79e7d5e2b9f826bb7dc7ba0d2384d70f964d1c3ccfec34b7905",
+    "semantic_oracle_unchanged_for_RED_and_candidate": true,
+    "controller_sha256": "84173a06f29bf03202ad1b1b37bb0534d7385b1dbdd9a431f90149fada8ffdd7",
+    "earlier_attempts_preserved": {
+      "root-red-1": "Old local SDK pins, setup only",
+      "root-red-2": "Test-only cursor observation GCC warning, setup only",
+      "root-red-3": "Actual component identity change observed, outer tuple/list join failed; not selected full-epoch RED"
+    },
+    "independent_RED_and_guard_review_sha256": "342b5fe27c01b3de50bfda302b52d980b19f5e81812e8ea81ae9b66c6b207541",
+    "independent_review_is_not_new_behavioral_cases": true
+  },
+  "no_attach_public_source_sha256": {
+    "tools/native-render-import/noattach/real-wayland-client.snapshot.c": "4a4f2676cb8c804a89b77b7bd9c7ff11254f0b5c84481e6fe7304a2c738ab1a7",
+    "tools/native-render-import/noattach/shm-snapshot-witness.cpp": "883a31d03bab8032548417ecf7a006ba6353080c15687189b3292d1d6039d0be",
+    "tools/native-render-import/noattach/unassigned_identity_oracle.py": "cd27a87d9d41b79e7d5e2b9f826bb7dc7ba0d2384d70f964d1c3ccfec34b7905",
+    "tools/native-render-import/noattach/noattach_epoch.py": "d8f2c7f089ca1937546c534e8235e7da5d6bf58592a7ffa4818f54aa4c3964e7"
+  },
+  "no_attach_identity_repair": {
+    "authored": true,
+    "native_rebuild_qualified": true,
+    "behavioral_GREEN_qualified": true,
+    "production_file": "src/protocols/core/Compositor.cpp",
+    "change": "Require incoming state.updated.bits.buffer before synchronous capture; retained current buffer alone does not trigger recapture",
+    "initial_file_sha256": "9433e64a445fe6e43cf549c3a71cb78cbdbc97dc26c35aacb992f61d11201b0c",
+    "fixed_file_sha256": "0b611e7cabe5ebc4d4023bd4de1eb60fe0400dfadcfc749c0a015a15598eae42",
+    "other_17_payload_hashes_unchanged": true,
+    "fixed_complete_source_patch_sha256": "fdb628720ad9133c59e42c1db0f77f9defd01af6e419a9790160f596649d584f",
+    "fixed_combined_map_sha256": "7c1a1c4c72e420c7370c928dd21ef7be803750bd0f2ee3d0d8f7129669dec099",
+    "native_rebuild_qualification_sha256": "5d169d49025dee65da3ba5843dcf6b16b03bc11c9053b405034a33f2104bd9b4",
+    "behavioral_GREEN_qualification_sha256": "205b44599d96fcf2248b32a1e49a6643bc5bfcdfe4a46085c8073754f778e8fc"
+  },
+  "remaining_limits": [
+    "Infallible Box/Arc metadata allocation may abort despite fallible bulk pixel reserve",
+    "Texture-object validity does not qualify actual GL upload success or GPU completion",
+    "Padded cursor consumer assumes tight AR24 rows and remains unqualified",
+    "Client exit plus retained clone bytes does not qualify server-resource retirement",
+    "Assigned SHM frame/cursor behavior and real output/presentation completion",
+    "Coherent Rust frame/executor/AQ-GL-output ownership and unchanged seven-case Source RED",
+    "Original cold full owner/Sounds/Pixel/PCM, ARM/matched Google kernel/full smartphone matrix"
+  ],
+  "initial_source_patch_sha256": "204afbf91f6df24a1ba492c7ca42432911c98ba1dbeaa11e6e937d7507459b79",
+  "source_patch_public_path": "tools/native-render-import/hyprland.patch",
+  "repaired_native_x86_build_and_FFI": {
+    "Root_qualification_sha256": "5d169d49025dee65da3ba5843dcf6b16b03bc11c9053b405034a33f2104bd9b4",
+    "selection_sha256": "083cdb9b39519c1f06208d112e5638c9455aec18f58c2edbf89561fdd298be0e",
+    "command_sha256": "0c4e5106838f3e8fe73596f8807fe965b6a0c4aea173dde84404d99fc4a52dab",
+    "receipt_sha256": {
+      "execution.json": "d7fc591e4f3dc7cf5ec40f3a8a9e5c3f4415bbd69c395fb5ace68759dd332b5e",
+      "boot-result.json": "8a760dc6e94329ef4b9ae05ff7194057e76b884637d5b11395b224506488aabf",
+      "guest-out/guest-result.json": "0928544cf71a7e71836b766a5f6f8fc88a8052ae78407a3a84fcf323fcafc220",
+      "guest-out/build-output/build-result.json": "4770c2642ce3bd80d3dfb79109b9beb7c6a83ce14c2abd1c33ab71c53c49b7de"
+    },
+    "new_ELF": {
+      "bytes": 25082160,
+      "sha256": "c09f83f2ac6ac9f8d7e584a706e4fefa9ae17ea5c85a98496099f2f4089910d2"
+    },
+    "matching_SDK": {
+      "bytes": 2590720,
+      "sha256": "87435fe120f05afd86ee9dcc5cb3e65b0d2f06a57fdc51afa11958c47e3aff2c",
+      "regular_files": 501,
+      "C_header_sha256": "4a7a9a603fe6d7780ff071020f727c3eb7b0aba1c9bba56b682ddd219f995396"
+    },
+    "actual_FFI_groups": 5,
+    "same_five_FFI_groups_run_separately_not_aggregated": true,
+    "FFI_source_sha256": "8483338e25120ba986cca3224466fce32457f6c275d5aefde585925c75314e5a",
+    "Scope_waits": 33,
+    "Scope_PIPE_EOF": 33,
+    "early_mask_counted_once": true,
+    "FFI_producer_and_thread_custody_separate": true,
+    "elapsed_ns": 173836398179,
+    "source_patch_sha256": "fdb628720ad9133c59e42c1db0f77f9defd01af6e419a9790160f596649d584f",
+    "current_GL_owner_retained": true,
+    "compositor_executed": false,
+    "Source_UI_PCM_executed": false,
+    "same_peer_QMP_KVM_SHUTDOWN_EOF_QEMU0_CLI0_exact_CID_absence": true,
+    "original_cutoffs_and_locked_inputs_unchanged": true
+  },
+  "no_attach_identity_GREEN": {
+    "Root_qualification_sha256": "205b44599d96fcf2248b32a1e49a6643bc5bfcdfe4a46085c8073754f778e8fc",
+    "prerequisite_RED_qualification_sha256": "468efc6ed392580c334af5efd74e96038a568d88e88d35dd5a36c6ac77c7903c",
+    "actual_controller_exit": 0,
+    "actual_outer_exit": 0,
+    "case_count": 1,
+    "stable_identity_property_passed": true,
+    "actual_before": [
+      7,
+      7,
+      7,
+      16384
+    ],
+    "actual_after": [
+      7,
+      7,
+      7,
+      16384
+    ],
+    "same_original_pattern_every_pixel": true,
+    "current_client_buffer_retained": true,
+    "retained_bytes_after_actual_client_exit": true,
+    "witness_close_released_handles": 1,
+    "witness_close_held_handles": 0,
+    "server_resource_retirement_qualified": false,
+    "Source_or_Observer_selected": false,
+    "same_actor_controller_oracle_epoch_join_bytes_as_qualified_RED4": true,
+    "semantic_identity_oracle_sha256": "cd27a87d9d41b79e7d5e2b9f826bb7dc7ba0d2384d70f964d1c3ccfec34b7905",
+    "controller_sha256": "84173a06f29bf03202ad1b1b37bb0534d7385b1dbdd9a431f90149fada8ffdd7",
+    "selection_sha256": "caa1a0ea88aa20606df13ef26459a907b6bf6d1561b122532a3969df08327f1e",
+    "command_sha256": "e953a52a43e7d6aa3fffab8c69aa7edf4ff19c56ff597344af1916e52b4d2844",
+    "actual_receipt_sha256": {
+      "execution.json": "c7bab63a8f4fcd3e218e4bcbc0e1e2c8cda93989bb8d7f5c8a03a4bcaede6bb6",
+      "result.json": "bf547bec11035dd82d5f8f1c548951f3b4865506394c042ffc8722388cb11045",
+      "bootstrap-result.json": "1899d56a5a6fb37759c7e71b0dc933f5993ac1452cef931a43f45d50b60abc7f",
+      "boot-result.json": "4301968caa55af29877d8f02ea3060ae0f54ca3156815469a8aefd751970ae4a",
+      "component/test-result.json": "a623c93d166c4a017c5f10a90873b5ac95d1ca9d644cbb14e6d179b76916ce5b"
+    },
+    "selected_repaired_ELF_sha256": "c09f83f2ac6ac9f8d7e584a706e4fefa9ae17ea5c85a98496099f2f4089910d2",
+    "selected_repaired_SDK_sha256": "87435fe120f05afd86ee9dcc5cb3e65b0d2f06a57fdc51afa11958c47e3aff2c",
+    "actual_waits": 42,
+    "actual_PIPE_EOFs": 49,
+    "early_counted_once": true,
+    "watched_descendants_dead_absent_ECHILD": true,
+    "same_peer_QMP_KVM_SHUTDOWN_EOF_QEMU0_CLI0_exact_CID_absence": true,
+    "locked_inputs_unchanged": true,
+    "only_CPU_import_identity_qualified": true,
+    "independent_GREEN_review_sha256": "c451cf3516f55472ec6cc63831c2ba892c64421a4ccb2f8c9f113658e769ac5b",
+    "independent_review_is_not_new_behavioral_cases": true
+  }
+}

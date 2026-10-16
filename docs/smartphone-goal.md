@@ -62,6 +62,14 @@ RED: three no-stall controls and an authority-stall negative pass, while three
 operations during entered rendering holds time out. Production ownership separation
 and GREEN remain open, alongside the original full functional, ARM and phone gates.
 
+The [connected Rust SHM prerequisite](native-render-import.md) separately passes
+five actual C++/Rust lifetime groups and a complete native compositor/501-file SDK
+build. A separate actual no-attach identity case qualifies RED; a one-file
+incoming-buffer guard repair passes its matching rebuild and unchanged actual
+no-attach oracle, limited to CPU import identity GREEN.
+Coherent rendering ownership, the seven-case Source RED and full phone/runtime
+matrix remain open.
+
 The [native Rust session owner](native-session-owner.md) implements compositor
 Child custody; its original Sounds assembly has32 host boundary passes,
 host/ARM64 compilation and actual six-file Make staging. The current

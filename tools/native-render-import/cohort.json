@@ -1,0 +1,102 @@
+{
+  "schema": 1,
+  "upstream": "https://github.com/hyprwm/Hyprland",
+  "pinned_upstream_commit": "efb50993780079460b0cbed1363e2166a2de1d9f",
+  "original_archive_sha256": "5b05ce7ba5296fa46e666852bf108ab5af121bf577f8043787e2d2c252d8f109",
+  "patch_sha256": "fdb628720ad9133c59e42c1db0f77f9defd01af6e419a9790160f596649d584f",
+  "files": {
+    "CMakeLists.txt": {
+      "before_sha256": "97b8028aa342cf6ee6f04b5db2e67e6e4fe6adf5d3fd67bad18005193db36516",
+      "after_sha256": "ad29a43ee4115fa9e1efdd3ae3992750c025ce6fabb50986af7479c2ced45661",
+      "bytes": 26676
+    },
+    "src/event/EventBus.hpp": {
+      "before_sha256": "bfb8be17d84a0d8e7f10a0d61bcdc2b2e67378d139aaae8a484bebd96f62eede",
+      "after_sha256": "e2bb406757190f0fd65eace2ec5786a5588bb6333013cb5c6b41bfd30c318fd3",
+      "bytes": 7406
+    },
+    "src/protocols/core/Compositor.cpp": {
+      "before_sha256": "027212abbf9a194347f05fa87232181dc54be4c773ce75555a3a9bcd08281a60",
+      "after_sha256": "0b611e7cabe5ebc4d4023bd4de1eb60fe0400dfadcfc749c0a015a15598eae42",
+      "bytes": 31492
+    },
+    "src/protocols/types/SurfaceState.cpp": {
+      "before_sha256": "1155bcf4c0b8ce70e0a00097ae25dde3a58d52cda8cd10d1fcd8d923d5153199",
+      "after_sha256": "9fa63cbe3d2f851d552525abb941c4c90f9bccf8bec2e6ed2ccfba6eecce243f",
+      "bytes": 6757
+    },
+    "src/protocols/types/SurfaceState.hpp": {
+      "before_sha256": "521654c9949097522d76e256c4eca60ae60d5b6ba2e170d42f11517f82d276b8",
+      "after_sha256": "f9ddb67da492ae5f7e18ba4608caddb607107605ba9b17f47c615e4723e203c7",
+      "bytes": 4335
+    },
+    "src/render/EndRenderWitness.cpp": {
+      "before_sha256": null,
+      "after_sha256": "25185098f8068c33470292c4d44daeceb7ce13cc9af4160d0c767da47024e81b",
+      "bytes": 2031
+    },
+    "src/render/EndRenderWitness.hpp": {
+      "before_sha256": null,
+      "after_sha256": "0359b4d8c324f0c311b508a28a7e7c2208c6449132b35338aeb1ee8f887f7d73",
+      "bytes": 2040
+    },
+    "src/render/GLRenderer.cpp": {
+      "before_sha256": "2072807043b5d53a0910ebcc3936e69905abdf5905457d363f70d8c1043a4a81",
+      "after_sha256": "2c4282f1a2f34a1abea3dcec4314d24b968e986b3eedf93d26b4b3c0ffe45cae",
+      "bytes": 14819
+    },
+    "src/render/GLRenderer.hpp": {
+      "before_sha256": "8d2c0f8dd00fa2e99330dc0059818d72ff8e851e9694783bf71dab0c075ffb87",
+      "after_sha256": "8c28064bb58809a69daaa46964d1b707fc93051bbeddb7a0a06740aaa7e9a6ca",
+      "bytes": 3619
+    },
+    "src/render/OpenGL.cpp": {
+      "before_sha256": "7bbf0f8f6714cc7ed7b6d17dbc670d75f5f17db54637def8d8b322ac3b873d58",
+      "after_sha256": "a09b6a54052a811476fbe4b93b82db18ffac81addbc99c0e0949d7f33bc555e1",
+      "bytes": 124953
+    },
+    "src/render/Renderer.cpp": {
+      "before_sha256": "9af8a74e7dc42ba3c5532303b9bb4ee7c350d4cef2f2c8984e41f2a01b3bdd22",
+      "after_sha256": "d52085528092386d6d47e0fb117d7c9b81f3c1dd41185d3fd3ee44042eaca1ef",
+      "bytes": 143339
+    },
+    "src/render/Renderer.hpp": {
+      "before_sha256": "b947bec0fee19c19056cbbe07e6db9f14d075c363ff2b4f74124a2b0622a52ea",
+      "after_sha256": "7a57eaaf65cb4c43766d95a06b5a7e37a57d3af4c66170cb31b7cbd1ec21f763",
+      "bytes": 21496
+    },
+    "src/render/SHMSnapshot.cpp": {
+      "before_sha256": null,
+      "after_sha256": "5c87ef17df869105993fa3b571f63ac54dfa5914f070f2ef547fca2728458e6a",
+      "bytes": 3925
+    },
+    "src/render/SHMSnapshot.hpp": {
+      "before_sha256": null,
+      "after_sha256": "c4ed57fa4f344b9a2ed9701576f39a0494360f06c5d89e084ceb5f6a0f12ed1b",
+      "bytes": 1573
+    },
+    "src/render/Texture.cpp": {
+      "before_sha256": "8b3deb46192ed4b8b30821f2717aa93c25851a9bc7528ff9a557c49f00535b2a",
+      "after_sha256": "b436dec937360e3a8e04c2611a7eac1221b55bc41fb61cfcc454d7420ce4b75b",
+      "bytes": 758
+    },
+    "src/render/Texture.hpp": {
+      "before_sha256": "19d60589437730d71dec2050f79bbf69a4df4890fd1945aeceba654d2746739e",
+      "after_sha256": "641013ab638f3ad1a0c210fece847ce3d49f0638abb360ee7ec08523b6905c1c",
+      "bytes": 2369
+    },
+    "src/render/gl/GLTexture.cpp": {
+      "before_sha256": "5eec4be7c268850b785a3802f7b513be4a11c8ccd4a6b45ebd8f5ff592ebf0e4",
+      "after_sha256": "e3af44e7e4c0b1fd6534e909874095f863e0015aa056af4abc29ed26d6ef4add",
+      "bytes": 7407
+    },
+    "src/render/gl/GLTexture.hpp": {
+      "before_sha256": "beee988c473126ada9a2f4519ab5cafc5bebde2ec4e289427f395f3c0acaa984",
+      "after_sha256": "15d1787cb594aa0ef4f2a60c15a7ad33dc888cf211eeed08b61f1b460271b655",
+      "bytes": 1949
+    }
+  },
+  "Rust_C_header_sha256": "4a7a9a603fe6d7780ff071020f727c3eb7b0aba1c9bba56b682ddd219f995396",
+  "scope": "Connected Rust CPU SHM import prerequisite plus preserved original observations; GL still runs on original owner, not a rendering executor.",
+  "noattach_actual_RED_qualification_sha256": "468efc6ed392580c334af5efd74e96038a568d88e88d35dd5a36c6ac77c7903c"
+}

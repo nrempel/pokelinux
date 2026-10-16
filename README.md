@@ -98,6 +98,14 @@ separation and GREEN remain open. The interval proves no avoidable wait or cause
 The selected set is not exhaustive:
 short or absent selected calls leave the delay unresolved and establish neither a
 userspace-only cause nor offload. ARM and phone gates stay open.
+A later [connected Rust immutable SHM import](docs/native-render-import.md) now
+passes formatting/Clippy, an actual x86 Release library build, five real C++/Rust
+lifetime groups and a full native compositor build with its matching501-file SDK.
+GL remains on the original owner. A later actual Wayland no-attach case qualifies
+RED: import identity changes7→8 while the same16,384 pixel bytes remain. A one-file
+incoming-buffer guard repair passes the matching full rebuild/five FFI groups and
+the unchanged actual no-attach oracle: identity stays7→7. This CPU identity GREEN
+leaves rendering ownership and Source GREEN open.
 Earlier [permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
 passes four touch/graph/PCM groups using root-authored focus. Physical audio,
 production session completion and all phone gates remain open.

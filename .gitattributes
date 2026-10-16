@@ -1,0 +1,2 @@
+# Preserve standard unified-diff context whitespace in the checked source patch.
+tools/native-render-import/hyprland.patch -whitespace

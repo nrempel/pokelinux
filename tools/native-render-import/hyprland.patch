@@ -1,0 +1,860 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -305,6 +305,28 @@
+ add_library(hyprland_lib STATIC ${SRCFILES})
+ add_executable(Hyprland src/main.cpp ${TRACY_CPP_FILES})
+ target_link_libraries(Hyprland hyprland_lib)
++
++# Original Rust-owned immutable CPU SHM import prerequisite. Cargo is built and
++# selected by the external qualified build; CMake never fetches/builds a crate.
++set(POKELINUX_RENDER_STATIC_LIBRARY "" CACHE FILEPATH "Exact externally built libpokelinux_render.a")
++set(POKELINUX_RENDER_INCLUDE_DIR "" CACHE PATH "Directory containing its exact pokelinux_render.h")
++set(POKELINUX_RENDER_NATIVE_LIBRARIES "" CACHE STRING "Target native libraries reported by the external Rust staticlib build")
++if(NOT IS_ABSOLUTE "${POKELINUX_RENDER_STATIC_LIBRARY}" OR NOT EXISTS "${POKELINUX_RENDER_STATIC_LIBRARY}")
++  message(FATAL_ERROR "Set POKELINUX_RENDER_STATIC_LIBRARY to the qualified Rust staticlib absolute path")
++endif()
++if(NOT IS_ABSOLUTE "${POKELINUX_RENDER_INCLUDE_DIR}" OR NOT EXISTS "${POKELINUX_RENDER_INCLUDE_DIR}/pokelinux_render.h")
++  message(FATAL_ERROR "Set POKELINUX_RENDER_INCLUDE_DIR to the matching C ABI header directory")
++endif()
++add_library(pokelinux_render_rust STATIC IMPORTED GLOBAL)
++set_target_properties(pokelinux_render_rust PROPERTIES
++  IMPORTED_LOCATION "${POKELINUX_RENDER_STATIC_LIBRARY}"
++  INTERFACE_INCLUDE_DIRECTORIES "${POKELINUX_RENDER_INCLUDE_DIR}")
++target_link_libraries(pokelinux_render_rust INTERFACE Threads::Threads ${CMAKE_DL_LIBS} ${POKELINUX_RENDER_NATIVE_LIBRARIES})
++target_link_libraries(hyprland_lib PRIVATE pokelinux_render_rust)
++# SHMSnapshot.hpp is installed in the matching compositor SDK; keep its exact C
++# contract adjacent so a plugin does not depend on an external build directory.
++install(FILES "${POKELINUX_RENDER_INCLUDE_DIR}/pokelinux_render.h"
++        DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/hyprland/src/render")
+ 
+ target_include_directories(hyprland_lib PUBLIC ${deps_INCLUDE_DIRS} ${LUA_INCLUDE_DIRS})
+ target_include_directories(Hyprland PUBLIC ${deps_INCLUDE_DIRS} ${LUA_INCLUDE_DIRS})
+--- a/src/event/EventBus.hpp
++++ b/src/event/EventBus.hpp
+@@ -191,6 +191,9 @@
+             Event<std::string>                                pluginEventRemoved;
+             std::unordered_map<std::string, SP<CCustomEvent>> plugin;
+ 
++            // Private single event-loop diagnostic: packed invocation/phase, zero = saturation.
++            Event<uint32_t> endRenderPhase;
++
+         } m_events;
+ 
+         std::expected<void, std::string> addPluginEvent(SP<CCustomEvent> event);
+--- a/src/protocols/core/Compositor.cpp
++++ b/src/protocols/core/Compositor.cpp
+@@ -99,6 +99,7 @@
+         m_pending.updated.bits.offset = true;
+ 
+         m_pending.offset = {x, y};
++        m_pending.shmSnapshot.reset();
+ 
+         if (m_pending.buffer)
+             m_pending.buffer.drop();
+@@ -612,6 +613,11 @@
+ }
+ 
+ void CWLSurfaceResource::commitState(SSurfaceState& state) {
++    // A fatal import failure never publishes later queued commits for this surface.
++    if (m_current.rejected) {
++        state.rejected = true;
++        return;
++    }
+     // TODO might be incorrect. needed for VRR with FIFO to avoid same buffer extra frames for second commit when it's used in this way:
+     // wp_fifo_v1#43.set_barrier()
+     // wp_fifo_v1#43.wait_barrier()
+@@ -629,8 +635,25 @@
+     m_current.updateFrom(state);
+ 
+     if (m_current.buffer) {
+-        if (m_current.buffer->isSynchronous())
+-            m_current.updateSynchronousTexture(lastTexture);
++        // Retained unassigned/synchronized buffers keep their immutable import
++        // on no-attach commits. Only a new attachment captures client memory.
++        if (state.updated.bits.buffer && m_current.buffer->isSynchronous()) {
++            const int32_t status = m_current.updateSynchronousTexture(lastTexture);
++            if (status != PR_OK) {
++                // Keep the failed buffer locked in m_current until normal fatal
++                // client/surface teardown. No commit notification, fake render,
++                // successful SHM drop or presentation is emitted on this path.
++                m_current.rejected = true;
++                PROTO::presentation->discardFeedbacks(m_current.presentationFeedbacks);
++                if (status == PR_CAPACITY || status == PR_ALLOCATION)
++                    m_resource->noMemory();
++                else if (status == PR_INVALID)
++                    m_resource->error(WL_SURFACE_ERROR_INVALID_SIZE, "Invalid immutable SHM snapshot import");
++                else
++                    wl_client_post_implementation_error(m_client, "Immutable SHM texture upload failed");
++                return;
++            }
++        }
+ 
+         // if the surface is a cursor, update the shm buffer
+         // TODO: don't update the entire texture
+@@ -661,7 +684,8 @@
+             nullptr);
+     }
+ 
+-    // release the buffer if it's synchronous (SHM) as updateSynchronousTexture() has copied the buffer data to a GPU tex
++    // Release synchronous client memory only after immutable Rust capture and
++    // the current-owner texture import succeed. shmSnapshot retains owned bytes.
+     // if it doesn't have a role, we can't release it yet, in case it gets turned into a cursor.
+     if (m_current.buffer && m_current.buffer->isSynchronous() && m_role->role() != SURFACE_ROLE_UNASSIGNED)
+         dropCurrentBuffer();
+@@ -754,38 +778,29 @@
+     if (damage.empty())
+         return;
+ 
+-    auto buf = m_current.buffer ? m_current.buffer : SP<IHLBuffer>{};
+-
+-    if UNLIKELY (!buf)
+-        return;
+-
+-    auto& shmData  = CCursorSurfaceRole::cursorPixelData(m_self.lock());
+-    auto  shmAttrs = buf->shm();
+-
+-    if (!shmAttrs.success) {
+-        LOGM(Log::TRACE, "updateCursorShm: ignoring, not a shm buffer");
+-        return;
+-    }
+-
+-    damage.intersect(CBox{0, 0, buf->size.x, buf->size.y});
+-
+-    // no need to end, shm.
+-    auto [pixelData, fmt, bufLen] = buf->beginDataPtr(0);
+-
+-    shmData.resize(bufLen);
+-
+-    int         rectsNum = 0;
+-    const auto* rects    = pixman_region32_rectangles(damage.pixman(), &rectsNum);
+-
+-    if (rectsNum == 1 && rects[0].x2 == buf->size.x && rects[0].y2 == buf->size.y)
+-        memcpy(shmData.data(), pixelData, bufLen);
++    // The same retained import is the only SHM source for both the texture and
++    // cursor CPU data. Never re-read released or mutable client storage here.
++    const auto snapshot = m_current.shmSnapshot.view();
++    if (!snapshot)
++        return;
++    const auto& description = snapshot->description;
++    auto& shmData = CCursorSurfaceRole::cursorPixelData(m_self.lock());
++    damage.intersect(CBox{0, 0, description.width, description.height});
++    shmData.resize(static_cast<size_t>(snapshot->pixel_bytes));
++
++    int rectsNum = 0;
++    const auto* rects = pixman_region32_rectangles(damage.pixman(), &rectsNum);
++    if (rectsNum == 1 && rects[0].x1 == 0 && rects[0].y1 == 0 && rects[0].x2 == static_cast<int32_t>(description.width) &&
++        rects[0].y2 == static_cast<int32_t>(description.height))
++        memcpy(shmData.data(), snapshot->pixels, static_cast<size_t>(snapshot->pixel_bytes));
+     else {
+-        const auto stride = shmAttrs.stride;
+-        damage.forEachRect([&pixelData, &shmData, stride](const auto& box) {
++        const auto stride = description.stride;
++        const auto bytesPerPixel = description.bytes_per_pixel;
++        const auto* pixelData = snapshot->pixels;
++        damage.forEachRect([pixelData, &shmData, stride, bytesPerPixel](const auto& box) {
+             for (auto y = box.y1; y < box.y2; ++y) {
+-                // bpp is 32 INSALLAH
+-                auto begin = y * stride + 4 * box.x1;
+-                auto len   = 4 * (box.x2 - box.x1);
++                const auto begin = static_cast<size_t>(y) * stride + static_cast<size_t>(box.x1) * bytesPerPixel;
++                const auto len = static_cast<size_t>(box.x2 - box.x1) * bytesPerPixel;
+                 memcpy(shmData.data() + begin, pixelData + begin, len);
+             }
+         });
+--- a/src/protocols/types/SurfaceState.cpp
++++ b/src/protocols/types/SurfaceState.cpp
+@@ -3,6 +3,11 @@
+ #include "protocols/types/Buffer.hpp"
+ #include "render/Renderer.hpp"
+ #include "render/Texture.hpp"
++#include <cmath>
++#include <limits>
++#include <new>
++#include <utility>
++#include <hyprgraphics/egl/Egl.hpp>
+ 
+ Vector2D SSurfaceState::sourceSize() {
+     if UNLIKELY (!texture)
+@@ -45,18 +50,65 @@
+     return input.copy().intersect(CBox{{}, size});
+ }
+ 
+-void SSurfaceState::updateSynchronousTexture(SP<Render::ITexture> lastTexture) {
+-    auto [dataPtr, fmt, size] = buffer->beginDataPtr(0);
+-    if (dataPtr) {
+-        auto drmFmt = NFormatUtils::shmToDRM(fmt);
+-        auto stride = bufferSize.y ? size / bufferSize.y : 0;
++int32_t SSurfaceState::updateSynchronousTexture(SP<Render::ITexture> lastTexture) {
++    if (!buffer || !buffer->isSynchronous())
++        return PR_INVALID;
++
++    Render::CSHMSnapshot imported;
++    {
++        // Only the existing control owner touches the live client buffer.
++        auto [dataPtr, fmt, size] = buffer->beginDataPtr(0);
++        struct SEndDataPtr {
++            IHLBuffer& buffer;
++            ~SEndDataPtr() { buffer.endDataPtr(); }
++        } endData{*buffer.m_buffer};
++
++        if (!dataPtr || !std::isfinite(bufferSize.x) || !std::isfinite(bufferSize.y) || bufferSize.x < 1 || bufferSize.y < 1 ||
++            std::floor(bufferSize.x) != bufferSize.x || std::floor(bufferSize.y) != bufferSize.y ||
++            bufferSize.x > std::numeric_limits<uint32_t>::max() || bufferSize.y > std::numeric_limits<uint32_t>::max())
++            return PR_INVALID;
++
++        const auto width = static_cast<uint32_t>(bufferSize.x);
++        const auto height = static_cast<uint32_t>(bufferSize.y);
++        if (size % height != 0 || size / height > static_cast<size_t>(std::numeric_limits<int32_t>::max()))
++            return PR_INVALID;
++        const auto stride = static_cast<uint32_t>(size / height);
++        const auto drmFmt = NFormatUtils::shmToDRM(fmt);
++        const auto format = Hyprgraphics::Egl::getPixelFormatFromDRM(drmFmt);
++        if (!format || !NFormatUtils::isShmBufferLayoutValid(drmFmt, bufferSize, static_cast<int32_t>(stride), 0, size))
++            return PR_INVALID;
++
++        PrShmDescription description{};
++        description.drm_format = drmFmt;
++        description.width = width;
++        description.height = height;
++        description.stride = stride;
++        description.bytes_per_pixel = format->bytesPerBlock;
++        const int32_t status = Render::CSHMSnapshot::capture(description, dataPtr, static_cast<uint64_t>(size), imported);
++        if (status != PR_OK)
++            return status;
++    } // endDataPtr runs before any GL call, including all failed captures.
++
++    const auto view = imported.view();
++    if (!view)
++        return PR_INVALID;
++    const auto& description = view->description;
++    try {
++        // Actual GL execution is still on the existing compositor owner. These
++        // calls now read only immutable Rust-owned bytes, never client memory.
+         if (lastTexture && lastTexture->m_isSynchronous && lastTexture->m_size == bufferSize) {
+             texture = lastTexture;
+-            texture->update(drmFmt, dataPtr, stride, accumulateBufferDamage());
++            texture->update(description.drm_format, view->pixels, description.stride, accumulateBufferDamage());
+         } else
+-            texture = g_pHyprRenderer->createTexture(drmFmt, dataPtr, stride, bufferSize);
+-    }
+-    buffer->endDataPtr();
++            texture = g_pHyprRenderer->createTexture(description.drm_format, view->pixels, description.stride, bufferSize);
++    } catch (const std::bad_alloc&) {
++        return PR_ALLOCATION;
++    }
++    if (!texture || !texture->ok())
++        return -1; // GPU import failed; caller reports an implementation failure.
++
++    shmSnapshot = std::move(imported);
++    return PR_OK;
+ }
+ 
+ void SSurfaceState::reset() {
+@@ -64,6 +116,7 @@
+ 
+     // After commit, there is no pending buffer until the next attach.
+     buffer = {};
++    shmSnapshot.reset();
+ 
+     // applies only to the buffer that is attached to the surface
+     acquire = {};
+@@ -91,6 +144,7 @@
+     if (ref.updated.bits.buffer) {
+         buffer     = ref.buffer;
+         texture    = ref.texture;
++        shmSnapshot = ref.shmSnapshot;
+         size       = ref.size;
+         bufferSize = ref.bufferSize;
+     }
+--- a/src/protocols/types/SurfaceState.hpp
++++ b/src/protocols/types/SurfaceState.hpp
+@@ -5,6 +5,7 @@
+ #include "../../managers/eventLoop/EventLoopTimer.hpp"
+ #include "../WaylandProtocol.hpp"
+ #include "./Buffer.hpp"
++#include "../../render/SHMSnapshot.hpp"
+ 
+ namespace Render {
+     class ITexture;
+@@ -97,7 +98,10 @@
+ 
+     // texture of surface content, used for rendering
+     SP<Render::ITexture> texture;
+-    void                 updateSynchronousTexture(SP<Render::ITexture> lastTexture);
++    // Immutable CPU payload survives normal SHM buffer release. The current GL
++    // texture remains on the existing owner in this import-only prerequisite.
++    Render::CSHMSnapshot shmSnapshot;
++    int32_t               updateSynchronousTexture(SP<Render::ITexture> lastTexture);
+ 
+     // fifo
+     bool barrierSet    = false;
+--- /dev/null
++++ b/src/render/EndRenderWitness.cpp
+@@ -0,0 +1,76 @@
++#include "EndRenderWitness.hpp"
++#include "../event/EventBus.hpp"
++
++namespace EndRenderWitness {
++namespace {
++// Context only; no new writer thread or asynchronous callback is introduced.
++thread_local uint32_t allocated = 0;
++thread_local bool saturationSent = false;
++thread_local Callsite* pending = nullptr;
++thread_local uint32_t currentInvocation = 0;
++
++void notify(uint32_t detail) noexcept {
++    try {
++        const auto& bus = Event::bus();
++        if (bus)
++            bus->m_events.endRenderPhase.emit(detail);
++    } catch (...) {
++        // Diagnostic listeners cannot change original rendering exception behavior.
++    }
++}
++
++uint32_t allocate() noexcept {
++    if (allocated < MAX_INVOCATIONS)
++        return ++allocated;
++    if (!saturationSent) {
++        saturationSent = true;
++        notify(0); // Transport-only control: set overflow, never commit an invalid ID.
++    }
++    return 0;
++}
++}
++
++void mark(uint32_t invocation, Phase phase) noexcept {
++    const auto numeric = static_cast<uint32_t>(phase);
++    if (invocation == 0 || invocation > MAX_INVOCATIONS || numeric > static_cast<uint32_t>(Phase::DupNativeFenceAfter))
++        return;
++    notify((invocation << PHASE_BITS) | numeric);
++}
++
++InvocationScope::InvocationScope(uint32_t invocation) noexcept : previous_(currentInvocation) {
++    currentInvocation = invocation;
++}
++
++InvocationScope::~InvocationScope() noexcept {
++    currentInvocation = previous_;
++}
++
++void markCurrent(Phase phase) noexcept {
++    mark(currentInvocation, phase);
++}
++
++Callsite::Callsite() noexcept : previous_(pending), invocation_(allocate()) {
++    pending = this;
++}
++
++Callsite::~Callsite() noexcept {
++    if (pending == this)
++        pending = previous_;
++}
++
++uint32_t beginInvocation() noexcept {
++    if (!pending)
++        return allocate();
++    auto* call = pending;
++    pending = call->previous_;
++    call->entered_ = true;
++    return call->invocation_;
++}
++
++void Callsite::returned() noexcept {
++    if (!entered_)
++        return;
++    entered_ = false;
++    mark(invocation_, Phase::CallsiteReturned);
++}
++}
+--- /dev/null
++++ b/src/render/EndRenderWitness.hpp
+@@ -0,0 +1,52 @@
++#pragma once
++#include <cstdint>
++
++// Private observation on the existing render event-loop thread. No render policy.
++namespace EndRenderWitness {
++inline constexpr uint32_t MAX_INVOCATIONS = 128;
++inline constexpr uint32_t PHASE_BITS = 5;
++enum class Phase : uint32_t {
++    Entry = 0, RenderPassBefore = 1, RenderPassAfter = 2,
++    OpenGLEndBefore = 3, OpenGLEndAfter = 4, ReadOnlyBranch = 5,
++    FullFakeReturnIntent = 6, SyncSectionBefore = 7, ImplicitBranch = 8,
++    FinishBefore = 9, FinishAfter = 10, FlushBefore = 11, FlushAfter = 12,
++    CallbackBefore = 13, CallbackAfter = 14, ImplicitReturnIntent = 15,
++    FenceCreateBefore = 16, FenceCreateAfter = 17, ExplicitValidBranch = 18,
++    ExplicitFallbackBranch = 19, BodyEndIntent = 20, CleanupEnter = 21,
++    CleanupExit = 22, CallsiteReturned = 23,
++    EglCreateSyncBefore = 24, EglCreateSyncAfter = 25,
++    FenceFlushBefore = 26, FenceFlushAfter = 27,
++    DupNativeFenceBefore = 28, DupNativeFenceAfter = 29,
++};
++void mark(uint32_t invocation, Phase phase) noexcept;
++uint32_t beginInvocation() noexcept;
++void markCurrent(Phase phase) noexcept;
++
++// Existing event-loop context only. Zero masks the parent; destruction restores
++// context without publishing a return or completion mark.
++class InvocationScope {
++  public:
++    explicit InvocationScope(uint32_t invocation) noexcept;
++    ~InvocationScope() noexcept;
++    InvocationScope(const InvocationScope&) = delete;
++    InvocationScope& operator=(const InvocationScope&) = delete;
++  private:
++    uint32_t previous_ = 0;
++};
++
++// The explicit line after the original call is the only return publication.
++// An unconsumed token (another backend or an exception) cannot publish return.
++class Callsite {
++  public:
++    Callsite() noexcept;
++    ~Callsite() noexcept;
++    Callsite(const Callsite&) = delete;
++    Callsite& operator=(const Callsite&) = delete;
++    void returned() noexcept;
++  private:
++    friend uint32_t beginInvocation() noexcept;
++    Callsite* previous_ = nullptr;
++    uint32_t invocation_ = 0;
++    bool entered_ = false;
++};
++}
+--- a/src/render/GLRenderer.cpp
++++ b/src/render/GLRenderer.cpp
+@@ -1,4 +1,5 @@
+ #include "GLRenderer.hpp"
++#include "EndRenderWitness.hpp"
+ #include "decorations/CHyprInnerGlowDecoration.hpp"
+ #include <aquamarine/output/Output.hpp>
+ #include "../config/ConfigValue.hpp"
+@@ -82,50 +83,76 @@
+ }
+ 
+ void CHyprGLRenderer::endRender(const std::function<void()>& renderingDoneCallback) {
++    const auto witnessInvocation = EndRenderWitness::beginInvocation();
++    EndRenderWitness::InvocationScope witnessScope(witnessInvocation);
++    EndRenderWitness::mark(witnessInvocation, EndRenderWitness::Phase::Entry);
+     const auto  PMONITOR           = g_pHyprRenderer->m_renderData.pMonitor;
+     static auto PNVIDIAANTIFLICKER = CConfigValue<Config::INTEGER>("opengl:nvidia_anti_flicker");
+ 
++    EndRenderWitness::mark(witnessInvocation, EndRenderWitness::Phase::RenderPassBefore);
+     g_pHyprRenderer->m_renderData.damage = m_renderPass.render(g_pHyprRenderer->m_renderData.damage);
+-
+-    auto cleanup = CScopeGuard([this]() {
++    EndRenderWitness::mark(witnessInvocation, EndRenderWitness::Phase::RenderPassAfter);
++
++    auto cleanup = CScopeGuard([this, witnessInvocation]() {
++        EndRenderWitness::mark(witnessInvocation, EndRenderWitness::Phase::CleanupEnter);
+         if (m_currentRenderbuffer)
+             m_currentRenderbuffer->unbind();
+         m_currentRenderbuffer = nullptr;
+         m_currentBuffer       = nullptr;
++        EndRenderWitness::mark(witnessInvocation, EndRenderWitness::Phase::CleanupExit);
+     });
+ 
+-    if (m_renderMode != RENDER_MODE_TO_BUFFER_READ_ONLY)
++    if (m_renderMode != RENDER_MODE_TO_BUFFER_READ_ONLY) {
++        EndRenderWitness::mark(witnessInvocation, EndRenderWitness::Phase::OpenGLEndBefore);
+         g_pHyprOpenGL->end();
+-    else {
++        EndRenderWitness::mark(witnessInvocation, EndRenderWitness::Phase::OpenGLEndAfter);
++    } else {
++        EndRenderWitness::mark(witnessInvocation, EndRenderWitness::Phase::ReadOnlyBranch);
+         g_pHyprRenderer->m_renderData.pMonitor.reset();
+         g_pHyprRenderer->m_renderData.mouseZoomFactor   = 1.f;
+         g_pHyprRenderer->m_renderData.mouseZoomUseMouse = true;
+     }
+ 
+-    if (m_renderMode == RENDER_MODE_FULL_FAKE)
++    if (m_renderMode == RENDER_MODE_FULL_FAKE) {
++        EndRenderWitness::mark(witnessInvocation, EndRenderWitness::Phase::FullFakeReturnIntent);
+         return;
++    }
+ 
+     if (m_renderMode == RENDER_MODE_NORMAL)
+         PMONITOR->m_output->state->setBuffer(m_currentBuffer);
+ 
++    EndRenderWitness::mark(witnessInvocation, EndRenderWitness::Phase::SyncSectionBefore);
+     if (!explicitSyncSupported()) {
++        EndRenderWitness::mark(witnessInvocation, EndRenderWitness::Phase::ImplicitBranch);
+         Log::logger->log(Log::TRACE, "renderer: Explicit sync unsupported, falling back to implicit in endRender");
+ 
+         // nvidia doesn't have implicit sync, so we have to explicitly wait here, llvmpipe and other software renderer seems to bug out as well.
+-        if ((isNvidia() && *PNVIDIAANTIFLICKER) || isSoftware())
++        if ((isNvidia() && *PNVIDIAANTIFLICKER) || isSoftware()) {
++            EndRenderWitness::mark(witnessInvocation, EndRenderWitness::Phase::FinishBefore);
+             glFinish();
+-        else
++            EndRenderWitness::mark(witnessInvocation, EndRenderWitness::Phase::FinishAfter);
++        } else {
++            EndRenderWitness::mark(witnessInvocation, EndRenderWitness::Phase::FlushBefore);
+             glFlush(); // mark an implicit sync point
++            EndRenderWitness::mark(witnessInvocation, EndRenderWitness::Phase::FlushAfter);
++        }
+ 
+         m_usedAsyncBuffers.clear(); // release all buffer refs and hope implicit sync works
+-        if (renderingDoneCallback)
++        if (renderingDoneCallback) {
++            EndRenderWitness::mark(witnessInvocation, EndRenderWitness::Phase::CallbackBefore);
+             renderingDoneCallback();
+-
++            EndRenderWitness::mark(witnessInvocation, EndRenderWitness::Phase::CallbackAfter);
++        }
++
++        EndRenderWitness::mark(witnessInvocation, EndRenderWitness::Phase::ImplicitReturnIntent);
+         return;
+     }
+ 
++    EndRenderWitness::mark(witnessInvocation, EndRenderWitness::Phase::FenceCreateBefore);
+     auto eglSync = createSyncFDManager();
++    EndRenderWitness::mark(witnessInvocation, EndRenderWitness::Phase::FenceCreateAfter);
+     if LIKELY (eglSync && eglSync->isValid()) {
++        EndRenderWitness::mark(witnessInvocation, EndRenderWitness::Phase::ExplicitValidBranch);
+         for (auto const& buf : m_usedAsyncBuffers) {
+             for (const auto& releaser : buf->m_syncReleasers) {
+                 releaser->addSyncFileFd(eglSync->fd());
+@@ -148,10 +175,13 @@
+             PMONITOR->m_output->state->setExplicitInFence(PMONITOR->m_inFence.get());
+         }
+     } else {
++        EndRenderWitness::mark(witnessInvocation, EndRenderWitness::Phase::ExplicitFallbackBranch);
+         Log::logger->log(Log::ERR, "renderer: Explicit sync failed, falling back to implicit sync");
+ 
+         // Establish an implicit synchronization point without blocking the render loop.
++        EndRenderWitness::mark(witnessInvocation, EndRenderWitness::Phase::FlushBefore);
+         glFlush();
++        EndRenderWitness::mark(witnessInvocation, EndRenderWitness::Phase::FlushAfter);
+ 
+         if (m_renderMode == RENDER_MODE_NORMAL && PMONITOR) {
+             PMONITOR->m_inFence.reset();
+@@ -159,9 +189,13 @@
+         }
+ 
+         m_usedAsyncBuffers.clear();
+-        if (renderingDoneCallback)
++        if (renderingDoneCallback) {
++            EndRenderWitness::mark(witnessInvocation, EndRenderWitness::Phase::CallbackBefore);
+             renderingDoneCallback();
+-    }
++            EndRenderWitness::mark(witnessInvocation, EndRenderWitness::Phase::CallbackAfter);
++        }
++    }
++    EndRenderWitness::mark(witnessInvocation, EndRenderWitness::Phase::BodyEndIntent);
+ }
+ 
+ void CHyprGLRenderer::renderOffToMain(SP<IFramebuffer> off) {
+@@ -190,7 +224,7 @@
+     return makeShared<CGLTexture>(opaque);
+ }
+ 
+-SP<ITexture> CHyprGLRenderer::createTexture(uint32_t drmFormat, uint8_t* pixels, uint32_t stride, const Vector2D& size, bool keepDataCopy, bool opaque) {
++SP<ITexture> CHyprGLRenderer::createTexture(uint32_t drmFormat, const uint8_t* pixels, uint32_t stride, const Vector2D& size, bool keepDataCopy, bool opaque) {
+     g_pHyprOpenGL->makeEGLCurrent();
+     return makeShared<CGLTexture>(drmFormat, pixels, stride, size, keepDataCopy, opaque);
+ }
+--- a/src/render/GLRenderer.hpp
++++ b/src/render/GLRenderer.hpp
+@@ -14,7 +14,7 @@
+         UP<ISyncFDManager>      createSyncFDManager() override;
+         SP<ITexture>            createStencilTexture(const int width, const int height) override;
+         SP<ITexture>            createTexture(bool opaque = false) override;
+-        SP<ITexture>            createTexture(uint32_t drmFormat, uint8_t* pixels, uint32_t stride, const Vector2D& size, bool keepDataCopy = false, bool opaque = false) override;
++        SP<ITexture>            createTexture(uint32_t drmFormat, const uint8_t* pixels, uint32_t stride, const Vector2D& size, bool keepDataCopy = false, bool opaque = false) override;
+         SP<ITexture>            createTexture(const Aquamarine::SDMABUFAttrs&, bool opaque = false) override;
+         SP<ITexture>            createTexture(const int width, const int height, unsigned char* const data) override;
+         SP<ITexture>            createTexture(cairo_surface_t* cairo) override;
+--- a/src/render/OpenGL.cpp
++++ b/src/render/OpenGL.cpp
+@@ -9,6 +9,7 @@
+ #include <random>
+ #include <pango/pangocairo.h>
+ #include "OpenGL.hpp"
++#include "EndRenderWitness.hpp"
+ #include "Renderer.hpp"
+ #include "../Compositor.hpp"
+ #include "../helpers/MiscFunctions.hpp"
+@@ -2737,7 +2738,9 @@
+ UP<CEGLSync> CEGLSync::create() {
+     RASSERT(g_pHyprOpenGL->m_exts.EGL_ANDROID_native_fence_sync_ext, "Tried to create an EGL sync when syncs are not supported on the gpu");
+ 
++    EndRenderWitness::markCurrent(EndRenderWitness::Phase::EglCreateSyncBefore);
+     EGLSyncKHR sync = g_pHyprOpenGL->m_proc.eglCreateSyncKHR(g_pHyprOpenGL->m_eglDisplay, EGL_SYNC_NATIVE_FENCE_ANDROID, nullptr);
++    EndRenderWitness::markCurrent(EndRenderWitness::Phase::EglCreateSyncAfter);
+ 
+     if UNLIKELY (sync == EGL_NO_SYNC_KHR) {
+         Log::logger->log(Log::ERR, "eglCreateSyncKHR failed");
+@@ -2745,9 +2748,13 @@
+     }
+ 
+     // we need to flush otherwise we might not get a valid fd
++    EndRenderWitness::markCurrent(EndRenderWitness::Phase::FenceFlushBefore);
+     glFlush();
+-
++    EndRenderWitness::markCurrent(EndRenderWitness::Phase::FenceFlushAfter);
++
++    EndRenderWitness::markCurrent(EndRenderWitness::Phase::DupNativeFenceBefore);
+     int fd = g_pHyprOpenGL->m_proc.eglDupNativeFenceFDANDROID(g_pHyprOpenGL->m_eglDisplay, sync);
++    EndRenderWitness::markCurrent(EndRenderWitness::Phase::DupNativeFenceAfter);
+     if UNLIKELY (fd == EGL_NO_NATIVE_FENCE_FD_ANDROID) {
+         const auto ERR = eglGetError();
+         Log::logger->log(Log::ERR, "eglDupNativeFenceFDANDROID failed: 0x{:x}", sc<int>(ERR));
+--- a/src/render/Renderer.cpp
++++ b/src/render/Renderer.cpp
+@@ -1,4 +1,5 @@
+ #include "Renderer.hpp"
++#include "EndRenderWitness.hpp"
+ #include "../Compositor.hpp"
+ #include "../helpers/math/Math.hpp"
+ #include <algorithm>
+@@ -2226,7 +2227,11 @@
+ 
+     Event::bus()->m_events.render.stage.emit(RENDER_LAST_MOMENT);
+ 
+-    endRender();
++    {
++        EndRenderWitness::Callsite witnessCall;
++        endRender();
++        witnessCall.returned();
++    }
+ 
+     TRACY_GPU_COLLECT;
+ 
+--- a/src/render/Renderer.hpp
++++ b/src/render/Renderer.hpp
+@@ -168,7 +168,7 @@
+         virtual WP<IElementRenderer> elementRenderer()                                                                                                                         = 0;
+         virtual SP<ITexture>         createStencilTexture(const int width, const int height)                                                                                   = 0;
+         virtual SP<ITexture>         createTexture(bool opaque = false)                                                                                                        = 0;
+-        virtual SP<ITexture>         createTexture(uint32_t drmFormat, uint8_t* pixels, uint32_t stride, const Vector2D& size, bool keepDataCopy = false, bool opaque = false) = 0;
++        virtual SP<ITexture>         createTexture(uint32_t drmFormat, const uint8_t* pixels, uint32_t stride, const Vector2D& size, bool keepDataCopy = false, bool opaque = false) = 0;
+         virtual SP<ITexture>         createTexture(const Aquamarine::SDMABUFAttrs&, bool opaque = false)                                                                       = 0;
+         virtual SP<ITexture>         createTexture(const int width, const int height, unsigned char* const)                                                                    = 0;
+         virtual SP<ITexture>         createTexture(cairo_surface_t* cairo)                                                                                                     = 0;
+--- /dev/null
++++ b/src/render/SHMSnapshot.cpp
+@@ -0,0 +1,113 @@
++#include "SHMSnapshot.hpp"
++
++#include <limits>
++#include <new>
++#include <thread>
++#include <utility>
++
++namespace {
++    class CControlSnapshotStore {
++      public:
++        CControlSnapshotStore() noexcept : m_owner(std::this_thread::get_id()), m_store(pr_snapshot_store_create(128ULL * 1024ULL * 1024ULL)) {}
++        ~CControlSnapshotStore() { pr_snapshot_store_release(m_store); }
++        CControlSnapshotStore(const CControlSnapshotStore&) = delete;
++        CControlSnapshotStore& operator=(const CControlSnapshotStore&) = delete;
++
++        int32_t capture(PrShmDescription description, const uint8_t* pixels, uint64_t bytes, PrSnapshot** result) noexcept {
++            if (std::this_thread::get_id() != m_owner)
++                return PR_INVALID;
++            if (!m_store)
++                return PR_ALLOCATION;
++            if (m_nextImport == std::numeric_limits<uint64_t>::max())
++                return PR_CAPACITY;
++            // A key identifies this immutable content import, not a wl_resource.
++            // Never reuse ids/generations; all successful imports increase all
++            // three fields. Gaps on rejected imports are intentional.
++            const uint64_t sequence = m_nextImport++;
++            description.resource_id = sequence;
++            description.generation = sequence;
++            description.commit_sequence = sequence;
++            return pr_snapshot_capture(m_store, &description, pixels, bytes, result);
++        }
++
++      private:
++        std::thread::id m_owner;
++        PrSnapshotStore* m_store = nullptr;
++        uint64_t m_nextImport = 1;
++    };
++
++    CControlSnapshotStore& controlStore() {
++        // Initialized only by the existing serialized surface-commit owner.
++        // Rust's budget remains alive if snapshot handles outlive the store.
++        static CControlSnapshotStore store;
++        return store;
++    }
++}
++
++Render::CSHMSnapshot::~CSHMSnapshot() {
++    reset();
++}
++
++Render::CSHMSnapshot::CSHMSnapshot(const CSHMSnapshot& other) {
++    if (!other.m_snapshot)
++        return;
++    m_snapshot = pr_snapshot_clone(other.m_snapshot);
++    if (!m_snapshot)
++        throw std::bad_alloc();
++}
++
++Render::CSHMSnapshot::CSHMSnapshot(CSHMSnapshot&& other) noexcept : m_snapshot(std::exchange(other.m_snapshot, nullptr)) {}
++
++Render::CSHMSnapshot& Render::CSHMSnapshot::operator=(const CSHMSnapshot& other) {
++    if (this == &other)
++        return *this;
++    CSHMSnapshot replacement(other);
++    std::swap(m_snapshot, replacement.m_snapshot);
++    return *this;
++}
++
++Render::CSHMSnapshot& Render::CSHMSnapshot::operator=(CSHMSnapshot&& other) noexcept {
++    if (this != &other) {
++        reset();
++        m_snapshot = std::exchange(other.m_snapshot, nullptr);
++    }
++    return *this;
++}
++
++Render::CSHMSnapshot::operator bool() const noexcept {
++    return m_snapshot != nullptr;
++}
++
++void Render::CSHMSnapshot::reset() noexcept {
++    pr_snapshot_release(std::exchange(m_snapshot, nullptr));
++}
++
++std::optional<PrSnapshotView> Render::CSHMSnapshot::view() const& noexcept {
++    if (!m_snapshot)
++        return std::nullopt;
++    PrSnapshotView view{};
++    if (pr_snapshot_view(m_snapshot, &view) != PR_OK)
++        return std::nullopt;
++    return view;
++}
++
++PrSnapshot* Render::CSHMSnapshot::cloneForTransfer() const noexcept {
++    return m_snapshot ? pr_snapshot_clone(m_snapshot) : nullptr;
++}
++
++PrSnapshot* Render::CSHMSnapshot::releaseForTransfer() && noexcept {
++    return std::exchange(m_snapshot, nullptr);
++}
++
++int32_t Render::CSHMSnapshot::capture(PrShmDescription description, const uint8_t* pixels, uint64_t pixelBytes, CSHMSnapshot& result) noexcept {
++    PrSnapshot* imported = nullptr;
++    const int32_t status = controlStore().capture(description, pixels, pixelBytes, &imported);
++    if (status != PR_OK)
++        return status;
++    if (!imported)
++        return PR_ALLOCATION;
++    CSHMSnapshot replacement;
++    replacement.m_snapshot = imported;
++    result = std::move(replacement);
++    return PR_OK;
++}
+--- /dev/null
++++ b/src/render/SHMSnapshot.hpp
+@@ -0,0 +1,37 @@
++#pragma once
++
++#include "pokelinux_render.h"
++#include <cstdint>
++#include <optional>
++
++namespace Render {
++    // Owns one Rust snapshot handle. Copies explicitly clone a separately owned
++    // handle to the same immutable pixel allocation; moves transfer that handle.
++    // No Wayland, buffer, surface, EGL or other C++ ownership enters Rust.
++    class CSHMSnapshot {
++      public:
++        CSHMSnapshot() noexcept = default;
++        ~CSHMSnapshot();
++        CSHMSnapshot(const CSHMSnapshot& other);
++        CSHMSnapshot(CSHMSnapshot&& other) noexcept;
++        CSHMSnapshot& operator=(const CSHMSnapshot& other);
++        CSHMSnapshot& operator=(CSHMSnapshot&& other) noexcept;
++
++        explicit operator bool() const noexcept;
++        void reset() noexcept;
++        // This borrow is valid only while this owned handle remains alive.
++        std::optional<PrSnapshotView> view() const& noexcept;
++        std::optional<PrSnapshotView> view() const&& = delete;
++        // Each non-null result is a new owned handle for an exclusive transfer.
++        [[nodiscard]] PrSnapshot* cloneForTransfer() const noexcept;
++        [[nodiscard]] PrSnapshot* releaseForTransfer() && noexcept;
++
++        // Control-owner-only import; leaves result unchanged on any failure.
++        // Identity fields are assigned by the monotonic import store, not callers.
++        static int32_t capture(PrShmDescription description, const uint8_t* pixels,
++                               uint64_t pixelBytes, CSHMSnapshot& result) noexcept;
++
++      private:
++        PrSnapshot* m_snapshot = nullptr;
++    };
++}
+--- a/src/render/Texture.cpp
++++ b/src/render/Texture.cpp
+@@ -3,7 +3,7 @@
+ 
+ using namespace Render;
+ 
+-ITexture::ITexture(uint32_t drmFormat, uint8_t* pixels, uint32_t stride, const Vector2D& size, bool keepDataCopy, bool opaque) :
++ITexture::ITexture(uint32_t drmFormat, const uint8_t* pixels, uint32_t stride, const Vector2D& size, bool keepDataCopy, bool opaque) :
+     m_size(size), m_opaque(opaque), m_drmFormat(drmFormat), m_keepDataCopy(keepDataCopy) {
+     if (m_keepDataCopy && stride && pixels) {
+         m_dataCopy.resize(stride * size.y);
+--- a/src/render/Texture.hpp
++++ b/src/render/Texture.hpp
+@@ -29,7 +29,7 @@
+ 
+         virtual void                setTexParameter(GLenum pname, GLint param)                                          = 0;
+         virtual void                allocate(const Vector2D& size, uint32_t drmFormat = 0)                              = 0;
+-        virtual void                update(uint32_t drmFormat, uint8_t* pixels, uint32_t stride, const CRegion& damage) = 0;
++        virtual void                update(uint32_t drmFormat, const uint8_t* pixels, uint32_t stride, const CRegion& damage) = 0;
+         virtual void                bind() {};
+         virtual void                unbind() {};
+         virtual bool                ok();
+@@ -55,7 +55,7 @@
+ 
+       protected:
+         ITexture() = default;
+-        ITexture(uint32_t drmFormat, uint8_t* pixels, uint32_t stride, const Vector2D& size, bool keepDataCopy = false, bool opaque = false);
++        ITexture(uint32_t drmFormat, const uint8_t* pixels, uint32_t stride, const Vector2D& size, bool keepDataCopy = false, bool opaque = false);
+         ITexture(std::span<const float> lut3D, size_t N);
+ 
+         bool                 m_keepDataCopy = false;
+--- a/src/render/gl/GLTexture.cpp
++++ b/src/render/gl/GLTexture.cpp
+@@ -29,7 +29,7 @@
+     m_cachedStates.fill(std::nullopt);
+ }
+ 
+-CGLTexture::CGLTexture(uint32_t drmFormat, uint8_t* pixels, uint32_t stride, const Vector2D& size_, bool keepDataCopy, bool opaque) :
++CGLTexture::CGLTexture(uint32_t drmFormat, const uint8_t* pixels, uint32_t stride, const Vector2D& size_, bool keepDataCopy, bool opaque) :
+     ITexture(drmFormat, pixels, stride, size_, keepDataCopy, opaque) {
+ 
+     g_pHyprOpenGL->makeEGLCurrent();
+@@ -120,7 +120,7 @@
+     unbind();
+ }
+ 
+-void CGLTexture::update(uint32_t drmFormat, uint8_t* pixels, uint32_t stride, const CRegion& damage) {
++void CGLTexture::update(uint32_t drmFormat, const uint8_t* pixels, uint32_t stride, const CRegion& damage) {
+     if (damage.empty())
+         return;
+ 
+--- a/src/render/gl/GLTexture.hpp
++++ b/src/render/gl/GLTexture.hpp
+@@ -16,13 +16,13 @@
+         CGLTexture(const CGLTexture&)  = delete;
+ 
+         CGLTexture(bool opaque = false);
+-        CGLTexture(uint32_t drmFormat, uint8_t* pixels, uint32_t stride, const Vector2D& size, bool keepDataCopy = false, bool opaque = false);
++        CGLTexture(uint32_t drmFormat, const uint8_t* pixels, uint32_t stride, const Vector2D& size, bool keepDataCopy = false, bool opaque = false);
+         CGLTexture(const Aquamarine::SDMABUFAttrs&, void* image, bool opaque = false);
+         CGLTexture(std::span<const float> lut3D, size_t N);
+         ~CGLTexture();
+ 
+         void allocate(const Vector2D& size, uint32_t drmFormat = 0) override;
+-        void update(uint32_t drmFormat, uint8_t* pixels, uint32_t stride, const CRegion& damage) override;
++        void update(uint32_t drmFormat, const uint8_t* pixels, uint32_t stride, const CRegion& damage) override;
+         void bind() override;
+         void unbind() override;
+         void setTexParameter(GLenum pname, GLint param) override;

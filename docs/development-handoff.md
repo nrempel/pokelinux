@@ -223,6 +223,18 @@ and selects no driver patch. That discrimination investigation is closed. A late
 RED: the three no-stall focus/death/lock controls and authority-stall negative pass;
 the same three operations under entered native EGL holds all time out with positive
 state false. All seven cases pass setup; five earlier attempts remain setup failures.
+The later [connected Rust SHM prerequisite](native-render-import.md) compiles and
+links into full native Hyprland with a501-file matching SDK; five actual C++/Rust
+CPU lifetime groups pass in the x86 KVM guest. A separate actual compositor
+no-attach case now qualifies RED: a retained unassigned surface's import identity
+changes7→8 despite unchanged16,384-byte content. Earlier old-SDK/borrow-compile
+setup failures and the component-RED/failed outer join remain preserved. A one-file
+repair gates recapture on the new state's buffer-update bit; its matching native
+rebuild and five FFI groups pass. The unchanged actual no-attach oracle then
+passes: identity stays7→7 with the same bytes, real client/clone facts and closure.
+This is CPU import identity GREEN only. GL ownership, the seven-case Source RED
+and original
+cold full-composition failure remain unchanged.
 Production control/render ownership separation and GREEN remain open. Source100ms,
 terminal authority expiry, real facts and fence/buffer lifetime remain required;
 no exclusive-CPU or earlier-failure cause follows. Strict matching ARM64 owner/client
