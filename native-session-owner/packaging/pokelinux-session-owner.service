@@ -1,5 +1,5 @@
 [Unit]
-Description=PokeLinux native compositor and Sounds session owner
+Description=PokeLinux native compositor, Sounds and Messages session owner
 After=systemd-user-sessions.service
 ConditionPathExists=/etc/pokelinux/session.json
 

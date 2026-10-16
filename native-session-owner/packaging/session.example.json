@@ -14,5 +14,12 @@
     "PATH": "/usr/bin",
     "XDG_SESSION_TYPE": "wayland",
     "XDG_CURRENT_DESKTOP": "Hyprland"
+  },
+  "appearance_socket": "/run/pokelinux/appearance.sock",
+  "messages": {
+    "mode": "history",
+    "runtime": "/run/pokelinux/messages-storage",
+    "raw": "/var/lib/pokelinux/messages/raw",
+    "inbox": "/var/lib/pokelinux/messages/inbox"
   }
 }

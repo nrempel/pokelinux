@@ -1,6 +1,8 @@
 //! One production session composition, retaining Source custody on every return.
 use crate::{Compositor, MAX_SOURCE_STARTUP_NS, SourceOwner, config::Config};
+use pokelinux_lifecycle::messages::Provider as _;
 use pokelinux_lifecycle::{boottime_ns, session::Provider};
+use pokelinux_messages::worker::Projector;
 use std::{io, time::Duration};
 pub const CLEANUP_BUDGET_NS: u64 = 2_000_000_000;
 /// Every caller retains the same SourceOwner through successful actual reap.
@@ -54,7 +56,22 @@ pub fn run(config: &Config) -> io::Result<()> {
         },
         until,
     )?;
+    // Retain the optional history provider outside every subsequent fallible setup.
+    let mut messages = None;
     let outcome = (|| {
+        if let crate::config::Messages::History {
+            runtime,
+            raw,
+            inbox,
+        } = &config.messages
+        {
+            messages = Some(Projector::spawn(
+                runtime,
+                raw,
+                inbox,
+                &std::env::current_exe()?,
+            )?);
+        }
         let mut display = crate::display::Factory::new(
             config.display_parent.clone(),
             config.wayland.clone(),
@@ -73,7 +90,9 @@ pub fn run(config: &Config) -> io::Result<()> {
             &config.profiles,
             &config.app_entry,
             None,
-            None,
+            messages
+                .as_mut()
+                .map(|p| p as &mut dyn pokelinux_lifecycle::messages::Provider),
             Some(&mut source),
             Some(&mut display),
             None,
@@ -83,8 +102,21 @@ pub fn run(config: &Config) -> io::Result<()> {
     // The actor drains its Source internally on normal/loop-error completion.
     // This outer original budget also covers setup errors before that loop.
     let cleanup_until = boottime_ns().saturating_add(CLEANUP_BUDGET_NS);
+    // Fence both providers before either drain spends the shared original cutoff.
+    source.stop();
+    if let Some(p) = &mut messages {
+        p.stop();
+    }
+    let history_drained = messages
+        .as_mut()
+        .is_none_or(|p| p.drain_until(cleanup_until));
+    let outcome = if history_drained {
+        outcome
+    } else {
+        Err(io::ErrorKind::TimedOut.into())
+    };
     let outcome = drain_after(&mut source, outcome, cleanup_until);
-    if source.occupied() {
+    if source.occupied() || messages.as_ref().is_some_and(|p| p.occupied()) {
         std::process::abort();
     }
     outcome

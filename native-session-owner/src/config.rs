@@ -17,9 +17,34 @@ pub struct Config {
     pub display_parent: PathBuf,
     pub wayland: PathBuf,
     pub audio_socket: PathBuf,
+    pub appearance_socket: PathBuf,
+    pub messages: Messages,
     pub compositor_executable: PathBuf,
     pub compositor_config: PathBuf,
     pub environment: BTreeMap<String, String>,
+}
+/// Explicit installed target capability, never an incoming/backend selector.
+#[derive(Debug, Deserialize)]
+#[serde(tag = "mode", rename_all = "snake_case", deny_unknown_fields)]
+pub enum Messages {
+    Disabled,
+    History {
+        runtime: PathBuf,
+        raw: PathBuf,
+        inbox: PathBuf,
+    },
+}
+/// Fixed installed principals. Display admission uses this same mapping.
+pub(crate) fn app_uid(app: &pokelinux_lifecycle::AppProfile) -> io::Result<u32> {
+    let uid = match app.app.as_str() {
+        pokelinux_lifecycle::audio::APP => 11042,
+        pokelinux_lifecycle::messages::APP => 11010,
+        _ => return Err(io::ErrorKind::PermissionDenied.into()),
+    };
+    if app.uid != uid || app.args.len() != 6 {
+        return Err(io::ErrorKind::PermissionDenied.into());
+    }
+    Ok(uid)
 }
 fn absolute(path: &Path) -> io::Result<()> {
     if !path.is_absolute() || path.components().any(|p| matches!(p, Component::ParentDir)) {
@@ -89,10 +114,39 @@ impl Config {
         for path in [&self.runtime, &self.display_parent] {
             protected_directory(path)?;
         }
-        for path in [&self.wayland, &self.audio_socket] {
+        for path in [&self.wayland, &self.audio_socket, &self.appearance_socket] {
             absolute(path)?;
         }
         private_directory(&self.policy, 0)?;
+        protected_directory(
+            self.appearance_socket
+                .parent()
+                .ok_or(io::ErrorKind::InvalidInput)?,
+        )?;
+        if let Messages::History {
+            runtime,
+            raw,
+            inbox,
+        } = &self.messages
+        {
+            let mut identities = std::collections::BTreeSet::new();
+            for path in [
+                &self.runtime,
+                &self.policy,
+                &self.display_parent,
+                runtime,
+                raw,
+                inbox,
+            ] {
+                if [runtime, raw, inbox].contains(&path) {
+                    private_directory(path, 0)?;
+                }
+                let m = fs::symlink_metadata(path)?;
+                if !identities.insert((m.dev(), m.ino())) {
+                    return Err(io::ErrorKind::PermissionDenied.into());
+                }
+            }
+        }
         installed_file(&self.profiles)?;
         installed_file(&self.compositor_config)?;
         pokelinux_lifecycle::service::trusted_executable(&self.app_entry)?;
@@ -141,24 +195,31 @@ impl Config {
             return Err(io::ErrorKind::PermissionDenied.into());
         }
         let profiles = pokelinux_lifecycle::service::profile(&self.profiles)?;
-        if profiles.apps.len() != 1 {
+        let history = matches!(&self.messages, Messages::History { .. });
+        if profiles.apps.len() != if history { 2 } else { 1 } {
             return Err(io::ErrorKind::PermissionDenied.into());
         }
-        let app = &profiles.apps[0];
-        if app.app != pokelinux_lifecycle::audio::APP || app.uid != 11042 || app.args.len() != 6 {
-            return Err(io::ErrorKind::PermissionDenied.into());
+        let mut roles = std::collections::BTreeSet::new();
+        for app in &profiles.apps {
+            let uid = app_uid(app)?;
+            if !roles.insert(app.app.as_str())
+                || (!history && app.app != pokelinux_lifecycle::audio::APP)
+            {
+                return Err(io::ErrorKind::PermissionDenied.into());
+            }
+            for arg in &app.args {
+                absolute(Path::new(arg))?;
+            }
+            if Path::new(&app.args[2]) != self.wayland
+                || Path::new(&app.args[3]) != self.appearance_socket
+                || Path::new(&app.args[4]) != self.runtime.join("app.sock")
+            {
+                return Err(io::ErrorKind::PermissionDenied.into());
+            }
+            private_directory(Path::new(&app.args[0]), uid)?;
+            private_directory(Path::new(&app.args[1]), uid)?;
+            protected_directory(Path::new(&app.args[5]))?;
         }
-        for arg in &app.args {
-            absolute(Path::new(arg))?;
-        }
-        if Path::new(&app.args[2]) != self.wayland
-            || Path::new(&app.args[4]) != self.runtime.join("app.sock")
-        {
-            return Err(io::ErrorKind::PermissionDenied.into());
-        }
-        private_directory(Path::new(&app.args[0]), 11042)?;
-        private_directory(Path::new(&app.args[1]), 11042)?;
-        protected_directory(Path::new(&app.args[5]))?;
         Ok(())
     }
 }

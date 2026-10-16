@@ -38,6 +38,13 @@ Dashed connections are work still required, not working hardware paths. “Rust 
 
 The [native Rust session owner](docs/native-session-owner.md) retains the
 compositor Child and composes Source, lifecycle, per-app display and audio.
+The current [Messages history assembly](docs/native-messages-session-composition.md)
+adds an explicit history/disabled target and the shared appearance client. Current
+host components36 and Source-status12 pass in one recorded selection; later
+retained release owner/launch-client builds and three exact-owner history cases
+pass separately. Actual eight-file Make staging also passes without activation.
+The earlier missing-fixture aggregate remains failed. Normal
+Messages GUI/session composition, ARM availability and all phone gates remain open.
 Host ownership/storage checks, strict host/ARM builds and Make staging qualify
 within their recorded scopes. [Source observation](docs/native-source-observation.md)
 adds four actual IPC/four local passes after genuine RED. The separate default

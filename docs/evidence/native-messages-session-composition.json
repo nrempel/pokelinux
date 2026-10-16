@@ -1,0 +1,267 @@
+{
+  "schema": 1,
+  "scope": "Current Messages history/session composition documentation; separate host components and historical UI evidence, no normal GUI/session or phone qualification",
+  "public_base": "6ee28297c0188c8b3e2820b9443b946e767e577a",
+  "source_snapshots": {
+    "merged551": {
+      "manifest_sha256": "d6327a2bb75cf4166b96f97c3eb18941aca99da331bcdc34134e1abd7a1c1843",
+      "file_count": 551,
+      "bytes": 4297846
+    },
+    "fixture_input_repair556": {
+      "manifest_sha256": "c8d6fc87161783952e3fa1a50a2cc69f2c2b2c53f99fc5333dccb669ac01dbf2",
+      "file_count": 556,
+      "bytes": 4337963,
+      "all_prior551_files_unchanged": true,
+      "added_public_fixture_inputs": 5,
+      "completed_followup_scope": "Separate release artifact completion only; no inherited aggregate GREEN"
+    }
+  },
+  "selected_current_source_sha256": {
+    "native-session-owner/Cargo.toml": "358c8bfea9ccd88dccc21821df02e11d63f1f6663d61c0903e6938564eb4e319",
+    "native-session-owner/Cargo.lock": "58c0b4abfa73f34e62dd4fbff5ebcae7227dfd8a87a8a74f91d39f72771c09f1",
+    "native-session-owner/Makefile": "0c3a7c53456dd410dc72089ba8205e77b2e51ebf968b359cbe0991510efeb9a7",
+    "native-session-owner/src/config.rs": "adb41c450fc2a113d6e45d5d7829b76418264120650a786d38d51b0109ab0143",
+    "native-session-owner/src/runtime.rs": "8a569eb6755da1cf3ce348697bf369b3cb0def1b2f4fff35b72fc4c4c5d68e9f",
+    "native-session-owner/src/main.rs": "0111160fe6b14f3666c15b1009fec45fd3f30ab01e6b2cbdbbe3c37705d189e9",
+    "native-session-owner/src/display.rs": "b69cf2148b9178fcda0718a639294968e8968337c48e089e7fed749be2334741",
+    "native-session-owner/packaging/session.example.json": "acf682b33468311cfbb611173281eb57441a97fe8dd840a9582dde99a6292e99",
+    "native-session-owner/packaging/apps.example.json": "e1b8e5ab33075ed0f32011d276b97d7a1ef9594a66ccb111a9bac9ef3c8701a0",
+    "native-session-owner/packaging/pokelinux-session-owner.service": "19d10b95dcdd4f209a4a796c4b4286d5da819789a626cefaaefbe2214149d062",
+    "native-session-owner/tests/messages_config.rs": "b4fe20feb9309baa912406d0336b6ddbb1ba03fe1148452f4152442172b04e6a",
+    "native-session-owner/tests/history_workers.rs": "330eef97fd6827ccab5b79496f8f93e9417343318e2c2bba1a56d2f57e268e51",
+    "native-session-owner/tests/display.rs": "6a54508088fad3e22cce7d14e67af499461934ae73f446ac598051e16756513b",
+    "native-session-owner/tests/support/runtime-setup-test-fixture.rs": "d7ffc5b82958876eb1720da026b2bc3e2a987d9605415412206f4687393cc082",
+    "native-messages-ui/CMakeLists.txt": "c08c2ac2cd995056878b6984c78020ee8fe2dd9fd2e43760629e4f3253e5042c",
+    "native-messages-ui/main.cpp": "fd0bd9f42af7e24759c4d70cadca5e8acc8b091334710047179ac053f11f225d",
+    "native-messages-ui/org.omarchy.Messages.desktop": "e77cba1df72466dc1a6f601aaa46ff0fd35686e545691cbe6001ad457ad5051a",
+    "native-messages-ui/appearance-tests/CMakeLists.txt": "a5bcbcbd9ee89e39a078135bdf36c84707f8497dc238cb55c52598d9b0c2d342",
+    "native-messages-ui/appearance-tests/process.cpp": "1183872932f04c89ba21658d8332382f9f1ea71df963c59cdb81a09013036d6e",
+    "native-app/PhoneAppearanceClient.cpp": "7a2a5d0d5f7a5012dd724596a1bf1f96d8fa9d3242c913933d8cf69fe9de34d9",
+    "native-app/PhoneAppearanceClient.h": "b7b12f9a1d335e9036dc065ea2218ca107d447f57e029fef674941e1520b4e92",
+    "native-app/PhoneAppearance.qml": "705ab25799cba18095a76f4fb47e70eb10099ca035426d7e4400fa9cef8452bc"
+  },
+  "current_partial_qualification": {
+    "summary_sha256": "4452afb1485347922c23ccfc2190a3bdda76fdce40ecc7805ef96ffcdbe613cd",
+    "selection_manifest_sha256": "d6327a2bb75cf4166b96f97c3eb18941aca99da331bcdc34134e1abd7a1c1843",
+    "component_passes": {
+      "messages_config_and_setup": 9,
+      "history_workers": 3,
+      "display": 9,
+      "existing_config": 15,
+      "total": 36
+    },
+    "Source_status_passes": 12,
+    "default_release": {
+      "opt_level": 3,
+      "isolated_fixture": false,
+      "owner_and_messages_launch_compile_completed": true,
+      "exact_history_passes": 3,
+      "retained_binary_hashes": null
+    },
+    "aggregate_failure": {
+      "phase": "sounds-launch-release",
+      "exit": 101,
+      "reason": "Frozen source omitted tools/native-session-authority/fixture/Cargo.toml",
+      "feature_RED_claim": false
+    },
+    "binary_hash_limit": "Artifacts lost when tmpfs container was cleaned after setup failure; no historical binary substitution",
+    "custody": {
+      "actor_waits0": 12,
+      "actor_stdout_PIPE_EOFs": 12,
+      "actor_stderr_PIPE_EOFs": 12,
+      "Source_waits": 11,
+      "Source_streams": "DEVNULL; no PIPE EOF claims",
+      "outer_CLI_waits": 10,
+      "outer_stdout_PIPE_EOFs": 10,
+      "outer_stderr_PIPE_EOFs": 10,
+      "same_daemon": true,
+      "exact_CID_absent": true,
+      "original_observed_cutoffs_met": true
+    }
+  },
+  "historical_owner": {
+    "public_base": "2bef7c1d57ee26a5301628b08d66eacd3d2df207",
+    "summary_sha256": "9938c2f001c02aa9b893456dfbd33f75ce39c4735bd97dcd3510d94052ff5728",
+    "strict_behavioral_RED": {
+      "messages_config": {
+        "pass": 6,
+        "fail": 2
+      },
+      "history_workers": {
+        "pass": 1,
+        "fail": 2
+      },
+      "messages_factory": {
+        "pass": 0,
+        "fail": 1
+      },
+      "factory_negative": {
+        "pass": 1,
+        "fail": 0
+      }
+    },
+    "component_passes": 36,
+    "setup_error_case_added_after_initial_GREEN": true,
+    "default_owner": "No isolated feature; dev opt0, not release",
+    "default_owner_history_passes": 3,
+    "Make_staged_files": 8,
+    "unit_activated": false,
+    "Projector_wait_scope": "Actual child waits internal to Projector, occupancy/ECHILD witnesses; numeric child exit statuses not exported; DEVNULL streams",
+    "normal_GUI_or_real_Source_composition": false
+  },
+  "historical_matching_UI_source": {
+    "manifest_sha256": "ad66c58fbd30c4f6ca8651c445f595fd6b40da6236848a71a2a9bb3e38db36bb",
+    "qualification_sha256": "a9a9c01b0b142d27e7615cb0ef1ca07bb148d03a85d101e9e5f5496df500aba7",
+    "normal_native_build": {
+      "ELF_machine": 62,
+      "sha256": "deb3fc1dfaeecd0737dca037c591b3bc5c4be917b13f08128f15de2407f43e8f",
+      "Qt_version": "6.8.2",
+      "CMake_profile": "Release",
+      "warnings_as_errors": true,
+      "normal_observer_macro_unselected": true
+    },
+    "strict_compiled_RED": {
+      "normal_argc_UID_controls": 4,
+      "installed_live_policy_invocations": 3,
+      "expected_exit": 101,
+      "single_failure": "missing installed PhoneAppearance.qml; three invocations share that prerequisite"
+    },
+    "matching_GREEN": {
+      "normal_argc_UID_controls": 4,
+      "installed_component": true,
+      "live_appearance_and_unavailable": true,
+      "authored_Messages_denial_unavailable_and_literal_QML_delegate": true,
+      "actual_application_UID": 11010
+    },
+    "shared_source_sha256": {
+      "PhoneAppearanceClient.cpp": "7a2a5d0d5f7a5012dd724596a1bf1f96d8fa9d3242c913933d8cf69fe9de34d9",
+      "PhoneAppearanceClient.h": "b7b12f9a1d335e9036dc065ea2218ca107d447f57e029fef674941e1520b4e92",
+      "PhoneAppearance.qml": "705ab25799cba18095a76f4fb47e70eb10099ca035426d7e4400fa9cef8452bc"
+    },
+    "reused29": {
+      "proof_sha256": "ebea18358c8deabfe120e20c8eb6d5d853ae48258bb906e07c2eafb2d83bde9a",
+      "rerun": false,
+      "new_normal_GUI_claim": false
+    },
+    "root_peers": "Authored SEQPACKET fixtures, not production appearance/lifecycle authorities",
+    "normal_main_execution": "Only pre-QGui argc/UID refusals64/65; positive six-argument GUI path unexecuted",
+    "presenting_window_or_capture": false
+  },
+  "preserved_boundaries": [
+    "Source100ms lease and terminal rejection",
+    "No Source replacement, retry, focus or grant relaxation",
+    "Pixel10 native display/capture guards",
+    "Independent audio/PCM guards",
+    "Typed source-rejection and render-witness failure chronology"
+  ],
+  "remaining": [
+    "Current normal launcher/actor/per-app Wayland/real Source and positive Messages GUI path",
+    "Independent grant-to-read, cross-app denial, revoke/stale-read clearing and terminal Source-loss GUI evidence",
+    "Production appearance broker and live theme changes on the normal GUI path",
+    "ARM runtime availability and installed provisioning",
+    "Trusted lock/PAM, secure presentation, incoming/send/ACK/producer identity, notifications/wake",
+    "Modem/carrier and all physical Pixel gates"
+  ],
+  "private_raw_logs_or_binaries_published": false,
+  "phone_accessed": false,
+  "combined_GUI_session_qualified": false,
+  "current_release_completion": {
+    "passed": true,
+    "qualification_sha256": "461f0921109afa4e326681999da2b8d488c1000c61040086cd4eebecb0a3371e",
+    "manifest_sha256": "967149a3821ea47a9e07c26fa4bd056d48a998dfbf08e076ceb77a193f104a66",
+    "approved_source_manifest_sha256": "c8d6fc87161783952e3fa1a50a2cc69f2c2b2c53f99fc5333dccb669ac01dbf2",
+    "all556_inputs_and_prior551_unchanged": true,
+    "strict_Clippy_all_three": true,
+    "opt_level": 3,
+    "debuginfo": 0,
+    "features": [],
+    "explicit_no_default_features": true,
+    "isolated_fixture": false,
+    "retained_artifacts": {
+      "pokelinux-session-owner": {
+        "sha256": "22e68b4cc83f59de193dc93c47248a283c9895b89b057ca8a21b0f49bda6267d",
+        "bytes": 5512872,
+        "ELF_machine": 62,
+        "profile": "release opt3",
+        "isolated_fixture": false,
+        "features": [],
+        "no_default_features_argument": true
+      },
+      "messages-launch": {
+        "sha256": "36acb427e80f6503a4f753bc94c452256de578314f70a5c53c02714a96d123ba",
+        "bytes": 967120,
+        "ELF_machine": 62,
+        "profile": "release opt3",
+        "isolated_fixture": false,
+        "features": [],
+        "no_default_features_argument": true
+      },
+      "sounds-launch": {
+        "sha256": "235d6eadc5513711ad23d68a10484a10063d6dcca038039c5e9e587c8571b081",
+        "bytes": 966712,
+        "ELF_machine": 62,
+        "profile": "release opt3",
+        "isolated_fixture": false,
+        "features": [],
+        "no_default_features_argument": true
+      }
+    },
+    "history_cases": 3,
+    "history_passed": true,
+    "exact_retained_owner_hash_unchanged_before_and_after_history": true,
+    "prior36_components_and12_Source_cases": "Reused separately; not rerun or aggregated",
+    "earlier_missing_input_failure_preserved": true,
+    "custody": {
+      "outer_CLI_actual_waits": 10,
+      "outer_stdout_PIPE_EOFs": 10,
+      "outer_stderr_PIPE_EOFs": 10,
+      "same_daemon": true,
+      "exact_CID_absent": true,
+      "actual_container_exit": 0,
+      "actual_attach_exit": 0,
+      "all_original_observed_cutoffs_met": true,
+      "inner_shell_actual_waits": 13,
+      "inner_stdout_stderr": "regular files; no PIPE EOF claims",
+      "inner_timestamp_resolution_ns": 10000000,
+      "history_workers": "actual internal parent waits/ECHILD/occupancy; DEVNULL, no numeric per-child status or PIPE EOF claim"
+    },
+    "no_GUI_or_real_Source_composition": true
+  },
+  "current_Make_staging": {
+    "passed": true,
+    "qualification_sha256": "2f455374c8e03156e2dac6e3ef5742d6b309717cf9f61832dfe0bc63bff98583",
+    "source_output_manifest_sha256": "8e1892fec5b5528876e74527b9118da2304631d5ab96c43c816266a32e3ce650",
+    "manifest_sha256": "a588cbeae8e91adc0a83a2309ae69bfb1c336c2ba6ce5006502e8dcae8433167",
+    "GNU_Make": "4.4.1",
+    "install_exit": 0,
+    "exact_outputs": 8,
+    "uid": 0,
+    "gid": 0,
+    "binary_mode": "0755",
+    "metadata_mode": "0644",
+    "output_sha256": {
+      "usr/lib/systemd/system/pokelinux-session-owner.service": "19d10b95dcdd4f209a4a796c4b4286d5da819789a626cefaaefbe2214149d062",
+      "usr/libexec/pokelinux/messages-launch": "36acb427e80f6503a4f753bc94c452256de578314f70a5c53c02714a96d123ba",
+      "usr/libexec/pokelinux/pokelinux-session-owner": "22e68b4cc83f59de193dc93c47248a283c9895b89b057ca8a21b0f49bda6267d",
+      "usr/libexec/pokelinux/sounds-launch": "235d6eadc5513711ad23d68a10484a10063d6dcca038039c5e9e587c8571b081",
+      "usr/share/applications/org.omarchy.Messages.desktop": "e77cba1df72466dc1a6f601aaa46ff0fd35686e545691cbe6001ad457ad5051a",
+      "usr/share/applications/org.omarchy.Sounds.desktop": "42f4157e5edae04d0c57a8311cf2abeda518d395ca3ef2206f63216d54d03e1d",
+      "usr/share/pokelinux/session-owner/apps.example.json": "e1b8e5ab33075ed0f32011d276b97d7a1ef9594a66ccb111a9bac9ef3c8701a0",
+      "usr/share/pokelinux/session-owner/session.example.json": "acf682b33468311cfbb611173281eb57441a97fe8dd840a9582dde99a6292e99"
+    },
+    "selected_inputs_unchanged": true,
+    "fixed_desktop_endpoints_and_history_two_role_six_arg_examples_verified": true,
+    "actual_CLI_waits": 10,
+    "stdout_PIPE_EOFs": 10,
+    "stderr_PIPE_EOFs": 10,
+    "original_work_seconds": 60,
+    "original_close_seconds": 90,
+    "all_observed_original_cutoffs_met": true,
+    "same_daemon": true,
+    "exact_CID_absent": true,
+    "service_activation": false,
+    "test_reruns": false,
+    "normal_GUI_or_full_session_qualification": false
+  }
+}

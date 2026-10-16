@@ -1,10 +1,15 @@
-# Native Sounds session owner
+# Native session owner
 
-The new `native-session-owner` Rust entry starts and owns the compositor, then
+The `native-session-owner` Rust entry starts and owns the compositor, then
 composes the existing Source Observer, lifecycle actor, per-app Wayland supervisor
-and sole audio client. A fixed desktop request can launch the installed Sounds
-profile, but cannot grant permission, choose an executable or restore a failed
-Source. The initial host cohort passes32 cases; the later policy-directory
+and sole audio client. Current configuration also explicitly selects local
+Messages history or disabled mode; fixed desktop requests grant no permission,
+choose no executable and cannot restore a failed Source. The
+[Messages composition report](native-messages-session-composition.md) separates
+current host components from historical owner/UI evidence and the unexecuted
+normal Messages GUI/session gate.
+
+The original Sounds-only host cohort passes32 cases; the later policy-directory
 repair passes15 current preflight cases and two actual native worker groups.
 The other24 original cases are reused, without a39-case current aggregate.
 Host and ARM64 binaries compile; the combined original-compositor ARM session
@@ -31,25 +36,37 @@ An unresolved occupied owner aborts rather than detaching. Existing actor/storag
 fail-stop paths are not graceful-return cleanup. This qualifies the direct leader
 Child, without claiming native reaping of all compositor descendants.
 
-The Sounds display Factory accepts its configured original Wayland path before
-it is bound. An admitted launch connects nonblocking, checks the actual peer
+The fixed Sounds/Messages display Factory accepts its configured original Wayland
+path before it is bound. An admitted launch connects nonblocking, checks the actual peer
 against the retained compositor PID/UID/GID and pidfd, and starts the existing
-owned SDK. Only a fresh per-app listener is given to UID11042. Listener withdrawal
-precedes SDK termination even when withdrawal fails; occupancy lasts until reap.
+owned SDK. Only a fresh per-app listener is given to UID11042 Sounds or
+UID11010 Messages. Listener withdrawal precedes SDK termination even when withdrawal fails; occupancy lasts until reap.
 
-Root-installed strict configuration binds one Sounds profile, exact six app
-arguments, private UID1000/11042 HOME/runtime directories, protected installer
-paths and a bounded environment. The `policy` path must be an existing root-owned
-0700 directory, which the storage worker uses for its policy and owner seals.
+Root-installed strict configuration requires `appearance_socket` and an explicit
+tagged `messages` mode. Disabled mode binds only UID11042 Sounds; history mode
+requires both Sounds and UID11010 Messages, exactly six absolute arguments per
+app, matching canonical Wayland/appearance/actor paths and private app HOME/runtime
+directories. History runtime/raw/inbox must be existing, distinct root0700
+directories, separate from session runtime/policy/display. Private UID1000
+compositor HOME/runtime, protected installer paths and the bounded environment
+remain required. The `policy` path must be an existing root-owned0700 directory, which the storage worker uses for its policy and owner seals.
 Missing paths and filenames are refused before compositor spawn. Unknown
-permission, unlock and Source fields are refused. The same binary dispatches existing app-entry, storage and display
-workers. `--stop ABSOLUTE_RUNTIME` uses fixed typed bounded IPC directly, without
-reading session configuration, profiles or HOME files.
+permission, unlock and Source fields are refused. The same binary dispatches
+existing app-entry, storage, display and Messages writer/read workers. The optional
+history Projector is retained across subsequent fallible setup; returning cleanup
+fences both providers before draining against one shared original two-second
+cutoff, aborting if either remains occupied. `--stop ABSOLUTE_RUNTIME` uses fixed
+typed bounded IPC directly, without reading session configuration, profiles or
+HOME files.
 
 The [crate instructions](../native-session-owner/README.md) describe building and
-staging. Actual Make install stages two native binaries, the desktop file, unit
-and two examples with exact hashes/modes. It activates no unit. Operational
-accounts, policy, matching Source plugin/compositor configuration, app assets,
+staging. The original actual Make install staged two native binaries, the Sounds
+desktop file, unit and two examples with exact hashes/modes. The current target
+defines eight staged files by adding `messages-launch` and its desktop file;
+separate current release completion retains all three compiled binaries and passes
+three exact-owner history cases. A separate actual GNU Make4.4.1 install passes
+all eight current files with exact hashes, root:root ownership and0755/0644 modes.
+It activates no unit and adds no combined GUI claim. Operational accounts, policy, matching Source plugin/compositor configuration, app assets,
 appearance and audio services still require provisioning. The unit's cgroup kill
 policy is metadata, without an executed systemd or native descendant-cleanup claim.
 

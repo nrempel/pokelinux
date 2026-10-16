@@ -42,9 +42,16 @@ established, and normal Sounds/PCM remains unreached. Narrow the next observatio
 to original endRender phases while retaining Pixel/Source/focus/PCM guards.
 Native success would not close ARM or phone gates.
 
-The [native Rust session owner](native-session-owner.md) now implements compositor
-Child custody and fixed Sounds session assembly.32 host boundary cases,
-host/ARM64 compilation and actual six-file Make staging pass. The full completion
+The [native Rust session owner](native-session-owner.md) implements compositor
+Child custody; its original Sounds assembly has32 host boundary passes,
+host/ARM64 compilation and actual six-file Make staging. The current
+[Messages history assembly](native-messages-session-composition.md) adds an
+explicit history/disabled target and typed shared appearance selection. Current
+host components36 and Source-status12 pass; their later missing-fixture aggregate
+remains failed. A separate completion retains three release opt3, feature-empty
+owner/launch-client ELFs and passes strict Clippy and three exact-owner history
+cases. Separate actual eight-file Make staging passes without activation; normal
+Messages GUI/session remains open. The full completion
 matrix below remains in force: combined original Source/normal app ARM execution,
 trusted restoration, full startup provisioning and all physical gates remain open.
 

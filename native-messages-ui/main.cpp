@@ -1,5 +1,5 @@
 #include "MessagesClient.h"
-#include "PhoneThemeFiles.h"
+#include "PhoneAppearanceClient.h"
 #include <QGuiApplication>
 #include <QQuickView>
 #include <QQuickItem>
@@ -44,9 +44,10 @@ int main(int argc,char**argv){
   if(count==ssize_t(sizeof(notification))&&notification.ssi_signo==SIGTERM)app.quit();
   else app.exit(70);
  });
- PhoneThemeFiles files(QString::fromLocal8Bit(argv[4]));QQuickView view;
- QQmlComponent component(view.engine(),QUrl::fromLocalFile(QString::fromLocal8Bit(argv[6])+"/PhoneTheme.qml"));
- QScopedPointer<QObject> theme(component.createWithInitialProperties({{"source",QVariant::fromValue(&files)}}));if(!theme)return 66;
+ // argv4 is the authenticated public appearance socket, never a HOME path.
+ PhoneAppearanceClient appearance(QString::fromLocal8Bit(argv[4]));QQuickView view;
+ QQmlComponent component(view.engine(),QUrl::fromLocalFile(QString::fromLocal8Bit(argv[6])+"/PhoneAppearance.qml"));
+ QScopedPointer<QObject> theme(component.createWithInitialProperties({{"source",QVariant::fromValue(&appearance)}}));if(!theme)return 66;
  MessagesClient client(QString::fromLocal8Bit(argv[5]));
  view.setTitle("Messages");view.setInitialProperties({{"theme",QVariant::fromValue(theme.data())},{"messagesClient",QVariant::fromValue(&client)}});
  view.setResizeMode(QQuickView::SizeRootObjectToView);view.setSource(QUrl("qrc:/messages/MessagesView.qml"));if(view.status()!=QQuickView::Ready)return 67;view.resize(390,844);view.show();

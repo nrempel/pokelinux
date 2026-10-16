@@ -8,6 +8,7 @@ publish = false
 isolated-fixture = []
 
 [dependencies]
+pokelinux-messages = { path = "../native-messages" }
 pokelinux-display = { path = "../native-display" }
 pokelinux-session = { path = "../native-session" }
 pokelinux-lifecycle = { path = "../native-lifecycle" }
@@ -57,4 +58,12 @@ required-features = ["isolated-fixture"]
 [[test]]
 name = "source_status"
 path = "tests/source_status.rs"
+required-features = ["isolated-fixture"]
+
+[dev-dependencies]
+pokelinux-messaging = { path = "../native-messaging" }
+
+[[bin]]
+name = "session-runtime-setup-test-fixture"
+path = "tests/support/runtime-setup-test-fixture.rs"
 required-features = ["isolated-fixture"]

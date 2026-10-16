@@ -1,9 +1,11 @@
 # Native session owner
 
 This Rust entry owns one compositor Child and composes the existing Source
-Observer, lifecycle actor, per-app Wayland supervisor and audio client. The fixed
-Sounds desktop request still supplies no permission, route or executable.
-This is the Sounds session assembly; the full smartphone system remains open.
+Observer, lifecycle actor, per-app Wayland supervisor, audio client and explicitly
+selected local Messages history. The fixed Sounds and Messages desktop requests
+supply no permission, route or executable. The full smartphone system remains open;
+see the [composition report](../docs/native-messages-session-composition.md) for
+current component evidence and the remaining normal-session gate.
 
 The new service starts the compositor itself. Its private credentialed socket
 passes through the fixed internal bootstrap on stdin, then only the selected
@@ -17,8 +19,10 @@ SourceOwner retains Child custody before every post-spawn fallible operation.
 Poll is nonblocking and terminal errors still drive actual try_wait. Stop fences
 local facts and signals KILL immediately; occupancy clears only after actual
 wait. The parent lifecycle fences permissions before its normal provider Stop.
-Every returning outer setup path drains the same owner with one original cleanup
-cutoff. Existing storage/actor fail-stop aborts are not graceful-return cleanup.
+In history mode the Projector is retained before subsequent fallible setup. Every
+returning outer setup path fences Source and history before draining both against
+one shared original two-second cutoff; retained occupancy aborts. Existing
+storage/actor fail-stop aborts are not graceful-return cleanup.
 No production poll writes to a potentially blocked logging stream.
 
 The existing root-admin Snapshot reports bounded [Source observation history](../docs/native-source-observation.md):
@@ -31,31 +35,39 @@ The first failure survives cleanup; observation does not change authority or ret
 
 The display Factory accepts a configured Wayland pathname before it exists.
 An admitted launch connects nonblocking and checks the actual peer against the
-retained compositor pidfd/PID/UID/GID before the owned SDK setup. Sounds gets
-only its fresh per-app listener; the original desktop runtime stays private.
+retained compositor pidfd/PID/UID/GID before the owned SDK setup. Each admitted
+fixed app gets only its fresh per-app listener; the original desktop runtime stays private.
 Listener withdrawal precedes SDK termination, including withdrawal failure.
 These checks do not claim containment of every compositor descendant.
 
 ## Build and stage
 
 ```sh
-cargo build --manifest-path native-session-owner/Cargo.toml --locked --release --bin pokelinux-session-owner
-cargo build --manifest-path native-lifecycle/Cargo.toml --locked --release --bin sounds-launch
+cargo build --manifest-path native-session-owner/Cargo.toml --locked --release --no-default-features --bin pokelinux-session-owner
+cargo build --manifest-path native-lifecycle/Cargo.toml --locked --release --no-default-features --bin sounds-launch
+cargo build --manifest-path native-messages/Cargo.toml --locked --release --no-default-features --bin messages-launch
 make -C native-session-owner install \
   SESSION_OWNER_BIN="$PWD/native-session-owner/target/release/pokelinux-session-owner" \
   SOUNDS_LAUNCH_BIN="$PWD/native-lifecycle/target/release/sounds-launch" \
+  MESSAGES_LAUNCH_BIN="$PWD/native-messages/target/release/messages-launch" \
   DESTDIR="$PWD/session-stage"
 ```
 
-The install target stages the two native binaries, desktop file, unit and examples.
-It does not activate a host session or install examples as operational policy.
-Install the normal Sounds Qt/QML target through its existing CMake rules.
+The install target defines eight staged files: three native binaries, two desktop
+files, the unit and two examples. It does not activate a host session or install
+examples as operational policy. Install the normal Sounds and
+[Messages Qt/QML targets](../native-messages-ui/README.md) through their CMake rules.
 Supply a matching original Hyprland/Source-adapter build and a root-installed
 compositor configuration that loads that adapter. Full Omarchy shell setup and
 device graphics remain separate from a minimal Source composition.
 
 The deployment must create root-owned nonwritable runtime, display and policy
-ancestors, UID1000 compositor HOME/runtime0700 and UID11042 app HOME/runtime0700.
+ancestors, UID1000 compositor HOME/runtime0700 and UID11042 Sounds
+HOME/runtime0700. History mode also needs UID11010 Messages HOME/runtime0700
+and three existing, separate root0700 directories for history runtime/raw/inbox.
+The required `appearance_socket` has a protected parent. Both fixed profiles have
+exactly six absolute arguments and bind the configured Wayland path, appearance
+socket and session `app.sock`; configuration grants no app access.
 The `policy` field names an existing root-owned directory with mode0700, such as
 `/var/lib/pokelinux/session`. It is the lifecycle storage directory, which owns
 its policy and durable owner files; a policy JSON filename is invalid. Prepare
@@ -65,7 +77,10 @@ the selected directory before startup, for example as root:
 install -d -o0 -g0 -m0700 -- /var/lib/pokelinux/session
 ```
 
-Configuration validation does not create the directory or change storage data.
+The required `messages` field accepts only `{"mode":"disabled"}` (Sounds only)
+or `{"mode":"history","runtime":"…","raw":"…","inbox":"…"}` (both apps).
+There is no incoming/backend selector or implicit default. Configuration validation
+does not create directories or change storage data.
 The examples show the schema; choose actual trusted paths/accounts for the
 installed profile, keeping the unit Stop runtime equal to the configured
 runtime. The sole audio service at11040 and appearance feed must be
@@ -77,7 +92,8 @@ The normal entry takes one root-installed JSON path. `--stop ABSOLUTE_RUNTIME`
 uses the fixed bounded typed Stop client without reading installation/profile
 files. A positive Stop reply acknowledges the actor's reply; actual owner waits
 and independent effects remain distinct evidence. The fixed internal app-entry,
-storage-worker, display-context-worker and compositor-bootstrap modes reuse
+storage-worker, Messages writer/read-worker, display-context-worker and
+compositor-bootstrap modes reuse
 existing ownership boundaries, with no arbitrary service-command API.
 
 The unit uses KillMode=control-group for manager-owned descendant termination
@@ -93,8 +109,16 @@ Host component tests use actual UID1000 Source processes, credentials, pidfds,
 filesystem roles and owned children. Display tests use a real unresponsive
 Wayland peer and actual SDK registry requests, with Preparing rather than an
 invented Ready state. They qualify no original compositor, ARM execution, GUI,
-phone or complete installed Source/audio path. The later combined run must bind
-its own exact source/artifacts and original compositor/normal Qt/graph/samples.
+phone or complete installed Source/app/audio path. Current host36 components and
+12 Source-status cases pass; that earlier aggregate later fails on a missing
+fixture input and loses its tmpfs binaries. A separate completed556-input run
+retains release opt3, feature-empty owner/launch clients, passes strict Clippy for
+all three and three exact retained-owner history cases. The earlier36/12 cases
+are reused, not rerun or combined into a new aggregate. Separate GNU Make4.4.1
+staging passes all eight current files with exact hashes, root:root ownership,
+0755 binaries and0644 metadata, without activation or test reruns. The normal
+GUI/session runtime remains open. The later combined run
+must bind its own exact source/artifacts and original compositor/normal Qt/graph/samples.
 
 Run the explicitly ignored root integration tests only in an isolated prepared
 container with built feature-gated helpers. The `isolated-fixture` helpers are

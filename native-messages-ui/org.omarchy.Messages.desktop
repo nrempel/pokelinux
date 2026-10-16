@@ -2,7 +2,7 @@
 Type=Application
 Name=Messages
 Comment=Local Messages history; modem send and receive unavailable
-Exec=/usr/libexec/pokelinux/messages-launch /run/pokelinux/messages/launch-messages.sock
+Exec=/usr/libexec/pokelinux/messages-launch /run/pokelinux/session/launch-messages.sock
 Icon=mail-message
 Terminal=false
 Categories=Network;Telephony;

@@ -18,6 +18,23 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The current [Messages session assembly](native-messages-session-composition.md)
+selects explicit local history alongside Sounds, shares the actor and per-app
+Wayland Factory, and selects the typed public appearance client/QML. Current
+host components36 and Source-status12 pass in the earlier selection, whose later
+`sounds-launch` build fails on an omitted fixture input and loses its tmpfs
+artifacts. That aggregate remains failed. A separate completed556-input selection
+preserves all551 prior files and retains all three release opt3, feature-empty
+owner/launch-client ELFs, with strict Clippy and three exact retained-owner
+history passes. The36/12 cases are reused, not rerun or combined into a new
+aggregate. Separate actual GNU Make4.4.1 staging now passes all eight current
+files with exact hashes, root:root ownership and0755/0644 modes; no activation or
+test rerun follows.
+Historical owner RED→GREEN and native Qt6.8.2 Release/nonpresenting appearance
+checks remain separately pinned. The successful normal Messages main/launcher,
+current actor, per-app Wayland, real Source and grant→read/revoke/source-loss GUI
+path remains the next integration gate; ARM and all phone gates remain open.
+
 The [fixed Sounds desktop endpoint](native-sounds-desktop.md) now passes six
 actual host UID/socket/owned-child cases after a genuine three-failure dispatch
 RED. The matching fixed Rust client, desktop metadata, default64-test suite and
@@ -156,8 +173,9 @@ endRender phases: render submission, OpenGL finalization, selected synchronizati
 branch and return. No broad startup profiler, Source gate or lease change is
 justified. Strict matching ARM64 owner/client compilation also passes separately,
 without ARM execution.
-Messages history composition remains in a separate worktree and is excluded
-from this replay; its component results do not qualify the normal Messages GUI.
+Messages history composition was excluded from that render-witness replay. The
+current integration described above preserves its Source-rejection changes;
+Messages component results do not qualify the normal Messages GUI.
 
 Preserve the ARM failure and stop speculative fixture changes. Continue
 matching-source native CPU-speed composition on Harbour, with the same Pixel

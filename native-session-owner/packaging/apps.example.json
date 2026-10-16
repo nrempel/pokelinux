@@ -12,6 +12,19 @@
         "/run/pokelinux/session/app.sock",
         "/usr/share/pokelinux/appearance"
       ]
+    },
+    {
+      "app": "org.omarchy.Messages",
+      "uid": 11010,
+      "executable": "/usr/libexec/pokelinux/pokelinux-messages",
+      "args": [
+        "/var/lib/pokelinux/messages/app",
+        "/run/pokelinux/apps/messages",
+        "/run/user/1000/wayland-1",
+        "/run/pokelinux/appearance.sock",
+        "/run/pokelinux/session/app.sock",
+        "/usr/share/pokelinux/appearance"
+      ]
     }
   ]
 }

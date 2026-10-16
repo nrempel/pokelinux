@@ -1,4 +1,4 @@
-//! Sounds-only per-app listener and owned SDK supervisor adaptation.
+//! Fixed Sounds/Messages per-app listeners and owned SDK supervisor adaptation.
 //! Source process custody remains with the installed session owner.
 use pokelinux_display::{
     Metadata, SourceIdentity,
@@ -115,12 +115,7 @@ impl display::Factory for Factory {
         until: u64,
     ) -> io::Result<Box<dyn Context>> {
         // Fixed installed role; no application supplies another profile or UID.
-        if profile.app != pokelinux_lifecycle::audio::APP
-            || profile.uid != 11042
-            || profile.args.len() != 6
-        {
-            return Err(io::ErrorKind::PermissionDenied.into());
-        }
+        crate::config::app_uid(profile)?;
         let now = boottime_ns();
         if until <= now || until - now > display::INITIALIZATION_BUDGET_NS {
             return Err(io::ErrorKind::InvalidInput.into());
