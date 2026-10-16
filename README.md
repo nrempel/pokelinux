@@ -133,6 +133,12 @@ input; frame admission and final device grants are bound to those copied records
 Stop/expiry fence late startup while the worker retains native cleanup custody.
 This archive is not linked into the earlier native Frame ELF/SDK. Production
 AQ/GL/DRM, session ingress/output authority and Source GREEN remain open.
+A separate [actual native GL baseline](docs/native-render-gl-baseline.md) now
+passes exact CLEAR/RECT offscreen readback and retained96-byte Frame custody on
+a real worker EGL context. Its repaired test channel qualifies EOF/unload/join
+with fresh live Source before/after. It selects the earlier Frame native cohort;
+owned SHM/fence behavior, the production Rust render backend and Source7 GREEN
+remain open.
 Earlier [permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
 passes four touch/graph/PCM groups using root-authored focus. Physical audio,
 production session completion and all phone gates remain open.

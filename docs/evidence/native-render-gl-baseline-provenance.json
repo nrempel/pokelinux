@@ -1,0 +1,206 @@
+{
+  "schema": 1,
+  "scope": "Actual native x86 KVM GL baseline: original CLEAR/RECT leaves exact offscreen readback and retained Rust Frame CPU bytes; missing owner-resource/fence interfaces STRUCTURAL only",
+  "current_public_base": "2569e0616a9d13a8548e16245cfe187d560e8fd3",
+  "selected_native_cohort": {
+    "source_base": "130a096d229a799450bbd69f3a780b553c4c74ce",
+    "ELF_sha256": "91848cff35e3d7425c487444bc251d685924c942e603cef427f004d350e584fe",
+    "SDK_sha256": "c1775e08aabb028b08904f37d78f8242b7791c5768a6c0994783c0d88b53d5d5",
+    "SDK_files": 507,
+    "Rust_archive_sha256": "3cf0a142115bc2f261086cfbb9dbfc0d543d0988219f08b1c4988d70f5a36f9b",
+    "latest_Rust_worker_1dcce61e_selected": false
+  },
+  "source_hashes": {
+    "source/baseline-actor.cpp": "6378deb03e4df75217a86eeecd60fa856844d98cd42f3882a83126209cde2830",
+    "source/render-node-inventory.cpp": "d3594378872f60c59b91db4f63bd0930fdb0ba7ce40daa671faecf91d8fbc76a",
+    "source/controller.py": "0414af748e05981b7e3d8dd02c9f84a745bbec32df9f8cd98ea5ee792c170389",
+    "source/owner_gl_epoch.py": "24db93a86c21b8ebe5d0e04bd6217401b6749d923e702704656c5668f2824da8",
+    "source/production/OwnerFramePrimitives.cpp": "5701dcb0f4a41cc0e1aec3bb618a9b4baa7ea17431646d671303752f398f82d6"
+  },
+  "actual_GL_profile": {
+    "vendor": "Mesa",
+    "renderer": "virgl (LLVMPIPE (LLVM 19.1.7, 256 bits))",
+    "version": "OpenGL ES 3.2 Mesa 26.2.4-arch1.1"
+  },
+  "actual_GL_controls": {
+    "target_pixels": [
+      8,
+      6
+    ],
+    "clear_mismatched_bytes": 0,
+    "rect_mismatched_bytes": 0,
+    "exact_retained_pixel_and_padding_bytes": 96,
+    "actual_RGBA_byte_comparisons_per_control": 192,
+    "worker_packet_count": 15,
+    "worker_packet_bytes": 5241,
+    "post_start_authenticated_channel": true,
+    "actual_EOF_then_unload_join_then_task_absence": true,
+    "native_fence_extension_and_procedures_only": true,
+    "native_fence_FD_created_or_completed": false
+  },
+  "Pixel_profile": {
+    "native_pixels": [
+      1080,
+      2424
+    ],
+    "physical_mm": [
+      65,
+      146
+    ],
+    "target_window_DPR": 2.625,
+    "hardware_verified": false
+  },
+  "actual_waits_and_EOFs": {
+    "host": {
+      "direct_waits": 7,
+      "PIPE_EOFs": 14,
+      "returncodes": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0
+      ]
+    },
+    "boot": {
+      "direct_waits": 5,
+      "PIPE_EOFs": 5,
+      "returncodes": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "bootstrap": {
+      "direct_waits": 4,
+      "PIPE_EOFs": 4,
+      "returncodes": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "guest": {
+      "direct_waits": 2,
+      "PIPE_EOFs": 2,
+      "returncodes": [
+        0,
+        1
+      ]
+    },
+    "component": {
+      "direct_waits": 30,
+      "PIPE_EOFs": 30,
+      "returncodes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        -9
+      ]
+    },
+    "early": {
+      "direct_waits": 2,
+      "PIPE_EOFs": 2,
+      "returncodes": [
+        0,
+        0
+      ]
+    }
+  },
+  "total_actual_direct_waits": 50,
+  "total_actual_PIPE_EOFs": 57,
+  "elapsed_ns": 24804891116,
+  "ordinary_bootstrap_QMP_KVM_guest_SHUTDOWN_EOF_QEMU0_CLI0": true,
+  "same_daemon_exact_CID_absent_original_locked_inputs_unchanged": true,
+  "component_cleanup_limit": "Private seatd and watched Xwayland are killed/reaped after the completed live boundary; their process death is not native GPU/vendor retirement.",
+  "failed_attempts_preserved": [
+    {
+      "attempt": 1,
+      "execution_sha256": "19ea8d2058f719584fca0a349049e64bb76b3686b171eb0c5dc5f904ce9928c9",
+      "component_sha256": "fa9f372080862e490cd1c3c08897b3ebd2eafe303a966b857c2f00791a522992",
+      "availability": "SETUP_FAILED",
+      "actual_outer_terminal_exit": 1
+    },
+    {
+      "attempt": 2,
+      "execution_sha256": "304b0cc7ceed52f35d52c1dbdcda4b8fd7ee9f1d69553a8c1d577d57e856aef8",
+      "component_sha256": "787851b41da84de68c391e6f32d004346f1d65c0456e34c554de3208194c1f33",
+      "availability": "SETUP_FAILED",
+      "actual_outer_terminal_exit": 1
+    },
+    {
+      "attempt": 3,
+      "execution_sha256": "18416e72e12c96384292046fcdb0ae538138d9faf714721da6fb1e5860dd270a",
+      "component_sha256": "06fbb710a15e86960f8e036171845171c5eb9bafc8b5fc0c9252c873c95d5d8b",
+      "availability": "RAW_RENDER_NODE_SETUP_UNAVAILABLE",
+      "actual_outer_terminal_exit": 1
+    },
+    {
+      "attempt": 4,
+      "execution_sha256": "6a4b19555bdb2a9ca11edf14348b899fb80c8cca68c6ca10f3d432d4b05322d0",
+      "component_sha256": "bbc7ab03e4ca45cd7bda21437d9fa1d2b09567b5e929a8b5c7391dcbfcea15ab",
+      "availability": "SETUP_FAILED",
+      "actual_outer_terminal_exit": 1
+    },
+    {
+      "attempt": 5,
+      "execution_sha256": "28b2b1c2dc408b42348f1aed5db4f750313e865a05f924e5ea161dccd6151987",
+      "component_sha256": "71f62fe99f7992b9803011e745cff129a771862e9f91ce8fffcaeb560e142385",
+      "availability": "SETUP_FAILED",
+      "actual_outer_terminal_exit": 1
+    }
+  ],
+  "remaining": [
+    "actual owner SHM upload AR24/XR24 and binding/refusal cases",
+    "actual correlated native fence FD/completion/retirement",
+    "Rust worker C ABI, real AQ15 session/GL and one rebuilt dependency cohort",
+    "real native routing and startup/StopRetire authority",
+    "unchanged Source7 GREEN, cold app/PCM and normal session",
+    "ARM/matchedGoogle kernel, physical phone/full smartphone matrix"
+  ],
+  "Root_qualification_sha256": "ac325f1fee0b89591c8eb9b0ad315acb089093490914f625da76502f09456551",
+  "actual_execution_sha256": "67657e4231c6fb8a2f18e182da33e68a3a57d1ebe703ffc0272ba3ec6ce141ff",
+  "actual_selection_sha256": "f6a516e547cc1986bf4b5db445ea0a6453cc29cfd746630cc554f70e5f72ad2c",
+  "actual_command_sha256": "4f9203d25d90fc4c970ad8b3085548b70d350509b02e4c18ec813dd752bbb8d9",
+  "published_fixture_hashes": {
+    "tools/native-render-owner/baseline-actor.cpp": "6378deb03e4df75217a86eeecd60fa856844d98cd42f3882a83126209cde2830",
+    "tools/native-render-owner/render-node-inventory.cpp": "d3594378872f60c59b91db4f63bd0930fdb0ba7ce40daa671faecf91d8fbc76a"
+  },
+  "Source_lease_ns": 100000000,
+  "Source7_GREEN": false,
+  "physical_phone_accessed": false,
+  "hardware_qualified": false,
+  "qualification_count_correction": "Initial Root count omitted the two retained early-runtime Scope waits/EOFs; corrected from original receipts with no runtime rerun.",
+  "independent_qualification_sha256": "241971e44c2739d271e3f702ca4620d409649909faee02a21efe49a74bbd5c3f"
+}

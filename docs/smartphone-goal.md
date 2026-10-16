@@ -90,6 +90,14 @@ SDK plus the same five FFI/four codec CPU groups. This authored CPU value bounda
 producer, GL primitive or production render worker and closes no Source, full
 functional, ARM or phone gate.
 
+The [actual native GL baseline](native-render-gl-baseline.md) separately passes
+real worker CLEAR/RECT pixel comparisons and retained96-byte CPU custody after
+fixing an inherited test result socket in Xwayland. Fresh live Source before/after,
+actual EOF/unload/join and bounded KVM closure qualify this prepared component.
+It selects the earlier Frame archive3cf0a142, without the new Rust executor;
+SHM/fence behavior, production AQ15 binding, original Source7 GREEN and all full
+runtime/phone requirements remain open.
+
 The later [owned bootstrap/worker component](native-render-bootstrap.md) passes62
 active Rust cases with authored native adapters and real descriptors, threads,
 eventfds and a BOOTTIME timerfd. It binds copied discovery to owned initial input,

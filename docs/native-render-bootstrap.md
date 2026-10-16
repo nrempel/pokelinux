@@ -88,6 +88,11 @@ fixture establishes neither vendor cleanup nor production blocked-call recovery.
 
 ## Remaining native and phone gates
 
+A separate [actual GL baseline](native-render-gl-baseline.md) now executes
+CLEAR/RECT and retained Frame byte controls against the earlier native Frame
+cohort, with complete owned test-channel closure. It selects no new Rust worker
+and supplies no SHM upload/native-fence behavior or Source7 GREEN.
+
 The new release archive is1dcce61e. The earlier native Frame ELF91848cff and its
 507-file SDK selected3cf0a142; the new worker archive is not linked into them and
 its C++ FFI/codec groups have not been rerun with it. Worker C ABI, genuine AQ/GL

@@ -258,6 +258,14 @@ frame header contains only implemented capture/release/visitor functions and
 passes separate Rust QA. Its fresh matching native33 build/507-file SDK and the
 same five FFI/four codec CPU groups also pass. Authored plan values qualify CPU custody only; live producer,
 GL primitives and a production worker have not executed in these epochs.
+The [actual native GL baseline](native-render-gl-baseline.md) separately passes
+real worker CLEAR/RECT pixel comparisons and retained96-byte CPU custody after
+fixing an inherited test result socket in Xwayland. Fresh live Source before/after,
+actual EOF/unload/join and bounded KVM closure qualify this prepared component.
+It selects the earlier Frame archive3cf0a142, without the new Rust executor;
+SHM/fence behavior, production AQ15 binding, original Source7 GREEN and all full
+runtime/phone requirements remain open.
+
 The later [owned bootstrap/worker checkpoint](native-render-bootstrap.md) passes62
 active Rust cases:8 permit/28 worker/14 Frame/12 descriptor bootstrap, plus two
 owned-child modes invoked by parent tests. A retained deferred holder takes the

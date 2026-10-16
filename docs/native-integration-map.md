@@ -30,6 +30,12 @@ actual host and generic ARM kernel Unix fixtures. Full source-buffer overwrite
 preserves the same report and lifecycle oracle. It remains a fixture boundary;
 no installed CPIF worker, runtime modem identity or APN-context writer follows.
 
+The separate [actual GL baseline](native-render-gl-baseline.md) now executes real
+CLEAR/RECT leaves and retained Frame bytes on a worker EGL context, with actual
+test-channel EOF/unload/join and fresh live Source before/after. It is a prepared
+offscreen component with missing SHM/fence interfaces, not the installed Rust
+render backend or Source rendering-stall GREEN.
+
 The [owned render bootstrap](native-render-bootstrap.md) now connects initial
 value/FD custody, copied discovery and original BOOTTIME expiry to the Rust worker
 in actual Linux CPU tests. This is not yet the installed compositor's AQ/GL

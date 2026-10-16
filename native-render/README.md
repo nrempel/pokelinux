@@ -193,3 +193,9 @@ and five FFI/four codec groups selected earlier3cf0a142, without this worker.
 Worker C ABI, genuine AQ/GL, later session ingress/OOB revocation, complete actual
 native output/routing authority and distinct Stop-retirement remain required.
 No worker C ABI or private proposed executor header is published.
+
+A separate [actual native GL baseline](../docs/native-render-gl-baseline.md) now
+executes real CLEAR/RECT leaves and retained Frame bytes on a worker EGL context,
+with authenticated test-channel EOF/unload/join. It selects earlier Frame3cf0a142,
+not this latest worker archive. Owned SHM/fence behavior and the production Rust
+render backend remain required; this supplies no Source7 GREEN.
