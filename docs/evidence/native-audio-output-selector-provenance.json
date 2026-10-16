@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "scope": "Root selected Rust/Qt host foundation qualification; actual host audio graph and authored Qt socket peer remain separate",
+  "root_review_sha256": "1a4aef2fa6302cd64efde46907f578de8cab4e0f272e8ee2218b7f036766f390",
+  "source_sha256": {
+    "native-audio/src/main.rs": "e62500d6e80935dc61b9678144b41c7130f8554170409680be9347255a172b60",
+    "native-audio/src/pipewire.rs": "0eea4cca56b7261e0b801a79c383dcd4470f0526f46e8788a15ca87b43dd4e27",
+    "native-audio/tests/profile.rs": "15a11f307aa60dec1c050e1c99f514632295c22c63f8ed1e4875ac974776f256",
+    "tools/native-audio-fixture.py": "62890732bfb1065b61c90dd157092098be89fd4e3868db19e6e5aed3f8296ade",
+    "tools/media-route-fixture.py": "101d90ba869c47078c8ad3422ecf49cc6e2e0082fcaf120b97b835625810c9a0",
+    "tools/native-audio-output-selector/media-routes.py": "b402f994cc41da98355777c5fb99c7bd4f73bfdb7b27712a1da285a36d871a7b",
+    "tools/native-audio-output-selector/current-observation.py": "3fea039e7b8d8c9b98b04ca02107100f7fe926307fa33c531b89999ae18bc6e2",
+    "native-audio-ui/CMakeLists.txt": "27a8cd300f0f392d287c8520c503182c294ebd5940bb4ccb1c536cb72b9c8dcd",
+    "native-audio-ui/AudioClientTest.cpp": "e19b44f5f75667e43c1b1e36dc8228dd913b8b90d482b4d879587d270b754da7",
+    "native-audio-ui/AudioClient.h": "87a819a1d837d61d9d9170bca012d253863f59bc3c80f42037cf9bbc8b108112",
+    "native-audio-ui/resources.qrc": "1256d0136462e661632f17ede81f498f1d0b7c1081b38d9d41a29c5893a683ae",
+    "native-audio-ui/SoundsView.qml": "eaa651d226d0cfcc3df4c04d6888937110e3de2fdde362af664676eabf0c4635",
+    "native-audio-ui/AudioClient.cpp": "5e43a8e80f9acec719ce425075bfc0496aa096a6d1dd69bc6ce0bd10715c1f2d",
+    "native-audio-ui/main.cpp": "76b7331f5cc1d38e5eb3355dcac0277b0a2a79063cfbac771580369a2a9b3e42"
+  },
+  "logical_route_review_sha256": "33cf5dfe3ca0aafce5123747d0b0304d784a1a0cb412b8d7153cfddcfe075cb0",
+  "current_observation_review_sha256": "4f6c2194e7b35f076da5ee070b42fc428c93628d200354e865ea1be4be4b7309",
+  "independent_review_sha256": "f53d0db04bf5bf1105de349326d5a993f4fcc651a96b30d526d9da60934eb5aa",
+  "Qt_root_review_sha256": "b6b54d22c97da032daf4ca2bc50a56572571002d30600d3a6594270a9fb7de9b",
+  "fixed_Qt_test_sha256": "e19b44f5f75667e43c1b1e36dc8228dd913b8b90d482b4d879587d270b754da7",
+  "recorded_execution": {
+    "red-real-1": {
+      "sha256": "93d61dce7df613dcf2f068d51087e15e340d82792ba79a743bb7ee5c101090de",
+      "passed": false
+    },
+    "green-real-1": {
+      "sha256": "b39fa837885a7fe997aac9329c145997e2357abde6c8cf01750b927def7da5b3",
+      "passed": true
+    },
+    "green-catalog-1": {
+      "sha256": "d002c2e42f07159a0861f4f5ebd902e92153e946297e7b25a86431dc67918c2f",
+      "passed": true
+    },
+    "green-original-1": {
+      "sha256": "d53d7bfd99f85093d82bb558c04c533876a708b3a97b0e3a9308e7ac14075db8",
+      "passed": true
+    },
+    "green-stop-1": {
+      "sha256": "aea7e5f323388746f8d383b6a222300438dda07c3e4021531893026115667d18",
+      "passed": true
+    }
+  },
+  "fresh_present_absence_witnesses": [
+    "9d6a1c6cb41a11630c0d2a8c131adf82b971562ae273d97fe5d578095355810a",
+    "fdb0d04443b9809844dd5f1d8baec4b2cf94d3cb46880fc42fd5f6280c4337e3"
+  ],
+  "runtime": {
+    "image": "sha256:b6818cecd61a5e378fecbf25d7b0979360cf29fda9ad0801b4a21e2054f69678",
+    "pipewire": "1.4.2",
+    "wireplumber": "0.5.8",
+    "Qt": "6.8.2"
+  },
+  "ARM": "ELF183 compile only",
+  "claims_excluded": [
+    "normal Qt UI rendering/input",
+    "PCM content",
+    "ARM runtime",
+    "matched Google audio kernel",
+    "production launcher/session permission/service management",
+    "physical phones"
+  ],
+  "physical_phone_accessed": false
+}

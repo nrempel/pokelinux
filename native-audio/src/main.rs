@@ -75,9 +75,23 @@ impl State {
                     self.observed.revision += 1;
                     self.observed.available = reply.cookie.is_some() && reply.error.is_none();
                     self.observed.links = reply.links;
-                    if self.sent == Some((reply.token, self.intent, true)) {
-                        self.applied = reply.applied.then_some(self.intent);
-                    }
+                    let matching =
+                        pokelinux_audio::pipewire::wanted(&self.profile, &self.authority.desired())
+                            .is_ok_and(|wanted| {
+                                let actual: std::collections::BTreeSet<_> = self
+                                    .observed
+                                    .links
+                                    .iter()
+                                    .filter(|link| link.state == "active")
+                                    .map(|link| (link.source.clone(), link.target.clone()))
+                                    .collect();
+                                self.observed.links.len() == wanted.len() && actual == wanted
+                            });
+                    self.applied = (self.sent.is_some_and(|(token, intent, _)| {
+                        token == reply.token && intent == self.intent
+                    }) && self.observed.available
+                        && matching)
+                        .then_some(self.intent);
                     self.sent = None;
                 }
                 Ok(None) => {}
@@ -213,11 +227,15 @@ impl State {
         if let Err(error) = operation {
             return json!({"ok":false,"error":error});
         }
-        json!({"ok":true,"lease":lease,"peer_uid":peer.uid,"desired":self.authority.desired(),
+        let mut response = json!({"ok":true,"lease":lease,"peer_uid":peer.uid,"desired":self.authority.desired(),
             "observed":self.observed,"intent_revision":self.intent,
             "application":if self.recovery_required { "uncertain" } else if self.applied == Some(self.intent) { "observed" } else { "pending" },
             "phase":if self.stopping { "stopping" } else { "running" },
-            "cleanup":if self.stopping { "pending" } else { "none" }})
+            "cleanup":if self.stopping { "pending" } else { "none" }});
+        if value["op"] == "status" {
+            response["media_routes"] = json!(self.profile.media_routes());
+        }
+        response
     }
 }
 

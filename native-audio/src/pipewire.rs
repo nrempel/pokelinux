@@ -10,9 +10,81 @@ use std::thread;
 use std::time::{Duration, Instant};
 
 #[derive(Deserialize)]
+struct Route {
+    id: String,
+    label: String,
+    target: String,
+    roles: Vec<Role>,
+}
+
+#[derive(Deserialize)]
+struct ProfileConfig {
+    sources: BTreeMap<String, String>,
+    routes: Vec<Route>,
+}
+
+/// Trusted backend configuration. Logical selectors are independent of node names.
+#[derive(Deserialize)]
+#[serde(try_from = "ProfileConfig")]
 pub struct Profile {
     pub sources: BTreeMap<String, String>,
-    pub routes: BTreeMap<String, Vec<Role>>,
+    routes: Vec<Route>,
+}
+
+/// Configured Media choices only; neither a graph observation nor an availability grant.
+#[derive(Serialize)]
+pub struct MediaRoute<'a> {
+    pub id: &'a str,
+    pub label: &'a str,
+}
+
+impl TryFrom<ProfileConfig> for Profile {
+    type Error = &'static str;
+
+    fn try_from(config: ProfileConfig) -> Result<Self, Self::Error> {
+        if config.routes.is_empty() || config.routes.len() > 32 {
+            return Err("invalid_route_count");
+        }
+        let mut ids = BTreeSet::new();
+        for route in &config.routes {
+            if route.id.is_empty()
+                || route.id.len() > 64
+                || !route
+                    .id
+                    .bytes()
+                    .all(|b| b.is_ascii_alphanumeric() || b"_.-".contains(&b))
+                || !ids.insert(route.id.as_str())
+            {
+                return Err("invalid_or_duplicate_route_id");
+            }
+            if route.label.trim().is_empty()
+                || route.label.len() > 96
+                || route.label.chars().any(char::is_control)
+            {
+                return Err("invalid_route_label");
+            }
+            if route.target.is_empty()
+                || route.target.len() > 256
+                || route.target.chars().any(char::is_control)
+            {
+                return Err("invalid_route_target");
+            }
+            if route.roles.is_empty()
+                || route.roles.len() > 3
+                || route
+                    .roles
+                    .iter()
+                    .enumerate()
+                    .any(|(i, role)| route.roles[..i].contains(role))
+            {
+                return Err("invalid_route_roles");
+            }
+        }
+        Ok(Self {
+            sources: config.sources,
+            routes: config.routes,
+        })
+    }
 }
 
 impl Profile {
@@ -26,10 +98,32 @@ impl Profile {
             .map(String::as_str)
             .ok_or("unsupported_role")
     }
+    pub fn media_routes(&self) -> Vec<MediaRoute<'_>> {
+        let mut routes: Vec<_> = self
+            .routes
+            .iter()
+            .filter(|route| route.roles.contains(&Role::Media))
+            .map(|route| MediaRoute {
+                id: &route.id,
+                label: &route.label,
+            })
+            .collect();
+        routes.sort_by(|a, b| a.id.cmp(b.id));
+        routes
+    }
+
+    pub fn target(&self, role: Role, id: &str) -> Result<&str, &'static str> {
+        self.routes
+            .iter()
+            .find(|route| route.id == id && route.roles.contains(&role))
+            .map(|route| route.target.as_str())
+            .ok_or("unsupported_route")
+    }
+
     pub fn supports(&self, role: Role, route: &str) -> bool {
         self.routes
-            .get(route)
-            .is_some_and(|roles| roles.contains(&role))
+            .iter()
+            .any(|candidate| candidate.id == route && candidate.roles.contains(&role))
     }
 }
 
@@ -236,7 +330,12 @@ pub fn wanted(
 ) -> Result<BTreeSet<(String, String)>, &'static str> {
     desired
         .iter()
-        .map(|(_, role, route)| Ok((profile.source(*role)?.to_owned(), route.clone())))
+        .map(|(_, role, route)| {
+            Ok((
+                profile.source(*role)?.to_owned(),
+                profile.target(*role, route)?.to_owned(),
+            ))
+        })
         .collect()
 }
 

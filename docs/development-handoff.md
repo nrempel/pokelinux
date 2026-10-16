@@ -18,6 +18,21 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The [native output-selector foundation](native-audio-output-selector.md) now
+passes host logical catalog→actual graph and fresh same-cookie application
+RED→GREEN checks, final original16-stage regression and Stop.12 Rust host tests,
+ARM ELF compilation and11 actual Qt socket cases pass; native Sounds compiles.
+The Qt peer is authored and no normal Sounds window or PCM result is claimed.
+
+Continue the finite normal installed ARM output selector: actual UI input,
+private Rust/PipeWire routing and independent sample flow, call interruption,
+close/lease cleanup, loss/no replay and genuine Omarchy theme change. Official
+ARM package provisioning and the existing qualified typed appearance client are
+preparation; compose and qualify the exact final cohort. Keep private HOME closed,
+use the Pixel10 metadata/native-capture guards, and avoid auth/PAM expansion.
+
+The preceding CPIF checkpoint below retains its own completed evidence.
+
 The [native CPIF local policy](native-sit-cpif-policy.md) now adds bounded
 poll/read work, an absolute BOOTTIME timer and idle-zero handling. A compiled
 2-pass/9-missing-policy RED precedes86 host/86 ARM user-QEMU component passes.
@@ -49,8 +64,8 @@ per host/ARM user-QEMU architecture and actual host/generic ARM kernel
 completion/expiry/cancel process integration. The primitive exposes no descriptor or retry, retains
 uncertainty, and uses the original BOOTTIME deadline. Three additional direct
 syscall controls pass on host/ARM user-QEMU: actual write error, partial16 and
-late-read refusal. CPIF record/source admission, natural worker termination
-within Main, provider/APN/IMS and hardware remain open.
+late-read refusal. CPIF record/source admission, provider/APN/IMS and hardware remain open;
+the later natural-worker Main repair is qualified above.
 
 One [current diagnostic bundle](native-boot-ack-and-current-bundle.md) now joins
 the native build, complete8MiB image, exact original-unpacked generic and normal

@@ -346,7 +346,12 @@ Incoming SMS text/metadata parsing also matches33 actual AOSP decoder outputs wi
 
 The first native power-request arbiter is built and component-tested, including18 outcomes from actual public source. Installed permission/lifecycle, native suspend authority and hardware policy remain open; see [native power](native-power.md).
 
-The native audio authority is built and boundary-tested against original
+The [logical audio-selector foundation](native-audio-output-selector.md) adds
+portable route IDs, current matching graph application and a compiled native
+Sounds client. Two host real-daemon RED→GREEN checks and eleven Qt socket cases
+pass; normal installed ARM UI/PCM/theme and physical audio remain open.
+
+The earlier native audio authority is built and boundary-tested against original
 PipeWire/WirePlumber in a private virtual mono graph:16 stages and an authenticated
 stop run cover call/media priority, reserved capacity, capture revocation,
 responsive status/stop, permanently blocked worker reaping and explicit recovery.

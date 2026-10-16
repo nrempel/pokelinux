@@ -75,7 +75,10 @@ context.modules = [
 context.objects = [\n''' + '\n'.join(objects) + '\n]\n')
 profile = config / 'profile.json'
 profile.write_text(json.dumps({'sources': {'media': 'source.media', 'call': 'source.call', 'capture': 'source.microphone'},
-                               'routes': {'route.speaker': ['media', 'call'], 'route.earpiece': ['media', 'call'], 'route.capture': ['capture']}}))
+                               'routes': [
+                                   {'id':'route.speaker','label':'Speaker','target':'route.speaker','roles':['media','call']},
+                                   {'id':'route.earpiece','label':'Earpiece','target':'route.earpiece','roles':['media','call']},
+                                   {'id':'route.capture','label':'Capture','target':'route.capture','roles':['capture']}] }))
 env = dict(os.environ, XDG_RUNTIME_DIR=str(private), PIPEWIRE_RUNTIME_DIR=str(private),
            PIPEWIRE_REMOTE='pokelinux-audio-test-manager', XDG_CONFIG_HOME=str(config),
            XDG_STATE_HOME=str(state), DISABLE_RTKIT='1', PIPEWIRE_DEBUG='3')

@@ -55,6 +55,11 @@ Samsung backend and exposes local syntax, without a qualified source or device
 acquisition path. Common services gain no CPIF node names, numeric states or
 assumed modem authority from it.
 
+The [native Media catalog](native-audio-output-selector.md) uses logical IDs
+and labels. Only the trusted audio profile maps them to private PipeWire nodes;
+shared UI code carries no Pixel device names. Host virtual routes qualify no
+physical audio backend or additional phone model.
+
 ## Boundaries
 
 | Layer | Owns | Must not assume |
