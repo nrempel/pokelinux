@@ -188,11 +188,41 @@ join. Unregister both borrowed watches before `try_release`. Fallback `Drop`
 still joins and may block. The ordinary BOOTTIME timer includes suspend time but
 does not itself wake a suspended phone; actual suspend remains unqualified.
 
-The new archive1dcce61e is Rust CPU-QA only. The native Frame ELF/507-file SDK
-and five FFI/four codec groups selected earlier3cf0a142, without this worker.
-Worker C ABI, genuine AQ/GL, later session ingress/OOB revocation, complete actual
-native output/routing authority and distinct Stop-retirement remain required.
-No worker C ABI or private proposed executor header is published.
+The bootstrap checkpoint archive1dcce61e was Rust CPU-QA only. The native Frame
+ELF/507-file SDK and historical five FFI/four codec groups selected earlier
+3cf0a142, without this worker. The current
+[worker C ABI](../docs/native-render-executor-ffi.md) is now implemented in
+[`pokelinux_render_executor.h`](include/pokelinux_render_executor.h) and
+[`executor_ffi`](src/executor_ffi.rs), with current release archive246a6680.
+Actual C++ lifecycle and five authored-owner groups pass, alongside all62 Rust
+cases, format-check and strict Clippy. The C function table/scalar options move
+by value through the single typed factory; native holders are worker-created.
+The immutable thread guard precedes inner/slot/output access, and the shared
+admission path consumes/nulls a Frame only after successful admission. Stop,
+real BOOTTIME expiry and pending native cleanup retain ownership through actual
+worker destruction/join. Unregister both borrowed watches before release, and
+retain supplier code until join. No compatibility factory or second archive is
+used. This does not select the executor in a production AQ/GL compositor.
+
+For a selected current x86 Rust static archive, build/run each actual C++ test:
+
+```sh
+c++ -std=c++20 -O2 -Wall -Wextra -Werror -pedantic -Iinclude \
+  tests/executor_lifecycle_ffi.cpp /absolute/selected/libpokelinux_render.a \
+  -pthread -ldl -lm -lrt -lutil -o /absolute/output/executor-lifecycle-ffi
+/absolute/output/executor-lifecycle-ffi
+c++ -std=c++20 -O2 -Wall -Wextra -Werror -pedantic -Iinclude \
+  tests/executor_ffi.cpp /absolute/selected/libpokelinux_render.a \
+  -pthread -ldl -lm -lrt -lutil -o /absolute/output/executor-ffi
+/absolute/output/executor-ffi
+```
+
+The larger fixture keeps its original5s work/8s close cutoffs; observe its actual
+process wait/EOF externally. Its authored callbacks and `/dev/null` descriptor
+fixture establish neither genuine native routing nor vendor cleanup. Preserve
+failed setup/fixture selections separately, as the report does. Genuine AQ/GL,
+later session ingress/OOB revocation, complete actual native output/routing
+authority and distinct Stop-retirement remain required.
 
 A separate [actual native GL baseline](../docs/native-render-gl-baseline.md) now
 executes real CLEAR/RECT leaves and retained Frame bytes on a worker EGL context,

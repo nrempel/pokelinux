@@ -281,8 +281,15 @@ that input, frame admission matches actual discovered values and final grants
 match the selected device tuple. An original BOOTTIME timerfd exposes expiry
 while bootstrap is held; control accepts a copied candidate before Ready.
 Stop/expiry never revive a late result or release pending native custody. The
-new1dcce61e archive is CPU-QA only; the earlier native33/SDK result still selects
-3cf0a142 without this worker. Next connect the worker C ABI, real AQ/GL and later
+bootstrap archive1dcce61e was CPU-QA only; the earlier native33/SDK result still
+selects3cf0a142 without this worker. The later
+[current worker C ABI](native-render-executor-ffi.md) now passes actual C++
+lifecycle and five authored-owner groups, all62 Rust cases, strict Clippy and
+release compilation using archive246a6680. Copied per-executor tables/options,
+exact refusal retention, held Stop/BOOTTIME expiry and worker-side destruction/
+actual join qualify at that authored native boundary. Structural missing-ABI RED
+and failed fixture selections retain separate classifications. Next build one
+matching AQ15/Hyprland/Rust/SDK/plugin cohort and connect real AQ/GL and later
 session ingress/OOB revocation, then actual output/routing and distinct
 Stop-retirement authority. The unchanged Source7/full-runtime gates remain open.
 Production control/render ownership separation and GREEN remain open. Source100ms,

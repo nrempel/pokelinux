@@ -214,6 +214,10 @@ pub struct Attempt {
     sealed: Option<SealedAttempt>,
 }
 impl Attempt {
+    pub(crate) fn reject_invalid(&mut self) -> Result<(), Error> {
+        self.ticket.take().ok_or(Error::Stale)?;
+        Err(Error::Invalid)
+    }
     pub fn authorize(&mut self, actual: &NativeScope<'_>) -> Result<&SealedAttempt, Error> {
         let ticket = self.ticket.take().ok_or(Error::Stale)?;
         if actual.policy != self.policy
@@ -416,7 +420,26 @@ pub trait NativeOwner {
 }
 /// The factory creates a deferred holder only. It must not acquire native
 /// custody in a local that could unwind before returning the retained owner.
-pub type OwnerFactory = fn() -> Result<Box<dyn NativeOwner>, Error>;
+pub struct OwnerFactoryConfig {
+    pub(crate) native: crate::executor_ffi::NativeOwnerFunctionsV1,
+    pub(crate) options: crate::executor_ffi::OwnerOptionsV1,
+}
+pub type OwnerFactory = fn(OwnerFactoryConfig) -> Result<Box<dyn NativeOwner>, Error>;
+
+/// One admission path for Rust values and C handle slots. The owned value is
+/// taken only after every refusal point; C never has to move/rebox on refusal.
+pub(crate) trait FrameCustody {
+    fn frame(&self) -> Option<&Frame>;
+    fn take_frame(&mut self) -> Frame;
+}
+impl FrameCustody for Option<Frame> {
+    fn frame(&self) -> Option<&Frame> {
+        self.as_ref()
+    }
+    fn take_frame(&mut self) -> Frame {
+        self.take().expect("validated owned frame")
+    }
+}
 
 struct EventFd(OwnedFd, #[cfg(test)] AtomicBool);
 unsafe extern "C" {
@@ -711,6 +734,7 @@ impl Executor {
     pub fn new(
         security_generation: u64,
         factory: OwnerFactory,
+        config: OwnerFactoryConfig,
         bootstrap: OwnedBootstrap,
         startup_not_after_boottime_ns: u64,
     ) -> Result<Self, Error> {
@@ -741,7 +765,7 @@ impl Executor {
         let worker = Arc::clone(&shared);
         let handle = thread::Builder::new()
             .name("pokelinux-render".into())
-            .spawn(move || run(worker, factory, Some(bootstrap)))
+            .spawn(move || run(worker, factory, config, Some(bootstrap)))
             .map_err(|_| Error::Native)?;
         Ok(Self {
             control: thread::current().id(),
@@ -762,11 +786,20 @@ impl Executor {
             Err(Error::Invalid)
         }
     }
-    /// On EVERY refusal the frame stays in its original slot; earlier authority
-    /// stays unchanged. All credits/queue capacity reserve before issue/CAS.
+    /// On every refusal the frame stays in its original slot. Ordinary refusal
+    /// preserves earlier authority; terminal serial exhaustion fail-closes it. All credits/queue capacity reserve before issue/CAS.
     pub fn try_submit(
         &mut self,
         frame: &mut Option<Frame>,
+        policy: OperationPolicy,
+        cutoff: u64,
+        cookie: u64,
+    ) -> Result<Admission, Error> {
+        self.try_submit_custody(frame, policy, cutoff, cookie)
+    }
+    pub(crate) fn try_submit_custody(
+        &mut self,
+        frame: &mut impl FrameCustody,
         policy: OperationPolicy,
         cutoff: u64,
         cookie: u64,
@@ -779,7 +812,7 @@ impl Executor {
         if self.shared.startup.load(Ordering::Acquire) != 1 || self.discovered.is_none() {
             return Err(Error::Busy);
         }
-        let f = frame.as_ref().ok_or(Error::Invalid)?;
+        let f = frame.frame().ok_or(Error::Invalid)?;
         if f.security_generation() != policy.security_generation
             || f.scene_sequence() != policy.scene_sequence
             || f.target().output_id != policy.output_id
@@ -823,7 +856,7 @@ impl Executor {
         self.shared.queued.fetch_add(1, Ordering::AcqRel);
         queue.push_back(Job {
             expected_device,
-            frame: frame.take().expect("validated owned frame"),
+            frame: frame.take_frame(),
             admission,
             ticket,
         });
@@ -951,7 +984,8 @@ impl Executor {
             Error::WorkerPanic
         })
     }
-    /// The caller must first unregister the borrowed completion fd. None is a
+    /// The caller must first unregister both borrowed completion and startup
+    /// deadline FDs. None is a
     /// successful already-empty slot. BUSY leaves ownership untouched.
     pub fn try_release(slot: &mut Option<Self>) -> Result<(), Error> {
         if let Some(owner) = slot.as_ref() {
@@ -1107,9 +1141,14 @@ fn wait_native(shared: &Shared, owner: &mut dyn NativeOwner, blocking: bool) {
         }
     }
 }
-fn run(shared: Arc<Shared>, factory: OwnerFactory, mut bootstrap: Option<OwnedBootstrap>) {
+fn run(
+    shared: Arc<Shared>,
+    factory: OwnerFactory,
+    config: OwnerFactoryConfig,
+    mut bootstrap: Option<OwnedBootstrap>,
+) {
     let identity = BootstrapIdentity::capture(bootstrap.as_ref().expect("owned bootstrap input"));
-    let mut owner = match native_call(&shared, factory) {
+    let mut owner = match native_call(&shared, || factory(config)) {
         Ok(owner) => owner,
         Err(_) => shared.quarantine(),
     };
@@ -1354,7 +1393,7 @@ mod tests {
         thread: ThreadId,
         _not_send: Rc<()>,
     }
-    fn factory() -> Result<Box<dyn NativeOwner>, Error> {
+    fn factory(_: OwnerFactoryConfig) -> Result<Box<dyn NativeOwner>, Error> {
         let plan = PLAN.lock().unwrap().take().ok_or(Error::Invalid)?;
         let thread = thread::current().id();
         plan.checkpoint.send(("created", thread)).unwrap();
@@ -1559,6 +1598,7 @@ mod tests {
         let mut executor = Executor::new(
             1,
             factory,
+            crate::executor_ffi::test_config(),
             bootstrap_input(),
             boottime_ns().unwrap() + 5_000_000_000,
         )
@@ -1958,7 +1998,7 @@ mod tests {
         _not_send: Rc<()>,
     }
     static ASYNC_PLAN: Mutex<Option<AsyncPlan>> = Mutex::new(None);
-    fn async_factory() -> Result<Box<dyn NativeOwner>, Error> {
+    fn async_factory(_: OwnerFactoryConfig) -> Result<Box<dyn NativeOwner>, Error> {
         let plan = ASYNC_PLAN.lock().unwrap().take().ok_or(Error::Invalid)?;
         let wake = Arc::new(EventFd::new()?);
         let release_all = Arc::new(AtomicBool::new(false));
@@ -2145,6 +2185,7 @@ mod tests {
         let mut executor = Executor::new(
             1,
             async_factory,
+            crate::executor_ffi::test_config(),
             bootstrap_input(),
             boottime_ns().unwrap() + 5_000_000_000,
         )
@@ -2634,7 +2675,7 @@ mod tests {
         thread: ThreadId,
         _not_send: Rc<()>,
     }
-    fn bootstrap_factory() -> Result<Box<dyn NativeOwner>, Error> {
+    fn bootstrap_factory(_: OwnerFactoryConfig) -> Result<Box<dyn NativeOwner>, Error> {
         let plan = BOOTSTRAP_PLAN
             .lock()
             .unwrap()
@@ -2794,7 +2835,14 @@ mod tests {
             release: go,
         });
         (
-            Executor::new(1, bootstrap_factory, bootstrap_input(), cutoff).unwrap(),
+            Executor::new(
+                1,
+                bootstrap_factory,
+                crate::executor_ffi::test_config(),
+                bootstrap_input(),
+                cutoff,
+            )
+            .unwrap(),
             release,
             events,
         )
@@ -3117,6 +3165,7 @@ mod tests {
         let result = Executor::new(
             1,
             bootstrap_factory,
+            crate::executor_ffi::test_config(),
             bootstrap_input(),
             boottime_ns().unwrap() - 1,
         );
@@ -3283,6 +3332,7 @@ mod tests {
         let mut e = Executor::new(
             1,
             bootstrap_factory,
+            crate::executor_ffi::test_config(),
             input,
             boottime_ns().unwrap() + 5_000_000_000,
         )

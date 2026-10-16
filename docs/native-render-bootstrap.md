@@ -101,10 +101,13 @@ facts before exact readbacks, followed by EOF/unload/join. Its four native sourc
 compile into a test plugin against unchanged Frame507/9184/Rust3cf inputs. The
 production Rust executor, AQ output/presentation, Source7 and phone remain open.
 
-The new release archive is1dcce61e. The earlier native Frame ELF91848cff and its
-507-file SDK selected3cf0a142; the new worker archive is not linked into them and
-its C++ FFI/codec groups have not been rerun with it. Worker C ABI, genuine AQ/GL
-initialization, later session ingress and OOB revocation, real discovery updates,
+The bootstrap checkpoint archive is1dcce61e. The later
+[current worker C ABI](native-render-executor-ffi.md) now passes actual C++
+lifecycle and five authored-owner groups, plus all62 Rust cases and strict QA,
+using release archive246a6680. The earlier native Frame ELF91848cff/507-file SDK
+still selected3cf0a142; neither newer worker archive is linked into that cohort.
+Its historical FFI/codec/native GL results are not relabelled current. Genuine
+AQ/GL initialization, later session ingress and OOB revocation, real discovery updates,
 complete native routing scope and a separate StopRetire ledger remain required.
 The production worker GL/output/presentation/retirement path, unchanged Source7 rendering
 GREEN, cold normal app/PCM composition, ARM/matched Google kernel and every

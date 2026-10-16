@@ -46,8 +46,10 @@ production Rust executor, AQ output/presentation, Source7 and phone remain open.
 
 The [owned render bootstrap](native-render-bootstrap.md) now connects initial
 value/FD custody, copied discovery and original BOOTTIME expiry to the Rust worker
-in actual Linux CPU tests. This is not yet the installed compositor's AQ/GL
-backend; its original Source rendering-stall cases remain RED.
+in actual Linux CPU tests. The later [current worker C ABI](native-render-executor-ffi.md)
+passes actual C++ lifecycle/five authored-owner groups and all62 Rust cases,
+strict Clippy and release compilation. This is not yet the installed compositor's
+AQ/GL backend; its original Source rendering-stall cases remain RED.
 
 | Function | Existing native component or boundary | Installed service and app composition | Backend and evidence still required |
 | --- | --- | --- | --- |

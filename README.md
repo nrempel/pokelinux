@@ -131,8 +131,14 @@ and release build. Real descriptor duplication, threads, eventfds and a BOOTTIME
 timerfd exercise authored native adapters. Discovery must match owned device
 input; frame admission and final device grants are bound to those copied records.
 Stop/expiry fence late startup while the worker retains native cleanup custody.
-This archive is not linked into the earlier native Frame ELF/SDK. Production
-AQ/GL/DRM, session ingress/output authority and Source GREEN remain open.
+That bootstrap checkpoint archive is not linked into the earlier native Frame
+ELF/SDK. The later [current worker C ABI](docs/native-render-executor-ffi.md) now
+passes actual C++ lifecycle and five authored-owner groups, including copied
+per-executor factories, exact refusal retention, late Stop/expiry fencing and
+worker-side destruction/actual join. All62 Rust cases, strict Clippy and release
+build pass. Failed fixture selections remain failed; the missing-ABI RED was a
+link failure, not a semantic production-bug RED. Genuine AQ/GL/DRM,
+session ingress/output authority and Source GREEN remain open.
 A separate [actual native GL baseline](docs/native-render-gl-baseline.md) now
 passes exact CLEAR/RECT offscreen readback and retained96-byte Frame custody on
 a real worker EGL context. Its repaired test channel qualifies EOF/unload/join

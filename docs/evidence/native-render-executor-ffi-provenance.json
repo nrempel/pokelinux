@@ -1,0 +1,165 @@
+{
+  "schema": 1,
+  "scope": "Actual native Linux x86 C++/Rust executor ABI with authored callbacks; not AQ/GL/Source/ARM/hardware",
+  "base_commit": "fcc56734809fd15ee468fed86dbad1b4597e0512",
+  "final_source": {
+    "native-render/Cargo.lock": "ba1141e2a968bbad02a5be018efa8f8e6b29c8006439bd6a7f7024de45398713",
+    "native-render/Cargo.toml": "e8c67650745ce2544ad8607b4525e3724f4da5204c41b9a37071c35a4ce099b3",
+    "native-render/include/pokelinux_render.h": "4a7a9a603fe6d7780ff071020f727c3eb7b0aba1c9bba56b682ddd219f995396",
+    "native-render/include/pokelinux_render_executor.h": "b5aee195198a44475b90156244fe9f998bb4f4f196d4b12cb7c6f59e9988b731",
+    "native-render/include/pokelinux_render_frame.h": "56f8ec91b6cfb434af8875c6139fd210f0d57618614a660bffde13e6d3d479f0",
+    "native-render/src/bootstrap.rs": "c36a8e0055ceb89c5ca1e02d20e9802b5e169770690e251d790ee4be76ec2208",
+    "native-render/src/commit.rs": "aafe65445772cb10c598affa97e8693bdf483934dd5f9710249762b64ce325cd",
+    "native-render/src/executor.rs": "c5fab8d064ffdef9652d55e8ad47f6e17f8ae7b6a190df94bf757cce2663e621",
+    "native-render/src/executor_ffi.rs": "b68b11b5ace74f554652b50d71a6969c4ce35c49c5933e668dbd46de53eba9d9",
+    "native-render/src/frame.rs": "1234607ea4ebc0552e3625bffdda821ae27a8b81ca4229d199e2b6140d62ec2e",
+    "native-render/src/lib.rs": "9a0cf67f179b883292db6e15cad215d6b39c8736e488bf70f91964652207fcff",
+    "native-render/tests/executor_ffi.cpp": "a1fd6ee5a5534314986b7b5f7a6820bb7dcb82ae75a8ed8c9df2e1815b284f06",
+    "native-render/tests/executor_lifecycle_ffi.cpp": "5cef781f1706434ec014f7c7f3f5cf20651c50129971a4bdf63617e45d8e5e73",
+    "native-render/tests/ffi.cpp": "8483338e25120ba986cca3224466fce32457f6c275d5aefde585925c75314e5a",
+    "native-render/tests/frame_capture.rs": "6f3c277dbbee02c0923cfd8bd21f8677dbb0c79c9bbc07cf52371179c68d3849",
+    "native-render/tests/owned_bootstrap.rs": "1a1c03e92e80642ce8bfa8ec544e398831f7c44a38bf39ac1976104e0bfa1386"
+  },
+  "release_archive": {
+    "sha256": "246a6680b7f9ed8affd89bd9b022319a0903f5ebc58f03d7d76eaa85f8653311",
+    "bytes": 22901236
+  },
+  "epochs": [
+    {
+      "phase": "format-1",
+      "result_sha256": "84e402f90514d7cfc008b7f28e4aef71fdfebcd96c0612f331181f3e40b68b37",
+      "classification_passed": true,
+      "actual_exit": 0,
+      "waits": 6,
+      "merged_PIPE_EOFs": 6,
+      "elapsed_ns": 581821390
+    },
+    {
+      "phase": "green-1",
+      "result_sha256": "e55eb2d0fdd0c63776e1da65a42b47ca3c213d5d6029f9b713d3fa56d669662e",
+      "classification_passed": false,
+      "actual_exit": 1,
+      "waits": 9,
+      "merged_PIPE_EOFs": 9,
+      "elapsed_ns": 2356443689
+    },
+    {
+      "phase": "green-2",
+      "result_sha256": "8f5379dc9bc02d1a58891725af15ded75a6e0f13110714ba1b6228a3c650c2a5",
+      "classification_passed": false,
+      "actual_exit": 1,
+      "waits": 9,
+      "merged_PIPE_EOFs": 9,
+      "elapsed_ns": 2304591294
+    },
+    {
+      "phase": "qa-1",
+      "result_sha256": "e76d055095ef92f81ba900770b836bac1eab4288ab64297971ce43041b5d8eae",
+      "classification_passed": false,
+      "actual_exit": 1,
+      "waits": 9,
+      "merged_PIPE_EOFs": 9,
+      "elapsed_ns": 3594259237
+    },
+    {
+      "phase": "qa-2",
+      "result_sha256": "16351d9d7770928472801c8c1bca2f33f549ae6b0cb4fc5943e84a458efd1e87",
+      "classification_passed": false,
+      "actual_exit": 1,
+      "waits": 9,
+      "merged_PIPE_EOFs": 9,
+      "elapsed_ns": 3615372438
+    },
+    {
+      "phase": "qa-3",
+      "result_sha256": "53bdfa64dc71187fee682630018dfcd0d80e77e75078740394d7f5f33e42012f",
+      "classification_passed": true,
+      "actual_exit": 0,
+      "waits": 9,
+      "merged_PIPE_EOFs": 9,
+      "elapsed_ns": 3742610159
+    },
+    {
+      "phase": "red-1",
+      "result_sha256": "d50c72374d722d7939eeb2b77e5ba955638a5e0194d92e035378e2a1f6131d81",
+      "classification_passed": false,
+      "actual_exit": 127,
+      "waits": 6,
+      "merged_PIPE_EOFs": 6,
+      "elapsed_ns": 896876524
+    },
+    {
+      "phase": "red-2",
+      "result_sha256": "6a1aaae3de0886932908f826f04df6a331a1bf484af6689c2af02605d5e3e910",
+      "classification_passed": false,
+      "actual_exit": null,
+      "waits": 6,
+      "merged_PIPE_EOFs": 6,
+      "elapsed_ns": 879484700
+    },
+    {
+      "phase": "red-3",
+      "result_sha256": "9990f7c107fb6bfc67695bb108a7fdaa74bb5c620e36b6935006eb491983872f",
+      "classification_passed": true,
+      "actual_exit": 1,
+      "waits": 9,
+      "merged_PIPE_EOFs": 9,
+      "elapsed_ns": 1626325943
+    },
+    {
+      "phase": "red-4",
+      "result_sha256": "363454be0a49de7fa6d5032ff339e77c83550c1f58c0c4dc4bdded5c4957d0f6",
+      "classification_passed": true,
+      "actual_exit": 1,
+      "waits": 9,
+      "merged_PIPE_EOFs": 9,
+      "elapsed_ns": 1590454173
+    },
+    {
+      "phase": "red-5",
+      "result_sha256": "4d4d51b345e9df7865eebe23eef2cedbd32f3c5982e13d7da9403198016bf56c",
+      "classification_passed": true,
+      "actual_exit": 1,
+      "waits": 9,
+      "merged_PIPE_EOFs": 9,
+      "elapsed_ns": 2057035820
+    }
+  ],
+  "total_direct_waits": 90,
+  "total_merged_PIPE_EOFs": 90,
+  "original_per_epoch_work_seconds": 240,
+  "original_per_epoch_close_seconds": 270,
+  "test_deadlines": {
+    "full_fixture_work_seconds": 5,
+    "full_fixture_close_seconds": 8,
+    "per_observation_seconds": 2,
+    "held_startup_ms": 150
+  },
+  "final_Rust_active_passes": 62,
+  "ignored_child_entry_modes": 2,
+  "actual_CXX_lifecycle_passed": true,
+  "actual_CXX_named_groups_passed": 5,
+  "independent_post_join_task_absence_observations": 4,
+  "fmt_strict_Clippy_all_targets_release_passed": true,
+  "all_source_inputs_unchanged_during_each_run": true,
+  "all_exact_CIDs_absent_same_daemon": true,
+  "production_semantic_RED_claimed": false,
+  "missing_ABI_compilation_RED": true,
+  "phone_accessed": false,
+  "Source7_GREEN": false,
+  "production_native_worker_selected": false,
+  "passed": true,
+  "Root_qualification_sha256": "462974ff6ddce109518f14a5e0018d41b62c871d64722ad8e6f31df49953c31e",
+  "forced_outer_container_disposal": false,
+  "inner_authored_quarantine_children": {
+    "per_final_Rust_QA": 4,
+    "outcome": "expected SIGKILL and actual parent reap; whole-fixture disposal, not native retirement"
+  },
+  "independent_qualification": {
+    "sha256": "bdb8b3f82b65700bfaf6d3bebe821c9c3482aecb625c6491c98da932051af11a",
+    "bytes": 71473,
+    "result": "PASS, no blockers",
+    "scope": "Independent source, frozen input, execution log and closure receipt review; no rerun",
+    "release_archive_digest": "primary-pinned; independent path/size/single-archive cohort verification"
+  }
+}

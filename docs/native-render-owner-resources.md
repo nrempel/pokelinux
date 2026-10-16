@@ -77,8 +77,10 @@ renderer is virgl with an explicitly selected LLVMPIPE software host. Pixel10
 metadata qualifies 1080x2424 and target-window DPR2.625; the 8x6 FBO is an offscreen
 oracle, not a phone preview or physical GPU result.
 
-Next expose the Rust executor through a thin C ABI and worker-created native
-holder, then connect this real GL operation. Frame submission must consume the caller's handle
+The later [current worker C ABI](native-render-executor-ffi.md) now exposes the
+retained Rust executor and worker-created native holder. Actual C++ lifecycle
+and five authored-owner groups pass, with all62 Rust cases and strict QA;
+the real GL operation is not yet connected to that worker. Next connect it. Frame submission must consume the caller's handle
 only on accepted admission; refusal retains it. Move a typed factory record
 containing only copied functions and bounded scalar options to the worker; keep
 owned bootstrap separate and retain the supplying library through actual join.

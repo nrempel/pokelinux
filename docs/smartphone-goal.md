@@ -111,8 +111,13 @@ eventfds and a BOOTTIME timerfd. It binds copied discovery to owned initial inpu
 frames to discovered outputs and final grants to their device tuples. Expiry and
 Stop reject late readiness while retaining cleanup custody. Its new archive is
 not linked into the earlier native Frame compositor/SDK. Genuine AQ/GL/DRM,
-worker C ABI, later session ingress/real output registry and authenticated
-Stop-retirement remain open. Whole-fixture quarantine/reaping in CPU tests proves
+later session ingress/real output registry and authenticated Stop-retirement
+remain open. The later [current worker C ABI](native-render-executor-ffi.md) now
+passes actual C++ lifecycle/five authored-owner groups and all62 Rust cases,
+strict Clippy and release compilation. Copied configuration, exact refusal
+retention, held Stop/expiry and actual worker destruction/join qualify only this
+ABI boundary. The real AQ/GL cohort is not yet rebuilt or selected. Whole-fixture
+quarantine/reaping in CPU tests proves
 neither real native drain nor blocked-driver recovery; all Source/full functional,
 ARM/Google-kernel/phone requirements below remain in force.
 
