@@ -1,4 +1,4 @@
-# Immutable SHM payloads and commit permits
+# Immutable SHM payloads, frame values and commit permits
 
 This original Rust library owns bounded immutable CPU pixel snapshots for the
 [connected Hyprland import](../tools/native-render-import/README.md). It copies
@@ -119,3 +119,33 @@ Test-only OS threads are actually joined. The module implements no production
 worker/JoinHandle ownership, FD queue, C ABI export, AQ/GL/native output call or
 Source integration. These eight component tests are distinct from the seven
 rendering-stall cases; connected frame commit/presentation and hardware remain open.
+
+## Immutable frame values
+
+The [`frame` module](src/frame.rs) now copies bounded CPU target/draw/material/
+matrix/rectangle values and Arc-clones exact immutable snapshots. The implemented
+[`pokelinux_render_frame.h`](include/pokelinux_render_frame.h) exports capture,
+release and a synchronous visitor only. It uses `PR_FRAME_ABI_V1`, with no private
+executor declarations or compatibility aliases. The visitor's pointers expire
+before return; only explicitly cloned snapshot handles can outlive it.
+
+Run the14 actual boundary cases separately:
+
+```sh
+cargo test --offline --locked --test frame_capture --target x86_64-unknown-linux-gnu
+```
+
+These tests were written after the implementation draft. An initial wrong layout
+expectation is corrected without a production behavior change; final14-case QA,
+format-check, strict Clippy and release build pass. A structural missing-public-
+header expectation is separate and supplies no behavioral RED. Historical permit8
+results are not added to this count.
+
+A historical native FULL33/private-header selection builds16 affected units and
+507 SDK files and passes five snapshot FFI plus four actual codec CPU groups.
+The public-header C++ successor changes names/includes only; its separate fresh
+native build now passes all16 affected units,507 matching SDK files, the same
+five snapshot FFI and four codec CPU groups. The actor calls real capture/visitor/
+clone/adoption using authored plan values, without a live scene producer, native
+GL or production worker. See the [frame report](../docs/native-render-frame.md)
+for matching evidence and unchanged Source/full-runtime limits.

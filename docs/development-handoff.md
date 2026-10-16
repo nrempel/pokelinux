@@ -251,6 +251,13 @@ now builds all15 affected C++ units and505 matching SDK files after a separate
 controls and three rendering failures, with original windows and full closure.
 The new scene producer/GL primitives compile only; no owner starts, and this ELF
 selects old snapshot-only Rust69 rather than the separate permit module.
+The later [frame CPU custody checkpoint](native-render-frame.md) passes14
+postimplementation Rust cases and a historical FULL33/private-header build with
+507 SDK files, five snapshot FFI and four real codec CPU groups. The new public
+frame header contains only implemented capture/release/visitor functions and
+passes separate Rust QA. Its fresh matching native33 build/507-file SDK and the
+same five FFI/four codec CPU groups also pass. Authored plan values qualify CPU custody only; live producer,
+GL primitives and a production worker have not executed in these epochs.
 Production control/render ownership separation and GREEN remain open. Source100ms,
 terminal authority expiry, real facts and fence/buffer lifetime remain required;
 no exclusive-CPU or earlier-failure cause follows. Strict matching ARM64 owner/client

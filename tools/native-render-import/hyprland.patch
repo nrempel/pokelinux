@@ -1,20 +1,21 @@
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -305,6 +305,28 @@
+@@ -305,6 +305,30 @@
  add_library(hyprland_lib STATIC ${SRCFILES})
  add_executable(Hyprland src/main.cpp ${TRACY_CPP_FILES})
  target_link_libraries(Hyprland hyprland_lib)
 +
-+# Original Rust-owned immutable CPU SHM import prerequisite. Cargo is built and
++# Original Rust-owned immutable CPU SHM/frame custody prerequisite. Cargo is built and
 +# selected by the external qualified build; CMake never fetches/builds a crate.
 +set(POKELINUX_RENDER_STATIC_LIBRARY "" CACHE FILEPATH "Exact externally built libpokelinux_render.a")
-+set(POKELINUX_RENDER_INCLUDE_DIR "" CACHE PATH "Directory containing its exact pokelinux_render.h")
++set(POKELINUX_RENDER_INCLUDE_DIR "" CACHE PATH "Directory containing its exact SHM and frame C headers")
 +set(POKELINUX_RENDER_NATIVE_LIBRARIES "" CACHE STRING "Target native libraries reported by the external Rust staticlib build")
 +if(NOT IS_ABSOLUTE "${POKELINUX_RENDER_STATIC_LIBRARY}" OR NOT EXISTS "${POKELINUX_RENDER_STATIC_LIBRARY}")
 +  message(FATAL_ERROR "Set POKELINUX_RENDER_STATIC_LIBRARY to the qualified Rust staticlib absolute path")
 +endif()
-+if(NOT IS_ABSOLUTE "${POKELINUX_RENDER_INCLUDE_DIR}" OR NOT EXISTS "${POKELINUX_RENDER_INCLUDE_DIR}/pokelinux_render.h")
-+  message(FATAL_ERROR "Set POKELINUX_RENDER_INCLUDE_DIR to the matching C ABI header directory")
++if(NOT IS_ABSOLUTE "${POKELINUX_RENDER_INCLUDE_DIR}" OR NOT EXISTS "${POKELINUX_RENDER_INCLUDE_DIR}/pokelinux_render.h"
++   OR NOT EXISTS "${POKELINUX_RENDER_INCLUDE_DIR}/pokelinux_render_frame.h")
++  message(FATAL_ERROR "Set POKELINUX_RENDER_INCLUDE_DIR to the matching SHM and frame C ABI header directory")
 +endif()
 +add_library(pokelinux_render_rust STATIC IMPORTED GLOBAL)
 +set_target_properties(pokelinux_render_rust PROPERTIES
@@ -22,9 +23,10 @@
 +  INTERFACE_INCLUDE_DIRECTORIES "${POKELINUX_RENDER_INCLUDE_DIR}")
 +target_link_libraries(pokelinux_render_rust INTERFACE Threads::Threads ${CMAKE_DL_LIBS} ${POKELINUX_RENDER_NATIVE_LIBRARIES})
 +target_link_libraries(hyprland_lib PRIVATE pokelinux_render_rust)
-+# SHMSnapshot.hpp is installed in the matching compositor SDK; keep its exact C
-+# contract adjacent so a plugin does not depend on an external build directory.
++# Snapshot/codec headers are installed in the matching compositor SDK; keep
++# their exact C contracts adjacent, without an external build-directory path.
 +install(FILES "${POKELINUX_RENDER_INCLUDE_DIR}/pokelinux_render.h"
++              "${POKELINUX_RENDER_INCLUDE_DIR}/pokelinux_render_frame.h"
 +        DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/hyprland/src/render")
  
  target_include_directories(hyprland_lib PUBLIC ${deps_INCLUDE_DIRS} ${LUA_INCLUDE_DIRS})
@@ -1137,6 +1139,330 @@
 +    struct SFramePlanError { eFrameUnavailable reason; std::string detail; };
 +    using FramePlanResult = std::expected<SFramePlan, SFramePlanError>;
 +}
+--- /dev/null
++++ b/src/render/FramePlanCodec.cpp
+@@ -0,0 +1,275 @@
++#include "FramePlanCodec.hpp"
++#include "FramePlan.hpp"
++
++#include <algorithm>
++#include <array>
++#include <cmath>
++#include <cstddef>
++#include <memory>
++#include <new>
++#include <stdexcept>
++#include <utility>
++#include <vector>
++
++static_assert(Render::FRAME_MAX_DRAWS == PR_FRAME_MAX_DRAWS);
++static_assert(Render::FRAME_MAX_RESOURCES == PR_FRAME_MAX_RESOURCES);
++static_assert(Render::FRAME_MAX_SCISSORS == PR_FRAME_MAX_RECTS);
++static_assert(Render::FRAME_MAX_METADATA_BYTES == PR_FRAME_MAX_METADATA_BYTES);
++
++struct SCodecSnapshotDeleter {
++    void operator()(PrSnapshot* snapshot) const noexcept { pr_snapshot_release(snapshot); }
++};
++using CodecSnapshot = std::unique_ptr<PrSnapshot, SCodecSnapshotDeleter>;
++
++struct SCodecStorage {
++    std::vector<PrFrameDrawV1> draws;
++    std::vector<PrFrameResourceBorrowV1> resources;
++    std::vector<PrFrameRectV1> rects;
++    std::vector<CodecSnapshot> snapshots;
++};
++
++template<size_t N>
++static bool finiteArray(const std::array<float, N>& values) {
++    return std::ranges::all_of(values, [](float value) { return std::isfinite(value); });
++}
++
++static bool finiteBox(const Render::SFrameBox& box) {
++    return std::isfinite(box.x) && std::isfinite(box.y) && std::isfinite(box.width) && std::isfinite(box.height) && std::isfinite(box.rotation);
++}
++
++static bool finiteCM(const Render::SFrameCM& cm) {
++    return std::isfinite(cm.srcTFMin) && std::isfinite(cm.srcTFMax) && std::isfinite(cm.dstTFMin) && std::isfinite(cm.dstTFMax) &&
++        std::isfinite(cm.srcRefLuminance) && std::isfinite(cm.dstRefLuminance) && std::isfinite(cm.maxLuminance) && std::isfinite(cm.dstMaxLuminance) &&
++        finiteArray(cm.convertMatrix) && finiteArray(cm.dstPrimariesXYZ) && std::isfinite(cm.sdrSaturation) && std::isfinite(cm.sdrBrightness);
++}
++
++static bool finiteMaterial(const Render::SFrameMaterial& material) {
++    return std::isfinite(material.alpha) && std::isfinite(material.roundingPx) && std::isfinite(material.roundingPower) &&
++        std::isfinite(material.discardOpacity) && finiteArray(material.tintRgb) && finiteCM(material.cm) && material.wrapX <= 1 && material.wrapY <= 1;
++}
++
++static bool sameDescription(const PrShmDescription& a, const PrShmDescription& b) {
++    return a.resource_id == b.resource_id && a.generation == b.generation && a.commit_sequence == b.commit_sequence && a.drm_format == b.drm_format &&
++        a.width == b.width && a.height == b.height && a.stride == b.stride && a.bytes_per_pixel == b.bytes_per_pixel && a.reserved == b.reserved;
++}
++
++static PrFrameBoxV1 boxValue(const Render::SFrameBox& box) {
++    return {box.x, box.y, box.width, box.height, box.rotation};
++}
++
++static uint32_t flagValue(bool enabled, uint32_t bit) {
++    return enabled ? bit : 0u;
++}
++
++static PrFrameCMV1 cmValue(const Render::SFrameCM& cm) {
++    PrFrameCMV1 result{};
++    result.flags = flagValue(cm.enabled, PR_CM_ENABLED) | flagValue(cm.needsTonemap, PR_CM_TONEMAP) | flagValue(cm.needsSDRmod, PR_CM_SDR_MOD);
++    result.source_tf = cm.sourceTF;
++    result.target_tf = cm.targetTF;
++    result.tonemap_mode = cm.tonemapMode;
++    result.src_tf_min = cm.srcTFMin;
++    result.src_tf_max = cm.srcTFMax;
++    result.dst_tf_min = cm.dstTFMin;
++    result.dst_tf_max = cm.dstTFMax;
++    result.src_ref_luminance = cm.srcRefLuminance;
++    result.dst_ref_luminance = cm.dstRefLuminance;
++    result.max_luminance = cm.maxLuminance;
++    result.dst_max_luminance = cm.dstMaxLuminance;
++    // These matrices are already column-major. No transpose/recomputation.
++    std::copy(cm.convertMatrix.begin(), cm.convertMatrix.end(), result.convert_matrix);
++    std::copy(cm.dstPrimariesXYZ.begin(), cm.dstPrimariesXYZ.end(), result.dst_primaries_xyz);
++    result.sdr_saturation = cm.sdrSaturation;
++    result.sdr_brightness = cm.sdrBrightness;
++    return result;
++}
++
++static PrFrameMaterialV1 materialValue(const Render::SFrameMaterial& material) {
++    PrFrameMaterialV1 result{};
++    result.alpha = material.alpha;
++    result.rounding_px = material.roundingPx;
++    result.rounding_power = material.roundingPower;
++    result.discard_opacity = material.discardOpacity;
++    result.flags = flagValue(material.nearest, PR_MAT_NEAREST) | flagValue(material.blend, PR_MAT_BLEND) | flagValue(material.rgbx, PR_MAT_RGBX) |
++        flagValue(material.tintEnabled, PR_MAT_TINT) | flagValue(material.discardActive, PR_MAT_DISCARD_ACTIVE) |
++        flagValue(material.discardOpaque, PR_MAT_DISCARD_OPAQUE) | flagValue(material.discardAlpha, PR_MAT_DISCARD_ALPHA);
++    result.wrap_x = material.wrapX;
++    result.wrap_y = material.wrapY;
++    std::copy(material.tintRgb.begin(), material.tintRgb.end(), result.tint_rgb);
++    result.cm = cmValue(material.cm);
++    return result;
++}
++
++static void appendRects(const std::vector<Render::SFrameRect>& input, std::vector<PrFrameRectV1>& rects, uint32_t& first, uint32_t& count) {
++    first = static_cast<uint32_t>(rects.size());
++    count = static_cast<uint32_t>(input.size());
++    for (const auto& rect : input)
++        rects.push_back({rect.x1, rect.y1, rect.x2, rect.y2});
++}
++
++static bool countRects(const Render::SFramePlan& plan, size_t& count) {
++    count = 0;
++    const auto add = [&count](size_t next) {
++        if (next > PR_FRAME_MAX_RECTS - count)
++            return false;
++        count += next;
++        return true;
++    };
++    if (!add(plan.damage.size()) || !add(plan.finalDamage.size()))
++        return false;
++    for (const auto& draw : plan.draws) {
++        if (!add(draw.scissors.size()))
++            return false;
++    }
++    return true;
++}
++
++static bool boundedStorage(const SCodecStorage& storage) {
++    size_t bytes = sizeof(SCodecStorage) + sizeof(PrFrameBorrowV1);
++    const auto add = [&bytes](size_t capacity, size_t elementBytes) {
++        if (capacity > (PR_FRAME_MAX_METADATA_BYTES - bytes) / elementBytes)
++            return false;
++        bytes += capacity * elementBytes;
++        return true;
++    };
++    return add(storage.draws.capacity(), sizeof(PrFrameDrawV1)) && add(storage.resources.capacity(), sizeof(PrFrameResourceBorrowV1)) &&
++        add(storage.rects.capacity(), sizeof(PrFrameRectV1)) && add(storage.snapshots.capacity(), sizeof(CodecSnapshot));
++}
++
++Render::CFramePlanCapture::~CFramePlanCapture() {
++    reset();
++}
++
++Render::CFramePlanCapture::CFramePlanCapture(CFramePlanCapture&& other) noexcept : m_frame(std::exchange(other.m_frame, nullptr)) { ; }
++
++Render::CFramePlanCapture& Render::CFramePlanCapture::operator=(CFramePlanCapture&& other) noexcept {
++    if (this != &other) {
++        reset();
++        m_frame = std::exchange(other.m_frame, nullptr);
++    }
++    return *this;
++}
++
++Render::CFramePlanCapture::operator bool() const noexcept {
++    return m_frame != nullptr;
++}
++
++const PrFrame* Render::CFramePlanCapture::get() const& noexcept {
++    return m_frame;
++}
++
++void Render::CFramePlanCapture::reset() noexcept {
++    pr_frame_release(std::exchange(m_frame, nullptr));
++}
++
++PrFrame** Render::CFramePlanCapture::admissionSlot() & noexcept {
++    return &m_frame;
++}
++
++PrFrame* Render::CFramePlanCapture::releaseForTransfer() && noexcept {
++    return std::exchange(m_frame, nullptr);
++}
++
++int32_t Render::CFramePlanCodec::capture(const SFramePlan& plan, CFramePlanCapture& result) noexcept {
++    if (plan.draws.size() > PR_FRAME_MAX_DRAWS || plan.resources.size() > PR_FRAME_MAX_RESOURCES)
++        return PR_FRAME_CAPACITY;
++    size_t rectCount = 0;
++    if (!countRects(plan, rectCount))
++        return PR_FRAME_CAPACITY;
++    if (!std::isfinite(plan.target.scale) || !finiteArray(plan.target.targetProjection) || !finiteArray(plan.target.scaleMatrix))
++        return PR_FRAME_INVALID;
++    for (const auto& draw : plan.draws) {
++        if (!finiteBox(draw.box) || !finiteBox(draw.roundingBox) || !finiteArray(draw.projection) || !finiteArray(draw.uv) ||
++            !finiteArray(draw.convertedColor) || !finiteArray(draw.colorSRGB) || !finiteMaterial(draw.material))
++            return PR_FRAME_INVALID;
++        switch (draw.kind) {
++            case eFrameDrawKind::CLEAR:
++            case eFrameDrawKind::RECT: break;
++            case eFrameDrawKind::SHM:
++                if (draw.resourceIndex >= plan.resources.size() || draw.commitSequence != plan.resources[draw.resourceIndex].description.commit_sequence)
++                    return PR_FRAME_INVALID;
++                break;
++            default: return PR_FRAME_INVALID;
++        }
++    }
++    try {
++        SCodecStorage storage;
++        storage.draws.reserve(plan.draws.size());
++        storage.resources.reserve(plan.resources.size());
++        storage.rects.reserve(rectCount);
++        storage.snapshots.reserve(plan.resources.size());
++        if (!boundedStorage(storage))
++            return PR_FRAME_CAPACITY;
++        for (const auto& resource : plan.resources) {
++            const auto view = resource.snapshot.view();
++            if (!view || !sameDescription(resource.description, view->description))
++                return PR_FRAME_INVALID;
++            CodecSnapshot snapshot(resource.snapshot.cloneForTransfer());
++            if (!snapshot)
++                return PR_FRAME_ALLOCATION;
++            storage.resources.push_back({resource.description, snapshot.get()});
++            storage.snapshots.push_back(std::move(snapshot));
++        }
++        PrFrameBorrowV1 borrow{};
++        borrow.abi_version = PR_FRAME_ABI_V1;
++        borrow.struct_size = static_cast<uint32_t>(sizeof(PrFrameBorrowV1));
++        borrow.flags = flagValue(plan.commit, PR_FRAME_COMMIT) | flagValue(plan.fullRepaint, PR_FRAME_FULL_REPAINT);
++        borrow.scene_sequence = plan.sceneSequence;
++        borrow.security_generation = plan.securityGeneration;
++        borrow.target.output_id = plan.target.outputId;
++        borrow.target.output_generation = plan.target.outputGeneration;
++        borrow.target.width = plan.target.width;
++        borrow.target.height = plan.target.height;
++        borrow.target.transformed_width = plan.target.transformedWidth;
++        borrow.target.transformed_height = plan.target.transformedHeight;
++        borrow.target.output_transform = plan.target.outputTransform;
++        borrow.target.flags = flagValue(plan.target.shaderCMAvailable, PR_TARGET_SHADER_CM_AVAILABLE);
++        borrow.target.scale = plan.target.scale;
++        std::copy(plan.target.targetProjection.begin(), plan.target.targetProjection.end(), borrow.target.target_projection);
++        std::copy(plan.target.scaleMatrix.begin(), plan.target.scaleMatrix.end(), borrow.target.scale_matrix);
++        appendRects(plan.damage, storage.rects, borrow.damage_first, borrow.damage_count);
++        appendRects(plan.finalDamage, storage.rects, borrow.final_damage_first, borrow.final_damage_count);
++        for (const auto& draw : plan.draws) {
++            PrFrameDrawV1 value{};
++            switch (draw.kind) {
++                case eFrameDrawKind::CLEAR: value.kind = PR_DRAW_CLEAR; break;
++                case eFrameDrawKind::RECT: value.kind = PR_DRAW_RECT; break;
++                case eFrameDrawKind::SHM: value.kind = PR_DRAW_SHM; break;
++                default: return PR_FRAME_INVALID;
++            }
++            value.resource_index = draw.resourceIndex;
++            appendRects(draw.scissors, storage.rects, value.scissor_first, value.scissor_count);
++            value.box = boxValue(draw.box);
++            value.rounding_box = boxValue(draw.roundingBox);
++            std::copy(draw.projection.begin(), draw.projection.end(), value.projection);
++            std::copy(draw.uv.begin(), draw.uv.end(), value.uv);
++            std::copy(draw.convertedColor.begin(), draw.convertedColor.end(), value.converted_color);
++            std::copy(draw.colorSRGB.begin(), draw.colorSRGB.end(), value.color_srgb);
++            value.material = materialValue(draw.material);
++            value.surface_id = draw.surfaceId;
++            value.commit_sequence = draw.commitSequence;
++            storage.draws.push_back(value);
++        }
++        borrow.draw_count = static_cast<uint32_t>(storage.draws.size());
++        borrow.resource_count = static_cast<uint32_t>(storage.resources.size());
++        borrow.rect_count = static_cast<uint32_t>(storage.rects.size());
++        borrow.draws = storage.draws.data();
++        borrow.resources = storage.resources.data();
++        borrow.rects = storage.rects.data();
++        PrFrame* captured = nullptr;
++        const int32_t status = pr_frame_capture_v1(&borrow, &captured);
++        if (status != PR_FRAME_OK)
++            return status;
++        if (!captured)
++            return PR_FRAME_ALLOCATION;
++        CFramePlanCapture replacement;
++        replacement.m_frame = captured;
++        result = std::move(replacement);
++        return PR_FRAME_OK;
++    } catch (const std::bad_alloc&) {
++        return PR_FRAME_ALLOCATION;
++    } catch (const std::length_error&) {
++        return PR_FRAME_CAPACITY;
++    } catch (...) {
++        return PR_FRAME_INVALID;
++    }
++}
+--- /dev/null
++++ b/src/render/FramePlanCodec.hpp
+@@ -0,0 +1,43 @@
++#pragma once
++
++#include "pokelinux_render_frame.h"
++#include <cstdint>
++
++namespace Render {
++    struct SFramePlan;
++
++    // Owns one immutable Rust frame handle. A synchronous borrow ends before
++    // reset, move, successful admission or destruction of this handle.
++    class CFramePlanCapture {
++      public:
++        CFramePlanCapture() noexcept = default;
++        ~CFramePlanCapture();
++        CFramePlanCapture(const CFramePlanCapture&) = delete;
++        CFramePlanCapture& operator=(const CFramePlanCapture&) = delete;
++        CFramePlanCapture(CFramePlanCapture&& other) noexcept;
++        CFramePlanCapture& operator=(CFramePlanCapture&& other) noexcept;
++
++        explicit operator bool() const noexcept;
++        const PrFrame* get() const& noexcept;
++        const PrFrame* get() const&& = delete;
++        void reset() noexcept;
++        // Borrow the unique owned-handle slot only for a synchronous control
++        // transfer that nulls it on success and preserves it on refusal.
++        PrFrame** admissionSlot() & noexcept;
++        PrFrame** admissionSlot() && = delete;
++        [[nodiscard]] PrFrame* releaseForTransfer() && noexcept;
++
++      private:
++        friend class CFramePlanCodec;
++        PrFrame* m_frame = nullptr;
++    };
++
++    class CFramePlanCodec {
++      public:
++        // Call on the same control owner that prepared this immutable plan.
++        // Copies all values and clones Rust snapshot custody synchronously.
++        // Does not consume/mutate the plan or result on any refusal. Does not
++        // create authority, admit work, call graphics or retain C++ pointers.
++        static int32_t capture(const SFramePlan& plan, CFramePlanCapture& result) noexcept;
++    };
++}
 --- a/src/render/GLRenderer.cpp
 +++ b/src/render/GLRenderer.cpp
 @@ -1,4 +1,5 @@
@@ -1712,7 +2038,7 @@
          virtual SP<ITexture>         createTexture(cairo_surface_t* cairo)                                                                                                     = 0;
 --- /dev/null
 +++ b/src/render/SHMSnapshot.cpp
-@@ -0,0 +1,113 @@
+@@ -0,0 +1,128 @@
 +#include "SHMSnapshot.hpp"
 +
 +#include <limits>
@@ -1826,9 +2152,24 @@
 +    result = std::move(replacement);
 +    return PR_OK;
 +}
++
++int32_t Render::CSHMSnapshot::takeTransferred(PrSnapshot* transferred, const PrShmDescription& expected, CSHMSnapshot& result) noexcept {
++    CSHMSnapshot replacement;
++    replacement.m_snapshot = transferred; // Own before any validation or return.
++    const auto view = replacement.view();
++    if (!view)
++        return PR_INVALID;
++    const auto& actual = view->description;
++    if (actual.resource_id != expected.resource_id || actual.generation != expected.generation || actual.commit_sequence != expected.commit_sequence ||
++        actual.drm_format != expected.drm_format || actual.width != expected.width || actual.height != expected.height || actual.stride != expected.stride ||
++        actual.bytes_per_pixel != expected.bytes_per_pixel || actual.reserved != expected.reserved)
++        return PR_INVALID;
++    result = std::move(replacement);
++    return PR_OK;
++}
 --- /dev/null
 +++ b/src/render/SHMSnapshot.hpp
-@@ -0,0 +1,37 @@
+@@ -0,0 +1,43 @@
 +#pragma once
 +
 +#include "pokelinux_render.h"
@@ -1856,6 +2197,12 @@
 +        // Each non-null result is a new owned handle for an exclusive transfer.
 +        [[nodiscard]] PrSnapshot* cloneForTransfer() const noexcept;
 +        [[nodiscard]] PrSnapshot* releaseForTransfer() && noexcept;
++
++        // Consumes one independently owned transferred handle on entry, EVEN
++        // on mismatch/refusal. Caller must never reuse/release it afterwards.
++        // Does not touch the control store, copy pixels or create graphics.
++        // Result stays unchanged on failure; replace/release it on its owner.
++        static int32_t takeTransferred(PrSnapshot* transferred, const PrShmDescription& expected, CSHMSnapshot& result) noexcept;
 +
 +        // Control-owner-only import; leaves result unchanged on any failure.
 +        // Identity fields are assigned by the monotonic import store, not callers.

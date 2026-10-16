@@ -24,12 +24,19 @@ is fallible; `Box`/`Arc` metadata allocation can still abort on exhaustion. Ther
 is no full process out-of-memory recovery guarantee.
 
 The public patch is complete against pinned upstream Hyprland
-`efb50993780079460b0cbed1363e2166a2de1d9f`. Its31-file before/after map preserves
-the original observations, immutable imports and Cairo repair, then adds factored
-scene order, CPU frame records and owner-only GL primitives. It contains no
+`efb50993780079460b0cbed1363e2166a2de1d9f`. Its33-file before/after map preserves
+the original observations, immutable imports, Cairo repair and scene prerequisites,
+then adds the bounded frame codec and owned snapshot adoption. It contains no
 proprietary source or unpublished patch prerequisite. Every plugin must use the
 complete matching rebuilt SDK. Earlier18-file import and21-file cursor cohorts
 retain their own evidence; their no-attach/Cairo oracles were not rerun on31.
+
+The later [immutable frame CPU checkpoint](native-render-frame.md) keeps the
+historical FULL33/private-header native build separate from the new public-header
+source selection. It qualifies real value/snapshot custody, without executing the
+live scene producer, GL primitives or a production render worker. A separate
+fresh public-header native build now passes all16 affected units, its matching
+507-file SDK, five snapshot FFI and four codec CPU groups.
 
 ## Executed builds and C++ lifetime boundary
 

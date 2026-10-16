@@ -1,0 +1,147 @@
+{
+  "schema": 1,
+  "scope": "Current public immutable Frame API source and CPU custody evidence; historical native private-header epoch remains separate. No rendering worker/Source/phone completion.",
+  "public_source_base": "130a096d229a799450bbd69f3a780b553c4c74ce",
+  "published_source_hashes": {
+    "native-render/src/frame.rs": "1234607ea4ebc0552e3625bffdda821ae27a8b81ca4229d199e2b6140d62ec2e",
+    "native-render/include/pokelinux_render_frame.h": "56f8ec91b6cfb434af8875c6139fd210f0d57618614a660bffde13e6d3d479f0",
+    "native-render/tests/frame_capture.rs": "6f3c277dbbee02c0923cfd8bd21f8677dbb0c79c9bbc07cf52371179c68d3849",
+    "tools/native-render-import/hyprland.patch": "bd1f10c7d204c85eac78938bd1ed7f3cd430f823f50b5a867b2d9931fc393b32",
+    "tools/native-render-import/cohort.json": "99106ac0add1e1ab9baaed85de94ed76f1b3f1588fecb7e0437f7ed4ec542e2d",
+    "tools/native-render-import/frame-codec-integration.cpp": "e7f86ad4890423d71d112ae6eb06199a26eb948813d903e9101bf99e4ce60786"
+  },
+  "frame_14_historical_postimplementation": {
+    "qualification_sha256": "05de38a1d249949acba0d7d02e5a271631043eb256d63b418615845a0ae00afa",
+    "initial_compiled": 14,
+    "initial_passed": 13,
+    "initial_failed": 1,
+    "failure_class": "authored test expected wrong material/surface field offsets; test-only correction, no production behavior repair",
+    "final_passed": 14,
+    "strict_TDD_RED_claim": false,
+    "private_header_sha256": "95339c33088d010acf21011bd197b1c6d40a4f78a192dc6ce1f10db0918a74bf",
+    "actual_archive_sha256": "3cf0a142115bc2f261086cfbb9dbfc0d543d0988219f08b1c4988d70f5a36f9b"
+  },
+  "public_frame_CPU_selection": {
+    "qualification_sha256": "3f3f22823b2356888149fe2759ce1936e44c2c6e00abd3a9190911a24d1327d1",
+    "header_sha256": "56f8ec91b6cfb434af8875c6139fd210f0d57618614a660bffde13e6d3d479f0",
+    "tests": 14,
+    "failures": 0,
+    "fmt_check": true,
+    "strict_Clippy_Dwarnings": true,
+    "release_build": true,
+    "actual_archive_sha256": "3cf0a142115bc2f261086cfbb9dbfc0d543d0988219f08b1c4988d70f5a36f9b",
+    "archive_bytes": 22649328,
+    "actual_host_direct_waits": 6,
+    "merged_PIPE_EOFs": 6,
+    "original_cutoffs_same_daemon_exactCID_absence_readonly_input_closure": true,
+    "structural_expectation_authored_before_public_header": true,
+    "initial_missing_header_structural_exit": 1,
+    "behavioral_RED_claim": false,
+    "C_type_declaration_block_byte_equal_to_historical": true,
+    "public_functions": [
+      "pr_frame_capture_v1",
+      "pr_frame_release",
+      "pr_frame_with_view_v1"
+    ],
+    "ABI_macro": "PR_FRAME_ABI_V1",
+    "no_private_executor_declarations_or_aliases": true
+  },
+  "historical_native_FULL33": {
+    "Root_qualification_sha256": "47e393cbfbd1e2aadba6a1b6c5ee0fca440ab8c91c69d6b317ffe79ccdc8663c",
+    "independent_qualification_sha256": "9062f1654ae2caa4e59ed2ca43effef64f4291c47a442118daad8286d27b3618",
+    "execution_sha256": "a0eef728aae6230a804a9e60693b4c30c3a214421eae5329ae1a49397e2c5f0c",
+    "source_patch_sha256": "907b01f4463b22d6ee1ad567f868382edb6523d685d5af55a37d89e7ae2e01d2",
+    "private_header_sha256": "95339c33088d010acf21011bd197b1c6d40a4f78a192dc6ce1f10db0918a74bf",
+    "source_payloads": 33,
+    "actual_CPP_units": 16,
+    "configured_command_entries": 454,
+    "ELF": {
+      "bytes": 25115672,
+      "sha256": "5ecc5fb1d6f91c3b70154506e3b432ab1caf3d440cc0ad0ebe21f0a16e370be3"
+    },
+    "SDK": {
+      "regular_files": 507,
+      "bytes": 2641920,
+      "sha256": "a2cbaa5be754d69eec61c108c887e9a912bbdc9a8f063dfbb676184d0fea3836"
+    },
+    "snapshot_FFI_groups": 5,
+    "frame_codec_groups": 4,
+    "codec_groups_scope": "Authored CPU SFramePlan values calling actual linked Rust capture/visitor/snapshot clone and C++ adoption; real std::thread::join, no separate codec-thread TID/proc receipt",
+    "actual_direct_waits": 35,
+    "merged_PIPE_EOFs": 35,
+    "early_counted_once": true,
+    "host_elapsed_ns": 166091777817,
+    "all_original_numeric_cutoffs_and_QMP_KVM_shutdown_EOF_QEMU0_CLI0_exactCID_sameDaemon_locked_input_closure": true,
+    "compositor_or_live_scene_producer_or_GL_primitives_executed": false,
+    "production_executor_qualified": false
+  },
+  "new_public_header_CPP_source": {
+    "source_receipt_sha256": "04fb7d0060ac1a28389a28d26a4870e49ac85b1d0bf3fa2f3bcbea6f5427a8d5",
+    "independent_source_review_sha256": "8da9e8a21c4d8d8f79d30455412fe20798e4f365d4bbcfc6707e49d4946dbe84",
+    "only_nominal_production_paths_changed": 3,
+    "thirty_historical_payload_bytes_unchanged": true,
+    "native_build_and_CPU_actors_executed": true
+  },
+  "open": [
+    "production live scene producer and retained render worker integration",
+    "native output authority, real GPU/buffer/fence lifecycle and presentation",
+    "unchanged Source7 rendering RED and original cold full composition",
+    "all ARM, physical phone and full smartphone gates"
+  ],
+  "current_native_public_header_FULL33": {
+    "Root_qualification_sha256": "01f18929c48ca043b9fa9243dc5f7b08795ae94a8cfbd2fb3b01279d4f3e01ed",
+    "independent_qualification_sha256": "2e11b4fda6073df32638573fd515081067b340b53450b8dfb97987e3044c36b9",
+    "preparation_independent_review_sha256": "7470885080cf0d404d89c2a937fbf544b1fdc6ad12cce98d2932452ad38665f3",
+    "selection_sha256": "fd7fd7a79a9b3da7802dadfcd178ee9ca74a13d3005eea23a72f8562672996e8",
+    "command_sha256": "defe0dd881b75f63e3c43849df884099c8c42518e8d56a61bcc82b94d8098ad5",
+    "actual_receipts": {
+      "boot-result.json": "1e28832b28879e7a59cefc4b3506cbce138be93120ca6405b569d25aa383fa03",
+      "execution.json": "e291a99af4897c24238569899d62d0a1230f1e0064ffcc2a4ab4b014360e1e7d",
+      "guest-out/build-output/build-result.json": "e94272dabf12f51de2c61e6c53450d3989fce9c887517b9b2734d074588d0b76",
+      "guest-out/guest-result.json": "9399f565581cae6a47a98eff2102f177428cb166b954ce81daf70bdfe8e44951"
+    },
+    "source_patch_sha256": "bd1f10c7d204c85eac78938bd1ed7f3cd430f823f50b5a867b2d9931fc393b32",
+    "source_map_sha256": "c70c0af0dc1105b7c1c9bce51cf187e890d9ef12d1ab7b86cf7c68da79ae9528",
+    "frame_C_header_sha256": "56f8ec91b6cfb434af8875c6139fd210f0d57618614a660bffde13e6d3d479f0",
+    "snapshot_C_header_sha256": "4a7a9a603fe6d7780ff071020f727c3eb7b0aba1c9bba56b682ddd219f995396",
+    "private_executor_header_selected": false,
+    "private_worker_archive_selected": false,
+    "source_payloads": 33,
+    "actual_CPP_units": 16,
+    "configured_command_entries": 454,
+    "ELF": {
+      "bytes": 25115672,
+      "sha256": "91848cff35e3d7425c487444bc251d685924c942e603cef427f004d350e584fe"
+    },
+    "SDK": {
+      "bytes": 2631680,
+      "regular_files": 507,
+      "sha256": "c1775e08aabb028b08904f37d78f8242b7791c5768a6c0994783c0d88b53d5d5"
+    },
+    "snapshot_FFI_groups": 5,
+    "frame_codec_groups": [
+      "global_bound_finite_descriptor_refusal_preserves_output",
+      "full_values_matrices_global_ranges_after_original_plan_drop",
+      "padded_stride_immutable_custody_after_frame_replacement_and_actual_worker_join",
+      "refused_transfer_consumes_incoming_handle_preserves_prior_result"
+    ],
+    "codec_actor_original_cutoff_seconds": 15,
+    "codec_actor_elapsed_ns": 7993913,
+    "codec_actual_wait0_and_EOF": true,
+    "codec_actual_std_thread_join_predicate": true,
+    "codec_separate_TID_proc_receipt": false,
+    "separate_FFI_producer_wait_pidfd_proc_ECHILD_EOF_and_thread_join_task_absent_EOF": true,
+    "actual_direct_waits": 35,
+    "merged_PIPE_EOFs": 35,
+    "early_counted_once": true,
+    "host_elapsed_ns": 165943350216,
+    "all_original_numeric_cutoffs_and_QMP_KVM_shutdown_EOF_QEMU0_CLI0_exactCID_sameDaemon_locked_input_closure": true,
+    "compositor_executed": false,
+    "live_CPU_scene_producer_executed": false,
+    "GL_primitives_executed": false,
+    "production_render_worker_qualified": false,
+    "Source_GREEN": false,
+    "noattach_cursor_oracles_rerun": false,
+    "ARM_phone_qualified": false
+  }
+}

@@ -119,6 +119,12 @@ The complete [31-file scene prerequisite checkpoint](docs/native-render-import.m
 passes its full native build/505-file SDK. Its new producer/GL primitives compile;
 the unchanged actual Source7 replay still has four controls and three rendering
 failures. That ELF selects the earlier snapshot-only Rust archive.
+A later [immutable frame CPU checkpoint](docs/native-render-frame.md) passes14
+postimplementation Rust boundary cases. A separate historical FULL33 build/507-file
+SDK passes five snapshot FFI and four real codec CPU groups using authored plan
+values. The implemented-only public frame header has fresh Rust QA and a separate
+successful native33 build/507-file SDK with the same five FFI/four codec groups. Live scene production, GL/worker execution and Source GREEN
+remain open.
 Earlier [permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
 passes four touch/graph/PCM groups using root-authored focus. Physical audio,
 production session completion and all phone gates remain open.

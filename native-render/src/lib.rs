@@ -252,3 +252,5 @@ pub unsafe extern "C" fn pr_snapshot_release(snapshot: *mut Snapshot) {
 }
 
 pub mod commit;
+
+pub mod frame;

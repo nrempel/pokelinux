@@ -2,9 +2,10 @@
 
 `hyprland.patch` applies to upstream Hyprland
 [`efb50993780079460b0cbed1363e2166a2de1d9f`](https://github.com/hyprwm/Hyprland/tree/efb50993780079460b0cbed1363e2166a2de1d9f).
-`cohort.json` binds exact before/after bytes for all31 affected files. It extends
-the earlier21-file import/Cairo cohort with factored scene order, CPU frame
-records and owner-only GL primitives. The original render observations, no-attach
+`cohort.json` binds exact before/after bytes for all33 affected files. It extends
+the earlier31-file scene prerequisite with the immutable frame codec and explicit
+owned snapshot adoption. The implemented-only frame header replaces private
+executor declarations; frame layout and behavior remain unchanged. The original render observations, no-attach
 guard and supplied-stride Cairo repair remain included.
 It does not require an unpublished source patch.
 The source remains subject to upstream licensing.
@@ -18,18 +19,22 @@ immutable payload. Client memory access ends before the existing GL call.
 `native-render` is the original std-only Rust library and C ABI; no proprietary
 input, decompiled code, runtime binary or private raw receipt is included.
 
-Build the exact Rust archive/header first. Configure the patched compositor with
-explicit absolute `POKELINUX_RENDER_STATIC_LIBRARY` and
-`POKELINUX_RENDER_INCLUDE_DIR`, plus `POKELINUX_RENDER_NATIVE_LIBRARIES` from the
-actual target Rust build. The qualified31 ELF selects the snapshot-only archive
-`69b81281…`, with C header `4a7a9a60…`, from the snapshot-only Rust source in
-public checkpoint `79c80ba39dd7b12bee87384547291e222241cf73`. Its five source
-hashes match the earlier library qualification.
-The separately published eight-case permit module/archive `fe5aac70…` is not linked
-into that ELF; a rebuild against current Rust is a new artifact selection.
-CMake performs no Cargo or network work. Rebuild the
-matching SDK and every plugin: texture input signatures are const-correct and
-the SDK must include the exact C header beside `SHMSnapshot.hpp`.
+Build the exact current Rust archive and matching `pokelinux_render.h` and
+`pokelinux_render_frame.h` first. Configure the patched compositor with explicit
+absolute `POKELINUX_RENDER_STATIC_LIBRARY` and `POKELINUX_RENDER_INCLUDE_DIR`, plus
+`POKELINUX_RENDER_NATIVE_LIBRARIES` from that actual target Rust build. CMake does
+no Cargo/network work. The matching SDK must carry both exact C headers beside
+`SHMSnapshot.hpp` and `FramePlanCodec.hpp`; rebuild every plugin against that SDK.
+The current frame CPU selection builds archive `3cf0a142…`, with snapshot header
+`4a7a9a60…` and public frame header `56f8ec91…`.
+
+The historical qualified31 ELF selects snapshot-only Rust `69b81281…`; its Source7
+replay is a separate retained result. A later historical FULL33 build uses the
+private95339 frame/header selection and passes five FFI plus four codec CPU
+groups. The new public-header successor has its own Rust CPU QA and now a separate
+successful native full-build/507-file SDK plus the same five FFI/four codec CPU
+groups. Its own qualified epoch supplies that evidence; prior artifacts remain
+historical. See the [frame report](../../docs/native-render-frame.md).
 
 The initial full native build and five C++/Rust lifetime groups pass. A separate
 [actual no-attach case](../../docs/native-render-import.md#actual-no-attach-identity-red)
@@ -64,3 +69,11 @@ GL still executes on the original compositor owner. This is an immutable CPU
 handoff prerequisite, not an executor, complete frame/output ownership split,
 Source GREEN, cold composition pass or phone result. The unchanged
 [rendering-stall baseline](../../docs/native-render-authority.md) remains RED.
+
+`frame-codec-integration.cpp` supplies an authored CPU plan and calls the actual
+linked frame capture/visitor/snapshot-clone/adoption functions. Its four groups
+check value preservation, refusal, padded lifetime after input/frame replacement,
+actual joined-thread adoption and consume-on-entry transfer refusal. It requires
+the matched patched source, exact Rust archive/headers, native libraries and an
+owned finite driver; this directory supplies no complete VM runner. No live scene
+producer, GL primitive or production executor is executed by this actor.

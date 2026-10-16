@@ -82,6 +82,14 @@ controls and three rendering failures. New scene/GL prerequisites compile only;
 no producer/primitive call or render-owner startup is selected, and the old
 snapshot-only Rust archive remains separate from the permit component.
 
+A later [immutable frame CPU checkpoint](native-render-frame.md) passes14
+postimplementation Rust boundary cases; a separate historical FULL33 build with
+507 SDK files passes five snapshot FFI and four codec CPU groups. The clean public
+frame-header selection passes fresh Rust QA and its own native33 build/507-file
+SDK plus the same five FFI/four codec CPU groups. This authored CPU value boundary executes no live
+producer, GL primitive or production render worker and closes no Source, full
+functional, ARM or phone gate.
+
 The [native Rust session owner](native-session-owner.md) implements compositor
 Child custody; its original Sounds assembly has32 host boundary passes,
 host/ARM64 compilation and actual six-file Make staging. The current
