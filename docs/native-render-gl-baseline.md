@@ -81,9 +81,9 @@ Earlier output-overflow/failed-path Xvfb disposals remain failed evidence.
 
 ## Next connected work
 
-Implement and test explicit owner SHM textures and real correlated fences using
-the frozen AR24/XR24, stride/padding, allocation identity and wrong-owner/context
-expectations. Then bind Rust bootstrap/ingress, copied discovery and frame
+The later [owner resource checkpoint](native-render-owner-resources.md) now
+qualifies the small SHM/fence helpers and a separate sampler-state repair through
+two actual RED/GREEN pairs. Next bind Rust bootstrap/ingress, copied discovery and frame
 execution to one rebuilt AQ15/native compositor/SDK/plugin cohort, with complete
 actual native routing authority and distinct startup/StopRetire permissions.
 No competing AQ14/AQ15 C++ runtime is qualified by SONAME separation alone.

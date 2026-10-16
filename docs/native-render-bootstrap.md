@@ -93,11 +93,19 @@ CLEAR/RECT and retained Frame byte controls against the earlier native Frame
 cohort, with complete owned test-channel closure. It selects no new Rust worker
 and supplies no SHM upload/native-fence behavior or Source7 GREEN.
 
+The later [native owner resource checkpoint](native-render-owner-resources.md)
+qualifies two actual native KVM RED/GREEN pairs: missing fence export, then a
+nondefault sampler override producing eight wrong bytes. Final eight-case GREEN
+checks padded AR24/XR24, owner/context/allocation refusals and six real sync-file
+facts before exact readbacks, followed by EOF/unload/join. Its four native sources
+compile into a test plugin against unchanged Frame507/9184/Rust3cf inputs. The
+production Rust executor, AQ output/presentation, Source7 and phone remain open.
+
 The new release archive is1dcce61e. The earlier native Frame ELF91848cff and its
 507-file SDK selected3cf0a142; the new worker archive is not linked into them and
 its C++ FFI/codec groups have not been rerun with it. Worker C ABI, genuine AQ/GL
 initialization, later session ingress and OOB revocation, real discovery updates,
 complete native routing scope and a separate StopRetire ledger remain required.
-Actual GL upload/fence/presentation/retirement, the unchanged Source7 rendering
+The production worker GL/output/presentation/retirement path, unchanged Source7 rendering
 GREEN, cold normal app/PCM composition, ARM/matched Google kernel and every
 physical Pixel/carrier/camera/power/suspend gate remain open. No phone was accessed.

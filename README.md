@@ -137,8 +137,13 @@ A separate [actual native GL baseline](docs/native-render-gl-baseline.md) now
 passes exact CLEAR/RECT offscreen readback and retained96-byte Frame custody on
 a real worker EGL context. Its repaired test channel qualifies EOF/unload/join
 with fresh live Source before/after. It selects the earlier Frame native cohort;
-owned SHM/fence behavior, the production Rust render backend and Source7 GREEN
-remain open.
+that baseline contains no SHM/fence behavior.
+The later [owned SHM/fence checkpoint](docs/native-render-owner-resources.md)
+qualifies actual missing-export and sampler-override RED/GREEN pairs. Final eight
+cases pass with six real sync-file observations before exact pixel readbacks,
+owner/context/allocation refusals and EOF/unload/join. Explicit native plugin
+sources use the unchanged earlier Frame cohort. The production Rust executor,
+AQ output/presentation, unchanged Source7 and all phone gates remain open.
 Earlier [permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
 passes four touch/graph/PCM groups using root-authored focus. Physical audio,
 production session completion and all phone gates remain open.

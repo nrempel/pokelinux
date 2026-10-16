@@ -1,0 +1,102 @@
+"""Frozen actual NGL behavior classifier; setup/closure failure is never target RED."""
+
+def _timed(row):
+ assert 0<row['operation_enter_ns']<=row['operation_return_ns']<=row['collection_boottime_ns']<=row['Root_received_at_ns']
+
+def classify(component,exit_code,epoch,expected_failure_case=None):
+ assert epoch in ['RED','GREEN']
+ assert component['schema']==1 and component['baseline_kind']=='OWNER_GL_NATIVE_LEAF_BEHAVIOR'
+ assert component['Source_lease_ns']==100000000 and component['Source_packets_authored_or_relayed']is False
+ assert component['availability']=='ACTUAL_NATIVE_SYNC_FILE_POLL_SUCCESS','actual native fence capability unavailable, never target RED'
+ assert component['setup_failure']is None and not component['cleanup_errors']
+ assert component['ECHILD']and component['all_original_waits_and_EOF_qualified']
+ assert all(v['pidfd_dead']and v['proc_absent']for v in component['descendant_closure'])
+ assert len(component['cases'])==1
+ c=component['cases'][0];assert c['id']=='owner-gl-behavior'and c['setup_qualified']
+ assert c['Pixel10_profile']['qualification']['qualified'] and c['render_node_inventory']['raw_open_qualified']
+ assert c['actor_sender_UID_GID']==[1000,1000] and c['actor_sender_PID']==c['compositor_PID']
+ assert c['actor_result_transport']=='POST_START_SEQPACKET_CONNECTION'
+ assert c['actor_connection_peer_PID_UID_GID']==[c['compositor_PID'],1000,1000]
+ assert c['actor_connection_CLOEXEC']and c['actor_connection_NONBLOCK']and c['no_actor_sender_FD_inherited_at_compositor_exec']
+ assert c['source_healthy_before_and_after']and not c['source_terminal_errors']and c['actor_load_reply']=='ok'
+ before,after=c['Source_before'],c['Source_after']
+ for sample in [before,after]:
+  assert sample['frame']['source']==c['source_incarnation']and sample['frame']['focus']['pid']==c['client_PID']
+  assert sample['has_owned_focus']and sample['focused_peer_matches_metadata']and sample['focused_peer_cloexec']
+ assert 0<=c['actor_load_before_ns']-before['frame']['sampled_at_ns']<50000000
+ linkage=c['plugin_linkage'];assert linkage['unresolved_strong']==[]and linkage['production_primitive_CPP_explicitly_compiled']and linkage['production_resource_CPP_explicitly_compiled']
+ assert linkage['plugin_only_local_headers']and not linkage['installed_Frame507_SDK_changed']and not linkage['native_rebuilt_cohort_claimed']
+ records=c['actor_records'];assert 0<len(records)<=64 and 0<c['actor_total_bytes']<=65536
+ tids={v['tid']for v in records};assert len(tids)==1;worker=next(iter(tids));assert worker>0 and worker!=c['compositor_PID']
+ for v in records:
+  assert v['Root_actual_sender_PID_UID_GID']==[c['compositor_PID'],1000,1000]
+  assert v['run']==1 and 0<v['collection_boottime_ns']<=v['Root_received_at_ns']
+  if v['case']=='GL_PROFILE':
+   assert v['renderer'].startswith('virgl')and 'Mesa 26.2.4'in v['version']and v['vendor'];continue
+  assert v['authority']=='OFFSCREEN_FIXTURE_IDS_ONLY'and v['admission_id']==v['run']
+  assert all(v[k]==1 for k in ['security_generation','output_id','output_generation'])
+  assert v['scene_sequence']==v['resource_id']==v['resource_generation']==v['commit_sequence']and v['resource_id']in [1,2]
+  assert type(v['fence_sequence'])is int and 0<=v['fence_sequence']<=6
+  assert type(v['command_sequence'])is int and 0<=v['command_sequence']<=3
+ # Exact production-controlled prefix: actual capabilities and existing leaf
+ # controls precede the first target failure or successful helper completion.
+ prefix=[('CAPS','REAL_DEVICE'),('GL_PROFILE',None),('NATIVE_FENCE_CAPABILITY','EXTENSION_AND_PROCS_PRESENT_NOT_COMPLETION'),('NATIVE_FENCE_CAPABILITY','ACTUAL_SYNC_FILE_POLL_SUCCESS'),('CUSTODY_BYTES','EXACT_96_BYTES_AND_PADDING'),('CUSTODY_PRODUCER','SOURCE_SNAPSHOT_STORE_MAPPING_DROPPED'),('NGL-01','PASS'),('NGL-02','PASS'),('SHM_DRAW','COMMANDS_ISSUED_NOT_COMPLETION')]
+ assert [(v['case'],None if v['case']=='GL_PROFILE'else v['status'])for v in records[:9]]==prefix
+ assert records[0]['value']==c['render_node_inventory']['actual_opened_rdev']
+ assert all(v.get('resource_id',1)==1 for v in records[:9])
+ _timed(records[3]);assert records[3]['value']>0
+ assert records[4]['value']==0 and records[5]['value']==c['compositor_PID']
+ _timed(records[5]);assert records[5]['operation_return_ns']<=records[8]['operation_enter_ns']
+ for v in records[6:9]:_timed(v)
+ assert records[6]['value']==records[7]['value']==0 and records[8]['command_sequence']==1 and records[8]['fence_sequence']==0
+ if epoch=='RED':
+  # First selected vertical slice intentionally lacks owned export/publication.
+  # Accept only its exact frozen NGL-03 boundary failure, not arbitrary errors.
+  assert expected_failure_case=='NGL-03'and exit_code==1 and len(records)==10
+  fail=records[-1];assert fail['case']=='NGL-03'and fail['status']=='BEHAVIOR_FAILED_RETAINED_OWNER'
+  assert fail['fence_sequence']==1 and fail['command_sequence']==1 and fail['resource_id']==1
+  assert c['outcome']=='BEHAVIOR_FAILURE_RETAINED_OWNER'and c['behavior_failure_receipt']==fail
+  assert not c['actor_unload_attempted']and not c['actor_done_before_EOF']and c['native_cleanup_qualified']is False
+  task=c['retained_worker_before_disposal'];assert task['tid']==worker and task['task_exists']and task['actual_state']
+  assert fail['Root_received_at_ns']<after['frame']['sampled_at_ns']<=task['observed_boottime_ns']
+  disposal=c['owned_process_disposal'];assert disposal['exact_retained_PID']==c['compositor_PID']and disposal['signal']=='SIGKILL'and disposal['actual_wait_exit']==-9
+  assert task['observed_boottime_ns']<=disposal['entered_boottime_ns']<=disposal['waited_boottime_ns']<disposal['original_close_until_ns']
+  assert disposal['native_cleanup_or_worker_join_qualified']is False
+  assert c['actor_EOF_after_process_disposal']>=disposal['entered_boottime_ns']and c['actor_records_after_process_disposal']==records
+  return {'qualified':True,'kind':'ACTUAL_NGL03_OWNED_EXPORT_READINESS_BEHAVIOR_RED','real_CLEAR_RECT_readback_controls':True,'CPU_retained_96_pixel_and_padding_bytes':True,'actual_SHM_draw_commands_issued':True,'independent_backend_sync_file_poll_success':True,'helper_completion_or_native_cleanup_qualified':False,'Source_repair_qualified':False,'native_AQ_or_full_owner_or_device_retirement_qualified':False}
+ assert expected_failure_case is None and exit_code==0 and c['outcome']=='ALL_CASES_CLOSED'
+ tail=[('FENCE_ISSUE','EXPORTED_NOT_COMPLETION'),('FENCE_FACT','SYNC_FILE_SUCCESS_OBSERVED'),('READBACK','EXACT_RGBA_192_BYTES'),('NGL-03','PASS'),('CUSTODY_BYTES','EXACT_96_BYTES_AND_PADDING'),('CUSTODY_PRODUCER','SOURCE_SNAPSHOT_STORE_MAPPING_DROPPED'),('SHM_DRAW','COMMANDS_ISSUED_NOT_COMPLETION'),('FENCE_ISSUE','EXPORTED_NOT_COMPLETION'),('FENCE_FACT','SYNC_FILE_SUCCESS_OBSERVED'),('READBACK','EXACT_RGBA_192_BYTES'),('NGL-04','PASS'),('WRONG_THREAD','REFUSED_WITHOUT_TRANSFER'),('FENCE_ISSUE','EXPORTED_NOT_COMPLETION'),('FENCE_FACT','SYNC_FILE_SUCCESS_OBSERVED'),('READBACK','EXACT_RGBA_192_BYTES'),('NGL-05','PASS'),('FENCE_ISSUE','EXPORTED_NOT_COMPLETION'),('FENCE_FACT','SYNC_FILE_SUCCESS_OBSERVED'),('READBACK','EXACT_RGBA_192_BYTES'),('NGL-06','PASS'),('FENCE_ISSUE','EXPORTED_NOT_COMPLETION'),('FENCE_FACT','SYNC_FILE_SUCCESS_OBSERVED'),('READBACK','EXACT_RGBA_192_BYTES'),('NGL-07','PASS'),('SHM_DRAW','COMMANDS_ISSUED_NOT_COMPLETION'),('FENCE_ISSUE','EXPORTED_NOT_COMPLETION'),('FENCE_FACT','SYNC_FILE_SUCCESS_OBSERVED'),('READBACK','EXACT_RGBA_192_BYTES'),('FINAL_PIXEL_ORACLE','PASS'),('NGL-08','PASS_COMPLETION_THEN_LOCAL_RETIREMENT_NO_PRESENTATION'),('WORKER_CLEANUP','CONTEXT_CLOSED_AFTER_OBSERVED_FENCE_LOCAL_RETIREMENT'),('DONE','EIGHT_CASES_CLOSED_NO_SOURCE_OR_PRESENTATION_CLAIM')]
+ assert [(v['case'],v['status'])for v in records[9:]]==tail and len(records)==41
+ assert c['actor_done_before_EOF']and c['actor_unload_attempted']and c['actor_unload_reply']=='ok'and c['worker_task_absent_after_unload']
+ assert records[-1]['Root_received_at_ns']<=c['actor_SEQPACKET_EOF']<after['frame']['sampled_at_ns']
+ assert c['owned_process_disposal']is None
+ facts={};issued={};lastFact=None;readbacks=[];custody={};commands=[]
+ for v in records:
+  case=v['case']
+  if case=='GL_PROFILE':continue
+  if case in ['CUSTODY_BYTES','CUSTODY_PRODUCER']:
+   custody[(v['resource_id'],case)]=v
+   if case=='CUSTODY_BYTES':assert v['value']==0
+  if case=='SHM_DRAW':
+   _timed(v);commands.append(v);assert v['command_sequence']==len(commands)
+  if case=='FENCE_ISSUE':
+   _timed(v);seq=v['fence_sequence'];assert seq not in issued and seq==len(issued)+1;issued[seq]=v
+  if case=='FENCE_FACT':
+   _timed(v);seq=v['fence_sequence'];assert seq in issued and seq not in facts and v['value']>0
+   assert issued[seq]['operation_return_ns']<=v['operation_enter_ns']and v['command_sequence']==issued[seq]['command_sequence']
+   facts[seq]=v;lastFact=v
+  if case=='READBACK':
+   _timed(v);assert lastFact and v['fence_sequence']==lastFact['fence_sequence']and v['command_sequence']==lastFact['command_sequence']
+   assert lastFact['operation_return_ns']<=v['operation_enter_ns']and v['value']==0;readbacks.append(v)
+  if case.startswith('NGL-')or case=='FINAL_PIXEL_ORACLE':
+   _timed(v);assert v['value']==0
+  if case=='WRONG_THREAD':assert v['value']>0 and v['value']not in [worker,c['compositor_PID']]
+ assert len(commands)==3 and len(facts)==len(issued)==len(readbacks)==6
+ for seq in range(1,7):
+  v=facts[seq];assert v['resource_id']==(1 if seq==1 else 2)and v['command_sequence']==(1 if seq==1 else 3 if seq==6 else 2)
+ assert commands[0]['resource_id']==1 and commands[1]['resource_id']==commands[2]['resource_id']==2
+ for resource in [1,2]:
+  v=custody[(resource,'CUSTODY_PRODUCER')];_timed(v)
+  assert v['operation_return_ns']<=next(x for x in commands if x['resource_id']==resource)['operation_enter_ns']
+  assert v['value']==c['compositor_PID']if resource==1 else v['value']not in [worker,c['compositor_PID']]
+ return {'qualified':True,'kind':'ACTUAL_EIGHT_NGL_NATIVE_HELPER_COMPONENT_GREEN','real_CLEAR_RECT_readback_controls':True,'CPU_retained_96_pixel_and_padding_bytes_per_format':True,'AR24_XR24_actual_exact_RGBA_readback':True,'wrong_owner_context_and_allocation_identity_refusals':True,'actual_correlated_sync_file_completion_before_readback':True,'worker_local_helper_retirement_and_context_cleanup':True,'GPU_wide_drain_or_presentation_qualified':False,'Source_repair_qualified':False,'native_AQ_or_full_owner_or_device_retirement_qualified':False}

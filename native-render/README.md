@@ -197,5 +197,8 @@ No worker C ABI or private proposed executor header is published.
 A separate [actual native GL baseline](../docs/native-render-gl-baseline.md) now
 executes real CLEAR/RECT leaves and retained Frame bytes on a worker EGL context,
 with authenticated test-channel EOF/unload/join. It selects earlier Frame3cf0a142,
-not this latest worker archive. Owned SHM/fence behavior and the production Rust
-render backend remain required; this supplies no Source7 GREEN.
+not this latest worker archive. The later [owned resource checkpoint](../docs/native-render-owner-resources.md)
+qualifies actual SHM/fence and sampler RED/GREEN against that same older Rust
+Frame archive, with explicit native plugin sources and exact readbacks. Binding
+the production Rust executor to real native GL/AQ remains required; neither
+component supplies Source7 GREEN or output/presentation qualification.

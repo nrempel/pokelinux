@@ -1,0 +1,626 @@
+{
+  "schema": 1,
+  "scope": "Actual native x86 KVM plugin-only immutable SHM/GL/native fence helpers; two distinct frozen RED/GREEN pairs, unchanged old Frame507/9184/Rust3cf dependency cohort",
+  "current_public_base": "b86501b37aa533c825dfea38377da02b166220a7",
+  "selected_native_dependencies": {
+    "ELF_sha256": "91848cff35e3d7425c487444bc251d685924c942e603cef427f004d350e584fe",
+    "SDK_sha256": "c1775e08aabb028b08904f37d78f8242b7791c5768a6c0994783c0d88b53d5d5",
+    "SDK_file_count": 507,
+    "Rust_archive_sha256": "3cf0a142115bc2f261086cfbb9dbfc0d543d0988219f08b1c4988d70f5a36f9b",
+    "installed_SDK_mutated": false,
+    "main_ELF_rebuilt": false,
+    "production_Rust_executor_selected": false
+  },
+  "published_sources": {
+    "tools/native-render-owner/native/OwnerFrameResources.cpp": "732e6571b65b2798f30623b2b3c364b047efd09f0b922ccf7ab79498c6afb595",
+    "tools/native-render-owner/native/OwnerFrameResources.hpp": "b484f3497e3e0495a3561cb274a658117075f3ceff1741a705927b64d83aee80",
+    "tools/native-render-owner/native/OwnerFramePrimitives.cpp": "7203aa6e4a80feb9e12028fb8f52c421bfef2014c6a810deb04deddc57989882",
+    "tools/native-render-owner/native/OwnerFramePrimitives.hpp": "755e6b6043df85ff29d06821f54f076d662547cb3f20f5a861758291cb197124",
+    "tools/native-render-owner/behavior-actor.cpp": "37d1e910b04393a9e89bb74b2b6cb781b40ecde6246c8e7953cffee2ead2c80c",
+    "tools/native-render-owner/sampler-actor.cpp": "059886fd0dbadce23fa6f598528ee1116cf35001dc102a40315c666266da908c",
+    "tools/native-render-owner/behavior-oracle.py": "fe2f3d22915a9feff256ea398d9f2a627d7a2e8009d63d51125ac5b5d307b24a",
+    "tools/native-render-owner/sampler-oracle.py": "6c40764e629f31e4bb4dd7f3060510345a7b74010747dbdc26433bfe72cc35f6"
+  },
+  "actual_GL_profile": {
+    "vendor": "Mesa",
+    "renderer": "virgl (LLVMPIPE (LLVM 19.1.7, 256 bits))",
+    "version": "OpenGL ES 3.2 Mesa 26.2.4-arch1.1"
+  },
+  "Pixel_profile_metadata_only": {
+    "native_pixels": [
+      1080,
+      2424
+    ],
+    "target_window_DPR": 2.625,
+    "hardware_qualified": false
+  },
+  "offscreen_RGBA_oracle_pixels": [
+    8,
+    6
+  ],
+  "SHM_fixture": {
+    "source_width": 5,
+    "source_height": 3,
+    "stride": 32,
+    "exact_retained_bytes_per_format": 96,
+    "padding_bytes_per_format": 36,
+    "formats": [
+      "AR24",
+      "XR24"
+    ],
+    "XR24_X_byte": 57,
+    "pixel_readback_bytes_each": 192
+  },
+  "phases": {
+    "missing_export": {
+      "red": {
+        "actual_Root_session": 4845,
+        "actual_Root_terminal_exit": 0,
+        "receipts": {
+          "execution.json": "d6d78716ed731263b395157a652931b7bb2640c13248e675dcdd2a6df6f58e05",
+          "selection.json": "8e8b26ac7ec6497ff54a5193841dbb13ad728bbfe3b19e9cedb5a915eb8eef4a",
+          "command.json": "8d7f8cd25850dd9c1d2278bdad4de8b310d64e3e576f7f1ef5e26c5e79c93bf7",
+          "boot-result.json": "df597472aa1a1c3c48a198c9caec8c9b68331e85be537a725d15d09a37c23189",
+          "bootstrap-result.json": "0b56223e599f150bdd31a2a9754f7932d735c09ffaef55606febe8880d7204ec",
+          "result.json": "7996019113c7c90c3527e0a48b643169e05b36980f3965fc2f74dab38d4d0515",
+          "component/test-result.json": "f17fa1eecfc0578107e4e63bcdf731933407d06747696b7c4180b59a63bc93b0"
+        },
+        "classification": {
+          "qualified": true,
+          "kind": "ACTUAL_NGL03_OWNED_EXPORT_READINESS_BEHAVIOR_RED",
+          "real_CLEAR_RECT_readback_controls": true,
+          "CPU_retained_96_pixel_and_padding_bytes": true,
+          "actual_SHM_draw_commands_issued": true,
+          "independent_backend_sync_file_poll_success": true,
+          "helper_completion_or_native_cleanup_qualified": false,
+          "Source_repair_qualified": false,
+          "native_AQ_or_full_owner_or_device_retirement_qualified": false
+        },
+        "waits_and_EOFs": {
+          "host": {
+            "waits": 7,
+            "PIPE_EOFs": 14,
+            "returns": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0
+            ]
+          },
+          "boot": {
+            "waits": 5,
+            "PIPE_EOFs": 5,
+            "returns": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "bootstrap": {
+            "waits": 4,
+            "PIPE_EOFs": 4,
+            "returns": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "guest": {
+            "waits": 2,
+            "PIPE_EOFs": 2,
+            "returns": [
+              0,
+              1
+            ]
+          },
+          "component": {
+            "waits": 30,
+            "PIPE_EOFs": 30,
+            "returns": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              -9,
+              0,
+              -9
+            ]
+          },
+          "early": {
+            "waits": 2,
+            "PIPE_EOFs": 2,
+            "returns": [
+              0,
+              0
+            ]
+          }
+        },
+        "total_actual_waits": 50,
+        "total_actual_PIPE_EOFs": 57,
+        "elapsed_ns": 26643601458,
+        "authenticated_records": 10,
+        "actual_record_bytes": 4074,
+        "Source_before_after_sequences": [
+          6,
+          10
+        ],
+        "separate_Observer_terminal_records": [
+          {
+            "error": "invalid data",
+            "event": "failed",
+            "positive_state": false
+          }
+        ]
+      },
+      "green": {
+        "actual_Root_session": 30969,
+        "actual_Root_terminal_exit": 0,
+        "receipts": {
+          "execution.json": "147145f75fdc07c8690c7cc9736e61245ed760154389c0bf537f5fc88d5c13cb",
+          "selection.json": "6e2687fc120a0da925730e425fffe760737a0fa49fc9b14b50a5dc46bdb6ee18",
+          "command.json": "da661cc137d1e24b0a9658c8755ccafe3c77aae3ff304ffdec351c12cf73d779",
+          "boot-result.json": "d0be9762d8d2d560219bc3c1b3a18778fb8cf79ecda555f74f6489d196fb6b31",
+          "bootstrap-result.json": "2dadf6ae71aae512e7661cf665898d0532ba323bac95a37b9564066e2a5987da",
+          "result.json": "f017779255890c4df55cc64b50177f6fc00bfff56c3fe85774271a1e10a4dfce",
+          "component/test-result.json": "cb60615d4830e6e702eef3bb555234fbd9f06c350faf14b5223aab19ef4b5ede"
+        },
+        "classification": {
+          "qualified": true,
+          "kind": "ACTUAL_EIGHT_NGL_NATIVE_HELPER_COMPONENT_GREEN",
+          "real_CLEAR_RECT_readback_controls": true,
+          "CPU_retained_96_pixel_and_padding_bytes_per_format": true,
+          "AR24_XR24_actual_exact_RGBA_readback": true,
+          "wrong_owner_context_and_allocation_identity_refusals": true,
+          "actual_correlated_sync_file_completion_before_readback": true,
+          "worker_local_helper_retirement_and_context_cleanup": true,
+          "GPU_wide_drain_or_presentation_qualified": false,
+          "Source_repair_qualified": false,
+          "native_AQ_or_full_owner_or_device_retirement_qualified": false
+        },
+        "waits_and_EOFs": {
+          "host": {
+            "waits": 7,
+            "PIPE_EOFs": 14,
+            "returns": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0
+            ]
+          },
+          "boot": {
+            "waits": 5,
+            "PIPE_EOFs": 5,
+            "returns": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "bootstrap": {
+            "waits": 4,
+            "PIPE_EOFs": 4,
+            "returns": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "guest": {
+            "waits": 2,
+            "PIPE_EOFs": 2,
+            "returns": [
+              0,
+              0
+            ]
+          },
+          "component": {
+            "waits": 30,
+            "PIPE_EOFs": 30,
+            "returns": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              -9
+            ]
+          },
+          "early": {
+            "waits": 2,
+            "PIPE_EOFs": 2,
+            "returns": [
+              0,
+              0
+            ]
+          }
+        },
+        "total_actual_waits": 50,
+        "total_actual_PIPE_EOFs": 57,
+        "elapsed_ns": 26601881472,
+        "authenticated_records": 41,
+        "actual_record_bytes": 17538,
+        "Source_before_after_sequences": [
+          6,
+          14
+        ],
+        "separate_Observer_terminal_records": [
+          {
+            "error": "invalid data",
+            "event": "failed",
+            "positive_state": false
+          }
+        ]
+      }
+    },
+    "sampler_override": {
+      "red": {
+        "actual_Root_session": 30424,
+        "actual_Root_terminal_exit": 0,
+        "receipts": {
+          "execution.json": "d0181ef147e97f2909d31e3b987155c5d3fdcda35069de8290ae095b95b60921",
+          "selection.json": "c8d9b7a1c073356508a82d672ed338642acc878de273537d3ea8c3a156e272b2",
+          "command.json": "3cd6469eaf8ad48fc14db45f067c324da8c5018216bdfd183f5b37c893195958",
+          "boot-result.json": "d5ba1a895f9861b273ec8090ecfe7d2571f91635e4a2941b8502d1437fcb4b1a",
+          "bootstrap-result.json": "c43547878404448f0ca1ded8810df60682455852b56f01ab97b14a77e6b5731b",
+          "result.json": "ef241432e80b8377971667a8688ef036950986f1d8ff49abc3e83e08f55814c8",
+          "component/test-result.json": "2830670de97c7c1d6ed97dbe6084a3d53ef187a3d3644ebdd0260e0db65f9aed"
+        },
+        "classification": {
+          "qualified": true,
+          "kind": "ACTUAL_NONDEFAULT_SAMPLER_OVERRIDE_PIXEL_BEHAVIOR_RED",
+          "real_CLEAR_RECT_readback_controls": true,
+          "CPU_retained_96_pixel_and_padding_bytes": true,
+          "actual_SHM_draw_commands_issued": true,
+          "independent_backend_sync_file_poll_success": true,
+          "helper_fence_completion_before_actual_pixel_mismatch": true,
+          "native_cleanup_qualified": false,
+          "Source_repair_qualified": false,
+          "native_AQ_or_full_owner_or_device_retirement_qualified": false
+        },
+        "waits_and_EOFs": {
+          "host": {
+            "waits": 7,
+            "PIPE_EOFs": 14,
+            "returns": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0
+            ]
+          },
+          "boot": {
+            "waits": 5,
+            "PIPE_EOFs": 5,
+            "returns": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "bootstrap": {
+            "waits": 4,
+            "PIPE_EOFs": 4,
+            "returns": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "guest": {
+            "waits": 2,
+            "PIPE_EOFs": 2,
+            "returns": [
+              0,
+              1
+            ]
+          },
+          "component": {
+            "waits": 30,
+            "PIPE_EOFs": 30,
+            "returns": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              -9,
+              0,
+              -9
+            ]
+          },
+          "early": {
+            "waits": 2,
+            "PIPE_EOFs": 2,
+            "returns": [
+              0,
+              0
+            ]
+          }
+        },
+        "total_actual_waits": 50,
+        "total_actual_PIPE_EOFs": 57,
+        "elapsed_ns": 28438657298,
+        "authenticated_records": 14,
+        "actual_record_bytes": 5838,
+        "Source_before_after_sequences": [
+          6,
+          11
+        ],
+        "separate_Observer_terminal_records": [
+          {
+            "error": "invalid data",
+            "event": "failed",
+            "positive_state": false
+          }
+        ]
+      },
+      "green": {
+        "actual_Root_session": 81101,
+        "actual_Root_terminal_exit": 0,
+        "receipts": {
+          "execution.json": "5d6a52ac54c69cdf817299e9ec85daddc498ad1d9f4945424d020279d3335678",
+          "selection.json": "f80cb39427222f6716a5fcc35a499f7b9232d38477d04e324ee83900df4bfb8c",
+          "command.json": "050293b18ad1e506870c33ffafcc065234a3ce4ade68f21dc7a001c2f1529ea7",
+          "boot-result.json": "5398fcbba020281fa7440a79409bc84768e936f69207d1ea191b5b457e3f1713",
+          "bootstrap-result.json": "74140b9b0d671ca789349cb4965a0f4d0c63979aca6c473f4b2bfba6f7079027",
+          "result.json": "8ce1b56276ab37ebb14670c74192677c995b3188b8e47a5a9ef43077453e86b7",
+          "component/test-result.json": "9b9551c1f096ef2c5566dede07c4de85a5802152704f99902550d71cbc48026f"
+        },
+        "classification": {
+          "qualified": true,
+          "kind": "ACTUAL_EIGHT_NGL_WITH_NONDEFAULT_SAMPLER_COMPONENT_GREEN",
+          "real_CLEAR_RECT_readback_controls": true,
+          "CPU_retained_96_pixel_and_padding_bytes_per_format": true,
+          "AR24_XR24_actual_exact_RGBA_readback": true,
+          "wrong_owner_context_and_allocation_identity_refusals": true,
+          "actual_correlated_sync_file_completion_before_readback": true,
+          "worker_local_helper_retirement_and_context_cleanup": true,
+          "GPU_wide_drain_or_presentation_qualified": false,
+          "Source_repair_qualified": false,
+          "native_AQ_or_full_owner_or_device_retirement_qualified": false
+        },
+        "waits_and_EOFs": {
+          "host": {
+            "waits": 7,
+            "PIPE_EOFs": 14,
+            "returns": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0
+            ]
+          },
+          "boot": {
+            "waits": 5,
+            "PIPE_EOFs": 5,
+            "returns": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "bootstrap": {
+            "waits": 4,
+            "PIPE_EOFs": 4,
+            "returns": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "guest": {
+            "waits": 2,
+            "PIPE_EOFs": 2,
+            "returns": [
+              0,
+              0
+            ]
+          },
+          "component": {
+            "waits": 30,
+            "PIPE_EOFs": 30,
+            "returns": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              -9
+            ]
+          },
+          "early": {
+            "waits": 2,
+            "PIPE_EOFs": 2,
+            "returns": [
+              0,
+              0
+            ]
+          }
+        },
+        "total_actual_waits": 50,
+        "total_actual_PIPE_EOFs": 57,
+        "elapsed_ns": 27240288701,
+        "authenticated_records": 42,
+        "actual_record_bytes": 18002,
+        "Source_before_after_sequences": [
+          6,
+          13
+        ],
+        "separate_Observer_terminal_records": [
+          {
+            "error": "invalid data",
+            "event": "failed",
+            "positive_state": false
+          }
+        ]
+      }
+    }
+  },
+  "final_eight_case_GREEN": {
+    "authenticated_packets": 42,
+    "helper_fence_success_facts": 6,
+    "SHM_readbacks_after_successful_sync_file_POLLIN": 6,
+    "mismatched_readback_bytes_each": 0,
+    "owner_thread_context_allocation_refusals_qualified": true,
+    "duplicate_completed_fence_survives_local_helper_retirement": true,
+    "local_retirement_then_context_cleanup_DONE_EOF_unload_actual_join_task_absence": true
+  },
+  "Root_paired_qualification_sha256": "ed4c9038ebcd049cdff2a9199a0cf04481c40f66801a70c18b401d21788b240b",
+  "Root_sampler_paired_qualification_sha256": "1f1640d84c4f82f4f61effc7ad79371eb31f20efcfd585360f870774d19d39d3",
+  "independent_pair_qualification_sha256": "76b904adc30c922d7252fa4e704dd1e52db91c8c03921d95e2aec7d3635852c1",
+  "independent_sampler_qualification_sha256": "697ab0b7f83b96835d5c9ed9d64cc6e2d020bc3aa2be72a0c3be2749e2add404",
+  "limits": {
+    "Source_lease_ns": 100000000,
+    "epoch_setup_seconds": 35,
+    "epoch_close_seconds": 45,
+    "guest_work_close_seconds": [
+      660,
+      700
+    ],
+    "bootstrap_work_close_seconds": [
+      720,
+      740
+    ],
+    "boot_work_close_seconds": [
+      780,
+      800
+    ],
+    "outer_seconds": 840,
+    "packet_count": 64,
+    "packet_bytes": 2048,
+    "aggregate_packet_bytes": 65536
+  },
+  "RED_process_disposal_is_native_cleanup_or_thread_join": false,
+  "GREEN_local_retirement_is_GPU_wide_device_retirement": false,
+  "physical_phone_accessed": false,
+  "Source7_GREEN": false,
+  "presentation_or_hardware_qualified": false,
+  "remaining": [
+    "actual Rust executor C ABI and native holder selection",
+    "one rebuilt Rust/AQ15/Hyprland/SDK/plugin cohort",
+    "ordered later session ingress and OOB revoke",
+    "authentic native routing/startup/StopRetire authority",
+    "output commit/scanout/presentation and complete native retirement",
+    "unchanged Source7 and cold normal app/PCM",
+    "odd-stride and fractional-alpha runtime coverage",
+    "ARM/matched Google kernel, physical Pixel/carrier and full smartphone matrix"
+  ]
+}

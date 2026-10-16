@@ -43,3 +43,31 @@ remain mandatory. Shader inputs are the four exact pinned original files in the
 report. Environment/path/UID/capability failures are setup failures, not target
 RED or a fallback. Native-fence extension/procedure availability alone qualifies
 no native FD/completion. The8x6 target is an offscreen oracle, not a UI preview.
+
+## Later owned-resource component
+
+The [owner-resource report](../../docs/native-render-owner-resources.md) records two
+separate actual RED/GREEN pairs. `behavior-actor.cpp` is the exact first pair's
+actor; `sampler-actor.cpp` adds one genuine nondefault sampler control while
+preserving its eight oracles. The corresponding Python classifiers consume the
+bounded authenticated controller receipts; they do not fabricate runtime facts.
+The original baseline actor still selects its historical SDK and is separate.
+Actor comments retain their original preimplementation wording as exact tested
+inputs; the linked report records subsequent implementation and execution.
+
+`native/` contains the four exact final tested native helper sources/headers.
+Compile BOTH CPP files explicitly with the chosen actor. Put this directory at
+`hyprland/src/render/gl/` in a separate ordinary include root and place that root
+plus its local GL directory before the matching Frame507 system SDK includes.
+Relative FramePlan/OpenGL/Rust headers resolve only to that exact SDK. Never
+mutate the installed SDK, link another Rust archive, or claim that these local
+headers make a rebuilt native cohort. Keep authored files under -Wall/-Wextra/
+-Werror and the actual main-export/DSO relocation check. These native glue files
+follow the pinned Hyprland source's licensing.
+
+The holders are worker-only, noncopyable/nonmovable, and retain partial native
+acquisitions. Failed workers stay held; an actual RED's owned-process reaping is
+not native cleanup. GREEN needs real sync_file/POLLIN success before SHM readback,
+local retirement then context cleanup/DONE/EOF/unload/join/task absence. Do not
+unload the supplying plugin/library before actual worker join. The remaining
+Rust executor C ABI and matched AQ15/native cohort are separate required work.

@@ -263,8 +263,15 @@ real worker CLEAR/RECT pixel comparisons and retained96-byte CPU custody after
 fixing an inherited test result socket in Xwayland. Fresh live Source before/after,
 actual EOF/unload/join and bounded KVM closure qualify this prepared component.
 It selects the earlier Frame archive3cf0a142, without the new Rust executor;
-SHM/fence behavior, production AQ15 binding, original Source7 GREEN and all full
-runtime/phone requirements remain open.
+That baseline contains no SHM/fence behavior or production Rust executor.
+
+The later [native owner resource checkpoint](native-render-owner-resources.md)
+qualifies two actual native KVM RED/GREEN pairs: missing fence export, then a
+nondefault sampler override producing eight wrong bytes. Final eight-case GREEN
+checks padded AR24/XR24, owner/context/allocation refusals and six real sync-file
+facts before exact readbacks, followed by EOF/unload/join. Its four native sources
+compile into a test plugin against unchanged Frame507/9184/Rust3cf inputs. The
+production Rust executor, AQ output/presentation, Source7 and phone remain open.
 
 The later [owned bootstrap/worker checkpoint](native-render-bootstrap.md) passes62
 active Rust cases:8 permit/28 worker/14 Frame/12 descriptor bootstrap, plus two

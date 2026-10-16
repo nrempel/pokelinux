@@ -36,6 +36,14 @@ test-channel EOF/unload/join and fresh live Source before/after. It is a prepare
 offscreen component with missing SHM/fence interfaces, not the installed Rust
 render backend or Source rendering-stall GREEN.
 
+The later [native owner resource checkpoint](native-render-owner-resources.md)
+qualifies two actual native KVM RED/GREEN pairs: missing fence export, then a
+nondefault sampler override producing eight wrong bytes. Final eight-case GREEN
+checks padded AR24/XR24, owner/context/allocation refusals and six real sync-file
+facts before exact readbacks, followed by EOF/unload/join. Its four native sources
+compile into a test plugin against unchanged Frame507/9184/Rust3cf inputs. The
+production Rust executor, AQ output/presentation, Source7 and phone remain open.
+
 The [owned render bootstrap](native-render-bootstrap.md) now connects initial
 value/FD custody, copied discovery and original BOOTTIME expiry to the Rust worker
 in actual Linux CPU tests. This is not yet the installed compositor's AQ/GL
