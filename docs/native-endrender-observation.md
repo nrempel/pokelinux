@@ -212,11 +212,13 @@ from the failed functional result. No Root execution handle remains live.
 
 The next planned Root8 set is EXECBUFFER, WAIT, TRANSFER_TO_HOST and
 TRANSFER_FROM_HOST ioctl entry/exit across the owned compositor, including its
-workers. Numeric requests must be compiled from the matched installed header;
-no observer implementation or test result is claimed. Retain the same clock,
+workers. Numeric requests must come from the matched installed header; the
+component GREEN below covers EXECBUFFER/VERSION helpers only, leaving the full
+Root8 four-request/compositor runtime unqualified.
+Retain the same clock,
 request/FD identity, result, loss accounting and collection after closure. The
 separate capability probe below qualifies individual metadata/private controls;
-actual observer operation remains unqualified.
+full Root8 observer operation remains unqualified.
 
 A matched long selected interval chooses the next narrow boundary. Short or
 absent selected requests leave the delay unresolved. A short matched call rules
@@ -256,3 +258,58 @@ within original numeric cutoffs, with same-peer KVM/guest shutdown/EOF/QEMU0,
 CLI0, exact-container absence on the same daemon and locked unchanged inputs.
 Earlier failed runtime selections and all Source/functional/ARM/phone gates retain
 their existing scope.
+
+## Observer-absent component RED
+
+A later frozen native x86 KVM baseline executes14 tests with no observer:
+six pass and eight intended missing-observer assertions fail (02–09), with zero
+errors and no setup failure. Controller exit1 and outer terminal0 are the expected
+RED classification, without a production or composition pass. Actual lineage,
+metadata and forced helpers exit0/0/17. Guest-compiled header constants record
+EXECBUFFER `0xc0406442`, DRM_VERSION control `0xc0406400` and64-byte EXECBUFFER
+structure size; these controls do not qualify traced observation.
+
+Root and independent qualification agree on the13.444021653s closed epoch:
+26 direct waits/33 PIPE EOFs, original numeric cutoffs, same-peer KVM/guest
+shutdown/EOF/QEMU0, CLI0, exact-container absence on the same daemon and locked
+unchanged inputs. The [hash-only evidence](evidence/native-endrender-observation-provenance.json)
+retains the frozen-test and actual-result pins separately from capability evidence.
+
+A private implementation was written after this RED; its later native attempts
+are qualified separately below. This RED supplies no observer GREEN, compositor
+timing replay, repair, Source/UI/PCM, ARM or phone result.
+
+## Native observer component GREEN
+
+The first implementation attempt passes13 of the unchanged14 tests. Only test04,
+actual call/timestamp bracketing, fails: a printed exit is338ns after the helper's
+independent after-time. There are no errors or setup failure. This attempt remains
+failed;13.897536870s,32 direct waits/39 PIPE EOFs and its CLI1 close separately.
+
+The exact [kernel formatter](https://github.com/gregkh/linux/blob/v7.2.9/kernel/trace/trace.c#L364)
+confirms floor((ns+500)/1000). A native printed
+timestamp converted to integer nanoseconds P represents [max(0,P−500),P+499]ns. The decoder retains
+printed P, the1000ns quantum and both bounds; authored timestamp conventions stay
+unchanged. This corrects representation of rounded text, without changing test
+thresholds, the14 tests or their four frozen inputs. It establishes no clock drift.
+
+The corrected actual native x86 KVM selection passes14/14 with zero failures,
+errors or setup failure. This is EXECBUFFER/VERSION helper component GREEN, not
+WAIT/TRANSFER_TO_HOST/TRANSFER_FROM_HOST or compositor runtime qualification.
+It checks four helper-lineage TIDs, actual clock brackets, libbpf BTF-derived
+f_inode32/i_rdev76 offsets with unsigned four-byte device identity, a verified
+DRM226:128 positive, six zero-loss CPU rows, zero probe misses, forced helper17
+and removal of the owned tracing instance/probe after actual helper closure.
+Unresolved positive-FD pairs remain unattributed, without an aggregate DRM identity
+claim. The14.121180884s selection closes32 direct waits/39 PIPE EOFs, original
+numeric cutoffs, same-peer KVM/guest shutdown/EOF/QEMU0, CLI0, exact-container
+absence on the same daemon and locked unchanged inputs.
+
+Seven supplemental authored host decoder cases remain separate: three controls
+pass/four semantic failures precede7/7, zero-error GREEN on the same frozen inputs;
+the final observer also passes those seven. They cover identity timestamps outside
+the syscall interval and unresolved positive-FD negatives, without adding DRM
+attribution. Their host ECHILD/original10s cutoffs do not qualify native coverage.
+No21-case aggregate is claimed. Root8's four-header-request compilation and actual
+matched compositor/all-worker timing replay remain open, followed by any measured
+repair and the full Sounds/PCM, Messages, ARM/Google-kernel/Pixel/carrier goal.

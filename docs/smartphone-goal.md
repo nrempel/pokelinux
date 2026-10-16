@@ -49,7 +49,10 @@ the prior malformed-phase control was revised before that RED, so the old13 proo
 is separate. A second full native source build and matching499-file SDK pass.
 The new matching replay observes113.338ms around eglCreateSyncKHR inside a
 113.644ms Source gap, with no driver/prior-failure cause established; it still
-fails before Sounds/PCM. Native success would not close ARM or phone gates.
+fails before Sounds/PCM. A separate native observer component now passes14/14
+EXECBUFFER/VERSION helper cases after actual RED and a preserved13/14 timestamp
+failure. Full four-request observer/compositor runtime and the original functional
+composition remain open; this does not close ARM or phone gates.
 
 The [native Rust session owner](native-session-owner.md) implements compositor
 Child custody; its original Sounds assembly has32 host boundary passes,

@@ -191,16 +191,23 @@ pidfd death does not include process disappearance; final external closure has
 both. Independent full-prefix decoding agrees;101 direct waits/108 PIPE EOFs and
 original cutoffs close the failed60.587s selection. Root8 plans bounded
 owned-compositor/all-worker entry/exit observations for header-selected EXECBUFFER,
-WAIT, TRANSFER_TO_HOST and TRANSFER_FROM_HOST; implementation/tests remain
-unqualified. Same-clock request/FD identity, result/loss and after-closure evidence
+WAIT, TRANSFER_TO_HOST and TRANSFER_FROM_HOST; full observer-runtime qualification
+remains open. Same-clock request/FD identity, result/loss and after-closure evidence
 are required. A matched long selected interval chooses the next narrow boundary.
 Short or absent selected requests leave the delay unresolved: this non-exhaustive
 set excludes no other ioctl, sync_wait, futex or scheduling wait and establishes
 no userspace-only cause or offload. A separate native kernel capability probe
 qualifies private tracefs control write/readbacks, exact format availability and
 selected metadata only, without observer activation, DRM ioctl or timing evidence.
-Actual inheritance, BTF/probe/device identity and loss/pairing/cleanup behavior
-remain for observer TDD and replay. No inner-driver, exclusive-CPU
+That capability probe alone does not qualify inheritance, BTF/probe/device
+identity or loss/pairing/cleanup behavior. A later frozen observer-absent baseline
+executes14 tests:6pass,8 intended missing-observer failures (02–09),0 errors and
+no setup failure. Outer0 acknowledges expected RED, not a production pass. A
+private implementation follows RED. Its first native attempt passes13/14 with
+only the printed-timestamp bracket failing. Source-supported nearest-microsecond
+decoding then passes unchanged14/14, limited to EXECBUFFER/VERSION helpers. A
+separate authored host7-case decoder RED4→GREEN0 remains separate. Actual full
+Root8 WAIT/transfer/compositor runtime remains unqualified. No inner-driver, exclusive-CPU
 or earlier-failure cause follows. Strict matching ARM64 owner/client compilation also passes separately,
 without ARM execution.
 Messages history composition was excluded from that render-witness replay. The

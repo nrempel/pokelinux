@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "public_basis": "a392808a147a023edd2061562037056f905f0380",
-  "scope": "Paired original-code endRender component qualification, separate offline native x86 source build, two preserved setup failures and later actual paired runtime observation; full composition still fails before Sounds/PCM; later inner-fence frozen-v2 component and separate second full source build, later actual inner-fence runtime observation; full composition still fails before Sounds/PCM; separate individual kernel capability observations only, actual observer operation still unqualified",
+  "public_basis": "945876366a97122c963063a89694ea5563cd7ba4",
+  "scope": "Pinned endRender and inner-fence components and native source builds; matched compositor runtime still fails before Sounds/PCM; separate kernel capability observations and native ioctl EXECBUFFER/VERSION component RED, failed13/14 and corrected14/14 GREEN; authored host7 separate; full Root8/compositor and smartphone gates open",
   "component_qualified": true,
   "native_source_build_qualified": true,
   "actual_render_phase_runtime_qualified": true,
@@ -109,7 +109,7 @@
     }
   },
   "remaining": [
-    "Planned Root8 bounded owned-compositor/all-worker EXECBUFFER, WAIT, TRANSFER_TO_HOST and TRANSFER_FROM_HOST entry/exit observation; non-exhaustive header-selected set, no implementation/test or rendering-repair claim",
+    "Actual Root8 four-request compiled-header/compositor/all-worker timing replay remains open; separate14-case EXECBUFFER/VERSION helper GREEN does not qualify WAIT/transfers or full runtime",
     "Normal fixed Sounds four groups, final Pixel profile/capture/PCM",
     "Current-owner Messages grant/read/revoke/source-loss GUI",
     "ARM availability, matched Google kernel, full Omarchy startup and physical/carrier gates"
@@ -460,7 +460,7 @@
       "TRANSFER_TO_HOST",
       "TRANSFER_FROM_HOST"
     ],
-    "request_values_source": "To be compiled from the matched installed header; no new compilation, implementation or test result claimed",
+    "request_values_source": "Matched installed UAPI header; native14 compiles EXECBUFFER and DRM_VERSION helper controls only, without Root8 WAIT/transfer values or compositor replay qualification",
     "selected_requests_exhaustive": false,
     "short_absent_calls_do_not_establish_userspace_only_cause_or_offload": true,
     "unresolved_alternatives_include": [
@@ -469,7 +469,9 @@
       "futex",
       "scheduling"
     ],
-    "short_matched_call_excludes_only_long_duration_for_that_observed_call": true
+    "short_matched_call_excludes_only_long_duration_for_that_observed_call": true,
+    "separate_native_EXECBUFFER_VERSION_component_qualified": true,
+    "planned_Root8_four_request_compositor_runtime_qualified": false
   },
   "prior_checkpoint_public_basis": "7aa605422aecb542f661250f0c1852d1e1725e4f",
   "ioctl_capability_probe": {
@@ -573,5 +575,246 @@
       "Bounded actual compositor observation of the non-exhaustive selected Root8 set; matched long intervals choose the next narrow boundary, while short/absent selected calls leave the delay unresolved",
       "ARM/Google-kernel/Pixel/carrier/full smartphone gates"
     ]
+  },
+  "prior_capability_public_basis": "a392808a147a023edd2061562037056f905f0380",
+  "observer_component_RED": {
+    "Root_qualification_sha256": "46ef5e6e163df232c715d83427ee7b843c274051ce3794125cdce9b1d15c6dfe",
+    "independent_qualification_sha256": "a9f96f9f729a0a3b1e7fc6129b4421c1de1e9c8b395f38207297e0984db770f4",
+    "scope": "Frozen actual native x86 KVM observer-absent component RED only; no native GREEN, traced observer coverage, production or composition pass",
+    "Root_exec_session": 33527,
+    "actual_Root_terminal_exit": 0,
+    "controller_exit": 1,
+    "expected_semantic_RED_qualified": true,
+    "tests_run": 14,
+    "tests_passed": 6,
+    "semantic_missing_observer_failures": 8,
+    "failed_test_numbers": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "errors": 0,
+    "setup_failure": false,
+    "frozen_tests_sha256": "29659b6ff582b3c3af6d58379232c6762fe898f7a41847f680fea3787da245f8",
+    "actual_helper_returncodes": {
+      "lineage": 0,
+      "metadata": 0,
+      "forced": 17
+    },
+    "actual_compiled_header_constants": {
+      "EXECBUFFER_request_hex": "0xc0406442",
+      "DRM_VERSION_request_hex": "0xc0406400",
+      "EXECBUFFER_structure_bytes": 64
+    },
+    "receipt_sha256": {
+      "selection.json": "57f3914778e7e55c95a5e981e709cabeb7cb8ef4c4d2c17c7800ed10a52c23b6",
+      "command.json": "9258327624bca3c558be94acdeaad1ad7c3cbd378f68013b849679a3c670d3e8",
+      "execution.json": "4852173bc6d0092be40fdfbaad81692c7944a0a96e8cce7ca2e3a0b2d7614a27",
+      "result.json": "2157d439c4106eb647f1e36956ac205f511e9f19363c817ca070f70e88342a88",
+      "boot-result.json": "fe3243ca40719c432241e653cb2c608df64902dc284fdffde8feb439003d3451",
+      "bootstrap-result.json": "cfc17d2c141d76dcdfdcef853eb181d8748e7637c114d0671c4f4e74cdced380",
+      "early-receipt.json": "3ec927c389f52fc5620ac0abfab3ba83d83f24f82e6aa571bd5e092f13342c5e",
+      "component/test-result.json": "6abb6308088ddc5c6d28832d642d2bda3a58967ba6ca5cf745b2c1ce168aad16",
+      "component/unittest.log": "f6d151749405455fbb73a69f14597d819e7e29749cf97f05587e5533bac4115b",
+      "component/actual-constants.log": "adfa118c174bc9d67e833d5394f40d5c6525c0609b194a3ce28fa2f571093c18"
+    },
+    "host_elapsed_ns": 13444021653,
+    "actual_direct_waits": 26,
+    "actual_PIPE_EOFs": 33,
+    "all_original_numeric_cutoffs_met": true,
+    "same_peer_QMP_KVM_guest_SHUTDOWN_EOF_QEMU0": true,
+    "CLI0_exact_CID_absence_same_daemon": true,
+    "selected_inputs_unchanged_under_shared_lock": true,
+    "implementation_written_after_this_RED": true,
+    "native_GREEN_qualified": false,
+    "actual_traced_observer_coverage_qualified": false,
+    "remaining": [
+      "Native observer GREEN with BTF/probe/ancestry/identity/timestamp/clock/loss/pairing/cleanup behavior",
+      "Actual matched compositor timing replay then next narrow boundary",
+      "Original full functional runtime, ARM, Pixel/carrier/full smartphone gates"
+    ]
+  },
+  "native_observer_component_qualified": true,
+  "full_Root8_observer_runtime_qualified": false,
+  "observer_component_failed13of14": {
+    "Root_qualification_sha256": "1b68a7a11b1be51cbdc5eab2c3969191c23830df392eb8361317e82b90e985e1",
+    "Root_exec_session": 59724,
+    "actual_Root_terminal_exit": 1,
+    "tests": {
+      "run": 14,
+      "pass": 13,
+      "fail": 1,
+      "errors": 0,
+      "setup_failure": null
+    },
+    "failing_test": "test_04_raw_slots_return_and_actual_call_brackets",
+    "first_observed_exit_text_ns": 7714876000,
+    "helper_after_ns": 7714875662,
+    "difference_ns": 338,
+    "timestamp_quantum_ns": 1000,
+    "kernel_rounding_confirmed_in_that_epoch": false,
+    "no_test_threshold_or_oracle_changed": true,
+    "native_component_qualified": false,
+    "host_elapsed_ns": 13897536870,
+    "actual_direct_waits": 32,
+    "actual_PIPE_EOFs": 39,
+    "all_original_numeric_cutoffs_met": true,
+    "same_peer_QMP_KVM_guest_SHUTDOWN_EOF_QEMU0": true,
+    "CLI1_exact_CID_absence_same_daemon": true,
+    "selected_inputs_unchanged_under_shared_lock": true,
+    "receipt_sha256": {
+      "selection.json": "7443d2f940cfe8b844da10bff7ab8036a9d64ccd4db3dc843e9093ac508b1c17",
+      "command.json": "f72093dcc8b6c6ec47f308ac02ab7fe3979655d35e1a085339072a59dde29549",
+      "execution.json": "be3382808bb0874211263d5d508159d8768049defe5f82745c91474989bf9ae9",
+      "result.json": "de7bc5609ecd109451321f71b6ee20e9583240487b93958ea97f64d79ad9e002",
+      "boot-result.json": "e6e6aa8f4bb7dfa7b12b6d91f7a9e3fa36d96162180ee90f95a9056d0d089669",
+      "bootstrap-result.json": "6124c50d452eb824fe654013bea67bda9dbb0db02fd2a766a681378a255cc2d1",
+      "early-receipt.json": "dbb0fa56886328b7889f451580f7a1ea20072d99f0bc4010eeb4a4cd9c7f1f5a",
+      "component/test-result.json": "66ca861f8b16e77590be9d300cd0dbe5ee21b1b4b72612b3d9e1406ed73197fc",
+      "component/unittest.log": "85fd9f2ad6952ca8cdfcdb1f5698c3ad752c66f377c771b8096c81d5017e8c89"
+    }
+  },
+  "native_timestamp_rounding": {
+    "source_only_receipt_sha256": "27352181e1df1bb4b5ec3d1ba1029eb63d10e92b8a1cfac4361119153f9f28f8",
+    "conversion": "floor((timestamp_ns + 500) / 1000)",
+    "native_printed_P_interval_ns": {
+      "lower": "max(0,P-500)",
+      "upper_inclusive": "P+499"
+    },
+    "quantum_ns": 1000,
+    "printed_value_and_both_bounds_retained": true,
+    "authored_convention_unchanged": true,
+    "fourteen_tests_and_four_inputs_unchanged": true,
+    "clock_drift_or_deadline_relaxation_inferred": false,
+    "source_files_sha256": {
+      "kernel/trace/trace.c": "f7a7da6e6fce54b309ea27045ef0c334c9cf1ffb3fa34a2a67c9eb6a857e3e18",
+      "kernel/trace/trace_output.c": "4fa9a5b2ad62fcfcf7819c4b216fe6bad0caf08e35886325bb0ab8abfab519f8",
+      "kernel/trace/trace.h": "dcd5d411845efa6eb4613e841c40ca2f8a72328080d1d12a99706f7aa36c0bf6"
+    }
+  },
+  "observer_component_GREEN": {
+    "Root_qualification_sha256": "5732792f485d8293e9f22993f721270143e76d1758b3699d17a96048a78fbe59",
+    "Root_exec_session": 12509,
+    "actual_Root_terminal_exit": 0,
+    "native_component_qualified": true,
+    "classification": {
+      "epoch": "GREEN",
+      "expected_epoch_qualified": true,
+      "tests_run": 14,
+      "tests_passed": 14,
+      "semantic_missing_failures": 0,
+      "errors": 0,
+      "production_or_composition_pass": false
+    },
+    "observer_sha256": "d69ac9d3ebbbbb33d9d14ce56aafff7c47e3e427b53f7f8b03a939f3d1ed7c49",
+    "frozen_tests_sha256": "29659b6ff582b3c3af6d58379232c6762fe898f7a41847f680fea3787da245f8",
+    "original_four_inputs_unchanged": true,
+    "scope": "Actual native x86 KVM EXECBUFFER/VERSION helper component only; not Root8 WAIT/transfers or compositor/Source/UI/ARM/phone/full functional runtime",
+    "helper_lineage_TIDs": 4,
+    "BTF_derived_field_offsets": {
+      "file_f_inode_bytes": 32,
+      "inode_i_rdev_bytes": 76,
+      "rdev_unsigned_bytes": 4
+    },
+    "actual_verified_DRM_positive_device": [
+      226,
+      128
+    ],
+    "selected_cases": {
+      "lineage": {
+        "selected_pair_count": 4,
+        "verified_DRM_pair_count": 0,
+        "device_identity_coverage_qualified": true,
+        "probe_hits": 0,
+        "probe_missed": 0,
+        "CPU_loss_rows": 6,
+        "clock_qualified": true,
+        "loss_qualified": true,
+        "trace_resources_removed": true,
+        "collection_after_actual_helper_wait": true
+      },
+      "metadata": {
+        "selected_pair_count": 2,
+        "verified_DRM_pair_count": 1,
+        "device_identity_coverage_qualified": false,
+        "probe_hits": 1,
+        "probe_missed": 0,
+        "CPU_loss_rows": 6,
+        "clock_qualified": true,
+        "loss_qualified": true,
+        "trace_resources_removed": true,
+        "collection_after_actual_helper_wait": true
+      },
+      "forced": {
+        "selected_pair_count": 0,
+        "verified_DRM_pair_count": 0,
+        "device_identity_coverage_qualified": true,
+        "probe_hits": 0,
+        "probe_missed": 0,
+        "CPU_loss_rows": 6,
+        "clock_qualified": true,
+        "loss_qualified": true,
+        "trace_resources_removed": true,
+        "collection_after_actual_helper_wait": true
+      }
+    },
+    "six_CPU_loss_rows_zero_in_each_selected_case": true,
+    "forced_helper_exit": 17,
+    "unresolved_device_pairs_not_DRM_attribution": true,
+    "raw_trace_or_payload_retained": false,
+    "host_elapsed_ns": 14121180884,
+    "actual_direct_waits": 32,
+    "actual_PIPE_EOFs": 39,
+    "all_original_numeric_cutoffs_met": true,
+    "same_peer_QMP_KVM_guest_SHUTDOWN_EOF_QEMU0": true,
+    "CLI0_exact_CID_absence_same_daemon": true,
+    "selected_inputs_unchanged_under_shared_lock": true,
+    "receipt_sha256": {
+      "selection.json": "a56be0c669bd7dd4dff21f9fee285dbc7348265ced8970231cefe273f045abfd",
+      "command.json": "63539628b4ec3442eb1fead6136ba89854a99a3d63bb05c35096b79b2cde3eea",
+      "execution.json": "e4b7ee53f6a41a895c318d54c9b11f91fa3baea805c416e62afbd2d5085a9cac",
+      "result.json": "0087e669dcda68bd524076aae383a8e2a5a51eb130d5a4824adf236ee1957b2c",
+      "boot-result.json": "ecc40b5b637ca866718567e50f7083f7dc56999f6f93776ba59919dc2ad16076",
+      "bootstrap-result.json": "72e88e549bef06092b3aff5adbc5001d84ab5f54c8d5a8665420f8520c2d6c79",
+      "early-receipt.json": "fed7db99f77430421d133bb0f5ec3e9260eab015102c4713e534a0d763dbccb0",
+      "component/test-result.json": "efc3106c7d5647eb41da074192d07a0fa0ce180f453ce4b3c667f1802d138981",
+      "component/unittest.log": "055ef5d6dd3aeb0c7cda191a333ddf1dbeaed86a9e4f9b2c7b71aa40f70be67e"
+    }
+  },
+  "supplemental_host_decoder_seven": {
+    "scope": "Separate authored host decoder cases; no real trace/kernel/native/VM coverage and no21-case aggregate",
+    "frozen_tests_sha256": "23c504ac0b9a56e9250877888a2ba777a1f1897843a4819c276f2105ac8d0b4a",
+    "test_source_sha256": "d43bab22ab54b8e8b0cf9efa5ee5d0fba7dad09b978e9c6887b1abf4df3929bc",
+    "RED_qualification_sha256": "a144708edbe57195604db6cad9fb0ca1dc0af912800f661f674d16458135291f",
+    "v4_readonly_review_sha256": "a947d6047f3d52b87af59c911da1edd72563a3f6822bde63c7f0153a2f5a8e0e",
+    "RED": {
+      "tests": 7,
+      "passes": 3,
+      "semantic_failures": 4,
+      "errors": 0,
+      "result_sha256": "fe98bae579b581fda847bb909326b388becb24cf00310d95cb0ab88ad829c84d"
+    },
+    "v4_GREEN": {
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "result_sha256": "dbfe82fd391c8535d68411dfa51c23ba1c9a09dd2a710a3859fb5ca08bc39701"
+    },
+    "v5_GREEN": {
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "result_sha256": "05788b3b1adef7bb44c60be4690c77cc840f9bc88858986018113f852a6962f3",
+      "observer_sha256": "d69ac9d3ebbbbb33d9d14ce56aafff7c47e3e427b53f7f8b03a939f3d1ed7c49"
+    },
+    "same_frozen_seven_inputs": true,
+    "ECHILD_and_original10s_cutoffs": true,
+    "native14_tests_untouched": true,
+    "unresolved_positive_FD_identity_not_attributed": true
   }
 }

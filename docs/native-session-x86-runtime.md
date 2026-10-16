@@ -295,7 +295,9 @@ TRANSFER_FROM_HOST. Numeric requests must come from the matched compiled header;
 this is a plan, without implementation/test qualification. Retain same-clock
 request/FD identity, result, loss and after-closure evidence. A separate
 [capability probe](native-endrender-observation.md#kernel-capability-probe) qualifies
-individual metadata/private controls only; full observer operation remains open.
+individual metadata/private controls only. A separate unchanged14-case native
+EXECBUFFER/VERSION helper selection now passes after the initial RED and a13/14
+timestamp failure; the four-request Root8/compositor runtime remains unqualified.
 A matched long selected interval chooses the next narrow boundary. Short or
 absent selected calls leave the delay unresolved, including other ioctls,
 sync_wait, futex and scheduling; this set is not exhaustive and establishes no

@@ -82,9 +82,13 @@ Source gap, then still fails before Sounds/PCM. This supplies no inner driver or
 earlier-failure cause. A separate kernel capability probe qualifies specific
 tracefs metadata/private control readbacks, without observer activation or an
 ioctl/timing result. Root8 plans header-selected EXECBUFFER, WAIT, TRANSFER_TO_HOST
-and TRANSFER_FROM_HOST observations, without an implementation/test claim. This
-set is not exhaustive: short or absent selected calls leave the delay unresolved
-and establish neither a userspace-only cause nor offload. ARM and phone gates stay open.
+and TRANSFER_FROM_HOST observations. A later14-case observer-absent baseline
+qualifies expected RED:6pass/8 missing-observer failures,0 errors or setup failures.
+A first observer attempt passes13/14; corrected timestamp decoding then passes
+the same14 component tests. This GREEN covers EXECBUFFER/VERSION helpers only;
+the planned four-request compositor replay remains open. The set is not exhaustive:
+short or absent selected calls leave the delay unresolved and establish neither a
+userspace-only cause nor offload. ARM and phone gates stay open.
 Earlier [permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
 passes four touch/graph/PCM groups using root-authored focus. Physical audio,
 production session completion and all phone gates remain open.
