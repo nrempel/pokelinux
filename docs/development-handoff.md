@@ -18,6 +18,14 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The [additional audio checkpoint](native-audio-pcm-arm-foundation.md) passes five
+actual host PCM stages (240,000 measured frames) and eleven unchanged Qt socket
+cases under a generic ARM kernel. Signed32-package preparation preserves all353
+existing versions and exports a closed read-only layer. These are separate
+proofs; no normal Sounds GUI/audio/theme composition is claimed. Continue the
+finite normal ARM tracer using the current matching schema3 appearance cohort.
+
+
 The [native output-selector foundation](native-audio-output-selector.md) now
 passes host logical catalog→actual graph and fresh same-cookie application
 RED→GREEN checks, final original16-stage regression and Stop.12 Rust host tests,

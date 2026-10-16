@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "classification": "FROZEN_BEFORE_ANY_PCM_EXECUTION",
+  "format": "F32LE",
+  "rate": 48000,
+  "channels": 1,
+  "discard_frames": 9600,
+  "measure_frames": 24000,
+  "capture_deadline_seconds": 6,
+  "tone_volume": 0.25,
+  "media_hz": 440,
+  "call_hz": 880,
+  "finite_all_samples": true,
+  "active_rms_min": 0.02,
+  "active_rms_max": 0.4,
+  "active_tone_energy_fraction_min": 0.9,
+  "wrong_tone_amplitude_max": 0.01,
+  "silence_rms_max": 1e-06,
+  "silence_peak_max": 1e-05,
+  "stages": [
+    {
+      "name": "media_speaker",
+      "speaker_hz": 440,
+      "earpiece_hz": 0
+    },
+    {
+      "name": "media_earpiece",
+      "speaker_hz": 0,
+      "earpiece_hz": 440
+    },
+    {
+      "name": "call_preemption",
+      "speaker_hz": 0,
+      "earpiece_hz": 880
+    },
+    {
+      "name": "media_restored",
+      "speaker_hz": 0,
+      "earpiece_hz": 440
+    },
+    {
+      "name": "released_silence",
+      "speaker_hz": 0,
+      "earpiece_hz": 0
+    }
+  ],
+  "source_link_mutation_by_observer": false,
+  "monitor_links": "Only actual sink monitor output -> actual unconnected recorder input, owned non-lingering pw-link -m children",
+  "setup_failures": "Missing tools, invalid actual source Props, missing/ambiguous monitor/capture ports, or incomplete PCM windows. Preserve separately; no behavioral RED claim.",
+  "behavior_failure": "Complete finite raw PCM windows from qualified monitor plumbing fail the fixed tone/quiet comparisons; service response text is not a PCM oracle."
+}

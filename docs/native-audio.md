@@ -11,6 +11,11 @@ and a compiled native Sounds client. Two actual host graph RED→GREEN checks,
 final original-daemon regressions and eleven Qt socket cases pass. Normal ARM
 UI/PCM/theme composition and physical audio remain separate gates.
 
+Additional [host PCM and ARM socket qualification](native-audio-pcm-arm-foundation.md)
+now measures both virtual sinks through five media/call/release stages and runs
+all eleven unchanged Qt socket cases under a generic ARM kernel. Normal ARM
+UI/audio/theme composition and physical audio remain unqualified.
+
 ## Ownership and permissions
 
 The service receives bounded newline-delimited JSON over a Unix socket.

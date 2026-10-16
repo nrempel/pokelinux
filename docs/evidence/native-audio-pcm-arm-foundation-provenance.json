@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "scope": "Additional unchanged-production host PCM integration and separate actual generic ARM socket/build/package foundation",
+  "production_audio_sha256": "cc16f6aa2d0264f7f7c0e0ff87211c3115e61503522c3eb611fa72ddc69c6a85",
+  "PCM": {
+    "root_review_sha256": "1cecab37d576c1565d5f4e7c14010011ce7a2ac3078aa18db8e6d7b211d57c67",
+    "author_review_sha256": "84a54d45503a0d2d86713c095ab379aa5992b755db6990c2ec29616dee1157dd",
+    "execution_sha256": "6acf7322e136c9fa8a6e48825980d0d4d3977328d3a62c0e2a377b20faa5b73f",
+    "oracle_sha256": "241aeeb82a3fa43a3b5541d76d1e2d2563d88144377284d473133c7a763dbc39",
+    "public_sources": {
+      "pcm_observer.py": "21d332a912da789c43e8520b691838b454f8d04ccab812032927d48bec457eae",
+      "monitor_fixture.py": "1bc8f485e07c37ca6d8263378685bf9771452b8035a55b75dd1d08056ba53fd4",
+      "ORACLES.json": "241aeeb82a3fa43a3b5541d76d1e2d2563d88144377284d473133c7a763dbc39"
+    },
+    "measured_frames": 240000,
+    "actual_waits": 68,
+    "PIPE_stdout_streams": 58,
+    "DEVNULL_stdout_exclusions": 10,
+    "PIPE_stderr_streams": 45,
+    "regular_file_stderr_exclusions": 23
+  },
+  "ARM_foundation": {
+    "root_review_sha256": "df755cf79e7bc1da581b16a04374ff04eb6f9918dd084dbe45af3c2cdf0e2496",
+    "independent_review_sha256": "a0487889a0d7f420bcec58f5a7e03483fa4accd0b7f0a6946cc280611a2950c8",
+    "execution_sha256": "46c6307cdccac64825e9724d008ec3d2e87eb326d32e4a6e718c67522e79e729",
+    "Qt": "6.12.0",
+    "pipewire": "1.6.9",
+    "wireplumber": "0.5.18",
+    "new_signed_packages": 32,
+    "existing_packages_unchanged": 353,
+    "functional_socket_cases": 11,
+    "closed_layer_sha256": "cf4900eeff5dc2a9c4ebe436de2d75bfe9d5db186b7993a10f361cddb9835128"
+  },
+  "claims_excluded": [
+    "normal Qt GUI/audio composition",
+    "ARM audio-daemon graph or PCM",
+    "current-schema private-HOME appearance composition",
+    "production lifecycle/launcher/service management",
+    "matched Pixel kernel audio",
+    "physical audio/carrier/phone qualification"
+  ],
+  "physical_phone_accessed": false
+}

@@ -6,6 +6,10 @@ bounded Unix-socket client compile and pass their host protocol tests. This
 checkpoint does not yet qualify normal UI input through an installed ARM audio
 graph, PCM content, a production launcher, or physical audio.
 
+A later [sample-flow and ARM socket checkpoint](native-audio-pcm-arm-foundation.md)
+adds five actual host PCM stages and eleven actual generic ARM socket cases.
+Those additional proofs remain separate from normal ARM UI/audio composition.
+
 ## Logical routes
 
 Trusted profiles use one schema, without an old-format adapter:
