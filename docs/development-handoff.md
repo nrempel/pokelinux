@@ -245,6 +245,12 @@ A separate original Rust commit-permit component now passes eight Linux x86
 thread/clock/admission cases after a real control-owner-drop RED and repair.
 It orders grant-time intent/Stop and same-epoch revocation; actual native binding,
 worker/FD custody, AQ and output completion remain open.
+The [qualified31 source checkpoint](native-render-import.md#qualified-scene31-checkpoint)
+now builds all15 affected C++ units and505 matching SDK files after a separate
+29-path compile failure. A fresh unchanged Source7 replay still yields four
+controls and three rendering failures, with original windows and full closure.
+The new scene producer/GL primitives compile only; no owner starts, and this ELF
+selects old snapshot-only Rust69 rather than the separate permit module.
 Production control/render ownership separation and GREEN remain open. Source100ms,
 terminal authority expiry, real facts and fence/buffer lifetime remain required;
 no exclusive-CPU or earlier-failure cause follows. Strict matching ARM64 owner/client

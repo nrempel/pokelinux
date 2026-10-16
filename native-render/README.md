@@ -76,6 +76,16 @@ zero mismatches. Later retained clones check original raw Rust pixels/padding
 after client wait0, without invoking Cairo. This CPU consumer boundary is separate from a complete hardware-
 or software-cursor output path, GPU upload and presentation.
 
+## Compiled scene prerequisites
+
+The public [31-file C++ cohort](../docs/native-render-import.md#qualified-scene31-checkpoint)
+now builds all15 affected units and its matching505-file SDK. It adds factored
+scene order, CPU frame records and owner-only GL primitives. The new producer
+and primitives are not called and no render owner starts in the selected runtime;
+a fresh unchanged Source7 replay still gives four controls and three rendering
+failures. That ELF selects the earlier snapshot-only Rust archive69b81281, without
+this separate commit-permit module. No connected frame/output result follows.
+
 ## Commit-permit component
 
 The original Rust `commit` module is an executor prerequisite. A unique control

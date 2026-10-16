@@ -76,6 +76,11 @@ Full cursor output and presentation remain unqualified. Coherent rendering owner
 matrix remain open. A separate Rust commit-permit component passes eight
 Linux x86 thread/clock/admission cases after actual owner-drop RED and repair;
 this establishes neither an executor nor actual native commit/presentation.
+A later [complete31-file source checkpoint](native-render-import.md#qualified-scene31-checkpoint)
+builds its505-file SDK, but a fresh unchanged Source7 replay still has four passing
+controls and three rendering failures. New scene/GL prerequisites compile only;
+no producer/primitive call or render-owner startup is selected, and the old
+snapshot-only Rust archive remains separate from the permit component.
 
 The [native Rust session owner](native-session-owner.md) implements compositor
 Child custody; its original Sounds assembly has32 host boundary passes,

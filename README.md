@@ -115,6 +115,10 @@ A separate original Rust commit-permit component passes eight native Linux
 thread/clock/admission tests and formatted-source QA after an actual owner-drop
 RED and repair. It supplies one-shot attempt ordering and same-epoch invalidation;
 connected worker, AQ/GL and Source integration remain open.
+The complete [31-file scene prerequisite checkpoint](docs/native-render-import.md#qualified-scene31-checkpoint)
+passes its full native build/505-file SDK. Its new producer/GL primitives compile;
+the unchanged actual Source7 replay still has four controls and three rendering
+failures. That ELF selects the earlier snapshot-only Rust archive.
 Earlier [permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
 passes four touch/graph/PCM groups using root-authored focus. Physical audio,
 production session completion and all phone gates remain open.

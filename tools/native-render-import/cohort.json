@@ -3,7 +3,7 @@
   "upstream": "https://github.com/hyprwm/Hyprland",
   "pinned_upstream_commit": "efb50993780079460b0cbed1363e2166a2de1d9f",
   "original_archive_sha256": "5b05ce7ba5296fa46e666852bf108ab5af121bf577f8043787e2d2c252d8f109",
-  "patch_sha256": "d859ccb7d38d176c9b5adc0e89ca09d728bd03c0b0eab02afb49db4c7a09b425",
+  "patch_sha256": "fcee3531d211a1d2a65abbdf2805308483ac5d19d0c9806404577043a1fff369",
   "files": {
     "CMakeLists.txt": {
       "before_sha256": "97b8028aa342cf6ee6f04b5db2e67e6e4fe6adf5d3fd67bad18005193db36516",
@@ -12,8 +12,38 @@
     },
     "src/event/EventBus.hpp": {
       "before_sha256": "bfb8be17d84a0d8e7f10a0d61bcdc2b2e67378d139aaae8a484bebd96f62eede",
-      "after_sha256": "e2bb406757190f0fd65eace2ec5786a5588bb6333013cb5c6b41bfd30c318fd3",
-      "bytes": 7406
+      "after_sha256": "635a83fb9724e4e96c96c8be0065cbbd3a9d3cef344c3ea8adb5822079409a5e",
+      "bytes": 8055
+    },
+    "src/managers/input/InputMethodRelay.cpp": {
+      "before_sha256": "f3abdcb490650be96b90f6f23e5f0cae6d62ab967ae39be8e99611b8c9ff570b",
+      "after_sha256": "6e33da4ec930c87d644754b83992d9484107dbef83056ae7c06d9c8f7c404544",
+      "bytes": 5262
+    },
+    "src/managers/input/InputMethodRelay.hpp": {
+      "before_sha256": "c50677357e45684f374facddb26c0b8ff634d371d7677ad482fa2ad8340f24ac",
+      "after_sha256": "95833a04aff9fae4bde6f5ebd24aae5a68d4cf3306b97f5b63e6c1fc64bb2825",
+      "bytes": 1860
+    },
+    "src/pointer/CursorImage.cpp": {
+      "before_sha256": null,
+      "after_sha256": "eeb8d863ddb13a3c0ce3ac7cb2f015ebf2372e7039e8bab742dec19389ecd56d",
+      "bytes": 232
+    },
+    "src/pointer/CursorImage.hpp": {
+      "before_sha256": null,
+      "after_sha256": "fd0aa86d9717bad34fe8627b5b6e079c19af82a55f928132ad626c53a38ec067",
+      "bytes": 327
+    },
+    "src/pointer/PointerManager.cpp": {
+      "before_sha256": "83c69d93f09088f1e2383a9c85a54cf3f55718d9506a1121058afef77911223a",
+      "after_sha256": "9974f4c9331d532e93bb80ddae255ecba3c26b35119f9a722f52d72a40617e2d",
+      "bytes": 45579
+    },
+    "src/pointer/PointerManager.hpp": {
+      "before_sha256": "af62bde2f8cf14e0440a99d0e81b361d3845eb95873be549e4ce44f45edb345e",
+      "after_sha256": "42b9582767a46b4c0da71b33df0e0e76a7afd7a773e82195f3c552eee6843dce",
+      "bytes": 7383
     },
     "src/protocols/core/Compositor.cpp": {
       "before_sha256": "027212abbf9a194347f05fa87232181dc54be4c773ce75555a3a9bcd08281a60",
@@ -30,6 +60,16 @@
       "after_sha256": "f9ddb67da492ae5f7e18ba4608caddb607107605ba9b17f47c615e4723e203c7",
       "bytes": 4335
     },
+    "src/render/ElementRenderer.cpp": {
+      "before_sha256": "32f79c359a5ae6a265f7b2feee5c190d643371dd984d2bdda6a4ef203ccec828",
+      "after_sha256": "c218419e23857816e76c8bcd57ad710b01bd62b3dd2798ff7246707a11a9a7c4",
+      "bytes": 30118
+    },
+    "src/render/ElementRenderer.hpp": {
+      "before_sha256": "3b1d6db6d1e893423e0966aa12e4723e8800920850b61acc43bdf9f1fdf86979",
+      "after_sha256": "40ecf1f37bf71e6a941c06f3586a375f3c4551c84602f9a228670c3d14d678c1",
+      "bytes": 2987
+    },
     "src/render/EndRenderWitness.cpp": {
       "before_sha256": null,
       "after_sha256": "25185098f8068c33470292c4d44daeceb7ce13cc9af4160d0c767da47024e81b",
@@ -39,6 +79,16 @@
       "before_sha256": null,
       "after_sha256": "0359b4d8c324f0c311b508a28a7e7c2208c6449132b35338aeb1ee8f887f7d73",
       "bytes": 2040
+    },
+    "src/render/FramePlan.cpp": {
+      "before_sha256": null,
+      "after_sha256": "f06679a46d9609ee7cec1cc150b900ad76aa8310c81b80289819edb8cb6c05d3",
+      "bytes": 32143
+    },
+    "src/render/FramePlan.hpp": {
+      "before_sha256": null,
+      "after_sha256": "71e5cd0425ed58c5b92e06450f0d3a5fbcc6f7ffc65f245759e177399da37781",
+      "bytes": 4343
     },
     "src/render/GLRenderer.cpp": {
       "before_sha256": "2072807043b5d53a0910ebcc3936e69905abdf5905457d363f70d8c1043a4a81",
@@ -57,13 +107,13 @@
     },
     "src/render/Renderer.cpp": {
       "before_sha256": "9af8a74e7dc42ba3c5532303b9bb4ee7c350d4cef2f2c8984e41f2a01b3bdd22",
-      "after_sha256": "d52085528092386d6d47e0fb117d7c9b81f3c1dd41185d3fd3ee44042eaca1ef",
-      "bytes": 143339
+      "after_sha256": "a132df8560f8d91866fcc34332a7b9ba3c2dadeea54c00de6ba239f2fb96f1ab",
+      "bytes": 138192
     },
     "src/render/Renderer.hpp": {
       "before_sha256": "b947bec0fee19c19056cbbe07e6db9f14d075c363ff2b4f74124a2b0622a52ea",
-      "after_sha256": "7a57eaaf65cb4c43766d95a06b5a7e37a57d3af4c66170cb31b7cbd1ec21f763",
-      "bytes": 21496
+      "after_sha256": "342d5ed245c43f7c3d6c38ef0f93b7060a3e79a95b52084c0969a7b9b5ca0d8d",
+      "bytes": 22328
     },
     "src/render/SHMSnapshot.cpp": {
       "before_sha256": null,
@@ -74,6 +124,11 @@
       "before_sha256": null,
       "after_sha256": "c4ed57fa4f344b9a2ed9701576f39a0494360f06c5d89e084ceb5f6a0f12ed1b",
       "bytes": 1573
+    },
+    "src/render/SceneOrder.hpp": {
+      "before_sha256": null,
+      "after_sha256": "3aa7da52b1229573cb8df6af2498a36eed7ab7c123ed05576466a2094124a4af",
+      "bytes": 8087
     },
     "src/render/Texture.cpp": {
       "before_sha256": "8b3deb46192ed4b8b30821f2717aa93c25851a9bc7528ff9a557c49f00535b2a",
@@ -95,26 +150,38 @@
       "after_sha256": "15d1787cb594aa0ef4f2a60c15a7ad33dc888cf211eeed08b61f1b460271b655",
       "bytes": 1949
     },
-    "src/pointer/PointerManager.cpp": {
-      "before_sha256": "83c69d93f09088f1e2383a9c85a54cf3f55718d9506a1121058afef77911223a",
-      "after_sha256": "a280dde76e3d415efed122d3fc61261be8f34cfeea14ae2e2fcf3ccbc63c9bcd",
-      "bytes": 45168
-    },
-    "src/pointer/CursorImage.hpp": {
+    "src/render/gl/OwnerFramePrimitives.cpp": {
       "before_sha256": null,
-      "after_sha256": "fd0aa86d9717bad34fe8627b5b6e079c19af82a55f928132ad626c53a38ec067",
-      "bytes": 327
+      "after_sha256": "5701dcb0f4a41cc0e1aec3bb618a9b4baa7ea17431646d671303752f398f82d6",
+      "bytes": 18309
     },
-    "src/pointer/CursorImage.cpp": {
+    "src/render/gl/OwnerFramePrimitives.hpp": {
       "before_sha256": null,
-      "after_sha256": "eeb8d863ddb13a3c0ce3ac7cb2f015ebf2372e7039e8bab742dec19389ecd56d",
-      "bytes": 232
+      "after_sha256": "f4b01f6120869d68da21e555ef30434cc442ca2575dce92cee2a8a0ad04ac48d",
+      "bytes": 3260
     }
   },
   "Rust_C_header_sha256": "4a7a9a603fe6d7780ff071020f727c3eb7b0aba1c9bba56b682ddd219f995396",
-  "scope": "Connected Rust immutable CPU SHM import plus supplied-stride Cairo CPU consumer repair and preserved render observations; GL remains on the original owner, no rendering executor or Source GREEN.",
+  "scope": "Connected immutable CPU SHM import and repaired Cairo consumer, preserved render observations, factored scene order, CPU frame-description producer and owner-only GL primitives. New producer/primitives compilation only; original rendering path remains on its owner and unchanged Source7 remains RED.",
   "noattach_actual_RED_qualification_sha256": "468efc6ed392580c334af5efd74e96038a568d88e88d35dd5a36c6ac77c7903c",
   "cursor_actual_RED_qualification_sha256": "5a7b103920cef9b3e1a613880973f2beaf2790e36b4ef09288961552dcfb25d6",
   "cursor_repaired_build_Root_qualification_sha256": "c3648e2d7d6ef84b8d51ff1d962aaefd880d228d0cfc24a23fe7ee7977adcc95",
-  "cursor_actual_GREEN_qualification_sha256": "c446a95667c2a08f6798778407a44dc620f3d0b923df08c6c5199671715911c1"
+  "cursor_actual_GREEN_qualification_sha256": "c446a95667c2a08f6798778407a44dc620f3d0b923df08c6c5199671715911c1",
+  "historical_fixed_cursor21_patch_sha256": "d859ccb7d38d176c9b5adc0e89ca09d728bd03c0b0eab02afb49db4c7a09b425",
+  "source_version_marker": "pokelinux-local-scene-owner-primitives-compile-fix",
+  "qualified31_native_build_Root_sha256": "8264d81a577d49afdce6984ffdd1165452e61b886acac31675b51139a2764fd0",
+  "qualified31_native_build_independent_sha256": "48190a8f2d862700773a09b9bdc0f6b30c437666ff8791d78f320c50fa9ba491",
+  "qualified31_source_map_sha256": "f8df89dfec29a999381ebd3c4fcda2540866dead15ae85647165cc59b395a1eb",
+  "selected_snapshot_only_Rust_staticlib_sha256": "69b812817c6ee2e090a31fe0179de1db9e2c89500e7eb4e184de5ba36126c46c",
+  "separate_Rust_commit_permit_archive_selected": false,
+  "historical_noattach_and_cursor_results_rerun_on31": false,
+  "unchanged_Source7_scene31_expected_RED": {
+    "Root_qualification_sha256": "1b6802d6d9261934917bffae095490dfe25ccbc77627faf1baf6351c73472d3a",
+    "independent_qualification_sha256": "b2cb0e3dc654ec50ae79c50d3c3a112b3e7675fccb59795c9e612011891b1222",
+    "execution_sha256": "61a2eca8c2c4c452c72f6ae1b24dbc9b2f173ceeca93c1a02ab14f482832e6c8",
+    "controls_passed": 4,
+    "rendering_feature_failures": 3,
+    "feature_GREEN": false
+  },
+  "selected_snapshot_only_Rust_source_base": "79c80ba39dd7b12bee87384547291e222241cf73"
 }

@@ -31,7 +31,38 @@
  target_include_directories(Hyprland PUBLIC ${deps_INCLUDE_DIRS} ${LUA_INCLUDE_DIRS})
 --- a/src/event/EventBus.hpp
 +++ b/src/event/EventBus.hpp
-@@ -191,6 +191,9 @@
+@@ -39,6 +39,21 @@
+ 
+         template <typename... Args>
+         using Cancellable = CSignalT<Args..., SCallbackInfo&>;
++
++        // Control-only presence query for the immutable scene subset. Existing
++        // stage callbacks can issue arbitrary old pass/GL work; they cannot be
++        // called while producing a value-only frame, or silently omitted.
++        class CRenderStageEvent : public Event<eRenderStage> {
++          public:
++            bool hasLiveListenersForFramePlan() const {
++                if (!m_vStaticListeners.empty())
++                    return true;
++                for (const auto& listener : m_vListeners)
++                    if (!listener.expired())
++                        return true;
++                return false;
++            }
++        };
+ 
+         class CCustomEvent {
+           public:
+@@ -134,7 +149,7 @@
+             struct {
+                 Event<PHLMONITOR>   preChecks;
+                 Event<PHLMONITOR>   pre;
+-                Event<eRenderStage> stage;
++                CRenderStageEvent  stage;
+             } render;
+ 
+             struct {
+@@ -191,6 +206,9 @@
              Event<std::string>                                pluginEventRemoved;
              std::unordered_map<std::string, SP<CCustomEvent>> plugin;
  
@@ -41,6 +72,123 @@
          } m_events;
  
          std::expected<void, std::string> addPluginEvent(SP<CCustomEvent> event);
+--- a/src/managers/input/InputMethodRelay.cpp
++++ b/src/managers/input/InputMethodRelay.cpp
+@@ -99,6 +99,14 @@
+     std::erase_if(m_textInputs, [pInput](const auto& other) { return other.get() == pInput; });
+ }
+ 
++bool CInputMethodRelay::hasVisiblePopups() const {
++    for (const auto& popup : m_inputMethodPopups) {
++        if (popup->shouldBeRendered())
++            return true;
++    }
++    return false;
++}
++
+ void CInputMethodRelay::updateAllPopups() {
+     for (auto const& p : m_inputMethodPopups) {
+         p->onCommit();
+--- a/src/managers/input/InputMethodRelay.hpp
++++ b/src/managers/input/InputMethodRelay.hpp
+@@ -38,6 +38,7 @@
+     CInputPopup*       popupFromSurface(const SP<CWLSurfaceResource> surface);
+ 
+     void               updateAllPopups();
++    bool               hasVisiblePopups() const;
+ 
+     WP<CInputMethodV2> m_inputMethod;
+ 
+--- /dev/null
++++ b/src/pointer/CursorImage.cpp
+@@ -0,0 +1,5 @@
++#include "CursorImage.hpp"
++
++cairo_surface_t* Pointer::cursorCpuInputSurface(uint8_t* pixels, int width, int height, int stride) {
++    return cairo_image_surface_create_for_data(pixels, CAIRO_FORMAT_ARGB32, width, height, stride);
++}
+--- /dev/null
++++ b/src/pointer/CursorImage.hpp
+@@ -0,0 +1,9 @@
++#pragma once
++#include <cairo/cairo.h>
++#include <cstdint>
++
++namespace Pointer {
++    // The caller owns the pixels until the returned Cairo surface is destroyed.
++    // The surface is owned by the caller and must be destroyed once.
++    cairo_surface_t* cursorCpuInputSurface(uint8_t* pixels, int width, int height, int stride);
++}
+--- a/src/pointer/PointerManager.cpp
++++ b/src/pointer/PointerManager.cpp
+@@ -1,4 +1,5 @@
+ #include "PointerManager.hpp"
++#include "CursorImage.hpp"
+ #include "../Compositor.hpp"
+ #include "../config/ConfigValue.hpp"
+ #include "../config/shared/actions/ConfigActions.hpp"
+@@ -511,6 +512,7 @@
+     if (shouldUseCpuBuffer) {
+         // get the texture data if available.
+         auto texData = texture->dataCopy();
++        int  texDataStride = static_cast<int>(texture->m_size.x) * 4;
+         if (texData.empty()) {
+             if (m_currentCursorImage.surface && m_currentCursorImage.surface->resource()->m_role->role() == SURFACE_ROLE_CURSOR) {
+                 const auto SURFACE   = m_currentCursorImage.surface->resource();
+@@ -531,9 +533,14 @@
+                     }
+                 }
+ 
+-                if (shmBuffer.data())
++                if (shmBuffer.data()) {
+                     texData = shmBuffer;
+-                else {
++                    const auto view = SURFACE->m_current.shmSnapshot.view();
++                    if (view && view->pixel_bytes == texData.size() && view->description.bytes_per_pixel == 4 &&
++                        view->description.width == static_cast<uint32_t>(texture->m_size.x) &&
++                        view->description.height == static_cast<uint32_t>(texture->m_size.y))
++                        texDataStride = static_cast<int>(view->description.stride);
++                } else {
+                     texData.resize(texture->m_size.x * 4 * texture->m_size.y);
+                     memset(texData.data(), 0x00, texData.size());
+                 }
+@@ -555,7 +562,7 @@
+         auto [data, fmt, size] = buf->beginDataPtr(0);
+ 
+         auto CAIROSURFACE     = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, DMABUF.size.x, DMABUF.size.y);
+-        auto CAIRODATASURFACE = cairo_image_surface_create_for_data(texData.data(), CAIRO_FORMAT_ARGB32, texture->m_size.x, texture->m_size.y, texture->m_size.x * 4);
++        auto CAIRODATASURFACE = Pointer::cursorCpuInputSurface(texData.data(), texture->m_size.x, texture->m_size.y, texDataStride);
+ 
+         auto CAIRO = cairo_create(CAIROSURFACE);
+ 
+@@ -638,6 +645,16 @@
+     return buf;
+ }
+ 
++CPointerManager::SFrameCursorState CPointerManager::cursorStateForFramePlan(PHLMONITOR monitor) {
++    if (!hasCursor())
++        return {};
++    const auto state = stateFor(monitor);
++    const auto box = state->box.copy();
++    if (box.intersection(CBox{{}, monitor->m_size}).empty())
++        return {};
++    return {.visible = true, .hardware = !state->hardwareFailed && state->softwareLocks == 0, .box = box};
++}
++
+ void CPointerManager::renderSoftwareCursorsFor(PHLMONITOR pMonitor, const Time::steady_tp& now, CRegion& damage, std::optional<Vector2D> overridePos, bool screencopy,
+                                                bool forceRender) {
+     if (!hasCursor())
+--- a/src/pointer/PointerManager.hpp
++++ b/src/pointer/PointerManager.hpp
+@@ -72,6 +72,8 @@
+ 
+         // returns the thing in global coords
+         CBox getCursorBoxGlobal();
++        struct SFrameCursorState { bool visible = false, hardware = false; CBox box; };
++        SFrameCursorState cursorStateForFramePlan(PHLMONITOR monitor);
+ 
+         struct SCursorImage {
+             SP<Aquamarine::IBuffer>       pBuffer;
 --- a/src/protocols/core/Compositor.cpp
 +++ b/src/protocols/core/Compositor.cpp
 @@ -99,6 +99,7 @@
@@ -288,6 +436,41 @@
  
      // fifo
      bool barrierSet    = false;
+--- a/src/render/ElementRenderer.cpp
++++ b/src/render/ElementRenderer.cpp
+@@ -29,6 +29,13 @@
+         case EK_CUSTOM: drawCustom(element, damage); break;
+         default: Log::logger->log(Log::WARN, "Unimplimented draw for {}", element->passName());
+     }
++}
++
++std::pair<Vector2D, Vector2D> IElementRenderer::resolveSurfaceUVForPlan(PHLWINDOW window, SP<CWLSurfaceResource> surface, PHLMONITOR monitor,
++                                                                           bool main, const Vector2D& projected, const Vector2D& unscaled, bool fixFractional) {
++    calculateUVForSurface(window, surface, monitor, main, projected, unscaled, fixFractional);
++    const auto& data = g_pHyprRenderer->m_renderData;
++    return {data.primarySurfaceUVTopLeft, data.primarySurfaceUVBottomRight};
+ }
+ 
+ static std::optional<Vector2D> getSurfaceExpectedSize(PHLWINDOW pWindow, SP<CWLSurfaceResource> pSurface, PHLMONITOR pMonitor, bool main) {
+--- a/src/render/ElementRenderer.hpp
++++ b/src/render/ElementRenderer.hpp
+@@ -13,6 +13,7 @@
+ #include "./pass/InnerGlowPassElement.hpp"
+ #include "./pass/TransformedWindowPassElement.hpp"
+ #include <hyprutils/math/Region.hpp>
++#include <utility>
+ 
+ namespace Render {
+     class IElementRenderer {
+@@ -21,6 +22,8 @@
+         virtual ~IElementRenderer() = default;
+ 
+         void drawElement(WP<IPassElement> element, const CRegion& damage);
++        std::pair<Vector2D, Vector2D> resolveSurfaceUVForPlan(PHLWINDOW window, SP<CWLSurfaceResource> surface, PHLMONITOR monitor,
++                                                           bool main, const Vector2D& projected, const Vector2D& unscaled, bool fixFractional);
+ 
+       protected:
+         virtual void draw(WP<CBorderPassElement> element, const CRegion& damage)    = 0;
 --- /dev/null
 +++ b/src/render/EndRenderWitness.cpp
 @@ -0,0 +1,76 @@
@@ -421,6 +604,538 @@
 +    uint32_t invocation_ = 0;
 +    bool entered_ = false;
 +};
++}
+--- /dev/null
++++ b/src/render/FramePlan.cpp
+@@ -0,0 +1,439 @@
++#include "FramePlan.hpp"
++#include "Renderer.hpp"
++#include "ElementRenderer.hpp"
++#include "SceneOrder.hpp"
++#include "../Compositor.hpp"
++#include "../config/ConfigValue.hpp"
++#include "../desktop/Workspace.hpp"
++#include "../desktop/state/FadingOutState.hpp"
++#include "../desktop/state/WindowState.hpp"
++#include "../desktop/view/GlobalViewMethods.hpp"
++#include "../desktop/view/Window.hpp"
++#include "../desktop/view/WLSurface.hpp"
++#include "../errorOverlay/Overlay.hpp"
++#include "../event/EventBus.hpp"
++#include "../notification/NotificationOverlay.hpp"
++#include "../managers/input/InputManager.hpp"
++#include "../managers/input/InputMethodPopup.hpp"
++#include "../layout/LayoutManager.hpp"
++#include "../pointer/PointerManager.hpp"
++#include "../protocols/ColorManagement.hpp"
++#include "../protocols/LayerShell.hpp"
++#include "../protocols/SessionLock.hpp"
++#include "../protocols/core/Compositor.hpp"
++#include "../protocols/core/DataDevice.hpp"
++#include "../state/WorkspaceState.hpp"
++#include "decorations/IHyprWindowDecoration.hpp"
++#include <algorithm>
++#include <cmath>
++#include <limits>
++#include <new>
++#include <utility>
++#include <hyprutils/utils/ScopeGuard.hpp>
++
++using namespace Render;
++using namespace NColorManagement;
++namespace {
++[[noreturn]] void unavailable(eFrameUnavailable reason, const char* detail) { throw SFramePlanError{reason, detail}; }
++void require(bool condition, eFrameUnavailable reason, const char* detail) { if (!condition) unavailable(reason, detail); }
++SFrameBox copiedBox(const CBox& box) { return {box.x, box.y, box.width, box.height, box.rot}; }
++FrameMatrix copiedMatrix(const Hyprutils::Math::Mat3x3& matrix) {
++    return matrix.getMatrix();
++}
++std::array<float, 4> copiedColor(const CHyprColor& color) {
++    return {static_cast<float>(color.r), static_cast<float>(color.g), static_cast<float>(color.b), static_cast<float>(color.a)};
++}
++
++class CFramePlanBuilder {
++  public:
++    CFramePlanBuilder(IHyprRenderer& renderer, PHLMONITOR monitor, SFrameTarget target, uint64_t sequence,
++                      uint64_t securityGeneration, const Time::steady_tp& when, bool commit) :
++        m_renderer(renderer), m_monitor(monitor), m_when(when) {
++        m_plan.target = target;
++        m_plan.sceneSequence = sequence;
++        m_plan.securityGeneration = securityGeneration;
++        m_plan.commit = commit;
++        // This first producer encodes complete target contents. Actual swapchain
++        // age/history selection remains on the output owner; control rotates none.
++        m_plan.fullRepaint = true;
++        m_plan.draws.reserve(FRAME_MAX_DRAWS);
++        m_plan.resources.reserve(FRAME_MAX_RESOURCES);
++        m_damage = CBox{0, 0, target.transformedWidth, target.transformedHeight};
++        m_plan.damage = scissors(m_damage);
++        m_plan.finalDamage = scissors(m_damage);
++    }
++
++    SFramePlan build() {
++        preflight();
++        const bool locked = g_pSessionLockManager->isSessionLocked();
++        static auto xray = CConfigValue<Config::INTEGER>("misc:session_lock_xray");
++        const bool workspaceVisible = !locked || *xray || !(g_pSessionLockManager->shallConsiderLockMissing() ||
++            g_pSessionLockManager->clientLocked() || g_pSessionLockManager->clientDenied());
++        if (m_monitor->m_solitaryClient)
++            window(m_monitor->m_solitaryClient.lock(), false, RENDER_PASS_MAIN);
++        else {
++            if (workspaceVisible) workspace();
++            if (locked) lockscreen();
++        }
++        cursor();
++        if (m_monitor->m_dpmsBlackOpacity->value() != 0.F)
++            rect(CBox{0, 0, m_monitor->m_transformedSize.x, m_monitor->m_transformedSize.y}, Colors::BLACK.modifyA(m_monitor->m_dpmsBlackOpacity->value()));
++        metadataBound();
++        return std::move(m_plan);
++    }
++
++  private:
++    IHyprRenderer& m_renderer;
++    PHLMONITOR m_monitor; // control-only builder, never part of returned plan
++    Time::steady_tp m_when;
++    SFramePlan m_plan;
++    CRegion m_damage;
++    size_t m_scissors = 0;
++
++    void metadataBound(size_t transientRectCapacity = 0) {
++        // Count actual vector capacities, including in-progress scissor storage.
++        size_t rectangles = m_plan.damage.capacity() + m_plan.finalDamage.capacity() + transientRectCapacity;
++        for (const auto& draw : m_plan.draws) rectangles += draw.scissors.capacity();
++        const size_t bytes = sizeof(SFramePlan) + m_plan.draws.capacity() * sizeof(SFrameDraw) +
++            m_plan.resources.capacity() * sizeof(SFrameShmResource) + rectangles * sizeof(SFrameRect);
++        require(bytes <= FRAME_MAX_METADATA_BYTES, eFrameUnavailable::ALLOCATION, "frame metadata admission bound");
++    }
++    std::vector<SFrameRect> scissors(const CRegion& region) {
++        std::vector<SFrameRect> result;
++        region.copy().intersect(CBox{0, 0, m_plan.target.transformedWidth, m_plan.target.transformedHeight}).forEachRect([&](const auto& r) {
++            require(m_scissors < FRAME_MAX_SCISSORS, eFrameUnavailable::ALLOCATION, "frame scissor admission bound");
++            CBox box{r.x1, r.y1, r.x2 - r.x1, r.y2 - r.y1};
++            box.transform(Math::wlTransformToHyprutils(Math::invertTransform(m_monitor->m_transform)), m_monitor->m_transformedSize.x, m_monitor->m_transformedSize.y);
++            const auto x = static_cast<int32_t>(box.x), y = static_cast<int32_t>(box.y);
++            result.push_back({x, y, x + static_cast<int32_t>(box.width), y + static_cast<int32_t>(box.height)});
++            ++m_scissors;
++        });
++        metadataBound(result.capacity());
++        return result;
++    }
++    void push(SFrameDraw&& draw) {
++        if (draw.scissors.empty()) return;
++        require(m_plan.draws.size() < FRAME_MAX_DRAWS, eFrameUnavailable::ALLOCATION, "frame draw admission bound");
++        m_plan.draws.emplace_back(std::move(draw));
++        metadataBound();
++    }
++    uint32_t resource(const Render::CSHMSnapshot& snapshot) {
++        const auto view = snapshot.view();
++        require(view.has_value(), eFrameUnavailable::MISSING_SHM, "surface has no immutable SHM import");
++        for (size_t i = 0; i < m_plan.resources.size(); ++i) {
++            const auto& d = m_plan.resources[i].description;
++            if (d.resource_id == view->description.resource_id && d.generation == view->description.generation && d.commit_sequence == view->description.commit_sequence)
++                return static_cast<uint32_t>(i);
++        }
++        require(m_plan.resources.size() < FRAME_MAX_RESOURCES, eFrameUnavailable::ALLOCATION, "frame snapshot-handle admission bound");
++        SFrameShmResource value;
++        value.description = view->description;
++        value.snapshot = snapshot; // explicit separately owned Rust handle
++        m_plan.resources.emplace_back(std::move(value));
++        metadataBound();
++        return static_cast<uint32_t>(m_plan.resources.size() - 1);
++    }
++    void preflight() {
++        require(!Event::bus()->m_events.render.stage.hasLiveListenersForFramePlan(), eFrameUnavailable::UNSUPPORTED_SCENE,
++                "live render-stage callback has no immutable frame producer");
++        static auto overlay = CConfigValue<Config::INTEGER>("debug:overlay");
++        static auto pass = CConfigValue<Config::INTEGER>("debug:pass");
++        static auto blink = CConfigValue<Config::INTEGER>("debug:damage_blink");
++        static auto screenShader = CConfigValue<std::string>("decoration:screen_shader");
++        const auto screenShaderPath = *screenShader;
++        require(!m_renderer.m_crashingInProgress && (screenShaderPath.empty() || screenShaderPath == STRVAL_EMPTY),
++                eFrameUnavailable::UNSUPPORTED_SCENE, "custom/glitch final shader is not a frame-plan form");
++        require(!m_monitor->isMirror() && m_monitor->m_mirrors.empty(), eFrameUnavailable::UNSUPPORTED_SCENE, "mirror resources are not a frame-plan form");
++        require(!m_monitor->needsACopyFB() && !m_monitor->needsUnmodifiedCopy(), eFrameUnavailable::UNSUPPORTED_SCENE,
++                "screencopy/unmodified work-buffer resources are not a frame-plan form");
++        require(!*overlay && !*pass && !*blink && !Notification::overlay()->hasAny() && !ErrorOverlay::overlay()->active(),
++                eFrameUnavailable::UNSUPPORTED_SCENE, "visible diagnostic/notification overlay is not a frame-plan form");
++        require(Desktop::fadingOutState()->fadeouts().empty(), eFrameUnavailable::UNSUPPORTED_SCENE, "fadeout framebuffer resources are not a frame-plan form");
++        require(m_monitor->m_cursorZoom->value() == 1.F && m_monitor->m_zoomAnimProgress->value() == 1.F,
++                eFrameUnavailable::UNSUPPORTED_SCENE, "zoom postprocessing is not a frame-plan form");
++        require(!g_pInputManager->m_relay.hasVisiblePopups(), eFrameUnavailable::UNSUPPORTED_SCENE, "visible IME popup is not a frame-plan form");
++        const auto work = m_monitor->workBufferImageDescription();
++        require(work && m_monitor->m_imageDescription && !work->value().icc.present && !m_monitor->m_imageDescription->value().icc.present,
++                eFrameUnavailable::UNSUPPORTED_MATERIAL, "ICC LUT ownership is not implemented");
++        require(!work->needsCM(m_monitor->m_imageDescription), eFrameUnavailable::UNSUPPORTED_MATERIAL, "final work-buffer/output conversion is not implemented");
++    }
++    void background() {
++        static auto logo = CConfigValue<Config::INTEGER>("misc:disable_hyprland_logo");
++        static auto splash = CConfigValue<Config::INTEGER>("misc:disable_splash_rendering");
++        require(*logo && *splash, eFrameUnavailable::UNSUPPORTED_SCENE, "requested background/logo/splash asset import is not implemented");
++        static auto background = CConfigValue<Config::INTEGER>("misc:background_color");
++        SFrameDraw draw;
++        draw.kind = eFrameDrawKind::CLEAR;
++        draw.convertedColor = copiedColor(m_renderer.getConvertedColor(CHyprColor(*background)));
++        draw.scissors = scissors(m_damage); // explicit full-target clear, never empty means full
++        push(std::move(draw));
++    }
++    void rect(const CBox& box, const CHyprColor& color) {
++        if (box.width <= 0 || box.height <= 0) return;
++        SFrameDraw draw;
++        draw.kind = eFrameDrawKind::RECT;
++        draw.box = copiedBox(box);
++        auto rounding = box;
++        rounding.transform(Math::wlTransformToHyprutils(Math::invertTransform(m_monitor->m_transform)), m_monitor->m_transformedSize.x, m_monitor->m_transformedSize.y);
++        draw.roundingBox = copiedBox(rounding);
++        draw.projection = copiedMatrix(m_renderer.projectBoxToTarget(box, Math::wlTransformToHyprutils(WL_OUTPUT_TRANSFORM_NORMAL)));
++        const auto premultiplied = CHyprColor(color.r * color.a, color.g * color.a, color.b * color.a, color.a);
++        draw.convertedColor = copiedColor(m_renderer.getConvertedColor(premultiplied));
++        draw.colorSRGB = copiedColor(premultiplied);
++        draw.scissors = scissors(m_damage);
++        push(std::move(draw));
++    }
++    void cm(SFrameDraw& draw, SP<CWLSurfaceResource> surface, bool useSurface) {
++        static auto enabled = CConfigValue<Config::INTEGER>("render:cm_enabled");
++        auto source = getDefaultImageDescription();
++        // Preserve renderToFBInternal's texture-description priority; only
++        // copied scalar/matrix results enter the returned immutable plan.
++        if (surface->m_current.texture && surface->m_current.texture->m_imageDescription)
++            source = surface->m_current.texture->m_imageDescription;
++        else if (useSurface && surface->m_colorManagement.valid())
++            source = CImageDescription::from(surface->m_colorManagement->imageDescription());
++        const auto target = m_monitor->workBufferImageDescription();
++        require(source && target && !source->value().icc.present && !target->value().icc.present,
++                eFrameUnavailable::UNSUPPORTED_MATERIAL, "source/target ICC LUT is not a frame-plan resource");
++        auto& out = draw.material.cm;
++        out.enabled = *enabled && m_plan.target.shaderCMAvailable && !m_monitor->doesNoShaderCM() && source->needsCM(target);
++        if (!out.enabled) return;
++        const auto value = m_renderer.getCMSettings(source, target, surface, true, m_monitor->m_sdrMinLuminance, m_monitor->m_sdrMaxLuminance, true);
++        out.sourceTF = static_cast<uint32_t>(value.sourceTF); out.targetTF = static_cast<uint32_t>(value.targetTF);
++        out.srcTFMin = value.srcTFRange.min; out.srcTFMax = value.srcTFRange.max;
++        out.dstTFMin = value.dstTFRange.min; out.dstTFMax = value.dstTFRange.max;
++        out.srcRefLuminance = value.srcRefLuminance; out.dstRefLuminance = value.dstRefLuminance;
++        out.maxLuminance = value.maxLuminance; out.dstMaxLuminance = value.dstMaxLuminance;
++        out.needsTonemap = value.needsTonemap; out.tonemapMode = value.tonemapMode; out.needsSDRmod = value.needsSDRmod;
++        out.sdrSaturation = value.sdrSaturation; out.sdrBrightness = value.sdrBrightnessMultiplier;
++        for (size_t column = 0; column < 3; ++column) for (size_t row = 0; row < 3; ++row) {
++            out.convertMatrix[column * 3 + row] = value.convertMatrix[row][column];
++            out.dstPrimariesXYZ[column * 3 + row] = value.dstPrimaries2XYZ[row][column];
++        }
++    }
++    void texture(SFrameDraw& draw, SP<CWLSurfaceResource> surface, const CBox& box, bool flip, const CRegion& selectedScissors, bool useSurfaceCM) {
++        const auto view = surface->m_current.shmSnapshot.view();
++        require(view.has_value(), eFrameUnavailable::MISSING_SHM, "visible content requires immutable SHM");
++        require(view->description.width == surface->m_current.bufferSize.x && view->description.height == surface->m_current.bufferSize.y,
++                eFrameUnavailable::MISSING_SHM, "SHM description disagrees with current buffer extent");
++        if (!draw.material.nearest && surface->m_current.texture)
++            require(surface->m_current.texture->magFilter == GL_LINEAR && surface->m_current.texture->minFilter == GL_LINEAR,
++                    eFrameUnavailable::UNSUPPORTED_MATERIAL, "non-linear texture filter is not copied by this frame form");
++        draw.kind = eFrameDrawKind::SHM;
++        draw.box = copiedBox(box);
++        auto rounding = box;
++        rounding.transform(Math::wlTransformToHyprutils(Math::invertTransform(m_monitor->m_transform)), m_monitor->m_transformedSize.x, m_monitor->m_transformedSize.y);
++        draw.roundingBox = copiedBox(rounding);
++        auto transform = Math::wlTransformToHyprutils(surface->m_current.transform);
++        if (flip) transform = Math::composeTransform(Math::wlTransformToHyprutils(Math::invertTransform(m_monitor->m_transform)), transform);
++        draw.projection = copiedMatrix(m_renderer.projectBoxToTarget(box, transform));
++        draw.scissors = scissors(selectedScissors);
++        if (draw.scissors.empty()) return;
++        draw.resourceIndex = resource(surface->m_current.shmSnapshot);
++        draw.surfaceId = surface->id(); // client-scoped provenance, never a global identity
++        draw.commitSequence = view->description.commit_sequence;
++        cm(draw, surface, useSurfaceCM);
++        push(std::move(draw));
++    }
++    void surface(CSurfacePassElement::SRenderData data) {
++        require(data.surface && !data.surface->m_current.rejected, eFrameUnavailable::MISSING_SHM, "invalid/rejected visible surface");
++        const auto view = data.surface->m_current.shmSnapshot.view();
++        require(view.has_value(), eFrameUnavailable::MISSING_SHM, "DMA-BUF/external surface import is not implemented");
++        if (data.surface->m_current.size.x < 1 || data.surface->m_current.size.y < 1) return;
++        const auto wlSurface = Desktop::View::CWLSurface::fromResource(data.surface);
++        const float alpha = data.alpha * data.fadeAlpha * (wlSurface ? wlSurface->m_alphaModifier : 1.F);
++        const float overall = wlSurface ? wlSurface->m_overallOpacity : 1.F;
++        // Existing SHM ITexture::m_opaque is an explicit renderer property,
++        // not equivalent to the format's alpha-channel presence.
++        const bool opaque = data.surface->m_current.texture && data.surface->m_current.texture->m_opaque;
++        require(!(data.blur && (!opaque || alpha < 1.F || overall < 1.F)), eFrameUnavailable::UNSUPPORTED_MATERIAL, "visible blur is not a frame-plan form");
++        CSurfacePassElement element(data); // live references are confined to this CPU call
++        auto box = element.getTexBox();
++        const auto unscaled = box.size();
++        box.scale(m_monitor->m_scale).round();
++        if (box.width <= 1 || box.height <= 1) return;
++        const bool resizing = data.pWindow && g_layoutManager->dragController()->target() && g_layoutManager->dragController()->mode() == MBIND_RESIZE;
++        const bool misaligned = std::floor(m_monitor->m_scale) != m_monitor->m_scale && data.surface->m_current.scale == 1 &&
++            box.size() != data.surface->m_current.bufferSize && DELTALESSTHAN(box.width, data.surface->m_current.bufferSize.x, 3) &&
++            DELTALESSTHAN(box.height, data.surface->m_current.bufferSize.y, 3) &&
++            (!data.pWindow || (!data.pWindow->sizeAnimation()->isBeingAnimated() && !resizing)) && (!data.pLS || !data.pLS->sizeAnimation()->isBeingAnimated());
++        m_renderer.m_renderData.currentWindow = data.pWindow;
++        m_renderer.m_renderData.surface = data.surface;
++        auto uv = m_renderer.elementRenderer()->resolveSurfaceUVForPlan(data.pWindow, data.surface, m_monitor, data.mainSurface, box.size(), unscaled, misaligned);
++        bool cancel = false;
++        const auto visible = element.visibleRegion(cancel);
++        if (cancel) return;
++        CRegion selected = data.clipBox;
++        if (!visible.empty()) { if (data.clipBox.empty()) selected = visible; else selected.intersect(visible); }
++        if (data.clipBox.empty() && visible.empty()) selected = m_damage.copy().intersect(box);
++        SFrameDraw draw;
++        draw.uv = {static_cast<float>(uv.first.x), static_cast<float>(uv.first.y), static_cast<float>(uv.second.x), static_cast<float>(uv.second.y)};
++        if (uv.first == Vector2D{-1, -1}) draw.uv = {0, 0, 1, 1};
++        draw.material.alpha = std::clamp(alpha * overall, 0.F, 1.F);
++        draw.material.roundingPx = data.dontRound ? 0.F : std::max(0.F, static_cast<float>(data.rounding - 1));
++        draw.material.roundingPower = data.dontRound ? 2.F : data.roundingPower;
++        draw.material.nearest = data.useNearestNeighbor || misaligned;
++        draw.material.wrapX = data.wrapX; draw.material.wrapY = data.wrapY;
++        const bool windowOpaque = data.pWindow && data.pWindow->wlSurface()->resource() == data.surface && data.pWindow->opaque();
++        draw.material.blend = !(alpha >= 1.F && overall >= 1.F && draw.material.roundingPx <= 0.F && windowOpaque);
++        if (data.pWindow) {
++            draw.material.rgbx = data.pWindow->m_ruleApplicator->RGBX().valueOrDefault();
++            const float tint = data.pWindow->m_notRespondingTint->value() > 0 ? data.pWindow->m_notRespondingTint->value() : data.pWindow->m_dimPercent->value();
++            draw.material.tintEnabled = tint > 0;
++            draw.material.tintRgb = {1.F - tint, 1.F - tint, 1.F - tint};
++        }
++        // Non-blur surface draw originally passes discardActive=false.
++        texture(draw, data.surface, box, data.flipEndFrame, selected, true);
++        m_renderer.m_renderData.currentWindow.reset();
++        m_renderer.m_renderData.surface.reset();
++        m_renderer.m_renderData.primarySurfaceUVTopLeft = {-1, -1};
++        m_renderer.m_renderData.primarySurfaceUVBottomRight = {-1, -1};
++    }
++    void decorations(PHLWINDOW window, bool decorate) {
++        if (!decorate) return;
++        static auto shadows = CConfigValue<Config::INTEGER>("decoration:shadow:enabled");
++        static auto glow = CConfigValue<Config::INTEGER>("decoration:glow:enabled");
++        for (const auto& decoration : window->m_windowDecorations) {
++            switch (decoration->getDecorationType()) {
++                case DECORATION_NONE: break;
++                case DECORATION_BORDER:
++                    require(window->getRealBorderSize() == 0, eFrameUnavailable::UNSUPPORTED_SCENE, "visible border is not a frame-plan form"); break;
++                case DECORATION_SHADOW: {
++                    const auto hasAlpha = [](const auto& c) { return c.a > 0.001F; };
++                    const bool colored = std::any_of(window->m_realShadowColor.m_colors.begin(), window->m_realShadowColor.m_colors.end(), hasAlpha) ||
++                        (window->m_shadowFadeAnimationProgress->isBeingAnimated() && std::any_of(window->m_realShadowColorPrevious.m_colors.begin(), window->m_realShadowColorPrevious.m_colors.end(), hasAlpha));
++                    require(!(*shadows == 1 && colored && window->m_ruleApplicator->decorate().valueOrDefault() && !window->m_ruleApplicator->noShadow().valueOrDefault()),
++                            eFrameUnavailable::UNSUPPORTED_SCENE, "visible shadow is not a frame-plan form"); break;
++                }
++                case DECORATION_INNER_GLOW:
++                    require(!*glow, eFrameUnavailable::UNSUPPORTED_SCENE, "enabled inner glow is not a frame-plan form"); break;
++                default: unavailable(eFrameUnavailable::UNSUPPORTED_SCENE, "custom/group decoration is not a frame-plan form");
++            }
++        }
++    }
++    void window(PHLWINDOW window, bool decorate, eRenderPassMode mode) {
++        if (window->isHidden() || !window->m_isMapped || (window->effectiveAlpha() == 0.F && !window->alpha().isBeingAnimated())) return;
++        require(window->m_transformers.empty(), eFrameUnavailable::UNSUPPORTED_SCENE, "window transformer is not a frame-plan form");
++        auto data = m_renderer.makeWindowSurfaceRenderData(window, m_monitor, m_when, decorate);
++        static auto dimAround = CConfigValue<Config::FLOAT>("decoration:dim_around");
++        if (*dimAround && window->m_ruleApplicator->dimAround().valueOrDefault() && mode != RENDER_PASS_POPUP)
++            rect(CBox{0, 0, m_monitor->m_transformedSize.x, m_monitor->m_transformedSize.y}, CHyprColor(0, 0, 0, *dimAround * data.alpha * data.fadeAlpha));
++        data.pos += window->m_floatingOffset;
++        const auto workspace = window->m_workspace;
++        if (window->m_isFloating && !Fullscreen::controller()->isFullscreen(window) && workspace->m_renderOffset->isBeingAnimated() && !window->m_pinned)
++            data.clipBox = CRegion{window->getFullWindowBoundingBox().translate(-m_monitor->m_position + workspace->m_renderOffset->value() + window->m_floatingOffset).scale(m_monitor->m_scale).round()}.getExtents();
++        if (mode == RENDER_PASS_MAIN || mode == RENDER_PASS_ALL) {
++            decorations(window, data.decorate);
++            data.useNearestNeighbor = window->m_ruleApplicator->nearestNeighbor().valueOrDefault();
++            require(!window->m_isX11, eFrameUnavailable::UNSUPPORTED_SCENE, "X11 content eligibility is not implemented");
++            window->wlSurface()->resource()->breadthfirst([&](SP<CWLSurfaceResource> child, const Vector2D& offset, void*) {
++                if (child->m_current.size.x < 1 || child->m_current.size.y < 1) return;
++                data.localPos = offset; data.surface = child; data.mainSurface = child == window->wlSurface()->resource();
++                surface(data); ++data.surfaceCounter;
++            }, nullptr);
++        }
++        if (mode == RENDER_PASS_ALL || mode == RENDER_PASS_POPUP)
++            window->m_popupHead->breadthfirst([&](WP<Desktop::View::CPopup> popup, void*) {
++                require(!popup->aliveAndVisible(), eFrameUnavailable::UNSUPPORTED_SCENE, "visible window popup is not a frame-plan form");
++            }, nullptr);
++    }
++    void windows(PHLWORKSPACE workspace) {
++        auto visit = [&](PHLWINDOW value, PHLMONITOR, const Time::steady_tp&, bool decorate, eRenderPassMode mode) { window(value, decorate, mode); };
++        auto noFade = [](PHLMONITOR, Desktop::eFadeoutPlane, PHLWORKSPACE) {};
++        if (Fullscreen::controller()->hasFullscreen(workspace)) SceneOrder::visitFullscreen(m_renderer, m_monitor, workspace, m_when, visit, noFade);
++        else SceneOrder::visitWindows(m_renderer, m_monitor, workspace, m_when, visit, noFade);
++    }
++    void layer(PHLLS value, bool aboveLock = false, bool popups = false) {
++        if (!value || !value->visible()) return;
++        const bool locked = g_pSessionLockManager->isSessionLocked();
++        if ((value->m_ruleApplicator->aboveLock().valueOrDefault() && !aboveLock && locked) || (aboveLock && !value->m_ruleApplicator->aboveLock().valueOrDefault())) return;
++        if (popups) {
++            value->m_popupHead->breadthfirst([&](WP<Desktop::View::CPopup> popup, void*) { require(!popup->aliveAndVisible(), eFrameUnavailable::UNSUPPORTED_SCENE, "visible layer popup is not a frame-plan form"); }, nullptr);
++            return;
++        }
++        auto data = m_renderer.makeLayerSurfaceRenderData(value, m_monitor, m_when);
++        static auto dim = CConfigValue<Config::FLOAT>("decoration:dim_around");
++        if (*dim && value->m_ruleApplicator->dimAround().valueOrDefault()) rect(CBox{0, 0, m_monitor->m_transformedSize.x, m_monitor->m_transformedSize.y}, CHyprColor(0, 0, 0, *dim * data.fadeAlpha));
++        value->wlSurface()->resource()->breadthfirst([&](SP<CWLSurfaceResource> child, const Vector2D& offset, void*) {
++            if (child->m_current.size.x < 1 || child->m_current.size.y < 1) return;
++            data.localPos = offset; data.surface = child; data.mainSurface = child == value->wlSurface()->resource(); surface(data); ++data.surfaceCounter;
++        }, nullptr);
++    }
++    void plane(unsigned plane, bool aboveLock = false) { for (const auto& value : m_monitor->m_layerSurfaceLayers[plane]) layer(value.lock(), aboveLock); }
++    void workspace() {
++        static auto xp = CConfigValue<Config::INTEGER>("render:xp_mode");
++        const auto active = m_monitor->m_activeWorkspace;
++        require(!(*xp && active), eFrameUnavailable::UNSUPPORTED_SCENE, "retained XP work-buffer contents require an owner resource dependency");
++        if (!*xp || !active) { background(); plane(ZWLR_LAYER_SHELL_V1_LAYER_BACKGROUND); plane(ZWLR_LAYER_SHELL_V1_LAYER_BOTTOM); }
++        if (active) {
++            windows(active);
++            if (m_monitor->m_specialDim->value() != 0.F) rect(CBox{0, 0, m_monitor->m_transformedSize.x, m_monitor->m_transformedSize.y}, CHyprColor(0, 0, 0, m_monitor->m_specialDim->value()));
++            require(m_monitor->m_specialBlur->value() == 0.F, eFrameUnavailable::UNSUPPORTED_MATERIAL, "special-workspace blur is not a frame-plan form");
++            for (const auto& value : State::workspaceState()->workspaces()) if (value->m_alpha->value() > 0.F && value->m_isSpecialWorkspace) windows(value.lock());
++            for (const auto& value : Desktop::windowState()->windows()) {
++                if (value->isHidden() && !value->m_isMapped) continue;
++                if (value->m_pinned && value->m_isFloating && m_renderer.shouldRenderWindow(value, m_monitor)) window(value, true, RENDER_PASS_ALL);
++            }
++        }
++        plane(ZWLR_LAYER_SHELL_V1_LAYER_TOP); plane(ZWLR_LAYER_SHELL_V1_LAYER_OVERLAY);
++        for (const auto& values : m_monitor->m_layerSurfaceLayers) for (const auto& value : values) layer(value.lock(), false, true);
++        require(!PROTO::data->dndActive(), eFrameUnavailable::UNSUPPORTED_SCENE, "drag icon is not a frame-plan form");
++    }
++    void lockscreen() {
++        static auto xray = CConfigValue<Config::INTEGER>("misc:session_lock_xray");
++        if (!*xray && (g_pSessionLockManager->shallConsiderLockMissing() || g_pSessionLockManager->clientLocked() || g_pSessionLockManager->clientDenied())) rect(CBox{{}, m_monitor->m_pixelSize}, CHyprColor(0, 0, 0, 1.F));
++        const auto lock = g_pSessionLockManager->getSessionLockSurfaceForMonitor(m_monitor->m_id);
++        require(!((lock.expired() || g_pSessionLockManager->clientDenied()) && g_pSessionLockManager->shallConsiderLockMissing()), eFrameUnavailable::UNSUPPORTED_SCENE, "missing-lock asset is not a frame-plan form");
++        if (!lock) return;
++        CSurfacePassElement::SRenderData data{m_monitor, m_when, m_monitor->m_position, m_monitor->m_position};
++        static auto blur = CConfigValue<Config::BOOL>("misc:session_lock_blur");
++        data.blur = *xray && *blur; data.surface = lock->surface->surface(); data.decorate = false; data.w = m_monitor->m_size.x; data.h = m_monitor->m_size.y;
++        const auto root = data.surface;
++        root->breadthfirst([&](SP<CWLSurfaceResource> child, const Vector2D& offset, void*) {
++            if (child->m_current.size.x < 1 || child->m_current.size.y < 1) return;
++            data.localPos = offset; data.surface = child; data.mainSurface = child == root; surface(data); ++data.surfaceCounter;
++        }, nullptr);
++        for (const auto& values : m_monitor->m_layerSurfaceLayers) for (const auto& value : values) layer(value.lock(), true);
++        for (const auto& values : m_monitor->m_layerSurfaceLayers) for (const auto& value : values) layer(value.lock(), true, true);
++        // No onLockscreenRenderedOnMonitor call: only actual owner completion may acknowledge it.
++    }
++    void cursor() {
++        if (!m_renderer.shouldRenderCursor()) return;
++        const auto state = Pointer::mgr()->cursorStateForFramePlan(m_monitor);
++        if (!state.visible) return;
++        require(!state.hardware, eFrameUnavailable::UNSUPPORTED_SCENE, "hardware cursor owner command is not implemented");
++        const auto& image = Pointer::mgr()->currentCursorImage();
++        require(!image.pBuffer && image.surface && image.surface->resource(), eFrameUnavailable::MISSING_SHM, "cursor-theme/external CPU asset is not imported");
++        auto box = state.box.copy().scale(m_monitor->m_scale); box.x = std::round(box.x); box.y = std::round(box.y); box.round();
++        m_renderer.m_renderData.currentWindow.reset(); m_renderer.m_renderData.surface.reset();
++        SFrameDraw draw;
++        texture(draw, image.surface->resource(), box, false, m_damage, false);
++        // No wl_surface.frame notification or swRendered bookkeeping before execution.
++    }
++};
++}
++
++FramePlanResult IHyprRenderer::prepareMonitorFramePlan(PHLMONITOR monitor, SFrameTarget target, uint64_t sceneSequence,
++                                                      uint64_t securityGeneration, const Time::steady_tp& when, bool commit) {
++    if (g_pHyprRenderer.get() != this || !monitor || !sceneSequence || !securityGeneration || !target.outputGeneration || target.width == 0 || target.height == 0 ||
++        target.width > 16384 || target.height > 16384 || target.transformedWidth == 0 || target.transformedHeight == 0 ||
++        target.transformedWidth > 16384 || target.transformedHeight > 16384 || target.width != monitor->m_pixelSize.x || target.height != monitor->m_pixelSize.y ||
++        target.transformedWidth != monitor->m_transformedSize.x || target.transformedHeight != monitor->m_transformedSize.y || target.scale != monitor->m_scale ||
++        !std::isfinite(target.scale) || target.scale <= 0 || target.outputTransform > 7 || target.outputTransform != static_cast<uint32_t>(monitor->m_transform))
++        return std::unexpected(SFramePlanError{eFrameUnavailable::INVALID_TARGET, "invalid or stale copied output target/security identity"});
++    auto saved = std::move(m_renderData);
++    m_renderData = {};
++    Hyprutils::Utils::CScopeGuard restore([&] { m_renderData = std::move(saved); });
++    m_renderData.pMonitor = monitor;
++    setProjectionType(RPT_MONITOR); // CPU matrices only, never beginRender()
++    target.targetProjection = copiedMatrix(monitor->getTransformMatrix());
++    target.scaleMatrix = copiedMatrix(monitor->getScaleMatrix());
++    try {
++        clearCMSettingsCache();
++        return CFramePlanBuilder(*this, monitor, target, sceneSequence, securityGeneration, when, commit).build();
++    } catch (const SFramePlanError& failure) {
++        return std::unexpected(failure);
++    } catch (const std::bad_alloc&) {
++        return std::unexpected(SFramePlanError{eFrameUnavailable::ALLOCATION, "immutable scene metadata/clone allocation failed"});
++    }
++}
+--- /dev/null
++++ b/src/render/FramePlan.hpp
+@@ -0,0 +1,87 @@
++#pragma once
++
++#include "SHMSnapshot.hpp"
++#include <array>
++#include <cstdint>
++#include <cstddef>
++#include <expected>
++#include <string>
++#include <vector>
++
++namespace Render {
++    inline constexpr size_t FRAME_MAX_DRAWS = 256, FRAME_MAX_RESOURCES = 256, FRAME_MAX_SCISSORS = 4096;
++    // Bound C++ plan/vector storage; the separately bounded Rust clone handles
++    // share the existing 128 MiB distinct-pixel store rather than recopying pixels.
++    inline constexpr size_t FRAME_MAX_METADATA_BYTES = 1024 * 1024;
++
++    struct SFrameRect { int32_t x1 = 0, y1 = 0, x2 = 0, y2 = 0; }; // final GL scissor coordinates
++    struct SFrameBox { double x = 0, y = 0, width = 0, height = 0, rotation = 0; };
++    using FrameMatrix = std::array<float, 9>;
++    struct SFrameTarget {
++        uint64_t outputId = 0, outputGeneration = 0;
++        uint32_t width = 0, height = 0, transformedWidth = 0, transformedHeight = 0, outputTransform = 0;
++        double scale = 1;
++        bool shaderCMAvailable = false;
++        FrameMatrix targetProjection{}, scaleMatrix{};
++    };
++    struct SFrameCM {
++        bool enabled = false, needsTonemap = false, needsSDRmod = false;
++        uint32_t sourceTF = 0, targetTF = 0, tonemapMode = 0;
++        float srcTFMin = 0, srcTFMax = 0, dstTFMin = 0, dstTFMax = 0;
++        float srcRefLuminance = 0, dstRefLuminance = 0, maxLuminance = 0, dstMaxLuminance = 0;
++        std::array<float, 9> convertMatrix{}, dstPrimariesXYZ{}; // column-major, original passCMUniforms layout
++        float sdrSaturation = 1, sdrBrightness = 1;
++    };
++    struct SFrameMaterial {
++        float alpha = 1, roundingPx = 0, roundingPower = 2;
++        bool nearest = false, blend = true, rgbx = false, tintEnabled = false;
++        uint8_t wrapX = 0, wrapY = 0; // 0 clamp, 1 repeat; explicit mapping at GL boundary
++        bool discardActive = false, discardOpaque = false, discardAlpha = false;
++        float discardOpacity = 0;
++        std::array<float, 3> tintRgb{1, 1, 1};
++        SFrameCM cm;
++    };
++    enum class eFrameDrawKind : uint8_t { CLEAR, RECT, SHM };
++    struct SFrameDraw {
++        eFrameDrawKind kind = eFrameDrawKind::CLEAR;
++        // Exact index into this same SFramePlan::resources vector. The owner
++        // dispatch must pass resources[resourceIndex], then verify its descriptor.
++        uint32_t resourceIndex = UINT32_MAX;
++        SFrameBox box, roundingBox;
++        FrameMatrix projection{}; // row-major Mat3x3 layout; original GL_TRUE transpose semantics
++        std::array<float, 4> uv{0, 0, 1, 1}; // u0,v0,u1,v1; no live UV lookup
++        std::array<float, 4> convertedColor{}, colorSRGB{};
++        SFrameMaterial material;
++        std::vector<SFrameRect> scissors;
++        // surfaceId is client-scoped provenance only. commitSequence is the
++        // immutable import sequence, not a surface commit/callback generation.
++        uint64_t surfaceId = 0, commitSequence = 0;
++    };
++    struct SFrameShmResource {
++        PrShmDescription description{};
++        CSHMSnapshot snapshot; // one separately owned Rust handle; no client mapping or GL object
++    };
++    // Build on control, then transfer exclusively and treat all fields as
++    // immutable. No implicit frame copy may multiply owned snapshot handles.
++    struct SFramePlan {
++        SFramePlan() = default;
++        SFramePlan(const SFramePlan&) = delete;
++        SFramePlan& operator=(const SFramePlan&) = delete;
++        SFramePlan(SFramePlan&&) noexcept = default;
++        SFramePlan& operator=(SFramePlan&&) noexcept = default;
++        // Authentic control security/lock epoch, independent of output/scene identity.
++        // Admission and completion must compare it with current control authority.
++        uint64_t sceneSequence = 0, securityGeneration = 0;
++        SFrameTarget target;
++        bool commit = true, fullRepaint = true;
++        // Final output-pixel coordinates, after inverse output transform.
++        std::vector<SFrameRect> damage, finalDamage;
++        std::vector<SFrameShmResource> resources;
++        std::vector<SFrameDraw> draws;
++    };
++    enum class eFrameUnavailable : uint8_t {
++        INVALID_TARGET, UNSUPPORTED_SCENE, UNSUPPORTED_MATERIAL, MISSING_SHM, ALLOCATION
++    };
++    struct SFramePlanError { eFrameUnavailable reason; std::string detail; };
++    using FramePlanResult = std::expected<SFramePlan, SFramePlanError>;
 +}
 --- a/src/render/GLRenderer.cpp
 +++ b/src/render/GLRenderer.cpp
@@ -609,7 +1324,347 @@
  #include "../Compositor.hpp"
  #include "../helpers/math/Math.hpp"
  #include <algorithm>
-@@ -2226,7 +2227,11 @@
+@@ -56,6 +57,7 @@
+ #include "./pass/PreBlurElement.hpp"
+ #include "../protocols/types/SurfaceState.hpp"
+ #include "types.hpp"
++#include "SceneOrder.hpp"
+ #include <hyprgraphics/color/Color.hpp>
+ #include <hyprutils/math/Mat3x3.hpp>
+ #include <hyprutils/math/Region.hpp>
+@@ -329,199 +331,23 @@
+ }
+ 
+ void IHyprRenderer::renderWorkspaceWindowsFullscreen(PHLMONITOR pMonitor, PHLWORKSPACE pWorkspace, const Time::steady_tp& time) {
+-    PHLWINDOW pWorkspaceWindow = nullptr;
+-
+     Event::bus()->m_events.render.stage.emit(RENDER_PRE_WINDOWS);
+-
+-    // pre-filter renderable windows once for the tiled + floating passes
+-    std::vector<PHLWINDOW> windows;
+-    windows.reserve(Desktop::windowState()->windows().size());
+-    for (auto const& w : Desktop::windowState()->windows()) {
+-        if (!shouldRenderWindow(w, pMonitor))
+-            continue;
+-
+-        if (w->alphaValue(WINDOW_ALPHA_FADE) * w->alphaValue(WINDOW_ALPHA_FULLSCREEN) == 0.f)
+-            continue;
+-
+-        if (Fullscreen::controller()->isFullscreen(w))
+-            continue;
+-
+-        windows.emplace_back(w);
+-    }
+-
+-    // tiled windows that are fading out
+-    for (auto const& w : windows) {
+-        if (w->m_isFloating)
+-            continue;
+-
+-        if (pWorkspace->m_isSpecialWorkspace != w->onSpecialWorkspace())
+-            continue;
+-
+-        renderWindow(w, pMonitor, time, true, RENDER_PASS_ALL);
+-    }
+-    renderFadeouts(pMonitor, Desktop::FADEOUT_PLANE_WINDOW_TILED, pWorkspace);
+-
+-    // and floating ones too
+-    for (auto const& w : windows) {
+-        if (!w->m_isFloating)
+-            continue;
+-
+-        if (w->m_monitor == pWorkspace->m_monitor && pWorkspace->m_isSpecialWorkspace != w->onSpecialWorkspace())
+-            continue;
+-
+-        if (pWorkspace->m_isSpecialWorkspace && w->m_monitor != pWorkspace->m_monitor)
+-            continue; // special on another are rendered as a part of the base pass
+-
+-        if (w->isFadingOutUnderFullscreen())
+-            continue; // render these over fullscreen so the fade-out is visible
+-
+-        renderWindow(w, pMonitor, time, true, RENDER_PASS_ALL);
+-    }
+-    renderFadeouts(pMonitor, Desktop::FADEOUT_PLANE_WINDOW_FLOATING, pWorkspace);
+-
+-    // TODO: this pass sucks
+-    for (auto const& w : Desktop::windowState()->windows()) {
+-        const auto PWORKSPACE = w->m_workspace;
+-
+-        if (w->m_workspace != pWorkspace || !Fullscreen::controller()->isFullscreen(w)) {
+-            if (!(PWORKSPACE && (PWORKSPACE->m_renderOffset->isBeingAnimated() || PWORKSPACE->m_alpha->isBeingAnimated() || PWORKSPACE->m_forceRendering)))
+-                continue;
+-
+-            if (w->m_monitor != pMonitor)
+-                continue;
+-        }
+-
+-        if (!Fullscreen::controller()->isFullscreen(w))
+-            continue;
+-
+-        if (w->m_monitor == pWorkspace->m_monitor && pWorkspace->m_isSpecialWorkspace != w->onSpecialWorkspace())
+-            continue;
+-
+-        if (shouldRenderWindow(w, pMonitor))
+-            renderWindow(w, pMonitor, time, Fullscreen::controller()->getFullscreenModes(pWorkspace).internal != Fullscreen::FSMODE_FULLSCREEN, RENDER_PASS_ALL);
+-
+-        if (w->m_workspace != pWorkspace)
+-            continue;
+-
+-        pWorkspaceWindow = w;
+-    }
+-
+-    if (!pWorkspaceWindow)
+-        return; // this will produce one blank frame. Oh well.
+-
+-    // then render windows over fullscreen.
+-    for (auto const& w : Desktop::windowState()->windows()) {
+-        const bool shouldSkipWindow = w->workspaceID() != pWorkspaceWindow->workspaceID() || !w->m_isFloating || !w->shouldRenderOverFullscreen() || !w->m_isMapped ||
+-            Fullscreen::controller()->isFullscreen(w);
+-
+-        if (shouldSkipWindow)
+-            continue;
+-
+-        const bool mismatchedSpecialWorkspace = w->m_monitor == pWorkspace->m_monitor && pWorkspace->m_isSpecialWorkspace != w->onSpecialWorkspace();
+-
+-        if (mismatchedSpecialWorkspace)
+-            continue;
+-
+-        const bool specialWorkspaceOnDifferentMonitor = pWorkspace->m_isSpecialWorkspace && w->m_monitor != pWorkspace->m_monitor;
+-
+-        if (specialWorkspaceOnDifferentMonitor)
+-            continue; // special on another are rendered as a part of the base pass
+-
+-        renderWindow(w, pMonitor, time, true, RENDER_PASS_ALL);
+-    }
+-    renderFadeouts(pMonitor, Desktop::FADEOUT_PLANE_WINDOW_OVER_FULLSCREEN, pWorkspace);
++    SceneOrder::visitFullscreen(*this, pMonitor, pWorkspace, time,
++        [this](PHLWINDOW window, PHLMONITOR monitor, const Time::steady_tp& when, bool decorate, eRenderPassMode mode) {
++            renderWindow(window, monitor, when, decorate, mode);
++        },
++        [this](PHLMONITOR monitor, Desktop::eFadeoutPlane plane, PHLWORKSPACE workspace) { renderFadeouts(monitor, plane, workspace); });
+ }
+ 
+ void IHyprRenderer::renderWorkspaceWindows(PHLMONITOR pMonitor, PHLWORKSPACE pWorkspace, const Time::steady_tp& time) {
+-    PHLWINDOW lastWindow;
+-
+     Event::bus()->m_events.render.stage.emit(RENDER_PRE_WINDOWS);
+-
+-    std::vector<PHLWINDOWREF> windows;
+-    windows.reserve(Desktop::windowState()->windows().size());
+-
+-    for (auto const& w : Desktop::windowState()->windows()) {
+-        const bool isNotRenderable = w->isHidden() || !w->m_isMapped;
+-
+-        if (isNotRenderable)
+-            continue;
+-
+-        if (!shouldRenderWindow(w, pMonitor))
+-            continue;
+-
+-        windows.emplace_back(w);
+-    }
+-
+-    // Non-floating main
+-    for (auto& w : windows) {
+-        if (w->m_isFloating)
+-            continue; // floating are in the second pass
+-
+-        // some things may force us to ignore the special/not special disparity
+-        const bool IGNORE_SPECIAL_CHECK = w->m_monitorMovedFrom != -1 && (w->m_workspace && !w->m_workspace->isVisible());
+-
+-        if (!IGNORE_SPECIAL_CHECK && pWorkspace->m_isSpecialWorkspace != w->onSpecialWorkspace())
+-            continue;
+-
+-        // render active window after all others of this pass
+-        if (w == Desktop::focusState()->window()) {
+-            lastWindow = w.lock();
+-            continue;
+-        }
+-
+-        // render the bad boy
+-        renderWindow(w.lock(), pMonitor, time, true, RENDER_PASS_MAIN);
+-        w.reset();
+-    }
+-
+-    if (lastWindow)
+-        renderWindow(lastWindow, pMonitor, time, true, RENDER_PASS_MAIN);
+-
+-    lastWindow.reset();
+-
+-    renderFadeouts(pMonitor, Desktop::FADEOUT_PLANE_WINDOW_TILED, pWorkspace);
+-
+-    // Non-floating popup
+-    for (auto& w : windows) {
+-        if (!w)
+-            continue;
+-
+-        if (w->m_isFloating)
+-            continue; // floating are in the second pass
+-
+-        // some things may force us to ignore the special/not special disparity
+-        const bool IGNORE_SPECIAL_CHECK = w->m_monitorMovedFrom != -1 && (w->m_workspace && !w->m_workspace->isVisible());
+-
+-        if (!IGNORE_SPECIAL_CHECK && pWorkspace->m_isSpecialWorkspace != w->onSpecialWorkspace())
+-            continue;
+-
+-        // render the bad boy
+-        renderWindow(w.lock(), pMonitor, time, true, RENDER_PASS_POPUP);
+-        w.reset();
+-    }
+-
+-    // floating on top
+-    for (auto& w : windows) {
+-        if (!w)
+-            continue;
+-
+-        if (!w->m_isFloating || w->m_pinned)
+-            continue;
+-
+-        // some things may force us to ignore the special/not special disparity
+-        const bool IGNORE_SPECIAL_CHECK = w->m_monitorMovedFrom != -1 && (w->m_workspace && !w->m_workspace->isVisible());
+-
+-        if (!IGNORE_SPECIAL_CHECK && pWorkspace->m_isSpecialWorkspace != w->onSpecialWorkspace())
+-            continue;
+-
+-        if (pWorkspace->m_isSpecialWorkspace && w->m_monitor != pWorkspace->m_monitor)
+-            continue; // special on another are rendered as a part of the base pass
+-
+-        // render the bad boy
+-        renderWindow(w.lock(), pMonitor, time, true, RENDER_PASS_ALL);
+-    }
+-    renderFadeouts(pMonitor, Desktop::FADEOUT_PLANE_WINDOW_FLOATING, pWorkspace);
+-}
++    SceneOrder::visitWindows(*this, pMonitor, pWorkspace, time,
++        [this](PHLWINDOW window, PHLMONITOR monitor, const Time::steady_tp& when, bool decorate, eRenderPassMode mode) {
++            renderWindow(window, monitor, when, decorate, mode);
++        },
++        [this](PHLMONITOR monitor, Desktop::eFadeoutPlane plane, PHLWORKSPACE workspace) { renderFadeouts(monitor, plane, workspace); });
++}
++
+ 
+ void IHyprRenderer::bindOffMain() {
+     bindFB(m_renderData.pMonitor->resources()->getUnusedWorkBuffer());
+@@ -546,22 +372,10 @@
+     return makeUnique<CScopeGuard>([this, oldPass] { m_currentPass = oldPass; });
+ }
+ 
+-void IHyprRenderer::renderWindow(PHLWINDOW pWindow, PHLMONITOR pMonitor, const Time::steady_tp& time, bool decorate, eRenderPassMode mode, bool ignorePosition, bool standalone) {
+-    if (pWindow->isHidden() && !standalone)
+-        return;
+-
+-    if (!standalone && pWindow->effectiveAlpha() == 0.F && !pWindow->alpha().isBeingAnimated())
+-        return;
+-
+-    if (!pWindow->m_isMapped)
+-        return;
+-
+-    TRACY_GPU_ZONE("RenderWindow");
+-
+-    const auto  PWORKSPACE = pWindow->m_workspace;
+-    const auto  REALPOS    = pWindow->position(Desktop::View::IGeometric::GEOMETRIC_CURRENT) + (pWindow->m_pinned ? Vector2D{} : PWORKSPACE->m_renderOffset->value());
+-    static auto PDIMAROUND = CConfigValue<Config::FLOAT>("decoration:dim_around");
+-
++CSurfacePassElement::SRenderData IHyprRenderer::makeWindowSurfaceRenderData(PHLWINDOW pWindow, PHLMONITOR pMonitor, const Time::steady_tp& time,
++                                                                          bool decorate, bool ignorePosition, bool standalone) {
++    const auto PWORKSPACE = pWindow->m_workspace;
++    const auto REALPOS = pWindow->position(Desktop::View::IGeometric::GEOMETRIC_CURRENT) + (pWindow->m_pinned ? Vector2D{} : PWORKSPACE->m_renderOffset->value());
+     CSurfacePassElement::SRenderData renderdata = {pMonitor, time};
+     const auto                       REALSIZE   = pWindow->size(Desktop::View::IGeometric::GEOMETRIC_CURRENT);
+     CBox                             textureBox = {REALPOS.x, REALPOS.y, std::max(REALSIZE.x, 5.0), std::max(REALSIZE.y, 5.0)};
+@@ -610,6 +424,26 @@
+         renderdata.alpha = 1.f;
+ 
+     renderdata.pWindow = pWindow;
++
++    return renderdata;
++}
++
++void IHyprRenderer::renderWindow(PHLWINDOW pWindow, PHLMONITOR pMonitor, const Time::steady_tp& time, bool decorate, eRenderPassMode mode, bool ignorePosition, bool standalone) {
++    if (pWindow->isHidden() && !standalone)
++        return;
++
++    if (!standalone && pWindow->effectiveAlpha() == 0.F && !pWindow->alpha().isBeingAnimated())
++        return;
++
++    if (!pWindow->m_isMapped)
++        return;
++
++    TRACY_GPU_ZONE("RenderWindow");
++
++    const auto  PWORKSPACE = pWindow->m_workspace;
++    static auto PDIMAROUND = CConfigValue<Config::FLOAT>("decoration:dim_around");
++
++    auto renderdata = makeWindowSurfaceRenderData(pWindow, pMonitor, time, decorate, ignorePosition, standalone);
+ 
+     // for plugins
+     m_renderData.currentWindow = pWindow;
+@@ -932,29 +766,7 @@
+     return tex;
+ }
+ 
+-void IHyprRenderer::renderLayer(PHLLS pLayer, PHLMONITOR pMonitor, const Time::steady_tp& time, bool popups, bool lockscreen) {
+-    if (!pLayer)
+-        return;
+-
+-    if (!pLayer->visible())
+-        return;
+-
+-    // skip rendering based on abovelock rule and make sure to not render abovelock layers twice
+-    if ((pLayer->m_ruleApplicator->aboveLock().valueOrDefault() && !lockscreen && g_pSessionLockManager->isSessionLocked()) ||
+-        (lockscreen && !pLayer->m_ruleApplicator->aboveLock().valueOrDefault()))
+-        return;
+-
+-    static auto PDIMAROUND = CConfigValue<Config::FLOAT>("decoration:dim_around");
+-
+-    if (*PDIMAROUND && pLayer->m_ruleApplicator->dimAround().valueOrDefault() && !m_bRenderingSnapshot && !popups) {
+-        CRectPassElement::SRectData data;
+-        data.box   = {0, 0, pMonitor->m_transformedSize.x, pMonitor->m_transformedSize.y};
+-        data.color = CHyprColor(0, 0, 0, *PDIMAROUND * pLayer->alpha()[LS_ALPHA_FADE]->value());
+-        m_renderPass.add(makeUnique<CRectPassElement>(data));
+-    }
+-
+-    TRACY_GPU_ZONE("RenderLayer");
+-
++CSurfacePassElement::SRenderData IHyprRenderer::makeLayerSurfaceRenderData(PHLLS pLayer, PHLMONITOR pMonitor, const Time::steady_tp& time) {
+     const auto                       REALPOS = pLayer->position(Desktop::View::IGeometric::GEOMETRIC_CURRENT);
+     const auto                       REALSIZ = pLayer->size(Desktop::View::IGeometric::GEOMETRIC_CURRENT);
+ 
+@@ -973,6 +785,34 @@
+         renderdata.discardMode |= DISCARD_ALPHA;
+         renderdata.discardOpacity = pLayer->m_ruleApplicator->ignoreAlpha().valueOrDefault();
+     }
++
++    return renderdata;
++}
++
++void IHyprRenderer::renderLayer(PHLLS pLayer, PHLMONITOR pMonitor, const Time::steady_tp& time, bool popups, bool lockscreen) {
++    if (!pLayer)
++        return;
++
++    if (!pLayer->visible())
++        return;
++
++    // skip rendering based on abovelock rule and make sure to not render abovelock layers twice
++    if ((pLayer->m_ruleApplicator->aboveLock().valueOrDefault() && !lockscreen && g_pSessionLockManager->isSessionLocked()) ||
++        (lockscreen && !pLayer->m_ruleApplicator->aboveLock().valueOrDefault()))
++        return;
++
++    static auto PDIMAROUND = CConfigValue<Config::FLOAT>("decoration:dim_around");
++
++    if (*PDIMAROUND && pLayer->m_ruleApplicator->dimAround().valueOrDefault() && !m_bRenderingSnapshot && !popups) {
++        CRectPassElement::SRectData data;
++        data.box   = {0, 0, pMonitor->m_transformedSize.x, pMonitor->m_transformedSize.y};
++        data.color = CHyprColor(0, 0, 0, *PDIMAROUND * pLayer->alpha()[LS_ALPHA_FADE]->value());
++        m_renderPass.add(makeUnique<CRectPassElement>(data));
++    }
++
++    TRACY_GPU_ZONE("RenderLayer");
++
++    auto renderdata = makeLayerSurfaceRenderData(pLayer, pMonitor, time);
+ 
+     if (!popups)
+         pLayer->wlSurface()->resource()->breadthfirst(
+@@ -2226,7 +2066,11 @@
  
      Event::bus()->m_events.render.stage.emit(RENDER_LAST_MOMENT);
  
@@ -624,7 +1679,29 @@
  
 --- a/src/render/Renderer.hpp
 +++ b/src/render/Renderer.hpp
-@@ -168,7 +168,7 @@
+@@ -32,6 +32,7 @@
+ #include "desktop/view/Popup.hpp"
+ #include "Framebuffer.hpp"
+ #include "Texture.hpp"
++#include "FramePlan.hpp"
+ 
+ #include <hyprgraphics/resource/resources/TextResource.hpp>
+ 
+@@ -70,6 +71,13 @@
+         WP<Render::GL::CHyprOpenGLImpl>     glBackend();
+ 
+         void                                renderMonitor(PHLMONITOR pMonitor, bool commit = true);
++        // Control-only producer, called at the pre-AQ renderMonitor cut by the
++        // owned-route integration. It never acquires a buffer or consumes damage.
++        FramePlanResult prepareMonitorFramePlan(PHLMONITOR monitor, SFrameTarget target, uint64_t sceneSequence,
++                                                uint64_t securityGeneration, const Time::steady_tp& when, bool commit = true);
++        CSurfacePassElement::SRenderData makeWindowSurfaceRenderData(PHLWINDOW window, PHLMONITOR monitor, const Time::steady_tp& when,
++                                                                   bool decorate, bool ignorePosition = false, bool standalone = false);
++        CSurfacePassElement::SRenderData makeLayerSurfaceRenderData(PHLLS layer, PHLMONITOR monitor, const Time::steady_tp& when);
+         void                                arrangeLayersForMonitor(const MONITORID&);
+         void                                damageSurface(SP<CWLSurfaceResource>, double, double, double scale = 1.0);
+         void                                damageWindow(PHLWINDOW, bool forceFull = false);
+@@ -168,7 +176,7 @@
          virtual WP<IElementRenderer> elementRenderer()                                                                                                                         = 0;
          virtual SP<ITexture>         createStencilTexture(const int width, const int height)                                                                                   = 0;
          virtual SP<ITexture>         createTexture(bool opaque = false)                                                                                                        = 0;
@@ -789,6 +1866,213 @@
 +        PrSnapshot* m_snapshot = nullptr;
 +    };
 +}
+--- /dev/null
++++ b/src/render/SceneOrder.hpp
+@@ -0,0 +1,204 @@
++#pragma once
++// Synchronous control-only iteration. These visitors never enter a frame payload.
++#include "../desktop/view/Window.hpp"
++#include "../desktop/Workspace.hpp"
++#include "../desktop/state/WindowState.hpp"
++#include "../desktop/state/FocusState.hpp"
++#include "../desktop/state/Fadeout.hpp"
++#include "../managers/fullscreen/FullscreenController.hpp"
++#include "../helpers/time/Time.hpp"
++#include "types.hpp"
++#include <vector>
++namespace Render::SceneOrder {
++    template<class Renderer, class Window, class Fadeout>
++    void visitFullscreen(Renderer& renderer, PHLMONITOR pMonitor, PHLWORKSPACE pWorkspace, const Time::steady_tp& time, Window&& window, Fadeout&& fadeout) {
++        PHLWINDOW pWorkspaceWindow = nullptr;
++
++        // pre-filter renderable windows once for the tiled + floating passes
++        std::vector<PHLWINDOW> windows;
++        windows.reserve(Desktop::windowState()->windows().size());
++        for (auto const& w : Desktop::windowState()->windows()) {
++            if (!renderer.shouldRenderWindow(w, pMonitor))
++                continue;
++
++            if (w->alphaValue(Desktop::View::WINDOW_ALPHA_FADE) * w->alphaValue(Desktop::View::WINDOW_ALPHA_FULLSCREEN) == 0.f)
++                continue;
++
++            if (Fullscreen::controller()->isFullscreen(w))
++                continue;
++
++            windows.emplace_back(w);
++        }
++
++        // tiled windows that are fading out
++        for (auto const& w : windows) {
++            if (w->m_isFloating)
++                continue;
++
++            if (pWorkspace->m_isSpecialWorkspace != w->onSpecialWorkspace())
++                continue;
++
++            window(w, pMonitor, time, true, RENDER_PASS_ALL);
++        }
++        fadeout(pMonitor, Desktop::FADEOUT_PLANE_WINDOW_TILED, pWorkspace);
++
++        // and floating ones too
++        for (auto const& w : windows) {
++            if (!w->m_isFloating)
++                continue;
++
++            if (w->m_monitor == pWorkspace->m_monitor && pWorkspace->m_isSpecialWorkspace != w->onSpecialWorkspace())
++                continue;
++
++            if (pWorkspace->m_isSpecialWorkspace && w->m_monitor != pWorkspace->m_monitor)
++                continue; // special on another are rendered as a part of the base pass
++
++            if (w->isFadingOutUnderFullscreen())
++                continue; // render these over fullscreen so the fade-out is visible
++
++            window(w, pMonitor, time, true, RENDER_PASS_ALL);
++        }
++        fadeout(pMonitor, Desktop::FADEOUT_PLANE_WINDOW_FLOATING, pWorkspace);
++
++        // TODO: this pass sucks
++        for (auto const& w : Desktop::windowState()->windows()) {
++            const auto PWORKSPACE = w->m_workspace;
++
++            if (w->m_workspace != pWorkspace || !Fullscreen::controller()->isFullscreen(w)) {
++                if (!(PWORKSPACE && (PWORKSPACE->m_renderOffset->isBeingAnimated() || PWORKSPACE->m_alpha->isBeingAnimated() || PWORKSPACE->m_forceRendering)))
++                    continue;
++
++                if (w->m_monitor != pMonitor)
++                    continue;
++            }
++
++            if (!Fullscreen::controller()->isFullscreen(w))
++                continue;
++
++            if (w->m_monitor == pWorkspace->m_monitor && pWorkspace->m_isSpecialWorkspace != w->onSpecialWorkspace())
++                continue;
++
++            if (renderer.shouldRenderWindow(w, pMonitor))
++                window(w, pMonitor, time, Fullscreen::controller()->getFullscreenModes(pWorkspace).internal != Fullscreen::FSMODE_FULLSCREEN, RENDER_PASS_ALL);
++
++            if (w->m_workspace != pWorkspace)
++                continue;
++
++            pWorkspaceWindow = w;
++        }
++
++        if (!pWorkspaceWindow)
++            return; // this will produce one blank frame. Oh well.
++
++        // then render windows over fullscreen.
++        for (auto const& w : Desktop::windowState()->windows()) {
++            const bool shouldSkipWindow = w->workspaceID() != pWorkspaceWindow->workspaceID() || !w->m_isFloating || !w->shouldRenderOverFullscreen() || !w->m_isMapped ||
++                Fullscreen::controller()->isFullscreen(w);
++
++            if (shouldSkipWindow)
++                continue;
++
++            const bool mismatchedSpecialWorkspace = w->m_monitor == pWorkspace->m_monitor && pWorkspace->m_isSpecialWorkspace != w->onSpecialWorkspace();
++
++            if (mismatchedSpecialWorkspace)
++                continue;
++
++            const bool specialWorkspaceOnDifferentMonitor = pWorkspace->m_isSpecialWorkspace && w->m_monitor != pWorkspace->m_monitor;
++
++            if (specialWorkspaceOnDifferentMonitor)
++                continue; // special on another are rendered as a part of the base pass
++
++            window(w, pMonitor, time, true, RENDER_PASS_ALL);
++        }
++        fadeout(pMonitor, Desktop::FADEOUT_PLANE_WINDOW_OVER_FULLSCREEN, pWorkspace);
++    }
++    template<class Renderer, class Window, class Fadeout>
++    void visitWindows(Renderer& renderer, PHLMONITOR pMonitor, PHLWORKSPACE pWorkspace, const Time::steady_tp& time, Window&& window, Fadeout&& fadeout) {
++        PHLWINDOW lastWindow;
++
++        std::vector<PHLWINDOWREF> windows;
++        windows.reserve(Desktop::windowState()->windows().size());
++
++        for (auto const& w : Desktop::windowState()->windows()) {
++            const bool isNotRenderable = w->isHidden() || !w->m_isMapped;
++
++            if (isNotRenderable)
++                continue;
++
++            if (!renderer.shouldRenderWindow(w, pMonitor))
++                continue;
++
++            windows.emplace_back(w);
++        }
++
++        // Non-floating main
++        for (auto& w : windows) {
++            if (w->m_isFloating)
++                continue; // floating are in the second pass
++
++            // some things may force us to ignore the special/not special disparity
++            const bool IGNORE_SPECIAL_CHECK = w->m_monitorMovedFrom != -1 && (w->m_workspace && !w->m_workspace->isVisible());
++
++            if (!IGNORE_SPECIAL_CHECK && pWorkspace->m_isSpecialWorkspace != w->onSpecialWorkspace())
++                continue;
++
++            // render active window after all others of this pass
++            if (w == Desktop::focusState()->window()) {
++                lastWindow = w.lock();
++                continue;
++            }
++
++            // render the bad boy
++            window(w.lock(), pMonitor, time, true, RENDER_PASS_MAIN);
++            w.reset();
++        }
++
++        if (lastWindow)
++            window(lastWindow, pMonitor, time, true, RENDER_PASS_MAIN);
++
++        lastWindow.reset();
++
++        fadeout(pMonitor, Desktop::FADEOUT_PLANE_WINDOW_TILED, pWorkspace);
++
++        // Non-floating popup
++        for (auto& w : windows) {
++            if (!w)
++                continue;
++
++            if (w->m_isFloating)
++                continue; // floating are in the second pass
++
++            // some things may force us to ignore the special/not special disparity
++            const bool IGNORE_SPECIAL_CHECK = w->m_monitorMovedFrom != -1 && (w->m_workspace && !w->m_workspace->isVisible());
++
++            if (!IGNORE_SPECIAL_CHECK && pWorkspace->m_isSpecialWorkspace != w->onSpecialWorkspace())
++                continue;
++
++            // render the bad boy
++            window(w.lock(), pMonitor, time, true, RENDER_PASS_POPUP);
++            w.reset();
++        }
++
++        // floating on top
++        for (auto& w : windows) {
++            if (!w)
++                continue;
++
++            if (!w->m_isFloating || w->m_pinned)
++                continue;
++
++            // some things may force us to ignore the special/not special disparity
++            const bool IGNORE_SPECIAL_CHECK = w->m_monitorMovedFrom != -1 && (w->m_workspace && !w->m_workspace->isVisible());
++
++            if (!IGNORE_SPECIAL_CHECK && pWorkspace->m_isSpecialWorkspace != w->onSpecialWorkspace())
++                continue;
++
++            if (pWorkspace->m_isSpecialWorkspace && w->m_monitor != pWorkspace->m_monitor)
++                continue; // special on another are rendered as a part of the base pass
++
++            // render the bad boy
++            window(w.lock(), pMonitor, time, true, RENDER_PASS_ALL);
++        }
++        fadeout(pMonitor, Desktop::FADEOUT_PLANE_WINDOW_FLOATING, pWorkspace);
++    }
++}
 --- a/src/render/Texture.cpp
 +++ b/src/render/Texture.cpp
 @@ -3,7 +3,7 @@
@@ -858,68 +2142,415 @@
          void bind() override;
          void unbind() override;
          void setTexParameter(GLenum pname, GLint param) override;
-diff --git a/src/pointer/PointerManager.cpp b/src/pointer/PointerManager.cpp
---- a/src/pointer/PointerManager.cpp
-+++ b/src/pointer/PointerManager.cpp
-@@ -1,4 +1,5 @@
- #include "PointerManager.hpp"
-+#include "CursorImage.hpp"
- #include "../Compositor.hpp"
- #include "../config/ConfigValue.hpp"
- #include "../config/shared/actions/ConfigActions.hpp"
-@@ -511,6 +512,7 @@
-     if (shouldUseCpuBuffer) {
-         // get the texture data if available.
-         auto texData = texture->dataCopy();
-+        int  texDataStride = static_cast<int>(texture->m_size.x) * 4;
-         if (texData.empty()) {
-             if (m_currentCursorImage.surface && m_currentCursorImage.surface->resource()->m_role->role() == SURFACE_ROLE_CURSOR) {
-                 const auto SURFACE   = m_currentCursorImage.surface->resource();
-@@ -531,9 +533,14 @@
-                     }
-                 }
- 
--                if (shmBuffer.data())
-+                if (shmBuffer.data()) {
-                     texData = shmBuffer;
--                else {
-+                    const auto view = SURFACE->m_current.shmSnapshot.view();
-+                    if (view && view->pixel_bytes == texData.size() && view->description.bytes_per_pixel == 4 &&
-+                        view->description.width == static_cast<uint32_t>(texture->m_size.x) &&
-+                        view->description.height == static_cast<uint32_t>(texture->m_size.y))
-+                        texDataStride = static_cast<int>(view->description.stride);
-+                } else {
-                     texData.resize(texture->m_size.x * 4 * texture->m_size.y);
-                     memset(texData.data(), 0x00, texData.size());
-                 }
-@@ -555,7 +562,7 @@
-         auto [data, fmt, size] = buf->beginDataPtr(0);
- 
-         auto CAIROSURFACE     = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, DMABUF.size.x, DMABUF.size.y);
--        auto CAIRODATASURFACE = cairo_image_surface_create_for_data(texData.data(), CAIRO_FORMAT_ARGB32, texture->m_size.x, texture->m_size.y, texture->m_size.x * 4);
-+        auto CAIRODATASURFACE = Pointer::cursorCpuInputSurface(texData.data(), texture->m_size.x, texture->m_size.y, texDataStride);
- 
-         auto CAIRO = cairo_create(CAIROSURFACE);
- 
-diff --git a/src/pointer/CursorImage.hpp b/src/pointer/CursorImage.hpp
 --- /dev/null
-+++ b/src/pointer/CursorImage.hpp
-@@ -0,0 +1,9 @@
-+#pragma once
-+#include <cairo/cairo.h>
-+#include <cstdint>
++++ b/src/render/gl/OwnerFramePrimitives.cpp
+@@ -0,0 +1,325 @@
++#include "OwnerFramePrimitives.hpp"
++#include "../OpenGL.hpp" // existing fullVerts/SVertex layout and shader definitions only
++#include "GLTexture.hpp"
++#include <algorithm>
++#include <cmath>
++#include <limits>
 +
-+namespace Pointer {
-+    // The caller owns the pixels until the returned Cairo surface is destroyed.
-+    // The surface is owned by the caller and must be destroyed once.
-+    cairo_surface_t* cursorCpuInputSurface(uint8_t* pixels, int width, int height, int stride);
++using namespace Render;
++using namespace Render::GL;
++
++static bool finiteValues(const auto& values) {
++    return std::ranges::all_of(values, [](const auto value) { return std::isfinite(value); });
 +}
-diff --git a/src/pointer/CursorImage.cpp b/src/pointer/CursorImage.cpp
---- /dev/null
-+++ b/src/pointer/CursorImage.cpp
-@@ -0,0 +1,5 @@
-+#include "CursorImage.hpp"
 +
-+cairo_surface_t* Pointer::cursorCpuInputSurface(uint8_t* pixels, int width, int height, int stride) {
-+    return cairo_image_surface_create_for_data(pixels, CAIRO_FORMAT_ARGB32, width, height, stride);
++static bool finiteBox(const SFrameBox& box) {
++    return std::isfinite(box.x) && std::isfinite(box.y) && std::isfinite(box.width) && std::isfinite(box.height) && std::isfinite(box.rotation);
++}
++
++static bool validCM(const SFrameCM& cm) {
++    if (!cm.enabled)
++        return !cm.needsTonemap && !cm.needsSDRmod;
++
++    const std::array values = {cm.srcTFMin, cm.srcTFMax, cm.dstTFMin, cm.dstTFMax, cm.srcRefLuminance, cm.dstRefLuminance, cm.maxLuminance,
++                               cm.dstMaxLuminance, cm.sdrSaturation, cm.sdrBrightness};
++    return finiteValues(values) && finiteValues(cm.convertMatrix) && finiteValues(cm.dstPrimariesXYZ) && cm.srcTFMax > cm.srcTFMin && cm.dstTFMax > cm.dstTFMin &&
++        cm.srcRefLuminance > 0 && cm.dstRefLuminance > 0 && cm.maxLuminance > 0 && cm.dstMaxLuminance > 0 && cm.sdrSaturation >= 0 && cm.sdrBrightness >= 0 &&
++        cm.sourceTF <= sc<uint32_t>(std::numeric_limits<GLint>::max()) && cm.targetTF <= sc<uint32_t>(std::numeric_limits<GLint>::max()) &&
++        (!cm.needsTonemap || (cm.tonemapMode >= 1 && cm.tonemapMode <= 3));
++}
++
++static bool colorOnlyMaterial(const SFrameMaterial& material) {
++    return !material.cm.enabled && !material.cm.needsTonemap && !material.cm.needsSDRmod && !material.tintEnabled && !material.discardActive;
++}
++
++static bool sameDescription(const PrShmDescription& a, const PrShmDescription& b) {
++    return a.resource_id == b.resource_id && a.generation == b.generation && a.commit_sequence == b.commit_sequence && a.drm_format == b.drm_format && a.width == b.width &&
++        a.height == b.height && a.stride == b.stride && a.bytes_per_pixel == b.bytes_per_pixel && a.reserved == b.reserved;
++}
++
++// Preserve projectBoxToTarget's row-major/transpose=true convention while using
++// the transpose=false upload required by GLES. No geometry is recomputed here.
++static FrameMatrix projectionForGL(const FrameMatrix& matrix) {
++    return {matrix[0], matrix[3], matrix[6], matrix[1], matrix[4], matrix[7], matrix[2], matrix[5], matrix[8]};
++}
++
++// Raw uniforms intentionally avoid CShader's setter cache/GLCALL diagnostics.
++// The exact existing shader uniform locations and shader arithmetic are retained.
++static void uniformInt(const CShader& shader, eShaderUniform name, GLint value) {
++    glUniform1i(shader.getUniformLocation(name), value);
++}
++
++static void uniformFloat(const CShader& shader, eShaderUniform name, GLfloat value) {
++    glUniform1f(shader.getUniformLocation(name), value);
++}
++
++static void uniformFloat2(const CShader& shader, eShaderUniform name, GLfloat x, GLfloat y) {
++    glUniform2f(shader.getUniformLocation(name), x, y);
++}
++
++static void uniformFloat3(const CShader& shader, eShaderUniform name, const std::array<float, 3>& value) {
++    glUniform3fv(shader.getUniformLocation(name), 1, value.data());
++}
++
++static void uniformFloat4(const CShader& shader, eShaderUniform name, const std::array<float, 4>& value) {
++    glUniform4fv(shader.getUniformLocation(name), 1, value.data());
++}
++
++static void uniformMatrix(const CShader& shader, eShaderUniform name, const FrameMatrix& value) {
++    glUniformMatrix3fv(shader.getUniformLocation(name), 1, GL_FALSE, value.data());
++}
++
++static void applyCM(const CShader& shader, const SFrameCM& cm) {
++    uniformInt(shader, SHADER_SOURCE_TF, sc<GLint>(cm.sourceTF));
++    uniformInt(shader, SHADER_TARGET_TF, sc<GLint>(cm.targetTF));
++    uniformFloat2(shader, SHADER_SRC_TF_RANGE, cm.srcTFMin, cm.srcTFMax);
++    uniformFloat2(shader, SHADER_DST_TF_RANGE, cm.dstTFMin, cm.dstTFMax);
++    uniformFloat(shader, SHADER_SRC_REF_LUMINANCE, cm.srcRefLuminance);
++    uniformFloat(shader, SHADER_DST_REF_LUMINANCE, cm.dstRefLuminance);
++    uniformFloat(shader, SHADER_MAX_LUMINANCE, cm.maxLuminance);
++    uniformFloat(shader, SHADER_DST_MAX_LUMINANCE, cm.dstMaxLuminance);
++    uniformInt(shader, SHADER_TONEMAP_MODE, sc<GLint>(cm.tonemapMode));
++    uniformFloat(shader, SHADER_SDR_SATURATION, cm.sdrSaturation);
++    uniformFloat(shader, SHADER_SDR_BRIGHTNESS, cm.sdrBrightness);
++    // CPU preparation copied the same column-major arrays as passCMUniforms.
++    uniformMatrix(shader, SHADER_CONVERT_MATRIX, cm.convertMatrix);
++    uniformMatrix(shader, SHADER_TARGET_PRIMARIES_XYZ, cm.dstPrimariesXYZ);
++}
++
++static bool validProgram(const SOwnerFrameProgram& program, const SOwnerFrameShaderKey& expected) {
++    return program.key == expected && program.shader.program() != 0 && program.shader.getUniformLocation(SHADER_SHADER_VAO) > 0 &&
++        program.shader.getUniformLocation(SHADER_SHADER_VBO) > 0 && program.shader.getUniformLocation(SHADER_PROJ) >= 0;
++}
++
++static void bindTarget(const SOwnerFrameTarget& target, bool blend) {
++    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, target.framebuffer);
++    glViewport(0, 0, sc<GLsizei>(target.description.width), sc<GLsizei>(target.description.height));
++    // Mirrors/MRT, stencil/effects and final output shaders are outside this
++    // subset and must be rejected by CPU preparation before admission.
++    const GLenum attachment = GL_COLOR_ATTACHMENT0;
++    glDrawBuffers(1, &attachment);
++    glDisable(GL_STENCIL_TEST);
++    glDisable(GL_DEPTH_TEST);
++    glDepthMask(GL_FALSE);
++    glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
++    glBlendEquation(GL_FUNC_ADD);
++    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA); // existing premultiplied contract
++    if (blend)
++        glEnable(GL_BLEND);
++    else
++        glDisable(GL_BLEND);
++    glEnable(GL_SCISSOR_TEST);
++}
++
++static void applyRounding(const CShader& shader, const SFrameDraw& draw) {
++    uniformFloat2(shader, SHADER_TOP_LEFT, sc<float>(draw.roundingBox.x), sc<float>(draw.roundingBox.y));
++    uniformFloat2(shader, SHADER_FULL_SIZE, sc<float>(draw.roundingBox.width), sc<float>(draw.roundingBox.height));
++    uniformFloat(shader, SHADER_RADIUS, draw.material.roundingPx);
++    uniformFloat(shader, SHADER_ROUNDING_POWER, draw.material.roundingPower);
++}
++
++static void drawScissors(const SFrameDraw& draw) {
++    // Already resolved using the original clip-vs-damage branch and transformed
++    // to final GL target coordinates on control. Never intersect/transform again.
++    for (const auto& rect : draw.scissors) {
++        glScissor(rect.x1, rect.y1, rect.x2 - rect.x1, rect.y2 - rect.y1);
++        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
++    }
++}
++
++COwnerFramePrimitives::COwnerFramePrimitives(EGLDisplay display, EGLContext context) : m_display(display), m_context(context), m_owner(std::this_thread::get_id()) {}
++
++std::optional<eOwnerFramePrimitiveStatus> COwnerFramePrimitives::validate(const SOwnerFrameTarget& target, const SFrameDraw& draw) const {
++    if (std::this_thread::get_id() != m_owner || m_display == EGL_NO_DISPLAY || m_context == EGL_NO_CONTEXT || eglGetCurrentDisplay() != m_display ||
++        eglGetCurrentContext() != m_context)
++        return eOwnerFramePrimitiveStatus::WRONG_OWNER_CONTEXT;
++
++    const auto& desc = target.description;
++    if (target.framebuffer == 0 || desc.outputGeneration == 0 || desc.width == 0 || desc.height == 0 || desc.transformedWidth == 0 || desc.transformedHeight == 0 ||
++        desc.width > sc<uint32_t>(std::numeric_limits<GLsizei>::max()) || desc.height > sc<uint32_t>(std::numeric_limits<GLsizei>::max()) || desc.outputTransform > 7 ||
++        !std::isfinite(desc.scale) || desc.scale <= 0 || !finiteValues(desc.targetProjection) || !finiteValues(desc.scaleMatrix))
++        return eOwnerFramePrimitiveStatus::INVALID_TARGET;
++
++    if (draw.scissors.size() > FRAME_MAX_SCISSORS)
++        return eOwnerFramePrimitiveStatus::INVALID_DRAW;
++    if (draw.material.cm.enabled && !desc.shaderCMAvailable)
++        return eOwnerFramePrimitiveStatus::UNSUPPORTED_MATERIAL;
++
++    for (const auto& rect : draw.scissors) {
++        if (rect.x1 < 0 || rect.y1 < 0 || rect.x2 <= rect.x1 || rect.y2 <= rect.y1 || sc<uint32_t>(rect.x2) > desc.width || sc<uint32_t>(rect.y2) > desc.height)
++            return eOwnerFramePrimitiveStatus::INVALID_DRAW;
++    }
++
++    if (draw.kind != eFrameDrawKind::CLEAR && (!finiteBox(draw.box) || draw.box.width <= 0 || draw.box.height <= 0 || !finiteValues(draw.projection)))
++        return eOwnerFramePrimitiveStatus::INVALID_DRAW;
++    if (!std::isfinite(draw.material.alpha) || !std::isfinite(draw.material.roundingPx) || draw.material.roundingPx < 0 || !std::isfinite(draw.material.roundingPower) ||
++        draw.material.roundingPower <= 0 || !std::isfinite(draw.material.discardOpacity) || !finiteValues(draw.material.tintRgb) || !validCM(draw.material.cm))
++        return eOwnerFramePrimitiveStatus::INVALID_DRAW;
++    if (draw.material.roundingPx > 0 &&
++        (!finiteBox(draw.roundingBox) || draw.roundingBox.width <= 0 || draw.roundingBox.height <= 0 ||
++         !finiteValues(std::array{sc<float>(draw.roundingBox.x), sc<float>(draw.roundingBox.y), sc<float>(draw.roundingBox.width), sc<float>(draw.roundingBox.height)})))
++        return eOwnerFramePrimitiveStatus::INVALID_DRAW;
++
++    return std::nullopt;
++}
++
++std::optional<SOwnerFrameShaderKey> COwnerFramePrimitives::shaderKey(const SFrameDraw& draw, bool textureHasAlpha) {
++    ShaderFeatureFlags features = 0;
++    if (draw.material.roundingPx > 0)
++        features |= SH_FEAT_ROUNDING;
++
++    if (draw.kind == eFrameDrawKind::RECT) {
++        if (!colorOnlyMaterial(draw.material))
++            return std::nullopt;
++        return SOwnerFrameShaderKey{.fragment = SH_FRAG_QUAD, .features = features};
++    }
++    if (draw.kind != eFrameDrawKind::SHM || draw.material.wrapX > 1 || draw.material.wrapY > 1)
++        return std::nullopt;
++
++    if (textureHasAlpha && !draw.material.rgbx)
++        features |= SH_FEAT_RGBA;
++    if (draw.material.discardActive)
++        features |= SH_FEAT_DISCARD;
++    if (draw.material.tintEnabled)
++        features |= SH_FEAT_TINT;
++    if (draw.material.cm.enabled) {
++        features |= SH_FEAT_CM;
++        if (draw.material.cm.needsTonemap) {
++            features |= SH_FEAT_TONEMAP;
++            if (draw.material.cm.tonemapMode == 3)
++                features |= SH_FEAT_ALT_TONEMAP;
++        }
++        if (draw.material.cm.needsSDRmod)
++            features |= SH_FEAT_SDR_MOD;
++    }
++    return SOwnerFrameShaderKey{.fragment = SH_FRAG_SURFACE, .features = features};
++}
++
++eOwnerFramePrimitiveStatus COwnerFramePrimitives::drawClear(const SOwnerFrameTarget& target, const SFrameDraw& draw) {
++    if (const auto failure = validate(target, draw))
++        return *failure;
++    if (draw.kind != eFrameDrawKind::CLEAR || !finiteValues(draw.convertedColor))
++        return eOwnerFramePrimitiveStatus::INVALID_DRAW;
++    if (!colorOnlyMaterial(draw.material) || draw.material.roundingPx != 0)
++        return eOwnerFramePrimitiveStatus::UNSUPPORTED_MATERIAL;
++    if (draw.scissors.empty())
++        return eOwnerFramePrimitiveStatus::EMPTY;
++    if (glGetError() != GL_NO_ERROR)
++        return eOwnerFramePrimitiveStatus::GL_ERROR;
++
++    bindTarget(target, false);
++    for (const auto& rect : draw.scissors) {
++        glScissor(rect.x1, rect.y1, rect.x2 - rect.x1, rect.y2 - rect.y1);
++        // CPU preparation already applied the original clear color conversion.
++        // Clear does not introduce the RECT premultiplication step.
++        glClearBufferfv(GL_COLOR, 0, draw.convertedColor.data());
++    }
++    glDisable(GL_SCISSOR_TEST);
++    return glGetError() == GL_NO_ERROR ? eOwnerFramePrimitiveStatus::COMMANDS_ISSUED : eOwnerFramePrimitiveStatus::GL_ERROR;
++}
++
++eOwnerFramePrimitiveStatus COwnerFramePrimitives::drawRect(const SOwnerFrameTarget& target, const SFrameDraw& draw, const SOwnerFrameProgram& program) {
++    if (const auto failure = validate(target, draw))
++        return *failure;
++    if (draw.kind != eFrameDrawKind::RECT || !finiteValues(draw.convertedColor) || !finiteValues(draw.colorSRGB))
++        return eOwnerFramePrimitiveStatus::INVALID_DRAW;
++    const auto key = shaderKey(draw);
++    if (!key)
++        return eOwnerFramePrimitiveStatus::UNSUPPORTED_MATERIAL;
++    if (!validProgram(program, *key) || program.shader.getUniformLocation(SHADER_COLOR) < 0)
++        return eOwnerFramePrimitiveStatus::SHADER_MISMATCH;
++    if (draw.scissors.empty())
++        return eOwnerFramePrimitiveStatus::EMPTY;
++    if (glGetError() != GL_NO_ERROR)
++        return eOwnerFramePrimitiveStatus::GL_ERROR;
++
++    bindTarget(target, draw.material.blend);
++    glUseProgram(program.shader.program());
++    uniformMatrix(program.shader, SHADER_PROJ, projectionForGL(draw.projection));
++    // Both are already premultiplied on control, and the first is converted to
++    // the copied target space. Do not multiply material.alpha a second time.
++    uniformFloat4(program.shader, SHADER_COLOR, draw.convertedColor);
++    uniformFloat4(program.shader, SHADER_COLOR_SRGB, draw.colorSRGB);
++    applyRounding(program.shader, draw);
++    glBindVertexArray(program.shader.getUniformLocation(SHADER_SHADER_VAO));
++    drawScissors(draw);
++    glBindVertexArray(0);
++    glDisable(GL_SCISSOR_TEST);
++    return glGetError() == GL_NO_ERROR ? eOwnerFramePrimitiveStatus::COMMANDS_ISSUED : eOwnerFramePrimitiveStatus::GL_ERROR;
++}
++
++eOwnerFramePrimitiveStatus COwnerFramePrimitives::drawShm(const SOwnerFrameTarget& target, const SFrameDraw& draw, const SFrameShmResource& resource,
++                                                        const SOwnerImportedShmTexture& imported, const SOwnerFrameProgram& program) {
++    if (const auto failure = validate(target, draw))
++        return *failure;
++    if (draw.kind != eFrameDrawKind::SHM || draw.resourceIndex >= FRAME_MAX_RESOURCES || !finiteValues(draw.uv))
++        return eOwnerFramePrimitiveStatus::INVALID_DRAW;
++
++    const auto view = resource.snapshot.view();
++    const auto& desc = resource.description;
++    if (!view || !view->pixels || desc.resource_id == 0 || desc.generation == 0 || desc.commit_sequence == 0 || desc.reserved != 0 ||
++        !sameDescription(desc, view->description) || !sameDescription(desc, imported.description) || draw.commitSequence != desc.commit_sequence ||
++        view->pixel_bytes != sc<uint64_t>(desc.stride) * desc.height)
++        return eOwnerFramePrimitiveStatus::RESOURCE_MISMATCH;
++
++    // The imported cache entry was created on this owner from this exact owned
++    // immutable snapshot. CGLTexture::ok only establishes GLuint validity; it is
++    // not evidence that upload, rendering or presentation completed.
++    auto& texture = imported.texture;
++    if (!texture.m_isSynchronous || texture.isDMA() || !texture.ok() || texture.m_size.x != desc.width || texture.m_size.y != desc.height ||
++        (texture.m_type != TEXTURE_RGBA && texture.m_type != TEXTURE_RGBX))
++        return eOwnerFramePrimitiveStatus::RESOURCE_MISMATCH;
++    // !nearest preserves the imported sampler filters in the original path.
++    // This first immutable-SHM subset supports their default linear pair; a
++    // nondefault pair must be encoded explicitly before it can be admitted.
++    if (!draw.material.nearest && (texture.magFilter != GL_LINEAR || texture.minFilter != GL_LINEAR))
++        return eOwnerFramePrimitiveStatus::UNSUPPORTED_MATERIAL;
++    // Do not compare texture.m_drmFormat: this cohort's SHM ctor calls
++    // allocate(size) with default format=0. The exact cache record above is used.
++    const auto key = shaderKey(draw, texture.m_type == TEXTURE_RGBA);
++    if (!key)
++        return eOwnerFramePrimitiveStatus::UNSUPPORTED_MATERIAL;
++    if (!validProgram(program, *key) || program.shader.getUniformLocation(SHADER_TEX) < 0)
++        return eOwnerFramePrimitiveStatus::SHADER_MISMATCH;
++    if (draw.scissors.empty())
++        return eOwnerFramePrimitiveStatus::EMPTY;
++    if (glGetError() != GL_NO_ERROR)
++        return eOwnerFramePrimitiveStatus::GL_ERROR;
++
++    bindTarget(target, draw.material.blend);
++    glActiveTexture(GL_TEXTURE0);
++    glBindTexture(GL_TEXTURE_2D, texture.m_texID);
++    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, draw.material.wrapX == 0 ? GL_CLAMP_TO_EDGE : GL_REPEAT);
++    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, draw.material.wrapY == 0 ? GL_CLAMP_TO_EDGE : GL_REPEAT);
++    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, draw.material.nearest ? GL_NEAREST : GL_LINEAR);
++    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, draw.material.nearest ? GL_NEAREST : GL_LINEAR);
++    glUseProgram(program.shader.program());
++    uniformMatrix(program.shader, SHADER_PROJ, projectionForGL(draw.projection));
++    uniformInt(program.shader, SHADER_TEX, 0);
++    uniformFloat(program.shader, SHADER_ALPHA, std::clamp(draw.material.alpha, 0.F, 1.F));
++    uniformInt(program.shader, SHADER_DISCARD_OPAQUE, draw.material.discardActive && draw.material.discardOpaque);
++    uniformInt(program.shader, SHADER_DISCARD_ALPHA, draw.material.discardActive && draw.material.discardAlpha);
++    uniformFloat(program.shader, SHADER_DISCARD_ALPHA_VALUE, draw.material.discardOpacity);
++    uniformInt(program.shader, SHADER_APPLY_TINT, draw.material.tintEnabled);
++    uniformFloat3(program.shader, SHADER_TINT, draw.material.tintRgb);
++    applyRounding(program.shader, draw);
++    if (draw.material.cm.enabled)
++        applyCM(program.shader, draw.material.cm);
++
++    glBindVertexArray(program.shader.getUniformLocation(SHADER_SHADER_VAO));
++    glBindBuffer(GL_ARRAY_BUFFER, program.shader.getUniformLocation(SHADER_SHADER_VBO));
++    // Keep previous draws' vertices alive exactly as renderTextureInternal does.
++    glBufferData(GL_ARRAY_BUFFER, sizeof(fullVerts), nullptr, GL_DYNAMIC_DRAW);
++    auto vertices = fullVerts;
++    vertices[0].u = vertices[1].u = draw.uv[0];
++    vertices[0].v = vertices[2].v = draw.uv[1];
++    vertices[2].u = vertices[3].u = draw.uv[2];
++    vertices[1].v = vertices[3].v = draw.uv[3];
++    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices.data());
++    drawScissors(draw);
++    glBindVertexArray(0);
++    glBindBuffer(GL_ARRAY_BUFFER, 0);
++    glBindTexture(GL_TEXTURE_2D, 0);
++    glDisable(GL_SCISSOR_TEST);
++    return glGetError() == GL_NO_ERROR ? eOwnerFramePrimitiveStatus::COMMANDS_ISSUED : eOwnerFramePrimitiveStatus::GL_ERROR;
++}
+--- /dev/null
++++ b/src/render/gl/OwnerFramePrimitives.hpp
+@@ -0,0 +1,81 @@
++#pragma once
++
++#include "../FramePlan.hpp"
++#include <EGL/egl.h>
++#include <cstdint>
++#include <optional>
++#include <thread>
++
++class CShader;
++
++namespace Render::GL {
++    class CGLTexture;
++
++    // These borrows exist only inside the graphics owner. They are not mailbox
++    // payloads and must never be constructed from control-side GL resources.
++    struct SOwnerFrameTarget {
++        const SFrameTarget& description;
++        uint32_t            framebuffer = 0;
++    };
++
++    struct SOwnerFrameShaderKey {
++        uint8_t  fragment = UINT8_MAX;
++        uint16_t features = 0;
++        bool operator==(const SOwnerFrameShaderKey&) const = default;
++    };
++
++    struct SOwnerFrameProgram {
++        CShader&             shader;
++        SOwnerFrameShaderKey key;
++    };
++
++    struct SOwnerImportedShmTexture {
++        const PrShmDescription& description;
++        CGLTexture&             texture;
++    };
++
++    enum class eOwnerFramePrimitiveStatus : uint8_t {
++        COMMANDS_ISSUED,
++        EMPTY,
++        WRONG_OWNER_CONTEXT,
++        INVALID_TARGET,
++        INVALID_DRAW,
++        RESOURCE_MISMATCH,
++        SHADER_MISMATCH,
++        UNSUPPORTED_MATERIAL,
++        GL_ERROR,
++    };
++
++    // Only the creating graphics thread may use this object, while this exact
++    // display/context is current. No method makes EGL current, compiles shaders,
++    // imports/uploads textures, transfers GL ownership, or sends protocol events.
++    // Programs are exclusively used by these raw-uniform primitives: do not mix
++    // CShader cached setters or the old render path into their program cache.
++    // Imported sampler state is also set directly on every draw; do not mix
++    // the old cached ITexture parameter setters into this exclusive cache.
++    // COMMANDS_ISSUED is deliberately not fence completion, commit or presentation.
++    class COwnerFramePrimitives {
++      public:
++        COwnerFramePrimitives(EGLDisplay display, EGLContext context);
++        COwnerFramePrimitives(const COwnerFramePrimitives&) = delete;
++        COwnerFramePrimitives& operator=(const COwnerFramePrimitives&) = delete;
++        COwnerFramePrimitives(COwnerFramePrimitives&&) = delete;
++        COwnerFramePrimitives& operator=(COwnerFramePrimitives&&) = delete;
++
++        // Pure key selection from copied material and the worker import format.
++        // Missing/unsupported kinds return no key; CLEAR needs no shader.
++        static std::optional<SOwnerFrameShaderKey> shaderKey(const SFrameDraw& draw, bool textureHasAlpha = true);
++
++        eOwnerFramePrimitiveStatus drawClear(const SOwnerFrameTarget& target, const SFrameDraw& draw);
++        eOwnerFramePrimitiveStatus drawRect(const SOwnerFrameTarget& target, const SFrameDraw& draw, const SOwnerFrameProgram& program);
++        eOwnerFramePrimitiveStatus drawShm(const SOwnerFrameTarget& target, const SFrameDraw& draw, const SFrameShmResource& resource,
++                                           const SOwnerImportedShmTexture& imported, const SOwnerFrameProgram& program);
++
++      private:
++        const EGLDisplay      m_display;
++        const EGLContext      m_context;
++        const std::thread::id m_owner;
++
++        std::optional<eOwnerFramePrimitiveStatus> validate(const SOwnerFrameTarget& target, const SFrameDraw& draw) const;
++    };
 +}

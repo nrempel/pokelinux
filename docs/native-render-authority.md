@@ -73,9 +73,26 @@ The last correction uses the current public focus dispatch; it changes neither
 the behavior oracle nor Source lease/terminal semantics. Those attempts supply
 no behavioral RED and are not aggregated with the seven-case baseline.
 
+## Scene31 replay
+
+A later [qualified31 source cohort](native-render-import.md#qualified-scene31-checkpoint)
+rebuilds all helpers against its complete505-file SDK and executes these same
+actors, oracle, Source/Observer and original cutoffs. All seven setups qualify;
+three no-stall controls and the stopped-owner negative pass, while focus/death/lock
+under entered EGL holds still time out. Controller1/outer0 qualifies expected RED
+only. The original table above remains its earlier cohort's measurement.
+
+The new holds last200.617/200.452/200.649ms, with each operation-to-release window
+above100ms. This36.805508919s epoch closes77 waits/84 PIPE EOFs, including early2
+once, seven watched descendants dead/absent, ECHILD and same-peer QMP/QEMU/CLI/CID/
+locked-input closure. Its [hash-only provenance](evidence/native-render-import-provenance.json)
+keeps this replay separate. The new scene producer/GL primitives compile but are
+not called; this ELF retains the earlier snapshot-only Rust library. No worker,
+Source GREEN, output completion or phone result follows.
+
 ## Custody and remaining work
 
-The actual epoch closes in36.866915733s:77 direct nested waits/84 PIPE EOFs meet
+The original epoch closes in36.866915733s:77 direct nested waits/84 PIPE EOFs meet
 their original numeric/output/global cutoffs, including the separate early runtime
 mask's2 waits/2 EOFs exactly once. Ten watched descendants are dead and
 absent, and the subreaper reaches ECHILD. Private seatd requires SIGKILL9 and is

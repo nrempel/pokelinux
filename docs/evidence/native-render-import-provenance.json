@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "scope": "Original immutable CPU SHM builds and no-attach identity RED to GREEN, separate cursor baseline/repaired native builds and unchanged actual padded-ARGB linked Cairo CPU consumer RED to GREEN. No complete cursor/GPU output, rendering ownership, Source/cold/full-phone acceptance.",
+  "scope": "Original immutable CPU import and Cairo consumer evidence, separate Rust permit component, qualified31 scene-prerequisite source build and fresh unchanged Source7 expected-RED replay. No connected worker, migrated GL/AQ ownership, Source GREEN, output completion, cold/full-phone acceptance.",
   "Rust_build": {
     "qualification_sha256": "0d4272d03e70c86bd05b518af8a330cafcf774a45a9d26986ad1fadadb6cb297",
     "original_driver_exit": 1,
@@ -62,7 +62,7 @@
     "network": "none",
     "compositor_executed": false
   },
-  "source_patch_sha256": "d859ccb7d38d176c9b5adc0e89ca09d728bd03c0b0eab02afb49db4c7a09b425",
+  "source_patch_sha256": "fcee3531d211a1d2a65abbdf2805308483ac5d19d0c9806404577043a1fff369",
   "no_attach_behavior_RED_executed": true,
   "rendering_executor_implemented": false,
   "Source_rendering_GREEN": false,
@@ -588,5 +588,129 @@
     "existing_snapshot_C_ABI_code_and_header_unchanged": true,
     "CXX_FFI_reexecuted_with_new_release_archive": false,
     "ARM_build_or_runtime_qualified": false
+  },
+  "historical_fixed_cursor21_source_patch_sha256": "d859ccb7d38d176c9b5adc0e89ca09d728bd03c0b0eab02afb49db4c7a09b425",
+  "scene31_checkpoint": {
+    "scope": "Complete public31 raw-upstream patch; new scene producer/GL primitives compilation and preserved original rendering runtime only",
+    "source_payloads": 31,
+    "source_map_sha256": "f8df89dfec29a999381ebd3c4fcda2540866dead15ae85647165cc59b395a1eb",
+    "compile_map_sha256": "043a3c7899a53828886bed4fd8ea3606300b79bc051d8f9f5f1c0b60e8e00ff0",
+    "full_raw_upstream_patch_sha256": "fcee3531d211a1d2a65abbdf2805308483ac5d19d0c9806404577043a1fff369",
+    "upstream_commit": "efb50993780079460b0cbed1363e2166a2de1d9f",
+    "original_archive_sha256_from_prior_qualified_provenance": "5b05ce7ba5296fa46e666852bf108ab5af121bf577f8043787e2d2c252d8f109",
+    "selected_Rust_staticlib_sha256": "69b812817c6ee2e090a31fe0179de1db9e2c89500e7eb4e184de5ba36126c46c",
+    "selected_C_header_sha256": "4a7a9a603fe6d7780ff071020f727c3eb7b0aba1c9bba56b682ddd219f995396",
+    "separate_Rust_permit_archive_fe5aac70_selected": false,
+    "historical_noattach_and_Cairo_oracles_rerun_on31": false,
+    "evidence": {
+      "scene31-compile-failure29": {
+        "execution_sha256": "2d3c68603f5efb87a52550a66e648bea9e5a7ad35efa15a43a4a5d166875a6c9",
+        "independent_classification_sha256": "758be54df36825e94e2c4e2dde98aac5c8993e658e4264451314b4a1b542374c",
+        "class": "C++ namespace/type/private-access compilation failure",
+        "behavioral_RED": false,
+        "new_ELF_or_matching_SDK_qualified": false,
+        "actual_owned_waits": 30,
+        "actual_PIPE_EOF": 30,
+        "physical_closure_and_original_cutoffs_qualified": true,
+        "corrected_source_paths": 4,
+        "other_prior_payloads_unchanged": 27
+      },
+      "scene31-native-build": {
+        "Root_qualification_sha256": "8264d81a577d49afdce6984ffdd1165452e61b886acac31675b51139a2764fd0",
+        "independent_qualification_sha256": "48190a8f2d862700773a09b9bdc0f6b30c437666ff8791d78f320c50fa9ba491",
+        "execution_sha256": "bffc4e0325ccefe1b5d691302f8616e4e52cb6002523f9b209287a01234649b7",
+        "build_result_sha256": "6235169b9a158a4d7c1725b15c4d77bebd3dcaa42dc10a01a46ef2b02cc3e76f",
+        "new_ELF": {
+          "bytes": 25092280,
+          "sha256": "286c906815141d550317bcfaa5034d73bbb5d07b1ece57259896cc9d50ed83f8"
+        },
+        "matching_SDK": {
+          "FramePlan_header_sha256": "71e5cd0425ed58c5b92e06450f0d3a5fbcc6f7ffc65f245759e177399da37781",
+          "bytes": 2621440,
+          "regular_files": 505,
+          "sha256": "0b5983c7845cd76e9cb5a3226cef0011827eb3cc2e65e8f168a5c012d0743c83"
+        },
+        "actual_affected_CPP_units": 15,
+        "configured_compile_commands_entries_not_executed_units": 453,
+        "existing_snapshot_FFI_groups_passed": 5,
+        "Scope_waits": 33,
+        "Scope_PIPE_EOF": 33,
+        "early_mask_counted_once": true,
+        "separate_FFI_producer_wait_and_thread_join_qualified": true,
+        "same_peer_QMP_SHUTDOWN_EOF_QEMU0_CLI0_exact_CID_same_daemon_inputs_cutoffs_qualified": true,
+        "elapsed_ns": 175441011001,
+        "compositor_executed": false,
+        "new_CPU_producer_or_GL_primitives_executed": false
+      },
+      "scene31-source-seven": {
+        "Root_qualification_sha256": "1b6802d6d9261934917bffae095490dfe25ccbc77627faf1baf6351c73472d3a",
+        "independent_qualification_sha256": "b2cb0e3dc654ec50ae79c50d3c3a112b3e7675fccb59795c9e612011891b1222",
+        "selection_sha256": "764d9e9b70cf85a8f9e08b25f314228a439e0ee90c1bcdf954816d35bd80a7d3",
+        "command_sha256": "243d4d0acddac4fe1d74470b0fc8f2173d979d689cdac8dfab694775b836c717",
+        "receipt_sha256": {
+          "boot-result.json": "a4993209e30929274e727ff246174062979831832359b80306984717749dfcf7",
+          "bootstrap-result.json": "8172b5e98055bbdc57a27f7f45e754755667f1faed71ab1de290dd47277897ad",
+          "component/test-result.json": "6ac8ece525993cb8b5eeff0b126dd726c66a168ee307a8d14d59650d75262126",
+          "early-receipt.json": "c26331368216f31d258e624c88db76865f033db9340180ca96db06260635edea",
+          "execution.json": "61a2eca8c2c4c452c72f6ae1b24dbc9b2f173ceeca93c1a02ab14f482832e6c8",
+          "result.json": "2e3a93ffda2f4c3089d30aedd2a4fd671a2da31348f6a78512778be7708597ca"
+        },
+        "all7setups_qualified": true,
+        "no_stall_focus_death_lock_facts_latency_ns": [
+          129074,
+          370623,
+          71485
+        ],
+        "native_EGL_hold_ns": [
+          200616701,
+          200451968,
+          200649262
+        ],
+        "operation_flush_to_release_min_ns": [
+          170381699,
+          200014890,
+          199691608
+        ],
+        "authority_negative_hold_ns": 200954440,
+        "controls_passed": 4,
+        "render_feature_failures": [
+          "render-focus",
+          "render-client-death",
+          "render-lock"
+        ],
+        "controller_actual_exit": 1,
+        "outer_actual_exit": 0,
+        "outer_success_means_expected_RED_and_custody_only": true,
+        "feature_GREEN": false,
+        "Source_lease_ns": 100000000,
+        "Source_actors_oracle_and_original_cutoffs_unchanged": true,
+        "Source_packets_authored_relayed_cached_or_revived": false,
+        "actual_installed_SDK_regular_files": 505,
+        "actual_waits": 77,
+        "actual_PIPE_EOF": 84,
+        "early2counted_once": true,
+        "watched_descendants_dead_proc_absent": 7,
+        "ECHILD": true,
+        "same_peer_QMP_SHUTDOWN_EOF_QEMU0_CLI0_exact_CID_same_daemon_inputs_cutoffs_qualified": true,
+        "elapsed_ns": 36805508919,
+        "timeout_times_are_collection_observations_not_failure_occurrence": true,
+        "nonnull_EGL_return_is_GPU_completion": false,
+        "new_CPU_producer_or_GL_primitives_called_or_owner_started": false
+      },
+      "scene31-public-source-closure": {
+        "qualification_sha256": "f40944e1ebd8b58a1b53e46d613b44a46fc4df617a0d617e01ee8fa0e6e97663",
+        "kind": "Source-only standard-tool patch round-trip and exact selected-file hash closure; not behavioral tests",
+        "selected_raw_upstream_files": 20,
+        "after_files": 31,
+        "new31_git_apply_reverse_forward_exact": true,
+        "historical21_GNU_patch_fuzz0_forward_reverse_exact": true,
+        "all31before_after_hashes_join_actual_build_raw_and_patched_manifests": true,
+        "large_archive_rehashed_or_copied": false
+      }
+    },
+    "connected_worker_or_native_binding_qualified": false,
+    "Source_GREEN_or_frame_output_completion_or_ARM_phone_qualified": false,
+    "selected_snapshot_only_Rust_source_base": "79c80ba39dd7b12bee87384547291e222241cf73",
+    "all5snapshot_Rust_source_hashes_match_public_base_and_earlier_qualification": true
   }
 }

@@ -24,11 +24,12 @@ is fallible; `Box`/`Arc` metadata allocation can still abort on exhaustion. Ther
 is no full process out-of-memory recovery guarantee.
 
 The public patch is complete against pinned upstream Hyprland
-`efb50993780079460b0cbed1363e2166a2de1d9f`. Its21-file before/after map preserves
-the six original render observations, immutable import changes and later Cairo
-cursor consumer/helper. It contains no proprietary source or unpublished patch
-prerequisite. Every plugin must use the rebuilt SDK, including the exact C header
-and `CursorImage.hpp`. Earlier18-file import cohorts retain their own evidence.
+`efb50993780079460b0cbed1363e2166a2de1d9f`. Its31-file before/after map preserves
+the original observations, immutable imports and Cairo repair, then adds factored
+scene order, CPU frame records and owner-only GL primitives. It contains no
+proprietary source or unpublished patch prerequisite. Every plugin must use the
+complete matching rebuilt SDK. Earlier18-file import and21-file cursor cohorts
+retain their own evidence; their no-attach/Cairo oracles were not rerun on31.
 
 ## Executed builds and C++ lifetime boundary
 
@@ -103,7 +104,7 @@ byte-identical.
 
 The repair changes only `Compositor.cpp`: synchronous capture now requires the
 incoming `state.updated.bits.buffer` as well as a synchronous current buffer.
-The other17 cohort payloads are unchanged. The public complete18-file patch now
+The other17 cohort payloads are unchanged. That complete18-file patch
 contains this repair. Its separate full native rebuild and the same five FFI
 groups pass in173.836398179s with33 Scope waits/33 PIPE EOFs and a matching501-file
 SDK; producer wait and thread join remain separate. Compositor/Source/UI/PCM do
@@ -186,6 +187,48 @@ or software-cursor display path. Snapshot bytes, returned texture validity,
 protocol callbacks and this CPU image establish no GPU upload, output readback,
 presentation or server-resource retirement.
 
+## Qualified scene31 checkpoint
+
+The complete public31-file patch now passes a native x86 source build with its
+matching505-file SDK. All15 affected C++ units appear in actual compilation;
+453 `compile_commands` entries describe configuration, not453 executed units.
+The five existing C++/Rust snapshot lifetime groups pass separately within this
+build. Its175.441011001s epoch closes33 waits/33 PIPE EOFs, same-peer QMP guest
+shutdown/QEMU0, foreground CLI0, exact same-daemon container absence and original
+locked-input/cutoff closure. This build executes no compositor.
+
+An earlier29-path native build fails C++ namespace/type/private-access compilation;
+it supplies no behavioral RED. Four narrowly corrected files produce the31-file
+candidate; the other27 prior payloads remain identical. The complete upstream
+patch and every before/after hash match the qualified source manifest. The
+corrected final `FramePlan.hpp` carries `securityGeneration`, but integer shape
+alone supplies no authentic control authority.
+
+The factored order, CPU frame-description producer and owner-only GL primitives
+are prerequisites. The new producer/primitives are not called and no render owner
+starts in this selected runtime. The31 ELF uses the old snapshot-only Rust archive
+`69b81281…` and unchanged C ABI `4a7a9a60…`; the separate eight-test permit archive
+`fe5aac70…` is not linked. These artifacts have separate source/build qualifications.
+
+A fresh native replay then rebuilds the original helpers against the complete
+505-file SDK and executes the unchanged seven Source cases. All setups qualify.
+No-stall focus/death/lock facts arrive after129,074/370,623/71,485ns. Their three
+entered EGL holds last200.617/200.452/200.649ms and still produce terminal timeout
+with positive state false before release. The full post-operation response window
+exceeds100ms inside each hold; actual focus reply, client exit and lock protocol
+acceptance remain mandatory. The stopped-owner negative also passes. Controller1
+and outer0 qualify expected RED, with four controls passing and three rendering
+failures; they do not qualify feature GREEN.
+
+This36.805508919s replay closes77 waits/84 PIPE EOFs, counting the early two once.
+All seven watched descendants are dead and absent, and the subreaper reaches
+ECHILD before final closure. Same-peer QMP shutdown/EOF/QEMU0, CLI0, exact-CID
+absence, same daemon and original locked inputs close separately. Hash-only
+[provenance](evidence/native-render-import-provenance.json) binds both qualifications
+and the independent reviews. The earlier CPU identity/Cairo results retain their
+original cohorts. No connected worker, AQ/GL execution migration, frame completion,
+Source GREEN or phone acceptance follows from this checkpoint.
+
 ## Rust commit-permit component
 
 A separate original Rust component now orders an individual attempt against
@@ -221,8 +264,8 @@ custody, FD queue, C ABI, AQ/render dispatch, native call or Source integration.
 Neither an issued ticket nor a sealed record establishes commit, GPU completion
 or presentation; the eight Rust cases do not turn the seven rendering cases GREEN.
 
-A complete immutable scene/frame, Rust-owned executor, exclusive AQ/session/GL/
-output state, real fence/presentation completion and responsive terminal ownership
+Complete supported scene/frame integration, a Rust-owned executor, exclusive
+AQ/session/GL/output state, real fence/presentation completion and responsive terminal ownership
 are still required. Queue acceptance or copied pixels cannot substitute for
 those results. Keep the frozen seven rendering cases and original cold owner,
 permissions, focus, Pixel and Sounds/PCM guards unchanged. ARM, the matched
