@@ -138,3 +138,19 @@ releases the owner, and only then unloads. Unexpected unload aborts instead of
 unloading live supplier code. The matched compositor aborts before actor startup,
 so these runtime GL/handshake contracts and the frozen GREEN oracle are still
 unreached. No source change or compiler success is relabelled execution evidence.
+
+## Initial broker batch successor
+
+`aquamarine-initial-batch.patch` is incremental after `aquamarine.patch`; its
+cohort pins exactly three changed files. The const peek supplies borrowed values
+for Rust capture before queue admission; refusals preserve output bytes and
+queue/descriptor custody. `initial-batch-consumer.cpp` and its runtime contract
+are the exact frozen inputs, and `initial-batch-compile-oracle.py` is the executed
+structural-RED classifier. The [report](../../docs/native-render-initial-batch.md)
+records actual missing-API RED and matching native source/CPU build separately.
+The unchanged real-broker consumer now passes with one virtual DRM graphics lease,
+three events and two pending duplicates closed after Rust capture. C++ compilation
+force-includes `initial-batch-c-headers.hpp` for real libseat C linkage; this adds
+no function wrapper/interposer. `initial-batch-runtime-oracle.py` records the
+executed separate runtime predicate. Preserve the historical AQ15
+and Frame fixtures; no compatibility or runtime fallback is added.

@@ -80,3 +80,9 @@ Stop-retirement authority remain open. So do Source7 GREEN, AQ output/scanout/
 presentation, device retirement, blocked-driver recovery, normal app/PCM, ARM/
 matched Google kernel and every physical-phone/full-smartphone gate. No phone
 was accessed.
+
+The later [initial batch source checkpoint](native-render-initial-batch.md) adds
+the const broker prefix peek after an actual missing-API compile RED and matching
+AQ15 source/CPU build. Its unchanged real seatd/udev/virtio consumer now passes
+Rust capture before queue admission. This fills the input API gap; the actual
+main/control-to-worker startup and this matched GL handshake remain open.

@@ -18,6 +18,8 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The [initial broker batch peek](native-render-initial-batch.md) now passes unchanged-consumer real seatd/udev/virtio capture after a qualified missing-API compile RED and matching AQ15 source/SDK build. Three initial events reach Rust before queue admission; two pending duplicates close while original service leases remain open. Ten existing CPU groups also pass. Connect the actual main/control broker to Rust worker backend startup next; Source7 and all phone gates remain open.
+
 The current [Messages session assembly](native-messages-session-composition.md)
 selects explicit local history alongside Sounds, shares the actor and per-app
 Wayland Factory, and selects the typed public appearance client/QML. Current

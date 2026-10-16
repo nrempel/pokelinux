@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "scope": "Structural missing-API compilation RED, native AQ15 source/CPU build, then unchanged real-broker consumer GREEN. Main worker/Source/phone remain open.",
+  "frozen_consumer_sha256": "2976ed3145590f574476e3fcfef237847722623fedecd1cd14a69de0ea91f423",
+  "RED": {
+    "execution_sha256": "6fabe652cfc05455b749109dc808a31b8be59ea2b323b5bb7d8ac70a549c712e",
+    "Root_qualification_sha256": "80ebc19fc59fd935ec9cf0b7145bb22508b79137e07463b88e7c7a7f97b8dfe7",
+    "independent_qualification_sha256": "3274b05af240c408cd32b8f743eaacea37471018f643a78babc5affd3c055864",
+    "actual_compile_exit": 1,
+    "diagnostics": 31,
+    "existing_API_compile_link_loader_run": true,
+    "direct_waits": 33,
+    "PIPE_EOFs": 40,
+    "aggregate_passed": true,
+    "prior_failed_aggregates_preserved": 3
+  },
+  "source_build": {
+    "execution_sha256": "7b7496853762fd9bda7865c99875062572e57e813e1ab833cb556c6b02e4cca3",
+    "build_result_sha256": "d74d7c8ffd6e61d80b4449428869b0386ceca804d542f4cea1800c26ce05039c",
+    "Root_qualification_sha256": "e41d8cfde4731099a8c0e114822fc440e883609c359f1658ae46102b5fd1549c",
+    "independent_qualification_sha256": "fc752170fff4460c3886e3021c4388aeebe7e0431ce44a7913410cf1e072a2cc",
+    "affected_CPP_units": 6,
+    "existing_CPU_groups": 10,
+    "SDK_entries": 24,
+    "library_sha256": "323e1cb3120162338ee46cde029038677c0abb4214e152ce8848245d4d16b148",
+    "SDK_sha256": "5a89a24cee7c57575dca7137f640f6045fee7342b7b04ed95af4a5255d6bbd87",
+    "direct_waits_and_PIPE_EOFs": 46,
+    "actual_live_broker_executed": false
+  },
+  "real_broker_API_runtime_qualified": true,
+  "main_worker_Source_GL_ARM_phone_qualified": false,
+  "prior_real_broker_link_setup_failure": {
+    "execution_sha256": "63c59097ab5db394ea8a33673ef26e128e5e27d52a4ac4542ff5e07b9d458a4a",
+    "consumer_executed": false,
+    "aggregate_passed": false,
+    "fixture_correction": "Force-include exact declaration-only libseat C linkage preheader; frozen consumer and assertions unchanged.",
+    "preheader_sha256": "7165bd15cc972d22087c71317fe7cd6997a1d9f9efbfceb91ff581e913a7f545"
+  },
+  "real_broker_runtime": {
+    "execution_sha256": "6317fe3f337ab15fd6eb47edb5bfa335cab21bd7722e2e304beed0f2167dbf95",
+    "fixture_result_sha256": "89e9ed79f14c5896f6af121f5f15f4df1f3c1dc48863a57fe1016c45c7e03285",
+    "Root_qualification_sha256": "764493bcef1b7236c5b56ed1dbd17b9ff270eef85dc3090a7cbca57db68bda95",
+    "consumer_sha256": "2976ed3145590f574476e3fcfef237847722623fedecd1cd14a69de0ea91f423",
+    "actual_consumer_exit": 0,
+    "graphics_devices": 1,
+    "events": 3,
+    "pending_duplicates_closed_after_Rust_capture": 2,
+    "original_service_descriptors_retained": true,
+    "work_close_outer_seconds": [
+      5,
+      8,
+      20
+    ],
+    "actual_seat_disable_tested": false,
+    "service_retirement_qualified": false,
+    "worker_or_output_discovery_qualified": false,
+    "independent_qualification_sha256": "62b167e10f6c297b0190152ae7b6c7e30c10242292b993bea7c46436326d7ee5",
+    "direct_waits": 39,
+    "PIPE_EOFs": 46
+  }
+}

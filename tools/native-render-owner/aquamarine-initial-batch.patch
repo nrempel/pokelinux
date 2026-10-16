@@ -1,0 +1,101 @@
+diff --git a/include/aquamarine/backend/SessionEvents.hpp b/include/aquamarine/backend/SessionEvents.hpp
+--- a/include/aquamarine/backend/SessionEvents.hpp
++++ b/include/aquamarine/backend/SessionEvents.hpp
+@@ -27,5 +27,10 @@
+ };
+ // The FDClosed type is a device-FD fact, NOT full graphics retirement: the owner adapter must
+ // also drain every output/GL/allocator/GBM descendant before acknowledging a lease.
++// Initial batch values synchronously borrow the broker's pending descriptors.
++// Only READY writes caller storage/count. Refusal leaves all bytes unchanged.
++enum class eSessionInitialRenderEventsResult : uint32_t {
++    READY=0, NOT_READY, WRONG_OWNER, CAPACITY, INVALID_PREFIX, TERMINAL
++};
+ enum class eSessionApply : uint32_t { APPLIED_METADATA=0, WRONG_OWNER, INVALID, CAPACITY, TERMINAL };
+ }
+diff --git a/include/aquamarine/backend/Session.hpp b/include/aquamarine/backend/Session.hpp
+--- a/include/aquamarine/backend/Session.hpp
++++ b/include/aquamarine/backend/Session.hpp
+@@ -242,6 +242,9 @@
+         void brokerSeatChanged(bool enabled); // actual libseat callback, control-only
+         void failRenderTransport() noexcept; // terminal failure, caller also invalidates Rust out-of-band
+         std::optional<SSessionPendingEvent> peekPendingRenderEvent() const;
++        // Complete INIT/DEVICE_ADD*/ENUM prefix only; no advance, FD duplication,
++        // close or native work. Borrows expire when serialized control advances.
++        eSessionInitialRenderEventsResult peekInitialRenderEvents(SSessionPendingEvent* out, size_t capacity, size_t* count) const;
+         bool markRenderEventAdmitted(uint64_t sequence); // only after Rust accepted its own FD duplicates
+         // Only a full owner aggregate, never DEVICE_FDS_CLOSED alone, may call this.
+         bool acknowledgeDeviceRetired(const SSessionDeviceRetired& aggregate);
+diff --git a/src/backend/SessionBroker.cpp b/src/backend/SessionBroker.cpp
+--- a/src/backend/SessionBroker.cpp
++++ b/src/backend/SessionBroker.cpp
+@@ -67,6 +67,70 @@
+ std::optional<SSessionPendingEvent> CSession::peekPendingRenderEvent()const{
+  if(!isInputBroker()||!onOwnerThread()||failed||!pendingCount)return {};
+  const auto& p=pending[pendingHead];return SSessionPendingEvent{p.event,p.primary,p.render};
++}
++eSessionInitialRenderEventsResult CSession::peekInitialRenderEvents(SSessionPendingEvent* out, size_t capacity, size_t* count) const {
++    using Result = eSessionInitialRenderEventsResult;
++    if (!onOwnerThread() || !isInputBroker())
++        return Result::WRONG_OWNER;
++    if (failed || shuttingDown)
++        return Result::TERMINAL;
++    if (!pendingCount)
++        return Result::NOT_READY;
++    if (pendingCount > pending.size())
++        return Result::CAPACITY;
++    if (pendingHead >= pending.size())
++        return Result::INVALID_PREFIX;
++
++    constexpr size_t MAX_INITIAL_EVENTS = AQ_SESSION_MAX_DEVICE_LEASES + 2;
++    const auto at = [this](size_t index) -> const SPending& {
++        return pending[(pendingHead + index) % pending.size()];
++    };
++    size_t required = 0;
++    for (size_t i = 0; i < pendingCount; ++i) {
++        if (i >= MAX_INITIAL_EVENTS)
++            return Result::CAPACITY;
++        const auto& entry = at(i);
++        const auto& value = entry.event;
++        if (value.version != AQ_SESSION_EVENT_VERSION || value.session_generation != sessionGeneration ||
++            value.session_sequence != static_cast<uint64_t>(i) + 1 || value.active > 1 || value.boot_vga > 1 ||
++            std::any_of(std::begin(value.reserved), std::end(value.reserved), [](uint32_t v) { return v != 0; }) ||
++            !copiedText(value.seat_name, sizeof(value.seat_name)) || !copiedText(value.device_path, sizeof(value.device_path)) ||
++            entry.primary < -1 || entry.render < -1)
++            return Result::INVALID_PREFIX;
++        if (i == 0) {
++            if (value.type != AQ_SESSION_INIT || !value.seat_name[0] || entry.primary != -1 || entry.render != -1)
++                return Result::INVALID_PREFIX;
++        } else if (value.type == AQ_SESSION_ENUMERATION_DONE) {
++            if (entry.primary != -1 || entry.render != -1)
++                return Result::INVALID_PREFIX;
++            required = i + 1;
++            break;
++        } else if (value.type == AQ_SESSION_DEVICE_ADD) {
++            if (i > AQ_SESSION_MAX_DEVICE_LEASES)
++                return Result::CAPACITY;
++            if (entry.primary < 0 || !value.device_lease_id || !value.device_generation || !value.device_path[0])
++                return Result::INVALID_PREFIX;
++            for (size_t prior = 1; prior < i; ++prior) {
++                const auto& previous = at(prior).event;
++                if (previous.device_lease_id == value.device_lease_id || previous.rdev == value.rdev)
++                    return Result::INVALID_PREFIX;
++            }
++        } else
++            return Result::INVALID_PREFIX;
++    }
++    if (!required)
++        return Result::NOT_READY;
++    if (!out || !count || capacity < required)
++        return Result::CAPACITY;
++
++    // Validation finishes before any caller write. These are copied values and
++    // borrowed FD integers: Rust must capture its own duplicates before marking.
++    for (size_t i = 0; i < required; ++i) {
++        const auto& entry = at(i);
++        out[i] = SSessionPendingEvent{entry.event, entry.primary, entry.render};
++    }
++    *count = required;
++    return Result::READY;
+ }
+ bool CSession::markRenderEventAdmitted(uint64_t sequence){
+  if(!isInputBroker()||!onOwnerThread()||failed||!pendingCount||pending[pendingHead].event.session_sequence!=sequence)return false;

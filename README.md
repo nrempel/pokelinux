@@ -158,6 +158,8 @@ now passes CPU/loader checks, but the matched runtime aborts during backend
 startup before Source/actor; its exact cause remains unresolved. Source GREEN
 and all phone gates remain open.
 
+The [initial broker batch peek](docs/native-render-initial-batch.md) now passes real seatd/udev/virtio descriptor capture after an actual missing-API compile RED and matching AQ15 source/SDK build. Rust captures before queue admission; original service leases stay retained. Main worker startup, Source7 and all phone gates remain open.
+
 Earlier [permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
 passes four touch/graph/PCM groups using root-authored focus. Physical audio,
 production session completion and all phone gates remain open.

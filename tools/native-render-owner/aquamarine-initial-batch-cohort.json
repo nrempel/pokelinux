@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "scope": "Original incremental AQ15 initial broker batch-peek source, after separately published source2 patch. No compatibility path.",
+  "upstream_commit": "f31c47a1b9d300847d8fc3108ad959448103dfc1",
+  "parent_public_patch_sha256": "4428b5e292b096100b827c544b89e712f3cf886a64ce2bc1648b82e5803895ed",
+  "incremental_patch_sha256": "9009a3ec4e9fa01f1f40dba5670cc9e8e2451ee5d662199bfb4c0485492ef75a",
+  "changes": {
+    "include/aquamarine/backend/SessionEvents.hpp": {
+      "before_sha256": "6440340b5f057168cd62ddf2ae57e527f80ebaa6da230e838a9c7ccd5a5ec0a5",
+      "after_sha256": "dd925a34d308096af702cd8c752589bfc0d92a0b5a1945c517d9bc6bcc923d6a",
+      "after_bytes": 2269
+    },
+    "include/aquamarine/backend/Session.hpp": {
+      "before_sha256": "e90b55bdd4da88aa2b0c38363ea174c3ae32755009054a260e714643cd2adb0a",
+      "after_sha256": "1ac721dd15715b3fdc55635240879ba9356a46e79f9d16c7be70278bab540c88",
+      "after_bytes": 14403
+    },
+    "src/backend/SessionBroker.cpp": {
+      "before_sha256": "8e4335b5422dfc15e2b25d9cfa56855e02cefa16e2d990acab29be6161e5461a",
+      "after_sha256": "e3a7e7c16c19542a660e45aeb6442a134690a40a04e8c3311a13b13a47ab89a6",
+      "after_bytes": 15761
+    }
+  },
+  "frozen_consumer_sha256": "2976ed3145590f574476e3fcfef237847722623fedecd1cd14a69de0ea91f423",
+  "frozen_runtime_contract_sha256": "0ac7f0e569b1826f1a4dccd7572d769c126ed2b41368c23f12da3e984d4a7894",
+  "qualified_structural_RED_sha256": "80ebc19fc59fd935ec9cf0b7145bb22508b79137e07463b88e7c7a7f97b8dfe7",
+  "native_build_result_sha256": "d74d7c8ffd6e61d80b4449428869b0386ceca804d542f4cea1800c26ce05039c",
+  "library_sha256": "323e1cb3120162338ee46cde029038677c0abb4214e152ce8848245d4d16b148",
+  "SDK_sha256": "5a89a24cee7c57575dca7137f640f6045fee7342b7b04ed95af4a5255d6bbd87",
+  "real_broker_API_runtime_qualified": true,
+  "Source_ARM_or_phone_qualified": false,
+  "C_linkage_fixture_preheader_sha256": "7165bd15cc972d22087c71317fe7cd6997a1d9f9efbfceb91ff581e913a7f545",
+  "public_reconstruction_receipt_sha256": "c1cf7523c91b072f991bf01db50a8c0d5eaa0d199b54c1978f3db2af2042788b",
+  "runtime_execution_sha256": "6317fe3f337ab15fd6eb47edb5bfa335cab21bd7722e2e304beed0f2167dbf95",
+  "runtime_Root_qualification_sha256": "764493bcef1b7236c5b56ed1dbd17b9ff270eef85dc3090a7cbca57db68bda95"
+}
