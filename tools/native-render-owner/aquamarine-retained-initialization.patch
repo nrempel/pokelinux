@@ -1,0 +1,97 @@
+--- a/include/aquamarine/backend/Backend.hpp
++++ b/include/aquamarine/backend/Backend.hpp
+@@ -7,6 +7,7 @@
+ #include <vector>
+ #include <functional>
+ #include <mutex>
++#include <thread>
+ #include <condition_variable>
+ #include "../allocator/Allocator.hpp"
+ #include "Misc.hpp"
+@@ -111,12 +112,11 @@
+       public:
+         /* Create a backend, with the provided options. May return a single or a multi-backend. */
+         static Hyprutils::Memory::CSharedPointer<CBackend> create(const std::vector<SBackendImplementationOptions>& backends, const SBackendOptions& options);
+-        // Called on render owner with a mirror created and initialized there.
+-        // The control/input broker is never accepted or retained by CBackend.
+-        // This component route requires exactly one mandatory DRM request; no
+-        // headless/Wayland backend substitution on missing atomic capability.
+-        static Hyprutils::Memory::CSharedPointer<CBackend> createForRenderSession(const std::vector<SBackendImplementationOptions>& backends,
+-            const SBackendOptions& options,Hyprutils::Memory::CSharedPointer<CSession> renderMirror);
++        // CPU-only empty holder. Caller MUST retain it before initialization.
++        // Requires an enumerated render-local mirror; mandatory DRM only.
++        static Hyprutils::Memory::CSharedPointer<CBackend> createRenderSessionHolder(
++            const SBackendOptions& options, Hyprutils::Memory::CSharedPointer<CSession> renderMirror);
++        bool initializeRenderSession();
+ 
+         ~CBackend();
+ 
+@@ -177,6 +177,8 @@
+         static Hyprutils::Memory::CSharedPointer<CBackend> createInternal(const std::vector<SBackendImplementationOptions>&,
+             const SBackendOptions&,Hyprutils::Memory::CSharedPointer<CSession> renderMirror);
+ 
++        const std::thread::id renderOwner = std::this_thread::get_id();
++        bool renderSessionHolder = false, renderInitializationAttempted = false, renderInitialized = false, renderStartAttempted = false;
+         bool                                                                   terminate = false;
+ 
+         std::vector<SBackendImplementationOptions>                             implementationOptions;
+--- a/src/backend/Backend.cpp
++++ b/src/backend/Backend.cpp
+@@ -60,10 +60,41 @@
+ SP<CBackend> CBackend::create(const std::vector<SBackendImplementationOptions>& backends,const SBackendOptions& options) {
+     return createInternal(backends,options,nullptr); // DRM has no implicit input/session construction
+ }
+-SP<CBackend> CBackend::createForRenderSession(const std::vector<SBackendImplementationOptions>& backends,const SBackendOptions& options,SP<CSession> mirror) {
+-    if(!mirror||!mirror->isRenderMirror()||!mirror->onOwnerThread()||!mirror->initialEnumerationComplete()||
+-       backends.size()!=1||backends.front().backendType!=AQ_BACKEND_DRM||backends.front().backendRequestMode!=AQ_BACKEND_REQUEST_MANDATORY)return nullptr;
+-    return createInternal(backends,options,mirror);
++SP<CBackend> CBackend::createRenderSessionHolder(const SBackendOptions& options, SP<CSession> mirror) {
++    if (!mirror || !mirror->isRenderMirror() || !mirror->onOwnerThread() || !mirror->initialEnumerationComplete())
++        return nullptr;
++    auto holder = SP<CBackend>(new CBackend()); // Empty CPU holder, no native acquisition.
++    holder->self = holder;
++    holder->session = mirror;
++    holder->options = options;
++    holder->renderSessionHolder = true;
++    SBackendImplementationOptions drm;
++    drm.backendType = AQ_BACKEND_DRM;
++    drm.backendRequestMode = AQ_BACKEND_REQUEST_MANDATORY;
++    holder->implementationOptions = {drm};
++    if (!mirror->bindRenderBackend(holder))
++        return nullptr;
++    return holder;
++}
++
++bool CBackend::initializeRenderSession() {
++    if (!renderSessionHolder || renderInitializationAttempted || renderOwner != std::this_thread::get_id() ||
++        !session || !session->onOwnerThread() || !session->initialEnumerationComplete() || !session->active)
++        return false;
++    renderInitializationAttempted = true; // No implicit retry after any native work.
++    logger = Hyprutils::Memory::makeShared<CLogger>();
++    logger->m_loggerConnection = options.logConnection;
++    logger->m_logFn = options.logFunction;
++    logger->updateLevels();
++    implementations.reserve(session->sessionDevices.size());
++    // The caller retains this outer holder before entering here. Actual child
++    // failure custody is the NEXT separate behavioral RED/repair boundary.
++    const auto initialized = CDRMBackend::attempt(self.lock());
++    for (const auto& child : initialized)
++        implementations.emplace_back(child);
++    idle.fd = timerfd_create(CLOCK_MONOTONIC, TFD_CLOEXEC);
++    renderInitialized = !implementations.empty() && idle.fd >= 0;
++    return renderInitialized;
+ }
+ SP<CBackend> CBackend::createInternal(const std::vector<SBackendImplementationOptions>& backends,const SBackendOptions& options,SP<CSession> mirror) {
+     auto backend = SP<CBackend>(new CBackend());
+@@ -129,6 +160,11 @@
+ }
+ 
+ bool Aquamarine::CBackend::start() {
++    if (renderSessionHolder) {
++        if (renderOwner != std::this_thread::get_id() || !renderInitialized || renderStartAttempted)
++            return false;
++        renderStartAttempted = true;
++    }
+     log(AQ_LOG_DEBUG, "Starting the Aquamarine backend!");
+ 
+     int  started = 0;

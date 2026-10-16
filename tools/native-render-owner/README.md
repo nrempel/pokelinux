@@ -168,3 +168,11 @@ The same report separately qualifies `aq-retained-initialization-header-control.
 Both missing API names are mandatory. `main-startup-runtime-oracle.py` also binds
 retained-before-initialize ordering and bounded EOF-framed startup control; it
 remains source only. Neither structural compile RED proves native failure custody.
+
+`aquamarine-retained-initialization.patch` applies after `aquamarine.patch` and
+`aquamarine-initial-batch.patch`; its cohort pins the exact two changed files,
+compiled library/SDK and unchanged frozen interface consumers. It removes the
+old factory without an alias and splits empty outer-holder creation from native
+initialization. The matching build passes the ten existing CPU groups and public
+API syntax checks. Actual partial-child, mandatory-start and subordinate-factory
+failure custody remain deliberately unqualified for the next behavioral RED.

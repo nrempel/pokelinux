@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "scope": "Incremental original AQ15 deferred outer holder/initializer source; build and public API syntax qualified only. Child/start/subfactory native failure custody still unqualified.",
+  "upstream_commit": "f31c47a1b9d300847d8fc3108ad959448103dfc1",
+  "parent_public_patches_sha256": [
+    "4428b5e292b096100b827c544b89e712f3cf886a64ce2bc1648b82e5803895ed",
+    "9009a3ec4e9fa01f1f40dba5670cc9e8e2451ee5d662199bfb4c0485492ef75a"
+  ],
+  "incremental_patch_sha256": "f1a11f3a7915f0e5f58febf221547c2d84780e449de4ce409530896d2a8465e7",
+  "changes": {
+    "include/aquamarine/backend/Backend.hpp": {
+      "before_sha256": "ea5885b9daeac65e065a5d563eb5caf568768e325b0ee97eca9cda1ba4b292c4",
+      "after_sha256": "4dc58de077c7604f42fa712ef1594dd94a8aba672f013dcbc7e490801626879c",
+      "after_bytes": 9399
+    },
+    "src/backend/Backend.cpp": {
+      "before_sha256": "a1666da8a2e525cf08232146317e9803ec97efdba6ba4ab31195fd71d584a91a",
+      "after_sha256": "95034d007691825fe88ef918e9bf2d8f214c0e9077c9a67909055637fa86ebc5",
+      "after_bytes": 15170
+    }
+  },
+  "qualified_structural_RED_sha256": "ff4c5e9e07289a72133f3b35a7cf8c2354a440c1951ea38d0f888c098ac502ce",
+  "native_build_execution_sha256": "3f1c087b5f91665fa5d3b3eb29633049a83ad924af95fd03bf9ac6136146f44c",
+  "native_build_result_sha256": "8694ee15491e2addb5a278469b533960c343a0d738ca934638d9fd0188248aaf",
+  "library": {
+    "bytes": 1839272,
+    "sha256": "a30c010d97a88a1620a9b919d5443c26e4ebb5bafe3a755ebb05dee50fcdcb1e"
+  },
+  "SDK": {
+    "bytes": 2027520,
+    "sha256": "bd481ff9f975a065c8667b7962fc1cc2da9fd3ab195071f02b3365b1fe0150ad"
+  },
+  "frozen_TUs": {
+    "retained_compile_control": {
+      "source": {
+        "bytes": 709,
+        "sha256": "82b43316940b2356d0146d6f05787aeeb5ce1b0f5ff8eeb64aceb8e6665bd8a1"
+      },
+      "actual_exit": 0,
+      "diagnostic_bytes": 0
+    },
+    "retained_compile_members": {
+      "source": {
+        "bytes": 1269,
+        "sha256": "871440874e3c4a2df0bcca4673fd03d840833a9c78408f9fc914df4c784141bd"
+      },
+      "actual_exit": 0,
+      "diagnostic_bytes": 0
+    }
+  },
+  "original_CPU_groups_passed": 10,
+  "CPU_fixture_changes": 0,
+  "public_reconstruction_receipt_sha256": "6ae4509726a4fa23d09a96a337e4329c26605381e16f988d61afed8166c8e546",
+  "empty_holder_runtime_qualified": false,
+  "native_initialization_or_child_retention_runtime_qualified": false,
+  "mandatory_start_failure_custody_qualified": false,
+  "subordinate_native_factory_cleanup_qualified": false,
+  "main_or_Source_or_ARM_or_phone_qualified": false,
+  "removed_factory": "createForRenderSession",
+  "compatibility_alias_present": false,
+  "Root_build_qualification_sha256": "c1dcf0593060552839f37316eb9290df93894b96cfc84246f626b6550121e43b",
+  "independent_build_qualification_sha256": "e52751463dfd58a4aadef078fbb371023ee2c293489a9632d063333ea79a1152",
+  "direct_waits": 53,
+  "PIPE_EOFs": 53,
+  "all_original_cutoffs_and_closure_qualified": true
+}

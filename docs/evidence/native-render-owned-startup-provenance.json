@@ -94,5 +94,54 @@
     "PIPE_EOFs": 37,
     "original_bounds_and_closure_qualified": true,
     "native_failure_custody_GREEN": false
+  },
+  "deferred_outer_holder_build": {
+    "native_build_execution_sha256": "3f1c087b5f91665fa5d3b3eb29633049a83ad924af95fd03bf9ac6136146f44c",
+    "native_build_result_sha256": "8694ee15491e2addb5a278469b533960c343a0d738ca934638d9fd0188248aaf",
+    "library": {
+      "bytes": 1839272,
+      "sha256": "a30c010d97a88a1620a9b919d5443c26e4ebb5bafe3a755ebb05dee50fcdcb1e"
+    },
+    "SDK": {
+      "bytes": 2027520,
+      "sha256": "bd481ff9f975a065c8667b7962fc1cc2da9fd3ab195071f02b3365b1fe0150ad"
+    },
+    "frozen_TUs": {
+      "retained_compile_control": {
+        "source": {
+          "bytes": 709,
+          "sha256": "82b43316940b2356d0146d6f05787aeeb5ce1b0f5ff8eeb64aceb8e6665bd8a1"
+        },
+        "actual_exit": 0,
+        "diagnostic_bytes": 0
+      },
+      "retained_compile_members": {
+        "source": {
+          "bytes": 1269,
+          "sha256": "871440874e3c4a2df0bcca4673fd03d840833a9c78408f9fc914df4c784141bd"
+        },
+        "actual_exit": 0,
+        "diagnostic_bytes": 0
+      }
+    },
+    "original_CPU_groups_passed": 10,
+    "CPU_fixture_changes": 0,
+    "public_reconstruction_receipt_sha256": "6ae4509726a4fa23d09a96a337e4329c26605381e16f988d61afed8166c8e546",
+    "classification": "SOURCE_BUILD_AND_PUBLIC_API_SYNTAX_GREEN_ONLY",
+    "native_failure_runtime_executed": false,
+    "main_or_Rust_executor_executed": false,
+    "Root_build_qualification_sha256": "c1dcf0593060552839f37316eb9290df93894b96cfc84246f626b6550121e43b",
+    "independent_build_qualification_sha256": "e52751463dfd58a4aadef078fbb371023ee2c293489a9632d063333ea79a1152",
+    "direct_waits": 53,
+    "PIPE_EOFs": 53,
+    "all_original_cutoffs_and_closure_qualified": true,
+    "build_receipt_pins": {
+      "execution.json": "3f1c087b5f91665fa5d3b3eb29633049a83ad924af95fd03bf9ac6136146f44c",
+      "selection.json": "0518e67ab17b3a758d1e969872858d92fa1e83cf4f9510831ed702e3ea6ff9d3",
+      "command.json": "cb074ca1c9bc8d41c62a23cf9d2819e5932fa834a41e7da720e2388c77a9815e",
+      "boot-result.json": "a336805f555a8fe8526b973f6b24a4fa651e8253a6ec11f8227e102846679916",
+      "guest-out/guest-result.json": "ac8de29a4dea076d7d8d14b949eb1c17ff844cc22610bc288afdbd3f562cc1bb",
+      "guest-out/build-output/build-result.json": "8694ee15491e2addb5a278469b533960c343a0d738ca934638d9fd0188248aaf"
+    }
   }
 }

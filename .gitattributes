@@ -3,3 +3,4 @@ tools/native-render-import/hyprland.patch -whitespace
 tools/native-render-owner/aquamarine.patch -whitespace
 tools/native-render-owner/hyprland-executor-aq15.patch -whitespace
 tools/native-render-owner/aquamarine-initial-batch.patch -whitespace
+tools/native-render-owner/aquamarine-retained-initialization.patch -whitespace

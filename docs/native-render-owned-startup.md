@@ -80,3 +80,36 @@ The CPU monitor/renderer continuation, actual immutable frame/output route,
 authentic native StopRetire and aggregate drain, current GL/Stop/finalize,
 unchanged seven-case Source replay, normal cold app/audio/PCM, ARM, matched Google
 kernel and all physical-phone/carrier gates remain open. Zero phones qualify.
+
+## Compiled deferred outer holder
+
+The [incremental source patch](../tools/native-render-owner/aquamarine-retained-initialization.patch)
+now replaces `createForRenderSession` with the empty CPU holder factory
+`createRenderSessionHolder(options, mirror)` and an explicit one-attempt
+`initializeRenderSession()`. The worker caller retains the returned holder
+before initialization. The holder validates a render-local mirror and selects
+one mandatory DRM route; there is no old factory alias. Start also refuses a
+second attempt on this owned route.
+
+After the actual missing-API RED, a separate native x86 KVM build compiles the
+source and links the matching AQ15 library/SDK. Both unchanged frozen AQ TUs
+compile against that generated SDK with strict zero-diagnostic syntax success.
+All ten unchanged CPU groups also pass, covering their existing gate/mirror
+boundaries. Those groups never invoke the new native factory/initializer; this
+is build and public-interface GREEN only. It does not establish native acquisition
+or failure-custody behavior. No Rust executor, actual broker, compositor or native
+failure hook executes in this build. All six required affected CPP object
+records are retained. Each frozen TU selects the same eight generated private
+headers among 335 resolved paths. Independent qualification verifies all 53 direct
+waits and 53 merged PIPE EOFs within the original bounds, normal QMP shutdown,
+QEMU/CLI0, exact container absence and unchanged locked inputs. The published
+[cohort](../tools/native-render-owner/aquamarine-retained-initialization-cohort.json)
+reconstructs every compiled/header byte from the public patch chain. No library,
+SDK binary, raw log or private planning note is published.
+
+The outer-holder change leaves partial DRM child, mandatory-start cleanup and
+subordinate factory behavior as the next actual behavioral RED. The forced
+post-acquisition and mandatory-start cases must observe genuine weak identities
+and destructor entry, without fixture strong references that hide early teardown.
+Retain the original failure paths until those failures are observed, then repair
+child custody. Normal rendering and every hardware gate above remain open.
