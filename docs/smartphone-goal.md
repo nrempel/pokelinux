@@ -2,6 +2,8 @@
 
 The latest [initial broker batch checkpoint](native-render-initial-batch.md) now passes real seatd/udev/virtio descriptor capture after actual structural compile RED and a matching native AQ15 build. Rust capture precedes queue admission and pending-duplicate closure; original service leases stay retained. Main worker startup, Source7 and all physical-phone requirements remain open.
 
+The [owned startup checkpoint](native-render-owned-startup.md) now retains actual structural compile REDs for the missing public compositor control member and deferred backend factory/initializer. Source review exposes factory failure paths that can drop partial native graphs; retained-holder initialization and actual failure-custody tests are the next gate. No main startup, Source or phone GREEN follows.
+
 The later [policy-directory correction](native-session-owner.md#policy-directory-correction)
 passes15 preflight cases after five actual acceptance failures and two separate
 native storage-worker groups. The example now selects an existing root0700

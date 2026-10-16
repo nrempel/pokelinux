@@ -154,3 +154,17 @@ force-includes `initial-batch-c-headers.hpp` for real libseat C linkage; this ad
 no function wrapper/interposer. `initial-batch-runtime-oracle.py` records the
 executed separate runtime predicate. Preserve the historical AQ15
 and Frame fixtures; no compatibility or runtime fallback is added.
+
+The [owned startup checkpoint](../../docs/native-render-owned-startup.md) adds
+`main-startup-existing-header-control.cpp`, `main-startup-public-member.cpp` and
+`main-startup-compile-oracle.py`, the exact executed original-source structural
+RED inputs/classifier. `main-startup-runtime-oracle.py` is separately frozen
+source only; no execution or implementation GREEN is claimed. Actual deferred
+factory acquisition, failure custody and main worker startup remain required.
+
+The same report separately qualifies `aq-retained-initialization-header-control.cpp`,
+`aq-retained-initialization-members.cpp` and
+`aq-retained-initialization-compile-oracle.py` against the actual historical SDK.
+Both missing API names are mandatory. `main-startup-runtime-oracle.py` also binds
+retained-before-initialize ordering and bounded EOF-framed startup control; it
+remains source only. Neither structural compile RED proves native failure custody.

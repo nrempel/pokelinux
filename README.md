@@ -160,6 +160,8 @@ and all phone gates remain open.
 
 The [initial broker batch peek](docs/native-render-initial-batch.md) now passes real seatd/udev/virtio descriptor capture after an actual missing-API compile RED and matching AQ15 source/SDK build. Rust captures before queue admission; original service leases stay retained. Main worker startup, Source7 and all phone gates remain open.
 
+The [owned startup checkpoint](docs/native-render-owned-startup.md) now retains actual structural compile REDs for the missing public compositor control member and deferred backend factory/initializer. Source review exposes factory failure paths that can drop partial native graphs; retained-holder initialization and actual failure-custody tests are the next gate. No main startup, Source or phone GREEN follows.
+
 Earlier [permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
 passes four touch/graph/PCM groups using root-authored focus. Physical audio,
 production session completion and all phone gates remain open.

@@ -1,0 +1,98 @@
+{
+  "schema": 1,
+  "classification": "STRUCTURAL_COMPILATION_RED_ONLY",
+  "public_source_base": "e126377b2158c3ed8843e9d7c4ded44e915e69ae",
+  "actual_selection_base": "e11cffe581c07cbb051ef7bb1cdd2423ed2f295c",
+  "pins": {
+    "execution.json": "05e021da86accd2d258381dcca5fec11f1937d53ed8db282f8fb63d00c4c8b2b",
+    "selection.json": "3a5b1fdcb5aced2fa556d41326baeff314b7beb2485cd7df45b244c715e90406",
+    "command.json": "a5af9d8d02e9f66ebfaf9d6440849afc8926d6b47d407ceb260ccd9213b2b05f",
+    "component/test-result.json": "2c14711bbaaccd3e25bb3c95a20f919eec02e306d9465b85e8043be7f71545b2",
+    "result.json": "41855149ff85905cd6b79a528a2f54fa8af8858820414b525977493985fc0bf2",
+    "boot-result.json": "3594bada72c1389e28eeaad1d9abd70be20e4ee22dbdf92af685cfff39635ed0",
+    "bootstrap-result.json": "e9188a2ed476808462becd127537a2545c8184fbefad9373082c5d1e8cd93ecf"
+  },
+  "root_qualification_sha256": "86b360f06290eeb9ae5e2b68429a0b9a106dc92c13a6bbcd040b39e655a05b02",
+  "independent_qualification_sha256": "97ce5b52c6a14aef921c933b888a4472a7e904e3b55352cdec800b1d9c7398d1",
+  "input_sources": {
+    "main-startup-existing-header-control.cpp": {
+      "sha256": "1e24ee3d9ec1bbce0a16b223e483a411ccd5a6fff2ee7d8668ac2cf242262c43",
+      "bytes": 708
+    },
+    "main-startup-public-member.cpp": {
+      "sha256": "b1d03f0610e52b47ec02baf1d759d41049538342a041168dac2937651b6951f5",
+      "bytes": 1048
+    },
+    "main-startup-compile-oracle.py": {
+      "sha256": "0f28c7261638b17ffad7b8286689b5c48e01338ec700ed4b0b01c4fc22ada509",
+      "bytes": 2831
+    },
+    "main-startup-runtime-oracle.py": {
+      "bytes": 13462,
+      "sha256": "c428047dd5a1a309eccf3db9ab7a9e5c4e3eb3134e80042d56bfb785e82295eb"
+    }
+  },
+  "actual_baseline_syntax_exit": 0,
+  "baseline_diagnostic_bytes": 0,
+  "actual_target_syntax_exit": 1,
+  "target_errors": 2,
+  "target_categories": [
+    "MISSING_PUBLIC_MEMBER",
+    "DEPENDENT_INVALID_DECLTYPE"
+  ],
+  "diagnostics_sha256": "48054153105e2d548919b6d29c7ec0b09080511c34bea7c2d08564e9aa8e2569",
+  "SDK_sha256": "ec4840158c8dee30216365785a3e22ae0f8a136f503940fd13715b58720838a8",
+  "SDK_regular_files": 530,
+  "SDK_symlinks": 2,
+  "private_headers_per_TU": 86,
+  "resolved_dependency_paths_per_TU": 559,
+  "direct_waits": 30,
+  "PIPE_EOFs": 37,
+  "all_original_cutoffs_and_closure_qualified": true,
+  "runtime_oracle_status": "FROZEN_SOURCE_ONLY_UNEXECUTED",
+  "main_startup_GREEN": false,
+  "native_custody_failure_GREEN": false,
+  "worker_or_Source_GREEN": false,
+  "UI_or_frame_GREEN": false,
+  "phone_accessed": false,
+  "phones_qualified": 0,
+  "retained_initialization_structural_RED": {
+    "classification": "STRUCTURAL_COMPILATION_RED_ONLY",
+    "pins": {
+      "execution.json": "8d40e41fdd67abf07fb1f7bd8da5c9589b3c1d7a85d34c4563403272615f03cc",
+      "selection.json": "8aed1256558dc4a21bff652a0ff3e60905cb79bbdf87d2055d41eb6a5c3a5e1c",
+      "command.json": "09f85f90c6d88f3bef3c1597fb5ce40c596a2a5ecb8faf3a559fd9221840d36d",
+      "component/test-result.json": "2f2ae809107cf562c9aef50cd4815c0aed6a7a50cf2befd941dd2df8a274a12e",
+      "result.json": "9645e8782682efe2ffb1e6cdf3496f353763576527ee8ab68833c0992af3291e",
+      "boot-result.json": "904ac56a41985240420d89d58697148bea21e98ccd375ed731134d27e8c5fe4b",
+      "bootstrap-result.json": "134b6647e54abb8e8eb43198eeeb1d84a1f18b78fefb733cbfae4267001d83f9"
+    },
+    "Root_qualification_sha256": "ff4c5e9e07289a72133f3b35a7cf8c2354a440c1951ea38d0f888c098ac502ce",
+    "independent_qualification_sha256": "55aebe5c7a3cdd23b0769a31186970fc026ad4a11cf1439fc5685a3a99b9a961",
+    "input_sources": {
+      "aq-retained-initialization-header-control.cpp": {
+        "bytes": 709,
+        "sha256": "82b43316940b2356d0146d6f05787aeeb5ce1b0f5ff8eeb64aceb8e6665bd8a1"
+      },
+      "aq-retained-initialization-members.cpp": {
+        "bytes": 1269,
+        "sha256": "871440874e3c4a2df0bcca4673fd03d840833a9c78408f9fc914df4c784141bd"
+      },
+      "aq-retained-initialization-compile-oracle.py": {
+        "bytes": 3288,
+        "sha256": "acf87a9abcabe718dc81f6d0f60db25ef1fdd0e099b9fa7897cb8035c3391bba"
+      }
+    },
+    "baseline_syntax_exit": 0,
+    "baseline_diagnostic_bytes": 0,
+    "target_syntax_exit": 1,
+    "target_errors": 4,
+    "both_missing_members_required": true,
+    "private_headers_per_TU": 8,
+    "resolved_dependency_paths_per_TU": 335,
+    "direct_waits": 30,
+    "PIPE_EOFs": 37,
+    "original_bounds_and_closure_qualified": true,
+    "native_failure_custody_GREEN": false
+  }
+}
