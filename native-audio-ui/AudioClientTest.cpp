@@ -116,6 +116,28 @@ private slots:
  void decreasingGraphObservationIsRefused() {
   Peer peer;AudioClient client(peer.server.fullServerName(),getuid());QTRY_VERIFY(client.canChoose());peer.epoch=0;QTRY_VERIFY(client.canReconnect());QVERIFY(client.routes().isEmpty());
  }
+ void readonlyGestureQueuesOneAcquire(){
+  Peer p;bool hold=false,held=false;p.custom=[&](const QJsonObject&q){if(hold&&q.value("op")=="status"){held=true;return true;}return false;};AudioClient c(p.server.fullServerName(),getuid());QTRY_VERIFY_WITH_TIMEOUT(c.canChoose(),1500);hold=true;QTRY_VERIFY_WITH_TIMEOUT(held,1500);QVERIFY(c.canChoose());QTest::qWait(120);QVERIFY(c.canChoose());c.select("media-a7");c.select("media-z2");QVERIFY(!c.canChoose());QCOMPARE(p.count("acquire"),0);hold=false;p.send(p.reply());QTRY_COMPARE_WITH_TIMEOUT(p.count("acquire"),1,1500);QTRY_COMPARE_WITH_TIMEOUT(c.applied(),QString("media-a7"),1500);QTest::qWait(300);QCOMPARE(p.count("acquire"),1);QCOMPARE(p.count("route"),0);
+ }
+ void readonlyQueuePreservesAppliedUntilSend(){
+  Peer p;bool hold=false,held=false;p.custom=[&](const QJsonObject&q){if(hold&&q.value("op")=="status"){held=true;return true;}return false;};AudioClient c(p.server.fullServerName(),getuid());QTRY_VERIFY_WITH_TIMEOUT(c.canChoose(),1500);c.select("media-a7");QTRY_COMPARE_WITH_TIMEOUT(c.applied(),QString("media-a7"),1500);hold=true;QTRY_VERIFY_WITH_TIMEOUT(held,1500);QVERIFY(c.canChoose());c.select("media-z2");c.select("media-a7");QCOMPARE(c.applied(),QString("media-a7"));QCOMPARE(p.count("route"),0);hold=false;p.send(p.reply());QTRY_COMPARE_WITH_TIMEOUT(p.count("route"),1,1500);QTRY_COMPARE_WITH_TIMEOUT(c.applied(),QString("media-z2"),1500);QTest::qWait(300);QCOMPARE(p.count("route"),1);
+ }
+ void queuedChoiceCancelledByFreshUnavailable(){
+  Peer p;bool hold=false,held=false;p.custom=[&](const QJsonObject&q){if(hold&&q.value("op")=="status"){held=true;return true;}return false;};AudioClient c(p.server.fullServerName(),getuid());QTRY_VERIFY_WITH_TIMEOUT(c.canChoose(),1500);hold=true;QTRY_VERIFY_WITH_TIMEOUT(held,1500);QVERIFY(c.canChoose());c.select("media-a7");p.available=false;hold=false;p.send(p.reply());QTRY_COMPARE_WITH_TIMEOUT(c.status(),QString("Audio unavailable; service recovery required"),1500);QTest::qWait(300);QCOMPARE(p.count("acquire"),0);QVERIFY(!c.canChoose());
+ }
+ void queuedChoiceRechecksFreshCatalog(){
+  Peer p;bool hold=false,held=false;p.custom=[&](const QJsonObject&q){if(hold&&q.value("op")=="status"){held=true;return true;}return false;};AudioClient c(p.server.fullServerName(),getuid());QTRY_VERIFY_WITH_TIMEOUT(c.canChoose(),1500);hold=true;QTRY_VERIFY_WITH_TIMEOUT(held,1500);QVERIFY(c.canChoose());c.select("media-z2");auto value=p.reply();value["media_routes"]=QJsonArray{QJsonObject{{"id","media-a7"},{"label","Speaker"}}};p.send(value);QTRY_COMPARE_WITH_TIMEOUT(c.routes().size(),1,1500);QCOMPARE(p.count("acquire"),0);p.socket->abort();
+ }
+ void queuedChoiceExpiresWithoutSend(){
+  Peer p;bool hold=false,held=false;p.custom=[&](const QJsonObject&q){if(hold&&q.value("op")=="status"){held=true;return true;}return false;};AudioClient c(p.server.fullServerName(),getuid());QTRY_VERIFY_WITH_TIMEOUT(c.canChoose(),1500);hold=true;QTRY_VERIFY_WITH_TIMEOUT(held,1500);QVERIFY(c.canChoose());c.select("media-a7");QTest::qWait(1150);QTRY_VERIFY_WITH_TIMEOUT(c.canReconnect(),1500);hold=false;c.reconnect();QTRY_VERIFY_WITH_TIMEOUT(c.canChoose(),1500);QTest::qWait(300);QCOMPARE(p.count("acquire"),0);QVERIFY(c.requested().isEmpty());
+ }
+ void queuedChoiceDisconnectedNeverReplays(){
+  Peer p;bool hold=false,held=false;p.custom=[&](const QJsonObject&q){if(hold&&q.value("op")=="status"){held=true;return true;}return false;};AudioClient c(p.server.fullServerName(),getuid());QTRY_VERIFY_WITH_TIMEOUT(c.canChoose(),1500);hold=true;QTRY_VERIFY_WITH_TIMEOUT(held,1500);QVERIFY(c.canChoose());c.select("media-a7");p.socket->abort();QTRY_VERIFY_WITH_TIMEOUT(c.canReconnect(),1500);hold=false;c.reconnect();QTRY_COMPARE_WITH_TIMEOUT(p.connections,2,1500);QTRY_VERIFY_WITH_TIMEOUT(c.canChoose(),1500);QTest::qWait(300);QCOMPARE(p.count("acquire"),0);
+ }
+ void queuedEffectReplyKeepsOriginalInputDeadline(){
+  Peer p;bool hold=false,held=false;p.custom=[&](const QJsonObject&q){if(hold&&q.value("op")=="status"){held=true;return true;}if(q.value("op")=="acquire"){QThread::msleep(600);p.desired=QJsonArray{QJsonArray{largeLease,"media","media-a7"}};++p.intent;auto value=p.reply(largeLease);value.remove("media_routes");p.send(value);return true;}return false;};AudioClient c(p.server.fullServerName(),getuid());QTRY_VERIFY_WITH_TIMEOUT(c.canChoose(),1500);hold=true;QTRY_VERIFY_WITH_TIMEOUT(held,1500);QVERIFY(c.canChoose());c.select("media-a7");QTest::qWait(600);hold=false;p.send(p.reply());QTRY_COMPARE_WITH_TIMEOUT(p.count("acquire"),1,2500);QTRY_VERIFY_WITH_TIMEOUT(c.canReconnect(),1500);QVERIFY(c.applied().isEmpty());QTest::qWait(300);QCOMPARE(p.count("acquire"),1);QCOMPARE(p.connections,1);
+ }
+
 };
 QTEST_GUILESS_MAIN(AudioClientTest)
 #include "AudioClientTest.moc"

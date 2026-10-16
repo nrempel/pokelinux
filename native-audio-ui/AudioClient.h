@@ -22,7 +22,7 @@ public:
  QString requested() const { return m_requested; }
  QString applied() const { return m_applied; }
  QString status() const { return m_status; }
- bool canChoose() const { return m_online && m_available && m_pending.isEmpty(); }
+ bool canChoose() const { return m_online && m_available && m_queued.isEmpty() && (m_pending.isEmpty() || m_pending=="status"); }
  bool canReconnect() const { return !m_online && m_socket.state()==QLocalSocket::UnconnectedState; }
  Q_INVOKABLE void reconnect();
  Q_INVOKABLE void select(const QString &id);
@@ -31,7 +31,9 @@ signals:
 private:
  static qint64 boottime();
  void fail(const QString &message);
- void request(const QJsonObject &message, const QString &kind);
+ void request(const QJsonObject &message, const QString &kind, qint64 originalUntil=0);
+ void sendSelection(const QString &id, qint64 originalUntil);
+ void dispatchQueued();
  void receive();
  bool accept(const QJsonObject &reply);
  bool expired() const;
@@ -40,7 +42,8 @@ private:
  QLocalSocket m_socket;
  QTimer m_poll, m_watch;
  QByteArray m_input;
- QString m_pending, m_requested, m_applied;
+ QString m_pending, m_requested, m_applied, m_queued;
+ qint64 m_queuedUntil=0;
  QString m_status=QStringLiteral("Audio disconnected");
  QVariantList m_routes;
  qint64 m_deadline=0, m_lease=-1, m_intent=-1, m_epoch=-1, m_revision=-1;

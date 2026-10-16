@@ -51,6 +51,7 @@ AudioClient::~AudioClient() { m_closing=true;m_poll.stop();m_watch.stop();m_sock
 void AudioClient::fail(const QString &message) {
  if(m_closing) return;
  m_closing=true;m_poll.stop();m_watch.stop();m_socket.abort();m_input.clear();m_pending.clear();
+ m_queued.clear();m_queuedUntil=0;
  m_online=false;m_available=false;m_lease=-1;m_intent=-1;m_epoch=-1;m_revision=-1;
  m_routes.clear();m_requested.clear();m_applied.clear();m_status=message;m_closing=false;emit changed();
 }
@@ -60,11 +61,13 @@ void AudioClient::reconnect() {
  m_deadline=now+requestNs;m_pending="connect";m_status="Connecting to audio";m_watch.start();
  m_socket.connectToServer(m_path,QIODevice::ReadWrite);emit changed();
 }
-void AudioClient::request(const QJsonObject &message,const QString &kind) {
+void AudioClient::request(const QJsonObject &message,const QString &kind,qint64 originalUntil) {
  if(!m_online || !m_pending.isEmpty()) return;
  const auto now=boottime();if(now<0) { fail("Audio clock unavailable");return; }
  const QByteArray bytes=QJsonDocument(message).toJson(QJsonDocument::Compact)+'\n';
- m_deadline=now+requestNs;m_pending=kind;m_watch.start();
+ m_deadline=originalUntil>0?originalUntil:now+requestNs;
+ if(now>=m_deadline) { fail("Audio request expired; reconnect to inspect");return; }
+ m_pending=kind;m_watch.start();
  if(m_socket.write(bytes)!=bytes.size()) { fail("Audio request could not be sent");return; }
  emit changed();
 }
@@ -72,9 +75,24 @@ void AudioClient::select(const QString &id) {
  if(!canChoose()) return;
  bool known=false;for(const auto &route:m_routes) if(route.toMap().value("id").toString()==id) known=true;
  if(!known) return;
- m_requested=id;m_applied.clear();m_status="Output requested";emit changed();
- if(m_lease<0) request({{"op","acquire"},{"role","media"},{"route",id}},"acquire");
- else request({{"op","route"},{"lease",m_lease},{"route",id}},"route");
+ const auto now=boottime();
+ if(now<0 || now>std::numeric_limits<qint64>::max()-requestNs) { fail("Audio clock unavailable");return; }
+ const auto until=now+requestNs;
+ if(m_pending=="status") { m_queued=id;m_queuedUntil=until;emit changed();return; }
+ sendSelection(id,until);
+}
+void AudioClient::sendSelection(const QString &id,qint64 originalUntil) {
+ const auto now=boottime();if(now<0 || now>=originalUntil) return;
+ m_requested=id;m_applied.clear();m_status="Output requested";
+ if(m_lease<0) request({{"op","acquire"},{"role","media"},{"route",id}},"acquire",originalUntil);
+ else request({{"op","route"},{"lease",m_lease},{"route",id}},"route",originalUntil);
+}
+void AudioClient::dispatchQueued() {
+ if(m_queued.isEmpty()) return;
+ const auto id=m_queued;const auto until=m_queuedUntil;m_queued.clear();m_queuedUntil=0;
+ const auto now=boottime();if(now<0 || now>=until || !m_online || !m_available || !m_pending.isEmpty()) return;
+ bool known=false;for(const auto &route:m_routes) if(route.toMap().value("id").toString()==id) known=true;
+ if(known) sendSelection(id,until);
 }
 void AudioClient::receive() {
  if(m_pending.isEmpty() || m_pending=="connect" || expired()) { fail("Audio reply arrived outside its request");return; }
@@ -84,13 +102,13 @@ void AudioClient::receive() {
  if(newline!=m_input.size()-1 || expired()) { fail("Audio reply framing refused");return; }
  QJsonParseError error{};const auto document=QJsonDocument::fromJson(m_input.left(newline),&error);
  if(error.error!=QJsonParseError::NoError || !document.isObject() || !accept(document.object()) || expired()) { fail("Audio reply refused");return; }
- m_input.clear();m_pending.clear();m_watch.stop();emit changed();
+ m_input.clear();m_pending.clear();m_watch.stop();dispatchQueued();emit changed();
 }
 bool AudioClient::accept(const QJsonObject &reply) {
  if(!reply.value("ok").isBool()) return false;
  if(!reply.value("ok").toBool()) {
   if(!reply.value("error").isString()) return false;
-  m_applied.clear();m_status="Audio request refused";return true;
+  m_queued.clear();m_queuedUntil=0;m_applied.clear();m_status="Audio request refused";return true;
  }
  if(integer(reply.value("peer_uid"))!=qint64(getuid()) || reply.value("phase").toString()!="running") return false;
  const auto application=reply.value("application").toString();

@@ -18,6 +18,12 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The [Sounds input repair](native-audio-readonly-input.md) prevents read-only
+polls from cancelling a press. Seven real socket REDs precede18 behavioral host
+passes plus Qt setup/cleanup. One queued explicit choice retains its original
+deadline and fresh-state checks. The normal ARM tracer uses this exact cohort;
+its complete UI/audio/theme result remains separate from the host proof.
+
 The [media-only Rust audio client](native-audio-client.md) is now qualified as a
 standalone transport:24 default host passes/one root-only ignored case,25 in
 isolated root, and ARM compilation. Two real original-deadline failures precede

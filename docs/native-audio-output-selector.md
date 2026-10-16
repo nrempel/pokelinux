@@ -55,6 +55,11 @@ intent/epoch and no extra acquire, route or reconcile.
 
 ## Sounds client
 
+The [read-only input repair](native-audio-readonly-input.md) now adds seven
+held-status controls:18 host behavioral cases plus Qt setup/cleanup pass.
+It preserves the normal press and original deadline; QML/main are unchanged.
+The eleven-case evidence below retains its original selection.
+
 The presentation uses Qt/QML and the Rust service remains the route authority.
 One persistent authenticated connection owns one Media lease. The event loop
 uses nonblocking `QLocalSocket`, checks the service UID through `SO_PEERCRED`,

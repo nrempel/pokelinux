@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "scope": "Current-stream Sounds read-only polling repair; strict actual host sockets",
+  "selection_sha256": "ef0672b6c48ff696fd4abbdaae0d2cbc1283b27daaaf02664342947855f2c338",
+  "review_sha256": "0e1fd310cf962731ad3b2ef4dd6f79c730d83cbf82f3cf634d461b813e1ce2a3",
+  "preimplementation_contract_sha256": "2a941f30b1e92bb02c95c77965857ec380a2373ea284f8ec60937cdc12215a1c",
+  "source_files": {
+    "native-app/PhoneAppearance.qml": "705ab25799cba18095a76f4fb47e70eb10099ca035426d7e4400fa9cef8452bc",
+    "native-app/PhoneAppearanceClient.cpp": "7a2a5d0d5f7a5012dd724596a1bf1f96d8fa9d3242c913933d8cf69fe9de34d9",
+    "native-app/PhoneAppearanceClient.h": "b7b12f9a1d335e9036dc065ea2218ca107d447f57e029fef674941e1520b4e92",
+    "native-app/PhoneTheme.qml": "67caaa853a01ac2108f16bff88009d026779da4df54961b11d3d82a1d2ed2fd1",
+    "native-app/PhoneThemeFiles.cpp": "57b39dcf95a8d28b65cced5d730a13e5eab8726edc2e889d936acdecac668664",
+    "native-app/PhoneThemeFiles.h": "9bfdbb38ed23e4b03491073038264596ec3825b91e83d3b05eafd941623ecc1a",
+    "native-app/ThemePalette.js": "677d9faa94873dd6aceee81a900f179600f7a699defe1c4304760beeccd26a33",
+    "native-app/appearance-client-tests/CMakeLists.txt": "287c36a3854a8bdef11d0d92f45a31892836ce19e2a004fb9aef23cbdd5d9579",
+    "native-app/appearance-client-tests/process.cpp": "95e5c11905062a891393f9ee7d0633cd8278f07f1d0fce82b7db1f2a9c81f5d7",
+    "native-audio-ui/AudioClient.cpp": "673d2113a5402b0de583b1f3e6bbb352ecd3ec2ef19b9628ac24309379e80095",
+    "native-audio-ui/AudioClient.h": "20981b5d40c3f0d2607c79db1f4c6cf33e3b5c1e1c3c7221ce468638f80a3801",
+    "native-audio-ui/AudioClientTest.cpp": "e2223d27b788a26eb115ff3b44b0858d904ca1d9561a39bd9bd917859bfa8d49",
+    "native-audio-ui/CMakeLists.txt": "0159c6fc40debd177032285889668b5c6d6bed5ef848c19b1bdd6ba5e3852df8",
+    "native-audio-ui/SoundsView.qml": "eaa651d226d0cfcc3df4c04d6888937110e3de2fdde362af664676eabf0c4635",
+    "native-audio-ui/main.cpp": "9e9bf5f403b18c30473083d388bf3e2ed44c46c27a71af53b1fbaebedaf0d1dd",
+    "native-audio-ui/resources.qrc": "1256d0136462e661632f17ede81f498f1d0b7c1081b38d9d41a29c5893a683ae"
+  },
+  "fixed_tests_identical": true,
+  "source_only_GREEN_delta": [
+    "native-audio-ui/AudioClient.cpp",
+    "native-audio-ui/AudioClient.h"
+  ],
+  "original_behaviors": [
+    "authenticatedCatalog",
+    "logicalAcquireWaitsForObservedApplication",
+    "routeUsesExactLeaseThenCallInterruptsAndRestores",
+    "backendLossDisablesMutationsWithoutReplay",
+    "connectionLossNeedsExplicitReconnectAndNeverReplays",
+    "destructorClosesTheLeaseConnection",
+    "wrongOwnerSendsNothing",
+    "lateMutationReplyAfterBlockedEventLoopIsRefused",
+    "oversizedReplyClosesConnection",
+    "catalogWithPrivateTargetIsRefused",
+    "decreasingGraphObservationIsRefused"
+  ],
+  "new_behaviors": [
+    "readonlyGestureQueuesOneAcquire",
+    "readonlyQueuePreservesAppliedUntilSend",
+    "queuedChoiceCancelledByFreshUnavailable",
+    "queuedChoiceRechecksFreshCatalog",
+    "queuedChoiceExpiresWithoutSend",
+    "queuedChoiceDisconnectedNeverReplays",
+    "queuedEffectReplyKeepsOriginalInputDeadline"
+  ],
+  "RED": {
+    "passed": 13,
+    "failed": 7,
+    "includes_Qt_init_cleanup": true,
+    "actual_attach_and_container_exit": 7,
+    "receipt_sha256": "c22dff0964f0529345ba27e2d305a14543ac10dc7ce8272c265fc625d4b5cc17"
+  },
+  "GREEN": {
+    "passed": 20,
+    "failed": 0,
+    "includes_Qt_init_cleanup": true,
+    "actual_attach_and_container_exit": 0,
+    "receipt_sha256": "20105a8fecd2783d378af0d675c6c11260f118c89f1dc8ab5511943f2e5bd7a7"
+  },
+  "limits": "Regular-file merged output, no invented PIPE EOF or per-helper cutoff proof. Authored socket server, not real audio graph or normal UI.",
+  "physical_phone_accessed": false
+}

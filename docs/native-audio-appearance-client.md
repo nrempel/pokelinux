@@ -30,7 +30,9 @@ infrastructure and is not selected by Sounds. No old-schema alias is added.
 
 ## Concrete checks
 
-Strict host compilation and eleven unchanged audio socket cases pass. Twenty-nine
+The original reuse selection passes strict host compilation and eleven unchanged
+audio socket cases. The later [input repair](native-audio-readonly-input.md)
+passes18 host audio behaviors without changing appearance/QML/main. Twenty-nine
 actual appearance IPC controls pass, including sender UID/PID, restart/loss,
 malformed/oversized/FD refusal, actual deadline/late-receive checks, schema1/2
 refusal, exact RGBA16/alpha/revision behavior and QML style-token forwarding.
