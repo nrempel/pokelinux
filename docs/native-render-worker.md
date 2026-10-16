@@ -1,5 +1,9 @@
 # Retained Rust worker CPU component
 
+This report preserves the earlier worker-only result. The current
+[bootstrap checkpoint](native-render-bootstrap.md) extends it with owned input,
+validated copied discovery and62 active CPU passes.
+
 The original [`executor` module](../native-render/src/executor.rs) implements a
 retained Rust worker, bounded frame admission and copied completion records.
 Actual Linux x86 CPU tests use real threads, kernel eventfds and `poll`, with
@@ -76,15 +80,20 @@ the worker source and module declaration are added.
 
 ## Integration still required
 
-The new worker archive is `8067436b…`. The independently qualified native Frame
+This report records the earlier worker-only checkpoint. The later
+[owned bootstrap integration](native-render-bootstrap.md) adds initial input,
+validated copied discovery and a control-visible startup deadline, with62 active
+CPU passes. Its genuine AQ/GL binding remains open.
+
+The earlier worker archive is `8067436b…`. The independently qualified native Frame
 ELF/SDK selected earlier `3cf0a142…`; it did not link this worker archive, and its
 five FFI/four codec CPU groups are not new worker evidence. No worker C ABI or
 private proposed executor header is published. Genuine session/FD transport,
-bootstrap/discovery, a worker-local AQ/GL implementation, complete actual native
-object scope and distinct Stop-retirement authority/ledger remain required. The
-current configuration-free factory has no session input. A real binding needs a
-retained deferred holder, then explicit session/bootstrap/output discovery before
-constructing the real FrameTarget; those operations are not implemented here.
+a worker-local AQ/GL implementation, complete actual native object scope and a
+distinct Stop-retirement authority/ledger remain required. That checkpoint's
+configuration-free factory had no session input. Its retained deferred holder,
+explicit bootstrap and copied discovery now have the separate CPU integration
+above; constructing a real backend's FrameTarget remains unqualified.
 
 No live scene producer, real render owner, GPU/fence/output/presentation, secure
 lock frame or blocked-driver recovery is qualified. The unchanged

@@ -90,10 +90,13 @@ SDK plus the same five FFI/four codec CPU groups. This authored CPU value bounda
 producer, GL primitive or production render worker and closes no Source, full
 functional, ARM or phone gate.
 
-A later [retained worker CPU component](native-render-worker.md) passes36 active
-Rust cases with authored native adapters and real kernel eventfds/threads. Its
-new archive is not linked into the earlier native Frame compositor/SDK. Genuine
-AQ/GL/DRM, worker C ABI, session/bootstrap/output discovery and authenticated
+The later [owned bootstrap/worker component](native-render-bootstrap.md) passes62
+active Rust cases with authored native adapters and real descriptors, threads,
+eventfds and a BOOTTIME timerfd. It binds copied discovery to owned initial input,
+frames to discovered outputs and final grants to their device tuples. Expiry and
+Stop reject late readiness while retaining cleanup custody. Its new archive is
+not linked into the earlier native Frame compositor/SDK. Genuine AQ/GL/DRM,
+worker C ABI, later session ingress/real output registry and authenticated
 Stop-retirement remain open. Whole-fixture quarantine/reaping in CPU tests proves
 neither real native drain nor blocked-driver recovery; all Source/full functional,
 ARM/Google-kernel/phone requirements below remain in force.

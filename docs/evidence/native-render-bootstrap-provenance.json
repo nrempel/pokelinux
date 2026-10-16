@@ -1,0 +1,242 @@
+{
+  "schema": 1,
+  "public_source_base": "656dd0122c5ff0850648f10e5560e17be75924ce",
+  "five_actual_semantic_RED_GREEN_pairs": [
+    {
+      "RED": "red-2",
+      "GREEN": "green-2",
+      "behavior": "bootstrap dispatch, pre-discovery frame refusal and Stop-fenced late success",
+      "same_whole_test_module_sha256": "4c87c210064a2dd30444a00c2c96c3bd618afa93119c7f945e4bda6daefef303",
+      "red_tests": {
+        "pass": 0,
+        "fail": 3
+      },
+      "green_tests": {
+        "pass": 3,
+        "fail": 0
+      }
+    },
+    {
+      "RED": "red-3",
+      "GREEN": "green-3",
+      "behavior": "bounded input-bound discovery, matching frame admission and retained malformed-result cleanup",
+      "same_whole_test_module_sha256": "598825e7a4853b5930651a6ddd68f72c6603bf6bfd40c0ec6523205d8e089274",
+      "red_tests": {
+        "pass": 3,
+        "fail": 3
+      },
+      "green_tests": {
+        "pass": 6,
+        "fail": 0
+      }
+    },
+    {
+      "RED": "red-4",
+      "GREEN": "green-4",
+      "behavior": "final attempt device lease/generation binding before grant",
+      "same_whole_test_module_sha256": "9000180ae919dfdcd58ce59f9bf7f6751bdb5b4cf173786146ab9746cfa70cbd",
+      "red_tests": {
+        "pass": 6,
+        "fail": 1
+      },
+      "green_tests": {
+        "pass": 7,
+        "fail": 0
+      }
+    },
+    {
+      "RED": "red-5",
+      "GREEN": "green-5",
+      "behavior": "original BOOTTIME deadline, owned watch and late candidate rejection",
+      "same_whole_test_module_sha256": "da33de12a4b832ebcd082c98cfeb6f0feca930d6c62c32cf27b110daec6018b3",
+      "red_tests": {
+        "pass": 8,
+        "fail": 3
+      },
+      "green_tests": {
+        "pass": 11,
+        "fail": 0
+      }
+    },
+    {
+      "RED": "red-6",
+      "GREEN": "green-6",
+      "behavior": "terminal bootstrap error wakes control before blocked cleanup",
+      "same_whole_test_module_sha256": "b3a44f940ef4ad35f3e747e927925a724adcf2cda9c3e3a5846e78127b08a745",
+      "red_tests": {
+        "pass": 13,
+        "fail": 1
+      },
+      "green_tests": {
+        "pass": 14,
+        "fail": 0
+      }
+    }
+  ],
+  "epochs": {
+    "format-1": {
+      "result_sha256": "407f77d2843dc7bd1767b79f8d38f66e1365cdb7407f27b1b751390a0068486c",
+      "actual_cargo_exit": 0,
+      "driver_passed": true,
+      "outer_waits_and_merged_EOF": 6,
+      "actual_cargo_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "format-2": {
+      "result_sha256": "d0a263a98af658d9fbdfa13da706b1b322d91585413c13747171dd4372bf0686",
+      "actual_cargo_exit": 0,
+      "driver_passed": true,
+      "outer_waits_and_merged_EOF": 6,
+      "actual_cargo_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "format-3": {
+      "result_sha256": "c4f4b8ea927bd453e1a5046c06a9f702b84a285f8f4b404002fb59dd564f2ea1",
+      "actual_cargo_exit": 0,
+      "driver_passed": true,
+      "outer_waits_and_merged_EOF": 6,
+      "actual_cargo_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "green-1": {
+      "result_sha256": "aa04157a983854988ef9b67a09973507d7f0461cb0fca6d1304c7c3b0d6cb555",
+      "actual_cargo_exit": 101,
+      "driver_passed": false,
+      "outer_waits_and_merged_EOF": 6,
+      "actual_cargo_log_sha256": "31c3aff53942b74adf36de8a8cafd7e34df4af86fe20de88f962d7c7f935f611"
+    },
+    "green-2": {
+      "result_sha256": "6cb0679e52722f183804c797af45109f942ffc6e27cc355c9bf17e66b8da7fe6",
+      "actual_cargo_exit": 0,
+      "driver_passed": true,
+      "outer_waits_and_merged_EOF": 6,
+      "actual_cargo_log_sha256": "90df78087b913f1f5bb0f12a1c706dff8a27e2e6c0dbbef01678a764c51a7b8a"
+    },
+    "green-3": {
+      "result_sha256": "8c7398e372c06b0767fb547a61cfd128347a1a0d8f38cded4ac25cb24d6d52c3",
+      "actual_cargo_exit": 0,
+      "driver_passed": true,
+      "outer_waits_and_merged_EOF": 6,
+      "actual_cargo_log_sha256": "ccf09ec5b43e9e9a32e3301f9da0414f5b92783b3c5d479d929837628c873a71"
+    },
+    "green-4": {
+      "result_sha256": "274178c0238d054ab17f5df84d2d5bc7fb34e90af1ca9aa3f9ee3853bdd3d275",
+      "actual_cargo_exit": 0,
+      "driver_passed": true,
+      "outer_waits_and_merged_EOF": 6,
+      "actual_cargo_log_sha256": "a7d289d1ef0740765609f646cb6676a3b849bf2dd62a015866dece97d3265ed0"
+    },
+    "green-5": {
+      "result_sha256": "f76b12a33c7635be77eeda23f0e669e0563812b284509ee0cc044b555354b9ab",
+      "actual_cargo_exit": 0,
+      "driver_passed": true,
+      "outer_waits_and_merged_EOF": 6,
+      "actual_cargo_log_sha256": "4cc66cfb1caef2ecc802969df0681f01a8768b16b622de176c314fdf46025e8e"
+    },
+    "green-6": {
+      "result_sha256": "05d7cd8f411a13c54f6d490110040d07bbd9a1f0c327c1a5eb121364b4585c2c",
+      "actual_cargo_exit": 0,
+      "driver_passed": true,
+      "outer_waits_and_merged_EOF": 6,
+      "actual_cargo_log_sha256": "7fa8514d911ca6c535d452795346872f64f8ea8b8209400a426d090117316f40"
+    },
+    "qa-1": {
+      "result_sha256": "9836cbd02c1f8ec2f889f1695c41b881b97771e7d84595891f181b4612d192bb",
+      "actual_cargo_exit": 101,
+      "driver_passed": false,
+      "outer_waits_and_merged_EOF": 6,
+      "actual_cargo_log_sha256": "882a199bd59752657a9747e905bf939fa97e8d67f10157c248d1decbc8098fc8"
+    },
+    "qa-2": {
+      "result_sha256": "12c7256fce15b6b20a9b0b341f76ff14bea78d8dd9dbcdfea6fe6dccaa31dc0f",
+      "actual_cargo_exit": 0,
+      "driver_passed": true,
+      "outer_waits_and_merged_EOF": 6,
+      "actual_cargo_log_sha256": "a99d4dbb798bbd7a25739aacef62e6194ae1365ba97ad31eb7580df30bf2b7d2"
+    },
+    "red-1": {
+      "result_sha256": "007d6620174ef1bfbd9bfaedfb0ce89bdb9bff2cdcbc4a7d31ae9a278c95cce8",
+      "actual_cargo_exit": 101,
+      "driver_passed": true,
+      "outer_waits_and_merged_EOF": 6,
+      "actual_cargo_log_sha256": "7269a4f0202950b3a13e70a03b567e88d55fa072c4de287effc984484ec30e36"
+    },
+    "red-2": {
+      "result_sha256": "cca5bd1fb2d971c7b6143e128eeed60ae6cea2c14c4bf265d1dfcb71f85f9b8d",
+      "actual_cargo_exit": 101,
+      "driver_passed": true,
+      "outer_waits_and_merged_EOF": 6,
+      "actual_cargo_log_sha256": "8b681bacd44d3dc1b2f12b044ea9ac66d69784a76a4313fa279d49a30d05d021"
+    },
+    "red-3": {
+      "result_sha256": "01647a4aa8e602310f80de180b66a5682c496249d391d25eadf68fc260d45f20",
+      "actual_cargo_exit": 101,
+      "driver_passed": true,
+      "outer_waits_and_merged_EOF": 6,
+      "actual_cargo_log_sha256": "c302ad9c624e6c599581803575a2a21181c728c23d809910a64a0275116d97ce"
+    },
+    "red-4": {
+      "result_sha256": "d69951c7550fd172dcc0103203298441f48736edac870f1c85b11bfc05023e0d",
+      "actual_cargo_exit": 101,
+      "driver_passed": true,
+      "outer_waits_and_merged_EOF": 6,
+      "actual_cargo_log_sha256": "18a6db8e0d2f52b8bcbb82fc6c03d71162e761cf9e91168775ab28863d71ec84"
+    },
+    "red-5": {
+      "result_sha256": "6b01326dac0bc2642b1cfe2332643a0916f2d963e1900268b6d5fe7193eb65ec",
+      "actual_cargo_exit": 101,
+      "driver_passed": true,
+      "outer_waits_and_merged_EOF": 6,
+      "actual_cargo_log_sha256": "ac42a668dea10badd93123a38f660b7325f202321e07b9bc3c90aa83f7cf203c"
+    },
+    "red-6": {
+      "result_sha256": "abfdeca1bd6311c8d305a047830d862e4e00c8d0896aab61981657e6ffaceb6e",
+      "actual_cargo_exit": 101,
+      "driver_passed": true,
+      "outer_waits_and_merged_EOF": 6,
+      "actual_cargo_log_sha256": "566d73fc8d0d50b4c2ad782077d76349012e66f243406254a8f98fb0007aaded"
+    }
+  },
+  "actual_outer_direct_waits": 102,
+  "actual_outer_merged_PIPE_EOFs": 102,
+  "current_QA": {
+    "retained_Root_session": 6452,
+    "actual_Root_terminal_exit": 0,
+    "library_passes": 36,
+    "permit": 8,
+    "worker": 28,
+    "ignored_child_modes": 2,
+    "Frame_passes": 14,
+    "OwnedBootstrap_passes": 12,
+    "total_active": 62,
+    "fmt_strict_Clippy_release": true
+  },
+  "archive": {
+    "bytes": 22828484,
+    "sha256": "1dcce61eefa9437738ef206a710104eb2359f984ad037506edc956781b9e1fc5",
+    "native_CPP_ELF_SDK_selected": false
+  },
+  "OwnedBootstrap_separate_qualification_sha256": "0e4267d54e216f83114b5f5918707f21d34ef3e08875e693519d411e02d3a1e6",
+  "chronology_corrections": [
+    "Initial GREEN1 failed one fixture Busy unwrap; RED2 refroze fixed tests against original scheduler then GREEN2 passed.",
+    "QA1 strict Clippy stopped before tests at redundant fixture target:target; fresh QA2 shorthand correction passes.",
+    "Two final existing-behavior controls and original fixture startup/helper adaptation added after targeted pairs; no distinct semantic RED claimed.",
+    "Bootstrap descriptor module tests predate implementation but its missing-module baseline was structural only, no semantic RED."
+  ],
+  "remaining": [
+    "worker C ABI and actual AQ/GL/DRM backend",
+    "session ingress/OOB revocation and real output registry updates",
+    "authenticated complete actual native routing and separate StopRetire ledger",
+    "native fence/presentation/retirement and blocked-call recovery",
+    "unchanged Source7 GREEN and normal full app/PCM composition",
+    "ARM/matchedGoogle kernel/Pixel hardware/full smartphone matrix"
+  ],
+  "scope": "Original Linux x86 Rust owned bootstrap/executor CPU component, real FD duplication/thread/eventfd/timerfd boundaries with authored NativeOwner; no AQ/GL/native renderer/Source/ARM/phone qualification",
+  "Root_qualification_sha256": "dab11042d34fb6a1a02678b879f8626e86e6e82cf7c87027521bb6ebb181fbef",
+  "published_source_hashes": {
+    "native-render/src/executor.rs": "6a47e2361922a8af4f1972d621d543283fbc23940e0a9d0a028032b8bbd1bc17",
+    "native-render/src/bootstrap.rs": "c36a8e0055ceb89c5ca1e02d20e9802b5e169770690e251d790ee4be76ec2208",
+    "native-render/src/lib.rs": "81316fa26e445422fe3a696159a2dd0ab77cdd884183073dab400e1c563d978f",
+    "native-render/tests/owned_bootstrap.rs": "1a1c03e92e80642ce8bfa8ec544e398831f7c44a38bf39ac1976104e0bfa1386"
+  },
+  "hardware_qualified": false,
+  "native_CPP_ELF_SDK_selected_new_archive": false,
+  "independent_qualification_sha256": "bf2d8e31ed075db97963b13cf8b825cc74551e9c53a73f400f9d37f12269f43e"
+}

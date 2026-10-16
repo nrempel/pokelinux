@@ -4,6 +4,7 @@
 //! copied function pointer, never a captured control/Wayland/graphics object.
 //! Its production AQ/GL binding and authenticated device scope remain required.
 use crate::{
+    bootstrap::OwnedBootstrap,
     commit::{CommitAuthority, CommitTicket, GateError, OperationPolicy, SealedAttempt},
     frame::Frame,
 };
@@ -158,6 +159,7 @@ impl From<GateError> for Error {
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Stage {
     Starting = 0,
+    Bootstrapping = 8,
     Idle = 1,
     Preparing = 2,
     Executing = 3,
@@ -205,6 +207,7 @@ impl RecordedNativeScope {
     }
 }
 pub struct Attempt {
+    expected_device: (u64, u64),
     scope: Option<RecordedNativeScope>,
     ticket: Option<CommitTicket>,
     policy: OperationPolicy,
@@ -216,6 +219,7 @@ impl Attempt {
         if actual.policy != self.policy
             || actual.device_lease_id == 0
             || actual.device_generation == 0
+            || (actual.device_lease_id, actual.device_generation) != self.expected_device
             || actual.objects.is_empty()
             || actual.objects.len() > 128
             || actual.objects.iter().enumerate().any(|(i, o)| {
@@ -280,6 +284,101 @@ pub struct Completion {
     pub error: Option<Error>,
 }
 
+/// Copied observations from the worker's real output registry. These IDs are
+/// local registry keys, not kernel object IDs or permission by themselves.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct DiscoveredOutput {
+    pub output_id: u64,
+    pub output_generation: u64,
+    pub device_lease_id: u64,
+    pub device_generation: u64,
+    pub mode_id: u64,
+    pub mode_generation: u64,
+    pub modifier: u64,
+    pub connector_id: u32,
+    pub width: u32,
+    pub height: u32,
+    pub refresh_millihz: u32,
+    pub drm_format: u32,
+    pub flags: u32,
+}
+pub const MAX_DISCOVERED_OUTPUTS: usize = 32;
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct Discovery {
+    pub session_generation: u64,
+    pub output_count: u32,
+    pub outputs: [DiscoveredOutput; MAX_DISCOVERED_OUTPUTS],
+}
+// Value identity is captured before the owner takes the FD pack. This binds
+// observations to the transported input, not to actual DRM routing authority.
+struct BootstrapIdentity {
+    session_generation: u64,
+    count: usize,
+    devices: [(u64, u64); crate::bootstrap::MAX_BOOTSTRAP_DEVICES],
+}
+impl BootstrapIdentity {
+    fn capture(input: &OwnedBootstrap) -> Self {
+        let mut value = Self {
+            session_generation: input.session_generation(),
+            count: 0,
+            devices: [(0, 0); crate::bootstrap::MAX_BOOTSTRAP_DEVICES],
+        };
+        for event in input
+            .events()
+            .iter()
+            .filter(|v| v.metadata().event_type == 2)
+        {
+            let device = event.metadata();
+            value.devices[value.count] = (device.device_lease_id, device.device_generation);
+            value.count += 1;
+        }
+        value
+    }
+    fn accepts(&self, value: &Discovery) -> bool {
+        if value.session_generation != self.session_generation
+            || value.output_count as usize > MAX_DISCOVERED_OUTPUTS
+        {
+            return false;
+        }
+        let count = value.output_count as usize;
+        if value.outputs[count..]
+            .iter()
+            .any(|v| *v != DiscoveredOutput::default())
+        {
+            return false;
+        }
+        for (i, output) in value.outputs[..count].iter().enumerate() {
+            if output.output_id == 0
+                || output.output_generation == 0
+                || !self.devices[..self.count]
+                    .contains(&(output.device_lease_id, output.device_generation))
+                || output.mode_id == 0
+                || output.mode_generation == 0
+                || output.connector_id == 0
+                || !(1..=16_384).contains(&output.width)
+                || !(1..=16_384).contains(&output.height)
+                || output.refresh_millihz == 0
+                || output.drm_format == 0
+                || output.flags & !1 != 0
+                || value.outputs[..i].iter().any(|prior| {
+                    prior.output_id == output.output_id
+                        || ((
+                            prior.device_lease_id,
+                            prior.device_generation,
+                            prior.connector_id,
+                        ) == (
+                            output.device_lease_id,
+                            output.device_generation,
+                            output.connector_id,
+                        ))
+                })
+            {
+                return false;
+            }
+        }
+        true
+    }
+}
 /// Implementations are constructed, used and destroyed on the single worker.
 /// They need NOT implement Send. prepare/execute can block; progress and
 /// dispatch must return bounded work without waiting for another submission; no control mutex is held over any of them. prepare cannot retain a
@@ -290,6 +389,10 @@ pub struct Completion {
 /// must not own an untracked native descendant. After successful shutdown all
 /// native resources are gone; its remaining Rust destructor is CPU-only.
 pub trait NativeOwner {
+    /// The deferred holder is retained before this potentially blocking call.
+    /// Take the input only into owner-held state before fallible native work.
+    /// Return bounded copied output observations, never AQ pointers/callbacks.
+    fn bootstrap(&mut self, input: &mut Option<OwnedBootstrap>) -> Result<Discovery, Error>;
     fn prepare(&mut self, frame: &Frame, admission: Admission) -> Result<(), Error>;
     fn execute(
         &mut self,
@@ -321,6 +424,8 @@ unsafe extern "C" {
     fn read(fd: i32, data: *mut std::ffi::c_void, count: usize) -> isize;
     fn write(fd: i32, data: *const std::ffi::c_void, count: usize) -> isize;
     fn poll(fds: *mut PollFd, count: usize, timeout: i32) -> i32;
+    fn timerfd_create(clock: i32, flags: i32) -> i32;
+    fn timerfd_settime(fd: i32, flags: i32, value: *const TimerSpec, old: *mut TimerSpec) -> i32;
 }
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -402,7 +507,77 @@ impl EventFd {
         }
     }
 }
+#[repr(C)]
+#[derive(Clone, Copy, Default)]
+struct TimerTime {
+    seconds: std::ffi::c_long,
+    nanoseconds: std::ffi::c_long,
+}
+#[repr(C)]
+#[derive(Default)]
+struct TimerSpec {
+    interval: TimerTime,
+    value: TimerTime,
+}
+struct StartupDeadline {
+    fd: OwnedFd,
+    until: u64,
+}
+impl StartupDeadline {
+    fn new(until: u64) -> Result<Self, Error> {
+        let fd = unsafe { timerfd_create(7, 0x800 | 0x80000) }; // CLOCK_BOOTTIME, NONBLOCK | CLOEXEC
+        if fd < 0 {
+            return Err(Error::Wake);
+        }
+        let value = Self {
+            fd: unsafe { OwnedFd::from_raw_fd(fd) },
+            until,
+        };
+        let spec = TimerSpec {
+            interval: TimerTime::default(),
+            value: TimerTime {
+                seconds: (until / 1_000_000_000)
+                    .try_into()
+                    .map_err(|_| Error::Invalid)?,
+                nanoseconds: (until % 1_000_000_000) as std::ffi::c_long,
+            },
+        };
+        if unsafe { timerfd_settime(value.fd.as_raw_fd(), 1, &spec, std::ptr::null_mut()) } != 0 {
+            return Err(Error::Wake);
+        }
+        Ok(value)
+    }
+    fn disarm(&self) -> Result<(), Error> {
+        if unsafe {
+            timerfd_settime(
+                self.fd.as_raw_fd(),
+                0,
+                &TimerSpec::default(),
+                std::ptr::null_mut(),
+            )
+        } != 0
+        {
+            return Err(Error::Wake);
+        }
+        loop {
+            let mut value = 0u64;
+            let result = unsafe { read(self.fd.as_raw_fd(), (&mut value as *mut u64).cast(), 8) };
+            if result == 8 {
+                continue;
+            }
+            let error = io::Error::last_os_error();
+            if result < 0 && error.kind() == io::ErrorKind::Interrupted {
+                continue;
+            }
+            if result < 0 && error.kind() == io::ErrorKind::WouldBlock {
+                return Ok(());
+            }
+            return Err(Error::Wake);
+        }
+    }
+}
 struct Job {
+    expected_device: (u64, u64),
     frame: Frame,
     admission: Admission,
     ticket: CommitTicket,
@@ -410,6 +585,9 @@ struct Job {
 struct Shared {
     ingress: Mutex<VecDeque<Job>>,
     completions: Mutex<VecDeque<Completion>>,
+    discovery: Mutex<Option<Discovery>>,
+    startup: AtomicU32, // 0 starting, 3 copied candidate, 1 control accepted, 2 terminal
+    startup_deadline: StartupDeadline,
     stop: AtomicBool,
     alive: AtomicBool,
     stage: AtomicU32,
@@ -426,9 +604,59 @@ struct Shared {
 impl Shared {
     fn stop(&self) -> Result<(), Error> {
         // Stop is independent of ingress/completion mutexes and every native call.
+        self.startup.store(2, Ordering::Release);
         self.stop_gate.stop();
         self.stop.store(true, Ordering::Release);
-        self.wake.notify()
+        let wake = self.wake.notify();
+        let timer = self.startup_deadline.disarm();
+        if timer.is_err() {
+            self.failed.store(true, Ordering::Release);
+        }
+        wake.and(timer)
+    }
+    fn startup_before_deadline(&self) -> bool {
+        if self.startup.load(Ordering::Acquire) == 2 {
+            return false;
+        }
+        match crate::commit::boottime_ns() {
+            Ok(now) if now < self.startup_deadline.until => true,
+            _ => {
+                self.failed.store(true, Ordering::Release);
+                let _ = self.stop();
+                let _ = self.complete.notify();
+                false
+            }
+        }
+    }
+    // Only control accepts the worker's copied candidate. A descheduled worker
+    // cannot publish Ready using an earlier time sample. The eligibility point
+    // is the control's post-disarm BOOTTIME check; no native call runs here.
+    fn observe_startup(&self) -> Result<(), Error> {
+        let state = self.startup.load(Ordering::Acquire);
+        if state == 1 || state == 2 {
+            return Ok(());
+        }
+        if !self.startup_before_deadline() {
+            return Ok(());
+        }
+        if state == 3
+            && self
+                .startup
+                .compare_exchange(3, 1, Ordering::AcqRel, Ordering::Acquire)
+                .is_ok()
+        {
+            if let Err(error) = self.startup_deadline.disarm() {
+                self.failed.store(true, Ordering::Release);
+                let _ = self.stop();
+                return Err(error);
+            }
+            // Before returning availability, reject a control turn itself
+            // delayed past the original cutoff. No frame is admitted meanwhile.
+            if !self.startup_before_deadline() {
+                return Ok(());
+            }
+        }
+        Ok(())
     }
     fn publish(&self, value: Completion) -> Result<(), Error> {
         let mut queue = self.completions.lock().map_err(|_| Error::Protocol)?;
@@ -455,6 +683,7 @@ pub struct Snapshot {
     pub stage: Stage,
     pub worker_alive: bool,
     pub stopping: bool,
+    pub ready: bool,
     pub failed: bool,
     pub occupied_credits: u32,
     pub reserved_completion_records: u32,
@@ -475,14 +704,27 @@ pub struct Executor {
     next_id: u64,
     handle: Option<JoinHandle<()>>,
     joined: bool,
+    discovered: Option<Discovery>,
     _control_only: PhantomData<Rc<()>>,
 }
 impl Executor {
-    pub fn new(security_generation: u64, factory: OwnerFactory) -> Result<Self, Error> {
+    pub fn new(
+        security_generation: u64,
+        factory: OwnerFactory,
+        bootstrap: OwnedBootstrap,
+        startup_not_after_boottime_ns: u64,
+    ) -> Result<Self, Error> {
+        if crate::commit::boottime_ns()? >= startup_not_after_boottime_ns {
+            return Err(Error::Expired);
+        }
         let authority = CommitAuthority::new(security_generation)?;
+        let startup_deadline = StartupDeadline::new(startup_not_after_boottime_ns)?;
         let shared = Arc::new(Shared {
             ingress: Mutex::new(VecDeque::with_capacity(FRAME_CREDITS as usize)),
             completions: Mutex::new(VecDeque::with_capacity(COMPLETION_CAPACITY)),
+            discovery: Mutex::new(None),
+            startup: AtomicU32::new(0),
+            startup_deadline,
             stop: AtomicBool::new(false),
             alive: AtomicBool::new(true),
             stage: AtomicU32::new(Stage::Starting as u32),
@@ -499,7 +741,7 @@ impl Executor {
         let worker = Arc::clone(&shared);
         let handle = thread::Builder::new()
             .name("pokelinux-render".into())
-            .spawn(move || run(worker, factory))
+            .spawn(move || run(worker, factory, Some(bootstrap)))
             .map_err(|_| Error::Native)?;
         Ok(Self {
             control: thread::current().id(),
@@ -509,6 +751,7 @@ impl Executor {
             next_id: 0,
             handle: Some(handle),
             joined: false,
+            discovered: None,
             _control_only: PhantomData,
         })
     }
@@ -529,8 +772,12 @@ impl Executor {
         cookie: u64,
     ) -> Result<Admission, Error> {
         self.control()?;
+        self.shared.observe_startup()?;
         if self.shared.stop.load(Ordering::Acquire) {
             return Err(Error::Stopping);
+        }
+        if self.shared.startup.load(Ordering::Acquire) != 1 || self.discovered.is_none() {
+            return Err(Error::Busy);
         }
         let f = frame.as_ref().ok_or(Error::Invalid)?;
         if f.security_generation() != policy.security_generation
@@ -540,6 +787,20 @@ impl Executor {
         {
             return Err(Error::Invalid);
         }
+        let discovery = self.discovered.as_ref().ok_or(Error::Busy)?;
+        if policy.session_generation != discovery.session_generation {
+            return Err(Error::Invalid);
+        }
+        let output = discovery.outputs[..discovery.output_count as usize]
+            .iter()
+            .find(|output| {
+                output.output_id == policy.output_id
+                    && output.output_generation == policy.output_generation
+                    && output.width == f.target().width
+                    && output.height == f.target().height
+            })
+            .ok_or(Error::Invalid)?;
+        let expected_device = (output.device_lease_id, output.device_generation);
         let id = self.next_id.checked_add(1).ok_or(Error::Exhausted)?;
         let mut queue = self.shared.ingress.try_lock().map_err(|_| Error::Busy)?;
         if self.shared.credits.load(Ordering::Acquire) >= FRAME_CREDITS
@@ -561,6 +822,7 @@ impl Executor {
         self.shared.credits.fetch_add(1, Ordering::AcqRel);
         self.shared.queued.fetch_add(1, Ordering::AcqRel);
         queue.push_back(Job {
+            expected_device,
             frame: frame.take().expect("validated owned frame"),
             admission,
             ticket,
@@ -591,12 +853,40 @@ impl Executor {
         self.control()?;
         self.shared.stop()
     }
+    /// CPU-only copied discovery channel. No native object escapes the worker.
+    pub fn try_discovery(&mut self) -> Result<Option<Discovery>, Error> {
+        self.control()?;
+        self.shared.observe_startup()?;
+        if self.shared.stop.load(Ordering::Acquire)
+            || self.shared.startup.load(Ordering::Acquire) != 1
+        {
+            return Ok(None);
+        }
+        let record = *self.shared.discovery.try_lock().map_err(|_| Error::Busy)?;
+        if self.shared.stop.load(Ordering::Acquire)
+            || self.shared.startup.load(Ordering::Acquire) != 1
+        {
+            self.discovered = None;
+            return Ok(None);
+        }
+        self.discovered = record;
+        Ok(record)
+    }
+    /// Borrowed CLOCK_BOOTTIME watch. Register it AND completion_fd before
+    /// waiting. On readability call snapshot/try_discovery/try_submit/try_join,
+    /// which enforce the original cutoff; never merely drain this FD. Unregister
+    /// both before release. This timer includes suspend but does not wake a phone.
+    pub fn startup_deadline_fd(&self) -> Result<i32, Error> {
+        self.control()?;
+        Ok(self.shared.startup_deadline.fd.as_raw_fd())
+    }
     pub fn completion_fd(&self) -> Result<i32, Error> {
         self.control()?;
         Ok(self.shared.complete.0.as_raw_fd())
     }
     pub fn snapshot(&self) -> Result<Snapshot, Error> {
         self.control()?;
+        self.shared.observe_startup()?;
         let stage = match self.shared.stage.load(Ordering::Acquire) {
             0 => Stage::Starting,
             1 => Stage::Idle,
@@ -605,12 +895,14 @@ impl Executor {
             4 => Stage::Retiring,
             5 => Stage::Destroying,
             6 => Stage::Quarantined,
+            8 => Stage::Bootstrapping,
             _ => Stage::Exited,
         };
         Ok(Snapshot {
             stage,
             worker_alive: self.shared.alive.load(Ordering::Acquire),
             stopping: self.shared.stop.load(Ordering::Acquire),
+            ready: self.shared.startup.load(Ordering::Acquire) == 1,
             failed: self.shared.failed.load(Ordering::Acquire),
             occupied_credits: self.shared.credits.load(Ordering::Acquire),
             reserved_completion_records: self.shared.reserved_records.load(Ordering::Acquire),
@@ -643,6 +935,7 @@ impl Executor {
     }
     pub fn try_join(&mut self) -> Result<(), Error> {
         self.control()?;
+        self.shared.observe_startup()?;
         if self.joined {
             return Ok(());
         }
@@ -814,11 +1107,61 @@ fn wait_native(shared: &Shared, owner: &mut dyn NativeOwner, blocking: bool) {
         }
     }
 }
-fn run(shared: Arc<Shared>, factory: OwnerFactory) {
+fn run(shared: Arc<Shared>, factory: OwnerFactory, mut bootstrap: Option<OwnedBootstrap>) {
+    let identity = BootstrapIdentity::capture(bootstrap.as_ref().expect("owned bootstrap input"));
     let mut owner = match native_call(&shared, factory) {
         Ok(owner) => owner,
         Err(_) => shared.quarantine(),
     };
+    // The native holder is retained above, and the not-yet-transferred input
+    // remains outside catch_unwind. Bootstrap cannot unwind either custody.
+    shared
+        .stage
+        .store(Stage::Bootstrapping as u32, Ordering::Release);
+    if shared.startup_before_deadline() {
+        match native_call(&shared, || owner.bootstrap(&mut bootstrap)) {
+            Ok(discovery) => {
+                if bootstrap.is_some() {
+                    shared.quarantine();
+                } // Take input into owner-held state before native work.
+                if !identity.accepts(&discovery) {
+                    shared.failed.store(true, Ordering::Release);
+                    let _ = shared.stop();
+                }
+                let _ = shared.startup_before_deadline();
+                let mut slot = match shared.discovery.lock() {
+                    Ok(slot) => slot,
+                    Err(_) => shared.quarantine(),
+                };
+                *slot = Some(discovery);
+                // Only a copied candidate: control must accept it before the
+                // original deadline. Stop is terminal and cannot be resurrected.
+                if shared
+                    .startup
+                    .compare_exchange(0, 3, Ordering::AcqRel, Ordering::Acquire)
+                    .is_err()
+                {
+                    *slot = None;
+                }
+                drop(slot);
+                if shared.complete.notify().is_err() {
+                    shared.quarantine();
+                }
+            }
+            Err(_) => {
+                shared.failed.store(true, Ordering::Release);
+                let _ = shared.stop();
+                // Terminal availability is observable even while native cleanup
+                // remains Pending or blocked and the startup timer is disarmed.
+                if shared.complete.notify().is_err() {
+                    shared.quarantine();
+                }
+                drop(bootstrap.take()); // Untransferred FD duplicates only, never vendor cleanup proof.
+            }
+        }
+    } else {
+        drop(bootstrap.take());
+    }
     let mut entries = Vec::<Entry>::with_capacity(FRAME_CREDITS as usize);
     loop {
         shared.stage.store(Stage::Idle as u32, Ordering::Release);
@@ -836,6 +1179,7 @@ fn run(shared: Arc<Shared>, factory: OwnerFactory) {
                 frame: Some(job.frame),
                 admission: job.admission,
                 attempt: Attempt {
+                    expected_device: job.expected_device,
                     scope: None,
                     ticket: Some(job.ticket),
                     policy: job.admission.policy,
@@ -1027,6 +1371,11 @@ mod tests {
         }
     }
     impl NativeOwner for Owner {
+        fn bootstrap(&mut self, input: &mut Option<OwnedBootstrap>) -> Result<Discovery, Error> {
+            let discovery = bootstrap_discovery(input.as_ref().ok_or(Error::Invalid)?);
+            drop(input.take());
+            Ok(discovery)
+        }
         fn prepare(&mut self, frame: &Frame, _: Admission) -> Result<(), Error> {
             self.checkpoint("prepare");
             if self.plan.mode == 3 {
@@ -1136,6 +1485,21 @@ mod tests {
         }
     }
     fn frame(sequence: u64) -> Frame {
+        frame_target(
+            sequence,
+            FrameTargetV1 {
+                output_id: 11,
+                output_generation: 17,
+                width: 32,
+                height: 32,
+                transformed_width: 32,
+                transformed_height: 32,
+                scale: 1.0,
+                ..Default::default()
+            },
+        )
+    }
+    fn frame_target(sequence: u64, target: FrameTargetV1) -> Frame {
         let rect = FrameRectV1 {
             x1: 0,
             y1: 0,
@@ -1160,16 +1524,7 @@ mod tests {
             reserved: 0,
             scene_sequence: sequence,
             security_generation: 1,
-            target: FrameTargetV1 {
-                output_id: 11,
-                output_generation: 17,
-                width: 32,
-                height: 32,
-                transformed_width: 32,
-                transformed_height: 32,
-                scale: 1.0,
-                ..Default::default()
-            },
+            target,
             damage_first: 0,
             damage_count: 1,
             final_damage_first: 1,
@@ -1201,7 +1556,15 @@ mod tests {
             release: go,
             mode,
         });
-        (Executor::new(1, factory).unwrap(), release, events)
+        let mut executor = Executor::new(
+            1,
+            factory,
+            bootstrap_input(),
+            boottime_ns().unwrap() + 5_000_000_000,
+        )
+        .unwrap();
+        assert!(await_discovery(&mut executor).is_some());
+        (executor, release, events)
     }
     fn await_stage(
         events: &Receiver<(&'static str, ThreadId)>,
@@ -1216,13 +1579,15 @@ mod tests {
     }
     fn submit(e: &mut Executor, sequence: u64) {
         let mut f = Some(frame(sequence));
-        e.try_submit(
-            &mut f,
-            policy(sequence),
-            boottime_ns().unwrap() + 5_000_000_000,
-            sequence * 101,
-        )
-        .unwrap();
+        let until = boottime_ns().unwrap() + 100_000_000;
+        let cutoff = boottime_ns().unwrap() + 5_000_000_000;
+        loop {
+            match e.try_submit(&mut f, policy(sequence), cutoff, sequence * 101) {
+                Ok(_) => break,
+                Err(Error::Busy) if boottime_ns().unwrap() < until => thread::yield_now(),
+                other => panic!("valid fixture admission {other:?}"),
+            }
+        }
         assert!(f.is_none());
     }
     fn join(e: &mut Executor) {
@@ -1625,6 +1990,11 @@ mod tests {
         }
     }
     impl NativeOwner for AsyncOwner {
+        fn bootstrap(&mut self, input: &mut Option<OwnedBootstrap>) -> Result<Discovery, Error> {
+            let discovery = bootstrap_discovery(input.as_ref().ok_or(Error::Invalid)?);
+            drop(input.take());
+            Ok(discovery)
+        }
         fn prepare(&mut self, frame: &Frame, admission: Admission) -> Result<(), Error> {
             assert_eq!(frame.scene_sequence(), admission.policy.scene_sequence);
             self.live_registry += 1;
@@ -1772,7 +2142,14 @@ mod tests {
             checkpoint: tx,
             control,
         });
-        let executor = Executor::new(1, async_factory).unwrap();
+        let mut executor = Executor::new(
+            1,
+            async_factory,
+            bootstrap_input(),
+            boottime_ns().unwrap() + 5_000_000_000,
+        )
+        .unwrap();
+        assert!(await_discovery(&mut executor).is_some());
         (
             executor,
             controls.recv_timeout(Duration::from_secs(2)).unwrap(),
@@ -2162,5 +2539,796 @@ mod tests {
             "verified final retirement must recheck pending shutdown before sleeping for a nonexistent event"
         );
         assert!(e.snapshot().unwrap().joined && !e.snapshot().unwrap().worker_alive);
+    }
+    fn bootstrap_input() -> OwnedBootstrap {
+        use crate::bootstrap::{BorrowedBootstrapEvent, SessionRenderEvent};
+        use std::{
+            fs::File,
+            os::{fd::AsFd, unix::fs::MetadataExt},
+        };
+        let file = File::open("/dev/null").unwrap();
+        let mut init = SessionRenderEvent {
+            event_type: 1,
+            session_sequence: 1,
+            session_generation: 29,
+            active: 1,
+            ..Default::default()
+        };
+        init.seat_name[..5].copy_from_slice(b"seat0");
+        let mut add = SessionRenderEvent {
+            event_type: 2,
+            session_sequence: 2,
+            session_generation: 29,
+            device_lease_id: 59,
+            device_generation: 61,
+            rdev: file.metadata().unwrap().rdev(),
+            ..Default::default()
+        };
+        add.device_path[..9].copy_from_slice(b"/dev/null");
+        let end = SessionRenderEvent {
+            event_type: 3,
+            session_sequence: 3,
+            session_generation: 29,
+            ..Default::default()
+        };
+        OwnedBootstrap::capture(
+            29,
+            &[
+                BorrowedBootstrapEvent {
+                    metadata: &init,
+                    primary: None,
+                    render: None,
+                },
+                BorrowedBootstrapEvent {
+                    metadata: &add,
+                    primary: Some(file.as_fd()),
+                    render: None,
+                },
+                BorrowedBootstrapEvent {
+                    metadata: &end,
+                    primary: None,
+                    render: None,
+                },
+            ],
+        )
+        .unwrap()
+    }
+    fn bootstrap_discovery(input: &OwnedBootstrap) -> Discovery {
+        let device = input
+            .events()
+            .iter()
+            .find(|event| event.metadata().event_type == 2)
+            .unwrap()
+            .metadata();
+        let mut outputs = [DiscoveredOutput::default(); MAX_DISCOVERED_OUTPUTS];
+        outputs[0] = DiscoveredOutput {
+            output_id: 11,
+            output_generation: 17,
+            device_lease_id: device.device_lease_id,
+            device_generation: device.device_generation,
+            mode_id: 97,
+            mode_generation: 101,
+            modifier: 0,
+            connector_id: 41,
+            width: 32,
+            height: 32,
+            refresh_millihz: 60_000,
+            drm_format: 0x34325241,
+            flags: 1,
+        };
+        Discovery {
+            session_generation: input.session_generation(),
+            output_count: 1,
+            outputs,
+        }
+    }
+    struct BootstrapPlan {
+        mode: u32,
+        events: Sender<(&'static str, ThreadId)>,
+        release: Receiver<()>,
+    }
+    static BOOTSTRAP_PLAN: Mutex<Option<BootstrapPlan>> = Mutex::new(None);
+    struct BootstrapOwner {
+        plan: BootstrapPlan,
+        input: Option<OwnedBootstrap>,
+        thread: ThreadId,
+        _not_send: Rc<()>,
+    }
+    fn bootstrap_factory() -> Result<Box<dyn NativeOwner>, Error> {
+        let plan = BOOTSTRAP_PLAN
+            .lock()
+            .unwrap()
+            .take()
+            .ok_or(Error::Invalid)?;
+        let thread = thread::current().id();
+        let _ = plan.events.send(("created", thread));
+        Ok(Box::new(BootstrapOwner {
+            plan,
+            input: None,
+            thread,
+            _not_send: Rc::new(()),
+        }))
+    }
+    impl BootstrapOwner {
+        fn mark(&self, event: &'static str) {
+            assert_eq!(thread::current().id(), self.thread);
+            let _ = self.plan.events.send((event, self.thread));
+        }
+    }
+    impl NativeOwner for BootstrapOwner {
+        fn bootstrap(&mut self, input: &mut Option<OwnedBootstrap>) -> Result<Discovery, Error> {
+            self.input = input.take(); // Retain all duplicate-FD custody before the held native step.
+            self.mark("bootstrap");
+            if self.plan.mode < 12 {
+                self.plan
+                    .release
+                    .recv_timeout(Duration::from_secs(2))
+                    .map_err(|_| Error::Native)?;
+            }
+            self.mark("bootstrap_return");
+            if self.plan.mode == 131 {
+                return Err(Error::Native);
+            }
+            let pack = self.input.as_ref().ok_or(Error::Invalid)?;
+            let mut value = if self.plan.mode == 150 {
+                assert_eq!(pack.device_count(), 0);
+                Discovery {
+                    session_generation: pack.session_generation(),
+                    output_count: 0,
+                    outputs: [DiscoveredOutput::default(); MAX_DISCOVERED_OUTPUTS],
+                }
+            } else {
+                bootstrap_discovery(pack)
+            };
+            match self.plan.mode {
+                100 | 130 => value.session_generation += 1,
+                101 => value.output_count = 33,
+                102 => value.outputs[0].output_id = 0,
+                103 => value.outputs[0].output_generation = 0,
+                104 => value.outputs[0].device_lease_id += 1,
+                105 => value.outputs[0].device_generation += 1,
+                106 => value.outputs[0].mode_id = 0,
+                107 => value.outputs[0].mode_generation = 0,
+                108 => value.outputs[0].connector_id = 0,
+                109 => value.outputs[0].width = 0,
+                110 => value.outputs[0].height = 0,
+                111 => value.outputs[0].refresh_millihz = 0,
+                112 => value.outputs[0].drm_format = 0,
+                113 => value.outputs[0].flags = 2,
+                114 => {
+                    value.output_count = 2;
+                    value.outputs[1] = value.outputs[0];
+                    value.outputs[1].connector_id += 1;
+                }
+                115 => {
+                    value.output_count = 2;
+                    value.outputs[1] = value.outputs[0];
+                    value.outputs[1].output_id += 1;
+                }
+                116 => value.outputs[1] = value.outputs[0],
+                117 => value.outputs[0].width = 16_385,
+                118 => value.outputs[0].height = 16_385,
+                119 => value.session_generation = 0,
+                _ => {}
+            }
+            Ok(value)
+        }
+        fn prepare(&mut self, _: &Frame, _: Admission) -> Result<(), Error> {
+            self.mark("prepare");
+            Ok(())
+        }
+        fn execute(
+            &mut self,
+            _: &Frame,
+            admission: Admission,
+            attempt: &mut Attempt,
+        ) -> Result<NativeResult, Error> {
+            self.mark("execute");
+            if self.plan.mode == 140 || self.plan.mode == 141 {
+                let objects = [NativeObject {
+                    id: 41,
+                    generation: 3,
+                    output_id: admission.policy.output_id,
+                    output_generation: admission.policy.output_generation,
+                }];
+                let scope = NativeScope {
+                    policy: admission.policy,
+                    device_lease_id: if self.plan.mode == 140 { 60 } else { 59 },
+                    device_generation: if self.plan.mode == 141 { 62 } else { 61 },
+                    objects: &objects,
+                };
+                attempt.authorize(&scope)?;
+                return Ok(NativeResult::Returned {
+                    operation: 1,
+                    value: 0,
+                    errno: 0,
+                    succeeded: true,
+                    extra_attempt_refused: false,
+                });
+            }
+            Ok(NativeResult::NotEntered)
+        }
+        fn advance(&mut self, _: &RetirementContext<'_>) -> Result<NativeProgress, Error> {
+            Ok(NativeProgress::retired())
+        }
+        fn poll_sources(
+            &mut self,
+            _: &mut [PollSource; MAX_NATIVE_SOURCES],
+        ) -> Result<usize, Error> {
+            Ok(0)
+        }
+        fn dispatch(&mut self, _: NativeReady) -> Result<(), Error> {
+            Err(Error::Protocol)
+        }
+        fn shutdown_progress(&mut self) -> Result<RetirementProgress, Error> {
+            if self.plan.mode == 130 || self.plan.mode == 131 {
+                assert!(self.input.as_ref().unwrap().events()[1].primary().is_some());
+                self.mark("shutdown_held");
+                self.plan
+                    .release
+                    .recv_timeout(Duration::from_secs(2))
+                    .map_err(|_| Error::Native)?;
+            }
+            drop(self.input.take());
+            self.mark("shutdown");
+            Ok(RetirementProgress::Verified(RetirementProof))
+        }
+    }
+    impl Drop for BootstrapOwner {
+        fn drop(&mut self) {
+            self.mark("drop");
+        }
+    }
+    fn bootstrap_start(mode: u32) -> (Executor, Sender<()>, Receiver<(&'static str, ThreadId)>) {
+        bootstrap_start_until(mode, boottime_ns().unwrap() + 5_000_000_000)
+    }
+    fn bootstrap_start_until(
+        mode: u32,
+        cutoff: u64,
+    ) -> (Executor, Sender<()>, Receiver<(&'static str, ThreadId)>) {
+        let (tx, events) = mpsc::channel();
+        let (release, go) = mpsc::channel();
+        *BOOTSTRAP_PLAN.lock().unwrap() = Some(BootstrapPlan {
+            mode,
+            events: tx,
+            release: go,
+        });
+        (
+            Executor::new(1, bootstrap_factory, bootstrap_input(), cutoff).unwrap(),
+            release,
+            events,
+        )
+    }
+    fn bootstrap_observed(
+        events: &Receiver<(&'static str, ThreadId)>,
+    ) -> (bool, Vec<(&'static str, ThreadId)>) {
+        let until = boottime_ns().unwrap() + 100_000_000;
+        let mut seen = Vec::new();
+        while boottime_ns().unwrap() < until {
+            for event in events.try_iter() {
+                let entered = event.0 == "bootstrap";
+                seen.push(event);
+                if entered {
+                    return (true, seen);
+                }
+            }
+            thread::yield_now();
+        }
+        (false, seen)
+    }
+    #[test]
+    fn bootstrap_dispatch_precedes_frame_admission_and_preserves_held_owner() {
+        let _serial = SERIAL.lock().unwrap_or_else(|p| p.into_inner());
+        let (mut e, release, events) = bootstrap_start(10);
+        let (entered, mut seen) = bootstrap_observed(&events);
+        let mut input = Some(frame(1));
+        let admitted = e.try_submit(
+            &mut input,
+            policy(1),
+            boottime_ns().unwrap() + 5_000_000_000,
+            101,
+        );
+        let start = boottime_ns().unwrap();
+        let responsive = (0..1024).all(|_| !e.snapshot().unwrap().ready);
+        let elapsed = boottime_ns().unwrap() - start;
+        let busy_join = e.try_join();
+        let before = e.snapshot().unwrap();
+        e.request_stop().unwrap();
+        let _ = release.send(());
+        join(&mut e);
+        seen.extend(events.try_iter());
+        assert!(entered, "required worker bootstrap was never entered");
+        assert_eq!(admitted, Err(Error::Busy));
+        assert!(input.is_some());
+        assert!(
+            responsive
+                && elapsed < 100_000_000
+                && before.accepted == 0
+                && before.occupied_credits == 0
+        );
+        assert_eq!(busy_join, Err(Error::Busy));
+        let thread = seen.iter().find(|v| v.0 == "created").unwrap().1;
+        assert!(seen.iter().all(|v| v.1 == thread));
+        assert!(seen.iter().any(|v| v.0 == "drop"));
+    }
+    #[test]
+    fn bootstrap_late_success_after_stop_cannot_publish_ready_or_outputs() {
+        let _serial = SERIAL.lock().unwrap_or_else(|p| p.into_inner());
+        let (mut e, release, events) = bootstrap_start(11);
+        let (entered, _) = bootstrap_observed(&events);
+        e.request_stop().unwrap();
+        let was_busy = e.try_join();
+        let _ = release.send(());
+        join(&mut e);
+        let mut input = Some(frame(1));
+        let refused = e.try_submit(
+            &mut input,
+            policy(1),
+            boottime_ns().unwrap() + 5_000_000_000,
+            101,
+        );
+        let ready = e.snapshot().unwrap().ready;
+        let discovery = e.try_discovery().unwrap();
+        assert!(entered, "required worker bootstrap was never entered");
+        assert_eq!(was_busy, Err(Error::Busy));
+        assert!(!ready && discovery.is_none());
+        assert_eq!(refused, Err(Error::Stopping));
+        assert!(input.is_some());
+    }
+    #[test]
+    fn bootstrap_copies_actual_output_mode_and_format_before_valid_frame() {
+        let _serial = SERIAL.lock().unwrap_or_else(|p| p.into_inner());
+        let (mut e, _release, _events) = bootstrap_start(12);
+        let until = boottime_ns().unwrap() + 100_000_000;
+        let mut discovery = None;
+        while discovery.is_none() && boottime_ns().unwrap() < until {
+            match e.try_discovery() {
+                Ok(value) => discovery = value,
+                Err(Error::Busy) => {}
+                Err(error) => panic!("discovery {error:?}"),
+            }
+            thread::yield_now();
+        }
+        let ready = e.snapshot().unwrap().ready;
+        let admitted = if discovery.is_some() {
+            let mut input = Some(frame(1));
+            let until = boottime_ns().unwrap() + 100_000_000;
+            let cutoff = boottime_ns().unwrap() + 5_000_000_000;
+            loop {
+                let result = e.try_submit(&mut input, policy(1), cutoff, 101);
+                if result != Err(Error::Busy) || boottime_ns().unwrap() >= until {
+                    break Some(result);
+                }
+                thread::yield_now();
+            }
+        } else {
+            None
+        };
+        e.request_stop().unwrap();
+        join(&mut e);
+        assert!(
+            discovery.is_some(),
+            "real worker discovery was not published"
+        );
+        assert!(ready);
+        assert!(admitted.unwrap().is_ok());
+        let d = discovery.unwrap();
+        assert_eq!((d.session_generation, d.output_count), (29, 1));
+        assert_eq!(
+            d.outputs[0],
+            bootstrap_discovery(&bootstrap_input()).outputs[0]
+        );
+        assert_eq!(
+            (
+                d.outputs[0].mode_id,
+                d.outputs[0].mode_generation,
+                d.outputs[0].refresh_millihz,
+                d.outputs[0].drm_format
+            ),
+            (97, 101, 60000, 0x34325241)
+        );
+    }
+
+    fn await_discovery(e: &mut Executor) -> Option<Discovery> {
+        let until = boottime_ns().unwrap() + 100_000_000;
+        loop {
+            match e.try_discovery() {
+                Ok(Some(value)) => return Some(value),
+                Ok(None) | Err(Error::Busy) => {}
+                Err(error) => panic!("discovery {error:?}"),
+            }
+            if e.snapshot().unwrap().stopping || boottime_ns().unwrap() >= until {
+                return None;
+            }
+            thread::yield_now();
+        }
+    }
+    #[test]
+    fn bootstrap_rejects_malformed_or_unbound_discovery_before_ready() {
+        let _serial = SERIAL.lock().unwrap_or_else(|p| p.into_inner());
+        let mut accepted = Vec::new();
+        for mode in 100..120 {
+            let (mut e, _release, events) = bootstrap_start(mode);
+            let discovery = await_discovery(&mut e);
+            let before = e.snapshot().unwrap();
+            e.request_stop().unwrap();
+            join(&mut e);
+            let seen: Vec<_> = events.try_iter().collect();
+            assert!(seen.iter().any(|v| v.0 == "bootstrap_return"));
+            assert!(seen.iter().any(|v| v.0 == "shutdown") && seen.iter().any(|v| v.0 == "drop"));
+            if discovery.is_some() || before.ready || !before.failed || !before.stopping {
+                accepted.push(mode);
+            }
+        }
+        assert!(
+            accepted.is_empty(),
+            "unchecked discovery became Ready: {accepted:?}"
+        );
+    }
+    #[test]
+    fn bootstrap_frame_admission_matches_discovered_session_output_and_dimensions() {
+        let _serial = SERIAL.lock().unwrap_or_else(|p| p.into_inner());
+        let (mut e, _release, _events) = bootstrap_start(12);
+        assert!(await_discovery(&mut e).is_some());
+        let mut accepted = Vec::new();
+        for case in 0..5 {
+            let sequence = case + 1;
+            let mut target = *frame(sequence).target();
+            let mut requested = policy(sequence);
+            match case {
+                0 => requested.session_generation += 1,
+                1 => {
+                    target.output_id += 1;
+                    requested.output_id += 1;
+                }
+                2 => {
+                    target.output_generation += 1;
+                    requested.output_generation += 1;
+                }
+                3 => {
+                    target.width += 1;
+                    target.transformed_width += 1;
+                }
+                4 => {
+                    target.height += 1;
+                    target.transformed_height += 1;
+                }
+                _ => unreachable!(),
+            }
+            let mut input = Some(frame_target(sequence, target));
+            let until = boottime_ns().unwrap() + 100_000_000;
+            let cutoff = boottime_ns().unwrap() + 5_000_000_000;
+            let result = loop {
+                let result = e.try_submit(&mut input, requested, cutoff, sequence * 101);
+                if result != Err(Error::Busy) || boottime_ns().unwrap() >= until {
+                    break result;
+                }
+                thread::yield_now();
+            };
+            if result != Err(Error::Invalid) || input.is_none() {
+                accepted.push(case);
+            }
+        }
+        let before = e.snapshot().unwrap();
+        e.request_stop().unwrap();
+        join(&mut e);
+        assert!(
+            accepted.is_empty(),
+            "frames absent from actual discovery admitted: {accepted:?}"
+        );
+        assert_eq!(
+            (
+                before.accepted,
+                before.occupied_credits,
+                before.reserved_completion_records
+            ),
+            (0, 0, 0)
+        );
+    }
+    #[test]
+    fn bootstrap_invalid_result_retains_worker_and_owned_input_through_shutdown() {
+        let _serial = SERIAL.lock().unwrap_or_else(|p| p.into_inner());
+        let (mut e, release, events) = bootstrap_start(130);
+        let discovery = await_discovery(&mut e);
+        let before = e.snapshot().unwrap();
+        // Both baseline and repair reach held native shutdown before assertions.
+        e.request_stop().unwrap();
+        await_stage(&events, "shutdown_held");
+        let start = boottime_ns().unwrap();
+        let responsive = (0..1024).all(|_| {
+            let s = e.snapshot().unwrap();
+            s.worker_alive && !s.ready && s.stopping
+        });
+        let elapsed = boottime_ns().unwrap() - start;
+        let busy = e.try_join();
+        release.send(()).unwrap();
+        join(&mut e);
+        let seen: Vec<_> = events.try_iter().collect();
+        assert!(
+            discovery.is_none() && !before.ready && before.failed && before.stopping,
+            "malformed successful bootstrap must become terminal before native cleanup"
+        );
+        assert!(responsive && elapsed < 100_000_000);
+        assert_eq!(busy, Err(Error::Busy));
+        assert_eq!(
+            seen.iter().map(|v| v.0).collect::<Vec<_>>(),
+            vec!["shutdown", "drop"]
+        );
+    }
+
+    #[test]
+    fn bootstrap_final_attempt_must_match_discovered_device_before_grant() {
+        let _serial = SERIAL.lock().unwrap_or_else(|p| p.into_inner());
+        let mut wrongly_granted = Vec::new();
+        for mode in 140..=141 {
+            let (mut e, _release, _events) = bootstrap_start(mode);
+            assert!(await_discovery(&mut e).is_some());
+            let mut input = Some(frame(1));
+            let cutoff = boottime_ns().unwrap() + 5_000_000_000;
+            let until = boottime_ns().unwrap() + 100_000_000;
+            loop {
+                match e.try_submit(&mut input, policy(1), cutoff, 101) {
+                    Ok(_) => break,
+                    Err(Error::Busy) if boottime_ns().unwrap() < until => thread::yield_now(),
+                    other => panic!("valid admission {other:?}"),
+                }
+            }
+            let until = boottime_ns().unwrap() + 100_000_000;
+            while e.snapshot().unwrap().retired != 1 && boottime_ns().unwrap() < until {
+                thread::yield_now();
+            }
+            e.request_stop().unwrap();
+            join(&mut e);
+            let mut records = Vec::new();
+            drain(&e, &mut records);
+            assert!(
+                records
+                    .iter()
+                    .any(|r| r.kind == CompletionKind::Retired && r.resources_retired)
+            );
+            if records
+                .iter()
+                .any(|r| r.grant.is_some() || r.kind == CompletionKind::Attempt)
+                || !records.iter().any(|r| {
+                    r.kind == CompletionKind::SubmissionOutcome
+                        && r.error == Some(Error::Invalid)
+                        && r.native == NativeResult::NotEntered
+                })
+            {
+                wrongly_granted.push(mode);
+            }
+        }
+        assert!(
+            wrongly_granted.is_empty(),
+            "wrong discovered device obtained final grant: {wrongly_granted:?}"
+        );
+    }
+
+    #[test]
+    fn bootstrap_expired_constructor_refuses_before_starting_worker() {
+        let _serial = SERIAL.lock().unwrap_or_else(|p| p.into_inner());
+        let (tx, events) = mpsc::channel();
+        let (_release, go) = mpsc::channel();
+        *BOOTSTRAP_PLAN.lock().unwrap() = Some(BootstrapPlan {
+            mode: 12,
+            events: tx,
+            release: go,
+        });
+        let result = Executor::new(
+            1,
+            bootstrap_factory,
+            bootstrap_input(),
+            boottime_ns().unwrap() - 1,
+        );
+        let refused = match result {
+            Err(Error::Expired) => true,
+            Ok(mut e) => {
+                e.request_stop().unwrap();
+                join(&mut e);
+                false
+            }
+            Err(error) => panic!("constructor {error:?}"),
+        };
+        let unused = BOOTSTRAP_PLAN.lock().unwrap().take().is_some();
+        assert!(
+            refused && unused && events.try_iter().next().is_none(),
+            "expired original startup deadline must refuse before worker spawn"
+        );
+    }
+    #[test]
+    fn bootstrap_original_deadline_watch_expires_held_native_without_detach_or_late_ready() {
+        let _serial = SERIAL.lock().unwrap_or_else(|p| p.into_inner());
+        let cutoff = boottime_ns().unwrap() + 100_000_000;
+        let (mut e, release, events) = bootstrap_start_until(10, cutoff);
+        let (entered, _) = bootstrap_observed(&events);
+        let fd = e.startup_deadline_fd().unwrap();
+        let mut pollfd = PollFd {
+            fd,
+            events: 1,
+            revents: 0,
+        };
+        let readable = unsafe { poll(&mut pollfd, 1, 200) };
+        let before = e.snapshot().unwrap();
+        let busy = e.try_join();
+        let mut input = Some(frame(1));
+        let refused = e.try_submit(
+            &mut input,
+            policy(1),
+            boottime_ns().unwrap() + 5_000_000_000,
+            101,
+        );
+        e.request_stop().unwrap();
+        release.send(()).unwrap();
+        join(&mut e);
+        let after = e.snapshot().unwrap();
+        let discovery = e.try_discovery().unwrap();
+        assert!(
+            entered && fd >= 0 && readable == 1 && pollfd.revents == 1,
+            "held native bootstrap needs a real owned startup deadline watch"
+        );
+        assert!(
+            before.stopping && before.failed && before.worker_alive && !before.ready,
+            "original BOOTTIME startup cutoff must expire without restarting"
+        );
+        assert_eq!(busy, Err(Error::Busy));
+        assert_eq!(refused, Err(Error::Stopping));
+        assert!(input.is_some());
+        assert!(!after.ready && after.joined && !after.worker_alive && discovery.is_none());
+    }
+    #[test]
+    fn bootstrap_candidate_observed_after_deadline_cannot_become_ready() {
+        let _serial = SERIAL.lock().unwrap_or_else(|p| p.into_inner());
+        let cutoff = boottime_ns().unwrap() + 100_000_000;
+        let (mut e, _release, events) = bootstrap_start_until(12, cutoff);
+        await_stage(&events, "bootstrap_return");
+        while boottime_ns().unwrap() <= cutoff {
+            thread::yield_now();
+        }
+        let discovery = e.try_discovery().unwrap();
+        let before = e.snapshot().unwrap();
+        e.request_stop().unwrap();
+        join(&mut e);
+        assert!(
+            discovery.is_none() && before.stopping && before.failed && !before.ready,
+            "late control observation must not activate expired bootstrap evidence"
+        );
+    }
+    #[test]
+    fn bootstrap_accepted_ready_disarms_deadline_and_stale_watch_does_not_stop_owner() {
+        let _serial = SERIAL.lock().unwrap_or_else(|p| p.into_inner());
+        let cutoff = boottime_ns().unwrap() + 100_000_000;
+        let (mut e, _release, _events) = bootstrap_start_until(12, cutoff);
+        let discovery = await_discovery(&mut e);
+        while boottime_ns().unwrap() <= cutoff {
+            thread::yield_now();
+        }
+        let fd = e.startup_deadline_fd().unwrap();
+        let is_readable = readable(fd);
+        let after = e.snapshot().unwrap();
+        e.request_stop().unwrap();
+        join(&mut e);
+        assert!(
+            discovery.is_some() && after.ready && !after.stopping && !after.failed && !is_readable,
+            "accepted startup must disarm its timer; stale readiness cannot stop a live owner"
+        );
+    }
+
+    #[test]
+    fn bootstrap_invalid_frame_does_not_supersede_an_earlier_unsealed_ticket() {
+        let _serial = SERIAL.lock().unwrap_or_else(|p| p.into_inner());
+        let (mut e, release, events) = start(0);
+        submit(&mut e, 1);
+        await_stage(&events, "prepare");
+        let mut invalid_policy = policy(2);
+        invalid_policy.session_generation += 1;
+        let mut input = Some(frame(2));
+        let refused = e.try_submit(
+            &mut input,
+            invalid_policy,
+            boottime_ns().unwrap() + 5_000_000_000,
+            202,
+        );
+        let before = e.snapshot().unwrap();
+        release.send(()).unwrap();
+        await_stage(&events, "sealed");
+        e.request_stop().unwrap();
+        join(&mut e);
+        let completion = next_retired(&e).unwrap();
+        assert_eq!(refused, Err(Error::Invalid));
+        assert!(input.is_some());
+        assert_eq!(before.accepted, 1);
+        assert_eq!(completion.grant.unwrap().policy(), policy(1));
+        assert!(completion.error.is_none());
+    }
+    #[test]
+    fn bootstrap_empty_input_and_no_outputs_never_mint_frame_authority() {
+        use crate::bootstrap::{BorrowedBootstrapEvent, SessionRenderEvent};
+        let _serial = SERIAL.lock().unwrap_or_else(|p| p.into_inner());
+        let mut init = SessionRenderEvent {
+            event_type: 1,
+            session_sequence: 1,
+            session_generation: 29,
+            ..Default::default()
+        };
+        init.seat_name[..5].copy_from_slice(b"seat0");
+        let end = SessionRenderEvent {
+            event_type: 3,
+            session_sequence: 2,
+            session_generation: 29,
+            ..Default::default()
+        };
+        let input = OwnedBootstrap::capture(
+            29,
+            &[
+                BorrowedBootstrapEvent {
+                    metadata: &init,
+                    primary: None,
+                    render: None,
+                },
+                BorrowedBootstrapEvent {
+                    metadata: &end,
+                    primary: None,
+                    render: None,
+                },
+            ],
+        )
+        .unwrap();
+        let (tx, events) = mpsc::channel();
+        let (_release, go) = mpsc::channel();
+        *BOOTSTRAP_PLAN.lock().unwrap() = Some(BootstrapPlan {
+            mode: 150,
+            events: tx,
+            release: go,
+        });
+        let mut e = Executor::new(
+            1,
+            bootstrap_factory,
+            input,
+            boottime_ns().unwrap() + 5_000_000_000,
+        )
+        .unwrap();
+        let discovery = await_discovery(&mut e).unwrap();
+        let mut frame_slot = Some(frame(1));
+        let refused = e.try_submit(
+            &mut frame_slot,
+            policy(1),
+            boottime_ns().unwrap() + 5_000_000_000,
+            101,
+        );
+        let before = e.snapshot().unwrap();
+        e.request_stop().unwrap();
+        join(&mut e);
+        let seen: Vec<_> = events.try_iter().collect();
+        assert_eq!(discovery.output_count, 0);
+        assert!(before.ready);
+        assert_eq!(refused, Err(Error::Invalid));
+        assert!(frame_slot.is_some());
+        assert_eq!(before.accepted, 0);
+        assert!(seen.iter().any(|v| v.0 == "shutdown") && seen.iter().any(|v| v.0 == "drop"));
+    }
+
+    #[test]
+    fn bootstrap_error_wakes_control_before_blocked_cleanup_finishes() {
+        let _serial = SERIAL.lock().unwrap_or_else(|p| p.into_inner());
+        let (mut e, release, events) = bootstrap_start(131);
+        await_stage(&events, "shutdown_held");
+        let wake = readable(e.completion_fd().unwrap());
+        let timer_ready = readable(e.startup_deadline_fd().unwrap());
+        let before = e.snapshot().unwrap();
+        let busy = e.try_join();
+        release.send(()).unwrap();
+        join(&mut e);
+        assert!(
+            before.failed
+                && before.stopping
+                && !before.ready
+                && before.worker_alive
+                && !timer_ready
+        );
+        assert_eq!(busy, Err(Error::Busy));
+        assert!(
+            wake,
+            "terminal bootstrap error must wake control before native cleanup returns"
+        );
     }
 }

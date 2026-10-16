@@ -162,16 +162,34 @@ fallback Rust `Drop` stops and actually joins but can block indefinitely. Pendin
 native retirement keeps frames, completion delivery does not free their custody,
 and native progress uses actual kernel eventfds/`poll` with finite ingress work.
 
-Actual CPU QA passes22 library cases (8 permit/14 worker) plus14 Frame cases,
-36 active total, with two ignored child modes invoked by their parent tests.
-Format-check, strict Clippy and release build pass. Recorded regressions include
-pending drain, readiness fairness/raw clock facts and the final-retirement shutdown
-recheck; see the [worker report](../docs/native-render-worker.md) and hash-only
-receipts. These authored-adapter tests qualify no real AQ/GL/DRM output or Source.
+Current [owned bootstrap/worker QA](../docs/native-render-bootstrap.md) passes36
+library cases (8 permit/28 worker),14 Frame and12 bootstrap descriptor cases:
+62 active total, with two ignored owned-child modes invoked by their parents.
+Format-check, strict Clippy and release build pass. Earlier worker-only results
+and the five new strict RED/GREEN pairs retain separate receipts.
 
-The new worker archive8067436b is Rust CPU-QA only. The native Frame ELF/507-file
-SDK and five FFI/four codec groups selected earlier3cf0a142, without this worker.
-The configuration-free factory currently receives no session input: a genuine
-binding still needs retained deferred custody followed by explicit bootstrap/
-output discovery, authenticated session/FD transport and Stop-retirement scope.
+`OwnedBootstrap::capture` copies the bounded initial session prefix and duplicates
+its separate primary/render descriptors with CLOEXEC. The worker retains a
+deferred holder before it calls `NativeOwner::bootstrap`; the adapter must take
+the input into owner-held state before fallible native work. No live C++ graph,
+callback or borrowed input pointer crosses this boundary. Discovery values must
+match the transported session/device tuples before control can accept readiness.
+Frames must match discovered output identity/generation/dimensions; final native
+grants must match the discovered device lease/generation as well.
+
+`Executor::new` requires one original absolute BOOTTIME startup cutoff. Register
+both borrowed `completion_fd()` and `startup_deadline_fd()` before waiting.
+Inspect `try_discovery` as well as frame completions on completion readiness.
+Call `snapshot`, `try_discovery`, `try_submit` or `try_join` on a deadline event to
+enforce expiry; never merely drain the timer counter. Ready is accepted by control
+at its post-disarm BOOTTIME check, then its timer is disarmed. Stop/expiry is
+terminal; native resources and the JoinHandle remain owned until actual drain and
+join. Unregister both borrowed watches before `try_release`. Fallback `Drop`
+still joins and may block. The ordinary BOOTTIME timer includes suspend time but
+does not itself wake a suspended phone; actual suspend remains unqualified.
+
+The new archive1dcce61e is Rust CPU-QA only. The native Frame ELF/507-file SDK
+and five FFI/four codec groups selected earlier3cf0a142, without this worker.
+Worker C ABI, genuine AQ/GL, later session ingress/OOB revocation, complete actual
+native output/routing authority and distinct Stop-retirement remain required.
 No worker C ABI or private proposed executor header is published.
