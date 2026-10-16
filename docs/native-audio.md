@@ -16,6 +16,10 @@ now measures both virtual sinks through five media/call/release stages and runs
 all eleven unchanged Qt socket cases under a generic ARM kernel. Normal ARM
 UI/audio/theme composition and physical audio remain unqualified.
 
+Sounds now selects the [current typed appearance feed](native-audio-appearance-client.md).
+Its11 audio and29 appearance IPC cases plus the exact installed QML check pass
+on host; normal ARM GUI/audio/theme composition remains open.
+
 ## Ownership and permissions
 
 The service receives bounded newline-delimited JSON over a Unix socket.

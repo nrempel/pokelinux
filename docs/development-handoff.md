@@ -18,6 +18,13 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+Sounds now uses the [current schema3 appearance client](native-audio-appearance-client.md),
+with11 unchanged audio/29 actual appearance IPC cases and an exact installed-QML
+Ready/create check. The candidate is one matching current cohort, without a
+private-HOME reader or old-schema fallback. Continue its normal ARM tracer; host
+component results do not qualify the normal GUI/audio/theme path.
+
+
 The [additional audio checkpoint](native-audio-pcm-arm-foundation.md) passes five
 actual host PCM stages (240,000 measured frames) and eleven unchanged Qt socket
 cases under a generic ARM kernel. Signed32-package preparation preserves all353

@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "scope": "Current-schema3 appearance client reuse for Sounds; strict host IPC and installed-component proof only",
+  "Root_review_sha256": "b1214839fb57e9489988dc3c0997a497b4472f625bcc1d1be6358a9bbcaa3089",
+  "author_review_sha256": "1f5bb9fbf4664c35ecf8eee5fb5ac6f62a34cd949a60d9dd67b09666af30df73",
+  "host_build_review_sha256": "4e0a185f673ea9807f7ce20fe16e5b931d27c5665b35850c4087a644ce54d4cc",
+  "installed_component_review_sha256": "7f4e85fc40cc2b7ba8e5ede3e7efa07df7c8ca2233e86a1ce8aa9c1fb6dfe08f",
+  "selected_changed_sources": {
+    "native-app/PhoneAppearanceClient.h": "b7b12f9a1d335e9036dc065ea2218ca107d447f57e029fef674941e1520b4e92",
+    "native-app/PhoneAppearanceClient.cpp": "7a2a5d0d5f7a5012dd724596a1bf1f96d8fa9d3242c913933d8cf69fe9de34d9",
+    "native-app/PhoneAppearance.qml": "705ab25799cba18095a76f4fb47e70eb10099ca035426d7e4400fa9cef8452bc",
+    "native-app/appearance-client-tests/process.cpp": "95e5c11905062a891393f9ee7d0633cd8278f07f1d0fce82b7db1f2a9c81f5d7",
+    "native-app/appearance-client-tests/CMakeLists.txt": "287c36a3854a8bdef11d0d92f45a31892836ce19e2a004fb9aef23cbdd5d9579",
+    "native-audio-ui/main.cpp": "9e9bf5f403b18c30473083d388bf3e2ed44c46c27a71af53b1fbaebedaf0d1dd",
+    "native-audio-ui/CMakeLists.txt": "0159c6fc40debd177032285889668b5c6d6bed5ef848c19b1bdd6ba5e3852df8"
+  },
+  "audio_cases_unchanged": 11,
+  "appearance_actual_IPC_cases": 29,
+  "old_schema_fallback": false,
+  "new_RED_claimed": false,
+  "matching_current_ARM_service_sha256": "4af8686cfd5763eef222049385cb5141bc62021f5fde1a531eee0fe49e8c14f3",
+  "claims_excluded": [
+    "normal Sounds GUI rendering",
+    "new ARM audio/theme composition",
+    "full font/settings fidelity",
+    "current lifecycle/launcher/service management",
+    "physical phone/audio qualification"
+  ],
+  "physical_phone_accessed": false
+}

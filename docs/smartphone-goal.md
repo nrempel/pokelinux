@@ -346,6 +346,9 @@ Incoming SMS text/metadata parsing also matches33 actual AOSP decoder outputs wi
 
 The first native power-request arbiter is built and component-tested, including18 outcomes from actual public source. Installed permission/lifecycle, native suspend authority and hardware policy remain open; see [native power](native-power.md).
 
+Sounds now selects the [current schema3 appearance feed](native-audio-appearance-client.md)
+after host IPC/install qualification. Normal ARM GUI/audio/theme remains open.
+
 Additional [host PCM/ARM socket evidence](native-audio-pcm-arm-foundation.md) now
 qualifies five actual virtual-sink stages and eleven actual generic ARM socket
 cases, with separate signed package/API preparation. Normal ARM UI/audio/theme

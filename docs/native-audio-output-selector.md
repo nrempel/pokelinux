@@ -70,11 +70,12 @@ graph observation.
 cases with strict compiler warnings. The selected normal binary expects its own
 UID11042 and service UID11040; the planned call fixture uses11041, distinct from
 existing Camera and Messages principals. Its six arguments select app HOME,
-runtime directory, Wayland display, appearance HOME, audio socket and installed
-appearance QML directory. This foundation still uses the shared file appearance
-reader. The separate qualified native palette client must be composed before a
-private-HOME Omarchy theme run; no HOME ACL or copied palette is a substitute.
-There is no registered Sounds desktop launcher or installed service unit here.
+runtime directory, Wayland display, current appearance socket, audio socket and
+installed appearance QML directory. The [current typed appearance client](native-audio-appearance-client.md)
+now supplies the public schema3 feed, with no file-HOME or old-schema fallback.
+Normal private-HOME Omarchy composition remains unqualified; no HOME ACL or copied
+palette is a substitute. There is no registered Sounds desktop launcher or
+installed service unit here.
 
 The normal binary emits at most eight distinct bounded mapped-frame metadata
 lines for independent display qualification. Compilation is not evidence that
