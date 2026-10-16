@@ -294,11 +294,52 @@ order startup work against expiry; they do not by themselves prove exact callbac
 return, private refresh entry, an empty deferred queue or a cause. Choose a repair
 only from the resulting evidence.
 
+## Startup event witness replay
+
+One diagnostic witness extends the existing read-only focus plugin, without an
+extra plugin load, modified production owner, Source packet access or lease change.
+It compiles against the actual matching guest SDK. A preallocated4096B tmpfs map
+retains the earliest128 numeric records; complete records precede lock-free release
+publication. Overflow, clock error and retirement are sticky. This is a cooperative
+UID1000 fixture, not an authenticated audit channel.
+
+The guest reads the map only after its retained compositor pidfd reports dead,
+before Stop, within the original failure-observation2s and WORK. Both independent
+readers decode the same13 committed records: armed, five preReload, five reloaded
+and two scheduled props_refreshed landmarks. Flags are zero and the uncommitted
+tail is empty. Raw memory stays private; [hash-only evidence](evidence/native-session-startup-event-witness-provenance.json)
+binds the exact proposal, source review, selection, runtime and qualifications.
+
+The last observed props_refreshed event is183439178490ns. Source later accepts
+sequence50 at184793650204ns,1354471714ns after that event, then first reports
+provider TimedOut at184912831352ns:119181148ns sample age against100ms. The
+nonpresenting discovery again exits255/empty before Sounds. No final display,
+new capture, functional step or PCM succeeds. Completion landmarks do not prove
+exact callback return, private refresh entry, an empty deferred queue, in-flight
+work or the cause of Source expiry. These observations do not justify delaying
+activation until those events as a production repair.
+
+All four compiles return0. All36 guest waits/applicable merged PIPE EOFs, one
+shutdown wait, three boot waits/QEMU0 and seven host waits/both PIPE EOFs meet
+their original cutoffs. Expected-exit aggregates remain false on discovery255.
+Stop/owner waits0, same-daemon exact container absence and input closure qualify
+separately. The compositor Child's numeric wait/signal remains unexported; adopted
+0/1/-9 statuses keep their own scope.
+
+The retained untimestamped log identifies virgl/LLVMPIPE software rendering; its
+last line does not identify the later failing call. Preserve this ARM failure and
+prepare matching-source native CPU-speed composition on Harbour rather than
+another speculative startup change. Keep Pixel geometry, actual window/focus,
+independent grants, all PCM assertions and100ms freshness. A full host pass would
+qualify host composition only; ARM availability, TCG causality, the matched Google
+kernel and physical phone gates remain open.
+
 ## Remaining integration
 
-Next run the production owner with original Hyprland/Source, the fixed desktop
-client, normal UID11042 Sounds, independent permission and real native focus,
-per-app Wayland, and independent virtual graph/PCM. Qualify null-focus background
+Prepare native CPU-speed execution of the same-source production owner and
+original Hyprland/Source, fixed desktop client, normal UID11042 Sounds,
+independent permission and real native focus, then return to ARM availability. Keep
+per-app Wayland and independent virtual graph/PCM. Qualify null-focus background
 continuation and terminal Source loss without app/audio revival. Earlier ARM
 Sounds evidence uses root-authored focus and a separate selected actor cohort.
 Trusted lock/restoration, complete Omarchy shell/startup, the other smartphone

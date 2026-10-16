@@ -88,3 +88,9 @@ obtain a bounded authenticated Snapshot before cleanup Stop when possible,
 within the original observation cutoff. Its fields remain observations rather
 than a crash cause or health guarantee. No new original Hyprland runtime, normal
 GUI/PCM, ARM runtime or physical-phone qualification follows from this host cohort.
+
+The later [startup-event witness replay](native-session-owner.md#startup-event-witness-replay)
+retains the same root observation contract and a separate13-landmark diagnostic
+prefix. All observed completion landmarks precede Source sequence50 by over1.35s;
+provider TimedOut still occurs before Sounds/PCM. No startup-gate repair or cause
+follows, and the full functional assembly remains unqualified.

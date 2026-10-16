@@ -94,13 +94,24 @@ qualifies separately. The [non-presenting discovery replay](native-session-owner
 then compiles the derived probe but also fails before Sounds/PCM. Source accepts
 sequence48 before provider TimedOut at113.76ms; early actual profile receipts
 are retained, but final measurement is unreached. Removed probe-window painting
-is not a necessary trigger; the gap's cause remains unknown. Stop fixture guesses
-and obtain one bounded public configuration/property-refresh event timing witness
-in the existing observer plugin, preserving production owner, Source and deadlines.
-Read timing only after retained compositor death; no exact private callback-entry
-or cause claim follows from completion events alone. Then choose the production
-repair and qualify
-null-focus background lease continuation, then terminal Source loss without
+is not a necessary trigger; the gap's cause remains unknown. The bounded
+[startup-event witness](native-session-owner.md#startup-event-witness-replay) now
+compiles against the matching SDK and retains13 committed landmarks, armed with
+zero flags, read after retained compositor death within the original2s/WORK. Its
+last observed property-refresh completion precedes the last accepted Source sample
+by1.354s; sequence50 is followed by provider TimedOut at119.18ms sample age. No
+Sounds, final display, functional step or PCM follows. Both independent readers
+agree; all owned waits/EOF and exact container closure qualify separately from
+functional failure. This does not justify another startup gate or establish a
+blocked call, callback return or empty deferred queue. The witness is cooperative,
+not an authenticated audit channel.
+
+Preserve the ARM failure and stop speculative fixture changes. Next prepare
+matching-source native CPU-speed composition on Harbour, with the same Pixel
+geometry, real focus/grants, app/PCM guards and100ms lease. Existing TCG/virgl
+software rendering is an execution constraint, not a proven cause. A host pass
+would qualify only host composition; original ARM availability stays open. Then
+qualify null-focus background lease continuation and terminal Source loss without
 app/audio revival. Preserve the earlier ARM selection and its authored-focus
 scope. Do not reopen auth/PAM or a broad static/diagnostic campaign. Hardware
 remains untested.

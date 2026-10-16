@@ -20,7 +20,12 @@ functional runtime and all phone gates remain open. A subsequent [non-presenting
 discovery replay](native-session-owner.md#non-presenting-discovery-replay) also
 expires after sequence48, before Sounds/PCM, despite creating no probe window.
 The derived probe compiles and retains early profile receipts; final display
-qualification remains unreached. One bounded startup-event witness is next.
+qualification remains unreached. The [startup-event witness](native-session-owner.md#startup-event-witness-replay)
+now retains13 committed landmarks with zero flags after actual compositor death.
+The last observed completion precedes the last accepted Source sample by1.354s;
+sequence50 is followed by119.18ms expiry. This does not justify another activation
+gate. Next prepare matching-source native CPU-speed composition with the same
+Pixel/Source/focus/PCM guards; host success would not close ARM or phone gates.
 
 The [native Rust session owner](native-session-owner.md) now implements compositor
 Child custody and fixed Sounds session assembly.32 host boundary cases,

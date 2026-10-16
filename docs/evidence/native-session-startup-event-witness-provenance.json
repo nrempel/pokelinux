@@ -1,0 +1,180 @@
+{
+  "schema": 1,
+  "evidence_qualified": true,
+  "functional_epoch_passed": false,
+  "scope": "Generic ARM kernel, original Hyprland and default native Rust owner; one cooperative startup-event witness. Discovery255 before normal Sounds, final display, four functional steps and PCM. No production repair or phone proof.",
+  "label": "pokelinux-audio-arm-installed-source-green-sol-12",
+  "public_source_base": "7eead0c2453d5b57e8bde0fc9a584950cf861d35",
+  "production_owner_sha256": "252ad901562df9b41676ebe3c424afff34c5e2fff0e27461ea1f806aa5586a33",
+  "matching_client_sha256": "21e7f51c5e79ef3c66eb757e116b9521a8c847f3aa73113e01d1f5ef05c43096",
+  "normal_Sounds_ELF_sha256": "684057c40c05a26e69dfc175b125b5130deda0a29980b4505d7b1a58cdc5fadf",
+  "Source_adapter_sha256": "7d78b090b4fac0701fa5926d5a5bb53789d01b9309296e4fa8103e0b7f5643a4",
+  "Source_header_sha256": "73612325a597b71a4386d62a4a563477e78e1bd5e572e48784f005507600e845",
+  "diagnostic_source_sha256": {
+    "focus-observer.cpp": "8d70b7a4418e4f03ab8329d47877a63d0f88182648317f36f85426e69d585d8d",
+    "guest.py": "32664d8113ace4f972b3aaee044a742619c254f62e3f7b91cdd2d48b1fc522c8",
+    "installed.py": "7fe2156f603e0dcf1ece7f2145e102540861780fd523c009b41fac71cf2e5b2b",
+    "startup_event_ring.hpp": "060f046074b348f439c5b38a7d08e8cc285c22b07f9b5b764bd7ca393797b153"
+  },
+  "diagnostic_proposal_sha256": "cc9ce526ac2cb9ff5ff688f10171a4b481b762a0c53f9e77180c60a7f4018a84",
+  "Root_source_review_sha256": "950473ba8ed7f398be1d9766dd2635b2ac8642a4ba541ca7ffdf01f6f0016e41",
+  "Root_prelaunch_sha256": "f1634c95c69a7fdc9aa09a14d23bd97190b99d285921c91e51645dc62628fc86",
+  "hashes": {
+    "boot-result.json": "a52c248e8adcf390192c75658989fd6d4d2bfb7e2784418aa5a938d5a01f3e01",
+    "command.json": "a37735f0b5d20b7b3441bd621f85232d263d87713992e1bbb0702f5d337dc272",
+    "execution.json": "20f844414a3d1700c360b70c777e63a1dfcea18ebc273c04d390df663a4c6539",
+    "result.json": "b13437bd4d0b0948c59252eae13924202f57e15e21c5e974834adc697f01d230",
+    "selection.json": "79bd17acb562d1b442423015bf8ba8b463a620343791ee2511288b05f5ed3a32"
+  },
+  "compilation": {
+    "actual_compiles0": 4,
+    "actual_wait_mergedEOF_original_cutoffs": true,
+    "witness_plugin_output_sha256": "c5994bac10bb8bb4e4973ecae2d13c29cb00b09457a8aef5869e5ad6a94e08bd",
+    "matching_guest_SDK": "Hyprland efb50993780079460b0cbed1363e2166a2de1d9f; GCC16.1.1",
+    "normal_Sounds_build_or_component_tests_rerun": false
+  },
+  "Source_initial": {
+    "state": "observed",
+    "last_accepted": {
+      "sequence": 4,
+      "sampled_at_ns": 183522517439
+    },
+    "first_failure": null
+  },
+  "Source_preStop": {
+    "state": "failed",
+    "last_accepted": {
+      "sequence": 50,
+      "sampled_at_ns": 184793650204
+    },
+    "first_failure": {
+      "category": "provider_error",
+      "error_kind": "TimedOut",
+      "observed_at_boottime_ns": 184912831352
+    }
+  },
+  "same_authenticated_root_admin_peer": [
+    450,
+    0,
+    0
+  ],
+  "sample_age_at_first_actor_failure_ns": 119181148,
+  "unchanged_sample_budget_ns": 100000000,
+  "startup_witness": {
+    "file_bytes": 4096,
+    "header_bytes": 64,
+    "record_bytes": 24,
+    "capacity": 128,
+    "earliest_records_no_wrap": true,
+    "committed": 13,
+    "witness_armed": true,
+    "flags": 0,
+    "overflow": false,
+    "clock_error": false,
+    "retired": false,
+    "unknown_flag_bits": 0,
+    "uncommitted_tail_nonzero": false,
+    "raw_sha256": "c1d70ab8cd58dcb0f430fea947b2decc48592faccf651a80937da0db899cd910",
+    "raw_file_published": false,
+    "event_counts": {
+      "witness_armed": 1,
+      "config.preReload": 5,
+      "config.reloaded": 5,
+      "config.props_refreshed": 2
+    },
+    "props_refreshed_details": [
+      true,
+      true
+    ],
+    "last_observed_props_refreshed_boottime_ns": 183439178490,
+    "last_observed_landmark_before_last_accepted_Source_ns": 1354471714,
+    "collector_started_after_retained_compositor_pidfd_dead_boottime_ns": 185152813213,
+    "collector_completed_boottime_ns": 185159312465,
+    "original_failure_observation_until_ns": 187151889377,
+    "original_guest_WORK_until_ns": 676952248560,
+    "within_original2s_and_WORK_before_Stop": true,
+    "preallocated_dev_inode_identity_verified": true,
+    "Root_and_author_independent_raw_ABI_decode_agree": true,
+    "cooperative_UID1000_same_UID_writer_not_excluded": true,
+    "authenticated_audit_channel": false,
+    "milestone_ordering_only": true,
+    "no_callback_return_private_entry_duration_queueempty_inflight_or_cause_claim": true
+  },
+  "failure": {
+    "PCM_invocations": 0,
+    "actual_EOF_ns": 185094341559,
+    "actual_waited_ns": 185093880217,
+    "admission_timestamp_exported": false,
+    "boundary_steps": 0,
+    "classification": "SETUP_FAILURE",
+    "discovery_actual_exit": 255,
+    "discovery_merged_output_bytes": 0,
+    "exact_error": "AssertionError: ('pixel10-actual-discovery.log', 255, b'')",
+    "final_Pixel10_measurement_qualified": false,
+    "measured_frames": 0,
+    "normal_Sounds_launch_reached": false,
+    "original30s_command_budget_derived_established_ns": 183652218059,
+    "original_cutoff_ns": 213652218059,
+    "phase": "setup",
+    "raw_PCM_windows": 0
+  },
+  "profile_receipts": {
+    "Source_FD_or_facts_accessed": false,
+    "actual_normal_output_measurement_qualification": null,
+    "applied_sha256": "f0958e5f532e1a34392a30ba2750d0affd496043b9323d4d49db5bc18d0b624d",
+    "ordered_sha256": "5f695f11625c771cb96345fdf5fb264a3a031829fd3130ebb5b6d4395fb53683",
+    "physical_load_completed_ns": 183295609863,
+    "physical_load_interval_ns": 114568391,
+    "ready_callback_ns": 183181041472
+  },
+  "closure": {
+    "guest_direct_waits_mergedEOF_inside_original_cutoffs": 36,
+    "expected_exit_aggregate_preserved": false,
+    "sole_unexpected_exit": "discovery255 vs required0",
+    "shutdown_actual_wait0": 1,
+    "boot_waits0_QEMU0_mergedEOF": 3,
+    "host_waits_bothEOF_cutoffs": 7,
+    "DockerCLI0_exactCIDgone_same_daemon_input_closure": true,
+    "native_StopCLI_and_owner_actualwait0": true,
+    "SourceChild_numeric_wait_signal_not_exported": true,
+    "separate_subreaper_statuses": [
+      0,
+      1,
+      -9
+    ],
+    "author_and_Root_independently_hashed_selected_files": 226,
+    "large_external_closure_checked_by_reviewed_driver_under_shared_lock": true,
+    "raw_unresolved_handle_field_preserved_despite_separate_actual_absence_receipt": true,
+    "Root_actual_wait": "35326 exit1"
+  },
+  "qualifications": {
+    "author_sha256": "d3fb4ab734273856966346be45a6c544afe367e410f9149e961c916cc7bedd6e",
+    "Root_sha256": "4c0b75f4801042ca0fd4c60736a37a053ead90905036f9e572d1232d432df669"
+  },
+  "existing_log": {
+    "bytes": 10499,
+    "sha256": "22079c263a3192abcf242fe0332ca4de937950cf2c34a879dfa6115862954a6c",
+    "renderer": "virgl (LLVMPIPE (LLVM19.1.7,256 bits))",
+    "untimestamped_log_not_a_current_stack_or_cause_witness": true
+  },
+  "inference": "Observed completion landmarks precede the last accepted Source sample by1.354s; this does not justify an activation gate based only on those events. It does not exclude unmarked work or establish the source of the late freshness gap.",
+  "next_boundary": "Prepare matching-source native CPU-speed composition on Harbour without changing geometry, real focus/grants, PCM or the100ms lease. Qualify host composition separately; ARM/Pixel availability and TCG causality remain unproven.",
+  "phone_accessed": false,
+  "hardware_qualified": false,
+  "proprietary_inputs_raw_decompilation_credentials_or_private_raw_artifacts_published": false,
+  "original_public_event_source_pins": {
+    "revision": "efb50993780079460b0cbed1363e2166a2de1d9f",
+    "EventBus.hpp": {
+      "sha256": "bfb8be17d84a0d8e7f10a0d61bcdc2b2e67378d139aaae8a484bebd96f62eede",
+      "url": "https://raw.githubusercontent.com/hyprwm/Hyprland/efb50993780079460b0cbed1363e2166a2de1d9f/src/event/EventBus.hpp"
+    },
+    "ConfigManager.cpp": {
+      "sha256": "94b5c6891326e7a3e490019d26fd9d6f5b3137fb5318a94dff0a6cb6dfdaf502",
+      "url": "https://raw.githubusercontent.com/hyprwm/Hyprland/efb50993780079460b0cbed1363e2166a2de1d9f/src/config/lua/ConfigManager.cpp"
+    },
+    "PropRefresher.cpp": {
+      "sha256": "65f01a1a50ef05ecb1630f8fd30bbbac91029b29f6b4b6bc3f353d0bb4b2817b",
+      "url": "https://raw.githubusercontent.com/hyprwm/Hyprland/efb50993780079460b0cbed1363e2166a2de1d9f/src/config/supplementary/propRefresher/PropRefresher.cpp"
+    }
+  }
+}

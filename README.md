@@ -44,10 +44,13 @@ adds four actual IPC/four local passes after genuine RED. The separate default
 library run passes68 tests, including those four local cases, with20 ignored. The startup gate separately passes two real
 ARM Wayland/socket cases.
 
-The latest [non-presenting discovery replay](docs/native-session-owner.md#non-presenting-discovery-replay)
-still fails before Sounds/PCM: the new probe compiles, Source accepts sequence48,
-then observes a timeout beyond its unchanged100ms lease. The removed extra raster
-window is not necessary for that failure; the gap's cause remains unknown.
+The [non-presenting discovery replay](docs/native-session-owner.md#non-presenting-discovery-replay)
+still fails before Sounds/PCM. A later [startup-event witness](docs/native-session-owner.md#startup-event-witness-replay)
+retains13 committed landmarks with no error flags. Its last observed completion
+precedes the last accepted Source sample by1.35s; Source reaches sequence50 before
+a119ms expiry against the unchanged100ms lease. This does not justify another
+startup gate or identify a cause. Next prepare matching-source native CPU-speed
+composition on Harbour; ARM availability and all phone gates stay open.
 Earlier [permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
 passes four touch/graph/PCM groups using root-authored focus. Physical audio,
 production session completion and all phone gates remain open.

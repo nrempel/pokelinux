@@ -300,6 +300,13 @@
       "sha256": "1caec4203cb02a5ffbf072da97ea64027de69d97051e7b8e61e22f7aedb355c1",
       "functional_epoch_passed": false,
       "observed_root_Source_status_qualified": true
+    },
+    {
+      "path": "docs/evidence/native-session-startup-event-witness-provenance.json",
+      "sha256": "eb8a1d9e1c5478bdc4757d8b82da92338a2ca00ffb4ecab4b5a35e49fa0479bf",
+      "functional_epoch_passed": false,
+      "observed_root_Source_status_qualified": true,
+      "bounded_startup_landmark_prefix_qualified": true
     }
   ]
 }
