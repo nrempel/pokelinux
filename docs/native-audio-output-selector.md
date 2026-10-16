@@ -10,6 +10,11 @@ A later [sample-flow and ARM socket checkpoint](native-audio-pcm-arm-foundation.
 adds five actual host PCM stages and eleven actual generic ARM socket cases.
 Those additional proofs remain separate from normal ARM UI/audio composition.
 
+A separate [media-only Rust client](native-audio-client.md) now qualifies explicit
+nonblocking transport and original deadline fencing for the existing owner.
+Its standalone host tests do not qualify current lifecycle permission or the
+normal Sounds UI/audio path described here.
+
 ## Logical routes
 
 Trusted profiles use one schema, without an old-format adapter:

@@ -1,5 +1,11 @@
 # Omarchy smartphone goal
 
+The [media-only Rust client](native-audio-client.md) adds owned nonblocking
+transport with original BOOTTIME deadlines, no automatic replay and distinct
+admitted/applied state. Actual host tests and ARM compilation qualify this
+component; current authority, normal ARM UI/audio/theme composition and physical
+audio remain separate completion gates.
+
 The [native CPIF local policy](native-sit-cpif-policy.md) now adds bounded
 poll/read work, an absolute BOOTTIME timer and idle-zero handling. A compiled
 2-pass/9-missing-policy RED precedes86 host/86 ARM user-QEMU component passes.

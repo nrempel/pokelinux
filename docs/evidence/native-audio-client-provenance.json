@@ -1,0 +1,122 @@
+{
+  "schema": 1,
+  "scope": "Standalone media-only Rust client; actual host Linux transport tests and ARM compilation only",
+  "packaging_review_sha256": "1760341d552eca4476a694fbe0eb3b8e10a3cf9043740f1e20e749572c2b49a0",
+  "independent_publication_review_sha256": "19d8cfa70e86885934407bd0585ef9724397ca934a5b2758ea8b641a9fa7b556",
+  "prior_Root_review_sha256": "c7bdd5cb089fc780f1ee4cefdc120d38a11a770e0913c1f79469c344cc25c2c6",
+  "selected_source_files": {
+    "native-audio/Cargo.lock": "78c727f75f9346652a3cac7a64ba7572f51ec93ecc41910cb5282510e856fafc",
+    "native-audio/Cargo.toml": "96db1b8d5ff48b13d116e4dde6b2e96e569abb9ab24217c5a2d26a77743c8a5a",
+    "native-audio/src/backend_process.rs": "6fa30b8477c4a438298a74d66fd36b01efd4ec71ffd6ae694cce30e20fe177be",
+    "native-audio/src/client.rs": "857f328b8cf20540a189c614792313d01633ab5427a3a904dafc2071287914cc",
+    "native-audio/src/lib.rs": "4c13d8f31a6f542751505b00f9ac4eba14b5f6af4dfe3951c40fa48e430a0738",
+    "native-audio/src/main.rs": "e62500d6e80935dc61b9678144b41c7130f8554170409680be9347255a172b60",
+    "native-audio/src/pipewire.rs": "0eea4cca56b7261e0b801a79c383dcd4470f0526f46e8788a15ca87b43dd4e27",
+    "native-audio/tests/authority.rs": "45e5a7749423db9022532df868d40c0ffeeb2e8d707f8f42d9e9310b26dcd637",
+    "native-audio/tests/client.rs": "b5decc6f5cd9d576141c22aaed91b22cb0c24f73f3e46602dbe55a7e59dd1b03",
+    "native-audio/tests/profile.rs": "15a11f307aa60dec1c050e1c99f514632295c22c63f8ed1e4875ac974776f256",
+    "native-power/Cargo.lock": "65674be12771cbd56d3030ecec345554b3c5d2f7215aaffbe5b0ab0286dd42a1",
+    "native-power/Cargo.toml": "7f2ee64a94c00f0b15267af41bd76001fd6893897e0daff93df19b42ca2666b4",
+    "native-power/src/clock.rs": "cc32f4fe076606a46a1704cd42f6a161ae3c9a8809b1905223041b23d8eda5dd",
+    "native-power/src/lib.rs": "1f1ef69d79a7dc07f0106df5bd2b4d3949efe988a2c23a95520aec385dd9144f",
+    "native-power/tests/arbitration.rs": "58260e7bed11296f56307682bbfe0089bfb9ae1e9fa834042c01f116a6b581ef",
+    "native-power/tests/fixtures/public-node-reference.tsv": "6d89d20f3c61c3b7445867a69250751ff0fed53636a3dc985c470641171cb60e",
+    "native-power/tests/original_node.rs": "8b964163e2576b98fd626b2bd315ca4e32f359765f0a019a9136f014a767d887",
+    "native-power/tests/support/mod.rs": "6410fa7b244e5c89155d63a0344022043e8e76adb0d65ffbb8a9c90f7a31b7e5"
+  },
+  "strict_build_reviews": {
+    "red3": "9d82e42e98212180353957fbbf9a66039f801ac8ce776b5d814b4ca534525829",
+    "green3": "5abf0d374f3f23b15046f5296b5396c8350d77909d794f67f95c123f78b9b8d4"
+  },
+  "new_feature_RED": {
+    "passed": 23,
+    "failed": 2,
+    "failures": [
+      "original_deadline_expires_with_no_response_and_no_timer",
+      "original_deadline_rejects_real_buffered_late_reply_without_timer_delivery"
+    ],
+    "source_only_delta": "native-audio/src/client.rs",
+    "fixed_annotated_tests_sha256": "b5decc6f5cd9d576141c22aaed91b22cb0c24f73f3e46602dbe55a7e59dd1b03"
+  },
+  "host_final": {
+    "green3-runtime-default3": {
+      "runtime_uid": 1000,
+      "include_ignored": false,
+      "passed": 24,
+      "failed": 0,
+      "ignored": 1,
+      "execution_sha256": "a515a232c1f01613c6f071e2f3c2c9b3417071651a331f5dcc9738dbaead86a8",
+      "result_sha256": "b39b68e573f290c004da96f9c000996dfabd51abd63abe94a94096f947a710a5"
+    },
+    "green3-runtime-root3": {
+      "runtime_uid": 0,
+      "include_ignored": true,
+      "passed": 25,
+      "failed": 0,
+      "ignored": 0,
+      "execution_sha256": "3a87daf5116903d9f4b3cb8c4a2e6a9d0b30512e98b1b0120a957cd650cd7dd7",
+      "result_sha256": "511f6356e326a9dc22268bf82de2a72783a2d670e1a5e4f3a2e9d0a62c44fea9"
+    },
+    "red3-runtime-root3": {
+      "runtime_uid": 0,
+      "include_ignored": true,
+      "passed": 23,
+      "failed": 2,
+      "ignored": 0,
+      "execution_sha256": "ad5ae2138d925ad386d52873cc229db2cf02e6377fc1c35b5805fc0a84faef8a",
+      "result_sha256": "85b9e55d14e225259421b8e6ae5a743eddaed724606c32394722363294db03e9"
+    }
+  },
+  "ARM": "cross-compilation only; no client runtime claim",
+  "packaging_change": "One root-required test ignore attribute; test bodies and production GREEN unchanged",
+  "new_packaging_RED_claimed": false,
+  "unchanged_original_runtime_inputs": 16,
+  "owned_container_closure": [
+    {
+      "receipt": "red3/build-execution.json",
+      "sha256": "cab9884bd10b1bb12efd0ebd740ddc4e65e32d6db6f8d83edeec6f6083b46cf3",
+      "CID": "0de497c41d30f7a83c04d052711ab15fd74bf509a25bf2b033f01371b20060c0",
+      "actual_CLI_wait": 0,
+      "actual_container_wait": 0
+    },
+    {
+      "receipt": "green3/build-execution.json",
+      "sha256": "cbc0c68a15a819229d0c9e7e77c4dfea785721cf0d9de057206a1f0d8f591906",
+      "CID": "b229c55bd6d110b6c0fa6a6581a209670e884a381a8c27a85a6a3c5c430c5087",
+      "actual_CLI_wait": 0,
+      "actual_container_wait": 0
+    },
+    {
+      "receipt": "green3-runtime-default3/execution.json",
+      "sha256": "a515a232c1f01613c6f071e2f3c2c9b3417071651a331f5dcc9738dbaead86a8",
+      "CID": "888ba931f682b4fe83b8f9f21efb77004d6748e10124f7327f65424153b721b7",
+      "actual_CLI_wait": 0,
+      "actual_container_wait": 0
+    },
+    {
+      "receipt": "green3-runtime-root3/execution.json",
+      "sha256": "3a87daf5116903d9f4b3cb8c4a2e6a9d0b30512e98b1b0120a957cd650cd7dd7",
+      "CID": "dba6cd3000a4a323930081319aeaf0950351b82798b237205bbcd0c28aa7c19e",
+      "actual_CLI_wait": 0,
+      "actual_container_wait": 0
+    },
+    {
+      "receipt": "red3-runtime-root3/execution.json",
+      "sha256": "ad5ae2138d925ad386d52873cc229db2cf02e6377fc1c35b5805fc0a84faef8a",
+      "CID": "e38873b0d634046205efc8874c788498943233701178c05ad03218c2ba1b0b3a",
+      "actual_CLI_wait": 101,
+      "actual_container_wait": 101
+    }
+  ],
+  "wait_scope": "Actual CLI waits and pipe EOF; exact same-daemon CID absence. Five test-executable waits per runtime; stdout/stderr closed regular files. Main wait asserted internally, no external PID receipt.",
+  "claims_excluded": [
+    "Current lifecycle authority",
+    "normal Sounds GUI integration",
+    "actual running PipeWire graph in the Main wire case",
+    "actual partial-write control",
+    "proprietary original-code execution",
+    "ARM runtime",
+    "physical output or phone qualification"
+  ],
+  "physical_phone_accessed": false
+}

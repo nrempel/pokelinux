@@ -18,6 +18,13 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The [media-only Rust audio client](native-audio-client.md) is now qualified as a
+standalone transport:24 default host passes/one root-only ignored case,25 in
+isolated root, and ARM compilation. Two real original-deadline failures precede
+the source-only repair. Its poll is read-only and revoke closes the connection;
+current lifecycle permission, normal Qt and graph integration remain separate.
+Continue the finite ARM tracer and matching actor integration below.
+
 Sounds now uses the [current schema3 appearance client](native-audio-appearance-client.md),
 with11 unchanged audio/29 actual appearance IPC cases and an exact installed-QML
 Ready/create check. The candidate is one matching current cohort, without a

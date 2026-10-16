@@ -1,4 +1,5 @@
 pub mod backend_process;
+pub mod client;
 pub mod pipewire;
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
