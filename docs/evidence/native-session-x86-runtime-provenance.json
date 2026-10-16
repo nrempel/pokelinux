@@ -1,0 +1,176 @@
+{
+  "schema": 1,
+  "scope": "Native x86_64 KVM runtime bootstrap and matching-source Rust payload compilation only; no combined compositor, app, focus, PCM, ARM or phone qualification",
+  "public_source_basis": "387fe72bc375def6dacd79fae8df2758f537e58a",
+  "runtime_boot_qualified": true,
+  "full_composition_qualified": false,
+  "production_behavior_changed": false,
+  "production_red_green_claim": false,
+  "runtime": {
+    "image_id": "sha256:3b6891447ad0490585badb0cbbac5658238b9dc61bfa57e64a4cbad050be8f1f",
+    "base_image_id": "sha256:561177a4305051567b1d28d67ba9a95e0ce0ad32a8815b49da42fe71aa5a3dd6",
+    "base_distribution": "Debian13 amd64",
+    "matching_QEMU_family": "1:10.0.13+ds-0+deb13u1",
+    "added_packages": {
+      "genisoimage": {
+        "before": null,
+        "after": "genisoimage\t9:1.1.11-4\tamd64"
+      },
+      "ipxe-qemu": {
+        "before": null,
+        "after": "ipxe-qemu\t1.21.1+git20250501.dad20602+dfsg-1\tall"
+      },
+      "qemu-system-x86": {
+        "before": null,
+        "after": "qemu-system-x86\t1:10.0.13+ds-0+deb13u1\tamd64"
+      },
+      "seabios": {
+        "before": null,
+        "after": "seabios\t1.16.3-2\tall"
+      }
+    },
+    "build_qualification_sha256": "a5cfbf5c9332e1876ddb50134a2313da4b170a779730a679901682625aef513f",
+    "build_receipt_sha256": "fa74502021f9d2b1f0735b768f5886c0913699918cacb3647a47b801a0622434",
+    "prior_setup_failure": "First build used FROM sha256:... interpreted as a registry repository; failed before apt. Corrected by a checked local base alias in a fresh build, not a login or behavior repair.",
+    "actual_tool_reports": {
+      "packages-before.tsv": {
+        "bytes": 18276,
+        "sha256": "6c849782238ebdb89d07ce2879c3ba6239b0bc6a9820660ca3bc7072902b8201",
+        "regular_file_not_PIPE_EOF": true
+      },
+      "packages-after.tsv": {
+        "bytes": 18420,
+        "sha256": "562e60536d98abc848ae0c2fc2e58d020d66eb57107dc2ef01a4c628a6d43c3a",
+        "regular_file_not_PIPE_EOF": true
+      },
+      "selected-qemu-family-version.txt": {
+        "bytes": 23,
+        "sha256": "2246e2c96cd44e1b7969a68f5760ed6856789ed60fd2ac96d7241e9b344ddf07",
+        "regular_file_not_PIPE_EOF": true
+      },
+      "qemu-system-x86-version.txt": {
+        "bytes": 134,
+        "sha256": "d5e1ae8dd845009e27fe1cab4612650fd6a774c76bff3d06e929069de043f7f5",
+        "regular_file_not_PIPE_EOF": true
+      },
+      "genisoimage-version.txt": {
+        "bytes": 27,
+        "sha256": "17b52b7f6cfb54ec14bdacc45b5804bae5121cebb38750381f8d686ad5ef57f4",
+        "regular_file_not_PIPE_EOF": true
+      }
+    }
+  },
+  "official_cloud_input": {
+    "file": "Arch-Linux-x86_64-cloudimg-20261015.611680.qcow2",
+    "bytes": 576680960,
+    "sha256": "08754e28d91b1680086c6211ef4df13559e766fff7cdb4006489b14b5d281f08",
+    "virtual_disk_bytes": 2147483648,
+    "read_only_original": true,
+    "no_external_backing_or_data_file": true,
+    "authentication_receipt_sha256": "26ccea0dd8bbc48f6dd96f183980864382997aba8288d303cb47065600a2d14f",
+    "image_and_checksum_signatures_verified": true,
+    "primary_fingerprint": "1B9A16984A4E8CB448712D2AE0B78BF4326C6F8F",
+    "public_signer_basis_arch_boxes_commit": "7f733af26fe9a0c93fdabba13e7803cbe803374a",
+    "public_signer_basis_README_sha256": "d653cf803ed35d08223eb285f49ac9456df750fe9f4bdbcd51f528a6c2497fa6"
+  },
+  "boot": {
+    "actual_guest_kernel": "7.2.9-arch1-1",
+    "actual_architecture": "x86_64",
+    "actual_resuid": [
+      0,
+      0,
+      0
+    ],
+    "actual_KVM_API_version": 12,
+    "API_query_receipt_sha256": "12eb2e7cca81373c5601f089789744e41fd9600c1bf822343a693eba90334ba4",
+    "explicit_KVM_no_TCG_fallback": true,
+    "authenticated_QMP_same_owned_QEMU_peer": true,
+    "query_KVM_enabled_present": true,
+    "actual_guest_shutdown_QMP_EOF_QEMUwait0": true,
+    "normal_cloud_init_power_state_after_result_publication": true,
+    "direct_guest_shutdown_child_wait_claim": false,
+    "serial_identity_and_guest_result_hash_match": true,
+    "runtime_only_offline_time_wait_mask": true,
+    "stock_noNIC_network_online_wait_about120s": true,
+    "source_only_stale_receipt_field_corrected_before_first_launch": true,
+    "QEMU_work_closure_seconds": [
+      180,
+      210
+    ],
+    "host_work_closure_seconds": [
+      240,
+      270
+    ],
+    "elapsed_host_ns": 132455092729,
+    "direct_wait_counts": {
+      "host": 7,
+      "boot": 4,
+      "guest": 5,
+      "early": 1
+    },
+    "host_actual_PIPE_EOFs": 14,
+    "nested_actual_merged_PIPE_EOFs": 10,
+    "original_cutoffs_met": true,
+    "QEMU_and_DockerCLI_actual_wait_exit": 0,
+    "same_daemon_exact_CID_absent": true,
+    "input_hashes_pre_post_under_shared_lock": true,
+    "only_fresh_disposable_overlay_written": true,
+    "overlay_allocated_bytes": 154468352,
+    "hashes": {
+      "selection.json": "366a9780fb8b3902548c20fcde1af66bbbfb5e2b78ea457c747343a51211747d",
+      "command.json": "81d99e4306b6a781e2637eaf9bd1e45145a6b907da38600a9a6b294deebd5156",
+      "execution.json": "434dbb1d4d876fcddba1612b66ac99d323c4c363a156798635c95b8e6be02f16",
+      "boot-result.json": "b842a6736da893fb506c66f6f858efe82d6fb3bc3358669f6a36aef3d7f0da73",
+      "guest-result.json": "a841f3fac996b028c404f7effe264654e1542d364bc4b968a1c08438c922bf2d"
+    },
+    "Root_source_review_sha256": "01b32be81b83e9089a716f27fb7b92cea2726e37411a0038b62be50a42f23b2d",
+    "Root_entry_review_sha256": "2deec3ad632f0cf282b75e9c7540bd03374d7d29bd1f36d317da1b5350aed6e5",
+    "Root_qualification_sha256": "06c76cf0a4647706a0d421c1416967a4ebc2e46053a2631ee3d273552bbede65"
+  },
+  "native_Rust_payload": {
+    "qualification_sha256": "cce266207b4569eaaf9946cdf29616c677aa0638b0782922a068840ee3bc3999",
+    "receipt_sha256": "ac49ceea24de945d1e85a8a167690e7e60f79b0eb3f9a99091840247909a4009",
+    "selection_sha256": "274e68d8895de25966d68274b33e6ade785bff40ff63554bf80a5ff437eb74d3",
+    "production_files_public_byte_equal": 83,
+    "fixture_files": 4,
+    "actual_ELF_machine": 62,
+    "strict_fmt_selected_bin_Clippy_build": true,
+    "newly_compiled": {
+      "native-appearance": "298d391d42df9438e9be084f4465ca74ab6b28fe166a8f3b4a8fd5dc121f9949",
+      "pokelinux-audio": "858b1a6f9aa270314eac74f773d2d6ac3daa31c8ac5e3070f4d1284771e25762",
+      "sounds-exec": "f690bad6f6f52525d8e7c66e56dd26b3bb91ad83ae49fd5adcb88e1d559c4f27"
+    },
+    "reused_verified_matching_source": {
+      "pokelinux-session-owner": "43fdc375a80e81e86873df8f4404a269027fd8184d40e58f397986fe964f8cfe",
+      "sounds-launch": "57fabacf5e296c1779bd3af172adbc92361309d147d70cdcdcbc94aa5d46f27c"
+    },
+    "appearance_packaging_rename": {
+      "Cargo_bin": "pokelinux-appearance",
+      "selected_name": "native-appearance",
+      "bytes_unchanged": true
+    },
+    "actual_host_CLIwaits0": 10,
+    "actual_PIPE_EOFs": 20,
+    "all_original_cutoffs_met": true,
+    "same_daemon_exact_CID_absent": true,
+    "shared_target_or_cache_mutated": false,
+    "Qt_or_tests_executed": false,
+    "prior_Qt32_rerun_or_inherited": false
+  },
+  "next_boundary": "Offline signed x86 package closure and exact loaded Hyprland binary/SDK commit binding, actual native Qt build, then unchanged four-step original compositor/production Source/fixed launch/normal Sounds/real focus/grants/Pixel geometry/graph/PCM composition.",
+  "still_open": [
+    "Full native x86 compositor/Source/app/audio runtime",
+    "Generic ARM availability and cause of Source expiry",
+    "Matched Google kernel composition",
+    "Pixel graphics, boot, audio, modem/IMS, camera, suspend and carrier",
+    "Complete smartphone matrix"
+  ],
+  "phone_accessed": false,
+  "hardware_qualified": false,
+  "screenshot_or_Pixel_profile_qualified": false,
+  "proprietary_inputs_raw_decompilation_credentials_or_private_raw_artifacts_published": false,
+  "independent_qualifications_sha256": {
+    "native_payload": "1fc54c3f7390bfeeed584c1df0e088e8e23d5725209a34d2696ce2a492423d8c",
+    "stock_KVM_boot": "80e53060e7903affe44b642f6f8ed7b76d01c71bb46db3ecf78749d275c03f52"
+  }
+}

@@ -106,7 +106,14 @@ functional failure. This does not justify another startup gate or establish a
 blocked call, callback return or empty deferred queue. The witness is cooperative,
 not an authenticated audit channel.
 
-Preserve the ARM failure and stop speculative fixture changes. Next prepare
+The [native x86 runtime checkpoint](native-session-x86-runtime.md) now passes
+one actual offline KVM stock-kernel bootstrap and normal poweroff, with QMP,
+serial, owned waits/EOF and exact container/input closure. Matching-source native
+Rust payload builds pass separately. This runs no compositor, Qt app or PCM.
+Next acquire signed offline packages, bind the actual Hyprland binary/SDK, build
+Qt and run the full composition. No prior Qt tests are relabeled as current.
+
+Preserve the ARM failure and stop speculative fixture changes. Continue
 matching-source native CPU-speed composition on Harbour, with the same Pixel
 geometry, real focus/grants, app/PCM guards and100ms lease. Existing TCG/virgl
 software rendering is an execution constraint, not a proven cause. A host pass

@@ -334,9 +334,19 @@ independent grants, all PCM assertions and100ms freshness. A full host pass woul
 qualify host composition only; ARM availability, TCG causality, the matched Google
 kernel and physical phone gates remain open.
 
+## Native CPU runtime checkpoint
+
+The [native x86 KVM runtime](native-session-x86-runtime.md) now passes one actual
+offline stock Arch kernel/bootstrap/poweroff selection. Authenticated same-QEMU
+QMP confirms KVM enabled/present and guest shutdown, then socket EOF and actual
+QEMU0. Serial identity/hash, all owned cutoffs and exact container/input closure
+qualify. Matching-source Rust payload builds pass separately; no Qt, compositor,
+Source or PCM executes in this checkpoint. Signed offline provisioning and exact
+actual Hyprland binary/SDK binding precede the full functional run.
+
 ## Remaining integration
 
-Prepare native CPU-speed execution of the same-source production owner and
+Complete native CPU-speed execution of the same-source production owner and
 original Hyprland/Source, fixed desktop client, normal UID11042 Sounds,
 independent permission and real native focus, then return to ARM availability. Keep
 per-app Wayland and independent virtual graph/PCM. Qualify null-focus background

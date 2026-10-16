@@ -49,8 +49,10 @@ still fails before Sounds/PCM. A later [startup-event witness](docs/native-sessi
 retains13 committed landmarks with no error flags. Its last observed completion
 precedes the last accepted Source sample by1.35s; Source reaches sequence50 before
 a119ms expiry against the unchanged100ms lease. This does not justify another
-startup gate or identify a cause. Next prepare matching-source native CPU-speed
-composition on Harbour; ARM availability and all phone gates stay open.
+startup gate or identify a cause. A [native x86 KVM runtime](docs/native-session-x86-runtime.md)
+now boots the authenticated stock Arch guest and shuts down normally; the matching
+Rust payload builds. Offline compositor/Qt provisioning and full composition are
+next. ARM availability and all phone gates stay open.
 Earlier [permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
 passes four touch/graph/PCM groups using root-authored focus. Physical audio,
 production session completion and all phone gates remain open.

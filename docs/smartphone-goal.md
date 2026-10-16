@@ -24,8 +24,11 @@ qualification remains unreached. The [startup-event witness](native-session-owne
 now retains13 committed landmarks with zero flags after actual compositor death.
 The last observed completion precedes the last accepted Source sample by1.354s;
 sequence50 is followed by119.18ms expiry. This does not justify another activation
-gate. Next prepare matching-source native CPU-speed composition with the same
-Pixel/Source/focus/PCM guards; host success would not close ARM or phone gates.
+gate. A [native x86 KVM runtime](native-session-x86-runtime.md) now passes
+authenticated stock-kernel bootstrap and normal poweroff; matching-source Rust
+payload builds pass separately. Signed offline provisioning and full composition
+remain next, with the same Pixel/Source/focus/PCM guards. This is no app/PCM
+result; host success would not close ARM or phone gates.
 
 The [native Rust session owner](native-session-owner.md) now implements compositor
 Child custody and fixed Sounds session assembly.32 host boundary cases,
