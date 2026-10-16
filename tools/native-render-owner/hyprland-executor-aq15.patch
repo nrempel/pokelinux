@@ -1,0 +1,91 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -309,14 +309,15 @@
+ # Original Rust-owned immutable CPU SHM/frame custody prerequisite. Cargo is built and
+ # selected by the external qualified build; CMake never fetches/builds a crate.
+ set(POKELINUX_RENDER_STATIC_LIBRARY "" CACHE FILEPATH "Exact externally built libpokelinux_render.a")
+-set(POKELINUX_RENDER_INCLUDE_DIR "" CACHE PATH "Directory containing its exact SHM and frame C headers")
++set(POKELINUX_RENDER_INCLUDE_DIR "" CACHE PATH "Directory containing its exact SHM, frame and executor C headers")
+ set(POKELINUX_RENDER_NATIVE_LIBRARIES "" CACHE STRING "Target native libraries reported by the external Rust staticlib build")
+ if(NOT IS_ABSOLUTE "${POKELINUX_RENDER_STATIC_LIBRARY}" OR NOT EXISTS "${POKELINUX_RENDER_STATIC_LIBRARY}")
+   message(FATAL_ERROR "Set POKELINUX_RENDER_STATIC_LIBRARY to the qualified Rust staticlib absolute path")
+ endif()
+ if(NOT IS_ABSOLUTE "${POKELINUX_RENDER_INCLUDE_DIR}" OR NOT EXISTS "${POKELINUX_RENDER_INCLUDE_DIR}/pokelinux_render.h"
+-   OR NOT EXISTS "${POKELINUX_RENDER_INCLUDE_DIR}/pokelinux_render_frame.h")
+-  message(FATAL_ERROR "Set POKELINUX_RENDER_INCLUDE_DIR to the matching SHM and frame C ABI header directory")
++   OR NOT EXISTS "${POKELINUX_RENDER_INCLUDE_DIR}/pokelinux_render_frame.h"
++   OR NOT EXISTS "${POKELINUX_RENDER_INCLUDE_DIR}/pokelinux_render_executor.h")
++  message(FATAL_ERROR "Set POKELINUX_RENDER_INCLUDE_DIR to the matching SHM, frame and executor C ABI header directory")
+ endif()
+ add_library(pokelinux_render_rust STATIC IMPORTED GLOBAL)
+ set_target_properties(pokelinux_render_rust PROPERTIES
+@@ -324,10 +325,68 @@
+   INTERFACE_INCLUDE_DIRECTORIES "${POKELINUX_RENDER_INCLUDE_DIR}")
+ target_link_libraries(pokelinux_render_rust INTERFACE Threads::Threads ${CMAKE_DL_LIBS} ${POKELINUX_RENDER_NATIVE_LIBRARIES})
+ target_link_libraries(hyprland_lib PRIVATE pokelinux_render_rust)
++# Retain/export every public Rust C entry, independent of codegen-unit placement.
++# Main owns the single selected archive; native plugins must not link another.
++set(POKELINUX_RENDER_PUBLIC_SYMBOLS
++  pr_snapshot_store_create
++  pr_snapshot_store_release
++  pr_snapshot_store_used
++  pr_snapshot_capture
++  pr_snapshot_clone
++  pr_snapshot_view
++  pr_snapshot_release
++  pr_frame_capture_v1
++  pr_frame_release
++  pr_frame_with_view_v1
++  pr_bootstrap_capture_v1
++  pr_bootstrap_release
++  pr_executor_create_v1
++  pr_executor_watch_fds
++  pr_executor_snapshot_v1
++  pr_executor_discovery_v1
++  pr_executor_try_submit_v1
++  pr_executor_invalidate
++  pr_executor_stop
++  pr_executor_next_completion_v1
++  pr_executor_try_join
++  pr_executor_try_release
++  pr_attempt_authorize_v1
++)
++foreach(symbol IN LISTS POKELINUX_RENDER_PUBLIC_SYMBOLS)
++  target_link_options(Hyprland PRIVATE "LINKER:--undefined,${symbol}" "LINKER:--export-dynamic-symbol,${symbol}")
++endforeach()
++# Matching runtime/SDK carries only the exact AQ15 dependency at this path.
++set_target_properties(Hyprland PROPERTIES
++  BUILD_WITH_INSTALL_RPATH TRUE
++  INSTALL_RPATH "$ORIGIN/../lib/pokelinux-aq15")
++set(POKELINUX_AQ15_ROOT "" CACHE PATH "Private extracted qualified AQ15 /usr prefix")
++if(NOT IS_ABSOLUTE "${POKELINUX_AQ15_ROOT}" OR
++   NOT EXISTS "${POKELINUX_AQ15_ROOT}/lib/libaquamarine.so.15.0.0" OR
++   NOT EXISTS "${POKELINUX_AQ15_ROOT}/include/aquamarine/backend/DisplayAttempt.hpp")
++  message(FATAL_ERROR "Set POKELINUX_AQ15_ROOT to the qualified AQ15 dependency prefix")
++endif()
++if(NOT aquamarine_dep_VERSION STREQUAL "0.15.1+pokelinux-owner-abi15-source-2")
++  message(FATAL_ERROR "The pinned AQ15 pkg-config version was not selected")
++endif()
++get_target_property(POKELINUX_AQ15_LINK PkgConfig::aquamarine_dep INTERFACE_LINK_LIBRARIES)
++get_target_property(POKELINUX_AQ15_INCLUDE PkgConfig::aquamarine_dep INTERFACE_INCLUDE_DIRECTORIES)
++list(LENGTH POKELINUX_AQ15_LINK POKELINUX_AQ15_LINK_COUNT)
++if(NOT POKELINUX_AQ15_LINK_COUNT EQUAL 1)
++  message(FATAL_ERROR "AQ15 must resolve to exactly one pinned shared library")
++endif()
++get_filename_component(POKELINUX_AQ15_LINK_REAL "${POKELINUX_AQ15_LINK}" REALPATH)
++get_filename_component(POKELINUX_AQ15_EXPECTED_REAL "${POKELINUX_AQ15_ROOT}/lib/libaquamarine.so.15.0.0" REALPATH)
++if(NOT POKELINUX_AQ15_LINK_REAL STREQUAL POKELINUX_AQ15_EXPECTED_REAL OR
++   NOT POKELINUX_AQ15_INCLUDE STREQUAL "${POKELINUX_AQ15_ROOT}/include")
++  message(FATAL_ERROR "AQ imported library or headers escaped the pinned AQ15 prefix")
++endif()
++file(WRITE "${CMAKE_BINARY_DIR}/pokelinux-aq15-selection.txt"
++  "library=${POKELINUX_AQ15_LINK_REAL}\ninclude=${POKELINUX_AQ15_INCLUDE}\nversion=${aquamarine_dep_VERSION}\n")
+ # Snapshot/codec headers are installed in the matching compositor SDK; keep
+ # their exact C contracts adjacent, without an external build-directory path.
+ install(FILES "${POKELINUX_RENDER_INCLUDE_DIR}/pokelinux_render.h"
+               "${POKELINUX_RENDER_INCLUDE_DIR}/pokelinux_render_frame.h"
++              "${POKELINUX_RENDER_INCLUDE_DIR}/pokelinux_render_executor.h"
+         DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/hyprland/src/render")
+ 
+ target_include_directories(hyprland_lib PUBLIC ${deps_INCLUDE_DIRS} ${LUA_INCLUDE_DIRS})

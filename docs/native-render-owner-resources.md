@@ -70,7 +70,10 @@ records remain preserved; their exact time and cause are not inferred.
 The [executor GL lifecycle checkpoint](native-render-executor-gl.md) now qualifies an actual
 missing-handshake RED after all eight GL cases, 42 packets and six sync-file
 facts. Stop returns `unknown request`; no finalize, unload or Rust join/release
-occurs. Matching AQ15/current-ABI execution, Source GREEN and phone gates remain open.
+occurs. A separate [AQ15/current-ABI native build](native-render-executor-gl.md#separate-aq15current-abi-build-and-startup-failure)
+now passes CPU/loader checks, but the matched runtime aborts during backend
+startup before Source/actor; its exact cause remains unresolved. Source GREEN
+and all phone gates remain open.
 
 ## Selected boundary and remaining work
 
@@ -90,8 +93,9 @@ only on accepted admission; refusal retains it. Move a typed factory record
 containing only copied functions and bounded scalar options to the worker; keep
 owned bootstrap separate and retain the supplying library through actual join.
 No control-created native pointer or userdata crosses that factory boundary.
-Build one matching AQ15, Hyprland, Rust, SDK and plugin cohort before selecting
-the new Rust archive in the native GL case. Then connect ordered session ingress,
+The separate matching AQ15/main/SDK build passes CPU/loader checks, but its
+actual startup aborts before Source/actor. Integrate the genuine broker/render
+startup before selecting the new worker in the GL case, then ordered session ingress,
 revocation, genuine output/routing authority and distinct startup/StopRetire
 permissions. AQ14/AQ15 SONAME separation alone does not qualify a mixed runtime.
 

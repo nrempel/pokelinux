@@ -202,7 +202,10 @@ admission path consumes/nulls a Frame only after successful admission. Stop,
 real BOOTTIME expiry and pending native cleanup retain ownership through actual
 worker destruction/join. Unregister both borrowed watches before release, and
 retain supplier code until join. No compatibility factory or second archive is
-used. This does not select the executor in a production AQ/GL compositor.
+used. The later [matching AQ15/main/SDK build](../docs/native-render-executor-gl.md#separate-aq15current-abi-build-and-startup-failure)
+passes CPU/loader checks and reruns these C++ groups. It does not rerun the62 Rust
+cases. A subsequent matched runtime aborts during backend startup before Source/
+actor, so production AQ/GL worker execution remains unqualified.
 
 For a selected current x86 Rust static archive, build/run each actual C++ test:
 

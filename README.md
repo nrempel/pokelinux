@@ -153,7 +153,10 @@ AQ output/presentation, unchanged Source7 and all phone gates remain open.
 The [executor GL lifecycle checkpoint](docs/native-render-executor-gl.md) now qualifies an actual
 missing-handshake RED after all eight GL cases, 42 packets and six sync-file
 facts. Stop returns `unknown request`; no finalize, unload or Rust join/release
-occurs. Matching AQ15/current-ABI execution, Source GREEN and phone gates remain open.
+occurs. A separate [AQ15/current-ABI native build](docs/native-render-executor-gl.md#separate-aq15current-abi-build-and-startup-failure)
+now passes CPU/loader checks, but the matched runtime aborts during backend
+startup before Source/actor; its exact cause remains unresolved. Source GREEN
+and all phone gates remain open.
 
 Earlier [permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
 passes four touch/graph/PCM groups using root-authored focus. Physical audio,

@@ -1,0 +1,228 @@
+{
+  "schema": 1,
+  "scope": "Separate native x86 full33/current Rust/AQ15 compilation, matching SDK, explicit exports, CPU boundary reruns and loader-only closure; subsequent startup attempts remain failed.",
+  "public_draft_base": "486ea7bbc3ae321fed37bdd729e8f13c734bc561",
+  "selected_build_source_base": "f3be35a74d48245d41638f87b78847421f6dd0c0",
+  "native_build": {
+    "passed": true,
+    "Root_qualification_sha256": "bb8e704ce8b1bd38c7d78078d591300ad3c6b6e58b458fe50d41c8fb8ca6f0b1",
+    "execution_sha256": "bd32f692f91e80b8953d87f9614fe1df65987384dae645fb8b12a63bb5a46753",
+    "selection_sha256": "9da8f176bb44532feabbe7e69ef1f27feb7e01be0595e94e9af5c253a3669ba8",
+    "command_sha256": "7b12f7912f6b4619a6f444850eacc8a29f5eda166723f15910cc1fd7e4ae917a",
+    "boot_result_sha256": "1f72ddcdd5b474c0da9a6f8dac188780b60ce203bf7554d317a87f23fa00006e",
+    "guest_result_sha256": "cf3d1bd5a7a2e99dd5a9b92c7fac606b15b1dc4fd4eb009cf53ae9ba1bf99a1b",
+    "build_result_sha256": "02b3d8071f46a32fb972a4fdf65e7782ee75ebf177ccc2e9df829ee07a4a1062",
+    "elapsed_seconds": 169.011396494,
+    "source_paths": 33,
+    "actual_affected_CPP_objects": 16,
+    "sole_delta_from_frozen_public_full33": [
+      "CMakeLists.txt"
+    ],
+    "other32_payloads_unchanged": true,
+    "ELF": {
+      "bytes": 25225336,
+      "sha256": "ab8458c2a826669166241f6475b1681fcc3d6990ec9fb6e8088d0dcded6bfa99"
+    },
+    "SDK_tar": {
+      "bytes": 4659200,
+      "sha256": "ec4840158c8dee30216365785a3e22ae0f8a136f503940fd13715b58720838a8"
+    },
+    "SDK_regular_files": 530,
+    "SDK_exact_symlinks": 2,
+    "current_Rust_staticlib": {
+      "bytes": 22901236,
+      "sha256": "246a6680b7f9ed8affd89bd9b022319a0903f5ebc58f03d7d76eaa85f8653311"
+    },
+    "matching3_Rust_C_headers": {
+      "pokelinux_render.h": {
+        "bytes": 1988,
+        "sha256": "4a7a9a603fe6d7780ff071020f727c3eb7b0aba1c9bba56b682ddd219f995396"
+      },
+      "pokelinux_render_executor.h": {
+        "bytes": 9941,
+        "sha256": "b5aee195198a44475b90156244fe9f998bb4f4f196d4b12cb7c6f59e9988b731"
+      },
+      "pokelinux_render_frame.h": {
+        "bytes": 4036,
+        "sha256": "56f8ec91b6cfb434af8875c6139fd210f0d57618614a660bffde13e6d3d479f0"
+      }
+    },
+    "defined_GLOBAL_FUNC_DEFAULT_Rust_C_exports": [
+      "pr_snapshot_store_create",
+      "pr_snapshot_store_release",
+      "pr_snapshot_store_used",
+      "pr_snapshot_capture",
+      "pr_snapshot_clone",
+      "pr_snapshot_view",
+      "pr_snapshot_release",
+      "pr_frame_capture_v1",
+      "pr_frame_release",
+      "pr_frame_with_view_v1",
+      "pr_bootstrap_capture_v1",
+      "pr_bootstrap_release",
+      "pr_executor_create_v1",
+      "pr_executor_watch_fds",
+      "pr_executor_snapshot_v1",
+      "pr_executor_discovery_v1",
+      "pr_executor_try_submit_v1",
+      "pr_executor_invalidate",
+      "pr_executor_stop",
+      "pr_executor_next_completion_v1",
+      "pr_executor_try_join",
+      "pr_executor_try_release",
+      "pr_attempt_authorize_v1"
+    ],
+    "main_RUNPATH": "$ORIGIN/../lib/pokelinux-aq15",
+    "actual_AQ15_library": {
+      "bytes": 1834600,
+      "sha256": "222d4c5514f2273496603f43a51fcfbd60b749bb0e418bd6cc4c2f069f8ae444"
+    },
+    "actual_AQ_SONAME": "libaquamarine.so.15",
+    "actual_loader_no_AQ14_or_missing_or_undefined_relocations": true,
+    "compositor_main_executed": false,
+    "GL_or_Source_GREEN": false
+  },
+  "actual_CPU_reruns": {
+    "Snapshot_groups": 5,
+    "codec_groups": 4,
+    "executor_C_ABI_groups": 5,
+    "executor_lifecycle": 1,
+    "separate_post_join_task_absence_observations": 4
+  },
+  "historical62_Rust_cases_rerun": false,
+  "closure": {
+    "Scope_waits_and_merged_PIPE_EOFs": 46,
+    "Scope_counts_host_boot_guest_early_build": [
+      7,
+      5,
+      8,
+      1,
+      25
+    ],
+    "embedded_Snapshot_producer_direct_waits": 1,
+    "embedded_Snapshot_producer_and_thread_PIPE_EOFs": 2,
+    "embedded_actual_std_thread_join": true,
+    "total_waits_including_embedded_producer": 47,
+    "total_PIPE_EOFs_including_embedded_producer_and_thread": 48,
+    "all_before_original_cutoffs": true,
+    "actual_QMP_KVM_present_enabled_and_same_socket_EOF": true,
+    "same_daemon_exact_CID_absent": true,
+    "readonly_inputs_pre_post_unchanged_under_shared_lock": true
+  },
+  "original_limits": {
+    "container_CPUs": 12,
+    "container_memory_bytes": 30064771072,
+    "stage_minimum_free_bytes": 17179869184,
+    "ongoing_disk_reserve_bytes": 2147483648,
+    "guest_work_close_seconds": [
+      1500,
+      1560
+    ],
+    "boot_work_close_seconds": [
+      1580,
+      1620
+    ],
+    "host_work_outer_seconds": [
+      1620,
+      1680
+    ]
+  },
+  "public_source_routes": {
+    "frozen_baseline": "tools/native-render-import/hyprland.patch",
+    "separate_compile_only_incremental": "tools/native-render-owner/hyprland-executor-aq15.patch",
+    "AQ15_source_patch": "tools/native-render-owner/aquamarine.patch"
+  },
+  "subsequent_runtime_attempts": [
+    {
+      "attempt": "green-1",
+      "aggregate_passed": false,
+      "execution_sha256": "548b1d7c5d63d294760ab56300533f15ded5ea9b7541f9b282a0cc8dcc6409b8",
+      "component_result_sha256": "75c26969f487af212f4f2d3d1e54e8285a32829c7bbd7cc84319c2f6954a535e",
+      "executed_GL_cases": 0,
+      "Source_or_GL_or_handshake_GREEN": false,
+      "classification": "SETUP_LINKAGE_FAILURE",
+      "unresolved_wayland_server_symbols": [
+        "wl_event_loop_add_fd",
+        "wl_event_source_remove"
+      ],
+      "actual_direct_waits": 53,
+      "actual_PIPE_EOFs": 60,
+      "actual_QMP_guest_SHUTDOWN_same_socket_EOF_QEMU0": true,
+      "actual_foreground_CLI_exit": 1,
+      "same_daemon_exact_CID_absent": true,
+      "locked_inputs_unchanged": true
+    },
+    {
+      "attempt": "green-2",
+      "aggregate_passed": false,
+      "execution_sha256": "e4d81a8e23953228dba93b4664c0549881b8bd947ecd97930eee3f437eb1b4c9",
+      "component_result_sha256": "7461835f11c55145e71fd86095d30d26d8dc87db2d4bfbf4b64eb62d9f07e080",
+      "executed_GL_cases": 0,
+      "Source_or_GL_or_handshake_GREEN": false,
+      "classification": "COMPOSITOR_STARTUP_FAILURE_BEFORE_SOURCE_OR_ACTOR",
+      "matching_install_and_plugin_linkage_passed": true,
+      "unresolved_strong_symbols": [],
+      "actual_compositor_exit": -6,
+      "diagnostic": "CBackend::create() failed!",
+      "compositor_log_sha256": "f321eb26a2694c0e9c3509db367c628d82fcd323d8df4fa4b181940678433cb8",
+      "normal_component_cleanup_qualified": false,
+      "cause_limit": "The same diagnostic covers both a null create result and start returning false. Internal AQ logs were not retained; no exact branch or abort cause is established.",
+      "actual_direct_waits": 59,
+      "actual_PIPE_EOFs": 66,
+      "actual_QMP_guest_SHUTDOWN_same_socket_EOF_QEMU0": true,
+      "actual_foreground_CLI_exit": 1,
+      "same_daemon_exact_CID_absent": true,
+      "locked_inputs_unchanged": true
+    }
+  ],
+  "source_review_next_boundary": "Legacy compositor startup has not been migrated to the control broker plus render-session mirror/native owner path. That is required integration work, not a proven instruction-level cause of the observed abort.",
+  "not_qualified": [
+    "Matched worker GL/Stop/finalize/join/release before unload",
+    "Authentic native routing and separate startup/Stop-retirement authority",
+    "AQ output commit, scanout, presentation or full device retirement",
+    "Source7 GREEN and cold normal app/PCM",
+    "Blocked-driver recovery, ARM/matched Google-kernel execution, all physical-phone/full-smartphone gates"
+  ],
+  "phone_accessed": false,
+  "compile_link_checked_executor_actor": {
+    "path": "tools/native-render-owner/executor-actor.cpp",
+    "sha256": "11071902161970629bccb69a107407bfafa77b106858da5f0f873bd50f29d1c3",
+    "bytes": 58878,
+    "shared_CXX_compile_passed_both_attempts": true,
+    "matching_main_and_DSO_relocation_gate_passed_second_attempt": true,
+    "first_attempt_failure": "Shared C++ compile succeeds, then relocation gate lacks two Wayland-server symbols.",
+    "second_attempt_correction": "Explicit Wayland-server dependency only; frozen actor unchanged.",
+    "plugin_DT_NEEDED": [
+      "libgbm.so.1",
+      "libEGL.so.1",
+      "libGLESv2.so.2",
+      "libwayland-server.so.0",
+      "libhyprutils.so.13",
+      "libstdc++.so.6",
+      "libm.so.6",
+      "libgcc_s.so.1",
+      "libc.so.6"
+    ],
+    "plugin_direct_AQ_dependency": false,
+    "AQ15_fact_scope": "AQ15 SONAME belongs to actual matching main loader closure, not plugin direct DT_NEEDED.",
+    "offscreen_bootstrap_outputs": 0,
+    "frame_admissions_or_display_grants_claimed": false,
+    "runtime_GL_or_handshake_GREEN": false,
+    "unexpected_unload_contract": "Abort rather than unload supplying code while Rust worker/borrowed watches/native custody remain.",
+    "required_controlled_pre_unload": "Stop, nonblocking finalize/actual try_join, unregister both watches, release, then plugin unload."
+  },
+  "AQ15_public_reconstruction": {
+    "actual_qualified_candidate_source_paths": 83,
+    "actual_qualified_changed_paths": 16,
+    "public_source_paths": 82,
+    "public_changed_build_paths": 14,
+    "all_compiled_source_header_CMake_pc_bytes_exact": true,
+    "omitted_non_build_note_hash": "aeddb091df5d91b34507864e9f0c41781a1de28d9d5cd561736e96734d80fb96",
+    "upstream_README_retained": true
+  },
+  "independent_read_only_review_sha256": {
+    "native_build": "04632bbe1dc264cdb102e22af2ad835069c2626dedf36a767e8760a79c56d4f7",
+    "failed_runtime_attempts": "94738089ba751c90401f20676426d2009a75bd98d57a678c87b049864141a40b",
+    "startup_architecture_advice": "0e0de1d31db080077334949f87a13dc10818201a6e0646082a3c29cbbad6eded"
+  }
+}

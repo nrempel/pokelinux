@@ -116,15 +116,20 @@ remain open. The later [current worker C ABI](native-render-executor-ffi.md) now
 passes actual C++ lifecycle/five authored-owner groups and all62 Rust cases,
 strict Clippy and release compilation. Copied configuration, exact refusal
 retention, held Stop/expiry and actual worker destruction/join qualify only this
-ABI boundary. The real AQ/GL cohort is not yet rebuilt or selected. Whole-fixture
-quarantine/reaping in CPU tests proves
+ABI boundary. A separate matching AQ15/main/SDK rebuild now passes CPU/loader
+checks, but its selected runtime aborts during startup before Source/actor.
+The exact abort branch/cause remains unresolved. Whole-fixture quarantine/reaping
+in CPU tests proves
 neither real native drain nor blocked-driver recovery; all Source/full functional,
 ARM/Google-kernel/phone requirements below remain in force.
 
 The [executor GL lifecycle checkpoint](native-render-executor-gl.md) now qualifies an actual
 missing-handshake RED after all eight GL cases, 42 packets and six sync-file
 facts. Stop returns `unknown request`; no finalize, unload or Rust join/release
-occurs. Matching AQ15/current-ABI execution, Source GREEN and phone gates remain open.
+occurs. A separate [AQ15/current-ABI native build](native-render-executor-gl.md#separate-aq15current-abi-build-and-startup-failure)
+now passes CPU/loader checks, but the matched runtime aborts during backend
+startup before Source/actor; its exact cause remains unresolved. Source GREEN
+and all phone gates remain open.
 
 The [native Rust session owner](native-session-owner.md) implements compositor
 Child custody; its original Sounds assembly has32 host boundary passes,

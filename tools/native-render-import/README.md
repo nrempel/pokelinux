@@ -82,3 +82,19 @@ The later [Rust worker CPU component](../../docs/native-render-worker.md) has a 
 Rust-QA archive8067436b. This native Frame ELF/SDK selected3cf0a142 without that
 worker; neither the C++ groups nor native artifacts qualify the new archive.
 Its genuine native binding and a fresh matched runtime selection remain required.
+
+
+## Separate current-executor/AQ15 compile checkpoint
+
+This directory's patch and cohort remain the exact frozen Frame507 baseline.
+They are historical evidence, not a runtime fallback. The separate
+[Hyprland incremental patch](../native-render-owner/hyprland-executor-aq15.patch)
+applies after this exact full33 patch, and the
+[AQ15 source patch](../native-render-owner/aquamarine.patch) supplies its independent
+pinned backend dependency. Their metadata bind all source hashes and the actual
+matching main/SDK [CPU and loader build](../../docs/native-render-executor-gl.md#separate-aq15current-abi-build-and-startup-failure).
+That build passes 16 affected CPPs, 530 regular SDK files/two links and all 23 Rust
+exports; it reruns five Snapshot, four codec, lifecycle and five C ABI CPU groups. The subsequent
+matched compositor aborts before Source/actor, with no proven exact abort cause.
+The compile-only successor is deliberately not selected as this default import
+patch. Real broker/render startup and the remaining Source/phone gates stay open.

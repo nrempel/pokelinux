@@ -1,0 +1,1434 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -38,6 +38,8 @@
+   libdisplay-info
+   hwdata)
+ 
++set(AQUAMARINE_PRIVATE_COHORT "pokelinux-owner-abi15-source-2")
++set(AQUAMARINE_PRIVATE_VERSION "${AQUAMARINE_VERSION}+${AQUAMARINE_PRIVATE_COHORT}")
+ configure_file(aquamarine.pc.in aquamarine.pc @ONLY)
+ 
+ set(CMAKE_CXX_STANDARD 23)
+@@ -69,8 +71,8 @@
+   aquamarine
+   PUBLIC "./include"
+   PRIVATE "./src" "./src/include" "./protocols" "${CMAKE_BINARY_DIR}")
+-set_target_properties(aquamarine PROPERTIES VERSION ${AQUAMARINE_VERSION}
+-                                            SOVERSION 14)
++set_target_properties(aquamarine PROPERTIES VERSION 15.0.0
++                                            SOVERSION 15)
+ target_link_libraries(aquamarine OpenGL::EGL OpenGL::OpenGL PkgConfig::deps Threads::Threads)
+ 
+ check_include_file("sys/timerfd.h" HAS_TIMERFD)
+--- a/aquamarine.pc.in
++++ b/aquamarine.pc.in
+@@ -2,9 +2,11 @@
+ includedir=@INCLUDE@
+ libdir=@LIBDIR@
+ 
++pokelinux_private_cohort=@AQUAMARINE_PRIVATE_COHORT@
++
+ Name: aquamarine
+ URL: https://github.com/hyprwm/aquamarine
+ Description: A very light linux rendering backend library
+-Version: @AQUAMARINE_VERSION@
++Version: @AQUAMARINE_PRIVATE_VERSION@
+ Cflags: -I${includedir}
+ Libs: -L${libdir} -laquamarine
+--- a/include/aquamarine/backend/Backend.hpp
++++ b/include/aquamarine/backend/Backend.hpp
+@@ -111,6 +111,12 @@
+       public:
+         /* Create a backend, with the provided options. May return a single or a multi-backend. */
+         static Hyprutils::Memory::CSharedPointer<CBackend> create(const std::vector<SBackendImplementationOptions>& backends, const SBackendOptions& options);
++        // Called on render owner with a mirror created and initialized there.
++        // The control/input broker is never accepted or retained by CBackend.
++        // This component route requires exactly one mandatory DRM request; no
++        // headless/Wayland backend substitution on missing atomic capability.
++        static Hyprutils::Memory::CSharedPointer<CBackend> createForRenderSession(const std::vector<SBackendImplementationOptions>& backends,
++            const SBackendOptions& options,Hyprutils::Memory::CSharedPointer<CSession> renderMirror);
+ 
+         ~CBackend();
+ 
+@@ -168,6 +174,8 @@
+ 
+       private:
+         CBackend();
++        static Hyprutils::Memory::CSharedPointer<CBackend> createInternal(const std::vector<SBackendImplementationOptions>&,
++            const SBackendOptions&,Hyprutils::Memory::CSharedPointer<CSession> renderMirror);
+ 
+         bool                                                                   terminate = false;
+ 
+--- /dev/null
++++ b/include/aquamarine/backend/DisplayAttempt.hpp
+@@ -0,0 +1,44 @@
++#pragma once
++#include <cstdint>
++#include <array>
++#include <cstddef>
++#include <thread>
++#include <cerrno>
++namespace Aquamarine {
++enum class eDisplayAttemptDomain:uint32_t { RENDER=1, STOP_RETIRE=2 };
++enum class eDisplayAttemptKind:uint32_t { ATOMIC=1, EXTERNAL_LEASE_CREATE=2 };
++inline constexpr size_t AQ_MAX_DISPLAY_OBJECTS=128;
++struct SDisplayAttemptInfo {
++    uint32_t kind=0,domain=0,flags=0,connector_id=0; int32_t drm_fd=-1; uint32_t object_count=0;
++    uint64_t session_generation=0,device_lease_id=0,device_generation=0;
++    std::array<uint32_t,AQ_MAX_DISPLAY_OBJECTS> object_ids{};
++    // Actual private request object IDs, not invented output generations. The
++    // synchronous owner bridge must resolve EVERY ID through its genuine live
++    // device/output generation table and authenticate the whole effect scope.
++};
++struct SDisplayAttemptResult { SDisplayAttemptInfo info{}; bool sealed=false,attempted=false,additional_refused=false; int32_t result=0,error=0; };
++class CDisplayAttemptScope {
++ public:
++    using SealFn=uint32_t(*)(void*,const SDisplayAttemptInfo*) noexcept;
++    CDisplayAttemptScope(eDisplayAttemptDomain domain,SealFn seal,void* ownerLocalStackToken) noexcept;
++    ~CDisplayAttemptScope();
++    CDisplayAttemptScope(const CDisplayAttemptScope&)=delete;
++    CDisplayAttemptScope& operator=(const CDisplayAttemptScope&)=delete;
++    bool bound() const noexcept;
++    const SDisplayAttemptResult& result() const noexcept;
++    static bool authorize(const SDisplayAttemptInfo&) noexcept;
++    static void returned(int result,int error) noexcept;
++ private:
++    const std::thread::id owner=std::this_thread::get_id();
++    eDisplayAttemptDomain domain;
++    SealFn seal=nullptr;
++    void* token=nullptr; // borrowed only for this synchronous owner stack scope
++    CDisplayAttemptScope* previous=nullptr;
++    bool installed=false,consumed=false;
++    SDisplayAttemptResult record;
++};
++template<class Call> int displayChangingCall(const SDisplayAttemptInfo& info,Call&& call) {
++    if(!CDisplayAttemptScope::authorize(info)){errno=EPERM;return -1;}
++    const int value=call();const int error=errno;CDisplayAttemptScope::returned(value,error);errno=error;return value;
++}
++}
+--- a/include/aquamarine/backend/Session.hpp
++++ b/include/aquamarine/backend/Session.hpp
+@@ -5,6 +5,13 @@
+ #include <hyprutils/memory/SharedPtr.hpp>
+ #include "../input/Input.hpp"
+ #include <vector>
++#include <array>
++#include <optional>
++#include <functional>
++#include <thread>
++#include <cstdint>
++#include <string>
++#include "SessionEvents.hpp"
+ 
+ struct udev;
+ struct udev_monitor;
+@@ -20,6 +27,18 @@
+     class CSession;
+     class CLibinputDevice;
+     struct SPollFD;
++    class CSessionRetirementState;
++    enum eSessionRevokeReason : uint32_t { AQ_REVOKE_DISABLE=1, AQ_REVOKE_TRANSPORT_FAILURE=2, AQ_REVOKE_SHUTDOWN=3, AQ_REVOKE_DEVICE_REMOVE=4, AQ_REVOKE_DEVICE_CHANGE=5 };
++    enum eSessionRevokeResult : uint32_t { AQ_REVOKED=1, AQ_ALREADY_STOPPED=2, AQ_REVOKE_UNAVAILABLE=3 };
++    struct SInputSessionOptions {
++        uint64_t sessionGeneration=0; // required broker-lifetime identity; not a security epoch
++        std::function<void(uint32_t,const std::string&)> logFunction; // control-owned only
++        // REQUIRED control-only same-thread Root Rust authority invalidation.
++        // Must not wait for render/queue/native/GL. Transport failure must Stop if
++        // invalidation is unavailable. Never retained or called by the mirror.
++        uint32_t (*revokeRender)(void* controlContext,uint64_t sessionGeneration,uint32_t reason) noexcept=nullptr;
++        void* controlContext=nullptr;
++    };
+ 
+     class CSessionDevice {
+       public:
+@@ -33,7 +52,7 @@
+ 
+         int                                                      fd       = -1;
+         int                                                      deviceID = -1;
+-        dev_t                                                    dev;
++        dev_t                                                    dev = 0;
+         std::string                                              path;
+ 
+         enum eChangeEventType : uint32_t {
+@@ -55,9 +74,16 @@
+         } events;
+ 
+         int renderNodeFd = -1;
++        uint64_t leaseID=0,generation=0,removeSequence=0,sessionGenerationTag=0;
++        bool bootVGA=false,retiring=false;
+ 
+       private:
+         Hyprutils::Memory::CWeakPointer<CSession> session;
++        libseat* serviceSeat=nullptr; // broker owner only, never in a mirror
++        std::thread::id owner=std::this_thread::get_id();
++        Hyprutils::Memory::CSharedPointer<CSessionRetirementState> retirement;
++        CSessionDevice() = default;
++        friend class CSession;
+     };
+ 
+     class CLibinputKeyboard : public IKeyboard {
+@@ -203,7 +229,26 @@
+       public:
+         ~CSession();
+ 
+-        static Hyprutils::Memory::CSharedPointer<CSession>              attempt(Hyprutils::Memory::CSharedPointer<CBackend> backend_);
++        static Hyprutils::Memory::CSharedPointer<CSession> attemptInputBroker(const SInputSessionOptions& options);
++        static Hyprutils::Memory::CSharedPointer<CSession> createRenderMirror(uint64_t sessionGeneration);
++        bool isInputBroker() const;
++        bool isRenderMirror() const;
++        bool onOwnerThread() const;
++        bool initialEnumerationComplete() const;
++        bool transportFailed() const;
++        uint32_t lastRenderRevocationResult() const;
++        void log(uint32_t level,const std::string& message) const;
++        void publishBrokerState() noexcept; // control notifications, after actual disable acknowledgment
++        void brokerSeatChanged(bool enabled); // actual libseat callback, control-only
++        void failRenderTransport() noexcept; // terminal failure, caller also invalidates Rust out-of-band
++        std::optional<SSessionPendingEvent> peekPendingRenderEvent() const;
++        bool markRenderEventAdmitted(uint64_t sequence); // only after Rust accepted its own FD duplicates
++        // Only a full owner aggregate, never DEVICE_FDS_CLOSED alone, may call this.
++        bool acknowledgeDeviceRetired(const SSessionDeviceRetired& aggregate);
++        eSessionApply applyRenderEvent(const SSessionRenderEvent&,int ownedPrimaryFD,int ownedRenderFD); // consumes both on entry
++        std::optional<SSessionDeviceFDClosed> takeDeviceFDClosed();
++        bool bindRenderBackend(Hyprutils::Memory::CSharedPointer<CBackend> backend);
++        void beginBrokerShutdown();
+ 
+         bool                                                            active = true; // whether the current vt is ours
+         uint32_t                                                        vt     = 0;    // 0 means unsupported
+@@ -235,9 +280,35 @@
+             Hyprutils::Signal::CSignalT<>                 changeActive;
+             Hyprutils::Signal::CSignalT<SAddDrmCardEvent> addDrmCard;
+             Hyprutils::Signal::CSignalT<>                 destroy;
++            Hyprutils::Signal::CSignalT<> transportFailed;
++            Hyprutils::Signal::CSignalT<Hyprutils::Memory::CSharedPointer<IPointer>> newPointer;
++            Hyprutils::Signal::CSignalT<Hyprutils::Memory::CSharedPointer<IKeyboard>> newKeyboard;
++            Hyprutils::Signal::CSignalT<Hyprutils::Memory::CSharedPointer<ITouch>> newTouch;
++            Hyprutils::Signal::CSignalT<Hyprutils::Memory::CSharedPointer<ISwitch>> newSwitch;
++            Hyprutils::Signal::CSignalT<Hyprutils::Memory::CSharedPointer<ITablet>> newTablet;
++            Hyprutils::Signal::CSignalT<Hyprutils::Memory::CSharedPointer<ITabletTool>> newTabletTool;
++            Hyprutils::Signal::CSignalT<Hyprutils::Memory::CSharedPointer<ITabletPad>> newTabletPad;
+         } events;
+ 
+       private:
++        enum class eRole { UNSET, INPUT_BROKER, RENDER_MIRROR };
++        eRole role=eRole::UNSET;
++        const std::thread::id owner=std::this_thread::get_id();
++        SInputSessionOptions inputOptions;
++        bool inputReady=false,publishing=false,failed=false,enumerated=false,shuttingDown=false,failureNotificationPending=false;
++        uint64_t sessionGeneration=0,nextSequence=1,lastAppliedSequence=0,nextLease=1;
++        uint32_t lastRevocation=AQ_REVOKE_UNAVAILABLE;
++        bool revokeForControl(uint32_t reason);
++        struct SPending { SSessionRenderEvent event{}; int primary=-1,render=-1; };
++        std::array<SPending,AQ_SESSION_MAX_PENDING_EVENTS> pending{};
++        size_t pendingHead=0,pendingCount=0;
++        Hyprutils::Memory::CSharedPointer<CSessionRetirementState> retirement;
++        SSessionRenderEvent makeEvent(uint32_t type) const;
++        bool enqueueRenderEvent(SSessionRenderEvent event,int primary=-1,int render=-1);
++        void discoverGraphicsDevices();
++        void addGraphicsDevice(udev_device* device);
++        void removeGraphicsDevice(Hyprutils::Memory::CSharedPointer<CSessionDevice> device);
++        // Present only in the mirror and touched only by its render owner.
+         Hyprutils::Memory::CWeakPointer<CBackend>               backend;
+         std::vector<Hyprutils::Memory::CSharedPointer<SPollFD>> polls;
+ 
+--- /dev/null
++++ b/include/aquamarine/backend/SessionEvents.hpp
+@@ -0,0 +1,31 @@
++#pragma once
++#include <cstdint>
++#include <cstddef>
++#include <type_traits>
++namespace Aquamarine {
++inline constexpr uint32_t AQ_SESSION_EVENT_VERSION=1;
++inline constexpr size_t AQ_SESSION_MAX_DEVICE_LEASES=32, AQ_SESSION_MAX_PENDING_EVENTS=128;
++enum eSessionRenderEvent : uint32_t { AQ_SESSION_INIT=1, AQ_SESSION_DEVICE_ADD=2, AQ_SESSION_ENUMERATION_DONE=3,
++    AQ_SESSION_ACTIVE=4, AQ_SESSION_DEVICE_CHANGE=5, AQ_SESSION_DEVICE_REMOVE=6, AQ_SESSION_SHUTDOWN=7 };
++// Copied metadata only. FD arguments are separate owned capabilities at apply.
++struct SSessionRenderEvent {
++    uint32_t version=1,type=0;
++    uint64_t session_sequence=0,session_generation=0,device_lease_id=0,device_generation=0,rdev=0;
++    uint32_t active=0,vt=0,change_type=0,connector_id=0,prop_id=0,boot_vga=0,reserved[4]{};
++    char seat_name[64]{},device_path[256]{};
++};
++static_assert(std::is_standard_layout_v<SSessionRenderEvent> && std::is_trivially_copyable_v<SSessionRenderEvent>);
++static_assert(sizeof(SSessionRenderEvent)==408 && offsetof(SSessionRenderEvent,reserved)==72 && offsetof(SSessionRenderEvent,seat_name)==88 && offsetof(SSessionRenderEvent,device_path)==152);
++struct SSessionPendingEvent { SSessionRenderEvent metadata; int primary_fd=-1,render_fd=-1; }; // borrowed, never consumed by peek
++struct SSessionDeviceFDClosed {
++    uint64_t session_generation=0,device_lease_id=0,device_generation=0,remove_sequence=0;
++};
++// Different type: Root may construct this only from the actual owner aggregate
++// after outputs/GL/allocator/GBM descendants AND the mirrored device are retired.
++struct SSessionDeviceRetired {
++    uint64_t session_generation=0,device_lease_id=0,device_generation=0,remove_sequence=0;
++};
++// The FDClosed type is a device-FD fact, NOT full graphics retirement: the owner adapter must
++// also drain every output/GL/allocator/GBM descendant before acknowledging a lease.
++enum class eSessionApply : uint32_t { APPLIED_METADATA=0, WRONG_OWNER, INVALID, CAPACITY, TERMINAL };
++}
+--- a/include/aquamarine/backend/drm/Atomic.hpp
++++ b/include/aquamarine/backend/drm/Atomic.hpp
+@@ -1,6 +1,7 @@
+ #pragma once
+ 
+ #include "../DRM.hpp"
++#include "../DisplayAttempt.hpp"
+ 
+ namespace Aquamarine {
+     class CDRMAtomicRequest;
+@@ -53,6 +54,10 @@
+         bool         failed = false;
+ 
+       private:
++        bool                                             trackObject(uint32_t id) noexcept;
++        SDisplayAttemptInfo                               attemptInfo(int fd,uint32_t flags,uint32_t connector) const noexcept;
++        std::array<uint32_t,AQ_MAX_DISPLAY_OBJECTS>        requestObjects{};
++        uint32_t                                         requestObjectCount=0;
+         void                                             destroyBlob(uint32_t id);
+         void                                             commitBlob(uint32_t* current, uint32_t next);
+         void                                             rollbackBlob(uint32_t* current, uint32_t next);
+--- a/src/backend/Backend.cpp
++++ b/src/backend/Backend.cpp
+@@ -57,13 +57,23 @@
+     ;
+ }
+ 
+-Hyprutils::Memory::CSharedPointer<CBackend> Aquamarine::CBackend::create(const std::vector<SBackendImplementationOptions>& backends, const SBackendOptions& options) {
++SP<CBackend> CBackend::create(const std::vector<SBackendImplementationOptions>& backends,const SBackendOptions& options) {
++    return createInternal(backends,options,nullptr); // DRM has no implicit input/session construction
++}
++SP<CBackend> CBackend::createForRenderSession(const std::vector<SBackendImplementationOptions>& backends,const SBackendOptions& options,SP<CSession> mirror) {
++    if(!mirror||!mirror->isRenderMirror()||!mirror->onOwnerThread()||!mirror->initialEnumerationComplete()||
++       backends.size()!=1||backends.front().backendType!=AQ_BACKEND_DRM||backends.front().backendRequestMode!=AQ_BACKEND_REQUEST_MANDATORY)return nullptr;
++    return createInternal(backends,options,mirror);
++}
++SP<CBackend> CBackend::createInternal(const std::vector<SBackendImplementationOptions>& backends,const SBackendOptions& options,SP<CSession> mirror) {
+     auto backend = SP<CBackend>(new CBackend());
+ 
+     backend->options               = options;
+     backend->logger                = Hyprutils::Memory::makeShared<CLogger>();
+     backend->implementationOptions = backends;
+     backend->self                  = backend;
++    backend->session               = mirror;
++    if(mirror&&!mirror->bindRenderBackend(backend))return nullptr;
+ 
+     backend->logger->m_loggerConnection = options.logConnection;
+     backend->logger->m_logFn            = options.logFunction;
+--- /dev/null
++++ b/src/backend/DisplayAttempt.cpp
+@@ -0,0 +1,24 @@
++#include <aquamarine/backend/DisplayAttempt.hpp>
++#include <exception>
++#include <algorithm>
++using namespace Aquamarine;
++namespace { thread_local CDisplayAttemptScope* current=nullptr; }
++CDisplayAttemptScope::CDisplayAttemptScope(eDisplayAttemptDomain value,SealFn fn,void* stackToken) noexcept:domain(value),seal(fn),token(stackToken){
++ previous=current;
++ installed=!previous&&seal&&token&&(domain==eDisplayAttemptDomain::RENDER||domain==eDisplayAttemptDomain::STOP_RETIRE);
++ current=this; // even invalid/nested scopes shadow the outer capability and fail closed
++}
++CDisplayAttemptScope::~CDisplayAttemptScope(){if(owner!=std::this_thread::get_id()||current!=this)std::terminate();current=previous;}
++bool CDisplayAttemptScope::bound() const noexcept{return installed&&owner==std::this_thread::get_id();}
++const SDisplayAttemptResult& CDisplayAttemptScope::result() const noexcept{return record;}
++bool CDisplayAttemptScope::authorize(const SDisplayAttemptInfo& info) noexcept{
++ if(!current||!current->bound())return false;
++ auto& self=*current;if(self.consumed){self.record.additional_refused=true;return false;}
++ self.consumed=true;self.record.info=info;self.record.info.domain=static_cast<uint32_t>(self.domain);
++ if((info.kind!=static_cast<uint32_t>(eDisplayAttemptKind::ATOMIC)&&info.kind!=static_cast<uint32_t>(eDisplayAttemptKind::EXTERNAL_LEASE_CREATE))||
++    info.drm_fd<0||!info.session_generation||!info.device_lease_id||!info.device_generation||!info.object_count||info.object_count>info.object_ids.size())return false;
++ for(size_t i=0;i<info.object_count;++i){if(!info.object_ids[i])return false;for(size_t j=0;j<i;++j)if(info.object_ids[j]==info.object_ids[i])return false;}
++ for(size_t i=info.object_count;i<info.object_ids.size();++i)if(info.object_ids[i])return false;
++ self.record.sealed=self.seal(self.token,&self.record.info)==1;return self.record.sealed;
++}
++void CDisplayAttemptScope::returned(int result,int error) noexcept{if(current&&current->record.sealed){current->record.attempted=true;current->record.result=result;current->record.error=error;}}
+--- a/src/backend/Session.cpp
++++ b/src/backend/Session.cpp
+@@ -2,6 +2,10 @@
+ #include <cerrno>
+ #include <fcntl.h>
+ #include "Shared.hpp"
++#include "SessionBrokerInternal.hpp"
++#include <thread>
++#include <limits>
++#include <exception>
+ 
+ extern "C" {
+ #include <libseat.h>
+@@ -24,7 +28,7 @@
+ // we can't really do better with libseat/libinput logs
+ // because they don't allow us to pass "data" or anything...
+ // Nobody should create multiple backends anyways really
+-Hyprutils::Memory::CSharedPointer<CBackend> backendInUse;
++static thread_local Hyprutils::Memory::CWeakPointer<CSession> brokerInUse;
+ 
+ //
+ static Aquamarine::eBackendLogLevel logLevelFromLibseat(libseat_log_level level) {
+@@ -47,52 +51,47 @@
+ }
+ 
+ static void libseatLog(libseat_log_level level, const char* fmt, va_list args) {
+-    if (!backendInUse)
++    if (!brokerInUse)
+         return;
+ 
+-    static char string[1024];
++    thread_local char string[1024];
+     vsnprintf(string, sizeof(string), fmt, args);
+ 
+     // remove trailing newlines
+     for (int len = strlen(string); len > 0 && string[len - 1] == '\n'; --len)
+         string[len - 1] = '\0';
+ 
+-    backendInUse->log(logLevelFromLibseat(level), std::format("[libseat] {}", string));
++    brokerInUse->log(logLevelFromLibseat(level), std::format("[libseat] {}", string));
+ }
+ 
+ static void libinputLog(libinput*, libinput_log_priority level, const char* fmt, va_list args) {
+-    if (!backendInUse)
++    if (!brokerInUse)
+         return;
+ 
+-    static char string[1024];
++    thread_local char string[1024];
+     vsnprintf(string, sizeof(string), fmt, args);
+ 
+     // remove trailing newlines
+     for (int len = strlen(string); len > 0 && string[len - 1] == '\n'; --len)
+         string[len - 1] = '\0';
+ 
+-    backendInUse->log(logLevelFromLibinput(level), std::format("[libinput] {}", string));
++    brokerInUse->log(logLevelFromLibinput(level), std::format("[libinput] {}", string));
+ }
+ 
+ // ------------ Libseat
+ 
+ static void libseatEnableSeat(struct libseat* seat, void* data) {
+-    auto PSESSION    = (Aquamarine::CSession*)data;
+-    PSESSION->active = true;
+-    if (PSESSION->libinputHandle) {
+-        libinput_resume(PSESSION->libinputHandle);
+-        PSESSION->dispatchLibinputEvents();
+-    }
+-    PSESSION->events.changeActive.emit();
++    auto* session=static_cast<CSession*>(data);
++    try{session->brokerSeatChanged(true);}catch(...){session->failRenderTransport();}
++    session->publishBrokerState();
+ }
+ 
+ static void libseatDisableSeat(struct libseat* seat, void* data) {
+-    auto PSESSION    = (Aquamarine::CSession*)data;
+-    PSESSION->active = false;
+-    if (PSESSION->libinputHandle)
+-        libinput_suspend(PSESSION->libinputHandle);
+-    PSESSION->events.changeActive.emit();
+-    libseat_disable_seat(PSESSION->libseatHandle);
++    auto* session=static_cast<CSession*>(data);
++    try{session->brokerSeatChanged(false);}catch(...){session->failRenderTransport();} // control values/input only; ack still proceeds
++    const int ack=libseat_disable_seat(seat); // never waits for mirror/GPU drain or transport admission
++    if(ack<0)session->failRenderTransport();
++    session->publishBrokerState(); // control notifications follow the actual acknowledgment
+ }
+ 
+ static const libseat_seat_listener libseatListener = {
+@@ -131,49 +130,42 @@
+ 
+ // ------------
+ 
+-Aquamarine::CSessionDevice::CSessionDevice(Hyprutils::Memory::CSharedPointer<CSession> session_, const std::string& path_) : path(path_), session(session_) {
+-    deviceID = libseat_open_device(session->libseatHandle, path.c_str(), &fd);
+-    if (deviceID < 0) {
+-        session->backend->log(AQ_LOG_ERROR, std::format("libseat: Couldn't open device at {}", path_));
+-        return;
+-    }
+-
+-    struct stat stat_;
+-    if (fstat(fd, &stat_) < 0) {
+-        session->backend->log(AQ_LOG_ERROR, std::format("libseat: Couldn't stat device at {}", path_));
+-        deviceID = -1;
+-        return;
+-    }
+-
+-    dev = stat_.st_rdev;
++Aquamarine::CSessionDevice::CSessionDevice(SP<CSession> session_,const std::string& path_):path(path_),session(session_) {
++    if(!session_||!session_->isInputBroker()||!session_->onOwnerThread())return;
++    serviceSeat=session_->libseatHandle;
++    deviceID=libseat_open_device(serviceSeat,path.c_str(),&fd);
++    if(deviceID<0){session_->log(AQ_LOG_ERROR,"libseat: device open failed");return;}
++    struct stat st{};
++    if(fstat(fd,&st)<0){libseat_close_device(serviceSeat,deviceID);deviceID=-1;close(fd);fd=-1;return;}
++    dev=st.st_rdev;
+ }
+ 
+ Aquamarine::CSessionDevice::~CSessionDevice() {
+-    if (deviceID >= 0)
+-        if (libseat_close_device(session->libseatHandle, deviceID) < 0)
+-            session->backend->log(AQ_LOG_ERROR, std::format("libseat: Couldn't close device at {}", path));
+-    if (fd >= 0)
+-        close(fd);
+-
+-    if (renderNodeFd >= 0)
+-        close(renderNodeFd);
++    if(owner!=std::this_thread::get_id())std::terminate();
++    if(deviceID>=0&&serviceSeat)libseat_close_device(serviceSeat,deviceID);
++    if(fd>=0)close(fd);
++    if(renderNodeFd>=0)close(renderNodeFd);
++    if(retirement&&leaseID&&removeSequence)
++        retirement->closed({sessionGenerationTag,leaseID,generation,removeSequence});
+ }
+ 
+ bool Aquamarine::CSessionDevice::supportsKMS() {
+-    if (deviceID < 0)
++    if(!session||!session->isRenderMirror()||!session->onOwnerThread())return false;
++    if (fd < 0)
+         return false;
+ 
+     bool kms = drmIsKMS(fd);
+ 
+     if (kms)
+-        session->backend->log(AQ_LOG_DEBUG, std::format("libseat: Device {} supports kms", path));
++        session->log(AQ_LOG_DEBUG, std::format("libseat: Device {} supports kms", path));
+     else
+-        session->backend->log(AQ_LOG_DEBUG, std::format("libseat: Device {} does not support kms", path));
++        session->log(AQ_LOG_DEBUG, std::format("libseat: Device {} does not support kms", path));
+ 
+     return kms;
+ }
+ 
+ void Aquamarine::CSessionDevice::resolveMatchingRenderNode(udev_device* cardDevice) {
++    if(!session||!session->isInputBroker()||!session->onOwnerThread())return;
+     if (!cardDevice)
+         return;
+ 
+@@ -208,7 +200,7 @@
+         if (devParent && parentSyspath && strcmp(udev_device_get_syspath(devParent), parentSyspath) == 0) {
+             renderNodeFd = open(devnode, O_RDWR | O_CLOEXEC);
+             if (renderNodeFd < 0)
+-                session->backend->log(AQ_LOG_WARNING, std::format("drm: Failed to open matching render node {}", devnode));
++                session->log(AQ_LOG_WARNING, std::format("drm: Failed to open matching render node {}", devnode));
+ 
+             udev_device_unref(dev);
+             break;
+@@ -265,7 +257,7 @@
+                 }
+                 renderNodeFd = open(fbDevnode, O_RDWR | O_CLOEXEC);
+                 if (renderNodeFd >= 0) {
+-                    session->backend->log(
++                    session->log(
+                         AQ_LOG_WARNING,
+                         std::format("drm: No matching render node for {}, falling back to sole renderD on the system: {}", parentSyspath ? parentSyspath : "(unknown)", fbDevnode));
+                     udev_device_unref(fbDev);
+@@ -274,7 +266,7 @@
+                 udev_device_unref(fbDev);
+             }
+         } else if (renderDCount > 1) {
+-            session->backend->log(AQ_LOG_WARNING,
++            session->log(AQ_LOG_WARNING,
+                                   std::format("drm: No matching render node for {}, refusing to guess among {} renderD candidates; leaving renderer to fall through to KMS fd (may "
+                                               "force software rendering; set AQ_DRM_DEVICES to disambiguate)",
+                                               parentSyspath ? parentSyspath : "(unknown)", renderDCount));
+@@ -284,21 +276,24 @@
+     udev_enumerate_unref(enumerate);
+ }
+ 
+-SP<CSessionDevice> Aquamarine::CSessionDevice::openIfKMS(SP<CSession> session_, const std::string& path_) {
+-    auto dev = makeShared<CSessionDevice>(session_, path_);
+-    if (envEnabled("AQ_NO_KMS_REQUIREMENT") || dev->supportsKMS())
+-        return dev;
++SP<CSessionDevice> Aquamarine::CSessionDevice::openIfKMS(SP<CSession> session_,const std::string& path_) {
++    if(!session_||!session_->isRenderMirror()||!session_->onOwnerThread())return nullptr;
++    for(const auto& device:session_->sessionDevices)
++        if(!device->retiring&&device->path==path_&&(envEnabled("AQ_NO_KMS_REQUIREMENT")||device->supportsKMS()))return device;
+     return nullptr;
+ }
+ 
+-SP<CSession> Aquamarine::CSession::attempt(Hyprutils::Memory::CSharedPointer<CBackend> backend_) {
+-    if (!backend_)
++SP<CSession> Aquamarine::CSession::attemptInputBroker(const SInputSessionOptions& options) {
++    if (!options.sessionGeneration || !options.revokeRender || !options.controlContext || brokerInUse)
+         return nullptr;
+ 
+     auto session     = makeShared<CSession>();
+-    session->backend = backend_;
++    session->role=eRole::INPUT_BROKER;
++    session->active=false;
++    session->sessionGeneration=options.sessionGeneration;
++    session->inputOptions=options;
+     session->self    = session;
+-    backendInUse     = backend_;
++    brokerInUse     = session;
+ 
+     // ------------ Libseat
+ 
+@@ -308,13 +303,13 @@
+     session->libseatHandle = libseat_open_seat(&libseatListener, session.get());
+ 
+     if (!session->libseatHandle) {
+-        session->backend->log(AQ_LOG_ERROR, "libseat: failed to open a seat");
++        session->log(AQ_LOG_ERROR, "libseat: failed to open a seat");
+         return nullptr;
+     }
+ 
+     auto seatName = libseat_seat_name(session->libseatHandle);
+     if (!seatName) {
+-        session->backend->log(AQ_LOG_ERROR, "libseat: failed to get seat name");
++        session->log(AQ_LOG_ERROR, "libseat: failed to get seat name");
+         return nullptr;
+     }
+ 
+@@ -327,13 +322,13 @@
+ 
+     session->udevHandle = udev_new();
+     if (!session->udevHandle) {
+-        session->backend->log(AQ_LOG_ERROR, "udev: failed to create a new context");
++        session->log(AQ_LOG_ERROR, "udev: failed to create a new context");
+         return nullptr;
+     }
+ 
+     session->udevMonitor = udev_monitor_new_from_netlink(session->udevHandle, "udev");
+     if (!session->udevMonitor) {
+-        session->backend->log(AQ_LOG_ERROR, "udev: failed to create a new udevMonitor");
++        session->log(AQ_LOG_ERROR, "udev: failed to create a new udevMonitor");
+         return nullptr;
+     }
+ 
+@@ -344,7 +339,7 @@
+ 
+     session->libinputHandle = libinput_udev_create_context(&libinputListener, session.get(), session->udevHandle);
+     if (!session->libinputHandle) {
+-        session->backend->log(AQ_LOG_ERROR, "libinput: failed to create a new context");
++        session->log(AQ_LOG_ERROR, "libinput: failed to create a new context");
+         return nullptr;
+     }
+ 
+@@ -353,33 +348,45 @@
+ 
+ #ifdef AQUAMARINE_HAS_LIBINPUT_PLUGINS
+     if (envEnabled("AQ_LIBINPUT_NO_PLUGINS"))
+-        session->backend->log(AQ_LOG_DEBUG, "libinput: plugin loading disabled by AQ_LIBINPUT_NO_PLUGINS");
++        session->log(AQ_LOG_DEBUG, "libinput: plugin loading disabled by AQ_LIBINPUT_NO_PLUGINS");
+     else {
+         libinput_plugin_system_append_default_paths(session->libinputHandle);
+ 
+         if (int ret = libinput_plugin_system_load_plugins(session->libinputHandle, LIBINPUT_PLUGIN_SYSTEM_FLAG_NONE); ret < 0) {
+             if (ret == -ENOSYS)
+-                session->backend->log(AQ_LOG_WARNING, "libinput: plugin support is not available in this libinput build");
++                session->log(AQ_LOG_WARNING, "libinput: plugin support is not available in this libinput build");
+             else
+-                session->backend->log(AQ_LOG_WARNING, std::format("libinput: failed to load plugins: {}", strerror(-ret)));
++                session->log(AQ_LOG_WARNING, std::format("libinput: failed to load plugins: {}", strerror(-ret)));
+         }
+     }
+ #endif
+ 
+     if (libinput_udev_assign_seat(session->libinputHandle, session->seatName.c_str())) {
+-        session->backend->log(AQ_LOG_ERROR, "libinput: failed to assign a seat");
+-        return nullptr;
+-    }
+-
++        session->log(AQ_LOG_ERROR, "libinput: failed to assign a seat");
++        return nullptr;
++    }
++
++    session->publishing=true;
++    auto initial=session->makeEvent(AQ_SESSION_INIT);
++    initial.active=session->active;
++    initial.vt=session->vt;
++    if(session->seatName.size()>=sizeof(initial.seat_name)){session->failRenderTransport();return nullptr;}
++    std::memcpy(initial.seat_name,session->seatName.c_str(),session->seatName.size()+1);
++    if(!session->enqueueRenderEvent(initial))return nullptr;
++    session->discoverGraphicsDevices();
++    if(session->failed||!session->enqueueRenderEvent(session->makeEvent(AQ_SESSION_ENUMERATION_DONE)))return nullptr;
+     return session;
+ }
+ 
+ Aquamarine::CSession::~CSession() {
++    if(!onOwnerThread())std::terminate();
++    // Destruction is final forced service shutdown, never a fabricated owner
++    // retirement. Normal operation retains graphics leases until aggregate ack.
++    for(auto& value:pending){if(value.primary>=0)close(value.primary);if(value.render>=0)close(value.render);}
++    if(libinputHandle){libinput_unref(libinputHandle);libinputHandle=nullptr;}
+     sessionDevices.clear();
+     libinputDevices.clear();
+ 
+-    if (libinputHandle)
+-        libinput_unref(libinputHandle);
+     if (libseatHandle)
+         libseat_close_seat(libseatHandle);
+     if (udevMonitor)
+@@ -406,90 +413,48 @@
+ }
+ 
+ void Aquamarine::CSession::onReady() {
+-    ;
++    if(!isInputBroker()||!onOwnerThread()||inputReady)return;
++    inputReady=true;
++    for(const auto& d:libinputDevices){
++        if(d->keyboard)events.newKeyboard.emit(SP<IKeyboard>(d->keyboard));
++        if(d->mouse)events.newPointer.emit(SP<IPointer>(d->mouse));
++        if(d->touch)events.newTouch.emit(SP<ITouch>(d->touch));
++        if(d->switchy)events.newSwitch.emit(SP<ISwitch>(d->switchy));
++        if(d->tablet)events.newTablet.emit(SP<ITablet>(d->tablet));
++        if(d->tabletPad)events.newTabletPad.emit(SP<ITabletPad>(d->tabletPad));
++    }
+ }
+ 
+ void Aquamarine::CSession::dispatchUdevEvents() {
+-    if (!udevHandle || !udevMonitor)
++    if(!isInputBroker()||!onOwnerThread()||!udevHandle||!udevMonitor||failed)return;
++    auto* device=udev_monitor_receive_device(udevMonitor);if(!device)return;
++    const auto* sysname=udev_device_get_sysname(device);const auto* action=udev_device_get_action(device);
++    if(!sysname||!isDRMCard(sysname)||!action){udev_device_unref(device);return;}
++    const auto number=udev_device_get_devnum(device);
++    SP<CSessionDevice> selected;
++    for(const auto& d:sessionDevices)if(d->leaseID&&d->dev==number&&!d->retiring){selected=d;break;}
++    if(std::strcmp(action,"add")==0){if(!selected)addGraphicsDevice(device);}
++    else if(selected&&std::strcmp(action,"remove")==0)removeGraphicsDevice(selected);
++    else if(selected&&std::strcmp(action,"change")==0){
++        auto event=makeEvent(AQ_SESSION_DEVICE_CHANGE);event.device_lease_id=selected->leaseID;event.device_generation=selected->generation;event.rdev=selected->dev;
++        const auto* hotplug=udev_device_get_property_value(device,"HOTPLUG");const auto* lease=udev_device_get_property_value(device,"LEASE");
++        if(hotplug&&std::strcmp(hotplug,"1")==0){
++            event.change_type=CSessionDevice::AQ_SESSION_EVENT_CHANGE_HOTPLUG;
++            const auto parse=[](const char* text,uint32_t& value){if(!text)return true;char* end=nullptr;errno=0;const auto v=strtoull(text,&end,10);if(errno||!end||*end||v>UINT32_MAX)return false;value=static_cast<uint32_t>(v);return true;};
++            if(!parse(udev_device_get_property_value(device,"CONNECTOR"),event.connector_id)||!parse(udev_device_get_property_value(device,"PROPERTY"),event.prop_id))failRenderTransport();
++            else {revokeForControl(AQ_REVOKE_DEVICE_CHANGE);enqueueRenderEvent(event);}
++        }else if(lease&&std::strcmp(lease,"1")==0){event.change_type=CSessionDevice::AQ_SESSION_EVENT_CHANGE_LEASE;revokeForControl(AQ_REVOKE_DEVICE_CHANGE);enqueueRenderEvent(event);}
++    }
++    udev_device_unref(device);
++    if(failureNotificationPending)publishBrokerState();
++}
++
++void Aquamarine::CSession::dispatchLibinputEvents() {
++    if (!isInputBroker() || !onOwnerThread() || !libinputHandle || failed)
+         return;
+ 
+-    auto device = udev_monitor_receive_device(udevMonitor);
+-
+-    if (!device)
+-        return;
+-
+-    auto sysname = udev_device_get_sysname(device);
+-    auto devnode = udev_device_get_devnode(device);
+-    auto action  = udev_device_get_action(device);
+-
+-    backend->log(AQ_LOG_DEBUG, std::format("udev: new udev {} event for {}", action ? action : "unknown", sysname ? sysname : "unknown"));
+-
+-    if (!isDRMCard(sysname) || !action || !devnode) {
+-        udev_device_unref(device);
+-        return;
+-    }
+-
+-    dev_t              deviceNum = udev_device_get_devnum(device);
+-    SP<CSessionDevice> sessionDevice;
+-    for (auto const& sDev : sessionDevices) {
+-        if (sDev->dev == deviceNum) {
+-            sessionDevice = sDev;
+-            break;
+-        }
+-    }
+-
+-    if (!sessionDevice && action == std::string{"add"}) {
+-        backend->onNewGpu(devnode);
+-        udev_device_unref(device);
+-        return;
+-    }
+-
+-    if (!sessionDevice) {
+-        udev_device_unref(device);
+-        return;
+-    }
+-
+-    if (action == std::string{"add"})
+-        events.addDrmCard.emit(SAddDrmCardEvent{.path = devnode});
+-    else if (action == std::string{"change"}) {
+-        backend->log(AQ_LOG_DEBUG, std::format("udev: DRM device {} changed", sysname ? sysname : "unknown"));
+-
+-        CSessionDevice::SChangeEvent event;
+-
+-        //
+-        auto prop = udev_device_get_property_value(device, "HOTPLUG");
+-        if (prop && prop == std::string{"1"}) {
+-            event.type = CSessionDevice::AQ_SESSION_EVENT_CHANGE_HOTPLUG;
+-
+-            prop = udev_device_get_property_value(device, "CONNECTOR");
+-            if (prop)
+-                event.hotplug.connectorID = std::stoull(prop);
+-
+-            prop = udev_device_get_property_value(device, "PROPERTY");
+-            if (prop)
+-                event.hotplug.propID = std::stoull(prop);
+-        } else if (prop = udev_device_get_property_value(device, "LEASE"); prop && prop == std::string{"1"}) {
+-            event.type = CSessionDevice::AQ_SESSION_EVENT_CHANGE_LEASE;
+-        } else {
+-            backend->log(AQ_LOG_DEBUG, std::format("udev: DRM device {} change event unrecognized", sysname ? sysname : "unknown"));
+-        }
+-
+-        sessionDevice->events.change.emit(event);
+-    } else if (action == std::string{"remove"}) {
+-        backend->log(AQ_LOG_DEBUG, std::format("udev: DRM device {} removed", sysname ? sysname : "unknown"));
+-        sessionDevice->events.remove.emit();
+-        std::erase_if(sessionDevices, [sessionDevice](const auto& sd) { return sd == sessionDevice; });
+-    }
+-
+-    udev_device_unref(device);
+-}
+-
+-void Aquamarine::CSession::dispatchLibinputEvents() {
+-    if (!libinputHandle)
+-        return;
+-
+     if (int ret = libinput_dispatch(libinputHandle); ret) {
+-        backend->log(AQ_LOG_ERROR, std::format("Couldn't dispatch libinput events: {}", strerror(-ret)));
++        log(AQ_LOG_ERROR, std::format("Couldn't dispatch libinput events: {}", strerror(-ret)));
+         return;
+     }
+ 
+@@ -502,8 +467,9 @@
+ }
+ 
+ void Aquamarine::CSession::dispatchLibseatEvents() {
++    if(!isInputBroker()||!onOwnerThread()||!libseatHandle)return;
+     if (libseat_dispatch(libseatHandle, 0) == -1)
+-        backend->log(AQ_LOG_ERROR, "Couldn't dispatch libseat events");
++        log(AQ_LOG_ERROR, "Couldn't dispatch libseat events");
+ }
+ 
+ void Aquamarine::CSession::dispatchPendingEventsAsync() {
+@@ -518,6 +484,7 @@
+ }
+ 
+ std::vector<Hyprutils::Memory::CSharedPointer<SPollFD>> Aquamarine::CSession::pollFDs() {
++    if(!isInputBroker()||!onOwnerThread()||!libseatHandle||!udevMonitor||!libinputHandle)return {};
+     // clang-format off
+     return {
+         makeShared<SPollFD>(libseat_get_fd(libseatHandle), [this](){    dispatchLibseatEvents();  }),
+@@ -528,7 +495,7 @@
+ }
+ 
+ bool Aquamarine::CSession::switchVT(uint32_t vt) {
+-    return libseat_switch_session(libseatHandle, vt) == 0;
++    return isInputBroker()&&onOwnerThread()&&!failed&&libseatHandle&&libseat_switch_session(libseatHandle, vt)==0;
+ }
+ 
+ void Aquamarine::CSession::handleLibinputEvent(libinput_event* e) {
+@@ -536,10 +503,10 @@
+     auto eventType = libinput_event_get_type(e);
+     auto data      = libinput_device_get_user_data(device);
+ 
+-    backend->log(AQ_LOG_TRACE, std::format("libinput: Event {}", (int)eventType));
++    log(AQ_LOG_TRACE, std::format("libinput: Event {}", (int)eventType));
+ 
+     if (!data && eventType != LIBINPUT_EVENT_DEVICE_ADDED) {
+-        backend->log(AQ_LOG_ERROR, "libinput: No aq device in event and not added");
++        log(AQ_LOG_ERROR, "libinput: No aq device in event and not added");
+         return;
+     }
+ 
+@@ -951,7 +918,7 @@
+     const auto PRODUCT = libinput_device_get_id_product(device);
+     const auto NAME    = libinput_device_get_name(device);
+ 
+-    session->backend->log(AQ_LOG_DEBUG, std::format("libinput: New device {}: {}-{}", NAME ? NAME : "Unknown", VENDOR, PRODUCT));
++    session->log(AQ_LOG_DEBUG, std::format("libinput: New device {}: {}-{}", NAME ? NAME : "Unknown", VENDOR, PRODUCT));
+ 
+     name = NAME;
+ 
+@@ -960,38 +927,38 @@
+ 
+     if (libinput_device_has_capability(device, LIBINPUT_DEVICE_CAP_KEYBOARD)) {
+         keyboard = makeShared<CLibinputKeyboard>(self.lock());
+-        if (session->backend->ready)
+-            session->backend->events.newKeyboard.emit(SP<IKeyboard>(keyboard));
++        if (session->inputReady)
++            session->events.newKeyboard.emit(SP<IKeyboard>(keyboard));
+     }
+ 
+     if (libinput_device_has_capability(device, LIBINPUT_DEVICE_CAP_POINTER)) {
+         mouse = makeShared<CLibinputMouse>(self.lock());
+-        if (session->backend->ready)
+-            session->backend->events.newPointer.emit(SP<IPointer>(mouse));
++        if (session->inputReady)
++            session->events.newPointer.emit(SP<IPointer>(mouse));
+     }
+ 
+     if (libinput_device_has_capability(device, LIBINPUT_DEVICE_CAP_TOUCH)) {
+         touch = makeShared<CLibinputTouch>(self.lock());
+-        if (session->backend->ready)
+-            session->backend->events.newTouch.emit(SP<ITouch>(touch));
++        if (session->inputReady)
++            session->events.newTouch.emit(SP<ITouch>(touch));
+     }
+ 
+     if (libinput_device_has_capability(device, LIBINPUT_DEVICE_CAP_SWITCH)) {
+         switchy = makeShared<CLibinputSwitch>(self.lock());
+-        if (session->backend->ready)
+-            session->backend->events.newSwitch.emit(SP<ISwitch>(switchy));
++        if (session->inputReady)
++            session->events.newSwitch.emit(SP<ISwitch>(switchy));
+     }
+ 
+     if (libinput_device_has_capability(device, LIBINPUT_DEVICE_CAP_TABLET_TOOL)) {
+         tablet = makeShared<CLibinputTablet>(self.lock());
+-        if (session->backend->ready)
+-            session->backend->events.newTablet.emit(SP<ITablet>(tablet));
++        if (session->inputReady)
++            session->events.newTablet.emit(SP<ITablet>(tablet));
+     }
+ 
+     if (libinput_device_has_capability(device, LIBINPUT_DEVICE_CAP_TABLET_PAD)) {
+         tabletPad = makeShared<CLibinputTabletPad>(self.lock());
+-        if (session->backend->ready)
+-            session->backend->events.newTabletPad.emit(SP<ITabletPad>(tabletPad));
++        if (session->inputReady)
++            session->events.newTabletPad.emit(SP<ITabletPad>(tabletPad));
+     }
+ }
+ 
+@@ -1008,8 +975,8 @@
+ 
+     auto newt = makeShared<CLibinputTabletTool>(self.lock(), tool);
+     tabletTools.emplace_back(newt);
+-    if (session->backend->ready)
+-        session->backend->events.newTabletTool.emit(SP<ITabletTool>(newt));
++    if (session->inputReady)
++        session->events.newTabletTool.emit(SP<ITabletTool>(newt));
+     return newt;
+ }
+ 
+--- /dev/null
++++ b/src/backend/SessionBroker.cpp
+@@ -0,0 +1,173 @@
++#include <aquamarine/backend/Backend.hpp>
++#include <aquamarine/backend/Session.hpp>
++#include "SessionBrokerInternal.hpp"
++#include <libseat.h>
++#include <libinput.h>
++#include <libudev.h>
++#include <sys/stat.h>
++#include <fcntl.h>
++#include <unistd.h>
++#include <algorithm>
++#include <cstring>
++#include <limits>
++#include <new>
++using namespace Aquamarine;
++using namespace Hyprutils::Memory;
++#define SP CSharedPointer
++namespace {
++struct OwnedFD {int fd=-1;explicit OwnedFD(int value=-1):fd(value){}OwnedFD(const OwnedFD&)=delete;OwnedFD& operator=(const OwnedFD&)=delete;~OwnedFD(){if(fd>=0)close(fd);}int release(){const int value=fd;fd=-1;return value;}};
++bool copiedText(const char* text,size_t size){return std::memchr(text,0,size)!=nullptr;}
++bool closeOnExec(int fd){const int flags=fcntl(fd,F_GETFD);return flags>=0&&(flags&FD_CLOEXEC);}
++}
++bool CSession::onOwnerThread()const{return owner==std::this_thread::get_id();}
++bool CSession::isInputBroker()const{return role==eRole::INPUT_BROKER;}
++bool CSession::isRenderMirror()const{return role==eRole::RENDER_MIRROR;}
++bool CSession::initialEnumerationComplete()const{return isRenderMirror()&&onOwnerThread()&&enumerated&&!failed&&!(retirement&&retirement->failed);}
++bool CSession::transportFailed()const{return !onOwnerThread()||failed||(retirement&&retirement->failed);}
++uint32_t CSession::lastRenderRevocationResult()const{return onOwnerThread()?lastRevocation:AQ_REVOKE_UNAVAILABLE;}
++bool CSession::revokeForControl(uint32_t reason){
++ if(!isInputBroker()||!onOwnerThread())return false;
++ lastRevocation=inputOptions.revokeRender?inputOptions.revokeRender(inputOptions.controlContext,sessionGeneration,reason):AQ_REVOKE_UNAVAILABLE;
++ if(lastRevocation==AQ_REVOKED||lastRevocation==AQ_ALREADY_STOPPED)return true;
++ failed=true;active=false;failureNotificationPending=true;return false;
++}
++void CSession::log(uint32_t level,const std::string& message)const{
++ if(!onOwnerThread())return;
++ if(isInputBroker()){if(inputOptions.logFunction)inputOptions.logFunction(level,message);}
++ else if(backend)backend->log(static_cast<eBackendLogLevel>(level),message);
++}
++SSessionRenderEvent CSession::makeEvent(uint32_t type)const{SSessionRenderEvent e;e.type=type;e.session_generation=sessionGeneration;return e;}
++void CSession::failRenderTransport() noexcept{
++ if(!isInputBroker()||!onOwnerThread()||failed)return;
++ failed=true;active=false;failureNotificationPending=true;
++ revokeForControl(AQ_REVOKE_TRANSPORT_FAILURE);
++ try{if(libinputHandle)libinput_suspend(libinputHandle);}catch(...){/* terminal state/revocation already retained */}
++ // No graphics call, queue wait, false retirement or listener before seat ack.
++}
++void CSession::publishBrokerState() noexcept{
++ if(!isInputBroker()||!onOwnerThread())return;
++ try{
++  events.changeActive.emit();
++  if(failureNotificationPending){failureNotificationPending=false;events.transportFailed.emit();}
++ }catch(...){failRenderTransport();}
++}
++void CSession::brokerSeatChanged(bool enabled){
++ if(!isInputBroker()||!onOwnerThread())return;
++ if(!enabled)revokeForControl(AQ_REVOKE_DISABLE); // before ANY queued event or seat ack, even failed/full
++ active=enabled&&!failed&&!shuttingDown;
++ if(libinputHandle){if(active){if(libinput_resume(libinputHandle)<0)failRenderTransport();else dispatchLibinputEvents();}else libinput_suspend(libinputHandle);}
++ if(publishing&&!failed){auto event=makeEvent(AQ_SESSION_ACTIVE);event.active=active;event.vt=vt;enqueueRenderEvent(event);}
++}
++bool CSession::enqueueRenderEvent(SSessionRenderEvent event,int primary,int render){
++ OwnedFD p{primary},r{render};
++ if(!isInputBroker()||!onOwnerThread()||failed||pendingCount==pending.size()||nextSequence==std::numeric_limits<uint64_t>::max()){failRenderTransport();return false;}
++ event.session_sequence=nextSequence++;
++ auto& out=pending[(pendingHead+pendingCount)%pending.size()];out.event=event;out.primary=p.release();out.render=r.release();++pendingCount;return true;
++}
++std::optional<SSessionPendingEvent> CSession::peekPendingRenderEvent()const{
++ if(!isInputBroker()||!onOwnerThread()||failed||!pendingCount)return {};
++ const auto& p=pending[pendingHead];return SSessionPendingEvent{p.event,p.primary,p.render};
++}
++bool CSession::markRenderEventAdmitted(uint64_t sequence){
++ if(!isInputBroker()||!onOwnerThread()||failed||!pendingCount||pending[pendingHead].event.session_sequence!=sequence)return false;
++ auto& p=pending[pendingHead];if(p.primary>=0)close(p.primary);if(p.render>=0)close(p.render);p={};pendingHead=(pendingHead+1)%pending.size();--pendingCount;return true;
++}
++void CSession::discoverGraphicsDevices(){
++ if(!isInputBroker()||!onOwnerThread()||failed)return;
++ auto* scan=udev_enumerate_new(udevHandle);if(!scan){failRenderTransport();return;}
++ udev_enumerate_add_match_subsystem(scan,"drm");udev_enumerate_add_match_sysname(scan,"card[0-9]*");
++ if(udev_enumerate_scan_devices(scan)){udev_enumerate_unref(scan);failRenderTransport();return;}
++ udev_list_entry* entry=nullptr;
++ udev_list_entry_foreach(entry,udev_enumerate_get_list_entry(scan)){
++  auto* device=udev_device_new_from_syspath(udevHandle,udev_list_entry_get_name(entry));
++  if(device){addGraphicsDevice(device);udev_device_unref(device);}if(failed)break;
++ }
++ udev_enumerate_unref(scan);
++}
++void CSession::addGraphicsDevice(udev_device* device){
++ if(!isInputBroker()||!onOwnerThread()||failed||shuttingDown)return;
++ const char* path=udev_device_get_devnode(device);const char* seat=udev_device_get_property_value(device,"ID_SEAT");
++ if(!path||seatName!=(seat?seat:"seat0"))return;
++ const auto live=std::count_if(sessionDevices.begin(),sessionDevices.end(),[](const auto& d){return d->leaseID!=0;});
++ if(live>=static_cast<ptrdiff_t>(AQ_SESSION_MAX_DEVICE_LEASES)||nextLease==std::numeric_limits<uint64_t>::max()){failRenderTransport();return;}
++ for(const auto& d:sessionDevices)if(d->leaseID&&d->path==path&&!d->retiring)return;
++ if(std::strlen(path)>=sizeof(SSessionRenderEvent{}.device_path)){failRenderTransport();return;}
++ auto value=makeShared<CSessionDevice>(self.lock(),path);if(value->fd<0)return;
++ value->leaseID=nextLease++;value->generation=value->leaseID;
++ auto* pci=udev_device_get_parent_with_subsystem_devtype(device,"pci",nullptr);
++ const char* boot=pci?udev_device_get_sysattr_value(pci,"boot_vga"):nullptr;value->bootVGA=boot&&std::strcmp(boot,"1")==0;
++ value->resolveMatchingRenderNode(device); // udev + owned open only; KMS stays on mirror
++ auto event=makeEvent(AQ_SESSION_DEVICE_ADD);event.device_lease_id=value->leaseID;event.device_generation=value->generation;event.rdev=value->dev;event.boot_vga=value->bootVGA;
++ std::memcpy(event.device_path,path,std::strlen(path)+1);
++ OwnedFD primary{fcntl(value->fd,F_DUPFD_CLOEXEC,3)},render;
++ if(primary.fd<0){failRenderTransport();return;}
++ if(value->renderNodeFd>=0){render.fd=fcntl(value->renderNodeFd,F_DUPFD_CLOEXEC,3);if(render.fd<0){failRenderTransport();return;}}
++ sessionDevices.emplace_back(value); // original service lease stays on control
++ enqueueRenderEvent(event,primary.release(),render.release());
++}
++void CSession::removeGraphicsDevice(SP<CSessionDevice> device){
++ if(!device||device->retiring||!isInputBroker()||!onOwnerThread())return;
++ revokeForControl(AQ_REVOKE_DEVICE_REMOVE); // old unsealed tickets cannot await mirror queue progress
++ auto event=makeEvent(AQ_SESSION_DEVICE_REMOVE);event.device_lease_id=device->leaseID;event.device_generation=device->generation;event.rdev=device->dev;
++ device->retiring=true;device->removeSequence=nextSequence;
++ enqueueRenderEvent(event); // retain original lease until matching full owner aggregate
++}
++void CSession::beginBrokerShutdown(){
++ if(!isInputBroker()||!onOwnerThread()||shuttingDown)return;
++ revokeForControl(AQ_REVOKE_SHUTDOWN);shuttingDown=true;active=false;
++ if(libinputHandle)libinput_suspend(libinputHandle);
++ for(const auto& device:sessionDevices)if(device->leaseID&&!device->retiring)removeGraphicsDevice(device);
++ if(!failed)enqueueRenderEvent(makeEvent(AQ_SESSION_SHUTDOWN));
++}
++bool CSession::acknowledgeDeviceRetired(const SSessionDeviceRetired& value){
++ if(!isInputBroker()||!onOwnerThread()||value.session_generation!=sessionGeneration||!value.remove_sequence)return false;
++ for(auto i=sessionDevices.begin();i!=sessionDevices.end();++i){const auto& d=*i;
++  if(d->leaseID==value.device_lease_id&&d->generation==value.device_generation&&d->retiring&&d->removeSequence==value.remove_sequence){sessionDevices.erase(i);return true;}}
++ return false;
++}
++SP<CSession> CSession::createRenderMirror(uint64_t generation){
++ if(!generation)return nullptr;auto mirror=makeShared<CSession>();mirror->self=mirror;mirror->role=eRole::RENDER_MIRROR;mirror->active=false;
++ mirror->sessionGeneration=generation;mirror->retirement=makeShared<CSessionRetirementState>();return mirror;
++}
++bool CSession::bindRenderBackend(SP<CBackend> value){
++ if(!isRenderMirror()||!onOwnerThread()||!enumerated||failed||!value||backend)return false;backend=value;return true;
++}
++std::optional<SSessionDeviceFDClosed> CSession::takeDeviceFDClosed(){
++ if(!isRenderMirror()||!onOwnerThread()||!retirement)return {};return retirement->take();
++}
++eSessionApply CSession::applyRenderEvent(const SSessionRenderEvent& e,int primaryFD,int renderFD){
++ OwnedFD primary{primaryFD},render{renderFD}; // consumes arguments even on rejection
++ if(!isRenderMirror()||!onOwnerThread())return eSessionApply::WRONG_OWNER;
++ if(failed||shuttingDown||(retirement&&retirement->failed))return eSessionApply::TERMINAL;
++ const auto invalid=[&](){failed=true;active=false;return eSessionApply::INVALID;};
++ if(e.version!=1||e.session_generation!=sessionGeneration||e.session_sequence!=lastAppliedSequence+1||!e.session_sequence||
++    e.type<AQ_SESSION_INIT||e.type>AQ_SESSION_SHUTDOWN||e.active>1||e.boot_vga>1||!copiedText(e.seat_name,sizeof(e.seat_name))||!copiedText(e.device_path,sizeof(e.device_path))||
++    std::any_of(std::begin(e.reserved),std::end(e.reserved),[](uint32_t v){return v!=0;}))return invalid();
++ if(e.type!=AQ_SESSION_INIT&&!lastAppliedSequence)return invalid();
++ if(!enumerated&&e.type!=AQ_SESSION_INIT&&e.type!=AQ_SESSION_DEVICE_ADD&&e.type!=AQ_SESSION_ENUMERATION_DONE)return invalid();
++ if(e.type!=AQ_SESSION_DEVICE_ADD&&(primaryFD>=0||renderFD>=0))return invalid();
++ if(e.type==AQ_SESSION_INIT){
++  if(lastAppliedSequence||!e.seat_name[0])return invalid();seatName=e.seat_name;active=e.active;vt=e.vt;
++ }else if(e.type==AQ_SESSION_ENUMERATION_DONE){if(!lastAppliedSequence||enumerated)return invalid();enumerated=true;
++ }else if(e.type==AQ_SESSION_DEVICE_ADD){
++  if(primaryFD<0||!e.device_lease_id||!e.device_generation||!e.device_path[0]||sessionDevices.size()>=AQ_SESSION_MAX_DEVICE_LEASES)return invalid();
++  for(const auto& d:sessionDevices)if(d->leaseID==e.device_lease_id||(!d->retiring&&d->dev==static_cast<dev_t>(e.rdev)))return invalid();
++  struct stat st{};if(fstat(primaryFD,&st)||!S_ISCHR(st.st_mode)||static_cast<uint64_t>(st.st_rdev)!=e.rdev||!closeOnExec(primaryFD))return invalid();
++  if(renderFD>=0&&(fstat(renderFD,&st)||!S_ISCHR(st.st_mode)||!closeOnExec(renderFD)))return invalid();
++  SP<CSessionDevice> d;
++  try {
++   d=SP<CSessionDevice>(new CSessionDevice());d->session=self;d->path=e.device_path;d->dev=static_cast<dev_t>(e.rdev);d->leaseID=e.device_lease_id;d->generation=e.device_generation;
++   d->bootVGA=e.boot_vga;d->sessionGenerationTag=sessionGeneration;d->retirement=retirement;
++   sessionDevices.emplace_back(d);
++  } catch(const std::bad_alloc&) {failed=true;active=false;return eSessionApply::CAPACITY;}
++  d->fd=primary.release();d->renderNodeFd=render.release();
++  if(backend&&enumerated)backend->onNewGpu(d->path); // executes KMS/GL only on mirror owner
++ }else if(e.type==AQ_SESSION_ACTIVE){if(!enumerated)return invalid();active=e.active;vt=e.vt;events.changeActive.emit();
++ }else if(e.type==AQ_SESSION_DEVICE_CHANGE||e.type==AQ_SESSION_DEVICE_REMOVE){
++  SP<CSessionDevice> d;for(const auto& value:sessionDevices)if(value->leaseID==e.device_lease_id&&value->generation==e.device_generation&&static_cast<uint64_t>(value->dev)==e.rdev){d=value;break;}
++  if(!d||d->retiring)return invalid();
++  if(e.type==AQ_SESSION_DEVICE_CHANGE){if(e.change_type>1)return invalid();CSessionDevice::SChangeEvent value;value.type=static_cast<CSessionDevice::eChangeEventType>(e.change_type);value.hotplug.connectorID=e.connector_id;value.hotplug.propID=e.prop_id;d->events.change.emit(value);}
++  else{d->retiring=true;d->removeSequence=e.session_sequence;d->events.remove.emit();std::erase(sessionDevices,d);}
++ }else if(e.type==AQ_SESSION_SHUTDOWN){active=false;shuttingDown=true;if(!sessionDevices.empty())return invalid();}
++ lastAppliedSequence=e.session_sequence;return eSessionApply::APPLIED_METADATA;
++}
+--- /dev/null
++++ b/src/backend/SessionBrokerInternal.hpp
+@@ -0,0 +1,24 @@
++#pragma once
++#include <aquamarine/backend/SessionEvents.hpp>
++#include <array>
++#include <optional>
++#include <thread>
++#include <exception>
++namespace Aquamarine {
++class CSessionRetirementState {
++ public:
++    const std::thread::id owner=std::this_thread::get_id();
++    std::array<SSessionDeviceFDClosed,AQ_SESSION_MAX_DEVICE_LEASES> values{};
++    size_t head=0,count=0;
++    bool failed=false;
++    void closed(SSessionDeviceFDClosed value) noexcept {
++        if(owner!=std::this_thread::get_id())std::terminate();
++        if(count==values.size()){failed=true;return;}
++        values[(head+count)%values.size()]=value;++count;
++    }
++    std::optional<SSessionDeviceFDClosed> take() noexcept {
++        if(owner!=std::this_thread::get_id())std::terminate();
++        if(!count)return {};auto value=values[head];head=(head+1)%values.size();--count;return value;
++    }
++};
++}
+--- a/src/backend/drm/DRM.cpp
++++ b/src/backend/drm/DRM.cpp
+@@ -1,6 +1,7 @@
+ #include "aquamarine/output/Output.hpp"
+ #include <algorithm>
+ #include <aquamarine/backend/DRM.hpp>
++#include <aquamarine/backend/DisplayAttempt.hpp>
+ #include <aquamarine/backend/drm/Legacy.hpp>
+ #include <aquamarine/backend/drm/Atomic.hpp>
+ #include <aquamarine/allocator/GBM.hpp>
+@@ -75,26 +76,6 @@
+     });
+ }
+ 
+-static udev_enumerate* enumDRMCards(udev* udev) {
+-    auto enumerate = udev_enumerate_new(udev);
+-    if (!enumerate)
+-        return nullptr;
+-
+-    udev_enumerate_add_match_subsystem(enumerate, "drm");
+-#ifdef __linux__
+-    // https://github.com/wulf7/libudev-devd/issues/11
+-    udev_enumerate_add_match_property(enumerate, "DEVTYPE", "drm_minor");
+-#endif
+-    udev_enumerate_add_match_sysname(enumerate, DRM_PRIMARY_MINOR_NAME "[0-9]*");
+-
+-    if (udev_enumerate_scan_devices(enumerate)) {
+-        udev_enumerate_unref(enumerate);
+-        return nullptr;
+-    }
+-
+-    return enumerate;
+-}
+-
+ static int gpuNumBuiltinPanels(const SP<CSessionDevice> gpu) {
+     auto resources = drmModeGetResources(gpu->fd);
+     if (!resources)
+@@ -119,84 +100,17 @@
+ }
+ 
+ static std::vector<SP<CSessionDevice>> scanGPUs(SP<CBackend> backend) {
+-    auto enumerate = enumDRMCards(backend->session->udevHandle);
+-
+-    if (!enumerate) {
+-        backend->log(AQ_LOG_ERROR, "drm: couldn't enumerate gpus with udev");
+-        return {};
+-    }
+-
+-    if (!udev_enumerate_get_list_entry(enumerate)) {
+-        backend->log(AQ_LOG_ERROR, "drm: No gpus in scanGPUs.");
+-        udev_enumerate_unref(enumerate);
+-        return {};
+-    }
+-
+-    udev_list_entry*               entry = nullptr;
++    if(!backend->session||!backend->session->isRenderMirror()||!backend->session->onOwnerThread()||!backend->session->initialEnumerationComplete())return {};
+     std::deque<SP<CSessionDevice>> devices;
+-
+-    int                            maxBuiltinPanels = 0;
+-    SP<CSessionDevice>             maxBuiltinPanelsGPU;
+-
+-    udev_list_entry_foreach(entry, udev_enumerate_get_list_entry(enumerate)) {
+-        auto path   = udev_list_entry_get_name(entry);
+-        auto device = udev_device_new_from_syspath(backend->session->udevHandle, path);
+-        if (!device) {
+-            backend->log(AQ_LOG_WARNING, std::format("drm: Skipping device {}", path ? path : "unknown"));
+-            continue;
+-        }
+-
+-        backend->log(AQ_LOG_DEBUG, std::format("drm: Enumerated device {}", path ? path : "unknown"));
+-
+-        auto seat = udev_device_get_property_value(device, "ID_SEAT");
+-        if (!seat)
+-            seat = "seat0";
+-
+-        if (!backend->session->seatName.empty() && backend->session->seatName != seat) {
+-            backend->log(AQ_LOG_WARNING, std::format("drm: Skipping device {} because seat {} doesn't match our {}", path ? path : "unknown", seat, backend->session->seatName));
+-            udev_device_unref(device);
+-            continue;
+-        }
+-
+-        auto pciDevice = udev_device_get_parent_with_subsystem_devtype(device, "pci", nullptr);
+-        bool isBootVGA = false;
+-        if (pciDevice) {
+-            auto id   = udev_device_get_sysattr_value(pciDevice, "boot_vga");
+-            isBootVGA = id && id == std::string{"1"};
+-        }
+-
+-        if (!udev_device_get_devnode(device)) {
+-            backend->log(AQ_LOG_ERROR, std::format("drm: Skipping device {}, no devnode", path ? path : "unknown"));
+-            udev_device_unref(device);
+-            continue;
+-        }
+-
+-        auto sessionDevice = CSessionDevice::openIfKMS(backend->session, udev_device_get_devnode(device));
+-        if (!sessionDevice) {
+-            backend->log(AQ_LOG_ERROR, std::format("drm: Skipping device {}, not a KMS device", path ? path : "unknown"));
+-            udev_device_unref(device);
+-            continue;
+-        }
+-
+-        sessionDevice->resolveMatchingRenderNode(device);
+-
+-        udev_device_unref(device);
+-
+-        if (isBootVGA)
+-            devices.push_front(sessionDevice);
+-        else
+-            devices.push_back(sessionDevice);
+-
+-        int numBuiltinPanels = gpuNumBuiltinPanels(sessionDevice);
+-        backend->log(AQ_LOG_TRACE, std::format("drm: Device {} has {} builtin {}", sessionDevice->path, numBuiltinPanels, numBuiltinPanels == 1 ? "panel" : "panels"));
+-        if (numBuiltinPanels > maxBuiltinPanels) {
+-            maxBuiltinPanelsGPU = sessionDevice;
+-            maxBuiltinPanels    = numBuiltinPanels;
+-        }
+-    }
+-
+-    udev_enumerate_unref(enumerate);
+-
++    int maxBuiltinPanels=0;
++    SP<CSessionDevice> maxBuiltinPanelsGPU;
++    for(const auto& device:backend->session->sessionDevices){
++        if(device->retiring||!device->leaseID||!device->supportsKMS())continue;
++        if(device->bootVGA)devices.push_front(device);else devices.push_back(device);
++        const int panels=gpuNumBuiltinPanels(device);
++        if(panels>maxBuiltinPanels){maxBuiltinPanels=panels;maxBuiltinPanelsGPU=device;}
++    }
++    if(devices.empty())return {};
+     std::vector<SP<CSessionDevice>> vecDevices;
+ 
+     auto                            explicitGpus = getenv("AQ_DRM_DEVICES");
+@@ -287,39 +201,16 @@
+     drmBackend->dumbAllocator = CDRMDumbAllocator::create(gpu->fd, backend);
+ 
+     // so that session can handle udev change/remove events for this gpu
+-    backend->session->sessionDevices.push_back(gpu);
++    // Device capability is already owned by the render mirror.
+ 
+     return drmBackend;
+ }
+ 
+ std::vector<SP<CDRMBackend>> Aquamarine::CDRMBackend::attempt(SP<CBackend> backend) {
+-    if (!backend->session)
+-        backend->session = CSession::attempt(backend);
+-
+-    if (!backend->session) {
+-        backend->log(AQ_LOG_ERROR, "Failed to open a session");
++    if(!backend->session||!backend->session->isRenderMirror()||!backend->session->onOwnerThread()||
++       !backend->session->initialEnumerationComplete()||!backend->session->active){
++        backend->log(AQ_LOG_ERROR,"DRM requires initialized active render-local session mirror; no control session/VT wait fallback");
+         return {};
+-    }
+-
+-    if (!backend->session->active) {
+-        backend->log(AQ_LOG_DEBUG, "Session is not active, waiting for 5s");
+-
+-        auto started = std::chrono::system_clock::now();
+-
+-        while (!backend->session->active) {
+-            std::this_thread::sleep_for(std::chrono::milliseconds(250));
+-            backend->session->dispatchPendingEventsAsync();
+-
+-            if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - started).count() >= 5000) {
+-                backend->log(AQ_LOG_DEBUG, "Session timeout reached");
+-                break;
+-            }
+-        }
+-
+-        if (!backend->session->active) {
+-            backend->log(AQ_LOG_DEBUG, "Session could not be activated in time");
+-            return {};
+-        }
+     }
+ 
+     auto gpus = scanGPUs(backend);
+@@ -373,7 +264,7 @@
+         backends.emplace_back(drmBackend);
+ 
+         // so that session can handle udev change/remove events for this gpu
+-        backend->session->sessionDevices.push_back(gpu);
++        // Device capability is already owned by the render mirror.
+     }
+ 
+     return backends;
+@@ -746,20 +637,15 @@
+     } else
+         drmProps.supportsAddFb2Modifiers = drmGetCap(gpu->fd, DRM_CAP_ADDFB2_MODIFIERS, &cap) == 0 && cap == 1;
+ 
+-    if (envEnabled("AQ_NO_ATOMIC")) {
+-        backend->log(AQ_LOG_WARNING, "drm: AQ_NO_ATOMIC enabled, using the legacy drm iface");
+-        impl = makeShared<CDRMLegacyImpl>(self.lock());
+-    } else if (drmSetClientCap(gpu->fd, DRM_CLIENT_CAP_ATOMIC, 1)) {
+-        backend->log(AQ_LOG_WARNING, "drm: failed to set DRM_CLIENT_CAP_ATOMIC, falling back to legacy");
+-        impl = makeShared<CDRMLegacyImpl>(self.lock());
+-    } else {
+-        backend->log(AQ_LOG_DEBUG, "drm: Atomic supported, using atomic for modesetting");
+-        impl                         = makeShared<CDRMAtomicImpl>(self.lock());
+-        drmProps.supportsAsyncCommit = drmGetCap(gpu->fd, DRM_CAP_ATOMIC_ASYNC_PAGE_FLIP, &cap) == 0 && cap == 1;
+-        atomic                       = true;
+-        if (!initCommitThread())
+-            backend->log(AQ_LOG_WARNING, "drm: Failed to create the asynchronous commit worker");
+-    }
++    if(envEnabled("AQ_NO_ATOMIC")||drmSetClientCap(gpu->fd,DRM_CLIENT_CAP_ATOMIC,1)){
++        backend->log(AQ_LOG_ERROR,"Owned display-attempt slice requires atomic DRM; legacy multi-effect commits are unavailable");
++        return false;
++    }
++    impl=makeShared<CDRMAtomicImpl>(self.lock());
++    atomic=true;
++    // An AQ internal commit thread cannot inherit an owner-local Rust stack
++    // token. The initial owned route uses synchronous per-attempt submission.
++    drmProps.supportsAsyncCommit=false;
+ 
+     backend->log(AQ_LOG_DEBUG, std::format("drm: drmProps.supportsAsyncCommit: {}", drmProps.supportsAsyncCommit));
+     backend->log(AQ_LOG_DEBUG, std::format("drm: drmProps.supportsAddFb2Modifiers: {}", drmProps.supportsAddFb2Modifiers));
+@@ -3490,7 +3376,7 @@
+ }
+ 
+ SP<CDRMLease> Aquamarine::CDRMLease::create(std::vector<SP<IOutput>> outputs) {
+-    if (outputs.empty())
++    if (outputs.empty() || outputs.size()>AQ_MAX_DISPLAY_OBJECTS/4)
+         return nullptr;
+ 
+     if (outputs.at(0)->getBackend()->type() != AQ_BACKEND_DRM)
+@@ -3532,7 +3418,16 @@
+ 
+     backend->log(AQ_LOG_DEBUG, "drm lease: issuing a lease");
+ 
+-    int leaseFD = drmModeCreateLease(backend->gpu->fd, objects.data(), objects.size(), O_CLOEXEC, &lease->lesseeID);
++    SDisplayAttemptInfo effect;effect.kind=static_cast<uint32_t>(eDisplayAttemptKind::EXTERNAL_LEASE_CREATE);effect.drm_fd=backend->gpu->fd;effect.flags=O_CLOEXEC;
++    effect.session_generation=backend->gpu->sessionGenerationTag;effect.device_lease_id=backend->gpu->leaseID;effect.device_generation=backend->gpu->generation;
++    for(const auto object:objects){
++        if(std::find(effect.object_ids.begin(),effect.object_ids.begin()+effect.object_count,object)!=effect.object_ids.begin()+effect.object_count)continue;
++        if(!object||effect.object_count==effect.object_ids.size()){backend->log(AQ_LOG_ERROR,"drm lease: unavailable bounded native object scope");return nullptr;}
++        effect.object_ids[effect.object_count++]=object;
++    }
++    int leaseFD = displayChangingCall(effect,[&]{
++        return drmModeCreateLease(backend->gpu->fd,objects.data(),objects.size(),O_CLOEXEC,&lease->lesseeID);
++    });
+     if (leaseFD < 0) {
+         backend->log(AQ_LOG_ERROR, "drm lease: drm rejected a lease");
+         return nullptr;
+--- a/src/backend/drm/impl/Atomic.cpp
++++ b/src/backend/drm/impl/Atomic.cpp
+@@ -1,3 +1,4 @@
++#include <aquamarine/backend/DisplayAttempt.hpp>
+ #include <aquamarine/backend/drm/Atomic.hpp>
+ #include <cerrno>
+ #include <cstdint>
+@@ -15,6 +16,8 @@
+ using namespace Hyprutils::Memory;
+ using namespace Hyprutils::Math;
+ #define SP CSharedPointer
++
++
+ 
+ // HW capabilites aren't checked. Should be handled by the drivers (and highly unlikely to get a format outside of bpc range)
+ // https://drmdb.emersion.fr/properties/3233857728/max%20bpc
+@@ -131,6 +134,23 @@
+     return any && !failed;
+ }
+ 
++bool CDRMAtomicRequest::trackObject(uint32_t id) noexcept {
++    if(!id||failed)return false;
++    for(uint32_t i=0;i<requestObjectCount;++i)if(requestObjects[i]==id)return true;
++    if(requestObjectCount==requestObjects.size()){failed=true;return false;}
++    requestObjects[requestObjectCount++]=id;return true;
++}
++SDisplayAttemptInfo CDRMAtomicRequest::attemptInfo(int fd,uint32_t flags,uint32_t connector) const noexcept {
++    SDisplayAttemptInfo info;info.kind=static_cast<uint32_t>(eDisplayAttemptKind::ATOMIC);info.flags=flags;info.connector_id=connector;info.drm_fd=fd;
++    info.object_count=requestObjectCount;info.object_ids=requestObjects;
++    if(backend&&backend->gpu){info.session_generation=backend->gpu->sessionGenerationTag;info.device_lease_id=backend->gpu->leaseID;info.device_generation=backend->gpu->generation;}
++    return info;
++}
++static int authorizedAtomicAttempt(const SDisplayAttemptInfo& info,drmModeAtomicReq* request,void* data) noexcept {
++    if(info.flags&DRM_MODE_ATOMIC_TEST_ONLY)return drmModeAtomicCommit(info.drm_fd,request,info.flags,data);
++    return displayChangingCall(info,[&]{return drmModeAtomicCommit(info.drm_fd,request,info.flags,data);});
++}
++
+ void Aquamarine::CDRMAtomicRequest::add(uint32_t id, uint32_t prop, uint64_t val) {
+     if (failed)
+         return;
+@@ -139,9 +159,10 @@
+ 
+     if (id == 0 || prop == 0) {
+         backend->log(AQ_LOG_ERROR, "atomic drm request: failed to add prop: id / prop == 0");
+-        return;
+-    }
+-
++        failed=true;return;
++    }
++
++    if(!trackObject(id))return;
+     if (drmModeAtomicAddProperty(req, id, prop, val) < 0) {
+         backend->log(AQ_LOG_ERROR, "atomic drm request: failed to add prop");
+         failed = true;
+@@ -149,17 +170,16 @@
+ }
+ 
+ bool Aquamarine::CDRMAtomicRequest::addRaw(uint32_t id, uint32_t prop, uint64_t val) noexcept {
+-    if (!req || !id || !prop)
+-        return false;
+-
+-    return drmModeAtomicAddProperty(req, id, prop, val) >= 0;
++    if (!req || !id || !prop || !trackObject(id))return false;
++    if(drmModeAtomicAddProperty(req,id,prop,val)<0){failed=true;return false;}
++    return true;
+ }
+ 
+ CDRMAtomicRequest::SAsyncResult Aquamarine::CDRMAtomicRequest::submitAsync(int drmFD, uint32_t flags, uint64_t commitID) noexcept {
+     if (!req || failed || drmFD < 0 || !commitID)
+         return {.submitted = false, .error = EINVAL};
+ 
+-    const auto RET = drmModeAtomicCommit(drmFD, req, flags, rc<void*>(commitID));
++    const auto RET = authorizedAtomicAttempt(attemptInfo(drmFD,flags,0),req,rc<void*>(commitID));
+     if (RET)
+         return {.submitted = false, .error = RET == -1 ? errno : -RET};
+ 
+@@ -396,7 +416,7 @@
+     const bool WANTSFLIP = conn && conn->crtc && (flagssss & DRM_MODE_PAGE_FLIP_EVENT) && !(flagssss & DRM_MODE_ATOMIC_TEST_ONLY);
+     const auto FLIPID    = WANTSFLIP ? conn->crtc->armPageFlip(conn, flagssss & DRM_MODE_PAGE_FLIP_ASYNC) : uintptr_t{0};
+ 
+-    if (auto ret = drmModeAtomicCommit(backend->gpu->fd, req, flagssss, rc<void*>(FLIPID)); ret) {
++    if (auto ret = authorizedAtomicAttempt(attemptInfo(backend->gpu->fd,flagssss,conn?conn->id:0),req,rc<void*>(FLIPID)); ret) {
+         backend->log((flagssss & DRM_MODE_ATOMIC_TEST_ONLY) ? AQ_LOG_DEBUG : AQ_LOG_ERROR,
+                      std::format("atomic drm request: failed to commit: {}, flags: {}", strerror(ret == -1 ? errno : -ret), flagsToStr(flagssss)));
+ 
+@@ -461,6 +481,8 @@
+     commitBlob(&conn->crtc->atomic.hdr, data.atomic.hdrBlob);
+     destroyBlob(data.atomic.fbDamage);
+ }
++
++
+ 
+ Aquamarine::CDRMAtomicImpl::CDRMAtomicImpl(Hyprutils::Memory::CSharedPointer<CDRMBackend> backend_) : backend(backend_) {
+     ;

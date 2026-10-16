@@ -117,12 +117,16 @@ functional aggregates are not made successful by outer closure receipts.
 The [executor GL lifecycle checkpoint](native-render-executor-gl.md) now qualifies an actual
 missing-handshake RED after all eight GL cases, 42 packets and six sync-file
 facts. Stop returns `unknown request`; no finalize, unload or Rust join/release
-occurs. Matching AQ15/current-ABI execution, Source GREEN and phone gates remain open.
+occurs. A separate [AQ15/current-ABI native build](native-render-executor-gl.md#separate-aq15current-abi-build-and-startup-failure)
+now passes CPU/loader checks, but the matched runtime aborts during backend
+startup before Source/actor; its exact cause remains unresolved. Source GREEN
+and all phone gates remain open.
 
 ## Next native and phone gates
 
-Build one matching AQ15/Hyprland/Rust/SDK/plugin cohort, then select this worker
-and a worker-created native GL holder in the real offscreen case. Do not link a
+The separate matching AQ15/main/SDK build now passes CPU/loader checks. Its
+runtime startup still fails before Source/actor; integrate the real broker/
+render owner before claiming the offscreen worker/handshake result. Do not link a
 second Rust archive into the earlier compositor or mix AQ14/AQ15 symbols.
 Ordered later session ingress/OOB revocation, genuine output discovery/updates,
 complete native routing and distinct startup/StopRetire authority remain open.

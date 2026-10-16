@@ -288,14 +288,18 @@ lifecycle and five authored-owner groups, all62 Rust cases, strict Clippy and
 release compilation using archive246a6680. Copied per-executor tables/options,
 exact refusal retention, held Stop/BOOTTIME expiry and worker-side destruction/
 actual join qualify at that authored native boundary. Structural missing-ABI RED
-and failed fixture selections retain separate classifications. Next build one
-matching AQ15/Hyprland/Rust/SDK/plugin cohort and connect real AQ/GL and later
-session ingress/OOB revocation, then actual output/routing and distinct
-Stop-retirement authority. The unchanged Source7/full-runtime gates remain open.
+and failed fixture selections retain separate classifications. The separate
+matching AQ15/main/SDK build now passes CPU/loader checks, but actual runtime
+startup remains failed before Source/actor. Next integrate the legacy startup
+with the genuine broker/render owner, then real AQ/GL, later session ingress/OOB
+revocation, actual output/routing and distinct Stop-retirement authority. The unchanged Source7/full-runtime gates remain open.
 The [executor GL lifecycle checkpoint](native-render-executor-gl.md) now qualifies an actual
 missing-handshake RED after all eight GL cases, 42 packets and six sync-file
 facts. Stop returns `unknown request`; no finalize, unload or Rust join/release
-occurs. Matching AQ15/current-ABI execution, Source GREEN and phone gates remain open.
+occurs. A separate [AQ15/current-ABI native build](native-render-executor-gl.md#separate-aq15current-abi-build-and-startup-failure)
+now passes CPU/loader checks, but the matched runtime aborts during backend
+startup before Source/actor; its exact cause remains unresolved. Source GREEN
+and all phone gates remain open.
 
 Production control/render ownership separation and GREEN remain open. Source100ms,
 terminal authority expiry, real facts and fence/buffer lifetime remain required;
