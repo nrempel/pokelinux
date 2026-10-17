@@ -52,3 +52,30 @@ private expected JSON with schema1, authored_seed_only:true and raw_rows from
 one actual native isolated-seed execution. Never start Messages in preparation;
 require Inbox absent. Neither cold boot may reseed or manually start services.
 There is no incoming reception, permission grant, app launch or carrier claim.
+
+
+`battery-probe.py` is the separate frozen x86_64 KVM battery scenario. It requires
+the selected Arch 7.2.9 kernel and exact `test_power` module, the installed
+production service/unit/configuration manifest, root credentials and PID1
+systemd. Run it only in that disposable guest, with this repository's
+[`owned.py`](owned.py) alongside it. The exact executed probe/helper pair is
+pinned in the [kernel provenance](../../docs/evidence/native-battery-kernel-provenance.json):
+
+```sh
+python3 /results/source/battery-probe.py \
+  --manifest /results/source/deployment-manifest.json \
+  --until-ns "$POKELINUX_VM_ORIGINAL_UNTIL_NS" \
+  --output /results/battery-service-probe.json
+```
+
+It loads the real synthetic kernel driver, changes 73%/charging to
+51%/discharging and then absent, and requires matching kernel attributes
+and credentialed snapshots from one Main. It verifies PID1 normal Stop, actual
+reader retirement and empty cgroup, then unloads the driver. The probe performs
+no installation, enable or start; those belong to explicit preparation. The
+separate cold wrapper performs none of those operations before this same probe.
+Boolean controls use `true`/`false`; the raw module getter is recorded while
+kernel PRESENT=0 and unavailable/null publication remain required. See the
+[battery evidence](../../docs/native-battery.md) for the preserved parser and
+fixture failures, repaired seven-test provider and actual two-boot result. This
+is neither an ARM/Pixel reading nor app, Source or power-policy evidence.

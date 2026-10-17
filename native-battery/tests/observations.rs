@@ -137,3 +137,31 @@ fn suspend_expiry_and_late_completion_cannot_keep_a_percentage() {
     );
     assert_eq!(model.view(second.until_ns + 8).observation, None);
 }
+
+#[test]
+fn repeated_identical_kernel_type_is_valid_but_conflicting_data_is_not() {
+    let t = Tree::new();
+    // The actual7.2.9 test_power uevent repeats TYPE at lines3 and25.
+    // This is a kernel attribute record, separate from strict JSON IPC fields.
+    let original = packet("73", "Charging");
+    t.write(&(original.clone() + "POWER_SUPPLY_TYPE=Battery\n"));
+    assert_eq!(
+        t.read()
+            .expect("identical kernel TYPE repetition must retain the observation"),
+        BatteryObservation {
+            capacity_percent: 73,
+            status: ChargingStatus::Charging,
+        }
+    );
+    for duplicate in [
+        "POWER_SUPPLY_TYPE=Mains\n",
+        "POWER_SUPPLY_CAPACITY=73\n",
+        "POWER_SUPPLY_STATUS=Charging\n",
+    ] {
+        t.write(&(original.clone() + duplicate));
+        assert!(
+            t.read().is_err(),
+            "ambiguous duplicate accepted: {duplicate}"
+        );
+    }
+}

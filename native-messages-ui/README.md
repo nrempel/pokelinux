@@ -5,7 +5,10 @@ validation, models, pagination, generations, scheduling and worker-lifetime
 decisions. Qt keeps its native socket/thread edge and QObject/QML presentation.
 The normal UID11010 QtQuick app reads bounded local history through the lifecycle
 actor and receives schema3 appearance through `PhoneAppearanceClient` and the
-installed `PhoneAppearance.qml`. Main and CMake select that shared typed path;
+installed `PhoneAppearance.qml`. A shared readonly Rust battery client now owns
+root-peer validation, bounded socket I/O, BOOTTIME deadlines and expiry;
+`PhoneBatteryClient` presents copied scalar state in the themed header. Main and
+CMake select these shared typed paths;
 no HOME theme-file reader or fallback is selected. Appearance availability does
 not grant Messages access, and Messages denial remains distinct from unavailability.
 
@@ -64,7 +67,7 @@ normal ARM mains/windows, default ARM Cargo and the complete running cohort rema
 open, as does direct normal QWindow/DPR. CMake compiles both public headers; it
 does not install an FFI SDK.
 
-Explicit provider selection, including cross builds, needs BOTH matching-target
+Explicit provider selection, including cross builds, needs all three matching-target
 archive/SHA pairs (replace the paths and digests with the selected artifacts):
 
 ```sh
@@ -72,7 +75,9 @@ cmake -S native-messages-ui -B messages-build -DCMAKE_BUILD_TYPE=Release \
   -DPOKELINUX_MESSAGES_CLIENT_ARCHIVE=/absolute/libpokelinux_messages_client.a \
   -DPOKELINUX_MESSAGES_CLIENT_ARCHIVE_SHA256=ACTUAL_MESSAGES_SHA256 \
   -DPOKELINUX_APPEARANCE_CLIENT_ARCHIVE=/absolute/libpokelinux_appearance_client.a \
-  -DPOKELINUX_APPEARANCE_CLIENT_ARCHIVE_SHA256=ACTUAL_APPEARANCE_SHA256
+  -DPOKELINUX_APPEARANCE_CLIENT_ARCHIVE_SHA256=ACTUAL_APPEARANCE_SHA256 \
+  -DPOKELINUX_BATTERY_CLIENT_ARCHIVE=/absolute/libpokelinux_battery_client.a \
+  -DPOKELINUX_BATTERY_CLIENT_ARCHIVE_SHA256=ACTUAL_BATTERY_SHA256
 ```
 
 The permanent native Qt regressions use authored root peers in a disposable test
@@ -98,3 +103,12 @@ source-loss composition in this current app, ARM window availability and phone
 gates remain open.
 Any future visual run must qualify the actual [Pixel10 display profile](../docs/native-phone-display-profile.md)
 and native capture dimensions before presenting a screenshot.
+
+The later [battery client/build checkpoint](../docs/native-battery-ui.md) passes
+11 Rust client groups and a real native Qt6.12 Release build/install with all
+three matching Rust archives, the actual battery adapter and no observer. Its
+normal app ELF is built. The existing installed/live-appearance/Messages-policy
+QML groups also pass with the actual battery adapter after a genuine creation
+assertion RED and a fixture-only repair. The first graphical battery attempt
+failed in setup before any capture; visible changes remain a separate GUI gate.
+Earlier two-engine ARM and graphical results retain their recorded cohorts.

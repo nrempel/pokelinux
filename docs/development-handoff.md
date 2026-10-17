@@ -2108,17 +2108,40 @@ An advisory Pro worker-lifecycle consultation was stopped at the user's handoff
 request before a terminal answer. It is not a completed review or accepted design.
 Earlier completed owner reviews are recorded in `native-radio-owner.md`.
 
-## Native battery component checkpoint
+## Native battery kernel and client checkpoint
 
-The standalone `native-battery` Rust service and portable `native-phone-state`
-battery types now pass six frozen component groups after actual compiled RED.
-Real held-FIFO snapshots/Stop and successful queued99percent expiry/recovery are
-included. The final service uses readiness polling,1Hz collections,1s BOOTTIME
-collection deadlines and2s observations. Host/ARM64 release builds, formatting
-and strict Clippy pass. See `native-battery.md` and its hash-only provenance.
-The three-file unit/provider/config deployment is explicit; installed kernel/
-PID1 and normal UI/Pixel behavior remain unqualified at this checkpoint. Native
-battery observation supplies no suspend or charging authority. The earlier auth/
+The standalone `native-battery` service now passes seven component groups and
+host/ARM64 release builds. A real kernel `test_power` integration exposed repeated
+identical TYPE fields in actual uevent data. A new compiled regression failed,
+then the parser was narrowly repaired to allow identical TYPE while refusing
+conflicting TYPE and repeated capacity/status. Original collection/publication
+deadlines, held-reader shutdown and late-success fencing remain unchanged.
+
+An actual three-file deployment now passes installed PID1 startup and a fresh
+automatic cold boot in offline native x86 KVM guests. Both observe73% charging,
+51% discharging and kernel PRESENT0/service unavailable in the same Main. Stop
+records normal Main exit0, empty cgroup and dead Main/reader pidfds. Cold startup
+has a fresh InvocationID without install/reload/enable/start. An intermediate
+fixture used numeric presence input where the driver expects true/false; that
+failed case and its unrelated bytecode input mutation remain recorded separately.
+See `native-battery.md` and the kernel hash-only provenance.
+
+The shared battery client now owns readonly socket I/O, peer validation, schema,
+BOOTTIME request deadlines and expiry in Rust. Eleven real Unix/C ABI groups pass
+after actual initial and corrective RED. A native Qt6.12 build links all three
+Rust engines, compiles the actual thin battery adapter, passes the nine original
+Messages C ABI groups and verifies protected installation/loader dependencies.
+The app header uses existing Omarchy font/color tokens. See `native-battery-ui.md`.
+Existing QML composition tests now pass all three original groups after an
+actual creation assertion RED and wiring the real battery adapter into the
+fixture. The first graphical battery attempt failed its setup executable-hash
+check before any app/window/capture; its guest closure is false due to a driver
+unload cutoff and custody error. Outer QEMU/container shutdown does not upgrade
+that result. A separate fixture correction is in preparation, with Source and
+production service deadlines unchanged. ARM graphical startup and all physical
+Pixel battery, charging, suspend and drain gates remain open.
+
+Battery observation supplies no suspend or charging authority. The earlier auth/
 Source investigation stays parked; no permission freshness rule changes.
 
 ## Verification and publication

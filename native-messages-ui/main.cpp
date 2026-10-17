@@ -1,5 +1,6 @@
 #include "MessagesClient.h"
 #include "PhoneAppearanceClient.h"
+#include "PhoneBatteryClient.h"
 #include <QGuiApplication>
 #include <QQuickView>
 #include <QQuickItem>
@@ -49,7 +50,8 @@ int main(int argc,char**argv){
  QQmlComponent component(view.engine(),QUrl::fromLocalFile(QString::fromLocal8Bit(argv[6])+"/PhoneAppearance.qml"));
  QScopedPointer<QObject> theme(component.createWithInitialProperties({{"source",QVariant::fromValue(&appearance)}}));if(!theme)return 66;
  MessagesClient client(QString::fromLocal8Bit(argv[5]));
- view.setTitle("Messages");view.setInitialProperties({{"theme",QVariant::fromValue(theme.data())},{"messagesClient",QVariant::fromValue(&client)}});
+ PhoneBatteryClient battery;
+ view.setTitle("Messages");view.setInitialProperties({{"theme",QVariant::fromValue(theme.data())},{"messagesClient",QVariant::fromValue(&client)},{"batteryClient",QVariant::fromValue(&battery)}});
  view.setResizeMode(QQuickView::SizeRootObjectToView);view.setSource(QUrl("qrc:/messages/MessagesView.qml"));if(view.status()!=QQuickView::Ready)return 67;view.resize(390,844);view.show();
 #ifdef MESSAGES_ISOLATED_OBSERVER
  // Fixed root-installed test profile only. Production binary has no observer.

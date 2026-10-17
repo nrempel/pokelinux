@@ -74,11 +74,13 @@ contents across clean reboot, and stops with Main/ExecStop0 and empty cgroups.
 This is local-history persistence; incoming SMS, app reads and notifications
 remain separate gates.
 
-The [native Rust battery service](docs/native-battery.md) now reads capacity and
-charging status through a portable Linux backend. Six real filesystem/socket/
-process tests pass, including blocked-reader shutdown and rejection of a late
-successful reading. Host and ARM64 release builds pass. Kernel-driver, installed
-startup, screen presentation and Pixel battery behavior remain separate gates.
+The [native Rust battery service](docs/native-battery.md) now follows a Linux
+kernel test battery driver in a VM from73% charging to51% discharging to absent.
+Installed PID1 startup and a fresh automatic cold boot both pass; Stop leaves
+Main0, an empty cgroup and a dead reader. Seven service and11 readonly client
+groups pass after actual assertion RED. The [normal Qt app build](docs/native-battery-ui.md)
+links all three Rust engines; visible battery changes and physical Pixel behavior
+remain separate gates. Host/ARM64 service release builds pass.
 
 > **Development status:** no physical phone has been accessed. There is no verified bootable phone image. Modem communication, carrier IMS registration, physical call audio, Pixel GPU rendering, camera capture and suspend remain unverified.
 

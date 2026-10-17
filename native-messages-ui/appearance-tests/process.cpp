@@ -2,6 +2,7 @@
 // No window, screenshot, compositor, production broker or lifecycle authority.
 #include "MessagesClient.h"
 #include "PhoneAppearanceClient.h"
+#include "PhoneBatteryClient.h"
 #include <QGuiApplication>
 #include <QQmlEngine>
 #include <QQmlComponent>
@@ -92,11 +93,11 @@ int main(int argc,char** argv){
   Peer broker(root+"/appearance.sock",true);Peer actor(root+"/app.sock",false);
   require(setgroups(0,nullptr)==0&&setgid(11010)==0&&setuid(11010)==0,"app principal");qputenv("QT_QPA_PLATFORM","offscreen");qputenv("QT_QUICK_BACKEND","software");qputenv("XDG_RUNTIME_DIR",runtime);qputenv("HOME",runtime);QGuiApplication app(argc,argv);QQuickStyle::setStyle("Basic");
   const auto work=boot()+5000000000;
-  PhoneAppearanceClient appearanceClient(root+"/appearance.sock");MessagesClient messages(root+"/app.sock");QQmlEngine engine;
+  PhoneAppearanceClient appearanceClient(root+"/appearance.sock");PhoneBatteryClient batteryClient;MessagesClient messages(root+"/app.sock");QQmlEngine engine;
   QQmlComponent component(&engine,QUrl::fromLocalFile(QString::fromLocal8Bit(argv[2])+"/PhoneAppearance.qml"));require(component.isReady(),"installed PhoneAppearance.qml must be Ready");
   QScopedPointer<QObject> theme(component.createWithInitialProperties({{"source",QVariant::fromValue(&appearanceClient)}}));require(!theme.isNull(),"installed typed component create");
   QQmlComponent viewComponent(&engine,QUrl("qrc:/messages/MessagesView.qml"));require(viewComponent.isReady(),"normal resource component Ready");
-  QScopedPointer<QObject> view(viewComponent.createWithInitialProperties({{"theme",QVariant::fromValue(theme.data())},{"messagesClient",QVariant::fromValue(&messages)}}));require(!view.isNull(),"normal Messages QML create");auto* item=qobject_cast<QQuickItem*>(view.data());require(item,"normal view root");
+  QScopedPointer<QObject> view(viewComponent.createWithInitialProperties({{"theme",QVariant::fromValue(theme.data())},{"messagesClient",QVariant::fromValue(&messages)},{"batteryClient",QVariant::fromValue(&batteryClient)}}));require(!view.isNull(),"normal Messages QML create");auto* item=qobject_cast<QQuickItem*>(view.data());require(item,"normal view root");
   require(wait([&]{return appearanceClient.available()&&theme->property("available").toBool();},work),"actual root appearance publication");require(item->property("color").value<QColor>()==QColor("#112233"),"normal view binds typed palette");
   require(wait([&]{return !messages.messages().isEmpty();},work),"actual root Messages response");
   if(mode=="live-appearance"){

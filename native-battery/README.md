@@ -26,5 +26,8 @@ supplies no permission, lease or charging/suspend command.
 
 Snapshot/Stop remain responsive while a reader is blocked after launch. A local
 trusted executable and default child-wait signal disposition are deployment
-requirements; permanently blocked exec setup is not qualified. Actual physical
-battery, complete installed startup and the graphical client are separate gates.
+requirements; permanently blocked exec setup is not qualified. Installed startup and a fresh automatic cold boot now pass against the real
+`test_power` kernel driver in disposable x86 KVM guests, including changing
+capacity/status, absence and normal PID1 Stop. The readonly Rust client and a
+normal Qt app build also pass. Visible GUI changes, ARM kernel integration and
+physical Pixel battery behavior remain separate gates.

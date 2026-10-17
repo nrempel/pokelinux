@@ -1,0 +1,150 @@
+{
+  "schema": 1,
+  "scope": "Actual closed first x86_64 prepared battery/Messages GUI attempt: setup failure before qualifying GUI evidence, with failed guest cleanup. No repaired-run or visual result inferred.",
+  "aggregate_passed": false,
+  "functional_GUI_qualified": false,
+  "records": {
+    "execution.json": {
+      "bytes": 12061,
+      "sha256": "792324f4b7e9895c287f043b8857bc51ead436600ef23899bc0b5e2e4d16c00c"
+    },
+    "result.json": {
+      "bytes": 218421,
+      "sha256": "39b350fa7f654b7246813f780d7498940c079d63e882b430c8c90825893e1c8e"
+    },
+    "boot-result.json": {
+      "bytes": 11098,
+      "sha256": "068ebe56432f63ea879b329792fc238af48664fde135fd4c3956b4058d8bd45e"
+    },
+    "bootstrap-result.json": {
+      "bytes": 7246,
+      "sha256": "f12e78229afe2a0684c8350aa39a3f196379fb3effc5aee3d5ff9c1607f4ac04"
+    },
+    "early-receipt.json": {
+      "bytes": 2043,
+      "sha256": "d962bbc53ff9217392c1ac40ddb9e9b895defca7c0e3962850b7b4b7c33a6da9"
+    },
+    "selection.json": {
+      "bytes": 196161,
+      "sha256": "78579b4576fa842a9540ebf889e4b131bb911cacd3a8ba700e47ff5b046b0820"
+    },
+    "command.json": {
+      "bytes": 1403,
+      "sha256": "e478c074fcd2a583b4e6a0b98ce6c60f6957e16bb820963f2575c1109424bd63"
+    },
+    "FINAL-SOURCE-SEAL.json": {
+      "bytes": 1047,
+      "sha256": "af6f19836bc7fc2a023f82ace259a248acfeef08dd70567442ff8516fd371c56"
+    },
+    "Root-execution-admission.json": {
+      "bytes": 570,
+      "sha256": "ebaf0da01eacc7664b90caee3a68e736bd6be94b875d7471ffe7ee08714f998e"
+    },
+    "FEATURE-CONTRACT.json": {
+      "bytes": 1277,
+      "sha256": "05d6dcef37e00bd43e88a946e7e594826b29d0d7eafd0abb7cc73fd2b2e70f33"
+    }
+  },
+  "frozen_fixture_sources": {
+    "battery_runtime_helper": {
+      "bytes": 8196,
+      "sha256": "c1f1e7345f82c3fd15e36a40d154afd83e338c6a390a522e3a0070ab03c723e7"
+    },
+    "guest_controller": {
+      "bytes": 62975,
+      "sha256": "b2ee629e465a798621fab97ee06f5d6be5e10918b8b6e104b00e96f37ba8ab4b"
+    },
+    "owned_process_helper": {
+      "bytes": 5960,
+      "sha256": "266024c425f92732c53c4b4ea1f06e90f4cd30cbc5cca0d19b8385e63921ae3f"
+    },
+    "boot_controller": {
+      "bytes": 12172,
+      "sha256": "b418364c353fdf21c3d21dc3e0bd157e1894a4613a7bb98a3005413a89300ba8"
+    },
+    "outer_runner": {
+      "bytes": 22305,
+      "sha256": "811b6aadadcd588de2985a981a2dcd3d6f3ec8780b27464ef3fd524da4d66708"
+    }
+  },
+  "first_observed_failure": {
+    "classification": "SETUP_FAILURE",
+    "location": "battery_runtime.Backend.setup executable SHA equality assertion, line22",
+    "comparison": "Running service executable SHA equals installed service ELF SHA",
+    "assertion_failed": true,
+    "individual_compared_digests_recorded": false,
+    "running_executable_readlink_recorded": false,
+    "cause_qualified": false,
+    "cause": "Unknown; the retained assertion identifies a failed comparison without recording its two values or executable path identity."
+  },
+  "GUI_evidence_in_this_attempt": {
+    "completed_functional_groups": 0,
+    "native_frames": 0,
+    "capture_candidates": 0,
+    "actual_window_metadata_recorded": false,
+    "actual_Source_sample_recorded": false,
+    "normal_Messages_app_start_recorded": false,
+    "semantic_visual_review_qualified": false,
+    "direct_QWindow_DPR_qualified": false,
+    "normal_app_numeric_exit_status": null,
+    "prior_GUI_or_component_pass_inherited": false
+  },
+  "guest_cleanup": {
+    "guest_case_closure_qualified": false,
+    "aggregate_direct_child_wait_and_EOF_qualified": false,
+    "battery_module_unload_original_limit_seconds": 5,
+    "module_unload_failure": "Original actual direct-wait cutoff reached",
+    "owned_stop_error_class": "KeyError",
+    "private_numeric_error_argument_omitted": true,
+    "successful_service_or_reader_retirement_inferred": false,
+    "raw_cleanup_errors_and_unresolved_custody_not_reclassified": true
+  },
+  "outer_envelope_separate_from_guest_failure": {
+    "boot_envelope_passed": true,
+    "boot_guest_functional_passed": false,
+    "QEMU_actual_wait_exit": 0,
+    "outer_container_CLI_actual_wait_exit": 0,
+    "actual_host_CLI_waits": 7,
+    "actual_host_stdout_and_stderr_PIPE_EOFs": 14,
+    "host_cleanup_errors_empty": true,
+    "exact_owned_container_absent": true,
+    "same_daemon": true,
+    "all_original_and_selected_inputs_unchanged": true,
+    "does_not_qualify_failed_guest_or_GUI_closure": true
+  },
+  "original_bounds": {
+    "guest_work_seconds": 660,
+    "guest_closure_seconds": 700,
+    "QEMU_seconds": 780,
+    "outer_seconds": 840,
+    "failed_unload_command_seconds": 5,
+    "deadlines_not_renewed": true
+  },
+  "selected_display_profile_not_measured_GUI_output": {
+    "native_pixels": [
+      1080,
+      2424
+    ],
+    "Source_lease_ns": 100000000,
+    "profile_is_not_a_capture_or_window_measurement": true
+  },
+  "upstream_unload_reference_guidance_only": {
+    "url": "https://raw.githubusercontent.com/torvalds/linux/master/drivers/power/supply/test_power.c",
+    "function": "test_power_exit",
+    "reference_call": "ssleep(10)",
+    "reference_delay_seconds": 10,
+    "reference_is_mutable_upstream_master": true,
+    "selected_kernel_module_binary_equivalence_qualified": false,
+    "cause_of_this_unload_failure_established_from_reference": false,
+    "original_five_second_case_retained": true
+  },
+  "followup_scope": "Separate reviewed fixture successor only; no production change or result from a future attempt is included.",
+  "excluded_claims": [
+    "successful GUI presentation or three battery frames",
+    "successful guest functional cleanup",
+    "diagnosed executable mismatch cause",
+    "Source/session readiness",
+    "ARM GUI execution",
+    "physical battery or phone"
+  ]
+}

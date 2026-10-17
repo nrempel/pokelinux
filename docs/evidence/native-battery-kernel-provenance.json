@@ -1,0 +1,501 @@
+{
+  "schema": 1,
+  "scope": "Repaired Rust battery backend and headless installed x86_64 KVM test_power kernel/PID1 preparation plus fresh cold boot. ARM64 release is cross-build only.",
+  "selected_public_base": "d9978111fd30441c501bcd029fab568800cda06f",
+  "post_base_delta": "TYPE-only production parser repair and frozen seventh regression; exact compiled cohort below.",
+  "historical_six_test_provenance_unchanged": {
+    "bytes": 4408,
+    "sha256": "8b607106471bc6e60f99bf5649f54e38d6ca5109386d08f152a2868c2ee80f59"
+  },
+  "current_source_files": {
+    "native-battery/Cargo.toml": {
+      "bytes": 385,
+      "sha256": "70da4d1425fe46d6828649d2529c04fca4ca12ce819fd51e08cea980f9274619"
+    },
+    "native-battery/Cargo.lock": {
+      "bytes": 4399,
+      "sha256": "386dbed78d167edb5021bdc087f46ed7b3d9f9595fe28c2c5aa0199bec09dd12"
+    },
+    "native-battery/src/lib.rs": {
+      "bytes": 5512,
+      "sha256": "6819c570597a019c8be9929e6b4ec284cd522ffc8b6529aed90a5be5ece51d94"
+    },
+    "native-battery/src/main.rs": {
+      "bytes": 10568,
+      "sha256": "5e9bc420320bfa2611655bf32f99db67e9d7f75b9ab9d850d6927e2c36621253"
+    },
+    "native-battery/tests/observations.rs": {
+      "bytes": 6170,
+      "sha256": "a19d4932d362803fafe932d9e97d53f354826c7cef08900c746966e801258cbc"
+    },
+    "native-battery/tests/service.rs": {
+      "bytes": 8394,
+      "sha256": "7b95849acf376b5821e1aa193e493a5ee7333034c31fc2baefab054ef02111f1"
+    },
+    "native-phone-state/Cargo.toml": {
+      "bytes": 129,
+      "sha256": "84fb4dee9128c50aedb5bf9fd1bd4dcb2650e45730a20715db6b09719d33d2b2"
+    },
+    "native-phone-state/src/lib.rs": {
+      "bytes": 1658,
+      "sha256": "fb82bb119065649231dee4e852d9cb2005ce18bd2ca9f303b9062507c288862f"
+    },
+    "native-kernel-identity/Cargo.toml": {
+      "bytes": 421,
+      "sha256": "73dcde30e1860aa1d2d41d3c24c50b57cdcfddb907ebb3a1c8f039f63c7e6586"
+    },
+    "native-kernel-identity/src/lib.rs": {
+      "bytes": 3706,
+      "sha256": "17760f73db788e91810e9ba8c688955e5efd49efde6736922435085047efe131"
+    },
+    "native-kernel-identity/src/pidfd.rs": {
+      "bytes": 10064,
+      "sha256": "caf4b44738fc53093a32ef96c2e639c1a376935ad29fa17a42091a56180b11ff"
+    },
+    "native-kernel-identity/src/termination.rs": {
+      "bytes": 6316,
+      "sha256": "76b25680e311bb1fb0bb957c7cec93f336969e269023f616bd204c8252f7675e"
+    }
+  },
+  "actual_current_code_regression_RED": {
+    "qualification": {
+      "bytes": 3244,
+      "sha256": "7c9a31088b73469e77e9701fc7b58e7fa511159a3636ea2b83a75a1fa2a48c37"
+    },
+    "source_selection": {
+      "bytes": 2201,
+      "sha256": "0aa3c6eb9e967b56d4d5b6aef12b57238ee58e60b7893496abfe7bea790fc56d"
+    },
+    "receipt": {
+      "bytes": 17951,
+      "sha256": "7e861fd1dfb1dac8620ae518c75f56f2cee78f77b6192caaa482fe21b34ce562"
+    },
+    "stdout": {
+      "bytes": 1111,
+      "sha256": "955b903927786e9acae5cb56444772a7fa550ebfad0131949f3a9574c74afffd"
+    },
+    "compilation_passed": true,
+    "test_exit": 101,
+    "previous_tests_passed": 6,
+    "new_positive_failed": 1,
+    "ignored": 0,
+    "failure": "Repeated identical kernel TYPE returned InvalidData",
+    "new_negative_assertions_unreached_before_repair": true
+  },
+  "current_seven_test_GREEN": {
+    "qualification": {
+      "bytes": 16007,
+      "sha256": "b43ec733bdba71de2118f5c61c0bb3f0e8151697e3bb928f93d8ba5532a75770"
+    },
+    "source_selection": {
+      "bytes": 2235,
+      "sha256": "65ee65362727aeb8c821387c930c93ba4ca5f7ca3f2662777b8c0fde41f78d53"
+    },
+    "receipt": {
+      "bytes": 17304,
+      "sha256": "cd15eee71522bddad183ab60c633f42a48c4519264900655f07df0dbcfa153e7"
+    },
+    "stdout": {
+      "bytes": 1009,
+      "sha256": "216b8fc20b30c23caf21c18374bb590dddd9c400d3f78ab8956338f40e361923"
+    },
+    "production_only_diff": {
+      "bytes": 858,
+      "sha256": "2085b060c3322b97ed08a57f9ef9ee7811c836c4a35fdda56737189bd134fcf5"
+    },
+    "passed": 7,
+    "failed": 0,
+    "ignored": 0,
+    "format_checks_strict_Clippy_and_host_ARM_releases": true,
+    "actual_host_CLI_waits": 10,
+    "actual_PIPE_EOFs": 20,
+    "same_daemon_CID_absence_and_inputs_unchanged": true
+  },
+  "release_providers": {
+    "host": {
+      "bytes": 674560,
+      "sha256": "3f70acdaf356f1f4f0af2946bb7a47dc3b4c5e241fa09331950ab5f23ed044ae",
+      "ELF_machine": 62,
+      "optimization": 3,
+      "features": [],
+      "ARM_execution": false
+    },
+    "ARM": {
+      "bytes": 722472,
+      "sha256": "6cacd19ba989d16f431ed07e12f646a98a73e47aefbb0ce60c70560713e1022b",
+      "ELF_machine": 183,
+      "optimization": 3,
+      "features": [],
+      "ARM_execution": false
+    }
+  },
+  "frozen_probe": {
+    "bytes": 8988,
+    "sha256": "8711e3b52621b0c7c165e08ab4384c7389e9ba504ae8a2fdd12066794662f5ba"
+  },
+  "frozen_probe_source_seal": {
+    "bytes": 762,
+    "sha256": "2f03300e050ef964a71f764cd8c89fb7b42b94a265f98aecdd8a84bb4316bcfb"
+  },
+  "actual_public_owned_helper": {
+    "bytes": 10486,
+    "sha256": "350577b44f5059bdd55d739dc4dd5150c6e41804853e471c8fda9fc6892cd524"
+  },
+  "old_probe_sha256": "dfc09b8cc2a8d3f2c21473b1bb884eb4726256e2de6e6c3fb7b83e77a0b1fc2e",
+  "combined_closed_qualification": {
+    "bytes": 10232,
+    "sha256": "d925630cc05e3cf6d96901cadb45ff454b9005c9d476ff1af1545a4619d88442"
+  },
+  "deployment": {
+    "host_Make_stage": {
+      "bytes": 3738,
+      "sha256": "23b60a2da80e099b7e8c9c9990859bb8dca9bcfad49bce87bd8cbfa60fcdaa77"
+    },
+    "target": "install-native-services",
+    "actual_files": {
+      "usr/libexec/pokelinux/battery-service": {
+        "bytes": 674560,
+        "sha256": "3f70acdaf356f1f4f0af2946bb7a47dc3b4c5e241fa09331950ab5f23ed044ae",
+        "mode": 493
+      },
+      "usr/lib/systemd/system/pokelinux-battery.service": {
+        "bytes": 568,
+        "sha256": "7ba661877f81ae36c10ddf357bc55a3bbf2b0512492e1efdd6a8def619d94136",
+        "mode": 420
+      },
+      "etc/pokelinux/battery.conf": {
+        "bytes": 38,
+        "sha256": "59da02e114b2063c69068ba108ff99925ca849ce8bfaadb9c1f38f9737a73e68",
+        "mode": 420
+      }
+    },
+    "manifest": {
+      "bytes": 565,
+      "sha256": "00f0beec7f1ad99060d675bb3687c6e0312ae8b533d39d757c6e3631c7db1fc1"
+    },
+    "host_activation": false,
+    "guest_loader_and_unit_verification_before_enable_start": true,
+    "prepared_layer_after_actual_QEMU_wait0": {
+      "bytes": 63504384,
+      "sha256": "2cec2e72f73b5d428124c3bcd66d405dcd6e546f842e4ac604b0f708030904fc"
+    }
+  },
+  "runtime": {
+    "architecture": "x86_64",
+    "acceleration": "KVM",
+    "kernel_release": "7.2.9-arch1-1",
+    "driver": "Linux synthetic test_power, actual kernel execution with fixture-controlled parameters",
+    "installed_module": {
+      "bytes": 8813,
+      "sha256": "da0782f3d00b46cf5f301a202ac8edee494f1fdd7894c579d152b43cbeb847fa"
+    },
+    "matching_linux_package": {
+      "bytes": 168904540,
+      "sha256": "4e894947032a3d72c52a87924ceb9ddf7bc7a8a47575e95e552ce39dd2b2949e"
+    },
+    "original_package_inventory_count": 367,
+    "original_package_inventory_unchanged": true,
+    "package_inventory_sha256": "d1a51fbcc848498321dbd5e53850a7da2fac4bdf5937cbd8d92acf20b6902f38",
+    "stock_cloud_image_sha256": "08754e28d91b1680086c6211ef4df13559e766fff7cdb4006489b14b5d281f08",
+    "provisioned_layer_sha256": "529fc1ffbdb5f0edebe83e66a84716eb28774036e07a81bf8655119107ebf6e0",
+    "runtime_container_image": "sha256:3b6891447ad0490585badb0cbbac5658238b9dc61bfa57e64a4cbad050be8f1f",
+    "network": "none",
+    "original_guest_work_QEMU_outer_seconds": [
+      660,
+      780,
+      840
+    ],
+    "container_CPUs_memory_GiB": [
+      8,
+      10
+    ],
+    "VM_vCPUs_memory_MiB": [
+      6,
+      6144
+    ]
+  },
+  "observations": [
+    {
+      "kernel_PRESENT": "1",
+      "available": true,
+      "capacity_percent": 73,
+      "status": "charging"
+    },
+    {
+      "kernel_PRESENT": "1",
+      "available": true,
+      "capacity_percent": 51,
+      "status": "discharging"
+    },
+    {
+      "kernel_PRESENT": "0",
+      "available": false,
+      "capacity_percent": null,
+      "status": null
+    }
+  ],
+  "module_presence_raw_getter": "off\n",
+  "both_epochs": {
+    "same_Main_for_three_observations": true,
+    "actual_socket_peer_credentials_same_root_Main": true,
+    "bounded_JSON_line_then_EOF_no_request": true,
+    "actual_live_reader_retained": true,
+    "PID1_Main_normal_exit_code": 1,
+    "PID1_Main_status": 0,
+    "PID1_Result": "success",
+    "cgroup_empty_Main_reader_pidfds_dead_proc_and_socket_absent": true,
+    "native_PID1_children_not_guest_parent_wait_claims": true
+  },
+  "fresh_cold": {
+    "prep_pass_before_cold_selection": true,
+    "different_InvocationID_against_bound_actual_prep_records": true,
+    "no_install_reload_enable_start_before_cold_probe": true,
+    "same_PROBE2_and_public_helper_both_epochs": true
+  },
+  "epochs": {
+    "preparation": {
+      "receipts": {
+        "selection.json": {
+          "bytes": 15409,
+          "sha256": "3d21ef6a110d52536f8a128d95df47ed4b556e2fa09d5331c70bdc3224af6747"
+        },
+        "command.json": {
+          "bytes": 1246,
+          "sha256": "d61368acfce684130f63c7bddd47658916899716e366f96add834086be7a4a6c"
+        },
+        "FREEZE.json": {
+          "bytes": 847,
+          "sha256": "9c0f6f85c2eb5e2caa8e32aea42bc8b1670afe50cf6bd3762dbfd72a7177211b"
+        },
+        "execution.json": {
+          "bytes": 11962,
+          "sha256": "aa2882a66794dba53617848a0f33de3c306fd000b0c6c93b55a296ddd7f440c1"
+        },
+        "result.json": {
+          "bytes": 9566,
+          "sha256": "6f073e937a1e38a73082fb08c86ba4394a34b18c4c0a74e2f585235da2cf6fb8"
+        },
+        "boot-result.json": {
+          "bytes": 10026,
+          "sha256": "4403ebbf5da4b5bb7db48485cf94302f98dda731369c295340b2397e25f64a40"
+        },
+        "bootstrap-result.json": {
+          "bytes": 6683,
+          "sha256": "b77db954cb25720c596b21063c3a0616b2795da59442ea0448f3defc8afca1c1"
+        },
+        "early-receipt.json": {
+          "bytes": 2129,
+          "sha256": "87da602f4531de00e25be6cf7df2254785ae99bd0984f819f83e155d2dae44b9"
+        },
+        "battery-service-probe.json": {
+          "bytes": 10954,
+          "sha256": "835a7df9859401234d49a9a30f0c6e42aef0f2302361896d70d65189e5c4d537"
+        }
+      },
+      "actual_owned_inside_waits_and_merged_PIPE_EOFs": 27,
+      "inside_parts": {
+        "guest": 11,
+        "frozen_probe": 6,
+        "bootstrap": 4,
+        "early": 2,
+        "boot": 4
+      },
+      "actual_owned_host_waits": 7,
+      "actual_owned_host_PIPE_EOFs": 14,
+      "QEMU_and_outer_CLI_actual_exit0": true,
+      "QMP_guest_shutdown_socket_EOF_separate": true,
+      "exact_CID_absent_same_daemon_inputs_unchanged": true,
+      "runtime_source_cache_created": false
+    },
+    "cold": {
+      "receipts": {
+        "selection.json": {
+          "bytes": 15176,
+          "sha256": "9fb978894363f40ffaf9fc34098607d6d2955d72ae93559e100b81c8e60692fa"
+        },
+        "command.json": {
+          "bytes": 1427,
+          "sha256": "b65725ef7f0bb8dc63f35faa9d6dcb6a0edb506e50c36f803bb56400f147e10b"
+        },
+        "FREEZE.json": {
+          "bytes": 762,
+          "sha256": "9d42e2a3514405e4cd304d2541235f5ab0c8e2707d0edcd11b741b2efe706f82"
+        },
+        "execution.json": {
+          "bytes": 12194,
+          "sha256": "2e346633c1edbdeaf99ccacd9964c2fea80851b694e40e9714de0b28b0310090"
+        },
+        "result.json": {
+          "bytes": 4081,
+          "sha256": "09edafc8fd30f3c62934592fd6229c61e122c31097c23de6395c40c0d42e67e9"
+        },
+        "boot-result.json": {
+          "bytes": 9880,
+          "sha256": "335eaf017ebb3c8a9f719d65549b2c447053cee3bb3efc920121a9cc3dab1e8b"
+        },
+        "bootstrap-result.json": {
+          "bytes": 6683,
+          "sha256": "b0a66d065749ee2e808d2d51c4f9fc15eda31f7bc0174505ec0ae73871f5abcd"
+        },
+        "early-receipt.json": {
+          "bytes": 2129,
+          "sha256": "2dad7c5613250e7a544ef88ba4bd461e2012f674a5bd069967b07e4bb3a0899b"
+        },
+        "battery-service-probe.json": {
+          "bytes": 10953,
+          "sha256": "c4c3638cafbffee9ee59742942ed88886e88bb89c3623768cb1d4a87d9c058e9"
+        }
+      },
+      "actual_owned_inside_waits_and_merged_PIPE_EOFs": 20,
+      "inside_parts": {
+        "guest": 4,
+        "frozen_probe": 6,
+        "bootstrap": 4,
+        "early": 2,
+        "boot": 4
+      },
+      "actual_owned_host_waits": 7,
+      "actual_owned_host_PIPE_EOFs": 14,
+      "QEMU_and_outer_CLI_actual_exit0": true,
+      "QMP_guest_shutdown_socket_EOF_separate": true,
+      "exact_CID_absent_same_daemon_inputs_unchanged": true,
+      "runtime_source_cache_created": false
+    }
+  },
+  "successful_pair_custody": {
+    "actual_inside_direct_waits": 47,
+    "actual_inside_merged_PIPE_EOFs": 47,
+    "actual_host_direct_waits": 14,
+    "actual_host_stdout_and_stderr_PIPE_EOFs": 28,
+    "separate_host_Make_waits_and_merged_PIPE_EOFs": 3,
+    "QMP_socket_EOF_is_separate": true,
+    "reader_native_processes_not_added_as_guest_parent_waits": true,
+    "original_work_QEMU_outer_seconds": [
+      660,
+      780,
+      840
+    ],
+    "container_cpus_memory": [
+      8,
+      "10g"
+    ],
+    "VM_vcpus_memory_mib": [
+      6,
+      6144
+    ]
+  },
+  "preserved_failures": {
+    "missing_installed_unit": {
+      "records": {
+        "execution.json": {
+          "bytes": 11910,
+          "sha256": "7a2dba618706188ac8b37aeaa41fe9d20d4962271abee6b57c71f43e344b1839"
+        },
+        "result.json": {
+          "bytes": 2171,
+          "sha256": "114dedc5697c1aee852529686c99be8d7dc3b43842e7321bf59b3867cb8fd6f2"
+        },
+        "probe_result": {
+          "bytes": 1860,
+          "sha256": "fd6577e745534f29cab8a1d0870255a84b361f9e4fc80da4268a10d4460eacbd"
+        }
+      },
+      "aggregate_passed": true,
+      "feature_GREEN": false,
+      "expected_assertion_RED_qualified": true,
+      "target_exit": 1,
+      "failure": "Installed production battery unit must be present"
+    },
+    "first_installed_production_parser_failure": {
+      "records": {
+        "execution.json": {
+          "bytes": 11788,
+          "sha256": "a315cdb8813d15d626f05f2a0fa776a900ffcf11c1995d43ebdb35f685d766fd"
+        },
+        "result.json": {
+          "bytes": 9791,
+          "sha256": "be0e005889aa0fc48ca489c3ae9345c537012225ac50f9d2a78e855803a030d0"
+        },
+        "probe_result": {
+          "bytes": 4723,
+          "sha256": "9cbac59d506f99235042990e995052c2bec1353fe86e69ba2ba71408f381703c"
+        }
+      },
+      "aggregate_passed": false,
+      "feature_GREEN": false,
+      "valid_reading_not_observed_before_original_cutoff": true,
+      "old_host_provider": {
+        "bytes": 674496,
+        "sha256": "41307b225caad4a6ca0502ae11d219a7a3e0b13c4582e0a2675b8c174112902e"
+      }
+    },
+    "diagnostic_only": {
+      "records": {
+        "execution.json": {
+          "bytes": 11945,
+          "sha256": "b175cea63c9199066f4961ba2e93dab92a176dea8e8cad5fb8c0e799831f0f7a"
+        },
+        "result.json": {
+          "bytes": 26517,
+          "sha256": "fc0868f14654dfec57cc51af3dae54e1a12a2896f59a34fe1c27f5c944bc7f21"
+        }
+      },
+      "aggregate_passed": true,
+      "feature_GREEN": false,
+      "diagnostic_completed_not_feature_GREEN": true,
+      "kernel_record": {
+        "bytes": 894,
+        "sha256": "ba40b2f53a9fd458d799c2322fb4e5aefdc1ecec05c4dbd7b56978eeb9fb316d"
+      },
+      "identical_TYPE_record_lines": [
+        3,
+        25
+      ],
+      "real_sysfs_and_byte_identical_regular_copy_reader_results": "null with exit0",
+      "raw_record_published": false
+    },
+    "corrected_parser_old_probe_fixture_failure": {
+      "records": {
+        "execution.json": {
+          "bytes": 11492,
+          "sha256": "d8ee0a417e689cc3b35a4d1a06776b11ef55d951c284875f74483f513ffbc7ca"
+        },
+        "result.json": {
+          "bytes": 9614,
+          "sha256": "5ac066bc17a06916bc0931f1afad4b197f7fb9176cac5e35138bb63406efb3b8"
+        },
+        "probe_result": {
+          "bytes": 7302,
+          "sha256": "366b7aacb4d1ca85a9e67822420d81550ba2bce46b78153f5dd47894ba3ebf7f"
+        }
+      },
+      "aggregate_passed": false,
+      "feature_GREEN": false,
+      "failure": "Numeric boolean getter assumption failed after first two real observations",
+      "original_execution_input_closure_qualified": false,
+      "separate_post_run_check": {
+        "bytes": 572,
+        "sha256": "ebfed5caab557754ebb845e72d8ce50f3b52cc514f5bbd8703c4584a4b30a8be"
+      },
+      "post_check_only_generated_python_bytecode_differed": true,
+      "post_check_other_selected_files_and_external_inputs_match": true,
+      "post_check_does_not_upgrade_original_input_closure": true
+    }
+  },
+  "evidence_separation": {
+    "actual_kernel_driver_execution": "Generic Arch x86_64 KVM test_power only",
+    "ARM_battery_service_execution": false,
+    "normal_Qt_or_app_window": false,
+    "Source_or_session_authorization": false,
+    "physical_Pixel_battery_charge_suspend_wake_drain": false,
+    "phone_accessed": false
+  },
+  "fixture_successor_changes": {
+    "true_false_module_controls": true,
+    "raw_getter_recorded_without_numeric_zero_assumption": true,
+    "kernel_PRESENT0_and_service_false_nulls_still_required": true,
+    "bytecode_generation_disabled_before_import": true,
+    "actual_public_owned_helper_reused": true,
+    "functional_conditions_and_original_deadlines_unchanged": true
+  }
+}

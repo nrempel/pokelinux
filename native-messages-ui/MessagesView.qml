@@ -4,6 +4,7 @@ Rectangle {
  id: root
  required property QtObject theme
  required property QtObject messagesClient
+ required property QtObject batteryClient
  color: theme.background
  component MessageButton: Button {
   id: button
@@ -31,6 +32,19 @@ Rectangle {
    id: column; width: scroll.width
    spacing: root.theme.spacingPixel("panelGap",14)
    Text { text: "Messages"; textFormat: Text.PlainText; color: root.theme.foreground; font.family: root.theme.fontFamily; font.pixelSize: root.theme.fontPixel("heading",24) }
+   Text {
+    objectName: "batteryStatus"
+    text: {
+     if (!root.batteryClient.available) return "Battery unavailable"
+     const status = root.batteryClient.status
+     const label = status === "charging" ? "Charging" : status === "discharging" ? "Discharging" : status === "full" ? "Full" : status === "not_charging" ? "Not charging" : "Status unknown"
+     return root.batteryClient.capacityPercent + "% · " + label
+    }
+    textFormat: Text.PlainText
+    color: root.theme.muted
+    font.family: root.theme.fontFamily
+    font.pixelSize: root.theme.fontPixel("caption",12)
+   }
    Text { text: root.messagesClient.status; textFormat: Text.PlainText; width: parent.width; wrapMode: Text.Wrap; color: root.theme.muted; font.family: root.theme.fontFamily; font.pixelSize: root.theme.fontPixel("caption",12) }
    Repeater { model: root.messagesClient.conversations
     delegate: MessageButton { required property var modelData; width: column.width

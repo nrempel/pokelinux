@@ -1,0 +1,499 @@
+{
+  "schema": 1,
+  "scope": "Rust readonly battery client components and actual native Qt6.12 normal Messages build/link/install; no visible GUI or physical battery result",
+  "source_base": "d9978111fd30441c501bcd029fab568800cda06f",
+  "client_runtime_and_header_files": {
+    "native-app/BatteryRustClient.cmake": "061b6dc4c1ef4caa875834cbd9417efd67290f1e2f61d7f5fd5a09757ae2364c",
+    "native-app/PhoneBatteryClient.h": "db9e90a43af098160b53c7906046e0f8efb59f53733fc967c3c718008f3476fc",
+    "native-app/PhoneBatteryClient.cpp": "3e5dc487a76ffa2ff1efdaf07b378f8e3c2880e125066df3f79f884a83896e1b",
+    "native-app/battery-client-core/Cargo.lock": "2f54c0339e6152d74e92fda7e07e8fcea4e1e8aa9dc6596ca9039ca168028171",
+    "native-app/battery-client-core/Cargo.toml": "871e2503b862ff91a56f952b34e8c9988d7bfc6cd88ec0e541da29db4e3949d0",
+    "native-app/battery-client-core/include/pokelinux_battery_client.h": "1284efc7258a658f9d9c3eac2fec2fa2ec7316575ae889acac3869df4567df0d",
+    "native-app/battery-client-core/src/ffi.rs": "bc85eef1321e4f51d9f8621c93ba46547206cb336e83f1eb229add990d66caf8",
+    "native-app/battery-client-core/src/lib.rs": "ea3ab691e87e6407b99a509f4582be20c453cae3eeed69e47ca48c3d4649dc2b",
+    "native-app/battery-client-core/src/protocol_controls.rs": "13234aab6e96505d4f64a27597827b9e86050cb2992630b369deb1ca22eb2f3f",
+    "native-app/battery-client-core/src/tests.rs": "4aa7115366b04e2e806387542dbf31186758e3f47f49438e286dfb2f6d21356d"
+  },
+  "client_RED": {
+    "initial_receipt": {
+      "bytes": 15928,
+      "sha256": "be858d814759d77545d64bd28a5995c1b855b42fc1246b773ac17ecec9ed605f"
+    },
+    "compiled_tests_failed": 7,
+    "corrective_receipt": {
+      "bytes": 17432,
+      "sha256": "f2f2cd106d49b5677363cd7564cb1ed363832bee5d09e95e403d593e70e466dd"
+    },
+    "corrective_actual_counts": {
+      "passed": 9,
+      "failed": 2
+    },
+    "corrective_tests": {
+      "bytes": 1436,
+      "sha256": "13234aab6e96505d4f64a27597827b9e86050cb2992630b369deb1ca22eb2f3f"
+    },
+    "reason": "Unavailable state requires canonical zero deadline and explicit null fields; production time sampled after bounded IO."
+  },
+  "client_GREEN": {
+    "receipt": {
+      "bytes": 17360,
+      "sha256": "f7e609ad7ad02624071057dccf704a7c9cac22d91ea3a9b7abad525e53935d87"
+    },
+    "test_stdout": {
+      "bytes": 1081,
+      "sha256": "a74d1e9b3f240f0568dca87fa9cbe30b817cc00568c22b5a335238d205882a58"
+    },
+    "tests": 11,
+    "failed": 0,
+    "format_strict_Clippy_release": true,
+    "archive": {
+      "bytes": 23780942,
+      "sha256": "f5c2a983088711bbdbe9563352c855edc6ad9f65cfbde497bb7085a42f53962e"
+    },
+    "actual_owned_CLI_waits": 10,
+    "actual_PIPE_EOFs": 20,
+    "CID_absent_same_daemon_inputs_unchanged": true,
+    "post_GREEN_README_only_delta": true
+  },
+  "native_Qt_build": {
+    "qualification": {
+      "bytes": 11898,
+      "sha256": "d0cffc0a2b50c4f12c93f81dfac59b8a4ea51a33e3751c7d277da3c75094cc78"
+    },
+    "output_seal": {
+      "bytes": 1968,
+      "sha256": "d68d9323990e3db4d4e38a7cb2615b4c6f2d615c13de691d5a8645e43fd12b6e"
+    },
+    "execution": {
+      "bytes": 11883,
+      "sha256": "4e084ffe0c72a4353ec7c8425bcd57ff4451f0b390514c9f30e45627cdd3a5e3"
+    },
+    "boot": {
+      "bytes": 9746,
+      "sha256": "ca8ab9469ce4bc32c82efe86a0b28bd20393fae7abab2f436b6300c626083705"
+    },
+    "result": {
+      "bytes": 50454,
+      "sha256": "fc126b1d30c32a48b68cf79e83212ac6263742d9383fd1d805356b78ea13ff01"
+    },
+    "Qt_build_result": {
+      "bytes": 36460,
+      "sha256": "51e591b166ec36dd42ff0b10c2957a6496dd0b533f1d1d14accf2dc9efaee72d"
+    },
+    "source_files": {
+      "native-app/AppearanceRustClient.cmake": {
+        "bytes": 2397,
+        "sha256": "e3f7f1801609297cbcb3d4f89baa7673291e7a3857984e4f35b8e8855a1a057f"
+      },
+      "native-app/BatteryRustClient.cmake": {
+        "bytes": 2116,
+        "sha256": "061b6dc4c1ef4caa875834cbd9417efd67290f1e2f61d7f5fd5a09757ae2364c"
+      },
+      "native-app/PhoneAppearance.qml": {
+        "bytes": 1954,
+        "sha256": "705ab25799cba18095a76f4fb47e70eb10099ca035426d7e4400fa9cef8452bc"
+      },
+      "native-app/PhoneAppearanceClient.cpp": {
+        "bytes": 11817,
+        "sha256": "e4b65bf9e622702e8f72494db7b9387fbaad02d0e194d64ce0b26f0df68fc689"
+      },
+      "native-app/PhoneAppearanceClient.h": {
+        "bytes": 1245,
+        "sha256": "3f67e172898df24d5548baf8dd94aa0cd6d394858c432967eb051a9ee0623076"
+      },
+      "native-app/PhoneBatteryClient.cpp": {
+        "bytes": 1910,
+        "sha256": "3e5dc487a76ffa2ff1efdaf07b378f8e3c2880e125066df3f79f884a83896e1b"
+      },
+      "native-app/PhoneBatteryClient.h": {
+        "bytes": 852,
+        "sha256": "db9e90a43af098160b53c7906046e0f8efb59f53733fc967c3c718008f3476fc"
+      },
+      "native-app/appearance-client-core/Cargo.lock": {
+        "bytes": 2856,
+        "sha256": "17ca86b82ea1915692d8bf6dbb2d8b97bddcfc85f27796c29a9b91a493c41362"
+      },
+      "native-app/appearance-client-core/Cargo.toml": {
+        "bytes": 385,
+        "sha256": "6ce6142caa133a1e03c569c8661b558a1b6ddf62d8c0400e82310d97c56cfcad"
+      },
+      "native-app/appearance-client-core/README.md": {
+        "bytes": 3506,
+        "sha256": "5beb9d464762f635ba0bfbe25379d7001b2ce54b0530ae5c1a1ced3864dd1c56"
+      },
+      "native-app/appearance-client-core/include/pokelinux_appearance_client.h": {
+        "bytes": 7080,
+        "sha256": "46e993660ced0eb0f6d901071b347aefe289d757af4dc9ea0d9d601a06d79504"
+      },
+      "native-app/appearance-client-core/src/clock.rs": {
+        "bytes": 674,
+        "sha256": "4648db05efb4a170f1934946eeb1e9e093b19a93666df16f07b147e1d6e80e68"
+      },
+      "native-app/appearance-client-core/src/engine.rs": {
+        "bytes": 15679,
+        "sha256": "ad269b4f65e1d6abf084f780b12755f5476e0eee53711aeb777db3e6e4663ca8"
+      },
+      "native-app/appearance-client-core/src/ffi.rs": {
+        "bytes": 6531,
+        "sha256": "3241542071f3ddd78a1b7f16a0bbd58c40928c89982773123e8492f7d481f920"
+      },
+      "native-app/appearance-client-core/src/layout.rs": {
+        "bytes": 2098,
+        "sha256": "f98e26d2aaff8b47925acffd8a795c45c4f950c973a2da0f4b4122c76270fc2f"
+      },
+      "native-app/appearance-client-core/src/lib.rs": {
+        "bytes": 142,
+        "sha256": "cf6cac9cfc0710cd990ed51acec7738bee6022cf8435109e059e7c9ce0463359"
+      },
+      "native-app/appearance-client-core/src/protocol.rs": {
+        "bytes": 4565,
+        "sha256": "5173fd3db41142803dbe92c6eabc532af753ae005a7797da2dc8d76d5812aa80"
+      },
+      "native-app/appearance-client-core/tests/client-functional.cpp": {
+        "bytes": 18621,
+        "sha256": "d3a9af1009656e0bccd834f01e75bf3d5eabbbc949f38b9f446c13282e79f56b"
+      },
+      "native-app/appearance-client-tests/CMakeLists.txt": {
+        "bytes": 1299,
+        "sha256": "68fc12aecaaede90c974d441991d595ccba1a44104c192f41d4888b9f0d94ed7"
+      },
+      "native-app/appearance-client-tests/process.cpp": {
+        "bytes": 31745,
+        "sha256": "95e5c11905062a891393f9ee7d0633cd8278f07f1d0fce82b7db1f2a9c81f5d7"
+      },
+      "native-app/battery-client-core/Cargo.lock": {
+        "bytes": 2880,
+        "sha256": "2f54c0339e6152d74e92fda7e07e8fcea4e1e8aa9dc6596ca9039ca168028171"
+      },
+      "native-app/battery-client-core/Cargo.toml": {
+        "bytes": 395,
+        "sha256": "871e2503b862ff91a56f952b34e8c9988d7bfc6cd88ec0e541da29db4e3949d0"
+      },
+      "native-app/battery-client-core/README.md": {
+        "bytes": 2801,
+        "sha256": "7d3afa40ba2a85a6b22e7f41e44a34328ef623e22495492ef9aa6dd732c1a143"
+      },
+      "native-app/battery-client-core/include/pokelinux_battery_client.h": {
+        "bytes": 1480,
+        "sha256": "1284efc7258a658f9d9c3eac2fec2fa2ec7316575ae889acac3869df4567df0d"
+      },
+      "native-app/battery-client-core/src/ffi.rs": {
+        "bytes": 4460,
+        "sha256": "bc85eef1321e4f51d9f8621c93ba46547206cb336e83f1eb229add990d66caf8"
+      },
+      "native-app/battery-client-core/src/lib.rs": {
+        "bytes": 11977,
+        "sha256": "ea3ab691e87e6407b99a509f4582be20c453cae3eeed69e47ca48c3d4649dc2b"
+      },
+      "native-app/battery-client-core/src/protocol_controls.rs": {
+        "bytes": 1436,
+        "sha256": "13234aab6e96505d4f64a27597827b9e86050cb2992630b369deb1ca22eb2f3f"
+      },
+      "native-app/battery-client-core/src/tests.rs": {
+        "bytes": 7838,
+        "sha256": "4aa7115366b04e2e806387542dbf31186758e3f47f49438e286dfb2f6d21356d"
+      },
+      "native-messages-ui/CMakeLists.txt": {
+        "bytes": 4879,
+        "sha256": "8d9b53f1c67619a233f6b3e33fc5a640ac3bc8d6e6a3ff527fa8fcf74595a383"
+      },
+      "native-messages-ui/MessagesClient.cpp": {
+        "bytes": 8930,
+        "sha256": "15fb38e0372e1863dc8d3aeaaaeb6cee3ce63a9f43f86984c67f2e9accfa8929"
+      },
+      "native-messages-ui/MessagesClient.h": {
+        "bytes": 1199,
+        "sha256": "70e35f8e4ff19e7ff9f939e7f2c587f1350eecf9828c92ce41d4b94364c5d930"
+      },
+      "native-messages-ui/MessagesView.qml": {
+        "bytes": 3504,
+        "sha256": "5885ee5e3463f21c92bf9cb46c7e427932e466b0d09eeb994bc1d9cf4ae9f193"
+      },
+      "native-messages-ui/README.md": {
+        "bytes": 5691,
+        "sha256": "c9071ffea988f2008d29064f79b78d8dad5cb4c35dba78835d6add668abcbd9d"
+      },
+      "native-messages-ui/appearance-tests/CMakeLists.txt": {
+        "bytes": 3261,
+        "sha256": "304e2c78fbdcd08256403ef7a3ac1bf0c7c0da6aff60a3ad0167a9e4ba16b702"
+      },
+      "native-messages-ui/appearance-tests/process.cpp": {
+        "bytes": 11377,
+        "sha256": "1183872932f04c89ba21658d8332382f9f1ea71df963c59cdb81a09013036d6e"
+      },
+      "native-messages-ui/client-core/Cargo.lock": {
+        "bytes": 2854,
+        "sha256": "6f3a254a3db007ce60a1e65b97416a804103529606c316de696dddcce1879436"
+      },
+      "native-messages-ui/client-core/Cargo.toml": {
+        "bytes": 381,
+        "sha256": "dd6cb54ff4ac64069ad5de9b45af8d7be409709a21d6a56e77f15ff316de766e"
+      },
+      "native-messages-ui/client-core/README.md": {
+        "bytes": 2473,
+        "sha256": "ce7e24caeeb64b69ad0d08c106180d3ab3127c43b8b9b481e8dab3f8423deaef"
+      },
+      "native-messages-ui/client-core/include/pokelinux_messages_client.h": {
+        "bytes": 9416,
+        "sha256": "77464323084b96c08f4d706c468f008803203e6a3182c1491f234264b84e2b0e"
+      },
+      "native-messages-ui/client-core/src/clock.rs": {
+        "bytes": 674,
+        "sha256": "4648db05efb4a170f1934946eeb1e9e093b19a93666df16f07b147e1d6e80e68"
+      },
+      "native-messages-ui/client-core/src/engine.rs": {
+        "bytes": 18264,
+        "sha256": "60df497986d35784e8228b85180275e62169cf31c16d4e79b9788d443fcdbd30"
+      },
+      "native-messages-ui/client-core/src/ffi.rs": {
+        "bytes": 7640,
+        "sha256": "d969ad3c4ede62b1e1815ea04d489fdac16d5f3c0521d4e34272bb450a2e5f3d"
+      },
+      "native-messages-ui/client-core/src/layout.rs": {
+        "bytes": 4270,
+        "sha256": "1f31e02923478711a828bb585a3ff893071dabd8f93aa5f07d522fd0a09d2759"
+      },
+      "native-messages-ui/client-core/src/lib.rs": {
+        "bytes": 151,
+        "sha256": "8bb68d21bd7d0e91722beb044eecf776fa8adae2c0fc4f96184073071bcbcbb7"
+      },
+      "native-messages-ui/client-core/src/model.rs": {
+        "bytes": 4859,
+        "sha256": "a36222def617728d366b8a5a5bd41d75694e7f74a98b909d6b03fecfd7357ce7"
+      },
+      "native-messages-ui/client-core/src/protocol.rs": {
+        "bytes": 6777,
+        "sha256": "1a87d512d481daf86737668c6e92f61fb43496117416138af4de6db850b944b7"
+      },
+      "native-messages-ui/client-core/tests/client-functional.cpp": {
+        "bytes": 24323,
+        "sha256": "c86382942c0226bd5a61bdb788a029f5642e4fc3858d6cf69fce1c7589818bb5"
+      },
+      "native-messages-ui/main.cpp": {
+        "bytes": 4707,
+        "sha256": "32217e3f2a4421b407223428662598b8566d8e76acccc280d3af2333037d00bd"
+      },
+      "native-messages-ui/org.omarchy.Messages.desktop": {
+        "bytes": 299,
+        "sha256": "e77cba1df72466dc1a6f601aaa46ff0fd35686e545691cbe6001ad457ad5051a"
+      },
+      "native-messages-ui/resources.qrc": {
+        "bytes": 83,
+        "sha256": "91df1dfa68b76ec8ae48ecee92aeb7b6413a8d4d778cedc25c3e17b9e70f9c7d"
+      },
+      "native-messages-ui/worker-tests/CMakeLists.txt": {
+        "bytes": 7100,
+        "sha256": "b3fa318af618adf869c5800bed6570c6d01cb998564ef541af1e8e1c919806a5"
+      },
+      "native-messages-ui/worker-tests/current-qt-behavior.cpp": {
+        "bytes": 14513,
+        "sha256": "4e9c6b276de58e7f5971d66076ee5b33fb73d7efabfbf773df8c50fa441be6d2"
+      },
+      "native-messages-ui/worker-tests/overflow-projection.cpp": {
+        "bytes": 9094,
+        "sha256": "d199861e78c670b29075a4476f267a356599989a9b6b1a7ab55efc80c2b6509d"
+      },
+      "native-messages-ui/worker-tests/pre-entry-join.cpp": {
+        "bytes": 6063,
+        "sha256": "5c3a40ed6f28b5f03fe7ff0ec473d371c67faae7a8a03dac400ab78463ab1a70"
+      },
+      "native-messages-ui/worker-tests/process.cpp": {
+        "bytes": 5522,
+        "sha256": "56f787b73c5da729c4cb5499dce05d7d9a08f52b510cf248b1a6f2ad4f9837e8"
+      },
+      "native-messages-ui/worker-tests/qt-order.cpp": {
+        "bytes": 29100,
+        "sha256": "7db9d60a539e803b8d586e297648cfb34dbf2dcd844f00a2d2f5dd91e26d9140"
+      }
+    },
+    "normal_ELF": {
+      "sha256": "37e516a960cebab5a2c9f60a46bdeaea5e8c56fe63e66969116b4a5b833b3bdc",
+      "bytes": 6153552,
+      "ELF_machine": 62
+    },
+    "observer": false,
+    "three_archives_each_linked_exactly_once": true,
+    "strong_C_APIs": {
+      "Messages": 12,
+      "appearance": 11,
+      "battery": 4
+    },
+    "original_Messages_C_ABI_groups_passed": 9,
+    "real_adapter_compilation": true,
+    "ldd_r_no_missing_or_undefined": true,
+    "protected_install_byte_mode_equality": true,
+    "original367_packages_unchanged": true,
+    "QEMU_wait_exit": 0,
+    "outer_CLI_wait_exit": 0,
+    "inside_direct_waits_and_merged_PIPE_EOFs": 24,
+    "host_direct_waits": 7,
+    "host_PIPE_EOFs": 14,
+    "CID_absent_same_daemon_inputs_unchanged": true,
+    "normal_app_executed": false,
+    "inside_wait_breakdown": {
+      "boot": 4,
+      "bootstrap": 4,
+      "guest": 14,
+      "early_runtime": 2
+    }
+  },
+  "remaining_gates": [
+    "Actual normal Messages window and kernel-to-visible-battery changes",
+    "Actual nonroot server rejection",
+    "Physical Pixel battery, suspend, charging and drain"
+  ],
+  "post_build_documentation_only_deltas": {
+    "native-app/battery-client-core/README.md": {
+      "bytes": 3033,
+      "sha256": "565fcca87270f921c928e058c909aa761c2c3171ac9cb0262e8a7d9d2bc4b936",
+      "compiled_runtime_changed": false
+    },
+    "native-messages-ui/README.md": {
+      "bytes": 6666,
+      "sha256": "e286d705aedf38500f8e986c8fcca91324bb533815ca51341de8e701c29000d3",
+      "compiled_runtime_changed": false
+    }
+  },
+  "existing_QML_fixture_composition": {
+    "scope": "Fixture composition repair only; native Qt6.12 offscreen component execution; no normal main/window/Source/battery service qualification",
+    "handoff": {
+      "bytes": 6760,
+      "sha256": "178197f49729ee437a3cf5c404f9d638fad501d6f27094dfd1446cc4b9354242"
+    },
+    "actual_RED": {
+      "execution_sha256": "663b31c7dc48ae4a1466e0cbc174752071107f75377bda18b925f169ecd6ec6f",
+      "outer_qualification_passed": false,
+      "compiled_runtime_mode_executed": [
+        "installed"
+      ],
+      "actual_exit": 101,
+      "failure": "Original BOUNDARY_FAILURE normal Messages QML create",
+      "specific_missing_required_battery_diagnostic_emitted": false,
+      "other_original_modes_executed": false,
+      "root_peer_actual_waits": 2,
+      "root_peer_exits": [
+        0,
+        0
+      ],
+      "qualification_failure": "Expected specific Qt component diagnostic was absent; driver stopped after first actual assertion RED",
+      "owned_custody_same_daemon_exact_CID_absence_source_unchanged": true
+    },
+    "GREEN": {
+      "execution_sha256": "ea8242bf69be6f8acf16f6df39d45fdddc47b5adf2995bcd664f8b4b88bfce62",
+      "selection_sha256": "67b2752758be8701b8d4ff40e0a81cc3e003ed4c7e215a5001e649e7c8d05107",
+      "passed": true,
+      "groups": [
+        {
+          "id": "installed",
+          "actual_exit": 0,
+          "behavior_group_passed": true,
+          "actual_peer_exits": [
+            0,
+            0
+          ]
+        },
+        {
+          "id": "live-appearance",
+          "actual_exit": 0,
+          "behavior_group_passed": true,
+          "actual_peer_exits": [
+            0,
+            0
+          ]
+        },
+        {
+          "id": "messages-policy",
+          "actual_exit": 0,
+          "behavior_group_passed": true,
+          "actual_peer_exits": [
+            0,
+            0
+          ]
+        }
+      ],
+      "Qt_module_versions": "6.12.0\n6.12.0\n6.12.0\n6.12.0\n6.12.0\n",
+      "fixture_ELF": {
+        "sha256": "915e8a1b1595a345c7c202f9967822bf321ef909339a7e6e159a3eae274192fb",
+        "bytes": 6194512,
+        "ELF_machine": 62
+      },
+      "source_before_after": {
+        "native-app/AppearanceRustClient.cmake": "e3f7f1801609297cbcb3d4f89baa7673291e7a3857984e4f35b8e8855a1a057f",
+        "native-app/BatteryRustClient.cmake": "061b6dc4c1ef4caa875834cbd9417efd67290f1e2f61d7f5fd5a09757ae2364c",
+        "native-app/PhoneAppearance.qml": "705ab25799cba18095a76f4fb47e70eb10099ca035426d7e4400fa9cef8452bc",
+        "native-app/PhoneAppearanceClient.cpp": "e4b65bf9e622702e8f72494db7b9387fbaad02d0e194d64ce0b26f0df68fc689",
+        "native-app/PhoneAppearanceClient.h": "3f67e172898df24d5548baf8dd94aa0cd6d394858c432967eb051a9ee0623076",
+        "native-app/PhoneBatteryClient.cpp": "3e5dc487a76ffa2ff1efdaf07b378f8e3c2880e125066df3f79f884a83896e1b",
+        "native-app/PhoneBatteryClient.h": "db9e90a43af098160b53c7906046e0f8efb59f53733fc967c3c718008f3476fc",
+        "native-app/appearance-client-core/include/pokelinux_appearance_client.h": "46e993660ced0eb0f6d901071b347aefe289d757af4dc9ea0d9d601a06d79504",
+        "native-app/battery-client-core/include/pokelinux_battery_client.h": "1284efc7258a658f9d9c3eac2fec2fa2ec7316575ae889acac3869df4567df0d",
+        "native-messages-ui/MessagesClient.cpp": "15fb38e0372e1863dc8d3aeaaaeb6cee3ce63a9f43f86984c67f2e9accfa8929",
+        "native-messages-ui/MessagesClient.h": "70e35f8e4ff19e7ff9f939e7f2c587f1350eecf9828c92ce41d4b94364c5d930",
+        "native-messages-ui/MessagesView.qml": "5885ee5e3463f21c92bf9cb46c7e427932e466b0d09eeb994bc1d9cf4ae9f193",
+        "native-messages-ui/appearance-tests/CMakeLists.txt": "86159961872acc93b8b312e79ffc9f7d4fbff24468b86353f5ff58d19f7f73ff",
+        "native-messages-ui/appearance-tests/process.cpp": "a5e95ff0406d0087f037f7c417516c6ca20aa2b1a554c9c04b3b7cf758e78d6e",
+        "native-messages-ui/client-core/include/pokelinux_messages_client.h": "77464323084b96c08f4d706c468f008803203e6a3182c1491f234264b84e2b0e",
+        "native-messages-ui/resources.qrc": "91df1dfa68b76ec8ae48ecee92aeb7b6413a8d4d778cedc25c3e17b9e70f9c7d"
+      },
+      "protected_installed_theme": {
+        "path": "/usr/share/pokelinux/appearance/PhoneAppearance.qml",
+        "sha256": "705ab25799cba18095a76f4fb47e70eb10099ca035426d7e4400fa9cef8452bc",
+        "UID": 0,
+        "GID": 0,
+        "mode": "0644"
+      },
+      "normal_main_executed": false,
+      "QWindow_created": false
+    },
+    "all_original_behavior_assertions_unchanged": true,
+    "other14selectedfiles_byte_identical": true,
+    "all3archives_identical": true,
+    "only_test_fixture_files_changed": [
+      "native-messages-ui/appearance-tests/CMakeLists.txt",
+      "native-messages-ui/appearance-tests/process.cpp"
+    ],
+    "owned_wait_and_EOF_counts": {
+      "red": {
+        "outer": 7,
+        "boot": 4,
+        "bootstrap": 4,
+        "guest": 7
+      },
+      "green": {
+        "outer": 7,
+        "boot": 4,
+        "bootstrap": 4,
+        "guest": 10
+      }
+    },
+    "host_two_PIPEs_per_wait": true
+  },
+  "post_build_test_fixture_delta": {
+    "native-messages-ui/appearance-tests/CMakeLists.txt": "86159961872acc93b8b312e79ffc9f7d4fbff24468b86353f5ff58d19f7f73ff",
+    "native-messages-ui/appearance-tests/process.cpp": "a5e95ff0406d0087f037f7c417516c6ca20aa2b1a554c9c04b3b7cf758e78d6e"
+  },
+  "ARM64_client_static_crossbuild": {
+    "qualification": {
+      "bytes": 6488,
+      "sha256": "7e2f80fa49165b07665a8e1af014948da2193e55694f3c90f8a1c0f1a1713108"
+    },
+    "source_selection": {
+      "bytes": 1535,
+      "sha256": "a23d3d6ca23adca1dafc393f71c1e8842304d31019d6e339fb97b9cb0ef55953"
+    },
+    "archive": {
+      "bytes": 24690338,
+      "sha256": "f978da2a45e76c9c08a520a19e9b3ef33c64207aa9f41c77cf22edc5483a5e02"
+    },
+    "ELF64_REL_machine183_objects": 432,
+    "GNU_archive_metadata_members": 2,
+    "strong_public_C_ABI_exports": 4,
+    "locked_offline_release_target_only": true,
+    "tests_or_ARM_execution": false,
+    "same7runtime_header_Cargo_inputs_as_host": true,
+    "actual_CLI_waits": 10,
+    "actual_PIPE_EOFs": 20,
+    "same_daemon_CID_absent_source_unchanged": true,
+    "initial_setup_failure": "Script mode0500 unreadable to remapped user; exit126 before compilation, preserved separately. Successor uses readable0444 script; production inputs unchanged."
+  }
+}

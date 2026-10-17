@@ -116,7 +116,14 @@ pub fn read_supply(class_root: &Path, supply: &str) -> io::Result<BatteryObserva
     for line in text.lines() {
         let (key, value) = line.split_once('=').ok_or_else(invalid)?;
         match key {
-            "POWER_SUPPLY_TYPE" => field(&mut kind, value)?,
+            "POWER_SUPPLY_TYPE" => {
+                // Linux can repeat the same TYPE in one uevent. Conflicting
+                // types remain invalid; other measured fields stay unique.
+                if kind.is_some_and(|previous| previous != value) {
+                    return Err(invalid());
+                }
+                kind = Some(value);
+            }
             "POWER_SUPPLY_PRESENT" => field(&mut present, value)?,
             "POWER_SUPPLY_CAPACITY" => field(&mut capacity, value)?,
             "POWER_SUPPLY_STATUS" => field(&mut status, value)?,
