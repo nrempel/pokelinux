@@ -2,7 +2,7 @@
 
 The latest [initial broker batch checkpoint](native-render-initial-batch.md) now passes real seatd/udev/virtio descriptor capture after actual structural compile RED and a matching native AQ15 build. Rust capture precedes queue admission and pending-duplicate closure; original service leases stay retained. Normal main/worker startup, Source7 and all physical-phone requirements remain open.
 
-The [owned startup checkpoint](native-render-owned-startup.md) now qualifies both genuine native failure-custody RED cases after its full test-profile main/SDK build. Real resource-scan continuation and forced failure after actual mandatory-start success each destroy the selected child and expire native weak identities before verified retirement. Three earlier failed attempts remain preserved. Repairing child/start/subordinate-factory custody is next; runtime GREEN, normal rendering, Source and all phone gates remain open.
+The [owned startup checkpoint](native-render-owned-startup.md) now passes the same two failed-startup child-retention cases after qualified native RED. A production AQ dependency patch retains the selected child and all preexisting resource identities through both injected failures; matching AQ/main SDK builds pass. Each case records zero child destructors and valid weak metadata. Startup still fails, Ready stays false and join stays Busy and native shutdown stays Pending. Earlier failures remain preserved; nested factories, normal readiness, retirement, Source and phone gates stay open.
 
 The later [policy-directory correction](native-session-owner.md#policy-directory-correction)
 passes15 preflight cases after five actual acceptance failures and two separate

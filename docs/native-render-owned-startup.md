@@ -1,11 +1,11 @@
 # Native compositor owned-startup checkpoint
 
-Both genuine native failure-custody cases now have qualified **semantic RED**
-after the full test-profile main/SDK build and original structural REDs. Real
-post-resource-scan continuation and forced failure after actual mandatory-start
-success destroy the selected child before verified retirement. Three earlier
-failed attempts remain preserved. Custody repair is next; runtime GREEN, normal
-startup, Source and phone gates remain open.
+The same two failed-startup child-retention cases now pass **RED → GREEN** after
+a production AQ dependency repair and matching main/SDK rebuild. The selected
+child and preexisting resource identities remain valid after both injected
+failures, with zero child destructor entries. Startup still fails and Ready stays
+false. Earlier REDs and failed attempts remain preserved; nested factories, normal
+startup, retirement, Source and phone gates remain open.
 [Hash-only evidence](evidence/native-render-owned-startup-provenance.json) preserves
 each selection, failed scope and original closure.
 
@@ -258,7 +258,60 @@ actual wait -9; normal guest QMP shutdown, QEMU0, foreground CLI0, exact contain
 absence, the same daemon and unchanged locked inputs complete outer qualification.
 Process disposal remains distinct from native cleanup, GPU drain, join or release.
 
-Next repair child retention before acquisition and mandatory-start failure custody,
-then replay the same cases and bounds. Subordinate factories, normal startup/CPU
-facade/live ingress, authentic StopRetire, Source/GL, ARM and phone gates remain
-open. No native custody GREEN is claimed.
+At this RED checkpoint, child retention before acquisition and mandatory-start
+failure custody were the next repair. The matching repair and unchanged-case
+retention result follow below; this RED remains preserved.
+
+
+## Production dependency repair and matching retention GREEN
+
+The [three-file AQ patch](../tools/native-render-owner/aquamarine-retained-child-custody.patch)
+and [matching cohort](../tools/native-render-owner/aquamarine-retained-child-custody-cohort.json)
+add a bounded ledger of up to 32 native children to the owned render-session
+backend. Custody is separate from active dispatch eligibility. Children enter the
+ledger before native registration; failed initialization/start clears eligibility
+while retaining that ledger. Source guards prevent unavailable children from
+reentering active callback dispatch. The repair applies outside the test macro;
+the original hook blocks, resource-scan continuation and mandatory active-list
+clear remain unchanged. Late callbacks and other unexecuted paths gain no runtime
+qualification from these two cases.
+
+The first repair build remains a compile setup failure for a missing algorithm
+include. Its successor adds only that include. The matching AQ build passes all
+seven required objects, 36 test-defined C++ entries, ten existing CPU groups and
+both unchanged strict API TUs. Its SDK has 23 regular members and two links; its
+57 direct waits/57 merged PIPE EOFs include one early mask. No native hook callback
+executes during that build.
+
+The private Backend class layout changes, so callers must be rebuilt against the
+new SDK. The matching main is rebuilt from the same 13 main source files, frozen
+consumer/probe/trace and sole Rust archive. It passes 15 CPU groups, two unchanged
+strict TUs, all 23 Rust export checks and actual relocation closure against the new
+AQ15 library, without AQ14. Its matching SDK has 535 regular members and two links.
+Its Scope records 55 waits/55 merged PIPE EOFs; the snapshot CPU fixture's embedded
+producer wait and two PIPE EOFs remain separate. The earlier main binary is a RED
+baseline and cannot be paired with the repaired library.
+
+Both original failure cases now qualify `CUSTODY_RETENTION_GREEN` with the same
+consumer, semantic classifier, hooks and bounds. Resource-scan continuation still
+forces initialization failure. In the mandatory-start case, the real start call
+succeeds before the hook substitutes effective false. Each case has 13
+authenticated records and three control-wire records; the RED had 14 because it
+also observed a child destructor. The repaired cases observe zero child destructor
+entries, no expired preexisting weak identities and no metadata mismatch. The
+selected child, output, CRTC and plane remain valid; the second case also retains
+the dumb allocator. The observer releases its temporary locks before injection.
+
+This GREEN qualifies failed-startup child retention only. Rust still reports
+startup error 9, failed/nonready/stopping state and Busy (2) join; public Stop
+returns 0. Clean native Pending remains status 0/retired 0, with both borrowed
+watches and the worker retained. Six public snapshot/Stop requests meet the
+unchanged 2s bound. Root and independent reviews agree on 29 direct waits,
+36 PIPE EOFs, four trace-socket EOFs and one QMP-socket EOF, normal guest shutdown,
+QEMU/CLI0, exact container absence and unchanged locked inputs. Both retained
+main processes are disposed with SIGKILL/wait -9. That is process disposal, with
+no native cleanup, GPU drain, Rust join or release claim.
+
+Nested GBM/EGL factories, partial subordinate initialization, late hotplug/removal,
+normal BACKEND_READY/CPU facade/live ingress, frame execution, authentic StopRetire,
+Source/GL, ARM and physical phone gates remain open.

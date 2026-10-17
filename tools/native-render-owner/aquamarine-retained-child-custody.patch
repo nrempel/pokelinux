@@ -1,0 +1,244 @@
+diff --git a/include/aquamarine/backend/Backend.hpp b/include/aquamarine/backend/Backend.hpp
+--- a/include/aquamarine/backend/Backend.hpp
++++ b/include/aquamarine/backend/Backend.hpp
+@@ -4,6 +4,7 @@
+ #include <hyprutils/memory/WeakPtr.hpp>
+ #include <hyprutils/signal/Signal.hpp>
+ #include <hyprutils/cli/Logger.hpp>
++#include <array>
+ #include <vector>
+ #include <functional>
+ #include <mutex>
+@@ -182,6 +183,14 @@
+         bool                                                                   terminate = false;
+ 
+         std::vector<SBackendImplementationOptions>                             implementationOptions;
++        // Owned render-session dispatch eligibility is separate from lifetime.
++        // Retain each child before acquisition, including failed children.
++        std::array<Hyprutils::Memory::CSharedPointer<IBackendImplementation>, AQ_SESSION_MAX_DEVICE_LEASES> retainedNativeChildren{};
++        size_t retainedNativeChildCount = 0;
++        bool retainNativeChild(const Hyprutils::Memory::CSharedPointer<IBackendImplementation>& child);
++        bool operationalChild(const IBackendImplementation* child) const noexcept;
++        bool failRenderStartup() noexcept;
++
+         std::vector<Hyprutils::Memory::CSharedPointer<IBackendImplementation>> implementations;
+         SBackendOptions                                                        options;
+         Hyprutils::Memory::CWeakPointer<CBackend>                              self;
+diff --git a/src/backend/Backend.cpp b/src/backend/Backend.cpp
+--- a/src/backend/Backend.cpp
++++ b/src/backend/Backend.cpp
+@@ -8,6 +8,7 @@
+ #include <aquamarine/backend/Null.hpp>
+ #include <aquamarine/allocator/GBM.hpp>
+ #include <hyprutils/os/FileDescriptor.hpp>
++#include <algorithm>
+ #include <ranges>
+ #include <sys/timerfd.h>
+ #include <ctime>
+@@ -80,7 +81,7 @@
+     return holder;
+ }
+ 
+-bool CBackend::initializeRenderSession() {
++bool CBackend::initializeRenderSession() try {
+     if (!renderSessionHolder || renderInitializationAttempted || renderOwner != std::this_thread::get_id() ||
+         !session || !session->onOwnerThread() || !session->initialEnumerationComplete() || !session->active)
+         return false;
+@@ -90,14 +91,19 @@
+     logger->m_logFn = options.logFunction;
+     logger->updateLevels();
+     implementations.reserve(session->sessionDevices.size());
+-    // The caller retains this outer holder before entering here. Actual child
+-    // failure custody is the NEXT separate behavioral RED/repair boundary.
++    // The caller retains this outer holder before entering here. Child custody
++    // is registered before acquisition, separately from dispatch eligibility.
+     const auto initialized = CDRMBackend::attempt(self.lock());
+     for (const auto& child : initialized)
+         implementations.emplace_back(child);
+     idle.fd = timerfd_create(CLOCK_MONOTONIC, TFD_CLOEXEC);
+     renderInitialized = !implementations.empty() && idle.fd >= 0;
+-    return renderInitialized;
++    if (!renderInitialized)
++        return failRenderStartup();
++    return true;
++} catch (...) {
++    failRenderStartup();
++    throw; // preserve the original native/allocator exception for the owner
+ }
+ SP<CBackend> CBackend::createInternal(const std::vector<SBackendImplementationOptions>& backends,const SBackendOptions& options,SP<CSession> mirror) {
+     auto backend = SP<CBackend>(new CBackend());
+@@ -160,9 +166,11 @@
+     // Tear down implementations before the logger is destroyed,
+     // as backends may log during teardown (e.g. SDRMConnector::disconnect).
+     implementations.clear();
+-}
+-
+-bool Aquamarine::CBackend::start() {
++    for (size_t i = 0; i < retainedNativeChildCount; ++i)
++        retainedNativeChildren[i].reset();
++}
++
++bool Aquamarine::CBackend::start() try {
+     if (renderSessionHolder) {
+         if (renderOwner != std::this_thread::get_id() || !renderInitialized || renderStartAttempted)
+             return false;
+@@ -197,7 +205,7 @@
+             if (optionsForType(impl->type()).backendRequestMode == AQ_BACKEND_REQUEST_MANDATORY) {
+                 log(AQ_LOG_CRITICAL, std::format("Requested backend ({}) could not start and it's mandatory, cannot continue!", backendTypeToName(impl->type())));
+                 implementations.clear();
+-                return false;
++                return failRenderStartup();
+             }
+         } else
+             started++;
+@@ -205,7 +213,7 @@
+ 
+     if (implementations.empty() || started <= 0) {
+         log(AQ_LOG_CRITICAL, "No backend could be opened. Make sure there was a correct backend passed to CBackend, and that your environment supports at least one of them.");
+-        return false;
++        return failRenderStartup();
+     }
+ 
+     // erase failed impls
+@@ -223,7 +231,7 @@
+             if (fd < 0) {
+                 // this is critical, we cannot create an allocator properly
+                 log(AQ_LOG_CRITICAL, "Failed to create an allocator (reopenDRMNode failed)");
+-                return false;
++                return failRenderStartup();
+             }
+             primaryAllocator = CGBMAllocator::create(fd, self);
+             break;
+@@ -232,7 +240,7 @@
+ 
+     if (!primaryAllocator && (implementations.empty() || implementations.at(0)->type() != AQ_BACKEND_NULL)) {
+         log(AQ_LOG_CRITICAL, "Cannot open backend: no allocator available");
+-        return false;
++        return failRenderStartup();
+     }
+ 
+     ready = true;
+@@ -246,6 +254,38 @@
+     sessionFDs = session ? session->pollFDs() : std::vector<Hyprutils::Memory::CSharedPointer<SPollFD>>{};
+ 
+     return true;
++} catch (...) {
++    failRenderStartup();
++    throw; // retain the owned graph without suppressing the native error
++}
++
++bool Aquamarine::CBackend::retainNativeChild(const SP<IBackendImplementation>& child) {
++    if (!renderSessionHolder)
++        return true;
++    if (renderOwner != std::this_thread::get_id() || !child || retainedNativeChildCount == retainedNativeChildren.size())
++        return false;
++    retainedNativeChildren[retainedNativeChildCount] = child;
++    ++retainedNativeChildCount;
++    return true;
++}
++
++bool Aquamarine::CBackend::operationalChild(const IBackendImplementation* child) const noexcept {
++    if (!renderSessionHolder)
++        return true;
++    if (renderOwner != std::this_thread::get_id() || !ready || !child)
++        return false;
++    return std::ranges::any_of(implementations, [child](const auto& active) { return active.get() == child; });
++}
++
++bool Aquamarine::CBackend::failRenderStartup() noexcept {
++    if (renderOwner == std::this_thread::get_id() && renderSessionHolder) {
++        ready = false;
++        renderInitialized = false;
++        // These are dispatch references only. Native children remain in the
++        // holder; its caller still needs genuine retirement before destruction.
++        implementations.clear();
++    }
++    return false;
+ }
+ 
+ void Aquamarine::CBackend::log(eBackendLogLevel level, const std::string& msg) {
+@@ -254,6 +294,8 @@
+ }
+ 
+ std::vector<Hyprutils::Memory::CSharedPointer<SPollFD>> Aquamarine::CBackend::getPollFDs() {
++    if (renderSessionHolder && (renderOwner != std::this_thread::get_id() || !ready))
++        return {};
+     std::vector<Hyprutils::Memory::CSharedPointer<SPollFD>> result;
+     for (auto const& i : implementations) {
+         auto pollfds = i->pollFDs();
+@@ -362,6 +404,14 @@
+ }
+ 
+ void Aquamarine::CBackend::onNewGpu(std::string path) {
++    if (renderSessionHolder) {
++        if (renderOwner != std::this_thread::get_id())
++            return;
++        if (!ready) {
++            log(AQ_LOG_ERROR, "DRM GPU admission refused while owned backend is unavailable");
++            return;
++        }
++    }
+     const auto primary    = std::ranges::find_if(implementations, [](SP<IBackendImplementation> value) { return value->type() == Aquamarine::AQ_BACKEND_DRM; });
+     const auto primaryDrm = primary != implementations.end() ? ((Aquamarine::CDRMBackend*)(*primary).get())->self.lock() : nullptr;
+ 
+diff --git a/src/backend/drm/DRM.cpp b/src/backend/drm/DRM.cpp
+--- a/src/backend/drm/DRM.cpp
++++ b/src/backend/drm/DRM.cpp
+@@ -67,7 +67,10 @@
+ 
+ Aquamarine::CDRMBackend::CDRMBackend(SP<CBackend> backend_) : backend(backend_) {
+     listeners.sessionActivate = backend->session->events.changeActive.listen([this] {
+-        if (backend->session->active) {
++        const auto owner = backend.lock();
++        if (!owner || !owner->operationalChild(this))
++            return;
++        if (owner->session->active) {
+             // session got activated, we need to restore
+             restoreAfterVT();
+         } else
+@@ -180,6 +183,10 @@
+ 
+     auto drmBackend  = SP<CDRMBackend>(new CDRMBackend(backend));
+     drmBackend->self = drmBackend;
++    if (!backend->retainNativeChild(drmBackend)) {
++        backend->log(AQ_LOG_ERROR, "DRM child custody capacity unavailable");
++        return nullptr;
++    }
+ 
+     if (!drmBackend->registerGPU(gpu, primary)) {
+         backend->log(AQ_LOG_ERROR, std::format("drm: Failed to register gpu {}", gpu->path));
+@@ -231,6 +238,10 @@
+     for (auto const& gpu : gpus) {
+         auto drmBackend  = SP<CDRMBackend>(new CDRMBackend(backend));
+         drmBackend->self = drmBackend;
++        if (!backend->retainNativeChild(drmBackend)) {
++            backend->log(AQ_LOG_ERROR, "DRM child custody capacity unavailable");
++            return {};
++        }
+ 
+         if (!drmBackend->registerGPU(gpu, newPrimary)) {
+             backend->log(AQ_LOG_ERROR, std::format("drm: Failed to register gpu {}", gpu->path));
+@@ -1081,6 +1092,9 @@
+     if (drmVer)
+         drmFreeVersion(drmVer);
+     listeners.gpuChange = gpu->events.change.listen([this](const CSessionDevice::SChangeEvent& E) {
++        const auto owner = backend.lock();
++        if (!owner || !owner->operationalChild(this))
++            return;
+         if (E.type == CSessionDevice::AQ_SESSION_EVENT_CHANGE_HOTPLUG) {
+             backend->log(AQ_LOG_DEBUG, std::format("drm: Got a hotplug event for {}", gpuName));
+             recheckOutputs();
+@@ -1091,8 +1105,11 @@
+     });
+ 
+     listeners.gpuRemove = gpu->events.remove.listen([this] {
+-        std::erase_if(backend->implementations, [this](const auto& impl) { return impl->drmFD() == this->drmFD(); });
+-        backend->events.pollFDsChanged.emit();
++        const auto owner = backend.lock();
++        if (!owner || !owner->operationalChild(this))
++            return;
++        std::erase_if(owner->implementations, [this](const auto& impl) { return impl->drmFD() == this->drmFD(); });
++        owner->events.pollFDsChanged.emit();
+     });
+ 
+     return true;

@@ -494,10 +494,11 @@
   ],
   "current_remaining_scope": {
     "qualified_native_behavior_RED": true,
-    "native_failure_custody_repair": false,
     "normal_CPU_facade_live_ingress_authentic_StopRetire": false,
     "Source_GL_ARM_phone": false,
-    "next_fixture_change": "Repair real child-before-acquisition retention and mandatory-start failure custody, then replay unchanged cases and bounds; subordinate factories and normal runtime/Source/phone gates remain open."
+    "next_fixture_change": "Qualify subordinate factory custody and the normal startup/CPU facade/live-ingress route separately; authentic StopRetire, frame/Source/GL, ARM and phone gates remain open.",
+    "qualified_failed_startup_child_retention_GREEN": true,
+    "full_native_failure_custody_repair": false
   },
   "qualified_native_startup_custody_RED": {
     "epoch": 4,
@@ -661,5 +662,295 @@
     "independent_qualification_sha256": "944e16e207a98008e84eb42a0861a333e23c4963fb6921d992b283793ceb0bbc",
     "QMP_socket_EOF_separate_from_PIPE_count": 1,
     "Root_and_independent_reviews_agree": true
+  },
+  "retained_child_production_dependency_and_retention_GREEN": {
+    "classification": "MATCHING_BUILDS_AND_TWO_CASE_FAILED_STARTUP_CHILD_RETENTION_GREEN_ONLY",
+    "patch_file": "tools/native-render-owner/aquamarine-retained-child-custody.patch",
+    "patch_sha256": "5d84ebb9356ae874098baab2f707ca54a97476f2b46074c624568f38f1ecb58f",
+    "cohort_file": "tools/native-render-owner/aquamarine-retained-child-custody-cohort.json",
+    "cohort_sha256": "49b258a891bba6abf5b7f25f62a9aeee904d9f2193b3b5c8a29ee1d67b81a6e5",
+    "source_SOURCE_sha256": "a37f733e1402b78cd4e6ec3245a7a2d9efe5b49eeb74f8715a66d7432be7af2c",
+    "source_map_sha256": "377a0f7c7d00e0b6819a9e966566f36a83f2efbf8ecf713b10b1f49c22c23171",
+    "source_SEAL_sha256": "b45fd18a12fe8b36d78ea47fc7682de18b4a1091e3f74a64af40db04dd779415",
+    "three_source_files": {
+      "include/aquamarine/backend/Backend.hpp": {
+        "after_sha256": "f85a46be5bbd55178f464daf6d303d5032974ba5f14d25b53f38b2fda3ab9098",
+        "before_bytes": 9399,
+        "before_sha256": "4dc58de077c7604f42fa712ef1594dd94a8aba672f013dcbc7e490801626879c",
+        "bytes": 9982
+      },
+      "src/backend/Backend.cpp": {
+        "after_sha256": "0d0fb43cf979059e15dd47df0ae2a98fa59865074e8064f53102df1ee186505d",
+        "before_bytes": 15759,
+        "before_sha256": "08be483dc1bf2b22fea4fdf43a026369457dfd5bfa6d4822b69ef14fd311902e",
+        "bytes": 17761
+      },
+      "src/backend/drm/DRM.cpp": {
+        "after_sha256": "d86768809c6168996936237f7ba379559cab4bfb975d50e69a4514e97958a740",
+        "before_bytes": 133563,
+        "before_sha256": "78ac7e195929b0e7d2f274cad9ade26eee580507cc1266e7e2ac6b76f354ad7e",
+        "bytes": 134237
+      }
+    },
+    "public_reconstruction_receipt_sha256": "ee8eb05a9dd8c3ac56594bcdb6ab4899b0a7cee54b3ef25a55dcff62109c8eb6",
+    "actual_source_before_after": [
+      85,
+      85
+    ],
+    "public_source_before_after": [
+      84,
+      84
+    ],
+    "inherited_non_build_exceptions_changed": false,
+    "production_repair_outside_test_macro": true,
+    "class_layout_requires_matching_caller_rebuild": true,
+    "preserved_failed_first_AQ_compile": {
+      "aggregate_passed": false,
+      "classification": "COMPILE_SETUP_FAILURE_MISSING_ALGORITHM_NOT_NATIVE_BEHAVIOR_RED",
+      "execution_sha256": "a7251be1e8928eb4764cd3b8dcc47518eb62cedf5f1bcd7ff417afdcb40ba09c",
+      "sol2_correction": "Only add explicit algorithm include; preserve all other source bytes."
+    },
+    "actual_AQ_build": {
+      "CPU_groups_passed": 10,
+      "CXX_entries_with_test_define": 36,
+      "QEMU0_CLI0_CID_absence_same_daemon_locked_inputs": true,
+      "Root_build_qualification": {
+        "bytes": 1573,
+        "sha256": "f93bb34fde3171f02ebb817c1465ed27da2849fe81ca3a3644d4b5911db4e70d"
+      },
+      "Root_review_sha256": "4b90d6784b50025b4310742882195996ea568510e22d0e732873bcc08d43bf3b",
+      "SDK_non_directory_members": 25,
+      "SDK_regular_members": 23,
+      "SDK_symlinks": 2,
+      "actual_AQ_library": {
+        "bytes": 1853176,
+        "sha256": "32fd43a403df9d09e15f706a46f52ee49ecb15352729d902e45f241c5a174f3f"
+      },
+      "actual_CPU_log_sha256": "fe975d70aa3d657425da4382e5fa6d63bc15c570382a7b7228f86f885f3afc95",
+      "actual_SDK": {
+        "bytes": 2048000,
+        "sha256": "95fc9c1f008b073eb8a6976aba580f1175f96fac3a4576d1ae59a3b95faa8c77"
+      },
+      "actual_object_log_sha256": "04b67a37ef81bf92367b43bbe135b9ffddce33232ad61e373de7575061f0c49f",
+      "actual_required_objects": 7,
+      "actual_selection_public_source_base": "5d62932c91ac4920c892cdf98c4445377c6cddfa",
+      "all_SDK_members_and_library_header_bytes_read_and_matched": true,
+      "all_candidate_manifest_entries_match_frozen_sol2": true,
+      "build_execution": {
+        "bytes": 24297,
+        "sha256": "22d6a99baec45afa2d1e24d4623750fd76052d270e789cddbf4bde57ce4935a6"
+      },
+      "build_result": {
+        "bytes": 209576,
+        "sha256": "4543abb8cf135186ea1fc5fa474c027d9091621223b469e80138d645907cd5d5"
+      },
+      "direct_waits": 57,
+      "hook_address_probe_link_and_relocation_only": true,
+      "hook_callbacks_or_main_Rust_owner_executed": false,
+      "independent_build_qualification": {
+        "bytes": 5603,
+        "sha256": "975a7807254d2fad09abc72654065513afae44e95c0fbcaff5cf838bb62a1d88"
+      },
+      "merged_PIPE_EOFs": 57,
+      "native_cleanup_join_release_Source_ARM_phone_claimed": false,
+      "original_wait_EOF_timestamps_within_cutoffs": true,
+      "pins": {
+        "boot-result.json": "8ecd9bf923a5c0c35b8c5dc901781d7381ac1f45e470c0499564ed4c1bac01ac",
+        "command.json": "5e266913c9b50fa56ffb78af2544ba9aff5cb0592369e454ae161dff27bc95a0",
+        "guest-out/guest-result.json": "3519589f0e5a9a5d5708fbee8394cf2da3850342c7eb9877d4ab394e982f1e6f",
+        "selection.json": "1afd36e6466abd9a2de129a60358564971af98bd1d9066b2752a8494dd5c8ac0"
+      },
+      "preparation_sha256": "0831250a32d5c5a81b70cae06192cdfcd3fa500aa35bdda1e39eb9d788b29e40",
+      "qualification_status": "ROOT_AND_INDEPENDENT_BUILD_QUALIFIED",
+      "receipt_layers": {
+        "boot": 5,
+        "build": 36,
+        "early": 1,
+        "guest": 8,
+        "host": 7
+      },
+      "schema": 1,
+      "scope": "Actual repaired AQ source/library/SDK build and existing CPU/public-header checks only",
+      "source_after_files": 85,
+      "source_before_files": 85,
+      "source_changed_files": 3,
+      "source_successor_map_sha256": "b63f4726475263c305451f977c4b6e6aa19d8c40e48da6e05d6ffb9aedac5571",
+      "unchanged_frozen_TUs": {
+        "retained_compile_control": {
+          "actual_exit": 0,
+          "diagnostic_bytes": 0,
+          "source": {
+            "bytes": 709,
+            "sha256": "82b43316940b2356d0146d6f05787aeeb5ce1b0f5ff8eeb64aceb8e6665bd8a1"
+          }
+        },
+        "retained_compile_members": {
+          "actual_exit": 0,
+          "diagnostic_bytes": 0,
+          "source": {
+            "bytes": 1269,
+            "sha256": "871440874e3c4a2df0bcca4673fd03d840833a9c78408f9fc914df4c784141bd"
+          }
+        }
+      },
+      "matched_main_rebuild_qualified_by_this_AQ_build": false,
+      "same_case_native_runtime_GREEN_qualified_by_this_AQ_build": false
+    },
+    "actual_matching_main_build": {
+      "execution": {
+        "bytes": 36606,
+        "sha256": "b67850d0fa1a06cbebf099f66d363a5d3af01efe605fd3ce764310e711567ef9"
+      },
+      "build_result": {
+        "bytes": 1376677,
+        "sha256": "2559a8181a371963571b96bc9b44106edd3df2acfd6b69f460d7ac96f97aa989"
+      },
+      "Root_qualification": {
+        "bytes": 2547,
+        "sha256": "f6ee9b3e7b2ce75c484a3f9b1e96497d084705eafdd10ddb5ff408102d5dbb88"
+      },
+      "independent_qualification": {
+        "bytes": 30731,
+        "sha256": "9f847384b95495a4b565dbe658b6a9edafc3c9df2d188b595d2ed905f1565b5e"
+      },
+      "ELF": {
+        "bytes": 25339832,
+        "sha256": "185066dd6b8460a7b213f0b0abc659c3f93093e64957e7b1e05b0110f214efc1"
+      },
+      "SDK": {
+        "bytes": 4700160,
+        "sha256": "9a31e800bd4b7bc1e3eccf7089cdbce181cfe3a57d4446eab8a43b240bde9893"
+      },
+      "SDK_regular_members": 535,
+      "SDK_symlinks": 2,
+      "unchanged_main_source_files": 13,
+      "CXX_entries_with_test_define": 457,
+      "startup_CPP_objects": 6,
+      "historical_CPP_objects": 16,
+      "Rust_defined_exports": 23,
+      "sole_Rust_archive_sha256": "246a6680b7f9ed8affd89bd9b022319a0903f5ebc58f03d7d76eaa85f8653311",
+      "actual_matching_AQ15_library": {
+        "bytes": 1853176,
+        "sha256": "32fd43a403df9d09e15f706a46f52ee49ecb15352729d902e45f241c5a174f3f"
+      },
+      "RUNPATH": "$ORIGIN/../lib/pokelinux-aq15",
+      "ldd_relocation_closure_exit": 0,
+      "CPU_groups": 15,
+      "strict_frozen_TUs": 2,
+      "Scope_direct_waits": 55,
+      "Scope_merged_PIPE_EOFs": 55,
+      "embedded_snapshot_producer_waits_separate": 1,
+      "embedded_snapshot_PIPE_EOFs_separate": 2,
+      "main_or_hook_runtime_executed_in_build_epoch": false
+    },
+    "actual_native_retention_GREEN": {
+      "execution": {
+        "bytes": 13808,
+        "sha256": "2278f72f5f6d72e24893d21ffe9a0eab5bd721d0a3bfb5003f23fa40cdb60fab"
+      },
+      "Root_qualification": {
+        "bytes": 4530,
+        "sha256": "4fcd50b792d079a4d81ef7c0d651c672aaabdb306da710c40ab3aee94c0d9084"
+      },
+      "independent_qualification": {
+        "bytes": 10288,
+        "sha256": "5ed6b29647debac7f15b6fdb6dce89a152f875e1398f84809e47e7864f80ed45"
+      },
+      "qualified_scope": "ONLY_PREEXISTING_CHILD_AND_RESOURCE_RETENTION_AFTER_THE_SAME_TWO_INJECTED_STARTUP_FAILURES",
+      "same_frozen_consumer_and_oracle": true,
+      "cases": [
+        {
+          "case": "AFTER_REAL_RESOURCE_SCAN",
+          "classification": "CUSTODY_RETENTION_GREEN",
+          "qualified": true,
+          "outer_closure_pending": false,
+          "case_sha256": "17391f85c55ee0588628259308e4fab6302ffe5e4d19d02c0886fc9a92a00410",
+          "authenticated_records": 13,
+          "CONTROL_WIRE_records": 3,
+          "matched_child_destructor_entries": 0,
+          "all_preexisting_weak_locks_and_metadata_match": true,
+          "expired_weak_identities": [],
+          "identity_or_metadata_mismatches": [],
+          "actual_impl_start_result": null,
+          "effective_impl_start_result": null,
+          "observation_locks_released_before_injection": true,
+          "public_request_order": [
+            "snapshot",
+            "Stop",
+            "snapshot"
+          ],
+          "public_request_duration_ns": [
+            111451,
+            76686,
+            65765
+          ],
+          "original_public_request_bound_ns": 2000000000,
+          "Rust_failed": true,
+          "Rust_ready": false,
+          "Rust_stopping": true,
+          "Rust_join_code": 2,
+          "startup_error": 9,
+          "public_Stop_code": 0,
+          "Pending_status": 0,
+          "resources_retired": 0,
+          "both_borrowed_watches_registered": true,
+          "actual_worker_task_retained": true,
+          "opaque_Rust_pack_retention_is_source_bound_inference_not_private_inspection": true,
+          "owned_main_actual_wait": -9,
+          "native_cleanup_or_Rust_join_claim": false
+        },
+        {
+          "case": "AFTER_REAL_IMPLEMENTATION_START",
+          "classification": "CUSTODY_RETENTION_GREEN",
+          "qualified": true,
+          "outer_closure_pending": false,
+          "case_sha256": "a81d99f7d994da03830046b840daca599e350598bb582fe463e54cf4b58fab2d",
+          "authenticated_records": 13,
+          "CONTROL_WIRE_records": 3,
+          "matched_child_destructor_entries": 0,
+          "all_preexisting_weak_locks_and_metadata_match": true,
+          "expired_weak_identities": [],
+          "identity_or_metadata_mismatches": [],
+          "actual_impl_start_result": true,
+          "effective_impl_start_result": false,
+          "observation_locks_released_before_injection": true,
+          "public_request_order": [
+            "snapshot",
+            "Stop",
+            "snapshot"
+          ],
+          "public_request_duration_ns": [
+            109548,
+            71987,
+            63651
+          ],
+          "original_public_request_bound_ns": 2000000000,
+          "Rust_failed": true,
+          "Rust_ready": false,
+          "Rust_stopping": true,
+          "Rust_join_code": 2,
+          "startup_error": 9,
+          "public_Stop_code": 0,
+          "Pending_status": 0,
+          "resources_retired": 0,
+          "both_borrowed_watches_registered": true,
+          "actual_worker_task_retained": true,
+          "opaque_Rust_pack_retention_is_source_bound_inference_not_private_inspection": true,
+          "owned_main_actual_wait": -9,
+          "native_cleanup_or_Rust_join_claim": false
+        }
+      ],
+      "direct_waits": 29,
+      "PIPE_EOFs": 36,
+      "trace_socket_EOFs": 4,
+      "QMP_socket_EOFs": 1,
+      "QEMU0_CLI0_exact_CID_same_daemon_locked_inputs_original_bounds": true,
+      "normal_BACKEND_READY_or_frame_execution": false,
+      "nested_factory_custody": false,
+      "native_cleanup_drain_join_release": false,
+      "Source_ARM_phone": false
+    },
+    "earlier_structural_RED_native_RED_and_all_failed_epochs_preserved": true,
+    "normal_readiness_nested_factories_retirement_Source_ARM_phone_qualified": false
   }
 }

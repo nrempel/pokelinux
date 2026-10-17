@@ -160,7 +160,7 @@ and all phone gates remain open.
 
 The [initial broker batch peek](docs/native-render-initial-batch.md) now passes real seatd/udev/virtio descriptor capture after an actual missing-API compile RED and matching AQ15 source/SDK build. Rust captures before queue admission; original service leases stay retained. Normal main/worker startup, Source7 and all phone gates remain open.
 
-The [owned startup checkpoint](docs/native-render-owned-startup.md) now qualifies both genuine native failure-custody RED cases after its full test-profile main/SDK build. Real resource-scan continuation and forced failure after actual mandatory-start success each destroy the selected child and expire native weak identities before verified retirement. Three earlier failed attempts remain preserved. Repairing child/start/subordinate-factory custody is next; runtime GREEN, normal rendering, Source and all phone gates remain open.
+The [owned startup checkpoint](docs/native-render-owned-startup.md) now passes the same two failed-startup child-retention cases after qualified native RED. A production AQ dependency patch retains the selected child and all preexisting resource identities through both injected failures; matching AQ/main SDK builds pass. Each case records zero child destructors and valid weak metadata. Startup still fails, Ready stays false and join stays Busy and native shutdown stays Pending. Earlier failures remain preserved; nested factories, normal readiness, retirement, Source and phone gates stay open.
 
 Earlier [permission-aware ARM Sounds composition](docs/native-audio-arm-lifecycle.md)
 passes four touch/graph/PCM groups using root-authored focus. Physical audio,

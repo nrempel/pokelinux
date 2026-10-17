@@ -210,7 +210,23 @@ of those empty regular logs and qualifies both native failure RED cases, with
 29 direct waits/36 PIPE EOFs and full outer closure. Each genuine failure destroys
 the selected child before verified retirement; case two observes actual start
 success before forcing the existing false-result path. Native source, consumer,
-semantic oracle and bounds remain fixed. Repair custody next; no runtime GREEN,
-Rust join/native retirement, Source or phone success is claimed. See the
+semantic oracle and bounds remain fixed. This historical RED precedes the narrow
+retention GREEN below. Normal readiness, Rust join/native retirement, Source and
+phone success remain unqualified. See the
 [full checkpoint](../../docs/native-render-owned-startup.md#runtime-setup-failures-preserved)
 for the exact scope; process disposal is not native cleanup or release.
+
+
+`aquamarine-retained-child-custody.patch` applies after the four published AQ
+patches named in its cohort. This is a production dependency repair for owned
+render-session child custody, outside the test macro. Its three-file increment
+keeps hooks and active-list failure paths unchanged while a bounded ledger retains
+children before acquisition. The Backend layout changes: use the exact new AQ SDK
+and rebuilt matching main/callers; the earlier RED main cannot be reused.
+
+Actual matching AQ and main builds pass their existing CPU/API/loader checks. The
+same two native failed-startup cases then pass child-retention GREEN: zero child
+destructors, no expired weak identities and matching preexisting metadata. Startup
+still fails with Ready false, native error 9 and retained Busy/Pending ownership.
+Prior failed builds/epochs and native RED remain preserved. This does not qualify
+nested factories, normal readiness/rendering, retirement, Source, ARM or phone.
