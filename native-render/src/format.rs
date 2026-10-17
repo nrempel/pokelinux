@@ -1,28 +1,33 @@
-//! Stateless format capability policy. Native adapters supply observations only.
+//! Stateless format operation planning. Native adapters supply observations only.
 //!
-//! Corroboration is not allocation/import eligibility, readiness or display authority.
+//! A plan requests one primitive attempt; it proves no native success or authority.
 use std::mem::size_of;
 
 const INVALID: i32 = 1;
 const CAPACITY: i32 = 2;
-const ABI: u32 = 1;
+const ABI: u32 = 2;
 const MOD_INVALID: u64 = 0x00ff_ffff_ffff_ffff;
 const UNKNOWN: u32 = 0;
 const OK: u32 = 1;
 const ERROR: u32 = 2;
 const PRESENT: u32 = 3;
 const REFUSED: u32 = 1;
-const CORROBORATED: u32 = 2;
+const PREPARE_ATTEMPT: u32 = 2;
+const IMPLICIT: u32 = 1;
+const EXPLICIT: u32 = 2;
 const EMPTY_NATIVE: u32 = 1;
 const EMPTY_MODIFIERS: u32 = 2;
-const IMPLICIT_UNQUALIFIED: u32 = 3;
+const EXPLICIT_MODIFIER_INVALID: u32 = 3;
 const QUERY_UNKNOWN: u32 = 4;
 const QUERY_ERROR: u32 = 5;
 const PROPERTY_ABSENT: u32 = 6;
-const CAP_UNSUPPORTED: u32 = 7;
 const INCONSISTENT: u32 = 8;
 const NO_ROUTE: u32 = 9;
 const NO_EXPLICIT_MATCH: u32 = 10;
+const BACKEND_UNSUPPORTED: u32 = 11;
+const DEVICE_MISMATCH: u32 = 12;
+const OPTIONS_UNSUPPORTED: u32 = 13;
+const NO_IMPLICIT_MATCH: u32 = 14;
 const NATIVE: u32 = 1;
 const CAP: u32 = 2;
 const ROUTE: u32 = 3;
@@ -30,6 +35,12 @@ const PLANE: u32 = 4;
 const TYPE: u32 = 5;
 const IN_FORMATS: u32 = 6;
 const BLOB: u32 = 7;
+const BACKEND: u32 = 8;
+const ALLOCATOR_DEVICE: u32 = 9;
+const KMS_DEVICE: u32 = 10;
+const DEVICE: u32 = 11;
+const OPTIONS: u32 = 12;
+const CONTEXT: u32 = 13;
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
@@ -95,6 +106,14 @@ pub struct Plane {
 }
 #[repr(C)]
 #[derive(Clone, Copy)]
+pub struct Call {
+    pub state: u32,
+    pub return_value: i32,
+    pub error_number: i32,
+    pub reserved: u32,
+}
+#[repr(C)]
+#[derive(Clone, Copy)]
 pub struct Facts {
     pub abi_version: u32,
     pub struct_size: u32,
@@ -122,6 +141,20 @@ pub struct Facts {
     pub crtc_ids: *const u32,
     pub encoder_possible_crtcs: *const u32,
     pub reserved: [u64; 2],
+    pub allocator_kind: u32,
+    pub output_backend_kind: u32,
+    pub width: u32,
+    pub height: u32,
+    pub scanout: u32,
+    pub cursor: u32,
+    pub multigpu: u32,
+    pub ordinary_reserved: u32,
+    pub allocator_device_query: Call,
+    pub kms_device_query: Call,
+    pub allocator_rdev: u64,
+    pub kms_rdev: u64,
+    pub devices_equal: i32,
+    pub devices_equal_count: u32,
 }
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
@@ -134,8 +167,10 @@ pub struct Selection {
     pub plane_id: u32,
     pub drm_format: u32,
     pub refusal_source: u32,
-    pub reserved: u32,
+    pub buffer_mode: u32,
     pub modifier: u64,
+    pub width: u32,
+    pub height: u32,
 }
 
 // Empty borrowed arrays require null. The caller still guarantees live memory;
@@ -208,6 +243,30 @@ fn cap(value: Capability) -> bool {
             _ => false,
         }
 }
+fn call(value: Call) -> bool {
+    value.reserved == 0
+        && value.error_number >= 0
+        && match value.state {
+            UNKNOWN | OK => value.return_value == 0 && value.error_number == 0,
+            ERROR => value.return_value != 0,
+            _ => false,
+        }
+}
+fn ordinary(f: &Facts) -> bool {
+    f.ordinary_reserved == 0
+        && (1..=16384).contains(&f.width)
+        && (1..=16384).contains(&f.height)
+        && f.scanout <= 1
+        && f.cursor <= 1
+        && f.multigpu <= 1
+        && call(f.allocator_device_query)
+        && call(f.kms_device_query)
+        && match f.devices_equal_count {
+            0 => f.devices_equal == 0,
+            1 => f.allocator_device_query.state == OK && f.kms_device_query.state == OK,
+            _ => false,
+        }
+}
 fn encoder(f: &Facts) -> bool {
     f.current_encoder_errno >= 0
         && match f.current_encoder_state {
@@ -232,6 +291,7 @@ struct Views<'a> {
 impl Views<'_> {
     fn valid(&self, f: &Facts) -> bool {
         if !context(f.context)
+            || !ordinary(f)
             || !cap(f.cap)
             || !encoder(f)
             || !read_state(f.route_state, f.route_errno)
@@ -311,30 +371,58 @@ fn query_reason(state: u32) -> u32 {
 }
 fn choose(f: &Facts, v: &Views<'_>) -> Selection {
     let reject = |reason, source, plane| refuse(f.context, reason, source, plane);
+    if f.allocator_kind == UNKNOWN || f.output_backend_kind == UNKNOWN {
+        return reject(QUERY_UNKNOWN, BACKEND, 0);
+    }
+    if f.allocator_kind != 1 || f.output_backend_kind != 1 {
+        return reject(BACKEND_UNSUPPORTED, BACKEND, 0);
+    }
+    if f.scanout != 1 || f.cursor != 0 || f.multigpu != 0 {
+        return reject(OPTIONS_UNSUPPORTED, OPTIONS, 0);
+    }
+    for (query, source) in [
+        (f.allocator_device_query, ALLOCATOR_DEVICE),
+        (f.kms_device_query, KMS_DEVICE),
+    ] {
+        if query.state != OK {
+            return reject(query_reason(query.state), source, 0);
+        }
+    }
+    if f.devices_equal_count == 0 {
+        return reject(QUERY_UNKNOWN, DEVICE, 0);
+    }
+    match f.devices_equal {
+        0 => return reject(DEVICE_MISMATCH, DEVICE, 0),
+        1 => (),
+        _ => return reject(INCONSISTENT, DEVICE, 0),
+    }
+    if f.kms_rdev != f.context.rdev {
+        return reject(INCONSISTENT, CONTEXT, 0);
+    }
     let Some(first) = v.native.first() else {
         return reject(EMPTY_NATIVE, NATIVE, 0);
     };
-    if first.modifier_count == 0 {
-        return reject(EMPTY_MODIFIERS, NATIVE, 0);
-    }
-    let modifier = v.modifiers[first.modifier_first as usize];
-    if modifier == MOD_INVALID {
-        return reject(IMPLICIT_UNQUALIFIED, NATIVE, 0);
-    }
     if f.cap.state != OK {
         return reject(query_reason(f.cap.state), CAP, 0);
     }
-    if f.cap.value != 1 {
-        return reject(
-            if f.cap.value == 0 {
-                CAP_UNSUPPORTED
-            } else {
-                INCONSISTENT
-            },
-            CAP,
-            0,
-        );
-    }
+    let buffer_mode = match f.cap.value {
+        0 => IMPLICIT,
+        1 => EXPLICIT,
+        _ => return reject(INCONSISTENT, CAP, 0),
+    };
+    let modifier = if buffer_mode == EXPLICIT {
+        if first.modifier_count == 0 {
+            return reject(EMPTY_MODIFIERS, NATIVE, 0);
+        }
+        let modifier = v.modifiers[first.modifier_first as usize];
+        if modifier == MOD_INVALID {
+            return reject(EXPLICIT_MODIFIER_INVALID, NATIVE, 0);
+        }
+        modifier
+    } else {
+        // The implicit mode is a request, never a layout inferred from raw modifiers.
+        0
+    };
     if f.route_state != OK {
         return reject(query_reason(f.route_state), ROUTE, 0);
     }
@@ -374,43 +462,59 @@ fn choose(f: &Facts, v: &Views<'_>) -> Selection {
         if p.type_property.value != 1 {
             continue;
         }
-        if p.in_formats.state != PRESENT {
-            return reject(query_reason(p.in_formats.state), IN_FORMATS, p.plane_id);
+        if !(p.in_formats.state == OK && buffer_mode == IMPLICIT) {
+            if p.in_formats.state != PRESENT {
+                return reject(query_reason(p.in_formats.state), IN_FORMATS, p.plane_id);
+            }
+            if p.in_formats.value == 0 {
+                return reject(INCONSISTENT, IN_FORMATS, p.plane_id);
+            }
+            if p.blob_state != OK {
+                return reject(query_reason(p.blob_state), BLOB, p.plane_id);
+            }
+            if buffer_mode == EXPLICIT {
+                let pairs = &v.pairs[p.pair_first as usize..(p.pair_first + p.pair_count) as usize];
+                if !pairs
+                    .iter()
+                    .any(|pair| pair.drm_format == first.drm_format && pair.modifier == modifier)
+                {
+                    continue;
+                }
+            }
         }
-        if p.in_formats.value == 0 {
-            return reject(INCONSISTENT, IN_FORMATS, p.plane_id);
-        }
-        if p.blob_state != OK {
-            return reject(query_reason(p.blob_state), BLOB, p.plane_id);
-        }
-        let pairs = &v.pairs[p.pair_first as usize..(p.pair_first + p.pair_count) as usize];
-        if pairs
-            .iter()
-            .any(|pair| pair.drm_format == first.drm_format && pair.modifier == modifier)
-        {
-            return Selection {
-                abi_version: ABI,
-                struct_size: size_of::<Selection>() as u32,
-                decision: CORROBORATED,
-                context: f.context,
-                plane_id: p.plane_id,
-                drm_format: first.drm_format,
-                modifier,
-                ..Selection::default()
-            };
-        }
+        return Selection {
+            abi_version: ABI,
+            struct_size: size_of::<Selection>() as u32,
+            decision: PREPARE_ATTEMPT,
+            context: f.context,
+            plane_id: p.plane_id,
+            drm_format: first.drm_format,
+            buffer_mode,
+            modifier,
+            width: f.width,
+            height: f.height,
+            ..Selection::default()
+        };
     }
-    reject(NO_EXPLICIT_MATCH, PLANE, 0)
+    reject(
+        if buffer_mode == IMPLICIT {
+            NO_IMPLICIT_MATCH
+        } else {
+            NO_EXPLICIT_MATCH
+        },
+        PLANE,
+        0,
+    )
 }
 
-/// Return one owned capability decision without retaining any caller memory.
+/// Return one owned operation plan without retaining any caller memory.
 ///
 /// # Safety
 /// Advertised nonnull ranges must be live for the call, read-only for inputs and
 /// writable for result. Shape/alignment/overlap errors are detected before writes;
 /// no general validity check of arbitrary addresses is possible. See the C header.
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn pr_format_select_v1(facts: *const Facts, result: *mut Selection) -> i32 {
+pub unsafe extern "C" fn pr_format_select_v2(facts: *const Facts, result: *mut Selection) -> i32 {
     match unsafe { select(facts, result) } {
         Ok(value) => {
             unsafe {

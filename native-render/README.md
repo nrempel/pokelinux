@@ -44,13 +44,14 @@ actual AQ recovery remains unavailable at fresh DRM format/modifier corroboratio
 A separate real KVM [format observation](../tools/native-render-owner/format-diagnostic/README.md)
 now identifies an explicit-modifier negotiation mismatch after its own actual
 RED; its matching build and frozen diagnostic pass. A separate
-[Rust format-policy component](../docs/native-render-format-policy.md) now passes
-four unchanged real C++/Rust ABI groups with the same fresh archive as all64 old
-Rust tests and the five existing C++ programs. Its authored facts prove CPU policy
-only. The native adapter has not called this helper yet; shared bootstrap/recovery
-wiring and exact allocation/import remain required. Native prepare/execute still
-return protocol refusal. Normal client frames, Source and phone qualification
-remain open.
+[Rust format planner](../docs/native-render-format-policy.md) now passes
+six real C++/Rust ABI groups with the same fresh archive as all64 old Rust tests
+and the five existing C++ programs. V2 replaces the old format API and selects an
+exact implicit or explicit request from raw backend/device/capability observations.
+This is authored CPU policy evidence. The shared native bootstrap/CHANGE collector
+is authored separately; its matching full build and runtime remain pending.
+Native prepare/execute still return protocol refusal. Normal client frames,
+Source and phone qualification remain open.
 The historical checkpoints below retain their original providers and scopes.
 
 ## Build and actual boundary test
@@ -72,7 +73,7 @@ The C++ flags are `-std=c++20 -O2 -Wall -Wextra -Werror -pthread`.
 
 Compile `tests/format_ffi.cpp` against `include/pokelinux_render_format.h`
 and that same actual archive, adding `-pedantic` and the reported native libraries.
-Its success marker is `FORMAT_SELECT_ALL_PASS groups=4`. The inputs are authored
+Its success marker is `FORMAT_SELECT_ALL_PASS groups=6`. The inputs are authored
 CPU facts; this does not run a DRM backend or qualify native compositor wiring.
 
 The test uses an actual shared memfd and forked producer: capture, mutation,

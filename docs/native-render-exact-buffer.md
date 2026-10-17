@@ -10,7 +10,8 @@ Portable format decisions and lifecycle belong in Rust; the native adapter
 still has C++ policy awaiting replacement. This dependency patch performs native
 GBM/DRM operations and retains objects through the existing swapchain/framebuffer
 holders. The [Rust selector](native-render-format-policy.md) remains disconnected
-from that adapter and currently refuses implicit selection. Test requests grant
+from that adapter. Its separately tested V2 can plan an implicit request; native
+wiring and execution remain unqualified. Test requests grant
 no production eligibility or display authority.
 
 The [source and tests](../tools/native-render-owner/exact-buffer/README.md) add
@@ -54,8 +55,8 @@ processes/EOF, QEMU0, CLI1, exact containers and unchanged inputs separately fro
 their failed integration result. Raw receipts remain private; the public cohort
 contains source identities and compact observations.
 
-Connect the existing production Rust CHANGE reconciliation, extend Rust format
-selection for an exact implicit attempt, then implement owned prepare/execute
+Connect the existing production Rust CHANGE reconciliation and the V2 Rust format
+planner, then implement owned prepare/execute
 and real client capture. Preserve
 the real event; do not relax the fixture to manufacture GREEN. Continue one normal
 app session through presentation, Sounds/PCM, permissions, live Omarchy themes,
