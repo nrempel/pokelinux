@@ -151,3 +151,42 @@ and theme host. This epoch does not exercise a live theme change, the installed
 Omarchy shell/menu, secure lock presentation, a stopped compositor, ARM or a
 phone. Its one prepared client warmup does not repair either earlier cold-start
 Source failure. All those gates remain open.
+
+## Compositor freeze: expiry and Stop
+
+Two additional fresh native x86 epochs start with the same actual protected
+Sounds window, healthy Source, independent grant, real touch and measured speaker
+PCM. Each then stops the exact retained compositor with pidfd `SIGSTOP`. These
+qualify existing Rust behavior; production code and the successful four-group
+epoch remain unchanged. No compositor query, plugin-unload request or `SIGCONT`
+is used after the stop.
+
+The expiry epoch observes a real cached-sample rejection113.475386ms after its
+sample,98.608345ms after SIGSTOP began. Validation follows the actual stopped
+state and precedes any Stop request. The actor locks, removes permissions and
+principals, retires the app/listeners and compositor, and independently measured
+PCM becomes silent. The fixed launch client is refused. The identical failure
+survives these observations; only then does the test request native Stop and
+actually wait for the owner.
+
+The separate Stop epoch sends native Stop as its first post-SIGSTOP actor request.
+Immediately before sending, the retained compositor is still live in stateT and
+the last healthy sample is11.315965ms old against the100ms lease. The authenticated
+Ok arrives0.952184ms after the request starts; actual parent wait0 for the owner
+is observed69.934551ms after request start. These are one-run observations,
+within the unchanged2s response and10s outer owner-wait limits, not latency
+guarantees. This uses the existing authenticated native admin packet, not a
+separate Stop CLI execution. It makes no independent-expiry claim.
+
+Each epoch passes three groups and six raw PCM windows:144,000 measured frames.
+Only the focused speaker window contains440Hz; the other five windows are silent.
+Independent recomputation, matching provider/SDK/input identities, native Pixel
+captures, actual owner/guest waits and output EOFs, QMP shutdown, QEMU/CLI0 and
+same-daemon exact container absence all qualify within the original limits.
+
+A whole-process SIGSTOP also suspends Source production. These passes therefore
+qualify fail-closed withdrawal and responsive Stop, not fresh focus/lock facts
+during rendering-only stalls, uninterruptible kernel work, native display or
+vendor cleanup, ARM or a physical phone. Continue with cold installed startup
+through real units/configuration and the genuine shell, then installed ARM app/
+theme composition and the concrete matched Pixel graphics/userspace boundary.

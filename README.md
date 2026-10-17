@@ -18,9 +18,15 @@ qualify the Pixel10 profile:1080×2424, approximately422PPI and DPR2.625.
 The only compositor source change is a
 [one-entry logical-output allowlist fix](patches/hyprland-unprivileged-logical-output.patch),
 qualified after actual registry RED. Cold startup, live theme changes in this
-combined slice, the full Omarchy shell/menu, render-stall behavior and native
-display cleanup remain open. The unsuccessful initial-presentation candidate
+combined slice, the full Omarchy shell/menu, fresh Source during rendering stalls
+and native display cleanup remain open. The unsuccessful initial-presentation candidate
 stays unmerged; Source retains its unchanged100ms freshness rule.
+
+Two separate [compositor-freeze tests](docs/native-normal-upstream-tracer.md#compositor-freeze-expiry-and-stop)
+now pass. One proves permission withdrawal and silent audio before Stop; the other
+gets Stop acknowledgement in0.95ms and an actual owner exit in70ms while the
+compositor is frozen. These are individual VM measurements. Cold installed
+startup is the next integration gate.
 
 The [Rust ingress wake fix](docs/native-render-ingress-wake.md) passes its frozen RED→GREEN regression and all66 active Rust tests, with two ignored child modes, formatting, strict Clippy and release compilation. This repairs the experimental executor component; it establishes no normal compositor frame or phone behavior.
 
@@ -50,9 +56,11 @@ flowchart TB
 
 Dashed connections are work still required, not working hardware paths. “Rust services” is the implementation direction; only a small part of native IMS exists today. We are not rewriting the Linux kernel or modem firmware in Rust. The [current integration map](docs/native-integration-map.md) separates components, installed service/app composition and remaining backend evidence.
 
-Hyprland, Aquamarine and the Qt app frontend still contain substantial C++. The Rust migration is unfinished. New lifecycle, event ordering and scheduling policy belongs in Rust; existing native code remains behind explicit adapters while those paths are migrated.
+Hyprland, Aquamarine and the Qt app frontend contain C++. Upstream graphics engines and small adapters remain part of the selected normal stack. New phone-service policy and resource ownership belong in Rust; the custom renderer remains parked as component research.
 
 ## What has been tested
+
+The renderer checkpoints immediately below are earlier component research. The current normal-stack app and lifecycle results are linked above.
 
 The [native graphics resource operations](docs/native-render-exact-buffer.md) pass their matching normal AQ15 build, ten existing CPU groups and four API checks after missing-interface RED. Two real-driver runs observe all five resource groups passing, but both aggregates fail a control-session check; the diagnostic identifies revocation with a queued CHANGE. Production exact-buffer preparation/execution, normal frames, Source, ARM and phone gates remain open.
 

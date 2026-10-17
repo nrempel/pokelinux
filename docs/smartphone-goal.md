@@ -12,6 +12,14 @@ render-stall availability and native display cleanup remain open. The custom
 renderer results below remain component research. The full completion matrix and
 all physical-phone gates stay open.
 
+Two additional [whole-compositor stall epochs](native-normal-upstream-tracer.md#compositor-freeze-expiry-and-stop)
+now qualify independent100ms Source-expiry withdrawal/quietness/refusal before
+Stop, and separately native Stop while the compositor remains stopped. Each
+retains six PCM windows/144,000 measured frames and owned closure. Fresh Source
+facts during rendering-only stalls, native display cleanup and phone gates stay
+open. Cold installed normal startup is next, followed by genuine ARM shell/app/
+theme composition and the matched Pixel userspace graphics boundary.
+
 The [native graphics resource operations](native-render-exact-buffer.md) pass their matching normal AQ15 build, ten existing CPU groups and four API checks after missing-interface RED. Two real-driver runs observe all five resource groups passing, but both aggregates fail a control-session check; the diagnostic identifies revocation with a queued CHANGE. Production exact-buffer preparation/execution, normal frames, Source, ARM and phone gates remain open.
 
 The [Rust format planner](native-render-format-policy.md) now chooses exact implicit or explicit requests from copied native observations. Its six-group C++/Rust boundary test, all64 existing Rust tests, five previous C++ programs, formatting, strict Clippy and Release build pass after genuine missing-interface RED. The obsolete planning API is removed. The shared native startup/CHANGE collector removes both old C++ format choices and passes its matching full compositor/SDK build. The unchanged normal startup/CHANGE test also passes on the real generic x86 KVM virtio driver: Rust accepts the fresh sequence4 configuration after bootstrap3, with one output and no Stop. Client frames, native retirement and the integrated normal app session remain open.

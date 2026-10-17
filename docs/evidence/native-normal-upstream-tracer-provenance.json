@@ -130,11 +130,11 @@
     }
   ],
   "still_open": [
-    "cold session Source availability",
+    "cold installed session Source availability",
     "live theme changes in the current combined app/service slice",
-    "render-stall availability and separate responsive Stop while stalled",
+    "fresh Source/focus/lock availability during render-only stalls",
     "full installed Omarchy shell and menu integration",
-    "native display and vendor cleanup",
+    "native display/vendor cleanup and genuinely uninterruptible native tasks",
     "ARM composed runtime and physical phone gates"
   ],
   "phone_accessed": false,
@@ -243,7 +243,7 @@
       "full_PCM_oracles_executed": false
     }
   ],
-  "next_boundary": "Two distinct actual compositor-stall epochs: independent Source-expiry/quietness/refusal, and immediate responsive native Stop while compositor is still stopped. Cold availability, full shell, live combined theme changes, ARM and hardware remain open.",
+  "next_boundary": "Cold installed normal-stack startup through genuine unit/config/shell without manual warmup or adapter load; then installed ARM Omarchy shell/menu/live themes/Messages; resolve concrete matched PowerVR userspace ABI offline. No custom-renderer prerequisite.",
   "logical_output_boundary": {
     "aggregate_passed": false,
     "actual_missing_required_global_RED_qualified": true,
@@ -592,5 +592,302 @@
     "all_original_resource_and_deadline_limits_retained": true,
     "recorded_owned_closure_qualified": true
   },
-  "full_app_service_composition_scope": "Full cold/installed shell and live-theme/stall-qualified system remains open; the narrower prepared four-group app/service slice passes below."
+  "full_app_service_composition_scope": "Full cold/installed shell and live-theme/stall-qualified system remains open; the narrower prepared four-group app/service slice passes below.",
+  "whole_compositor_SIGSTOP_lifecycle_qualified": true,
+  "render_only_fresh_facts_availability_qualified": false,
+  "whole_compositor_stall_cases": [
+    {
+      "mode": "expiry-before-stop",
+      "actual_Root_exec_exit": 0,
+      "bindings": {
+        "selection.json": {
+          "bytes": 120355,
+          "sha256": "8b380ad2f4be851d53d565f6fa6daf2d8a7ab998e88a9f6351a08eddcb320f20"
+        },
+        "command.json": {
+          "bytes": 1297,
+          "sha256": "09d3313fb51e5925e0c0b43bbeddd6572b8dea1662367ded9ad5c325bde59c1d"
+        },
+        "execution.json": {
+          "bytes": 12033,
+          "sha256": "45822e410f09a410cc5c7e2be8aca5244f60c6a68b0c8a64b79f425f17d3bd17"
+        },
+        "boot-result.json": {
+          "bytes": 11116,
+          "sha256": "dc4079c65b3e86b893fce80ed984338df1e6fbd2bc83ebb4ddf43823b10b3a20"
+        },
+        "bootstrap-result.json": {
+          "bytes": 7252,
+          "sha256": "68c4f6aa35d1b9565c4dbe2a769b7c310cf99321859bc1931499b0bac8e1a4d4"
+        },
+        "result.json": {
+          "bytes": 479752,
+          "sha256": "eded2870572385f0aa16c8d02e9c380757886ae8c94bac8663f7ef1814d0e82f"
+        }
+      },
+      "frozen_contract_sha256": "6739a094dc93de3e42146e0673e00bc4b3c42816b556e831b962a9865ea4d034",
+      "preparation_sha256": "ef8b9ee7a9f4e45dec7112061c2fa90dc73d58eb87a1917740fc41a2346bfa1d",
+      "actual_retained_compositor_state": "T",
+      "healthy_Source_and_real_speaker_PCM_prerequisite": true,
+      "Stop_transport": "native existing authenticated root admin packet; not a separate CLI execution",
+      "Stop_ACK_elapsed_ns": 103696,
+      "Stop_request_to_actual_owner_wait0_ns": 21483855,
+      "original_ACK_bound_ns": 2000000000,
+      "original_owner_wait_bound_ns": 10000000000,
+      "PCM_windows": 6,
+      "PCM_measured_frames": 144000,
+      "PCM_groups": [
+        {
+          "id": 1,
+          "stage": "released_silence",
+          "result_sha256": "60ed172baeb1bd940f07e04dc05fe0f911a500c8005875fe6837fbf4800f06bd",
+          "measured_frames": 48000,
+          "stats": {
+            "speaker": {
+              "frames": 24000,
+              "finite_all": true,
+              "rms": 0.0,
+              "peak": 0.0,
+              "tone_amplitudes": {
+                "440": 0.0,
+                "880": 0.0
+              },
+              "expected_hz": 0
+            },
+            "earpiece": {
+              "frames": 24000,
+              "finite_all": true,
+              "rms": 0.0,
+              "peak": 0.0,
+              "tone_amplitudes": {
+                "440": 0.0,
+                "880": 0.0
+              },
+              "expected_hz": 0
+            }
+          }
+        },
+        {
+          "id": 2,
+          "stage": "media_speaker",
+          "result_sha256": "6d9553a982ae1d91a1c1d30ae6a3db181277394005a7e4aec66668b044a6352d",
+          "measured_frames": 48000,
+          "stats": {
+            "speaker": {
+              "frames": 24000,
+              "finite_all": true,
+              "rms": 0.04419418789187871,
+              "peak": 0.062499988824129105,
+              "tone_amplitudes": {
+                "440": 0.06250001920407654,
+                "880": 7.741136697845355e-08
+              },
+              "expected_hz": 440,
+              "selected_tone_energy_fraction": 0.999999977898146
+            },
+            "earpiece": {
+              "frames": 24000,
+              "finite_all": true,
+              "rms": 0.0,
+              "peak": 0.0,
+              "tone_amplitudes": {
+                "440": 0.0,
+                "880": 0.0
+              },
+              "expected_hz": 0
+            }
+          }
+        },
+        {
+          "id": 3,
+          "stage": "released_silence",
+          "result_sha256": "d5a48200aad080fda81e7d844e63a47e148770f6eb25b38778374c5554264803",
+          "measured_frames": 48000,
+          "stats": {
+            "speaker": {
+              "frames": 24000,
+              "finite_all": true,
+              "rms": 0.0,
+              "peak": 0.0,
+              "tone_amplitudes": {
+                "440": 0.0,
+                "880": 0.0
+              },
+              "expected_hz": 0
+            },
+            "earpiece": {
+              "frames": 24000,
+              "finite_all": true,
+              "rms": 0.0,
+              "peak": 0.0,
+              "tone_amplitudes": {
+                "440": 0.0,
+                "880": 0.0
+              },
+              "expected_hz": 0
+            }
+          }
+        }
+      ],
+      "app_compositor_pidfd_dead_and_proc_absent": true,
+      "all_display_listeners_absent": true,
+      "SIGCONT_or_post_stall_compositor_query_used": false,
+      "original_resources_deadlines_and_Source_lease_unchanged": true,
+      "recorded_owned_closure_and_locked_inputs_qualified": true,
+      "production_change_or_TDD_repair_claim": false,
+      "render_only_fresh_facts_or_D_state_or_vendor_cleanup_or_ARM_or_phone_claim": false,
+      "independent_expiry_before_Stop": true,
+      "expiry_sample_age_ns": 113475386,
+      "expiry_validation_after_SIGSTOP_start_ns": 98608345,
+      "failure_category": "provider_error",
+      "failure_stage": "cached_sample",
+      "failure_reason": "sample_expired",
+      "later_fixed_launch_refused": true,
+      "quiet_PCM_before_Stop": true
+    },
+    {
+      "mode": "stop-while-stopped",
+      "actual_Root_exec_exit": 0,
+      "bindings": {
+        "selection.json": {
+          "bytes": 120353,
+          "sha256": "7d533a9991a8d5675dbace0e3aa3c60432f58f9261920537a4ee5c5e99ba1571"
+        },
+        "command.json": {
+          "bytes": 1291,
+          "sha256": "84d6c52ce15d5baa5e4730d9e6fbaec71987299948fbe76184724ae700edd927"
+        },
+        "execution.json": {
+          "bytes": 12023,
+          "sha256": "87144c42591c45752450471a8eb914549c827b5eb8c5798c971ff361dec6067b"
+        },
+        "boot-result.json": {
+          "bytes": 11114,
+          "sha256": "b462a9633a10259bf1c33d14db357c29b07ffe188aa71cf7449ea4b24fa83fe2"
+        },
+        "bootstrap-result.json": {
+          "bytes": 7250,
+          "sha256": "8e677548a3df4ca813ba1c2e3eb84097927043b4127b04a1ab242dfb2ab017be"
+        },
+        "result.json": {
+          "bytes": 465821,
+          "sha256": "63779a48b553a809c3c437fae131f065bc501678a6eec9c3e8056623dce3967e"
+        }
+      },
+      "frozen_contract_sha256": "6739a094dc93de3e42146e0673e00bc4b3c42816b556e831b962a9865ea4d034",
+      "preparation_sha256": "ef8b9ee7a9f4e45dec7112061c2fa90dc73d58eb87a1917740fc41a2346bfa1d",
+      "actual_retained_compositor_state": "T",
+      "healthy_Source_and_real_speaker_PCM_prerequisite": true,
+      "Stop_transport": "native existing authenticated root admin packet; not a separate CLI execution",
+      "Stop_ACK_elapsed_ns": 952184,
+      "Stop_request_to_actual_owner_wait0_ns": 69934551,
+      "original_ACK_bound_ns": 2000000000,
+      "original_owner_wait_bound_ns": 10000000000,
+      "PCM_windows": 6,
+      "PCM_measured_frames": 144000,
+      "PCM_groups": [
+        {
+          "id": 1,
+          "stage": "released_silence",
+          "result_sha256": "bfe186ed9961a17fed1b9d9fdf241ed6f2fcd09c4984f92e7acbc05bf9980a7f",
+          "measured_frames": 48000,
+          "stats": {
+            "speaker": {
+              "frames": 24000,
+              "finite_all": true,
+              "rms": 0.0,
+              "peak": 0.0,
+              "tone_amplitudes": {
+                "440": 0.0,
+                "880": 0.0
+              },
+              "expected_hz": 0
+            },
+            "earpiece": {
+              "frames": 24000,
+              "finite_all": true,
+              "rms": 0.0,
+              "peak": 0.0,
+              "tone_amplitudes": {
+                "440": 0.0,
+                "880": 0.0
+              },
+              "expected_hz": 0
+            }
+          }
+        },
+        {
+          "id": 2,
+          "stage": "media_speaker",
+          "result_sha256": "4e4776e100b18173d9280801e8aaea734353b04ab10a96d04b5309ab84510b0f",
+          "measured_frames": 48000,
+          "stats": {
+            "speaker": {
+              "frames": 24000,
+              "finite_all": true,
+              "rms": 0.04419418808115449,
+              "peak": 0.062499988824129105,
+              "tone_amplitudes": {
+                "440": 0.06250001947163913,
+                "880": 3.839794999098198e-08
+              },
+              "expected_hz": 440,
+              "selected_tone_energy_fraction": 0.9999999778945055
+            },
+            "earpiece": {
+              "frames": 24000,
+              "finite_all": true,
+              "rms": 0.0,
+              "peak": 0.0,
+              "tone_amplitudes": {
+                "440": 0.0,
+                "880": 0.0
+              },
+              "expected_hz": 0
+            }
+          }
+        },
+        {
+          "id": 3,
+          "stage": "released_silence",
+          "result_sha256": "044a8a25582e4256dfb4911b44f7d78d7b00b71c2356f811e05ecde207cae7f3",
+          "measured_frames": 48000,
+          "stats": {
+            "speaker": {
+              "frames": 24000,
+              "finite_all": true,
+              "rms": 0.0,
+              "peak": 0.0,
+              "tone_amplitudes": {
+                "440": 0.0,
+                "880": 0.0
+              },
+              "expected_hz": 0
+            },
+            "earpiece": {
+              "frames": 24000,
+              "finite_all": true,
+              "rms": 0.0,
+              "peak": 0.0,
+              "tone_amplitudes": {
+                "440": 0.0,
+                "880": 0.0
+              },
+              "expected_hz": 0
+            }
+          }
+        }
+      ],
+      "app_compositor_pidfd_dead_and_proc_absent": true,
+      "all_display_listeners_absent": true,
+      "SIGCONT_or_post_stall_compositor_query_used": false,
+      "original_resources_deadlines_and_Source_lease_unchanged": true,
+      "recorded_owned_closure_and_locked_inputs_qualified": true,
+      "production_change_or_TDD_repair_claim": false,
+      "render_only_fresh_facts_or_D_state_or_vendor_cleanup_or_ARM_or_phone_claim": false,
+      "first_post_stall_native_actor_request": "Stop",
+      "pre_send_healthy_sample_age_ns": 11315965,
+      "independent_expiry_inferred": false
+    }
+  ]
 }

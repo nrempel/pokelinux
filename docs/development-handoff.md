@@ -47,9 +47,19 @@ Stop/owner/guest/VM/container/input closure pass separately within that epoch.
 The captures are from a prepared native x86 session with a visible debug banner.
 This is a completed app/service tracer, not a cold-start repair, live theme-change
 or full-shell qualification, render-stall proof, ARM selection or phone boot.
-Next exercise genuine compositor stall with independent expiry and separately
-responsive Stop, then the broader installed app/theme/phone matrix. Do not resume
-the parked custom renderer as a prerequisite. Keep Pixel targets fixed.
+Two later whole-compositor SIGSTOP epochs now independently qualify expiry with
+pre-Stop silent PCM/refusal, and native Stop while the compositor remains stopped.
+The latter observes Ok0.952184ms and actual ownerwait0 at69.934551ms after request
+start, with its previous healthy sample only11.315965ms old at send. Each passes
+six PCM windows/144,000 measured frames and original owned/input closure. These
+are existing-behavior x86 qualifications, not fresh Source during rendering-only
+stalls or native display cleanup. No production repair is claimed.
+
+Next complete cold installed normal-stack startup without manual warmup/adapter
+loading; then installed ARM real Omarchy shell/menu/live theme/Messages composition;
+then resolve the concrete matched PowerVR userspace boundary offline. Astra's
+current architecture review supports that order. Keep the diagnostic boot bundle
+frozen and the custom renderer parked. Keep Pixel targets fixed.
 
 The Rust [one-shot add-PDN response observer](native-radio-add-pdn-response.md)
 now retains immutable request/session/route/error/byte history after frozen
