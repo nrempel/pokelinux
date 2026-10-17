@@ -34,15 +34,22 @@ cleanup stay open. No physical phone is authorized.
 
 Two fresh [normal upstream startup attempts](native-normal-upstream-tracer.md)
 retain terminal Source failures, including the unsuccessful private initial-present
-candidate. Do not merge it or add another speculative activation predicate. A
-later prepared session now launches actual Sounds through the Rust owner with
-Source healthy through sequence87. Its strict screen metadata fails before the
-four behavior/PCM groups. A later actual registry consumer now qualifies missing
-logical-output RED on that exact owned app listener, with Source healthy and all
-prior privileged protocols still hidden. Next qualify a one-entry upstream
-allowlist correction against the same frozen consumer, then the full app/PCM
-contract. Keep Pixel targets fixed. Prepared startup cannot qualify cold startup
-or complete the phone goal.
+candidate. Do not merge it or add another speculative activation predicate.
+After actual missing-logical-output RED, a one-entry upstream allowlist patch now
+passes the same real registry consumer and the full prepared four-group Sounds
+session: denied silence, independent grant plus real touch/virtual speaker PCM,
+null-focus restriction with retained approved media, and terminal Source loss
+with quiet PCM and later launch refusal. Eight windows retain192,000 measured
+frames. Actual screen/window/native capture qualifies the Pixel10 profile without
+resizing. Full matching SDK and plugins, current32 audio/29 appearance cases,
+Stop/owner/guest/VM/container/input closure pass separately within that epoch.
+
+The captures are from a prepared native x86 session with a visible debug banner.
+This is a completed app/service tracer, not a cold-start repair, live theme-change
+or full-shell qualification, render-stall proof, ARM selection or phone boot.
+Next exercise genuine compositor stall with independent expiry and separately
+responsive Stop, then the broader installed app/theme/phone matrix. Do not resume
+the parked custom renderer as a prerequisite. Keep Pixel targets fixed.
 
 The Rust [one-shot add-PDN response observer](native-radio-add-pdn-response.md)
 now retains immutable request/session/route/error/byte history after frozen

@@ -18,6 +18,19 @@ The graphics builder applies our patches to the pinned libhybris tree. Preserve 
 
 A manifest and fetch scripts keep dependency identity explicit without copying upstream history into this repository. Use a submodule only if future work requires direct development in a maintained upstream checkout. Subtrees are not the default. Submit reusable fixes upstream where practical, then remove the local patch when the pinned upstream revision contains it.
 
+## Current normal compositor correction
+
+The prepared app tracer uses Hyprland0.56.2 source commit
+`efb50993780079460b0cbed1363e2166a2de1d9f` with one
+[logical-output allowlist entry](../patches/hyprland-unprivileged-logical-output.patch).
+The actual protected app listener first fails its required protocol check; the
+same consumer, complete matching SDK/plugins and full prepared Sounds/PCM slice
+then pass. See [qualification and provenance](native-normal-upstream-tracer.md).
+The local ELF is explicitly source-built, not the signed Arch binary. Keep its
+whole SDK together with the ELF, and retain the recorded normal Aquamarine14/system
+library cohort. Do not mix in the parked custom-renderer dependencies. This
+checkpoint does not provide an installed phone package or reproducible full OS.
+
 ## Inputs not supplied here
 
 Google factory images, proprietary APKs, PowerVR libraries, modem/camera firmware and extracted vendor files remain local inputs subject to their original terms. Download them from their official source separately; this project does not grant redistribution rights or accept terms on behalf of contributors. The Android SDK and emulator image must also be provisioned separately.

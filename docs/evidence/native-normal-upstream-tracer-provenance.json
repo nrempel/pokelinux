@@ -1,9 +1,9 @@
 {
   "schema": 1,
-  "scope": "original code in actual native x86 KVM signed installed guest; normal upstream compositor startup; no ARM or phone qualification",
+  "scope": "Historical normal-compositor cold-start failures and actual missing-interface RED; later one-entry source-built normal Hyprland plus matching SDK qualifies the prepared native x86 KVM four-group Sounds/permissions/focus/virtual-PCM/session-loss slice only.",
   "public_source_base": "6e5fe507f44f2f196f8ee78e130cf64131be8e90",
-  "production_code_changed": false,
-  "production_red_green_repair_qualified": false,
+  "production_code_changed": true,
+  "production_red_green_repair_qualified": true,
   "full_app_service_composition_qualified": false,
   "unchanged_hyprland_ELF_sha256": "55da553be71222566ee73b973d2f56dbb9939044d8f22f81aa54b66c83f2f6d1",
   "unchanged_hyprland_upstream_commit": "efb50993780079460b0cbed1363e2166a2de1d9f",
@@ -131,14 +131,14 @@
   ],
   "still_open": [
     "cold session Source availability",
-    "four-group Sounds/Source/Rust permissions/audio/PCM/theme/Stop composition",
+    "live theme changes in the current combined app/service slice",
     "render-stall availability and separate responsive Stop while stalled",
     "full installed Omarchy shell and menu integration",
     "native display and vendor cleanup",
     "ARM composed runtime and physical phone gates"
   ],
   "phone_accessed": false,
-  "screenshot_qualified": false,
+  "screenshot_qualified": true,
   "raw_private_artifacts_or_proprietary_inputs_published": false,
   "prepared_cases": [
     {
@@ -243,7 +243,7 @@
       "full_PCM_oracles_executed": false
     }
   ],
-  "next_boundary": "One-entry normal-upstream logical-output allowlist repair, exact same actual registry consumer and strict normal-app Pixel/four-group/PCM/Source/closure requirements.",
+  "next_boundary": "Two distinct actual compositor-stall epochs: independent Source-expiry/quietness/refusal, and immediate responsive native Stop while compositor is still stopped. Cold availability, full shell, live combined theme changes, ARM and hardware remain open.",
   "logical_output_boundary": {
     "aggregate_passed": false,
     "actual_missing_required_global_RED_qualified": true,
@@ -290,6 +290,307 @@
     "qualified_Sounds_screenshot_or_PCM": false,
     "one_entry_dependency_candidate_not_yet_qualified": true,
     "production_code_changed": false,
-    "phone_or_ARM_or_display_cleanup_qualified": false
-  }
+    "phone_or_ARM_or_display_cleanup_qualified": false,
+    "scope": "Historical pre-edit RED epoch only; see prepared_GREEN for later qualified result."
+  },
+  "production_repair_scope": "One upstream logical-output allowlist entry, frozen actual registry consumer RED then GREEN; no Source cold-start repair.",
+  "prepared_four_group_composition_qualified": true,
+  "unchanged_hyprland_ELF_scope": "Signed installed binary used by earlier baseline/RED epochs and initial preflight; later successful runtime selects the explicit local source-built cohort below.",
+  "prepared_GREEN": {
+    "public_preceding_commit": "5969b4bcc4f4407febe75adf9c29a23943672593",
+    "actual_Root_exec_exit": 0,
+    "actual_Root_exec_session": 64615,
+    "bindings": {
+      "selection.json": {
+        "bytes": 119780,
+        "sha256": "368588e684b9f6a99cb99edb4848fcf841d74a7b92034cc00059bce386b06b2d"
+      },
+      "command.json": {
+        "bytes": 1300,
+        "sha256": "04377084e0e9bcb2eb1ec30b9ff113146ccca23fc99950e97bb70ae7b63a08e8"
+      },
+      "execution.json": {
+        "bytes": 11981,
+        "sha256": "3b6d79b6b5c27f2dbd276b3dd0b49f2e677f5584593d57c41c8969033d1d9ec8"
+      },
+      "boot-result.json": {
+        "bytes": 11165,
+        "sha256": "dbc1439abc3fed9bb50ea30e7314c909100c0f8265309ac043fca5bffc7574dd"
+      },
+      "bootstrap-result.json": {
+        "bytes": 7260,
+        "sha256": "f49bd996da8af991f8af2010edcff63453709b8fe0d4f3a3be60390c1d65e47f"
+      },
+      "result.json": {
+        "bytes": 498699,
+        "sha256": "ee5d4a26c4dd57ef9e08844df4a4c231895e30b6afc2ed6de57f3ebd8de26c82"
+      }
+    },
+    "dependency_patch": {
+      "path": "patches/hyprland-unprivileged-logical-output.patch",
+      "bytes": 386,
+      "sha256": "5f05b63166fd73bb6daca52e326978d62de22ff810fb58754ec38e7fe32cacbd"
+    },
+    "source_build_Root_qualification": {
+      "bytes": 2033,
+      "sha256": "55e26726f6276a2c13642e72121ef8c4a73fbdc21bf9d3aa616b600bcea747b2"
+    },
+    "source_build_execution": {
+      "bytes": 14394,
+      "sha256": "8ed8d7c42b9468b4a6c626507f7cfd42aa73d0527b28d3711eca239608af7edb"
+    },
+    "source_build_result": {
+      "bytes": 680080,
+      "sha256": "838b052957ad9624200e874743512eb745074f0342ad64b24f4c746120fe045a"
+    },
+    "new_source_built_ELF": {
+      "bytes": 19531128,
+      "sha256": "c70c79f67f7ccb820e09afc8640fafdf2f75b2e619b89243101bc9ec07545b48"
+    },
+    "complete_matching_SDK": {
+      "bytes": 2580480,
+      "sha256": "91c44a4ce0bfc3c20bb2a2cd0ec9c24827ce95163604260dcafe86587bf67620",
+      "files": 498
+    },
+    "ELF_is_signed_Arch_package": false,
+    "experimental_renderer_or_AQ_or_Rust_executor_selected": false,
+    "actual_app_UID": 11042,
+    "registry_probe_sha256": "3826ee3b958e2e7ce5962bac5596d89c7b429211898afa37344197f2c172c52c",
+    "restricted_logical_output_version": 3,
+    "five_prior_privileged_protocols_hidden": true,
+    "actual_window_metadata": {
+      "kind": "sounds_window_metadata",
+      "pid": 1307,
+      "schema": 1,
+      "screen": {
+        "available_geometry": [
+          0,
+          0,
+          411,
+          923
+        ],
+        "dpr": 3,
+        "geometry": [
+          0,
+          0,
+          411,
+          923
+        ],
+        "logical_dpi": [
+          96,
+          96
+        ],
+        "name": "Virtual-1",
+        "physical_dpi": [
+          160.60615384615383,
+          160.57671232876712
+        ],
+        "physical_mm": [
+          65,
+          146
+        ]
+      },
+      "title": "Sounds",
+      "window": {
+        "dpr": 2.625,
+        "exposed": true,
+        "geometry": [
+          0,
+          0,
+          411,
+          923
+        ],
+        "visible": true
+      }
+    },
+    "Pixel10_qualification": {
+      "measurement_contract_version": 2,
+      "qualified": true,
+      "failures": [],
+      "densities": {
+        "x": {
+          "native_pixels_over_wl_mm_ppi": 422.03076923076924,
+          "qt_physical_dpi_times_screen_dpr_diagnostic": 481.8184615384615,
+          "qt_physical_dpi_times_target_window_dpr_ppi": 421.5911538461538
+        },
+        "y": {
+          "native_pixels_over_wl_mm_ppi": 421.70958904109585,
+          "qt_physical_dpi_times_screen_dpr_diagnostic": 481.7301369863013,
+          "qt_physical_dpi_times_target_window_dpr_ppi": 421.51386986301367
+        }
+      },
+      "pixel_dimensions": {
+        "height": 2424,
+        "refresh_millihz": 60000,
+        "width": 1080
+      },
+      "native_surface_dpr": 2.625,
+      "qt_screen_dpr_diagnostic": 3,
+      "physical_qt_coordinate_basis": "actual target QWindow DPR with less than one logical pixel rounding per axis; integer QScreen DPR diagnostic retained",
+      "logical_geometry": {
+        "x": 0,
+        "y": 0,
+        "width": 411,
+        "height": 923
+      },
+      "physical_size_scope": "actual Wayland/Qt metadata of selected simulation profile; DRM connector/base EDID precision separately recorded"
+    },
+    "behavior_groups": [
+      {
+        "id": 1,
+        "name": "installed_native_desktop_client_normal_per_app_Window_real_focus_no_grant_quiet",
+        "passed": true,
+        "PCM_result_sha256": "68787185bf5b885263ff5a777a212045de8c0dc5431d02454cd0a2da4c2c0563",
+        "PCM_measured_frames": 48000,
+        "PCM_stats": {
+          "speaker": {
+            "frames": 24000,
+            "finite_all": true,
+            "rms": 0.0,
+            "peak": 0.0,
+            "tone_amplitudes": {
+              "440": 0.0,
+              "880": 0.0
+            },
+            "expected_hz": 0
+          },
+          "earpiece": {
+            "frames": 24000,
+            "finite_all": true,
+            "rms": 0.0,
+            "peak": 0.0,
+            "tone_amplitudes": {
+              "440": 0.0,
+              "880": 0.0
+            },
+            "expected_hz": 0
+          }
+        }
+      },
+      {
+        "id": 2,
+        "name": "independent_Root_grant_real_Source_focus_one_touch_graph_PCM",
+        "passed": true,
+        "PCM_result_sha256": "79974662745b279ce7cf25c73860dd2ace1c37f14351167f7c28e203b8a895b9",
+        "PCM_measured_frames": 48000,
+        "PCM_stats": {
+          "speaker": {
+            "frames": 24000,
+            "finite_all": true,
+            "rms": 0.04419419071349334,
+            "peak": 0.062499988824129105,
+            "tone_amplitudes": {
+              "440": 0.06250002319456009,
+              "880": 3.931547989356008e-08
+            },
+            "expected_hz": 440,
+            "selected_tone_energy_fraction": 0.9999999779019195
+          },
+          "earpiece": {
+            "frames": 24000,
+            "finite_all": true,
+            "rms": 0.0,
+            "peak": 0.0,
+            "tone_amplitudes": {
+              "440": 0.0,
+              "880": 0.0
+            },
+            "expected_hz": 0
+          }
+        }
+      },
+      {
+        "id": 3,
+        "name": "actual_exclusive_layer_null_focus_denies_choice_preserves_approved_media",
+        "passed": true,
+        "PCM_result_sha256": "ba024417f594b060337a19aea9b52c5856933cc377d3500c7521bb492619e94a",
+        "PCM_measured_frames": 48000,
+        "PCM_stats": {
+          "speaker": {
+            "frames": 24000,
+            "finite_all": true,
+            "rms": 0.044194185577577705,
+            "peak": 0.06249988079071045,
+            "tone_amplitudes": {
+              "440": 0.06250001593109743,
+              "880": 4.187205199458656e-08
+            },
+            "expected_hz": 440,
+            "selected_tone_energy_fraction": 0.9999999778961213
+          },
+          "earpiece": {
+            "frames": 24000,
+            "finite_all": true,
+            "rms": 0.0,
+            "peak": 0.0,
+            "tone_amplitudes": {
+              "440": 0.0,
+              "880": 0.0
+            },
+            "expected_hz": 0
+          }
+        }
+      },
+      {
+        "id": 4,
+        "name": "requested_Source_unload_observed_terminal_app_audio_quiet_later_fixed_desktop_refusal",
+        "passed": true,
+        "PCM_result_sha256": "775f23f6d17bd231bccd65b6fb90c5ed473338b3672049ae5c600a5deaec0a35",
+        "PCM_measured_frames": 48000,
+        "PCM_stats": {
+          "speaker": {
+            "frames": 24000,
+            "finite_all": true,
+            "rms": 0.0,
+            "peak": 0.0,
+            "tone_amplitudes": {
+              "440": 0.0,
+              "880": 0.0
+            },
+            "expected_hz": 0
+          },
+          "earpiece": {
+            "frames": 24000,
+            "finite_all": true,
+            "rms": 0.0,
+            "peak": 0.0,
+            "tone_amplitudes": {
+              "440": 0.0,
+              "880": 0.0
+            },
+            "expected_hz": 0
+          }
+        }
+      }
+    ],
+    "PCM_windows": 8,
+    "measured_PCM_frames": 192000,
+    "captures": {
+      "sounds-prepared-no-permission.png": {
+        "bytes": 52627,
+        "sha256": "fd757957c2c1362d8a44d862e09a9fbd817a9b0f951664339b158b990c53ae14"
+      },
+      "sounds-prepared-permitted.png": {
+        "bytes": 53461,
+        "sha256": "1bfcd796727aacb8c8ee80a1c3ced5d6a242f466d55efbc1e1e0085972c9d05c"
+      }
+    },
+    "capture_pixels": [
+      1080,
+      2424
+    ],
+    "captures_unresized": true,
+    "capture_debug_banner_present": true,
+    "Root_visual_review": "Actual Sounds title, Media output label, disabled/enabled Speaker and Headphones controls; enabled image precedes route touch/PCM measurement. Debug-launch warning retained.",
+    "Source_lease_ns": 100000000,
+    "prepared_warmup_selected": true,
+    "cold_start_repair_claimed": false,
+    "live_theme_change_in_this_epoch": false,
+    "full_shell_or_desktop_menu_executed": false,
+    "native_display_or_vendor_cleanup_qualified": false,
+    "ARM_or_phone_qualified": false,
+    "all_original_resource_and_deadline_limits_retained": true,
+    "recorded_owned_closure_qualified": true
+  },
+  "full_app_service_composition_scope": "Full cold/installed shell and live-theme/stall-qualified system remains open; the narrower prepared four-group app/service slice passes below."
 }

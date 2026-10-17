@@ -4,17 +4,23 @@
 
 **Native Linux phone software, with Pixel 10 as the first hardware target and Omarchy as the intended desktop and theme environment.**
 
-The target is Arch Linux ARM, Hyprland, native phone apps and Rust services for calls, messages, camera, power and other phone functions. The initial hardware strategy uses Google's matched Pixel kernel, modules and firmware. Replacing Android framework userspace is the goal; it is not yet achieved. The [completion criteria](docs/smartphone-goal.md#completion-matrix) require native service integration; Android framework tests provide reference evidence. Hyprland, Aquamarine and Qt remain C++ dependencies. The [graphics critical-path decision](docs/runtime-language-decision.md#graphics-critical-path) selects normal upstream compositor initialization for the next integrated app tracer; the custom Rust render executor remains component research.
+The target is Arch Linux ARM, Hyprland, native phone apps and Rust services for calls, messages, camera, power and other phone functions. The initial hardware strategy uses Google's matched Pixel kernel, modules and firmware. Replacing Android framework userspace is the goal; it is not yet achieved. The [completion criteria](docs/smartphone-goal.md#completion-matrix) require native service integration; Android framework tests provide reference evidence. Hyprland, Aquamarine and Qt remain C++ dependencies. The [graphics critical-path decision](docs/runtime-language-decision.md#graphics-critical-path) selects normal upstream compositor initialization for the integrated app tracer; the custom Rust render executor remains component research.
 
 > **Development status:** no physical phone has been accessed. There is no verified bootable phone image. Modem communication, carrier IMS registration, physical call audio, Pixel GPU rendering, camera capture and suspend remain unverified.
 
-The next end-to-end slice joins the normal Omarchy Sounds app, genuine Source/focus, the Rust session and audio services, actual virtual PCM, live themes and app/service Stop. This combined slice remains unqualified. Source must keep its unchanged100ms freshness rule and fail closed on expiry; responsive service Stop, compositor process exit and native display cleanup require separate evidence.
+A [prepared end-to-end Sounds session](docs/native-normal-upstream-tracer.md#prepared-full-appservice-slice-passes)
+now joins the actual app, Rust permissions/audio services, genuine compositor
+focus and measured virtual audio. All four original behavior groups pass: denied
+silence, granted touchscreen routing, focus-loss restrictions and terminal
+session loss with silence and launch refusal. The real unresized screenshots
+qualify the Pixel10 profile:1080×2424, approximately422PPI and DPR2.625.
 
-A [prepared normal session](docs/native-normal-upstream-tracer.md#prepared-normal-session-reaches-sounds)
-now launches Sounds through the Rust owner with genuine Source healthy through
-sequence87. Its strict display-metadata check still fails before audio/PCM; no
-qualified Sounds screenshot follows. Cold-start Source availability stays open,
-and the unsuccessful initial-presentation candidate remains unmerged.
+The only compositor source change is a
+[one-entry logical-output allowlist fix](patches/hyprland-unprivileged-logical-output.patch),
+qualified after actual registry RED. Cold startup, live theme changes in this
+combined slice, the full Omarchy shell/menu, render-stall behavior and native
+display cleanup remain open. The unsuccessful initial-presentation candidate
+stays unmerged; Source retains its unchanged100ms freshness rule.
 
 The [Rust ingress wake fix](docs/native-render-ingress-wake.md) passes its frozen RED→GREEN regression and all66 active Rust tests, with two ignored child modes, formatting, strict Clippy and release compilation. This repairs the experimental executor component; it establishes no normal compositor frame or phone behavior.
 
@@ -300,7 +306,16 @@ Public-source publication excludes proprietary inputs, raw decompilation, creden
 
 ## Real UI evidence
 
-These are captures from an **Arch ARM virtual machine**, showing the same phone app under two Omarchy themes. The bridge is deliberately unavailable in this test. They demonstrate theme integration, not a working cellular phone.
+These current captures show the actual Sounds app in the successful **prepared
+native x86 VM** session, before and after permission. They use the Pixel10 display
+profile; the debug-launch banner remains visible. The audio check measures
+virtual PCM, with no physical-phone or physical-speaker claim.
+
+| Without permission | With permission |
+|---|---|
+| ![Sounds output controls disabled without permission](docs/assets/sounds-prepared-no-permission.png) | ![Sounds output controls enabled after permission](docs/assets/sounds-prepared-permitted.png) |
+
+The earlier captures below come from an **Arch ARM virtual machine**, showing the phone app under two Omarchy themes. The bridge is deliberately unavailable in this test. They demonstrate theme integration, not a working cellular phone.
 
 | Tokyo Night | Catppuccin Latte |
 |---|---|

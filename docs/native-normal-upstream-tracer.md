@@ -1,8 +1,10 @@
 # Normal upstream compositor tracer
 
 The next app/service slice uses normal upstream Hyprland under the Rust session
-owner. The experimental custom renderer is component research. The current
-Sounds/Source/permissions/audio/PCM/theme/Stop composition remains unqualified.
+owner. The experimental custom renderer is component research. A prepared
+Sounds/Source/permissions/audio/PCM/theme/Stop slice now passes all four original
+behavior groups. Cold startup, live theme changes in this combined slice, the
+full shell and rendering-stall behavior remain unqualified.
 [Hash-only provenance](evidence/native-normal-upstream-tracer-provenance.json)
 retains two separate closed failed native x86 KVM epochs; private logs stay private.
 
@@ -84,10 +86,9 @@ remains observed through sequence79. Normal owner/guest/VM/container/input closu
 passes; the aggregate still fails its required logical-output assertion, with no
 behavioral/PCM group or qualified Sounds screenshot.
 
-Next prepare exactly one allowlist entry in otherwise normal upstream Hyprland.
-The same frozen consumer must pass before any repair claim, followed by all strict
-app metadata and original full behavior/PCM groups. This is a bounded native
-dependency correction; it is not another renderer rewrite or a Rust port.
+The later correction below adds exactly one allowlist entry in otherwise normal
+upstream Hyprland. The same frozen registry consumer and strict app/PCM contract
+now pass. This is a small native dependency correction, not a Rust port.
 
 For a later positive metadata observation, wait within the original single30s
 frame deadline for the actual current QWindow's negotiated2.625 scale; retain the
@@ -98,3 +99,55 @@ behavioral/PCM groups and Source/cleanup assertions remain required.
 A successful prepared composition still cannot qualify cold startup, render-stall
 availability, the real installed Omarchy shell/menu, native display cleanup, ARM
 composition or any physical-phone gate.
+
+## Prepared full app/service slice passes
+
+The [one-entry dependency patch](../patches/hyprland-unprivileged-logical-output.patch)
+adds `PROTO::xdgOutput->getGlobal()` to the unprivileged allowlist at the pinned
+upstream commit. All other original source blobs remain unchanged. The actual
+normal Release compositor and complete matching498-file SDK build successfully,
+with truthful local dirty-version metadata. This is a local source build on the
+signed367-package base, not a signed Arch package or exact Arch recipe rebuild.
+The original signed guest preflight runs before the local ELF and whole SDK are
+installed; all display helpers and plugins then compile against that new SDK.
+The installed Aquamarine14 and system libraries remain unchanged.
+
+A fresh native x86 KVM session now passes the unchanged registry consumer. The
+owned app listener exposes logical-output version3 while all five previously
+checked privileged protocols remain hidden. The actual Sounds QScreen is411×923
+logical pixels, with the same exposed QWindow geometry and negotiated DPR2.625.
+Actual Wayland and DRM modes are1080×2424; physical metadata gives approximately
+422PPI. Integer QScreen DPR3 remains a diagnostic. No scale environment, metadata
+transformation or resized capture supplies the positive result.
+
+All four original groups then pass:
+
+1. Normal Rust-owned launch without a grant shows disabled controls and measured
+   silence on both virtual outputs.
+2. An independent grant and genuine Source focus permit one touchscreen selection;
+   the independent graph and recorded PCM confirm440Hz on the virtual speaker,
+   with the other output silent.
+3. An actual exclusive layer removes eligible focus. Further selection is denied
+   while already-approved speaker audio continues.
+4. After one authenticated Source-unload request, the actor reaches terminal
+   state, app/compositor/listener ownership closes, measured audio is silent and
+   another fixed desktop launch is refused. The request does not prove that
+   plugin unload completed or identify the exact first terminal cause.
+
+Eight captured PCM windows contain192,000 measured frames in total. Native owner
+Stop acknowledges and actually waits0; guest, QMP shutdown, QEMU, CLI, exact-CID
+and locked input closure pass within the original limits. Process closure does
+not prove native display or vendor cleanup.
+
+| Without permission | With permission |
+|---|---|
+| ![Sounds with disabled output buttons in the prepared native x86 VM](assets/sounds-prepared-no-permission.png) | ![Sounds with enabled output buttons after permission in the same VM](assets/sounds-prepared-permitted.png) |
+
+These are original unresized1080×2424 native captures from this successful epoch.
+The debug-launch banner is visible. The enabled capture precedes the measured
+touch/audio step; it is not itself evidence of a selected route or physical
+sound. Initial Tokyo Night appearance comes through the original Omarchy setter
+and theme host. This epoch does not exercise a live theme change, the installed
+Omarchy shell/menu, secure lock presentation, a stopped compositor, ARM or a
+phone. Its one prepared client warmup does not repair either earlier cold-start
+Source failure. All those gates remain open.

@@ -5,10 +5,12 @@ KVM boot. The production Rust payload also compiles for x86_64 from the current
 public source. A later native Qt build and current component checks also pass;
 the full composition fails during original compositor startup before Sounds/PCM.
 No Source availability or phone hardware qualification follows.
-A later [prepared normal-session tracer](native-normal-upstream-tracer.md) reaches
-actual Sounds launch with genuine Source healthy; strict app density metadata and
-an actual missing logical-output registry contract still fail before audio/PCM.
-That prepared result does not qualify cold startup or a complete app session.
+A later [prepared normal-session tracer](native-normal-upstream-tracer.md) now
+passes its actual missing-logical-output RED→one-entry dependency correction and
+all four original Sounds/permissions/focus/touch/virtual-PCM/session-loss groups.
+The new compositor has its whole matching SDK; native Pixel10 metadata/captures
+and owned closure pass. This prepared result does not qualify cold startup, live
+theme change in the combined slice, full shell, render-stall behavior or a phone.
 [Hash-only evidence](evidence/native-session-x86-runtime-provenance.json) binds the
 inputs, builds, execution and qualifications. Private logs and VM artifacts stay
 private.

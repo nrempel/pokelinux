@@ -1,13 +1,16 @@
 # Omarchy smartphone goal
 
 The current [graphics selection](runtime-language-decision.md#graphics-critical-path)
-uses normal upstream Hyprland supervised by Rust services. A [prepared session](native-normal-upstream-tracer.md)
-now launches actual Sounds with healthy genuine Source. Its strict display check
-fails before audio/PCM; an actual per-app registry test identifies missing logical
-output metadata while prior privileged protocols remain hidden. The next graphics
-change is one upstream allowlist entry, pending qualification. The custom renderer
-results below remain component research. The full completion matrix and all
-physical-phone gates stay open.
+uses normal upstream Hyprland supervised by Rust services. Its
+[prepared full Sounds slice](native-normal-upstream-tracer.md#prepared-full-appservice-slice-passes)
+now passes all four original permission/focus/touch/virtual-PCM/terminal-session
+behavior groups, with real Pixel10-profile captures. Actual missing-interface RED
+precedes a one-entry upstream logical-output allowlist correction; the same
+consumer passes without exposing the five previously checked privileged globals.
+Cold startup, live theme change in this combined slice, full shell/menu,
+render-stall availability and native display cleanup remain open. The custom
+renderer results below remain component research. The full completion matrix and
+all physical-phone gates stay open.
 
 The [native graphics resource operations](native-render-exact-buffer.md) pass their matching normal AQ15 build, ten existing CPU groups and four API checks after missing-interface RED. Two real-driver runs observe all five resource groups passing, but both aggregates fail a control-session check; the diagnostic identifies revocation with a queued CHANGE. Production exact-buffer preparation/execution, normal frames, Source, ARM and phone gates remain open.
 

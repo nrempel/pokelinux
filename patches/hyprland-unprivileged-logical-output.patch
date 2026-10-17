@@ -1,0 +1,10 @@
+--- a/src/managers/ProtocolManager.cpp
++++ b/src/managers/ProtocolManager.cpp
+@@ -366,6 +366,7 @@
+         PROTO::viewport->getGlobal(),
+         PROTO::tearing->getGlobal(),
+         PROTO::fractional->getGlobal(),
++        PROTO::xdgOutput->getGlobal(),
+         PROTO::cursorShape->getGlobal(),
+         PROTO::idleInhibit->getGlobal(),
+         PROTO::relativePointer->getGlobal(),
