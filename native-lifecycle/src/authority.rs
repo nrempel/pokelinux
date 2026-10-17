@@ -60,6 +60,16 @@ impl MediaStamp {
         &self.intent
     }
 }
+/// One explicit brightness effect, scoped to current policy/session and backend.
+pub(crate) struct BrightnessStamp {
+    authority: ReadStamp,
+    intent: crate::brightness::Intent,
+}
+impl BrightnessStamp {
+    pub(crate) fn intent(&self) -> &crate::brightness::Intent {
+        &self.intent
+    }
+}
 struct SessionRead {
     source: String,
     revision: u64,
@@ -1131,6 +1141,77 @@ impl Authority {
             && self.current_stamp(&stamp.authority, backend, now)
             && crate::boottime_ns() < stamp.intent.until_ns
     }
+    pub(crate) fn brightness_allowed(&mut self, pid: u32, uid: u32, backend: &str) -> bool {
+        self.begin_stamp(
+            pid,
+            uid,
+            backend,
+            Permission::DisplayBrightness,
+            1000,
+            crate::boottime_ns(),
+        )
+        .is_ok_and(|s| {
+            s.app == crate::brightness::APP
+                && s.uid == crate::brightness::UID
+                && self.current_stamp(&s, backend, crate::boottime_ns())
+        })
+    }
+    pub(crate) fn begin_brightness(
+        &mut self,
+        pid: u32,
+        uid: u32,
+        backend: &str,
+        request: crate::brightness::Request,
+        now: u64,
+    ) -> Result<BrightnessStamp, Reply> {
+        if request.percent > 100 || request.expected_revision == 0 || backend.is_empty() {
+            return Err(Reply::Denied);
+        }
+        let authority = self.begin_stamp(
+            pid,
+            uid,
+            backend,
+            Permission::DisplayBrightness,
+            request.ttl_ms,
+            now,
+        )?;
+        if authority.app != crate::brightness::APP || authority.uid != crate::brightness::UID {
+            return Err(Reply::Denied);
+        }
+        let Some(id) = self.sequence.checked_add(1) else {
+            self.invalidate();
+            return Err(Reply::Unavailable);
+        };
+        self.sequence = id;
+        let until_ns = authority
+            .session
+            .as_ref()
+            .map_or(authority.until, |s| authority.until.min(s.until));
+        let stamp = BrightnessStamp {
+            authority,
+            intent: crate::brightness::Intent {
+                id,
+                percent: request.percent,
+                expected_revision: request.expected_revision,
+                until_ns,
+            },
+        };
+        if !self.current_brightness(&stamp, backend, crate::boottime_ns()) {
+            return Err(Reply::Denied);
+        }
+        Ok(stamp)
+    }
+    pub(crate) fn current_brightness(
+        &self,
+        stamp: &BrightnessStamp,
+        backend: &str,
+        now: u64,
+    ) -> bool {
+        stamp.authority.permission == Permission::DisplayBrightness
+            && now < stamp.intent.until_ns
+            && self.current_stamp(&stamp.authority, backend, now)
+            && crate::boottime_ns() < stamp.intent.until_ns
+    }
     pub(crate) fn media_allowed(&mut self, pid: u32, uid: u32, backend: &str) -> bool {
         match self.begin_stamp(
             pid,
@@ -1280,7 +1361,9 @@ impl Authority {
             return immediate(Reply::Denied);
         };
         match request {
-            AppRequest::MessagesRead { .. }
+            AppRequest::BrightnessSet { .. }
+            | AppRequest::BrightnessStatus {}
+            | AppRequest::MessagesRead { .. }
             | AppRequest::CameraCapture { .. }
             | AppRequest::MediaRoute { .. }
             | AppRequest::MediaStatus { .. }
@@ -1289,7 +1372,9 @@ impl Authority {
             AppRequest::Prepare { permission, ttl_ms } => {
                 if matches!(
                     permission,
-                    Permission::MessagesRead | Permission::MediaRoute
+                    Permission::MessagesRead
+                        | Permission::MediaRoute
+                        | Permission::DisplayBrightness
                 ) || !(1..=5000).contains(&ttl_ms)
                     || !self.allowed(&app, permission)
                     || self.permits.len() >= MAX_PERMITS

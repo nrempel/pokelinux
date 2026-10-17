@@ -1,0 +1,203 @@
+{
+  "schema": 1,
+  "scope": "Seven actual authored synthetic regular-file/class-symlink I/O tests and seven controlled-clock model groups. Caller-child-owned operations are an interface requirement, not a worker/service custody result. Separate host/ARM library crossbuild only; no host sysfs, Linux driver, VM, physical brightness or phone execution.",
+  "RED": {
+    "qualification": {
+      "bytes": 6225,
+      "sha256": "326dab07463c4b314c8ba4627b426319841b004b1d8fb8e39a6299ea44a73f24"
+    },
+    "receipt": {
+      "bytes": 16664,
+      "sha256": "b1b376b12698f70366ab12a7cb328be8ee76e068914369d6073d97a96a8b078a"
+    },
+    "compiled_groups": 14,
+    "assertion_failures": 12,
+    "already_passing_negative_groups": 2,
+    "ignored": 0
+  },
+  "GREEN": {
+    "qualification": {
+      "bytes": 16073,
+      "sha256": "8ede8ddce562a9dc57d45d50f4fe5ad5973f62a0d650698fb66f6d9ad8947245"
+    },
+    "receipt": {
+      "bytes": 16084,
+      "sha256": "31b4c38c8ae7f41e05a316a0caf8f1c2a67a6603c6c494fe8445fcde9f49a7d5"
+    },
+    "source": {
+      "bytes": 1382,
+      "sha256": "868558e0c551cc958ee67b9dd7b4a740fcfd930074b8e84083f83854b429dffe"
+    },
+    "selected_files": {
+      "schema": 1,
+      "original_source_root": "/tmp/pokelinux-native-unlock-root",
+      "compiled_files": {
+        "native-brightness/Cargo.lock": {
+          "bytes": 1712,
+          "sha256": "77b35dc20cdcda55e8f1bf5f93739d4285289d6619bd875af84b79adf84198dd"
+        },
+        "native-brightness/Cargo.toml": {
+          "bytes": 195,
+          "sha256": "7e12c1151170bfa1dfb78a6b98af27c18658ba6e9bf53122b9f477b56384e823"
+        },
+        "native-brightness/src/lib.rs": {
+          "bytes": 4654,
+          "sha256": "57b15a8e04b4ebb2d4821d1affbcb815f9451b94bac75afd7078084f974b61f9"
+        },
+        "native-brightness/src/model.rs": {
+          "bytes": 7496,
+          "sha256": "d007c005b2dcf9be590c08540831d81482ad14720c5ba6ab60802e6aa0558c37"
+        },
+        "native-brightness/tests/backend.rs": {
+          "bytes": 8527,
+          "sha256": "0463895807b6d357d3470311efc6bd82cd04dfef8ddc7a63a4160a2f42828000"
+        },
+        "native-brightness/tests/ownership.rs": {
+          "bytes": 8008,
+          "sha256": "92452b38964335ea03899f2cc248bcdbb0e0d2ca2763125b132a5312b68c6628"
+        }
+      },
+      "scope": "Root GREEN_READY backend/model implementation after style-only pinned rustfmt; exact14frozen RED tests, actual synthetic filesystem plus controlled clocks only; no service/worker custody/kernel/VM/hardware execution."
+    },
+    "counts": {
+      "total": 14,
+      "passed": 14,
+      "failed": 0,
+      "ignored": 0,
+      "backend": 7,
+      "controlled_policy": 7
+    },
+    "same_test_bytes_as_RED": true,
+    "tests": {
+      "native-brightness/tests/backend.rs": {
+        "bytes": 8527,
+        "sha256": "0463895807b6d357d3470311efc6bd82cd04dfef8ddc7a63a4160a2f42828000"
+      },
+      "native-brightness/tests/ownership.rs": {
+        "bytes": 8008,
+        "sha256": "92452b38964335ea03899f2cc248bcdbb0e0d2ca2763125b132a5312b68c6628"
+      }
+    },
+    "checks": {
+      "ARM-archive-members": 0,
+      "host-archive-members": 0,
+      "ARM-release": 0,
+      "host-release": 0,
+      "clippy": 0,
+      "all-tests": 0,
+      "fmt": 0
+    },
+    "libraries": {
+      "host": {
+        "rlib": {
+          "bytes": 92320,
+          "sha256": "7e9e9612a2ae8d58cfc89e14373d5b9867d843e58c5759913587c76bee831ca5"
+        },
+        "ELF_object_machine": 62,
+        "ELF_object_members": 3,
+        "archive_member_count": 5,
+        "Cargo_artifact": {
+          "reason": "compiler-artifact",
+          "target": {
+            "kind": [
+              "lib"
+            ],
+            "crate_types": [
+              "lib"
+            ],
+            "name": "pokelinux_brightness",
+            "edition": "2024",
+            "doc": true,
+            "doctest": true,
+            "test": true
+          },
+          "profile": {
+            "opt_level": "3",
+            "debuginfo": 0,
+            "debug_assertions": false,
+            "overflow_checks": false,
+            "test": false
+          },
+          "features": [],
+          "fresh": false
+        },
+        "Cargo_stdout": {
+          "bytes": 4012,
+          "sha256": "1b31c7902e987dfac9d144b90c7579e7ac9addfce806805cb557b395c3dd3bb7"
+        },
+        "Cargo_stderr": {
+          "bytes": 227,
+          "sha256": "0ae4831846ed330878d0f834e084cfbb4006904fb8edc55766aa2390e78c6551"
+        },
+        "actual_ar_members": {
+          "bytes": 114,
+          "sha256": "a54e58dbd20e0f4a5e03a7a5d2d44853e3c0f358d4eda21be593a9a45fb44498"
+        },
+        "library_not_a_service_executable": true,
+        "ARM_execution": false
+      },
+      "ARM": {
+        "rlib": {
+          "bytes": 89200,
+          "sha256": "bdd3f2f9c19dcdb226ffceb6f2fb92dfc12c24947a897c604b764551fd833250"
+        },
+        "ELF_object_machine": 183,
+        "ELF_object_members": 3,
+        "archive_member_count": 5,
+        "Cargo_artifact": {
+          "reason": "compiler-artifact",
+          "target": {
+            "kind": [
+              "lib"
+            ],
+            "crate_types": [
+              "lib"
+            ],
+            "name": "pokelinux_brightness",
+            "edition": "2024",
+            "doc": true,
+            "doctest": true,
+            "test": true
+          },
+          "profile": {
+            "opt_level": "3",
+            "debuginfo": 0,
+            "debug_assertions": false,
+            "overflow_checks": false,
+            "test": false
+          },
+          "features": [],
+          "fresh": false
+        },
+        "Cargo_stdout": {
+          "bytes": 4245,
+          "sha256": "80deb5637613887dc3292d262672cfedfea48d2364fe5bc035f916034be502c0"
+        },
+        "Cargo_stderr": {
+          "bytes": 227,
+          "sha256": "c1d44bd6b70b54d41b96266ebfa2fbe51aedadaa373658212f652af986c07a6d"
+        },
+        "actual_ar_members": {
+          "bytes": 114,
+          "sha256": "084f0fd79e7a8527e360a41d00a4bfb1ea301e13352d5f0308f318d802b64cf9"
+        },
+        "library_not_a_service_executable": true,
+        "ARM_execution": false
+      }
+    },
+    "actual_host_CLI_waits": 10,
+    "actual_PIPE_EOF": 20,
+    "original_cutoffs_closed": true,
+    "CID_absent_same_daemon": true,
+    "selected_inputs_unchanged": true
+  },
+  "not_qualified": [
+    "service process",
+    "worker wait or EOF",
+    "installed deployment",
+    "Linux backlight driver",
+    "ARM execution",
+    "physical brightness",
+    "Pixel hardware"
+  ]
+}

@@ -4,6 +4,8 @@ pub mod audio;
 mod audio_owner;
 mod audio_session;
 pub mod authority;
+pub mod brightness;
+mod brightness_session;
 pub mod camera;
 pub mod display;
 pub mod ipc;
@@ -26,6 +28,7 @@ pub enum Permission {
     SendMessage,
     MessagesRead,
     MediaRoute,
+    DisplayBrightness,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
@@ -45,6 +48,8 @@ pub struct Profile {
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(tag = "op", rename_all = "snake_case", deny_unknown_fields)]
 pub enum AppRequest {
+    BrightnessSet { request: brightness::Request },
+    BrightnessStatus {},
     MediaRoute { request: audio::Request },
     MediaStatus { offset: usize },
     MediaReconnect {},
@@ -87,6 +92,13 @@ pub enum AdminRequest {
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 #[serde(tag = "result", rename_all = "snake_case", deny_unknown_fields)]
 pub enum Reply {
+    BrightnessCompleted {
+        state: brightness::State,
+    },
+    BrightnessState {
+        state: brightness::State,
+        can_set: bool,
+    },
     MediaSelected {
         state: audio::State,
     },

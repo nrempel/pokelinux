@@ -1,0 +1,243 @@
+{
+  "schema": 1,
+  "passed": true,
+  "scope": "Brightness lifecycle only: typed Settings permission, current-authority effect stamp, actor provider/session/dispatch/publication fences. Controlled authority/provider tests and actual local Linux SEQPACKET boundaries are separate. No configured backend, normal Settings UI, full actor/service integration, ARM or hardware claim.",
+  "source": {
+    "bytes": 2357,
+    "sha256": "b11153c5d1d8202d10fb3d8e0f43fbe404f26528534ae664769f936eb76786bd"
+  },
+  "patch": {
+    "bytes": 44383,
+    "sha256": "54662a0e08a587c387a1c6beafc437332360f4ba26c02ecc2d04b2a6787fb8a7"
+  },
+  "configured_entry": "service::run_with_brightness_services(existing arguments through audio, brightness:Option<&mut dyn brightness::Provider>, startup)",
+  "default_entry_behavior": "No provider: Unavailable; no new authority enabled by old entrypoints",
+  "target_APP": "org.omarchy.Settings",
+  "target_UID": 11050,
+  "actual_original_compiled_runtime_RED": {
+    "consumer": {
+      "bytes": 904,
+      "sha256": "3891d3ee515f2478f05d4286a415b3bd735a712f541b34697ae477cff8910c6c"
+    },
+    "existing_controls_passed": true,
+    "brightness_set_accepted": false,
+    "brightness_grant_accepted": false,
+    "actual_runtime_exit": 101,
+    "assertion": "MISSING_TYPED_BRIGHTNESS_SET_AND_GRANT"
+  },
+  "original_compiler_absence_only": {
+    "errors": [
+      "E0432 missing brightness module",
+      "E0599 missing DisplayBrightness"
+    ],
+    "actual_compiler_exit": 101,
+    "functional_behavior_RED_claimed": false
+  },
+  "additional_actual_freshness_RED": {
+    "frozen_regression": {
+      "bytes": 1195,
+      "sha256": "09e0d56f458449c580ccc75738f69359a5a197e9b99a4682780dec18ff463797"
+    },
+    "stale_unsent_refused": false,
+    "expired_readback_refused": false,
+    "actual_test_exit": 101,
+    "assertion": "BRIGHTNESS_ORIGINAL_READBACK_FRESHNESS_FENCE"
+  },
+  "final_checks": {
+    "fmt_check": true,
+    "strict_all_target_Clippy": true,
+    "focused_brightness_groups_passed": 10,
+    "frozen_current_control": true,
+    "frozen_typed_boundary": true,
+    "frozen_compiled_runtime_boundary": true,
+    "host_release": true,
+    "host_release_ELF": {
+      "bytes": 1526824,
+      "sha256": "88d1988ae0bcf9e03a2451c2d8d64f38d0a1205b1a36e2b7e02cf0fdcb14a7c9"
+    }
+  },
+  "adjacent_regressions_on_first_candidate": {
+    "media_groups_passed": 11,
+    "Source_observation_groups_passed": 4,
+    "not_rerun_after_brightness_session_only_freshness_fix": true,
+    "their_files_and_shared_authority_predicates_unchanged": true,
+    "media_stdout": {
+      "bytes": 1180,
+      "sha256": "79a42a14bad7c7b39b2148302ffa5c9393cd38857520a458a874cab167a632c6"
+    },
+    "Source_stdout": {
+      "bytes": 512,
+      "sha256": "a7dd26a5feff7d685cdfda425df8296ed46f0a2dd2e1b7bef8299386659065ed"
+    }
+  },
+  "common_predicates_unchanged": {
+    "begin_stamp": {
+      "unchanged": true,
+      "sha256": "8e2f1d43c842f5208bd9deb5c9a7b93bcb670606082ed33a43f883b58e1e6719"
+    },
+    "current_stamp": {
+      "unchanged": true,
+      "sha256": "9467d9d9c95c919caea8fe834debd290beaadeef0d9f5872362b9f8b132fc19e"
+    },
+    "lifecycle_and_allowed": {
+      "unchanged": true,
+      "sha256": "c8686d408015c0256169f4bee764187738f994b8f943e12cc7218e1d963ab67f"
+    },
+    "native-lifecycle/src/session.rs": {
+      "unchanged": true,
+      "sha256": "d3ef843dbd96f4b6341de1952ca15832f3f0f1484e8c22e75926692753dae240"
+    },
+    "native-lifecycle/src/ipc.rs": {
+      "unchanged": true,
+      "sha256": "3777ef70117c8a37078e6c25ecaa21f17c2de094604877d433c6b69b8f0a90c9"
+    },
+    "native-lifecycle/src/audio_session.rs": {
+      "unchanged": true,
+      "sha256": "5ef15b40d1b2908dc4ec0d42c13379c1ab543cba547baa09af1274650be6f322"
+    },
+    "native-lifecycle/src/audio.rs": {
+      "unchanged": true,
+      "sha256": "4af4416f3d4e4899eefc4ec0a004da7c869c2d2e6df87096f25d7a5575b018dd"
+    }
+  },
+  "phases": {
+    "original-red-1": {
+      "receipt": {
+        "bytes": 51078,
+        "sha256": "74ab9f193d76e4995099f19631d71a6b1d153d0a4c50cc96be10f36e582afcd3"
+      },
+      "expected_phase_result_closed": true,
+      "CLI_waits": 10,
+      "PIPE_EOF": 20,
+      "source_unchanged": true,
+      "exact_CID_absent": true,
+      "same_daemon": true
+    },
+    "original-runtime-red-1": {
+      "receipt": {
+        "bytes": 51196,
+        "sha256": "4f146d178629a2ce15b94fbd570a103093ef35738dc02efafc63d2173253a9ce"
+      },
+      "expected_phase_result_closed": true,
+      "CLI_waits": 10,
+      "PIPE_EOF": 20,
+      "source_unchanged": true,
+      "exact_CID_absent": true,
+      "same_daemon": true
+    },
+    "green-1": {
+      "receipt": {
+        "bytes": 51685,
+        "sha256": "084420d0fae5814274773c089b74da40edd2eaa063ce61d061af762845016c31"
+      },
+      "expected_phase_result_closed": true,
+      "CLI_waits": 10,
+      "PIPE_EOF": 20,
+      "source_unchanged": true,
+      "exact_CID_absent": true,
+      "same_daemon": true
+    },
+    "freshness-red-1": {
+      "receipt": {
+        "bytes": 51949,
+        "sha256": "ffa48d628474db9311bff302d78e6b299e4ccad8b8091e278c9509379d23b61f"
+      },
+      "expected_phase_result_closed": true,
+      "CLI_waits": 10,
+      "PIPE_EOF": 20,
+      "source_unchanged": true,
+      "exact_CID_absent": true,
+      "same_daemon": true
+    },
+    "green-2": {
+      "receipt": {
+        "bytes": 51685,
+        "sha256": "b9ccb8120b510c0d9a14bd69dae1637d7c4d8a4c55b2ed42a1fe3252569eeb7c"
+      },
+      "expected_phase_result_closed": true,
+      "CLI_waits": 10,
+      "PIPE_EOF": 20,
+      "source_unchanged": true,
+      "exact_CID_absent": true,
+      "same_daemon": true
+    }
+  },
+  "custody_total_all_five_phases": {
+    "actual_Docker_CLI_waits": 50,
+    "actual_PIPE_EOF_observations": 100,
+    "all_original_cutoffs_preserved": true,
+    "inner_Cargo_stdout_stderr": "regular files, no PIPE EOF claim"
+  },
+  "final_artifact_receipts": {
+    "brightness-tests.stdout": {
+      "bytes": 1263,
+      "sha256": "c022f6d675ec009ac23cc6951a43a7d6b43e1e7eaa73264256cc8d281b7976f0"
+    },
+    "brightness-tests.stderr": {
+      "bytes": 3377,
+      "sha256": "5ee1b1316077001597594a47e13e5908e14155c7d847fca02d9c83146da04572"
+    },
+    "fmt-check.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "fmt-check.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "clippy.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "clippy.stderr": {
+      "bytes": 2791,
+      "sha256": "d800d57d2c65f42add537dfe81ad1a95cd513f1960a3cfd4e00af6dd25ccb8f0"
+    },
+    "current-control.stdout": {
+      "bytes": 41,
+      "sha256": "c4b99668339890f713e947cf926145d9da045bf42e2f633cb1b6bcbc70790d6b"
+    },
+    "typed-boundary.stdout": {
+      "bytes": 41,
+      "sha256": "376e06a7bda3b983ec38898a6ca792e438eadcd81fab11ff496cbb26375893ba"
+    },
+    "runtime-boundary.stdout": {
+      "bytes": 156,
+      "sha256": "6c9b64ad115c18b8b0e48ecfefde2d1c2287fe9c5409a7cd6a37e5e653b88525"
+    },
+    "release.stderr": {
+      "bytes": 1135,
+      "sha256": "a2b6f7af2e47b181008e81019c8e50ed5dd50f781621151ab9740b3edce872c6"
+    }
+  },
+  "qualification": {
+    "bytes": 7308,
+    "sha256": "0d909fd7bc520a4595a2e3df7ddc8bf1250c29d44584af239eeb4505ab7cc26c"
+  },
+  "selected_source_files": {
+    "native-lifecycle/src/lib.rs": {
+      "bytes": 4145,
+      "sha256": "7346ad648f0765055cb45c6a8b12e66daf658a5139f662b5b85497de00169e35"
+    },
+    "native-lifecycle/src/authority.rs": {
+      "bytes": 78852,
+      "sha256": "ca5e8b6545765b2d3667b10e5eb1b0cf4068e676bcbe6c95fcd95e5d529d776c"
+    },
+    "native-lifecycle/src/service.rs": {
+      "bytes": 89136,
+      "sha256": "66592b1fb8b80c0b24377dbbf37bc2b5f32ed8f1edd1fcee389bd7b69c5a48b1"
+    },
+    "native-lifecycle/src/brightness.rs": {
+      "bytes": 3641,
+      "sha256": "d743fcadda7e2dffaeb1ed5630602ee4be20a260e412cf9bf7bf42cc45887d83"
+    },
+    "native-lifecycle/src/brightness_session.rs": {
+      "bytes": 6892,
+      "sha256": "715689ff6b789b546ac9a9522f1cc09ff48cbf795069f377007d7e87d562834b"
+    },
+    "native-lifecycle/src/brightness_tests.rs": {
+      "bytes": 15853,
+      "sha256": "e171e8914e99a2f838567d5de6a48807def6e4e870b86565fe469200f99fbe0c"
+    }
+  }
+}

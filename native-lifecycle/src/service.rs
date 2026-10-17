@@ -17,6 +17,29 @@ use std::{
     process::Command,
 };
 
+// Brightness uses the same actual request-half EOF/extra-packet boundary.
+pub(crate) fn brightness_client_input(
+    brightness: &mut crate::brightness_session::Session,
+    connection: u64,
+    fd: &OwnedFd,
+    provider: &mut dyn crate::brightness::Provider,
+) -> io::Result<()> {
+    if !brightness.pending_on(connection) {
+        return Ok(());
+    }
+    match ipc::receive(fd) {
+        Ok(None) => Ok(()),
+        Err(e) if e.raw_os_error() == Some(4) => Err(e),
+        result => {
+            brightness.retire(provider);
+            match result {
+                Err(e) => Err(e),
+                _ => Err(io::ErrorKind::InvalidData.into()),
+            }
+        }
+    }
+}
+
 // Check the exact pending request stream before dispatch/publication. A successful
 // send alone cannot establish that the client kept its request half alive.
 fn media_client_input(
@@ -452,11 +475,77 @@ fn run_with_services_inner(
     profile_path: &Path,
     entry: &Path,
     test: Option<&str>,
+    messages: Option<&mut dyn crate::messages::Provider>,
+    session: Option<&mut dyn crate::session::Provider>,
+    display: Option<&mut dyn crate::display::Factory>,
+    camera: Option<&mut dyn crate::camera::Provider>,
+    audio: Option<&mut dyn crate::audio::Provider>,
+    startup: Option<&mut dyn crate::startup::Observer>,
+    #[cfg(test)] restore: Option<&mut restore_tests::ActorControl>,
+) -> io::Result<()> {
+    run_with_brightness_services_inner(
+        runtime,
+        policy,
+        profile_path,
+        entry,
+        test,
+        messages,
+        session,
+        display,
+        camera,
+        audio,
+        None,
+        startup,
+        #[cfg(test)]
+        restore,
+    )
+}
+/// Explicit provider configuration; ordinary entrypoints supply no brightness authority.
+#[allow(clippy::too_many_arguments)]
+pub fn run_with_brightness_services(
+    runtime: &Path,
+    policy: &Path,
+    profile_path: &Path,
+    entry: &Path,
+    test: Option<&str>,
+    messages: Option<&mut dyn crate::messages::Provider>,
+    session: Option<&mut dyn crate::session::Provider>,
+    display: Option<&mut dyn crate::display::Factory>,
+    camera: Option<&mut dyn crate::camera::Provider>,
+    audio: Option<&mut dyn crate::audio::Provider>,
+    brightness: Option<&mut dyn crate::brightness::Provider>,
+    startup: Option<&mut dyn crate::startup::Observer>,
+) -> io::Result<()> {
+    run_with_brightness_services_inner(
+        runtime,
+        policy,
+        profile_path,
+        entry,
+        test,
+        messages,
+        session,
+        display,
+        camera,
+        audio,
+        brightness,
+        startup,
+        #[cfg(test)]
+        None,
+    )
+}
+#[allow(clippy::too_many_arguments)]
+fn run_with_brightness_services_inner(
+    runtime: &Path,
+    policy: &Path,
+    profile_path: &Path,
+    entry: &Path,
+    test: Option<&str>,
     mut messages: Option<&mut dyn crate::messages::Provider>,
     mut session: Option<&mut dyn crate::session::Provider>,
     mut display: Option<&mut dyn crate::display::Factory>,
     mut camera: Option<&mut dyn crate::camera::Provider>,
     mut audio: Option<&mut dyn crate::audio::Provider>,
+    mut brightness_provider: Option<&mut dyn crate::brightness::Provider>,
     mut startup: Option<&mut dyn crate::startup::Observer>,
     #[cfg(test)] mut restore: Option<&mut restore_tests::ActorControl>,
 ) -> io::Result<()> {
@@ -536,6 +625,8 @@ fn run_with_services_inner(
     let mut capture: Option<Capture> = None;
     let mut audio_inspected_at = 0u64;
     let mut media = crate::audio_session::Session::default();
+    let mut brightness = crate::brightness_session::Session::default();
+    let mut brightness_inspected_at = 0u64;
     let mut outcome = (|| {
         loop {
             // The signal handler only latches intent. The actor owns the same
@@ -600,6 +691,28 @@ fn run_with_services_inner(
                 {
                     audio_inspected_at = boottime_ns();
                     let _ = provider.inspect(audio_inspected_at.saturating_add(1_000_000_000));
+                }
+            }
+            if let Some(provider) = brightness_provider.as_deref_mut() {
+                if let Some((id, reply)) = brightness.fence(&authority, provider, stopping, |id| {
+                    connections.iter().any(|c| c.id == id)
+                }) {
+                    queue_media_reply(&mut connections, id, reply)?;
+                }
+                if let Some(event) = provider.poll()
+                    && let Some((id, reply)) = brightness.observe(event, &authority, provider)
+                {
+                    queue_media_reply(&mut connections, id, reply)?;
+                }
+                // Readonly reconciliation may establish a fresh connection, but
+                // never dispatches or replays a Set, including after revoke.
+                if !stopping
+                    && !brightness.pending()
+                    && !provider.state().pending
+                    && boottime_ns().saturating_sub(brightness_inspected_at) >= 250_000_000
+                {
+                    brightness_inspected_at = boottime_ns();
+                    let _ = provider.inspect(brightness_inspected_at.saturating_add(1_000_000_000));
                 }
             }
             if capture.as_ref().is_some_and(|active| {
@@ -1000,6 +1113,28 @@ fn run_with_services_inner(
                         Err(_) => return false,
                     }
                 }
+                if let Some(provider) = brightness_provider.as_deref_mut() {
+                    match brightness_client_input(
+                        &mut brightness,
+                        connection.id,
+                        &connection.fd,
+                        provider,
+                    ) {
+                        Ok(()) => {}
+                        Err(e) if e.raw_os_error() == Some(4) => return true,
+                        Err(_) => return false,
+                    }
+                }
+                if brightness.needs_drive(connection.id) {
+                    if !stopping
+                        && operation.is_none()
+                        && let Some(provider) = brightness_provider.as_deref_mut()
+                        && let Some(reply) = brightness.drive(connection.id, &authority, provider)
+                    {
+                        connection.pending = serde_json::to_vec(&reply).ok();
+                    }
+                    return true;
+                }
                 if media.needs_drive(connection.id) {
                     if !stopping
                         && operation.is_none()
@@ -1108,6 +1243,12 @@ fn run_with_services_inner(
                 {
                     connection.pending = serde_json::to_vec(&reply).ok();
                 }
+                if let Some(provider) = brightness_provider.as_deref_mut()
+                    && let Some(reply) =
+                        brightness.revalidate_reply(connection.id, &authority, provider, stopping)
+                {
+                    connection.pending = serde_json::to_vec(&reply).ok();
+                }
                 revalidate_lock_ack(connection, stopping, &authority, &operation, &storage);
                 if let Some(bytes) = &connection.pending {
                     return match ipc::send(&connection.fd, bytes) {
@@ -1123,6 +1264,7 @@ fn run_with_services_inner(
                             if let Some(provider) = audio.as_deref_mut() {
                                 media.published(connection.id, &authority, provider);
                             }
+                            brightness.published(connection.id);
                             connection.pending = None;
                             connection.lock_ack = None;
                             connection.read_stamp = None;
@@ -1404,6 +1546,56 @@ fn run_with_services_inner(
                     }
                 } else {
                     match serde_json::from_slice::<AppRequest>(&bytes) {
+                        Ok(AppRequest::BrightnessSet { request }) if !stopping => {
+                            if operation.is_some() {
+                                Reply::Unavailable
+                            } else if let Some(provider) = brightness_provider.as_deref() {
+                                match brightness.begin(
+                                    connection.id,
+                                    cred.pid.as_raw_nonzero().get() as u32,
+                                    cred.uid.as_raw(),
+                                    request,
+                                    &mut authority,
+                                    provider,
+                                ) {
+                                    Ok(until) => {
+                                        connection.deadline = until.saturating_add(1_000_000_000);
+                                        return true;
+                                    }
+                                    Err(reply) => reply,
+                                }
+                            } else {
+                                Reply::Unavailable
+                            }
+                        }
+                        Ok(AppRequest::BrightnessStatus {}) if !stopping => {
+                            let authenticated = matches!(
+                                authority.plan_request(
+                                    cred.pid.as_raw_nonzero().get() as u32,
+                                    cred.uid.as_raw(),
+                                    AppRequest::Query {},
+                                    boottime_ns()
+                                ),
+                                Decision::Immediate(Reply::Ok)
+                            );
+                            if !authenticated {
+                                Reply::Denied
+                            } else if let Some(provider) = brightness_provider.as_deref() {
+                                let state = brightness.state(connection.id, provider);
+                                let can_set = operation.is_none()
+                                    && brightness.available_to(connection.id)
+                                    && state.available
+                                    && !state.pending
+                                    && authority.brightness_allowed(
+                                        cred.pid.as_raw_nonzero().get() as u32,
+                                        cred.uid.as_raw(),
+                                        provider.incarnation(),
+                                    );
+                                Reply::BrightnessState { state, can_set }
+                            } else {
+                                Reply::Unavailable
+                            }
+                        }
                         Ok(AppRequest::MediaRoute { request }) if !stopping => {
                             if operation.is_some() {
                                 Reply::Unavailable
@@ -1694,6 +1886,10 @@ fn run_with_services_inner(
     if let Some(provider) = audio.as_deref_mut() {
         media.retire(provider);
     }
+    #[allow(clippy::needless_option_as_deref)]
+    if let Some(provider) = brightness_provider.as_deref_mut() {
+        brightness.retire(provider);
+    }
     revoke_capture(&mut capture, &mut camera);
     if let Some(provider) = camera.as_deref_mut() {
         provider.stop();
@@ -1816,3 +2012,7 @@ mod media_input_tests;
 #[cfg(test)]
 #[path = "service_source_observation_tests.rs"]
 mod source_observation_tests;
+
+#[cfg(test)]
+#[path = "brightness_tests.rs"]
+mod brightness_tests;
