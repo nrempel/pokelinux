@@ -1,0 +1,295 @@
+{
+  "schema": 1,
+  "scope": "original code in actual native x86 KVM signed installed guest; normal upstream compositor startup; no ARM or phone qualification",
+  "public_source_base": "6e5fe507f44f2f196f8ee78e130cf64131be8e90",
+  "production_code_changed": false,
+  "production_red_green_repair_qualified": false,
+  "full_app_service_composition_qualified": false,
+  "unchanged_hyprland_ELF_sha256": "55da553be71222566ee73b973d2f56dbb9939044d8f22f81aa54b66c83f2f6d1",
+  "unchanged_hyprland_upstream_commit": "efb50993780079460b0cbed1363e2166a2de1d9f",
+  "baseline_adapter_sha256": "7d78b090b4fac0701fa5926d5a5bb53789d01b9309296e4fa8103e0b7f5643a4",
+  "shared_sampler_sha256": "73612325a597b71a4386d62a4a563477e78e1bd5e572e48784f005507600e845",
+  "freshness_lease_ns": 100000000,
+  "initial_deadline_ns": 120000000000,
+  "cases": [
+    {
+      "id": "normal-tracer-1",
+      "aggregate_passed": false,
+      "classification": "startup Source unavailability before Sounds/PCM",
+      "artifact_sha256": {
+        "selection.json": "157f245de76fa1ee7e738776c1400c38a00c9f01af005508e709bd67ce796bfd",
+        "command.json": "a0d520767948b64e0012ba31141aa329ed48f389fb2842c24d30d531977a446f",
+        "execution.json": "8ba8a7064c1a247e19ba03a53412b4d4b6cd3ce2dcf99110bdaf6df1b0d5f4b7",
+        "result.json": "74262e5bc3543fe537f52fec6e032586cb3ec3b4692f89b8d1a2fc7c7b67e227",
+        "boot-result.json": "afae9a7ad2fcf8b33c6536d71a4778f60b4a008ab9f64f8e7ebdfb2161af05db",
+        "native-Qt-build-result.json": "687aee2d59441996254530f8a890eb7de52f9255a93e95874e669352bc7878ff"
+      },
+      "Source_last_accepted": {
+        "sequence": 1,
+        "sampled_at_ns": 53794934365
+      },
+      "first_rejection": {
+        "stage": "cached_sample",
+        "reason": "sample_expired",
+        "drain_ordinal": 0,
+        "sequence": 1,
+        "sampled_at_ns": 53794934365,
+        "previous_accepted": {
+          "sequence": 1,
+          "sampled_at_ns": 53794934365
+        },
+        "validated_at_boottime_ns": 53895237650,
+        "receive": null
+      },
+      "first_failure_kind": "TimedOut",
+      "original_behavior_groups_completed": [],
+      "actual_Qt_audio_component_cases": 32,
+      "audio_component_setup_cleanup_cases_included": 2,
+      "actual_Qt_appearance_component_cases": 29,
+      "actual_CLI_wait_exit": 0,
+      "actual_QEMU_wait_exit": 0,
+      "host_wait_receipts": 7,
+      "guest_wait_receipts": 78,
+      "host_waits_have_distinct_stdout_and_stderr_EOF": true,
+      "guest_waits_have_merged_output_EOF": true,
+      "QMP_shutdown_and_EOF_separate": true,
+      "all_guest_children_wait_and_EOF_closed": true,
+      "external_descendant_pidfds_closed": true,
+      "exact_CID_absent_same_daemon_inputs_unchanged": true,
+      "native_Stop_client_exit": 0,
+      "actual_owner_wait0": true,
+      "Stop_and_Snapshot_after_failure_not_stall_responsiveness": true,
+      "native_display_vendor_cleanup_not_qualified": true,
+      "phone_or_ARM_qualification": false,
+      "cached_first_sample_age_ns": 100303285,
+      "Root_review_sha256": "fedd4255d374b340922f0653f1f7446776541c73d6508023c02cd6f27cec2578"
+    },
+    {
+      "id": "normal-tracer-2",
+      "aggregate_passed": false,
+      "classification": "startup Source unavailability before Sounds/PCM",
+      "artifact_sha256": {
+        "selection.json": "f20b8915d96b1119aaea855d2cb130e58167e8d8e5cd2b5bbe1dc64d71a8b320",
+        "command.json": "20632c0960e7122ff4f95930860f5b4854e1f0ae2a76c60e9f9b9a1858587ef7",
+        "execution.json": "8a363d97b4e49bc568e693b9e6adc0a4599ddc3c5ba0b3624b64b22bfc84b2c7",
+        "result.json": "87c9fd21c8c6ace4df7d7367cb7f86f0539222f7090eb7ef9a3f19927e7acae1",
+        "boot-result.json": "301d43e129f13634b080a921819b92c2fe4e846c64e0d3942dfec164b02efc3b",
+        "native-Qt-build-result.json": "6060d025b09c78d6549efdec1dda2ad958fc3c09d75e04245dfc406deb19cc21"
+      },
+      "Source_last_accepted": {
+        "sequence": 1,
+        "sampled_at_ns": 54809024652
+      },
+      "first_rejection": {
+        "stage": "validation",
+        "reason": "sample_gap",
+        "drain_ordinal": 1,
+        "sequence": 2,
+        "sampled_at_ns": 54920030069,
+        "previous_accepted": {
+          "sequence": 1,
+          "sampled_at_ns": 54809024652
+        },
+        "validated_at_boottime_ns": 54927075134,
+        "receive": {
+          "received_bytes": 216,
+          "payload_truncated": false,
+          "control_truncated": false,
+          "errno": null
+        }
+      },
+      "first_failure_kind": "InvalidData",
+      "original_behavior_groups_completed": [],
+      "actual_Qt_audio_component_cases": 32,
+      "audio_component_setup_cleanup_cases_included": 2,
+      "actual_Qt_appearance_component_cases": 29,
+      "actual_CLI_wait_exit": 0,
+      "actual_QEMU_wait_exit": 0,
+      "host_wait_receipts": 7,
+      "guest_wait_receipts": 78,
+      "host_waits_have_distinct_stdout_and_stderr_EOF": true,
+      "guest_waits_have_merged_output_EOF": true,
+      "QMP_shutdown_and_EOF_separate": true,
+      "all_guest_children_wait_and_EOF_closed": true,
+      "external_descendant_pidfds_closed": true,
+      "exact_CID_absent_same_daemon_inputs_unchanged": true,
+      "native_Stop_client_exit": 0,
+      "actual_owner_wait0": true,
+      "Stop_and_Snapshot_after_failure_not_stall_responsiveness": true,
+      "native_display_vendor_cleanup_not_qualified": true,
+      "phone_or_ARM_qualification": false,
+      "unsuccessful_private_initial_present_candidate_not_merged": true,
+      "candidate_adapter_sha256": "a92edd0d3be3a856f44c4b9abf46101673229e69d8de9e42290bdf5d0777496f",
+      "candidate_compiled_plugin_sha256": "d04c2c4e0bcbab112f83ce4df539166f9d6319baa3483beac21e28c9e24461b0",
+      "producer_sample_gap_ns": 111005417,
+      "rejected_packet_age_ns": 7045065,
+      "retained_activation_log_sha256": "ca122198b95686439da400c99ed18e217a40dc58e2577d96d89e237757b9d607",
+      "activation_ordering_unqualified": true,
+      "missing_log_record_not_a_cause_or_no_presentation_claim": true,
+      "independent_review_sha256": "04f021f5f2011ae8309440e84d90f5cd2d73787fb3e040724ad9e2c40254ee5c"
+    }
+  ],
+  "still_open": [
+    "cold session Source availability",
+    "four-group Sounds/Source/Rust permissions/audio/PCM/theme/Stop composition",
+    "render-stall availability and separate responsive Stop while stalled",
+    "full installed Omarchy shell and menu integration",
+    "native display and vendor cleanup",
+    "ARM composed runtime and physical phone gates"
+  ],
+  "phone_accessed": false,
+  "screenshot_qualified": false,
+  "raw_private_artifacts_or_proprietary_inputs_published": false,
+  "prepared_cases": [
+    {
+      "id": "normal-prepared-tracer-1",
+      "aggregate_passed": false,
+      "artifact_sha256": {
+        "selection.json": "f1f9ec03a7584dec757b4e0b7bc24c3ac961170ec002f67a0b054ef4b993681c",
+        "command.json": "ec6bb5dc4347346a1bb9efa740b4978a92494c69a8787dbbb813f5a0fa383183",
+        "execution.json": "da0db211456750ca4523af4bbe8a139c40371405a0c2f9e2de26bda5f8d6eb8f",
+        "result.json": "1931e798511585324934882441e083a6d85c4b86f92c6debe15c7526fa397661",
+        "boot-result.json": "7612a83d97a2e2527f08b307073d090f7dcc6e37b16715a28fd4b59be3237402"
+      },
+      "production_code_changed": false,
+      "Source_adapter_is_baseline": true,
+      "original_behavior_groups_completed": [],
+      "actual_CLI_wait_exit": 0,
+      "actual_QEMU_wait_exit": 0,
+      "exact_CID_absent_same_daemon_inputs_unchanged": true,
+      "guest_case_closure_qualified": false,
+      "guest_cleanup_error_count": 1,
+      "native_display_vendor_cleanup_qualified": false,
+      "cold_startup_qualified": false,
+      "phone_qualified": false,
+      "classification": "fixture setup failure: UID1000 client cannot read private results QML; Source remains awaiting_first",
+      "warmup_client_actual_exit": 255,
+      "unexpected_fixture_exit_correctly_fails_guest_closure": true
+    },
+    {
+      "id": "normal-prepared-tracer-2",
+      "aggregate_passed": false,
+      "artifact_sha256": {
+        "selection.json": "77fba26d1c8988935cdc6e8464144a0acb0fd274135a71ac1c8d794361c51486",
+        "command.json": "7bee10b18aa491953ffe778095933cccbf2f95a3bc75a91d74c258b2c66347f8",
+        "execution.json": "53482e62aa5c006849f04504322bcfe8ce210e080ddc805c5b2ebda3127d4b44",
+        "result.json": "f3fdedba817eff2b825fda92cd7a1cdd1805d6e7d8a05869ffacd8d814f52bd1",
+        "boot-result.json": "bb1ebb4b63d03ddbd04c1e867e1b7c651a29a8c0bf15d725a6e21252073381df"
+      },
+      "production_code_changed": false,
+      "Source_adapter_is_baseline": true,
+      "original_behavior_groups_completed": [],
+      "actual_CLI_wait_exit": 0,
+      "actual_QEMU_wait_exit": 0,
+      "exact_CID_absent_same_daemon_inputs_unchanged": true,
+      "guest_case_closure_qualified": true,
+      "guest_cleanup_error_count": 0,
+      "native_display_vendor_cleanup_qualified": false,
+      "cold_startup_qualified": false,
+      "phone_qualified": false,
+      "classification": "actual Sounds launched; strict current normal app density metadata fails before functional groups",
+      "one_ordinary_warmup_native_capture_and_actual_child_wait": true,
+      "warmup_capture_is_not_normal_Sounds_capture": true,
+      "warmup_client_actual_wait_exit": -15,
+      "first_genuine_Source_snapshot": {
+        "state": "observed",
+        "last_accepted": {
+          "sequence": 1,
+          "sampled_at_ns": 55413782799
+        },
+        "first_failure": null
+      },
+      "later_authenticated_Source_snapshot": {
+        "state": "observed",
+        "last_accepted": {
+          "sequence": 87,
+          "sampled_at_ns": 57594652655
+        },
+        "first_failure": null
+      },
+      "Source_was_not_restarted_or_revived": true,
+      "normal_Qt_app_actually_launched_by_Rust_owner": true,
+      "normal_Qt_app_UID": 11042,
+      "normal_metadata_sha256": "9bb6c98b18142acc58318b61c327400e2dcc139dbdc6b89b69c8bcf88fd6beda",
+      "trusted_nonpresenting_discovery_sha256": "843772852804bd72625bd75b8da76256bf73b3a9d6cd72682a68cc7bb255fee1",
+      "actual_window_DPRs": [
+        3,
+        2.625
+      ],
+      "actual_window_geometry": [
+        0,
+        0,
+        411,
+        923
+      ],
+      "actual_app_QScreen_geometry": [
+        0,
+        0,
+        360,
+        808
+      ],
+      "actual_app_QScreen_DPR": 3,
+      "trusted_discovery_QScreen_geometry": [
+        0,
+        0,
+        411,
+        923
+      ],
+      "trusted_discovery_QScreen_DPR": 3,
+      "actual_owner_wait0": true,
+      "all_guest_children_wait_and_EOF_closed": true,
+      "external_descendant_pidfds_closed": true,
+      "qualified_Sounds_screenshot": false,
+      "full_PCM_oracles_executed": false
+    }
+  ],
+  "next_boundary": "One-entry normal-upstream logical-output allowlist repair, exact same actual registry consumer and strict normal-app Pixel/four-group/PCM/Source/closure requirements.",
+  "logical_output_boundary": {
+    "aggregate_passed": false,
+    "actual_missing_required_global_RED_qualified": true,
+    "artifact_sha256": {
+      "selection.json": "d811c8651fc35188b977a4f47ed46d66be9b03a6543dc3f4f36879b6f511c45f",
+      "command.json": "2bd7f699848f337397b7c74afe3ff4b735de5e6821bf6410647d2c816df84aa1",
+      "execution.json": "fb2513262bb7aa37bfe09db37547537aa27805e551c511bc3f137713999ee474",
+      "result.json": "8f8e7d9177ba2c4f6d1a25758790e84e40fff0b3cc6d6963f5847e4b6e685506",
+      "boot-result.json": "9549c3316528f7892489daa459223a6d5d04c4aa5fcc69ae9c576311886a9039",
+      "source/guest.py": "820082ff51701a4d8b83ebc90bb386953b60b675e1f7ebc6c76ef8566af25bf1",
+      "source/logical-output-registry-probe.py": "3826ee3b958e2e7ce5962bac5596d89c7b429211898afa37344197f2c172c52c"
+    },
+    "pre_edit_consumer_contract_sha256": "6d12a1258cc5e1dbc97631b043fba517ed0e9ac76f4381fc036fba9643c66706",
+    "Root_actual_RED_qualification_sha256": "1e88e1c5df51e7c1887439985ec5cbb96da05dc241a602229be0e7d1311e1ed1",
+    "trusted_UID": 1000,
+    "app_UID": 11042,
+    "protocol": "zxdg_output_manager_v1",
+    "trusted_advertised_version": 3,
+    "actual_owned_app_advertises_protocol": false,
+    "normal_compositor_and_xdg_shell_bind_both": true,
+    "all_previous_privileged_globals_present_trusted_but_hidden_app": [
+      "ext_session_lock_manager_v1",
+      "wp_security_context_manager_v1",
+      "zwlr_layer_shell_v1",
+      "zwlr_screencopy_manager_v1",
+      "zwp_virtual_keyboard_manager_v1"
+    ],
+    "Source_snapshot": {
+      "state": "observed",
+      "last_accepted": {
+        "sequence": 79,
+        "sampled_at_ns": 57096117107
+      },
+      "first_failure": null
+    },
+    "postactivation_Source_lease_ns": 100000000,
+    "actual_owner_Stop_client_exit": 0,
+    "actual_owner_wait0": true,
+    "guest_closure_qualified": true,
+    "exactCID_absent_same_daemon_inputs_unchanged": true,
+    "actual_CLI_wait_exit": 0,
+    "actual_QEMU_wait_exit": 0,
+    "original_behavior_groups_completed": [],
+    "qualified_Sounds_screenshot_or_PCM": false,
+    "one_entry_dependency_candidate_not_yet_qualified": true,
+    "production_code_changed": false,
+    "phone_or_ARM_or_display_cleanup_qualified": false
+  }
+}

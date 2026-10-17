@@ -10,6 +10,12 @@ The target is Arch Linux ARM, Hyprland, native phone apps and Rust services for 
 
 The next end-to-end slice joins the normal Omarchy Sounds app, genuine Source/focus, the Rust session and audio services, actual virtual PCM, live themes and app/service Stop. This combined slice remains unqualified. Source must keep its unchanged100ms freshness rule and fail closed on expiry; responsive service Stop, compositor process exit and native display cleanup require separate evidence.
 
+A [prepared normal session](docs/native-normal-upstream-tracer.md#prepared-normal-session-reaches-sounds)
+now launches Sounds through the Rust owner with genuine Source healthy through
+sequence87. Its strict display-metadata check still fails before audio/PCM; no
+qualified Sounds screenshot follows. Cold-start Source availability stays open,
+and the unsuccessful initial-presentation candidate remains unmerged.
+
 The [Rust ingress wake fix](docs/native-render-ingress-wake.md) passes its frozen RED→GREEN regression and all66 active Rust tests, with two ignored child modes, formatting, strict Clippy and release compilation. This repairs the experimental executor component; it establishes no normal compositor frame or phone behavior.
 
 Future UI runs and screenshots target the [Pixel 10 display profile](docs/native-phone-display-profile.md):1080 ×2424 native pixels at422PPI, with the matched image's420 logical density. Three actual ARM checks now qualify virtual physical metadata, native capture pixel equality and normal unload restoration. Each UI fixture must retain the profile and capture guards; older screenshots keep their original geometry.

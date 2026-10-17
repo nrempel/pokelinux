@@ -32,6 +32,18 @@ and its failed runtime evidence as component research. Source freshness and
 render-stall availability, uncertain native operations and genuine display
 cleanup stay open. No physical phone is authorized.
 
+Two fresh [normal upstream startup attempts](native-normal-upstream-tracer.md)
+retain terminal Source failures, including the unsuccessful private initial-present
+candidate. Do not merge it or add another speculative activation predicate. A
+later prepared session now launches actual Sounds through the Rust owner with
+Source healthy through sequence87. Its strict screen metadata fails before the
+four behavior/PCM groups. A later actual registry consumer now qualifies missing
+logical-output RED on that exact owned app listener, with Source healthy and all
+prior privileged protocols still hidden. Next qualify a one-entry upstream
+allowlist correction against the same frozen consumer, then the full app/PCM
+contract. Keep Pixel targets fixed. Prepared startup cannot qualify cold startup
+or complete the phone goal.
+
 The [experimental executor ingress wake fix](native-render-ingress-wake.md)
 passes its exact frozen RED→GREEN test, a separate expired-retry refusal and all66
 active Rust tests, with two ignored child modes, fmt, strict Clippy and release.
