@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "scope": "Public Python test-helper host real-child timeout custody; host kernel syscalls, no VM, power-supply driver, vendor transport or physical phone execution",
+  "helper": {
+    "bytes": 12712,
+    "sha256": "5a738b9529a1a0e5d5b0bd20e27e2ec4244d4e61d7c8e0dad96fe1ffbef3c423"
+  },
+  "test": {
+    "bytes": 7873,
+    "sha256": "d9bd7013ea9f725eb582f3e388f6ad8ea6818d93f0dc6c535fb7bf59f12fefd8"
+  },
+  "initial_old_helper_RED": {
+    "helper_sha256": "350577b44f5059bdd55d739dc4dd5150c6e41804853e471c8fda9fc6892cd524",
+    "receipt": {
+      "bytes": 1095,
+      "sha256": "a3f68c69e66a57d7697c25cfecb8fd982c29ca3a28db5ce8b91cf448454b5454"
+    },
+    "overdue_cases_failed": 2,
+    "timely_controls_passed": 2,
+    "rescue_wait_required": true
+  },
+  "first_four_case_GREEN": {
+    "receipt": {
+      "bytes": 1097,
+      "sha256": "971e437ff9c1b951bd0fec6073af6360dea3dd4025488407c2f18b3058b16865"
+    },
+    "passed": 4
+  },
+  "earlier_finish_deadline_RED": {
+    "sha256": "a11ee2f086842bb1495dd16c405b0ce4e06f8e043b5551b2543c14edbb99bd3e",
+    "helper_sha256": "ee68a61d96ce6e627c94aaf67e8456dfa616c79edd67d981590743787ef02638",
+    "actual_test_exit": 1,
+    "case_outcomes": {
+      "merged-timeout": true,
+      "regular-timeout": true,
+      "merged-timely": true,
+      "regular-timely": true,
+      "regular-shorter-finish-timeout": false
+    },
+    "specific_inconsistency": "Regular stderr close after the first finish80ms incorrectly appeared timely against the larger start wait2s"
+  },
+  "five_case_GREEN": {
+    "sha256": "26056d281a12973c3ec2d025c864cda9798b4c857a967c70acde957aaa7ec9be",
+    "helper_sha256": "5a738b9529a1a0e5d5b0bd20e27e2ec4244d4e61d7c8e0dad96fe1ffbef3c423",
+    "test_sha256": "f19ba5c563f8149fc41a00da06ccd54416d69ac66dcb300329d76700c7b3b3dd",
+    "actual_test_exit": 0,
+    "case_outcomes": {
+      "merged-timeout": true,
+      "regular-timeout": true,
+      "merged-timely": true,
+      "regular-timely": true,
+      "regular-shorter-finish-timeout": true
+    },
+    "all_five_actual_wait_PIPE_EOF_ECHILD_proc_absent": true,
+    "rescue_used": false
+  },
+  "Root_exact_public_test_GREEN": {
+    "summary": {
+      "bytes": 12050,
+      "sha256": "8173d9d6f6246c55ca4dba91f88b5a3f23d3c393595aa85b6fceb46fbc748833"
+    },
+    "actual_exit": 0,
+    "cases": {
+      "merged-timeout": true,
+      "regular-timeout": true,
+      "merged-timely": true,
+      "regular-timely": true,
+      "regular-shorter-finish-timeout": true
+    },
+    "only_post_agent_change": "Output classification says power-supply-driver rather than kernel; test behavior unchanged, exact published bytes rerun."
+  },
+  "required_results": {
+    "all5_actual_same_parent_wait_PIPE_EOF_ECHILD_proc_absence": true,
+    "no_GREEN_rescue": true,
+    "all3_overdue_original_wait_EOF_flags_false": true,
+    "regular_stderr_identity_limit_hash_and_after_wait_close_preserved": true,
+    "regular_stderr_is_not_PIPE": true,
+    "shorter_first_finish_deadline_controls_stderr_timeliness": true,
+    "timeout_functional_failure_preserved": true,
+    "separate_original_cleanup_budget": true
+  },
+  "historical_VM_results_not_upgraded": true,
+  "private_GUI_helper_separately_qualified_not_replaced_by_this_file": true,
+  "incomplete_custody_branch": {
+    "implementation": "Retain the exact Popen, pidfd, PIPE, log and regular stderr with an explicit error if actual wait or EOF remains unresolved",
+    "source_reviewed": true,
+    "forced_incomplete_cleanup_case_executed": false,
+    "uninterruptible_kernel_or_vendor_worker_qualified": false
+  }
+}

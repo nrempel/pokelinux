@@ -100,6 +100,7 @@ still requires kernel PRESENT=0 plus unavailable/null service state; it disables
 bytecode generation. Preparation and cold boot both pass this corrected probe.
 
 These are headless, fixture-controlled kernel observations and installed-service
-lifecycle evidence. ARM64 is a crossbuild only here. Normal Qt presentation,
-physical Pixel attributes, charging, suspend, wake and drain remain separate
-gates. No physical phone is accessed.
+lifecycle evidence. ARM64 is a crossbuild only here. A later [prepared normal Messages window](native-battery-ui.md#kernel-to-visible-battery-status)
+now follows all three virtual-driver states through the actual Rust client, with
+original Pixel10-profile captures. Physical Pixel attributes, charging, suspend,
+wake and drain remain separate gates. No physical phone is accessed.

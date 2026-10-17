@@ -58,7 +58,7 @@ There is no incoming reception, permission grant, app launch or carrier claim.
 the selected Arch 7.2.9 kernel and exact `test_power` module, the installed
 production service/unit/configuration manifest, root credentials and PID1
 systemd. Run it only in that disposable guest, with this repository's
-[`owned.py`](owned.py) alongside it. The exact executed probe/helper pair is
+[`owned.py`](owned.py) alongside it. The recorded boots used the exact probe/helper pair
 pinned in the [kernel provenance](../../docs/evidence/native-battery-kernel-provenance.json):
 
 ```sh
@@ -79,3 +79,24 @@ kernel PRESENT=0 and unavailable/null publication remain required. See the
 [battery evidence](../../docs/native-battery.md) for the preserved parser and
 fixture failures, repaired seven-test provider and actual two-boot result. This
 is neither an ARM/Pixel reading nor app, Source or power-policy evidence.
+
+
+The current `owned.py` is a later timeout-custody repair. The battery kernel
+boots above used historical helper `350577b4…`; their result is not reassigned
+to this successor. Five focused real-child cases separately qualify the current
+helper: two timely controls, two overdue commands and a shorter first-finish
+deadline with regular stderr. Cleanup obtains actual same-parent wait and PIPE
+EOF within its separately selected original close budget, while the failed
+command's wait/EOF/stderr timing stays failed. Unresolved custody retains the
+Popen and descriptors with an explicit error. A regular stderr file is hashed
+and closed after actual wait; it is never counted as a PIPE.
+
+```sh
+python3 tools/native-installed-services/owned-timeout-tests.py \
+  --output-dir /tmp/pokelinux-owned-test-NEW
+```
+
+Use a fresh output path. These tests launch only their own finite children and
+access no service, power-supply driver or phone. Actual RED, the deadline-field
+correction and final five-case GREEN are recorded in the
+[hash-only provenance](../../docs/evidence/native-owned-timeout-provenance.json).

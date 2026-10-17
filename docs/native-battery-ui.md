@@ -53,6 +53,47 @@ without recording the mismatching hashes, before app start or any capture. The
 failed guest also exceeded its test-driver unload subdeadline and reported a
 separate custody error. Its [hash-only record](evidence/native-battery-gui-attempt-provenance.json)
 keeps guest closure false despite outer QEMU/container shutdown. No visible
-battery feature follows from this attempt. A separate fixture successor is being
-prepared; its result is not inherited. Pixel battery readings, charging policy,
+battery feature follows from this attempt. The later successors below are separate epochs; their results do not upgrade
+that failed attempt. Pixel battery readings, charging policy,
 suspend, drain, ARM graphical startup and a bootable phone image remain open.
+
+
+## Kernel to visible battery status
+
+The later prepared native x86 KVM run passes all three actual driver states in
+one normal Messages process/window:73% charging,51% discharging, then battery
+unavailable. Independent kernel attributes and fresh root-credentialed service
+snapshots bracket every capture. Root read the expected label in each original
+image; no UI observer, model access, text injection, cropping or resizing is used.
+
+| Charging | Discharging | Source unavailable |
+| --- | --- | --- |
+| [![73% charging](assets/messages-battery-charging.png)](assets/messages-battery-charging.png) | [![51% discharging](assets/messages-battery-discharging.png)](assets/messages-battery-discharging.png) | [![Battery unavailable](assets/messages-battery-unavailable.png)](assets/messages-battery-unavailable.png) |
+
+These are original1080×2424 native output captures, approximately422PPI at
+scale2.625, with actual output and mapped-window metadata. Direct normal QWindow
+DPR is not measured. Tokyo Night values come from the selected genuine Omarchy
+source. This run retains the explicitly older qualified session/Source/audio/
+appearance providers and one fixture-authored MessagesRead grant. The local
+history is authored test data, without real SMS reception or sending. The
+compositor's debug-launch banner and prototype layout remain in the originals;
+this is not a finished phone shell or full theme/accessibility qualification.
+
+The first successor fixed fixture readiness and cleanup, then reached a mapped
+normal app but failed before capture because a dictionary binding shadowed a
+helper function. Its readiness, normal Stop and guest closure pass separately;
+the feature remains failed. Renaming those dictionary bindings preserves every
+function and assertion. The following fresh run passes all three captures,
+normal owner Stop and battery PID1 exit0, empty cgroup, dead Main, socket removal
+and actual test-driver unload. QEMU/container closure and all selected inputs
+also pass. No Source policy or production deadline is changed. The explicit
+fixture unload allowance is15s within the original700s close budget; its earlier
+5s failure remains recorded separately.
+
+See [graphical provenance](evidence/native-battery-gui-provenance.json) for exact
+inputs, images, readiness and closure, and the
+[public helper timeout regression](evidence/native-owned-timeout-provenance.json)
+for the separate current helper. That helper was not substituted into these
+frozen VM epochs. Cold graphical startup, current all-service integration,
+physical Pixel battery/charging, ARM window startup, suspend and drain remain
+open. No physical phone was accessed.

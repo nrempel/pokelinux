@@ -116,7 +116,8 @@ qualification. The separate [native battery observation service](native-battery.
 now passes seven filesystem/socket/process groups, host/ARM crossbuilds and
 actual virtual-kernel driver observations with installed PID1 startup and fresh
 automatic cold boot. Its readonly Rust client and normal Qt build also pass;
-visible GUI changes and physical battery integration remain open. Display/brightness, actual
+a prepared normal Messages window now visibly follows all three states, with
+original Pixel10-profile captures. Physical battery integration remains open. Display/brightness, actual
 suspend/wakeup, charging, thermal measurements and drain remain separate
 implementation and later authorized hardware gates. This component supplies no production or
 hardware completion claim.

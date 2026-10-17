@@ -1,0 +1,315 @@
+{
+  "schema": 1,
+  "scope": "Closed native x86_64 prepared normal Messages GUI: Linux test_power → readonly Rust battery service/client → three original native frames, with independent Root semantic visual review. Virtual kernel backend only.",
+  "passed": true,
+  "closed_records": {
+    "selection.json": {
+      "bytes": 205558,
+      "sha256": "d405400b78dca1643d4a10f122a3de408afa55b4c7169be2689021d526653d68"
+    },
+    "command.json": {
+      "bytes": 1403,
+      "sha256": "10fb40777c52cd9e6438e0fd9918dd7c69cd223e821e205ba2fc9a91660e7b04"
+    },
+    "execution.json": {
+      "bytes": 12504,
+      "sha256": "8ca0c70b5a79bb21c7cd7f91368e7ce9ff284a1cea262a46a30473d8f710f3b7"
+    },
+    "result.json": {
+      "bytes": 367368,
+      "sha256": "ace033a93db6e13d9b76c47a1893684ccbaa7a8cd57bd486b6bf760ed8d22235"
+    },
+    "boot-result.json": {
+      "bytes": 11687,
+      "sha256": "42648ec12c4edd9fa00cae017112bedafa2cafdcd3d9a1b24b3d8fa11e9c73eb"
+    },
+    "bootstrap-result.json": {
+      "bytes": 7813,
+      "sha256": "ab5f743f7774f1f9bd85a6a9d0e6265219bfe5dcdd064f46abee0939e888f494"
+    },
+    "battery-readiness.json": {
+      "bytes": 823,
+      "sha256": "25b60dfaad34f9ad4f605d7b1bb817a30da6317acc252cde6acf94418fd0ab3b"
+    },
+    "CLOSED-CAPTURE-CANDIDATES.json": {
+      "bytes": 42447,
+      "sha256": "fa81d28dc155ce8c8c6887ac4185fd080efd9459898bdae6ea401b912c4ee3f9"
+    },
+    "CLOSED-OUTPUT-SEAL.json": {
+      "bytes": 2024,
+      "sha256": "6286938f3d78ebe2890da55e51b7aae21e14f724a5c86453d13619876bbf7736"
+    },
+    "Root-VISUAL-REVIEW.json": {
+      "bytes": 1553,
+      "sha256": "0d2f30c507e69fbcd8661a92e5a46cdf48b53410057e87e904132e9c6da1cafa"
+    }
+  },
+  "Root_visual_review": {
+    "passed": true,
+    "all_three_originals_reviewed": true,
+    "same_Messages_history_layout": true,
+    "exact_headers_recorded_with_frames": true,
+    "Hyprland_debug_banner_and_VM_borders_preserved": true,
+    "images_edited_cropped_or_resized": false,
+    "separate_review_after_automated_capture_receipt": true
+  },
+  "normal_Messages_and_Rust_cohort": {
+    "normal_ELF": {
+      "sha256": "37e516a960cebab5a2c9f60a46bdeaea5e8c56fe63e66969116b4a5b833b3bdc",
+      "bytes": 6153552,
+      "ELF_machine": 62
+    },
+    "closed_Qt6_12_build_qualification_sha256": "d0cffc0a2b50c4f12c93f81dfac59b8a4ea51a33e3751c7d277da3c75094cc78",
+    "closed_Qt_build_result_sha256": "51e591b166ec36dd42ff0b10c2957a6496dd0b533f1d1d14accf2dc9efaee72d",
+    "same_frozen_56_source_files_and_367_package_runtime_rechecked": true,
+    "three_Rust_cores": {
+      "Messages": {
+        "archive_sha256": "c6123df92a185525b5dc51fbab44781b53f75219a1801084b4f4c6b8294a207a",
+        "compiled_header_sha256": "77464323084b96c08f4d706c468f008803203e6a3182c1491f234264b84e2b0e",
+        "strong_C_API_count": 12
+      },
+      "appearance": {
+        "archive_sha256": "2352a455d1da1697309a18b8ae6f95b8e4efcc0422c90cf78d2aa9d468e72b94",
+        "compiled_header_sha256": "46e993660ced0eb0f6d901071b347aefe289d757af4dc9ea0d9d601a06d79504",
+        "strong_C_API_count": 11
+      },
+      "battery": {
+        "archive_sha256": "f5c2a983088711bbdbe9563352c855edc6ad9f65cfbde497bb7085a42f53962e",
+        "compiled_header_sha256": "1284efc7258a658f9d9c3eac2fec2fa2ec7316575ae889acac3869df4567df0d",
+        "strong_C_API_count": 4
+      }
+    },
+    "actual_guest_loader_resolution_rechecked": true,
+    "normal_default_app_observer_enabled": false,
+    "app_rebuilt_this_GUI_epoch": false,
+    "original_Qt_build_only_proof_not_relabelled_GUI": true,
+    "README_only_delta_receipt_sha256": "f03d8e95e044e1a69e49c66b3115dcfb8a2abe903cf14a0fc06f2b1543ba7b04",
+    "frozen_original_runtime_snapshot_retained": true,
+    "later_documentation_and_component_fixture_changes_not_relabelled_as_this_runtime": true
+  },
+  "battery_and_prepared_runtime": {
+    "production_files": {
+      "usr/libexec/pokelinux/battery-service": {
+        "bytes": 674560,
+        "sha256": "3f70acdaf356f1f4f0af2946bb7a47dc3b4c5e241fa09331950ab5f23ed044ae"
+      },
+      "usr/lib/systemd/system/pokelinux-battery.service": {
+        "bytes": 568,
+        "sha256": "7ba661877f81ae36c10ddf357bc55a3bbf2b0512492e1efdd6a8def619d94136"
+      },
+      "etc/pokelinux/battery.conf": {
+        "bytes": 38,
+        "sha256": "59da02e114b2063c69068ba108ff99925ca849ce8bfaadb9c1f38f9737a73e68"
+      }
+    },
+    "passed_kernel_and_cold_service_qualification_sha256": "d925630cc05e3cf6d96901cadb45ff454b9005c9d476ff1af1545a4619d88442",
+    "kernel": "7.2.9-arch1-1",
+    "test_power_module_sha256": "da0782f3d00b46cf5f301a202ac8edee494f1fdd7894c579d152b43cbeb847fa",
+    "admitted_packages": 367,
+    "installed_package_inventory_sha256": "d1a51fbcc848498321dbd5e53850a7da2fac4bdf5937cbd8d92acf20b6902f38",
+    "read_only_base_image_sha256": "529fc1ffbdb5f0edebe83e66a84716eb28774036e07a81bf8655119107ebf6e0",
+    "public_endpoint": "/run/pokelinux-battery/snapshot.sock",
+    "runtime_directory_mode": "0755",
+    "socket_mode": "0666",
+    "root_service_and_unprivileged_readonly_client": true,
+    "exact_executable_and_fresh_root_socket_peer_readiness_observed": true,
+    "Main_identity_and_pidfd_pinned": true,
+    "one_original_readiness_deadline_before_start_seconds": 10,
+    "restart_or_alternate_executable_accepted": false,
+    "test_power_presence_controls": "load true; write false\\n for absent; raw getter diagnostic only",
+    "driver_controls_only_inside_disposable_guest": true,
+    "retained_old_service_payload_manifest_sha256": "3f96a0af9f23c44664c9ccd97e547926437805d302725c9f380bfe44f4755544",
+    "retained_old_Source_compositor_ELF_sha256": "c70c79f67f7ccb820e09afc8640fafdf2f75b2e619b89243101bc9ec07545b48",
+    "matching_retained_SDK_sha256": "91c44a4ce0bfc3c20bb2a2cd0ec9c24827ce95163604260dcafe86587bf67620",
+    "Source_adapters_old_qualified_cohort_not_current_all_Rust": true,
+    "Source_lease_ns": 100000000,
+    "Source_bootstrap_ns": 5000000000,
+    "Source_first_sample_ns": 120000000000,
+    "Source_authentication_or_freshness_policy_changed": false
+  },
+  "display_profile": {
+    "qualified": true,
+    "scope": "actual compositor output, mapped normal app/window, Wayland registry and original native capture",
+    "native_pixels": [
+      1080,
+      2424
+    ],
+    "nominal_mm": [
+      65,
+      146
+    ],
+    "axis_PPI": [
+      422.03076923076924,
+      421.70958904109585
+    ],
+    "nominal_PPI": 422,
+    "selected_image_logical_density": 420,
+    "actual_compositor_output_scale": 2.625,
+    "actual_normal_QWindow_DPR_measured": false,
+    "normal_QWindow_DPR": null,
+    "direct_Qt_window_DPR_physical_DPI_product_qualified": false,
+    "resize_crop_or_export_scale_used": false
+  },
+  "same_live_participants": {
+    "same_app_PID_starttime_and_ELF_all_three_states": true,
+    "same_mapped_Wayland_window_all_three_states": true,
+    "same_service_Main_and_Invocation_all_three_states": true,
+    "app_pidfd_and_proc_identity_verified": true,
+    "raw_process_ids_and_window_addresses_omitted": true,
+    "UI_observer_model_or_snapshot_injection": false
+  },
+  "frames": [
+    {
+      "public_file": "docs/assets/messages-battery-charging.png",
+      "bytes": 74877,
+      "sha256": "0bf8cc1cf0e4245fd783be29557f97ece602320da4a52c4164c28bd170e587e2",
+      "native_pixels": [
+        1080,
+        2424
+      ],
+      "Root_visually_read_header": "73% · Charging",
+      "Root_original_image_review_passed": true,
+      "kernel_uevent_before_and_after_capture": {
+        "present": 1,
+        "capacity_percent": 73,
+        "status": "charging"
+      },
+      "fresh_authenticated_service_snapshot_before_and_after_capture": {
+        "available": true,
+        "capacity_percent": 73,
+        "status": "charging"
+      },
+      "unavailable_deadline_canonical_zero": null,
+      "native_buffer_sha256": "d1d1bea43dc18765e8d86948c8621dabd4cab22f47d444332086de37ac602e10",
+      "PNG_decoded_pixels_match_native_buffer": true,
+      "resized_cropped_or_edited": false
+    },
+    {
+      "public_file": "docs/assets/messages-battery-discharging.png",
+      "bytes": 75326,
+      "sha256": "115c36f9837a7aa7bfc74e0d69b917bb8b89f6da2bbe95802c672392c16fcec2",
+      "native_pixels": [
+        1080,
+        2424
+      ],
+      "Root_visually_read_header": "51% · Discharging",
+      "Root_original_image_review_passed": true,
+      "kernel_uevent_before_and_after_capture": {
+        "present": 1,
+        "capacity_percent": 51,
+        "status": "discharging"
+      },
+      "fresh_authenticated_service_snapshot_before_and_after_capture": {
+        "available": true,
+        "capacity_percent": 51,
+        "status": "discharging"
+      },
+      "unavailable_deadline_canonical_zero": null,
+      "native_buffer_sha256": "3c49a61349196a7a9dbc97f8dba7588403f2a0c2745d726488b1277a8b688b20",
+      "PNG_decoded_pixels_match_native_buffer": true,
+      "resized_cropped_or_edited": false
+    },
+    {
+      "public_file": "docs/assets/messages-battery-unavailable.png",
+      "bytes": 75966,
+      "sha256": "645bdc113062230aecd2baeb1cfdfe50978751c63a60f3da466968aa62ceb4a9",
+      "native_pixels": [
+        1080,
+        2424
+      ],
+      "Root_visually_read_header": "Battery unavailable",
+      "Root_original_image_review_passed": true,
+      "kernel_uevent_before_and_after_capture": {
+        "present": 0,
+        "capacity_percent": 51,
+        "status": "discharging"
+      },
+      "fresh_authenticated_service_snapshot_before_and_after_capture": {
+        "available": false,
+        "capacity_percent": null,
+        "status": null
+      },
+      "unavailable_deadline_canonical_zero": true,
+      "native_buffer_sha256": "d89b482b0a94d7a8283b5c3a20de0e79210964785135dd149a64fc28f91515c8",
+      "PNG_decoded_pixels_match_native_buffer": true,
+      "resized_cropped_or_edited": false
+    }
+  ],
+  "theme_and_history_scope": {
+    "theme": "tokyo-night",
+    "original_upstream_theme_setter_templates_and_Color_Style_in_authored_theme_only_host": true,
+    "current_two_theme_cohort_qualified": false,
+    "full_original_shell_or_menu_qualified": false,
+    "local_history_and_initial_MessagesRead_grant_are_authored_fixture": true,
+    "real_SMS_or_new_authorization_claimed": false
+  },
+  "closure": {
+    "actual_outer_exec_exit": 0,
+    "actual_container_CLI_wait_exit": 0,
+    "actual_QEMU_wait_exit": 0,
+    "actual_host_wait_receipts": 7,
+    "actual_host_PIPE_EOFs": 14,
+    "actual_boot_wait_receipts": 5,
+    "actual_bootstrap_wait_receipts": 5,
+    "actual_guest_direct_wait_receipts": 86,
+    "all_direct_children_actual_wait_and_EOF": true,
+    "guest_case_closure_qualified": true,
+    "host_and_guest_cleanup_errors_empty": true,
+    "native_owner_authenticated_Stop_and_actual_wait0": true,
+    "external_app_retained_pidfd_dead_and_proc_absent": true,
+    "normal_app_numeric_exit_status": null,
+    "native_parent_wait_not_relabelled_as_guest_wait": true,
+    "battery_PID1_Stop": {
+      "passed": true,
+      "final_active_state": "inactive",
+      "final_substate": "dead",
+      "normal_Main_exit_status": 0,
+      "retained_Main_dead": true,
+      "cgroup_empty": true,
+      "PID1_child_wait_claimed_by_guest": false
+    },
+    "virtual_module_unload_returned_zero": true,
+    "unload_command_cap_seconds": 15,
+    "exact_owned_container_absent": true,
+    "same_daemon": true,
+    "all_selected_and_original_inputs_unchanged": true,
+    "original_work_seconds": 660,
+    "original_guest_closure_seconds": 700,
+    "original_QEMU_seconds": 780,
+    "original_outer_seconds": 840,
+    "deadlines_renewed": false
+  },
+  "failed_predecessors_separate": {
+    "GUI1": {
+      "aggregate_passed": false,
+      "execution_sha256": "792324f4b7e9895c287f043b8857bc51ead436600ef23899bc0b5e2e4d16c00c",
+      "result_sha256": "39b350fa7f654b7246813f780d7498940c079d63e882b430c8c90825893e1c8e",
+      "first_failure": "Service executable SHA comparison assertion during setup; compared digest values/readlink not retained; cause unknown.",
+      "feature_frames": 0,
+      "guest_case_closure_qualified": false,
+      "original_five_second_driver_unload_timeout_and_missing_expected_child_KeyError_retained": true,
+      "cause_not_inferred_from_later_readiness_pass": true,
+      "public_detail": "docs/evidence/native-battery-gui-attempt-provenance.json"
+    },
+    "GUI2": {
+      "aggregate_passed": false,
+      "execution_sha256": "9f1faecb486db1ea4c3c9a316ba0a262727f812e17f41cad00941f16193f9e43",
+      "result_sha256": "ac75fed3f5dc8233b5ed29945cb6d1cad24872dd24722c08dc904957744fa4de",
+      "first_failure": "Private tracer module-level identity dictionary shadowed identity(user) helper; TypeError before first feature capture.",
+      "feature_frames": 0,
+      "normal_window_and_service_readiness_passed_separately": true,
+      "guest_case_closure_qualified": true,
+      "GUI3_fix": "Only four module-level binding/comparison renames; all guest function ASTs and production/runtime inputs unchanged.",
+      "production_Source_UI_or_deadline_change_for_GUI3": false
+    },
+    "repair_limits": "Separate reviewed private fixture repairs added observed executable/socket readiness, honest overdue-child custody and a15s unload cap within unchanged700s close; GUI1 failed5s case remains failed. Public owned-helper changes are independent and were not copied into this GUI helper."
+  },
+  "limits": [
+    "Virtual test_power backend only; no physical phone, host power access or real battery hardware qualification.",
+    "Prepared synthetic native x86_64 GUI only; no ARM GUI result inferred.",
+    "Actual normal QWindow DPR was not measured; output/registry/native-capture profile evidence has its stated scope.",
+    "Old qualified Source/owner cohort retained; no current all-Rust service cohort, cold compositor startup, full shell/menu or complete phone claim.",
+    "Tokyo Night only in this epoch; no current two-theme matrix.",
+    "Authored local history and initial grant only; no real SMS or new authorization claim."
+  ]
+}

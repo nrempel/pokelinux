@@ -110,5 +110,8 @@ three matching Rust archives, the actual battery adapter and no observer. Its
 normal app ELF is built. The existing installed/live-appearance/Messages-policy
 QML groups also pass with the actual battery adapter after a genuine creation
 assertion RED and a fixture-only repair. The first graphical battery attempt
-failed in setup before any capture; visible changes remain a separate GUI gate.
+failed in setup before any capture. A later prepared normal window now visibly
+follows charging, discharging and unavailable state through the actual Rust
+service/client, with original Pixel10-profile captures. It retains the explicitly
+older qualified session/Source providers; no full current phone cohort follows.
 Earlier two-engine ARM and graphical results retain their recorded cohorts.

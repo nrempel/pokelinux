@@ -338,19 +338,19 @@
     }
   },
   "remaining_gates": [
-    "Actual normal Messages window and kernel-to-visible-battery changes",
     "Actual nonroot server rejection",
+    "Cold graphical startup and full current service cohort",
     "Physical Pixel battery, suspend, charging and drain"
   ],
   "post_build_documentation_only_deltas": {
     "native-app/battery-client-core/README.md": {
-      "bytes": 3033,
-      "sha256": "565fcca87270f921c928e058c909aa761c2c3171ac9cb0262e8a7d9d2bc4b936",
+      "bytes": 3283,
+      "sha256": "6543cdb07bf5f546481e79ed495ddf8c6316bc668b9db75289ffa51d975098f4",
       "compiled_runtime_changed": false
     },
     "native-messages-ui/README.md": {
-      "bytes": 6666,
-      "sha256": "e286d705aedf38500f8e986c8fcca91324bb533815ca51341de8e701c29000d3",
+      "bytes": 6903,
+      "sha256": "a1162974acff82d0b4e6aa9b050d8df45451fd79e6101d0c062fa2f7d5ec6547",
       "compiled_runtime_changed": false
     }
   },
@@ -495,5 +495,10 @@
     "actual_PIPE_EOFs": 20,
     "same_daemon_CID_absent_source_unchanged": true,
     "initial_setup_failure": "Script mode0500 unreadable to remapped user; exit126 before compilation, preserved separately. Successor uses readable0444 script; production inputs unchanged."
+  },
+  "later_prepared_GUI_result": {
+    "provenance_file": "docs/evidence/native-battery-gui-provenance.json",
+    "three_actual_kernel_to_visible_states_Root_reviewed": true,
+    "current_build_epoch_itself_executed_app": false
   }
 }

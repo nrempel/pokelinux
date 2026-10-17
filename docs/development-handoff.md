@@ -2137,9 +2137,28 @@ actual creation assertion RED and wiring the real battery adapter into the
 fixture. The first graphical battery attempt failed its setup executable-hash
 check before any app/window/capture; its guest closure is false due to a driver
 unload cutoff and custody error. Outer QEMU/container shutdown does not upgrade
-that result. A separate fixture correction is in preparation, with Source and
-production service deadlines unchanged. ARM graphical startup and all physical
-Pixel battery, charging, suspend and drain gates remain open.
+that result. The next fixture qualifies readiness/Stop/closure and maps the normal app,
+then fails before capture at a dictionary binding shadowing identity(user). The
+following run fixes only those bindings and passes all three original capture
+states in one app/window/service. Root visually verifies the native original
+labels and byte-copies approved1080×2424/~422PPI/scale2.625 images. Source and
+production deadlines remain unchanged; current Tokyo Night uses genuine Omarchy
+values, with older qualified session/Source providers explicit. See
+`native-battery-ui.md` and graphical provenance. Cold graphics, full current
+cohort/theme accessibility and all physical gates remain open.
+
+The public owned-process helper is separately repaired after actual timeout RED.
+Five real-child cases now preserve failed original deadlines while obtaining
+actual wait/PIPE EOF under the original cleanup budget; regular stderr retains
+identity/hash and closes after wait. An earlier finish deadline also controls
+its timeliness flag. Incomplete custody retains handles. Historical kernel
+proofs still name helper350577, not this successor. See the current helper
+provenance and focused test beside `owned.py`.
+
+Next product slice after the battery tracer: display brightness with shared
+Rust ownership, an explicit device backend, readback and unavailable behavior,
+while preserving the existing suspend authority. Keep the parked auth/Source
+investigation parked. ARM graphical startup remains unqualified.
 
 Battery observation supplies no suspend or charging authority. The earlier auth/
 Source investigation stays parked; no permission freshness rule changes.

@@ -26,8 +26,10 @@ Main process. Installed PID1 startup and fresh automatic cold boot pass with
 normal exit0, empty cgroups and dead readers. Seven service groups,11 readonly
 client groups and host/ARM64 service release builds pass after actual RED.
 The [normal native Qt build](native-battery-ui.md) links all three Rust client
-engines. GUI, physical battery, charging and suspend gates remain open; the
-suspend authority is unchanged.
+engines. A later prepared normal Messages window visibly follows all three
+kernel/service states in one process/window, with original Pixel10-profile
+captures. Physical battery, charging, suspend and cold graphical startup gates
+remain open; the suspend authority is unchanged.
 
 The later [16-CPU cold diagnostic](native-session-manager-stop.md#declared-cpu-resource-diagnostic)
 still expires Source at103.24ms, with zero own-quota throttling in60 captured

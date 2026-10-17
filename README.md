@@ -79,8 +79,10 @@ kernel test battery driver in a VM from73% charging to51% discharging to absent.
 Installed PID1 startup and a fresh automatic cold boot both pass; Stop leaves
 Main0, an empty cgroup and a dead reader. Seven service and11 readonly client
 groups pass after actual assertion RED. The [normal Qt app build](docs/native-battery-ui.md)
-links all three Rust engines; visible battery changes and physical Pixel behavior
-remain separate gates. Host/ARM64 service release builds pass.
+links all three Rust engines. A prepared normal Messages window now visibly
+follows all three driver states through that service/client path, with original
+Pixel10-profile captures. Physical Pixel behavior remains a separate gate.
+Host/ARM64 service release builds pass.
 
 > **Development status:** no physical phone has been accessed. There is no verified bootable phone image. Modem communication, carrier IMS registration, physical call audio, Pixel GPU rendering, camera capture and suspend remain unverified.
 

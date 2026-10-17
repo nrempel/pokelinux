@@ -29,5 +29,7 @@ trusted executable and default child-wait signal disposition are deployment
 requirements; permanently blocked exec setup is not qualified. Installed startup and a fresh automatic cold boot now pass against the real
 `test_power` kernel driver in disposable x86 KVM guests, including changing
 capacity/status, absence and normal PID1 Stop. The readonly Rust client and a
-normal Qt app build also pass. Visible GUI changes, ARM kernel integration and
-physical Pixel battery behavior remain separate gates.
+normal Qt app build also pass. A prepared normal Messages window now visibly
+follows all three virtual-driver states through the real service/client path,
+with original Pixel10-profile captures. ARM kernel integration and physical
+Pixel battery behavior remain separate gates.

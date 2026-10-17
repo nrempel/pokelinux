@@ -43,3 +43,8 @@ physical battery, VM, screenshot or host power-supply driver execution is claime
 A separate locked/offline ARM64 release staticlib crossbuild passes with432
 AArch64 ELF objects and the same four strong C exports. This executes no ARM
 code or tests; the host component results above remain separate.
+
+Later native Qt composition and prepared kernel-to-visible battery results are
+recorded [separately](../../docs/native-battery-ui.md). They use the real Rust
+client in one normal app/window; physical suspend and battery hardware remain
+unqualified.
