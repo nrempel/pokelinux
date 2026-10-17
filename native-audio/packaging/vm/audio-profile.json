@@ -1,0 +1,1 @@
+{"sources":{"media":"source.media","call":"source.call","capture":"source.microphone"},"routes":[{"id":"vm-speaker","label":"Virtual speaker","target":"route.speaker","roles":["media"]}]}

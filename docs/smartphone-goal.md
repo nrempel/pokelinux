@@ -537,6 +537,12 @@ The [language boundary](runtime-language-decision.md#current-language-boundary) 
 
 Phone, Messages, Camera and phone settings form an installed smartphone bundle. Shared services own hardware state and background work independently of open app windows. Each mutable resource has one owner. Preserve the subsystem decisions and unresolved deployment questions in `hardware-boundary-decision.md`.
 
+The [installed private audio backend](native-installed-audio-backend.md) now
+qualifies automatic fresh ARM boot, real Rust availability/private graph and
+whole-stack Stop. This is a virtual-backend deployment slice: full playback
+admission, production PCM isolation, physical audio, suspend and phone-session
+integration remain required below. No completed row follows from this pass.
+
 ## Completion matrix
 
 Every row requires permission boundaries, error and recovery behavior, service restart tests, and relevant offline integration tests. Device-dependent rows additionally require later authorized Pixel verification. An unavailable feature must be explicit in the UI and release report.

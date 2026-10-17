@@ -29,3 +29,13 @@ The test site selects unavailable appearance (no theme) and unavailable audio
 not qualify audio routing, a graphical session, permissions/Source, physical
 hardware or carrier behavior. See [deployment](../../docs/native-installed-services.md)
 for unit/configuration selection and the recorded outcome.
+
+`backend-probe.py` is a separate frozen availability-only scenario. On the
+original installed353 image it must fail after a completed real Rust observation
+reports `available:false`. With the explicitly selected VM backend, the same
+probe requires all four enabled PID1 services, a credentialed private PipeWire
+socket, the actual virtual graph and WirePlumber client, then one whole-target
+Stop with retained process deaths and successful PID1 outcomes. It requires a
+selected `BACKEND-TOOLS.json` containing exact installed tool hashes. It never
+requests a lease, route, permission grant, capture or PCM playback. Its package
+transaction and separate cold boot are enclosing fixture responsibilities.

@@ -1,0 +1,321 @@
+{
+  "schema": 1,
+  "scope": "Installed generic ARM private virtual audio backend availability and PID1 shutdown; no playback or phone qualification",
+  "public_source_base": "1766c8998c3a4472e697cf478feaa08944412d8a",
+  "frozen_probe": {
+    "bytes": 10189,
+    "sha256": "1e30eb5a54883d70937a8710a33ec49e940f17c0451004d7fe091fd25302422b"
+  },
+  "unchanged_original_degraded_probe": {
+    "bytes": 10694,
+    "sha256": "e23300a6ecdbd70e2037874860e442c68a930b4958fe0ec9b2eb3cd66b1cd255"
+  },
+  "actual_backend_unavailable_RED": {
+    "qualification": {
+      "bytes": 3764,
+      "sha256": "ee92c0578bed5e23ebf7eec6d6a69c29e34254a1a4be94590ae9fd7176b83a40"
+    },
+    "records": {
+      "execution.json": {
+        "bytes": 2864,
+        "sha256": "d45a2d7cbd3752f731c76ba10ed09c586ca02db44e8de699da5ee6ad5cdd385c"
+      },
+      "result.json": {
+        "bytes": 5418,
+        "sha256": "81fb60e54e99257f8fe31c6b61d3f70c0b71d68369069390202e004506928000"
+      },
+      "boot-result.json": {
+        "bytes": 6752,
+        "sha256": "eb28850232ca70979509417a0eb984aa041b5de55be5739a7d3b70dd45952974"
+      },
+      "backend-probe.json": {
+        "bytes": 8178,
+        "sha256": "f489d9cdcb889f872a9486064fdb87f8321c0bf91cdc6902992a488ad2d8197d"
+      }
+    },
+    "actual_target_exit": 1,
+    "failure": "completed Rust backend observation remained available:false",
+    "observed_revision": 46,
+    "setup_error": false
+  },
+  "readiness_helper": {
+    "source": {
+      "bytes": 4026,
+      "sha256": "d3c6d584b903e9fcd88d47f772c2d016bb282b2725ba8a292d046ea23ac8006e"
+    },
+    "frozen_tests": {
+      "bytes": 4510,
+      "sha256": "bb6d6fbfee54b4356403b67a1386e1996b90d67b6a74b4fe89899745ef429070"
+    },
+    "qualification": {
+      "bytes": 7284,
+      "sha256": "03478ac9638aee45d8f2ce783d949007ecca61e60e4f95925dc4204ad593817e"
+    },
+    "actual_assertion_RED_Cargo_exit": 101,
+    "frozen_real_socket_assertions_RED_failed": 3,
+    "frozen_real_socket_assertions_GREEN_passed": 3,
+    "full_audio_active_tests": 28,
+    "existing_ignored_tests": 1,
+    "fmt_and_strict_Clippy_passed": true,
+    "host_and_ARM_release_builds_passed": true,
+    "GREEN_execution": {
+      "bytes": 21502,
+      "sha256": "c527ec24176de61033caa7909008a32987a66f8e0b9bd8923a5cc40d3f069196"
+    },
+    "ARM_ELF": {
+      "bytes": 544944,
+      "sha256": "5e735ba499701691afa603a915f0ecd211240281ed05e5a87368f5cc8a77e175"
+    },
+    "host_owned_CLI_waits": 10,
+    "host_actual_PIPE_EOFs": 20,
+    "no_dependencies_or_locks_changed": true
+  },
+  "first_host_stage_failure": {
+    "record": {
+      "bytes": 3521,
+      "sha256": "11329ef541bb66e45d579804df12155994d020135194007a13d1e68ecc31acbe"
+    },
+    "scope": "Stager rejected newly copied bundle file modes before any VM; not functional RED",
+    "correction": "New bundle files use exact manifest modes; production bytes and probe unchanged"
+  },
+  "successful_host_stage": {
+    "record": {
+      "bytes": 3683,
+      "sha256": "f87c8f765ec5ed34d37d2580129a6b7df052e3583216c9d1f955d570fd5726c1"
+    },
+    "files": 11,
+    "actual_target": "install-native-services",
+    "owned_command_waits": 3,
+    "actual_merged_PIPE_EOFs": 3
+  },
+  "selected_deployment_manifest": {
+    "bytes": 2111,
+    "sha256": "3e8814c569684c8720441463fc7505ed90fe5130273e04a6597c9aa952edd842"
+  },
+  "unchanged_installed_audio_ARM_ELF": {
+    "bytes": 1249592,
+    "sha256": "14ef29d04272a19bf6673fd837fcbd50d29f7e75bae146ee2615db25fe7e4963"
+  },
+  "production_site_sources": {
+    "native-audio/packaging/vm/20-vm-backend.conf": {
+      "bytes": 254,
+      "sha256": "de72d68b562c6b0aa083f13a02c61ee18440c6e25b0a9e1d14af98b64ad060f1"
+    },
+    "native-audio/packaging/vm/audio-profile.json": {
+      "bytes": 188,
+      "sha256": "bd7881745adcd69e8e9f4524cc14cebe3941bf11c300627f42bef3b77738fd1e"
+    },
+    "native-audio/packaging/vm/audio.env": {
+      "bytes": 419,
+      "sha256": "13315636e93443b878a1b378d980b46425a377262a09044e2b3f42208411a53f"
+    },
+    "native-audio/packaging/vm/pipewire.conf": {
+      "bytes": 3018,
+      "sha256": "391f443c8c7825bae5194ee66d00118bf4e07f4ae077b260ff192488cb17c361"
+    },
+    "native-audio/packaging/vm/pokelinux-audio-backend.target": {
+      "bytes": 357,
+      "sha256": "b37e0b42acb06fb33ab45f93e261a2d6c030b5d55df59419acaaaa766a12fb2c"
+    },
+    "native-audio/packaging/vm/pokelinux-audio-backend.tmpfiles": {
+      "bytes": 225,
+      "sha256": "fabcca869b723c1e4d5402efed83eaa2e6620794b7c6454f469e2df21b3cb3f8"
+    },
+    "native-audio/packaging/vm/pokelinux-audio-bus.service": {
+      "bytes": 643,
+      "sha256": "aec69d49eb950180cab25f370f796663c9d1aa3519bb6764825ba6731038cac9"
+    },
+    "native-audio/packaging/vm/pokelinux-audio-pipewire.service": {
+      "bytes": 650,
+      "sha256": "929a94d5043a4522acdc4189223ddca5c9d61c8e7d026cb38dc4655aa00ee97f"
+    },
+    "native-audio/packaging/vm/pokelinux-audio-wireplumber.service": {
+      "bytes": 571,
+      "sha256": "8e76782ac8ffaafd6cb6a41c46032f6896711f92ddda50f9946f24af58ae232c"
+    },
+    "native-audio/packaging/vm/wireplumber.conf": {
+      "bytes": 359,
+      "sha256": "f0a24ba5b5a486e11b0c8ef03d8c348caf38eb54f0c1eb2dcc99e0c4e0f6c449"
+    }
+  },
+  "epochs": {
+    "preparation": {
+      "records": {
+        "selection.json": {
+          "bytes": 16763,
+          "sha256": "75ddd4e4026b40374994a83f605c0e460b3979af7554d0ca77b9db15e607ce35"
+        },
+        "command.json": {
+          "bytes": 1526,
+          "sha256": "c0cbf87fc7704016acbd9308650f2f0c57638e462d5be83a0c54716ff0808209"
+        },
+        "FREEZE.json": {
+          "bytes": 1122,
+          "sha256": "ee8018621b17689e7bdc42111268ff731be9252c77316f39179292d742c43f61"
+        },
+        "execution.json": {
+          "bytes": 2853,
+          "sha256": "ee61d02673e9b44e7bcd76af619cd0d59fbd7fc6a037a04144aaeda39ff2bed1"
+        },
+        "result.json": {
+          "bytes": 24677,
+          "sha256": "f8719f8e06e6ff8677e838053d5f1f7a5b6c9a2bd6e0654c677726874f35e814"
+        },
+        "boot-result.json": {
+          "bytes": 6955,
+          "sha256": "5e990da6d01a2e9108c325b5bd12bb50d7428b874afbde00c9d0d4c506e196b3"
+        },
+        "backend-probe.json": {
+          "bytes": 14560,
+          "sha256": "ed072a37dc18cb7385ef866c9ea5d045a7f0b6ff63d10d0e004acfd2794d35a6"
+        }
+      },
+      "passed": true,
+      "Rust_observed_available": true,
+      "Rust_observation_revision": 5,
+      "desired_empty_lease_null_links_empty": true,
+      "independent_virtual_node_names": [
+        "Test-Driver",
+        "route.capture",
+        "route.earpiece",
+        "route.speaker",
+        "source.media",
+        "source.microphone"
+      ],
+      "actual_PipeWire_endpoint_credentials_and_WirePlumber_client_checked": true,
+      "all_four_PID1_Main_outcomes": {
+        "code": 1,
+        "status": 0,
+        "Result": "success",
+        "MainPID": 0
+      },
+      "whole_target_Stop_empty_cgroups_and_retained_process_death": true,
+      "inside_direct_owned_waits": 39,
+      "actual_merged_PIPE_EOFs": 39,
+      "separate_outer_CLI_wait_exit": 0,
+      "outer_console_regular_file_not_PIPE": true,
+      "separate_inspect_CLI_waits": 2,
+      "inspect_PIPE_EOF_claimed": false,
+      "QEMU_actual_wait_exit": 0,
+      "exact_container_absent_same_daemon_inputs_unchanged": true,
+      "actual_trusted_runtime_packages": {
+        "before": 353,
+        "after": 385,
+        "trusted_signed_additive32": true,
+        "all353_versions_and_Qt50_unchanged": true,
+        "exact_native_projection32": true
+      },
+      "actual_installed_systemd_analyze_verify": true
+    },
+    "fresh_cold_boot": {
+      "records": {
+        "selection.json": {
+          "bytes": 5280,
+          "sha256": "c63541443b1d51e07a80db46a8d2c04af67ee07e0caf65f9fa358cd06758c6ac"
+        },
+        "command.json": {
+          "bytes": 1698,
+          "sha256": "db7257a2b22b08c5d42c655df7c2afb672a5b2a103bc695bc164d3df7a0cb614"
+        },
+        "FREEZE.json": {
+          "bytes": 1161,
+          "sha256": "59265502c4ff24c582d67fb303427d323f99d3b9c06f4c5112019b99a2154569"
+        },
+        "execution.json": {
+          "bytes": 2854,
+          "sha256": "3349620cbb7bdfbc152c2155660a21fd7db8af7445eaab20d8ce5add7efef58c"
+        },
+        "result.json": {
+          "bytes": 10578,
+          "sha256": "67c8d3c66463f381423862ecba06f9bd160d4fb74847067f36fc0bed8ef0c92d"
+        },
+        "boot-result.json": {
+          "bytes": 7849,
+          "sha256": "63f3988dea25d16b12d5130d0ca861780b4e6f997991c49cb840207643308c50"
+        },
+        "backend-probe.json": {
+          "bytes": 14560,
+          "sha256": "2d253b8692393a642c2bd97fce2ab0055e73b1a008c3a22f02fb85b780339e4f"
+        }
+      },
+      "passed": true,
+      "Rust_observed_available": true,
+      "Rust_observation_revision": 17,
+      "desired_empty_lease_null_links_empty": true,
+      "independent_virtual_node_names": [
+        "Test-Driver",
+        "route.capture",
+        "route.earpiece",
+        "route.speaker",
+        "source.media",
+        "source.microphone"
+      ],
+      "actual_PipeWire_endpoint_credentials_and_WirePlumber_client_checked": true,
+      "all_four_PID1_Main_outcomes": {
+        "code": 1,
+        "status": 0,
+        "Result": "success",
+        "MainPID": 0
+      },
+      "whole_target_Stop_empty_cgroups_and_retained_process_death": true,
+      "inside_direct_owned_waits": 24,
+      "actual_merged_PIPE_EOFs": 24,
+      "separate_outer_CLI_wait_exit": 0,
+      "outer_console_regular_file_not_PIPE": true,
+      "separate_inspect_CLI_waits": 2,
+      "inspect_PIPE_EOF_claimed": false,
+      "QEMU_actual_wait_exit": 0,
+      "exact_container_absent_same_daemon_inputs_unchanged": true,
+      "no_install_reload_enable_or_start_before_check": true,
+      "fresh_invocations_vs_preparation": true,
+      "both_actual_readiness_ExecStartPost_exit0": true
+    }
+  },
+  "evidence_separation": {
+    "host_original_Rust_socket_tests": true,
+    "ARM_cross_build": true,
+    "generic_ARM_kernel_PID1_and_actual_upstream_audio_daemons": true,
+    "synthetic_virtual_graph_only": true,
+    "no_session_Source_or_authority_substitute": true,
+    "no_acquire_or_route_or_PCM_request": true,
+    "physical_phone_accessed": false
+  },
+  "remaining_gates": [
+    "Genuine session-authorized playback through the complete phone path",
+    "Production PCM/FD broker and per-app isolation",
+    "Physical speaker/microphone/wired/USB/Bluetooth routes",
+    "Physical suspend and audio recovery",
+    "Pixel matched backend and full graphical phone session"
+  ],
+  "VM_inputs": {
+    "generic_kernel": {
+      "bytes": 44100096,
+      "sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b"
+    },
+    "generic_initramfs": {
+      "bytes": 15371767,
+      "sha256": "a9bb29d29abda94748c9948f903c3c1704f829eea477652b9a4201a61f36a647"
+    },
+    "readonly_raw_base_sha256": "31e3ccf69a5496f61284abdcd049e8273e70e840407bab4e744c778f21e25842",
+    "readonly_original_353_services_layer": {
+      "bytes": 23986176,
+      "sha256": "4ae11aa6a2af0b828d63fd6daa07f2597fe2c83df212e5d61ee4b7ec5324c597"
+    },
+    "closed_prepared_backend_layer": {
+      "bytes": 97910784,
+      "sha256": "264c9940615ad5623a618d4430b5e51f98acc492a2bd53278e262ebbdebfd475"
+    },
+    "guest_vCPU": 4,
+    "guest_RAM_MiB": 3072,
+    "container_CPU_limit": 4,
+    "container_memory_GiB": 5,
+    "guest_original_work_seconds": 420,
+    "QEMU_original_seconds": 540,
+    "outer_original_seconds": 600,
+    "no_network_or_physical_phone": true
+  },
+  "combined_closed_qualification": {
+    "bytes": 14560,
+    "sha256": "573cccab5cca7b6376e462dd25b2b74a7177b4d87451078e45e9cec58a4cd8ec"
+  }
+}

@@ -8,6 +8,10 @@ each answers its real IPC, and both Stop with Main exit0 and empty cgroups.
 Domain readiness remains unavailable: there is no theme or selected PipeWire
 endpoint in this test.
 No physical phone was accessed.
+A later [private audio-backend deployment](native-installed-audio-backend.md)
+separately qualifies a real available backend in a fresh ARM boot, independent
+of this original degraded pair. It retains the same audio owner ELF and adds an
+explicit VM backend target, private daemons and Rust socket-readiness helper.
 
 The audio [SIGTERM repair](native-audio.md#sigterm-enters-owned-stop) passes its
 unchanged real-process regression,25 active tests and host/ARM release builds.

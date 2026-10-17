@@ -1,0 +1,22 @@
+[Unit]
+Description=PokeLinux VM private audio session manager
+Requires=pokelinux-audio-bus.service pokelinux-audio-pipewire.service
+After=pokelinux-audio-bus.service pokelinux-audio-pipewire.service
+PartOf=pokelinux-audio-backend.target
+
+[Service]
+Type=exec
+User=pokelinux-audio
+Group=pokelinux-audio
+EnvironmentFile=/etc/pokelinux/audio.env
+ExecStart=/usr/bin/wireplumber --profile native-audio-test
+TimeoutStartSec=15s
+TimeoutStopSec=5s
+KillMode=control-group
+SendSIGKILL=yes
+Restart=no
+NoNewPrivileges=yes
+UMask=0077
+
+[Install]
+WantedBy=pokelinux-audio-backend.target

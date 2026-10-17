@@ -1,0 +1,22 @@
+[Unit]
+Description=PokeLinux VM private audio bus
+After=systemd-sysusers.service systemd-tmpfiles-setup.service
+PartOf=pokelinux-audio-backend.target
+
+[Service]
+Type=exec
+User=pokelinux-audio
+Group=pokelinux-audio
+EnvironmentFile=/etc/pokelinux/audio.env
+ExecStart=/usr/bin/dbus-daemon --session --nofork --address=unix:path=/run/pokelinux-audio-backend/bus
+ExecStartPost=/usr/libexec/pokelinux/pokelinux-audio-backend-ready /run/pokelinux-audio-backend/bus $MAINPID 11040
+TimeoutStartSec=15s
+TimeoutStopSec=5s
+KillMode=control-group
+SendSIGKILL=yes
+Restart=no
+NoNewPrivileges=yes
+UMask=0077
+
+[Install]
+WantedBy=pokelinux-audio-backend.target

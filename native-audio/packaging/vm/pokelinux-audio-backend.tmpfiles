@@ -1,0 +1,3 @@
+# One owner for the shared backend sockets; individual unit Stop must retain it.
+d /run/pokelinux-audio-backend 0700 pokelinux-audio pokelinux-audio -
+d /var/lib/pokelinux-audio-backend 0700 pokelinux-audio pokelinux-audio -

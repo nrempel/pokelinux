@@ -29,6 +29,18 @@ unavailable theme/backend states, Main0 and empty cgroups. Physical audio and a
 healthy phone session remain open.
 See [provenance](evidence/native-audio-signal-stop-provenance.json).
 
+The later [installed private audio backend](native-installed-audio-backend.md)
+passes actual ARM preparation and a separate fresh cold boot. The original
+completed-unavailable RED is retained. Explicit VM units select private D-Bus,
+PipeWire and WirePlumber; a new Rust nonblocking socket-ready helper passes three
+frozen real-socket tests after compiled assertion RED, plus all28 active audio
+tests and host/ARM releases. The exact signed32-package addition retains all353
+versions and Qt50. Both real graphs/whole-target Stops pass with four Main0,
+empty cgroups and original execution closure. The first host stage's file-mode
+refusal remains separate. No Source, grant, playback/PCM or phone evidence is
+inferred. Keep the blocked authentication and expired-Source branches parked;
+next work should advance a bounded native phone-service path.
+
 The [current language boundary](runtime-language-decision.md#current-language-boundary)
 retains upstream Hyprland/Aquamarine/Qt C++ scene, protocol and native operations.
 Rust remains responsible for shared phone services and ownership/recovery policy.

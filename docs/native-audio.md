@@ -91,6 +91,12 @@ local owners finish. An unreaped worker or unfinished stop owner causes process
 abort at a bounded deadline. An unexpected actor exit also refuses to detach a
 live frontend. The [production unit](native-installed-services.md) now passes separate
 ARM PID1 start/IPC/Stop and fresh autostart with an unavailable backend.
+A later [explicit VM backend](native-installed-audio-backend.md) now passes
+separate fresh ARM boot with real available observations and independent private
+graph checks. One target Stop produces four normal Main exits0 and empty cgroups.
+The new Rust startup readiness helper passes actual socket RED→GREEN; all28
+active audio tests and host/ARM builds pass. No session permission or playback
+operation is substituted to obtain that availability result.
 
 Each active link belongs to a non-lingering `pw-link -m` child spawned by the
 stable backend main thread. Both backend and tool worker set Linux's parent-death

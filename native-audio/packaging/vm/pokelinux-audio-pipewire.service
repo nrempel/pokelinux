@@ -1,0 +1,23 @@
+[Unit]
+Description=PokeLinux VM private PipeWire backend
+Requires=pokelinux-audio-bus.service
+After=pokelinux-audio-bus.service
+PartOf=pokelinux-audio-backend.target
+
+[Service]
+Type=exec
+User=pokelinux-audio
+Group=pokelinux-audio
+EnvironmentFile=/etc/pokelinux/audio.env
+ExecStart=/usr/bin/pipewire -c /etc/pokelinux/vm-audio/pipewire.conf
+ExecStartPost=/usr/libexec/pokelinux/pokelinux-audio-backend-ready /run/pokelinux-audio-backend/pokelinux-audio-test-manager $MAINPID 11040
+TimeoutStartSec=15s
+TimeoutStopSec=5s
+KillMode=control-group
+SendSIGKILL=yes
+Restart=no
+NoNewPrivileges=yes
+UMask=0077
+
+[Install]
+WantedBy=pokelinux-audio-backend.target

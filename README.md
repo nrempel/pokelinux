@@ -38,8 +38,7 @@ epochs: copied database-signature policy first, then owner
 `Kind(PermissionDenied)` before compositor/Source/menu execution. Neither reaches
 a functional group. Package/app-component and user-manager checks remain separate
 from the failed session. [Failure record](docs/evidence/native-full-shell-parked-provenance.json).
-The next bounded target is a normal ARM app/window with the unchanged passing
-compositor configuration. The later whole ARM compositor/498-file SDK build
+The later whole ARM compositor/498-file SDK build
 passes, but the normal-window run expires a 101.804ms-old Source sample before a
 qualified frame. Zero window groups pass; that timing branch is parked and full
 menu execution remains unqualified. [ARM record](docs/native-current-arm-apps.md).
@@ -61,7 +60,12 @@ tests, strict Rust checks and host/ARM release builds pass. The
 [installed audio/appearance pair](docs/native-installed-services.md) now starts
 automatically in a separate fresh ARM boot, answers its real IPC with explicit
 unavailable backend/theme state, and stops with PID1 Main0 and empty cgroups.
-Physical audio and the complete phone session remain open.
+A later [installed private audio backend](docs/native-installed-audio-backend.md)
+now starts automatically in a fresh ARM boot. Rust observes the actual virtual
+PipeWire graph, and one target Stop shuts down all four services with normal
+exit0. The unchanged availability regression,28 active audio tests and exact
+353→385 signed package transaction pass. This qualifies backend availability;
+session-authorized playback, physical audio and the complete phone remain open.
 
 > **Development status:** no physical phone has been accessed. There is no verified bootable phone image. Modem communication, carrier IMS registration, physical call audio, Pixel GPU rendering, camera capture and suspend remain unverified.
 
