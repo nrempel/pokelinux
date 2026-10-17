@@ -18,6 +18,8 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The [Rust session-reconciliation component](native-render-session-reconciliation.md) now passes64 Rust tests, six real C++/Rust integration groups and the matching normal compositor/SDK build. Rust owns recovery policy; C++ connects native calls. Actual startup recovery remains unavailable at fresh DRM format/modifier corroboration. Normal frames, Source and phone gates remain open.
+
 The [Rust first-Stop observer](native-render-first-stop.md) now identifies a real startup trigger: a direct Aquamarine device-change revocation requests full Stop before startup completes. The unchanged native wire test passes; the first record survives a later actual Stop and two snapshots. The matching normal main/SDK,64 Rust tests and compiled interface checks pass separately. Recoverable Rust event handling, normal readiness, real client frames and phone gates remain open.
 
 The earlier [normal render profile](native-render-normal-profile.md) now excludes the original test-only probe after actual source-configuration RED and clean syntax checks in both profiles. Matching normal AQ and compositor/SDK builds pass, with23 Rust exports, five strict API checks,15 existing CPU groups and the five-group texture program in the complete main selection. The earlier fixture failure remains preserved. That earlier normal startup reports STOPPING at its0.284s observation, before the20s deadline, without recording its cause. Its126 replies stay responsive, and all37 waits/44 PIPE EOFs close, without backend readiness or client launch. Normal startup, real client frames, Source7 and phone gates remain open.

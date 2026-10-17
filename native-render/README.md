@@ -28,6 +28,22 @@ A successful snapshot does not establish upload, GPU completion, presentation,
 secure lock display, Source freshness or phone support. The prepared rendering
 [authority baseline remains RED](../docs/native-render-authority.md).
 
+## Current session-recovery boundary
+
+The [Rust session reconciliation](../docs/native-render-session-reconciliation.md)
+adds mandatory ABI2 (`PrNativeOwnerFunctionsV2`,120 bytes, `create_v2` only), a
+copied32-entry CHANGE queue and a required worker apply/refresh callback. Rust
+owns immediate old-ticket invalidation, availability, sequence/acceptance gates
+and fixed BOOTTIME deadlines; native output generations stay actual adapter facts.
+There is no legacy factory or optional callback.
+
+All64 existing Rust tests and the frozen six-group real C++/Rust consumer now
+pass with the same fresh archive, strict Clippy and Release compilation. This
+uses authored CPU native callbacks. The matching normal main/SDK build passes;
+actual AQ recovery remains unavailable at fresh DRM format/modifier corroboration.
+Normal client frames, Source and phone qualification remain open.
+The historical checkpoints below retain their original providers and scopes.
+
 ## Build and actual boundary test
 
 The crate is std-only and has no downloaded dependencies. For a native Linux

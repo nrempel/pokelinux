@@ -1,0 +1,168 @@
+{
+  "actual_Rust_component_GREEN": {
+    "Root_qualification_sha256": "c6bf488ac12b27ed04ceb892715e46d55571e8aebbffc34dc255d4f4e2aabcf4",
+    "actual_Rust_tests": 64,
+    "actual_apply_callbacks": 11,
+    "actual_exports": 30,
+    "actual_foreign_thread_joins": 1,
+    "actual_worker_joins": 9,
+    "archive": {
+      "bytes": 22922502,
+      "sha256": "29a8d2d0d2c98cff565f0685af8d8450c2a04104a406a28cb4b66c65f496ad97"
+    },
+    "exact_two_CIDs_absent": true,
+    "executor_header": {
+      "bytes": 15911,
+      "sha256": "a198de37d3b3e99ed819b855113dabd92aa8f9e4143f19eef7dc38b0110d9f77"
+    },
+    "ignored_child_modes": 2,
+    "old_create_v1_absent": true,
+    "outer_PIPE_EOFs": 10,
+    "outer_direct_waits": 10,
+    "reconciliation_CABI_groups": 6,
+    "result_sha256": "14ec726d74c7b658f45f717e34eac7d75c2c9742f1c3c328a9787777fd611112",
+    "same_daemon": true,
+    "source_sha256": "19d1864329ced54381b9a441f6035bbbc691da994fe1b6ee483fe146cb665e39"
+  },
+  "actual_matching_NORMAL_build": {
+    "QMP_EOF_separate": 1,
+    "Root_qualification_sha256": "47718c9b8bac899ade7767a0d1e468a787782645b10a7d9f0aa61302154cdbda",
+    "SDK": {
+      "bytes": 4700160,
+      "sha256": "940898a4528232a70527311ffcd0db40212eed6878f0b3e2d80a1656bafaf5ed"
+    },
+    "SDK_links": 2,
+    "SDK_regular_files": 535,
+    "Scope_PIPE_EOFs": 82,
+    "Scope_waits": 82,
+    "actual_Rust_exports": 30,
+    "build_result": {
+      "bytes": 712029,
+      "sha256": "4c8edbfc56aa0badfd0afc852a218bcf2e44061677ea55fb92694eb47d64d8b2"
+    },
+    "embedded_PIPE_EOFs_separate": 2,
+    "embedded_producer_waits_separate": 1,
+    "execution_sha256": "fa79d635fd9d9a905a4b3dcf77306bf5a82c45ffc2119461637f0240fa3e68a8",
+    "independent_review_sha256": "f6cef7b76b1faa8e05213f9a51ae7ce6ed3ac6b0963dc21fbe3aa60770910639",
+    "main_ELF": {
+      "bytes": 25307064,
+      "sha256": "8c9cac0b47b7a78e1e2a12a385b4b26ab676c37b27b049f842c83a41d029870e"
+    },
+    "native_runtime_qualified": false,
+    "strict_API_probes": 7
+  },
+  "actual_native_recovery_RED": {
+    "PIPE_EOFs": 35,
+    "Root_qualification_sha256": "768e77e36f468ade74427528d601e6cc7370be1458f61a296dfb69a1141b1e20",
+    "actual_revoke_reason": 5,
+    "case_sha256": "16d76b3df63184b32f16462c1a2bcd685c31bf07bf84e4941fe68242e21fa549",
+    "direct_waits": 28,
+    "execution_sha256": "a14fda446d709c8de182508786a045982ab2fae999d397188a7cbe5d6d7a3a8f",
+    "first_Stop_origin": 3,
+    "native_cleanup_or_retirement": false,
+    "observed_stages": [
+      8,
+      5
+    ],
+    "public_Stop_sent": false
+  },
+  "actual_native_recovery_attempt_failed": {
+    "actual_wire_stages": [
+      8,
+      5
+    ],
+    "case": {
+      "bytes": 8698,
+      "sha256": "93f4eb2a22079c242bad4b8b07fb0d485b2562b4251e631ff94c82e60b1afb1d"
+    },
+    "classification": "SETUP_UNQUALIFIED",
+    "execution_sha256": "6991949668efafc7578af9f2b58bded1f33df69c1da233339581457835b5c912",
+    "first_Stop_origin": 11,
+    "fixed_native_reason": "primary-format-modifier-unavailable",
+    "independent_closure_sha256": "f9c0e4077c6639102906ddb874969aab6c40ac625156b7737b69038afc343abf",
+    "independent_review_sha256": "94544eda7ee46bb3bab22b6d734163fde933101d0ed909001ebfd7f990d7071f",
+    "native_error": 9,
+    "normal_ready_or_native_cleanup_qualified": false
+  },
+  "actual_structural_RED": {
+    "PIPE_EOFs": 30,
+    "Root_qualification_sha256": "0148e0d23b2cd6f3df223080e7da932f814487f15f387edc2ba78f9f754557f8",
+    "direct_waits": 23,
+    "execution_sha256": "c533b801bcc2c7a755e80a64e714505fe4e7eb64c8457cead3fa9bbc6c2dbb60",
+    "existing_control_exit": 0,
+    "missing_functions": 4,
+    "target_exit": 1
+  },
+  "failed_first_build_setup": {
+    "QMP_EOF_separate": 1,
+    "Scope_PIPE_EOFs": 26,
+    "Scope_waits": 26,
+    "actual_TU_compilation": false,
+    "execution_sha256": "87573d4ef7f5f54daafe6a51466d06d1ae6e4eaef02ee9ff25459de136d9e8a7",
+    "independent_closure_review_sha256": "fd5912cd40eb642cdaf91238e729a65ea4a14bbc1472faa8eb066474b2f692fc"
+  },
+  "frozen_public_inputs": {
+    "CONTRACT.md": {
+      "bytes": 10469,
+      "sha256": "6cd20fba8b8d0a20286be481308420f590aa107339bfc57119b8a7557c492163"
+    },
+    "device_change_recovery_case.py": {
+      "bytes": 8642,
+      "sha256": "82ab1be9025447c450792ca6f65439df35c99fa3fe5d1f721b6a1ad279f710cc"
+    },
+    "device_change_recovery_oracle.py": {
+      "bytes": 5109,
+      "sha256": "18bb9828b6341606e6045bd8340f6edcb4fef7ccc5930668cb9ea94f4dfa2ab6"
+    },
+    "functional_oracle.py": {
+      "bytes": 4780,
+      "sha256": "7f25952e7d1d96f2240700bfe56695d0477c852f60f3572d8b02875cc5f9b926"
+    },
+    "session-reconcile-public-api.cpp": {
+      "bytes": 484,
+      "sha256": "731d1fdcf9e6c5be10dadf99e5b922e454e06970c0d98bdbaf4cc038974b87df"
+    },
+    "session_reconcile_epoch.py": {
+      "bytes": 1418,
+      "sha256": "dcc5fa2751cff6c64d6185318656fac68f72352453cbf8121f14b8825c84d616"
+    }
+  },
+  "functional_consumer": {
+    "bytes": 45776,
+    "repository_path": "native-render/tests/session_reconcile_ffi.cpp",
+    "sha256": "5026e2f9cdbdee378df0adb780bec531ec2e066e6b8eeb74b43cc574c4adcf6d"
+  },
+  "native_adapter": {
+    "after": {
+      "CMakeLists.txt": {
+        "bytes": 29914,
+        "sha256": "16c009a4339e5305e3d0f051d1f7b28a555bee344a6a38025302031c5877b0bb"
+      },
+      "src/render/OwnedBackendStartup.cpp": {
+        "bytes": 61352,
+        "sha256": "e3de9f578083458aa0f220154bdfccf2af6f28c9ca702f97034ccbd0722d8c4d"
+      }
+    },
+    "before": {
+      "CMakeLists.txt": {
+        "bytes": 29810,
+        "sha256": "04d7b9e0418658c4b91ef435f0d762f1a768b6d56d8d9b5116a8475f5308d5be"
+      },
+      "src/render/OwnedBackendStartup.cpp": {
+        "bytes": 42904,
+        "sha256": "3892b090143d63ce95a4449392909bd5df08a97290bac276a4ae97d41a0c03b7"
+      }
+    },
+    "compiled": true,
+    "incremental_patch": {
+      "bytes": 32408,
+      "sha256": "963ed349349ee84ceb546afbc065a76bfd94e819cc5d2c9349e1b71666907085"
+    },
+    "native_recovery_GREEN": false,
+    "patch_base": "675ce2b0855bde57f33fec020e3663bd5ac0003d first-Stop native after-images",
+    "source_sha256": "07ba3041192fe12bed44782ee83dd0433bea88b6fa14ee7e8316b21a7db18893"
+  },
+  "normal_ready_frame_Source_ARM_phone_qualified": false,
+  "schema": 1,
+  "scope": "Actual Rust component and matching NORMAL build GREEN; real native recovery attempt remains failed"
+}

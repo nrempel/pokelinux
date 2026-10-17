@@ -18,7 +18,7 @@ ABI_SIZE(PrNativeReadyV1, 40);
 ABI_SIZE(PrDiscoveredOutputV1, 80);
 ABI_SIZE(PrDiscoveryV1, 2576);
 ABI_SIZE(PrOwnerOptionsV1, 48);
-ABI_SIZE(PrNativeOwnerFunctionsV1, 112);
+ABI_SIZE(PrNativeOwnerFunctionsV2, 120);
 ABI_SIZE(PrExecutorSnapshotV1, 56);
 ABI_SIZE(PrCompletionV1, 4376);
 static_assert(offsetof(PrCompletionV1, admission) == 24);
@@ -65,6 +65,7 @@ static int32_t bootstrap(void *p, const PrBootstrapViewV1 *input, PrDiscoveryV1 
         input->events[1].metadata.event_type != 3) return PR_EXECUTOR_NATIVE;
     *out = {}; out->session_generation = 29; return PR_EXECUTOR_OK;
 }
+static int32_t apply_device_change(void*, const PrSessionRenderEventV1*, PrDiscoveryV1*) noexcept { return PR_EXECUTOR_INVALID; }
 static int32_t prepare(void*, const PrFrame*, const PrAdmissionV1*) noexcept { return PR_EXECUTOR_INVALID; }
 static int32_t execute(void*, const PrFrame*, const PrAdmissionV1*, PrAttempt*, PrNativeResultV1*) noexcept { return PR_EXECUTOR_INVALID; }
 static int32_t advance(void*, const PrRetirementContextV1*, PrNativeProgressV1*) noexcept { return PR_EXECUTOR_INVALID; }
@@ -90,15 +91,15 @@ int main() {
     std::memcpy(events[0].metadata.seat_name, "seat0", 6);
     PrBootstrap *input=nullptr;
     CHECK(pr_bootstrap_capture_v1(29, events, 2, &input)==PR_EXECUTOR_OK && input);
-    PrNativeOwnerFunctionsV1 functions{};
-    functions.abi_version=1; functions.struct_size=sizeof(functions);
+    PrNativeOwnerFunctionsV2 functions{};
+    functions.abi_version=PR_EXECUTOR_ABI_V2; functions.struct_size=sizeof(functions);
     functions.create=create; functions.destroy=destroy; functions.bootstrap=bootstrap;
     functions.prepare=prepare; functions.execute=execute; functions.advance=advance;
-    functions.poll_sources=sources; functions.dispatch=dispatch; functions.shutdown_progress=shutdown_progress;
-    PrOwnerOptionsV1 options{}; options.abi_version=1; options.struct_size=sizeof(options); options.owner_id=42;
+    functions.poll_sources=sources; functions.dispatch=dispatch; functions.shutdown_progress=shutdown_progress; functions.apply_device_change=apply_device_change;
+    PrOwnerOptionsV1 options{}; options.abi_version=PR_EXECUTOR_ABI_V2; options.struct_size=sizeof(options); options.owner_id=42;
     PrExecutor *owner=nullptr;
     const uint64_t until=now()+2000000000ULL;
-    CHECK(pr_executor_create_v1(&functions, &options, 1, &input, until, &owner)==PR_EXECUTOR_OK);
+    CHECK(pr_executor_create_v2(&functions, &options, 1, &input, until, &owner)==PR_EXECUTOR_OK);
     CHECK(!input && owner);
     functions.create=poison_create; functions.destroy=poison_destroy; options.owner_id=999;
     PrExecutor *original=owner;

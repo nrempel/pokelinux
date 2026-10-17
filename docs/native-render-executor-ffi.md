@@ -1,5 +1,10 @@
 # Retained render executor C boundary
 
+The current factory/table is now mandatory ABI2; see
+[Rust session reconciliation](native-render-session-reconciliation.md). The
+`create_v1` factory is removed, without compatibility aliases. The earlier
+checkpoint below retains its original source/archive and is historical evidence.
+
 The current [`pokelinux_render_executor.h`](../native-render/include/pokelinux_render_executor.h)
 and Rust [`executor_ffi`](../native-render/src/executor_ffi.rs) connect actual C++
 callers to the retained Rust worker. Current native Linux x86 execution passes

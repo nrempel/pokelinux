@@ -1,0 +1,482 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -340,7 +340,10 @@
+   pr_frame_with_view_v1
+   pr_bootstrap_capture_v1
+   pr_bootstrap_release
+-  pr_executor_create_v1
++  pr_executor_create_v2
++  pr_executor_invalidate_session_v2
++  pr_executor_try_session_change_v2
++  pr_executor_reconciliation_v2
+   pr_executor_watch_fds
+   pr_executor_snapshot_v1
+   pr_executor_discovery_v1
+--- a/src/render/OwnedBackendStartup.cpp
++++ b/src/render/OwnedBackendStartup.cpp
+@@ -1,4 +1,5 @@
+ #include "OwnedBackendStartup.hpp"
++#include "../debug/log/Logger.hpp"
+ #ifdef POKELINUX_STARTUP_CUSTODY_TEST
+ #include "StartupTestTrace.hpp"
+ #include "StartupCustodyProbe.hpp"
+@@ -13,12 +14,14 @@
+ #include <algorithm>
+ #include <array>
+ #include <cmath>
++#include <cerrno>
+ #include <cstring>
+ #include <ctime>
+ #include <exception>
+ #include <fcntl.h>
+ #include <format>
+ #include <limits>
++#include <memory>
+ #include <poll.h>
+ #include <stdexcept>
+ #include <sys/stat.h>
+@@ -166,6 +169,8 @@
+         Pointer<IOutput> output;
+         Pointer<SOutputMode> mode;
+         PrDiscoveredOutputV1 values{};
++        bool live = true;
++        Hyprutils::Signal::CHyprSignalListener destroyed;
+     };
+     std::array<SOutput, PR_EXECUTOR_MAX_OUTPUTS> outputs{};
+     uint32_t outputCount = 0;
+@@ -190,6 +195,7 @@
+             // Retain the real native output before asking it for more state.
+             auto& entry = outputs[outputCount++];
+             entry.output = output;
++            entry.destroyed = output->events.destroy.listen([&entry]() { entry.live = false; });
+             entry.mode = output->preferredMode();
+             auto implementation = output->getBackend();
+             auto drm = Hyprutils::Memory::dynamicPointerCast<CDRMOutput>(output);
+@@ -343,6 +349,188 @@
+ #endif
+     } catch (...) { return PR_EXECUTOR_NATIVE; }
+ }
++// These queries only corroborate native registry facts. They neither select a
++// display route nor mint a recovery epoch/capability generation.
++struct SObservationFailure { const char* reason; int error; uint32_t connector; };
++void requireObservation(bool valid, const char* reason, uint32_t connector, int error = 0) {
++    if (!valid) throw SObservationFailure{reason, error, connector};
++}
++template<auto Free, class T> auto drmOwned(T* value) {
++    return std::unique_ptr<T, decltype(Free)>(value, Free);
++}
++bool sameMode(const drmModeModeInfo& a, const drmModeModeInfo& b) {
++    return a.clock == b.clock && a.hdisplay == b.hdisplay && a.hsync_start == b.hsync_start && a.hsync_end == b.hsync_end &&
++        a.htotal == b.htotal && a.hskew == b.hskew && a.vdisplay == b.vdisplay && a.vsync_start == b.vsync_start &&
++        a.vsync_end == b.vsync_end && a.vtotal == b.vtotal && a.vscan == b.vscan && a.vrefresh == b.vrefresh &&
++        a.flags == b.flags && a.type == b.type && std::strncmp(a.name, b.name, sizeof(a.name)) == 0;
++}
++uint32_t modeRefresh(const drmModeModeInfo& mode) {
++    if (!mode.htotal || !mode.vtotal) return 0;
++    int64_t refresh = (int64_t(mode.clock) * 1000000 / mode.htotal + mode.vtotal / 2) / mode.vtotal;
++    if (mode.flags & DRM_MODE_FLAG_INTERLACE) refresh *= 2;
++    if (mode.flags & DRM_MODE_FLAG_DBLSCAN) refresh /= 2;
++    if (mode.vscan > 1) refresh /= mode.vscan;
++    return refresh > 0 && refresh <= std::numeric_limits<uint32_t>::max() ? uint32_t(refresh) : 0;
++}
++void corroborateFormat(int fd, const drmModeRes& resources, const drmModeConnector& connector, uint32_t format, uint64_t modifier) {
++    const auto id = connector.connector_id;
++    requireObservation(resources.count_crtcs > 0 && resources.count_crtcs <= 32 && connector.count_encoders > 0 &&
++        connector.count_encoders <= int(PR_EXECUTOR_MAX_OBJECTS), "encoder-bounds", id);
++    uint32_t compatible = 0;
++    for (int i = 0; i < connector.count_encoders; ++i) {
++        auto encoder = drmOwned<drmModeFreeEncoder>(drmModeGetEncoder(fd, connector.encoders[i]));
++        requireObservation(!!encoder, "get-encoder", id, errno);
++        compatible |= encoder->possible_crtcs;
++    }
++    if (connector.encoder_id) {
++        auto encoder = drmOwned<drmModeFreeEncoder>(drmModeGetEncoder(fd, connector.encoder_id));
++        requireObservation(!!encoder, "get-current-encoder", id, errno);
++        if (encoder->crtc_id) {
++            uint32_t current = 0;
++            for (int i = 0; i < resources.count_crtcs; ++i)
++                if (resources.crtcs[i] == encoder->crtc_id) current = uint32_t(1) << i;
++            requireObservation(current && (compatible & current), "current-crtc", id);
++            compatible = current;
++        }
++    }
++    requireObservation(compatible != 0, "no-compatible-crtc", id);
++    auto planes = drmOwned<drmModeFreePlaneResources>(drmModeGetPlaneResources(fd));
++    requireObservation(!!planes, "get-planes", id, errno);
++    requireObservation(planes->count_planes > 0 && planes->count_planes <= PR_EXECUTOR_MAX_OBJECTS, "plane-bounds", id);
++    for (uint32_t i = 0; i < planes->count_planes; ++i) {
++        auto plane = drmOwned<drmModeFreePlane>(drmModeGetPlane(fd, planes->planes[i]));
++        requireObservation(!!plane, "get-plane", id, errno);
++        if (!(plane->possible_crtcs & compatible)) continue;
++        requireObservation(plane->count_formats <= 4096, "format-bounds", id);
++        bool hasFormat = false;
++        for (uint32_t j = 0; j < plane->count_formats; ++j) hasFormat |= plane->formats[j] == format;
++        if (!hasFormat) continue;
++        auto properties = drmOwned<drmModeFreeObjectProperties>(drmModeObjectGetProperties(fd, plane->plane_id, DRM_MODE_OBJECT_PLANE));
++        requireObservation(!!properties, "get-plane-properties", id, errno);
++        requireObservation(properties->count_props <= PR_EXECUTOR_MAX_OBJECTS, "plane-property-bounds", id);
++        bool primary = false;
++        uint64_t blobID = 0;
++        for (uint32_t j = 0; j < properties->count_props; ++j) {
++            auto property = drmOwned<drmModeFreeProperty>(drmModeGetProperty(fd, properties->props[j]));
++            requireObservation(!!property, "get-plane-property", id, errno);
++            if (std::strcmp(property->name, "type") == 0) primary = properties->prop_values[j] == DRM_PLANE_TYPE_PRIMARY;
++            if (std::strcmp(property->name, "IN_FORMATS") == 0) blobID = properties->prop_values[j];
++        }
++        if (!primary || !blobID) continue; // No implicit modifier capability fallback.
++        requireObservation(blobID <= std::numeric_limits<uint32_t>::max(), "format-blob-id", id);
++        auto blob = drmOwned<drmModeFreePropertyBlob>(drmModeGetPropertyBlob(fd, uint32_t(blobID)));
++        requireObservation(!!blob, "get-format-blob", id, errno);
++        requireObservation(blob->length > 0 && blob->length <= 1024 * 1024, "format-blob-bounds", id);
++        drmModeFormatModifierIterator iterator{};
++        while (drmModeFormatModifierBlobIterNext(blob.get(), &iterator))
++            if (iterator.fmt == format && iterator.mod == modifier) return;
++    }
++    throw SObservationFailure{"primary-format-modifier-unavailable", 0, id};
++}
++PrDiscoveryV1 freshDiscovery(SNativeOwner& owner, uint64_t session) {
++    requireObservation(owner.mirror && owner.backend && owner.mirror->initialEnumerationComplete() && owner.mirror->active &&
++        !owner.outputFailure, "native-registry-unavailable", 0);
++    PrDiscoveryV1 result{};
++    result.session_generation = session;
++    for (uint32_t i = 0; i < owner.outputCount; ++i) {
++        const auto& entry = owner.outputs[i];
++        if (!entry.live) continue; // Retain the destroyed object's custody; never publish it.
++        const auto id = entry.values.connector_id;
++        auto implementation = entry.output->getBackend();
++        auto drm = Hyprutils::Memory::dynamicPointerCast<CDRMOutput>(entry.output);
++        requireObservation(implementation && implementation->type() == AQ_BACKEND_DRM && drm &&
++            drm->getConnectorID() > 0 && uint32_t(drm->getConnectorID()) == id, "native-output-identity", id);
++        const int fd = implementation->drmFD();
++        struct stat identity{};
++        const int statResult = fd >= 0 ? fstat(fd, &identity) : -1;
++        requireObservation(statResult == 0 && S_ISCHR(identity.st_mode), "native-device-fstat", id, statResult < 0 ? (fd < 0 ? EBADF : errno) : 0);
++        bool deviceFound = false;
++        for (const auto& device : owner.mirror->sessionDevices)
++            deviceFound |= device && !device->retiring && device->fd == fd && device->dev == identity.st_rdev &&
++                device->leaseID == entry.values.device_lease_id && device->generation == entry.values.device_generation;
++        requireObservation(deviceFound, "native-device-generation", id);
++        auto resources = drmOwned<drmModeFreeResources>(drmModeGetResources(fd));
++        requireObservation(!!resources, "get-resources", id, errno);
++        requireObservation(resources->count_connectors > 0 && resources->count_connectors <= int(PR_EXECUTOR_MAX_OUTPUTS), "connector-bounds", id);
++        bool foundConnector = false;
++        for (int j = 0; j < resources->count_connectors; ++j) {
++            auto current = drmOwned<drmModeFreeConnector>(drmModeGetConnectorCurrent(fd, resources->connectors[j]));
++            requireObservation(!!current, "get-current-connector", resources->connectors[j], errno);
++            if (current->connector_id == id) foundConnector = true;
++            if (current->connection != DRM_MODE_CONNECTED || current->count_modes == 0) continue;
++            bool represented = false;
++            for (uint32_t k = 0; k < owner.outputCount; ++k) {
++                const auto& actual = owner.outputs[k];
++                represented |= actual.live && actual.values.connector_id == current->connector_id &&
++                    actual.values.device_lease_id == entry.values.device_lease_id && actual.values.device_generation == entry.values.device_generation;
++            }
++            requireObservation(represented, "kernel-connector-missing-native-output", current->connector_id);
++        }
++        requireObservation(foundConnector, "native-connector-missing-kernel", id);
++        auto connector = drmOwned<drmModeFreeConnector>(drmModeGetConnectorCurrent(fd, id));
++        requireObservation(!!connector, "get-selected-connector", id, errno);
++        requireObservation(connector->connection == DRM_MODE_CONNECTED && connector->count_modes > 0 && connector->count_modes <= 4096,
++            "connected-mode-bounds", id);
++        requireObservation(connector->count_props >= 0 && connector->count_props <= int(PR_EXECUTOR_MAX_OBJECTS), "connector-property-bounds", id);
++        bool nonDesktopObserved = false;
++        for (int j = 0; j < connector->count_props; ++j) {
++            auto property = drmOwned<drmModeFreeProperty>(drmModeGetProperty(fd, connector->props[j]));
++            requireObservation(!!property, "get-connector-property", id, errno);
++            if (std::strcmp(property->name, "non-desktop") == 0) {
++                requireObservation(connector->prop_values[j] <= 1 && bool(connector->prop_values[j]) == entry.output->nonDesktop,
++                    "kernel-non-desktop-mismatch", id);
++                nonDesktopObserved = true;
++            }
++        }
++        requireObservation(nonDesktopObserved, "non-desktop-property-unavailable", id);
++        const drmModeModeInfo* preferred = nullptr;
++        for (int j = 0; j < connector->count_modes; ++j)
++            if (!(connector->modes[j].flags & DRM_MODE_FLAG_INTERLACE) && (connector->modes[j].type & DRM_MODE_TYPE_PREFERRED)) {
++                preferred = &connector->modes[j]; break;
++            }
++        // Keep the actual retained registry mode identity. A stale AQ preferred
++        // cache cannot qualify fresh kernel timings/flags/selection.
++        const auto mode = entry.output->preferredMode();
++        requireObservation(mode && mode == entry.mode && mode->modeInfo && preferred && mode->preferred &&
++            sameMode(*mode->modeInfo, *preferred) && mode->pixelSize.x == preferred->hdisplay && mode->pixelSize.y == preferred->vdisplay &&
++            mode->refreshRate == modeRefresh(*preferred), "kernel-preferred-mode-mismatch", id);
++        auto value = entry.values;
++        value.width = preferred->hdisplay;
++        value.height = preferred->vdisplay;
++        value.refresh_millihz = modeRefresh(*preferred);
++        const auto formats = entry.output->getRenderFormats();
++        requireObservation(!formats.empty() && !formats.front().modifiers.empty(), "native-format-unavailable", id);
++        value.drm_format = formats.front().drmFormat;
++        value.modifier = formats.front().modifiers.front();
++        corroborateFormat(fd, *resources, *connector, value.drm_format, value.modifier);
++        value.flags = entry.output->nonDesktop ? 1u : 0u;
++        result.outputs[result.output_count++] = value;
++    }
++    requireObservation(result.output_count > 0, "no-live-native-outputs", 0);
++    return result;
++}
++int32_t applyDeviceChangeNative(void* opaque, const PrSessionRenderEventV1* event, PrDiscoveryV1* result) noexcept {
++    try {
++        if (!opaque || !event || !result) return PR_EXECUTOR_INVALID;
++        auto& owner = *static_cast<SNativeOwner*>(opaque);
++        if (owner.thread != std::this_thread::get_id() || !owner.mirror || !owner.backend || event->event_type != 5)
++            return PR_EXECUTOR_PROTOCOL;
++        CDisplayAttemptScope guard(eDisplayAttemptDomain::RENDER, denyDisplay, &owner);
++        const auto applied = owner.mirror->applyRenderEvent(copyEvent(*event), -1, -1);
++        requireObservation(applied == eSessionApply::APPLIED_METADATA, "mirror-apply-change", event->connector_id);
++        requireObservation(noDisplayRequest(guard), "display-request-during-change", event->connector_id);
++        const auto candidate = freshDiscovery(owner, event->session_generation);
++        requireObservation(noDisplayRequest(guard), "display-request-during-query", event->connector_id);
++        *result = candidate;
++        return PR_EXECUTOR_OK;
++    } catch (const SObservationFailure& failure) {
++        try { Log::logger->log(Log::ERR, "owned-device-change: {} errno={} connector={}", failure.reason, failure.error, failure.connector); } catch (...) {}
++        return PR_EXECUTOR_NATIVE;
++    } catch (...) {
++        try { Log::logger->log(Log::ERR, "owned-device-change: native-query-exception"); } catch (...) {}
++        return PR_EXECUTOR_NATIVE;
++    }
++}
+ int32_t prepareNative(void*, const PrFrame*, const PrAdmissionV1*) noexcept { return PR_EXECUTOR_PROTOCOL; }
+ int32_t executeNative(void*, const PrFrame*, const PrAdmissionV1*, PrAttempt*, PrNativeResultV1*) noexcept { return PR_EXECUTOR_PROTOCOL; }
+ int32_t advanceNative(void*, const PrRetirementContextV1*, PrNativeProgressV1* result) noexcept {
+@@ -433,9 +621,9 @@
+     return pendingShutdownNative(retired);
+ #endif
+ }
+-const PrNativeOwnerFunctionsV1 FUNCTIONS = {
+-    PR_EXECUTOR_ABI_V1, sizeof(PrNativeOwnerFunctionsV1), {}, createNative, destroyNative, bootstrapNative,
+-    prepareNative, executeNative, advanceNative, pollNative, dispatchNative, shutdownNative
++const PrNativeOwnerFunctionsV2 FUNCTIONS = {
++    PR_EXECUTOR_ABI_V2, sizeof(PrNativeOwnerFunctionsV2), {}, createNative, destroyNative, bootstrapNative,
++    prepareNative, executeNative, advanceNative, pollNative, dispatchNative, shutdownNative, applyDeviceChangeNative
+ };
+ }
+ 
+@@ -446,6 +634,16 @@
+     PrExecutor* executor = nullptr;
+     PrBootstrap* pack = nullptr;
+     PrDiscoveryV1 discovery{};
++    // A local copied observation, never an authority/policy state machine.
++    // Formatting this value performs no further Rust observation/acceptance.
++    struct SObservation {
++        PrExecutorSnapshotV1 snapshot{};
++        PrDiscoveryV1 discovery{};
++        PrSessionReconciliationV2 reconciliation{};
++        PrFirstStopSnapshotV1 firstStop{};
++        int32_t code = PR_EXECUTOR_EMPTY, snapshotCode = PR_EXECUTOR_EMPTY;
++        bool discoveryKnown = false, reconciliationKnown = false, firstStopKnown = false;
++    };
+     PrFirstStop* stopObservation = nullptr;
+     bool stopObservationUnavailable = false; // Sticky interop failure, never a substitute first cause.
+ #ifdef POKELINUX_STARTUP_CUSTODY_TEST
+@@ -533,6 +731,14 @@
+     static uint32_t revoke(void* opaque, uint64_t session, uint32_t reason) noexcept {
+         auto& control = *static_cast<SControl*>(opaque);
+         if (control.thread != std::this_thread::get_id()) return AQ_REVOKE_UNAVAILABLE;
++        // Suspend the native admission bit before the synchronous Rust fence.
++        control.backendReady = false;
++        if (reason == AQ_REVOKE_DEVICE_CHANGE && control.executor && session == control.generation) {
++            const auto code = pr_executor_invalidate_session_v2(control.executor, session);
++            if (code == PR_EXECUTOR_OK) return AQ_REVOKED;
++            control.failed = true;
++            if (!control.firstError) control.firstError = code;
++        }
+         auto facts = control.stopFacts(PR_FIRST_STOP_AQ_REVOKE);
+         facts.revoke_session = session;
+         facts.revoke_reason = reason; // Actual callback arguments, even before enqueue.
+@@ -547,8 +753,27 @@
+         control.observeStop(facts);
+         return result;
+     }
+-    bool initialTransportHealthy() const {
+-        return !terminal && broker && !broker->transportFailed() && !broker->peekPendingRenderEvent();
++    bool transportHealthy() const {
++        return !terminal && broker && !broker->transportFailed();
++    }
++    void offerPending() {
++        if (!transportHealthy()) { if (!terminal) stop(PR_FIRST_STOP_BROKER_SUFFIX); return; }
++        // A finite offer batch, never a retry loop. Busy/Capacity retain the
++        // genuine AQ head for a later dispatch, observation or Rust wake.
++        for (uint32_t i = 0; i < PR_EXECUTOR_MAX_SESSION_CHANGES; ++i) {
++            const auto head = broker->peekPendingRenderEvent();
++            if (!head) return;
++            if (!executor || head->primary_fd >= 0 || head->render_fd >= 0 || head->metadata.type != 5) {
++                stop(PR_FIRST_STOP_BROKER_SUFFIX); return;
++            }
++            const auto copied = copyEvent(head->metadata);
++            const auto code = pr_executor_try_session_change_v2(executor, &copied);
++            if (code == PR_EXECUTOR_BUSY || code == PR_EXECUTOR_CAPACITY) return;
++            if (code != PR_EXECUTOR_OK) { fail(code, PR_FIRST_STOP_BROKER_SUFFIX); return; }
++            if (!broker->markRenderEventAdmitted(head->metadata.session_sequence)) {
++                fail(PR_EXECUTOR_PROTOCOL, PR_FIRST_STOP_BROKER_SUFFIX); return;
++            }
++        }
+     }
+     static int brokerTick(int, uint32_t mask, void* opaque) noexcept {
+         auto& watch = *static_cast<SWatch*>(opaque);
+@@ -556,10 +781,7 @@
+         try {
+             if (mask & (WL_EVENT_ERROR | WL_EVENT_HANGUP)) { control.fail(PR_EXECUTOR_PROTOCOL, PR_FIRST_STOP_BROKER_WATCH_ERROR, mask); return 0; }
+             if (watch.brokerPoll) watch.brokerPoll->onSignal();
+-            // There is no ordered live ingress yet. EVERY suffix, including
+-            // ADD, ENUM, ACTIVE, REMOVE, CHANGE and SHUTDOWN, fails closed. It
+-            // stays queued and the original service lease remains retained.
+-            if (control.broker->transportFailed() || control.broker->peekPendingRenderEvent()) control.stop(PR_FIRST_STOP_BROKER_SUFFIX);
++            control.observe();
+             control.syncBrokerWatches();
+         } catch (...) { control.fail(PR_EXECUTOR_NATIVE, PR_FIRST_STOP_BROKER_DISPATCH_EXCEPTION); }
+         return 0;
+@@ -598,27 +820,64 @@
+             control.fail(code == PR_EXECUTOR_OK ? PR_EXECUTOR_PROTOCOL : code, PR_FIRST_STOP_RUST_UNEXPECTED_COMPLETION); // No frame has been admitted.
+         return 0;
+     }
+-    void observe() noexcept {
+-        if (!executor) return;
++    SObservation observe() noexcept {
++        SObservation observation{};
++        const auto finish = [&]() {
++            // FirstStop is a separate CPU-only receipt: it cannot observe or
++            // accept an executor candidate, even after a negative projection.
++            observation.firstStopKnown = !stopObservationUnavailable && stopObservation &&
++                pr_first_stop_snapshot_v1(stopObservation, &observation.firstStop) == PR_EXECUTOR_OK;
++            return observation;
++        };
+         if (thread != std::this_thread::get_id()) std::terminate();
++        if (!executor) return finish();
+         try {
+-            if (!terminal && !initialTransportHealthy()) stop(PR_FIRST_STOP_OBSERVE_TRANSPORT);
+-            PrExecutorSnapshotV1 snapshot{};
+-            const auto code = pr_executor_snapshot_v1(executor, &snapshot);
+-            if (code != PR_EXECUTOR_OK) { fail(code, PR_FIRST_STOP_SNAPSHOT_ERROR); return; }
+-            if (snapshot.failed) { fail(PR_EXECUTOR_NATIVE, PR_FIRST_STOP_RUST_FAILED); return; }
+-            if (terminal || snapshot.stopping) { stop(terminal ? PR_FIRST_STOP_TERMINAL_REOBSERVED : PR_FIRST_STOP_RUST_STOPPING); return; }
++            if (!terminal && !transportHealthy()) stop(PR_FIRST_STOP_OBSERVE_TRANSPORT);
++            if (!terminal) offerPending();
++            observation.snapshotCode = pr_executor_snapshot_v1(executor, &observation.snapshot);
++            observation.code = observation.snapshotCode;
++            if (observation.code != PR_EXECUTOR_OK) { fail(observation.code, PR_FIRST_STOP_SNAPSHOT_ERROR); return finish(); }
++            auto& snapshot = observation.snapshot;
++            if (!snapshot.ready) backendReady = false;
++            if (snapshot.failed) { fail(PR_EXECUTOR_NATIVE, PR_FIRST_STOP_RUST_FAILED); return finish(); }
++            if (terminal || snapshot.stopping) { stop(terminal ? PR_FIRST_STOP_TERMINAL_REOBSERVED : PR_FIRST_STOP_RUST_STOPPING); return finish(); }
++            // A later candidate must wait for another observation. In particular,
++            // no discovery/reconciliation/join may accept after this raw !Ready.
++            if (!snapshot.ready) return finish();
+             PrDiscoveryV1 candidate{};
+-            const auto ready = pr_executor_discovery_v1(executor, &candidate);
+-            if (ready == PR_EXECUTOR_EMPTY || ready == PR_EXECUTOR_BUSY) return;
+-            if (ready != PR_EXECUTOR_OK) { fail(ready, PR_FIRST_STOP_DISCOVERY_ERROR); return; }
+-            if (!initialTransportHealthy()) { stop(PR_FIRST_STOP_DISCOVERY_TRANSPORT); return; }
+-            if (!backendReady && boottime() >= startupNotAfter) { stop(PR_FIRST_STOP_STARTUP_DEADLINE); return; }
+-            if (!candidate.output_count) { stop(PR_FIRST_STOP_DISCOVERY_EMPTY_OUTPUTS); return; }
+-            if (candidate.session_generation != generation) { stop(PR_FIRST_STOP_DISCOVERY_SESSION_MISMATCH); return; }
+-            discovery = candidate;
++            observation.code = pr_executor_discovery_v1(executor, &candidate);
++            if (observation.code == PR_EXECUTOR_EMPTY || observation.code == PR_EXECUTOR_BUSY) {
++                backendReady = false; return finish(); // Honest nonterminal observation refusal.
++            }
++            if (observation.code != PR_EXECUTOR_OK) { fail(observation.code, PR_FIRST_STOP_DISCOVERY_ERROR); return finish(); }
++            if (!transportHealthy()) { stop(PR_FIRST_STOP_DISCOVERY_TRANSPORT); return finish(); }
++            // Rust enforces the original startup cutoff and each later fixed
++            // recovery burst; C++ never reapplies the old initial deadline.
++            if (!candidate.output_count) { stop(PR_FIRST_STOP_DISCOVERY_EMPTY_OUTPUTS); return finish(); }
++            if (candidate.session_generation != generation) { stop(PR_FIRST_STOP_DISCOVERY_SESSION_MISMATCH); return finish(); }
++            observation.code = pr_executor_reconciliation_v2(executor, &observation.reconciliation);
++            if (observation.code == PR_EXECUTOR_BUSY) { backendReady = false; return finish(); }
++            if (observation.code != PR_EXECUTOR_OK) { fail(observation.code, PR_FIRST_STOP_DISCOVERY_ERROR); return finish(); }
++            observation.reconciliationKnown = true;
++            // Ready was already accepted before the copied discovery above.
++            // Serialized control cannot invalidate between these reads. This
++            // final raw sample can reflect a concurrent terminal worker result.
++            observation.snapshotCode = pr_executor_snapshot_v1(executor, &snapshot);
++            observation.code = observation.snapshotCode;
++            if (observation.code != PR_EXECUTOR_OK) { fail(observation.code, PR_FIRST_STOP_SNAPSHOT_ERROR); return finish(); }
++            if (snapshot.failed) { fail(PR_EXECUTOR_NATIVE, PR_FIRST_STOP_RUST_FAILED); return finish(); }
++            if (terminal || snapshot.stopping) { stop(terminal ? PR_FIRST_STOP_TERMINAL_REOBSERVED : PR_FIRST_STOP_RUST_STOPPING); return finish(); }
++            if (!snapshot.ready) { backendReady = false; return finish(); }
++            discovery = candidate; // Historical copied metadata remains retained internally.
++            observation.discovery = candidate;
++            observation.discoveryKnown = true;
+             backendReady = true; // Backend metadata only. Never shell/Source Ready.
+-        } catch (...) { fail(PR_EXECUTOR_NATIVE, PR_FIRST_STOP_OBSERVE_EXCEPTION); }
++            return finish();
++        } catch (...) {
++            fail(PR_EXECUTOR_NATIVE, PR_FIRST_STOP_OBSERVE_EXCEPTION);
++            observation.code = PR_EXECUTOR_NATIVE;
++            return finish();
++        }
+     }
+     void begin() {
+         if (began || thread != std::this_thread::get_id() || !loop) throw std::runtime_error("invalid startup control");
+@@ -692,12 +951,12 @@
+             markEnter, markReturn, numberArray(markedSequences.data(), count), boolean(pendingClosed), boolean(testDevice(broker).valid),
+             broker->peekPendingRenderEvent() ? 1 : 0, boolean(broker->transportFailed()), boolean(terminal)));
+ #endif
+-        if (!initialTransportHealthy()) throw std::runtime_error("unsupported session suffix before creation");
++        if (!transportHealthy() || broker->peekPendingRenderEvent()) throw std::runtime_error("unsupported session suffix before creation");
+         PrOwnerOptionsV1 native{};
+-        native.abi_version = PR_EXECUTOR_ABI_V1;
++        native.abi_version = PR_EXECUTOR_ABI_V2;
+         native.struct_size = sizeof(native);
+         native.owner_id = generation;
+-        const auto created = pr_executor_create_v1(&FUNCTIONS, &native, generation, &pack, startupNotAfter, &executor);
++        const auto created = pr_executor_create_v2(&FUNCTIONS, &native, generation, &pack, startupNotAfter, &executor);
+         if (created != PR_EXECUTOR_OK || !executor) throw std::runtime_error("Rust executor unavailable");
+         completion.control = timer.control = this;
+         const auto watches = pr_executor_watch_fds(executor, &completion.fd, &timer.fd);
+@@ -716,11 +975,10 @@
+         // No native output, broker pointer or rendering FD crosses to main.
+         observe();
+     }
+-    std::string stopObservationReply() const {
+-        PrFirstStopSnapshotV1 snapshot{};
+-        if (stopObservationUnavailable || !stopObservation ||
+-            pr_first_stop_snapshot_v1(stopObservation, &snapshot) != PR_EXECUTOR_OK)
++    std::string stopObservationReply(const SObservation& observation) const {
++        if (!observation.firstStopKnown)
+             return R"(,"first_stop":null,"stop_requests":null)";
++        const auto& snapshot = observation.firstStop;
+         if (!snapshot.has_first)
+             return std::format(R"(,"first_stop":null,"stop_requests":{})", snapshot.stop_requests);
+         const auto& f = snapshot.first;
+@@ -740,20 +998,31 @@
+             f.executor_present ? "true" : "false", hasError ? std::to_string(f.error) : "null", hasMask ? std::to_string(f.event_mask) : "null", revoke,
+             f.broker_present ? "true" : "false", f.broker_probe_failed ? "true" : "false", brokerFacts, snapshot.stop_requests);
+     }
++    std::string sessionReconciliationReply(const SObservation& observation) const {
++        if (!observation.reconciliationKnown)
++            return R"(,"session_reconcile":null)"; // Unobserved for a negative/refused projection.
++        const auto& state = observation.reconciliation;
++        return std::format(R"(,"session_reconcile":{{"session_generation":{},"invalidation_epoch":{},"admitted_epoch":{},"applied_epoch":{},"accepted_epoch":{},"last_admitted_sequence":{},"last_applied_sequence":{},"discovery_sequence":{},"bootstrap_end_sequence":{},"reconcile_not_after_boottime_ns":{}}})",
++            state.session_generation, state.invalidation_epoch, state.admitted_epoch, state.applied_epoch, state.accepted_epoch,
++            state.last_admitted_sequence, state.last_applied_sequence, state.discovery_sequence, state.bootstrap_end_sequence,
++            state.reconcile_not_after_boottime_ns);
++    }
+     std::string reply(std::string_view request) {
+         if (thread != std::this_thread::get_id()) throw std::runtime_error("wrong startup control thread");
+         if (request != "owner-startup snapshot" && request != "owner-startup stop") return "startup request unavailable";
+         const bool stopping = request == "owner-startup stop";
+         const auto stopCode = stopping ? stop(PR_FIRST_STOP_PUBLIC_STOP) : PR_EXECUTOR_EMPTY;
+-        observe();
+-        PrExecutorSnapshotV1 snapshot{};
+-        int32_t code = executor ? pr_executor_snapshot_v1(executor, &snapshot) : PR_EXECUTOR_EMPTY;
++        // try_join can itself accept a candidate: it must precede capture.
+         const int32_t joined = !stopping && executor ? pr_executor_try_join(executor) : -1;
+-        const auto phase = failed || snapshot.failed ? "UNAVAILABLE" : terminal || snapshot.stopping ? "STOPPING" : backendReady && snapshot.ready ? "BACKEND_READY" : "STARTING";
++        const auto observation = observe();
++        const auto& snapshot = observation.snapshot;
++        const bool ready = observation.discoveryKnown && observation.reconciliationKnown && snapshot.ready && !terminal && !failed && !snapshot.failed && !snapshot.stopping;
++        const auto phase = failed || snapshot.failed ? "UNAVAILABLE" : terminal || snapshot.stopping ? "STOPPING" :
++            observation.code == PR_EXECUTOR_BUSY ? "OBSERVATION_BUSY" : observation.code != PR_EXECUTOR_OK ? "OBSERVATION_UNAVAILABLE" : ready ? "BACKEND_READY" : "STARTING";
+         return std::format(R"({{"schema":1,"run":1,"main_tid":{},"observed_boottime_ns":{},"startup_not_after_ns":{},"phase":"{}","code":{},"first_error":{},"startup_error":{},"stage":{},"snapshot_code":{},"rust_failed":{},"rust_ready":{},"rust_stopping":{},"failed":{},"ready":{},"stopping":{},"worker_alive":{},"join_code":{},"executor_retained":{},"both_borrowed_watches_registered":{},"outputs":{},"native_retirement":false,"shell_ready":false{}}})",
+-            syscall(SYS_gettid), boottime(), startupNotAfter, phase, stopping ? stopCode : code, firstError, firstError, snapshot.stage, code, snapshot.failed ? "true" : "false", snapshot.ready ? "true" : "false", snapshot.stopping ? "true" : "false",
+-            failed || snapshot.failed ? "true" : "false", backendReady && snapshot.ready && !terminal ? "true" : "false", terminal || snapshot.stopping ? "true" : "false",
+-            snapshot.worker_alive ? "true" : "false", joined, executor ? "true" : "false", completion.source && timer.source ? "true" : "false", discovery.output_count, stopObservationReply());
++            syscall(SYS_gettid), boottime(), startupNotAfter, phase, stopping ? stopCode : observation.code, firstError, firstError, snapshot.stage, observation.snapshotCode, snapshot.failed ? "true" : "false", snapshot.ready ? "true" : "false", snapshot.stopping ? "true" : "false",
++            failed || snapshot.failed ? "true" : "false", ready ? "true" : "false", terminal || snapshot.stopping ? "true" : "false",
++            snapshot.worker_alive ? "true" : "false", joined, executor ? "true" : "false", completion.source && timer.source ? "true" : "false", ready ? observation.discovery.output_count : 0u, stopObservationReply(observation) + sessionReconciliationReply(observation));
+     }
+ };
+ 

@@ -11,7 +11,8 @@ extern "C" {
  * C++, never unwind, never reenter executor control, and obey native custody.
  * The supplier's code must remain loaded until destroy AND actual try_join.
  * Callback success is a trusted adapter report, not independent native evidence. */
-#define PR_EXECUTOR_ABI_V1 1u
+#define PR_EXECUTOR_ABI_V2 2u
+#define PR_EXECUTOR_MAX_SESSION_CHANGES 32u
 #define PR_EXECUTOR_MAX_OUTPUTS 32u
 #define PR_EXECUTOR_MAX_SOURCES 16u
 #define PR_EXECUTOR_MAX_OBJECTS 128u
@@ -139,7 +140,21 @@ typedef struct {
  int32_t (*poll_sources)(void *owner, PrPollSourceV1 *storage, uint32_t capacity, uint32_t *count);
  int32_t (*dispatch)(void *owner, const PrNativeReadyV1 *ready);
  int32_t (*shutdown_progress)(void *owner, uint32_t *resources_retired);
-} PrNativeOwnerFunctionsV1;
+ /* Required worker-only: apply this CHANGE once, then query the real registry.
+  * No display authority; deny display calls. Retain partial native custody on
+  * failure. Never retry an uncertain apply. Both borrows expire on return. */
+ int32_t (*apply_device_change)(void *owner, const PrSessionRenderEventV1 *event,
+                                PrDiscoveryV1 *result);
+} PrNativeOwnerFunctionsV2;
+/* All ten u64 values are functional Rust policy state, never native pointers.
+ * Dirty means invalidation_epoch!=accepted_epoch, including unmatched revoke.
+ * Sequence seed is actual captured ENUM end. Applied/discovery begin0 until
+ * successful bootstrap. Output/mode generations remain actual native facts. */
+typedef struct {
+ uint64_t session_generation, invalidation_epoch, admitted_epoch, applied_epoch, accepted_epoch;
+ uint64_t last_admitted_sequence, last_applied_sequence, discovery_sequence;
+ uint64_t bootstrap_end_sequence, reconcile_not_after_boottime_ns;
+} PrSessionReconciliationV2;
 typedef struct {
  uint32_t stage, worker_alive, stopping, ready, failed;
  uint32_t occupied_credits, reserved_completion_records, queued_frames;
@@ -223,17 +238,18 @@ int32_t pr_bootstrap_capture_v1(uint64_t session_generation, const PrBootstrapEv
 void pr_bootstrap_release(PrBootstrap *input);
 /* Validate pointers, empty output, table/version/options BEFORE consuming input.
  * After that validation input is consumed/null even if startup/spawn fails.
- * Copies the function table/options by VALUE; retains no borrowed table pointer.
+ * ABI2 only: required120B table and48B options both select version2. No legacy
+ * table/factory/fallback. Copies both by VALUE; retains no borrowed table pointer.
  * All executor calls are creating-control-thread-only, serialized/nonreentrant.
  * Wrong-thread calls refuse BEFORE inner-state access, ownership changes or
  * output writes. Release must first read its outer handle slot for lookup.
  * All pointed objects must be live/aligned, valid for the call, nonaliasing. */
-int32_t pr_executor_create_v1(const PrNativeOwnerFunctionsV1 *functions,
+int32_t pr_executor_create_v2(const PrNativeOwnerFunctionsV2 *functions,
                             const PrOwnerOptionsV1 *options, uint64_t security_generation,
                             PrBootstrap **input, uint64_t startup_not_after_boottime_ns,
                             PrExecutor **result);
 /* Both FDs are borrowed. Register BOTH before waiting; on startup readability
- * call snapshot/discovery/submit/join to observe original BOOTTIME expiry.
+ * call snapshot/discovery/submit/join to observe active fixed BOOTTIME expiry.
  * Unregister BOTH before release. Timer includes suspend; no wake guarantee. */
 int32_t pr_executor_watch_fds(PrExecutor *owner, int32_t *completion_fd, int32_t *startup_fd);
 int32_t pr_executor_snapshot_v1(PrExecutor *owner, PrExecutorSnapshotV1 *result);
@@ -245,6 +261,23 @@ int32_t pr_executor_try_submit_v1(PrExecutor *owner, PrFrame **frame, const PrOp
                                 uint64_t not_after_boottime_ns, uint64_t control_cookie,
                                 PrAdmissionV1 *result);
 int32_t pr_executor_invalidate(PrExecutor *owner, uint64_t security_generation);
+/* Owner-thread actual session revoke. Invalidates current commit serial and
+ * suspends discovery/frame admission BEFORE clock/queue/fallible work. Does not
+ * change the separate security generation or record terminal first-Stop.
+ * Initial dirty burst keeps original startup deadline. After initial Ready,
+ * clean->dirty starts real BOOTTIME+20s once; further pending revokes never renew.
+ * CLOCK/EXHAUSTED/WAKE after revocation terminally fail closed, never restore Ready. */
+int32_t pr_executor_invalidate_session_v2(PrExecutor *owner, uint64_t session_generation);
+/* Copy exact408B CHANGE, version1/type5, actual known lease/gen/rdev, next sequence
+ * and one unmatched revoke. No FDs/pointers/native call/allocation. Only OK may
+ * let AQ mark the head admitted. Ordinary refusals preserve caller/state:
+ * malformed INVALID; duplicate/gap STALE; unmatched/lock BUSY; full32 CAPACITY.
+ * Once accepted, wake failure Stops but returns OK: never retry copied metadata. */
+int32_t pr_executor_try_session_change_v2(PrExecutor *owner, const PrSessionRenderEventV1 *event);
+/* Copied actual queue/application/latest-acceptance state. Terminal state remains
+ * readable. Wrong-thread/null/Busy writes nothing. Last burst deadline stays
+ * after acceptance/disarm. No native admission or retirement follows from read. */
+int32_t pr_executor_reconciliation_v2(PrExecutor *owner, PrSessionReconciliationV2 *result);
 int32_t pr_executor_stop(PrExecutor *owner);
 int32_t pr_executor_next_completion_v1(PrExecutor *owner, PrCompletionV1 *result);
 /* Nonblocking; Busy retains all ownership while native work is live. */

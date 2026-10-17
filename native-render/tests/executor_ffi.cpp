@@ -35,7 +35,7 @@
 static_assert(sizeof(PrSessionRenderEventV1)==408);
 static_assert(offsetof(PrSessionRenderEventV1,seat_name)==88);
 static_assert(sizeof(PrOperationPolicyV1)==40);
-static_assert(std::is_trivially_copyable_v<PrNativeOwnerFunctionsV1>);
+static_assert(std::is_trivially_copyable_v<PrNativeOwnerFunctionsV2>);
 static_assert(std::is_trivially_copyable_v<PrOwnerOptionsV1>);
 namespace {
 constexpr uint64_t A=101,B=202,SECOND=1000000000ULL;
@@ -112,7 +112,7 @@ template<class F> int32_t callback(void* pointer,F function)noexcept{
 void* create(const PrOwnerOptionsV1* options,Probe& probe,uint64_t expected)noexcept{
  try{
   probe.mark(CREATE_ENTER,expected);probe.gate(&Probe::release_create,until());
-  require(options&&options->abi_version==1&&options->struct_size==sizeof(*options)&&options->owner_id==expected,"copied factory options");
+  require(options&&options->abi_version==PR_EXECUTOR_ABI_V2&&options->struct_size==sizeof(*options)&&options->owner_id==expected,"copied factory options");
   for(auto value:options->reserved)require(value==0,"copied option reserved");
   auto* owner=new(std::nothrow) NativeOwner(probe,*options);require(owner!=nullptr,"CPU holder allocation");
   require(owner->worker!=control_tid,"factory ran on control");probe.mark(CREATED,owner->options.owner_id);return owner;
@@ -200,13 +200,15 @@ int32_t poison_advance(void*,const PrRetirementContextV1*,PrNativeProgressV1*)no
 int32_t poison_poll(void*,PrPollSourceV1*,uint32_t,uint32_t*)noexcept{++poisoned_calls;return PR_EXECUTOR_NATIVE;}
 int32_t poison_dispatch(void*,const PrNativeReadyV1*)noexcept{++poisoned_calls;return PR_EXECUTOR_NATIVE;}
 int32_t poison_shutdown(void*,uint32_t*)noexcept{++poisoned_calls;return PR_EXECUTOR_NATIVE;}
-PrNativeOwnerFunctionsV1 table(bool second=false,bool poison=false){
- PrNativeOwnerFunctionsV1 f{};f.abi_version=1;f.struct_size=sizeof(f);
+int32_t apply_device_change(void*,const PrSessionRenderEventV1*,PrDiscoveryV1*)noexcept{return PR_EXECUTOR_INVALID;}
+int32_t poison_apply_device_change(void*,const PrSessionRenderEventV1*,PrDiscoveryV1*)noexcept{++poisoned_calls;return PR_EXECUTOR_NATIVE;}
+PrNativeOwnerFunctionsV2 table(bool second=false,bool poison=false){
+ PrNativeOwnerFunctionsV2 f{};f.abi_version=PR_EXECUTOR_ABI_V2;f.struct_size=sizeof(f);
  f.create=poison?poison_create:second?create_b:create_a;f.destroy=poison?poison_destroy:destroy;f.bootstrap=poison?poison_bootstrap:bootstrap;
  f.prepare=poison?poison_prepare:prepare;f.execute=poison?poison_execute:execute;f.advance=poison?poison_advance:advance;
- f.poll_sources=poison?poison_poll:poll_sources;f.dispatch=poison?poison_dispatch:dispatch;f.shutdown_progress=poison?poison_shutdown:shutdown_progress;return f;
+ f.poll_sources=poison?poison_poll:poll_sources;f.dispatch=poison?poison_dispatch:dispatch;f.shutdown_progress=poison?poison_shutdown:shutdown_progress;f.apply_device_change=poison?poison_apply_device_change:apply_device_change;return f;
 }
-PrOwnerOptionsV1 options(uint64_t id){PrOwnerOptionsV1 value{};value.abi_version=1;value.struct_size=sizeof(value);value.owner_id=id;return value;}
+PrOwnerOptionsV1 options(uint64_t id){PrOwnerOptionsV1 value{};value.abi_version=PR_EXECUTOR_ABI_V2;value.struct_size=sizeof(value);value.owner_id=id;return value;}
 PrBootstrap* pack(uint64_t id){
  const int fd=open("/dev/null",O_RDONLY|O_CLOEXEC);require(fd>=0,"/dev/null fixture");struct stat info{};
  if(fstat(fd,&info)||!S_ISCHR(info.st_mode)){close(fd);throw std::runtime_error("fixture character rdev");}
@@ -242,8 +244,8 @@ struct Slot {
  }
 };
 std::array<Slot,2> slots;
-void start(Slot& slot,uint64_t id,PrNativeOwnerFunctionsV1& functions,PrOwnerOptionsV1& opts,uint64_t deadline){
- auto* input=pack(id);const auto status=pr_executor_create_v1(&functions,&opts,1,&input,deadline,&slot.owner);
+void start(Slot& slot,uint64_t id,PrNativeOwnerFunctionsV2& functions,PrOwnerOptionsV1& opts,uint64_t deadline){
+ auto* input=pack(id);const auto status=pr_executor_create_v2(&functions,&opts,1,&input,deadline,&slot.owner);
  if(input)pr_bootstrap_release(input);
  require(status==PR_EXECUTOR_OK&&slot.owner&&!input,"executor accepts copied factory and consumes pack");
 }
@@ -319,8 +321,8 @@ void pass(const char* group){require(now()<work_until,"original fixture work cut
 void test(){
  probe_a.reset();probe_b.reset();auto functions_a=table(),functions_b=table(true);auto opts_a=options(A),opts_b=options(B);
  // Invalid table validation preserves an actual owned pack and empty owner slot.
- auto* input=pack(A);auto* original=input;PrExecutor* output=nullptr;auto invalid=functions_a;invalid.abi_version=2;
- require(pr_executor_create_v1(&invalid,&opts_a,1,&input,until(),&output)==PR_EXECUTOR_INVALID&&input==original&&!output,"invalid table preserves bootstrap/owner slots");pr_bootstrap_release(input);
+ auto* input=pack(A);auto* original=input;PrExecutor* output=nullptr;auto invalid=functions_a;invalid.abi_version=1;
+ require(pr_executor_create_v2(&invalid,&opts_a,1,&input,until(),&output)==PR_EXECUTOR_INVALID&&input==original&&!output,"invalid table preserves bootstrap/owner slots");pr_bootstrap_release(input);
  pass("abi_validation_original_bootstrap_retention");
  start(slots[0],A,functions_a,opts_a,until());start(slots[1],B,functions_b,opts_b,until());
  probe_a.wait(CREATE_ENTER,until());probe_b.wait(CREATE_ENTER,until());

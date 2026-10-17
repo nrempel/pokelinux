@@ -38,6 +38,8 @@ Hyprland, Aquamarine and the Qt app frontend still contain substantial C++. The 
 
 ## What has been tested
 
+The [Rust session-reconciliation component](docs/native-render-session-reconciliation.md) now passes64 Rust tests, six real C++/Rust integration groups and the matching normal compositor/SDK build. Rust owns recovery policy; C++ connects native calls. Actual startup recovery remains unavailable at fresh DRM format/modifier corroboration. Normal frames, Source and phone gates remain open.
+
 The [Rust first-Stop observer](docs/native-render-first-stop.md) now identifies a real startup trigger: a direct Aquamarine device-change revocation requests full Stop before startup completes. The unchanged native wire test passes; the first record survives a later actual Stop and two snapshots. The matching normal main/SDK,64 Rust tests and compiled interface checks pass separately. Recoverable Rust event handling, normal readiness, real client frames and phone gates remain open.
 
 The [native Rust session owner](docs/native-session-owner.md) retains the

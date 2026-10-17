@@ -4,7 +4,7 @@
 //! copied function pointer, never a captured control/Wayland/graphics object.
 //! Its production AQ/GL binding and authenticated device scope remain required.
 use crate::{
-    bootstrap::OwnedBootstrap,
+    bootstrap::{OwnedBootstrap, SessionRenderEvent},
     commit::{CommitAuthority, CommitTicket, GateError, OperationPolicy, SealedAttempt},
     frame::Frame,
 };
@@ -25,6 +25,8 @@ const FRAME_CREDITS: u32 = 3;
 const COMPLETION_CAPACITY: usize = 128;
 const RECORDS_PER_FRAME: u32 = 5;
 const MAX_NATIVE_SOURCES: usize = 16;
+pub const MAX_SESSION_CHANGES: usize = 32;
+const RECOVERY_BUDGET_NS: u64 = 20_000_000_000;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct PollSource {
@@ -245,14 +247,15 @@ impl Attempt {
             output_generation: 0,
         }; 128];
         objects[..actual.objects.len()].copy_from_slice(actual.objects);
-        self.scope = Some(RecordedNativeScope {
+        let scope = RecordedNativeScope {
             policy: actual.policy,
             device_lease_id: actual.device_lease_id,
             device_generation: actual.device_generation,
             count: actual.objects.len(),
             objects,
-        });
+        };
         self.sealed = Some(ticket.seal()?);
+        self.scope = Some(scope);
         Ok(self.sealed.as_ref().expect("sealed value just installed"))
     }
 }
@@ -315,17 +318,25 @@ pub struct Discovery {
 }
 // Value identity is captured before the owner takes the FD pack. This binds
 // observations to the transported input, not to actual DRM routing authority.
+#[derive(Clone, Copy)]
 struct BootstrapIdentity {
     session_generation: u64,
     count: usize,
-    devices: [(u64, u64); crate::bootstrap::MAX_BOOTSTRAP_DEVICES],
+    devices: [(u64, u64, u64); crate::bootstrap::MAX_BOOTSTRAP_DEVICES],
+    end_sequence: u64,
 }
 impl BootstrapIdentity {
     fn capture(input: &OwnedBootstrap) -> Self {
         let mut value = Self {
             session_generation: input.session_generation(),
             count: 0,
-            devices: [(0, 0); crate::bootstrap::MAX_BOOTSTRAP_DEVICES],
+            devices: [(0, 0, 0); crate::bootstrap::MAX_BOOTSTRAP_DEVICES],
+            end_sequence: input
+                .events()
+                .last()
+                .expect("complete initial prefix")
+                .metadata()
+                .session_sequence,
         };
         for event in input
             .events()
@@ -333,10 +344,30 @@ impl BootstrapIdentity {
             .filter(|v| v.metadata().event_type == 2)
         {
             let device = event.metadata();
-            value.devices[value.count] = (device.device_lease_id, device.device_generation);
+            value.devices[value.count] = (
+                device.device_lease_id,
+                device.device_generation,
+                device.rdev,
+            );
             value.count += 1;
         }
         value
+    }
+    fn accepts_change(&self, value: &SessionRenderEvent) -> bool {
+        value.version == 1
+            && value.event_type == 5
+            && value.session_generation == self.session_generation
+            && self.devices[..self.count].contains(&(
+                value.device_lease_id,
+                value.device_generation,
+                value.rdev,
+            ))
+            && value.change_type <= 1
+            && value.active <= 1
+            && value.boot_vga <= 1
+            && value.reserved == [0; 4]
+            && value.seat_name.contains(&0)
+            && value.device_path.contains(&0)
     }
     fn accepts(&self, value: &Discovery) -> bool {
         if value.session_generation != self.session_generation
@@ -354,8 +385,9 @@ impl BootstrapIdentity {
         for (i, output) in value.outputs[..count].iter().enumerate() {
             if output.output_id == 0
                 || output.output_generation == 0
-                || !self.devices[..self.count]
-                    .contains(&(output.device_lease_id, output.device_generation))
+                || !self.devices[..self.count].iter().any(|device| {
+                    (device.0, device.1) == (output.device_lease_id, output.device_generation)
+                })
                 || output.mode_id == 0
                 || output.mode_generation == 0
                 || output.connector_id == 0
@@ -397,6 +429,10 @@ pub trait NativeOwner {
     /// Take the input only into owner-held state before fallible native work.
     /// Return bounded copied output observations, never AQ pointers/callbacks.
     fn bootstrap(&mut self, input: &mut Option<OwnedBootstrap>) -> Result<Discovery, Error>;
+    /// Worker-only single application plus fresh registry query. The adapter
+    /// must deny display calls and retain partial native custody on failure.
+    /// No callback is retried and no control mutex is held while it runs.
+    fn apply_device_change(&mut self, event: &SessionRenderEvent) -> Result<Discovery, Error>;
     fn prepare(&mut self, frame: &Frame, admission: Admission) -> Result<(), Error>;
     fn execute(
         &mut self,
@@ -421,7 +457,7 @@ pub trait NativeOwner {
 /// The factory creates a deferred holder only. It must not acquire native
 /// custody in a local that could unwind before returning the retained owner.
 pub struct OwnerFactoryConfig {
-    pub(crate) native: crate::executor_ffi::NativeOwnerFunctionsV1,
+    pub(crate) native: crate::executor_ffi::NativeOwnerFunctionsV2,
     pub(crate) options: crate::executor_ffi::OwnerOptionsV1,
 }
 pub type OwnerFactory = fn(OwnerFactoryConfig) -> Result<Box<dyn NativeOwner>, Error>;
@@ -544,7 +580,6 @@ struct TimerSpec {
 }
 struct StartupDeadline {
     fd: OwnedFd,
-    until: u64,
 }
 impl StartupDeadline {
     fn new(until: u64) -> Result<Self, Error> {
@@ -554,8 +589,11 @@ impl StartupDeadline {
         }
         let value = Self {
             fd: unsafe { OwnedFd::from_raw_fd(fd) },
-            until,
         };
+        value.arm(until)?;
+        Ok(value)
+    }
+    fn arm(&self, until: u64) -> Result<(), Error> {
         let spec = TimerSpec {
             interval: TimerTime::default(),
             value: TimerTime {
@@ -565,10 +603,10 @@ impl StartupDeadline {
                 nanoseconds: (until % 1_000_000_000) as std::ffi::c_long,
             },
         };
-        if unsafe { timerfd_settime(value.fd.as_raw_fd(), 1, &spec, std::ptr::null_mut()) } != 0 {
+        if unsafe { timerfd_settime(self.fd.as_raw_fd(), 1, &spec, std::ptr::null_mut()) } != 0 {
             return Err(Error::Wake);
         }
-        Ok(value)
+        Ok(())
     }
     fn disarm(&self) -> Result<(), Error> {
         if unsafe {
@@ -605,10 +643,50 @@ struct Job {
     admission: Admission,
     ticket: CommitTicket,
 }
+#[repr(C)]
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct SessionReconciliationV2 {
+    pub session_generation: u64,
+    pub invalidation_epoch: u64,
+    pub admitted_epoch: u64,
+    pub applied_epoch: u64,
+    pub accepted_epoch: u64,
+    pub last_admitted_sequence: u64,
+    pub last_applied_sequence: u64,
+    pub discovery_sequence: u64,
+    pub bootstrap_end_sequence: u64,
+    pub reconcile_not_after_boottime_ns: u64,
+}
+#[derive(Clone, Copy)]
+struct SessionChange {
+    epoch: u64,
+    event: SessionRenderEvent,
+}
+#[derive(Clone, Copy)]
+struct DiscoveryCandidate {
+    epoch: u64,
+    sequence: u64,
+    discovery: Discovery,
+}
+struct SessionState {
+    changes: VecDeque<SessionChange>,
+    admitted_epoch: u64,
+    applied_epoch: u64,
+    last_admitted_sequence: u64,
+    last_applied_sequence: u64,
+    candidate: Option<DiscoveryCandidate>,
+}
 struct Shared {
     ingress: Mutex<VecDeque<Job>>,
     completions: Mutex<VecDeque<Completion>>,
-    discovery: Mutex<Option<Discovery>>,
+    identity: BootstrapIdentity,
+    session: Mutex<SessionState>,
+    invalidation_epoch: AtomicU64,
+    accepted_epoch: AtomicU64,
+    queued_changes: AtomicU32,
+    reconcile_until: AtomicU64,
+    ever_ready: AtomicBool,
+    beginning_recovery: AtomicBool,
     startup: AtomicU32, // 0 starting, 3 copied candidate, 1 control accepted, 2 terminal
     startup_deadline: StartupDeadline,
     stop: AtomicBool,
@@ -637,49 +715,142 @@ impl Shared {
         }
         wake.and(timer)
     }
-    fn startup_before_deadline(&self) -> bool {
-        if self.startup.load(Ordering::Acquire) == 2 {
+    fn available(&self) -> bool {
+        !self.stop.load(Ordering::Acquire)
+            && !self.beginning_recovery.load(Ordering::Acquire)
+            && self.startup.load(Ordering::Acquire) == 1
+            && self.invalidation_epoch.load(Ordering::Acquire)
+                == self.accepted_epoch.load(Ordering::Acquire)
+    }
+    fn terminal(&self, error: Error) -> Error {
+        self.failed.store(true, Ordering::Release);
+        let _ = self.stop();
+        let _ = self.complete.notify();
+        error
+    }
+    fn deadline_eligible(&self) -> bool {
+        if self.stop.load(Ordering::Acquire) || self.startup.load(Ordering::Acquire) == 2 {
             return false;
         }
-        match crate::commit::boottime_ns() {
-            Ok(now) if now < self.startup_deadline.until => true,
-            _ => {
-                self.failed.store(true, Ordering::Release);
-                let _ = self.stop();
-                let _ = self.complete.notify();
+        // An in-progress clean post-Ready begin has already fenced authority,
+        // but has not published its new cutoff yet. Defer without using the old
+        // deadline. Only serialized control may turn an expired sample into Stop.
+        if self.beginning_recovery.load(Ordering::Acquire) {
+            return false;
+        }
+        if self.available() {
+            return true;
+        }
+        let until = self.reconcile_until.load(Ordering::Acquire);
+        let now = crate::commit::boottime_ns();
+        match now {
+            Ok(now) if now < until => true,
+            Ok(_) => false,
+            Err(_) => {
+                self.terminal(Error::Clock);
                 false
             }
         }
     }
-    // Only control accepts the worker's copied candidate. A descheduled worker
-    // cannot publish Ready using an earlier time sample. The eligibility point
-    // is the control's post-disarm BOOTTIME check; no native call runs here.
+    // Only serialized control may expire the active cutoff. A worker's sample
+    // can straddle control acceptance and a new burst even with version rereads;
+    // it may reject work, but must never Stop that new burst using an old sample.
+    fn startup_before_deadline(&self) -> bool {
+        let eligible = self.deadline_eligible();
+        if !eligible
+            && !self.stop.load(Ordering::Acquire)
+            && !self.beginning_recovery.load(Ordering::Acquire)
+        {
+            self.terminal(Error::Expired);
+        }
+        eligible
+    }
+    fn worker_before_deadline(&self) -> bool {
+        let eligible = self.deadline_eligible();
+        if !eligible && self.complete.notify().is_err() {
+            self.quarantine();
+        }
+        eligible
+    }
+    // A candidate is never availability on its own. Only this control-thread
+    // observer accepts the latest epoch before the active fixed deadline.
     fn observe_startup(&self) -> Result<(), Error> {
-        let state = self.startup.load(Ordering::Acquire);
-        if state == 1 || state == 2 {
+        if self.stop.load(Ordering::Acquire) || self.available() {
             return Ok(());
         }
         if !self.startup_before_deadline() {
             return Ok(());
         }
-        if state == 3
-            && self
-                .startup
-                .compare_exchange(3, 1, Ordering::AcqRel, Ordering::Acquire)
-                .is_ok()
+        let session = match self.session.try_lock() {
+            Ok(value) => value,
+            Err(std::sync::TryLockError::WouldBlock) => return Ok(()),
+            Err(_) => return Err(self.terminal(Error::Protocol)),
+        };
+        let epoch = self.invalidation_epoch.load(Ordering::Acquire);
+        if session
+            .candidate
+            .as_ref()
+            .is_none_or(|candidate| candidate.epoch != epoch)
+            || session.admitted_epoch != epoch
+            || session.applied_epoch != epoch
         {
-            if let Err(error) = self.startup_deadline.disarm() {
-                self.failed.store(true, Ordering::Release);
-                let _ = self.stop();
-                return Err(error);
-            }
-            // Before returning availability, reject a control turn itself
-            // delayed past the original cutoff. No frame is admitted meanwhile.
-            if !self.startup_before_deadline() {
-                return Ok(());
-            }
+            return Ok(());
+        }
+        self.startup_deadline
+            .disarm()
+            .map_err(|e| self.terminal(e))?;
+        if !self.startup_before_deadline() {
+            return Ok(());
+        }
+        if self
+            .startup
+            .compare_exchange(3, 1, Ordering::AcqRel, Ordering::Acquire)
+            .is_ok()
+        {
+            self.accepted_epoch.store(epoch, Ordering::Release);
+            self.ever_ready.store(true, Ordering::Release);
         }
         Ok(())
+    }
+    fn publish_discovery(&self, value: Discovery, epoch: u64, sequence: u64) {
+        if !self.identity.accepts(&value) {
+            self.terminal(Error::Protocol);
+            return;
+        }
+        if !self.worker_before_deadline() {
+            return;
+        }
+        let mut session = match self.session.lock() {
+            Ok(value) => value,
+            Err(_) => self.quarantine(),
+        };
+        // Native apply is once and ordered. A later invalidate may make this
+        // perfectly valid result stale; retain the candidate, never grant it.
+        if epoch != 0 && session.applied_epoch.checked_add(1) != Some(epoch) {
+            drop(session);
+            self.quarantine();
+        }
+        session.applied_epoch = epoch;
+        session.last_applied_sequence = sequence;
+        session.candidate = Some(DiscoveryCandidate {
+            epoch,
+            sequence,
+            discovery: value,
+        });
+        let mut state = self.startup.load(Ordering::Acquire);
+        while state != 2 {
+            match self
+                .startup
+                .compare_exchange(state, 3, Ordering::AcqRel, Ordering::Acquire)
+            {
+                Ok(_) => break,
+                Err(actual) => state = actual,
+            }
+        }
+        drop(session);
+        if self.complete.notify().is_err() {
+            self.quarantine();
+        }
     }
     fn publish(&self, value: Completion) -> Result<(), Error> {
         let mut queue = self.completions.lock().map_err(|_| Error::Protocol)?;
@@ -743,10 +914,25 @@ impl Executor {
         }
         let authority = CommitAuthority::new(security_generation)?;
         let startup_deadline = StartupDeadline::new(startup_not_after_boottime_ns)?;
+        let identity = BootstrapIdentity::capture(&bootstrap);
         let shared = Arc::new(Shared {
             ingress: Mutex::new(VecDeque::with_capacity(FRAME_CREDITS as usize)),
             completions: Mutex::new(VecDeque::with_capacity(COMPLETION_CAPACITY)),
-            discovery: Mutex::new(None),
+            identity,
+            session: Mutex::new(SessionState {
+                changes: VecDeque::with_capacity(MAX_SESSION_CHANGES),
+                admitted_epoch: 0,
+                applied_epoch: 0,
+                last_admitted_sequence: identity.end_sequence,
+                last_applied_sequence: 0,
+                candidate: None,
+            }),
+            invalidation_epoch: AtomicU64::new(0),
+            accepted_epoch: AtomicU64::new(0),
+            queued_changes: AtomicU32::new(0),
+            reconcile_until: AtomicU64::new(startup_not_after_boottime_ns),
+            ever_ready: AtomicBool::new(false),
+            beginning_recovery: AtomicBool::new(false),
             startup: AtomicU32::new(0),
             startup_deadline,
             stop: AtomicBool::new(false),
@@ -809,7 +995,7 @@ impl Executor {
         if self.shared.stop.load(Ordering::Acquire) {
             return Err(Error::Stopping);
         }
-        if self.shared.startup.load(Ordering::Acquire) != 1 || self.discovered.is_none() {
+        if !self.shared.available() || self.discovered.is_none() {
             return Err(Error::Busy);
         }
         let f = frame.frame().ok_or(Error::Invalid)?;
@@ -882,6 +1068,130 @@ impl Executor {
         }
         Ok(())
     }
+    /// Invalidate current commit authority immediately, independently of every
+    /// queue/native call. This session identity is NOT a security generation.
+    pub fn invalidate_session(&mut self, generation: u64) -> Result<(), Error> {
+        self.control()?;
+        if generation != self.shared.identity.session_generation {
+            return Err(Error::Invalid);
+        }
+        if self.shared.stop.load(Ordering::Acquire) {
+            return Err(Error::Stopping);
+        }
+        let old = self.shared.invalidation_epoch.load(Ordering::Acquire);
+        let new_burst = old == self.shared.accepted_epoch.load(Ordering::Acquire)
+            && self.shared.ever_ready.load(Ordering::Acquire);
+        if new_burst {
+            self.shared
+                .beginning_recovery
+                .store(true, Ordering::Release);
+        }
+        let result = (|| {
+            self.authority
+                .invalidate_current()
+                .map_err(|e| self.shared.terminal(e.into()))?;
+            self.discovered = None;
+            let next = old
+                .checked_add(1)
+                .ok_or_else(|| self.shared.terminal(Error::Exhausted))?;
+            self.shared
+                .invalidation_epoch
+                .store(next, Ordering::Release);
+            // Authority and dirty fence precede every clock, arm, queue and wake.
+            if new_burst {
+                let now =
+                    crate::commit::boottime_ns().map_err(|e| self.shared.terminal(e.into()))?;
+                let until = now
+                    .checked_add(RECOVERY_BUDGET_NS)
+                    .ok_or_else(|| self.shared.terminal(Error::Exhausted))?;
+                self.shared.reconcile_until.store(until, Ordering::Release);
+                self.shared
+                    .startup_deadline
+                    .arm(until)
+                    .map_err(|e| self.shared.terminal(e))?;
+            } else if !self.shared.startup_before_deadline() {
+                return Err(Error::Expired);
+            }
+            if self.shared.stop.load(Ordering::Acquire) {
+                self.shared
+                    .startup_deadline
+                    .disarm()
+                    .map_err(|e| self.shared.terminal(e))?;
+                return Err(Error::Stopping);
+            }
+            Ok(())
+        })();
+        self.shared
+            .beginning_recovery
+            .store(false, Ordering::Release);
+        result?;
+        // Wake only after the new deadline is fully published and ungated.
+        self.shared
+            .wake
+            .notify()
+            .map_err(|e| self.shared.terminal(e))
+    }
+    pub fn try_session_change(&mut self, event: &SessionRenderEvent) -> Result<(), Error> {
+        self.control()?;
+        if !self.shared.identity.accepts_change(event) {
+            return Err(Error::Invalid);
+        }
+        if self.shared.stop.load(Ordering::Acquire) {
+            return Err(Error::Stopping);
+        }
+        let mut session = self.shared.session.try_lock().map_err(|_| Error::Busy)?;
+        let next = session
+            .last_admitted_sequence
+            .checked_add(1)
+            .ok_or_else(|| self.shared.terminal(Error::Exhausted))?;
+        if event.session_sequence != next {
+            return Err(Error::Stale);
+        }
+        let epoch = session
+            .admitted_epoch
+            .checked_add(1)
+            .ok_or_else(|| self.shared.terminal(Error::Exhausted))?;
+        if epoch > self.shared.invalidation_epoch.load(Ordering::Acquire) {
+            return Err(Error::Busy);
+        }
+        if session.changes.len() == MAX_SESSION_CHANGES {
+            return Err(Error::Capacity);
+        }
+        if !self.shared.startup_before_deadline() {
+            return Err(Error::Stopping);
+        }
+        session.changes.push_back(SessionChange {
+            epoch,
+            event: *event,
+        });
+        session.admitted_epoch = epoch;
+        session.last_admitted_sequence = event.session_sequence;
+        self.shared.queued_changes.fetch_add(1, Ordering::AcqRel);
+        drop(session);
+        // An accepted value remains owned even when wake fails. Fail closed but
+        // return accepted so native never retries an already-copied event.
+        if let Err(e) = self.shared.wake.notify() {
+            self.shared.terminal(e);
+        }
+        Ok(())
+    }
+    pub fn reconciliation(&self) -> Result<SessionReconciliationV2, Error> {
+        self.control()?;
+        self.shared.observe_startup()?;
+        let session = self.shared.session.try_lock().map_err(|_| Error::Busy)?;
+        Ok(SessionReconciliationV2 {
+            session_generation: self.shared.identity.session_generation,
+            invalidation_epoch: self.shared.invalidation_epoch.load(Ordering::Acquire),
+            admitted_epoch: session.admitted_epoch,
+            applied_epoch: session.applied_epoch,
+            accepted_epoch: self.shared.accepted_epoch.load(Ordering::Acquire),
+            last_admitted_sequence: session.last_admitted_sequence,
+            last_applied_sequence: session.last_applied_sequence,
+            discovery_sequence: session.candidate.as_ref().map_or(0, |value| value.sequence),
+            bootstrap_end_sequence: self.shared.identity.end_sequence,
+            reconcile_not_after_boottime_ns: self.shared.reconcile_until.load(Ordering::Acquire),
+        })
+    }
     pub fn request_stop(&self) -> Result<(), Error> {
         self.control()?;
         self.shared.stop()
@@ -890,24 +1200,22 @@ impl Executor {
     pub fn try_discovery(&mut self) -> Result<Option<Discovery>, Error> {
         self.control()?;
         self.shared.observe_startup()?;
-        if self.shared.stop.load(Ordering::Acquire)
-            || self.shared.startup.load(Ordering::Acquire) != 1
-        {
-            return Ok(None);
-        }
-        let record = *self.shared.discovery.try_lock().map_err(|_| Error::Busy)?;
-        if self.shared.stop.load(Ordering::Acquire)
-            || self.shared.startup.load(Ordering::Acquire) != 1
-        {
+        if !self.shared.available() {
             self.discovered = None;
             return Ok(None);
         }
+        let session = self.shared.session.try_lock().map_err(|_| Error::Busy)?;
+        if !self.shared.available() {
+            self.discovered = None;
+            return Ok(None);
+        }
+        let record = session.candidate.as_ref().map(|value| value.discovery);
         self.discovered = record;
         Ok(record)
     }
     /// Borrowed CLOCK_BOOTTIME watch. Register it AND completion_fd before
     /// waiting. On readability call snapshot/try_discovery/try_submit/try_join,
-    /// which enforce the original cutoff; never merely drain this FD. Unregister
+    /// which enforce the active fixed cutoff; never merely drain this FD. Unregister
     /// both before release. This timer includes suspend but does not wake a phone.
     pub fn startup_deadline_fd(&self) -> Result<i32, Error> {
         self.control()?;
@@ -935,7 +1243,7 @@ impl Executor {
             stage,
             worker_alive: self.shared.alive.load(Ordering::Acquire),
             stopping: self.shared.stop.load(Ordering::Acquire),
-            ready: self.shared.startup.load(Ordering::Acquire) == 1,
+            ready: self.shared.available(),
             failed: self.shared.failed.load(Ordering::Acquire),
             occupied_credits: self.shared.credits.load(Ordering::Acquire),
             reserved_completion_records: self.shared.reserved_records.load(Ordering::Acquire),
@@ -1147,7 +1455,6 @@ fn run(
     config: OwnerFactoryConfig,
     mut bootstrap: Option<OwnedBootstrap>,
 ) {
-    let identity = BootstrapIdentity::capture(bootstrap.as_ref().expect("owned bootstrap input"));
     let mut owner = match native_call(&shared, || factory(config)) {
         Ok(owner) => owner,
         Err(_) => shared.quarantine(),
@@ -1157,35 +1464,14 @@ fn run(
     shared
         .stage
         .store(Stage::Bootstrapping as u32, Ordering::Release);
-    if shared.startup_before_deadline() {
+    let bootstrap_entered = shared.worker_before_deadline();
+    if bootstrap_entered {
         match native_call(&shared, || owner.bootstrap(&mut bootstrap)) {
             Ok(discovery) => {
                 if bootstrap.is_some() {
                     shared.quarantine();
                 } // Take input into owner-held state before native work.
-                if !identity.accepts(&discovery) {
-                    shared.failed.store(true, Ordering::Release);
-                    let _ = shared.stop();
-                }
-                let _ = shared.startup_before_deadline();
-                let mut slot = match shared.discovery.lock() {
-                    Ok(slot) => slot,
-                    Err(_) => shared.quarantine(),
-                };
-                *slot = Some(discovery);
-                // Only a copied candidate: control must accept it before the
-                // original deadline. Stop is terminal and cannot be resurrected.
-                if shared
-                    .startup
-                    .compare_exchange(0, 3, Ordering::AcqRel, Ordering::Acquire)
-                    .is_err()
-                {
-                    *slot = None;
-                }
-                drop(slot);
-                if shared.complete.notify().is_err() {
-                    shared.quarantine();
-                }
+                shared.publish_discovery(discovery, 0, shared.identity.end_sequence);
             }
             Err(_) => {
                 shared.failed.store(true, Ordering::Release);
@@ -1202,8 +1488,48 @@ fn run(
         drop(bootstrap.take());
     }
     let mut entries = Vec::<Entry>::with_capacity(FRAME_CREDITS as usize);
+    // Retain an uncertain applied record through verified aggregate shutdown.
+    let mut retained_change: Option<SessionChange> = None;
     loop {
         shared.stage.store(Stage::Idle as u32, Ordering::Release);
+        if !bootstrap_entered && !shared.stop.load(Ordering::Acquire) {
+            // Empty deferred holder: await control's mandatory timer observation
+            // or Stop; do not call native source callbacks without bootstrap.
+            if shared.wake.wait().is_err() {
+                shared.quarantine();
+            }
+            continue;
+        }
+        let session_eligible =
+            !shared.stop.load(Ordering::Acquire) && shared.worker_before_deadline();
+        if session_eligible {
+            retained_change = match shared.session.lock() {
+                Ok(mut session) => session.changes.pop_front(),
+                Err(_) => shared.quarantine(),
+            };
+            if let Some(change) = retained_change.as_ref() {
+                shared.queued_changes.fetch_sub(1, Ordering::AcqRel);
+                shared
+                    .stage
+                    .store(Stage::Bootstrapping as u32, Ordering::Release);
+                // The queue lock is gone before the real worker callback.
+                match native_call(&shared, || owner.apply_device_change(&change.event)) {
+                    Ok(discovery) => {
+                        shared.publish_discovery(
+                            discovery,
+                            change.epoch,
+                            change.event.session_sequence,
+                        );
+                        if !shared.stop.load(Ordering::Acquire) {
+                            retained_change = None;
+                        }
+                    }
+                    Err(error) => {
+                        shared.terminal(error);
+                    }
+                }
+            }
+        }
         let job = match shared.ingress.lock() {
             Ok(mut queue) => queue.pop_front(),
             Err(_) => shared.quarantine(),
@@ -1362,10 +1688,14 @@ fn run(
         // One ingress operation is the finite budget. Even continuously
         // refilled queues pass an actual nonblocking native dispatch point.
         // When ingress is empty the same poll includes the control wake fd.
-        let blocking = shared.queued.load(Ordering::Acquire) == 0;
+        let blocking = shared.queued.load(Ordering::Acquire) == 0
+            && (shared.stop.load(Ordering::Acquire)
+                || shared.queued_changes.load(Ordering::Acquire) == 0
+                || !session_eligible);
         wait_native(&shared, &mut *owner, blocking);
     }
     native_call(&shared, || drop(owner)); // Actual creation worker, after verified native drain.
+    let _retained_change = retained_change; // Copied metadata only, retained through actual native drain.
     shared.stage.store(Stage::Exited as u32, Ordering::Release);
     shared.alive.store(false, Ordering::Release);
     let _ = shared.complete.notify();
@@ -1410,6 +1740,9 @@ mod tests {
         }
     }
     impl NativeOwner for Owner {
+        fn apply_device_change(&mut self, _: &SessionRenderEvent) -> Result<Discovery, Error> {
+            Err(Error::Invalid)
+        }
         fn bootstrap(&mut self, input: &mut Option<OwnedBootstrap>) -> Result<Discovery, Error> {
             let discovery = bootstrap_discovery(input.as_ref().ok_or(Error::Invalid)?);
             drop(input.take());
@@ -2030,6 +2363,9 @@ mod tests {
         }
     }
     impl NativeOwner for AsyncOwner {
+        fn apply_device_change(&mut self, _: &SessionRenderEvent) -> Result<Discovery, Error> {
+            Err(Error::Invalid)
+        }
         fn bootstrap(&mut self, input: &mut Option<OwnedBootstrap>) -> Result<Discovery, Error> {
             let discovery = bootstrap_discovery(input.as_ref().ok_or(Error::Invalid)?);
             drop(input.take());
@@ -2697,6 +3033,9 @@ mod tests {
         }
     }
     impl NativeOwner for BootstrapOwner {
+        fn apply_device_change(&mut self, _: &SessionRenderEvent) -> Result<Discovery, Error> {
+            Err(Error::Invalid)
+        }
         fn bootstrap(&mut self, input: &mut Option<OwnedBootstrap>) -> Result<Discovery, Error> {
             self.input = input.take(); // Retain all duplicate-FD custody before the held native step.
             self.mark("bootstrap");

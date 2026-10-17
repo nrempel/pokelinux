@@ -17,7 +17,7 @@ use std::{
     thread::{self, ThreadId},
 };
 
-const ABI: u32 = 1;
+const ABI: u32 = 2;
 const EMPTY: i32 = 13;
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
@@ -29,7 +29,7 @@ pub struct OwnerOptionsV1 {
 }
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
-pub struct NativeOwnerFunctionsV1 {
+pub struct NativeOwnerFunctionsV2 {
     pub abi_version: u32,
     pub struct_size: u32,
     pub reserved: [u64; 4],
@@ -54,6 +54,9 @@ pub struct NativeOwnerFunctionsV1 {
         Option<unsafe extern "C" fn(*mut c_void, *mut PollSourceV1, u32, *mut u32) -> i32>,
     pub dispatch: Option<unsafe extern "C" fn(*mut c_void, *const NativeReadyV1) -> i32>,
     pub shutdown_progress: Option<unsafe extern "C" fn(*mut c_void, *mut u32) -> i32>,
+    pub apply_device_change: Option<
+        unsafe extern "C" fn(*mut c_void, *const SessionRenderEvent, *mut DiscoveryV1) -> i32,
+    >,
 }
 impl OwnerFactoryConfig {
     /// Validates and owns only a copied current table and bounded scalar options.
@@ -65,11 +68,11 @@ impl OwnerFactoryConfig {
     /// code lifetime through destruction and actual join. No pointer encoding in
     /// scalar options and no control/Wayland/AQ/GL graph is transferred here.
     pub unsafe fn new(
-        native: NativeOwnerFunctionsV1,
+        native: NativeOwnerFunctionsV2,
         options: OwnerOptionsV1,
     ) -> Result<Self, Error> {
         if native.abi_version != ABI
-            || native.struct_size as usize != size_of::<NativeOwnerFunctionsV1>()
+            || native.struct_size as usize != size_of::<NativeOwnerFunctionsV2>()
             || native.reserved != [0; 4]
             || native.create.is_none()
             || native.destroy.is_none()
@@ -80,6 +83,7 @@ impl OwnerFactoryConfig {
             || native.poll_sources.is_none()
             || native.dispatch.is_none()
             || native.shutdown_progress.is_none()
+            || native.apply_device_change.is_none()
             || options.abi_version != ABI
             || options.struct_size as usize != size_of::<OwnerOptionsV1>()
             || options.owner_id == 0
@@ -89,7 +93,7 @@ impl OwnerFactoryConfig {
         }
         Ok(Self { native, options })
     }
-    pub fn native_functions(&self) -> NativeOwnerFunctionsV1 {
+    pub fn native_functions(&self) -> NativeOwnerFunctionsV2 {
         self.native
     }
     pub fn options(&self) -> OwnerOptionsV1 {
@@ -663,7 +667,7 @@ impl FrameCustody for CFrameSlot {
     }
 }
 struct NativeAdapter {
-    functions: NativeOwnerFunctionsV1,
+    functions: NativeOwnerFunctionsV2,
     options: OwnerOptionsV1,
     owner: *mut c_void,
     bootstrap: Option<OwnedBootstrap>,
@@ -705,6 +709,16 @@ impl NativeOwner for NativeAdapter {
         let mut value = DiscoveryV1::default();
         status(unsafe {
             (self.functions.bootstrap.expect("validated bootstrap"))(self.owner, &view, &mut value)
+        })?;
+        value.try_into()
+    }
+    fn apply_device_change(&mut self, event: &SessionRenderEvent) -> Result<Discovery, Error> {
+        let mut value = DiscoveryV1::default();
+        status(unsafe {
+            (self
+                .functions
+                .apply_device_change
+                .expect("validated CHANGE callback"))(self.owner, event, &mut value)
         })?;
         value.try_into()
     }
@@ -881,8 +895,8 @@ pub unsafe extern "C" fn pr_bootstrap_release(input: *mut OwnedBootstrap) {
 /// uniquely owned; result is empty and nonaliasing. After shape validation the
 /// bootstrap slot is consumed even when the original cutoff/spawn refuses.
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn pr_executor_create_v1(
-    functions: *const NativeOwnerFunctionsV1,
+pub unsafe extern "C" fn pr_executor_create_v2(
+    functions: *const NativeOwnerFunctionsV2,
     options: *const OwnerOptionsV1,
     security_generation: u64,
     input: *mut *mut OwnedBootstrap,
@@ -1009,6 +1023,48 @@ pub unsafe extern "C" fn pr_executor_try_submit_v1(
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn pr_executor_invalidate(owner: *mut PrExecutor, generation: u64) -> i32 {
     returned(unsafe { with_executor(owner, |e| e.invalidate(generation)) })
+}
+/// # Safety
+/// Live serialized owner-thread handle; generation is the actual session identity.
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn pr_executor_invalidate_session_v2(
+    owner: *mut PrExecutor,
+    generation: u64,
+) -> i32 {
+    returned(unsafe { with_executor(owner, |e| e.invalidate_session(generation)) })
+}
+/// # Safety
+/// Live serialized owner-thread handle and synchronous live408B metadata borrow.
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn pr_executor_try_session_change_v2(
+    owner: *mut PrExecutor,
+    event: *const SessionRenderEvent,
+) -> i32 {
+    returned(unsafe {
+        with_executor(owner, |e| {
+            let event = event.as_ref().ok_or(Error::Invalid)?;
+            e.try_session_change(event)
+        })
+    })
+}
+/// # Safety
+/// Live serialized owner-thread handle; writable nonaliasing80B output. Refusal
+/// writes nothing. The terminal state remains readable after an actual Stop.
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn pr_executor_reconciliation_v2(
+    owner: *mut PrExecutor,
+    result: *mut SessionReconciliationV2,
+) -> i32 {
+    returned(unsafe {
+        with_executor(owner, |e| {
+            if result.is_null() {
+                return Err(Error::Invalid);
+            }
+            let value = e.reconciliation()?;
+            result.write(value);
+            Ok(())
+        })
+    })
 }
 /// # Safety
 /// Live serialized control-thread handle; no concurrent or reentrant calls.
@@ -1181,13 +1237,20 @@ pub(crate) fn test_config() -> OwnerFactoryConfig {
     unsafe extern "C" fn shutdown(_: *mut c_void, _: *mut u32) -> i32 {
         9
     }
+    unsafe extern "C" fn apply_change(
+        _: *mut c_void,
+        _: *const SessionRenderEvent,
+        _: *mut DiscoveryV1,
+    ) -> i32 {
+        9
+    }
     // Existing independent Rust test factories ignore this table. If accidentally
     // invoked, create fails without acquiring any native resource.
     unsafe {
         OwnerFactoryConfig::new(
-            NativeOwnerFunctionsV1 {
-                abi_version: 1,
-                struct_size: size_of::<NativeOwnerFunctionsV1>() as u32,
+            NativeOwnerFunctionsV2 {
+                abi_version: ABI,
+                struct_size: size_of::<NativeOwnerFunctionsV2>() as u32,
                 create: Some(create),
                 destroy: Some(destroy),
                 bootstrap: Some(bootstrap),
@@ -1197,10 +1260,11 @@ pub(crate) fn test_config() -> OwnerFactoryConfig {
                 poll_sources: Some(sources),
                 dispatch: Some(dispatch),
                 shutdown_progress: Some(shutdown),
+                apply_device_change: Some(apply_change),
                 ..Default::default()
             },
             OwnerOptionsV1 {
-                abi_version: 1,
+                abi_version: ABI,
                 struct_size: size_of::<OwnerOptionsV1>() as u32,
                 owner_id: 1,
                 ..Default::default()
@@ -1230,7 +1294,9 @@ const _: () = {
     assert!(size_of::<DiscoveredOutputV1>() == 80);
     assert!(size_of::<DiscoveryV1>() == 2576);
     assert!(size_of::<OwnerOptionsV1>() == 48);
-    assert!(size_of::<NativeOwnerFunctionsV1>() == 112);
+    assert!(size_of::<NativeOwnerFunctionsV2>() == 120);
+    assert!(std::mem::offset_of!(NativeOwnerFunctionsV2, apply_device_change) == 112);
+    assert!(size_of::<SessionReconciliationV2>() == 80);
     assert!(size_of::<SnapshotV1>() == 56);
     assert!(size_of::<CompletionV1>() == 4376);
     assert!(std::mem::offset_of!(CompletionV1, admission) == 24);
