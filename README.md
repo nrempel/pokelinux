@@ -67,6 +67,13 @@ exit0. The unchanged availability regression,28 active audio tests and exact
 353→385 signed package transaction pass. This qualifies backend availability;
 session-authorized playback, physical audio and the complete phone remain open.
 
+The [production Messages history service](docs/native-installed-messages-history.md)
+now also starts automatically in two fresh ARM boots with its app closed. It
+reconciles two authored raw records into Inbox history, retains their IDs and
+contents across clean reboot, and stops with Main/ExecStop0 and empty cgroups.
+This is local-history persistence; incoming SMS, app reads and notifications
+remain separate gates.
+
 > **Development status:** no physical phone has been accessed. There is no verified bootable phone image. Modem communication, carrier IMS registration, physical call audio, Pixel GPU rendering, camera capture and suspend remain unverified.
 
 A [prepared end-to-end Sounds session](docs/native-normal-upstream-tracer.md#prepared-full-appservice-slice-passes)

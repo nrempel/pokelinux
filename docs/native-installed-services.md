@@ -126,3 +126,11 @@ closed review confirms the installed files, compiled sources and both boots. The
 This is two installed owners in a generic Arch ARM VM. It does not qualify a
 healthy graphical phone session, working theme rendering, an audio backend,
 physical routes, suspend, modem/IMS or Pixel hardware.
+
+
+The same explicit staging target now also installs the separate
+[production Messages history bundle](native-installed-messages-history.md).
+Raw-only preparation followed by two fresh353-package ARM boots qualifies
+reconciliation/persistence and real Main/ExecStop completion. Its protected
+normal app/QML dependency is not launched. This is separate from the385-package
+available audio-backend image and does not qualify a combined phone session.

@@ -543,6 +543,11 @@ whole-stack Stop. This is a virtual-backend deployment slice: full playback
 admission, production PCM isolation, physical audio, suspend and phone-session
 integration remain required below. No completed row follows from this pass.
 
+The [production Messages history service](native-installed-messages-history.md)
+now qualifies automatic startup, authored raw reconciliation, exact selected
+record persistence across two fresh ARM boots and native Stop. Production receive,
+ACK/send, notifications, app read authority, power-loss and hardware remain open.
+
 ## Completion matrix
 
 Every row requires permission boundaries, error and recovery behavior, service restart tests, and relevant offline integration tests. Device-dependent rows additionally require later authorized Pixel verification. An unavailable feature must be explicit in the UI and release report.

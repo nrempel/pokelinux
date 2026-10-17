@@ -41,6 +41,18 @@ refusal remains separate. No Source, grant, playback/PCM or phone evidence is
 inferred. Keep the blocked authentication and expired-Source branches parked;
 next work should advance a bounded native phone-service path.
 
+The [production Messages history service](native-installed-messages-history.md)
+now passes missing-deployment RED→explicit installation and two fresh ARM boots.
+Fresh normal-feature current service/Stop/launcher providers are separate from
+the isolated seed. Preparation creates only two authored unqualified raw records
+and never starts Messages; cold1 reconciles exact selected IDs/provenance into
+Inbox, and cold2 retains them without reseed or manual starts. The same frozen
+probe checks actual writer/readonly DB ownership, Main owning neither DB,
+locked/zero-principal policy and no receiving/counters. Both PID1 Main/ExecStop0
+and all three VM closures pass;353/Qt50 and original owners remain unchanged.
+This is local history, not incoming SMS, notifications, app reads or a complete
+phone session. The earlier Qt app remains an unlaunched dependency.
+
 The [current language boundary](runtime-language-decision.md#current-language-boundary)
 retains upstream Hyprland/Aquamarine/Qt C++ scene, protocol and native operations.
 Rust remains responsible for shared phone services and ownership/recovery policy.

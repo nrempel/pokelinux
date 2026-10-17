@@ -1,0 +1,290 @@
+{
+  "schema": 1,
+  "scope": "Installed production history-only Messages, authored raw reconciliation and clean-shutdown/reboot persistence; no incoming or app-read evidence",
+  "public_source_base": "82f958802fdf803669f251d5d1542e8816e43f42",
+  "frozen_probe": {
+    "bytes": 10513,
+    "sha256": "b77a7830dd433b16f064815d1eaeb897e3647e10f653701819470a330dd8442c"
+  },
+  "unchanged_production_unit": {
+    "bytes": 782,
+    "sha256": "f6f8ef6b4f9d5563777fa73f4e74dd202ec393423f955499a7502f85a52c14d3"
+  },
+  "new_explicit_VM_profile": {
+    "bytes": 408,
+    "sha256": "fa8025b44067270495700c092d5ba4bba4a1c37570c1fb4026f30c0bfb1cf708"
+  },
+  "actual_missing_deployment_RED": {
+    "qualification": {
+      "bytes": 2375,
+      "sha256": "8fcfdb7ad4225fd60f7f5ad8c0d74990f9d92a2588a373916adab1cfe0e5ec3e"
+    },
+    "records": {
+      "execution.json": {
+        "bytes": 2882,
+        "sha256": "da07879e3c0c757e2e092148bf5abcddc7d0167a56c6378f7b0819ba7a00f28f"
+      },
+      "result.json": {
+        "bytes": 3021,
+        "sha256": "1722ebacfe667e6ebb6678a3738341b5ef5381d45ecc549dc9412a2b780049fb"
+      },
+      "boot-result.json": {
+        "bytes": 6752,
+        "sha256": "6d3a2ecad769112c1e8baf6b2e30a6c5295bc80306fefe6d62218922fb4a9cc9"
+      },
+      "messages-history-probe.json": {
+        "bytes": 1601,
+        "sha256": "6d31d468c34a8918c664cc761303df3e584fbac0a2f2bf87f6a73acc2895f2cf"
+      }
+    },
+    "actual_target_exit": 1,
+    "LoadState": "not-found",
+    "failure": "Installed production Messages unit must be present",
+    "expected_file_absent_and_never_read_before_failure": true,
+    "import_or_setup_failure": false
+  },
+  "current_ARM_provider_build": {
+    "qualification": {
+      "bytes": 7784,
+      "sha256": "f497605d813d757d67b961ea1b1c2fbf71f96de421d0a8785b7988cd170d8d44"
+    },
+    "source_cohort": {
+      "bytes": 22927,
+      "sha256": "bd8a14ab5cff2f3d85fc1fb3cf75ed2376daaefae765fd69a95a150653e2a86e"
+    },
+    "selected_files": 140,
+    "exact_current_source_bridge": true,
+    "provider_manifest": {
+      "bytes": 5264,
+      "sha256": "408057bfc085c256abb3c5e006463c21e659bd88d8dabb85c9ee412f06b4fef7"
+    },
+    "normal_production_features": [],
+    "separate_test_seed_features": [
+      "isolated-fixture"
+    ],
+    "optimization": 3,
+    "ELF_machine": 183,
+    "bundled_SQLite_no_extra_guest_packages": true,
+    "dependencies_and_Cargo_locks_changed": false,
+    "actual_build_custody_CLI_waits": 10,
+    "actual_stdout_stderr_PIPE_EOFs": 20,
+    "exact_container_absence_source_and_daemon_closure": true,
+    "artifacts": {
+      "production/messages-service-ARM": {
+        "bytes": 4189408,
+        "sha256": "8af36d92a1c4276939f5a67f821ec70b9c9cb37aff835a060dc1ceba57e58186"
+      },
+      "production/messages-stop-ARM": {
+        "bytes": 894896,
+        "sha256": "e4579cfdd6c46466787653d9271cbe372172aec89ca1037185e7d1a19d7affd2"
+      },
+      "production/lifecycle-launcher-ARM": {
+        "bytes": 988072,
+        "sha256": "1bfde7f01972450184ad1af37d47c92d9d8751add6e8a108d47522f43d791b4a"
+      },
+      "isolated-fixture/messages-seed-fixture-ARM": {
+        "bytes": 2671568,
+        "sha256": "6318f21406b637516bd55ce3602adfc4aed55a6e5f22db7f27b171b4f14255a8"
+      }
+    }
+  },
+  "host_stage": {
+    "record": {
+      "bytes": 3694,
+      "sha256": "746535a0b762913f1634694f0d2c142275d276b33bd6226530378f547d8d68cd"
+    },
+    "files": 8,
+    "target": "install-native-services",
+    "actual_owned_waits": 3,
+    "actual_merged_PIPE_EOFs": 3,
+    "no_host_service_activation": true
+  },
+  "selected_deployment_manifest": {
+    "bytes": 1504,
+    "sha256": "d9fb02833e25a3950a96c498b96ab9635c0c5e0614f42998dca63445abb060bc"
+  },
+  "combined_closed_qualification": {
+    "bytes": 12006,
+    "sha256": "e27db6c7cbf2e279b7439efb3818d0212fefbe0a27a61381116fb7ef36094d80"
+  },
+  "epochs": {
+    "preparation": {
+      "records": {
+        "selection.json": {
+          "bytes": 6918,
+          "sha256": "0363a606be8bed47ef72cef1aefdc94719db0622b76a83bd65081b78f5ffe35d"
+        },
+        "command.json": {
+          "bytes": 1538,
+          "sha256": "9244143d9a72c2cf67943c3184339d6b4885f850377484acb49be5200d59f8e4"
+        },
+        "FREEZE.json": {
+          "bytes": 973,
+          "sha256": "551b41af95facbc6cd983a84c6e305f73d0aab84b810df9c3d3d7954f46e1582"
+        },
+        "execution.json": {
+          "bytes": 2865,
+          "sha256": "f420b281b057bd9cc873c1866c5833e5318bf5aba5ed3a06a3d5662015082f05"
+        },
+        "result.json": {
+          "bytes": 12177,
+          "sha256": "cd63e92228f7374a3e8137002d3d97fca7d2783af1f72da12d3da028794e4c32"
+        },
+        "boot-result.json": {
+          "bytes": 6933,
+          "sha256": "0bc7534180d56a113d3319c95a9c9598786765825aa41bd4006f3808bdafa930"
+        }
+      },
+      "passed": true,
+      "actual_original353_and_Qt50_retained": true,
+      "direct_inside_owned_waits": 17,
+      "actual_merged_PIPE_EOFs": 17,
+      "separate_outer_CLI_wait_exit": 0,
+      "outer_console_regular_not_PIPE": true,
+      "separate_inspect_CLI_waits": 2,
+      "inspect_PIPE_EOF_claimed": false,
+      "QEMU_actual_wait_exit": 0,
+      "exact_container_absent_same_daemon_inputs_unchanged": true,
+      "authored_raw_occurrences": 2,
+      "Inbox_DB_absent_before_first_cold": true,
+      "Messages_never_started": true,
+      "enabled_while_stopped": true,
+      "actual_unit_and_loader_verification": true
+    },
+    "first_cold_boot": {
+      "records": {
+        "selection.json": {
+          "bytes": 4892,
+          "sha256": "d63ec410808f5867561f64fe6c26875ee5effc3947fd28bc4e892eaada7d2c29"
+        },
+        "command.json": {
+          "bytes": 1719,
+          "sha256": "64cf9e268cd3c38a55885027c47f447c687da1e0d354e124d871dae06395ba0f"
+        },
+        "FREEZE.json": {
+          "bytes": 1859,
+          "sha256": "4288696e2e9891b30c6e8f96ae8d56362d0be18006ec0d53682ea396bc78f7f4"
+        },
+        "execution.json": {
+          "bytes": 2868,
+          "sha256": "2737cf91ae7f63a04dfb3729f899ccc8791aee3865719a0320db951c9158171a"
+        },
+        "result.json": {
+          "bytes": 5112,
+          "sha256": "2b05bcee195a05026a3a08c4c46e127f57e4214baa6dcf84571c16d625ac5575"
+        },
+        "boot-result.json": {
+          "bytes": 8035,
+          "sha256": "9ea2cea6bf1ea45b9dbc2b7ea5c985ce354e1dc27de73a8680acb40d235d547c"
+        },
+        "messages-history-probe.json": {
+          "bytes": 6001,
+          "sha256": "607e4cbd76b93e7c616e30e43d6cd40cb6a5f4001994e95b94cfed3809433677"
+        }
+      },
+      "passed": true,
+      "actual_original353_and_Qt50_retained": true,
+      "direct_inside_owned_waits": 11,
+      "actual_merged_PIPE_EOFs": 11,
+      "separate_outer_CLI_wait_exit": 0,
+      "outer_console_regular_not_PIPE": true,
+      "separate_inspect_CLI_waits": 2,
+      "inspect_PIPE_EOF_claimed": false,
+      "QEMU_actual_wait_exit": 0,
+      "exact_container_absent_same_daemon_inputs_unchanged": true,
+      "raw_count": 2,
+      "Inbox_count": 2,
+      "exact_raw_IDs_and_provenance": true,
+      "body": "hello",
+      "actual_writer_and_readonly_DB_ownership": true,
+      "Main_owns_neither_database": true,
+      "principals": 0,
+      "permits": 0,
+      "locked": true,
+      "receiving": false,
+      "incoming_counters": 0,
+      "PID1_Main_code": 1,
+      "PID1_Main_status": 0,
+      "ExecStop_exit": 0,
+      "Result": "success",
+      "cgroup_empty_and_retained_processes_dead": true,
+      "no_seed_install_reload_enable_or_start": true
+    },
+    "second_cold_boot": {
+      "records": {
+        "selection.json": {
+          "bytes": 6461,
+          "sha256": "dd9edd202fe8cb08a6cd27a472d1d4f781b18c7e397e3745bb2351a8eadfd473"
+        },
+        "command.json": {
+          "bytes": 1894,
+          "sha256": "7ae4a236d478e2d89b1a1cfe8cdedf6ef9d5b1d1555bff7a5ba04fd859740613"
+        },
+        "FREEZE.json": {
+          "bytes": 1962,
+          "sha256": "cf921f759785cc3358113b97280c73f9769b4473c3d16849fd6165cf79e5ce46"
+        },
+        "execution.json": {
+          "bytes": 2868,
+          "sha256": "06e18d3de5c602b26ed048f4fa86654f21a0a1e3cd16ea4999ea3c4e03bd4449"
+        },
+        "result.json": {
+          "bytes": 5112,
+          "sha256": "7b60b579ada49bad6b85da68fa61a3a31567c54fa680d9dfe5f2235286c9cfef"
+        },
+        "boot-result.json": {
+          "bytes": 8956,
+          "sha256": "717c7d6d60250228cf7326565b1044d9e28ba52ab67f79fe6ab75a3e72702ed1"
+        },
+        "messages-history-probe.json": {
+          "bytes": 6001,
+          "sha256": "727b40d4f234477aa405bf7cd63fa7eaca884708b3b63e3bc21f29e48efca65e"
+        }
+      },
+      "passed": true,
+      "actual_original353_and_Qt50_retained": true,
+      "direct_inside_owned_waits": 11,
+      "actual_merged_PIPE_EOFs": 11,
+      "separate_outer_CLI_wait_exit": 0,
+      "outer_console_regular_not_PIPE": true,
+      "separate_inspect_CLI_waits": 2,
+      "inspect_PIPE_EOF_claimed": false,
+      "QEMU_actual_wait_exit": 0,
+      "exact_container_absent_same_daemon_inputs_unchanged": true,
+      "raw_count": 2,
+      "Inbox_count": 2,
+      "exact_raw_IDs_and_provenance": true,
+      "body": "hello",
+      "actual_writer_and_readonly_DB_ownership": true,
+      "Main_owns_neither_database": true,
+      "principals": 0,
+      "permits": 0,
+      "locked": true,
+      "receiving": false,
+      "incoming_counters": 0,
+      "PID1_Main_code": 1,
+      "PID1_Main_status": 0,
+      "ExecStop_exit": 0,
+      "Result": "success",
+      "cgroup_empty_and_retained_processes_dead": true,
+      "no_seed_install_reload_enable_or_start": true
+    }
+  },
+  "evidence_separation": {
+    "normal_current_production_Rust_service": true,
+    "test_only_seed_authors_unqualified_raw_occurrences": 2,
+    "earlier_normal_GUI_artifact_protected_but_unlaunched": true,
+    "app_read_or_permission_grant": false,
+    "incoming_or_Binder_registration": false,
+    "Source_or_full_graphical_session": false,
+    "power_loss_or_physical_phone": false
+  },
+  "selection_metadata_note": "Preparation retains unused inherited generic audio-probe/old-stage fields. Explicit Messages probe/stage pins, frozen file map and actual invoked source are authoritative; historical records are unchanged. A CLI hash-argument refusal before Docker/VM launch is retained separately, not a functional epoch.",
+  "remaining_gates": [
+    "Production incoming SMS/ACK/send and carrier delivery",
+    "Notifications and background event policy",
+    "Current-authority app data release and complete graphical phone session",
+    "Physical storage/power-loss and suspend behavior",
+    "Matched Pixel hardware integration"
+  ]
+}

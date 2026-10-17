@@ -39,3 +39,16 @@ Stop with retained process deaths and successful PID1 outcomes. It requires a
 selected `BACKEND-TOOLS.json` containing exact installed tool hashes. It never
 requests a lease, route, permission grant, capture or PCM playback. Its package
 transaction and separate cold boot are enclosing fixture responsibilities.
+
+
+`messages-history-probe.py` separately tests the normal production Messages
+history-only unit. Its unchanged original353 run fails the actual missing-unit
+requirement before an expected-data file or socket is opened. After explicit
+raw-only preparation, two distinct cold boots require real PID1 startup,
+authenticated admin status, actual writer/readonly database ownership and exact
+authored raw→Inbox IDs/provenance/text. Both Stop through the production helper
+and require Main/ExecStop0, empty cgroup and retained process deaths. Supply a
+private expected JSON with schema1, authored_seed_only:true and raw_rows from
+one actual native isolated-seed execution. Never start Messages in preparation;
+require Inbox absent. Neither cold boot may reseed or manually start services.
+There is no incoming reception, permission grant, app launch or carrier claim.

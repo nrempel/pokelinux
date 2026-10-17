@@ -21,6 +21,14 @@ is retained with its exact source, binary and proof hashes. Its ten-desktop and
 nine-service greens describe the earlier source, before this recovery-order and
 [Qt worker](native-messages-ui-worker.md) correction.
 
+The later [installed history cold-boot scenario](native-installed-messages-history.md)
+now uses fresh current normal-feature production Rust providers. Its raw-only
+preparation and two distinct ARM boots qualify automatic reconciliation and
+clean-reboot persistence of two authored records with the app unopened. Both
+Main/ExecStop outcomes0 and actual writer/readonly ownership pass. This retains
+the history-only entry; no production receiving selector or old GUI result is
+inherited.
+
 ## Ownership and current read authority
 
 One lifecycle actor owns policy, launched principals and publication. Its
