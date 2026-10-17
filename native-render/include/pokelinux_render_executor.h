@@ -159,6 +159,63 @@ typedef struct {
  PrNativeProgressV1 facts;
 } PrCompletionV1;
 
+/* Control-owned CPU-only observations. Not authority, native custody or a worker.
+ * Create BEFORE broker construction/fallible native work. At each accepted Stop
+ * branch, copy fixed pre-facts, perform terminal latch/invalidation/Stop FIRST,
+ * then record. Recording failure must never prevent or delay authority Stop.
+ * No FD, callback, native pointer, worker or queue is stored. All calls are
+ * serialized/nonreentrant and creating-control-Rust-thread-only. Refusals write
+ * no output/slot/state. All pointed objects are live/aligned/nonaliasing.
+ * The owner identity is nonreused Rust ThreadId, never a native/pthread/C++ ID.
+ * Record/snapshot/release must check an already cached Rust identity without
+ * initializing allocating Rust thread metadata on foreign C++ threads. */
+#define PR_FIRST_STOP_ABI_V1 1u
+typedef struct PrFirstStop PrFirstStop;
+enum {
+ PR_FIRST_STOP_PUBLIC_STOP=1, PR_FIRST_STOP_EXTERNAL_STOP=2,
+ PR_FIRST_STOP_AQ_REVOKE=3, PR_FIRST_STOP_BROKER_WATCH_ERROR=4,
+ PR_FIRST_STOP_BROKER_DISPATCH_EXCEPTION=5, PR_FIRST_STOP_BROKER_SUFFIX=6,
+ PR_FIRST_STOP_RUST_WATCH_ERROR=7, PR_FIRST_STOP_RUST_UNEXPECTED_COMPLETION=8,
+ PR_FIRST_STOP_OBSERVE_TRANSPORT=9, PR_FIRST_STOP_SNAPSHOT_ERROR=10,
+ PR_FIRST_STOP_RUST_FAILED=11, PR_FIRST_STOP_RUST_STOPPING=12,
+ PR_FIRST_STOP_DISCOVERY_ERROR=13, PR_FIRST_STOP_DISCOVERY_TRANSPORT=14,
+ PR_FIRST_STOP_STARTUP_DEADLINE=15, PR_FIRST_STOP_DISCOVERY_EMPTY_OUTPUTS=16,
+ PR_FIRST_STOP_DISCOVERY_SESSION_MISMATCH=17, PR_FIRST_STOP_OBSERVE_EXCEPTION=18,
+ PR_FIRST_STOP_BEGIN_EXCEPTION=19, PR_FIRST_STOP_TERMINAL_REOBSERVED=20
+};
+typedef struct {
+ uint32_t abi_version, struct_size, origin, executor_present;
+ int32_t error;
+ uint32_t event_mask;
+ uint64_t revoke_session;
+ uint32_t revoke_reason, broker_present, broker_probe_failed;
+ uint32_t broker_transport_failed, broker_pending_present, broker_pending_type;
+ uint64_t broker_pending_sequence;
+ uint32_t reserved[4];
+} PrFirstStopFactsV1;
+typedef struct {
+ uint64_t stop_requests; /* saturating u64; valid owner-thread record calls only */
+ uint32_t has_first, clock_known;
+ uint64_t observed_boottime_ns; /* POST-authority observation, not transition */
+ int32_t clock_errno; /* 0 when known; genuine positive errno when unknown */
+ uint32_t reserved;
+ PrFirstStopFactsV1 first; /* fixed copied first record; never replaced */
+} PrFirstStopSnapshotV1;
+/* One fallible CPU allocation only here; empty result slot required. Allocation
+ * refusal returns CAPACITY preserving the slot; no worker/native work starts. */
+int32_t pr_first_stop_create_v1(PrFirstStop **result);
+/* No allocation. Validate all fields before state change. Valid calls increment
+ * count saturating; only the first stores facts and reads real CLOCK_BOOTTIME.
+ * A clock failure still returns OK and stores clock_known=0/time=0/errno>0.
+ * Origin20 cannot be first. Invalid facts do not increment or replace anything. */
+int32_t pr_first_stop_record_v1(PrFirstStop *owner, const PrFirstStopFactsV1 *facts);
+/* No clock read/reset. Empty state: count0,has_first0 and every other byte0. */
+int32_t pr_first_stop_snapshot_v1(PrFirstStop *owner, PrFirstStopSnapshotV1 *result);
+/* Null slot is invalid; already-null handle returns OK. Owner-thread-only.
+ * Caller has retired broker/callback sources first. Independent of native join,
+ * drain or retirement: these observations own none of those resources. */
+int32_t pr_first_stop_release(PrFirstStop **owner);
+
 /* Capture copies all metadata and DUPLICATES each borrowed FD CLOEXEC. Original
  * descriptors stay caller-owned on every path. result must be an empty slot. */
 int32_t pr_bootstrap_capture_v1(uint64_t session_generation, const PrBootstrapEventV1 *events,

@@ -235,3 +235,37 @@ qualifies actual SHM/fence and sampler RED/GREEN against that same older Rust
 Frame archive, with explicit native plugin sources and exact readbacks. Binding
 the production Rust executor to real native GL/AQ remains required; neither
 component supplies Source7 GREEN or output/presentation qualification.
+
+
+## Control-owned first-Stop observations
+
+[`first_stop.rs`](src/first_stop.rs) owns a separate CPU-only first record and
+saturating recording-call count, with creating Rust-thread identity. It is
+created before broker construction; native authority Stop precedes recording.
+The fixed record owns no worker, descriptor or callback. Polling may add terminal
+reobservations to the count, so it is not a count of distinct user Stop actions.
+Clock/broker fields describe post-authority observations. Observer release is
+separate from native retirement and executor join.
+
+After actual missing-API and normal wire REDs, all64 active Rust tests, formatting,
+strict Clippy and Release pass; the old62 names and two ignored child modes remain.
+All four compiled C++ consumers pass against this same new archive, including the
+five first-Stop groups and two joined foreign threads. The native adapter's
+matching normal main/SDK build now passes with all27 Rust exports, six strict API
+checks and all CPU consumers. The unchanged actual native wire GREEN identifies
+a direct AQ device-change revocation and preserves its first record across a
+later public Stop and two snapshots. This does not establish normal readiness,
+recoverable device-event handling, frames or native cleanup. See the
+[first-Stop evidence and remaining gates](../docs/native-render-first-stop.md).
+
+To exercise the new C ABI against the selected actual archive:
+
+```sh
+c++ -std=c++20 -O2 -Wall -Wextra -Werror -pedantic -Iinclude \
+  tests/first_stop_ffi.cpp /absolute/selected/libpokelinux_render.a \
+  -pthread -ldl -lm -lrt -lutil -o /absolute/output/first-stop-ffi
+/absolute/output/first-stop-ffi
+```
+
+Use that archive's three actual headers and compiler-reported native libraries.
+Do not substitute the older snapshot/executor archive for the new four functions.

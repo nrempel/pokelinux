@@ -101,3 +101,17 @@ retirement, Source acceptance/timing, current ARM and physical phone gates
 remain unqualified. The earlier [CPU texture component](native-render-cpu-texture.md)
 and [startup-custody checkpoint](native-render-owned-startup.md) retain their
 separate evidence boundaries. No physical phone was accessed.
+
+
+## First-Stop observation successor
+
+A separate [Rust-owned first-Stop observer](native-render-first-stop.md) now has
+actual wire/missing-API REDs followed by64 Rust and compiled C ABI passes. Its
+new27-function provider is distinct from the23-function build recorded above.
+The matching normal compositor/SDK build now passes with27 Rust exports, six
+strict API checks, the original15 CPU groups, texture5 and first-Stop5. Its78
+direct waits/PIPE EOFs close. The unchanged native wire GREEN now identifies a
+direct AQ device-change revocation before startup finishes. A later public Stop
+and two snapshots preserve that first record;28 waits/35 PIPE EOFs close. The
+first pre-case fixture failure is preserved separately. Recoverable Rust device-
+event handling, normal frames, native retirement and phone support remain open.

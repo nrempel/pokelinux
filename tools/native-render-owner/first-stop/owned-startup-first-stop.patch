@@ -1,0 +1,254 @@
+--- a/src/render/OwnedBackendStartup.cpp
++++ b/src/render/OwnedBackendStartup.cpp
+@@ -446,6 +446,8 @@
+     PrExecutor* executor = nullptr;
+     PrBootstrap* pack = nullptr;
+     PrDiscoveryV1 discovery{};
++    PrFirstStop* stopObservation = nullptr;
++    bool stopObservationUnavailable = false; // Sticky interop failure, never a substitute first cause.
+ #ifdef POKELINUX_STARTUP_CUSTODY_TEST
+     TestTrace trace;
+ #endif
+@@ -460,36 +462,90 @@
+     } completion, timer;
+     std::array<SWatch, PR_EXECUTOR_MAX_SOURCES> brokerWatches{};
+ 
+-    explicit SControl(wl_event_loop* value) : loop(value) {}
++    explicit SControl(wl_event_loop* value) : loop(value) {
++        // CPU-only Rust state exists before any broker-constructor callback.
++        stopObservationUnavailable = pr_first_stop_create_v1(&stopObservation) != PR_EXECUTOR_OK;
++    }
+     ~SControl() {
+         // No blocking Drop, detach, graph destruction or lease acknowledgment
+         // can turn an alive worker into a successful shutdown.
+         if (executor) std::terminate();
+         if (pack) pr_bootstrap_release(pack);
+-        for (auto& watch : brokerWatches) if (watch.source) wl_event_source_remove(watch.source);
+-    }
+-    void fail(int32_t error) noexcept {
++        for (auto& watch : brokerWatches) {
++            if (watch.source) wl_event_source_remove(watch.source);
++            watch = {};
++        }
++        // Retire every callback borrower before releasing its Rust observation.
++        auto retiringBroker = std::move(broker);
++        broker.reset(); // Clear the callback-visible slot before final destruction.
++        retiringBroker.reset();
++        if (stopObservation && pr_first_stop_release(&stopObservation) != PR_EXECUTOR_OK)
++            std::terminate();
++    }
++    PrFirstStopFactsV1 stopFacts(uint32_t origin, int32_t error = 0, uint32_t mask = 0) const noexcept {
++        PrFirstStopFactsV1 facts{};
++        facts.abi_version = PR_FIRST_STOP_ABI_V1;
++        facts.struct_size = sizeof(facts);
++        facts.origin = origin;
++        facts.executor_present = executor ? 1 : 0;
++        facts.error = error;
++        facts.event_mask = mask;
++        facts.broker_present = broker ? 1 : 0;
++        return facts;
++    }
++    void observeStop(PrFirstStopFactsV1 facts) noexcept {
++        // Authority has already been revoked. These reads never admit an event,
++        // touch an FD/native graph, or manufacture a later replacement cause.
++        if (thread != std::this_thread::get_id() || stopObservationUnavailable || !stopObservation) return;
++        if (facts.broker_present) {
++            try {
++                facts.broker_transport_failed = broker->transportFailed() ? 1 : 0;
++                const auto pending = broker->peekPendingRenderEvent();
++                if (pending) {
++                    facts.broker_pending_present = 1;
++                    facts.broker_pending_type = pending->metadata.type;
++                    facts.broker_pending_sequence = pending->metadata.session_sequence;
++                }
++                // A failed transport may hide its head; absent is only unobserved.
++            } catch (...) {
++                facts.broker_probe_failed = 1;
++                facts.broker_transport_failed = facts.broker_pending_present = facts.broker_pending_type = 0;
++                facts.broker_pending_sequence = 0;
++            }
++        }
++        if (pr_first_stop_record_v1(stopObservation, &facts) != PR_EXECUTOR_OK)
++            stopObservationUnavailable = true;
++    }
++    void fail(int32_t error, uint32_t origin, uint32_t mask = 0) noexcept {
+         failed = true;
+         if (!firstError) firstError = error;
+-        stop();
+-    }
+-    int32_t stop() noexcept {
++        stop(origin, error, mask);
++    }
++    int32_t stop(uint32_t origin, int32_t error = 0, uint32_t mask = 0) noexcept {
++        const auto facts = stopFacts(origin, error, mask);
+         terminal = true;
+         backendReady = false;
+         const auto code = executor ? pr_executor_stop(executor) : PR_EXECUTOR_EMPTY;
+         if (executor && code != PR_EXECUTOR_OK) { failed = true; if (!firstError) firstError = code; }
++        observeStop(facts); // Rust's clock observation is AFTER the authority action.
+         return code;
+     }
+-    static uint32_t revoke(void* opaque, uint64_t session, uint32_t) noexcept {
++    static uint32_t revoke(void* opaque, uint64_t session, uint32_t reason) noexcept {
+         auto& control = *static_cast<SControl*>(opaque);
+         if (control.thread != std::this_thread::get_id()) return AQ_REVOKE_UNAVAILABLE;
+-        control.terminal = true; // Authentic preworker latch, including ctor callbacks.
++        auto facts = control.stopFacts(PR_FIRST_STOP_AQ_REVOKE);
++        facts.revoke_session = session;
++        facts.revoke_reason = reason; // Actual callback arguments, even before enqueue.
++        control.terminal = true;
+         control.backendReady = false;
+-        if (!control.executor || session != control.generation)
+-            return AQ_REVOKE_UNAVAILABLE;
+-        const auto code = pr_executor_stop(control.executor);
+-        if (code != PR_EXECUTOR_OK) { control.failed = true; control.firstError = code; return AQ_REVOKE_UNAVAILABLE; }
+-        return AQ_REVOKED;
++        uint32_t result = AQ_REVOKE_UNAVAILABLE;
++        if (control.executor && session == control.generation) {
++            const auto code = pr_executor_stop(control.executor);
++            if (code != PR_EXECUTOR_OK) { control.failed = true; control.firstError = code; }
++            else result = AQ_REVOKED;
++        }
++        control.observeStop(facts);
++        return result;
+     }
+     bool initialTransportHealthy() const {
+         return !terminal && broker && !broker->transportFailed() && !broker->peekPendingRenderEvent();
+@@ -498,14 +554,14 @@
+         auto& watch = *static_cast<SWatch*>(opaque);
+         auto& control = *watch.control;
+         try {
+-            if (mask & (WL_EVENT_ERROR | WL_EVENT_HANGUP)) { control.fail(PR_EXECUTOR_PROTOCOL); return 0; }
++            if (mask & (WL_EVENT_ERROR | WL_EVENT_HANGUP)) { control.fail(PR_EXECUTOR_PROTOCOL, PR_FIRST_STOP_BROKER_WATCH_ERROR, mask); return 0; }
+             if (watch.brokerPoll) watch.brokerPoll->onSignal();
+             // There is no ordered live ingress yet. EVERY suffix, including
+             // ADD, ENUM, ACTIVE, REMOVE, CHANGE and SHUTDOWN, fails closed. It
+             // stays queued and the original service lease remains retained.
+-            if (control.broker->transportFailed() || control.broker->peekPendingRenderEvent()) control.stop();
++            if (control.broker->transportFailed() || control.broker->peekPendingRenderEvent()) control.stop(PR_FIRST_STOP_BROKER_SUFFIX);
+             control.syncBrokerWatches();
+-        } catch (...) { control.fail(PR_EXECUTOR_NATIVE); }
++        } catch (...) { control.fail(PR_EXECUTOR_NATIVE, PR_FIRST_STOP_BROKER_DISPATCH_EXCEPTION); }
+         return 0;
+     }
+     void syncBrokerWatches() {
+@@ -532,36 +588,37 @@
+     }
+     static int rustTick(int, uint32_t mask, void* opaque) noexcept {
+         auto& control = *static_cast<SWatch*>(opaque)->control;
+-        if (mask & (WL_EVENT_ERROR | WL_EVENT_HANGUP)) control.fail(PR_EXECUTOR_WAKE);
++        if (mask & (WL_EVENT_ERROR | WL_EVENT_HANGUP)) control.fail(PR_EXECUTOR_WAKE, PR_FIRST_STOP_RUST_WATCH_ERROR, mask);
+         control.observe();
+         // A bounded actual completion dequeue clears/rearms the Rust eventfd;
+         // the BOOTTIME timer is observed through the real executor API above.
+         PrCompletionV1 record{};
+         const auto code = pr_executor_next_completion_v1(control.executor, &record);
+         if (code == PR_EXECUTOR_OK || (code != PR_EXECUTOR_EMPTY && code != PR_EXECUTOR_BUSY))
+-            control.fail(code == PR_EXECUTOR_OK ? PR_EXECUTOR_PROTOCOL : code); // No frame has been admitted.
++            control.fail(code == PR_EXECUTOR_OK ? PR_EXECUTOR_PROTOCOL : code, PR_FIRST_STOP_RUST_UNEXPECTED_COMPLETION); // No frame has been admitted.
+         return 0;
+     }
+     void observe() noexcept {
+         if (!executor) return;
+         if (thread != std::this_thread::get_id()) std::terminate();
+         try {
+-            if (!terminal && !initialTransportHealthy()) stop();
++            if (!terminal && !initialTransportHealthy()) stop(PR_FIRST_STOP_OBSERVE_TRANSPORT);
+             PrExecutorSnapshotV1 snapshot{};
+             const auto code = pr_executor_snapshot_v1(executor, &snapshot);
+-            if (code != PR_EXECUTOR_OK) { fail(code); return; }
+-            if (snapshot.failed) { fail(PR_EXECUTOR_NATIVE); return; }
+-            if (terminal || snapshot.stopping) { stop(); return; }
++            if (code != PR_EXECUTOR_OK) { fail(code, PR_FIRST_STOP_SNAPSHOT_ERROR); return; }
++            if (snapshot.failed) { fail(PR_EXECUTOR_NATIVE, PR_FIRST_STOP_RUST_FAILED); return; }
++            if (terminal || snapshot.stopping) { stop(terminal ? PR_FIRST_STOP_TERMINAL_REOBSERVED : PR_FIRST_STOP_RUST_STOPPING); return; }
+             PrDiscoveryV1 candidate{};
+             const auto ready = pr_executor_discovery_v1(executor, &candidate);
+             if (ready == PR_EXECUTOR_EMPTY || ready == PR_EXECUTOR_BUSY) return;
+-            if (ready != PR_EXECUTOR_OK) { fail(ready); return; }
+-            if (!initialTransportHealthy() || (!backendReady && boottime() >= startupNotAfter) || !candidate.output_count || candidate.session_generation != generation) {
+-                stop(); return;
+-            }
++            if (ready != PR_EXECUTOR_OK) { fail(ready, PR_FIRST_STOP_DISCOVERY_ERROR); return; }
++            if (!initialTransportHealthy()) { stop(PR_FIRST_STOP_DISCOVERY_TRANSPORT); return; }
++            if (!backendReady && boottime() >= startupNotAfter) { stop(PR_FIRST_STOP_STARTUP_DEADLINE); return; }
++            if (!candidate.output_count) { stop(PR_FIRST_STOP_DISCOVERY_EMPTY_OUTPUTS); return; }
++            if (candidate.session_generation != generation) { stop(PR_FIRST_STOP_DISCOVERY_SESSION_MISMATCH); return; }
+             discovery = candidate;
+             backendReady = true; // Backend metadata only. Never shell/Source Ready.
+-        } catch (...) { fail(PR_EXECUTOR_NATIVE); }
++        } catch (...) { fail(PR_EXECUTOR_NATIVE, PR_FIRST_STOP_OBSERVE_EXCEPTION); }
+     }
+     void begin() {
+         if (began || thread != std::this_thread::get_id() || !loop) throw std::runtime_error("invalid startup control");
+@@ -659,27 +716,51 @@
+         // No native output, broker pointer or rendering FD crosses to main.
+         observe();
+     }
++    std::string stopObservationReply() const {
++        PrFirstStopSnapshotV1 snapshot{};
++        if (stopObservationUnavailable || !stopObservation ||
++            pr_first_stop_snapshot_v1(stopObservation, &snapshot) != PR_EXECUTOR_OK)
++            return R"(,"first_stop":null,"stop_requests":null)";
++        if (!snapshot.has_first)
++            return std::format(R"(,"first_stop":null,"stop_requests":{})", snapshot.stop_requests);
++        const auto& f = snapshot.first;
++        const bool hasError = f.origin == PR_FIRST_STOP_BROKER_WATCH_ERROR || f.origin == PR_FIRST_STOP_BROKER_DISPATCH_EXCEPTION ||
++            f.origin == PR_FIRST_STOP_RUST_WATCH_ERROR || f.origin == PR_FIRST_STOP_RUST_UNEXPECTED_COMPLETION ||
++            f.origin == PR_FIRST_STOP_SNAPSHOT_ERROR || f.origin == PR_FIRST_STOP_RUST_FAILED || f.origin == PR_FIRST_STOP_DISCOVERY_ERROR ||
++            f.origin == PR_FIRST_STOP_OBSERVE_EXCEPTION || f.origin == PR_FIRST_STOP_BEGIN_EXCEPTION;
++        const bool hasMask = f.origin == PR_FIRST_STOP_BROKER_WATCH_ERROR || f.origin == PR_FIRST_STOP_RUST_WATCH_ERROR;
++        const auto revoke = f.origin == PR_FIRST_STOP_AQ_REVOKE ?
++            std::format(R"({{"session":{},"reason":{}}})", f.revoke_session, f.revoke_reason) : "null";
++        const auto pending = f.broker_pending_present ?
++            std::format(R"({{"type":{},"sequence":{}}})", f.broker_pending_type, f.broker_pending_sequence) : "null";
++        const auto brokerFacts = f.broker_present && !f.broker_probe_failed ?
++            std::format(R"({{"transport_failed":{},"pending":{}}})", f.broker_transport_failed ? "true" : "false", pending) : "null";
++        return std::format(R"(,"first_stop":{{"origin":{},"boottime_ns":{},"clock_errno":{},"executor_present":{},"error":{},"event_mask":{},"revoke":{},"broker_present":{},"broker_probe_failed":{},"broker":{}}},"stop_requests":{})",
++            f.origin, snapshot.clock_known ? std::to_string(snapshot.observed_boottime_ns) : "null", snapshot.clock_errno,
++            f.executor_present ? "true" : "false", hasError ? std::to_string(f.error) : "null", hasMask ? std::to_string(f.event_mask) : "null", revoke,
++            f.broker_present ? "true" : "false", f.broker_probe_failed ? "true" : "false", brokerFacts, snapshot.stop_requests);
++    }
+     std::string reply(std::string_view request) {
+         if (thread != std::this_thread::get_id()) throw std::runtime_error("wrong startup control thread");
+         if (request != "owner-startup snapshot" && request != "owner-startup stop") return "startup request unavailable";
+         const bool stopping = request == "owner-startup stop";
+-        const auto stopCode = stopping ? stop() : PR_EXECUTOR_EMPTY;
++        const auto stopCode = stopping ? stop(PR_FIRST_STOP_PUBLIC_STOP) : PR_EXECUTOR_EMPTY;
+         observe();
+         PrExecutorSnapshotV1 snapshot{};
+         int32_t code = executor ? pr_executor_snapshot_v1(executor, &snapshot) : PR_EXECUTOR_EMPTY;
+         const int32_t joined = !stopping && executor ? pr_executor_try_join(executor) : -1;
+         const auto phase = failed || snapshot.failed ? "UNAVAILABLE" : terminal || snapshot.stopping ? "STOPPING" : backendReady && snapshot.ready ? "BACKEND_READY" : "STARTING";
+-        return std::format(R"({{"schema":1,"run":1,"main_tid":{},"observed_boottime_ns":{},"startup_not_after_ns":{},"phase":"{}","code":{},"first_error":{},"startup_error":{},"stage":{},"snapshot_code":{},"rust_failed":{},"rust_ready":{},"rust_stopping":{},"failed":{},"ready":{},"stopping":{},"worker_alive":{},"join_code":{},"executor_retained":{},"both_borrowed_watches_registered":{},"outputs":{},"native_retirement":false,"shell_ready":false}})",
++        return std::format(R"({{"schema":1,"run":1,"main_tid":{},"observed_boottime_ns":{},"startup_not_after_ns":{},"phase":"{}","code":{},"first_error":{},"startup_error":{},"stage":{},"snapshot_code":{},"rust_failed":{},"rust_ready":{},"rust_stopping":{},"failed":{},"ready":{},"stopping":{},"worker_alive":{},"join_code":{},"executor_retained":{},"both_borrowed_watches_registered":{},"outputs":{},"native_retirement":false,"shell_ready":false{}}})",
+             syscall(SYS_gettid), boottime(), startupNotAfter, phase, stopping ? stopCode : code, firstError, firstError, snapshot.stage, code, snapshot.failed ? "true" : "false", snapshot.ready ? "true" : "false", snapshot.stopping ? "true" : "false",
+             failed || snapshot.failed ? "true" : "false", backendReady && snapshot.ready && !terminal ? "true" : "false", terminal || snapshot.stopping ? "true" : "false",
+-            snapshot.worker_alive ? "true" : "false", joined, executor ? "true" : "false", completion.source && timer.source ? "true" : "false", discovery.output_count);
++            snapshot.worker_alive ? "true" : "false", joined, executor ? "true" : "false", completion.source && timer.source ? "true" : "false", discovery.output_count, stopObservationReply());
+     }
+ };
+ 
+ COwnedBackendStartup::COwnedBackendStartup(wl_event_loop* loop) : m_control(std::make_unique<SControl>(loop)) {}
+ COwnedBackendStartup::~COwnedBackendStartup() = default;
+ void COwnedBackendStartup::begin() noexcept {
+-    try { m_control->begin(); } catch (...) { m_control->fail(PR_EXECUTOR_NATIVE); }
+-}
+-void COwnedBackendStartup::stop() noexcept { m_control->stop(); }
++    try { m_control->begin(); } catch (...) { m_control->fail(PR_EXECUTOR_NATIVE, PR_FIRST_STOP_BEGIN_EXCEPTION); }
++}
++void COwnedBackendStartup::stop() noexcept { m_control->stop(PR_FIRST_STOP_EXTERNAL_STOP); }
+ std::string COwnedBackendStartup::reply(std::string_view request) { return m_control->reply(request); }
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -350,6 +350,10 @@
+   pr_executor_next_completion_v1
+   pr_executor_try_join
+   pr_executor_try_release
++  pr_first_stop_create_v1
++  pr_first_stop_record_v1
++  pr_first_stop_snapshot_v1
++  pr_first_stop_release
+   pr_attempt_authorize_v1
+ )
+ foreach(symbol IN LISTS POKELINUX_RENDER_PUBLIC_SYMBOLS)

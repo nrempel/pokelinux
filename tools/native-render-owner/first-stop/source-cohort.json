@@ -1,0 +1,259 @@
+{
+  "actual_Rust_CPU_QA": {
+    "Cpp_identity_reuse_observed": true,
+    "active_Rust_tests": 64,
+    "first_stop_CABI_groups": 5,
+    "fmt_strict_Clippy_release_passed": true,
+    "ignored_child_modes": 2,
+    "main_or_wire_qualified": false,
+    "new_private_unit_tests": 2,
+    "old62_names_preserved": true,
+    "old_CABI_consumers": 3,
+    "qualification": {
+      "bytes": 1520,
+      "sha256": "fee9b3cb9ba383cda0de0755350364b3093ef82dae1bef4d1a64113bab198d88"
+    },
+    "result": {
+      "bytes": 20792,
+      "sha256": "5da7aaf56717e452d414712accd876d8603c9789c70c0f6e6f442e734028dfc8"
+    },
+    "single_new_archive": {
+      "bytes": 22903680,
+      "sha256": "0fdc60b68c02d1e94bd2f3543b56627e683b41d2b592bb3ff16bd5869000e8a9"
+    },
+    "two_actual_joined_foreign_threads": true
+  },
+  "actual_matching_NORMAL_build": {
+    "PCH": 1,
+    "QMP_socket_EOF_separate": true,
+    "SDK": {
+      "bytes": 4689920,
+      "sha256": "aff715141a5b4d7f82557b915a68ce471724da4faf7158ddc70b2dca61b63a77"
+    },
+    "SDK_links": 2,
+    "SDK_regular_files": 535,
+    "actual_PIPE_EOFs": 78,
+    "actual_defined_Rust_exports": 27,
+    "actual_direct_waits": 78,
+    "build_result": {
+      "bytes": 697448,
+      "sha256": "13d719cc031289995b6dc537b0450c292d287bb654d5a7efb5ee15fb396e4402"
+    },
+    "configured_CPP_including_PCH": 458,
+    "early_wait_and_EOF_included_once": true,
+    "embedded_snapshot_producer_and_thread_PIPE_EOFs_separate": 2,
+    "embedded_snapshot_producer_wait_separate": 1,
+    "execution": {
+      "bytes": 23415,
+      "sha256": "eafa3e67ded2e1d18fdabe3ef0a050e4c8bda9112bdccb3e1ada9e4065d246d0"
+    },
+    "first_stop_CPU_CABI_groups": 5,
+    "independent_review": {
+      "bytes": 7669,
+      "sha256": "b3f0c80e876cba63ea61a6f361cce4fa497f3f1c49f5de0fa893673d3dd535b2"
+    },
+    "main_ELF": {
+      "bytes": 25275688,
+      "sha256": "11bf76bd6a100f41e6ccde182b4a3c9d4db38c5d799d423aa30694d34a6e3264"
+    },
+    "main_invoked": false,
+    "old_CPU_groups": 15,
+    "published_CPU_texture_groups": 5,
+    "qualification": {
+      "bytes": 2169,
+      "sha256": "c308571387cedca58c89e7b30338b113fc99a28ef6dee95ce36ed355e289e01b"
+    },
+    "strict_API_probes": 6
+  },
+  "actual_public_wire_GREEN": {
+    "QMP_socket_EOFs_separate": 1,
+    "actual_PIPE_EOFs": 35,
+    "actual_authenticated_requests": 5,
+    "actual_direct_waits": 28,
+    "case": {
+      "bytes": 20885,
+      "sha256": "c4860a3a199b6ca22541a3a5ff2cd72f334ba9a35660e43d7aa04f2986915e28"
+    },
+    "counters": [
+      0,
+      4,
+      6,
+      7,
+      8
+    ],
+    "direct_reason_number": 5,
+    "direct_revoke_reason": "AQ_REVOKE_DEVICE_CHANGE",
+    "execution": {
+      "bytes": 12391,
+      "sha256": "74325cf48d69b78de2f26061c96323bd3e6fa492f955b4071a0d473330280035"
+    },
+    "first_immutable_after_actual_Stop_and_two_snapshots": true,
+    "first_origin": "AQ_REVOKE",
+    "first_origin_number": 3,
+    "independent_review": {
+      "bytes": 9762,
+      "sha256": "944fd9958c0705f8e3b3b440a248accbdab4095436ddc2a0af7bfb28f0499090"
+    },
+    "maximum_observed_request_ns": 10590931,
+    "normal_readiness_or_native_cleanup_qualified": false,
+    "post_authority_observation_offset_ns": 116433680,
+    "public_response_EOFs_separate": 5,
+    "qualification": {
+      "bytes": 1484,
+      "sha256": "c970aaec09e73a3f8e46e5b19d218caaa546911a935ec5a521180aa540025676"
+    },
+    "reply_bytes": 3455,
+    "specific_device_and_change_subtype_observed": false
+  },
+  "apply_after": {
+    "bytes": 550,
+    "path": "tools/native-render-owner/normal-profile/startup-probe-guard.patch",
+    "sha256": "1bdb30d723f607b1fd1c123dde66d74cdf98425ce6fafc5f33af477e1d6817b3"
+  },
+  "frozen_consumers": {
+    "CONTRACT.md": {
+      "bytes": 12237,
+      "sha256": "de51db009ffa180c5192c3ab4f1cef084fb93f8ba0efbec1234dfa502eb719d7"
+    },
+    "existing-executor-control.cpp": {
+      "bytes": 6834,
+      "sha256": "5cef781f1706434ec014f7c7f3f5cf20651c50129971a4bdf63617e45d8e5e73"
+    },
+    "first-stop-public-api.cpp": {
+      "bytes": 451,
+      "sha256": "88bb8db07fe26bff958e6f2a4acf9a2201fb172e6130639d127728e61e6ae9e3"
+    },
+    "first_stop_case.py": {
+      "bytes": 9276,
+      "sha256": "845f053e8f28d47491a8ddd220b33cf677230cc7ecbcb2fadf56626c4ff47b85"
+    },
+    "first_stop_epoch.py": {
+      "bytes": 1382,
+      "sha256": "416ce301154f0c97ae0252e56adf216c2b3b5a1b714336e804fffbf06397bba4"
+    },
+    "first_stop_oracle.py": {
+      "bytes": 5709,
+      "sha256": "cedab82c7a181d0df7044e3cb904df869babd61c342ff59add82d7ec8d8cd3b6"
+    }
+  },
+  "known_CABI_structural_RED": {
+    "component": {
+      "bytes": 13193,
+      "sha256": "4aa8e3467657124f1f6db5e491e7595e8008c0686bcafe42027761c5300957c8"
+    },
+    "control_diagnostic_bytes": 0,
+    "control_exit": 0,
+    "execution": {
+      "bytes": 11858,
+      "sha256": "002ac1dc1624ce84839e8430d5a22a1def9c126466d65cc8d51c14e6e9e52c17"
+    },
+    "four_missing_functions": [
+      "pr_first_stop_create_v1",
+      "pr_first_stop_record_v1",
+      "pr_first_stop_snapshot_v1",
+      "pr_first_stop_release"
+    ],
+    "qualification": {
+      "bytes": 1523,
+      "sha256": "c8574817951d63a4e1e3499b75952853dadfaa6378831154092a97cccd2d03f0"
+    },
+    "semantic_production_RED": false,
+    "target_exit": 1,
+    "three_public_headers_selected": true
+  },
+  "known_public_wire_RED": {
+    "QMP_socket_EOFs_separate": 1,
+    "actual_PIPE_EOFs": 35,
+    "actual_direct_waits": 28,
+    "authenticated_snapshots": 2,
+    "case": {
+      "bytes": 7752,
+      "sha256": "9576f47cf1239b92ad5793055bf75b99cb3ce5119d8f8d19e42e2a08c689da04"
+    },
+    "execution": {
+      "bytes": 12372,
+      "sha256": "aed9e903f160a6f5a4ce25f950b47491f193515bf1d829fbce3ef6a89d15443e"
+    },
+    "first_native_cause_known": false,
+    "qualification": {
+      "bytes": 1399,
+      "sha256": "b310402ce1cf8173919afe65652f1608e260120beb9e9fc76df3a4691160e500"
+    },
+    "response_bytes": 914,
+    "target": "FIRST_STOP_RECORD_MISSING"
+  },
+  "native_join_retirement_ready_frame_Source_ARM_phone_qualified": false,
+  "native_patch": {
+    "bytes": 16656,
+    "path": "tools/native-render-owner/first-stop/owned-startup-first-stop.patch",
+    "sha256": "d63b55b5d589eeb29bb65bc45f66efa63b57768ef1dc30f0ecc217c15de19d7d"
+  },
+  "original_Rust_files": {
+    "native-render/include/pokelinux_render_executor.h": {
+      "bytes": 13386,
+      "sha256": "338dd308fda306a3e0774800bf3ea852119fb938dc38143df2d4829a161855ec"
+    },
+    "native-render/src/first_stop.rs": {
+      "bytes": 12372,
+      "sha256": "8bf77ffa38bc430151633421b9db7f3219472027a3a6f7677500c1fe9792ae13"
+    },
+    "native-render/src/lib.rs": {
+      "bytes": 7626,
+      "sha256": "90a1772704aa6754bb073193edb50acf40252bf09eff247995b34344b20ae0cd"
+    },
+    "native-render/tests/first_stop_ffi.cpp": {
+      "bytes": 8681,
+      "sha256": "5c77a6bfa3c486b2fc90784a72efcdb4411ee8eb9fc0cf1d38e347a930b8488f"
+    }
+  },
+  "parent_public_revision": "7009570e7174408a2e190a800cf909abb76ec49a",
+  "patch_applies_to_exact_before_and_reconstructs_candidate": true,
+  "pending": {
+    "native_retirement_and_physical_gates": null,
+    "real_client_frame_and_Source": null,
+    "recoverable_Rust_device_change_and_normal_readiness": null
+  },
+  "preserved_failed_GREEN1_setup": {
+    "Root_closure_review": {
+      "bytes": 1098,
+      "sha256": "b85b60f79fd8d9757cddb86c3db9c6fa008e9c043dfb0bf401e25be99581b1d7"
+    },
+    "actual_PIPE_EOFs": 34,
+    "actual_direct_waits": 27,
+    "execution": {
+      "bytes": 12290,
+      "sha256": "a1ad856e51325a4fb9d582a8b0980f1a2e73786ebcb0c61ed682a32b0a753ce5"
+    },
+    "fixture_fix": "Wait for socket and GID1000 within same original5s cutoff; retain final assertion; no permission mutation.",
+    "initial_GID_sample_retained": false,
+    "main_or_case_launched": false,
+    "production_bug_TDD_claim": false,
+    "socket_group_readiness_race_explanation_is_inference": true
+  },
+  "public_source_repository": "https://github.com/nrempel/pokelinux",
+  "raw_private_paths_receipts_binaries_identifiers_or_credentials_included": false,
+  "schema": 1,
+  "scope": "Original Rust first-Stop observations and narrow native adapter; actual RED precedes Rust CPU QA, matching NORMAL main/SDK build and unchanged native wire GREEN. Direct AQ device-change revoke observed; recovery, readiness, frames, native retirement, ARM and phone remain open.",
+  "source_delta": {
+    "CMakeLists.txt": {
+      "after": {
+        "bytes": 29810,
+        "sha256": "04d7b9e0418658c4b91ef435f0d762f1a768b6d56d8d9b5116a8475f5308d5be"
+      },
+      "before": {
+        "bytes": 29706,
+        "sha256": "76c94594c9b77f38e8ce1cbf2c97a2468a35b004f0ba864ea694cb0cbfabb792"
+      }
+    },
+    "src/render/OwnedBackendStartup.cpp": {
+      "after": {
+        "bytes": 42904,
+        "sha256": "3892b090143d63ce95a4449392909bd5df08a97290bac276a4ae97d41a0c03b7"
+      },
+      "before": {
+        "bytes": 36946,
+        "sha256": "2875f1c78a7bb0edfe01767b94be092fcc60711cc1f75de1ba19f61d8b3e99fa"
+      }
+    }
+  }
+}

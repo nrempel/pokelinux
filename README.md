@@ -34,7 +34,11 @@ flowchart TB
 
 Dashed connections are work still required, not working hardware paths. “Rust services” is the implementation direction; only a small part of native IMS exists today. We are not rewriting the Linux kernel or modem firmware in Rust. The [current integration map](docs/native-integration-map.md) separates components, installed service/app composition and remaining backend evidence.
 
+Hyprland, Aquamarine and the Qt app frontend still contain substantial C++. The Rust migration is unfinished. New lifecycle, event ordering and scheduling policy belongs in Rust; existing native code remains behind explicit adapters while those paths are migrated.
+
 ## What has been tested
+
+The [Rust first-Stop observer](docs/native-render-first-stop.md) now identifies a real startup trigger: a direct Aquamarine device-change revocation requests full Stop before startup completes. The unchanged native wire test passes; the first record survives a later actual Stop and two snapshots. The matching normal main/SDK,64 Rust tests and compiled interface checks pass separately. Recoverable Rust event handling, normal readiness, real client frames and phone gates remain open.
 
 The [native Rust session owner](docs/native-session-owner.md) retains the
 compositor Child and composes Source, lifecycle, per-app display and audio.
@@ -162,7 +166,7 @@ The [initial broker batch peek](docs/native-render-initial-batch.md) now passes 
 
 The [owned startup checkpoint](docs/native-render-owned-startup.md) now passes the same two failed-startup child-retention cases after qualified native RED. A production AQ dependency patch retains the selected child and all preexisting resource identities through both injected failures; matching AQ/main SDK builds pass. Each case records zero child destructors and valid weak metadata. Startup still fails, Ready stays false and join stays Busy and native shutdown stays Pending. Earlier failures remain preserved; nested factories, normal readiness, retirement, Source and phone gates stay open.
 
-The [normal render profile](docs/native-render-normal-profile.md) now excludes the original test-only probe after actual source-configuration RED and clean syntax checks in both profiles. Matching normal AQ and compositor/SDK builds pass, with23 Rust exports, five strict API checks,15 existing CPU groups and the five-group texture program in the complete main selection. The earlier fixture failure remains preserved. The first actual normal startup already reports STOPPING at its0.284s observation, before the20s deadline; the cause remains unknown. Its126 replies stay responsive, and all37 waits/44 PIPE EOFs close, without backend readiness or client launch. Normal startup, real client frames, Source7 and phone gates remain open.
+The earlier [normal render profile](docs/native-render-normal-profile.md) now excludes the original test-only probe after actual source-configuration RED and clean syntax checks in both profiles. Matching normal AQ and compositor/SDK builds pass, with23 Rust exports, five strict API checks,15 existing CPU groups and the five-group texture program in the complete main selection. The earlier fixture failure remains preserved. That earlier normal startup reports STOPPING at its0.284s observation, before the20s deadline, without recording its cause. Its126 replies stay responsive, and all37 waits/44 PIPE EOFs close, without backend readiness or client launch. Normal startup, real client frames, Source7 and phone gates remain open.
 
 The [immutable CPU texture checkpoint](docs/native-render-cpu-texture.md) now passes two strict signature checks and five real C++/Rust integration groups after the original missing-API structural RED. Owned pixels survive producer disposal; immutable replacement and two joined-thread refusals pass even with actual C++ thread-ID reuse. The CPU adapter has no GPU identity. Core Wayland capture, normal frames, Source7 and all phone gates remain open.
 
