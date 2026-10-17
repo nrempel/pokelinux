@@ -9,8 +9,9 @@ integration GREEN, active-context qualification or presented app frame here.
 Portable format decisions and lifecycle belong in Rust. The
 [Rust V2 planner](native-render-format-policy.md) now requests implicit or explicit
 operations and replaces both native C++ format choices through one common
-collector. Its matching full compositor/SDK build passes; actual startup/CHANGE
-acceptance remains pending. This AQ patch performs native GBM/DRM operations and
+collector. Its matching full compositor/SDK build and separate actual native
+startup/CHANGE metadata acceptance pass on generic x86 KVM virtio. This later
+metadata result does not rerun or repair the earlier failed resource fixtures. This AQ patch performs native GBM/DRM operations and
 retains objects through the existing swapchain/framebuffer holders. Native
 prepare/execute is still unimplemented; no production allocation/import or display
 authority follows from a plan or test request.

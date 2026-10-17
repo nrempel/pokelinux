@@ -1,9 +1,10 @@
 # Rust session reconciliation
 
-The qualified baseline stops the normal compositor at a genuine Aquamarine
-device-change callback. Recoverable same-session CHANGE handling is now implemented
-in Rust; its native acceptance remains unqualified. This is an unfinished graphics integration path; no
-normal client frame, Source acceptance or phone result follows from its tests.
+Rust now accepts actual normal bootstrap and queued same-session CHANGE metadata
+through the [V2 format planner](native-render-format-policy.md#actual-native-bootstrap-and-change)
+on generic x86 KVM virtio. The unchanged ten-watermark native success target passes
+with one output, no Stop and the original20s startup deadline. Normal client
+frames, native retirement, Source and phone results remain unqualified.
 
 ## Language and ownership boundary
 
@@ -13,25 +14,18 @@ C++ translates actual AQ callbacks, invokes worker-local native operations and
 copies device/output facts. Hyprland, Aquamarine and Qt remain substantial C++
 dependencies. Their engines have not been ported to Rust by this change.
 
-The custom native adapter also still performs mode equality and refresh
-arithmetic, preferred-mode and first-format selection, connector completeness,
-lease/device consistency, CRTC/primary-plane eligibility, format/modifier matching
-and non-desktop consistency checks in `freshDiscovery`/`corroborateFormat`.
-These are remaining portable policy in C++, beyond ABI glue. Move them to Rust
-with bounded copied facts and behavior-preserving boundary tests after the
-current actual capability refusal is understood. Worker-local AQ objects,
-libdrm queries/decoding/freeing, mirror application and display-attempt custody
-remain native adapter responsibilities. Bounds needed to safely copy native
-arrays stay at that copying boundary.
+The shared native collector now calls Rust once after backend startup and again
+after CHANGE. Rust chooses first-fourcc implicit or first-tuple explicit requests
+from raw cap, device, route, primary-plane, legacy and complete-blob facts. Both
+C++ tuple choices and the duplicate C++ format corroboration are removed. Six
+C++/Rust groups, the matching full main/SDK build and actual native metadata
+acceptance pass; see the [format report](native-render-format-policy.md).
 
-The [Rust format-policy component](native-render-format-policy.md) now implements
-first-tuple selection and raw cap/route/primary-plane/exact-pair decisions behind
-one synchronous C ABI. Its four-group real C++/Rust test passes, but the native
-adapter has not been rewired: the C++ decisions above still execute. Use one
-collector/helper after enumeration at both bootstrap and recovery; registration
-should retain objects and identities without choosing a tuple. Strict query
-status handling can move or add refusals, so this is not an all-behavior-identical
-conversion.
+Mode equality/refresh arithmetic, preferred-mode corroboration, connector
+completeness, lease/device and non-desktop consistency checks remain in C++.
+That portable policy migration is unfinished. Worker-local AQ objects, libdrm
+queries/byte decoding/freeing, mirror application and native object custody
+remain adapter work. Safe-copy bounds stay at that copying boundary.
 
 Production frame preparation and execution currently return protocol refusal,
 and the normal compositor still runs only its startup loop. The next graphics
@@ -115,9 +109,9 @@ new burst using an older cutoff. Control accepts only the latest copied candidat
 A stale final seal also preserves no successful native-entry scope; the scope is
 fully copied before sealing and installed only on success.
 
-## Matching build and actual native refusal
+## Historical matching build and native refusal
 
-The matching NORMAL compositor and SDK now pass in one actual x86 KVM build.
+The earlier matching NORMAL compositor and SDK passed in one actual x86 KVM build.
 All458 configured C++/PCH entries omit the test definition. The main exports30
 current Rust functions; seven strict SDK probes and the original15 CPU, texture5,
 first-Stop5 and reconciliation6 groups pass with that same provider. All535
@@ -179,7 +173,7 @@ property. Both display-attempt denial checks remain true. All28 waits/35 PIPE
 EOFs, QMP EOF and two authenticated public-response EOFs close within the original
 bounds, with exact CID absence, the same daemon and unchanged inputs.
 
-These facts identify the current negotiation mismatch: the adapter chooses an
+These facts identified the earlier negotiation mismatch: the adapter chooses an
 explicit modifier candidate from AQ's advertised list, then cannot corroborate
 it in this driver's explicit capabilities. The kernel's
 [buffer exchange contract](https://docs.kernel.org/userspace-api/dma-buf-alloc-exchange.html)
@@ -188,14 +182,13 @@ allocation/import chain must be negotiated consistently. Missing properties do
 not establish explicit linear support, and modifier intersection alone does not
 prove allocation or import success.
 
-The next repair must move format selection/corroboration policy into Rust using
-bounded actual native facts, preserve bootstrap/recovery consistency, and bind
-the chosen mode to actual allocation/import. This checkpoint makes no permissive
-fallback. The unchanged native recovery result remains `SETUP_UNQUALIFIED`,
-UNAVAILABLE/error9 and aggregate FAILED. Only the separate observation target
-passes. The [original source package](../tools/native-render-owner/format-diagnostic/README.md)
-contains frozen tests, the incremental native patch and compact provenance;
-private raw logs and inputs are excluded.
+That historical recovery aggregate remains FAILED/SETUP_UNQUALIFIED; only its
+separate observation target passed. The [original diagnostic source package](../tools/native-render-owner/format-diagnostic/README.md)
+retains its frozen tests, incremental patch and compact provenance; private raw
+logs and inputs remain excluded.
 
-Normal frames, presentation, native retirement, Source7, new ARM execution and
-all physical-phone gates remain open. No physical phone was accessed.
+The later [Rust V2 planner and common collector](native-render-format-policy.md)
+now resolve this initial metadata-negotiation blocker and pass the unchanged native
+recovery target. That does not implement prepare/execute, normal clients,
+presentation, native shutdown or hardware support. Those remain the next integrated
+slice; earlier failed epochs keep their recorded scopes.

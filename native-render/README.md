@@ -40,7 +40,8 @@ There is no legacy factory or optional callback.
 All64 existing Rust tests and the frozen six-group real C++/Rust consumer now
 pass with the same fresh archive, strict Clippy and Release compilation. This
 uses authored CPU native callbacks. The matching normal main/SDK build passes;
-actual AQ recovery remains unavailable at fresh DRM format/modifier corroboration.
+the later Rust format-planner integration now accepts actual AQ bootstrap/CHANGE
+metadata as described below.
 A separate real KVM [format observation](../tools/native-render-owner/format-diagnostic/README.md)
 now identifies an explicit-modifier negotiation mismatch after its own actual
 RED; its matching build and frozen diagnostic pass. A separate
@@ -49,8 +50,11 @@ six real C++/Rust ABI groups with the same fresh archive as all64 old Rust tests
 and the five existing C++ programs. V2 replaces the old format API and selects an
 exact implicit or explicit request from raw backend/device/capability observations.
 This is authored CPU policy evidence. The shared native bootstrap/CHANGE collector
-now passes the matching full compositor/SDK build; actual runtime acceptance
-remains pending.
+now passes the matching full compositor/SDK build and unchanged actual native
+bootstrap/queued-CHANGE test on generic x86 KVM virtio. All ten Rust watermarks
+correlate bootstrap3→CHANGE4 with one accepted output, no Stop and the unchanged
+20s startup cutoff. This is metadata readiness; shell and native retirement
+remain false.
 Native prepare/execute still return protocol refusal. Normal client frames,
 Source and phone qualification remain open.
 The historical checkpoints below retain their original providers and scopes.

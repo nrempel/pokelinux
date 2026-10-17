@@ -26,7 +26,11 @@ entries, all31 Rust exports,537 regular SDK files/two links and all original
 regressions/strict interface checks. The first build compiled/linked but failed
 SDK packaging because the fixture omitted the format header; four staging lines
 repair it without changing production code or assertions. That aggregate stays
-failed. Actual normal bootstrap/CHANGE remains pending. Native prepare/execute, real client frames, scanout
+failed. Actual normal bootstrap/queued-CHANGE now passes the unchanged success
+target: all ten Rust watermarks, bootstrap3→CHANGE4, one output, no Stop and the
+original20s deadline. All28 waits/35 PIPE EOFs close; QMP and public-response EOFs
+are separate. This is metadata acceptance on generic x86 KVM virtio, without
+rendered client content. Main/seatd SIGKILL is process disposal only. Native prepare/execute, real client frames, scanout
 replacement/retirement and authorized Stop remain open. Process disposal does not
 establish native cleanup. Source, ARM and all Pixel hardware gates stay separate.
 No physical phone was accessed.

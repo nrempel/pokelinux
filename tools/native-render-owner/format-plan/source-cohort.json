@@ -23,7 +23,87 @@
     "bytes": 18110,
     "sha256": "89956ee4bb8df2b1d0917b5d56f23e29bd5576587089412160f3011831a5c254"
   },
-  "actual_bootstrap_CHANGE": null,
+  "actual_bootstrap_CHANGE": {
+    "QMP_socket_EOF_separate": true,
+    "Root_qualification": {
+      "bytes": 2812,
+      "sha256": "ce1ee0970484642bebeaf19ceb7ba18b2678d4a23ec1e1ab8faa197301829d98"
+    },
+    "Root_qualified": true,
+    "Rust_archive": {
+      "bytes": 22940238,
+      "sha256": "425dd6fa9d604054b2ab15beeb488c79f1dbcac5efc0779b213bed5bd6de9f83"
+    },
+    "SDK": {
+      "bytes": 4751360,
+      "sha256": "cf58cbf5a946ec700a81cb72344e995cd4f56f404d234c9934ecec131b0e8603"
+    },
+    "accepted_outputs": 1,
+    "actual_AQ_library": {
+      "bytes": 1884672,
+      "sha256": "9512cc02716accd9636e9b462df28af83154078f9b5856620640b869a8a432b2"
+    },
+    "actual_CHANGE_sequence": 4,
+    "actual_bootstrap_sequence": 3,
+    "actual_ordered_Rust_watermarks": {
+      "accepted_epoch": 1,
+      "admitted_epoch": 1,
+      "applied_epoch": 1,
+      "bootstrap_end_sequence": 3,
+      "discovery_sequence": 4,
+      "invalidation_epoch": 1,
+      "last_admitted_sequence": 4,
+      "last_applied_sequence": 4,
+      "reconcile_not_after_boottime_ns": 28498563334,
+      "session_generation": 8498563334
+    },
+    "actual_owned_PIPE_EOFs": 35,
+    "actual_owned_direct_waits": 28,
+    "case": {
+      "bytes": 10153,
+      "sha256": "d33e7ce449edfc92e0e4352027f58a65144e3ffd361e5fe96096dd2917cb51da"
+    },
+    "classification": "RECOVERABLE_DEVICE_CHANGE_TARGET_PASS",
+    "controller": {
+      "bytes": 21960,
+      "sha256": "43ca85c2c8502731343d3e09099555781de2bf7abed4998c084e3ab7c2e63821"
+    },
+    "execution": {
+      "bytes": 12559,
+      "sha256": "07f82c618063abac6e99c17e811138cccfe203fb4685e02efc63d6efc8a524c0"
+    },
+    "first_stop": null,
+    "main_ELF": {
+      "bytes": 25326944,
+      "sha256": "4ffa7ae10fdbbf2c42eac3e53a0e7a827a2a86857bc65e777d14cfc8e3a6c182"
+    },
+    "main_build_qualification": {
+      "bytes": 3234,
+      "sha256": "f1b3fa2e2d996fc5f43af98ef0d9125176b6fb4ba069ad9e8c8bb70e680cda63"
+    },
+    "native_main_wait_and_PIPE_already_in_controller_counts": true,
+    "native_plans": {
+      "actual_device_comparison_count_each": 1,
+      "actual_device_comparison_return_each": 1,
+      "bootstrap_and_CHANGE": "same Rust V2 planner",
+      "corroborating_plane_witness": 35,
+      "fourcc": "XR24",
+      "mode": "IMPLICIT",
+      "modifier0_is_reserved_not_layout_proof": true,
+      "native_cap_value": 0,
+      "native_device_query_returns": [
+        0,
+        0
+      ]
+    },
+    "original_startup_budget_ns": 20000000000,
+    "process_disposal_is_native_cleanup": false,
+    "public_response_bytes": 1298,
+    "public_snapshot_requests": 2,
+    "schema": 1,
+    "stop_requests": 0,
+    "time_from_session_start_to_metadata_Ready_ns": 282850187
+  },
   "exact_native_patch": {
     "bytes": 38248,
     "sha256": "82b44521a325fa63717d0ef67f45980e72070b0d264520bb09bad6ee53cdaccd"
@@ -100,5 +180,5 @@
   "public_Rust_checkpoint": "131030e8b23dae74a2efb75c5d2a66060a6c94c0",
   "remaining_native_files_unchanged": 1152,
   "schema": 1,
-  "scope": "Original open-source common native observation collector invoking Rust V2 planning. Matching complete NORMAL main/SDK build passes; actual startup/CHANGE runtime pending."
+  "scope": "Original open-source common native observations invoking Rust V2. Full normal main/SDK build and actual bootstrap/CHANGE metadata acceptance pass on generic x86 KVM virtio; frames/retirement remain unqualified."
 }

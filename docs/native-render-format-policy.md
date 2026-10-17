@@ -8,7 +8,9 @@ frozen groups against the new archive. All64 existing Rust tests, the five earli
 C++ programs, formatting, strict Clippy and Release compilation pass in the same
 selection. These are authored CPU facts, not new DRM observations or a working
 compositor. The common native startup/CHANGE collector now passes its matching
-full normal compositor/SDK build. Actual native startup/recovery remains pending.
+full normal compositor/SDK build and the unchanged actual native startup/CHANGE
+test on generic x86 KVM virtio. This accepts metadata, without client frames or
+native retirement.
 
 ## Ownership and language boundary
 
@@ -135,12 +137,48 @@ all assertions and oracles stay unchanged. The second full selection above passe
 | Closed execution | 84d635a0279dc5190e39d8f5bbb96ad152ee598ae1756bab2c85ad644ac9b93a |
 | Root build qualification | f1b3fa2e2d996fc5f43af98ef0d9125176b6fb4ba069ad9e8c8bb70e680cda63 |
 
+## Actual native bootstrap and CHANGE
+
+The unchanged genuine recovery success target now passes with that exact main,
+SDK, Rust and AQ cohort. The normal broker/session and Rust worker observe actual
+bootstrap stage8, then accept one refreshed output after the queued real CHANGE.
+All ten Rust watermarks agree: bootstrap ends at sequence3; invalidation,
+admission, application and acceptance epochs are1; all latest sequence witnesses
+are4. The initial session generation and original20s startup deadline are unchanged.
+There is no first-Stop record, no Stop request and no startup retry.
+
+Native logs show the same V2 planner called at sequence3 and4. Both request
+implicit XR24 with known cap0, actual device-query returns0 and one actual device
+comparison returning1. Modifier0 is the reserved implicit request value, not a
+LINEAR layout claim. The plane35 witness does not establish actual plane selection.
+Two authenticated public socket replies preserve real peer PID/UID/GID and EOF.
+This run observes metadata Ready282,850,187ns after the session start; it is one
+startup observation, not a general latency benchmark.
+
+All28 owned direct waits and35 PIPE EOFs close; QMP socket and two public-response
+EOFs are separate. QEMU and outer CLI exit0, the exact container is absent on the
+same daemon and selected inputs stay unchanged. Main and seatd are disposed with
+SIGKILL/wait-9. That disposal supplies no native cleanup, retirement or Rust join.
+The accepted snapshot explicitly retains shell_ready=false and
+native_retirement=false. No client, plugin or diagnostic substitute was launched.
+
+| Native runtime artifact | SHA-256 |
+| --- | --- |
+| Closed execution | 07f82c618063abac6e99c17e811138cccfe203fb4685e02efc63d6efc8a524c0 |
+| Frozen-case result | d33e7ce449edfc92e0e4352027f58a65144e3ffd361e5fe96096dd2917cb51da |
+| Root runtime qualification | ce1ee0970484642bebeaf19ceb7ba18b2678d4a23ec1e1ab8faa197301829d98 |
+
+This is modified open-source native compositor/Rust integration on a generic
+x86-64 KVM kernel and virtio driver. It is separate from Android emulator,
+ARM64/QEMU, the matched Google/Pixel kernel and physical-device evidence.
+The earlier failed raw allocation/import fixtures remain failed; this run does
+not invoke those production operations or qualify rendering/presentation.
+
 ## Next integrated slice
 
-Run the matching common collector through actual native enumeration at both
-bootstrap and CHANGE. Preserve real events and existing Rust reconciliation;
-do not ignore revocation to make a fixture pass. Retain native output/mode/device
-identity and the copied plan without choosing a second tuple in C++.
+Continue the accepted native session through real normal Wayland globals, client
+content and Rust frame admission. Preserve actual event reconciliation and the
+retained output/mode/device identity; use the copied Rust request mode directly.
 
 The [exact native allocation/import operations](native-render-exact-buffer.md)
 pass their separate normal source/SDK build. Their real-driver runs observe five
