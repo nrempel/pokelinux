@@ -1,0 +1,167 @@
+--- a/src/render/OwnedBackendStartup.cpp
++++ b/src/render/OwnedBackendStartup.cpp
+@@ -22,6 +22,8 @@
+ #include <format>
+ #include <limits>
+ #include <memory>
++#include <optional>
++#include <xf86drm.h>
+ #include <poll.h>
+ #include <stdexcept>
+ #include <sys/stat.h>
+@@ -372,11 +374,111 @@
+     if (mode.vscan > 1) refresh /= mode.vscan;
+     return refresh > 0 && refresh <= std::numeric_limits<uint32_t>::max() ? uint32_t(refresh) : 0;
+ }
+-void corroborateFormat(int fd, const drmModeRes& resources, const drmModeConnector& connector, uint32_t format, uint64_t modifier) {
++// Diagnostic only, reached AFTER the unchanged predicate has refused. These
++// bounded reads use the same worker/FD/scope; they never select a different
++// tuple, change admission, or replace the original error. Unknown is null.
++void logFormatFacts(int fd, const drmModeRes& resources, const drmModeConnector& connector, const drmModePlaneRes& planes,
++                    uint32_t compatible, uint32_t currentCrtc, uint32_t format, uint64_t modifier,
++                    const PrSessionRenderEventV1& event, const CDisplayAttemptScope& guard) noexcept {
++    std::string packet;
++    try {
++        packet = R"({"schema":1,"complete":false})";
++        const auto number = [](const auto& value) { return value ? std::to_string(*value) : std::string("null"); };
++        const auto booleanFact = [](const std::optional<bool>& value) { return !value ? "null" : *value ? "true" : "false"; };
++        bool complete = true;
++        const bool before = noDisplayRequest(guard);
++        const auto tid = syscall(SYS_gettid);
++        struct stat identity{};
++        std::optional<uint64_t> rdev;
++        if (fstat(fd, &identity) == 0 && S_ISCHR(identity.st_mode)) rdev = uint64_t(identity.st_rdev);
++        else complete = false;
++        uint64_t capability = 0;
++        errno = 0;
++        const int capReturn = drmGetCap(fd, DRM_CAP_ADDFB2_MODIFIERS, &capability);
++        const int capErrno = errno;
++        if (capReturn != 0 || tid <= 0) complete = false;
++        std::string rows = "[";
++        for (uint32_t i = 0; i < planes.count_planes; ++i) {
++            auto plane = drmOwned<drmModeFreePlane>(drmModeGetPlane(fd, planes.planes[i]));
++            std::optional<uint32_t> crtc, possible, formatCount;
++            std::optional<bool> route, hasFormat, typePresent, formatsPresent, pairMatch;
++            std::optional<uint64_t> type, blobID;
++            std::optional<uint32_t> blobLength;
++            std::optional<int> blobErrno;
++            if (!plane) complete = false;
++            else {
++                crtc = plane->crtc_id; possible = plane->possible_crtcs; formatCount = plane->count_formats;
++                route = bool(plane->possible_crtcs & compatible);
++                if (plane->count_formats > 4096) complete = false;
++                else {
++                    hasFormat = false;
++                    for (uint32_t j = 0; j < plane->count_formats; ++j)
++                        if (plane->formats[j] == format) hasFormat = true;
++                }
++                if (*route) {
++                    auto properties = drmOwned<drmModeFreeObjectProperties>(drmModeObjectGetProperties(fd, plane->plane_id, DRM_MODE_OBJECT_PLANE));
++                    if (!properties || properties->count_props > PR_EXECUTOR_MAX_OBJECTS) complete = false;
++                    else {
++                        bool propertiesComplete = true;
++                        typePresent = false; formatsPresent = false;
++                        for (uint32_t j = 0; j < properties->count_props; ++j) {
++                            auto property = drmOwned<drmModeFreeProperty>(drmModeGetProperty(fd, properties->props[j]));
++                            if (!property) { complete = propertiesComplete = false; continue; }
++                            if (std::strcmp(property->name, "type") == 0) { typePresent = true; type = properties->prop_values[j]; }
++                            if (std::strcmp(property->name, "IN_FORMATS") == 0) { formatsPresent = true; blobID = properties->prop_values[j]; }
++                        }
++                        // A failed property read cannot establish absence.
++                        if (!propertiesComplete) {
++                            if (!*typePresent) typePresent.reset();
++                            if (!*formatsPresent) formatsPresent.reset();
++                        }
++                        if (blobID && *blobID) {
++                            if (*blobID > std::numeric_limits<uint32_t>::max()) complete = false;
++                            else {
++                                errno = 0;
++                                auto blob = drmOwned<drmModeFreePropertyBlob>(drmModeGetPropertyBlob(fd, uint32_t(*blobID)));
++                                blobErrno = errno;
++                                if (!blob) complete = false;
++                                else {
++                                    blobLength = blob->length;
++                                    if (!blob->length || blob->length > 1024 * 1024) complete = false;
++                                    else {
++                                        pairMatch = false;
++                                        drmModeFormatModifierIterator iterator{};
++                                        while (drmModeFormatModifierBlobIterNext(blob.get(), &iterator))
++                                            if (iterator.fmt == format && iterator.mod == modifier) pairMatch = true;
++                                    }
++                                }
++                            }
++                        }
++                    }
++                }
++            }
++            const auto row = std::format(R"({{"id":{},"current_crtc_id":{},"possible_crtcs":{},"route_eligible":{},"format_count":{},"selected_format_present":{},"type_present":{},"type_value":{},"in_formats_present":{},"blob_id":{},"blob_errno":{},"blob_length":{},"selected_pair_match":{}}})",
++                planes.planes[i], number(crtc), number(possible), booleanFact(route), number(formatCount), booleanFact(hasFormat),
++                booleanFact(typePresent), number(type), booleanFact(formatsPresent), number(blobID), number(blobErrno), number(blobLength), booleanFact(pairMatch));
++            if (rows.size() + row.size() + 1 > 28672) { complete = false; break; }
++            if (i) rows += ',';
++            rows += row;
++        }
++        rows += ']';
++        const bool after = noDisplayRequest(guard);
++        packet = std::format(R"({{"schema":1,"worker_tid":{},"event_sequence":{},"session_generation":{},"connector_id":{},"fd_rdev":{},"selected_format":{},"selected_modifier":{},"cap":{{"ret":{},"errno":{},"value":{}}},"crtc_count":{},"connector_encoder_id":{},"connector_current_crtc_id":{},"compatible_crtc_mask":{},"plane_count":{},"planes":{},"deny_display_before":{},"deny_display_after":{},"complete":{},"unchanged_predicate_result":false}})",
++            tid, event.session_sequence, event.session_generation, connector.connector_id, number(rdev), format, modifier,
++            capReturn, capErrno, capReturn == 0 ? std::to_string(capability) : "null", resources.count_crtcs, connector.encoder_id,
++            currentCrtc, compatible, planes.count_planes, rows, before ? "true" : "false", after ? "true" : "false", complete ? "true" : "false");
++        if (packet.size() > 32768) packet = R"({"schema":1,"complete":false})";
++    } catch (...) {} // Observation allocation/query failure cannot replace the original decision.
++    if (packet.size() > 32768) packet.clear(); // Never emit an oversized/partial fact claim.
++    try { Log::logger->log(Log::ERR, "owned-device-change-format-v1: {}", packet); } catch (...) {}
++}
++void corroborateFormat(int fd, const drmModeRes& resources, const drmModeConnector& connector, uint32_t format, uint64_t modifier,
++                       const PrSessionRenderEventV1& event, const CDisplayAttemptScope& guard) {
+     const auto id = connector.connector_id;
+     requireObservation(resources.count_crtcs > 0 && resources.count_crtcs <= 32 && connector.count_encoders > 0 &&
+         connector.count_encoders <= int(PR_EXECUTOR_MAX_OBJECTS), "encoder-bounds", id);
+     uint32_t compatible = 0;
++    uint32_t currentCrtc = 0; // Copied fact from the existing encoder query.
+     for (int i = 0; i < connector.count_encoders; ++i) {
+         auto encoder = drmOwned<drmModeFreeEncoder>(drmModeGetEncoder(fd, connector.encoders[i]));
+         requireObservation(!!encoder, "get-encoder", id, errno);
+@@ -385,6 +487,7 @@
+     if (connector.encoder_id) {
+         auto encoder = drmOwned<drmModeFreeEncoder>(drmModeGetEncoder(fd, connector.encoder_id));
+         requireObservation(!!encoder, "get-current-encoder", id, errno);
++        currentCrtc = encoder->crtc_id;
+         if (encoder->crtc_id) {
+             uint32_t current = 0;
+             for (int i = 0; i < resources.count_crtcs; ++i)
+@@ -425,13 +528,14 @@
+         while (drmModeFormatModifierBlobIterNext(blob.get(), &iterator))
+             if (iterator.fmt == format && iterator.mod == modifier) return;
+     }
++    logFormatFacts(fd, resources, connector, *planes, compatible, currentCrtc, format, modifier, event, guard);
+     throw SObservationFailure{"primary-format-modifier-unavailable", 0, id};
+ }
+-PrDiscoveryV1 freshDiscovery(SNativeOwner& owner, uint64_t session) {
++PrDiscoveryV1 freshDiscovery(SNativeOwner& owner, const PrSessionRenderEventV1& event, const CDisplayAttemptScope& guard) {
+     requireObservation(owner.mirror && owner.backend && owner.mirror->initialEnumerationComplete() && owner.mirror->active &&
+         !owner.outputFailure, "native-registry-unavailable", 0);
+     PrDiscoveryV1 result{};
+-    result.session_generation = session;
++    result.session_generation = event.session_generation;
+     for (uint32_t i = 0; i < owner.outputCount; ++i) {
+         const auto& entry = owner.outputs[i];
+         if (!entry.live) continue; // Retain the destroyed object's custody; never publish it.
+@@ -502,7 +606,7 @@
+         requireObservation(!formats.empty() && !formats.front().modifiers.empty(), "native-format-unavailable", id);
+         value.drm_format = formats.front().drmFormat;
+         value.modifier = formats.front().modifiers.front();
+-        corroborateFormat(fd, *resources, *connector, value.drm_format, value.modifier);
++        corroborateFormat(fd, *resources, *connector, value.drm_format, value.modifier, event, guard);
+         value.flags = entry.output->nonDesktop ? 1u : 0u;
+         result.outputs[result.output_count++] = value;
+     }
+@@ -519,7 +623,7 @@
+         const auto applied = owner.mirror->applyRenderEvent(copyEvent(*event), -1, -1);
+         requireObservation(applied == eSessionApply::APPLIED_METADATA, "mirror-apply-change", event->connector_id);
+         requireObservation(noDisplayRequest(guard), "display-request-during-change", event->connector_id);
+-        const auto candidate = freshDiscovery(owner, event->session_generation);
++        const auto candidate = freshDiscovery(owner, *event, guard);
+         requireObservation(noDisplayRequest(guard), "display-request-during-query", event->connector_id);
+         *result = candidate;
+         return PR_EXECUTOR_OK;

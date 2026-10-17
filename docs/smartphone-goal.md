@@ -1,6 +1,6 @@
 # Omarchy smartphone goal
 
-The [Rust session-reconciliation component](native-render-session-reconciliation.md) now passes64 Rust tests, six real C++/Rust integration groups and the matching normal compositor/SDK build. Rust owns recovery policy; C++ connects native calls. Actual startup recovery remains unavailable at fresh DRM format/modifier corroboration. Normal frames, Source and phone gates remain open.
+The [Rust session-reconciliation component](native-render-session-reconciliation.md) now passes64 Rust tests, six real C++/Rust integration groups and the matching normal compositor/SDK build. Rust owns recovery policy; C++ connects native calls. A separate real KVM diagnostic now identifies a format-negotiation mismatch: the selected explicit modifier has no advertised driver support. The matching build and frozen observation test pass; native startup recovery still fails. Format policy migration into Rust, real frames, Source and phone gates remain open.
 
 The [Rust first-Stop observer](native-render-first-stop.md) now identifies a real startup trigger: a direct Aquamarine device-change revocation requests full Stop before startup completes. The unchanged native wire test passes; the first record survives a later actual Stop and two snapshots. The matching normal main/SDK,64 Rust tests and compiled interface checks pass separately. Recoverable Rust event handling, normal readiness, real client frames and phone gates remain open.
 

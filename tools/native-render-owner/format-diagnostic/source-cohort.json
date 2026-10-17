@@ -1,0 +1,136 @@
+{
+  "actual_fresh_diagnostic_RED": {
+    "PIPE_EOFs": 35,
+    "QMP_EOF_separate": 1,
+    "Root_qualification_sha256": "4075f3b7ff0873557e7204a96c37cdebab40d40ea0ec13fe26d72eb0ac5a21d0",
+    "actual_wire_stages": [
+      8,
+      5
+    ],
+    "aggregate_passed": false,
+    "case_sha256": "7d56c4c3451e9189aa7e7cf1f03ab350d25e50ca34616b3c95e10ac75166dc5d",
+    "classification": "DIAGNOSTIC_FACTS_MISSING_RED",
+    "direct_waits": 28,
+    "execution_sha256": "4a4c2f9356cae8da103b14a8ec4871ad522220ed1c3b601fd3e6af770f05ec24",
+    "first_Stop_origin": 11,
+    "independent_qualification_sha256": "dca6bf11f6eef59a8edd3fe31ed38ca547221a947e3a70be3334a48cd270cb4c",
+    "native_cleanup_join_or_retirement_qualified": false,
+    "native_error": 9,
+    "public_response_EOFs_separate": 2,
+    "unchanged_native_wire_classification": "SETUP_UNQUALIFIED"
+  },
+  "actual_matching_NORMAL_build": {
+    "QMP_EOF_separate": 1,
+    "Root_qualification": {
+      "bytes": 3247,
+      "sha256": "955c83449f013cc585c15a2c1f9534fd163c3a9c1131aad265988c0d7e3a506a"
+    },
+    "SDK": {
+      "bytes": 4700160,
+      "sha256": "b685a96a068324ce0917e436604cb7b7e3b7998fc0a56b762972f833fffc738f"
+    },
+    "SDK_links": 2,
+    "SDK_regular_files": 535,
+    "Scope_PIPE_EOFs": 82,
+    "Scope_waits": 82,
+    "actual_CPP_including_PCH": 458,
+    "actual_Rust_archive": {
+      "bytes": 22922502,
+      "sha256": "29a8d2d0d2c98cff565f0685af8d8450c2a04104a406a28cb4b66c65f496ad97"
+    },
+    "actual_Rust_exports": 30,
+    "build_result": {
+      "bytes": 712029,
+      "sha256": "5596b17664cee05bfe3b1e1078b30eeb998f452b813d2f26833d246d338ec3e3"
+    },
+    "compiled_main_executed_in_build": false,
+    "embedded_snapshot_producer_PIPE_EOFs_separate": 2,
+    "embedded_snapshot_producer_waits_separate": 1,
+    "execution": {
+      "bytes": 27829,
+      "sha256": "d7895f552edae5fb4036fb0844a2bf79c8180d0591b8869cfb959be117da145b"
+    },
+    "full1154_actual_source_manifest_matches": true,
+    "independent_review_sha256": "a87a8b01ce7e504c62c65469b4343297b734fadbec64b334f9644945b938d7f2",
+    "main_ELF": {
+      "bytes": 25320328,
+      "sha256": "70bffe704f849a65148de37c8e55f607c6c81c5825099602afed4a3a7800492a"
+    },
+    "native_diagnostic_or_recovery_GREEN_inferred": false,
+    "strict_generated_SDK_probes": 7
+  },
+  "actual_same_worker_diagnostic_GREEN": {
+    "PIPE_EOFs": 35,
+    "QMP_EOF_separate": 1,
+    "Root_qualification": {
+      "bytes": 1348,
+      "sha256": "8b9034bfa259c7d49958c0a1fd766bedaff5e857793257a1a7ba7a85053c3f31"
+    },
+    "actual_IN_FORMATS_present": false,
+    "actual_cap_return_errno_value": [
+      0,
+      0,
+      0
+    ],
+    "actual_event_sequence": 4,
+    "actual_primary_plane": 35,
+    "actual_selected_format": 875713112,
+    "actual_selected_format_present": true,
+    "actual_selected_modifier": 0,
+    "aggregate_passed": false,
+    "case": {
+      "bytes": 10812,
+      "sha256": "2441d11a7e95ec37c75b78ac94ec7893859ecc6660f128ec8f769d21626cde99"
+    },
+    "classification": "DIAGNOSTIC_FACTS_PASS",
+    "direct_waits": 28,
+    "execution": {
+      "bytes": 12718,
+      "sha256": "89405224d71f474d1c05b1ac01cc5483891e08406b758af009fb90b4448a1e4d"
+    },
+    "explicit_linear_or_implicit_fallback_support_qualified": false,
+    "independent_qualification_sha256": "8bf80c26687abb1106c944018e4b1b654632e881f32980460af16b8ac62cadd0",
+    "native_cleanup_join_or_retirement_qualified": false,
+    "public_response_EOFs_separate": 2,
+    "same_worker_FD_event_scope_bound": true,
+    "unchanged_native_wire_classification": "SETUP_UNQUALIFIED"
+  },
+  "frozen_tests": {
+    "CONTRACT.md": {
+      "bytes": 5432,
+      "sha256": "9c50d750ae2258ebdbf9c63073f67e3ffdfa9a66f239387eac449441f2f64cac"
+    },
+    "format_fact_case.py": {
+      "bytes": 3314,
+      "sha256": "fb7fbb2944c02c63962945be5dae149df8f4d8177766f93ca3936c5721b9e800"
+    },
+    "format_fact_oracle.py": {
+      "bytes": 4994,
+      "sha256": "0fe1edd10dfa03837b96e5bb039f48cc880b8ead5785da467641e37b3966c0cb"
+    }
+  },
+  "native_Readiness_frame_Source_ARM_phone_qualified": false,
+  "native_adapter": {
+    "Root_source_review_sha256": "9258e4368092ea12855fe0d91a033a52a7b5e2299dc76d3553e491c4cd9d4377",
+    "after": {
+      "bytes": 68885,
+      "sha256": "f3706d239e85ef8b225648d497eab468ed82cbaf6f0404c17606f02ffe74ae2a"
+    },
+    "before": {
+      "bytes": 61352,
+      "sha256": "e3de9f578083458aa0f220154bdfccf2af6f28c9ca702f97034ccbd0722d8c4d"
+    },
+    "native_SOURCE": {
+      "bytes": 5804,
+      "sha256": "b8d207de9c9de3e152b1e7c8b6df9aaf8efc6facbc3ffad5f92551e1a4d062e8"
+    },
+    "patch": {
+      "bytes": 11291,
+      "sha256": "f532b8223dbf52706353a5c95605ec5fb6eb071586d699fdb05ac8777ae23b13"
+    },
+    "path": "src/render/OwnedBackendStartup.cpp",
+    "source_map_sha256": "00307e0ab3f1e745962afe4b88763b0a4e471c991d6f932a08b5f5824bef64e7"
+  },
+  "schema": 1,
+  "scope": "Original same-worker bounded graphics observations; native format predicate and recovery remain unchanged"
+}

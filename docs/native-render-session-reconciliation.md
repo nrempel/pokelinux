@@ -13,6 +13,17 @@ C++ translates actual AQ callbacks, invokes worker-local native operations and
 copies device/output facts. Hyprland, Aquamarine and Qt remain substantial C++
 dependencies. Their engines have not been ported to Rust by this change.
 
+The custom native adapter also still performs mode equality and refresh
+arithmetic, preferred-mode and first-format selection, connector completeness,
+lease/device consistency, CRTC/primary-plane eligibility, format/modifier matching
+and non-desktop consistency checks in `freshDiscovery`/`corroborateFormat`.
+These are remaining portable policy in C++, beyond ABI glue. Move them to Rust
+with bounded copied facts and behavior-preserving boundary tests after the
+current actual capability refusal is understood. Worker-local AQ objects,
+libdrm queries/decoding/freeing, mirror application and display-attempt custody
+remain native adapter responsibilities. Bounds needed to safely copy native
+arrays stay at that copying boundary.
+
 Invalidation immediately revokes old unsealed tickets and suspends availability.
 It does not substitute the AQ session identity for the security generation.
 Already-sealed work retains its historical grant, frame and retirement duties.
@@ -117,10 +128,59 @@ The matching main log records `primary-format-modifier-unavailable`, errno0,
 connector40. This establishes the failed corroboration branch, without recording
 the selected format/modifier, actual primary-plane properties or kernel modifier
 capability. It does not establish which fact is missing or which repair is valid.
-The next integration gate is actual same-worker capability evidence before any
-change to that predicate. Readiness remains unavailable; the worker and both
-watches stay retained. Actual SIGKILL/wait-9 disposal proves no native join or
-retirement.
+The later observation-only checkpoint below supplies these actual facts.
+Readiness remains unavailable; the worker and both watches stay retained.
+Actual SIGKILL/wait-9 disposal proves no native join or retirement.
+
+## Actual format observations
+
+A new frozen diagnostic target first fails on the unchanged matching main:
+actual authenticated stages8 then5, error9 and first-Stop11 precede the original
+startup cutoff; the original format refusal is present, but the new fact packet
+is absent. All28 waits/35 PIPE EOFs close, with QMP and two public-response EOFs
+separate. This fresh diagnostic RED leaves the original recovery test failed;
+it does not retrospectively reclassify the earlier attempt.
+
+The native successor adds one bounded existing-logger observation only after the
+unchanged predicate has refused. Its same-worker, same-owned-FD readback records
+numeric capability/plane/property/blob facts under the existing display-attempt
+denial scope. Additional read failures stay incomplete or unknown and preserve
+the original error. Selection, predicate, native control, Rust ABI and provider
+are unchanged. Removing only this observation plumbing reproduces the entire
+previous native source byte for byte. Readback is not an atomic DRM snapshot.
+
+The new matching NORMAL compositor/SDK build passes with the same Rust archive,
+30 exports, seven strict SDK probes and all existing CPU groups. Its complete
+1154-file source map matches;458 C++/PCH entries omit the test macro. SDK535
+regular files/two links and82 Scope waits/PIPE EOFs qualify. The embedded producer
+one wait/two EOFs and QMP EOF remain separate. No compositor main runs in the build.
+
+A separate actual KVM execution now passes the unchanged diagnostic oracle.
+The one complete packet records actual event4/session8620365025 on worker626,
+primary device rdev57856 and connector40/CRTC39. The selected format875713112
+(`XR24`) is present on primary plane35. Selected modifier0 is accompanied by
+`DRM_CAP_ADDFB2_MODIFIERS` return0/errno0/value0, and that plane has no `IN_FORMATS`
+property. Both display-attempt denial checks remain true. All28 waits/35 PIPE
+EOFs, QMP EOF and two authenticated public-response EOFs close within the original
+bounds, with exact CID absence, the same daemon and unchanged inputs.
+
+These facts identify the current negotiation mismatch: the adapter chooses an
+explicit modifier candidate from AQ's advertised list, then cannot corroborate
+it in this driver's explicit capabilities. The kernel's
+[buffer exchange contract](https://docs.kernel.org/userspace-api/dma-buf-alloc-exchange.html)
+distinguishes explicit LINEAR0 from implicit `DRM_FORMAT_MOD_INVALID`; an implicit
+allocation/import chain must be negotiated consistently. Missing properties do
+not establish explicit linear support, and modifier intersection alone does not
+prove allocation or import success.
+
+The next repair must move format selection/corroboration policy into Rust using
+bounded actual native facts, preserve bootstrap/recovery consistency, and bind
+the chosen mode to actual allocation/import. This checkpoint makes no permissive
+fallback. The unchanged native recovery result remains `SETUP_UNQUALIFIED`,
+UNAVAILABLE/error9 and aggregate FAILED. Only the separate observation target
+passes. The [original source package](../tools/native-render-owner/format-diagnostic/README.md)
+contains frozen tests, the incremental native patch and compact provenance;
+private raw logs and inputs are excluded.
 
 Normal frames, presentation, native retirement, Source7, new ARM execution and
 all physical-phone gates remain open. No physical phone was accessed.

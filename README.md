@@ -4,7 +4,7 @@
 
 **Native Linux phone software, with Pixel 10 as the first hardware target and Omarchy as the intended desktop and theme environment.**
 
-The target is Arch Linux ARM, Hyprland, native phone apps and Rust services for calls, messages, camera, power and other phone functions. The initial hardware strategy uses Google's matched Pixel kernel, modules and firmware. Replacing Android framework userspace is the goal; it is not yet achieved. The [completion criteria](docs/smartphone-goal.md#completion-matrix) require native service integration; Android framework tests provide reference evidence.
+The target is Arch Linux ARM, Hyprland, native phone apps and Rust services for calls, messages, camera, power and other phone functions. The initial hardware strategy uses Google's matched Pixel kernel, modules and firmware. Replacing Android framework userspace is the goal; it is not yet achieved. The [completion criteria](docs/smartphone-goal.md#completion-matrix) require native service integration; Android framework tests provide reference evidence. Hyprland, Aquamarine and Qt remain C++ dependencies; custom graphics validation also still contains [policy awaiting Rust migration](docs/native-render-session-reconciliation.md#language-and-ownership-boundary).
 
 > **Development status:** no physical phone has been accessed. There is no verified bootable phone image. Modem communication, carrier IMS registration, physical call audio, Pixel GPU rendering, camera capture and suspend remain unverified.
 
@@ -38,7 +38,7 @@ Hyprland, Aquamarine and the Qt app frontend still contain substantial C++. The 
 
 ## What has been tested
 
-The [Rust session-reconciliation component](docs/native-render-session-reconciliation.md) now passes64 Rust tests, six real C++/Rust integration groups and the matching normal compositor/SDK build. Rust owns recovery policy; C++ connects native calls. Actual startup recovery remains unavailable at fresh DRM format/modifier corroboration. Normal frames, Source and phone gates remain open.
+The [Rust session-reconciliation component](docs/native-render-session-reconciliation.md) now passes64 Rust tests, six real C++/Rust integration groups and the matching normal compositor/SDK build. Rust owns recovery policy; C++ connects native calls. A separate real KVM diagnostic now identifies a format-negotiation mismatch: the selected explicit modifier has no advertised driver support. The matching build and frozen observation test pass; native startup recovery still fails. Format policy migration into Rust, real frames, Source and phone gates remain open.
 
 The [Rust first-Stop observer](docs/native-render-first-stop.md) now identifies a real startup trigger: a direct Aquamarine device-change revocation requests full Stop before startup completes. The unchanged native wire test passes; the first record survives a later actual Stop and two snapshots. The matching normal main/SDK,64 Rust tests and compiled interface checks pass separately. Recoverable Rust event handling, normal readiness, real client frames and phone gates remain open.
 

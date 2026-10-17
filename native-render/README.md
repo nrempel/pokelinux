@@ -41,6 +41,10 @@ All64 existing Rust tests and the frozen six-group real C++/Rust consumer now
 pass with the same fresh archive, strict Clippy and Release compilation. This
 uses authored CPU native callbacks. The matching normal main/SDK build passes;
 actual AQ recovery remains unavailable at fresh DRM format/modifier corroboration.
+A separate real KVM [format observation](../tools/native-render-owner/format-diagnostic/README.md)
+now identifies an explicit-modifier negotiation mismatch after its own actual
+RED; its matching build and frozen diagnostic pass. Format selection policy
+still needs Rust migration and allocation/import qualification.
 Normal client frames, Source and phone qualification remain open.
 The historical checkpoints below retain their original providers and scopes.
 
