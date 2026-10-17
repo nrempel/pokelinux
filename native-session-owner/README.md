@@ -61,6 +61,42 @@ Supply a matching original Hyprland/Source-adapter build and a root-installed
 compositor configuration that loads that adapter. Full Omarchy shell setup and
 device graphics remain separate from a minimal Source composition.
 
+### Explicit normal-session deployment bundle
+
+`install-normal-session` stages a separately selected operational bundle. The
+existing eight-file `install` target keeps its examples-only scope. Supply an
+absolute source root, an absolute JSON manifest and a private absolute DESTDIR:
+
+```sh
+make -C native-session-owner install-normal-session \
+  SESSION_DEPLOYMENT_ROOT="$PWD/selected-deployment" \
+  SESSION_DEPLOYMENT_MANIFEST="$PWD/selected-deployment.json" \
+  DESTDIR="$PWD/session-stage"
+```
+
+The manifest is `{"schema":1,"files":{"etc/pokelinux/session.json":
+{"bytes":123,"sha256":"…64 lowercase hex digits…","mode":420}}}`. File keys are
+canonical relative installation paths; modes are integers (420 is0644). Every
+source must be a single-link regular file with the declared bytes, SHA256 and
+mode. The installer rejects symlink components, traversal, duplicate JSON keys,
+path collisions and unsafe modes, and checks the complete selected source and
+destination metadata before its first write. Bounds are4096 files,8MiB per file
+and64MiB total. Existing destination parents keep their modes; newly created
+parents are0755. Run it only against an installer-controlled staging tree.
+Files are replaced individually with fsync; an I/O failure can leave a partially
+staged tree and must remain a failed installation.
+
+This build-only target fetches nothing and chooses no UID, HOME, device, policy
+or service defaults. It does not create accounts, grant permissions, enable or
+start units, or retry startup. The operator supplies and reviews those deployment
+inputs. A Root-selected virtual Pixel10 bundle now passes the frozen host
+GNUmake4.3 install consumer after an actual missing-target RED: eight core files
+plus205 selected files, including all196 pinned Omarchy blobs and modes. Eight
+filesystem cases also pass, including source corruption and path/symlink
+refusals before copying. This qualifies staged selection; unit ownership,
+dependency readiness, cold Source, full shell, Sounds and PCM startup still need
+the actual installed VM trace. See the [normal tracer report](../docs/native-normal-upstream-tracer.md#explicit-installed-session-selection).
+
 The deployment must create root-owned nonwritable runtime, display and policy
 ancestors, UID1000 compositor HOME/runtime0700 and UID11042 Sounds
 HOME/runtime0700. History mode also needs UID11010 Messages HOME/runtime0700

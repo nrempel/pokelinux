@@ -61,6 +61,13 @@ then resolve the concrete matched PowerVR userspace boundary offline. Astra's
 current architecture review supports that order. Keep the diagnostic boot bundle
 frozen and the custom renderer parked. Keep Pixel targets fixed.
 
+The explicit normal-session bundle installer now passes its frozen missing-target
+RED→GREEN consumer:205 selected files plus eight core files, including196 locked
+Omarchy source blobs. This is host staging evidence only; no unit or cold startup
+is qualified. The [graphics boundary review](native-pixel-graphics-boundary.md)
+retains the original EGL initialization failure and leaves actual PowerVR devices,
+module membership/loading/KMI and separate display scanout unqualified.
+
 The Rust [one-shot add-PDN response observer](native-radio-add-pdn-response.md)
 now retains immutable request/session/route/error/byte history after frozen
 component RED→GREEN and a separate actual ARM Binder differential check. All79

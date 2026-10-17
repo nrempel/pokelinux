@@ -27,7 +27,7 @@ There is no decision to route every feature through the phone APK. Use the lowes
 
 The kernel provides mechanisms such as input events, interrupts, memory allocation, device control and suspend. Vendor camera processing, EGL/GLES drivers, radio/IMS integration and much of power policy are userspace components. Rebuilding the kernel does not convert those Bionic libraries and Android services into glibc programs or standard Linux APIs.
 
-The factory graphics audit records module version `6.6.127-android15-8-gee206ffe8752-ab16254410-4k`, PowerVR DDK 25.3, and firmware identifier `71.2.2448.1212`. Current upstream kernel and Mesa supported-device tables do not list that identifier. Therefore an upstream kernel/Mesa replacement is not an established shortcut. GPU rendering and display scanout also remain separate integration problems.
+The [retained graphics boundary](native-pixel-graphics-boundary.md) records PowerVR DDK25.3, firmware identifier `71.2.2448.1212` and retained module metadata with `6.6.127-android15-8-gee206ffe8752-ab16254410-4k` vermagic. The module-to-authenticated-image extraction chain, actual loading and KMI remain unqualified. Current upstream kernel and Mesa supported-device tables do not list that identifier. Therefore an upstream kernel/Mesa replacement is not an established shortcut. The existing original EGL run reaches an absent-device failure; successful rendering and separate display scanout remain open.
 
 Google's kernel ABI documentation scopes stability to specific KMI branches. Keep the matched vendor module interface and userspace driver contract when changing configuration or adding patches. The public Pixel build guide inspected in this review does not list Pixel 10; it is not evidence of an exact reproducible source manifest for this factory release. Identifying and rebuilding that exact source/configuration remains an offline task, not a completed result.
 
@@ -46,7 +46,7 @@ Public Pixel Power HAL source provides a concrete reduction candidate: `Power.cp
 
 ## Sources
 
-- [Factory graphics audit](../../pixel-10-factory-graphics-audit.md): pinned frankel CP3A.261005.005, module/firmware and graphics binary evidence.
+- [Native Pixel graphics boundary](native-pixel-graphics-boundary.md): CP3A.261005.005 runtime hashes, retained original EGL execution, static module provenance limits and remaining bringup gates. Module membership/loading/KMI and all device execution remain explicitly unqualified.
 - [Cellular and IMS audit](cellular-ims-audit.md): package selection, native dependencies and Android service relationships. Its old test-status section is superseded by later completion checkpoints.
 - Actual retained init files: `artifacts/telephony-audit/input/vendor/etc/init/android.hardware.power-service.pixel-libperfmgr.rc` and `android.hardware.camera.provider@2.7-service-google-apex.rc`.
 - [Android kernel modules](https://source.android.com/docs/core/architecture/kernel/modules) and [KMI monitoring](https://source.android.com/docs/core/architecture/kernel/abi-monitor).

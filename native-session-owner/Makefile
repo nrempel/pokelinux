@@ -1,4 +1,4 @@
-.PHONY: install
+.PHONY: install install-normal-session
 install:
 	test -n "$(SESSION_OWNER_BIN)" && test -x "$(SESSION_OWNER_BIN)"
 	test -n "$(SOUNDS_LAUNCH_BIN)" && test -x "$(SOUNDS_LAUNCH_BIN)"
@@ -11,3 +11,8 @@ install:
 	install -Dm644 -- packaging/pokelinux-session-owner.service "$(DESTDIR)/usr/lib/systemd/system/pokelinux-session-owner.service"
 	install -Dm644 -- packaging/session.example.json "$(DESTDIR)/usr/share/pokelinux/session-owner/session.example.json"
 	install -Dm644 -- packaging/apps.example.json "$(DESTDIR)/usr/share/pokelinux/session-owner/apps.example.json"
+
+# Additional explicit deployment input; never activate examples or host services.
+install-normal-session:
+	test -n "$(DESTDIR)" && test -n "$(SESSION_DEPLOYMENT_ROOT)" && test -n "$(SESSION_DEPLOYMENT_MANIFEST)"
+	python3 packaging/install_deployment.py --root "$(SESSION_DEPLOYMENT_ROOT)" --manifest "$(SESSION_DEPLOYMENT_MANIFEST)" --destdir "$(DESTDIR)"

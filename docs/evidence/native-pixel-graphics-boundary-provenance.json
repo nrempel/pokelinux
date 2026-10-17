@@ -1,0 +1,212 @@
+{
+  "schema": 1,
+  "review_date_utc": "2026-10-17",
+  "source_base": "1706f30a4067418c769a86679a252d02af4d198e",
+  "scope": "Retained original-execution and static-metadata review only; no new target execution or graphics qualification.",
+  "new_build_or_target_execution": false,
+  "phone_accessed": false,
+  "graphics_or_scanout_qualified": false,
+  "retained_runtime_manifest": {
+    "bytes": 60110,
+    "sha256": "e4290ec9c8a5bf4c6ccdb5c23d36756ccbdb38949b90ad5cf9277393187dbd46",
+    "build": "CP3A.261005.005",
+    "file_count": 86,
+    "current_file_hashes_verified": 86,
+    "historical_build_to_execution_chain_reconstructed": false
+  },
+  "selected_original_members": {
+    "/apex/com.android.runtime/bin/linker64": {
+      "bytes": 2690136,
+      "sha256": "09105dda9253238d125dc9be82c68a2b54819d03f92177348ef7211288001941"
+    },
+    "/apex/com.android.runtime/lib64/bionic/libc.so": {
+      "bytes": 1375440,
+      "sha256": "ff418def7a55466ed696b7aa3a2ecac7d3a56715111f128e87b2ac6657f72c8d"
+    },
+    "/vendor/bin/hw/pixel.gralloc.allocator-service": {
+      "bytes": 187672,
+      "sha256": "9afb59bb3009eea04e4daa1c9a3ef82d01ca0ce36281e9fcbaa6fcf064b92fb1"
+    },
+    "/vendor/firmware/rgx.fw.signed.71.2.2448.1212": {
+      "bytes": 356356,
+      "sha256": "a7de905f5254c2dc37fa72e0443561538514a767b640ed317e6e50ad1843835c"
+    },
+    "/vendor/firmware/rgx.sh.71.2.2448.1212": {
+      "bytes": 380392,
+      "sha256": "f4b2994f2e74fe9851c978b2c9bd33c0baedac7acf18b3d32c895dede3b1c04a"
+    },
+    "/vendor/lib64/egl/libEGL_powervr.so": {
+      "bytes": 40696,
+      "sha256": "782ca6b0ad7f51508415622c6486e3af7bc608080d313c5f0b59efffda012ed5"
+    },
+    "/vendor/lib64/egl/libGLESv2_powervr.so": {
+      "bytes": 2343936,
+      "sha256": "325198d4dde66bdfaa175c3165c4a88a5c0b492aaaa91c0c261e5f02f1f587e0"
+    },
+    "/vendor/lib64/hw/mapper.pixel.so": {
+      "bytes": 452464,
+      "sha256": "70dc9f085065518e9218664c6241716286bc2f34804393fc1cd7a5b9983bdb83"
+    },
+    "/vendor/lib64/libIMGegl.so": {
+      "bytes": 494232,
+      "sha256": "7be4eacbaeb26b2a5c48efb0bf5452cfc5f365b51e09fc9ddb4465dc3db486f6"
+    },
+    "/vendor/lib64/libsrv_um.so": {
+      "bytes": 686152,
+      "sha256": "9938e9577a95736a3495f585b9fa11958910f651a793b9e362895a63f2bad2e1"
+    }
+  },
+  "retained_original_execution": {
+    "class": "ARM64 user-mode QEMU; C probe through selected libhybris to original factory EGL",
+    "exit_code": 77,
+    "egl_initialize_success": false,
+    "egl_error": "0x3003",
+    "factory_configuration_open_observed": true,
+    "attempted_render_nodes_absent": true,
+    "artifacts": {
+      "factory-boundary.json": {
+        "bytes": 192,
+        "sha256": "0f6a792de26deb006a134b8e0510c3807e73d83707369d28aba45f7eae1bea36"
+      },
+      "factory-egl.stdout": {
+        "bytes": 321,
+        "sha256": "57f17f31dd471ca2e4d2b29352d19247f7403f5a6c890dadb0c08938139c12ea"
+      },
+      "factory-egl.syscalls": {
+        "bytes": 2799707,
+        "sha256": "690ed57f2782e61c56d8a705d33a9a03df1edca6e01f40499bef83395c4bc70d"
+      },
+      "mapper.pixel.so.link-check.log": {
+        "bytes": 2844,
+        "sha256": "ae8c3d0320984149625a3a453318f60dc1baf9666b7c862015180bcbcc7eade8"
+      }
+    },
+    "mapper_evidence_scope": "Original Bionic linker dependency listing only; no stable-C mapper call.",
+    "new_lifecycle_closure_claimed": false
+  },
+  "current_retained_bridge_binaries": {
+    "bin/runtime-probe": {
+      "bytes": 77384,
+      "sha256": "28044e7e1c33c0d38af2ad8fa02e05a8e020390e792d1cedcee6c93fcb1d7d08"
+    },
+    "lib/libpixel-runtime.so": {
+      "bytes": 89184,
+      "sha256": "86fa1a70d7560092e4c2b01fe61e26c6d716c52897d53aa67fb712fe94690877"
+    },
+    "lib/libEGL.so.1.0.0": {
+      "bytes": 209504,
+      "sha256": "8d5c15105337c91312862427a01ed6150ecfee31c83e1c874bf761ed73b99a8b"
+    },
+    "lib/libhybris-common.so.1.0.0": {
+      "bytes": 499568,
+      "sha256": "e728b21d681afaf786c5bde484d4414d56997ff8930039656b93112a7a5de013"
+    },
+    "lib/libhybris/linker/q.so": {
+      "bytes": 5198280,
+      "sha256": "1fcf6c32918ff0f6e52ef2715c114874357dc0cf1869b5bf994e0aac376769e5"
+    },
+    "lib/libhybris/eglplatform_pixel.so": {
+      "bytes": 76288,
+      "sha256": "e14bc8efbc549c7e141280f717fcb1c1ab7cac97bb9610f2233181ca64cd91fe"
+    }
+  },
+  "authored_sources": {
+    "src/runtime_probe.c": {
+      "bytes": 2011,
+      "sha256": "450605e3192d68607c7f338dd4be23f03f6812e038f0d1f25add37018c50bcf3"
+    },
+    "src/pixel_runtime.c": {
+      "bytes": 8556,
+      "sha256": "fd00dddab3f859a3662b180976c3b76b9997f11d236a63c97701760f865ad53c"
+    },
+    "src/eglplatform_pixel.c": {
+      "bytes": 2887,
+      "sha256": "310834a4507885795f3a546ef05dc2ae56266b8af66fff48e26e671971427e8b"
+    },
+    "tools/with-runtime.sh": {
+      "bytes": 951,
+      "sha256": "ef99b3bb448ff43201f1d48f0e1cf2e8c642335d60f0cb969054f83c992ccc1c"
+    },
+    "tools/test-factory-boundary.py": {
+      "bytes": 1251,
+      "sha256": "3e158c93cdd321ff17c9ca8a8009547321f536844a6cb5975d8ad6c2d2cc763e"
+    },
+    "tools/sim.py": {
+      "bytes": 4887,
+      "sha256": "e05d058f464601c99a9d7f1183fdc7d28072bd892f006f96e3efed06711546ca"
+    },
+    "sources.lock.json": {
+      "bytes": 480,
+      "sha256": "a41ebad6fc96a7e144bee53f7aa3743416aba3943a2fd9f9a9737266e6cf1e44"
+    },
+    "patches/libhybris-null-window.patch": {
+      "bytes": 488,
+      "sha256": "7bf9d1e8072e46510ae724c92e7da87c624e59e15d6203ec5ef97eead0cb0f19"
+    },
+    "patches/libhybris-property-init-hook.patch": {
+      "bytes": 1061,
+      "sha256": "6f2bb2f1af29e7dcca0449cc16249a0637f3d632f490ee82efbaf1e4a5fdf2e1"
+    },
+    "patches/libhybris-aligned-alloc.patch": {
+      "bytes": 315,
+      "sha256": "af3eb467e0a635f1717ee3cb93ec014c1c8012ae96de934200c12511d930ca6f"
+    }
+  },
+  "open_source_pins": {
+    "libhybris": {
+      "repository": "https://github.com/Linux-on-droid/libhybris",
+      "commit": "c6a03429d12202f0b198d88140610a49ab73ddb0",
+      "archive_sha256": "281e785be60111816dd03568cab3d2428de6ae921dce8a0741635de7201675bb"
+    },
+    "android-headers": {
+      "repository": "https://github.com/droidian/android-headers-30",
+      "commit": "7438d904e9db7d66e9da4e726bbeeb077d74f610",
+      "archive_sha256": "61b08ce2d78c39d2d356297cf2b1e028ac6ec0b1e32b49564762b7d938f11c0d"
+    }
+  },
+  "retained_module": {
+    "name": "pvrsrvkm.ko",
+    "bytes": 2994928,
+    "sha256": "61a4ecdd5333c8f37ad17c5c0eecca44b36a013683a7b26eb9554624122adb02",
+    "metadata_list": {
+      "bytes": 31768,
+      "sha256": "75c01da4ee796ee652741fc7c9f440bec08dc522b60434b1dfffb19c1530455b"
+    },
+    "digest_matches_retained_metadata_list": true,
+    "ddk_version": "25.3",
+    "firmware_abi": 33,
+    "scmversion": "gc67b777b0fa8",
+    "vermagic": "6.6.127-android15-8-gee206ffe8752-ab16254410-4k SMP preempt mod_unload modversions aarch64",
+    "device_bindings": [
+      "google,lga-gpu",
+      "platform:rgx"
+    ],
+    "authenticated_image_membership_verified": false,
+    "qualification": "Retained static metadata only; member-to-authenticated-image extraction chain unavailable in this review.",
+    "actual_module_loading_or_KMI_qualified": false
+  },
+  "separate_existing_factory_evidence": {
+    "repo_path": "native-boot-inputs/evidence/factory-metadata.json",
+    "bytes": 10953,
+    "sha256": "ead74a1be70a64d3081ba36a223f563fc8b880dd7ad0d68018ec81e06248b7fc",
+    "factory_archive_sha256": "3721e6accc2e87d851ee7966d794318078ec74c7cc32343daa10968264d6bb62",
+    "whole_archive_authenticated_as_recorded": true,
+    "vendor_dlkm_image_sha256": "a41db39a1ffbb91b7176ddfc3a4bd1a424200961cd806fa2a3dfa250c32b038a",
+    "kernel_4k_image_sha256": "0226c3be4224b02884d4f9b332aee58ec06c65b2263265e80f2498332ef15c06",
+    "kernel_4k_release": "6.6.127-android15-8-g91d825611104-ab16252310-4k",
+    "kernel_kmi_qualified": false,
+    "retained_module_membership_follows_from_this_aggregate": false
+  },
+  "public_contract": {
+    "mapper_header_blob": "23de7b9b71a889954a5bf361cfc186cfc8076ce4",
+    "mapper_api_executed": false,
+    "mapper_api_is_optional_only": true
+  },
+  "limits": [
+    "No private input, proprietary payload, configuration body, decompilation or raw audit is published.",
+    "Static strings, symbols and version metadata do not prove driver connection, source equivalence, module loading or KMI.",
+    "Prior user-mode original execution, generic ARM kernel rendering and physical-device qualification remain separate.",
+    "Successful genuine PowerVR initialization, allocation/import, fences, teardown and separate vs_drm scanout remain unqualified.",
+    "The existing manifest is preserved; this review checks its file pins without regenerating the factory inventory."
+  ]
+}

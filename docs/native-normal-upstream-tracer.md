@@ -190,3 +190,44 @@ during rendering-only stalls, uninterruptible kernel work, native display or
 vendor cleanup, ARM or a physical phone. Continue with cold installed startup
 through real units/configuration and the genuine shell, then installed ARM app/
 theme composition and the concrete matched Pixel graphics/userspace boundary.
+
+## Explicit installed session selection
+
+The core Makefile intentionally installs eight files and examples. A separate
+`install-normal-session` target now takes an explicit source root and manifest;
+it does not silently turn those examples into operational policy. The generic
+stdlib installer validates all selected paths, hashes, modes and destination
+metadata before writing. It fetches nothing, enables or starts no service and
+adds no retry. Staging is file-by-file, so an I/O failure remains a failed partial
+installation rather than an atomic whole-bundle claim.
+
+The frozen consumer first records a genuine missing-target RED with host
+GNUmake4.3: the original eight-file install passes, then the new target exits2
+with its exact missing-rule diagnostic. An earlier host attempt lacks `make`
+and remains setup failure. After implementation, the same consumer and unchanged
+205-file Root-selected virtual-device bundle pass. All196 original Omarchy
+v4.0.4 source blobs and modes match the pinned lock. All213 installed files match,
+with no extras. Both actual epochs retain three direct parent waits and three
+merged PIPE EOFs, unchanged selected inputs and no cleanup errors. Eight further
+filesystem cases pass, including corrupt-source, traversal, duplicate-key,
+symlink, collision and privileged-mode refusals.
+
+This is host destination byte/mode evidence, not an executed root-owned guest
+installation or a systemd startup result. The selected bundle explicitly names
+virtual audio, one normal compositor/Source session and a direct full-shell unit
+with Restart=no. `Type=exec` and `After=` establish ordering only; they do not
+prove endpoint readiness. The proposed cold trace must use those selected bytes,
+without prepared warmup or a manual first Source load. Any early owner, service,
+full-shell module or Source failure must be retained with actual unit MainPID,
+cgroup and bounded journal evidence. Cold startup, full-shell rendering,
+Sounds/PCM and native cleanup remain unqualified by this installation result.
+
+Hash-only evidence: RED qualification
+`48950ca3dc2f549f0bf0da7ad095b338038090f451bd652383ca9ebe54fe762a`;
+GREEN qualification
+`572f6d7ff189d019b00a378d3d84de524d9239a128c41ecb9976fbf4452c8090`;
+actual GREEN result
+`8763e0134020d0f3e104ecb2dc308cc72db7b2403012e15880470d24fd9561b9`;
+filesystem suite result
+`74138838b12a4abe6226e93ab852a818e6d1be2ac05f7b08d6fd4787e39358df`.
+Private deployment inputs and raw outputs are retained outside the repository.
