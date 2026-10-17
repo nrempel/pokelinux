@@ -48,7 +48,10 @@ successful six-argument normal-main GUI path is separately qualified in the
 Native default builds invoke locked/offline Cargo; dependencies must already be
 cached. An explicit archive requires its SHA256, and cross builds require a
 pinned matching-target archive. A separate manual ARM Qt6.12 build and component
-run now pass; production ARM CMake and a normal ARM window remain open.
+run now pass. A later native ARM production CMake Release build installs the normal
+app and protected QML with the explicit matching archive and passes the nine-group
+consumer. A normal ARM window and ARM default Cargo remain open; see the
+[CMake/install result](../docs/native-messages-rust-client.md#native-arm-production-cmake-build-and-installation).
 CMake compiles the public header; it does not install an FFI SDK.
 
 The permanent native Qt regressions use authored root peers in a disposable test

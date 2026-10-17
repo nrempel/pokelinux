@@ -1,0 +1,410 @@
+{
+  "Messages_implementation_commit": "2865fa0298e2290b34600bf9cb9d7d000a74e60b",
+  "Rust_AArch64_archive": {
+    "bytes": 25003610,
+    "sha256": "c57aabc7a81eb728278ec9341d9540bfd50d9c9de7551c08a2fba093566217a1"
+  },
+  "actual_execution": {
+    "bytes": 2885,
+    "sha256": "9a79d9fea509feb708ac3e3d2da989bb5dd242f191bbea6341eda344eee4aef0"
+  },
+  "actual_result": {
+    "bytes": 29941,
+    "sha256": "66bcb73ddaf66394052be3bcc456089378b45af7faed011a6cb23f38b88237fc"
+  },
+  "artifact_hashes": {
+    "commands/actual353-additive-projection.log": {
+      "bytes": 618,
+      "sha256": "6ea1d11afc351e921cbd81c39e88e18484cccf82519351dc8a2439b826ed6c7a"
+    },
+    "commands/actual353-external-dependencies.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "commands/archive-defined-symbols.log": {
+      "bytes": 305845,
+      "sha256": "fae1b1907a2e7582c4bb37f1e772e54681ea1f835beb505b69f269f3ba16915b"
+    },
+    "commands/messages-client-test-commands.log": {
+      "bytes": 2139,
+      "sha256": "be59122825d5709c3618c671e19d15f10c33a72605a578e80e02d72f295a7e00"
+    },
+    "commands/normal-defined-symbols.log": {
+      "bytes": 213098,
+      "sha256": "6181cd5dc7a8c4c90596cab4a3497e9ed2cb4a6cfb52c8837e6d0e9d1da4c6f0"
+    },
+    "commands/packages-after.log": {
+      "bytes": 7141,
+      "sha256": "8cb7ded65abc203a53f0ebf4045b6efda5aa3cf6f10b88fb67497a8258836549"
+    },
+    "commands/packages-before.log": {
+      "bytes": 6996,
+      "sha256": "b8aea755b307ba77aa2a941060aab3f963bb6ca7eaa059f61f0b683c8184e10d"
+    },
+    "commands/pokelinux-messages-commands.log": {
+      "bytes": 9307,
+      "sha256": "98a7470956df4a925587d2bceeb9cf7feaec94fd6095599d6d31ddb83ab545c0"
+    },
+    "commands/production-CMake-build.log": {
+      "bytes": 1416,
+      "sha256": "a67732b56a47a709c1aa41b5196135a17c87e478caeda0d978a12a1a129728e7"
+    },
+    "commands/production-CMake-configure.log": {
+      "bytes": 799,
+      "sha256": "0db5fb80382b550967f064cb92bcb00c857508dfd520da2af0e4e9c413d561d1"
+    },
+    "commands/production-CMake-install.log": {
+      "bytes": 228,
+      "sha256": "72c66faf291519238685e154fac48b3ca92185944f3b3b3af5ff2bc012e9ae6a"
+    },
+    "commands/strict-signed-offline8-install.log": {
+      "bytes": 1064,
+      "sha256": "2e820478a6d772ab90818a2c166b47ebefda6fd5c7c71d4974469fe2a7847cdd"
+    }
+  },
+  "claims": {
+    "ARM_default_Cargo": false,
+    "ARM_production_CMake_matching_archive": true,
+    "GUI_window_or_DPR": false,
+    "UID11010_runtime": false,
+    "actual_disposable_guest_CMake_install": true,
+    "frozen_nine_C_ABI_groups": true,
+    "full_installed_ARM_service_app_shell_cohort": false,
+    "normal_main_executed": false,
+    "physical_phone_hardware_PAM_suspend_modem_carrier": false,
+    "separate_compiler_direct_waits": false
+  },
+  "command": {
+    "bytes": 1360,
+    "sha256": "6166f285dbc75dd0053be3c44be357bef66aed6cb3e378c85d5116df11aa71ba"
+  },
+  "compiled_code_comparison_public_base": "4d662b6214e69d5423b62161b344db1d54f7638f",
+  "current_compiled_code_unchanged_post_run": true,
+  "frozen_nine_group_consumer": {
+    "bytes": 24323,
+    "sha256": "c86382942c0226bd5a61bdb788a029f5642e4fc3858d6cf69fce1c7589818bb5"
+  },
+  "historical_manual_ARM_evidence_preserved": true,
+  "independent_closed_review": {
+    "bytes": 9878,
+    "sha256": "65b1d096497ee9783ce4a8dc6a2025b78ab40bb198797a7bf0c6fa59abf585c7"
+  },
+  "installed_files": {
+    "/usr/libexec/pokelinux/pokelinux-messages": {
+      "bytes": 5933136,
+      "gid": 0,
+      "mode": "0755",
+      "sha256": "500f8bf6836fb547a465d8a376e6042cb7574cee2a4d9e295157407411802652",
+      "uid": 0
+    },
+    "/usr/share/applications/org.omarchy.Messages.desktop": {
+      "bytes": 299,
+      "gid": 0,
+      "mode": "0644",
+      "sha256": "e77cba1df72466dc1a6f601aaa46ff0fd35686e545691cbe6001ad457ad5051a",
+      "uid": 0
+    },
+    "/usr/share/pokelinux/appearance/PhoneAppearance.qml": {
+      "bytes": 1954,
+      "gid": 0,
+      "mode": "0644",
+      "sha256": "705ab25799cba18095a76f4fb47e70eb10099ca035426d7e4400fa9cef8452bc",
+      "uid": 0
+    }
+  },
+  "mandatory_consumer_AArch64_ELF": {
+    "bytes": 5903904,
+    "sha256": "2d886f7774320cf78b1cd86540aaba644bb73e71dbf4a9d4b25cb9fa3bd0ab2c"
+  },
+  "normal_AArch64_ELF": {
+    "bytes": 5933136,
+    "sha256": "500f8bf6836fb547a465d8a376e6042cb7574cee2a4d9e295157407411802652"
+  },
+  "package_transaction": {
+    "after_packages": 361,
+    "all_original_versions_unchanged": true,
+    "exact_additions": 8,
+    "offline_signed_native_pacman": true,
+    "original_packages": 353,
+    "packages": [
+      {
+        "architecture": "aarch64",
+        "compressed_bytes": 316428,
+        "name": "cppdap",
+        "sha256": "daf4c7990af45016ffa92b9af8f995dd816ef9755e181dc634a6aab15452cdab",
+        "signature_sha256": "d1cc43c39ca388a515833c63eda18833779d38b85e42a31ff732ee26b3ca4b2b",
+        "version": "1.58.0-3"
+      },
+      {
+        "architecture": "aarch64",
+        "compressed_bytes": 136220,
+        "name": "jsoncpp",
+        "sha256": "d013ab87d21e0cbcf284772523f08c373d14c0a50ad708bdd28e5f727a684395",
+        "signature_sha256": "d9154732b87135f20aff334e7634e10e0f34f31c1edb65bbb16e45c553e46732",
+        "version": "1.9.8-1"
+      },
+      {
+        "architecture": "aarch64",
+        "compressed_bytes": 252776,
+        "name": "libuv",
+        "sha256": "b7ef4dd7c5dd724a71ad37a28640057cc75988cf8f49b605d3b6b468ef2ee854",
+        "signature_sha256": "8d77a301695203bc18aa251413a267f88f0f6d3a880218e188b8b20ba4587784",
+        "version": "1.52.1-2"
+      },
+      {
+        "architecture": "aarch64",
+        "compressed_bytes": 173616,
+        "name": "rhash",
+        "sha256": "ceaaa210a8a222d724971709e928b9a0c1cbb3d7838c94ec8719b14a37280260",
+        "signature_sha256": "02107c03b9eea1d5e0a7efa5c6d8db3ed779d201b8faa8f7299bd6756ce513f5",
+        "version": "1.4.6-1"
+      },
+      {
+        "architecture": "aarch64",
+        "compressed_bytes": 23320952,
+        "name": "cmake",
+        "sha256": "d03c7956ca35408d50b3bf72a318386e44a07331bf3ab61e9f598a1c4b33086b",
+        "signature_sha256": "4f326e1292a9dba67c7e773e2909ef43e10bbd89c87dfd1542a4fa90e64cb1f6",
+        "version": "4.4.4-1"
+      },
+      {
+        "architecture": "aarch64",
+        "compressed_bytes": 173996,
+        "name": "ninja",
+        "sha256": "4455a6c92fb38e8d5d0172176bb19d9ee6e9f2c6acae9aced5d65752fdd47290",
+        "signature_sha256": "dfac59ccb7bec23adedaff055203dd5902fb0b10e456706d4ac2ae63b31ec5e9",
+        "version": "1.13.2-3"
+      },
+      {
+        "architecture": "aarch64",
+        "compressed_bytes": 76716,
+        "name": "hyprwayland-scanner",
+        "sha256": "2f383690181cb35c25827a2ce7675d3fbf4cda3e7d30840df0626837048a6487",
+        "signature_sha256": "25704aa4fdad191faa77caf2785e23babcbc1c0a32b1a2d57e9d7d4417df100b",
+        "version": "0.4.6-1"
+      },
+      {
+        "architecture": "aarch64",
+        "compressed_bytes": 11232,
+        "name": "hyprland-protocols",
+        "sha256": "072f7700e0cdc36835783935e1ef88ea47da4cb7b5eed34b758df426dc7987f5",
+        "signature_sha256": "368046249b4cb2c8dd3230b01126a9ec932d59050049b53e6865475b0c99513f",
+        "version": "0.7.1-1"
+      }
+    ],
+    "required_signer_fingerprint": "68B3537F39A313B3E574D06777193F152BDBE6A6",
+    "retained_signature_PKGINFO_receipt": {
+      "bytes": 6422,
+      "sha256": "41d290aa730566284e05962a3b2c71a1e391bff1912439293dd84f3ec1b59759"
+    },
+    "source_selection": {
+      "bytes": 12580,
+      "sha256": "148866062504d1fac1a785319077712de99d8a87bec6c2b2376438ee6bcb07cc"
+    }
+  },
+  "post_run_documentation_changes_are_not_tested_source": true,
+  "post_run_documentation_delta": [
+    "README.md",
+    "docs/native-messages-rust-client.md",
+    "native-messages-ui/README.md",
+    "docs/development-handoff.md",
+    "docs/smartphone-goal.md",
+    "docs/runtime-language-decision.md"
+  ],
+  "post_run_documentation_only_differences": [
+    "native-messages-ui/README.md"
+  ],
+  "provider": {
+    "CMake": "4.4.4",
+    "GNU_CXX": "16.1.1",
+    "Ninja": "1.13.2",
+    "Qt": "6.12.0",
+    "Qt_after": {
+      "bytes": 20178,
+      "sha256": "db250aaf6f8c201bc291e0f20449aa6a143af5aa2d90ebde320ba72bb1e0129a"
+    },
+    "Qt_before": {
+      "bytes": 20178,
+      "sha256": "db250aaf6f8c201bc291e0f20449aa6a143af5aa2d90ebde320ba72bb1e0129a"
+    },
+    "actual_Qt_libraries_and_plugins": 50,
+    "actual_tool_ELFs": [
+      {
+        "ELF_class": 64,
+        "ELF_machine": "AArch64",
+        "bytes": 2365000,
+        "mode": "0o755",
+        "path": "/usr/bin/g++",
+        "resolved_path": "/usr/bin/g++",
+        "sha256": "4adcbd630a7bbbb043a38aaa5545b0322a183938ea5fb9a737398a796e131836",
+        "uid": 0
+      },
+      {
+        "ELF_class": 64,
+        "ELF_machine": "AArch64",
+        "bytes": 1050896,
+        "mode": "0o755",
+        "path": "/usr/lib/qt6/moc",
+        "resolved_path": "/usr/lib/qt6/moc",
+        "sha256": "9cf3b7551723b8a24926657caa9b440455e52145ec989c5c4502028f0e166c21",
+        "uid": 0
+      },
+      {
+        "ELF_class": 64,
+        "ELF_machine": "AArch64",
+        "bytes": 133352,
+        "mode": "0o755",
+        "path": "/usr/lib/qt6/rcc",
+        "resolved_path": "/usr/lib/qt6/rcc",
+        "sha256": "bb146d6ff5426dfbaadd017dbac8b8ce436b87134d0e0710fc7295aa617062cc",
+        "uid": 0
+      },
+      {
+        "ELF_class": 64,
+        "ELF_machine": "AArch64",
+        "bytes": 13766960,
+        "mode": "0o755",
+        "path": "/usr/bin/cmake",
+        "resolved_path": "/usr/bin/cmake",
+        "sha256": "5f93c483c517b48a606fc773dace76e5206fd55869d66f8f413cadeaf6830ea0",
+        "uid": 0
+      },
+      {
+        "ELF_class": 64,
+        "ELF_machine": "AArch64",
+        "bytes": 461504,
+        "mode": "0o755",
+        "path": "/usr/bin/ninja",
+        "resolved_path": "/usr/bin/ninja",
+        "sha256": "671136a3af44c776f00c72fbdb6b2b04fd723394d12ef1570642ea78179002d5",
+        "uid": 0
+      },
+      {
+        "ELF_class": 64,
+        "ELF_machine": "AArch64",
+        "bytes": 264592,
+        "mode": "0o755",
+        "path": "/usr/bin/hyprwayland-scanner",
+        "resolved_path": "/usr/bin/hyprwayland-scanner",
+        "sha256": "779166513ca13d983f0bf91104de1d9afa868563e59982577a20bef9ebe5e6f6",
+        "uid": 0
+      }
+    ],
+    "generator": "Ninja",
+    "glibc": "2.43",
+    "guest_kernel": "7.1.6-1-aarch64-ARCH",
+    "installed_FFI_SDK_claimed": false,
+    "jobs": 6,
+    "native_build_type": "Release",
+    "normal_observer_or_test_wrappers": false,
+    "one_matching_archive_per_actual_link": true,
+    "public_header_compiled": true,
+    "same_before_after_and_retained_ARM": true
+  },
+  "public_C_ABI_header": {
+    "bytes": 9416,
+    "sha256": "77464323084b96c08f4d706c468f008803203e6a3182c1491f234264b84e2b0e"
+  },
+  "public_C_API_exports": [
+    "pr_messages_client_action_v1",
+    "pr_messages_client_deliver_v1",
+    "pr_messages_client_free_v1",
+    "pr_messages_client_join_result_v1",
+    "pr_messages_client_new_v1",
+    "pr_messages_client_received_v1",
+    "pr_messages_client_report_v1",
+    "pr_messages_client_step_v1",
+    "pr_messages_client_stop_v1",
+    "pr_messages_client_view_v1",
+    "pr_messages_client_worker_enter_v1",
+    "pr_messages_client_worker_exited_v1"
+  ],
+  "recorded_selection_source_head": "f5b2eede512e3ef672c75cb665f20ae9d63eca8b",
+  "results": {
+    "exact_owned_CID_absent": true,
+    "guest_Scope_actual_direct_waits": 24,
+    "guest_Scope_merged_stdout_PIPE_EOFs": 24,
+    "guest_work_elapsed_seconds": 152.879404823,
+    "mandatory_nine_groups": {
+      "exit": 0,
+      "passed": true,
+      "stdout": {
+        "bytes": 669,
+        "sha256": "9835f1f89356e4047154199fd7f953f93e6a2c5a2be958d95c325dc8a4017aba"
+      }
+    },
+    "optional_old7_or_order5_rerun": false,
+    "original_work_QEMU_outer_seconds": [
+      420,
+      540,
+      600
+    ],
+    "outer_CLI_elapsed_seconds": 174.302945625,
+    "outer_Docker_CLI_actual_waits": 1,
+    "outer_console_regular_not_PIPE_EOF": true,
+    "recorded_owned_CID_inspect_CLI_waits": 2,
+    "same_daemon_and_all_inputs_unchanged": true,
+    "separate_nested_C_ABI_actual_waits": 1,
+    "separate_nested_C_ABI_additional_PIPE_EOFs": 0
+  },
+  "schema": 1,
+  "scope": "Native AArch64 production CMake Release build and actual disposable-guest installation of current normal Messages using its explicit matching ARM Rust archive; nine frozen C ABI groups execute. Successful normal main/UID11010/window, default ARM Cargo and compiler direct-child waits are not qualified.",
+  "selected_repository_source_hashes": {
+    "native-app/PhoneAppearance.qml": "705ab25799cba18095a76f4fb47e70eb10099ca035426d7e4400fa9cef8452bc",
+    "native-app/PhoneAppearanceClient.cpp": "7a2a5d0d5f7a5012dd724596a1bf1f96d8fa9d3242c913933d8cf69fe9de34d9",
+    "native-app/PhoneAppearanceClient.h": "b7b12f9a1d335e9036dc065ea2218ca107d447f57e029fef674941e1520b4e92",
+    "native-app/appearance-client-tests/CMakeLists.txt": "287c36a3854a8bdef11d0d92f45a31892836ce19e2a004fb9aef23cbdd5d9579",
+    "native-app/appearance-client-tests/process.cpp": "95e5c11905062a891393f9ee7d0633cd8278f07f1d0fce82b7db1f2a9c81f5d7",
+    "native-messages-ui/CMakeLists.txt": "566cc38299d1ac2920d9666735a81b358cade01a2f3003d0593562aafa3cebff",
+    "native-messages-ui/MessagesClient.cpp": "15fb38e0372e1863dc8d3aeaaaeb6cee3ce63a9f43f86984c67f2e9accfa8929",
+    "native-messages-ui/MessagesClient.h": "70e35f8e4ff19e7ff9f939e7f2c587f1350eecf9828c92ce41d4b94364c5d930",
+    "native-messages-ui/MessagesView.qml": "e39c725fe014bf17e84a445065cbaacc093c09204f826f9068dafc22074e099c",
+    "native-messages-ui/README.md": "5f8e642cd698bb011b547b5a9e1a63064758bb7b968fca54479dcbf6fdf903d7",
+    "native-messages-ui/appearance-tests/CMakeLists.txt": "39a296caeb9eb86c6ef06195e282e85d143cd86e8d6ae490ce1d04928a794aac",
+    "native-messages-ui/appearance-tests/process.cpp": "1183872932f04c89ba21658d8332382f9f1ea71df963c59cdb81a09013036d6e",
+    "native-messages-ui/client-core/Cargo.lock": "6f3a254a3db007ce60a1e65b97416a804103529606c316de696dddcce1879436",
+    "native-messages-ui/client-core/Cargo.toml": "dd6cb54ff4ac64069ad5de9b45af8d7be409709a21d6a56e77f15ff316de766e",
+    "native-messages-ui/client-core/README.md": "ce7e24caeeb64b69ad0d08c106180d3ab3127c43b8b9b481e8dab3f8423deaef",
+    "native-messages-ui/client-core/include/pokelinux_messages_client.h": "77464323084b96c08f4d706c468f008803203e6a3182c1491f234264b84e2b0e",
+    "native-messages-ui/client-core/src/clock.rs": "4648db05efb4a170f1934946eeb1e9e093b19a93666df16f07b147e1d6e80e68",
+    "native-messages-ui/client-core/src/engine.rs": "60df497986d35784e8228b85180275e62169cf31c16d4e79b9788d443fcdbd30",
+    "native-messages-ui/client-core/src/ffi.rs": "d969ad3c4ede62b1e1815ea04d489fdac16d5f3c0521d4e34272bb450a2e5f3d",
+    "native-messages-ui/client-core/src/layout.rs": "1f31e02923478711a828bb585a3ff893071dabd8f93aa5f07d522fd0a09d2759",
+    "native-messages-ui/client-core/src/lib.rs": "8bb68d21bd7d0e91722beb044eecf776fa8adae2c0fc4f96184073071bcbcbb7",
+    "native-messages-ui/client-core/src/model.rs": "a36222def617728d366b8a5a5bd41d75694e7f74a98b909d6b03fecfd7357ce7",
+    "native-messages-ui/client-core/src/protocol.rs": "1a87d512d481daf86737668c6e92f61fb43496117416138af4de6db850b944b7",
+    "native-messages-ui/client-core/tests/client-functional.cpp": "c86382942c0226bd5a61bdb788a029f5642e4fc3858d6cf69fce1c7589818bb5",
+    "native-messages-ui/main.cpp": "fd0bd9f42af7e24759c4d70cadca5e8acc8b091334710047179ac053f11f225d",
+    "native-messages-ui/org.omarchy.Messages.desktop": "e77cba1df72466dc1a6f601aaa46ff0fd35686e545691cbe6001ad457ad5051a",
+    "native-messages-ui/resources.qrc": "91df1dfa68b76ec8ae48ecee92aeb7b6413a8d4d778cedc25c3e17b9e70f9c7d",
+    "native-messages-ui/worker-tests/CMakeLists.txt": "b3fa318af618adf869c5800bed6570c6d01cb998564ef541af1e8e1c919806a5",
+    "native-messages-ui/worker-tests/current-qt-behavior.cpp": "4e9c6b276de58e7f5971d66076ee5b33fb73d7efabfbf773df8c50fa441be6d2",
+    "native-messages-ui/worker-tests/overflow-projection.cpp": "d199861e78c670b29075a4476f267a356599989a9b6b1a7ab55efc80c2b6509d",
+    "native-messages-ui/worker-tests/pre-entry-join.cpp": "5c3a40ed6f28b5f03fe7ff0ec473d371c67faae7a8a03dac400ab78463ab1a70",
+    "native-messages-ui/worker-tests/process.cpp": "56f787b73c5da729c4cb5499dce05d7d9a08f52b510cf248b1a6f2ad4f9837e8",
+    "native-messages-ui/worker-tests/qt-order.cpp": "7db9d60a539e803b8d586e297648cfb34dbf2dcd844f00a2d2f5dd91e26d9140"
+  },
+  "selection": {
+    "bytes": 16640,
+    "sha256": "ca7a927c3c058b0f95ba4bc922b628c4a4de78707c676b57173d33fb7b0981a3"
+  },
+  "source_metadata_bridge": {
+    "Messages_implementation_commit": "2865fa0298e2290b34600bf9cb9d7d000a74e60b",
+    "all_selected_files_match_verified_snapshot": true,
+    "closed_review_selected_source_commit_field": "Echoes the recorded selection label; exact frozen file hashes and this verified full snapshot identify the selected sources",
+    "comparison_method": "Read-only git show for all33 selected paths at each of the three named commits, SHA256 compared with frozen selection.repository_sources; no runtime rerun",
+    "compiled_sources_CMake_header_consumer_identical_across_three_commits": true,
+    "differences_from_recorded_head_and_implementation_commit": [
+      {
+        "path": "native-messages-ui/README.md",
+        "recorded_head_and_implementation_commit_sha256": "f5fb8ac1553ae5d677c6b3a8430b6e26313cab07700854afbec5cc0ef7f38d09",
+        "selected_sha256": "5f8e642cd698bb011b547b5a9e1a63064758bb7b968fca54479dcbf6fdf903d7"
+      }
+    ],
+    "original_selection_result_review_unchanged": true,
+    "recorded_selection_source_head": "f5b2eede512e3ef672c75cb665f20ae9d63eca8b",
+    "selected_repository_files_compared": 33,
+    "verified_selected_source_snapshot": "4d662b6214e69d5423b62161b344db1d54f7638f"
+  },
+  "source_public_base": "4d662b6214e69d5423b62161b344db1d54f7638f"
+}

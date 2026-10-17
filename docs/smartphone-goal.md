@@ -34,7 +34,11 @@ Frozen C ABI and actual Qt/socket/thread/default-build tests pass, including
 pre-entry Stop and numeric-projection red-green regressions. A separate manual
 generic ARM kernel build links the normal Qt6.12 app and executes nine C ABI,
 seven typed worker and five Qt ordering groups with owned closure. This adds no
-normal-main/window or production ARM CMake result. See [ARM evidence](evidence/native-messages-arm-client-provenance.json).
+normal-main/window or production ARM CMake result. See [manual ARM evidence](evidence/native-messages-arm-client-provenance.json).
+A separate native ARM production CMake Release build and actual guest installation
+now pass with the matching archive and nine-group consumer. Normal ARM main,
+window, default Cargo and the complete installed cohort remain open.
+See [CMake/install evidence](evidence/native-messages-arm-cmake-provenance.json).
 The [fresh prepared x86 Messages window](native-messages-prepared-tracer.md) now
 passes denial, granted authored history, live original Omarchy theme switching
 and revoked-list clearing in one normal app/window. Four unmodified native

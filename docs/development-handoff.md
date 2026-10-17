@@ -52,9 +52,14 @@ separate regular stderr closes; that host epoch does not qualify ARM execution.
 A later manual generic ARM kernel build links the normal Qt6.12 app and executes
 nine frozen C ABI groups, seven typed worker controls and five Qt ordering cases.
 All49 distinct guest waits/18 PIPE EOFs close; compiler regular logs remain
-separate. The ARM normal app main/window and production ARM CMake remain
-unexecuted.
-See [ARM provenance](evidence/native-messages-arm-client-provenance.json).
+separate. See [manual ARM provenance](evidence/native-messages-arm-client-provenance.json).
+A later native ARM production CMake Release build and actual guest installation
+now pass with the explicit matching archive and frozen nine-group consumer.
+Eight signed additive tools preserve all353 original package versions; the50 Qt
+libraries/plugins remain identical.24 guest command waits/PIPE EOFs and one
+separate native child wait close within original bounds. Normal ARM main/window,
+default ARM Cargo and the full installed cohort remain open.
+See [CMake/install provenance](evidence/native-messages-arm-cmake-provenance.json).
 The [fresh prepared x86 Messages tracer](native-messages-prepared-tracer.md) now
 passes denial, granted authored history, original Omarchy live dark/light themes
 and revoked-list clearing in one normal app/window, with four Root-reviewed

@@ -109,6 +109,31 @@ and input closure pass. This is manual ARM build/component evidence, not product
 ARM CMake, a GUI or physical-device qualification. See the separate
 [hash-only ARM provenance](evidence/native-messages-arm-client-provenance.json).
 
+## Native ARM production CMake build and installation
+
+A separate native build in the generic Arch ARM7.1.6 QEMU guest now uses the
+current production CMake path. Eight signed offline build-tool packages extend
+the actual353-package base to361; all original versions remain unchanged.
+CMake4.4.4/Ninja1.13.2 build the full Release app against Qt6.12.0, GNU16.1.1 and
+the explicit matching ARM Rust archive. The50 actual Qt libraries/plugins match
+before and after, and the normal ELF and archive each expose the exact12 APIs.
+
+The frozen nine-group consumer passes with assertions enabled. Actual CMake
+installation places the normal app, desktop entry and protected
+`PhoneAppearance.qml` under `/usr`, with root ownership, required modes and
+matching hashes. The current six-argument contract is bound through the unchanged
+compiled main and installation; normal ARM main/UID11010/window execution remains
+open. This explicit-archive build does not qualify ARM default Cargo.
+
+All24 guest command waits and24 merged PIPE EOFs close within their original
+cutoffs. One separate native C ABI child wait adds no PIPE EOF. The actual outer
+Docker CLI wait, exact container absence, same daemon and input closure pass;
+regular console output is counted separately. The original420s work/540s QEMU/
+600s outer bounds remain. CMake/Ninja compiler descendants are not reported as
+separately observed direct child waits. The earlier seven worker and five Qt
+ordering controls retain their separate manual ARM result. See the new
+[hash-only CMake/install provenance](evidence/native-messages-arm-cmake-provenance.json).
+
 ## Prepared normal x86 window
 
 A later fresh Qt6.12 production CMake build now passes the normal UID11010
@@ -120,10 +145,10 @@ window/output measurements do not claim direct normal QWindow/DPR values.
 
 ## Remaining integration gates
 
-The current ARM normal application is compiled, not launched. Production ARM
-CMake, an ARM successful-main window, cold installed Omarchy/session
-composition, physical suspend, stuck kernel tasks and native display cleanup
-remain open. Existing older Messages GUI/ARM results select their recorded older
+The ARM normal main remains unexecuted. An ARM successful-main window, ARM
+default Cargo, the complete installed ARM service/app/shell cohort, cold installed
+Omarchy/session composition, physical suspend, stuck kernel tasks and native
+display cleanup remain open. Existing older Messages GUI/ARM results select their recorded older
 client and are not inherited. The new x86 screenshots qualify only their prepared
 session; no phone, vendor modem,
 continuous incoming/SMS send, notifications/wake or carrier result is claimed.

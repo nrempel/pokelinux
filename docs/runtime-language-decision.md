@@ -31,8 +31,11 @@ parser/model, pagination, generation, scheduling and worker-lifetime policy in
 Rust. Nine frozen C ABI groups, actual Qt/worker controls, thirteen permanent
 CTest cases, default full-host linking and an ARM64 archive build pass. A later
 manual generic ARM kernel build links the normal Qt6.12 app and executes nine
-C ABI, seven typed worker and five Qt ordering groups; normal-main/window and
-production ARM CMake remain unqualified. See [ARM evidence](evidence/native-messages-arm-client-provenance.json).
+C ABI, seven typed worker and five Qt ordering groups. See [manual ARM evidence](evidence/native-messages-arm-client-provenance.json).
+A separate native ARM production CMake Release build and guest installation now
+pass with the explicit matching archive and nine-group consumer. Normal-main/
+window, ARM default Cargo and the full installed ARM cohort remain unqualified.
+See [CMake/install evidence](evidence/native-messages-arm-cmake-provenance.json).
 A later [prepared x86 Messages session](native-messages-prepared-tracer.md) now
 passes denied/granted history, original Omarchy live themes and revocation in
 one normal app/window with native captures and owner Stop/closure. Shared
