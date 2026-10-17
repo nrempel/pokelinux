@@ -129,7 +129,11 @@ PCM case stays false. All146 waits,153 PIPE EOFs, separate QMP EOF and eight
 unit-reference returns close within original limits, with exact input/container
 closure and no cleanup errors. Diagnostic provenance retains these results.
 
-Next measure bounded entry/exit spans at the original compositor callback
-boundaries, using BOOTTIME and main-thread CPU time, with explicit coverage and
-overflow. This is a proposed diagnostic, not an implemented production repair.
-Keep default logging for that measurement, Source100ms and all functional gates.
+The later [bounded callback diagnostic](native-callback-spans.md) keeps default
+logging, Source100ms and all functional gates. Its retained native ring records
+an unmatched AQ callback entry27.131us after Source1; the sample expires at
+109.601368ms. The writer is already observed dead before explicit manager Stop.
+The earlier shortened-shell-argv assertion and shell255 remain failed;148 waits/
+155 PIPE EOFs close. No callback CPU duration, internal cause or production repair
+is inferred. Next distinguish the AQ resource with bounded existing-watch fd
+metadata, retaining fd-reuse uncertainty.

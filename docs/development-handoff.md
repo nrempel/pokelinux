@@ -124,9 +124,16 @@ waits/153PIPE plus original closure pass, while full startup stays false. The
 structural RED→native component GREEN and its matching full GNU16 compositor/
 498-file SDK build. Its1024-record BOOTTIME/main-thread CPU ring brackets only
 three existing callback sites. All16 component and31 build waits/merged EOFs
-close separately. Next run the fresh cold diagnostic with retained inode/main
-pidfd and post-exit reading, keeping default logging and all Source/functional
-gates. Native callback dispatch, cause and production repair remain unqualified.
+close separately. The fresh cold diagnostic now executes real deferred/AQ
+callbacks with retained inode/main pidfd and post-exit reading. It keeps31 commits,
+14 complete deferred spans, one complete AQ span and one unmatched AQ fd25 entry
+27.131us after Source1; the cached sample expires at109.601368ms. Writer death is
+already observed before explicit manager Stop, so neither a permanently blocked
+call, CPU duration, internal cause nor shutdown trigger is established. The case
+retains its shortened-shell-argv assertion and later shell255; all148 waits/155
+PIPE plus original closure pass. The next focused observation is bounded fd
+metadata in the existing watch, with reuse uncertainty. Full cold startup,
+new-client/GUI/PCM and production repair remain unqualified.
 
 The Rust [one-shot add-PDN response observer](native-radio-add-pdn-response.md)
 now retains immutable request/session/route/error/byte history after frozen

@@ -43,9 +43,11 @@ Stop after Source loss exits cleanly. Healthy cold startup remains open. A later
 explicit 16-CPU diagnostic still expires Source at103.24ms; all 60 captured
 container CPU-counter samples report zero quota throttling. The cause remains
 unidentified; this resource change is not a production repair.
-A [bounded callback diagnostic](docs/native-callback-spans.md) now passes native
-component checks and a matching full compositor/SDK build. Real callback dispatch
-and a fresh cold-start diagnostic remain next; no cause or repair is inferred.
+A [bounded callback diagnostic](docs/native-callback-spans.md) now records real
+native callbacks after its component/full-build checks. An AQ callback enters
+27us after Source1 with no recorded normal return; Source expires at110ms. The
+writer is already dead before later manager Stop. Cold startup still fails;
+the internal operation, missing-return reason and production repair remain open.
 [Native SIGTERM Stop](docs/native-session-signal-stop.md) also passes before
 readiness, with Main exit0 and no adopted children. The [explicit deployment
 installer](docs/native-normal-upstream-tracer.md#explicit-installed-session-selection)

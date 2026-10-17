@@ -1,9 +1,38 @@
 # Cold startup callback diagnostic
 
-A bounded diagnostic now passes its native component consumer and a complete
-matching Hyprland/SDK build. It has not yet executed real compositor callbacks
-or identified the cold-start Source gap. The unchanged100ms freshness rule and
-full installed shell/Sounds consumer remain the acceptance gates.
+One actual cold native x86 diagnostic now records a useful lead: Aquamarine
+fd25 enters27.131us after Source1, with no committed normal return before the
+writer dies. The authenticated observer rejects that sample at109.601368ms
+against the unchanged100ms lease. This identifies a callback entry and missing
+return, not a permanently blocked call, internal operation, CPU duration or cause.
+Full installed shell/Sounds startup remains failed.
+
+The retained post-retirement file contains31 committed records,14 complete
+deferred spans, one complete AQ span and one unmatched AQ entry. There is no
+overflow, partial final reservation, saturation or clock-error flag. The short
+AQ fd22 span starts11.581us after Source1 and returns26.650us after it; fd25 enters
+0.481us later. The last deferred return precedes Source1 by8.937us. No selected
+event-loop timer callback is qualified by this epoch. Root and an independent
+reviewer recompute the frozen reader output directly from the same retained raw
+file; PID/TID match the authenticated compositor main. Raw rings and addresses
+remain private.
+
+The writer is already observed dead before the later explicit manager Stop.
+That Stop separately records Main0/Resultsuccess and an empty cgroup. Do not
+attribute writer death to that later request or call process retirement native
+graphics cleanup. The whole case retains its earlier shell-argv identity
+assertion: observed `/usr/bin/quickshell` does not match the full selected argv;
+the shell later exits255 after Wayland connection refusal. This observer failure
+is preserved alongside the independently authenticated Source expiry.
+
+All148 direct waits and155 PIPE EOFs close, with separate QMP EOF, actual QEMU/
+CLI0, exact container absence and unchanged inputs. All60 captured own-cgroup
+CPU samples report zero quota throttling; their last sample precedes QMP shutdown
+by389.368417ms. No quota or single-thread CPU cause follows. The original205-file
+default-logging profile, old cold-fixture Qt client, four existing Rust roles and
+full positive consumer are retained. This is no new-client, four-group GUI/PCM,
+ARM or phone result. The next bounded diagnostic is passive fd metadata in the
+existing watch to distinguish the AQ resource, preserving fd-reuse uncertainty.
 
 The [temporary upstream patch](../tools/native-callback-spans/callback-span-producer.patch)
 brackets existing Aquamarine, selected event-loop timer and deferred callbacks.
@@ -40,8 +69,8 @@ with31 direct waits/31 merged PIPE EOFs, separate QMP EOF, actual QEMU/CLI0,
 exact container absence, unchanged inputs and the original resource/deadline
 limits. It executes no compositor ELF, Source, app or hardware.
 
-The next runtime must retain the exact tmpfs file descriptor/device/inode and
-compositor main pidfd, require PID=TID=actual main, and read only after exact
+The runtime retains the exact tmpfs file descriptor/device/inode and
+compositor main pidfd, requires PID=TID=actual main, and reads only after exact
 writer death and source retirement. At most16 Source stamps may come from the
 existing authenticated observer records; no second Source reader is added.
 Temporal overlap, elapsed-vs-thread-CPU time and unmatched entries each have
