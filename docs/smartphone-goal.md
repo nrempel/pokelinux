@@ -31,9 +31,12 @@ remain open.
 The [Rust Messages client engine](native-messages-rust-client.md) now also owns
 request/parser/model, pagination, generations, scheduling and worker lifetime.
 Frozen C ABI and actual Qt/socket/thread/default-build tests pass, including
-pre-entry Stop and numeric-projection red-green regressions. Host and ARM64
-archives build; only host integration executes in this epoch. Shared appearance
-Rust migration, normal cold/window composition and all phone gates remain open.
+pre-entry Stop and numeric-projection red-green regressions. A separate manual
+generic ARM kernel build links the normal Qt6.12 app and executes nine C ABI,
+seven typed worker and five Qt ordering groups with owned closure. This adds no
+normal-main/window or production ARM CMake result. See [ARM evidence](evidence/native-messages-arm-client-provenance.json).
+Shared appearance Rust migration, normal cold/window composition and all phone
+gates remain open.
 
 Two additional [whole-compositor stall epochs](native-normal-upstream-tracer.md#compositor-freeze-expiry-and-stop)
 now qualify independent100ms Source-expiry withdrawal/quietness/refusal before

@@ -1,0 +1,189 @@
+{
+  "Rust_AArch64_archive": {
+    "bytes": 25003610,
+    "sha256": "c57aabc7a81eb728278ec9341d9540bfd50d9c9de7551c08a2fba093566217a1"
+  },
+  "actual_execution": {
+    "bytes": 2886,
+    "sha256": "cc5e13be7cf1e069329ac3f7f9080ee2d01b1981089ab4080f7e5d598ea0daad"
+  },
+  "actual_result": {
+    "bytes": 958569,
+    "sha256": "7f0295f5f065095d92f1c02986923e714b5d876ad83458269ec6fc163158b6e2"
+  },
+  "claims": {
+    "ARM_production_CMake": false,
+    "DPR_or_PAM": false,
+    "GUI_window": false,
+    "UID11010_runtime": false,
+    "normal_ARM_build_and_components": true,
+    "normal_main_executed": false,
+    "physical_phone_or_hardware": false
+  },
+  "frozen_nine_group_consumer": {
+    "bytes": 24323,
+    "sha256": "c86382942c0226bd5a61bdb788a029f5642e4fc3858d6cf69fce1c7589818bb5"
+  },
+  "independent_closed_review": {
+    "bytes": 10734,
+    "sha256": "76fca109add4a9ead058fa209c537df50d79a7883674c5c84a6a7e5060c108a5"
+  },
+  "mandatory_consumer_AArch64_ELF": {
+    "bytes": 5917272,
+    "sha256": "ea2158cc3d41bc71bacbf8a1cf8714050e823db0b7ae0537435b9fcd7198bfdf"
+  },
+  "normal_AArch64_ELF": {
+    "bytes": 6257136,
+    "sha256": "0d0172b6e8bc56fb5590630fe25e148d08938ee86f1e47140eeccd04716a97b5"
+  },
+  "provider": {
+    "GNU_CXX": "16.1.1",
+    "Qt": "6.12.0",
+    "Qt_library_plugin_cohort": {
+      "bytes": 20178,
+      "sha256": "db250aaf6f8c201bc291e0f20449aa6a143af5aa2d90ebde320ba72bb1e0129a"
+    },
+    "actual_tool_ELF_hashes": {
+      "/usr/bin/g++": "4adcbd630a7bbbb043a38aaa5545b0322a183938ea5fb9a737398a796e131836",
+      "/usr/lib/qt6/moc": "9cf3b7551723b8a24926657caa9b440455e52145ec989c5c4502028f0e166c21",
+      "/usr/lib/qt6/rcc": "bb146d6ff5426dfbaadd017dbac8b8ce436b87134d0e0710fc7295aa617062cc"
+    },
+    "fresh_verified_Qt_library_plugin_count": 50,
+    "glibc": "2.43",
+    "guest_kernel": "7.1.6-1-aarch64-ARCH",
+    "manual_compile_not_production_CMake": true,
+    "normal_compile_flags": [
+      "-std=c++17",
+      "-O0",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-fPIC"
+    ],
+    "normal_observer_or_test_wrappers": false,
+    "one_explicit_matching_Rust_archive_per_link": true
+  },
+  "public_C_ABI_header": {
+    "bytes": 9416,
+    "sha256": "77464323084b96c08f4d706c468f008803203e6a3182c1491f234264b84e2b0e"
+  },
+  "results": {
+    "component_and_nested_PIPE_EOFs": 18,
+    "component_and_nested_actual_waits": 19,
+    "exact_owned_CID_absent": true,
+    "guest_tool_compiler_direct_waits_to_regular_logs": 30,
+    "mandatory_nine_groups": {
+      "exit": 0,
+      "passed": true
+    },
+    "optional_five_Qt_order_cases": [
+      {
+        "case": "notify-deliver-before-ack",
+        "exit": 0,
+        "passed": true
+      },
+      {
+        "case": "stale-deliver-before-ack",
+        "exit": 0,
+        "passed": true
+      },
+      {
+        "case": "stop-connect-entered",
+        "exit": 0,
+        "passed": true
+      },
+      {
+        "case": "stop-send-entered",
+        "exit": 0,
+        "passed": true
+      },
+      {
+        "case": "stop-notify-unacked",
+        "exit": 0,
+        "passed": true
+      }
+    ],
+    "optional_seven_worker_cases": [
+      {
+        "case": "held-close",
+        "exit": 0,
+        "passed": true
+      },
+      {
+        "case": "clock-admission",
+        "exit": 0,
+        "passed": true
+      },
+      {
+        "case": "clock-completion",
+        "exit": 0,
+        "passed": true
+      },
+      {
+        "case": "held-clock-close",
+        "exit": -6,
+        "passed": true
+      },
+      {
+        "case": "wait-report-failure",
+        "exit": -6,
+        "passed": true
+      },
+      {
+        "case": "within-budget",
+        "exit": 0,
+        "passed": true
+      },
+      {
+        "case": "late-completion",
+        "exit": 0,
+        "passed": true
+      }
+    ],
+    "original_work_QEMU_outer_seconds": [
+      420,
+      540,
+      600
+    ],
+    "outer_Docker_CLI_wait": true,
+    "same_daemon_and_all_inputs_unchanged": true
+  },
+  "schema": 1,
+  "scope": "Fresh manual native AArch64 full normal Messages ELF built in a cached Arch ARM TCG guest, with actual frozen nine-group C ABI execution, seven typed worker checks and five Qt ordering checks. Normal application main/window, production ARM CMake, QML/UID11010 runtime, DPR, PAM/authentication, physical phone and hardware were not qualified.",
+  "selected_repository_source_hashes": {
+    "native-app/PhoneAppearance.qml": "705ab25799cba18095a76f4fb47e70eb10099ca035426d7e4400fa9cef8452bc",
+    "native-app/PhoneAppearanceClient.cpp": "7a2a5d0d5f7a5012dd724596a1bf1f96d8fa9d3242c913933d8cf69fe9de34d9",
+    "native-app/PhoneAppearanceClient.h": "b7b12f9a1d335e9036dc065ea2218ca107d447f57e029fef674941e1520b4e92",
+    "native-app/appearance-client-tests/CMakeLists.txt": "287c36a3854a8bdef11d0d92f45a31892836ce19e2a004fb9aef23cbdd5d9579",
+    "native-app/appearance-client-tests/process.cpp": "95e5c11905062a891393f9ee7d0633cd8278f07f1d0fce82b7db1f2a9c81f5d7",
+    "native-messages-ui/CMakeLists.txt": "566cc38299d1ac2920d9666735a81b358cade01a2f3003d0593562aafa3cebff",
+    "native-messages-ui/MessagesClient.cpp": "15fb38e0372e1863dc8d3aeaaaeb6cee3ce63a9f43f86984c67f2e9accfa8929",
+    "native-messages-ui/MessagesClient.h": "70e35f8e4ff19e7ff9f939e7f2c587f1350eecf9828c92ce41d4b94364c5d930",
+    "native-messages-ui/MessagesView.qml": "e39c725fe014bf17e84a445065cbaacc093c09204f826f9068dafc22074e099c",
+    "native-messages-ui/README.md": "f5fb8ac1553ae5d677c6b3a8430b6e26313cab07700854afbec5cc0ef7f38d09",
+    "native-messages-ui/appearance-tests/CMakeLists.txt": "39a296caeb9eb86c6ef06195e282e85d143cd86e8d6ae490ce1d04928a794aac",
+    "native-messages-ui/appearance-tests/process.cpp": "1183872932f04c89ba21658d8332382f9f1ea71df963c59cdb81a09013036d6e",
+    "native-messages-ui/client-core/Cargo.lock": "6f3a254a3db007ce60a1e65b97416a804103529606c316de696dddcce1879436",
+    "native-messages-ui/client-core/Cargo.toml": "dd6cb54ff4ac64069ad5de9b45af8d7be409709a21d6a56e77f15ff316de766e",
+    "native-messages-ui/client-core/README.md": "ce7e24caeeb64b69ad0d08c106180d3ab3127c43b8b9b481e8dab3f8423deaef",
+    "native-messages-ui/client-core/include/pokelinux_messages_client.h": "77464323084b96c08f4d706c468f008803203e6a3182c1491f234264b84e2b0e",
+    "native-messages-ui/client-core/src/clock.rs": "4648db05efb4a170f1934946eeb1e9e093b19a93666df16f07b147e1d6e80e68",
+    "native-messages-ui/client-core/src/engine.rs": "60df497986d35784e8228b85180275e62169cf31c16d4e79b9788d443fcdbd30",
+    "native-messages-ui/client-core/src/ffi.rs": "d969ad3c4ede62b1e1815ea04d489fdac16d5f3c0521d4e34272bb450a2e5f3d",
+    "native-messages-ui/client-core/src/layout.rs": "1f31e02923478711a828bb585a3ff893071dabd8f93aa5f07d522fd0a09d2759",
+    "native-messages-ui/client-core/src/lib.rs": "8bb68d21bd7d0e91722beb044eecf776fa8adae2c0fc4f96184073071bcbcbb7",
+    "native-messages-ui/client-core/src/model.rs": "a36222def617728d366b8a5a5bd41d75694e7f74a98b909d6b03fecfd7357ce7",
+    "native-messages-ui/client-core/src/protocol.rs": "1a87d512d481daf86737668c6e92f61fb43496117416138af4de6db850b944b7",
+    "native-messages-ui/client-core/tests/client-functional.cpp": "c86382942c0226bd5a61bdb788a029f5642e4fc3858d6cf69fce1c7589818bb5",
+    "native-messages-ui/main.cpp": "fd0bd9f42af7e24759c4d70cadca5e8acc8b091334710047179ac053f11f225d",
+    "native-messages-ui/org.omarchy.Messages.desktop": "e77cba1df72466dc1a6f601aaa46ff0fd35686e545691cbe6001ad457ad5051a",
+    "native-messages-ui/resources.qrc": "91df1dfa68b76ec8ae48ecee92aeb7b6413a8d4d778cedc25c3e17b9e70f9c7d",
+    "native-messages-ui/worker-tests/CMakeLists.txt": "b3fa318af618adf869c5800bed6570c6d01cb998564ef541af1e8e1c919806a5",
+    "native-messages-ui/worker-tests/current-qt-behavior.cpp": "4e9c6b276de58e7f5971d66076ee5b33fb73d7efabfbf773df8c50fa441be6d2",
+    "native-messages-ui/worker-tests/overflow-projection.cpp": "d199861e78c670b29075a4476f267a356599989a9b6b1a7ab55efc80c2b6509d",
+    "native-messages-ui/worker-tests/pre-entry-join.cpp": "5c3a40ed6f28b5f03fe7ff0ec473d371c67faae7a8a03dac400ab78463ab1a70",
+    "native-messages-ui/worker-tests/process.cpp": "56f787b73c5da729c4cb5499dce05d7d9a08f52b510cf248b1a6f2ad4f9837e8",
+    "native-messages-ui/worker-tests/qt-order.cpp": "7db9d60a539e803b8d586e297648cfb34dbf2dcd844f00a2d2f5dd91e26d9140"
+  },
+  "source_public_base": "2865fa0298e2290b34600bf9cb9d7d000a74e60b"
+}

@@ -15,6 +15,11 @@ groups and eight PCM windows/192,000 measured frames. Unedited Pixel10 captures
 and the [earlier queue-only result](docs/native-sounds-rust-queue.md) retain their
 separate evidence. Cold installed startup and ARM remain open.
 
+The [Messages request and model engine](docs/native-messages-rust-client.md) now
+also runs in Rust. The current app builds against Qt6.12 in an ARM virtual
+machine, where its engine and actual Qt worker checks pass. The normal ARM
+window, cold startup and physical SMS remain open.
+
 The [installed Rust radio operator](docs/native-radio-operator.md) now implements
 one privileged typed request through a durable intent writer and owned transport
 worker, with independent request history and responsive Stop.83 radio tests,
@@ -254,7 +259,7 @@ production session completion and all phone gates remain open.
 
 | Area | Evidence and scope | Still missing |
 |---|---|---|
-| Rust Messages client engine | Nine frozen C ABI groups, six current-Qt modes/40 parser rows, seven original worker controls, five real-thread ordering groups and13 permanent CTest cases pass. All29 appearance and UID11010 installed-QML controls are rerun; host/ARM archives and full host default Cargo/CMake build pass. [Report](docs/native-messages-rust-client.md) · [Evidence](docs/evidence/native-messages-rust-client-provenance.json) | ARM execution/full Qt app, normal successful-main window/cold session, shared appearance Rust migration, suspend and physical phone/SMS/carrier remain open |
+| Rust Messages client engine | Nine frozen C ABI groups, six current-Qt modes/40 parser rows, seven original worker controls, five real-thread ordering groups and13 permanent CTest cases pass. All29 appearance and UID11010 installed-QML controls are rerun; host/ARM archives and full host default Cargo/CMake build pass. A separate manual ARM Qt6.12 full-app build executes9 C ABI,7 typed worker and5 Qt ordering groups. [Report](docs/native-messages-rust-client.md) · [Host evidence](docs/evidence/native-messages-rust-client-provenance.json) · [ARM evidence](docs/evidence/native-messages-arm-client-provenance.json) | Normal ARM main/window, production ARM CMake, normal cold session, shared appearance Rust migration, suspend and physical phone/SMS/carrier remain open |
 | Native SMS codecs and outbox | 27 encoder and 33 decoder comparisons with Android’s actual implementation; bounded multipart planning and durable SQLite admission pass Linux/ARM64 tests. SIGKILL/restart retains uncertainty under an actual ARM64 kernel. [Report](docs/native-messaging.md) · [Codec evidence](docs/evidence/sms-submit-provenance.json) · [Outbox evidence](docs/evidence/sms-outbox-provenance.json) · [Receive evidence](docs/evidence/sms-receive-provenance.json) | Installed sending and continuous incoming composition, qualified transport receipts, delivery, carrier and wake behavior |
 | Native GSM status reports | Bounded Rust status-report parsing passes57 actual AOSP comparisons and12 focused tests on x86/ARM64 user-QEMU;61 stricter malformed and8 unsupported cases remain explicit. [Report](docs/native-sms-status-report.md) · [Evidence](docs/evidence/native-sms-status-report-provenance.json) | Production receive/ACK identity, separately qualified delivery correlation, installed apps/notifications and modem/carrier proof |
 | Installed native Messages history | One lifecycle actor and owned raw/inbox child release bounded history to an actual distinct-UID Qt window in original Omarchy. Eleven ARM64 desktop groups, nested ten service groups and two retained-descriptor cases pass; x86 service/recovery, current permission/EAGAIN fences, SQLite recovery and seven actual Qt worker checks pass. [Report](docs/native-messages-service.md) · [Current evidence](docs/evidence/native-messages-correction-provenance.json) · [Qt worker](docs/native-messages-ui-worker.md) | Incoming synthetic composition is qualified separately below; enumeration is qualified separately below; trusted lock/focus/session ingress, Wayland containment, notifications/wake, send/ACK/producer identity, production session ACLs and modem/carrier/device proof |

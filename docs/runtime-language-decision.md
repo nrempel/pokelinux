@@ -29,8 +29,11 @@ queue-only client retains its own evidence. Cold installed startup and ARM remai
 open. The [Messages engine](native-messages-rust-client.md) now also owns request,
 parser/model, pagination, generation, scheduling and worker-lifetime policy in
 Rust. Nine frozen C ABI groups, actual Qt/worker controls, thirteen permanent
-CTest cases, default full-host linking and an ARM64 archive build pass. Shared
-appearance validation remains Rust migration work. Retain presentation and narrow
+CTest cases, default full-host linking and an ARM64 archive build pass. A later
+manual generic ARM kernel build links the normal Qt6.12 app and executes nine
+C ABI, seven typed worker and five Qt ordering groups; normal-main/window and
+production ARM CMake remain unqualified. See [ARM evidence](evidence/native-messages-arm-client-provenance.json).
+Shared appearance validation remains Rust migration work. Retain presentation and narrow
 native API conversions at the Qt boundary. The full client stack has not been
 ported.
 

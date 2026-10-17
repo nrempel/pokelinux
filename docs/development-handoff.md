@@ -48,9 +48,14 @@ Strict Rust checks, optimized host/ARM64 archives and native default
 Cargo/CMake/CTest/full-app linking pass. Actual pre-entry false-wait RED and
 whole-client numeric-overflow RED precede Rust repairs; retain both failures.
 The final seven phases close91 host and113 inside waits/PIPE EOFs, with45
-separate regular stderr closes. This does not qualify ARM execution or a new
-normal window. Shared appearance-client Rust migration and ordinary cold/app
-composition remain; retain Qt presentation. Extra conservative parser-error
+separate regular stderr closes; that host epoch does not qualify ARM execution.
+A later manual generic ARM kernel build links the normal Qt6.12 app and executes
+nine frozen C ABI groups, seven typed worker controls and five Qt ordering cases.
+All49 distinct guest waits/18 PIPE EOFs close; compiler regular logs remain
+separate. The normal app main/window and production ARM CMake remain unexecuted.
+See [ARM provenance](evidence/native-messages-arm-client-provenance.json).
+Shared appearance-client Rust migration and ordinary cold/app composition remain;
+retain Qt presentation. Extra conservative parser-error
 classification refinements are parked; no exhaustive Qt equivalence is claimed.
 
 The [later finite fd metadata epoch](native-callback-spans.md#later-finite-file-descriptor-metadata-samples)
@@ -92,12 +97,6 @@ without ExecStop. Fixture/property-observer and audit-format failures remain
 failed, not functional evidence. The explicit harness3→harness5
 observer-only bridge preserves actual Release ELFs and compiled source. No vendor
 cleanup, app permission, production modem transport or phone capability follows.
-
-Next coherent app migration is the entire Messages request/parser/model/
-scheduling/generation engine to Rust, retaining Qt presentation and native socket
-custody. Its independent contract is frozen privately; execute current Qt controls
-and genuine missing-API RED before production implementation. Cold compositor
-stall diagnostics remain parked; no new graphics-cause or phone-boot claim.
 
 The [finite main-thread epoch](native-callback-spans.md#later-finite-main-thread-metadata)
 now records one authenticated native R/running sample156.067174ms after the

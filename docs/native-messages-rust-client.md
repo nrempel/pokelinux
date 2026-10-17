@@ -60,7 +60,7 @@ authored files read-only into scratch directories. No original private directory
 permissions were changed. Earlier unused preflight/source preparations remain
 separate; they supply no functional pass.
 
-## Current qualification
+## Host qualification
 
 All checks use Harbour and the frozen final source, with Qt6.8.2 on native x86:
 
@@ -93,10 +93,26 @@ records the frozen source/oracles, actual failures, final binaries and results.
 The tests are checked in under `native-messages-ui/client-core/tests` and
 `native-messages-ui/worker-tests`.
 
+## Manual ARM build and component execution
+
+A later manual native build under a generic Arch ARM7.1.6 kernel in QEMU/TCG
+links the full current normal app against Qt6.12.0 and the matching ARM Rust
+archive. Actual g++/moc/rcc identities and50 Qt libraries/plugins match the retained
+provider. All nine frozen C ABI groups execute successfully. The optional seven
+worker controls also pass their typed classifiers, including two expected SIGABRT
+refusals; all five Qt ordering cases pass. The normal application main is not run.
+
+The retained evidence closes49 distinct guest process waits and18 PIPE EOFs;
+compiler/tool regular logs and the outer regular console are counted separately.
+Original420s work/540s QEMU/600s outer bounds, exact container absence, same daemon
+and input closure pass. This is manual ARM build/component evidence, not production
+ARM CMake, a GUI or physical-device qualification. See the separate
+[hash-only ARM provenance](evidence/native-messages-arm-client-provenance.json).
+
 ## Remaining integration gates
 
-The ARM64 archive is built, not executed in this epoch. A complete matching ARM
-Qt app, genuine normal successful-main window, cold installed Omarchy/session
+The current ARM normal application is compiled, not launched. Production ARM
+CMake, a genuine normal successful-main window, cold installed Omarchy/session
 composition, physical suspend, stuck kernel tasks and native display cleanup
 remain open. Existing older Messages GUI/ARM results select their recorded older
 client and are not inherited. No new screenshot or phone, vendor modem,
