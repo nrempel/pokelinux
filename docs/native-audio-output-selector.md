@@ -65,10 +65,10 @@ Thirty host behavioral socket cases plus setup/cleanup pass. The later
 [Rust client engine](native-sounds-rust-client.md) passes those same unchanged
 cases and six frozen C ABI groups. Rust owns direct/queued request state, packets,
 reply validation, pagination, deadlines and the accepted UI model; Qt retains
-credentialed socket I/O and presentation. The earlier queue-only client passed
-four prepared GUI/audio groups and192,000 measured frames. A fresh native run
-must qualify the whole engine separately; cold installed/ARM integration remains
-open. Actor embedding must supply `audio::Owner`; existing callers passing `None`
+credentialed socket I/O and presentation. A fresh native Qt6.12 run of the whole
+engine now passes four prepared GUI/audio groups and192,000 measured frames,
+separately from the historical queue-only client. Cold installed/ARM integration
+remains open. Actor embedding must supply `audio::Owner`; existing callers passing `None`
 provide no audio service.
 The direct-owner description and11-case evidence below are the historical
 foundation, preserved separately from this target. No old-protocol fallback is

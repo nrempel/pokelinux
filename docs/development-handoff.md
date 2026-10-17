@@ -30,11 +30,15 @@ Rust owner. Six frozen C ABI groups, unchanged30 Qt behaviors plus setup/cleanup
 29 appearance cases, strict Rust checks, default offline Cargo/CMake/CTest and
 full host Sounds linking pass. The obsolete public queue ABI is removed.
 
-The [earlier queue-only client](native-sounds-rust-queue.md) passed four prepared
-GUI/PCM groups with192,000 measured frames and Pixel10 captures. That historical
-result does not qualify the whole engine. Its fresh prepared GUI/PCM run, cold
-installed startup and ARM integration remain open. Messages and appearance client
-logic still require Rust migration; retain Qt presentation.
+A fresh native Qt6.12 build of this whole engine now passes all four prepared
+GUI/PCM groups with192,000 measured frames and Pixel10 captures, independently
+of the [earlier queue-only result](native-sounds-rust-queue.md). The first new
+native run failed by latching an early Qt size before normal configure; preserve
+it. A stronger same-PID Qt/native-size predicate passes within the original30s
+frame cutoff, retaining both stability assertions and every original audio group.
+No production client change or old-result inheritance supplies that GREEN.
+Cold installed startup and ARM integration remain open. Messages and appearance
+client logic still require Rust migration; retain Qt presentation.
 
 ## Current stopping point
 

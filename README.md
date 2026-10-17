@@ -10,9 +10,10 @@ The [app-local Rust Sounds engine](docs/native-sounds-rust-client.md) now owns
 request packets, deadlines, replies, pagination, queued choices and the accepted
 model. Six frozen C++/Rust groups, the30 unchanged Qt behaviors and29 appearance
 cases pass. Qt retains QObject/QML and the credentialed nonblocking socket edge.
-A fresh prepared GUI/PCM epoch with this whole engine remains pending; the
-[earlier queue client](docs/native-sounds-rust-queue.md) retains its separate
-four-group/eight-window prepared pass. Cold installed startup and ARM remain open.
+A fresh native prepared run with this whole engine now passes all four app/audio
+groups and eight PCM windows/192,000 measured frames. Unedited Pixel10 captures
+and the [earlier queue-only result](docs/native-sounds-rust-queue.md) retain their
+separate evidence. Cold installed startup and ARM remain open.
 
 > **Development status:** no physical phone has been accessed. There is no verified bootable phone image. Modem communication, carrier IMS registration, physical call audio, Pixel GPU rendering, camera capture and suspend remain unverified.
 

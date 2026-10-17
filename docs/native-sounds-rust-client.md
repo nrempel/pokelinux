@@ -71,9 +71,55 @@ preserved; subsequent epochs use separately selected corrected inputs.
 
 These are host Linux CPU/C ABI, real socket and full-link results. The
 [historical prepared GUI/PCM pass](native-sounds-rust-queue.md#actual-prepared-app-and-audio)
-selects the earlier queue client. A fresh native prepared app/PCM epoch with this
-whole engine is still required. No new ARM build, installed cold startup, native
+selects the earlier queue client. The fresh whole-engine native result below
+qualifies its own composition. No new ARM build, installed cold startup, native
 display cleanup or physical phone result is inferred.
 
 [Hash-only provenance](evidence/native-sounds-rust-client-provenance.json) records
 the actual source, archive, frozen consumer and closed host evidence.
+
+## Actual prepared app and audio
+
+A fresh native x86 VM builds Sounds against Arch Qt6.12.0 and the selected Rust
+archive. Its actual guest-built application,13 strong current exports, sole
+archive link, loader resolution, exact six-group C ABI consumer,30 Qt behaviors
+plus setup/cleanup and29 appearance cases all pass. The host Qt6.8 executable is
+never installed or launched in this selection.
+
+The first native attempt fails before the four GUI groups: it latches an exposed
+fractional-scale Qt frame at411×923, while the owned compositor already reports
+369×881. Qt then reports that same configured size and the existing equality
+guard refuses the stale first record. The older queue-only pass also retains
+this ordinary resize sequence; no Rust engine cause is inferred.
+
+The observer now additionally requires the same owned app PID and agreement
+between actual Qt/native window dimensions before latching. Its original30s
+frame cutoff and both before/during metadata equality assertions remain. Every
+other runtime/provider/source input and the four audio scenarios stay unchanged.
+A separate fresh VM then passes denied silence, independent Root grant with real
+focus and touchscreen speaker routing, null-focus restrictions while approved
+media persists, and terminal Source loss with silent audio and launch refusal.
+These are prepared-session observations, with the previous warmup and five Rust
+service roles retained. They do not repair cold installed startup.
+
+An independent review recomputes all eight raw PCM windows:192,000 measured
+frames,440Hz speaker content in the two approved-media groups and exactly zero
+in the six expected silent windows. The [permitted](assets/sounds-rust-client-prepared-permitted.png)
+and [no-permission](assets/sounds-rust-client-prepared-no-permission.png) PNGs are
+original, unedited1080×2424 captures. Their independently decoded RGBA hashes
+match the recorded native-oriented pixel hashes. Native shared-memory buffers
+are not independently reread after shutdown. The output remains approximately
+422PPI, target-window DPR2.625; QScreen's integer3 is diagnostic. The qualified
+app is369×881 within the411×923 logical screen. The permitted capture precedes
+the route gesture; the later graph/PCM observations establish application.
+
+All primary141 waits/148 actual PIPE EOFs and PCM40 waits/56 PIPE EOFs close.
+The QMP socket EOF, authenticated Source-unload reply EOF, two adopted waits,
+21 dead-descendant observations and regular capture files retain separate counts.
+Actual owner/service Stop, same-daemon exact container absence and locked input
+closure pass under the original limits. Process closure establishes no native
+display retirement. Full cold shell/menu, live themes in this combined slice,
+ARM integration and all physical-phone gates remain open.
+
+[Prepared-run provenance](evidence/native-sounds-rust-client-prepared-provenance.json)
+records this new source/binary, actual failure, corrected run, raw PCM and captures.

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "scope": "Host app-local Rust Sounds request/model engine; actual C ABI and credentialed Linux socket tests, default package build and full link. New prepared GUI/PCM, cold installed, ARM and phone remain open.",
+  "scope": "App-local Rust Sounds engine: host component/socket/package checks and a separately qualified fresh native prepared GUI/virtual PCM run. Cold installed startup, ARM and phone remain open.",
   "implementation_base": "11e598ab7e2b572f88d57d5adad5732c43f6ebb7",
   "Root_integration_base": "c07cc01d1b9635ab6bd5875149886c0f3d3da9e6",
   "source_manifest": {
@@ -202,9 +202,10 @@
     "first strict-Clippy collapsible-if diagnostic",
     "preimplementation structural setup/probe failures retained separately"
   ],
-  "prepared_GUI_PCM_qualified": false,
+  "prepared_GUI_PCM_qualified": true,
   "cold_installed_startup_qualified": false,
   "ARM_qualified": false,
   "physical_phone_accessed": false,
-  "provider_permission_authority_migrated_by_this_change": false
+  "provider_permission_authority_migrated_by_this_change": false,
+  "prepared_GUI_PCM_evidence": "native-sounds-rust-client-prepared-provenance.json"
 }

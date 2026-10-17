@@ -22,9 +22,11 @@ project-owned direct/queued request state, packet construction, reply validation
 pagination and the accepted UI model. Six frozen C ABI groups, unchanged30 Qt
 behaviors,29 appearance cases and full host application linking pass. Qt retains
 credentialed socket I/O and presentation. The obsolete queue ABI is removed.
-The earlier queue-only client passed four prepared GUI/audio groups with192,000
-measured frames and Pixel10 captures. A fresh prepared run must qualify the whole
-engine separately; cold installed and ARM integration remain open.
+A fresh native Qt6.12 prepared run now qualifies the whole engine in four
+GUI/audio groups with192,000 measured frames and Pixel10 captures. Its initial
+frame-observer RED and stronger Qt/native-size predicate remain explicit; no
+production client change supplies that GREEN. Cold installed and ARM integration
+remain open.
 
 Two additional [whole-compositor stall epochs](native-normal-upstream-tracer.md#compositor-freeze-expiry-and-stop)
 now qualify independent100ms Source-expiry withdrawal/quietness/refusal before

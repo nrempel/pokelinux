@@ -31,6 +31,7 @@ The permanent byte-identical independent six-group C++ consumer exercises the
 actual C ABI and clock, with assertions active in Release via target-only
 `-UNDEBUG`. The unchanged30-case Qt suite retains real socket/credential checks.
 See [the component record](../../docs/native-sounds-rust-client.md) for actual
-source/link/loader checks and the separate pending new-engine prepared GUI/PCM,
-installed cold startup, ARM and phone gates. Historical queue-only results remain
-in their [original record](../../docs/native-sounds-rust-queue.md).
+source/link/loader checks and the fresh whole-engine prepared GUI/PCM pass with
+192,000 measured frames. Installed cold startup, ARM and phone gates remain open.
+Historical queue-only results remain in their
+[original record](../../docs/native-sounds-rust-queue.md).

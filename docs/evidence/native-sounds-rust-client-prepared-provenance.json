@@ -1,0 +1,262 @@
+{
+  "schema": 1,
+  "scope": "Actual prepared native x86 Sounds whole Rust client engine; virtual PCM and native1080x2424 captures only",
+  "public_source_commit": "228a09cff6b4408d515111edb20e780e17897153",
+  "implementation_base_commit": "11e598ab7e2b572f88d57d5adad5732c43f6ebb7",
+  "artifact_hashes": {
+    "selection.json": {
+      "bytes": 148720,
+      "sha256": "a9ff7df5e6f3524d93987a8c42c872601aafa1764cb9fab25de3ee7f62fe01b9"
+    },
+    "command.json": {
+      "bytes": 1312,
+      "sha256": "919f9ceb18291fb9068dc7488150747cb655e6b7dff412c8e13084a439e121c9"
+    },
+    "execution.json": {
+      "bytes": 11922,
+      "sha256": "fb4071586b640223985c9151953025294111e557eae24fa554560e4d2fc77a05"
+    },
+    "result.json": {
+      "bytes": 523200,
+      "sha256": "52d9a563c27d593b45acdfaf7a8240cf9ba430855b0a594245afa324adb52d23"
+    },
+    "boot-result.json": {
+      "bytes": 11086,
+      "sha256": "a0b740b0da2a48a0484c580a3c92abe4921799ebaadd26d6cd9a264051e5500a"
+    },
+    "bootstrap-result.json": {
+      "bytes": 7264,
+      "sha256": "e784feffd11515f6de9494a6b16ee4740deb29f6f0801076fa4939eb4bf54aae"
+    },
+    "early-receipt.json": {
+      "bytes": 2043,
+      "sha256": "d976b590621bf1ec82fa5eaca36c03453d8bc86ef30a8cf724efac315f1aee8b"
+    },
+    "native-Qt-build-result.json": {
+      "bytes": 78544,
+      "sha256": "c40199d968c5ac51457a38fa120586b86fd9cfb214d0da74569cf64809a7f3be"
+    },
+    "native-audio-client-test.xml": {
+      "bytes": 5322,
+      "sha256": "a12b2a410d04b59ad1e917474e6eabb4b4e04d316608e788f29551bdcdcc5819"
+    },
+    "013-native-Sounds-client-six-groups.log": {
+      "bytes": 530,
+      "sha256": "fd037739b850862c3d63021452994ad552ce5ec4d16df5891f7aa2e59a28918a"
+    },
+    "015-native-Sounds-client-defined-symbols.log": {
+      "bytes": 333690,
+      "sha256": "7c15eb2eff18c5eee813ab743947c9af9be05a44110293b52c27289c735112b5"
+    },
+    "016-native-Sounds-client-archive-defined-symbols.log": {
+      "bytes": 429583,
+      "sha256": "3dcdb3b955a72cd3130982883c69428ad71d9467e8a7182bcb29694a93f02658"
+    },
+    "017-native-Sounds-ldd-r.log": {
+      "bytes": 5250,
+      "sha256": "b05b6375e50eaefc687f457c5556008a91079b63b02bcbc83c161e3344e2748b"
+    },
+    "normal-qt-window.jsonl": {
+      "bytes": 1741,
+      "sha256": "439ecdea03f9e85c9618f63269db6966fc09133b36476c2f843333690f27e6c5"
+    },
+    "actual-native-focus.jsonl": {
+      "bytes": 3241,
+      "sha256": "99315439fa58c9baa7ee5fb52fb3d45db7bd48994280bb01f2a9dbdc04fd902d"
+    },
+    "app-startup-observations.jsonl": {
+      "bytes": 15807,
+      "sha256": "48926d3b9d9f4914bdf4196a356eedfa1a8e44ee4a2c8e64af8b0e05c592fa2a"
+    }
+  },
+  "actual_guest_Sounds_ELF": {
+    "sha256": "634ec504ee22c7f2c228928dceb7ff356fa55890c1a35953d4135c56498f0c28",
+    "bytes": 6017208,
+    "ELF_machine": 62
+  },
+  "Rust_archive": {
+    "bytes": 23918044,
+    "sha256": "7702d403d380d916ad59cd72b7e7b4e2b46c24012e24f453aa91ec4258f687af"
+  },
+  "compiled_header": {
+    "bytes": 5092,
+    "sha256": "582f0f8286de6cd08d8b3c3b48335632d57f91e763e0a2ddd6becb2d1e234898"
+  },
+  "frozen_consumer": {
+    "bytes": 22547,
+    "sha256": "e7b32b84871165d3ffaab6a8b1f2362f090eec8a5f9577c255c71636d64c887b"
+  },
+  "source_cohort_manifest": {
+    "bytes": 8304,
+    "sha256": "e3fdb84d88edf9c36b780251aa978f98c8dcdcab74e4fb9060a0604ba5e7c76b"
+  },
+  "host_component_qualification": {
+    "bytes": 2678,
+    "sha256": "d56035629b4dbd22f8e3204d72e1a97af59d67019bedf64258eed790ca1eb92b"
+  },
+  "C_ABI_groups": 6,
+  "Qt_authored_cases": 30,
+  "Qt_setup_cleanup": 2,
+  "appearance_cases": 29,
+  "GUI_groups": 4,
+  "PCM_windows": 8,
+  "PCM_measured_frames": 192000,
+  "raw_PCM_hashes": [
+    {
+      "group": 1,
+      "sink": "speaker",
+      "bytes": 134400,
+      "sha256": "ac8f5613c4b176d380009fa1306c49a027644dba38b9703ed102634c60f8d5ff",
+      "rms": 0.0,
+      "peak": 0.0,
+      "amplitude440": 0.0,
+      "amplitude880": 0.0
+    },
+    {
+      "group": 1,
+      "sink": "earpiece",
+      "bytes": 134400,
+      "sha256": "ac8f5613c4b176d380009fa1306c49a027644dba38b9703ed102634c60f8d5ff",
+      "rms": 0.0,
+      "peak": 0.0,
+      "amplitude440": 0.0,
+      "amplitude880": 0.0
+    },
+    {
+      "group": 2,
+      "sink": "speaker",
+      "bytes": 134400,
+      "sha256": "482a3e183886ba3083a165dd98158f61a610281b2cb805660f19e49768a53b0b",
+      "rms": 0.04419419152095439,
+      "peak": 0.062499988824129105,
+      "amplitude440": 0.06250002433641992,
+      "amplitude880": 9.361091520789438e-08
+    },
+    {
+      "group": 2,
+      "sink": "earpiece",
+      "bytes": 134400,
+      "sha256": "ac8f5613c4b176d380009fa1306c49a027644dba38b9703ed102634c60f8d5ff",
+      "rms": 0.0,
+      "peak": 0.0,
+      "amplitude440": 0.0,
+      "amplitude880": 0.0
+    },
+    {
+      "group": 3,
+      "sink": "speaker",
+      "bytes": 134400,
+      "sha256": "e928ebdece966228e1daa6d7ded2144b3ee9ab2a7c589efb4829851779495d16",
+      "rms": 0.04419419029390599,
+      "peak": 0.062499869614839554,
+      "amplitude440": 0.06250002260093195,
+      "amplitude880": 5.8998423274171247e-08
+    },
+    {
+      "group": 3,
+      "sink": "earpiece",
+      "bytes": 134400,
+      "sha256": "ac8f5613c4b176d380009fa1306c49a027644dba38b9703ed102634c60f8d5ff",
+      "rms": 0.0,
+      "peak": 0.0,
+      "amplitude440": 0.0,
+      "amplitude880": 0.0
+    },
+    {
+      "group": 4,
+      "sink": "speaker",
+      "bytes": 134400,
+      "sha256": "ac8f5613c4b176d380009fa1306c49a027644dba38b9703ed102634c60f8d5ff",
+      "rms": 0.0,
+      "peak": 0.0,
+      "amplitude440": 0.0,
+      "amplitude880": 0.0
+    },
+    {
+      "group": 4,
+      "sink": "earpiece",
+      "bytes": 134400,
+      "sha256": "ac8f5613c4b176d380009fa1306c49a027644dba38b9703ed102634c60f8d5ff",
+      "rms": 0.0,
+      "peak": 0.0,
+      "amplitude440": 0.0,
+      "amplitude880": 0.0
+    }
+  ],
+  "screenshots": [
+    {
+      "group": 1,
+      "bytes": 52623,
+      "sha256": "461c464a1ac5e2b3264dfe7eef09c86df15a6d8282a030eba4de4063eb4f9dce",
+      "decoded_RGBA_sha256": "32d219b67241aecd76f23ac142fb3c7f2b64e6af55620f408a11b4ce179f15d5",
+      "native_pixels": [
+        1080,
+        2424
+      ],
+      "unresized_unedited_original_PNG_bytes": true
+    },
+    {
+      "group": 2,
+      "bytes": 53474,
+      "sha256": "5b60724997abb822dfa18e232824e19eca020736f666396aa22e5b8054785f0f",
+      "decoded_RGBA_sha256": "c3091d58dce0dda20bf3e638b68eb68c7317d88821ddcb419d639ff22a8be3af",
+      "native_pixels": [
+        1080,
+        2424
+      ],
+      "unresized_unedited_original_PNG_bytes": true
+    }
+  ],
+  "closure_counts": {
+    "primary_direct_waits": 141,
+    "primary_PIPE_EOFs": 148,
+    "PCM_direct_waits": 40,
+    "PCM_PIPE_EOFs": 56,
+    "QMP_EOF_separate": 1,
+    "Source_reply_EOF_separate": 1,
+    "adopted_guest_waits_separate": 2,
+    "regular_capture_files_not_PIPE_EOF": 3
+  },
+  "phone_ARM_cold_fullshell_native_cleanup_qualified": false,
+  "compositor_ELF_sha256": "c70c79f67f7ccb820e09afc8640fafdf2f75b2e619b89243101bc9ec07545b48",
+  "matching_compositor_SDK_sha256": "91c44a4ce0bfc3c20bb2a2cd0ec9c24827ce95163604260dcafe86587bf67620",
+  "actual_guest_matching_SDK_files": 498,
+  "source_adapter_source_sha256": "7d78b090b4fac0701fa5926d5a5bb53789d01b9309296e4fa8103e0b7f5643a4",
+  "source_sampler_sha256": "73612325a597b71a4386d62a4a563477e78e1bd5e572e48784f005507600e845",
+  "source_lease_ns": 100000000,
+  "actual_target_QWindow_DPR": 2.625,
+  "actual_native_and_Qt_window_size": [
+    369,
+    881
+  ],
+  "logical_screen_size": [
+    411,
+    923
+  ],
+  "same_five_service_launch_role_hashes": {
+    "native-appearance": "298d391d42df9438e9be084f4465ca74ab6b28fe166a8f3b4a8fd5dc121f9949",
+    "pokelinux-audio": "858b1a6f9aa270314eac74f773d2d6ac3daa31c8ac5e3070f4d1284771e25762",
+    "pokelinux-session-owner": "22e68b4cc83f59de193dc93c47248a283c9895b89b057ca8a21b0f49bda6267d",
+    "sounds-exec": "f690bad6f6f52525d8e7c66e56dd26b3bb91ad83ae49fd5adcb88e1d559c4f27",
+    "sounds-launch": "235d6eadc5513711ad23d68a10484a10063d6dcca038039c5e9e587c8571b081"
+  },
+  "independent_review": {
+    "bytes": 15454,
+    "sha256": "eefb1ff2a68ed83febbc902c3da36ef6a500690358775333a9b30291572eb2b5"
+  },
+  "Root_qualification": {
+    "bytes": 2426,
+    "sha256": "83f125f91132890db96f8ad97989e3371b78955f42ea51670737ccf4bc478a64"
+  },
+  "retained_failed_epoch_Root_review": {
+    "bytes": 1481,
+    "sha256": "53b3b95464f51ec9d81fe15d91f9984852239e9d936eb72f42dbb7bbe53e7f54"
+  },
+  "initial_frame_observer_correction": {
+    "actual_failed_epoch_before_GUI_groups": true,
+    "original_frame_cutoff_s": 30,
+    "both_metadata_stability_assertions_retained": true,
+    "same_owned_PID_native_and_Qt_size_required_before_latching": true,
+    "production_Rust_client_changed_for_runtime_GREEN": false
+  }
+}

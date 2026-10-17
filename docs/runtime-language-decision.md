@@ -23,9 +23,10 @@ queued requests, packets, original deadlines, reply validation, pagination and
 the accepted UI model in Rust. Actual C ABI, unchanged Qt socket tests and full
 host application linking pass. Qt retains credentialed nonblocking socket I/O
 and QObject/QML presentation. The obsolete public queue ABI is removed.
-The earlier queue-only client passed prepared GUI/audio groups; a fresh native
-GUI/audio run must qualify this whole engine separately. Cold installed startup
-and ARM remain open. Messages RPC worker lifetimes/stale-result generations and
+A fresh prepared native Qt6.12 run now qualifies this whole engine in all four
+GUI/audio groups, with eight PCM windows/192,000 measured frames. The earlier
+queue-only client retains its own evidence. Cold installed startup and ARM remain
+open. Messages RPC worker lifetimes/stale-result generations and
 appearance validation remain Rust migration work. Retain presentation and narrow
 native API conversions at the Qt boundary. The full client stack has not been
 ported.
