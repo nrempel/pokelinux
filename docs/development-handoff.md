@@ -22,10 +22,13 @@ Rust remains responsible for shared phone services and ownership/recovery policy
 The graphics integration includes substantial C++; it must not be reported as
 progress porting phone services to Rust or as an all-Rust stack.
 
-Project-owned Qt clients also retain queued request, deadline and response
-validation state. Treat those as remaining Rust client-core migration work;
-Sounds is the first concrete extraction candidate after the startup/Stop path.
-Qt/QML presentation and upstream graphics stay at their native boundary.
+The first [Sounds queue core](native-sounds-rust-queue.md) now owns the copied
+queued route/reconnect intent, original BOOTTIME deadline, fresh-state checks
+and cancellation in Rust. Six actual C ABI groups, unchanged30 Qt socket cases
+plus setup/cleanup, strict Rust checks, default offline Cargo/CMake and full
+Sounds link pass. Direct request/reply/transport code still contains C++; prepared
+PCM, installed runtime and ARM have not selected the new client. Continue those
+integration gates and the remaining client-core migration; retain Qt presentation.
 
 ## Current stopping point
 
@@ -93,9 +96,12 @@ shell connection. Actual manager Stop after that loss records Main0/Resultsucces
 and empty cgroup for both baseline and candidate; both functional aggregates stay
 false. Retained unit references preserve matching invocation exit evidence.
 The earlier queued-job observer failure remains failed, without Source inference.
-Next retain the activating owner's compositor identity early enough to collect
-existing startup/log evidence and identify the Source gap. Keep100ms unchanged;
-do not infer shell causation, presentation, or a healthy manager-Stop pass.
+Later passive diagnostics now retain the activating owner's compositor identity
+and13 completed startup events. One real sequence2 is rejected for a116.863834ms
+sample gap. Configuration completion precedes sequence1; the later blocking
+operation remains unidentified. Default file logging is disabled, so absence of
+a captured log supplies no cause. Keep100ms unchanged and identify the gap from
+concrete runtime evidence, without inventing another activation predicate.
 
 The Rust [one-shot add-PDN response observer](native-radio-add-pdn-response.md)
 now retains immutable request/session/route/error/byte history after frozen

@@ -6,6 +6,12 @@
 
 The target is Arch Linux ARM, Hyprland, native phone apps and Rust services for calls, messages, camera, power and other phone functions. The initial hardware strategy uses Google's matched Pixel kernel, modules and firmware. Replacing Android framework userspace is the goal; it is not yet achieved. The [completion criteria](docs/smartphone-goal.md#completion-matrix) require native service integration; Android framework tests provide reference evidence. Hyprland, Aquamarine and Qt remain C++ dependencies. The [graphics critical-path decision](docs/runtime-language-decision.md#graphics-critical-path) selects normal upstream compositor initialization for the integrated app tracer; the custom Rust render executor remains component research.
 
+The first [Rust app-client core](docs/native-sounds-rust-queue.md) now owns queued
+Sounds choices, deadlines and cancellation. Six C++/Rust groups and the30 existing
+Qt behavior cases pass, with a full application link. Qt transport/presentation
+and upstream graphics remain C++; this new client selection still needs PCM and
+installed-runtime qualification.
+
 > **Development status:** no physical phone has been accessed. There is no verified bootable phone image. Modem communication, carrier IMS registration, physical call audio, Pixel GPU rendering, camera capture and suspend remain unverified.
 
 A [prepared end-to-end Sounds session](docs/native-normal-upstream-tracer.md#prepared-full-appservice-slice-passes)

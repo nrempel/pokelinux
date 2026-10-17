@@ -25,6 +25,11 @@ bool label(const QString &s) {
  for(const auto c:s) if(c.isNull() || c.category()==QChar::Other_Control) return false;
  return true;
 }
+bool encodeRoute(const QString &id,PrSoundsRouteV1 &out) {
+ const auto bytes=id.toUtf8();
+ if(bytes.isEmpty() || bytes.size()>64)return false;
+ out={};out.length=uint32_t(bytes.size());std::memcpy(out.bytes,bytes.constData(),size_t(bytes.size()));return true;
+}
 bool nullableSelector(const QJsonValue &v) { return v.isNull() || (v.isString() && selector(v.toString())); }
 bool state(const QJsonValue &v) {
  if(!v.isObject()) return false;
@@ -47,19 +52,20 @@ bool AudioClient::setDeadline() {
 }
 AudioClient::AudioClient(QString path,uid_t ownerUid,QObject *parent)
  :QObject(parent),m_path(std::move(path)),m_ownerUid(ownerUid) {
+ if(pr_sounds_queue_new_v1(&m_intents)!=PR_SOUNDS_OK){m_status="Audio command state unavailable";return;}
  m_poll.setInterval(250);m_watch.setInterval(25);
  connect(&m_poll,&QTimer::timeout,this,[this]{if(m_online && m_pending.isEmpty())statusRequest();});
  connect(&m_watch,&QTimer::timeout,this,[this]{if(!m_pending.isEmpty() && expired())fail("Audio request expired; reconnect to inspect");});
  QTimer::singleShot(0,this,[this]{if(m_fd<0 && m_pending.isEmpty())connectActor();});
 }
-AudioClient::~AudioClient(){m_closing=true;closeSocket();}
+AudioClient::~AudioClient(){m_closing=true;closeSocket();pr_sounds_queue_free_v1(m_intents);}
 void AudioClient::closeSocket() {
  ++m_generation;m_poll.stop();m_watch.stop();
  for(auto **notifier:{&m_read,&m_write}) {
   if(*notifier){(*notifier)->setEnabled(false);(*notifier)->deleteLater();*notifier=nullptr;}
  }
  if(m_fd>=0)::close(m_fd);
- m_queued.clear();m_queuedUntil=0;m_reconnectQueued=false;m_available=false;
+ pr_sounds_queue_cancel_v1(m_intents);m_sendToken=0;m_available=false;
  m_fd=-1;m_peerPid=-1;m_stage=Stage::Idle;m_online=false;m_pending.clear();m_output.clear();m_pageRoutes.clear();m_offset=0;
 }
 void AudioClient::fail(const QString &message) {
@@ -100,9 +106,8 @@ void AudioClient::reconnect() {
  if(!canReconnect())return;
  if(m_fd<0)connectActor(); // A new app transport inspects only, never replays.
  else if(m_pending=="status") {
-  const auto now=boottime();
-  if(now<0 || now>std::numeric_limits<qint64>::max()-requestNs){fail("Audio clock unavailable");return;}
-  m_reconnectQueued=true;m_queuedUntil=now+requestNs;emit changed();
+  if(pr_sounds_queue_offer_v1(m_intents,PR_SOUNDS_RECONNECT,nullptr)!=PR_SOUNDS_OK){fail("Audio clock unavailable");return;}
+  emit changed();
  }else request({{"op","media_reconnect"}},"reconnect");
 }
 void AudioClient::statusRequest() {
@@ -129,57 +134,71 @@ void AudioClient::writable() {
   m_read->setEnabled(true);queue({{"op","media_status"},{"offset",0}});return;
  }
  if(m_stage!=Stage::Sending)return;
- if(m_pending=="route" && !m_queued.isEmpty()) {
-  // EAGAIN may retain this one unsent packet. Sample remaining TTL again
-  // immediately before every actual send attempt, never a fresh budget.
-  const auto now=boottime();const auto ttl=now<0?0:(m_queuedUntil-now)/1000000;
-  if(ttl<1) {
-   m_queued.clear();m_queuedUntil=0;m_pending.clear();m_output.clear();m_stage=Stage::Idle;
+ if(m_sendToken) {
+  PrSoundsCommandV1 command{};const auto result=prepareQueued(command);
+  if(result==PR_SOUNDS_EXPIRED || result==PR_SOUNDS_REFUSED) {
+   m_sendToken=0;m_pending.clear();m_output.clear();m_stage=Stage::Idle;
    m_write->setEnabled(false);m_watch.stop();emit changed();return;
   }
-  m_output=QJsonDocument(QJsonObject{{"op","media_route"},{"request",QJsonObject{{"route",m_queued},{"ttl_ms",ttl}}}}).toJson(QJsonDocument::Compact);
+  if(result!=PR_SOUNDS_OK || command.token!=m_sendToken || command.original_until_boottime_ns!=uint64_t(m_deadline)
+     || (command.kind==PR_SOUNDS_ROUTE)!=(m_pending=="route")){fail("Audio queued command refused");return;}
+  if(command.kind==PR_SOUNDS_ROUTE) {
+   const auto id=QString::fromLatin1(reinterpret_cast<const char*>(command.route.bytes),int(command.route.length));
+   m_output=QJsonDocument(QJsonObject{{"op","media_route"},{"request",QJsonObject{{"route",id},{"ttl_ms",qint64(command.ttl_ms)}}}}).toJson(QJsonDocument::Compact);
+  }
  }
  const auto count=::send(m_fd,m_output.constData(),size_t(m_output.size()),MSG_DONTWAIT|MSG_NOSIGNAL);
  const auto error=errno;
  if(expired()){fail("Audio request expired");return;}
  if(count<0 && (error==EAGAIN || error==EINTR)){m_write->setEnabled(true);return;}
  if(count!=m_output.size()){fail("Audio request could not be sent");return;}
+ if(m_sendToken) {
+  if(pr_sounds_queue_sent_v1(m_intents,m_sendToken)!=PR_SOUNDS_OK){fail("Audio request expired");return;}
+  m_sendToken=0;
+ }
  m_output.clear();m_stage=Stage::Receiving;m_write->setEnabled(false);m_read->setEnabled(true);
- if(m_pending=="reconnect") { m_reconnectQueued=false;m_queuedUntil=0; }
- if(m_pending=="route") { m_queued.clear();m_queuedUntil=0;m_applied.clear();m_status="Output requested";emit changed(); }
+ if(m_pending=="route") { m_applied.clear();m_status="Output requested";emit changed(); }
 }
 void AudioClient::select(const QString &id) {
  if(!canChoose())return;
  bool known=false;for(const auto &route:m_routes)if(route.toMap().value("id").toString()==id)known=true;
  if(!known)return;
+ if(m_pending=="status") {
+  PrSoundsRouteV1 route{};
+  if(!encodeRoute(id,route) || pr_sounds_queue_offer_v1(m_intents,PR_SOUNDS_ROUTE,&route)!=PR_SOUNDS_OK){fail("Audio clock unavailable");return;}
+  emit changed();return;
+ }
  const auto now=boottime();
  if(now<0 || now>std::numeric_limits<qint64>::max()-requestNs){fail("Audio clock unavailable");return;}
- const auto until=now+requestNs;
- if(m_pending=="status"){m_queued=id;m_queuedUntil=until;emit changed();return;}
- sendSelection(id,until,false);
+ sendSelection(id,now+requestNs);
 }
-void AudioClient::sendSelection(const QString &id,qint64 originalUntil,bool wasQueued) {
+void AudioClient::sendSelection(const QString &id,qint64 originalUntil) {
  const auto now=boottime();
- if(now<0 || now>=originalUntil) { if(wasQueued){m_queued.clear();m_queuedUntil=0;}return; }
- const auto ttl=wasQueued?(originalUntil-now)/1000000:1000;
- if(ttl<1) { if(wasQueued){m_queued.clear();m_queuedUntil=0;}return; }
- request({{"op","media_route"},{"request",QJsonObject{{"route",id},{"ttl_ms",ttl}}}},"route",originalUntil);
+ if(now<0 || now>=originalUntil)return;
+ request({{"op","media_route"},{"request",QJsonObject{{"route",id},{"ttl_ms",1000}}}},"route",originalUntil);
+}
+int AudioClient::prepareQueued(PrSoundsCommandV1 &command) {
+ PrSoundsFreshV1 fresh{};
+ fresh.transport_online=m_online;fresh.status_complete=m_pending!="status";
+ fresh.available=m_available;fresh.can_choose=m_actorCanChoose;fresh.can_reconnect=m_actorCanReconnect;
+ fresh.route_count=uint32_t(m_routes.size());
+ if(fresh.route_count<=32) {
+  for(uint32_t i=0;i<fresh.route_count;++i) {
+   if(!encodeRoute(m_routes[int(i)].toMap().value("id").toString(),fresh.routes[i])){fresh.route_count=33;break;}
+  }
+ }
+ return pr_sounds_queue_prepare_v1(m_intents,&fresh,&command);
 }
 void AudioClient::dispatchQueued() {
- if(m_reconnectQueued) {
-  const auto now=boottime();const auto until=m_queuedUntil;
-  if(now<0 || now>=until || !m_online || !m_actorCanReconnect || !m_pending.isEmpty()) {
-   m_reconnectQueued=false;m_queuedUntil=0;return;
-  }
-  request({{"op","media_reconnect"}},"reconnect",until);return;
+ PrSoundsCommandV1 command{};const auto result=prepareQueued(command);
+ if(result==PR_SOUNDS_EMPTY || result==PR_SOUNDS_BUSY || result==PR_SOUNDS_EXPIRED || result==PR_SOUNDS_REFUSED)return;
+ if(result!=PR_SOUNDS_OK){fail("Audio queued command refused");return;}
+ m_sendToken=command.token;
+ if(command.kind==PR_SOUNDS_RECONNECT)request({{"op","media_reconnect"}},"reconnect",qint64(command.original_until_boottime_ns));
+ else {
+  const auto id=QString::fromLatin1(reinterpret_cast<const char*>(command.route.bytes),int(command.route.length));
+  request({{"op","media_route"},{"request",QJsonObject{{"route",id},{"ttl_ms",qint64(command.ttl_ms)}}}},"route",qint64(command.original_until_boottime_ns));
  }
- if(m_queued.isEmpty())return;
- const auto id=m_queued;const auto until=m_queuedUntil;
- const auto now=boottime();bool known=false;for(const auto &route:m_routes)if(route.toMap().value("id").toString()==id)known=true;
- if(now<0 || now>=until || !m_online || !m_available || !m_actorCanChoose || !m_pending.isEmpty() || !known) {
-  m_queued.clear();m_queuedUntil=0;return;
- }
- sendSelection(id,until,true);
 }
 void AudioClient::receive() {
  if(m_fd<0)return;
@@ -220,7 +239,7 @@ AudioClient::Reply AudioClient::accept(const QJsonObject &reply) {
  const auto result=reply.value("result").toString();
  if(result=="denied" || result=="unavailable") {
   if(reply.size()!=1 || expired())return Reply::Invalid;
-  m_queued.clear();m_queuedUntil=0;m_reconnectQueued=false;m_actorCanChoose=false;m_actorCanReconnect=false;m_applied.clear();m_status=result=="denied"?"Media route denied":"Audio unavailable";return Reply::Done;
+  pr_sounds_queue_cancel_v1(m_intents);m_actorCanChoose=false;m_actorCanReconnect=false;m_applied.clear();m_status=result=="denied"?"Media route denied":"Audio unavailable";return Reply::Done;
  }
  if(m_pending=="reconnect") {
   if(reply.size()!=1 || result!="ok" || expired())return Reply::Invalid;

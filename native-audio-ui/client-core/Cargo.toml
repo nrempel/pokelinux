@@ -1,0 +1,14 @@
+[package]
+name = "pokelinux-sounds-queue"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[lib]
+crate-type = ["rlib", "staticlib"]
+
+[dependencies]
+pokelinux-power = { path = "../../native-power" }
+
+[lints.rust]
+unsafe_op_in_unsafe_fn = "deny"

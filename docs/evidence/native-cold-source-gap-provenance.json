@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "scope": "Later observer-only native x86 cold-start diagnostics; original Source,100ms contract and success predicates unchanged. No production repair or runtime success.",
+  "epochs": [
+    {
+      "epoch": 6,
+      "selection": {
+        "bytes": 230460,
+        "sha256": "b4b934d9f4f29b12b308052f1b32142bface014cc029fdfcd97e41d757325d1b"
+      },
+      "execution": {
+        "bytes": 12022,
+        "sha256": "0dfdbfc283f5f0c371eeeaddd6d3918adb22aa6288f2702f0e5406ccfeb227c5"
+      },
+      "guest_result": {
+        "bytes": 477170,
+        "sha256": "38edc366817a17b54a4eae460bf624a8bbfc78abeb9f26f04bd1eb52de37a1ef"
+      },
+      "startup_ring": {
+        "bytes": 4096,
+        "sha256": "153c54009b4d2eb57d9d8cf2a1725a0748ca3f44dda01e7cc33959b48ac65ed3"
+      },
+      "aggregate_pass": false,
+      "actual_authenticated_compositor_pidfd_retained_then_dead": true,
+      "completed_config_event_count": 13,
+      "event_flags": 0,
+      "last_completed_props_to_first_Source_ns": 7164,
+      "typed_rejection": {
+        "stage": "cached_sample",
+        "reason": "sample_expired",
+        "sequence": 1
+      },
+      "Source_gap_ns": null,
+      "cached_sample_age_ns": 114864477,
+      "Source_sequence2_sample_to_validation_ns": null,
+      "existing_instance_log_bound": false,
+      "direct_waits": 148,
+      "PIPE_EOFs": 155,
+      "separate_QMP_EOF": 1,
+      "separate_RefUnit_UnrefUnit_returns": 8,
+      "original_cutoffs_inputs_and_CID_closure": true,
+      "blocking_operation_identified": false,
+      "phone_accessed": false
+    },
+    {
+      "epoch": 7,
+      "selection": {
+        "bytes": 230460,
+        "sha256": "5d97b630b3df7bc59764ab56fc757401c727ebecdcf9627c8d4bb18cf3e9b378"
+      },
+      "execution": {
+        "bytes": 12022,
+        "sha256": "9bffc3972b9779be47c9478cfa2506586f6b1b11ff944858ac3f96052aa2a81e"
+      },
+      "guest_result": {
+        "bytes": 488013,
+        "sha256": "14a5b745147514a25919fbaef4b8407fc5afff76bb4577c0a49e60920ccabc5d"
+      },
+      "startup_ring": {
+        "bytes": 4096,
+        "sha256": "d8749f56dc8a460759799c5d5f4fde2bca7b9e6f5fb2b4b7efb2fa0fd53e19fb"
+      },
+      "aggregate_pass": false,
+      "actual_authenticated_compositor_pidfd_retained_then_dead": true,
+      "completed_config_event_count": 13,
+      "event_flags": 0,
+      "last_completed_props_to_first_Source_ns": 7655,
+      "typed_rejection": {
+        "stage": "validation",
+        "reason": "sample_gap",
+        "sequence": 2
+      },
+      "Source_gap_ns": 116863834,
+      "cached_sample_age_ns": null,
+      "Source_sequence2_sample_to_validation_ns": 37458825,
+      "existing_instance_log_bound": false,
+      "direct_waits": 149,
+      "PIPE_EOFs": 156,
+      "separate_QMP_EOF": 1,
+      "separate_RefUnit_UnrefUnit_returns": 8,
+      "original_cutoffs_inputs_and_CID_closure": true,
+      "blocking_operation_identified": false,
+      "phone_accessed": false
+    }
+  ],
+  "normal_Hyprland_source_commit": "efb50993780079460b0cbed1363e2166a2de1d9f",
+  "default_disable_file_logs_true_static_source": "src/config/values/ConfigValues.cpp:629",
+  "log_absence_does_not_establish_cause": true,
+  "no_render_or_inflight_cause_inferred": true
+}

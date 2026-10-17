@@ -59,3 +59,18 @@ SIGTERM RED→GREEN record. Next identify the cold Source gap using the retained
 compositor's existing evidence, then qualify healthy full-shell/Sounds/Stop.
 ARM, live combined themes, Messages and every physical Pixel gate remain open.
 No physical phone is accessed.
+
+## Later passive startup diagnostics
+
+Two observer-only epochs now retain the activating owner's actual compositor
+pidfd and13 completed configuration events, with valid committed ring prefixes.
+Configuration completion precedes the first accepted Source sample. One later
+real216-byte sequence2 is rejected for a116.863834ms producer sample gap; its
+sample-to-validation interval is37.458825ms. This does not identify the blocking
+operation or justify another readiness gate.
+
+No instance log was captured. The pinned upstream [configuration default](https://github.com/hyprwm/Hyprland/blob/efb50993780079460b0cbed1363e2166a2de1d9f/src/config/values/ConfigValues.cpp#L629)
+disables file logging; missing logs supply no cause. Both aggregates remain
+failed. Their respective148/149 direct waits and155/156 PIPE EOFs, separate QMP
+EOF, exact container/input closure and original bounds pass. See the separate
+[diagnostic provenance](evidence/native-cold-source-gap-provenance.json).

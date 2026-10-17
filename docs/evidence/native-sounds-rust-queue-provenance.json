@@ -1,0 +1,252 @@
+{
+  "schema": 1,
+  "scope": "One unsent Sounds route/reconnect intent moves from C++ into an app-local Rust core. Host actual C ABI and Qt socket qualification only.",
+  "source_base": "cdcf8bcda454b6a38bc68d8552251f4dd5da5b86",
+  "Root_integration_base": "ca1ea815169fcf8dc57407e6505f7c7460355e58",
+  "source": {
+    "bytes": 4813,
+    "sha256": "3c02f784c0d90a9a955d261386951c63fb4fca6509cbda588f8587087f7e5cf5"
+  },
+  "independent_implementation_review": {
+    "bytes": 46889,
+    "sha256": "72f95b36a0898f5100795d7b085c191abec19ac63dffd29b301895eddbea1f8b"
+  },
+  "public_source_patch": {
+    "bytes": 38343,
+    "sha256": "731c85ed9e980531ccb8efa9af87f6a33e066155ed0362ed2e5edb3b95e67cb2"
+  },
+  "changed_files": {
+    "native-audio-ui/AudioClient.cpp": {
+      "bytes": 15619,
+      "sha256": "2a92b028f34cd480e41ea13982f00bb6bdac2d04576b393c9b6a2a8303dbb4ed"
+    },
+    "native-audio-ui/AudioClient.h": {
+      "bytes": 2762,
+      "sha256": "b20a311239afe63184edfc9b2f692e90c40cc59f311d2a58e49f35a5be93ea0c"
+    },
+    "native-audio-ui/CMakeLists.txt": {
+      "bytes": 3842,
+      "sha256": "5c617fe6f912bdca38fc5e5dd92ca9741ef2b9907cdebb8bc1152cc8e835e275"
+    },
+    "native-audio-ui/client-core/Cargo.lock": {
+      "bytes": 1809,
+      "sha256": "23ff76a78da027f4854d21de0272e5a11ca0dba263ff7804f7191cad5556e201"
+    },
+    "native-audio-ui/client-core/Cargo.toml": {
+      "bytes": 247,
+      "sha256": "00f4e4e1e20557e08c61ec1810a015442b52c82cd21d6df456fa472a31dbb64e"
+    },
+    "native-audio-ui/client-core/include/pokelinux_sounds_intent.h": {
+      "bytes": 1770,
+      "sha256": "2a2fea88b212eaa7b99534c4a15b392583cbb261f6f88f6db1d70f0797f0efd6"
+    },
+    "native-audio-ui/client-core/src/ffi.rs": {
+      "bytes": 4535,
+      "sha256": "19a18116c7f119b4c5e1efe8ef641befbfae8fd12713f576e01088f8f5bed9ce"
+    },
+    "native-audio-ui/client-core/src/lib.rs": {
+      "bytes": 109,
+      "sha256": "f346c487793e583da2abe3b470b504e0db9ada03ed9344958cb88bdfdf95d38e"
+    },
+    "native-audio-ui/client-core/src/queue.rs": {
+      "bytes": 3245,
+      "sha256": "5f99967534d88cf4bce25764bdfc16412b18b64ac8fcfd222d9f06793033f693"
+    },
+    "native-audio-ui/client-core/src/wire.rs": {
+      "bytes": 1866,
+      "sha256": "861bbc30e788f2b3ff3548c54485f3c2fdf8df84f81f59740959d94357e61abd"
+    },
+    "native-audio-ui/client-core/tests/queue-functional.cpp": {
+      "bytes": 6646,
+      "sha256": "4dc3c72dc9b5381f39aaa5adb321c394235e22e3609ed2e631d8306664beafab"
+    }
+  },
+  "missing_API_RED": {
+    "evidence": {
+      "bytes": 2979,
+      "sha256": "44b0be50efec42d218222629b67cc572f524303e7575490a8271ae1e97a6bce9"
+    },
+    "genuine_current_header_control_exit": 0,
+    "exact_missing_type_and_create_symbol_target_exit": 1,
+    "before_production_implementation": true,
+    "behavioral_bug_RED_claimed": false
+  },
+  "frozen_consumer": {
+    "initial": {
+      "bytes": 6641,
+      "sha256": "5b647cf050f09d88328a0057dff1f5027e19d1c59f7c59878290657d79ef753d"
+    },
+    "type_corrected": {
+      "bytes": 6645,
+      "sha256": "40a8d5797767f81789a7a478c99ca942ed29032a6168cf40f71e490da525b45f"
+    },
+    "declaration_only_setup_correction": {
+      "bytes": 1458,
+      "sha256": "2ea7fcc5084b539e40d4f24773da30003e7e298cc049a9b576390798c63fb730"
+    },
+    "permanent_header_filename_only_normalization": {
+      "bytes": 725,
+      "sha256": "13c13a40ca61f5c92c6833687f9e691afd8d074a4a193dfab9a1d7bd39f6ee73"
+    },
+    "assertions_and_original_5s_8s_bounds_unchanged": true
+  },
+  "actual_qualified_groups": [
+    "copied_first_intent_waits_for_final_status",
+    "repeated_prepare_keeps_original_deadline",
+    "fresh_permission_availability_membership_cancels",
+    "one_explicit_reconnect_never_replays",
+    "actual_boottime_expiry_without_timer_delivery",
+    "cancel_and_one_shot_send_token_fences"
+  ],
+  "unchanged_Qt_socket_behavior_cases": 30,
+  "separate_Qt_setup_cleanup": 2,
+  "existing_Qt_test_source": {
+    "bytes": 24429,
+    "sha256": "8a23bb432f1cb05eea04386551b57502431884f36fee1d147381ba8cb5cb8b82"
+  },
+  "Rust_fmt_strict_all_target_Clippy_release": true,
+  "Rust_library_unit_test_count": 0,
+  "permanent_CMake_CTest_boundary_pass": true,
+  "actual_default_offline_Cargo_CMake_full_Sounds_link_pass": true,
+  "Rust_archive": {
+    "bytes": 23266816,
+    "sha256": "b2ac66492427b12e7950c455a55d17f0099701611a4cf1279762fa15bfaf5f30"
+  },
+  "default_archive_byte_identical": true,
+  "full_Sounds_ELF": {
+    "bytes": 5934448,
+    "sha256": "93d810f32b19729c294e69fe868e0e3c662d952c53689ea3ccc47f9d6d49884c"
+  },
+  "exact_strong_C_ABI_export_count": 7,
+  "phases": {
+    "compile-red-1": {
+      "execution": {
+        "bytes": 8079,
+        "sha256": "dbb567793211f808def367691287098133de3d1339e6d2688ef60c9726c50043"
+      },
+      "source": {
+        "bytes": 7851,
+        "sha256": "5ffccdc0b8d88cdddc1a5136f5745595c5b7474928a0be8c32d320b938098354"
+      },
+      "actual_CLI_exit": 90,
+      "actual_selected_command_exit": 90,
+      "owned_closure_qualified": true
+    },
+    "compile-red-2": {
+      "execution": {
+        "bytes": 9156,
+        "sha256": "174dc5ef2182b36b93996f13d8f007d9c8ed09606c22c0f80d9e9f85bea2ce70"
+      },
+      "source": {
+        "bytes": 7851,
+        "sha256": "ec592ba3bad237b267dd65aa74a90c2af695c5a7fc5b58af9a072eda6d851fcd"
+      },
+      "actual_CLI_exit": 1,
+      "actual_selected_command_exit": 1,
+      "owned_closure_qualified": true
+    },
+    "rust-lock-and-format-1": {
+      "execution": {
+        "bytes": 8494,
+        "sha256": "ba10720fdfa74ce306d22521fdd138287418d1fc1fdd38626779c87fff9421a9"
+      },
+      "source": {
+        "bytes": 8828,
+        "sha256": "6bff63f877e300303a1ff4db9059e772ea8e884a44c1b5c34f05d062032d997c"
+      },
+      "actual_CLI_exit": 0,
+      "actual_selected_command_exit": 0,
+      "owned_closure_qualified": true
+    },
+    "Rust-QA-1": {
+      "execution": {
+        "bytes": 9382,
+        "sha256": "199cad7fe569b2776dd27765dc007b1e360d3293af89cbeca47d9b96f3e79de7"
+      },
+      "source": {
+        "bytes": 8988,
+        "sha256": "ac02ea0c0a128c65dda928814c7a4ff4796226ce3a9543f52f63fb00d638ed1b"
+      },
+      "actual_CLI_exit": 0,
+      "actual_selected_command_exit": 0,
+      "owned_closure_qualified": true
+    },
+    "Cpp-Qt-GREEN-1": {
+      "execution": {
+        "bytes": 8938,
+        "sha256": "865db058801aa0439f6aafe6b648ddb43b60a9836828ff649e174cec26edf9a8"
+      },
+      "source": {
+        "bytes": 8988,
+        "sha256": "111545eb4f184be65b0ac571b18bceeacc51189cd033b6f14b871cddd853a3ad"
+      },
+      "actual_CLI_exit": 91,
+      "actual_selected_command_exit": 91,
+      "owned_closure_qualified": true
+    },
+    "Cpp-Qt-GREEN-2": {
+      "execution": {
+        "bytes": 10189,
+        "sha256": "cecb6de59889a7245d7b95010cb29e0513247d9a1094280333a608316f57bc82"
+      },
+      "source": {
+        "bytes": 8988,
+        "sha256": "ab7a3c5aa6b7ed631432c4152da5042dbc75eb56231de10e60a1ee97720fd4ec"
+      },
+      "actual_CLI_exit": 94,
+      "actual_selected_command_exit": 94,
+      "owned_closure_qualified": true
+    },
+    "Cpp-Qt-GREEN-3": {
+      "execution": {
+        "bytes": 11394,
+        "sha256": "80c7ca9ca9985607d3c440f38575e98293c2b3b49ade58c46365c07a17d84b59"
+      },
+      "source": {
+        "bytes": 8988,
+        "sha256": "4a588c049ba769067c52883ffcd6cdaf8831cfa6ecd8a878e2bbe1b537ccffb0"
+      },
+      "actual_CLI_exit": 0,
+      "actual_selected_command_exit": 0,
+      "owned_closure_qualified": true
+    },
+    "signature-and-Sounds-link-1": {
+      "execution": {
+        "bytes": 11052,
+        "sha256": "af05319e1f452acc3f9db685e07f4ac05a3e5df090763fea78a731f72751f2b1"
+      },
+      "source": {
+        "bytes": 8988,
+        "sha256": "edec444675ed3e269c883141193d8db231e59ba4231e49ae6f8c11fba335b107"
+      },
+      "actual_CLI_exit": 0,
+      "actual_selected_command_exit": 0,
+      "owned_closure_qualified": true
+    },
+    "default-CMake-and-permanent-CABI-1": {
+      "execution": {
+        "bytes": 9854,
+        "sha256": "df030fad7e347c6d983648577e016d1fca7b770570caf993fd6a09a315ed54fb"
+      },
+      "source": {
+        "bytes": 9163,
+        "sha256": "9212746b4c24f4fd6360f8e48518435adf6222f45bb51f2b2368198baddc5d41"
+      },
+      "actual_CLI_exit": 0,
+      "actual_selected_command_exit": 0,
+      "owned_closure_qualified": true
+    }
+  },
+  "retained_failed_setups": {
+    "Cpp-Qt-GREEN-1": "frozen consumer auto declaration mixed uint64_t/ULL; never executed",
+    "Cpp-Qt-GREEN-2": "six groups passed, then wrapper corrupted archive SHA option; aggregate failed",
+    "compile-red-1": "Qt builder has no pkg-config; compiler never invoked"
+  },
+  "all_nine_phase_outer_direct_waits": 54,
+  "all_nine_phase_outer_merged_PIPE_EOFs": 54,
+  "all_original_cutoffs_exact_CIDs_same_daemon_and_input_closure": true,
+  "direct_request_reply_validation_and_QObject_transport_remain_Cpp": true,
+  "service_permission_authority_changed": false,
+  "prepared_GUI_PCM_requalification": false,
+  "installed_or_ARM_or_phone_qualified": false
+}

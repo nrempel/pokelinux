@@ -4,6 +4,7 @@
 #include <QTimer>
 #include <QVariantList>
 #include <sys/types.h>
+#include "pokelinux_sounds_intent.h"
 class QSocketNotifier;
 
 // Presentation of one root lifecycle actor connection. The actor owns policy
@@ -23,8 +24,8 @@ public:
  QString requested() const { return m_requested; }
  QString applied() const { return m_applied; }
  QString status() const { return m_status; }
- bool canChoose() const { return m_online && m_available && m_actorCanChoose && !m_reconnectQueued && m_queued.isEmpty() && (m_pending.isEmpty() || m_pending=="status"); }
- bool canReconnect() const { return !m_reconnectQueued && m_queued.isEmpty() && (m_pending.isEmpty() || m_pending=="status") && (m_fd<0 || (m_online && m_actorCanReconnect)); }
+ bool canChoose() const { return m_online && m_available && m_actorCanChoose && m_intents && pr_sounds_queue_pending_v1(m_intents)==0 && (m_pending.isEmpty() || m_pending=="status"); }
+ bool canReconnect() const { return m_intents && pr_sounds_queue_pending_v1(m_intents)==0 && (m_pending.isEmpty() || m_pending=="status") && (m_fd<0 || (m_online && m_actorCanReconnect)); }
  Q_INVOKABLE void reconnect();
  Q_INVOKABLE void select(const QString &id);
 signals:
@@ -40,8 +41,9 @@ private:
  void connectActor();
  bool peer();
  void request(const QJsonObject &message, const QString &kind, qint64 originalUntil=0);
- void sendSelection(const QString &id, qint64 originalUntil, bool wasQueued);
+ void sendSelection(const QString &id, qint64 originalUntil);
  void dispatchQueued();
+ int prepareQueued(PrSoundsCommandV1 &command);
  bool queue(const QJsonObject &message);
  void statusRequest();
  void writable();
@@ -57,11 +59,12 @@ private:
  Stage m_stage=Stage::Idle;
  QTimer m_poll,m_watch;
  QByteArray m_output;
- QString m_pending,m_requested,m_applied,m_queued;
- qint64 m_queuedUntil=0;
+ QString m_pending,m_requested,m_applied;
+ PrSoundsQueue *m_intents=nullptr;
+ quint64 m_sendToken=0;
  QString m_status=QStringLiteral("Audio disconnected");
  QVariantList m_routes,m_pageRoutes;
  qint64 m_deadline=0;
  int m_offset=0;
- bool m_online=false,m_available=false,m_actorCanChoose=false,m_actorCanReconnect=false,m_closing=false,m_reconnectQueued=false;
+ bool m_online=false,m_available=false,m_actorCanChoose=false,m_actorCanReconnect=false,m_closing=false;
 };

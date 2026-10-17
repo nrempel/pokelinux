@@ -12,6 +12,11 @@ render-stall availability and native display cleanup remain open. The custom
 renderer results below remain component research. The full completion matrix and
 all physical-phone gates stay open.
 
+The first [Rust app-client queue core](native-sounds-rust-queue.md) now replaces
+Sounds queued route/reconnect ownership and deadline/cancel logic in C++. Actual
+C ABI, unchanged Qt socket checks and full application linking pass; this new
+client still needs prepared PCM, installed and ARM integration.
+
 Two additional [whole-compositor stall epochs](native-normal-upstream-tracer.md#compositor-freeze-expiry-and-stop)
 now qualify independent100ms Source-expiry withdrawal/quietness/refusal before
 Stop, and separately native Stop while the compositor remains stopped. Each
