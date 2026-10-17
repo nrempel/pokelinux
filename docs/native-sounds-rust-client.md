@@ -1,5 +1,10 @@
 # Sounds request and model engine in Rust
 
+The later [shared appearance Rust client](native-appearance-rust-client.md)
+adds separately qualified policy and fresh joined normal host/default-Cargo/
+installed-QML checks. Earlier Sounds captures below retain their own source;
+no new Sounds GUI or ARM Qt execution is inherited.
+
 The app-local Rust engine now owns direct and queued requests, outgoing packets,
 original deadlines, reply validation, pagination and the accepted UI model.
 `AudioClient` retains QObject/QML presentation and the credentialed nonblocking

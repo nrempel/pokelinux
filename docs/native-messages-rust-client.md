@@ -152,5 +152,8 @@ display cleanup remain open. Existing older Messages GUI/ARM results select thei
 client and are not inherited. The new x86 screenshots qualify only their prepared
 session; no phone, vendor modem,
 continuous incoming/SMS send, notifications/wake or carrier result is claimed.
-The separate shared appearance client still contains C++ policy requiring Rust
-migration. Upstream Qt/Hyprland/Aquamarine remain substantial C++ dependencies.
+The [shared appearance client](native-appearance-rust-client.md) now has Rust
+policy with separately qualified host component/full-app/default-Cargo/install
+checks. The ARM builds and prepared GUI above retain their pre-port appearance
+cohorts; new-port ARM Qt and visible-session proof remain open. Upstream
+Qt/Hyprland/Aquamarine remain substantial C++ dependencies.

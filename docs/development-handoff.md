@@ -65,8 +65,15 @@ passes denial, granted authored history, original Omarchy live dark/light themes
 and revoked-list clearing in one normal app/window, with four Root-reviewed
 native Pixel10 captures and actual owner Stop/closure. Both initial setup and
 pixel-oracle failures remain preserved; no production repair is claimed.
-Shared appearance-client Rust migration and ordinary cold/ARM composition remain;
-retain Qt presentation. Extra conservative parser-error
+The [shared appearance client](native-appearance-rust-client.md) now keeps schema,
+cache, revision, generation, readiness and deadline policy in Rust. One actual
+counter regression RED precedes its repair; strict Rust checks, host/ARM archive
+builds, eight frozen C ABI groups and all29 unchanged native Qt cases pass. Fresh
+normal Sounds/Messages explicit and default-Cargo host builds, dual-archive
+links, protected installation and four windowless controls pass. The earlier
+ARM and visible captures retain their pre-port appearance client; the new
+visible-session check and complete installed ARM cohort are next.
+Retain Qt presentation. Extra conservative parser-error
 classification refinements are parked; no exhaustive Qt equivalence is claimed.
 
 The [later finite fd metadata epoch](native-callback-spans.md#later-finite-file-descriptor-metadata-samples)

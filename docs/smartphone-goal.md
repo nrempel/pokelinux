@@ -43,8 +43,12 @@ The [fresh prepared x86 Messages window](native-messages-prepared-tracer.md) now
 passes denial, granted authored history, live original Omarchy theme switching
 and revoked-list clearing in one normal app/window. Four unmodified native
 Pixel10 captures and owned Stop/closure pass; direct QWindow/DPR remains open.
-Shared appearance Rust migration, cold/ARM window composition and all phone
-gates remain open.
+The [shared appearance Rust client](native-appearance-rust-client.md) now passes
+its frozen eight-group C ABI, counter regression and all29 unchanged native Qt
+cases. Fresh normal Sounds/Messages host links, default Cargo and installed-QML
+checks pass. The earlier ARM and visible results keep their pre-port client;
+new-port ARM Qt/window, visible composition, cold startup and all phone gates
+remain open.
 
 Two additional [whole-compositor stall epochs](native-normal-upstream-tracer.md#compositor-freeze-expiry-and-stop)
 now qualify independent100ms Source-expiry withdrawal/quietness/refusal before

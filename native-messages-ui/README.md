@@ -52,7 +52,22 @@ run now pass. A later native ARM production CMake Release build installs the nor
 app and protected QML with the explicit matching archive and passes the nine-group
 consumer. A normal ARM window and ARM default Cargo remain open; see the
 [CMake/install result](../docs/native-messages-rust-client.md#native-arm-production-cmake-build-and-installation).
-CMake compiles the public header; it does not install an FFI SDK.
+Those ARM builds and prepared captures retain the pre-appearance-Rust-port
+cohort. The [shared appearance port](../docs/native-appearance-rust-client.md)
+separately qualifies fresh host full-app/default-Cargo/install checks; its new
+ARM Qt/visible-session cohort remains open. CMake compiles both public headers;
+it does not install an FFI SDK.
+
+Explicit provider selection, including cross builds, needs BOTH matching-target
+archive/SHA pairs (replace the paths and digests with the selected artifacts):
+
+```sh
+cmake -S native-messages-ui -B messages-build -DCMAKE_BUILD_TYPE=Release \
+  -DPOKELINUX_MESSAGES_CLIENT_ARCHIVE=/absolute/libpokelinux_messages_client.a \
+  -DPOKELINUX_MESSAGES_CLIENT_ARCHIVE_SHA256=ACTUAL_MESSAGES_SHA256 \
+  -DPOKELINUX_APPEARANCE_CLIENT_ARCHIVE=/absolute/libpokelinux_appearance_client.a \
+  -DPOKELINUX_APPEARANCE_CLIENT_ARCHIVE_SHA256=ACTUAL_APPEARANCE_SHA256
+```
 
 The permanent native Qt regressions use authored root peers in a disposable test
 environment. Build and run their13 CTest cases there:

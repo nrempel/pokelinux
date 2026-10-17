@@ -2,6 +2,7 @@
 #include <QObject>
 #include <QVariantMap>
 #include <QTimer>
+#include "pokelinux_appearance_client.h"
 class QSocketNotifier;
 
 // Authenticated public appearance only. Never used for action/session authority.
@@ -17,23 +18,20 @@ public:
 signals:
     void changed();
 private:
-    enum class Stage { Idle, Connecting, Sending, Receiving };
     void refresh();
-    void writable();
-    void readable();
-    void fail();
+    void tick();
+    void notified(uint64_t generation, uint32_t event);
+    void drain(bool notify = true);
+    void execute(const PrAppearanceStepV1 &plan);
+    void applyView(const PrAppearanceViewV1 &view, bool notify);
     void closeSocket();
-    void invalidate();
-    void armExpiry();
     bool peer();
     QString path;
-    QString owner;
-    quint64 revision = 0, requestUntil = 0, paletteUntil = 0, connectionGeneration = 0;
     QVariantMap current;
-    bool valid = false;
+    PrAppearanceClient *policy = nullptr;
+    uint64_t deliveredChangeSequence = 0;
     int fd = -1;
     qint64 peerPid = 0;
-    Stage stage = Stage::Idle;
     QSocketNotifier *readNotifier = nullptr, *writeNotifier = nullptr;
     QTimer pollTimer, requestTimer, expiryTimer;
 };

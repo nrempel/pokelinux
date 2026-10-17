@@ -1,0 +1,516 @@
+{
+  "Rust": {
+    "14_foreground_shell_waits_regular_outputs": true,
+    "ARM_archive": {
+      "bytes": 24830446,
+      "sha256": "1b760cf33b1a1cceb2a5b2f2f4e3914823e93e4ebe26c551b634297ad59286b9"
+    },
+    "counter_regression_units_passed": 1,
+    "exact_strong_C_exports": [
+      "pr_appearance_client_available_v1",
+      "pr_appearance_client_free_v1",
+      "pr_appearance_client_new_v1",
+      "pr_appearance_client_ready_v1",
+      "pr_appearance_client_received_v1",
+      "pr_appearance_client_refresh_v1",
+      "pr_appearance_client_report_v1",
+      "pr_appearance_client_step_v1",
+      "pr_appearance_client_stop_v1",
+      "pr_appearance_client_tick_v1",
+      "pr_appearance_client_view_v1"
+    ],
+    "execution": {
+      "bytes": 27395,
+      "sha256": "b368e63c45457558fbed3f16fc98cf11b4e9c331a62beed3f6b894253d4cabd6"
+    },
+    "fmt_strict_Clippy_pass": true,
+    "host_archive": {
+      "bytes": 23924416,
+      "sha256": "2352a455d1da1697309a18b8ae6f95b8e4efcc0422c90cf78d2aa9d468e72b94"
+    },
+    "inner_PIPE_EOF_claimed": false,
+    "qualification": {
+      "bytes": 3421,
+      "sha256": "7958aa60a49defacc0634301e67cfd41ec40feaaf276c0764f26766eb6c28758"
+    }
+  },
+  "claims": {
+    "ARM_Qt_adapter_or_GUI": false,
+    "default_Cargo_full_apps": true,
+    "eight_C_ABI_groups": true,
+    "full_normal_Sounds_Messages_joined_links": true,
+    "hardware_phone_suspend_modem_carrier": false,
+    "host_Rust_and_new_Qt_adapter": true,
+    "host_and_ARM_release_archives": true,
+    "normal_window_new_visible_session": false,
+    "protected_installed_QML_new_cohort": true,
+    "service_or_session_authority": false,
+    "unchanged29_actual_native_Qt_cases": true
+  },
+  "closed_Root_review": {
+    "bytes": 6761,
+    "sha256": "d54ac3977d06aee5395cd521c998d671c85a8a1612b5a00d4b19a8ff226a7f06"
+  },
+  "historical_ARM_and_GUI_epochs_inherited": false,
+  "host_native_boundary": {
+    "Qt": "6.8.2",
+    "actual_cases": [
+      "publication",
+      "expired",
+      "cached-expiry",
+      "malformed",
+      "unavailable",
+      "peer-uid",
+      "restart",
+      "disconnect",
+      "until-syntax",
+      "revision-float",
+      "revision-rollback",
+      "owner",
+      "rights",
+      "held",
+      "oversized",
+      "sender-pid",
+      "sender-uid",
+      "delayed-consumption",
+      "late-real-receive",
+      "qml-full-style",
+      "schema1",
+      "schema2",
+      "rgba16-exact",
+      "rgba16-alpha-only-new-revision",
+      "rgba16-alpha-only-same-revision",
+      "rgba16-one-unit-new-revision",
+      "rgba16-final-liveness",
+      "style-same-revision",
+      "style-new-revision"
+    ],
+    "actual_native_peer_waits0": 29,
+    "adopted_processes": [],
+    "direct_consumer_PID": 22,
+    "execution": {
+      "bytes": 34482,
+      "sha256": "f1d84aaf4a60a49b0f2ee3ebff33fe1ca8910b00fbd8e5fbf3a0e28f29800b6f"
+    },
+    "frozen_consumer": {
+      "bytes": 18621,
+      "sha256": "d3a9af1009656e0bccd834f01e75bf3d5eabbbc949f38b9f446c13282e79f56b"
+    },
+    "frozen_groups": [
+      "initial_query_one_effect_original_deadline",
+      "owner_revision_and_RGBA16_immutability",
+      "style_numeric_projection_and_duplicate_last_wins",
+      "schema3_shape_and_bounded_refusals",
+      "owned_snapshot_and_unavailable_retention",
+      "real_BOOTTIME_RPC_and_independent_cached_expiry",
+      "stale_connection_generation_isolation",
+      "Stop_native_close_and_no_reactivation"
+    ],
+    "frozen_oracle": {
+      "bytes": 1761,
+      "sha256": "00db990e0f76639ce9b14f9ba8b8173288b3ba70a860ff9abb126c8d6b40db02"
+    },
+    "header": {
+      "bytes": 7080,
+      "sha256": "46e993660ced0eb0f6d901071b347aefe289d757af4dc9ea0d9d601a06d79504"
+    },
+    "inside_actual_waits": 39,
+    "inside_stdout_PIPE_EOFs": 39,
+    "permanent_CTest": {
+      "bytes": 279,
+      "sha256": "e0eec975433edd23487a22e960224567ae96689b1c6e89a59a10572e1db45cbb"
+    },
+    "permanent_CTest_tests": 1,
+    "permanent_LastTest": {
+      "bytes": 1453,
+      "sha256": "61ebd0b3575f6fd609a787d110fbf48f8489dfc986506162f0bc7bfd0b0bbdfe"
+    },
+    "probe_ELF": {
+      "bytes": 5774672,
+      "sha256": "fbe45068fcb0d1947e443edd7552afadc1e075d035d2956a7ec17e4ff61ed6e6"
+    },
+    "probe_loader": {
+      "bytes": 6424,
+      "sha256": "75041ce1570cc57c635808d7a19064c9612abfcb2930600045119e88da30e23c"
+    },
+    "regular_stderr_handles_closed": 30,
+    "regular_stderr_not_PIPE": true,
+    "result": {
+      "bytes": 119680,
+      "sha256": "40c6e3a8265e182064d7b65bfca10e666dd772272376db17508fa579a593a7f4"
+    },
+    "wait_all_ECHILD": true
+  },
+  "independent_closed_read": {
+    "bytes": 1526,
+    "sha256": "76854773da454c53dbdfb47c6a171b0935b22bdf0ac0177a6f637247d3a39319"
+  },
+  "joined_normal_host": {
+    "default_archives_byte_equal_to_explicit_claimed": false,
+    "default_generated_archives_observed_in_closed_container_not_exported": true,
+    "host_actual_waits_and_PIPE_EOFs": 26,
+    "independent_closed_read": {
+      "bytes": 657,
+      "sha256": "528ff425e9004ebfe8a6c57c7edfe37d253d11fa09326bd5e769138f98e9a2b0"
+    },
+    "inside_actual_waits_and_stdout_PIPE_EOFs": 49,
+    "inside_merged_PIPE_EOFs": 45,
+    "inside_regular_stderr_closed_after_wait": 4,
+    "original_runner_legacy_passed_qualification_flags": {
+      "Default-native-Cargo": false,
+      "Explicit-dual-archive": false
+    },
+    "phases": {
+      "Default-native-Cargo": {
+        "Qt": "6.8.2",
+        "execution": {
+          "bytes": 22642,
+          "sha256": "f59e9f96429469565448ed9c29731f61ceef35458f8cb3113c456ee3368924ae"
+        },
+        "normal_apps": {
+          "Messages": {
+            "installed": {
+              "PhoneAppearance_QML": {
+                "bytes": 1954,
+                "sha256": "705ab25799cba18095a76f4fb47e70eb10099ca035426d7e4400fa9cef8452bc"
+              },
+              "actual_manifest": {
+                "bytes": 203,
+                "sha256": "98658c6d2d074c09354f5a0556f98bcb43de0df442a575eb5ca5cb3d7c675b53"
+              },
+              "desktop": {
+                "bytes": 299,
+                "sha256": "e77cba1df72466dc1a6f601aaa46ff0fd35686e545691cbe6001ad457ad5051a"
+              },
+              "normal_ELF": {
+                "bytes": 5782208,
+                "sha256": "cb1d7be961d9303fce55c6010f95a9213f2671be2e57065132a2a4f1c21800da"
+              }
+            },
+            "normal_ELF": {
+              "bytes": 5782208,
+              "sha256": "cb1d7be961d9303fce55c6010f95a9213f2671be2e57065132a2a4f1c21800da"
+            },
+            "one_app_archive_and_one_appearance_archive": true,
+            "strong_C_API_count": 23
+          },
+          "Sounds": {
+            "installed": {
+              "PhoneAppearance_QML": {
+                "bytes": 1954,
+                "sha256": "705ab25799cba18095a76f4fb47e70eb10099ca035426d7e4400fa9cef8452bc"
+              },
+              "actual_manifest": {
+                "bytes": 193,
+                "sha256": "a3e8a0c506aea91f6b4dd71563459954dc87b9cc8930de240568a0f8e7f08d25"
+              },
+              "desktop": {
+                "bytes": 261,
+                "sha256": "42f4157e5edae04d0c57a8311cf2abeda518d395ca3ef2206f63216d54d03e1d"
+              },
+              "normal_ELF": {
+                "bytes": 6251136,
+                "sha256": "987bbcd70415a6670fe18ae901081cb99f83233328f75aff8881672c2c400e5f"
+              }
+            },
+            "normal_ELF": {
+              "bytes": 6251136,
+              "sha256": "987bbcd70415a6670fe18ae901081cb99f83233328f75aff8881672c2c400e5f"
+            },
+            "one_app_archive_and_one_appearance_archive": true,
+            "strong_C_API_count": 24
+          }
+        },
+        "result": {
+          "bytes": 29251,
+          "sha256": "47b65ccaa84c3e46dead61241477ba925052221ae0205440818f5db7a057e1ac"
+        },
+        "windowless_Messages_controls": null
+      },
+      "Explicit-dual-archive": {
+        "Qt": "6.8.2",
+        "execution": {
+          "bytes": 26066,
+          "sha256": "1a3abc09ceeeeb80c563e70ae9fc2c3b58cdf13c7de3e0e8345d56dd6e4ccf71"
+        },
+        "normal_apps": {
+          "Messages": {
+            "installed": {
+              "PhoneAppearance_QML": {
+                "bytes": 1954,
+                "sha256": "705ab25799cba18095a76f4fb47e70eb10099ca035426d7e4400fa9cef8452bc"
+              },
+              "actual_manifest": {
+                "bytes": 203,
+                "sha256": "98658c6d2d074c09354f5a0556f98bcb43de0df442a575eb5ca5cb3d7c675b53"
+              },
+              "desktop": {
+                "bytes": 299,
+                "sha256": "e77cba1df72466dc1a6f601aaa46ff0fd35686e545691cbe6001ad457ad5051a"
+              },
+              "normal_ELF": {
+                "bytes": 5983624,
+                "sha256": "1e68aafec828d1117f792a6284c3b8e603e7729d36beb9c8c5aeaa479fc125e9"
+              }
+            },
+            "normal_ELF": {
+              "bytes": 5983624,
+              "sha256": "1e68aafec828d1117f792a6284c3b8e603e7729d36beb9c8c5aeaa479fc125e9"
+            },
+            "one_app_archive_and_one_appearance_archive": true,
+            "strong_C_API_count": 23
+          },
+          "Sounds": {
+            "installed": {
+              "PhoneAppearance_QML": {
+                "bytes": 1954,
+                "sha256": "705ab25799cba18095a76f4fb47e70eb10099ca035426d7e4400fa9cef8452bc"
+              },
+              "actual_manifest": {
+                "bytes": 193,
+                "sha256": "a3e8a0c506aea91f6b4dd71563459954dc87b9cc8930de240568a0f8e7f08d25"
+              },
+              "desktop": {
+                "bytes": 261,
+                "sha256": "42f4157e5edae04d0c57a8311cf2abeda518d395ca3ef2206f63216d54d03e1d"
+              },
+              "normal_ELF": {
+                "bytes": 6251136,
+                "sha256": "987bbcd70415a6670fe18ae901081cb99f83233328f75aff8881672c2c400e5f"
+              }
+            },
+            "normal_ELF": {
+              "bytes": 6251136,
+              "sha256": "987bbcd70415a6670fe18ae901081cb99f83233328f75aff8881672c2c400e5f"
+            },
+            "one_app_archive_and_one_appearance_archive": true,
+            "strong_C_API_count": 24
+          }
+        },
+        "result": {
+          "bytes": 39873,
+          "sha256": "b6a71b1c59870a8a4d3dadadd7e0eff972762ab1e1106c39792671e2a4dfc105"
+        },
+        "windowless_Messages_controls": [
+          {
+            "Window_created": false,
+            "actual_exit": 0,
+            "actual_normal_rejection_wait_rows": 0,
+            "mode": "installed"
+          },
+          {
+            "Window_created": false,
+            "actual_exit": 0,
+            "actual_normal_rejection_wait_rows": 0,
+            "mode": "live-appearance"
+          },
+          {
+            "Window_created": false,
+            "actual_exit": 0,
+            "actual_normal_rejection_wait_rows": 0,
+            "mode": "messages-policy"
+          },
+          {
+            "Window_created": null,
+            "actual_exit": 0,
+            "actual_normal_rejection_wait_rows": 4,
+            "mode": "arguments"
+          }
+        ]
+      }
+    },
+    "qualification": {
+      "bytes": 26191,
+      "sha256": "c872fd21f21c055777f2dafc0b25fa7e19e3da994fb715d1375a08226cd25b6d"
+    },
+    "separate_normal_main_argument_waits": 4,
+    "source_manifest": {
+      "bytes": 20933,
+      "sha256": "29e51a2f559d96a3dab69abb418c6c925b7f0d6eaf03b440133d818aa4a7012f"
+    },
+    "staged_source_files": 69,
+    "success_field_scope": "New finite actual_phase_and_owned_closure_success/actual_phase_success plus detailed closed qualification; inherited legacy aggregate remains false.",
+    "unaffected8_29_9_13_audio30_reexecuted": false
+  },
+  "ownership_scope": {
+    "Qt_outer_actual_waits": 13,
+    "Qt_outer_merged_PIPE_EOFs": 13,
+    "Rust_outer_actual_waits": 13,
+    "Rust_outer_merged_PIPE_EOFs": 13,
+    "all_original_cutoffs_same_daemon_exact_CID_absence_input_closure": true,
+    "regular_logs_not_PIPE_EOF": true
+  },
+  "preserved_failures_and_baseline": {
+    "Clippy_failures_are_feature_RED": false,
+    "counter_feature_RED": {
+      "actual_exit": 101,
+      "assertion_values_retained": true,
+      "execution": {
+        "bytes": 23303,
+        "sha256": "d2204b52ddfc2170f74b8a16b677566727b2db6b6618c5b018a15a5827ca523e"
+      },
+      "expected": 42,
+      "failure_branch": "request counter is first; repaired unit covers request and effect counters",
+      "observed": 41
+    },
+    "initial_production_Clippy_build_failure": {
+      "bytes": 24424,
+      "sha256": "db482cb4ef904d6aac68db55b71d40d44757dc3c20371c05593910bd0c27647d"
+    },
+    "later_unit_initializer_Clippy_build_failure": {
+      "bytes": 24661,
+      "sha256": "456737215b439676bff8b66a0c274a6922e738df88002b07bbf7e1520762017e"
+    },
+    "missing_names": [
+      "PrAppearanceClient",
+      "PrAppearanceViewV1",
+      "pr_appearance_client_new_v1"
+    ],
+    "original_CPP_Qt29_baseline": {
+      "execution": {
+        "bytes": 29402,
+        "sha256": "47e8ca35d5d5ae08cecaadd7115faedbe61c443be3660559c6734b6729044705"
+      },
+      "passed": 29,
+      "result": {
+        "bytes": 113885,
+        "sha256": "30037252cca7e5ffb6338be1dc510c0b922973beef8833abef0a71879a14308d"
+      }
+    },
+    "preimplementation": {
+      "bytes": 5455,
+      "sha256": "59826ac0cc73ab3667f1b2ec8e5bcd8ce9be56e29fff420e6b07bd72a7a46763"
+    },
+    "structural_control_exit": 0,
+    "structural_target_exit": 1
+  },
+  "schema": 1,
+  "scope": "App-local shared appearance policy in Rust: host Rust/C ABI/new Qt6.8.2 socket/QML component and fresh explicit/default-Cargo full normal Sounds/Messages build/install/windowless controls. ARM result is archive build only; new visible session and ARM Qt runtime remain open.",
+  "source_origin": {
+    "documentation_paths": [
+      "native-app/appearance-client-core/README.md",
+      "native-app/appearance-client-tests/README.md"
+    ],
+    "joined_source_publication_documentation_only_differences": [
+      "native-app/appearance-client-core/README.md",
+      "native-app/appearance-client-tests/README.md",
+      "native-messages-ui/README.md"
+    ],
+    "other_publication_documentation_paths": [
+      "README.md",
+      "docs/development-handoff.md",
+      "docs/smartphone-goal.md",
+      "docs/runtime-language-decision.md",
+      "docs/native-messages-rust-client.md",
+      "docs/native-messages-prepared-tracer.md",
+      "docs/native-audio-appearance-client.md",
+      "docs/native-sounds-rust-client.md",
+      "native-messages-ui/README.md"
+    ],
+    "post_run_documentation_hash_bridge": {
+      "native-app/appearance-client-core/README.md": {
+        "compiled_behavior_changed": false,
+        "published_documentation": {
+          "bytes": 3204,
+          "sha256": "27af49bce5afa616161b94232c01395663894109a1ae26a348e5146895ad975b"
+        },
+        "tested_snapshot": {
+          "bytes": 2825,
+          "sha256": "d0b4860a17b9473b45cf2eb8c07966ad5fb356c95c59329b6556a06120622406"
+        }
+      },
+      "native-app/appearance-client-tests/README.md": {
+        "compiled_behavior_changed": false,
+        "published_documentation": {
+          "bytes": 2025,
+          "sha256": "debc50c361b5ff72bc1fcdca1de393e9010b8920dc9961ffbe6482ab5206414c"
+        },
+        "tested_snapshot": {
+          "bytes": 1412,
+          "sha256": "c09f44d21de79c3e22d6fec667dcfe954887cc5ed80b402be7fba44c84469fa9"
+        }
+      }
+    },
+    "public_baseline": "675f50aef77aeb5aaa8909a4af62a6b704e1451f",
+    "publication_documentation_is_not_relabelled_compiled_source": true,
+    "selected_file_pins": {
+      "native-app/AppearanceRustClient.cmake": {
+        "bytes": 2397,
+        "sha256": "e3f7f1801609297cbcb3d4f89baa7673291e7a3857984e4f35b8e8855a1a057f"
+      },
+      "native-app/PhoneAppearance.qml": {
+        "bytes": 1954,
+        "sha256": "705ab25799cba18095a76f4fb47e70eb10099ca035426d7e4400fa9cef8452bc"
+      },
+      "native-app/PhoneAppearanceClient.cpp": {
+        "bytes": 11817,
+        "sha256": "e4b65bf9e622702e8f72494db7b9387fbaad02d0e194d64ce0b26f0df68fc689"
+      },
+      "native-app/PhoneAppearanceClient.h": {
+        "bytes": 1245,
+        "sha256": "3f67e172898df24d5548baf8dd94aa0cd6d394858c432967eb051a9ee0623076"
+      },
+      "native-app/appearance-client-core/Cargo.lock": {
+        "bytes": 2856,
+        "sha256": "17ca86b82ea1915692d8bf6dbb2d8b97bddcfc85f27796c29a9b91a493c41362"
+      },
+      "native-app/appearance-client-core/Cargo.toml": {
+        "bytes": 385,
+        "sha256": "6ce6142caa133a1e03c569c8661b558a1b6ddf62d8c0400e82310d97c56cfcad"
+      },
+      "native-app/appearance-client-core/README.md": {
+        "bytes": 2825,
+        "sha256": "d0b4860a17b9473b45cf2eb8c07966ad5fb356c95c59329b6556a06120622406"
+      },
+      "native-app/appearance-client-core/include/pokelinux_appearance_client.h": {
+        "bytes": 7080,
+        "sha256": "46e993660ced0eb0f6d901071b347aefe289d757af4dc9ea0d9d601a06d79504"
+      },
+      "native-app/appearance-client-core/src/clock.rs": {
+        "bytes": 674,
+        "sha256": "4648db05efb4a170f1934946eeb1e9e093b19a93666df16f07b147e1d6e80e68"
+      },
+      "native-app/appearance-client-core/src/engine.rs": {
+        "bytes": 15679,
+        "sha256": "ad269b4f65e1d6abf084f780b12755f5476e0eee53711aeb777db3e6e4663ca8"
+      },
+      "native-app/appearance-client-core/src/ffi.rs": {
+        "bytes": 6531,
+        "sha256": "3241542071f3ddd78a1b7f16a0bbd58c40928c89982773123e8492f7d481f920"
+      },
+      "native-app/appearance-client-core/src/layout.rs": {
+        "bytes": 2098,
+        "sha256": "f98e26d2aaff8b47925acffd8a795c45c4f950c973a2da0f4b4122c76270fc2f"
+      },
+      "native-app/appearance-client-core/src/lib.rs": {
+        "bytes": 142,
+        "sha256": "cf6cac9cfc0710cd990ed51acec7738bee6022cf8435109e059e7c9ce0463359"
+      },
+      "native-app/appearance-client-core/src/protocol.rs": {
+        "bytes": 4565,
+        "sha256": "5173fd3db41142803dbe92c6eabc532af753ae005a7797da2dc8d76d5812aa80"
+      },
+      "native-app/appearance-client-core/tests/client-functional.cpp": {
+        "bytes": 18621,
+        "sha256": "d3a9af1009656e0bccd834f01e75bf3d5eabbbc949f38b9f446c13282e79f56b"
+      },
+      "native-app/appearance-client-tests/CMakeLists.txt": {
+        "bytes": 1299,
+        "sha256": "68fc12aecaaede90c974d441991d595ccba1a44104c192f41d4888b9f0d94ed7"
+      },
+      "native-app/appearance-client-tests/README.md": {
+        "bytes": 1412,
+        "sha256": "c09f44d21de79c3e22d6fec667dcfe954887cc5ed80b402be7fba44c84469fa9"
+      },
+      "native-app/appearance-client-tests/process.cpp": {
+        "bytes": 31745,
+        "sha256": "95e5c11905062a891393f9ee7d0633cd8278f07f1d0fce82b7db1f2a9c81f5d7"
+      }
+    },
+    "source_manifest": {
+      "bytes": 3593,
+      "sha256": "6cc53dfe2194589e26e4ae4098f9c5d0c5d6ac63374e4f12152ab451f5ae88ad"
+    },
+    "tested_implementation": "Exact staged18-file manifest for the working Rust port; no whole-HEAD inheritance"
+  }
+}

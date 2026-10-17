@@ -85,8 +85,10 @@ uses a generic ARM kernel and supplies no ARM window.
 
 The next product milestone is one installed ARM cohort using production build
 and package paths, normal Messages/Sounds, genuine shell/menu and live themes.
-Move shared appearance policy into Rust within that milestone, retaining its
-existing29 cases and this visible theme path. Cold startup still needs a concrete
+The [shared appearance Rust port](native-appearance-rust-client.md) separately
+passes the same29 native cases and fresh host full-app/default-Cargo/install
+checks. The four captures here retain the pre-port client; a new visible cohort
+and complete current ARM stack remain open. Cold startup still needs a concrete
 repair; repeated diagnostic ladders are parked. Matched Pixel graphics, real
 incoming/SMS sending, notifications/wake, suspend, carrier and all phone hardware
 remain unqualified. No physical phone was accessed.

@@ -38,10 +38,12 @@ window, ARM default Cargo and the full installed ARM cohort remain unqualified.
 See [CMake/install evidence](evidence/native-messages-arm-cmake-provenance.json).
 A later [prepared x86 Messages session](native-messages-prepared-tracer.md) now
 passes denied/granted history, original Omarchy live themes and revocation in
-one normal app/window with native captures and owner Stop/closure. Shared
-appearance validation remains Rust migration work. Retain presentation and narrow
-native API conversions at the Qt boundary. The full client stack has not been
-ported.
+one normal app/window with native captures and owner Stop/closure; that recorded
+cohort predates the shared appearance port. The [shared appearance client](native-appearance-rust-client.md)
+now puts schema/cache/generation/readiness/deadline decisions in Rust. Qt keeps
+credentialed socket I/O, descriptor/notifier retirement, timer delivery and
+QColor/QML conversion. Fresh host component/full-app/default-Cargo/install checks
+pass; new ARM Qt and visible-session cohorts remain separate gates.
 
 The custom renderer experiment added substantial authored C++ scene, protocol
 and GPU integration. That work is now parked as component research. It is not

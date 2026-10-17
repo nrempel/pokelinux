@@ -1,5 +1,9 @@
 # Sounds and the current native appearance service
 
+The later [shared appearance Rust client](native-appearance-rust-client.md)
+qualifies policy/components and fresh normal host build/install checks. The reuse
+checkpoint and older ARM GUI/audio evidence below keep their pre-port sources.
+
 The later [complete normal ARM tracer](native-audio-arm-ui.md) qualifies the
 separately selected direct-stream UI/audio/theme path. Evidence and remaining
 gates below retain this checkpoint's own scope.

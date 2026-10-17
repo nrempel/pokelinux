@@ -13,11 +13,19 @@ schema2, rgba16-exact, rgba16-alpha-only-new-revision,
 rgba16-alpha-only-same-revision, rgba16-one-unit-new-revision,
 rgba16-final-liveness, style-same-revision and style-new-revision.
 
-These are unchanged existing current-schema controls under mechanical class/QML
-filename renames. The selected cases reject old schemas; there is no fallback.
+The unchanged29-case fixture now exercises the thin Qt native adapter backed by
+the app-local Rust policy engine. Qt keeps socket/credential/descriptor/notifier
+work and QColor/QML projection; Rust owns schema/cache/generation/readiness and
+deadline decisions. Assertions and cutoffs remain unchanged. The selected cases
+reject old schemas; there is no fallback.
 Retain each actual probe/peer wait and applicable EOF, enforce the original
 cutoffs, and preserve failures. The test target alone does not qualify the real
 Rust owner, a rendered app, an ARM runtime or hardware. The separate installed-QML
 probe loads only the two-file install tree, without the source tree or JavaScript.
 
-See [scope and provenance](../../docs/native-audio-appearance-client.md).
+See the [current Rust-client qualification](../../docs/native-appearance-rust-client.md)
+and the [earlier reuse checkpoint](../../docs/native-audio-appearance-client.md).
+CMake selects one appearance engine. Explicit/cross builds supply both
+`POKELINUX_APPEARANCE_CLIENT_ARCHIVE` and its `_SHA256`; native default builds use
+locked/offline Cargo. The separate frozen eight-group C ABI consumer uses authored
+native-result inputs and does not replace these actual credentialed peers.
