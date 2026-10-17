@@ -243,7 +243,7 @@
       "full_PCM_oracles_executed": false
     }
   ],
-  "next_boundary": "Cold installed normal-stack startup through genuine unit/config/shell without manual warmup or adapter load; then installed ARM Omarchy shell/menu/live themes/Messages; resolve concrete matched PowerVR userspace ABI offline. No custom-renderer prerequisite.",
+  "next_boundary": "Native Rust/systemd startup notification and owned Stop correction after actual installed cold RED; then same cold contract, installed ARM shell/apps/live theme and matched Pixel graphics boundary.",
   "logical_output_boundary": {
     "aggregate_passed": false,
     "actual_missing_required_global_RED_qualified": true,
@@ -889,5 +889,47 @@
       "pre_send_healthy_sample_age_ns": 11315965,
       "independent_expiry_inferred": false
     }
-  ]
+  ],
+  "cold_installed_startup": {
+    "scope": "Actual native x86 KVM installed startup; not prepared four-group or ARM/phone qualification",
+    "runtime_qualified": false,
+    "production_repair_implemented": false,
+    "selected_root_owned_bundle_files": 205,
+    "genuine_Omarchy_source_blobs": 196,
+    "first_aggregate_preserved_failed": true,
+    "first_execution_sha256": "e2e632ccb982aae7cba83ba63aa575bc51a105295741317399bfc3d300b9232c",
+    "first_Root_review_sha256": "e7add77ca20a875827d23266238c6c4d6e898127e12d9c7752d0a26460a192fd",
+    "second_frozen_preimplementation_contract_sha256": "3e5131276c76a213aac8de7e77ecbea794892958d98806def60e1cb2ef27e3ea",
+    "second_selection_sha256": "0fffa4dd1ad10768846ae5a07ed45cf95568c38436831c161aafe800c25a7508",
+    "second_command_sha256": "3a607473102c6f9f4b10243aca166f5ae77fea8eb6bba3f3e58b05a7207995ca",
+    "second_guest_result_sha256": "d66a2426412f9285398431c04061ed91e33e0a5a2399baa2ea4342b73620ce86",
+    "second_boot_result_sha256": "18d07ad8927fefce0d12d36832637be7b86cbf65555fcf97aca68ae9abfd9277",
+    "second_execution_sha256": "556cc458746eb043016718e6325d384e7bf97132b8e1598adf4856762b573cbc",
+    "second_Root_RED_qualification_sha256": "ef7ad6bafcdb9e6aba9ff88bae3e4db8d66b9c1d93c63812c2bb8f4114dc8c85",
+    "second_Root_exec_exit": 1,
+    "second_qualified_cold_startup_RED": true,
+    "shell_connection_error": "ENOENT",
+    "shell_PID1_exit_status": 255,
+    "Source_snapshot": {
+      "state": "awaiting_first",
+      "last_accepted": null,
+      "first_failure": null
+    },
+    "Source_failure_cause_claimed": false,
+    "owner_main_exit0": true,
+    "separate_ExecStop_exit_status": 1,
+    "owner_overall_unit_Result": "exit-code",
+    "second_guest_process_closure_qualified": true,
+    "second_nested_boot_guest_and_container_closure_qualified": true,
+    "second_runtime_and_unit_operational_success": false,
+    "same_daemon_exact_CID_absence_and_input_closure": true,
+    "warmup_manual_first_Source_load_or_authored_theme_host": false,
+    "Sounds_focus_capture_or_PCM_executed": false,
+    "native_display_or_vendor_cleanup_qualified": false,
+    "phone_accessed": false,
+    "second_recorded_direct_waits": 128,
+    "second_recorded_PIPE_EOFs": 135,
+    "QMP_socket_EOF_separate_from_PIPEs": true,
+    "second_independent_review_sha256": "5d22270c655f2c43122061a11e8b2deedc9ca7cf7112237fec37837ac24763c7"
+  }
 }

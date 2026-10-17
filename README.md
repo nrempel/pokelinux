@@ -25,8 +25,10 @@ stays unmerged; Source retains its unchanged100ms freshness rule.
 Two separate [compositor-freeze tests](docs/native-normal-upstream-tracer.md#compositor-freeze-expiry-and-stop)
 now pass. One proves permission withdrawal and silent audio before Stop; the other
 gets Stop acknowledgement in0.95ms and an actual owner exit in70ms while the
-compositor is frozen. These are individual VM measurements. Cold installed
-startup is the next integration gate. The separate [explicit deployment
+compositor is frozen. These are individual VM measurements. The first
+[cold installed startup](docs/native-normal-upstream-tracer.md#cold-installed-startup-fails-before-sounds)
+now fails at the genuine shell's unavailable Wayland endpoint. Native Rust
+startup notification and a separate unit Stop correction are next. The [explicit deployment
 installer](docs/native-normal-upstream-tracer.md#explicit-installed-session-selection)
 now passes its frozen host RED→GREEN consumer with the unchanged205-file selected
 bundle. This qualifies staged bytes and modes; installed unit/Source/shell startup

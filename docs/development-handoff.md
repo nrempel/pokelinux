@@ -68,6 +68,14 @@ is qualified. The [graphics boundary review](native-pixel-graphics-boundary.md)
 retains the original EGL initialization failure and leaves actual PowerVR devices,
 module membership/loading/KMI and separate display scanout unqualified.
 
+Two actual cold installed runs now fail before Sounds: the genuine shell's
+selected Wayland connection is absent and the shell exits255 while Source still
+awaits its first sample. The second frozen observer qualifies process/VM/input
+closure while runtime and unit health remain failed. Native owner main exit0 is
+separate from a later failing unit ExecStop. Implement native Rust/systemd
+readiness and the separate Stop lifecycle correction against this actual RED;
+keep the original100ms Source and120s startup bounds. See the [cold result](native-normal-upstream-tracer.md#cold-installed-startup-fails-before-sounds).
+
 The Rust [one-shot add-PDN response observer](native-radio-add-pdn-response.md)
 now retains immutable request/session/route/error/byte history after frozen
 component RED→GREEN and a separate actual ARM Binder differential check. All79

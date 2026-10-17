@@ -231,3 +231,53 @@ actual GREEN result
 filesystem suite result
 `74138838b12a4abe6226e93ab852a818e6d1be2ac05f7b08d6fd4787e39358df`.
 Private deployment inputs and raw outputs are retained outside the repository.
+
+
+## Cold installed startup fails before Sounds
+
+Two actual cold native x86 KVM runs now execute the explicit installed selection:
+all205 bundle files, including196 genuine Omarchy source blobs, are checked at
+their Root-owned guest paths. The same five Rust payloads, normal c70c compositor,
+498-file SDK, signed367-package base and100ms Source contract remain selected.
+There is no prepared window, manual first Source load or authored theme host.
+
+Both attempts fail before Sounds. The genuine full-shell process attempts its
+selected Wayland connection and reports `ENOENT`, then exits255. `Type=exec` plus
+`After=` released this dependency after owner exec, before its display endpoint
+was available. An authenticated owner snapshot still reports `awaiting_first`,
+with no accepted Source sample and no Source failure. This run establishes no
+Source-expiry cause, shell rendering, app window, capture, focus or PCM result.
+
+The first observer encounters ESRCH while acquiring the already-exited shell's
+pidfd. Its strict cleanup aggregate also fails because it conflates the owner's
+main exit0 with overall unit success. That failed aggregate is preserved. A
+source-only observer correction is frozen before any production repair; a fresh
+second run retains the before/after PID1 exit record, with no retry or replacement,
+and separates actual process retirement from operational unit status. The same
+cold success criteria still fail. No production startup or unit fix is merged.
+
+The second run also confirms a distinct Stop defect: the native Stop client
+receives Ok and the owner's actual main process exits0, then the unit's configured
+ExecStop invocation exits1 after the admin socket has gone. The unit remains
+`Result=exit-code`. Actual PID1 ExecStop metadata retains that separate failure;
+main exit0 cannot promote unit health or imply native/vendor cleanup.
+
+This second epoch qualifies an actual cold-startup RED: guest direct waits and
+PIPE EOFs, retained descendant retirement, all four empty exact unit cgroups,
+normal QMP shutdown, QEMU0/CLI0, exact owned-container absence on the same daemon,
+and selected-input closure pass. Runtime success and all-unit operational success
+remain false. The original first aggregate remains failed.
+
+The next repair belongs in Rust and the installed lifecycle: one-shot native
+systemd readiness after existing setup, currently valid authenticated Source and
+a nonblocking Wayland connection matching the owned compositor. Keep policy
+`ready`, unlock, permissions and successful presentation distinct. Preserve the
+original startup bound and terminal Source behavior; do not add sleeps, a new
+presentation gate, synthetic heartbeats or a renderer prerequisite. Correct the
+separate repeated Stop path against actual main-process ownership. These are
+planned corrections, not implemented results.
+
+Hash-only second-epoch selection `0fffa4dd1ad10768846ae5a07ed45cf95568c38436831c161aafe800c25a7508`;
+execution `556cc458746eb043016718e6325d384e7bf97132b8e1598adf4856762b573cbc`;
+Root RED qualification `ef7ad6bafcdb9e6aba9ff88bae3e4db8d66b9c1d93c63812c2bb8f4114dc8c85`.
+No raw private logs or original binaries are published. No physical phone is accessed.
