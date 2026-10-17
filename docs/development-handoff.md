@@ -87,6 +87,19 @@ seed are closed, without service target execution. Retain the failed archive
 `nm` timeout and archive-only10→30s correction; Root review was postlaunch.
 Both normal ARM mains/windows, ARM default Cargo and the complete running cohort
 remain next.
+
+The later full-shell x86 attempt is parked after two setup failures and zero
+functional groups. A copied database-signature policy failure precedes the sole
+`DatabaseOptional` correction, with trusted local package signatures still
+mandatory. The successor passes package/current app component checks but its
+owner exits1 with `Kind(PermissionDenied)` before compositor/Source/menu execution;
+the exact cause remains unknown. Real user-manager start/Stop stays separate
+from a successful owner or shell. Keep both aggregate and guest-case-closure flags false; successful recorded
+waits remain separate facts. See the [compact failure record](evidence/native-full-shell-parked-provenance.json).
+No further x86 retry or admission investigation is selected. Next is a normal
+ARM app/window under the unchanged passing compositor configuration; native menu
+execution remains unqualified.
+
 Retain Qt presentation. Extra conservative parser-error
 classification refinements are parked; no exhaustive Qt equivalence is claimed.
 

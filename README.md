@@ -33,6 +33,14 @@ Qt6.12 cohort includes the shared appearance Rust port; the [earlier captures](d
 retain their pre-port appearance client. Direct normal QWindow/DPR, current
 Sounds GUI and ARM composition remain open.
 
+A later native x86 full-shell/menu attempt is parked after two failed setup
+epochs: copied database-signature policy first, then owner
+`Kind(PermissionDenied)` before compositor/Source/menu execution. Neither reaches
+a functional group. Package/app-component and user-manager checks remain separate
+from the failed session. [Failure record](docs/evidence/native-full-shell-parked-provenance.json).
+The next bounded target is a normal ARM app/window with the unchanged passing
+compositor configuration; full menu execution remains unqualified.
+
 The [installed Rust radio operator](docs/native-radio-operator.md) now implements
 one privileged typed request through a durable intent writer and owned transport
 worker, with independent request history and responsive Stop.83 radio tests,

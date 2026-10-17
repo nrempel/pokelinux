@@ -72,6 +72,19 @@ closed result, independent reviews, exact providers, source bridge, installed
 files and preserved first failure. Frozen preparation flags are preserved;
 actual execution and closed review supply this later qualification.
 
+## Parked native full-shell attempt
+
+Two later native x86 full-shell epochs remain failed with no functional groups.
+The first stops before installation at copied database-signature policy. Its sole
+successor adds `DatabaseOptional`, preserving mandatory trusted local package
+signatures. Package installation, fresh current app builds and their nine/six C ABI
+checks then pass separately, but the owner exits1 with `Kind(PermissionDenied)`
+before compositor/Source/menu execution. The exact cause is not established.
+Real user-manager start/Stop is a separate observation, not a successful session.
+[Compact failure provenance](evidence/native-full-shell-parked-provenance.json)
+preserves both failures. This x86 attempt is parked. The next bounded target is
+a normal ARM app/window using the unchanged passing compositor configuration.
+
 ## Remaining integration
 
 Both normal ARM mains/windows, current app permission/live-theme/audio behavior,

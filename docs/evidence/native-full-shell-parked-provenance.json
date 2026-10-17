@@ -1,0 +1,152 @@
+{
+  "schema": 1,
+  "scope": "Parked prepared native x86 full-shell dual-app attempt; separate completed components and process-custody facts only. No admission diagnosis or runtime repair.",
+  "documentation_base": "ca301ac01962dfc292bc9df4d12b3b91f615d071",
+  "runtime_declared_source_base": "6cf1ca7216fb20fc9759e7739437be86207d8529",
+  "aggregate_passed": false,
+  "functional_groups": 0,
+  "independent_closed_failure_review": {
+    "bytes": 11978,
+    "sha256": "dfea8e3269f961a088418ed158fca41dbc8ea2db3fc206a4a04f107c18020229"
+  },
+  "attempts": [
+    {
+      "number": 1,
+      "aggregate_passed": false,
+      "classification": "setup failure before package installation: copied database-signature policy",
+      "selection": {
+        "bytes": 222840,
+        "sha256": "f70c028062aaa1a1907027a11abe182f87783f24827eec4c9553e863129607cc"
+      },
+      "execution": {
+        "bytes": 12170,
+        "sha256": "747ca0fc0f91789695bf4188130c2ba9d735ce8fb8e7e215fa41e20674732ac9"
+      },
+      "result": {
+        "bytes": 157872,
+        "sha256": "2266060a76d19df93209b08bb14298d795f836f966efecfd721d7540f07e2d1c"
+      },
+      "guest_case_closure_qualified": false
+    },
+    {
+      "number": 2,
+      "aggregate_passed": false,
+      "classification": "setup failure: installed owner exited before compositor readiness",
+      "selection": {
+        "bytes": 226212,
+        "sha256": "cc640a79e504ea7e5b1db63ba43a1c312dd50e65a8a34506d2f9d3c120af2c72"
+      },
+      "execution": {
+        "bytes": 12170,
+        "sha256": "e18119fe6480df71c6814f4713d1be09c256de63f9db62ca36f3d4e058e195b7"
+      },
+      "result": {
+        "bytes": 384935,
+        "sha256": "2611e34b94db0a5b9b4dc16b9de9592c3d6242fd9838c8f1613e6b3042e20065"
+      },
+      "observed_owner_exit": 1,
+      "observed_owner_error": "Kind(PermissionDenied)",
+      "owner_log": {
+        "bytes": 30,
+        "sha256": "f3905990f85abbe5d378f369bed668a724745eb04753bd4ce437e201864a3ef8"
+      },
+      "exact_cause_established": false,
+      "compositor_PID_observed": null,
+      "guest_case_closure_qualified": false,
+      "unexpected_owner_exit_cleanup_failure_preserved": true
+    }
+  ],
+  "only_successor_source_delta": {
+    "description": "Add DatabaseOptional to copied database policy; local package signatures remain Required TrustedOnly. No production, assertion, Source100ms, resource or overall-bound change.",
+    "patch": {
+      "bytes": 1297,
+      "sha256": "817e93f625d01a24a4735559b28eba9b98563c6945c069116a4c2467c1154b47"
+    }
+  },
+  "separately_completed_components": {
+    "packages_before_after": [
+      367,
+      370
+    ],
+    "trusted_additions": {
+      "python-dbus": "1.5.0-1",
+      "python-pyxdg": "0.28-8",
+      "uwsm": "0.27.1-1"
+    },
+    "original_base_versions_unchanged": true,
+    "Qt_library_plugin_identities_unchanged": 153,
+    "native_Qt_app_build_install_result": {
+      "bytes": 88227,
+      "sha256": "44b3b26bb402ad80adf883ea502274dc62391c54743ee3c599bdd8be68df2517"
+    },
+    "current_app_source_rows": 73,
+    "protected_installed_files": 5,
+    "normal_apps": {
+      "Messages": {
+        "ELF": {
+          "bytes": 5987304,
+          "sha256": "b06a71697d3cddaff321d910cc448dea5c93fc366b0853032137d7c446316f3e"
+        },
+        "strong_API_count": 23,
+        "CABI_groups_passed": 9,
+        "loader_output": {
+          "bytes": 5250,
+          "sha256": "05982fb97ed40047c4f2d407ecb675557f7f53a1c84aa3341b755ce789ed768d"
+        }
+      },
+      "Sounds": {
+        "ELF": {
+          "bytes": 6259104,
+          "sha256": "09007ed8ca81967e0564cdfcb871cd236a08f1eeb9972dd61a9f0be9d2316a2f"
+        },
+        "strong_API_count": 24,
+        "CABI_groups_passed": 6,
+        "loader_output": {
+          "bytes": 5250,
+          "sha256": "50b3b2688c6e649dd2c316d01e8d5a2a398104675b56b6365acdd1e0805a4257"
+        }
+      }
+    },
+    "PID1_user_manager": {
+      "actual_started_by_PID1": true,
+      "actual_UID": 1000,
+      "initial_ActiveState": "active",
+      "actual_Stop_final_properties": {
+        "ActiveState": "inactive",
+        "MainPID": "0",
+        "Result": "success",
+        "SubState": "dead"
+      },
+      "guest_parent_waitpid_claimed": false,
+      "shell_or_owner_startup_success_implied": false
+    }
+  },
+  "recorded_custody": {
+    "primary_actual_waits": 100,
+    "primary_PIPE_EOFs": 107,
+    "separate_adopted_actual_waits_exit0": 14,
+    "separate_nested_CABI_child_waits_exit0": 1,
+    "nested_additional_PIPE_EOFs": 0,
+    "all_recorded_waits_and_PIPE_EOFs_before_original_cutoffs": true,
+    "guest_case_closure_flag": false,
+    "Docker_CLI_actual_wait_exit": 0,
+    "QEMU_actual_wait_exit": 0,
+    "QMP_guest_shutdown_and_socket_EOF": true,
+    "exact_CID_absent_same_daemon_inputs_unchanged": true,
+    "regular_logs_not_PIPE_EOFs": true,
+    "unexpected_owner_exit_is_not_relabelled_success": true
+  },
+  "selected_pins_verified": 174,
+  "external_pins_verified": 205,
+  "Source_lease_ns_unchanged": 100000000,
+  "unqualified": [
+    "compositor execution in these attempts",
+    "Source/menu/full-shell functional groups",
+    "normal app GUI in this attempt",
+    "full native menu execution",
+    "ARM result",
+    "phone hardware"
+  ],
+  "work_status": "x86 full-shell branch parked; no further x86 retry or admission investigation selected; next bounded target normal ARM app/window using unchanged passing compositor configuration",
+  "separate_GTK_package_review_included": false
+}
