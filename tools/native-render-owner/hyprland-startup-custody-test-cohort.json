@@ -1,0 +1,277 @@
+{
+  "AQ15_dependency": {
+    "AQ14_alias_or_mixing_allowed": false,
+    "SDK_tar": {
+      "sha256": "4b196fdf49c8e853454bbe07131d743238dbccb11914c7549025dc0215b8ad1e"
+    },
+    "SONAME": "libaquamarine.so.15",
+    "apply_public_patches_in_order": [
+      {
+        "bytes": 71502,
+        "path": "tools/native-render-owner/aquamarine.patch",
+        "sha256": "4428b5e292b096100b827c544b89e712f3cf886a64ce2bc1648b82e5803895ed"
+      },
+      {
+        "bytes": 5642,
+        "path": "tools/native-render-owner/aquamarine-initial-batch.patch",
+        "sha256": "9009a3ec4e9fa01f1f40dba5670cc9e8e2451ee5d662199bfb4c0485492ef75a"
+      },
+      {
+        "bytes": 5404,
+        "path": "tools/native-render-owner/aquamarine-retained-initialization.patch",
+        "sha256": "f1a11f3a7915f0e5f58febf221547c2d84780e449de4ce409530896d2a8465e7"
+      },
+      {
+        "bytes": 12813,
+        "path": "tools/native-render-owner/aquamarine-startup-custody-test-hooks.patch",
+        "sha256": "278a09007d8ae81fc6f2b571f7c0f69d6461c1d5361fdbf7491113580da05e78"
+      }
+    ],
+    "cohort": {
+      "bytes": 10615,
+      "path": "tools/native-render-owner/aquamarine-startup-custody-test-hooks-cohort.json",
+      "sha256": "80f9e5dd8bdd70f7ee246b20ce05762b4d1e141773f7bf1792c06e06a576ecab"
+    },
+    "derived_SDK_pc": {
+      "SDK_path": "usr/lib/pokelinux-aq15/pkgconfig/aquamarine.pc",
+      "bytes": 371,
+      "sha256": "441a7a623b1f5927dfbe5489d651190a58a1d7a4cb8b684ac7158a585a132342"
+    },
+    "library": {
+      "bytes": 1848848,
+      "sha256": "8c24ed439c071be9e71605907f5387b45664d6d7ed1b60ab860384e78809eebe"
+    },
+    "source_exception_policy": "Retain exact inherited public_reconstruction_exceptions in aquamarine-cohort.json; no private planning note or private README is needed. Preserve official data/hwdata.sh executable mode.",
+    "upstream_commit": "f31c47a1b9d300847d8fc3108ad959448103dfc1"
+  },
+  "CMake_CXX_FLAGS": "-DPOKELINUX_STARTUP_CUSTODY_TEST",
+  "apply_order": [
+    "Unpack pinned official Hyprland source",
+    "Populate subprojects/udis86 from its pinned official source",
+    "Apply ../native-render-import/hyprland.patch",
+    "Apply hyprland-executor-aq15.patch",
+    "Apply hyprland-startup-custody-test.patch",
+    "Build matching test-defined AQ15 prefix and main using the current Rust archive/headers; macro required on every C++ unit"
+  ],
+  "consumer_include": {
+    "included_once_by": "src/render/StartupCustodyProbe.cpp",
+    "path": "src/render/custody-consumer.inc",
+    "separate_compile_unit": false,
+    "sha256": "f07276f6f8bc66cb3494ee0a099e1d7467607b25198da1c7c7e0f5a7e9ff79d2"
+  },
+  "current_Rust": {
+    "all23_actual_defined_GLOBAL_FUNC_DEFAULT": true,
+    "difference_scope": "Documentation only; selected archive/header bytes remain the actual build inputs.",
+    "headers": {
+      "pokelinux_render.h": {
+        "bytes": 1988,
+        "sha256": "4a7a9a603fe6d7780ff071020f727c3eb7b0aba1c9bba56b682ddd219f995396"
+      },
+      "pokelinux_render_executor.h": {
+        "bytes": 9941,
+        "sha256": "b5aee195198a44475b90156244fe9f998bb4f4f196d4b12cb7c6f59e9988b731"
+      },
+      "pokelinux_render_frame.h": {
+        "bytes": 4036,
+        "sha256": "56f8ec91b6cfb434af8875c6139fd210f0d57618614a660bffde13e6d3d479f0"
+      }
+    },
+    "implementation_and_test_sources_unchanged_at_public_preparation": true,
+    "public_C_exports": [
+      "pr_snapshot_store_create",
+      "pr_snapshot_store_release",
+      "pr_snapshot_store_used",
+      "pr_snapshot_capture",
+      "pr_snapshot_clone",
+      "pr_snapshot_view",
+      "pr_snapshot_release",
+      "pr_frame_capture_v1",
+      "pr_frame_release",
+      "pr_frame_with_view_v1",
+      "pr_bootstrap_capture_v1",
+      "pr_bootstrap_release",
+      "pr_executor_create_v1",
+      "pr_executor_watch_fds",
+      "pr_executor_snapshot_v1",
+      "pr_executor_discovery_v1",
+      "pr_executor_try_submit_v1",
+      "pr_executor_invalidate",
+      "pr_executor_stop",
+      "pr_executor_next_completion_v1",
+      "pr_executor_try_join",
+      "pr_executor_try_release",
+      "pr_attempt_authorize_v1"
+    ],
+    "public_preparation_difference_from_selected_source_base": [
+      "native-render/README.md"
+    ],
+    "second_Rust_archive_allowed": false,
+    "selected_staticlib": {
+      "bytes": 22901236,
+      "sha256": "246a6680b7f9ed8affd89bd9b022319a0903f5ebc58f03d7d76eaa85f8653311"
+    },
+    "source_base": "f3be35a74d48245d41638f87b78847421f6dd0c0"
+  },
+  "files": {
+    "src/Compositor.cpp": {
+      "after_sha256": "911e4d0007c538f17c95557e041f8cfd1b30d6ed112337fb12b8d0c360735fb1",
+      "before_sha256": "74833ecbf0e2b6f8ad84345ac0716a3295a0e347420a188be0ab4f6a684af7c0",
+      "bytes": 33930
+    },
+    "src/Compositor.hpp": {
+      "after_sha256": "43700b16196bcd108b75ebb52ff20434dc06abee4c8e92cb8cce9da37aa358a7",
+      "before_sha256": "e5254d98bbdd079a5f688682181ce1155871369b9de381fdb81de2f57750c645",
+      "bytes": 4249
+    },
+    "src/debug/HyprCtl.cpp": {
+      "after_sha256": "b2b34b9faccc6e4b3edd766e8687e1c0f767f665c9a1a9112095e572c23d8098",
+      "before_sha256": "798b7c6c4c1684557842463d46ac99c96629be4179e0e461dca77670247b91fa",
+      "bytes": 107127
+    },
+    "src/debug/HyprCtl.hpp": {
+      "after_sha256": "bfe00552b89963d236a19e2b4ceeb154023896906658f21c6509d80c31c189ab",
+      "before_sha256": "5f3ec0e128c814e556115c4f89bb70f9fc52c35408ab77156a2ff746853b11cc",
+      "bytes": 2247
+    },
+    "src/managers/eventLoop/EventLoopManager.cpp": {
+      "after_sha256": "2b70babaa669bbc1f5b3f1563a59112fe745aad9ef7692c12686cbbd18cade82",
+      "before_sha256": "104ff43a4c02fcc88e8711cade68becd3a1fe099e970e4b1306774c85dd76f7c",
+      "bytes": 9383
+    },
+    "src/managers/eventLoop/EventLoopManager.hpp": {
+      "after_sha256": "d7c902478b5fd81724dad514177dfc7a3b9f16b6f60a05c53accee744b7295b5",
+      "before_sha256": "c8b0def65f6383e92c863e719c55fd5938b36c901299c29ec0962e82ee4ed125",
+      "bytes": 3558
+    },
+    "src/render/OwnedBackendStartup.cpp": {
+      "after_sha256": "2875f1c78a7bb0edfe01767b94be092fcc60711cc1f75de1ba19f61d8b3e99fa",
+      "before_sha256": null,
+      "bytes": 36946
+    },
+    "src/render/OwnedBackendStartup.hpp": {
+      "after_sha256": "60e4cca0a9e0e7f141726b094691b82a9ea93a63be4bbceb1c8b1a9ef3793918",
+      "before_sha256": null,
+      "bytes": 708
+    },
+    "src/render/StartupCustodyProbe.cpp": {
+      "after_sha256": "914e2c17afeeab8eece5e3f5f3064b8833c1afa140b3de03c50eb4e8093dfece",
+      "before_sha256": null,
+      "bytes": 21168
+    },
+    "src/render/StartupCustodyProbe.hpp": {
+      "after_sha256": "ee2ea2eaf30f7b41aae207c6535e8bcdcdc0e8a719238881a07aa25e9905745c",
+      "before_sha256": null,
+      "bytes": 2217
+    },
+    "src/render/StartupTestTrace.cpp": {
+      "after_sha256": "64bfc9475208572d92b32e9ab1d96838c5a88cc5d0ce1e4a1527b619d6db1e56",
+      "before_sha256": null,
+      "bytes": 8871
+    },
+    "src/render/StartupTestTrace.hpp": {
+      "after_sha256": "4cab173097af3dbc4220441662fb893058040ca1cd1f3e2ff822d9d66cf78c2e",
+      "before_sha256": null,
+      "bytes": 2474
+    },
+    "src/render/custody-consumer.inc": {
+      "after_sha256": "f07276f6f8bc66cb3494ee0a099e1d7467607b25198da1c7c7e0f5a7e9ff79d2",
+      "before_sha256": null,
+      "bytes": 3052
+    }
+  },
+  "incremental_patch": "hyprland-startup-custody-test.patch",
+  "incremental_patch_sha256": "5731048744eb1ec3a9569047b51009b3f7876c7c06349d92ca22d7c80e3df7f3",
+  "lifecycle_limits": "Keep the separately frozen actual-main runtime oracle/controller and original cutoffs. Preserve failed child continue and mandatory implementations.clear until actual RED. Pending shutdown/Busy retained-owner process disposal is not native cleanup, GPU drain or retirement.",
+  "macro_required_on_all_main_and_test_AQ_CPP_units": true,
+  "main_CPP_units": [
+    "src/Compositor.cpp",
+    "src/debug/HyprCtl.cpp",
+    "src/managers/eventLoop/EventLoopManager.cpp",
+    "src/render/OwnedBackendStartup.cpp",
+    "src/render/StartupCustodyProbe.cpp",
+    "src/render/StartupTestTrace.cpp"
+  ],
+  "modified_paths": 6,
+  "native_build_only": {
+    "ARM_or_phone": false,
+    "ELF": {
+      "bytes": 25339832,
+      "sha256": "83fbf40ab1798fa8c285aaef6512be3c35360e5a28a56fc6664b7746a62a5318"
+    },
+    "SDK_regular_files": 535,
+    "SDK_tar": {
+      "bytes": 4689920,
+      "sha256": "9e1e1e5956665aebfdb1112d96f573652558488397096babf631e049c3020ae2"
+    },
+    "Source_GREEN": false,
+    "aggregate_or_runtime_qualification_attached": false,
+    "all23_Rust_C_exports_defined": true,
+    "build_report_sha256": "74c9771ce0bf23edfce40dbd3f07b500ba8a44e854c58c546df9f2b5ff4f66f6",
+    "compositor_main_executed": false,
+    "configured_CPP_entries_with_required_define": 457,
+    "each_six_main_CPP_actual_object_record_present": true,
+    "each_six_main_CPP_units_configured_once": true,
+    "fixture_runtime_executed": false,
+    "ldd_relocation_closure_only": true,
+    "matching_ELF_SDK_and_AQ15_selected": true,
+    "native_custody_behavior_RED_or_GREEN": false,
+    "qualification_scope": "Retained actual build report pass and exact artifact/source coupling. Later independent aggregate and behavioral replay qualifications remain separate.",
+    "report_passed": true
+  },
+  "new_paths": 7,
+  "normal_production_build_or_runtime_route_qualified": false,
+  "original_archive_sha256": "5b05ce7ba5296fa46e666852bf108ab5af121bf577f8043787e2d2c252d8f109",
+  "parent_public_cohorts": [
+    {
+      "bytes": 11021,
+      "path": "tools/native-render-import/cohort.json",
+      "sha256": "99106ac0add1e1ab9baaed85de94ed76f1b3f1588fecb7e0437f7ed4ec542e2d"
+    },
+    {
+      "bytes": 15976,
+      "path": "tools/native-render-owner/hyprland-executor-aq15-cohort.json",
+      "sha256": "3fb5ebb198f26fc20431cb9839e6e9f60c7fff01ef3285e346641d4460acd0ba"
+    }
+  ],
+  "parent_public_patches": [
+    {
+      "bytes": 145530,
+      "path": "tools/native-render-import/hyprland.patch",
+      "sha256": "bd1f10c7d204c85eac78938bd1ed7f3cd430f823f50b5a867b2d9931fc393b32"
+    },
+    {
+      "bytes": 5238,
+      "path": "tools/native-render-owner/hyprland-executor-aq15.patch",
+      "sha256": "52990191d0d91d3717abdf25d2f8ff106773b51f0e390ae56c2d5db79b5f1d83"
+    }
+  ],
+  "pinned_subproject": {
+    "archive_sha256": "2f459fafa19535ef1be417bf7614e4f92475e5787d7ba76df20287cc29d1b5a9",
+    "commit": "5336633af70f3917760a6d441ff02d93477b0c86",
+    "regular_files": 105,
+    "source_scope": "subprojects/udis86",
+    "upstream": "https://github.com/canihavesomecoffee/udis86"
+  },
+  "pinned_upstream_commit": "efb50993780079460b0cbed1363e2166a2de1d9f",
+  "public_source_repository": "https://github.com/nrempel/pokelinux",
+  "public_source_revision_at_preparation": "e6050446ded37c91769ac99a68e8b0683bd8e0f1",
+  "publication_contents": "Original authored source changes plus public upstream context and hash-only metadata. No binaries, raw private logs, private planning material, credentials or private absolute paths.",
+  "reconstruction": {
+    "after_canonical_manifest_sha256": "9ddd72d5c2ef0e5c60663e9051615d03a1e788f8165e30dee808e9bc1aaae3a1",
+    "after_tree_leaves": 1153,
+    "all_after_leaves_equal_retained_build_manifest": true,
+    "all_before_leaves_equal_retained_build_manifest": true,
+    "base_final33_hashes_verified": 33,
+    "before_canonical_manifest_sha256": "c82955f1c14926972b0d11200657726f68dc3f0ab74a8ac4abc47d4ca3bf86ed",
+    "canonical_manifest_encoding": "UTF-8 JSON sort_keys=true separators=(comma,colon), followed by LF",
+    "frozen_incremental_map_sha256": "a04475729b9642043b3de19a93498125806a695963b7504ff9a042d76f92f24b",
+    "historical_before_tree_leaves": 1146,
+    "historical_tree_exceptions": [],
+    "patch_applied_to_exact_six_before_files_all13_outputs_match": true,
+    "retained_build_input_historical_map_sha256": "f8c5aebb6e5fb0a313b67719b0d11f83d53d7088fb43c429b27c32df06651918"
+  },
+  "required_test_definition": "POKELINUX_STARTUP_CUSTODY_TEST",
+  "schema": 1,
+  "scope": "Dedicated main-linked startup-custody TEST fixture. Exact13-source incremental patch and matching native compile/loader evidence only; no actual main/native failure behavior, Ready, Stop-retirement, Source, ARM or phone qualification.",
+  "upstream": "https://github.com/hyprwm/Hyprland"
+}

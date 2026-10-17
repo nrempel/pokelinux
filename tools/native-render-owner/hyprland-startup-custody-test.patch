@@ -1,0 +1,2092 @@
+diff --git a/src/Compositor.cpp b/src/Compositor.cpp
+index 1d2d8b9320ab667da633289900f1bbfff0155706..a57fd7f2d17c566cf9ad9bc4aa7df2f6970a99e3 100644
+--- a/src/Compositor.cpp
++++ b/src/Compositor.cpp
+@@ -1,5 +1,6 @@
+ 
+ #include "Compositor.hpp"
++#include "render/OwnedBackendStartup.hpp"
+ #include "config/supplementary/executor/Executor.hpp"
+ #include "debug/log/Logger.hpp"
+ #include "desktop/DesktopTypes.hpp"
+@@ -260,6 +261,9 @@
+ //
+ 
+ static bool filterGlobals(const wl_client* client, const wl_global* global, void* data) {
++    if (!g_pCompositor->m_initialized || !PROTO::securityContext)
++        return false;
++
+     if (!PROTO::securityContext->isClientSandboxed(client))
+         return true;
+ 
+@@ -293,93 +297,9 @@
+     }
+     signal(SIGUSR1, handleUserSignal);
+ 
+-    initManagers(STAGE_PRIORITY);
+-
+-    Log::logger->initCallbacks();
+-
+-    // set the buffer size to 1MB to avoid disconnects due to an app hanging for a short while
+-    wl_display_set_default_max_buffer_size(m_wlDisplay, 1_MB);
+-
+-    Aquamarine::SBackendOptions           options{};
+-    SP<Hyprutils::CLI::CLoggerConnection> conn = makeShared<Hyprutils::CLI::CLoggerConnection>(Log::logger->hu());
+-    conn->setLogLevel(Log::DEBUG);
+-    conn->setName("aquamarine");
+-    options.logConnection = std::move(conn);
+-
+-    std::vector<Aquamarine::SBackendImplementationOptions> implementations;
+-    Aquamarine::SBackendImplementationOptions              option;
+-    option.backendType        = Aquamarine::eBackendType::AQ_BACKEND_HEADLESS;
+-    option.backendRequestMode = Aquamarine::eBackendRequestMode::AQ_BACKEND_REQUEST_MANDATORY;
+-    implementations.emplace_back(option);
+-    option.backendType        = Aquamarine::eBackendType::AQ_BACKEND_DRM;
+-    option.backendRequestMode = Aquamarine::eBackendRequestMode::AQ_BACKEND_REQUEST_IF_AVAILABLE;
+-    implementations.emplace_back(option);
+-    option.backendType        = Aquamarine::eBackendType::AQ_BACKEND_WAYLAND;
+-    option.backendRequestMode = Aquamarine::eBackendRequestMode::AQ_BACKEND_REQUEST_FALLBACK;
+-    implementations.emplace_back(option);
+-
+-    m_aqBackend = CBackend::create(implementations, options);
+-
+-    if (!m_aqBackend) {
+-        Log::logger->log(
+-            Log::CRIT,
+-            "m_pAqBackend was null! This usually means aquamarine could not find a GPU or encountered some issues. Make sure you're running either on a tty or on a Wayland "
+-            "session, NOT an X11 one.");
+-        throwError("CBackend::create() failed!");
+-    }
+-
+-    // TODO: headless only
+-
+-    initAllSignals();
+-
+-    if (!m_aqBackend->start()) {
+-        Log::logger->log(
+-            Log::CRIT,
+-            "m_pAqBackend couldn't start! This usually means aquamarine could not find a GPU or encountered some issues. Make sure you're running either on a tty or on a "
+-            "Wayland session, NOT an X11 one.");
+-        throwError("CBackend::create() failed!");
+-    }
+-
+-    m_initialized = true;
+-
+-    Log::logger->log(Log::DEBUG, "Instance Signature: {}", m_instanceSignature);
+-    Log::logger->log(Log::DEBUG, "Runtime directory: {}", m_instancePath);
+-    Log::logger->log(Log::DEBUG, "Hyprland PID: {}", m_hyprlandPID);
+-    Log::logger->log(Log::DEBUG, "===== SYSTEM INFO: =====");
+-    Log::logger->log(Log::DEBUG, "{}", Helpers::SystemInfo::getSystemInfo());
+-    Log::logger->log(Log::DEBUG, "========================");
+-    Log::logger->log(Log::DEBUG, "\n\n"); // pad
+-    Log::logger->log(Log::INFO, "If you are crashing, or encounter any bugs, please consult https://wiki.hypr.land/Crashes-and-Bugs/\n\n");
+-    Log::logger->log(Log::DEBUG, "\nCurrent splash: {}\n\n", m_currentSplash);
+-
+-    m_drm.fd = m_aqBackend->drmFD();
+-    Log::logger->log(Log::DEBUG, "Running on DRMFD: {}", m_drm.fd);
+-
+-    m_drmRenderNode.fd = m_aqBackend->drmRenderNodeFD();
+-    Log::logger->log(Log::DEBUG, "Using RENDERNODEFD: {}", m_drmRenderNode.fd);
+-
+-#if defined(__linux__)
+-    auto syncObjSupport = [](auto fd) {
+-        if (fd < 0)
+-            return false;
+-
+-        uint64_t cap = 0;
+-        int      ret = drmGetCap(fd, DRM_CAP_SYNCOBJ_TIMELINE, &cap);
+-        return ret == 0 && cap != 0;
+-    };
+-
+-    m_drm.syncobjSupport = syncObjSupport(m_drm.fd);
+-    Log::logger->log(Log::DEBUG, "DRM DisplayNode syncobj timeline support: {}", m_drm.syncobjSupport ? "yes" : "no");
+-
+-    m_drmRenderNode.syncObjSupport = syncObjSupport(m_drmRenderNode.fd);
+-    Log::logger->log(Log::DEBUG, "DRM RenderNode syncobj timeline support: {}", m_drmRenderNode.syncObjSupport ? "yes" : "no");
+-
+-    if (!m_drm.syncobjSupport && !m_drmRenderNode.syncObjSupport)
+-        Log::logger->log(Log::DEBUG, "DRM no syncobj support, disabling explicit sync");
+-#else
+-    Log::logger->log(Log::DEBUG, "DRM syncobj timeline support: no (not linux)");
+-#endif
+-
++    // Run only the initialized control loop during native startup. Normal
++    // config/timer/protocol/input callbacks depend on the future CPU facade.
++    g_pEventLoopManager = makeUnique<CEventLoopManager>(m_wlDisplay, m_wlEventLoop);
+     if (!socketName.empty() && socketFd != -1) {
+         fcntl(socketFd, F_SETFD, FD_CLOEXEC);
+         const auto RETVAL = wl_display_add_socket_fd(m_wlDisplay, socketFd);
+@@ -420,38 +340,23 @@
+         m_desktopEnvSet = true;
+     }
+ 
+-    initManagers(STAGE_BASICINIT);
+-
+-    initManagers(STAGE_LATE);
+-
+-    m_listeners.lock = g_pSessionLockManager->m_events.lock.listen([this] {
+-        static int lock_count = 0;
+-        // lock_count used to avoid triggering condition on initial forceLock()
+-        if (m_startLocked && lock_count >= 1) {
+-            // Lock manager has taken over
+-            m_startLocked = false;
+-            m_startLockedCommand.clear();
+-        }
+-        lock_count++;
+-        writeWatchdogFd("lock");
+-    });
+-
+-    m_listeners.unlock = g_pSessionLockManager->m_events.unlock.listen([this] {
+-        m_startLocked = false;
+-        writeWatchdogFd("unlock");
+-    });
+-
+-    if (m_startLocked) {
+-        g_pSessionLockManager->forceLock();
+-
+-        if (!m_startLockedCommand.empty())
+-            Config::Supplementary::executor()->spawn(m_startLockedCommand);
+-    }
+-
+-    for (auto const& o : pendingOutputs) {
+-        State::monitorState()->add(o);
+-    }
+-    pendingOutputs.clear();
++    g_pHyprCtl = makeUnique<CHyprCtl>();
++    g_pHyprCtl->registerCommand(SHyprCtlCommand{
++        "owner-startup", false, [this](eHyprCtlOutputFormat, std::string request) {
++            return ownedBackendStartupReply(request);
++        }});
++
++    // Retain the empty control owner BEFORE broker callbacks or Rust spawn.
++    m_ownedBackendStartup = std::make_unique<COwnedBackendStartup>(m_wlEventLoop);
++    m_ownedBackendStartup->begin();
++    // BACKEND_READY is copied backend metadata only. m_initialized and normal
++    // Ready remain false until the immutable-frame/CPU monitor route is bound.
++}
++
++std::string CCompositor::ownedBackendStartupReply(std::string_view request) {
++    if (!m_ownedBackendStartup)
++        return "startup owner unavailable";
++    return m_ownedBackendStartup->reply(request);
+ }
+ 
+ void CCompositor::initAllSignals() {
+@@ -552,6 +457,13 @@
+ void CCompositor::stopCompositor() {
+     Log::logger->log(Log::DEBUG, "Hyprland is stopping!");
+ 
++    if (m_ownedBackendStartup) {
++        m_ownedBackendStartup->stop();
++        // Native retirement is pending. Keep the actual control loop, both
++        // borrowed watches, worker and service leases retained for supervision.
++        return;
++    }
++
+     // this stops the wayland loop, wl_display_run
+     wl_display_terminate(m_wlDisplay);
+     m_isShuttingDown = true;
+@@ -560,6 +472,13 @@
+ void CCompositor::cleanup() {
+     if (!m_wlDisplay)
+         return;
++
++    if (m_ownedBackendStartup) {
++        m_ownedBackendStartup->stop();
++        // Reaching generic cleanup without verified join is a custody failure;
++        // abort is process disposal, never a successful native retirement.
++        std::terminate();
++    }
+ 
+     writeWatchdogFd("end");
+ 
+@@ -781,46 +700,13 @@
+ 
+ void CCompositor::startCompositor() {
+     signal(SIGPIPE, SIG_IGN);
+-
+-    if (
+-        /* Session-less Hyprland usually means a nest, don't update the env in that case */
+-        m_aqBackend->hasSession() &&
+-        /* Activation environment management is not disabled */
+-        !Env::envEnabled("HYPRLAND_NO_SD_VARS")) {
+-        const auto CMD =
+-#ifdef USES_SYSTEMD
+-            "systemctl --user import-environment DISPLAY WAYLAND_DISPLAY HYPRLAND_INSTANCE_SIGNATURE XDG_CURRENT_DESKTOP QT_QPA_PLATFORMTHEME PATH XDG_DATA_DIRS && hash "
+-            "dbus-update-activation-environment 2>/dev/null && "
+-#endif
+-            "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE QT_QPA_PLATFORMTHEME PATH XDG_DATA_DIRS";
+-        Config::Supplementary::executor()->spawn(CMD);
+-    }
+-
+-    Log::logger->log(Log::DEBUG, "Running on WAYLAND_DISPLAY: {}", m_wlDisplaySocket);
+-
+-    g_pHyprRenderer->setCursorFromName("left_ptr");
+-
+-#ifdef USES_SYSTEMD
+-    if (NSystemd::sdBooted() > 0) {
+-        // tell systemd that we are ready so it can start other bond, following, related units
+-        if (!Env::envEnabled("HYPRLAND_NO_SD_NOTIFY"))
+-            NSystemd::sdNotify(0, "READY=1");
+-    } else
+-        Log::logger->log(Log::DEBUG, "systemd integration is baked in but system itself is not booted à la systemd!");
+-#endif
+-
+     createLockFile();
+-
+-    Event::bus()->m_events.ready.emit();
+-
+-    if (m_watchdogWriteFd.isValid()) {
+-        if (!writeWatchdogFd("vax"))
+-            Log::logger->log(Log::ERR, "startCompositor: failed to write to watchdogWriteFd {}: {}", m_watchdogWriteFd.get(), strerror(errno));
+-    }
+-
+-    // This blocks until we are done.
+-    Log::logger->log(Log::DEBUG, "Hyprland is ready, running the event loop!");
+-    g_pEventLoopManager->enterLoop();
++    Log::logger->log(Log::DEBUG, "Owned backend startup: entering initialized control loop");
++    g_pEventLoopManager->enterStartupLoop();
++    // The normal Ready/cursor/activation environment continuation is withheld.
++    // An unexpected loop exit must not destroy a retained native graph.
++    if (m_ownedBackendStartup)
++        std::terminate();
+ }
+ 
+ // returns a delta
+diff --git a/src/Compositor.hpp b/src/Compositor.hpp
+index 6fe077a41abc89c97a601d9773bd9366896fbee6..5735d29585a5d25e5e2e5fe2f1a0f145b046b91e 100644
+--- a/src/Compositor.hpp
++++ b/src/Compositor.hpp
+@@ -3,6 +3,8 @@
+ #include <sys/resource.h>
+ 
+ #include <ranges>
++#include <memory>
++#include <string_view>
+ 
+ #include "helpers/math/Direction.hpp"
+ #include "managers/XWaylandManager.hpp"
+@@ -20,6 +22,7 @@
+ #include <aquamarine/output/Output.hpp>
+ 
+ class CWLSurfaceResource;
++class COwnedBackendStartup;
+ 
+ enum eManagersInitStage : uint8_t {
+     STAGE_PRIORITY = 0,
+@@ -60,6 +63,7 @@
+ 
+     void                     initServer(std::string socketName, int socketFd);
+     void                     startCompositor();
++    std::string              ownedBackendStartupReply(std::string_view request);
+     void                     stopCompositor();
+     void                     cleanup();
+     void                     bumpNofile();
+@@ -99,6 +103,8 @@
+     void                           setMallocThreshold();
+     void                           openSafeModeBox();
+ 
++    std::unique_ptr<COwnedBackendStartup> m_ownedBackendStartup;
++
+     uint64_t                       m_hyprlandPID    = 0;
+     wl_event_source*               m_critSigSource  = nullptr;
+     rlimit                         m_originalNofile = {};
+diff --git a/src/debug/HyprCtl.cpp b/src/debug/HyprCtl.cpp
+index 060e25b096e682770e4be64a4e1570f355ce72b3..ab296e63e9d1bda4eb19370319249c1dc02393eb 100644
+--- a/src/debug/HyprCtl.cpp
++++ b/src/debug/HyprCtl.cpp
+@@ -1,4 +1,7 @@
+ #include "HyprCtl.hpp"
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++#include "../render/StartupTestTrace.hpp"
++#endif
+ #include "output/Monitor.hpp"
+ 
+ #include <algorithm>
+@@ -19,6 +22,10 @@
+ #include <filesystem>
+ #include <ranges>
+ #include <sys/eventfd.h>
++#include <sys/timerfd.h>
++#include <fcntl.h>
++#include <cerrno>
++#include <ctime>
+ 
+ #include <sstream>
+ #include <string>
+@@ -2000,6 +2007,161 @@
+         return format == FORMAT_JSON ? "{\"ok\": false}" : "error";
+ }
+ 
++// Startup uses a bounded nonblocking request/reply transport. The client
++// half-closes its write side to delimit the exact raw request; no flags/batch or
++// partial-prefix dispatch. Slow clients never hold the actual main loop.
++struct CHyprCtl::SEarlyConnection {
++    CHyprCtl* owner;
++    CFileDescriptor socket, timer;
++    wl_event_source* socketSource = nullptr;
++    wl_event_source* timerSource = nullptr;
++    std::string request, reply;
++    size_t sent = 0;
++    bool responding = false;
++    uint64_t cutoffNs = 0;
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++    uint64_t acceptedNs = 0, requestEOFNs = 0, dispatchCheckedNs = 0, lastSendCheckedNs = 0;
++    mutable uint64_t lastCutoffCheckNs = 0;
++    uint32_t sendAttempts = 0, sendChecks = 0;
++    bool listenerNonblocking = false, acceptedNonblocking = false;
++    void traceWire() {
++        auto* trace = Pokelinux::StartupCustodyTest::CStartupTestTrace::current();
++        if (!trace) return; // Missing authenticated records cannot qualify a test.
++        constexpr char digits[] = "0123456789abcdef";
++        std::string hex;
++        hex.reserve(request.size() * 2);
++        for (const unsigned char value : request) { hex += digits[value >> 4]; hex += digits[value & 15]; }
++        trace->emit("CONTROL_WIRE", std::format(
++            R"(,"request_utf8_hex":"{}","accepted_at_ns":{},"original_client_until_ns":{},"server_request_EOF_at_ns":{},"dispatch_deadline_checked_at_ns":{},"last_send_deadline_checked_at_ns":{},"send_attempt_count":{},"send_deadline_check_count":{},"listener_nonblocking":{},"accepted_socket_nonblocking":{},"read_and_write_nonblocking":true,"response_bytes":{})",
++            hex, acceptedNs, cutoffNs, requestEOFNs, dispatchCheckedNs, lastSendCheckedNs, sendAttempts, sendChecks,
++            listenerNonblocking ? "true" : "false", acceptedNonblocking ? "true" : "false", reply.size()));
++    }
++#endif
++
++    bool beforeCutoff() const noexcept {
++        timespec now{};
++        if (!cutoffNs || clock_gettime(CLOCK_BOOTTIME, &now) != 0 || now.tv_sec < 0) return false;
++        const auto checked = uint64_t(now.tv_sec) * 1'000'000'000ULL + uint64_t(now.tv_nsec);
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++        lastCutoffCheckNs = checked;
++#endif
++        return checked < cutoffNs;
++    }
++
++    explicit SEarlyConnection(CHyprCtl* value) : owner(value) {}
++    ~SEarlyConnection() { finish(); }
++    void finish() noexcept {
++        if (socketSource) wl_event_source_remove(socketSource);
++        if (timerSource) wl_event_source_remove(timerSource);
++        socketSource = timerSource = nullptr;
++        socket = CFileDescriptor{};
++        timer = CFileDescriptor{};
++        request.clear(); reply.clear(); sent = 0; responding = false; cutoffNs = 0;
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++        acceptedNs = requestEOFNs = dispatchCheckedNs = lastSendCheckedNs = lastCutoffCheckNs = 0;
++        sendAttempts = sendChecks = 0;
++        listenerNonblocking = acceptedNonblocking = false;
++#endif
++    }
++    static int expired(int, uint32_t, void* value) noexcept {
++        static_cast<SEarlyConnection*>(value)->finish();
++        return 0;
++    }
++    static int tick(int, uint32_t mask, void* value) noexcept {
++        auto& self = *static_cast<SEarlyConnection*>(value);
++        try {
++            if (!self.beforeCutoff() || (mask & WL_EVENT_ERROR)) { self.finish(); return 0; }
++            if (!self.responding) {
++                // At most 65 bytes and two recv calls in a dispatch. EOF is the
++                // framing boundary; a client never chooses how long main waits.
++                std::array<char, 65> bytes{};
++                for (unsigned budget = 0; budget < 2; ++budget) {
++                    const auto got = recv(self.socket.get(), bytes.data(), bytes.size(), MSG_DONTWAIT);
++                    if (got < 0) {
++                        if (errno == EAGAIN || errno == EWOULDBLOCK || errno == EINTR) return 0;
++                        self.finish(); return 0;
++                    }
++                    if (got == 0) {
++                        if (!self.beforeCutoff()) { self.finish(); return 0; }
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++                        self.requestEOFNs = self.lastCutoffCheckNs;
++                        self.dispatchCheckedNs = self.lastCutoffCheckNs;
++#endif
++                        self.reply = self.owner->getReply(self.request);
++                        if (self.reply.size() > 2048) { self.finish(); return 0; }
++                        self.responding = true;
++                        break;
++                    }
++                    self.request.append(bytes.data(), size_t(got));
++                    if (self.request.size() > 64) { self.finish(); return 0; }
++                }
++                if (!self.responding) return 0;
++            }
++            if (!self.beforeCutoff()) { self.finish(); return 0; }
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++            self.lastSendCheckedNs = self.lastCutoffCheckNs;
++            ++self.sendChecks;
++            ++self.sendAttempts;
++#endif
++            const auto put = send(self.socket.get(), self.reply.data() + self.sent, self.reply.size() - self.sent, MSG_DONTWAIT | MSG_NOSIGNAL);
++            if (put < 0) {
++                if (errno != EAGAIN && errno != EWOULDBLOCK && errno != EINTR) { self.finish(); return 0; }
++            } else self.sent += size_t(put);
++            if (self.sent == self.reply.size()) {
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++                self.traceWire();
++#endif
++                self.finish(); return 0;
++            }
++            if (wl_event_source_fd_update(self.socketSource, WL_EVENT_WRITABLE) < 0) self.finish();
++        } catch (...) { self.finish(); }
++        return 0;
++    }
++    bool start(CFileDescriptor owned, uint64_t acceptedAtNs) {
++        socket = std::move(owned);
++        const auto flags = fcntl(socket.get(), F_GETFL);
++        if (flags < 0 || fcntl(socket.get(), F_SETFL, flags | O_NONBLOCK) < 0) return false;
++        timer = CFileDescriptor{timerfd_create(CLOCK_BOOTTIME, TFD_CLOEXEC | TFD_NONBLOCK)};
++        if (!timer.isValid()) return false;
++        if (!acceptedAtNs || acceptedAtNs > UINT64_MAX - 2'000'000'000ULL) return false;
++        cutoffNs = acceptedAtNs + 2'000'000'000ULL;
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++        acceptedNs = acceptedAtNs;
++        const int acceptedFlags = fcntl(socket.get(), F_GETFL);
++        const int listenerFlags = fcntl(owner->m_socketFD.get(), F_GETFL);
++        acceptedNonblocking = acceptedFlags >= 0 && (acceptedFlags & O_NONBLOCK);
++        listenerNonblocking = listenerFlags >= 0 && (listenerFlags & O_NONBLOCK);
++#endif
++        if (!beforeCutoff()) return false;
++        itimerspec cutoff{};
++        cutoff.it_value.tv_sec = time_t(cutoffNs / 1'000'000'000ULL);
++        cutoff.it_value.tv_nsec = long(cutoffNs % 1'000'000'000ULL);
++        if (timerfd_settime(timer.get(), TFD_TIMER_ABSTIME, &cutoff, nullptr) < 0) return false;
++        const auto loop = g_pCompositor->m_wlEventLoop;
++        socketSource = wl_event_loop_add_fd(loop, socket.get(), WL_EVENT_READABLE, tick, this);
++        timerSource = wl_event_loop_add_fd(loop, timer.get(), WL_EVENT_READABLE, expired, this);
++        return socketSource && timerSource;
++    }
++};
++
++void CHyprCtl::acceptStartupConnection(int ownedFD, uint64_t acceptedAtNs) noexcept {
++    CFileDescriptor accepted{ownedFD};
++    try {
++        // Native Linux target; only this user or the root-owned fixture/admin
++        // may issue startup control through the private instance socket.
++        ucred peer{};
++        socklen_t length = sizeof(peer);
++        if (getsockopt(accepted.get(), SOL_SOCKET, SO_PEERCRED, &peer, &length) != 0 || length != sizeof(peer) ||
++            (peer.uid != getuid() && peer.uid != 0)) return;
++        for (auto& slot : m_earlyConnections) {
++            if (!slot) slot = std::make_unique<SEarlyConnection>(this);
++            if (slot->socket.isValid()) continue;
++            if (!slot->start(std::move(accepted), acceptedAtNs)) slot->finish();
++            return;
++        }
++    } catch (...) { /* accepted connection remains owned on every refusal */ }
++}
++
+ CHyprCtl::CHyprCtl() {
+     registerCommand(SHyprCtlCommand{"workspaces", true, workspacesRequest});
+     registerCommand(SHyprCtlCommand{"workspacerules", true, workspaceRulesRequest});
+@@ -2045,6 +2207,7 @@
+ }
+ 
+ CHyprCtl::~CHyprCtl() {
++    m_earlyConnections = {};
+     if (m_eventSource)
+         wl_event_source_remove(m_eventSource);
+     if (!m_socketPath.empty())
+@@ -2060,6 +2223,17 @@
+ }
+ 
+ std::string CHyprCtl::getReply(std::string request) {
++    // Guard raw bytes BEFORE flag parsing, batch dispatch or reload side
++    // effects. BACKEND_READY still has no normal renderer/protocol managers.
++    if (!g_pCompositor->m_initialized) {
++        if (request != "owner-startup snapshot" && request != "owner-startup stop")
++            return "startup request unavailable";
++        for (const auto& cmd : m_commands)
++            if (cmd->name == "owner-startup" && !cmd->exact)
++                return cmd->fn(eHyprCtlOutputFormat::FORMAT_NORMAL, request);
++        return "startup owner unavailable";
++    }
++
+     auto format                          = eHyprCtlOutputFormat::FORMAT_NORMAL;
+     bool reloadAll                       = false;
+     m_currentRequestParams.all           = false;
+@@ -2239,7 +2413,20 @@
+     sockaddr_in            clientAddress;
+     socklen_t              clientSize = sizeof(clientAddress);
+ 
+-    const auto             ACCEPTEDCONNECTION = accept4(g_pHyprCtl->m_socketFD.get(), rc<sockaddr*>(&clientAddress), &clientSize, SOCK_CLOEXEC);
++    const auto             ACCEPTEDCONNECTION = accept4(g_pHyprCtl->m_socketFD.get(), rc<sockaddr*>(&clientAddress), &clientSize, SOCK_CLOEXEC | SOCK_NONBLOCK);
++
++    if (ACCEPTEDCONNECTION < 0)
++        return 0;
++    if (!g_pCompositor->m_initialized) {
++        timespec accepted{};
++        if (clock_gettime(CLOCK_BOOTTIME, &accepted) != 0 || accepted.tv_sec < 0) {
++            close(ACCEPTEDCONNECTION);
++            return 0;
++        }
++        const auto acceptedAtNs = uint64_t(accepted.tv_sec) * 1'000'000'000ULL + uint64_t(accepted.tv_nsec);
++        g_pHyprCtl->acceptStartupConnection(ACCEPTEDCONNECTION, acceptedAtNs);
++        return 0;
++    }
+ 
+     std::array<char, 1024> readBuffer;
+ 
+@@ -2289,6 +2476,13 @@
+         reply = "Err: " + std::string(e.what());
+     }
+ 
++    if (!g_pCompositor->m_initialized) {
++        successWrite(ACCEPTEDCONNECTION, reply);
++        close(ACCEPTEDCONNECTION);
++        g_pHyprCtl->m_currentRequestParams.pid = 0;
++        return 0;
++    }
++
+     if (g_pHyprCtl->m_currentRequestParams.pendingPromise) {
+         // we have a promise pending
+         g_pHyprCtl->m_currentRequestParams.pendingPromise->then([ACCEPTEDCONNECTION, request](SP<CPromiseResult<std::string>> result) {
+@@ -2319,7 +2513,7 @@
+ }
+ 
+ void CHyprCtl::startHyprCtlSocket() {
+-    m_socketFD = CFileDescriptor{socket(AF_UNIX, SOCK_STREAM | SOCK_CLOEXEC, 0)};
++    m_socketFD = CFileDescriptor{socket(AF_UNIX, SOCK_STREAM | SOCK_CLOEXEC | SOCK_NONBLOCK, 0)};
+ 
+     if (!m_socketFD.isValid()) {
+         Log::logger->log(Log::ERR, "Couldn't start the Hyprland Socket. (1) IPC will not work.");
+diff --git a/src/debug/HyprCtl.hpp b/src/debug/HyprCtl.hpp
+index cb3a47f72854ca93c97f79846ea420a5d4060f57..116974487972a442096c5b955b318febcfe056d3 100644
+--- a/src/debug/HyprCtl.hpp
++++ b/src/debug/HyprCtl.hpp
+@@ -1,6 +1,9 @@
+ #pragma once
+ 
+ #include <fstream>
++#include <array>
++#include <cstdint>
++#include <memory>
+ #include "../helpers/MiscFunctions.hpp"
+ #include "../helpers/defer/Promise.hpp"
+ #include "../desktop/view/Window.hpp"
+@@ -22,6 +25,7 @@
+     SP<SHyprCtlCommand>            registerCommand(SHyprCtlCommand cmd);
+     void                           unregisterCommand(const SP<SHyprCtlCommand>& cmd);
+     std::string                    getReply(std::string);
++    void                           acceptStartupConnection(int ownedFD, uint64_t acceptedAtNs) noexcept;
+ 
+     Hyprutils::OS::CFileDescriptor m_socketFD;
+ 
+@@ -41,6 +45,8 @@
+     static std::string getMonitorData(PHLMONITOR m, eHyprCtlOutputFormat format);
+ 
+   private:
++    struct SEarlyConnection;
++    std::array<std::unique_ptr<SEarlyConnection>, 16> m_earlyConnections;
+     void                             startHyprCtlSocket();
+ 
+     std::vector<SP<SHyprCtlCommand>> m_commands;
+diff --git a/src/managers/eventLoop/EventLoopManager.cpp b/src/managers/eventLoop/EventLoopManager.cpp
+index 0e0f6e9fe34be6249cd02bf486367f2c2be4c33f..96d79a8f8ef64bd7f50c5c6c96fe9ecd6b0c9c3e 100644
+--- a/src/managers/eventLoop/EventLoopManager.cpp
++++ b/src/managers/eventLoop/EventLoopManager.cpp
+@@ -119,6 +119,13 @@
+         return;
+ 
+     m_readableWaiters.erase(it);
++}
++
++void CEventLoopManager::enterStartupLoop() {
++    // The same actual Wayland main loop, admitting only explicitly registered
++    // initialized control, broker and Rust watches. No legacy config/timers/AQ
++    // or normal renderer callbacks are attached in this phase.
++    wl_display_run(m_wayland.display);
+ }
+ 
+ void CEventLoopManager::enterLoop() {
+diff --git a/src/managers/eventLoop/EventLoopManager.hpp b/src/managers/eventLoop/EventLoopManager.hpp
+index 646734555ebe3635ab6ca093640e1e2f59ddc865..e0f783aec98405888a829bc433613974d146bd49 100644
+--- a/src/managers/eventLoop/EventLoopManager.hpp
++++ b/src/managers/eventLoop/EventLoopManager.hpp
+@@ -27,6 +27,7 @@
+     ~CEventLoopManager();
+ 
+     void enterLoop();
++    void enterStartupLoop();
+ 
+     // Note: will remove the timer if the ptr is lost.
+     void addTimer(SP<CEventLoopTimer> timer);
+diff --git a/src/render/OwnedBackendStartup.cpp b/src/render/OwnedBackendStartup.cpp
+new file mode 100644
+index 0000000000000000000000000000000000000000..9f2b772588db16c01975323bcf883839c385357f
+--- /dev/null
++++ b/src/render/OwnedBackendStartup.cpp
+@@ -0,0 +1,685 @@
++#include "OwnedBackendStartup.hpp"
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++#include "StartupTestTrace.hpp"
++#include "StartupCustodyProbe.hpp"
++#endif
++#include <pokelinux_render_executor.h>
++#include <aquamarine/backend/Backend.hpp>
++#include <aquamarine/backend/DRM.hpp>
++#include <aquamarine/backend/DisplayAttempt.hpp>
++#include <aquamarine/backend/Session.hpp>
++#include <aquamarine/output/Output.hpp>
++
++#include <algorithm>
++#include <array>
++#include <cmath>
++#include <cstring>
++#include <ctime>
++#include <exception>
++#include <fcntl.h>
++#include <format>
++#include <limits>
++#include <poll.h>
++#include <stdexcept>
++#include <sys/stat.h>
++#include <sys/syscall.h>
++#include <thread>
++#include <utility>
++#include <unistd.h>
++
++namespace {
++using namespace Aquamarine;
++using Hyprutils::Memory::CSharedPointer;
++template<class T> using Pointer = CSharedPointer<T>;
++
++uint64_t boottime() {
++    timespec value{};
++    if (clock_gettime(CLOCK_BOOTTIME, &value) != 0 || value.tv_sec < 0)
++        throw std::runtime_error("startup CLOCK_BOOTTIME unavailable");
++    return uint64_t(value.tv_sec) * 1'000'000'000ULL + uint64_t(value.tv_nsec);
++}
++
++struct FD {
++    int value = -1;
++    explicit FD(int fd = -1) : value(fd) {}
++    ~FD() { if (value >= 0) close(value); }
++    FD(const FD&) = delete;
++    FD& operator=(const FD&) = delete;
++    int take() { const int fd = value; value = -1; return fd; }
++};
++
++int duplicate(int borrowed) {
++    if (borrowed < 0)
++        return -1;
++    const int result = fcntl(borrowed, F_DUPFD_CLOEXEC, 0);
++    if (result < 0)
++        throw std::runtime_error("startup descriptor duplication failed");
++    return result;
++}
++
++PrSessionRenderEventV1 copyEvent(const SSessionRenderEvent& source) {
++    PrSessionRenderEventV1 out{};
++    out.version = source.version;
++    out.event_type = source.type;
++    out.session_sequence = source.session_sequence;
++    out.session_generation = source.session_generation;
++    out.device_lease_id = source.device_lease_id;
++    out.device_generation = source.device_generation;
++    out.rdev = source.rdev;
++    out.active = source.active;
++    out.vt = source.vt;
++    out.change_type = source.change_type;
++    out.connector_id = source.connector_id;
++    out.prop_id = source.prop_id;
++    out.boot_vga = source.boot_vga;
++    std::copy(std::begin(source.reserved), std::end(source.reserved), out.reserved);
++    std::memcpy(out.seat_name, source.seat_name, sizeof(out.seat_name));
++    std::memcpy(out.device_path, source.device_path, sizeof(out.device_path));
++    return out;
++}
++
++SSessionRenderEvent copyEvent(const PrSessionRenderEventV1& source) {
++    SSessionRenderEvent out{};
++    out.version = source.version;
++    out.type = source.event_type;
++    out.session_sequence = source.session_sequence;
++    out.session_generation = source.session_generation;
++    out.device_lease_id = source.device_lease_id;
++    out.device_generation = source.device_generation;
++    out.rdev = source.rdev;
++    out.active = source.active;
++    out.vt = source.vt;
++    out.change_type = source.change_type;
++    out.connector_id = source.connector_id;
++    out.prop_id = source.prop_id;
++    out.boot_vga = source.boot_vga;
++    std::copy(std::begin(source.reserved), std::end(source.reserved), out.reserved);
++    std::memcpy(out.seat_name, source.seat_name, sizeof(out.seat_name));
++    std::memcpy(out.device_path, source.device_path, sizeof(out.device_path));
++    return out;
++}
++
++uint32_t denyDisplay(void*, const SDisplayAttemptInfo*) noexcept { return 0; }
++bool noDisplayRequest(const CDisplayAttemptScope& scope) {
++    return scope.bound() && scope.result().info.kind == 0 && !scope.result().attempted && !scope.result().additional_refused;
++}
++
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++using TestTrace = Pokelinux::StartupCustodyTest::CStartupTestTrace;
++const char* boolean(bool value) { return value ? "true" : "false"; }
++struct STestDevice {
++    uint64_t lease = 0, generation = 0, primary = 0, render = 0;
++    size_t graphics = 0;
++    bool valid = false;
++};
++bool characterFD(int fd, uint64_t* device = nullptr) {
++    struct stat value{};
++    if (fd < 0 || fcntl(fd, F_GETFD) < 0 || fstat(fd, &value) != 0 || !S_ISCHR(value.st_mode)) return false;
++    if (device) *device = uint64_t(value.st_rdev);
++    return true;
++}
++bool closedFD(int fd) { return fd >= 0 && fcntl(fd, F_GETFD) < 0 && errno == EBADF; }
++STestDevice testDevice(const Pointer<CSession>& session) {
++    STestDevice result{};
++    size_t selected = 0;
++    for (const auto& device : session->sessionDevices) {
++        if (!device || !device->leaseID) continue;
++        ++selected;
++        result.lease = device->leaseID;
++        result.generation = device->generation;
++        result.valid = !device->retiring && characterFD(device->fd, &result.primary) &&
++            characterFD(device->renderNodeFd, &result.render) && result.primary == uint64_t(device->dev) &&
++            result.primary != result.render;
++    }
++    result.graphics = selected;
++    result.valid = result.valid && selected == 1;
++    return result;
++}
++std::string deviceFields(const STestDevice& device) {
++    return std::format(R"(,"device":{{"device_lease_id":{},"device_generation":{},"primary_rdev":{},"render_rdev":{}}})",
++        device.lease, device.generation, device.primary, device.render);
++}
++void traceRequired(TestTrace& trace, const char* event, std::string_view fields) {
++    if (!trace.emit(event, fields)) throw std::runtime_error("startup test trace unavailable");
++}
++std::string numberArray(const uint64_t* values, size_t count) {
++    std::string result = "[";
++    for (size_t i = 0; i < count; ++i) { if (i) result += ','; result += std::to_string(values[i]); }
++    result += ']'; return result;
++}
++#endif
++
++// Constructed empty and retained by Rust BEFORE any native acquisition. This
++// type is never constructed on main and retains no pointer to control/broker.
++struct SNativeOwner {
++    const std::thread::id thread = std::this_thread::get_id();
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++    // Only CPU clock/TID observations at creation; trace IO opens at bootstrap.
++    const Pokelinux::StartupCustodyTest::STraceStamp createdAt = TestTrace::stamp();
++    TestTrace trace;
++    Pokelinux::StartupCustodyTest::CStartupCustodyProbe custody;
++    bool pendingTraced = false;
++#endif
++    Pointer<CSession> mirror;
++    Pointer<CBackend> backend;
++    struct SOutput {
++        Pointer<IOutput> output;
++        Pointer<SOutputMode> mode;
++        PrDiscoveredOutputV1 values{};
++    };
++    std::array<SOutput, PR_EXECUTOR_MAX_OUTPUTS> outputs{};
++    uint32_t outputCount = 0;
++    bool outputFailure = false;
++    Hyprutils::Signal::CHyprSignalListener outputListener;
++    struct SSource {
++        Pointer<SPollFD> poll;
++        uint64_t token = 0;
++        int fd = -1;
++    };
++    std::array<SSource, PR_EXECUTOR_MAX_SOURCES> sources{};
++    uint32_t sourceCount = 0;
++    uint64_t nextSource = 0;
++
++    void copyOutput(const Pointer<IOutput>& output) noexcept {
++        try {
++            if (std::this_thread::get_id() != thread || !output || outputCount == outputs.size())
++                throw std::runtime_error("unavailable output registry");
++            for (uint32_t i = 0; i < outputCount; ++i)
++                if (outputs[i].output == output)
++                    throw std::runtime_error("duplicate output discovery");
++            // Retain the real native output before asking it for more state.
++            auto& entry = outputs[outputCount++];
++            entry.output = output;
++            entry.mode = output->preferredMode();
++            auto implementation = output->getBackend();
++            auto drm = Hyprutils::Memory::dynamicPointerCast<CDRMOutput>(output);
++            if (!entry.mode || !drm || !implementation || implementation->type() != AQ_BACKEND_DRM)
++                throw std::runtime_error("unsupported output or mode");
++            Pointer<CSessionDevice> device;
++            const int fd = implementation->drmFD();
++            struct stat identity{};
++            if (fd < 0 || fstat(fd, &identity) != 0 || !S_ISCHR(identity.st_mode))
++                throw std::runtime_error("unbound output device");
++            for (const auto& candidate : mirror->sessionDevices)
++                if (candidate->leaseID && !candidate->retiring && candidate->fd == fd && candidate->dev == identity.st_rdev)
++                    device = candidate;
++            const auto& mode = entry.mode;
++            if (!device || mode->pixelSize.x <= 0 || mode->pixelSize.y <= 0 || mode->pixelSize.x > 16384 || mode->pixelSize.y > 16384 ||
++                std::floor(mode->pixelSize.x) != mode->pixelSize.x || std::floor(mode->pixelSize.y) != mode->pixelSize.y || !mode->refreshRate)
++                throw std::runtime_error("unbound output mode");
++            // The registry key is assigned only AFTER retaining the corresponding
++            // genuine output/mode; it is not a connector or control monitor ID.
++            auto& value = entry.values;
++            value.output_id = outputCount;
++            value.output_generation = device->generation;
++            value.device_lease_id = device->leaseID;
++            value.device_generation = device->generation;
++            value.mode_id = outputCount;
++            value.mode_generation = device->generation;
++            const int connector = drm->getConnectorID();
++            if (connector <= 0) throw std::runtime_error("invalid native connector identity");
++            value.connector_id = uint32_t(connector);
++            value.width = uint32_t(mode->pixelSize.x);
++            value.height = uint32_t(mode->pixelSize.y);
++            value.refresh_millihz = mode->refreshRate;
++            const auto formats = output->getRenderFormats();
++            if (formats.empty() || formats.front().modifiers.empty())
++                throw std::runtime_error("no native format observation");
++            value.drm_format = formats.front().drmFormat;
++            value.modifier = formats.front().modifiers.front();
++            value.flags = output->nonDesktop ? 1u : 0u;
++            if (!value.connector_id || !value.drm_format)
++                throw std::runtime_error("invalid native output metadata");
++        } catch (...) {
++            outputFailure = true;
++        }
++    }
++};
++
++void* createNative(const PrOwnerOptionsV1*) noexcept {
++    try { return new SNativeOwner(); } catch (...) { return nullptr; }
++}
++void destroyNative(void* opaque) noexcept {
++    // Rust invokes this only after aggregate verified shutdown. That branch is
++    // deliberately unavailable while this adapter still lacks StopRetire/drain.
++    auto* owner = static_cast<SNativeOwner*>(opaque);
++    if (owner && (owner->mirror || owner->backend))
++        std::terminate();
++    delete owner;
++}
++int32_t bootstrapNative(void* opaque, const PrBootstrapViewV1* input, PrDiscoveryV1* result) noexcept {
++    try {
++        auto& owner = *static_cast<SNativeOwner*>(opaque);
++        if (owner.thread != std::this_thread::get_id() || !input || !result || owner.mirror || !input->events || !input->event_count)
++            return PR_EXECUTOR_PROTOCOL;
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++        if (!owner.trace.open(2) || !owner.createdAt.valid ||
++            !owner.trace.emitStamped("NATIVE_HOLDER_CREATED", owner.createdAt, ",\"CPU_only_empty\":true"))
++            return PR_EXECUTOR_NATIVE;
++        const auto mirrorEnter = boottime();
++        std::array<uint64_t, PR_EXECUTOR_MAX_BOOTSTRAP_EVENTS> appliedSequences{}, applyResults{};
++        bool borrowedCloexec = true, duplicated = true;
++        if (input->event_count > appliedSequences.size()) return PR_EXECUTOR_CAPACITY;
++#endif
++        // This is deny-only. Initial allocation can have native effects (client
++        // caps, allocator lease/FDs, GBM/EGL); it grants no display mutation.
++        CDisplayAttemptScope guard(eDisplayAttemptDomain::RENDER, denyDisplay, &owner);
++        owner.mirror = CSession::createRenderMirror(input->session_generation);
++        if (!owner.mirror)
++            return PR_EXECUTOR_NATIVE;
++        for (uint32_t i = 0; i < input->event_count; ++i) {
++            const auto& event = input->events[i];
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++            for (const int borrowed : {event.primary_fd, event.render_fd}) {
++                if (borrowed >= 0) {
++                    const int flags = fcntl(borrowed, F_GETFD);
++                    borrowedCloexec = borrowedCloexec && flags >= 0 && (flags & FD_CLOEXEC) && characterFD(borrowed);
++                }
++            }
++#endif
++            FD primary(duplicate(event.primary_fd));
++            FD render(duplicate(event.render_fd));
++            const auto copied = copyEvent(event.metadata);
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++            for (const auto pair : {std::pair{event.primary_fd, primary.value}, std::pair{event.render_fd, render.value}}) {
++                if (pair.first < 0) { duplicated = duplicated && pair.second == -1; continue; }
++                uint64_t originalRdev = 0, copyRdev = 0;
++                const int flags = fcntl(pair.second, F_GETFD);
++                duplicated = duplicated && pair.first != pair.second && characterFD(pair.first, &originalRdev) &&
++                    characterFD(pair.second, &copyRdev) && originalRdev == copyRdev && flags >= 0 && (flags & FD_CLOEXEC);
++            }
++#endif
++            // applyRenderEvent consumes BOTH descriptors on every path. The
++            // borrowed Rust originals stay Rust-owned through verified shutdown.
++            const auto applied = owner.mirror->applyRenderEvent(copied, primary.take(), render.take());
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++            appliedSequences[i] = event.metadata.session_sequence;
++            applyResults[i] = uint64_t(applied);
++#endif
++            if (applied != eSessionApply::APPLIED_METADATA)
++                return PR_EXECUTOR_NATIVE;
++        }
++        if (!owner.mirror->initialEnumerationComplete() || !owner.mirror->active)
++            return PR_EXECUTOR_NATIVE;
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++        const auto mirrorReturn = boottime();
++        const auto mirrored = testDevice(owner.mirror);
++        if (!mirrored.valid || !borrowedCloexec || !duplicated) return PR_EXECUTOR_NATIVE;
++        traceRequired(owner.trace, "MIRROR_ENUM_APPLIED", std::format(
++            R"(,"enter_ns":{},"return_ns":{},"session_generation":{},"applied_sequences":{},"all_apply_results":{},"owned_FDs_duplicated_from_Rust_borrows":{},"Rust_borrow_FDs_CLOEXEC_verified":{},"enumerated":{},"active":{})",
++            mirrorEnter, mirrorReturn, input->session_generation, numberArray(appliedSequences.data(), input->event_count),
++            numberArray(applyResults.data(), input->event_count), boolean(duplicated), boolean(borrowedCloexec),
++            boolean(owner.mirror->initialEnumerationComplete()), boolean(owner.mirror->active)) + deviceFields(mirrored));
++#endif
++        SBackendOptions options;
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++        const auto sink = +[](void* opaqueTrace, const char* event, Aquamarine::StartupCustodyTest::SProbeStamp stamp, std::string_view fields) noexcept {
++            auto& trace = *static_cast<TestTrace*>(opaqueTrace);
++            return trace.emitStamped(event, {stamp.boottimeNs, stamp.tid, stamp.valid}, fields);
++        };
++        if (!owner.custody.configure(static_cast<Aquamarine::StartupCustodyTest::eCase>(owner.trace.caseSelection()), sink, &owner.trace))
++            return PR_EXECUTOR_NATIVE;
++        const auto outcome = owner.custody.run(options, owner.mirror, guard);
++        owner.backend = owner.custody.backend(); // RetainedCase already owned this before initialize.
++        (void)outcome; // Native failure is expected for either selected injection; oracle assesses custody separately.
++        return PR_EXECUTOR_NATIVE;
++#else
++        // Empty holder first, assigned into the retained worker owner BEFORE
++        // native initialization. Child failure custody remains a separate gate.
++        owner.backend = CBackend::createRenderSessionHolder(options, owner.mirror);
++        if (!owner.backend || !owner.backend->initializeRenderSession())
++            return PR_EXECUTOR_NATIVE;
++        owner.outputListener = owner.backend->events.newOutput.listen([&owner](const Pointer<IOutput>& output) { owner.copyOutput(output); });
++        const bool started = owner.backend->start();
++        if (!started || !owner.backend->primaryAllocator || owner.outputFailure || !owner.outputCount || !noDisplayRequest(guard))
++            return PR_EXECUTOR_NATIVE;
++        PrDiscoveryV1 candidate{};
++        candidate.session_generation = input->session_generation;
++        candidate.output_count = owner.outputCount;
++        for (uint32_t i = 0; i < owner.outputCount; ++i)
++            candidate.outputs[i] = owner.outputs[i].values;
++        *result = candidate;
++        return PR_EXECUTOR_OK;
++#endif
++    } catch (...) { return PR_EXECUTOR_NATIVE; }
++}
++int32_t prepareNative(void*, const PrFrame*, const PrAdmissionV1*) noexcept { return PR_EXECUTOR_PROTOCOL; }
++int32_t executeNative(void*, const PrFrame*, const PrAdmissionV1*, PrAttempt*, PrNativeResultV1*) noexcept { return PR_EXECUTOR_PROTOCOL; }
++int32_t advanceNative(void*, const PrRetirementContextV1*, PrNativeProgressV1* result) noexcept {
++    if (!result) return PR_EXECUTOR_INVALID;
++    *result = {};
++    return PR_EXECUTOR_OK;
++}
++int32_t pollNative(void* opaque, PrPollSourceV1* storage, uint32_t capacity, uint32_t* count) noexcept {
++    try {
++        auto& owner = *static_cast<SNativeOwner*>(opaque);
++        if (owner.thread != std::this_thread::get_id() || !storage || !count)
++            return PR_EXECUTOR_PROTOCOL;
++        const auto current = owner.backend ? owner.backend->getPollFDs() : std::vector<Pointer<SPollFD>>{};
++        if (current.size() > capacity || current.size() > owner.sources.size())
++            return PR_EXECUTOR_CAPACITY;
++        std::array<SNativeOwner::SSource, PR_EXECUTOR_MAX_SOURCES> next{};
++        std::array<PrPollSourceV1, PR_EXECUTOR_MAX_SOURCES> values{};
++        for (size_t i = 0; i < current.size(); ++i) {
++            if (!current[i] || current[i]->fd < 0 || !current[i]->onSignal)
++                return PR_EXECUTOR_PROTOCOL;
++            for (size_t j = 0; j < i; ++j)
++                if (current[i]->fd == current[j]->fd)
++                    return PR_EXECUTOR_PROTOCOL;
++            uint64_t token = 0;
++            for (uint32_t j = 0; j < owner.sourceCount; ++j)
++                if (owner.sources[j].poll == current[i] && owner.sources[j].fd == current[i]->fd)
++                    token = owner.sources[j].token;
++            if (!token) {
++                if (owner.nextSource == std::numeric_limits<uint64_t>::max()) return PR_EXECUTOR_EXHAUSTED;
++                token = ++owner.nextSource;
++            }
++            next[i] = {current[i], token, current[i]->fd};
++            values[i].fd = current[i]->fd;
++            values[i].token = token;
++            values[i].generation = token;
++            values[i].events = POLLIN;
++        }
++        owner.sources = std::move(next);
++        owner.sourceCount = uint32_t(current.size());
++        std::copy_n(values.begin(), current.size(), storage);
++        *count = owner.sourceCount;
++        return PR_EXECUTOR_OK;
++    } catch (...) { return PR_EXECUTOR_NATIVE; }
++}
++int32_t dispatchNative(void* opaque, const PrNativeReadyV1* ready) noexcept {
++    try {
++        auto& owner = *static_cast<SNativeOwner*>(opaque);
++        if (owner.thread != std::this_thread::get_id() || !ready) return PR_EXECUTOR_PROTOCOL;
++        for (uint32_t i = 0; i < owner.sourceCount; ++i) {
++            const auto& source = owner.sources[i];
++            if (source.token != ready->source.token || source.token != ready->source.generation || source.fd != ready->source.fd || source.poll->fd != source.fd)
++                continue;
++            CDisplayAttemptScope guard(eDisplayAttemptDomain::RENDER, denyDisplay, &owner);
++            source.poll->onSignal();
++            return noDisplayRequest(guard) ? PR_EXECUTOR_OK : PR_EXECUTOR_NATIVE;
++        }
++        return PR_EXECUTOR_STALE;
++    } catch (...) { return PR_EXECUTOR_NATIVE; }
++}
++int32_t pendingShutdownNative(uint32_t* retired) noexcept {
++    if (!retired) return PR_EXECUTOR_INVALID;
++    // No authentic StopRetire/drain exists yet. Report Pending and retain the
++    // available graph and Rust bootstrap pack on this live owned worker.
++    *retired = 0;
++    return PR_EXECUTOR_OK;
++}
++int32_t shutdownNative(void* opaque, uint32_t* retired) noexcept {
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++    try {
++    auto& owner = *static_cast<SNativeOwner*>(opaque);
++    if (owner.thread != std::this_thread::get_id()) return PR_EXECUTOR_PROTOCOL;
++    const auto enter = TestTrace::stamp();
++    const auto status = pendingShutdownNative(retired);
++    const auto returned = TestTrace::stamp();
++    if (!enter.valid || !returned.valid) return PR_EXECUTOR_CLOCK;
++    if (retired && !owner.pendingTraced) {
++        owner.pendingTraced = true;
++        owner.trace.emit("NATIVE_SHUTDOWN_PENDING", std::format(
++            R"(,"enter_ns":{},"return_ns":{},"status":{},"resources_retired":{},"mirror_retained":{},"outer_backend_retained":{},"native_retirement":false)",
++            enter.boottimeNs, returned.boottimeNs, status, *retired, boolean(!!owner.mirror), boolean(!!owner.backend)));
++    }
++    // The interval above measures the real implementation return. This packet
++    // does not claim that the enclosing C ABI callback has already returned.
++    return status;
++    } catch (...) { return PR_EXECUTOR_NATIVE; }
++#else
++    (void)opaque;
++    return pendingShutdownNative(retired);
++#endif
++}
++const PrNativeOwnerFunctionsV1 FUNCTIONS = {
++    PR_EXECUTOR_ABI_V1, sizeof(PrNativeOwnerFunctionsV1), {}, createNative, destroyNative, bootstrapNative,
++    prepareNative, executeNative, advanceNative, pollNative, dispatchNative, shutdownNative
++};
++}
++
++struct COwnedBackendStartup::SControl {
++    const std::thread::id thread = std::this_thread::get_id();
++    wl_event_loop* loop;
++    Pointer<CSession> broker;
++    PrExecutor* executor = nullptr;
++    PrBootstrap* pack = nullptr;
++    PrDiscoveryV1 discovery{};
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++    TestTrace trace;
++#endif
++    uint64_t generation = 0, startupNotAfter = 0;
++    bool began = false, terminal = false, failed = false, backendReady = false;
++    int32_t firstError = PR_EXECUTOR_OK;
++    struct SWatch {
++        SControl* control = nullptr;
++        wl_event_source* source = nullptr;
++        Pointer<SPollFD> brokerPoll;
++        int fd = -1;
++    } completion, timer;
++    std::array<SWatch, PR_EXECUTOR_MAX_SOURCES> brokerWatches{};
++
++    explicit SControl(wl_event_loop* value) : loop(value) {}
++    ~SControl() {
++        // No blocking Drop, detach, graph destruction or lease acknowledgment
++        // can turn an alive worker into a successful shutdown.
++        if (executor) std::terminate();
++        if (pack) pr_bootstrap_release(pack);
++        for (auto& watch : brokerWatches) if (watch.source) wl_event_source_remove(watch.source);
++    }
++    void fail(int32_t error) noexcept {
++        failed = true;
++        if (!firstError) firstError = error;
++        stop();
++    }
++    int32_t stop() noexcept {
++        terminal = true;
++        backendReady = false;
++        const auto code = executor ? pr_executor_stop(executor) : PR_EXECUTOR_EMPTY;
++        if (executor && code != PR_EXECUTOR_OK) { failed = true; if (!firstError) firstError = code; }
++        return code;
++    }
++    static uint32_t revoke(void* opaque, uint64_t session, uint32_t) noexcept {
++        auto& control = *static_cast<SControl*>(opaque);
++        if (control.thread != std::this_thread::get_id()) return AQ_REVOKE_UNAVAILABLE;
++        control.terminal = true; // Authentic preworker latch, including ctor callbacks.
++        control.backendReady = false;
++        if (!control.executor || session != control.generation)
++            return AQ_REVOKE_UNAVAILABLE;
++        const auto code = pr_executor_stop(control.executor);
++        if (code != PR_EXECUTOR_OK) { control.failed = true; control.firstError = code; return AQ_REVOKE_UNAVAILABLE; }
++        return AQ_REVOKED;
++    }
++    bool initialTransportHealthy() const {
++        return !terminal && broker && !broker->transportFailed() && !broker->peekPendingRenderEvent();
++    }
++    static int brokerTick(int, uint32_t mask, void* opaque) noexcept {
++        auto& watch = *static_cast<SWatch*>(opaque);
++        auto& control = *watch.control;
++        try {
++            if (mask & (WL_EVENT_ERROR | WL_EVENT_HANGUP)) { control.fail(PR_EXECUTOR_PROTOCOL); return 0; }
++            if (watch.brokerPoll) watch.brokerPoll->onSignal();
++            // There is no ordered live ingress yet. EVERY suffix, including
++            // ADD, ENUM, ACTIVE, REMOVE, CHANGE and SHUTDOWN, fails closed. It
++            // stays queued and the original service lease remains retained.
++            if (control.broker->transportFailed() || control.broker->peekPendingRenderEvent()) control.stop();
++            control.syncBrokerWatches();
++        } catch (...) { control.fail(PR_EXECUTOR_NATIVE); }
++        return 0;
++    }
++    void syncBrokerWatches() {
++        const auto polls = broker->pollFDs();
++        if (polls.size() > brokerWatches.size()) throw std::runtime_error("broker poll capacity");
++        for (auto& watch : brokerWatches) {
++            const bool retained = watch.brokerPoll && std::ranges::any_of(polls, [&](const auto& p) { return p && p == watch.brokerPoll && p->fd == watch.fd; });
++            if (!retained) {
++                if (watch.source) wl_event_source_remove(watch.source);
++                watch = {};
++            }
++        }
++        for (const auto& poll : polls) {
++            if (!poll || poll->fd < 0 || !poll->onSignal) throw std::runtime_error("invalid broker poll source");
++            if (std::ranges::any_of(brokerWatches, [&](const auto& w) { return w.source && w.fd == poll->fd; })) continue;
++            auto slot = std::ranges::find_if(brokerWatches, [](const auto& w) { return !w.source; });
++            if (slot == brokerWatches.end()) throw std::runtime_error("broker source capacity");
++            slot->control = this;
++            slot->brokerPoll = poll;
++            slot->fd = poll->fd;
++            slot->source = wl_event_loop_add_fd(loop, poll->fd, WL_EVENT_READABLE, brokerTick, &*slot);
++            if (!slot->source) throw std::runtime_error("broker watch registration");
++        }
++    }
++    static int rustTick(int, uint32_t mask, void* opaque) noexcept {
++        auto& control = *static_cast<SWatch*>(opaque)->control;
++        if (mask & (WL_EVENT_ERROR | WL_EVENT_HANGUP)) control.fail(PR_EXECUTOR_WAKE);
++        control.observe();
++        // A bounded actual completion dequeue clears/rearms the Rust eventfd;
++        // the BOOTTIME timer is observed through the real executor API above.
++        PrCompletionV1 record{};
++        const auto code = pr_executor_next_completion_v1(control.executor, &record);
++        if (code == PR_EXECUTOR_OK || (code != PR_EXECUTOR_EMPTY && code != PR_EXECUTOR_BUSY))
++            control.fail(code == PR_EXECUTOR_OK ? PR_EXECUTOR_PROTOCOL : code); // No frame has been admitted.
++        return 0;
++    }
++    void observe() noexcept {
++        if (!executor) return;
++        if (thread != std::this_thread::get_id()) std::terminate();
++        try {
++            if (!terminal && !initialTransportHealthy()) stop();
++            PrExecutorSnapshotV1 snapshot{};
++            const auto code = pr_executor_snapshot_v1(executor, &snapshot);
++            if (code != PR_EXECUTOR_OK) { fail(code); return; }
++            if (snapshot.failed) { fail(PR_EXECUTOR_NATIVE); return; }
++            if (terminal || snapshot.stopping) { stop(); return; }
++            PrDiscoveryV1 candidate{};
++            const auto ready = pr_executor_discovery_v1(executor, &candidate);
++            if (ready == PR_EXECUTOR_EMPTY || ready == PR_EXECUTOR_BUSY) return;
++            if (ready != PR_EXECUTOR_OK) { fail(ready); return; }
++            if (!initialTransportHealthy() || (!backendReady && boottime() >= startupNotAfter) || !candidate.output_count || candidate.session_generation != generation) {
++                stop(); return;
++            }
++            discovery = candidate;
++            backendReady = true; // Backend metadata only. Never shell/Source Ready.
++        } catch (...) { fail(PR_EXECUTOR_NATIVE); }
++    }
++    void begin() {
++        if (began || thread != std::this_thread::get_id() || !loop) throw std::runtime_error("invalid startup control");
++        began = true;
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++        if (!trace.open(1)) throw std::runtime_error("startup control trace unavailable");
++#endif
++        generation = boottime();
++        constexpr uint64_t STARTUP_NS = 20'000'000'000ULL;
++        if (!generation || generation > std::numeric_limits<uint64_t>::max() - STARTUP_NS) throw std::runtime_error("startup clock range");
++        startupNotAfter = generation + STARTUP_NS; // Set BEFORE fallible broker construction.
++        SInputSessionOptions options;
++        options.sessionGeneration = generation;
++        options.revokeRender = revoke;
++        options.controlContext = this;
++        broker = CSession::attemptInputBroker(options);
++        if (!broker || terminal || broker->transportFailed()) throw std::runtime_error("input broker unavailable");
++        std::array<SSessionPendingEvent, PR_EXECUTOR_MAX_BOOTSTRAP_EVENTS> batch{};
++        size_t count = 0;
++        if (broker->peekInitialRenderEvents(batch.data(), batch.size(), &count) != eSessionInitialRenderEventsResult::READY)
++            throw std::runtime_error("initial broker batch unavailable");
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++        const auto serviceDevice = testDevice(broker);
++        const auto head = broker->peekPendingRenderEvent();
++        const bool queueAdvanced = !head || !count || head->metadata.session_sequence != batch[0].metadata.session_sequence;
++        if (!serviceDevice.valid) throw std::runtime_error("startup test graphics device unavailable");
++        traceRequired(trace, "BROKER_INITIAL_BATCH_READY", std::format(
++            R"(,"events":{},"graphics_devices":{},"real_service_lease_retained":{},"queue_advanced":{},"session_generation":{})",
++            count, serviceDevice.graphics, boolean(serviceDevice.valid), boolean(queueAdvanced), generation) + deviceFields(serviceDevice));
++#endif
++        std::array<PrBootstrapEventV1, PR_EXECUTOR_MAX_BOOTSTRAP_EVENTS> copied{};
++        for (size_t i = 0; i < count; ++i) {
++            copied[i].metadata = copyEvent(batch[i].metadata);
++            copied[i].primary_fd = batch[i].primary_fd;
++            copied[i].render_fd = batch[i].render_fd;
++        }
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++        const auto captureEnter = boottime();
++#endif
++        const auto captured = pr_bootstrap_capture_v1(generation, copied.data(), uint32_t(count), &pack);
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++        const auto captureReturn = boottime();
++        bool pendingOpen = true;
++        for (size_t i = 0; i < count; ++i)
++            for (const int fd : {batch[i].primary_fd, batch[i].render_fd})
++                if (fd >= 0) pendingOpen = pendingOpen && characterFD(fd);
++        traceRequired(trace, "RUST_BOOTSTRAP_CAPTURED", std::format(
++            R"(,"enter_ns":{},"return_ns":{},"code":{},"events":{},"opaque_capture_handle_nonnull":{},"source_pending_and_service_FDs_still_open":{})",
++            captureEnter, captureReturn, captured, count, boolean(!!pack), boolean(pendingOpen && testDevice(broker).valid)));
++#endif
++        if (captured != PR_EXECUTOR_OK || !pack) throw std::runtime_error("Rust bootstrap capture unavailable");
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++        const auto markEnter = boottime();
++        std::array<uint64_t, PR_EXECUTOR_MAX_BOOTSTRAP_EVENTS> markedSequences{};
++#endif
++        for (size_t i = 0; i < count; ++i) {
++            if (terminal || broker->transportFailed() || !broker->markRenderEventAdmitted(batch[i].metadata.session_sequence))
++                throw std::runtime_error("initial prefix admission failed");
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++            markedSequences[i] = batch[i].metadata.session_sequence;
++#endif
++        }
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++        const auto markReturn = boottime();
++        bool pendingClosed = true;
++        for (size_t i = 0; i < count; ++i)
++            for (const int fd : {batch[i].primary_fd, batch[i].render_fd})
++                if (fd >= 0) pendingClosed = pendingClosed && closedFD(fd);
++        traceRequired(trace, "BROKER_PREFIX_MARKED", std::format(
++            R"(,"enter_ns":{},"return_ns":{},"sequences":{},"pending_duplicates_closed":{},"original_service_lease_retained":{},"post_prefix_suffix_count":{},"transport_failed":{},"preworker_revocation_latched":{})",
++            markEnter, markReturn, numberArray(markedSequences.data(), count), boolean(pendingClosed), boolean(testDevice(broker).valid),
++            broker->peekPendingRenderEvent() ? 1 : 0, boolean(broker->transportFailed()), boolean(terminal)));
++#endif
++        if (!initialTransportHealthy()) throw std::runtime_error("unsupported session suffix before creation");
++        PrOwnerOptionsV1 native{};
++        native.abi_version = PR_EXECUTOR_ABI_V1;
++        native.struct_size = sizeof(native);
++        native.owner_id = generation;
++        const auto created = pr_executor_create_v1(&FUNCTIONS, &native, generation, &pack, startupNotAfter, &executor);
++        if (created != PR_EXECUTOR_OK || !executor) throw std::runtime_error("Rust executor unavailable");
++        completion.control = timer.control = this;
++        const auto watches = pr_executor_watch_fds(executor, &completion.fd, &timer.fd);
++        if (watches != PR_EXECUTOR_OK || completion.fd < 0 || timer.fd < 0 || completion.fd == timer.fd)
++            throw std::runtime_error("Rust watches unavailable");
++        completion.source = wl_event_loop_add_fd(loop, completion.fd, WL_EVENT_READABLE, rustTick, &completion);
++        timer.source = wl_event_loop_add_fd(loop, timer.fd, WL_EVENT_READABLE, rustTick, &timer);
++        if (!completion.source || !timer.source) throw std::runtime_error("Rust watch registration failed");
++        syncBrokerWatches();
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++        traceRequired(trace, "MAIN_WATCHES_REGISTERED", std::format(
++            R"(,"broker_sources_control_only":true,"completion_borrowed":true,"startup_borrowed":true,"completion_fd":{},"startup_fd":{})",
++            completion.fd, timer.fd));
++#endif
++        // Input onReady is deferred until real CPU/input managers subscribe.
++        // No native output, broker pointer or rendering FD crosses to main.
++        observe();
++    }
++    std::string reply(std::string_view request) {
++        if (thread != std::this_thread::get_id()) throw std::runtime_error("wrong startup control thread");
++        if (request != "owner-startup snapshot" && request != "owner-startup stop") return "startup request unavailable";
++        const bool stopping = request == "owner-startup stop";
++        const auto stopCode = stopping ? stop() : PR_EXECUTOR_EMPTY;
++        observe();
++        PrExecutorSnapshotV1 snapshot{};
++        int32_t code = executor ? pr_executor_snapshot_v1(executor, &snapshot) : PR_EXECUTOR_EMPTY;
++        const int32_t joined = !stopping && executor ? pr_executor_try_join(executor) : -1;
++        const auto phase = failed || snapshot.failed ? "UNAVAILABLE" : terminal || snapshot.stopping ? "STOPPING" : backendReady && snapshot.ready ? "BACKEND_READY" : "STARTING";
++        return std::format(R"({{"schema":1,"run":1,"main_tid":{},"observed_boottime_ns":{},"startup_not_after_ns":{},"phase":"{}","code":{},"first_error":{},"startup_error":{},"stage":{},"snapshot_code":{},"rust_failed":{},"rust_ready":{},"rust_stopping":{},"failed":{},"ready":{},"stopping":{},"worker_alive":{},"join_code":{},"executor_retained":{},"both_borrowed_watches_registered":{},"outputs":{},"native_retirement":false,"shell_ready":false}})",
++            syscall(SYS_gettid), boottime(), startupNotAfter, phase, stopping ? stopCode : code, firstError, firstError, snapshot.stage, code, snapshot.failed ? "true" : "false", snapshot.ready ? "true" : "false", snapshot.stopping ? "true" : "false",
++            failed || snapshot.failed ? "true" : "false", backendReady && snapshot.ready && !terminal ? "true" : "false", terminal || snapshot.stopping ? "true" : "false",
++            snapshot.worker_alive ? "true" : "false", joined, executor ? "true" : "false", completion.source && timer.source ? "true" : "false", discovery.output_count);
++    }
++};
++
++COwnedBackendStartup::COwnedBackendStartup(wl_event_loop* loop) : m_control(std::make_unique<SControl>(loop)) {}
++COwnedBackendStartup::~COwnedBackendStartup() = default;
++void COwnedBackendStartup::begin() noexcept {
++    try { m_control->begin(); } catch (...) { m_control->fail(PR_EXECUTOR_NATIVE); }
++}
++void COwnedBackendStartup::stop() noexcept { m_control->stop(); }
++std::string COwnedBackendStartup::reply(std::string_view request) { return m_control->reply(request); }
+diff --git a/src/render/OwnedBackendStartup.hpp b/src/render/OwnedBackendStartup.hpp
+new file mode 100644
+index 0000000000000000000000000000000000000000..83f22d50724cdb9cdd23da94926d7ee3631768f4
+--- /dev/null
++++ b/src/render/OwnedBackendStartup.hpp
+@@ -0,0 +1,24 @@
++#pragma once
++
++#include <memory>
++#include <string>
++#include <string_view>
++#include <wayland-server-core.h>
++
++// Main/control owns only the input broker, copied discovery and Rust control
++// handle. All mirror/backend/allocator/output objects belong to Rust's worker.
++class COwnedBackendStartup {
++  public:
++    explicit COwnedBackendStartup(wl_event_loop* loop);
++    ~COwnedBackendStartup();
++    COwnedBackendStartup(const COwnedBackendStartup&) = delete;
++    COwnedBackendStartup& operator=(const COwnedBackendStartup&) = delete;
++
++    void begin() noexcept;
++    void stop() noexcept;
++    std::string reply(std::string_view request);
++
++  private:
++    struct SControl;
++    std::unique_ptr<SControl> m_control;
++};
+diff --git a/src/render/StartupCustodyProbe.cpp b/src/render/StartupCustodyProbe.cpp
+new file mode 100644
+index 0000000000000000000000000000000000000000..09deb45cd97ab4091c8b81ac23385758daf6bbd9
+--- /dev/null
++++ b/src/render/StartupCustodyProbe.cpp
+@@ -0,0 +1,329 @@
++#include "StartupCustodyProbe.hpp"
++#include "custody-consumer.inc" // byte-exact f072 consumer; included in this TU ONLY
++#include <aquamarine/allocator/DRMDumb.hpp>
++#include <aquamarine/backend/DRM.hpp>
++#include <array>
++#include <cerrno>
++#include <charconv>
++#include <cstring>
++#include <exception>
++#include <limits>
++#include <sys/stat.h>
++#include <system_error>
++
++namespace Pokelinux::StartupCustodyTest {
++namespace {
++using namespace Aquamarine;
++namespace Hook = Aquamarine::StartupCustodyTest;
++using SelectedCase = Hook::eCase;
++using Stamp = Hook::SProbeStamp;
++using Graph = Hook::SWeakGraphView;
++constexpr uint64_t BAD_CONFIG=1, BAD_MIRROR=4, BAD_SCOPE=8,
++    BAD_BOUNDARY=16, BAD_ORDER=32, BAD_CLOCK=64, BAD_RETURN=128,
++    BAD_GATE=256, BAD_WEAK_CALL=512, BAD_RECORD=1024, BAD_SINK=2048;
++// Leaves >=1024 bytes for the transport-owned authenticated envelope.
++constexpr size_t FRAGMENT_MAX=7168, BYTES_MAX=65536, RECORDS_MAX=64;
++
++const char* caseName(SelectedCase value) noexcept {
++    return value == SelectedCase::AFTER_REAL_RESOURCE_SCAN ? "AFTER_REAL_RESOURCE_SCAN" : "AFTER_REAL_IMPLEMENTATION_START";
++}
++bool validCase(SelectedCase value) noexcept {
++    return value == SelectedCase::AFTER_REAL_RESOURCE_SCAN || value == SelectedCase::AFTER_REAL_IMPLEMENTATION_START;
++}
++struct CJson {
++    std::array<char, FRAGMENT_MAX> storage{};
++    size_t used=0;
++    bool good=true;
++    void raw(std::string_view value) noexcept {
++        if (!good || value.size() > storage.size()-used) { good=false; return; }
++        std::memcpy(storage.data()+used,value.data(),value.size()); used+=value.size();
++    }
++    void number(uint64_t value) noexcept {
++        char chars[32]{};
++        const auto result=std::to_chars(chars,chars+sizeof(chars),value);
++        if (result.ec != std::errc{}) {good=false;return;}
++        raw(std::string_view(chars,static_cast<size_t>(result.ptr-chars)));
++    }
++    void value(bool v) noexcept {raw(v ? "true" : "false");}
++    void field(std::string_view key,uint64_t v) noexcept {raw(",\"");raw(key);raw("\":");number(v);}
++    void field(std::string_view key,bool v) noexcept {raw(",\"");raw(key);raw("\":");value(v);}
++    // All string values below are fixed source-authored enum/event names.
++    void text(std::string_view key,std::string_view v) noexcept {raw(",\"");raw(key);raw("\":\"");raw(v);raw("\"");}
++    std::string_view view() const noexcept {return {storage.data(),used};}
++};
++void caseFields(CJson& j,SelectedCase which) noexcept {
++    // Transport adds schema/run/event/tid/stamp/role/sequence exactly once.
++    j.text("case",caseName(which));
++}
++bool realCharacterDevice(int fd,uint64_t expected) noexcept {
++    const int saved=errno;
++    struct stat st{};
++    const bool valid=fd>=0 && ::fstat(fd,&st)==0 && S_ISCHR(st.st_mode) && static_cast<uint64_t>(st.st_rdev)==expected;
++    errno=saved;return valid;
++}
++void graphJson(CJson& j,const Graph& g) noexcept {
++    j.raw("{\"session_generation\":");j.number(g.sessionGeneration);
++    j.field("device_lease_id",g.deviceLeaseID);j.field("device_generation",g.deviceGeneration);j.field("device_rdev",g.deviceRdev);
++    j.field("connector_count",g.connectorCount);j.field("crtc_count",g.crtcCount);j.field("plane_count",g.planeCount);
++    j.field("captured_output_count",uint64_t(g.capturedOutputCount));j.field("captured_crtc_count",uint64_t(g.capturedCrtcCount));
++    j.field("captured_plane_count",uint64_t(g.capturedPlaneCount));j.field("overflow",g.overflow);j.field("atomic",g.atomic);
++    j.field("native_implementation_present",g.nativeImplementationPresent);j.field("dumb_allocator_present",g.dumbAllocatorPresent);
++    j.field("primary_allocator_present",g.primaryAllocatorPresent);j.field("renderer_allocator_present",g.rendererAllocatorPresent);j.field("renderer_present",g.rendererPresent);
++    j.raw(",\"outputs\":[");
++    for(uint32_t i=0;i<g.capturedOutputCount && i<g.outputs.size();++i) {
++        if(i) { j.raw(","); }
++        j.raw("{\"connector_id\":");j.number(g.outputs[i].connectorID);j.field("mode_count",g.outputs[i].modeCount);j.raw("}");
++    }
++    j.raw("],\"crtc_ids\":[");
++    for(uint32_t i=0;i<g.capturedCrtcCount && i<g.crtcIDs.size();++i){if(i) { j.raw(","); } j.number(g.crtcIDs[i]);}
++    j.raw("],\"plane_ids\":[");
++    for(uint32_t i=0;i<g.capturedPlaneCount && i<g.planeIDs.size();++i){if(i) { j.raw(","); } j.number(g.planeIDs[i]);}
++    j.raw("]}");
++}
++struct SWeakResult {bool present=false,alive=false,matches=false;};
++struct SObserved {
++    SWeakResult child,device,dumb;
++    std::array<SWeakResult,Hook::MAX_OUTPUTS> outputs{};
++    std::array<SWeakResult,Hook::MAX_CRTCS> crtcs{};
++    std::array<SWeakResult,Hook::MAX_PLANES> planes{};
++    bool lost=false,metadataMatches=true;
++};
++void weakFields(CJson& j,const SWeakResult& r) noexcept {
++    j.raw("\"present_at_boundary\":");j.value(r.present);j.raw(",\"lock_succeeded\":");
++    if(r.present)j.value(r.alive);else j.raw("null");
++    j.raw(",\"metadata_matches\":");if(r.present && r.alive)j.value(r.matches);else j.raw("null");
++}
++void weakJson(CJson& j,const SWeakResult& r) noexcept {j.raw("{");weakFields(j,r);j.raw("}");}
++void aggregate(SObserved& all,const SWeakResult& r) noexcept {
++    if(!r.present)return;
++    all.lost=all.lost || !r.alive;all.metadataMatches=all.metadataMatches && r.alive && r.matches;
++}
++}
++
++struct CStartupCustodyProbe::SState {
++    RetainedCase call; // frozen owner-retained state; never reset on native error
++    Graph graph{}; // weak handles only, never any locked/native strong reference
++    SelectedCase selected=SelectedCase::AFTER_REAL_RESOURCE_SCAN;
++    RecordSink sink=nullptr;void* sinkContext=nullptr;
++    Stamp ownerStamp{},enterStamp{},returnStamp{};
++    uint64_t errors=0,sessionGeneration=0,leaseID=0,deviceGeneration=0,rdev=0;
++    uint32_t scanCallbacks=0,startCallbacks=0,matchedDtors=0;
++    size_t recordCount=0,recordBytes=0;
++    bool configured=false,runEntered=false,running=false,scopeBound=false,injected=false,callReturned=false;
++    Outcome result=Outcome::UNQUALIFIED;
++
++    bool stampValid(Stamp stamp) noexcept {
++        const bool ok=stamp.valid && stamp.tid && stamp.tid==ownerStamp.tid && stamp.boottimeNs;
++        if(!ok) { errors|=BAD_CLOCK; }
++        return ok;
++    }
++    bool send(CJson& j,const char* event,Stamp stamp) noexcept {
++        const int saved=errno;
++        if(!j.good){
++            errors|=BAD_RECORD;
++            CJson fallback;caseFields(fallback,selected);fallback.field("setup_error_bits",errors);fallback.field("setup_qualified",false);
++            const bool ok=send(fallback,event,stamp);errno=saved;return ok;
++        }
++        if(!sink || recordCount>=RECORDS_MAX || j.used>BYTES_MAX-recordBytes){errors|=BAD_RECORD;errno=saved;return false;}
++        ++recordCount;recordBytes+=j.used;
++        const bool ok=sink(sinkContext,event,stamp,j.view());if(!ok)errors|=BAD_SINK;
++        errno=saved;return ok;
++    }
++    bool boundaryValid(const Graph& v,bool atStart) noexcept {
++        bool ok=stampValid(v.stamp) && v.childIdentity && v.atomic && v.nativeImplementationPresent && !v.overflow &&
++            v.sessionGeneration==sessionGeneration && v.deviceLeaseID==leaseID && v.deviceGeneration==deviceGeneration && v.deviceRdev==rdev &&
++            v.connectorCount>0 && v.connectorCount<=Hook::MAX_OUTPUTS && v.crtcCount>0 && v.crtcCount<=Hook::MAX_CRTCS &&
++            v.planeCount>0 && v.planeCount<=Hook::MAX_PLANES && v.capturedOutputCount>0 && v.capturedOutputCount<=v.connectorCount &&
++            v.capturedCrtcCount==v.crtcCount && v.capturedPlaneCount==v.planeCount &&
++            !v.primaryAllocatorPresent && !v.rendererAllocatorPresent && !v.rendererPresent && v.dumbAllocatorPresent==atStart &&
++            !!call.backend && call.backend->session && call.backend->session->isRenderMirror() && call.backend->session->onOwnerThread();
++        if(v.capturedOutputCount>v.outputs.size() || v.capturedCrtcCount>v.crtcs.size() || v.capturedPlaneCount>v.planes.size())ok=false;
++        for(uint32_t i=0;i<v.capturedOutputCount && i<v.outputs.size();++i){
++            if(!v.outputs[i].connectorID || !v.outputs[i].modeCount)ok=false;
++            for(uint32_t k=0;k<i;++k)if(v.outputs[i].connectorID==v.outputs[k].connectorID)ok=false;
++        }
++        for(uint32_t i=0;i<v.capturedCrtcCount && i<v.crtcIDs.size();++i){
++            if(!v.crtcIDs[i]) { ok=false; }
++            for(uint32_t k=0;k<i;++k)if(v.crtcIDs[i]==v.crtcIDs[k])ok=false;
++        }
++        for(uint32_t i=0;i<v.capturedPlaneCount && i<v.planeIDs.size();++i){
++            if(!v.planeIDs[i]) { ok=false; }
++            for(uint32_t k=0;k<i;++k)if(v.planeIDs[i]==v.planeIDs[k])ok=false;
++        }
++        if(!ok) { errors|=BAD_BOUNDARY; }
++        return ok;
++    }
++    void injection(bool atStart) noexcept {
++        // No observation weak lock has occurred before this branch. Copying
++        // Graph increments weak counts only; call.backend is the actual holder.
++        const Stamp stamp=Hook::probeStamp();stampValid(stamp);
++        CJson j;caseFields(j,selected);
++        j.field("boundary_reached",true);j.field("injection_returned_true",true);j.field("hook_scope_bound",scopeBound);
++        j.field("outer_holder_retained",!!call.backend);j.field("retained_case_is_owner_member",true);
++        j.field("all_observation_locks_released_before_injection",true);
++        j.text("injected_action",atStart ? "EFFECTIVE_FALSE_AFTER_REAL_IMPLEMENTATION_START" : "CONTINUE_AFTER_REAL_RESOURCE_SCAN");
++        j.raw(",\"actual_impl_start_result\":");j.raw(atStart ? "true" : "null");
++        j.raw(",\"effective_impl_start_result\":");j.raw(atStart ? "false" : "null");
++        j.field("boundary_boottime_ns",graph.stamp.boottimeNs);j.raw(",\"graph\":");graphJson(j,graph);
++        send(j,"CUSTODY_INJECTION",stamp);
++    }
++    SObserved observeWeak() noexcept {
++        SObserved out{};
++        if(!injected)return out;
++        // Every strong observation handle is automatic INSIDE one of the
++        // following scopes, after frozen exercise returned. None is retained.
++        try {
++            out.child.present=true;
++            {auto child=graph.child.lock();out.child.alive=!!child;
++             if(child)out.child.matches=child.get()==graph.childIdentity && child->type()==AQ_BACKEND_DRM && realCharacterDevice(child->drmFD(),rdev);}
++            out.device.present=true;
++            {auto device=graph.device.lock();out.device.alive=!!device;
++             if(device)out.device.matches=device->sessionGenerationTag==sessionGeneration && device->leaseID==leaseID && device->generation==deviceGeneration &&
++                 static_cast<uint64_t>(device->dev)==rdev && !device->retiring && realCharacterDevice(device->fd,rdev);}
++            out.dumb.present=graph.dumbAllocatorPresent;
++            if(out.dumb.present){auto dumb=graph.dumbAllocator.lock();out.dumb.alive=!!dumb;
++                if(dumb){auto owner=dumb->getBackend();out.dumb.matches=owner.get()==call.backend.get() && realCharacterDevice(dumb->drmFD(),rdev);}}
++            for(uint32_t i=0;i<graph.capturedOutputCount;++i){
++                auto& result=out.outputs[i];result.present=true;
++                auto output=graph.outputs[i].output.lock();result.alive=!!output;
++                if(output){auto child=output->getBackend();result.matches=output->getConnectorID()>0 && uint64_t(output->getConnectorID())==graph.outputs[i].connectorID &&
++                    output->modes.size()==graph.outputs[i].modeCount && child.get()==graph.childIdentity;}
++            }
++            for(uint32_t i=0;i<graph.capturedCrtcCount;++i){
++                auto& result=out.crtcs[i];result.present=true;auto crtc=graph.crtcs[i].lock();result.alive=!!crtc;
++                if(crtc){auto child=crtc->backend.lock();result.matches=crtc->id==graph.crtcIDs[i] && child.get()==graph.childIdentity;}
++            }
++            for(uint32_t i=0;i<graph.capturedPlaneCount;++i){
++                auto& result=out.planes[i];result.present=true;auto plane=graph.planes[i].lock();result.alive=!!plane;
++                if(plane){auto child=plane->backend.lock();result.matches=plane->id==graph.planeIDs[i] && child.get()==graph.childIdentity;}
++            }
++        } catch(...){errors|=BAD_WEAK_CALL;}
++        aggregate(out,out.child);aggregate(out,out.device);aggregate(out,out.dumb);
++        for(uint32_t i=0;i<graph.capturedOutputCount;++i)aggregate(out,out.outputs[i]);
++        for(uint32_t i=0;i<graph.capturedCrtcCount;++i)aggregate(out,out.crtcs[i]);
++        for(uint32_t i=0;i<graph.capturedPlaneCount;++i)aggregate(out,out.planes[i]);
++        return out; // result has booleans only; all locks already destroyed
++    }
++};
++
++CStartupCustodyProbe::CStartupCustodyProbe() : m_state(std::make_unique<SState>()) {}
++CStartupCustodyProbe::~CStartupCustodyProbe() noexcept {
++    // No StopRetire/drain is implemented in this fixture. Never auto-destroy
++    // even the outer native graph by dropping a failed probe or wrong thread.
++    if(!onOwnerThread() || (m_state && m_state->call.backend))std::terminate();
++}
++bool CStartupCustodyProbe::configure(SelectedCase which,RecordSink sink,void* context) noexcept {
++    if(!onOwnerThread())return false;
++    auto& s=*m_state;
++    if(s.configured || s.runEntered || !validCase(which) || !sink){s.errors|=BAD_CONFIG;return false;}
++    s.ownerStamp=Hook::probeStamp();
++    if(!s.ownerStamp.valid){s.errors|=BAD_CLOCK;return false;}
++    s.selected=which;s.sink=sink;s.sinkContext=context;s.configured=true;return true;
++}
++const Hyprutils::Memory::CSharedPointer<CBackend>& CStartupCustodyProbe::backend() const noexcept {
++    if(!onOwnerThread()) { std::terminate(); }
++    return m_state->call.backend;
++}
++Outcome CStartupCustodyProbe::outcome() const noexcept {return onOwnerThread() ? m_state->result : Outcome::UNQUALIFIED;}
++
++bool CStartupCustodyProbe::afterRealResourceScan(const Graph& view) noexcept {
++    if(!onOwnerThread())return false;
++    auto& s=*m_state;++s.scanCallbacks;
++    if(!s.running || !s.scopeBound || Hook::CProbeScope::current()!=this || s.scanCallbacks!=1){s.errors|=BAD_ORDER;return false;}
++    if(s.selected!=SelectedCase::AFTER_REAL_RESOURCE_SCAN)return false;
++    if(s.injected || !s.boundaryValid(view,false))return false;
++    s.graph=view;s.injected=true;s.injection(false);return true; // true even if record sink failed
++}
++bool CStartupCustodyProbe::afterRealImplementationStart(const Graph& view,bool actualResult) noexcept {
++    if(!onOwnerThread())return false;
++    auto& s=*m_state;++s.startCallbacks;
++    if(!s.running || !s.scopeBound || Hook::CProbeScope::current()!=this || s.startCallbacks!=1 || s.scanCallbacks!=1 ||
++        s.selected!=SelectedCase::AFTER_REAL_IMPLEMENTATION_START || s.injected || !actualResult){s.errors|=BAD_ORDER;return false;}
++    if(!s.boundaryValid(view,true))return false;
++    s.graph=view;s.injected=true;s.injection(true);return true;
++}
++void CStartupCustodyProbe::childDestructorEntry(const CDRMBackend* identity,Stamp stamp) noexcept {
++    if(!onOwnerThread())return;
++    auto& s=*m_state;
++    if(!s.injected || identity!=s.graph.childIdentity)return;
++    if(s.matchedDtors==std::numeric_limits<uint32_t>::max()){s.errors|=BAD_ORDER;return;}
++    ++s.matchedDtors;
++    if(!s.running || s.callReturned || s.matchedDtors!=1)s.errors|=BAD_ORDER;
++    s.stampValid(stamp);
++    if(s.matchedDtors!=1)return; // no repeated fabricated records for one actual child
++    CJson j;caseFields(j,s.selected);
++    j.field("matched_selected_child",true);j.field("cleanup_completion_claim",false);
++    s.send(j,"MATCHED_CHILD_DESTRUCTOR_ENTERED",stamp);
++}
++
++Outcome CStartupCustodyProbe::run(const SBackendOptions& options,const Hyprutils::Memory::CSharedPointer<CSession>& mirror,
++                                  const CDisplayAttemptScope& guard) noexcept {
++    if(!onOwnerThread())return Outcome::UNQUALIFIED; // do not read mutable state on foreign thread
++    auto& s=*m_state;
++    if(!s.configured || s.runEntered){s.errors|=BAD_CONFIG;return Outcome::UNQUALIFIED;}
++    s.runEntered=true;
++    if(!mirror || !mirror->isRenderMirror() || !mirror->onOwnerThread() || !mirror->active || !mirror->initialEnumerationComplete()){
++        s.errors|=BAD_MIRROR;return Outcome::UNQUALIFIED;
++    }
++    size_t devices=0;
++    for(const auto& device:mirror->sessionDevices){
++        if(!device || !device->leaseID)continue;
++        ++devices;
++        struct stat render{};
++        if(device->retiring || !device->sessionGenerationTag || !device->generation || !device->dev ||
++            !realCharacterDevice(device->fd,static_cast<uint64_t>(device->dev)) || device->renderNodeFd<0 ||
++            ::fstat(device->renderNodeFd,&render)!=0 || !S_ISCHR(render.st_mode) || render.st_rdev==device->dev){s.errors|=BAD_MIRROR;return Outcome::UNQUALIFIED;}
++        s.sessionGeneration=device->sessionGenerationTag;s.leaseID=device->leaseID;s.deviceGeneration=device->generation;s.rdev=static_cast<uint64_t>(device->dev);
++    }
++    if(devices!=1){s.errors|=BAD_MIRROR;return Outcome::UNQUALIFIED;}
++    Hook::CProbeScope scope(*this);s.scopeBound=scope.bound();
++    if(!s.scopeBound || !guard.bound()){s.errors|=BAD_SCOPE;return Outcome::UNQUALIFIED;}
++    s.enterStamp=Hook::probeStamp();if(!s.stampValid(s.enterStamp))return Outcome::UNQUALIFIED;
++    s.running=true;
++    exercise(s.call,s.selected==SelectedCase::AFTER_REAL_RESOURCE_SCAN ? Case::AFTER_REAL_RESOURCE_SCAN : Case::AFTER_REAL_IMPLEMENTATION_START,options,mirror);
++    s.returnStamp=Hook::probeStamp();s.callReturned=true;s.stampValid(s.returnStamp);
++    if(s.returnStamp.boottimeNs<s.enterStamp.boottimeNs ||
++        (s.injected && (s.graph.stamp.boottimeNs<s.enterStamp.boottimeNs || s.graph.stamp.boottimeNs>s.returnStamp.boottimeNs)))s.errors|=BAD_CLOCK;
++    const bool correctReturn=s.call.entered && s.call.backend && s.call.initializeCalled && !s.call.unexpectedException && s.call.expectedInjectedFailureReturned &&
++        (s.selected==SelectedCase::AFTER_REAL_RESOURCE_SCAN ? (!s.call.initializeReturned && !s.call.startCalled && !s.call.startReturned && s.startCallbacks==0) :
++          (s.call.initializeReturned && s.call.startCalled && !s.call.startReturned && s.startCallbacks==1));
++    if(!correctReturn || !s.injected || s.scanCallbacks!=1)s.errors|=BAD_RETURN;
++    {
++        const Stamp stamp=Hook::probeStamp();s.stampValid(stamp);
++        CJson j;caseFields(j,s.selected);
++        j.field("enter_ns",s.enterStamp.boottimeNs);j.field("return_ns",s.returnStamp.boottimeNs);
++        j.field("entered",s.call.entered);j.field("initialize_called",s.call.initializeCalled);j.field("initialize_returned",s.call.initializeReturned);
++        j.field("start_called",s.call.startCalled);j.field("start_returned",s.call.startReturned);j.field("unexpected_exception",s.call.unexpectedException);
++        j.field("expected_injected_failure_returned",s.call.expectedInjectedFailureReturned);j.field("outer_holder_retained",!!s.call.backend);
++        j.field("setup_error_bits",s.errors);s.send(j,"CUSTODY_CALL_RETURNED",stamp);
++    }
++    const SObserved observed=s.observeWeak(); // contains no handles; all lock scopes ended
++    const auto& gate=guard.result();
++    if(!guard.bound() || gate.sealed || gate.attempted)s.errors|=BAD_GATE;
++    {
++        const Stamp stamp=Hook::probeStamp();s.stampValid(stamp);
++        CJson j;caseFields(j,s.selected);
++        j.field("outer_holder_retained",!!s.call.backend);j.field("all_observation_locks_released",true);
++        j.field("matched_child_destructor_entries",uint64_t(s.matchedDtors));j.field("setup_error_bits",s.errors);j.field("setup_qualified",s.errors==0);
++        j.raw(",\"child\":");weakJson(j,observed.child);j.raw(",\"device\":");weakJson(j,observed.device);j.raw(",\"dumb_allocator\":");weakJson(j,observed.dumb);
++        j.raw(",\"outputs\":[");
++        for(uint32_t i=0;i<s.graph.capturedOutputCount;++i){if(i) { j.raw(","); }
++        j.raw("{\"captured_id\":");j.number(s.graph.outputs[i].connectorID);j.raw(",");weakFields(j,observed.outputs[i]);j.raw("}");}
++        j.raw("],\"crtcs\":[");
++        for(uint32_t i=0;i<s.graph.capturedCrtcCount;++i){if(i) { j.raw(","); }
++        j.raw("{\"captured_id\":");j.number(s.graph.crtcIDs[i]);j.raw(",");weakFields(j,observed.crtcs[i]);j.raw("}");}
++        j.raw("],\"planes\":[");
++        for(uint32_t i=0;i<s.graph.capturedPlaneCount;++i){if(i) { j.raw(","); }
++        j.raw("{\"captured_id\":");j.number(s.graph.planeIDs[i]);j.raw(",");weakFields(j,observed.planes[i]);j.raw("}");}
++        j.raw("],\"current_graph\":null,\"native_gate\":{\"deny_only_scope_bound\":");j.value(guard.bound());
++        j.field("native_sealed",gate.sealed);j.field("native_attempted",gate.attempted);j.field("request_recorded",gate.info.kind!=0);
++        j.field("additional_refused",gate.additional_refused);j.field("cleanup_acknowledged",false);j.field("retirement_authority_used",false);j.raw("}");
++        s.send(j,"CUSTODY_WEAK_OBSERVED",stamp);
++    }
++    s.running=false;
++    if(s.errors)return s.result=Outcome::UNQUALIFIED;
++    if(s.matchedDtors || observed.lost)return s.result=Outcome::CUSTODY_LOST;
++    if(observed.metadataMatches)return s.result=Outcome::RETAINED;
++    return s.result=Outcome::UNQUALIFIED;
++}
++} // namespace Pokelinux::StartupCustodyTest
+diff --git a/src/render/StartupCustodyProbe.hpp b/src/render/StartupCustodyProbe.hpp
+new file mode 100644
+index 0000000000000000000000000000000000000000..d9853a71980c06b684d28c33e9b431caa75e5ec5
+--- /dev/null
++++ b/src/render/StartupCustodyProbe.hpp
+@@ -0,0 +1,38 @@
++#pragma once
++#ifndef POKELINUX_STARTUP_CUSTODY_TEST
++#error "StartupCustodyProbe is main-linked test infrastructure only"
++#endif
++#include <aquamarine/backend/Backend.hpp>
++#include <aquamarine/backend/DisplayAttempt.hpp>
++#include <aquamarine/backend/StartupCustodyTest.hpp>
++#include <memory>
++#include <string_view>
++
++namespace Pokelinux::StartupCustodyTest {
++// UNQUALIFIED is setup/unexpected metadata/transport failure, never target RED.
++enum class Outcome : uint32_t { UNQUALIFIED = 0, CUSTODY_LOST = 1, RETAINED = 2 };
++class CStartupCustodyProbe final : public Aquamarine::StartupCustodyTest::IProbe {
++  public:
++    using SelectedCase = Aquamarine::StartupCustodyTest::eCase;
++    using RecordSink = bool (*)(void*, const char* event, Aquamarine::StartupCustodyTest::SProbeStamp actualStamp,
++                                std::string_view trustedCommaPrefixedFragment) noexcept;
++    // Construct as an SNativeOwner member ON the Rust worker, before acquisition.
++    CStartupCustodyProbe();
++    ~CStartupCustodyProbe() noexcept override;
++    CStartupCustodyProbe(const CStartupCustodyProbe&) = delete;
++    CStartupCustodyProbe& operator=(const CStartupCustodyProbe&) = delete;
++    bool configure(SelectedCase, RecordSink, void* workerLocalSinkContext) noexcept;
++    Outcome run(const Aquamarine::SBackendOptions&,
++                const Hyprutils::Memory::CSharedPointer<Aquamarine::CSession>& mirror,
++                const Aquamarine::CDisplayAttemptScope& denyOnlyGuard) noexcept;
++    // Same-worker borrow only. Does not transfer/reset the retained outer holder.
++    const Hyprutils::Memory::CSharedPointer<Aquamarine::CBackend>& backend() const noexcept;
++    Outcome outcome() const noexcept;
++    bool afterRealResourceScan(const Aquamarine::StartupCustodyTest::SWeakGraphView&) noexcept override;
++    bool afterRealImplementationStart(const Aquamarine::StartupCustodyTest::SWeakGraphView&, bool actualResult) noexcept override;
++    void childDestructorEntry(const Aquamarine::CDRMBackend*, Aquamarine::StartupCustodyTest::SProbeStamp) noexcept override;
++  private:
++    struct SState;
++    std::unique_ptr<SState> m_state; // owns frozen RetainedCase as SState.call
++};
++} // namespace Pokelinux::StartupCustodyTest
+diff --git a/src/render/StartupTestTrace.cpp b/src/render/StartupTestTrace.cpp
+new file mode 100644
+index 0000000000000000000000000000000000000000..62d0395c9bdda2a7b35a226d2f2582c0dd91fe04
+--- /dev/null
++++ b/src/render/StartupTestTrace.cpp
+@@ -0,0 +1,244 @@
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++#ifndef _GNU_SOURCE
++#define _GNU_SOURCE
++#endif
++#endif
++#include "StartupTestTrace.hpp"
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++#include <array>
++#include <cerrno>
++#include <climits>
++#include <cstdio>
++#include <cstdlib>
++#include <cstring>
++#include <exception>
++#include <limits>
++#include <sys/socket.h>
++#include <sys/syscall.h>
++#include <sys/un.h>
++#include <time.h>
++#include <unistd.h>
++
++namespace Pokelinux::StartupCustodyTest {
++namespace {
++thread_local CStartupTestTrace* activeTrace = nullptr;
++constexpr size_t MAX_EVENT_BYTES = 96;
++
++bool expectedRootPID(const char* text, pid_t& result) noexcept {
++    if (!text)
++        return false;
++    const size_t length = ::strnlen(text, 11);
++    if (!length || length > 10 || text[0] == '0')
++        return false;
++    uint32_t value = 0;
++    for (size_t i = 0; i < length; ++i) {
++        if (text[i] < '0' || text[i] > '9')
++            return false;
++        const uint32_t digit = static_cast<uint32_t>(text[i] - '0');
++        if (value > (static_cast<uint32_t>(INT_MAX) - digit) / 10)
++            return false;
++        value = value * 10 + digit;
++    }
++    if (!value)
++        return false;
++    result = static_cast<pid_t>(value);
++    return true;
++}
++
++bool selectedCase(const char* text, uint32_t& result) noexcept {
++    if (!text || ::strnlen(text, 2) != 1 || (text[0] != '1' && text[0] != '2'))
++        return false;
++    result = static_cast<uint32_t>(text[0] - '0');
++    return true;
++}
++
++bool escapeEvent(const char* event, char* escaped) noexcept {
++    if (!event)
++        return false;
++    const size_t length = ::strnlen(event, MAX_EVENT_BYTES + 1);
++    if (!length || length > MAX_EVENT_BYTES)
++        return false;
++    size_t used = 0;
++    for (size_t i = 0; i < length; ++i) {
++        const unsigned char byte = static_cast<unsigned char>(event[i]);
++        if (byte < 0x20 || byte > 0x7e)
++            return false;
++        if (byte == '"' || byte == '\\')
++            escaped[used++] = '\\';
++        escaped[used++] = static_cast<char>(byte);
++    }
++    escaped[used] = '\0';
++    return true;
++}
++} // namespace
++
++uint64_t CStartupTestTrace::actualTID() noexcept {
++    const long value = ::syscall(SYS_gettid);
++    return value > 0 ? static_cast<uint64_t>(value) : 0;
++}
++
++STraceStamp CStartupTestTrace::stamp() noexcept {
++    STraceStamp result{};
++    result.tid = actualTID();
++    if (!result.tid)
++        return result;
++    timespec value{};
++    if (::clock_gettime(CLOCK_BOOTTIME, &value) != 0)
++        return result;
++    if (value.tv_sec < 0 || value.tv_nsec < 0 || value.tv_nsec >= 1'000'000'000L ||
++        static_cast<uint64_t>(value.tv_sec) >
++            (std::numeric_limits<uint64_t>::max() - static_cast<uint64_t>(value.tv_nsec)) / 1'000'000'000ULL) {
++        errno = ERANGE;
++        return result;
++    }
++    result.boottimeNs = static_cast<uint64_t>(value.tv_sec) * 1'000'000'000ULL + static_cast<uint64_t>(value.tv_nsec);
++    result.valid = result.boottimeNs != 0;
++    if (!result.valid)
++        errno = ERANGE;
++    return result;
++}
++
++bool CStartupTestTrace::fail(int error) noexcept {
++    m_state = EState::FAILED;
++    if (!m_error)
++        m_error = error ? error : EIO;
++    if (activeTrace == this)
++        activeTrace = nullptr;
++    if (m_fd >= 0) {
++        const int fd = m_fd;
++        m_fd = -1;
++        ::close(fd);
++    }
++    // close must not erase the first failure, including connect's EAGAIN.
++    errno = m_error;
++    return false;
++}
++
++bool CStartupTestTrace::open(uint32_t role) noexcept {
++    if (m_state != EState::EMPTY)
++        return fail(EALREADY);
++    m_state = EState::FAILED;
++    m_ownerTid = actualTID();
++    if (!m_ownerTid)
++        return fail(errno ? errno : EIO);
++    if ((role != 1 && role != 2) || activeTrace)
++        return fail(role != 1 && role != 2 ? EINVAL : EBUSY);
++    m_role = role;
++
++    // Only these fixed fixture variables are read. No caller-selected env names.
++    const char* path = std::getenv("POKELINUX_STARTUP_TRACE_SOCKET");
++    const char* rootPIDText = std::getenv("POKELINUX_STARTUP_TRACE_ROOT_PID");
++    const char* caseText = std::getenv("POKELINUX_STARTUP_CUSTODY_CASE");
++    sockaddr_un address{};
++    pid_t rootPID = 0;
++    if (!path || !expectedRootPID(rootPIDText, rootPID) || !selectedCase(caseText, m_case))
++        return fail(EINVAL);
++    const size_t pathLength = ::strnlen(path, sizeof(address.sun_path));
++    if (pathLength < 2 || pathLength >= sizeof(address.sun_path) || path[0] != '/')
++        return fail(EINVAL);
++    address.sun_family = AF_UNIX;
++    std::memcpy(address.sun_path, path, pathLength + 1);
++
++    m_fd = ::socket(AF_UNIX, SOCK_SEQPACKET | SOCK_CLOEXEC | SOCK_NONBLOCK, 0);
++    if (m_fd < 0)
++        return fail(errno);
++    const socklen_t addressLength = static_cast<socklen_t>(offsetof(sockaddr_un, sun_path) + pathLength + 1);
++    if (::connect(m_fd, reinterpret_cast<const sockaddr*>(&address), addressLength) != 0)
++        return fail(errno); // Includes EAGAIN/EINPROGRESS/EINTR: never retry/wait.
++    ucred peer{};
++    socklen_t peerLength = sizeof(peer);
++    if (::getsockopt(m_fd, SOL_SOCKET, SO_PEERCRED, &peer, &peerLength) != 0)
++        return fail(errno);
++    if (peerLength != sizeof(peer) || peer.pid != rootPID || peer.uid != 0 || peer.gid != 0)
++        return fail(EPERM);
++
++    m_state = EState::OPEN;
++    activeTrace = this; // Only authenticated successful open installs the TLS view.
++    return true;
++}
++
++bool CStartupTestTrace::okay() const noexcept {
++    return m_state == EState::OPEN && m_fd >= 0 && m_ownerTid && m_ownerTid == actualTID();
++}
++
++uint32_t CStartupTestTrace::caseSelection() const noexcept {
++    return m_ownerTid && m_ownerTid == actualTID() ? m_case : 0;
++}
++
++int CStartupTestTrace::failureErrno() const noexcept {
++    if (m_ownerTid && m_ownerTid != actualTID())
++        return EXDEV;
++    return m_error;
++}
++
++CStartupTestTrace* CStartupTestTrace::current() noexcept {
++    if (activeTrace && !activeTrace->okay())
++        activeTrace = nullptr;
++    return activeTrace;
++}
++
++bool CStartupTestTrace::emit(const char* event, std::string_view trustedFragment) noexcept {
++    if (!okay())
++        return fail(m_ownerTid && m_ownerTid != actualTID() ? EXDEV : ENOTCONN);
++    const STraceStamp observed = stamp();
++    if (!observed.valid)
++        return fail(errno ? errno : EIO);
++    return emitStamped(event, observed, trustedFragment);
++}
++
++bool CStartupTestTrace::emitStamped(const char* event, STraceStamp observed, std::string_view trustedFragment) noexcept {
++    if (!okay())
++        return fail(m_ownerTid && m_ownerTid != actualTID() ? EXDEV : ENOTCONN);
++    if (!observed.valid || !observed.boottimeNs || observed.tid != m_ownerTid)
++        return fail(EINVAL);
++    if (m_records >= MAX_RECORDS || trustedFragment.size() > MAX_PACKET_BYTES)
++        return fail(EMSGSIZE);
++    std::array<char, MAX_EVENT_BYTES * 2 + 1> escaped{};
++    if (!escapeEvent(event, escaped.data()))
++        return fail(EINVAL);
++    if (!trustedFragment.empty() && trustedFragment.front() != ',')
++        return fail(EINVAL);
++
++    std::array<char, MAX_PACKET_BYTES> packet{};
++    const int prefix = std::snprintf(packet.data(), packet.size(),
++        "{\"schema\":1,\"run\":1,\"event\":\"%s\",\"tid\":%llu,\"observed_boottime_ns\":%llu,\"sequence\":%u,\"role\":%u",
++        escaped.data(), static_cast<unsigned long long>(observed.tid),
++        static_cast<unsigned long long>(observed.boottimeNs), m_records + 1, m_role);
++    if (prefix < 0)
++        return fail(EIO);
++    const size_t prefixBytes = static_cast<size_t>(prefix);
++    if (prefixBytes >= packet.size() || trustedFragment.size() > packet.size() - prefixBytes - 1)
++        return fail(EMSGSIZE);
++    const size_t packetBytes = prefixBytes + trustedFragment.size() + 1;
++    if (m_bytes > MAX_TOTAL_BYTES || packetBytes > MAX_TOTAL_BYTES - m_bytes)
++        return fail(EMSGSIZE);
++    if (!trustedFragment.empty())
++        std::memcpy(packet.data() + prefixBytes, trustedFragment.data(), trustedFragment.size());
++    packet[packetBytes - 1] = '}';
++
++    // Exactly one send, no sendmsg/ancillary capabilities, blocking or retries.
++    const ssize_t sent = ::send(m_fd, packet.data(), packetBytes, MSG_NOSIGNAL | MSG_DONTWAIT);
++    if (sent < 0)
++        return fail(errno);
++    if (static_cast<size_t>(sent) != packetBytes)
++        return fail(EIO);
++    ++m_records;
++    m_bytes += packetBytes;
++    return true;
++}
++
++CStartupTestTrace::~CStartupTestTrace() noexcept {
++    // An opened object cannot be moved to another thread, which would leave its
++    // owner-thread TLS pointer dangling. There is no supported concurrent access.
++    if (m_ownerTid && m_ownerTid != actualTID())
++        std::terminate();
++    if (activeTrace == this)
++        activeTrace = nullptr;
++    if (m_fd >= 0) {
++        const int savedErrno = errno;
++        ::close(m_fd);
++        errno = savedErrno;
++    }
++}
++} // namespace Pokelinux::StartupCustodyTest
++#endif
+diff --git a/src/render/StartupTestTrace.hpp b/src/render/StartupTestTrace.hpp
+new file mode 100644
+index 0000000000000000000000000000000000000000..a7c9fdca0bd837046e7b081f16194af3593ce6a8
+--- /dev/null
++++ b/src/render/StartupTestTrace.hpp
+@@ -0,0 +1,63 @@
++#pragma once
++// Fixture-only, main-linked transport. Ordinary builds expose no declarations.
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
++#include <cstddef>
++#include <cstdint>
++#include <string_view>
++
++namespace Pokelinux::StartupCustodyTest {
++struct STraceStamp {
++    uint64_t boottimeNs = 0;
++    uint64_t tid = 0;
++    bool valid = false;
++};
++
++class CStartupTestTrace final {
++  public:
++    // CPU-empty: no environment read, timestamp, descriptor or TLS installation.
++    CStartupTestTrace() noexcept = default;
++    ~CStartupTestTrace() noexcept;
++    CStartupTestTrace(const CStartupTestTrace&) = delete;
++    CStartupTestTrace& operator=(const CStartupTestTrace&) = delete;
++    CStartupTestTrace(CStartupTestTrace&&) = delete;
++    CStartupTestTrace& operator=(CStartupTestTrace&&) = delete;
++
++    // Explicitly call at main begin (role 1) or worker bootstrap (role 2), never
++    // from Nativecreate. Exactly one attempt per instance, with no waiting/retry.
++    // Successful open installs this instance as this thread's trace context.
++    bool open(uint32_t role) noexcept;
++    bool okay() const noexcept;
++    uint32_t caseSelection() const noexcept;
++    int failureErrno() const noexcept;
++
++    // Trusted caller-only fragment: comma-prefixed JSON members, no outer braces
++    // and no duplicate envelope keys. Numeric/bool/arrays are permitted. Never
++    // pass external data, addresses, native handles, FD numbers or capabilities.
++    bool emit(const char* event, std::string_view trustedFragment = {}) noexcept;
++    // Preserve an actual earlier same-thread stamp, e.g. Nativecreate's CPU-only
++    // observation, emitted only after the worker explicitly opens at bootstrap.
++    bool emitStamped(const char* event, STraceStamp actualSavedStamp,
++                     std::string_view trustedFragment = {}) noexcept;
++
++    static STraceStamp stamp() noexcept;
++    static uint64_t actualTID() noexcept;
++    static CStartupTestTrace* current() noexcept;
++
++    static constexpr size_t MAX_PACKET_BYTES = 8192;
++    static constexpr uint32_t MAX_RECORDS = 64;
++    static constexpr uint64_t MAX_TOTAL_BYTES = 64 * 1024;
++
++  private:
++    enum class EState : uint8_t { EMPTY, OPEN, FAILED };
++    bool fail(int error) noexcept;
++    int m_fd = -1;
++    EState m_state = EState::EMPTY;
++    uint32_t m_case = 0;
++    uint32_t m_role = 0;
++    uint32_t m_records = 0;
++    uint64_t m_bytes = 0;
++    uint64_t m_ownerTid = 0;
++    int m_error = 0;
++};
++} // namespace Pokelinux::StartupCustodyTest
++#endif
+diff --git a/src/render/custody-consumer.inc b/src/render/custody-consumer.inc
+new file mode 100644
+index 0000000000000000000000000000000000000000..3f27c91d71ad3b7354bd57610cba408334a466f1
+--- /dev/null
++++ b/src/render/custody-consumer.inc
+@@ -0,0 +1,57 @@
++// Frozen source-only worker consumer for the agreed new API. No fallback.
++// This state MUST be a retained actual NativeOwner member, never an automatic
++// temporary. Root's narrowly compiled native hooks supply the separate weak-
++// identity/destructor-entry oracle; no destructor or graph is mocked here.
++#include <aquamarine/backend/Backend.hpp>
++#include <aquamarine/backend/Session.hpp>
++#include <hyprutils/memory/SharedPtr.hpp>
++#include <cstdint>
++#include <type_traits>
++
++namespace Pokelinux::StartupCustodyTest {
++using Hyprutils::Memory::CSharedPointer;
++using Aquamarine::CBackend;
++using Aquamarine::CSession;
++using Aquamarine::SBackendOptions;
++using HolderFactory = CSharedPointer<CBackend> (*)(const SBackendOptions&, CSharedPointer<CSession>);
++using Initialize = bool (CBackend::*)();
++static_assert(std::is_same_v<decltype(&CBackend::createRenderSessionHolder), HolderFactory>);
++static_assert(std::is_same_v<decltype(&CBackend::initializeRenderSession), Initialize>);
++
++enum class Case : uint32_t { AFTER_REAL_RESOURCE_SCAN=1, AFTER_REAL_IMPLEMENTATION_START=2 };
++struct RetainedCase {
++    CSharedPointer<CBackend> backend;
++    bool entered=false, initializeCalled=false, initializeReturned=false;
++    bool startCalled=false, startReturned=false, unexpectedException=false;
++    bool expectedInjectedFailureReturned=false;
++};
++// Root installs one worker-local test hook scope before this call. The scope
++// holds only weak native identities, never strong ownership masking failure.
++// The mirror and its real FD capabilities are already retained on this worker.
++void exercise(RetainedCase& state, Case which, const SBackendOptions& options,
++              CSharedPointer<CSession> mirror) noexcept {
++    if(state.entered || state.backend) {state.unexpectedException=true;return;}
++    state.entered=true;
++    try {
++        // The agreed holder constructor is CPU-only. Store it BEFORE native init.
++        state.backend=CBackend::createRenderSessionHolder(options,mirror);
++        if(!state.backend) return; // setup/factory failure, not target custody RED
++        state.initializeCalled=true;
++        state.initializeReturned=state.backend->initializeRenderSession();
++        if(which==Case::AFTER_REAL_RESOURCE_SCAN) {
++            // Hook deliberately uses the real child failure/continue branch.
++            state.expectedInjectedFailureReturned=!state.initializeReturned;
++            return; // no reset/drop/retry/alternate backend
++        }
++        if(which!=Case::AFTER_REAL_IMPLEMENTATION_START || !state.initializeReturned) return;
++        state.startCalled=true;
++        state.startReturned=state.backend->start();
++        // Hook observes real impl.start() success then injects effective failure.
++        state.expectedInjectedFailureReturned=!state.startReturned;
++    } catch(...) {
++        // Catch C++ exceptions before Rust. Any partial native custody stays in
++        // retained state; actual child destructor hooks reveal early unwind.
++        state.unexpectedException=true;
++    }
++}
++} // namespace Pokelinux::StartupCustodyTest

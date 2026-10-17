@@ -158,16 +158,16 @@ and Frame fixtures; no compatibility or runtime fallback is added.
 The [owned startup checkpoint](../../docs/native-render-owned-startup.md) adds
 `main-startup-existing-header-control.cpp`, `main-startup-public-member.cpp` and
 `main-startup-compile-oracle.py`, the exact executed original-source structural
-RED inputs/classifier. `main-startup-runtime-oracle.py` is separately frozen
-source only; no execution or implementation GREEN is claimed. Actual deferred
-factory acquisition, failure custody and main worker startup remain required.
+RED inputs/classifier. `main-startup-runtime-oracle.py` retains the separately
+frozen runtime contract. The later full main test build and setup-failed runtime
+attempts are recorded below; native failure-custody behavior remains unqualified.
 
 The same report separately qualifies `aq-retained-initialization-header-control.cpp`,
 `aq-retained-initialization-members.cpp` and
 `aq-retained-initialization-compile-oracle.py` against the actual historical SDK.
 Both missing API names are mandatory. `main-startup-runtime-oracle.py` also binds
-retained-before-initialize ordering and bounded EOF-framed startup control; it
-remains source only. Neither structural compile RED proves native failure custody.
+retained-before-initialize ordering and bounded EOF-framed startup control.
+Neither structural compile RED proves native failure custody.
 
 `aquamarine-retained-initialization.patch` applies after `aquamarine.patch` and
 `aquamarine-initial-batch.patch`; its cohort pins the exact two changed files,
@@ -182,10 +182,35 @@ initialization patch. Its matching cohort pins the dedicated
 `POKELINUX_STARTUP_CUSTODY_TEST` build, seven affected C++ objects, nine interfaces
 (11 function symbols), the generated SDK and the address probe's actual AQ15
 relocation closure. `aq-startup-custody-hook-link-probe.cpp` is the exact compiled
-address-only probe; its functions and the hook callbacks were not invoked. Ten
-unchanged CPU groups and both frozen API syntax contracts pass, with 57 original
-waits/PIPE EOFs. This publishes test infrastructure and build evidence only;
-actual native failure RED, child/start/subordinate-factory custody and matching
-main/Rust worker execution remain open. Keep the inherited non-build source
-exceptions in `aquamarine-cohort.json`; no private planning note is needed to
+address-only probe; its functions and hook callbacks were not invoked during that
+build-only epoch. Ten unchanged CPU groups and both frozen API syntax contracts pass, with 57 original
+waits/PIPE EOFs. That epoch publishes test infrastructure and build evidence only;
+the later qualified native failure RED below has its own scope.
+Child/start/subordinate-factory repair remains open. Keep the inherited
+non-build source exceptions in `aquamarine-cohort.json`; no private planning note is needed to
 reconstruct the compiled sources or SDK headers.
+
+`hyprland-startup-custody-test.patch` applies after the two parent Hyprland
+patches named in its cohort. Its exact 13-file increment reconstructs the compiled
+main test profile, including the unchanged custody-consumer include. Select the
+matching test-defined AQ15 hook library and sole Rust archive/three headers; no
+normal production route is qualified. The actual build passes both frozen member
+TUs, 15 CPU groups, all 537 SDK member checks and 55 original waits/EOFs.
+
+Two later native runtime selections remain failed setup epochs: first an overlong
+control pathname, then a lookup beyond the direct PCI function to the bus root
+instead of the GPU's PCI-local virtio child, after two
+snapshots and Stop completed. Hooks executed and partial child destructor/weak
+loss was observed, but neither selection qualifies native behavior RED; the second
+case did not run in those attempts. A third selection executes both unchanged
+cases and its guest controller matches expected semantic RED, then outer output
+collection rejects two successful empty regular command logs. Its aggregate also
+remains failed, with outer RED unqualified. Run4 corrects only bounded collection
+of those empty regular logs and qualifies both native failure RED cases, with
+29 direct waits/36 PIPE EOFs and full outer closure. Each genuine failure destroys
+the selected child before verified retirement; case two observes actual start
+success before forcing the existing false-result path. Native source, consumer,
+semantic oracle and bounds remain fixed. Repair custody next; no runtime GREEN,
+Rust join/native retirement, Source or phone success is claimed. See the
+[full checkpoint](../../docs/native-render-owned-startup.md#runtime-setup-failures-preserved)
+for the exact scope; process disposal is not native cleanup or release.

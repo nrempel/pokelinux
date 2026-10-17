@@ -222,5 +222,444 @@
     "main_or_Rust_worker_executed": false,
     "Source_GL_AQ_output_ARM_or_phone_qualified": false,
     "phones_qualified": 0
+  },
+  "full_main_startup_custody_test_build": {
+    "classification": "FULL_MAIN_TEST_PROFILE_BUILD_SDK_PUBLIC_INTERFACE_GREEN_AND_CPU_ONLY",
+    "actual_selection_public_source_base": "f3be35a74d48245d41638f87b78847421f6dd0c0",
+    "reviewed_startup_contract_base": "6e2da15a39ebb6f6bbfc597af25abe772c32d4a9",
+    "public_reconstruction_revision": "e6050446ded37c91769ac99a68e8b0683bd8e0f1",
+    "pins": {
+      "execution.json": "62cf1f941864a2ddc4894b52669909f40dc012e805f9a4bdacc2e88211557a62",
+      "selection.json": "d9fc2d28756c81030619259492f04936c7d62711f1c48c29c0e645bbdf3c599c",
+      "command.json": "a65924b4f28c2363b2a120c5faa2d96fd6413c034e8056e9f757eaec572cb075",
+      "boot-result.json": "42754b1a79575ca55dbba5dd8f0168017c69ab2d859a9ce50d51a012ff8a391c",
+      "guest-out/guest-result.json": "ba7f8530952c5670f916a720fe03bec6bc8a66397f3aff39518ace2d724d2794",
+      "guest-out/build-output/build-result.json": "74c9771ce0bf23edfce40dbd3f07b500ba8a44e854c58c546df9f2b5ff4f66f6"
+    },
+    "Root_build_qualification_sha256": "2c97501563142cb59ded89962d0840344b46dc39b78a442a43ebbf8dde923ebb",
+    "independent_build_qualification_sha256": "6644c103d036704250f5f974c5e8626254f0011340701891f48a14ece676d945",
+    "public_patch_sha256": "5731048744eb1ec3a9569047b51009b3f7876c7c06349d92ca22d7c80e3df7f3",
+    "matching_cohort_file": "tools/native-render-owner/hyprland-startup-custody-test-cohort.json",
+    "matching_cohort_sha256": "5aaca1cfb9d639432081e63b86370ec1b3267aa4ade60fe82dd72269d8dae3a9",
+    "public_reconstruction_receipt_sha256": "2d8d7f8d11151f2fc3d5c382e42c60055a38904d6b4de599976d23c382cbecf0",
+    "public_reconstruction": {
+      "before_leaves": 1146,
+      "after_leaves": 1153,
+      "historical_payloads": 33,
+      "distinct_successor_files": 13,
+      "modified": 6,
+      "added": 7,
+      "exceptions": [],
+      "all_source_leaves_equal_actual_build": true
+    },
+    "main": {
+      "bytes": 25339832,
+      "sha256": "83fbf40ab1798fa8c285aaef6512be3c35360e5a28a56fc6664b7746a62a5318"
+    },
+    "SDK": {
+      "bytes": 4689920,
+      "sha256": "9e1e1e5956665aebfdb1112d96f573652558488397096babf631e049c3020ae2"
+    },
+    "matching_AQ15_library": {
+      "bytes": 1848848,
+      "sha256": "8c24ed439c071be9e71605907f5387b45664d6d7ed1b60ab860384e78809eebe"
+    },
+    "original_Rust_archive": {
+      "bytes": 22901236,
+      "sha256": "246a6680b7f9ed8affd89bd9b022319a0903f5ebc58f03d7d76eaa85f8653311"
+    },
+    "all23_Rust_exports_defined_GLOBAL_FUNC_DEFAULT": true,
+    "CPP_entries_with_exact_test_define": 457,
+    "actual_startup_CPP_objects": 6,
+    "historical_CPP_objects": 16,
+    "native_FUNCTIONS_table_and_bootstrap_to_probe_link_references_verified": true,
+    "SDK_regular_files": 535,
+    "SDK_symlinks": 2,
+    "all537_SDK_members_byte_or_link_verified": true,
+    "matching_AQ_headers": 21,
+    "DT_NEEDED": 111,
+    "RUNPATH": "$ORIGIN/../lib/pokelinux-aq15",
+    "actual_matching_AQ15_ldd_r_exit": 0,
+    "AQ14_missing_or_undefined_relocations": false,
+    "unchanged_frozen_main_TUs": {
+      "startup_compile_control": {
+        "source": {
+          "bytes": 708,
+          "sha256": "1e24ee3d9ec1bbce0a16b223e483a411ccd5a6fff2ee7d8668ac2cf242262c43"
+        },
+        "actual_exit": 0,
+        "diagnostic_bytes": 0,
+        "private_headers": 86,
+        "dependency_paths": 559,
+        "dependency_file": {
+          "bytes": 26678,
+          "sha256": "18525a3f1fb998057c160966ad3c180bafe63e85a582d5c3ede27a1453b547ff"
+        }
+      },
+      "startup_compile_member": {
+        "source": {
+          "bytes": 1048,
+          "sha256": "b1d03f0610e52b47ec02baf1d759d41049538342a041168dac2937651b6951f5"
+        },
+        "actual_exit": 0,
+        "diagnostic_bytes": 0,
+        "private_headers": 86,
+        "dependency_paths": 559,
+        "dependency_file": {
+          "bytes": 26669,
+          "sha256": "9b024c5893a314bbf940773954ccf3020465d6f30addc5c0ead0e714865fe69b"
+        }
+      }
+    },
+    "actual_CPU_groups": {
+      "snapshot": 5,
+      "codec": 4,
+      "lifecycle": 1,
+      "current_C_ABI": 5
+    },
+    "post_join_task_absence_rows": 4,
+    "historical62_Rust_tests_rerun": false,
+    "direct_waits": 55,
+    "PIPE_EOFs": 55,
+    "all_original_cutoffs_and_closure_qualified": true,
+    "actual_QMP_KVM_shutdown_socket_EOF_QEMU0_CLI0_exact_CID_same_daemon_locked_inputs": true,
+    "main_or_hook_callback_executed_in_this_build_epoch": false,
+    "native_runtime_or_behavior_RED_GREEN": false,
+    "normal_production_route_qualified": false,
+    "Source_GL_ARM_or_phone_qualified": false
+  },
+  "native_runtime_setup_failures": [
+    {
+      "epoch": 1,
+      "classification": "SETUP_UNQUALIFIED_OVERLONG_CONTROL_SOCKET_PATH",
+      "pins": {
+        "execution.json": "b4d27f208f730ef86eb9cfb547475f534a51071e3f8c60e6a2578a0e37804985",
+        "selection.json": "cbc730a445842ac456209ad1fd7dd81c9434e006822a3225631cd570ec8242d7",
+        "command.json": "a34b81c549d7f332afcefa82df26334993fdcdf438ebf178400203fb48f9a706",
+        "boot-result.json": "5ac004a5d54b79c520a5835b4c52301224c4ab3d2295edb077a9d3b3870310c0",
+        "result.json": "7058e175ff703a614064ba49e3c9767d84e925231b9d3b47b75a68cecbdcf551",
+        "bootstrap-result.json": "23efe5884935e00f7dbcef0666810d3b315fb7b05c8fcb240a38ed500b710bc8",
+        "component/controller-result.json": "4e751c4b388a0f2c1343d65dc43951f60dd271980bc642b30a7901b0adbf65db",
+        "component/case1.provisional.json": "8a6460107e5e830ab15a5428f2f98237399cd365ffc70900d493eaeff04af43c"
+      },
+      "aggregate_passed": false,
+      "native_behavior_RED_qualified": false,
+      "native_runtime_GREEN": false,
+      "case": "AFTER_REAL_RESOURCE_SCAN",
+      "authenticated_records": 11,
+      "matched_child_destructor_entries": 1,
+      "child_weak_lock_failed": true,
+      "clean_Pending_status": 0,
+      "resources_retired": 0,
+      "observations_are_partial_only": true,
+      "mandatory_start_case_executed": false,
+      "QEMU_actual_exit": 0,
+      "CLI_actual_exit": 1,
+      "exact_CID_absent": true,
+      "same_daemon": true,
+      "original_inputs_unchanged_under_lock": true,
+      "cleanup_errors": [],
+      "retained_main_SIGKILL_actual_wait": -9,
+      "process_disposal_is_native_cleanup_or_Rust_join": false,
+      "Root_failure_qualification_sha256": "3f0067e6c581d8cd797840efdcda47294aee20dba57f7684ea677139d6e4df75",
+      "control_path_bytes": 121,
+      "Unix_pathname_max_bytes": 107,
+      "public_queries": 0,
+      "public_Stop_executed": false,
+      "failure": "Full control pathname exceeds sun_path capacity; original cutoff expires before public query."
+    },
+    {
+      "epoch": 2,
+      "classification": "SETUP_UNQUALIFIED_KERNEL_DEVICE_HIERARCHY_LOOKUP",
+      "pins": {
+        "execution.json": "d4a02ad499329e99a2d01efb060a59f30a8dbaf5de9605528242b0120b306ac7",
+        "selection.json": "c2ccef08832f7c504dd6f45b62e1c1c9188e12b245644e10a72d66e6e3f3f83f",
+        "command.json": "ac573f24149f752f3f0ef5048987b8338105e9c1152bfafc247683d99705d2b2",
+        "boot-result.json": "79a92da90184e3f8c311ac85f6b9fc9c04e0c00f4ab7ff2e7aa41a85caf874ed",
+        "result.json": "f0a3b56a9370ac90e7a5c5f713d84c46d6b85d40ce9d30fccc0017d51b0bba9e",
+        "bootstrap-result.json": "b1865ccc13ad044ad01cd6f34998b1a09a195ab59545d9c9cf9c0269c31d4606",
+        "component/controller-result.json": "dfff15c41bf9eafea6a30ea42e2967cf37b0547a8c9d4ccd2d1c1a1bd47852e8",
+        "component/case1.provisional.json": "bdf6082cf605712847bbb98869969bf61c2fa38e06606447da58475f580ca5a7"
+      },
+      "aggregate_passed": false,
+      "native_behavior_RED_qualified": false,
+      "native_runtime_GREEN": false,
+      "case": "AFTER_REAL_RESOURCE_SCAN",
+      "authenticated_records": 14,
+      "matched_child_destructor_entries": 1,
+      "child_weak_lock_failed": true,
+      "clean_Pending_status": 0,
+      "resources_retired": 0,
+      "observations_are_partial_only": true,
+      "mandatory_start_case_executed": false,
+      "QEMU_actual_exit": 0,
+      "CLI_actual_exit": 1,
+      "exact_CID_absent": true,
+      "same_daemon": true,
+      "original_inputs_unchanged_under_lock": true,
+      "cleanup_errors": [],
+      "retained_main_SIGKILL_actual_wait": -9,
+      "process_disposal_is_native_cleanup_or_Rust_join": false,
+      "control_path_bytes": 94,
+      "CONTROL_WIRE_records": 3,
+      "public_requests": [
+        "snapshot",
+        "Stop",
+        "snapshot"
+      ],
+      "request_duration_ns": [
+        113645,
+        76795,
+        67468
+      ],
+      "Rust_snapshot_failed": true,
+      "Rust_snapshot_ready": false,
+      "Rust_snapshot_stopping": true,
+      "snapshot_join_codes": [
+        2,
+        2
+      ],
+      "Stop_code": 0,
+      "startup_error": 9,
+      "native_retirement_claimed": false,
+      "failure": "Metadata observer walked beyond the DRM direct PCI function to the bus root; GPU driver binding is on the PCI-local virtio child, not found through an ancestor search."
+    },
+    {
+      "epoch": 3,
+      "classification": "GUEST_EXPECTED_SEMANTIC_RED_MATCHED_OUTER_EMPTY_LOG_COLLECTION_FAILED",
+      "pins": {
+        "execution.json": "cc8240220ee26959bb355c15efc29422afe6706858f2d30a59ccc89f437e6c82",
+        "selection.json": "a280a8f938da147004301cf5379186f884503badf8efc07d043d970ac44bfa47",
+        "command.json": "71339803dcd98d08a761813cfadc41f05116aa7e3a78742449bbfd5ce28c2d31",
+        "boot-result.json": "a9100843a98c15e727ca3645b9b51619fcb27bd94a635d7e59d9629e90b53e8f",
+        "result.json": "8170af6259c5ab7f8e7131e312f474185dc225c4f976a2da053812f355cb3c9e",
+        "bootstrap-result.json": "68c8a4b20dad943c13f7721869c8234a37fda2ff3824a58749448a7ad361f6ab",
+        "component/controller-result.json": "77d91d36f81cdcbf0978b51e376de9585487f1164e274978878e6ba4f5903f0c",
+        "component/case1.provisional.json": "ba8ad93a4dca25424436da4f52ef6688102672c1ba8fe1128f35a16027a039b2",
+        "component/case2.provisional.json": "d95ef8b281c64633c8c29702d228bb7173e678154d03a4dc5b88ef0fa9d58f60"
+      },
+      "aggregate_passed": false,
+      "guest_controller_passed": true,
+      "guest_controller_actual_exit": 0,
+      "guest_result_passed": false,
+      "native_behavior_RED_qualified": false,
+      "native_runtime_GREEN": false,
+      "unchanged_cases_executed": [
+        "AFTER_REAL_RESOURCE_SCAN",
+        "AFTER_REAL_IMPLEMENTATION_START"
+      ],
+      "guest_semantic_classifications": [
+        "SEMANTIC_NATIVE_CUSTODY_RED",
+        "SEMANTIC_NATIVE_CUSTODY_RED"
+      ],
+      "guest_expected_RED_matches": [
+        true,
+        true
+      ],
+      "case_outer_qualified": [
+        false,
+        false
+      ],
+      "authenticated_records": 28,
+      "same_frozen_semantic_oracle_sha256": "f260fd42c1fc93d0b657c34f15ee9a4a30eecfc163a1670f5f74cb4eca27284c",
+      "native_source_main_AQ_consumer_changed": false,
+      "guest_inventory_nonempty_reader_rejects_successful_empty_logs": [
+        {
+          "name": "004-modprobe-virtio-gpu",
+          "regular_file": true,
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "actual_command_exit": 0
+        },
+        {
+          "name": "005-udev-settle",
+          "regular_file": true,
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "actual_command_exit": 0
+        }
+      ],
+      "failure": "Bounded component output inventory uses data() requiring positive file size; successful empty regular modprobe/udev logs fail that assertion after both cases.",
+      "QEMU_actual_exit": 0,
+      "CLI_actual_exit": 1,
+      "exact_CID_absent": true,
+      "same_daemon": true,
+      "original_inputs_unchanged_under_lock": true,
+      "cleanup_errors": [],
+      "process_disposal_is_native_cleanup_or_Rust_join": false,
+      "Source_GL_ARM_or_phone_qualified": false,
+      "component_output_files_all_regular": true,
+      "component_output_file_count": 11
+    }
+  ],
+  "current_remaining_scope": {
+    "qualified_native_behavior_RED": true,
+    "native_failure_custody_repair": false,
+    "normal_CPU_facade_live_ingress_authentic_StopRetire": false,
+    "Source_GL_ARM_phone": false,
+    "next_fixture_change": "Repair real child-before-acquisition retention and mandatory-start failure custody, then replay unchanged cases and bounds; subordinate factories and normal runtime/Source/phone gates remain open."
+  },
+  "qualified_native_startup_custody_RED": {
+    "epoch": 4,
+    "classification": "TWO_REAL_NATIVE_FAILURE_CUSTODY_RED_CASES_WITH_OUTER_CLOSURE",
+    "aggregate_passed": true,
+    "native_behavior_RED_qualified": true,
+    "pins": {
+      "execution.json": "1cd4a5ecec332b74706795ca0c179dbde82b7c425eeee216b45b3d6818e34e99",
+      "selection.json": "298a3f1094fb0e04d8be49fc0fe41a19970882d6a2759ba5ed0e9f7f6c2bc2f5",
+      "command.json": "9ffd7adda5cb5a01dcb20da3465772a521d722f5bbd2f6e2ac2b42837def30dd",
+      "boot-result.json": "9d0c9be00577482782444be04dcb34680142c147fd0351aae8457e0ad4b390a9",
+      "bootstrap-result.json": "4f3b9a57cf1db65c82eb329636ccd25f75269c54f9763e02b5091a3f3007475e",
+      "result.json": "20f9c309f643d69b3b88d5d8e1f084b45e475b6f0994993f7e5ba90ac02ce517",
+      "component/controller-result.json": "da82647553300143cfd0aac816fbb3c4b726008d85b7e75e61529b585828ece1",
+      "component/case1.provisional.json": "a77bf95e4f2ed1f4a882e38882abf254bddcd91d9826aeeb94a427a5472a79d0",
+      "component/case2.provisional.json": "e325a6051a15aca4b4b3d6ca0d250d5e6d7daa19ef042a52086e67f4a7509aa9"
+    },
+    "main_ELF_sha256": "83fbf40ab1798fa8c285aaef6512be3c35360e5a28a56fc6664b7746a62a5318",
+    "AQ15_library_sha256": "8c24ed439c071be9e71605907f5387b45664d6d7ed1b60ab860384e78809eebe",
+    "frozen_consumer_sha256": "f07276f6f8bc66cb3494ee0a099e1d7467607b25198da1c7c7e0f5a7e9ff79d2",
+    "frozen_semantic_oracle_sha256": "f260fd42c1fc93d0b657c34f15ee9a4a30eecfc163a1670f5f74cb4eca27284c",
+    "native_source_or_target_or_bounds_changed": false,
+    "collector_only_correction": "Accept successful empty regular command logs within existing bounded inventory.",
+    "cases": [
+      {
+        "case": "AFTER_REAL_RESOURCE_SCAN",
+        "classification": "SEMANTIC_NATIVE_CUSTODY_RED",
+        "qualified": true,
+        "outer_closure_pending": false,
+        "case_sha256": "a77bf95e4f2ed1f4a882e38882abf254bddcd91d9826aeeb94a427a5472a79d0",
+        "authenticated_records": 14,
+        "CONTROL_WIRE_records": 3,
+        "selected_child_destructor_entries": 1,
+        "target_loss_proven": true,
+        "expired_weak_resource_kinds": [
+          "child",
+          "outputs",
+          "crtcs",
+          "planes"
+        ],
+        "observation_locks_released_before_injection": true,
+        "initialize_returned": false,
+        "start_called": false,
+        "actual_impl_start_result": null,
+        "effective_impl_start_result": null,
+        "expected_injected_failure_returned": true,
+        "setup_error_bits": 0,
+        "public_request_order": [
+          "snapshot",
+          "Stop",
+          "snapshot"
+        ],
+        "public_request_duration_ns": [
+          110679,
+          83177,
+          40737
+        ],
+        "original_public_request_bound_ns": 2000000000,
+        "snapshot_join_codes": [
+          2,
+          2
+        ],
+        "Stop_code": 0,
+        "startup_error": 9,
+        "Rust_failed": true,
+        "Rust_ready": false,
+        "Rust_stopping": true,
+        "actual_worker_task_retained": true,
+        "both_borrowed_watches_registered": true,
+        "mirror_outer_holder_service_lease_and_supplier_code_retained": true,
+        "opaque_Rust_pack_retention_is_source_bound_inference_not_private_inspection": true,
+        "native_Pending_status": 0,
+        "resources_retired": 0,
+        "actual_trace_socket_EOFs": 2,
+        "owned_main_actual_wait": -9,
+        "native_cleanup_or_Rust_join_claim": false
+      },
+      {
+        "case": "AFTER_REAL_IMPLEMENTATION_START",
+        "classification": "SEMANTIC_NATIVE_CUSTODY_RED",
+        "qualified": true,
+        "outer_closure_pending": false,
+        "case_sha256": "e325a6051a15aca4b4b3d6ca0d250d5e6d7daa19ef042a52086e67f4a7509aa9",
+        "authenticated_records": 14,
+        "CONTROL_WIRE_records": 3,
+        "selected_child_destructor_entries": 1,
+        "target_loss_proven": true,
+        "expired_weak_resource_kinds": [
+          "child",
+          "dumb_allocator",
+          "outputs",
+          "crtcs",
+          "planes"
+        ],
+        "observation_locks_released_before_injection": true,
+        "initialize_returned": true,
+        "start_called": true,
+        "actual_impl_start_result": true,
+        "effective_impl_start_result": false,
+        "expected_injected_failure_returned": true,
+        "setup_error_bits": 0,
+        "public_request_order": [
+          "snapshot",
+          "Stop",
+          "snapshot"
+        ],
+        "public_request_duration_ns": [
+          94910,
+          70904,
+          63610
+        ],
+        "original_public_request_bound_ns": 2000000000,
+        "snapshot_join_codes": [
+          2,
+          2
+        ],
+        "Stop_code": 0,
+        "startup_error": 9,
+        "Rust_failed": true,
+        "Rust_ready": false,
+        "Rust_stopping": true,
+        "actual_worker_task_retained": true,
+        "both_borrowed_watches_registered": true,
+        "mirror_outer_holder_service_lease_and_supplier_code_retained": true,
+        "opaque_Rust_pack_retention_is_source_bound_inference_not_private_inspection": true,
+        "native_Pending_status": 0,
+        "resources_retired": 0,
+        "actual_trace_socket_EOFs": 2,
+        "owned_main_actual_wait": -9,
+        "native_cleanup_or_Rust_join_claim": false
+      }
+    ],
+    "actual_virtual_DRM_device_and_character_descriptor_metadata_bound": true,
+    "direct_waits": 29,
+    "PIPE_EOFs": 36,
+    "waits_by_layer": {
+      "host": 7,
+      "boot": 5,
+      "bootstrap": 5,
+      "guest": 2,
+      "controller": 8,
+      "early": 2
+    },
+    "host_separate_stdout_stderr_EOFs": 14,
+    "other_merged_PIPE_EOFs": 22,
+    "trace_socket_EOFs_separate_from_PIPE_count": 4,
+    "all_original_cutoffs_and_outer_closure_qualified": true,
+    "QEMU_actual_exit": 0,
+    "CLI_actual_exit": 0,
+    "exact_CID_absent": true,
+    "same_daemon": true,
+    "original_inputs_unchanged_under_lock": true,
+    "normal_guest_QMP_shutdown_same_socket_EOF": true,
+    "cleanup_errors": [],
+    "native_custody_GREEN": false,
+    "native_cleanup_join_release_GPU_drain": false,
+    "normal_production_startup_Source_GL_ARM_or_phone_qualified": false,
+    "Root_qualification_sha256": "97779df44cdc7e2a39e7f12c7d35bfde1c888b6ad1830c58bc225c20b9242706",
+    "Root_runtime_review_sha256": "1a751f82afb8eeccef8c4abd42151320a00441add5eedcabba97c6955b7cdf7d",
+    "preparation_sha256": "6133f72d44cf17b6b1720ce4a6c3a3ef1b150f5865d67799f1b0e43fd16e6e47",
+    "independent_qualification_sha256": "944e16e207a98008e84eb42a0861a333e23c4963fb6921d992b283793ceb0bbc",
+    "QMP_socket_EOF_separate_from_PIPE_count": 1,
+    "Root_and_independent_reviews_agree": true
   }
 }
