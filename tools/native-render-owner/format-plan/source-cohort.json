@@ -1,0 +1,104 @@
+{
+  "CABI_consumer": {
+    "bytes": 28925,
+    "sha256": "d130c73f1230ee0f41997be8c61b5c2345ebfe14e4355bc071e7fabb653a794d"
+  },
+  "CPU_QA_result": {
+    "bytes": 31105,
+    "sha256": "1ad4bfbfab4a1731f83e34176515ec5eee0a0c70c20db63ad909b35fe45b0fbe"
+  },
+  "CPU_Root_qualification": {
+    "bytes": 1699,
+    "sha256": "38cb26dbe6d286b89a058c3abe8b5dd6b3f8a4919ea55bbbd8e1c33f0ab308a0"
+  },
+  "Rust_archive": {
+    "bytes": 22940238,
+    "sha256": "425dd6fa9d604054b2ab15beeb488c79f1dbcac5efc0779b213bed5bd6de9f83"
+  },
+  "Rust_header": {
+    "bytes": 7145,
+    "sha256": "a58e9396a2a1f144041a4beb45d06e9c79f9f2d4df9515df2538ffedd6cbcf97"
+  },
+  "Rust_module": {
+    "bytes": 18110,
+    "sha256": "89956ee4bb8df2b1d0917b5d56f23e29bd5576587089412160f3011831a5c254"
+  },
+  "actual_bootstrap_CHANGE": null,
+  "exact_native_patch": {
+    "bytes": 38248,
+    "sha256": "82b44521a325fa63717d0ef67f45980e72070b0d264520bb09bad6ee53cdaccd"
+  },
+  "failed_first_build": {
+    "aggregate_passed": false,
+    "execution": {
+      "bytes": 29655,
+      "sha256": "38846ba839770d2ebaf41210e9564efddaaa6f5f8d7b88f799af953e8ca2bc8b"
+    },
+    "reason": "Full source compiled/linked; fixture manual SDK staging omitted the fourth Rust header. Four staging lines repaired, production source and test assertions unchanged."
+  },
+  "frozen_contract": {
+    "bytes": 7642,
+    "sha256": "b2f10f27cfbbcd35a1731894f4f8510869189651357baa02efa0562739508bf2"
+  },
+  "native_changed_paths": {
+    "CMakeLists.txt": {
+      "after": {
+        "bytes": 30103,
+        "sha256": "26fb80d4cf3298194cf5234a6de822acd16f12f79db3af67f70f6a57245f208d"
+      },
+      "before": {
+        "bytes": 29914,
+        "sha256": "16c009a4339e5305e3d0f051d1f7b28a555bee344a6a38025302031c5877b0bb"
+      }
+    },
+    "src/render/OwnedBackendStartup.cpp": {
+      "after": {
+        "bytes": 74752,
+        "sha256": "495575fae473c56ad30001aa5c0f45008034346624a1c9792e18b4f4648dccf2"
+      },
+      "before": {
+        "bytes": 68885,
+        "sha256": "f3706d239e85ef8b225648d497eab468ed82cbaf6f0404c17606f02ffe74ae2a"
+      }
+    }
+  },
+  "native_prepare_execute_present_retire_ARM_phone_qualified": false,
+  "native_source_file_count": 1154,
+  "native_source_review": {
+    "bytes": 1162,
+    "sha256": "a453240acb5646ffd05f4b9616f006559b91f496b476153ba9013be86100d5ad"
+  },
+  "normal_native_build": {
+    "Root_qualification": {
+      "bytes": 3234,
+      "sha256": "f1b3fa2e2d996fc5f43af98ef0d9125176b6fb4ba069ad9e8c8bb70e680cda63"
+    },
+    "Rust_exports": 31,
+    "SDK": {
+      "bytes": 4751360,
+      "sha256": "cf58cbf5a946ec700a81cb72344e995cd4f56f404d234c9934ecec131b0e8603"
+    },
+    "SDK_links": 2,
+    "SDK_regular_files": 537,
+    "build_result": {
+      "bytes": 714824,
+      "sha256": "3d6e592da54555936da671028abcba90e82a88c0cc9f01f9e264c2380bd3978f"
+    },
+    "configured_CPP_and_PCH": 458,
+    "execution": {
+      "bytes": 29619,
+      "sha256": "84d635a0279dc5190e39d8f5bbb96ad152ee598ae1756bab2c85ad644ac9b93a"
+    },
+    "main_ELF": {
+      "bytes": 25326944,
+      "sha256": "4ffa7ae10fdbbf2c42eac3e53a0e7a827a2a86857bc65e777d14cfc8e3a6c182"
+    },
+    "no_compositor_native_runtime_claim": true,
+    "owned_PIPE_EOFs": 82,
+    "owned_direct_waits": 82
+  },
+  "public_Rust_checkpoint": "131030e8b23dae74a2efb75c5d2a66060a6c94c0",
+  "remaining_native_files_unchanged": 1152,
+  "schema": 1,
+  "scope": "Original open-source common native observation collector invoking Rust V2 planning. Matching complete NORMAL main/SDK build passes; actual startup/CHANGE runtime pending."
+}

@@ -49,7 +49,8 @@ six real C++/Rust ABI groups with the same fresh archive as all64 old Rust tests
 and the five existing C++ programs. V2 replaces the old format API and selects an
 exact implicit or explicit request from raw backend/device/capability observations.
 This is authored CPU policy evidence. The shared native bootstrap/CHANGE collector
-is authored separately; its matching full build and runtime remain pending.
+now passes the matching full compositor/SDK build; actual runtime acceptance
+remains pending.
 Native prepare/execute still return protocol refusal. Normal client frames,
 Source and phone qualification remain open.
 The historical checkpoints below retain their original providers and scopes.

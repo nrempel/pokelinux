@@ -7,8 +7,8 @@ The [genuine C ABI consumer](../native-render/tests/format_ffi.cpp) passes six
 frozen groups against the new archive. All64 existing Rust tests, the five earlier
 C++ programs, formatting, strict Clippy and Release compilation pass in the same
 selection. These are authored CPU facts, not new DRM observations or a working
-compositor. The common native startup/CHANGE collector is authored separately;
-its matching full build and runtime remain pending.
+compositor. The common native startup/CHANGE collector now passes its matching
+full normal compositor/SDK build. Actual native startup/recovery remains pending.
 
 ## Ownership and language boundary
 
@@ -106,10 +106,39 @@ The historical V1 checkpoint used224/104-byte views, four authored groups and
 archive d9a7ad56. It refused implicit selection and was not connected to native
 startup. That result remains historical; its API is removed by this change.
 
+## Matching native build
+
+The [common native collector](../tools/native-render-owner/format-plan/README.md)
+removes both C++ first-tuple choices and the separate C++ format corroboration.
+Bootstrap and CHANGE call the same Rust planner with each output's own retained
+device identity and actual sequence. Native pointers and the copied request mode
+remain worker-owned; existing mode corroboration stays unchanged.
+
+Its complete normal main build passes against exact AQ9512cc02/SDK93150843 and
+Rust425dd6fa. All458 configured C++/PCH entries omit the test macro,31 Rust symbols
+are retained/exported, and the matching SDK fully reads back537 regular files and
+two links. The original15 CPU groups, texture5, first-Stop5, session6 and seven
+strict SDK checks pass; the format6 result is the separately selected component
+QA, not a new guest execution. All82 owned waits/PIPE EOFs close, with QMP socket
+closure separately verified, QEMU/CLI0, exact container absence, the same daemon
+and unchanged inputs. No compositor main/native runtime was invoked by this build.
+
+The first full source build compiled and linked, then failed because the fixture's
+manual SDK builder omitted the fourth Rust header. Its failed aggregate is
+preserved. The repair adds four staging lines only; production code, resources,
+all assertions and oracles stay unchanged. The second full selection above passes.
+
+| Native build artifact | SHA-256 |
+| --- | --- |
+| Main ELF | 4ffa7ae10fdbbf2c42eac3e53a0e7a827a2a86857bc65e777d14cfc8e3a6c182 |
+| Matching SDK | cf58cbf5a946ec700a81cb72344e995cd4f56f404d234c9934ecec131b0e8603 |
+| Closed execution | 84d635a0279dc5190e39d8f5bbb96ad152ee598ae1756bab2c85ad644ac9b93a |
+| Root build qualification | f1b3fa2e2d996fc5f43af98ef0d9125176b6fb4ba069ad9e8c8bb70e680cda63 |
+
 ## Next integrated slice
 
-Connect one bounded raw collector to this Rust planner after native enumeration
-at both bootstrap and CHANGE. Preserve real events and existing Rust reconciliation;
+Run the matching common collector through actual native enumeration at both
+bootstrap and CHANGE. Preserve real events and existing Rust reconciliation;
 do not ignore revocation to make a fixture pass. Retain native output/mode/device
 identity and the copied plan without choosing a second tuple in C++.
 

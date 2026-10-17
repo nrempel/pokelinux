@@ -6,13 +6,14 @@ Two later virtual-driver selections execute all five resource groups successfull
 but both aggregates fail a control-session check. There is no complete kernel
 integration GREEN, active-context qualification or presented app frame here.
 
-Portable format decisions and lifecycle belong in Rust; the native adapter
-still has C++ policy awaiting replacement. This dependency patch performs native
-GBM/DRM operations and retains objects through the existing swapchain/framebuffer
-holders. The [Rust selector](native-render-format-policy.md) remains disconnected
-from that adapter. Its separately tested V2 can plan an implicit request; native
-wiring and execution remain unqualified. Test requests grant
-no production eligibility or display authority.
+Portable format decisions and lifecycle belong in Rust. The
+[Rust V2 planner](native-render-format-policy.md) now requests implicit or explicit
+operations and replaces both native C++ format choices through one common
+collector. Its matching full compositor/SDK build passes; actual startup/CHANGE
+acceptance remains pending. This AQ patch performs native GBM/DRM operations and
+retains objects through the existing swapchain/framebuffer holders. Native
+prepare/execute is still unimplemented; no production allocation/import or display
+authority follows from a plan or test request.
 
 The [source and tests](../tools/native-render-owner/exact-buffer/README.md) add
 explicit operations: an implicit request uses one `gbm_bo_create` and AddFB2
