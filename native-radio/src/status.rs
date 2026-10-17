@@ -4,6 +4,7 @@
 #![forbid(unsafe_code)]
 use crate::{
     observation::{self, Frame, Kind},
+    operator::{Admit, AdmitReply, RequestHistory},
     receiver::ReceiverFailure,
 };
 use pokelinux_kernel_identity::socket_peer_pidfd;
@@ -16,6 +17,7 @@ use rustix::{
     },
     process,
 };
+use serde::{Deserialize, Deserializer};
 use std::{
     io::{self, IoSliceMut},
     mem::MaybeUninit,
@@ -24,8 +26,8 @@ use std::{
 };
 
 const HEADER: usize = 12;
-const FIXED: usize = 44;
-pub const MAX_PACKET: usize = FIXED + observation::MAX_FRAME_LEN;
+pub const MAX_PACKET: usize = 16384;
+pub const MAX_ADMIT: usize = 512;
 const MAGIC: &[u8; 4] = b"RADS";
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum Phase {
@@ -42,37 +44,25 @@ pub struct Status {
     pub failure: Option<ReceiverFailure>,
     /// One historical transport observation, retained independently of local phase.
     pub last_observation: Option<Frame>,
+    pub request_history: Option<RequestHistory>,
 }
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum Command {
     Status,
     Stop,
+    Admit(Admit),
 }
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum Reply {
     Status(Status),
-    StopAck,
+    StopAck(Status),
+    Admit(AdmitReply),
 }
 fn invalid() -> io::Error {
     io::ErrorKind::InvalidData.into()
 }
 fn denied() -> io::Error {
     io::ErrorKind::PermissionDenied.into()
-}
-fn failure(code: u8) -> io::Result<Option<ReceiverFailure>> {
-    Ok(match code {
-        0 => None,
-        1 => Some(ReceiverFailure::MalformedCallback),
-        2 => Some(ReceiverFailure::QueueFull),
-        3 => Some(ReceiverFailure::ConsumerGone),
-        4 => Some(ReceiverFailure::InternalFailure),
-        5 => Some(ReceiverFailure::PublisherGone),
-        6 => Some(ReceiverFailure::Cancelled),
-        7 => Some(ReceiverFailure::ServiceDied),
-        8 => Some(ReceiverFailure::MonitoringFailed),
-        9 => Some(ReceiverFailure::Expired),
-        _ => return Err(invalid()),
-    })
 }
 pub fn failure_name(reason: ReceiverFailure) -> &'static str {
     match reason {
@@ -94,14 +84,6 @@ impl Phase {
             Self::ObservedActive => "observed-active",
             Self::Unavailable => "unavailable",
             Self::Stopping => "stopping",
-        }
-    }
-    fn code(self) -> u8 {
-        match self {
-            Self::Initializing => 1,
-            Self::ObservedActive => 2,
-            Self::Unavailable => 3,
-            Self::Stopping => 4,
         }
     }
 }
@@ -140,6 +122,14 @@ impl Status {
             }
             // The same bounded canonical representation governs binary and JSON.
             let _ = observed.encode()?;
+        }
+        if let Some(history) = &self.request_history {
+            history.validate()?;
+            if self.identity.map(ProcessIdentity::hex).as_deref()
+                != Some(history.incarnation.as_str())
+            {
+                return Err(invalid());
+            }
         }
         Ok(())
     }
@@ -201,121 +191,291 @@ impl Status {
                 _ => return Err(invalid()),
             },
         };
+        let history = serde_json::to_string(&self.request_history).map_err(|_| invalid())?;
         let json = format!(
-            "{{\"server_pid\":{},\"phase\":\"{}\",\"failure\":{},\"incarnation\":{},\"revision\":{},\"last_observation\":{}}}\n",
+            "{{\"server_pid\":{},\"phase\":\"{}\",\"failure\":{},\"incarnation\":{},\"revision\":{},\"last_observation\":{},\"request_history\":{}}}\n",
             server_pid,
             self.phase.name(),
             failure,
             incarnation,
             self.revision,
-            observed
+            observed,
+            history
         );
-        if json.len() > 5120 {
+        if json.len() > MAX_PACKET - HEADER {
             return Err(invalid());
         }
         Ok(json)
     }
 }
 
+fn required_option<'de, D, T>(de: D) -> Result<Option<T>, D::Error>
+where
+    D: Deserializer<'de>,
+    T: Deserialize<'de>,
+{
+    Option::deserialize(de)
+}
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct WireStatus {
+    server_pid: u32,
+    phase: String,
+    #[serde(deserialize_with = "required_option")]
+    failure: Option<String>,
+    #[serde(deserialize_with = "required_option")]
+    incarnation: Option<String>,
+    revision: u64,
+    #[serde(deserialize_with = "required_option")]
+    last_observation: Option<WireObservation>,
+    #[serde(deserialize_with = "required_option")]
+    request_history: Option<RequestHistory>,
+}
+#[derive(Deserialize)]
+#[serde(tag = "kind", rename_all = "kebab-case", deny_unknown_fields)]
+enum WireObservation {
+    Raw {
+        revision: u64,
+        attempt: u64,
+        slot_id: i32,
+        serial: i32,
+        rilc_msg_id: i32,
+        declared_length: i32,
+        error: i32,
+        payload_hex: String,
+    },
+    RegistrationWire {
+        revision: u64,
+        attempt: u64,
+        slot_id: i32,
+        message_id: i32,
+        wire: WireRegistration,
+    },
+}
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct WireRegistration {
+    registration_state_wire: u8,
+    feature_wire: u8,
+    feature_mask_wire: i32,
+    status_code_wire: u16,
+    uri_hex: String,
+    reason_hex: String,
+    #[serde(deserialize_with = "required_option")]
+    feature_mask_ext_wire: Option<i32>,
+    #[serde(deserialize_with = "required_option")]
+    sip_delegate_mask_wire: Option<i64>,
+    #[serde(deserialize_with = "required_option")]
+    feature_ext_wire: Option<u16>,
+}
+fn unhex(text: &str, max: usize) -> io::Result<Vec<u8>> {
+    if !text.len().is_multiple_of(2)
+        || text.len() > max * 2
+        || !text
+            .bytes()
+            .all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b))
+    {
+        return Err(invalid());
+    }
+    text.as_bytes()
+        .as_chunks::<2>()
+        .0
+        .iter()
+        .map(|part| {
+            let text = std::str::from_utf8(part).map_err(|_| invalid())?;
+            u8::from_str_radix(text, 16).map_err(|_| invalid())
+        })
+        .collect()
+}
+fn status_json(bytes: &[u8], expected_pid: Option<u32>) -> io::Result<Status> {
+    let value: WireStatus = serde_json::from_slice(bytes).map_err(|_| invalid())?;
+    if value.server_pid == 0 || expected_pid.is_some_and(|pid| pid != value.server_pid) {
+        return Err(invalid());
+    }
+    let identity = value
+        .incarnation
+        .as_deref()
+        .map(|s| ProcessIdentity::from_hex(s).ok_or_else(invalid))
+        .transpose()?;
+    let phase = match value.phase.as_str() {
+        "initializing" => Phase::Initializing,
+        "observed-active" => Phase::ObservedActive,
+        "unavailable" => Phase::Unavailable,
+        "stopping" => Phase::Stopping,
+        _ => return Err(invalid()),
+    };
+    let failure = value
+        .failure
+        .as_deref()
+        .map(|text| match text {
+            "malformed-callback" => Ok(ReceiverFailure::MalformedCallback),
+            "queue-full" => Ok(ReceiverFailure::QueueFull),
+            "consumer-gone" => Ok(ReceiverFailure::ConsumerGone),
+            "internal-failure" => Ok(ReceiverFailure::InternalFailure),
+            "publisher-gone" => Ok(ReceiverFailure::PublisherGone),
+            "cancelled" => Ok(ReceiverFailure::Cancelled),
+            "service-died" => Ok(ReceiverFailure::ServiceDied),
+            "monitoring-failed" => Ok(ReceiverFailure::MonitoringFailed),
+            "expired" => Ok(ReceiverFailure::Expired),
+            _ => Err(invalid()),
+        })
+        .transpose()?;
+    let last_observation = value
+        .last_observation
+        .map(|observed| -> io::Result<Frame> {
+            let identity = identity.ok_or_else(invalid)?;
+            let (revision, attempt, kind) = match observed {
+                WireObservation::Raw {
+                    revision,
+                    attempt,
+                    slot_id,
+                    serial,
+                    rilc_msg_id,
+                    declared_length,
+                    error,
+                    payload_hex,
+                } => (
+                    revision,
+                    attempt,
+                    Kind::Raw {
+                        slot_id,
+                        serial,
+                        rilc_msg_id,
+                        declared_length,
+                        error,
+                        payload: unhex(&payload_hex, observation::MAX_PAYLOAD)?,
+                    },
+                ),
+                WireObservation::RegistrationWire {
+                    revision,
+                    attempt,
+                    slot_id,
+                    message_id,
+                    wire,
+                } => {
+                    let uri = unhex(&wire.uri_hex, crate::registration::MAX_URI_BYTES)?;
+                    let reason = unhex(&wire.reason_hex, crate::registration::MAX_REASON_BYTES)?;
+                    let wire = crate::registration::RegistrationWire::new(
+                        omarchy_ims::registration::RegistrationWire {
+                            registration_state_wire: wire.registration_state_wire,
+                            feature_wire: wire.feature_wire,
+                            feature_mask_wire: wire.feature_mask_wire,
+                            status_code_wire: wire.status_code_wire,
+                            uri_bytes: &uri,
+                            reason_bytes: &reason,
+                            feature_mask_ext_wire: wire.feature_mask_ext_wire,
+                            sip_delegate_mask_wire: wire.sip_delegate_mask_wire,
+                            feature_ext_wire: wire.feature_ext_wire,
+                        },
+                    )
+                    .map_err(|_| invalid())?;
+                    (
+                        revision,
+                        attempt,
+                        Kind::RegistrationWire {
+                            slot_id,
+                            message_id,
+                            wire,
+                        },
+                    )
+                }
+            };
+            Ok(Frame {
+                identity,
+                revision,
+                attempt,
+                kind,
+            })
+        })
+        .transpose()?;
+    let status = Status {
+        phase,
+        identity,
+        revision: value.revision,
+        failure,
+        last_observation,
+        request_history: value.request_history,
+    };
+    status.validate()?;
+    Ok(status)
+}
 impl Reply {
-    /// Header magic/version1/type/reserved00/total-u32LE. Status body contains
-    /// phase/failure/identity-present/reserved0, incarnation16, revision-u64LE,
-    /// observation-frame-length-u32LE, and at most one exact Raw/Registration Frame.
+    /// Current RADS v2/type1 or type2, reserved00, total-u32LE, whole status JSON.
+    /// Admit replies are one bounded typed JSON record, as the root operator wire requires.
     pub fn encode(&self) -> io::Result<Vec<u8>> {
-        let mut bytes = Vec::with_capacity(MAX_PACKET);
-        bytes.extend(MAGIC);
-        bytes.extend([1, 0, 0, 0]);
-        bytes.extend([0; 4]);
         match self {
-            Self::StopAck => bytes[5] = 2,
-            Self::Status(status) => {
-                status.validate()?;
-                bytes[5] = 1;
-                let raw = status
-                    .last_observation
-                    .as_ref()
-                    .map(Frame::encode)
-                    .transpose()?;
-                bytes.extend([
-                    status.phase.code(),
-                    status.failure.map_or(0, |r| r as u8),
-                    u8::from(status.identity.is_some()),
+            Self::Admit(reply) => {
+                reply.validate()?;
+                let bytes = serde_json::to_vec(reply).map_err(|_| invalid())?;
+                if bytes.len() > 1024 {
+                    return Err(invalid());
+                }
+                Ok(bytes)
+            }
+            Self::Status(status) | Self::StopAck(status) => {
+                let body = status.json(std::process::id())?;
+                let mut bytes = Vec::with_capacity(HEADER + body.len());
+                bytes.extend_from_slice(MAGIC);
+                bytes.extend_from_slice(&[
+                    2,
+                    if matches!(self, Self::Status(_)) {
+                        1
+                    } else {
+                        2
+                    },
+                    0,
                     0,
                 ]);
-                bytes.extend(status.identity.map_or([0; 16], |id| *id.as_bytes()));
-                bytes.extend(status.revision.to_le_bytes());
-                bytes.extend((raw.as_ref().map_or(0, Vec::len) as u32).to_le_bytes());
-                if let Some(raw) = raw {
-                    bytes.extend(raw);
+                bytes.extend_from_slice(&((HEADER + body.len()) as u32).to_le_bytes());
+                bytes.extend_from_slice(body.as_bytes());
+                if bytes.len() > MAX_PACKET {
+                    return Err(invalid());
                 }
+                Ok(bytes)
             }
         }
-        let length = bytes.len();
-        if length > MAX_PACKET {
-            return Err(invalid());
-        }
-        bytes[8..12].copy_from_slice(&(length as u32).to_le_bytes());
-        Ok(bytes)
     }
 }
-/// One SEQPACKET packet must contain exactly one reply; no partial acceptance.
-pub fn decode_reply(bytes: &[u8]) -> io::Result<Reply> {
+fn reply(bytes: &[u8], expected_pid: Option<u32>) -> io::Result<Reply> {
+    if bytes.is_empty() || bytes.len() > MAX_PACKET {
+        return Err(invalid());
+    }
+    if !bytes.starts_with(MAGIC) {
+        if bytes.len() > 1024 {
+            return Err(invalid());
+        }
+        let reply: AdmitReply = serde_json::from_slice(bytes).map_err(|_| invalid())?;
+        reply.validate()?;
+        return Ok(Reply::Admit(reply));
+    }
     if bytes.len() < HEADER
-        || bytes.len() > MAX_PACKET
-        || &bytes[..4] != MAGIC
-        || bytes[4] != 1
+        || bytes[4] != 2
         || bytes[6..8] != [0, 0]
         || u32::from_le_bytes(bytes[8..12].try_into().map_err(|_| invalid())?) as usize
             != bytes.len()
     {
         return Err(invalid());
     }
+    let status = status_json(&bytes[HEADER..], expected_pid)?;
     match bytes[5] {
-        2 if bytes.len() == HEADER => Ok(Reply::StopAck),
-        1 if bytes.len() >= FIXED => {
-            let phase = match bytes[12] {
-                1 => Phase::Initializing,
-                2 => Phase::ObservedActive,
-                3 => Phase::Unavailable,
-                4 => Phase::Stopping,
-                _ => return Err(invalid()),
-            };
-            let identity = match bytes[14] {
-                0 if bytes[16..32] == [0; 16] => None,
-                1 => Some(ProcessIdentity::from_bytes(
-                    bytes[16..32].try_into().map_err(|_| invalid())?,
-                )),
-                _ => return Err(invalid()),
-            };
-            if bytes[15] != 0 {
-                return Err(invalid());
-            }
-            let raw_len =
-                u32::from_le_bytes(bytes[40..44].try_into().map_err(|_| invalid())?) as usize;
-            if raw_len != bytes.len() - FIXED {
-                return Err(invalid());
-            }
-            let status = Status {
-                phase,
-                identity,
-                revision: u64::from_le_bytes(bytes[32..40].try_into().map_err(|_| invalid())?),
-                failure: failure(bytes[13])?,
-                last_observation: if raw_len == 0 {
-                    None
-                } else {
-                    Some(observation::decode_exact(&bytes[FIXED..])?)
-                },
-            };
-            status.validate()?;
-            Ok(Reply::Status(status))
-        }
+        1 => Ok(Reply::Status(status)),
+        2 => Ok(Reply::StopAck(status)),
         _ => Err(invalid()),
     }
+}
+/// Exactly one current-v2 record; rejects earlier layouts and unknown fields.
+pub fn decode_reply(bytes: &[u8]) -> io::Result<Reply> {
+    reply(bytes, None)
 }
 fn command(bytes: &[u8]) -> io::Result<Command> {
     match bytes {
         [1] => Ok(Command::Status),
         [2] => Ok(Command::Stop),
+        [3, body @ ..] if bytes.len() <= MAX_ADMIT => {
+            let value: Admit = serde_json::from_slice(body).map_err(|_| invalid())?;
+            value.validate()?;
+            Ok(Command::Admit(value))
+        }
         _ => Err(invalid()),
     }
 }
@@ -374,15 +534,26 @@ impl Listener {
         };
         net::sockopt::set_socket_passcred(&fd, true)?;
         let peer = net::sockopt::socket_peercred(&fd)?;
-        if !self.principal.accepts(peer) {
+        if !self.principal.accepts(peer) && !(peer.uid.as_raw() == 0 && peer.gid.as_raw() == 0) {
             return Err(denied());
         }
-        Ok(Some(Connection { fd, peer }))
+        let origin = socket_peer_pidfd(&fd)?;
+        if !origin_live(&origin)? {
+            return Err(denied());
+        }
+        Ok(Some(Connection {
+            fd,
+            peer,
+            origin,
+            service: self.principal,
+        }))
     }
 }
 pub struct Connection {
     fd: OwnedFd,
     peer: UCred,
+    origin: OwnedFd,
+    service: Principal,
 }
 impl AsFd for Connection {
     fn as_fd(&self) -> BorrowedFd<'_> {
@@ -394,9 +565,30 @@ impl Connection {
         self.peer
     }
     pub fn receive(&self) -> io::Result<Option<Command>> {
-        receive(&self.fd, self.peer)?
-            .map(|bytes| command(&bytes))
-            .transpose()
+        if self.service != Principal::current() || !self.is_live()? {
+            return Err(denied());
+        }
+        let received = receive(&self.fd, self.peer);
+        if !self.is_live()? {
+            return Err(denied());
+        }
+        let command = received?.map(|bytes| command(&bytes)).transpose()?;
+        if let Some(command) = &command {
+            let authorized = match command {
+                Command::Status | Command::Stop => {
+                    self.peer.uid.as_raw() != 0 && self.service.accepts(self.peer)
+                }
+                Command::Admit(_) => self.peer.uid.as_raw() == 0 && self.peer.gid.as_raw() == 0,
+            };
+            if !authorized || !self.is_live()? {
+                return Err(denied());
+            }
+        }
+        Ok(command)
+    }
+    /// Exact connected origin, retained from SO_PEERPIDFD; no numeric PID reopening.
+    pub fn is_live(&self) -> io::Result<bool> {
+        origin_live(&self.origin)
     }
     /// Recompute a Status from current local state on each caller retry.
     /// Never queue an encoded historical response for later admission.
@@ -454,10 +646,28 @@ fn send(fd: impl AsFd, bytes: &[u8]) -> io::Result<()> {
     }
     Ok(())
 }
-/// One-shot diagnostics client; retains the exact server socket-origin pidfd.
+fn origin_live(origin: impl AsFd) -> io::Result<bool> {
+    use rustix::event::{PollFd, PollFlags, Timespec, poll};
+    let mut fds = [PollFd::new(&origin, PollFlags::IN)];
+    let count = poll(
+        &mut fds,
+        Some(&Timespec {
+            tv_sec: 0,
+            tv_nsec: 0,
+        }),
+    )?;
+    if fds[0]
+        .revents()
+        .intersects(PollFlags::ERR | PollFlags::NVAL)
+    {
+        return Err(invalid());
+    }
+    Ok(count == 0 && fds[0].revents().is_empty())
+}
+/// One-shot service diagnostics; authenticated queued history survives server exit.
+/// Exit observation is not native process wait or cleanup authority.
 pub struct Client {
     connection: Connection,
-    server: OwnedFd,
 }
 impl AsFd for Client {
     fn as_fd(&self) -> BorrowedFd<'_> {
@@ -465,56 +675,61 @@ impl AsFd for Client {
     }
 }
 impl Client {
-    /// Nonblocking attempt. Caller may retry EAGAIN/INTR under its original budget.
     pub fn connect(path: &Path) -> io::Result<Self> {
         let fd = socket()?;
         net::connect(&fd, &SocketAddrUnix::new(path)?)?;
         let peer = net::sockopt::socket_peercred(&fd)?;
-        if !Principal::current().accepts(peer) {
+        let service = Principal::current();
+        if !service.accepts(peer) {
             return Err(denied());
         }
-        let server = socket_peer_pidfd(&fd)?;
+        let origin = socket_peer_pidfd(&fd)?;
+        if !origin_live(&origin)? {
+            return Err(denied());
+        }
         Ok(Self {
-            connection: Connection { fd, peer },
-            server,
+            connection: Connection {
+                fd,
+                peer,
+                origin,
+                service,
+            },
         })
     }
     pub fn server_pid(&self) -> u32 {
         self.connection.peer.pid.as_raw_pid() as u32
     }
     pub fn send(&self, command: Command) -> io::Result<()> {
-        send(
-            &self.connection.fd,
-            &[match command {
-                Command::Status => 1,
-                Command::Stop => 2,
-            }],
-        )
+        if !self.connection.is_live()? {
+            return Err(denied());
+        }
+        let bytes = match command {
+            Command::Status => vec![1],
+            Command::Stop => vec![2],
+            Command::Admit(value) => {
+                value.validate()?;
+                let mut bytes = vec![3];
+                bytes.extend(serde_json::to_vec(&value).map_err(|_| invalid())?);
+                if bytes.len() > MAX_ADMIT {
+                    return Err(invalid());
+                }
+                bytes
+            }
+        };
+        send(&self.connection.fd, &bytes)
     }
     pub fn receive(&self) -> io::Result<Option<Reply>> {
+        // Per-packet credentials still bind the retained origin. Do not reject a
+        // queued StopAck solely because its exact server has already exited.
         receive(&self.connection.fd, self.connection.peer)?
-            .map(|bytes| decode_reply(&bytes))
+            .map(|bytes| reply(&bytes, Some(self.server_pid())))
             .transpose()
     }
-    /// Local process exit only: this client is neither the parent nor a reaper.
     pub fn server_exited(&self) -> io::Result<bool> {
-        use rustix::event::{PollFd, PollFlags, Timespec, poll};
-        let mut fds = [PollFd::new(&self.server, PollFlags::IN)];
-        poll(
-            &mut fds,
-            Some(&Timespec {
-                tv_sec: 0,
-                tv_nsec: 0,
-            }),
-        )?;
-        let flags = fds[0].revents();
-        if flags.intersects(PollFlags::ERR | PollFlags::NVAL) {
-            return Err(invalid());
-        }
-        Ok(flags.contains(PollFlags::IN))
+        Ok(!self.connection.is_live()?)
     }
     pub fn server_pidfd(&self) -> BorrowedFd<'_> {
-        self.server.as_fd()
+        self.connection.origin.as_fd()
     }
 }
 
@@ -528,6 +743,7 @@ mod tests {
             identity: Some(identity),
             revision: 9,
             failure: Some(ReceiverFailure::ServiceDied),
+            request_history: None,
             last_observation: Some(Frame {
                 identity,
                 attempt: 1,
@@ -547,43 +763,42 @@ mod tests {
     fn terminal_status_preserves_bounded_history_without_claiming_availability() {
         let status = status();
         let wire = Reply::Status(status.clone()).encode().unwrap();
-        assert_eq!(wire.len(), MAX_PACKET);
+        // Current v2 carries JSON, so packet length varies with the retained data.
+        assert!(wire.len() > HEADER && wire.len() <= MAX_PACKET);
         assert_eq!(decode_reply(&wire).unwrap(), Reply::Status(status.clone()));
-        assert!(
-            status
-                .json(42)
-                .unwrap()
-                .contains("\"phase\":\"unavailable\"")
-        );
-        assert!(status.json(42).unwrap().len() <= 5120);
+        let json = status.json(42).unwrap();
+        assert!(json.contains("\"phase\":\"unavailable\""));
+        assert!(json.len() <= MAX_PACKET - HEADER);
     }
     #[test]
     fn packet_boundaries_unknown_tags_reserved_and_lengths_fail_closed() {
-        let wire = Reply::Status(status()).encode().unwrap();
-        for end in 0..wire.len() {
-            assert!(decode_reply(&wire[..end]).is_err());
+        let mut stopping = status();
+        stopping.phase = Phase::Stopping;
+        let stop = Reply::StopAck(stopping);
+        assert_eq!(decode_reply(&stop.encode().unwrap()).unwrap(), stop);
+        for reply in [Reply::Status(status()), stop] {
+            let wire = reply.encode().unwrap();
+            for end in 0..wire.len() {
+                assert!(decode_reply(&wire[..end]).is_err(), "accepted prefix {end}");
+            }
+            let mut extra = wire.clone();
+            extra.push(0);
+            assert!(decode_reply(&extra).is_err());
+            // A matching outer length must not make trailing JSON bytes valid.
+            let length = extra.len() as u32;
+            extra[8..12].copy_from_slice(&length.to_le_bytes());
+            assert!(decode_reply(&extra).is_err());
+            for (at, value) in [(0, b'X'), (4, 1), (4, 3), (5, 0), (5, 3), (6, 1), (7, 1)] {
+                let mut bad = wire.clone();
+                bad[at] = value;
+                assert!(decode_reply(&bad).is_err());
+            }
+            for length in [0, wire.len() as u32 - 1, wire.len() as u32 + 1] {
+                let mut bad = wire.clone();
+                bad[8..12].copy_from_slice(&length.to_le_bytes());
+                assert!(decode_reply(&bad).is_err());
+            }
         }
-        let mut extra = wire.clone();
-        extra.push(0);
-        assert!(decode_reply(&extra).is_err());
-        for (at, value) in [
-            (4, 2),
-            (5, 3),
-            (6, 1),
-            (12, 0),
-            (13, 10),
-            (14, 2),
-            (15, 1),
-            (40, 0),
-        ] {
-            let mut bad = wire.clone();
-            bad[at] = value;
-            assert!(decode_reply(&bad).is_err());
-        }
-        assert_eq!(
-            decode_reply(&Reply::StopAck.encode().unwrap()).unwrap(),
-            Reply::StopAck
-        );
         assert!(command(&[]).is_err());
         assert!(command(&[1, 2]).is_err());
         assert!(command(&[3]).is_err());

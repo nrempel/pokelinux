@@ -15,11 +15,15 @@ groups and eight PCM windows/192,000 measured frames. Unedited Pixel10 captures
 and the [earlier queue-only result](docs/native-sounds-rust-queue.md) retain their
 separate evidence. Cold installed startup and ARM remain open.
 
-The [Rust parent/worker channel](docs/native-process-channel.md) now passes
-actual Linux copied-message, credential/rights, deadline, backpressure and Stop
-checks. A separate installed ARM radio run qualifies the missing operator-command
-boundary as RED, with normal shutdown and uncertain-restart refusal. Durable
-request admission and the integrated worker command path are still next.
+The [installed Rust radio operator](docs/native-radio-operator.md) now implements
+one privileged typed request through a durable intent writer and owned transport
+worker, with independent request history and responsive Stop.83 radio tests,
+nine shared process tests, five termination groups and ARM Release builds pass.
+All six installed generic ARM Binder cases pass, including a frozen writer,
+expired permit and actual manager Stop. Both children are actually reaped, unit
+shutdown succeeds and retained markers refuse restart. Earlier fixture/unit
+failures remain explicit. Native IMS, modem-facing replacement and phone hardware
+remain separate gates.
 
 > **Development status:** no physical phone has been accessed. There is no verified bootable phone image. Modem communication, carrier IMS registration, physical call audio, Pixel GPU rendering, camera capture and suspend remain unverified.
 

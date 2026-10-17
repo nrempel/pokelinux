@@ -1,7 +1,7 @@
 //! Local service-account diagnostics only. Stop observes server exit, not reaping.
 #![forbid(unsafe_code)]
 use pokelinux_process_owner::deadline::{BootClock, Clock};
-use pokelinux_radio::status::{Client, Command, Reply};
+use pokelinux_radio::status::{Client, Command, MAX_PACKET, Reply};
 use rustix::{
     event::{PollFd, PollFlags, Timespec, poll},
     fd::AsFd,
@@ -51,7 +51,7 @@ fn output(text: &str, until: Duration) -> io::Result<()> {
             let _ = fcntl_setfl(&self.fd, self.flags);
         }
     }
-    if text.len() > 5120 {
+    if text.len() > MAX_PACKET {
         return Err(io::ErrorKind::InvalidData.into());
     }
     let fd = std::io::stdout();
@@ -65,12 +65,19 @@ fn output(text: &str, until: Duration) -> io::Result<()> {
     let flags = fcntl_getfl(&fd)?;
     fcntl_setfl(&fd, flags | OFlags::NONBLOCK)?;
     let guard = Restore { fd, flags };
-    before(until)?;
-    match rustix::io::write(&guard.fd, text.as_bytes()) {
-        Ok(count) if count == text.len() => before(until),
-        Ok(_) => Err(io::ErrorKind::WriteZero.into()),
-        Err(error) => Err(error.into()),
+    let mut written = 0;
+    while written < text.len() {
+        before(until)?;
+        match rustix::io::write(&guard.fd, &text.as_bytes()[written..]) {
+            Ok(0) => return Err(io::ErrorKind::WriteZero.into()),
+            Ok(count) => written += count,
+            Err(Errno::AGAIN) => wait(&guard.fd, PollFlags::OUT, until)?,
+            Err(Errno::INTR) => (),
+            Err(error) => return Err(error.into()),
+        }
+        before(until)?;
     }
+    Ok(())
 }
 fn run() -> io::Result<()> {
     let args: Vec<_> = std::env::args_os().skip(1).collect();
@@ -107,7 +114,7 @@ fn run() -> io::Result<()> {
     };
     loop {
         before(until)?;
-        match client.send(command) {
+        match client.send(command.clone()) {
             Ok(()) => {
                 before(until)?;
                 break;
@@ -132,7 +139,7 @@ fn run() -> io::Result<()> {
         (Command::Status, Reply::Status(status)) => {
             output(&status.json(client.server_pid())?, until)
         }
-        (Command::Stop, Reply::StopAck) => {
+        (Command::Stop, Reply::StopAck(_status)) => {
             loop {
                 before(until)?;
                 match client.server_exited() {

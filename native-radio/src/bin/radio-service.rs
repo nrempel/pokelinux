@@ -1,14 +1,14 @@
 //! Installed owner for one radio transport process and private operator diagnostics.
 //! Historical transport data is never a cellular/IMS state or operation receipt.
 use pokelinux_process_owner::{
-    bootstrap::{WorkerCommand, WorkerState},
+    bootstrap::WorkerState,
     deadline::{BootClock, Clock},
-    supervisor::{ProcessIdentity, StartError, Supervisor},
+    supervisor::{ProcessIdentity, Supervisor},
 };
 use pokelinux_radio::{
     observation::{self, Frame, Kind},
     receiver::ReceiverFailure,
-    status::{Command, Connection, Listener, Phase, Reply, Status},
+    status::{Command, Connection, Phase, Status},
 };
 use rustix::fs::{FileType, OFlags, fcntl_getfl, fcntl_setfl, fstat};
 use std::{
@@ -20,6 +20,8 @@ use std::{
     path::{Path, PathBuf},
     time::Duration,
 };
+#[path = "radio-service/operator_control.rs"]
+mod operator_control;
 const TURN: Duration = Duration::from_millis(2);
 const DISPOSAL: Duration = Duration::from_secs(2);
 fn now() -> Duration {
@@ -92,6 +94,7 @@ struct Client {
     connection: Connection,
     until: Duration,
     command: Option<Command>,
+    admit_reply: Option<pokelinux_radio::operator::AdmitReply>,
 }
 struct Service {
     owner: Supervisor,
@@ -104,9 +107,11 @@ struct Service {
     closing: bool,
     fault: bool,
     raw_seen: bool,
+    control: operator_control::Control,
 }
 impl Service {
     fn retire(&mut self, reason: ReceiverFailure, closing: bool) {
+        self.control.fence();
         self.closing |= closing;
         self.state.phase = if self.closing {
             Phase::Stopping
@@ -114,9 +119,11 @@ impl Service {
             Phase::Unavailable
         };
         self.state.failure.get_or_insert(reason);
-        if self.owner.occupied() && self.cleanup_until.is_none() {
+        if (self.owner.occupied() || self.control.occupied()) && self.cleanup_until.is_none() {
             self.cleanup_until = Some(now() + DISPOSAL);
-            if self.owner.stop().is_err() {
+            let radio = self.owner.stop();
+            let writer = self.control.stop();
+            if radio.is_err() || writer.is_err() {
                 self.fault = true;
             }
         }
@@ -148,6 +155,9 @@ impl Service {
                     .failure
                     .get_or_insert(ReceiverFailure::InternalFailure);
                 self.input.clear();
+                if self.cleanup_until.is_none() {
+                    self.retire(ReceiverFailure::InternalFailure, false);
+                }
             }
             Ok(None) => {}
             Err(_) => {
@@ -155,7 +165,10 @@ impl Service {
                 self.retire(ReceiverFailure::InternalFailure, true);
             }
         }
-        if self.owner.occupied() && self.cleanup_until.is_some_and(|until| now() >= until) {
+        self.reap_writer();
+        if (self.owner.occupied() || self.control.occupied())
+            && self.cleanup_until.is_some_and(|until| now() >= until)
+        {
             // No detach and no renewed cleanup budget. The installed manager
             // owns process/cgroup fallback; this is not a native successful wait.
             std::process::abort();
@@ -182,6 +195,7 @@ impl Service {
         match &frame.kind {
             Kind::Active { client_id } if self.state.phase == Phase::Initializing => {
                 self.state.phase = Phase::ObservedActive;
+                self.control.client_id = Some(*client_id);
                 event(format!(
                     "\"event\":\"transport-active\",\"incarnation\":\"{}\",\"attempt\":1,\"client_id\":{},\"revision\":{}",
                     self.identity.hex(),
@@ -253,155 +267,9 @@ impl Service {
     }
 }
 fn run(config: Config) -> io::Result<i32> {
-    private_directory(&config.runtime)?;
-    private_directory(config.journal.parent().ok_or(io::ErrorKind::InvalidInput)?)?;
-    let listener = Listener::bind(&config.runtime.join("status.sock"))?;
-    let mut owner = Supervisor::new(config.journal);
-    let mut worker = WorkerCommand::new(&config.worker)?;
-    let until_text = ns(config.until).to_string();
-    let slot_text = config.slot.to_string();
-    for value in [
-        "--device",
-        &config.device,
-        "--service",
-        &config.service,
-        "--slot",
-        &slot_text,
-        "--until-ns",
-        &until_text,
-    ] {
-        worker.arg(value);
-    }
-    let identity = match owner.start_worker(&mut worker) {
-        Ok(identity) => identity,
-        Err(error) => {
-            if error == StartError::AdmissionUncertain && !owner.occupied() {
-                event("\"event\":\"start-refused\",\"journal_retained\":true,\"child_spawned\":false,\"reason\":\"registration-uncertain\"".into());
-                return Ok(78);
-            }
-            // Setup errors can retain a spawned child; no error return may drop it.
-            let until = now() + DISPOSAL;
-            if owner.occupied() {
-                let _ = owner.stop();
-            }
-            while owner.occupied() {
-                let _ = owner.poll_reap();
-                if now() >= until {
-                    std::process::abort();
-                }
-                std::thread::sleep(TURN);
-            }
-            return Ok(70);
-        }
-    };
-    let worker_pid = owner.child_pid().expect("owned worker PID");
-    event(format!(
-        "\"event\":\"worker-start\",\"main_pid\":{},\"worker_pid\":{},\"incarnation\":\"{}\",\"until_ns\":{},\"selected_slot\":{}",
-        std::process::id(),
-        worker_pid,
-        identity.hex(),
-        ns(config.until),
-        config.slot
-    ));
-    let mut service = Service {
-        owner,
-        identity,
-        worker_pid,
-        slot: config.slot,
-        state: Status {
-            phase: Phase::Initializing,
-            identity: Some(identity),
-            revision: 0,
-            failure: None,
-            last_observation: None,
-        },
-        input: Vec::new(),
-        cleanup_until: None,
-        closing: false,
-        fault: false,
-        raw_seen: false,
-    };
-    let mut clients: Vec<Client> = Vec::new();
-    loop {
-        service.reap();
-        if now() >= config.until && service.cleanup_until.is_none() {
-            service.retire(ReceiverFailure::Expired, false);
-        }
-        if service.poll_output().is_err() {
-            service.retire(ReceiverFailure::InternalFailure, false);
-        }
-        if !service.closing {
-            for _ in 0..2 {
-                match listener.accept() {
-                    Ok(Some(connection)) if clients.len() < 8 => clients.push(Client {
-                        connection,
-                        until: now() + Duration::from_millis(500),
-                        command: None,
-                    }),
-                    Ok(Some(_)) => {}
-                    Ok(None) => break,
-                    Err(e) if e.kind() == io::ErrorKind::Interrupted => break,
-                    Err(e) if e.kind() == io::ErrorKind::PermissionDenied => continue,
-                    Err(_) => {
-                        service.fault = true;
-                        service.retire(ReceiverFailure::InternalFailure, true);
-                        break;
-                    }
-                }
-            }
-        }
-        clients.retain_mut(|client| {
-            if now() >= client.until {
-                return false;
-            }
-            if client.command.is_none() {
-                match client.connection.receive() {
-                    Ok(Some(command)) => {
-                        if command == Command::Stop {
-                            service.retire(ReceiverFailure::Cancelled, true);
-                        }
-                        client.command = Some(command);
-                    }
-                    Ok(None) => return true,
-                    Err(e) if e.kind() == io::ErrorKind::Interrupted => return true,
-                    Err(_) => return false,
-                }
-            }
-            // Recompute every reply after local revocation/expiry/reap, including
-            // every EAGAIN retry. No encoded stale status queue is retained.
-            service.reap();
-            if now() >= config.until && service.cleanup_until.is_none() {
-                service.retire(ReceiverFailure::Expired, false);
-            }
-            let reply = match client.command {
-                Some(Command::Status) => Reply::Status(service.state.clone()),
-                Some(Command::Stop) => Reply::StopAck,
-                None => unreachable!(),
-            };
-            match client.connection.send(&reply) {
-                Ok(()) => false,
-                Err(e)
-                    if matches!(
-                        e.kind(),
-                        io::ErrorKind::WouldBlock | io::ErrorKind::Interrupted
-                    ) =>
-                {
-                    true
-                }
-                Err(_) => false,
-            }
-        });
-        if service.closing
-            && !service.owner.occupied()
-            && !clients
-                .iter()
-                .any(|client| client.command == Some(Command::Stop))
-        {
-            return Ok(if service.fault { 70 } else { 0 });
-        }
-        std::thread::sleep(TURN);
-    }
+    operator_control::run(config)
 }
+
 fn main() {
     let output = std::io::stdout();
     let stat = fstat(&output).unwrap_or_else(|_| std::process::exit(70));

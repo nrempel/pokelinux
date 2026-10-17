@@ -34,6 +34,7 @@ fn unavailable_status_retains_typed_history_and_zero_versus_absent_options() {
         revision: 11,
         failure: Some(ReceiverFailure::ServiceDied),
         last_observation: Some(history.clone()),
+        request_history: None,
     };
     let reply = Reply::Status(status.clone());
     let packet = reply.encode().unwrap();
@@ -55,7 +56,7 @@ fn unavailable_status_retains_typed_history_and_zero_versus_absent_options() {
             "\"registration_state_wire\":255,\"feature_wire\":128,",
             "\"feature_mask_wire\":-2147483648,\"status_code_wire\":65535,",
             "\"uri_hex\":\"00ffc000\",\"reason_hex\":\"800a\",",
-            "\"feature_mask_ext_wire\":0,\"sip_delegate_mask_wire\":null,\"feature_ext_wire\":0}}}\n"
+            "\"feature_mask_ext_wire\":0,\"sip_delegate_mask_wire\":null,\"feature_ext_wire\":0}},\"request_history\":null}\n"
         )
     );
 }
@@ -95,11 +96,11 @@ fn maximum_typed_status_preserves_opaque_bytes_extremes_and_packet_json_bounds()
         revision: u64::MAX,
         failure: Some(ReceiverFailure::ServiceDied),
         last_observation: Some(history.clone()),
+        request_history: None,
     };
     let reply = Reply::Status(status);
     let packet = reply.encode().unwrap();
-    assert_eq!(MAX_PACKET, 2160);
-    assert_eq!(packet.len(), 1384);
+    assert_eq!(MAX_PACKET, 16384);
     assert!(packet.len() <= MAX_PACKET);
     let decoded = decode_reply(&packet).unwrap();
     assert_eq!(decoded, reply);
@@ -124,7 +125,7 @@ fn maximum_typed_status_preserves_opaque_bytes_extremes_and_packet_json_bounds()
             "\"registration_state_wire\":255,\"feature_wire\":128,",
             "\"feature_mask_wire\":-2147483648,\"status_code_wire\":65535,",
             "\"uri_hex\":\"{}\",\"reason_hex\":\"{}\",",
-            "\"feature_mask_ext_wire\":2147483647,\"sip_delegate_mask_wire\":-9223372036854775808,\"feature_ext_wire\":65535}}}}}}\n"
+            "\"feature_mask_ext_wire\":2147483647,\"sip_delegate_mask_wire\":-9223372036854775808,\"feature_ext_wire\":65535}}}},\"request_history\":null}}\n"
         ),
         uri_hex, reason_hex
     );

@@ -34,3 +34,6 @@ mod add_pdn_transport_tests;
 
 #[cfg(test)]
 mod add_pdn_response_binder_tests;
+
+/// One Root-selected operator attempt; observations never grant network readiness.
+pub mod operator;

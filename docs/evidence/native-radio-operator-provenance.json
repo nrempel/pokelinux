@@ -1,0 +1,436 @@
+{
+  "actual_boundary": {
+    "Stop_before_consumption_history": "outcome-unknown; zero105",
+    "config_alone_or_service_account03_authorizes_dispatch": false,
+    "expired_unconsumed_permit_history": "not-sent; zero105; late response unattributed",
+    "first_attributed_response": {
+      "outcome": "outcome-unknown",
+      "payload_hex": "7000ff31",
+      "retained_through_duplicate_and_Stop": true,
+      "semantic_modem_success_claimed": false,
+      "vendor_error": -27
+    },
+    "independent_Binder_manager_peer_controller_UID_GID": 1000,
+    "normal_writer_sync_ACK_matching_Finish_actualwait0_precedes_permit": true,
+    "one_105_route": {
+      "attempt": 1,
+      "client_id": 42,
+      "payload_bytes": 663,
+      "request": 105,
+      "serial": 1,
+      "slot": 1
+    },
+    "root_Status_Stop_and_service_account_operator_authorities_separate": true,
+    "root_operator_UID_GID": 0,
+    "service_Main_worker_writer_status_UID_GID": 1500,
+    "three_responsive_status_visits_while_writer_held": true,
+    "wrong_serial_slot_code_declared_length_not_attributed": true
+  },
+  "aggregate": {
+    "Stop_measurement_scope": "Caller operation before Popen/RPC through helper actual wait; not separately measured kernel packet latency",
+    "actual_fresh_generic_ARM_epochs": 6,
+    "actual_guest_PIPE_EOF_count": 118,
+    "all_original_deadlines_retained": true,
+    "guest_direct_wait_count": 214,
+    "separate_PID1_normal_Main_outcomes": 6,
+    "separate_PID1_restart78_outcomes": 6,
+    "separate_nested_native_transport_and_writer_waits": 12
+  },
+  "build": {
+    "actual_ARM_Release_ELFs_sha256": {
+      "manager": "a854b2b21bbe36db5d73511c1c0175c030eaeab7997b2141659804abcef616dd",
+      "operator-controller": "ab48e139c950ca619236af0dae65e51ce165ca4c49b7af6ba41f18097201bd8d",
+      "peer": "3b4220751b0ffe3373d8bebaaa3862ba07c888ec24eddb73905b80ecd494b8fb",
+      "radio-service": "d2b204ec44f5e87578135c8a88031fdf9572b9076bdbc37a5ecafe251a823e3e",
+      "radio-status": "ef4ae56932e8f03b8c3c11dc482023bc28af04c52232f5e8e30ea6e1e2f671f7",
+      "radio-worker": "080b16438fa1637af69f75a8345c691abdb4dc4f0a29bc294ca8ddb0bfb9b0c7"
+    },
+    "actual_Cargo_stream_sha256": {
+      "fixture-arm-cargo.jsonl": "414f998e09878be466da76e27e5140de6b7454d6b4135819733ac524df89d8b3",
+      "production-arm-cargo.jsonl": "43dc878ae5260bffbed81ae939c9e6917a88051b3c4aaa375cab9bb6b61a3b35"
+    },
+    "actual_execution_sha256": "760fde00d46db51048938c4bf414f561798f090689fe970f49e5f85bfe8f015a",
+    "actual_host_test_totals_pass_fail_ignored": {
+      "process-tests": [
+        9,
+        0,
+        0
+      ],
+      "production-tests": [
+        83,
+        0,
+        9
+      ]
+    },
+    "bridge": "Only guest show() changed after actual Release build: typed GetUnit/Service.ExecStop queries replace omitted systemctl display field; AST and all bytes outside show identical, all8 compiled fixture inputs and6 ELFs unchanged",
+    "explicit_runtime_admission_sha256": "a999f203d7a120d48940f91ed73e66c0ef22035636572ba42a78832ba1222146",
+    "new_build_or_runtime_inherited_from_admission": false,
+    "original_harness3_manifest_sha256": "796b75bc616415083adfa1f538c3aa9802e1d582c1277971a96e9b0805843af4",
+    "original_qualification_sha256": "c5faa3fa45adc68dd14407fe40ad3ea39d3f57632c88365813ac543eeccbb6a6",
+    "runtime_harness5_manifest_sha256": "b08c12692272997e28f1be2e2d8343deb0efdf3f2103b83af1f649acd3a4cab7",
+    "shared_termination_controls": {
+      "actual_nested_PIPE_EOF_count": 2,
+      "actual_nested_child_signal": 15,
+      "actual_nested_child_wait_count": 1,
+      "all_before_original5s_work8s_close_bounds": true,
+      "groups": 5,
+      "original_custom_harness_false_output": true,
+      "stderr_sha256": "6162e54c53e9b301a85f54a485dc216c2b88fb048752618cc37648da9e37275e",
+      "stdout_sha256": "5d221d2f69d82d0c303e30d7c7fc3214a443cce3da75f70adf7dac0ff8b4a715"
+    },
+    "strict_format_Clippy_and_locked_offline_Release_passed": true
+  },
+  "cases": [
+    {
+      "PID1_Main_exit": 0,
+      "PID1_unit_result": "success",
+      "Stop_authority": "authenticated socket Stop",
+      "Stop_caller_operation_through_helper_wait_ns": 574257078,
+      "Stop_caller_operation_through_native_waits_and_PID1_observation_ns": 849721987,
+      "actual_guest_PIPE_EOFs": 31,
+      "actual_typed_ExecStop_observations": 2,
+      "all_actual_waits_and_selected_EOFs_before_original_cutoffs": true,
+      "all_markers_inode_and_bytes_unchanged": true,
+      "case": "accepted",
+      "evidence_sha256": {
+        "command.json": "e1d47292641f5786944c17875a7db8d04c70e4ba3644d05da4b2ea22321e9083",
+        "execution.json": "672834330c52346feb91f6b0420a33199a0ab4fbb908a6f3847c39fa2540eda1",
+        "result.json": "11c35b971177bbe169eb33b280b041e25b7dbf085cf45cd449076965c4ba20d0",
+        "selection.json": "5cf16b11ffb3f2ae14f152e29bf588c97f4ca9d4702f6e6871d881933805b0c1",
+        "systemd-main-exit.json": "63d57fd92bf28ea57d6f00c7af5ab7d8eb04f053c28678c240d94cbdf4b0d300"
+      },
+      "exact_kernel_packet_latency_ns": null,
+      "functional_and_owned_closure_passed": true,
+      "guest_direct_child_waits": 47,
+      "independent105_count_before_Stop_and_after_refusal": 1,
+      "label": "pokelinux-radio-operator-green-arm-accepted-root-6",
+      "native_transport_wait_signal": 9,
+      "native_writer_wait": {
+        "exit_code": 0,
+        "signal": null
+      },
+      "no_successor_lookup_registration_or105": true,
+      "regular_sink_waits_without_PIPE_EOF_claim": 16,
+      "same_daemon_live_owned_CID_then_absent_and_all_inputs_unchanged": true,
+      "separate_restart_exit": 78,
+      "socket_StopAck_claimed": true,
+      "unit_cgroup_empty_or_removed": true
+    },
+    {
+      "PID1_Main_exit": 0,
+      "PID1_unit_result": "success",
+      "Stop_authority": "authenticated socket Stop",
+      "Stop_caller_operation_through_helper_wait_ns": 607548622,
+      "Stop_caller_operation_through_native_waits_and_PID1_observation_ns": 890480685,
+      "actual_guest_PIPE_EOFs": 17,
+      "actual_typed_ExecStop_observations": 2,
+      "all_actual_waits_and_selected_EOFs_before_original_cutoffs": true,
+      "all_markers_inode_and_bytes_unchanged": true,
+      "case": "writer-held",
+      "evidence_sha256": {
+        "command.json": "4f6fb0883e00a6886dd8554ecc7c8f1348248027602659bda6f824fe60202d7e",
+        "execution.json": "823e91a6ace3f99cb681f672821833647d8264ad71c87aa1f0789b6b0d61b04f",
+        "result.json": "6c06fd079df31ff3c8841e1e9656b5c4c90c358af04b14d1fb2fa545f8f453ad",
+        "selection.json": "95eeee2a24d091ad62cb341a270538469441880742e0e3a1802446d0d9da374d",
+        "systemd-main-exit.json": "80f5ec81215a2f7101000bf34766d7a86985292850bed25c18928858f78ebd90"
+      },
+      "exact_kernel_packet_latency_ns": null,
+      "functional_and_owned_closure_passed": true,
+      "guest_direct_child_waits": 33,
+      "independent105_count_before_Stop_and_after_refusal": 0,
+      "label": "pokelinux-radio-operator-green-arm-writer-held-root-6",
+      "native_transport_wait_signal": 9,
+      "native_writer_wait": {
+        "exit_code": null,
+        "signal": 9
+      },
+      "no_successor_lookup_registration_or105": true,
+      "regular_sink_waits_without_PIPE_EOF_claim": 16,
+      "same_daemon_live_owned_CID_then_absent_and_all_inputs_unchanged": true,
+      "separate_restart_exit": 78,
+      "socket_StopAck_claimed": true,
+      "unit_cgroup_empty_or_removed": true
+    },
+    {
+      "PID1_Main_exit": 0,
+      "PID1_unit_result": "success",
+      "Stop_authority": "authenticated socket Stop",
+      "Stop_caller_operation_through_helper_wait_ns": 610533832,
+      "Stop_caller_operation_through_native_waits_and_PID1_observation_ns": 870548469,
+      "actual_guest_PIPE_EOFs": 15,
+      "actual_typed_ExecStop_observations": 2,
+      "all_actual_waits_and_selected_EOFs_before_original_cutoffs": true,
+      "all_markers_inode_and_bytes_unchanged": true,
+      "case": "expired-before-admission",
+      "evidence_sha256": {
+        "command.json": "ff6a51dfa7e90b149dd57a59d78551f1f6ce65905657442c388487a7aabf3d23",
+        "execution.json": "b603ba4f5db2bf1b3714599677088bcdb7f81620b56370b0cceec6febff4755b",
+        "result.json": "aadfb1abd0808eff4a367fb5f4ddf2994378af2c436cffabaf83d88f5f515fac",
+        "selection.json": "20359ecd58b7e47cc8b92ba2a93915f9c65fb8776aee55dd41f2dadfc44875e4",
+        "systemd-main-exit.json": "336f1eaa75d96d06e543d93c00e1f0f6dfdb0d1c6655b2903a2433c05cd29fda"
+      },
+      "exact_kernel_packet_latency_ns": null,
+      "functional_and_owned_closure_passed": true,
+      "guest_direct_child_waits": 31,
+      "independent105_count_before_Stop_and_after_refusal": 0,
+      "label": "pokelinux-radio-operator-green-arm-expired-before-admission-root-6",
+      "native_transport_wait_signal": 9,
+      "native_writer_wait": {
+        "exit_code": null,
+        "signal": 9
+      },
+      "no_successor_lookup_registration_or105": true,
+      "regular_sink_waits_without_PIPE_EOF_claim": 16,
+      "same_daemon_live_owned_CID_then_absent_and_all_inputs_unchanged": true,
+      "separate_restart_exit": 78,
+      "socket_StopAck_claimed": true,
+      "unit_cgroup_empty_or_removed": true
+    },
+    {
+      "PID1_Main_exit": 0,
+      "PID1_unit_result": "success",
+      "Stop_authority": "authenticated socket Stop",
+      "Stop_caller_operation_through_helper_wait_ns": 644542156,
+      "Stop_caller_operation_through_native_waits_and_PID1_observation_ns": 904685379,
+      "actual_guest_PIPE_EOFs": 21,
+      "actual_typed_ExecStop_observations": 2,
+      "all_actual_waits_and_selected_EOFs_before_original_cutoffs": true,
+      "all_markers_inode_and_bytes_unchanged": true,
+      "case": "permit-expires",
+      "evidence_sha256": {
+        "command.json": "8dceb746e57849c50a1cfa54436477881734de4d4364783fc0d83da09b7d53ba",
+        "execution.json": "d9c4e2b0e091ed389f75c20d54ede5dc276d5f6f30aec1351d1ca7cf95badb67",
+        "result.json": "bf2150666c92349e5cb2079bb73f8468e754ba9853f7232c2ed14cc9dcc582b8",
+        "selection.json": "245abb3d2c48fa2b00ce11da772dbb3e6834d1c4994da7bc88d102b3fa47ba14",
+        "systemd-main-exit.json": "9a5cfcfb1ee7c04272287b56f4fdf302f1a34e8fceedd0588fd4b480f2177583"
+      },
+      "exact_kernel_packet_latency_ns": null,
+      "functional_and_owned_closure_passed": true,
+      "guest_direct_child_waits": 37,
+      "independent105_count_before_Stop_and_after_refusal": 0,
+      "label": "pokelinux-radio-operator-green-arm-permit-expires-root-6",
+      "native_transport_wait_signal": 9,
+      "native_writer_wait": {
+        "exit_code": 0,
+        "signal": null
+      },
+      "no_successor_lookup_registration_or105": true,
+      "regular_sink_waits_without_PIPE_EOF_claim": 16,
+      "same_daemon_live_owned_CID_then_absent_and_all_inputs_unchanged": true,
+      "separate_restart_exit": 78,
+      "socket_StopAck_claimed": true,
+      "unit_cgroup_empty_or_removed": true
+    },
+    {
+      "PID1_Main_exit": 0,
+      "PID1_unit_result": "success",
+      "Stop_authority": "authenticated socket Stop",
+      "Stop_caller_operation_through_helper_wait_ns": 606559846,
+      "Stop_caller_operation_through_native_waits_and_PID1_observation_ns": 865639186,
+      "actual_guest_PIPE_EOFs": 16,
+      "actual_typed_ExecStop_observations": 2,
+      "all_actual_waits_and_selected_EOFs_before_original_cutoffs": true,
+      "all_markers_inode_and_bytes_unchanged": true,
+      "case": "stop-before-consumption",
+      "evidence_sha256": {
+        "command.json": "ab8a13270496324b5681de4551b3e14f1bc3d8f03b51f6e0797ec1497f9cbd9a",
+        "execution.json": "23515446fcf81f5fcf2a2ecb3fba87a1f7c8dd1db32ac3d694ef41a6f5cd1552",
+        "result.json": "211a6b9f084a967227f51412deca7356772c801dcb088c4d0fc6f5aa5cd501e9",
+        "selection.json": "7e3b27a4d421ddd498b901af761aa5b34444a4fef043669c34e736c76a1797d5",
+        "systemd-main-exit.json": "e8d453724f6911590c6559ca1f9f65e09d0adc3a9762e999995dbed2a7d0ba26"
+      },
+      "exact_kernel_packet_latency_ns": null,
+      "functional_and_owned_closure_passed": true,
+      "guest_direct_child_waits": 32,
+      "independent105_count_before_Stop_and_after_refusal": 0,
+      "label": "pokelinux-radio-operator-green-arm-stop-before-consumption-root-6",
+      "native_transport_wait_signal": 9,
+      "native_writer_wait": {
+        "exit_code": 0,
+        "signal": null
+      },
+      "no_successor_lookup_registration_or105": true,
+      "regular_sink_waits_without_PIPE_EOF_claim": 16,
+      "same_daemon_live_owned_CID_then_absent_and_all_inputs_unchanged": true,
+      "separate_restart_exit": 78,
+      "socket_StopAck_claimed": true,
+      "unit_cgroup_empty_or_removed": true
+    },
+    {
+      "PID1_Main_exit": 0,
+      "PID1_unit_result": "success",
+      "Stop_authority": "manager SIGTERM",
+      "Stop_caller_operation_through_helper_wait_ns": 484398412,
+      "Stop_caller_operation_through_native_waits_and_PID1_observation_ns": 396062872,
+      "actual_guest_PIPE_EOFs": 18,
+      "actual_typed_ExecStop_observations": 2,
+      "all_actual_waits_and_selected_EOFs_before_original_cutoffs": true,
+      "all_markers_inode_and_bytes_unchanged": true,
+      "case": "manager-stop-held-writer",
+      "evidence_sha256": {
+        "command.json": "69fb0f5fb62d4d1cefbd3a569f174e375c15c9a9a503358849982e8dd787ace7",
+        "execution.json": "5b6db627190560e01b8a13d8d196c2d33cd579d2b11bd8ad32dda42fe1ecc174",
+        "result.json": "95b8ece03b2acbe527cd49bf2eb62b1a3abc10876bab29dd18ce0c9251b96cb1",
+        "selection.json": "1b32dbe7ae8ac7d8a054277fb85fec91c1ca27e0231c042ac258d8c7874fe289",
+        "systemd-main-exit.json": "34db49461496ac87f814d86d0ba3713bc531598ecab5834b1bdac3d3b63baa85"
+      },
+      "exact_kernel_packet_latency_ns": null,
+      "functional_and_owned_closure_passed": true,
+      "guest_direct_child_waits": 34,
+      "independent105_count_before_Stop_and_after_refusal": 0,
+      "label": "pokelinux-radio-operator-green-arm-manager-stop-held-writer-root-6",
+      "native_transport_wait_signal": 9,
+      "native_writer_wait": {
+        "exit_code": null,
+        "signal": 9
+      },
+      "no_successor_lookup_registration_or105": true,
+      "regular_sink_waits_without_PIPE_EOF_claim": 16,
+      "same_daemon_live_owned_CID_then_absent_and_all_inputs_unchanged": true,
+      "separate_restart_exit": 78,
+      "socket_StopAck_claimed": false,
+      "unit_cgroup_empty_or_removed": true
+    }
+  ],
+  "classification": "qualified-installed-one-shot-Rust-operator-generic-ARM-GREEN",
+  "independent_audit": {
+    "all_six_actual_cases_passed": true,
+    "checker_sha256": "7af7edee6f9a654120bce2346546fc194fa4218af24ac3734de46cbb568c3bd8",
+    "closed_audit_sha256": "49389e7042d1ab268d81330d9992af98b60c669702cf4c3c1546947da91f1ba3",
+    "closed_review_sha256": "565c7be7fb5d74075e945e086507f042a232405154f823ecb10681e6ef5c4005",
+    "five_socket_cases_and_separate_manager_case": true,
+    "original_custom_harness_parser_failure_receipt_sha256": "6fc42ff3d876442819ff14fd5c62180c0f39f10304aaa0ff5140d20e3f62c4b9",
+    "prior_checker_format_failure_retained": true,
+    "selected_file_counts_by_case": {
+      "accepted": 146,
+      "expired-before-admission": 146,
+      "manager-stop-held-writer": 146,
+      "permit-expires": 146,
+      "stop-before-consumption": 146,
+      "writer-held": 146
+    }
+  },
+  "limits": {
+    "APN_acquisition_or_semantic_IMS_or_calls": false,
+    "actual_suspend_wake_or_unkillable_task_or_manager_fallback": false,
+    "full_phone_deployment_or_app_permission_API": false,
+    "future_backend_portability_qualification": false,
+    "hardware_qualified": false,
+    "phone_accessed": false,
+    "production_modem_facing_vendor_replacement": false,
+    "proprietary_or_raw_decompiled_inputs_selected": false,
+    "remote_cleanup_or_safe_retry": false,
+    "response_crash_persistence": false
+  },
+  "red_green_history": {
+    "disk_full_planning_attempt": "Preserved as incomplete plan without a VM/runtime claim",
+    "failed_cache_only_cleanup": "Failed build1 target cache removed after closed failure; source/logs/receipts and selected ELFs retained",
+    "failed_runtime_attempts_retained": [
+      {
+        "classification": "fixture diagnostic length assumption failed after105; unchanged response oracle retained",
+        "execution_sha256": "2c8aa2cf23a95c8d7c80038f8e8406d50adf65ae3c0875bde554cd45ff64387a",
+        "label": "pokelinux-radio-operator-green-arm-accepted-root-1",
+        "passed": false,
+        "result_sha256": "c386ec22e73c2cbe1b357324887b90b23ef4ebbfdeff2aef4722b16813249f41"
+      },
+      {
+        "classification": "setup descriptor diagnostic disappeared between proc reads",
+        "execution_sha256": "cf00ee908beec450ffa29d4245ea7242aa41c48c3da2532ce0f3229f299ce431",
+        "label": "pokelinux-radio-operator-green-arm-writer-held-root-1",
+        "passed": false,
+        "result_sha256": "aefc6cf298d2e42822debe0d45ad0706b93f8565fdb0bac7b8dab3e025bd47dc"
+      },
+      {
+        "classification": "actual unit RED: native child waits/Main0 followed by duplicate ExecStop failure",
+        "execution_sha256": "be18f27bf4da58f7103b506cc94956118f270d6ba68844c55bace99f4b858b3e",
+        "label": "pokelinux-radio-operator-green-arm-accepted-root-2",
+        "passed": false,
+        "result_sha256": "ceef79a11db6578a61792700d8f7092a4e9d1844bdb99e9f62ca464351c03260"
+      },
+      {
+        "classification": "actual unit RED: native child waits/Main0 followed by duplicate ExecStop failure",
+        "execution_sha256": "f8b6af3485f012d9758894d6f91be5ef523a3dda20ee02d40f45c1771f2b16a7",
+        "label": "pokelinux-radio-operator-green-arm-writer-held-root-2",
+        "passed": false,
+        "result_sha256": "2d55a7bfe4aaf4905fbb8279b734b2e9ff0c8bd7c12d9ce2ea18d425d4793560"
+      },
+      {
+        "classification": "setup CLI omitted empty ExecStop display field",
+        "execution_sha256": "96df1ae4750fb0293349c171f79701f3cdc1c524d66ab043b3f71669d735a999",
+        "label": "pokelinux-radio-operator-green-arm-accepted-root-3",
+        "passed": false,
+        "result_sha256": "662b2ac1acf7bfb9500e88f12f0f37686fb291a3f0647c8e391ccc7f405e8697"
+      },
+      {
+        "classification": "setup CLI omitted empty ExecStop display field",
+        "execution_sha256": "cbc553ecccb6fcd7e88e1d4acb00ccd636aa36bfffac937b4b074852c87f8a4e",
+        "label": "pokelinux-radio-operator-green-arm-manager-stop-held-writer-root-3",
+        "passed": false,
+        "result_sha256": "99492b28038cf932611078ae7c25a2400a87484b28461051d6a5f3b2e727e63d"
+      },
+      {
+        "classification": "setup --all still omitted empty ExecStop display field",
+        "execution_sha256": "9e8fec602d5683571ff18bc319aa6790842667f7d965a73bfbb14c0a19eab810",
+        "label": "pokelinux-radio-operator-green-arm-accepted-root-4",
+        "passed": false,
+        "result_sha256": "d37cc1a711319a1f38b9bd0561b99c6a975776f9b1d4bd27ff53c091cc873366"
+      },
+      {
+        "classification": "setup --all still omitted empty ExecStop display field",
+        "execution_sha256": "051ab4c254eced7a466bcc4ac3e7ae385a4b15f460e7cd827b15338926931e9c",
+        "label": "pokelinux-radio-operator-green-arm-manager-stop-held-writer-root-4",
+        "passed": false,
+        "result_sha256": "8cdb284dfaed73c9dd24e58ee23af55391f62773d5c8cb15cf2abb94fa01932c"
+      }
+    ],
+    "observer_repair": "Raw diagnostic may retain mismatched declared length; disappearing proc FD is diagnostic only; typed actual systemd GetUnit/ExecStop queries, no missing-field normalization",
+    "original_missing_command_baseline": "native-radio-operator-baseline-provenance.json",
+    "original_unit_RED_repaired_by": "Retained shared single-thread SIGTERM guard installed before children; final admission/permit latch gates; no ExecStop; KillMode=mixed"
+  },
+  "schema": 1,
+  "scope": "Rust Main, finite durable intent writer, owned Binder transport worker and current typed frontend; authored independent public peer under generic ARM64 Linux",
+  "source": {
+    "base_commit": "f376c88dd19cc4df2033698a2a92b9c090d95be5",
+    "changed_selected_code_and_unit_sha256": {
+      "native-radio/Cargo.lock": "653d40a73787322c297b41200ca14b486c638d02a8b416f926b3399115e9b2d8",
+      "native-radio/Cargo.toml": "7019d09b69faa6ba0448ae839f8311dbf93d6507391fac6ed1cfbe538d00b5b9",
+      "native-radio/packaging/pokelinux-radio.service": "8d627073a4ed044c92b1f496cc0b2c7f653fe2083f866fae2c188f4e4978290c",
+      "native-radio/src/bin/radio-service.rs": "955cc6d9b02619d1fa352c7126780a59f7d75e337dcb046a9abc28acf8bb472c",
+      "native-radio/src/bin/radio-service/operator_control.rs": "7de24f0d1cde76496e52dc16103cfb3220c07377047147faf9a39bcafd911783",
+      "native-radio/src/bin/radio-status.rs": "91ede138b1fb6ced8067f6a3d7fd99b0f7028562ba4e610f0774f5336436037f",
+      "native-radio/src/bin/radio-worker.rs": "506269c3d91dc22a84ee627f7968b311671d9012f2bb80a1fc9aa90bba103984",
+      "native-radio/src/lib.rs": "905c52d05e0512b91a68450b7a969ee2e8852353bc1231821601afe82759d299",
+      "native-radio/src/operator.rs": "09edfef95d02a0dd795c228ba1c138cbb2938a24229f616eb12e3746a4cf506b",
+      "native-radio/src/registration_status_tests.rs": "7039c83911283dca70245abacd2f72b0b48c6726d1d9d751a0473b387b9cde3b",
+      "native-radio/src/status.rs": "ef8af32cc2dc0d4f0db907105a97c0f914e89db3b6f3b835a8f52e1a9048165d",
+      "native-radio/tests/status_v2_contract.rs": "e4abe0dff4c8cbb868b068e91117760ee825d4ef9181841bc7054a16d0af0644"
+    },
+    "five_case_consumer_unchanged_sha256": "40900949c20c90e7499d97958e6041bed06aca0b4d89c792f2b8ea86826e3ba3",
+    "frozen_selected_source_count": 81,
+    "maintained_harness_runtime_sha256": {
+      "config.json": "4ac32df992776baef828c044009254abd317666062d79e4cbd104ab0807a51da",
+      "consumer.py": "40900949c20c90e7499d97958e6041bed06aca0b4d89c792f2b8ea86826e3ba3",
+      "envelope/boot.sh": "5f4015c1fe16eec99c01781327857dcde5625d2d0efa3653bd14b9417e427867",
+      "envelope/guest.py": "2ab6ab733c84f09442b8b9d9e3959505cb5cd21f809c9fc0e0e69f4487c36ffe",
+      "envelope/plan.py": "db524b3103f2d3da7d2a8d42454be11f3a8288c60a6f039bb8be8ec7f9e499b9",
+      "envelope/run-selected.py": "cd1f03bde222e611c8c142442868d388a5b0f499090f6e9b572d4a7c76404ce0",
+      "envelope/systemd-exit-observer.py": "cc42e387fc92d1d967a1aa54310f392d94fdc7f2044e0d1af8e184e39b166764",
+      "expected.json": "27649e68cc1d125b950507985fba5b145d5668ef8a83059fd36db2e281d77d79",
+      "fixture/Cargo.lock": "11ffab85f8ea986d9e70e764425e507947ac1a9028e6868c245416652106dbca",
+      "fixture/Cargo.toml": "81a607d1c931311015ae7847e1d0698d38ee491ab05452ca89604b99fe7db587",
+      "fixture/expected.tsv": "d5bd8106f83b3cc260a04dfa4087f35fe6d65adc4abd8c0afb0c45359f66465c",
+      "fixture/src/add_pdn_capture.rs": "efe076d13af68efcc681c7690881191c3c8a0950faddfc5664ce657f7ab76cb3",
+      "fixture/src/bin/controller.rs": "fc5a8741f48c62c44f2c4373626459d51293faba50a5113c5b625ab3471d1c11",
+      "fixture/src/bin/manager.rs": "c4a27f6a05884f3c258b2af921ca8caa53db08d4e0d3d4cf6217f0bac515ceb8",
+      "fixture/src/bin/peer.rs": "561a8b8ddbbeba4a022fbd894d61081b6b0164e0ac900acb384005d92b0bcc7c",
+      "fixture/src/registration_vectors.rs": "b6e1dababd6dac6dcd009a522d5c0cd610046d65159f2edd4b29fe9718e1035d",
+      "green_adapter.py": "cbd6d91795acda095851aabc64ce9910daac5a82c2291f4b9eb865f226a93b8c",
+      "manager_stop_consumer.py": "5a140e5e3638af5e92a64267ddd1c702c06463eecd3ccb558d30c7a226df58c3",
+      "operator_client.py": "d10a5c3c6ba699dad46e45ae2a1a01d6e7cbce42c292b8b64debc3cd8094f16c",
+      "wire_assertions.py": "77b3a87d50eb255acbc1d77c5f7cf6e6445afb3cf3b00f370dec65bff7a77d67"
+    },
+    "only_post_build_selected_source_change": "native-radio/packaging/README.md documentation; all other80 selected inputs still match",
+    "production_source_pins_sha256": "0dadfc803dcbdc562dcabea7227af72c9ca48bb81466f267746f5dd5baa7ee98",
+    "separate_manager_consumer_sha256": "5a140e5e3638af5e92a64267ddd1c702c06463eecd3ccb558d30c7a226df58c3"
+  }
+}

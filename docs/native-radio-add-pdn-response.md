@@ -71,10 +71,11 @@ the daemon is unchanged, and locked source/backing inputs are unchanged. The
 outer console is a closed ordinary output file, not an invented PIPE EOF.
 See the [bounded provenance](evidence/native-radio-add-pdn-response-provenance.json).
 
-The ordinary installed radio service/status schema is unchanged; attributed
-request history is currently a library snapshot, separate from its latest raw or
-registration-wire diagnostic. This adds no durable command permission/ledger,
-request retirement, subsequent operation, APN ownership/acquisition, semantic
+At this earlier checkpoint the installed schema was unchanged and attributed
+history was a library snapshot. The later [installed Rust operator](native-radio-operator.md)
+adds durable one-shot permission and independent RADS version2 request history;
+its evidence is separate from the79-test and differential runs above. Neither
+checkpoint establishes request retirement, subsequent operation, APN ownership/acquisition, semantic
 registration, vendor cleanup/reset, carrier, physical-device or UI qualification.
 The backend still uses the Samsung radioExternal provider; replacement of that
 modem-facing vendor userspace remains a separate final-architecture gate. No

@@ -63,11 +63,28 @@ is added. Keep fixture prerequisite failures distinct from functional results.
 The original installed ARM Main/worker/status path now has its own operator
 baseline RED: service-account03 unsupported, root refused before parsing,
 independent zero105, native worker9/PID1 Main0 and unchanged-journal restart78.
-All25 direct guest waits/13 PIPE EOFs and owned outer closure pass. The operator GREEN
-still needs root command admission, copied startup config, a prewarmed intent
-writer, authenticated ACK→EXIT→actual wait0 before permit, fresh original gates,
-independent request history and responsive Stop for both owned roles. No vendor
-cleanup, app permission or phone capability follows from either proof.
+All25 direct guest waits/13 PIPE EOFs and owned outer closure pass. The later
+[installed Rust operator](native-radio-operator.md) now qualifies root admission,
+copied startup config, a prewarmed intent writer, authenticated ACK→Finish→actual
+wait0 before the sole permit, fresh original gates, independent request history
+and Stop for both roles.83 radio/nine process tests, five existing termination
+groups and six ARM Release builds pass. All six fresh generic ARM Binder cases
+pass: accepted, writer-held, expired-before-admission, permit-expires,
+stop-before-consumption and separate actual manager Stop with the writer held.
+The214 guest waits/118 PIPE EOFs,12 native waits, six PID1 Main0/unit-success and
+six unchanged-marker restart78 outcomes close within original bounds.
+Two earlier direct-Stop runs reached native waits/Main0 but failed duplicate
+ExecStop; the repair retains the shared SIGTERM guard and uses KillMode=mixed
+without ExecStop. Fixture/property-observer and audit-format failures remain
+failed, not functional evidence. The explicit harness3→harness5
+observer-only bridge preserves actual Release ELFs and compiled source. No vendor
+cleanup, app permission, production modem transport or phone capability follows.
+
+Next coherent app migration is the entire Messages request/parser/model/
+scheduling/generation engine to Rust, retaining Qt presentation and native socket
+custody. Its independent contract is frozen privately; execute current Qt controls
+and genuine missing-API RED before production implementation. Cold compositor
+stall diagnostics remain parked; no new graphics-cause or phone-boot claim.
 
 The [finite main-thread epoch](native-callback-spans.md#later-finite-main-thread-metadata)
 now records one authenticated native R/running sample156.067174ms after the

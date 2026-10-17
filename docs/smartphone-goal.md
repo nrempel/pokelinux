@@ -48,6 +48,14 @@ readiness, then fail Source freshness before shell connection. Full healthy cold
 startup remains required. Process closure in the second run does not qualify
 runtime success. See the [cold startup RED](native-normal-upstream-tracer.md#cold-installed-startup-fails-before-sounds).
 
+The [installed Rust radio operator](native-radio-operator.md) now passes six fresh
+generic ARM kernel/Binder cases: one durable privileged request, wrong/duplicate
+response attribution controls, held writer, expiry and both socket/manager Stop.
+Actual child waits, PID1 unit success and persistent restart refusal qualify this
+backend lifecycle. App authority, APN acquisition, native IMS/calls, modem-facing
+vendor replacement and matched Pixel hardware remain open; no completion-matrix
+phone capability is inferred from authored peers.
+
 The [native SIGTERM Stop repair](native-session-signal-stop.md) passes actual
 production-owner shutdown before readiness and110 composed host regressions.
 The selected unit now uses Main SIGTERM/KillMode=mixed, without redundant ExecStop.

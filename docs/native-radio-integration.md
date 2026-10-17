@@ -1,12 +1,17 @@
 # Native radio integration: next execution gate
 
-The [retained Rust parent/worker channel](native-process-channel.md) now passes
-five actual host groups after missing-API RED. The original installed ARM radio
-baseline separately qualifies healthy Main/worker/status, missing privileged
-operator admission, zero105 and complete normal Stop/unchanged-journal refusal.
-Root is refused before parsing; only the service-account03 reaches the old
-unsupported-command path. Durable intent, the actual operator/worker command
-path and request-history Stop snapshots remain unimplemented integration gates.
+The [installed Rust one-shot operator](native-radio-operator.md) now implements
+root-only typed admission, copied startup configuration, a separately owned durable
+intent writer and actual writer wait before the sole worker permit. Request history
+has its own revision and survives in typed Stop snapshots.83 host radio tests,
+nine shared process tests and five existing termination groups pass; six ARM
+Release binaries build. All six fresh installed generic ARM Binder cases pass,
+including held writer, expired permit, socket Stop and actual manager Stop.
+The214 direct guest waits/118 PIPE EOFs, both native waits, PID1 Main0/unit success
+and unchanged-marker restart78 qualify within their original bounds. The original
+missing-command RED and duplicate ExecStop failure stay separate; the repair uses
+Rust's shared SIGTERM latch with Main-first mixed shutdown. No remote cleanup,
+app grant, semantic IMS or phone qualification follows.
 
 
 The [native CPIF local policy](native-sit-cpif-policy.md) now adds bounded

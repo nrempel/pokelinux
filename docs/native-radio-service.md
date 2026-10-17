@@ -1,18 +1,18 @@
 # Installed native radio service
 
-The packaged service now exposes one current `last_observation`, tagged `raw` or
-`registration-wire`, with required explicit `SLOT_ID` carried to its worker and
-owner. The later [installed slot1 tracer](native-radio-registration-installed.md)
-qualifies typed history after a genuine stale-RAW projection RED: accepted R4
-becomes typed status R4, then survives peer-loss unavailable R5. All59 host tests
-and complete native/PID1/guest/outer closure pass.
+The current [installed Rust one-shot operator](native-radio-operator.md) joins
+Main, a finite durable intent writer and the supervised transport worker. Its
+RADS version2 snapshot carries `last_observation` and independent
+`request_history`; the older wire layout is removed. Root0:0 has typed command03
+admission only; the service account retains Status/Stop. Neither role provides
+an app permission or carrier-state API.
 
-The original RAW-only tracer below remains historical evidence for its recorded
-component set and `last_raw` schema. Its45-test result and the later
-[held-registration control](native-radio-service-blocked.md) are not current-source
-replays. The matching current service/status set uses only `last_observation`,
-without a legacy schema adapter. All inputs remain authored public transport
-fixtures, without semantic IMS or physical-phone qualification.
+The earlier [slot1 tracer](native-radio-registration-installed.md) qualified typed
+registration-wire history after a stale-RAW projection RED, with59 host tests.
+The original RAW-only tracer below qualified45 tests and its recorded `last_raw`
+schema. These remain historical evidence for their exact component sets, not
+current-source replays or compatibility protocols. Authored public transport
+fixtures qualify no semantic IMS or physical phone.
 
 ## Historical RAW integration RED and repair
 
@@ -63,18 +63,18 @@ Installation paths, selected device/service/lease/slot and account provisioning 
 specified in [packaging](../native-radio/packaging/README.md). The unit requests
 private0700 runtime/state directories and a0600 status socket/journal, an empty
 capability bounding set, `NoNewPrivileges=yes`, `Restart=no` and
-`KillMode=control-group`. This run checks the actual selected credentials,
+`KillMode=mixed`, with no ExecStop. The current operator retains its SIGTERM
+guard before either child exists through both actual waits. The historical RAW
+run above used the earlier unit; it checks the selected credentials,
 directories and membership/empty lifecycle; it does not qualify universal
 confinement, resource-limit enforcement or manager fallback.
 
-The nonblocking Unix SEQPACKET interface accepts only the service account's
-UID/GID. Each packet must carry credentials matching the connected peer's
-PID/UID/GID. The client retains the actual socket-origin server pidfd. Commands
-are Status and Stop; status is one bounded packet with one optional historical
-Raw or RegistrationWire frame. Unknown shapes, truncation, passed descriptors and credential
-mismatches are rejected. This is an operator diagnostic interface, not an app
-permission or phone-state API. Cross-UID installed refusal still needs its own
-runtime control; source checks and component coverage do not replace it.
+The nonblocking Unix SEQPACKET interface checks exact connected and per-packet
+PID/UID/GID, retains the socket-origin pidfd and rejects passed descriptors,
+truncation and dead origins. Service-account commands are Status and Stop;
+root0:0 may issue the single strict operator command03. Status/Stop and operation
+admission are separate authorities. Current host credential/descriptor controls
+and installed ARM root/service-account negatives retain their distinct scopes.
 
 | Status field | Meaning |
 | --- | --- |
@@ -83,6 +83,7 @@ runtime control; source checks and component coverage do not replace it.
 | `revision` | Latest accepted worker revision; local phase changes need not increment it |
 | `failure` | First terminal reason, retained through later cleanup |
 | `last_observation` | One optional tagged `raw` or `registration-wire` historical frame, with its own revision and attempt1; never current carrier state or a final request receipt |
+| `request_history` | Optional one-shot intent, fixed route, digest, original deadline, conservative outcome and immutable first attributed response; its revision is independent of transport |
 
 Frames must match the actual owned stream, current admission, incarnation,
 attempt1 and increasing worker revision. Revocation clears buffered input and
@@ -93,7 +94,8 @@ independently prove continuing remote liveness or IMS registration.
 
 The current registration Frame kind4 carries bounded opaque fields and byte
 strings, with a1340-byte maximum including its header. Raw frames remain bounded
-at2116 bytes, status packets at2160 and JSON output at5120. There is one current
+at2116 bytes. Current RADS version2 status packets and complete JSON output are
+bounded at16384 bytes. There is one current
 codec and tagged history schema. Required profile `SLOT_ID` becomes immutable
 `--slot` configuration; the executed installed profile selects1. See the
 [slot1 report](native-radio-registration-installed.md) for the complete path.
@@ -110,15 +112,18 @@ most1024 bytes; incomplete diagnostics cannot qualify a test.
 
 The selected lease becomes one absolute CLOCK_BOOTTIME deadline, with no renewal.
 The client has one3s deadline across connection, request, response and Stop exit
-observation. Status writes once to a pipe, socket or actual terminal, with a5120-byte
-maximum and no retry queue; short/EAGAIN output fails. Require exit0 and a complete
-line because a failed large pipe write can leave a prefix. Regular-file and
+observation and complete bounded output. Status writes the entire line to a
+pipe, socket or actual terminal with bounded partial-write/EAGAIN handling under
+that same original deadline. A real host control transfers13001 bytes through a
+4096-byte pipe; it is separate from installed ARM status. Require exit0 and a
+complete line because a failed output may leave a prefix. Regular-file and
 block-device stdout are refused. Stop is silent. Pipe output is exercised here;
-TTY output and output-pressure behavior remain unqualified.
+TTY output remains unqualified.
 
-Retirement revokes admission before killing the worker and starts one original2s
-cleanup cutoff. Repeated Stop or errors cannot renew it. The production Supervisor
-retains and actually waits its child; an occupied child at cutoff aborts the
+Retirement unconditionally fences both role channels before killing either child
+and starts one original2s cleanup cutoff. Repeated Stop or errors cannot renew it.
+The production Supervisor
+retains and actually waits both children; an occupied child at cutoff aborts the
 service for manager fallback rather than detaching it. Normal service exit waits
 for native child closure and pending Stop replies. The configured manager stop
 bound is5s, a separate fallback contract that this normal run does not exercise.
@@ -148,8 +153,9 @@ are qualified.
 
 A later [permanently held registration control](native-radio-service-blocked.md)
 qualifies responsive Initializing status, normal native Stop and durable refusal
-with identical production ELF bytes. Blocked discovery/output pressure, installed
-principal negatives and startup filesystem stalls remain separate. Synchronous startup metadata/journal fsync can stall;
+with identical production ELF bytes. Blocked discovery/output pressure and startup
+filesystem stalls remain separate from the later operator credential and held-writer
+checks. Synchronous startup metadata/journal fsync can stall;
 the event-loop budgets do not make those filesystem operations bounded. Actual
 suspend/wake, unkillable tasks and manager fallback remain open.
 The current worker explicitly skips `InvalidIndication` without withdrawing

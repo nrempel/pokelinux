@@ -4,7 +4,13 @@ use pokelinux_process_owner::{
     bootstrap::{BoundParent, WORKER_SELECTOR},
     deadline::{BootClock, Clock, Deadline},
 };
-use pokelinux_radio::{observation, owner::OwnerError, worker::TransportSession};
+use pokelinux_radio::{
+    observation,
+    operator::{self, ChildMessage, HistoryResponse, Operation, ParentMessage, RequestOutcome},
+    owner::{OwnerError, Phase},
+    request::Outcome,
+    worker::TransportSession,
+};
 use rsbinder::{
     ProcessState, Proxy,
     hub::android_16::{BpServiceManager, IServiceManager},
@@ -61,8 +67,34 @@ fn fatal() -> ! {
     std::process::exit(70)
 }
 fn main() {
+    let args: Vec<_> = std::env::args().skip(1).collect();
+    if args.get(1).is_some_and(|s| s == "--intent-writer") {
+        if args.len() != 6
+            || args[0] != WORKER_SELECTOR
+            || args[2] != "--journal"
+            || args[4] != "--until-ns"
+        {
+            std::process::exit(64);
+        }
+        let until = args[5]
+            .parse::<u64>()
+            .unwrap_or_else(|_| std::process::exit(64));
+        let mut parent = BoundParent::from_stdin().unwrap_or_else(|_| std::process::exit(73));
+        let code = if operator::run_intent_writer(
+            std::path::Path::new(&args[3]),
+            Deadline::at(Duration::from_nanos(until)),
+            &mut parent,
+        )
+        .is_ok()
+        {
+            0
+        } else {
+            70
+        };
+        std::process::exit(code);
+    }
     let endpoint = Endpoint::arguments().unwrap_or_else(|_| std::process::exit(64));
-    let parent = BoundParent::from_stdin().unwrap_or_else(|_| std::process::exit(73));
+    let mut parent = BoundParent::from_stdin().unwrap_or_else(|_| std::process::exit(73));
     let output = std::io::stdout();
     let stat = fstat(&output).unwrap_or_else(|_| fatal());
     if FileType::from_raw_mode(stat.st_mode) != FileType::Fifo {
@@ -91,7 +123,7 @@ fn main() {
     let transport =
         pokelinux_radio::transport::RadioTransport::from_binder(binder).unwrap_or_else(|_| fatal());
     let mut session = TransportSession::new(NonZeroUsize::new(2).unwrap(), endpoint.slot);
-    let _key = session
+    let key = session
         .start(
             transport,
             "pokelinux-radio".into(),
@@ -101,6 +133,10 @@ fn main() {
         .unwrap_or_else(|_| fatal());
     let mut sent_revision = 0;
     let mut announced = false;
+    let mut operation: Option<Operation> = None;
+    let mut known_not_sent = false;
+    let mut message_revision = 0u64;
+    let mut last_request: Option<(RequestOutcome, Option<HistoryResponse>)> = None;
     loop {
         // Completion is joined only after is_finished. A permanently blocked
         // registration remains owned while this loop/parent retain control.
@@ -143,6 +179,108 @@ fn main() {
                 },
                 Ok(None) | Err(OwnerError::Failed(_)) => {}
                 Err(_) => fatal(),
+            }
+        }
+        // Main alone supplies one durable, exact permit on the retained role
+        // channel. Decode/copy before fresh operation admission; no raw dispatch.
+        match parent.receive_message(Deadline::at(endpoint.until)) {
+            Ok(Some(bytes)) => {
+                let ParentMessage::Dispatch {
+                    operation: admitted,
+                    config,
+                } = ParentMessage::decode(&bytes).unwrap_or_else(|_| fatal())
+                else {
+                    fatal()
+                };
+                if operation.is_some()
+                    || admitted.incarnation != parent.identity()
+                    || endpoint.slot != 1
+                {
+                    fatal();
+                }
+                let current = session.snapshot();
+                if !matches!(current.phase,Phase::Active{client_id} if client_id==admitted.client_id)
+                {
+                    fatal();
+                }
+                // Occupy the one permanent local attempt before preparation. A
+                // late permit proves no native invocation occurred here; it does
+                // not end this process/session or authorize another operation.
+                operation = Some(admitted.clone());
+                let deadline = Deadline::at(Duration::from_nanos(admitted.deadline_ns));
+                if deadline.elapsed(BootClock.now()) {
+                    known_not_sent = true;
+                } else {
+                    match session.prepare_add_pdn(&key, &config.as_add_pdn(), deadline) {
+                        Ok(prepared) => {
+                            // Allocations/encoding may consume time. The existing
+                            // request thread also samples its clock at permission.
+                            if deadline.elapsed(BootClock.now()) {
+                                drop(prepared);
+                                known_not_sent = true;
+                            } else if session.submit_request(prepared).is_err() {
+                                known_not_sent = true;
+                            }
+                        }
+                        Err(_) => known_not_sent = true,
+                    }
+                }
+            }
+            Ok(None) => {}
+            Err(_) => fatal(),
+        }
+        // Only finished native calls are joined. Blocked Binder work and its
+        // endpoint/watch remain owned by this process until parent disposal.
+        let _completed_request = session.poll_request();
+        if let Some(op) = &operation {
+            let snapshot = session.snapshot();
+            let next = if let Some(receipt) = snapshot.request {
+                let outcome = match receipt.outcome {
+                    Outcome::Queued => None,
+                    Outcome::NotSent => Some(RequestOutcome::NotSent),
+                    Outcome::OutcomeUnknown => Some(RequestOutcome::OutcomeUnknown),
+                };
+                outcome.map(|outcome| {
+                    let response = receipt.response.map(|r| HistoryResponse {
+                        vendor_error: r.vendor_error(),
+                        payload_hex: operator::hex(r.payload()),
+                        ingress_sequence: r.ingress_sequence(),
+                        received_at_ns: r
+                            .received_at()
+                            .as_nanos()
+                            .try_into()
+                            .unwrap_or_else(|_| fatal()),
+                        publication_revision: r.revision(),
+                    });
+                    (outcome, response)
+                })
+            } else if known_not_sent {
+                Some((RequestOutcome::NotSent, None))
+            } else {
+                None
+            };
+            if let Some(next) = next
+                && last_request.as_ref() != Some(&next)
+            {
+                let publication = next.1.as_ref().map_or(0, |r| r.publication_revision);
+                let revision = message_revision
+                    .checked_add(1)
+                    .unwrap_or_else(|| fatal())
+                    .max(publication);
+                let message = ChildMessage::Request {
+                    operation: op.clone(),
+                    revision,
+                    outcome: next.0,
+                    response: next.1.clone(),
+                };
+                let bytes = message.encode().unwrap_or_else(|_| fatal());
+                // Exactly one send. Failure preserves uncertainty and ends the
+                // role; no stored packet/retry can later restore authority.
+                parent
+                    .send_message(Deadline::at(endpoint.until), &bytes)
+                    .unwrap_or_else(|_| fatal());
+                message_revision = revision;
+                last_request = Some(next);
             }
         }
         // Keep session/watch/worker owned through terminal states. Parent Stop
