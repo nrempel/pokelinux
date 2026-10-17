@@ -53,6 +53,9 @@ fn main() -> io::Result<()> {
         }
     }
     let listener = UnixListener::bind(Path::new(&args[1]))?;
+    // Explicit small kernel backlog lets bounded queue-pressure tests reach
+    // actual EAGAIN without relying on the standard library default.
+    rustix::net::listen(&listener, 8)?;
     listener.set_nonblocking(true)?;
     println!(
         "{}",

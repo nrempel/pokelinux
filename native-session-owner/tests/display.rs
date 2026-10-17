@@ -586,3 +586,6 @@ fn messages_owns_only_its_uid_listener_then_actual_sdk_reap() {
     );
     assert_eq!(child_set(), before);
 }
+
+#[path = "support/readiness_cases.rs"]
+mod readiness_cases;

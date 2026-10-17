@@ -18,6 +18,14 @@ upstream Hyprland, Aquamarine and Qt, which contain substantial C++. Our own
 Qt client adapters and small compositor plugins also contain C++; these are
 separate from the Rust phone services and must be counted honestly.
 
+The existing app adapters contain more than Qt glue: Sounds queues route and
+reconnect requests with original deadlines, Messages owns RPC worker lifetimes
+and stale-result generations, and appearance clients validate credentials and
+revisions. Those portable client cores remain Rust migration work. Start with
+Sounds after the current startup/Stop repair; retain QObject/QML presentation
+and narrow native API conversions at the Qt boundary. This is a source review
+and direction, not a completed port.
+
 The custom renderer experiment added substantial authored C++ scene, protocol
 and GPU integration. That work is now parked as component research. It is not
 a prerequisite for normal app launch or progress porting phone services to Rust.

@@ -151,6 +151,7 @@ impl Case {
                 None,
                 None,
                 None,
+                None,
                 Some(&mut control),
             );
             let _ = actor_done.try_send(result);

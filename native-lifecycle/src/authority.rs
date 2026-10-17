@@ -802,6 +802,14 @@ impl Authority {
     pub(crate) fn ready(&self) -> bool {
         self.ready && !self.degraded
     }
+    /// Startup uses the same already accepted Source as admission. Unlock/focus
+    /// are independent; policy loading, terminal failure and expiry refuse it.
+    pub(crate) fn startup_source_until(&self, now: u64) -> Option<u64> {
+        if !self.ready() || !self.session_required {
+            return None;
+        }
+        self.fresh_session(now).map(|sample| sample.until)
+    }
     pub(crate) fn session_terminal(&self) -> bool {
         self.session_failed
     }

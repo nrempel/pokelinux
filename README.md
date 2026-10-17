@@ -28,7 +28,9 @@ gets Stop acknowledgement in0.95ms and an actual owner exit in70ms while the
 compositor is frozen. These are individual VM measurements. The first
 [cold installed startup](docs/native-normal-upstream-tracer.md#cold-installed-startup-fails-before-sounds)
 now fails at the genuine shell's unavailable Wayland endpoint. Native Rust
-startup notification and a separate unit Stop correction are next. The [explicit deployment
+[startup notification](docs/native-session-startup-readiness.md) now passes actual
+actor and socket/process boundaries; installed PID1/cold-shell validation and the
+separate unit Stop correction remain open. The [explicit deployment
 installer](docs/native-normal-upstream-tracer.md#explicit-installed-session-selection)
 now passes its frozen host RED→GREEN consumer with the unchanged205-file selected
 bundle. This qualifies staged bytes and modes; installed unit/Source/shell startup
@@ -62,7 +64,7 @@ flowchart TB
 
 Dashed connections are work still required, not working hardware paths. “Rust services” is the implementation direction; only a small part of native IMS exists today. We are not rewriting the Linux kernel or modem firmware in Rust. The [current integration map](docs/native-integration-map.md) separates components, installed service/app composition and remaining backend evidence.
 
-Hyprland, Aquamarine and the Qt app frontend contain C++. Upstream graphics engines and small adapters remain part of the selected normal stack. New phone-service policy and resource ownership belong in Rust; the custom renderer remains parked as component research.
+Hyprland, Aquamarine and the Qt app frontend contain C++. Upstream graphics engines and small adapters remain part of the selected normal stack. New phone-service policy and resource ownership belong in Rust; the custom renderer remains parked as component research. Project-owned Sounds, Messages and appearance clients still contain request/deadline/validation logic in C++; moving those client cores into Rust remains work, separately from Qt/QML presentation.
 
 ## What has been tested
 

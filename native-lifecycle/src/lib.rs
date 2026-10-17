@@ -10,6 +10,7 @@ pub mod ipc;
 pub mod lock;
 pub mod messages;
 pub mod service;
+pub mod startup;
 pub mod storage;
 use serde::{Deserialize, Serialize};
 

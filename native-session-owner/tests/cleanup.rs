@@ -77,6 +77,7 @@ fn actual_lifecycle_early_setup_error_reaps_same_source_before_return() {
         None,
         None,
         None,
+        None,
     );
     assert_eq!(
         result.as_ref().unwrap_err().kind(),

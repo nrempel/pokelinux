@@ -6,5 +6,6 @@ pub use bootstrap::bootstrap_entry;
 pub use source::{Compositor, MAX_SOURCE_STARTUP_NS, SourceOwner};
 pub mod config;
 pub mod display;
+pub mod readiness;
 pub mod runtime;
 pub mod stop;

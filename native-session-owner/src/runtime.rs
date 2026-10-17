@@ -83,6 +83,21 @@ pub fn run(config: &Config) -> io::Result<()> {
             },
             std::env::current_exe()?,
         )?;
+        let mut startup = std::env::var_os("NOTIFY_SOCKET")
+            .map(|destination| {
+                crate::readiness::Readiness::new(
+                    config.wayland.clone(),
+                    source.duplicate_pidfd()?,
+                    pokelinux_display::SourceIdentity {
+                        pid: source.pid(),
+                        uid: 1000,
+                        gid: 1000,
+                    },
+                    destination,
+                    until,
+                )
+            })
+            .transpose()?;
         let mut audio = pokelinux_lifecycle::audio::Owner::connect(&config.audio_socket, 11040)?;
         pokelinux_lifecycle::service::run_with_services(
             &config.runtime,
@@ -97,6 +112,9 @@ pub fn run(config: &Config) -> io::Result<()> {
             Some(&mut display),
             None,
             Some(&mut audio),
+            startup
+                .as_mut()
+                .map(|observer| observer as &mut dyn pokelinux_lifecycle::startup::Observer),
         )
     })();
     // The actor drains its Source internally on normal/loop-error completion.

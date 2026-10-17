@@ -824,6 +824,7 @@ impl Case {
                     .map(|factory| factory.as_mut() as &mut dyn crate::display::Factory),
                 None,
                 None,
+                None,
                 Some(&mut control),
             );
             let _ = service_tx.try_send(result);

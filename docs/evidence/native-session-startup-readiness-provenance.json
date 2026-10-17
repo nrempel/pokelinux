@@ -1,0 +1,168 @@
+{
+  "schema": 1,
+  "description": "Rust one-shot startup notification: actual Linux socket/process and lifecycle/Source/storage/admin boundaries; no new genuine compositor, installed PID1/cold shell, ARM or phone pass. Hash-only public index.",
+  "source_base": "817c2583f320ad61a77aade7ec2e18fff14f1d9a",
+  "artifacts": {
+    "low_level_structural_RED_qualification": {
+      "bytes": 1708,
+      "sha256": "fce98c712cffcc0c1d595a6585093b084a66677b5d8cd6b17b435f198392ab5e"
+    },
+    "actor_structural_RED_qualification": {
+      "bytes": 782,
+      "sha256": "8870d375bdfdba39451d283e02b65b2302d2d7bab4795b4445352321cd4dbd7f"
+    },
+    "low_level_closed_GREEN": {
+      "bytes": 52498,
+      "sha256": "5dab96fde6425f204114b0618e9d00bcc75782d4881b26800bba58d0e430bd40"
+    },
+    "actor_initial_closed_failed_aggregate": {
+      "bytes": 62932,
+      "sha256": "b0193d92ef015b883301f6fbb065936298a9a5da343aff58517e029ad8317315"
+    },
+    "targeted_QA_closed_failed_aggregate": {
+      "bytes": 63060,
+      "sha256": "09ed71a6836c7d2e3a3d5d340fc5117248b4de114894888ea67d8d4d6722d089"
+    },
+    "enabled_display_and_release_closed_GREEN": {
+      "bytes": 62512,
+      "sha256": "fe883d6eba552e9478483ef1f33b0044ff81e9ce7dc6ca0620b032edc7912077"
+    },
+    "canonical_frozen_actor_consumers": {
+      "bytes": 1128,
+      "sha256": "f01a8eb5201c7bfc3bc3898efd034d8ec8614477622415d63f1bf2998fc91ac8"
+    },
+    "Root_qualification": {
+      "bytes": 1545,
+      "sha256": "0e308fa886a2378ca9323c19311e4fed3fa444a434142bd3ed0dfdf1e3796aa9"
+    },
+    "optimized_native_owner": {
+      "bytes": 5520896,
+      "sha256": "9d1d4cb4b72aeacdaa3609b5e185e449f05541a6724bcacdc4eb6472c610fd92"
+    }
+  },
+  "selected_changed_sources": {
+    "native-lifecycle/src/authority.rs": {
+      "bytes": 76046,
+      "sha256": "21fb4e3e8efdeacc912db5fdbb71ef0af1604a39852b5e59a192a552d3cf157d"
+    },
+    "native-lifecycle/src/lib.rs": {
+      "bytes": 3848,
+      "sha256": "51eba665cfb902e8d88e50029358a8b7913a5c19854dd1c49a9011d334c781c5"
+    },
+    "native-lifecycle/src/service.rs": {
+      "bytes": 81014,
+      "sha256": "ca86a3a51ba6e5323681422105439a638a736e67f10f5dc0020fd66627b5e535"
+    },
+    "native-lifecycle/src/service_restore_tests.rs": {
+      "bytes": 62240,
+      "sha256": "0848531585c0b0d8ce13802fec4bc8c4527e04f488beea1d27102578499a7f2d"
+    },
+    "native-lifecycle/src/service_sounds_desktop_tests.rs": {
+      "bytes": 15720,
+      "sha256": "25c424c33cafeb072db074a94c048799c637f7001a9b8f16257a3c26a49ad522"
+    },
+    "native-lifecycle/src/startup.rs": {
+      "bytes": 439,
+      "sha256": "d1dab8794caf4adecb9fea778949e705a17dcdbd49496fa9b837a7af46d0f784"
+    },
+    "native-session-owner/Cargo.toml": {
+      "bytes": 2151,
+      "sha256": "1f0d6051fbcec07c1547de7f054e2b6684787d1a37f3a9140bd90e88b34604d0"
+    },
+    "native-session-owner/packaging/pokelinux-session-owner.service": {
+      "bytes": 556,
+      "sha256": "2ec1b90eb29b8a7e7c6069ff52d98d31527d0b60a6e98ef1ff8d0b85ff7901fa"
+    },
+    "native-session-owner/src/lib.rs": {
+      "bytes": 319,
+      "sha256": "deb64d39a6a29207b7d97f715c988076bd2e108b7f9f149b641f8e3fc462648a"
+    },
+    "native-session-owner/src/readiness.rs": {
+      "bytes": 5506,
+      "sha256": "40443bc8e1b77040052a0f0e03d243a9f8ce417ed3ae5865b45047cde6144331"
+    },
+    "native-session-owner/src/runtime.rs": {
+      "bytes": 5041,
+      "sha256": "79f08ba988abc50dfaa2ca61ea1aece47e2f2fa2b2b897bf412b46c6accb8933"
+    },
+    "native-session-owner/tests/cleanup.rs": {
+      "bytes": 3586,
+      "sha256": "1940ae47a24d34e1f8e4d549b95a34cfa8ebeb7434b2e254d15654b055020d83"
+    },
+    "native-session-owner/tests/display.rs": {
+      "bytes": 19539,
+      "sha256": "0cc358fa97250f1130db442fa3fcbe040d20f9bf955cd3b3fc91c8b4785a6da2"
+    },
+    "native-session-owner/tests/startup_status.rs": {
+      "bytes": 16180,
+      "sha256": "d15a9b21601d6bf9c2b39f146494670693c7fc2dfae9c5386d3f9738ddd060c0"
+    },
+    "native-session-owner/tests/support/display-test-fixture.rs": {
+      "bytes": 4107,
+      "sha256": "bfe34e19de6f3468f38a06493bcd4f7a3c72a364a33c748b19495ba3bf4f3b23"
+    },
+    "native-session-owner/tests/support/readiness_cases.rs": {
+      "bytes": 9157,
+      "sha256": "267afbe6de5082487ec6bac0107036273899d76d38bfd6005d99cdb23c7d1acc"
+    },
+    "native-session-owner/tests/support/source-status-test-fixture.rs": {
+      "bytes": 3524,
+      "sha256": "c1bbb613cfbbbe9d0e2d83d5bbfbc92fcbfcdc0cb5dbcd97667617ddcd731191"
+    },
+    "native-session-owner/tests/support/startup-source-test-fixture.rs": {
+      "bytes": 3112,
+      "sha256": "1ec0413dfdba83969c565b51fe5e53001529ad47fe508e2506554c5b0e17bbe7"
+    },
+    "native-session-owner/tests/support/startup-status-test-fixture.rs": {
+      "bytes": 4663,
+      "sha256": "9285db11560957447db087879eec6962a51873b8384d9d749ffd94bfb1ba9007"
+    },
+    "tools/native-camera-service-boundary/fixture/src/bin/camera-composed-service.rs": {
+      "bytes": 2119,
+      "sha256": "650ca1e36563be79062cbef6f5fec74599dbff545dad18e97f4b104ac6f7de01"
+    },
+    "tools/native-display-app-generations/app-context-fixture/src/bin/service.rs": {
+      "bytes": 9407,
+      "sha256": "5aaf24ff7948dc958c354c310f437bc1953ab0c07c1d411233ca3017622c4757"
+    },
+    "tools/native-phone-tracer/fixture/src/bin/service.rs": {
+      "bytes": 10140,
+      "sha256": "27bb0c20ba170f8838b60803119d56b1b5bdf9689e5b2d11cfb96de568dbb564"
+    }
+  },
+  "qualified_actual_case_groups": {
+    "startup_actor": 5,
+    "display_including_readiness": 19,
+    "existing_source_status": 12,
+    "default_lifecycle_initial_pass": 66,
+    "default_lifecycle_setup_recovery_pass": 2,
+    "default_lifecycle_ignored_not_selected": 20
+  },
+  "same_source_selections": true,
+  "all_current_direct_waits_PIPE_EOFs_exact_CID_absence_and_source_closure_qualified": true,
+  "separate_old_production_SIGTERM_RED": {
+    "actual_main_exit": -15,
+    "adopted_children": 2,
+    "final_ECHILD": true,
+    "result_sha256": "e85c7e2b1363ad6a960ee7f9c0bed632cf6d10861bcdf9eb0aeaf7f3f5e92a21"
+  },
+  "unqualified": [
+    "Installed PID1 notification and full cold shell/Sounds",
+    "Corrected signal Stop and actual unit Stop result",
+    "Generated camera/phone fixture build gates requiring explicit schema selections",
+    "Current ARM composition",
+    "Rendering-stall availability and native display cleanup",
+    "All Pixel hardware/carrier gates"
+  ],
+  "preserved_failed_setup_epochs": [
+    "Low-level compiler post-check requires Python absent in pinned image; real missing-module compiler101 independently qualified",
+    "Low-level pressure positive control could not fill implicit listener backlog within256 connections",
+    "Cargo auto-discovered submodule as standalone integration test",
+    "Actor v1 operational wrapper not executed: unavailable Python",
+    "Actor v2 compiler inherited8MiB file limit: real unchanged control failed while writing SQLite object",
+    "Actor v3 actual missing-module compiler101, host wording check fails; independently qualified without rerun",
+    "Actor/runtime first aggregate:36 integration and66 component passes,2 existing daemon-helper setup failures",
+    "Targeted recovery:2 passes and QA pass; optional generated camera check lacks explicit verified schemas"
+  ],
+  "no_raw_logs_binaries_proprietary_inputs_or_credentials_published": true
+}

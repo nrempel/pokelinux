@@ -347,6 +347,7 @@ pub fn run_with_messages_and_session(
         None,
         None,
         None,
+        None,
     )
 }
 #[allow(clippy::too_many_arguments)]
@@ -361,6 +362,7 @@ pub fn run_with_services(
     display: Option<&mut dyn crate::display::Factory>,
     camera: Option<&mut dyn crate::camera::Provider>,
     audio: Option<&mut dyn crate::audio::Provider>,
+    startup: Option<&mut dyn crate::startup::Observer>,
 ) -> io::Result<()> {
     run_with_services_inner(
         runtime,
@@ -373,6 +375,7 @@ pub fn run_with_services(
         display,
         camera,
         audio,
+        startup,
         #[cfg(test)]
         None,
     )
@@ -389,6 +392,7 @@ fn run_with_services_inner(
     mut display: Option<&mut dyn crate::display::Factory>,
     mut camera: Option<&mut dyn crate::camera::Provider>,
     mut audio: Option<&mut dyn crate::audio::Provider>,
+    mut startup: Option<&mut dyn crate::startup::Observer>,
     #[cfg(test)] mut restore: Option<&mut restore_tests::ActorControl>,
 ) -> io::Result<()> {
     if rustix::process::getuid().as_raw() != 0 || rustix::process::geteuid().as_raw() != 0 {
@@ -472,6 +476,14 @@ fn run_with_services_inner(
             // Never block on child wait, request IO, or an idle client.
             authority.reap_dead()?;
             refresh_session(&mut authority, &mut session)?;
+            if let Some(observer) = startup.as_deref_mut() {
+                let until = if stopping {
+                    None
+                } else {
+                    authority.startup_source_until(boottime_ns())
+                };
+                observer.poll(until, stopping)?;
+            }
             #[cfg(test)]
             if let Some(control) = restore.as_deref_mut() {
                 control.poll(

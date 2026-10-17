@@ -254,7 +254,9 @@ main exit0 with overall unit success. That failed aggregate is preserved. A
 source-only observer correction is frozen before any production repair; a fresh
 second run retains the before/after PID1 exit record, with no retry or replacement,
 and separates actual process retirement from operational unit status. The same
-cold success criteria still fail. No production startup or unit fix is merged.
+cold success criteria still fail. These epochs contain no production startup or
+unit repair. The later [Rust readiness implementation](native-session-startup-readiness.md)
+is qualified separately at host actor/socket boundaries, with no cold PID1 pass.
 
 The second run also confirms a distinct Stop defect: the native Stop client
 receives Ok and the owner's actual main process exits0, then the unit's configured
@@ -274,8 +276,9 @@ a nonblocking Wayland connection matching the owned compositor. Keep policy
 `ready`, unlock, permissions and successful presentation distinct. Preserve the
 original startup bound and terminal Source behavior; do not add sleeps, a new
 presentation gate, synthetic heartbeats or a renderer prerequisite. Correct the
-separate repeated Stop path against actual main-process ownership. These are
-planned corrections, not implemented results.
+separate repeated Stop path against actual main-process ownership. The later Rust
+startup notifier and notify unit are now implemented with host component proof.
+Their installed cold execution and the separate Stop correction remain open.
 
 Hash-only second-epoch selection `0fffa4dd1ad10768846ae5a07ed45cf95568c38436831c161aafe800c25a7508`;
 execution `556cc458746eb043016718e6325d384e7bf97132b8e1598adf4856762b573cbc`;

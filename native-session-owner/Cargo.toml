@@ -67,3 +67,18 @@ pokelinux-messaging = { path = "../native-messaging" }
 name = "session-runtime-setup-test-fixture"
 path = "tests/support/runtime-setup-test-fixture.rs"
 required-features = ["isolated-fixture"]
+
+[[bin]]
+name = "startup-status-test-fixture"
+path = "tests/support/startup-status-test-fixture.rs"
+required-features = ["isolated-fixture"]
+
+[[bin]]
+name = "startup-source-test-fixture"
+path = "tests/support/startup-source-test-fixture.rs"
+required-features = ["isolated-fixture"]
+
+[[test]]
+name = "startup_status"
+path = "tests/startup_status.rs"
+required-features = ["isolated-fixture"]

@@ -15,6 +15,12 @@ The other24 original cases are reused, without a39-case current aggregate.
 Host and ARM64 binaries compile; the combined original-compositor ARM session
 remains the next runtime gate.
 
+The [native Rust startup notifier](native-session-startup-readiness.md) now
+connects existing accepted Source freshness to one Main-process notification,
+with exact compositor peer/pidfd validation and nonblocking delivery. Its actor
+and Linux socket/process tests pass; notify unit metadata is selected, while
+installed PID1/cold-shell behavior and separate signal Stop remain open.
+
 ## Ownership and installation
 
 SourceOwner retains the actual compositor Child before every fallible postspawn

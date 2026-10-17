@@ -22,6 +22,11 @@ Rust remains responsible for shared phone services and ownership/recovery policy
 The graphics integration includes substantial C++; it must not be reported as
 progress porting phone services to Rust or as an all-Rust stack.
 
+Project-owned Qt clients also retain queued request, deadline and response
+validation state. Treat those as remaining Rust client-core migration work;
+Sounds is the first concrete extraction candidate after the startup/Stop path.
+Qt/QML presentation and upstream graphics stay at their native boundary.
+
 ## Current stopping point
 
 The [graphics critical-path decision](runtime-language-decision.md#graphics-critical-path)
@@ -72,8 +77,10 @@ Two actual cold installed runs now fail before Sounds: the genuine shell's
 selected Wayland connection is absent and the shell exits255 while Source still
 awaits its first sample. The second frozen observer qualifies process/VM/input
 closure while runtime and unit health remain failed. Native owner main exit0 is
-separate from a later failing unit ExecStop. Implement native Rust/systemd
-readiness and the separate Stop lifecycle correction against this actual RED;
+separate from a later failing unit ExecStop. Native Rust/systemd
+[startup readiness](native-session-startup-readiness.md) now passes actual actor
+and socket/process boundaries, with notify unit metadata. Run the installed
+PID1/cold-shell selection and complete the separate Stop lifecycle correction;
 keep the original100ms Source and120s startup bounds. See the [cold result](native-normal-upstream-tracer.md#cold-installed-startup-fails-before-sounds).
 
 The Rust [one-shot add-PDN response observer](native-radio-add-pdn-response.md)
