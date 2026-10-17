@@ -1,6 +1,6 @@
 # Omarchy smartphone goal
 
-The [native graphics resource operations](native-render-exact-buffer.md) now pass a matching normal AQ15 source/SDK build, ten existing CPU groups and four strict API checks after actual missing-interface RED. The real virtual-driver resource test remains pending. This adds no production frame, Source, ARM or phone qualification.
+The [native graphics resource operations](native-render-exact-buffer.md) pass their matching normal AQ15 build, ten existing CPU groups and four API checks after missing-interface RED. Two real-driver runs observe all five resource groups passing, but both aggregates fail a control-session check; the diagnostic identifies revocation with a queued CHANGE. Production Rust selection/prepare, normal frames, Source, ARM and phone gates remain open.
 
 The [Rust format-policy component](native-render-format-policy.md) now passes its unchanged four-group C++/Rust boundary test after a genuine missing-header structural RED. All64 existing Rust tests, five previous C++ programs, formatting, strict Clippy and Release build also pass with the same new archive. This is authored CPU capability evidence; the native adapter still uses its C++ policy, and frame preparation/execution remain unimplemented. The next graphics milestone is one integrated normal app session.
 

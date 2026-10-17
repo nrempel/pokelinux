@@ -250,4 +250,4 @@ scope and preserved setup failures.
 
 ## Exact buffer operations
 
-The [exact-buffer package](exact-buffer/README.md) adds explicit GBM/DRM resource operations and the unchanged independent tests. Qualified missing-interface RED precedes the passing matching normal library/SDK build; real driver behavior remains pending. Rust selection, production prepare/execute, normal frames and complete retirement remain open. [Report](../../docs/native-render-exact-buffer.md).
+The [exact-buffer package](exact-buffer/README.md) adds explicit GBM/DRM operations. Missing-interface RED precedes a matching normal build, ten CPU groups and four API checks. Two actual driver selections observe five passing resource groups, but both aggregates fail after a real CHANGE/revocation; complete kernel integration remains unqualified. Production Rust selection/prepare, normal frames and retirement remain open. [Report](../../docs/native-render-exact-buffer.md).

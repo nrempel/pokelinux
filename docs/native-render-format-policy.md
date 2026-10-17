@@ -100,7 +100,8 @@ refusals; do not describe all old behavior as unchanged.
 
 The [exact native allocation/import operations](native-render-exact-buffer.md)
 now pass their matching normal source/SDK build and strict API checks. Their
-real-driver behavior test is next. Connect qualified operations to production
+real-driver tests observe five passing resource groups but fail the control-session
+check on a queued CHANGE/revocation. Connect production Rust reconciliation and
 prepare/execute, then connect real client content to a normal presented frame at
 the Pixel10 display profile. Allocation and framebuffer registration are owned
 preparation; the one-shot display seal stays immediately before the actual atomic

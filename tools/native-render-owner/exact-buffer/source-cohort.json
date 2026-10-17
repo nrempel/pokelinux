@@ -1,8 +1,85 @@
 {
   "apply_after": "tools/native-render-owner/aquamarine-retained-child-custody.patch",
+  "control_failure_diagnostic": {
+    "CLI_actual_wait_exit": 1,
+    "QEMU_actual_wait_exit": 0,
+    "active_authority_context_qualified": false,
+    "actual_addfb_flags": 0,
+    "actual_cap_value": 0,
+    "actual_implicit_fourcc": "XR24",
+    "actual_implicit_height": 64,
+    "actual_implicit_pitch": 256,
+    "actual_implicit_width": 64,
+    "aggregate_passed": false,
+    "component": {
+      "bytes": 85960,
+      "sha256": "99e011929a3077afef5432ce8be7df99f6ab289fbd90431b19369dc2a3a5aab6"
+    },
+    "consumer_exit": 2,
+    "control_record_precedes_operation_rows": true,
+    "copied_control_facts": {
+      "connector_id": 0,
+      "device_generation": 1,
+      "device_lease_id": 1,
+      "pending": true,
+      "revoked": true,
+      "session_sequence": 4,
+      "transport_failed": false,
+      "type": 5
+    },
+    "execution": {
+      "bytes": 12077,
+      "sha256": "62723aead5d3a96aaccc6b54e6757956d7ac5c51a34e42e3ffc1e27b81b1aacf"
+    },
+    "failure": "no_unhandled_authority_change",
+    "native_retirement_or_frame_qualified": false,
+    "observed_operation_groups_passed": 5,
+    "owned_container_absent_same_daemon_inputs_unchanged": true,
+    "raw_log": {
+      "bytes": 2908,
+      "sha256": "d09136f6d4a29bcef6dfdfc506c4df00d8de5947b68a79a7ae13c6f9d25c8d29"
+    }
+  },
+  "failed_kernel_fixture_compile": {
+    "CLI_actual_wait_exit": 1,
+    "QEMU_actual_wait_exit": 0,
+    "aggregate_passed": false,
+    "classification": "SETUP_CLASS_MEMACCESS",
+    "compiler_exit": 1,
+    "component": {
+      "bytes": 9500,
+      "sha256": "a12f8c3fdc718bcb4376496a9a0ee38d39abafa6c2265ab264d97f47e061a82d"
+    },
+    "diagnostics": {
+      "bytes": 811,
+      "sha256": "ebe4de7fa3707327f44da6d1f4388622bce67d6f370144a6635073ad069d87c1"
+    },
+    "exact_CID_absent_same_daemon_inputs_unchanged": true,
+    "execution": {
+      "bytes": 12052,
+      "sha256": "1c571485d4001b4b0e46f758ccd5c05b0725f857a8f72c0425c7cb4a5cf83138"
+    },
+    "native_consumer_executed": false
+  },
   "full_after_source_manifest_count": 87,
   "full_before_source_manifest_count": 85,
   "full_source_map_sha256": "c3c627e863cc50cfcbebb23feaf46fea227a0abcbaf1ca70d4c5e3e66a8a6680",
+  "kernel_consumer": {
+    "all_five_operation_oracles_unchanged": true,
+    "changes": [
+      "typed metadata copy with equal-size and two trivially-copyable checks",
+      "failure-only copied facts at unchanged control-session predicate"
+    ],
+    "current": {
+      "bytes": 27710,
+      "sha256": "081e6dc2701873accb185ed4430a54f2e653b07c5f526a0cd7925f50cf813c6e"
+    },
+    "original": {
+      "bytes": 26079,
+      "sha256": "d26ba86cf3806902ecb164997e0f0f24ba9d82c9790a73128147adcae7812b07"
+    },
+    "production_source_unchanged_after_matching_build": true
+  },
   "kernel_resource_operations_qualified": false,
   "matching_NORMAL_build": {
     "QMP_EOF_separate": true,
@@ -38,6 +115,35 @@
     "testhook_definitions_present": false
   },
   "parent_public_revision": "3298302b33757a8af44ce749477ab255092c27fc",
+  "partial_kernel_observation": {
+    "CLI_actual_wait_exit": 1,
+    "QEMU_actual_wait_exit": 0,
+    "active_authority_context_qualified": false,
+    "actual_addfb_flags": 0,
+    "actual_cap_value": 0,
+    "actual_implicit_fourcc": "XR24",
+    "actual_implicit_height": 64,
+    "actual_implicit_pitch": 256,
+    "actual_implicit_width": 64,
+    "aggregate_passed": false,
+    "component": {
+      "bytes": 85734,
+      "sha256": "3d42df1b084001105c9b1d51b00a9069eadd800b5ffe00ae0f0dd66c5096bb9b"
+    },
+    "consumer_exit": 2,
+    "execution": {
+      "bytes": 12050,
+      "sha256": "087ad75e657de38e1b01916b2a0765d953579eea6a9e3657e72a793fd7bd355e"
+    },
+    "failure": "no_unhandled_authority_change",
+    "native_retirement_or_frame_qualified": false,
+    "observed_operation_groups_passed": 5,
+    "owned_container_absent_same_daemon_inputs_unchanged": true,
+    "raw_log": {
+      "bytes": 2701,
+      "sha256": "41a1836b1c47ebcad293bbf061847a33f4f68b37315990e70ae1d7ab6a22e1dc"
+    }
+  },
   "patch": {
     "bytes": 33266,
     "sha256": "74b33fd63e587b010990a2d106d7546ffac01977203d149ccc9e7b69e6b6784b"
@@ -152,10 +258,6 @@
     "current-sdk-control.cpp": {
       "bytes": 516,
       "sha256": "f4ab38d3fa4084cb3c3e4126504b4ac3f44544ef139afc55a982130dc41feb2d"
-    },
-    "exact-buffer-kernel.cpp": {
-      "bytes": 26079,
-      "sha256": "d26ba86cf3806902ecb164997e0f0f24ba9d82c9790a73128147adcae7812b07"
     },
     "missing-interface.cpp": {
       "bytes": 527,

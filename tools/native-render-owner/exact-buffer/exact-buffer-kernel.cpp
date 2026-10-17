@@ -16,6 +16,7 @@
 #include <algorithm>
 #include <array>
 #include <atomic>
+#include <bit>
 #include <cerrno>
 #include <cmath>
 #include <cstdio>
@@ -26,6 +27,7 @@
 #include <poll.h>
 #include <set>
 #include <stdexcept>
+#include <type_traits>
 #include <sys/stat.h>
 #include <sys/syscall.h>
 #include <time.h>
@@ -72,7 +74,9 @@ int duplicate(int fd) {
 }
 SSessionRenderEvent metadata(const PrSessionRenderEventV1& in) {
     static_assert(sizeof(SSessionRenderEvent)==sizeof(PrSessionRenderEventV1));
-    SSessionRenderEvent out; std::memcpy(&out,&in,sizeof(out)); return out;
+    static_assert(std::is_trivially_copyable_v<SSessionRenderEvent>);
+    static_assert(std::is_trivially_copyable_v<PrSessionRenderEventV1>);
+    return std::bit_cast<SSessionRenderEvent>(in);
 }
 bool sameRequest(const SExactBufferRequest& a,const SExactBufferRequest& b) {
     return a.request_id==b.request_id && a.mode==b.mode && a.modifier==b.modifier;
@@ -356,7 +360,24 @@ int main(int argc,char**) {
             check(rc>=0,"owned_watch_poll",true);
             for(size_t i=0;i<brokerPolls.size();++i) if(watched[i+2].revents) brokerPolls[i]->onSignal();
             if(watched[1].revents) {PrExecutorSnapshotV1 s{};(void)pr_executor_snapshot_v1(c.executor,&s);}
-            check(!c.revoked&&!broker->transportFailed()&&!broker->peekPendingRenderEvent(),"no_unhandled_authority_change",true);
+            const bool observedRevoked=c.revoked;
+            const bool observedTransportFailed=broker->transportFailed();
+            const auto observedPending=broker->peekPendingRenderEvent();
+            if(observedRevoked||observedTransportFailed||observedPending) {
+                if(observedPending) {
+                    const auto copiedMetadata=observedPending->metadata;
+                    std::printf("EXACT_BUFFER_CONTROL_FAILURE {\"revoked\":%s,\"transport_failed\":%s,\"pending\":true,\"type\":%u,\"session_sequence\":%llu,\"session_generation\":%llu,\"device_lease_id\":%llu,\"device_generation\":%llu,\"connector_id\":%u}\n",
+                        observedRevoked?"true":"false",observedTransportFailed?"true":"false",
+                        static_cast<unsigned>(copiedMetadata.type),static_cast<unsigned long long>(copiedMetadata.session_sequence),
+                        static_cast<unsigned long long>(copiedMetadata.session_generation),static_cast<unsigned long long>(copiedMetadata.device_lease_id),
+                        static_cast<unsigned long long>(copiedMetadata.device_generation),static_cast<unsigned>(copiedMetadata.connector_id));
+                } else {
+                    std::printf("EXACT_BUFFER_CONTROL_FAILURE {\"revoked\":%s,\"transport_failed\":%s,\"pending\":false}\n",
+                        observedRevoked?"true":"false",observedTransportFailed?"true":"false");
+                }
+                std::fflush(stdout);
+            }
+            check(!observedRevoked&&!observedTransportFailed&&!observedPending,"no_unhandled_authority_change",true);
         }
         check(workerTid.load()>0&&workerTid.load()!=controlTid,"observed_distinct_worker",true);
         check(now()<start+20*SECOND,"actual_operations_within_original_startup_cutoff",true);

@@ -1,50 +1,64 @@
 # Native graphics resource operations
 
-The matching normal Aquamarine library and SDK build now pass after a genuine
-missing-interface RED. All ten existing CPU groups, two retained API checks and
-two exact-operation API checks pass. Real allocation/import behavior is the next
-execution gate; no displayed app frame or phone behavior is qualified here.
+The matching normal Aquamarine library/SDK build passes after genuine
+missing-interface RED. Ten existing CPU groups and four strict API checks pass.
+Two later virtual-driver selections execute all five resource groups successfully,
+but both aggregates fail a control-session check. There is no complete kernel
+integration GREEN, active-context qualification or presented app frame here.
 
 Portable format decisions and lifecycle belong in Rust; the native adapter
-still has C++ policy awaiting replacement. This small C++ dependency patch
-performs native GBM/DRM operations and retains their objects. It uses the
-existing swapchain and framebuffer ownership rather than adding another manager.
-The [Rust format selector](native-render-format-policy.md) remains separate and
-currently refuses implicit selection; this fixture cannot grant it eligibility.
+still has C++ policy awaiting replacement. This dependency patch performs native
+GBM/DRM operations and retains objects through the existing swapchain/framebuffer
+holders. The [Rust selector](native-render-format-policy.md) remains disconnected
+from that adapter and currently refuses implicit selection. Test requests grant
+no production eligibility or display authority.
 
-The [public source and frozen tests](../tools/native-render-owner/exact-buffer/README.md)
-cover one exact allocation path, raw exported metadata, matching framebuffer
-import, explicit refusal and release. Device equality comes from actual
-`drmGetDevice2` and `drmDevicesEqual` observations. An implicit operation explicitly
-uses `gbm_bo_create` and AddFB2 flags0; an explicit operation uses exactly the
-supplied modifier and requires capability1. The returned modifier never changes
-the request mode. There is no format substitution or automatic fallback.
+The [source and tests](../tools/native-render-owner/exact-buffer/README.md) add
+explicit operations: an implicit request uses one `gbm_bo_create` and AddFB2
+flags0; an explicit request uses exactly its supplied modifier and requires
+capability1. Actual native device queries establish same-device observations.
+The raw exported modifier never changes the request mode. There is no format
+substitution, automatic fallback or retry. Failed reconfiguration preserves the
+old committed buffers/options and retains native candidates. Cached import reuse
+checks the full request, live output and backend. Exact close stores one CLOSEFB
+result without RMFB fallback; it cannot prove active scanout retirement.
 
-Holders retain native acquisitions before subsequent effects. Failed swapchain
-reconfiguration preserves the old committed buffers/options. Reuse checks the
-complete request, live output identity and options. A fresh exact buffer cannot
-enter the older framebuffer import path. Exact close records one CLOSEFB result,
-with no hidden retry or RMFB fallback. CLOSEFB success does not prove retirement
-of active scanout; this consumer only plans a never-attached registration case.
+The actual structural RED uses genuine GNU16/C++23 and the earlier normal SDK:
+control0 with no diagnostics, target1 on exactly six missing interfaces. Its
+failed aggregate is preserved. All three changed CPP files then compile into the
+new normal AQ15 library. The complete matching SDK readback includes24 regular
+files/two links. All57 distinct waits/57 PIPE EOFs close, with QMP separate,
+QEMU/CLI0, exact container absence and unchanged inputs. This build evidence is
+separate from the following real-driver observations.
 
-The actual structural RED used genuine GNU16/C++23 and the existing normal SDK:
-the control exited0 with no diagnostics, and the target exited1 on exactly six
-missing interfaces. Its failed aggregate remains preserved. After implementation,
-all three changed CPP files were compiled into the new normal AQ15 library. The
-complete matching SDK was read back, including24 regular files and two links.
-All57 distinct owned waits and57 PIPE EOFs close, with QMP EOF recorded separately,
-QEMU/CLI exit0 and the exact container absent on the same daemon. This is source,
-loader and CPU-boundary evidence, not kernel operation or presentation evidence.
+The first kernel selection stops at strict compilation: the fixture metadata
+`memcpy` triggers `-Werror=class-memaccess`. The correction uses `std::bit_cast`
+with equal-size and two trivially-copyable assertions; strict flags and all
+operation assertions remain unchanged. Seatd/native operations never ran in that
+failed first selection.
 
-The next unchanged five-group consumer uses a real seatd broker, Rust-owned
-worker and virtual DRM driver. It checks allocation/export, actual cap0 explicit
-refusal, request mismatches without import, AddFB2 plus independent GETFB2, and
-never-attached CLOSEFB/export-FD release. Its actual execution remains pending.
-Partial PRIME/GEM-close failures, explicit positive allocation and all active
-scanout retirement remain unqualified by those five groups.
+The second selection observes a real64×64 XR24 allocation, one256-byte-pitch
+export plane, cap0 explicit refusal preserving that buffer, three no-import
+request refusals, AddFB2 flags0, matching independent GETFB2 metadata and fresh
+GEM-handle close. CLOSEFB succeeds once, the registration becomes ENOENT and the
+export FD becomes EBADF after buffer release. All five resource checks pass,
+then `no_unhandled_authority_change` fails. The aggregate remains FAILED.
 
-Connect qualified operations to the Rust selection/admission and production
-prepare/execute path, then run the same normal app session through real client
-content, presentation, Sounds/PCM, permissions, live Omarchy themes, Source and
-clean shutdown. ARM evidence and the matched Pixel kernel/GPU/firmware hardware
-gates remain separate. No physical phone has been accessed.
+A third selection adds only failure observations at that same predicate. All
+five resource checks again pass. The control record reports revoked=true,
+transport_failed=false and pending=true: type5 CHANGE, sequence4 after initial
+enumeration3, same lease/device generation1, connector0. That record precedes the
+resource-operation rows; active authority during those operations is not
+qualified. The original assertion still fails. Both later selections close owned
+processes/EOF, QEMU0, CLI1, exact containers and unchanged inputs separately from
+their failed integration result. Raw receipts remain private; the public cohort
+contains source identities and compact observations.
+
+Connect the existing production Rust CHANGE reconciliation, extend Rust format
+selection for an exact implicit attempt, then implement owned prepare/execute
+and real client capture. Preserve
+the real event; do not relax the fixture to manufacture GREEN. Continue one normal
+app session through presentation, Sounds/PCM, permissions, live Omarchy themes,
+Source and clean shutdown. Explicit-positive allocation, partial PRIME/GEM-close
+failures, active scanout retirement, ARM and the matched Pixel kernel/GPU/firmware
+hardware gates remain open. No physical phone has been accessed.
