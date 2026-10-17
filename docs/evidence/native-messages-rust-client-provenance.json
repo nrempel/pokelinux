@@ -1,0 +1,372 @@
+{
+  "Root_qualification": {
+    "bytes": 6110,
+    "sha256": "b229f1d7b2cc0e283eafcc4c49e84fd5b00788e076227c6800b01e9c629b8fc1"
+  },
+  "UID11010_modes": [
+    "installed",
+    "live-appearance",
+    "messages-policy",
+    "arguments"
+  ],
+  "archive_builds": {
+    "aarch64-unknown-linux-gnu": {
+      "bytes": 25003610,
+      "sha256": "c57aabc7a81eb728278ec9341d9540bfd50d9c9de7551c08a2fba093566217a1"
+    },
+    "x86_64-unknown-linux-gnu": {
+      "bytes": 24106170,
+      "sha256": "c6123df92a185525b5dc51fbab44781b53f75219a1801084b4f4c6b8294a207a"
+    }
+  },
+  "baseline_Root_qualification": {
+    "bytes": 3248,
+    "sha256": "67ffde5d5e886e68d82ef667d595eeea9eb5e77eeb11916b6efa78f3e9596ddb"
+  },
+  "closure": {
+    "actual_host_stdout_PIPE_EOFs": 91,
+    "actual_host_waits": 91,
+    "actual_inside_regular_stderr_handles_closed": 45,
+    "actual_inside_stdout_PIPE_EOFs": 113,
+    "actual_inside_waits": 113,
+    "actual_six_explicit_binary_link_commands_each_one_archive": true
+  },
+  "compiled_sources": {
+    "native-messages-ui/CMakeLists.txt": {
+      "bytes": 4343,
+      "sha256": "566cc38299d1ac2920d9666735a81b358cade01a2f3003d0593562aafa3cebff"
+    },
+    "native-messages-ui/MessagesClient.cpp": {
+      "bytes": 8930,
+      "sha256": "15fb38e0372e1863dc8d3aeaaaeb6cee3ce63a9f43f86984c67f2e9accfa8929"
+    },
+    "native-messages-ui/MessagesClient.h": {
+      "bytes": 1199,
+      "sha256": "70e35f8e4ff19e7ff9f939e7f2c587f1350eecf9828c92ce41d4b94364c5d930"
+    },
+    "native-messages-ui/MessagesView.qml": {
+      "bytes": 2874,
+      "sha256": "e39c725fe014bf17e84a445065cbaacc093c09204f826f9068dafc22074e099c"
+    },
+    "native-messages-ui/README.md": {
+      "bytes": 2784,
+      "sha256": "85ab76b8f5cd272c9e36a2258c736863bbe7ada1ef1ed33ed29bbfb8c5fad9f2"
+    },
+    "native-messages-ui/appearance-tests/CMakeLists.txt": {
+      "bytes": 3157,
+      "sha256": "39a296caeb9eb86c6ef06195e282e85d143cd86e8d6ae490ce1d04928a794aac"
+    },
+    "native-messages-ui/appearance-tests/process.cpp": {
+      "bytes": 11377,
+      "sha256": "1183872932f04c89ba21658d8332382f9f1ea71df963c59cdb81a09013036d6e"
+    },
+    "native-messages-ui/client-core/Cargo.lock": {
+      "bytes": 2854,
+      "sha256": "6f3a254a3db007ce60a1e65b97416a804103529606c316de696dddcce1879436"
+    },
+    "native-messages-ui/client-core/Cargo.toml": {
+      "bytes": 381,
+      "sha256": "dd6cb54ff4ac64069ad5de9b45af8d7be409709a21d6a56e77f15ff316de766e"
+    },
+    "native-messages-ui/client-core/README.md": {
+      "bytes": 2473,
+      "sha256": "ce7e24caeeb64b69ad0d08c106180d3ab3127c43b8b9b481e8dab3f8423deaef"
+    },
+    "native-messages-ui/client-core/include/pokelinux_messages_client.h": {
+      "bytes": 9416,
+      "sha256": "77464323084b96c08f4d706c468f008803203e6a3182c1491f234264b84e2b0e"
+    },
+    "native-messages-ui/client-core/src/clock.rs": {
+      "bytes": 674,
+      "sha256": "4648db05efb4a170f1934946eeb1e9e093b19a93666df16f07b147e1d6e80e68"
+    },
+    "native-messages-ui/client-core/src/engine.rs": {
+      "bytes": 18264,
+      "sha256": "60df497986d35784e8228b85180275e62169cf31c16d4e79b9788d443fcdbd30"
+    },
+    "native-messages-ui/client-core/src/ffi.rs": {
+      "bytes": 7640,
+      "sha256": "d969ad3c4ede62b1e1815ea04d489fdac16d5f3c0521d4e34272bb450a2e5f3d"
+    },
+    "native-messages-ui/client-core/src/layout.rs": {
+      "bytes": 4270,
+      "sha256": "1f31e02923478711a828bb585a3ff893071dabd8f93aa5f07d522fd0a09d2759"
+    },
+    "native-messages-ui/client-core/src/lib.rs": {
+      "bytes": 151,
+      "sha256": "8bb68d21bd7d0e91722beb044eecf776fa8adae2c0fc4f96184073071bcbcbb7"
+    },
+    "native-messages-ui/client-core/src/model.rs": {
+      "bytes": 4859,
+      "sha256": "a36222def617728d366b8a5a5bd41d75694e7f74a98b909d6b03fecfd7357ce7"
+    },
+    "native-messages-ui/client-core/src/protocol.rs": {
+      "bytes": 6777,
+      "sha256": "1a87d512d481daf86737668c6e92f61fb43496117416138af4de6db850b944b7"
+    },
+    "native-messages-ui/client-core/tests/client-functional.cpp": {
+      "bytes": 24323,
+      "sha256": "c86382942c0226bd5a61bdb788a029f5642e4fc3858d6cf69fce1c7589818bb5"
+    },
+    "native-messages-ui/main.cpp": {
+      "bytes": 4598,
+      "sha256": "fd0bd9f42af7e24759c4d70cadca5e8acc8b091334710047179ac053f11f225d"
+    },
+    "native-messages-ui/org.omarchy.Messages.desktop": {
+      "bytes": 299,
+      "sha256": "e77cba1df72466dc1a6f601aaa46ff0fd35686e545691cbe6001ad457ad5051a"
+    },
+    "native-messages-ui/resources.qrc": {
+      "bytes": 83,
+      "sha256": "91df1dfa68b76ec8ae48ecee92aeb7b6413a8d4d778cedc25c3e17b9e70f9c7d"
+    },
+    "native-messages-ui/worker-tests/CMakeLists.txt": {
+      "bytes": 7100,
+      "sha256": "b3fa318af618adf869c5800bed6570c6d01cb998564ef541af1e8e1c919806a5"
+    },
+    "native-messages-ui/worker-tests/current-qt-behavior.cpp": {
+      "bytes": 14513,
+      "sha256": "4e9c6b276de58e7f5971d66076ee5b33fb73d7efabfbf773df8c50fa441be6d2"
+    },
+    "native-messages-ui/worker-tests/overflow-projection.cpp": {
+      "bytes": 9094,
+      "sha256": "d199861e78c670b29075a4476f267a356599989a9b6b1a7ab55efc80c2b6509d"
+    },
+    "native-messages-ui/worker-tests/pre-entry-join.cpp": {
+      "bytes": 6063,
+      "sha256": "5c3a40ed6f28b5f03fe7ff0ec473d371c67faae7a8a03dac400ab78463ab1a70"
+    },
+    "native-messages-ui/worker-tests/process.cpp": {
+      "bytes": 5522,
+      "sha256": "56f787b73c5da729c4cb5499dce05d7d9a08f52b510cf248b1a6f2ad4f9837e8"
+    },
+    "native-messages-ui/worker-tests/qt-order.cpp": {
+      "bytes": 29100,
+      "sha256": "7db9d60a539e803b8d586e297648cfb34dbf2dcd844f00a2d2f5dd91e26d9140"
+    },
+    "tools/native-messages-ui-worker-test.py": {
+      "bytes": 5343,
+      "sha256": "b40a661086312ebf0678477cc11ba3a481b74f8a6c8b730918c5f0f93588417b"
+    },
+    "tools/native-session-restoration/qt-client/CMakeLists.txt": {
+      "bytes": 2980,
+      "sha256": "4926d6d0fc42f6e743d5f9dcde28ccc22059740ea118dbb7bdc4809dcd2b7603"
+    },
+    "tools/native-session-restoration/qt-client/main.cpp": {
+      "bytes": 10517,
+      "sha256": "e556f8ae1e137edc60747d0aad54c14a2cdeafc3f2afeab3bd4907b6cf4c362d"
+    }
+  },
+  "counts_overlap": true,
+  "cross_configure_guard": {
+    "actual_ARM_Qt_application_qualified": false,
+    "actual_configure_exit": 1,
+    "exact_expected_diagnostic": "Cross builds require an explicit pinned Messages client archive for the matching target",
+    "qualified_matching_target_archive_guard": true,
+    "scope": "forced Linux/aarch64 CMake configure only; existing native compiler/Qt search"
+  },
+  "current_Qt_modes": 6,
+  "default_full_app": {
+    "bytes": 5739264,
+    "sha256": "4f12c593955e2f00d45de01758cd9bebd74d70e32d57fb9288bd9a9743913d71"
+  },
+  "existing_worker_cases": 7,
+  "explicit_full_app": {
+    "bytes": 5739264,
+    "sha256": "e4ae8a9cf7cd3853ec26c538a539682058f36587ae75fdad3222c4ae566f6040"
+  },
+  "final_phases": {
+    "Appearance-29": {
+      "actual_host_PIPE_EOFs": 13,
+      "actual_host_waits": 13,
+      "actual_inside_PIPE_EOFs": 34,
+      "actual_inside_waits": 34,
+      "execution": {
+        "bytes": 30753,
+        "sha256": "4b0ad993ee1e66238e1ecfdfd82644df6d8563c1ffa9101dbfd0b0baa972d920"
+      },
+      "inside": {
+        "bytes": 109371,
+        "sha256": "77b26d63b98b9e9657844a9f623afba9ad18e4ce85caf70791722b5d5c635676"
+      },
+      "regular_stderr_handles_closed": 29
+    },
+    "Default-native-CMake": {
+      "actual_host_PIPE_EOFs": 13,
+      "actual_host_waits": 13,
+      "actual_inside_PIPE_EOFs": 11,
+      "actual_inside_waits": 11,
+      "execution": {
+        "bytes": 23532,
+        "sha256": "65e95aa8fab5f372658cc2e043a2baa6006f7feb75f6ade5201ad9bedc8a6e65"
+      },
+      "inside": {
+        "bytes": 12448,
+        "sha256": "fb0680ae90952b591d85cec797b007c496e097ec3ac8fe44cc1c592a2f42596f"
+      },
+      "regular_stderr_handles_closed": 0
+    },
+    "Messages-UID11010": {
+      "actual_host_PIPE_EOFs": 13,
+      "actual_host_waits": 13,
+      "actual_inside_PIPE_EOFs": 13,
+      "actual_inside_waits": 13,
+      "execution": {
+        "bytes": 24625,
+        "sha256": "ae724c00b545f7a60ee31787cee88519536bb9ca836cc603f41db0dcdfdcd91d"
+      },
+      "inside": {
+        "bytes": 15478,
+        "sha256": "a165ccd8f57dbabcaa081860ea997b876b1de735f79b2c8e3b82fd46377ada02"
+      },
+      "regular_stderr_handles_closed": 4
+    },
+    "Overflow-Rust": {
+      "actual_host_PIPE_EOFs": 13,
+      "actual_host_waits": 13,
+      "actual_inside_PIPE_EOFs": 7,
+      "actual_inside_waits": 7,
+      "execution": {
+        "bytes": 22784,
+        "sha256": "a80fecf4223b70c27acab845ab0771e950f0ef3f752f4ade0d2a93d606a12c30"
+      },
+      "inside": {
+        "bytes": 8727,
+        "sha256": "2b76dc4ef5118f08821890e6ebcd2c09957c64068810af7e0654d1e0632aa763"
+      },
+      "regular_stderr_handles_closed": 1
+    },
+    "Qt-core-and-current": {
+      "actual_host_PIPE_EOFs": 13,
+      "actual_host_waits": 13,
+      "actual_inside_PIPE_EOFs": 37,
+      "actual_inside_waits": 37,
+      "execution": {
+        "bytes": 30039,
+        "sha256": "81d802b808450776c4cef002fbf87d08d1f0a8c268d5c4d60f27b3b408a39cf6"
+      },
+      "inside": {
+        "bytes": 58557,
+        "sha256": "36a911afa1e58785b319fbc80b4e091f8cc2aa35fa39f58153ec5decb276cfcc"
+      },
+      "regular_stderr_handles_closed": 6
+    },
+    "Qt-native-order": {
+      "actual_host_PIPE_EOFs": 13,
+      "actual_host_waits": 13,
+      "actual_inside_PIPE_EOFs": 11,
+      "actual_inside_waits": 11,
+      "execution": {
+        "bytes": 24031,
+        "sha256": "ab884e0925881d5e0d271e947ce8db47d2911f33f13fb24a15c8522f22b4c5d2"
+      },
+      "inside": {
+        "bytes": 17469,
+        "sha256": "e4f022c5f36e2afc58a62636691296b2de216294efbb5c90a42057422689bd54"
+      },
+      "regular_stderr_handles_closed": 5
+    },
+    "Rust-QA": {
+      "actual_host_PIPE_EOFs": 13,
+      "actual_host_waits": 13,
+      "execution": {
+        "bytes": 24632,
+        "sha256": "f2f6c5a56b15695434473d054567ccdc9dbc90b8990e2e0ee36906648642bb11"
+      }
+    }
+  },
+  "frozen_C_ABI_groups": 9,
+  "frozen_actual_Qt_order_cases": 5,
+  "frozen_consumer": {
+    "bytes": 24322,
+    "sha256": "18b0da3f161f45fc0e7d0d5c4119b13299fd0ea9255a6ef491e76caebc20bd34"
+  },
+  "frozen_header": {
+    "bytes": 9416,
+    "sha256": "77464323084b96c08f4d706c468f008803203e6a3182c1491f234264b84e2b0e"
+  },
+  "host_Qt": "6.8.2",
+  "implementation_base": "63ef2214ac244e812dc9c453c6b0a66bf81ca43b",
+  "independent_baseline_review": {
+    "bytes": 16619,
+    "sha256": "f35a5fa3196931f855300dfcea2f174a40610c163e482a4d896b7253bd6b92f7"
+  },
+  "independent_source_differential_review": {
+    "bytes": 8897,
+    "sha256": "caca0ef7c3bb1d194117b875ad5089a607571a5f6c5a8ac5001ca0ad859f4b95"
+  },
+  "named_open_refinements": [
+    "Exact denied fallback can conservatively classify an invalid page/overflow differently from old Qt; no authority or model publication results."
+  ],
+  "normal_successful_main_GUI_ARM_Qt_or_phone_qualified": false,
+  "original_dispositions": [
+    0,
+    0,
+    0,
+    -6,
+    -6,
+    0,
+    0
+  ],
+  "overflow_RED": {
+    "bytes": 788,
+    "sha256": "b003cbefcc3a1f3708a2ad49d41ee89df2d728b46679be61df39abef38e9a2d7"
+  },
+  "overflow_original_reference": {
+    "bytes": 1764,
+    "sha256": "8bf303da0777dc26d3318456d660af4fe420aacc9a8c1d11b537d25373d96fd7"
+  },
+  "parser_rows": {
+    "fixed": 37,
+    "new_observation_results": [
+      0,
+      0,
+      0
+    ],
+    "observations": 3,
+    "old_observation_results": [
+      1,
+      1,
+      0
+    ]
+  },
+  "permanent_CTest_cases": 13,
+  "post_build_documentation_changes": {
+    "native-messages-ui/README.md": {
+      "current": {
+        "bytes": 3825,
+        "sha256": "f5fb8ac1553ae5d677c6b3a8430b6e26313cab07700854afbec5cc0ef7f38d09"
+      },
+      "tested": {
+        "bytes": 2784,
+        "sha256": "85ab76b8f5cd272c9e36a2258c736863bbe7ada1ef1ed33ed29bbfb8c5fad9f2"
+      }
+    }
+  },
+  "pre_entry_GREEN": {
+    "bytes": 731,
+    "sha256": "4876d5d13d0d389a43d62ff0b115a41e24f819dfa7d30c5f7f882015261328d1"
+  },
+  "pre_entry_RED": {
+    "bytes": 538,
+    "sha256": "42d3d3a232462d4a3cec7dc4a2c518ac3715e5864e565e164941ea0409477cfb"
+  },
+  "remaining_gates": [
+    "ARM execution and complete matching ARM Qt application",
+    "cold installed Omarchy/session/window composition",
+    "appearance client Rust migration",
+    "real suspend and uninterruptible tasks",
+    "native display cleanup",
+    "vendor modem/SMS send or continuous incoming/notifications/wake/carrier/Pixel hardware"
+  ],
+  "rust_unit_cases": 3,
+  "schema": 1,
+  "scope": "Full Messages Rust engine: native host component/real Qt socket-thread/default package checks, plus distinct ARM64 archive build. No GUI window, ARM execution or phone qualification.",
+  "shared_appearance_cases": 29,
+  "source_manifest": {
+    "bytes": 10774,
+    "sha256": "26df5e70947f62771b1d535cf49fb24dd8527ee87754da83c2a78b48da8671be"
+  },
+  "structural_RED": "Current consumer object compiles with assertions; actual old library lacks exactly twelve exports. No baseline semantic-bug claim.",
+  "window_created": false
+}

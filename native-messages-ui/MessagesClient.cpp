@@ -1,95 +1,185 @@
 #include "MessagesClient.h"
 #include <QJsonDocument>
 #include <QJsonArray>
-#include <QJsonObject>
-#include <QRegularExpression>
+#include <QJsonParseError>
 #include <QMetaObject>
+#include <QThread>
+#include <algorithm>
+#include <cerrno>
+#include <cstdlib>
+#include <cstring>
+#include <limits>
+#include <utility>
+#include <poll.h>
 #include <sys/socket.h>
 #include <sys/un.h>
-#include <poll.h>
 #include <unistd.h>
-#include <time.h>
-#include <cstring>
-#include <chrono>
-#include <thread>
-#include <optional>
-#include <limits>
-#include <cstdlib>
-#include <QThread>
 namespace {
-std::optional<quint64> now(){
- timespec t{};
- if(clock_gettime(CLOCK_BOOTTIME,&t)!=0||t.tv_sec<0||t.tv_nsec<0||t.tv_nsec>=1000000000)return {};
- const auto seconds=quint64(t.tv_sec), nanos=quint64(t.tv_nsec);
- if(seconds>(std::numeric_limits<quint64>::max()-nanos)/1000000000)return {};
- return seconds*1000000000+nanos;
+void result(int32_t code){
+ // Refusal/expiry can themselves produce a terminal plan. Always drive that
+ // plan; a refused report never releases a native descriptor or thread.
+ if(code<PR_MESSAGES_OK||code>PR_MESSAGES_ABORT||code==PR_MESSAGES_INVALID||code==PR_MESSAGES_ABORT)std::abort();
 }
-bool current(const std::atomic<bool>&stopped,quint64 until){const auto sample=now();return !stopped&&sample&&*sample<until;}
-bool id(const QString&s){return QRegularExpression("^[0-9a-f]{32}$").match(s).hasMatch();}
-QByteArray exchange(int fd,const QByteArray &request,pid_t server,const std::atomic<bool>&stopped){
- const auto began=now();
- if(stopped||!began||*began>std::numeric_limits<quint64>::max()-1000000000)return {};
- const auto until=*began+1000000000;
- bool sent=false;
- while(current(stopped,until)){const auto n=send(fd,request.constData(),size_t(request.size()),MSG_NOSIGNAL|MSG_DONTWAIT);if(n==request.size()){sent=true;break;}if(n<0&&(errno==EAGAIN||errno==EINTR)){pollfd p{fd,POLLOUT,0};poll(&p,1,20);continue;}return {};}
- if(!sent)return {};
- while(current(stopped,until)){char bytes[4096];alignas(cmsghdr) char control[CMSG_SPACE(sizeof(ucred))+CMSG_SPACE(sizeof(int))];iovec v{bytes,sizeof(bytes)};msghdr msg{};msg.msg_iov=&v;msg.msg_iovlen=1;msg.msg_control=control;msg.msg_controllen=sizeof(control);
-  const auto n=recvmsg(fd,&msg,MSG_DONTWAIT|MSG_CMSG_CLOEXEC);if(n<0&&(errno==EAGAIN||errno==EINTR)){pollfd p{fd,POLLIN,0};poll(&p,1,20);continue;}if(n<=0)return {};
-  bool trusted=false,seenCredential=false,invalid=msg.msg_flags&(MSG_TRUNC|MSG_CTRUNC);for(auto*c=CMSG_FIRSTHDR(&msg);c;c=CMSG_NXTHDR(&msg,c)){if(c->cmsg_level==SOL_SOCKET&&c->cmsg_type==SCM_CREDENTIALS&&c->cmsg_len==CMSG_LEN(sizeof(ucred))&&!seenCredential){seenCredential=true;ucred u{};memcpy(&u,CMSG_DATA(c),sizeof(u));trusted=u.uid==0&&u.pid==server;}else{invalid=true;if(c->cmsg_level==SOL_SOCKET&&c->cmsg_type==SCM_RIGHTS){const auto count=(c->cmsg_len-CMSG_LEN(0))/sizeof(int);auto*f=reinterpret_cast<int*>(CMSG_DATA(c));for(size_t i=0;i<count;i++)close(f[i]);}}}
-  if(!trusted||invalid||!current(stopped,until)) { return {}; }
-  return QByteArray(bytes,int(n));
- }return {};
+struct NativeSocket {
+ int fd=-1;
+ pid_t server=0;
+ void close(){
+  if(fd<0)return;
+  const int owned=fd;fd=-1;server=0;
+  // Linux releases a close(EINTR) descriptor; retry could close a reused fd.
+  if(::close(owned)<0&&errno!=EINTR)std::abort();
+ }
+ ~NativeSocket(){close();}
+};
+void pollNative(int fd,short events,const PrMessagesStepV1 &plan){
+ if(plan.wait_slice_ms==0||plan.wait_slice_ms>20)std::abort();
+ pollfd descriptor{fd,events,0};
+ ::poll(&descriptor,1,int(plan.wait_slice_ms));
+}
+QVariantList project(const uint8_t *bytes,uint32_t length){
+ if(length>4096)std::abort();
+ QJsonParseError error{};
+ const auto document=QJsonDocument::fromJson(QByteArray(reinterpret_cast<const char*>(bytes),int(length)),&error);
+ if(error.error!=QJsonParseError::NoError||!document.isArray())std::abort();
+ return document.array().toVariantList();
+}
+bool authenticated(const msghdr &message,pid_t server){
+ bool valid=(message.msg_flags&(MSG_TRUNC|MSG_CTRUNC))==0;
+ bool seen=false,trusted=false;
+ // The kernel supplies ancillary framing; reject every unexpected record and
+ // close every delivered rights descriptor, including truncated refusals.
+ auto copy=message;
+ for(auto *c=CMSG_FIRSTHDR(&copy);c;c=CMSG_NXTHDR(&copy,c)){
+  if(c->cmsg_level==SOL_SOCKET&&c->cmsg_type==SCM_CREDENTIALS&&c->cmsg_len==CMSG_LEN(sizeof(ucred))&&!seen){
+   seen=true;ucred actual{};std::memcpy(&actual,CMSG_DATA(c),sizeof(actual));trusted=actual.uid==0&&actual.pid==server;
+  }else{
+   valid=false;
+   if(c->cmsg_level==SOL_SOCKET&&c->cmsg_type==SCM_RIGHTS&&c->cmsg_len>=CMSG_LEN(0)){
+    const auto count=(c->cmsg_len-CMSG_LEN(0))/sizeof(int);
+    for(size_t i=0;i<count;++i){int delivered=-1;std::memcpy(&delivered,CMSG_DATA(c)+i*sizeof(int),sizeof(delivered));if(delivered>=0)::close(delivered);}
+   }
+  }
+ }
+ return valid&&seen&&trusted;
 }
 }
-MessagesClient::MessagesClient(QString socket,QObject*parent):QObject(parent){thread=QThread::create([this,socket]{loop(socket);});thread->start();}
+MessagesClient::MessagesClient(QString socket,QObject *parent):QObject(parent){
+ if(pr_messages_client_new_v1(&core)!=PR_MESSAGES_OK||!core)std::abort();
+ thread=QThread::create([this,socket]{loop(socket);});
+ if(!thread)std::abort();
+ thread->start();
+}
 MessagesClient::~MessagesClient(){
- stopped=true;
- const auto began=now();
- // A successful wait synchronizes complete thread exit, including TLS cleanup.
- // Never enter QThread::create's implicitly waiting destructor with uncertain ownership.
- if(!began||*began>std::numeric_limits<quint64>::max()-500000000){
-  if(!thread->wait(20))std::abort();
- }else{
-  const auto until=*began+500000000;
-  while(!thread->wait(20)){
-   const auto sample=now();
-   if(!sample||*sample>=until)std::abort();
-  }
+ if(pr_messages_client_stop_v1(core)!=PR_MESSAGES_OK)std::abort();
+ for(;;){
+  const bool completed=thread->wait(20);
+  const auto verdict=pr_messages_client_join_result_v1(core,completed?1:0);
+  if(verdict==PR_MESSAGES_OK)break;
+  if(verdict!=PR_MESSAGES_WAIT)std::abort();
  }
- delete thread;
+ delete thread;thread=nullptr;
+ if(pr_messages_client_free_v1(core)!=PR_MESSAGES_OK)std::abort();
+ core=nullptr;
 }
-void MessagesClient::select(const QString&v){if(!id(v))return;{std::lock_guard<std::mutex>g(requests);selected=v;after=0;requestGeneration++;}texts.clear();emit changed();}
-void MessagesClient::nextPage(){if(texts.isEmpty())return;{std::lock_guard<std::mutex>g(requests);after=texts.last().toMap()["ordinal"].toULongLong();requestGeneration++;}texts.clear();emit changed();}
-void MessagesClient::firstPage(){{std::lock_guard<std::mutex>g(requests);after=0;requestGeneration++;}texts.clear();emit changed();}
-void MessagesClient::nextConversations(){if(convo.isEmpty())return;{std::lock_guard<std::mutex>g(requests);conversationAfter=convo.last().toMap()["id"].toString();selected.clear();after=0;requestGeneration++;}convo.clear();texts.clear();emit changed();}
-void MessagesClient::firstConversations(){{std::lock_guard<std::mutex>g(requests);conversationAfter.clear();selected.clear();after=0;requestGeneration++;}convo.clear();texts.clear();emit changed();}
-void MessagesClient::loop(const QString &path){
- int fd=-1;pid_t server=0;bool conversation=true;
- while(!stopped){
-  if(fd<0){fd=socket(AF_UNIX,SOCK_SEQPACKET|SOCK_CLOEXEC|SOCK_NONBLOCK,0);sockaddr_un addr{};addr.sun_family=AF_UNIX;const auto p=path.toLocal8Bit();if(fd<0||p.size()>=int(sizeof(addr.sun_path))){if(fd>=0)close(fd);return;}memcpy(addr.sun_path,p.constData(),size_t(p.size())+1);
-   int one=1;setsockopt(fd,SOL_SOCKET,SO_PASSCRED,&one,sizeof(one));ucred peer{};socklen_t length=sizeof(peer);if(::connect(fd,reinterpret_cast<sockaddr*>(&addr),sizeof(addr))||getsockopt(fd,SOL_SOCKET,SO_PEERCRED,&peer,&length)||peer.uid!=0){close(fd);fd=-1;std::this_thread::sleep_for(std::chrono::milliseconds(100));continue;}server=peer.pid;
-  }
-  QString chosen,cursor;quint64 ordinal,generation;{std::lock_guard<std::mutex>g(requests);chosen=selected;cursor=conversationAfter;ordinal=after;generation=requestGeneration;}
-  QJsonObject query;if(conversation||chosen.isEmpty())query={{"query","conversations"},{"after",cursor.isEmpty()?QJsonValue(QJsonValue::Null):QJsonValue(cursor)},{"limit",8}};else query={{"query","messages"},{"conversation",chosen},{"after_ordinal",qint64(ordinal)},{"limit",2}};
-  const auto data=exchange(fd,QJsonDocument(QJsonObject{{"op","messages_read"},{"request",QJsonObject{{"query",query},{"ttl_ms",1000}}}}).toJson(QJsonDocument::Compact),server,stopped);
-  if(data.isEmpty()){close(fd);fd=-1;}
-  if(stopped)break;
-  QMetaObject::invokeMethod(this,[this,data,generation]{std::lock_guard<std::mutex>g(requests);if(generation==requestGeneration)apply(data);},Qt::QueuedConnection);
-  conversation=!conversation;for(int i=0;i<25&&!stopped;i++)std::this_thread::sleep_for(std::chrono::milliseconds(10));
+void MessagesClient::sync(){
+ PrMessagesViewV1 view{};
+ if(pr_messages_client_view_v1(core,&view)!=PR_MESSAGES_OK)std::abort();
+ if(view.model_revision==projectedRevision)return;
+ auto conversations=project(view.conversations_json,view.conversations_length);
+ auto messages=project(view.messages_json,view.messages_length);
+ QString status;
+ switch(view.status){
+  case PR_MESSAGES_UNAVAILABLE:status="Messages unavailable";break;
+  case PR_MESSAGES_HISTORY:status="Local receipt history · modem receive and send unavailable";break;
+  case PR_MESSAGES_DENIED:status="Messages access denied";break;
+  default:std::abort();
  }
- if(fd>=0)close(fd);
-}
-void MessagesClient::apply(const QByteArray&wire){
- const auto value=QJsonDocument::fromJson(wire).object();const auto kind=value["page"].toString();const auto items=value["items"].toArray();bool valid=wire.size()<=4096&&value["items"].isArray()&&(kind=="conversations"||kind=="messages");
- valid=valid&&items.size()<=(kind=="conversations"?8:2);QVariantList out;
- for(const auto&v:items){const auto m=v.toObject();const auto sender=m["sender"].toString();valid=valid&&v.isObject()&&!sender.isEmpty()&&sender.toUtf8().size()<=64;
-  if(kind=="conversations"){valid=valid&&id(m["id"].toString())&&m["slot"].toInt(-1)>=0&&m["slot"].toInt()>-1&&m["slot"].toInt()<8;}
-  else{valid=valid&&id(m["receipt"].toString())&&m["text"].isString()&&m["text"].toString().toUtf8().size()<=640&&m["ordinal"].toInteger(-1)>0&&m["ordinal"].toInteger()>0&&m["ordinal"].toInteger()<=4096;}
-  out.append(m.toVariantMap());
- }
- if(!valid){convo.clear();texts.clear();currentStatus=value["result"].toString()=="denied"?"Messages access denied":"Messages unavailable";emit changed();return;}
- currentStatus="Local receipt history · modem receive and send unavailable";
- if(kind=="conversations"){convo=out;if(selected.isEmpty()&&!out.isEmpty()){selected=out.first().toMap()["id"].toString();after=0;}}
- else texts=out;
+ convo=std::move(conversations);texts=std::move(messages);currentStatus=std::move(status);
+ projectedRevision=view.model_revision; // Set before reentrant changed handlers.
  emit changed();
+}
+void MessagesClient::action(uint32_t kind,const PrMessagesIdV1 *id){
+ result(pr_messages_client_action_v1(core,kind,id));sync();
+}
+void MessagesClient::select(const QString &value){
+ const auto bytes=value.toUtf8();PrMessagesIdV1 id{};
+ id.length=uint32_t(std::min<quint64>(quint64(bytes.size()),std::numeric_limits<uint32_t>::max()));
+ std::memcpy(id.bytes,bytes.constData(),std::min<size_t>(sizeof(id.bytes),size_t(bytes.size())));
+ // Rust decides exact length/hex syntax; this only bounds the copied ABI input.
+ const auto code=pr_messages_client_action_v1(core,PR_MESSAGES_SELECT,&id);
+ if(code==PR_MESSAGES_INVALID)return;
+ result(code);sync();
+}
+void MessagesClient::nextPage(){action(PR_MESSAGES_NEXT_MESSAGES);}
+void MessagesClient::firstPage(){action(PR_MESSAGES_FIRST_MESSAGES);}
+void MessagesClient::nextConversations(){action(PR_MESSAGES_NEXT_CONVERSATIONS);}
+void MessagesClient::firstConversations(){action(PR_MESSAGES_FIRST_CONVERSATIONS);}
+void MessagesClient::loop(const QString &path){
+ NativeSocket native;
+ if(pr_messages_client_worker_enter_v1(core)!=PR_MESSAGES_OK)std::abort();
+ const auto encoded=path.toLocal8Bit();
+ for(;;){
+  PrMessagesStepV1 plan{};
+  const auto status=pr_messages_client_step_v1(core,&plan);
+  if(status==PR_MESSAGES_WAIT){QThread::yieldCurrentThread();continue;}
+  if(status!=PR_MESSAGES_OK||plan.reserved!=0)std::abort();
+  switch(plan.action){
+   case PR_MESSAGES_CONNECT:{
+    if(native.fd>=0)std::abort();
+    sockaddr_un address{};address.sun_family=AF_UNIX;
+    if(encoded.size()>=int(sizeof(address.sun_path))){result(pr_messages_client_report_v1(core,&plan,PR_MESSAGES_PATH_REFUSED,0));break;}
+    native.fd=::socket(AF_UNIX,SOCK_SEQPACKET|SOCK_CLOEXEC|SOCK_NONBLOCK,0);
+    int one=1;ucred peer{};socklen_t size=sizeof(peer);
+    std::memcpy(address.sun_path,encoded.constData(),size_t(encoded.size())+1);
+    if(native.fd<0||setsockopt(native.fd,SOL_SOCKET,SO_PASSCRED,&one,sizeof(one))||::connect(native.fd,reinterpret_cast<sockaddr*>(&address),sizeof(address))||getsockopt(native.fd,SOL_SOCKET,SO_PEERCRED,&peer,&size)||size!=sizeof(peer)||peer.uid!=0||peer.pid<=0){
+     native.close();result(pr_messages_client_report_v1(core,&plan,PR_MESSAGES_CONNECT_FAILED,0));break;
+    }
+    native.server=peer.pid;
+    result(pr_messages_client_report_v1(core,&plan,PR_MESSAGES_CONNECTED,0));break;
+   }
+   case PR_MESSAGES_SEND:{
+    if(native.fd<0||plan.packet_length==0||plan.packet_length>sizeof(plan.packet))std::abort();
+    const auto sent=::send(native.fd,plan.packet,plan.packet_length,MSG_NOSIGNAL|MSG_DONTWAIT);
+    if(sent==ssize_t(plan.packet_length)){result(pr_messages_client_report_v1(core,&plan,PR_MESSAGES_SENT,uint32_t(sent)));break;}
+    if(sent<0&&(errno==EAGAIN||errno==EWOULDBLOCK||errno==EINTR)){
+     const auto outcome=errno==EINTR?PR_MESSAGES_INTERRUPTED:PR_MESSAGES_WOULD_BLOCK;
+     result(pr_messages_client_report_v1(core,&plan,outcome,0));pollNative(native.fd,POLLOUT,plan);break;
+    }
+    result(pr_messages_client_report_v1(core,&plan,PR_MESSAGES_IO_FAILED,0));break;
+   }
+   case PR_MESSAGES_RECEIVE:{
+    if(native.fd<0)std::abort();
+    uint8_t bytes[4096];alignas(cmsghdr) char ancillary[CMSG_SPACE(sizeof(ucred))+CMSG_SPACE(sizeof(int))]{};
+    iovec vector{bytes,sizeof(bytes)};msghdr message{};message.msg_iov=&vector;message.msg_iovlen=1;message.msg_control=ancillary;message.msg_controllen=sizeof(ancillary);
+    const auto received=::recvmsg(native.fd,&message,MSG_DONTWAIT|MSG_CMSG_CLOEXEC);
+    if(received<0&&(errno==EAGAIN||errno==EWOULDBLOCK||errno==EINTR)){
+     const auto outcome=errno==EINTR?PR_MESSAGES_INTERRUPTED:PR_MESSAGES_WOULD_BLOCK;
+     result(pr_messages_client_report_v1(core,&plan,outcome,0));pollNative(native.fd,POLLIN,plan);break;
+    }
+    const bool trusted=received>=0&&authenticated(message,native.server);
+    if(received<=0||!trusted){result(pr_messages_client_report_v1(core,&plan,PR_MESSAGES_IO_FAILED,0));break;}
+    result(pr_messages_client_received_v1(core,&plan,bytes,uint32_t(received)));break;
+   }
+   case PR_MESSAGES_NOTIFY:{
+    const auto token=plan.event_token;
+    if(QMetaObject::invokeMethod(this,[this,token]{if(core){result(pr_messages_client_deliver_v1(core,token));sync();}},Qt::QueuedConnection)){
+     result(pr_messages_client_report_v1(core,&plan,PR_MESSAGES_NOTIFY_QUEUED,0));
+    }else if(pr_messages_client_stop_v1(core)!=PR_MESSAGES_OK){std::abort();}
+    break;
+   }
+   case PR_MESSAGES_SLEEP:
+    if(plan.wait_slice_ms==0||plan.wait_slice_ms>10)std::abort();
+    QThread::msleep(plan.wait_slice_ms);break;
+   case PR_MESSAGES_CLOSE:
+    native.close();result(pr_messages_client_report_v1(core,&plan,PR_MESSAGES_CLOSED,0));break;
+   case PR_MESSAGES_EXIT:{
+    const bool unexpectedDescriptor=native.fd>=0;
+    native.close();
+    if(unexpectedDescriptor)std::abort();
+    if(pr_messages_client_worker_exited_v1(core)!=PR_MESSAGES_OK)std::abort();
+    return;
+   }
+   default:std::abort();
+  }
+ }
 }

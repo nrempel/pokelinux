@@ -37,8 +37,21 @@ native run failed by latching an early Qt size before normal configure; preserve
 it. A stronger same-PID Qt/native-size predicate passes within the original30s
 frame cutoff, retaining both stability assertions and every original audio group.
 No production client change or old-result inheritance supplies that GREEN.
-Cold installed startup and ARM integration remain open. Messages and appearance
-client logic still require Rust migration; retain Qt presentation.
+Cold installed startup and ARM integration remain open.
+
+The [Messages engine](native-messages-rust-client.md) now owns its full request,
+parser/model, pagination, stale generations, scheduling, FIFO/ACK and shutdown
+verdict in Rust. Nine frozen C ABI groups, seven original worker controls, six
+current-Qt modes/40 rows, five real-thread ordering groups,13 permanent CTest
+cases, all29 appearance and UID11010 installed-QML/no-window controls pass.
+Strict Rust checks, optimized host/ARM64 archives and native default
+Cargo/CMake/CTest/full-app linking pass. Actual pre-entry false-wait RED and
+whole-client numeric-overflow RED precede Rust repairs; retain both failures.
+The final seven phases close91 host and113 inside waits/PIPE EOFs, with45
+separate regular stderr closes. This does not qualify ARM execution or a new
+normal window. Shared appearance-client Rust migration and ordinary cold/app
+composition remain; retain Qt presentation. Extra conservative parser-error
+classification refinements are parked; no exhaustive Qt equivalence is claimed.
 
 The [later finite fd metadata epoch](native-callback-spans.md#later-finite-file-descriptor-metadata-samples)
 still fails cold startup. Two existing-watch proc samples complete before Source1;

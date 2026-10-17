@@ -1,5 +1,8 @@
 # Native Messages UI
 
+The [Rust client engine](../docs/native-messages-rust-client.md) owns requests,
+validation, models, pagination, generations, scheduling and worker-lifetime
+decisions. Qt keeps its native socket/thread edge and QObject/QML presentation.
 The normal UID11010 QtQuick app reads bounded local history through the lifecycle
 actor and receives schema3 appearance through `PhoneAppearanceClient` and the
 installed `PhoneAppearance.qml`. Main and CMake select that shared typed path;
@@ -33,15 +36,32 @@ CMake installs the normal app, desktop file and shared `PhoneAppearance.qml`.
 `MESSAGES_ISOLATED_OBSERVER` defaults off; its capture controls belong only to
 explicit disposable qualification builds.
 
-The pinned appearance epoch builds/stages the normal x86 ELF with Qt6.8.2,
-Release and warnings as errors. Actual UID11010 production clients, installed
-QML and authored root SEQPACKET peers qualify palette updates, unavailability,
-Messages denial clearing and literal text delegates without a window. Three
-frozen RED invocations share the same missing-QML prerequisite; they are not
-three independent defects. The matching GREEN passes those exact cases and four
-normal-main argc/UID64/65 controls. Only those pre-QGui refusal paths execute in
-normal main; its successful six-argument GUI path remains unexecuted. Prior29
-appearance cases are reused by exact shared-source pins, not rerun.
+Current host qualification builds/stages the full Release app with Qt6.8.2 and
+warnings as errors. Nine frozen C ABI groups, seven original worker controls,
+six current-Qt modes/40 rows, five real-thread ordering groups and13 permanent
+CTest cases pass. All29 shared appearance cases are rerun. Actual UID11010
+clients, installed QML, live appearance and denial/literal-text controls pass
+without a window, as do four normal-main argument/UID refusal controls. The
+successful six-argument normal-main GUI path remains unexecuted in this epoch.
+
+Native default builds invoke locked/offline Cargo; dependencies must already be
+cached. An explicit archive requires its SHA256, and cross builds require a
+pinned matching-target archive. The ARM64 archive build does not qualify an ARM
+Qt app. CMake compiles the public header; it does not install an FFI SDK.
+
+The permanent native Qt regressions use authored root peers in a disposable test
+environment. Build and run their13 CTest cases there:
+
+```sh
+cmake -S native-messages-ui/worker-tests -B messages-worker-build -DCMAKE_BUILD_TYPE=Release
+cmake --build messages-worker-build
+ctest --test-dir messages-worker-build --output-on-failure
+```
+
+The original seven clock/wait worker controls retain their separate classifier
+in `tools/native-messages-ui-worker-test.py`; expected abort controls are not
+ordinary exit-zero tests. The full [report](../docs/native-messages-rust-client.md)
+separates actual C ABI, Qt, default-build and hardware evidence.
 
 See the [session composition report](../docs/native-messages-session-composition.md)
 for the separate current-owner release completion, host components and historical

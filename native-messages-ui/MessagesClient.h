@@ -2,9 +2,9 @@
 #include <QObject>
 #include <QVariantList>
 #include <QString>
-#include <atomic>
-#include <mutex>
+#include "pokelinux_messages_client.h"
 class QThread;
+// Rust owns the request/model engine. Qt owns presentation and the native edge.
 class MessagesClient final: public QObject {
  Q_OBJECT
  Q_PROPERTY(QVariantList conversations READ conversations NOTIFY changed)
@@ -24,8 +24,11 @@ public:
 signals: void changed();
 private:
  void loop(const QString &socket);
- void apply(const QByteArray &wire);
- std::atomic<bool> stopped{false};QThread *thread=nullptr;
- std::mutex requests;QString selected,conversationAfter;quint64 after=0,requestGeneration=0;
- QVariantList convo,texts;QString currentStatus="Messages unavailable";
+ void action(uint32_t kind,const PrMessagesIdV1 *id=nullptr);
+ void sync();
+ PrMessagesClient *core=nullptr;
+ QThread *thread=nullptr;
+ uint64_t projectedRevision=0;
+ QVariantList convo,texts;
+ QString currentStatus="Messages unavailable";
 };

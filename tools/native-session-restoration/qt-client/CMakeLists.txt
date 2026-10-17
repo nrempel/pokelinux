@@ -5,12 +5,45 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
 find_package(Qt6 REQUIRED COMPONENTS Core)
 set(MESSAGES_CONSUMER_DIR "${CMAKE_CURRENT_LIST_DIR}/../../../native-messages-ui"
-    CACHE PATH "Frozen production MessagesClient source directory")
+    CACHE PATH "Exact current production MessagesClient source and engine header directory")
+# Select one full Messages Rust engine; cross builds supply the matching archive.
+set(POKELINUX_MESSAGES_CLIENT_ARCHIVE "" CACHE FILEPATH "Explicit already-built Messages client engine archive")
+set(POKELINUX_MESSAGES_CLIENT_ARCHIVE_SHA256 "" CACHE STRING "Required digest for an explicit Messages client engine archive")
+if((POKELINUX_MESSAGES_CLIENT_ARCHIVE AND NOT POKELINUX_MESSAGES_CLIENT_ARCHIVE_SHA256) OR (POKELINUX_MESSAGES_CLIENT_ARCHIVE_SHA256 AND NOT POKELINUX_MESSAGES_CLIENT_ARCHIVE))
+ message(FATAL_ERROR "Explicit Messages archive and SHA256 must be supplied together")
+endif()
+if(POKELINUX_MESSAGES_CLIENT_ARCHIVE)
+ file(SHA256 "${POKELINUX_MESSAGES_CLIENT_ARCHIVE}" actual_messages_client_sha256)
+ if(NOT actual_messages_client_sha256 STREQUAL POKELINUX_MESSAGES_CLIENT_ARCHIVE_SHA256)
+  message(FATAL_ERROR "Explicit Messages client archive digest mismatch")
+ endif()
+ set(messages_client_archive "${POKELINUX_MESSAGES_CLIENT_ARCHIVE}")
+else()
+ if(CMAKE_CROSSCOMPILING)
+  message(FATAL_ERROR "Cross builds require an explicit pinned Messages client archive for the matching target")
+ endif()
+ find_program(CARGO_EXECUTABLE cargo REQUIRED)
+ set(messages_client_archive "${CMAKE_CURRENT_BINARY_DIR}/rust-target/release/libpokelinux_messages_client.a")
+ # Always invoke Cargo: it tracks transitive path dependencies, including clocks.
+ add_custom_target(messages-client-rust-build
+  COMMAND ${CMAKE_COMMAND} -E env "CARGO_TARGET_DIR=${CMAKE_CURRENT_BINARY_DIR}/rust-target"
+   ${CARGO_EXECUTABLE} build --manifest-path "${MESSAGES_CONSUMER_DIR}/client-core/Cargo.toml" --locked --offline --release
+  BYPRODUCTS "${messages_client_archive}"
+  VERBATIM)
+endif()
+add_library(messages-client-core STATIC IMPORTED)
+set_target_properties(messages-client-core PROPERTIES
+ IMPORTED_LOCATION "${messages_client_archive}"
+ INTERFACE_INCLUDE_DIRECTORIES "${MESSAGES_CONSUMER_DIR}/client-core/include")
+if(TARGET messages-client-rust-build)
+ add_dependencies(messages-client-core messages-client-rust-build)
+endif()
+find_package(Threads REQUIRED)
 add_executable(messages-restoration-qt-client
     main.cpp
     "${MESSAGES_CONSUMER_DIR}/MessagesClient.cpp"
     "${MESSAGES_CONSUMER_DIR}/MessagesClient.h")
 target_include_directories(messages-restoration-qt-client PRIVATE "${MESSAGES_CONSUMER_DIR}")
-target_link_libraries(messages-restoration-qt-client PRIVATE Qt6::Core)
+target_link_libraries(messages-restoration-qt-client PRIVATE Qt6::Core messages-client-core Threads::Threads ${CMAKE_DL_LIBS} m)
 target_compile_options(messages-restoration-qt-client PRIVATE -Wall -Wextra -Werror)
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/qt-version.txt" "${Qt6Core_VERSION}\n")

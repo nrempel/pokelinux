@@ -1,0 +1,21 @@
+[package]
+name = "pokelinux-messages-client"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+name = "pokelinux_messages_client"
+crate-type = ["staticlib", "rlib"]
+
+[dependencies]
+libc = "=0.2.190"
+serde_json = { version = "=1.0.154", features = ["raw_value"] }
+
+[lints.rust]
+unsafe_op_in_unsafe_fn = "deny"
+
+[profile.release]
+panic = "abort"
+lto = true
+codegen-units = 1

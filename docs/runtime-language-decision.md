@@ -26,8 +26,11 @@ and QObject/QML presentation. The obsolete public queue ABI is removed.
 A fresh prepared native Qt6.12 run now qualifies this whole engine in all four
 GUI/audio groups, with eight PCM windows/192,000 measured frames. The earlier
 queue-only client retains its own evidence. Cold installed startup and ARM remain
-open. Messages RPC worker lifetimes/stale-result generations and
-appearance validation remain Rust migration work. Retain presentation and narrow
+open. The [Messages engine](native-messages-rust-client.md) now also owns request,
+parser/model, pagination, generation, scheduling and worker-lifetime policy in
+Rust. Nine frozen C ABI groups, actual Qt/worker controls, thirteen permanent
+CTest cases, default full-host linking and an ARM64 archive build pass. Shared
+appearance validation remains Rust migration work. Retain presentation and narrow
 native API conversions at the Qt boundary. The full client stack has not been
 ported.
 

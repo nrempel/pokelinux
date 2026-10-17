@@ -28,6 +28,13 @@ frame-observer RED and stronger Qt/native-size predicate remain explicit; no
 production client change supplies that GREEN. Cold installed and ARM integration
 remain open.
 
+The [Rust Messages client engine](native-messages-rust-client.md) now also owns
+request/parser/model, pagination, generations, scheduling and worker lifetime.
+Frozen C ABI and actual Qt/socket/thread/default-build tests pass, including
+pre-entry Stop and numeric-projection red-green regressions. Host and ARM64
+archives build; only host integration executes in this epoch. Shared appearance
+Rust migration, normal cold/window composition and all phone gates remain open.
+
 Two additional [whole-compositor stall epochs](native-normal-upstream-tracer.md#compositor-freeze-expiry-and-stop)
 now qualify independent100ms Source-expiry withdrawal/quietness/refusal before
 Stop, and separately native Stop while the compositor remains stopped. Each
