@@ -18,6 +18,8 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The [normal render profile](native-render-normal-profile.md) now excludes the original test-only probe after actual source-configuration RED and clean syntax checks in both profiles. Matching normal AQ and compositor/SDK builds pass, with23 Rust exports, five strict API checks,15 existing CPU groups and the five-group texture program in the complete main selection. The earlier fixture failure remains preserved. The first actual normal startup already reports STOPPING at its0.284s observation, before the20s deadline; the cause remains unknown. Its126 replies stay responsive, and all37 waits/44 PIPE EOFs close, without backend readiness or client launch. Normal startup, real client frames, Source7 and phone gates remain open.
+
 The [immutable CPU texture checkpoint](native-render-cpu-texture.md) now passes two strict signature checks and five real C++/Rust integration groups after the original missing-API structural RED. Owned pixels survive producer disposal; immutable replacement and two joined-thread refusals pass even with actual C++ thread-ID reuse. The CPU adapter has no GPU identity. Core Wayland capture, normal frames, Source7 and all phone gates remain open.
 
 The [retained CPU surface-content checkpoint](native-render-surface-content.md) now passes unchanged-consumer five-group C++/Rust integration after actual geometry RED. Source extent uses retained Rust pixels after producer overwrite/unmap/close; no-attach identity, transforms, detach/replacement and independent clones pass. The two-file patch changes CPU geometry only; core GL capture/upload, normal Wayland frames, Source7 and phone gates remain open.

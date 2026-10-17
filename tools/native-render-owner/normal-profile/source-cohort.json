@@ -1,0 +1,343 @@
+{
+  "actual_outer_guard_GREEN": {
+    "QMP_socket_EOF_separate": true,
+    "SDK_header_overlay": false,
+    "SDK_original_links": 2,
+    "SDK_original_regular_files": 535,
+    "actual_PIPE_EOFs": 35,
+    "actual_direct_waits": 28,
+    "all_original_nested_closure_qualified": true,
+    "both_diagnostic_bytes": 0,
+    "commands_unchanged_from_RED": true,
+    "component": {
+      "bytes": 31953,
+      "sha256": "6b26ad458d2fec71190d7733a6b0ee66490828cb2c136a49f2733620760fc3c0"
+    },
+    "execution": {
+      "bytes": 12041,
+      "sha256": "075a7e3bcef71210352530461a1bc7d587c3b417a3e6986f75289395c6b96110"
+    },
+    "implicit_toolchain_predefinition_header": {
+      "bytes": 2462,
+      "name": "stdc-predef.h",
+      "sha256": "383ff8bd7dcc87deefedd062637f4afe28f85f8be443beda8b41d15e45ef1679"
+    },
+    "independent_review": {
+      "bytes": 4434,
+      "sha256": "8a40a9890b51d970161d754ed7d6099184acc88b27790a6f17c565aa00b2338b"
+    },
+    "normal_dependency_roles": [
+      "selected project translation unit",
+      "GCC implicit stdc-predef.h"
+    ],
+    "normal_project_headers_and_inc": 0,
+    "only_profile_command_delta": "-DPOKELINUX_STARTUP_CUSTODY_TEST",
+    "qualification": {
+      "bytes": 1992,
+      "sha256": "e95f2928daefd7fa16ec512a7a77c294d4a5e9e0a20c5a60e566e946990ef95c"
+    },
+    "syntax_only_no_link_or_body_execution": true,
+    "test_macro_and_normal_exit": 0,
+    "test_macro_private_SDK_headers": 16
+  },
+  "actual_source_configuration_RED": {
+    "QMP_socket_EOF_separate": true,
+    "actual_PIPE_EOFs": 35,
+    "actual_direct_waits": 28,
+    "all_original_nested_closure_qualified": true,
+    "component": {
+      "bytes": 31995,
+      "sha256": "069bf750a84ec7af871fe4ae0de9665293961b129fd9fdb6070195613f8bf331"
+    },
+    "control_diagnostic_bytes": 0,
+    "execution": {
+      "bytes": 12028,
+      "sha256": "7796137bd927e6fe44f771be4f214aac0d123c9259b7032156df61281c708543"
+    },
+    "first_diagnostic": {
+      "column": 2,
+      "file": "src/render/StartupCustodyProbe.hpp",
+      "line": 3,
+      "message": "#error \"StartupCustodyProbe is main-linked test infrastructure only\""
+    },
+    "normal_dependency_map_emitted": false,
+    "normal_full_header_closure_qualified": false,
+    "normal_target_exit": 1,
+    "production_semantic_RED": false,
+    "qualification": {
+      "bytes": 1330,
+      "sha256": "f8ee5d1c7687824fce84ca6893a64091e6c062e7dd3f7488643bf9ad06883c9a"
+    },
+    "termination": "compilation terminated due to -fmax-errors=1.",
+    "test_macro_control_exit": 0
+  },
+  "apply_after": {
+    "bytes": 104804,
+    "path": "tools/native-render-owner/hyprland-startup-custody-test.patch",
+    "sha256": "5731048744eb1ec3a9569047b51009b3f7876c7c06349d92ca22d7c80e3df7f3"
+  },
+  "existing_public_probe_cohort": {
+    "bytes": 12285,
+    "path": "tools/native-render-owner/hyprland-startup-custody-test-cohort.json",
+    "sha256": "5aaca1cfb9d639432081e63b86370ec1b3267aa4ade60fe82dd72269d8dae3a9"
+  },
+  "failed_matching_main_attempts": [
+    {
+      "actual_PIPE_EOFs": 64,
+      "actual_direct_waits": 64,
+      "aggregate_passed": false,
+      "build_result": {
+        "bytes": 600084,
+        "sha256": "cfc2c07d039f0b3453081be4388a90bed59621371c731052c508c2718169ce91"
+      },
+      "classification": "SETUP_HEADER_SEARCH_CONTEXT",
+      "diagnostics": {
+        "bytes": 8692,
+        "sha256": "6902af0b310a5faa6cef1d19879e7de30641daa7274255d8d5f6610337ae8908"
+      },
+      "execution": {
+        "bytes": 18814,
+        "sha256": "8957741489e5f87b438c701073ba8140e5cbc23d8325d583ad6b7a0f06b2334d"
+      },
+      "main_build_loader_and_15_CPU_prefix_executed": true,
+      "original_owned_closure_qualified": true,
+      "production_bug_RED": false,
+      "qualification": {
+        "bytes": 3020,
+        "sha256": "6a77a913aad43c25687cca75823e5332c7016f39f2ba042b2e752ec504fe5792"
+      },
+      "separate_early_scope_waits_and_PIPE_EOFs": 1,
+      "strict_generated_SDK_API_checks": 5,
+      "supplemental_CPU_texture_compile_failed": true,
+      "tracked_four_layer_waits_and_PIPE_EOFs": 63
+    }
+  ],
+  "frozen_oracles": {
+    "normal-profile-green-oracle.py": {
+      "bytes": 2764,
+      "sha256": "ed132b550cdd3f8f56b454c4e71c4e7ce1938dc0f0598110ee677a6a21439621"
+    },
+    "normal-profile-red-oracle.py": {
+      "bytes": 2939,
+      "sha256": "184808ae8c0d094d1526c2119149c1c8a45e3c3d22d85b5013b29942dd8499df"
+    }
+  },
+  "matching_normal_main": {
+    "QMP_socket_EOF_separate": true,
+    "SDK": {
+      "bytes": 4689920,
+      "sha256": "ab95664667ad5577094d7fd48d7d9a37d9bd79a87dad4dabfeb41e1e0aef0126"
+    },
+    "SDK_links": 2,
+    "SDK_regular_files": 535,
+    "actual_PCH": 1,
+    "actual_PIPE_EOFs": 74,
+    "actual_Rust_exports": 23,
+    "actual_direct_waits": 74,
+    "actual_two_joined_threads_and_observed_Cpp_ID_reuse": true,
+    "all_original_owned_closure_qualified": true,
+    "build_result": {
+      "bytes": 683933,
+      "sha256": "8f247f2122ca140e06c92cc19faabc56083df26977cfc6975cf0ad0c513c6543"
+    },
+    "configured_CPP_including_PCH": 458,
+    "consistent_normal_AQ_SDK_DRM_class_layout_required": true,
+    "embedded_snapshot_producer_PIPE_EOFs_separate": 2,
+    "embedded_snapshot_producer_waits_separate": 1,
+    "execution": {
+      "bytes": 18777,
+      "sha256": "31960f0b643a4f500a106e32114de938399e27227e5803410b63e7333358ff68"
+    },
+    "independent_review": {
+      "bytes": 4453,
+      "sha256": "cf0d07241c6f84c11d1e3c220c244a166f72f4a1f3579e08f10885e9abf981c5"
+    },
+    "main_ELF": {
+      "bytes": 25271872,
+      "sha256": "adaa13a091546346bb77092c76a756f354fdc3c668cfc7b48187dba0554260bf"
+    },
+    "mandatory_CPU_groups": 15,
+    "normal_startup_Wayland_frame_Source_or_phone_qualified": false,
+    "published_CPU_texture_groups": 5,
+    "qualification": {
+      "bytes": 2909,
+      "sha256": "e025a73324955a153604dbfe85d078841d416a921ceab53f451d2012b6aceccf"
+    },
+    "qualification_attached": true,
+    "separate_early_scope_waits_and_PIPE_EOFs": 1,
+    "status": "QUALIFIED_NORMAL_BUILD_LOADER_AND_CPU_ONLY",
+    "strict_generated_SDK_API_TUs": 5,
+    "test_defined_symbols_absent": true,
+    "test_macro_present": false,
+    "tracked_four_layer_waits_and_PIPE_EOFs": 73
+  },
+  "modified_paths": [
+    "src/render/StartupCustodyProbe.cpp"
+  ],
+  "normal_AQ_prerequisite": {
+    "QMP_socket_EOF_separate": true,
+    "SDK": {
+      "bytes": 2037760,
+      "sha256": "1ff854c7b87f3008c556219a173aa81b8f9fc5fd9c47312d5b62855d87cac4af"
+    },
+    "actual_AQ_target_objects": 32,
+    "actual_CPU_groups": 10,
+    "actual_PIPE_EOFs": 54,
+    "actual_direct_waits": 54,
+    "actual_normal_loader_relocations_qualified": true,
+    "affected_compiled_objects": 7,
+    "all_configured_CPP_PCH_test_macro_absent": true,
+    "build_profile": "NORMAL",
+    "build_result": {
+      "bytes": 202177,
+      "sha256": "c2bfe5fe9bf665b7a5d33d899455ab65a3a6e1ce70b2e3d73a67bf6d83b9f27f"
+    },
+    "configured_CPP_units": 36,
+    "configured_PCH_entries": 0,
+    "configured_unselected_upstream_test_CPP_units": 4,
+    "execution": {
+      "bytes": 24695,
+      "sha256": "aad28b5a09e52e29fb8a892388225c6aabcd724e52e81d0d4be5973cbe16931a"
+    },
+    "library": {
+      "bytes": 1843728,
+      "sha256": "efa7a9f160916c79369a743f2df2cb62355748595cf0bdced51307522143f8df"
+    },
+    "matching_normal_main_or_native_runtime_qualified": false,
+    "qualification": {
+      "bytes": 1559,
+      "sha256": "ce53041228a83f7a569b198cec3cd3d6fe5468ddf89b72e4051ac84a73a15b6e"
+    },
+    "separate_early_scope_waits_and_PIPE_EOFs": 1,
+    "strict_API_TUs": 2,
+    "test_hook_defined_exports_absent": true,
+    "tracked_four_layer_waits_and_PIPE_EOFs": 53
+  },
+  "normal_CMake_source_list_changed": false,
+  "normal_startup_baseline1": {
+    "aggregate_passed": false,
+    "bounded_receipt_hash_links_verified": true,
+    "classification": "UNQUALIFIED_EARLIEST_GATE",
+    "closed_unmet_baseline_independently_reviewed": true,
+    "earliest_unmet_gate": "FIXTURE_OR_PROCESS_SETUP",
+    "generic_failure_traceback_retained": false,
+    "owned_closure": {
+      "actual_PIPE_EOFs": 44,
+      "actual_QEMU_and_CLI_wait_exit": 0,
+      "actual_direct_waits": 37,
+      "actual_main_PIPE_EOF": true,
+      "actual_main_wait_exit": -9,
+      "all_original_bounds_met": true,
+      "main_disposal_signal": "SIGKILL",
+      "native_join_or_retirement_proof": false,
+      "owned_descendants_closed": true,
+      "same_daemon_exact_CID_absent_inputs_unchanged": true,
+      "separate_QMP_socket_EOFs": 1,
+      "separate_public_response_EOFs": 126
+    },
+    "public_observations": {
+      "accepted_discovery_qualified": false,
+      "advertised_startup_deadline_ns": 28794283644,
+      "all_reported_outputs": 0,
+      "all_worker_alive_Busy_unready": true,
+      "early_STOPPING_cause": "UNKNOWN",
+      "first_STOPPING_is_sample_time_not_transition_time": true,
+      "first_STOPPING_observed_after_generation_ns": 284083284,
+      "first_STOPPING_observed_ns": 9078366928,
+      "generation_basis": "advertised deadline minus fixed20s startup window",
+      "last_STOPPING_observed_ns": 41671027672,
+      "max_socket_request_ns": 10487716,
+      "peer_authenticated_replies": 126,
+      "phase_counts": {
+        "STARTING": 1,
+        "STOPPING": 125
+      },
+      "reply_bytes": 57579,
+      "stage5_meaning": "bootstrap returned; not an identified blocked native call",
+      "stage_counts": {
+        "5": 125,
+        "8": 1
+      },
+      "startup_generation_ns": 8794283644
+    },
+    "records": {
+      "boot": {
+        "bytes": 11060,
+        "sha256": "865dbf28147c628291089af693885035cc4a36bc6dac1e4a70182c7cb4d527c0"
+      },
+      "bootstrap": {
+        "bytes": 7653,
+        "sha256": "bab265b4cf36be529f2a5f3bdda3a964bf99ffb787117cf2b88f3cdf98a4cce5"
+      },
+      "case": {
+        "bytes": 295047,
+        "sha256": "67b1664c6360be39e8a6f2d5a0922e808ec96080c47b4a1077c0e5b2f8b1b738"
+      },
+      "command": {
+        "bytes": 1302,
+        "sha256": "b04ed518dc5cc245adbf72c7cad7d1d286dc3db66e5ee4e959d24b126d8ed265"
+      },
+      "controller": {
+        "bytes": 28078,
+        "sha256": "385aae9bdd67c1ec42d8b319edc5af3280defe04a18da2568f3ab8454c97c4e0"
+      },
+      "early": {
+        "bytes": 2043,
+        "sha256": "e230081d59ad874b942d738c5005c3aee911ad51333e0ff3b157ad2f58407ac5"
+      },
+      "execution": {
+        "bytes": 12383,
+        "sha256": "5a48ed5682784108a336c54c7aef691511c298a6b89d81ac42a82882c3ab3acb"
+      },
+      "guest": {
+        "bytes": 6701,
+        "sha256": "eaf5ec65c2a4f2efd4735cc275dbe4e7eea25ddac10ce4fa5f2cc0f91796a5d5"
+      },
+      "independent_review": {
+        "bytes": 27184,
+        "sha256": "e32ac3f570c58905c3c674bb9767b94381efee83637e7977dff7a0066182b1e9"
+      },
+      "selection": {
+        "bytes": 7835,
+        "sha256": "37df52f9f8ad2f1dd447f7a4b53c2df0ce5ca77ecbc65ffb1f5b86f011d41bd7"
+      }
+    },
+    "retained_failure_type": "AssertionError",
+    "same_qualified_NORMAL_main_AQ_cohort": true,
+    "semantic_RED_readiness_client_globals_frames_Source_ARM_or_hardware_qualified": false
+  },
+  "normal_startup_full_frame_worker_Source_ARM_or_phone_qualified": false,
+  "parent_public_revision": "5cb3c0ccf96e9d82992e5b31ed887c3ba04dc798",
+  "public_source_repository": "https://github.com/nrempel/pokelinux",
+  "raw_private_receipts_paths_binaries_or_proprietary_inputs_included": false,
+  "schema": 1,
+  "scope": "Actual native x86 source-configuration RED and outer-guard syntax GREEN; separately qualified matching normal AQ and main build/loader/CPU prerequisites. Normal startup and real client frames remain unqualified.",
+  "source_delta": {
+    "src/render/StartupCustodyProbe.cpp": {
+      "added_lines": [
+        "#ifdef POKELINUX_STARTUP_CUSTODY_TEST",
+        "#endif"
+      ],
+      "after": {
+        "bytes": 21213,
+        "sha256": "ebcf1ecf92f1d77cc56a56cc0600a010f6b84242f652b786ca1faf2155c8c822"
+      },
+      "before": {
+        "bytes": 21168,
+        "sha256": "914e2c17afeeab8eece5e3f5f3064b8833c1afa140b3de03c50eb4e8093dfece"
+      },
+      "original_body_byte_exact": true,
+      "removed_lines": 0
+    }
+  },
+  "unchanged_test_inputs": {
+    "src/render/StartupCustodyProbe.hpp": {
+      "bytes": 2217,
+      "sha256": "ee2ea2eaf30f7b41aae207c6535e8bcdcdc0e8a719238881a07aa25e9905745c"
+    },
+    "src/render/custody-consumer.inc": {
+      "bytes": 3052,
+      "sha256": "f07276f6f8bc66cb3494ee0a099e1d7467607b25198da1c7c7e0f5a7e9ff79d2"
+    }
+  }
+}

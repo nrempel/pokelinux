@@ -1,0 +1,14 @@
+diff --git a/src/render/StartupCustodyProbe.cpp b/src/render/StartupCustodyProbe.cpp
+index 09deb45cd97a..dbe42958b302 100644
+--- a/src/render/StartupCustodyProbe.cpp
++++ b/src/render/StartupCustodyProbe.cpp
+@@ -1,3 +1,4 @@
++#ifdef POKELINUX_STARTUP_CUSTODY_TEST
+ #include "StartupCustodyProbe.hpp"
+ #include "custody-consumer.inc" // byte-exact f072 consumer; included in this TU ONLY
+ #include <aquamarine/allocator/DRMDumb.hpp>
+@@ -327,3 +328,4 @@
+     return s.result=Outcome::UNQUALIFIED;
+ }
+ } // namespace Pokelinux::StartupCustodyTest
++#endif

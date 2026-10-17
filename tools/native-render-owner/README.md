@@ -44,6 +44,10 @@ report. Environment/path/UID/capability failures are setup failures, not target
 RED or a fallback. Native-fence extension/procedure availability alone qualifies
 no native FD/completion. The8x6 target is an offscreen oracle, not a UI preview.
 
+## Normal build profile
+
+The [normal-profile package](normal-profile/README.md) adds the exact outer guard for the main-linked test probe after source-configuration RED. Both syntax profiles and matching normal AQ/main/SDK builds pass, including23 Rust exports, five API checks and15+5 CPU groups in the complete main selection. The earlier fixture failure remains preserved. Normal startup and real frames remain unqualified. [Report](../../docs/native-render-normal-profile.md).
+
 ## CPU texture resources
 
 The [texture package](texture/README.md) adds a real immutable CPU ITexture retaining Rust pixels, with no GPU ID. Separate missing-interface structural RED precedes two clean signature checks and five real native C++/Rust groups. Two joined-thread refusals hold even when the C++ thread identity is actually reused. [Report](../../docs/native-render-cpu-texture.md). Core Wayland capture, normal frame/worker output, Source7 and phone gates remain open.
