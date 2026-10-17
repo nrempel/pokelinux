@@ -1,0 +1,183 @@
+{
+  "artifacts": [
+    {
+      "artifact": "selection.json",
+      "bytes": 233533,
+      "sha256": "e610ad7b161ab64957805385870f2ae758821ac9783c41fcf32e1a86e1191b03"
+    },
+    {
+      "artifact": "execution.json",
+      "bytes": 108712,
+      "sha256": "2491f040b9911f18eb4014cf70dd335df405e9dd0ef39ad343771e16fe41d557"
+    },
+    {
+      "artifact": "result.json",
+      "bytes": 527849,
+      "sha256": "4e5a2a1d6ac377a85385b16822082d7384c8988d8ccb8cd47b6484778a04bd2d"
+    },
+    {
+      "artifact": "boot-result.json",
+      "bytes": 11075,
+      "sha256": "8eadce50a330a82b4ac2223a6aab4ea695c2965d9e169f0a74d0e730a8c6dbd8"
+    },
+    {
+      "artifact": "bootstrap-result.json",
+      "bytes": 7265,
+      "sha256": "bced68b11b31eacd8adca0252aada8906cdb5ad88e0c6696be77a8dedc454c88"
+    },
+    {
+      "artifact": "callback-spans-after-retirement.bin",
+      "bytes": 82048,
+      "sha256": "96ff08da0cf527770cb500d5c93783c529259dbf6cc1b083ebb5bcc315cf73b5"
+    },
+    {
+      "artifact": "callback-spans-assessment.json",
+      "bytes": 8556,
+      "sha256": "e7976bf1b3cf6f644d9decd15cb1ac4995a7e4f34d12444ded65b8dd9af5c56d"
+    },
+    {
+      "artifact": "callback_span_consumer.py",
+      "bytes": 9009,
+      "sha256": "ef3cf731d28d85af94db7b7fb387ff9a042280e2cf9652b09e9c45672ab52b0c"
+    },
+    {
+      "artifact": "callback_observer.py",
+      "bytes": 14973,
+      "sha256": "9cffb88a188d237a39b6d9e7f64808b5d711a30b82ba9dc36884fc1aa69cc561"
+    },
+    {
+      "artifact": "guest.py",
+      "bytes": 70370,
+      "sha256": "a7e4dfc7dd3adefca2e42f60dba25b8994a9239368fc91366e6c5204c574eb0e"
+    }
+  ],
+  "closed_review": {
+    "artifact": "closed-review.json",
+    "bytes": 5145,
+    "sha256": "84b861785915f6850683379a3ba78ce0ceabcf5197d1ee14d5bfafc967da5a27"
+  },
+  "native_cause_qualified": false,
+  "runtime_or_source_changed_by_reviewer": false,
+  "schema": 1,
+  "scope": "Public-safe artifact hashes and bounded evidence scope only; no private paths, raw ring, callback addresses, decompilation or credentials",
+  "scope_limits": [
+    "Functional cold case failed; closure/integrity passed.",
+    "31commits/15normal-return spans/one unmatched AQfd25 entry; no causal qualification.",
+    "Earlier fd25 photo identifies timerfd class only; no continuity or callback-time identity.",
+    "Static idle timer read is guarded; separately authenticated package/source guard uses zero-timeout poll, without runtime cause qualification."
+  ],
+  "selected_pin_count_verified": 315,
+  "Root_qualification": {
+    "bytes": 987,
+    "sha256": "20c383055473a72e6692e3caf13c748c528d531e0fc8780fdf7befa3484d9686"
+  },
+  "independent_closed_review": {
+    "bytes": 5145,
+    "sha256": "84b861785915f6850683379a3ba78ce0ceabcf5197d1ee14d5bfafc967da5a27"
+  },
+  "original_code_component_sources": {
+    "callback_observer.py": {
+      "bytes": 14973,
+      "sha256": "9cffb88a188d237a39b6d9e7f64808b5d711a30b82ba9dc36884fc1aa69cc561"
+    },
+    "real_proc_consumer.py": {
+      "bytes": 6675,
+      "sha256": "e07806c9003c4418d7b5ce712842f178a8a3d29b1d4629feb250617b583237ef"
+    }
+  },
+  "component": {
+    "frozen_before_implementation": true,
+    "original_Linux_control_exit": 0,
+    "genuine_missing_optional_API_RED_exit": 3,
+    "same_frozen_consumer_GREEN_exit": 0,
+    "real_proc_groups": 4,
+    "actual_direct_waits": 4,
+    "actual_merged_PIPE_EOFs": 4,
+    "original_work_seconds_each": 5,
+    "original_close_seconds_each": 8,
+    "no_native_callback_or_phone_qualified_by_component": true
+  },
+  "authenticated_readiness_source": {
+    "BUILDINFO_recipe_and_source_archive_hashes_match": true,
+    "artifacts": [
+      {
+        "bytes": 7089,
+        "name": "provision-installed-packages.txt",
+        "sha256": "d1a51fbcc848498321dbd5e53850a7da2fac4bdf5937cbd8d92acf20b6902f38"
+      },
+      {
+        "bytes": 183187,
+        "name": "package-manifest.json",
+        "sha256": "80c8d200e507c0daad1e6784bfc3f01b18b96813494c44725eb4cc228a2ac29e"
+      },
+      {
+        "bytes": 221405,
+        "name": "hyprutils-0.14.2-1-x86_64.pkg.tar.zst",
+        "sha256": "177dfe5d64dba65ef2f1274d84d647b12cc1bc0b808394fd556f135ac8d7e65e"
+      },
+      {
+        "bytes": 566,
+        "name": "hyprutils-0.14.2-1-x86_64.pkg.tar.zst.sig",
+        "sha256": "4988a983f4f28f7e78aa1ed2e62cfa97bafbc4eef1e83001c33863c93a1a8a55"
+      },
+      {
+        "bytes": 1807,
+        "name": "FileDescriptor.cpp",
+        "sha256": "395ae91aa71cbeca16b0d22488e83124aabd00784e8fba745f09a0327d40b5bf"
+      },
+      {
+        "bytes": 1096,
+        "name": "FileDescriptor.hpp",
+        "sha256": "92f9210b292c3d238512d16de423370c36137bd026d19c698fef80ba28531ca1"
+      },
+      {
+        "bytes": 7,
+        "name": "VERSION",
+        "sha256": "232cca15f9cab0453d820d20649067576ec18d279ce3b1dc6d2931d1eb638721"
+      },
+      {
+        "bytes": 957,
+        "name": "PKGBUILD",
+        "sha256": "1a3989b011f0db604489916f3e9811a6836e4a498c5a3da3a1c3f158868a9ee5"
+      },
+      {
+        "bytes": 81756,
+        "name": "hyprutils-0.14.2.tar.gz",
+        "sha256": "2061b7b08c8104fb02a609553b28f6c8580e5ec38633015845f1c4553980175b"
+      }
+    ],
+    "exact_guard": "zero-timeout poll, positive result and POLLIN required",
+    "native_cause_qualified": false,
+    "package_member_hashes": {
+      "BUILDINFO": "78923269eca05778b7cba7bd340a898fd9a0a342ee75a2ea0cca4bde49c05ca5",
+      "PKGINFO": "9164f77310882ad0decd5752dfb1f47e5e91393ebba53d5de605e986f5739271",
+      "installed_libhyprutils.so.0.14.2": "c33f3d8d6fbe66b0c308bcd9782cde55e142777f9e61398d3e2624f2a63a7811"
+    },
+    "schema": 1,
+    "scope": "Public-safe hash provenance for exact signed installed package/public-source readiness finding; no raw native records, addresses, decompilation, credentials or private paths",
+    "upstream_commit": "a21e87b878e72ee5dfd375899e8b2ad0d0c4c0e1",
+    "upstream_tag": "v0.14.2",
+    "version": "hyprutils 0.14.2-1"
+  },
+  "authenticated_readiness_source_review": {
+    "bytes": 8566,
+    "sha256": "91c5be881c1e6552eb1b8d020f932ce934576c520f4cfb17ea87672502237711"
+  },
+  "native_metadata_observations": {
+    "photo_rows": [
+      22,
+      35
+    ],
+    "photo2_before_Source1_ns": 158458194,
+    "unmatched_entry_after_Source1_ns": 25949,
+    "Source_cached_expiry_age_ns": 113574824,
+    "FD_continuity_or_callback_time_identity_proven": false,
+    "primary_direct_waits": 149,
+    "primary_PIPE_EOFs": 156,
+    "early_mask_waits_counted_once": 2
+  },
+  "closure_addendum": {
+    "bytes": 1773,
+    "sha256": "32168eeda57eff87368434ba657f459530f67d61feb3cbdbcddea9f8a83de935"
+  }
+}

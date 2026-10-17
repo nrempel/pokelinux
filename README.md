@@ -48,8 +48,10 @@ unidentified; this resource change is not a production repair.
 A [bounded callback diagnostic](docs/native-callback-spans.md) now records real
 native callbacks after its component/full-build checks. An AQ callback enters
 27us after Source1 with no recorded normal return; Source expires at110ms. The
-writer is already dead before later manager Stop. Cold startup still fails;
-the internal operation, missing-return reason and production repair remain open.
+writer is already dead before later manager Stop. Later finite proc samples
+identify an earlier blocking timer-descriptor class; callback-time identity and
+continuity remain unknown. Cold startup still fails; the internal operation,
+missing-return reason and production repair remain open.
 [Native SIGTERM Stop](docs/native-session-signal-stop.md) also passes before
 readiness, with Main exit0 and no adopted children. The [explicit deployment
 installer](docs/native-normal-upstream-tracer.md#explicit-installed-session-selection)

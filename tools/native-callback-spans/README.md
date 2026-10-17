@@ -47,3 +47,21 @@ must be fresh and writable by UID/GID1000. It creates real mmap/files/clocks and
 checks three component groups. It neither compiles all Hyprland nor executes its
 native callbacks. `format_check.py READER_PATH` supplies ten independently
 crafted binary-format controls. Neither test qualifies cold startup or hardware.
+
+
+`callback_observer.py` supplies the exact original-code runtime custody helper and
+finite `FDIdentityObserver`. The latter takes at most two samples through an
+existing caller watch loop, borrows its authenticated main pidfd, and reads only
+bounded proc metadata. Its first binding consumes custody; a second sample can
+occur only at least50ms later under the original caller WORK deadline. No target
+FD is opened/read/duplicated. Maximum64 rows per sample and512KiB total; errors
+consume attempts. The caller must establish native identity before binding and
+interpret Source ordering only from authenticated original records after exit.
+Repeated metadata equality never proves descriptor continuity or object identity.
+
+`real_proc_consumer.py --control` exercises independent Linux pidfd/pipe/eventfd/
+epoll metadata. Its `--helper` option loads the actual observer and exercises four
+real-proc groups, including a genuinely closed/reused fd and wrong starttime.
+Use an actually owned external runner with the original5s work/8s closure;
+the consumer's cooperative work check is not a kernel-interruption guarantee.
+These are finite host metadata tests, without a compositor, Source or phone.

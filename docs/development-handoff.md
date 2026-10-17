@@ -40,6 +40,18 @@ No production client change or old-result inheritance supplies that GREEN.
 Cold installed startup and ARM integration remain open. Messages and appearance
 client logic still require Rust migration; retain Qt presentation.
 
+The [later finite fd metadata epoch](native-callback-spans.md#later-finite-file-descriptor-metadata-samples)
+still fails cold startup. Two existing-watch proc samples complete before Source1;
+fd25 is a blocking monotonic timerfd in the second,158.458194ms before Source1.
+The ring again ends with an unmatched AQ fd25 entry,25.949us after Source1;
+cached expiry is113.574824ms. This does not prove fd continuity or a blocked read.
+AQ idle dispatch has a readiness guard; a separate authenticated Hyprutils0.14.2-1
+package/source chain identifies zero-timeout poll, without new native execution.
+The outer span does not isolate the read or pending callback work. All315 pins
+and149 waits/156 PIPE EOFs close. Keep this original
+metadata component/native diagnostic separate from the passing prepared Sounds
+whole-engine run. No C++ source rebuild or production repair was added here.
+
 ## Current stopping point
 
 The [graphics critical-path decision](runtime-language-decision.md#graphics-critical-path)

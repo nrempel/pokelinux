@@ -82,3 +82,57 @@ separate format controls, native component execution and the matching full build
 Cold startup, the full Omarchy shell/menu, current ARM composition and all Pixel
 hardware gates remain open. The production phone-service and app-core target
 continues to be Rust; this C++ probe measures a retained upstream dependency.
+
+## Later finite file-descriptor metadata samples
+
+A separate cold native epoch retains the same diagnostic compositor/498-file SDK,
+Rust owner,205-file installed profile, Source100ms lease and original resources.
+It still fails: an installed unit exits during cold startup, before a full shell
+or Sounds session. Its raw ring again has31 committed records,15 normal returns
+and one unmatched AQ entry on fd25. That entry is25.949us after authentic Source1;
+Source expires its cached sample at113.574824ms. There is no clock, overflow or
+partial-record flag. The writer is already dead before the later explicit manager
+Stop; neither that Stop nor process reaping identifies the missing-return cause.
+
+One optional observer now takes at most two proc metadata samples, triggered by
+the existing watch loop. It borrows the externally authenticated main pidfd,
+checks starttime/liveness, reads at most64 descriptor rows per sample and keeps
+at most512KiB total. It never opens, duplicates or reads the target descriptor,
+starts no worker/timer, and adds no Source connection or readiness condition.
+Each attempt is consumed even if unavailable. Its time checks are cooperative;
+the unchanged outer watchdog remains necessary for kernel-side delays.
+
+The first sample has22 rows and no fd25. The second has35 rows and completes
+158.458194ms before authentic Source1. At that earlier observation, fd25 is a
+CLOCK_MONOTONIC timerfd in blocking mode, with zero ticks and disarmed. This
+narrows a resource-class lead only. No sample covers the callback instant;
+close/reuse remains possible. Equal metadata does not establish continuity, and
+the observed generic anon-inode number is shared by other descriptors here.
+
+Pinned Aquamarine idle dispatch first calls `isReadable()`, conditionally reads
+the timerfd, then runs pending callbacks and rearms. The selected Hyprland wrapper
+ignores the Wayland mask when invoking `onSignal`; its registration requests
+readability. These static facts do not prove a blocked read, stale readiness or
+an internal operation. A subsequent authenticated package/source check binds
+Hyprutils0.14.2-1 through signed package BUILDINFO, the exact Arch recipe and its
+release archive. Its [readiness guard](https://github.com/hyprwm/hyprutils/blob/a21e87b878e72ee5dfd375899e8b2ad0d0c4c0e1/src/os/FileDescriptor.cpp#L82-L85)
+uses zero-timeout poll and requires readability. This is a separate static source
+finding, without new library/native execution. The outer span still does not
+isolate that guard, the conditional read, pending callbacks or rearm. There is
+no production repair or healthy-cold claim.
+
+The [published observer](../tools/native-callback-spans/callback_observer.py) and
+[independent real-proc consumer](../tools/native-callback-spans/real_proc_consumer.py)
+are byte-identical to the executed original-code inputs. Genuine Linux control0
+and missing-API RED3 precede implementation; the same consumer then passes four
+real-proc groups for descriptor metadata/reuse, identical-photo ambiguity, limits
+and wrong starttime. All four component waits/merged PIPE EOFs close within their
+original5s/8s bounds. Those host results remain separate from the cold native run.
+
+For the failed native epoch,149 primary waits/156 actual PIPE EOFs close, including
+the two early masks once. QMP EOF and unit-reference calls retain separate counts.
+Actual manager Stop, empty selected cgroups, same-daemon exact container absence
+and locked input closure pass. Raw rings, addresses and proc dumps stay private;
+[hash-only provenance](evidence/native-callback-fd-metadata-provenance.json) records
+the bounded observations. Callback-time identity, internal cause, native display
+cleanup, ARM integration and phone behavior remain open.
