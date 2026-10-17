@@ -31,3 +31,6 @@ mod registration_state;
 
 #[cfg(test)]
 mod add_pdn_transport_tests;
+
+#[cfg(test)]
+mod add_pdn_response_binder_tests;

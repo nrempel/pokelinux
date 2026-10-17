@@ -378,6 +378,13 @@ x86/ARM user-QEMU qualification. Installed dispatch needs durable uncertainty an
 current permissions; response meaning, APN/network acquisition and hardware remain
 gates. The synthetic fixture reset clears only its preflight capture table.
 
+The later [one-shot add-PDN response observation](native-radio-add-pdn-response.md)
+adds frozen component RED→GREEN and actual generic ARM Binder differential proof
+of local request/session/route attribution, including real receiver ingress
+before owner draining. Historical response bytes/error never resolve the remote
+outcome, authorize retry, release capacity or grant APN/IMS readiness. Installed
+permission/admission, provider/carrier and physical-device gates remain open.
+
 The [installed slot1 registration tracer](native-radio-registration-installed.md)
 now carries one original-qualified complete wire payload through actual ARM
 Binder, the native owner, typed worker IPC and restricted status under the

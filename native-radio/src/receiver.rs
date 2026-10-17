@@ -14,7 +14,7 @@ use std::{
         atomic::{AtomicU8, Ordering},
         mpsc::{self, Receiver, RecvTimeoutError, SyncSender, TryRecvError, TrySendError},
     },
-    time::Instant,
+    time::{Duration, Instant},
 };
 
 pub const RESPONSE_DESCRIPTOR: &str =
@@ -49,15 +49,26 @@ fn failure(state: &AtomicU8) -> Option<ReceiverFailure> {
     }
 }
 
+/// Minted only at actual validated queue admission under the publication gate.
+/// This is not a kernel arrival time or proof of producer causation.
+#[derive(Clone, Copy)]
+pub(crate) struct IngressStamp {
+    pub(crate) sequence: u64,
+    pub(crate) received_at: Duration,
+}
+pub(crate) struct AdmittedEvent {
+    pub(crate) event: RadioEvent,
+    pub(crate) stamp: IngressStamp,
+}
 pub(crate) struct CallbackQueue {
     shared: Arc<Shared>,
     key: SessionKey,
-    sender: Mutex<Option<SyncSender<RadioEvent>>>,
+    sender: Mutex<Option<SyncSender<AdmittedEvent>>>,
     failure: Arc<AtomicU8>,
 }
 pub struct CallbackInbox {
     queue: Weak<CallbackQueue>,
-    receiver: Receiver<RadioEvent>,
+    receiver: Receiver<AdmittedEvent>,
     failure: Arc<AtomicU8>,
 }
 impl Drop for CallbackInbox {
@@ -77,6 +88,13 @@ impl CallbackInbox {
         &self,
         deadline: Instant,
     ) -> std::result::Result<Option<RadioEvent>, ReceiverFailure> {
+        self.recv_admitted_until(deadline)
+            .map(|event| event.map(|event| event.event))
+    }
+    pub(crate) fn recv_admitted_until(
+        &self,
+        deadline: Instant,
+    ) -> std::result::Result<Option<AdmittedEvent>, ReceiverFailure> {
         if let Some(error) = failure(&self.failure) {
             return Err(error);
         }
@@ -99,7 +117,7 @@ impl CallbackInbox {
             return Err(error);
         }
         let result = match self.receiver.try_recv() {
-            Ok(response) => Ok(Some(response)),
+            Ok(response) => Ok(Some(response.event)),
             Err(TryRecvError::Empty) => Ok(None),
             Err(TryRecvError::Disconnected) => Err(ReceiverFailure::PublisherGone),
         };
@@ -136,6 +154,14 @@ impl CallbackQueue {
         {
             return Err(StatusCode::FailedTransaction);
         }
+        let Some(sequence) = gate.callback_ingress_sequence.checked_add(1) else {
+            self.fail_locked(&mut gate, ReceiverFailure::InternalFailure);
+            return Err(StatusCode::FailedTransaction);
+        };
+        let stamp = IngressStamp {
+            sequence,
+            received_at: self.shared.1.now(),
+        };
         let mut sender = match self.sender.lock() {
             Ok(sender) => sender,
             Err(poison) => {
@@ -158,7 +184,8 @@ impl CallbackQueue {
         let Some(active) = sender.as_ref() else {
             return Err(StatusCode::DeadObject);
         };
-        match active.try_send(event) {
+        gate.callback_ingress_sequence = sequence;
+        match active.try_send(AdmittedEvent { event, stamp }) {
             Ok(()) => Ok(()),
             Err(error) => {
                 let reason = match error {

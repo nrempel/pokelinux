@@ -13,19 +13,24 @@ the final completion target. See `smartphone-goal.md` for authoritative scope.
 
 ## Current language boundary
 
-The phone-service target is Rust, not an all-Rust operating system. Hyprland,
-Aquamarine and Qt remain upstream C++ dependencies. The current graphics
-integration extracts and reconnects actual CPU scene/layout handling, Wayland
-protocols and native GPU/output operations; that work is more than ABI glue.
-It does not advance the Rust phone-service ports by itself.
+The phone-service target is Rust. The current production direction retains
+upstream Hyprland, Aquamarine and Qt, which contain substantial C++. Our own
+Qt client adapters and small compositor plugins also contain C++; these are
+separate from the Rust phone services and must be counted honestly.
 
-Rust owns shared permission and lifecycle decisions, immutable frame ownership,
-admission and credits, generation validity, format choice, deadlines, recovery
-and Stop authorization. C++ adapts upstream compositor objects and performs
-native operations under that authority. New retries, fallback policy or a second
-readiness authority must not accumulate in C++. Reusing an upstream C++ engine
-is distinct from retaining Android framework services. The matched Google
-kernel/modules/firmware decision remains unchanged.
+The custom renderer experiment added substantial authored C++ scene, protocol
+and GPU integration. That work is now parked as component research. It is not
+a prerequisite for normal app launch or progress porting phone services to Rust.
+Its Rust frame ownership, credits and format planner are research results too;
+the normal upstream compositor does not acquire them merely by being supervised
+by a Rust process.
+
+Rust owns shared phone policy, permissions, service lifecycle, deadlines,
+recovery and Stop authorization. Upstream graphics engines retain their native
+rendering operations. Keep dependency corrections small and test their actual
+boundaries. New phone-service policy, implicit retries or a second readiness
+authority must not accumulate in C++. The matched Google kernel/modules/firmware
+decision remains unchanged.
 
 ## Graphics critical path
 

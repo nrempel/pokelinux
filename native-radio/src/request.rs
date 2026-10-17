@@ -6,7 +6,7 @@ use crate::{
 use omarchy_ims::requests::RequestParts;
 use pokelinux_process_owner::deadline::Deadline;
 use rsbinder::StatusCode;
-use std::sync::Arc;
+use std::{sync::Arc, time::Duration};
 
 #[derive(Clone, Debug)]
 pub struct RequestKey(Arc<()>);
@@ -22,20 +22,87 @@ pub enum Outcome {
     NotSent,
     OutcomeUnknown,
 }
+/// Copied wire routing, never modem identity or admission authority.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct ResponseRoute {
+    pub serial: i32,
+    pub request_id: i32,
+    pub slot_id: i32,
+}
+/// Immutable historical raw callback bound to one original local request.
+/// Vendor error/payload establish no modem acceptance, readiness or retry right.
+#[derive(Debug, PartialEq, Eq)]
+pub struct ResponseObservation {
+    pub(crate) request: RequestKey,
+    pub(crate) session: SessionKey,
+    pub(crate) route: ResponseRoute,
+    pub(crate) vendor_error: i32,
+    pub(crate) payload: Vec<u8>,
+    pub(crate) ingress_sequence: u64,
+    pub(crate) received_at: Duration,
+    pub(crate) revision: u64,
+}
+impl ResponseObservation {
+    pub fn request_key(&self) -> &RequestKey {
+        &self.request
+    }
+    pub fn session_key(&self) -> &SessionKey {
+        &self.session
+    }
+    pub fn route(&self) -> ResponseRoute {
+        self.route
+    }
+    pub fn vendor_error(&self) -> i32 {
+        self.vendor_error
+    }
+    pub fn payload(&self) -> &[u8] {
+        &self.payload
+    }
+    pub fn ingress_sequence(&self) -> u64 {
+        self.ingress_sequence
+    }
+    pub fn received_at(&self) -> Duration {
+        self.received_at
+    }
+    pub fn revision(&self) -> u64 {
+        self.revision
+    }
+}
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct RequestReceipt {
     pub key: RequestKey,
     pub serial: i32,
     pub outcome: Outcome,
     pub revision: u64,
+    pub response: Option<Arc<ResponseObservation>>,
 }
 pub(crate) struct RequestState {
     pub(crate) receipt: RequestReceipt,
     pub(crate) deadline: Deadline,
     pub(crate) cancelled: bool,
     pub(crate) reason: Option<crate::receiver::ReceiverFailure>,
+    pub(crate) route: ResponseRoute,
+    pub(crate) dispatch_ingress_floor: Option<u64>,
 }
 impl RequestState {
+    pub(crate) fn admits_response(
+        &self,
+        observed: &ResponseObservation,
+        selected_slot: i32,
+    ) -> bool {
+        !self.cancelled
+            && self.receipt.outcome == Outcome::OutcomeUnknown
+            && self.receipt.response.is_none()
+            && self.receipt.revision < u64::MAX - 1
+            && self.route.request_id == omarchy_ims::add_pdn::MESSAGE_ID
+            && self.route.slot_id == selected_slot
+            && self.route == observed.route
+            && self.receipt.key == observed.request
+            && self
+                .dispatch_ingress_floor
+                .is_some_and(|floor| observed.ingress_sequence > floor)
+            && !self.deadline.elapsed(observed.received_at)
+    }
     pub(crate) fn cancel(&mut self, reason: crate::receiver::ReceiverFailure) {
         if !self.cancelled {
             self.receipt.revision += 1;
@@ -100,10 +167,17 @@ impl PreparedRequest {
                     serial: arguments[0],
                     outcome: Outcome::Queued,
                     revision: 0,
+                    response: None,
                 },
                 deadline,
                 cancelled: false,
                 reason: None,
+                route: ResponseRoute {
+                    serial: arguments[0],
+                    request_id: arguments[2],
+                    slot_id: arguments[3],
+                },
+                dispatch_ingress_floor: None,
             });
         }
         Ok(Self {
@@ -126,6 +200,7 @@ impl PreparedRequest {
             return Err(OwnerError::StaleSession);
         }
         gate.active()?;
+        let ingress_floor = gate.callback_ingress_sequence;
         let request = gate.request.as_mut().ok_or(OwnerError::StaleSession)?;
         if request.receipt.key != self.key {
             return Err(OwnerError::StaleSession);
@@ -139,6 +214,7 @@ impl PreparedRequest {
             return Err(OwnerError::Failed(request.reason.expect("cancel reason")));
         }
         if request.receipt.outcome == Outcome::Queued {
+            request.dispatch_ingress_floor = Some(ingress_floor);
             request.receipt.outcome = Outcome::OutcomeUnknown;
             request.receipt.revision += 1;
         }
@@ -275,3 +351,7 @@ mod tests {
         );
     }
 }
+
+#[cfg(test)]
+#[path = "request_response_tests.rs"]
+mod response_tests;

@@ -83,6 +83,7 @@ pub struct Snapshot {
 }
 pub(crate) struct Gate {
     pub(crate) current: Option<SessionKey>,
+    pub(crate) callback_ingress_sequence: u64,
     pub(crate) phase: Phase,
     pub(crate) queue: Weak<CallbackQueue>,
     revision: u64,
@@ -96,6 +97,7 @@ impl Default for Gate {
     fn default() -> Self {
         Self {
             current: None,
+            callback_ingress_sequence: 0,
             phase: Phase::Idle,
             queue: Weak::new(),
             revision: 0,
@@ -182,6 +184,8 @@ pub struct PreparedEvent {
     token: Arc<()>,
     base_revision: u64,
     event: Option<RadioEvent>,
+    ingress: Option<receiver::IngressStamp>,
+    request_key: Option<crate::request::RequestKey>,
 }
 impl PreparedEvent {
     pub fn event(&self) -> &RadioEvent {
@@ -487,16 +491,22 @@ impl RadioOwner {
                 token,
                 base_revision: gate.revision,
                 event: None,
+                ingress: None,
+                request_key: gate
+                    .request
+                    .as_ref()
+                    .map(|request| request.receipt.key.clone()),
             }
         };
         let event = self
             .inbox
             .as_ref()
             .ok_or(OwnerError::NotActive)?
-            .recv_until(deadline)
+            .recv_admitted_until(deadline)
             .map_err(OwnerError::Failed)?;
         if let Some(event) = event {
-            prepared.event = Some(event);
+            prepared.ingress = Some(event.stamp);
+            prepared.event = Some(event.event);
             Ok(Some(prepared))
         } else {
             Ok(None)
@@ -534,6 +544,30 @@ impl RadioOwner {
             }
             _ => return Err(OwnerError::Unsupported),
         };
+        // All owned copying/allocation precedes the gate. The route/length are
+        // conservative local policy; vendor error is never interpreted as success.
+        let mut response = match (&kind, prepared.request_key.as_ref(), prepared.ingress) {
+            (Observation::RawResponse(raw), Some(key), Some(stamp))
+                if raw.payload.len() <= 4096
+                    && usize::try_from(raw.info.length).ok() == Some(raw.payload.len()) =>
+            {
+                Some(Arc::new(crate::request::ResponseObservation {
+                    request: key.clone(),
+                    session: prepared.key.clone(),
+                    route: crate::request::ResponseRoute {
+                        serial: raw.info.serial,
+                        request_id: raw.info.rilcMsgId,
+                        slot_id: raw.info.slotId,
+                    },
+                    vendor_error: raw.info.error,
+                    payload: raw.payload.clone(),
+                    ingress_sequence: stamp.sequence,
+                    received_at: stamp.received_at,
+                    revision: 0,
+                }))
+            }
+            _ => None,
+        };
         let mut observed = Arc::new(CommittedObservation { revision: 0, kind });
         let mut gate = self.shared.lock();
         if !prepared.shared.ptr_eq(&Arc::downgrade(&self.shared)) || !gate.is_current(&prepared.key)
@@ -561,6 +595,22 @@ impl RadioOwner {
         Arc::get_mut(&mut observed)
             .expect("new observation is not shared before commit")
             .revision = revision;
+        let bind_response = response.as_ref().is_some_and(|response| {
+            response.session == prepared.key
+                && gate
+                    .request
+                    .as_ref()
+                    .is_some_and(|request| request.admits_response(response, self.selected_slot))
+        });
+        if bind_response {
+            let mut response = response.take().expect("qualified response candidate");
+            Arc::get_mut(&mut response)
+                .expect("unpublished response")
+                .revision = revision;
+            let request = gate.request.as_mut().expect("qualified original request");
+            request.receipt.revision += 1; // One reserved terminal cancellation revision remains.
+            request.receipt.response = Some(response);
+        }
         let retired = gate.observation.replace(observed);
         gate.preparing = None;
         drop(gate);

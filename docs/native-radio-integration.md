@@ -97,6 +97,15 @@ x86/ARM user-QEMU qualification. Installed dispatch needs durable uncertainty an
 current permissions; response meaning, APN/network acquisition and hardware remain
 gates. The synthetic fixture reset clears only its preflight capture table.
 
+The later [one-shot add-PDN response observation](native-radio-add-pdn-response.md)
+adds exact request/session/serial/code/slot attribution at the current owner gate.
+Its frozen component RED→GREEN and actual generic ARM Binder differential check
+separate raw diagnostic history from immutable attributed bytes/error. A callback
+queued before dispatch permission cannot bind when drained later. Neither a
+matching callback nor error0 resolves OutcomeUnknown, releases capacity, grants
+retry, or proves APN/IMS readiness. Installed request ingress and physical
+provider/carrier gates remain open.
+
 The [native registration observation](native-registration-state.md) now combines
 a data-only shared type with the production radio Gate mapper and passes a private
 conditional ARM Binder RED→GREEN test. Origin pairs are local to one RadioOwner.

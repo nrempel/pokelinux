@@ -73,3 +73,14 @@ required by the final native Rust architecture. Remote cleanup, safe retry/reset
 carrier/IMS operation and Pixel hardware remain open. The VM kernel is
 7.1.6-1-aarch64-ARCH; this selection adds no matched Google-kernel execution,
 actual suspend, installed app or UI result. No physical phone was accessed.
+
+## Later response-attribution slice
+
+The [one-shot response observer](native-radio-add-pdn-response.md) adds a separate
+raw-history boundary after this transport checkpoint. Its exact route/length and
+receiver-admission ordering are conservative authored policy, not an inferred
+vendor completion protocol. The preimplementation frozen unit tests pass after
+missing-field and safe-empty runtime REDs; additional actual ARM Binder baseline/
+current runs preserve the original full-byte request and independent peer.
+OutcomeUnknown, occupied capacity, registration unavailable and no implicit retry
+remain unchanged. This earlier transport evidence retains its historical counts.

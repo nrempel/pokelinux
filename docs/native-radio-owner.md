@@ -160,8 +160,9 @@ even with timer delivery withheld. `begin_until` replaces unbounded owner begin.
 `TransportSession` now owns one registration worker, its reserved JoinHandle
 completion and retained death watch. `RadioOwner` remains the publication gate.
 One bounded owned request now distinguishes queued, NotSent and OutcomeUnknown
-under this gate. Qualified final semantic receipts and timer delivery remain
-unfinished, and it does not decode phone/IMS state. `prepare_until` still bounds
+under this gate. One-shot [raw add-PDN response attribution](native-radio-add-pdn-response.md) now
+retains exact request history with real receiver-admission ordering, while
+qualified final semantic receipts and timer delivery remain unfinished, and it does not decode phone/IMS state. `prepare_until` still bounds
 receive waiting only; candidate/event-age and operation deadlines remain open.
 See [deadline execution](evidence/radio-deadline-provenance.json).
 

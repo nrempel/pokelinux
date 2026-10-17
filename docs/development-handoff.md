@@ -44,6 +44,15 @@ allowlist correction against the same frozen consumer, then the full app/PCM
 contract. Keep Pixel targets fixed. Prepared startup cannot qualify cold startup
 or complete the phone goal.
 
+The Rust [one-shot add-PDN response observer](native-radio-add-pdn-response.md)
+now retains immutable request/session/route/error/byte history after frozen
+component RED→GREEN and a separate actual ARM Binder differential check. All79
+active host tests, formatting, strict Clippy and Release pass; nine Binder cases
+remain ignored on the host. A callback queued before dispatch permission cannot
+bind later, and a duplicate cannot replace the first response. OutcomeUnknown,
+occupied capacity and no implicit retry remain. Installed request admission,
+APN/IMS semantics, vendor cleanup and phone qualification remain open.
+
 The [experimental executor ingress wake fix](native-render-ingress-wake.md)
 passes its exact frozen RED→GREEN test, a separate expired-retry refusal and all66
 active Rust tests, with two ignored child modes, fmt, strict Clippy and release.

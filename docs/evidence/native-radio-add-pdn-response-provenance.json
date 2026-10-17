@@ -1,0 +1,229 @@
+{
+  "ARM_build": {
+    "actual_CLI_exit": 0,
+    "direct_waits": 6,
+    "execution": {
+      "bytes": 8047,
+      "sha256": "baefa472e1eb0233fdfe8cf69afd53f97114a542f901a96e7e2f0d78739be315"
+    },
+    "fmt_strict_Clippy": true,
+    "merged_PIPE_EOFs": 6,
+    "only_selected_ELFs_exported": true,
+    "source": {
+      "bytes": 13242,
+      "sha256": "097208eb1216139de53a1776ad9dedb34b2fb14d899f3b1e00e77324cad590bd"
+    }
+  },
+  "actual_ARM_kernel_Binder": {
+    "NIC": "none",
+    "OutcomeUnknown_slot_occupied_and_OperationPending_retained": true,
+    "UID": 1000,
+    "exact_CID_absent_same_daemon_locked_inputs_unchanged": true,
+    "foreground_Docker_CLI_exit_each": 0,
+    "guest_test_QEMU_outer_seconds": [
+      45,
+      540,
+      600
+    ],
+    "kernel": {
+      "machine": "aarch64",
+      "release": "7.1.6-1-aarch64-ARCH",
+      "version": "#1 SMP PREEMPT_DYNAMIC Wed Aug  5 00:20:13 UTC 2026"
+    },
+    "matching_observation_once_and_duplicate_immutable": true,
+    "one_original_663B_preflight_and_one_owned_submission_each": true,
+    "original_setup_work_session_cleanup_seconds": [
+      10,
+      20,
+      30,
+      2
+    ],
+    "outer_console_is_regular_merged_file_not_PIPE": true,
+    "prepermission_wrong_route_length_rejected": true,
+    "private_Binderfs": true,
+    "runs": {
+      "baseline": {
+        "binaries": {
+          "manager": "e7f43ddb842395e56ac854bf152b09a535af55e1c19059dae13dc85e3e0cee58",
+          "peer": "c15a416d9db5d837ddb20166829c1cdd4c0e6afdcb3078865e71d44d3c8e8af3",
+          "radio-test": "fd5384e768dcb9ae14a62613add4d30283907bd2645e1bf605311d037e2609ec"
+        },
+        "execution": {
+          "bytes": 3629,
+          "sha256": "168b7b5aace4f365aea833656cf75fd05e15256c8466ea6dcb0fae2d30d5e40c"
+        },
+        "guest_direct_waits": 4,
+        "guest_merged_PIPE_EOFs": 4,
+        "libtest_exit": 101,
+        "manager_exact_pidfd_wait": -9,
+        "peer_normal_exit": 0,
+        "raw_manager": {
+          "bytes": 85,
+          "sha256": "77c5d638ec40ae8cdffbf7e90a918ba0dded6c9fe05be34159dc87369bd9f627"
+        },
+        "raw_peer": {
+          "bytes": 4906,
+          "sha256": "31655e86f23f8003d1aec86aab596beb26761c901dcfe364346f70bf3026bd76"
+        },
+        "raw_test": {
+          "bytes": 6251,
+          "sha256": "0359a6fc13381e35e2a0773060b56273f654c7307b637d3383abc4c356096d7b"
+        },
+        "result": {
+          "bytes": 21978,
+          "sha256": "534b9b32df3af32bd80a3c6b03f5c8629420455365148dc126b9185d54dc9df9"
+        },
+        "selection": {
+          "bytes": 43092,
+          "sha256": "f35d4fe96df57558258980a9fee8d7b0d92e91b9b743603c8c8159006914041d"
+        }
+      },
+      "green": {
+        "binaries": {
+          "manager": "e7f43ddb842395e56ac854bf152b09a535af55e1c19059dae13dc85e3e0cee58",
+          "peer": "c15a416d9db5d837ddb20166829c1cdd4c0e6afdcb3078865e71d44d3c8e8af3",
+          "radio-test": "5ef292cc1260ece41012b5a7af1b5ddf81509f09859253f551f2ef16e8f249fb"
+        },
+        "execution": {
+          "bytes": 3623,
+          "sha256": "ba5fc9001af69b44445186ebb6c245e39b9e2aff474f58b702b33a600676f53b"
+        },
+        "guest_direct_waits": 4,
+        "guest_merged_PIPE_EOFs": 4,
+        "libtest_exit": 0,
+        "manager_exact_pidfd_wait": -9,
+        "peer_normal_exit": 0,
+        "raw_manager": {
+          "bytes": 85,
+          "sha256": "a39b7d90cd55896c2909be2c6b82fd96a180ed22be861869d1c2365b9656531b"
+        },
+        "raw_peer": {
+          "bytes": 4906,
+          "sha256": "5060e7fffd75eb638b45929497a7d81f7b776790c1319e3467e13561c3ebac91"
+        },
+        "raw_test": {
+          "bytes": 6042,
+          "sha256": "17985fe9f4b4380e467954966fc094aceabc515a62d31ac6373edfa9a8f7ac14"
+        },
+        "result": {
+          "bytes": 21917,
+          "sha256": "4f19d38a2dc408cbbb3b789aa8e44c80d1d7d3a0cf20f38a70b8cd000d9cbaef"
+        },
+        "selection": {
+          "bytes": 42094,
+          "sha256": "b7234e21cebc720b45144cbc057bfe8ab4c71836ced0c21362742aae713825c9"
+        }
+      }
+    },
+    "safe_empty_vs_current_changed_paths": [
+      "native-radio/src/owner.rs",
+      "native-radio/src/receiver.rs",
+      "native-radio/src/request.rs"
+    ],
+    "same_consumer_fixture_and_envelope": true,
+    "seven_real_receiver_completed_callbacks_each": true,
+    "total_guest_direct_waits": 8,
+    "total_guest_merged_PIPE_EOFs": 8
+  },
+  "authored_policy": {
+    "current_owner_session_request_and_original_deadlines": true,
+    "error_uninterpreted": true,
+    "first_dispatch_sequence_floor": true,
+    "historical_raw_diagnostic_distinct": true,
+    "ingress_at_actual_receiver_gate_not_owner_drain": true,
+    "matching_length_max4096": true,
+    "route_serial_code_slot": true,
+    "synchronous_fixture_callback_flags": 0,
+    "vendor_sender_flags_claimed": false
+  },
+  "chronology": {
+    "additional_ARM_safe_empty_vs_current_is_postimplementation_differential": true,
+    "preimplementation_missing_API_compiler_RED": {
+      "bytes": 2150,
+      "sha256": "2014b4e95ef9f0b0bb7360da9a4cd12eb6f7d6870a538ff1e3cd16cfc06382a6"
+    },
+    "preimplementation_same_frozen_consumer_safe_empty_runtime_RED": {
+      "bytes": 3157,
+      "sha256": "cc8d54319179d0c48fc8318b0db2d159532bf3d11f798051d4e8f970e0e78819"
+    },
+    "runtime_RED_negative_passes": 2,
+    "runtime_RED_positive_failures": 7,
+    "same_nine_tests_GREEN": true
+  },
+  "compiled_base_commit": "6e5fe507f44f2f196f8ee78e130cf64131be8e90",
+  "frozen_contract": {
+    "bytes": 3515,
+    "sha256": "67d5a8df133b20b5ae71d69e72239159391de033a02540d1f759d9b448c1ea67"
+  },
+  "host": {
+    "CID_absent_same_daemon_sources_unchanged": true,
+    "active": 79,
+    "actual_direct_waits": 6,
+    "actual_merged_PIPE_EOFs": 6,
+    "execution": {
+      "bytes": 9348,
+      "sha256": "15d84670219545c3ace33272f93b7fa6efbea04af00f13f77402cdb5d478855e"
+    },
+    "existing_integration_active": 11,
+    "fixture_fmt_and_strict_Clippy": 0,
+    "fmt": 0,
+    "full_target_cache_exported": false,
+    "ignored": 9,
+    "library_active": 68,
+    "new_frozen_tests": 9,
+    "release": 0,
+    "source": {
+      "bytes": 13242,
+      "sha256": "3faf94d9cc7fc3447876135cec9666c6b4e26370d706667954530fa8ef7c722e"
+    },
+    "strict_Clippy": 0,
+    "test_output": {
+      "bytes": 9807,
+      "sha256": "e1372c6c828cbc76739bc46e65af8eb465cafef0edd459cd2a09a4dacc0fe31f"
+    }
+  },
+  "qualified": {
+    "APN_acquisition": false,
+    "GUI_or_frame": false,
+    "IMS_registration": false,
+    "actual_generic_ARM_Binder_library_integration": true,
+    "host_component": true,
+    "installed_command_ingress_or_durable_request_ledger": false,
+    "original_vendor_semantic_completion": false,
+    "physical_phone_or_carrier": false,
+    "remote_cleanup_reset": false,
+    "retry_or_request_slot_release": false
+  },
+  "schema": 1,
+  "scope": "native Rust one-shot add-PDN raw response attribution; original serial-matching evidence is separate from conservative authored local policy",
+  "source_files": {
+    "native-radio/src/add_pdn_response_binder_tests.rs": {
+      "bytes": 33718,
+      "sha256": "7f4c7e361f4c46b525d2e19d9421eb3f9dfa0ca2927961d81c8497321e21a896"
+    },
+    "native-radio/src/lib.rs": {
+      "bytes": 858,
+      "sha256": "fd5759adebe70293924a4a3d024f70b99771fa76cf42d5221dbbb971ac4e68cf"
+    },
+    "native-radio/src/owner.rs": {
+      "bytes": 41000,
+      "sha256": "1094b36d55b07b4fe50da1777c1e5361939bfd108853ed7fc49fda40df8154c6"
+    },
+    "native-radio/src/receiver.rs": {
+      "bytes": 16788,
+      "sha256": "dfd225018182fe8d59c90f3c65196d8cd01165a4cf890793b12c99f61edf51db"
+    },
+    "native-radio/src/request.rs": {
+      "bytes": 11746,
+      "sha256": "b9173010e77ea32075a00a977e08d618815d7efd3bd807987022dcda0b0f930a"
+    },
+    "native-radio/src/request_response_tests.rs": {
+      "bytes": 10972,
+      "sha256": "b3f6db9e921ff6c1d16cf8ed5073a48865f58da378d6cb7b604940258a51ab14"
+    },
+    "tools/native-arm64-binder/fixture/src/bin/peer.rs": {
+      "bytes": 19872,
+      "sha256": "f315f031bf6b33ec6babe0dd39838aa36a2460f29a70004826bc37075e692671"
+    }
+  }
+}

@@ -27,8 +27,9 @@ implicit replay in this milestone.
 
 One registration and one request attempt are allowed per supervised process.
 Serial1 is never reused in that scope. Request retirement, subsequent operations
-and production correlation require a qualified immutable final receipt and safe
-wire-key allocation. Local cancellation does not reopen the request slot. A
+and final remote-outcome correlation require qualified semantics and safe
+wire-key allocation. The narrower [one-shot raw add-PDN observation](native-radio-add-pdn-response.md)
+now binds exact local request/session history without retiring the operation. Local cancellation does not reopen the request slot. A
 request receipt also prevents direct owner replacement from erasing uncertainty.
 The existing synced supervisor admission marker remains registration-level
 uncertainty; it is not a durable request ledger.
@@ -74,3 +75,20 @@ snapshot Arch guest with no NIC and a read-only project mount. No physical phone
 proprietary execution or credentials are involved. The [provenance](evidence/radio-request-provenance.json)
 pins authored code, compiled artifacts, immutable red, actual Binder outputs and
 separate ARM64 user/kernel results.
+
+## One-shot raw add-PDN attribution
+
+`RequestReceipt::response` now retains at most one exact-route raw105 observation
+for the current admitted request. The validated receiver gate stamps actual queue
+admission before any owner drain; the first dispatch permission captures its
+sequence floor. An older queued callback is refused even when consumed after
+submission. Current owner/session/request identity, slot/serial/code, matching
+bounded length, original BOOTTIME deadlines and cancellation/death fencing all
+remain required. The vendor error is copied without interpretation.
+
+This observation and the latest raw diagnostic history are distinct. Duplicate,
+late, cancelled, foreign, segmented or other-operation responses cannot complete
+another request or authorize retry. OutcomeUnknown and occupied capacity remain.
+The [report](native-radio-add-pdn-response.md) separates the preimplementation
+frozen unit RED→GREEN from additional actual ARM Binder differential integration
+and the independently recovered original serial-matching behavior.

@@ -375,6 +375,82 @@ impl Remotable for Radio {
                     ],
                 )
             }
+            // Authored bounded response-attribution fixture. A synchronous
+            // callback ACK witnesses actual receiver gate/deliver completion;
+            // flags 0 are not asserted to be original vendor sender semantics.
+            140..=146 => {
+                if data.data_avail() != 0 {
+                    return Err(StatusCode::BadValue);
+                }
+                let (callback, owner) = {
+                    let state = self.0.state.lock().unwrap();
+                    (
+                        state.response.clone().ok_or(StatusCode::UnexpectedNull)?,
+                        [state.calling_pid, state.calling_uid],
+                    )
+                };
+                if [
+                    thread_state::get_calling_pid(),
+                    thread_state::get_calling_uid() as i32,
+                ] != owner
+                {
+                    return Err(StatusCode::BadValue);
+                }
+                let mut route = [1, 1, 105, 4, -27]; // slot, serial, code, length, error
+                let bytes: &[u8] = match code {
+                    140 => {
+                        route[3] = 1;
+                        &[0x10]
+                    }
+                    141 => {
+                        route[1] = 99;
+                        &[0x70, 0, 0xff, 0x31]
+                    }
+                    142 => {
+                        route[0] = 0;
+                        &[0x70, 0, 0xff, 0x31]
+                    }
+                    143 => {
+                        route[2] = 137;
+                        &[0x70, 0, 0xff, 0x31]
+                    }
+                    144 => {
+                        route[3] = 3;
+                        &[0x70, 0, 0xff, 0x31]
+                    }
+                    145 => &[0x70, 0, 0xff, 0x31],
+                    146 => &[0xd0, 0, 0xff, 0x31],
+                    _ => unreachable!(),
+                };
+                let remote = callback.as_remote().ok_or(StatusCode::BadType)?;
+                let mut input = remote.prepare_transact(true)?;
+                input.write_i32(1)?;
+                input.write_i32(24)?;
+                for value in route {
+                    input.write_i32(value)?;
+                }
+                input.write(bytes)?;
+                let output = remote
+                    .submit_transact(1, &input, 0)?
+                    .ok_or(StatusCode::UnexpectedNull)?;
+                if output.data_avail() != 0 {
+                    return Err(StatusCode::BadValue);
+                }
+                println!(
+                    "ADD-PDN-RESPONSE-DELIVERED control={} owner_pid={} owner_uid={} slot={} serial={} request={} declared_length={} error={} bytes={} receiver_returned=true callback_flags=0",
+                    code,
+                    owner[0],
+                    owner[1],
+                    route[0],
+                    route[1],
+                    route[2],
+                    route[3],
+                    route[4],
+                    bytes.len()
+                );
+                std::io::Write::flush(&mut std::io::stdout())?;
+                ack(reply)
+            }
             107 => std::process::exit(0),
             _ => Err(StatusCode::UnknownTransaction),
         }
