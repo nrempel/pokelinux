@@ -52,11 +52,13 @@ run now pass. A later native ARM production CMake Release build installs the nor
 app and protected QML with the explicit matching archive and passes the nine-group
 consumer. A normal ARM window and ARM default Cargo remain open; see the
 [CMake/install result](../docs/native-messages-rust-client.md#native-arm-production-cmake-build-and-installation).
-Those ARM builds and prepared captures retain the pre-appearance-Rust-port
+Those ARM builds and earlier prepared captures retain the pre-appearance-Rust-port
 cohort. The [shared appearance port](../docs/native-appearance-rust-client.md)
-separately qualifies fresh host full-app/default-Cargo/install checks; its new
-ARM Qt/visible-session cohort remains open. CMake compiles both public headers;
-it does not install an FFI SDK.
+separately qualifies fresh host full-app/default-Cargo/install checks. A
+[new prepared Messages session](../docs/native-messages-appearance-rust-tracer.md)
+now passes the same four visible groups with both Rust engines, one app/window
+and original native captures. Direct normal QWindow/DPR and the current ARM Qt
+cohort remain open. CMake compiles both public headers; it does not install an FFI SDK.
 
 Explicit provider selection, including cross builds, needs BOTH matching-target
 archive/SHA pairs (replace the paths and digests with the selected artifacts):

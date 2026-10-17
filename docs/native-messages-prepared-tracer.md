@@ -1,7 +1,11 @@
 # Prepared Messages window with the Rust engine
 
-The current normal Messages app now passes a fresh native x86 session through
-four visible states: denied access, granted local history, a live Omarchy theme
+This earlier normal Messages epoch uses the pre-port shared appearance client.
+A later [session with both Rust client engines](native-messages-appearance-rust-tracer.md)
+now passes independently; the four assets and provenance here keep their original
+source cohort and are preserved.
+
+This native x86 session passes four visible states: denied access, granted local history, a live Omarchy theme
 change and revoked access. One app process and window survive the whole sequence.
 The app's request/model engine and service ownership are Rust; Qt presents QML and
 performs native operations. These are authored local messages in a prepared VM.
@@ -87,8 +91,9 @@ The next product milestone is one installed ARM cohort using production build
 and package paths, normal Messages/Sounds, genuine shell/menu and live themes.
 The [shared appearance Rust port](native-appearance-rust-client.md) separately
 passes the same29 native cases and fresh host full-app/default-Cargo/install
-checks. The four captures here retain the pre-port client; a new visible cohort
-and complete current ARM stack remain open. Cold startup still needs a concrete
+checks. The four captures here retain the pre-port client. The later [current appearance
+Rust session](native-messages-appearance-rust-tracer.md) now passes separately;
+the complete current ARM stack remains open. Cold startup still needs a concrete
 repair; repeated diagnostic ladders are parked. Matched Pixel graphics, real
 incoming/SMS sending, notifications/wake, suspend, carrier and all phone hardware
 remain unqualified. No physical phone was accessed.

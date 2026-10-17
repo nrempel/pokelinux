@@ -5,7 +5,9 @@ strict Clippy, the counter regression, eight frozen C ABI groups and all29
 unchanged native Qt cases pass. Fresh full normal Sounds and Messages host builds
 also pass explicit/default-Cargo links, loader and installed-QML controls. The
 AArch64 result is an optimized Rust archive build; new ARM Qt/window/session
-execution remains open.
+execution remains open. A later [normal Messages Qt6.12 session](native-messages-appearance-rust-tracer.md)
+now also passes four visible groups with both Rust clients and original native
+captures; it supplies no current Sounds window or full shell proof.
 
 Rust owns the schema3 request and bounded JSON validation, normalized cache,
 owner/revision checks, connection generations, readiness admission, checked
@@ -62,13 +64,18 @@ a later documentation commit is not relabelled tested source.
 
 ## Remaining integration
 
+A fresh [normal Messages Qt6.12 session](native-messages-appearance-rust-tracer.md)
+now passes all four denial/grant/live-theme/revoke groups with this published
+appearance Rust client and the Messages Rust engine. The same process/window,
+four original native Pixel10 captures and native Stop/owned closure pass. Direct
+normal QWindow/DPR and the app's numeric wait status remain unmeasured.
+
 The earlier [ARM CMake result](native-messages-rust-client.md#native-arm-production-cmake-build-and-installation)
-and [prepared Messages captures](native-messages-prepared-tracer.md) use the
-pre-port appearance client. They retain their own sources and do not qualify
-this new provider on ARM or in a visible session. A new current ARM cohort must
-freshly build both normal apps with matching appearance/services/shell/Source
-inputs. ARM default Cargo, full installed ARM composition and cold startup remain
-open. A Messages-only tracer supplies no new Sounds execution/window proof.
+and [prepared Messages captures](native-messages-prepared-tracer.md) retain their
+pre-port appearance client. A new current ARM cohort must freshly build both
+normal apps with matching appearance/services/shell/Source inputs. ARM default
+Cargo, full installed ARM composition and cold startup remain open. This
+Messages-only tracer supplies no new Sounds execution/window proof.
 
 Full font/settings/rendering fidelity, actual window/output/DPR/native capture,
 trusted lock/focus/session ingress, native display cleanup and stuck kernel tasks,

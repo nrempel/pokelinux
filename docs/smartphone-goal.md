@@ -46,9 +46,12 @@ Pixel10 captures and owned Stop/closure pass; direct QWindow/DPR remains open.
 The [shared appearance Rust client](native-appearance-rust-client.md) now passes
 its frozen eight-group C ABI, counter regression and all29 unchanged native Qt
 cases. Fresh normal Sounds/Messages host links, default Cargo and installed-QML
-checks pass. The earlier ARM and visible results keep their pre-port client;
-new-port ARM Qt/window, visible composition, cold startup and all phone gates
-remain open.
+checks pass. A [fresh normal Messages Qt6.12 session](native-messages-appearance-rust-tracer.md)
+now passes denial, granted authored history, live theme switching and revocation
+with both Rust engines, the same PID/window, four original native captures and
+native Stop/owned closure. Earlier ARM and visible results retain their pre-port
+client. Current Sounds GUI, full shell, new-port ARM composition, cold startup,
+direct normal QWindow/DPR and all phone gates remain open.
 
 Two additional [whole-compositor stall epochs](native-normal-upstream-tracer.md#compositor-freeze-expiry-and-stop)
 now qualify independent100ms Source-expiry withdrawal/quietness/refusal before

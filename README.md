@@ -16,15 +16,18 @@ and the [earlier queue-only result](docs/native-sounds-rust-queue.md) retain the
 separate evidence. Cold installed startup and ARM remain open.
 
 The [Messages request and model engine](docs/native-messages-rust-client.md) now
-also runs in Rust. The current app builds against Qt6.12 in an ARM virtual
-machine, where its engine and actual Qt worker checks pass. A separate production
-CMake Release build now installs the app and protected theme QML and passes the
-nine-group client test. The normal ARM
+also runs in Rust. An earlier cohort with the pre-port appearance client builds
+against Qt6.12 in an ARM virtual machine, where its engine and actual Qt worker
+checks pass. Its separate production CMake Release build installs the app and
+protected theme QML and passes the nine-group client test. The normal ARM
 window, cold startup and physical SMS remain open.
-A [fresh prepared native window](docs/native-messages-prepared-tracer.md) now
-shows denied access, two synthetic messages after permission, a live dark/light
+A [fresh prepared native window with both Rust clients](docs/native-messages-appearance-rust-tracer.md)
+now shows denied access, two authored messages after permission, a live dark/light
 Omarchy theme change and cleared history after revocation. All four groups pass
-with the same app/window and original Pixel10-sized captures.
+with the same app/window and four original Pixel10-sized captures. This new
+Qt6.12 cohort includes the shared appearance Rust port; the [earlier captures](docs/native-messages-prepared-tracer.md)
+retain their pre-port appearance client. Direct normal QWindow/DPR, current
+Sounds GUI and ARM composition remain open.
 
 The [installed Rust radio operator](docs/native-radio-operator.md) now implements
 one privileged typed request through a durable intent writer and owned transport
@@ -111,7 +114,7 @@ flowchart TB
 
 Dashed connections are work still required, not working hardware paths. “Rust services” is the implementation direction; only a small part of native IMS exists today. We are not rewriting the Linux kernel or modem firmware in Rust. The [current integration map](docs/native-integration-map.md) separates components, installed service/app composition and remaining backend evidence.
 
-Hyprland, Aquamarine and the Qt app frontend contain C++. Upstream graphics engines and small adapters remain part of the selected normal stack. New phone-service policy and resource ownership belong in Rust; the custom renderer remains parked as component research. The Sounds and [Messages request/model engines](docs/native-messages-rust-client.md) now run in Rust, including Messages worker-lifetime and stale-result decisions. Qt adapters retain credentialed socket I/O and presentation. The [shared appearance client](docs/native-appearance-rust-client.md) now keeps schema/cache/generation/readiness/deadline policy in Rust; Qt executes native socket/credential/notifier and presentation work. Host components and fresh normal-app/default-Cargo/install checks pass; new ARM Qt and visible-session cohorts remain open.
+Hyprland, Aquamarine and the Qt app frontend contain C++. Upstream graphics engines and small adapters remain part of the selected normal stack. New phone-service policy and resource ownership belong in Rust; the custom renderer remains parked as component research. The Sounds and [Messages request/model engines](docs/native-messages-rust-client.md) now run in Rust, including Messages worker-lifetime and stale-result decisions. Qt adapters retain credentialed socket I/O and presentation. The [shared appearance client](docs/native-appearance-rust-client.md) now keeps schema/cache/generation/readiness/deadline policy in Rust; Qt executes native socket/credential/notifier and presentation work. Host components and fresh normal-app/default-Cargo/install checks pass. A fresh normal Messages Qt6.12 visible session now passes with both Rust engines; a current ARM cohort and current Sounds window remain open.
 
 ## What has been tested
 

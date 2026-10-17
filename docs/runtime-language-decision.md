@@ -43,7 +43,9 @@ cohort predates the shared appearance port. The [shared appearance client](nativ
 now puts schema/cache/generation/readiness/deadline decisions in Rust. Qt keeps
 credentialed socket I/O, descriptor/notifier retirement, timer delivery and
 QColor/QML conversion. Fresh host component/full-app/default-Cargo/install checks
-pass; new ARM Qt and visible-session cohorts remain separate gates.
+pass. A [new normal Messages Qt6.12 session](native-messages-appearance-rust-tracer.md)
+also passes all four visible groups with both Rust engines and owned closure.
+A current Sounds window, ARM Qt cohort and full shell/menu remain open.
 
 The custom renderer experiment added substantial authored C++ scene, protocol
 and GPU integration. That work is now parked as component research. It is not

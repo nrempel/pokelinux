@@ -71,8 +71,14 @@ counter regression RED precedes its repair; strict Rust checks, host/ARM archive
 builds, eight frozen C ABI groups and all29 unchanged native Qt cases pass. Fresh
 normal Sounds/Messages explicit and default-Cargo host builds, dual-archive
 links, protected installation and four windowless controls pass. The earlier
-ARM and visible captures retain their pre-port appearance client; the new
-visible-session check and complete installed ARM cohort are next.
+ARM and visible captures retain their pre-port appearance client. A [fresh normal
+Messages Qt6.12 session](native-messages-appearance-rust-tracer.md) now passes the
+same four groups with both Rust engines, one PID/window, four original native
+captures and native Stop/owned closure. The closed review counts102 primary
+waits/109 PIPE EOFs plus one separate C ABI child wait. Numeric app exit and
+direct QWindow/DPR stay unmeasured. The required historical Sounds profile is
+inactive; no current Sounds GUI or full shell is qualified. A complete installed
+current ARM cohort remains next.
 Retain Qt presentation. Extra conservative parser-error
 classification refinements are parked; no exhaustive Qt equivalence is claimed.
 
