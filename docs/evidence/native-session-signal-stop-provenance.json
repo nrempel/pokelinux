@@ -1,0 +1,112 @@
+{
+  "schema": 1,
+  "description": "Native Rust owner SIGTERM uses the existing actor Stop; actual before-readiness production-owner integration after preserved default-signal RED. Hash-only evidence; manager/cold/ARM/phone remain separate.",
+  "source_base": "d5d28e786cdce85f70039baaa84ad4f07f7eb3cf",
+  "changed_code_and_manifest": {
+    "native-kernel-identity/Cargo.toml": {
+      "bytes": 421,
+      "sha256": "73dcde30e1860aa1d2d41d3c24c50b57cdcfddb907ebb3a1c8f039f63c7e6586"
+    },
+    "native-kernel-identity/src/lib.rs": {
+      "bytes": 3706,
+      "sha256": "17760f73db788e91810e9ba8c688955e5efd49efde6736922435085047efe131"
+    },
+    "native-kernel-identity/src/termination.rs": {
+      "bytes": 6316,
+      "sha256": "76b25680e311bb1fb0bb957c7cec93f336969e269023f616bd204c8252f7675e"
+    },
+    "native-kernel-identity/tests/termination_control.rs": {
+      "bytes": 9926,
+      "sha256": "f1540527ca78ff2e1df285de118ad01ab3f1f344ae461f012c53efd72dced2ad"
+    },
+    "native-lifecycle/src/service.rs": {
+      "bytes": 80817,
+      "sha256": "06245a25c9f7b6dda2ffd4771c38e9b56b86eaf767bd12ebd63d80c799d1571a"
+    },
+    "native-session-owner/src/runtime.rs": {
+      "bytes": 5274,
+      "sha256": "71bda16c54c7ee5f7c6540545fbad507eeb90f3f9f8a1636c5bab956e25bfaf9"
+    }
+  },
+  "leaf_component": {
+    "missing_interface_RED": {
+      "bytes": 1510,
+      "sha256": "ba970b7c36bd85dafbad2f767dd59619e57e7bf95b94c4f78e247944a1365fe0"
+    },
+    "independent_review": {
+      "bytes": 9399,
+      "sha256": "dfee776b31be66c7dbe30cddec62bd6fcd4203ae1bd0499c780f916c190079c9"
+    },
+    "source_manifest": {
+      "bytes": 2372,
+      "sha256": "5172b7ccec26b7c7a26dde73ca13617e1755c509f2685e23a12c30cc13c1585c"
+    },
+    "frozen_real_signal_consumer_sha256": "f1540527ca78ff2e1df285de118ad01ab3f1f344ae461f012c53efd72dced2ad",
+    "active_existing_tests_serial": 14,
+    "real_signal_groups": 5,
+    "default_ignored_helper_modes": 3,
+    "fmt_strict_Clippy_Release_pass": true,
+    "parallel_numeric_FD_assertion_failure_preserved": true
+  },
+  "owner_integration": {
+    "Root_qualification": {
+      "bytes": 2420,
+      "sha256": "2a2c7cf7e65199a58df62c06404d7504e30468a86698fe2c5ad3cec9dc7a21b1"
+    },
+    "build_selection": {
+      "bytes": 22668,
+      "sha256": "f69958c7ab1fdbb8f22cb4a7b0045d075105899ba9f7b1c647c96e54339617e0"
+    },
+    "closed_build_receipt": {
+      "bytes": 62963,
+      "sha256": "dbc9c08d78f324f33597f22d0953f0e44020dbc07daeddffa35f1d44d94356cf"
+    },
+    "optimized_default_owner": {
+      "bytes": 5527360,
+      "sha256": "fdf9714b5537ee932a69d3a12562a1b8c743529eb4a16ce2f7b9aef82c95240b"
+    },
+    "actual_regression_cases": {
+      "startup_status": 5,
+      "display": 19,
+      "source_status": 12,
+      "stop": 6,
+      "lifecycle": 68
+    },
+    "lifecycle_ignored_unselected": 20,
+    "native_SIGTERM_consumer_sha256": "983d17265644e220507dd55d209d021cf8448630dfab5bc228f36c7fa6ee00fe",
+    "closed_integration_receipt": {
+      "bytes": 15529,
+      "sha256": "149d8162c2236413b24aeabe913aa834889a1820ae8542dda496b3e95eb4c314"
+    },
+    "actual_SIGTERM_result": {
+      "bytes": 4159,
+      "sha256": "552aed5666544453254454aec4958bef261f29a1998cbd6b35eb1748a92168a5",
+      "actual_main_wait_exit": 0,
+      "subreaper_adopted_children": 0,
+      "final_ECHILD": true,
+      "all_retained_descendants_dead_absent": true,
+      "authenticated_setup_policy_ready": false,
+      "positive_Source_frames": 0,
+      "positive_audio_facts": 0,
+      "signal_to_main_wait_ms": 20.288799
+    },
+    "all_original_bound_process_PIPE_EOF_source_and_CID_closure": true,
+    "raw_production_SIGTERM_RED_preserved": true
+  },
+  "separate_cold_observer_failure": {
+    "Root_review": {
+      "bytes": 1798,
+      "sha256": "5fb40f9a269f4b897859ed0e895cd35436d00be622358ca8e84f3ec656501381"
+    },
+    "actual_installed205_verified": true,
+    "runtime_pass": false,
+    "guest_service_closure_pass": false,
+    "VM_and_input_closure_pass": true,
+    "Source_or_readiness_failure_inferred": false
+  },
+  "installed_manager_Stop_qualified": false,
+  "actual_compositor_new_success_or_full_shell_qualified": false,
+  "ARM_or_Pixel_hardware_qualified": false,
+  "no_physical_phone_access": true,
+  "no_proprietary_inputs_raw_logs_binaries_or_credentials_published": true
+}

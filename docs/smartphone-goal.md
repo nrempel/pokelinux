@@ -31,6 +31,12 @@ now passes actor and socket/process boundaries; installed PID1 readiness, cold
 shell behavior and separate unit Stop lifecycle remain required. Process closure in the second run does not qualify
 runtime success. See the [cold startup RED](native-normal-upstream-tracer.md#cold-installed-startup-fails-before-sounds).
 
+The [native SIGTERM Stop repair](native-session-signal-stop.md) passes actual
+production-owner shutdown before readiness and110 composed host regressions.
+Manager Stop, its exact unit configuration and cold full-shell behavior remain
+unqualified. The first notify-owner cold attempt stops on a queued-job observer
+error before any authenticated Source result; it is preserved as failed evidence.
+
 The [native graphics resource operations](native-render-exact-buffer.md) pass their matching normal AQ15 build, ten existing CPU groups and four API checks after missing-interface RED. Two real-driver runs observe all five resource groups passing, but both aggregates fail a control-session check; the diagnostic identifies revocation with a queued CHANGE. Production exact-buffer preparation/execution, normal frames, Source, ARM and phone gates remain open.
 
 The [Rust format planner](native-render-format-policy.md) now chooses exact implicit or explicit requests from copied native observations. Its six-group C++/Rust boundary test, all64 existing Rust tests, five previous C++ programs, formatting, strict Clippy and Release build pass after genuine missing-interface RED. The obsolete planning API is removed. The shared native startup/CHANGE collector removes both old C++ format choices and passes its matching full compositor/SDK build. The unchanged normal startup/CHANGE test also passes on the real generic x86 KVM virtio driver: Rust accepts the fresh sequence4 configuration after bootstrap3, with one output and no Stop. Client frames, native retirement and the integrated normal app session remain open.

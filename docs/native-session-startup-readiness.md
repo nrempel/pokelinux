@@ -86,8 +86,9 @@ The actual released pre-repair owner separately fails a real pidfd SIGTERM
 contract while awaiting Source: authenticated setup succeeds, Main exits-15 and
 the subreaper must reap its compositor and storage children after parent-death
 SIGKILL. Actual child death is not graceful owner cleanup. The contract retains
-its failure, final ECHILD, all waits and exact container closure. A Rust signal
-Stop/drain correction and actual unit Stop result remain required; the old strict
+its failure, final ECHILD, all waits and exact container closure. The later [Rust signal
+Stop/drain correction](native-session-signal-stop.md) now passes its separate
+actual owner consumer; an actual unit Stop result remains required; the old strict
 native `--stop` behavior is unchanged in this readiness selection.
 
 Still open: installed PID1 readiness/Stop, genuine cold full shell and Sounds,

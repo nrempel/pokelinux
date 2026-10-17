@@ -30,7 +30,9 @@ compositor is frozen. These are individual VM measurements. The first
 now fails at the genuine shell's unavailable Wayland endpoint. Native Rust
 [startup notification](docs/native-session-startup-readiness.md) now passes actual
 actor and socket/process boundaries; installed PID1/cold-shell validation and the
-separate unit Stop correction remain open. The [explicit deployment
+separate unit Stop correction remain open. [Native SIGTERM Stop](docs/native-session-signal-stop.md)
+now passes against the actual Rust owner before readiness, with Main exit0 and
+no adopted children; this does not qualify manager Stop or cold startup. The [explicit deployment
 installer](docs/native-normal-upstream-tracer.md#explicit-installed-session-selection)
 now passes its frozen host RED→GREEN consumer with the unchanged205-file selected
 bundle. This qualifies staged bytes and modes; installed unit/Source/shell startup

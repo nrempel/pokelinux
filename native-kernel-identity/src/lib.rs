@@ -1,4 +1,8 @@
-//! Fixed Linux socket-origin and owned-pidfd identity boundaries.
+//! Fixed Linux socket-origin, owned-pidfd and process signal boundaries.
+#[cfg(target_os = "linux")]
+mod termination;
+#[cfg(target_os = "linux")]
+pub use termination::{TerminationGuard, termination_requested};
 #[cfg(target_os = "linux")]
 mod pidfd;
 #[cfg(target_os = "linux")]

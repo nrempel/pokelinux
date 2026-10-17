@@ -83,3 +83,43 @@ build/host record. Current combined provenance is linked in
 still records matched6.6 assets. Upstream6.6 source availability and a6.8 host
 pass do not qualify that exact Pixel image/config/KMI or a physical device. No
 physical phone, privileged service configuration or retained kernel was changed.
+
+## Process termination latch
+
+`TerminationGuard::install()` owns one Linux SIGTERM action and
+`termination_requested()` reads its atomic latch. The handler only stores that
+flag. The caller must feed it into its existing actor Stop/drain path; this leaf
+adds no Stop implementation, signal mask, thread, worker, descriptor or retry.
+The guard is neither Send nor Sync and must live through all drain custody.
+
+Install and Drop require the main thread and one actual task under trusted
+`/proc`. The process owner must exclude concurrent thread creation and external
+signal reconfiguration at those boundaries; threads created during the lifetime
+must have joined before Drop. Installation refuses an active guard, an
+unqualified thread set or an inherited blocked SIGTERM mask. It never changes
+the calling mask. Drop restores the complete saved signal action; a failed
+restoration or unqualified destruction aborts instead of releasing a possibly
+still-active handler lease. A fork child cannot consume the copied parent latch
+or release its guard. Caught handlers reset to default across exec, while the
+unchanged signal mask carries across exec. Children must exec before independent
+work. See [Linux signal semantics](https://man7.org/linux/man-pages/man7/signal.7.html)
+and [execve](https://man7.org/linux/man-pages/man2/execve.2.html).
+
+A frozen independent consumer first failed with exactly the two absent public
+interfaces. The same consumer now passes five real host component groups:
+actual SIGTERM latch/duplicate delivery and prior-action restoration; fresh
+lifetimes; blocked-mask refusal; actual main/foreign-thread refusal; and a
+pidfd-signalled exec child with signal15 parent wait and both PIPE EOFs. The test
+uses one joined test-only thread; the implementation adds none. Its original
+BOOTTIME bounds remain5s work and8s close.
+
+All fourteen existing active crate tests and the five new groups pass with
+`RUST_TEST_THREADS=1`; three isolated helper entrypoints remain ignored in the
+ordinary listing and are invoked by their actual parent cases. An earlier
+parallel run failed an unchanged numeric FD-slot absence assertion while another
+test opened descriptors; that failed run remains separate. Formatting, strict
+all-target Clippy and Release build pass. These are Linux host component checks,
+not owner signal-to-Stop/drain integration, systemd shutdown, ARM or phone proof.
+The later [owner integration](../docs/native-session-signal-stop.md) separately
+passes actual SIGTERM before readiness, with Main exit0 and no adopted children.
+That combined result does not follow merely from this leaf component pass.

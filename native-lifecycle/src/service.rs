@@ -307,6 +307,71 @@ fn stop_session(authority: &mut Authority, provider: &mut dyn crate::session::Pr
     authority.source_stopping();
     provider.stop();
 }
+#[allow(clippy::too_many_arguments)]
+fn begin_stop(
+    authority: &mut Authority,
+    apps: &mut crate::apps::Apps,
+    storage: &mut Worker,
+    operation: &mut Option<Operation>,
+    messages: &mut Option<&mut dyn crate::messages::Provider>,
+    session: &mut Option<&mut dyn crate::session::Provider>,
+    startup_failed: bool,
+    stopping: &mut bool,
+    stop_reply: &mut Option<Reply>,
+    cleanup_until: &mut Option<u64>,
+) -> Reply {
+    if let Some(reply) = stop_reply.as_ref() {
+        // The first Stop owns the operation, deadline and acknowledgement truth.
+        return reply.clone();
+    }
+    *stopping = true;
+    let cleanup = *cleanup_until.get_or_insert_with(|| boottime_ns().saturating_add(2_000_000_000));
+    if let Some(provider) = messages.as_deref_mut() {
+        provider.stop();
+    }
+    let clean = !startup_failed
+        && authority.ready()
+        && operation.is_none()
+        && !storage.busy()
+        && !authority.required_lock_write_pending();
+    authority.invalidate();
+    let app_stop = if startup_failed {
+        apps.stop(authority)
+    } else {
+        apps.normal_stop(authority, cleanup)
+    };
+    if let Some(provider) = session.as_deref_mut() {
+        stop_session(authority, provider);
+    }
+    if clean {
+        let until = boottime_ns().saturating_add(1_000_000_000).min(cleanup);
+        if let Ok(token) = storage.start_shutdown(until) {
+            *operation = Some(Operation {
+                token,
+                connection: None,
+                intent: None,
+                until,
+                retired: false,
+                shutdown: true,
+                camera: false,
+            });
+        } else {
+            storage.stop();
+        }
+    } else {
+        if let Some(operation) = operation.as_mut() {
+            operation.retired = true;
+        }
+        storage.stop();
+    }
+    let reply = if app_stop.is_ok() {
+        Reply::Ok
+    } else {
+        Reply::Unavailable
+    };
+    *stop_reply = Some(reply.clone());
+    reply
+}
 fn refresh_session(
     authority: &mut Authority,
     session: &mut Option<&mut dyn crate::session::Provider>,
@@ -473,6 +538,23 @@ fn run_with_services_inner(
     let mut media = crate::audio_session::Session::default();
     let mut outcome = (|| {
         loop {
+            // The signal handler only latches intent. The actor owns the same
+            // Stop/fence/drain operation as authenticated admin Stop, including
+            // startup with an outstanding policy load and no accepted Source.
+            if pokelinux_kernel_identity::termination_requested() {
+                begin_stop(
+                    &mut authority,
+                    &mut apps,
+                    &mut storage,
+                    &mut operation,
+                    &mut messages,
+                    &mut session,
+                    startup_failed,
+                    &mut stopping,
+                    &mut stop_reply,
+                    &mut cleanup_until,
+                );
+            }
             // Never block on child wait, request IO, or an idle client.
             authority.reap_dead()?;
             refresh_session(&mut authority, &mut session)?;
@@ -1212,65 +1294,18 @@ fn run_with_services_inner(
                             Ok(AdminRequest::Snapshot {}) => {
                                 authority.snapshot(storage.occupied(), storage.busy())
                             }
-                            Ok(AdminRequest::Stop {}) => {
-                                if let Some(reply) = &stop_reply {
-                                    // The first Stop owns the shutdown operation,
-                                    // original deadlines and acknowledgement truth.
-                                    reply.clone()
-                                } else {
-                                    stopping = true;
-                                    let cleanup = *cleanup_until.get_or_insert_with(|| {
-                                        boottime_ns().saturating_add(2_000_000_000)
-                                    });
-                                    if let Some(p) = messages.as_deref_mut() {
-                                        p.stop();
-                                    }
-                                    let clean = !startup_failed
-                                        && authority.ready()
-                                        && operation.is_none()
-                                        && !storage.busy()
-                                        && !authority.required_lock_write_pending();
-                                    authority.invalidate();
-                                    let app_stop = if startup_failed {
-                                        apps.stop(&mut authority)
-                                    } else {
-                                        apps.normal_stop(&mut authority, cleanup)
-                                    };
-                                    if let Some(provider) = session.as_deref_mut() {
-                                        stop_session(&mut authority, provider);
-                                    }
-                                    if clean {
-                                        let until = boottime_ns()
-                                            .saturating_add(1_000_000_000)
-                                            .min(cleanup);
-                                        if let Ok(token) = storage.start_shutdown(until) {
-                                            operation = Some(Operation {
-                                                token,
-                                                connection: None,
-                                                intent: None,
-                                                until,
-                                                retired: false,
-                                                shutdown: true,
-                                                camera: false,
-                                            });
-                                        } else {
-                                            storage.stop();
-                                        }
-                                    } else {
-                                        if let Some(op) = &mut operation {
-                                            op.retired = true;
-                                        }
-                                        storage.stop();
-                                    }
-                                    let reply = if app_stop.is_ok() {
-                                        Reply::Ok
-                                    } else {
-                                        Reply::Unavailable
-                                    };
-                                    stop_reply = Some(reply.clone());
-                                    reply
-                                }
-                            }
+                            Ok(AdminRequest::Stop {}) => begin_stop(
+                                &mut authority,
+                                &mut apps,
+                                &mut storage,
+                                &mut operation,
+                                &mut messages,
+                                &mut session,
+                                startup_failed,
+                                &mut stopping,
+                                &mut stop_reply,
+                                &mut cleanup_until,
+                            ),
                             Ok(_) if stopping => Reply::Unavailable,
                             Ok(AdminRequest::Launch { app }) => {
                                 match profiles.iter().find(|p| p.app == app) {

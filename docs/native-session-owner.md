@@ -19,7 +19,9 @@ The [native Rust startup notifier](native-session-startup-readiness.md) now
 connects existing accepted Source freshness to one Main-process notification,
 with exact compositor peer/pidfd validation and nonblocking delivery. Its actor
 and Linux socket/process tests pass; notify unit metadata is selected, while
-installed PID1/cold-shell behavior and separate signal Stop remain open.
+installed PID1/cold-shell behavior remains open. The later
+[signal Stop repair](native-session-signal-stop.md) now qualifies actual owner
+SIGTERM before readiness; installed manager Stop/unit behavior is separate.
 
 ## Ownership and installation
 

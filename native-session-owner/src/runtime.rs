@@ -36,6 +36,9 @@ pub fn drain_after<T>(
 pub fn run(config: &Config) -> io::Result<()> {
     let helper = std::env::current_exe()?;
     pokelinux_lifecycle::service::trusted_executable(&helper)?;
+    // Arm before compositor custody can exist; keep this process-owned guard
+    // alive through every Source/history/actor drain and occupancy check.
+    let _termination = pokelinux_kernel_identity::TerminationGuard::install()?;
     let until = boottime_ns()
         .checked_add(MAX_SOURCE_STARTUP_NS)
         .ok_or(io::ErrorKind::InvalidInput)?;

@@ -83,6 +83,15 @@ and socket/process boundaries, with notify unit metadata. Run the installed
 PID1/cold-shell selection and complete the separate Stop lifecycle correction;
 keep the original100ms Source and120s startup bounds. See the [cold result](native-normal-upstream-tracer.md#cold-installed-startup-fails-before-sounds).
 
+The [Rust SIGTERM owner repair](native-session-signal-stop.md) now passes its
+unchanged actual production-owner consumer before policy/Source readiness, with
+Main exit0/no adopted children/ECHILD;110 composed regressions and default Release
+pass. Unit ExecStop/KillMode and actual manager Stop remain open. A cold run of
+the earlier readiness owner aborts on the observer treating a queued shell job
+as failure while Main is still activating; it proves no Source/readiness failure.
+Retain that failed aggregate and fix pending/identity/exit observation without
+relaxing runtime success or treating reset PID1 defaults as positive exit proof.
+
 The Rust [one-shot add-PDN response observer](native-radio-add-pdn-response.md)
 now retains immutable request/session/route/error/byte history after frozen
 component RED→GREEN and a separate actual ARM Binder differential check. All79
