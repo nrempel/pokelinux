@@ -43,9 +43,14 @@ uses authored CPU native callbacks. The matching normal main/SDK build passes;
 actual AQ recovery remains unavailable at fresh DRM format/modifier corroboration.
 A separate real KVM [format observation](../tools/native-render-owner/format-diagnostic/README.md)
 now identifies an explicit-modifier negotiation mismatch after its own actual
-RED; its matching build and frozen diagnostic pass. Format selection policy
-still needs Rust migration and allocation/import qualification.
-Normal client frames, Source and phone qualification remain open.
+RED; its matching build and frozen diagnostic pass. A separate
+[Rust format-policy component](../docs/native-render-format-policy.md) now passes
+four unchanged real C++/Rust ABI groups with the same fresh archive as all64 old
+Rust tests and the five existing C++ programs. Its authored facts prove CPU policy
+only. The native adapter has not called this helper yet; shared bootstrap/recovery
+wiring and exact allocation/import remain required. Native prepare/execute still
+return protocol refusal. Normal client frames, Source and phone qualification
+remain open.
 The historical checkpoints below retain their original providers and scopes.
 
 ## Build and actual boundary test
@@ -64,6 +69,11 @@ Use the archive path Cargo actually reports, including any explicit
 `include/pokelinux_render.h`; link the native libraries reported by that Rust
 build. The current x86 compiler reports `-lgcc_s -lutil -lrt -lpthread -lm -ldl -lc`.
 The C++ flags are `-std=c++20 -O2 -Wall -Wextra -Werror -pthread`.
+
+Compile `tests/format_ffi.cpp` against `include/pokelinux_render_format.h`
+and that same actual archive, adding `-pedantic` and the reported native libraries.
+Its success marker is `FORMAT_SELECT_ALL_PASS groups=4`. The inputs are authored
+CPU facts; this does not run a DRM backend or qualify native compositor wiring.
 
 The test uses an actual shared memfd and forked producer: capture, mutation,
 unmap/close and actual child wait precede the retained-byte check. A separately

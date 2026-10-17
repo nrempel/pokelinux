@@ -24,6 +24,21 @@ libdrm queries/decoding/freeing, mirror application and display-attempt custody
 remain native adapter responsibilities. Bounds needed to safely copy native
 arrays stay at that copying boundary.
 
+The [Rust format-policy component](native-render-format-policy.md) now implements
+first-tuple selection and raw cap/route/primary-plane/exact-pair decisions behind
+one synchronous C ABI. Its four-group real C++/Rust test passes, but the native
+adapter has not been rewired: the C++ decisions above still execute. Use one
+collector/helper after enumeration at both bootstrap and recovery; registration
+should retain objects and identities without choosing a tuple. Strict query
+status handling can move or add refusals, so this is not an all-behavior-identical
+conversion.
+
+Production frame preparation and execution currently return protocol refusal,
+and the normal compositor still runs only its startup loop. The next graphics
+work must connect the narrow allocation/import operations to those callbacks and
+reach a real normal app frame, then the existing Sounds/service/theme slice.
+Further isolated capability checkpoints do not establish that path.
+
 Invalidation immediately revokes old unsealed tickets and suspends availability.
 It does not substitute the AQ session identity for the security generation.
 Already-sealed work retains its historical grant, frame and retirement duties.
