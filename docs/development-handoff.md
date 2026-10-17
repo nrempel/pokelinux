@@ -103,6 +103,16 @@ operation remains unidentified. Default file logging is disabled, so absence of
 a captured log supplies no cause. Keep100ms unchanged and identify the gap from
 concrete runtime evidence, without inventing another activation predicate.
 
+A later explicit container8→16CPU diagnostic keeps guest6CPU, profile, providers,
+functional consumer,100ms Source and original deadlines unchanged. All60 bounded
+cgroup samples report zero own-bandwidth throttling; the last precedes QMP guest
+shutdown by585.796ms, without an invented guest/host clock alignment. Source1
+still expires at103.241220ms, shell exits255 and no app/PCM group qualifies.
+Actual manager cleanup and153wait/160PIPE plus QMP/unit-reference/input/CID closure
+pass separately. An authenticated existing log is retained but stops before the
+gap. Next use explicit diagnostic logging, with its changed profile admitted
+separately from the original205-file installer proof. No cause or repair inferred.
+
 The Rust [one-shot add-PDN response observer](native-radio-add-pdn-response.md)
 now retains immutable request/session/route/error/byte history after frozen
 component RED→GREEN and a separate actual ARM Binder differential check. All79
@@ -475,14 +485,12 @@ Ready/create check. The candidate is one matching current cohort, without a
 private-HOME reader or old-schema fallback. The later normal ARM tracer above qualifies this separate UI/audio/theme
 selection; its host component results retain their original scope.
 
-
 The [additional audio checkpoint](native-audio-pcm-arm-foundation.md) passes five
 actual host PCM stages (240,000 measured frames) and eleven unchanged Qt socket
 cases under a generic ARM kernel. Signed32-package preparation preserves all353
 existing versions and exports a closed read-only layer. These are separate
 proofs; no normal Sounds GUI/audio/theme composition is claimed. Continue the
 finite normal ARM tracer using the current matching schema3 appearance cohort.
-
 
 The [native output-selector foundation](native-audio-output-selector.md) now
 passes host logical catalog→actual graph and fresh same-cookie application

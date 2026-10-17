@@ -38,7 +38,10 @@ now fails at the genuine shell's unavailable Wayland endpoint. Native Rust
 actor and socket/process boundaries. Two later [cold PID1 checks](docs/native-session-manager-stop.md)
 reach notify readiness, then lose Source freshness before the shell can connect.
 The selected unit now signals the Rust owner with `KillMode=mixed`; actual manager
-Stop after Source loss exits cleanly. Healthy cold startup remains open.
+Stop after Source loss exits cleanly. Healthy cold startup remains open. A later
+explicit 16-CPU diagnostic still expires Source at103.24ms; all 60 captured
+container CPU-counter samples report zero quota throttling. The cause remains
+unidentified; this resource change is not a production repair.
 [Native SIGTERM Stop](docs/native-session-signal-stop.md) also passes before
 readiness, with Main exit0 and no adopted children. The [explicit deployment
 installer](docs/native-normal-upstream-tracer.md#explicit-installed-session-selection)

@@ -74,3 +74,34 @@ disables file logging; missing logs supply no cause. Both aggregates remain
 failed. Their respective148/149 direct waits and155/156 PIPE EOFs, separate QMP
 EOF, exact container/input closure and original bounds pass. See the separate
 [diagnostic provenance](evidence/native-cold-source-gap-provenance.json).
+
+## Declared CPU resource diagnostic
+
+A separate epoch changes only the container quota from8 to16 CPUs and adds bounded
+read-only CPU accounting on the existing host loop. Guest6 vCPUs/6144MiB,
+container10GiB, profile, providers, functional consumer and all original deadlines
+remain unchanged. This is an explicit resource variant, not qualification under
+the earlier8-CPU limit or a production repair.
+
+All60 retained exact-container cgroup snapshots report cpu.max1600000/100000,
+zero nr_throttled and zero throttled_usec. Their59.378s observation span ends
+585.796ms before QMP observes guest shutdown; no exact guest/host Source timestamp
+alignment is invented. Earlier8-CPU epochs retained no comparable counters.
+These are selected-cgroup accounting facts, not proof about ancestor limits,
+host scheduling or the gap's cause. The [kernel interface](https://docs.kernel.org/admin-guide/cgroup-v2.html#cpu-interface-files)
+defines those quota and accounting fields.
+
+The original freshness failure remains: sequence1 expires at103.241220ms before
+healthy shell/Sounds/PCM startup. Actual shell identity is retained, followed by
+exit255. Thirteen configuration completions again precede Source1. A live PID and
+lock-bound existing log is finally retained, but contains only the initial
+startup buffer before default logging is disabled; it does not identify the gap.
+Next use an explicitly selected logging diagnostic, preserving the original
+functional consumer and100ms lease.
+
+Actual manager cleanup records command0, matching Main0/Resultsuccess and an
+empty cgroup; the healthy-full-startup Stop predicate remains false. All153
+direct waits,160 PIPE EOFs, separate QMP EOF, eight native unit-reference returns,
+original cutoffs and exact container/input closure pass. Overall functional
+qualification remains false. The separate diagnostic provenance binds this epoch;
+raw logs and binaries remain private. No phone is accessed.

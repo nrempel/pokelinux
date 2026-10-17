@@ -12,6 +12,11 @@ render-stall availability and native display cleanup remain open. The custom
 renderer results below remain component research. The full completion matrix and
 all physical-phone gates stay open.
 
+The later [16-CPU cold diagnostic](native-session-manager-stop.md#declared-cpu-resource-diagnostic)
+still expires Source at103.24ms, with zero own-quota throttling in60 captured
+container snapshots. Cold availability remains unqualified; no causal repair is
+claimed and the100ms freshness contract stays unchanged.
+
 The first [Rust app-client queue core](native-sounds-rust-queue.md) now replaces
 Sounds queued route/reconnect ownership and deadline/cancel logic in C++. Actual
 C ABI, unchanged Qt socket checks and full application linking pass; this new
@@ -254,7 +259,6 @@ can retain a packet tail or return zero on an empty queue. This advances the nat
 contract; complete-record/channel custody, source/KMI, provider/APN/IMS and
 hardware remain open. That static checkpoint changes no native behavior; no
 phone execution is claimed.
-
 
 This scope supersedes the earlier call-bridge-only completion target. It records Nicholas's expanded instruction: build a complete Omarchy smartphone system for Pixel 10, including SMS, camera, power and all phone functions that need special treatment, with genuine Omarchy plugin and theme integration.
 
