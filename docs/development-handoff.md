@@ -26,9 +26,14 @@ The first [Sounds queue core](native-sounds-rust-queue.md) now owns the copied
 queued route/reconnect intent, original BOOTTIME deadline, fresh-state checks
 and cancellation in Rust. Six actual C ABI groups, unchanged30 Qt socket cases
 plus setup/cleanup, strict Rust checks, default offline Cargo/CMake and full
-Sounds link pass. Direct request/reply/transport code still contains C++; prepared
-PCM, installed runtime and ARM have not selected the new client. Continue those
-integration gates and the remaining client-core migration; retain Qt presentation.
+Sounds link pass. A real Arch Release attempt then fails when NDEBUG disables the
+permanent consumer; preserve that setup RED. Target-only -UNDEBUG now passes the
+same six groups and fresh Qt32/appearance29, plus all four prepared app/PCM groups
+and192,000 frames with the new client. Five native Pixel-profile app captures and
+all original closure qualify separately. The older five service roles/owner and
+prepared warmup stay selected; no cold-start repair is inherited. Direct request/
+reply/transport still contains C++; cold installed/ARM gates and further client
+core migration remain. Retain Qt presentation.
 
 ## Current stopping point
 
@@ -110,8 +115,14 @@ shutdown by585.796ms, without an invented guest/host clock alignment. Source1
 still expires at103.241220ms, shell exits255 and no app/PCM group qualifies.
 Actual manager cleanup and153wait/160PIPE plus QMP/unit-reference/input/CID closure
 pass separately. An authenticated existing log is retained but stops before the
-gap. Next use explicit diagnostic logging, with its changed profile admitted
-separately from the original205-file installer proof. No cause or repair inferred.
+gap. The next logging-only profile is admitted separately from the original205-file
+installer proof; actual guest205-file installation is checked. It retains100,868
+log bytes and another115.427033ms Source gap, with seq2 received/validated52.269us
+later. It identifies no blocking operation or logger buffering behavior. All146
+waits/153PIPE plus original closure pass, while full startup stays false. Next
+prepare a bounded callback-span diagnostic with BOOTTIME/main-thread CPU and
+explicit coverage, keeping default logging and all Source/functional gates.
+No cause or production repair is inferred.
 
 The Rust [one-shot add-PDN response observer](native-radio-add-pdn-response.md)
 now retains immutable request/session/route/error/byte history after frozen

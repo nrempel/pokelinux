@@ -232,7 +232,6 @@ filesystem suite result
 `74138838b12a4abe6226e93ab852a818e6d1be2ac05f7b08d6fd4787e39358df`.
 Private deployment inputs and raw outputs are retained outside the repository.
 
-
 ## Cold installed startup fails before Sounds
 
 Two actual cold native x86 KVM runs now execute the explicit installed selection:
@@ -286,3 +285,17 @@ Hash-only second-epoch selection `0fffa4dd1ad10768846ae5a07ed45cf95568c38436831c
 execution `556cc458746eb043016718e6325d384e7bf97132b8e1598adf4856762b573cbc`;
 Root RED qualification `ef7ad6bafcdb9e6aba9ff88bae3e4db8d66b9c1d93c63812c2bb8f4114dc8c85`.
 No raw private logs or original binaries are published. No physical phone is accessed.
+
+## Prepared Rust queue client successor
+
+The [new Rust queue core](native-sounds-rust-queue.md#actual-prepared-app-and-audio)
+is now linked into a freshly built Arch Qt6.12.0 Sounds application and passes the
+same four prepared permission/focus/touch/terminal-Source groups, eight PCM windows
+and192,000 frames. A real Release test-target failure is retained; only that target
+adds -UNDEBUG, keeping the frozen consumer and app flags unchanged. Six C ABI,
+32 Qt and29 appearance cases rerun. Native Pixel-profile captures are separate
+new assets. The older five Rust service roles, c70c normal compositor/full498SDK,
+warmup,100ms Source and original limits remain selected. Full owned closure passes.
+This advances the new client qualification; it does not repair cold startup or
+qualify live full-shell themes, ARM, native cleanup or a phone. Historical results
+above retain their original client bytes.

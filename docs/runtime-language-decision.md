@@ -20,7 +20,9 @@ separate from the Rust phone services and must be counted honestly.
 
 The first [Sounds queue core](native-sounds-rust-queue.md) now moves one unsent
 route/reconnect intent, its original deadline, revalidation and cancellation into
-Rust, with actual C ABI and unchanged Qt socket tests. Sounds transport, direct
+Rust, with actual C ABI and unchanged Qt socket tests. The app linked with that
+core now passes the four prepared GUI/audio groups; cold installed startup and
+ARM remain open. Sounds transport, direct
 request deadlines, reply validation and presentation still contain C++. Messages
 RPC worker lifetimes/stale-result generations and appearance validation remain
 Rust migration work. Retain QObject/QML presentation and narrow native API

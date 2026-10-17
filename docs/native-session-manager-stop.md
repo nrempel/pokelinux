@@ -105,3 +105,31 @@ direct waits,160 PIPE EOFs, separate QMP EOF, eight native unit-reference return
 original cutoffs and exact container/input closure pass. Overall functional
 qualification remains false. The separate diagnostic provenance binds this epoch;
 raw logs and binaries remain private. No phone is accessed.
+
+## Explicit logging diagnostic
+
+The next epoch changes only the selected Lua's disable_logs/disable_time settings
+to false. The other204 files and196 Omarchy blobs, all58 runtime source leaves,
+16-CPU quota/counters, providers and original deadlines remain unchanged. The
+original205-file host-install proof is retained as historical evidence; it is
+not attributed to the changed profile. Actual guest installation checks all205
+selected bytes and modes.
+
+This captures an untruncated100,868-byte log through actual compositor startup
+and input/keymap messages. The log tail establishes neither the last operation
+executed nor asynchronous buffering. Its printed clock is not a BOOTTIME
+measurement. Sequence2 is actually received and rejected for a115.427033ms sample
+gap, with52.269us from its sample to validation. All13 completed configuration
+events precede Source1. No blocking operation is identified.
+
+All60 captured cgroup samples again report zero own-quota throttling. The last
+precedes QMP shutdown by285.042ms; no guest/logger/host clock alignment is
+invented. Actual manager cleanup passes separately, while the full shell/app/
+PCM case stays false. All146 waits,153 PIPE EOFs, separate QMP EOF and eight
+unit-reference returns close within original limits, with exact input/container
+closure and no cleanup errors. Diagnostic provenance retains these results.
+
+Next measure bounded entry/exit spans at the original compositor callback
+boundaries, using BOOTTIME and main-thread CPU time, with explicit coverage and
+overflow. This is a proposed diagnostic, not an implemented production repair.
+Keep default logging for that measurement, Source100ms and all functional gates.

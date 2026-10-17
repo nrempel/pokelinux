@@ -56,6 +56,44 @@ selections are separate results. [Hash-only provenance](evidence/native-sounds-r
 binds the source, archive, full app and actual test records; private logs/binaries
 are not published.
 
-Prepared real GUI/PCM requalification, installed startup, coherent ARM selection
-and every physical phone gate remain open for this new client. Earlier app/PCM
-results retain their older client selection. No physical phone is accessed.
+## Actual prepared app and audio
+
+The first native Arch Release attempt fails before app launch: NDEBUG removes
+assertions from the permanent C++ consumer, producing unused-symbol errors under
+unchanged strict warnings. Its actual build exit1,30 direct waits/37 PIPE EOFs and
+separate QMP closure are preserved as failed setup. No GUI pass is inherited.
+
+Only that test target now undefines NDEBUG. The frozen consumer and Rust archive
+stay byte-identical; production app flags and all original runtime predicates stay
+unchanged. A fresh Arch Qt6.12.0 epoch builds the full Sounds application, records
+the one exact Rust archive in its link, checks seven strong C ABI definitions and
+actual loader resolution, and executes the six frozen groups with Release
+assertions active. The actual configured compiler command has -DNDEBUG followed
+by target-only -UNDEBUG. It also reruns all30 Qt behaviors plus setup/cleanup and
+29 appearance cases.
+
+The new application passes all four existing prepared groups: denied silence,
+independent grant plus genuine compositor focus/touch/speaker PCM, exclusive-focus
+restriction while approved media continues, and terminal Source loss with launch
+refusal and quiet PCM. Eight measured windows retain192,000 frames. These are
+results for the app linked with the new core; no dynamic queue-branch coverage is
+invented for the GUI groups. The separate C ABI/socket tests exercise queued intent.
+
+The unresized [permitted](assets/sounds-rust-queue-prepared-permitted.png) and
+[denied](assets/sounds-rust-queue-prepared-no-permission.png) captures retain the
+actual1080×2424 Pixel10 profile, about422PPI and target-window DPR2.625. They show a
+prepared native x86 VM with its debug banner, not a phone or full-shell preview.
+The enabled view is captured before the route gesture and PCM measurement.
+
+This epoch keeps the five historical Rust service roles, normal c70c compositor
+and matching498-file SDK, original warmup, permissions and100ms Source lease.
+It does not select the later cold-start owner/unit repair. Primary closure records
+140 direct waits/147 PIPE EOFs; the independent PCM scopes add40 direct waits and
+56 actual PIPE EOFs. QMP closure, two adopted-child waits and retained descendant
+pidfds remain separately scoped. Original limits, exact container/daemon/input
+closure and no cleanup errors pass.
+
+Cold installed normal startup, combined live theme/full shell, coherent ARM
+selection, native display cleanup and every physical phone gate remain open.
+Earlier prepared results keep their older client selection; this new result is
+separately bound in the provenance. No physical phone is accessed.

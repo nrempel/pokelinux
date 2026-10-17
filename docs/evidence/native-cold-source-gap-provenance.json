@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "scope": "Native x86 cold-start diagnostics, including an explicitly changed container16CPU epoch; original Source100ms contract and functional predicates unchanged. No production repair or runtime success.",
+  "scope": "Native x86 cold-start diagnostics, including explicit16CPU resource and logging-profile variants; Source100ms and functional predicates unchanged. No causal/production repair or runtime success.",
   "epochs": [
     {
       "epoch": 6,
@@ -152,6 +152,86 @@
       "independent_review": {
         "bytes": 12251,
         "sha256": "7085518423cca574814423bd94223c2b71d131b5833fef413e44f26afc5380f2"
+      }
+    },
+    {
+      "schema": 1,
+      "scope": "Logging-only profile diagnostic on the same16CPU native x86 cold consumer; full startup failed, no causal/production repair",
+      "epoch": 9,
+      "selection": {
+        "bytes": 233566,
+        "sha256": "4e0d0d872419d787680e318545cc176c0fbbf6ee3097ca7f2128d779758c6549"
+      },
+      "command": {
+        "bytes": 1298,
+        "sha256": "78c74a0e989c9e6d199d506be6f3f84c5a87d5bd8a98dae952e99d9967187bb1"
+      },
+      "execution": {
+        "bytes": 108709,
+        "sha256": "eeda1f76f19a4cf2725d2ae00f80d6dca1b03fb36434feccc602bf4abf6acef7"
+      },
+      "guest_result": {
+        "bytes": 478911,
+        "sha256": "5c6ce65be6de825133e91cf5d100062a89ba9320770eaf2b25a31c5df1d69c06"
+      },
+      "startup_ring": {
+        "bytes": 4096,
+        "sha256": "c1eb1792aaa4932a52b9c3fd438289abdca24fee078346ea4affa7cdfbe638c1"
+      },
+      "existing_log": {
+        "bytes": 100868,
+        "sha256": "5c341f7ea24fb176bf7a0b291657b81bd5e20e8b9e765b49a630f2796094dcc6"
+      },
+      "aggregate_pass": false,
+      "actual_authenticated_compositor_pidfd_retained_then_dead": true,
+      "completed_config_event_count": 13,
+      "event_flags": 0,
+      "last_completed_props_to_first_Source_ns": 7715,
+      "typed_rejection": {
+        "stage": "validation",
+        "reason": "sample_gap",
+        "sequence": 2
+      },
+      "Source_gap_ns": 115427033,
+      "cached_sample_age_ns": null,
+      "Source_sequence2_sample_to_validation_ns": 52269,
+      "existing_instance_log_bound": true,
+      "log_clock_is_not_BOOTTIME_qualification": true,
+      "logger_buffering_inferred": false,
+      "direct_waits": 146,
+      "PIPE_EOFs": 153,
+      "separate_QMP_EOF": 1,
+      "separate_RefUnit_UnrefUnit_returns": 8,
+      "original_cutoffs_inputs_and_CID_closure": true,
+      "container_cpus_selected": 16,
+      "guest_cpus": 6,
+      "profile_delta": {
+        "changed_file": "etc/pokelinux/normal-hypr.lua",
+        "prior_sha256": "cc62f998299a90f45adcaa78a065af6ba05c393bc2e8df156ee38ec0b82d5c58",
+        "selected_sha256": "153ed0fdf819ab094b73c9502c008b08829094c5bd39cc5be90f20956b87bfdf",
+        "selected_profile_host_install_qualified": false,
+        "historical205_install_proof_inherited": false,
+        "other204_files_and196_Omarchy_blobs_unchanged": true
+      },
+      "CPU": {
+        "qualified_samples": 60,
+        "capped": false,
+        "actual_quota_usec": 1600000,
+        "actual_period_usec": 100000,
+        "first_observed_host_boottime_ns": 6181852582889604,
+        "last_observed_host_boottime_ns": 6181911961085894,
+        "last_counter_to_QMP_SHUTDOWN_ns": 285041653,
+        "nr_throttled_max": 0,
+        "throttled_usec_max": 0,
+        "quota_cause_proven": false,
+        "ancestor_or_host_cause_inferred": false
+      },
+      "blocking_operation_identified": false,
+      "phone_accessed": false,
+      "production_repair_claimed": false,
+      "independent_review": {
+        "bytes": 13884,
+        "sha256": "29eae15abb0d9650380a65c32616846f52328dbda49aa4a6f05b8688f0d9f812"
       }
     }
   ],

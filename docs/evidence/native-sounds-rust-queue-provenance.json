@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "scope": "One unsent Sounds route/reconnect intent moves from C++ into an app-local Rust core. Host actual C ABI and Qt socket qualification only.",
+  "scope": "App-local Rust queue with separate host C ABI/socket and prepared native x86 GUI/virtual PCM evidence; cold normal stack, ARM and phone remain open.",
   "source_base": "cdcf8bcda454b6a38bc68d8552251f4dd5da5b86",
   "Root_integration_base": "ca1ea815169fcf8dc57407e6505f7c7460355e58",
   "source": {
@@ -247,6 +247,138 @@
   "all_original_cutoffs_exact_CIDs_same_daemon_and_input_closure": true,
   "direct_request_reply_validation_and_QObject_transport_remain_Cpp": true,
   "service_permission_authority_changed": false,
-  "prepared_GUI_PCM_requalification": false,
-  "installed_or_ARM_or_phone_qualified": false
+  "prepared_GUI_PCM_requalification": true,
+  "cold_installed_or_ARM_or_phone_qualified": false,
+  "prepared_native_x86_runtime": {
+    "schema": 1,
+    "scope": "Actual prepared native x86 app linked with Rust Sounds queue; Release test-target repair plus unchanged four GUI/PCM groups, no cold/ARM/phone claim",
+    "Root_qualified_prepared_GUI_PCM": true,
+    "source_base": "bd515482dc0b8a30feec19f7683b6042b6b925e5",
+    "CMake_test_target_overlay": {
+      "scope": "One target-only CMake assertion-enabling line after actual Release setup failure; original component CMake proof remains baseline only",
+      "base_source_commit": "bd515482dc0b8a30feec19f7683b6042b6b925e5",
+      "source_relative_path": "native-audio-ui/CMakeLists.txt",
+      "before": {
+        "bytes": 3842,
+        "sha256": "5c617fe6f912bdca38fc5e5dd92ca9741ef2b9907cdebb8bc1152cc8e835e275"
+      },
+      "after": {
+        "bytes": 3851,
+        "sha256": "1e43988fbe6fd48ddb88dbc6770c535bc489a9449c05b195441a847215b1f9f0"
+      },
+      "before_copy_relative_path": "source/proofs/sounds-queue/base-CMakeLists.txt",
+      "patch": {
+        "relative_path": "source/proofs/sounds-queue/target-assertions.patch",
+        "bytes": 703,
+        "sha256": "9ed66c039541d983a2de4dd42275a58162962abade3792fd707b7a55224505aa"
+      },
+      "old_line": "target_compile_options(sounds-queue-test PRIVATE -Wall -Wextra -Werror)",
+      "new_line": "target_compile_options(sounds-queue-test PRIVATE -Wall -Wextra -Werror -UNDEBUG)",
+      "actual_failed_epoch_execution": {
+        "bytes": 11869,
+        "sha256": "4e2627c68eeff0e9904a74d84470faa4d7e6a03011469185de644222a0c5f0a7"
+      },
+      "independent_failure_review": {
+        "bytes": 9339,
+        "sha256": "819b76440eab1a10f49f22a4e0518400bb89c5a8fbb8d1aa17b060e8684dbfc5"
+      }
+    },
+    "selection": {
+      "bytes": 133359,
+      "sha256": "a9403a5dabfcc22c87c80f0ba0545dd3e820c9c2ff95a367b39ec60779833848"
+    },
+    "execution": {
+      "bytes": 11881,
+      "sha256": "8e09dcc6245a5f12bb5683f2042e3bedf0b33ab5d49872709135e0435a92e673"
+    },
+    "guest_result": {
+      "bytes": 511967,
+      "sha256": "929dcc205442bfee5c9c7b506aba8e1fc98ec8594bfa338a851cd4c3e7b3fcf8"
+    },
+    "new_Arch_Sounds_ELF": {
+      "sha256": "1119078ad19d6b5a18fa77fc183c9e16d33ab9dd5dbd8d6ea86fc3c52c2416fb",
+      "bytes": 5766824,
+      "ELF_machine": 62
+    },
+    "Rust_archive": {
+      "relative_path": "providers/libpokelinux_sounds_queue.a",
+      "bytes": 23266816,
+      "sha256": "b2ac66492427b12e7950c455a55d17f0099701611a4cf1279762fa15bfaf5f30"
+    },
+    "actual_C_ABI_definition_count": 7,
+    "Release_frozen_groups": [
+      "copied_first_intent_waits_for_final_status",
+      "repeated_prepare_keeps_original_deadline",
+      "fresh_permission_availability_membership_cancels",
+      "one_explicit_reconnect_never_replays",
+      "actual_boottime_expiry_without_timer_delivery",
+      "cancel_and_one_shot_send_token_fences"
+    ],
+    "frozen_consumer_sha256": "4dc3c72dc9b5381f39aaa5adb321c394235e22e3609ed2e631d8306664beafab",
+    "actual_Qt_behavior_cases": 30,
+    "Qt_setup_cleanup": 2,
+    "appearance_cases": 29,
+    "GUI_group_ids": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "PCM_windows": 8,
+    "PCM_frames": 192000,
+    "actual_Pixel_native_dimensions": [
+      1080,
+      2424
+    ],
+    "actual_target_window_DPR": 2.625,
+    "independent_raw_PCM_and_selected_RGBA_review_bound": true,
+    "primary_direct_waits": 140,
+    "primary_PIPE_EOFs": 147,
+    "PCM_direct_waits": 40,
+    "PCM_PIPE_EOFs": 56,
+    "separate_QMP_EOF": 1,
+    "adopted_waits_and_Source_unload_socket_EOF_separate": true,
+    "original_cutoffs_CID_daemon_locked_inputs_Stop_closure": true,
+    "actual_independent_review": {
+      "bytes": 8130,
+      "sha256": "71ac55cd81099bd1a210762fb80e3ca15580d87182063d426c2210accf34e1f1"
+    },
+    "actual_independent_provenance": {
+      "bytes": 20560,
+      "sha256": "c11edcffdff2f221ac33fe8236d6892ae240e1b37bd8a7c152a801678130107c"
+    },
+    "retained_Release_setup_RED_review": {
+      "bytes": 9339,
+      "sha256": "819b76440eab1a10f49f22a4e0518400bb89c5a8fbb8d1aa17b060e8684dbfc5"
+    },
+    "earlier_cold_start_owner_unit_selected": false,
+    "phone_accessed": false,
+    "ARM_or_cold_fullshell_or_native_display_cleanup_qualified": false
+  },
+  "prepared_native_x86_Root_qualification": {
+    "bytes": 4181,
+    "sha256": "4f70e6ef8191d21bc8cc47a4f9b87df2fb520c1ac9e1bcc7d8f33a040ce4af95"
+  },
+  "prepared_native_x86_screenshots": {
+    "sounds-rust-queue-prepared-permitted.png": {
+      "bytes": 53461,
+      "sha256": "fa604e4ada3c2559869aa7735cdf0d090569938aad49db32e9c1c8f38d9e9683",
+      "native_pixels": [
+        1080,
+        2424
+      ],
+      "unresized": true,
+      "debug_banner_retained": true
+    },
+    "sounds-rust-queue-prepared-no-permission.png": {
+      "bytes": 52627,
+      "sha256": "1c91579552996ee03e5315c0e7b7d764c7bd4ecefff210e70eba2842c2a93051",
+      "native_pixels": [
+        1080,
+        2424
+      ],
+      "unresized": true,
+      "debug_banner_retained": true
+    }
+  }
 }

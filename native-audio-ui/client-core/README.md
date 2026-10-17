@@ -27,6 +27,7 @@ transitive path dependencies. An explicit existing archive requires both
 archive built for the matching target; a host archive is not silently selected.
 
 The permanent six-group C++ consumer exercises the real C ABI and clock. The
-unchanged Qt suite checks actual app-edge socket behavior. See the [execution
-record](../../docs/native-sounds-rust-queue.md) for separate scopes and remaining
-PCM/installed/ARM/phone gates.
+unchanged Qt suite checks actual app-edge socket behavior. Its target keeps
+assertions active in Release with -UNDEBUG. The app linked with this core also
+passes the prepared GUI/PCM tracer. See the [execution record](../../docs/native-sounds-rust-queue.md)
+for separate scopes and remaining cold installed/ARM/phone gates.

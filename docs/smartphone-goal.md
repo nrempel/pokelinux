@@ -19,8 +19,10 @@ claimed and the100ms freshness contract stays unchanged.
 
 The first [Rust app-client queue core](native-sounds-rust-queue.md) now replaces
 Sounds queued route/reconnect ownership and deadline/cancel logic in C++. Actual
-C ABI, unchanged Qt socket checks and full application linking pass; this new
-client still needs prepared PCM, installed and ARM integration.
+C ABI, unchanged Qt socket checks and full application linking pass. The new
+client now also passes all four original prepared GUI/audio groups with192,000
+measured frames and Pixel10 captures, after a genuine Release-test build RED and
+target-only assertion correction. Cold installed and ARM integration remain open.
 
 Two additional [whole-compositor stall epochs](native-normal-upstream-tracer.md#compositor-freeze-expiry-and-stop)
 now qualify independent100ms Source-expiry withdrawal/quietness/refusal before

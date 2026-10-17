@@ -8,9 +8,10 @@ The target is Arch Linux ARM, Hyprland, native phone apps and Rust services for 
 
 The first [Rust app-client core](docs/native-sounds-rust-queue.md) now owns queued
 Sounds choices, deadlines and cancellation. Six C++/Rust groups and the30 existing
-Qt behavior cases pass, with a full application link. Qt transport/presentation
-and upstream graphics remain C++; this new client selection still needs PCM and
-installed-runtime qualification.
+Qt behavior cases pass. The new client also passes all four prepared app/audio
+groups, with eight PCM windows and192,000 measured frames; a Release-only test
+build issue is fixed without changing the consumer. Qt transport/presentation
+and upstream graphics remain C++. Cold installed startup and ARM remain open.
 
 > **Development status:** no physical phone has been accessed. There is no verified bootable phone image. Modem communication, carrier IMS registration, physical call audio, Pixel GPU rendering, camera capture and suspend remain unverified.
 
