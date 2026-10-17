@@ -121,14 +121,17 @@ impl Owner {
         self.refresh(now);
         self.view
     }
-    pub fn observe(&mut self, now: u64) -> Option<Ticket> {
+    /// Initial test-first forwarding stub: the caller deadline is not yet honored.
+    pub fn observe_until(&mut self, now: u64, until_ns: u64) -> Option<Ticket> {
+        if until_ns <= now || until_ns - now > SECOND {
+            return None;
+        }
         self.refresh(now);
         if self.flight.is_some() {
             return None;
         }
-        let until = now.checked_add(SECOND)?;
         let publication_until = now.checked_add(2 * SECOND)?;
-        let ticket = self.ticket(Action::Observe, until, publication_until, None)?;
+        let ticket = self.ticket(Action::Observe, until_ns, publication_until, None)?;
         self.flight = Some(Flight {
             ticket,
             admitted: true,
@@ -137,6 +140,10 @@ impl Owner {
         self.advance();
         Some(ticket)
     }
+    pub fn observe(&mut self, now: u64) -> Option<Ticket> {
+        self.observe_until(now, now.checked_add(SECOND)?)
+    }
+
     pub fn set(
         &mut self,
         percent: u8,

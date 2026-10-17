@@ -12,6 +12,8 @@ pub enum BackendKind {
     SyntheticTree,
 }
 pub mod model;
+pub mod protocol;
+pub mod worker;
 pub use model::Observation;
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub struct WriteReadback {

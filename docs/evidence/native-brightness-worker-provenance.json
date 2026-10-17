@@ -1,0 +1,244 @@
+{
+  "schema": 1,
+  "scope": "Owned worker, original inspection deadline and strict packet-policy components; separate cohorts, not a daemon or configured app integration result.",
+  "deadline_and_protocol": {
+    "RED_qualification": {
+      "bytes": 6999,
+      "sha256": "0f873aa44ef8107a22d8ac188d87a0689979e91b0ec39f3d8cf9b913c6720e7b"
+    },
+    "RED_receipt": {
+      "bytes": 18827,
+      "sha256": "4102059654089441d42939cdd246dbdb521804862b4f66a83326a1947c47065b"
+    },
+    "compiled_groups": 10,
+    "RED_assertion_failures": 8,
+    "RED_already_passing_controls": 2,
+    "generic_RED_wrapper_marked_failed": true,
+    "generic_RED_wrapper_failure_is_preserved_not_relabelled": "Wrapper called actual compiled assertion failure compile or setup failure; narrow qualification retains compiler completion and test assertions independently.",
+    "GREEN_qualification": {
+      "bytes": 8934,
+      "sha256": "fdcb19a36afb5ce0f96e6a5aad7a9eaf5e61c2dc9fc505ae5ec7844e77328985"
+    },
+    "GREEN_receipt": {
+      "bytes": 18265,
+      "sha256": "df1f9631ed1eb04e321ded15c157b5f72e733dab9ba781bf188e6ac7f162605b"
+    },
+    "GREEN_selected_groups": 24,
+    "unchanged_tests": {
+      "native-brightness/tests/backend.rs": {
+        "bytes": 8527,
+        "sha256": "0463895807b6d357d3470311efc6bd82cd04dfef8ddc7a63a4160a2f42828000"
+      },
+      "native-brightness/tests/inspection_deadline.rs": {
+        "bytes": 4160,
+        "sha256": "dc49a3c03a3d027924255d1fb28c3fd2db4266858fdbecd7e21c701a025d3b1a"
+      },
+      "native-brightness/tests/ownership.rs": {
+        "bytes": 8008,
+        "sha256": "92452b38964335ea03899f2cc248bcdbb0e0d2ca2763125b132a5312b68c6628"
+      },
+      "native-brightness/tests/protocol.rs": {
+        "bytes": 6289,
+        "sha256": "6ac2e7d54ad9d6ad2d82473ee0577301ea3899d18f3fd01af385943a20c0fc71"
+      }
+    },
+    "strict_all_target_Clippy": true,
+    "worker_harness_not_executed_in_24_group_phase": true
+  },
+  "worker": {
+    "schema": 1,
+    "scope": "Brightness-local worker retained-process/FIFO/PIPE component; six groups and21 child retirements. No brightness hardware, sysfs driver, VM, UI, service or protocol runtime qualification",
+    "owned_public_files": {
+      "native-brightness/src/worker.rs": "6e3afbd5cb33fc8c0e3d62f4fac4a852e2a472b76af63c57eee566b55be8d416",
+      "native-brightness/tests/worker.rs": "340347281d31168e21d6a85d46872e53dcbe85bf149fbae5a0abce5fb930781c"
+    },
+    "authorized_exact_offline_lock_refresh": {
+      "sha256": "8a87a6bf7057391de392605761e311bddf8252225d4f29ae5bcccaef8fcafe5c",
+      "receipt": {
+        "bytes": 17127,
+        "sha256": "366b9312d20aa0a844b82008c0ffb531b28421012b0a9f8de59d3a7308161399"
+      }
+    },
+    "actual_RED": {
+      "receipt": {
+        "bytes": 17242,
+        "sha256": "1d6b8376ca1e11bfc46bc39da9d988a494b03208ab28ec1edc7ef9aa57e90ec7"
+      },
+      "sha256": "1d6b8376ca1e11bfc46bc39da9d988a494b03208ab28ec1edc7ef9aa57e90ec7",
+      "groups": 6,
+      "failed": 6,
+      "actual_harness_exit": 1,
+      "compiled_runtime_assertions": true
+    },
+    "final_GREEN": {
+      "receipt": {
+        "bytes": 17259,
+        "sha256": "67aa4e54e04d19d30df7ee6aaba9c8888e7a21b8dce8d0e9e42cf8b5eb697832"
+      },
+      "sha256": "67aa4e54e04d19d30df7ee6aaba9c8888e7a21b8dce8d0e9e42cf8b5eb697832",
+      "groups": 6,
+      "failed": 0,
+      "actual_child_wait_EOF_ECHILD_retirements": 21,
+      "own_file_format_check": true,
+      "worker_target_strict_Clippy": true,
+      "actual_test_output_sha256": "fe198881ef2eb023d72da69250a81430cfb4656124d1aa1126a346b9e1b74a16"
+    },
+    "only_RED_GREEN_source_difference": [
+      "native-brightness/src/worker.rs"
+    ],
+    "frozen_tests_byte_identical": true,
+    "other_model_lib_protocol_dependency_source_exact_snapshot_unchanged": true,
+    "later_Root_model_protocol_updates_not_tested_by_this_epoch": true,
+    "boundaries": [
+      "actual FIFO block with responsive poll/fence",
+      "exactly one real child retained per Worker",
+      "actual parent reader NONBLOCK and CLOEXEC flags",
+      "actual child PDEATHSIG KILL and exact parent before fixture I/O",
+      "wait without EOF cannot publish; EOF without wait cannot retire",
+      "strict bounded canonical BR1 and nonzero exit failure",
+      "fresh getter expiry without another poll",
+      "actual successful zombie held past Set deadline; model busy until real retirement",
+      "expired admission and missing executable leave no child"
+    ],
+    "failure_artifacts": {
+      "sol3": "test parent-PID assertion API compile failure; no runtime RED claim",
+      "sol4": "same6 compiled runtime assertion RED but wrapper expected101 instead of actual1; preserved qualification failure"
+    },
+    "unexecuted_guard_claims": [
+      "Drop unreaped kill+abort is source-reviewed, not exercised with an uninterruptible child",
+      "parent-death signal setup observed in child; actual parent death was not induced"
+    ],
+    "closure": {
+      "source_unchanged": true,
+      "all_owned_wrapper_wait_PIPE_EOF_before_original_cutoffs": true,
+      "same_Docker_daemon": true,
+      "exact_CID_absence": true,
+      "all_actual_child_retirements_before_original_case_close": true
+    },
+    "no_commits_or_pushes": true
+  },
+  "readonly_reconciliation": {
+    "schema": 1,
+    "passed": true,
+    "scope": "One actor readonly inspection scheduling repair. Controlled Provider regression only; existing local Linux SEQPACKET tests are separate. No actual remote custody/reap, transport/daemon integration, full actor, UI, ARM or hardware claim.",
+    "finding": "Cached provider State.pending=true could prevent future readonly Inspect forever after local actor intent retirement. Remote custody is not local transport occupancy.",
+    "change": "Mechanically extract the original inspection block into the helper used by the same loop; remove only !provider.state().pending, with rustfmt condition reflow. Keep stopping, actor Session.pending(), 250ms cadence and original one-second Inspect cutoff. Adapter decides whether actual transport is busy; no Set/replay introduced.",
+    "RED_to_GREEN_only_behavior_delta_is_one_guard_removal": true,
+    "same_formatted_test_bytes_RED_GREEN": true,
+    "frozen_pre_repair_test": {
+      "bytes": 2681,
+      "sha256": "9e77f699d3c8ae62bc1d8e3a720f75db27bc3120f232798546e5ae04f7d2bfd3"
+    },
+    "actual_compiled_RED": {
+      "test_exit": 101,
+      "existing_idle_read_control": 1,
+      "remote_pending_read_count": 0,
+      "busy_provider_attempts": 0,
+      "assertion": "MISSING_READONLY_RECONCILIATION_WHILE_REMOTE_PENDING",
+      "stdout": {
+        "bytes": 426,
+        "sha256": "a1df403980155176624d8360cc32e7995e641dfaf4038eb1ffd7beb5fb83c786"
+      },
+      "stderr": {
+        "bytes": 3773,
+        "sha256": "cdeb1144bee3fa73fcf0eff794a41102acba758c1d4b17e19901bb5b3b317f52"
+      }
+    },
+    "actual_GREEN": {
+      "focused_and_existing_brightness_groups": 11,
+      "remote_pending_read_count": 1,
+      "busy_provider_attempts": 1,
+      "busy_provider_reads": 0,
+      "cached_remote_pending_remains_true": true,
+      "fmt_strict": true,
+      "all_target_Clippy_strict": true,
+      "host_Release": true,
+      "stdout": {
+        "bytes": 1441,
+        "sha256": "0b5b8c80d3ebf38de067de1e8e42f356751770aa3404213052b98fc13e62c905"
+      },
+      "Clippy_stderr": {
+        "bytes": 2791,
+        "sha256": "03a8f6c6bb90f492a5e219bd7b287504a8392fa38b22363833714db17a387231"
+      },
+      "Release_stderr": {
+        "bytes": 1135,
+        "sha256": "d0e5dbd42fe859dcc9823b3fa841e31d64f059b7d75759c41e554a5736ffc480"
+      }
+    },
+    "Source_auth_authority_and_other_files_unchanged": true,
+    "source": {
+      "bytes": 700,
+      "sha256": "dc7f40bec187a821570ce3321e285675069dd21a10ee24db0e36aaa7ca75f387"
+    },
+    "patch": {
+      "bytes": 5188,
+      "sha256": "863b65e8c7719f55f213d67e2d138d0334cd5400fb618e8903d5767c2d66d6ef"
+    },
+    "phases": {
+      "red-1": {
+        "receipt": {
+          "bytes": 50734,
+          "sha256": "58c9cacef7a8a4ba047c31daf62d0a272f6903e1bed9dcec340b028d954096d0"
+        },
+        "CLI_actual_waits": 10,
+        "PIPE_EOF": 20,
+        "all_original_cutoffs_closed": true,
+        "exact_CID_absent": true,
+        "same_daemon": true,
+        "source_snapshot_unchanged": true
+      },
+      "green-1": {
+        "receipt": {
+          "bytes": 50522,
+          "sha256": "b0add2f91122e4b7be6d48d7b7ef242d1f814d2fd92ac80a3aba8b68cc657365"
+        },
+        "CLI_actual_waits": 10,
+        "PIPE_EOF": 20,
+        "all_original_cutoffs_closed": true,
+        "exact_CID_absent": true,
+        "same_daemon": true,
+        "source_snapshot_unchanged": true
+      }
+    },
+    "total_owned_Docker_CLI_waits": 20,
+    "total_actual_PIPE_EOF": 40,
+    "inner_Cargo_outputs": "regular files; no PIPE EOF claim"
+  },
+  "current_library_build": {
+    "source": {
+      "bytes": 2844,
+      "sha256": "f1ca2735445407673039cabfbafe3c078897b6738a32e32c2e8e938917779aee"
+    },
+    "receipt": {
+      "bytes": 18255,
+      "sha256": "81c5e68db6cdafc2668e41e9b6594744d28ccb5b90b41227a8867314fb5fef38"
+    },
+    "whole_crate_fmt": true,
+    "host": {
+      "bytes": 431916,
+      "sha256": "768a1b9cda9766ff8d2a573a6c662226843126f344b6d319d1b28c7151a9a099"
+    },
+    "ARM": {
+      "bytes": 427894,
+      "sha256": "4a08bcac53a44a2518e8c8a42b8e4366677ab00e74765e740657e9adca6ad914"
+    },
+    "opt_level": 3,
+    "host_machine": 62,
+    "ARM_machine": 183,
+    "library_only": true,
+    "ARM_execution": false,
+    "worker_final_source_selected": true,
+    "CLI_actual_waits": 10,
+    "PIPE_EOF": 20,
+    "source_unchanged_CID_absent_same_daemon": true
+  },
+  "remaining": [
+    "daemon transport",
+    "configured lifecycle adapter",
+    "Settings app/UI",
+    "installation/VM tracer",
+    "Linux backlight driver execution",
+    "matched Pixel hardware"
+  ]
+}

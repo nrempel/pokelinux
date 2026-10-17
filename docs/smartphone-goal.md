@@ -31,12 +31,13 @@ kernel/service states in one process/window, with original Pixel10-profile
 captures. Physical battery, charging, suspend and cold graphical startup gates
 remain open; the suspend authority is unchanged.
 
-The [native Rust brightness component](native-brightness.md) now passes14
-frozen backend/ownership groups after compiled assertion RED, plus strict Rust
-checks and host/ARM64 library builds. A separate lifecycle permission boundary
-passes ten focused groups after actual runtime RED and a queued-readback freshness
-repair. A retained worker, configured daemon, Settings UI and display/hardware
-integration remain the next gates; these are component results only.
+The [native Rust brightness components](native-brightness.md) now pass24 frozen
+backend/ownership/deadline/packet-policy groups after compiled assertion RED.
+A separate retained-worker epoch passes six real-process groups with21 actual
+child retirements; host/ARM64 library builds pass. The lifecycle boundary passes
+11 focused groups after runtime RED and fixes queued-readback freshness plus
+readonly reconciliation while a worker remains occupied. A configured daemon,
+Settings UI, installed VM tracer and physical display behavior remain open.
 
 The later [16-CPU cold diagnostic](native-session-manager-stop.md#declared-cpu-resource-diagnostic)
 still expires Source at103.24ms, with zero own-quota throttling in60 captured

@@ -17,6 +17,18 @@ use std::{
     process::Command,
 };
 
+fn inspect_brightness(
+    provider: &mut dyn crate::brightness::Provider,
+    actor_pending: bool,
+    stopping: bool,
+    inspected_at: &mut u64,
+) {
+    if !stopping && !actor_pending && boottime_ns().saturating_sub(*inspected_at) >= 250_000_000 {
+        *inspected_at = boottime_ns();
+        let _ = provider.inspect(inspected_at.saturating_add(1_000_000_000));
+    }
+}
+
 // Brightness uses the same actual request-half EOF/extra-packet boundary.
 pub(crate) fn brightness_client_input(
     brightness: &mut crate::brightness_session::Session,
@@ -706,14 +718,12 @@ fn run_with_brightness_services_inner(
                 }
                 // Readonly reconciliation may establish a fresh connection, but
                 // never dispatches or replays a Set, including after revoke.
-                if !stopping
-                    && !brightness.pending()
-                    && !provider.state().pending
-                    && boottime_ns().saturating_sub(brightness_inspected_at) >= 250_000_000
-                {
-                    brightness_inspected_at = boottime_ns();
-                    let _ = provider.inspect(brightness_inspected_at.saturating_add(1_000_000_000));
-                }
+                inspect_brightness(
+                    provider,
+                    brightness.pending(),
+                    stopping,
+                    &mut brightness_inspected_at,
+                );
             }
             if capture.as_ref().is_some_and(|active| {
                 stopping
@@ -2016,3 +2026,104 @@ mod source_observation_tests;
 #[cfg(test)]
 #[path = "brightness_tests.rs"]
 mod brightness_tests;
+
+#[cfg(test)]
+mod brightness_inspection_tests {
+    //! Controlled Provider scheduling only; no transport, actual remote custody,
+    //! remote reap, full actor, backend or hardware qualification.
+    use super::inspect_brightness;
+    use crate::{
+        boottime_ns,
+        brightness::{Event, Intent, Provider, State},
+    };
+    use std::io;
+    struct PendingProvider {
+        remote_pending: bool,
+        transport_busy: bool,
+        attempts: usize,
+        reads: usize,
+    }
+    impl Provider for PendingProvider {
+        fn incarnation(&self) -> &str {
+            "controlled-inspection"
+        }
+        fn state(&self) -> State {
+            State {
+                pending: self.remote_pending,
+                ..State::default()
+            }
+        }
+        fn submit(&mut self, _: &Intent) -> io::Result<bool> {
+            panic!("inspection must never submit Set")
+        }
+        fn inspect(&mut self, until: u64) -> io::Result<bool> {
+            assert!(boottime_ns() < until && until <= boottime_ns() + 1_000_000_000);
+            self.attempts += 1;
+            if self.transport_busy {
+                return Ok(false);
+            }
+            self.reads += 1;
+            Ok(true)
+        }
+        fn poll(&mut self) -> Option<Event> {
+            panic!("inspection helper must not poll or replay")
+        }
+        fn revoke(&mut self) {
+            panic!("inspection helper must not revoke/reconnect for Set")
+        }
+    }
+    #[test]
+    fn brightness_remote_pending_still_allows_readonly_reconciliation() {
+        let mut idle = PendingProvider {
+            remote_pending: false,
+            transport_busy: false,
+            attempts: 0,
+            reads: 0,
+        };
+        let mut last = 0;
+        inspect_brightness(&mut idle, false, false, &mut last);
+        assert_eq!(
+            (idle.attempts, idle.reads),
+            (1, 1),
+            "existing idle inspection control"
+        );
+        inspect_brightness(&mut idle, false, false, &mut last);
+        assert_eq!(
+            idle.attempts, 1,
+            "same cadence must not issue a second read"
+        );
+        for (actor_pending, stopping) in [(true, false), (false, true)] {
+            let mut last = 0;
+            inspect_brightness(&mut idle, actor_pending, stopping, &mut last);
+            assert_eq!(last, 0, "local pending and Stop still suppress inspection");
+            assert_eq!(idle.attempts, 1);
+        }
+        let mut remote = PendingProvider {
+            remote_pending: true,
+            transport_busy: false,
+            attempts: 0,
+            reads: 0,
+        };
+        inspect_brightness(&mut remote, false, false, &mut 0);
+        let mut busy = PendingProvider {
+            remote_pending: true,
+            transport_busy: true,
+            attempts: 0,
+            reads: 0,
+        };
+        inspect_brightness(&mut busy, false, false, &mut 0);
+        println!(
+            "idle_reads={} remote_pending_reads={} busy_attempts={} busy_reads={}",
+            idle.reads, remote.reads, busy.attempts, busy.reads
+        );
+        assert_eq!(
+            (remote.reads, busy.attempts, busy.reads),
+            (1, 1, 0),
+            "MISSING_READONLY_RECONCILIATION_WHILE_REMOTE_PENDING"
+        );
+        assert!(
+            remote.state().pending,
+            "a status attempt is not remote cleanup proof"
+        );
+    }
+}

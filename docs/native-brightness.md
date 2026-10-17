@@ -2,7 +2,8 @@
 
 The new Rust brightness component separates deployment-selected backlight I/O,
 local observation/intent ownership and the lifecycle actor's app permission.
-This is a qualified component boundary. No production brightness daemon, Settings
+These are qualified component boundaries, including a retained real child worker.
+No production brightness daemon, Settings
 window, installed service or physical display change is qualified yet.
 
 ## Attribute backend
@@ -26,9 +27,9 @@ one write attempt and reads attributes independently afterward. A short or faile
 write is never resent. A changed maximum or mismatched requested readback refuses
 confirmation without rescaling/retrying. Attribute reads are sampled, not atomic
 with external driver changes; the local expected revision is not sysfs CAS.
-The caller must retain this potentially blocking operation in a child. That
-process implementation is the next integration boundary, not a result of these
-library tests.
+The caller must retain this potentially blocking operation in a child. The
+separate real-worker tests below qualify custody; these backend tests alone do
+not establish it.
 
 ## Local ownership and freshness
 
@@ -91,9 +92,65 @@ Across all five lifecycle epochs,50 host CLI waits/100 PIPE EOFs close. These
 checks do not execute the full actor with a configured backlight. See the
 [lifecycle provenance](evidence/native-brightness-lifecycle-provenance.json).
 
+## Retained worker and exact caller deadlines
+
+The worker now owns one actual exec child and an atomically nonblocking/CLOEXEC
+pipe. Safe child entry installs PDEATHSIG KILL, checks the exact parent and the
+original BOOTTIME deadline before backend I/O, then checks again before output.
+Main-side cancellation withdraws the result before kill. Wait and EOF are tracked
+separately; neither alone allows a result. The fresh result getter independently
+checks deadline expiry. Unreaped Drop kills and aborts rather than detaching;
+service callers must retain custody through actual retirement. Trusted local
+executable setup and default SIGCHLD remain deployment assumptions. Permanently
+blocked exec setup or an uninterruptible kernel operation is not qualified.
+
+Six compiled real-process groups first fail against the worker stub, then pass
+unchanged. They exercise actual FIFO blocking, responsive poll/fence, independent
+wait/EOF controls, bounded canonical child output, nonzero exits, no-child failed
+admission and a successful zombie whose buffered Set result expires before it
+can publish. All21 spawned children are actually waited/drained with ECHILD and
+process absence. Child PDEATHSIG/parent setup is observed, but actual parent death
+and unreaped-Drop abort are source-reviewed guards, not induced test results.
+The initial test-API compilation failure and a later wrapper exit-expectation
+failure remain separate from the qualified runtime RED. Format and strict worker
+Clippy pass.
+
+A separate caller-deadline regression compiles against an ordinary-one-second
+forwarding stub: three deadline assertions fail and the ordinary budget control
+passes. Six packet-policy groups add five positive failures and one already
+passing strict-serde control. The repaired owner now uses the exact earlier
+caller deadline, while observation expiry stays anchored to collection start.
+Strict private packet types have no device/path fields, require canonical decimal
+BOOT deadlines and all nullable fields, and distinguish requested from optional
+actual attributes. All24 selected backend/ownership/deadline/packet groups then
+pass with frozen tests, format checks and strict all-target Clippy. This phase
+validates authored bytes and clocks, without executing a socket daemon or worker
+harness. The generic RED wrapper's erroneous compile/setup label is preserved;
+a separate qualification records the actual successful compilation and assertion
+failures without upgrading that wrapper receipt.
+
+The final worker's formatting-only successor is selected in a fresh whole-crate
+format check and optimized host/ARM64 library build. Worker runtime and24-group
+policy execution retain their separate exact source cohorts. Neither library is
+a daemon executable, and ARM64 is crossbuild evidence only. See the
+[worker/deadline provenance](evidence/native-brightness-worker-provenance.json).
+
+## Readonly reconciliation while custody is retained
+
+Integration review exposed a scheduling stall: cached provider pending=true could
+suppress every later readonly Inspect after the actor retired its local intent.
+A compiled controlled-provider regression first records zero reads while remote
+custody is pending; its existing idle control passes. Removing that one cached
+pending guard lets the adapter attempt readonly inspection. Actual transport
+occupancy still returns false without queuing; actor pending, Stop,250ms cadence
+and the original one-second inspection cutoff remain unchanged. The same test
+then passes with11 focused brightness groups, strict Rust checks and host Release.
+Cached pending remains true until a new observation; no process retirement or
+cleanup is inferred. This is scheduling evidence, separate from daemon transport.
+
 ## Remaining integration and hardware gates
 
-Next are retained real child processes, responsive daemon IPC/Stop, a concrete
+Next are responsive daemon IPC/Stop, a concrete
 provider adapter, normal Rust Settings client and themed UI, explicit installation
 and a synthetic VM end-to-end tracer. Linux driver execution and matched Pixel
 panel/backlight discovery, brightness response, physical readback, suspend/resume,

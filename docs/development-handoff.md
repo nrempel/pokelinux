@@ -16,12 +16,13 @@ phone. Keep synthetic emulator, original-code, ARM64/QEMU and physical evidence
 separate. Do not equate registration, submission or API success with carrier
 acceptance, delivery, native call state or working physical hardware.
 
-The [native Rust brightness component](native-brightness.md) now passes14
-frozen backend/ownership groups after compiled assertion RED, plus strict Rust
-checks and host/ARM64 library builds. A separate lifecycle permission boundary
-passes ten focused groups after actual runtime RED and a queued-readback freshness
-repair. A retained worker, configured daemon, Settings UI and display/hardware
-integration remain the next gates; these are component results only.
+The [native Rust brightness components](native-brightness.md) now pass24 frozen
+backend/ownership/deadline/packet-policy groups after compiled assertion RED.
+A separate retained-worker epoch passes six real-process groups with21 actual
+child retirements; host/ARM64 library builds pass. The lifecycle boundary passes
+11 focused groups after runtime RED and fixes queued-readback freshness plus
+readonly reconciliation while a worker remains occupied. A configured daemon,
+Settings UI, installed VM tracer and physical display behavior remain open.
 
 The [audio SIGTERM repair](native-audio.md#sigterm-enters-owned-stop) now routes
 the shared Rust termination latch into existing idempotent Stop. The unchanged
