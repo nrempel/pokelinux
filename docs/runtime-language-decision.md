@@ -33,7 +33,10 @@ CTest cases, default full-host linking and an ARM64 archive build pass. A later
 manual generic ARM kernel build links the normal Qt6.12 app and executes nine
 C ABI, seven typed worker and five Qt ordering groups; normal-main/window and
 production ARM CMake remain unqualified. See [ARM evidence](evidence/native-messages-arm-client-provenance.json).
-Shared appearance validation remains Rust migration work. Retain presentation and narrow
+A later [prepared x86 Messages session](native-messages-prepared-tracer.md) now
+passes denied/granted history, original Omarchy live themes and revocation in
+one normal app/window with native captures and owner Stop/closure. Shared
+appearance validation remains Rust migration work. Retain presentation and narrow
 native API conversions at the Qt boundary. The full client stack has not been
 ported.
 

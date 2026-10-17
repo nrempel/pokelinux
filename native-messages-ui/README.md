@@ -42,12 +42,14 @@ six current-Qt modes/40 rows, five real-thread ordering groups and13 permanent
 CTest cases pass. All29 shared appearance cases are rerun. Actual UID11010
 clients, installed QML, live appearance and denial/literal-text controls pass
 without a window, as do four normal-main argument/UID refusal controls. The
-successful six-argument normal-main GUI path remains unexecuted in this epoch.
+successful six-argument normal-main GUI path is separately qualified in the
+[later prepared x86 session](../docs/native-messages-prepared-tracer.md).
 
 Native default builds invoke locked/offline Cargo; dependencies must already be
 cached. An explicit archive requires its SHA256, and cross builds require a
-pinned matching-target archive. The ARM64 archive build does not qualify an ARM
-Qt app. CMake compiles the public header; it does not install an FFI SDK.
+pinned matching-target archive. A separate manual ARM Qt6.12 build and component
+run now pass; production ARM CMake and a normal ARM window remain open.
+CMake compiles the public header; it does not install an FFI SDK.
 
 The permanent native Qt regressions use authored root peers in a disposable test
 environment. Build and run their13 CTest cases there:
@@ -66,7 +68,9 @@ separates actual C ABI, Qt, default-build and hardware evidence.
 See the [session composition report](../docs/native-messages-session-composition.md)
 for the separate current-owner release completion, host components and historical
 evidence boundaries.
-Normal launcher/current actor/per-app Wayland/real Source/grant→read/revoke/
-source-loss GUI composition remains open, as do ARM availability and phone gates.
+The later prepared native x86 session qualifies the normal launcher/current
+actor/per-app Wayland/real Source/grant→read/live theme/revoke path. Cold startup,
+source-loss composition in this current app, ARM window availability and phone
+gates remain open.
 Any future visual run must qualify the actual [Pixel10 display profile](../docs/native-phone-display-profile.md)
 and native capture dimensions before presenting a screenshot.

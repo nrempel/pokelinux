@@ -19,6 +19,10 @@ The [Messages request and model engine](docs/native-messages-rust-client.md) now
 also runs in Rust. The current app builds against Qt6.12 in an ARM virtual
 machine, where its engine and actual Qt worker checks pass. The normal ARM
 window, cold startup and physical SMS remain open.
+A [fresh prepared native window](docs/native-messages-prepared-tracer.md) now
+shows denied access, two synthetic messages after permission, a live dark/light
+Omarchy theme change and cleared history after revocation. All four groups pass
+with the same app/window and original Pixel10-sized captures.
 
 The [installed Rust radio operator](docs/native-radio-operator.md) now implements
 one privileged typed request through a durable intent writer and owned transport
@@ -259,7 +263,7 @@ production session completion and all phone gates remain open.
 
 | Area | Evidence and scope | Still missing |
 |---|---|---|
-| Rust Messages client engine | Nine frozen C ABI groups, six current-Qt modes/40 parser rows, seven original worker controls, five real-thread ordering groups and13 permanent CTest cases pass. All29 appearance and UID11010 installed-QML controls are rerun; host/ARM archives and full host default Cargo/CMake build pass. A separate manual ARM Qt6.12 full-app build executes9 C ABI,7 typed worker and5 Qt ordering groups. [Report](docs/native-messages-rust-client.md) · [Host evidence](docs/evidence/native-messages-rust-client-provenance.json) · [ARM evidence](docs/evidence/native-messages-arm-client-provenance.json) | Normal ARM main/window, production ARM CMake, normal cold session, shared appearance Rust migration, suspend and physical phone/SMS/carrier remain open |
+| Rust Messages client engine | Nine frozen C ABI groups, six current-Qt modes/40 parser rows, seven original worker controls, five real-thread ordering groups and13 permanent CTest cases pass. All29 appearance and UID11010 installed-QML controls are rerun; host/ARM archives and full host default Cargo/CMake build pass. A separate manual ARM Qt6.12 full-app build executes9 C ABI,7 typed worker and5 Qt ordering groups. A fresh prepared native x86 window also passes denial/grant/history/live-theme/revoke with four original native captures. [GUI report](docs/native-messages-prepared-tracer.md) · [Report](docs/native-messages-rust-client.md) · [Host evidence](docs/evidence/native-messages-rust-client-provenance.json) · [ARM evidence](docs/evidence/native-messages-arm-client-provenance.json) | Normal ARM main/window, production ARM CMake, normal cold session, shared appearance Rust migration, suspend and physical phone/SMS/carrier remain open |
 | Native SMS codecs and outbox | 27 encoder and 33 decoder comparisons with Android’s actual implementation; bounded multipart planning and durable SQLite admission pass Linux/ARM64 tests. SIGKILL/restart retains uncertainty under an actual ARM64 kernel. [Report](docs/native-messaging.md) · [Codec evidence](docs/evidence/sms-submit-provenance.json) · [Outbox evidence](docs/evidence/sms-outbox-provenance.json) · [Receive evidence](docs/evidence/sms-receive-provenance.json) | Installed sending and continuous incoming composition, qualified transport receipts, delivery, carrier and wake behavior |
 | Native GSM status reports | Bounded Rust status-report parsing passes57 actual AOSP comparisons and12 focused tests on x86/ARM64 user-QEMU;61 stricter malformed and8 unsupported cases remain explicit. [Report](docs/native-sms-status-report.md) · [Evidence](docs/evidence/native-sms-status-report-provenance.json) | Production receive/ACK identity, separately qualified delivery correlation, installed apps/notifications and modem/carrier proof |
 | Installed native Messages history | One lifecycle actor and owned raw/inbox child release bounded history to an actual distinct-UID Qt window in original Omarchy. Eleven ARM64 desktop groups, nested ten service groups and two retained-descriptor cases pass; x86 service/recovery, current permission/EAGAIN fences, SQLite recovery and seven actual Qt worker checks pass. [Report](docs/native-messages-service.md) · [Current evidence](docs/evidence/native-messages-correction-provenance.json) · [Qt worker](docs/native-messages-ui-worker.md) | Incoming synthetic composition is qualified separately below; enumeration is qualified separately below; trusted lock/focus/session ingress, Wayland containment, notifications/wake, send/ACK/producer identity, production session ACLs and modem/carrier/device proof |
@@ -363,6 +367,15 @@ Historical reports refer to local `artifacts/` paths. Those files are not all pu
 Public-source publication excludes proprietary inputs, raw decompilation, credentials, private runtime artifacts and macOS resource-fork sidecars. The [public audit](docs/publication-audit.md) checked current files, all reachable history and GitHub attachment surfaces: no validated credentials, proprietary input binaries or raw decompilation dumps were found. Benign historical metadata and removed private conversation references remain in old commits; source/log hashes were validated as scanner false positives.
 
 ## Real UI evidence
+
+The current Rust-backed Messages app now runs through permission changes and a
+live Omarchy theme switch in a **prepared native x86 VM**. These unmodified
+1080x2424 captures show the same window and two authored local messages; modem
+receive/send are unavailable. [Four-state report and denial captures](docs/native-messages-prepared-tracer.md).
+
+| Messages: Tokyo Night | Same window: Catppuccin Latte |
+|---|---|
+| ![Messages with two synthetic hello rows in Tokyo Night](docs/assets/messages-rust-history-dark.png) | ![The same Messages history after a live light-theme change](docs/assets/messages-rust-history-light.png) |
 
 These current captures show the actual Sounds app in the successful **prepared
 native x86 VM** session, before and after permission. They use the Pixel10 display

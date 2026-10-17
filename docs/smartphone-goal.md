@@ -35,7 +35,11 @@ pre-entry Stop and numeric-projection red-green regressions. A separate manual
 generic ARM kernel build links the normal Qt6.12 app and executes nine C ABI,
 seven typed worker and five Qt ordering groups with owned closure. This adds no
 normal-main/window or production ARM CMake result. See [ARM evidence](evidence/native-messages-arm-client-provenance.json).
-Shared appearance Rust migration, normal cold/window composition and all phone
+The [fresh prepared x86 Messages window](native-messages-prepared-tracer.md) now
+passes denial, granted authored history, live original Omarchy theme switching
+and revoked-list clearing in one normal app/window. Four unmodified native
+Pixel10 captures and owned Stop/closure pass; direct QWindow/DPR remains open.
+Shared appearance Rust migration, cold/ARM window composition and all phone
 gates remain open.
 
 Two additional [whole-compositor stall epochs](native-normal-upstream-tracer.md#compositor-freeze-expiry-and-stop)
@@ -43,8 +47,9 @@ now qualify independent100ms Source-expiry withdrawal/quietness/refusal before
 Stop, and separately native Stop while the compositor remains stopped. Each
 retains six PCM windows/144,000 measured frames and owned closure. Fresh Source
 facts during rendering-only stalls, native display cleanup and phone gates stay
-open. Cold installed normal startup is next, followed by genuine ARM shell/app/
-theme composition and the matched Pixel userspace graphics boundary.
+open. Next is one current installed ARM shell/app/theme cohort through production
+build/package paths, including shared appearance policy in Rust; then a concrete
+cold-start repair and finite matched-Pixel deployment dependency closure.
 
 The explicit deployment installer passes its frozen host RED→GREEN selection
 check with205 bundle files, including196 pinned Omarchy source blobs. This

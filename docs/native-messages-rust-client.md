@@ -109,13 +109,23 @@ and input closure pass. This is manual ARM build/component evidence, not product
 ARM CMake, a GUI or physical-device qualification. See the separate
 [hash-only ARM provenance](evidence/native-messages-arm-client-provenance.json).
 
+## Prepared normal x86 window
+
+A later fresh Qt6.12 production CMake build now passes the normal UID11010
+window through denial, granted authored history, original Omarchy live dark/light
+themes and revoked-list clearing. One app/window is retained; native Stop and
+owned closure pass. Root reviewed all four unmodified Pixel10-sized captures.
+See the [prepared GUI report](native-messages-prepared-tracer.md); its external
+window/output measurements do not claim direct normal QWindow/DPR values.
+
 ## Remaining integration gates
 
 The current ARM normal application is compiled, not launched. Production ARM
-CMake, a genuine normal successful-main window, cold installed Omarchy/session
+CMake, an ARM successful-main window, cold installed Omarchy/session
 composition, physical suspend, stuck kernel tasks and native display cleanup
 remain open. Existing older Messages GUI/ARM results select their recorded older
-client and are not inherited. No new screenshot or phone, vendor modem,
+client and are not inherited. The new x86 screenshots qualify only their prepared
+session; no phone, vendor modem,
 continuous incoming/SMS send, notifications/wake or carrier result is claimed.
 The separate shared appearance client still contains C++ policy requiring Rust
 migration. Upstream Qt/Hyprland/Aquamarine remain substantial C++ dependencies.

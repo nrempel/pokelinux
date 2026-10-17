@@ -52,9 +52,15 @@ separate regular stderr closes; that host epoch does not qualify ARM execution.
 A later manual generic ARM kernel build links the normal Qt6.12 app and executes
 nine frozen C ABI groups, seven typed worker controls and five Qt ordering cases.
 All49 distinct guest waits/18 PIPE EOFs close; compiler regular logs remain
-separate. The normal app main/window and production ARM CMake remain unexecuted.
+separate. The ARM normal app main/window and production ARM CMake remain
+unexecuted.
 See [ARM provenance](evidence/native-messages-arm-client-provenance.json).
-Shared appearance-client Rust migration and ordinary cold/app composition remain;
+The [fresh prepared x86 Messages tracer](native-messages-prepared-tracer.md) now
+passes denial, granted authored history, original Omarchy live dark/light themes
+and revoked-list clearing in one normal app/window, with four Root-reviewed
+native Pixel10 captures and actual owner Stop/closure. Both initial setup and
+pixel-oracle failures remain preserved; no production repair is claimed.
+Shared appearance-client Rust migration and ordinary cold/ARM composition remain;
 retain Qt presentation. Extra conservative parser-error
 classification refinements are parked; no exhaustive Qt equivalence is claimed.
 
@@ -142,10 +148,12 @@ six PCM windows/144,000 measured frames and original owned/input closure. These
 are existing-behavior x86 qualifications, not fresh Source during rendering-only
 stalls or native display cleanup. No production repair is claimed.
 
-Next complete cold installed normal-stack startup without manual warmup/adapter
-loading; then installed ARM real Omarchy shell/menu/live theme/Messages composition;
-then resolve the concrete matched PowerVR userspace boundary offline. Astra's
-current architecture review supports that order. Keep the diagnostic boot bundle
+Next assemble one installed ARM cohort through production CMake/package paths,
+with current Messages/Sounds, real Omarchy shell/menu and live themes. Include
+the bounded shared-appearance Rust policy port with existing29 cases and the
+visible theme tracer. Then repair cold startup from a concrete causal hypothesis;
+avoid another instrumentation ladder. Resolve the finite matched-Pixel deployment
+dependency closure before further PowerVR work. Keep the diagnostic boot bundle
 frozen and the custom renderer parked. Keep Pixel targets fixed.
 
 The explicit normal-session bundle installer now passes its frozen missing-target

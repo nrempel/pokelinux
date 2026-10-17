@@ -1,9 +1,12 @@
 # Native Messages session composition
 
 The current production owner can explicitly compose local Messages history with
-Sounds. This is built native composition code with host component evidence;
-the successful normal Messages GUI/session path remains unexecuted. It does not
-complete the [smartphone goal](smartphone-goal.md#completion-matrix).
+Sounds. A later [prepared native x86 session](native-messages-prepared-tracer.md)
+now executes the current normal Rust-backed Messages window through denial,
+granted authored history, live Omarchy themes and revocation with owned Stop.
+The source epochs below retain their separate host/staging limits. Cold startup,
+ARM GUI and the full [smartphone goal](smartphone-goal.md#completion-matrix) remain
+open.
 
 ## Selected implementation
 
@@ -81,11 +84,11 @@ retained release binaries.
 
 ## Remaining integration
 
-Run the normal native launcher, exact current actor and successful normal UID11010
-Messages main through fresh per-app Wayland and real original Source. Qualify
-independent grant→read, cross-app denial, revoke/stale-read clearing and terminal
-Source loss in the GUI, with actual owned Stop/reaping and no revival. Exercise
-the production appearance broker and actual live appearance changes on that path.
+The later prepared x86 tracer now qualifies the normal native launcher/current
+actor/UID11010 main through per-app Wayland and real Source, independent grant→read,
+ordinary revoked-list clearing, the production appearance broker, live themes and
+owned Stop. Cross-app denial and terminal Source-loss composition with this
+current GUI remain open, along with cold startup and full shell/menu execution.
 Retain the unchanged100ms Source lease, no-retry/focus rules, Pixel10 geometry and
 all existing audio/PCM guards. The earlier [typed rejection](native-source-observation.md#first-observer-rejection-evidence)
 and [render-witness chronology](native-session-x86-runtime.md#render-witness-replay)

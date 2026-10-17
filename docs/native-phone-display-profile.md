@@ -59,3 +59,17 @@ must retain the selected adapter, run actual metadata checks before Source/app
 focus begins, and encode its native output buffer without resizing. Older
 screenshots remain historical at their original resolution/density. Deliberately
 wrong-density negative measurements and raw measurement captures stay private.
+
+## Later normal Messages capture scope
+
+The [prepared native x86 Messages tracer](native-messages-prepared-tracer.md)
+retains the adapter, ordered profile application, native1080x2424 output, nominal
+65x146mm density, scale2.625, actual mapped app bounds, independent registry/output
+measurements and whole native-buffer/PNG equality. Its four unmodified captures
+show the normal app, rather than a measurement surface.
+
+This epoch does not sample the normal app's QWindow getters. It therefore does
+not qualify the full direct-Qt window-DPR/physical-DPI product defined above. Its
+explicitly bounded external output/window qualification and original native
+captures remain separate from the earlier complete ARM measurement-surface
+qualification; no old Qt-window value is inherited.
