@@ -294,6 +294,50 @@ impl Supervisor {
     ) -> bool {
         source == owner && attempt == 1 && self.admits(source)
     }
+    /// Copy one opaque bounded message to the exact current Ready worker.
+    /// No application permission, durable dispatch or remote delivery is implied.
+    /// Use the original absolute operation/session deadline. A post-I/O error
+    /// can follow delivery and must never be treated as safe retry authority.
+    pub fn send_message(
+        &mut self,
+        source: ProcessIdentity,
+        until: crate::deadline::Deadline,
+        bytes: &[u8],
+    ) -> io::Result<()> {
+        if !self.admits(source) {
+            return Err(io::ErrorKind::PermissionDenied.into());
+        }
+        let result = self
+            .bootstrap
+            .as_mut()
+            .ok_or(io::ErrorKind::PermissionDenied)?
+            .send_message(until, bytes);
+        if !self.admits(source) {
+            return Err(io::ErrorKind::PermissionDenied.into());
+        }
+        result
+    }
+    /// Receive one owned post-GO record from the exact current Ready worker.
+    /// None means actual EAGAIN. Stop/reap revoke admission before any I/O.
+    /// This may discard bytes on error and never clears the admission marker.
+    pub fn receive_message(
+        &mut self,
+        source: ProcessIdentity,
+        until: crate::deadline::Deadline,
+    ) -> io::Result<Option<Vec<u8>>> {
+        if !self.admits(source) {
+            return Err(io::ErrorKind::PermissionDenied.into());
+        }
+        let result = self
+            .bootstrap
+            .as_mut()
+            .ok_or(io::ErrorKind::PermissionDenied)?
+            .receive_message(until);
+        if !self.admits(source) {
+            return Err(io::ErrorKind::PermissionDenied.into());
+        }
+        result
+    }
     /// Read at most one caller-bounded buffer. WouldBlock is normal. No detached
     /// reader thread or deferred publication is created; stale output is discardable.
     pub fn read_output(&mut self, buffer: &mut [u8]) -> io::Result<usize> {

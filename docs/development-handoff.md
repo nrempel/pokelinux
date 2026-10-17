@@ -52,6 +52,23 @@ and149 waits/156 PIPE EOFs close. Keep this original
 metadata component/native diagnostic separate from the passing prepared Sounds
 whole-engine run. No C++ source rebuild or production repair was added here.
 
+The [retained Rust process channel](native-process-channel.md) now implements
+one nonblocking1..8192-byte opaque message over the existing authenticated
+READY/GO pair. Original control and genuine missing-API RED precede five actual
+host groups;13 child waits/11 PIPE EOFs,9 shared and68 radio tests/3 ignored,
+strict production checks and Release builds pass separately. Startup deadlines
+are not reused for application operations. No retry or remote-cleanup authority
+is added. Keep fixture prerequisite failures distinct from functional results.
+
+The original installed ARM Main/worker/status path now has its own operator
+baseline RED: service-account03 unsupported, root refused before parsing,
+independent zero105, native worker9/PID1 Main0 and unchanged-journal restart78.
+All25 direct guest waits/13 PIPE EOFs and owned outer closure pass. The operator GREEN
+still needs root command admission, copied startup config, a prewarmed intent
+writer, authenticated ACK→EXIT→actual wait0 before permit, fresh original gates,
+independent request history and responsive Stop for both owned roles. No vendor
+cleanup, app permission or phone capability follows from either proof.
+
 ## Current stopping point
 
 The [graphics critical-path decision](runtime-language-decision.md#graphics-critical-path)

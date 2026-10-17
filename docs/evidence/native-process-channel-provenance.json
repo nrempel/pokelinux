@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "scope": "Actual x86_64 Linux shared Rust post-GO process channel; no radio transport, ARM kernel, suspend/wake or phone claim",
+  "basis": "62fefb27066e5c395f87896750a21a1b59d4acd3",
+  "preimplementation_RED_result_sha256": "f770470d40cb2aa1e76ce8686aca793665207b6f08c6e1d0d89b405347c60829",
+  "final_QA_result_sha256": "4625764719270edb893fa5624826c637c81ee655b2f4fcfa1707d7ddc3a0442d",
+  "source": {
+    "bootstrap.rs": "5833095e1fa5dfcfac281e965840792bfdfdef9818f6f5d98fae340aaf8f5e28",
+    "supervisor.rs": "a796309b2ed1134c74cf100bc8df391136a3284f5829c38df8d2a4fa20626e70"
+  },
+  "consumer_source": {
+    "Cargo.lock": "6c267cc0e3bd2eb1da23cb4e116af2a7d2392c43e1751090eebe397e5d9273e5",
+    "Cargo.toml": "d6b78989c13c20e51014387051787678dc3f9bbbe6feb6b939cf56b1b5c28c9f",
+    "src/common.rs": "652edeee7f6fa02851394b2c3ff60261ca530922623416c08ca730c6aff95fb9",
+    "src/consumer.rs": "2cc1799c8fbd024e736c1a038bea5ee840f612f533ca287a22c883a3a396aff8",
+    "src/current_control.rs": "4a06eb322a24ee0f2076b42f625f29a0acb5e2db8e24b8bf2617b1393597d6c3",
+    "src/raw_controls.rs": "35da480471994d27f4fa70b2744902968c048648ba7ee07c6307e4fa128fac5e"
+  },
+  "actual_boundary": {
+    "implemented_current_control_passed": true,
+    "implemented_consumer_all_five_groups_passed": true,
+    "consumer_actual_waits": 13,
+    "consumer_stdout_PIPE_EOF": 11,
+    "consumer_no_stdout_PIPE_children": 2,
+    "consumer_piped_EOF_before_each_wait": true
+  },
+  "checks": {
+    "fixture_fmt_and_strict_Clippy_passed": true,
+    "shared_production_fmt_and_strict_Clippy_passed": true,
+    "shared_components": {
+      "passed": 9,
+      "ignored": 0
+    },
+    "radio_components": {
+      "passed": 68,
+      "ignored": 3
+    },
+    "radio_strict_Clippy_all_targets_passed": true,
+    "shared_and_all_radio_bins_release_passed": true
+  },
+  "owned_closure": {
+    "actual_CLI_wait_exit": 0,
+    "stdout_EOF": true,
+    "fresh_exact_CID_absent": true,
+    "same_daemon": true,
+    "immutable_inputs_unchanged": true
+  },
+  "fixture_source_origin": "authorized nonsemantic Path/AsFd refactor AFTER actual original RED3, production implementation and preserved runtime GREEN3",
+  "preserved_prerequisite_failures": [
+    "mixed original fixture compiler failure; not RED",
+    "strict fixture style failure before final borrowed-Path/AsFd refactor"
+  ],
+  "final_original_refactor_check": {
+    "current_control_passed": true,
+    "compiler_exit": 101,
+    "missing_constant": 1,
+    "missing_methods": 29,
+    "unrelated_diagnostics": 0,
+    "authored_after_production": true
+  },
+  "artifacts": {
+    "original-current-control.stdout": "1347c41e371d52c7d2381a99cff325b6b690b3a70e280ce94074289b8bba9bf9",
+    "original-target-build.stderr": "3cc97e50940ce34467144a60ac9d20995525b443ff234e9061d92544c3c84bb2",
+    "final-fixture-clippy.stderr": "d978ac8532e780aed1a3f5d9699d4c19f350b890cbe516998b7b5d0feceb2d16",
+    "implemented-current-control.stdout": "197be427084285f7b3334241843b7f063c15cc713b31cec87dfbfeba69713c8b",
+    "implemented-consumer.stdout": "d6a50907fbf20fe6b0f26bbed1b54fe5fa8e4aeb49071dd54f553b77a7443a22",
+    "implemented-consumer.stderr": "e7edb1e20980aeeb59c5927f73135065c1780b2ac13d97263717835ffd078507"
+  },
+  "final_command_sha256": "6768bf9938c4d7da25e8476483372a0864572a629a2c08c5e831625eb3b46091",
+  "final_execution_sha256": "e3211404dc7e8e0205c2b56f89570ab1d2a47ff25cb1d5cd181bddc94701d306",
+  "regression_execution_sha256": "00ca32b1d7c8422fb2db5684ff53474e64c169db783f0faece6911e6c06074ec"
+}

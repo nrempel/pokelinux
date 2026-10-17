@@ -1,0 +1,105 @@
+{
+  "actual_boundary": {
+    "captured_105_count": 0,
+    "client_unknown_command_flag_is_not_parser_telemetry": true,
+    "configuration_does_not_authorize_dispatch": true,
+    "healthy_actual_status": {
+      "decoded_RAW_observation": true,
+      "phase": "observed-active",
+      "revision": 3
+    },
+    "independent_manager_peer_controller_UID_GID": 1000,
+    "operator_UID_GID": 0,
+    "peer_clear_count": 0,
+    "peer_registration_count": 1,
+    "root_03": "refused by existing accept-time UID/GID authorization before command parsing",
+    "root_parser_execution_claimed": false,
+    "service_Main_worker_status_UID_GID": 1500,
+    "service_account_03": "unsupported command refused on authenticated service-account connection"
+  },
+  "build": {
+    "ELF_sha256": {
+      "manager": "1f3ab94dcbf2e2ef384661ce08a2648e0c2305f2997f628a998fcf456d27171f",
+      "operator-controller": "e4bd1b8f5d38d39c70f465499b5817767976738c11d237e984213d75fed182ec",
+      "peer": "ef47478bc450ae91d9c5d75baa20b35e21b33dcd0bacd68aa96c8dea9c0aacf7",
+      "radio-service": "545e9ac1ad616415b1a2a61d0c99a0aaa9044effb4a845b5b89475125b029629",
+      "radio-status": "8629f49c0deb726c5bae172f9178497fce75fc9d97d6f05e2e5d5166932f89a3",
+      "radio-worker": "576d472073dd1329392e4c2a0a53a4d0d96832a4722433129f4a4b55c4ff0ee7"
+    },
+    "actual_Cargo_ELF_and_runtime_selected_bytes_match": true,
+    "actual_Cargo_reported_AArch64_ELF_count": 6,
+    "actual_build_execution_sha256": "ef607eab6761dd78399d47804e80ac8c3d33bd8c26642d541282744d69227e75",
+    "artifact_qualification_sha256": "e5eaf3001f681aa159a8ef42cccbaebe9e349f2b1380d219921dd67acbfef2e6",
+    "successful_Cargo_stream_sha256": {
+      "fixture-arm-cargo.jsonl": "b7a08d7f1575ddbc5dc54323e098cea23b280af524d6e7c43c8ea0c51278b035",
+      "production-arm-cargo.jsonl": "4ddbcfc245c1f863f9e679b2589ea4bf5ae85240ea6e253dc2a48ca06aff4084"
+    }
+  },
+  "classification": "qualified-structural-missing-privileged-boundary-RED",
+  "closure": {
+    "actual_outer_CLI_exit": 0,
+    "actual_outer_CLI_wait_before_original_cutoff": true,
+    "all_25_waits_and_13_PIPE_EOFs_before_their_original_cutoffs": true,
+    "auxiliary_manager_peer_and_journal_reader_actually_waited": true,
+    "exact_journal_inode_and_bytes_retained": true,
+    "exact_owned_CID": "baa294863521af60c541657f6e2534d85c03cfcaeeea66dc15dbb5576acecab8",
+    "exact_owned_CID_observed_live_then_absent": true,
+    "guest_PIPE_actual_EOF_count": 13,
+    "guest_direct_child_actual_wait_count": 25,
+    "guest_direct_worker_or_Main_reap": false,
+    "guest_normal_worker_signal_or_cgroup_kill": false,
+    "nested_native_worker": {
+      "actual_wait_signal": 9,
+      "admitted_after_wait": false,
+      "occupied_after_wait": false,
+      "owner": "Rust Supervisor",
+      "wait_before_original_cleanup_cutoff": true
+    },
+    "nested_service_Main": {
+      "normal_exit": 0,
+      "outcome_authority": "PID1 ExecStopPost outcome environment; observer does not reap",
+      "owner": "PID1 systemd",
+      "same_journal_restart_exit": 78
+    },
+    "original_and_selected_inputs_unchanged": true,
+    "other_direct_child_regular_sinks_without_PIPE_EOF_claim": 12,
+    "restart_spawn_lookup_registration_or_105": false,
+    "same_daemon_before_after": true,
+    "unit_cgroup_absent_after_native_and_Main_waits": true,
+    "whole_guest_closure_qualified": true
+  },
+  "limits": {
+    "future_operator_or_writer_or_channel_GREEN_proven": false,
+    "hardware_qualified": false,
+    "phone_accessed": false,
+    "private_or_proprietary_inputs_selected": false
+  },
+  "operator_GREEN_open": true,
+  "review_action": "Read-only completed-evidence review; no rerun, production edit or publication",
+  "runtime_evidence_sha256": {
+    "PID1_Main_outcomes": "4bfee87935ac7e58be9c80dd2dba67f2271128ac7a0d949239447cc1214d4c72",
+    "actual_execution": "2e2feeeac43fb813629a753464fd2b6df9b230e8d868e2d1390ca751cfe5d20d",
+    "command": "8dd1b248e6acea4f907a80e20c1a908efd30b68dc505bd24ce5bd8b5d216a708",
+    "result": "93237348d3e42577b8cb2b030ccf98c2c0c796c910be394bccb4c1482125afdf",
+    "selection": "484f372726fee57493cc3007603be5026e57a80be9c69159f0cbff48094dc559"
+  },
+  "schema": 1,
+  "scope": "Original installed native Rust radio baseline under generic ARM64 Linux Binder and an independently authored public peer",
+  "source": {
+    "consumer_source_sha256": {
+      "baseline_adapter.py": "cf6b4e7940974566b7b20a1631f6d4ca00d0ec4b28553214ce122d6b8fccf5c9",
+      "consumer.py": "40900949c20c90e7499d97958e6041bed06aca0b4d89c792f2b8ea86826e3ba3",
+      "operator_client.py": "8b106cd2ad52b864f1a9319ec8f6a596c83d453e64c5c1b5291dfe248ccd6fbd",
+      "wire_assertions.py": "77b3a87d50eb255acbc1d77c5f7cf6e6445afb3cf3b00f370dec65bff7a77d67"
+    },
+    "frozen_manifest_entries": 111,
+    "frozen_manifest_sha256": "4478e79190c8df17749940d20f8dbfb0c110bb1e858e36f2ec8ca0120f422918",
+    "production_bytes_equal_frozen_current_and_reference": true,
+    "production_reference": "c07cc01d1b9635ab6bd5875149886c0f3d3da9e6",
+    "production_source_files": 78,
+    "production_source_pins_sha256": "798d0933516c1b9101aa410ae219bbd8dd07a08a4f24e4865dde3591b626b72f",
+    "selected_copied_input_hashes_match": true,
+    "selected_copied_inputs": 108,
+    "whole_HEAD_equality_required": false
+  }
+}

@@ -12,6 +12,11 @@ for the former radio-local modules.
   occupied through its actual wait. Stop revokes local admission first. The
   mode-0600 journal remains across failure, Stop, wait and owner recreation;
   `StartError::AdmissionUncertain` forbids another admission.
+- `send_message`/`receive_message` reuse the authenticated retained pair after
+  GO with1..8192 copied bytes, exact live credentials/pidfds and fresh original
+  application BOOTTIME deadlines. No raw handle, queue or resend is exposed.
+  The [real host channel consumer](../docs/native-process-channel.md) passes five
+  groups, including actual rights overflow, EAGAIN and Stop-before-wait fencing.
 - `ProcessIdentity::{from_bytes,as_bytes,from_hex,hex}` are explicit codecs.
   Decoding an identity grants no custody or publication authority: admission
   also binds the current source connection and attempt.

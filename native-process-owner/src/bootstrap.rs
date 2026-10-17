@@ -1,7 +1,7 @@
 //! Cooperative process custody before any Binder initialization.
 //! This is not app authentication, containment or remote registration cleanup.
 use crate::{
-    deadline::{BootClock, Clock},
+    deadline::{BootClock, Clock, Deadline},
     supervisor::ProcessIdentity,
 };
 use pokelinux_kernel_identity::{ProcessView, socket_peer_pidfd};
@@ -25,6 +25,8 @@ use std::{
 };
 
 pub const WORKER_SELECTOR: &str = "--pokelinux-process-worker";
+/// Maximum opaque post-GO record. No application authority is encoded here.
+pub const MAX_MESSAGE_BYTES: usize = 8192;
 const SETUP_NS: u64 = 3_000_000_000;
 const SIZE: usize = 26;
 const BOOT: u8 = 1;
@@ -151,6 +153,67 @@ fn send(fd: impl AsFd, bytes: &[u8; SIZE], handles: &[BorrowedFd<'_>]) -> io::Re
     }
     Ok(())
 }
+fn message_before(until: Deadline) -> io::Result<()> {
+    if until.elapsed(BootClock.now()) {
+        Err(io::ErrorKind::TimedOut.into())
+    } else {
+        Ok(())
+    }
+}
+fn message_length(bytes: &[u8]) -> io::Result<()> {
+    if bytes.is_empty() || bytes.len() > MAX_MESSAGE_BYTES {
+        Err(io::ErrorKind::InvalidInput.into())
+    } else {
+        Ok(())
+    }
+}
+fn send_payload(fd: impl AsFd, bytes: &[u8]) -> io::Result<()> {
+    let count = net::send(fd, bytes, SendFlags::DONTWAIT | SendFlags::NOSIGNAL)?;
+    if count != bytes.len() {
+        return Err(io::ErrorKind::WriteZero.into());
+    }
+    Ok(())
+}
+fn receive_payload(fd: impl AsFd, expected: UCred) -> io::Result<Option<Vec<u8>>> {
+    let mut bytes = [0; MAX_MESSAGE_BYTES];
+    let mut space = [MaybeUninit::uninit(); rustix::cmsg_space!(ScmCredentials(1), ScmRights(2))];
+    let mut ancillary = RecvAncillaryBuffer::new(&mut space);
+    let message = match net::recvmsg(
+        fd,
+        &mut [IoSliceMut::new(&mut bytes)],
+        &mut ancillary,
+        RecvFlags::DONTWAIT | RecvFlags::CMSG_CLOEXEC,
+    ) {
+        Err(rustix::io::Errno::AGAIN) => return Ok(None),
+        value => value?,
+    };
+    let mut malformed = message.bytes == 0
+        || message
+            .flags
+            .intersects(ReturnFlags::TRUNC | ReturnFlags::CTRUNC);
+    let mut credentials = None;
+    // Drain and close every received right even when another field is malformed.
+    // Linux closes rights omitted by ancillary truncation; received ones are ours.
+    for entry in ancillary.drain() {
+        match entry {
+            RecvAncillaryMessage::ScmCredentials(value) if credentials.is_none() => {
+                credentials = Some(value);
+            }
+            RecvAncillaryMessage::ScmRights(values) => {
+                for handle in values {
+                    drop(handle);
+                }
+                malformed = true;
+            }
+            _ => malformed = true,
+        }
+    }
+    if malformed || credentials != Some(expected) {
+        return Err(invalid());
+    }
+    Ok(Some(bytes[..message.bytes].to_vec()))
+}
+
 fn wait_packet(fd: impl AsFd, until: u64) -> io::Result<Packet> {
     loop {
         before(until)?;
@@ -252,6 +315,43 @@ pub(crate) struct ParentBootstrap {
     gid: process::Gid,
 }
 impl ParentBootstrap {
+    fn check_message(&self, until: Deadline) -> io::Result<()> {
+        if !self.ready {
+            return Err(io::ErrorKind::PermissionDenied.into());
+        }
+        message_before(until)?;
+        if rustix::thread::gettid() != process::getpid()
+            || process::getuid() != self.uid
+            || process::geteuid() != self.uid
+            || process::getgid() != self.gid
+            || process::getegid() != self.gid
+            || !self
+                .view
+                .matches(&self.child, &self.child, self.child_pid)?
+        {
+            return Err(io::ErrorKind::PermissionDenied.into());
+        }
+        message_before(until)
+    }
+    pub(crate) fn send_message(&mut self, until: Deadline, bytes: &[u8]) -> io::Result<()> {
+        message_length(bytes)?;
+        self.check_message(until)?;
+        let result = send_payload(&self.channel, bytes);
+        self.check_message(until)?;
+        result
+    }
+    pub(crate) fn receive_message(&mut self, until: Deadline) -> io::Result<Option<Vec<u8>>> {
+        self.check_message(until)?;
+        let expected = UCred {
+            pid: Pid::from_raw(self.child_pid.try_into().map_err(|_| invalid())?)
+                .ok_or_else(invalid)?,
+            uid: self.uid,
+            gid: self.gid,
+        };
+        let result = receive_payload(&self.channel, expected);
+        self.check_message(until)?;
+        result
+    }
     pub(crate) fn poll(&mut self) -> io::Result<WorkerState> {
         if self.ready {
             return Ok(WorkerState::Ready);
@@ -296,9 +396,11 @@ impl ParentBootstrap {
 #[must_use]
 pub struct BoundParent {
     identity: ProcessIdentity,
-    _origin: OwnedFd,
-    _transferred: OwnedFd,
-    _channel: OwnedFd,
+    origin: OwnedFd,
+    transferred: OwnedFd,
+    channel: OwnedFd,
+    creator: UCred,
+    view: ProcessView,
     _same_thread: PhantomData<Rc<()>>,
 }
 impl BoundParent {
@@ -360,14 +462,57 @@ impl BoundParent {
         check()?;
         Ok(Self {
             identity,
-            _origin: origin,
-            _transferred: transferred,
-            _channel: channel,
+            origin,
+            transferred,
+            channel,
+            creator,
+            view,
             _same_thread: PhantomData,
         })
     }
     pub fn identity(&self) -> ProcessIdentity {
         self.identity
+    }
+    fn check_message(&self, until: Deadline) -> io::Result<()> {
+        message_before(until)?;
+        if rustix::thread::gettid() != process::getpid()
+            || process::getuid() != self.creator.uid
+            || process::geteuid() != self.creator.uid
+            || process::getgid() != self.creator.gid
+            || process::getegid() != self.creator.gid
+            || process::getppid() != Some(self.creator.pid)
+            || process::parent_process_death_signal()? != Some(Signal::KILL)
+            || !self.view.matches(
+                &self.origin,
+                &self.transferred,
+                self.creator.pid.as_raw_pid() as u32,
+            )?
+        {
+            return Err(io::ErrorKind::PermissionDenied.into());
+        }
+        message_before(until)
+    }
+    /// Copy one opaque bounded record over the retained post-GO channel.
+    /// The caller supplies its original absolute application/session deadline;
+    /// the bootstrap cutoff is never reused. No wait, queue or resend is added.
+    /// A post-I/O error may follow delivery; it proves neither nondelivery nor
+    /// permission to retry. The guard stays on the worker's main thread.
+    pub fn send_message(&mut self, until: Deadline, bytes: &[u8]) -> io::Result<()> {
+        message_length(bytes)?;
+        self.check_message(until)?;
+        let result = send_payload(&self.channel, bytes);
+        self.check_message(until)?;
+        result
+    }
+    /// Receive at most one copied record, or None for actual backpressure.
+    /// Exact live parent credentials/pidfds and fresh BOOTTIME bracket the I/O.
+    /// Rights, malformed/truncated packets and closed peers are refused. An
+    /// error may consume bytes; caller policy owns uncertainty and disposal.
+    pub fn receive_message(&mut self, until: Deadline) -> io::Result<Option<Vec<u8>>> {
+        self.check_message(until)?;
+        let result = receive_payload(&self.channel, self.creator);
+        self.check_message(until)?;
+        result
     }
 }
 

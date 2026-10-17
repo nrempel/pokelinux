@@ -15,6 +15,12 @@ groups and eight PCM windows/192,000 measured frames. Unedited Pixel10 captures
 and the [earlier queue-only result](docs/native-sounds-rust-queue.md) retain their
 separate evidence. Cold installed startup and ARM remain open.
 
+The [Rust parent/worker channel](docs/native-process-channel.md) now passes
+actual Linux copied-message, credential/rights, deadline, backpressure and Stop
+checks. A separate installed ARM radio run qualifies the missing operator-command
+boundary as RED, with normal shutdown and uncertain-restart refusal. Durable
+request admission and the integrated worker command path are still next.
+
 > **Development status:** no physical phone has been accessed. There is no verified bootable phone image. Modem communication, carrier IMS registration, physical call audio, Pixel GPU rendering, camera capture and suspend remain unverified.
 
 A [prepared end-to-end Sounds session](docs/native-normal-upstream-tracer.md#prepared-full-appservice-slice-passes)

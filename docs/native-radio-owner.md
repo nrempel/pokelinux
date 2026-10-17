@@ -1,5 +1,14 @@
 # Native radio session owner
 
+The [retained Rust parent/worker channel](native-process-channel.md) now passes
+five actual host groups after missing-API RED. The original installed ARM radio
+baseline separately qualifies healthy Main/worker/status, missing privileged
+operator admission, zero105 and complete normal Stop/unchanged-journal refusal.
+Root is refused before parsing; only the service-account03 reaches the old
+unsupported-command path. Durable intent, the actual operator/worker command
+path and request-history Stop snapshots remain unimplemented integration gates.
+
+
 The [native CPIF local policy](native-sit-cpif-policy.md) now adds bounded
 poll/read work, an absolute BOOTTIME timer and idle-zero handling. A compiled
 2-pass/9-missing-policy RED precedes86 host/86 ARM user-QEMU component passes.
