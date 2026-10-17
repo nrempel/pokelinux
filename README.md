@@ -38,6 +38,8 @@ Hyprland, Aquamarine and the Qt app frontend still contain substantial C++. The 
 
 ## What has been tested
 
+The [native graphics resource operations](docs/native-render-exact-buffer.md) now build as a matching normal AQ15 library/SDK after a genuine missing-interface RED. Ten existing CPU groups and four API checks pass. The real virtual-driver allocation/import test is next; production frames, Source, ARM and phone gates remain open.
+
 The [Rust format-policy component](docs/native-render-format-policy.md) now passes its unchanged four-group C++/Rust boundary test after a genuine missing-header structural RED. All64 existing Rust tests, five previous C++ programs, formatting, strict Clippy and Release build also pass with the same new archive. This is authored CPU capability evidence; the native adapter still uses its C++ policy, and frame preparation/execution remain unimplemented. The next graphics milestone is one integrated normal app session.
 
 The [Rust session-reconciliation component](docs/native-render-session-reconciliation.md) now passes64 Rust tests, six real C++/Rust integration groups and the matching normal compositor/SDK build. Rust owns recovery policy; C++ connects native calls. A separate real KVM diagnostic now identifies a format-negotiation mismatch: the selected explicit modifier has no advertised driver support. The matching build and frozen observation test pass; native startup recovery still fails. Format policy migration into Rust, real frames, Source and phone gates remain open.

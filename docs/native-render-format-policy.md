@@ -98,7 +98,9 @@ both bootstrap and recovery. Registration should retain native objects and
 identity without choosing a tuple. Strict missing-query handling can add or move
 refusals; do not describe all old behavior as unchanged.
 
-Implement only the exact native allocation/import operations needed by production
+The [exact native allocation/import operations](native-render-exact-buffer.md)
+now pass their matching normal source/SDK build and strict API checks. Their
+real-driver behavior test is next. Connect qualified operations to production
 prepare/execute, then connect real client content to a normal presented frame at
 the Pixel10 display profile. Allocation and framebuffer registration are owned
 preparation; the one-shot display seal stays immediately before the actual atomic

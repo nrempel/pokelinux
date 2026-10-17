@@ -247,3 +247,7 @@ qualifies retained CPU content and geometry, with separate declaration checks;
 normal compositor/Wayland rendering, worker output, Source and hardware remain
 open. The [report](../../docs/native-render-surface-content.md) records exact
 scope and preserved setup failures.
+
+## Exact buffer operations
+
+The [exact-buffer package](exact-buffer/README.md) adds explicit GBM/DRM resource operations and the unchanged independent tests. Qualified missing-interface RED precedes the passing matching normal library/SDK build; real driver behavior remains pending. Rust selection, production prepare/execute, normal frames and complete retirement remain open. [Report](../../docs/native-render-exact-buffer.md).

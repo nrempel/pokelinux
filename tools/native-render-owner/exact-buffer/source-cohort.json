@@ -1,0 +1,167 @@
+{
+  "apply_after": "tools/native-render-owner/aquamarine-retained-child-custody.patch",
+  "full_after_source_manifest_count": 87,
+  "full_before_source_manifest_count": 85,
+  "full_source_map_sha256": "c3c627e863cc50cfcbebb23feaf46fea227a0abcbaf1ca70d4c5e3e66a8a6680",
+  "kernel_resource_operations_qualified": false,
+  "matching_NORMAL_build": {
+    "QMP_EOF_separate": true,
+    "SDK": {
+      "bytes": 2088960,
+      "sha256": "93150843071f1353af9b53a0d7f5a54d8c39ee698b97eda60c1e07f3e82f8db5"
+    },
+    "SDK_regular_files": 24,
+    "SDK_symlinks": 2,
+    "actual_PIPE_EOFs": 57,
+    "actual_owned_waits": 57,
+    "build_result": {
+      "bytes": 394133,
+      "sha256": "921144fb1c2879bd9f07c135b75732c34bda379344af9025f41446e7cedc975f"
+    },
+    "changed_CPP_objects": 3,
+    "exact_strict_API_TUs": 2,
+    "execution": {
+      "bytes": 28747,
+      "sha256": "071ec0e072ba65ab61471ee51d39e94b632ee332c9d13802951cdb5486c8be78"
+    },
+    "existing_CPU_groups": 10,
+    "library": {
+      "bytes": 1884672,
+      "sha256": "9512cc02716accd9636e9b462df28af83154078f9b5856620640b869a8a432b2"
+    },
+    "qualification": {
+      "bytes": 1375,
+      "sha256": "b81611b90f9696d2b4b47253bd763be664456420985c482d50bc4ae22f4e47e4"
+    },
+    "retained_strict_API_TUs": 2,
+    "test_macro_present": false,
+    "testhook_definitions_present": false
+  },
+  "parent_public_revision": "3298302b33757a8af44ce749477ab255092c27fc",
+  "patch": {
+    "bytes": 33266,
+    "sha256": "74b33fd63e587b010990a2d106d7546ffac01977203d149ccc9e7b69e6b6784b"
+  },
+  "production_prepare_execute_frame_Source_ARM_or_phone_qualified": false,
+  "raw_private_receipts_binaries_proprietary_inputs_or_credentials_included": false,
+  "schema": 1,
+  "source_delta": {
+    "include/aquamarine/allocator/Exact.hpp": {
+      "after": {
+        "bytes": 3107,
+        "sha256": "53ba276a3d52e815549dc962e734183627d96673e6e6894c2b19a9c372ec3ebd"
+      },
+      "before": null
+    },
+    "include/aquamarine/allocator/GBM.hpp": {
+      "after": {
+        "bytes": 3401,
+        "sha256": "71fb26b3d1b3f0b972c62cf97fc24b4e0268b726a17ef3a2ab26a4e5e80c8637"
+      },
+      "before": {
+        "bytes": 2756,
+        "sha256": "70bd4d1f69520bfaa2ed846f1e8789d60888894b8ee8089d0faef79b92f1ce6b"
+      }
+    },
+    "include/aquamarine/allocator/Swapchain.hpp": {
+      "after": {
+        "bytes": 3047,
+        "sha256": "ca995f0e6c036d06da8d0aa3fe52887fa83e79c0628675621c4d5ad15377e00b"
+      },
+      "before": {
+        "bytes": 2403,
+        "sha256": "2509a5fcf5109dbce99b1c1c0f5c620a17c9f5f508902e4f5124d4f56feb377b"
+      }
+    },
+    "include/aquamarine/backend/DRM.hpp": {
+      "after": {
+        "bytes": 29196,
+        "sha256": "06430230983c6ccf18096fd7fe2f2a48a92e156ad0b81a84fad7400be42d1002"
+      },
+      "before": {
+        "bytes": 28571,
+        "sha256": "8273251aedd372c513dc208f5ddd54b9701e8deb1674eb58547241714000d7f5"
+      }
+    },
+    "src/allocator/ExactInternal.hpp": {
+      "after": {
+        "bytes": 3647,
+        "sha256": "03fbb1924c9930818b01c97c15465f1b21399f26784bd18f0e13c69e096de55e"
+      },
+      "before": null
+    },
+    "src/allocator/GBM.cpp": {
+      "after": {
+        "bytes": 21446,
+        "sha256": "4855f48dea69c3318c4a6bfe0e18da8db6df2bd5efd8db44e63b98bec1d76821"
+      },
+      "before": {
+        "bytes": 15605,
+        "sha256": "2268a7a72a8ce3d25199a423081cec0e0d53f6c3bd41b47c883e59ba7d0aa2ff"
+      }
+    },
+    "src/allocator/Swapchain.cpp": {
+      "after": {
+        "bytes": 8689,
+        "sha256": "549398fd79a60f134b437a53b8546dac2bb15b8835c5322dab322176f72898ff"
+      },
+      "before": {
+        "bytes": 4730,
+        "sha256": "bf11ebd3ed8ddad7166a8c07c5a38e2bcc1aad045ecaeb8b89271717363b1cfb"
+      }
+    },
+    "src/backend/drm/DRM.cpp": {
+      "after": {
+        "bytes": 142676,
+        "sha256": "bad5f72fd82db7d841945fb27e65569e16c91f0648e8d40fde65e352b6c4402a"
+      },
+      "before": {
+        "bytes": 134237,
+        "sha256": "d86768809c6168996936237f7ba379559cab4bfb975d50e69a4514e97958a740"
+      }
+    }
+  },
+  "structural_RED": {
+    "CXX_standard": 23,
+    "aggregate_passed": false,
+    "control_exit": 0,
+    "genuine_GNU_major": 16,
+    "missing_names": [
+      "SExactBufferRequest",
+      "reconfigureExact",
+      "exactAllocation",
+      "createExact",
+      "exactImport",
+      "closeExact"
+    ],
+    "qualification": {
+      "bytes": 2070,
+      "sha256": "27666811ca38795d266372e5b581e2952e4e987b4abf327b22d8586cf4cf5956"
+    },
+    "target_exit": 1
+  },
+  "unchanged_fixtures": {
+    "CONTRACT.md": {
+      "bytes": 8643,
+      "sha256": "8742d4f4ec7aeff3fdc093ecfe049be2dbc31753c6bd2ac0183d6b5724a3c10b"
+    },
+    "classifier.py": {
+      "bytes": 7434,
+      "sha256": "7d4f136d9e0e1eea36f1863fe76929337e7bba5dfdb131b83c0d24b681127ba8"
+    },
+    "current-sdk-control.cpp": {
+      "bytes": 516,
+      "sha256": "f4ab38d3fa4084cb3c3e4126504b4ac3f44544ef139afc55a982130dc41feb2d"
+    },
+    "exact-buffer-kernel.cpp": {
+      "bytes": 26079,
+      "sha256": "d26ba86cf3806902ecb164997e0f0f24ba9d82c9790a73128147adcae7812b07"
+    },
+    "missing-interface.cpp": {
+      "bytes": 527,
+      "sha256": "106b60b1dcafbb5e38fdb67f8118b396f01ff1a14e87d14d18c0410460be949c"
+    }
+  },
+  "upstream_commit": "f31c47a1b9d300847d8fc3108ad959448103dfc1",
+  "upstream_repository": "https://github.com/hyprwm/aquamarine"
+}

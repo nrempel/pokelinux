@@ -1,0 +1,766 @@
+--- /dev/null
++++ b/include/aquamarine/allocator/Exact.hpp
+@@ -0,0 +1,75 @@
++#pragma once
++#include "Swapchain.hpp"
++#include <array>
++#include <cstdint>
++
++namespace Aquamarine {
++    enum class eExactBufferMode : uint32_t { IMPLICIT = 1, EXPLICIT = 2 };
++    struct SExactBufferRequest {
++        uint64_t request_id = 0; // nonzero opaque caller binding, not authority
++        eExactBufferMode mode = eExactBufferMode::IMPLICIT;
++        uint64_t modifier = 0; // reserved zero for IMPLICIT; exact for EXPLICIT
++    };
++    enum class eExactBufferResult : uint32_t {
++        NOT_ATTEMPTED = 0, SUCCESS, INVALID_REQUEST, DEVICE_MISMATCH,
++        REQUEST_MISMATCH, MODIFIERS_UNAVAILABLE, NATIVE_FAILURE,
++        RETURNED_MODIFIER_MISMATCH
++    };
++    enum class eExactAllocationAPI : uint32_t {
++        NONE = 0, GBM_BO_CREATE, GBM_BO_CREATE_WITH_MODIFIERS2
++    };
++    struct SExactNativeCall {
++        uint32_t count = 0;
++        int result = 0;
++        int error = 0; // captured immediately; zero on successful call
++    };
++    // These are copied observations. FDs/pointers in options/attrs remain borrowed.
++    struct SExactDeviceBinding {
++        int allocator_fd = -1, kms_fd = -1;
++        uint64_t allocator_rdev = 0, kms_rdev = 0; // not equality evidence
++        SExactNativeCall allocator_get_device, kms_get_device;
++        int devices_equal = 0; // actual drmDevicesEqual result after both queries
++    };
++    struct SExactAllocation {
++        eExactBufferResult result = eExactBufferResult::NOT_ATTEMPTED;
++        SExactBufferRequest request;
++        SSwapchainOptions options; // full exact input, including output identity
++        uint64_t buffer_id = 0; // unique native allocation occurrence, not policy epoch
++        SExactDeviceBinding device;
++        SExactNativeCall modifiers_cap;
++        uint64_t modifiers_cap_value = 0;
++        eExactAllocationAPI api = eExactAllocationAPI::NONE;
++        uint32_t flags = 0;
++        uint32_t modifier_count = 0;
++        uint64_t requested_modifier = 0; // only supplied when modifier_count==1
++        uint32_t create_count = 0;
++        bool returned_buffer = false;
++        int create_error = 0;
++        uint32_t modifier_getter_count = 0;
++        uint64_t raw_modifier = 0;
++        SDMABUFAttrs exported; // raw exported metadata, never mode inference
++    };
++    struct SExactImport {
++        eExactBufferResult result = eExactBufferResult::NOT_ATTEMPTED;
++        SExactBufferRequest request;
++        uint64_t buffer_id = 0;
++        SExactDeviceBinding device;
++        SExactNativeCall modifiers_cap;
++        uint64_t modifiers_cap_value = 0;
++        bool reused = false;
++        uint32_t prime_count = 0;
++        std::array<SExactNativeCall, 4> prime;
++        std::array<uint32_t, 4> handles{};
++        uint32_t addfb_flags = 0;
++        bool with_modifiers = false;
++        SExactNativeCall addfb;
++        uint32_t framebuffer_id = 0;
++        SDMABUFAttrs exported; // same buffer metadata supplied to import
++    };
++    struct SExactClose {
++        uint64_t request_id = 0, buffer_id = 0;
++        uint32_t framebuffer_id = 0;
++        SExactNativeCall closefb;
++        // No RMFB operation exists in this strict resource path.
++    };
++}
+--- a/include/aquamarine/allocator/GBM.hpp
++++ b/include/aquamarine/allocator/GBM.hpp
+@@ -1,6 +1,7 @@
+ #pragma once
+ 
+ #include "Allocator.hpp"
++#include "Exact.hpp"
+ 
+ struct gbm_device;
+ struct gbm_bo;
+@@ -20,13 +21,21 @@
+         virtual bool                                   isSynchronous();
+         virtual bool                                   good();
+         virtual SDMABUFAttrs                           dmabuf();
++        SExactAllocation                               exactAllocation() const;
+         virtual std::tuple<uint8_t*, uint32_t, size_t> beginDataPtr(uint32_t flags);
+         virtual void                                   endDataPtr();
+ 
+       private:
++        // CPU-only holder. The swapchain retains it before initializeExact.
++        explicit CGBMBuffer(Hyprutils::Memory::CSharedPointer<CGBMAllocator> allocator_);
++        bool initializeExact(const SSwapchainOptions&, const SExactBufferRequest&, Hyprutils::Memory::CSharedPointer<IBackendImplementation>);
++
+         CGBMBuffer(const SAllocatorBufferParams& params, Hyprutils::Memory::CWeakPointer<CGBMAllocator> allocator_, Hyprutils::Memory::CSharedPointer<CSwapchain> swapchain);
+ 
+         Hyprutils::Memory::CWeakPointer<CGBMAllocator> allocator;
++        // Exact buffers can outlive their swapchain; keep the native GBM device alive.
++        Hyprutils::Memory::CSharedPointer<CGBMAllocator> exactAllocator;
++        SExactAllocation exactReceipt;
+ 
+         // gbm stuff
+         gbm_bo*      bo         = nullptr;
+@@ -35,6 +44,7 @@
+         SDMABUFAttrs attrs{.success = false};
+ 
+         friend class CGBMAllocator;
++        friend class CSwapchain;
+     };
+ 
+     class CGBMAllocator : public IAllocator {
+--- a/include/aquamarine/allocator/Swapchain.hpp
++++ b/include/aquamarine/allocator/Swapchain.hpp
+@@ -6,6 +6,8 @@
+ 
+     class IBackendImplementation;
+     class IOutput;
++    struct SExactBufferRequest;
++    struct SExactAllocation;
+ 
+     struct SSwapchainOptions {
+         size_t                    length = 0;
+@@ -21,6 +23,8 @@
+                                                                     Hyprutils::Memory::CSharedPointer<IBackendImplementation> backendImpl_);
+ 
+         bool                                                 reconfigure(const SSwapchainOptions& options_);
++        // One copied receipt per attempted allocation, in order; reuse has none.
++        bool reconfigureExact(const SSwapchainOptions&, const SExactBufferRequest&, std::vector<SExactAllocation>& attempts);
+ 
+         bool                                                 contains(Hyprutils::Memory::CSharedPointer<IBuffer> buffer);
+         Hyprutils::Memory::CSharedPointer<IBuffer>           next(int* age);
+@@ -45,6 +49,11 @@
+         Hyprutils::Memory::CWeakPointer<IBackendImplementation> backendImpl;
+         std::vector<Hyprutils::Memory::CSharedPointer<IBuffer>> buffers;
+         int                                                     lastAcquired = 0;
++        // Strict calls cannot later enter the legacy guessing/fallback path.
++        bool exactOnly = false, exactCommitted = false;
++        // Native candidates are retained here before initialization. Failed acquired
++        // candidates remain until this swapchain is explicitly disposed.
++        std::vector<Hyprutils::Memory::CSharedPointer<IBuffer>> exactInProgress;
+ 
+         friend class CGBMBuffer;
+     };
+--- a/include/aquamarine/backend/DRM.hpp
++++ b/include/aquamarine/backend/DRM.hpp
+@@ -2,6 +2,7 @@
+ 
+ #include "./Backend.hpp"
+ #include "../allocator/Swapchain.hpp"
++#include "../allocator/Exact.hpp"
+ #include "../output/Output.hpp"
+ #include "../input/Input.hpp"
+ #include "FrameScheduler.hpp"
+@@ -83,6 +84,11 @@
+         static Hyprutils::Memory::CSharedPointer<CDRMFB> create(Hyprutils::Memory::CSharedPointer<IBuffer> buffer_, Hyprutils::Memory::CWeakPointer<CDRMBackend> backend_,
+                                                                 bool* isNew = nullptr);
+ 
++        static Hyprutils::Memory::CSharedPointer<CDRMFB> createExact(Hyprutils::Memory::CSharedPointer<IBuffer>,
++            Hyprutils::Memory::CWeakPointer<CDRMBackend>, const SExactBufferRequest&, SExactImport&);
++        SExactImport exactImport() const;
++        SExactClose closeExact();
++
+         void                                             closeHandles();
+         // drops the buffer from KMS
+         void drop();
+@@ -100,6 +106,11 @@
+ 
+       private:
+         CDRMFB(Hyprutils::Memory::CSharedPointer<IBuffer> buffer_, Hyprutils::Memory::CWeakPointer<CDRMBackend> backend_);
++        CDRMFB() = default; // CPU-empty holder, retained before native import.
++        void importExact(const SExactAllocation&);
++        bool exact = false, exactCloseAttempted = false, exactHandleCloseAttempted = false;
++        SExactImport exactImportFacts;
++        SExactClose exactCloseFacts;
+         uint32_t submitBuffer();
+         void     import();
+ 
+--- /dev/null
++++ b/src/allocator/ExactInternal.hpp
+@@ -0,0 +1,71 @@
++#pragma once
++
++#include <aquamarine/allocator/Exact.hpp>
++#include <aquamarine/output/Output.hpp>
++#include <cerrno>
++#include <cmath>
++#include <limits>
++#include <sys/stat.h>
++#include <xf86drm.h>
++
++namespace Aquamarine::ExactInternal {
++    inline bool validRequest(const SExactBufferRequest& request) {
++        if (!request.request_id)
++            return false;
++        if (request.mode == eExactBufferMode::IMPLICIT)
++            return request.modifier == 0;
++        return request.mode == eExactBufferMode::EXPLICIT && request.modifier != DRM_FORMAT_MOD_INVALID;
++    }
++
++    inline bool sameRequest(const SExactBufferRequest& a, const SExactBufferRequest& b) {
++        return a.request_id == b.request_id && a.mode == b.mode && a.modifier == b.modifier;
++    }
++
++    inline bool validOptions(const SSwapchainOptions& options) {
++        const auto width = options.size.x, height = options.size.y;
++        return options.length > 0 && options.length <= static_cast<size_t>(std::numeric_limits<int>::max()) &&
++            std::isfinite(width) && std::isfinite(height) && width >= 1 && height >= 1 &&
++            width <= std::numeric_limits<uint32_t>::max() && height <= std::numeric_limits<uint32_t>::max() &&
++            std::floor(width) == width && std::floor(height) == height && options.format != DRM_FORMAT_INVALID &&
++            options.scanout && !options.cursor && !options.multigpu && options.scanoutOutput;
++    }
++
++    inline bool sameOptions(const SSwapchainOptions& a, const SSwapchainOptions& b) {
++        const auto outputA = a.scanoutOutput.lock(), outputB = b.scanoutOutput.lock();
++        return outputA && outputB && outputA == outputB && a.length == b.length && a.size == b.size &&
++            a.format == b.format && a.scanout == b.scanout && a.cursor == b.cursor && a.multigpu == b.multigpu;
++    }
++
++    inline bool bindDevice(int allocatorFd, int kmsFd, SExactDeviceBinding& binding) {
++        binding = {};
++        binding.allocator_fd = allocatorFd;
++        binding.kms_fd = kmsFd;
++        struct stat allocatorStat{}, kmsStat{};
++        const int allocatorStatResult = fstat(allocatorFd, &allocatorStat);
++        const int kmsStatResult = fstat(kmsFd, &kmsStat);
++        if (allocatorStatResult == 0)
++            binding.allocator_rdev = static_cast<uint64_t>(allocatorStat.st_rdev);
++        if (kmsStatResult == 0)
++            binding.kms_rdev = static_cast<uint64_t>(kmsStat.st_rdev);
++
++        drmDevicePtr allocatorDevice = nullptr, kmsDevice = nullptr;
++        binding.allocator_get_device.count = 1;
++        errno = 0;
++        binding.allocator_get_device.result = drmGetDevice2(allocatorFd, 0, &allocatorDevice);
++        const int allocatorError = errno;
++        binding.allocator_get_device.error = binding.allocator_get_device.result == 0 ? 0 : allocatorError;
++        binding.kms_get_device.count = 1;
++        errno = 0;
++        binding.kms_get_device.result = drmGetDevice2(kmsFd, 0, &kmsDevice);
++        const int kmsError = errno;
++        binding.kms_get_device.error = binding.kms_get_device.result == 0 ? 0 : kmsError;
++        if (binding.allocator_get_device.result == 0 && binding.kms_get_device.result == 0 && allocatorDevice && kmsDevice)
++            binding.devices_equal = drmDevicesEqual(allocatorDevice, kmsDevice);
++        if (allocatorDevice)
++            drmFreeDevice(&allocatorDevice);
++        if (kmsDevice)
++            drmFreeDevice(&kmsDevice);
++        return allocatorStatResult == 0 && kmsStatResult == 0 && S_ISCHR(allocatorStat.st_mode) && S_ISCHR(kmsStat.st_mode) &&
++            binding.allocator_get_device.result == 0 && binding.kms_get_device.result == 0 && binding.devices_equal == 1;
++    }
++}
+--- a/src/allocator/GBM.cpp
++++ b/src/allocator/GBM.cpp
+@@ -1,10 +1,14 @@
+ #include <algorithm>
++#include <atomic>
++#include <cerrno>
++#include <limits>
+ #include <aquamarine/allocator/GBM.hpp>
+ #include <aquamarine/backend/Backend.hpp>
+ #include <aquamarine/backend/DRM.hpp>
+ #include <aquamarine/allocator/Swapchain.hpp>
+ #include "FormatUtils.hpp"
+ #include "Shared.hpp"
++#include "ExactInternal.hpp"
+ #include <xf86drm.h>
+ #include <gbm.h>
+ #include <unistd.h>
+@@ -59,6 +63,127 @@
+     }
+ 
+     return formats.at(0);
++}
++
++namespace {
++    // IDs name acquired native allocation occurrences, with permanent refusal
++    // on exhaustion rather than wrapping into a previously issued identity.
++    uint64_t nextExactBufferID() {
++        static std::atomic<uint64_t> next{1};
++        auto value = next.load(std::memory_order_relaxed);
++        while (value != 0) {
++            const auto following = value == std::numeric_limits<uint64_t>::max() ? 0 : value + 1;
++            if (next.compare_exchange_weak(value, following, std::memory_order_relaxed))
++                return value;
++        }
++        return 0;
++    }
++}
++
++Aquamarine::CGBMBuffer::CGBMBuffer(SP<CGBMAllocator> allocator_) : allocator(allocator_), exactAllocator(allocator_) {
++    attrs.planes = 0;
++}
++
++bool Aquamarine::CGBMBuffer::initializeExact(const SSwapchainOptions& options_, const SExactBufferRequest& request, SP<IBackendImplementation> implementation) {
++    // This private initializer is one-shot. Its holder is already in the
++    // swapchain's in-progress vector before the first native operation.
++    if (exactReceipt.result != eExactBufferResult::NOT_ATTEMPTED || bo)
++        return false;
++    exactReceipt.request = request;
++    exactReceipt.options = options_;
++    exactReceipt.exported = attrs;
++    if (!ExactInternal::validRequest(request) || !ExactInternal::validOptions(options_) || !exactAllocator || !exactAllocator->gbmDevice || !implementation) {
++        exactReceipt.result = eExactBufferResult::INVALID_REQUEST;
++        return false;
++    }
++    const auto output = options_.scanoutOutput.lock();
++    if (!dynamicPointerCast<CDRMBackend>(implementation) || !dynamicPointerCast<CDRMOutput>(output) ||
++        implementation->type() != AQ_BACKEND_DRM || output->getBackend() != implementation) {
++        exactReceipt.result = eExactBufferResult::INVALID_REQUEST;
++        return false;
++    }
++    if (!ExactInternal::bindDevice(exactAllocator->drmFD(), implementation->drmFD(), exactReceipt.device)) {
++        exactReceipt.result = eExactBufferResult::DEVICE_MISMATCH;
++        return false;
++    }
++
++    if (request.mode == eExactBufferMode::EXPLICIT) {
++        exactReceipt.modifiers_cap.count = 1;
++        errno = 0;
++        exactReceipt.modifiers_cap.result = drmGetCap(implementation->drmFD(), DRM_CAP_ADDFB2_MODIFIERS, &exactReceipt.modifiers_cap_value);
++        const int capError = errno;
++        exactReceipt.modifiers_cap.error = exactReceipt.modifiers_cap.result == 0 ? 0 : capError;
++        if (exactReceipt.modifiers_cap.result != 0) {
++            exactReceipt.result = eExactBufferResult::NATIVE_FAILURE;
++            return false;
++        }
++        if (exactReceipt.modifiers_cap_value != 1) {
++            exactReceipt.result = eExactBufferResult::MODIFIERS_UNAVAILABLE;
++            return false;
++        }
++    }
++
++    const uint64_t occurrence = nextExactBufferID();
++    if (!occurrence) {
++        exactReceipt.result = eExactBufferResult::NATIVE_FAILURE;
++        return false;
++    }
++    const auto width = static_cast<uint32_t>(options_.size.x), height = static_cast<uint32_t>(options_.size.y);
++    exactReceipt.flags = GBM_BO_USE_RENDERING | GBM_BO_USE_SCANOUT;
++    exactReceipt.create_count = 1;
++    if (request.mode == eExactBufferMode::IMPLICIT) {
++        exactReceipt.api = eExactAllocationAPI::GBM_BO_CREATE;
++        errno = 0;
++        bo = gbm_bo_create(exactAllocator->gbmDevice, width, height, options_.format, exactReceipt.flags);
++        const int createError = errno;
++        exactReceipt.create_error = bo ? 0 : createError;
++    } else {
++        exactReceipt.api = eExactAllocationAPI::GBM_BO_CREATE_WITH_MODIFIERS2;
++        exactReceipt.modifier_count = 1;
++        exactReceipt.requested_modifier = request.modifier;
++        errno = 0;
++        bo = gbm_bo_create_with_modifiers2(exactAllocator->gbmDevice, width, height, options_.format, &request.modifier, 1, exactReceipt.flags);
++        const int createError = errno;
++        exactReceipt.create_error = bo ? 0 : createError;
++    }
++    exactReceipt.returned_buffer = bo != nullptr;
++    if (!bo) {
++        exactReceipt.result = eExactBufferResult::NATIVE_FAILURE;
++        return false;
++    }
++    exactReceipt.buffer_id = occurrence;
++    exactReceipt.modifier_getter_count = 1;
++    exactReceipt.raw_modifier = gbm_bo_get_modifier(bo);
++    attrs.size = {static_cast<double>(gbm_bo_get_width(bo)), static_cast<double>(gbm_bo_get_height(bo))};
++    attrs.format = gbm_bo_get_format(bo);
++    attrs.modifier = exactReceipt.raw_modifier;
++    attrs.planes = gbm_bo_get_plane_count(bo);
++    size = attrs.size;
++
++    bool exported = attrs.planes > 0 && attrs.planes <= static_cast<int>(attrs.fds.size());
++    if (exported) {
++        for (int i = 0; i < attrs.planes; ++i) {
++            attrs.strides.at(i) = gbm_bo_get_stride_for_plane(bo, i);
++            attrs.offsets.at(i) = gbm_bo_get_offset(bo, i);
++            attrs.fds.at(i) = gbm_bo_get_fd_for_plane(bo, i);
++            if (attrs.fds.at(i) < 0 || attrs.strides.at(i) == 0) {
++                exported = false;
++                break;
++            }
++        }
++    }
++    attrs.success = exported;
++    exactReceipt.exported = attrs;
++    if (request.mode == eExactBufferMode::EXPLICIT && exactReceipt.raw_modifier != request.modifier) {
++        exactReceipt.result = eExactBufferResult::RETURNED_MODIFIER_MISMATCH;
++        return false;
++    }
++    if (!exported || attrs.size != options_.size || attrs.format != options_.format) {
++        exactReceipt.result = eExactBufferResult::NATIVE_FAILURE;
++        return false;
++    }
++    exactReceipt.result = eExactBufferResult::SUCCESS;
++    return true;
+ }
+ 
+ Aquamarine::CGBMBuffer::CGBMBuffer(const SAllocatorBufferParams& params, Hyprutils::Memory::CWeakPointer<CGBMAllocator> allocator_,
+@@ -255,8 +380,9 @@
+ }
+ 
+ Aquamarine::CGBMBuffer::~CGBMBuffer() {
+-    for (size_t i = 0; i < (size_t)attrs.planes; i++) {
+-        close(attrs.fds.at(i));
++    for (size_t i = 0; attrs.planes > 0 && i < static_cast<size_t>(attrs.planes) && i < attrs.fds.size(); ++i) {
++        if (attrs.fds.at(i) >= 0)
++            close(attrs.fds.at(i));
+     }
+ 
+     events.destroy.emit();
+@@ -289,6 +415,10 @@
+ 
+ SDMABUFAttrs Aquamarine::CGBMBuffer::dmabuf() {
+     return attrs;
++}
++
++SExactAllocation Aquamarine::CGBMBuffer::exactAllocation() const {
++    return exactReceipt;
+ }
+ 
+ std::tuple<uint8_t*, uint32_t, size_t> Aquamarine::CGBMBuffer::beginDataPtr(uint32_t flags) {
+--- a/src/allocator/Swapchain.cpp
++++ b/src/allocator/Swapchain.cpp
+@@ -1,5 +1,8 @@
+ #include <algorithm>
+ #include <aquamarine/allocator/Swapchain.hpp>
++#include <aquamarine/allocator/GBM.hpp>
++#include <aquamarine/backend/DRM.hpp>
++#include "ExactInternal.hpp"
+ #include <aquamarine/backend/Backend.hpp>
+ #include "FormatUtils.hpp"
+ 
+@@ -20,6 +23,8 @@
+ }
+ 
+ bool Aquamarine::CSwapchain::reconfigure(const SSwapchainOptions& options_) {
++    if (exactOnly)
++        return false;
+     if (!allocator)
+         return false;
+ 
+@@ -56,6 +61,86 @@
+ 
+     allocator->getBackend()->log(AQ_LOG_DEBUG,
+                                  std::format("Swapchain: Reconfigured a swapchain to {} {} of length {}", options.size, fourccToName(options.format), options.length));
++    return true;
++}
++
++bool Aquamarine::CSwapchain::reconfigureExact(const SSwapchainOptions& options_, const SExactBufferRequest& request, std::vector<SExactAllocation>& attempts) {
++    exactOnly = true;
++    attempts.clear();
++    const auto implementation = backendImpl.lock();
++    const auto gbmAllocator = dynamicPointerCast<CGBMAllocator>(allocator);
++    const auto output = options_.scanoutOutput.lock();
++    if (!ExactInternal::validRequest(request) || !ExactInternal::validOptions(options_) || !gbmAllocator || !implementation ||
++        !dynamicPointerCast<CDRMBackend>(implementation) || !dynamicPointerCast<CDRMOutput>(output) ||
++        implementation->type() != AQ_BACKEND_DRM || output->getBackend() != implementation) {
++        SExactAllocation refused;
++        refused.request = request;
++        refused.options = options_;
++        refused.result = eExactBufferResult::INVALID_REQUEST;
++        attempts.push_back(refused);
++        return false;
++    }
++
++    if (exactCommitted && buffers.size() == options_.length && ExactInternal::sameOptions(options, options_)) {
++        bool identical = true;
++        for (const auto& buffer : buffers) {
++            const auto gbm = dynamicPointerCast<CGBMBuffer>(buffer);
++            if (!gbm) {
++                identical = false;
++                break;
++            }
++            const auto prior = gbm->exactAllocation();
++            if (prior.result != eExactBufferResult::SUCCESS || !ExactInternal::sameRequest(prior.request, request) ||
++                !ExactInternal::sameOptions(prior.options, options_)) {
++                identical = false;
++                break;
++            }
++        }
++        if (identical)
++            return true; // no allocation or native-call receipt is invented
++    }
++
++    // An unresolved native attempt keeps this one candidate set in custody.
++    // Only whole committed-request reuse above can proceed without cleanup.
++    for (const auto& retained : exactInProgress) {
++        const auto gbm = dynamicPointerCast<CGBMBuffer>(retained);
++        if (!gbm)
++            return false;
++        const auto prior = gbm->exactAllocation();
++        if (prior.create_count > 0 || gbm->bo || std::ranges::any_of(gbm->attrs.fds, [](int fd) { return fd >= 0; }))
++            return false;
++    }
++    exactInProgress.clear(); // CPU-only precondition holders have no native custody
++
++    // Reserve all container/receipt storage before the first native operation.
++    const auto firstCandidate = exactInProgress.size();
++    if (options_.length > exactInProgress.max_size() - firstCandidate)
++        return false;
++    exactInProgress.reserve(firstCandidate + options_.length);
++    attempts.reserve(options_.length);
++    std::vector<SP<IBuffer>> committed;
++    committed.reserve(options_.length);
++    for (size_t i = 0; i < options_.length; ++i) {
++        const auto candidate = SP<CGBMBuffer>(new CGBMBuffer(gbmAllocator));
++        exactInProgress.emplace_back(candidate);
++        const bool initialized = candidate->initializeExact(options_, request, implementation);
++        attempts.emplace_back(candidate->exactAllocation());
++        if (!initialized) {
++            // The copied refusal survives discarding a holder that never
++            // attempted creation and owns neither a BO nor an exported FD.
++            if (attempts.back().create_count == 0 && !candidate->bo &&
++                std::ranges::none_of(candidate->attrs.fds, [](int fd) { return fd >= 0; }))
++                exactInProgress.pop_back();
++            return false;
++        }
++    }
++    for (size_t i = firstCandidate; i < exactInProgress.size(); ++i)
++        committed.emplace_back(std::move(exactInProgress[i]));
++    exactInProgress.resize(firstCandidate);
++    buffers = std::move(committed);
++    options = options_;
++    exactCommitted = true;
++    lastAcquired = 0;
+     return true;
+ }
+ 
+--- a/src/backend/drm/DRM.cpp
++++ b/src/backend/drm/DRM.cpp
+@@ -8,6 +8,7 @@
+ #include <aquamarine/backend/drm/Legacy.hpp>
+ #include <aquamarine/backend/drm/Atomic.hpp>
+ #include <aquamarine/allocator/GBM.hpp>
++#include "../../allocator/ExactInternal.hpp"
+ #include <aquamarine/allocator/DRMDumb.hpp>
+ #include <cstdint>
+ #include <format>
+@@ -3233,6 +3234,15 @@
+         TRACE(backend_->log(AQ_LOG_TRACE, std::format("drm: CDRMFB: buffer has drmfb attachment with fb {:x}", (uintptr_t)fb.get())));
+     }
+ 
++    const auto exactBuffer = dynamicPointerCast<CGBMBuffer>(buffer_);
++    if (exactBuffer && exactBuffer->exactAllocation().result != eExactBufferResult::NOT_ATTEMPTED) {
++        // An exact buffer must first be imported by createExact. Never infer its mode here.
++        if (!fb || !fb->exact || !fb->id || fb->dead || fb->exactCloseAttempted ||
++            fb->exactImportFacts.result != eExactBufferResult::SUCCESS || fb->backend.lock() != backend_.lock())
++            return nullptr;
++    } else if (fb && fb->exact)
++        return nullptr;
++
+     if (fb) {
+         if (isNew)
+             *isNew = false;
+@@ -3299,6 +3309,8 @@
+ }
+ 
+ void Aquamarine::CDRMFB::reimport() {
++    if (exact)
++        return; // No implicit retry through the upstream import path.
+     drop();
+     dropped       = false;
+     handlesClosed = false;
+@@ -3312,6 +3324,28 @@
+ }
+ 
+ void Aquamarine::CDRMFB::closeHandles() {
++    if (exact) {
++        if (exactHandleCloseAttempted)
++            return;
++        auto owner = backend.lock();
++        if (!owner)
++            return; // Keep unresolved handles; retirement is unproven.
++        exactHandleCloseAttempted = true;
++        const auto original = boHandles;
++        for (size_t i = 0; i < original.size(); ++i) {
++            const auto handle = original[i];
++            if (!handle || std::find(original.begin(), original.begin() + i, handle) != original.begin() + i)
++                continue;
++            if (drmCloseBufferHandle(owner->drmFD(), handle) == 0) {
++                for (auto& retained : boHandles)
++                    if (retained == handle)
++                        retained = 0;
++            }
++            // A failed close stays owned and is never implicitly retried.
++        }
++        handlesClosed = std::all_of(boHandles.begin(), boHandles.end(), [](auto h) { return h == 0; });
++        return;
++    }
+     if (handlesClosed)
+         return;
+ 
+@@ -3341,6 +3375,10 @@
+ }
+ 
+ void Aquamarine::CDRMFB::drop() {
++    if (exact) {
++        (void)closeExact();
++        return; // Strict objects never enter RMFB or a retry.
++    }
+     if (dropped)
+         return;
+ 
+@@ -3542,3 +3580,157 @@
+ void Aquamarine::CDRMLease::destroy() {
+     events.destroy.emit();
+ }
++
++SP<CDRMFB> Aquamarine::CDRMFB::createExact(SP<IBuffer> source, CWeakPointer<CDRMBackend> target,
++                                          const SExactBufferRequest& request, SExactImport& result) {
++    result = {};
++    result.request = request;
++    if (!ExactInternal::validRequest(request)) {
++        result.result = eExactBufferResult::INVALID_REQUEST;
++        return nullptr;
++    }
++    auto native = dynamicPointerCast<CGBMBuffer>(source);
++    auto owner = target.lock();
++    if (!native || !owner) {
++        result.result = eExactBufferResult::REQUEST_MISMATCH;
++        return nullptr;
++    }
++    const auto allocation = native->exactAllocation();
++    if (allocation.result != eExactBufferResult::SUCCESS || !allocation.buffer_id ||
++        !ExactInternal::sameRequest(allocation.request, request) || !ExactInternal::validOptions(allocation.options) ||
++        allocation.options.scanoutOutput->getBackend().get() != owner.get() || allocation.device.kms_fd != owner->drmFD()) {
++        result.result = eExactBufferResult::REQUEST_MISMATCH;
++        return nullptr;
++    }
++    if (auto attachment = source->attachments.get<CDRMBufferAttachment>()) {
++        auto fb = attachment->fb;
++        if (!fb || !fb->exact || !fb->id || fb->dead || fb->exactCloseAttempted || fb->backend.lock() != owner ||
++            fb->buffer.lock() != source || fb->exactImportFacts.result != eExactBufferResult::SUCCESS ||
++            fb->exactImportFacts.buffer_id != allocation.buffer_id || !ExactInternal::sameRequest(fb->exactImportFacts.request, request)) {
++            result.result = eExactBufferResult::REQUEST_MISMATCH;
++            return nullptr;
++        }
++        result = fb->exactImportFacts;
++        result.reused = true;
++        result.prime_count = 0;
++        result.prime = {};
++        result.addfb = {};
++        return fb;
++    }
++    // Attach the CPU-empty holder before PRIME or framebuffer creation.
++    auto fb = SP<CDRMFB>(new CDRMFB());
++    fb->buffer = source;
++    fb->backend = target;
++    fb->exact = true;
++    fb->exactImportFacts.request = request;
++    fb->exactImportFacts.buffer_id = allocation.buffer_id;
++    source->attachments.add(makeShared<CDRMBufferAttachment>(fb));
++    fb->listeners.destroyBuffer = source->events.destroy.listen([raw = fb.get()] {
++        (void)raw->closeExact();
++        raw->dead = true;
++    });
++    fb->importExact(allocation);
++    result = fb->exactImportFacts;
++    return result.result == eExactBufferResult::SUCCESS ? fb : nullptr;
++}
++
++void Aquamarine::CDRMFB::importExact(const SExactAllocation& allocation) {
++    auto source = buffer.lock();
++    auto owner = backend.lock();
++    auto& receipt = exactImportFacts;
++    receipt.result = eExactBufferResult::NATIVE_FAILURE;
++    if (!source || !owner)
++        return;
++    const auto attrs = source->dmabuf();
++    receipt.exported = attrs;
++    if (!attrs.success || attrs.planes < 1 || attrs.planes > 4 || attrs.size != allocation.options.size ||
++        attrs.format != allocation.options.format || attrs.modifier != allocation.exported.modifier ||
++        attrs.planes != allocation.exported.planes || attrs.fds != allocation.exported.fds ||
++        attrs.offsets != allocation.exported.offsets || attrs.strides != allocation.exported.strides)
++        return;
++    for (int i = 0; i < attrs.planes; ++i)
++        if (attrs.fds[i] < 0 || attrs.strides[i] == 0)
++            return;
++    const int fd = owner->drmFD();
++    if (!ExactInternal::bindDevice(allocation.device.allocator_fd, fd, receipt.device)) {
++        receipt.result = eExactBufferResult::DEVICE_MISMATCH;
++        return;
++    }
++    receipt.modifiers_cap.count = 1;
++    errno = 0;
++    receipt.modifiers_cap.result = drmGetCap(fd, DRM_CAP_ADDFB2_MODIFIERS, &receipt.modifiers_cap_value);
++    const int capError = errno;
++    receipt.modifiers_cap.error = receipt.modifiers_cap.result == 0 ? 0 : capError;
++    if (receipt.modifiers_cap.result != 0)
++        return;
++    const bool explicitMode = receipt.request.mode == eExactBufferMode::EXPLICIT;
++    if (explicitMode && receipt.modifiers_cap_value != 1) {
++        receipt.result = eExactBufferResult::MODIFIERS_UNAVAILABLE;
++        return;
++    }
++    if (explicitMode && attrs.modifier != receipt.request.modifier) {
++        receipt.result = eExactBufferResult::RETURNED_MODIFIER_MISMATCH;
++        return;
++    }
++    for (int i = 0; i < attrs.planes; ++i) {
++        auto& call = receipt.prime[i];
++        ++receipt.prime_count;
++        call.count = 1;
++        errno = 0;
++        call.result = drmPrimeFDToHandle(fd, attrs.fds[i], &boHandles[i]);
++        const int callError = errno;
++        call.error = call.result == 0 ? 0 : callError;
++        receipt.handles[i] = boHandles[i];
++        if (call.result != 0)
++            return; // The attachment retains all earlier handles on failure.
++    }
++    receipt.with_modifiers = explicitMode;
++    receipt.addfb_flags = explicitMode ? DRM_MODE_FB_MODIFIERS : 0;
++    receipt.addfb.count = 1;
++    errno = 0;
++    if (explicitMode) {
++        std::array<uint64_t, 4> modifiers{};
++        std::fill_n(modifiers.begin(), attrs.planes, receipt.request.modifier);
++        receipt.addfb.result = drmModeAddFB2WithModifiers(fd, attrs.size.x, attrs.size.y, attrs.format,
++            boHandles.data(), attrs.strides.data(), attrs.offsets.data(), modifiers.data(), &id, receipt.addfb_flags);
++    } else {
++        receipt.addfb.result = drmModeAddFB2(fd, attrs.size.x, attrs.size.y, attrs.format,
++            boHandles.data(), attrs.strides.data(), attrs.offsets.data(), &id, 0);
++    }
++    const int addError = errno;
++    receipt.addfb.error = receipt.addfb.result == 0 ? 0 : addError;
++    receipt.framebuffer_id = id;
++    if (receipt.addfb.result == 0 && id)
++        receipt.result = eExactBufferResult::SUCCESS;
++}
++
++SExactImport Aquamarine::CDRMFB::exactImport() const {
++    return exactImportFacts;
++}
++
++SExactClose Aquamarine::CDRMFB::closeExact() {
++    if (!exact)
++        return {};
++    if (exactCloseAttempted)
++        return exactCloseFacts;
++    exactCloseAttempted = true;
++    exactCloseFacts.request_id = exactImportFacts.request.request_id;
++    exactCloseFacts.buffer_id = exactImportFacts.buffer_id;
++    exactCloseFacts.framebuffer_id = id;
++    auto owner = backend.lock();
++    if (!owner)
++        return exactCloseFacts; // count0 is unresolved, never a close pass.
++    if (id) {
++        auto& call = exactCloseFacts.closefb;
++        call.count = 1;
++        errno = 0;
++        call.result = drmModeCloseFB(owner->drmFD(), id);
++        const int closeError = errno;
++        call.error = call.result == 0 ? 0 : closeError;
++        if (call.result == 0)
++            id = 0;
++    }
++    closeHandles();
++    dropped = id == 0 && handlesClosed;
++    return exactCloseFacts;
++}
