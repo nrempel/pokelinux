@@ -18,10 +18,12 @@ remains the next runtime gate.
 The [native Rust startup notifier](native-session-startup-readiness.md) now
 connects existing accepted Source freshness to one Main-process notification,
 with exact compositor peer/pidfd validation and nonblocking delivery. Its actor
-and Linux socket/process tests pass; notify unit metadata is selected, while
-installed PID1/cold-shell behavior remains open. The later
-[signal Stop repair](native-session-signal-stop.md) now qualifies actual owner
-SIGTERM before readiness; installed manager Stop/unit behavior is separate.
+and Linux socket/process tests pass. Later [actual PID1 epochs](native-session-manager-stop.md)
+reach notify active/running, then record terminal Source expiry before full-shell
+startup. The [signal Stop repair](native-session-signal-stop.md) qualifies actual
+owner SIGTERM before readiness. The selected unit now removes redundant ExecStop
+and uses KillMode=mixed; actual manager Stop after Source loss exits cleanly.
+Healthy cold full-shell/Sounds startup and its final manager Stop remain open.
 
 ## Ownership and installation
 

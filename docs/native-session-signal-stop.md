@@ -6,7 +6,8 @@ Main exits0, both retained compositor/storage children are dead and absent,
 no child is adopted by the test subreaper, and final ECHILD is observed. One
 Harbour host measurement takes20.29ms from pidfd SIGTERM to the actual Main wait.
 This is an authored-peer Linux integration result, not a phone measurement.
-Installed manager Stop and the unit configuration remain separate gates.
+This host result alone does not qualify installed manager Stop. The later
+[PID1 selection](native-session-manager-stop.md) is recorded separately.
 
 ## One Stop owner
 
@@ -69,24 +70,21 @@ binds the actual separate epochs; raw logs and binaries stay private on Harbour.
 
 ## Installed gates
 
-The production unit still has its previous `ExecStop` helper and
-`KillMode=control-group` in this selection. The observed repeated-helper failure
-remains open. The intended unit change removes that second helper and selects
-`KillMode=mixed`, so the manager first signals Main while retaining a cgroup-wide
-final kill after Main exit or its stop timeout. This matches the
-[upstream manager semantics](https://raw.githubusercontent.com/systemd/systemd/main/man/systemd.kill.xml).
-It needs an actual manager Stop run; this host SIGTERM pass does not qualify it.
+The later unit removes the redundant ExecStop helper and selects KillMode=mixed.
+Its [actual PID1 checks](native-session-manager-stop.md) observe clean manager Stop
+through the Rust signal path after terminal Source loss. The unchanged-unit
+baseline also stops cleanly when its helper runs while Main is live; it is not
+reported as a new unit-repair RED. The earlier native-IPC-first ExecStop failure
+remains separate evidence.
 
-The first cold run with the separately qualified Rust readiness owner stops on
-an observer error: it rejects the shell's still-queued start job while the notify
-owner remains activating. No authenticated Source observation, readiness result,
-full shell, app frame or PCM boundary is obtained. The selected205 files are
-verified in the guest; VM and input closure pass, but guest unit closure remains
-failed because final PID1 status was reset after manager Stop. Dead retained
-processes and empty cgroups do not manufacture a missing exit-status observation.
-The observer correction preserves these failures and all functional success gates.
+The earlier readiness-owner cold run stops on the queued-job observer error and
+retains its failed aggregate and incomplete guest closure. Corrected observers
+then reach notify active/running in two genuine cold epochs, but Source expires
+before the shell can connect. No full-shell/app/PCM pass follows. Held unit
+references preserve matching invocation exits; reset PID1 defaults still cannot
+manufacture success.
 
-Next qualify the corrected installed observer, exact manager Stop configuration
-and genuine cold full-shell/Sounds path. Live combined themes, Messages, coherent
-ARM composition, rendering-stall availability, native display cleanup and all
-Pixel hardware/carrier gates remain open. No physical phone is accessed.
+Next identify that startup Source gap and qualify the complete healthy cold
+full-shell/Sounds/Stop path. Live combined themes, Messages, coherent ARM
+composition, rendering-stall availability, native display cleanup and all Pixel
+hardware/carrier gates remain open. No physical phone is accessed.

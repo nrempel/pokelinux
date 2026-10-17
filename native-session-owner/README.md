@@ -118,8 +118,8 @@ or `{"mode":"history","runtime":"…","raw":"…","inbox":"…"}` (both apps).
 There is no incoming/backend selector or implicit default. Configuration validation
 does not create directories or change storage data.
 The examples show the schema; choose actual trusted paths/accounts for the
-installed profile, keeping the unit Stop runtime equal to the configured
-runtime. The sole audio service at11040 and appearance feed must be
+installed profile. A direct native Stop client must name that configured runtime.
+The sole audio service at11040 and appearance feed must be
 ready independently before startup. This unit does not start or replace them.
 An independent Root policy grant is required; configuration cannot grant access,
 clear durable locks or restore a failed Source.
@@ -132,10 +132,13 @@ storage-worker, Messages writer/read-worker, display-context-worker and
 compositor-bootstrap modes reuse
 existing ownership boundaries, with no arbitrary service-command API.
 
-The unit uses KillMode=control-group for manager-owned descendant termination
-and Restart=no. Its metadata alone proves neither executed unit containment nor
-native descendant reaping. SourceOwner's host tests qualify its direct leader
-Child only. Do not treat fallback manager killing as successful native cleanup.
+The unit uses KillMode=mixed and Restart=no, without a second ExecStop client.
+Systemd first sends SIGTERM to Main; the Rust actor uses its existing Stop and
+drain before the manager's final cgroup kill boundary. Actual installed Stop after
+Source loss observes Main exit0, unit Result=success and an empty exact cgroup;
+healthy full-shell startup remains open. See the [separate evidence](../docs/native-session-manager-stop.md).
+Metadata and fallback killing do not establish native descendant reaping or
+hardware cleanup.
 Root needs the filesystem/UID/GID/signal capabilities used by the existing
 listeners and workers, including chmod after chown (FOWNER).
 

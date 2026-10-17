@@ -86,11 +86,16 @@ keep the original100ms Source and120s startup bounds. See the [cold result](nati
 The [Rust SIGTERM owner repair](native-session-signal-stop.md) now passes its
 unchanged actual production-owner consumer before policy/Source readiness, with
 Main exit0/no adopted children/ECHILD;110 composed regressions and default Release
-pass. Unit ExecStop/KillMode and actual manager Stop remain open. A cold run of
-the earlier readiness owner aborts on the observer treating a queued shell job
-as failure while Main is still activating; it proves no Source/readiness failure.
-Retain that failed aggregate and fix pending/identity/exit observation without
-relaxing runtime success or treating reset PID1 defaults as positive exit proof.
+pass. The selected unit now removes ExecStop and uses KillMode=mixed. Two later
+[cold PID1 epochs](native-session-manager-stop.md), with identical corrected
+observers, reach notify readiness and then fail terminal Source expiry before
+shell connection. Actual manager Stop after that loss records Main0/Resultsuccess
+and empty cgroup for both baseline and candidate; both functional aggregates stay
+false. Retained unit references preserve matching invocation exit evidence.
+The earlier queued-job observer failure remains failed, without Source inference.
+Next retain the activating owner's compositor identity early enough to collect
+existing startup/log evidence and identify the Source gap. Keep100ms unchanged;
+do not infer shell causation, presentation, or a healthy manager-Stop pass.
 
 The Rust [one-shot add-PDN response observer](native-radio-add-pdn-response.md)
 now retains immutable request/session/route/error/byte history after frozen

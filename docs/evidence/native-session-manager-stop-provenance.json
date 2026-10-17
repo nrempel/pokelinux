@@ -1,0 +1,154 @@
+{
+  "schema": 1,
+  "scope": "Two genuinely cold native x86 PID1 epochs; notify activation and owned manager Stop after terminal Source loss only, both functional aggregates remain false. Exact baseline vs candidate unit metadata, unchanged consumer.",
+  "source_base": "cdcf8bcda454b6a38bc68d8552251f4dd5da5b86",
+  "epochs": [
+    {
+      "schema": 1,
+      "epoch": 4,
+      "selection": {
+        "bytes": 230403,
+        "sha256": "ecf7f6f8846e7cd607a113c1dd2efde6a366184b08ee50db239ea9579bd34e5d"
+      },
+      "command": {
+        "bytes": 1297,
+        "sha256": "06094f5152947bd91efdbc46e1d24a2c3550f6b04dab02d1a6a2fcdc998684c9"
+      },
+      "execution": {
+        "bytes": 12022,
+        "sha256": "67d76cb14d87ee5f2e1129e88862d40b1e92444dd31d5658fed74eca6a8a1dc2"
+      },
+      "boot_result": {
+        "bytes": 11075,
+        "sha256": "9b9f635f3e6f259c1705facea81af7746b12928e95e59dd36f0b29d1b13010bf"
+      },
+      "bootstrap_result": {
+        "bytes": 7260,
+        "sha256": "f872a16c5b028b850c40def75ed9bd9d2d5335eab2a875e9e06f5dbffadb0e4f"
+      },
+      "guest_result": {
+        "bytes": 477292,
+        "sha256": "862adfa882cca128aaef32da7c40b89e93b4553151fb9bb3242884ace912107e"
+      },
+      "unit": {
+        "bytes": 556,
+        "sha256": "2ec1b90eb29b8a7e7c6069ff52d98d31527d0b60a6e98ef1ff8d0b85ff7901fa",
+        "Type": "notify",
+        "KillMode": "control-group",
+        "ExecStop_source": "/usr/libexec/pokelinux/pokelinux-session-owner --stop /run/pokelinux/session"
+      },
+      "runtime_consumer": {
+        "guest.py": {
+          "bytes": 66142,
+          "sha256": "1d47e57a65f2bd364da86c111b8023a3f6511d8ccda79466dfb3f6c1e245b4d4"
+        },
+        "systemd_units.py": {
+          "bytes": 21454,
+          "sha256": "631011f301ce3e5cf9a875919181cc2f95bf4e67f97dc7149c41714a92966e13"
+        }
+      },
+      "actual_owner_ELF": {
+        "bytes": 5527360,
+        "sha256": "fdf9714b5537ee932a69d3a12562a1b8c743529eb4a16ce2f7b9aef82c95240b"
+      },
+      "aggregate_pass": false,
+      "genuine_notify_active_running_observed": true,
+      "source_accepted_sequence": 1,
+      "source_sample_expiry_age_ms": 104.932153,
+      "manager_Stop_after_Source_loss": {
+        "command_exit": 0,
+        "matching_main_exit": 0,
+        "unit_Result": "success",
+        "retained_pidfd_dead": true,
+        "empty_exact_cgroup": true,
+        "request_to_final_status_ms": 50.428412,
+        "signal_syscall_observed": false,
+        "native_cleanup_inferred": false
+      },
+      "full_healthy_startup_and_manager_Stop_case_pass": false,
+      "closure": {
+        "direct_waits": 148,
+        "PIPE_EOFs": 155,
+        "separate_QMP_socket_EOF": 1,
+        "separate_native_RefUnit_UnrefUnit_returns": 8,
+        "all_original_cutoffs_and_source_input_CID_closure": true
+      },
+      "ARM_or_hardware_qualified": false,
+      "phone_accessed": false
+    },
+    {
+      "schema": 1,
+      "epoch": 5,
+      "selection": {
+        "bytes": 230470,
+        "sha256": "13bb177378fe29f77d0f84d045bbee73a4a48421e7ae6ceebea80887bb7b1665"
+      },
+      "command": {
+        "bytes": 1297,
+        "sha256": "e41412e7001baf03fdd1fe27906a77176050a53f5634964c863ad913cbeb8ebb"
+      },
+      "execution": {
+        "bytes": 12022,
+        "sha256": "dea41763e4affbffd26fef24e9845009ad7caf1eb29d6debdfb1254c8031984f"
+      },
+      "boot_result": {
+        "bytes": 11075,
+        "sha256": "e2e4a63304b9ce9b2e8be91fe2ca0c5b243726199135e0372be1591756add956"
+      },
+      "bootstrap_result": {
+        "bytes": 7261,
+        "sha256": "1f66165c8cd081ea99824dbbace5411a16f4df3db10c22961105776e1debeec3"
+      },
+      "guest_result": {
+        "bytes": 471201,
+        "sha256": "f36111c1aa59b3e084ab7de77fc765f55443a016b612e97c93459ed313239751"
+      },
+      "unit": {
+        "bytes": 462,
+        "sha256": "d0044950256832e78fd560f0c44c5130f3da35db1cc3b001a98264588f6ccd56",
+        "Type": "notify",
+        "KillMode": "mixed",
+        "ExecStop_source": ""
+      },
+      "runtime_consumer": {
+        "guest.py": {
+          "bytes": 66142,
+          "sha256": "1d47e57a65f2bd364da86c111b8023a3f6511d8ccda79466dfb3f6c1e245b4d4"
+        },
+        "systemd_units.py": {
+          "bytes": 21454,
+          "sha256": "631011f301ce3e5cf9a875919181cc2f95bf4e67f97dc7149c41714a92966e13"
+        }
+      },
+      "actual_owner_ELF": {
+        "bytes": 5527360,
+        "sha256": "fdf9714b5537ee932a69d3a12562a1b8c743529eb4a16ce2f7b9aef82c95240b"
+      },
+      "aggregate_pass": false,
+      "genuine_notify_active_running_observed": true,
+      "source_accepted_sequence": 1,
+      "source_sample_expiry_age_ms": 110.312815,
+      "manager_Stop_after_Source_loss": {
+        "command_exit": 0,
+        "matching_main_exit": 0,
+        "unit_Result": "success",
+        "retained_pidfd_dead": true,
+        "empty_exact_cgroup": true,
+        "request_to_final_status_ms": 35.039281,
+        "signal_syscall_observed": false,
+        "native_cleanup_inferred": false
+      },
+      "full_healthy_startup_and_manager_Stop_case_pass": false,
+      "closure": {
+        "direct_waits": 148,
+        "PIPE_EOFs": 155,
+        "separate_QMP_socket_EOF": 1,
+        "separate_native_RefUnit_UnrefUnit_returns": 8,
+        "all_original_cutoffs_and_source_input_CID_closure": true
+      },
+      "ARM_or_hardware_qualified": false,
+      "phone_accessed": false
+    }
+  ],
+  "full_goal_complete": false
+}

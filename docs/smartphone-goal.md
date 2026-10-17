@@ -27,15 +27,18 @@ remain open. See the [deployment result](native-normal-upstream-tracer.md#explic
 and [bounded Pixel graphics review](native-pixel-graphics-boundary.md).
 The first actual cold installed runs now fail before Sounds at the shell's
 unavailable Wayland endpoint. Native Rust [startup notification](native-session-startup-readiness.md)
-now passes actor and socket/process boundaries; installed PID1 readiness, cold
-shell behavior and separate unit Stop lifecycle remain required. Process closure in the second run does not qualify
+now passes actor and socket/process boundaries. Later PID1 epochs reach notify
+readiness, then fail Source freshness before shell connection. Full healthy cold
+startup remains required. Process closure in the second run does not qualify
 runtime success. See the [cold startup RED](native-normal-upstream-tracer.md#cold-installed-startup-fails-before-sounds).
 
 The [native SIGTERM Stop repair](native-session-signal-stop.md) passes actual
 production-owner shutdown before readiness and110 composed host regressions.
-Manager Stop, its exact unit configuration and cold full-shell behavior remain
-unqualified. The first notify-owner cold attempt stops on a queued-job observer
-error before any authenticated Source result; it is preserved as failed evidence.
+The selected unit now uses Main SIGTERM/KillMode=mixed, without redundant ExecStop.
+[Actual manager Stop after Source loss](native-session-manager-stop.md) records
+Main0/Resultsuccess/empty cgroup; the healthy full-shell/app case remains failed.
+The first notify-owner cold observer error stays separate from the two later
+authenticated Source-expiry failures.
 
 The [native graphics resource operations](native-render-exact-buffer.md) pass their matching normal AQ15 build, ten existing CPU groups and four API checks after missing-interface RED. Two real-driver runs observe all five resource groups passing, but both aggregates fail a control-session check; the diagnostic identifies revocation with a queued CHANGE. Production exact-buffer preparation/execution, normal frames, Source, ARM and phone gates remain open.
 

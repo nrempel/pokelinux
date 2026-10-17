@@ -29,14 +29,16 @@ compositor is frozen. These are individual VM measurements. The first
 [cold installed startup](docs/native-normal-upstream-tracer.md#cold-installed-startup-fails-before-sounds)
 now fails at the genuine shell's unavailable Wayland endpoint. Native Rust
 [startup notification](docs/native-session-startup-readiness.md) now passes actual
-actor and socket/process boundaries; installed PID1/cold-shell validation and the
-separate unit Stop correction remain open. [Native SIGTERM Stop](docs/native-session-signal-stop.md)
-now passes against the actual Rust owner before readiness, with Main exit0 and
-no adopted children; this does not qualify manager Stop or cold startup. The [explicit deployment
+actor and socket/process boundaries. Two later [cold PID1 checks](docs/native-session-manager-stop.md)
+reach notify readiness, then lose Source freshness before the shell can connect.
+The selected unit now signals the Rust owner with `KillMode=mixed`; actual manager
+Stop after Source loss exits cleanly. Healthy cold startup remains open.
+[Native SIGTERM Stop](docs/native-session-signal-stop.md) also passes before
+readiness, with Main exit0 and no adopted children. The [explicit deployment
 installer](docs/native-normal-upstream-tracer.md#explicit-installed-session-selection)
 now passes its frozen host RED→GREEN consumer with the unchanged205-file selected
-bundle. This qualifies staged bytes and modes; installed unit/Source/shell startup
-remains unproved.
+bundle. This qualifies staged bytes and modes; the complete installed
+Source/shell/Sounds path remains unproved.
 
 The [Rust ingress wake fix](docs/native-render-ingress-wake.md) passes its frozen RED→GREEN regression and all66 active Rust tests, with two ignored child modes, formatting, strict Clippy and release compilation. This repairs the experimental executor component; it establishes no normal compositor frame or phone behavior.
 

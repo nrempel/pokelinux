@@ -88,10 +88,12 @@ the subreaper must reap its compositor and storage children after parent-death
 SIGKILL. Actual child death is not graceful owner cleanup. The contract retains
 its failure, final ECHILD, all waits and exact container closure. The later [Rust signal
 Stop/drain correction](native-session-signal-stop.md) now passes its separate
-actual owner consumer; an actual unit Stop result remains required; the old strict
-native `--stop` behavior is unchanged in this readiness selection.
+actual owner consumer. Later [cold PID1 epochs](native-session-manager-stop.md)
+observe notify active/running followed by Source expiry, and clean manager Stop
+after that failure. The old strict native `--stop` behavior is unchanged in this
+readiness selection; the later unit removes the redundant ExecStop helper.
 
-Still open: installed PID1 readiness/Stop, genuine cold full shell and Sounds,
+Still open: sustained healthy installed startup/Stop, genuine cold full shell and Sounds,
 combined live themes and Messages, coherent ARM execution, rendering-stall
 availability, native display cleanup, and every Pixel hardware/carrier gate.
 No physical phone has been accessed.

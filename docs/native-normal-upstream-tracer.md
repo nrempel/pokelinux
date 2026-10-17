@@ -256,7 +256,9 @@ second run retains the before/after PID1 exit record, with no retry or replaceme
 and separates actual process retirement from operational unit status. The same
 cold success criteria still fail. These epochs contain no production startup or
 unit repair. The later [Rust readiness implementation](native-session-startup-readiness.md)
-is qualified separately at host actor/socket boundaries, with no cold PID1 pass.
+is qualified separately at host actor/socket boundaries. Later
+[cold PID1 epochs](native-session-manager-stop.md) now reach notify active/running
+and then fail Source expiry; they do not qualify the full cold path.
 
 The second run also confirms a distinct Stop defect: the native Stop client
 receives Ok and the owner's actual main process exits0, then the unit's configured
