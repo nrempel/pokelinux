@@ -2,8 +2,11 @@
 
 The later [shared appearance Rust client](native-appearance-rust-client.md)
 adds separately qualified policy and fresh joined normal host/default-Cargo/
-installed-QML checks. Earlier Sounds captures below retain their own source;
-no new Sounds GUI or ARM Qt execution is inherited.
+installed-QML checks. A later [current native ARM production CMake epoch](native-current-arm-apps.md)
+now builds and installs normal Sounds with the shared appearance Rust client,
+resolves its loader and passes the unchanged six-group C ABI consumer. Its normal
+main/window does not run. Earlier Sounds captures below retain their own source;
+no new Sounds GUI is inherited.
 
 The app-local Rust engine now owns direct and queued requests, outgoing packets,
 original deadlines, reply validation, pagination and the accepted UI model.
@@ -128,3 +131,17 @@ ARM integration and all physical-phone gates remain open.
 
 [Prepared-run provenance](evidence/native-sounds-rust-client-prepared-provenance.json)
 records this new source/binary, actual failure, corrected run, raw PCM and captures.
+
+## Current ARM providers and production app build
+
+The [current ARM result](native-current-arm-apps.md) separately closes the optimized
+Sounds Rust archive with451 AArch64 members and13 exact APIs, then a fresh native
+production CMake app/consumer build against Qt6.12. The normal app links one
+Sounds and one shared appearance archive, exposes13+11 APIs and passes native
+loader checks. The frozen six-group consumer and protected binary/desktop/QML
+installation pass alongside the separate Messages9 result. Current owner,
+launchers, audio and appearance services are also crossbuilt with empty production
+features; their target runtime is not executed. The first dual-app archive-audit
+timeout remains failed, without a production repair claim. Normal ARM main,
+window/audio routing, default ARM Cargo and the full running ARM cohort remain
+open.

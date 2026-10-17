@@ -4,8 +4,10 @@ The shared app-local appearance client now runs its policy in Rust. Formatting,
 strict Clippy, the counter regression, eight frozen C ABI groups and all29
 unchanged native Qt cases pass. Fresh full normal Sounds and Messages host builds
 also pass explicit/default-Cargo links, loader and installed-QML controls. The
-AArch64 result is an optimized Rust archive build; new ARM Qt/window/session
-execution remains open. A later [normal Messages Qt6.12 session](native-messages-appearance-rust-tracer.md)
+optimized AArch64 archive now also links through [fresh native ARM production
+CMake builds](native-current-arm-apps.md) of both normal apps, with protected
+installation and their nine/six C ABI groups passing. Both normal ARM mains,
+windows and full session execution remain open. A later [normal Messages Qt6.12 session](native-messages-appearance-rust-tracer.md)
 now also passes four visible groups with both Rust clients and original native
 captures; it supplies no current Sounds window or full shell proof.
 
@@ -72,9 +74,12 @@ normal QWindow/DPR and the app's numeric wait status remain unmeasured.
 
 The earlier [ARM CMake result](native-messages-rust-client.md#native-arm-production-cmake-build-and-installation)
 and [prepared Messages captures](native-messages-prepared-tracer.md) retain their
-pre-port appearance client. A new current ARM cohort must freshly build both
-normal apps with matching appearance/services/shell/Source inputs. ARM default
-Cargo, full installed ARM composition and cold startup remain open. This
+pre-port appearance client. Both current normal apps now have a separate
+[native ARM production CMake/install result](native-current-arm-apps.md), including
+matching app/shared archives and their frozen nine/six C ABI groups. It does not
+run either normal main or the appearance eight/Qt29 suites. Current services and
+launchers are separately crossbuilt, without target execution. ARM default Cargo,
+full running ARM composition and cold startup remain open. This
 Messages-only tracer supplies no new Sounds execution/window proof.
 
 Full font/settings/rendering fidelity, actual window/output/DPR/native capture,

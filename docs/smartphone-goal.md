@@ -50,8 +50,13 @@ checks pass. A [fresh normal Messages Qt6.12 session](native-messages-appearance
 now passes denial, granted authored history, live theme switching and revocation
 with both Rust engines, the same PID/window, four original native captures and
 native Stop/owned closure. Earlier ARM and visible results retain their pre-port
-client. Current Sounds GUI, full shell, new-port ARM composition, cold startup,
-direct normal QWindow/DPR and all phone gates remain open.
+client. A [fresh current dual-app ARM production CMake epoch](native-current-arm-apps.md)
+now builds and installs both normal apps with matching app/shared archives and
+passes frozen9/6 groups, native loader and five-file installation checks. Current
+Sounds-engine and production service/launcher ARM crossbuilds also close, without
+service runtime. Both normal ARM mains/windows, ARM default Cargo, current Sounds
+GUI, full running shell/service/Source composition, cold startup, direct normal
+QWindow/DPR and all phone gates remain open.
 
 Two additional [whole-compositor stall epochs](native-normal-upstream-tracer.md#compositor-freeze-expiry-and-stop)
 now qualify independent100ms Source-expiry withdrawal/quietness/refusal before

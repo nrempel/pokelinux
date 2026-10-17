@@ -49,5 +49,9 @@ this exact header/archive/adapter cohort separately.
 Closed qualification now passes formatting/strict Clippy, the counter unit, eight
 frozen C ABI groups and all29 native Qt cases. Fresh joined normal Sounds/Messages
 host builds, default Cargo and installed-QML controls pass separately. See the
-[report](../../docs/native-appearance-rust-client.md); ARM archives alone qualify
-no normal ARM Qt/window/session or physical device.
+[report](../../docs/native-appearance-rust-client.md). A fresh [current ARM
+CMake/install epoch](../../docs/native-current-arm-apps.md) now links this matching
+archive into both normal apps, checks native loaders and installation, and runs
+their frozen nine/six C ABI groups. It does not repeat appearance8/Qt29 or run
+either normal app main/window. ARM default Cargo, the full running ARM cohort
+and physical-device gates remain open.

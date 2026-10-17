@@ -57,8 +57,12 @@ cohort. The [shared appearance port](../docs/native-appearance-rust-client.md)
 separately qualifies fresh host full-app/default-Cargo/install checks. A
 [new prepared Messages session](../docs/native-messages-appearance-rust-tracer.md)
 now passes the same four visible groups with both Rust engines, one app/window
-and original native captures. Direct normal QWindow/DPR and the current ARM Qt
-cohort remain open. CMake compiles both public headers; it does not install an FFI SDK.
+and original native captures. A separate [current dual-app ARM CMake epoch](../docs/native-current-arm-apps.md)
+now builds and installs both normal apps with their matching app/shared archives,
+passes the frozen nine/six groups and resolves the native guest loaders. Both
+normal ARM mains/windows, default ARM Cargo and the complete running cohort remain
+open, as does direct normal QWindow/DPR. CMake compiles both public headers; it
+does not install an FFI SDK.
 
 Explicit provider selection, including cross builds, needs BOTH matching-target
 archive/SHA pairs (replace the paths and digests with the selected artifacts):

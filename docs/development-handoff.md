@@ -77,8 +77,16 @@ same four groups with both Rust engines, one PID/window, four original native
 captures and native Stop/owned closure. The closed review counts102 primary
 waits/109 PIPE EOFs plus one separate C ABI child wait. Numeric app exit and
 direct QWindow/DPR stay unmeasured. The required historical Sounds profile is
-inactive; no current Sounds GUI or full shell is qualified. A complete installed
-current ARM cohort remains next.
+inactive; no current Sounds GUI or full shell is qualified. Both current normal
+apps now separately pass [native ARM production CMake/install](native-current-arm-apps.md)
+with matching app/shared archives,23/24 normal APIs, unchanged Qt50, frozen9/6
+consumers and five protected files.36 guest waits/36 merged PIPE EOFs close;
+outer CLI, inspections and nested child wait stay separate. Current Sounds-engine
+and five production service/launcher ARM crossbuilds plus the separately featured
+seed are closed, without service target execution. Retain the failed archive
+`nm` timeout and archive-only10→30s correction; Root review was postlaunch.
+Both normal ARM mains/windows, ARM default Cargo and the complete running cohort
+remain next.
 Retain Qt presentation. Extra conservative parser-error
 classification refinements are parked; no exhaustive Qt equivalence is claimed.
 

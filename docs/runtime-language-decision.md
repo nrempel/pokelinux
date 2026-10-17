@@ -25,8 +25,8 @@ host application linking pass. Qt retains credentialed nonblocking socket I/O
 and QObject/QML presentation. The obsolete public queue ABI is removed.
 A fresh prepared native Qt6.12 run now qualifies this whole engine in all four
 GUI/audio groups, with eight PCM windows/192,000 measured frames. The earlier
-queue-only client retains its own evidence. Cold installed startup and ARM remain
-open. The [Messages engine](native-messages-rust-client.md) now also owns request,
+queue-only client retains its own evidence. Cold installed startup and ARM
+window/session integration remain open. The [Messages engine](native-messages-rust-client.md) now also owns request,
 parser/model, pagination, generation, scheduling and worker-lifetime policy in
 Rust. Nine frozen C ABI groups, actual Qt/worker controls, thirteen permanent
 CTest cases, default full-host linking and an ARM64 archive build pass. A later
@@ -45,7 +45,13 @@ credentialed socket I/O, descriptor/notifier retirement, timer delivery and
 QColor/QML conversion. Fresh host component/full-app/default-Cargo/install checks
 pass. A [new normal Messages Qt6.12 session](native-messages-appearance-rust-tracer.md)
 also passes all four visible groups with both Rust engines and owned closure.
-A current Sounds window, ARM Qt cohort and full shell/menu remain open.
+Both current normal apps now separately pass [native ARM production CMake
+build/install](native-current-arm-apps.md), their frozen nine/six C ABI groups,
+matching app/shared-appearance links and guest loader checks. Current Sounds
+engine and production service/launcher ARM crossbuilds also close, with service
+runtime still unexecuted. Both normal ARM mains/windows, ARM default Cargo,
+current Sounds GUI and the complete running ARM shell/service/Source cohort
+remain open. Upstream Qt/Hyprland/Aquamarine retain their existing C++ roles.
 
 The custom renderer experiment added substantial authored C++ scene, protocol
 and GPU integration. That work is now parked as component research. It is not

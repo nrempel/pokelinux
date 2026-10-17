@@ -1,0 +1,474 @@
+{
+  "schema": 1,
+  "scope": "Actual generic AArch64 guest production CMake build/install and native CPU consumers for both current app engines/shared Appearance engine. No normal main/window/default Cargo or phone claim.",
+  "actual_native_ARM_build_install_and_component_epoch_passed": true,
+  "compiled_source_public_base": "d896aa322a47161cbee9a9a708e189c4980661c6",
+  "later_documentation_bridge_base": "6cf1ca7216fb20fc9759e7739437be86207d8529",
+  "artifact_hashes": {
+    "FAILED-EPOCH-1.json": {
+      "bytes": 5661,
+      "sha256": "20d904bc793c7d5d1e8f3ea2936b6d6d133c977b89a3505b8905a844417c7aa6"
+    },
+    "PROVIDER.json": {
+      "bytes": 23215,
+      "sha256": "cd04db01270ea2ea589a0b835692c9eb4ec214cf8086078816635df107d12735"
+    },
+    "Root-postlaunch-review.json": {
+      "bytes": 728,
+      "sha256": "f35d407a1bc29fb8383414d609cfaab2cf49671d3490ce96a615e4c479daf618"
+    },
+    "SOURCE-BRIDGE.json": {
+      "bytes": 33813,
+      "sha256": "9aa49b5234403e3ae4796767a81a1e0e45a8a8770890ed0e4904f04c38cd966f"
+    },
+    "SOURCE.json": {
+      "bytes": 21004,
+      "sha256": "2377175012fdaf2205ee08be0906b561a5664d89a851d05ee19a887d7e6ee09e"
+    },
+    "command.json": {
+      "bytes": 1424,
+      "sha256": "08d1589f7091809c68fb90ddb129ac897f0e1eac0eaa246cae051c382c5f707e"
+    },
+    "execution.json": {
+      "bytes": 2932,
+      "sha256": "ea880d6abd119a07c971600cabf20e7b7e7764ac79fc16cfa5af474d721323cb"
+    },
+    "result.json": {
+      "bytes": 47875,
+      "sha256": "0ad1652f9cb5d060d43ff41ca45363d308fe079d12da2a178ec2306b78ce47ca"
+    },
+    "selection.json": {
+      "bytes": 32365,
+      "sha256": "8daaf3416441629e1672e83fa1109a18e0ee24be6900ced25bea2830d68425ae"
+    }
+  },
+  "independent_closed_review": {
+    "bytes": 7861,
+    "sha256": "b5197d1af62f41c402a8c01b1dbfbe04fd1f796f4cb8533f1c86525f80fa82cf"
+  },
+  "compiled_source_rows_verified": 73,
+  "selected_pins_verified": 114,
+  "external_pins_verified": 25,
+  "source_bridge": {
+    "all_selected_non_Markdown_bytes_match_documentation_base": true,
+    "README_differences": [
+      {
+        "path": "native-messages-ui/README.md",
+        "snapshot": {
+          "bytes": 5175,
+          "sha256": "9c5dcc22dbd48448f7b73d9b4680b70d876e2724a0cb8ac01128a32e4ad5537b"
+        },
+        "published_documentation_base": {
+          "bytes": 5394,
+          "sha256": "f8e1d9984f4bfd13e424e2c1d73953ba2a3cdd6beb87ce8fe0ff83e311167916"
+        },
+        "compiled": false
+      }
+    ],
+    "later_documentation_commit_not_tested_source_relabelled": true
+  },
+  "native_environment": {
+    "architecture": "aarch64",
+    "kernel": "7.1.6-1-aarch64-ARCH",
+    "Qt_version": "6.12.0",
+    "GNU_gxx_version": "16.1.1",
+    "CMake_version": "4.4.4",
+    "Ninja_version": "1.13.2",
+    "packages_before_after": [
+      353,
+      361
+    ],
+    "trusted_offline_additions": 8,
+    "original353_versions_unchanged": true,
+    "Qt_library_plugin_identities_before_after_unchanged": 50,
+    "Qt50_manifest_sha256": "db250aaf6f8c201bc291e0f20449aa6a143af5aa2d90ebde320ba72bb1e0129a"
+  },
+  "explicit_matching_Rust_archives": {
+    "Appearance": {
+      "bytes": 24830446,
+      "sha256": "1b760cf33b1a1cceb2a5b2f2f4e3914823e93e4ebe26c551b634297ad59286b9",
+      "strong_C_API_count": 11
+    },
+    "Messages": {
+      "bytes": 25003610,
+      "sha256": "c57aabc7a81eb728278ec9341d9540bfd50d9c9de7551c08a2fba093566217a1",
+      "strong_C_API_count": 12
+    },
+    "Sounds": {
+      "bytes": 24883312,
+      "sha256": "6b1df733e125b176ff4170a0b41384e9242797817958f405e8ebaa22bf9e9fa8",
+      "strong_C_API_count": 13
+    }
+  },
+  "normal_app_instrumented": false,
+  "normal_ELF_API_counts": {
+    "Messages": 23,
+    "Sounds": 24
+  },
+  "actual_one_app_archive_plus_one_Appearance_archive_each_normal_link": true,
+  "native_guest_ldd_r_passed": 4,
+  "AArch64_binaries": {
+    "messages-client-test": {
+      "bytes": 5903904,
+      "sha256": "2d886f7774320cf78b1cd86540aaba644bb73e71dbf4a9d4b25cb9fa3bd0ab2c",
+      "ELF_machine": 183
+    },
+    "pokelinux-messages": {
+      "bytes": 5943608,
+      "sha256": "c52b1355beaa037b85fdc0eb0effc2024af34c448c29793f60248198b252570e",
+      "ELF_machine": 183
+    },
+    "pokelinux-sounds": {
+      "bytes": 6443832,
+      "sha256": "66d95d3515948da829f8dae3ac61ae6027a605b8e7c2bc9020322289c76ee0e2",
+      "ELF_machine": 183
+    },
+    "sounds-client-test": {
+      "bytes": 6218336,
+      "sha256": "feff238175e4c6505ebd97102bf7acc4fa468eb1ac4ea9c6104770758643e4ac",
+      "ELF_machine": 183
+    }
+  },
+  "frozen_consumers": {
+    "Messages": {
+      "groups_passed": 9,
+      "source": {
+        "bytes": 24323,
+        "sha256": "c86382942c0226bd5a61bdb788a029f5642e4fc3858d6cf69fce1c7589818bb5"
+      },
+      "original_parent_cutoff_seconds": 20,
+      "stdout": {
+        "bytes": 669,
+        "sha256": "8cdb322e239b431e9d82e9dfdf96f2da79d80233f572747b58af9682742a601c"
+      },
+      "exact_stdout_rows": 11,
+      "exact_PASS_rows": 10,
+      "actual_nested_child_wait_exit": 0
+    },
+    "Sounds": {
+      "groups_passed": 6,
+      "source": {
+        "bytes": 22547,
+        "sha256": "e7b32b84871165d3ffaab6a8b1f2362f090eec8a5f9577c255c71636d64c887b"
+      },
+      "original_parent_cutoff_seconds": 8,
+      "stdout": {
+        "bytes": 533,
+        "sha256": "eedfda5b24820885f4e01d0b462c58c1f276f60588dd37c1f801994e9e950c4a"
+      },
+      "native_result_reports_are_authored_CPU_facts": true
+    },
+    "DNDEBUG_then_UNDEBUG_assertions_enabled": true,
+    "Qt_window_audio_and_thread_join_qualification": false
+  },
+  "actual_installed_five_files": {
+    "/usr/libexec/pokelinux/pokelinux-messages": {
+      "bytes": 5943608,
+      "gid": 0,
+      "mode": "0755",
+      "sha256": "c52b1355beaa037b85fdc0eb0effc2024af34c448c29793f60248198b252570e",
+      "uid": 0
+    },
+    "/usr/libexec/pokelinux/pokelinux-sounds": {
+      "bytes": 6443832,
+      "gid": 0,
+      "mode": "0755",
+      "sha256": "66d95d3515948da829f8dae3ac61ae6027a605b8e7c2bc9020322289c76ee0e2",
+      "uid": 0
+    },
+    "/usr/share/applications/org.omarchy.Messages.desktop": {
+      "bytes": 299,
+      "gid": 0,
+      "mode": "0644",
+      "sha256": "e77cba1df72466dc1a6f601aaa46ff0fd35686e545691cbe6001ad457ad5051a",
+      "uid": 0
+    },
+    "/usr/share/applications/org.omarchy.Sounds.desktop": {
+      "bytes": 261,
+      "gid": 0,
+      "mode": "0644",
+      "sha256": "42f4157e5edae04d0c57a8311cf2abeda518d395ca3ef2206f63216d54d03e1d",
+      "uid": 0
+    },
+    "/usr/share/pokelinux/appearance/PhoneAppearance.qml": {
+      "bytes": 1954,
+      "gid": 0,
+      "mode": "0644",
+      "sha256": "705ab25799cba18095a76f4fb47e70eb10099ca035426d7e4400fa9cef8452bc",
+      "uid": 0
+    }
+  },
+  "six_arguments_and_UIDs_source_binding_only": {
+    "Messages": {
+      "compiled_main_sha256": "fd0bd9f42af7e24759c4d70cadca5e8acc8b091334710047179ac053f11f225d",
+      "arguments": 6,
+      "UID": 11010
+    },
+    "Sounds": {
+      "compiled_main_sha256": "0ac78083b40d688dca5b3c771ff6338c25c100f9aedf74fdfb8957dfc5cd0f2a",
+      "arguments": 6,
+      "UID": 11042
+    }
+  },
+  "closure": {
+    "compiler_descendant_direct_waits_claimed": false,
+    "guest_actual_direct_waits": 36,
+    "guest_actual_merged_PIPE_EOFs": 36,
+    "inspection_PIPE_EOFs_claimed": false,
+    "nested_additional_PIPE_EOFs": 0,
+    "outer_Docker_CLI_actual_waits": 1,
+    "outer_console_regular_not_PIPE_EOF": true,
+    "same_exact_CID_absent_daemon_inputs_original_cutoffs_closed": true,
+    "separate_nested_CABI_actual_child_waits": 1,
+    "separate_recorded_inspection_CLI_waits": 2
+  },
+  "original_limits_seconds": {
+    "all_package_build_install_component_work": 720,
+    "guest_close": 724,
+    "QEMU": 840,
+    "outer": 900,
+    "archive_nm": 30,
+    "normal_ELF_nm": 10
+  },
+  "frozen_preparation_flags_preserved_not_rewritten": true,
+  "preserved_first_failed_epoch": {
+    "aggregate_passed": false,
+    "selection": {
+      "bytes": 29995,
+      "sha256": "1c5a88c4e6fb62ae2aa57f6f1acb78b7a930bdc2cddee9e738cc159fa560bc78"
+    },
+    "execution": {
+      "bytes": 2934,
+      "sha256": "6ea957fae3762091956c0a7844bd2a3eeddd846880e3eb3cdd7c868b0e9f691b"
+    },
+    "guest_result": {
+      "bytes": 32515,
+      "sha256": "d0419a83b74b6e1b9c8c4db3d64f1b60f35ba4e10e1698e7cd57fe6deedca543"
+    },
+    "failure": "Messages archive-symbol audit exceeds original10s wait cutoff and receives TERM; late wait/EOF remains failure.",
+    "successor_only_runtime_source_change": "Three archive nm initial bounds10 to30 seconds; normal ELF nm stays10 seconds.",
+    "feature_RED_or_production_repair_claimed": false,
+    "earlier_intermediate_passes_inherited": false,
+    "overlay_reused": false
+  },
+  "Root_source_capacity_review": {
+    "timing": "postlaunch only; not a completed prelaunch guard",
+    "receipt": {
+      "bytes": 728,
+      "sha256": "f35d407a1bc29fb8383414d609cfaab2cf49671d3490ce96a615e4c479daf618"
+    }
+  },
+  "separate_closed_Rust_crossproviders": {
+    "schema": 1,
+    "scope": "Closed AArch64 crossbuild providers only. No native ARM loader resolution, service runtime, full normal app link, GUI or phone qualification.",
+    "actual_crossbuilds_passed": true,
+    "source_public_base": "d896aa322a47161cbee9a9a708e189c4980661c6",
+    "independent_closed_review": {
+      "bytes": 10754,
+      "sha256": "360ae65813f3ca80145f6405e1bbff9f9b74c7e5936dbe9b4e73b9440e866a30"
+    },
+    "distinct_committed_source_blobs_verified": 175,
+    "providers": {
+      "Sounds": {
+        "archive": {
+          "bytes": 24883312,
+          "sha256": "6b1df733e125b176ff4170a0b41384e9242797817958f405e8ebaa22bf9e9fa8"
+        },
+        "header": {
+          "bytes": 5092,
+          "sha256": "582f0f8286de6cd08d8b3c3b48335632d57f91e763e0a2ddd6becb2d1e234898"
+        },
+        "ELF_members": 451,
+        "ELF_machine": 183,
+        "strong_public_C_API": [
+          "pr_sounds_client_choose_v1",
+          "pr_sounds_client_connected_v1",
+          "pr_sounds_client_disconnected_v1",
+          "pr_sounds_client_free_v1",
+          "pr_sounds_client_new_v1",
+          "pr_sounds_client_prepare_v1",
+          "pr_sounds_client_reconnect_v1",
+          "pr_sounds_client_refresh_v1",
+          "pr_sounds_client_reply_v1",
+          "pr_sounds_client_sent_v1",
+          "pr_sounds_client_start_v1",
+          "pr_sounds_client_tick_v1",
+          "pr_sounds_client_view_v1"
+        ],
+        "actual_Cargo_features": [],
+        "actual_Cargo_profile": {
+          "debug_assertions": false,
+          "debuginfo": 0,
+          "opt_level": "3",
+          "overflow_checks": false,
+          "test": false
+        },
+        "source_rows": 13,
+        "qualification": {
+          "bytes": 2195,
+          "sha256": "8ce09795cae82f954bf90570c6d17c5af88806baa0c1c0a6e0d3a562329fb71c"
+        },
+        "source_manifest": {
+          "bytes": 1793,
+          "sha256": "210c047ca4eea9e03ae5650a2d63f5a908ea070c643464be7b8e1a2411dc1e20"
+        },
+        "selection": {
+          "bytes": 2201,
+          "sha256": "6bed17145e9fe00f7b7183b0e54ed9cb70e2ed0df4cdae2781686cb9561dbf49"
+        },
+        "execution": {
+          "bytes": 17926,
+          "sha256": "7da3850b2c662f325b1113da4f977cbd91119ca4fe4e0db1a1a4400922439f97"
+        },
+        "host_waits": 10,
+        "host_PIPE_EOFs": 20,
+        "foreground_shell_regular_log_waits": 7
+      },
+      "services_and_seed": {
+        "source_rows": 166,
+        "qualification": {
+          "bytes": 5950,
+          "sha256": "0e8cdac60645c732fa549a3608d00a50986f66db90162315d5effa83a57d2564"
+        },
+        "source_manifest": {
+          "bytes": 19354,
+          "sha256": "ec60a2c1a175633e3becc61bf5ac7e227597862d1ccc16f1612c54b31c13708c"
+        },
+        "selection": {
+          "bytes": 19363,
+          "sha256": "c3f6817be4e2e7c842db08011a5481fbfdd2216c1a9867acfb5971f0bbc08b87"
+        },
+        "execution": {
+          "bytes": 54779,
+          "sha256": "6a0505b15fdcb45c2d07be7db6dfccdd31bf1e2873f650a0e5c7dbbd12705448"
+        },
+        "host_waits": 10,
+        "host_PIPE_EOFs": 20,
+        "foreground_shell_regular_log_waits": 27,
+        "ELFs": {
+          "messages-launch": {
+            "bytes": 899432,
+            "sha256": "d0bea10efa808e6a8ac681f098a5176e3118d56380ae178c8c873b6857bb5559",
+            "ELF_machine": 183,
+            "actual_Cargo_features": [],
+            "actual_Cargo_profile": {
+              "debug_assertions": false,
+              "debuginfo": 0,
+              "opt_level": "3",
+              "overflow_checks": false,
+              "test": false
+            },
+            "Clippy_exit0_recorded": true,
+            "role": "production default-equivalent empty-feature service/fixed launcher"
+          },
+          "messages-seed-fixture": {
+            "bytes": 2671552,
+            "sha256": "8eeaac4f6930ac26c4c8578cdfd58cacf671bb418875b708e1154d389c1f6944",
+            "ELF_machine": 183,
+            "actual_Cargo_features": [
+              "isolated-fixture"
+            ],
+            "actual_Cargo_profile": {
+              "debug_assertions": false,
+              "debuginfo": 0,
+              "opt_level": "3",
+              "overflow_checks": false,
+              "test": false
+            },
+            "Clippy_exit0_recorded": true,
+            "role": "isolated pre-start local-history seed only"
+          },
+          "pokelinux-appearance": {
+            "bytes": 921536,
+            "sha256": "20300230ebee4a5c11aa37c8d357ed4769161f75ce51b99637a06938458baef2",
+            "ELF_machine": 183,
+            "actual_Cargo_features": [],
+            "actual_Cargo_profile": {
+              "debug_assertions": false,
+              "debuginfo": 0,
+              "opt_level": "3",
+              "overflow_checks": false,
+              "test": false
+            },
+            "Clippy_exit0_recorded": true,
+            "role": "production default-equivalent empty-feature service/fixed launcher"
+          },
+          "pokelinux-audio": {
+            "bytes": 1245896,
+            "sha256": "c4a33c45377194d75d8e7af40360f4be62992690cf908cc6d1498303def49306",
+            "ELF_machine": 183,
+            "actual_Cargo_features": [],
+            "actual_Cargo_profile": {
+              "debug_assertions": false,
+              "debuginfo": 0,
+              "opt_level": "3",
+              "overflow_checks": false,
+              "test": false
+            },
+            "Clippy_exit0_recorded": true,
+            "role": "production default-equivalent empty-feature service/fixed launcher"
+          },
+          "pokelinux-session-owner": {
+            "bytes": 5338040,
+            "sha256": "c816f5da98dcb583dad0292fd606bdcf6bbc273f7ac5b4dba72277a728ce3f18",
+            "ELF_machine": 183,
+            "actual_Cargo_features": [],
+            "actual_Cargo_profile": {
+              "debug_assertions": false,
+              "debuginfo": 0,
+              "opt_level": "3",
+              "overflow_checks": false,
+              "test": false
+            },
+            "Clippy_exit0_recorded": true,
+            "role": "production default-equivalent empty-feature service/fixed launcher"
+          },
+          "sounds-launch": {
+            "bytes": 899048,
+            "sha256": "8bab48ee8f58581f82b07244b9a46ea1d61a01dd9008df884c6049fb54fef42c",
+            "ELF_machine": 183,
+            "actual_Cargo_features": [],
+            "actual_Cargo_profile": {
+              "debug_assertions": false,
+              "debuginfo": 0,
+              "opt_level": "3",
+              "overflow_checks": false,
+              "test": false
+            },
+            "Clippy_exit0_recorded": true,
+            "role": "production default-equivalent empty-feature service/fixed launcher"
+          }
+        },
+        "production_feature_policy": "Five production services/fixed launchers have actual empty feature sets and no nonempty manifest default; isolated-fixture appears only on the separate pre-start seed."
+      }
+    },
+    "primary_host_waits": 20,
+    "primary_host_PIPE_EOFs": 40,
+    "foreground_shell_waits_with_regular_logs": 34,
+    "foreground_regular_logs_are_not_PIPE_EOFs": true,
+    "all_original_cutoffs_exact_CID_same_daemon_and_source_closure_passed": true,
+    "ARM_dynamic_loader_resolution_qualified": false,
+    "ARM_runtime_qualified": false,
+    "normal_app_link_or_GUI_qualified": false,
+    "physical_phone_accessed": false
+  },
+  "not_repeated_in_this_epoch": [
+    "appearance8 C ABI",
+    "Qt29 appearance/socket cases",
+    "Messages old7 workers",
+    "Messages order5",
+    "audio routing and service fixtures"
+  ],
+  "open_or_unqualified": [
+    "both normal ARM mains and windows",
+    "UID11010/11042 successful normal runtime admission",
+    "ARM default Cargo",
+    "crossbuilt service runtime and loader closure",
+    "current full ARM shell/service/Source composition",
+    "current Sounds GUI",
+    "cold startup",
+    "physical Pixel hardware",
+    "modem SMS receive/send and carrier",
+    "suspend and native display cleanup"
+  ]
+}

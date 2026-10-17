@@ -24,14 +24,21 @@ ctest --test-dir /tmp/pokelinux-sounds-build --output-on-failure -R 'audio-clien
 CMake invokes locked offline Cargo on every build so Cargo tracks transitive path
 dependencies. An existing archive requires both `POKELINUX_SOUNDS_CLIENT_ARCHIVE`
 and its actual `POKELINUX_SOUNDS_CLIENT_ARCHIVE_SHA256`. Cross compilation requires
-that explicit archive built for the matching target. The obsolete queue-only
-header/functions are removed; there is no compatibility alias.
+that explicit archive built for the matching target. The normal app also needs
+`POKELINUX_APPEARANCE_CLIENT_ARCHIVE` and its
+`POKELINUX_APPEARANCE_CLIENT_ARCHIVE_SHA256` for the same cross target. The obsolete
+queue-only header/functions are removed; there is no compatibility alias.
 
 The permanent byte-identical independent six-group C++ consumer exercises the
 actual C ABI and clock, with assertions active in Release via target-only
 `-UNDEBUG`. The unchanged30-case Qt suite retains real socket/credential checks.
 See [the component record](../../docs/native-sounds-rust-client.md) for actual
 source/link/loader checks and the fresh whole-engine prepared GUI/PCM pass with
-192,000 measured frames. Installed cold startup, ARM and phone gates remain open.
+192,000 measured frames. A later [current ARM build/install epoch](../../docs/native-current-arm-apps.md)
+passes the optimized engine crossbuild, native production CMake app/consumer link,
+six groups, loader and protected installation with the shared appearance Rust
+client. The normal ARM main/window and audio routing are not run. ARM default
+Cargo, the full running ARM cohort, installed cold startup and phone gates remain
+open.
 Historical queue-only results remain in their
 [original record](../../docs/native-sounds-rust-queue.md).

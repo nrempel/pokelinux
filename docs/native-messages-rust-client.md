@@ -136,12 +136,26 @@ ordering controls retain their separate manual ARM result. See the new
 
 ## Prepared normal x86 window
 
-A later fresh Qt6.12 production CMake build now passes the normal UID11010
+An earlier fresh Qt6.12 production CMake build passes the normal UID11010
 window through denial, granted authored history, original Omarchy live dark/light
-themes and revoked-list clearing. One app/window is retained; native Stop and
-owned closure pass. Root reviewed all four unmodified Pixel10-sized captures.
-See the [prepared GUI report](native-messages-prepared-tracer.md); its external
-window/output measurements do not claim direct normal QWindow/DPR values.
+themes and revoked-list clearing. Its [prepared GUI report](native-messages-prepared-tracer.md)
+retains the pre-port appearance client. A later [current session](native-messages-appearance-rust-tracer.md)
+passes the same four groups with both Rust clients and four new original native
+captures. One app/window and native Stop/owned closure pass; direct normal
+QWindow/DPR remains open.
+
+## Current dual-app ARM build and installation
+
+A separate [fresh native ARM production CMake epoch](native-current-arm-apps.md)
+now builds and installs both current normal apps with the shared appearance Rust
+client. Messages exposes12+11 strong APIs and its unchanged nine-group consumer
+passes; Sounds independently exposes13+11 and passes its six groups. All50 Qt
+identities and the original353 package versions remain unchanged after eight
+trusted tools. Both app/consumer loader checks and five protected installed files
+pass.36 guest waits/36 merged PIPE EOFs close, with one separate C ABI child wait.
+The first archive-audit timeout remains failed; its bound-only correction changes
+no production behavior. Neither normal ARM main runs, and default ARM Cargo is
+not selected.
 
 ## Remaining integration gates
 
@@ -154,6 +168,7 @@ session; no phone, vendor modem,
 continuous incoming/SMS send, notifications/wake or carrier result is claimed.
 The [shared appearance client](native-appearance-rust-client.md) now has Rust
 policy with separately qualified host component/full-app/default-Cargo/install
-checks. The ARM builds and prepared GUI above retain their pre-port appearance
-cohorts; new-port ARM Qt and visible-session proof remain open. Upstream
-Qt/Hyprland/Aquamarine remain substantial C++ dependencies.
+checks. Earlier ARM/GUI records retain their pre-port appearance cohorts. The
+current dual-app ARM build/install and current x86 Messages window now pass
+separately; ARM mains/windows and complete running composition remain open.
+Upstream Qt/Hyprland/Aquamarine remain substantial C++ dependencies.
