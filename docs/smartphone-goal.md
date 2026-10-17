@@ -1,5 +1,7 @@
 # Omarchy smartphone goal
 
+The [retained CPU surface-content checkpoint](native-render-surface-content.md) now passes unchanged-consumer five-group C++/Rust integration after actual geometry RED. Source extent uses retained Rust pixels after producer overwrite/unmap/close; no-attach identity, transforms, detach/replacement and independent clones pass. The two-file patch changes CPU geometry only; core GL capture/upload, normal Wayland frames, Source7 and phone gates remain open.
+
 The latest [initial broker batch checkpoint](native-render-initial-batch.md) now passes real seatd/udev/virtio descriptor capture after actual structural compile RED and a matching native AQ15 build. Rust capture precedes queue admission and pending-duplicate closure; original service leases stay retained. Normal main/worker startup, Source7 and all physical-phone requirements remain open.
 
 The [owned startup checkpoint](native-render-owned-startup.md) now passes the same two failed-startup child-retention cases after qualified native RED. A production AQ dependency patch retains the selected child and all preexisting resource identities through both injected failures; matching AQ/main SDK builds pass. Each case records zero child destructors and valid weak metadata. Startup still fails, Ready stays false and join stays Busy and native shutdown stays Pending. Earlier failures remain preserved; nested factories, normal readiness, retirement, Source and phone gates stay open.

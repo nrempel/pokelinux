@@ -1,5 +1,7 @@
 # Rust-owned immutable SHM import
 
+The [retained CPU surface-content checkpoint](native-render-surface-content.md) now passes unchanged-consumer five-group C++/Rust integration after actual geometry RED. Source extent uses retained Rust pixels after producer overwrite/unmap/close; no-attach identity, transforms, detach/replacement and independent clones pass. The two-file patch changes CPU geometry only; core GL capture/upload, normal Wayland frames, Source7 and phone gates remain open.
+
 The original [`native-render`](../native-render/README.md) library and
 [connected compositor patch](../tools/native-render-import/README.md) now compile
 as one native x86 Hyprland cohort. A real C++→Rust integration helper also runs

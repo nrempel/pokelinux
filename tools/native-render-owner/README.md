@@ -230,3 +230,12 @@ destructors, no expired weak identities and matching preexisting metadata. Start
 still fails with Ready false, native error 9 and retained Busy/Pending ownership.
 Prior failed builds/epochs and native RED remain preserved. This does not qualify
 nested factories, normal readiness/rendering, retirement, Source, ARM or phone.
+
+## Retained CPU surface content
+
+The [two-file content patch and frozen consumers](content/README.md) now pass
+actual original-code geometry RED to unchanged five-group C++/Rust GREEN. It
+qualifies retained CPU content and geometry, with separate declaration checks;
+normal compositor/Wayland rendering, worker output, Source and hardware remain
+open. The [report](../../docs/native-render-surface-content.md) records exact
+scope and preserved setup failures.

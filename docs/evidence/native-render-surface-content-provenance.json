@@ -1,0 +1,252 @@
+{
+  "actual_guest_architecture": "x86_64",
+  "actual_guest_kernel": "7.2.9-arch1-1",
+  "evidence_class": "original_Cpp_Rust_component_native_x86_KVM",
+  "frozen_classifier": {
+    "bytes": 2665,
+    "sha256": "410c7e6e82cd6ffe450ffe4c603c082eb0c9f9a2dcee2a642806796437e78696"
+  },
+  "frozen_consumer": {
+    "bytes": 10867,
+    "sha256": "16f7aaec47daf5e913608867f0e68f77501dfe8f06435c5074fc1ed14e5ad3b3"
+  },
+  "functional": {
+    "GREEN": {
+      "ELF": {
+        "bytes": 4625784,
+        "sha256": "f7941863a36aa3a76093c7903a57dad7c4da9943d6500935dc05867022afef40"
+      },
+      "PIPE_EOFs": 52,
+      "QMP_socket_EOF_separate": true,
+      "Root_qualification": {
+        "bytes": 2838,
+        "sha256": "eeaeaf034d214269febbdf323111d41e838c5a987466c49dde93e1c1a3e61f01"
+      },
+      "actual_compiled_objects": 8,
+      "actual_rows": [
+        "CPU_CONTENT_PASS empty_zero",
+        "CPU_CONTENT_PREREQUISITES_PASS actual_Rust_snapshot=true client_buffer_absent=true producer_overwritten_unmapped_closed=true width=5 height=3 stride=32 retained_bytes=96",
+        "CPU_CONTENT_PASS retained_shm_geometry_and_producer_disposal",
+        "CPU_CONTENT_PASS no_attach_update_and_pending_reset",
+        "CPU_CONTENT_PASS viewport_rotation_scale_geometry",
+        "CPU_CONTENT_PASS attach_null_fresh_import_and_current_reset",
+        "CPU_CONTENT_ALL_PASS groups=5"
+      ],
+      "all_original_cutoffs_input_locks_QMP_and_same_daemon_CID_absence_qualified": true,
+      "command": {
+        "bytes": 1308,
+        "sha256": "59e189915c2066f317ee1e30df35d249ea1dd1f8dbbbc9ff1aa2552242593c5d"
+      },
+      "component": {
+        "bytes": 180952,
+        "sha256": "9d6b4b7dfd1d7cdbcdc38aea1e3a2e961139741e3034215bb062793054bad273"
+      },
+      "direct_waits": 45,
+      "execution": {
+        "bytes": 12293,
+        "sha256": "f020acdfdd66da2ad6be31164aa4c317a716f52b32554ee1a5d4947498ec539c"
+      },
+      "link_map": {
+        "bytes": 1808664,
+        "sha256": "3726b32813df2558de7edd41b3bb676e0be14c19e538c62a99c0c248138493b1"
+      },
+      "program_deadline_ns": 5000000000,
+      "program_exit": 0,
+      "selection": {
+        "bytes": 109582,
+        "sha256": "1d8f714d5eed945ebf60d8ee0064dd7c6370686634d381d27a7dcfce1e78e67b"
+      }
+    },
+    "RED": {
+      "ELF": {
+        "bytes": 4625720,
+        "sha256": "e2ae50fa64f157f3b0c7846996ebadafa3181afa472812b85184351252450bdb"
+      },
+      "PIPE_EOFs": 52,
+      "QMP_socket_EOF_separate": true,
+      "Root_qualification": {
+        "bytes": 1618,
+        "sha256": "863abc4c8b555c2c0ffa92f71b093fcaf07e2b8e585b97f2d8b94e4e4ef47292"
+      },
+      "actual_compiled_objects": 8,
+      "actual_rows": [
+        "CPU_CONTENT_PASS empty_zero",
+        "CPU_CONTENT_PREREQUISITES_PASS actual_Rust_snapshot=true client_buffer_absent=true producer_overwritten_unmapped_closed=true width=5 height=3 stride=32 retained_bytes=96",
+        "CPU_CONTENT_GEOMETRY name=retained_shm_geometry expected=5,3 actual=0,0",
+        "CPU_CONTENT_FAIL retained_shm_geometry"
+      ],
+      "all_original_cutoffs_input_locks_QMP_and_same_daemon_CID_absence_qualified": true,
+      "command": {
+        "bytes": 1302,
+        "sha256": "956f86fdc602512f55a0584fc3b23fd0fa3894cf4af5fd8b41e1cac555cfaab6"
+      },
+      "component": {
+        "bytes": 180187,
+        "sha256": "dffd5ec6237500e1dda23a9e38991faa3f25b84ede6a940d5ab3ceae3c92c468"
+      },
+      "direct_waits": 45,
+      "execution": {
+        "bytes": 12178,
+        "sha256": "7a6b62905e88e8bffd94934fa3333f627e4a2285825babdde468ca5e7a0382e8"
+      },
+      "link_map": {
+        "bytes": 1808400,
+        "sha256": "18aac23985cfacef83e56b37018aee9619c8ad047b5838c0be07afa668529a5e"
+      },
+      "program_deadline_ns": 5000000000,
+      "program_exit": 1,
+      "selection": {
+        "bytes": 106755,
+        "sha256": "976b4231858d1ef3c081b3ab4a434fd6aab7d210081f5da1cddf3eb455298b7b"
+      }
+    }
+  },
+  "hardware_models_qualified": 0,
+  "original_SDK": {
+    "bytes": 4700160,
+    "sha256": "9a31e800bd4b7bc1e3eccf7089cdbce181cfe3a57d4446eab8a43b240bde9893"
+  },
+  "physical_phone_accessed": false,
+  "preserved_setup_failures": [
+    {
+      "attempt": 1,
+      "classification": "UNQUALIFIED_SETUP",
+      "component": {
+        "bytes": 27144,
+        "sha256": "39585bf80c57310f565552e0269565c6135c80c8dcffe6fe24bb396fa9141c64"
+      },
+      "execution": {
+        "bytes": 12141,
+        "sha256": "0aec373b101239a0c4668684a54127e0eb3a6ef7908fa49b92067ce373af649e"
+      },
+      "reason": "consumer Vector2D constructor ambiguity",
+      "semantic_RED": false
+    },
+    {
+      "attempt": 2,
+      "classification": "UNQUALIFIED_SETUP",
+      "component": {
+        "bytes": 81935,
+        "sha256": "be94cfb012cb35afdd9795c19c6a0e0fd476b49f151335ebcbcf18e6dcdd893f"
+      },
+      "execution": {
+        "bytes": 12141,
+        "sha256": "2fce73d727b84f9fd396f9008d65b43dccc344b9459f748738b26bd8945f234e"
+      },
+      "reason": "missing genuine logger and colour link definitions",
+      "semantic_RED": false
+    },
+    {
+      "attempt": 3,
+      "classification": "UNQUALIFIED_SETUP",
+      "component": {
+        "bytes": 99743,
+        "sha256": "41895b255d86a1dfab67d94ff98128425d78afbc187f6d82c4b285409ce15d39"
+      },
+      "execution": {
+        "bytes": 12199,
+        "sha256": "ce3ce002717044da122de5009ac8cea83080d4c18b223163a0fb194015ec9c8d"
+      },
+      "reason": "logger compiled without its original unused-result setting",
+      "semantic_RED": false
+    },
+    {
+      "attempt": 4,
+      "classification": "UNQUALIFIED_SETUP",
+      "component": {
+        "bytes": 134453,
+        "sha256": "12c1f69447b4ff96423333d05edd3797b35397bd86b6802d4390bd94de8f6000"
+      },
+      "execution": {
+        "bytes": 12200,
+        "sha256": "e70502d07baf3d85dd3b18eb597f17d5fbb7b8bd4f68d8d63600b6c5b0a50ef8"
+      },
+      "reason": "colour compiled without its original narrowing setting",
+      "semantic_RED": false
+    }
+  ],
+  "production_patch": {
+    "bytes": 1106,
+    "path": "tools/native-render-owner/content/surface-state.patch",
+    "sha256": "129efc9ab69a61d80997fb39fdedd2d36e8ebab3f54c38f49ae37171f8421caf"
+  },
+  "public_parent": "382d3ff506e97bda1124b83e80274cb965a02b66",
+  "raw_private_receipts_or_binaries_published": false,
+  "remaining": {
+    "CPU_managers_monitor_scene_assets_cursor_and_native_worker_output": true,
+    "core_commit_CPU_capture_and_real_Wayland_client": true,
+    "current_ARM_matched_Google_kernel_and_phone_carrier_gates": true,
+    "full_matching_main_SDK_rebuild": true,
+    "genuine_native_readiness_and_StopRetire_drain": true,
+    "unchanged_Source7_and_normal_Sounds_PCM_Messages": true
+  },
+  "repaired_header_overlay": {
+    "candidate_header": {
+      "bytes": 4546,
+      "sha256": "2ad8eede01393e934d21921a8ce2ab5b448588b5ad6049e8498d48da343040bf"
+    },
+    "only_header_overlay": "usr/include/hyprland/src/protocols/types/SurfaceState.hpp",
+    "original_authenticated_header": {
+      "bytes": 4335,
+      "sha256": "f9ddb67da492ae5f7e18ba4608caddb607107605ba9b17f47c615e4723e203c7"
+    },
+    "original_full_SDK_authenticated_before_overlay": true
+  },
+  "schema": 1,
+  "scope": "Actual original-code CPU surface content RED to unchanged five-group GREEN in disposable native x86 KVM guests; declaration syntax checks remain separate. No production compositor or Wayland protocol executes in these component epochs.",
+  "sole_Rust_archive": {
+    "bytes": 22901236,
+    "sha256": "246a6680b7f9ed8affd89bd9b022319a0903f5ebc58f03d7d76eaa85f8653311"
+  },
+  "source_cohort": {
+    "bytes": 15734,
+    "path": "tools/native-render-owner/content/source-cohort.json",
+    "sha256": "7b3097f508e8af4e75bab3808a9e0aa92e9366171c71c00b7dce1443db35909e"
+  },
+  "syntax": {
+    "GREEN": {
+      "PIPE_EOFs": 37,
+      "Root_qualification": {
+        "bytes": 1409,
+        "sha256": "f48ffd151ed64f88b0db7a36e945c816eeb5bb01b89ba3d0447d2ac0cfe82668"
+      },
+      "body_execution": false,
+      "component": {
+        "bytes": 65737,
+        "sha256": "404581bf70507b7835401055933f1931992287ba1942b400ff5861247cf5afde"
+      },
+      "control_diagnostic_bytes": 0,
+      "control_exit": 0,
+      "direct_waits": 30,
+      "execution": {
+        "bytes": 12002,
+        "sha256": "2e2926e67473eb595a1ddd0f77fea5e1703a3f7c55565a976849c6284f9697be"
+      },
+      "same_private_SDK_headers": 96,
+      "target_diagnostics": 0,
+      "target_exit": 0
+    },
+    "RED": {
+      "PIPE_EOFs": 37,
+      "Root_qualification": {
+        "bytes": 1568,
+        "sha256": "fd56d9a3953df3cd09a5711663639d534a99d0fba042fa6d54997fdcb8d433ee"
+      },
+      "body_execution": false,
+      "component": {
+        "bytes": 65346,
+        "sha256": "f76177e116bc13de1e60bb7c304aa0207e978c90f48fe7562307b5b9c6d79a97"
+      },
+      "control_diagnostic_bytes": 0,
+      "control_exit": 0,
+      "direct_waits": 30,
+      "execution": {
+        "bytes": 11967,
+        "sha256": "020b2bcdce0b472cf050cbf2157a5e7ecb20274781b13973c2d6b8fb5f729757"
+      },
+      "same_private_SDK_headers": 96,
+      "target_diagnostics": 2,
+      "target_exit": 1
+    }
+  }
+}

@@ -1,0 +1,32 @@
+--- a/src/protocols/types/SurfaceState.cpp
++++ b/src/protocols/types/SurfaceState.cpp
+@@ -9,8 +9,16 @@
+ #include <utility>
+ #include <hyprgraphics/egl/Egl.hpp>
+ 
++bool SSurfaceState::hasContent() const noexcept {
++    if (rejected)
++        return false;
++    const auto view = shmSnapshot.view();
++    return view && view->description.width > 0 && view->description.height > 0 &&
++        view->description.width == bufferSize.x && view->description.height == bufferSize.y;
++}
++
+ Vector2D SSurfaceState::sourceSize() {
+-    if UNLIKELY (!texture)
++    if UNLIKELY (!hasContent())
+         return {};
+ 
+     if UNLIKELY (viewport.hasSource)
+--- a/src/protocols/types/SurfaceState.hpp
++++ b/src/protocols/types/SurfaceState.hpp
+@@ -90,6 +90,9 @@
+         Vector2D destination;
+         CBox     source;
+     } viewport;
++    // Retained CPU attachment identity survives client buffer release. Native
++    // textures and the presence of a live client buffer are not content proof.
++    [[nodiscard]] bool hasContent() const noexcept;
+     Vector2D sourceSize();
+ 
+     // drm syncobj protocol surface state

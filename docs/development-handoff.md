@@ -18,6 +18,8 @@ acceptance, delivery, native call state or working physical hardware.
 
 ## Current stopping point
 
+The [retained CPU surface-content checkpoint](native-render-surface-content.md) now passes unchanged-consumer five-group C++/Rust integration after actual geometry RED. Source extent uses retained Rust pixels after producer overwrite/unmap/close; no-attach identity, transforms, detach/replacement and independent clones pass. The two-file patch changes CPU geometry only; core GL capture/upload, normal Wayland frames, Source7 and phone gates remain open.
+
 The [initial broker batch peek](native-render-initial-batch.md) now passes unchanged-consumer real seatd/udev/virtio capture after a qualified missing-API compile RED and matching AQ15 source/SDK build. Three initial events reach Rust before queue admission; two pending duplicates close while original service leases remain open. Ten existing CPU groups also pass. The later main/control-to-Rust-worker failure boundary now executes below; normal startup, Source7 and all phone gates remain open.
 
 The [owned startup checkpoint](native-render-owned-startup.md) now passes the same two failed-startup child-retention cases after qualified native RED. A production AQ dependency patch retains the selected child and all preexisting resource identities through both injected failures; matching AQ/main SDK builds pass. Each case records zero child destructors and valid weak metadata. Startup still fails, Ready stays false and join stays Busy and native shutdown stays Pending. Earlier failures remain preserved; nested factories, normal readiness, retirement, Source and phone gates stay open.

@@ -1,0 +1,425 @@
+{
+  "GL_upload_or_presentation_qualified": false,
+  "Source_or_ARM_or_phone_qualified": false,
+  "before_reconstruction": {
+    "src/protocols/types/SurfaceState.cpp": {
+      "exact_before": {
+        "bytes": 6757,
+        "sha256": "9fa63cbe3d2f851d552525abb941c4c90f9bccf8bec2e6ed2ccfba6eecce243f"
+      },
+      "official_upstream": {
+        "bytes": 4280,
+        "sha256": "1155bcf4c0b8ce70e0a00097ae25dde3a58d52cda8cd10d1fcd8d923d5153199"
+      },
+      "public_composition_steps": [
+        {
+          "after": {
+            "bytes": 6757,
+            "sha256": "9fa63cbe3d2f851d552525abb941c4c90f9bccf8bec2e6ed2ccfba6eecce243f"
+          },
+          "before": {
+            "bytes": 4280,
+            "sha256": "1155bcf4c0b8ce70e0a00097ae25dde3a58d52cda8cd10d1fcd8d923d5153199"
+          },
+          "public_patch": "tools/native-render-import/hyprland.patch",
+          "touches_selected_file": true
+        },
+        {
+          "after": {
+            "bytes": 6757,
+            "sha256": "9fa63cbe3d2f851d552525abb941c4c90f9bccf8bec2e6ed2ccfba6eecce243f"
+          },
+          "before": {
+            "bytes": 6757,
+            "sha256": "9fa63cbe3d2f851d552525abb941c4c90f9bccf8bec2e6ed2ccfba6eecce243f"
+          },
+          "public_patch": "tools/native-render-owner/hyprland-executor-aq15.patch",
+          "touches_selected_file": false
+        },
+        {
+          "after": {
+            "bytes": 6757,
+            "sha256": "9fa63cbe3d2f851d552525abb941c4c90f9bccf8bec2e6ed2ccfba6eecce243f"
+          },
+          "before": {
+            "bytes": 6757,
+            "sha256": "9fa63cbe3d2f851d552525abb941c4c90f9bccf8bec2e6ed2ccfba6eecce243f"
+          },
+          "public_patch": "tools/native-render-owner/hyprland-startup-custody-test.patch",
+          "touches_selected_file": false
+        }
+      ]
+    },
+    "src/protocols/types/SurfaceState.hpp": {
+      "exact_before": {
+        "bytes": 4335,
+        "sha256": "f9ddb67da492ae5f7e18ba4608caddb607107605ba9b17f47c615e4723e203c7"
+      },
+      "official_upstream": {
+        "bytes": 4097,
+        "sha256": "521654c9949097522d76e256c4eca60ae60d5b6ba2e170d42f11517f82d276b8"
+      },
+      "public_composition_steps": [
+        {
+          "after": {
+            "bytes": 4335,
+            "sha256": "f9ddb67da492ae5f7e18ba4608caddb607107605ba9b17f47c615e4723e203c7"
+          },
+          "before": {
+            "bytes": 4097,
+            "sha256": "521654c9949097522d76e256c4eca60ae60d5b6ba2e170d42f11517f82d276b8"
+          },
+          "public_patch": "tools/native-render-import/hyprland.patch",
+          "touches_selected_file": true
+        },
+        {
+          "after": {
+            "bytes": 4335,
+            "sha256": "f9ddb67da492ae5f7e18ba4608caddb607107605ba9b17f47c615e4723e203c7"
+          },
+          "before": {
+            "bytes": 4335,
+            "sha256": "f9ddb67da492ae5f7e18ba4608caddb607107605ba9b17f47c615e4723e203c7"
+          },
+          "public_patch": "tools/native-render-owner/hyprland-executor-aq15.patch",
+          "touches_selected_file": false
+        },
+        {
+          "after": {
+            "bytes": 4335,
+            "sha256": "f9ddb67da492ae5f7e18ba4608caddb607107605ba9b17f47c615e4723e203c7"
+          },
+          "before": {
+            "bytes": 4335,
+            "sha256": "f9ddb67da492ae5f7e18ba4608caddb607107605ba9b17f47c615e4723e203c7"
+          },
+          "public_patch": "tools/native-render-owner/hyprland-startup-custody-test.patch",
+          "touches_selected_file": false
+        }
+      ]
+    }
+  },
+  "existing_public_cohorts": [
+    {
+      "bytes": 11021,
+      "path": "tools/native-render-import/cohort.json",
+      "sha256": "99106ac0add1e1ab9baaed85de94ed76f1b3f1588fecb7e0437f7ed4ec542e2d"
+    },
+    {
+      "bytes": 15976,
+      "path": "tools/native-render-owner/hyprland-executor-aq15-cohort.json",
+      "sha256": "3fb5ebb198f26fc20431cb9839e6e9f60c7fff01ef3285e346641d4460acd0ba"
+    },
+    {
+      "bytes": 12285,
+      "path": "tools/native-render-owner/hyprland-startup-custody-test-cohort.json",
+      "sha256": "5aaca1cfb9d639432081e63b86370ec1b3267aa4ade60fe82dd72269d8dae3a9"
+    }
+  ],
+  "frozen_tests": {
+    "cpu-surface-content.cpp": {
+      "bytes": 10867,
+      "sha256": "16f7aaec47daf5e913608867f0e68f77501dfe8f06435c5074fc1ed14e5ad3b3"
+    },
+    "existing-surface-state-header-control.cpp": {
+      "bytes": 1306,
+      "sha256": "99fb49e1e21633a3ef77210c1398628514f92b48c977aef1f74ebdfd9014b00b"
+    },
+    "main_member_epoch.py": {
+      "bytes": 2665,
+      "sha256": "410c7e6e82cd6ffe450ffe4c603c082eb0c9f9a2dcee2a642806796437e78696"
+    },
+    "retained-content-public-member.cpp": {
+      "bytes": 1463,
+      "sha256": "0de2f1cdd3749f08bf02c63dbbbd73fb5ed7528f157a1c80c59e04bc3bb24a37"
+    }
+  },
+  "modified_paths": [
+    "src/protocols/types/SurfaceState.cpp",
+    "src/protocols/types/SurfaceState.hpp"
+  ],
+  "new_full_main_or_normal_Wayland_frame_qualified": false,
+  "new_production_paths": [],
+  "parent_public_revision": "382d3ff506e97bda1124b83e80274cb965a02b66",
+  "pinned_subproject": {
+    "archive_sha256": "2f459fafa19535ef1be417bf7614e4f92475e5787d7ba76df20287cc29d1b5a9",
+    "commit": "5336633af70f3917760a6d441ff02d93477b0c86",
+    "regular_files": 105,
+    "source_scope": "subprojects/udis86",
+    "upstream": "https://github.com/canihavesomecoffee/udis86"
+  },
+  "production_delta_files": {
+    "src/protocols/types/SurfaceState.cpp": {
+      "after": {
+        "bytes": 7072,
+        "sha256": "1232a7d35b890d0b4efda8049f2fda610d9b1853147134a5ea8367fa875de091"
+      },
+      "before": {
+        "bytes": 6757,
+        "sha256": "9fa63cbe3d2f851d552525abb941c4c90f9bccf8bec2e6ed2ccfba6eecce243f"
+      }
+    },
+    "src/protocols/types/SurfaceState.hpp": {
+      "after": {
+        "bytes": 4546,
+        "sha256": "2ad8eede01393e934d21921a8ce2ab5b448588b5ad6049e8498d48da343040bf"
+      },
+      "before": {
+        "bytes": 4335,
+        "sha256": "f9ddb67da492ae5f7e18ba4608caddb607107605ba9b17f47c615e4723e203c7"
+      }
+    }
+  },
+  "public_Hyprland_apply_order": [
+    {
+      "bytes": 145530,
+      "path": "tools/native-render-import/hyprland.patch",
+      "sha256": "bd1f10c7d204c85eac78938bd1ed7f3cd430f823f50b5a867b2d9931fc393b32"
+    },
+    {
+      "bytes": 5238,
+      "path": "tools/native-render-owner/hyprland-executor-aq15.patch",
+      "sha256": "52990191d0d91d3717abdf25d2f8ff106773b51f0e390ae56c2d5db79b5f1d83"
+    },
+    {
+      "bytes": 104804,
+      "path": "tools/native-render-owner/hyprland-startup-custody-test.patch",
+      "sha256": "5731048744eb1ec3a9569047b51009b3f7876c7c06349d92ca22d7c80e3df7f3"
+    },
+    {
+      "bytes": 1106,
+      "path": "tools/native-render-owner/content/surface-state.patch",
+      "sha256": "129efc9ab69a61d80997fb39fdedd2d36e8ebab3f54c38f49ae37171f8421caf"
+    }
+  ],
+  "public_package_contains_raw_private_receipts": false,
+  "public_source_repository": "https://github.com/nrempel/pokelinux",
+  "qualified_evidence_available": {
+    "declaration_syntax_only": {
+      "Root_qualification": {
+        "bytes": 1409,
+        "sha256": "f48ffd151ed64f88b0db7a36e945c816eeb5bb01b89ba3d0447d2ac0cfe82668"
+      },
+      "scope": "Both exact frozen TUs compiled with the candidate header overlay; no implementation execution."
+    },
+    "functional_original_failure": {
+      "Root_qualification": {
+        "bytes": 1618,
+        "sha256": "863abc4c8b555c2c0ffa92f71b093fcaf07e2b8e585b97f2d8b94e4e4ef47292"
+      },
+      "component_sha256": "dffd5ec6237500e1dda23a9e38991faa3f25b84ede6a940d5ab3ceae3c92c468",
+      "execution_sha256": "7a6b62905e88e8bffd94934fa3333f627e4a2285825babdde468ca5e7a0382e8",
+      "scope": "Actual original CPU surface geometry failure after real96-byte Rust custody prerequisites, controlled child wait/EOF and original nested closure."
+    },
+    "functional_repaired": {
+      "Root_qualification": {
+        "bytes": 2838,
+        "sha256": "eeaeaf034d214269febbdf323111d41e838c5a987466c49dde93e1c1a3e61f01"
+      },
+      "component": {
+        "bytes": 180952,
+        "sha256": "9d6b4b7dfd1d7cdbcdc38aea1e3a2e961139741e3034215bb062793054bad273"
+      },
+      "execution": {
+        "bytes": 12293,
+        "sha256": "f020acdfdd66da2ad6be31164aa4c317a716f52b32554ee1a5d4947498ec539c"
+      },
+      "scope": "Same frozen five-group consumer and classifier, sole Rust archive, support context and original process bounds; actual exit0 with all five groups."
+    }
+  },
+  "repaired_functional_execution_qualified": true,
+  "schema": 1,
+  "scope": "Incremental two-file retained-SHM CPU surface-content and source-geometry repair with actual unchanged-consumer RED to five-group GREEN; frontend attachment/upload remains GL-coupled. No new full main/SDK build or normal Wayland frame qualification.",
+  "selected_component_inputs": {
+    "AQ15_library": {
+      "bytes": 1853176,
+      "sha256": "32fd43a403df9d09e15f706a46f52ee49ecb15352729d902e45f241c5a174f3f"
+    },
+    "AQ15_public_source": {
+      "public_patch_order": [
+        {
+          "bytes": 71502,
+          "path": "tools/native-render-owner/aquamarine.patch",
+          "sha256": "4428b5e292b096100b827c544b89e712f3cf886a64ce2bc1648b82e5803895ed"
+        },
+        {
+          "bytes": 5642,
+          "path": "tools/native-render-owner/aquamarine-initial-batch.patch",
+          "sha256": "9009a3ec4e9fa01f1f40dba5670cc9e8e2451ee5d662199bfb4c0485492ef75a"
+        },
+        {
+          "bytes": 5404,
+          "path": "tools/native-render-owner/aquamarine-retained-initialization.patch",
+          "sha256": "f1a11f3a7915f0e5f58febf221547c2d84780e449de4ce409530896d2a8465e7"
+        },
+        {
+          "bytes": 12813,
+          "path": "tools/native-render-owner/aquamarine-startup-custody-test-hooks.patch",
+          "sha256": "278a09007d8ae81fc6f2b571f7c0f69d6461c1d5361fdbf7491113580da05e78"
+        },
+        {
+          "bytes": 10637,
+          "path": "tools/native-render-owner/aquamarine-retained-child-custody.patch",
+          "sha256": "5d84ebb9356ae874098baab2f707ca54a97476f2b46074c624568f38f1ecb58f"
+        }
+      ],
+      "upstream_commit": "f31c47a1b9d300847d8fc3108ad959448103dfc1"
+    },
+    "Rust_headers": {
+      "pokelinux_render.h": {
+        "bytes": 1988,
+        "sha256": "4a7a9a603fe6d7780ff071020f727c3eb7b0aba1c9bba56b682ddd219f995396"
+      },
+      "pokelinux_render_executor.h": {
+        "bytes": 9941,
+        "sha256": "b5aee195198a44475b90156244fe9f998bb4f4f196d4b12cb7c6f59e9988b731"
+      },
+      "pokelinux_render_frame.h": {
+        "bytes": 4036,
+        "sha256": "56f8ec91b6cfb434af8875c6139fd210f0d57618614a660bffde13e6d3d479f0"
+      }
+    },
+    "Rust_source_base": "f3be35a74d48245d41638f87b78847421f6dd0c0",
+    "Rust_static_library": {
+      "bytes": 22901236,
+      "sha256": "246a6680b7f9ed8affd89bd9b022319a0903f5ebc58f03d7d76eaa85f8653311"
+    },
+    "actual_original_and_support_TUs": {
+      "src/debug/log/Logger.cpp": {
+        "original": {
+          "bytes": 1789,
+          "sha256": "d04e3a2fe5c73ad8684377856ce8301e493929ed9f391e405fde4975eaf6b868"
+        },
+        "repaired": {
+          "bytes": 1789,
+          "sha256": "d04e3a2fe5c73ad8684377856ce8301e493929ed9f391e405fde4975eaf6b868"
+        }
+      },
+      "src/helpers/Color.cpp": {
+        "original": {
+          "bytes": 1497,
+          "sha256": "0e7d472cb56d9fd9f006e3d7cff930ee4341ed587cde7c47a3242b01447aa57f"
+        },
+        "repaired": {
+          "bytes": 1497,
+          "sha256": "0e7d472cb56d9fd9f006e3d7cff930ee4341ed587cde7c47a3242b01447aa57f"
+        }
+      },
+      "src/helpers/cm/ColorManagement.cpp": {
+        "original": {
+          "bytes": 20800,
+          "sha256": "b769268098d042aa452800f78d5176f468251165d9df04ec6acd38aa7f7cfe50"
+        },
+        "repaired": {
+          "bytes": 20800,
+          "sha256": "b769268098d042aa452800f78d5176f468251165d9df04ec6acd38aa7f7cfe50"
+        }
+      },
+      "src/helpers/env/Env.cpp": {
+        "original": {
+          "bytes": 285,
+          "sha256": "2976c823023e4a6147946d8678d8fa91963a8f3b585b4d9c9eb9d67760597b16"
+        },
+        "repaired": {
+          "bytes": 285,
+          "sha256": "2976c823023e4a6147946d8678d8fa91963a8f3b585b4d9c9eb9d67760597b16"
+        }
+      },
+      "src/protocols/types/Buffer.cpp": {
+        "original": {
+          "bytes": 2927,
+          "sha256": "e575d18766a585d39a792b21d1a8a9e5565ae2a53ac52b78fb0e3bdf7e2c453c"
+        },
+        "repaired": {
+          "bytes": 2927,
+          "sha256": "e575d18766a585d39a792b21d1a8a9e5565ae2a53ac52b78fb0e3bdf7e2c453c"
+        }
+      },
+      "src/protocols/types/SurfaceState.cpp": {
+        "original": {
+          "bytes": 6757,
+          "sha256": "9fa63cbe3d2f851d552525abb941c4c90f9bccf8bec2e6ed2ccfba6eecce243f"
+        },
+        "repaired": {
+          "bytes": 7072,
+          "sha256": "1232a7d35b890d0b4efda8049f2fda610d9b1853147134a5ea8367fa875de091"
+        }
+      },
+      "src/render/SHMSnapshot.cpp": {
+        "original": {
+          "bytes": 4798,
+          "sha256": "cf01b9a77952ab38952c246c26b22d9f815a1bec992fc3821d9ab827ac4c9918"
+        },
+        "repaired": {
+          "bytes": 4798,
+          "sha256": "cf01b9a77952ab38952c246c26b22d9f815a1bec992fc3821d9ab827ac4c9918"
+        }
+      }
+    },
+    "matching_existing_SDK": {
+      "bytes": 4700160,
+      "sha256": "9a31e800bd4b7bc1e3eccf7089cdbce181cfe3a57d4446eab8a43b240bde9893"
+    },
+    "matching_existing_SDK_scope": "Exact existing535regular2link SDK with candidate SurfaceState.hpp overlaid only for component compilation; not a rebuilt main SDK.",
+    "support_warning_options": {
+      "by_unchanged_support_TU": {
+        "Color.cpp": [
+          "-Wno-keyword-macro",
+          "-Wno-unused-result",
+          "-Wno-unused-parameter",
+          "-Wno-unused-value",
+          "-Wno-missing-field-initializers",
+          "-Wno-gnu-zero-variadic-macro-arguments",
+          "-Wno-narrowing",
+          "-Wno-pointer-arith",
+          "-Wno-clobbered",
+          "-Wno-missing-braces"
+        ],
+        "ColorManagement.cpp": [
+          "-Wno-keyword-macro",
+          "-Wno-unused-result",
+          "-Wno-unused-parameter",
+          "-Wno-unused-value",
+          "-Wno-missing-field-initializers",
+          "-Wno-gnu-zero-variadic-macro-arguments",
+          "-Wno-narrowing",
+          "-Wno-pointer-arith",
+          "-Wno-clobbered",
+          "-Wno-missing-braces"
+        ],
+        "Env.cpp": [
+          "-Wno-keyword-macro",
+          "-Wno-unused-result",
+          "-Wno-unused-parameter",
+          "-Wno-unused-value",
+          "-Wno-missing-field-initializers",
+          "-Wno-gnu-zero-variadic-macro-arguments",
+          "-Wno-narrowing",
+          "-Wno-pointer-arith",
+          "-Wno-clobbered",
+          "-Wno-missing-braces"
+        ],
+        "Logger.cpp": [
+          "-Wno-keyword-macro",
+          "-Wno-unused-result",
+          "-Wno-unused-parameter",
+          "-Wno-unused-value",
+          "-Wno-missing-field-initializers",
+          "-Wno-gnu-zero-variadic-macro-arguments",
+          "-Wno-narrowing",
+          "-Wno-pointer-arith",
+          "-Wno-clobbered",
+          "-Wno-missing-braces"
+        ]
+      },
+      "compile_database_sha256": "0bfe3f824ab4741f4bf379ba8e881054d638c577a4b362a6f949bad8af96cc28",
+      "consumer_and_three_target_TUs_keep_original_strict_flags": true,
+      "source": "Exact four commands in the previously successful production compile database"
+    }
+  },
+  "upstream": {
+    "archive_sha256": "5b05ce7ba5296fa46e666852bf108ab5af121bf577f8043787e2d2c252d8f109",
+    "commit": "efb50993780079460b0cbed1363e2166a2de1d9f",
+    "repository": "https://github.com/hyprwm/Hyprland"
+  }
+}
