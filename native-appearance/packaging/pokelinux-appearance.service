@@ -1,0 +1,18 @@
+[Unit]
+Description=PokeLinux native appearance owner
+After=systemd-tmpfiles-setup.service
+
+[Service]
+Type=exec
+User=root
+Group=root
+ExecStart=/usr/libexec/pokelinux/pokelinux-appearance --serve /run/pokelinux/appearance.sock /etc/pokelinux/appearance.json
+KillMode=mixed
+TimeoutStopSec=5s
+SendSIGKILL=yes
+Restart=no
+NoNewPrivileges=yes
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

@@ -15,9 +15,10 @@ all physical-phone gates stay open.
 The [native audio owner](native-audio.md#sigterm-enters-owned-stop) now handles
 SIGTERM through existing owned Stop, after a genuine signal15 RED. The unchanged
 host process test passes with Main0, backend reaping and partial frontend drain;
-25 active audio tests and host/ARM release builds pass. Installed service-manager
-start/Stop and fresh boot remain required; no ARM runtime or hardware result is
-inferred from compilation.
+25 active audio tests and host/ARM release builds pass. The [installed audio/appearance pair](native-installed-services.md) now separately
+passes actual ARM PID1 start/IPC/Stop and fresh autostart with unavailable
+backend/theme state, Main0 and empty cgroups. This is a two-owner VM boot slice;
+working audio, the graphical phone session and hardware gates remain open.
 
 The later [16-CPU cold diagnostic](native-session-manager-stop.md#declared-cpu-resource-diagnostic)
 still expires Source at103.24ms, with zero own-quota throttling in60 captured

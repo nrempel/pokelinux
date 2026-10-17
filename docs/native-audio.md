@@ -89,7 +89,8 @@ A privileged `stop` clears intent, advances its revision and returns
 frontend drains its retained threads and joins them, and exits only after
 local owners finish. An unreaped worker or unfinished stop owner causes process
 abort at a bounded deadline. An unexpected actor exit also refuses to detach a
-live frontend. There is no installed service-manager unit yet.
+live frontend. The [production unit](native-installed-services.md) now passes separate
+ARM PID1 start/IPC/Stop and fresh autostart with an unavailable backend.
 
 Each active link belongs to a non-lingering `pw-link -m` child spawned by the
 stable backend main thread. Both backend and tool worker set Linux's parent-death
@@ -134,8 +135,10 @@ See [hash-only provenance](evidence/native-audio-signal-stop-provenance.json).
 All18 dependent Cargo locks were synchronized with actual offline Cargo.
 Already-stale lifecycle/camera and source-timer/Messages fixture dependencies
 were also resolved; existing registry versions and checksums remain unchanged.
-The audio build wrapper now includes the kernel-identity source. Installed PID1
-start/Stop, cold boot, physical audio and the complete smartphone remain open.
+The audio build wrapper now includes the kernel-identity source. [Installed PID1 start/Stop and fresh autostart](native-installed-services.md) now
+pass for the new ARM owner with explicit unavailable-backend status. Private
+PipeWire connection selection, physical audio and the complete smartphone remain
+open.
 
 ## Verification
 

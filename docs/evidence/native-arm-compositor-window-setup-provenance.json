@@ -1,0 +1,247 @@
+{
+  "attempt_1": {
+    "Root_diagnosis": "Base image directly starts source/guest.py; it bypassed the project entry shim, so the required initial-timestamp environment value was absent.",
+    "Source_or_app_functional_groups": 0,
+    "actual_Docker_CLI_exit": 0,
+    "actual_QEMU_exit": 0,
+    "aggregate_passed": false,
+    "boot_result": {
+      "bytes": 5379,
+      "sha256": "d4a3f58d82fb816b9d7e55ad61c74513eab579ac745a52524101e7e9ce2ff8a6"
+    },
+    "entry_result_present": false,
+    "exact_CID_absent": true,
+    "execution": {
+      "bytes": 11739,
+      "sha256": "5bbaa1b86c5b671c2621bc8daa27c550e3466c5ee8c6f345032fcccd3a3865a5"
+    },
+    "guest_case_closure_claimed": false,
+    "guest_result_present": false,
+    "inputs_unchanged": true,
+    "same_daemon": true
+  },
+  "attempt_2": {
+    "Messages_consumer_executed": false,
+    "Source_or_app_functional_groups": 0,
+    "actual_Docker_CLI_exit": 0,
+    "actual_QEMU_exit": 0,
+    "actual_ldd_r_pass": [
+      "compositor",
+      "normal Messages",
+      "Messages consumer"
+    ],
+    "aggregate_passed": false,
+    "all_original_versions_unchanged": true,
+    "boot_result": {
+      "bytes": 5380,
+      "sha256": "d1118dcf729042e8455ec7828514226a951007260255236630d1020868c8a496"
+    },
+    "complete_matching_ELF_and_498_SDK_files_installed": true,
+    "entry_result": {
+      "bytes": 899,
+      "sha256": "81caa98ef4df4e39a09b5dacff63afe08cb76c47b065fe68bffcd10e1ee14b1a"
+    },
+    "exact_CID_absent": true,
+    "execution": {
+      "bytes": 11587,
+      "sha256": "a3b84622f608ee1612d55b6a7bfca6fd49eb82d786f8bcd9e64345c9aa31c58f"
+    },
+    "failure": "SETUP_FAILURE: shared-export Messages consumer execution PermissionDenied",
+    "guest_case_closure_qualified": true,
+    "guest_direct_waits": 15,
+    "guest_merged_PIPE_EOFs": 15,
+    "guest_result": {
+      "bytes": 173591,
+      "sha256": "6eab711e8d6324d703ee2f98a10d99ddebc8ee671f7f2918870fb9b9defa1e46"
+    },
+    "inputs_unchanged": true,
+    "packages_after": 396,
+    "packages_before": 353,
+    "retained_Qt_identities_unchanged": 50,
+    "same_daemon": true,
+    "trusted_packages_added": 43
+  },
+  "attempt_3": {
+    "actual_Docker_CLI_exit": 0,
+    "actual_QEMU_exit": 0,
+    "actual_local_stop_exit0": {
+      "appearance": true,
+      "audio": true,
+      "owner": true,
+      "owner_client": true
+    },
+    "adopted_or_nested_PIPE_EOFs_claimed": 0,
+    "aggregate_passed": false,
+    "compositor_actual_exe_sha256": "49087490cd11253b8098211c20319e40dbcf092d484b42fd297602d03a77e57f",
+    "consumer_install_correction": "Byte copies to actual guest fixture paths, root0:0/0755; no retained export xattrs or private results permissions changed.",
+    "current_ELF_and_SDK_cohort_used": true,
+    "exact_CID_absent": true,
+    "external_app_and_compositor_pidfds_dead_proc_absent": true,
+    "final_same_PID_exe_hash_or_mapped_window_qualification_reached": false,
+    "first_Source_failure": {
+      "CPU_or_scheduling_cause_proven": false,
+      "category": "provider_error",
+      "original_maximum_ns": 100000000,
+      "reason": "sample_expired",
+      "sample_age_at_validation_ns": 101804273,
+      "sequence": 462,
+      "stage": "validation"
+    },
+    "functional_window_groups": 0,
+    "guest_case_closure_qualified": false,
+    "independent_closed_review": {
+      "bytes": 10982,
+      "sha256": "fc0e6c1202df55ddb31b06049b61473c080c29b841346bb363b1312b149b6372"
+    },
+    "initial_real_Source_observed_ready": true,
+    "inputs_unchanged": true,
+    "native9_plus6_consumers_and_five_loader_logs_passed": true,
+    "new_timing_or_Source_retries_selected": false,
+    "normal_Messages_launch_process_UID_parent_and_argv_observed": true,
+    "normal_app_QWindow_DPR_measured": false,
+    "normal_app_native_capture_qualified": false,
+    "observed_PIPE_EOFs": 93,
+    "observed_primary_waits": 86,
+    "only_prepared_warmup_PNG_captured": true,
+    "records": {
+      "boot-result.json": {
+        "bytes": 5381,
+        "sha256": "9c3973d0780a30a4b75ddf5d8224cd22de42dcc4bf9e07d800051979ed04bbf0"
+      },
+      "command.json": {
+        "bytes": 1368,
+        "sha256": "f983225ce7621b2b186f85a0a57b5329a8a12b2ccf41c9fc52d4c9252229e1d9"
+      },
+      "entry-result.json": {
+        "bytes": 899,
+        "sha256": "34799f1719c2eea0fc893f2668c4f8a058561714856c18a24726902efff9c8fc"
+      },
+      "execution.json": {
+        "bytes": 11587,
+        "sha256": "845510356e94a7f2eb24fd1cbc4670445d6a58842214dff674302bd137a1d3fc"
+      },
+      "result.json": {
+        "bytes": 335590,
+        "sha256": "b18df6dd498ec00ababf41b158fbe2f0d0685ffa14999fa83de50e90a8a133d1"
+      },
+      "selection.json": {
+        "bytes": 180904,
+        "sha256": "85914b28a9279d9f3fd13c9ed490e6b9247adbc28fa0617e344a08c5e169618f"
+      }
+    },
+    "same_daemon": true,
+    "separate_adopted_waits": 95,
+    "separate_nested_C_ABI_waits": 1,
+    "unexpected_exits_preserved": {
+      "owned_registry_probe": 1,
+      "theme_host": 255
+    },
+    "wait_timing_and_output_closure_passed": true
+  },
+  "audio_cohorts": {
+    "SIGTERM_Stop_source_commit": "8d9e28dd6d0d41cfbb4ba62fcb9cfcf2efd5b901",
+    "intentionally_retained_window_audio_ARM": {
+      "bytes": 1245896,
+      "sha256": "c4a33c45377194d75d8e7af40360f4be62992690cf908cc6d1498303def49306"
+    },
+    "new_SIGTERM_Stop_ARM_release": {
+      "bytes": 1249592,
+      "sha256": "14ef29d04272a19bf6673fd837fcbd50d29f7e75bae146ee2615db25fe7e4963"
+    },
+    "new_release_scope": "Crossbuild only; installed ARM/PID1 runtime unqualified",
+    "window_service_cohort_is_HEAD": false
+  },
+  "build": {
+    "ELF": {
+      "bytes": 17319104,
+      "machine": 183,
+      "sha256": "49087490cd11253b8098211c20319e40dbcf092d484b42fd297602d03a77e57f"
+    },
+    "QMP_used": false,
+    "Root_qualification": {
+      "bytes": 2218,
+      "sha256": "e16b583901fc07e4efe7db65fb4692e0593ddc3139d70de9a4d6ab153e178ecf"
+    },
+    "SDK_regular_files": 498,
+    "SDK_tar": {
+      "bytes": 2580480,
+      "sha256": "c96cd145448d844979a2259563ba53a68dae2f406aa2e1bf6958a38130b04f22"
+    },
+    "Source_or_window_executed": false,
+    "actual_main_link_exit": 0,
+    "artifact_binding": {
+      "bytes": 88845,
+      "sha256": "60084cf56ba0906a333cbb948e830cbbcddfd733e9892c00e8d6c56f1124426b"
+    },
+    "build_result_sha256": "333273ec4dda9a1a966cd4616a8ca1887777f6e656a8b16e0ad89e58307b2993",
+    "command_sha256": "3fd9bca5223fa44b2bc9571bc1039fc485e02e42e0d40996ff1b04ebcf925527",
+    "compiler": "GNU16.1.1 20260430; gnu++26 O3 noLTO",
+    "compositor_ELF_or_loader_executed": false,
+    "configured_CXX_commands": 448,
+    "configured_auxiliary_commands_unbuilt": 14,
+    "execution_sha256": "33f795775f5de8869b7a11861c285a848f6a45e54e3b61d757846a39f3f7c531",
+    "external_inputs_rehashed": 17,
+    "guest_direct_waits": 24,
+    "guest_merged_PIPE_EOFs": 24,
+    "guest_result_sha256": "137d91db0e83b403995fa05c09a304f5a01262e2579a863871da7b57f7bdb7a4",
+    "independent_closed_review": {
+      "bytes": 140463,
+      "sha256": "fb54b82893587ca25648d80b26d5fbdced6e8aed01901de68188430c0a208716"
+    },
+    "independent_review_checks": 729,
+    "original_outer_seconds": 4200,
+    "original_work_seconds": 3600,
+    "outer_Docker_CLI_waits": 1,
+    "outer_PIPE_EOF_claimed": false,
+    "outer_console_regular_file": true,
+    "patch_sha256": "5f05b63166fd73bb6daca52e326978d62de22ff810fb58754ec38e7fe32cacbd",
+    "phase_manifest_sha256": "2aa3ce48ad808f5c519c3eaf4a244231b53f34b79410dbbcf8419dd58fabfc37",
+    "recorded_owned_and_input_closure": true,
+    "selected_leaves_rehashed": 50,
+    "selection_sha256": "8394fdc3e67f2570acb74dbcec32af277bae369f6635c6e38535b72d3e7f2a04",
+    "separate_QEMU_wait_claimed": false,
+    "separate_inspection_CLI_waits": 2,
+    "signed_Arch_compositor_package": false,
+    "sole_authored_delta": "ProtocolManager logical-output allowlist",
+    "source_archive": {
+      "bytes": 50812454,
+      "sha256": "5b05ce7ba5296fa46e666852bf108ab5af121bf577f8043787e2d2c252d8f109"
+    }
+  },
+  "normal_ARM_window_qualified": false,
+  "phone_accessed": false,
+  "post_run_export_mode_observation": {
+    "files": {
+      "messages-client-test": {
+        "bytes": 5903904,
+        "host_permissions": "0755",
+        "sha256": "2d886f7774320cf78b1cd86540aaba644bb73e71dbf4a9d4b25cb9fa3bd0ab2c",
+        "virtfs_mode": "0100644"
+      },
+      "pokelinux-messages": {
+        "bytes": 5943608,
+        "host_permissions": "0755",
+        "sha256": "c52b1355beaa037b85fdc0eb0effc2024af34c448c29793f60248198b252570e",
+        "virtfs_mode": "0100644"
+      },
+      "pokelinux-sounds": {
+        "bytes": 6443832,
+        "host_permissions": "0755",
+        "sha256": "66d95d3515948da829f8dae3ac61ae6027a605b8e7c2bc9020322289c76ee0e2",
+        "virtfs_mode": "0100644"
+      },
+      "sounds-client-test": {
+        "bytes": 6218336,
+        "host_permissions": "0755",
+        "sha256": "feff238175e4c6505ebd97102bf7acc4fa468eb1ac4ea9c6104770758643e4ac",
+        "virtfs_mode": "0100644"
+      }
+    },
+    "next_preparation": "Copy/install consumers into guest filesystem0755; runtime unqualified in this record",
+    "scope": "Host mode differs from preserved 9p mapped mode; no successful consumer execution in attempt2"
+  },
+  "schema": 1,
+  "scope": "Compiled native ARM compositor/SDK and two failed normal-window setup attempts; no window or physical-device qualification",
+  "source_commit": "efb50993780079460b0cbed1363e2166a2de1d9f",
+  "source_timing_branch_parked": true
+}

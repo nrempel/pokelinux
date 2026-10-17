@@ -23,7 +23,10 @@ drained).25 active audio tests/one existing ignored listener, fmt, strict Clippy
 and host/ARM releases pass. All18 audio-dependent locks close through actual
 offline Cargo; existing camera/Messages fixture staleness is recorded separately.
 The new ARM audio provider is distinct from the earlier frozen GUI provider.
-Installed PID1 units, fresh boot and physical audio are next, not qualified here.
+[Production audio/appearance units](native-installed-services.md) now separately
+pass installed ARM start/IPC/Stop and a fresh PID1 autostart with explicit
+unavailable theme/backend states, Main0 and empty cgroups. Physical audio and a
+healthy phone session remain open.
 See [provenance](evidence/native-audio-signal-stop-provenance.json).
 
 The [current language boundary](runtime-language-decision.md#current-language-boundary)

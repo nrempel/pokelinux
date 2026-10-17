@@ -1,0 +1,2 @@
+# Shared control parent: individual service shutdown must not remove it.
+d /run/pokelinux 0755 root root -

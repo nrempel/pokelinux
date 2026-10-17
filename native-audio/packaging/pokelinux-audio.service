@@ -1,0 +1,21 @@
+[Unit]
+Description=PokeLinux native audio authority
+After=systemd-sysusers.service systemd-tmpfiles-setup.service
+
+[Service]
+Type=exec
+User=pokelinux-audio
+Group=pokelinux-audio
+EnvironmentFile=/etc/pokelinux/audio.env
+RuntimeDirectory=pokelinux-audio
+RuntimeDirectoryMode=0755
+ExecStart=/usr/libexec/pokelinux/pokelinux-audio /run/pokelinux-audio/audio.sock /etc/pokelinux/audio-profile.json ${CALL_UID} ${APP_UID}
+KillMode=mixed
+TimeoutStopSec=5s
+SendSIGKILL=yes
+Restart=no
+NoNewPrivileges=yes
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

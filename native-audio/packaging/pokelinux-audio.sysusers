@@ -1,0 +1,2 @@
+# The installed site must keep owner, call and application UIDs distinct.
+u pokelinux-audio 11040 "PokeLinux audio owner" - /usr/bin/nologin

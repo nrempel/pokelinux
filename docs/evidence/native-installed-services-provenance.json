@@ -1,0 +1,348 @@
+{
+  "schema": 1,
+  "scope": "Actual host build-only production Make staging; original generic ARM kernel missing-unit RED; installed same-boot and fresh cold PID1 startup, unavailable per-service IPC and clean Stop. No phone/GUI/Source/PipeWire route proof.",
+  "closed_qualification": {
+    "bytes": 12380,
+    "sha256": "04822617b5c1872923408c934d8753ae4ae6bc07b84e6ca6497c06dc61858001"
+  },
+  "production_inputs": {
+    "native-appearance/packaging/pokelinux-appearance.service": {
+      "bytes": 385,
+      "sha256": "8f4d3827aa2cfbc62ce8947fe04b07ed561c6e8c312d713e0cbf652b55281ae6"
+    },
+    "native-appearance/packaging/pokelinux-appearance.tmpfiles": {
+      "bytes": 107,
+      "sha256": "592c80b460e22ee0687e349ac875defad55d008e99156130c0150610a6ac0a69"
+    },
+    "native-audio/packaging/pokelinux-audio.service": {
+      "bytes": 545,
+      "sha256": "5d04db817ca44616a0389e305e42214a666baeda93e1d327a03814ad019a281b"
+    },
+    "native-audio/packaging/pokelinux-audio.sysusers": {
+      "bytes": 141,
+      "sha256": "8a574f4d869823b795db14e4a532c1656d3b223d44882e47fb5e0fd1a2f099ef"
+    },
+    "native-session-owner/Makefile": {
+      "bytes": 1959,
+      "sha256": "553597b42e8833ab06d1b228ab797d25ddfb3577fafaecbaf1ce0c5bbc4211fa"
+    },
+    "native-session-owner/packaging/install_deployment.py": {
+      "bytes": 7352,
+      "sha256": "42a6daacdde7c6c0fcbec7316b50e21f753d67df917de33bf991d42999b82482"
+    }
+  },
+  "compiled_providers": {
+    "manifest": {
+      "bytes": 6585,
+      "sha256": "080c0cb0ff6571d8fe8520fc0bd4d06d37582de84b5ed3264bbc203f9ff62439"
+    },
+    "appearance": {
+      "bytes": 921536,
+      "sha256": "20300230ebee4a5c11aa37c8d357ed4769161f75ce51b99637a06938458baef2"
+    },
+    "audio": {
+      "bytes": 1249592,
+      "sha256": "14ef29d04272a19bf6673fd837fcbd50d29f7e75bae146ee2615db25fe7e4963"
+    },
+    "appearance_current_source_rows": 10,
+    "audio_current_non_Markdown_source_rows": 28,
+    "README_used_as_compiled_source_proof": false
+  },
+  "frozen_probe": {
+    "bytes": 10694,
+    "sha256": "e23300a6ecdbd70e2037874860e442c68a930b4958fe0ec9b2eb3cd66b1cd255",
+    "unchanged_since_preimplementation_RED": true
+  },
+  "public_probe_sources": {
+    "service-probe.py": {
+      "bytes": 10694,
+      "sha256": "e23300a6ecdbd70e2037874860e442c68a930b4958fe0ec9b2eb3cd66b1cd255"
+    },
+    "owned.py": {
+      "bytes": 10486,
+      "sha256": "350577b44f5059bdd55d739dc4dd5150c6e41804853e471c8fda9fc6892cd524"
+    },
+    "expected-installed353.txt": {
+      "bytes": 6996,
+      "sha256": "b8aea755b307ba77aa2a941060aab3f963bb6ca7eaa059f61f0b683c8184e10d"
+    }
+  },
+  "original_missing_unit_RED": {
+    "qualification": {
+      "bytes": 4221,
+      "sha256": "45c86cd0dbe06d066b2e774e31776888ad7a8bbbde819437829bd3165ebb6c4a"
+    },
+    "target": {
+      "sha256": "bd0622f7d257291e0f7874a898a98840bf7a11222384fbd438b4fff9a7c76fd2"
+    },
+    "before_production_unit_authorship": true
+  },
+  "host_staging": {
+    "receipt": {
+      "bytes": 3659,
+      "sha256": "beb2822cf68ccb4a689b4b1ef66b74b874e6d066354584ef1b064d72d608f835"
+    },
+    "actual_target": "install-native-services",
+    "ten_files_authenticated_in_private_DESTDIR": true,
+    "actual_host_waits_and_merged_PIPE_EOF": 3,
+    "ARM_Make_execution_claimed": false,
+    "host_service_install_or_activation": false
+  },
+  "boots": [
+    {
+      "phase": "preparation",
+      "passed": true,
+      "receipts": {
+        "selection.json": {
+          "bytes": 5828,
+          "sha256": "59d6e7ddabc768b75b018112dc20705a394ab1de214aefed0723775843ae97c6"
+        },
+        "command.json": {
+          "bytes": 1337,
+          "sha256": "db346a6ee315597138a894e2366eacf7714108f840123c938aa527b757d45c56"
+        },
+        "FREEZE.json": {
+          "bytes": 5101,
+          "sha256": "d1c90a78da0511d433c4bb452b3c7e76faad6dea23446eac793258a5a4975ae9"
+        },
+        "execution.json": {
+          "bytes": 2872,
+          "sha256": "f899cc3fdbc265a21c1bbd659c558c9f280ffbf5fb9c335bed273ffe3062b8a8"
+        },
+        "result.json": {
+          "bytes": 15512,
+          "sha256": "f4a2bf26a05e65809b86b06208347445b544456808917b236dcf6a70b5cd0584"
+        },
+        "boot-result.json": {
+          "bytes": 3316,
+          "sha256": "5b61dd47f8eab7c9cb3baad1b816b2302dcb0a9d6b9917e47a1cf574b2a49f2a"
+        },
+        "prepared-service-probe.json": {
+          "bytes": 14545,
+          "sha256": "2e01415342926f9b2a7764352d1e3d7ca38b8e8c1033cf4a15d9a5bb458baa52"
+        }
+      },
+      "services": [
+        {
+          "role": "appearance",
+          "unit": "pokelinux-appearance.service",
+          "UID": 0,
+          "separate_IPC_readiness": {
+            "snapshot_schema": 3,
+            "available": false,
+            "appearance": null,
+            "collector_completed_at_least_once": true,
+            "worker_slot_empty": true
+          },
+          "final_PID1_result": {
+            "ActiveState": "inactive",
+            "SubState": "dead",
+            "MainPID": "0",
+            "Result": "success",
+            "ExecMainCode": "1",
+            "ExecMainStatus": "0"
+          },
+          "cgroup_empty_and_retained_process_death_checked": true,
+          "guest_waitpid_for_PID1_Main_claimed": false
+        },
+        {
+          "role": "audio",
+          "unit": "pokelinux-audio.service",
+          "UID": 11040,
+          "separate_IPC_readiness": {
+            "valid_virtual_media_route": "vm-speaker",
+            "backend_available": false,
+            "observed_links": [],
+            "application": "pending",
+            "PipeWire_health_or_route_effect_claimed": false
+          },
+          "final_PID1_result": {
+            "ActiveState": "inactive",
+            "SubState": "dead",
+            "MainPID": "0",
+            "Result": "success",
+            "ExecMainCode": "1",
+            "ExecMainStatus": "0"
+          },
+          "cgroup_empty_and_retained_process_death_checked": true,
+          "guest_waitpid_for_PID1_Main_claimed": false
+        }
+      ],
+      "custody": {
+        "owned_inside_actual_direct_waits": 28,
+        "actual_merged_stdout_PIPE_EOFs": 28,
+        "parts": {
+          "guest_helper": 14,
+          "shutdown": 1,
+          "nested_frozen_probe_commands": 11,
+          "boot_scope": 2
+        },
+        "all_status0_and_before_original_cutoffs": true,
+        "separate_outer_Docker_CLI_actual_wait": 1,
+        "outer_console_is_regular_file_not_PIPE": true,
+        "separate_inspect_CLI_actual_waits": 2,
+        "inspect_PIPE_EOF_claimed": false,
+        "exact_CID_absent_same_daemon_and_inputs_unchanged": true
+      },
+      "original_caps": {
+        "container_CPUs": 4,
+        "container_memory": "5g",
+        "VM_CPUs": 4,
+        "VM_memory_MiB": 3072,
+        "guest_work_s": 420,
+        "QEMU_s": 540,
+        "outer_s": 600
+      }
+    },
+    {
+      "phase": "cold_boot",
+      "passed": true,
+      "receipts": {
+        "selection.json": {
+          "bytes": 3269,
+          "sha256": "8a7f28c33ead3829968bb8bf6fa9bcaca6ed1edc12f587d124efb170abd41187"
+        },
+        "command.json": {
+          "bytes": 1506,
+          "sha256": "042648ee21f295d3443afb1a3866c234878d51de6c217e7ee8cb4f1a27615489"
+        },
+        "FREEZE.json": {
+          "bytes": 2453,
+          "sha256": "a00c54e9446559b2504246b9318b9f547eb1e1b414627ce51056bc29b90f3c89"
+        },
+        "execution.json": {
+          "bytes": 2875,
+          "sha256": "ca9ad9fafb47b310fc0528a4d2f52748ad82245831dee135d6029c2a38ca375f"
+        },
+        "result.json": {
+          "bytes": 9219,
+          "sha256": "ef1909a28f6ca6f9d31a6953fa9fcd50151d97d6543329a0103b326e5c3aefc4"
+        },
+        "boot-result.json": {
+          "bytes": 6752,
+          "sha256": "212c91bcdb7a58e04cbc4c440af2f7b7cca1985a3157f9c5094dd85dc6fb4f86"
+        },
+        "cold-service-probe.json": {
+          "bytes": 12952,
+          "sha256": "0c254a3c0a2ec067c1b3ac294acbd8c1f4f8b98de74ea23be3e38fc3e2e66cff"
+        }
+      },
+      "services": [
+        {
+          "role": "appearance",
+          "unit": "pokelinux-appearance.service",
+          "UID": 0,
+          "separate_IPC_readiness": {
+            "snapshot_schema": 3,
+            "available": false,
+            "appearance": null,
+            "collector_completed_at_least_once": true,
+            "worker_slot_empty": true
+          },
+          "final_PID1_result": {
+            "ActiveState": "inactive",
+            "SubState": "dead",
+            "MainPID": "0",
+            "Result": "success",
+            "ExecMainCode": "1",
+            "ExecMainStatus": "0"
+          },
+          "cgroup_empty_and_retained_process_death_checked": true,
+          "guest_waitpid_for_PID1_Main_claimed": false
+        },
+        {
+          "role": "audio",
+          "unit": "pokelinux-audio.service",
+          "UID": 11040,
+          "separate_IPC_readiness": {
+            "valid_virtual_media_route": "vm-speaker",
+            "backend_available": false,
+            "observed_links": [],
+            "application": "pending",
+            "PipeWire_health_or_route_effect_claimed": false
+          },
+          "final_PID1_result": {
+            "ActiveState": "inactive",
+            "SubState": "dead",
+            "MainPID": "0",
+            "Result": "success",
+            "ExecMainCode": "1",
+            "ExecMainStatus": "0"
+          },
+          "cgroup_empty_and_retained_process_death_checked": true,
+          "guest_waitpid_for_PID1_Main_claimed": false
+        }
+      ],
+      "custody": {
+        "owned_inside_actual_direct_waits": 19,
+        "actual_merged_stdout_PIPE_EOFs": 19,
+        "parts": {
+          "guest_helper": 6,
+          "shutdown": 1,
+          "nested_frozen_probe_commands": 9,
+          "boot_scope": 3
+        },
+        "all_status0_and_before_original_cutoffs": true,
+        "separate_outer_Docker_CLI_actual_wait": 1,
+        "outer_console_is_regular_file_not_PIPE": true,
+        "separate_inspect_CLI_actual_waits": 2,
+        "inspect_PIPE_EOF_claimed": false,
+        "exact_CID_absent_same_daemon_and_inputs_unchanged": true
+      },
+      "original_caps": {
+        "container_CPUs": 4,
+        "container_memory": "5g",
+        "VM_CPUs": 4,
+        "VM_memory_MiB": 3072,
+        "guest_work_s": 420,
+        "QEMU_s": 540,
+        "outer_s": 600
+      }
+    }
+  ],
+  "closed_prepared_layer": {
+    "bytes": 23986176,
+    "sha256": "4ae11aa6a2af0b828d63fd6daa07f2597fe2c83df212e5d61ee4b7ec5324c597"
+  },
+  "fresh_boot_invocations_differ": true,
+  "cold_phase_no_install_reload_enable_or_start": true,
+  "original353_package_map_unchanged": true,
+  "failed_preparation_1": {
+    "ledger": {
+      "bytes": 2801,
+      "sha256": "23663c06de09f6ba783bc9b322c770361f094c6999143548ba12022af1f13a6c"
+    },
+    "execution": {
+      "bytes": 2873,
+      "sha256": "7d3ad6145397dc69a8d96f7fa26e9956f190eba956849387df457d5469f2d6a0"
+    },
+    "result": {
+      "bytes": 10458,
+      "sha256": "bee425c956bdedf6fe33c1f2871750ef162dc9d7423aed39c17e5f49b2d63d40"
+    },
+    "probe": {
+      "bytes": 16118,
+      "sha256": "ae0fe678e1f19190ff4486d5d44305cb08607a9ea31dc7b6adede90c565caeee"
+    },
+    "both_active_and_IPC_passed_but_actual_final_ExecMainCode0_refused": true,
+    "unit_GC_cause_proven": false,
+    "no_image_or_cold_qualification_inherited": true,
+    "successor2_only_fixture_change": "Enable both while stopped before manual probe, assert MainPID0/inactive and actual loaded multi-user Wants; same units/probe/Make/providers."
+  },
+  "limits": {
+    "appearance_theme_absent": true,
+    "appearance_schema3_unavailable": true,
+    "audio_valid_virtual_catalog_only": true,
+    "audio_PipeWire_backend_health_or_route_application": false,
+    "Pixel_route": false,
+    "normal_session_owner_Source_readiness": false,
+    "GUI_or_normal_app": false,
+    "physical_phone": false,
+    "network": false,
+    "guest_waitpid_for_PID1_services": false
+  },
+  "independent_closed_review": {
+    "bytes": 12922,
+    "sha256": "b748fe9244f600b92bbfe0a71312fab8bc063f4b3613a8d7ce7f6bf1c2ea2faa"
+  }
+}

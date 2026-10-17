@@ -11,8 +11,10 @@ The root-owned configuration contains exactly `home` and `runtime`, for example
 `{"home":"/home/alarm","runtime":"/run/user/1000"}`. The selected desktop
 UID/GID is1000. Executable, configuration and socket-directory ancestry must be
 root owned and exclude group/other writes and symbolic links. This is an
-experimental component; installed supervision and full app migration remain
-acceptance gates, not completed deployment.
+experimental component. Its [production systemd unit](../docs/native-installed-services.md)
+now passes actual ARM PID1 start/IPC/Stop and fresh autostart with missing-theme
+unavailable state. Normal desktop/theme/Source supervision and full app migration
+remain separate acceptance gates.
 
 The public `appearance.sock` is a mode0666 Unix SEQPACKET endpoint. Its only
 operation is `{"op":"snapshot"}`. Root-only mode0600
