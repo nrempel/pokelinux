@@ -18,15 +18,17 @@ upstream Hyprland, Aquamarine and Qt, which contain substantial C++. Our own
 Qt client adapters and small compositor plugins also contain C++; these are
 separate from the Rust phone services and must be counted honestly.
 
-The first [Sounds queue core](native-sounds-rust-queue.md) now moves one unsent
-route/reconnect intent, its original deadline, revalidation and cancellation into
-Rust, with actual C ABI and unchanged Qt socket tests. The app linked with that
-core now passes the four prepared GUI/audio groups; cold installed startup and
-ARM remain open. Sounds transport, direct
-request deadlines, reply validation and presentation still contain C++. Messages
-RPC worker lifetimes/stale-result generations and appearance validation remain
-Rust migration work. Retain QObject/QML presentation and narrow native API
-conversions at the Qt boundary. The full client stack has not been ported.
+The [Sounds client engine](native-sounds-rust-client.md) now owns direct and
+queued requests, packets, original deadlines, reply validation, pagination and
+the accepted UI model in Rust. Actual C ABI, unchanged Qt socket tests and full
+host application linking pass. Qt retains credentialed nonblocking socket I/O
+and QObject/QML presentation. The obsolete public queue ABI is removed.
+The earlier queue-only client passed prepared GUI/audio groups; a fresh native
+GUI/audio run must qualify this whole engine separately. Cold installed startup
+and ARM remain open. Messages RPC worker lifetimes/stale-result generations and
+appearance validation remain Rust migration work. Retain presentation and narrow
+native API conversions at the Qt boundary. The full client stack has not been
+ported.
 
 The custom renderer experiment added substantial authored C++ scene, protocol
 and GPU integration. That work is now parked as component research. It is not

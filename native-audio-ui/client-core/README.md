@@ -1,15 +1,16 @@
-# Sounds queued-intent core
+# Sounds app-local client engine
 
-This app-local Rust static library owns one unsent logical route or explicit
-reconnect gesture, its original one-second BOOTTIME budget and cancellation.
-`queue.rs` and `wire.rs` forbid unsafe code; `ffi.rs` is the narrow borrowed-pointer
-C ABI. It creates no socket, worker, permission or provider lease.
+This Rust static library owns the request stage, compact packet, original
+one-second BOOTTIME deadline, reply validation, pagination, accepted UI model and
+one copied queued route/reconnect gesture. It reuses the internal Queue and shared
+BootClock. Safe engine/protocol/queue/layout modules forbid unsafe code; only the
+narrow borrowed-pointer FFI handles C storage.
 
-Qt copies its current validated actor status/catalog into `PrSoundsFreshV1` and
-requests a plan before each actual send attempt. A plan retains its token and
-original deadline across EAGAIN/EINTR. Only a complete native send permits `sent`;
-closing or refusing the connection cancels. One Qt event thread owns each handle,
-all input/output storage and exclusive calls/free; no borrowed pointer survives.
+Qt retains QObject/QML presentation, nonblocking SEQPACKET I/O, native peer and
+per-packet credentials, SCM_RIGHTS closure and notifier/timer ownership. Rust
+creates no socket, worker, permission or provider lease. Each handle belongs to
+one event thread without concurrent call/free; no caller pointer survives a call.
+A copied send plan is local intent. Only the native edge reports an actual send.
 
 From the repository root, with Linux Qt6 development packages, Cargo and the
 locked Rust dependencies already cached:
@@ -17,17 +18,19 @@ locked Rust dependencies already cached:
 ```sh
 cmake -S native-audio-ui -B /tmp/pokelinux-sounds-build -DCMAKE_BUILD_TYPE=Release
 cmake --build /tmp/pokelinux-sounds-build --parallel
-ctest --test-dir /tmp/pokelinux-sounds-build --output-on-failure -R 'audio-client-boundary|sounds-queue-boundary'
+ctest --test-dir /tmp/pokelinux-sounds-build --output-on-failure -R 'audio-client-boundary|sounds-client-boundary'
 ```
 
-Native CMake invokes locked offline Cargo on every build so Cargo tracks changed
-transitive path dependencies. An explicit existing archive requires both
-`POKELINUX_SOUNDS_QUEUE_ARCHIVE` and its actual
-`POKELINUX_SOUNDS_QUEUE_ARCHIVE_SHA256`. Cross compilation requires that explicit
-archive built for the matching target; a host archive is not silently selected.
+CMake invokes locked offline Cargo on every build so Cargo tracks transitive path
+dependencies. An existing archive requires both `POKELINUX_SOUNDS_CLIENT_ARCHIVE`
+and its actual `POKELINUX_SOUNDS_CLIENT_ARCHIVE_SHA256`. Cross compilation requires
+that explicit archive built for the matching target. The obsolete queue-only
+header/functions are removed; there is no compatibility alias.
 
-The permanent six-group C++ consumer exercises the real C ABI and clock. The
-unchanged Qt suite checks actual app-edge socket behavior. Its target keeps
-assertions active in Release with -UNDEBUG. The app linked with this core also
-passes the prepared GUI/PCM tracer. See the [execution record](../../docs/native-sounds-rust-queue.md)
-for separate scopes and remaining cold installed/ARM/phone gates.
+The permanent byte-identical independent six-group C++ consumer exercises the
+actual C ABI and clock, with assertions active in Release via target-only
+`-UNDEBUG`. The unchanged30-case Qt suite retains real socket/credential checks.
+See [the component record](../../docs/native-sounds-rust-client.md) for actual
+source/link/loader checks and the separate pending new-engine prepared GUI/PCM,
+installed cold startup, ARM and phone gates. Historical queue-only results remain
+in their [original record](../../docs/native-sounds-rust-queue.md).

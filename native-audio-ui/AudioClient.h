@@ -1,14 +1,12 @@
 #pragma once
 #include <QObject>
-#include <QJsonObject>
 #include <QTimer>
 #include <QVariantList>
 #include <sys/types.h>
-#include "pokelinux_sounds_intent.h"
+#include "pokelinux_sounds_client.h"
 class QSocketNotifier;
-
-// Presentation of one root lifecycle actor connection. The actor owns policy
-// and its audio-provider connection; Qt never owns or replays a media lease.
+// Qt owns native transport/credentials and presentation. Rust owns the local
+// request/packet/deadline/page/model engine; the lifecycle actor owns authority.
 class AudioClient final : public QObject {
  Q_OBJECT
  Q_PROPERTY(QVariantList routes READ routes NOTIFY changed)
@@ -20,51 +18,32 @@ class AudioClient final : public QObject {
 public:
  AudioClient(QString path, uid_t ownerUid, QObject *parent=nullptr);
  ~AudioClient() override;
- QVariantList routes() const { return m_routes; }
- QString requested() const { return m_requested; }
- QString applied() const { return m_applied; }
- QString status() const { return m_status; }
- bool canChoose() const { return m_online && m_available && m_actorCanChoose && m_intents && pr_sounds_queue_pending_v1(m_intents)==0 && (m_pending.isEmpty() || m_pending=="status"); }
- bool canReconnect() const { return m_intents && pr_sounds_queue_pending_v1(m_intents)==0 && (m_pending.isEmpty() || m_pending=="status") && (m_fd<0 || (m_online && m_actorCanReconnect)); }
+ QVariantList routes() const;
+ QString requested() const;
+ QString applied() const;
+ QString status() const;
+ bool canChoose() const;
+ bool canReconnect() const;
  Q_INVOKABLE void reconnect();
  Q_INVOKABLE void select(const QString &id);
 signals:
  void changed();
 private:
- enum class Stage { Idle, Connecting, Sending, Receiving };
- enum class Reply { Invalid, Done, More };
- static qint64 boottime();
- bool expired() const;
- bool setDeadline();
- void closeSocket();
- void fail(const QString &message);
- void connectActor();
+ PrSoundsClientViewV1 view() const;
+ void closeNative();
+ void nativeFailure(uint32_t reason);
+ void connectNative();
  bool peer();
- void request(const QJsonObject &message, const QString &kind, qint64 originalUntil=0);
- void sendSelection(const QString &id, qint64 originalUntil);
- void dispatchQueued();
- int prepareQueued(PrSoundsCommandV1 &command);
- bool queue(const QJsonObject &message);
- void statusRequest();
  void writable();
  void receive();
- Reply accept(const QJsonObject &reply);
- void applyState(const QJsonObject &state);
+ void drive();
+ void sync();
  QString m_path;
  uid_t m_ownerUid;
  int m_fd=-1;
  pid_t m_peerPid=-1;
+ uint64_t m_nativeEpoch=0;
  QSocketNotifier *m_read=nullptr,*m_write=nullptr;
- quint64 m_generation=0;
- Stage m_stage=Stage::Idle;
  QTimer m_poll,m_watch;
- QByteArray m_output;
- QString m_pending,m_requested,m_applied;
- PrSoundsQueue *m_intents=nullptr;
- quint64 m_sendToken=0;
- QString m_status=QStringLiteral("Audio disconnected");
- QVariantList m_routes,m_pageRoutes;
- qint64 m_deadline=0;
- int m_offset=0;
- bool m_online=false,m_available=false,m_actorCanChoose=false,m_actorCanReconnect=false,m_closing=false;
+ PrSoundsClient *m_client=nullptr;
 };

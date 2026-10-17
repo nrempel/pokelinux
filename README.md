@@ -6,12 +6,13 @@
 
 The target is Arch Linux ARM, Hyprland, native phone apps and Rust services for calls, messages, camera, power and other phone functions. The initial hardware strategy uses Google's matched Pixel kernel, modules and firmware. Replacing Android framework userspace is the goal; it is not yet achieved. The [completion criteria](docs/smartphone-goal.md#completion-matrix) require native service integration; Android framework tests provide reference evidence. Hyprland, Aquamarine and Qt remain C++ dependencies. The [graphics critical-path decision](docs/runtime-language-decision.md#graphics-critical-path) selects normal upstream compositor initialization for the integrated app tracer; the custom Rust render executor remains component research.
 
-The first [Rust app-client core](docs/native-sounds-rust-queue.md) now owns queued
-Sounds choices, deadlines and cancellation. Six C++/Rust groups and the30 existing
-Qt behavior cases pass. The new client also passes all four prepared app/audio
-groups, with eight PCM windows and192,000 measured frames; a Release-only test
-build issue is fixed without changing the consumer. Qt transport/presentation
-and upstream graphics remain C++. Cold installed startup and ARM remain open.
+The [app-local Rust Sounds engine](docs/native-sounds-rust-client.md) now owns
+request packets, deadlines, replies, pagination, queued choices and the accepted
+model. Six frozen C++/Rust groups, the30 unchanged Qt behaviors and29 appearance
+cases pass. Qt retains QObject/QML and the credentialed nonblocking socket edge.
+A fresh prepared GUI/PCM epoch with this whole engine remains pending; the
+[earlier queue client](docs/native-sounds-rust-queue.md) retains its separate
+four-group/eight-window prepared pass. Cold installed startup and ARM remain open.
 
 > **Development status:** no physical phone has been accessed. There is no verified bootable phone image. Modem communication, carrier IMS registration, physical call audio, Pixel GPU rendering, camera capture and suspend remain unverified.
 
@@ -83,7 +84,7 @@ flowchart TB
 
 Dashed connections are work still required, not working hardware paths. “Rust services” is the implementation direction; only a small part of native IMS exists today. We are not rewriting the Linux kernel or modem firmware in Rust. The [current integration map](docs/native-integration-map.md) separates components, installed service/app composition and remaining backend evidence.
 
-Hyprland, Aquamarine and the Qt app frontend contain C++. Upstream graphics engines and small adapters remain part of the selected normal stack. New phone-service policy and resource ownership belong in Rust; the custom renderer remains parked as component research. Project-owned Sounds, Messages and appearance clients still contain request/deadline/validation logic in C++; moving those client cores into Rust remains work, separately from Qt/QML presentation.
+Hyprland, Aquamarine and the Qt app frontend contain C++. Upstream graphics engines and small adapters remain part of the selected normal stack. New phone-service policy and resource ownership belong in Rust; the custom renderer remains parked as component research. The Sounds request/model engine now runs in Rust; its Qt adapter retains credentialed socket I/O and presentation. Messages worker lifetimes/stale-result generations and appearance validation still require Rust migration.
 
 ## What has been tested
 

@@ -1,0 +1,81 @@
+#pragma once
+#include <stdint.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
+/* App-local state only. No socket, credentials, provider lease or authority.
+ * Single caller thread, no call/free overlap; no caller pointer is retained.
+ * Actual native socket and credential checks precede connected/reply calls. */
+typedef struct PrSoundsClient PrSoundsClient;
+typedef struct { uint32_t length; uint8_t bytes[64]; } PrSoundsClientIdV1;
+typedef struct { uint32_t length; uint8_t bytes[96]; } PrSoundsClientLabelV1;
+typedef struct { PrSoundsClientIdV1 id; PrSoundsClientLabelV1 label; } PrSoundsClientRowV1;
+typedef struct {
+ uint64_t connection_epoch, request_until_boottime_ns, queued_until_boottime_ns;
+ uint32_t stage, request_kind, status, online, available, can_choose, can_reconnect;
+ uint32_t route_count, requested_present, applied_present, queued_kind, reserved;
+ PrSoundsClientIdV1 requested, applied;
+ PrSoundsClientRowV1 routes[32];
+} PrSoundsClientViewV1;
+typedef struct {
+ uint64_t connection_epoch, token, original_until_boottime_ns;
+ uint32_t length, reserved;
+ uint8_t bytes[4096];
+} PrSoundsClientPacketV1;
+enum { PR_SOUNDS_CLIENT_OK=0, PR_SOUNDS_CLIENT_EMPTY=1, PR_SOUNDS_CLIENT_BUSY=2,
+ PR_SOUNDS_CLIENT_REFUSED=3, PR_SOUNDS_CLIENT_EXPIRED=4,
+ PR_SOUNDS_CLIENT_INVALID=5, PR_SOUNDS_CLIENT_STALE=6 };
+enum { PR_SOUNDS_CLIENT_CLOSED=0, PR_SOUNDS_CLIENT_CONNECTING=1,
+ PR_SOUNDS_CLIENT_SENDING=2, PR_SOUNDS_CLIENT_RECEIVING=3, PR_SOUNDS_CLIENT_IDLE=4 };
+enum { PR_SOUNDS_CLIENT_NO_REQUEST=0, PR_SOUNDS_CLIENT_CONNECT=1,
+ PR_SOUNDS_CLIENT_STATUS=2, PR_SOUNDS_CLIENT_ROUTE=3, PR_SOUNDS_CLIENT_RECONNECT=4 };
+enum { PR_SOUNDS_CLIENT_NO_INTENT=0, PR_SOUNDS_CLIENT_ROUTE_INTENT=1,
+ PR_SOUNDS_CLIENT_RECONNECT_INTENT=2 };
+enum { PR_SOUNDS_CLIENT_SEND_COMPLETE=1, PR_SOUNDS_CLIENT_SEND_WOULD_BLOCK=2,
+ PR_SOUNDS_CLIENT_SEND_INTERRUPTED=3, PR_SOUNDS_CLIENT_SEND_FAILED=4 };
+/* Logical model/presentation codes, mapped by Qt to the existing exact text. */
+enum { PR_SOUNDS_CLIENT_DISCONNECTED=0, PR_SOUNDS_CLIENT_CONNECTING_AUDIO=1,
+ PR_SOUNDS_CLIENT_UNAVAILABLE_INSPECT=2, PR_SOUNDS_CLIENT_CHECKING=3,
+ PR_SOUNDS_CLIENT_APPLYING=4, PR_SOUNDS_CLIENT_APPLIED=5,
+ PR_SOUNDS_CLIENT_INTERRUPTED=6, PR_SOUNDS_CLIENT_CHOOSE_OUTPUT=7,
+ PR_SOUNDS_CLIENT_ROUTE_UNAVAILABLE=8, PR_SOUNDS_CLIENT_OUTPUT_REQUESTED=9,
+ PR_SOUNDS_CLIENT_DENIED=10, PR_SOUNDS_CLIENT_UNAVAILABLE=11,
+ PR_SOUNDS_CLIENT_STATE_UNAVAILABLE=12, PR_SOUNDS_CLIENT_PATH_OR_CLOCK_REFUSED=13,
+ PR_SOUNDS_CLIENT_CONNECTION_REFUSED=14, PR_SOUNDS_CLIENT_CONNECTION_EXPIRED=15,
+ PR_SOUNDS_CLIENT_ACTOR_UNAVAILABLE=16, PR_SOUNDS_CLIENT_IDENTITY_REFUSED=17,
+ PR_SOUNDS_CLIENT_REQUEST_EXPIRED_INSPECT=18, PR_SOUNDS_CLIENT_REQUEST_EXPIRED=19,
+ PR_SOUNDS_CLIENT_CLOCK_UNAVAILABLE=20, PR_SOUNDS_CLIENT_REQUEST_REFUSED=21,
+ PR_SOUNDS_CLIENT_QUEUED_REFUSED=22, PR_SOUNDS_CLIENT_SEND_REFUSED=23,
+ PR_SOUNDS_CLIENT_REPLY_OUTSIDE_REQUEST=24, PR_SOUNDS_CLIENT_REPLY_EXPIRED=25,
+ PR_SOUNDS_CLIENT_PACKET_REFUSED=26, PR_SOUNDS_CLIENT_REPLY_REFUSED=27 };
+/* Output pointee must initially be null. Non-OK never writes an output. */
+int32_t pr_sounds_client_new_v1(PrSoundsClient **out);
+void pr_sounds_client_free_v1(PrSoundsClient *client);
+/* Initial connect only. Later offline connect is an explicit reconnect action. */
+int32_t pr_sounds_client_start_v1(PrSoundsClient *client);
+int32_t pr_sounds_client_connected_v1(PrSoundsClient *client, uint64_t epoch);
+int32_t pr_sounds_client_choose_v1(PrSoundsClient *client, const PrSoundsClientIdV1 *route);
+int32_t pr_sounds_client_reconnect_v1(PrSoundsClient *client);
+/* Idle read-only poll only; never interrupts or extends an active request. */
+int32_t pr_sounds_client_refresh_v1(PrSoundsClient *client);
+/* Copied packet only, no I/O. Reprepare cannot renew token/deadline. */
+int32_t pr_sounds_client_prepare_v1(PrSoundsClient *client, PrSoundsClientPacketV1 *out);
+/* Reports one actual send result for the latest prepared packet. A complete
+ * send must equal its length; partial/error closes without claiming remote undo.
+ * WOULD_BLOCK/INTERRUPTED require sent_bytes=0 and do not consume the token. */
+int32_t pr_sounds_client_sent_v1(PrSoundsClient *client, uint64_t epoch,
+ uint64_t token, uint32_t outcome, uint32_t sent_bytes);
+/* Only exact bytes from one already authenticated <=4096-byte SEQPACKET. */
+int32_t pr_sounds_client_reply_v1(PrSoundsClient *client, uint64_t epoch,
+ const uint8_t *bytes, uint32_t length);
+/* Native edge supplies one of the explicitly enumerated failure codes13..27.
+ * Old epochs never close the current channel. No arbitrary text/status setter. */
+int32_t pr_sounds_client_disconnected_v1(PrSoundsClient *client, uint64_t epoch, uint32_t reason);
+/* Explicit watch delivery; no synthetic time. All effect/reply paths also check
+ * real BOOTTIME before dispatch, including incomplete-status expiry. */
+int32_t pr_sounds_client_tick_v1(PrSoundsClient *client);
+/* Pure copied observation: no clock transition, send, permission or renewal. */
+int32_t pr_sounds_client_view_v1(const PrSoundsClient *client, PrSoundsClientViewV1 *out);
+#ifdef __cplusplus
+}
+#endif

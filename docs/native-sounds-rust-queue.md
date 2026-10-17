@@ -1,5 +1,10 @@
 # Sounds queued intent in Rust
 
+This records the historical queue-only extraction and its exact prepared app/PCM
+epoch. The current [whole client engine](native-sounds-rust-client.md) replaces its
+production ABI and moves request/reply/page/model state into Rust. The results
+below retain their original source/provider scope.
+
 A route or explicit reconnect gesture made during a read-only status refresh now
 belongs to a small app-local Rust core. Rust owns the copied logical route ID,
 original one-second CLOCK_BOOTTIME deadline, remaining route TTL, fresh-state

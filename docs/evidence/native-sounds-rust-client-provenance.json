@@ -1,0 +1,210 @@
+{
+  "schema": 1,
+  "scope": "Host app-local Rust Sounds request/model engine; actual C ABI and credentialed Linux socket tests, default package build and full link. New prepared GUI/PCM, cold installed, ARM and phone remain open.",
+  "implementation_base": "11e598ab7e2b572f88d57d5adad5732c43f6ebb7",
+  "Root_integration_base": "c07cc01d1b9635ab6bd5875149886c0f3d3da9e6",
+  "source_manifest": {
+    "bytes": 14842,
+    "sha256": "02d0ba2dda814d26b3d271ee6c284c152252f317804dcc201bceb437d1255497"
+  },
+  "source_cohort_manifest": {
+    "bytes": 8304,
+    "sha256": "e3fdb84d88edf9c36b780251aa978f98c8dcdcab74e4fb9060a0604ba5e7c76b"
+  },
+  "closed_implementation_review": {
+    "bytes": 37307,
+    "sha256": "720f6e23165de76dafc8ad1f738f010b4878a554c3ec90512ab30eeb50bc662a"
+  },
+  "Root_qualification": {
+    "bytes": 2678,
+    "sha256": "d56035629b4dbd22f8e3204d72e1a97af59d67019bedf64258eed790ca1eb92b"
+  },
+  "source_patch": {
+    "bytes": 123605,
+    "sha256": "d313382f528b8aa22ef1ff6cdfa6cc1028503d6c53fe3081d8b358b719e5b1a7"
+  },
+  "sources": {
+    "native-audio-ui/AudioClient.cpp": {
+      "bytes": 8736,
+      "sha256": "96d8d58ba7edd05151781f444683b05f85ec3682027fdf1f914c4949daf3114c"
+    },
+    "native-audio-ui/AudioClient.h": {
+      "bytes": 1508,
+      "sha256": "41c43fba1c863dea868bbaa6e07f2928900e2ec8582cc4e30c8ac4d2581c2aa5"
+    },
+    "native-audio-ui/AudioClientTest.cpp": {
+      "bytes": 24429,
+      "sha256": "8a23bb432f1cb05eea04386551b57502431884f36fee1d147381ba8cb5cb8b82"
+    },
+    "native-audio-ui/CMakeLists.txt": {
+      "bytes": 3904,
+      "sha256": "a509eb98b1894e7bce76d2ebdda81d937f7be1e9b9c2df708420585ffe699fe9"
+    },
+    "native-audio-ui/SoundsView.qml": {
+      "bytes": 2268,
+      "sha256": "eaa651d226d0cfcc3df4c04d6888937110e3de2fdde362af664676eabf0c4635"
+    },
+    "native-audio-ui/client-core/Cargo.lock": {
+      "bytes": 4277,
+      "sha256": "0024ce1cd79cd0f244fb3a819e7eb8efa41b5ec4e5251dce94d295b26b5c9059"
+    },
+    "native-audio-ui/client-core/Cargo.toml": {
+      "bytes": 272,
+      "sha256": "f7025d6347ed785e4d4882f27de5ba7200fc25b2f800b3e023845ae011edfa3b"
+    },
+    "native-audio-ui/client-core/include/pokelinux_sounds_client.h": {
+      "bytes": 5092,
+      "sha256": "582f0f8286de6cd08d8b3c3b48335632d57f91e763e0a2ddd6becb2d1e234898"
+    },
+    "native-audio-ui/client-core/src/engine.rs": {
+      "bytes": 19714,
+      "sha256": "ea8c1cb3d3fbe40946a2dfe918d6e821f7b742a5ded4dfcd0466fc55bea4d463"
+    },
+    "native-audio-ui/client-core/src/ffi.rs": {
+      "bytes": 6867,
+      "sha256": "65a418b6458da3696a4ad14cacae7b1868362e783aed38c6b4ae6504bf30e7a4"
+    },
+    "native-audio-ui/client-core/src/lib.rs": {
+      "bytes": 142,
+      "sha256": "9ed8dbfee7c628234f09adc0542d578d905e29c2d5dc603c1e1abbb9b1532ec3"
+    },
+    "native-audio-ui/client-core/src/protocol.rs": {
+      "bytes": 4079,
+      "sha256": "0c3b86f235309d2799ffb3856c04c333da3a68721aef4fd59d259b21262c2f8c"
+    },
+    "native-audio-ui/client-core/src/queue.rs": {
+      "bytes": 3349,
+      "sha256": "4632e474e04578437511e276929cbc8555ec9cd3808981b61c955800be1646c1"
+    },
+    "native-audio-ui/client-core/src/wire.rs": {
+      "bytes": 1881,
+      "sha256": "575008e8666fa8001ea58bcfcade65379730d46791cf11d2dd75c4b22a2f95b7"
+    },
+    "native-audio-ui/client-core/tests/client-functional.cpp": {
+      "bytes": 22547,
+      "sha256": "e7b32b84871165d3ffaab6a8b1f2362f090eec8a5f9577c255c71636d64c887b"
+    },
+    "native-audio-ui/main.cpp": {
+      "bytes": 4159,
+      "sha256": "0ac78083b40d688dca5b3c771ff6338c25c100f9aedf74fdfb8957dfc5cd0f2a"
+    },
+    "native-audio-ui/resources.qrc": {
+      "bytes": 79,
+      "sha256": "1256d0136462e661632f17ede81f498f1d0b7c1081b38d9d41a29c5893a683ae"
+    }
+  },
+  "preimplementation_contract": {
+    "bytes": 3686,
+    "sha256": "a879465a588212c5fb4466746ce5e3f22fe2995c87bb2a88e0933abdd6575bfd"
+  },
+  "preimplementation_review": {
+    "bytes": 9692,
+    "sha256": "99bf8d1338bd969c4aab11dca07b1504290f986eb44572e143d56a4aed346f19"
+  },
+  "structural_RED": {
+    "genuine_existing_header_control_exit": 0,
+    "control_diagnostic_bytes": 0,
+    "missing_client_type_and_create_symbol_target_exit": 1,
+    "before_implementation": true,
+    "baseline_semantic_bug_claimed": false
+  },
+  "finite_current_Qt_wire_probe": {
+    "actual_cases": 26,
+    "exhaustive_parser_equivalence_claimed": false,
+    "named_authored_difference": "Reject lone escaped UTF16 surrogates; preserve valid Unicode labels and UTF8 byte bounds."
+  },
+  "frozen_header": {
+    "bytes": 5092,
+    "sha256": "582f0f8286de6cd08d8b3c3b48335632d57f91e763e0a2ddd6becb2d1e234898"
+  },
+  "frozen_consumer": {
+    "bytes": 22547,
+    "sha256": "e7b32b84871165d3ffaab6a8b1f2362f090eec8a5f9577c255c71636d64c887b"
+  },
+  "C_ABI_groups": [
+    "direct_request_and_accepted_model",
+    "atomic_pages_and_explicit_wire_semantics",
+    "send_reports_and_copied_packet_fences",
+    "queued_first_intent_and_final_freshness",
+    "connection_epoch_cancel_and_no_replay",
+    "original_boottime_deadlines_without_timer_delivery"
+  ],
+  "frozen_consumers_unchanged": true,
+  "actual_Qt_behavior_cases": 30,
+  "separate_Qt_setup_cleanup": 2,
+  "actual_appearance_cases": 29,
+  "appearance_test_namespace_only_added_caps": [
+    "SETUID",
+    "SETGID"
+  ],
+  "Rust_fmt_strict_all_target_Clippy_Release": true,
+  "Rust_library_unit_tests": 0,
+  "actual_default_offline_Cargo_CMake_full_app_build": true,
+  "actual_permanent_six_group_CTest": true,
+  "Rust_archive": {
+    "bytes": 23918044,
+    "sha256": "7702d403d380d916ad59cd72b7e7b4e2b46c24012e24f453aa91ec4258f687af"
+  },
+  "host_Qt_version": "6.8.2",
+  "host_full_Sounds_ELF": {
+    "bytes": 6009744,
+    "sha256": "523db72d5e092ba3cb7686c5584d62a8cdda1098d8e2facbfbe7434aabce6ea5"
+  },
+  "explicit_and_default_archive_and_full_app_byte_identical": true,
+  "actual_strong_client_exports": [
+    "pr_sounds_client_choose_v1",
+    "pr_sounds_client_connected_v1",
+    "pr_sounds_client_disconnected_v1",
+    "pr_sounds_client_free_v1",
+    "pr_sounds_client_new_v1",
+    "pr_sounds_client_prepare_v1",
+    "pr_sounds_client_reconnect_v1",
+    "pr_sounds_client_refresh_v1",
+    "pr_sounds_client_reply_v1",
+    "pr_sounds_client_sent_v1",
+    "pr_sounds_client_start_v1",
+    "pr_sounds_client_tick_v1",
+    "pr_sounds_client_view_v1"
+  ],
+  "obsolete_public_queue_API_removed": true,
+  "actual_single_selected_archive_link_and_loader_resolution": true,
+  "review_correction": {
+    "change": "Qt watch emits changed only when Rust tick reports a transition/refusal; successful observational ticks do not notify.",
+    "one_line_source_delta": {
+      "bytes": 787,
+      "sha256": "bd9b352f6a70cfa9429218bffb824c75cd19b76f63bb8f5770954e03e78d9c7e"
+    },
+    "fresh_affected_epochs": 2,
+    "fresh_wrapper_waits": 12,
+    "fresh_merged_PIPE_EOFs": 12,
+    "unchanged_Rust_C_ABI_appearance_CTest_evidence_retained_from_prior_closed_epochs": true
+  },
+  "implementation_epochs": {
+    "actual_host_orchestration_epochs": 13,
+    "distinct_actual_wrapper_waits": 78,
+    "distinct_actual_merged_PIPE_EOFs": 78,
+    "compiler_descendant_waits_claimed": false,
+    "same_daemon_exact_container_absence": true,
+    "selected_inputs_unchanged_within_each_epoch": true,
+    "cleanup_errors": [],
+    "original_phase_work_s": 300,
+    "original_phase_close_s": 320,
+    "max_parallel_CPU": 8,
+    "max_parallel_memory_bytes": 8589934592
+  },
+  "preimplementation_epochs": {
+    "actual_host_orchestration_epochs": 7,
+    "distinct_actual_wrapper_waits": 42,
+    "distinct_actual_merged_PIPE_EOFs": 42
+  },
+  "preserved_failed_epochs": [
+    "read-only disposable build-copy Cargo.lock setup failure",
+    "first strict-Clippy collapsible-if diagnostic",
+    "preimplementation structural setup/probe failures retained separately"
+  ],
+  "prepared_GUI_PCM_qualified": false,
+  "cold_installed_startup_qualified": false,
+  "ARM_qualified": false,
+  "physical_phone_accessed": false,
+  "provider_permission_authority_migrated_by_this_change": false
+}

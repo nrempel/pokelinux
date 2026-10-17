@@ -18,6 +18,9 @@ impl Queue {
             next_token: 1,
         }
     }
+    pub fn metadata(&self) -> Option<(u32, u64)> {
+        self.intent.map(|i| (i.kind, i.until))
+    }
     pub fn pending(&self) -> bool {
         self.intent.is_some()
     }

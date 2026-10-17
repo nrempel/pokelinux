@@ -22,18 +22,19 @@ Rust remains responsible for shared phone services and ownership/recovery policy
 The graphics integration includes substantial C++; it must not be reported as
 progress porting phone services to Rust or as an all-Rust stack.
 
-The first [Sounds queue core](native-sounds-rust-queue.md) now owns the copied
-queued route/reconnect intent, original BOOTTIME deadline, fresh-state checks
-and cancellation in Rust. Six actual C ABI groups, unchanged30 Qt socket cases
-plus setup/cleanup, strict Rust checks, default offline Cargo/CMake and full
-Sounds link pass. A real Arch Release attempt then fails when NDEBUG disables the
-permanent consumer; preserve that setup RED. Target-only -UNDEBUG now passes the
-same six groups and fresh Qt32/appearance29, plus all four prepared app/PCM groups
-and192,000 frames with the new client. Five native Pixel-profile app captures and
-all original closure qualify separately. The older five service roles/owner and
-prepared warmup stay selected; no cold-start repair is inherited. Direct request/
-reply/transport still contains C++; cold installed/ARM gates and further client
-core migration remain. Retain Qt presentation.
+The [Sounds client engine](native-sounds-rust-client.md) now owns direct and
+queued requests, packets, BOOTTIME deadlines, reply validation, pagination and
+the accepted UI model in Rust. Qt retains the credentialed nonblocking socket
+edge and QObject/QML presentation; permission/provider authority stays in the
+Rust owner. Six frozen C ABI groups, unchanged30 Qt behaviors plus setup/cleanup,
+29 appearance cases, strict Rust checks, default offline Cargo/CMake/CTest and
+full host Sounds linking pass. The obsolete public queue ABI is removed.
+
+The [earlier queue-only client](native-sounds-rust-queue.md) passed four prepared
+GUI/PCM groups with192,000 measured frames and Pixel10 captures. That historical
+result does not qualify the whole engine. Its fresh prepared GUI/PCM run, cold
+installed startup and ARM integration remain open. Messages and appearance client
+logic still require Rust migration; retain Qt presentation.
 
 ## Current stopping point
 

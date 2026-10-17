@@ -68,7 +68,7 @@ pub struct Command {
     pub route: Route,
 }
 #[repr(i32)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq, Eq)]
 pub enum Code {
     Ok = 0,
     Empty = 1,

@@ -17,12 +17,14 @@ still expires Source at103.24ms, with zero own-quota throttling in60 captured
 container snapshots. Cold availability remains unqualified; no causal repair is
 claimed and the100ms freshness contract stays unchanged.
 
-The first [Rust app-client queue core](native-sounds-rust-queue.md) now replaces
-Sounds queued route/reconnect ownership and deadline/cancel logic in C++. Actual
-C ABI, unchanged Qt socket checks and full application linking pass. The new
-client now also passes all four original prepared GUI/audio groups with192,000
-measured frames and Pixel10 captures, after a genuine Release-test build RED and
-target-only assertion correction. Cold installed and ARM integration remain open.
+The [Rust Sounds client engine](native-sounds-rust-client.md) now replaces
+project-owned direct/queued request state, packet construction, reply validation,
+pagination and the accepted UI model. Six frozen C ABI groups, unchanged30 Qt
+behaviors,29 appearance cases and full host application linking pass. Qt retains
+credentialed socket I/O and presentation. The obsolete queue ABI is removed.
+The earlier queue-only client passed four prepared GUI/audio groups with192,000
+measured frames and Pixel10 captures. A fresh prepared run must qualify the whole
+engine separately; cold installed and ARM integration remain open.
 
 Two additional [whole-compositor stall epochs](native-normal-upstream-tracer.md#compositor-freeze-expiry-and-stop)
 now qualify independent100ms Source-expiry withdrawal/quietness/refusal before
