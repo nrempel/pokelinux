@@ -1,0 +1,93 @@
+{
+  "base_commit": "88b3a6d1290702c646b202450a4998f2a5ad209f",
+  "closure": {
+    "all_three_exact_CIDs_absent": true,
+    "direct_waits_and_merged_PIPE_EOF_all_three_phases": 16,
+    "embedded_existing_child_waits_and_PIPE_EOF_separate": 5,
+    "same_daemon": true
+  },
+  "full_QA": {
+    "CPU_limit": 3,
+    "actual_log": {
+      "bytes": 9715,
+      "sha256": "15d47500657ac14625bc9aa93e1a6577b31d7dcf7edb4fa0a50064eb881ba174"
+    },
+    "fmt_exit": 0,
+    "ignored": 2,
+    "original_active_tests_preserved": 64,
+    "original_collector_aggregate": false,
+    "original_collector_failure": "Post-command tar validation rejected two internal Cargo hardlinks; failed result retained.",
+    "original_collector_result": {
+      "bytes": 7641,
+      "sha256": "b7417bef96dde7e666a46ce9e0031db721f8849c0a09ff1f5f46d3f1be3e3025"
+    },
+    "passed": 66,
+    "release_archive": {
+      "bytes": 22941230,
+      "sha256": "082856879457a75a4dfcdf349b81cef5844ffbf51f104434c6290659253332fc"
+    },
+    "release_exit": 0,
+    "release_selected_into_older_native_epochs": false,
+    "separate_read_only_output_review_without_rerun": true,
+    "source": {
+      "bytes": 3688,
+      "sha256": "f98758d23c60bcfc9e5aba6e612f56b927ae3a4c5de41309294c28fa95fa98ec"
+    },
+    "strict_all_target_clippy_exit": 0,
+    "target_tmpfs_cap_bytes": 268435456,
+    "test_exit": 0
+  },
+  "graphics_role": "Preserved component research; normal upstream compositor selected for next app tracer.",
+  "green": {
+    "admissions": 1,
+    "exact_frozen_source": {
+      "bytes": 150307,
+      "sha256": "6a359dc2e6e5a440be8757773cc0d9d4978147992ac4035dd2b4705df48a73cd"
+    },
+    "exact_result": {
+      "bytes": 7798,
+      "sha256": "0d813b8271c3d4444cd3e7d47d81751b05c743c83480da0719acf10e397f411f"
+    },
+    "full_source_patch": {
+      "bytes": 18891,
+      "sha256": "623fee5ca2499e47c6ee32c43d4cb937e4d218d52387b1caa96daae39a2be57b"
+    },
+    "notifications": 1,
+    "production_patch": {
+      "bytes": 632,
+      "sha256": "c90912fe794e8d9b64e32e304bdd5f3b0bd241befcd8638d7ca3d0622ad87c7a"
+    },
+    "review": {
+      "bytes": 4993,
+      "sha256": "b5af50f5e20c6c46b92d7628802dec3350bf4ae61f70e608219cacdf623643b9"
+    },
+    "separate_expiry_kept_frame_and_zero_credits": true
+  },
+  "native_Wayland_GPU_cleanup_ARM_phone_qualified": false,
+  "new_API_FD_credit_timer_retry_queue": false,
+  "red": {
+    "actual_log": {
+      "bytes": 2193,
+      "sha256": "9decdddf391b496e1d4998c201c4393f8328a4ad876ccaadb9afd83ddd7e3b3a"
+    },
+    "actual_worker_join_before_original_close": true,
+    "compile_exit": 0,
+    "notifications_after_unlock": 0,
+    "original_frame_cutoff_retained": true,
+    "review": {
+      "bytes": 3104,
+      "sha256": "b899ac0deec272859070ec305800b9e8128a2ad82d7a2aaac4266ff134bb0c19"
+    },
+    "test_exit": 101,
+    "test_only_patch": {
+      "bytes": 12069,
+      "sha256": "ece55227c27cfc08d2bd2f1ede2b75d919aa011e23b1aec963c821fdd2c3dfec"
+    }
+  },
+  "schema": 1,
+  "scope": "Experimental Rust executor CPU component with authored NativeOwner; not installed compositor or hardware.",
+  "source": {
+    "bytes": 156710,
+    "sha256": "af488d839d0852e9853ed09e0ee9f68564b9c1fdd35cd3fd382784d4ae58a52c"
+  }
+}

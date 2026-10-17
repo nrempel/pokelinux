@@ -676,8 +676,19 @@ struct SessionState {
     last_applied_sequence: u64,
     candidate: Option<DiscoveryCandidate>,
 }
+// Test-only scheduling control at the actual worker ingress guard. It never
+// writes either eventfd and is not compiled into the production executor.
+#[cfg(test)]
+struct IngressTestPause {
+    entered: std::sync::mpsc::Sender<(ThreadId, u64)>,
+    release: std::sync::mpsc::Receiver<()>,
+    popped: std::sync::mpsc::Sender<(ThreadId, u64, bool)>,
+    hold_until_ns: u64,
+}
 struct Shared {
     ingress: Mutex<VecDeque<Job>>,
+    #[cfg(test)]
+    ingress_test_pause: Mutex<Option<IngressTestPause>>,
     completions: Mutex<VecDeque<Completion>>,
     identity: BootstrapIdentity,
     session: Mutex<SessionState>,
@@ -917,6 +928,8 @@ impl Executor {
         let identity = BootstrapIdentity::capture(&bootstrap);
         let shared = Arc::new(Shared {
             ingress: Mutex::new(VecDeque::with_capacity(FRAME_CREDITS as usize)),
+            #[cfg(test)]
+            ingress_test_pause: Mutex::new(None),
             completions: Mutex::new(VecDeque::with_capacity(COMPLETION_CAPACITY)),
             identity,
             session: Mutex::new(SessionState {
@@ -1530,10 +1543,44 @@ fn run(
                 }
             }
         }
+        #[cfg(test)]
+        let ingress_test_pause;
         let job = match shared.ingress.lock() {
-            Ok(mut queue) => queue.pop_front(),
+            Ok(mut queue) => {
+                #[cfg(test)]
+                {
+                    ingress_test_pause = shared
+                        .ingress_test_pause
+                        .lock()
+                        .unwrap_or_else(|poison| poison.into_inner())
+                        .take();
+                    if let Some(pause) = ingress_test_pause.as_ref() {
+                        let now = crate::commit::boottime_ns().unwrap_or(pause.hold_until_ns);
+                        let _ = pause.entered.send((thread::current().id(), now));
+                        let _ = pause.release.recv_timeout(std::time::Duration::from_nanos(
+                            pause.hold_until_ns.saturating_sub(now),
+                        ));
+                    }
+                }
+                queue.pop_front()
+            }
             Err(_) => shared.quarantine(),
         };
+        // Unlocking ingress can make a refused control submission admissible,
+        // including after an empty pop. Wake its existing borrowed watch.
+        if shared.complete.notify().is_err() {
+            shared.terminal(Error::Wake);
+        }
+        #[cfg(test)]
+        if let Some(pause) = ingress_test_pause {
+            // This observation is sent only after the real ingress guard drops.
+            // No executor wake or completion notification is introduced here.
+            let _ = pause.popped.send((
+                thread::current().id(),
+                crate::commit::boottime_ns().unwrap_or(pause.hold_until_ns),
+                job.is_some(),
+            ));
+        }
         // No control mutex remains over any native call, wait or resource drop.
         if let Some(job) = job {
             if entries.len() == FRAME_CREDITS as usize {
@@ -1981,6 +2028,318 @@ mod tests {
         };
         let ready = unsafe { poll(&mut p, 1, 0) };
         ready == 1 && p.revents == 1
+    }
+
+    #[test]
+    fn ingress_busy_unlock_notifies_retry_without_another_control_wake() {
+        let _serial = SERIAL.lock().unwrap_or_else(|poison| poison.into_inner());
+        let started = boottime_ns().unwrap();
+        let work_until = started + 5_000_000_000;
+        let close_until = started + 8_000_000_000;
+        let control = thread::current().id();
+        let (mut e, _native_release, events) = start(8);
+        let worker = await_stage(&events, "created");
+        let (entered_tx, entered_rx) = mpsc::channel();
+        let (release_tx, release_rx) = mpsc::channel();
+        let (popped_tx, popped_rx) = mpsc::channel();
+        let mut input = Some(frame(1));
+        let original_frame = input.as_ref().unwrap() as *const Frame;
+        let original_view = input
+            .as_ref()
+            .unwrap()
+            .with_borrow(|view| format!("{view:?}"))
+            .unwrap();
+        println!(
+            "INGRESS_BUSY_BEGIN pid={} control={control:?} worker={worker:?} original_work_until_ns={work_until} original_close_until_ns={close_until}",
+            std::process::id()
+        );
+        // Every fallible observation while the guard is held is caught so the
+        // actual release, Stop and worker join precede assertion propagation.
+        let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            let before = e.snapshot().unwrap();
+            assert!(before.ready && before.worker_alive && !before.failed && !before.stopping);
+            assert_eq!(
+                (
+                    before.accepted,
+                    before.occupied_credits,
+                    before.queued_frames
+                ),
+                (0, 0, 0)
+            );
+            assert_ne!(control, worker);
+            *e.shared.ingress_test_pause.lock().unwrap() = Some(IngressTestPause {
+                entered: entered_tx,
+                release: release_rx,
+                popped: popped_tx,
+                hold_until_ns: work_until,
+            });
+            // The only scheduling wake is BEFORE the refused public submission.
+            e.shared.wake.notify().unwrap();
+            let remaining = work_until.saturating_sub(boottime_ns().unwrap());
+            let (entered_tid, entered_at) = entered_rx
+                .recv_timeout(Duration::from_nanos(remaining))
+                .unwrap();
+            assert_eq!(entered_tid, worker);
+            assert!(entered_at < work_until);
+            let completion_fd = e.completion_fd().unwrap();
+            let deadline_fd = e.startup_deadline_fd().unwrap();
+            // A fully drained prior bootstrap notification cannot count as the
+            // required post-Busy retry notification.
+            assert!(e.try_next_completion().unwrap().is_none());
+            assert!(!readable(completion_fd));
+            assert!(!readable(deadline_fd));
+            let original_until = boottime_ns().unwrap() + 1_000_000_000;
+            assert!(original_until < work_until);
+            let busy = e.try_submit(&mut input, policy(1), original_until, 101);
+            let refused_at = boottime_ns().unwrap();
+            assert_eq!(busy, Err(Error::Busy));
+            assert_eq!(input.as_ref().unwrap() as *const Frame, original_frame);
+            assert_eq!(
+                input
+                    .as_ref()
+                    .unwrap()
+                    .with_borrow(|view| format!("{view:?}"))
+                    .unwrap(),
+                original_view
+            );
+            let refused = e.snapshot().unwrap();
+            assert!(refused.ready && !refused.failed && !refused.stopping);
+            assert_eq!(
+                (
+                    refused.accepted,
+                    refused.occupied_credits,
+                    refused.queued_frames
+                ),
+                (0, 0, 0)
+            );
+            assert!(!readable(completion_fd));
+            println!(
+                "INGRESS_BUSY_REFUSED observed_at_ns={refused_at} original_until_ns={original_until} frame_preserved=true deadline_preserved=true credits=0 accepted=0 prior_completion_drained=true startup_watch_readable=false"
+            );
+            release_tx.send(()).unwrap();
+            let remaining = original_until.saturating_sub(boottime_ns().unwrap());
+            let (popped_tid, popped_at, had_job) = popped_rx
+                .recv_timeout(Duration::from_nanos(remaining))
+                .unwrap();
+            assert_eq!(popped_tid, worker);
+            assert!(!had_job && refused_at <= popped_at && popped_at < original_until);
+            println!(
+                "INGRESS_BUSY_UNLOCK worker={popped_tid:?} observed_at_ns={popped_at} actual_empty_pop=true additional_control_wakes=0"
+            );
+            let mut notifications = 0;
+            let mut admitted = false;
+            while boottime_ns().unwrap() < original_until {
+                let remaining = original_until.saturating_sub(boottime_ns().unwrap());
+                if remaining == 0 {
+                    break;
+                }
+                let mut watch = PollFd {
+                    fd: completion_fd,
+                    events: 1,
+                    revents: 0,
+                };
+                let timeout_ms = remaining.div_ceil(1_000_000).min(i32::MAX as u64) as i32;
+                let observed = unsafe { poll(&mut watch, 1, timeout_ms) };
+                let observed_at = boottime_ns().unwrap();
+                if observed == -1 && io::Error::last_os_error().kind() == io::ErrorKind::Interrupted
+                {
+                    continue;
+                }
+                assert!(observed >= 0);
+                if observed == 0 || observed_at >= original_until {
+                    break;
+                }
+                assert_eq!(watch.revents, 1);
+                notifications += 1;
+                assert!(e.try_next_completion().unwrap().is_none());
+                // Retry only from an actual new completion-FD notification.
+                // The identical frame and original cutoff are never renewed.
+                match e.try_submit(&mut input, policy(1), original_until, 101) {
+                    Ok(admission) => {
+                        assert_eq!(admission.control_cookie, 101);
+                        assert_eq!(admission.policy, policy(1));
+                        assert!(input.is_none());
+                        admitted = true;
+                        break;
+                    }
+                    Err(Error::Busy) => {
+                        assert_eq!(input.as_ref().unwrap() as *const Frame, original_frame);
+                        assert_eq!(
+                            input
+                                .as_ref()
+                                .unwrap()
+                                .with_borrow(|view| format!("{view:?}"))
+                                .unwrap(),
+                            original_view
+                        );
+                    }
+                    other => panic!("same retained frame retry: {other:?}"),
+                }
+            }
+            let observed_at = boottime_ns().unwrap();
+            println!(
+                "INGRESS_BUSY_RETRY observed_at_ns={observed_at} original_until_ns={original_until} actual_notifications={notifications} admitted={admitted} retained_frame={} additional_control_wakes=0",
+                input.is_some()
+            );
+            assert!(
+                admitted,
+                "INGRESS_BUSY_LOST_WAKE: actual worker unlocked ingress but no completion-FD notification permitted the retained frame retry before its original cutoff"
+            );
+            assert_eq!(e.snapshot().unwrap().accepted, 1);
+            assert_eq!(
+                e.try_submit(&mut input, policy(1), original_until, 101),
+                Err(Error::Invalid)
+            );
+            assert_eq!(e.snapshot().unwrap().accepted, 1);
+        }));
+        // Never leave the real guard or authored worker retained after failure.
+        let _ = release_tx.send(());
+        let stopped = e.request_stop();
+        let joined = loop {
+            match e.try_join() {
+                Err(Error::Busy) if boottime_ns().unwrap() < close_until => thread::yield_now(),
+                value => break value,
+            }
+        };
+        let after = e.snapshot().unwrap();
+        let closure: Vec<_> = events.try_iter().collect();
+        let owner_dropped = closure
+            .iter()
+            .any(|(name, id)| *name == "drop" && *id == worker);
+        let all_same_worker = closure.iter().all(|(_, id)| *id == worker);
+        let closed_at = boottime_ns().unwrap();
+        println!(
+            "INGRESS_BUSY_CLOSED observed_at_ns={closed_at} original_close_until_ns={close_until} stop_ok={} actual_join_ok={} joined={} worker_alive={} owner_dropped_same_worker={owner_dropped} all_owner_callbacks_same_worker={all_same_worker}",
+            stopped.is_ok(),
+            joined.is_ok(),
+            after.joined,
+            after.worker_alive
+        );
+        assert!(stopped.is_ok() && joined.is_ok() && after.joined && !after.worker_alive);
+        assert!(owner_dropped && all_same_worker && closed_at < close_until);
+        if let Err(payload) = outcome {
+            std::panic::resume_unwind(payload);
+        }
+    }
+
+    #[test]
+    fn ingress_busy_retry_after_original_cutoff_refuses_without_consuming_frame() {
+        let _serial = SERIAL.lock().unwrap_or_else(|poison| poison.into_inner());
+        let started = boottime_ns().unwrap();
+        let work_until = started + 5_000_000_000;
+        let close_until = started + 8_000_000_000;
+        let (mut e, _native_release, events) = start(8);
+        let worker = await_stage(&events, "created");
+        let (entered_tx, entered_rx) = mpsc::channel();
+        let (release_tx, release_rx) = mpsc::channel();
+        let (popped_tx, popped_rx) = mpsc::channel();
+        let mut input = Some(frame(1));
+        let original_frame = input.as_ref().unwrap() as *const Frame;
+        let original_view = input
+            .as_ref()
+            .unwrap()
+            .with_borrow(|view| format!("{view:?}"))
+            .unwrap();
+        let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            *e.shared.ingress_test_pause.lock().unwrap() = Some(IngressTestPause {
+                entered: entered_tx,
+                release: release_rx,
+                popped: popped_tx,
+                hold_until_ns: work_until,
+            });
+            e.shared.wake.notify().unwrap();
+            let remaining = work_until.saturating_sub(boottime_ns().unwrap());
+            let (actual_worker, _) = entered_rx
+                .recv_timeout(Duration::from_nanos(remaining))
+                .unwrap();
+            assert_eq!(actual_worker, worker);
+            let fd = e.completion_fd().unwrap();
+            assert!(e.try_next_completion().unwrap().is_none());
+            assert!(!readable(fd));
+            let original_until = boottime_ns().unwrap() + 20_000_000;
+            assert_eq!(
+                e.try_submit(&mut input, policy(1), original_until, 101),
+                Err(Error::Busy)
+            );
+            assert_eq!(input.as_ref().unwrap() as *const Frame, original_frame);
+            // This clock observation, rather than a sleep or renewed cutoff,
+            // establishes that the retained original admission bound elapsed.
+            while boottime_ns().unwrap() < original_until {
+                thread::yield_now();
+            }
+            release_tx.send(()).unwrap();
+            let remaining = work_until.saturating_sub(boottime_ns().unwrap());
+            let (actual_worker, popped_at, had_job) = popped_rx
+                .recv_timeout(Duration::from_nanos(remaining))
+                .unwrap();
+            assert_eq!(actual_worker, worker);
+            assert!(!had_job && popped_at >= original_until && popped_at < work_until);
+            let refused_at = loop {
+                let remaining = work_until.saturating_sub(boottime_ns().unwrap());
+                assert!(remaining > 0);
+                let mut watch = PollFd {
+                    fd,
+                    events: 1,
+                    revents: 0,
+                };
+                let timeout_ms = remaining.div_ceil(1_000_000).min(i32::MAX as u64) as i32;
+                let observed = unsafe { poll(&mut watch, 1, timeout_ms) };
+                if observed == -1 && io::Error::last_os_error().kind() == io::ErrorKind::Interrupted
+                {
+                    continue;
+                }
+                assert_eq!(observed, 1);
+                assert_eq!(watch.revents, 1);
+                assert!(e.try_next_completion().unwrap().is_none());
+                match e.try_submit(&mut input, policy(1), original_until, 101) {
+                    Err(Error::Expired) => break boottime_ns().unwrap(),
+                    Err(Error::Busy) => {}
+                    other => panic!("expired retained admission: {other:?}"),
+                }
+            };
+            assert!(original_until <= refused_at && refused_at < work_until);
+            assert_eq!(input.as_ref().unwrap() as *const Frame, original_frame);
+            assert_eq!(
+                input
+                    .as_ref()
+                    .unwrap()
+                    .with_borrow(|view| format!("{view:?}"))
+                    .unwrap(),
+                original_view
+            );
+            let refused = e.snapshot().unwrap();
+            assert!(refused.ready && !refused.failed && !refused.stopping);
+            assert_eq!(
+                (
+                    refused.accepted,
+                    refused.occupied_credits,
+                    refused.queued_frames
+                ),
+                (0, 0, 0)
+            );
+            println!(
+                "INGRESS_BUSY_EXPIRED original_until_ns={original_until} actual_unlock_ns={popped_at} expired_refusal_ns={refused_at} same_frame_preserved=true accepted=0 credits=0 original_work_until_ns={work_until}"
+            );
+        }));
+        let _ = release_tx.send(());
+        let stopped = e.request_stop();
+        let joined = loop {
+            match e.try_join() {
+                Err(Error::Busy) if boottime_ns().unwrap() < close_until => thread::yield_now(),
+                value => break value,
+            }
+        };
+        let after = e.snapshot().unwrap();
+        let closure: Vec<_> = events.try_iter().collect();
+        let owner_dropped = closure
+            .iter()
+            .any(|(name, id)| *name == "drop" && *id == worker);
+        assert!(stopped.is_ok() && joined.is_ok() && after.joined && !after.worker_alive);
+        assert!(owner_dropped && closure.iter().all(|(_, id)| *id == worker));
+        assert!(boottime_ns().unwrap() < close_until);
+        if let Err(payload) = outcome {
+            std::panic::resume_unwind(payload);
+        }
     }
 
     #[test]

@@ -195,6 +195,20 @@ for matching evidence and unchanged Source/full-runtime limits.
 
 ## Retained worker CPU component
 
+This custom render executor remains component research under the
+[graphics critical-path decision](../docs/runtime-language-decision.md#graphics-critical-path).
+The next integrated app tracer uses normal upstream Hyprland under the Rust
+session owner. The [ingress wake repair](../docs/native-render-ingress-wake.md)
+passes all66 active Rust tests and two ignored child modes, formatting, strict
+Clippy and release. Older native/C++ archives below retain their own evidence.
+
+An ingress `Busy` refusal preserves its exact frame and absolute cutoff. The
+worker now notifies the existing completion FD after releasing ingress, including
+an empty pop. Readability can therefore mean retry progress with no completion
+record: drain the existing API, then reoffer retained work under its original
+cutoff. No new FD, queue, credit, timer or deadline renewal is introduced. A
+notification failure takes the existing terminal path while retaining custody.
+
 The original [`executor` module](src/executor.rs) owns its worker `JoinHandle`,
 three admitted-frame credits and a separate128-record completion pool, reserving
 five records before each admission. Normal Busy join/refusal retains ownership;

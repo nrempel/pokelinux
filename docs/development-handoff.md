@@ -24,6 +24,20 @@ progress porting phone services to Rust or as an all-Rust stack.
 
 ## Current stopping point
 
+The [graphics critical-path decision](runtime-language-decision.md#graphics-critical-path)
+now selects normal upstream Hyprland under the Rust session owner for the next
+Sounds/Source/permissions/PCM/theme/Stop integration. Stop extending the custom
+CPU/native renderer reconstruction as the app-launch prerequisite; preserve it
+and its failed runtime evidence as component research. Source freshness and
+render-stall availability, uncertain native operations and genuine display
+cleanup stay open. No physical phone is authorized.
+
+The [experimental executor ingress wake fix](native-render-ingress-wake.md)
+passes its exact frozen RED→GREEN test, a separate expired-retry refusal and all66
+active Rust tests, with two ignored child modes, fmt, strict Clippy and release.
+The new archive is not C++/normal-main/ARM qualified or selected into those older
+test epochs. This component result does not qualify the integrated app slice.
+
 The [native graphics resource operations](native-render-exact-buffer.md) pass their matching normal AQ15 build, ten existing CPU groups and four API checks after missing-interface RED. Two real-driver runs observe all five resource groups passing, but both aggregates fail a control-session check; the diagnostic identifies revocation with a queued CHANGE. Production exact-buffer preparation/execution, normal frames, Source, ARM and phone gates remain open.
 
 The [Rust format planner](native-render-format-policy.md) now chooses exact implicit or explicit requests from copied native observations. Its six-group C++/Rust boundary test, all64 existing Rust tests, five previous C++ programs, formatting, strict Clippy and Release build pass after genuine missing-interface RED. The obsolete planning API is removed. The shared native startup/CHANGE collector removes both old C++ format choices and passes its matching full compositor/SDK build. The unchanged normal startup/CHANGE test also passes on the real generic x86 KVM virtio driver: Rust accepts the fresh sequence4 configuration after bootstrap3, with one output and no Stop. Client frames, native retirement and the integrated normal app session remain open.

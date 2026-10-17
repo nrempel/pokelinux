@@ -27,6 +27,29 @@ readiness authority must not accumulate in C++. Reusing an upstream C++ engine
 is distinct from retaining Android framework services. The matched Google
 kernel/modules/firmware decision remains unchanged.
 
+## Graphics critical path
+
+17 October2026: use normal upstream Hyprland initialization/rendering as the
+next integrated phone-app tracer candidate, supervised by the Rust session owner.
+Keep the custom CPU-scene/Rust-executor reconstruction and its exact-buffer,
+credit and retirement tests as component research. They are not prerequisites
+for launching an app through a normal compositor. This selects one intended
+production direction; it adds no fallback or compatibility runtime.
+
+The next measured slice joins genuine Omarchy launch and Source/focus with the
+Rust permission/audio services, actual virtual PCM, visible state, live theme
+change and app/service Stop. Earlier screenshots and separately passing
+components do not qualify that composition. Keep Source's unchanged100ms lease,
+real compositor identity and fail-closed revocation. Its rendering-stall
+availability failure remains open; do not synthesize heartbeats or replay work.
+
+Responsive service Stop, compositor process termination and verified native
+display cleanup are separate requirements. Supervision establishes neither fresh
+focus/lock facts nor display retirement. Inspect actual uncertain native retries
+at their operation boundary; replacing the entire upstream renderer is not the
+default remedy. Reconsider a focused control/render separation only when the
+measured normal composition establishes the necessary blocker.
+
 ## Earlier recommended target
 
 | Layer | Language | Reason |

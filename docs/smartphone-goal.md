@@ -396,6 +396,10 @@ runs keep their recorded component versions and evidence classes. Installed
 malformed-indication continuation, producer/reset, full semantic routing and
 physical phone qualification remain open.
 
+The [graphics critical-path decision](runtime-language-decision.md#graphics-critical-path) selects normal upstream Hyprland supervised by the Rust session owner for the next measured Sounds/Source/audio/PCM/theme/Stop slice. The custom renderer remains component research. Source freshness, rendering-stall availability and native display cleanup remain required, unresolved gates; no previous screenshot or component pass qualifies the combined slice.
+
+The [Rust ingress wake repair](native-render-ingress-wake.md) adds genuine retained-frame retry notification after actual worker unlock. Its frozen regression and separate expiry refusal pass with all66 Rust tests, two ignored child modes, fmt, strict Clippy and release. It proves no native frame, ARM or phone result.
+
 ## Product and architecture
 
 Nicholas updated the target on 12 October 2026: implement the required phone

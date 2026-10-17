@@ -16,6 +16,8 @@ keeps these selections and failed attempts distinct. Independent review matches
 the frozen sources, actual logs and closure receipts, without another runtime
 run; it checks archive selection/size and retains the primary pinned digest.
 
+The later [ingress wake repair](native-render-ingress-wake.md) changes the shared Rust worker without changing this ABI. Existing completion-FD readability may carry retry progress while `next_completion` returns Empty; a retained frame keeps its original cutoff. Its66-test Rust-only QA does not rerun the earlier C++ callers or qualify a normal compositor. The [graphics decision](runtime-language-decision.md#graphics-critical-path) keeps this executor as component research.
+
 ## Construction and native custody
 
 `OwnerFactory` now takes one typed, by-value, move-only `OwnerFactoryConfig`.
