@@ -22,7 +22,7 @@ silence, granted touchscreen routing, focus-loss restrictions and terminal
 session loss with silence and launch refusal. The real unresized screenshots
 qualify the Pixel10 profile:1080×2424, approximately422PPI and DPR2.625.
 
-The only compositor source change is a
+In that prepared pass, the only compositor source change is a
 [one-entry logical-output allowlist fix](patches/hyprland-unprivileged-logical-output.patch),
 qualified after actual registry RED. Cold startup, live theme changes in this
 combined slice, the full Omarchy shell/menu, fresh Source during rendering stalls
@@ -43,6 +43,9 @@ Stop after Source loss exits cleanly. Healthy cold startup remains open. A later
 explicit 16-CPU diagnostic still expires Source at103.24ms; all 60 captured
 container CPU-counter samples report zero quota throttling. The cause remains
 unidentified; this resource change is not a production repair.
+A [bounded callback diagnostic](docs/native-callback-spans.md) now passes native
+component checks and a matching full compositor/SDK build. Real callback dispatch
+and a fresh cold-start diagnostic remain next; no cause or repair is inferred.
 [Native SIGTERM Stop](docs/native-session-signal-stop.md) also passes before
 readiness, with Main exit0 and no adopted children. The [explicit deployment
 installer](docs/native-normal-upstream-tracer.md#explicit-installed-session-selection)

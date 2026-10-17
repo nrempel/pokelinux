@@ -119,10 +119,14 @@ gap. The next logging-only profile is admitted separately from the original205-f
 installer proof; actual guest205-file installation is checked. It retains100,868
 log bytes and another115.427033ms Source gap, with seq2 received/validated52.269us
 later. It identifies no blocking operation or logger buffering behavior. All146
-waits/153PIPE plus original closure pass, while full startup stays false. Next
-prepare a bounded callback-span diagnostic with BOOTTIME/main-thread CPU and
-explicit coverage, keeping default logging and all Source/functional gates.
-No cause or production repair is inferred.
+waits/153PIPE plus original closure pass, while full startup stays false. The
+[bounded callback diagnostic](native-callback-spans.md) now passes frozen
+structural RED→native component GREEN and its matching full GNU16 compositor/
+498-file SDK build. Its1024-record BOOTTIME/main-thread CPU ring brackets only
+three existing callback sites. All16 component and31 build waits/merged EOFs
+close separately. Next run the fresh cold diagnostic with retained inode/main
+pidfd and post-exit reading, keeping default logging and all Source/functional
+gates. Native callback dispatch, cause and production repair remain unqualified.
 
 The Rust [one-shot add-PDN response observer](native-radio-add-pdn-response.md)
 now retains immutable request/session/route/error/byte history after frozen

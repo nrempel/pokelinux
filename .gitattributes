@@ -8,3 +8,4 @@ tools/native-render-owner/aquamarine-startup-custody-test-hooks.patch -whitespac
 tools/native-render-owner/hyprland-startup-custody-test.patch -whitespace
 tools/native-render-owner/aquamarine-retained-child-custody.patch -whitespace
 tools/native-render-owner/first-stop/owned-startup-first-stop.patch -whitespace
+tools/native-callback-spans/callback-span-producer.patch -whitespace

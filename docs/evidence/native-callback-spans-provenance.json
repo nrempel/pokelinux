@@ -1,0 +1,124 @@
+{
+  "ARM_or_phone_qualified": false,
+  "Source_gap_cause_identified": false,
+  "baseline_CPP_sha256": "104ff43a4c02fcc88e8711cade68becd3a1fe099e970e4b1306774c85dd76f7c",
+  "cold_startup_qualified": false,
+  "component": {
+    "GREEN_result_sha256": "26961947fa22c927c2dc3d5e1e7d499287bb3f7186b488604884cd4f7ead0bc7",
+    "RED_result_sha256": "997e0cb857ae9e5890e470f4f787988bd424dd61373558de94c53940754a33aa",
+    "actual_RED": {
+      "classification": "MISSING_PRODUCER_TYPE_STRUCTURAL_RED",
+      "control_diagnostics_bytes": 0,
+      "control_exit": 0,
+      "no_future_declarations_supplied": true,
+      "target_exit": 1,
+      "target_primary_source_line": 13
+    },
+    "actual_direct_waits": 16,
+    "actual_merged_PIPE_EOFs": 16,
+    "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+    "normal_completed_spans": 3,
+    "normal_records": 7,
+    "normal_unmatched_entries": 1,
+    "owned_closure_qualified": true,
+    "rolling_completed_spans": 512,
+    "rolling_overwritten_reservations": 176,
+    "rolling_reservations": 1200,
+    "rolling_retained_records": 1024,
+    "three_groups": [
+      "GROUP normal-return-nesting-errno-and-unmatched-entry PASS",
+      "GROUP fixed-file-unavailable-and-sticky-refusals PASS",
+      "GROUP actual-rolling-overflow PASS"
+    ],
+    "unqualified_controls": [
+      "real machine interruption inside reservation/payload/commit",
+      "actual clock syscall failure",
+      "foreign process/thread callback misuse",
+      "whole genuine GNU16 Hyprland translation unit",
+      "native AQ or timer dispatch",
+      "Source gap cause"
+    ]
+  },
+  "matching_local_native_x86_build": {
+    "Root_qualified": true,
+    "SDK_differences_from_old_build": [
+      "usr/include/hyprland/src/version.h"
+    ],
+    "SDK_tar": {
+      "bytes": 2580480,
+      "sha256": "7a10ab5410f479464a7b0abd752de8861c64e4285fb72d9bc107e5724fc34fe6"
+    },
+    "actual_Root_exec_exit": 0,
+    "actual_compile_command_entries": 448,
+    "actual_direct_waits": 31,
+    "actual_merged_PIPE_EOFs": 31,
+    "boot_result_sha256": "e9e888cdd4d765626ec85af8e84c88a3f704aeb57cddfee5fad5cfc4263c08af",
+    "build_result_sha256": "45135b8e7b9086f7f8c89b7ee3a840cb9dee7148e052675a0db6417beb235365",
+    "callback_producer_proof_sha256": "c0afe25e660e75bb3433882f2c82f21fe294342a85f3fb43f5cb1ae1afb94aa0",
+    "command_sha256": "65da8a03af6d96dd2a6d45aa5357b064dccdf1c387a3c4a361bfdd06c1048ad8",
+    "compositor_ELF_executed": false,
+    "elapsed_host_boottime_ns": 159311014342,
+    "exact_two_authored_source_deltas": [
+      "src/managers/ProtocolManager.cpp",
+      "src/managers/eventLoop/EventLoopManager.cpp"
+    ],
+    "execution_sha256": "be34ea7b7d92dceb97e55f2cc98f2467ded3c3319f608fc428ea1c56565c77e0",
+    "full_GNU16_EventLoopManager_object_and_ELF_link_observed": true,
+    "guest_result_sha256": "a70e7fa30b49d23d874291de7cc0770c8c6849bd01f764aa5bcb6e7ba386cd07",
+    "matching_SDK_leaves_read_back": 498,
+    "new_ELF": {
+      "bytes": 19535720,
+      "sha256": "a8e0973b4bc3443465e68ff636843d10796dd69b2450c11f30e18d68e8b6bb36"
+    },
+    "new_ELF_is_signed_Arch_package": false,
+    "original_cutoffs_and_recorded_owned_closure": true,
+    "phase_manifest_sha256": "796d15d9dcbe35a4fa105d939c1b4a75b22d1b2be0a6f2d0145a7b6e2223e934",
+    "qualified_local_source_build_only": true,
+    "same_daemon_exact_CID_absent": true,
+    "schema": 1,
+    "selection_sha256": "54901998726b2c4b3ea4c71dcd74c52d5d7b45d5a67abfe34f5e07e0b3c965ce",
+    "separate_QMP_socket_EOF": true,
+    "source_inputs_pre_post_unchanged_under_lock": true
+  },
+  "native_callback_dispatch_qualified": false,
+  "next_boundary": "Fresh cold installed diagnostic with matching compositor/SDK/plugins, retained inode and main pidfd, post-exit ring read, original Source100ms and unchanged full functional consumer.",
+  "phone_accessed": false,
+  "production_repair_qualified": false,
+  "proprietary_inputs_or_raw_private_audit_artifacts_published": false,
+  "published_files": {
+    "callback-span-producer.patch": {
+      "bytes": 9326,
+      "sha256": "4496dd19916fee69d35588bc31e4d3582747961ff3893453738aca5b9c3348ff"
+    },
+    "callback_span_consumer.py": {
+      "bytes": 9009,
+      "sha256": "ef3cf731d28d85af94db7b7fb387ff9a042280e2cf9652b09e9c45672ab52b0c"
+    },
+    "extract_producer.py": {
+      "bytes": 734,
+      "sha256": "6592d5de256c7ee2349610de4089066c29f2be589689a5092edc93efb96029c2"
+    },
+    "format_check.py": {
+      "bytes": 5340,
+      "sha256": "4e994ea19e16f11301f5ab0c604a85ef9fdcc9f6f50a7d4661f97c84d397e9ec"
+    },
+    "producer-component.cpp": {
+      "bytes": 6149,
+      "sha256": "aad36299d8cc33defb0eeee781c2ce84777c6ce4100e181de0db348082124a12"
+    }
+  },
+  "reader_format": {
+    "actual_FIFO_CLI_refusal": true,
+    "actual_direct_waits": 3,
+    "actual_merged_PIPE_EOFs": 3,
+    "actual_v1_crossing_span_RED": true,
+    "authored_format_controls": 10,
+    "source_only_manifest_sha256": "3ef392248a9bf852d45c85390dfbf04b258e6fd81b16325d282c6bd70bda3ee1",
+    "unchanged_v2_consumer_GREEN": true
+  },
+  "replacement_CPP_sha256": "fa6453581abdff5d164fd6fca0cf2c34f121df3254352eae0a66c9884cb40988",
+  "schema": 1,
+  "scope": "bounded diagnostic component and matching local native x86 source build only",
+  "temporary_upstream_diagnostic": true,
+  "upstream_commit": "efb50993780079460b0cbed1363e2166a2de1d9f"
+}

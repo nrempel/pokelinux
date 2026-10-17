@@ -1,0 +1,220 @@
+--- a/src/managers/eventLoop/EventLoopManager.cpp
++++ b/src/managers/eventLoop/EventLoopManager.cpp
+@@ -16,6 +16,173 @@
+ 
+ #define TIMESPEC_NSEC_PER_SEC 1000000000L
+ 
++// POKELINUX_CALLBACK_SPAN_PRODUCER_BEGIN
++#include <atomic>
++#include <bit>
++#include <cerrno>
++#include <cstddef>
++#include <cstdint>
++#include <cstring>
++#include <new>
++#include <type_traits>
++#include <fcntl.h>
++#include <sys/mman.h>
++#include <sys/stat.h>
++#include <sys/syscall.h>
++#include <unistd.h>
++#include <time.h>
++
++namespace {
++class CCallbackSpanRing {
++  public:
++    static constexpr size_t FILE_BYTES = 82048;
++    struct SToken {
++        uint64_t span = 0, identity = 0, auxiliary = 0;
++        uint32_t kind = 0;
++    };
++    CCallbackSpanRing() noexcept = default;
++    CCallbackSpanRing(const CCallbackSpanRing&) = delete;
++    CCallbackSpanRing& operator=(const CCallbackSpanRing&) = delete;
++    ~CCallbackSpanRing() noexcept {
++        const SErrno saved;
++        if (m_storage)
++            munmap(m_storage, FILE_BYTES);
++    }
++    void armOnce() noexcept { arm("/run/user/1000/pokelinux-callback-spans.bin"); }
++    bool arm(const char* path) noexcept {
++        const SErrno saved;
++        if (m_attempted)
++            return false;
++        m_attempted = true;
++        if (getuid() != 1000 || geteuid() != 1000 || getgid() != 1000 || getegid() != 1000)
++            return false;
++        const int fd = open(path, O_RDWR | O_CLOEXEC | O_NOFOLLOW | O_NONBLOCK);
++        if (fd < 0)
++            return false;
++        struct stat st{};
++        if (fstat(fd, &st) != 0 || !S_ISREG(st.st_mode) || (st.st_mode & 07777) != 0600 ||
++            st.st_uid != 1000 || st.st_gid != 1000 || st.st_nlink != 1 || st.st_size != FILE_BYTES) {
++            close(fd);
++            return false;
++        }
++        void* mapping = mmap(nullptr, FILE_BYTES, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
++        const int closeResult = close(fd);
++        if (mapping == MAP_FAILED)
++            return false;
++        if (closeResult != 0) {
++            munmap(mapping, FILE_BYTES);
++            return false;
++        }
++        // Only the selected preallocated zero file may be initialized. A stale
++        // file remains untouched; unavailable tracing cannot prevent callbacks.
++        const auto bytes = static_cast<const unsigned char*>(mapping);
++        for (size_t i = 0; i < FILE_BYTES; ++i) {
++            if (bytes[i]) {
++                munmap(mapping, FILE_BYTES);
++                return false;
++            }
++        }
++        auto storage = ::new (mapping) SStorage{};
++        auto& h = storage->header;
++        h.version = 1; h.headerBytes = 128; h.recordBytes = 80; h.capacity = CAPACITY;
++        h.pid = uint32_t(getpid()); h.tid = uint32_t(syscall(SYS_gettid));
++        const auto boot = clock(CLOCK_BOOTTIME), cpu = clock(CLOCK_THREAD_CPUTIME_ID);
++        h.armBoot = boot.ns; h.armCPU = cpu.ns; h.armBootError = boot.error; h.armCPUError = cpu.error;
++        h.flags.store(1 | ((boot.error || cpu.error) ? 4 : 0), std::memory_order_relaxed);
++        // Published last. The reader never accepts a partly armed header.
++        h.magic.store(0x3130505342434c50ULL, std::memory_order_release);
++        m_storage = storage;
++        return true;
++    }
++    SToken enter(uint32_t kind, uint64_t identity, uint64_t auxiliary) noexcept {
++        const SErrno saved;
++        const uint64_t span = emit(kind, 1, 0, identity, auxiliary);
++        return {span, identity, auxiliary, kind};
++    }
++    void normalReturn(const SToken& token) noexcept {
++        const SErrno saved;
++        if (token.span)
++            emit(token.kind, 2, token.span, token.identity, token.auxiliary);
++    }
++
++  private:
++    static constexpr uint32_t CAPACITY = 1024;
++    struct SErrno {
++        const int value = errno;
++        ~SErrno() noexcept { errno = value; }
++    };
++    struct SClock { uint64_t ns; int32_t error; };
++    struct alignas(8) SHeader {
++        std::atomic<uint64_t> magic{0};
++        uint32_t version = 0, headerBytes = 0, recordBytes = 0, capacity = 0, pid = 0, tid = 0;
++        std::atomic<uint64_t> highest{0}, flags{0};
++        uint64_t armBoot = 0, armCPU = 0;
++        int32_t armBootError = 0, armCPUError = 0;
++        uint64_t reserved[7]{};
++    };
++    struct alignas(8) SRecord {
++        std::atomic<uint64_t> committed{0};
++        uint64_t span = 0, boot = 0, cpu = 0, identity = 0, auxiliary = 0;
++        uint32_t kind = 0, edge = 0, pid = 0, tid = 0;
++        int32_t bootError = 0, cpuError = 0;
++        uint32_t flags = 0, reserved = 0;
++    };
++    struct SStorage { SHeader header; SRecord records[CAPACITY]; };
++    static_assert(std::endian::native == std::endian::little && sizeof(uintptr_t) == 8);
++    static_assert(std::atomic<uint64_t>::is_always_lock_free && sizeof(std::atomic<uint64_t>) == 8);
++    static_assert(std::is_standard_layout_v<SHeader> && std::is_standard_layout_v<SRecord>);
++    static_assert(sizeof(SHeader) == 128 && sizeof(SRecord) == 80 && sizeof(SStorage) == FILE_BYTES);
++    static_assert(offsetof(SHeader, highest) == 32 && offsetof(SHeader, flags) == 40 && offsetof(SHeader, armBoot) == 48 &&
++                  offsetof(SHeader, armBootError) == 64 && offsetof(SHeader, reserved) == 72);
++    static_assert(offsetof(SRecord, span) == 8 && offsetof(SRecord, kind) == 48 && offsetof(SRecord, bootError) == 64 &&
++                  offsetof(SRecord, flags) == 72);
++    static SClock clock(clockid_t id) noexcept {
++        timespec ts{};
++        errno = 0;
++        if (clock_gettime(id, &ts) != 0)
++            return {0, errno};
++        return {uint64_t(ts.tv_sec) * 1000000000ULL + uint64_t(ts.tv_nsec), 0};
++    }
++    uint64_t emit(uint32_t kind, uint32_t edge, uint64_t span, uint64_t identity, uint64_t auxiliary) noexcept {
++        if (!m_storage)
++            return 0;
++        auto& h = m_storage->header;
++        if (uint32_t(getpid()) != h.pid || uint32_t(syscall(SYS_gettid)) != h.tid) {
++            h.flags.fetch_or(16, std::memory_order_relaxed);
++            return 0;
++        }
++        const uint64_t previous = h.highest.load(std::memory_order_relaxed);
++        if (previous == UINT64_MAX) {
++            h.flags.fetch_or(8, std::memory_order_relaxed);
++            return 0;
++        }
++        const uint64_t sequence = previous + 1;
++        // A reservation becomes visible before this slot is touched. Ordered
++        // atomic stores/fence also forbid old commits covering replaced payload.
++        h.highest.store(sequence, std::memory_order_seq_cst);
++        auto& r = m_storage->records[(sequence - 1) % CAPACITY];
++        r.committed.store(0, std::memory_order_seq_cst);
++        std::atomic_thread_fence(std::memory_order_seq_cst);
++        const auto boot = clock(CLOCK_BOOTTIME), cpu = clock(CLOCK_THREAD_CPUTIME_ID);
++        r.span = edge == 1 ? sequence : span;
++        r.boot = boot.ns; r.cpu = cpu.ns; r.identity = identity; r.auxiliary = auxiliary;
++        r.kind = kind; r.edge = edge; r.pid = h.pid; r.tid = h.tid;
++        r.bootError = boot.error; r.cpuError = cpu.error; r.flags = 0; r.reserved = 0;
++        if (sequence > CAPACITY)
++            h.flags.fetch_or(2, std::memory_order_relaxed);
++        if (boot.error || cpu.error)
++            h.flags.fetch_or(4, std::memory_order_relaxed);
++        r.committed.store(sequence, std::memory_order_release);
++        return sequence;
++    }
++    SStorage* m_storage = nullptr;
++    bool m_attempted = false;
++};
++} // namespace
++// POKELINUX_CALLBACK_SPAN_PRODUCER_END
++
++static CCallbackSpanRing callbackSpanRing;
++
+ static uint64_t LAST_DO_LATER_SEQ = 1;
+ 
+ SEventLoopDoLaterLock::SEventLoopDoLaterLock(uint64_t seq_) : seq(seq_) {
+@@ -31,6 +198,7 @@
+     m_timers.timerfd  = CFileDescriptor{timerfd_create(CLOCK_MONOTONIC, TFD_CLOEXEC)};
+     m_wayland.loop    = wlEventLoop;
+     m_wayland.display = display;
++    callbackSpanRing.armOnce();
+ }
+ 
+ CEventLoopManager::~CEventLoopManager() {
+@@ -63,7 +231,9 @@
+ 
+ static int aquamarineFDWrite(int fd, uint32_t mask, void* data) {
+     auto POLLFD = sc<Aquamarine::SPollFD*>(data);
++    const auto span = callbackSpanRing.enter(1, reinterpret_cast<uintptr_t>(POLLFD), uint32_t(fd));
+     POLLFD->onSignal();
++    callbackSpanRing.normalReturn(span);
+     return 0;
+ }
+ 
+@@ -142,8 +312,11 @@
+ void CEventLoopManager::onTimerFire() {
+     const auto CPY = m_timers.timers;
+     for (auto const& t : CPY) {
+-        if (t.strongRef() > 2 /* if it's 2, it was lost. Don't call it. */ && t->passed() && !t->cancelled())
++        if (t.strongRef() > 2 /* if it's 2, it was lost. Don't call it. */ && t->passed() && !t->cancelled()) {
++            const auto span = callbackSpanRing.enter(2, reinterpret_cast<uintptr_t>(t.get()), 0);
+             t->call(t);
++            callbackSpanRing.normalReturn(span);
++        }
+     }
+ 
+     scheduleRecalc();
+@@ -228,8 +401,11 @@
+             IDLE->fns.clear();
+             IDLE->eventSource = nullptr;
+             for (auto& f : fns) {
+-                if (f.second)
++                if (f.second) {
++                    const auto span = callbackSpanRing.enter(3, f.first, 0);
+                     f.second();
++                    callbackSpanRing.normalReturn(span);
++                }
+             }
+         },
+         &m_idle);
