@@ -174,10 +174,40 @@ ARM64/QEMU, the matched Google/Pixel kernel and physical-device evidence.
 The earlier failed raw allocation/import fixtures remain failed; this run does
 not invoke those production operations or qualify rendering/presentation.
 
+## Actual normal Wayland client boundary
+
+A later separately frozen [real client](../tools/native-render-owner/normal-client/README.md)
+now executes against the same normal main/SDK/Rust/AQ cohort. After actual
+bootstrap8→Ready1 and ordered bootstrap3→CHANGE4, UID/GID1000 authenticates the
+Wayland socket peer and completes a real registry sync. The required-global mask
+is0: wl_compositor>=4, wl_shm and xdg_wm_base are unavailable. The client records
+the exact negative marker and naturally exits77. A subsequent authenticated public
+snapshot remains healthy backend Ready, with the same accepted ten watermarks,
+one output and no Stop. This is a genuine missing-normal-server functional RED.
+
+All38 direct waits and45 PIPE EOFs close; the QMP socket and three public-response
+EOFs are separate. QEMU/CLI exit0, the exact container is absent on the same daemon
+and inputs stay unchanged. The independent qualification reparses raw client
+records, reruns the frozen predicate and rehashes all bounded component outputs.
+The runner's expected-RED collection passes; the normal app path remains failed.
+Main SIGKILL/wait-9 remains process disposal, without native retirement or join.
+
+The first launch failed at an old runner phase check before QEMU, main or client.
+Exactly three phase checks were corrected in a fresh preparation; client, oracle,
+functional assertions and bounds remain unchanged. That first aggregate stays
+failed and supplies no functional RED. No frame, native Stop, Source, ARM or phone
+result follows. Requested Pixel geometry is recorded without a new native
+measurement or screenshot. See the [compact cohort](../tools/native-render-owner/normal-client/source-cohort.json).
+
+| Real client boundary artifact | SHA-256 |
+| --- | --- |
+| Closed expected-RED execution | 62566d2af7295ab254d74fd3700dd26863de1487ef00cbfaf7f2644dd8a0abcb |
+| Independent Root qualification | c509a5902ca6c9db790fbe7cf30ba4d3247dae712c2fbce1df21d47b34bfbeca |
+
 ## Next integrated slice
 
-Continue the accepted native session through real normal Wayland globals, client
-content and Rust frame admission. Preserve actual event reconciliation and the
+Connect the accepted native session to existing normal Hyprland CPU managers,
+outputs, protocols and scene handling, then real client content and Rust admission. Preserve actual event reconciliation and the
 retained output/mode/device identity; use the copied Rust request mode directly.
 
 The [exact native allocation/import operations](native-render-exact-buffer.md)

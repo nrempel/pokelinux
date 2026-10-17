@@ -55,6 +55,10 @@ bootstrap/queued-CHANGE test on generic x86 KVM virtio. All ten Rust watermarks
 correlate bootstrap3→CHANGE4 with one accepted output, no Stop and the unchanged
 20s startup cutoff. This is metadata readiness; shell and native retirement
 remain false.
+The later [real normal client boundary](../tools/native-render-owner/normal-client/README.md)
+now reaches an authenticated registry sync with no required app globals, followed
+by healthy same-main Rust metadata. That functional RED precedes normal-server
+integration; its38 waits/45 PIPE EOFs close separately from native cleanup.
 Native prepare/execute still return protocol refusal. Normal client frames,
 Source and phone qualification remain open.
 The historical checkpoints below retain their original providers and scopes.

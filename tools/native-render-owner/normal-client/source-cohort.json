@@ -1,0 +1,148 @@
+{
+  "QMP_socket_EOF_separate": true,
+  "Root_qualification": {
+    "bytes": 3022,
+    "sha256": "c509a5902ca6c9db790fbe7cf30ba4d3247dae712c2fbce1df21d47b34bfbeca"
+  },
+  "actual_PIPE_EOFs": 45,
+  "actual_client_build": {
+    "actual_XML": {
+      "bytes": 63846,
+      "sha256": "7ba7f9c8473deee674cb1f154a18abd0bb0cc072604fc055b0c15e459fc4c7df"
+    },
+    "actual_client_source": {
+      "bytes": 15669,
+      "sha256": "714da891f78daa33059259e9dd34c89240c73f66f867ad9d579c21796af047ce"
+    },
+    "actual_fixture_pattern": {
+      "bytes": 923,
+      "sha256": "44a1ee4e6c8b0dae7f6ad63c40cc31fef8998cb2467e40233b1ffdf61a40e14c"
+    },
+    "actual_scanner": {
+      "bytes": 51376,
+      "sha256": "ce267015aacab2108ac8a76f273ef5431161603e1b63c7d976847b3f467bef51"
+    },
+    "client_pin": {
+      "bytes": 42200,
+      "sha256": "d71e3993d5cc4b9676a3153eede4c836600d5e717af5211522034b8b9af604b6"
+    },
+    "generated_code": {
+      "bytes": 5999,
+      "sha256": "9e12fcd5676d8c6b6cfd233c2eba563163c0ea7e586cb6e27f202a328323c7f0"
+    },
+    "generated_header": {
+      "bytes": 86409,
+      "sha256": "a09726137ea9fe1a23d58c95f1d33ab77a3fc692c63726bc82fbc91ab8e5c6fc"
+    },
+    "witness_compiled_or_loaded": false
+  },
+  "actual_client_negative_exit": 77,
+  "actual_client_records": 4,
+  "actual_direct_waits": 38,
+  "actual_providers": {
+    "AQ_Root_qualification": {
+      "bytes": 1375,
+      "sha256": "b81611b90f9696d2b4b47253bd763be664456420985c482d50bc4ae22f4e47e4"
+    },
+    "AQ_library": {
+      "bytes": 1884672,
+      "sha256": "9512cc02716accd9636e9b462df28af83154078f9b5856620640b869a8a432b2"
+    },
+    "Rust_QA_qualification": {
+      "bytes": 1699,
+      "sha256": "38cb26dbe6d286b89a058c3abe8b5dd6b3f8a4919ea55bbbd8e1c33f0ab308a0"
+    },
+    "Rust_archive": {
+      "bytes": 22940238,
+      "sha256": "425dd6fa9d604054b2ab15beeb488c79f1dbcac5efc0779b213bed5bd6de9f83"
+    },
+    "main_ELF": {
+      "bytes": 25326944,
+      "sha256": "4ffa7ae10fdbbf2c42eac3e53a0e7a827a2a86857bc65e777d14cfc8e3a6c182"
+    },
+    "main_Root_qualification": {
+      "bytes": 3234,
+      "sha256": "f1b3fa2e2d996fc5f43af98ef0d9125176b6fb4ba069ad9e8c8bb70e680cda63"
+    },
+    "main_SDK_tar": {
+      "bytes": 4751360,
+      "sha256": "cf58cbf5a946ec700a81cb72344e995cd4f56f404d234c9934ecec131b0e8603"
+    },
+    "main_build_result": {
+      "bytes": 714824,
+      "sha256": "3d6e592da54555936da671028abcba90e82a88c0cc9f01f9e264c2380bd3978f"
+    },
+    "sealed_native_adapter_source": {
+      "bytes": 2427,
+      "sha256": "b6d97e55d6c146b1e8b211620302045ecbf374727916029b86f21a62c05df7c4"
+    }
+  },
+  "actual_public_requests": 3,
+  "actual_public_response_bytes": 2077,
+  "actual_registry_global_mask": 0,
+  "actual_required_globals": [
+    "wl_compositor>=4",
+    "wl_shm",
+    "xdg_wm_base"
+  ],
+  "case": {
+    "bytes": 23849,
+    "sha256": "38e356eb1968df1891be7c9e537e62ab34e482b522a301584a737f287e435d4c"
+  },
+  "classification": "NORMAL_CLIENT_FRAME_TARGET_RED",
+  "combined_bounded_evidence_bytes": 2641,
+  "combined_bounded_record_count": 7,
+  "evidence_class": "modified open-source compositor and Rust integration on generic x86 KVM virtio, kernel7.2.9-arch1-1",
+  "execution": {
+    "bytes": 12882,
+    "sha256": "62566d2af7295ab254d74fd3700dd26863de1487ef00cbfaf7f2644dd8a0abcb"
+  },
+  "expected_RED_collection_and_owned_closure_passed": true,
+  "first_fixture_failure": {
+    "Root_qualification": {
+      "bytes": 763,
+      "sha256": "54142f3e0f51ae94384061243666cda63a2f7d8b8f82ec7cb8210b9d3f794f55"
+    },
+    "classification": "old phase label before QEMU, no functional RED",
+    "exact_three_phase_checks_repaired": true,
+    "execution": {
+      "bytes": 12157,
+      "sha256": "c6aac448cf1ea76f3c30d35b13cd39b170e85e693cfb68aae132dc3e95e2f0b7"
+    },
+    "functional_assertions_client_oracle_and_bounds_unchanged": true
+  },
+  "frozen_contract": {
+    "bytes": 17080,
+    "sha256": "9fb17a7ae29c7a45445b17958c6609c91008567697e6bae2998911cdd36c9794"
+  },
+  "frozen_contract_Root_review": {
+    "bytes": 1130,
+    "sha256": "4021575f91677130bb498ede7128edbafbf47357b513392aa9912439f1eab83d"
+  },
+  "frozen_oracle": {
+    "bytes": 31591,
+    "sha256": "40e1859a28e0211377133ed7c55fe3a334e41f39e2653cc1f15e16a116f84257"
+  },
+  "functional_normal_globals_passed": false,
+  "native_frame_Stop_Source_ARM_phone_qualified": false,
+  "native_geometry_measured": false,
+  "native_main_disposal": "SIGKILL/wait-9, process disposal only",
+  "public_response_EOFs_separate": 3,
+  "same_main_peer_authenticated_and_sync_completed": true,
+  "same_main_post_sync_Ready_and_ordered_CHANGE_verified": true,
+  "schema": 1,
+  "source_files": {
+    "fixture-pattern.h": {
+      "bytes": 923,
+      "sha256": "44a1ee4e6c8b0dae7f6ad63c40cc31fef8998cb2467e40233b1ffdf61a40e14c"
+    },
+    "normal.lua": {
+      "bytes": 595,
+      "sha256": "634865152c0ac50f8c6970e5f12695db9508639ea9aa2667dd872707c0533bef"
+    },
+    "real-two-frame-client.cpp": {
+      "bytes": 15669,
+      "sha256": "714da891f78daa33059259e9dd34c89240c73f66f867ad9d579c21796af047ce"
+    }
+  }
+}
