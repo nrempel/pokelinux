@@ -2,9 +2,11 @@
 
 The new Rust brightness component separates deployment-selected backlight I/O,
 local observation/intent ownership and the lifecycle actor's app permission.
-These are qualified component boundaries, including a retained real child worker.
-No production brightness daemon, Settings
-window, installed service or physical display change is qualified yet.
+The production daemon now passes native-host process/socket tests against
+authored SyntheticTree attributes. Its separate Rust client passes real local
+socket tests with authored peers. Their joined connection, configured lifecycle
+adapter, Settings window, installed service and physical display change remain
+unqualified at this checkpoint.
 
 ## Attribute backend
 
@@ -148,9 +150,77 @@ then passes with11 focused brightness groups, strict Rust checks and host Releas
 Cached pending remains true until a new observation; no process retirement or
 cleanup is inferred. This is scheduling evidence, separate from daemon transport.
 
+## Actual daemon and root-actor transport
+
+The normal Rust Main owns a private root:root0700 runtime directory and0600
+SEQPACKET endpoint. Its fixed protocol accepts no app-selected device, path or
+backend. Deployment supplies an explicit backend/class/device selection. Root
+SO_PEERCRED is verified at accept; every packet must carry matching PID/UID/GID
+SCM credentials. Truncated frames, extra descriptors, invalid JSON and pipelining
+on an occupied request close the connection. A verified persistent peer can first
+Inspect, then submit one explicit Set with the observed revision. Up to16 bounded
+peers can read unavailable/pending status while one global worker stays retained.
+Peer loss, original deadline and SIGTERM fence publication before worker polling;
+no successor is admitted until actual wait and pipe EOF. There is no queued reply
+or Set resend after partial/backpressured transport. Stop drains custody and
+removes the socket. Killing/reaping is not property rollback.
+
+Six service cases first compile and fail against an Unsupported Main, then pass
+unchanged. Review then found a distinct write-boundary defect: with Main stopped,
+a child could finish a blocked preflight read after its250ms deadline, write300,
+and only afterward reject its result. The actual regression records300 versus
+required200 while retaining and reaping the child. Its unchanged successor now
+records200: the production setter checks the immutable BOOTTIME cutoff after
+preflight, immediately before the potentially mutating open, immediately before
+its single write, and around readback. No retry is introduced. Opening synthetic
+regular files with truncate is itself a mutation, so the pre-open check matters.
+The clock check and syscall are not atomic; an already admitted kernel write may
+finish after expiry, and cancellation cannot guarantee no later device effect.
+
+The joined backend/owner/deadline/protocol/worker/service epoch passes38 groups,
+including the original six service cases, this late-preflight regression and an
+actual inherited-root-socket writer at UID11010. The inherited descriptor grants
+no per-packet write authority, even while normal private socket modes stay intact.
+All native service cases use temporary files and actual child processes, not a
+Linux backlight driver. Format and strict Clippy pass. Optimized host/ARM64 service
+ELFs are built and inspected; those exported Release files are not executed. The
+actual integration cases run the same-source normal Cargo test-profile binary.
+The cohort deliberately retains an unexecuted client stub, so it does not qualify
+the subsequently implemented client. Earlier mode/setup/compiler failures remain
+private recorded attempts, distinct from genuine runtime RED and GREEN. See the
+[service provenance](evidence/native-brightness-service-provenance.json).
+
+## Native Rust owner client
+
+The concrete client verifies the root peer and exact per-packet credentials,
+accepts bounded strict replies and samples BOOTTIME after I/O and on every view.
+Only explicit readonly Inspect may establish or replace a connection. Set requires
+that existing connection, a fresh observation, matching revision and no occupied
+request; it sends once. Poll never sends, reconnects or flushes an unsent command.
+Actual EAGAIN leaves no command queue. Unknown outcome, expiry, malformed/extra
+reply or EOF withdraws state. Known or unresolved custody stays pending across
+revoke until a fresh readonly reply establishes retirement. Reconciliation may
+report current attributes while preserving the old Set's uncertainty; it cannot
+acknowledge that earlier effect. A new explicit intent can act on the fresh state.
+
+Eight actual root SEQPACKET authored-peer groups first compile and fail before
+implementation. The first implemented run passes six, while two no-packet test
+observers incorrectly reject ECONNRESET produced by closing an unread socket;
+their preceding deadline/refusal/disconnection assertions already pass. One
+observer branch is corrected to accept that terminal reset while still rejecting
+any received packet or other error. The production client is unchanged. With the
+same successor consumer, the inert stub fails eight and the implemented client
+passes eight; this later stub control is not relabelled as the preimplementation
+RED. Strict client Clippy and formatting pass. Tests include actual backpressure,
+rights rejection, independent optional-actual readback, original deadline expiry,
+unsolicited packets, and cancel→readonly reconnect→busy status→reconciliation→a
+new explicit Set. These authored peers do not qualify a daemon connection,
+lifecycle grant, backend write, ARM runtime or hardware. See the
+[client provenance](evidence/native-brightness-client-provenance.json).
+
 ## Remaining integration and hardware gates
 
-Next are responsive daemon IPC/Stop, a concrete
+Next are the joined concrete client/daemon connection, a configured lifecycle
 provider adapter, normal Rust Settings client and themed UI, explicit installation
 and a synthetic VM end-to-end tracer. Linux driver execution and matched Pixel
 panel/backlight discovery, brightness response, physical readback, suspend/resume,

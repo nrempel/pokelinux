@@ -11,6 +11,7 @@ pub enum BackendKind {
     LinuxBacklight,
     SyntheticTree,
 }
+pub mod client;
 pub mod model;
 pub mod protocol;
 pub mod worker;
@@ -105,16 +106,28 @@ impl Backend {
     /// There is exactly one write attempt: a short/interrupted write is uncertain,
     /// never a reason to send the property update again.
     pub fn set_percent(&self, percent: u8) -> io::Result<WriteReadback> {
+        self.set_checked(percent, None)
+    }
+    /// Production caller's immutable CLOCK_BOOTTIME cutoff. Blocking preflight
+    /// reads must not carry a stale admission through to the property write.
+    pub fn set_percent_before(&self, percent: u8, until_ns: u64) -> io::Result<WriteReadback> {
+        self.set_checked(percent, Some(until_ns))
+    }
+    fn set_checked(&self, percent: u8, until_ns: Option<u64>) -> io::Result<WriteReadback> {
         if percent > 100 {
             return Err(invalid("percent above 100"));
         }
+        check_deadline(until_ns)?;
         let before = self.read()?;
+        check_deadline(until_ns)?;
         let target = model::scaled(before.max, percent);
         let bytes = format!("{target}\n").into_bytes();
+        check_deadline(until_ns)?;
         let mut file = OpenOptions::new()
             .write(true)
             .truncate(true)
             .open(self.directory.join("brightness"))?;
+        check_deadline(until_ns)?;
         if file.write(&bytes)? != bytes.len() {
             return Err(io::Error::new(
                 io::ErrorKind::WriteZero,
@@ -122,10 +135,31 @@ impl Backend {
             ));
         }
         drop(file);
+        check_deadline(until_ns)?;
         let observed = self.read()?;
+        check_deadline(until_ns)?;
         if observed.max != before.max || observed.requested != target {
             return Err(invalid("brightness readback changed or mismatched"));
         }
         Ok(WriteReadback { target, observed })
     }
+}
+
+fn check_deadline(until_ns: Option<u64>) -> io::Result<()> {
+    if let Some(until) = until_ns {
+        let t = rustix::time::clock_gettime(rustix::time::ClockId::Boottime);
+        let now = u64::try_from(t.tv_sec)
+            .ok()
+            .and_then(|s| s.checked_mul(1_000_000_000))
+            .and_then(|s| {
+                u64::try_from(t.tv_nsec)
+                    .ok()
+                    .filter(|n| *n < 1_000_000_000)
+                    .and_then(|n| s.checked_add(n))
+            });
+        if now.is_none_or(|now| now >= until) {
+            return Err(io::ErrorKind::TimedOut.into());
+        }
+    }
+    Ok(())
 }

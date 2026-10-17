@@ -1,0 +1,24 @@
+[Unit]
+Description=Pokelinux private brightness lifecycle actor
+After=systemd-tmpfiles-setup.service
+
+[Service]
+Type=simple
+User=root
+Group=root
+EnvironmentFile=/etc/pokelinux/brightness.conf
+ExecStart=/usr/libexec/pokelinux/brightness-service --serve /run/pokelinux-brightness/actor.sock ${POKELINUX_BRIGHTNESS_BACKEND} ${POKELINUX_BRIGHTNESS_CLASS_ROOT} ${POKELINUX_BRIGHTNESS_DEVICE}
+RuntimeDirectory=pokelinux-brightness
+RuntimeDirectoryMode=0700
+UMask=0077
+NoNewPrivileges=yes
+Restart=no
+KillMode=control-group
+KillSignal=SIGTERM
+TimeoutStopSec=5
+TasksMax=8
+MemoryMax=64M
+LimitNOFILE=64
+
+[Install]
+WantedBy=multi-user.target

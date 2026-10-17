@@ -16,5 +16,10 @@ name = "worker"
 path = "tests/worker.rs"
 harness = false
 
+[[test]]
+name = "service"
+path = "tests/service.rs"
+harness = false
+
 [lints.rust]
 unsafe_code = "forbid"

@@ -1,0 +1,303 @@
+{
+  "schema": 1,
+  "passed": true,
+  "scope": "Closed joined native-host brightness components: backend7+owner7+explicit-deadline4+protocol6+real-worker6+real-service8=38; strictClippy/fmt, host and ARM64 release services. Temporary SyntheticTree fixtures only; archived client stub deliberately excluded from execution/qualification.",
+  "execution": {
+    "bytes": 21964,
+    "sha256": "4ab648f65ab53dab5529d341064d48dd1d84204e03c27c118a1a5d683b556329"
+  },
+  "selection": {
+    "bytes": 3948,
+    "sha256": "ba2777fcb5f83f48f2d635e1dc1624f0371d00153af3273f6c870cb2b740eb4a"
+  },
+  "source": {
+    "bytes": 3496,
+    "sha256": "2b0a303300953424b441d9af46528288de5226f1f0f211c10eba25c12b8518ad"
+  },
+  "previous_actual_compiled_service_RED": {
+    "bytes": 1627,
+    "sha256": "b31f8f58ab01c0ed4c1d192e1eb3d0d5f22284dea07ab43cdb264379e85ceedf"
+  },
+  "previous_actual_late_preflight_RED": {
+    "bytes": 1878,
+    "sha256": "9a4446f4acdfad3803c40c1cae4a5e6d20a743d58e9f9be6a2ecfc7e718ac070"
+  },
+  "same_late_preflight_and_inherited_socket_fixture": {
+    "bytes": 26959,
+    "sha256": "0b43fc4b8a3aeb4eb5b3907768e25d80f58c9e1a7acd386d531c858532c7dbc2"
+  },
+  "case_counts": {
+    "backend": 7,
+    "ownership": 7,
+    "inspection_deadline": 4,
+    "protocol": 6,
+    "worker": 6,
+    "service": 8,
+    "total": 38
+  },
+  "actual_late_preflight_GREEN": {
+    "Main_Stop_actual_wait0_and_both_PIPE_EOFs": true,
+    "actual_preflight_wait_channel": "wait_for_partner",
+    "actual_worker_zombie_exit_code": 256,
+    "expected_unchanged": "200\n",
+    "late_preflight_actual_brightness_attribute": "200\n",
+    "preflight_original_until_elapsed_before_FIFO_release": true,
+    "same_Main_resumed_and_retired_worker": true
+  },
+  "source_files": {
+    "Cargo.toml": {
+      "bytes": 531,
+      "sha256": "d37ba8146e3b90c64e817aba5f84b22d26e406c756f5a8f446e684330b3bd75d"
+    },
+    "Cargo.lock": {
+      "bytes": 4341,
+      "sha256": "8a87a6bf7057391de392605761e311bddf8252225d4f29ae5bcccaef8fcafe5c"
+    },
+    "src/main.rs": {
+      "bytes": 16579,
+      "sha256": "76cffbfc9a107ef9fa34b8a7b0ce00898ebf20f7dcdeb6baafebc1811f11bdfb"
+    },
+    "src/lib.rs": {
+      "bytes": 6003,
+      "sha256": "28788e9fee1a320bc8b74b0cef5bcda13e8dae78579798dda7aabbd259228d2c"
+    },
+    "src/model.rs": {
+      "bytes": 7774,
+      "sha256": "9fcd88aaccc782eb572428752bc9ffb3627cd319eda03292f21fb8eec77049fa"
+    },
+    "src/protocol.rs": {
+      "bytes": 4092,
+      "sha256": "b5d5c4481a2e177e433c00f3885c918419688926a9e78e4cd84e5265c0180d2a"
+    },
+    "src/worker.rs": {
+      "bytes": 7665,
+      "sha256": "6e3afbd5cb33fc8c0e3d62f4fac4a852e2a472b76af63c57eee566b55be8d416"
+    },
+    "src/client.rs": {
+      "bytes": 1458,
+      "sha256": "1b8be2436b2063ac227cd6e2eac8f79794fae12871ec659a9e17b8926b8815eb"
+    },
+    "tests/backend.rs": {
+      "bytes": 8527,
+      "sha256": "0463895807b6d357d3470311efc6bd82cd04dfef8ddc7a63a4160a2f42828000"
+    },
+    "tests/ownership.rs": {
+      "bytes": 8008,
+      "sha256": "92452b38964335ea03899f2cc248bcdbb0e0d2ca2763125b132a5312b68c6628"
+    },
+    "tests/inspection_deadline.rs": {
+      "bytes": 4160,
+      "sha256": "dc49a3c03a3d027924255d1fb28c3fd2db4266858fdbecd7e21c701a025d3b1a"
+    },
+    "tests/protocol.rs": {
+      "bytes": 6289,
+      "sha256": "6ac2e7d54ad9d6ad2d82473ee0577301ea3899d18f3fd01af385943a20c0fc71"
+    },
+    "tests/worker.rs": {
+      "bytes": 14589,
+      "sha256": "340347281d31168e21d6a85d46872e53dcbe85bf149fbae5a0abce5fb930781c"
+    },
+    "tests/service.rs": {
+      "bytes": 26959,
+      "sha256": "0b43fc4b8a3aeb4eb5b3907768e25d80f58c9e1a7acd386d531c858532c7dbc2"
+    }
+  },
+  "target_outputs": {
+    "backend": {
+      "stdout": {
+        "bytes": 627,
+        "sha256": "2bbb0b9e7f77935c83e0ccc823b3984c6f6c156b209fa0aed00f0b124e032857"
+      },
+      "stderr": {
+        "bytes": 744,
+        "sha256": "fdb184a7d02b2913275635667af1e3b2607ee1094e7ed80ee066fca300622edc"
+      }
+    },
+    "ownership": {
+      "stdout": {
+        "bytes": 651,
+        "sha256": "113c09220475426e5e2bcd10ff792f6a3e4bad50e5a1ed352340608ebe0a9822"
+      },
+      "stderr": {
+        "bytes": 218,
+        "sha256": "4998cd90ec19fbc3c332c1b478ae6349484dc977c012b681fd2b4ee06eb27a73"
+      }
+    },
+    "inspection_deadline": {
+      "stdout": {
+        "bytes": 447,
+        "sha256": "d24dd35ead807ff9e4647170d9c1ab5f8a91c996828efb491258af30c6bc347a"
+      },
+      "stderr": {
+        "bytes": 238,
+        "sha256": "9e6a21b69499c3229062acad31ff1a727276cd6340cd1e6fe8c61330d5fe2893"
+      }
+    },
+    "protocol": {
+      "stdout": {
+        "bytes": 554,
+        "sha256": "bb9aaa6cc7caceb96023466e7be9128c1917804ce4a648e2eb39240ba4e0d524"
+      },
+      "stderr": {
+        "bytes": 216,
+        "sha256": "bfb965ac6321504ff5973d193b979658da72cdb6788c8d14f0dc2de53855e985"
+      }
+    },
+    "worker": {
+      "stdout": {
+        "bytes": 3645,
+        "sha256": "2f8e550487b530eeba3d51e95315762d363ffdd81eab8303936ac42e5d8088a3"
+      },
+      "stderr": {
+        "bytes": 212,
+        "sha256": "afd3c556c6dd5ed39e6579268dc8aebbce2c5d978b7a793cb6e714cd3acc1a78"
+      }
+    },
+    "service": {
+      "stdout": {
+        "bytes": 2271,
+        "sha256": "9305dc8f6b4bc1c4d2f707b110f09f08cc02dec7fde1f1309d97d6dbeeb844a8"
+      },
+      "stderr": {
+        "bytes": 214,
+        "sha256": "03ba51855f7c21be25398252e9b77e800303a242e46168a8a845adb6db3ccd14"
+      }
+    },
+    "fmt": {
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "clippy": {
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 508,
+        "sha256": "e939bacd04270ee5e61f3486d0a492e18dc2fdaf11b205c0331d8ea490854610"
+      }
+    },
+    "host-release": {
+      "stdout": {
+        "bytes": 21017,
+        "sha256": "89bc83f38016b042251704a88f8cab53902bf0d2c3541aea55b3428f59cc2850"
+      },
+      "stderr": {
+        "bytes": 665,
+        "sha256": "69809eac1e5b1c5de6fd810509c16ec8ddc394aaac1bd8decf2122e9f7fcb2ca"
+      }
+    },
+    "ARM-release": {
+      "stdout": {
+        "bytes": 21836,
+        "sha256": "4af2ef3a2d97f02187bf72b70a9f47feaa06f2d38d47ba334174c34125b9cdfc"
+      },
+      "stderr": {
+        "bytes": 510,
+        "sha256": "9da7badad2ae45a6666dcf657d71bdfe60b17208e343789cb09a715a967234e0"
+      }
+    }
+  },
+  "ELFs": {
+    "host": {
+      "bytes": 773136,
+      "sha256": "3a4ebe836803b519aafc77a53fe1478f84ec4dd21f71cab6bc8e98cc2fa53fa7",
+      "ELF_machine": 62,
+      "interpreter": "/lib64/ld-linux-x86-64.so.2",
+      "exported_release_ELF_actual_execution": false
+    },
+    "ARM": {
+      "bytes": 822536,
+      "sha256": "f7ad5d8fba16a8d38b106cb68baf032bf8d5a33cb85e258730614213c3a4f4d7",
+      "ELF_machine": 183,
+      "interpreter": "/lib/ld-linux-aarch64.so.1",
+      "exported_release_ELF_actual_execution": false
+    }
+  },
+  "closure": {
+    "host_actual_CLI_waits": 10,
+    "host_stdout_stderr_PIPE_EOFs": 20,
+    "all_host_actual_wait_and_EOF_before_original_cutoffs": true,
+    "service_and_nonroot_probe_actual_direct_waits_and_both_PIPE_EOFs": 10,
+    "service_workers_retained_until_actual_wait_and_PIPE_EOF_by_qualified_worker": true,
+    "exact_CID_absent": true,
+    "same_daemon": true,
+    "all_selected_inputs_unchanged": true,
+    "cleanup_errors_empty": true,
+    "original_outer_work_seconds": 600,
+    "original_outer_closure_seconds": 660,
+    "deadlines_renewed": false
+  },
+  "limits": [
+    "Temporary SyntheticTree component execution, not Linux backlight driver or physical luminance.",
+    "Service process cases execute the Cargo-built native-host test-profile service. Exported host and ARM release ELFs were built/inspected but not executed.",
+    "ARM64 output is actual cross-compiled ELF only, not native ARM loading/runtime evidence.",
+    "Archived closed client RED stub compiled but no client tests/transport behavior or lifecycle owner adapter qualified.",
+    "Clock checks and property syscall are not atomic; an already-admitted kernel write may finish after expiry. Cancellation/kill/reap are not property rollback.",
+    "SIGCHLD normal wait semantics are a trusted single-threaded exec assumption; termination guard separately checks inherited SIGTERM state.",
+    "Prior original-six suite pass does not qualify the discovered late-preflight gap; actual300 RED retained separately.",
+    "No VM, host sysfs/module, phone, Source/authentication change, GUI or hardware execution."
+  ],
+  "service_runtime_tests": [
+    {
+      "brightness_service_case": "same_socket_fresh_observe_set_and_stale_revision",
+      "passed": true
+    },
+    {
+      "brightness_service_case": "strict_packets_never_dispatch_backend",
+      "passed": true
+    },
+    {
+      "brightness_service_case": "held_real_inspect_single_worker_and_Stop",
+      "passed": true
+    },
+    {
+      "brightness_service_case": "owner_disconnect_fences_real_Set_and_reconciles",
+      "passed": true
+    },
+    {
+      "brightness_service_case": "original_deadline_rejects_real_queued_positive_Set",
+      "passed": true
+    },
+    {
+      "brightness_service_case": "actual_nonroot_peer_rejected_with_relaxed_fixture_modes",
+      "passed": true
+    },
+    {
+      "brightness_service_case": "late_preflight_never_writes_after_original_deadline",
+      "passed": true
+    },
+    {
+      "brightness_service_case": "inherited_root_socket_nonroot_Set_writer_denied",
+      "passed": true
+    },
+    {
+      "SyntheticTree_only": true,
+      "brightness_service_cases": 8,
+      "failed": 0,
+      "original_close_ns": 30000000000,
+      "original_work_ns": 25000000000
+    }
+  ],
+  "actual_native_host_service_process_tests_against_same_exact_source": true,
+  "qualification": {
+    "bytes": 9973,
+    "sha256": "69431083f2dd89378ac31753ebd131415cc16f57aa8828d2784bb8ddab7b9daa"
+  },
+  "packaging": {
+    "native-brightness/packaging/README.md": {
+      "bytes": 1794,
+      "sha256": "75d3bc806fe183936dabf13da6e2f02f3e44b67a6ea5733a36f8769cebd6a08e"
+    },
+    "native-brightness/packaging/pokelinux-brightness.service": {
+      "bytes": 630,
+      "sha256": "e86e8b868c4cc023911234b834b35864a7c0b6614022b7a745991291315d184a"
+    }
+  }
+}

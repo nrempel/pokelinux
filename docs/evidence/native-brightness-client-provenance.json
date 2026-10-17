@@ -1,0 +1,153 @@
+{
+  "schema": 1,
+  "qualified_brightness_client8_root_SEQPACKET_GREEN": true,
+  "scope": "Eight actual nonblocking local root-UID SEQPACKET authored-peer tests, client-target strictClippy and client-only formatting. No production daemon/client joined session, service/lifecycle authority/grant, backend/property write, worker retirement, ARM execution or physical brightness result.",
+  "SOURCE": {
+    "bytes": 3820,
+    "sha256": "c4df708a5510cd36165710fbc0f70229a920e492e03c044caba0673d87080771"
+  },
+  "selection": {
+    "bytes": 3646,
+    "sha256": "a4c9792d6d242d8dd7f04bd56323177d01cca40113036d5f47b0898a54cf3baa"
+  },
+  "actual_closed_receipt": {
+    "bytes": 19582,
+    "sha256": "82c39ef5e4e5bcd548b218b27b1994353797debdda5caa94474307010aa28760"
+  },
+  "same_consumer_stub_RED": {
+    "bytes": 3538,
+    "sha256": "62eb4f3960562ea8efb69dab8ca577f6fce2fbf3a3003abfec0c0d0daa12391b"
+  },
+  "original_preimplementation8RED": {
+    "bytes": 6128,
+    "sha256": "602de3ef37ac742956dfc0d05687b2e035dd050e05a8f2e32a75620825dc68af"
+  },
+  "preserved_first_candidate6pass2observerfail": {
+    "bytes": 3911,
+    "sha256": "b37e05227792cb1226af1d51a24049567bb83cd54ad798f0e8b69f02d0a41ed2"
+  },
+  "counts": {
+    "total": 8,
+    "passed": 8,
+    "failed": 0,
+    "ignored": 0
+  },
+  "actual_passed_names": [
+    "actual_send_eagain_never_queues_or_flushes_on_poll",
+    "invalid_or_unobserved_set_sends_nothing_and_has_no_queue",
+    "malformed_wrong_id_oversize_and_uncertain_ack_are_terminal",
+    "persistent_verified_socket_inspects_then_sends_exactly_one_explicit_set",
+    "queued_positive_cannot_publish_after_original_request_deadline",
+    "revoke_keeps_unknown_custody_and_only_readonly_inspect_reconnects",
+    "stream_type_and_relative_deployment_path_are_refused",
+    "unsolicited_duplicate_reply_fences_before_another_set_is_sent"
+  ],
+  "frozen_client_test": {
+    "bytes": 12864,
+    "sha256": "fec965bedf6b6e467380683c38050bc6a5c81c38cb3ed2578da2e9bfa3bc683a"
+  },
+  "production_client": {
+    "bytes": 13378,
+    "sha256": "7f2dd1b754d530cc4efc7c53e7eed27fb67f051a118d33cae1efb7c26cbc8045"
+  },
+  "production_client_byte_identical_to_first6pass2observerfail": true,
+  "same_consumer_in_both_new_cohorts": true,
+  "only_new_RED_GREEN_source_difference": [
+    "native-brightness/src/client.rs"
+  ],
+  "observer_bridge": {
+    "old_test": {
+      "bytes": 12833,
+      "sha256": "1ec17d15c462c43b11edc560ddaf3997ceefc1bfb77985177dd320f10e4c85a1"
+    },
+    "new_test": {
+      "bytes": 12864,
+      "sha256": "fec965bedf6b6e467380683c38050bc6a5c81c38cb3ed2578da2e9bfa3bc683a"
+    },
+    "exact_diff": {
+      "bytes": 433,
+      "sha256": "a1bbfcf95136f4a98aeb9ec52948e0749422fbbf598b5e4fe53b7cf167a16ccd"
+    },
+    "sole_change": "no_packet accepts actual terminal ECONNRESET in addition to EAGAIN/EOF; successful received packet and all other errors remain a panic.",
+    "fixture_correction_after_measured_reset": true,
+    "production_behavior_changed_for_fixture_correction": false,
+    "original_preimplementation_chronology_preserved": true,
+    "new_stubRED_is_postimplementation_observer_control_not_originalRED": true,
+    "parallel_execution_explicitly_authorized": true
+  },
+  "actual_foreground_command_exits": {
+    "client-tests": 0,
+    "client-fmt": 0,
+    "client-clippy": 0
+  },
+  "actual_compilation_succeeded": true,
+  "strict_Clippy_scope": "cargo clippy --locked --offline --test client -- -D warnings only; shared crate compilation occurs, no other harness runtime.",
+  "format_scope": "Pinned rustfmt --edition2024 --check src/client.rs only.",
+  "raw_phase_files": {
+    "cargo-version.txt": {
+      "bytes": 36,
+      "sha256": "9950bbb2d5c3417b1a068f0e81f6d3cac991a363193bdf2a22d447f5acf8b503"
+    },
+    "client-clippy.exit": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "client-clippy.stderr": {
+      "bytes": 508,
+      "sha256": "5455b400ee353d5e7e8b2724ad1e703b38dac78cb1dee9e01501f00aa6d8ebd5"
+    },
+    "client-clippy.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "client-fmt.exit": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "client-fmt.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "client-fmt.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "client-tests.exit": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "client-tests.stderr": {
+      "bytes": 742,
+      "sha256": "15ec1d275452142fdc9cda466fdebb12c648b6acb9f2d1475235e72cc16452fd"
+    },
+    "client-tests.stdout": {
+      "bytes": 692,
+      "sha256": "2fb99a8de2ced71e6c06cd02a964874bf6a2fcfd0026d06cc20b6dc2e595d248"
+    },
+    "phase-passed": {
+      "bytes": 7,
+      "sha256": "2700165975f68815c97d605c56eca8e90d497ade1264b6282401d13fee99ac27"
+    },
+    "rustc-version.txt": {
+      "bytes": 36,
+      "sha256": "2073de5abf149185c2f4d7473dc833bc921b99135560d24ae7b2293f33a9c376"
+    }
+  },
+  "private_source_closure_only": "Root service/Main may evolve separately; selected private21-input cohort is immutable. Packaging/docs are selected files, not compiler or installation/runtime qualification.",
+  "current_Root_client_and_consumer_exact_at_qualification": true,
+  "actual_owned_host_CLI_waits": 10,
+  "actual_distinct_stdout_stderr_PIPE_EOFs": 20,
+  "all_original_cutoffs_closed": true,
+  "exact_CID_absent": true,
+  "same_daemon": true,
+  "selected_inputs_unchanged": true,
+  "original_work_until_ns": 6221088190922301,
+  "original_closure_until_ns": 6221148190922301,
+  "completed_boottime_ns": 6220492935270609,
+  "releases_built": false,
+  "agent_production_behavior_edits": false,
+  "qualification": {
+    "bytes": 8509,
+    "sha256": "8285a64cd0f7756a34b730be90f4c01a5ee8b63f642be9bdfdd577ba69d97155"
+  }
+}
