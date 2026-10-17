@@ -1,0 +1,113 @@
+{
+  "schema": 1,
+  "scope": "Native x86 process SIGTERM through production audio Stop and original backend/frontend drain; optimized host/ARM builds separately. No ARM runtime, installed unit, PipeWire effects or phone claim.",
+  "red": {
+    "compile_succeeded": true,
+    "Cargo_exit": 101,
+    "actual_Main_signal": 15,
+    "qualification": {
+      "bytes": 4439,
+      "sha256": "d64c27c4981388b1da144aa22090b4a9356afdae58686bfac8110c4bdd0083ab"
+    },
+    "execution": {
+      "bytes": 19167,
+      "sha256": "41aaa524d62139f37bb554dcd4a5749cc2595e6a86a249cd968a3a3f6b3bc734"
+    }
+  },
+  "green": {
+    "Cargo_exit": 0,
+    "actual_Main_exit": 0,
+    "backend_pidfd_dead_and_proc_absent_before_Main_success": true,
+    "partial_frontend_drained": true,
+    "active_tests": 25,
+    "ignored_existing_distinct_UID_listener_test": 1,
+    "fmt_strict_Clippy_all_targets_and_two_release_builds_passed": true,
+    "qualification": {
+      "bytes": 8183,
+      "sha256": "1f8fa4fb8234c24e06d016f7a6838d7c890ae3a133f90d794faaad1a36d70ecf"
+    },
+    "execution": {
+      "bytes": 21363,
+      "sha256": "0bda7dc832aa3a2b2a6d678435ebbbcabc22634af98333b4591d898e0c810fcc"
+    },
+    "source": {
+      "bytes": 4322,
+      "sha256": "ab9d72ec0311af467989f2b7338c883ac924bd93c0b9fec5e145218ffd166275"
+    },
+    "selection": {
+      "bytes": 3943,
+      "sha256": "2bad368d3f68f0de2cf3f3e50a5a1ab154a7e9304cc72fa20c6f7dce5f4d0714"
+    },
+    "actual_test_ELF": {
+      "bytes": 1368880,
+      "sha256": "a2c2389f716cae99e810c5e01546e21b2585393f4951b3f7c2cb4262e126ae66"
+    },
+    "actual_tested_debug_Main": {
+      "bytes": 2854880,
+      "sha256": "286dc437477601e5773cc7046fd02369e68f3b3b03facd3d3a04e4f88f3f3f3c"
+    }
+  },
+  "frozen_test": {
+    "bytes": 4607,
+    "relative_path": "native-audio/tests/signal_stop.rs",
+    "sha256": "1296ba63fac19adad62f14e91ca3c613d0c2e7a355ad2c11847ca7cbcdee76b8"
+  },
+  "new_production_main": {
+    "bytes": 19681,
+    "relative_path": "native-audio/src/main.rs",
+    "sha256": "1d8c115dc11e25f082ecadf96564a835ebbc689e0c38c03092b6a2e50729eb6c"
+  },
+  "old_production_main": {
+    "bytes": 19273,
+    "relative_path": "native-audio/src/main.rs",
+    "sha256": "e62500d6e80935dc61b9678144b41c7130f8554170409680be9347255a172b60"
+  },
+  "release_artifacts": {
+    "ARM": {
+      "ELF_machine": 183,
+      "runtime_execution_qualified": false,
+      "file": {
+        "bytes": 1249592,
+        "sha256": "14ef29d04272a19bf6673fd837fcbd50d29f7e75bae146ee2615db25fe7e4963"
+      }
+    },
+    "host": {
+      "ELF_machine": 62,
+      "runtime_execution_qualified": false,
+      "file": {
+        "bytes": 1262272,
+        "sha256": "1e2d80bdeacbe9a65b32e960be9e81119c5cd64def42f9a90c28a1b496199bb6"
+      }
+    }
+  },
+  "ownership": {
+    "Cargo_logs_are_regular_not_PIPE_EOF": true,
+    "all_original_cutoffs_closed": true,
+    "cleanup_error": null,
+    "exact_CID_absent": true,
+    "host_Docker_CLI_direct_waits": 10,
+    "host_merged_PIPE_EOFs": 0,
+    "host_stderr_PIPE_EOFs": 10,
+    "host_stdout_PIPE_EOFs": 10,
+    "resources_released": true,
+    "same_daemon": true,
+    "shell_actual_foreground_Cargo_step_waits": 5,
+    "source_before_after_identical": true
+  },
+  "lock_closure": {
+    "qualification": {
+      "bytes": 13798,
+      "sha256": "a860548a5c813d7dc53b3105316527b64a738e9908487b6020f2ab95e2725e07"
+    },
+    "actual_offline_Cargo_commands": 18,
+    "existing_registry_versions_sources_checksums_and_dependency_targets_preserved": true,
+    "additional_preexisting_manifest_staleness": "Several lifecycle fixtures gain already-required camera; source-timer fixture gains65 already-required Messages sqlite/SMS packages. Not a new audio behavior."
+  },
+  "limits": [
+    "One original native host process observation; no hard latency guarantee.",
+    "Existing distinct-UID listener test remains ignored.",
+    "ARM ELF is a new compiled provider, separate from the earlier frozen GUI cohort.",
+    "Actual installed PID1 shutdown and cold boot still require separate execution.",
+    "No new original PipeWire or physical audio test was run."
+  ]
+}

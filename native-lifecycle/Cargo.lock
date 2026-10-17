@@ -438,17 +438,11 @@ checksum = "f6b464fbc74e149a392436b17d523f769e057cb6877f6a5c4618bc6f11800548"
 name = "pokelinux-audio"
 version = "0.1.0"
 dependencies = [
+ "pokelinux-kernel-identity",
  "pokelinux-power",
  "rustix",
  "serde",
  "serde_json",
-]
-
-[[package]]
-name = "pokelinux-power"
-version = "0.1.0"
-dependencies = [
- "rustix",
 ]
 
 [[package]]
@@ -487,8 +481,8 @@ dependencies = [
 name = "pokelinux-lifecycle"
 version = "0.1.0"
 dependencies = [
- "pokelinux-audio",
  "native-session-authority-fixture",
+ "pokelinux-audio",
  "pokelinux-camera",
  "pokelinux-kernel-identity",
  "rustix",
@@ -520,6 +514,13 @@ dependencies = [
  "sms-pdu",
  "time",
  "uuid",
+]
+
+[[package]]
+name = "pokelinux-power"
+version = "0.1.0"
+dependencies = [
+ "rustix",
 ]
 
 [[package]]

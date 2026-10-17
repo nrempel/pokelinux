@@ -63,6 +63,16 @@ impl State {
         self.applied = None;
         self.needs_apply = true;
     }
+    fn stop(&mut self) {
+        if self.stopping {
+            return;
+        }
+        self.stopping = true;
+        self.authority.cancel_all();
+        self.change();
+        self.needs_apply = false;
+        self.retire();
+    }
     fn poll(&mut self) {
         if let Some(process) = &mut self.process {
             match process.poll() {
@@ -164,11 +174,7 @@ impl State {
                     if !self.authority.is_privileged(peer) {
                         return Err("denied");
                     }
-                    self.stopping = true;
-                    self.authority.cancel_all();
-                    self.change();
-                    self.needs_apply = false;
-                    self.retire();
+                    self.stop();
                 }
                 "acquire" => {
                     if self.recovery_required {
@@ -383,6 +389,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         return Err("audio owner, call owner and app UIDs must be distinct".into());
     }
     let profile: Profile = serde_json::from_slice(&std::fs::read(&args[2])?)?;
+    // Own SIGTERM before starting workers and retain it until all Stop owners drain.
+    // Worker entry points above keep their independent default signal behavior.
+    let _termination = pokelinux_kernel_identity::TerminationGuard::install()?;
     let mut state = State {
         authority: Authority::new(call_uid, app_uid, false),
         profile,
@@ -413,6 +422,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let shutting = Arc::new(AtomicBool::new(false));
     let mut stop_deadline = None;
     loop {
+        if pokelinux_kernel_identity::termination_requested() {
+            state.stop();
+        }
         let mut i = 0;
         while i < workers.len() {
             if workers[i].1.is_finished() {

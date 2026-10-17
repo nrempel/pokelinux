@@ -478,6 +478,7 @@ dependencies = [
 name = "pokelinux-audio"
 version = "0.1.0"
 dependencies = [
+ "pokelinux-kernel-identity",
  "pokelinux-power",
  "rustix",
  "serde",

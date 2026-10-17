@@ -86,7 +86,7 @@ retire the current backend before new authorized work can run. This immediately
 fences its publication while actual unlinking remains a separate observation.
 A privileged `stop` clears intent, advances its revision and returns
 `phase:stopping`, `cleanup:pending`; that response does not claim cleanup. The
-frontend stops admission, retains and joins its threads, and exits only after
+frontend drains its retained threads and joins them, and exits only after
 local owners finish. An unreaped worker or unfinished stop owner causes process
 abort at a bounded deadline. An unexpected actor exit also refuses to detach a
 live frontend. There is no installed service-manager unit yet.
@@ -111,6 +111,31 @@ to64, snapshot bytes to1MiB and worker frames to65536. Timed-out queued requests
 are cancelled before later actor admission. The150ms observation polling trigger
 and10ms actor scheduling loop are not an idle-power or general latency guarantee.
 
+
+## SIGTERM enters owned Stop
+
+The normal owner now installs the shared Rust `TerminationGuard` before starting
+workers. SIGTERM only latches a request; the actor feeds it into the same
+idempotent Stop used by the authenticated protocol. It clears intent, fences
+publication and retires the backend, then retains the original three-second
+BOOTTIME drain deadline, actual child reap and frontend joins. The handler runs
+no cleanup. Separate backend/tool executable entry points keep their default
+signal behavior, and the guard outlives all drain ownership.
+
+A frozen real-process test first compiled and failed: SIGTERM killed the original
+Main with signal15. After the repair, the unchanged test observes Main exit0,
+backend pidfd death and `/proc` absence after actual parent reaping, while an
+already accepted partial JSON connection drains. This is native host process
+evidence; no PipeWire server or physical audio was involved. Formatting, strict
+Clippy,25 active audio tests and optimized host/ARM builds pass. One existing
+distinct-UID listener test stays ignored. The new ARM ELF has no runtime pass yet.
+See [hash-only provenance](evidence/native-audio-signal-stop-provenance.json).
+
+All18 dependent Cargo locks were synchronized with actual offline Cargo.
+Already-stale lifecycle/camera and source-timer/Messages fixture dependencies
+were also resolved; existing registry versions and checksums remain unchanged.
+The audio build wrapper now includes the kernel-identity source. Installed PID1
+start/Stop, cold boot, physical audio and the complete smartphone remain open.
 
 ## Verification
 

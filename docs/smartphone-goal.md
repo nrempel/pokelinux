@@ -12,6 +12,13 @@ render-stall availability and native display cleanup remain open. The custom
 renderer results below remain component research. The full completion matrix and
 all physical-phone gates stay open.
 
+The [native audio owner](native-audio.md#sigterm-enters-owned-stop) now handles
+SIGTERM through existing owned Stop, after a genuine signal15 RED. The unchanged
+host process test passes with Main0, backend reaping and partial frontend drain;
+25 active audio tests and host/ARM release builds pass. Installed service-manager
+start/Stop and fresh boot remain required; no ARM runtime or hardware result is
+inferred from compilation.
+
 The later [16-CPU cold diagnostic](native-session-manager-stop.md#declared-cpu-resource-diagnostic)
 still expires Source at103.24ms, with zero own-quota throttling in60 captured
 container snapshots. Cold availability remains unqualified; no causal repair is

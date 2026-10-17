@@ -92,6 +92,11 @@ flag. The caller must feed it into its existing actor Stop/drain path; this leaf
 adds no Stop implementation, signal mask, thread, worker, descriptor or retry.
 The guard is neither Send nor Sync and must live through all drain custody.
 
+The audio owner now uses this latch with its existing Stop actor. Its unchanged
+real-process regression fails with signal15 before integration and passes with
+Main exit0, actual backend reap and partial frontend drain afterward. See
+[audio shutdown evidence](../docs/native-audio.md#sigterm-enters-owned-stop).
+
 Install and Drop require the main thread and one actual task under trusted
 `/proc`. The process owner must exclude concurrent thread creation and external
 signal reconfiguration at those boundaries; threads created during the lifetime

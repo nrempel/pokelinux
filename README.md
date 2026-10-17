@@ -51,6 +51,12 @@ shutdown succeeds and retained markers refuse restart. Earlier fixture/unit
 failures remain explicit. Native IMS, modem-facing replacement and phone hardware
 remain separate gates.
 
+The [native Rust audio owner](docs/native-audio.md#sigterm-enters-owned-stop) now
+handles SIGTERM through its owned shutdown path. A genuine failing process test
+now passes with Main exit0, backend reaping and partial-client drain.25 audio
+tests, strict Rust checks and host/ARM release builds pass; installed service
+shutdown and physical audio remain separate gates.
+
 > **Development status:** no physical phone has been accessed. There is no verified bootable phone image. Modem communication, carrier IMS registration, physical call audio, Pixel GPU rendering, camera capture and suspend remain unverified.
 
 A [prepared end-to-end Sounds session](docs/native-normal-upstream-tracer.md#prepared-full-appservice-slice-passes)
