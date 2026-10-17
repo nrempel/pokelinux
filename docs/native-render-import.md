@@ -1,5 +1,7 @@
 # Rust-owned immutable SHM import
 
+The [immutable CPU texture checkpoint](native-render-cpu-texture.md) now passes two strict signature checks and five real C++/Rust integration groups after the original missing-API structural RED. Owned pixels survive producer disposal; immutable replacement and two joined-thread refusals pass even with actual C++ thread-ID reuse. The CPU adapter has no GPU identity. Core Wayland capture, normal frames, Source7 and all phone gates remain open.
+
 The [retained CPU surface-content checkpoint](native-render-surface-content.md) now passes unchanged-consumer five-group C++/Rust integration after actual geometry RED. Source extent uses retained Rust pixels after producer overwrite/unmap/close; no-attach identity, transforms, detach/replacement and independent clones pass. The two-file patch changes CPU geometry only; core GL capture/upload, normal Wayland frames, Source7 and phone gates remain open.
 
 The original [`native-render`](../native-render/README.md) library and

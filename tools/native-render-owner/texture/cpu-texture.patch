@@ -1,0 +1,145 @@
+--- a/src/render/Texture.hpp
++++ b/src/render/Texture.hpp
+@@ -4,12 +4,15 @@
+ #include "../helpers/cm/ColorManagement.hpp"
+ #include <aquamarine/buffer/Buffer.hpp>
+ #include <hyprutils/math/Misc.hpp>
++#include <cstdint>
+ #include <span>
+ 
+ class IHLBuffer;
+ HYPRUTILS_FORWARD(Math, CRegion);
+ 
+ namespace Render {
++    class CSHMSnapshot;
++
+     enum eTextureType : int8_t {
+         TEXTURE_INVALID = -1, // Invalid
+         TEXTURE_RGBA    = 0,  // 4 channels
+@@ -61,4 +64,13 @@
+         bool                 m_keepDataCopy = false;
+         std::vector<uint8_t> m_dataCopy;
+     };
++
++    // Immutable CPU content, with no GPU identity or native cleanup. Result must
++    // be empty or a CPU texture owned by this thread lifetime; failure leaves it
++    // unchanged. Each success publishes a new object retaining a Rust clone.
++    [[nodiscard]] int32_t createCPUTexture(const CSHMSnapshot& pixels, bool opaque, SP<ITexture>& result) noexcept;
++
++    // Synchronous creator-thread borrow. Clone the wrapper before queueing a
++    // frame resource; neither this pointer nor ITexture crosses to the worker.
++    [[nodiscard]] const CSHMSnapshot* borrowCPUTextureSnapshot(const ITexture& texture) noexcept;
+ }
+--- /dev/null
++++ b/src/render/CPUTexture.cpp
+@@ -0,0 +1,110 @@
++#include "Texture.hpp"
++#include "SHMSnapshot.hpp"
++
++#include <drm_fourcc.h>
++#include <atomic>
++#include <limits>
++#include <new>
++#include <stdexcept>
++#include <utility>
++
++namespace {
++    // OS/C++ thread identities can be reused after join. A retired creator must
++    // never regain access through a successor thread with the same identity.
++    std::atomic<uint64_t> nextOwnerToken{1};
++
++    uint64_t ownerToken() noexcept {
++        thread_local const uint64_t token = []() noexcept {
++            auto candidate = nextOwnerToken.load(std::memory_order_relaxed);
++            while (candidate != std::numeric_limits<uint64_t>::max()) {
++                if (nextOwnerToken.compare_exchange_weak(candidate, candidate + 1, std::memory_order_relaxed, std::memory_order_relaxed))
++                    return candidate;
++            }
++            return uint64_t{0}; // Saturate, never wrap or reuse a lifetime.
++        }();
++        return token;
++    }
++
++    bool supported(const PrSnapshotView& view) noexcept {
++        const auto& d = view.description;
++        return view.pixels && d.resource_id && d.generation && d.commit_sequence && d.reserved == 0 &&
++            (d.drm_format == DRM_FORMAT_ARGB8888 || d.drm_format == DRM_FORMAT_XRGB8888) && d.bytes_per_pixel == 4 &&
++            d.width > 0 && d.height > 0 && uint64_t{d.stride} >= uint64_t{d.width} * 4 &&
++            view.pixel_bytes == uint64_t{d.stride} * d.height;
++    }
++
++    class CCPUTexture final : public Render::ITexture {
++      public:
++        CCPUTexture(const Render::CSHMSnapshot& pixels, const PrSnapshotView& view, bool opaque, uint64_t owner) : m_pixels(pixels), m_owner(owner) {
++            const auto& d = view.description;
++            m_size = Vector2D{static_cast<double>(d.width), static_cast<double>(d.height)};
++            m_drmFormat = d.drm_format;
++            m_type = d.drm_format == DRM_FORMAT_ARGB8888 ? Render::TEXTURE_RGBA : Render::TEXTURE_RGBX;
++            m_opaque = opaque;
++            m_isSynchronous = true;
++            // Preserve the ordinary SHM defaults: normal transform, linear
++            // sampling and no explicit image description. m_texID stays zero.
++        }
++
++        bool onCreator() const noexcept { return m_owner != 0 && m_owner == ownerToken(); }
++        const Render::CSHMSnapshot& snapshot() const noexcept { return m_pixels; }
++
++        void setTexParameter(GLenum pname, GLint param) override {
++            if (!onCreator())
++                throw std::logic_error("CPU texture sampler belongs to another thread lifetime");
++            if ((pname != GL_TEXTURE_MAG_FILTER && pname != GL_TEXTURE_MIN_FILTER) || (param != GL_LINEAR && param != GL_NEAREST))
++                throw std::invalid_argument("unsupported CPU texture sampler parameter");
++            if (pname == GL_TEXTURE_MAG_FILTER)
++                magFilter = param;
++            else
++                minFilter = param;
++        }
++
++        void allocate(const Vector2D&, uint32_t) override {
++            throw std::logic_error("immutable CPU texture cannot allocate native storage");
++        }
++        void update(uint32_t, const uint8_t*, uint32_t, const CRegion&) override {
++            // Even empty/partial damage is refused: replacing a whole image
++            // here would silently change legacy damage-clipped update semantics.
++            throw std::logic_error("capture new content before replacing an immutable CPU texture");
++        }
++        void bind() override { throw std::logic_error("CPU texture has no native binding"); }
++        void unbind() override { throw std::logic_error("CPU texture has no native binding"); }
++        bool ok() override { return onCreator() && m_pixels.view().has_value(); }
++        bool isDMA() override { return false; }
++
++      private:
++        // No duplicate C++ pixel vector. Destruction, including after creator
++        // exit, releases only this independently owned Rust snapshot handle.
++        const Render::CSHMSnapshot m_pixels;
++        const uint64_t m_owner;
++    };
++}
++
++int32_t Render::createCPUTexture(const CSHMSnapshot& pixels, bool opaque, SP<ITexture>& result) noexcept {
++    if (result) {
++        const auto* previous = dynamic_cast<const CCPUTexture*>(result.get());
++        // Guard before cloning/allocation or assignment: replacing an arbitrary
++        // native texture could run its GPU destructor on the control thread.
++        if (!previous || !previous->onCreator())
++            return PR_INVALID;
++    }
++    const auto owner = ownerToken();
++    if (!owner)
++        return PR_CAPACITY;
++    const auto view = pixels.view();
++    if (!view || !supported(*view))
++        return PR_INVALID;
++    try {
++        SP<ITexture> replacement = makeShared<CCPUTexture>(pixels, *view, opaque, owner);
++        result = std::move(replacement);
++        return PR_OK;
++    } catch (const std::bad_alloc&) {
++        return PR_ALLOCATION;
++    }
++}
++
++const Render::CSHMSnapshot* Render::borrowCPUTextureSnapshot(const ITexture& texture) noexcept {
++    const auto* cpu = dynamic_cast<const CCPUTexture*>(&texture);
++    return cpu && cpu->onCreator() ? &cpu->snapshot() : nullptr;
++}

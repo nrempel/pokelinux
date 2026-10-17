@@ -44,6 +44,10 @@ report. Environment/path/UID/capability failures are setup failures, not target
 RED or a fallback. Native-fence extension/procedure availability alone qualifies
 no native FD/completion. The8x6 target is an offscreen oracle, not a UI preview.
 
+## CPU texture resources
+
+The [texture package](texture/README.md) adds a real immutable CPU ITexture retaining Rust pixels, with no GPU ID. Separate missing-interface structural RED precedes two clean signature checks and five real native C++/Rust groups. Two joined-thread refusals hold even when the C++ thread identity is actually reused. [Report](../../docs/native-render-cpu-texture.md). Core Wayland capture, normal frame/worker output, Source7 and phone gates remain open.
+
 ## Later owned-resource component
 
 The [owner-resource report](../../docs/native-render-owner-resources.md) records two

@@ -1,0 +1,145 @@
+{
+  "functional_GREEN": {
+    "Docker_CLI_exit": 0,
+    "ELF": {
+      "bytes": 4642144,
+      "sha256": "a533c4551cae53a9847c81b2cf0a1c1b5f99132151c190f2f9149ad0a37c0541"
+    },
+    "QEMU_exit": 0,
+    "Root_qualification": {
+      "bytes": 2625,
+      "sha256": "9c4e202dad852e029928c4207197ae3ee55f223122e44d19b74f55de91bb4284"
+    },
+    "actual_PIPE_EOFs": 54,
+    "actual_direct_waits": 47,
+    "actual_empty_pointer_destructor_wrapper_symbols": [
+      "_ZN9Hyprutils6Memory14CUniquePointerIN6Render13IHyprRendererEED1Ev",
+      "_ZN9Hyprutils6Memory14CUniquePointerIN6Render13IHyprRendererEED2Ev"
+    ],
+    "actual_forbidden_native_symbols": [],
+    "actual_program_wait_elapsed_ns": 5763327,
+    "command": {
+      "bytes": 1284,
+      "sha256": "196973b90b3a1f30510c65d7d54f6926706a0405c5a65417fbbbdd3bba9d91f7"
+    },
+    "component": {
+      "bytes": 174317,
+      "sha256": "679f8c5c95d9a085cac8c5d3674e04272cbdbfa74f44095bd1bbdf3083b01b99"
+    },
+    "consumer": {
+      "bytes": 18460,
+      "sha256": "d8267bc27780d0143696690b62fa364b672c73ad2fb64218d665147276d65efa"
+    },
+    "cpp_thread_identity_reused_observed": true,
+    "distinct_Linux_TIDs": true,
+    "execution": {
+      "bytes": 12259,
+      "sha256": "c3ae5ed4afafcd94f864f247619ed7b416f893adbcbfbb0a29b78862209f3b25"
+    },
+    "five_groups": 5,
+    "link_map": {
+      "bytes": 1754026,
+      "sha256": "9941745a49e69e361744b6e5ea463dc3f2b71e7ce7f50ced4914948008759c8a"
+    },
+    "oracle": {
+      "bytes": 3920,
+      "sha256": "23f4aa5b7e9f8da5a022c248ed08836ee7cb28dd098ab5f3b745ef24357982f6"
+    },
+    "original_closure_QMP_CID_inputs_qualified": true,
+    "original_program_bound_ns": 5000000000,
+    "preparation": {
+      "bytes": 18074,
+      "sha256": "78bf8cc05b971d008237f73a79e1d52b0e3a50341e9fd562d02dda183df0bc14"
+    },
+    "producer_separate_child_exit_observed": false,
+    "real_compiled_objects": 8,
+    "selection": {
+      "bytes": 111265,
+      "sha256": "42f2fa836c9aba018daf49d2d3d84112fa5c8f6647a4a088e4c7e9d7af1af036"
+    },
+    "two_clean_signature_TUs": true,
+    "two_real_joined_threads": true
+  },
+  "independent_source_and_actual_GREEN_review": {
+    "bytes": 9504,
+    "sha256": "0e1c014758ffca7252959be5ed39ccfb6c1b9bc79945d189c2592c8174e51991"
+  },
+  "parent_public_revision": "1d307086ce948bec8706409c2dccb8dc20d0e038",
+  "physical_phone_accessed": false,
+  "preserved_setup_failures": [
+    {
+      "Root_receipt": {
+        "bytes": 1010,
+        "sha256": "598c13d243e27f13915dec5c2bba1df837648b9833a9294085db2aaf0eeb6806"
+      },
+      "actual_PIPE_EOFs": 36,
+      "actual_direct_waits": 29,
+      "classification": "UNUSED_FROZEN_TEST_HELPER",
+      "execution": {
+        "bytes": 12280,
+        "sha256": "404712fde51376d7ca0b630233c1915847d72a5407abb19dfc7902f70953d707"
+      }
+    },
+    {
+      "Root_receipt": {
+        "bytes": 1749,
+        "sha256": "0d1d9d19bdd1672494ec2dc49adab6f56a7919500c20df428e2af2bbe93c6f32"
+      },
+      "actual_PIPE_EOFs": 52,
+      "actual_direct_waits": 45,
+      "classification": "OVERBROAD_RENDERER_NAME_FILTER",
+      "execution": {
+        "bytes": 12279,
+        "sha256": "f3af913c48b8766d162981a705bb64ac28ba3c8d5e7e9c05ca09ef86b692a566"
+      }
+    }
+  ],
+  "production_patch": {
+    "bytes": 6474,
+    "path": "tools/native-render-owner/texture/cpu-texture.patch",
+    "sha256": "a186fe62ee51826a5fb1396bd624bc2d60c41aa8c6b44910030dc51bd63b7d8c"
+  },
+  "raw_private_inputs_or_binaries_published": false,
+  "remaining_gates": [
+    "actual core Wayland capture uses CPU factory",
+    "normal CPU protocol/scene/output bootstrap",
+    "CPU assets/cursor and FramePlan handoff",
+    "Rust worker native output completion and retirement",
+    "unchanged Source7 and normal Sounds/PCM/Messages composition",
+    "fresh matching main/SDK and ARM validation",
+    "matched Google kernel and per-device hardware/carrier qualification"
+  ],
+  "schema": 1,
+  "scope": "Actual original-code native x86 KVM CPU texture component only; separate missing-API structural RED and postimplementation five-group/two-thread GREEN. No native frame, ARM or phone claim.",
+  "source_cohort": {
+    "bytes": 12977,
+    "path": "tools/native-render-owner/texture/source-cohort.json",
+    "sha256": "9e096b148812ce1b1b1afd8f842ea0c1fb8cf1ab3197382d928eb4fe9fb0d099"
+  },
+  "structural_RED": {
+    "Root_qualification": {
+      "bytes": 4496,
+      "sha256": "c0832cc70569cd4e96028ca6ee0bfa5e416797aff272a911fbefcfd93e0729ec"
+    },
+    "actual_PIPE_EOFs": 37,
+    "actual_direct_waits": 30,
+    "component": {
+      "bytes": 38701,
+      "sha256": "807b18a081324eb7761670007c5544328efeae1204779de665e6d297fed8740f"
+    },
+    "control_exit": 0,
+    "dependent_errors": 8,
+    "execution": {
+      "bytes": 11885,
+      "sha256": "925b0a2e972f5349adcba842653a1b2927553106b7113eedb5126cfb6382034d"
+    },
+    "missing_functions": [
+      "createCPUTexture",
+      "borrowCPUTextureSnapshot"
+    ],
+    "private_headers_per_TU": 17,
+    "production_semantic_RED": false,
+    "syntax_only_no_link_or_body_execution": true,
+    "target_exit": 1
+  }
+}

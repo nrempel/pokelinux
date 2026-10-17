@@ -1,0 +1,351 @@
+{
+  "GL_AQ_DRM_Source_ARM_or_phone_qualified": false,
+  "allocation_recovery_limits": "Recoverable object/copy allocation exceptions return PR_ALLOCATION. Existing Rust Box/Arc and Hyprutils noexcept shared-control-block allocation may terminate; no complete OOM recovery/fault injection is qualified.",
+  "before_header_reconstruction": {
+    "exact_before": {
+      "bytes": 2369,
+      "sha256": "641013ab638f3ad1a0c210fece847ce3d49f0638abb360ee7ec08523b6905c1c"
+    },
+    "new_CPUTexture_source_absent_from_all_prior_patches": true,
+    "official_upstream": {
+      "bytes": 2357,
+      "sha256": "19d60589437730d71dec2050f79bbf69a4df4890fd1945aeceba654d2746739e"
+    },
+    "only_touching_existing_public_patch": "tools/native-render-import/hyprland.patch"
+  },
+  "existing_public_cohort": {
+    "bytes": 15734,
+    "path": "tools/native-render-owner/content/source-cohort.json",
+    "sha256": "7b3097f508e8af4e75bab3808a9e0aa92e9366171c71c00b7dce1443db35909e"
+  },
+  "frozen_tests": {
+    "cpu-texture-api-oracle.py": {
+      "bytes": 3643,
+      "sha256": "c12105bc97ee73d42f603b06cceed9f5feb22e41eae1b5d4cdbb1aa1a219755f"
+    },
+    "cpu-texture-functional-oracle.py": {
+      "bytes": 3920,
+      "sha256": "23f4aa5b7e9f8da5a022c248ed08836ee7cb28dd098ab5f3b745ef24357982f6"
+    },
+    "cpu-texture-functional.cpp": {
+      "bytes": 18460,
+      "sha256": "d8267bc27780d0143696690b62fa364b672c73ad2fb64218d665147276d65efa"
+    },
+    "cpu-texture-public-member.cpp": {
+      "bytes": 1789,
+      "sha256": "1c2cc3e6d0641ba92c7dcf6a890312443a16f1a2b24343c92d1a6cd01bbe6c38"
+    },
+    "existing-texture-control.cpp": {
+      "bytes": 1221,
+      "sha256": "e4951cb1c9c7b29c20a697564e2d80c20560c47938b9c6049d9b609d4957c981"
+    }
+  },
+  "functional_oracle_scope": "Exact executed GREEN3 classifier: real eight-object CPU/Rust closure, strict signature checks, five groups and two joined-thread observations. Setup failures remain separate.",
+  "functional_runtime_qualification": {
+    "ELF": {
+      "bytes": 4642144,
+      "sha256": "a533c4551cae53a9847c81b2cf0a1c1b5f99132151c190f2f9149ad0a37c0541"
+    },
+    "Root_qualification": {
+      "bytes": 2625,
+      "sha256": "9c4e202dad852e029928c4207197ae3ee55f223122e44d19b74f55de91bb4284"
+    },
+    "actual_PIPE_EOFs": 54,
+    "actual_direct_waits": 47,
+    "all_original_nested_closure_qualified": true,
+    "component": {
+      "bytes": 174317,
+      "sha256": "679f8c5c95d9a085cac8c5d3674e04272cbdbfa74f44095bd1bbdf3083b01b99"
+    },
+    "cpp_thread_identity_reuse_actually_observed": true,
+    "different_actual_Linux_thread_ids": true,
+    "execution": {
+      "bytes": 12259,
+      "sha256": "c3ae5ed4afafcd94f864f247619ed7b416f893adbcbfbb0a29b78862209f3b25"
+    },
+    "five_groups": 5,
+    "full_Wayland_FramePlan_worker_Source_ARM_phone_qualified": false,
+    "link_map": {
+      "bytes": 1754026,
+      "sha256": "9941745a49e69e361744b6e5ea463dc3f2b71e7ce7f50ced4914948008759c8a"
+    },
+    "two_actual_joined_threads": true
+  },
+  "modified_paths": [
+    "src/render/Texture.hpp"
+  ],
+  "new_full_main_SDK_normal_Wayland_frame_or_render_execution_qualified": false,
+  "new_paths": [
+    "src/render/CPUTexture.cpp"
+  ],
+  "parent_public_revision": "1d307086ce948bec8706409c2dccb8dc20d0e038",
+  "preserved_first_functional_setup_failure": {
+    "Root_classification": {
+      "bytes": 1010,
+      "sha256": "598c13d243e27f13915dec5c2bba1df837648b9833a9294085db2aaf0eeb6806"
+    },
+    "exact_unused_helper_removal_diff": {
+      "bytes": 624,
+      "sha256": "247b793895b762161f60e5c7dbd8d366ae34bb80972405552a8555c462790601"
+    },
+    "execution": {
+      "bytes": 12280,
+      "sha256": "404712fde51376d7ca0b630233c1915847d72a5407abb19dfc7902f70953d707"
+    },
+    "original_consumer": {
+      "bytes": 18651,
+      "sha256": "28692ccc01e91872b6e1fed356becbb9397a7d496db593f30d51f19f0c44368e"
+    },
+    "production_semantic_RED": false,
+    "semantic_assertions_flags_and_production_unchanged": true
+  },
+  "preserved_second_functional_setup_failure": {
+    "Root_classification": {
+      "bytes": 1749,
+      "sha256": "0d1d9d19bdd1672494ec2dc49adab6f56a7919500c20df428e2af2bbe93c6f32"
+    },
+    "consumer_and_all_production_bytes_unchanged": true,
+    "exact_original_empty_pointer_destructor_wrappers": [
+      "_ZN9Hyprutils6Memory14CUniquePointerIN6Render13IHyprRendererEED1Ev",
+      "_ZN9Hyprutils6Memory14CUniquePointerIN6Render13IHyprRendererEED2Ev"
+    ],
+    "execution": {
+      "bytes": 12279,
+      "sha256": "f3af913c48b8766d162981a705bb64ac28ba3c8d5e7e9c05ca09ef86b692a566"
+    },
+    "production_semantic_RED": false,
+    "reason": "Overbroad renderer-name filter rejected only two original generic empty unique-pointer destructor wrappers, after real eight-object compilation/link. No consumer execution."
+  },
+  "production_delta_files": {
+    "src/render/CPUTexture.cpp": {
+      "after": {
+        "bytes": 5088,
+        "sha256": "7b6d28a2d1fcb78f7a1a0b270aec46dbdd42766e09fd5699e7e1a5db62d9c646"
+      },
+      "before": null
+    },
+    "src/render/Texture.hpp": {
+      "after": {
+        "bytes": 3029,
+        "sha256": "f1ca9ce26c95db40448c1cd6f32f225bf69dd1e6da8b0d7fc55f37000abc23d1"
+      },
+      "before": {
+        "bytes": 2369,
+        "sha256": "641013ab638f3ad1a0c210fece847ce3d49f0638abb360ee7ec08523b6905c1c"
+      }
+    }
+  },
+  "public_APIs": [
+    "int32_t Render::createCPUTexture(const CSHMSnapshot&, bool, SP<ITexture>&) noexcept",
+    "const Render::CSHMSnapshot* Render::borrowCPUTextureSnapshot(const ITexture&) noexcept"
+  ],
+  "public_apply_order": [
+    {
+      "bytes": 145530,
+      "path": "tools/native-render-import/hyprland.patch",
+      "sha256": "bd1f10c7d204c85eac78938bd1ed7f3cd430f823f50b5a867b2d9931fc393b32"
+    },
+    {
+      "bytes": 5238,
+      "path": "tools/native-render-owner/hyprland-executor-aq15.patch",
+      "sha256": "52990191d0d91d3717abdf25d2f8ff106773b51f0e390ae56c2d5db79b5f1d83"
+    },
+    {
+      "bytes": 104804,
+      "path": "tools/native-render-owner/hyprland-startup-custody-test.patch",
+      "sha256": "5731048744eb1ec3a9569047b51009b3f7876c7c06349d92ca22d7c80e3df7f3"
+    },
+    {
+      "bytes": 1106,
+      "path": "tools/native-render-owner/content/surface-state.patch",
+      "sha256": "129efc9ab69a61d80997fb39fdedd2d36e8ebab3f54c38f49ae37171f8421caf"
+    },
+    {
+      "bytes": 6474,
+      "path": "tools/native-render-owner/texture/cpu-texture.patch",
+      "sha256": "a186fe62ee51826a5fb1396bd624bc2d60c41aa8c6b44910030dc51bd63b7d8c"
+    }
+  ],
+  "public_source_repository": "https://github.com/nrempel/pokelinux",
+  "qualified_structural_evidence": {
+    "Root_qualification": {
+      "bytes": 4496,
+      "sha256": "c0832cc70569cd4e96028ca6ee0bfa5e416797aff272a911fbefcfd93e0729ec"
+    },
+    "component_sha256": "807b18a081324eb7761670007c5544328efeae1204779de665e6d297fed8740f",
+    "execution_sha256": "925b0a2e972f5349adcba842653a1b2927553106b7113eedb5126cfb6382034d",
+    "production_semantic_RED": false,
+    "syntax_only_no_link_or_body_execution": true
+  },
+  "raw_private_receipts_or_binaries_included": false,
+  "schema": 1,
+  "scope": "Real immutable CPU ITexture adapter: actual missing-two-API structural compilation RED, followed by two clean signature TUs and real five-group native x86 C++/Rust component GREEN. No original semantic runtime RED or normal compositor/frame claim.",
+  "selected_component_dependencies": {
+    "AQ15_library": {
+      "bytes": 1853176,
+      "sha256": "32fd43a403df9d09e15f706a46f52ee49ecb15352729d902e45f241c5a174f3f"
+    },
+    "Rust_headers": {
+      "pokelinux_render.h": {
+        "bytes": 1988,
+        "sha256": "4a7a9a603fe6d7780ff071020f727c3eb7b0aba1c9bba56b682ddd219f995396"
+      },
+      "pokelinux_render_executor.h": {
+        "bytes": 9941,
+        "sha256": "b5aee195198a44475b90156244fe9f998bb4f4f196d4b12cb7c6f59e9988b731"
+      },
+      "pokelinux_render_frame.h": {
+        "bytes": 4036,
+        "sha256": "56f8ec91b6cfb434af8875c6139fd210f0d57618614a660bffde13e6d3d479f0"
+      }
+    },
+    "Rust_source_base": "f3be35a74d48245d41638f87b78847421f6dd0c0",
+    "Rust_static_library": {
+      "bytes": 22901236,
+      "sha256": "246a6680b7f9ed8affd89bd9b022319a0903f5ebc58f03d7d76eaa85f8653311"
+    },
+    "SDK": {
+      "bytes": 4700160,
+      "sha256": "9a31e800bd4b7bc1e3eccf7089cdbce181cfe3a57d4446eab8a43b240bde9893"
+    },
+    "SDK_original_links": 2,
+    "SDK_original_regular_files": 535,
+    "component_overlay_only": {
+      "SDK_path": "usr/include/hyprland/src/render/Texture.hpp",
+      "after": {
+        "bytes": 3029,
+        "sha256": "f1ca9ce26c95db40448c1cd6f32f225bf69dd1e6da8b0d7fc55f37000abc23d1"
+      },
+      "before": {
+        "bytes": 2369,
+        "sha256": "641013ab638f3ad1a0c210fece847ce3d49f0638abb360ee7ec08523b6905c1c"
+      }
+    },
+    "native_link_libraries": [
+      "-lgcc_s",
+      "-lutil",
+      "-lrt",
+      "-lpthread",
+      "-lm",
+      "-ldl",
+      "-lc"
+    ],
+    "new_implementation": {
+      "bytes": 5088,
+      "sha256": "7b6d28a2d1fcb78f7a1a0b270aec46dbdd42766e09fd5699e7e1a5db62d9c646"
+    },
+    "original_compile_database": {
+      "bytes": 1021977,
+      "sha256": "0bfe3f824ab4741f4bf379ba8e881054d638c577a4b362a6f949bad8af96cc28"
+    },
+    "original_warning_options_only_on_unchanged_TUs": {
+      "src/debug/log/Logger.cpp": [
+        "-Wno-keyword-macro",
+        "-Wno-unused-result",
+        "-Wno-unused-parameter",
+        "-Wno-unused-value",
+        "-Wno-missing-field-initializers",
+        "-Wno-gnu-zero-variadic-macro-arguments",
+        "-Wno-narrowing",
+        "-Wno-pointer-arith",
+        "-Wno-clobbered",
+        "-Wno-missing-braces"
+      ],
+      "src/helpers/Color.cpp": [
+        "-Wno-keyword-macro",
+        "-Wno-unused-result",
+        "-Wno-unused-parameter",
+        "-Wno-unused-value",
+        "-Wno-missing-field-initializers",
+        "-Wno-gnu-zero-variadic-macro-arguments",
+        "-Wno-narrowing",
+        "-Wno-pointer-arith",
+        "-Wno-clobbered",
+        "-Wno-missing-braces"
+      ],
+      "src/helpers/cm/ColorManagement.cpp": [
+        "-Wno-keyword-macro",
+        "-Wno-unused-result",
+        "-Wno-unused-parameter",
+        "-Wno-unused-value",
+        "-Wno-missing-field-initializers",
+        "-Wno-gnu-zero-variadic-macro-arguments",
+        "-Wno-narrowing",
+        "-Wno-pointer-arith",
+        "-Wno-clobbered",
+        "-Wno-missing-braces"
+      ],
+      "src/helpers/env/Env.cpp": [
+        "-Wno-keyword-macro",
+        "-Wno-unused-result",
+        "-Wno-unused-parameter",
+        "-Wno-unused-value",
+        "-Wno-missing-field-initializers",
+        "-Wno-gnu-zero-variadic-macro-arguments",
+        "-Wno-narrowing",
+        "-Wno-pointer-arith",
+        "-Wno-clobbered",
+        "-Wno-missing-braces"
+      ],
+      "src/render/Texture.cpp": [
+        "-Wno-keyword-macro",
+        "-Wno-unused-result",
+        "-Wno-unused-parameter",
+        "-Wno-unused-value",
+        "-Wno-missing-field-initializers",
+        "-Wno-gnu-zero-variadic-macro-arguments",
+        "-Wno-narrowing",
+        "-Wno-pointer-arith",
+        "-Wno-clobbered",
+        "-Wno-missing-braces"
+      ]
+    },
+    "strict_TUs": [
+      "cpu-texture-functional.cpp",
+      "src/render/CPUTexture.cpp",
+      "src/render/SHMSnapshot.cpp"
+    ],
+    "unchanged_real_TUs": {
+      "src/debug/log/Logger.cpp": {
+        "bytes": 1789,
+        "sha256": "d04e3a2fe5c73ad8684377856ce8301e493929ed9f391e405fde4975eaf6b868"
+      },
+      "src/helpers/Color.cpp": {
+        "bytes": 1497,
+        "sha256": "0e7d472cb56d9fd9f006e3d7cff930ee4341ed587cde7c47a3242b01447aa57f"
+      },
+      "src/helpers/cm/ColorManagement.cpp": {
+        "bytes": 20800,
+        "sha256": "b769268098d042aa452800f78d5176f468251165d9df04ec6acd38aa7f7cfe50"
+      },
+      "src/helpers/env/Env.cpp": {
+        "bytes": 285,
+        "sha256": "2976c823023e4a6147946d8678d8fa91963a8f3b585b4d9c9eb9d67760597b16"
+      },
+      "src/render/SHMSnapshot.cpp": {
+        "bytes": 4798,
+        "sha256": "cf01b9a77952ab38952c246c26b22d9f815a1bec992fc3821d9ab827ac4c9918"
+      },
+      "src/render/Texture.cpp": {
+        "bytes": 758,
+        "sha256": "b436dec937360e3a8e04c2611a7eac1221b55bc41fb61cfcc454d7420ce4b75b"
+      }
+    }
+  },
+  "snapshot_and_thread_contract": {
+    "CPU_destructor_releases_Rust_custody_only": true,
+    "borrow_creator_thread_only": true,
+    "borrow_pointer_can_cross_worker": false,
+    "implicit_native_or_LUT_import": false,
+    "native_output_replacement_refused_before_clone_or_assignment": true,
+    "nonreused_private_thread_lifetime_token": true,
+    "owned_Rust_snapshot_clone": true,
+    "pixel_copy_in_Cpp_adapter": false,
+    "public_ITexture_fields_generally_thread_safe": false
+  },
+  "upstream": {
+    "archive_sha256": "5b05ce7ba5296fa46e666852bf108ab5af121bf577f8043787e2d2c252d8f109",
+    "commit": "efb50993780079460b0cbed1363e2166a2de1d9f",
+    "repository": "https://github.com/hyprwm/Hyprland"
+  }
+}
