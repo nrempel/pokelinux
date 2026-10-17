@@ -808,6 +808,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "pokelinux-brightness"
+version = "0.1.0"
+dependencies = [
+ "pokelinux-kernel-identity",
+ "rustix",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "pokelinux-camera"
 version = "0.1.0"
 
@@ -844,6 +854,7 @@ name = "pokelinux-lifecycle"
 version = "0.1.0"
 dependencies = [
  "pokelinux-audio",
+ "pokelinux-brightness",
  "pokelinux-camera",
  "pokelinux-kernel-identity",
  "rustix",

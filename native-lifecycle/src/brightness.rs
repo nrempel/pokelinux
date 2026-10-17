@@ -103,3 +103,7 @@ pub trait Provider {
     /// Retire intent/connection. No hardware rollback or remote cleanup proof.
     fn revoke(&mut self);
 }
+
+#[path = "brightness_owner.rs"]
+mod owner;
+pub use owner::Owner;

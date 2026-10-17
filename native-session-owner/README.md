@@ -2,7 +2,7 @@
 
 This Rust entry owns one compositor Child and composes the existing Source
 Observer, lifecycle actor, per-app Wayland supervisor, audio client and explicitly
-selected local Messages history. The fixed Sounds and Messages desktop requests
+selected local Messages history and brightness owner. The fixed desktop requests
 supply no permission, route or executable. The full smartphone system remains open;
 see the [composition report](../docs/native-messages-session-composition.md) for
 current component evidence and the remaining normal-session gate.
@@ -101,7 +101,8 @@ The deployment must create root-owned nonwritable runtime, display and policy
 ancestors, UID1000 compositor HOME/runtime0700 and UID11042 Sounds
 HOME/runtime0700. History mode also needs UID11010 Messages HOME/runtime0700
 and three existing, separate root0700 directories for history runtime/raw/inbox.
-The required `appearance_socket` has a protected parent. Both fixed profiles have
+Brightness owner mode additionally needs UID11050 Settings HOME/runtime0700.
+The required `appearance_socket` has a protected parent. All fixed profiles have
 exactly six absolute arguments and bind the configured Wayland path, appearance
 socket and session `app.sock`; configuration grants no app access.
 The `policy` field names an existing root-owned directory with mode0700, such as
@@ -113,10 +114,23 @@ the selected directory before startup, for example as root:
 install -d -o0 -g0 -m0700 -- /var/lib/pokelinux/session
 ```
 
-The required `messages` field accepts only `{"mode":"disabled"}` (Sounds only)
-or `{"mode":"history","runtime":"…","raw":"…","inbox":"…"}` (both apps).
+The required `messages` field accepts only `{"mode":"disabled"}` (no Messages)
+or `{"mode":"history","runtime":"…","raw":"…","inbox":"…"}` (adds Messages).
 There is no incoming/backend selector or implicit default. Configuration validation
 does not create directories or change storage data.
+
+The mandatory `brightness` field accepts `{"mode":"disabled"}` or
+`{"mode":"owner","socket":"/absolute/private-owner/owner.sock"}`. Owner mode
+requires exactly one `org.omarchy.Settings` profile at UID11050; disabled mode
+refuses that profile. Its six arguments follow the same fixed bindings, with the
+lifecycle `app.sock` rather than the private brightness endpoint. The owner socket
+must have an existing root:root0700 parent and differ from audio, appearance,
+Wayland and app endpoints. Configuration accepts no backend/device path or grant.
+Omission is rejected; update operational bundles explicitly. The example selects
+disabled mode. The separate brightness service must be ready independently.
+The [brightness report](../docs/native-brightness.md) distinguishes qualified
+configuration/adapter tests from the still-open full actor and graphical path.
+
 The examples show the schema; choose actual trusted paths/accounts for the
 installed profile. A direct native Stop client must name that configured runtime.
 The sole audio service at11040 and appearance feed must be

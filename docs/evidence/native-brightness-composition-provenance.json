@@ -1,0 +1,248 @@
+{
+  "schema": 1,
+  "scope": "Separate native-host original-code cohorts: real brightness Client/Main/worker on authored SyntheticTree; lifecycle Provider adapter with authored root peers; installed session Config filesystem selection. No full configured actor, Source session, GUI, PID1 brightness installation, ARM execution or physical backlight result.",
+  "joined_client_service": {
+    "qualification": {
+      "bytes": 20850,
+      "sha256": "3be6d93bdf40b279f7d12ca2cbda6822bc846d3cd12c1fc3d6d846803e9bf9ac"
+    },
+    "source": {
+      "bytes": 3924,
+      "sha256": "27ddc14007bf2f123f5938bb5ee9666a2bbe7a2bd3234e998cb2157396e83c33"
+    },
+    "receipt": {
+      "bytes": 19908,
+      "sha256": "19a1d7aaccd40805cc85b3c3baf485f7a568c356816ceda564ae14a994936f44"
+    },
+    "counts": {
+      "composed_groups": 3,
+      "passed": 3,
+      "failed": 0,
+      "actual_direct_Main_waits": 3,
+      "actual_Main_stdout_stderr_PIPE_EOFs": 6,
+      "observed_Main_owned_worker_lifetimes": 2,
+      "observed_Main_worker_gone_children_empty": 2,
+      "test_direct_worker_waits": 0
+    },
+    "consumer": {
+      "bytes": 23495,
+      "sha256": "1b9448c23baa2074aa20eb7787845bf293f4a6034323f16a1a2c5e5ac9a0d63a"
+    },
+    "first_failed_attempt": {
+      "bytes": 3260,
+      "sha256": "7994e61ab5c5df57c334300b7b1727682d0071cae55e33e2a0b935d8a77d9826"
+    },
+    "original_failure_cause_unknown": true,
+    "observer_successor_changes_only_test": true,
+    "pending_repeat_branch_exercised": false,
+    "actual_new_readonly_reconciliation_requests": 1,
+    "production_unchanged_after_first_attempt": true,
+    "fmt": true,
+    "strict_all_target_clippy": true,
+    "host_release_built_not_executed": {
+      "bytes": 776536,
+      "sha256": "99dfc25669cdcd643c5b2be8e3f033cb4d4177d7917a7b03291d7cbc485eac19"
+    },
+    "arm_release_crossbuilt_not_executed": {
+      "bytes": 824232,
+      "sha256": "6066680626e0a3b81dcad37bdf3fd69d6d59a0a3544659a11dd4132bd4b1ad64"
+    }
+  },
+  "lifecycle_provider_adapter": {
+    "qualification": {
+      "bytes": 8092,
+      "sha256": "627cece4da230b0ac3d41de873bdfe2d1f0c931c00a7cd5e01b278138e21c3eb"
+    },
+    "source": {
+      "bytes": 28388,
+      "sha256": "326804b299583104c53b98e30ca7065277c98a82a18536c3ffddc4c80c8b4782"
+    },
+    "compiled_red": {
+      "passed": 1,
+      "failed": 4,
+      "compiler_error": false,
+      "stdout": {
+        "bytes": 1277,
+        "sha256": "08feaa4ddc8cb9e5e7a4c720727775b2eea9e7c5a3f6c59cab38d05a536596e6"
+      },
+      "stderr": {
+        "bytes": 4409,
+        "sha256": "4f0b1f8377224fe1f6426aa429ae1771e68100438ec1f08c96d547b5d909ac24"
+      }
+    },
+    "green": {
+      "new_adapter_groups": 5,
+      "existing_brightness_groups": 11,
+      "passed": 16,
+      "failed": 0,
+      "fmt": true,
+      "strict_all_target_clippy": true,
+      "host_release_build_only": true
+    },
+    "same_red_green_consumer_sha256": "8ee0039f6782f95dfa8ab6d149a6d8e756c29781b61e8c82f5359974c6f3ff71",
+    "preserved_setup_failures": {
+      "red-1": "Offline unfiltered metadata wanted uncached target-only r-efi; no runtime test",
+      "green-1": "Four host overlay files0600 unreadable to mapped container uid0; no compile",
+      "green-2": "Readonly input modes persisted into disposable formatter copy; no compile",
+      "green-3": "New5 and cadence1 passed; old10 failed missing existing test-root environment before their policy assertions. No source/oracle change; established prerequisite restored."
+    }
+  },
+  "installed_config": {
+    "qualification": {
+      "bytes": 7960,
+      "sha256": "42c1dc38fb6a70736c1492c6a9f4be4b5972a7fa534ef2ad864f40ae4b3d8c5d"
+    },
+    "source": {
+      "bytes": 21562,
+      "sha256": "81adaacfae791aebe62993bcbb4ed76056ca945f07f753d087bef90927c723ce"
+    },
+    "receipt": {
+      "bytes": 60425,
+      "sha256": "df6c6691388dcc0cc25551302cee7d69640853c3983487861eb26b5d2a6a1b00"
+    },
+    "compiled_red": {
+      "bytes": 5219,
+      "sha256": "93c135835f0b6a7f2e61f3a7229811a1c98d74db4c294d9ce9870a3fe357c076"
+    },
+    "green_counts": {
+      "new_brightness_config": 4,
+      "existing_config": 15,
+      "messages_config_only": 8,
+      "failed": 0,
+      "unexecuted_runtime_source_case": 1
+    },
+    "same_new_four_test": {
+      "bytes": 8618,
+      "sha256": "f6707c8f47ffad9b705875b7621fd523341e9017d336c2f126bdf73c74349d79"
+    },
+    "config": {
+      "bytes": 9650,
+      "sha256": "a148ec6f5ad0e3af54aeb3017a7baa48f046b2a49fb5550442ad814e712caaec"
+    },
+    "preserved_first_green_failure": {
+      "bytes": 1622,
+      "sha256": "4c80da720eb2b9fc708910f54e61f81b44226962e378e2b894c6ff17f27d0090"
+    },
+    "open_runtime_test": "returning_runtime_setup_failure_drains_projector_and_source",
+    "missing_helper_failure_before_spawn": true,
+    "explicit_disabled_added_to_old_fixtures_only": true,
+    "fmt": true,
+    "strict_clippy": true,
+    "host_release_built_not_executed": {
+      "bytes": 5619016,
+      "sha256": "4768890a15d4e86e1edcb9852e0bff0066e591a1033afaa417a8362517852f3f",
+      "ELF_machine": 62,
+      "interpreter": "/lib64/ld-linux-x86-64.so.2",
+      "actual_execution": false,
+      "normal_default_features": true
+    },
+    "runtime_in_config_cohort_unchanged_pre_adapter": true
+  },
+  "limits": [
+    "Cohorts remain distinct; test counts are not a new combined run.",
+    "Synthetic attributes are not Linux sysfs driver or panel hardware.",
+    "Reconciliation establishes current attributes and retains uncertainty; it does not acknowledge an expired Set.",
+    "No permission, Source/session readiness, foreground admission or display effect is inferred from configuration.",
+    "No phone accessed."
+  ],
+  "runtime_constructor": {
+    "qualification": {
+      "bytes": 7493,
+      "sha256": "83fb5797fe8ccbf6b9bacea53888c10c3c669d755435262ef50c10f142cf90a7"
+    },
+    "scope": "Same selected_brightness constructor used by normal runtime::run -> lifecycle Owner -> actual normal host Release brightness Main/SyntheticTree. Only constructor and typed Provider IPC invoked; no runtime::run, full lifecycle actor authority, Source, compositor, Settings UI, Linux sysfs/hardware or ARM execution.",
+    "source": {
+      "bytes": 2632,
+      "sha256": "e8a75de35de374fc21b21efc0a089479dbb7e5a01c53b4a22287a6304a2632ae"
+    },
+    "same_frozen_red_green_test": {
+      "bytes": 10285,
+      "sha256": "e878349d0c8fb970a51604e1994b6cebe32b3d04c9083dd2cac0da981769b4c1"
+    },
+    "compiled_red": {
+      "passed": 1,
+      "failed": 1,
+      "assertion_before_service_lookup_or_spawn": true
+    },
+    "green": {
+      "passed": 2,
+      "failed": 0,
+      "fmt": true,
+      "strict_all_target_clippy": true,
+      "normal_host_service_actual_execution": {
+        "bytes": 776536,
+        "sha256": "99dfc25669cdcd643c5b2be8e3f033cb4d4177d7917a7b03291d7cbc485eac19"
+      },
+      "asserted_attributes": {
+        "max": 400,
+        "initial_brightness": 200,
+        "actual_brightness": 120,
+        "one_explicit_Set_percent": 75,
+        "final_brightness": 300,
+        "observed_percent": 75,
+        "actual_percent": 30,
+        "actual_attribute_unchanged": true,
+        "new_revision": true
+      },
+      "direct_main_custody": {
+        "actual_wait": 1,
+        "actual_exit": 0,
+        "stdout_PIPE_EOF": true,
+        "stderr_PIPE_EOF": true,
+        "same_parent_ECHILD": true,
+        "normal_SIGTERM": true,
+        "failure_cleanup": false,
+        "within_original_8s_work_10s_close": true
+      },
+      "session_owner_release_build_only": {
+        "bytes": 5680392,
+        "sha256": "b210bd23b53a135e7bc1e158b86f8868e2330d3588f394889ffc82865b595551"
+      }
+    },
+    "owned_epochs": [
+      {
+        "epoch": "red-1",
+        "receipt": {
+          "bytes": 80038,
+          "sha256": "ed1d6f29b17389d2fca6cfb4e7a21e03d0d1e194a55cc271029bd878967b2079"
+        },
+        "actual_CLI_waits": 10,
+        "actual_PIPE_EOFs": 20,
+        "exact_CID_absence": true,
+        "same_daemon": true,
+        "source_unchanged": true,
+        "original_cutoffs_passed": true
+      },
+      {
+        "epoch": "green-1",
+        "receipt": {
+          "bytes": 80489,
+          "sha256": "d3b62b0a58c8af0523147f50b59a33edb0c58496cbf8e67bd75670a1d8efb5fe"
+        },
+        "actual_CLI_waits": 10,
+        "actual_PIPE_EOFs": 20,
+        "exact_CID_absence": true,
+        "same_daemon": true,
+        "source_unchanged": true,
+        "original_cutoffs_passed": true
+      }
+    ],
+    "tracked_lock_closure": {
+      "closure": {
+        "bytes": 3780,
+        "sha256": "00d4e603218ef7a9c26e05bb7c300e69d94b8b0883758437259377080fc7b559"
+      },
+      "diff_review": {
+        "bytes": 21747,
+        "sha256": "d40967f6d7ceb0dcb5b933644dcd2a4b873a90df8f74c8c0c10231641b38a49d"
+      },
+      "scanned": 17,
+      "already_correct_no_write": 1,
+      "changed_copied_Root": 16,
+      "only_change": "Add pokelinux-brightness path package and lifecycle dependency edge in each affected lock",
+      "registry_name_version_source_checksum_drift": false,
+      "Settings_untracked_selected_or_written": false
+    },
+    "runtime_full_actor_invoked": false
+  }
+}

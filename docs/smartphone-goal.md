@@ -31,13 +31,17 @@ kernel/service states in one process/window, with original Pixel10-profile
 captures. Physical battery, charging, suspend and cold graphical startup gates
 remain open; the suspend authority is unchanged.
 
-The [native Rust brightness daemon](native-brightness.md) now passes38 native-host
-backend/ownership/deadline/packet/worker/service groups, including actual blocked
-I/O, Stop, late-success refusal and a reproduced late-preflight write repair.
-Host/ARM64 release services build; ARM execution remains open. The separate Rust
-owner client passes eight real-socket groups, and the lifecycle boundary passes
-11 focused groups. Joined client/daemon, configured Settings, installation, UI
-and physical display gates remain open; all property tests use authored files.
+The [native Rust brightness service](native-brightness.md) now joins its real Rust client,
+owned worker and authored attribute backend in three process/socket cases:
+explicit changes, cancellation with readonly recovery, and refusal of a queued
+success after its original deadline. A concrete lifecycle adapter passes five
+new socket groups plus11 existing policy groups. Installed configuration passes
+27 filesystem/selection controls with an explicit disabled or owner choice and
+fixed Settings identity. The normal runtime constructor also executes that provider
+against the actual release service in two focused cases. Earlier38 service and
+eight client groups retain their
+separate evidence. Full actor/Settings composition, installation, visible UI,
+ARM execution and physical display gates remain open.
 
 The later [16-CPU cold diagnostic](native-session-manager-stop.md#declared-cpu-resource-diagnostic)
 still expires Source at103.24ms, with zero own-quota throttling in60 captured

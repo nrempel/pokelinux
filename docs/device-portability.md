@@ -78,6 +78,15 @@ host permission/PCM proofs nor the separately qualified four-group
 That join uses virtual routes and root-authored lifecycle controls; the current
 installed Source/audio session owner remains separate.
 
+The [brightness vertical](native-brightness.md) carries percent intent and fresh
+readback revisions through shared Rust app/lifecycle/service code. Deployment
+alone selects a backlight backend and device. LinuxBacklight requires the Linux
+sysfs class; the qualified SyntheticTree tests use authored files with no driver
+fallback. Requested and optional actual attributes are distinct, and neither is
+physical luminance. A Pixel panel without a usable Linux backlight interface will
+need its own independently qualified backend; these host tests add no supported
+phone model.
+
 ## Boundaries
 
 | Layer | Owns | Must not assume |

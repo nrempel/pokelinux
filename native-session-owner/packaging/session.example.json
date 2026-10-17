@@ -21,5 +21,8 @@
     "runtime": "/run/pokelinux/messages-storage",
     "raw": "/var/lib/pokelinux/messages/raw",
     "inbox": "/var/lib/pokelinux/messages/inbox"
+  },
+  "brightness": {
+    "mode": "disabled"
   }
 }

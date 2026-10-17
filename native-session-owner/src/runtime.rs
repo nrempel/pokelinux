@@ -33,6 +33,17 @@ pub fn drain_after<T>(
     outcome
 }
 
+fn selected_brightness(
+    selection: &crate::config::Brightness,
+) -> io::Result<Option<pokelinux_lifecycle::brightness::Owner>> {
+    match selection {
+        crate::config::Brightness::Disabled => Ok(None),
+        crate::config::Brightness::Owner { socket } => {
+            pokelinux_lifecycle::brightness::Owner::new(socket).map(Some)
+        }
+    }
+}
+
 pub fn run(config: &Config) -> io::Result<()> {
     let helper = std::env::current_exe()?;
     pokelinux_lifecycle::service::trusted_executable(&helper)?;
@@ -102,7 +113,8 @@ pub fn run(config: &Config) -> io::Result<()> {
             })
             .transpose()?;
         let mut audio = pokelinux_lifecycle::audio::Owner::connect(&config.audio_socket, 11040)?;
-        pokelinux_lifecycle::service::run_with_services(
+        let mut brightness = selected_brightness(&config.brightness)?;
+        pokelinux_lifecycle::service::run_with_brightness_services(
             &config.runtime,
             &config.policy,
             &config.profiles,
@@ -115,6 +127,9 @@ pub fn run(config: &Config) -> io::Result<()> {
             Some(&mut display),
             None,
             Some(&mut audio),
+            brightness
+                .as_mut()
+                .map(|p| p as &mut dyn pokelinux_lifecycle::brightness::Provider),
             startup
                 .as_mut()
                 .map(|observer| observer as &mut dyn pokelinux_lifecycle::startup::Observer),
@@ -143,3 +158,7 @@ pub fn run(config: &Config) -> io::Result<()> {
     outcome
 }
 const POLL_CADENCE: Duration = Duration::from_millis(2);
+
+#[cfg(test)]
+#[path = "runtime_brightness_tests.rs"]
+mod brightness_tests;

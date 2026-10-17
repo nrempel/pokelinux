@@ -2,11 +2,11 @@
 
 The new Rust brightness component separates deployment-selected backlight I/O,
 local observation/intent ownership and the lifecycle actor's app permission.
-The production daemon now passes native-host process/socket tests against
-authored SyntheticTree attributes. Its separate Rust client passes real local
-socket tests with authored peers. Their joined connection, configured lifecycle
-adapter, Settings window, installed service and physical display change remain
-unqualified at this checkpoint.
+The production daemon and its concrete Rust client now pass joined native-host
+process/socket tests against authored SyntheticTree attributes. A lifecycle
+Provider adapter and explicit installed configuration have separate qualified
+host evidence. Full actor/Settings composition, the visible Settings window,
+installed service and physical display change remain open.
 
 ## Attribute backend
 
@@ -50,8 +50,9 @@ policy input: it proves no process wait, pipe EOF or kernel suspend behavior.
 ## App permission and lifecycle
 
 The lifecycle actor now understands DisplayBrightness for the fixed
-org.omarchy.Settings principal, UID11050. This names a future installed app; it
-does not install or launch one. Typed brightness_set and brightness_status requests
+org.omarchy.Settings principal, UID11050. The session configuration now validates
+this fixed profile when its brightness owner is selected; this does not itself
+install, launch or grant the app. Typed brightness_set and brightness_status requests
 carry a percent, expected readback revision and bounded lifetime, without device
 identifiers or app-supplied capabilities. The configured provider entry explicitly
 supplies the backend; unconfigured entries return Unavailable.
@@ -218,11 +219,67 @@ new explicit Set. These authored peers do not qualify a daemon connection,
 lifecycle grant, backend write, ARM runtime or hardware. See the
 [client provenance](evidence/native-brightness-client-provenance.json).
 
+## Composed client, lifecycle adapter and deployment selection
+
+Three additional original-code groups execute the real Rust client against the
+normal daemon and retained worker. They cover persistent Inspect→25→75 with
+independent optional actual attributes; a FIFO-held Set cancelled into retained
+pending state followed by readonly reconciliation without replay; and a worker
+that succeeds while Main is stopped, whose queued result the client rejects after
+the original deadline. A later readonly request observes current300/max400 while
+preserving uncertainty and never acknowledging the expired Set. All three Main
+processes exit0 and their stdout/stderr reach EOF. The two held worker lifetimes
+are separately observed; their internal wait remains the daemon's responsibility.
+
+The first composed attempt passed two cases, then failed its immediate fresh-view
+observer in the third. Its snapshot and cause remain unknown. The production
+code stayed unchanged. The successor logs snapshots and permits only explicit
+pending replies to trigger another readonly Inspect within one fixed800ms cutoff.
+It passes all three; the final observer needs one Inspect, so the repeat branch
+is not exercised. Whole-crate format, strict all-target Clippy and normal host/ARM
+Release builds pass. Those exported Release ELFs are build-only in this cohort;
+the composed cases execute the same-source normal test-profile daemon.
+
+The concrete lifecycle Owner delegates transport to that Rust client. It converts
+raw attributes with bounded half-up integer rounding, keeps requested and optional
+actual readback distinct, and clears expired values on every getter. Only readonly
+inspection connects or refreshes the incarnation. Set forwards once; poll never
+sends, reconnects or retries. Five actual root-peer adapter groups first compile
+against an inert adapter, with four assertion failures and one passing control.
+The same frozen five then pass with the11 existing brightness policy groups,
+format, strict Clippy and a host build. These authored peers do not establish a
+full actor grant or real backend operation.
+
+The mandatory session `brightness` field accepts explicit disabled mode or an
+owner socket. Owner mode requires the fixed UID11050 Settings profile and a
+private root-owned endpoint parent, distinct from other configured sockets.
+It accepts no app grant, backend or device selection. Four new configuration
+assertions fail before implementation and then pass with15 existing config and
+eight Messages configuration groups. Existing fixtures now explicitly select
+disabled mode; omission has no compatibility default. A first aggregate retains
+its separate missing runtime-helper failure before spawn. The successor excludes
+that Source/runtime case explicitly; it remains open. Config tests retain their
+pre-adapter runtime snapshot and cannot qualify the later runtime composition.
+See the [composition provenance](evidence/native-brightness-composition-provenance.json)
+for the separate source cohorts and preserved failures.
+
+The normal session entry now constructs the selected concrete Owner and passes
+it into the lifecycle brightness service entry. A compiled constructor regression
+first passes disabled mode and fails the explicit Owner assertion before any
+service lookup or spawn. After repair, the same two tests pass. The positive
+case uses the exact optimized host service ELF: Inspect→one explicit75% Set→raw
+300/max400 and observed75%, while optional actual120 remains30%. Normal SIGTERM
+ends Main0 with both pipe EOFs and same-parent ECHILD. This executes the actual
+constructor and typed Provider; it does not invoke the full session actor or
+Source. Format, strict Clippy and a current owner Release build pass separately.
+An offline scan covers17 tracked lifecycle-dependent lock closures;16 gain only
+the brightness path package and dependency edge, with no registry version or
+checksum changes. Settings' separate app lock remains outside that selection.
+
 ## Remaining integration and hardware gates
 
-Next are the joined concrete client/daemon connection, a configured lifecycle
-provider adapter, normal Rust Settings client and themed UI, explicit installation
-and a synthetic VM end-to-end tracer. Linux driver execution and matched Pixel
+Next are the configured full lifecycle actor, normal Rust Settings client and
+themed UI, explicit installation and a synthetic VM end-to-end tracer. Linux driver execution and matched Pixel
 panel/backlight discovery, brightness response, physical readback, suspend/resume,
 lock behavior and power/drain measurements remain separate gates. No phone has
 been accessed, and this component does not advance calls, IMS or SMS hardware

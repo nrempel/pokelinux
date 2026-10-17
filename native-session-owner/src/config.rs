@@ -19,6 +19,7 @@ pub struct Config {
     pub audio_socket: PathBuf,
     pub appearance_socket: PathBuf,
     pub messages: Messages,
+    pub brightness: Brightness,
     pub compositor_executable: PathBuf,
     pub compositor_config: PathBuf,
     pub environment: BTreeMap<String, String>,
@@ -34,11 +35,20 @@ pub enum Messages {
         inbox: PathBuf,
     },
 }
+/// Explicit installed owner selection. Omission is rejected; no app capability
+/// or backend/device selection is accepted through this session configuration.
+#[derive(Debug, Deserialize)]
+#[serde(tag = "mode", rename_all = "snake_case", deny_unknown_fields)]
+pub enum Brightness {
+    Disabled,
+    Owner { socket: PathBuf },
+}
 /// Fixed installed principals. Display admission uses this same mapping.
 pub(crate) fn app_uid(app: &pokelinux_lifecycle::AppProfile) -> io::Result<u32> {
     let uid = match app.app.as_str() {
         pokelinux_lifecycle::audio::APP => 11042,
         pokelinux_lifecycle::messages::APP => 11010,
+        pokelinux_lifecycle::brightness::APP => pokelinux_lifecycle::brightness::UID,
         _ => return Err(io::ErrorKind::PermissionDenied.into()),
     };
     if app.uid != uid || app.args.len() != 6 {
@@ -123,6 +133,24 @@ impl Config {
                 .parent()
                 .ok_or(io::ErrorKind::InvalidInput)?,
         )?;
+        if let Brightness::Owner { socket } = &self.brightness {
+            absolute(socket)?;
+            let parent = socket.parent().ok_or(io::ErrorKind::InvalidInput)?;
+            private_directory(parent, 0)?;
+            if fs::symlink_metadata(parent)?.gid() != 0
+                || [
+                    &self.audio_socket,
+                    &self.appearance_socket,
+                    &self.wayland,
+                    &self.runtime.join("app.sock"),
+                ]
+                .contains(&socket)
+            {
+                return Err(io::ErrorKind::PermissionDenied.into());
+            }
+            // Validate the actual AF_UNIX path representation without connecting.
+            rustix::net::SocketAddrUnix::new(socket)?;
+        }
         if let Messages::History {
             runtime,
             raw,
@@ -196,14 +224,17 @@ impl Config {
         }
         let profiles = pokelinux_lifecycle::service::profile(&self.profiles)?;
         let history = matches!(&self.messages, Messages::History { .. });
-        if profiles.apps.len() != if history { 2 } else { 1 } {
+        let brightness = matches!(&self.brightness, Brightness::Owner { .. });
+        if profiles.apps.len() != 1 + usize::from(history) + usize::from(brightness) {
             return Err(io::ErrorKind::PermissionDenied.into());
         }
         let mut roles = std::collections::BTreeSet::new();
         for app in &profiles.apps {
             let uid = app_uid(app)?;
             if !roles.insert(app.app.as_str())
-                || (!history && app.app != pokelinux_lifecycle::audio::APP)
+                || !(app.app == pokelinux_lifecycle::audio::APP
+                    || history && app.app == pokelinux_lifecycle::messages::APP
+                    || brightness && app.app == pokelinux_lifecycle::brightness::APP)
             {
                 return Err(io::ErrorKind::PermissionDenied.into());
             }

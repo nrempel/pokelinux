@@ -84,13 +84,17 @@ follows all three driver states through that service/client path, with original
 Pixel10-profile captures. Physical Pixel behavior remains a separate gate.
 Host/ARM64 service release builds pass.
 
-The [native Rust brightness daemon](docs/native-brightness.md) now passes38 native-host
-backend/ownership/deadline/packet/worker/service groups, including actual blocked
-I/O, Stop, late-success refusal and a reproduced late-preflight write repair.
-Host/ARM64 release services build; ARM execution remains open. The separate Rust
-owner client passes eight real-socket groups, and the lifecycle boundary passes
-11 focused groups. Joined client/daemon, configured Settings, installation, UI
-and physical display gates remain open; all property tests use authored files.
+The [native Rust brightness service](docs/native-brightness.md) now joins its real Rust client,
+owned worker and authored attribute backend in three process/socket cases:
+explicit changes, cancellation with readonly recovery, and refusal of a queued
+success after its original deadline. A concrete lifecycle adapter passes five
+new socket groups plus11 existing policy groups. Installed configuration passes
+27 filesystem/selection controls with an explicit disabled or owner choice and
+fixed Settings identity. The normal runtime constructor also executes that provider
+against the actual release service in two focused cases. Earlier38 service and
+eight client groups retain their
+separate evidence. Full actor/Settings composition, installation, visible UI,
+ARM execution and physical display gates remain open.
 
 
 > **Development status:** no physical phone has been accessed. There is no verified bootable phone image. Modem communication, carrier IMS registration, physical call audio, Pixel GPU rendering, camera capture and suspend remain unverified.
