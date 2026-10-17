@@ -1,0 +1,24 @@
+[Unit]
+Description=Pokelinux public battery observations
+After=systemd-tmpfiles-setup.service
+
+[Service]
+Type=simple
+User=root
+Group=root
+EnvironmentFile=/etc/pokelinux/battery.conf
+ExecStart=/usr/libexec/pokelinux/battery-service --serve /run/pokelinux-battery/snapshot.sock /sys/class/power_supply ${POKELINUX_BATTERY_SUPPLY}
+RuntimeDirectory=pokelinux-battery
+RuntimeDirectoryMode=0755
+UMask=0022
+NoNewPrivileges=yes
+Restart=no
+KillMode=control-group
+KillSignal=SIGTERM
+TimeoutStopSec=5
+TasksMax=8
+MemoryMax=64M
+LimitNOFILE=64
+
+[Install]
+WantedBy=multi-user.target

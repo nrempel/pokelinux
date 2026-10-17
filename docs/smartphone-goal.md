@@ -20,6 +20,13 @@ passes actual ARM PID1 start/IPC/Stop and fresh autostart with unavailable
 backend/theme state, Main0 and empty cgroups. This is a two-owner VM boot slice;
 working audio, the graphical phone session and hardware gates remain open.
 
+A separate [Rust battery observation service](native-battery.md) now supplies
+public capacity/status with source-loss and BOOTTIME expiry withdrawal. Six real
+filesystem/socket/process groups and host/ARM64 release builds pass after actual
+assertion RED. It preserves one owned reader through wait and pipe EOF. Kernel,
+PID1, GUI, physical battery, charging and suspend gates remain open; the suspend
+authority is unchanged.
+
 The later [16-CPU cold diagnostic](native-session-manager-stop.md#declared-cpu-resource-diagnostic)
 still expires Source at103.24ms, with zero own-quota throttling in60 captured
 container snapshots. Cold availability remains unqualified; no causal repair is

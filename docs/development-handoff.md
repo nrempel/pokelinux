@@ -2108,6 +2108,19 @@ An advisory Pro worker-lifecycle consultation was stopped at the user's handoff
 request before a terminal answer. It is not a completed review or accepted design.
 Earlier completed owner reviews are recorded in `native-radio-owner.md`.
 
+## Native battery component checkpoint
+
+The standalone `native-battery` Rust service and portable `native-phone-state`
+battery types now pass six frozen component groups after actual compiled RED.
+Real held-FIFO snapshots/Stop and successful queued99percent expiry/recovery are
+included. The final service uses readiness polling,1Hz collections,1s BOOTTIME
+collection deadlines and2s observations. Host/ARM64 release builds, formatting
+and strict Clippy pass. See `native-battery.md` and its hash-only provenance.
+The three-file unit/provider/config deployment is explicit; installed kernel/
+PID1 and normal UI/Pixel behavior remain unqualified at this checkpoint. Native
+battery observation supplies no suspend or charging authority. The earlier auth/
+Source investigation stays parked; no permission freshness rule changes.
+
 ## Verification and publication
 
 Use the existing prepared Linux checkout and its private inputs. Follow

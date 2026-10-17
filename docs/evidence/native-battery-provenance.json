@@ -1,0 +1,123 @@
+{
+  "schema": 1,
+  "scope": "Original Rust local filesystem, Unix socket and actual process/FIFO components; controlled absolute-clock model plus host/ARM crossbuild only",
+  "source_base": "8e550b388d964497dabb64b4aa9905f668693d11",
+  "source_files": {
+    "native-battery/Cargo.toml": {
+      "bytes": 385,
+      "sha256": "70da4d1425fe46d6828649d2529c04fca4ca12ce819fd51e08cea980f9274619"
+    },
+    "native-battery/Cargo.lock": {
+      "bytes": 4399,
+      "sha256": "386dbed78d167edb5021bdc087f46ed7b3d9f9595fe28c2c5aa0199bec09dd12"
+    },
+    "native-battery/src/lib.rs": {
+      "bytes": 5204,
+      "sha256": "ff84d3b74768ff2b8d17544990aa0b8567866f077da2b4031bb6924d21e4187a"
+    },
+    "native-battery/src/main.rs": {
+      "bytes": 10568,
+      "sha256": "5e9bc420320bfa2611655bf32f99db67e9d7f75b9ab9d850d6927e2c36621253"
+    },
+    "native-battery/tests/observations.rs": {
+      "bytes": 5234,
+      "sha256": "5ab86899995ba89d0dd756065ba7914efbf248e688b88d6b4f33e74ab1f108e0"
+    },
+    "native-battery/tests/service.rs": {
+      "bytes": 8394,
+      "sha256": "7b95849acf376b5821e1aa193e493a5ee7333034c31fc2baefab054ef02111f1"
+    },
+    "native-phone-state/Cargo.toml": {
+      "bytes": 129,
+      "sha256": "84fb4dee9128c50aedb5bf9fd1bd4dcb2650e45730a20715db6b09719d33d2b2"
+    },
+    "native-phone-state/src/lib.rs": {
+      "bytes": 1658,
+      "sha256": "fb82bb119065649231dee4e852d9cb2005ce18bd2ca9f303b9062507c288862f"
+    },
+    "native-kernel-identity/Cargo.toml": {
+      "bytes": 421,
+      "sha256": "73dcde30e1860aa1d2d41d3c24c50b57cdcfddb907ebb3a1c8f039f63c7e6586"
+    },
+    "native-kernel-identity/src/lib.rs": {
+      "bytes": 3706,
+      "sha256": "17760f73db788e91810e9ba8c688955e5efd49efde6736922435085047efe131"
+    },
+    "native-kernel-identity/src/pidfd.rs": {
+      "bytes": 10064,
+      "sha256": "caf4b44738fc53093a32ef96c2e639c1a376935ad29fa17a42091a56180b11ff"
+    },
+    "native-kernel-identity/src/termination.rs": {
+      "bytes": 6316,
+      "sha256": "76b25680e311bb1fb0bb957c7cec93f336969e269023f616bd204c8252f7675e"
+    }
+  },
+  "actual_assertion_RED": {
+    "qualification": {
+      "bytes": 2124,
+      "sha256": "de8fea83b9b329b3aa2d5aca69e13bd2ba2d1d6da2d802cd2ffc68d167d6e584"
+    },
+    "receipt": {
+      "bytes": 17954,
+      "sha256": "840790ccc18a2956c935cf955352cfc9b3f2731bcc73ed964da0b8d3c300a7b4"
+    },
+    "compilation_passed": true,
+    "test_exit": 101,
+    "passed": 1,
+    "failed": 5,
+    "ignored": 0,
+    "same_final_test_bytes": true,
+    "downstream_FIFO_controls_unreached_by_stub": true
+  },
+  "actual_GREEN": {
+    "qualification": {
+      "bytes": 15535,
+      "sha256": "4b20602485add446fa5ba6f098c40708f9048fa069b082a109c733e0c7cb7e0a"
+    },
+    "source_selection": {
+      "bytes": 2226,
+      "sha256": "4c2366f9b3b7cebec41dce3733a269b082d18e049ef1f53cdbac11935f1a2677"
+    },
+    "receipt": {
+      "bytes": 17304,
+      "sha256": "003b4948a8e03d83e86a0829f9629897a7657c897452c0f1ecd222a3f163942d"
+    },
+    "test_stdout": {
+      "bytes": 929,
+      "sha256": "bc3d2dc6fdf485797610d24028efe5210092b4de1443faeb85141483023f04eb"
+    },
+    "passed": 6,
+    "failed": 0,
+    "ignored": 0,
+    "formatting_and_strict_Clippy": true,
+    "actual_owned_CLI_waits": 10,
+    "actual_PIPE_EOFs": 20,
+    "same_daemon_CID_absence_inputs_unchanged": true
+  },
+  "release_providers": {
+    "x86_64": {
+      "bytes": 674496,
+      "sha256": "41307b225caad4a6ca0502ae11d219a7a3e0b13c4582e0a2675b8c174112902e",
+      "ELF_machine": 62,
+      "optimization": 3,
+      "features": []
+    },
+    "ARM64": {
+      "bytes": 722480,
+      "sha256": "55b57d8e5437998845fedb8ccbdec5eb00aa39b390568c9e9feb026309d07343",
+      "ELF_machine": 183,
+      "optimization": 3,
+      "features": []
+    }
+  },
+  "evidence_separation": {
+    "filesystem_attributes_authored": true,
+    "actual_owned_FIFO_process_socket_tests": true,
+    "original_kernel_battery_driver": false,
+    "PID1_installation_or_cold_start": false,
+    "ARM_execution": false,
+    "Qt_or_visible_window": false,
+    "physical_Pixel_suspend_charging_or_drain": false
+  },
+  "historical_preparation_note": "Earlier ownership-preserving copy, FIFO helper import and formatter metadata refusals are preserved setup failures; earlier assertion REDs and the5ms-loop GREEN remain separate intermediate evidence. Final tests precede the qualified readiness-poll/1Hz implementation."
+}

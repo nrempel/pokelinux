@@ -112,7 +112,9 @@ ADPF sessions, thermal/charging policy and vendor libpower participation are
 still required. The one suspend authority must account for kernel wake sources,
 the sensor FMQ acknowledgement obligation and the separate USF wake lock.
 Stock boot/property and optional/reset node behavior need explicit backend
-qualification. Battery observations, display/brightness, actual suspend/wakeup,
-charging, thermal measurements and drain remain separate implementation and
-later authorized hardware gates. This component supplies no production or
+qualification. The separate [native battery observation service](native-battery.md)
+now passes filesystem/socket/process components and host/ARM crossbuilds. Kernel,
+PID1, GUI and physical battery integration remain open. Display/brightness, actual
+suspend/wakeup, charging, thermal measurements and drain remain separate
+implementation and later authorized hardware gates. This component supplies no production or
 hardware completion claim.

@@ -1,0 +1,14 @@
+[package]
+name = "pokelinux-battery"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+pokelinux-phone-state = { path = "../native-phone-state" }
+pokelinux-kernel-identity = { path = "../native-kernel-identity" }
+rustix = { version = "=1.1.5", features = ["fs", "net", "process", "time", "pipe", "event"] }
+serde_json = "=1.0.154"
+
+[lints.rust]
+unsafe_code = "forbid"
