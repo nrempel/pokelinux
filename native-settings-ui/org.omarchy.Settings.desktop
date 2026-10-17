@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Settings
+Comment=Display brightness
+Exec=/usr/libexec/pokelinux/settings-launch /run/pokelinux/session/launch-settings.sock
+Icon=preferences-system
+Terminal=false
+Categories=Settings;
+StartupWMClass=pokelinux-settings

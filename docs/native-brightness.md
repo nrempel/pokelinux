@@ -276,10 +276,41 @@ An offline scan covers17 tracked lifecycle-dependent lock closures;16 gain only
 the brightness path package and dependency edge, with no registry version or
 checksum changes. Settings' separate app lock remains outside that selection.
 
+## Normal Rust Settings client and Qt build
+
+The new [Settings application](../native-settings-ui/README.md) runs as UID11050
+and uses only the lifecycle actor's public credentialed endpoint. Its Rust engine
+owns parsing, transport, fresh BOOTTIME state, a single explicit queued click and
+one joined worker thread. A click retains its revision and original local deadline;
+a revision change cancels it. Readonly status may reconnect, while an uncertain
+Set is never replayed. The transmitted relative TTL is bounded by remaining local
+time; actor admission has its own authority/deadline checks. No remote absolute
+click-deadline equivalence is claimed.
+
+Qt forwards explicit25%/75% choices and renders the current observed attribute as
+“Brightness”, separate from the optional actual attribute and from request success.
+A false can_set gives unavailable controls; only an explicit Denied reply gives
+access denied. The normal six-argument app loads the shared installed Omarchy
+appearance QML and Rust appearance client. It cannot choose a backend or grant
+itself permission.
+
+Seven real root-peer/UID11050 socket/C ABI groups first fail at runtime against
+the inert client, then pass unchanged. They cover observed74 after explicit75,
+malformed and ancillary packets, fresh getter expiry, held-request uncertainty,
+readonly recovery without replay, stale queued revisions and actual Stop/join.
+Formatting, strict Clippy and the Rust Release archive pass. A disposable x86 KVM
+VM then builds/installs the normal Qt6.12 target, checks both exact Rust archives,
+strong C exports and the loader, and executes the real adapters/shared QML as
+UID11050 with unavailable endpoints. A wording-only successor is rebuilt; both
+qualified builds remain distinct. No component window is shown. The fixed desktop
+launcher, full actor/service composition and visible native Pixel-profile captures
+remain open. See [app provenance](../native-settings-ui/evidence/qualification.json).
+
 ## Remaining integration and hardware gates
 
-Next are the configured full lifecycle actor, normal Rust Settings client and
-themed UI, explicit installation and a synthetic VM end-to-end tracer. Linux driver execution and matched Pixel
+Next are the configured full lifecycle actor, fixed Settings desktop launch,
+visible themed UI, explicit service installation and a synthetic VM end-to-end
+tracer. Linux driver execution and matched Pixel
 panel/backlight discovery, brightness response, physical readback, suspend/resume,
 lock behavior and power/drain measurements remain separate gates. No phone has
 been accessed, and this component does not advance calls, IMS or SMS hardware

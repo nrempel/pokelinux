@@ -43,6 +43,13 @@ eight client groups retain their
 separate evidence. Full actor/Settings composition, installation, visible UI,
 ARM execution and physical display gates remain open.
 
+The [normal Settings app](../native-settings-ui/README.md) now passes seven frozen Rust socket/C ABI
+groups after compiled assertion RED, plus a native Qt6.12 build/install and real
+unprivileged adapter/QML construction. Rust owns transport, state, deadlines and
+thread shutdown; Qt renders the shared Omarchy theme. The component window is
+never shown. Fixed desktop launch and the visible actor/service tracer remain
+separate gates.
+
 The later [16-CPU cold diagnostic](native-session-manager-stop.md#declared-cpu-resource-diagnostic)
 still expires Source at103.24ms, with zero own-quota throttling in60 captured
 container snapshots. Cold availability remains unqualified; no causal repair is

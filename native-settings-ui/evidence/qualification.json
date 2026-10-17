@@ -1,0 +1,292 @@
+{
+  "schema": 1,
+  "scope": "Native Settings app engine, normal Qt6.12 build/install and unavailable component only; no visible window or actor/Source/driver/phone claim",
+  "application": {
+    "profile": "org.omarchy.Settings",
+    "UID": 11050,
+    "Qt_application_name": "pokelinux-settings",
+    "normal_argument_count": 6
+  },
+  "Rust": {
+    "compiler": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "offline_compiler_image_sha256": "0b4b956502a9f55d992eaced6975737b523be19bd2034078983b36bbcfd7aee6",
+    "frozen_test": {
+      "bytes": 24826,
+      "sha256": "2820371c282951afbbdfd241a9373657f96a9138577db344295e086d5b1fb544"
+    },
+    "actual_assertion_RED": {
+      "closed_receipt_sha256": "6736ca78994366502bb76c9b9ea4bfe550e18cd5ed61760bc462b097668d0ed1",
+      "compiled_stub_sha256": "cc6c5b392f1331ae83197d618cf5de22f02b1d76d93bc8faa46ee37ce3eb02eb",
+      "test_process_exit": 1,
+      "groups": 7,
+      "groups_assertion_failed": 7,
+      "UID11050_clients_actually_waited": 14,
+      "all_client_stdout_and_stderr_EOF": true,
+      "runtime_assertion": "actual root status remained unavailable in the compiled inert client",
+      "compiler_or_setup_failure": false
+    },
+    "GREEN": {
+      "closed_receipt_sha256": "2fd3ed46dc196aee0f8b8148a647e3b6e908b7c620ae8465f30634884876f09c",
+      "groups": 7,
+      "groups_passed": 7,
+      "test_source_unchanged_from_RED": true,
+      "UID11050_clients_actually_waited": 14,
+      "separate_root_writer_actually_waited": 1,
+      "all_client_stdout_and_stderr_EOF": true,
+      "fmt_passed": true,
+      "strict_all_target_Clippy_passed": true,
+      "Release_archive": {
+        "bytes": 25263216,
+        "sha256": "73e5d00e9b7f2e1f7fcc89d6c7f34f1c08fca9400f4490b0c040fd4a8e14530f",
+        "filename": "libpokelinux_settings_client.a"
+      },
+      "groups_scope": [
+        "root peer and packet credentials; explicit75 confirms observed74/actual72 then explicit25",
+        "can_set=false controls unavailable versus explicit denied",
+        "duplicate/missing nullable/unknown/range/canonical/future-TTL/SCM_RIGHTS/wrong-PID refusal",
+        "fresh getter expiry",
+        "held Set original deadline/channel close/readonly recovery without replay",
+        "queued click canceled after revision change",
+        "responsive Stop and actual join; no remaining client worker task"
+      ]
+    },
+    "preserved_source_preparation_failure": {
+      "receipt_sha256": "110883de2a36eaa491feb6a8336eaf1d63881e1db5e0fd0a34cf5ea00ffc3ddd",
+      "scope": "Fixture rustix socket/recv tuple and catch_unwind type errors; not runtime RED"
+    }
+  },
+  "Qt": {
+    "architecture": "native x86_64 KVM guest",
+    "version": "6.12.0",
+    "selection_sha256": "ebc6ce99bc528b60082f6bb7b24db0540d6b7e0b7befe90ff8920aa83326c98c",
+    "execution_sha256": "bf4e9f27a85a2c05b182a79510f5a4e188121e5f969142765fd0e68cbde5babb",
+    "build_result_sha256": "12d0174a46f77ed5ce34b6213c5d0156ae7d4efaaad079d45e127864bbe3ee65",
+    "guest_result_sha256": "9d6d506f55887cdcc1e0571b00e149ccacadfeebd4f615a74f54e81435e4fddb",
+    "boot_result_sha256": "918304db7b5564fa1c31deae065c4e9eb010517a69859097b6c0f2005f5f7d70",
+    "bootstrap_result_sha256": "89f079d073e5f8ce79633933e175e121446526d83e20aa56850fa2fdb9d5de46",
+    "normal_ELF": {
+      "sha256": "b6a236f4d634ae83b6ac1be9a04a997b3e725386bbc88610a5602522ec07602f",
+      "bytes": 6115600,
+      "ELF_machine": 62,
+      "filename": "pokelinux-settings"
+    },
+    "component_ELF": {
+      "sha256": "e565a48b3595290876f265929565b99074dd5bd916322cfab8ef146a0a4e00ab",
+      "bytes": 6120312,
+      "ELF_machine": 62,
+      "filename": "settings-client-component-test"
+    },
+    "exactly_once_archives": {
+      "settings": "73e5d00e9b7f2e1f7fcc89d6c7f34f1c08fca9400f4490b0c040fd4a8e14530f",
+      "appearance": "2352a455d1da1697309a18b8ae6f95b8e4efcc0422c90cf78d2aa9d468e72b94"
+    },
+    "actual_strong_C_API": {
+      "settings": [
+        "pr_settings_client_free_v1",
+        "pr_settings_client_join_v1",
+        "pr_settings_client_new_v1",
+        "pr_settings_client_set_v1",
+        "pr_settings_client_stop_v1",
+        "pr_settings_client_view_v1"
+      ],
+      "appearance": [
+        "pr_appearance_client_available_v1",
+        "pr_appearance_client_free_v1",
+        "pr_appearance_client_new_v1",
+        "pr_appearance_client_ready_v1",
+        "pr_appearance_client_received_v1",
+        "pr_appearance_client_refresh_v1",
+        "pr_appearance_client_report_v1",
+        "pr_appearance_client_step_v1",
+        "pr_appearance_client_stop_v1",
+        "pr_appearance_client_tick_v1",
+        "pr_appearance_client_view_v1"
+      ]
+    },
+    "ldd_r_no_missing_or_undefined": true,
+    "installed_files": {
+      "/usr/libexec/pokelinux/pokelinux-settings": {
+        "sha256": "b6a236f4d634ae83b6ac1be9a04a997b3e725386bbc88610a5602522ec07602f",
+        "UID": 0,
+        "GID": 0,
+        "mode": "0755"
+      },
+      "/usr/share/pokelinux/appearance/PhoneAppearance.qml": {
+        "sha256": "705ab25799cba18095a76f4fb47e70eb10099ca035426d7e4400fa9cef8452bc",
+        "UID": 0,
+        "GID": 0,
+        "mode": "0644"
+      },
+      "/usr/share/applications/org.omarchy.Settings.desktop": {
+        "sha256": "3b6ade1081e3a72a010bb2b33b1cf41c828c10513fd3521c36101cbc098eb7d0",
+        "UID": 0,
+        "GID": 0,
+        "mode": "0644"
+      }
+    },
+    "C++_controls": {
+      "actual_UID": 11050,
+      "C_ABI_layout_refusal_actual_join_passed": true,
+      "real_adapters_and_normal_QML_resource_construction_passed": true,
+      "installed_shared_appearance_QML_created": true,
+      "window_shown": false
+    },
+    "closure": {
+      "host_children": 7,
+      "guest_children": 12,
+      "boot_children": 4,
+      "bootstrap_children": 4,
+      "all_actual_wait_and_PIPE_EOF_within_originals": true,
+      "QEMU_exit": 0,
+      "actual_QMP_KVM_and_guest_shutdown_and_socket_EOF": true,
+      "exact_container_absence": true,
+      "same_daemon": true,
+      "all_selected_inputs_unchanged": true,
+      "selected_RAM_bytes": 77040017,
+      "selected_RAM_bound_bytes": 536870912,
+      "installed367_package_inventory_unchanged": true,
+      "package_inventory_sha256": "d1a51fbcc848498321dbd5e53850a7da2fac4bdf5937cbd8d92acf20b6902f38"
+    },
+    "public_owned_helper_sha256": "5a738b9529a1a0e5d5b0bd20e27e2ec4244d4e61d7c8e0dad96fe1ffbef3c423",
+    "historical_results_relabelled": false,
+    "prior_qualified_wording_build": {
+      "execution_sha256": "56dc9483a95f637fe2bf4374747aedd5b8cfbc66103e9398b93c572d0a17056d",
+      "build_result_sha256": "e87bc629f62f8c69dad673579a9c20549296e22cbfa8f80567759b788c507363",
+      "normal_ELF_sha256": "dc9b9c2f82683ba7681faeb830bd48fbc5c0eb5d189773afc309595069a736dc",
+      "scope": "Earlier qualified normal build used Confirmed label; retained separately. Current Brightness label reports current attributes, including readonly recovery after an uncertain Set."
+    }
+  },
+  "unqualified": [
+    "normal visible window and Pixel10 output/window/native capture geometry",
+    "actor/Source/brightness service and driver end-to-end composition",
+    "default-Cargo Qt build",
+    "ARM execution and normal ARM app",
+    "phone hardware"
+  ],
+  "selected_code_and_test_files": {
+    "native-app/AppearanceRustClient.cmake": {
+      "bytes": 2397,
+      "sha256": "e3f7f1801609297cbcb3d4f89baa7673291e7a3857984e4f35b8e8855a1a057f"
+    },
+    "native-app/PhoneAppearance.qml": {
+      "bytes": 1954,
+      "sha256": "705ab25799cba18095a76f4fb47e70eb10099ca035426d7e4400fa9cef8452bc"
+    },
+    "native-app/PhoneAppearanceClient.cpp": {
+      "bytes": 11817,
+      "sha256": "e4b65bf9e622702e8f72494db7b9387fbaad02d0e194d64ce0b26f0df68fc689"
+    },
+    "native-app/PhoneAppearanceClient.h": {
+      "bytes": 1245,
+      "sha256": "3f67e172898df24d5548baf8dd94aa0cd6d394858c432967eb051a9ee0623076"
+    },
+    "native-app/appearance-client-core/Cargo.lock": {
+      "bytes": 2856,
+      "sha256": "17ca86b82ea1915692d8bf6dbb2d8b97bddcfc85f27796c29a9b91a493c41362"
+    },
+    "native-app/appearance-client-core/Cargo.toml": {
+      "bytes": 385,
+      "sha256": "6ce6142caa133a1e03c569c8661b558a1b6ddf62d8c0400e82310d97c56cfcad"
+    },
+    "native-app/appearance-client-core/include/pokelinux_appearance_client.h": {
+      "bytes": 7080,
+      "sha256": "46e993660ced0eb0f6d901071b347aefe289d757af4dc9ea0d9d601a06d79504"
+    },
+    "native-app/appearance-client-core/src/clock.rs": {
+      "bytes": 674,
+      "sha256": "4648db05efb4a170f1934946eeb1e9e093b19a93666df16f07b147e1d6e80e68"
+    },
+    "native-app/appearance-client-core/src/engine.rs": {
+      "bytes": 15679,
+      "sha256": "ad269b4f65e1d6abf084f780b12755f5476e0eee53711aeb777db3e6e4663ca8"
+    },
+    "native-app/appearance-client-core/src/ffi.rs": {
+      "bytes": 6531,
+      "sha256": "3241542071f3ddd78a1b7f16a0bbd58c40928c89982773123e8492f7d481f920"
+    },
+    "native-app/appearance-client-core/src/layout.rs": {
+      "bytes": 2098,
+      "sha256": "f98e26d2aaff8b47925acffd8a795c45c4f950c973a2da0f4b4122c76270fc2f"
+    },
+    "native-app/appearance-client-core/src/lib.rs": {
+      "bytes": 142,
+      "sha256": "cf6cac9cfc0710cd990ed51acec7738bee6022cf8435109e059e7c9ce0463359"
+    },
+    "native-app/appearance-client-core/src/protocol.rs": {
+      "bytes": 4565,
+      "sha256": "5173fd3db41142803dbe92c6eabc532af753ae005a7797da2dc8d76d5812aa80"
+    },
+    "native-app/appearance-client-core/tests/client-functional.cpp": {
+      "bytes": 18621,
+      "sha256": "d3a9af1009656e0bccd834f01e75bf3d5eabbbc949f38b9f446c13282e79f56b"
+    },
+    "native-settings-ui/CMakeLists.txt": {
+      "bytes": 3914,
+      "sha256": "91f5f39c912a551c5baec8ce2200501adfff48a0b02d7213fa35e41a8ad3e851"
+    },
+    "native-settings-ui/SettingsClient.cpp": {
+      "bytes": 3618,
+      "sha256": "1d6ae541b7c5a98f599c8301f64f339dc2fe974bc48b2a6cddf5ccfb89bf33eb"
+    },
+    "native-settings-ui/SettingsClient.h": {
+      "bytes": 1161,
+      "sha256": "a769a3783a852645c2f9d13074cb7ed25a319658e3fcda69918fd01527a444fd"
+    },
+    "native-settings-ui/SettingsView.qml": {
+      "bytes": 3694,
+      "sha256": "d7445e3c99980a3eb14b919b3ca593df670b49b654152e9450e03348229b2b59"
+    },
+    "native-settings-ui/client-core/Cargo.lock": {
+      "bytes": 4220,
+      "sha256": "3254825d8db03d6615c8765d165cfbf21dfbb2f5a1234087196be55c2709cfb9"
+    },
+    "native-settings-ui/client-core/Cargo.toml": {
+      "bytes": 568,
+      "sha256": "9e1e14944ff5a8a96ce99a240182c4ae1c05b6f1de3e86f51382bece88a92fc7"
+    },
+    "native-settings-ui/client-core/include/pokelinux_settings_client.h": {
+      "bytes": 1480,
+      "sha256": "bb30a2fa7d9b19cca04814454da6ff3cb90239fd0e69049f5954cdc6b37923d5"
+    },
+    "native-settings-ui/client-core/src/clock.rs": {
+      "bytes": 616,
+      "sha256": "5fb83f9152ddb609910df2ca5482064a87187d6d7d9ad602e00c007d351700a9"
+    },
+    "native-settings-ui/client-core/src/engine.rs": {
+      "bytes": 16862,
+      "sha256": "c199f96e4932cbb0dc0be034862477af8b4eb5f5414a843c94dd4e1501937e15"
+    },
+    "native-settings-ui/client-core/src/ffi.rs": {
+      "bytes": 4460,
+      "sha256": "1582ee568a37944cc2ffef2dc562a2a464804d0b29c4efcbd99be6e33204976c"
+    },
+    "native-settings-ui/client-core/src/lib.rs": {
+      "bytes": 127,
+      "sha256": "f04105fd66bcc2bb8d2fdaa1e66f2dc7da000eb3572be13d7852e570ed6f2495"
+    },
+    "native-settings-ui/client-core/src/protocol.rs": {
+      "bytes": 2220,
+      "sha256": "03edfdf6cdf817f4fc5ccb1a970972b0e846af4e11eff19cb57cab86de8b938a"
+    },
+    "native-settings-ui/client-core/tests/client-boundary.rs": {
+      "bytes": 24826,
+      "sha256": "2820371c282951afbbdfd241a9373657f96a9138577db344295e086d5b1fb544"
+    },
+    "native-settings-ui/main.cpp": {
+      "bytes": 2626,
+      "sha256": "996e0a1acd9d2a1438875ab989eeb2163a8cead32ef628a64bc9df3a630edf07"
+    },
+    "native-settings-ui/org.omarchy.Settings.desktop": {
+      "bytes": 256,
+      "sha256": "3b6ade1081e3a72a010bb2b33b1cf41c828c10513fd3521c36101cbc098eb7d0"
+    },
+    "native-settings-ui/resources.qrc": {
+      "bytes": 83,
+      "sha256": "0db89f92def251e1a86748c4d96013a8c64454d8f63c45fa3e174211866307d4"
+    },
+    "native-settings-ui/tests/component.cpp": {
+      "bytes": 4221,
+      "sha256": "24c9f5ab4c195c31a530076b8c0221ce2a05a0d038c73a006d2be7b416062d20"
+    }
+  }
+}
