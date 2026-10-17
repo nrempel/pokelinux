@@ -65,3 +65,25 @@ real-proc groups, including a genuinely closed/reused fd and wrong starttime.
 Use an actually owned external runner with the original5s work/8s closure;
 the consumer's cooperative work check is not a kernel-interruption guarantee.
 These are finite host metadata tests, without a compositor, Source or phone.
+
+
+`MainThreadObserver` appends a separate optional finite main-task diagnostic.
+Bind only the externally authenticated main PID/TID and borrowed pidfd/starttime.
+Existing watch calls alone can sample at original bind+250/+350ms, at most one
+attempt per call/two total. It reads only stat/status/syscall/wchan, with identity
+and liveness before/after. Maximum28KiB actual proc reads/32KiB record; terminal
+errors, expiry and death consume collection. No Source/ring/target-FD access,
+worker, timer or new readiness condition is added. Proc files are sequential,
+not atomic. Interpret timing only against separately authenticated Source and
+post-retirement ring evidence; raw syscall arguments and addresses stay private.
+
+`main_thread_consumer.py --control` owns a real child blocked in a stdin pipe and
+checks actual Linux task metadata, release, wait and EOF. With `--helper` it
+exercises four actual groups, including early/due scheduling, identity refusal,
+expiry and death. Pass `--owned tools/native-callback-spans/owned.py` and distinct
+nonexistent `--output` directories. This is the existing executed test-only Scope
+source, now included for reproducibility; it adds no production process manager.
+Use the original5s work/8s closure and an owning outer watchdog. Cooperative
+Python/proc checks alone cannot interrupt a stalled kernel read or replace the
+outer manager's failure disposal. See the separate host and cold native scopes
+in the [result](../../docs/native-callback-spans.md#later-finite-main-thread-metadata).

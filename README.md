@@ -57,7 +57,10 @@ native callbacks after its component/full-build checks. An AQ callback enters
 writer is already dead before later manager Stop. Later finite proc samples
 identify an earlier blocking timer-descriptor class; callback-time identity and
 continuity remain unknown. Cold startup still fails; the internal operation,
-missing-return reason and production repair remain open.
+missing-return reason and production repair remain open. A later finite
+[main-thread sample](docs/native-callback-spans.md#later-finite-main-thread-metadata)
+reports running/runnable after expiry; another finds the process dead. It
+identifies no kernel wait or continuous busy loop. This cold run also stays failed.
 [Native SIGTERM Stop](docs/native-session-signal-stop.md) also passes before
 readiness, with Main exit0 and no adopted children. The [explicit deployment
 installer](docs/native-normal-upstream-tracer.md#explicit-installed-session-selection)

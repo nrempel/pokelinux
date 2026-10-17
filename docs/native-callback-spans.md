@@ -121,9 +121,10 @@ finding, without new library/native execution. The outer span still does not
 isolate that guard, the conditional read, pending callbacks or rearm. There is
 no production repair or healthy-cold claim.
 
-The [published observer](../tools/native-callback-spans/callback_observer.py) and
+The earlier14973-byte observer revision and the
 [independent real-proc consumer](../tools/native-callback-spans/real_proc_consumer.py)
-are byte-identical to the executed original-code inputs. Genuine Linux control0
+were the executed original-code inputs. The [current observer](../tools/native-callback-spans/callback_observer.py)
+retains that exact byte prefix and appends the later optional main-task observer. Genuine Linux control0
 and missing-API RED3 precede implementation; the same consumer then passes four
 real-proc groups for descriptor metadata/reuse, identical-photo ambiguity, limits
 and wrong starttime. All four component waits/merged PIPE EOFs close within their
@@ -136,3 +137,43 @@ and locked input closure pass. Raw rings, addresses and proc dumps stay private;
 [hash-only provenance](evidence/native-callback-fd-metadata-provenance.json) records
 the bounded observations. Callback-time identity, internal cause, native display
 cleanup, ARM integration and phone behavior remain open.
+
+## Later finite main-thread metadata
+
+A further cold native epoch keeps the same compositor/SDK, Rust services,205-file
+profile, Source100ms and resource/deadline limits. It still fails before Sounds:
+the shell identity observer sees only bare Quickshell argv during startup rather
+than the complete selected arguments. Preserve this functional failure separately
+from the diagnostic and successful cleanup. No C++ source or build changed.
+
+The optional main-task observer reads only authenticated PID=TID stat/status/
+syscall/wchan metadata, bracketed by the existing borrowed pidfd/starttime checks.
+Its first binding fixes earliest samples at+250/+350ms. Only existing watch calls
+can consume at most one attempt each; errors/death/WORK expiry are terminal. The
+maximum is28KiB actual proc reads and32KiB JSON. There is no new worker, timer,
+process control, target-FD read, Source reader, live ring reader or readiness gate.
+The same frozen host consumer passes four genuine pipe-blocked-child groups
+after control0/missing-API RED3, with7 waits/7 merged PIPE EOFs under original5s/8s.
+The [observer](../tools/native-callback-spans/callback_observer.py),
+[consumer](../tools/native-callback-spans/main_thread_consumer.py) and existing
+[test-only ownership helper](../tools/native-callback-spans/owned.py) publish the
+exact executed original-code bytes. This host control is distinct from the native
+sample below.
+
+The first actual native attempt is118.542086ms late to its earliest watch time.
+Both stat guards report R, status reports running, syscall reports running and
+wchan supplies no wait symbol. Its identity-verified sample starts156.067174ms
+after the unmatched AQ entry and36.926877ms after cached expiry validation.
+These sequential proc reads identify no kernel wait. They do not establish
+continuous execution, a busy loop, an uninterrupted callback, descriptor identity
+or an internal cause. The second attempt finds the retained pidfd dead and reads
+no proc bytes. The whole record is4455 bytes with2152 proc bytes read.
+
+The retired ring has31 commits/15 normal returns/one unmatched AQ fd25 entry,
+23.935us after authentic Source1, with no format/clock/overflow flags. The writer
+is dead before later manager Stop. All334 pins,148 primary waits/155 actual PIPE
+EOFs and existing unit-reference/QMP/CID/daemon/input closure qualify separately.
+Raw proc fields, addresses and rings remain private; [curated provenance](evidence/native-callback-main-thread-provenance.json)
+records hashes and limited observations. Cold startup, the missing-return cause,
+a production repair, native display cleanup, ARM composition and phone gates
+remain open.

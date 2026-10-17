@@ -69,6 +69,17 @@ writer, authenticated ACK→EXIT→actual wait0 before permit, fresh original ga
 independent request history and responsive Stop for both owned roles. No vendor
 cleanup, app permission or phone capability follows from either proof.
 
+The [finite main-thread epoch](native-callback-spans.md#later-finite-main-thread-metadata)
+now records one authenticated native R/running sample156.067174ms after the
+unmatched AQ entry and36.926877ms after cached expiry validation. It identifies
+no kernel wait, continuous execution or busy-loop cause. The second attempt finds
+the pidfd dead and reads no proc bytes. Cold startup remains failed at partial
+Quickshell argv observation; all334 pins/148 waits/155 PIPE EOFs and existing
+closure qualify separately. The helper and frozen consumer passed genuine host
+control/RED/GREEN before this run. No C++ source/build or production repair changed;
+raw proc/addresses remain private. Preserve this result alongside the earlier
+finite descriptor observations, rather than promoting either to a blocked-read cause.
+
 ## Current stopping point
 
 The [graphics critical-path decision](runtime-language-decision.md#graphics-critical-path)

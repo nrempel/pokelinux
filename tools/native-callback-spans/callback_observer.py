@@ -187,3 +187,171 @@ class FDIdentityObserver:
    if now()<self.record['second_due_boottime_ns']:return
    self._identity();self._photo(2)
   except BaseException as error:self._error(self.record,error);self.disarmed=True
+
+
+# Optional finite MAIN-task metadata; existing guest authentication remains authoritative.
+class MainThreadObserver:
+ FIRST_NS = 250_000_000
+ SECOND_NS = 350_000_000
+ MAX_BYTES = 32_768
+ RESERVED_BYTES = 2048
+
+ class _Unavailable(Exception):
+  pass
+
+ def __init__(self, work_until_ns):
+  self.until = work_until_ns
+  self.pid = None
+  self.pidfd = None
+  self.starttime = None
+  self.bound = False
+  self.disarmed = False
+  self.record = {
+   'schema': 1, 'optional_diagnostic_only': True,
+   'Source_channel_accessed': False, 'live_callback_ring_read': False,
+   'internal_AQ_callback_identity_proven': False,
+   'external_native_identity_authentication_required': True,
+   'created_boottime_ns': None, 'binding_boottime_ns': None,
+   'due_boottime_ns': [], 'attempts': [], 'errors': [],
+   'terminal_reason': None, 'actual_proc_bytes_read': 0,
+  }
+  try:
+   self.record['created_boottime_ns'] = now()
+  except BaseException as error:
+   self._fail('constructor', error)
+
+ def _size(self):
+  return len(json.dumps(self.record, sort_keys=True, separators=(',', ':')).encode())
+
+ def _fail(self, stage, error, attempt=None):
+  self.disarmed = True
+  allowed = {
+   'work_expired', 'pidfd_dead', 'identity_mismatch', 'main_identity_mismatch',
+   'proc_record_at_cap', 'record_byte_limit', 'invalid_binding',
+  }
+  reason = str(error) if isinstance(error, self._Unavailable) else 'metadata_unavailable'
+  self.record['terminal_reason'] = reason if reason in allowed else 'metadata_unavailable'
+  target = self.record if attempt is None else attempt
+  if attempt is not None:
+   attempt['files'].clear()
+   attempt['proc_identity_verified'] = False
+  if len(target['errors']) < 8:
+   value = getattr(error, 'errno', None)
+   target['errors'].append({
+    'stage': stage[:32], 'error': type(error).__name__[:64],
+    'errno': value if type(value) is int else None,
+   })
+
+ def _active(self):
+  if type(self.until) is not int or now() >= self.until:
+   raise self._Unavailable('work_expired')
+
+ def _live(self):
+  self._active()
+  if dead(self.pidfd):
+   raise self._Unavailable('pidfd_dead')
+
+ def _read(self, attempt, key, name, cap):
+  self._active()
+  started = now()
+  path = Path('/proc') / str(self.pid) / 'task' / str(self.pid) / name
+  fd = os.open(path, os.O_RDONLY | os.O_CLOEXEC | os.O_NOFOLLOW | os.O_NONBLOCK)
+  try:
+   raw = os.read(fd, cap)
+  finally:
+   os.close(fd)
+  completed = now()
+  self.record['actual_proc_bytes_read'] += len(raw)
+  self._active()
+  if len(raw) == cap:
+   raise self._Unavailable('proc_record_at_cap')
+  text = raw.decode('ascii')
+  entry = {
+   'raw_text': text, 'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest(),
+   'read_limit_bytes': cap, 'possibly_truncated': False,
+   'started_boottime_ns': started, 'completed_boottime_ns': completed,
+  }
+  # Calculate exact compact-JSON growth before retaining candidate raw bytes.
+  encoded_entry = json.dumps(entry, sort_keys=True, separators=(',', ':')).encode()
+  growth = len(json.dumps(key).encode()) + 1 + len(encoded_entry) + bool(attempt['files'])
+  if self._size() + growth > self.MAX_BYTES - self.RESERVED_BYTES:
+   raise self._Unavailable('record_byte_limit')
+  attempt['files'][key] = entry
+  return text
+
+ def _stat(self, text):
+  head, tail = text.rsplit(') ', 1)
+  fields = tail.split()
+  actual_pid = int(head.split(' ', 1)[0])
+  stamp = fields[19]
+  if actual_pid != self.pid or stamp != self.starttime:
+   raise self._Unavailable('identity_mismatch')
+  return stamp
+
+ def _sample(self, ordinal, started):
+  attempt = {
+   'ordinal': ordinal, 'PID': self.pid, 'TID': self.pid,
+   'started_boottime_ns': started, 'completed_boottime_ns': None,
+   'proc_starttime_before': None, 'proc_starttime_after': None,
+   'pidfd_live_before': False, 'pidfd_live_after': False,
+   'proc_identity_verified': False, 'files': {}, 'errors': [],
+  }
+  self.record['attempts'].append(attempt)  # Consume this due attempt before fallible work.
+  try:
+   self._live()
+   attempt['pidfd_live_before'] = True
+   attempt['proc_starttime_before'] = self._stat(self._read(attempt, 'stat_before', 'stat', 1024))
+   text = self._read(attempt, 'status', 'status', 4096)
+   fields = {line.split(':', 1)[0]: line.split(':', 1)[1].split()
+             for line in text.splitlines() if ':' in line}
+   if fields.get('Pid') != [str(self.pid)] or fields.get('Tgid') != [str(self.pid)]:
+    raise self._Unavailable('main_identity_mismatch')
+   self._read(attempt, 'syscall', 'syscall', 4096)
+   self._read(attempt, 'wchan', 'wchan', 4096)
+   attempt['proc_starttime_after'] = self._stat(self._read(attempt, 'stat_after', 'stat', 1024))
+   self._live()
+   attempt['pidfd_live_after'] = True
+   attempt['proc_identity_verified'] = True
+  except BaseException as error:
+   self._fail('sample', error, attempt)
+  finally:
+   try:
+    attempt['completed_boottime_ns'] = now()
+    self._active()
+   except BaseException as error:
+    if not self.disarmed:
+     self._fail('sample-completion', error, attempt)
+
+ def bind_main(self, pid, borrowed_pidfd, expected_starttime):
+  if self.bound or self.disarmed:
+   return
+  self.bound = True
+  try:
+   self._active()
+   if not (type(pid) is int and 0 < pid < (1 << 31)
+           and type(borrowed_pidfd) is int and borrowed_pidfd >= 0
+           and type(expected_starttime) is str and 0 < len(expected_starttime) <= 32
+           and expected_starttime.isascii() and expected_starttime.isdecimal()):
+    raise self._Unavailable('invalid_binding')
+   self.pid = pid
+   self.pidfd = borrowed_pidfd
+   self.starttime = expected_starttime
+   trigger = now()
+   self._active()
+   self.record['binding_boottime_ns'] = trigger
+   self.record['due_boottime_ns'] = [trigger + self.FIRST_NS, trigger + self.SECOND_NS]
+  except BaseException as error:
+   self._fail('bind', error)
+
+ def watch(self):
+  if not self.bound or self.disarmed or len(self.record['attempts']) >= 2:
+   return
+  try:
+   self._active()
+   ordinal = len(self.record['attempts']) + 1
+   started = now()
+   if started < self.record['due_boottime_ns'][ordinal - 1]:
+    return
+   self._sample(ordinal, started)
+  except BaseException as error:
+   self._fail('watch', error)

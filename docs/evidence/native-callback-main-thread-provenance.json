@@ -1,0 +1,135 @@
+{
+  "Root_verified_epoch_selected_pins": 334,
+  "artifacts": [
+    {
+      "bytes": 236022,
+      "name": "selection.json",
+      "sha256": "9a790449fbea3704277b04f256ad796d4bd7f182102eebef62ba0ca8f6e62559"
+    },
+    {
+      "bytes": 1313,
+      "name": "command.json",
+      "sha256": "d9c4ae717e2fea203182d0e876d681cc83ea4eb742c20c996a86c3b99e840de5"
+    },
+    {
+      "bytes": 110308,
+      "name": "execution.json",
+      "sha256": "1b381907f45320f57ece475a91001fef56520ee4284ca3caa5d64e8c991ab406"
+    },
+    {
+      "bytes": 528212,
+      "name": "result.json",
+      "sha256": "8cb1a0b3dd5c752852d002a2f08067ab91cd919b7e1884e512aa550bd9cd2f6d"
+    },
+    {
+      "bytes": 11075,
+      "name": "boot-result.json",
+      "sha256": "4ab8c678e2b48381d1a09520b7817cb0c4b91050034db23174ea578994383be8"
+    },
+    {
+      "bytes": 7266,
+      "name": "bootstrap-result.json",
+      "sha256": "a1ce8d8e8d2c244cb82d12039d184179509d60fc6f704d6e39bc37ad0766e9cc"
+    },
+    {
+      "bytes": 2043,
+      "name": "early-receipt.json",
+      "sha256": "74609dc5c5b864cb277412a8c34db65fb3e18cd334dbba03993b24cce6b9680a"
+    },
+    {
+      "bytes": 82048,
+      "name": "callback-spans-after-retirement.bin",
+      "sha256": "5e184fcf2359702c37ddae3ae96425f4922445cf948b3971a0e20ff249c7258a"
+    },
+    {
+      "bytes": 8556,
+      "name": "callback-spans-assessment.json",
+      "sha256": "77069f3974bbf09f35719e96c5cf7fd0b680d44ac1fd374556cae30dd5e60f9b"
+    },
+    {
+      "bytes": 9009,
+      "name": "callback_span_consumer.py",
+      "sha256": "ef3cf731d28d85af94db7b7fb387ff9a042280e2cf9652b09e9c45672ab52b0c"
+    },
+    {
+      "bytes": 21121,
+      "name": "callback_observer.py",
+      "sha256": "39afe5813275a1e48254b280eb4974484a22de2d538aadb4a2d90c15f44fbf23"
+    },
+    {
+      "bytes": 70573,
+      "name": "guest.py",
+      "sha256": "d668056522d1eec573710593cd11678b548c45af5483ef4ce6d9cff0e258e427"
+    }
+  ],
+  "curated_observation": {
+    "actual_proc_bytes_read": 2152,
+    "continuous_callback_CPU_busy_loop_FD_identity_or_cause_qualified": false,
+    "functional_passed": false,
+    "kernel_wait_identified": false,
+    "normal_return_spans": 15,
+    "one_identity_verified_main_task_sample": "R running/runnable; syscall reports running; wchan no wait symbol",
+    "record_bytes": 4455,
+    "ring_commits": 31,
+    "sample_started_after_Source1_ns": 156091109,
+    "sample_started_after_cached_expiry_ns": 36926877,
+    "sample_started_after_unmatched_AQ_entry_ns": 156067174,
+    "second_attempt": "retained pidfd dead; no proc read",
+    "unmatched_AQ_entries": 1
+  },
+  "host_component": {
+    "actual_direct_waits": 7,
+    "actual_merged_PIPE_EOFs": 7,
+    "candidate_created_after_actual_RED": true,
+    "frozen_consumer_sha256": "2ebb8b25b108a6630432b4d3a8f58a793e66de159c4f4683aeff6509e1f2fd48",
+    "frozen_contract_sha256": "80c25501cca976a2783d4f1ca773b58ae2d538bcb002379ab16932eb9b0a5efe",
+    "green_result_sha256": "31ee7bfb1ff264c19521258f314cb834a17d3a6d85e2c5a64f62f58678e3fe9a",
+    "original_close_seconds": 8,
+    "original_control_then_missing_API_exits": [
+      0,
+      3
+    ],
+    "original_helper_prefix_bytes": 14973,
+    "original_helper_prefix_sha256": "9cffb88a188d237a39b6d9e7f64808b5d711a30b82ba9dc36884fc1aa69cc561",
+    "original_prefix_unchanged": true,
+    "original_work_seconds": 5,
+    "raw_kernel_fields_private": true,
+    "red_result_sha256": "4003a7c5b7759966c02e81f373b458e9626f62a2f1bbc6477f778a056b4c0a47",
+    "same_consumer_control_then_GREEN_exits": [
+      0,
+      0
+    ],
+    "scope": "actual original Linux pipe/main-task metadata API; separate from native compositor",
+    "source_record_sha256": "bc966bd25c6d6bc56ceb60aee72a6d2b461c9e67325b495dc9598dd90de96a0e"
+  },
+  "independent_closed_review_sha256": "ed61510d17b5d88712fa4111952aedd91b24e853a2332126306c8acbf1c52786",
+  "integrity_closure": {
+    "actual_PIPE_EOFs": 155,
+    "actual_direct_waits": 148,
+    "all_original_cutoffs_and_exact_CID_daemon_input_closure_verified": true,
+    "selected_pins": 334
+  },
+  "published_original_code": {
+    "callback_observer.py": {
+      "bytes": 21121,
+      "sha256": "39afe5813275a1e48254b280eb4974484a22de2d538aadb4a2d90c15f44fbf23"
+    },
+    "main_thread_consumer.py": {
+      "bytes": 13080,
+      "sha256": "2ebb8b25b108a6630432b4d3a8f58a793e66de159c4f4683aeff6509e1f2fd48"
+    },
+    "owned.py": {
+      "bytes": 5960,
+      "sha256": "266024c425f92732c53c4b4ea1f06e90f4cd30cbc5cca0d19b8385e63921ae3f"
+    }
+  },
+  "raw_kernel_record_hashes": {
+    "stat_after": "9278686f2ca1dc5646eaa5470da09b7b3131daf02a4f907f7587cccf457800a6",
+    "stat_before": "9278686f2ca1dc5646eaa5470da09b7b3131daf02a4f907f7587cccf457800a6",
+    "status": "8528d397776ffbf26b21e77c93dfb883407c38157653bcf8b597345f26d84528",
+    "syscall": "a4ecc5c87d811bbff7a118c17ef8cf83318cb623a103c15b8549089aa2a7f0ac",
+    "wchan": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+  },
+  "schema": 1,
+  "scope": "Public-safe hash-only raw artifact provenance and curated bounded cold4 observations; raw records/addresses remain private"
+}
