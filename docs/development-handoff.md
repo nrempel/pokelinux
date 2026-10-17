@@ -16,6 +16,12 @@ phone. Keep synthetic emulator, original-code, ARM64/QEMU and physical evidence
 separate. Do not equate registration, submission or API success with carrier
 acceptance, delivery, native call state or working physical hardware.
 
+The [current language boundary](runtime-language-decision.md#current-language-boundary)
+retains upstream Hyprland/Aquamarine/Qt C++ scene, protocol and native operations.
+Rust remains responsible for shared phone services and ownership/recovery policy.
+The graphics integration includes substantial C++; it must not be reported as
+progress porting phone services to Rust or as an all-Rust stack.
+
 ## Current stopping point
 
 The [native graphics resource operations](native-render-exact-buffer.md) pass their matching normal AQ15 build, ten existing CPU groups and four API checks after missing-interface RED. Two real-driver runs observe all five resource groups passing, but both aggregates fail a control-session check; the diagnostic identifies revocation with a queued CHANGE. Production exact-buffer preparation/execution, normal frames, Source, ARM and phone gates remain open.

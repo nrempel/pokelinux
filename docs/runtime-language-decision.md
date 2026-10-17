@@ -11,6 +11,22 @@ subsystems. Keep Google's matched kernel, drivers and firmware initially.
 The earlier bridge architecture below is historical test infrastructure, not
 the final completion target. See `smartphone-goal.md` for authoritative scope.
 
+## Current language boundary
+
+The phone-service target is Rust, not an all-Rust operating system. Hyprland,
+Aquamarine and Qt remain upstream C++ dependencies. The current graphics
+integration extracts and reconnects actual CPU scene/layout handling, Wayland
+protocols and native GPU/output operations; that work is more than ABI glue.
+It does not advance the Rust phone-service ports by itself.
+
+Rust owns shared permission and lifecycle decisions, immutable frame ownership,
+admission and credits, generation validity, format choice, deadlines, recovery
+and Stop authorization. C++ adapts upstream compositor objects and performs
+native operations under that authority. New retries, fallback policy or a second
+readiness authority must not accumulate in C++. Reusing an upstream C++ engine
+is distinct from retaining Android framework services. The matched Google
+kernel/modules/firmware decision remains unchanged.
+
 ## Earlier recommended target
 
 | Layer | Language | Reason |

@@ -297,7 +297,7 @@ These are captures from an **Arch ARM virtual machine**, showing the same phone 
 
 ## Why keep an Android test environment?
 
-The repository contains a functioning reference bridge and earlier Python/GTK experiments. They help compare behavior and test boundaries. They are **not a commitment to retain Android framework userspace or two production runtimes**. The current implementation direction is Rust service logic, QML presentation and only necessary low-level ABI glue.
+The repository contains a functioning reference bridge and earlier Python/GTK experiments. They help compare behavior and test boundaries. They are **not a commitment to retain Android framework userspace or two production runtimes**. The current implementation direction is Rust phone services and QML presentation, using upstream native graphics and Qt dependencies. Hyprland, Aquamarine and Qt contain substantial C++; integrating their scene/layout, Wayland and GPU operations is more than ABI glue. Shared permissions, resource ownership, frame admission, deadlines and recovery belong in Rust. We are not rewriting those upstream graphics engines for language uniformity. See the [current language boundary](docs/runtime-language-decision.md#current-language-boundary).
 
 ```mermaid
 %%{init: {'theme':'dark'}}%%

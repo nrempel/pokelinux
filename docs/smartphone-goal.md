@@ -420,6 +420,8 @@ necessary ABI glue do not establish permission to retain Android framework
 services in the final design. Any unavoidable retained userspace component must
 be documented as an unresolved exception, not silently declared complete.
 
+The [language boundary](runtime-language-decision.md#current-language-boundary) retains upstream Hyprland, Aquamarine and Qt C++ implementations. Their scene/layout, protocol and native rendering integration does not replace the Rust service requirement; shared permissions, admission, resource lifetimes, deadlines and recovery stay in Rust. No whole graphics-engine rewrite is currently planned.
+
 Phone, Messages, Camera and phone settings form an installed smartphone bundle. Shared services own hardware state and background work independently of open app windows. Each mutable resource has one owner. Preserve the subsystem decisions and unresolved deployment questions in `hardware-boundary-decision.md`.
 
 ## Completion matrix
