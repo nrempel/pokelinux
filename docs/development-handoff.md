@@ -24,20 +24,19 @@ kernel/socket tests pass alongside held-reader Stop and late-success rejection,
 with permanent reproducible boundary tests and separate host/ARM release builds.
 Installed deployment, a client/UI join and physical connectivity remain open.
 
-The first [prepared three-app navigation attempt](native-three-app-navigation.md)
-fails during setup at its first workspace command, with zero functional groups
-and no normal app capture. Raw reply/cause are unknown; exact Lua source supports
-a narrow fixture syntax correction with bounded reply retention. Its99 actual
-waits/106 PIPE EOFs and owned Stop close separately. Preserve this failed epoch;
-no Source/auth investigation, deadline change or automatic retry follows.
+The [prepared three-app navigation branch](native-three-app-navigation.md) is
+parked. The first epoch fails before a functional group; the second and third
+complete three groups, then fail Sounds metadata/capture. The third's actual
+class check passes but capture exits6; the exact capture cause is unknown. No
+Sounds frame, complete five-group join or return-to-Settings75% result follows.
+Preserve all failed aggregates and the third's theme-host255 cleanup error.
+Source100ms, warmup, authority and cutoffs are unchanged. Do not retry this branch
+or resume Source/authentication/capture investigations.
 
-Next composition priorities are one current installed ARM service/app cohort
-with fresh autostart and Messages data preserved across package replacement,
-then one prepared navigation session across Settings, Messages and Sounds with
-live Omarchy theme change and brightness after returning. Reuse existing authority
-and backends; cold graphical startup stays an explicit gate. Keep Source/auth
-investigations parked and do not expand coarse network counters into a broader
-connectivity campaign before those joins.
+Next production work is the private sole-daemon Messages read-provider join,
+then one current installed ARM service/app cohort with fresh autostart and
+Messages data retained across package replacement. Keep cold graphical startup
+as an explicit gate; do not expand network counters into a connectivity campaign.
 
 Messages currently has two alternative Projector owners: standalone daemon and
 session History. Never run both against one database. Installed headless and

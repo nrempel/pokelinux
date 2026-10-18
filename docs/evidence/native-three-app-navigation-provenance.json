@@ -1,73 +1,245 @@
 {
   "schema": 1,
   "evidence_class": "prepared native x86 KVM fixture; no physical phone",
+  "branch_parked": true,
   "aggregate_passed": false,
-  "functional_groups": 0,
-  "normal_app_capture_candidates": 0,
-  "failure": {
-    "phase": "setup",
-    "assertion": "first workspace command returned text other than ok",
-    "source_defined_request": "/dispatch workspace 1",
-    "actual_reply_retained": false,
-    "actual_reply_and_runtime_cause": "unknown"
-  },
+  "all_five_navigation_groups_qualified": false,
+  "latest_completed_groups": 3,
+  "successful_Sounds_native_capture": false,
+  "return_to_Settings_brightness_result": false,
   "Source_lease_ns": 100000000,
+  "production_behavior_changed": false,
   "automatic_retries": false,
-  "custody": {
-    "actual_direct_parent_waits": 99,
-    "actual_PIPE_EOFs": 106,
-    "all_original_cutoffs_satisfied": true,
-    "separate_adopted_exit_not_app_status": 1,
-    "guest_cleanup_errors": [],
-    "owner_audio_appearance_Stop_actual_wait0": true,
-    "both_PID1_power_services_Main0_success_empty_cgroups": true,
-    "QEMU_and_container_CLI_exit0": true,
-    "container_absent_same_daemon": true,
-    "selected355_and_external1485_unchanged": true,
-    "process_closure_does_not_promote_failed_aggregate": true
-  },
-  "artifacts": {
-    "selection.json": {
-      "bytes": 589508,
-      "sha256": "47a99e623bf57f43bdd3e40fd0b7448ad54d4eef53856466d316a9f92defdce0"
+  "first_epoch": {
+    "aggregate_passed": false,
+    "functional_groups": 0,
+    "normal_app_capture_candidates": 0,
+    "failure": {
+      "phase": "setup",
+      "assertion": "first workspace command returned text other than ok",
+      "source_defined_request": "/dispatch workspace 1",
+      "actual_reply_retained": false,
+      "actual_reply_and_runtime_cause": "unknown"
     },
-    "command.json": {
-      "bytes": 1406,
-      "sha256": "f9e974395c97a936136c997acac6777c606f95fc84ed283664439b5174a0e3c7"
+    "Source_lease_ns": 100000000,
+    "automatic_retries": false,
+    "custody": {
+      "actual_direct_parent_waits": 99,
+      "actual_PIPE_EOFs": 106,
+      "all_original_cutoffs_satisfied": true,
+      "separate_adopted_exit_not_app_status": 1,
+      "guest_cleanup_errors": [],
+      "owner_audio_appearance_Stop_actual_wait0": true,
+      "both_PID1_power_services_Main0_success_empty_cgroups": true,
+      "QEMU_and_container_CLI_exit0": true,
+      "container_absent_same_daemon": true,
+      "selected355_and_external1485_unchanged": true,
+      "process_closure_does_not_promote_failed_aggregate": true
     },
-    "execution.json": {
-      "bytes": 12044,
-      "sha256": "b14fed61e4f737bbce2058f1cfae0cafc1ce776e9060ea6ebe7d59ff541aa30d"
+    "artifacts": {
+      "selection.json": {
+        "bytes": 589508,
+        "sha256": "47a99e623bf57f43bdd3e40fd0b7448ad54d4eef53856466d316a9f92defdce0"
+      },
+      "command.json": {
+        "bytes": 1406,
+        "sha256": "f9e974395c97a936136c997acac6777c606f95fc84ed283664439b5174a0e3c7"
+      },
+      "execution.json": {
+        "bytes": 12044,
+        "sha256": "b14fed61e4f737bbce2058f1cfae0cafc1ce776e9060ea6ebe7d59ff541aa30d"
+      },
+      "result.json": {
+        "bytes": 291248,
+        "sha256": "cf1cc478538ee5073528db5c466199e391e50c468ee649a1dfbc4e3db81e3615"
+      },
+      "boot-result.json": {
+        "bytes": 11290,
+        "sha256": "33c01d123a2a44c0bc34b8b99871158b52b4d8b4441ce5e5d84157621fbee10b"
+      },
+      "bootstrap-result.json": {
+        "bytes": 7551,
+        "sha256": "0d220ee9781a7daee13b7e862d3673729d113e051b4d38e4477fdde008e25ff0"
+      },
+      "early-receipt.json": {
+        "bytes": 2129,
+        "sha256": "73c7c31318fef0de9f10398fb8b6748f07dec84269f206974b175ac6b652cbc5"
+      },
+      "Root-execution-admission.json": {
+        "bytes": 1169,
+        "sha256": "5a194dd16a325f1f95b616940c9fe95b91abab10c0467a07987b7f891c50d7f1"
+      },
+      "Root-failed-execution-review.json": {
+        "bytes": 1580,
+        "sha256": "6806d2503cb861a125c291c5dc1e5db879831398c526310530f3a143e088b4e1"
+      }
     },
-    "result.json": {
-      "bytes": 291248,
-      "sha256": "cf1cc478538ee5073528db5c466199e391e50c468ee649a1dfbc4e3db81e3615"
-    },
-    "boot-result.json": {
-      "bytes": 11290,
-      "sha256": "33c01d123a2a44c0bc34b8b99871158b52b4d8b4441ce5e5d84157621fbee10b"
-    },
-    "bootstrap-result.json": {
-      "bytes": 7551,
-      "sha256": "0d220ee9781a7daee13b7e862d3673729d113e051b4d38e4477fdde008e25ff0"
-    },
-    "early-receipt.json": {
-      "bytes": 2129,
-      "sha256": "73c7c31318fef0de9f10398fb8b6748f07dec84269f206974b175ac6b652cbc5"
-    },
-    "Root-execution-admission.json": {
-      "bytes": 1169,
-      "sha256": "5a194dd16a325f1f95b616940c9fe95b91abab10c0467a07987b7f891c50d7f1"
-    },
-    "Root-failed-execution-review.json": {
-      "bytes": 1580,
-      "sha256": "6806d2503cb861a125c291c5dc1e5db879831398c526310530f3a143e088b4e1"
+    "closed_independent_review": {
+      "bytes": 10950,
+      "sha256": "2a60f9256646360f6bd4781c98a11a2465475c7c3ffbde49e5679c90baa9a7d8"
     }
   },
-  "closed_independent_review": {
-    "bytes": 10950,
-    "sha256": "2a60f9256646360f6bd4781c98a11a2465475c7c3ffbde49e5679c90baa9a7d8"
-  },
+  "successor_epochs": [
+    {
+      "epoch": 2,
+      "aggregate_passed": false,
+      "completed_groups": [
+        1,
+        2,
+        3
+      ],
+      "completed_group_meaning": [
+        "initial_Settings25",
+        "Messages_two_authored_local_hello_rows",
+        "same_Messages_history_after_genuine_dark_to_light_theme_change"
+      ],
+      "no_Sounds_frame_or_return_brightness_result": true,
+      "failure": {
+        "phase": "navigation-Sounds",
+        "boundary": "Sounds compound metadata assertion; actual current client absent before assertion",
+        "exact_runtime_cause": "unknown",
+        "actual_failing_conjunct": "unknown"
+      },
+      "guest_case_closure_qualified": true,
+      "guest_cleanup_errors": [],
+      "outer": {
+        "actual_container_CLI_wait_exit": 0,
+        "owned_container_absent": true,
+        "same_daemon": true,
+        "all_original_and_selected_inputs_unchanged": true
+      },
+      "artifacts": {
+        "selection.json": {
+          "bytes": 597414,
+          "sha256": "ba5d9d6a57d46bac1d33fba84b85f064cfce291a37d7700cb1e532a30ee6a4dc"
+        },
+        "command.json": {
+          "bytes": 1406,
+          "sha256": "b5dd7297dd48a01f6deb26fb98a1e2e4e9345adc64cceb7b3f662768dd4fed4b"
+        },
+        "execution.json": {
+          "bytes": 12045,
+          "sha256": "9473631f7008cceb6e4a2c7fc2ad6a0459ccf80e2d1aaa46ea870d5d51c214ab"
+        },
+        "boot-result.json": {
+          "bytes": 11312,
+          "sha256": "d898de14eb73c19b95b9f930f638ac61c0b5bbc1d130fc742d3d1cdb0ca2a2a0"
+        },
+        "result.json": {
+          "bytes": 451304,
+          "sha256": "093503897a1f3f52a7069ec8c577348d24b986bec2f5a9b1a240dd8f21c0b595"
+        }
+      },
+      "closed_independent_review": {
+        "bytes": 11348,
+        "sha256": "6d32c628fe4c9e8e2607625bccb4de756d879a0122b3acf599268d48265a4e2e"
+      },
+      "custody": {
+        "actual_direct_parent_waits": 117,
+        "actual_PIPE_EOFs": 124,
+        "all_actual_wait_EOF_timestamps_under_original_cutoffs": true,
+        "separate_adopted_waits_not_normal_app_status": 1,
+        "numeric_normal_app_exit_status": null,
+        "retained_apps_compositor_and_observed_descendants_dead": true,
+        "owner_audio_appearance_Stop0": true,
+        "both_PID1_power_services_Main0_success_empty_cgroups": true,
+        "QEMU_actual_wait_exit": 0,
+        "all_expected_direct_dispositions_passed": true
+      },
+      "Root_original_visual_review": {
+        "bytes": 3027,
+        "sha256": "ef668f488a8de00f5e3c5f697f54bb8624044945a555bc5ab260aaa243289a48"
+      }
+    },
+    {
+      "epoch": 3,
+      "aggregate_passed": false,
+      "completed_groups": [
+        1,
+        2,
+        3
+      ],
+      "completed_group_meaning": [
+        "initial_Settings25",
+        "Messages_two_authored_local_hello_rows",
+        "same_Messages_history_after_genuine_dark_to_light_theme_change"
+      ],
+      "no_Sounds_frame_or_return_brightness_result": true,
+      "failure": {
+        "phase": "navigation-Sounds",
+        "boundary": "Sounds first native output capture process exits6",
+        "exact_runtime_cause": "unknown",
+        "exit6_does_not_distinguish_shared_helper_paths": true
+      },
+      "guest_case_closure_qualified": false,
+      "guest_cleanup_errors": [
+        {
+          "owned_role": "genuine theme-only host",
+          "actual_exit": 255,
+          "expected_disposition_check_failed": true
+        }
+      ],
+      "outer": {
+        "actual_container_CLI_wait_exit": 0,
+        "owned_container_absent": true,
+        "same_daemon": true,
+        "all_original_and_selected_inputs_unchanged": true
+      },
+      "artifacts": {
+        "selection.json": {
+          "bytes": 602653,
+          "sha256": "6540733d8b7bc3c21e1f9db1a6cfa2f248dc5dbdc8fc6126956ec7d5f1a4da20"
+        },
+        "command.json": {
+          "bytes": 1406,
+          "sha256": "84b33ec1ce31ba6689d079d3039225784d90ae6e6e1b3535186503a35faf8f2e"
+        },
+        "execution.json": {
+          "bytes": 12045,
+          "sha256": "db886bc2123974dc06f66845876c37d1439ab2225351d1cff20ecc16e144bd35"
+        },
+        "boot-result.json": {
+          "bytes": 11312,
+          "sha256": "322d3cb9f4f3090f5a9c46d85f14eed19ea9e89525ba8cdfc956b6faafe026a0"
+        },
+        "result.json": {
+          "bytes": 494574,
+          "sha256": "601cddb675a4014094f36c51d4a313c8668fdaf416dbcf4760c1c937b460679b"
+        },
+        "capture-error.log": {
+          "bytes": 40,
+          "sha256": "66d09960e2668dbdcf10340f05e0dcc127e1542abd37f4fc46f2b82338931367"
+        },
+        "normal-window-qualification.jsonl": {
+          "bytes": 6548,
+          "sha256": "08ef3fddb438adf53e4c3c5a395caf39fe4d9e60887aa5fe4e1345c244279d83"
+        }
+      },
+      "closed_independent_review": {
+        "bytes": 14735,
+        "sha256": "1744b391911d3d876ad05bf9f371095ed47227841f41a0236a025b5b0c5375bc"
+      },
+      "Sounds_actual_class": "org.omarchy.Sounds",
+      "Sounds_window_qualification_passed": true,
+      "custody": {
+        "actual_direct_parent_waits": 120,
+        "actual_PIPE_EOFs": 127,
+        "all_actual_wait_EOF_timestamps_under_original_cutoffs": true,
+        "separate_adopted_waits_not_normal_app_status": 1,
+        "numeric_normal_app_exit_status": null,
+        "retained_apps_compositor_and_observed_descendants_dead": true,
+        "owner_audio_appearance_Stop0": true,
+        "both_PID1_power_services_Main0_success_empty_cgroups": true,
+        "QEMU_actual_wait_exit": 0,
+        "all_expected_direct_dispositions_passed": false
+      },
+      "Root_current_original_visual_review_pending_at_independent_review_seal": true,
+      "Root_actual_timestamp_and_disposition_review": {
+        "bytes": 701,
+        "sha256": "57f2cb5fab0490bf0908f685a91cb9ffc8195694ca70e9d312abbf991ac80816"
+      }
+    }
+  ],
   "current_Rust_helpers_build_only": {
     "passed": true,
     "source_rows": 144,
@@ -156,5 +328,20 @@
     "cold full shell/menu",
     "normal direct QWindow DPR",
     "matched Pixel hardware"
-  ]
+  ],
+  "capture_exit6_static_scope": {
+    "selected_helper_source": {
+      "bytes": 10717,
+      "sha256": "e9aebd5eee61ebfeb119cb093c421c7a1af095658b4f46d4faaed0b842f7ef7d"
+    },
+    "condition": "!state.ready || state.failed || !state.copied || state.pixels == MAP_FAILED",
+    "shared_code_paths": [
+      "frame failed callback",
+      "buffer geometry or format refusal",
+      "unsupported flags",
+      "buffer-copy setup or allocation failure",
+      "Wayland display dispatch error"
+    ],
+    "specific_cause_not_observed": true
+  }
 }
