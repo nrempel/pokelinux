@@ -6,9 +6,11 @@ The production daemon and its concrete Rust client now pass joined native-host
 process/socket tests against authored SyntheticTree attributes. A lifecycle
 Provider adapter and explicit installed configuration have separate qualified
 host evidence. A first prepared normal Settings frame now reads through the actual
-actor and installed service. A later same-app touch/change/unavailable/recovery
-sequence now passes against authored attributes with five original screenshots.
-Cold startup, other input races and physical display behavior remain open.
+actor and installed service. An earlier client passes a same-app five-state
+trace against authored attributes; the current client reaches four states and
+fails its final new25% change. These GUI cohorts stay separate from the new generic
+ARM kernel/PID1 qualification of the actual LinuxBacklight driver interface.
+Cold startup, all-click reliability and physical display behavior remain open.
 
 ## Attribute backend
 
@@ -514,13 +516,49 @@ success retain their own cohorts. See
 
 ![Current normal Settings at75%, from the four-state partial trace](assets/settings-brightness-current75.png)
 
+## Actual ARM kernel LinuxBacklight integration
+
+The retained normal ARM daemon and real Rust Client now run through PID1 and the
+actual `/sys/class/backlight` filesystem in a generic7.1.6 ARM guest. The existing
+matching `gpio_backlight` module binds one authored QEMU PL061 device; no new
+kernel or module is built. This is a virtual GPIO backlight with max1, separate
+from the regular-file SyntheticTree and graphical traces above.
+
+The same frozen positive probe first reaches a credentialed daemon Inspect with
+no device: connected, not pending, no observation, then the exact positive
+assertion fails101. Only the virtual device-tree deployment changes for GREEN.
+Four fresh Client invocations pass: initial raw0, explicit75→raw1/current100,
+new25→raw0/current0, then Unavailable after unbinding only the authored device.
+Each invocation retains one original one-second BOOTTIME budget across Inspect
+and its optional Set on the same verified connection. There is no write retry.
+Independent sysfs reads and the same Main/Invocation are checked throughout.
+
+`actual_brightness` is present but follows the kernel core's requested-value
+fallback for this driver. It does not prove independent hardware readback,
+optional-attribute absence, gradual panel control or physical luminance. Normal
+PID1 Stop reports exit0/success, dead retained pidfd, removed socket and empty
+cgroup. All36 GREEN direct command waits/PIPE EOFs close before original cutoffs,
+with QEMU exit0, container removal and unchanged readonly inputs. The baseline's
+27 waits/EOFs remain separate. No fixture parent wait for PID1's child is claimed.
+
+The initial unpacked baseline never reaches guest output and remains a failed
+setup, not functional RED. A representation-only upstream FDT pack preserves all
+old nodes/raw property bytes before the completed baseline and GPIO runs. The
+exact cause in the original booting binary remains unproved; the fixture observes
+the [ARM64 DT size requirement](https://docs.kernel.org/arch/arm64/booting.html#setup-the-device-tree).
+Tool release-key trust remains unqualified. No Source, normal ARM app/window,
+cold autostart, Pixel kernel/panel or phone execution follows from this test.
+
+See [hash-only kernel provenance](evidence/native-brightness-arm-kernel-provenance.json)
+and the [verbatim original probe](../tools/native-brightness-kernel/README.md).
+
 ## Remaining integration and hardware gates
 
 The finite Settings touch/change/unavailable/recovery path is qualified only for
 the earlier explicit SyntheticTree backend cohort above. The updated normal app's
 touch path, persistent outcome/actor refusal UX, cold startup and full-shell
-composition retain their own gates. Linux driver execution and matched Pixel
-panel/backlight discovery, brightness response, physical readback, suspend/resume,
+composition retain their own gates. The separate generic ARM driver proof does
+not qualify matched Pixel panel/backlight discovery, brightness response, physical readback, suspend/resume,
 lock behavior and power/drain measurements remain separate gates. No phone has
 been accessed, and this component does not advance calls, IMS or SMS hardware
 qualification.

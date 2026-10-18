@@ -1,0 +1,268 @@
+{
+  "schema": 1,
+  "scope": "Closed installed ARM7.1.6 production LinuxBacklight kernel sysfs backend with existing matched gpio_backlight module and authored QEMU PL061 DT node. Root trusted-actor Rust Client fixture only; no UI/Source/physical-phone qualification.",
+  "qualification": {
+    "bytes": 9229,
+    "sha256": "4461d7550915f7cbcb42bf216f44b91706d6571f0600679529a74aacfe211b69"
+  },
+  "completed_baseline_RED": {
+    "bytes": 2834,
+    "sha256": "f4e610eaa2822b9693419032b4ff24508703cd326ec5a58aec716537dcc2c2f6"
+  },
+  "execution": {
+    "bytes": 16617,
+    "sha256": "2c0b6d140b6fe352e26b01a3c4fa56232e0c103cf20be4202909cd819070d992"
+  },
+  "boot_result": {
+    "bytes": 4386,
+    "sha256": "85947d2339907f4d88ba1bceedc064c66b792dddff2c2c7f72007effc024bf78"
+  },
+  "guest_result": {
+    "bytes": 22128,
+    "sha256": "eff34041668afbf05d34c3ecd91c833f77e35315ab1c8c3ff5e495fb6f3a82ee"
+  },
+  "kernel_and_deployment": {
+    "kernel_sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+    "kernel_release": "7.1.6-1-aarch64-ARCH",
+    "raw353_backing_sha256": "31e3ccf69a5496f61284abdcd049e8273e70e840407bab4e744c778f21e25842",
+    "all353_package_versions_unchanged": true,
+    "existing_module_ELF_machine": 183,
+    "existing_module_sha256": "f76e446dd7d0b72b15bec31ef7c539992a55995086f8d602224d3a4709761815",
+    "actual_native_modprobe_exit": 0,
+    "actual_class_symlink_resolves_below": "/sys/devices",
+    "actual_platform_driver": "/sys/bus/platform/drivers/gpio-backlight",
+    "actual_driver_module": "/sys/module/gpio_backlight",
+    "actual_class_fstatfs_SYSFS_MAGIC": true,
+    "selected_DT_sha256": "2e3c28ace9664c37cfc9d7659baf7d6a4f4e27f9c80d0017131ee7cdf723c259",
+    "authored_node": "/pokelinux-virtual-backlight",
+    "PL061_line": 7,
+    "powerkey_line3_preserved": true,
+    "max_brightness": 1,
+    "actual_attribute_present": true,
+    "actual_attribute_scope": "Requested-value kernel-core fallback for this GPIO driver; no independent physical readback, absent-attribute path or measured luminance proof.",
+    "explicit_pre_service_fixture_seed": {
+      "before": {
+        "max_brightness": 1,
+        "brightness": 1,
+        "actual_brightness": 1
+      },
+      "after": {
+        "max_brightness": 1,
+        "brightness": 0,
+        "actual_brightness": 0
+      }
+    }
+  },
+  "normal_providers": {
+    "service_ELF_sha256": "32111d160c523065a0ba3e82370a3a00d81843d3f4a90ef5857a8fc0ad695b3d",
+    "probe_ELF_sha256": "6f8d0cc96d843b284524e863620fb7e5f5b29897e8fe431805f83ffb585a0077",
+    "normal_features": [],
+    "service_rebuilt": false,
+    "native_ldd_r_actual": true,
+    "current_Root_full_source_equality_claimed": false,
+    "frozen_Main_source_sha256": "76cffbfc9a107ef9fa34b8a7b0ce00898ebf20f7dcdeb6baafebc1811f11bdfb",
+    "frozen_probe_Client_source_sha256": "7f2dd1b754d530cc4efc7c53e7eed27fb67f051a118d33cae1efb7c26cbc8045",
+    "source_and_compile_qualification": "Selected proofs/CLOSED-QUALIFICATION.json and NORMAL-DAEMON-CLOSED-QUALIFICATION.json; later Root client-only changes do not relabel this frozen cohort."
+  },
+  "actual_Rust_Client_probes": {
+    "initial": {
+      "actual_probe_log": {
+        "bytes": 154,
+        "sha256": "8dbb303d8755a7e2616d89e056184105193f54df87b07807bdd4c5238337f91c"
+      },
+      "actual_exit": 0,
+      "actual_direct_parent_wait_and_PIPE_EOF": true,
+      "within_one_original_Client_cutoff": true,
+      "observations": [
+        {
+          "connected": true,
+          "observation": {
+            "actual": 0,
+            "max": 1,
+            "requested": 0
+          },
+          "original_until_ns": 26900838716,
+          "pending": false,
+          "phase": "actual-inspect",
+          "revision": 1
+        }
+      ]
+    },
+    "set75": {
+      "actual_probe_log": {
+        "bytes": 313,
+        "sha256": "0e0dba2cf885fded493a5dbf1f8676cc107f500fef4b37bd028eaba74c070d49"
+      },
+      "actual_exit": 0,
+      "actual_direct_parent_wait_and_PIPE_EOF": true,
+      "within_one_original_Client_cutoff": true,
+      "observations": [
+        {
+          "connected": true,
+          "observation": {
+            "actual": 0,
+            "max": 1,
+            "requested": 0
+          },
+          "original_until_ns": 27100764149,
+          "pending": false,
+          "phase": "actual-inspect",
+          "revision": 1
+        },
+        {
+          "actual_is_core_fallback": true,
+          "current_percent": 100,
+          "optional_actual": 1,
+          "percent": 75,
+          "phase": "actual-Set",
+          "raw_requested": 1,
+          "same_connection_incarnation": 1
+        }
+      ]
+    },
+    "set25": {
+      "actual_probe_log": {
+        "bytes": 311,
+        "sha256": "971217dc35e0c09d45a05e5eb0d2afae377b54524c17549b3de142d960417de1"
+      },
+      "actual_exit": 0,
+      "actual_direct_parent_wait_and_PIPE_EOF": true,
+      "within_one_original_Client_cutoff": true,
+      "observations": [
+        {
+          "connected": true,
+          "observation": {
+            "actual": 1,
+            "max": 1,
+            "requested": 1
+          },
+          "original_until_ns": 27332831210,
+          "pending": false,
+          "phase": "actual-inspect",
+          "revision": 3
+        },
+        {
+          "actual_is_core_fallback": true,
+          "current_percent": 0,
+          "optional_actual": 0,
+          "percent": 25,
+          "phase": "actual-Set",
+          "raw_requested": 0,
+          "same_connection_incarnation": 1
+        }
+      ]
+    },
+    "unavailable": {
+      "actual_probe_log": {
+        "bytes": 124,
+        "sha256": "b9a28abf07163026cb0607ccd334187c790f891a077702804675c33dc6bf506b"
+      },
+      "actual_exit": 0,
+      "actual_direct_parent_wait_and_PIPE_EOF": true,
+      "within_one_original_Client_cutoff": true,
+      "observations": [
+        {
+          "connected": true,
+          "observation": null,
+          "original_until_ns": 27560636389,
+          "pending": false,
+          "phase": "actual-inspect",
+          "revision": 6
+        }
+      ]
+    }
+  },
+  "independent_kernel_before_after": [
+    {
+      "action": "initial",
+      "independent_kernel_before": {
+        "max_brightness": 1,
+        "brightness": 0,
+        "actual_brightness": 0
+      },
+      "independent_kernel_after": {
+        "max_brightness": 1,
+        "brightness": 0,
+        "actual_brightness": 0
+      }
+    },
+    {
+      "action": "set75",
+      "independent_kernel_before": {
+        "max_brightness": 1,
+        "brightness": 0,
+        "actual_brightness": 0
+      },
+      "independent_kernel_after": {
+        "max_brightness": 1,
+        "brightness": 1,
+        "actual_brightness": 1
+      }
+    },
+    {
+      "action": "set25",
+      "independent_kernel_before": {
+        "max_brightness": 1,
+        "brightness": 1,
+        "actual_brightness": 1
+      },
+      "independent_kernel_after": {
+        "max_brightness": 1,
+        "brightness": 0,
+        "actual_brightness": 0
+      }
+    }
+  ],
+  "same_Main_and_Invocation_each_group": true,
+  "one_explicit_Set_per_action_same_verified_Inspect_connection": true,
+  "fresh_probe_process_and_connection_per_group": true,
+  "unbind_only_authored_device_then_actual_Unavailable": true,
+  "normal_PID1_Stop": {
+    "ExecMainStatus": 0,
+    "Result": "success",
+    "retained_pidfd_dead": true,
+    "socket_absent": true,
+    "exact_cgroup_empty": true,
+    "fixture_direct_parent_wait_for_PID1_child": false
+  },
+  "closure": {
+    "guest_wait_EOF_records": 24,
+    "boot_wait_EOF_records": 2,
+    "host_wait_EOF_records": 10,
+    "all_original_timeliness_true": true,
+    "QEMU_actual_wait_exit": 0,
+    "normal_guest_poweroff": true,
+    "exact_CID_absent": true,
+    "same_daemon": true,
+    "all_selected_and_external_inputs_unchanged": true,
+    "host_cleanup_errors": [],
+    "boot_cleanup_errors": []
+  },
+  "public_original_probe": {
+    "file": "tools/native-brightness-kernel/probe.rs",
+    "bytes": 4394,
+    "sha256": "2ee81a3968d2942a3fd030f40dbbc9480088b8b80e6aaa9b70212b742e2b9c4f",
+    "verbatim_compiled_and_executed_fixture_source": true,
+    "not_installed_or_normal_app": true
+  },
+  "preserved_initial_setup_failure": {
+    "bytes": 2003,
+    "sha256": "b0d8af70d5cec05405e8b23faa7db01cb4a65bd2bde7f4f479060e0075ab013d"
+  },
+  "representation_only_packing_qualification": {
+    "bytes": 4375,
+    "sha256": "05b4b1ca74200155c97d94e82ff443dffbc72d1887513d2d2406fbb6a3c43fae"
+  },
+  "limits": {
+    "one_explicit_Set_is_source_selected_single_write_no_kernel_syscall_count_instrumentation": true,
+    "continuous_brightness_or_independent_light_output": false,
+    "normal_app_or_Qt_GUI_with_this_kernel": false,
+    "Pixel_or_physical_phone": false,
+    "cold_autostart_or_enabled_service": false,
+    "Source_or_auth_or_production_changes": false,
+    "tool_PGP_key_trust_qualified": false,
+    "first_unpacked_baseline_boot_remains_failed_setup": true,
+    "exact_matched_binary_original_blank_boot_cause_established": false
+  },
+  "Root_independently_verified_closed_artifact_pins_all36timelywait_EOF_and_actual_raw_steps": true
+}

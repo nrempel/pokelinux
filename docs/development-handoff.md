@@ -23,7 +23,9 @@ do not reject an otherwise valid explicit choice. A compiled real-client RED
 passes after the model repair; all52 brightness tests pass in one Release suite.
 Raw changes and expiry/unavailable/cancellation gaps still invalidate old intent.
 Separate lifecycle adapter, installed configuration and constructor qualifications
-remain distinct. ARM execution and physical display gates remain open.
+remain distinct. A generic ARM kernel/PID1 run now drives the real LinuxBacklight
+class through a virtual GPIO driver: raw0→1→0, then Unavailable after device removal,
+with normal Stop. The matched Pixel panel and physical display gates remain open.
 
 The [normal Settings app](../native-settings-ui/README.md) now passes seven frozen Rust socket/C ABI
 groups after compiled assertion RED, plus a native Qt6.12 build/install and real

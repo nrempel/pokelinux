@@ -84,7 +84,11 @@ fresh reads preserve value revisions; raw changes and freshness gaps invalidate
 them independently of rounded percent or observation cadence. Deployment
 alone selects a backlight backend and device. LinuxBacklight requires the Linux
 sysfs class; the qualified SyntheticTree tests use authored files with no driver
-fallback. The prepared normal Settings touch/change/unavailable/recovery path
+fallback. A separate generic ARM kernel/PID1 qualification now exercises the
+actual LinuxBacklight class with the existing matching GPIO backlight module and
+one authored virtual device: raw0→1→0, then unavailable on removal, with normal
+Stop. It proves a shared Rust service/kernel interface, not a Pixel panel or
+independent light output. The prepared normal Settings touch/change/unavailable/recovery path
 also passes on an earlier x86 KVM cohort with that authored backend, using the
 same Rust service interfaces. A newer client has separate native x86/ARM Qt
 build/install/offscreen C ABI proof; its current x86 tap trace fails and is not
