@@ -100,8 +100,9 @@ The [normal Settings app](native-settings-ui/README.md) now passes seven frozen 
 groups after compiled assertion RED, plus a native Qt6.12 build/install and real
 unprivileged adapter/QML construction. Rust owns transport, state, deadlines and
 thread shutdown; Qt renders the shared Omarchy theme. The component window is
-never shown. Fixed desktop launch and the visible actor/service tracer remain
-separate gates.
+never shown. Fixed desktop launch now passes six actor groups, three CLI and
+three staging groups plus six unchanged Sounds controls, with separate host/ARM
+builds. The visible actor/service tracer remains open.
 
 
 > **Development status:** no physical phone has been accessed. There is no verified bootable phone image. Modem communication, carrier IMS registration, physical call audio, Pixel GPU rendering, camera capture and suspend remain unverified.

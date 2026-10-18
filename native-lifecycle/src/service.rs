@@ -146,11 +146,17 @@ struct Operation {
 enum DesktopEndpoint {
     Messages,
     Sounds,
+    Settings,
 }
 #[derive(serde::Deserialize)]
 #[serde(tag = "op", rename_all = "snake_case", deny_unknown_fields)]
 enum SoundsDesktopRequest {
     LaunchSounds {},
+}
+#[derive(serde::Deserialize)]
+#[serde(tag = "op", rename_all = "snake_case", deny_unknown_fields)]
+enum SettingsDesktopRequest {
+    LaunchSettings {},
 }
 struct Connection {
     id: u64,
@@ -587,6 +593,13 @@ fn run_with_brightness_services_inner(
         let metadata = fs::symlink_metadata(&sounds_path)?;
         (metadata.dev(), metadata.ino())
     };
+    // Fixed Settings ingress does not depend on a selected brightness backend.
+    let settings_path = runtime.join("launch-settings.sock");
+    let settings = ipc::listener(&settings_path, 0o666)?;
+    let settings_identity = {
+        let metadata = fs::symlink_metadata(&settings_path)?;
+        (metadata.dev(), metadata.ino())
+    };
     let desktop_path = runtime.join("launch-messages.sock");
     let desktop = if messages.is_some() {
         Some(ipc::listener(&desktop_path, 0o666)?)
@@ -987,6 +1000,7 @@ fn run_with_brightness_services_inner(
                 fds.push(PollFd::new(fd, PollFlags::IN));
             }
             fds.push(PollFd::new(&sounds, PollFlags::IN));
+            fds.push(PollFd::new(&settings, PollFlags::IN));
             for c in &connections {
                 fds.push(PollFd::new(
                     &c.fd,
@@ -1013,6 +1027,7 @@ fn run_with_brightness_services_inner(
                 (&app, false, None, false, 12),
                 (&lock, false, None, true, 2),
                 (&sounds, false, Some(DesktopEndpoint::Sounds), false, 2),
+                (&settings, false, Some(DesktopEndpoint::Settings), false, 2),
             ];
             if let Some(fd) = &desktop {
                 listeners.push((fd, false, Some(DesktopEndpoint::Messages), false, 2));
@@ -1366,6 +1381,26 @@ fn run_with_brightness_services_inner(
                     {
                         Reply::Denied
                     } else if let Some(p) = profiles.iter().find(|p| p.app == crate::audio::APP) {
+                        match apps.start(p, connection.id, &authority, &mut display) {
+                            crate::apps::Start::Rejected(reply) => reply,
+                            crate::apps::Start::Reserved { instance, until } => {
+                                connection.launching = Some(instance);
+                                connection.deadline = until.saturating_add(1_000_000_000);
+                                return true;
+                            }
+                        }
+                    } else {
+                        Reply::Unavailable
+                    }
+                } else if connection.desktop == Some(DesktopEndpoint::Settings) {
+                    if cred.uid.as_raw() != crate::messages::DESKTOP_UID
+                        || stopping
+                        || serde_json::from_slice::<SettingsDesktopRequest>(&bytes).is_err()
+                    {
+                        Reply::Denied
+                    } else if let Some(p) =
+                        profiles.iter().find(|p| p.app == crate::brightness::APP)
+                    {
                         match apps.start(p, connection.id, &authority, &mut display) {
                             crate::apps::Start::Rejected(reply) => reply,
                             crate::apps::Start::Reserved { instance, until } => {
@@ -1953,6 +1988,11 @@ fn run_with_brightness_services_inner(
         .is_ok_and(|metadata| (metadata.dev(), metadata.ino()) == sounds_identity)
     {
         fs::remove_file(&sounds_path)?;
+    }
+    if fs::symlink_metadata(&settings_path)
+        .is_ok_and(|metadata| (metadata.dev(), metadata.ino()) == settings_identity)
+    {
+        fs::remove_file(&settings_path)?;
     }
     if desktop_identity.is_some_and(|identity| {
         fs::symlink_metadata(&desktop_path).is_ok_and(|m| (m.dev(), m.ino()) == identity)

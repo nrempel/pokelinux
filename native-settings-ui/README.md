@@ -76,6 +76,11 @@ absence, same-daemon and input-closure checks pass. The unchanged 367-package gu
 and the seven Rust groups retain their separate scopes. Public provenance is
 [hash-only](evidence/qualification.json); private raw logs are not published.
 
+The [fixed Settings desktop route](../docs/native-brightness.md#fixed-settings-desktop-launch)
+now has separate actual actor/CLI/staging tests. The core installer requires an
+explicit Settings launcher and stages its desktop entry; this does not grant
+DisplayBrightness or qualify the normal graphical session.
+
 The normal visible window, actor/Source/brightness-driver composition, native
 Pixel10 geometry and original captures remain unqualified. Default-Cargo Qt,
 ARM and phone hardware also remain separate gates. Future captures must qualify

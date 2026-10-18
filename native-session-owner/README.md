@@ -44,19 +44,24 @@ These checks do not claim containment of every compositor descendant.
 
 ```sh
 cargo build --manifest-path native-session-owner/Cargo.toml --locked --release --no-default-features --bin pokelinux-session-owner
-cargo build --manifest-path native-lifecycle/Cargo.toml --locked --release --no-default-features --bin sounds-launch
+cargo build --manifest-path native-lifecycle/Cargo.toml --locked --release --no-default-features --bin sounds-launch --bin settings-launch
 cargo build --manifest-path native-messages/Cargo.toml --locked --release --no-default-features --bin messages-launch
 make -C native-session-owner install \
   SESSION_OWNER_BIN="$PWD/native-session-owner/target/release/pokelinux-session-owner" \
   SOUNDS_LAUNCH_BIN="$PWD/native-lifecycle/target/release/sounds-launch" \
   MESSAGES_LAUNCH_BIN="$PWD/native-messages/target/release/messages-launch" \
+  SETTINGS_LAUNCH_BIN="$PWD/native-lifecycle/target/release/settings-launch" \
   DESTDIR="$PWD/session-stage"
 ```
 
-The install target defines eight staged files: three native binaries, two desktop
+The install target defines ten staged files: four native binaries, three desktop
 files, the unit and two examples. It does not activate a host session or install
-examples as operational policy. Install the normal Sounds and
-[Messages Qt/QML targets](../native-messages-ui/README.md) through their CMake rules.
+examples as operational policy. Install the normal Sounds, [Messages](../native-messages-ui/README.md) and
+[Settings Qt/QML targets](../native-settings-ui/README.md) through their CMake rules.
+The fixed Settings request accepts only desktop UID1000 and selects the installed
+`org.omarchy.Settings` profile (UID11050 and six absolute arguments). It grants no
+permission and supplies no backend pathname. Its socket is present independently
+of brightness availability so the normal app can show an unavailable state.
 Supply a matching original Hyprland/Source-adapter build and a root-installed
 compositor configuration that loads that adapter. Full Omarchy shell setup and
 device graphics remain separate from a minimal Source composition.
@@ -64,7 +69,7 @@ device graphics remain separate from a minimal Source composition.
 ### Explicit normal-session deployment bundle
 
 `install-normal-session` stages a separately selected operational bundle. The
-existing eight-file `install` target keeps its examples-only scope. Supply an
+existing ten-file `install` target keeps its examples-only scope. Supply an
 absolute source root, an absolute JSON manifest and a private absolute DESTDIR:
 
 ```sh
@@ -168,7 +173,7 @@ fixture input and loses its tmpfs binaries. A separate completed556-input run
 retains release opt3, feature-empty owner/launch clients, passes strict Clippy for
 all three and three exact retained-owner history cases. The earlier36/12 cases
 are reused, not rerun or combined into a new aggregate. Separate GNU Make4.4.1
-staging passes all eight current files with exact hashes, root:root ownership,
+staging passed the earlier eight-file core with exact hashes, root:root ownership,
 0755 binaries and0644 metadata, without activation or test reruns. The normal
 GUI/session runtime remains open. The later combined run
 must bind its own exact source/artifacts and original compositor/normal Qt/graph/samples.
@@ -178,3 +183,15 @@ container with built feature-gated helpers. The `isolated-fixture` helpers are
 not installed by the Makefile. See [session report](../docs/native-session-owner.md)
 and [current integration map](../docs/native-integration-map.md) for the executed
 selection and remaining gates. No physical phone is accessed.
+
+A later fixed Settings desktop selection passes six new route groups, all six
+unchanged Sounds controls, three real CLI groups and three GNU Make install
+consumer groups. The route checks actual UID1000 requests, UID11050 child setup,
+six exact absolute arguments, duplicate refusal and actual child waits on Stop.
+The install consumer requires an explicit executable `SETTINGS_LAUNCH_BIN` and
+checks the ten-file count, exact Settings launcher and original desktop bytes,
+and their0755/0644 modes. Route/CLI behavior and Make requirements first failed actual
+functional RED checks; the initial missing-Make setup failure is kept separately.
+Selected formatting and strict Clippy pass, with fresh feature-empty release
+owner and launcher builds for x86_64 and ARM64. These are component and build
+results; they do not qualify the normal Settings window or ARM execution.

@@ -1619,3 +1619,6 @@ mod normal_gui_tests;
 
 #[path = "service_sounds_desktop_tests.rs"]
 mod sounds_desktop_tests;
+
+#[path = "service_settings_desktop_tests.rs"]
+mod settings_desktop_tests;

@@ -1,0 +1,247 @@
+{
+  "schema": 1,
+  "qualification": {
+    "bytes": 9282,
+    "sha256": "3d045820596b7c132cfe898abb93b7aa64c775e82be66aa9c9c67d808030be82"
+  },
+  "passed": true,
+  "scope": "Actual fixed Settings desktop UID1000 ingress to existing Apps UID11050/six-argument child; strict fixed CLI and ten-file examples-only Make consumer. Host component execution plus host/ARM release compilation only.",
+  "actual_outer_exec_exit": 0,
+  "selection": {
+    "bytes": 24847,
+    "sha256": "89efdc64b0248046eb5133805f46b4790d63d58a569d6476fdd06ad343577e6f"
+  },
+  "execution": {
+    "bytes": 67569,
+    "sha256": "9e5b5b13e341d7a964ee13c5378cd6fa29e778e4b8731e16fe21fe6f664a2808"
+  },
+  "SOURCE": {
+    "bytes": 24890,
+    "sha256": "b1f6f85fdfe59fcf3b00515c6cc1bcdeab4d4090c217a4c7afbf0035a0e963dd"
+  },
+  "source_files": 214,
+  "current_Root_all_selected_source_equal": true,
+  "actual_targets": {
+    "settings": {
+      "passed": 6,
+      "failed": 0
+    },
+    "sounds": {
+      "passed": 6,
+      "failed": 0
+    },
+    "cli": {
+      "passed": 3,
+      "failed": 0
+    },
+    "install": {
+      "passed": 3,
+      "failed": 0
+    },
+    "fmt": {
+      "exit": 0
+    },
+    "clippy-lifecycle": {
+      "exit": 0
+    },
+    "clippy-owner": {
+      "exit": 0
+    },
+    "clippy-messages": {
+      "exit": 0
+    },
+    "host-lifecycle-release": {
+      "exit": 0
+    },
+    "host-messages-release": {
+      "exit": 0
+    },
+    "host-owner-release": {
+      "exit": 0
+    },
+    "arm64-lifecycle-release": {
+      "exit": 0
+    },
+    "arm64-messages-release": {
+      "exit": 0
+    },
+    "arm64-owner-release": {
+      "exit": 0
+    }
+  },
+  "tests": {
+    "new_frozen_cases_unchanged_from_compiled_RED": true,
+    "Sounds_six_existing_bytes_unchanged": true,
+    "process_receipts": {
+      "settings": {
+        "actual_client_wait_and_both_PIPE_EOF_records": 15,
+        "Apps_actual_wait_observer_records": 4
+      },
+      "sounds": {
+        "actual_client_wait_and_both_PIPE_EOF_records": 14,
+        "Apps_actual_wait_observer_records": 4
+      }
+    }
+  },
+  "RED": {
+    "compiled_route_and_CLI": {
+      "execution": {
+        "bytes": 69136,
+        "sha256": "1a1284a204eac19953b060ce9bc7786588eae824e9bd9e2c3d19ca6136582af4"
+      },
+      "route_failed": 6,
+      "CLI_failed": 2,
+      "CLI_control_passed": 1,
+      "Sounds_controls_passed": 6,
+      "aggregate_passed": false,
+      "aggregate_failure": "three Make consumer setup errors: runtime make absent; actual compile/route/CLI groups and all custody closed",
+      "test_source_formatted_during_RED_pinned_exact": true
+    },
+    "actual_GNU_make_consumer": {
+      "execution": {
+        "bytes": 18471,
+        "sha256": "3941c53f409a56927e3b3a793655343316bf1e14b9de243445a1064a632d2a26"
+      },
+      "expected_functional_failures": 3,
+      "passed_as_RED": true
+    },
+    "GREEN1_fmt_only_failure": {
+      "bytes": 67854,
+      "sha256": "53ea85b697eaf9fd7d0b0de3360a6491fb7f1b7069b0521afd649470b012270e"
+    }
+  },
+  "providers": {
+    "host": {
+      "pokelinux-session-owner": {
+        "bytes": 5694472,
+        "sha256": "101f72248d07936b684dc5c571c49d9b946e836ddfe6e091205e6fbf63030028",
+        "ELF_machine": 62,
+        "interpreter": "/lib64/ld-linux-x86-64.so.2",
+        "mode": "0755",
+        "features": [],
+        "Release_opt_level": 3,
+        "release_ELF_executed": false
+      },
+      "settings-launch": {
+        "bytes": 1003096,
+        "sha256": "9780beb715f2325fb6926960dab028c33a4dc47b6137f27509ba49328031527f",
+        "ELF_machine": 62,
+        "interpreter": "/lib64/ld-linux-x86-64.so.2",
+        "mode": "0755",
+        "features": [],
+        "Release_opt_level": 3,
+        "release_ELF_executed": false
+      },
+      "sounds-launch": {
+        "bytes": 1002464,
+        "sha256": "09ed9a69e8b1accb3af4cbc89ccd6c3f8050aad518ce191d734fb470b2a6ea5b",
+        "ELF_machine": 62,
+        "interpreter": "/lib64/ld-linux-x86-64.so.2",
+        "mode": "0755",
+        "features": [],
+        "Release_opt_level": 3,
+        "release_ELF_executed": false
+      },
+      "lifecycle-launcher": {
+        "bytes": 1074568,
+        "sha256": "b764b60890fd7bf8bda5b676e16314ccd0d6e7e3fda7e452e3569b665dc2cdf6",
+        "ELF_machine": 62,
+        "interpreter": "/lib64/ld-linux-x86-64.so.2",
+        "mode": "0755",
+        "features": [],
+        "Release_opt_level": 3,
+        "release_ELF_executed": false
+      },
+      "messages-launch": {
+        "bytes": 1002976,
+        "sha256": "e719f0f8b0578dd16cb5b1d341a5f4b8d6ace0d15171f7a4237cbe84638a794c",
+        "ELF_machine": 62,
+        "interpreter": "/lib64/ld-linux-x86-64.so.2",
+        "mode": "0755",
+        "features": [],
+        "Release_opt_level": 3,
+        "release_ELF_executed": false
+      }
+    },
+    "arm64": {
+      "pokelinux-session-owner": {
+        "bytes": 5535320,
+        "sha256": "3b960532312efe9dd9dc31c84eeadefa57428f88b2aeaab00f155b93cf54417f",
+        "ELF_machine": 183,
+        "interpreter": "/lib/ld-linux-aarch64.so.1",
+        "mode": "0755",
+        "features": [],
+        "Release_opt_level": 3,
+        "release_ELF_executed": false
+      },
+      "settings-launch": {
+        "bytes": 980640,
+        "sha256": "cc17f50c57faeee419ebc179a739f527b13469ead971711b6e0c954304669016",
+        "ELF_machine": 183,
+        "interpreter": "/lib/ld-linux-aarch64.so.1",
+        "mode": "0755",
+        "features": [],
+        "Release_opt_level": 3,
+        "release_ELF_executed": false
+      },
+      "sounds-launch": {
+        "bytes": 979960,
+        "sha256": "201902aa171b1ab828ce07b106317d0f47caf888a83b68827c5f40c2e1af50ec",
+        "ELF_machine": 183,
+        "interpreter": "/lib/ld-linux-aarch64.so.1",
+        "mode": "0755",
+        "features": [],
+        "Release_opt_level": 3,
+        "release_ELF_executed": false
+      },
+      "lifecycle-launcher": {
+        "bytes": 1007392,
+        "sha256": "24342d0c01e53a7a19a41bdae3ce97ebfb2da013a8ca08c0fc61956a04386d62",
+        "ELF_machine": 183,
+        "interpreter": "/lib/ld-linux-aarch64.so.1",
+        "mode": "0755",
+        "features": [],
+        "Release_opt_level": 3,
+        "release_ELF_executed": false
+      },
+      "messages-launch": {
+        "bytes": 980152,
+        "sha256": "243214e1a57f34ac2dfcbcf6e4ce1ed6e2be63042bc292c594010e476e7d6249",
+        "ELF_machine": 183,
+        "interpreter": "/lib/ld-linux-aarch64.so.1",
+        "mode": "0755",
+        "features": [],
+        "Release_opt_level": 3,
+        "release_ELF_executed": false
+      }
+    }
+  },
+  "production_changes": [
+    "service Settings endpoint/strict launch_settings/fixed Apps dispatch/inode-qualified cleanup",
+    "new settings-launch fixed CLI",
+    "explicit required SETTINGS_LAUNCH_BIN and original desktop in ten-file Make install"
+  ],
+  "unchanged_boundaries": [
+    "Source/auth/authority/Apps implementation",
+    "Settings UI and backend",
+    "Config/runtime/brightness Provider implementation",
+    "existing Sounds tests"
+  ],
+  "closure": {
+    "host_actual_waits": 10,
+    "host_PIPE_EOFs": 20,
+    "exact_CID_absent": true,
+    "same_daemon": true,
+    "source_unchanged": true,
+    "cleanup_error": null,
+    "original_work_seconds": 600,
+    "original_close_seconds": 660
+  },
+  "limits": [
+    "No Source, compositor, normal Settings window or hardware executed.",
+    "ARM ELFs were built and inspected, not executed.",
+    "The fixture validates a real launched UID and six exact absolute arguments; it is not the normal Qt application.",
+    "Release provider ELFs are built from the same selected source cohort; actual component cases execute Cargo test/development binaries.",
+    "The pinned host GNU make is a test consumer tool loaded with the cached runtime libc, not a product/provider dependency."
+  ]
+}

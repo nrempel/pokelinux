@@ -302,15 +302,40 @@ Formatting, strict Clippy and the Rust Release archive pass. A disposable x86 KV
 VM then builds/installs the normal Qt6.12 target, checks both exact Rust archives,
 strong C exports and the loader, and executes the real adapters/shared QML as
 UID11050 with unavailable endpoints. A wording-only successor is rebuilt; both
-qualified builds remain distinct. No component window is shown. The fixed desktop
-launcher, full actor/service composition and visible native Pixel-profile captures
-remain open. See [app provenance](../native-settings-ui/evidence/qualification.json).
+qualified builds remain distinct. No component window is shown. Full actor/service
+composition and visible native Pixel-profile captures remain open. See [app provenance](../native-settings-ui/evidence/qualification.json).
+
+## Fixed Settings desktop launch
+
+The normal fixed `settings-launch` client now sends only `launch_settings` to the
+lifecycle actor's dedicated endpoint. Desktop UID1000 can request the installed
+Settings profile through the existing Apps lifecycle. The packet accepts no app,
+executable, permission, backend or device field. This endpoint exists independently
+of brightness availability so Settings can display unavailable state; an absent
+profile returns Unavailable. Session configuration still fixes UID11050 and six
+absolute arguments. Child ownership, duplicate-launch refusal and Stop use the
+existing Apps implementation; endpoint cleanup checks its inode.
+
+Six actual socket/actor groups first fail at the missing endpoint. Two fixed-CLI
+functional groups fail against a compiled Unsupported stub while the invalid-argv
+control passes. Three frozen GNU Make install assertions then fail against the old
+stager. Its first aggregate's missing-make setup errors are retained separately.
+After repair, all six route groups, three CLI groups, three install groups and
+six unchanged Sounds controls pass. Selected formatting, strict Clippy and normal
+host/ARM Release providers pass; these exported ELFs are built and inspected,
+not executed in this cohort. A formatting-only intermediate failure is preserved.
+
+The examples-only core install now requires an explicit SETTINGS_LAUNCH_BIN and
+stages ten files, adding the fixed native client and original Settings desktop
+entry. It does not activate policy or services. The component app is an authored
+six-argument UID11050 process, not the normal Qt window; no Source, compositor,
+brightness operation or phone is selected. See the
+[desktop provenance](evidence/native-settings-desktop-provenance.json).
 
 ## Remaining integration and hardware gates
 
-Next are the configured full lifecycle actor, fixed Settings desktop launch,
-visible themed UI, explicit service installation and a synthetic VM end-to-end
-tracer. Linux driver execution and matched Pixel
+Next are the configured full lifecycle actor, visible themed UI, explicit service
+installation and a synthetic VM end-to-end tracer. Linux driver execution and matched Pixel
 panel/backlight discovery, brightness response, physical readback, suspend/resume,
 lock behavior and power/drain measurements remain separate gates. No phone has
 been accessed, and this component does not advance calls, IMS or SMS hardware
