@@ -24,6 +24,11 @@ name = "connectivity-boundary"
 path = "tests/connectivity-boundary.rs"
 harness = false
 
+[[test]]
+name = "connectivity-ffi-boundary"
+path = "tests/connectivity-ffi/boundary.rs"
+harness = false
+
 [lints.rust]
 unsafe_op_in_unsafe_fn = "deny"
 

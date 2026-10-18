@@ -22,7 +22,7 @@ use std::{
 };
 const LEASE: u64 = 250_000_000;
 const STATUS_BUDGET: u64 = 500_000_000;
-const ACTION_BUDGET: u64 = 1_000_000_000;
+pub(crate) const ACTION_BUDGET: u64 = 1_000_000_000;
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 #[serde(rename_all = "snake_case")]
 pub enum Status {

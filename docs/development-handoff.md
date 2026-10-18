@@ -30,9 +30,8 @@ Wi-Fi/Internet and all phone gates remain open.
 Earlier [private Main](native-connectivity-private-ingress.md) and
 [persistent-worker](native-connectivity-worker.md) cohorts remain separate.
 
-The next connectivity slice exposes the normal Rust Settings engine through a
-narrow C ABI and explicit Qt controls, then joins the normal app/window and
-installed Main deployment.
+The next connectivity slice adds explicit Qt controls to the qualified Rust
+Settings C ABI, then joins the normal app/window and installed Main deployment.
 Keep Source/authentication/full-shell/capture branches parked. The current tracer
 uses authored session=None/admin facts; no genuine session/authentication follows.
 Worker Stop/reaping is separate from remote cleanup, and no implicit mutation
@@ -46,8 +45,19 @@ sticky uncertainty. The unchanged consumer now passes actual packets, app exit/r
 explicit Disconnect; six real-socket protocol groups and the original seven/five
 pending brightness groups pass too. The green epoch's outer field-name error
 remains failed; offline schema-corrected review validates its original product,
-QA and complete custody without rerunning. No connectivity C ABI, Qt control or
-installed selection is qualified yet. Preserve the published actor checkpoint separately.
+QA and complete custody without rerunning. That SDK cohort supplies no Qt control
+or installed selection. Preserve the published actor checkpoint separately.
+
+The [connectivity C ABI](native-settings-connectivity-cabi.md) now passes all six
+unchanged socket groups after three qualified refusing-setter behavioral REDs.
+The setter delegates the untouched absolute deadline and explicit boolean to the
+Rust engine. Formatting, strict Clippy and the normal Release archive pass; a
+separate UID11050 C++ consumer uses the real header and exact archive to qualify
+unavailable/refusal and actual Stop/Join/Free. The earlier format-only setup
+failure remains recorded. This is separate from the published safe SDK
+checkpoint141c622. Next add thin Qt controls with asynchronous close, then reuse
+the existing packet oracle for ordinary app ownership/deployment. No connectivity
+Qt control or installed selection is qualified yet.
 
 The [native local-network status path](native-network-status.md) now passes both
 host and native ARM service-to-Rust-client-to-Settings integration. In the ARM VM,

@@ -1,0 +1,281 @@
+{
+  "schema": 1,
+  "status": "Normal Settings connectivity C ABI genuine RED\u2192GREEN, normal release build/strict QA and real-header C++ unavailable-lifetime component pass",
+  "public_base_commit": "141c622bb50d09c42bf94b30e846c0e04d2d6c68",
+  "evidence_class": "Native Harbour x86_64 Linux; actual UID11050 C ABI socket protocol with authored root peers and separate C++ release-archive component",
+  "normal_connectivity_C_ABI_executed": true,
+  "positive_C_ABI_protocol_C_caller": "Rust extern-C exported function calls, not a foreign-language positive packet result",
+  "CPP_release_archive_execution": "Real public C++ header, unavailable/refusal/lifetime only",
+  "Qt_normal_main_window_or_screenshot": false,
+  "lifecycle_actor_or_real_network_backend_in_this_cohort": false,
+  "genuine_Source_or_authentication": false,
+  "installed_deployment": false,
+  "new_ARM_or_physical_phone_evidence": false,
+  "physical_phone_access": false,
+  "sources": {
+    "native-settings-ui/client-core/src/connectivity_ffi.rs": {
+      "bytes": 5891,
+      "sha256": "aea911b1912ea991c8c4ef261fb4860aa60f43d87358dc7ea7395c8b16640878"
+    },
+    "native-settings-ui/client-core/src/connectivity.rs": {
+      "bytes": 22823,
+      "sha256": "e7639196cca65476e5fe13d56e9759d9c1051ec603efb3d0e4496bcaac0b1fcd"
+    },
+    "native-settings-ui/client-core/src/lib.rs": {
+      "bytes": 175,
+      "sha256": "74adcf4369817907be7f75fc01c57d96a0edc3ab88ad2d443e12f544bcf81faa"
+    },
+    "native-settings-ui/client-core/Cargo.toml": {
+      "bytes": 770,
+      "sha256": "8620f3353fcd2aa30d3b9103f686c112c55a1a382e9d8b64dd4032e55fa2cea8"
+    },
+    "native-settings-ui/client-core/Cargo.lock": {
+      "bytes": 4220,
+      "sha256": "3254825d8db03d6615c8765d165cfbf21dfbb2f5a1234087196be55c2709cfb9"
+    },
+    "native-settings-ui/client-core/include/pokelinux_settings_connectivity.h": {
+      "bytes": 1847,
+      "sha256": "0941cf2b520ed48fb20c41b8e5cf23d5a63487bcce3cbc01c5d8f0fa38576375"
+    },
+    "native-settings-ui/client-core/include/pokelinux_settings_client.h": {
+      "bytes": 1766,
+      "sha256": "36a72aa7431515c40c79ea8d8dcc4c6e7bed549ac9a4aaf4a842f6429c23dec5"
+    },
+    "native-settings-ui/client-core/tests/connectivity-ffi/boundary.rs": {
+      "bytes": 24687,
+      "sha256": "899cd2b7c39eaf3929272ba7a1571181675cf6c97db2ae0cd1e62df67132f765"
+    },
+    "native-settings-ui/client-core/tests/connectivity-ffi/ffi-engine.rs": {
+      "bytes": 7188,
+      "sha256": "e0ad0200abb48ecd6e804478e2f359d3a6c6b0745ebd2ab59664d14d72f30a88"
+    },
+    "native-settings-ui/client-core/tests/connectivity-ffi/support/connectivity-boundary.rs": {
+      "bytes": 8745,
+      "sha256": "c9d9488683710316ae2f92f9d36a4119f3a8ceb4204c23752862c521cfe1cf3e"
+    },
+    "native-settings-ui/tests/connectivity-unavailable.cpp": {
+      "bytes": 6659,
+      "sha256": "3b18e1079163bfb83e6e7e8f2cbe5d2c53c870eece5b4beb64b93f7b49716b8b"
+    }
+  },
+  "private_artifact_digests": {
+    "C_ABI_RED": {
+      "outer/receipt.json": {
+        "bytes": 36684,
+        "sha256": "8912b091ed618ccd529e6f152249e6c3dfe5456093004bb9a18436dabc50fc9d"
+      },
+      "out/result.json": {
+        "bytes": 29002,
+        "sha256": "1ec766bc17d03448c59f5bbe0a3a03a0594ae84a47a9441791a97c2dcd74a3b1"
+      },
+      "Root-behavior-RED-review.json": {
+        "bytes": 1085,
+        "sha256": "8c241e21215d51757da8359710abe15dece46bad4371619a25570ef38d0dee95"
+      }
+    },
+    "preserved_format_setup_failure": {
+      "outer/receipt.json": {
+        "bytes": 37954,
+        "sha256": "11f37d4181888e4cd4f3f30fc2b99e5bbda4302dda2972b9e25c8eab6b9a537a"
+      },
+      "out/result.json": {
+        "bytes": 7821,
+        "sha256": "b8965d2370ce565a98b7c1e951e107e4c2636546e4800f6dfcc8d7d52da07630"
+      }
+    },
+    "C_ABI_GREEN_QA": {
+      "outer/receipt.json": {
+        "bytes": 37613,
+        "sha256": "8c36cb816005bec76161642dcb1824ded886e5b054191bcd48d4b7b747439488"
+      },
+      "out/result.json": {
+        "bytes": 36652,
+        "sha256": "20e145eb2a6f01ffb03235b3d58b62606afcff5608d7c5d703f09d78a5ddc51b"
+      },
+      "preparer-closed-GREEN-review.json": {
+        "bytes": 4976,
+        "sha256": "b7075197e131427413ee0c863690d87a0a51cb278905adbb89bc28b7f9ebe021"
+      },
+      "Root-GREEN-QA-review.json": {
+        "bytes": 4074,
+        "sha256": "09de24b542e0a0bd92b49fc4cc558fcea1fd7fa8224c043647ae237e718bec12"
+      }
+    },
+    "CPP_real_header_component": {
+      "outer/receipt.json": {
+        "bytes": 24679,
+        "sha256": "11e8bf0df5b22e72e1667870cb05122d6ff23c2aea963ba1e84782963dc262f2"
+      },
+      "out/result.json": {
+        "bytes": 8239,
+        "sha256": "24bc88e289e2f144b3bc621a7fe9d9581d1f9d8e3ce25de896d470f132552b36"
+      },
+      "SELF-REVIEW.json": {
+        "bytes": 3576,
+        "sha256": "358defe9c93d8934f25ee4b7f1007e59888500ece344141476fd9cb31e596bd6"
+      },
+      "Root-review.json": {
+        "bytes": 1249,
+        "sha256": "ebd2d2e316e01508b77caae2251d14220e8ab9d71c9a263abfbfca05704ec48d"
+      }
+    }
+  },
+  "RED": {
+    "compile_succeeded": true,
+    "readonly_groups_passed": 3,
+    "mutation_groups_expected_failed": 3,
+    "fresh_control_Set_refusal_desired_assertions": 3,
+    "child_exit101_for_these_three_assertions": true,
+    "nested_actual_Child_waits": 13,
+    "nested_actual_PIPE_EOF": 26,
+    "nested_actual_SDK_joins_task_count_one": 12,
+    "Scope_actual_wait_PIPE_EOF": 17,
+    "regular_stderr_separate": 4,
+    "classification": "ACTUAL_SETTINGS_CONNECTIVITY_C_ABI_FRESH_PERMITTED_SET_REFUSED_RED",
+    "early_exit_finish_drain_before_parent_assertion": true,
+    "helper_support_unchanged_from_safeSDK": true
+  },
+  "GREEN": {
+    "all_six_normal_crate_protocol_groups_passed": true,
+    "frozen_consumer_adapter_and_support_bytes_unchanged": true,
+    "new_normal_test_registration_changes_location_only": true,
+    "nested_actual_Child_waits": 17,
+    "nested_actual_PIPE_EOF": 34,
+    "actual_SDK_joins_task_count_one": 16,
+    "Scope_actual_wait_PIPE_EOF": 19,
+    "regular_stderr_separate": 6,
+    "original_SDK_Stop_join_budget_ns": 200000000,
+    "original_child_budget_ns": 5000000000,
+    "fmt_check": true,
+    "strict_all_target_Clippy": true,
+    "old_brightness_and_safeSDK_functional_tests_not_repeated": true,
+    "only_effect_repair": "C ABI validates bool then delegates unchanged original_until_ns to already qualified safe Engine.set",
+    "SDK_engine_change": "ACTION_BUDGET visibility crate-only; no safe-engine behavior change",
+    "root_peer_capabilities": [
+      "SETUID",
+      "SETGID",
+      "KILL"
+    ],
+    "UID11050_effective_permitted_inheritable_ambient_zero_NoNewPrivs_one": true,
+    "UID11050_bounding_capabilities_retained": 3,
+    "compiler_all_capability_sets_zero_NoNewPrivs_one": true
+  },
+  "normal_release_archive": {
+    "bytes": 25678710,
+    "sha256": "b55b505975134cf2cd6601bde945ce71aeeea7e131ad3876d4efe50c92b9035b",
+    "normal_own_manifest_release": true,
+    "features": [],
+    "opt_level": "3",
+    "test_profile": false,
+    "ELF62_members": 339,
+    "strong_API_symbols": [
+      [
+        "T",
+        "pr_settings_client_free_v1"
+      ],
+      [
+        "T",
+        "pr_settings_client_join_v1"
+      ],
+      [
+        "T",
+        "pr_settings_client_new_v1"
+      ],
+      [
+        "T",
+        "pr_settings_client_set_v1"
+      ],
+      [
+        "T",
+        "pr_settings_client_stop_v1"
+      ],
+      [
+        "T",
+        "pr_settings_client_view_v1"
+      ],
+      [
+        "T",
+        "pr_settings_connectivity_deadline_v1"
+      ],
+      [
+        "T",
+        "pr_settings_connectivity_free_v1"
+      ],
+      [
+        "T",
+        "pr_settings_connectivity_join_v1"
+      ],
+      [
+        "T",
+        "pr_settings_connectivity_new_v1"
+      ],
+      [
+        "T",
+        "pr_settings_connectivity_set_v1"
+      ],
+      [
+        "T",
+        "pr_settings_connectivity_stop_v1"
+      ],
+      [
+        "T",
+        "pr_settings_connectivity_view_v1"
+      ]
+    ],
+    "matching_headers": {
+      "native-settings-ui/client-core/include/pokelinux_settings_client.h": {
+        "bytes": 1766,
+        "sha256": "36a72aa7431515c40c79ea8d8dcc4c6e7bed549ac9a4aaf4a842f6429c23dec5"
+      },
+      "native-settings-ui/client-core/include/pokelinux_settings_connectivity.h": {
+        "bytes": 1847,
+        "sha256": "0941cf2b520ed48fb20c41b8e5cf23d5a63487bcce3cbc01c5d8f0fa38576375"
+      }
+    },
+    "build_not_inferred_positive_release_execution": true
+  },
+  "CPP": {
+    "source": {
+      "bytes": 6659,
+      "sha256": "3b18e1079163bfb83e6e7e8f2cbe5d2c53c870eece5b4beb64b93f7b49716b8b"
+    },
+    "artifact": {
+      "bytes": 5907328,
+      "sha256": "9795e4dc3e5a120a90898001cf974e56b073a2a00be39fab962d5c058fb17f4e",
+      "ELF_machine": 62
+    },
+    "actual_compiler_and_runtime_UID_GID": 11050,
+    "all_capability_sets_zero_NoNewPrivs_one": true,
+    "single_explicit_Rust_archive_link": true,
+    "real_header_layout_40_align8_and_seven_function_types": true,
+    "BOOTTIME_deadline_helper_bracket": true,
+    "unchanged_output_and_invalid_boolean_checks": true,
+    "actual_early_free_refusal_and_Stop_join_task_count_one_free": true,
+    "external_original_Stop_to_after_free_ns": 1079795,
+    "original_Stop_budget_ns": 200000000,
+    "Scope_actual_wait_PIPE_EOF": 15,
+    "regular_compile_stderr_separate": 1,
+    "normal_CMake_or_Qt_not_executed": true
+  },
+  "preserved_setup_failure": {
+    "epoch": "C_ABI_GREEN1",
+    "format_only_if_chain_wrap": "cargo fmt check failed before compilation or functional execution",
+    "is_behavior_RED": false,
+    "repair": "Rustfmt whitespace only; all consumer bytes/oracles/clocks unchanged"
+  },
+  "all_qualified_epochs": {
+    "actual_wait_and_PIPE_EOF_before_original_cutoffs": true,
+    "regular_stderr_closure_separate": true,
+    "no_adopted_waits": true,
+    "exact_container_removed": true,
+    "same_Docker_daemon": true,
+    "inputs_and_original_protected_archive_unchanged": true
+  },
+  "remaining_gates": [
+    "Thin Qt controls and nonblocking GUI shutdown owner",
+    "Normal Settings window and existing packet oracle through installed actor/Main selection",
+    "Normal CMake/new-archive application build and deployment",
+    "ARM integration, actual suspend and hardware/carrier tests",
+    "All full smartphone completion-matrix requirements; zero hardware-qualified phone models"
+  ]
+}

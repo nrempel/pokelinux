@@ -255,5 +255,15 @@ The implementation passes the unchanged consumer through real packets, app
 exit/relaunch and explicit Disconnect, plus six real-socket protocol groups and
 the original seven/five pending brightness groups. Its original deadline,
 permanent queued retirement and uncertain outcome semantics are separate from
-the brightness engine above. Connectivity C ABI, Qt controls,
+the brightness engine above. The later C ABI result is recorded below; Qt controls,
 new normal window, installed deployment, ARM and phone qualification remain open.
+
+The [connectivity C ABI](../docs/native-settings-connectivity-cabi.md) adds a
+40-byte scalar view and seven exports, including Rust deadline capture. All six
+actual UID/socket groups pass after three qualified refusing-setter behavioral
+REDs, with actual waits, PIPE EOFs and owned joins closed. Formatting, strict
+Clippy and the normal Release archive pass. A separate UID11050 C++ consumer
+includes the real header, links that exact archive and qualifies unavailable/
+refusal and actual Stop/Join/Free under the original 200ms budget. It does not
+execute positive packets or Qt. No connectivity Qt control, new normal app build
+or deployment is qualified; the next slice adds asynchronous GUI ownership.

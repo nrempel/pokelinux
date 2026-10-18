@@ -102,8 +102,9 @@ compiled consumer and implementation; no extra functional rerun is inferred.
 
 ## Remaining gates
 
-The normal Settings connectivity C ABI, Qt controls, installed session-owner/Main
-selection, deployment and ARM integration remain open. This cohort supplies no
+The later [normal Settings connectivity C ABI](native-settings-connectivity-cabi.md)
+is qualified separately. Qt controls, installed session-owner/Main selection,
+deployment and ARM integration remain open. This SDK cohort supplies no
 new normal window, screenshot, genuine Source/authentication, actual suspend,
 physical Wi-Fi/Bluetooth/Internet, carrier or phone result. No physical phone was
 accessed. Pixel 10 remains the first target; no phone is qualified.

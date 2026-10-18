@@ -15,8 +15,10 @@ assets, an explicit hardware backend/profile and its own hardware evidence.
 The [normal Settings Rust connectivity SDK](native-settings-connectivity-sdk.md)
 also passes a native host actor/packet slice and socket lifecycle controls.
 It carries an explicit desired boolean and original deadline, with no vendor,
-interface or device identity in the app. This qualifies no Pixel radio or Wi-Fi
-backend, installed ARM session, additional model or physical hardware.
+interface or device identity in the app. Its later [C ABI](native-settings-connectivity-cabi.md)
+qualifies host socket/lifetime components and a separate real-header C++ consumer
+of the normal Release archive. This qualifies no Pixel radio or Wi-Fi backend,
+installed ARM session, additional model or physical hardware.
 
 ```mermaid
 flowchart TD
