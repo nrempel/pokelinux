@@ -1,0 +1,314 @@
+{
+  "schema": 1,
+  "evidence_class": "full-system generic AArch64 Linux kernel VM; TCG; original native apps/services and authored authority",
+  "source_commit": "bfe6e556465d611d2a0e4b34137d7c422b177c2f",
+  "classification": "THREE_FAILED_ARM_NORMAL_SETTINGS_WINDOW_ATTEMPTS",
+  "passed": false,
+  "phone_accessed": false,
+  "hardware_models_qualified": 0,
+  "Source_auth_full_session_owner_selected": false,
+  "matched_Google_kernel_or_WiFi_Internet_qualified": false,
+  "production_code_changed": false,
+  "production_RED_GREEN_claimed": false,
+  "attempts": [
+    {
+      "attempt": 1,
+      "classification": "SETUP_FAILURE",
+      "passed": false,
+      "behavior_RED_qualified": false,
+      "records": {
+        "selection.json": {
+          "bytes": 12789,
+          "sha256": "3343965789955ec27464624e68f3261683f3a0674a2685f13a3fa0f1d8110484"
+        },
+        "command.json": {
+          "bytes": 2750,
+          "sha256": "f0dad570ca12838c8f5df54bec1b6a9e1505cae6d46edfdde843eab6b3b5680a"
+        },
+        "SOURCE.json": {
+          "bytes": 4199,
+          "sha256": "186a65a88f16fc158a400e41f4eb3558305d5696ad20acceade15094f9ccf824"
+        },
+        "run_once.py": {
+          "bytes": 10083,
+          "sha256": "920e7b54620265b4e6bc6259ea1ed20e8241ade48bc37f582142275cf2b40432"
+        },
+        "Root-execution-admission.json": {
+          "bytes": 1156,
+          "sha256": "d78336b42005ebf2a776557214dabb53af9b5e1a50566af9eebbdc5b113c8e57"
+        },
+        "run/receipt.json": {
+          "bytes": 23889,
+          "sha256": "1796846fe2bb70da07fbbdb3be747cb392f71481d00f0b4d353ca912923bd92b"
+        },
+        "boot-result.json": {
+          "bytes": 16069,
+          "sha256": "7b2d354a6debd54c53d9727f9299efb87d719a0743ad07e039a23ff313ff1f85"
+        },
+        "result.json": {
+          "bytes": 95790,
+          "sha256": "69fb7581f5ccd07b93f707644e501f1f36e06699d354e649f415711ec837604d"
+        },
+        "ROOT-CLOSED-FAILED-WINDOW-REVIEW.json": {
+          "bytes": 1473,
+          "sha256": "ce429ba9291622f754392f39a8799bfb2b8b119b60146ca88c048876003823e3"
+        }
+      },
+      "actual_host_direct_waits_and_PIPE_EOF": 13,
+      "actual_boot_direct_waits_and_PIPE_EOF": 4,
+      "actual_guest_direct_waits_and_PIPE_EOF": 19,
+      "guest_case_closure_qualified": true,
+      "actual_QEMU_wait_exit": 0,
+      "actual_Xvfb_wait_exit": 0,
+      "all_boot_actual_wait_EOF_and_handles_closed": true,
+      "actual_container_wait_exit": 1,
+      "exact_CID_absent_same_daemon": true,
+      "selected_inputs_unchanged": true,
+      "cleanup_errors": [],
+      "normal_app_executed": false,
+      "normal_app_Enable_issued": false,
+      "normal_app_packets_qualified": false,
+      "captures_produced": false,
+      "failure": "Required unavailable-appearance fallback assertion finds an existing appearance endpoint before compositor/controller/app. Exact endpoint owner not sampled.",
+      "production_oracle_weakened": false
+    },
+    {
+      "attempt": 2,
+      "classification": "SETUP_FAILURE",
+      "passed": false,
+      "behavior_RED_qualified": false,
+      "records": {
+        "selection.json": {
+          "bytes": 12831,
+          "sha256": "35a29b706fffb5241917433f82245a330be9e348ebe54c14acbceb5558094afe"
+        },
+        "command.json": {
+          "bytes": 2750,
+          "sha256": "465510449ed4503da97148310892d9f5892ef5ba992abe109141eabdbe9dc872"
+        },
+        "SOURCE.json": {
+          "bytes": 5229,
+          "sha256": "610d0f7a738dad4c4a1e922fc9a4cc3f1336010464262d2589e07da1da6e945f"
+        },
+        "run_once.py": {
+          "bytes": 10083,
+          "sha256": "c21bbc4b43e0f8467b5d316823d6987d8b05cf166da82a4d85413454e92ddb48"
+        },
+        "Root-execution-admission.json": {
+          "bytes": 1082,
+          "sha256": "f16bd1785c8b6ba4bcf424e69a3fcff034b1c3afdc00fd63959783c5f8185c45"
+        },
+        "run/receipt.json": {
+          "bytes": 23889,
+          "sha256": "372323e8b2222cda2c3f0e96a2de2bfe92198c57b649b3c1ca143734416be13a"
+        },
+        "boot-result.json": {
+          "bytes": 16154,
+          "sha256": "597f80bd4a2401d9460f9e6c6d8f191ca04da3f7538e70d5d61a0986124ade22"
+        },
+        "result.json": {
+          "bytes": 105387,
+          "sha256": "2d60391549b9aa675ec9b2549c999a29e892bbf9065b11ca2bd95d02223463f6"
+        },
+        "ROOT-CLOSED-FAILED-WINDOW-REVIEW.json": {
+          "bytes": 2391,
+          "sha256": "aa157faafcfe30bd83cf5658acb20ce14ef0079f9e466cef28446dc9df293ba1"
+        },
+        "connectivity-case/result.json": {
+          "bytes": 8925,
+          "sha256": "c7464eec7c68e6ac388080298dec41b1b0d0537ffad5f699a7f965f8a7c2579b"
+        }
+      },
+      "actual_host_direct_waits_and_PIPE_EOF": 13,
+      "actual_boot_direct_waits_and_PIPE_EOF": 4,
+      "actual_guest_direct_waits_and_PIPE_EOF": 27,
+      "guest_case_closure_qualified": false,
+      "actual_QEMU_wait_exit": 0,
+      "actual_Xvfb_wait_exit": 0,
+      "all_boot_actual_wait_EOF_and_handles_closed": true,
+      "actual_container_wait_exit": 1,
+      "exact_CID_absent_same_daemon": true,
+      "selected_inputs_unchanged": true,
+      "cleanup_errors": [],
+      "normal_app_executed": false,
+      "normal_app_Enable_issued": false,
+      "normal_app_packets_qualified": false,
+      "captures_produced": false,
+      "controller_custody_qualified": false,
+      "controller_all_actual_wait_EOF_timely": false,
+      "actual_controller_direct_waits_and_PIPE_EOF": 4,
+      "actual_Main_exit_after_cleanup": 0,
+      "actual_worker_final_signal": 9,
+      "independent_worker_pidfd_terminal_after_Main_wait": true,
+      "actual_driver_exit_after_cleanup": 101,
+      "namespace_FDs_retained_through_all_waits_EOF": true,
+      "actual_Apps_waits": [],
+      "failure": "Actual unprivileged denial child misses original1s direct wait/EOF cutoff, with zero output bytes. No EACCES or internal failure stage observed; import-cost cause unknown.",
+      "setup_delta": "Append only boot mask for packaged appearance service; unchanged unavailable fallback assertion.",
+      "late_denial_child": {
+        "returncode": -9,
+        "stdout_bytes": 0,
+        "wait_before_original_cutoff": false,
+        "EOF_before_original_cutoff": false
+      }
+    },
+    {
+      "attempt": 3,
+      "classification": "SETUP_FAILURE",
+      "passed": false,
+      "behavior_RED_qualified": false,
+      "records": {
+        "selection.json": {
+          "bytes": 12928,
+          "sha256": "28cf36662a4c84485bf35488b5b6890bc76446bc95e7747480d5d213339b6c2f"
+        },
+        "command.json": {
+          "bytes": 2750,
+          "sha256": "dbc3c39d466ef5e6904712d05d4c7c964f0aa92a26cd124c6959de11fc9b422b"
+        },
+        "SOURCE.json": {
+          "bytes": 6604,
+          "sha256": "54acc2d12e44f75ca1fafd1c1f2342eaafc1c8d48f4509b39a5a7a23757f1777"
+        },
+        "run_once.py": {
+          "bytes": 10083,
+          "sha256": "b03871547cc7a63d3dbbadba0029c99d324a342f75deec5d56687ba7654a3d58"
+        },
+        "Root-execution-admission.json": {
+          "bytes": 1197,
+          "sha256": "78b55ba904a7fed85103829e33709b4648a42e6101224387f2b602f90c6598c8"
+        },
+        "run/receipt.json": {
+          "bytes": 23889,
+          "sha256": "6e90014920f855c444e60df898bec98f134607a89e74f68b2c5521230a4963fc"
+        },
+        "boot-result.json": {
+          "bytes": 16154,
+          "sha256": "05dec375eb7176aeeabd9e018de48f37a9ce96a897db02c1acbc4a47311ff134"
+        },
+        "result.json": {
+          "bytes": 108908,
+          "sha256": "a78b83829e6238e2de56ed950aed8554f7e45cab35fc3e537fdc9c76f3e0db5d"
+        },
+        "ROOT-CLOSED-FAILED-WINDOW-REVIEW.json": {
+          "bytes": 2054,
+          "sha256": "1de7337bae876deab0d6a95a9d1eee0742fbe7c0a40178ff9fc70c35197d5cca"
+        },
+        "connectivity-case/result.json": {
+          "bytes": 13786,
+          "sha256": "a29794c325e398860f9a3dc2dc0483bac59fba5e4b2b9866526bf2e890b836cb"
+        }
+      },
+      "actual_host_direct_waits_and_PIPE_EOF": 13,
+      "actual_boot_direct_waits_and_PIPE_EOF": 4,
+      "actual_guest_direct_waits_and_PIPE_EOF": 27,
+      "guest_case_closure_qualified": false,
+      "actual_QEMU_wait_exit": 0,
+      "actual_Xvfb_wait_exit": 0,
+      "all_boot_actual_wait_EOF_and_handles_closed": true,
+      "actual_container_wait_exit": 1,
+      "exact_CID_absent_same_daemon": true,
+      "selected_inputs_unchanged": true,
+      "cleanup_errors": [],
+      "normal_app_executed": true,
+      "normal_app_Enable_issued": false,
+      "normal_app_packets_qualified": false,
+      "captures_produced": false,
+      "controller_custody_qualified": true,
+      "controller_all_actual_wait_EOF_timely": true,
+      "actual_controller_direct_waits_and_PIPE_EOF": 6,
+      "actual_Main_exit_after_cleanup": 0,
+      "actual_worker_final_signal": 9,
+      "independent_worker_pidfd_terminal_after_Main_wait": true,
+      "actual_driver_exit_after_cleanup": 101,
+      "namespace_FDs_retained_through_all_waits_EOF": true,
+      "actual_Apps_waits": [
+        {
+          "PIPE_EOF_claim": false,
+          "actual_Apps_Child_try_wait_observer": true,
+          "code": null,
+          "pid": 462,
+          "signal": 9
+        }
+      ],
+      "failure": "Expected retained worker-child list assertion fails after normal Settings window mapping, before Enable-ready or functional-clock release. The differing child list and loss cause were not sampled.",
+      "setup_delta": "Use minimal standalone Python denial entry, with bounded stage markers; preserve credential/EACCES/final JSON and original1s spawn-through-wait/EOF predicates.",
+      "actual_private_access_denial": {
+        "passed": true,
+        "actual_uid": 11050,
+        "actual_gid": 11050,
+        "groups": [],
+        "caps": {
+          "CapInh": "0000000000000000",
+          "CapPrm": "0000000000000000",
+          "CapEff": "0000000000000000",
+          "CapBnd": "00000000002011e3",
+          "CapAmb": "0000000000000000",
+          "NoNewPrivs": "1"
+        },
+        "connect_errno": 13,
+        "private_access_denied": true,
+        "application_permission_decision": false
+      },
+      "private_access_denial_stages_observed": [
+        "entry",
+        "credentials",
+        "connectreturn"
+      ],
+      "original_denial_wait_and_EOF_timely": true,
+      "first_window_qualification_record": {
+        "bytes": 3640,
+        "sha256": "83cc8a60efc9fd1f34ba8b603c6afb8c4ac15e9fe77e1b27d974e9acf00f6907"
+      },
+      "normal_window": {
+        "mapped": true,
+        "visible": true,
+        "wayland": true,
+        "class": "pokelinux-settings",
+        "logical_dimensions": [
+          411,
+          923
+        ],
+        "UID_GID": 11050,
+        "supplementary_groups": [],
+        "effective_permitted_inheritable_ambient_caps_zero": true,
+        "bounding_caps_zero_claimed": false,
+        "NoNewPrivs": 1,
+        "external_output_pixels": [
+          1080,
+          2424
+        ],
+        "external_output_physical_mm": [
+          65,
+          146
+        ],
+        "external_output_scale": 2.625,
+        "normal_QWindow_getters_sampled": false
+      }
+    }
+  ],
+  "unchanged_upfront_measurement_profile": {
+    "readiness_seconds": 20,
+    "maximum_frames_per_stage": 8,
+    "functional_seconds": 32,
+    "controller_work_close_seconds": [
+      90,
+      100
+    ],
+    "guest_work_close_seconds": [
+      660,
+      700
+    ],
+    "production_action_seconds": 1,
+    "SDK_close_ms": 200,
+    "freshness_ms": 250,
+    "quiet_ms": 800
+  },
+  "remaining_gates": [
+    "ARM normal window Enable/packets/close/reopen/Disable and ready-control capture",
+    "exact retained-worker guard cause",
+    "installed activation, trusted namespace provisioning and complete session Main",
+    "real Wi-Fi, Internet and matched Pixel backend",
+    "all phone hardware behavior"
+  ]
+}

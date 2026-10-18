@@ -51,9 +51,22 @@ separately with unchanged production outputs. Native Qt6.12 CMake/install,
 current loaders and the exact three production app files now pass in a separate
 generic ARM preparation. The first missing-bootentry setup failure is preserved;
 the corrected cohort has 63 direct waits/stdout EOFs and exports its layer after
-actual QEMU closure. Next run the ordinary ARM window/packet case against those
-installed bytes; no normal app/compositor/backend executes during preparation. Keep
-Source/authentication/full-session Main
+actual QEMU closure; no normal app/compositor/backend executes during preparation.
+Three later ARM window attempts remain failed: existing appearance endpoint,
+a late denial child, then a retained-worker guard after normal Settings window
+mapping. The minimal denial probe passes the original 1s bound in the third;
+no Enable, app packet or capture follows, and the worker-loss cause is unknown.
+The second's custody-timeliness failure remains false despite eventual cleanup.
+See the [ARM window failures](native-settings-connectivity-window.md#arm-window-attempts-remain-failed).
+
+A separate [disabled connectivity bundle](../native-connectivity-control/packaging/README.md)
+now passes actual Make/installer staging of exactly two current ARM provider
+files while preserving the existing Disabled config. All eight filesystem
+installer tests pass. This executes no provider and adds no installed activation;
+trusted namespace provisioning and runtime selection remain open. The next
+behavioral tracer is a bounded Rust nl80211 scan against original hostapd and
+Linux hwsim in a disposable guest, with explicit supported/unavailable results.
+Keep Source/authentication/full-session Main
 and broader capture campaigns parked; authored session=None/admin facts remain
 explicit. Worker reaping is separate from remote cleanup; no implicit mutation
 retry or same-namespace recovery is allowed.

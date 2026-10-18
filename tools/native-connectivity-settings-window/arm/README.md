@@ -27,3 +27,16 @@ all native loaders. The 393-package inventory and 50 selected Qt files stays unc
 Guest child subreaping, original cutoffs, actual waits/stdout EOFs and QEMU
 closure precede image export. The source bundle does not distribute the image,
 SDK metadata snapshots, provider binaries or private receipts.
+
+
+`denied_peer.py` is the byte-identical minimal actual UID11050 private-socket
+probe from the third failed ARM window epoch. It runs only as an owned child in
+a disposable fixture, with an absolute CLOCK_BOOTTIME cutoff supplied by its
+parent. It sets no-new-privileges, drops supplementary groups/UID/GID, checks
+actual credentials/capabilities and attempts a real SEQPACKET connection.
+Only EACCES qualifies; up to three bounded flushed markers precede one final
+JSON result. The parent separately owns actual wait and output EOF under the
+same original cutoff. Its host private/accessible controls and ARM denial pass;
+the later window/worker guard still fails. This is test infrastructure, not a
+production permission service or a newly qualified public VM launcher.
+See the [preserved ARM failures](../../../docs/native-settings-connectivity-window.md#arm-window-attempts-remain-failed).

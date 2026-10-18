@@ -211,3 +211,50 @@ and [hash-only preparation provenance](evidence/native-settings-connectivity-arm
 bind this result. A normal ARM window, touch/packet lifecycle, complete session,
 service-manager connectivity owner, matched Google-kernel backend and every
 physical-phone gate remain open. No new screenshot follows from preparation.
+
+
+## ARM window attempts remain failed
+
+Three subsequent full-system ARM window attempts retain their failed results.
+The first finds an existing appearance endpoint before the compositor/controller
+or app starts, so the required unavailable-appearance fallback cannot be assumed.
+Its exact endpoint owner was not sampled. The second adds only an explicit
+boot mask for the packaged appearance service; it reaches the current Rust
+Main/worker and real virtual-link provisioning, then the actual UID11050 denial
+child misses its original one-second wait/EOF cutoff with zero result bytes.
+Neither EACCES nor the child's internal stage is observed. Its controller custody
+timeliness remains false despite eventual complete cleanup.
+
+The third replaces that test-only self-exec denial entry with a minimal
+[standalone probe](../tools/native-connectivity-settings-window/arm/denied_peer.py).
+Actual credentials, EACCES, result predicates and the original one-second cutoff
+covering spawn, credential changes, connection, wait and EOF are unchanged.
+Separate real host controls with private and deliberately accessible sockets
+pass first.
+The ARM child then actually returns EACCES as UID/GID11050, with no supplementary
+groups, zero effective/permitted capabilities and no-new-privileges. This does
+not identify the preceding timeout's cause or qualify an application grant.
+
+The normal installed Settings app now launches as UID11050 and maps through the
+upstream ARM compositor. Its external output is 1080 × 2424, 65 × 146 mm at scale 2.625;
+the identity-bound mapped window is 411 × 923 logical pixels. Direct QWindow getters
+are not sampled. Before Enable-ready, capture or the functional-clock release,
+the controller's retained-worker child-list assertion fails. The differing list
+and the cause are not sampled. No Enable or normal-app packet result follows.
+No implicit replacement, mutation retry or deadline relaxation is introduced.
+
+The third attempt's controller records six timely direct waits/merged stdout
+EOFs and complete custody. Its overall guest case remains failed. Normal App
+retirement records actual signal 9 with null stdio; the actor joins, Main exits 0
+and reports the retained worker reaped after signal 9 with output EOF. An
+independent worker pidfd is terminal after Main wait. The assertion driver
+exits 101 after owned cleanup. Guest subreaper/ECHILD and eventual closure pass;
+27 guest, four boot and 13 host direct waits/EOFs finish on time. QEMU and Xvfb
+actually return 0; the container returns 1 and is removed on the same daemon.
+Inputs stay unchanged. None of the three attempts produces a screenshot.
+
+[Hash-only ARM window provenance](evidence/native-settings-connectivity-arm-window-provenance.json)
+binds all three failures and their exact frozen selections. Native build/install
+qualification remains valid; the full ARM window/packet lifecycle remains open.
+These setup refinements establish no production RED/GREEN. Complete session
+startup, matched Pixel integration and every phone gate remain open.

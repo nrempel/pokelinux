@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "files": {
+    "usr/libexec/pokelinux/pokelinux-connectivity-main": {
+      "bytes": 860048,
+      "sha256": "5a555f284df0636c63f3bbe2a7cf3aa1c4293e5d48a958fc2460cf26d886c5d7",
+      "mode": 493
+    },
+    "usr/libexec/pokelinux/pokelinux-connectivity-service": {
+      "bytes": 654992,
+      "sha256": "c7deb6d43a791a110c7a7aae36d23cd5db45006b042fa0035ffcb882e531f928",
+      "mode": 493
+    }
+  }
+}

@@ -82,6 +82,14 @@ permissions, a real Settings window and an installed production service.
 The subsequent [registered app actor tracer](../docs/native-connectivity-actor.md)
 uses this unchanged Main/worker through the private Rust client and real durable
 grants. Actual app exit preserves packets; a fresh generation explicitly
-Disconnects. Normal Settings engine/window, installed deployment, ARM control
-and hardware remain open. This crate still receives no app-controlled identity,
-grant or backend targeting over its private wire.
+Disconnects. That actor cohort does not execute the normal Settings engine or
+window; the [later normal window case](../docs/native-settings-connectivity-window.md)
+passes separately in an x86 VM. Full installed runtime, ARM window/packets and
+hardware remain open. This crate receives no app-controlled identity, grant or
+backend targeting over its private wire.
+
+The [disabled ARM development bundle](packaging/README.md) now passes actual
+Make/installer staging of the two normal providers, preserving an existing
+Disabled configuration. Eight real filesystem installer tests pass. This is
+host deployment evidence, separate from service activation and the failed ARM
+normal-window/packet integration.
