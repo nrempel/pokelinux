@@ -95,8 +95,8 @@ backlight remain open. These published GUI images retain the preceding engine.
 The repaired Rust archive now passes native x86 and ARM normal Qt build/install
 and offscreen component execution. A new x86 touch attempt fails the first75%
 transition: one input, no raw change, cause unknown. The earlier success is not
-inherited. Persistent tap-outcome feedback now passes separate real C ABI
-regressions; joining its archive into normal Qt remains a new gate.
+inherited. The persistent-outcome successor now passes its own native x86 Qt
+build/component, then reaches four touch states before the final25 change fails.
 Future captures must qualify the actual
 [Pixel10 profile](../docs/native-phone-display-profile.md); no resized capture is valid evidence.
 
@@ -154,8 +154,8 @@ brief model lock, released before any polling or waiting. This prevents a
 concurrent getter from calling an already sent request “not sent.” No write
 retry, wire operation, request deadline, readonly cadence or Source policy is
 added. New C status constants preserve the current View layout and six exports;
-the Qt adapter only maps them to visible text. Native builds and touch evidence
-for the earlier engine are historical until a new normal app is qualified.
+the Qt adapter only maps them to visible text. The previous native ARM build and
+five-state touch evidence retain their historical engines.
 
 The outcome qualification preserves two compiled assertion REDs: the final frozen
 fixture fails all four new outcome checks plus the intentionally changed
@@ -168,3 +168,16 @@ tests are not repeated after this nonsemantic change. The original five-second
 client and200ms Stop/join bounds remain. No deterministic send/expiry interleaving
 reproduction or new Qt/GUI result is inferred. See
 [hash-only outcome provenance](../docs/evidence/native-settings-choice-outcome-provenance.json).
+
+The current outcome archive now compiles and installs through normal x86 Qt6.12
+CMake, with the same unprivileged offscreen component assertions passing. Its
+normal app then reaches25→explicit75→unavailable→readonly75 in one app/window and
+brightness Main. Root reviews those four original Pixel-profile images plus the
+immediate pending frame. A new25 tap fails its original five seconds:116 raw
+samples stay300/max400/actual120, with no mutation events and no retry. The original
+first-tap-only diagnostics do not capture this later failure, so its outcome and
+precise stopping boundary remain unknown. The whole trace fails; no Set ACK is
+inferred from rendered status or current raw readback.100 direct waits/107 PIPE
+EOFs, separate adopted wait-6, PID1 brightness Main0 and VM/container closure stay
+distinct from application success. See
+[current native evidence](../docs/evidence/native-settings-outcome-native-provenance.json).

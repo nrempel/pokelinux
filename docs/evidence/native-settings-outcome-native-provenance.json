@@ -1,0 +1,171 @@
+{
+  "schema": 1,
+  "scope": "Current outcome client normal x86 Qt6.12 build/install/offscreen execution passes. Fresh normal Settings/actor/installed SyntheticTree touch trace reaches four states then fails second explicit25; no full-trace, ARM runtime or phone qualification.",
+  "engine_sha256": "600243d20cb0e88cd9206aac685ae4d26257c020ced0d46afb925c0ae5d32687",
+  "Qt_qualification": {
+    "bytes": 14813,
+    "sha256": "a33bb5ec96e814d94040cee2345c40fbd3e5cc7121ff3153513defe455d1fba0"
+  },
+  "Qt_execution": {
+    "bytes": 11994,
+    "sha256": "b2b4b19710fc49b459f18aa1e0dad01624b24368a2c9b701dae1d03f15509ac1"
+  },
+  "normal_ELF": {
+    "bytes": 6115032,
+    "sha256": "d1bd1d19162ed2f8adf062d231433eb4a870bd815e3e2b52feb2beee3376956c",
+    "ELF_machine": 62
+  },
+  "Qt_component": {
+    "actual_UID": 11050,
+    "returncode": 0,
+    "stdout_sha256": "888a653ba42263da4046e49ac6e99a61f9571c80d8a5d85c18c60c69c30c8fd6",
+    "same_built_ELF_copy": true,
+    "original_Stop_budget_ms": 200,
+    "QML_constructed_without_window": true
+  },
+  "Qt_actual_waits": 29,
+  "Qt_PIPE_EOFs": 36,
+  "GUI_failed_qualification": {
+    "bytes": 24385,
+    "sha256": "f1aa39957c7bd0afdd4113e68bf09763a8f80fe49b0aa8b329955e163b3fd849"
+  },
+  "GUI_execution": {
+    "bytes": 12024,
+    "sha256": "78c480052ce8cf1c4b8b27874cb518ef2aeeb00837ba06ba19a8b5a2d8e4f99f"
+  },
+  "Root_visual_review": {
+    "bytes": 2821,
+    "sha256": "7c1912a0d8d4b563f935004cc08289324f254c2456ca3e404ba323aaaef6c4cb"
+  },
+  "Root_viewed_frames": [
+    {
+      "file": "Settings-initial25-attempt-2.png",
+      "bytes": 51477,
+      "sha256": "923d020b182211f7eb28eba6ac608d743eb699a168c62f7230ab9ecb317f9caf",
+      "Root_viewed_original_resolution": true,
+      "observed_text": "Brightness: 25%",
+      "observed_status": "Brightness ready",
+      "external_scale": 2.625,
+      "external_mm": [
+        65,
+        146
+      ],
+      "no_resize_crop_repaint": true,
+      "normal_QWindow_DPR": null
+    },
+    {
+      "file": "Settings-first75-immediate-post-tap.png",
+      "bytes": 53744,
+      "sha256": "d068f3811c6963d561c365a2a830252574475e6f5746c4ef5b1500b318267ae4",
+      "Root_viewed_original_resolution": true,
+      "observed_text": "Brightness unavailable",
+      "observed_status": "Brightness change pending",
+      "external_scale": 2.625,
+      "external_mm": [
+        65,
+        146
+      ],
+      "no_resize_crop_repaint": true,
+      "normal_QWindow_DPR": null
+    },
+    {
+      "file": "Settings-explicit75-attempt-2.png",
+      "bytes": 49861,
+      "sha256": "378da0b9f0d9f24e18264bed9459ac232d35585a2a107cdc6811f8127d25fbda",
+      "Root_viewed_original_resolution": true,
+      "observed_text": "Brightness: 75%",
+      "observed_status": "Brightness ready",
+      "external_scale": 2.625,
+      "external_mm": [
+        65,
+        146
+      ],
+      "no_resize_crop_repaint": true,
+      "normal_QWindow_DPR": null
+    },
+    {
+      "file": "Settings-unavailable-attempt-1.png",
+      "bytes": 52860,
+      "sha256": "f70edcc7322d079fa1e179c9e75f20d23a8c20b6e3a772322a0f8c086a0cb518",
+      "Root_viewed_original_resolution": true,
+      "observed_text": "Brightness unavailable",
+      "observed_status": "Brightness unavailable",
+      "external_scale": 2.625,
+      "external_mm": [
+        65,
+        146
+      ],
+      "no_resize_crop_repaint": true,
+      "normal_QWindow_DPR": null
+    },
+    {
+      "file": "Settings-readonly-recovered75-attempt-2.png",
+      "bytes": 49861,
+      "sha256": "d99d33ddddbc1c58f533cd52f3c1bbda783029f05379787ac42e0b0a9ac67089",
+      "Root_viewed_original_resolution": true,
+      "observed_text": "Brightness: 75%",
+      "observed_status": "Brightness ready",
+      "external_scale": 2.625,
+      "external_mm": [
+        65,
+        146
+      ],
+      "no_resize_crop_repaint": true,
+      "normal_QWindow_DPR": null
+    }
+  ],
+  "whole_trace_passed": false,
+  "completed_groups": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "first_explicit75": {
+    "raw_requested_before": 100,
+    "raw_requested_after": 300,
+    "max": 400,
+    "optional_actual": 120,
+    "samples": 4,
+    "inotify_MODIFY_and_CLOSE_WRITE_observed": true,
+    "syscall_write_count_claimed": false
+  },
+  "disabled_two_inputs": {
+    "raw_before_and_after": 300,
+    "no_requested_attribute_mutation_events": true
+  },
+  "last_new25": {
+    "passed": false,
+    "requested_raw_all116_samples": 300,
+    "requested_target": 100,
+    "mutation_events": 0,
+    "outcome_PNG_or_Qt_clicked_or_wire_Set_or_reply_observed": false,
+    "cause": "unknown",
+    "no_retry": true
+  },
+  "GUI_actual_waits": 100,
+  "GUI_PIPE_EOFs": 107,
+  "separate_adopted_waits": [
+    {
+      "pid": 835,
+      "actual_guest_subreaper_wait_exit": -6,
+      "at_boottime_ns": 37127647219
+    }
+  ],
+  "normal_app_numeric_exit_status": null,
+  "brightness_PID1_Stop_Main0_success": true,
+  "VM_container_and_all_selected_external_input_closure": true,
+  "public_original75_image": {
+    "file": "docs/assets/settings-brightness-current75.png",
+    "bytes": 49861,
+    "sha256": "378da0b9f0d9f24e18264bed9459ac232d35585a2a107cdc6811f8127d25fbda"
+  },
+  "limits": [
+    "First75 only original diagnostic contract leaves the later25 failure outcome unobserved.",
+    "Current raw readback and rendered status are separate from Set acknowledgement.",
+    "All four groups retain the same app/window/service; four captured Source snapshots do not establish continuous health.",
+    "Direct normal QWindow DPR and Qt enabled/text getters remain unknown.",
+    "The separate adopted wait-6 is not a normal Main exit or success claim.",
+    "Explicit SyntheticTree backend only; matched Pixel panel, physical readback/luminance, cold full shell, ARM visible UI and phone gates remain open."
+  ]
+}

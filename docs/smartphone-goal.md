@@ -53,13 +53,14 @@ muted controls and no mutation from two inputs→readonly recovery75→new expli
 The same app and service stay running. Five original1080×2424 screenshots are
 reviewed; earlier setup, observer and failed-tap attempts stay separate. This is
 an authored VM backend; cold full-shell, other input races and hardware remain
-open. The newer Rust client now builds and passes offscreen Qt component checks
-on native x86 and ARM kernels. Its fresh x86 touch trace fails the first change,
-with no write and an unknown stopping boundary; the earlier five-state success
-is not inherited. A further Rust correction now preserves the tap outcome
-through readonly recovery, with actual socket/C ABI RED→GREEN and existing
-regressions passing. Its new normal Qt/touch qualification remains separate.
-See the screenshots and limits in the brightness report.
+open. The earlier five-state success is not inherited by later clients. The
+accepted-choice client has separate native x86/ARM Qt build/component proof and
+an earlier failed first-tap trace. The current persistent-outcome Rust client
+passes15 socket/C ABI requirements and a new native x86 normal Qt build/component.
+Its fresh touch trace reaches25→explicit75→unavailable→readonly recovery75, then
+fails the new25% change. No final failure image or precise cause is available;
+the full current path remains unqualified. See the screenshots and limits in
+the brightness report.
 
 The later [16-CPU cold diagnostic](native-session-manager-stop.md#declared-cpu-resource-diagnostic)
 still expires Source at103.24ms, with zero own-quota throttling in60 captured

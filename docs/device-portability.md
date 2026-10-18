@@ -90,8 +90,9 @@ same Rust service interfaces. A newer client has separate native x86/ARM Qt
 build/install/offscreen C ABI proof; its current x86 tap trace fails and is not
 promoted from the earlier success. A further shared Rust correction retains the
 last explicit choice outcome through readonly recovery; its socket/C ABI tests
-and host/ARM release builds remain separate from normal Qt/touch qualification.
-No ARM visible UI is qualified. Requested and optional actual attributes are
+and host/ARM release builds remain separate from ARM runtime. Its new normal x86
+Qt build/component passes, while the latest touch trace reaches four states then
+fails the final new25% change. No ARM visible UI is qualified. Requested and optional actual attributes are
 distinct, and neither is physical luminance. A Pixel panel without a usable Linux backlight interface will
 need its own independently qualified backend; these host tests add no supported
 phone model.

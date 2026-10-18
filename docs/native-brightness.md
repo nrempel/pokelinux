@@ -490,6 +490,30 @@ The send/expiry lock invariant is reviewed without claiming a deterministic
 interleaving reproduction. See
 [outcome provenance](evidence/native-settings-choice-outcome-provenance.json).
 
+## Current outcome client: four touch states, final change still fails
+
+A new normal x86 Qt6.12 build/install/offscreen component passes with the persistent
+outcome archive. Its fresh actual-touch run reaches initial25→explicit75 with
+requested raw100→300→unavailable with no mutation from two disabled inputs→readonly
+recovery75. Root views those four original1080×2424 group captures plus the immediate
+pending frame. The same app/window and brightness Main remain in place.
+
+The later new25 tap fails its unchanged five seconds:116 raw samples remain300,
+with no requested-attribute mutation events and no retry. No final failure frame
+exists under the original first-tap-only diagnostic fixture. Its tap outcome,
+Qt click/first wire Set/reply boundary and precise cause remain unobserved. This
+is a failed whole trace, with four successful current-state groups. Current raw
+readback and displayed status do not establish a Set acknowledgement.
+
+All100 direct waits/107 PIPE EOFs close, alongside a separate adopted wait-6 which
+is not relabelled as normal app Main exit. Brightness PID1 Stop reports Main0 and
+success with dead retained pidfd, absent socket and empty cgroup. QEMU/container
+and input closure pass. Earlier clients, failures and the older full five-state
+success retain their own cohorts. See
+[current native provenance](evidence/native-settings-outcome-native-provenance.json).
+
+![Current normal Settings at75%, from the four-state partial trace](assets/settings-brightness-current75.png)
+
 ## Remaining integration and hardware gates
 
 The finite Settings touch/change/unavailable/recovery path is qualified only for
