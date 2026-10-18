@@ -1,0 +1,192 @@
+{
+  "schema": 1,
+  "status": "Current root-private Main/client packet and ordinary socket-error GREEN; host synthetic scope only",
+  "public_base_commit": "b9aa0e190c2a9309cba9a22bf2ee6ae72962d589",
+  "current_sources": {
+    "Main": "fca5b4422514c965610ebf0c3cff5d60508e1830b0a33c5c2dc2dd02e2193dc5",
+    "socket_tests": "c6d8fe68ed91af386d290c5ade71b05537dbc97ce706a1f020793a3e197a06f8",
+    "protected_service": "9355e1449d6d9ed3f158bd6004b271a384d6c4478f8aeadba4fe2178bd14d470",
+    "kernel": "ef2c769dcb737a6eaa7626f076a5ee65ef4717b1aa6a91d04214ab743546b2d3",
+    "shared_supervisor": "c8dac99e60685dcac9f383be2adb16f9dc7d6e14fac79e939fdf9de59c74490c",
+    "current_native_rows_verified": 35
+  },
+  "packet_RED": {
+    "review": "2152c1184819b5c9a81b839665e2110bddfa786399d98f61865effa9e81436d9",
+    "outer": "325163ac0f6d245739b5b63dce2af726dc6c82b4082565062fec9450f487e46c",
+    "build": "682c7e9bcaff17fced1c59678b6427ecaf2848ff70980708e0c63b0c6c3e6720",
+    "inner": "15cc05a42d51ddc4f229a149bfbc8ae8f9ec4b98e8b42a5ebcfa8e4fa628b8d5",
+    "product_passed": false,
+    "final_driver_exit_after_cleanup": 101,
+    "Scope_wait_PIPE_EOF": 22,
+    "Scope_split": [
+      13,
+      3,
+      6
+    ],
+    "regular_stderr_closures": 3,
+    "nested_worker_wait_EOF_separate": true
+  },
+  "historical_packet_GREEN": {
+    "review": "63b32311045eb1ccb63742b8cbddc610c0da04bd81e969d8a7f400f1ea8dce27",
+    "outer": "04e3232bca726de369d54c660cd30a967247a399a2c6b7c086ce810739db5b68",
+    "build": "c1f2d6ab6f5f010f01881d13ec8bf1d50628871d3e8078e90e6585fac53f1859",
+    "inner": "d89d671abc41690695233400e25436a7c28e57f10bc139d8cba21720dbb8d4ab",
+    "Main_source": "40c5a4fd649a1d15b817b9e9ed55d1a1e9657d43ad7a5d7b6ead730617bd4cb1",
+    "Scope_wait_PIPE_EOF": 21,
+    "regular_stderr_closures": 2,
+    "original_quiet_phase_ns_including_delivery": 800000000,
+    "actual_armed_to_final_EAGAIN_ns": 799637005
+  },
+  "ordinary_socket_RED": {
+    "Root_review": "18b6277b69bac1457ab078df75d899dd2185003ebcc799fe0dde41d24d4094a7",
+    "outer": "ddf03bfa66c9f23fa9c42437fe841c6b680409f183a86dd33546a980c5339062",
+    "inner": "34f2501e1a871a6b07006b62dd56c344e408f18eae528b24b1bde034afac3db5",
+    "actual_errno": 22,
+    "Scope_wait_PIPE_EOF": 14,
+    "scope": "Ordinary socket turn with existing private peer and authored unavailable/unoccupied Service; no normal Main/worker/start/network"
+  },
+  "ordinary_socket_GREEN_QA": {
+    "Root_review": {
+      "bytes": 1041,
+      "sha256": "61d6b0013b4c65a269b7f070a9b6e0fbd49c3a6526458baa0f16ec88c8d5b82d"
+    },
+    "outer": {
+      "bytes": 49599,
+      "sha256": "f36d65fcce815b7b26b8f56e8993c38b83aed552f5e6fbf197db4919c4d2f691"
+    },
+    "inner": {
+      "bytes": 11828,
+      "sha256": "b03034bd7ae4d052823d87e6949b1e20fd74195509d4d29b3cc57de776457f49"
+    },
+    "library_passed": 2,
+    "library_ignored_self_exec_helper": 1,
+    "owner_passed": 8,
+    "format_strict_Clippy_all_targets": true,
+    "Scope_wait_PIPE_EOF": 18,
+    "Scope_split": [
+      13,
+      5
+    ],
+    "regular_stderr_closures": 3,
+    "cache_NativeChild_wait_read0_EOF_separate": 1,
+    "normal_Main_worker_started": false,
+    "repair": "One stopping guard; same frozen socket test"
+  },
+  "current_packet_GREEN": {
+    "Root_review": {
+      "bytes": 1010,
+      "sha256": "3802af97f6670232a68011038e94825234f5e9e3e0fba3a00769c5c43d476563"
+    },
+    "outer": {
+      "bytes": 56554,
+      "sha256": "306d2d77643c49cfd0ccea79673f5f9264584db856ce05888f79e1056f51c018"
+    },
+    "build": {
+      "bytes": 16335,
+      "sha256": "f2a67f735b2d7f983baee2bcd9e96bc9f7aba3c08ac43efda181e55d502b97ce"
+    },
+    "inner": {
+      "bytes": 20043,
+      "sha256": "a65dd2c0f532ace9dbfafe98e35920e9c2aabf05189a60f77aab12a46f5daedf"
+    },
+    "functional_duration_ns": 988802450,
+    "original_case_ns": 6000000000,
+    "original_quiet_phase_ns_including_delivery": 800000000,
+    "actual_armed_to_final_EAGAIN_ns": 799602717,
+    "received_datagrams": 0,
+    "actual_final_EAGAIN": true,
+    "Main_driver_peer_keeper_exit": 0,
+    "Scope_wait_PIPE_EOF": 21,
+    "Scope_split": [
+      13,
+      2,
+      6
+    ],
+    "regular_stderr_closures": 2,
+    "Main_derived_worker_wait9_output_EOF_separate": 1,
+    "independent_worker_pidfd_terminal": true,
+    "inputs_unchanged_CID_absent_same_daemon": true,
+    "selected_ELFs": {
+      "main": {
+        "bytes": 1958160,
+        "sha256": "63f9b56ffa91a45f3b80875c690b08421725af9d0564f9be43fb238f90733d73"
+      },
+      "worker": {
+        "bytes": 1471832,
+        "sha256": "a685b92e128257dd93be8db9806231d44a20eed82169f70a8ebedb5ab528a542"
+      },
+      "driver": {
+        "bytes": 1684416,
+        "sha256": "56dfac3f43c8a00f91a3051f8771120d8e00300789a7db981ea6b097c6a3475e"
+      }
+    }
+  },
+  "setup_format_compile": {
+    "ingress_initial_format_compile": {
+      "outer": "4b53ee1322c6b81dad8be9ddf2c8d4d6637bfdcc329fca9f030322a4e5203c84",
+      "inner": "dfd31bdfee2e75051dbf3a7947ab2fce5aab8048e85b15bb0b6bf0777ef37ffc",
+      "passed": true,
+      "behavioral_execution_claim": false,
+      "copyback_review": "37f549246aaa826c596d87da5f9439a25c2e8ee06d6883fcc84bc7dcc1868b98"
+    },
+    "ingress_dispatch_format_compile": {
+      "outer": "53ae918f4eaae9e6364238b6273a0ee4f748c94b2066b714024dd61c019539e3",
+      "inner": "8eec54d2b852498b637ab56d53bdd11f7b9043fa32b15e6e0298c8f9755f8011",
+      "passed": true,
+      "behavioral_execution_claim": false,
+      "copyback_review": "9d5972e23766bc00eb1888ce64bdceab22bd58c00a907db4b46ab806e6f022c6"
+    },
+    "accept_stop_format_compile_failed": {
+      "outer": "9a7d91d41858913fa44e8e8fa106490a95477298efde8335480010c952923415",
+      "inner": "73af4e69eda753b741db9f796a933ab645c8c3c680aecde1661f1a6c8420425a",
+      "passed": false,
+      "behavioral_execution_claim": false
+    },
+    "accept_stop_format_compile_successor": {
+      "outer": "7fa6d91815c7241d7537e482073ae1b45c4b05d3b8057ecbb951260bed82170d",
+      "inner": "855040ec441f6f1ae2d2a4e61ba7b656901aa034404e6529250216eb4e7049ff",
+      "passed": true,
+      "behavioral_execution_claim": false,
+      "copyback_review": "3b7640a8fe9621faec6d6013e78cbba233db41e0e92a8c5bb4e71eb4acb3a6ae"
+    }
+  },
+  "fixture_sources": {
+    "driver.rs": {
+      "bytes": 16165,
+      "sha256": "ce8b296a26b855232973f9a016b7f616a21f6e3cc1aa5a838e91a3030a060f74"
+    },
+    "controller.py": {
+      "bytes": 19888,
+      "sha256": "9abb26f99136f8c385ad315aff50442e56d5945bc70c71243aeb7789a5177964"
+    },
+    "Cargo.toml": {
+      "bytes": 371,
+      "sha256": "5625336c0cfcfc323365f00a96efd699067a17b6a2a532a37e2c43856977a284"
+    },
+    "Cargo.lock": {
+      "bytes": 4809,
+      "sha256": "9ac544fc72861bb0b9df7f097781e44aebc64b6309ef09a8aaf3beeb3bfebbbe"
+    }
+  },
+  "access_scope": {
+    "transport_epoch": 1,
+    "transport_epoch_is_app_grant": false,
+    "UID11050_errno": 13,
+    "UID11050_effective_permitted_zero_NNP1": true,
+    "UID11050_bounding_set_retains_initial_five": true,
+    "Main_driver_controller_peer_all_capability_sets_zero": true,
+    "worker_NET_ADMIN_only": true
+  },
+  "limits": [
+    "No installed Main/public app permission/Settings/ARM/hardware result.",
+    "No Internet/Wi-Fi/DNS or arbitrary uninterruptible-kernel claim.",
+    "Source-only public fixture staging is not a new public-entry execution."
+  ],
+  "independent_reviews": {
+    "packet_RED": "3e477b92a73a2edc027dfdcb6413858d37ba6e418b8ffb7a7ea4499148d49ab0",
+    "historical_packet_GREEN": "f650b4b4a1942f0f30bccfc02d0e4d623f38608aff29615436dd5ab0e602b323",
+    "ordinary_socket_RED_and_repair": "cf72733579d2c29d19e44094ac1bc6103a17fc119f7291787e5a05025a7e463a",
+    "ordinary_socket_GREEN_QA": "ac5c92f65f3152fe5e83ee83624eb4b985e676db09265df9fd059b995aeb5933",
+    "current_packet_GREEN": "667c8112f982806f8b1aeb8bef0d36942c1c7526e9f18bae0de25c8ea2b4ff7c"
+  }
+}

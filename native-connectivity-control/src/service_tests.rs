@@ -1,5 +1,5 @@
-//! Authored cached Fact visibility only; no kernel-connectivity evidence.
-//! Actual local pipe custody only; no bootstrap or remote-cleanup claim.
+//! Host components with authored Service state and actual local pipe/socket I/O.
+//! No Service::start, virtual-link, app-permission or hardware claim.
 use super::{Fact, LEASE, Service, metadata, owner};
 use pokelinux_process_owner::{
     deadline::{BootClock, Clock},
@@ -445,5 +445,174 @@ fn cached_snapshot_revokes_after_actual_wait_before_stdout_eof() {
             && private_terminal_after
             && private_cache_cleared_after,
         "Service snapshot must revoke cached visibility at actual wait before stdout EOF"
+    );
+}
+
+/// Real Unix accept/error and credentialed packet boundary around an authored
+/// unavailable, unoccupied Service. No worker, Service::start or link is created.
+#[test]
+fn accept_error_stop_fences_existing_private_client_work() {
+    use crate::{
+        main_service::{Peer, clients_turn},
+        private_channel,
+        protocol::{Reply, Request, Status},
+    };
+    use rustix::net::{AddressFamily, SocketAddrUnix, SocketFlags, SocketType};
+    assert_eq!(
+        rustix::process::getuid().as_raw(),
+        0,
+        "private root component fixture"
+    );
+    assert_eq!(
+        rustix::process::getgid().as_raw(),
+        0,
+        "private root component fixture"
+    );
+    let started = now();
+    let original_until = started.checked_add(1_000_000_000).unwrap();
+    let directory = std::env::temp_dir().join(format!(
+        "pokelinux-accept-stop-{}-{}",
+        std::process::id(),
+        started
+    ));
+    fs::create_dir(&directory).unwrap();
+    fs::set_permissions(&directory, fs::Permissions::from_mode(0o700)).unwrap();
+    let endpoint = directory.join("control.sock");
+    let listener = net::socket_with(
+        AddressFamily::UNIX,
+        SocketType::SEQPACKET,
+        SocketFlags::NONBLOCK | SocketFlags::CLOEXEC,
+        None,
+    )
+    .unwrap();
+    net::bind(&listener, &SocketAddrUnix::new(&endpoint).unwrap()).unwrap();
+    net::listen(&listener, 8).unwrap();
+    let (client, server) = net::socketpair(
+        AddressFamily::UNIX,
+        SocketType::SEQPACKET,
+        SocketFlags::NONBLOCK | SocketFlags::CLOEXEC,
+        None,
+    )
+    .unwrap();
+    let expected_server = private_channel::peer(&client).unwrap();
+    let mut peers = vec![Peer::new(server, 1).unwrap()];
+    let (not_listener, other) = net::socketpair(
+        AddressFamily::UNIX,
+        SocketType::SEQPACKET,
+        SocketFlags::NONBLOCK | SocketFlags::CLOEXEC,
+        None,
+    )
+    .unwrap();
+    let current = fs::File::open("/proc/thread-self/ns/net").unwrap();
+    let second = fs::File::open("/proc/thread-self/ns/net").unwrap();
+    let namespace = metadata(&current).unwrap();
+    let mut service = Service {
+        supervisor: Supervisor::new(directory.join("unused-admission")),
+        identity: None,
+        _current: current,
+        _peer: second,
+        namespace,
+        owner: owner::Owner::default(),
+        observed: None,
+        handshake: false,
+        terminal: false,
+        stopping: false,
+        output_eof: false,
+        reaped: false,
+        exit_status: None,
+        main_caps_dropped: false,
+        start_until: original_until,
+    };
+    let mut serial = 1;
+    let mut fatal = None;
+    let mut stopping = false;
+    let first = Request::Inspect {
+        id: 1,
+        until_ns: original_until.to_string(),
+    };
+    private_channel::send(&client, &serde_json::to_vec(&first).unwrap()).unwrap();
+    clients_turn(
+        &listener,
+        &mut service,
+        &mut peers,
+        &mut serial,
+        &mut fatal,
+        &mut stopping,
+    );
+    let healthy_bytes = private_channel::receive(&client, &expected_server)
+        .unwrap()
+        .expect("healthy real private packet before error");
+    let healthy: Reply = serde_json::from_slice(&healthy_bytes).unwrap();
+    let setup_ok = healthy.valid_for(&first, now())
+        && healthy.status == Status::Unavailable
+        && !stopping
+        && fatal.is_none()
+        && peers.len() == 1
+        && !service.occupied();
+    let second_request = Request::Inspect {
+        id: 2,
+        until_ns: original_until.to_string(),
+    };
+    private_channel::send(&client, &serde_json::to_vec(&second_request).unwrap()).unwrap();
+    // A real connected socket is not a listener: the kernel, not a mock, returns
+    // EINVAL from the exact production accept call before existing-peer work.
+    clients_turn(
+        &not_listener,
+        &mut service,
+        &mut peers,
+        &mut serial,
+        &mut fatal,
+        &mut stopping,
+    );
+    let actual_accept_errno = fatal.as_ref().and_then(|e| e.raw_os_error());
+    let returned = private_channel::receive(&client, &expected_server).unwrap();
+    let after_error_reply = returned
+        .as_ref()
+        .map(|bytes| serde_json::from_slice::<Reply>(bytes).unwrap());
+    let unwanted_valid_reply = after_error_reply
+        .as_ref()
+        .is_some_and(|r| r.valid_for(&second_request, now()) && r.status == Status::Unavailable);
+    let peers_retained = peers.len() == 1;
+    let no_reply_before_close = returned.is_none();
+    let mut probe = [0_u8; 1024];
+    let actual_eagain_before_close = matches!(
+        net::recv(&client, &mut probe, RecvFlags::DONTWAIT | RecvFlags::PEEK),
+        Err(rustix::io::Errno::AGAIN)
+    );
+    // Save behavior first. Close all actual sockets and namespace handles and
+    // remove the directory before the desired assertion, on both RED and GREEN.
+    peers.clear();
+    let mut one = [0_u8; 1];
+    let transport_eof_or_reset = matches!(
+        net::recv(&client, &mut one, RecvFlags::DONTWAIT),
+        Ok((0, 0)) | Err(rustix::io::Errno::CONNRESET)
+    );
+    service.stop().unwrap();
+    let empty_owner = !service.occupied();
+    drop(service);
+    drop(listener);
+    drop(not_listener);
+    drop(other);
+    drop(client);
+    fs::remove_file(&endpoint).unwrap();
+    fs::remove_dir(&directory).unwrap();
+    let completed = now();
+    eprintln!(
+        "ACCEPT_STOP_COMPONENT setup_ok={setup_ok} actual_accept_errno={actual_accept_errno:?} stopping={stopping} unwanted_valid_reply={unwanted_valid_reply} no_reply_before_close={no_reply_before_close} actual_eagain_before_close={actual_eagain_before_close} peers_retained={peers_retained} transport_eof_or_reset={transport_eof_or_reset} owner_unoccupied={empty_owner} original_until_ns={original_until} completed_ns={completed}"
+    );
+    assert!(
+        setup_ok
+            && actual_accept_errno == Some(22)
+            && stopping
+            && peers_retained
+            && transport_eof_or_reset
+            && empty_owner
+            && (unwanted_valid_reply || actual_eagain_before_close)
+            && completed < original_until,
+        "Actual Unix socket/error fixture must be healthy and closed"
+    );
+    assert!(
+        no_reply_before_close && actual_eagain_before_close && !unwanted_valid_reply,
+        "ACCEPT_ERROR_STOP_MUST_FENCE_EXISTING_CLIENT_WORK"
     );
 }

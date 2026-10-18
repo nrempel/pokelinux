@@ -21,8 +21,10 @@ Nonblocking flags do not bound synchronous kernel rtnetlink dispatch.
 `service::Service` now isolates the backend in one persistent cooperative
 `native-process-owner` worker. Trusted single-threaded startup retains both
 namespaces, launches the fixed worker and irreversibly removes Main's
-capabilities; the worker retains only NET_ADMIN. The binary is a worker entry,
-not an installed service Main or public application endpoint.
+capabilities; the worker retains only NET_ADMIN.
+`pokelinux-connectivity-service` is the worker entry. The separate
+`pokelinux-connectivity-main` owns the protected root endpoint; neither is
+installed by this checkpoint, and applications cannot access that endpoint.
 
 Main snapshots expire both observation paths from completed kernel readback
 under CLOCK_BOOTTIME. Idle renewal requires another actual readback, never a
@@ -33,6 +35,15 @@ revokes cached readiness before a held stdout writer closes. Neither Stop nor
 BOOTTIME checks promise syscall cancellation or reclaimability of arbitrary
 blocked kernel calls. No implicit retry, replacement, Disconnect or rollback is
 performed; local descriptor/process release is distinct from link/vendor cleanup.
+
+The separate `main_service` and nonblocking `client` now pass the unchanged
+normal-Main packet consumer against the final source after an actual typed-refusal
+RED: UID11050 private access denial, traffic after requester close, fresh
+observations and explicit Disconnect/quiet. A separate real Unix accept-error
+RED precedes the stop guard; the frozen regression passes with no reply after
+Stop. Both active library tests, eight owner tests, formatting and strict Clippy
+pass. See the [private-ingress report](../docs/native-connectivity-private-ingress.md).
+This adds no Settings or actor-permission result.
 
 ```sh
 cargo fmt --manifest-path native-connectivity-control/Cargo.toml -- --check

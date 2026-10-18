@@ -30,12 +30,20 @@ The next connectivity tracer joins real Settings process actions, its Rust
 client and existing actor permission decisions to this supervised backend, with
 independent packets surviving actual app exit and a fresh app's explicit
 Disconnect. Keep Source/authentication/full-shell/capture branches parked.
-The current library and worker-only executable do not install a production Main
-or public app ingress. SIGSTOP controls do not prove arbitrary uninterruptible
+The separate root-private Main below has a normal executable but no installed
+unit or public app ingress. SIGSTOP controls do not prove arbitrary uninterruptible
 kernel reclamation; BOOTTIME fences do not prove actual suspend. Recovery requires
 an explicit trusted new service in fresh namespaces after prior custody closes;
 there is no automatic retry, same-namespace replacement or persistence promise.
 Preserve failed aggregates separately from qualified component assertions.
+
+The [root-private Rust connectivity Main/client](native-connectivity-private-ingress.md)
+now passes the unchanged packet consumer against the final source: real Connect,
+traffic after requester close, two newer observations and explicit Disconnect
+with independent address removal/quiet. A real Unix accept-error RED precedes
+the stop guard; the frozen regression, both active library tests, eight owner
+tests, formatting and strict Clippy pass. This is an isolated host endpoint;
+Settings, actor grants, installed deployment, ARM and phone gates remain open.
 
 The [native local-network status path](native-network-status.md) now passes both
 host and native ARM service-to-Rust-client-to-Settings integration. In the ARM VM,

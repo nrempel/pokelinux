@@ -670,9 +670,13 @@ Disconnect and independent address removal/quiet. The subsequent
 [persistent worker](native-connectivity-worker.md) adds actual idle readback,
 Main snapshot expiry, stopped-worker expiry/resume and queued-command Stop;
 an actual child/held-pipe component fences cached readiness at wait before EOF.
-Real app permissions/Settings, installed Main/deployment, arbitrary blocked-kernel
-reclamation, actual suspend, ARM and all hardware gates remain open. Read-only
-counts and NetworkManager reference evidence remain separate.
+The [root-private Main/client](native-connectivity-private-ingress.md) now separately
+passes real Connect, packets after requester close, fresh observations and
+explicit Disconnect/quiet against its final source. A real Unix accept-error
+RED→GREEN fences queued client work after stopping. Real app permissions/Settings,
+installed deployment, arbitrary blocked-kernel reclamation, actual suspend, ARM
+and all hardware gates remain open. Read-only counts and NetworkManager
+reference evidence remain separate.
 
 ## Completion matrix
 

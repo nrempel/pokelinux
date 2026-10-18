@@ -16,7 +16,10 @@ withdrawal, explicit Disconnect and independent readback/quiet. The initial
 foundation below retains its own source/evidence cohort. The later
 [persistent worker](native-connectivity-worker.md) adds isolated host supervision,
 idle actual readback, stopped-worker expiry/resume and queued-command Stop.
-Real permissions/Settings, installed Main, ARM and phone qualification remain open.
+The separate [root-private Main/client](native-connectivity-private-ingress.md)
+now passes the same packet lifecycle through actual credentialed Unix sockets,
+with a separate real accept-error stopping regression. Real permissions/Settings,
+installed deployment, ARM and phone qualification remain open.
 
 ## Earlier foundation checkpoint
 

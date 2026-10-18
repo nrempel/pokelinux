@@ -5,12 +5,12 @@ edition = "2024"
 publish = false
 
 [dependencies]
+pokelinux-kernel-identity = { path = "../native-kernel-identity" }
+serde = { version = "=1.0.229", features = ["derive"] }
+serde_json = "=1.0.154"
 pokelinux-process-owner = { path = "../native-process-owner" }
 pokelinux-network-state = { path = "../native-network-state" }
 rustix = { version = "=1.1.5", features = ["net", "time", "thread", "process", "fs"] }
-
-[dev-dependencies]
-serde_json = "=1.0.154"
 
 [lints.rust]
 unsafe_code = "forbid"
