@@ -15,7 +15,10 @@ session=None plus authenticated admin lock/background settings are authored
 facts. No genuine Source, authentication or graphical shell runs in this tracer.
 The production actor loop runs inside the selected library-test process; trusted
 helper selection and actual app-wait observation use its existing cfg(test) seam.
-The normal session-owner executable has no installed connectivity selection yet.
+This earlier actor cohort does not exercise installed connectivity selection. The
+later [configuration component](native-connectivity-installed-selection.md) adds
+explicit Disabled/Owner selection and compiles the normal session-owner wiring;
+it does not qualify normal session-owner execution.
 
 ## Authority and lifetime
 

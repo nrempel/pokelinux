@@ -44,6 +44,17 @@ fn selected_brightness(
     }
 }
 
+fn selected_connectivity(
+    selection: &crate::config::Connectivity,
+) -> io::Result<Option<pokelinux_lifecycle::connectivity::Owner>> {
+    match selection {
+        crate::config::Connectivity::Disabled {} => Ok(None),
+        crate::config::Connectivity::Owner { socket } => {
+            pokelinux_lifecycle::connectivity::Owner::new(socket).map(Some)
+        }
+    }
+}
+
 pub fn run(config: &Config) -> io::Result<()> {
     let helper = std::env::current_exe()?;
     pokelinux_lifecycle::service::trusted_executable(&helper)?;
@@ -114,7 +125,8 @@ pub fn run(config: &Config) -> io::Result<()> {
             .transpose()?;
         let mut audio = pokelinux_lifecycle::audio::Owner::connect(&config.audio_socket, 11040)?;
         let mut brightness = selected_brightness(&config.brightness)?;
-        pokelinux_lifecycle::service::run_with_brightness_services(
+        let mut connectivity = selected_connectivity(&config.connectivity)?;
+        pokelinux_lifecycle::service::run_with_connectivity_services(
             &config.runtime,
             &config.policy,
             &config.profiles,
@@ -130,6 +142,9 @@ pub fn run(config: &Config) -> io::Result<()> {
             brightness
                 .as_mut()
                 .map(|p| p as &mut dyn pokelinux_lifecycle::brightness::Provider),
+            connectivity
+                .as_mut()
+                .map(|p| p as &mut dyn pokelinux_lifecycle::connectivity::Provider),
             startup
                 .as_mut()
                 .map(|observer| observer as &mut dyn pokelinux_lifecycle::startup::Observer),

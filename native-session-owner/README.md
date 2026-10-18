@@ -2,8 +2,8 @@
 
 This Rust entry owns one compositor Child and composes the existing Source
 Observer, lifecycle actor, per-app Wayland supervisor, audio client and explicitly
-selected local Messages history and brightness owner. The fixed desktop requests
-supply no permission, route or executable. The full smartphone system remains open;
+selected local Messages history, brightness owner and connectivity owner. Fixed
+desktop requests supply no permission, route or executable. The full smartphone system remains open;
 see the [composition report](../docs/native-messages-session-composition.md) for
 current component evidence and the remaining normal-session gate.
 
@@ -106,7 +106,9 @@ The deployment must create root-owned nonwritable runtime, display and policy
 ancestors, UID1000 compositor HOME/runtime0700 and UID11042 Sounds
 HOME/runtime0700. History mode also needs UID11010 Messages HOME/runtime0700
 and three existing, separate root0700 directories for history runtime/raw/inbox.
-Brightness owner mode additionally needs UID11050 Settings HOME/runtime0700.
+Either brightness or connectivity owner mode needs UID11050 Settings HOME/runtime0700.
+Both owners share exactly one fixed Settings profile; both disabled refuses
+that profile. Other fixed app roles keep their existing selection rules.
 The required `appearance_socket` has a protected parent. All fixed profiles have
 exactly six absolute arguments and bind the configured Wayland path, appearance
 socket and session `app.sock`; configuration grants no app access.
@@ -126,15 +128,26 @@ does not create directories or change storage data.
 
 The mandatory `brightness` field accepts `{"mode":"disabled"}` or
 `{"mode":"owner","socket":"/absolute/private-owner/owner.sock"}`. Owner mode
-requires exactly one `org.omarchy.Settings` profile at UID11050; disabled mode
-refuses that profile. Its six arguments follow the same fixed bindings, with the
-lifecycle `app.sock` rather than the private brightness endpoint. The owner socket
+contributes to the shared `org.omarchy.Settings` role at UID11050. Exactly one
+Settings profile is required if brightness or connectivity selects an owner;
+Settings is refused if both are disabled. Its six arguments keep the fixed
+bindings, with the lifecycle `app.sock` rather than the private brightness endpoint. The owner socket
 must have an existing root:root0700 parent and differ from audio, appearance,
 Wayland and app endpoints. Configuration accepts no backend/device path or grant.
 Omission is rejected; update operational bundles explicitly. The example selects
 disabled mode. The separate brightness service must be ready independently.
 The [brightness report](../docs/native-brightness.md) distinguishes qualified
 configuration/adapter tests from the still-open full actor and graphical path.
+
+The mandatory `connectivity` field accepts only `{"mode":"disabled"}` or
+`{"mode":"owner","socket":"/absolute/private-connectivity/control.sock"}`.
+Omission is rejected. Owner mode requires an existing root:root0700 parent, an
+absolute path without parent traversal that fits AF_UNIX, and an endpoint distinct
+from audio, appearance, Wayland, lifecycle `app.sock` and the selected brightness
+endpoint. It accepts no grant, backend or device input. Selection constructs the
+existing Rust connectivity provider and passes it to the lifecycle actor; it does
+not start the separate connectivity service or grant NetworkControl. Prepare that
+service independently. The example explicitly disables connectivity.
 
 The examples show the schema; choose actual trusted paths/accounts for the
 installed profile. A direct native Stop client must name that configured runtime.
@@ -177,6 +190,14 @@ staging passed the earlier eight-file core with exact hashes, root:root ownershi
 0755 binaries and0644 metadata, without activation or test reruns. The normal
 GUI/session runtime remains open. The later combined run
 must bind its own exact source/artifacts and original compositor/normal Qt/graph/samples.
+
+The later [connectivity selection](../docs/native-connectivity-installed-selection.md)
+passes31 actual protected-filesystem tests: four new connectivity,15 configuration,
+eight Messages and four brightness groups. Formatting, strict all-target Clippy
+and a locked, feature-empty normal x86_64 Release build pass. The Messages test
+that executes Source/projector setup is explicitly filtered; the new tests run
+no Source, provider, normal Main or installed session. A preserved test-only lint
+failure precedes this completed GREEN and adds no behavioral RED evidence.
 
 Run the explicitly ignored root integration tests only in an isolated prepared
 container with built feature-gated helpers. The `isolated-fixture` helpers are

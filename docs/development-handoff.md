@@ -30,8 +30,10 @@ Wi-Fi/Internet and all phone gates remain open.
 Earlier [private Main](native-connectivity-private-ingress.md) and
 [persistent-worker](native-connectivity-worker.md) cohorts remain separate.
 
-The next connectivity slice joins ordinary Settings ownership and installed
-session-owner/Main selection to the qualified Rust C ABI and Qt controls.
+The next connectivity slice joins the normal Settings Main/window through the
+existing per-app display owner and normal upstream compositor to the actor/Main
+packet oracle. The later installed configuration component now passes separately;
+full session-owner Main runtime still depends on the parked Source composition.
 Keep Source/authentication/full-shell/capture branches parked. The current tracer
 uses authored session=None/admin facts; no genuine session/authentication follows.
 Worker Stop/reaping is separate from remote cleanup, and no implicit mutation
@@ -64,6 +66,16 @@ two existing unavailable components execute. This is native unshown Qt6.8.2,
 not the older Qt6.12 or ARM/window cohorts. Next reuse the existing packet oracle
 for ordinary app ownership and explicit installed session-owner/Main selection;
 normal Main runtime, window and deployment remain open.
+
+The later [installed connectivity selection](native-connectivity-installed-selection.md)
+requires explicit Disabled/Owner and exactly one UID11050 Settings role if either
+brightness or connectivity selects an owner. A real filesystem RED rejects all
+five explicit selections and accepts omission before the repair. All four new
+groups and27 existing filesystem tests now pass, as do formatting, strict
+all-target Clippy and the feature-empty normal Release owner build. The preserved
+first GREEN attempt fails only on two test lints; those corrections change no
+assertion. The actual Source/projector case is filtered. This qualifies Config
+and compilation, not provider execution, installed runtime, ARM or phone behavior.
 
 The [native local-network status path](native-network-status.md) now passes both
 host and native ARM service-to-Rust-client-to-Settings integration. In the ARM VM,

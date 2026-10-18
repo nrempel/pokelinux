@@ -24,5 +24,8 @@
   },
   "brightness": {
     "mode": "disabled"
+  },
+  "connectivity": {
+    "mode": "disabled"
   }
 }

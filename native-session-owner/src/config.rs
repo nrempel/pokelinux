@@ -20,6 +20,7 @@ pub struct Config {
     pub appearance_socket: PathBuf,
     pub messages: Messages,
     pub brightness: Brightness,
+    pub connectivity: Connectivity,
     pub compositor_executable: PathBuf,
     pub compositor_config: PathBuf,
     pub environment: BTreeMap<String, String>,
@@ -41,6 +42,13 @@ pub enum Messages {
 #[serde(tag = "mode", rename_all = "snake_case", deny_unknown_fields)]
 pub enum Brightness {
     Disabled,
+    Owner { socket: PathBuf },
+}
+/// Root-installed private owner selection; no app authority or backend input.
+#[derive(Debug, Deserialize)]
+#[serde(tag = "mode", rename_all = "snake_case", deny_unknown_fields)]
+pub enum Connectivity {
+    Disabled {},
     Owner { socket: PathBuf },
 }
 /// Fixed installed principals. Display admission uses this same mapping.
@@ -151,6 +159,24 @@ impl Config {
             // Validate the actual AF_UNIX path representation without connecting.
             rustix::net::SocketAddrUnix::new(socket)?;
         }
+        if let Connectivity::Owner { socket } = &self.connectivity {
+            absolute(socket)?;
+            let parent = socket.parent().ok_or(io::ErrorKind::InvalidInput)?;
+            private_directory(parent, 0)?;
+            if fs::symlink_metadata(parent)?.gid() != 0
+                || [
+                    &self.audio_socket,
+                    &self.appearance_socket,
+                    &self.wayland,
+                    &self.runtime.join("app.sock"),
+                ]
+                .contains(&socket)
+                || matches!(&self.brightness, Brightness::Owner { socket: other } if other == socket)
+            {
+                return Err(io::ErrorKind::PermissionDenied.into());
+            }
+            rustix::net::SocketAddrUnix::new(socket)?;
+        }
         if let Messages::History {
             runtime,
             raw,
@@ -224,8 +250,9 @@ impl Config {
         }
         let profiles = pokelinux_lifecycle::service::profile(&self.profiles)?;
         let history = matches!(&self.messages, Messages::History { .. });
-        let brightness = matches!(&self.brightness, Brightness::Owner { .. });
-        if profiles.apps.len() != 1 + usize::from(history) + usize::from(brightness) {
+        let settings = matches!(&self.brightness, Brightness::Owner { .. })
+            || matches!(&self.connectivity, Connectivity::Owner { .. });
+        if profiles.apps.len() != 1 + usize::from(history) + usize::from(settings) {
             return Err(io::ErrorKind::PermissionDenied.into());
         }
         let mut roles = std::collections::BTreeSet::new();
@@ -234,7 +261,7 @@ impl Config {
             if !roles.insert(app.app.as_str())
                 || !(app.app == pokelinux_lifecycle::audio::APP
                     || history && app.app == pokelinux_lifecycle::messages::APP
-                    || brightness && app.app == pokelinux_lifecycle::brightness::APP)
+                    || settings && app.app == pokelinux_lifecycle::brightness::APP)
             {
                 return Err(io::ErrorKind::PermissionDenied.into());
             }

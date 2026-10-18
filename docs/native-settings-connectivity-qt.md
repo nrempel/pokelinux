@@ -75,7 +75,9 @@ lifecycle actor, actual NetworkControl grant or network kernel backend.
 ## Remaining integration
 
 Reuse the existing actor/Main packet oracle for normal app ownership, then add
-explicit installed session-owner/Main selection and deployment. Keep Source,
+installed session-owner/Main execution and deployment. The later
+[configuration component](native-connectivity-installed-selection.md) qualifies the
+explicit selection and normal build separately. Keep Source,
 authentication, full-shell and capture investigations parked. ARM controls,
 actual suspend, Wi-Fi/Bluetooth/Internet and all phone gates remain open. No
 physical phone was accessed; zero models are hardware-qualified.

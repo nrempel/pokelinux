@@ -9,9 +9,11 @@ strict QA, a normal Release archive and a separate real-header C++ unavailable/
 lifetime smoke. The later [unshown Qt component](native-settings-connectivity-qt.md)
 passes a real Enable click, one exact-deadline Set, fresh Ready state and
 asynchronous Stop/Join/Free. Normal CMake builds/loads the app and three test
-targets. Normal app/window, installed selection, ARM and all physical gates
-remain open; this advances a software slice without completing the smartphone
-matrix.
+targets. The later [installed configuration](native-connectivity-installed-selection.md)
+passes31 protected-filesystem tests and the normal owner Release build. It requires
+an explicit Disabled/Owner choice with no permission or backend input. Normal
+app/window, installed runtime/deployment, ARM and all physical gates remain open;
+these slices do not complete the smartphone matrix.
 
 The [combined ARM development image](native-arm-development-image.md) now
 cold-boots seven installed services together: battery, brightness, network status

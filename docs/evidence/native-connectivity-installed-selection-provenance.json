@@ -1,0 +1,259 @@
+{
+  "schema": 1,
+  "status": "Actual compiled Config selection and missing-field behavioral RED then31 filesystem passes and normal Release build",
+  "public_base_commit": "c807ffb5ce84734353c4a441ba34a4a9d5266781",
+  "evidence_class": "Native Harbour x86_64 protected filesystem Config::load; no runtime/boot/ARM/phone",
+  "sources": {
+    "native-session-owner/src/config.rs": {
+      "bytes": 10792,
+      "sha256": "1a17d6a2bcd6a21bb64f4babc519856f79efc8c1db59e2c39644d9bcf76ebc24"
+    },
+    "native-session-owner/src/runtime.rs": {
+      "bytes": 6518,
+      "sha256": "3ae80677239daa5763c51dce263801e9fcf4055986eb76d6db4fd07c88a46bd9"
+    },
+    "native-session-owner/tests/config.rs": {
+      "bytes": 11704,
+      "sha256": "136cd1c3f4f170960be9145539e1b57db5b98741c5728b4c047038d8ef0a6caa"
+    },
+    "native-session-owner/tests/messages_config.rs": {
+      "bytes": 10723,
+      "sha256": "1beb3c7d08d50b9e1dd7c0937660e9d9f6a2a414349690b0fa693057b1e5f363"
+    },
+    "native-session-owner/tests/brightness_config.rs": {
+      "bytes": 8653,
+      "sha256": "c95fdf0ada518beb0c61e93bfd1d37b48a60f74f9566f5d25ffdfc9ce1ca77d3"
+    },
+    "native-session-owner/tests/connectivity_config.rs": {
+      "bytes": 12200,
+      "sha256": "ce142b21c308d9d9172e0f3b9a69139a4a3ef54bd7aea627a5e81a8641c77ee9"
+    },
+    "native-session-owner/packaging/session.example.json": {
+      "bytes": 960,
+      "sha256": "7fb0a73dd56dcdbb7094034e47465a521ad1024840b4cc83d70082f821fa9d1b"
+    },
+    "native-session-owner/Cargo.lock": {
+      "bytes": 25921,
+      "sha256": "01b883206ab05c128fe8fcad3928c1f6399d26ecadebf5bb2ddcf146ca4586b1"
+    }
+  },
+  "private_artifact_digests": {
+    "behavior_RED": {
+      "Root-command.json": {
+        "bytes": 90319,
+        "sha256": "8f2f1107d0430e385b3997fdb255ffdd19d8cb23a67c31f595b42fa1294c9b00"
+      },
+      "SEAL.json": {
+        "bytes": 35878,
+        "sha256": "706499d5ce73978e32bce17fc46e85067cd5b9ae1beadaf7728bf0495d17986c"
+      },
+      "SOURCE.json": {
+        "bytes": 33638,
+        "sha256": "f2146c4c741e1073f7fdb2d95fdc9f59a8bb7e07673d7e2ae51f0ebc617147f8"
+      },
+      "outer/receipt.json": {
+        "bytes": 194198,
+        "sha256": "3ad20a6f597fb5a576639fc29261750ae487b77e47de3f47e68fa06f0561df79"
+      },
+      "out/result.json": {
+        "bytes": 48899,
+        "sha256": "059d1f279f60fc39beb9f5c7858e2209517ed4b48f3118e960333e05adf558c4"
+      },
+      "Root-behavior-RED-review.json": {
+        "bytes": 1146,
+        "sha256": "eec351ebf8024bf82f555f34649b25e1f3b7fc97438b739b57d6c4693f7ec649"
+      },
+      "consumer-format.diff": {
+        "bytes": 20683,
+        "sha256": "9523510b5aab147ae1c8c5c170a42c23e2946e0e628372e6ef39179c5a73db6a"
+      }
+    },
+    "GREEN1_test_lint_QA_failure": {
+      "Root-command.json": {
+        "bytes": 94283,
+        "sha256": "f5ef989e063aeb02bccdbf2e0e11d4dd08db785a38b4aa055db582a37b0765c0"
+      },
+      "SEAL.json": {
+        "bytes": 36049,
+        "sha256": "ab35fe639fd21c4de11c66d9b1a63f1885072bc0941f545ed61820e5d86dd827"
+      },
+      "outer/receipt.json": {
+        "bytes": 196407,
+        "sha256": "cdd7a46d0651f2e0152092c1706753eb6b5fd5f7db8327d53ef35245c6cd0e3a"
+      },
+      "out/result.json": {
+        "bytes": 56071,
+        "sha256": "56bb3d0f7bf98aa43247e946e8831570e41942c7fd2031d2a88aa7b23aedb439"
+      }
+    },
+    "GREEN2": {
+      "Root-command.json": {
+        "bytes": 94972,
+        "sha256": "14f1025bfb24dbdba0c9b4743e292d34ad2bf7f784d9647fdc9a761560d55f9c"
+      },
+      "SEAL.json": {
+        "bytes": 36185,
+        "sha256": "dae1da023b5612dcfa67cb9a4dd8584b2d51e0e120c238841d9d116c407a73ee"
+      },
+      "SOURCE.json": {
+        "bytes": 37286,
+        "sha256": "909776cb00e57336bc1fed49c8fe61e090f70d6b8fff089f4b5e090a06578441"
+      },
+      "outer/receipt.json": {
+        "bytes": 196435,
+        "sha256": "7a8df8fae7d34a6f4d4b6df767fdcc8e93e028ce1912c52761dc82641bb29f99"
+      },
+      "out/result.json": {
+        "bytes": 71933,
+        "sha256": "45c8a2dc8722dedc7d3d82ea74c3f1f6f920a83e3a10b6a51d368ca188426a68"
+      },
+      "Root-GREEN-review.json": {
+        "bytes": 1235,
+        "sha256": "1d6625738fe5a36b04d156a3824f44a415104d15a465c17f5ce4a76c7923645f"
+      },
+      "preparer-closed-Config-GREEN-review.json": {
+        "bytes": 16841,
+        "sha256": "098cfcbbe8f58647f3b73121957e97ebd851e10ddab8f04591a0be47cc35fb1e"
+      }
+    },
+    "test_only_style_bridge": {
+      "bytes": 467,
+      "sha256": "032fc4d28b0508be7a9be7971554ed12c54de8476dc451245169fac59bf4b0bc"
+    }
+  },
+  "compiled_RED_consumer": {
+    "bytes": 12205,
+    "sha256": "ac08cb3c28a9ae7ab9d89b9972db1409fb3010b2f832c6dda27ffd08b73539ac"
+  },
+  "compiled_GREEN_consumer": {
+    "bytes": 12200,
+    "sha256": "ce142b21c308d9d9172e0f3b9a69139a4a3ef54bd7aea627a5e81a8641c77ee9"
+  },
+  "consumer_bridge": "Original rustfmt layout/commas and six expression blocks independently reviewed; after preserved GREEN1 lint failure only needless borrow and unused mut removed. No assertion/oracle change.",
+  "RED": {
+    "actual_compiled_tests": 2,
+    "actual_exit": 101,
+    "failed": 2,
+    "explicit_selection_rejected": 5,
+    "missing_selection_actual_load_accepted": true,
+    "later_negative_fields_not_reached": true,
+    "Scope_wait_stdout_EOF": 16,
+    "regular_stderr_separate": 3,
+    "pins_unchanged": 453
+  },
+  "GREEN": {
+    "actual_passed": 31,
+    "actual_suite_counts": {
+      "connectivity_config": 4,
+      "config": 15,
+      "messages_config": 8,
+      "brightness_config": 4
+    },
+    "actual_test_names": {
+      "connectivity_config": [
+        "explicit_selection_uses_one_settings_role_for_brightness_or_connectivity",
+        "connectivity_selection_is_required_and_accepts_no_authority_or_backend_fields",
+        "selected_settings_requires_exact_uid_role_and_six_bound_arguments",
+        "connectivity_owner_endpoint_is_private_canonical_unix_and_distinct"
+      ],
+      "config": [
+        "valid_installed_sounds_configuration_is_selected",
+        "unknown_permission_or_raw_descriptor_fields_are_refused",
+        "wrong_app_uid_and_argument_shape_are_refused",
+        "actor_endpoint_wayland_and_private_uid_directories_are_bound",
+        "writable_and_symlinked_installer_inputs_are_refused",
+        "relative_paths_and_reserved_source_environment_are_refused",
+        "bounded_document_refuses_oversize_before_role_selection",
+        "root_installed_display_profile_environment_is_selected",
+        "policy_directory_existing_root_private_control_is_selected",
+        "policy_directory_missing_filename_is_refused",
+        "policy_directory_regular_file_is_refused",
+        "policy_directory_nonprivate_modes_are_refused",
+        "policy_directory_symlink_is_refused",
+        "policy_directory_wrong_owner_is_refused",
+        "policy_directory_writable_ancestor_is_refused"
+      ],
+      "messages_config": [
+        "history_selects_both_fixed_app_roles",
+        "disabled_is_an_explicit_sounds_only_target",
+        "missing_mode_and_undeclared_backends_are_refused",
+        "history_requires_exact_roles_and_uids",
+        "mode_and_profile_set_cannot_disagree",
+        "both_apps_bind_canonical_actor_wayland_and_appearance_socket",
+        "app_private_directories_cannot_cross_principals",
+        "history_directories_are_existing_root_private_and_separate"
+      ],
+      "brightness_config": [
+        "explicit_brightness_selection_supports_the_exact_installed_app_matrix",
+        "selection_is_required_and_never_grants_app_authority",
+        "settings_requires_selected_owner_exact_uid_role_and_six_bound_arguments",
+        "owner_endpoint_requires_private_root_deployment_and_distinct_socket_selection"
+      ]
+    },
+    "explicitly_filtered": "messages_config::returning_runtime_setup_failure_drains_projector_and_source",
+    "format_strict_Clippy_locked_compile_and_normal_Release_before_first_test": true,
+    "current_compiled_sources": 223,
+    "pins_unchanged": 456,
+    "normal_Release": {
+      "bytes": 5951880,
+      "sha256": "5e04f0da4166c64d54f7bec8f3996db02d6cf2a7e9e5dacecb484446bb1a473a",
+      "ELF_machine": 62,
+      "normal_Main_executed": false
+    },
+    "normal_Release_features": [],
+    "normal_Release_opt_level": "3",
+    "Scope_actual_wait_stdout_EOF": 22,
+    "regular_stderr_separate": 9
+  },
+  "identity": {
+    "actual_test_uid_euid": 0,
+    "actual_test_Eff_Prm_Bnd_mask": 43,
+    "actual_test_Inh_Amb": 0,
+    "actual_test_capabilities": [
+      "CHOWN",
+      "DAC_OVERRIDE",
+      "FOWNER",
+      "KILL"
+    ],
+    "five_compiler_children_all_capability_sets_zero": true,
+    "NoNewPrivs": 1
+  },
+  "custody": {
+    "original_inner_work_close_seconds": [
+      140,
+      160
+    ],
+    "original_host_work_close_seconds": [
+      180,
+      200
+    ],
+    "all_actual_wait_stdout_EOF_before_original_cutoffs": true,
+    "all_regular_stderr_closed_after_wait_before_original_cutoff": true,
+    "fixture_empty_before_after_each_suite": true,
+    "no_adopted_waits_ECHILD": true,
+    "exact_container_removed_same_daemon": true,
+    "all_inputs_unchanged": true
+  },
+  "build_environment": {
+    "image_sha256": "b6818cecd61a5e378fecbf25d7b0979360cf29fda9ad0801b4a21e2054f69678",
+    "network": "none",
+    "cpu_limit": 8,
+    "memory_bytes": 3221225472,
+    "build_tmpfs_bytes": 1073741824
+  },
+  "scope_limits": {
+    "Source_projector_provider_backend_or_boot_execution": false,
+    "normal_Main_executed": false,
+    "normal_Settings_window_or_app": false,
+    "kernel_network_packets": false,
+    "ARM_or_matched_Pixel_kernel": false,
+    "physical_phone_access": false,
+    "qualified_phone_models": 0
+  },
+  "remaining_gates": [
+    "Normal Settings Main/window with real per-app display and actor/Main packet lifecycle",
+    "Installed Source/authentication/session-owner runtime and service deployment",
+    "ARM control and actual suspend",
+    "Wi-Fi/Bluetooth/Internet and matched physical hardware"
+  ]
+}
