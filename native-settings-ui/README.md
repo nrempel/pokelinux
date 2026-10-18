@@ -230,9 +230,13 @@ closure and `R\n` after the fresh service is ready; they are test-fixture contro
 not production network-service requests. Both run as UID/GID11050 with the actual
 protected shared appearance QML; neither shows a window.
 
-The current host Qt6.8.2 CMake Release build and these components pass. The normal
-app is compiled/linked only. This does not supply a new screenshot, normal-main
-execution, default-Cargo CMake execution, ARM frontend or physical-phone result.
+The current host Qt6.8.2 CMake Release build and these components pass. A separate
+native ARM Qt6.12 build/install now links all three matching Rust engines and
+passes the unchanged dynamic component against the actual installed PID1 service.
+PID1 owns both service Mains and their Stops; the fixture parent actually waits
+only its component and commands. All54 direct waits/merged PIPE EOFs close within
+their original bounds. The normal ARM app3a8b8aac is built/installed only. No
+normal-main/window, new screenshot, default-Cargo CMake or phone result follows.
 The earlier ARM59fb0ef1 and five brightness screenshots predate this card; their
 own source/binary cohorts remain separate. See the
 [network-status report](../docs/native-network-status.md).

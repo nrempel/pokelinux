@@ -126,9 +126,11 @@ Google kernel, device namespace/policy or another phone model.
 
 The [local-network status path](native-network-status.md) composes that observer
 with a portable coarse-count service, fixed read-only Rust client and themed
-Settings card. Generic ARM PID1 startup/Stop and host real-service/QML expiry and
-reconnection are separate results. They qualify neither usable connectivity nor
-the matched Pixel kernel, radio, namespace/policy or another phone model.
+Settings card. Native generic ARM now joins the actual installed PID1 service to
+the Rust reader and offscreen Qt6.12 component through Stop, expiry and fresh
+reconnection. The host Qt6.8.2 result remains separate. Neither qualifies usable
+connectivity, the matched Pixel kernel, radio, namespace/policy or another phone
+model; the normal ARM app window remains unexecuted.
 
 The [frozen public Data V3 boundary](native-cellular-data-abi.md) qualifies one
 Rust/NDK ABI exchange on generic ARM. Its API has no slot argument. Do not infer

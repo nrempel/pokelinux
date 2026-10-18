@@ -39,9 +39,15 @@ A separate [Rust reader and Settings card](../docs/native-network-status.md) now
 pass host real-service integration and offscreen loss/expiry/recovery. They do not
 inherit this ARM service cohort.
 
-TUN creation/disappearance integration, ARM typed Rust-client integration,
-Settings presentation, Internet reachability, modem behavior, and physical-device
-validation remain unqualified by these service runs.
+A later native ARM Qt6.12 [reader/QML join](../docs/native-network-status.md)
+executes the real Rust client in UID11050 normal Settings QML against this exact
+installed service. It starts with the autostarted PID1 Main, observes0/0, stops
+the service, proves getter expiry and dash rendering, then recovers0/0 through a
+fresh PID1 invocation in the same component. Both Stops record normal exit0, dead
+Main pidfds, removed sockets and empty cgroups; these are PID1 lifecycle facts,
+not fixture-parent waits of the service. Normal Settings main/window execution,
+TUN creation/disappearance, Internet/modem behavior and physical-device validation
+remain open. The earlier service-only and host results retain their own scope.
 
 
 ## Installed ARM service
@@ -70,9 +76,9 @@ The service runs as root with Type=exec, Restart=no, KillMode=control-group and 
 five-second Stop limit. Its runtime directory is root0:0/0755; the public snapshot
 socket is root0:0/0666. The existing install-native-services Make target stages
 the0755 executable and0644 unit; enablement is an explicit image-preparation step.
-This result uses a Python socket consumer. It supplies no ARM typed-client or
-Settings UI evidence, interface-mutation test, Wi-Fi/Internet/modem connectivity,
-or physical-phone qualification.
+This original service-only result uses a Python socket consumer. It does not
+itself supply the later ARM Rust-client/QML evidence, an interface-mutation test,
+Wi-Fi/Internet/modem connectivity or physical-phone qualification.
 
 
 ## Reproducing the tests

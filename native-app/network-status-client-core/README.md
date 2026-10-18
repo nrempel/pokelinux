@@ -34,9 +34,13 @@ cargo clippy --locked --offline --manifest-path native-app/network-status-client
 ```
 
 All seven default tests, fmt and strict all-target Clippy pass. Separate normal
-host/ARM archives compile and expose exactly the four C operations; the ARM
-archive is a crossbuild, without reader execution. See the
-[service/client report](../../docs/native-network-status.md).
+host/ARM archives compile and expose exactly the four C operations. That original
+ARM archive record is build-only. A later native ARM Qt6.12 run executes this real
+reader through the UID11050 normal-QML component with the installed PID1 service:
+0/0 → Stop → getter expiry without Qt events → dashes → fresh invocation →0/0.
+The same component/adapter recovers; both PID1 Stops report normal exit0 and empty
+cgroups. The normal Settings ELF is built/installed, without running its main or
+showing a window. See the [service/client report](../../docs/native-network-status.md).
 
 The ordinary tests use real Unix sockets for healthy-empty publication, zero
 request bytes, malformed and partial replies, withheld EOF, original deadline

@@ -86,15 +86,14 @@ follows all three driver states through that service/client path, with original
 Pixel10-profile captures. Physical Pixel behavior remains a separate gate.
 Host/ARM64 service release builds pass.
 
-The [native local-network status path](docs/native-network-status.md) now joins
-real kernel observations to a read-only Rust client and themed Settings card.
-The normal ARM daemon separately passes production installation, a fresh PID1
-cold boot and normal Stop. On the host, the same QML instance follows real0/0
-counts → service loss/expiry → dashes → fresh read-only recovery0/0. Seven Rust
-client groups, strict checks and separate host/ARM archives pass. Counts establish
-no Wi-Fi, Internet or modem connectivity. The new normal app is built, with no
-normal-main/window, new screenshot or physical-phone qualification; the ARM
-reader/Settings join and complete installed image remain separate gates.
+The [native local-network status path](docs/native-network-status.md) now passes both
+host and native ARM service-to-Rust-client-to-Settings integration. In the ARM VM,
+PID1 starts the installed service automatically; the same unprivileged QML
+instance shows0/0, clears stale counts after Stop and recovers through a fresh
+service instance. Both Stops finish normally. The native Qt6.12 build installs
+Settings with its three matching Rust engines. Counts establish no Wi-Fi,
+Internet or modem connectivity. The normal app main/window, combined installed
+image and physical-phone gates remain open; no new screenshot is claimed.
 
 The [prepared three-app navigation branch](docs/native-three-app-navigation.md)
 is parked after three failed epochs. The later attempts reach Settings and

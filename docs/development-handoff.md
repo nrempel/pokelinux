@@ -16,15 +16,14 @@ phone. Keep synthetic emulator, original-code, ARM64/QEMU and physical evidence
 separate. Do not equate registration, submission or API success with carrier
 acceptance, delivery, native call state or working physical hardware.
 
-The [native local-network status path](native-network-status.md) now joins
-real kernel observations to a read-only Rust client and themed Settings card.
-The normal ARM daemon separately passes production installation, a fresh PID1
-cold boot and normal Stop. On the host, the same QML instance follows real0/0
-counts → service loss/expiry → dashes → fresh read-only recovery0/0. Seven Rust
-client groups, strict checks and separate host/ARM archives pass. Counts establish
-no Wi-Fi, Internet or modem connectivity. The new normal app is built, with no
-normal-main/window, new screenshot or physical-phone qualification; the ARM
-reader/Settings join and complete installed image remain separate gates.
+The [native local-network status path](native-network-status.md) now passes both
+host and native ARM service-to-Rust-client-to-Settings integration. In the ARM VM,
+PID1 starts the installed service automatically; the same unprivileged QML
+instance shows0/0, clears stale counts after Stop and recovers through a fresh
+service instance. Both Stops finish normally. The native Qt6.12 build installs
+Settings with its three matching Rust engines. Counts establish no Wi-Fi,
+Internet or modem connectivity. The normal app main/window, combined installed
+image and physical-phone gates remain open; no new screenshot is claimed.
 
 The [current native ARM Settings/Messages build](native-current-arm-apps.md#current-settings-and-messages-with-battery)
 passes production CMake/install and offscreen components for its frozen
@@ -43,12 +42,14 @@ Preserve all failed aggregates and the third's theme-host255 cleanup error.
 Source100ms, warmup, authority and cutoffs are unchanged. Do not retry this branch
 or resume Source/authentication/capture investigations.
 
-Next is the same real network-status Rust-client/Settings component join under
-the generic ARM kernel and installed PID1 service. Keep it distinct from the
-already passing host QML and ARM Python-consumer results. The private Messages
-read-provider branch remains parked at compiled assertion RED, with no qualified
-GREEN or deployed join; do not retry it. A combined phone image, normal ARM
-windows, cold graphical startup and all matched-device gates remain open.
+Next is one installed ARM development-image tracer joining the existing battery,
+brightness and network services with current Settings. Require automatic startup,
+actual component observations, same-cohort runtime reinstall with preserved site
+configuration/data, and another fresh boot. Reuse the existing stager and VM;
+this is not a graphical phone image. The private Messages read-provider remains
+parked at compiled assertion RED, with no qualified GREEN or deployed join; do
+not retry it. Normal ARM windows, cold graphical startup and all matched-device
+gates remain open.
 
 Messages currently has two alternative Projector owners: standalone daemon and
 session History. Never run both against one database. Installed headless and

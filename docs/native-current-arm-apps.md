@@ -6,6 +6,10 @@ component execution. This uses the current Settings600 engine and all four
 matching ARM Rust archives. It executes neither normal app main nor a window;
 default ARM Cargo and a combined installed image remain open. Earlier ARM
 Messages/Sounds builds and graphical attempts below retain their own cohorts.
+The later [network-card Settings cohort](native-network-status.md) now separately
+builds and installs normal ARM3a8b8aac and executes its unchanged dynamic component
+against the installed PID1 service. Its three-archive link and direct QEMU closure
+do not replace the older cohort's evidence or execute a normal app window.
 
 ## Current Settings and Messages-with-battery
 
