@@ -137,3 +137,37 @@ and observation only; its setup failures are not relabeled production REDs.
 Installed full-runtime deployment, ARM controls, actual suspend, Wi-Fi,
 Bluetooth, Internet and all physical-phone gates remain open. No physical phone
 was accessed; zero phone models are hardware-qualified.
+
+## ARM64 compile prerequisite
+
+A separate host crossbuild at bfe6e556 now produces current AArch64 Release
+networking Main/worker, the normal session-owner helper and the matching Settings
+archive with all 13 strong C APIs. The helper is selected for its existing
+app-entry/storage/display-context modes; this does not execute full session Main.
+All 435 archive ELF members target AArch64. The compile epoch retains 17 foreground
+shell waits with regular logs and 14 host Scope waits/stdout EOFs; original
+cutoffs, input pins, ECHILD and exact container closure pass.
+
+The subsequent libtest-only build changes exactly one test observation scalar:
+`start.checked_add(12_000_000_000)` becomes `start.checked_add(32_000_000_000)`.
+Its derived source-pin manifest changes only that row. The original 12s driver,
+fixture and envelope remain preserved, and every normal binary/archive/header
+stays byte-identical. This second epoch has eight foreground regular-log waits
+and 14 host Scope waits/stdout EOFs with the same closure requirements.
+
+The ARM measurement profile is selected before execution: at most eight readonly
+frames under one fixed 20s readiness cutoff per stage, first within GUI 30s and
+second within one 32s functional aggregate. Controller work/close are 90/100s;
+guest 660/700s stays unchanged. Earlier qualified ARM captures took 0.919–0.984s
+from native readiness to child wait and another 4.391–8.877s through complete
+PNG/ROI qualification. One two-frame readiness observation took 19.255s. These
+observation costs justify an architecture-specific test budget, without changing
+the decoder, production action 1s, SDK close 200ms, freshness 250ms or quiet 800ms.
+There is no clock renewal, implicit mutation retry or new production RED/GREEN.
+The copied test's historical x86 ignore annotation remains unchanged and is not
+an ARM runtime qualification.
+
+[Hash-only build provenance](evidence/native-settings-connectivity-arm-build-provenance.json)
+binds both build epochs, their outputs and closed reviews. No AArch64 code executes in
+these crossbuilds. Native ARM loader resolution, Qt CMake/install, normal windows,
+packets, PID1 connectivity deployment and every physical-phone gate remain open.

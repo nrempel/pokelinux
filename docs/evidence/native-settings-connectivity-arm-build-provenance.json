@@ -1,0 +1,165 @@
+{
+  "schema": 1,
+  "evidence_class": "x86 host crosscompilation to AArch64 GNU/Linux; no ARM execution",
+  "source_commit": "bfe6e556465d611d2a0e4b34137d7c422b177c2f",
+  "classification": "CURRENT_RUST_PROVIDERS_AND_TEST_OBSERVATION_BRIDGE_COMPILE_ONLY",
+  "passed": true,
+  "phone_accessed": false,
+  "hardware_models_qualified": 0,
+  "compiler": "rustc1.98.1 (48a229cea 2026-09-01), LLVM22.1.8",
+  "target": "aarch64-unknown-linux-gnu",
+  "normal_production_features": [],
+  "normal_production_profile": {
+    "opt_level": "3",
+    "test": false
+  },
+  "normal_production_outputs": {
+    "pokelinux-connectivity-main": {
+      "bytes": 860048,
+      "sha256": "5a555f284df0636c63f3bbe2a7cf3aa1c4293e5d48a958fc2460cf26d886c5d7"
+    },
+    "pokelinux-connectivity-service": {
+      "bytes": 654992,
+      "sha256": "c7deb6d43a791a110c7a7aae36d23cd5db45006b042fa0035ffcb882e531f928"
+    },
+    "pokelinux-session-owner": {
+      "bytes": 5757656,
+      "sha256": "36536176cc7dc69b1c04f38aab16edd6653a8906ac6fedd15e6d13b9328ee8ec"
+    },
+    "libpokelinux_settings_client.a": {
+      "bytes": 26605614,
+      "sha256": "a1006830e65e3f457e6f19cccdb310bb963917b4844e3750682bc5ae99fef649",
+      "ELF_members": 435,
+      "ELF_machine": 183,
+      "strong_C_APIs": 13
+    }
+  },
+  "all_normal_ELFs_machine": 183,
+  "normal_ELF_interpreter": "/lib/ld-linux-aarch64.so.1",
+  "producer_custody": {
+    "source_files": 243,
+    "input_pins": 508,
+    "foreground_shell_waits_regular_logs": 17,
+    "host_Scope_wait_stdout_EOF": 14,
+    "actual_shell_capabilities_zero": true,
+    "NoNewPrivileges": true,
+    "descendant_capabilities_independently_probed": false,
+    "original_cutoffs_output_bounds_ECHILD_no_adopted_exact_CID_absent_same_daemon_inputs_unchanged": true
+  },
+  "producer_hash_only_receipts": {
+    "artifacts_and_inner_result": {
+      "bytes": 103652,
+      "sha256": "51525954963d6b2039595629f953385d968871044caa74d1e83b92a942968783"
+    },
+    "outer": {
+      "bytes": 217451,
+      "sha256": "39b22b9f0c1fc7f014a562a510124d9e69d7de3c98c851ba5132f5af4f88e07b"
+    },
+    "Root_closed_review": {
+      "bytes": 8264,
+      "sha256": "8e210b447f85614bfe3ffb03dead33c8f0fc3178fb2c3463f5d4c631873a4b1b"
+    }
+  },
+  "test_only_observation_bridge": {
+    "original_public_fixture": {
+      "bytes": 29236,
+      "sha256": "856588ac31209aabcf4d1294dcbaf876220ab0309bc3ecdc5095d6ee9ef31693"
+    },
+    "bridged_fixture": {
+      "bytes": 29236,
+      "sha256": "7cd20f15418c69fdcc34b4213d5ce66296a1d7090bdb6c335f7ac35312a3409c"
+    },
+    "only_literal_change": {
+      "before": "start.checked_add(12_000_000_000)",
+      "after": "start.checked_add(32_000_000_000)"
+    },
+    "derived_source_pin_manifest_changes_only_that_row": true,
+    "historical_x86_ignore_label_unchanged": true,
+    "original_12s_driver": {
+      "bytes": 10710008,
+      "sha256": "90840fcc70bf08d1b69467bbf9d78a9fb2c9c7fa1e5936d19a06966c9a998fb4"
+    },
+    "new_32s_driver": {
+      "bytes": 10710008,
+      "sha256": "5c9b18cc53a9804d9031a663ed2d249837c512f44d64220d6208acf71f28429f",
+      "ELF_machine": 183,
+      "opt_level": "0",
+      "test": true,
+      "features": []
+    },
+    "production_outputs_rebuilt": false,
+    "production_outputs_and_headers_physically_unchanged": true,
+    "compiled_source_files_physically_verified": 243,
+    "input_pins_physically_verified": 518,
+    "foreground_shell_waits_regular_logs": 8,
+    "host_Scope_wait_stdout_EOF": 14,
+    "original_cutoffs_output_bounds_ECHILD_no_adopted_exact_CID_absent_same_daemon_inputs_unchanged": true,
+    "hash_only_receipts": {
+      "artifacts_and_inner_result": {
+        "bytes": 51502,
+        "sha256": "caa325904103d3c7759889cb519c1198f414452a684236ddfdd8e3d2b5d1ae73"
+      },
+      "outer": {
+        "bytes": 227993,
+        "sha256": "fb9794f38a9df4f1193b97413c6506917f90bdb40e47f2c4358b7fcd8470a373"
+      },
+      "Root_closed_review": {
+        "bytes": 2823,
+        "sha256": "f79619e8b5efc1247a46f9b2f4642bc30a8337f4cd7c1f5b7e865e0cfec7f50b"
+      }
+    },
+    "runtime_measurement_profile_selected_before_any_new_ARM_run": {
+      "GUI_setup_seconds": 30,
+      "readiness_seconds_per_stage_fixed_once": 20,
+      "maximum_frames_per_stage": 8,
+      "functional_aggregate_seconds": 32,
+      "controller_work_seconds": 90,
+      "controller_close_seconds": 100,
+      "guest_work_seconds": 660,
+      "guest_close_seconds": 700
+    },
+    "unchanged_domain_bounds": {
+      "action_ns": 1000000000,
+      "SDK_close_ns": 200000000,
+      "observation_TTL_ns": 250000000,
+      "quiet_ns": 800000000
+    },
+    "clock_rearm_or_mutation_retry": false,
+    "new_capture_decoder_or_oracle": false,
+    "production_RED_or_GREEN_claim": false,
+    "historical_timing_basis": {
+      "evidence_class": "prior qualified generic ARM VM normal compositor capture; separate cohort",
+      "raw_result_hash_only": {
+        "bytes": 326010,
+        "sha256": "3b890dea4a50be72028b2f89d8f7d9393de2a9cd63d1ce8e8493aed8d1998a0b"
+      },
+      "native_ready_to_actual_capture_wait_ns": [
+        983854850,
+        930017760,
+        919204948,
+        955975505,
+        921093225
+      ],
+      "actual_wait_to_complete_observation_ns": [
+        8877459830,
+        8588921008,
+        8327297006,
+        4391255101,
+        7687773136
+      ],
+      "two_frame_readiness_observation_ns": 19254841418,
+      "not_current_ARM_runtime_evidence": true
+    }
+  },
+  "qualification_limits": {
+    "ARM_loader_resolution": false,
+    "native_ARM_Qt_build_install": false,
+    "ARM_window_input_or_packets": false,
+    "production_PID1_connectivity_service": false,
+    "genuine_Source_auth_full_session_Main": false,
+    "WiFi_Internet_or_physical_phone": false,
+    "new_tests_executed_by_crossbuild": false,
+    "strict_Clippy_in_this_cohort": false,
+    "preserved_copied_Config_dead_code_warnings": 9
+  }
+}

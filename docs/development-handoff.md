@@ -44,8 +44,13 @@ failed attempts retain their exact classifications; Sol9 passes after bounded
 visible-control readiness. First app retirement preserves the connection, and a
 fresh generation explicitly disables it. No production repair is attributed to
 the earlier unlocalized touch failure. The installed Config component remains a
-separate pass. Next inventory one installed generic ARM connectivity cohort using
-current native build/package paths. Keep Source/authentication/full-session Main
+separate pass. Current native Rust Main/worker, normal app helper and the
+13-API Settings archive now cross-compile for ARM64; the exact test-only 32s
+observation bridge compiles
+separately with unchanged production outputs. Native loaders, Qt build/install
+and window/packet execution remain open. Next prepare one installed generic ARM
+connectivity cohort using current native build/package paths. Keep
+Source/authentication/full-session Main
 and broader capture campaigns parked; authored session=None/admin facts remain
 explicit. Worker reaping is separate from remote cleanup; no implicit mutation
 retry or same-namespace recovery is allowed.

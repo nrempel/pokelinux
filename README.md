@@ -14,6 +14,12 @@ packet round trips, address removal and quiet pass in a generic x86 VM. Original
 This uses authored session authority and the normal appearance fallback; full
 installed runtime, ARM, Wi-Fi/Internet and every physical-phone gate remain open.
 
+The current Rust networking Main/worker, normal app helper and 13-API Settings
+archive also cross-compile for ARM64. This is compile evidence only; native ARM
+Qt build/install, loaders, windows and packets remain open. The separately
+compiled test bridge selects an upfront ARM observation budget while preserving
+production action deadlines. See the [ARM build record](docs/native-settings-connectivity-window.md#arm64-compile-prerequisite).
+
 The [registered app connectivity path](docs/native-connectivity-actor.md) now
 passes a durable permission grant through the existing lifecycle actor to the
 normal Rust Main and real packets. The connection survives actual app exit; a
