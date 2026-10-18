@@ -6,9 +6,9 @@ The production daemon and its concrete Rust client now pass joined native-host
 process/socket tests against authored SyntheticTree attributes. A lifecycle
 Provider adapter and explicit installed configuration have separate qualified
 host evidence. A first prepared normal Settings frame now reads through the actual
-actor and installed service. An earlier client passes a same-app five-state
-trace against authored attributes; the current client reaches four states and
-fails its final new25% change. These GUI cohorts stay separate from the new generic
+actor and installed service. The current normal client now passes a same-app five-state
+trace against authored attributes after the Rust actor reservation/readiness fixes.
+Earlier failed traces and the older successful client retain their own cohorts. These GUI cohorts stay separate from the new generic
 ARM kernel/PID1 qualification of the actual LinuxBacklight driver interface.
 Cold startup, all-click reliability and physical display behavior remain open.
 
@@ -492,7 +492,7 @@ The send/expiry lock invariant is reviewed without claiming a deterministic
 interleaving reproduction. See
 [outcome provenance](evidence/native-settings-choice-outcome-provenance.json).
 
-## Current outcome client: four touch states, final change still fails
+## Earlier outcome trace: four states, final change fails
 
 A new normal x86 Qt6.12 build/install/offscreen component passes with the persistent
 outcome archive. Its fresh actual-touch run reaches initial25→explicit75 with
@@ -579,7 +579,7 @@ Source suites are not repeated or relabelled. The new normal owner/window join
 remains unexecuted at this checkpoint. See
 [readiness provenance](evidence/native-brightness-readiness-provenance.json).
 
-## New owner join: first tap still fails
+## Earlier reservation owner join: first tap fails
 
 The published first-send reservation repair now runs in a fresh prepared normal
 Settings session with the matching launcher. Qt, the client archive, frozen
@@ -597,6 +597,45 @@ EOFs close within their original cutoffs; a separate adopted compositor descenda
 exit1 is not the normal Settings exit. Brightness PID1 Stop, QEMU/container and
 185+773 input closure pass. The aggregate remains failed. See
 [the new failed-join provenance](evidence/native-settings-reservation-native-provenance.json).
+
+## Current readiness owner: five-state normal Settings trace passes
+
+The current persistent-outcome Qt app, Rust actor and installed PID1 brightness
+service now complete one fresh actual-touch trace:25→explicit75→unavailable with
+muted controls→readonly recovery75→new explicit25. The same normal UID11050 app,
+window and service Main stay running. Exactly four authored touch inputs are used:
+one75, two while unavailable, then one new25. Inputs are never retried.
+
+Independent requested attributes follow100→300→300→300→100 at max400. With max
+withdrawn, both disabled inputs produce no requested-attribute mutation events;
+restoring it recovers readonly75 before a new explicit choice. Optional actual
+stays120 throughout. Neither raw readback nor rendered status establishes a Set
+acknowledgement or a physical luminance change. The fixture sends no private
+Inspect/Set to the daemon.
+
+The only three selected changes from the preceding failed join are the normal
+readiness owner, matching Settings launcher and their route proof. Qt/app/archive,
+the frozen daemon, all23 Python helpers, QML, feature contract, Source100ms, input
+sequence and original deadlines stay unchanged. The pass establishes this finite
+trace; it does not prove a cause for either earlier failure or universal click
+reliability. The new owner/launcher have separate actual component RED→GREEN and
+normal host/ARM release-build evidence; the GUI executes their x86 providers only.
+
+Root views and fully decodes the five original1080×2424 group captures, verifying
+CRC, opacity and native RGBA/BGRA hashes. External output/window metadata qualify
+scale2.625 and65×146mm, approximately422PPI. No capture is resized, cropped or
+repainted; the debugging banner and pointer remain. Normal QWindow DPR, numeric
+app exit, cold full-shell startup, ARM graphical execution and physical backlight
+remain open. All103 direct waits/110 PIPE EOFs close within their original cutoffs. The
+separate adopted compositor descendant exit1 is not a normal app Main status.
+PID1 brightness reports Main0/success with socket removed and cgroup empty;
+owner/audio/appearance Stop, QEMU/container and185+1002 input closure pass.
+The authored VM backend stays separate from the ARM GPIO kernel
+qualification below. See [current trace provenance](evidence/native-settings-readiness-native-provenance.json).
+
+| Initial25 | Explicit75 | Unavailable | Readonly recovery75 | New explicit25 |
+| --- | --- | --- | --- | --- |
+| ![Initial25](assets/settings-readiness-initial25.png) | ![Explicit75](assets/settings-readiness-explicit75.png) | ![Unavailable](assets/settings-readiness-unavailable.png) | ![Readonly recovery75](assets/settings-readiness-recovered75.png) | ![New explicit25](assets/settings-readiness-second25.png) |
 
 ## Actual ARM kernel LinuxBacklight integration
 

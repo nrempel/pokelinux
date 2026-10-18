@@ -48,21 +48,25 @@ unprivileged adapter/QML construction. Rust owns transport, state, deadlines and
 thread shutdown; Qt renders the shared Omarchy theme. The component window is
 never shown. Fixed desktop launch now passes six actor groups, three CLI and
 three staging groups plus six unchanged Sounds controls, with separate host/ARM
-builds. A prepared native Pixel-profile Settings window now visibly reads25%
-through the actual actor and installed Rust service. With the repaired service,
-the same prepared touch path passes five states:25→explicit75→unavailable with
-muted controls and no mutation from two inputs→readonly recovery75→new explicit25.
-The same app and service stay running. Five original1080×2424 screenshots are
-reviewed; earlier setup, observer and failed-tap attempts stay separate. This is
-an authored VM backend; cold full-shell, other input races and hardware remain
-open. The earlier five-state success is not inherited by later clients. The
-accepted-choice client has separate native x86/ARM Qt build/component proof and
-an earlier failed first-tap trace. The current persistent-outcome Rust client
-passes15 socket/C ABI requirements and a new native x86 normal Qt build/component.
-Its fresh touch trace reaches25→explicit75→unavailable→readonly recovery75, then
-fails the new25% change. No final failure image or precise cause is available;
-the full current path remains unqualified. See the screenshots and limits in
-the brightness report.
+builds. Earlier successful and failed prepared touch traces remain preserved with
+their own client/owner cohorts. The current persistent-outcome Rust client now
+completes a fresh five-state
+normal-window trace after the actor reservation and readiness fixes:25→explicit75
+→unavailable with two disabled inputs and no raw mutation→readonly recovery75
+→new explicit25. The same normal app/window and installed service remain running.
+Five original1080×2424 captures show the genuine Omarchy theme and qualify the
+external Pixel10 profile. Earlier failed traces remain separate and their causes
+are unknown; this pass does not establish all-input reliability, cold full-shell
+startup, ARM graphical execution or physical display behavior. See the brightness
+report for the exact current cohort and screenshots.
+
+The actor reserves a first send behind its own fresh readonly Inspect, preserves
+the original revision/deadline, and publishes accepted effects as pending.
+Frozen actual Session/Owner/socket RED→GREEN tests retain remote-busy, changed-
+revision and expiry controls. Focused lifecycle/launch checks and host/ARM releases
+pass. The new graphical pass changes only the owner, matching launcher and route
+proof from the preceding failed join; app, daemon, Source100ms, observer, inputs
+and deadlines remain unchanged. Readback is not a Set acknowledgement.
 
 The later [16-CPU cold diagnostic](native-session-manager-stop.md#declared-cpu-resource-diagnostic)
 still expires Source at103.24ms, with zero own-quota throttling in60 captured

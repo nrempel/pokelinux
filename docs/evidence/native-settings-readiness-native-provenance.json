@@ -1,0 +1,421 @@
+{
+  "schema": 1,
+  "passed": true,
+  "evidence_class": "Prepared original native x86_64 KVM app/actor/PID1 service with authored SyntheticTree attributes; no physical phone",
+  "public_owner_commit": "ae8721aa135bd530a6a3e7899d5546151b4d7347",
+  "source_providers": {
+    "normal_Settings": {
+      "bytes": 6115032,
+      "sha256": "d1bd1d19162ed2f8adf062d231433eb4a870bd815e3e2b52feb2beee3376956c"
+    },
+    "owner": {
+      "bytes": 5695752,
+      "sha256": "d136adc3146ed393ffa541fd36cc58ddb0b5f59ce14781f19b19e031b7c71f83"
+    },
+    "Settings_launcher": {
+      "bytes": 1002712,
+      "sha256": "6ac68e3414fcfdd698155acfc4bb12a8dc8ae4f6de6b99eeaff98aa75a55dd05"
+    },
+    "brightness74e": {
+      "bytes": 776616,
+      "sha256": "74e56b4000da678b6ebb2b8556cfbb875340d3179852c459896568df8c3c5a83"
+    },
+    "Settings_archive2a35": {
+      "bytes": 25262688,
+      "sha256": "2a35b8519b1151ad1d7c3012b40cc9ba75f4e6c296466207dcbadb5da3168f88"
+    },
+    "Engine600": {
+      "bytes": 18826,
+      "sha256": "600243d20cb0e88cd9206aac685ae4d26257c020ced0d46afb925c0ae5d32687"
+    },
+    "owned_Scope": {
+      "bytes": 12712,
+      "sha256": "5a738b9529a1a0e5d5b0bd20e27e2ec4244d4e61d7c8e0dad96fe1ffbef3c423"
+    }
+  },
+  "owner_component_qualification": {
+    "bytes": 7627,
+    "sha256": "74b39c5a8f0a386e4902663f80a071e326324997db10131b63f0ed0365bd83b6"
+  },
+  "owner_route_proof": {
+    "bytes": 4547,
+    "sha256": "95a74e6368f9d889bbbb773ea493b0e7d9cb7ff7fe5a3a5a31ba7120b76f5926"
+  },
+  "retained_Qt6_build_proof": {
+    "selection": {
+      "bytes": 61634,
+      "sha256": "9b2319d4accf09373debc254e8f50ce74e7514036e171e9500a9f014c462be9f"
+    },
+    "execution": {
+      "bytes": 11994,
+      "sha256": "b2b4b19710fc49b459f18aa1e0dad01624b24368a2c9b701dae1d03f15509ac1"
+    },
+    "build_result": {
+      "bytes": 14901,
+      "sha256": "41b72303160655f76992fcc19ceb1fa2d9812c9460a27d93b6a92b56f022f492"
+    },
+    "closed_review": {
+      "bytes": 14813,
+      "sha256": "a33bb5ec96e814d94040cee2345c40fbd3e5cc7121ff3153513defe455d1fba0"
+    }
+  },
+  "retained_brightness_component_qualification_sha256": "e9d513119c228c7f5012a98d87ad4e812fb7b2bbc862e4374ff0252c921b037b",
+  "evidence": {
+    "selection.json": {
+      "bytes": 377986,
+      "sha256": "b3e41770700c839afd7c425b525be4753b2bd513f8fbc363bf8342dfc3f9c759"
+    },
+    "command.json": {
+      "bytes": 1403,
+      "sha256": "c62be75914424e995d03feee4f54ab19182845da3d7080d4423d2c7af36ca9e7"
+    },
+    "Root-execution-admission.json": {
+      "bytes": 1302,
+      "sha256": "56a72de13b95fe1476d237bb7609a3817c8caed29c01d5194e7480b1b05570bc"
+    },
+    "execution.json": {
+      "bytes": 12290,
+      "sha256": "8da919bac0338944bde270c0c4e23205888238579817f103f62e6722acaa4184"
+    },
+    "result.json": {
+      "bytes": 530544,
+      "sha256": "b1233b13473b6617d33c5c0bd62ca74f8ce6fa09a314ef6ffe4bf84fdf4f891d"
+    },
+    "boot-result.json": {
+      "bytes": 11321,
+      "sha256": "a79e214776a234b615432ef16f518e99267a26a9ebbbd77dd7766382f1ecaa3e"
+    },
+    "bootstrap-result.json": {
+      "bytes": 7585,
+      "sha256": "e4b471033a79d3111f2cfa955105f0ad1937b84d47047764849a0e533ed8888c"
+    }
+  },
+  "closed_review": {
+    "bytes": 61824,
+    "sha256": "4f1ed105a6b8cfc0858324ef910823ddb33e9b8e90346af8bd07ba20aa187491"
+  },
+  "Root_execution_review": {
+    "bytes": 3175,
+    "sha256": "87e9cf149b68a2a96a979e7fbef7219f235fd5f6167c3ea02531635b18792660"
+  },
+  "Root_visual_review": {
+    "bytes": 22852,
+    "sha256": "348d61a768bfeef217d84fe21ff0482d7eff05110d1e18f5ff56a1adb86a1c98"
+  },
+  "functional": {
+    "five_machine_group_ids": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "raw_requested": [
+      100,
+      300,
+      300,
+      300,
+      100
+    ],
+    "max": [
+      400,
+      400,
+      null,
+      400,
+      400
+    ],
+    "optional_actual": 120,
+    "same_app_window_and_service_Main": true,
+    "actual_touch_inputs": 4,
+    "disabled_inputs": 2,
+    "disabled_inputs_no_requested_attribute_mutation_events": true,
+    "input_retry": false,
+    "private_protocol_Inspect_or_Set_from_fixture": false,
+    "readback_not_Set_ACK": true,
+    "physical_luminance_measured": false,
+    "Source_lease_ns": 100000000,
+    "raw_transition_journals": [
+      {
+        "artifact": {
+          "bytes": 3578,
+          "sha256": "e948f5307ca7af52a7751e1c01bf39d8d5228cd20531fd381e6c08df123f0dbf"
+        },
+        "sample_rows": 4,
+        "separate_begin_end_rows": 2,
+        "target": 300,
+        "requested_values": [
+          100,
+          300
+        ],
+        "original_functional_until_ns": 31640206050,
+        "observed_inotify": [
+          {
+            "sequence": 1,
+            "mask": 2,
+            "MODIFY": true,
+            "CLOSE_WRITE": false,
+            "observed_BOOTTIME_ns": 26664310098
+          },
+          {
+            "sequence": 2,
+            "mask": 8,
+            "MODIFY": false,
+            "CLOSE_WRITE": true,
+            "observed_BOOTTIME_ns": 26664316169
+          }
+        ],
+        "inotify_not_syscall_write_count": true,
+        "transition_observed_before_original_cutoff": true,
+        "cap_reached": false,
+        "errors": []
+      },
+      {
+        "artifact": {
+          "bytes": 3578,
+          "sha256": "a172cd00c62c94573404444f85eeeba97c02fdf4264e6ae782a87a9383a2b8cf"
+        },
+        "sample_rows": 4,
+        "separate_begin_end_rows": 2,
+        "target": 100,
+        "requested_values": [
+          100,
+          300
+        ],
+        "original_functional_until_ns": 38227022966,
+        "observed_inotify": [
+          {
+            "sequence": 3,
+            "mask": 2,
+            "MODIFY": true,
+            "CLOSE_WRITE": false,
+            "observed_BOOTTIME_ns": 33251389932
+          },
+          {
+            "sequence": 4,
+            "mask": 8,
+            "MODIFY": false,
+            "CLOSE_WRITE": true,
+            "observed_BOOTTIME_ns": 33251391676
+          }
+        ],
+        "inotify_not_syscall_write_count": true,
+        "transition_observed_before_original_cutoff": true,
+        "cap_reached": false,
+        "errors": []
+      }
+    ]
+  },
+  "scope_of_change": {
+    "selected_deltas": [
+      "normal owner",
+      "matching Settings launcher",
+      "route proof"
+    ],
+    "all23_runtime_Python_QML_observer_FEATURE_Source_policy_input_sequence_resources_and_deadlines_unchanged": true,
+    "old_failures_preserved_causes_unknown": true,
+    "current_trace_does_not_prove_historical_causation": true
+  },
+  "original_captures": {
+    "initial25": {
+      "public_file": "docs/assets/settings-readiness-initial25.png",
+      "bytes": 51477,
+      "sha256": "9d7461c59eeb2b55ad4a06e0cb6cdcd6289e89b6e996afebb40f96d75808cf82",
+      "CRC_full_native_decode_RGBA_BGRA_verified": true,
+      "Root_viewed": true,
+      "native_pixels": [
+        1080,
+        2424
+      ],
+      "external_scale": 2.625,
+      "external_mm": [
+        65,
+        146
+      ],
+      "axis_PPI": [
+        422.03076923076924,
+        421.70958904109585
+      ],
+      "resized_cropped_repainted": false
+    },
+    "explicit75": {
+      "public_file": "docs/assets/settings-readiness-explicit75.png",
+      "bytes": 49861,
+      "sha256": "7f7494d8af4839f7b000c11f98f60f161c93902cdadfffeaae32dc7f111e9b1f",
+      "CRC_full_native_decode_RGBA_BGRA_verified": true,
+      "Root_viewed": true,
+      "native_pixels": [
+        1080,
+        2424
+      ],
+      "external_scale": 2.625,
+      "external_mm": [
+        65,
+        146
+      ],
+      "axis_PPI": [
+        422.03076923076924,
+        421.70958904109585
+      ],
+      "resized_cropped_repainted": false
+    },
+    "unavailable": {
+      "public_file": "docs/assets/settings-readiness-unavailable.png",
+      "bytes": 52861,
+      "sha256": "123e2b6b6f27bc08624adcc9d6ec49b258aad9c8346ea541345d83dbee5db658",
+      "CRC_full_native_decode_RGBA_BGRA_verified": true,
+      "Root_viewed": true,
+      "native_pixels": [
+        1080,
+        2424
+      ],
+      "external_scale": 2.625,
+      "external_mm": [
+        65,
+        146
+      ],
+      "axis_PPI": [
+        422.03076923076924,
+        421.70958904109585
+      ],
+      "resized_cropped_repainted": false
+    },
+    "recovered75": {
+      "public_file": "docs/assets/settings-readiness-recovered75.png",
+      "bytes": 49861,
+      "sha256": "3764badd456feba6ebc560bb9edda432b197a774d5befe7c4e714a5ffee6c666",
+      "CRC_full_native_decode_RGBA_BGRA_verified": true,
+      "Root_viewed": true,
+      "native_pixels": [
+        1080,
+        2424
+      ],
+      "external_scale": 2.625,
+      "external_mm": [
+        65,
+        146
+      ],
+      "axis_PPI": [
+        422.03076923076924,
+        421.70958904109585
+      ],
+      "resized_cropped_repainted": false
+    },
+    "second25": {
+      "public_file": "docs/assets/settings-readiness-second25.png",
+      "bytes": 50058,
+      "sha256": "1b8f303ba63fc60fccc4c5c8302d23b45267d3821083533f5077a26b044a1919",
+      "CRC_full_native_decode_RGBA_BGRA_verified": true,
+      "Root_viewed": true,
+      "native_pixels": [
+        1080,
+        2424
+      ],
+      "external_scale": 2.625,
+      "external_mm": [
+        65,
+        146
+      ],
+      "axis_PPI": [
+        422.03076923076924,
+        421.70958904109585
+      ],
+      "resized_cropped_repainted": false
+    }
+  },
+  "closure": {
+    "qualified": true,
+    "actual_direct_waits": 103,
+    "actual_PIPE_EOFs": 110,
+    "early_counted_once": true,
+    "counts": {
+      "host": {
+        "direct_waits": 7,
+        "PIPE_EOFs": 14
+      },
+      "boot": {
+        "direct_waits": 5,
+        "PIPE_EOFs": 5
+      },
+      "bootstrap": {
+        "direct_waits": 5,
+        "PIPE_EOFs": 5
+      },
+      "early_once": {
+        "direct_waits": 2,
+        "PIPE_EOFs": 2
+      },
+      "guest": {
+        "direct_waits": 84,
+        "PIPE_EOFs": 84
+      }
+    },
+    "Root_independent_original_wait_EOF_timestamp_review": true,
+    "adopted_descendant_wait_separate": {
+      "actual_wait": {
+        "pid": 836,
+        "actual_guest_subreaper_wait_exit": 1,
+        "at_boottime_ns": 34340787711
+      },
+      "descendant": {
+        "starttime": "2182",
+        "cmdline_sha256": "39e3fd0b13aa8cc32bd41459c476647e9636e17fac07689c07491484d1320f1a",
+        "UIDs": [
+          "1000",
+          "1000",
+          "1000",
+          "1000"
+        ],
+        "parent_when_observed": 814,
+        "observed_at_boottime_ns": 21991243397,
+        "observation_errors": [],
+        "dead": true,
+        "observed_dead_boottime_ns": 34212109297,
+        "pid": 836,
+        "retained_pidfd_dead": true,
+        "proc_absent": true,
+        "native_parent_actual_wait_not_independently_relabelled": true
+      },
+      "classification": "Observed retired UID1000 compositor descendant exit1; not a direct-child PIPE row or normal Settings/Main numeric wait."
+    },
+    "normal_app_numeric_exit": null,
+    "PID1_brightness": {
+      "actual_parent_wait_for_PID1_Main_claimed": false,
+      "MainPID": 807,
+      "final_PID1": {
+        "LoadState": "loaded",
+        "ActiveState": "inactive",
+        "SubState": "dead",
+        "UnitFileState": "enabled",
+        "InvocationID": "a0a88592cb454c6b99a95c9290574c47",
+        "MainPID": "0",
+        "Result": "success",
+        "NRestarts": "0",
+        "ExecMainPID": "807",
+        "ExecMainCode": "1",
+        "ExecMainStatus": "0",
+        "ControlGroup": ""
+      },
+      "passed": true,
+      "Main_normal_exit0": true,
+      "retained_Main_pidfd_dead": true,
+      "proc_absent": true,
+      "socket_removed": true,
+      "cgroup_empty": true
+    },
+    "owner_audio_appearance_Stop_wait0": true,
+    "QEMU_CLI_wait0": true,
+    "exact_CID_absence_same_daemon": true,
+    "selected_inputs": 185,
+    "external_inputs": 1002,
+    "all_inputs_unchanged": true,
+    "cleanup_errors": []
+  },
+  "limits": {
+    "finite_trace_only_not_all_click_reliability": true,
+    "normal_QWindow_DPR": null,
+    "cold_full_shell_qualified": false,
+    "ARM_GUI_qualified": false,
+    "hardware_qualified": false,
+    "phone_accessed": false
+  }
+}

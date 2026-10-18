@@ -97,6 +97,12 @@ and offscreen component execution. A new x86 touch attempt fails the first75%
 transition: one input, no raw change, cause unknown. The earlier success is not
 inherited. The persistent-outcome successor now passes its own native x86 Qt
 build/component, then reaches four touch states before the final25 change fails.
+A later fresh trace with the repaired Rust actor reservation/readiness now passes
+all five states in the same current normal app and installed service. Root reviews
+five original Pixel10-profile captures; exactly four inputs include two disabled
+no-mutation controls. Earlier failures retain their own evidence and unknown
+causes. Cold full-shell startup, ARM UI and hardware remain open. See the
+[current trace](../docs/native-brightness.md#current-readiness-owner-five-state-normal-settings-trace-passes).
 Future captures must qualify the actual
 [Pixel10 profile](../docs/native-phone-display-profile.md); no resized capture is valid evidence.
 
