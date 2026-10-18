@@ -17,17 +17,35 @@ precondition. It cannot be established by checking names, interface indices or
 loopback-only inventory. A possibly dispatched failure fences this backend epoch
 without mutation retry or rollback.
 
-Nonblocking flags do not bound synchronous kernel rtnetlink dispatch. Run this
-component outside a responsive service Main; owned worker supervision and Stop
-integration remain open. Absolute BOOTTIME checks reject late completion, without
-claiming syscall cancellation. No implicit mutation retry or destructive rollback
-is performed; descriptor/process release is distinct from link/vendor cleanup.
+Nonblocking flags do not bound synchronous kernel rtnetlink dispatch.
+`service::Service` now isolates the backend in one persistent cooperative
+`native-process-owner` worker. Trusted single-threaded startup retains both
+namespaces, launches the fixed worker and irreversibly removes Main's
+capabilities; the worker retains only NET_ADMIN. The binary is a worker entry,
+not an installed service Main or public application endpoint.
+
+Main snapshots expire both observation paths from completed kernel readback
+under CLOCK_BOOTTIME. Idle renewal requires another actual readback, never a
+heartbeat. Original action expiry permanently fences the epoch; late retirement
+receipts cannot renew observations. Stop fences admission/publication before
+signaling and keeps custody until actual wait and stdout EOF. Actual wait also
+revokes cached readiness before a held stdout writer closes. Neither Stop nor
+BOOTTIME checks promise syscall cancellation or reclaimability of arbitrary
+blocked kernel calls. No implicit retry, replacement, Disconnect or rollback is
+performed; local descriptor/process release is distinct from link/vendor cleanup.
 
 ```sh
 cargo fmt --manifest-path native-connectivity-control/Cargo.toml -- --check
 cargo clippy --locked --offline --manifest-path native-connectivity-control/Cargo.toml --all-targets -- -D warnings
-cargo test --locked --offline --manifest-path native-connectivity-control/Cargo.toml --test owner
+cargo test --locked --offline --manifest-path native-connectivity-control/Cargo.toml --lib --test owner
 ```
+
+The library's cached-readiness regression uses a real child, actual wait and a
+retained stdout writer, with an authored cached fact. It does not start the
+privileged Service or create a virtual link. Its ignored self-exec helper is
+selected only by that parent test. The [worker report](../docs/native-connectivity-worker.md)
+separately qualifies actual startup, capability split, packets, idle freshness,
+stopped-worker expiry/resume and queued-command Stop.
 
 The ignored `actual_rust_owned_virtual_link_creation` test requires a trusted
 isolated fixture with two fresh retained namespaces, exclusive administration,

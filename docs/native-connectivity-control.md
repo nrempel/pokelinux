@@ -13,8 +13,10 @@ NetworkManager is not selected as the final production connectivity owner.
 The [subsequent packet slice](native-connectivity-packets.md) now implements Rust
 fixed IPv4 add/remove and passes two real nonce roundtrips, fixture-principal
 withdrawal, explicit Disconnect and independent readback/quiet. The initial
-foundation below retains its own source/evidence cohort. Service worker, real
-permissions/Settings, installation, ARM and phone qualification remain open.
+foundation below retains its own source/evidence cohort. The later
+[persistent worker](native-connectivity-worker.md) adds isolated host supervision,
+idle actual readback, stopped-worker expiry/resume and queued-command Stop.
+Real permissions/Settings, installed Main, ARM and phone qualification remain open.
 
 ## Earlier foundation checkpoint
 
@@ -85,7 +87,9 @@ can enter [RTNL handling](https://raw.githubusercontent.com/torvalds/linux/v6.6/
 and wait on a kernel lock. BOOTTIME checks fence accepted completion; they do not
 prove syscall duration or responsive Stop. A production service must isolate this
 component under owned worker/supervisor custody, with Main snapshots and Stop
-remaining responsive. That lifecycle integration is still open.
+remaining responsive. The [later worker checkpoint](native-connectivity-worker.md)
+implements that separation and passes stopped-worker controls; arbitrary
+uninterruptible kernel reclamation remains unqualified.
 
 Peer provisioning is serialized with command admission closed. Its short-lived
 privileged provisioner must close control sockets and actually exit and be reaped

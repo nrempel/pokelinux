@@ -18,18 +18,24 @@ acceptance, delivery, native call state or working physical hardware.
 
 The shared process owner now [retains stdout through actual EOF after child wait](native-process-custody.md#later-stdout-eof-custody-repair). A real held-writer RED passes after the repair, alongside nine existing Supervisor controls and strict Clippy. Local output closure remains separate from remote cleanup and successor authority. Earlier consumer cohorts are historical and were not rerun.
 
-The new [Rust connectivity-control component](native-connectivity-control.md)
-now [passes actual fixed IPv4 packet control](native-connectivity-packets.md): two nonce roundtrips,
-continued traffic after fixture-principal withdrawal, and explicit Disconnect
-with independent address removal and peer quiet. Eight owner groups also pass.
-This is host component evidence; real permissions/Settings, service supervision
-and deployment, ARM and all phone gates remain open.
+The [persistent Rust connectivity worker](native-connectivity-worker.md) now
+passes real fixed IPv4 traffic, background readback after fixture-principal
+withdrawal, and explicit Disconnect. Stopped-worker tests also pass original
+deadline expiry without late mutation and responsive Stop with a queued command.
+An actual child/held-pipe regression fences cached readiness after wait while
+retaining custody through EOF. These are isolated host results; real
+permissions/Settings, installed deployment, ARM and all phone gates remain open.
 
-The next connectivity step is an owned service worker with responsive Main
-snapshots/Stop and supervised blocked-dispatch recovery, then real Settings and
-OS permission integration. Nonblocking rtnetlink dispatch can wait in the kernel;
-the packet/component pass does not qualify that service lifecycle. Preserve the
-failed RED outer aggregate separately from its qualified component assertion.
+The next connectivity tracer joins real Settings process actions, its Rust
+client and existing actor permission decisions to this supervised backend, with
+independent packets surviving actual app exit and a fresh app's explicit
+Disconnect. Keep Source/authentication/full-shell/capture branches parked.
+The current library and worker-only executable do not install a production Main
+or public app ingress. SIGSTOP controls do not prove arbitrary uninterruptible
+kernel reclamation; BOOTTIME fences do not prove actual suspend. Recovery requires
+an explicit trusted new service in fresh namespaces after prior custody closes;
+there is no automatic retry, same-namespace replacement or persistence promise.
+Preserve failed aggregates separately from qualified component assertions.
 
 The [native local-network status path](native-network-status.md) now passes both
 host and native ARM service-to-Rust-client-to-Settings integration. In the ARM VM,

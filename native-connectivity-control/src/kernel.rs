@@ -204,6 +204,29 @@ impl VirtualLink {
         }
     }
 
+    /// Independent bounded readback on the original continuous observer. This
+    /// performs no mutation and never retires or acknowledges a pending intent.
+    pub fn refresh(&mut self, until: u64) -> Result<Fact, Error> {
+        if self.terminal {
+            return Err(Error::Uncertain);
+        }
+        command_deadline(until)?;
+        match self.read_profile(until) {
+            Ok(fact) if fact.connected == self.last.connected => {
+                self.last = fact;
+                Ok(fact)
+            }
+            Ok(_) => {
+                self.terminal = true;
+                Err(Error::Conflict)
+            }
+            Err(error) => {
+                self.terminal = true;
+                Err(error)
+            }
+        }
+    }
+
     fn read_profile(&mut self, until: u64) -> Result<Fact, Error> {
         let snapshot = collect(&mut self.observer, until)?;
         let local = snapshot

@@ -666,9 +666,13 @@ The [connectivity-control foundation](native-connectivity-control.md) now passes
 host owner-policy and actual virtual-pair creation tests after compiled RED.
 The [subsequent Rust packet case](native-connectivity-packets.md) also passes
 fixed IPv4 Connect, nonce traffic after fixture-principal withdrawal, explicit
-Disconnect and independent address removal/quiet. Real permissions/Settings,
-service lifecycle, installed deployment and all hardware gates remain open;
-read-only counts and NetworkManager reference evidence remain separate.
+Disconnect and independent address removal/quiet. The subsequent
+[persistent worker](native-connectivity-worker.md) adds actual idle readback,
+Main snapshot expiry, stopped-worker expiry/resume and queued-command Stop;
+an actual child/held-pipe component fences cached readiness at wait before EOF.
+Real app permissions/Settings, installed Main/deployment, arbitrary blocked-kernel
+reclamation, actual suspend, ARM and all hardware gates remain open. Read-only
+counts and NetworkManager reference evidence remain separate.
 
 ## Completion matrix
 

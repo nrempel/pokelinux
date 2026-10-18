@@ -36,7 +36,11 @@ The [new connectivity-control backend](native-connectivity-control.md) currently
 qualifies isolated host virtual-pair creation, fixed local IPv4 packets and shared
 owner-policy tests. Its exclusive namespace lifecycle contract does not establish
 physical/hotplug interface safety, a matched Pixel kernel or another model.
-The [packet proof](native-connectivity-packets.md) adds no qualified phone.
+The [packet proof](native-connectivity-packets.md) and later
+[persistent worker](native-connectivity-worker.md) add no qualified phone.
+The worker's host BOOTTIME freshness, stopped-worker controls and child/EOF
+custody are shared userspace behavior; each hardware backend still needs its own
+interface ownership, recovery, suspend and matched-kernel qualification.
 
 ## Kernel choice
 

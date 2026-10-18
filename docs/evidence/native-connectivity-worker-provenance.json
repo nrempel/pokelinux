@@ -1,0 +1,399 @@
+{
+  "schema": 1,
+  "component": "native-connectivity-control persistent worker",
+  "public_base_commit": "6c11cb685ab82c606501ea2d00c6a0aec8fd5553",
+  "scope": "Closed native x86_64 host synthetic fixed-IPv4 component join; no installed Main or public app ingress",
+  "executed_current_source": {
+    "native-connectivity-control/src/kernel.rs": {
+      "bytes": 16105,
+      "sha256": "ef2c769dcb737a6eaa7626f076a5ee65ef4717b1aa6a91d04214ab743546b2d3"
+    },
+    "native-connectivity-control/src/service.rs": {
+      "bytes": 18809,
+      "sha256": "9355e1449d6d9ed3f158bd6004b271a384d6c4478f8aeadba4fe2178bd14d470"
+    },
+    "native-connectivity-control/src/service_tests.rs": {
+      "bytes": 18493,
+      "sha256": "bd8d3fa20e136918a156b5314455919438fccb24add4ab4dd31b2f630e58fdb0"
+    },
+    "native-process-owner/src/supervisor.rs": {
+      "bytes": 27534,
+      "sha256": "c8dac99e60685dcac9f383be2adb16f9dc7d6e14fac79e939fdf9de59c74490c"
+    },
+    "native-connectivity-control/Cargo.toml": {
+      "bytes": 411,
+      "sha256": "da23d721e2cd0b6fb7dd24ad0cf1bbc40eadf0e8c9f50957cb9ce0659ffb2558"
+    },
+    "native-connectivity-control/Cargo.lock": {
+      "bytes": 4568,
+      "sha256": "8b3f60cd4f59e7a6f63a2322ce3dde1d6bea0489aa910782907a9d2d47236677"
+    },
+    "native-connectivity-control/src/lib.rs": {
+      "bytes": 220,
+      "sha256": "fedb15a01c86a57aa13e53d17232276945b906637cc1877ead316a62385d0617"
+    },
+    "native-connectivity-control/src/bin/pokelinux-connectivity-service.rs": {
+      "bytes": 449,
+      "sha256": "02f582bc3c25effabe23e2f362580f3ea2b4043ffdaab7962598e287b5357fd7"
+    }
+  },
+  "normal_worker_ELF": {
+    "bytes": 1426352,
+    "sha256": "a6a374542ae765d5c11151d48ccdf92820e7cf5c36791b7220aa1299df03e6dd",
+    "ELF_machine": 62,
+    "features": [],
+    "opt_level": "0",
+    "test": false
+  },
+  "frozen_fixture_sources": {
+    "lifecycle": {
+      "driver": {
+        "bytes": 16018,
+        "sha256": "72391b2d6a9e5ad9d5a1a582262be8bfbd566e6cb70b430894e2d9ec34341f62"
+      },
+      "controller": {
+        "bytes": 11843,
+        "sha256": "0750d48708e66729417773e5214ab4617bc77905bf93452b43fa1cac30a969c5"
+      }
+    },
+    "expiry_and_Stop": {
+      "driver": {
+        "bytes": 16088,
+        "sha256": "96f84561e726d3c76b7e5c4e2c779cf067303854c95070a3d7e6ac2af802efef"
+      },
+      "controller": {
+        "bytes": 19828,
+        "sha256": "062ccb562999ec7867c771c889d02801432f7f93dc4f8df96d6ab9184c326194"
+      }
+    },
+    "peer": {
+      "bytes": 10728,
+      "sha256": "531428dd32088887d0448f8576a1b25c7bdb7280812c9174c0dc2f079ef9ec91"
+    }
+  },
+  "final_cases": {
+    "lifecycle": {
+      "inputs": {
+        "bytes": 6574,
+        "sha256": "06622298e5bccb2f02eff9841f551422f15b2857ef6b995c33a81267b44a9956"
+      },
+      "outer": {
+        "bytes": 51438,
+        "sha256": "cbc37f3603b816db1210a2425071b45d44c8dbb2ba30ec744bc238edecada0ab"
+      },
+      "build": {
+        "bytes": 23712,
+        "sha256": "7382df477da0d23d3d21b49cd12145a4a33758cf444ab9e08e413c60f6df76a2"
+      },
+      "controller_result": {
+        "bytes": 17807,
+        "sha256": "501b02cb135b3b66186a8fe658fd7e187428cb3fd99f31d94eeaab189ad59fc9"
+      },
+      "passed": true,
+      "Scope_wait_PIPE_EOF": 24,
+      "Scope_split_host_build_controller_provisioner": [
+        13,
+        7,
+        3,
+        1
+      ],
+      "regular_stderr": 5,
+      "native_worker_signal": 9
+    },
+    "expiry": {
+      "inputs": {
+        "bytes": 6600,
+        "sha256": "531ab9fd8f46b43492a7882c4d119aa60a3b1cc3651b811cb2ef3a395501e473"
+      },
+      "outer": {
+        "bytes": 51643,
+        "sha256": "0125cb692aac682bdd6a6296263c629c64b3a15d300d6a196e01fbed72ef35b4"
+      },
+      "build": {
+        "bytes": 13247,
+        "sha256": "0f6fa25cbf4d71f7995c02a81ec3d9f49fe3f64c431d9d5fafe2facffe4ef885"
+      },
+      "controller_result": {
+        "bytes": 393263,
+        "sha256": "04030136c1acd9fad13e72756dec7e83d58c1290723274dfa7672a34ac9071d1"
+      },
+      "passed": true,
+      "Scope_wait_PIPE_EOF": 19,
+      "Scope_split_host_build_controller_provisioner": [
+        13,
+        2,
+        3,
+        1
+      ],
+      "regular_stderr": 2,
+      "native_worker_signal": 9
+    },
+    "stop": {
+      "inputs": {
+        "bytes": 6598,
+        "sha256": "ae7e01f55759388df9c9d5a193f0f08573278c7eba31e5ea64bb5441f65248af"
+      },
+      "outer": {
+        "bytes": 51431,
+        "sha256": "21bd799b4a8b52dec4ce332d776c3c29982b2cd599dca1cede0404dc6905e607"
+      },
+      "build": {
+        "bytes": 13245,
+        "sha256": "8537618500895aee1261cfed86e3bda1f7abaf21d041d1a6c0dfe8c5b8636385"
+      },
+      "controller_result": {
+        "bytes": 18579,
+        "sha256": "ab0dc17574a0c9427f5d82b0cbea04d57aa9eb85f857e99a6740066ebbc68bef"
+      },
+      "passed": true,
+      "Scope_wait_PIPE_EOF": 19,
+      "Scope_split_host_build_controller_provisioner": [
+        13,
+        2,
+        3,
+        1
+      ],
+      "regular_stderr": 2,
+      "native_worker_signal": 9
+    }
+  },
+  "lifecycle_QA": {
+    "owner_groups_caps0": 8,
+    "admission_cache_component_passed_caps0": true,
+    "full_format_and_strict_all_target_Clippy": true,
+    "cache_component_scope": "Authored cached Fact plus actual retained child/output; no Service.start/bootstrap/network creation"
+  },
+  "historical_epochs": {
+    "initial_worker_RED": {
+      "Root_component_review": {
+        "bytes": 636,
+        "sha256": "798efb959e74ee07a19715f5a6720ecb78888e8f8aafb420b78d30e8c1b5b577"
+      },
+      "outer": {
+        "bytes": 48743,
+        "sha256": "127d5716085ed0ac8e0d423738b40a3380ea55bf630fb0c7e980cd1ecf63ccea"
+      },
+      "build": {
+        "bytes": 15776,
+        "sha256": "e0de288d8ae0868f93c3d81da33cc72be14bacb73a47319e7745e09431959970"
+      },
+      "controller": {
+        "bytes": 11195,
+        "sha256": "73ec9b4d25a0df3bcac5febf3a118f254905a22b15c59e9128a3abcbbacd7666"
+      },
+      "outer_aggregate_passed": false,
+      "driver_exit": 101,
+      "source_service": {
+        "bytes": 12710,
+        "sha256": "4caa1f4ce804e865c11691bb39a0b2bdf2750840509d52c376308dc34120fce6"
+      },
+      "source_supervisor": {
+        "bytes": 25442,
+        "sha256": "a796309b2ed1134c74cf100bc8df391136a3284f5829c38df8d2a4fa20626e70"
+      },
+      "classification": "DefinitelyUnsent instead of observed true after healthy setup; failed outer permission-read preserved"
+    },
+    "preformat_lifecycle_GREEN": {
+      "Root_component_review": {
+        "bytes": 704,
+        "sha256": "2c221c650733c8d19564b9ab6134cfe591073d2c0beeb3e35cd4801f5e40e829"
+      },
+      "outer": {
+        "bytes": 49896,
+        "sha256": "7bb6e215abb5750f2f75d9fad8d39845f4cc248cd5b0fb74aaf7d61d93364f46"
+      },
+      "build": {
+        "bytes": 12889,
+        "sha256": "9137067108de593686fe21bd46bb5648a600468f2636c00b237d9ca83d4cda38"
+      },
+      "controller": {
+        "bytes": 17961,
+        "sha256": "86306e7f55488a645c6d0c1e7671137e343b6243544d5b9bf978fc32a02ac052"
+      },
+      "outer_aggregate_passed": true,
+      "driver_exit": 0,
+      "source_service": {
+        "bytes": 13776,
+        "sha256": "5455ed2951be9062be5a19cce7eb1f9c3ce170d50a66aadddcf9d1c9d8861696"
+      },
+      "source_supervisor": {
+        "bytes": 25442,
+        "sha256": "a796309b2ed1134c74cf100bc8df391136a3284f5829c38df8d2a4fa20626e70"
+      },
+      "classification": "Earlier functional GREEN; not relabeled as the final current-source join"
+    },
+    "snapshot_expiry_RED": {
+      "Root_component_review": {
+        "bytes": 514,
+        "sha256": "7df6c3514001b81207432f667af7ce66b0eb231f2333d7d4425a42d2982b55f1"
+      },
+      "outer": {
+        "bytes": 54111,
+        "sha256": "c71891631ed24626b5c30eb6df0da9e0830ee455b334d1cef8c20bbb431e995e"
+      },
+      "build": {
+        "bytes": 14567,
+        "sha256": "e5e1fe0eb158ba4043537e2839cf1bb03bcdb7adb4e22db33320fea20e29a70b"
+      },
+      "controller": {
+        "bytes": 179138,
+        "sha256": "c75d0e165108e3440a30ee39fe62779d46517519e79e96502358a4d71fa9ae80"
+      },
+      "outer_aggregate_passed": true,
+      "driver_exit": 101,
+      "source_service": {
+        "bytes": 13776,
+        "sha256": "5455ed2951be9062be5a19cce7eb1f9c3ce170d50a66aadddcf9d1c9d8861696"
+      },
+      "source_supervisor": {
+        "bytes": 25442,
+        "sha256": "a796309b2ed1134c74cf100bc8df391136a3284f5829c38df8d2a4fa20626e70"
+      },
+      "classification": "Actual stopped worker,100ms action,350ms snapshot-only hold; nested stale observation visible"
+    },
+    "admission_EOF_RED": {
+      "review": {
+        "bytes": 400,
+        "sha256": "7c76f315ac9923fafbad7ec1f24833f3df87b46451da2f11c3defb7b5191d619"
+      },
+      "source": {
+        "bytes": 8540,
+        "sha256": "dfc930f0bb73f60bd0ea4bfa29d904115aa9fc965a775a3b535c976e7fd94cba"
+      },
+      "outer": {
+        "bytes": 40680,
+        "sha256": "7628664172a2631271574b1d488441e5b8a44f09f1947d03be8514d6147229e5"
+      },
+      "inner": {
+        "bytes": 7168,
+        "sha256": "43eee3d388062993fef447db9bfcbc3c8e9fbac431a299b269eb914088f9ecb4"
+      },
+      "actual_compiled_exit": 101,
+      "outer_passed": true,
+      "kernel_connectivity_qualified": false,
+      "actual_child_wait_EOF_with_authored_cache": true,
+      "scope": "Actual child wait/held stdout plus explicitly authored Service cache; no Service.start/bootstrap/kernel claim"
+    }
+  },
+  "formatter_bridges": {
+    "initial_service": {
+      "Root_copyback_review": {
+        "bytes": 11351,
+        "sha256": "d3078ba604908bbc77da68ebb41cc834ea2e8cf1c70515a259fa97dd8365935d"
+      },
+      "outer": {
+        "bytes": 28615,
+        "sha256": "0d12e9082d534f8570dad5e776d6fdb31d57c04329730b204ace66708ee298a7"
+      },
+      "out": {
+        "bytes": 14760,
+        "sha256": "4f96d0326464c679e504c29b64b29dd98ccd7a8b53f83ea1a9a4986d71b70c51"
+      }
+    },
+    "final_service_test_kernel": {
+      "Root_copyback_review": {
+        "bytes": 3483,
+        "sha256": "ca9c66a494a00dfd27e801e26e6ee9cbd8b810bc4a0150f8ddaeac22f536b3c4"
+      },
+      "outer": {
+        "bytes": 23215,
+        "sha256": "b2ab5b913036e67c87534a503fe6b1211c62605dda1aa4fbd29857109841c584"
+      },
+      "out": {
+        "bytes": 4058,
+        "sha256": "06a4d62254980408a36b0d026bf87c016a1d39de1b78dfef2d3dc2f95fdd32cb"
+      }
+    }
+  },
+  "preserved_intermediates": {
+    "Sol1_lifecycle_Clippy_before_functional": {
+      "outer": {
+        "bytes": 55853,
+        "sha256": "ec96a14d761583d1e265c66bdfb238b2418a09cd024374b37e552afa0505049e"
+      },
+      "builder": {
+        "bytes": 4780,
+        "sha256": "0cbe02ef733cd190fefafd1b9fac23a29d30e6df6019a1f529395dc9e11f1807"
+      },
+      "aggregate_passed": false,
+      "functional_executed": false
+    },
+    "Sol3_lifecycle_stderr_preexec_setup": {
+      "outer": {
+        "bytes": 52182,
+        "sha256": "90e05f39e20b931bcbcd37ee09cbd201bc8b4df9dc11ca88c0e30d235b8993e9"
+      },
+      "builder": {
+        "bytes": 6740,
+        "sha256": "af4243ca4e857667c4346091e4b1bdd81b88059c70ca1046ceedebbab2846eaa"
+      },
+      "aggregate_passed": false,
+      "functional_executed": false
+    },
+    "Sol2_unexecuted": {
+      "commands": {
+        "bytes": 4515,
+        "sha256": "516d2abe8aaefc1007ff99a1340d7727d89bfe0f983f47c97e6cfe41c3d03bc2"
+      },
+      "executed": false
+    }
+  },
+  "Sol4_builder_fix": "Only stderr routing for preexec capability drop; source, fixtures, assertions and original deadlines unchanged from Sol3",
+  "timing_contract_ns": {
+    "observation_TTL": 250000000,
+    "idle_refresh_interval": 50000000,
+    "original_refresh_read_deadline": 100000000,
+    "held_case_action": 100000000,
+    "snapshot_only_hold": 350000000
+  },
+  "custody_totals": {
+    "Scope_direct_waits_and_stdout_PIPE_EOF": 62,
+    "lifecycle_expiry_Stop": [
+      24,
+      19,
+      19
+    ],
+    "regular_stderr_handle_closures": 9,
+    "additional_native_network_worker_wait_EOF": 3,
+    "additional_native_cache_helper_wait_EOF": 1,
+    "native_waits_not_counted_as_Scope_receipts": true,
+    "all_selected_Scope_receipts_timely": true,
+    "no_adopted_waits": true,
+    "namespace_process_output_retained_through_Stop": true,
+    "exact_container_absence_same_daemon_inputs_unchanged": true
+  },
+  "limits": [
+    "Seeded-cache component does not qualify real worker start or kernel connectivity.",
+    "SIGSTOP does not qualify arbitrary uninterruptible kernel reaping.",
+    "Terminal action uncertainty authorizes no retry, rollback, implicit Disconnect or restart.",
+    "No installed Main, public app ingress, OS/app permission or Settings execution.",
+    "No ARM, Wi-Fi, DNS, Internet, physical-phone or remote cleanup claim.",
+    "No actual suspend or same-namespace restart/persistence qualification."
+  ],
+  "Root_current_three_case_review": {
+    "bytes": 3017,
+    "sha256": "4e76f7deca8c9072d65c72907d02a1612b6ddbf3cae93c212a35e24bcfd7156d"
+  },
+  "public_fixture_source_copy": "tools/native-connectivity-worker/{lifecycle,held}: exact driver/controller sources above; no separate public-entry execution claim",
+  "frozen_fixture_locks": {
+    "lifecycle": {
+      "bytes": 4728,
+      "sha256": "0f2d3931fc9f32077b16ff5e57f629e761eeabd78386fb23b68e6074b1a9b31c"
+    },
+    "held": {
+      "bytes": 4733,
+      "sha256": "d46e96b34ff17470462d9729aaa7f44cb3c3dbaadfe7cd3824911244622123fa"
+    }
+  },
+  "independent_current_three_case_review": {
+    "bytes": 12215,
+    "sha256": "03579763ddebb36c9f894f52e00c6fc01091a0485e6ea57ff1d5bbca9b741de2",
+    "qualified": true
+  },
+  "recorded_host_case_elapsed_ns": {
+    "lifecycle": 954324529,
+    "expiry": 1296419914,
+    "stop": 53907345,
+    "benchmark_or_latency_guarantee": false
+  }
+}

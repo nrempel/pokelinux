@@ -29,8 +29,9 @@ Read-only collection may repeat on concurrent kernel notifications. Failed or
 conflicting pre-send observation also conservatively retires this backend epoch.
 
 `connected` describes the exact local IPv4 profile. Actual packet reachability
-is measured separately. `fact()` is cached; there is no idle background lifetime
-invalidation or production freshness service yet. The
+is measured separately. At this component checkpoint `fact()` is cached. The
+[later persistent worker](native-connectivity-worker.md) adds actual idle kernel
+readback and independently expiring Main observations. The
 [exclusive virtual-lifecycle contract](native-connectivity-control.md#exclusive-virtual-backend)
 remains necessary: lifetime checks do not make a write atomic against index reuse.
 Nonblocking netlink flags do not bound synchronous kernel handling, so this
@@ -96,22 +97,22 @@ measured controller/peer bytes. [Hash-only provenance](evidence/native-connectiv
 records the separate failed aggregate, qualified component RED, formatter bridge
 and current GREEN. Raw outputs, nonces and compiled test binaries remain private.
 
-## Remaining work
+## Later worker and remaining work
 
-Implement the owned service worker and qualify responsive Main snapshots/Stop,
-blocked-dispatch recovery, continuous readback/cache freshness and actual backend
-deadline/uncertainty/conflict/loss controls. Then connect real application authentication and permissions, the
-Settings Rust client/UI, installed deployment, restart/recovery and explicit
-connection-persistence policy. ARM, matched Pixel kernel/backends, suspend/lock,
-Wi-Fi/IP acquisition/DNS/Internet, Bluetooth, tethering, USB and every physical
-phone gate remain open. Zero phone models are qualified.
+The [persistent-worker checkpoint](native-connectivity-worker.md) now implements
+one `native-process-owner::Supervisor` worker per epoch, preserves the original
+observer and passes actual idle readback, independently expiring Main snapshots,
+stopped-worker expiry/resume and queued-command Stop. It also qualifies actual
+wait/held-stdout cache withdrawal separately. Startup removes Main's capabilities;
+no privileged broker remains. The worker executable and reusable Main library do
+not provide normal installed app ingress.
 
-The next service design uses one persistent `native-process-owner::Supervisor`
-worker per epoch, preserving the original observer between commands. Trusted
-startup launches that fixed worker, then Main drops all capabilities before
-admitting clients; no privileged broker remains. Worker loss makes the epoch
-unavailable/uncertain. Recovery requires an explicit trusted service restart into
-fresh namespaces after prior custody closes; no same-namespace worker replacement
-or connection-persistence promise is selected. Main must expire actual observation
-leases independently and must not turn a heartbeat into fresh kernel evidence.
-This architecture decision is not implemented service qualification.
+Next connect existing actor permission decisions and the Settings Rust client/UI
+to this backend, with actual app exit/background traffic and explicit fresh-app
+Disconnect. Backend uncertainty/conflict/loss controls, installed deployment,
+restart/recovery and explicit connection-persistence policy remain required.
+Recovery requires explicit trusted startup into fresh namespaces after prior
+custody closes, with no same-namespace replacement or implicit retry. Arbitrary
+uninterruptible kernel reclamation, ARM, matched Pixel kernel/backends, actual
+suspend/lock, Wi-Fi/IP acquisition/DNS/Internet, Bluetooth, tethering, USB and every
+physical phone gate remain open. Zero phone models are qualified.

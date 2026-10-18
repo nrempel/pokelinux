@@ -2,3 +2,4 @@
 //! This component does not authorize applications or configure physical interfaces.
 pub mod kernel;
 pub mod owner;
+pub mod service;

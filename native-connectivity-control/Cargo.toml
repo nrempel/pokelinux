@@ -5,8 +5,9 @@ edition = "2024"
 publish = false
 
 [dependencies]
+pokelinux-process-owner = { path = "../native-process-owner" }
 pokelinux-network-state = { path = "../native-network-state" }
-rustix = { version = "=1.1.5", features = ["net", "time"] }
+rustix = { version = "=1.1.5", features = ["net", "time", "thread", "process", "fs"] }
 
 [dev-dependencies]
 serde_json = "=1.0.154"
