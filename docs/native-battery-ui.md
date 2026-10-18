@@ -57,6 +57,20 @@ battery feature follows from this attempt. The later successors below are separa
 that failed attempt. Pixel battery readings, charging policy,
 suspend, drain, ARM graphical startup and a bootable phone image remain open.
 
+## Current native ARM build and offscreen composition
+
+A later [native ARM production CMake epoch](native-current-arm-apps.md#current-settings-and-messages-with-battery)
+now builds the normal Messages frontend with the same three matching Rust
+archives and actual battery adapter/header. Its new AArch64 ELFc7bb89e2 is
+separate from the earlierc52 app. All27 strong C APIs and native loaders pass;
+the frozen nine Messages C ABI groups and three installed/live-appearance/policy
+component groups execute as UID11010. The components instantiate Messages,
+appearance and battery adapters with normal embedded and installed shared QML,
+without a window. This establishes neither a positive battery service reply nor
+normal main/argument execution, graphical battery state or a combined ARM image.
+Default ARM Cargo and physical battery behavior remain open. See the
+[hash-only record](evidence/native-current-settings-messages-arm-qt-provenance.json).
+
 
 ## Kernel to visible battery status
 

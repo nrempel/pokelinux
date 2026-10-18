@@ -19,12 +19,14 @@ The [Messages request and model engine](docs/native-messages-rust-client.md) now
 also runs in Rust. An earlier cohort with the pre-port appearance client builds
 against Qt6.12 in an ARM virtual machine, where its engine and actual Qt worker
 checks pass. Its separate production CMake Release build installs the app and
-protected theme QML and passes the nine-group client test. A later [current dual-app
-ARM CMake epoch](docs/native-current-arm-apps.md) now builds and installs both normal
-apps with the shared appearance Rust client and passes their nine/six C ABI
-groups. Current service/launcher and Sounds-engine ARM crossbuilds also close
-separately. Both normal ARM mains/windows, default Cargo, the complete running
-cohort, cold startup and physical SMS remain open.
+protected theme QML and passes the nine-group client test. A later
+[Messages/Sounds ARM CMake epoch](docs/native-current-arm-apps.md#earlier-messages-and-sounds-cohort)
+builds both normal apps with the shared appearance Rust client and passes their
+nine/six C ABI groups. The newer [current Settings and Messages-with-battery build](docs/native-current-arm-apps.md#current-settings-and-messages-with-battery)
+now passes native ARM CMake/install, all five loaders and actual offscreen
+components with four matching Rust archives. Normal ARM app mains/windows,
+default Cargo, the complete running cohort, cold startup and physical SMS remain
+open. Service/launcher and Sounds-engine crossbuilds remain separate evidence.
 A [fresh prepared native window with both Rust clients](docs/native-messages-appearance-rust-tracer.md)
 now shows denied access, two authored messages after permission, a live dark/light
 Omarchy theme change and cleared history after revocation. All four groups pass

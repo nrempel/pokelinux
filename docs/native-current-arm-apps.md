@@ -1,10 +1,55 @@
 # Current ARM app builds and Rust providers
 
-Both normal Messages and Sounds now pass a fresh native ARM production CMake
+Normal Settings and Messages-with-battery now pass a distinct native ARM
+production CMake Release build, protected installation, loader checks and
+component execution. This uses the current Settings600 engine and all four
+matching ARM Rust archives. It executes neither normal app main nor a window;
+default ARM Cargo and a combined installed image remain open. Earlier ARM
+Messages/Sounds builds and graphical attempts below retain their own cohorts.
+
+## Current Settings and Messages-with-battery
+
+The frozen64-file source cohort matches the public base
+`21a1fa9e2fa1b0ad00f2627e14db378f071d7674`. Production CMake links explicit
+matching-target archives; this epoch does not rebuild them with guest Cargo.
+
+| Boundary | Actual current result |
+| --- | --- |
+| Native tools and Qt | AArch64 kernel7.1.6, Qt6.12.0, GCC16.1.1, CMake4.4.4 and Ninja1.13.2. Exactly eight trusted offline tools extend353 packages to361; all original versions and50 Qt identities remain unchanged. |
+| Normal Settings | New AArch64 ELF `59fb0ef1`,6,293,992 bytes. One Settings and one appearance archive supply exactly6+11 strong C APIs. |
+| Normal Messages | New AArch64 ELF `c7bb89e2`,6,139,672 bytes. Messages, appearance and readonly battery archives each link once and supply exactly12+11+4 strong C APIs. The optional app observer is off. |
+| Native loader and components | Five actual `ldd -r` checks pass. UID11050 Settings executes C ABI layout/refusal/actual join and constructs its real unavailable adapters, normal embedded QML and installed shared theme QML. Messages executes its frozen nine C ABI groups and three unchanged offscreen installed/live-appearance/policy groups as UID11010, with all three real adapters. |
+| Protected install | Two normal binaries are root0:0/0755; their two desktop entries and shared `PhoneAppearance.qml` are root0:0/0644. All five installed hashes match. |
+
+The components show no window and execute no normal six-argument main. Their
+unavailable endpoints establish no positive brightness/battery service reply,
+Source permission or visible state. Original200ms Settings Stop and actual join
+remain enforced. The earlier Settings6f9 and Messagesc52 normal ELFs are not
+reused or relabelled. Current source/header/lock matching qualifies the reused
+archives; separate historical Rust tests are not counted as new executions.
+
+Exactly56 Scope direct waits and56 merged PIPE EOFs close within their original
+cutoffs:15 host and41 guest. Seven separately observed nested waits exit0—one
+Messages C ABI child and six root component peers—with no additional PIPE EOF
+claim. Compiler descendants are not counted as separately observed waits. The
+exact container exits0 and is removed on the same daemon;103 selected and11
+external input pins remain unchanged.
+
+The functional result is saved before the inherited shutdown request. That
+request uses the existing Python timeout/cleanup path and has no separate
+poweroff wait/PIPE EOF receipt. This epoch claims neither a direct QEMU wait
+nor QMP shutdown evidence. The original720s guest work/724s close and900s outer
+bounds remain unchanged. [Hash-only current provenance](evidence/native-current-settings-messages-arm-qt-provenance.json)
+keeps this boundary distinct from normal app/window execution, default ARM
+Cargo, a combined image, the parked Messages daemon-provider join and hardware.
+
+## Earlier Messages and Sounds cohort
+
+The earlier normal Messages and Sounds cohort passes a native ARM production CMake
 Release build and protected installation with the shared appearance Rust client.
 Their unchanged nine- and six-group C ABI consumers execute successfully in the
 generic Arch ARM QEMU guest. That build does not execute either normal application main or window.
-This is a current build/install/component milestone, separate from the earlier
+That build/install/component milestone is separate from the earlier
 [pre-port Messages ARM result](native-messages-rust-client.md#native-arm-production-cmake-build-and-installation)
 and the [current prepared x86 Messages window](native-messages-appearance-rust-tracer.md).
 

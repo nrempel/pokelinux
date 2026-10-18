@@ -31,6 +31,13 @@ kernel/service states in one process/window, with original Pixel10-profile
 captures. Physical battery, charging, suspend and cold graphical startup gates
 remain open; the suspend authority is unchanged.
 
+A new [native ARM Settings and Messages-with-battery build](native-current-arm-apps.md#current-settings-and-messages-with-battery)
+passes production CMake, protected installation, five native loaders and actual
+offscreen components with matching Rust archives. Neither normal app main nor a
+window executes; default ARM Cargo and a combined installed image remain open.
+This advances app build/component portability, with no phone completion-matrix
+or physical hardware promotion.
+
 The [native Rust brightness service](native-brightness.md) now joins its real Rust client,
 owned worker and authored attribute backend in six process/socket cases. Unchanged
 fresh readonly observations now preserve the state revision, so background reads

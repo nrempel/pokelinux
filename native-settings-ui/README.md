@@ -187,3 +187,16 @@ inferred from rendered status or current raw readback.100 direct waits/107 PIPE
 EOFs, separate adopted wait-6, PID1 brightness Main0 and VM/container closure stay
 distinct from application success. See
 [current native evidence](../docs/evidence/native-settings-outcome-native-provenance.json).
+
+## Current native ARM build and component
+
+A separate [native ARM CMake epoch](../docs/native-current-arm-apps.md#current-settings-and-messages-with-battery)
+now builds and installs this current Settings600 frontend with the matching
+Settings/appearance archives. The new normal AArch64 ELF is59fb0ef1; it is
+separate from the earlier6f9 app. Actual UID11050 component execution passes
+layout/refusal/200ms Stop/actual join and constructs both real unavailable
+adapters, embedded Settings QML and installed shared appearance QML without
+showing a window.17 strong C APIs and native loader resolution match. This does
+not execute the normal main/six arguments, a positive brightness service, Source
+or visible UI; default ARM Cargo and combined-image execution remain open.
+See [hash-only evidence](../docs/evidence/native-current-settings-messages-arm-qt-provenance.json).

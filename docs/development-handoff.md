@@ -24,6 +24,14 @@ kernel/socket tests pass alongside held-reader Stop and late-success rejection,
 with permanent reproducible boundary tests and separate host/ARM release builds.
 Installed deployment, a client/UI join and physical connectivity remain open.
 
+The [current native ARM Settings/Messages build](native-current-arm-apps.md#current-settings-and-messages-with-battery)
+passes production CMake/install and offscreen components with the current
+Settings600 and three-engine Messages frontend. All64 frozen sources and four
+archives match; new normal ELFs59fb0ef1/c7bb89e2 remain unexecuted. The56 Scope
+waits/merged EOFs and seven nested waits are distinct from the legacy shutdown
+request, which has no direct QEMU/QMP receipt. No window, default ARM Cargo or
+combined image is qualified; older6f9/c52 app results remain separate.
+
 The [prepared three-app navigation branch](native-three-app-navigation.md) is
 parked. The first epoch fails before a functional group; the second and third
 complete three groups, then fail Sounds metadata/capture. The third's actual
@@ -33,16 +41,18 @@ Preserve all failed aggregates and the third's theme-host255 cleanup error.
 Source100ms, warmup, authority and cutoffs are unchanged. Do not retry this branch
 or resume Source/authentication/capture investigations.
 
-Next production work is the private sole-daemon Messages read-provider join,
-then one current installed ARM service/app cohort with fresh autostart and
-Messages data retained across package replacement. Keep cold graphical startup
-as an explicit gate; do not expand network counters into a connectivity campaign.
+Next production work is the existing coarse network-status service's installed
+and client join, keeping interface/address counts distinct from Wi-Fi, Internet
+or modem connectivity. The private Messages read-provider branch is parked at
+compiled assertion RED, with no qualified GREEN or deployed join. Do not retry
+that branch. Current combined ARM deployment and cold graphical startup remain
+explicit later gates.
 
 Messages currently has two alternative Projector owners: standalone daemon and
 session History. Never run both against one database. Installed headless and
 prepared app profiles remain exclusive and do not qualify combined phone
-composition. Prioritize the [private read-provider join](native-installed-messages-history.md#current-production-composition-gap)
-so one daemon owns background history while the session actor retains permission
+composition. The parked [private read-provider join](native-installed-messages-history.md#current-production-composition-gap)
+would let one daemon own background history while the session actor retains permission
 checks and cancels only its own reads. Do not forward the old app endpoint or
 translate session shutdown into daemon Stop.
 
