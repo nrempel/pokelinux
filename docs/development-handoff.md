@@ -110,9 +110,19 @@ second cutoff: half-level tone, actual Stop/retirement and full quiet, then mute
 Play with a distinct live attributed producer and active link. Its final native
 assertion exits 0 after cleanup. Failed check/build preparations remain in
 [hash-only level provenance](evidence/native-preview-level-provenance.json).
-No new-level ARM, normal-window, capture or physical-audio result follows. Next,
-carry this same feature through one installed generic ARM tracer. Do not expand
-host/ARM combinations or resume a window/capture campaign.
+The current Rust AArch64 crossbuild now passes all five ELFs and the 452-member/
+16-API Sounds archive. Installed-layer preparation also passes all five loaders,
+native Qt6.12 consumer build/link/load and four normal PID1 Stops before update,
+with the 393 package versions and 50 selected Qt files unchanged. QEMU closes before
+export. One fresh cold installed level/mute tracer now passes four new PID1
+invocations, six real QML clicks and 144,000 PCM frames: half-level tone, Stop/
+retirement/full quiet, then a distinct live muted producer/active link. Its upfront
+ARM 12-second aggregate and six-second windows remain separate from host bounds.
+Final assertion 0 follows controller/parent cleanup; normal Stop and QEMU closure
+pass, as does independent review. Both terminal verification records need one
+observation, leaving repeat polling unexercised. This preview-level campaign is
+complete; do not expand host/ARM combinations or resume a window/capture campaign.
+Normal-window, Pixel integration, capture and physical-audio gates remain open.
 The private Messages read-provider remains parked at compiled assertion RED,
 with no qualified GREEN or deployed join; do not retry it. Normal ARM windows,
 cold graphical startup and all matched-device gates remain open.
@@ -1292,7 +1302,7 @@ writes22 public dummy bytes, and a late candidate reaches pure protocol state.
 Nineteen host components now pass, including two existing-wire prompt rounds,
 queued-response cancellation under real EAGAIN and invalid response admission.
 The blocked ordinary helper is actually killed/waited before RED failure; GREEN
-exits0 naturally. Strict Clippy and separate ARM64 compilation pass. Local
+exits 0 naturally. Strict Clippy and separate ARM64 compilation pass. Local
 deadline checks do not prove atomic timing across syscalls. Attempt retains real
 custody, but no actual Attempt/cgroup, original PAM or ARM runtime executes in
 this historical selection. See

@@ -4,8 +4,8 @@ Current next-preview level/mute passes host native checks, frontend C ABI/Qt
 components and real unshown QML input through the actor/audio owner to measured
 virtual PCM. Six real clicks select a route, 50%, Play, Stop, mute and Play again:
 half-level tone, full quiet after retirement, then a distinct live muted producer.
-Earlier full-level host and installed generic ARM results below retain their own
-sources; they do not qualify the new level feature on ARM or physical hardware.
+A separate current cold installed generic ARM tracer also passes. Earlier
+full-level cohorts retain their own sources; physical hardware remains unqualified.
 
 ## Ownership and model
 
@@ -84,9 +84,37 @@ supplies no muted-Play proof. The final assertion exits 0 after cleanup/ECHILD.
 All 56 direct waits/75 real PIPE EOFs pass; one adopted wait and four regular
 stderr closures remain separate, without individual log-close timestamps.
 Preserved style-check and build-wrapper/file-limit failures and exact hashes are
-in [level provenance](evidence/native-preview-level-provenance.json). New-level
-ARM, normal app main/window, display/capture, live-theme, physical audio and phone
-gates remain open.
+in [level provenance](evidence/native-preview-level-provenance.json).
+
+The current Rust 1.98.1 AArch64 crossbuild also passes: normal audio/launcher and
+three fixture ELFs, plus a 452-member/16-API Sounds archive. All 16 host waits/merged
+PIPE EOFs and 18 separate shell waits with regular-file output close.
+
+Later generic ARM preparation passes all five Rust loaders and native Qt6.12
+consumer build/link/load with 16 Sounds and 11 appearance APIs, each archive linked
+once. The existing 393 package versions and 50 selected Qt libraries/plugins stay
+unchanged. Four normal PID1 Stops precede the stopped update; all 52 direct waits/
+merged PIPE EOFs close, with PID1 outcomes counted separately. Export follows
+actual QEMU exit 0/EOF and closed handles.
+
+One fresh cold installed generic ARM run now passes four new PID1 invocations,
+six real QML mouse pairs and 144,000 measured frames: half-level tone, actual Stop/
+retirement/full quiet, then a distinct live muted producer with an active selected
+link under the same Main/graph identity. Local 50%/mute clicks send no packets;
+all three controls are disabled during Starting/Playing/Retiring. Its upfront
+ARM aggregate is 12 seconds, each window retains six seconds, and measured work
+is 6.832403559 seconds; the host's six-second aggregate is separate. Each Play
+retains its original one-second deadline and Stop retires before Play+3s.
+
+All four units Stop normally. Two independent terminal records share the same
+original cutoff and each needs one observation; repeat polling remains unexercised.
+The final compiled assertion exits 0 after controller/prior parent Scope closure;
+QEMU exit 0/EOF, closed handles and outer absence pass. All 67 direct waits/79 real
+PIPE EOFs close, with four regular stderr files and two DEVNULL streams separate;
+individual log-close timestamps are unrecorded. Root recomputes all six raw files;
+an independent review passes. ARM tone's raw hash differs from the host, while
+measured half-level values match. Normal app main/window, Pixel integration,
+display/capture, live-theme, physical audio and phone gates remain open.
 
 ## Earlier full-level evidence
 

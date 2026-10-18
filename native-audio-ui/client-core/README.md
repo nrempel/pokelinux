@@ -85,7 +85,13 @@ groups pass, as do 31 Qt behaviors plus setup/cleanup and unshown QML level/defa
 50%/Muted bindings. The current public entry separately passes six real mouse
 pairs and 144,000 PCM frames: half-level tone, Stop/retirement/full quiet, then muted
 Play with a distinct live producer/active link. See [level evidence](../../docs/evidence/native-preview-level-provenance.json).
-New-level ARM, normal-window, live-theme and physical-audio gates remain open.
+The current AArch64 Rust crossbuild also passes with 452 ELF archive members and
+16 APIs. Later generic ARM preparation passes native Qt6.12 consumer build/link/
+load with 16 Sounds and 11 appearance APIs, each archive linked once. One fresh
+cold installed generic ARM run also passes six real QML clicks and 144,000 frames
+of half-level tone, Stop/quiet and muted Play with a distinct live producer. Its
+upfront 12-second aggregate/six-second windows are separate from host bounds.
+Normal-window, Pixel integration, live-theme and physical-audio gates remain open.
 
 The earlier [preview component qualification](../../docs/native-sounds-preview.md)
 passes six existing C ABI, seven schema and seven preview groups plus two cleanup cases,

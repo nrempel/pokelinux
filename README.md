@@ -39,9 +39,11 @@ behavioral RED with measured half-amplitude speaker PCM. Native Rust checks,
 the 16-API frontend and all seven Qt targets pass. The current public test also
 passes six real QML clicks and 144,000 frames under one original six-second
 cutoff: half-level tone, Stop/quiet, then muted Play with a distinct live producer.
-[Level evidence](docs/evidence/native-preview-level-provenance.json) is host-only;
-the earlier installed ARM/full-level cohort remains separate. New-level ARM,
-normal app windows, physical audio and phone gates remain open.
+The current Rust ARM crossbuild, native Qt preparation and cold installed
+generic ARM six-click/PCM tracer also pass under its separate 12-second aggregate.
+[Level evidence](docs/evidence/native-preview-level-provenance.json) keeps the
+earlier full-level cohorts separate. Pixel integration, normal app windows,
+physical audio and phone gates remain open.
 
 The [Messages request and model engine](docs/native-messages-rust-client.md) now
 also runs in Rust. An earlier cohort with the pre-port appearance client builds

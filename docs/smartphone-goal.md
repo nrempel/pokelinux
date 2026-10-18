@@ -131,6 +131,14 @@ the final compiled assertion. The first aggregate failure remains preserved.
 The repository host entry now also passes with the three fresh outputs of its
 public builds. Normal app windows and phone gates remain open.
 
+The newer Rust-owned preview level/mute now separately passes one fresh installed
+generic ARM boot with current providers: six real QML clicks, half-volume PCM,
+Stop/quiet and a distinct live muted producer across 144,000 measured frames.
+The original ARM 12-second aggregate is separate from the host six-second bound.
+All four PID1 services Stop normally before final assertion and QEMU closure;
+this remains an unshown component result, with phone gates open. See the
+[level evidence](evidence/native-preview-level-provenance.json).
+
 The [Rust Messages client engine](native-messages-rust-client.md) now also owns
 request/parser/model, pagination, generations, scheduling and worker lifetime.
 Frozen C ABI and actual Qt/socket/thread/default-build tests pass, including
@@ -166,9 +174,10 @@ now qualify independent100ms Source-expiry withdrawal/quietness/refusal before
 Stop, and separately native Stop while the compositor remains stopped. Each
 retains six PCM windows/144,000 measured frames and owned closure. Fresh Source
 facts during rendering-only stalls, native display cleanup and phone gates stay
-open. Next is one current installed ARM shell/app/theme cohort through production
-build/package paths, including shared appearance policy in Rust; then a concrete
-cold-start repair and finite matched-Pixel deployment dependency closure.
+open. Next is joining audio with the existing battery/brightness/network ARM
+development image through production installation and existing consumers. Normal
+graphical startup and matched-Pixel deployment remain separate unfinished gates;
+the parked Source/authentication/capture campaign stays parked.
 
 The explicit deployment installer passes its frozen host RED→GREEN selection
 check with205 bundle files, including196 pinned Omarchy source blobs. This

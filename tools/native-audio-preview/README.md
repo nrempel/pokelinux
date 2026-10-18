@@ -110,7 +110,13 @@ close; one adopted wait and four regular stderr closures are counted separately.
 The earlier raw valid50 denied/quiet behavioral RED, same-fixture GREEN, component
 checks and preserved failed preparations are in
 [level provenance](../../docs/evidence/native-preview-level-provenance.json).
-Current level/mute ARM execution remains open. The C++ consumer is a test fixture;
+Current Rust AArch64 providers/archive now crossbuild. Generic ARM preparation
+also passes all five Rust loaders and native Qt6.12 consumer build/link/load.
+One separate cold installed generic ARM run passes six real QML mouse pairs and
+144,000 half-level/Stop-quiet/muted-live PCM frames under its upfront 12-second
+aggregate and six-second windows. Four fresh PID1 invocations, normal Stop,
+assertion 0 after cleanup, QEMU closure and independent review pass. Host bounds
+and earlier full-level cohorts remain separate. The C++ consumer is a test fixture;
 production policy remains Rust.
 Separate host and installed ARM evidence remains in
 [the preview report](../../docs/native-sounds-preview.md).
