@@ -121,10 +121,21 @@ Raw windows are independently recomputed; actual waits, PIPE EOF, regular-log
 closes and adopted-child waits retain separate provenance. These cases change no
 production code. The next gate is the installed ARM tracer. A separate Rust 1.98.1
 crossbuild produces current audio/launcher plus three fixture binaries as
-AArch64 ELF and a 452-member/15-API Sounds archive. This is static build evidence;
-ARM loaders, Qt components and PID1 execution remain unqualified. Deployment,
-normal app main/window, display-profile/capture, live theme switching, cold
-graphical session and physical audio remain open. No physical phone was accessed.
+AArch64 ELF and a 452-member/15-API Sounds archive.
+
+Later generic Arch ARM/QEMU preparation passes all five current Rust loaders and
+a native Qt6.12 consumer build/link/loader check with 15 Sounds and 11 appearance
+APIs, each archive linked once. Available IPC from the old active PID1 daemon
+lacks required `policy_settled`; the assertion exits 101, without legacy fallback.
+All four old units Stop successfully with empty cgroups and terminal retained
+pidfds. Eight cached package additions retain the original 385 versions and 50
+selected Qt libraries/plugins, yielding 393 packages. The current daemon and three VM site configs are
+explicitly installed while stopped. All 62 direct waits/merged PIPE EOFs close;
+four PID1 outcomes remain separate. QEMU exit 0/EOF and closed handles precede
+export. The fresh cold QML/actor/PCM run has not executed. This is generic ARM
+preparation, with no Pixel kernel, normal app main/window, display-profile/
+capture, live theme switching or physical-audio qualification. No physical phone
+was accessed.
 
 ## Reproduce the Linux process tests
 

@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "status": "specified host finite-preview gates qualified: real unshown QML route/Play/Stop/new Play to actual Rust actor/audio and independent PCM, plus natural completion, revocation, app-close and backend recovery; installed ARM and normal-window gates remain open",
-  "scope": "Host original-code Rust/Qt components and seven separate authored real-actor/original-PipeWire virtual PCM cases, including actual unshown QML input; separate current Rust AArch64 crossbuild/static ABI only. No installed ARM execution, normal app main/window, display-profile/capture, live-theme, vendor-specific backend cleanup, real suspend or physical-phone qualification.",
+  "status": "specified host finite-preview gates qualified; generic ARM preparation/loaders/native Qt build and stopped install/export qualified; fresh cold installed QML/actor/PCM remains pending",
+  "scope": "Host original-code Rust/Qt components and seven authored real-actor/original-PipeWire virtual PCM cases; separate current Rust AArch64 crossbuild and generic Arch ARM/QEMU installed preparation with old PID1 schema refusal, current loader/native Qt build checks and stopped installation/export. No fresh cold current preview/QML/PCM success, normal app main/window, display-profile/capture, live-theme, vendor-specific backend cleanup, real suspend or physical-phone qualification.",
   "evidence": [
     {
       "boundary": "actual Qt adapters and offscreen QML",
@@ -1374,11 +1374,120 @@
       "QEMU_execution_qualified": false,
       "physical_phone_qualified": false,
       "independent_static_review_sha256": "856bc36582f5f51f833bc1a1e1c521a8a60cd64b91f80ed4df547a52afd1a4a5"
+    },
+    {
+      "boundary": "generic ARM preview preparation host selection before VM",
+      "outcome": "ACTUAL_HOST_SETUP_FAILURE_before_Docker_create_or_ARM_VM",
+      "preparation_passed": false,
+      "setup_failure_only": true,
+      "host_report_sha256": "40e453b6e44970ce1d908472ff8f927a87cd93361680a06d1bc194a371be1808",
+      "production_host_stage_receipt_sha256": "039723cae47b39fe3d4efd37e287fc253586a09ed1593e50a8003785415f082c",
+      "review_sha256": "9129fc1bc5bc07fc86337b1c9833e9e20baa7a7a09c79d555bab3783d4f6a83c",
+      "production_Make_staged_four_exact_files_modes_hashes": true,
+      "stage_actual_wait_PIPE_EOF_count": 3,
+      "host_CLI_actual_wait_PIPE_EOF_count": 4,
+      "all_direct_custody_closed_timely": true,
+      "VM_launched": false,
+      "old_installed_schema_RED_executed": false,
+      "native_ARM_behavior_RED_claim": false,
+      "selected_inputs_unchanged": true,
+      "failure": "host stage manifest loop clobbered selected container-name binding; canonical identity refused before VM creation"
+    },
+    {
+      "boundary": "generic Arch ARM64 kernel/QEMU current preview installed preparation",
+      "outcome": "qualified preparation GREEN with actual old-installed required-field RED; fresh cold current QML/PCM remains unexecuted",
+      "published_baseline": "f8d4424295ae73d74a11cd3bc848c57074cdad2b",
+      "preparation_passed": true,
+      "source_manifest_sha256": "fb115ea8a75f4f2004b08d15b4de862b50924df01c0500869b7dad54e3ab8e43",
+      "source_seal_sha256": "e6f8ef0eba0d29476ca5ac289f88bd930122dc5be6a6023ea158126ed9eb2450",
+      "source_selection_sha256": "712a66c40652d5ae8de284e4da0ced169b3577dd37e00852be63a503a3ab014d",
+      "command_sha256": "4466c62e342326c6b8abf26bafa5af7ee56c469a61f9ccf80f4581767888bdc7",
+      "host_report_sha256": "5cf2d8d07ad88cf514ac238d0a8cbba53f5db3f7543ae6400948ab297f5367e6",
+      "guest_report_sha256": "9f50d8327cc07ee3238f540453181aa5898fb99f9638156dc2eb97b1c8cfbc5a",
+      "boot_report_sha256": "295ea8fce17c12f04af176390da353cc8880f954aaa1f7a319427e5c9a9b2292",
+      "host_stage_report_sha256": "c2bd580a0b6cfd0585e77fa4ab0d5d40259d3fd6ec37e442af737434cc3eb3c0",
+      "schema_report_sha256": "6d87d0870c79a4bef7e4c28854aafdecc472ac0b4f60b67d3c1547a41e529e02",
+      "native_Qt_build_report_sha256": "0af3913d25a4ea82f410e7cb26a2e688ae14640aa55cc70b8255c46f30c70543",
+      "review_sha256": "fdbee1b7ad9fd784505bfa5e9f0f01adb70e1035aec1e84c204abe6150e85015",
+      "unexecuted_first_preparation_source_sha256": "66dbe10b471eb2c48ac5bbe5f8bd047cc78d54ef5245f213e147007eb7f8d986",
+      "failed_host_setup_predecessor_source_sha256": "4d18a13a43e4366cedd9e58629e281797e1d3b06f5dc8872975702ca01eeaaf9",
+      "only_successor_host_fix": "manifest relative-path loop binding no longer overwrites fixed selection name; guest helpers, payload and assertions unchanged",
+      "initial_old_PID1_units": {
+        "count": 4,
+        "active_enabled_running": true,
+        "no_install_reload_enable_or_start_before_initial_admission": true
+      },
+      "old_installed_schema_RED": {
+        "completed_available_IPC": true,
+        "required_policy_settled_boolean_missing": true,
+        "actual_assertion_exit": 101,
+        "legacy_ABI_fallback_added": false
+      },
+      "old_PID1_Stop": {
+        "count": 4,
+        "normal_success": true,
+        "ExecMainCode": 1,
+        "ExecMainStatus": 0,
+        "terminal_retained_pidfds": true,
+        "proc_absent": true,
+        "cgroups_empty": true,
+        "guest_parent_wait_claimed": false
+      },
+      "inventory": {
+        "before_packages": 385,
+        "cached_additions": 8,
+        "after_packages": 393,
+        "original385_versions_unchanged": true,
+        "selected_Qt_libraries_and_plugins": 50,
+        "selected_Qt_bytes_unchanged": true
+      },
+      "current_Rust_ARM_loader_checks": 5,
+      "native_Qt_consumer": {
+        "bytes": 7074624,
+        "sha256": "51474e77321813c87b12d5d1d40fc52a1c6565cd8e41d58867d8f280e9d502c3",
+        "ELF_machine": 183,
+        "Qt_version": "6.12",
+        "native_build_and_ldd_r_passed": true,
+        "Sounds_APIs": 15,
+        "appearance_APIs": 11,
+        "each_archive_linked_once": true,
+        "consumer_executed": false
+      },
+      "explicit_stopped_install": {
+        "files": 4,
+        "current_normal_audio_daemon": 1,
+        "VM_site_configs": 3,
+        "all_four_services_stopped_at_anchor": true,
+        "current_daemon_started_after_install": false
+      },
+      "counts": {
+        "host_actual_direct_wait_PIPE_EOF": 15,
+        "host_stage_actual_direct_wait_PIPE_EOF": 3,
+        "guest_actual_direct_wait_PIPE_EOF": 40,
+        "guest_shutdown_actual_direct_wait_PIPE_EOF": 1,
+        "QEMU_custody_actual_direct_wait_PIPE_EOF": 3,
+        "total_actual_direct_wait_PIPE_EOF": 62,
+        "separate_PID1_outcomes": 4
+      },
+      "all_bound_wait_and_PIPE_EOF_times_rechecked": true,
+      "actual_QEMU_wait_exit": 0,
+      "QEMU_PIPE_EOF_and_closed_handles_before_export": true,
+      "exported_layer": {
+        "bytes": 201719808,
+        "sha256": "6b7423d861bd94209b9d2119fc81357521e0438683306a37c801a1cf53dace08"
+      },
+      "fresh_cold_current_QML_actor_PCM_executed": false,
+      "normal_app_Main_or_QML_consumer_executed": false,
+      "Pixel_kernel_qualified": false,
+      "normal_window_or_display_profile_capture_qualified": false,
+      "live_theme_switching_qualified": false,
+      "physical_phone_accessed": false,
+      "next_gate": "fresh cold installed ARM QML/actor/PCM",
+      "fresh_cold_current_preview_functional_qualified": false
     }
   ],
   "pending": [
-    "deployment qualification for the new preview",
-    "ARM execution",
+    "fresh cold installed ARM QML/actor/PCM integration",
     "normal windows and cold graphical session",
     "physical audio and complete smartphone"
   ],
@@ -1408,5 +1517,5 @@
     "https://docs.pipewire.org/page_man_pipewire-props_7.html",
     "https://github.com/PipeWire/pipewire/blob/1.4.2/spa/plugins/audioconvert/audioadapter.c#L1810-L1892"
   ],
-  "next_integration_gate": "installed ARM tracer; no further host combinations selected"
+  "next_integration_gate": "fresh cold installed ARM tracer with QML/actor/PCM; no further host combinations selected"
 }

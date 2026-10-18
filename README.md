@@ -24,8 +24,9 @@ app-close/relaunch case also passes retirement and full quiet before explicit
 reconnect/new Play. Backend-worker loss and explicit recovery stay quiet until
 a new Play. A later unshown real QML consumer now passes route/Play/Stop/new-Play
 mouse input through the actual Rust client, actor and normal audio owner to
-independent PCM. The specified host preview gates pass; the installed ARM tracer
-is next.
+independent PCM. The specified host preview gates pass. Generic ARM preparation
+now qualifies current loaders, a native Qt6.12 consumer build and stopped
+installation/export; fresh cold QML/PCM integration remains next.
 
 The [Messages request and model engine](docs/native-messages-rust-client.md) now
 also runs in Rust. An earlier cohort with the pre-port appearance client builds

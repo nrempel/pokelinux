@@ -77,9 +77,13 @@ route/Play/Stop/new-Play mouse pairs, public QML Playing→Retiring→Idle state
 144,000 measured frames across three paired windows under one original six-second
 cutoff. Current Rust client/actor/normal audio providers remain unchanged; only
 test C++ discovery/layout preparation changes. The specified host preview gates
-now pass. Current Rust ARM crossbuild/static ABI also passes separately, without
-ARM loader, Qt component or PID1 execution. Continue with the installed ARM
-tracer; no further host combination or window/capture campaign.
+now pass. After the separate current Rust ARM crossbuild, generic Arch ARM
+preparation now passes all five Rust loaders and native Qt6.12 consumer build/
+link/loader checks (15 Sounds and 11 appearance APIs). The old active/available
+PID1 daemon fails the required-field assertion with exit 101. All four old units
+then Stop successfully before explicit four-file installation and export after
+QEMU closure. Fresh cold current QML/PCM remains unexecuted and is next; no further
+host combination or window/capture campaign.
 The private Messages read-provider remains parked at compiled assertion RED,
 with no qualified GREEN or deployed join; do not retry it. Normal ARM windows,
 cold graphical startup and all matched-device gates remain open.
