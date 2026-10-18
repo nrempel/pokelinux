@@ -12,6 +12,12 @@ Zero physical phone models are currently qualified. Kernel/HAL commonality makes
 shared implementations possible; each additional model still requires matched
 assets, an explicit hardware backend/profile and its own hardware evidence.
 
+The [normal Settings Rust connectivity SDK](native-settings-connectivity-sdk.md)
+also passes a native host actor/packet slice and socket lifecycle controls.
+It carries an explicit desired boolean and original deadline, with no vendor,
+interface or device identity in the app. This qualifies no Pixel radio or Wi-Fi
+backend, installed ARM session, additional model or physical hardware.
+
 ```mermaid
 flowchart TD
   Apps[Omarchy phone, messages, camera and settings apps] --> Core[Shared Rust services and domain state]

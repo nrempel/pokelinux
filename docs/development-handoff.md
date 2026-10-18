@@ -24,17 +24,30 @@ normal Rust Main and real packets. The connection survives actual app exit; a
 fresh generation observes it and explicitly Disconnects with independent address
 removal and silence. A genuine refusing-actor RED precedes the implementation;
 114 default lifecycle tests, six normal binaries and strict Clippy pass. This
-uses an actual UID11050 Rust process fixture. The normal Settings window/client,
-installed selection, ARM, Wi-Fi/Internet and all phone gates remain open.
+uses an actual UID11050 Rust process fixture. That earlier cohort does not
+execute the normal Settings engine/window; installed selection, ARM,
+Wi-Fi/Internet and all phone gates remain open.
 Earlier [private Main](native-connectivity-private-ingress.md) and
 [persistent-worker](native-connectivity-worker.md) cohorts remain separate.
 
-The next connectivity slice joins the normal Rust Settings engine and explicit
-controls to this actor path, then normal app/window and installed Main deployment.
+The next connectivity slice exposes the normal Rust Settings engine through a
+narrow C ABI and explicit Qt controls, then joins the normal app/window and
+installed Main deployment.
 Keep Source/authentication/full-shell/capture branches parked. The current tracer
 uses authored session=None/admin facts; no genuine session/authentication follows.
 Worker Stop/reaping is separate from remote cleanup, and no implicit mutation
 retry or same-namespace recovery is allowed.
+
+The [normal Settings Rust connectivity SDK](native-settings-connectivity-sdk.md)
+now has genuine actual-UID refusing-setter RED through this same actor/Main/packet
+boundary. Its effect implementation retains a readonly-established transport,
+original absolute deadline and one send, with permanent queued retirement and
+sticky uncertainty. The unchanged consumer now passes actual packets, app exit/relaunch and
+explicit Disconnect; six real-socket protocol groups and the original seven/five
+pending brightness groups pass too. The green epoch's outer field-name error
+remains failed; offline schema-corrected review validates its original product,
+QA and complete custody without rerunning. No connectivity C ABI, Qt control or
+installed selection is qualified yet. Preserve the published actor checkpoint separately.
 
 The [native local-network status path](native-network-status.md) now passes both
 host and native ARM service-to-Rust-client-to-Settings integration. In the ARM VM,

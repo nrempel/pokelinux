@@ -1,0 +1,291 @@
+{
+  "schema": 1,
+  "status": "Normal Settings safe Rust connectivity SDK: qualified refusing-setter RED, unchanged consumer product GREEN, six protocol groups and final publication QA",
+  "public_base_commit": "fdc4f6b8e3860c14cbda896f96aee7713b230cc9",
+  "evidence_class": "Native Harbour x86_64 Linux; isolated fixed local IPv4 virtual backend and authored actor session/admin facts",
+  "normal_Settings_safe_Rust_engine_executed": true,
+  "normal_connectivity_C_ABI_or_Qt_executed": false,
+  "normal_window_or_new_screenshot": false,
+  "installed_session_owner_or_deployment": false,
+  "genuine_Source_or_authentication": false,
+  "new_ARM_or_physical_phone_evidence": false,
+  "physical_phone_access": false,
+  "sources": {
+    "native-settings-ui/client-core/src/connectivity.rs": {
+      "bytes": 22812,
+      "sha256": "c4dd1c45c52d6a4ea0dd7caf50cfaab611a79388ea79cc8ce6bfb3bbd1bd5fdb"
+    },
+    "native-settings-ui/client-core/src/lib.rs": {
+      "bytes": 149,
+      "sha256": "c5d0f0c7d719bec0f96d124aa1ca80dc14b1d05cd9d1ee398b9a109d65c352fb"
+    },
+    "native-settings-ui/client-core/Cargo.toml": {
+      "bytes": 665,
+      "sha256": "f666f0dcc59fc036ec72df1d7837e352b0e5ecdd150989d2c796193b9ff5ceaa"
+    },
+    "native-settings-ui/client-core/Cargo.lock": {
+      "bytes": 4220,
+      "sha256": "3254825d8db03d6615c8765d165cfbf21dfbb2f5a1234087196be55c2709cfb9"
+    },
+    "native-settings-ui/client-core/tests/connectivity-boundary.rs": {
+      "bytes": 24343,
+      "sha256": "e294cf9c1f824fc7c3fd69e4f737077528b81433f29c6c2000fd58bd57df82a2"
+    },
+    "native-settings-ui/client-core/tests/support/connectivity-boundary.rs": {
+      "bytes": 8745,
+      "sha256": "c9d9488683710316ae2f92f9d36a4119f3a8ceb4204c23752862c521cfe1cf3e"
+    },
+    "tools/native-connectivity-settings-sdk/Cargo.lock": {
+      "bytes": 7664,
+      "sha256": "0bd26ef4903465e6cc446afff66c28c12d31b939ed48f0590247ac0dbcad1576"
+    },
+    "tools/native-connectivity-settings-sdk/Cargo.toml": {
+      "bytes": 453,
+      "sha256": "58e8e2b4facd9e968d9032690e9d1bb85a0651f43f786eaf52f556160d0e830a"
+    },
+    "tools/native-connectivity-settings-sdk/controller.py": {
+      "bytes": 23272,
+      "sha256": "897bc4fc8c39a07bab74086373c292997a599fa875e7656ab784a0fb46da9b0d"
+    },
+    "tools/native-connectivity-settings-sdk/service_connectivity_sdk_actor_tests.rs": {
+      "bytes": 28912,
+      "sha256": "5f21d9c5cfa9c0243e35db9c105e0eb84344db19431e7a500d85723e90dbdb7d"
+    },
+    "tools/native-connectivity-settings-sdk/settings-connectivity-sdk-app.rs": {
+      "bytes": 9716,
+      "sha256": "f7d91a9f6dfd9a1d8abd1fe8c8526686a4e587193d9698e3cdeef7abb747e4c5"
+    }
+  },
+  "private_artifact_digests": {
+    "initial_compile_only": {
+      "outer/receipt.json": {
+        "bytes": 29837,
+        "sha256": "d73f5e491cb5c873998c0a1f34866d179cbf7a55b32dd7cfc45cec14d1cfdf0b"
+      },
+      "out/result.json": {
+        "bytes": 18402,
+        "sha256": "57e5ab95591cfd2bb60e5eb4231c31c30d4857653c760cf0ff8e0c97c098b08d"
+      }
+    },
+    "qualified_RED": {
+      "outer/receipt.json": {
+        "bytes": 188841,
+        "sha256": "03f09db478a0cd7ddb7c5e1734e90d24d45154e6e41b5884d10d8bf895995530"
+      },
+      "out/build-result.json": {
+        "bytes": 53950,
+        "sha256": "e8eb672064cfee352fb819b0aa103f45fc56b34425f88e6ab2b1bc708724a67b"
+      },
+      "out/case/result.json": {
+        "bytes": 19426,
+        "sha256": "6796c08fa793a52fb918e8b037694349d6f005794982311bd4875b2d90c1a6fe"
+      },
+      "Root-behavior-RED-review.json": {
+        "bytes": 1273,
+        "sha256": "bf3f53a75889934895e31b381dcd2b7f5849e131d7523c299447c7ac850b5a87"
+      }
+    },
+    "GREEN_QA_and_product": {
+      "outer/receipt.json": {
+        "bytes": 192792,
+        "sha256": "7af1af62c06bde19a02ebbb3f6a337a6240cf6f5107e247a963156bcdeabb837"
+      },
+      "out/build-result.json": {
+        "bytes": 59446,
+        "sha256": "bbb8df9dd95ecc3ab1b3f3776d60040d5e6b7b9f54919c2a796facdb098e3381"
+      },
+      "out/case/result.json": {
+        "bytes": 28253,
+        "sha256": "666f4e0111bd76323d5ca3c906705c861fe8465e6c2a9164e75ed54df3c87799"
+      },
+      "audit.py": {
+        "bytes": 9916,
+        "sha256": "732b2812da7938e44641bbfe62c56958551ff1bd6bc3a86e148a41ec9d6dab56"
+      },
+      "audit.json": {
+        "bytes": 6449,
+        "sha256": "6aeaef4b96a0dfd4e00b81987003b8b110800bfc3dc814e01c8b8dc2bd10b939"
+      },
+      "Root-QA-inner-GREEN-review.json": {
+        "bytes": 2026,
+        "sha256": "f9e35c4ff4e74ce1e0f5051e66efad28d89c6a8cb5adb06c3313b70cc6dc24e0"
+      }
+    },
+    "protocol_setup_failure": {
+      "outer/receipt.json": {
+        "bytes": 31392,
+        "sha256": "0ead797e0ce4c1b9b4c104a4bc5e0837edaf48e3b18b044c16b22e38a4718840"
+      },
+      "out/result.json": {
+        "bytes": 8354,
+        "sha256": "0acedaf2cd6d37e6dd1a817ee1de83371d21790f68414860d7c3fcc94b96cf22"
+      }
+    },
+    "protocol_receive_fixture_failure": {
+      "outer/receipt.json": {
+        "bytes": 31392,
+        "sha256": "d82aba31f783eb00d7479a27dc0f3fd57c1208dbb885d8706d7019a0eafa1d0b"
+      },
+      "out/result.json": {
+        "bytes": 18456,
+        "sha256": "7d11249b2df57cc4d5f94b1d4e1c89615ca9096283aa7b5efd24189dac4c936e"
+      }
+    },
+    "protocol_pass": {
+      "outer/receipt.json": {
+        "bytes": 31057,
+        "sha256": "985cd8238ea84cb927e180cf4c9987ff01b0f5547959333b97732b38029b244f"
+      },
+      "out/result.json": {
+        "bytes": 21767,
+        "sha256": "779aba42cfa76dc4f2dc3ea6ab681f0c9ac294bee02debdcc3fc5cadded60025"
+      },
+      "SELF-REVIEW.json": {
+        "bytes": 3241,
+        "sha256": "c2ff6013174f9a3042c94a47e0bda459fb1d413def92ee6e762c9c531055461c"
+      },
+      "Root-protocol-promotion-review.json": {
+        "bytes": 1376,
+        "sha256": "a752e47a1e060c4b3415b0bbc3f6e706b15549f4a6542ff85a6b5b94b22e892b"
+      }
+    },
+    "publication_QA": {
+      "outer/receipt.json": {
+        "bytes": 30759,
+        "sha256": "fb7dde54e726bf0aabf01672394f5215c5d048c40095643e64cd21d578f47c52"
+      },
+      "out/result.json": {
+        "bytes": 5311,
+        "sha256": "a00121924696e0a89abeebddbca9ee8140b06526ddf6b316a807c34fc3aac0b0"
+      },
+      "SELF-REVIEW.json": {
+        "bytes": 2005,
+        "sha256": "f0afbec0b8be7d57f71ac78e3d20c66c6904999c1d819fd70335571f8457512a"
+      },
+      "Root-review.json": {
+        "bytes": 798,
+        "sha256": "c310913f130edeff243e72e3129c9d3e53f9e1136016980a3bada13e18e235b4"
+      }
+    }
+  },
+  "RED": {
+    "classification": "ACTUAL_REGISTERED_GRANTED_SETTINGS_SDK_CONNECT_REFUSED_RED",
+    "build_succeeded": true,
+    "actual_UID11050_granted_fresh_false_state": true,
+    "SDK_set_returned_false": true,
+    "desired_assertion_exit": 101,
+    "desired_assertion_after_all_backend_cleanup": true,
+    "Scope_actual_wait_PIPE_EOF": 23,
+    "regular_stderr_separate": 4,
+    "SDK_join_and_task_count_one": 1,
+    "Apps_actual_wait_zero_no_PIPE_claim": 1,
+    "Main_native_worker_wait_EOF_separate": true
+  },
+  "GREEN": {
+    "classification": "ACTUAL_NORMAL_SETTINGS_SDK_FIXTURE_ACTOR_MAIN_PACKET_GREEN",
+    "product_and_QA_passed": true,
+    "original_outer_aggregate_passed": false,
+    "original_outer_error": "KeyError('connected')",
+    "offline_audit_schema_correction": [
+      "connected to connected_choice",
+      "disconnected to disconnected_choice"
+    ],
+    "all_original_unreached_predicates_qualified_by_offline_audit": true,
+    "tests_clocks_and_runtime_not_repeated_for_audit": true,
+    "functional_elapsed_ns": 1209352872,
+    "original_case_ns": 6000000000,
+    "original_start_and_action_ns": 1000000000,
+    "original_quiet_phase_including_delivery_ns": 800000000,
+    "actual_armed_to_final_EAGAIN_ns": 799475960,
+    "quiet_packets": 0,
+    "actual_SDK_join_ns": [
+      2066255,
+      2072898
+    ],
+    "original_SDK_join_budget_ns": 200000000,
+    "actual_Apps_waits_zero_no_PIPE_claim": 2,
+    "actual_task_count_one_after_each_SDK_join": true,
+    "Scope_actual_wait_PIPE_EOF": 27,
+    "regular_stderr_separate": 8,
+    "native_worker_wait_EOF_and_terminal_pidfd_separate": true,
+    "original_brightness_groups": 7,
+    "pending_brightness_groups": 5,
+    "actual_brightness_client_waits": 19,
+    "actual_brightness_client_PIPE_EOF": 38,
+    "wrong_PID_writer_separate": true,
+    "full_lifecycle_default_suite_not_repeated": true,
+    "compiled_formatted_SDK": {
+      "bytes": 22812,
+      "sha256": "c4dd1c45c52d6a4ea0dd7caf50cfaab611a79388ea79cc8ce6bfb3bbd1bd5fdb"
+    },
+    "four_service_ELFs_reused_unchanged": true,
+    "frozen_consumer_and_app_lock_unchanged": true
+  },
+  "protocol": {
+    "groups": 6,
+    "queued_subcases": 5,
+    "actual_nested_Child_waits": 17,
+    "actual_nested_PIPE_EOF": 34,
+    "actual_SDK_joins_task_count_one": 16,
+    "original_SDK_join_budget_ns": 200000000,
+    "original_child_budget_ns": 5000000000,
+    "Scope_actual_wait_PIPE_EOF": 18,
+    "regular_stderr_separate": 4,
+    "runtime_capabilities": [
+      "SETUID",
+      "SETGID",
+      "KILL"
+    ],
+    "UID11050_effective_permitted_inheritable_ambient_capabilities_zero": true,
+    "UID11050_bounding_three_capabilities_and_NoNewPrivs_one": true,
+    "compiler_effective_permitted_inheritable_ambient_zero_bounding_three_NoNewPrivs_one": true,
+    "actual_socket_reset_observations": 2,
+    "actual_socket_EOF_observations_separate_from_PIPE_EOF": 26,
+    "SDK_before_format_only_source_sha256": "85faa5e836ec5b11ed0767812dcb405c68851c798a8d965d0c9da5878cfad351",
+    "SDK_semantic_changes_for_protocol_repairs": false,
+    "preserved_failures": [
+      {
+        "epoch": 1,
+        "classification": "SETUP_FAILURE: inherited16MiB file-size limit below normal static archive",
+        "functional_executed": false,
+        "is_RED": false
+      },
+      {
+        "epoch": 2,
+        "classification": "Compiled fixture receive handling failure",
+        "groups_passed": 4,
+        "groups_failed": 2,
+        "nested_waits_observed": 12,
+        "SDK_joins_observed": 11,
+        "is_SDK_behavior_RED": false
+      }
+    ],
+    "successor_repairs": [
+      "Bounded file-size/output limit64MiB; unchanged source/oracles/clocks",
+      "ECONNRESET keeps same socket and drains all queued packets through actual zero-byte EOF under original cutoff"
+    ]
+  },
+  "all_qualified_epochs": {
+    "owned_command_wait_EOF_before_original_cutoffs": true,
+    "no_adopted_waits": true,
+    "same_Docker_daemon": true,
+    "exact_container_removed": true,
+    "source_pins_unchanged_through_epoch_closure": true
+  },
+  "remaining_gates": [
+    "Connectivity C ABI and thin Qt controls",
+    "Normal Settings window and installed session-owner/Main selection",
+    "Normal deployment and ARM integration",
+    "Actual suspend and arbitrary blocked-kernel reclamation",
+    "Physical Wi-Fi/Bluetooth/Internet and phone kernel/driver/carrier gates",
+    "All full smartphone completion-matrix requirements; zero hardware-qualified phone models"
+  ],
+  "publication_QA": {
+    "format_check": true,
+    "strict_locked_offline_all_targets_Clippy": true,
+    "no_functional_execution": true,
+    "Scope_wait_PIPE_EOF": 16,
+    "regular_stderr_separate": 3,
+    "capabilities_all_sets_zero_NoNewPrivs_one": true
+  }
+}

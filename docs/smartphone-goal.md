@@ -1,5 +1,12 @@
 # Omarchy smartphone goal
 
+The [normal Settings Rust connectivity SDK](native-settings-connectivity-sdk.md)
+now passes granted Connect, packets after actual app exit, fresh app observations
+and explicit Disconnect through the native actor/Main/worker. Six socket groups
+and actual joins qualify its local lifecycle behavior. Connectivity C ABI/Qt,
+installed selection, ARM and all physical gates remain open; this advances a
+software slice without completing the smartphone matrix.
+
 The [combined ARM development image](native-arm-development-image.md) now
 cold-boots seven installed services together: battery, brightness, network status
 and the four-unit audio stack, with Settings and Sounds installed. One fresh boot

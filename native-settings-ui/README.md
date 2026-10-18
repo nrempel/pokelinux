@@ -246,3 +246,14 @@ installs normal3a8b8aac alongside the three native services. The unchanged netwo
 component passes in both fresh boots, including after runtime-only reinstall,
 while the original battery/brightness owners remain running. The normal app main
 and window are still unexecuted in this cohort.
+
+The [connectivity SDK](../docs/native-settings-connectivity-sdk.md) now adds a
+separate safe Rust model and owned transport worker in this normal client crate.
+Its actual launched-UID consumer first qualifies refusing-setter behavioral RED
+through the lifecycle actor, native Main/worker and independent packet boundary.
+The implementation passes the unchanged consumer through real packets, app
+exit/relaunch and explicit Disconnect, plus six real-socket protocol groups and
+the original seven/five pending brightness groups. Its original deadline,
+permanent queued retirement and uncertain outcome semantics are separate from
+the brightness engine above. Connectivity C ABI, Qt controls,
+new normal window, installed deployment, ARM and phone qualification remain open.
