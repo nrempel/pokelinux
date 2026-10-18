@@ -101,6 +101,21 @@ impl Model {
                 .as_ref()
                 .is_some_and(|c| c.state.revision == click.revision)
     }
+    // An already accepted choice may wait for readonly custody before its first
+    // send. Keep its exact revision/deadline; loss or changed state is terminal.
+    fn waiting_on_readonly(&self, click: Click, now: u64) -> bool {
+        self.click
+            .is_some_and(|c| c.id == click.id && !c.selected && !c.sent)
+            && now < click.until
+            && self.cache.as_ref().is_some_and(|c| {
+                c.state.available
+                    && c.state.pending
+                    && !c.can_set
+                    && c.state.revision == click.revision
+                    && c.state.requested_percent.is_none()
+                    && c.state.valid(now)
+            })
+    }
     fn view(&mut self, now: u64, stopped: bool) -> View {
         if stopped {
             self.clear(STOPPED);
@@ -462,6 +477,10 @@ fn run(shared: Arc<Shared>, path: PathBuf) {
                     if m.may_send(click, now) {
                         m.click.as_mut().unwrap().selected = true;
                         Some(Some(click))
+                    } else if m.waiting_on_readonly(click, now) {
+                        // Readiness is established by a new readonly status,
+                        // never by resending or extending this explicit choice.
+                        (now >= next_status).then_some(None)
                     } else {
                         m.click = None;
                         None

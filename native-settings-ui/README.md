@@ -9,7 +9,10 @@ or select a backend path. Settings cannot grant itself permission.
 The Rust engine owns strict JSON, root:root peer and exact per-packet credentials,
 state validation, fresh CLOCK_BOOTTIME expiry, one queued explicit choice, bounded
 nonblocking socket I/O and one owned thread. A queued click retains its revision
-and original one-second local deadline. A changed revision cancels it. The wire
+and original one-second local deadline. An accepted unsent choice now survives
+fresh same-revision readonly pending work and waits for fresh usable state before
+its first send. A changed revision, lost freshness, expiry or Stop cancels it;
+a refusal after first send is terminal. No actor busy refusal is retried. The wire
 TTL is the floor of remaining local time; the remote actor has its own admission
 and Source fences. Local expiry prevents later send/publication and closes the
 channel; no uncertain Set is replayed. Readonly status refresh may reconnect.
@@ -88,6 +91,26 @@ SyntheticTree service, in the same app. Root reviewed five original1080×2424
 captures and external Pixel10 profile metadata. The prior failed observer and
 single-tap attempts remain separate. Direct normal QWindow DPR/Qt.enabled getters,
 all input races, cold full-shell startup, default-Cargo Qt, ARM UI and physical
-backlight remain open. An accepted-click/readonly overlap regression is in progress.
+backlight remain open. A separate accepted-click/readonly overlap repair now
+passes real host C ABI tests; these published GUI images retain the preceding
+engine. Joining the repaired archive into a new normal Qt app remains separate.
 Future captures must qualify the actual
 [Pixel10 profile](../docs/native-phone-display-profile.md); no resized capture is valid evidence.
+
+The accepted-choice repair has a genuine compiled real-socket RED: the ABI accepts
+75%, but same-revision pending→usable status produces no Set. Four new cases
+cover retention, changed revision, original expiry and Stop before first send.
+The frozen focused five (including the existing happy control) pass after the
+Rust-only repair, then the original seven groups pass once:11 distinct groups.
+All19 client waits/38 PIPE EOFs and the separate wrong-PID writer close; Stop
+actually joins within its original200ms. Format, strict all-target Clippy and
+normal host/ARM Release archives pass with six strong C APIs each. These archives
+are build results; the actual host C ABI fixture executes a debug test binary,
+and ARM execution/new normal Qt integration are not inferred.
+
+The first post-repair attempt exposed a fixture clock-reference defect after the
+correct first Set: it compared sender TTL with later receive time. The precise
+test-only successor samples before releasing usable Status, retains the original
+cutoff, and fails against the archived original engine before passing unchanged
+against the repair. Earlier failed-attempt child receipt gaps remain explicit.
+See [hash-only provenance](../docs/evidence/native-settings-pending-choice-provenance.json).

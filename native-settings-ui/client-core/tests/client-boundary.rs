@@ -195,6 +195,66 @@ fn child(case: &str, path: &Path) {
             assert_eq!(v.can_set, 1);
             thread::sleep(Duration::from_millis(300));
         }
+        "pending-usable" | "pending-changed" | "pending-expiry" | "pending-stop" => {
+            let mut line = String::new();
+            io::stdin().read_line(&mut line).unwrap();
+            assert_eq!(line, "queue\n");
+            let before = now();
+            assert_eq!(
+                a.set(75),
+                OK,
+                "explicit click accepted before pending Status reply"
+            );
+            let accepted = now();
+            println!("ACCEPTED_CLICK {accepted}");
+            io::stdout().flush().unwrap();
+            match case {
+                "pending-usable" => {
+                    let v = a.until(
+                        "ACCEPTED_CLICK_MUST_SURVIVE_TRANSIENT_READONLY_PENDING",
+                        950_000_000,
+                        |v| {
+                            v.revision == 8 && v.observed_percent == 75 && v.requested_percent == 75
+                        },
+                    );
+                    assert_eq!(v.pending, 0);
+                    assert!(now() < before + 1_000_000_000, "original click deadline");
+                }
+                "pending-changed" => {
+                    a.until(
+                        "changed revision visibly retires queued click",
+                        900_000_000,
+                        |v| v.revision == 8 && v.pending == 0 && v.can_set == 1,
+                    );
+                    while now() < accepted + 1_050_000_000 {
+                        pause();
+                    }
+                }
+                "pending-expiry" => {
+                    let v = a.until(
+                        "original unsent click expiry is visible",
+                        1_200_000_000,
+                        |v| v.status == UNAVAILABLE && v.pending == 0,
+                    );
+                    assert!(now() >= before + 1_000_000_000);
+                    assert_eq!(v.available, 0);
+                    println!("CLICK_EXPIRED");
+                    io::stdout().flush().unwrap();
+                    a.until(
+                        "readonly recovery cannot replay expired click",
+                        700_000_000,
+                        |v| v.can_set == 1,
+                    );
+                    thread::sleep(Duration::from_millis(100));
+                }
+                "pending-stop" => {
+                    line.clear();
+                    io::stdin().read_line(&mut line).unwrap();
+                    assert_eq!(line, "stop\n");
+                }
+                _ => unreachable!(),
+            }
+        }
         "stop" => {
             assert_eq!(a.set(75), OK);
             thread::sleep(Duration::from_millis(50));
@@ -643,6 +703,137 @@ fn scenario(id: usize, case: &str, fault: Option<&str>) -> bool {
     }
     pass
 }
+// The existing root peer holds an already-entered Status transaction while the
+// unprivileged client accepts ONE explicit C ABI click. No service/policy mock.
+fn pending_scenario(id: usize, case: &str) -> bool {
+    let s = Socket::new(id);
+    let mut p = Peer::spawn(case, &s.path);
+    let (fd, request) = s.request(&mut p).unwrap();
+    is_status(&request);
+    send(&fd, status(state(7, 50, None, 2_000_000_000), true));
+    drop(fd);
+    let (fd, request) = s.request(&mut p).unwrap();
+    is_status(&request);
+    p.child
+        .stdin
+        .as_mut()
+        .unwrap()
+        .write_all(b"queue\n")
+        .unwrap();
+    let accepted = loop {
+        p.pump();
+        if let Some(line) = String::from_utf8_lossy(&p.out)
+            .lines()
+            .find(|v| v.starts_with("ACCEPTED_CLICK "))
+        {
+            break line
+                .strip_prefix("ACCEPTED_CLICK ")
+                .unwrap()
+                .parse::<u64>()
+                .unwrap();
+        }
+        assert!(
+            p.exit.is_none() && now() < p.until,
+            "accepted C ABI click marker"
+        );
+        pause();
+    };
+    let original_until = accepted + 1_000_000_000;
+    let pending = || {
+        let mut value = state(7, 50, None, 2_000_000_000);
+        value["pending"] = json!(true);
+        if case == "pending-expiry" {
+            value["until_ns"] = json!(original_until.to_string());
+        }
+        status(value, false)
+    };
+    send(&fd, pending());
+    drop(fd);
+    let mut sets = 0;
+    let mut reads = 2;
+    let mut first_usable_release = None;
+    while let Some((fd, request)) = s.request(&mut p) {
+        println!(
+            "PENDING_PACKET {}",
+            json!({"case":case,"packet":request,"at_ns":now(),"original_click_until_upper_ns":original_until})
+        );
+        if request["op"] == "brightness_set" {
+            sets += 1;
+            assert_eq!(case, "pending-usable", "invalidated click must never send");
+            assert_eq!(sets, 1, "one explicit click permits one Set packet");
+            is_set(&request, 75, 7);
+            assert!(now() < original_until, "no renewed click budget");
+            assert!(
+                request["request"]["ttl_ms"].as_u64().unwrap()
+                    <= (original_until - first_usable_release.unwrap()) / 1_000_000
+            );
+            send(
+                &fd,
+                json!({"result":"brightness_completed","state":state(8,75,Some(75),2_000_000_000)}),
+            );
+        } else {
+            is_status(&request);
+            reads += 1;
+            match case {
+                "pending-usable" => {
+                    // This precedes any Set caused by releasing fresh usable state.
+                    // Receiver time includes transit and cannot bound the sender TTL.
+                    if sets == 0 && first_usable_release.is_none() {
+                        first_usable_release = Some(now());
+                    }
+                    send(
+                        &fd,
+                        status(
+                            state(
+                                if sets == 0 { 7 } else { 8 },
+                                if sets == 0 { 50 } else { 75 },
+                                None,
+                                2_000_000_000,
+                            ),
+                            true,
+                        ),
+                    );
+                }
+                "pending-changed" => send(&fd, status(state(8, 50, None, 2_000_000_000), true)),
+                "pending-expiry" if now() < accepted + 750_000_000 => send(&fd, pending()),
+                "pending-expiry" => {
+                    loop {
+                        p.pump();
+                        if String::from_utf8_lossy(&p.out).contains("CLICK_EXPIRED")
+                            || p.exit.is_some()
+                        {
+                            break;
+                        }
+                        assert!(now() < p.until, "expiry marker within original child bound");
+                        pause();
+                    }
+                    if p.exit.is_none() {
+                        send(&fd, status(state(7, 50, None, 2_000_000_000), true));
+                    }
+                }
+                "pending-stop" => {
+                    p.child
+                        .stdin
+                        .as_mut()
+                        .unwrap()
+                        .write_all(b"stop\n")
+                        .unwrap();
+                    eof(&fd, &mut p, 200_000_000);
+                }
+                _ => unreachable!(),
+            }
+        }
+    }
+    let pass = p.finish();
+    println!(
+        "PENDING_CASE {}",
+        json!({"case":case,"accepted_at_ns":accepted,"original_click_until_upper_ns":original_until,"status_packets":reads,"set_packets":sets,"child_passed":pass})
+    );
+    if pass {
+        assert_eq!(sets, usize::from(case == "pending-usable"));
+    }
+    pass
+}
 fn main() {
     let args: Vec<_> = std::env::args().collect();
     if args.get(1).is_some_and(|v| v == "client") {
@@ -658,6 +849,35 @@ fn main() {
         0,
         "root authored server required"
     );
+    if args.get(1).is_some_and(|v| v == "pending-only") {
+        let mut failed = 0;
+        for (id, case) in [
+            "happy",
+            "pending-usable",
+            "pending-changed",
+            "pending-expiry",
+            "pending-stop",
+        ]
+        .into_iter()
+        .enumerate()
+        {
+            let result = std::panic::catch_unwind(|| {
+                if case == "happy" {
+                    scenario(id, case, None)
+                } else {
+                    pending_scenario(id, case)
+                }
+            });
+            let passed = matches!(result, Ok(true));
+            println!(
+                "GROUP {case} {}",
+                if passed { "PASS" } else { "ASSERT_FAIL" }
+            );
+            failed += usize::from(!passed);
+        }
+        println!("RESULT pending_groups=5 failed={failed}");
+        std::process::exit(if failed == 0 { 0 } else { 1 });
+    }
     let mut failed = 0;
     let mut id = 0;
     for case in [

@@ -440,15 +440,21 @@ their original bounds. Root's semantic review is separate from the automated
 capture result. The initial missing-admission-field setup failure launched no
 container and is preserved separately. Earlier failed taps remain recorded; this
 success does not identify which boundary stopped them or prove all input races
-resolved. A focused client regression for accepted intent overlapping readonly
-work is still in progress. See the
+resolved. A separate client correction now preserves an accepted unsent choice
+through fresh same-revision readonly pending work, under its original one-second
+deadline. Four new real-socket cases and the seven existing groups pass after
+compiled RED, with explicit earlier fixture-error evidence. That repaired Rust
+archive has not yet been joined into this normal Qt/GUI cohort; actor busy refusal
+and all post-first-send uncertainty/no-replay rules stay unchanged. See the
+[client correction](evidence/native-settings-pending-choice-provenance.json) and
 [five-state provenance](evidence/native-settings-brightness-tracer-provenance.json).
 
 ## Remaining integration and hardware gates
 
 The finite Settings touch/change/unavailable/recovery path is qualified only for
-the explicit SyntheticTree backend above. Accepted-intent/readonly races, cold
-startup and full-shell composition retain their own gates. Linux driver execution and matched Pixel
+the explicit SyntheticTree backend above. Joining the accepted-intent correction
+into normal Qt, actor busy/refusal UX, cold startup and full-shell composition
+retain their own gates. Linux driver execution and matched Pixel
 panel/backlight discovery, brightness response, physical readback, suspend/resume,
 lock behavior and power/drain measurements remain separate gates. No phone has
 been accessed, and this component does not advance calls, IMS or SMS hardware
