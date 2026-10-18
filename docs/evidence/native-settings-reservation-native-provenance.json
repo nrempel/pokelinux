@@ -1,0 +1,212 @@
+{
+  "schema": 1,
+  "passed": false,
+  "scope": "Prepared generic Arch x86_64 KVM normal Settings, real Rust actor and installed PID1 brightness service with explicit SyntheticTree and genuine Omarchy theme inputs; full original shell false.",
+  "public_owner_checkpoint": "2e86d8f1f40866b9545e3a2fa20e46c4ba88d265",
+  "source": {
+    "four_selected_changes_from_preserved_GUI7": {
+      "normal_owner_sha256": "2b92653975bf6483fa4c1e5b3e3d6db61c00f46685c8433d57fc812195397c3c",
+      "matching_Settings_launcher_sha256": "12362d8e114f289cb722d63f3e5e87d8f10aa59c5b037429cb772bb8ac04141b",
+      "diagnostic_guest_sha256": "5797c85660a67cf2c6b3983ae3327bac9224536859218ead560496bac2e4cda3",
+      "Root_route_proof_sha256": "f3c88a58af61d4e46f417df452be52a316459813f5de06be706917eca1c1e77a"
+    },
+    "owner_Q_sha256": "d18cb859f53050bf008426a534da39042179261b86eeffb860f082fc4375a6c1",
+    "owner_SOURCE_sha256": "0e0594cb72b22fc21a0fb29ec5f19703955943e27f074107af0e318f3f19c5ba",
+    "owner_manifest_sha256": "a1605c98552a64b6ce0309589247dc2166df40a847dfeb96135eab8a6bb67977",
+    "normal_Settings_ELF": {
+      "bytes": 6115032,
+      "sha256": "d1bd1d19162ed2f8adf062d231433eb4a870bd815e3e2b52feb2beee3376956c"
+    },
+    "Settings_archive": {
+      "bytes": 25262688,
+      "sha256": "2a35b8519b1151ad1d7c3012b40cc9ba75f4e6c296466207dcbadb5da3168f88"
+    },
+    "Engine_sha256": "600243d20cb0e88cd9206aac685ae4d26257c020ced0d46afb925c0ae5d32687",
+    "Qt6_execution_sha256": "b2b4b19710fc49b459f18aa1e0dad01624b24368a2c9b701dae1d03f15509ac1",
+    "Qt6_result_sha256": "41b72303160655f76992fcc19ceb1fa2d9812c9460a27d93b6a92b56f022f492",
+    "retained_brightness74e": {
+      "bytes": 776616,
+      "sha256": "74e56b4000da678b6ebb2b8556cfbb875340d3179852c459896568df8c3c5a83"
+    },
+    "brightness_old_Q_sha256": "e9d513119c228c7f5012a98d87ad4e812fb7b2bbc862e4374ff0252c921b037b",
+    "other_providers_observer_QML_FEATURE_Source100ms_and_bounds_unchanged": true
+  },
+  "evidence_sha256": {
+    "selection": "1a2d36d91b315efd413472493cc053075d98247ec330cb44ef0c34322efe764b",
+    "command": "02e6897470536e2c92098cb13f58ffd53b64ca0f970e983b6d70f9cfda656e8e",
+    "admission": "cdbbe0dc63978e3efcd1361a95e9cdb478b8a5b98a7495ad52b8f3003b272b66",
+    "execution": "8a534b293beace6bb1f7f2b6432b1ecda39afbb405b3b32d38b3af2a07017cee",
+    "guest": "eaa133b4aea45539edb245f5b73bcb889153bab2988dc1015e818d6786835178",
+    "boot": "6fc877056f7138c2d76ef2a4ca3f490cdc924a5ef00012b218f8b193ff540f93",
+    "bootstrap": "b3e8b676cf0d16e3a2e3ccf40246df4eea93d334b5d164394cc57db45bb99f33",
+    "closed_review": "7a008dd56d7ea6cb2920fff7c69f288285639754830397deba23df01f6869f7c"
+  },
+  "functional": {
+    "passed": false,
+    "completed_machine_groups": [
+      1
+    ],
+    "phase": "first explicit75",
+    "original_functional_seconds": 5,
+    "first75_inputs": 1,
+    "retry": false,
+    "second25_unreached": true,
+    "raw_diagnostic": {
+      "bytes": 67934,
+      "sha256": "1c09d5b8532e8ab9552cf420d2dd4052b856e1f7e7cbe526caf0b6031aa178a6"
+    },
+    "samples": 116,
+    "requested_values": [
+      100
+    ],
+    "max_values": [
+      400
+    ],
+    "actual_values": [
+      120
+    ],
+    "inotify_events": 0,
+    "caps_reached": false,
+    "diagnostic_errors": [],
+    "inotify_not_syscall_write_count": true,
+    "UInput_API_calls": 11,
+    "kernel_delivery_events": 10,
+    "Qt_input_handler": null,
+    "first_full_Set_send": null,
+    "first_reply": null,
+    "cause": "unknown",
+    "GUI7_cause": "unknown",
+    "reservation_component_not_causal_GUI_diagnosis": true,
+    "readback_or_rendered_status_not_Set_ACK": true
+  },
+  "Source": {
+    "authenticated_Snapshots": 2,
+    "both_state": "observed",
+    "both_first_failure": null,
+    "both_principals": 1,
+    "both_locked": false,
+    "both_degraded": false,
+    "continuous_health_qualified": false,
+    "failure_only_observation_seconds": 5,
+    "failure_observation_within_original_WORK": true
+  },
+  "original_captures": {
+    "all9_CRC_full_decode_and_RGBA_BGRA_hashes_verified": true,
+    "Root_viewed": {
+      "initial25": {
+        "PNG": {
+          "bytes": 51477,
+          "sha256": "5aa5a552c6705b71a2862663e852330c8740a40b804f746faeadd9dbb2939a99"
+        },
+        "capture_JSON_sha256": "5a4df34adba710be79b0ed92070d9b4a31eede5563fc9e196bb6c4a410a809c0",
+        "RGBA_sha256": "76faf9ca8ad79164cafd0602597417544ceba1a5d897eaeca1bde698cd5fe909",
+        "native_BGRA_sha256": "61b1557b777644085f8175ce0cbf83d809b57c216c25b4b4cf7490344608b143"
+      },
+      "immediate75": {
+        "PNG": {
+          "bytes": 50051,
+          "sha256": "7730222336913bd5812444a463ca0ae24128f7566559e327d06804d4a95629da"
+        },
+        "capture_JSON_sha256": "cb6c7bb2fc784b5259fc472adaeb33867d2654bd4ec9b2c9da2bca30b05f95cf",
+        "RGBA_sha256": "b65b5b6270ecd2c2eb0d4a5bbe6385078f8b2d9a65af45ac1635162765b989c8",
+        "native_BGRA_sha256": "f44b0a77386585e81219ce71cc9d97e49c1a0b93e5ee88f4ce474c69e1404818"
+      },
+      "failure75": {
+        "PNG": {
+          "bytes": 50051,
+          "sha256": "3c778cf155d872be302513294c9477dbde5e24a9e4c3645267fae4664d001160"
+        },
+        "capture_JSON_sha256": "d646e12b3c1c269eb3e080380d6dc2a63b5c27774e3247f909bf60735f56843f",
+        "RGBA_sha256": "979bb90f30a1f5a0f482be1fbcfe1c832a182bc5ea346a5373a8ab6a5a4ef70c",
+        "native_BGRA_sha256": "6782682d52514cca60e76f06fb68b0942872ee95b291392b2f139c6e2699b03f"
+      }
+    },
+    "native_pixels": [
+      1080,
+      2424
+    ],
+    "external_scale": 2.625,
+    "external_mm": [
+      65,
+      146
+    ],
+    "axis_PPI": [
+      422.03076923076924,
+      421.70958904109585
+    ],
+    "native_stride": 4320,
+    "resized_or_repainted": false,
+    "same_normal_window": true,
+    "QWindow_DPR": null,
+    "Root_semantic_review": {
+      "original_native_resolution": true,
+      "all3_visible": "25% and Brightness ready",
+      "pending_or_retained_outcome_visible": false,
+      "handler_absence_or_Set_reply_proved": false
+    }
+  },
+  "closure": {
+    "passed": true,
+    "aggregate_remains_failed": true,
+    "direct_waits": 100,
+    "PIPE_EOFs": 107,
+    "counts": {
+      "host": {
+        "wait": 7,
+        "PIPE_EOF": 14
+      },
+      "boot": {
+        "wait": 5,
+        "PIPE_EOF": 5
+      },
+      "bootstrap": {
+        "wait": 5,
+        "PIPE_EOF": 5
+      },
+      "early_once": {
+        "wait": 2,
+        "PIPE_EOF": 2
+      },
+      "guest": {
+        "wait": 81,
+        "PIPE_EOF": 81
+      }
+    },
+    "early_counted_once": true,
+    "all_Scope_wait_EOF_timestamps_within_original_cutoffs": true,
+    "all_direct_exits_match_frozen_dispositions": true,
+    "adopted_compositor_descendant": {
+      "separate_wait": 1,
+      "exit": 1,
+      "pidfd_dead_proc_absent": true,
+      "included_in_direct_wait_or_PIPE_counts": false,
+      "normal_Main_status_inferred": false
+    },
+    "normal_app_numeric_exit": null,
+    "app_compositor_pidfds_dead_proc_absent": true,
+    "owner_audio_appearance_Stop_wait0": true,
+    "PID1_brightness": {
+      "Result": "success",
+      "ExecMainCode": 1,
+      "ExecMainStatus": 0,
+      "NRestarts": 0,
+      "pidfd_dead_proc_absent_socket_removed_cgroup_empty": true
+    },
+    "QEMU_wait_exit": 0,
+    "container_CLI_wait_exit": 0,
+    "exact_CID_absence_same_daemon": true,
+    "selected_inputs": 185,
+    "external_inputs": 773,
+    "all_inputs_unchanged": true,
+    "cleanup_errors": [],
+    "QMPsocket_EOF_separate": true,
+    "outer_evaluation_assertion": "Runner records closure_error AssertionError when requiring guest.passed; functional failure remains false. Independently checked custody/timeliness/input closure pass."
+  },
+  "limits": "Current five-state path remains unqualified. No physical backlight, ARM execution, full shell or phone capability claim. Earlier failures and independent component evidence remain separately scoped.",
+  "Root_independent_review": {
+    "closed_review_bound_size_hash_pins": 32,
+    "actual_direct_waits_and_PIPE_EOF_and_cutoffs": true,
+    "original_three_selected_PNG_CRC_full_native_decode_and_opacity": true,
+    "Root_viewed_three_originals": "initial, immediate and failure:25% and Brightness ready; no handler/Set/reply inference."
+  }
+}

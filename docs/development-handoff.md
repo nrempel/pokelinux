@@ -54,8 +54,9 @@ then sends once only after a fresh idle reply at the original revision. A frozen
 actual Session/Owner/socket test passes after compiled assertion RED, including
 remote-busy, changed-revision and expiry controls. All52 brightness cases and
 focused lifecycle/launch/constructor checks pass, with fresh host/ARM releases.
-The prior graphical failure's cause remains unknown; the new graphical join is
-not yet qualified.
+The fresh graphical join still fails its first75% input: the backend stays25%
+and the sampled UI says ready. Qt delivery/Set/reply and the cause remain unknown;
+see the brightness report. The full current touch path remains unqualified.
 
 The [audio SIGTERM repair](native-audio.md#sigterm-enters-owned-stop) now routes
 the shared Rust termination latch into existing idempotent Stop. The unchanged

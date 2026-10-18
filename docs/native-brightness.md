@@ -555,6 +555,25 @@ kernel runtime. The graphical experiment retains its frozen brightness daemon
 and changes only the qualified actor/launcher plus failure diagnostics; it is not
 yet qualified. See [reservation provenance](evidence/native-brightness-readonly-reservation-provenance.json).
 
+## New owner join: first tap still fails
+
+The published first-send reservation repair now runs in a fresh prepared normal
+Settings session with the matching launcher. Qt, the client archive, frozen
+brightness daemon and all policy/resource bounds remain unchanged. One explicit
+75% input fails the original five seconds:116 independent raw samples stay100/400,
+with optional actual120 and no inotify event. Only initial25 completes; the second
+tap and its new failure diagnostics are unreached.
+
+Root views the initial, immediate and failure originals at1080×2424. All show25%
+and “Brightness ready”; no pending or retained outcome is visible in those frames.
+Qt handler delivery, the first full Set, its reply and the cause remain unknown.
+Two authenticated Source snapshots observe no recorded failure, which does not
+establish continuous health. No input is retried. All100 direct waits/107 PIPE
+EOFs close within their original cutoffs; a separate adopted compositor descendant
+exit1 is not the normal Settings exit. Brightness PID1 Stop, QEMU/container and
+185+773 input closure pass. The aggregate remains failed. See
+[the new failed-join provenance](evidence/native-settings-reservation-native-provenance.json).
+
 ## Actual ARM kernel LinuxBacklight integration
 
 The retained normal ARM daemon and real Rust Client now run through PID1 and the
