@@ -171,3 +171,20 @@ pub unsafe extern "C" fn pr_sounds_client_view_v1(client: *const Client, out: *m
     unsafe { ptr::write(out, c.view()) };
     Code::Ok as i32
 }
+
+/// Explicit Play input; never queues behind another request or opens a socket.
+/// # Safety
+/// client is an exclusive live handle on its single caller thread.
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn pr_sounds_client_preview_play_v1(client: *mut Client) -> i32 {
+    // SAFETY: caller owns the declared live exclusive handle.
+    unsafe { client.as_mut() }.map_or(Code::Invalid, Client::preview_play) as i32
+}
+/// Explicit cleanup input; fences an in-flight effect by closing local channel state.
+/// # Safety
+/// client is an exclusive live handle on its single caller thread.
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn pr_sounds_client_preview_stop_v1(client: *mut Client) -> i32 {
+    // SAFETY: caller owns the declared live exclusive handle.
+    unsafe { client.as_mut() }.map_or(Code::Invalid, Client::preview_stop) as i32
+}

@@ -18,7 +18,7 @@
 namespace {
 QJsonObject emptyState() {
  return {{"connected",true},{"available",true},{"pending",false},
-         {"requested",QJsonValue::Null},{"applied",QJsonValue::Null}};
+         {"requested",QJsonValue::Null},{"applied",QJsonValue::Null},{"policy_settled",false},{"preview","idle"}};
 }
 QJsonArray catalog(int count=2) {
  if(count==2) return {QJsonObject{{"id","media-a7"},{"label","Speaker"}},QJsonObject{{"id","media-z2"},{"label","Headphones"}}};

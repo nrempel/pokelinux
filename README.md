@@ -14,6 +14,10 @@ A fresh native prepared run with this whole engine now passes all four app/audio
 groups and eight PCM windows/192,000 measured frames. Unedited Pixel10 captures
 and the [earlier queue-only result](docs/native-sounds-rust-queue.md) retain their
 separate evidence. Cold installed startup and ARM remain open.
+The [finite Play/Stop preview](docs/native-sounds-preview.md) now passes one real
+host actor Play through the Rust-owned producer to selected-speaker virtual PCM,
+plus host Rust/frontend components. UI clicks, natural completion, preview Stop,
+revocation and backend-failure integration remain open.
 
 The [Messages request and model engine](docs/native-messages-rust-client.md) now
 also runs in Rust. An earlier cohort with the pre-port appearance client builds
@@ -100,8 +104,9 @@ PID1 starts the installed service automatically; the same unprivileged QML
 instance shows0/0, clears stale counts after Stop and recovers through a fresh
 service instance. Both Stops finish normally. The native Qt6.12 build installs
 Settings with its three matching Rust engines. Counts establish no Wi-Fi,
-Internet or modem connectivity. The normal app main/window, combined installed
-image and physical-phone gates remain open; no new screenshot is claimed.
+Internet or modem connectivity. The [combined headless development image](docs/native-arm-development-image.md)
+is qualified separately; normal app main/window and physical-phone gates remain
+open. No new screenshot is claimed.
 
 The [prepared three-app navigation branch](docs/native-three-app-navigation.md)
 is parked after three failed epochs. The later attempts reach Settings and

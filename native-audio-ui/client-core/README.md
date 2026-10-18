@@ -2,7 +2,7 @@
 
 This Rust static library owns the request stage, compact packet, original
 one-second BOOTTIME deadline, reply validation, pagination, accepted UI model and
-one copied queued route/reconnect gesture. It reuses the internal Queue and shared
+one copied queued route/reconnect/cleanup-Stop gesture. It reuses the internal Queue and shared
 BootClock. Safe engine/protocol/queue/layout modules forbid unsafe code; only the
 narrow borrowed-pointer FFI handles C storage.
 
@@ -29,9 +29,12 @@ that explicit archive built for the matching target. The normal app also needs
 `POKELINUX_APPEARANCE_CLIENT_ARCHIVE_SHA256` for the same cross target. The obsolete
 queue-only header/functions are removed; there is no compatibility alias.
 
-The permanent byte-identical independent six-group C++ consumer exercises the
-actual C ABI and clock, with assertions active in Release via target-only
-`-UNDEBUG`. The unchanged30-case Qt suite retains real socket/credential checks.
+The independent six-group C++ consumer exercises the actual C ABI and clock,
+with assertions active in Release via target-only `-UNDEBUG`. Its business
+assertions and the30-case Qt socket/credential assertions are retained; fixtures
+now supply required `policy_settled` and `preview` State fields, and the C ABI
+layout assertion includes four explicit appended fields. These fixture changes
+provide no compatibility defaults for the old wire schema.
 See [the component record](../../docs/native-sounds-rust-client.md) for actual
 source/link/loader checks and the fresh whole-engine prepared GUI/PCM pass with
 192,000 measured frames. A later [current ARM build/install epoch](../../docs/native-current-arm-apps.md)
@@ -42,3 +45,42 @@ Cargo, the full running ARM cohort, installed cold startup and phone gates remai
 open.
 Historical queue-only results remain in their
 [original record](../../docs/native-sounds-rust-queue.md).
+
+
+The preview source requires an explicit seven-field State. `policy_settled`
+describes the selected logical route; `preview` is one of `idle`, `starting`,
+`playing`, `retiring`, `completed` or `failed`. A settled selected route with idle
+preview is distinct from an interrupted route. Starting is distinct from Playing;
+Retiring does not assert quiet or remote child retirement.
+
+Explicit Play requires an idle channel and a settled selected route. Rust copies
+that route and an original one-second BOOTTIME deadline. Every native send plan
+contains that same absolute integer deadline and a freshly reduced remaining
+`ttl_ms`; EAGAIN/EINTR cannot renew it. Play is never queued behind a read-only
+request and is never replayed after reconnect. Qt polling only requests status.
+
+Stop is cleanup, independent of a fresh Play grant. It can wait behind one
+read-only status under its own original one-second deadline; a fresh negative
+status does not discard cleanup; a denied/unavailable envelope fences the channel
+to withdraw ownership instead. If Stop cannot share an in-flight effect or
+another queued intent, the engine fences the channel and Qt closes the actual
+socket to withdraw ownership. Send failure, expiry and transport failure also
+close the channel. Cancellation is not remote rollback, quiet or reap evidence.
+
+The later [preview component qualification](../../docs/native-sounds-preview.md)
+passes six existing C ABI, seven schema and seven preview groups plus two cleanup cases,
+the30 existing Qt socket behaviors plus setup/cleanup, and the unchanged frozen
+unavailable-state QML construction test under UID11042. All seven normal targets
+build and resolve their loaders with the selected Sounds archive linked once.
+The QML window is not shown and no Play/Stop UI action executes. Earlier AutoMoc,
+unused-helper and temporary-directory setup failures remain separately recorded;
+the source rename and `[[maybe_unused]]` bridge change no assertions.
+
+The later real lifecycle actor/audio join passes one registered/granted Play
+through the normal Rust-owned producer to original private PipeWire: 24,000
+measured frames per sink contain 440 Hz speaker content and exactly zero earpiece
+samples. The producer creation-time port configuration repairs the preceding
+channel-layout refusal with the same frozen fixture. This is separate from the
+component checks above. Actual Qt clicks joined to PCM, natural completion,
+explicit preview Stop/quiet, app-close/revocation and backend-failure integration
+remain open. Historical GUI/PCM and ARM results retain their original providers.

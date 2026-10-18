@@ -20,6 +20,8 @@ const CONNECTION: u64 = 71;
 struct ObservedProvider {
     revoked: usize,
     sent: Option<u64>,
+    played: Option<u64>,
+    stopped: Option<u64>,
 }
 impl Provider for ObservedProvider {
     fn incarnation(&self) -> &str {
@@ -40,6 +42,14 @@ impl Provider for ObservedProvider {
     }
     fn submit(&mut self, intent: &audio::Intent) -> io::Result<bool> {
         self.sent = Some(intent.id);
+        Ok(true)
+    }
+    fn play(&mut self, intent: &audio::Intent) -> io::Result<bool> {
+        self.played = Some(intent.id);
+        Ok(true)
+    }
+    fn stop_preview(&mut self, id: u64, _: u64) -> io::Result<bool> {
+        self.stopped = Some(id);
         Ok(true)
     }
     fn inspect(&mut self, _: u64) -> io::Result<bool> {
@@ -109,6 +119,8 @@ impl Ready {
         let mut provider = ObservedProvider {
             revoked: 0,
             sent: None,
+            played: None,
+            stopped: None,
         };
         let mut media = Session::default();
         media
@@ -245,4 +257,65 @@ fn media_ready_real_reply_eagain_rechecks_client_half_close() {
     net::shutdown(&c.client, Shutdown::Write).unwrap();
     assert_eq!(c.check().unwrap_err().kind(), io::ErrorKind::UnexpectedEof);
     c.assert_retired();
+}
+
+#[test]
+fn preview_actual_request_half_close_cancels_before_dispatch() {
+    let mut c = Ready::new();
+    c.media.published(CONNECTION, &c.authority, &mut c.provider);
+    c.media
+        .begin_preview(
+            CONNECTION,
+            std::process::id(),
+            11042,
+            audio::PreviewRequest {
+                route: "speaker".into(),
+                ttl_ms: 1000,
+                until_boottime_ns: boottime_ns() + 900_000_000,
+            },
+            &mut c.authority,
+            &c.provider,
+        )
+        .unwrap();
+    net::shutdown(&c.client, Shutdown::Write).unwrap();
+    assert_eq!(c.check().unwrap_err().kind(), io::ErrorKind::UnexpectedEof);
+    assert!(c.provider.played.is_none());
+    c.assert_retired();
+}
+
+#[test]
+fn preview_stop_is_owned_cleanup_and_does_not_publish_a_new_play_approval() {
+    let mut c = Ready::new();
+    c.media.published(CONNECTION, &c.authority, &mut c.provider);
+    assert_eq!(c.media.stop_preview(CONNECTION + 1), Err(Reply::Denied));
+    c.media.stop_preview(CONNECTION).unwrap();
+    c.check().unwrap();
+    assert!(
+        c.media
+            .drive(CONNECTION, &c.authority, &mut c.provider)
+            .is_none()
+    );
+    let id = c.provider.stopped.expect("explicit connection-owned Stop");
+    assert!(c.provider.played.is_none());
+    let mut state = c.provider.state();
+    state.preview = audio::PreviewState::Retiring;
+    let (_, reply) = c
+        .media
+        .observe(
+            audio::Event::Preview { id, state },
+            &c.authority,
+            &mut c.provider,
+        )
+        .unwrap();
+    assert!(
+        matches!(reply, Reply::MediaPreview { state } if state.preview == audio::PreviewState::Retiring)
+    );
+    c.media.published(CONNECTION, &c.authority, &mut c.provider);
+    assert!(c.media.owns(CONNECTION) && !c.media.pending());
+    assert!(
+        c.media
+            .fence(&c.authority, &mut c.provider, false, |_| true)
+            .is_none()
+    );
+    assert_eq!(c.provider.revoked, 0);
 }

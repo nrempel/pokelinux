@@ -1,6 +1,20 @@
 pub mod backend_process;
 pub mod client;
+mod fixed_pcm;
 pub mod pipewire;
+pub mod preview_process;
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum PreviewState {
+    #[default]
+    Idle,
+    Starting,
+    Playing,
+    Retiring,
+    Completed,
+    Failed,
+}
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 
@@ -43,12 +57,7 @@ impl Authority {
         }
     }
 
-    pub fn acquire(
-        &mut self,
-        peer: Identity,
-        role: Role,
-        route: &str,
-    ) -> Result<u64, &'static str> {
+    pub fn can_acquire(&self, peer: Identity, role: Role) -> Result<(), &'static str> {
         if peer.uid != self.call_uid && peer.uid != self.app_uid {
             return Err("denied");
         }
@@ -70,6 +79,19 @@ impl Authority {
         {
             return Err("lease_limit");
         }
+        if self.next_id == u64::MAX {
+            return Err("lease_limit");
+        }
+        Ok(())
+    }
+
+    pub fn acquire(
+        &mut self,
+        peer: Identity,
+        role: Role,
+        route: &str,
+    ) -> Result<u64, &'static str> {
+        self.can_acquire(peer, role)?;
         let id = self.next_id;
         self.next_id = self.next_id.checked_add(1).ok_or("lease_limit")?;
         self.leases.insert(

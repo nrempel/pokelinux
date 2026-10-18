@@ -22,16 +22,17 @@ PID1 starts the installed service automatically; the same unprivileged QML
 instance shows0/0, clears stale counts after Stop and recovers through a fresh
 service instance. Both Stops finish normally. The native Qt6.12 build installs
 Settings with its three matching Rust engines. Counts establish no Wi-Fi,
-Internet or modem connectivity. The normal app main/window, combined installed
-image and physical-phone gates remain open; no new screenshot is claimed.
+Internet or modem connectivity. The [combined headless development image](native-arm-development-image.md)
+is qualified separately; normal app main/window and physical-phone gates remain
+open. No new screenshot is claimed.
 
 The [current native ARM Settings/Messages build](native-current-arm-apps.md#current-settings-and-messages-with-battery)
 passes production CMake/install and offscreen components for its frozen
 pre-network-card Settings600 and three-engine Messages frontend. All64 frozen sources and four
 archives match; new normal ELFs59fb0ef1/c7bb89e2 remain unexecuted. The56 Scope
 waits/merged EOFs and seven nested waits are distinct from the legacy shutdown
-request, which has no direct QEMU/QMP receipt. No window, default ARM Cargo or
-combined image is qualified; older6f9/c52 app results remain separate.
+request, which has no direct QEMU/QMP receipt. No window or default ARM Cargo is qualified by that build; the later headless
+combined image is qualified separately. Older6f9/c52 app results remain separate.
 
 The [prepared three-app navigation branch](native-three-app-navigation.md) is
 parked. The first epoch fails before a functional group; the second and third
@@ -51,12 +52,16 @@ ownership, modes, inode and mtime. All197 direct waits/merged PIPE EOFs close
 within original bounds. This is an installed development image, with no normal
 app main/window or graphical phone-session claim.
 
-Next implement one finite Play/Stop sound preview in Sounds through the existing
-media authority and selected logical route. Rust owns playback lifetime; Qt owns
-controls. Require actual UI actions and independently measured virtual PCM, Stop,
-app-close/revocation retirement and unavailable-backend failure without queued
-replay. Reuse the private audio stack and offscreen component first; add no new
-permission system, direct app PipeWire access or window/capture campaign.
+The [finite Play/Stop Sounds preview](native-sounds-preview.md) now passes one
+registered/granted host actor Play through the normal Rust-owned producer to
+original private PipeWire: 24,000 frames per sink contain 440 Hz speaker content
+and exactly zero earpiece samples. Earlier zero-PCM runs and the fixed
+`unsupported_channel_layout` diagnostic remain preserved; creation-time producer
+port initialization is the sole behavior fix. Host Rust and frontend C ABI/socket/
+unshown-QML components pass separately. Actual Qt clicks joined to PCM, natural
+completion, explicit preview Stop/quiet, app-close/revocation and backend failure
+without replay remain open. Continue with the private stack/offscreen component;
+no window/capture campaign.
 The private Messages read-provider remains parked at compiled assertion RED,
 with no qualified GREEN or deployed join; do not retry it. Normal ARM windows,
 cold graphical startup and all matched-device gates remain open.

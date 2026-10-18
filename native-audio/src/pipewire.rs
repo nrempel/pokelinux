@@ -145,6 +145,38 @@ pub struct Graph {
     nodes: BTreeMap<String, u64>,
     ports: Vec<(u64, u64, String, String)>,
     links: Vec<Link>,
+    source_identities: BTreeMap<String, Result<SourceIdentity, &'static str>>,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct SourceIdentity {
+    pub pid: u32,
+    pub uid: u32,
+    pub gid: u32,
+    pub cookie: u64,
+    pub node_serial: u64,
+    pub client_serial: u64,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub enum MediaSource {
+    Automatic,
+    Owned {
+        pid: u32,
+        uid: u32,
+        gid: u32,
+        cookie: u64,
+        identity: Option<SourceIdentity>,
+    },
+    Retiring,
+}
+
+pub struct RenderPlan {
+    pub desired: Vec<(u64, Role, String)>,
+    pub wanted: BTreeSet<(String, String)>,
+    pub idle_media: bool,
+    pub media_present: bool,
+    pub preview_identity: Option<SourceIdentity>,
 }
 
 fn number(value: &Value) -> Option<u64> {
@@ -211,86 +243,223 @@ fn command(program: &str, args: &[String]) -> Result<Vec<u8>, &'static str> {
 
 pub fn read_graph() -> Result<Graph, &'static str> {
     let bytes = command("/usr/bin/pw-dump", &[])?;
-    let objects: Vec<Value> = serde_json::from_slice(&bytes).map_err(|_| "invalid_graph")?;
-    let cookie = objects
-        .iter()
-        .find(|object| {
-            object["type"]
-                .as_str()
-                .is_some_and(|t| t.ends_with(":Core"))
-        })
-        .and_then(|object| number(&object["info"]["cookie"]))
-        .ok_or("missing_core_identity")?;
-    let mut by_id = BTreeMap::new();
-    let mut nodes = BTreeMap::new();
-    let mut ports = Vec::new();
-    for object in &objects {
-        let Some(kind) = object["type"].as_str() else {
-            continue;
-        };
-        if kind.ends_with(":Node") {
-            if let (Some(id), Some(name)) = (
-                number(&object["id"]),
-                object["info"]["props"]["node.name"].as_str(),
-            ) {
-                if nodes.insert(name.to_owned(), id).is_some() {
-                    return Err("ambiguous_node_identity");
-                }
-                by_id.insert(id, name.to_owned());
-            }
-        } else if kind.ends_with(":Port")
-            && let (Some(id), Some(node), Some(direction)) = (
-                number(&object["id"]),
-                number(&object["info"]["props"]["node.id"]),
-                object["info"]["props"]["port.direction"].as_str(),
-            )
-        {
-            ports.push((
-                id,
-                node,
-                direction.to_owned(),
-                object["info"]["props"]["port.name"]
+    Graph::from_value(serde_json::from_slice(&bytes).map_err(|_| "invalid_graph")?)
+}
+
+impl Graph {
+    pub fn from_value(value: Value) -> Result<Self, &'static str> {
+        let objects: Vec<Value> = serde_json::from_value(value).map_err(|_| "invalid_graph")?;
+        let cookie = objects
+            .iter()
+            .find(|object| {
+                object["type"]
                     .as_str()
-                    .ok_or("missing_port_name")?
-                    .to_owned(),
-            ));
+                    .is_some_and(|t| t.ends_with(":Core"))
+            })
+            .and_then(|object| number(&object["info"]["cookie"]))
+            .ok_or("missing_core_identity")?;
+        let mut by_id = BTreeMap::new();
+        let mut nodes = BTreeMap::new();
+        let mut ports = Vec::new();
+        for object in &objects {
+            let Some(kind) = object["type"].as_str() else {
+                continue;
+            };
+            if kind.ends_with(":Node") {
+                if let (Some(id), Some(name)) = (
+                    number(&object["id"]),
+                    object["info"]["props"]["node.name"].as_str(),
+                ) {
+                    if nodes.insert(name.to_owned(), id).is_some() {
+                        return Err("ambiguous_node_identity");
+                    }
+                    by_id.insert(id, name.to_owned());
+                }
+            } else if kind.ends_with(":Port")
+                && let (Some(id), Some(node), Some(direction)) = (
+                    number(&object["id"]),
+                    number(&object["info"]["props"]["node.id"]),
+                    object["info"]["props"]["port.direction"].as_str(),
+                )
+            {
+                ports.push((
+                    id,
+                    node,
+                    direction.to_owned(),
+                    object["info"]["props"]["port.name"]
+                        .as_str()
+                        .ok_or("missing_port_name")?
+                        .to_owned(),
+                ));
+            }
         }
+        let mut links = Vec::new();
+        for object in &objects {
+            if !object["type"]
+                .as_str()
+                .is_some_and(|t| t.ends_with(":Link"))
+            {
+                continue;
+            }
+            if let (Some(id), Some(output), Some(input), Some(state)) = (
+                number(&object["id"]),
+                number(&object["info"]["output-node-id"]),
+                number(&object["info"]["input-node-id"]),
+                object["info"]["state"].as_str(),
+            ) && let (Some(source), Some(target)) = (by_id.get(&output), by_id.get(&input))
+            {
+                let _ = id;
+                links.push(Link {
+                    source: source.clone(),
+                    target: target.clone(),
+                    state: state.to_owned(),
+                });
+            }
+        }
+        let mut source_identities = BTreeMap::new();
+        for object in &objects {
+            if !object["type"]
+                .as_str()
+                .is_some_and(|v| v.ends_with(":Node"))
+            {
+                continue;
+            }
+            let Some(name) = object["info"]["props"]["node.name"].as_str() else {
+                continue;
+            };
+            let identity = (|| {
+                let props = &object["info"]["props"];
+                let client_id = number(&props["client.id"]).ok_or("missing_source_client")?;
+                let clients: Vec<_> = objects
+                    .iter()
+                    .filter(|v| {
+                        v["type"].as_str().is_some_and(|t| t.ends_with(":Client"))
+                            && number(&v["id"]) == Some(client_id)
+                    })
+                    .collect();
+                if clients.len() != 1 {
+                    return Err("missing_source_client");
+                }
+                let security = &clients[0]["info"]["props"];
+                let integer = |key: &str| {
+                    security[key]
+                        .as_u64()
+                        .and_then(|v| u32::try_from(v).ok())
+                        .ok_or("missing_source_security")
+                };
+                let formats = object["info"]["params"]["EnumFormat"]
+                    .as_array()
+                    .ok_or("missing_source_format")?;
+                if !formats.iter().any(|v| {
+                    v["mediaType"] == "audio"
+                        && v["mediaSubtype"] == "raw"
+                        && v["format"] == "F32LE"
+                        && v["rate"] == 48000
+                        && v["channels"] == 1
+                        && v["position"] == serde_json::json!(["MONO"])
+                }) {
+                    return Err("unsupported_preview_format");
+                }
+                Ok(SourceIdentity {
+                    pid: integer("pipewire.sec.pid")?,
+                    uid: integer("pipewire.sec.uid")?,
+                    gid: integer("pipewire.sec.gid")?,
+                    cookie,
+                    node_serial: props["object.serial"]
+                        .as_u64()
+                        .ok_or("missing_node_serial")?,
+                    client_serial: security["object.serial"]
+                        .as_u64()
+                        .ok_or("missing_client_serial")?,
+                })
+            })();
+            source_identities.insert(name.to_owned(), identity);
+        }
+        Ok(Graph {
+            cookie,
+            nodes,
+            ports,
+            links,
+            source_identities,
+        })
     }
-    let mut links = Vec::new();
-    for object in &objects {
-        if !object["type"]
-            .as_str()
-            .is_some_and(|t| t.ends_with(":Link"))
-        {
-            continue;
-        }
-        if let (Some(id), Some(output), Some(input), Some(state)) = (
-            number(&object["id"]),
-            number(&object["info"]["output-node-id"]),
-            number(&object["info"]["input-node-id"]),
-            object["info"]["state"].as_str(),
-        ) && let (Some(source), Some(target)) = (by_id.get(&output), by_id.get(&input))
-        {
-            let _ = id;
-            links.push(Link {
-                source: source.clone(),
-                target: target.clone(),
-                state: state.to_owned(),
-            });
-        }
-    }
-    Ok(Graph {
-        cookie,
-        nodes,
-        ports,
-        links,
-    })
 }
 
 impl Graph {
     pub fn cookie(&self) -> u64 {
         self.cookie
     }
+    pub fn render_plan(
+        &self,
+        profile: &Profile,
+        desired: &[(u64, Role, String)],
+        media: &MediaSource,
+    ) -> Result<RenderPlan, &'static str> {
+        let source = profile.sources.get("media");
+        let media_present = source.is_some_and(|s| self.nodes.contains_key(s));
+        let mut render = Vec::new();
+        let mut idle_media = false;
+        let mut preview_identity = None;
+        for (lease, role, route) in desired {
+            // Selected policy still validates the actual target capability when idle.
+            self.mono_port(profile.target(*role, route)?, "in")?;
+            if *role == Role::Media {
+                match media {
+                    MediaSource::Retiring => {
+                        idle_media = true;
+                        continue;
+                    }
+                    MediaSource::Automatic if !media_present => {
+                        idle_media = true;
+                        continue;
+                    }
+                    MediaSource::Owned {
+                        pid,
+                        uid,
+                        gid,
+                        cookie,
+                        identity,
+                    } => {
+                        if !media_present {
+                            return Err("preview_source_pending");
+                        }
+                        let found = self
+                            .source_identities
+                            .get(profile.source(Role::Media)?)
+                            .ok_or("missing_source_identity")?
+                            .clone()?;
+                        if found.pid != *pid
+                            || found.uid != *uid
+                            || found.gid != *gid
+                            || found.cookie != *cookie
+                            || identity.as_ref().is_some_and(|old| old != &found)
+                        {
+                            return Err("wrong_preview_source_identity");
+                        }
+                        preview_identity = Some(found);
+                    }
+                    MediaSource::Automatic => {}
+                }
+            }
+            self.mono_port(profile.source(*role)?, "out")?;
+            render.push((*lease, *role, route.clone()));
+        }
+        let wanted = wanted(profile, &render)?;
+        Ok(RenderPlan {
+            desired: render,
+            wanted,
+            idle_media,
+            media_present,
+            preview_identity,
+        })
+    }
+    pub fn media_present(&self, profile: &Profile) -> bool {
+        profile
+            .sources
+            .get("media")
+            .is_some_and(|source| self.nodes.contains_key(source))
+    }
+
     pub fn observed(&self, profile: &Profile) -> Vec<ObservedLink> {
         let mut links: Vec<_> = self
             .links

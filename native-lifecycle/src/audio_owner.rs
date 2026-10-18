@@ -19,6 +19,7 @@ pub struct Owner {
 enum Operation {
     Inspect,
     Select { id: u64, route: String },
+    Preview { id: u64, route: Option<String> },
 }
 fn connect(path: &Path) -> io::Result<UnixStream> {
     if !path.is_absolute() {
@@ -62,7 +63,10 @@ impl Owner {
     ) -> io::Result<bool> {
         match result {
             Ok(SendOutcome::Sent) => {
-                if matches!(operation, Operation::Select { .. }) {
+                if matches!(
+                    operation,
+                    Operation::Select { .. } | Operation::Preview { .. }
+                ) {
                     self.awaiting_application = true;
                 }
                 self.pending = Some(operation);
@@ -85,11 +89,18 @@ impl Provider for Owner {
                 && !snapshot.uncertain
                 && snapshot.observation.as_ref().is_some_and(|o| o.available),
             pending: snapshot.in_flight
+                || matches!(
+                    snapshot.preview,
+                    crate::audio::PreviewState::Starting | crate::audio::PreviewState::Retiring
+                )
                 || (self.awaiting_application
                     && snapshot.admitted.is_some()
+                    && !snapshot.policy_settled
                     && snapshot.applied.is_none()),
             requested: snapshot.admitted.as_ref().map(|a| a.route.clone()),
             applied: snapshot.applied.as_ref().map(|a| a.route.clone()),
+            policy_settled: snapshot.policy_settled,
+            preview: snapshot.preview,
         }
     }
     fn routes(&self) -> Vec<Route> {
@@ -113,6 +124,20 @@ impl Provider for Owner {
             },
         )
     }
+    fn play(&mut self, intent: &Intent) -> io::Result<bool> {
+        let result = self.client.preview_play(&intent.route, intent.until_ns);
+        self.sent(
+            result,
+            Operation::Preview {
+                id: intent.id,
+                route: Some(intent.route.clone()),
+            },
+        )
+    }
+    fn stop_preview(&mut self, id: u64, until_ns: u64) -> io::Result<bool> {
+        let result = self.client.preview_stop(until_ns);
+        self.sent(result, Operation::Preview { id, route: None })
+    }
     fn inspect(&mut self, until_ns: u64) -> io::Result<bool> {
         let result = self.client.inspect(until_ns);
         self.sent(result, Operation::Inspect)
@@ -121,7 +146,8 @@ impl Provider for Owner {
         let event = self.client.poll()?;
         let pending = self.pending.take();
         let snapshot = self.client.snapshot();
-        if snapshot.applied.is_some()
+        if snapshot.policy_settled
+            || snapshot.applied.is_some()
             || snapshot.admitted.is_none()
             || matches!(&event, ClientEvent::Rejected { .. })
         {
@@ -136,9 +162,23 @@ impl Provider for Owner {
                     state: self.state(),
                 }
             }
-            (ClientEvent::Rejected { .. }, Some(Operation::Select { id, .. })) => {
-                Event::Rejected { id }
+            (ClientEvent::Updated(snapshot), Some(Operation::Preview { id, route }))
+                if route.as_ref().is_none_or(|route| {
+                    snapshot
+                        .admitted
+                        .as_ref()
+                        .is_some_and(|a| &a.route == route)
+                }) =>
+            {
+                Event::Preview {
+                    id,
+                    state: self.state(),
+                }
             }
+            (
+                ClientEvent::Rejected { .. },
+                Some(Operation::Select { id, .. } | Operation::Preview { id, .. }),
+            ) => Event::Rejected { id },
             (ClientEvent::Updated(_), Some(Operation::Inspect)) => Event::Observed,
             _ => {
                 self.revoke();

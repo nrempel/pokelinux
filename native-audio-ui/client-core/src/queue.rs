@@ -1,5 +1,5 @@
 #![forbid(unsafe_code)]
-use crate::wire::{Code, Command, Fresh, RECONNECT, ROUTE, Route};
+use crate::wire::{Code, Command, Fresh, RECONNECT, ROUTE, Route, STOP};
 #[derive(Clone, Copy)]
 struct Intent {
     token: u64,
@@ -30,7 +30,7 @@ impl Queue {
         }
         let route = match (kind, route) {
             (ROUTE, Some(route)) if route.id().is_some() => *route,
-            (RECONNECT, None) => Route::EMPTY,
+            (RECONNECT | STOP, None) => Route::EMPTY,
             _ => return Code::Invalid,
         };
         let Some(until) = now
@@ -83,7 +83,7 @@ impl Queue {
                 self.cancel();
                 return Err(Code::Expired);
             }
-        } else if fresh.can_reconnect == 0 {
+        } else if intent.kind == RECONNECT && fresh.can_reconnect == 0 {
             self.cancel();
             return Err(Code::Refused);
         }

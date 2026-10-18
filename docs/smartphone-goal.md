@@ -13,8 +13,9 @@ real service/Rust-client/Settings QML loss, expiry and reconnection sequence on
 host and native generic ARM. The ARM service starts automatically through PID1;
 both normal Stops, native Qt6.12 build/install and three matching Rust engines
 are qualified separately from earlier cohorts. The card uses shared Omarchy
-values. Coarse counts establish no Wi-Fi, Internet, modem, normal app window or
-phone-image completion. The completion matrix and hardware gates remain open.
+values. Coarse counts establish no Wi-Fi, Internet or modem connectivity. The
+combined headless image above is qualified separately; normal app windows, the
+completion matrix and hardware gates remain open.
 
 The current [graphics selection](runtime-language-decision.md#graphics-critical-path)
 uses normal upstream Hyprland supervised by Rust services. Its
@@ -50,9 +51,9 @@ remain open; the suspend authority is unchanged.
 A new [native ARM Settings and Messages-with-battery build](native-current-arm-apps.md#current-settings-and-messages-with-battery)
 passes production CMake, protected installation, five native loaders and actual
 offscreen components with matching Rust archives. Neither normal app main nor a
-window executes; default ARM Cargo and a combined installed image remain open.
-This advances app build/component portability, with no phone completion-matrix
-or physical hardware promotion.
+window executes; default ARM Cargo remains open. The combined headless image
+above is qualified separately. This advances app build/component portability,
+with no phone completion-matrix or physical hardware promotion.
 
 The [native Rust brightness service](native-brightness.md) now joins its real Rust client,
 owned worker and authored attribute backend in six process/socket cases. Unchanged
@@ -113,7 +114,9 @@ A fresh native Qt6.12 prepared run now qualifies the whole engine in four
 GUI/audio groups with192,000 measured frames and Pixel10 captures. Its initial
 frame-observer RED and stronger Qt/native-size predicate remain explicit; no
 production client change supplies that GREEN. Cold installed and ARM integration
-remain open.
+remain open. The later [finite Play/Stop preview](native-sounds-preview.md) passes
+host components and one actor Play to selected-speaker virtual PCM; actual Qt
+click/PCM, completion and retirement/failure joins remain open.
 
 The [Rust Messages client engine](native-messages-rust-client.md) now also owns
 request/parser/model, pagination, generations, scheduling and worker lifetime.

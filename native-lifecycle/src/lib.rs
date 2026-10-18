@@ -51,6 +51,8 @@ pub enum AppRequest {
     BrightnessSet { request: brightness::Request },
     BrightnessStatus {},
     MediaRoute { request: audio::Request },
+    MediaPreviewPlay { request: audio::PreviewRequest },
+    MediaPreviewStop {},
     MediaStatus { offset: usize },
     MediaReconnect {},
     CameraCapture { request: camera::Request },
@@ -100,6 +102,9 @@ pub enum Reply {
         can_set: bool,
     },
     MediaSelected {
+        state: audio::State,
+    },
+    MediaPreview {
         state: audio::State,
     },
     MediaStatus {

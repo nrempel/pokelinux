@@ -1,5 +1,5 @@
 //! Explicit media-only requests on one verified connection. Poll never sends.
-use crate::Role;
+use crate::{PreviewState, Role};
 use pokelinux_power::clock::{BootClock, Clock};
 use rustix::net::{RecvFlags, SendFlags, recv, send, sockopt};
 use serde::Deserialize;
@@ -41,6 +41,9 @@ pub struct Snapshot {
     pub applied: Option<Admission>,
     pub observation: Option<Observation>,
     pub in_flight: bool,
+    /// Selection policy is settled; this does not assert an observed audio link.
+    pub policy_settled: bool,
+    pub preview: PreviewState,
     /// Owner uncertainty or a locally unknown outcome; never a cleanup claim.
     pub uncertain: bool,
 }
@@ -78,6 +81,8 @@ enum Operation {
     Inspect,
     Acquire(String),
     Route(String),
+    PreviewPlay { route: String, lease: Option<u64> },
+    PreviewStop,
 }
 struct Pending {
     operation: Operation,
@@ -129,6 +134,8 @@ struct Reply {
     application: Application,
     phase: Phase,
     cleanup: Cleanup,
+    policy_settled: bool,
+    preview: PreviewState,
     media_routes: Option<Vec<MediaRoute>>,
 }
 
@@ -186,6 +193,8 @@ impl Client {
                 applied: None,
                 observation: None,
                 in_flight: false,
+                policy_settled: false,
+                preview: PreviewState::Idle,
                 uncertain: false,
             },
             inspected: false,
@@ -226,6 +235,45 @@ impl Client {
                 until_ns,
             )
         }
+    }
+    /// One explicit finite preview. The actor supplies the already clamped
+    /// CLOCK_BOOTTIME deadline; neither this transport nor the service renews it.
+    pub fn preview_play(&mut self, route: &str, until_ns: u64) -> Result<SendOutcome, SubmitError> {
+        if self.stream.is_none() {
+            return Err(SubmitError::Closed);
+        }
+        if self.pending.is_some() {
+            return Err(SubmitError::Busy);
+        }
+        if !self.inspected {
+            return Err(SubmitError::NoCatalog);
+        }
+        if !id(route) || !self.state.media_routes.iter().any(|r| r.id == route) {
+            return Err(SubmitError::InvalidRoute);
+        }
+        let lease = self.state.admitted.as_ref().map(|a| a.lease);
+        self.submit(
+            Operation::PreviewPlay {
+                route: route.into(),
+                lease,
+            },
+            json!({"op":"preview_play","lease":lease,"route":route,"until_boottime_ns":until_ns}),
+            until_ns,
+        )
+    }
+    /// Connection-owned cleanup only; no new route or playback input is supplied.
+    pub fn preview_stop(&mut self, until_ns: u64) -> Result<SendOutcome, SubmitError> {
+        let lease = self
+            .state
+            .admitted
+            .as_ref()
+            .ok_or(SubmitError::InvalidRoute)?
+            .lease;
+        self.submit(
+            Operation::PreviewStop,
+            json!({"op":"preview_stop","lease":lease}),
+            until_ns,
+        )
     }
     fn submit(
         &mut self,
@@ -396,6 +444,28 @@ impl Client {
                     intent_revision: reply.intent_revision,
                 });
             }
+            Operation::PreviewPlay {
+                route,
+                lease: previous,
+            } => {
+                if reply.media_routes.is_some() {
+                    return Err(invalid());
+                }
+                let lease = reply.lease.filter(|n| *n > 0).ok_or_else(invalid)?;
+                if previous.is_some_and(|old| old != lease) {
+                    return Err(invalid());
+                }
+                self.state.admitted = Some(Admission {
+                    lease,
+                    route: route.clone(),
+                    intent_revision: reply.intent_revision,
+                });
+            }
+            Operation::PreviewStop => {
+                if reply.media_routes.is_some() || reply.lease.is_some() {
+                    return Err(invalid());
+                }
+            }
             Operation::Route(route) => {
                 if reply.media_routes.is_some() || reply.lease.is_some() {
                     return Err(invalid());
@@ -412,6 +482,13 @@ impl Client {
         {
             return Err(invalid());
         }
+        self.state.preview = reply.preview;
+        self.state.policy_settled = reply.policy_settled
+            && self.state.admitted.as_ref().is_some_and(|own| {
+                reply.desired.iter().any(|(lease, role, route)| {
+                    *lease == own.lease && *role == Role::Media && *route == own.route
+                })
+            });
         self.state.uncertain = matches!(reply.application, Application::Uncertain);
         self.state.observation = Some(Observation {
             epoch: reply.observed.epoch,
@@ -451,6 +528,8 @@ impl Client {
         self.inspected = false;
         self.state.connected = false;
         self.state.in_flight = false;
+        self.state.policy_settled = false;
+        self.state.preview = PreviewState::Idle;
         self.state.uncertain = uncertain;
         self.state.admitted = None;
         self.state.applied = None;

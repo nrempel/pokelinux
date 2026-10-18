@@ -16,6 +16,7 @@ typedef struct {
  uint32_t route_count, requested_present, applied_present, queued_kind, reserved;
  PrSoundsClientIdV1 requested, applied;
  PrSoundsClientRowV1 routes[32];
+ uint32_t policy_settled, preview, can_play, can_stop;
 } PrSoundsClientViewV1;
 typedef struct {
  uint64_t connection_epoch, token, original_until_boottime_ns;
@@ -28,9 +29,10 @@ enum { PR_SOUNDS_CLIENT_OK=0, PR_SOUNDS_CLIENT_EMPTY=1, PR_SOUNDS_CLIENT_BUSY=2,
 enum { PR_SOUNDS_CLIENT_CLOSED=0, PR_SOUNDS_CLIENT_CONNECTING=1,
  PR_SOUNDS_CLIENT_SENDING=2, PR_SOUNDS_CLIENT_RECEIVING=3, PR_SOUNDS_CLIENT_IDLE=4 };
 enum { PR_SOUNDS_CLIENT_NO_REQUEST=0, PR_SOUNDS_CLIENT_CONNECT=1,
- PR_SOUNDS_CLIENT_STATUS=2, PR_SOUNDS_CLIENT_ROUTE=3, PR_SOUNDS_CLIENT_RECONNECT=4 };
+ PR_SOUNDS_CLIENT_STATUS=2, PR_SOUNDS_CLIENT_ROUTE=3, PR_SOUNDS_CLIENT_RECONNECT=4,
+ PR_SOUNDS_CLIENT_PREVIEW_PLAY=5, PR_SOUNDS_CLIENT_PREVIEW_STOP=6 };
 enum { PR_SOUNDS_CLIENT_NO_INTENT=0, PR_SOUNDS_CLIENT_ROUTE_INTENT=1,
- PR_SOUNDS_CLIENT_RECONNECT_INTENT=2 };
+ PR_SOUNDS_CLIENT_RECONNECT_INTENT=2, PR_SOUNDS_CLIENT_STOP_INTENT=3 };
 enum { PR_SOUNDS_CLIENT_SEND_COMPLETE=1, PR_SOUNDS_CLIENT_SEND_WOULD_BLOCK=2,
  PR_SOUNDS_CLIENT_SEND_INTERRUPTED=3, PR_SOUNDS_CLIENT_SEND_FAILED=4 };
 /* Logical model/presentation codes, mapped by Qt to the existing exact text. */
@@ -47,7 +49,14 @@ enum { PR_SOUNDS_CLIENT_DISCONNECTED=0, PR_SOUNDS_CLIENT_CONNECTING_AUDIO=1,
  PR_SOUNDS_CLIENT_CLOCK_UNAVAILABLE=20, PR_SOUNDS_CLIENT_REQUEST_REFUSED=21,
  PR_SOUNDS_CLIENT_QUEUED_REFUSED=22, PR_SOUNDS_CLIENT_SEND_REFUSED=23,
  PR_SOUNDS_CLIENT_REPLY_OUTSIDE_REQUEST=24, PR_SOUNDS_CLIENT_REPLY_EXPIRED=25,
- PR_SOUNDS_CLIENT_PACKET_REFUSED=26, PR_SOUNDS_CLIENT_REPLY_REFUSED=27 };
+ PR_SOUNDS_CLIENT_PACKET_REFUSED=26, PR_SOUNDS_CLIENT_REPLY_REFUSED=27,
+ PR_SOUNDS_CLIENT_SELECTED_IDLE=28, PR_SOUNDS_CLIENT_PREVIEW_STARTING=29,
+ PR_SOUNDS_CLIENT_PREVIEW_PLAYING=30, PR_SOUNDS_CLIENT_PREVIEW_RETIRING=31,
+ PR_SOUNDS_CLIENT_PREVIEW_COMPLETED=32, PR_SOUNDS_CLIENT_PREVIEW_FAILED=33,
+ PR_SOUNDS_CLIENT_PREVIEW_CANCELLED=34 };
+enum { PR_SOUNDS_CLIENT_PREVIEW_IDLE_STATE=0, PR_SOUNDS_CLIENT_PREVIEW_STARTING_STATE=1,
+ PR_SOUNDS_CLIENT_PREVIEW_PLAYING_STATE=2, PR_SOUNDS_CLIENT_PREVIEW_RETIRING_STATE=3,
+ PR_SOUNDS_CLIENT_PREVIEW_COMPLETED_STATE=4, PR_SOUNDS_CLIENT_PREVIEW_FAILED_STATE=5 };
 /* Output pointee must initially be null. Non-OK never writes an output. */
 int32_t pr_sounds_client_new_v1(PrSoundsClient **out);
 void pr_sounds_client_free_v1(PrSoundsClient *client);
@@ -56,6 +65,14 @@ int32_t pr_sounds_client_start_v1(PrSoundsClient *client);
 int32_t pr_sounds_client_connected_v1(PrSoundsClient *client, uint64_t epoch);
 int32_t pr_sounds_client_choose_v1(PrSoundsClient *client, const PrSoundsClientIdV1 *route);
 int32_t pr_sounds_client_reconnect_v1(PrSoundsClient *client);
+/* Explicit Play only while idle with a settled selected logical route.
+ * Never queues Play. Packet carries the original absolute BOOTTIME deadline;
+ * each prepare recalculates its remaining ttl_ms without renewing it. */
+int32_t pr_sounds_client_preview_play_v1(PrSoundsClient *client);
+/* Cleanup Stop may wait behind one read-only status under its original deadline.
+ * Stop during an in-flight Play closes local channel state: native must close
+ * the socket to withdraw ownership; this does not assert remote quiet/reap. */
+int32_t pr_sounds_client_preview_stop_v1(PrSoundsClient *client);
 /* Idle read-only poll only; never interrupts or extends an active request. */
 int32_t pr_sounds_client_refresh_v1(PrSoundsClient *client);
 /* Copied packet only, no I/O. Reprepare cannot renew token/deadline. */

@@ -1,7 +1,7 @@
 //! Actor-owned permission and connection custody. The provider alone owns routing.
 use crate::{
     Reply,
-    audio::{Event, Provider, Request, State},
+    audio::{Event, PreviewRequest, PreviewState, Provider, Request, State},
     authority::{Authority, MediaLeaseStamp, MediaStamp},
     boottime_ns,
 };
@@ -12,9 +12,27 @@ enum Phase {
     Sent,
     ReplyReady,
 }
+enum Kind {
+    Effect { stamp: MediaStamp, preview: bool },
+    Stop { id: u64, until: u64 },
+}
 struct Pending {
-    stamp: MediaStamp,
+    kind: Kind,
     phase: Phase,
+}
+impl Pending {
+    fn id(&self) -> u64 {
+        match &self.kind {
+            Kind::Effect { stamp, .. } => stamp.intent().id,
+            Kind::Stop { id, .. } => *id,
+        }
+    }
+    fn valid(&self, authority: &Authority, backend: &str) -> bool {
+        match &self.kind {
+            Kind::Effect { stamp, .. } => authority.current_media(stamp, backend, boottime_ns()),
+            Kind::Stop { until, .. } => boottime_ns() < *until,
+        }
+    }
 }
 struct Active {
     connection: u64,
@@ -24,6 +42,7 @@ struct Active {
 #[derive(Default)]
 pub(crate) struct Session {
     active: Option<Active>,
+    cleanup_sequence: u64,
 }
 impl Session {
     pub(crate) fn pending(&self) -> bool {
@@ -49,12 +68,40 @@ impl Session {
             state.requested = None;
             state.applied = None;
             state.pending = false;
+            state.policy_settled = false;
+            state.preview = PreviewState::Idle;
         }
         state
     }
     pub(crate) fn retire(&mut self, provider: &mut dyn Provider) {
         self.active = None;
         provider.revoke();
+    }
+    fn check(&self, connection: u64, route: &str, provider: &dyn Provider) -> Result<(), Reply> {
+        if !self.available_to(connection) {
+            return Err(Reply::Denied);
+        }
+        let state = provider.state();
+        if !state.connected || !state.available {
+            return Err(Reply::Unavailable);
+        }
+        if !provider.routes().iter().any(|r| r.id == route) {
+            return Err(Reply::Denied);
+        }
+        Ok(())
+    }
+    fn install(&mut self, connection: u64, stamp: MediaStamp, preview: bool) -> u64 {
+        let until = stamp.intent().until_ns;
+        let active = self.active.get_or_insert(Active {
+            connection,
+            approved: None,
+            pending: None,
+        });
+        active.pending = Some(Pending {
+            kind: Kind::Effect { stamp, preview },
+            phase: Phase::Unsent,
+        });
+        until
     }
     pub(crate) fn begin(
         &mut self,
@@ -65,16 +112,7 @@ impl Session {
         authority: &mut Authority,
         provider: &dyn Provider,
     ) -> Result<u64, Reply> {
-        if !self.available_to(connection) {
-            return Err(Reply::Denied);
-        }
-        let state = provider.state();
-        if !state.connected || !state.available {
-            return Err(Reply::Unavailable);
-        }
-        if !provider.routes().iter().any(|r| r.id == request.route) {
-            return Err(Reply::Denied);
-        }
+        self.check(connection, &request.route, provider)?;
         let stamp = authority.begin_media(
             pid,
             uid,
@@ -83,20 +121,51 @@ impl Session {
             request.ttl_ms,
             boottime_ns(),
         )?;
-        let until = stamp.intent().until_ns;
-        let active = self.active.get_or_insert(Active {
-            connection,
-            approved: None,
-            pending: None,
-        });
-        active.pending = Some(Pending {
-            stamp,
+        Ok(self.install(connection, stamp, false))
+    }
+    pub(crate) fn begin_preview(
+        &mut self,
+        connection: u64,
+        pid: u32,
+        uid: u32,
+        request: PreviewRequest,
+        authority: &mut Authority,
+        provider: &dyn Provider,
+    ) -> Result<u64, Reply> {
+        self.check(connection, &request.route, provider)?;
+        let stamp = authority.begin_media_preview(
+            pid,
+            uid,
+            provider.incarnation(),
+            &request,
+            boottime_ns(),
+        )?;
+        Ok(self.install(connection, stamp, true))
+    }
+    /// Cleanup belongs to the existing connection, including in the background.
+    /// No new playback stamp or grant is minted. Existing lease invalidation
+    /// still closes the provider before any later response can publish.
+    pub(crate) fn stop_preview(&mut self, connection: u64) -> Result<u64, Reply> {
+        if !self.owns(connection) || !self.available_to(connection) {
+            return Err(Reply::Denied);
+        }
+        let until = boottime_ns()
+            .checked_add(1_000_000_000)
+            .ok_or(Reply::Unavailable)?;
+        self.cleanup_sequence = self
+            .cleanup_sequence
+            .checked_add(1)
+            .ok_or(Reply::Unavailable)?;
+        self.active.as_mut().unwrap().pending = Some(Pending {
+            kind: Kind::Stop {
+                id: self.cleanup_sequence,
+                until,
+            },
             phase: Phase::Unsent,
         });
         Ok(until)
     }
     /// Fence before consuming provider replies and after every lifecycle update.
-    /// A cancelled unsent replacement preserves the earlier approved lease.
     pub(crate) fn fence(
         &mut self,
         authority: &Authority,
@@ -118,14 +187,18 @@ impl Session {
             self.retire(provider);
             return pending.then_some((connection, Reply::Denied));
         }
-        if active.pending.as_ref().is_some_and(|p| {
-            !authority.current_media(&p.stamp, provider.incarnation(), boottime_ns())
-        }) {
-            if active.pending.as_ref().unwrap().phase == Phase::Unsent {
+        if active
+            .pending
+            .as_ref()
+            .is_some_and(|p| !p.valid(authority, provider.incarnation()))
+        {
+            let p = active.pending.as_ref().unwrap();
+            if p.phase == Phase::Unsent && matches!(&p.kind, Kind::Effect { .. }) {
+                // An unsent replacement preserves the earlier approved lease.
                 self.active.as_mut().unwrap().pending = None;
             } else {
-                // Bytes crossed the boundary; closing withdraws this connection,
-                // without claiming they never caused an effect or remote cleanup.
+                // Expired cleanup also withdraws ownership; it cannot disappear
+                // behind a negative read-only status or leave playback running.
                 self.retire(provider);
             }
             return Some((connection, Reply::Denied));
@@ -145,8 +218,7 @@ impl Session {
                     .is_some_and(|p| p.phase != Phase::ReplyReady)
         })
     }
-    /// Caller has just checked exact owning-client EOF/extra input. No provider
-    /// polling path can dispatch; each retry checks the original stamp again.
+    /// Caller has just checked exact owning-client EOF/extra input. Poll cannot dispatch.
     pub(crate) fn drive(
         &mut self,
         connection: u64,
@@ -163,7 +235,18 @@ impl Session {
         if pending.phase != Phase::Unsent {
             return None;
         }
-        match provider.submit(pending.stamp.intent()) {
+        let result = match &pending.kind {
+            Kind::Effect {
+                stamp,
+                preview: false,
+            } => provider.submit(stamp.intent()),
+            Kind::Effect {
+                stamp,
+                preview: true,
+            } => provider.play(stamp.intent()),
+            Kind::Stop { id, until } => provider.stop_preview(*id, *until),
+        };
+        match result {
             Ok(true) => {
                 pending.phase = Phase::Sent;
                 None
@@ -197,10 +280,19 @@ impl Session {
         let connection = active.connection;
         let pending = active.pending.as_ref()?;
         let id = match &event {
-            Event::Selected { id, .. } | Event::Rejected { id } => *id,
+            Event::Selected { id, .. } | Event::Preview { id, .. } | Event::Rejected { id } => *id,
             _ => unreachable!(),
         };
-        if pending.phase != Phase::Sent || pending.stamp.intent().id != id {
+        let matching_kind = matches!(
+            (&pending.kind, &event),
+            (Kind::Effect { preview: false, .. }, Event::Selected { .. })
+                | (
+                    Kind::Effect { preview: true, .. } | Kind::Stop { .. },
+                    Event::Preview { .. }
+                )
+                | (_, Event::Rejected { .. })
+        );
+        if pending.phase != Phase::Sent || pending.id() != id || !matching_kind {
             self.retire(provider);
             return Some((connection, Reply::Unavailable));
         }
@@ -218,15 +310,31 @@ impl Session {
                     .phase = Phase::ReplyReady;
                 Some((connection, Reply::MediaSelected { state }))
             }
+            Event::Preview { state, .. } => {
+                self.active
+                    .as_mut()
+                    .unwrap()
+                    .pending
+                    .as_mut()
+                    .unwrap()
+                    .phase = Phase::ReplyReady;
+                Some((connection, Reply::MediaPreview { state }))
+            }
             Event::Rejected { .. } => {
-                self.active.as_mut().unwrap().pending = None;
+                if matches!(
+                    self.active.as_ref().unwrap().pending.as_ref().unwrap().kind,
+                    Kind::Stop { .. }
+                ) {
+                    self.retire(provider);
+                } else {
+                    self.active.as_mut().unwrap().pending = None;
+                }
                 Some((connection, Reply::Unavailable))
             }
             _ => unreachable!(),
         }
     }
-    /// A queued positive response is rechecked immediately before every send,
-    /// including retries after an actual app-socket EAGAIN.
+    /// Recheck immediately before every app send, including real EAGAIN retries.
     pub(crate) fn revalidate_reply(
         &mut self,
         connection: u64,
@@ -256,10 +364,14 @@ impl Session {
         {
             return;
         }
-        let pending = active.pending.take().unwrap();
-        match authority.approve_media(&pending.stamp, provider.incarnation(), boottime_ns()) {
-            Some(stamp) => active.approved = Some(stamp),
-            None => self.retire(provider),
+        match active.pending.take().unwrap().kind {
+            Kind::Effect { stamp, .. } => {
+                match authority.approve_media(&stamp, provider.incarnation(), boottime_ns()) {
+                    Some(stamp) => active.approved = Some(stamp),
+                    None => self.retire(provider),
+                }
+            }
+            Kind::Stop { .. } => {}
         }
     }
 }

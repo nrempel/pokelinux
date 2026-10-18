@@ -1,0 +1,494 @@
+{
+  "schema": 1,
+  "status": "partial feature qualification: one host actor Play to original private PipeWire selected-speaker PCM passes; remaining UI/lifetime/failure integration open",
+  "scope": "Host native Rust and frontend components plus one authored real-actor/original-PipeWire virtual PCM case; no UI-click join, ARM, physical phone, real suspend or normal-window qualification.",
+  "evidence": [
+    {
+      "boundary": "actual Qt adapters and offscreen QML",
+      "outcome": "compiled missing-controls RED",
+      "feature_passed": false,
+      "frozen_test_sha256": "0b5e73ebdbe29ac9a5b1b325bdca152509a5b8350b4c3b9625c4825f16973c0f",
+      "host_report_sha256": "35dead52f9af923503850bd8d848b6bcef39c4a73e612cfc54fb698aa4256ff1",
+      "inner_report_sha256": "a3f141aef0d9c8bcd62b1165688fb199dc1c1231bc8f930ec9eb8ced00a1ebaa",
+      "review_sha256": "1ebc9df25831dbfc0a6cf369f29f8c1efce593c013273fc8ab93984fb5c924ea",
+      "old_view_constructed": true,
+      "missing_controls": [
+        "previewPlay",
+        "previewStop"
+      ],
+      "host_wait_and_merged_EOF": 15,
+      "inner_wait_and_merged_EOF": 9
+    },
+    {
+      "boundary": "existing Sounds C ABI parser",
+      "outcome": "compiled required-seven-field-State RED",
+      "feature_passed": false,
+      "frozen_test_sha256": "321f20f7121c4d3522cd3ec5d35b02d4dbc29c8043e1d17d06ce26bb1af419f9",
+      "host_report_sha256": "8dc72071dda19ebbf8a777cf71b28e4e3fdc7da2e6893e7845c0b9d20e0e4079",
+      "inner_report_sha256": "d22c3f1f17632d112df9100de62390377aedbd63f31f2953921473c5f991fe17",
+      "review_sha256": "6aded7d0e0135fb085907d939b99a7c2ac62aa911a6398b2a6f83296ea030862",
+      "historical_six_controls_passed": true,
+      "later_new_cases_executed": false,
+      "host_wait_and_merged_EOF": 15,
+      "inner_wait_and_merged_EOF": 10
+    },
+    {
+      "boundary": "actual lifecycle actor, native audio owner, original PipeWire and authored virtual sinks",
+      "outcome": "Play denied; paired measured PCM all zero; missing-feature RED",
+      "feature_passed": false,
+      "host_report_sha256": "2061eba780d737440517f7ab2a99f3c017c492c095d981fc1e87e348552ee662",
+      "build_report_sha256": "b285e7bde43d0a995d14ca9655b70fd1ceb4a02ebd2336d8101e5337c2599f37",
+      "runtime_report_sha256": "0b6fb7cad0b7598dd8bd3e03ddde9652b4db3d0bdb220321564f00fde36eda6e",
+      "pcm_report_sha256": "c47237f8f73bab29756662995f4795883e08faa40232f9e497455552cbbcebed",
+      "review_sha256": "212b4cd998e6bed4e7c8ff62aac6c2188d63f9bf141722f511bde531b0de7068",
+      "pipewire_version": "1.4.2",
+      "measured_frames_each": 24000,
+      "raw_pcm_bytes_each": 134400,
+      "independently_recomputed_all_zero": true,
+      "qt_input_executed": false,
+      "host_wait_and_merged_EOF": 15,
+      "build_and_assertion_wait_and_merged_EOF": 11,
+      "runtime_direct_wait_and_merged_EOF": 9,
+      "observer_nested_wait_and_merged_EOF": 88
+    },
+    {
+      "boundary": "finite producer owner delayed poll",
+      "outcome": "same frozen compiled test SIGABRT RED to one-pass GREEN after Process-only repair",
+      "frozen_test_sha256": "1d22d435b8e1054857b3dccf2c6ced34e748049dd67ed6db68bb0bf2bc4cfe4d",
+      "red_process_sha256": "e394f89f540929cf6984569103b41566ab85dd08c0aed79f842173b165f47c8e",
+      "green_process_sha256": "884607cbcfaf5570cd53c6528c9b1fb7e0e3533c6391db30270b96478a1b1b84",
+      "red_host_report_sha256": "2b2b544423bd310b5c22da47286be226ce0c149b31e6f408c9eede0f2280a66b",
+      "red_inner_report_sha256": "ae589183952cee9dd076f92a7d8cf8cee86bbb8fd2e77f29da4d20136dd503cc",
+      "green_host_report_sha256": "82d05f2cf455ca347c30f16bf482b1a216c8fede3789b7b4c0fcfeb98454da5a",
+      "green_inner_report_sha256": "368b2f462a315e596df2314dc3dd2df99f79d3b5afedf74e7b4e99b6c83f5319",
+      "red_review_sha256": "046efdee7c7c5b986a77a3e567cfc75d68b9a20cb3a06e48c6c543464d2de28c",
+      "green_review_sha256": "0ea6bb8b6a534af81df564327408c19ae414f86e713112839e98e631759b3e4c",
+      "red_actual_direct_test_wait_exit": -6,
+      "green_actual_direct_test_wait_exit": 0,
+      "helper_terminal_before_original_work_limit": true,
+      "first_owner_poll_after_original_internal_close_limit": true,
+      "host_direct_wait_and_merged_EOF_each": 15,
+      "inner_direct_wait_and_merged_EOF_each": 4,
+      "red_adopted_helper_wait_count_separate": 1,
+      "real_suspend_executed": false,
+      "service_pcm_qualified": false
+    },
+    {
+      "boundary": "full host Rust checks, first epoch",
+      "outcome": "checks incomplete: strict Clippy collapsible_if warning after passing selected tests; not a behavioral failure",
+      "qualified_full_green": false,
+      "test_counts": {
+        "audio": 40,
+        "audio_existing_ignored": 1,
+        "lifecycle_authority_media": 9,
+        "lifecycle_service_media_input": 6
+      },
+      "host_report_sha256": "77ea59ffe1bb0fc0d2eec35a0432277236e7bb34018e0166e3638f0f3f964291",
+      "inner_report_sha256": "1ef24e1c074d5af3af19dba80b0ca3d40d30da9070fbe4a3dc5b339dab9acd32",
+      "review_sha256": "de9e0a89021238f2567bb4325feb9a7713f0dd66074af2e24a399dd64fec14e5",
+      "host_direct_wait_and_merged_EOF": 15,
+      "inner_direct_wait_and_merged_EOF": 9,
+      "custody_qualified_separately": true
+    },
+    {
+      "boundary": "full host Rust checks and normal Release providers, style-only successor",
+      "outcome": "qualified GREEN; no Qt, PCM, ARM or physical-phone promotion",
+      "source_delta_from_preceding_check_epoch": "main.rs retire_preview conditional style only; no oracle changes",
+      "source_sha256": {
+        "native-audio/src/main.rs": "e780c924ac0f14945c56cedcadf00d519bfcfa7afaa902b062ecc6482e0ac8e5",
+        "native-audio/src/preview_process.rs": "0892b4e1c3b3edc92f513f635ef8bc7c1bd5c1ca343fb97466babc8deea7be0c",
+        "native-audio/src/preview_process_tests.rs": "876b411ad8e8efc10cd5b041d0b5c8b505733010b51c8a6d6ad873ce2e1d51d5",
+        "native-audio/src/preview_process_test_child.rs": "67f594554a098e6d6145e41df27f7db05870ec8668e1c9c4f6f3cf57ea6318c7"
+      },
+      "test_counts": {
+        "audio": 40,
+        "existing_audio_ignored": 1,
+        "lifecycle_media_authority": 9,
+        "lifecycle_media_service": 6
+      },
+      "format_crates": [
+        "audio",
+        "lifecycle",
+        "Sounds"
+      ],
+      "strict_clippy_crates": [
+        "audio",
+        "lifecycle",
+        "Sounds"
+      ],
+      "normal_release_empty_features": true,
+      "artifacts": {
+        "pokelinux-audio": {
+          "bytes": 1342096,
+          "sha256": "4bcbccbf43afce9f004e9eb900baadfce945784d624c5ce338a9a043b7a603ad",
+          "ELF_machine": 62
+        },
+        "lifecycle-launcher": {
+          "bytes": 1101872,
+          "sha256": "0526065536c9d5d42d1767e33afb87fe667ec97ee13dc531479c042a496d38b0",
+          "ELF_machine": 62
+        },
+        "pokelinux_sounds_client": {
+          "bytes": 23929558,
+          "sha256": "44fe36244572966b965e8a80b2b7975f9679dc81080dc103890140adab2b17c9",
+          "archive_member_count": 356,
+          "member_ELF_machine": 62,
+          "strong_API_symbols": [
+            "pr_sounds_client_choose_v1",
+            "pr_sounds_client_connected_v1",
+            "pr_sounds_client_disconnected_v1",
+            "pr_sounds_client_free_v1",
+            "pr_sounds_client_new_v1",
+            "pr_sounds_client_prepare_v1",
+            "pr_sounds_client_preview_play_v1",
+            "pr_sounds_client_preview_stop_v1",
+            "pr_sounds_client_reconnect_v1",
+            "pr_sounds_client_refresh_v1",
+            "pr_sounds_client_reply_v1",
+            "pr_sounds_client_sent_v1",
+            "pr_sounds_client_start_v1",
+            "pr_sounds_client_tick_v1",
+            "pr_sounds_client_view_v1"
+          ]
+        }
+      },
+      "host_report_sha256": "d666d8c09a30ec03229a557e7f11a489e2b1a265e47c9ae261d4d90ebc47a030",
+      "inner_report_sha256": "8a1132557772f4bc60d6e6a63d5a5c6c9981a295fc0b1af830c69dcb8fbfedbe",
+      "review_sha256": "d2817cb3f8e103e17ce6e31eaf670a74d45975f1ae1898379a2392fa024f3c27",
+      "host_direct_wait_and_merged_EOF": 15,
+      "inner_direct_wait_and_merged_EOF": 19
+    },
+    {
+      "boundary": "real actor/audio preview preparation",
+      "outcome": "setup refusal before container creation; selected/create name mismatch",
+      "feature_green": false,
+      "feature_red": false,
+      "runtime_executed": false,
+      "pcm_executed": false,
+      "host_report_sha256": "f7bd95e3e56b3165f20a68bd4860df2285bc00c259191e6323f72edcdc45e804",
+      "review_sha256": "23783099aca546be07d78058b3acf813fe0067bc81024ae219f2b68cccaf5548",
+      "host_direct_wait_and_merged_EOF": 4,
+      "same_daemon": true,
+      "container_created": false,
+      "source_unchanged": true
+    },
+    {
+      "boundary": "real lifecycle actor, native audio owner and original PipeWire virtual graph, subsequent preview",
+      "outcome": "actual preview behavior failure: Play accepted as Starting, source briefly appears then disappears, both measured PCM windows zero; exact cause unknown",
+      "qualified_green": false,
+      "actual_play_accepted_starting": true,
+      "measured_frames_each": 24000,
+      "raw_pcm_bytes_each": 134400,
+      "raw_pcm_sha256_each": "ac8f5613c4b176d380009fa1306c49a027644dba38b9703ed102634c60f8d5ff",
+      "independent_raw_recomputation_both_windows_zero": true,
+      "source_lifetime_snapshot_retained": false,
+      "actual_compiled_positive_wait_exit": 101,
+      "local_custody_qualified_separately": true,
+      "host_report_sha256": "111bb1a137e6a520f48193c7483ce441065d66e7c4ccc92597b9904974188bdf",
+      "inner_report_sha256": "128cf1a5b6e3a934b35ed30d8614cd165b9a5732d98144c97cbba5d1f90eaf6e",
+      "runtime_report_sha256": "4eea90e66ced1a9003c8f232dee88cb9688b86ab98e4b5f41a9f9925c913a1ce",
+      "pcm_report_sha256": "a2ac1a650283a3f6988816918669ed0ad5cfe78a3332347a20f01966fdc01d2c",
+      "review_sha256": "96a7ad0e1e0cea4b9ff1a66ca2f947fc2d7a837220e58112b6703fe61b0684b7",
+      "host_direct_wait_and_merged_EOF": 15,
+      "build_and_assertion_wait_and_merged_EOF": 9,
+      "runtime_direct_wait_and_merged_EOF": 9,
+      "observer_nested_wait_and_merged_EOF": 82,
+      "qt_input_executed": false
+    },
+    {
+      "boundary": "frontend build, AutoMoc epoch",
+      "outcome": "build failure before behavioral tests: frozen component source basename mismatched included moc basename",
+      "feature_green": false,
+      "behavioral_tests_executed": false,
+      "host_report_sha256": "e16a8f235238d3f4897ceee46ec85300c93a6d18c7ceea9eec25681f21015017",
+      "inner_report_sha256": "fce2cb42f12a920fd50612e3f85546e91428f7e35196b0472958d62d03a0b347",
+      "review_sha256": "72e1cd07b8a59d8ed624e30ddc2e261fea828d2bfc1fa1af3aebd31241e08195",
+      "host_direct_wait_and_merged_EOF": 13,
+      "inner_direct_wait_and_merged_EOF": 5,
+      "local_custody_qualified_separately": true
+    },
+    {
+      "boundary": "frontend build/setup epoch",
+      "outcome": "build failure before behavioral tests: unused static helper under -Werror",
+      "frontend_green": false,
+      "host_report_sha256": "3ad45bd441631e032147fecebdbf8c71474031c3cf139b5aac35ba234fea6d94",
+      "inner_report_sha256": "07b88b4c4bcb7914262174bd536bcf9fae371bb012700d8a064b51e8bc8c639f",
+      "host_direct_wait_and_merged_EOF": 13,
+      "inner_direct_wait_and_merged_EOF": 5,
+      "actual_timely_wait_EOF_rechecked": true,
+      "source_unchanged": true,
+      "same_daemon": true,
+      "exact_container_absence": true,
+      "behavioral_tests_executed": false
+    },
+    {
+      "boundary": "frontend build/setup epoch",
+      "outcome": "QML temporary-directory setup failure: parent /run mode0755 prevents UID11042 hard-template creation; prior component groups pass",
+      "frontend_green": false,
+      "host_report_sha256": "b8b2fef50931e410f0a9ba4e80291ee4289a32e13a5dca6afdbd96ee4bc24238",
+      "inner_report_sha256": "56368e0a9d5188ce35debdecbb1285c9b9e1d58e375feefa0e1d8ecd4de17f91",
+      "host_direct_wait_and_merged_EOF": 13,
+      "inner_direct_wait_and_merged_EOF": 19,
+      "actual_timely_wait_EOF_rechecked": true,
+      "source_unchanged": true,
+      "same_daemon": true,
+      "exact_container_absence": true,
+      "preceding_component_groups_passed": {
+        "existing_C_ABI": 6,
+        "schema": 7,
+        "preview": 7,
+        "cleanup": 2,
+        "existing_Qt_business_behaviors": 30,
+        "existing_Qt_with_setup_cleanup": 32
+      },
+      "qml_business_controls_qualified": false
+    },
+    {
+      "boundary": "frontend C ABI, real Qt sockets and genuine unavailable-state QML, setup-only successor",
+      "outcome": "qualified host component GREEN after /run sticky1777 setup-only repair; frozen assertions unchanged",
+      "host_report_sha256": "2b84a4737b82dfd4c0319e65988afb2da1d24d1711a20c576376234a43806c3d",
+      "inner_report_sha256": "6d90be2859ce34ac35fd7bf922141e5446ba6d5397682ad82ecfa3726b2efc75",
+      "review_sha256": "7c1dd7a1eced332a080792d51b92caeea2b245e1e5b9c2147fba7f784c7a7a3d",
+      "host_direct_wait_and_merged_EOF": 15,
+      "inner_direct_wait_and_merged_EOF": 19,
+      "C_ABI_group_counts": {
+        "existing": 6,
+        "schema": 7,
+        "preview": 7,
+        "negative_cleanup": 2
+      },
+      "existing_Qt_business_behaviors": 30,
+      "existing_Qt_with_setup_cleanup": 32,
+      "existing_Qt_xml_sha256": "0a261b30703d11f5c55253dffd0f17168ef8ee7eda0cd49ec8f763af722a2ad9",
+      "existing_Qt_fixture_extensions_only": [
+        "required policy_settled",
+        "required preview"
+      ],
+      "qml_business_rows": 3,
+      "qml_with_setup_cleanup": 5,
+      "qml_actual_uid": 11042,
+      "qml_source_root_owned": true,
+      "qml_source_mode": "0644",
+      "qml_frozen_test_sha256": "0b5e73ebdbe29ac9a5b1b325bdca152509a5b8350b4c3b9625c4825f16973c0f",
+      "qml_frozen_test_bytes": 5402,
+      "qml_xml_sha256": "50696669e8fc6502cd2e439e5d0b898ec5bc0258c82f8238831e344609561680",
+      "binaries": {
+        "audio-client-test": {
+          "bytes": 6149896,
+          "sha256": "d96478f026af0ad3761ee793fc75ca8afbbb31edef2f1519d6089eaf62ea1094",
+          "ELF_machine": 62,
+          "actual_selected_archive_once": true
+        },
+        "sounds-client-test": {
+          "bytes": 5998904,
+          "sha256": "be39706fe6935ef834dc68b2230a82e889016372e0249231906874628d984f69",
+          "ELF_machine": 62,
+          "actual_selected_archive_once": true
+        },
+        "sounds-state-schema-test": {
+          "bytes": 5948952,
+          "sha256": "67b63976ee6bb2cb9865074ef07454d558c6aab1eb1eeb4af9e9969eca5923b8",
+          "ELF_machine": 62,
+          "actual_selected_archive_once": true
+        },
+        "sounds-preview-test": {
+          "bytes": 5938712,
+          "sha256": "7dfba0b3c51abaf15acd0b64ac6178960a9716099d50f8a5a99961164530a551",
+          "ELF_machine": 62,
+          "actual_selected_archive_once": true
+        },
+        "sounds-preview-cleanup-test": {
+          "bytes": 5906768,
+          "sha256": "0a7f9965ef7255f933874062524d56146d3b7a3dda70aba7720c2766f6bd5c04",
+          "ELF_machine": 62,
+          "actual_selected_archive_once": true
+        },
+        "sounds-preview-component-test": {
+          "bytes": 6279008,
+          "sha256": "ba116a8fcccea179c5fe64b23db50c228831d65223befa474a2a9330b6e1e918",
+          "ELF_machine": 62,
+          "actual_selected_archive_once": true
+        },
+        "pokelinux-sounds": {
+          "bytes": 6259696,
+          "sha256": "61b1b723fc7d02d23a943b9f20c8e5de2c7b120840ade65bb06abab9791d339c",
+          "ELF_machine": 62,
+          "actual_selected_archive_once": true
+        }
+      },
+      "selected_sounds_archive_sha256": "44fe36244572966b965e8a80b2b7975f9679dc81080dc103890140adab2b17c9",
+      "each_binary_selected_archive_once": true,
+      "normal_main_executed": false,
+      "normal_window_shown": false,
+      "ui_actions_executed": false,
+      "actor_PCM_qualified": false,
+      "deployment_qualified": false,
+      "ARM_qualified": false
+    },
+    {
+      "boundary": "diagnostic-only audio Main build",
+      "outcome": "fixed local backend error-reason logging; format, strict Clippy, normal Release and loader qualified only; no fix or new PCM pass",
+      "host_report_sha256": "da97c33f112ffdd0ba3d27ff7589f730e242f96240e7b69af4cdc41743b12ed4",
+      "inner_report_sha256": "ba04e87cd41d2b76fcd9634cf22e0952a4ddd4b0be7efd88f4439c76200e9887",
+      "review_sha256": "157ce4b0ce41ba236a5130758c50ca16f0b534cad0ff269432fd7ceda7426c7c",
+      "host_direct_wait_and_merged_EOF": 15,
+      "inner_direct_wait_and_merged_EOF": 5,
+      "audio_executable_sha256": "614d592a10d525ee3a77c97e9b49f84e9d5afcf41a5ec53cd39e35c8d211ab83",
+      "audio_executable_bytes": 1346344,
+      "ELF_machine": 62,
+      "new_runtime_or_tests_qualified": false
+    },
+    {
+      "boundary": "same real actor/audio preview, diagnostic-only audio provider",
+      "outcome": "actual diagnostic failure: Play accepted as Starting; both full measured windows zero; fixed Main logging reports unsupported_channel_layout; corrective PCM result not qualified",
+      "qualified_green": false,
+      "normal_diagnostic_audio_sha256": "614d592a10d525ee3a77c97e9b49f84e9d5afcf41a5ec53cd39e35c8d211ab83",
+      "actual_backend_error": "unsupported_channel_layout",
+      "actual_play_accepted_starting": true,
+      "measured_frames_each": 24000,
+      "both_windows_zero": true,
+      "actual_compiled_positive_wait_exit": 101,
+      "local_custody_qualified_separately": true,
+      "host_direct_wait_and_merged_EOF": 15,
+      "build_and_assertion_wait_and_merged_EOF": 9,
+      "runtime_direct_wait_and_merged_EOF": 9,
+      "observer_nested_wait_and_merged_EOF": 83,
+      "host_report_sha256": "44949a98beface398db2dd986f6e93bd1413cc51f05efe9f2866d93ae92e8633",
+      "inner_report_sha256": "415c597f2fcbb45aeef8fabc2f32bc35024205b4a5396926ddd632987e2e3310",
+      "runtime_report_sha256": "24f2c710fd0bedd848dcff43dddf2152146fbbe8950f8097862ea12fa4acf2a5",
+      "pcm_report_sha256": "a9ecb3e6404b3cfbd9693503108c63d21be1b26bca513291d31df2e770a180b3",
+      "review_sha256": "c47a28faca6e22702e5c1c150d314ef5827eb5430b6a127782a7b484418dea45",
+      "specific_producer_configuration_cause_proven": false,
+      "corrective_PCM_pass": false
+    },
+    {
+      "boundary": "current producer port-configuration provider",
+      "outcome": "qualified host audio tests/checks/normal Release and loader; separate from later PCM",
+      "production_behavior_change": "Process creation adapter.auto-port-config JSON string only: dsp, monitor false, control false, position preserve",
+      "source_manifest_sha256": "3e71f88c20c366aa4d9bc52c962647ed8284dc11e624f9facf591cc46e5b7e69",
+      "process_source_sha256": "1ee764e701a761fceabe554a70928441ef875d404f5ac49eee2fdb59db75419a",
+      "audio_executable_sha256": "5d79db588da134c8d33a010d895806e726b8e1e74721528f6f8e7367dda54380",
+      "audio_executable_bytes": 1346352,
+      "ELF_machine": 62,
+      "normal_release_empty_features": true,
+      "audio_tests_passed": 40,
+      "existing_audio_ignored": 1,
+      "audio_fmt_and_strict_clippy_passed": true,
+      "host_direct_wait_and_merged_EOF": 15,
+      "inner_direct_wait_and_merged_EOF": 7,
+      "host_report_sha256": "ce8f9d31ae131d43c487136a79223387eb4406966a9f126988a9a26f58525f11",
+      "inner_report_sha256": "f628b6776920a53144a62c82063b593ee84a525cc0f1daeb36e1527e101044f5",
+      "review_sha256": "74109f27c9f331c599336d6fce80581d8c0f2fd13e9bf07b0f6ee611be828ab8"
+    },
+    {
+      "boundary": "one registered/granted actor client Play to normal Rust producer to original private PipeWire virtual PCM",
+      "outcome": "qualified GREEN for one selected-speaker Play/PCM case; no Qt input or completion/preview-Stop/failure integration",
+      "production_audio_executable_sha256": "5d79db588da134c8d33a010d895806e726b8e1e74721528f6f8e7367dda54380",
+      "source_manifest_sha256": "1e4c64e2e46927cf63c5800b8229b5d115f7a60f2ae7a8598ee9149cf304902a",
+      "controlled_delta_from_preceding_diagnostic_epoch": "producer creation port configuration only; phase compiled-source proof pin updated",
+      "frozen_fixture_sha256": {
+        "ORACLES.json": "241aeeb82a3fa43a3b5541d76d1e2d2563d88144377284d473133c7a763dbc39",
+        "controller.py": "17fbdfb3373b2ff817d6e3b280238c9e87a93faa00a44bd23077b77286c7abaf",
+        "fixture/src/bin/client.rs": "c78d0c4319ca729ce1841d3dcd769562f9c49fcb41b556ae19940cf5b0d2492a",
+        "fixture/src/main.rs": "d76250231f058d7cb9bc7e11d4037be51df67b7d3b9303e9766de331a02998ed",
+        "pcm_observer.py": "7614d5c6767d503497a1729f958092ad33c4ce8c792564e85181200759efcc62"
+      },
+      "fixture_assertions_oracles_and_deadlines_unchanged": true,
+      "positive_assertion_wait_exit": 0,
+      "native_audio_Main_wait_exit": 0,
+      "actor_wait_exit": 0,
+      "independently_recomputed_raw": {
+        "speaker": {
+          "raw_bytes": 134400,
+          "raw_sha256": "5b1748fc91916959c38649b94b3e1d4415a660e585f9eb8ba385fb323f75236b",
+          "measured_frames": 24000,
+          "rms": 0.17677339975691214,
+          "peak": 0.24999237060546875,
+          "tone_amplitudes": {
+            "440": 0.24989497238531816,
+            "880": 4.789426815533261e-17
+          },
+          "440_energy_fraction": 0.9991972100720332
+        },
+        "earpiece": {
+          "raw_bytes": 134400,
+          "raw_sha256": "ac8f5613c4b176d380009fa1306c49a027644dba38b9703ed102634c60f8d5ff",
+          "measured_frames": 24000,
+          "rms": 0,
+          "peak": 0,
+          "tone_amplitudes": {
+            "440": 0,
+            "880": 0
+          },
+          "440_energy_fraction": 0
+        }
+      },
+      "producer_binding_verified_before_and_after_capture": [
+        "actual producer PID and starttime",
+        "actual parent Main",
+        "server-authenticated PID UID GID",
+        "current graph cookie",
+        "node serial",
+        "client serial",
+        "raw EnumFormat F32LE 48000Hz mono MONO"
+      ],
+      "same_source_alive_and_identity_unchanged_before_after_capture": true,
+      "source_gate_observation_after_play_send_ns": 65461018,
+      "source_gate_is_latency_guarantee": false,
+      "host_direct_wait_and_merged_EOF": 15,
+      "build_and_assertion_wait_and_merged_EOF": 9,
+      "runtime_direct_wait_and_merged_EOF": 9,
+      "observer_nested_wait_and_merged_EOF": 13,
+      "host_report_sha256": "8a2a55e32fa33cfb2d226a133e15a552c3fcdf8d09fdc6c17ff12b239b6fbdf6",
+      "inner_report_sha256": "a340d12b38baca1afe4985bce9a76efd9b64849d8739842dfc51f7d4d41044ba",
+      "runtime_report_sha256": "f5e7805a637ca47da27a320e2a3e66830940058fda9e93fc81db8f1ebb7ffe40",
+      "pcm_report_sha256": "b6a2fe48f9a09605df500973e4df809fb283648d4cb44b3c5245b44948de470b",
+      "review_sha256": "c7dcc3a86ec9aa875a8c3a23d74e697678935eab114d8780c87465831ff8a143",
+      "qt_input_executed": false,
+      "natural_completion_qualified": false,
+      "explicit_preview_stop_with_quiet_qualified": false,
+      "app_close_revocation_retirement_qualified": false,
+      "backend_failure_without_replay_qualified": false,
+      "deployment_qualified": false,
+      "ARM_qualified": false,
+      "physical_audio_qualified": false
+    }
+  ],
+  "pending": [
+    "actual Qt Play/Stop clicks joined to independent PCM",
+    "natural completion",
+    "explicit preview Stop with quiet and retired graph absence",
+    "app close and permission revocation retirement",
+    "unavailable-backend failure without replay",
+    "deployment qualification for the new preview",
+    "ARM execution",
+    "normal windows and cold graphical session",
+    "physical audio and complete smartphone"
+  ],
+  "preceding_nonbehavioral_edits": {
+    "test_formatting_only_sha256": "876b411ad8e8efc10cd5b041d0b5c8b505733010b51c8a6d6ad873ce2e1d51d5",
+    "process_comments_only_sha256": "0892b4e1c3b3edc92f513f635ef8bc7c1bd5c1ca343fb97466babc8deea7be0c",
+    "fresh_runtime_pass": true,
+    "runtime_binding": "later complete host Rust selection"
+  },
+  "test_only_fixture": {
+    "source_sha256": "67f594554a098e6d6145e41df27f7db05870ec8668e1c9c4f6f3cf57ea6318c7",
+    "selector_environment_variable": "POKELINUX_AUDIO_PREVIEW_PROCESS_FIXTURE",
+    "compiled_separately_with": "rustc --edition=2024 -C opt-level=3 -C debuginfo=0",
+    "production_installed": false,
+    "frozen_tests_require_explicit_fixture": true
+  },
+  "frontend_compilation_bridges": {
+    "qml_source_basename_before": "component.cpp",
+    "qml_source_basename_after": "preview-component.cpp",
+    "frozen_qml_bytes_unchanged_sha256": "0b5e73ebdbe29ac9a5b1b325bdca152509a5b8350b4c3b9625c4825f16973c0f",
+    "CMake_selects_matching_basename": true,
+    "preview_test_frozen_before_unused_annotation_sha256": "576deaf0264b4d46407259842f346bdccead9e202485fe412cc3f35852dc0946",
+    "preview_test_after_maybe_unused_only_sha256": "9136ff2cb481cb3deea5b32d2e25adda68de66d9c1abf454dbd05b6806e99476",
+    "business_assertions_changed": false
+  },
+  "primary_port_configuration_references": [
+    "https://docs.pipewire.org/page_man_pipewire-props_7.html",
+    "https://github.com/PipeWire/pipewire/blob/1.4.2/spa/plugins/audioconvert/audioadapter.c#L1810-L1892"
+  ]
+}

@@ -9,16 +9,24 @@ use std::time::Duration;
 
 const FRAME_LIMIT: usize = 65_536;
 #[derive(Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct Job {
     pub token: u64,
-    pub desired: Option<Vec<(u64, Role, String)>>,
+    pub desired: Vec<(u64, Role, String)>,
+    pub apply: bool,
+    pub media: pipewire::MediaSource,
+    pub until_boottime_ns: Option<u64>,
 }
 #[derive(Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct Reply {
     pub token: u64,
     pub cookie: Option<u64>,
     pub links: Vec<ObservedLink>,
     pub applied: bool,
+    pub policy_settled: bool,
+    pub media_present: bool,
+    pub preview_identity: Option<pipewire::SourceIdentity>,
     pub error: Option<String>,
 }
 
@@ -28,71 +36,80 @@ struct Stack {
     cookie: Option<u64>,
 }
 impl Stack {
-    fn refresh(&mut self) -> Result<Vec<ObservedLink>, &'static str> {
+    fn graph(&mut self) -> Result<pipewire::Graph, &'static str> {
         let graph = pipewire::read_graph();
         let cookie = graph.as_ref().ok().map(pipewire::Graph::cookie);
         if self.cookie != cookie {
             self.backend.stop_all();
             self.cookie = cookie;
         }
-        graph.map(|graph| graph.observed(&self.profile))
+        graph
     }
     fn execute(&mut self, job: Job) -> Reply {
-        let mut applied = false;
+        let mut reply = Reply {
+            token: job.token,
+            cookie: self.cookie,
+            links: Vec::new(),
+            applied: false,
+            policy_settled: false,
+            media_present: false,
+            preview_identity: None,
+            error: None,
+        };
+        let end = job
+            .until_boottime_ns
+            .map(|v| BootTime::from_elapsed(Duration::from_nanos(v)))
+            .or_else(|| BootClock.now().checked_after(Duration::from_secs(2)));
         let result = (|| {
-            if let Some(desired) = &job.desired {
-                let end = BootClock
-                    .now()
-                    .checked_after(Duration::from_secs(2))
-                    .ok_or("deadline_overflow")?;
-                let graph = pipewire::read_graph()?;
-                // Establish the new process's graph identity before creating links.
-                // Otherwise the first refresh would discard its own fresh workers.
-                if self.cookie != Some(graph.cookie()) {
-                    self.backend.stop_all();
-                    self.cookie = Some(graph.cookie());
-                }
+            let end = end.ok_or("deadline_overflow")?;
+            loop {
                 if BootClock.now() >= end {
                     return Err("application_expired");
                 }
-                self.backend.apply(&self.profile, desired, &graph)?;
-                let wanted = pipewire::wanted(&self.profile, desired)?;
-                loop {
-                    let links = self.refresh()?;
-                    // A late successful graph reply cannot settle application.
-                    if BootClock.now() >= end {
-                        return Err("application_expired");
-                    }
-                    let actual: std::collections::BTreeSet<_> = links
-                        .iter()
-                        .filter(|link| link.state == "active")
-                        .map(|link| (link.source.clone(), link.target.clone()))
-                        .collect();
-                    if wanted == actual && links.len() == wanted.len() {
-                        applied = true;
-                        return Ok(links);
-                    }
-                    std::thread::sleep(Duration::from_millis(20));
+                let graph = self.graph()?;
+                reply.cookie = self.cookie;
+                reply.media_present = graph.media_present(&self.profile);
+                if BootClock.now() >= end {
+                    return Err("application_expired");
                 }
+                let plan = match graph.render_plan(&self.profile, &job.desired, &job.media) {
+                    Err("preview_source_pending") if job.apply => {
+                        std::thread::sleep(Duration::from_millis(10));
+                        continue;
+                    }
+                    other => other?,
+                };
+                if job.apply {
+                    self.backend.apply(&self.profile, &plan.desired, &graph)?;
+                }
+                let links = graph.observed(&self.profile);
+                let actual: std::collections::BTreeSet<_> = links
+                    .iter()
+                    .filter(|link| link.state == "active")
+                    .map(|link| (link.source.clone(), link.target.clone()))
+                    .collect();
+                // Check again after real graph and link IO; a buffered success is late.
+                if BootClock.now() >= end {
+                    return Err("application_expired");
+                }
+                reply.policy_settled = plan.wanted == actual && links.len() == plan.wanted.len();
+                reply.applied = reply.policy_settled && !plan.idle_media;
+                reply.preview_identity = plan.preview_identity;
+                reply.links = links;
+                if !job.apply || reply.policy_settled {
+                    return Ok(());
+                }
+                std::thread::sleep(Duration::from_millis(10));
             }
-            self.refresh()
         })();
-        match result {
-            Ok(links) => Reply {
-                token: job.token,
-                cookie: self.cookie,
-                links,
-                applied,
-                error: None,
-            },
-            Err(error) => Reply {
-                token: job.token,
-                cookie: self.cookie,
-                links: Vec::new(),
-                applied: false,
-                error: Some(error.into()),
-            },
+        reply.cookie = self.cookie;
+        if let Err(error) = result {
+            reply.applied = false;
+            reply.policy_settled = false;
+            reply.preview_identity = None;
+            reply.error = Some(error.into());
         }
+        reply
     }
 }
 
@@ -187,6 +204,16 @@ impl Process {
             return Err("backend_occupied");
         }
         let token = job.token;
+        let end = match job.until_boottime_ns {
+            Some(value) => BootTime::from_elapsed(Duration::from_nanos(value)),
+            None => BootClock
+                .now()
+                .checked_after(Duration::from_secs(3))
+                .ok_or("deadline_overflow")?,
+        };
+        if BootClock.now() >= end {
+            return Err("application_expired");
+        }
         self.outgoing = serde_json::to_vec(&job).map_err(|_| "invalid_backend_job")?;
         self.outgoing.push(b'\n');
         if self.outgoing.len() > FRAME_LIMIT {
@@ -194,13 +221,7 @@ impl Process {
             return Err("backend_job_budget");
         }
         self.sent = 0;
-        self.busy = Some((
-            token,
-            BootClock
-                .now()
-                .checked_after(Duration::from_secs(3))
-                .ok_or("deadline_overflow")?,
-        ));
+        self.busy = Some((token, end));
         Ok(())
     }
     /// Revoke publication before sending a signal. Retain Child until try_wait reaps it.

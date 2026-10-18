@@ -238,3 +238,55 @@ fn media_generic_historical_permit_is_not_route_admission() {
         "generic historical permit accepted media effect permission"
     );
 }
+
+#[test]
+fn preview_preserves_the_app_absolute_start_deadline_after_transport_delay() {
+    let mut c = Case::new(true);
+    let original = boottime_ns() + 80_000_000;
+    let stamp = c
+        .authority
+        .begin_media_preview(
+            std::process::id(),
+            UID,
+            BACKEND,
+            &crate::audio::PreviewRequest {
+                route: "speaker".into(),
+                ttl_ms: 1000,
+                until_boottime_ns: original,
+            },
+            boottime_ns(),
+        )
+        .unwrap();
+    assert!(stamp.intent().until_ns <= original);
+    while boottime_ns() < original {
+        std::thread::sleep(std::time::Duration::from_millis(1));
+    }
+    assert!(!c.authority.current_media(&stamp, BACKEND, boottime_ns()));
+    assert!(
+        c.authority
+            .approve_media(&stamp, BACKEND, boottime_ns())
+            .is_none()
+    );
+}
+
+#[test]
+fn preview_rejects_expired_or_unbounded_absolute_deadlines() {
+    let mut c = Case::new(true);
+    for absolute in [0, boottime_ns(), boottime_ns() + 2_000_000_000, u64::MAX] {
+        assert!(
+            c.authority
+                .begin_media_preview(
+                    std::process::id(),
+                    UID,
+                    BACKEND,
+                    &crate::audio::PreviewRequest {
+                        route: "speaker".into(),
+                        ttl_ms: 1000,
+                        until_boottime_ns: absolute
+                    },
+                    boottime_ns(),
+                )
+                .is_err()
+        );
+    }
+}

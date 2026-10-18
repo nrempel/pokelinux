@@ -1,5 +1,5 @@
-use pokelinux_audio::pipewire::{ObservedLink, Profile};
-use pokelinux_audio::{Authority, Identity, Role};
+use pokelinux_audio::pipewire::{MediaSource, ObservedLink, Profile, SourceIdentity};
+use pokelinux_audio::{Authority, Identity, PreviewState, Role};
 use pokelinux_power::clock::{BootClock, BootTime, Clock};
 use serde::Serialize;
 use serde_json::{Value, json};
@@ -22,6 +22,35 @@ struct Observation {
     links: Vec<ObservedLink>,
 }
 
+fn preview_deadlines(now: BootTime, until_ns: u64) -> Result<(BootTime, BootTime), &'static str> {
+    let start = BootTime::from_elapsed(Duration::from_nanos(until_ns));
+    if start <= now
+        || start
+            > now
+                .checked_after(Duration::from_secs(1))
+                .ok_or("deadline_overflow")?
+    {
+        return Err("preview_expired");
+    }
+    Ok((
+        start,
+        now.checked_after(Duration::from_secs(6))
+            .ok_or("deadline_overflow")?,
+    ))
+}
+
+struct Preview {
+    peer: Identity,
+    lease: u64,
+    route: String,
+    process: pokelinux_audio::preview_process::Process,
+    start_until: BootTime,
+    work_until: BootTime,
+    state: PreviewState,
+    terminal: PreviewState,
+    natural_drain: bool,
+    identity: Option<SourceIdentity>,
+}
 struct State {
     authority: Authority,
     profile: Profile,
@@ -33,6 +62,10 @@ struct State {
     token: u64,
     sent: Option<(u64, u64, bool)>,
     applied: Option<u64>,
+    policy_settled: bool,
+    media_present: bool,
+    preview: Option<Preview>,
+    last_preview: Option<(Identity, PreviewState)>,
     needs_apply: bool,
     recovery_required: bool,
     stopping: bool,
@@ -46,11 +79,12 @@ impl State {
         self.observed.links.clear();
         self.cookie = None;
         self.applied = None;
+        self.policy_settled = false;
         self.sent = None;
     }
     fn retire(&mut self) {
-        // Fence buffered output and current application before signaling the worker.
         self.invalidate();
+        self.retire_preview(PreviewState::Failed);
         if let Some(process) = &mut self.process {
             process.retire();
         }
@@ -61,7 +95,19 @@ impl State {
             .checked_add(1)
             .expect("audio intent revision overflow");
         self.applied = None;
+        self.policy_settled = false;
         self.needs_apply = true;
+    }
+    fn retire_preview(&mut self, terminal: PreviewState) {
+        if let Some(preview) = &mut self.preview
+            && (preview.state != PreviewState::Retiring || preview.natural_drain)
+        {
+            preview.state = PreviewState::Retiring;
+            preview.terminal = terminal;
+            preview.natural_drain = false;
+            preview.process.retire();
+            self.change();
+        }
     }
     fn stop(&mut self) {
         if self.stopping {
@@ -70,39 +116,152 @@ impl State {
         self.stopping = true;
         self.authority.cancel_all();
         self.change();
-        self.needs_apply = false;
         self.retire();
+        self.needs_apply = false;
+    }
+    fn media_source(&self) -> MediaSource {
+        match &self.preview {
+            Some(p) if p.state == PreviewState::Retiring => MediaSource::Retiring,
+            Some(p) => MediaSource::Owned {
+                pid: p.process.pid(),
+                uid: rustix::process::getuid().as_raw(),
+                gid: rustix::process::getgid().as_raw(),
+                cookie: self.cookie.unwrap_or(0),
+                identity: p.identity.clone(),
+            },
+            None => MediaSource::Automatic,
+        }
+    }
+    fn preview_for(&self, peer: Identity) -> PreviewState {
+        self.preview
+            .as_ref()
+            .filter(|p| p.peer == peer)
+            .map(|p| p.state)
+            .or_else(|| {
+                self.last_preview
+                    .filter(|(owner, _)| *owner == peer)
+                    .map(|(_, state)| state)
+            })
+            .unwrap_or_default()
+    }
+    fn enforce_preview_route(&mut self) {
+        if self.preview.as_ref().is_some_and(|p| {
+            matches!(p.state, PreviewState::Starting | PreviewState::Playing)
+                && !self.authority.desired().iter().any(|(id, role, route)| {
+                    *id == p.lease && *role == Role::Media && route == &p.route
+                })
+        }) {
+            self.retire_preview(PreviewState::Failed);
+        }
+    }
+    fn poll_preview(&mut self) {
+        let Some(p) = &mut self.preview else {
+            return;
+        };
+        let now = BootClock.now();
+        let finished = p.process.poll();
+        let mut changed = false;
+        let mut failure = false;
+        if let Some(done) = finished {
+            if p.state == PreviewState::Playing || p.natural_drain {
+                p.terminal = if done.successful {
+                    PreviewState::Completed
+                } else {
+                    PreviewState::Failed
+                };
+                p.state = PreviewState::Retiring;
+                p.natural_drain = false;
+                changed = true;
+            } else if p.state == PreviewState::Starting {
+                failure = true;
+            }
+        } else if now >= p.work_until
+            || (p.state == PreviewState::Starting && (now >= p.start_until || !p.process.alive()))
+        {
+            failure = true;
+        } else if p.state == PreviewState::Playing && !p.process.alive() {
+            // Death fences Playing immediately; retain natural completion until
+            // actual wait and stderr EOF decide Completed versus Failed.
+            p.state = PreviewState::Retiring;
+            p.terminal = PreviewState::Failed;
+            p.natural_drain = true;
+            changed = true;
+        }
+        if changed {
+            self.change();
+        }
+        if failure {
+            self.retire_preview(PreviewState::Failed);
+        }
+        if self.stopping && self.preview.as_ref().is_some_and(|p| p.process.settled()) {
+            self.preview.take();
+        }
     }
     fn poll(&mut self) {
+        self.enforce_preview_route();
+        self.poll_preview();
         if let Some(process) = &mut self.process {
             match process.poll() {
                 Ok(Some(reply)) => {
-                    if self.cookie != reply.cookie {
+                    if self.preview.is_some()
+                        && let Some(error) = &reply.error
+                    {
+                        // Backend errors are fixed local protocol reasons, not app data.
+                        eprintln!("preview backend job failed: {error}");
+                    }
+                    let cookie_changed = self.cookie != reply.cookie;
+                    if cookie_changed {
                         self.observed.epoch += 1;
                         self.applied = None;
                         self.cookie = reply.cookie;
+                        if self.preview.is_some() {
+                            self.retire_preview(PreviewState::Failed);
+                        }
                     }
                     self.observed.revision += 1;
                     self.observed.available = reply.cookie.is_some() && reply.error.is_none();
+                    self.media_present = reply.media_present;
                     self.observed.links = reply.links;
-                    let matching =
-                        pokelinux_audio::pipewire::wanted(&self.profile, &self.authority.desired())
-                            .is_ok_and(|wanted| {
-                                let actual: std::collections::BTreeSet<_> = self
-                                    .observed
-                                    .links
-                                    .iter()
-                                    .filter(|link| link.state == "active")
-                                    .map(|link| (link.source.clone(), link.target.clone()))
-                                    .collect();
-                                self.observed.links.len() == wanted.len() && actual == wanted
-                            });
-                    self.applied = (self.sent.is_some_and(|(token, intent, _)| {
+                    let current = self.sent.is_some_and(|(token, intent, _)| {
                         token == reply.token && intent == self.intent
-                    }) && self.observed.available
-                        && matching)
+                    });
+                    self.policy_settled =
+                        current && self.observed.available && reply.policy_settled;
+                    self.applied = (current && self.observed.available && reply.applied)
                         .then_some(self.intent);
                     self.sent = None;
+                    if let Some(p) = &mut self.preview {
+                        if p.state == PreviewState::Starting && current {
+                            if self.policy_settled
+                                && BootClock.now() < p.start_until
+                                && p.process.alive()
+                                && reply.preview_identity.is_some()
+                            {
+                                p.identity = reply.preview_identity;
+                                p.state = PreviewState::Playing;
+                            } else {
+                                self.retire_preview(PreviewState::Failed);
+                            }
+                        } else if p.state == PreviewState::Playing
+                            && (!self.observed.available
+                                || reply.preview_identity.as_ref() != p.identity.as_ref())
+                        {
+                            self.retire_preview(PreviewState::Failed);
+                        }
+                    }
+                    // Only a later successful absent-source graph can release a retiring tombstone.
+                    if current
+                        && self.policy_settled
+                        && self.observed.available
+                        && !self.media_present
+                        && self.preview.as_ref().is_some_and(|p| {
+                            p.state == PreviewState::Retiring && p.process.settled()
+                        })
+                    {
+                        let p = self.preview.take().unwrap();
+                        self.last_preview = Some((p.peer, p.terminal));
+                        self.change();
+                    }
                 }
                 Ok(None) => {}
                 Err(_) => {
@@ -117,7 +276,7 @@ impl State {
             .as_ref()
             .is_some_and(|process| process.reaped())
         {
-            self.process.take(); // Already reaped; never releases occupied live capacity.
+            self.process.take();
         }
         if self.stopping || self.recovery_required {
             return;
@@ -127,6 +286,7 @@ impl State {
                 Ok(process) => self.process = Some(process),
                 Err(_) => {
                     self.invalidate();
+                    self.retire_preview(PreviewState::Failed);
                     self.recovery_required = true;
                     return;
                 }
@@ -145,7 +305,20 @@ impl State {
             let applying = self.needs_apply;
             let job = pokelinux_audio::backend_process::Job {
                 token: self.token,
-                desired: applying.then(|| self.authority.desired()),
+                desired: self.authority.desired(),
+                apply: applying,
+                media: self.media_source(),
+                until_boottime_ns: self
+                    .preview
+                    .as_ref()
+                    .filter(|p| p.state == PreviewState::Starting)
+                    .map(|p| {
+                        p.start_until
+                            .elapsed()
+                            .as_nanos()
+                            .try_into()
+                            .unwrap_or(u64::MAX)
+                    }),
             };
             if self.process.as_mut().unwrap().submit(job).is_err() {
                 self.retire();
@@ -157,6 +330,89 @@ impl State {
             self.needs_apply = false;
             self.last_poll = now;
         }
+    }
+    fn start_preview(&mut self, peer: Identity, value: &Value) -> Result<u64, &'static str> {
+        let object = value.as_object().ok_or("invalid_request")?;
+        if object.len() != 4 || !object.contains_key("lease") {
+            return Err("invalid_request");
+        }
+        let (start_until, work_until) = preview_deadlines(
+            BootClock.now(),
+            value["until_boottime_ns"]
+                .as_u64()
+                .ok_or("invalid_deadline")?,
+        )?;
+        let route = value["route"].as_str().ok_or("invalid_route")?;
+        if !self.profile.supports(Role::Media, route) {
+            return Err("unsupported_route");
+        }
+        if self.preview.is_some() {
+            return Err("preview_busy");
+        }
+        if self.recovery_required || !self.observed.available || self.cookie.is_none() {
+            return Err("backend_unavailable");
+        }
+        if self.media_present {
+            return Err("external_media_busy");
+        }
+        if self
+            .authority
+            .desired()
+            .iter()
+            .any(|(_, role, _)| *role == Role::Call)
+        {
+            return Err("call_active");
+        }
+        let existing = if value["lease"].is_null() {
+            None
+        } else {
+            let id = value["lease"].as_u64().ok_or("invalid_lease")?;
+            if self.authority.role(peer, id)? != Role::Media {
+                return Err("invalid_role");
+            }
+            Some(id)
+        };
+        let source = self.profile.source(Role::Media)?.to_owned();
+        if existing.is_none() {
+            self.authority.can_acquire(peer, Role::Media)?;
+        }
+        let process = pokelinux_audio::preview_process::Process::start(&source, work_until)
+            .map_err(|_| "preview_start_failed")?;
+        self.preview = Some(Preview {
+            peer,
+            lease: existing.unwrap_or(0),
+            route: route.into(),
+            process,
+            start_until,
+            work_until,
+            state: PreviewState::Starting,
+            terminal: PreviewState::Failed,
+            natural_drain: false,
+            identity: None,
+        });
+        self.last_preview = None;
+        if !self.preview.as_ref().unwrap().process.admission_ready() {
+            self.retire_preview(PreviewState::Failed);
+            return Err("preview_start_failed");
+        }
+        if BootClock.now() >= start_until {
+            self.retire_preview(PreviewState::Failed);
+            return Err("preview_expired");
+        }
+        let selected = match existing {
+            Some(id) => self.authority.set_route(peer, id, route).map(|()| id),
+            None => self.authority.acquire(peer, Role::Media, route),
+        };
+        let lease = match selected {
+            Ok(id) => id,
+            Err(error) => {
+                self.retire_preview(PreviewState::Failed);
+                return Err(error);
+            }
+        };
+        self.preview.as_mut().unwrap().lease = lease;
+        self.change();
+        Ok(lease)
     }
     fn request(&mut self, peer: Identity, value: Value) -> Value {
         if !self.authority.is_allowed(peer) {
@@ -176,6 +432,27 @@ impl State {
                     }
                     self.stop();
                 }
+                "preview_play" => {
+                    lease = Some(self.start_preview(peer, &value)?);
+                }
+                "preview_stop" => {
+                    if value.as_object().is_none_or(|object| object.len() != 2) {
+                        return Err("invalid_request");
+                    }
+                    let id = value["lease"].as_u64().ok_or("invalid_lease")?;
+                    if self.authority.role(peer, id)? != Role::Media {
+                        return Err("invalid_role");
+                    }
+                    if self
+                        .preview
+                        .as_ref()
+                        .is_some_and(|p| p.peer != peer || p.lease != id)
+                    {
+                        return Err("preview_busy");
+                    }
+                    self.retire_preview(PreviewState::Idle);
+                    self.change();
+                }
                 "acquire" => {
                     if self.recovery_required {
                         return Err("explicit_recovery_required");
@@ -187,12 +464,22 @@ impl State {
                         return Err("unsupported_route");
                     }
                     lease = Some(self.authority.acquire(peer, role, route)?);
+                    if role == Role::Call {
+                        self.retire_preview(PreviewState::Failed);
+                    }
                     self.change();
                 }
                 "release" => {
                     let id = value["lease"].as_u64().ok_or("invalid_lease")?;
                     let capture = self.authority.role(peer, id)? == Role::Capture;
                     self.authority.release(peer, id)?;
+                    if self
+                        .preview
+                        .as_ref()
+                        .is_some_and(|p| p.peer == peer && p.lease == id)
+                    {
+                        self.retire_preview(PreviewState::Idle);
+                    }
                     self.change();
                     if capture {
                         self.retire();
@@ -209,6 +496,13 @@ impl State {
                         return Err("unsupported_route");
                     }
                     self.authority.set_route(peer, id, route)?;
+                    if self
+                        .preview
+                        .as_ref()
+                        .is_some_and(|p| p.peer == peer && p.lease == id)
+                    {
+                        self.retire_preview(PreviewState::Idle);
+                    }
                     self.change();
                 }
                 "grant_capture" | "revoke_capture" => {
@@ -233,8 +527,10 @@ impl State {
         if let Err(error) = operation {
             return json!({"ok":false,"error":error});
         }
+        self.enforce_preview_route();
         let mut response = json!({"ok":true,"lease":lease,"peer_uid":peer.uid,"desired":self.authority.desired(),
             "observed":self.observed,"intent_revision":self.intent,
+            "policy_settled":self.policy_settled,"preview":self.preview_for(peer),
             "application":if self.recovery_required { "uncertain" } else if self.applied == Some(self.intent) { "observed" } else { "pending" },
             "phase":if self.stopping { "stopping" } else { "running" },
             "cleanup":if self.stopping { "pending" } else { "none" }});
@@ -365,7 +661,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         )?)?);
     }
     if args.get(1).is_some_and(|arg| arg == "--tool-worker") {
-        if args.len() < 4 || !matches!(args[3].as_str(), "/usr/bin/pw-link" | "/usr/bin/pw-dump") {
+        if args.len() < 4
+            || !matches!(
+                args[3].as_str(),
+                "/usr/bin/pw-link" | "/usr/bin/pw-dump" | "/usr/bin/pw-cat"
+            )
+        {
             return Err("invalid owned worker".into());
         }
         // Set the kernel guard before checking the parent: catches death between fork and prctl.
@@ -401,6 +702,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         token: 0,
         sent: None,
         applied: None,
+        policy_settled: false,
+        media_present: false,
+        preview: None,
+        last_preview: None,
         needs_apply: false,
         recovery_required: false,
         stopping: false,
@@ -502,7 +807,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     .checked_after(Duration::from_secs(3))
                     .expect("stop deadline")
             });
-            if state.process.is_none() && workers.is_empty() {
+            if state.process.is_none() && state.preview.is_none() && workers.is_empty() {
                 return Ok(());
             }
             if BootClock.now() >= end {
@@ -513,3 +818,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         thread::sleep(Duration::from_millis(10));
     }
 }
+
+#[cfg(test)]
+#[path = "preview_main_tests.rs"]
+mod preview_main_tests;

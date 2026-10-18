@@ -35,6 +35,8 @@ Rectangle {
      onClicked: root.audioClient.select(modelData.id)
     }
    }
+   SoundButton { objectName: "previewPlay"; width: column.width; text: "Play preview"; enabled: root.audioClient.canPlay; onClicked: root.audioClient.playPreview() }
+   SoundButton { objectName: "previewStop"; width: column.width; text: "Stop"; enabled: root.audioClient.canStop; onClicked: root.audioClient.stopPreview() }
    SoundButton { width: column.width; text: "Reconnect"; visible: root.audioClient.canReconnect; onClicked: root.audioClient.reconnect() }
   }
  }

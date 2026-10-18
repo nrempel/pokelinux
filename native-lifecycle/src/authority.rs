@@ -1272,6 +1272,29 @@ impl Authority {
         }
         Ok(stamp)
     }
+    pub(crate) fn begin_media_preview(
+        &mut self,
+        pid: u32,
+        uid: u32,
+        backend: &str,
+        request: &crate::audio::PreviewRequest,
+        now: u64,
+    ) -> Result<MediaStamp, Reply> {
+        if request.until_boottime_ns <= now
+            || now
+                .checked_add(1_000_000_000)
+                .is_none_or(|maximum| request.until_boottime_ns > maximum)
+        {
+            return Err(Reply::Denied);
+        }
+        let mut stamp = self.begin_media(pid, uid, backend, &request.route, request.ttl_ms, now)?;
+        stamp.intent.until_ns = stamp.intent.until_ns.min(request.until_boottime_ns);
+        stamp.authority.until = stamp.authority.until.min(request.until_boottime_ns);
+        if !self.current_media(&stamp, backend, crate::boottime_ns()) {
+            return Err(Reply::Denied);
+        }
+        Ok(stamp)
+    }
     pub(crate) fn current_media(&self, stamp: &MediaStamp, backend: &str, now: u64) -> bool {
         stamp.authority.permission == Permission::MediaRoute
             && now < stamp.intent.until_ns
@@ -1366,6 +1389,8 @@ impl Authority {
             | AppRequest::MessagesRead { .. }
             | AppRequest::CameraCapture { .. }
             | AppRequest::MediaRoute { .. }
+            | AppRequest::MediaPreviewPlay { .. }
+            | AppRequest::MediaPreviewStop {}
             | AppRequest::MediaStatus { .. }
             | AppRequest::MediaReconnect {} => immediate(Reply::Unavailable),
             AppRequest::Query {} => immediate(Reply::Ok),

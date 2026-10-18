@@ -61,7 +61,7 @@ fn status(
     application: &str,
     inspected: bool,
 ) -> Value {
-    let mut v = json!({"ok":true,"lease":lease,"peer_uid":uid(),"desired":if route.is_empty(){json!([])}else{json!([[7,"media",route]])},"observed":{"epoch":1,"revision":intent+1,"available":true,"links":[]},"intent_revision":intent,"application":application,"phase":"running","cleanup":"none"});
+    let mut v = json!({"ok":true,"lease":lease,"peer_uid":uid(),"desired":if route.is_empty(){json!([])}else{json!([[7,"media",route]])},"observed":{"epoch":1,"revision":intent+1,"available":true,"links":[]},"intent_revision":intent,"application":application,"phase":"running","cleanup":"none","policy_settled":false,"preview":"idle"});
     if inspected {
         v["media_routes"] = catalog();
     }
@@ -525,4 +525,90 @@ fn actual_listener_credentials_and_original_main_catalog_acquire_route_wire() {
     let mut byte = [0; 16];
     assert!(accepted.read(&mut byte).unwrap() > 0);
     client.revoke();
+}
+
+#[test]
+fn explicit_preview_uses_one_original_absolute_deadline_and_owned_lease() {
+    use pokelinux_audio::PreviewState;
+    let (mut c, mut peer, _) = pair();
+    inspected(&mut c, &mut peer);
+    let original = now() + 900_000_000;
+    assert_eq!(c.preview_play("media-a7", original), Ok(SendOutcome::Sent));
+    assert_eq!(
+        request(&peer),
+        json!({"op":"preview_play","lease":null,"route":"media-a7","until_boottime_ns":original})
+    );
+    assert_eq!(c.preview_play("media-a7", original), Err(SubmitError::Busy));
+    quiet(&peer);
+    let mut starting = status(Some(7), "media-a7", 1, "pending", false);
+    starting["preview"] = json!("starting");
+    starting["policy_settled"] = json!(true);
+    reply(&mut peer, starting);
+    let state = updated(&mut c);
+    assert_eq!(state.preview, PreviewState::Starting);
+    assert!(state.policy_settled && state.applied.is_none());
+    for _ in 0..3 {
+        assert!(c.poll().is_none());
+    }
+    quiet(&peer);
+    assert_eq!(c.inspect(original), Ok(SendOutcome::Sent));
+    request(&peer);
+    let mut playing = status(None, "media-a7", 1, "observed", true);
+    playing["preview"] = json!("playing");
+    playing["policy_settled"] = json!(true);
+    reply(&mut peer, playing);
+    let state = updated(&mut c);
+    assert_eq!(state.preview, PreviewState::Playing);
+    assert_eq!(state.applied.as_ref().unwrap().lease, 7);
+    assert_eq!(c.preview_stop(original), Ok(SendOutcome::Sent));
+    assert_eq!(request(&peer), json!({"op":"preview_stop","lease":7}));
+    let mut retiring = status(None, "media-a7", 2, "pending", false);
+    retiring["preview"] = json!("retiring");
+    reply(&mut peer, retiring);
+    let state = updated(&mut c);
+    assert_eq!(state.preview, PreviewState::Retiring);
+    assert!(state.applied.is_none());
+    quiet(&peer);
+}
+
+#[test]
+fn idle_policy_selection_does_not_invent_observed_audio_application() {
+    let (mut c, mut peer, _) = pair();
+    inspected(&mut c, &mut peer);
+    assert_eq!(c.select("media-a7", until()), Ok(SendOutcome::Sent));
+    request(&peer);
+    let mut selected = status(Some(7), "media-a7", 1, "pending", false);
+    selected["policy_settled"] = json!(true);
+    reply(&mut peer, selected);
+    let state = updated(&mut c);
+    assert!(state.policy_settled && state.admitted.is_some() && state.applied.is_none());
+    assert_eq!(c.inspect(until()), Ok(SendOutcome::Sent));
+    request(&peer);
+    let mut other = status(None, "media-z2", 2, "pending", true);
+    other["desired"] = json!([[8, "media", "media-z2"]]);
+    other["policy_settled"] = json!(true);
+    reply(&mut peer, other);
+    let state = updated(&mut c);
+    assert!(!state.policy_settled && state.applied.is_none());
+}
+
+#[test]
+fn expired_preview_cannot_publish_buffered_start_or_retry_itself() {
+    let (mut c, mut peer, _) = pair();
+    inspected(&mut c, &mut peer);
+    let original = now() + 40_000_000;
+    assert_eq!(c.preview_play("media-a7", original), Ok(SendOutcome::Sent));
+    assert_eq!(request(&peer)["until_boottime_ns"], original);
+    let mut late = status(Some(7), "media-a7", 1, "pending", false);
+    late["preview"] = json!("starting");
+    reply(&mut peer, late);
+    while now() < original {
+        sleep(Duration::from_millis(1));
+    }
+    failure(&mut c, Failure::Deadline);
+    assert_eq!(
+        c.preview_play("media-a7", now() + 900_000_000),
+        Err(SubmitError::Closed)
+    );
+    assert!(!c.snapshot().policy_settled);
 }

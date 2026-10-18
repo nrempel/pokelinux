@@ -1,8 +1,8 @@
 #![forbid(unsafe_code)]
 use crate::{
-    protocol::{self, Reply, Row, State},
+    protocol::{self, Preview, Reply, Row, State},
     queue::Queue,
-    wire::{Code, Fresh, RECONNECT, ROUTE, Route},
+    wire::{Code, Fresh, RECONNECT, ROUTE, Route, STOP},
 };
 use pokelinux_power::clock::{BootClock, Clock};
 pub const CLOSED: u32 = 0;
@@ -14,6 +14,8 @@ const CONNECT: u32 = 1;
 const STATUS: u32 = 2;
 const SELECT: u32 = 3;
 const RECON: u32 = 4;
+const PLAY: u32 = 5;
+const STOP_REQUEST: u32 = 6;
 // Exact public presentation codes from the frozen C header.
 const DISCONNECTED: u32 = 0;
 const CONNECTING_AUDIO: u32 = 1;
@@ -35,6 +37,13 @@ const QUEUED_REFUSED: u32 = 22;
 const SEND_REFUSED: u32 = 23;
 const REPLY_OUTSIDE_REQUEST: u32 = 24;
 const REPLY_REFUSED: u32 = 27;
+const SELECTED_IDLE: u32 = 28;
+const PREVIEW_STARTING: u32 = 29;
+const PREVIEW_PLAYING: u32 = 30;
+const PREVIEW_RETIRING: u32 = 31;
+const PREVIEW_COMPLETED: u32 = 32;
+const PREVIEW_FAILED: u32 = 33;
+const PREVIEW_CANCELLED: u32 = 34;
 
 struct Pending {
     kind: u32,
@@ -43,6 +52,7 @@ struct Pending {
     output: String,
     queue_token: Option<u64>,
     prepared_length: u32,
+    preview_route: Option<Route>,
 }
 pub struct Client {
     started: bool,
@@ -58,6 +68,8 @@ pub struct Client {
     status: u32,
     requested: Option<Route>,
     applied: Option<Route>,
+    policy_settled: bool,
+    preview: Preview,
     rows: Vec<Row>,
     pages: Vec<Row>,
 }
@@ -93,6 +105,10 @@ pub struct View {
     pub requested: Route,
     pub applied: Route,
     pub routes: [ViewRow; 32],
+    pub policy_settled: u32,
+    pub preview: u32,
+    pub can_play: u32,
+    pub can_stop: u32,
 }
 #[repr(C)]
 pub struct Packet {
@@ -119,6 +135,8 @@ impl Client {
             status: DISCONNECTED,
             requested: None,
             applied: None,
+            policy_settled: false,
+            preview: Preview::Idle,
             rows: Vec::new(),
             pages: Vec::new(),
         }
@@ -164,6 +182,8 @@ impl Client {
         self.reconnect = false;
         self.requested = None;
         self.applied = None;
+        self.policy_settled = false;
+        self.preview = Preview::Failed;
         self.rows.clear();
         self.pages.clear();
         self.status = status;
@@ -196,6 +216,7 @@ impl Client {
             output,
             queue_token,
             prepared_length: 0,
+            preview_route: None,
         });
         self.stage = SENDING;
         Ok(())
@@ -216,6 +237,7 @@ impl Client {
             output: String::new(),
             queue_token: None,
             prepared_length: 0,
+            preview_route: None,
         });
         self.stage = CONNECTING;
         self.status = CONNECTING_AUDIO;
@@ -260,6 +282,97 @@ impl Client {
     fn can_reconnect(&self) -> bool {
         !self.queue.pending()
             && (self.stage == CLOSED || (self.online && self.reconnect && self.status_or_idle()))
+    }
+    fn can_play(&self) -> bool {
+        self.online
+            && self.available
+            && self.choose
+            && self.policy_settled
+            && self.stage == IDLE
+            && self.pending.is_none()
+            && !self.queue.pending()
+            && !self.preview.active()
+            && self
+                .requested
+                .is_some_and(|route| self.rows.iter().any(|r| r.id.id() == route.id()))
+    }
+    fn can_stop(&self) -> bool {
+        self.online
+            && !self.queue.metadata().is_some_and(|(kind, _)| kind == STOP)
+            && !self
+                .pending
+                .as_ref()
+                .is_some_and(|p| p.kind == STOP_REQUEST)
+            && (self.preview.active() || self.pending.as_ref().is_some_and(|p| p.kind == PLAY))
+    }
+    pub fn preview_play(&mut self) -> Code {
+        let n = match self.timely() {
+            Ok(n) => n,
+            Err(e) => return e,
+        };
+        if self.pending.is_some() || self.queue.pending() {
+            return Code::Busy;
+        }
+        if !self.can_play() {
+            return Code::Refused;
+        }
+        let until = match self.deadline(n) {
+            Ok(n) => n,
+            Err(e) => return e,
+        };
+        let route = self.requested.expect("selected logical route");
+        if let Err(e) = self.request(PLAY, until, String::new(), None) {
+            return e;
+        }
+        self.pending.as_mut().expect("play request").preview_route = Some(route);
+        self.preview = Preview::Starting;
+        self.status = PREVIEW_STARTING;
+        Code::Ok
+    }
+    pub fn preview_stop(&mut self) -> Code {
+        let n = match self.timely() {
+            Ok(n) => n,
+            Err(e) => return e,
+        };
+        if self.queue.pending() {
+            if self.queue.metadata().is_some_and(|(kind, _)| kind != STOP) && self.can_stop() {
+                self.fail(PREVIEW_CANCELLED);
+                return Code::Ok;
+            }
+            return Code::Busy;
+        }
+        if self
+            .pending
+            .as_ref()
+            .is_some_and(|p| p.kind == STOP_REQUEST)
+        {
+            return Code::Busy;
+        }
+        if !self.can_stop() {
+            return Code::Refused;
+        }
+        // A single transport cannot multiplex cleanup over an effect. Closing
+        // the channel withdraws ownership, without claiming remote quiet/reap.
+        if self.pending.as_ref().is_some_and(|p| p.kind != STATUS) {
+            self.fail(PREVIEW_CANCELLED);
+            return Code::Ok;
+        }
+        if self.pending.is_some() {
+            return self.queue.offer(STOP, None, n);
+        }
+        let until = match self.deadline(n) {
+            Ok(n) => n,
+            Err(e) => return e,
+        };
+        self.request(STOP_REQUEST, until, protocol::preview_stop(), None)
+            .map_or_else(
+                |e| e,
+                |()| {
+                    self.preview = Preview::Retiring;
+                    self.status = PREVIEW_RETIRING;
+                    Code::Ok
+                },
+            )
     }
     pub fn choose(&mut self, route: &Route) -> Code {
         if route.id().is_none() {
@@ -350,17 +463,30 @@ impl Client {
     }
     fn dispatch(&mut self, n: u64) -> Result<(), Code> {
         let fresh = self.fresh();
+        let cleanup = self.queue.metadata().is_some_and(|(kind, _)| kind == STOP);
         match self.queue.prepare(&fresh, n) {
             Ok(c) => self.request(
-                if c.kind == ROUTE { SELECT } else { RECON },
+                if c.kind == ROUTE {
+                    SELECT
+                } else if c.kind == STOP {
+                    STOP_REQUEST
+                } else {
+                    RECON
+                },
                 c.original_until_boottime_ns,
                 if c.kind == ROUTE {
                     protocol::selection(&c.route, c.ttl_ms)
+                } else if c.kind == STOP {
+                    protocol::preview_stop()
                 } else {
                     protocol::reconnect()
                 },
                 Some(c.token),
             ),
+            Err(e @ (Code::Expired | Code::Refused)) if cleanup => {
+                self.fail(REQUEST_EXPIRED);
+                Err(e)
+            }
             Err(Code::Empty | Code::Busy | Code::Expired | Code::Refused) => Ok(()),
             Err(e) => {
                 self.fail(QUEUED_REFUSED);
@@ -391,7 +517,15 @@ impl Client {
                     }
                 }
                 Err(e @ (Code::Expired | Code::Refused)) => {
-                    self.idle();
+                    if self
+                        .pending
+                        .as_ref()
+                        .is_some_and(|p| p.kind == STOP_REQUEST)
+                    {
+                        self.fail(REQUEST_EXPIRED);
+                    } else {
+                        self.idle();
+                    }
                     return Err(e);
                 }
                 Err(e) => {
@@ -401,6 +535,15 @@ impl Client {
             }
         }
         let p = self.pending.as_mut().expect("sending request");
+        if p.kind == PLAY {
+            let ttl = ((p.until - n) / 1_000_000) as u32;
+            if ttl == 0 {
+                self.fail(REQUEST_EXPIRED);
+                return Err(Code::Expired);
+            }
+            p.output =
+                protocol::preview_play(&p.preview_route.expect("frozen play route"), ttl, p.until);
+        }
         let length = p.output.len();
         if length == 0 || length > 4096 {
             self.fail(REQUEST_REFUSED);
@@ -463,8 +606,20 @@ impl Client {
         self.available = s.connected && s.available;
         self.requested = s.requested;
         self.applied = s.applied;
+        self.policy_settled = s.policy_settled;
+        self.preview = s.preview;
         self.status = if !self.available {
             UNAVAILABLE_INSPECT
+        } else if s.preview == Preview::Starting {
+            PREVIEW_STARTING
+        } else if s.preview == Preview::Playing {
+            PREVIEW_PLAYING
+        } else if s.preview == Preview::Retiring {
+            PREVIEW_RETIRING
+        } else if s.preview == Preview::Completed {
+            PREVIEW_COMPLETED
+        } else if s.preview == Preview::Failed {
+            PREVIEW_FAILED
         } else if s.pending {
             if self.requested.is_some() {
                 APPLYING
@@ -473,6 +628,8 @@ impl Client {
             }
         } else if self.applied.is_some() {
             APPLIED
+        } else if self.requested.is_some() && self.policy_settled {
+            SELECTED_IDLE
         } else if self.requested.is_some() {
             INTERRUPTED
         } else if self.choose {
@@ -486,6 +643,20 @@ impl Client {
         let kind = self.pending.as_ref().expect("receiving request").kind;
         match r {
             Reply::Denied | Reply::Unavailable => {
+                if kind == STATUS && self.queue.metadata().is_some_and(|(kind, _)| kind == STOP) {
+                    // The peer declined inspection, not ownership cleanup. Native
+                    // close withdraws the accepted Stop instead of discarding it.
+                    self.fail(PREVIEW_CANCELLED);
+                    return Ok(());
+                }
+                if kind == PLAY || kind == STOP_REQUEST {
+                    self.fail(if matches!(r, Reply::Denied) {
+                        DENIED
+                    } else {
+                        UNAVAILABLE
+                    });
+                    return Ok(());
+                }
                 self.queue.cancel();
                 self.choose = false;
                 self.reconnect = false;
@@ -504,6 +675,10 @@ impl Client {
                 return Ok(());
             }
             Reply::Selected(s) if kind == SELECT => {
+                self.apply(s);
+                self.idle();
+            }
+            Reply::Preview(s) if kind == PLAY || kind == STOP_REQUEST => {
                 self.apply(s);
                 self.idle();
             }
@@ -622,6 +797,10 @@ impl Client {
             requested: self.requested.unwrap_or(Route::EMPTY),
             applied: self.applied.unwrap_or(Route::EMPTY),
             routes,
+            policy_settled: u32::from(self.policy_settled),
+            preview: self.preview as u32,
+            can_play: u32::from(self.can_play()),
+            can_stop: u32::from(self.can_stop()),
         }
     }
 }

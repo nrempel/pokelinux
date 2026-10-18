@@ -80,3 +80,5 @@ pub enum Code {
 }
 pub const ROUTE: u32 = 1;
 pub const RECONNECT: u32 = 2;
+
+pub const STOP: u32 = 3;

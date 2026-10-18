@@ -5,6 +5,13 @@ service with a real PipeWire backend. Its qualified scope is a private graph
 with preallocated mono sources and routes. It is an early phone-service
 component, not a finished Pixel audio implementation.
 
+The later [finite Sounds preview](native-sounds-preview.md) adds a Main-owned
+fixed-PCM producer while this backend retains sole link ownership. One real host
+actor Play now reaches selected-speaker virtual PCM after producer-port setup;
+UI clicks, natural completion, explicit preview Stop/quiet, revocation and
+backend-failure integration remain open. Host Rust/frontend checks and the
+focused delayed-owner-poll regression pass separately.
+
 The [logical output-selector foundation](native-audio-output-selector.md) now
 adds configured logical Media routes, exact current application observations,
 and a compiled native Sounds client. Two actual host graph RED→GREEN checks,

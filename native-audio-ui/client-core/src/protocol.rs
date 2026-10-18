@@ -6,12 +6,40 @@ pub struct Row {
     pub id: Route,
     pub label: String,
 }
+#[repr(u32)]
+#[derive(Clone, Copy, PartialEq, Eq)]
+pub enum Preview {
+    Idle,
+    Starting,
+    Playing,
+    Retiring,
+    Completed,
+    Failed,
+}
+impl Preview {
+    pub fn active(self) -> bool {
+        matches!(self, Self::Starting | Self::Playing | Self::Retiring)
+    }
+    fn parse(value: &Value) -> Option<Self> {
+        Some(match value.as_str()? {
+            "idle" => Self::Idle,
+            "starting" => Self::Starting,
+            "playing" => Self::Playing,
+            "retiring" => Self::Retiring,
+            "completed" => Self::Completed,
+            "failed" => Self::Failed,
+            _ => return None,
+        })
+    }
+}
 pub struct State {
     pub connected: bool,
     pub available: bool,
     pub pending: bool,
     pub requested: Option<Route>,
     pub applied: Option<Route>,
+    pub policy_settled: bool,
+    pub preview: Preview,
 }
 pub struct Page {
     pub state: State,
@@ -25,6 +53,7 @@ pub enum Reply {
     Unavailable,
     Ok,
     Selected(State),
+    Preview(State),
     Status(Page),
 }
 fn object(v: &Value, size: usize) -> Option<&Map<String, Value>> {
@@ -46,13 +75,15 @@ fn nullable(v: &Value) -> Option<Option<Route>> {
     }
 }
 fn state(v: &Value) -> Option<State> {
-    let s = object(v, 5)?;
+    let s = object(v, 7)?;
     Some(State {
         connected: s.get("connected")?.as_bool()?,
         available: s.get("available")?.as_bool()?,
         pending: s.get("pending")?.as_bool()?,
         requested: nullable(s.get("requested")?)?,
         applied: nullable(s.get("applied")?)?,
+        policy_settled: s.get("policy_settled")?.as_bool()?,
+        preview: Preview::parse(s.get("preview")?)?,
     })
 }
 fn whitespace(c: char) -> bool {
@@ -76,6 +107,7 @@ pub fn parse(bytes: &[u8]) -> Option<Reply> {
         "unavailable" if s.len() == 1 => Some(Reply::Unavailable),
         "ok" if s.len() == 1 => Some(Reply::Ok),
         "media_selected" if s.len() == 2 => Some(Reply::Selected(state(s.get("state")?)?)),
+        "media_preview" if s.len() == 2 => Some(Reply::Preview(state(s.get("state")?)?)),
         "media_status" if s.len() == 6 => {
             let a = s.get("routes")?.as_array()?;
             if a.len() > 8 {
@@ -123,4 +155,14 @@ pub fn selection(route: &Route, ttl: u32) -> String {
 }
 pub fn reconnect() -> String {
     "{\"op\":\"media_reconnect\"}".to_owned()
+}
+
+pub fn preview_play(route: &Route, ttl: u32, until: u64) -> String {
+    let id = std::str::from_utf8(route.id().expect("validated selector")).expect("ASCII selector");
+    format!(
+        "{{\"op\":\"media_preview_play\",\"request\":{{\"route\":\"{id}\",\"ttl_ms\":{ttl},\"until_boottime_ns\":{until}}}}}"
+    )
+}
+pub fn preview_stop() -> String {
+    "{\"op\":\"media_preview_stop\"}".to_owned()
 }

@@ -15,6 +15,8 @@ class AudioClient final : public QObject {
  Q_PROPERTY(QString status READ status NOTIFY changed)
  Q_PROPERTY(bool canChoose READ canChoose NOTIFY changed)
  Q_PROPERTY(bool canReconnect READ canReconnect NOTIFY changed)
+ Q_PROPERTY(bool canPlay READ canPlay NOTIFY changed)
+ Q_PROPERTY(bool canStop READ canStop NOTIFY changed)
 public:
  AudioClient(QString path, uid_t ownerUid, QObject *parent=nullptr);
  ~AudioClient() override;
@@ -24,7 +26,11 @@ public:
  QString status() const;
  bool canChoose() const;
  bool canReconnect() const;
+ bool canPlay() const;
+ bool canStop() const;
  Q_INVOKABLE void reconnect();
+ Q_INVOKABLE void playPreview();
+ Q_INVOKABLE void stopPreview();
  Q_INVOKABLE void select(const QString &id);
 signals:
  void changed();

@@ -1,5 +1,12 @@
 # Sounds request and model engine in Rust
 
+The later [finite Play/Stop preview](native-sounds-preview.md) extends the current
+interface to fifteen explicit functions and exactly seven required State fields,
+including `policy_settled` and `preview`, without earlier-ABI compatibility. Host
+components and one actor Play to virtual PCM now pass. Actual Qt click/PCM,
+completion, explicit preview Stop/quiet, revocation and backend-failure joins
+remain open. Historical thirteen-function executions retain their original scope.
+
 The later [shared appearance Rust client](native-appearance-rust-client.md)
 adds separately qualified policy and fresh joined normal host/default-Cargo/
 installed-QML checks. A later [current native ARM production CMake epoch](native-current-arm-apps.md)
@@ -12,9 +19,10 @@ The app-local Rust engine now owns direct and queued requests, outgoing packets,
 original deadlines, reply validation, pagination and the accepted UI model.
 `AudioClient` retains QObject/QML presentation and the credentialed nonblocking
 SEQPACKET edge. The lifecycle owner continues to own permission and provider
-policy. No provider client, lease, worker, retry budget or new authority is added.
+policy. The original engine port added no provider client, lease, worker, retry
+budget or new authority; the later preview's Main-owned producer is separate.
 
-The13-function client ABI replaces the obsolete queue ABI. Safe modules reuse the
+The original13-function client ABI replaced the obsolete queue ABI. Safe modules reuse the
 existing internal Queue and BootClock; the narrow FFI copies bounded inputs and
 outputs without retaining caller pointers. One event thread owns each handle.
 Connection epochs and send tokens reject stale callbacks. EAGAIN/EINTR preserve

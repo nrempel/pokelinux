@@ -1,6 +1,7 @@
 //! Current lifecycle authorization and a single existing audio owner's Media lease.
 //! Presentation receives logical routes and observations; no PipeWire identity.
 pub use crate::audio_owner::Owner;
+pub use pokelinux_audio::PreviewState;
 use serde::{Deserialize, Serialize};
 use std::io;
 
@@ -11,6 +12,14 @@ pub const ROUTES_PER_PAGE: usize = 8;
 pub struct Request {
     pub route: String,
     pub ttl_ms: u64,
+}
+/// The app's original BOOTTIME limit can only shorten actor authority.
+#[derive(Debug, Deserialize, Serialize)]
+#[serde(deny_unknown_fields)]
+pub struct PreviewRequest {
+    pub route: String,
+    pub ttl_ms: u64,
+    pub until_boottime_ns: u64,
 }
 /// Trusted actor-only data, never an application-supplied capability.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -33,10 +42,13 @@ pub struct State {
     pub pending: bool,
     pub requested: Option<String>,
     pub applied: Option<String>,
+    pub policy_settled: bool,
+    pub preview: PreviewState,
 }
 pub enum Event {
     Observed,
     Selected { id: u64, state: State },
+    Preview { id: u64, state: State },
     Rejected { id: u64 },
     Unavailable,
 }
@@ -48,6 +60,9 @@ pub trait Provider {
     fn routes(&self) -> Vec<Route>;
     /// false means no command sent and no local command queue.
     fn submit(&mut self, intent: &Intent) -> io::Result<bool>;
+    fn play(&mut self, intent: &Intent) -> io::Result<bool>;
+    /// Cleanup of this connection only, independent of a new Play grant.
+    fn stop_preview(&mut self, id: u64, until_ns: u64) -> io::Result<bool>;
     /// Read-only, same single-in-flight transport and original deadline.
     fn inspect(&mut self, until_ns: u64) -> io::Result<bool>;
     /// Read only: never submit, flush, reconcile or reconnect.

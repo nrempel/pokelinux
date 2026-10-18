@@ -1663,6 +1663,50 @@ fn run_with_brightness_services_inner(
                                 Reply::Unavailable
                             }
                         }
+                        Ok(AppRequest::MediaPreviewPlay { request }) if !stopping => {
+                            if operation.is_some() {
+                                Reply::Unavailable
+                            } else if let Some(provider) = audio.as_deref() {
+                                match media.begin_preview(
+                                    connection.id,
+                                    cred.pid.as_raw_nonzero().get() as u32,
+                                    cred.uid.as_raw(),
+                                    request,
+                                    &mut authority,
+                                    provider,
+                                ) {
+                                    Ok(until) => {
+                                        connection.deadline = until.saturating_add(1_000_000_000);
+                                        return true;
+                                    }
+                                    Err(reply) => reply,
+                                }
+                            } else {
+                                Reply::Unavailable
+                            }
+                        }
+                        Ok(AppRequest::MediaPreviewStop {}) if !stopping => {
+                            let authenticated = matches!(
+                                authority.plan_request(
+                                    cred.pid.as_raw_nonzero().get() as u32,
+                                    cred.uid.as_raw(),
+                                    AppRequest::Query {},
+                                    boottime_ns()
+                                ),
+                                Decision::Immediate(Reply::Ok)
+                            );
+                            if !authenticated || !media.owns(connection.id) {
+                                Reply::Denied
+                            } else {
+                                match media.stop_preview(connection.id) {
+                                    Ok(until) => {
+                                        connection.deadline = until.saturating_add(1_000_000_000);
+                                        return true;
+                                    }
+                                    Err(reply) => reply,
+                                }
+                            }
+                        }
                         Ok(AppRequest::MediaStatus { offset }) if !stopping => {
                             let authenticated = matches!(
                                 authority.plan_request(
