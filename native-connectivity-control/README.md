@@ -9,9 +9,13 @@ applications or connect a Settings socket.
 `kernel::VirtualLink` is a Linux development backend for a fresh private virtual
 pair. It retains both namespaces, subscribes before creation, creates the pair
 with its own rtnetlink socket and observes its witnessed local lifetime and
-administrative-up state. Exclusive administration is a trusted supervisor
+administrative-up state. `set_connected` adds/removes only the fixed local
+192.0.2.1/30 profile and requires actual readback after its kernel ACK.
+`connected` is local configuration, not Internet reachability; `fact()` is cached.
+Exclusive administration is a trusted supervisor
 precondition. It cannot be established by checking names, interface indices or
-loopback-only inventory. Fixed IPv4 Connect/Disconnect is still unsupported.
+loopback-only inventory. A possibly dispatched failure fences this backend epoch
+without mutation retry or rollback.
 
 Nonblocking flags do not bound synchronous kernel rtnetlink dispatch. Run this
 component outside a responsive service Main; owned worker supervision and Stop
@@ -39,3 +43,9 @@ policy, actual kernel/packet, installed service, Settings and hardware gates
 separate. Existing NetworkManager and local-network-count services remain
 independent read-only paths. No Wi-Fi, DNS, Internet, Bluetooth or physical-device
 claim follows from this crate.
+
+The [actual host packet case](../docs/native-connectivity-packets.md) now passes
+two nonce roundtrips, fixture-principal withdrawal and explicit Disconnect with
+independent address removal and peer quiet. The [public fixture source](../tools/native-connectivity-control/)
+provides its controller/peer and setup contract. This remains separate from OS
+permissions, a real Settings window and an installed production service.

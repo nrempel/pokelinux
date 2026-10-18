@@ -33,9 +33,10 @@ assets, loader/diagnostic/recovery evidence and backend profile. Zero models
 are hardware-qualified.
 
 The [new connectivity-control backend](native-connectivity-control.md) currently
-qualifies only isolated host virtual-pair creation and shared owner-policy tests.
-Its exclusive namespace lifecycle contract does not establish physical/hotplug
-interface safety, Rust packet control, a matched Pixel kernel or another model.
+qualifies isolated host virtual-pair creation, fixed local IPv4 packets and shared
+owner-policy tests. Its exclusive namespace lifecycle contract does not establish
+physical/hotplug interface safety, a matched Pixel kernel or another model.
+The [packet proof](native-connectivity-packets.md) adds no qualified phone.
 
 ## Kernel choice
 

@@ -12,6 +12,7 @@ use rustix::{
 use std::{
     fs::File,
     io::IoSliceMut,
+    net::{IpAddr, Ipv4Addr},
     os::{fd::AsRawFd, unix::fs::MetadataExt},
     thread,
     time::Duration,
@@ -20,10 +21,10 @@ use std::{
 const SECOND: u64 = 1_000_000_000;
 const LOCAL_NAME: &str = "pklown0";
 const PEER_NAME: &str = "pklpeer0";
+const LOCAL_ADDRESS: Ipv4Addr = Ipv4Addr::new(192, 0, 2, 1);
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Error {
-    Unsupported,
     Deadline,
     Io(i32),
     InvalidData,
@@ -148,10 +149,98 @@ impl VirtualLink {
         before(until)
     }
 
+    /// One explicit fixed-profile choice. No address or interface selector comes
+    /// from an application. A possibly dispatched failure retires this epoch;
+    /// no rollback, compensating delete or implicit retry is attempted.
     pub fn set_connected(&mut self, connected: bool, until: u64) -> Result<Fact, Error> {
-        // Explicit refusing baseline for the next fixed IPv4 mutation test.
-        let _ = (connected, until, &self.mutator);
-        Err(Error::Unsupported)
+        if self.terminal {
+            return Err(Error::Uncertain);
+        }
+        command_deadline(until)?;
+        let observed = match self.read_profile(until) {
+            Ok(value) => value,
+            Err(error) => {
+                self.terminal = true;
+                return Err(error);
+            }
+        };
+        if observed.connected != self.last.connected {
+            self.terminal = true;
+            return Err(Error::Conflict);
+        }
+        if observed.connected == connected {
+            before(until)?;
+            self.last = observed;
+            return Ok(observed);
+        }
+        let mut body = vec![2, 30, 0, 0]; // ifaddrmsg: AF_INET, /30, global scope.
+        body.extend_from_slice(&self.last.ifindex.to_ne_bytes());
+        attribute(&mut body, 2, &LOCAL_ADDRESS.octets()); // IFA_LOCAL.
+        attribute(&mut body, 1, &LOCAL_ADDRESS.octets()); // IFA_ADDRESS, same local.
+        let (kind, flags) = if connected { (20, 0x605) } else { (21, 5) };
+        match self.mutator.exchange(kind, flags, &body, until) {
+            Ok(()) => {}
+            // exchange's Deadline is its last pre-send check. All later expiry
+            // is Uncertain. This path has not entered the mutating syscall.
+            Err(Error::Deadline) => return Err(Error::Deadline),
+            Err(_) => {
+                self.terminal = true;
+                return Err(Error::Uncertain);
+            }
+        }
+        // A kernel ACK alone is not our connection fact. Observe the actual
+        // address under the original deadline, on the continuously witnessed
+        // endpoint; the exclusive lifecycle contract remains necessary.
+        let result = self.read_profile(until);
+        match result {
+            Ok(value) if value.connected == connected && before(until).is_ok() => {
+                self.last = value;
+                Ok(value)
+            }
+            _ => {
+                self.terminal = true;
+                Err(Error::Uncertain)
+            }
+        }
+    }
+
+    fn read_profile(&mut self, until: u64) -> Result<Fact, Error> {
+        let snapshot = collect(&mut self.observer, until)?;
+        let local = snapshot
+            .links
+            .iter()
+            .find(|link| link.ifindex == self.last.ifindex)
+            .ok_or(Error::Conflict)?;
+        if snapshot.namespace != self.last.namespace
+            || snapshot.links.len() != 2
+            || local.name != LOCAL_NAME
+            || local.observed_lifetime != Some(self.last.lifetime)
+            || local.flags & 1 == 0
+        {
+            return Err(Error::Conflict);
+        }
+        let addresses: Vec<_> = local
+            .addresses
+            .iter()
+            .filter(|address| address.local.is_ipv4())
+            .collect();
+        let connected = match addresses.as_slice() {
+            [] => false,
+            [address]
+                if address.local == IpAddr::V4(LOCAL_ADDRESS)
+                    && address.peer.is_none()
+                    && address.prefix_len == 30
+                    && address.scope == 0 =>
+            {
+                true
+            }
+            _ => return Err(Error::Conflict),
+        };
+        before(until)?;
+        Ok(Fact {
+            connected,
+            ..self.last
+        })
     }
 }
 

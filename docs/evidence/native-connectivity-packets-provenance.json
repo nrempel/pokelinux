@@ -1,0 +1,336 @@
+{
+  "schema": 1,
+  "scope": "Native Rust fixed IPv4 mutation/readback and actual private virtual-link packets with literal trusted owner-principal withdrawal; no Settings or installed service.",
+  "foundation_commit": "38ff6ec4b29be5a99b33c2fdc79befaecb534e06",
+  "evidence_class": "Native x86_64 host Linux6.8.0-136-generic inside fresh exclusive containers; Cargo Debug test ELFs, features=[], profile.test=true; no ARM or matched Pixel kernel execution.",
+  "runtime_image": "sha256:b6818cecd61a5e378fecbf25d7b0979360cf29fda9ad0801b4a21e2054f69678",
+  "source_files": {
+    "native-connectivity-control/Cargo.lock": {
+      "bytes": 4311,
+      "sha256": "2fda555382ab67a174cdb9d5a6aabb0686b20f8721bbeccb15600b208db038d0"
+    },
+    "native-connectivity-control/Cargo.toml": {
+      "bytes": 321,
+      "sha256": "468816fe8ad957f1f1aecd598d4af7bcd8c7fc29b1b80c9681dbd157687c31b3"
+    },
+    "native-connectivity-control/src/kernel.rs": {
+      "bytes": 15348,
+      "sha256": "f6222510129febd4d6fe7da65cf6377412d1eba0452179b24d8095c0a8e95b2b"
+    },
+    "native-connectivity-control/src/lib.rs": {
+      "bytes": 203,
+      "sha256": "8d8590b66a278c6f8f61079a0f954d3a8b9cd3cc6654c515b6dace887b5c5071"
+    },
+    "native-connectivity-control/src/owner.rs": {
+      "bytes": 8673,
+      "sha256": "cf3824653bd0462105dcc2ff998af783d9b5ee1adebcf764fc35747dbe851830"
+    },
+    "native-connectivity-control/tests/kernel.rs": {
+      "bytes": 1548,
+      "sha256": "5f5ee08810f3c152659b6db29d250efc3e6ae19b34ab29cce924dd5f6f15beb3"
+    },
+    "native-connectivity-control/tests/owner.rs": {
+      "bytes": 10509,
+      "sha256": "1bf108bff31d78a7ccc66cbdc903cbe2dd4a1c1736c4ba8dd453166dcda6421a"
+    },
+    "native-connectivity-control/tests/packet_lifecycle.rs": {
+      "bytes": 12771,
+      "sha256": "7745ea84301fb9213c33faeb296fb8701a50e75391f0b8c0215ec2fe01bd89b6"
+    },
+    "native-network-state/Cargo.lock": {
+      "bytes": 4182,
+      "sha256": "12565a60a4784458741f00572db6e484e8c60887b11316de1d6b8b61457791ec"
+    },
+    "native-network-state/Cargo.toml": {
+      "bytes": 251,
+      "sha256": "7221e02625d30c473a2042f53734eae36bc941b86f5db3c0e449ea4e4a608a08"
+    },
+    "native-network-state/src/kernel_tests.rs": {
+      "bytes": 10209,
+      "sha256": "d0d6900ec8686cc3205f6520da8c8af6eaee5437c09ee6209deba8e0185be5d6"
+    },
+    "native-network-state/src/lib.rs": {
+      "bytes": 23830,
+      "sha256": "55b6e15060445e1949ccb4a10a27019be620356a327af6114be1938fd8f06ebf"
+    }
+  },
+  "published_measured_runtime_fixture": {
+    "controller.py": {
+      "bytes": 10437,
+      "sha256": "f7f862de5345f462a124deb7c9b2b0e760fe7a17fcf1e019b9a41e83028a832a"
+    },
+    "peer.py": {
+      "bytes": 10728,
+      "sha256": "531428dd32088887d0448f8576a1b25c7bdb7280812c9174c0dc2f079ef9ec91"
+    }
+  },
+  "canonical_helpers": {
+    "tools/native-installed-services/owned.py": {
+      "bytes": 12712,
+      "sha256": "5a738b9529a1a0e5d5b0bd20e27e2ec4244d4e61d7c8e0dad96fe1ffbef3c423"
+    },
+    "tools/native-audio-preview/closure.py": {
+      "bytes": 3596,
+      "sha256": "646e9cfd5f755b626fe8babfa26637ddac328ede05cdab75aa77cc51332d70d6"
+    }
+  },
+  "epochs": {
+    "compiled_component_RED": {
+      "private_epoch": "pokelinux-connectivity-packet-red-prepared-sol-1",
+      "command": {
+        "bytes": 6816,
+        "sha256": "a428d4fcee57a67e9ffb1887d61d660276ebc7d39315094fe33d0ea0405975c1"
+      },
+      "inside": {
+        "bytes": 3870,
+        "sha256": "a34f3d4e91920cbc8efc2b6fbd12950994b7511ea00b6a0ad664917ed8f196f8"
+      },
+      "inputs": {
+        "bytes": 2812,
+        "sha256": "66b0eea58d13b7796ea75887def496b49cf70a1aeeb370327b994b262acf3ecb"
+      },
+      "outer_receipt": {
+        "bytes": 34397,
+        "sha256": "f3a5e8e5682163392103e7cc178a971e85ce2f6331f32fd130aad9b5720845c5"
+      },
+      "build_result": {
+        "bytes": 4436,
+        "sha256": "288cf6179ae494b53178056b1a48fbd8d99e72defdf45ab93c92a01b8af2ff9e"
+      },
+      "controller_result": {
+        "bytes": 7495,
+        "sha256": "7710115b758009f1704dff2106678bc223c091216bc68a1774caf241ac1841d3"
+      },
+      "outer_aggregate_passed": false,
+      "controller_classification": "ACTUAL_FIXED_IPV4_CONNECT_UNSUPPORTED_RED",
+      "actual_Rust_test_exit": 101,
+      "actual_attach_exit": 1,
+      "actual_container_wait": 1,
+      "build_passed": true,
+      "controller_custody_qualified": true,
+      "behavior_RED_qualified": true,
+      "packet_GREEN": false,
+      "direct_waits_with_stdout_PIPE_EOF": {
+        "outer": 13,
+        "build": 1,
+        "controller": 3,
+        "provisioner": 1
+      },
+      "build_regular_stderr_closures": 1,
+      "build_wait_all_ECHILD": true,
+      "controller_wait_all_ECHILD": true,
+      "adopted_waits": 0,
+      "exact_owned_container_absent": true,
+      "same_daemon": true,
+      "inputs_unchanged": true,
+      "namespace_FDs_retained_through_all_waits_EOF": true,
+      "actual_test_ELF": {
+        "bytes": 2272736,
+        "sha256": "6e2f6f5e493b1046c82eb2895b72f30916b5da1aa6117d566b7d6c305ef3f52a",
+        "ELF_machine": 62
+      },
+      "separate_Root_component_qualification": {
+        "bytes": 1003,
+        "sha256": "976a21712bd3bf7aa9977fc97428e6a52cc3fed37e1bb3513f6dc5b69e51d5e3"
+      },
+      "failed_outer_checker_preserved": "Wrong receipt ordinal selected packet peer instead of Rust; independent exact-role binding qualifies actual component RED, not failed aggregate."
+    },
+    "current_GREEN": {
+      "private_epoch": "pokelinux-connectivity-packet-green-prepared-sol-1",
+      "command": {
+        "bytes": 7793,
+        "sha256": "931413bc4c5b5fb7ebb2f726ed55b5cfba16ba80a4c581db561bf0819643d6b4"
+      },
+      "inside": {
+        "bytes": 6291,
+        "sha256": "aca442adf189fc025f915d23d1476f8730f7406d13e26578db89aa2c08974d85"
+      },
+      "inputs": {
+        "bytes": 3405,
+        "sha256": "d76d1bd7509123b61bf3ef49845fd02a75321721a7280c38238ead9705f3aedc"
+      },
+      "outer_receipt": {
+        "bytes": 34737,
+        "sha256": "23fec6f4e5bc321f691cfd54586f0d06c693b22ac9fd39ad6dde758d544ee076"
+      },
+      "build_result": {
+        "bytes": 9608,
+        "sha256": "fe23399aff4be878c9b0ccf3f81cc31417191e35b972be8641cf5ac4631c5fbc"
+      },
+      "controller_result": {
+        "bytes": 12362,
+        "sha256": "3fc60bf23a96bd86930480e595a99d2ff74883150b290ad7714c5569c4c15ba1"
+      },
+      "outer_aggregate_passed": true,
+      "controller_classification": "ACTUAL_FIXED_IPV4_PACKET_LIFECYCLE_GREEN",
+      "actual_Rust_test_exit": 0,
+      "actual_attach_exit": 0,
+      "actual_container_wait": 0,
+      "build_passed": true,
+      "controller_custody_qualified": true,
+      "behavior_RED_qualified": false,
+      "packet_GREEN": true,
+      "direct_waits_with_stdout_PIPE_EOF": {
+        "outer": 13,
+        "build": 4,
+        "controller": 3,
+        "provisioner": 1
+      },
+      "build_regular_stderr_closures": 3,
+      "build_wait_all_ECHILD": true,
+      "controller_wait_all_ECHILD": true,
+      "adopted_waits": 0,
+      "exact_owned_container_absent": true,
+      "same_daemon": true,
+      "inputs_unchanged": true,
+      "namespace_FDs_retained_through_all_waits_EOF": true,
+      "actual_test_ELF": {
+        "bytes": 2289408,
+        "sha256": "32781678a4bbedb9dbac380aa8c21f92eea1555816a5a3472356af38b5672596",
+        "ELF_machine": 62
+      },
+      "Root_GREEN_review": {
+        "bytes": 1064,
+        "sha256": "18ed4ea6d0c06006ee8f8dca1f372f6e83882c277b01d302f9b2b4811b0cf5ff"
+      },
+      "locked_fmt_check": true,
+      "strict_Clippy_all_targets": true,
+      "owner_policy_groups_passed_caps0": 8
+    }
+  },
+  "format_bridge": {
+    "private_epoch": "pokelinux-connectivity-packet-format-prepared-sol-1",
+    "outer_receipt": {
+      "bytes": 25549,
+      "sha256": "23c5af825b65874458e0722197f6bdc3bad18a604e67b181ebfb47eb729cb51b"
+    },
+    "inner_result": {
+      "bytes": 11156,
+      "sha256": "fe1246457b707fe82a8e164529b6f263c7b4a7a71684022c8d1cd0b3d451f890"
+    },
+    "Root_copyback_review": {
+      "bytes": 3594,
+      "sha256": "54b8117538c6ca48c5ec3642646d4d0ae7735f7a38aeb6f5e9e9f92df5ad9ff7"
+    },
+    "rows": {
+      "src/lib.rs": {
+        "before": {
+          "bytes": 203,
+          "sha256": "8d8590b66a278c6f8f61079a0f954d3a8b9cd3cc6654c515b6dace887b5c5071"
+        },
+        "after": {
+          "bytes": 203,
+          "sha256": "8d8590b66a278c6f8f61079a0f954d3a8b9cd3cc6654c515b6dace887b5c5071"
+        },
+        "equivalence": "same tokens/string literals ignoring whitespace and commas outside strings, plus the exact listed single-expression match-arm wrappers",
+        "rustfmt_inserted_single_expression_arm_blocks": []
+      },
+      "src/kernel.rs": {
+        "before": {
+          "bytes": 14926,
+          "sha256": "065d491a71be6b81b493cb44c4bff2094f077b39ec6d229da4721e628276b639"
+        },
+        "after": {
+          "bytes": 15348,
+          "sha256": "f6222510129febd4d6fe7da65cf6377412d1eba0452179b24d8095c0a8e95b2b"
+        },
+        "equivalence": "same tokens/string literals ignoring whitespace and commas outside strings, plus the exact listed single-expression match-arm wrappers",
+        "rustfmt_inserted_single_expression_arm_blocks": [
+          "true"
+        ]
+      },
+      "src/owner.rs": {
+        "before": {
+          "bytes": 8673,
+          "sha256": "cf3824653bd0462105dcc2ff998af783d9b5ee1adebcf764fc35747dbe851830"
+        },
+        "after": {
+          "bytes": 8673,
+          "sha256": "cf3824653bd0462105dcc2ff998af783d9b5ee1adebcf764fc35747dbe851830"
+        },
+        "equivalence": "same tokens/string literals ignoring whitespace and commas outside strings, plus the exact listed single-expression match-arm wrappers",
+        "rustfmt_inserted_single_expression_arm_blocks": []
+      },
+      "tests/kernel.rs": {
+        "before": {
+          "bytes": 1548,
+          "sha256": "5f5ee08810f3c152659b6db29d250efc3e6ae19b34ab29cce924dd5f6f15beb3"
+        },
+        "after": {
+          "bytes": 1548,
+          "sha256": "5f5ee08810f3c152659b6db29d250efc3e6ae19b34ab29cce924dd5f6f15beb3"
+        },
+        "equivalence": "same tokens/string literals ignoring whitespace and commas outside strings, plus the exact listed single-expression match-arm wrappers",
+        "rustfmt_inserted_single_expression_arm_blocks": []
+      },
+      "tests/owner.rs": {
+        "before": {
+          "bytes": 10509,
+          "sha256": "1bf108bff31d78a7ccc66cbdc903cbe2dd4a1c1736c4ba8dd453166dcda6421a"
+        },
+        "after": {
+          "bytes": 10509,
+          "sha256": "1bf108bff31d78a7ccc66cbdc903cbe2dd4a1c1736c4ba8dd453166dcda6421a"
+        },
+        "equivalence": "same tokens/string literals ignoring whitespace and commas outside strings, plus the exact listed single-expression match-arm wrappers",
+        "rustfmt_inserted_single_expression_arm_blocks": []
+      },
+      "tests/packet_lifecycle.rs": {
+        "before": {
+          "bytes": 11529,
+          "sha256": "a761d8ad9d21e8e0575d9a3d5395549ade4433593a5b477897fd78367c678017"
+        },
+        "after": {
+          "bytes": 12771,
+          "sha256": "7745ea84301fb9213c33faeb296fb8701a50e75391f0b8c0215ec2fe01bd89b6"
+        },
+        "equivalence": "same tokens/string literals ignoring whitespace and commas outside strings, plus the exact listed single-expression match-arm wrappers",
+        "rustfmt_inserted_single_expression_arm_blocks": [
+          "thread::sleep(Duration::from_millis(2))",
+          "panic!(\"fresh disconnected UDP socket received an unexpected result: {other:?}\")"
+        ]
+      }
+    }
+  },
+  "actual_behavior": {
+    "one_Connect_and_one_Disconnect": true,
+    "same_retained_namespace_index_witnessed_lifetime": true,
+    "independent_Python_IPv4_readback_present_then_absent": true,
+    "IPv4_default_route_absent": true,
+    "UDP_nonce_roundtrips": 2,
+    "UDP_payload_bytes_each": 37,
+    "UDP_ACK_bytes_each": 41,
+    "second_roundtrip_after_literal_principal_withdrawal": true,
+    "fresh_literal_principal_for_Disconnect": true,
+    "fresh_loss_socket_actual_send_errno": 101,
+    "peer_quiet_original_window_ns": 800000000,
+    "peer_quiet_received_datagrams": 0,
+    "quiet_end_actual_EAGAIN": true,
+    "functional_original_cutoff_ns": 6000000000,
+    "functional_elapsed_ns": 842419364,
+    "original_action_cutoff_max_ns": 1000000000,
+    "packet_peer_and_supervisor_capabilities_zero": true,
+    "Rust_effective_permitted_bounding_capabilities": "NET_ADMIN only",
+    "real_OS_permission_or_Settings_window_executed": false,
+    "peer_actual_armed_to_final_EAGAIN_ns": 801237361,
+    "peer_original_deadline_minus_armed_ns": 799928737
+  },
+  "independent_review": {
+    "passed": true,
+    "scope": "Exact12 current/snapshot source rows, byte-exact RED/GREEN runtime fixture, actual8 owner+1 packet tests, two37B nonces and41B ACKs, independent readback, clock/quiet/caps bindings,21 direct waits/PIPE EOF and3 separate regular stderr closes; no service/Settings/OS permission/ARM/phone claim.",
+    "separate_kernel_correctness_review": "Single-shot mutation, post-send uncertainty fencing and targeting reviewed; actual negative backend controls remain open."
+  },
+  "claims_transitive_child_ownership": false,
+  "kernel_dispatch_wall_time_bounded_by_DONTWAIT": false,
+  "physical_phone_accessed": false,
+  "qualified_phone_models": 0,
+  "remaining_gates": [
+    "owned production worker; responsive Main snapshots/Stop and blocked-kernel recovery",
+    "actual backend deadline/uncertainty/conflict/lifetime-loss negative controls",
+    "real application authentication/permission and Settings control integration",
+    "installed deployment, restart/recovery and connection persistence policy",
+    "ARM64 and matched Pixel kernel/backend qualification",
+    "suspend/lock and all physical-phone behavior",
+    "Wi-Fi association/IP acquisition/DNS/Internet/Bluetooth/tethering/USB"
+  ]
+}

@@ -664,9 +664,11 @@ ACK/send, notifications, app read authority, power-loss and hardware remain open
 
 The [connectivity-control foundation](native-connectivity-control.md) now passes
 host owner-policy and actual virtual-pair creation tests after compiled RED.
-Rust fixed IPv4 Connect/Disconnect remains unsupported. The separate original
-`ip`/UDP prerequisite, read-only network counts and NetworkManager observation
-do not complete the connectivity row or its installed/Settings/hardware gates.
+The [subsequent Rust packet case](native-connectivity-packets.md) also passes
+fixed IPv4 Connect, nonce traffic after fixture-principal withdrawal, explicit
+Disconnect and independent address removal/quiet. Real permissions/Settings,
+service lifecycle, installed deployment and all hardware gates remain open;
+read-only counts and NetworkManager reference evidence remain separate.
 
 ## Completion matrix
 

@@ -17,16 +17,17 @@ separate. Do not equate registration, submission or API success with carrier
 acceptance, delivery, native call state or working physical hardware.
 
 The new [Rust connectivity-control component](native-connectivity-control.md)
-passes eight request-lifecycle groups and actual isolated kernel virtual-pair
-creation after compiled assertion RED. Fixed IPv4 Connect/Disconnect remains
-unsupported; the separate UDP fixture prerequisite is not Rust packet evidence.
-Settings, service supervision/deployment, ARM and all phone gates remain open.
+now [passes actual fixed IPv4 packet control](native-connectivity-packets.md): two nonce roundtrips,
+continued traffic after fixture-principal withdrawal, and explicit Disconnect
+with independent address removal and peer quiet. Eight owner groups also pass.
+This is host component evidence; real permissions/Settings, service supervision
+and deployment, ARM and all phone gates remain open.
 
-The next connectivity step is actual Rust fixed IPv4 mutation plus independent
-packet traffic, background-owner survival after fixture principal withdrawal,
-and fresh authorized explicit Disconnect. Keep that separate from real Settings
-and OS permission integration. Nonblocking rtnetlink dispatch can wait in the
-kernel; use an owned worker before claiming responsive Main snapshots or Stop.
+The next connectivity step is an owned service worker with responsive Main
+snapshots/Stop and supervised blocked-dispatch recovery, then real Settings and
+OS permission integration. Nonblocking rtnetlink dispatch can wait in the kernel;
+the packet/component pass does not qualify that service lifecycle. Preserve the
+failed RED outer aggregate separately from its qualified component assertion.
 
 The [native local-network status path](native-network-status.md) now passes both
 host and native ARM service-to-Rust-client-to-Settings integration. In the ARM VM,

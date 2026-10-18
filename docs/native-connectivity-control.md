@@ -8,7 +8,15 @@ This is a development backend, not Wi-Fi, Internet, Bluetooth or phone support.
 The existing NetworkManager adapter remains separate read-only reference code;
 NetworkManager is not selected as the final production connectivity owner.
 
-## Current checkpoint
+## Current packet checkpoint
+
+The [subsequent packet slice](native-connectivity-packets.md) now implements Rust
+fixed IPv4 add/remove and passes two real nonce roundtrips, fixture-principal
+withdrawal, explicit Disconnect and independent readback/quiet. The initial
+foundation below retains its own source/evidence cohort. Service worker, real
+permissions/Settings, installation, ARM and phone qualification remain open.
+
+## Earlier foundation checkpoint
 
 Eight compiled Rust owner groups and one actual virtual-pair creation test now
 pass on Harbour's native x86_64 Linux6.8.0-136-generic kernel. The same compiled
@@ -21,7 +29,7 @@ also pass. These are Debug test ELFs, not a deployed service or Release runtime.
 
 Rust subscribes before creating the pair, retains its witnessed local lifetime,
 sets the local link administratively UP and verifies that no IPv4 address was
-installed. `set_connected` still explicitly returns `Unsupported`. The owner
+installed. At this checkpoint, `set_connected` explicitly returned `Unsupported`. The owner
 accepts trusted in-process authorization decisions; no application socket or
 OS permission boundary is qualified by its deterministic tests.
 
