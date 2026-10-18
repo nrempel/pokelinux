@@ -187,8 +187,10 @@ its whole matching SDK of 498 files, then builds the five existing profile/captu
 layout helpers against it. Plugin dependencies are checked without claiming
 standalone resolution of symbols supplied later by Hyprland. The 393-package
 inventory, 50 selected Qt libraries/plugins and all selected frontend/archive
-bytes remain unchanged. Unrelated services are boot-masked in this authored
-slice; this adds no PID1 connectivity startup or coexistence qualification.
+bytes remain unchanged. The seven named background services, their audio target
+and session owner are boot-masked in this authored slice. Other image units are
+not claimed inactive; this adds no PID1 connectivity startup or coexistence
+qualification.
 
 The initial preparation fails before the guest body: the selected image invokes
 `/results/source/guest.py`, while the intended same-PID bootstrap was staged only

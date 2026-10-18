@@ -153,7 +153,6 @@
   "compiled_capture_source_and_XML_unchanged": true,
   "unchanged_packages": 393,
   "unchanged_selected_Qt_libraries_and_plugins": 50,
-  "unselected_services_boot_masked_and_inactive": true,
   "actual_direct_wait_and_stdout_EOF": {
     "host": 15,
     "boot": 3,
@@ -262,5 +261,18 @@
     "genuine Source/auth/full session Main",
     "Wi-Fi/Internet and matched Google kernel/backend integration",
     "all physical-phone behavior"
-  ]
+  ],
+  "declared_boot_masked_units": [
+    "pokelinux-battery.service",
+    "pokelinux-brightness.service",
+    "pokelinux-network-status.service",
+    "pokelinux-audio.service",
+    "pokelinux-audio-bus.service",
+    "pokelinux-audio-pipewire.service",
+    "pokelinux-audio-wireplumber.service",
+    "pokelinux-audio-backend.target",
+    "pokelinux-session-owner.service"
+  ],
+  "declared_units_inactive_verified": true,
+  "all_other_image_units_inactive_claimed": false
 }
