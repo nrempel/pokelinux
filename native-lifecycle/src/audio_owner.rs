@@ -1,5 +1,5 @@
 //! Safe, nonblocking protocol adapter to the existing sole Rust audio owner.
-use crate::audio::{Event, Intent, Provider, Route, State};
+use crate::audio::{Event, Intent, PreviewIntent, Provider, Route, State};
 use pokelinux_audio::client::{Client, Event as ClientEvent, SendOutcome, SubmitError};
 use rustix::net::{self, AddressFamily, SocketAddrUnix, SocketFlags, SocketType};
 use std::{
@@ -124,8 +124,11 @@ impl Provider for Owner {
             },
         )
     }
-    fn play(&mut self, intent: &Intent) -> io::Result<bool> {
-        let result = self.client.preview_play(&intent.route, intent.until_ns);
+    fn play(&mut self, preview: &PreviewIntent) -> io::Result<bool> {
+        let intent = &preview.route_intent;
+        let result = self
+            .client
+            .preview_play(&intent.route, preview.level, intent.until_ns);
         self.sent(
             result,
             Operation::Preview {

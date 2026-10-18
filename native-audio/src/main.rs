@@ -1,5 +1,5 @@
 use pokelinux_audio::pipewire::{MediaSource, ObservedLink, Profile, SourceIdentity};
-use pokelinux_audio::{Authority, Identity, PreviewState, Role};
+use pokelinux_audio::{Authority, Identity, PreviewLevel, PreviewState, Role};
 use pokelinux_power::clock::{BootClock, BootTime, Clock};
 use serde::Serialize;
 use serde_json::{Value, json};
@@ -20,6 +20,16 @@ struct Observation {
     revision: u64,
     available: bool,
     links: Vec<ObservedLink>,
+}
+
+fn preview_level(value: &Value) -> Result<PreviewLevel, &'static str> {
+    PreviewLevel::new(
+        value["level_percent"]
+            .as_u64()
+            .ok_or("invalid_preview_level")?,
+        value["muted"].as_bool().ok_or("invalid_preview_level")?,
+    )
+    .ok_or("invalid_preview_level")
 }
 
 fn preview_deadlines(now: BootTime, until_ns: u64) -> Result<(BootTime, BootTime), &'static str> {
@@ -333,9 +343,10 @@ impl State {
     }
     fn start_preview(&mut self, peer: Identity, value: &Value) -> Result<u64, &'static str> {
         let object = value.as_object().ok_or("invalid_request")?;
-        if object.len() != 4 || !object.contains_key("lease") {
+        if object.len() != 6 || !object.contains_key("lease") {
             return Err("invalid_request");
         }
+        let level = preview_level(value)?;
         let (start_until, work_until) = preview_deadlines(
             BootClock.now(),
             value["until_boottime_ns"]
@@ -376,7 +387,7 @@ impl State {
         if existing.is_none() {
             self.authority.can_acquire(peer, Role::Media)?;
         }
-        let process = pokelinux_audio::preview_process::Process::start(&source, work_until)
+        let process = pokelinux_audio::preview_process::Process::start(&source, level, work_until)
             .map_err(|_| "preview_start_failed")?;
         self.preview = Some(Preview {
             peer,

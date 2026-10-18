@@ -1,22 +1,17 @@
 # Finite native Sounds preview
 
-One registered/granted host actor client now plays the Rust-owned preview through
-original private PipeWire to independently measured virtual PCM. Host Rust and
-frontend components also pass. A separate same-session case now proves explicit
-Stop, producer retirement, full measured silence and one new explicit Play.
-Separate cases now pass natural completion and permission revocation, including
-quiet after regrant/explicit reconnect until a new Play. Native app-close/relaunch
-also passes retirement, full quiet and explicit reconnect before a new Play.
-Backend-worker loss and explicit recovery stay quiet until a new Play on the same
-app FD. A later unshown real QML consumer now joins route/Play/Stop/new-Play
-mouse input through the actual Rust client/actor/audio owner to independent PCM.
-The specified host preview gates pass. Earlier Sounds GUI/PCM results retain
-their own sources.
+Current next-preview level/mute passes host native checks, frontend C ABI/Qt
+components and real unshown QML input through the actor/audio owner to measured
+virtual PCM. Six real clicks select a route, 50%, Play, Stop, mute and Play again:
+half-level tone, full quiet after retirement, then a distinct live muted producer.
+Earlier full-level host and installed generic ARM results below retain their own
+sources; they do not qualify the new level feature on ARM or physical hardware.
 
 ## Ownership and model
 
-Rust generates fixed four-second 440 Hz mono F32LE PCM at 48 kHz. Applications
-supply no file, PCM, executable, node or frequency. The lifecycle actor checks
+Rust generates fixed four-second 440 Hz mono F32LE PCM at 48 kHz, scaled once
+from an immutable per-Play level/mute pair. Applications supply no file, PCM,
+executable, node or frequency. The lifecycle actor checks
 current app generation, MediaRoute permission and foreground authority before
 Play. Qt retains thin QObject/QML presentation, the shared Omarchy theme and the
 credentialed socket edge.
@@ -36,8 +31,11 @@ and implemented in the [exact 1.4.2 adapter](https://github.com/PipeWire/pipewir
 State requires exactly seven fields: `connected`, `available`, `pending`,
 `requested`, `applied`, `policy_settled` and `preview`; old five-field replies are
 refused. Preview states are `idle`, `starting`, `playing`, `retiring`, `completed`
-and `failed`. The explicit 15-function C ABI includes Play/Stop, without earlier-ABI
-compatibility. Historical thirteen-function executions retain their original scope.
+and `failed`. The current 16-function C ABI adds atomic
+`pr_sounds_client_preview_level_v1`; its 5616-byte View appends selected percent,
+mute, adjustment availability and explicit padding. Earlier 15-function preview
+and 13-function client executions retain their original scope; old ABI/wire shapes
+have no compatibility fallback.
 
 Play is never queued or replayed. Its original absolute `CLOCK_BOOTTIME` deadline
 passes through app, actor and audio owner; preparation only reduces remaining
@@ -54,7 +52,43 @@ Neither alone establishes acoustic silence. Whole-service Stop retains its
 original bounded drain and aborts instead of detaching unfinished owners.
 Independent virtual PCM now separately qualifies explicit preview Stop and quiet.
 
-## Evidence and remaining gates
+## Current level evidence
+
+Rust owns a 0–100% choice, initially 100%/unmuted. The atomic setter changes no IPC,
+request or deadline and is allowed offline or during read-only status. A pending
+connection returns Busy; selected values survive connection changes for that client
+lifetime. It refuses pending effects, queued
+intent or Starting/Playing/Retiring. Play freezes route, level, mute and original
+deadline; reprepare only reduces TTL. Actor and Main require integer
+`level_percent` and boolean `muted`, validate 0–100 and retain immutable gain.
+This controls the next authored preview, with no global mixer or call/capture gain.
+Qt only presents 50%, 100% and Rust-driven Mute/Muted controls.
+
+A healthy granted app's literal valid50 request first returns denied; both 24,000-
+frame sink windows are zero and the compiled assertion exits 101 after cleanup.
+The same frozen client/controller/observer/oracle then passes: speaker RMS
+0.08838669987845607, peak 0.12499618530273438 and 440 Hz energy fraction
+0.9991972100720329; all 24,000 earpiece samples are zero. Current native checks
+pass 46 audio tests (one existing ignored), 11 authority and seven input tests,
+fmt and strict Clippy. The 356-member x86-64 frontend archive has exactly 16 APIs;
+all seven normal Qt targets pass link/loader checks, six C ABI/seven schema/ten
+preview/two cleanup groups, 31 Qt behaviors and unshown level/mute bindings.
+
+The current [public test](../tools/native-audio-preview/) passes six native mouse
+pairs through the same app FD: one route, two Plays and one Stop. Its 144,000
+measured frames share one original six-second cutoff. Half-level speaker tone
+and quiet earpiece precede Stop; actual producer/graph retirement precedes full
+paired quiet. New muted Play stays quiet with a distinct live attributed producer,
+active selected link and public Playing state throughout capture. Silence alone
+supplies no muted-Play proof. The final assertion exits 0 after cleanup/ECHILD.
+All 56 direct waits/75 real PIPE EOFs pass; one adopted wait and four regular
+stderr closures remain separate, without individual log-close timestamps.
+Preserved style-check and build-wrapper/file-limit failures and exact hashes are
+in [level provenance](evidence/native-preview-level-provenance.json). New-level
+ARM, normal app main/window, display/capture, live-theme, physical audio and phone
+gates remain open.
+
+## Earlier full-level evidence
 
 | Boundary | Qualified result |
 | --- | --- |
@@ -73,10 +107,10 @@ The same producer is alive before and after capture; its parentage, server
 identity, graph cookie, serials and raw format match. The positive assertion, audio Main and
 actor exit 0. One source observation at 65.461018 ms is not a latency guarantee.
 
-Host Rust passes 40 audio tests (one existing ignored), nine media-authority and
-six media-input tests, formatting and strict Clippy. The current port-config
+That host Rust cohort passes 40 audio tests (one existing ignored), nine media-
+authority and six media-input tests, formatting and strict Clippy. Its port-config
 provider separately repeats all 40 audio tests and checks. Normal Release
-builds/loaders pass; Sounds has 356 x86-64 archive members and exactly 15 APIs.
+builds/loaders pass; that Sounds build has 356 x86-64 archive members and exactly 15 APIs.
 Seven frontend targets each link the selected archive once. Preserved failed
 epochs, assertion-preserving bridges and independent raw recomputation remain in
 [hash-only provenance](evidence/native-sounds-preview-provenance.json).
@@ -118,10 +152,10 @@ visual discovery and layout polishing precede success; earlier object-lookup and
 zero-click setup failures remain separate, without a production RED/repair claim.
 
 Raw windows are independently recomputed; actual waits, PIPE EOF, regular-log
-closes and adopted-child waits retain separate provenance. These cases change no
-production code. The next gate is the installed ARM tracer. A separate Rust 1.98.1
-crossbuild produces current audio/launcher plus three fixture binaries as
-AArch64 ELF and a 452-member/15-API Sounds archive.
+closes and adopted-child waits retain separate provenance. Those added cases
+change no production code. Their separate Rust 1.98.1 crossbuild produces audio/
+launcher plus three fixture binaries as AArch64 ELF and a 452-member/15-API Sounds
+archive.
 
 Later generic Arch ARM/QEMU preparation passes all five current Rust loaders and
 a native Qt6.12 consumer build/link/loader check with 15 Sounds and 11 appearance
@@ -152,8 +186,8 @@ actual waits, 81 real PIPE EOFs, QEMU exit 0 and outer closure pass separately.
 Regular stderr files and DEVNULL streams retain separate accounting. No feature C++/Rust
 change supplies this result.
 
-The [repository test entry and build commands](../tools/native-audio-preview/)
-now pass build→run on the host: locked/offline Rust and explicit-archive Qt
+The earlier [repository test entry and build commands](../tools/native-audio-preview/)
+pass build→run on the host: locked/offline Rust and explicit-archive Qt
 builds supply the three new test ELFs executed by actual public `run.py`. Four
 real clicks and 144,000 measured PCM frames pass under one original six-second
 cutoff; the native assertion exits 0 only after cleanup. Actual 58 direct waits/

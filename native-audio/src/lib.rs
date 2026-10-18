@@ -4,6 +4,34 @@ mod fixed_pcm;
 pub mod pipewire;
 pub mod preview_process;
 
+/// Immutable digital gain for one authored preview; never a global mixer level.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct PreviewLevel {
+    percent: u8,
+    muted: bool,
+}
+impl PreviewLevel {
+    pub fn new(percent: u64, muted: bool) -> Option<Self> {
+        (percent <= 100).then_some(Self {
+            percent: percent as u8,
+            muted,
+        })
+    }
+    pub fn percent(self) -> u8 {
+        self.percent
+    }
+    pub fn muted(self) -> bool {
+        self.muted
+    }
+    pub(crate) fn gain(self) -> f32 {
+        if self.muted {
+            0.0
+        } else {
+            f32::from(self.percent) / 100.0
+        }
+    }
+}
+
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum PreviewState {
@@ -196,3 +224,7 @@ impl Authority {
 pub fn validate_service_uids(owner: u32, call: u32, app: u32) -> bool {
     owner != call && owner != app && call != app
 }
+
+#[cfg(test)]
+#[path = "preview_level_tests.rs"]
+mod preview_level_tests;

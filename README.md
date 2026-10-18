@@ -14,9 +14,9 @@ A fresh native prepared run with this whole engine now passes all four app/audio
 groups and eight PCM windows/192,000 measured frames. Unedited Pixel10 captures
 and the [earlier queue-only result](docs/native-sounds-rust-queue.md) retain their
 separate evidence. Cold installed startup and ARM remain open.
-The [finite Play/Stop preview](docs/native-sounds-preview.md) now passes one real
-host actor Play through the Rust-owned producer to selected-speaker virtual PCM,
-plus host Rust/frontend components. A separate same-session case now proves
+The earlier full-level [finite Play/Stop preview](docs/native-sounds-preview.md)
+passes one real host actor Play through the Rust-owned producer to selected-
+speaker virtual PCM, plus host Rust/frontend components. A separate same-session case now proves
 explicit Stop, producer retirement, full measured silence and one new explicit
 Play. Separate cases now pass natural completion and permission revocation;
 regrant plus one explicit Reconnect stays quiet until a new Play. A native
@@ -30,8 +30,18 @@ installation/export. A second cold generic ARM run now passes PID1 autostart,
 current schema, real QML/PCM and full service-Stop cleanup/final assertion. The
 first aggregate failure remains preserved. The [repository test entry](tools/native-audio-preview/)
 now passes host QML/PCM with the three fresh outputs of its public Cargo/CMake
-builds. The earlier entry retains its prebuilt provider lineage. Normal app
-windows and phone gates remain open.
+builds. The earlier entry retains its prebuilt provider lineage.
+
+The current next-preview level is Rust-selected (0–100%, initially 100%, unmuted).
+An atomic local choice sends no IPC; Play freezes level/mute with its original
+deadline. The same frozen valid50 request now passes its earlier denied/quiet
+behavioral RED with measured half-amplitude speaker PCM. Native Rust checks,
+the 16-API frontend and all seven Qt targets pass. The current public test also
+passes six real QML clicks and 144,000 frames under one original six-second
+cutoff: half-level tone, Stop/quiet, then muted Play with a distinct live producer.
+[Level evidence](docs/evidence/native-preview-level-provenance.json) is host-only;
+the earlier installed ARM/full-level cohort remains separate. New-level ARM,
+normal app windows, physical audio and phone gates remain open.
 
 The [Messages request and model engine](docs/native-messages-rust-client.md) now
 also runs in Rust. An earlier cohort with the pre-port appearance client builds

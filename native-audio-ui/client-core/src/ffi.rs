@@ -172,6 +172,19 @@ pub unsafe extern "C" fn pr_sounds_client_view_v1(client: *const Client, out: *m
     Code::Ok as i32
 }
 
+/// Atomically select next-preview level/mute locally, without I/O or deadline changes.
+/// # Safety
+/// client is an exclusive live handle on its single caller thread.
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn pr_sounds_client_preview_level_v1(
+    client: *mut Client,
+    percent: u32,
+    muted: u32,
+) -> i32 {
+    // SAFETY: caller owns the declared live exclusive handle.
+    unsafe { client.as_mut() }.map_or(Code::Invalid, |c| c.preview_level(percent, muted)) as i32
+}
+
 /// Explicit Play input; never queues behind another request or opens a socket.
 /// # Safety
 /// client is an exclusive live handle on its single caller thread.

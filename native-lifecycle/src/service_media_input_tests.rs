@@ -21,6 +21,8 @@ struct ObservedProvider {
     revoked: usize,
     sent: Option<u64>,
     played: Option<u64>,
+    preview_intent: Option<audio::PreviewIntent>,
+    preview_calls: usize,
     stopped: Option<u64>,
 }
 impl Provider for ObservedProvider {
@@ -44,8 +46,10 @@ impl Provider for ObservedProvider {
         self.sent = Some(intent.id);
         Ok(true)
     }
-    fn play(&mut self, intent: &audio::Intent) -> io::Result<bool> {
-        self.played = Some(intent.id);
+    fn play(&mut self, intent: &audio::PreviewIntent) -> io::Result<bool> {
+        self.played = Some(intent.route_intent.id);
+        self.preview_intent = Some(intent.clone());
+        self.preview_calls += 1;
         Ok(true)
     }
     fn stop_preview(&mut self, id: u64, _: u64) -> io::Result<bool> {
@@ -120,6 +124,8 @@ impl Ready {
             revoked: 0,
             sent: None,
             played: None,
+            preview_intent: None,
+            preview_calls: 0,
             stopped: None,
         };
         let mut media = Session::default();
@@ -272,6 +278,8 @@ fn preview_actual_request_half_close_cancels_before_dispatch() {
                 route: "speaker".into(),
                 ttl_ms: 1000,
                 until_boottime_ns: boottime_ns() + 900_000_000,
+                level_percent: 50,
+                muted: false,
             },
             &mut c.authority,
             &c.provider,
@@ -318,4 +326,49 @@ fn preview_stop_is_owned_cleanup_and_does_not_publish_a_new_play_approval() {
             .is_none()
     );
     assert_eq!(c.provider.revoked, 0);
+}
+
+#[test]
+fn preview_dispatch_preserves_admitted_level_route_and_absolute_deadline() {
+    for muted in [false, true] {
+        let mut c = Ready::new();
+        c.media.published(CONNECTION, &c.authority, &mut c.provider);
+        let until = boottime_ns() + 900_000_000;
+        c.media
+            .begin_preview(
+                CONNECTION,
+                std::process::id(),
+                11042,
+                audio::PreviewRequest {
+                    route: "speaker".into(),
+                    ttl_ms: 1000,
+                    until_boottime_ns: until,
+                    level_percent: 50,
+                    muted,
+                },
+                &mut c.authority,
+                &c.provider,
+            )
+            .unwrap();
+        c.check().unwrap();
+        assert!(
+            c.media
+                .drive(CONNECTION, &c.authority, &mut c.provider)
+                .is_none()
+        );
+        let dispatched = c.provider.preview_intent.as_ref().unwrap();
+        assert_eq!(
+            dispatched.level,
+            audio::PreviewLevel::new(50, muted).unwrap()
+        );
+        assert_eq!(dispatched.route_intent.route, "speaker");
+        assert_eq!(dispatched.route_intent.until_ns, until);
+        assert_eq!(c.provider.preview_calls, 1);
+        assert!(
+            c.media
+                .drive(CONNECTION, &c.authority, &mut c.provider)
+                .is_none()
+        );
+        assert_eq!(c.provider.preview_calls, 1);
+    }
 }

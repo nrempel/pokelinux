@@ -17,6 +17,9 @@ class AudioClient final : public QObject {
  Q_PROPERTY(bool canReconnect READ canReconnect NOTIFY changed)
  Q_PROPERTY(bool canPlay READ canPlay NOTIFY changed)
  Q_PROPERTY(bool canStop READ canStop NOTIFY changed)
+ Q_PROPERTY(int previewLevelPercent READ previewLevelPercent NOTIFY changed)
+ Q_PROPERTY(bool previewMuted READ previewMuted NOTIFY changed)
+ Q_PROPERTY(bool canAdjustPreview READ canAdjustPreview NOTIFY changed)
 public:
  AudioClient(QString path, uid_t ownerUid, QObject *parent=nullptr);
  ~AudioClient() override;
@@ -28,6 +31,10 @@ public:
  bool canReconnect() const;
  bool canPlay() const;
  bool canStop() const;
+ int previewLevelPercent() const;
+ bool previewMuted() const;
+ bool canAdjustPreview() const;
+ Q_INVOKABLE void setPreviewLevel(int percent, bool muted);
  Q_INVOKABLE void reconnect();
  Q_INVOKABLE void playPreview();
  Q_INVOKABLE void stopPreview();

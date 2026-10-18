@@ -52,8 +52,8 @@ ownership, modes, inode and mtime. All197 direct waits/merged PIPE EOFs close
 within original bounds. This is an installed development image, with no normal
 app main/window or graphical phone-session claim.
 
-The [finite Play/Stop Sounds preview](native-sounds-preview.md) now passes one
-registered/granted host actor Play through the normal Rust-owned producer to
+The earlier full-level [finite Play/Stop Sounds preview](native-sounds-preview.md)
+passes one registered/granted host actor Play through the normal Rust-owned producer to
 original private PipeWire: 24,000 frames per sink contain 440 Hz speaker content
 and exactly zero earpiece samples. Earlier zero-PCM runs and the fixed
 `unsupported_channel_layout` diagnostic remain preserved; creation-time producer
@@ -94,8 +94,25 @@ now passes on the host with all three fresh outputs of its passing public
 Cargo/CMake builds: four real clicks and 144,000 PCM frames under one original
 six-second cutoff, final assertion 0 after cleanup. The earlier prebuilt entry
 retains its own mapping. The added C++ belongs to the test fixture; production
-policy remains Rust. Proceed to preview volume, with no further host/ARM
-combination or window/capture campaign.
+policy remains Rust. Those full-level host and installed ARM cohorts retain
+their original providers.
+
+Current preview level/mute is Rust-owned, local and atomic; default 100%/unmuted,
+no choice IPC, and each Play freezes its pair and original deadline. Actor and
+Main require typed level/mute fields and scale only that preview's fixed PCM.
+The frozen valid50 request progresses from actual denied/48,000 quiet-frame RED
+to measured half-amplitude GREEN. Current native QA passes 46 audio tests (one
+existing ignored), 11 authority and seven input tests, fmt and strict Clippy.
+The 16-API/5616-byte-View frontend passes Rust checks and all seven Qt targets,
+including 31 Qt behaviors and unshown level/mute bindings. The current public
+entry passes six real mouse pairs and 144,000 PCM frames under one original six-
+second cutoff: half-level tone, actual Stop/retirement and full quiet, then muted
+Play with a distinct live attributed producer and active link. Its final native
+assertion exits 0 after cleanup. Failed check/build preparations remain in
+[hash-only level provenance](evidence/native-preview-level-provenance.json).
+No new-level ARM, normal-window, capture or physical-audio result follows. Next,
+carry this same feature through one installed generic ARM tracer. Do not expand
+host/ARM combinations or resume a window/capture campaign.
 The private Messages read-provider remains parked at compiled assertion RED,
 with no qualified GREEN or deployed join; do not retry it. Normal ARM windows,
 cold graphical startup and all matched-device gates remain open.

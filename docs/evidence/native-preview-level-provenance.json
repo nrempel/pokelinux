@@ -1,0 +1,216 @@
+{
+  "schema": 1,
+  "boundary": "Rust-owned next-preview level/mute: host original-code components and actual unshown QML input through real lifecycle/audio owners to original PipeWire1.4.2 virtual PCM",
+  "status": "qualified host GREEN after executed valid50 behavioral RED; earlier full-level host/installed generic ARM cohorts remain separate",
+  "pre_feature_commit": "9983efa6b22a0f2a009f93fda981f87bea5190bf",
+  "contract": {
+    "selected_percent_range": [
+      0,
+      100
+    ],
+    "default_percent": 100,
+    "default_muted": false,
+    "atomic_local_choice_no_IPC": true,
+    "readonly_status_adjustment_allowed": true,
+    "pending_effect_queued_intent_active_preview_refuse_adjustment": true,
+    "choice_retained_for_client_lifetime": true,
+    "Play_freezes_level_mute_route_original_deadline": true,
+    "reprepare_cannot_renew_deadline": true,
+    "Actor_and_Main_require_typed_fields": true,
+    "old_wire_ABI_compatibility": false,
+    "current_Sounds_C_APIs": 16,
+    "current_View_bytes": 5616
+  },
+  "same_frozen_raw_valid50": {
+    "source_sha256": {
+      "level-client.rs": "6d1400027eb51b229770476b5151931047baab7d87535bb37f1601159c5dff96",
+      "controller.py": "2079c2de7adbc2981325366fbb3c0d77d09a1fb8f151368cdd7549a0d04dda33",
+      "pcm_observer.py": "024aeacb55dc089f2b2e698ca3159bfb8a2f7d58ecbd5863a92109c363029694",
+      "ORACLES.json": "245818369d86f054b23b3911cc0ff354a4ec5bce7046b476338328df038ed647",
+      "phase.py": "e968c40f97e0ab0c4b9d28fa424c7031d4a99b398f97416f6b3215c51b04285e",
+      "actor.rs": "d76250231f058d7cb9bc7e11d4037be51df67b7d3b9303e9766de331a02998ed"
+    },
+    "red": {
+      "review_sha256": "f9011a5d973d55a0a1b3b1a218fdd66665aba9ac8a28c62e64d4019f3f9af2a4",
+      "receipt_sha256": "9bc14bab6b4dba139cf7260da634fbf4fdd0cda13ac8d887f8c3fea33cf08f87",
+      "aggregate_exit": 1,
+      "compiled_assertion_exit_after_cleanup": 101,
+      "healthy_granted_current_catalog": true,
+      "Play_reply": "denied",
+      "measured_frames_each": 24000,
+      "both_windows_all_zero": true,
+      "raw_sha256_each": "ac8f5613c4b176d380009fa1306c49a027644dba38b9703ed102634c60f8d5ff",
+      "direct_waits": 117,
+      "real_PIPE_EOF": 198,
+      "observer_direct_waits": 87,
+      "observer_real_PIPE_EOF": 168,
+      "Scope_direct_waits_and_merged_PIPE_EOF": 30,
+      "regular_stderr_closes_separate": 4,
+      "DEVNULL_stdout_streams_separate": 2,
+      "adopted_actual_waits_separate": 0
+    },
+    "green": {
+      "review_sha256": "544d68d59ea61d6313a8672907e7dab32e0874f04a808ae183e3cc8121410a48",
+      "receipt_sha256": "5f7ce974ec9e8cada8ee64ff99cd6f6b8441e0c3c56354c7cf838e8a81861c24",
+      "aggregate_exit": 0,
+      "compiled_assertion_exit_after_cleanup": 0,
+      "Play_reply": "media_preview/starting",
+      "measured_frames_each": 24000,
+      "speaker": {
+        "sha256": "9a00d3cf55b6ec449dfaa6df005f951c3acd3075f4fa04ce47aa5699ce80af15",
+        "frames": 24000,
+        "rms": 0.08838669987845607,
+        "peak": 0.12499618530273438,
+        "energy_fraction_440": 0.9991972100720329
+      },
+      "earpiece": {
+        "sha256": "ac8f5613c4b176d380009fa1306c49a027644dba38b9703ed102634c60f8d5ff",
+        "frames": 24000,
+        "rms": 0,
+        "peak": 0
+      },
+      "direct_waits": 42,
+      "real_PIPE_EOF": 48,
+      "observer_direct_waits": 12,
+      "observer_real_PIPE_EOF": 18,
+      "Scope_direct_waits_and_merged_PIPE_EOF": 30,
+      "regular_stderr_closes_separate": 4,
+      "DEVNULL_stdout_streams_separate": 2,
+      "adopted_actual_waits_separate": [
+        {
+          "returncode": -9
+        }
+      ]
+    },
+    "frozen_source_bytes_equal_red_green": true,
+    "independent_raw_recomputation": true,
+    "actual_cleanup_and_input_closure_qualified_both": true
+  },
+  "native_checks": {
+    "review_sha256": "b8a0b0ac1b472698bbbec49853d860023ea3371933c0b5f213b831e19a9dabf9",
+    "audio_passed": 46,
+    "audio_existing_ignored": 1,
+    "authority_passed": 11,
+    "media_input_passed": 7,
+    "fmt_strict_Clippy_and_normal_three_provider_builds": true,
+    "normal_provider_sha256": {
+      "pokelinux-audio": "78f60015116711ac3ab7bf46f61694fdf88ef28b5b114e38ac3c2ac659254c3c",
+      "lifecycle-launcher": "0abaee695a9b5be535a93d2da5c108035af42139ebd1b7caabaf914da36a80b6",
+      "preview-actor": "88ee7583eb637a49ba654cff4810c64a347e814b869e04aea214b81518e68f61"
+    },
+    "direct_waits_and_merged_PIPE_EOF": 34,
+    "regular_stderr_closes_separate": 10,
+    "adopted_actual_waits_separate": [
+      {
+        "returncode": -9
+      }
+    ]
+  },
+  "frontend": {
+    "Rust_review_sha256": "d6b0d69be0a10ebdfeddaea5d6de26fb4912f3c8df5f3f4a5401b1d8f2662528",
+    "archive_sha256": "9096ed6b578bc8795913ca61daef19d0eb37e0f4e90080024f3e463761226a3e",
+    "archive_bytes": 23931202,
+    "x86_64_ELF_members": 356,
+    "Sounds_strong_APIs": 16,
+    "View_bytes": 5616,
+    "fmt_strict_Clippy": true,
+    "Qt_review_sha256": "b5d667fee503827a7f37bfb5ebc8f923a01a96e103f7424c8c96432eeded48ca",
+    "normal_CMake_targets_link_loader_passed": 7,
+    "Sounds_and_appearance_strong_APIs": 27,
+    "C_ABI_groups": {
+      "sounds-client-test": 6,
+      "sounds-state-schema-test": 7,
+      "sounds-preview-test": 10,
+      "sounds-preview-cleanup-test": 2
+    },
+    "Qt_business_cases": 31,
+    "Qt_incidents_including_setup_cleanup": 33,
+    "unshown_QML_incidents_including_setup_cleanup": 6,
+    "normal_app_main_window_or_component_Play_executed": false,
+    "header_comment_only_publication_clarification": {
+      "tested_header_sha256": "2bb9942e3a7d8f3ed121fe89048b0a14a76eb47bf8a987b8e8229cc9ec93c6b6",
+      "published_header_sha256": "a05fbaff533dad76428de8640d7b4373ed583974d0967dfc344daa86d7957b36",
+      "C_declarations_and_layout_byte_equal_after_comment_removal": true,
+      "clarification": "Pending connection refuses adjustment; selected values survive connection changes. No ABI or implementation change."
+    }
+  },
+  "public_entry": {
+    "review_sha256": "2f1e0aba8ac0f781dec1004887cbd2b45195ca500195e4114d67232ec9842697",
+    "receipt_sha256": "99ee8392c3c1a4db9f512a5fac1e7009cf72302f43085cc91370151c8d83b928",
+    "controller_result_sha256": "5011ebfced2bb53ddbc8d5b1e410ac982b7940b6b2682724c59df43fbdf95cf3",
+    "PCM_result_sha256": "ffc286dcd57de8b3bfcfd38872674a0fea4cbd0366d65a8c84f196ecd1921260",
+    "actual_mousepairs": 6,
+    "same_app_FD_actor_sends": 17,
+    "effects": {
+      "route": 1,
+      "plays": 2,
+      "stops": 1
+    },
+    "original_case_seconds": 6,
+    "measured_frames": 144000,
+    "speaker_half_RMS": 0.08838669987845607,
+    "speaker_half_peak": 0.12499618530273438,
+    "half_speaker_raw_sha256": "9a00d3cf55b6ec449dfaa6df005f951c3acd3075f4fa04ce47aa5699ce80af15",
+    "five_quiet_windows_raw_sha256_each": "ac8f5613c4b176d380009fa1306c49a027644dba38b9703ed102634c60f8d5ff",
+    "five_quiet_windows_measured_samples_all_zero": true,
+    "Stop_requires_actual_producer_graph_retirement": true,
+    "new_muted_Play_distinct_live_attributed_producer_active_link_public_Playing_through_full_capture": true,
+    "independent_raw_recomputation": true,
+    "compiled_assertion_exit_after_cleanup": 0,
+    "direct_waits": 56,
+    "real_PIPE_EOF": 75,
+    "Scope_direct_waits_and_merged_PIPE_EOF": 31,
+    "observer_direct_waits": 25,
+    "observer_real_PIPE_EOF": 44,
+    "adopted_actual_waits_separate": [
+      {
+        "returncode": -9
+      }
+    ],
+    "regular_stderr_closes_separate": 4,
+    "individual_regular_log_close_timestamps_recorded": false,
+    "cleanup_ECHILD_inputs_and_provider_closure_qualified": true,
+    "test_provider_builds": {
+      "preview-qml-assert": {
+        "bytes": 610304,
+        "sha256": "39bf71d15af2753dde11f982748955940266f602bf6434b104ac23c5d98aba75",
+        "build_review_sha256": "2a179db33a431946d6237e2a9ace17bf5967058c203b0de67839a98a22996cdf",
+        "source_rows": 82
+      },
+      "sounds-qml-input-client": {
+        "bytes": 6874576,
+        "sha256": "4af34603572e1f9533558f51fab19625c7592a014a9b7ba2acb171835d1654c1",
+        "build_review_sha256": "a18e1a0fe999dad123f40891e7ceca04a41afb61fb761d167599caa1add93069",
+        "source_rows": 22,
+        "matching_Sounds_archive_sha256": "9096ed6b578bc8795913ca61daef19d0eb37e0f4e90080024f3e463761226a3e"
+      },
+      "normal_three_provider_build_review_sha256": "b8a0b0ac1b472698bbbec49853d860023ea3371933c0b5f213b831e19a9dabf9"
+    }
+  },
+  "preserved_failed_preparations": [
+    {
+      "boundary": "native checks first epoch",
+      "receipt_sha256": "8bab081019d72dd7f289e0c3d702d26a6d995d5b2e3eb7889828e8e0d2947440",
+      "outcome": "strict Clippy rejects chunks_exact in a new test helper after passing behavior tests; helper-only style successor preserves production behavior"
+    },
+    {
+      "boundary": "frontend Rust first epoch",
+      "receipt_sha256": "f5cb840701f4adc7a95fd9f350b4d9f98d787adaaba3fb869434d0bfb3690811",
+      "outcome": "wrapper JSON decode failure; not behavior evidence"
+    },
+    {
+      "boundary": "frontend Rust second epoch",
+      "receipt_sha256": "1f5662a622686db2c534cd573eeb47018a2c16d39fb18debedaf137ea327b644",
+      "outcome": "4MiB RLIMIT_FSIZE causes compiler SIG25; third epoch uses established64MiB file limit with unchanged code/deadlines"
+    }
+  ],
+  "remaining_gates": [
+    "new-level ARM build/execution",
+    "normal app main/window",
+    "Pixel display profile and capture",
+    "live theme switching",
+    "physical audio",
+    "full phone"
+  ],
+  "no_physical_phone_accessed": true
+}

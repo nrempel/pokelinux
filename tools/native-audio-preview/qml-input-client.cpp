@@ -131,7 +131,7 @@ class Component final : public QObject {
     std::unique_ptr<AudioClient> audio;
     std::unique_ptr<QQuickView> view;
     std::unique_ptr<QObject> theme;
-    QQuickItem *statusItem = nullptr;
+    QQuickItem *statusItem = nullptr, *levelItem = nullptr, *level50Item = nullptr, *level100Item = nullptr, *muteItem = nullptr;
     std::unique_ptr<QSocketNotifier> acceptNotice, readNotice, writeNotice;
     QTimer controlWatch;
     int listener = -1, control = -1;
@@ -141,7 +141,7 @@ class Component final : public QObject {
     QString diagnosticOperation;
     QJsonObject observedClick;
     bool controlTrusted = false;
-    bool routeClicked = false, stopClicked = false, initialized = false, qmlWarning = false;
+    bool routeClicked = false, stopClicked = false, levelClicked = false, muteClicked = false, initialized = false, qmlWarning = false;
     unsigned playClicks = 0;
     dev_t socketDevice{}; ino_t socketInode{};
     static void retireNotice(std::unique_ptr<QSocketNotifier> &notice) {
@@ -180,11 +180,16 @@ class Component final : public QObject {
     QJsonObject state() const {
         require(!qmlWarning, "QML warning fenced component state");
         require(allHidden(*view), "state observed a visible/exposed Quick window");
-        require(statusItem != nullptr, "real QML status Text absent");
+        require(statusItem && levelItem && level50Item && level100Item && muteItem, "real named QML status/level controls absent");
         return {{"routes", QJsonArray::fromVariantList(audio->routes())},
             {"requested", audio->requested()}, {"applied", audio->applied()}, {"status", audio->status()},
             {"canChoose", audio->canChoose()}, {"canPlay", audio->canPlay()}, {"canStop", audio->canStop()},
-            {"qml_status", statusItem->property("text").toString()}};
+            {"qml_status", statusItem->property("text").toString()},
+            {"previewLevelPercent", audio->previewLevelPercent()}, {"previewMuted", audio->previewMuted()},
+            {"canAdjustPreview", audio->canAdjustPreview()}, {"qml_level", levelItem->property("text").toString()},
+            {"qml_muted", muteItem->property("checked").toBool()},
+            {"qml_level50_enabled", level50Item->isEnabled()}, {"qml_level100_enabled", level100Item->isEnabled()},
+            {"qml_mute_enabled", muteItem->isEnabled()}};
     }
     QJsonObject telemetry(unsigned after) const {
         const unsigned count = recordCount.load(std::memory_order_acquire);
@@ -208,11 +213,18 @@ class Component final : public QObject {
                 if (wire.value("op").toString() == QStringLiteral("media_preview_play")) {
                     const auto request = wire.value("request").toObject();
                     const auto untilValue = request.value("until_boottime_ns"), ttlValue = request.value("ttl_ms");
+                    const auto levelValue = request.value("level_percent"), mutedValue = request.value("muted");
+                    require(wire.size() == 2 && request.size() == 5 && request.value("route").toString() == QStringLiteral("media-a7")
+                        && levelValue.isDouble() && levelValue.toInteger(-1) == 50 && levelValue.toDouble() == 50.0
+                        && mutedValue.isBool(), "mandatory actual Play level fields refused");
                     require(untilValue.isDouble() && ttlValue.isDouble(), "actual Play integer fields absent");
                     const qint64 until = untilValue.toInteger(-1), ttl = ttlValue.toInteger(-1);
                     require(record.playChoice >= 1 && record.playChoice <= 2, "actual Play has no explicit choice ordinal");
+                    require(mutedValue.toBool() == (record.playChoice == 2), "actual explicit Play level/mute choice changed");
                     auto &choice = choices[record.playChoice - 1]; ++choice.attempts;
                     require(until > 0 && ttl > 0 && ttl <= 1000 && ttl <= choice.previousTtl, "same-choice Play TTL invalid/increased");
+                    require(quint64(until) > ns(record.before) && quint64(until) - ns(record.before) <= 1000000000ULL,
+                        "actual original Play cutoff exceeds one second");
                     require(choice.until == 0 || choice.until == quint64(until), "same-choice Play absolute deadline changed");
                     choice.until = quint64(until); choice.previousTtl = ttl;
                     if (complete) { ++choice.complete; ++completePlays; choice.sentUntil = quint64(until); }
@@ -249,11 +261,15 @@ class Component final : public QObject {
             require(playClicks < 2, "only two separate explicit Play choices are admitted");
             currentPlayChoice.store(++playClicks, std::memory_order_release);
         } else {
-            bool &used = operation == QStringLiteral("click_route") ? routeClicked : stopClicked;
-            require(!used, "route/Stop click cannot be retried"); used = true;
+            bool &used = operation == QStringLiteral("click_route") ? routeClicked
+                : operation == QStringLiteral("click_level50") ? levelClicked
+                : operation == QStringLiteral("click_mute") ? muteClicked : stopClicked;
+            require(!used, "route/level/mute/Stop click cannot be retried"); used = true;
         }
         const QString name = operation == QStringLiteral("click_route") ? QStringLiteral("route_media-a7")
-            : operation == QStringLiteral("click_play") ? QStringLiteral("previewPlay") : QStringLiteral("previewStop");
+            : operation == QStringLiteral("click_play") ? QStringLiteral("previewPlay")
+            : operation == QStringLiteral("click_level50") ? QStringLiteral("previewLevel50")
+            : operation == QStringLiteral("click_mute") ? QStringLiteral("previewMute") : QStringLiteral("previewStop");
         // Repeater delegates belong to the visual tree, independently of QObject parenting.
         QQuickItem *button = nullptr;
         unsigned matches = 0;
@@ -393,7 +409,8 @@ class Component final : public QObject {
         require(request.size() == 2 && marker.isDouble() && after >= 0 && after <= RecordLimit
             && marker.toDouble() == double(after), "control request/marker refused");
         require(operation == QStringLiteral("state") || operation == QStringLiteral("click_route")
-            || operation == QStringLiteral("click_play") || operation == QStringLiteral("click_stop"), "unknown private operation");
+            || operation == QStringLiteral("click_play") || operation == QStringLiteral("click_stop")
+            || operation == QStringLiteral("click_level50") || operation == QStringLiteral("click_mute"), "unknown private operation");
         require(now() < controlUntil, "parsed control request exceeded its original deadline");
         diagnosticOperation = operation;
         QJsonObject response{{"operation", operation}};
@@ -452,7 +469,16 @@ public:
                 require(statusItem == nullptr, "ambiguous actual QML status Text"); statusItem = item;
             }
         }
-        require(statusItem != nullptr, "actual QML status Text not found");
+        for (auto *item : view->rootObject()->findChildren<QQuickItem *>()) {
+            QQuickItem **slot = item->objectName() == QStringLiteral("previewLevelValue") ? &levelItem
+                : item->objectName() == QStringLiteral("previewLevel50") ? &level50Item
+                : item->objectName() == QStringLiteral("previewLevel100") ? &level100Item
+                : item->objectName() == QStringLiteral("previewMute") ? &muteItem : nullptr;
+            if (slot) { require(*slot == nullptr, "ambiguous named real QML level control"); *slot = item; }
+        }
+        require(statusItem && levelItem && level50Item && level100Item && muteItem, "actual QML status/level controls not found");
+        require(levelItem->inherits("QQuickText") && level50Item->inherits("QQuickButton")
+            && level100Item->inherits("QQuickButton") && muteItem->inherits("QQuickButton"), "actual QML level control types refused");
         require(::lstat(path.constData(), &metadata) < 0 && errno == ENOENT, "control path already exists");
         listener = ::socket(AF_UNIX, SOCK_SEQPACKET | SOCK_NONBLOCK | SOCK_CLOEXEC, 0);
         require(listener >= 0, "private listener socket failed");

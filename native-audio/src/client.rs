@@ -1,5 +1,5 @@
 //! Explicit media-only requests on one verified connection. Poll never sends.
-use crate::{PreviewState, Role};
+use crate::{PreviewLevel, PreviewState, Role};
 use pokelinux_power::clock::{BootClock, Clock};
 use rustix::net::{RecvFlags, SendFlags, recv, send, sockopt};
 use serde::Deserialize;
@@ -238,7 +238,12 @@ impl Client {
     }
     /// One explicit finite preview. The actor supplies the already clamped
     /// CLOCK_BOOTTIME deadline; neither this transport nor the service renews it.
-    pub fn preview_play(&mut self, route: &str, until_ns: u64) -> Result<SendOutcome, SubmitError> {
+    pub fn preview_play(
+        &mut self,
+        route: &str,
+        level: PreviewLevel,
+        until_ns: u64,
+    ) -> Result<SendOutcome, SubmitError> {
         if self.stream.is_none() {
             return Err(SubmitError::Closed);
         }
@@ -257,7 +262,7 @@ impl Client {
                 route: route.into(),
                 lease,
             },
-            json!({"op":"preview_play","lease":lease,"route":route,"until_boottime_ns":until_ns}),
+            json!({"op":"preview_play","lease":lease,"route":route,"until_boottime_ns":until_ns,"level_percent":level.percent(),"muted":level.muted()}),
             until_ns,
         )
     }

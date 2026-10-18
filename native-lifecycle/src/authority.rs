@@ -1279,7 +1279,9 @@ impl Authority {
         backend: &str,
         request: &crate::audio::PreviewRequest,
         now: u64,
-    ) -> Result<MediaStamp, Reply> {
+    ) -> Result<(MediaStamp, crate::audio::PreviewLevel), Reply> {
+        let level = crate::audio::PreviewLevel::new(request.level_percent, request.muted)
+            .ok_or(Reply::Denied)?;
         if request.until_boottime_ns <= now
             || now
                 .checked_add(1_000_000_000)
@@ -1293,7 +1295,7 @@ impl Authority {
         if !self.current_media(&stamp, backend, crate::boottime_ns()) {
             return Err(Reply::Denied);
         }
-        Ok(stamp)
+        Ok((stamp, level))
     }
     pub(crate) fn current_media(&self, stamp: &MediaStamp, backend: &str, now: u64) -> bool {
         stamp.authority.permission == Permission::MediaRoute

@@ -53,6 +53,7 @@ struct Pending {
     queue_token: Option<u64>,
     prepared_length: u32,
     preview_route: Option<Route>,
+    preview_level: Option<(u32, bool)>,
 }
 pub struct Client {
     started: bool,
@@ -70,6 +71,8 @@ pub struct Client {
     applied: Option<Route>,
     policy_settled: bool,
     preview: Preview,
+    selected_level_percent: u32,
+    selected_muted: bool,
     rows: Vec<Row>,
     pages: Vec<Row>,
 }
@@ -109,6 +112,10 @@ pub struct View {
     pub preview: u32,
     pub can_play: u32,
     pub can_stop: u32,
+    pub selected_level_percent: u32,
+    pub selected_muted: u32,
+    pub can_adjust_preview: u32,
+    pub preview_reserved: u32,
 }
 #[repr(C)]
 pub struct Packet {
@@ -137,6 +144,8 @@ impl Client {
             applied: None,
             policy_settled: false,
             preview: Preview::Idle,
+            selected_level_percent: 100,
+            selected_muted: false,
             rows: Vec::new(),
             pages: Vec::new(),
         }
@@ -217,6 +226,7 @@ impl Client {
             queue_token,
             prepared_length: 0,
             preview_route: None,
+            preview_level: None,
         });
         self.stage = SENDING;
         Ok(())
@@ -238,6 +248,7 @@ impl Client {
             queue_token: None,
             prepared_length: 0,
             preview_route: None,
+            preview_level: None,
         });
         self.stage = CONNECTING;
         self.status = CONNECTING_AUDIO;
@@ -283,6 +294,26 @@ impl Client {
         !self.queue.pending()
             && (self.stage == CLOSED || (self.online && self.reconnect && self.status_or_idle()))
     }
+    fn can_adjust_preview(&self) -> bool {
+        !self.queue.pending()
+            && !self.preview.active()
+            && !self
+                .pending
+                .as_ref()
+                .is_some_and(|p| matches!(p.kind, SELECT | RECON | PLAY | STOP_REQUEST))
+    }
+    pub fn preview_level(&mut self, percent: u32, muted: u32) -> Code {
+        if percent > 100 || muted > 1 {
+            return Code::Invalid;
+        }
+        if !self.can_adjust_preview() {
+            return Code::Busy;
+        }
+        // A local next-preview choice never creates, consumes or renews a request.
+        self.selected_level_percent = percent;
+        self.selected_muted = muted != 0;
+        Code::Ok
+    }
     fn can_play(&self) -> bool {
         self.online
             && self.available
@@ -321,10 +352,13 @@ impl Client {
             Err(e) => return e,
         };
         let route = self.requested.expect("selected logical route");
+        let level = (self.selected_level_percent, self.selected_muted);
         if let Err(e) = self.request(PLAY, until, String::new(), None) {
             return e;
         }
-        self.pending.as_mut().expect("play request").preview_route = Some(route);
+        let pending = self.pending.as_mut().expect("play request");
+        pending.preview_route = Some(route);
+        pending.preview_level = Some(level);
         self.preview = Preview::Starting;
         self.status = PREVIEW_STARTING;
         Code::Ok
@@ -541,8 +575,14 @@ impl Client {
                 self.fail(REQUEST_EXPIRED);
                 return Err(Code::Expired);
             }
-            p.output =
-                protocol::preview_play(&p.preview_route.expect("frozen play route"), ttl, p.until);
+            let (percent, muted) = p.preview_level.expect("frozen play level");
+            p.output = protocol::preview_play(
+                &p.preview_route.expect("frozen play route"),
+                ttl,
+                p.until,
+                percent,
+                muted,
+            );
         }
         let length = p.output.len();
         if length == 0 || length > 4096 {
@@ -801,6 +841,10 @@ impl Client {
             preview: self.preview as u32,
             can_play: u32::from(self.can_play()),
             can_stop: u32::from(self.can_stop()),
+            selected_level_percent: self.selected_level_percent,
+            selected_muted: u32::from(self.selected_muted),
+            can_adjust_preview: u32::from(self.can_adjust_preview()),
+            preview_reserved: 0,
         }
     }
 }

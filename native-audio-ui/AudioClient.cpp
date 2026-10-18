@@ -28,6 +28,10 @@ bool AudioClient::canChoose() const {return view().can_choose!=0;}
 bool AudioClient::canReconnect() const {return view().can_reconnect!=0;}
 bool AudioClient::canPlay() const {return view().can_play!=0;}
 bool AudioClient::canStop() const {return view().can_stop!=0;}
+int AudioClient::previewLevelPercent() const {return int(view().selected_level_percent);}
+bool AudioClient::previewMuted() const {return view().selected_muted!=0;}
+bool AudioClient::canAdjustPreview() const {return view().can_adjust_preview!=0;}
+void AudioClient::setPreviewLevel(int percent,bool muted){pr_sounds_client_preview_level_v1(m_client,uint32_t(percent),uint32_t(muted));sync();}
 AudioClient::AudioClient(QString path,uid_t ownerUid,QObject *parent):QObject(parent),m_path(std::move(path)),m_ownerUid(ownerUid) {
  if(pr_sounds_client_new_v1(&m_client)!=PR_SOUNDS_CLIENT_OK)return;
  m_poll.setInterval(250);m_watch.setInterval(25);

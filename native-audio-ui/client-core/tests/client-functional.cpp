@@ -111,7 +111,7 @@ static void expiry(){
 }
 int main(){
  static_assert(sizeof(PrSoundsClientIdV1)==68&&sizeof(PrSoundsClientLabelV1)==100&&sizeof(PrSoundsClientRowV1)==168);
- static_assert(sizeof(PrSoundsClientViewV1)==5600&&alignof(PrSoundsClientViewV1)==8&&offsetof(PrSoundsClientViewV1,routes)==208);
+ static_assert(sizeof(PrSoundsClientViewV1)==5616&&alignof(PrSoundsClientViewV1)==8&&offsetof(PrSoundsClientViewV1,routes)==208);
  static_assert(sizeof(PrSoundsClientPacketV1)==4128&&offsetof(PrSoundsClientPacketV1,bytes)==32&&std::is_trivially_copyable_v<PrSoundsClientPacketV1>);
  const uint64_t started=now();work=started+5000000000ULL;close_until=started+8000000000ULL;
  direct_model();parser_pages();send_fences();queued_fresh();incarnation();expiry();const auto done=now();assert(done<work&&done<close_until);

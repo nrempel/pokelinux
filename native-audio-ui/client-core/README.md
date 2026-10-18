@@ -29,11 +29,11 @@ that explicit archive built for the matching target. The normal app also needs
 `POKELINUX_APPEARANCE_CLIENT_ARCHIVE_SHA256` for the same cross target. The obsolete
 queue-only header/functions are removed; there is no compatibility alias.
 
-The independent six-group C++ consumer exercises the actual C ABI and clock,
+The earlier independent six-group C++ consumer exercises the actual C ABI and clock,
 with assertions active in Release via target-only `-UNDEBUG`. Its business
 assertions and the30-case Qt socket/credential assertions are retained; fixtures
 now supply required `policy_settled` and `preview` State fields, and the C ABI
-layout assertion includes four explicit appended fields. These fixture changes
+layout assertion includes the then-appended preview fields. These fixture changes
 provide no compatibility defaults for the old wire schema.
 See [the component record](../../docs/native-sounds-rust-client.md) for actual
 source/link/loader checks and the fresh whole-engine prepared GUI/PCM pass with
@@ -54,8 +54,8 @@ preview is distinct from an interrupted route. Starting is distinct from Playing
 Retiring does not assert quiet or remote child retirement.
 
 Explicit Play requires an idle channel and a settled selected route. Rust copies
-that route and an original one-second BOOTTIME deadline. Every native send plan
-contains that same absolute integer deadline and a freshly reduced remaining
+that route, selected level/mute pair and an original one-second BOOTTIME deadline.
+Every native send plan contains that same absolute integer deadline and a freshly reduced remaining
 `ttl_ms`; EAGAIN/EINTR cannot renew it. Play is never queued behind a read-only
 request and is never replayed after reconnect. Qt polling only requests status.
 
@@ -67,7 +67,27 @@ another queued intent, the engine fences the channel and Qt closes the actual
 socket to withdraw ownership. Send failure, expiry and transport failure also
 close the channel. Cancellation is not remote rollback, quiet or reap evidence.
 
-The later [preview component qualification](../../docs/native-sounds-preview.md)
+The current atomic `pr_sounds_client_preview_level_v1` setter accepts percent
+0–100 and muted 0/1, initially 100/0. Invalid pairs leave both unchanged. Choices
+produce no IPC and retain the current request/token/deadline, including during
+read-only status. Pending effects, queued intent and Starting/Playing/Retiring
+refuse adjustment. Selected values survive close/connect transitions for this client lifetime;
+a new client starts 100/0. Each Play packet requires typed
+`level_percent`/`muted` fields, frozen with its original deadline through reprepare.
+Actor and audio Main validate the pair; only that finite preview's PCM is scaled.
+There is no old-wire or old-layout compatibility.
+
+The current 16-function ABI/5616-byte View adds selected percent, mute, adjustment
+availability and explicit padding. Host Rust fmt/strict Clippy and the 356-member
+Release archive pass; all seven Qt targets pass link/load with 16 Sounds plus 11
+appearance APIs. Six existing C ABI, seven schema, ten preview and two cleanup
+groups pass, as do 31 Qt behaviors plus setup/cleanup and unshown QML level/default/
+50%/Muted bindings. The current public entry separately passes six real mouse
+pairs and 144,000 PCM frames: half-level tone, Stop/retirement/full quiet, then muted
+Play with a distinct live producer/active link. See [level evidence](../../docs/evidence/native-preview-level-provenance.json).
+New-level ARM, normal-window, live-theme and physical-audio gates remain open.
+
+The earlier [preview component qualification](../../docs/native-sounds-preview.md)
 passes six existing C ABI, seven schema and seven preview groups plus two cleanup cases,
 the30 existing Qt socket behaviors plus setup/cleanup, and the unchanged frozen
 unavailable-state QML construction test under UID11042. All seven normal targets
@@ -91,7 +111,8 @@ unshown real QML consumer passes route/Play/Stop/new-Play mouse input through
 current AudioClient/SoundsView and Rust policy to real actor/audio PCM: three
 paired windows, 144,000 measured frames under one original six-second cutoff.
 Only test C++ setup changes; production policy and presentation remain unchanged.
-A separate current AArch64 crossbuild qualifies all 452 ELF archive members and
-15 APIs; ARM linking/execution remains open. Installed ARM, normal windows and
-live-theme integration remain open. Historical GUI/PCM and ARM results retain
-their original providers.
+That separate AArch64 crossbuild qualifies 452 ELF archive members and 15 APIs;
+the later installed generic ARM full-level execution is recorded in the preview
+report. These earlier GUI/PCM/ARM results retain their original providers and do
+not qualify current level/mute on ARM. Normal windows and live-theme integration
+remain open.

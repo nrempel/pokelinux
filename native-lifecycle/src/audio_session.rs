@@ -1,7 +1,9 @@
 //! Actor-owned permission and connection custody. The provider alone owns routing.
 use crate::{
     Reply,
-    audio::{Event, PreviewRequest, PreviewState, Provider, Request, State},
+    audio::{
+        Event, PreviewIntent, PreviewLevel, PreviewRequest, PreviewState, Provider, Request, State,
+    },
     authority::{Authority, MediaLeaseStamp, MediaStamp},
     boottime_ns,
 };
@@ -13,8 +15,14 @@ enum Phase {
     ReplyReady,
 }
 enum Kind {
-    Effect { stamp: MediaStamp, preview: bool },
-    Stop { id: u64, until: u64 },
+    Effect {
+        stamp: MediaStamp,
+        preview: Option<PreviewLevel>,
+    },
+    Stop {
+        id: u64,
+        until: u64,
+    },
 }
 struct Pending {
     kind: Kind,
@@ -90,7 +98,12 @@ impl Session {
         }
         Ok(())
     }
-    fn install(&mut self, connection: u64, stamp: MediaStamp, preview: bool) -> u64 {
+    fn install(
+        &mut self,
+        connection: u64,
+        stamp: MediaStamp,
+        preview: Option<PreviewLevel>,
+    ) -> u64 {
         let until = stamp.intent().until_ns;
         let active = self.active.get_or_insert(Active {
             connection,
@@ -121,7 +134,7 @@ impl Session {
             request.ttl_ms,
             boottime_ns(),
         )?;
-        Ok(self.install(connection, stamp, false))
+        Ok(self.install(connection, stamp, None))
     }
     pub(crate) fn begin_preview(
         &mut self,
@@ -133,14 +146,14 @@ impl Session {
         provider: &dyn Provider,
     ) -> Result<u64, Reply> {
         self.check(connection, &request.route, provider)?;
-        let stamp = authority.begin_media_preview(
+        let (stamp, level) = authority.begin_media_preview(
             pid,
             uid,
             provider.incarnation(),
             &request,
             boottime_ns(),
         )?;
-        Ok(self.install(connection, stamp, true))
+        Ok(self.install(connection, stamp, Some(level)))
     }
     /// Cleanup belongs to the existing connection, including in the background.
     /// No new playback stamp or grant is minted. Existing lease invalidation
@@ -238,12 +251,15 @@ impl Session {
         let result = match &pending.kind {
             Kind::Effect {
                 stamp,
-                preview: false,
+                preview: None,
             } => provider.submit(stamp.intent()),
             Kind::Effect {
                 stamp,
-                preview: true,
-            } => provider.play(stamp.intent()),
+                preview: Some(level),
+            } => provider.play(&PreviewIntent {
+                route_intent: stamp.intent().clone(),
+                level: *level,
+            }),
             Kind::Stop { id, until } => provider.stop_preview(*id, *until),
         };
         match result {
@@ -285,9 +301,12 @@ impl Session {
         };
         let matching_kind = matches!(
             (&pending.kind, &event),
-            (Kind::Effect { preview: false, .. }, Event::Selected { .. })
+            (Kind::Effect { preview: None, .. }, Event::Selected { .. })
                 | (
-                    Kind::Effect { preview: true, .. } | Kind::Stop { .. },
+                    Kind::Effect {
+                        preview: Some(_),
+                        ..
+                    } | Kind::Stop { .. },
                     Event::Preview { .. }
                 )
                 | (_, Event::Rejected { .. })

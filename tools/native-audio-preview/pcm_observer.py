@@ -12,7 +12,7 @@ def observe(output):
     if sys.byteorder!='little':raise SetupFailure('F32LE fixture requires little endian')
     env=dict(os.environ,PIPEWIRE_RUNTIME_DIR='/tmp/pokelinux-native-audio/private',PIPEWIRE_REMOTE='pokelinux-audio-test-manager',PIPEWIRE_DEBUG='0')
     children=[];receipts=[];streams={};logs=[];handles=[];raw_stages={};serial=0;capture_until=None
-    result={'passed':False,'classification':'SETUP_FAILURE','stage':'actual_QML_Stop_quiet_new_Play','oracle_sha256':hashlib.sha256(pathlib.Path(__file__).with_name('ORACLES.json').read_bytes()).hexdigest(),'stages':{}}
+    result={'passed':False,'classification':'SETUP_FAILURE','stage':'actual_QML_half_Stop_quiet_muted_Play','oracle_sha256':hashlib.sha256(pathlib.Path(__file__).with_name('ORACLES.json').read_bytes()).hexdigest(),'stages':{}}
     clock=lambda:time.clock_gettime_ns(time.CLOCK_BOOTTIME)
     def publish(name,value):
         target=output/name;temporary=output/(name+'.tmp');temporary.write_text(json.dumps(value)+'\n');os.replace(temporary,target)
@@ -89,7 +89,7 @@ def observe(output):
         return wire,record
     def gate(play,label,choice):
         wire,record=actual_send(play,'media_preview_play',choice);request=wire['request'];until=request['until_boottime_ns'];gate={'original_start_until_boottime_ns':until,'qualified':False,'actual_complete_send_marker':record['marker']}
-        if not(set(wire)=={'op','request'}and set(request)=={'route','ttl_ms','until_boottime_ns'}and request['route']=='media-a7'and type(until)is int and type(request['ttl_ms'])is int and 1<=request['ttl_ms']<=1000 and int(record['after_boottime_ns'])<until):raise SampleFailure('Play deadline/remaining TTL must come from actual complete production bytes')
+        if not(set(wire)=={'op','request'}and set(request)=={'route','ttl_ms','until_boottime_ns','level_percent','muted'}and request['route']=='media-a7'and type(request['level_percent'])is int and request['level_percent']==50 and type(request['muted'])is bool and request['muted']==(choice==2)and type(until)is int and type(request['ttl_ms'])is int and 1<=request['ttl_ms']<=1000 and int(record['after_boottime_ns'])<until and 0<until-int(record['before_boottime_ns'])<=1_000_000_000):raise SampleFailure('Play deadline/remaining TTL must come from actual complete production bytes')
         while clock()<until and time.monotonic_ns()<capture_until:
             objects=graph();observed=clock();drain()
             if observed>=until:break
@@ -147,6 +147,7 @@ def observe(output):
                 after=identity(final);value['producer_after_capture']=after
                 if after!=old:errors.append('server/retained preview identity changed across full capture')
                 if not active_source_link(final):errors.append('owned source route not active in final graph')
+            value['live_attributed_producer_and_active_selected_link']=not errors
         value['sample_errors']=errors;value['passed']=not errors;result['stages'][label]=value
         if errors:raise SampleFailure('; '.join(errors))
         return value
@@ -181,7 +182,7 @@ def observe(output):
         selector=selectors.DefaultSelector()
         for sink,(child,_)in streams.items():selector.register(child.stdout,selectors.EVENT_READ,sink)
         publish('ready.json',{'no_fixture_media_source':True,'actual_monitor_ports':ports,'original_capture_until_monotonic_ns':capture_until,'original_capture_until_boottime_ns':capture_until_boot})
-        play=marker('qml-play-sent.json');first,firstfd=gate(play,'first_original_start_gate',1);before=capture('before_Stop','media_speaker',first,firstfd);publish('before-Stop.json',{'producer':first,'full_PCM':before})
+        play=marker('qml-play-sent.json');first,firstfd=gate(play,'first_original_start_gate',1);before=capture('before_Stop_half_tone','before_Stop_half_tone',first,firstfd);publish('before-Stop.json',{'producer':first,'full_PCM':before})
         stop=marker('qml-stop-sent.json');result['actual_QML_Stop']=stop;wire,stop_send=actual_send(stop,'media_preview_stop',1)
         if wire!={'op':'media_preview_stop'}or int(stop_send['after_boottime_ns'])>=int(play['dispatch']['before_boottime_ns'])+4_000_000_000:raise SampleFailure('one actual complete Stop send must precede natural four-second asset end')
         state=stop['observed_retiring']['state'];result['actual_QML_Retiring_fence']=state['status']==state['qml_status']=='Preview retiring'
@@ -193,12 +194,12 @@ def observe(output):
                 result['actual_retirement']={'observed_boottime_ns':observed,'old_source_client_links_absent':True,'retained_pidfd_terminal':True,'old_proc_absent':True};break
             time.sleep(.01)
         else:raise SampleFailure('explicit Stop did not retire producer/source before original pre-natural bound')
-        quiet=capture('after_Stop_quiet','released_silence',first,firstfd,quiet=True);publish('quiet.json',quiet)
+        quiet=capture('after_Stop_quiet','after_Stop_quiet',first,firstfd,quiet=True);publish('quiet.json',quiet)
         new_play=marker('qml-new-play-sent.json');second,secondfd=gate(new_play,'new_explicit_original_start_gate',2)
         distinct=second['pid']!=first['pid']and second['starttime']!=first['starttime']and second['node_serial']!=first['node_serial']and second['Client_server_security']['object.serial']!=first['Client_server_security']['object.serial']and second['actual_parent_Main']==first['actual_parent_Main']and second['current_core_cookie']==first['current_core_cookie']
         result['new_explicit_producer_distinct_same_Main_cookie']=distinct
         if not distinct:raise SampleFailure('new explicit Play must have a new owned producer identity')
-        capture('new_explicit_Play','media_speaker',second,secondfd)
+        capture('new_explicit_muted_Play','new_explicit_muted_Play',second,secondfd)
         result['complete_paired_windows']=all(v['complete_paired_windows']for v in result['stages'].values())and len(result['stages'])==3
         result['old_retained_pidfd_still_terminal']=bool(select.select([firstfd],[],[],0)[0]);result['captured_at_monotonic_ns']=time.monotonic_ns();result['observed_bytes']=seen
         if not result['actual_QML_Retiring_fence']:raise SampleFailure('actual public AudioClient/QML Retiring status required separately from quiet')

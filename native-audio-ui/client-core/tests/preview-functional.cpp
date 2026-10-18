@@ -8,6 +8,7 @@
 #include <cstring>
 #include <string>
 #include <vector>
+#include <utility>
 #include <time.h>
 
 static uint64_t work = 0;
@@ -33,7 +34,7 @@ struct Client final {
     Client &operator=(const Client &) = delete;
     PrSoundsClientViewV1 view() const {
         PrSoundsClientViewV1 out{};
-        assert(pr_sounds_client_view_v1(p, &out) == PR_SOUNDS_CLIENT_OK && out.reserved == 0 && out.route_count <= 32);
+        assert(pr_sounds_client_view_v1(p, &out) == PR_SOUNDS_CLIENT_OK && out.reserved == 0 && out.preview_reserved == 0 && out.route_count <= 32);
         return out;
     }
     PrSoundsClientPacketV1 packet() {
@@ -74,12 +75,12 @@ static uint64_t number(const std::string&s,const char*name){const auto key=std::
 static void refresh(Client&c){assert(pr_sounds_client_refresh_v1(c.p)==PR_SOUNDS_CLIENT_OK);c.sent(c.packet());}
 static void advance(uint64_t until){while(now()<until){bounded();timespec pause{0,1000000};(void)nanosleep(&pause,nullptr);}}
 static void projection(){
- static_assert(sizeof(PrSoundsClientViewV1)==5600&&offsetof(PrSoundsClientViewV1,routes)==208&&offsetof(PrSoundsClientViewV1,policy_settled)==5584);
+ static_assert(sizeof(PrSoundsClientViewV1)==5616&&offsetof(PrSoundsClientViewV1,routes)==208&&offsetof(PrSoundsClientViewV1,policy_settled)==5584&&offsetof(PrSoundsClientViewV1,selected_level_percent)==5600&&offsetof(PrSoundsClientViewV1,preview_reserved)==5612);
  for(unsigned i=0;i<6;++i){const char*names[]={"idle","starting","playing","retiring","completed","failed"};Client c;online(c,status(state(names[i])));auto v=c.view();assert(v.policy_settled==1&&v.preview==i);assert(bool(v.can_play)==(i==0||i==4||i==5));assert(bool(v.can_stop)==(i==1||i==2||i==3));if(i==0)assert(v.status==PR_SOUNDS_CLIENT_SELECTED_IDLE);if(i==1)assert(v.status==PR_SOUNDS_CLIENT_PREVIEW_STARTING);if(i==2)assert(v.status==PR_SOUNDS_CLIENT_PREVIEW_PLAYING);if(i==3)assert(v.status==PR_SOUNDS_CLIENT_PREVIEW_RETIRING);}
  Client missing;online(missing,status(state("idle",false)));assert(!missing.view().can_play);Client route;online(route,status(state("idle",true,"null")));assert(!route.view().can_play);pass("explicit_preview_and_policy_projection",8);
 }
 static void playDeadline(){
- Client c;online(c);const auto before=now();assert(pr_sounds_client_preview_play_v1(c.p)==PR_SOUNDS_CLIENT_OK);const auto after=now();auto first=c.packet();const auto until=first.original_until_boottime_ns;assert(until>=before+1000000000ULL&&until<=after+1000000000ULL);const auto wire=text(first);assert(wire.find("\"op\":\"media_preview_play\"")!=std::string::npos&&wire.find("\"route\":\"media-a7\"")!=std::string::npos);assert(number(wire,"until_boottime_ns")==until&&number(wire,"ttl_ms")>0&&number(wire,"ttl_ms")<=1000);assert(c.view().can_stop&&!c.view().can_play&&c.view().status==PR_SOUNDS_CLIENT_PREVIEW_STARTING);assert(pr_sounds_client_preview_play_v1(c.p)==PR_SOUNDS_CLIENT_BUSY);
+ Client c;online(c);const auto before=now();assert(pr_sounds_client_preview_play_v1(c.p)==PR_SOUNDS_CLIENT_OK);const auto after=now();auto first=c.packet();const auto until=first.original_until_boottime_ns;assert(until>=before+1000000000ULL&&until<=after+1000000000ULL);const auto wire=text(first);assert(number(wire,"level_percent")==100&&wire.find("\"muted\":false")!=std::string::npos);assert(wire.find("\"op\":\"media_preview_play\"")!=std::string::npos&&wire.find("\"route\":\"media-a7\"")!=std::string::npos);assert(number(wire,"until_boottime_ns")==until&&number(wire,"ttl_ms")>0&&number(wire,"ttl_ms")<=1000);assert(c.view().can_stop&&!c.view().can_play&&c.view().status==PR_SOUNDS_CLIENT_PREVIEW_STARTING);assert(pr_sounds_client_preview_play_v1(c.p)==PR_SOUNDS_CLIENT_BUSY);
  advance(now()+4000000ULL);auto second=c.packet();assert(second.token==first.token&&second.original_until_boottime_ns==until&&number(text(second),"until_boottime_ns")==until&&number(text(second),"ttl_ms")<number(wire,"ttl_ms"));assert(pr_sounds_client_sent_v1(c.p,second.connection_epoch,second.token,PR_SOUNDS_CLIENT_SEND_WOULD_BLOCK,0)==PR_SOUNDS_CLIENT_OK);advance(now()+2000000ULL);auto third=c.packet();assert(third.token==first.token&&third.original_until_boottime_ns==until&&number(text(third),"ttl_ms")<number(text(second),"ttl_ms"));c.sent(third);assert(c.reply("{\"result\":\"media_preview\",\"state\":"+state("starting")+"}")==PR_SOUNDS_CLIENT_OK);assert(c.view().preview==PR_SOUNDS_CLIENT_PREVIEW_STARTING_STATE&&c.view().status==PR_SOUNDS_CLIENT_PREVIEW_STARTING);refresh(c);assert(c.reply(status(state("playing",true,"\"media-a7\"","\"media-a7\"")))==PR_SOUNDS_CLIENT_OK);assert(c.view().preview==PR_SOUNDS_CLIENT_PREVIEW_PLAYING_STATE&&c.view().status==PR_SOUNDS_CLIENT_PREVIEW_PLAYING);pass("play_original_absolute_and_decreasing_remaining_ttl");
 }
 static void noQueuedPlay(){Client c;online(c);refresh(c);const auto until=c.view().request_until_boottime_ns;assert(!c.view().can_play&&pr_sounds_client_preview_play_v1(c.p)==PR_SOUNDS_CLIENT_BUSY&&c.view().queued_kind==0&&c.view().request_until_boottime_ns==until);assert(c.reply(status())==PR_SOUNDS_CLIENT_OK&&c.view().can_play&&c.view().queued_kind==0);PrSoundsClientPacketV1 p{};assert(pr_sounds_client_prepare_v1(c.p,&p)==PR_SOUNDS_CLIENT_EMPTY);pass("readonly_status_never_queues_or_replays_play");}
@@ -92,4 +93,81 @@ static void deadlinesAndFailure(){
  Client failed;online(failed);assert(pr_sounds_client_preview_play_v1(failed.p)==PR_SOUNDS_CLIENT_OK);auto packet=failed.packet();assert(pr_sounds_client_sent_v1(failed.p,packet.connection_epoch,packet.token,PR_SOUNDS_CLIENT_SEND_FAILED,0)==PR_SOUNDS_CLIENT_REFUSED);assert(failed.view().stage==PR_SOUNDS_CLIENT_CLOSED&&failed.view().queued_kind==0);pass("original_deadline_expiry_and_send_failure_withdraw",4);
 }
 static void replyContext(){Client c;online(c);refresh(c);assert(c.reply("{\"result\":\"media_preview\",\"state\":"+state("playing")+"}")==PR_SOUNDS_CLIENT_REFUSED&&c.view().stage==PR_SOUNDS_CLIENT_CLOSED);pass("preview_reply_requires_matching_effect_request");}
-int main(){work=now()+5000000000ULL;projection();playDeadline();noQueuedPlay();queuedStop();cancelInflight();deadlinesAndFailure();replyContext();bounded();std::puts("SOUNDS_PREVIEW_ALL_PASS groups=7 authored_CPU_facts_only=true");}
+
+static void localLevel() {
+ Client c;
+ assert(c.view().selected_level_percent==100&&!c.view().selected_muted&&c.view().can_adjust_preview);
+ assert(pr_sounds_client_preview_level_v1(nullptr,50,0)==PR_SOUNDS_CLIENT_INVALID);
+ Client connecting;
+ assert(pr_sounds_client_start_v1(connecting.p)==PR_SOUNDS_CLIENT_OK);
+ const auto connection=connecting.view();
+ assert(connection.can_adjust_preview&&pr_sounds_client_preview_level_v1(connecting.p,50,1)==PR_SOUNDS_CLIENT_OK);
+ assert(connecting.view().connection_epoch==connection.connection_epoch&&connecting.view().request_until_boottime_ns==connection.request_until_boottime_ns);
+ online(c);
+ for(uint32_t value:{0u,50u,100u}) {
+  assert(pr_sounds_client_preview_level_v1(c.p,value,1)==PR_SOUNDS_CLIENT_OK);
+  assert(c.view().selected_level_percent==value&&c.view().selected_muted==1);
+ }
+ for(const auto &bad:std::vector<std::pair<uint32_t,uint32_t>>{{101,0},{UINT32_MAX,0},{50,2},{0,UINT32_MAX}}) {
+  const auto before=c.view();
+  assert(pr_sounds_client_preview_level_v1(c.p,bad.first,bad.second)==PR_SOUNDS_CLIENT_INVALID);
+  const auto after=c.view();
+  assert(after.selected_level_percent==before.selected_level_percent&&after.selected_muted==before.selected_muted);
+  assert(after.request_kind==before.request_kind&&after.request_until_boottime_ns==before.request_until_boottime_ns&&after.queued_kind==0);
+ }
+ PrSoundsClientPacketV1 none{};none.token=99;
+ assert(pr_sounds_client_prepare_v1(c.p,&none)==PR_SOUNDS_CLIENT_EMPTY&&none.token==99);
+ assert(pr_sounds_client_refresh_v1(c.p)==PR_SOUNDS_CLIENT_OK);
+ auto request=c.packet();const auto until=request.original_until_boottime_ns;
+ assert(pr_sounds_client_preview_level_v1(c.p,50,0)==PR_SOUNDS_CLIENT_OK&&c.view().can_adjust_preview);
+ auto same=c.packet();assert(same.token==request.token&&same.original_until_boottime_ns==until&&text(same)==text(request));
+ c.sent(same);
+ assert(pr_sounds_client_preview_level_v1(c.p,100,1)==PR_SOUNDS_CLIENT_OK);
+ assert(c.view().request_until_boottime_ns==until&&c.view().request_kind==PR_SOUNDS_CLIENT_STATUS&&c.view().queued_kind==0);
+ assert(c.reply(status())==PR_SOUNDS_CLIENT_OK);
+ assert(c.view().selected_level_percent==100&&c.view().selected_muted==1);
+ assert(pr_sounds_client_prepare_v1(c.p,&none)==PR_SOUNDS_CLIENT_EMPTY&&none.token==99);
+ pass("atomic_local_level_validation_no_IPC_and_readonly_status");
+}
+static void levelBusy() {
+ for(const char *active:{"starting","playing","retiring"}) {
+  Client c;online(c,status(state(active)));assert(!c.view().can_adjust_preview);
+  assert(pr_sounds_client_preview_level_v1(c.p,50,1)==PR_SOUNDS_CLIENT_BUSY);
+  assert(c.view().selected_level_percent==100&&!c.view().selected_muted);
+ }
+ Client effect;online(effect);const auto route=effect.view().requested;
+ assert(pr_sounds_client_choose_v1(effect.p,&route)==PR_SOUNDS_CLIENT_OK);
+ assert(!effect.view().can_adjust_preview&&pr_sounds_client_preview_level_v1(effect.p,50,1)==PR_SOUNDS_CLIENT_BUSY);
+ effect.sent(effect.packet());
+ assert(pr_sounds_client_preview_level_v1(effect.p,50,1)==PR_SOUNDS_CLIENT_BUSY&&effect.view().selected_level_percent==100);
+ Client queued;online(queued);refresh(queued);
+ assert(pr_sounds_client_choose_v1(queued.p,&route)==PR_SOUNDS_CLIENT_OK&&queued.view().queued_kind==PR_SOUNDS_CLIENT_ROUTE_INTENT);
+ assert(!queued.view().can_adjust_preview&&pr_sounds_client_preview_level_v1(queued.p,50,1)==PR_SOUNDS_CLIENT_BUSY);
+ Client stop;online(stop,status(state("playing")));
+ assert(pr_sounds_client_preview_stop_v1(stop.p)==PR_SOUNDS_CLIENT_OK);
+ assert(!stop.view().can_adjust_preview&&pr_sounds_client_preview_level_v1(stop.p,50,1)==PR_SOUNDS_CLIENT_BUSY);
+ pass("level_refuses_effect_queue_and_all_active_preview_states");
+}
+static void levelSnapshot() {
+ Client c;online(c);assert(pr_sounds_client_preview_level_v1(c.p,50,0)==PR_SOUNDS_CLIENT_OK);
+ const auto before=now();assert(pr_sounds_client_preview_play_v1(c.p)==PR_SOUNDS_CLIENT_OK);const auto after=now();
+ const auto first=c.packet();const auto until=first.original_until_boottime_ns;
+ assert(until>=before+1000000000ULL&&until<=after+1000000000ULL);
+ assert(!c.view().can_adjust_preview&&pr_sounds_client_preview_level_v1(c.p,100,1)==PR_SOUNDS_CLIENT_BUSY);
+ uint64_t ttl=number(text(first),"ttl_ms");
+ for(uint32_t outcome:{PR_SOUNDS_CLIENT_SEND_WOULD_BLOCK,PR_SOUNDS_CLIENT_SEND_INTERRUPTED}) {
+  assert(pr_sounds_client_sent_v1(c.p,first.connection_epoch,first.token,outcome,0)==PR_SOUNDS_CLIENT_OK);
+  advance(now()+2000000ULL);const auto next=c.packet();const auto wire=text(next);
+  assert(next.token==first.token&&next.original_until_boottime_ns==until&&number(wire,"until_boottime_ns")==until);
+  assert(number(wire,"level_percent")==50&&wire.find("\"muted\":false")!=std::string::npos&&wire.find("\"route\":\"media-a7\"")!=std::string::npos);
+  assert(number(wire,"ttl_ms")<ttl);ttl=number(wire,"ttl_ms");
+ }
+ c.sent(c.packet());assert(c.reply("{\"result\":\"media_preview\",\"state\":"+state("starting")+"}")==PR_SOUNDS_CLIENT_OK);
+ refresh(c);assert(c.reply(status(state("idle")))==PR_SOUNDS_CLIENT_OK);
+ assert(pr_sounds_client_preview_level_v1(c.p,50,1)==PR_SOUNDS_CLIENT_OK);
+ assert(pr_sounds_client_preview_play_v1(c.p)==PR_SOUNDS_CLIENT_OK);
+ const auto muted=c.packet();assert(number(text(muted),"level_percent")==50&&text(muted).find("\"muted\":true")!=std::string::npos);
+ pass("Play_level_and_mute_snapshot_survive_reprepare_and_next_choice");
+}
+
+int main(){work=now()+5000000000ULL;projection();playDeadline();noQueuedPlay();queuedStop();cancelInflight();deadlinesAndFailure();replyContext();localLevel();levelBusy();levelSnapshot();bounded();std::puts("SOUNDS_PREVIEW_ALL_PASS groups=10 authored_CPU_facts_only=true");}

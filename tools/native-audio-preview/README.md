@@ -76,13 +76,19 @@ at /tmp/pokelinux-native-audio has virtual sinks and no fixture Media producer;
 normal audio Main owns the fixed four-second preview. No app supplies PCM,
 a path, frequency, producer command or PipeWire node.
 
-Four actual route/Play/Stop/new-Play clicks must join the same actor FD to
-Playing→Retiring→Idle→Playing. All three full paired PCM windows share ONE
+Six actual route/50%/Play/Stop/mute/new-Play mouse pairs must join the same
+actor FD to Starting→Playing→Retiring→Idle→Starting→Playing. Local level/mute
+choices change Rust-selected presentation without any effect packet; all level
+controls are disabled during Starting, Playing and Retiring. All three full paired PCM windows share ONE
 original six-second cutoff beginning at observer readiness before Play1,
 including active controls/status/telemetry/identity observations. Each sink and
-stage discards9600 frames then measures24000. Tone, actual old-producer/graph
-retirement, full quiet and a distinct new explicit producer remain independent
-requirements. Native positive assertion runs only after controller cleanup and
+stage discards9600 frames then measures24000. The first speaker window requires
+half-level440Hz tone (RMS0.08–0.1) and quiet earpiece; Stop requires producer/graph
+retirement and full paired quiet; new muted Play requires full paired quiet plus
+a distinct live attributed producer and active selected link. Silence alone cannot
+qualify muted Play. Every Play requires level_percent:50 and an explicit boolean
+muted value, frozen per choice under its original at-most-one-second deadline.
+Earlier Play packet shapes are refused. Native positive assertion runs only after controller cleanup and
 phase wait/PIPE EOF/handle closure/adopted ECHILD. Setup/control failures and
 compiled assertion101 are distinct; no implicit retries or deadline renewal.
 
@@ -90,12 +96,22 @@ An ARM invocation is separate: build/select AArch64 ELF183 providers and target
 Qt/PipeWire closure, then call the same entrypoint inside its separately owned
 guest using /providers/arm64.json. Host binaries/SDK/results do not qualify ARM.
 This child-owned fixture also does not substitute for installed PID1 service
-custody. The public locked/offline Cargo and explicit-archive CMake commands now
-pass, followed by a host run of this actual entrypoint using all three fresh test
-ELFs. Four real QML clicks and 144,000 measured frames pass under one original
-six-second cutoff; the final native assertion runs only after full cleanup. The
-earlier prebuilt-role entry remains separately recorded. The C++ consumer is a
-test fixture; production policy remains Rust.
+custody. Earlier commit9983/source/provider bindings qualify the public
+locked/offline Cargo and explicit-archive CMake commands and a four-click host
+run with144,000 measured frames. Those full-level executions remain historical;
+the CPU full-level bit-exact test separately covers unchanged100% sample generation.
+The current half/mute build and host entry now pass with the qualified 16-API
+Sounds archive and current native providers. Six real mouse pairs and 144,000
+frames share one original six-second cutoff: half-level speaker tone/quiet
+earpiece, Stop/actual retirement/full quiet, then muted Play/full quiet with a
+distinct live attributed producer and active selected link. The final compiled
+assertion exits 0 after cleanup/ECHILD. All 56 direct waits and 75 real PIPE EOFs
+close; one adopted wait and four regular stderr closures are counted separately.
+The earlier raw valid50 denied/quiet behavioral RED, same-fixture GREEN, component
+checks and preserved failed preparations are in
+[level provenance](../../docs/evidence/native-preview-level-provenance.json).
+Current level/mute ARM execution remains open. The C++ consumer is a test fixture;
+production policy remains Rust.
 Separate host and installed ARM evidence remains in
 [the preview report](../../docs/native-sounds-preview.md).
 No visible window, normal Main, display profile/capture, theme switch, full

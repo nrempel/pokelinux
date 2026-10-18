@@ -157,10 +157,10 @@ pub fn reconnect() -> String {
     "{\"op\":\"media_reconnect\"}".to_owned()
 }
 
-pub fn preview_play(route: &Route, ttl: u32, until: u64) -> String {
+pub fn preview_play(route: &Route, ttl: u32, until: u64, percent: u32, muted: bool) -> String {
     let id = std::str::from_utf8(route.id().expect("validated selector")).expect("ASCII selector");
     format!(
-        "{{\"op\":\"media_preview_play\",\"request\":{{\"route\":\"{id}\",\"ttl_ms\":{ttl},\"until_boottime_ns\":{until}}}}}"
+        "{{\"op\":\"media_preview_play\",\"request\":{{\"route\":\"{id}\",\"ttl_ms\":{ttl},\"until_boottime_ns\":{until},\"level_percent\":{percent},\"muted\":{muted}}}}}"
     )
 }
 pub fn preview_stop() -> String {

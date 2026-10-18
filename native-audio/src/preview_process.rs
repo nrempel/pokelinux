@@ -41,7 +41,11 @@ pub struct Process {
 impl Process {
     /// `source` comes from trusted deployment, never an application request.
     /// The tool, format, PCM and non-autoconnect properties are fixed by Rust.
-    pub fn start(source: &str, work_until: BootTime) -> io::Result<Self> {
+    pub fn start(
+        source: &str,
+        level: crate::PreviewLevel,
+        work_until: BootTime,
+    ) -> io::Result<Self> {
         if source.is_empty() || source.len() > 256 || source.chars().any(char::is_control) {
             return Err(io::ErrorKind::InvalidInput.into());
         }
@@ -83,7 +87,11 @@ impl Process {
             &properties,
             "-",
         ]);
-        Self::spawn_owned(command, crate::fixed_pcm::fixed_preview_pcm(), work_until)
+        Self::spawn_owned(
+            command,
+            crate::fixed_pcm::fixed_preview_pcm(level),
+            work_until,
+        )
     }
 
     // Production and the private finite-process fixture share the same owner.

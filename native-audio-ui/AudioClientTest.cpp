@@ -97,6 +97,29 @@ struct Peer {
 class AudioClientTest final:public QObject {
  Q_OBJECT
 private slots:
+ void previewLevelIsLocalAndAtomicDuringReadonlyStatus(){
+  Peer p;p.state["requested"]="media-a7";p.state["policy_settled"]=true;
+  bool hold=false,held=false;
+  p.custom=[&](const QJsonObject&q){
+   if(hold&&q.value("op")=="media_status"){held=true;return true;}
+   if(q.value("op")!="media_preview_play")return false;
+   const auto request=q.value("request").toObject();
+   if(q.size()!=2||request.size()!=5||request.value("route")!="media-a7"||request.value("level_percent").toInteger()!=50||!request.value("muted").isBool()||request.value("muted").toBool()||request.value("ttl_ms").toInteger()<1||request.value("ttl_ms").toInteger()>1000||request.value("until_boottime_ns").toInteger()<=0)qFatal("preview level wire shape");
+   p.state["preview"]="starting";p.send({{"result","media_preview"},{"state",p.state}});return true;
+  };
+  AudioClient c(p.path(),0);QCOMPARE(c.previewLevelPercent(),100);QVERIFY(!c.previewMuted());
+  QTRY_VERIFY_WITH_TIMEOUT(c.canPlay(),1500);QVERIFY(c.canAdjustPreview());
+  c.setPreviewLevel(50,true);QCOMPARE(c.previewLevelPercent(),50);QVERIFY(c.previewMuted());
+  c.setPreviewLevel(101,false);QCOMPARE(c.previewLevelPercent(),50);QVERIFY(c.previewMuted());
+  c.setPreviewLevel(-1,false);QCOMPARE(c.previewLevelPercent(),50);QVERIFY(c.previewMuted());
+  QCOMPARE(p.count("media_route"),0);QCOMPARE(p.count("media_preview_play"),0);
+  hold=true;QTRY_VERIFY_WITH_TIMEOUT(held,1500);QVERIFY(c.canAdjustPreview());
+  c.setPreviewLevel(50,false);QCOMPARE(c.previewLevelPercent(),50);QVERIFY(!c.previewMuted());
+  QCOMPARE(p.count("media_route"),0);QCOMPARE(p.count("media_preview_play"),0);QCOMPARE(p.count("media_reconnect"),0);
+  hold=false;p.send(p.status());QTRY_VERIFY_WITH_TIMEOUT(c.canPlay(),1500);c.playPreview();
+  QTRY_COMPARE_WITH_TIMEOUT(p.count("media_preview_play"),1,1500);QTRY_COMPARE_WITH_TIMEOUT(c.status(),QString("Preview starting"),1500);
+  QVERIFY(!c.canAdjustPreview());c.setPreviewLevel(100,true);QCOMPARE(c.previewLevelPercent(),50);QVERIFY(!c.previewMuted());
+ }
  void initTestCase(){QVERIFY2(::getuid()==0&&::getgid()==0,"actual root actor peer required for this fixed socket suite");}
  void authenticatedPaginatedCatalog(){
   Peer p;p.routes=catalog(10);AudioClient c(p.path(),0);QTRY_VERIFY_WITH_TIMEOUT(c.canChoose(),1500);QCOMPARE(c.routes().size(),10);QVERIFY(p.credentials);QCOMPARE(p.count("media_status"),2);QCOMPARE(p.requests[0].value("offset").toInteger(),0);QCOMPARE(p.requests[1].value("offset").toInteger(),8);c.select("private.sink");QTest::qWait(50);QCOMPARE(p.count("media_route"),0);

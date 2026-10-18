@@ -93,6 +93,31 @@ private slots:
         QVERIFY(button->property("enabled").isValid());
         QVERIFY2(!button->property("enabled").toBool(), "preview action must be disabled with actual unavailable actor");
     }
+    void previewLevelControls() {
+        QCOMPARE(audio->previewLevelPercent(), 100);
+        QVERIFY(!audio->previewMuted());
+        QVERIFY(plainTextExists(QStringLiteral("Preview level")));
+        QVERIFY(plainTextExists(QStringLiteral("Applies to next preview")));
+        for (const auto &entry : {qMakePair(QStringLiteral("previewLevel50"), QStringLiteral("50%")),
+                                  qMakePair(QStringLiteral("previewLevel100"), QStringLiteral("100%")),
+                                  qMakePair(QStringLiteral("previewMute"), QStringLiteral("Mute"))}) {
+            QObject *button = view->rootObject()->findChild<QObject *>(entry.first);
+            QVERIFY(button && button->inherits("QQuickButton"));
+            QCOMPARE(button->property("text").toString(), entry.second);
+            QCOMPARE(button->property("enabled").toBool(), audio->canAdjustPreview());
+        }
+        QObject *mute = view->rootObject()->findChild<QObject *>(QStringLiteral("previewMute"));
+        QVERIFY(mute->property("checkable").toBool());
+        QCOMPARE(mute->property("checked").toBool(), audio->previewMuted());
+        QObject *value = view->rootObject()->findChild<QObject *>(QStringLiteral("previewLevelValue"));
+        QVERIFY(value);
+        QCOMPARE(value->property("text").toString(), QStringLiteral("100%"));
+        audio->setPreviewLevel(50, true);
+        QCOMPARE(value->property("text").toString(), QStringLiteral("50%"));
+        QCOMPARE(mute->property("text").toString(), QStringLiteral("Muted"));
+        QVERIFY(mute->property("checked").toBool());
+        QVERIFY(!view->isVisible());
+    }
     void cleanup() {
         view.reset();
         theme.reset();

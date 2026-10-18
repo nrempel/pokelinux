@@ -16,3 +16,30 @@ fn expired_or_over_one_second_preview_never_gets_a_fresh_budget() {
     }
     assert!(preview_deadlines(now, 11_000_000_000).is_ok());
 }
+
+#[test]
+fn preview_level_parser_rejects_missing_malformed_and_out_of_range_fields() {
+    for percent in [0, 50, 100] {
+        for muted in [false, true] {
+            let level = preview_level(&json!({"level_percent":percent,"muted":muted})).unwrap();
+            assert_eq!(level.percent(), percent as u8);
+            assert_eq!(level.muted(), muted);
+        }
+    }
+    for bad in [
+        json!({}),
+        json!({"level_percent":50}),
+        json!({"muted":false}),
+        json!({"level_percent":101,"muted":false}),
+        json!({"level_percent":u64::MAX,"muted":false}),
+        json!({"level_percent":-1,"muted":false}),
+        json!({"level_percent":50.5,"muted":false}),
+        json!({"level_percent":"50","muted":false}),
+        json!({"level_percent":null,"muted":false}),
+        json!({"level_percent":50,"muted":0}),
+        json!({"level_percent":50,"muted":"false"}),
+        json!({"level_percent":50,"muted":null}),
+    ] {
+        assert_eq!(preview_level(&bad), Err("invalid_preview_level"), "{bad}");
+    }
+}

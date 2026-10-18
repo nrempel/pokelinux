@@ -243,7 +243,7 @@ fn media_generic_historical_permit_is_not_route_admission() {
 fn preview_preserves_the_app_absolute_start_deadline_after_transport_delay() {
     let mut c = Case::new(true);
     let original = boottime_ns() + 80_000_000;
-    let stamp = c
+    let (stamp, level) = c
         .authority
         .begin_media_preview(
             std::process::id(),
@@ -253,10 +253,13 @@ fn preview_preserves_the_app_absolute_start_deadline_after_transport_delay() {
                 route: "speaker".into(),
                 ttl_ms: 1000,
                 until_boottime_ns: original,
+                level_percent: 50,
+                muted: false,
             },
             boottime_ns(),
         )
         .unwrap();
+    assert_eq!(level, crate::audio::PreviewLevel::new(50, false).unwrap());
     assert!(stamp.intent().until_ns <= original);
     while boottime_ns() < original {
         std::thread::sleep(std::time::Duration::from_millis(1));
@@ -282,11 +285,70 @@ fn preview_rejects_expired_or_unbounded_absolute_deadlines() {
                     &crate::audio::PreviewRequest {
                         route: "speaker".into(),
                         ttl_ms: 1000,
-                        until_boottime_ns: absolute
+                        until_boottime_ns: absolute,
+                        level_percent: 100,
+                        muted: false,
                     },
                     boottime_ns(),
                 )
                 .is_err()
         );
     }
+}
+
+#[test]
+fn preview_level_bounds_are_checked_before_authority_admission() {
+    let mut c = Case::new(true);
+    for percent in [101, u64::MAX] {
+        assert!(
+            c.authority
+                .begin_media_preview(
+                    std::process::id(),
+                    UID,
+                    BACKEND,
+                    &crate::audio::PreviewRequest {
+                        route: "speaker".into(),
+                        ttl_ms: 1000,
+                        until_boottime_ns: boottime_ns() + 900_000_000,
+                        level_percent: percent,
+                        muted: false,
+                    },
+                    boottime_ns(),
+                )
+                .is_err()
+        );
+    }
+}
+
+#[test]
+fn preview_wire_requires_explicit_integer_level_and_boolean_mute() {
+    use serde_json::json;
+    let valid = json!({"op":"media_preview_play","request":{
+        "route":"speaker","ttl_ms":1000,"until_boottime_ns":123,
+        "level_percent":50,"muted":false}});
+    assert!(serde_json::from_value::<crate::AppRequest>(valid.clone()).is_ok());
+    for field in ["level_percent", "muted"] {
+        let mut missing = valid.clone();
+        missing["request"].as_object_mut().unwrap().remove(field);
+        assert!(serde_json::from_value::<crate::AppRequest>(missing).is_err());
+    }
+    for value in [
+        json!(null),
+        json!(-1),
+        json!(50.5),
+        json!("50"),
+        json!(true),
+    ] {
+        let mut malformed = valid.clone();
+        malformed["request"]["level_percent"] = value;
+        assert!(serde_json::from_value::<crate::AppRequest>(malformed).is_err());
+    }
+    for value in [json!(null), json!(0), json!("false"), json!([])] {
+        let mut malformed = valid.clone();
+        malformed["request"]["muted"] = value;
+        assert!(serde_json::from_value::<crate::AppRequest>(malformed).is_err());
+    }
+    let mut extra = valid;
+    extra["request"]["gain"] = json!(0.5);
+    assert!(serde_json::from_value::<crate::AppRequest>(extra).is_err());
 }

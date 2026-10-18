@@ -17,6 +17,7 @@ typedef struct {
  PrSoundsClientIdV1 requested, applied;
  PrSoundsClientRowV1 routes[32];
  uint32_t policy_settled, preview, can_play, can_stop;
+ uint32_t selected_level_percent, selected_muted, can_adjust_preview, preview_reserved;
 } PrSoundsClientViewV1;
 typedef struct {
  uint64_t connection_epoch, token, original_until_boottime_ns;
@@ -65,9 +66,18 @@ int32_t pr_sounds_client_start_v1(PrSoundsClient *client);
 int32_t pr_sounds_client_connected_v1(PrSoundsClient *client, uint64_t epoch);
 int32_t pr_sounds_client_choose_v1(PrSoundsClient *client, const PrSoundsClientIdV1 *route);
 int32_t pr_sounds_client_reconnect_v1(PrSoundsClient *client);
+/* Atomic local next-preview choice: percent 0..100 and muted 0/1. Defaults 100/0.
+ * Invalid pairs never partially update. Active preview, pending effects or queued
+ * intents return BUSY; a read-only status may continue under its original deadline.
+ * Choices are available offline and during read-only status; a pending connection
+ * returns BUSY. Selected values survive connection changes for this client lifetime;
+ * a new client starts 100/0.
+ * No socket operation, effect intent or request/token/deadline mutation. */
+int32_t pr_sounds_client_preview_level_v1(PrSoundsClient *client, uint32_t percent, uint32_t muted);
 /* Explicit Play only while idle with a settled selected logical route.
  * Never queues Play. Packet carries the original absolute BOOTTIME deadline;
- * each prepare recalculates its remaining ttl_ms without renewing it. */
+ * each prepare recalculates its remaining ttl_ms without renewing it. The route,
+ * selected_level_percent and selected_muted are frozen at this explicit choice. */
 int32_t pr_sounds_client_preview_play_v1(PrSoundsClient *client);
 /* Cleanup Stop may wait behind one read-only status under its original deadline.
  * Stop during an in-flight Play closes local channel state: native must close

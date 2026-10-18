@@ -43,13 +43,13 @@ def packet(path,body,pid,uid,cleanup=False,limit=4096,with_peer=False):
 def admin(v,cleanup=False):return packet(RUN/'admin.sock',json.dumps(v).encode(),actor['child'].pid,0,cleanup)
 qml={'records':[],'actor_sends':[],'states':[],'clicks':[]};cursor=0;actor_fd=None
 r['qml']=qml
-state_keys={'routes','requested','applied','status','canChoose','canPlay','canStop','qml_status'}
+state_keys={'routes','requested','applied','status','canChoose','canPlay','canStop','qml_status','previewLevelPercent','previewMuted','canAdjustPreview','qml_level','qml_muted','qml_level50_enabled','qml_level100_enabled','qml_mute_enabled'}
 def decimal(v,signed=False):
  assert type(v)is str and re.fullmatch(r'-?(0|[1-9][0-9]*)'if signed else r'0|[1-9][0-9]*',v);return int(v)
 def page(value,after):
  global cursor,actor_fd
  assert set(value)in[{'operation','state','telemetry'},{'operation','state','telemetry','dispatch'}]
- model=value['state'];assert set(model)==state_keys and type(model['routes'])is list and all(type(model[k])is bool for k in ['canChoose','canPlay','canStop'])and all(type(model[k])is str for k in ['requested','applied','status','qml_status']);assert len(qml['states'])<4096;qml['states'].append({'observed_boottime_ns':now(),'state':model})
+ model=value['state'];assert set(model)==state_keys and type(model['routes'])is list and all(type(model[k])is bool for k in ['canChoose','canPlay','canStop','previewMuted','canAdjustPreview','qml_muted','qml_level50_enabled','qml_level100_enabled','qml_mute_enabled'])and all(type(model[k])is str for k in ['requested','applied','status','qml_status','qml_level'])and type(model['previewLevelPercent'])is int and 0<=model['previewLevelPercent']<=100;assert model['qml_level']==str(model['previewLevelPercent'])+'%'and model['qml_muted']==model['previewMuted']and all(model[k]==model['canAdjustPreview']for k in ['qml_level50_enabled','qml_level100_enabled','qml_mute_enabled']);assert len(qml['states'])<4096;qml['states'].append({'observed_boottime_ns':now(),'state':model})
  t=value['telemetry'];assert set(t)=={'after','next','available_through','more','overflow','records','complete_play_sends','play_choices'}and t['after']==after and t['overflow']is False and len(t['records'])<=4 and after<=t['next']<=t['available_through']<=128 and t['more']==(t['next']<t['available_through'])
  for record in t['records']:
   assert record['marker']==cursor+1;cursor+=1;qml['records'].append(record)
@@ -67,8 +67,8 @@ def check_choices(t):
   attempts=[x for x in qml['actor_sends']if json.loads(x['wire_utf8'])['op']=='media_preview_play'and x['record']['play_choice']==ordinal];complete=[x for x in attempts if x['record']['complete_send']];assert len(complete)<=1
   until=None;ttl=1001
   for x in attempts:
-   wire=json.loads(x['wire_utf8']);request=wire['request'];assert set(wire)=={'op','request'}and set(request)=={'route','ttl_ms','until_boottime_ns'}and request['route']=='media-a7'and type(request['ttl_ms'])is int and 1<=request['ttl_ms']<=ttl<=1001 and type(request['until_boottime_ns'])is int and request['until_boottime_ns']>0
-   assert until is None or until==request['until_boottime_ns'];until=request['until_boottime_ns'];ttl=request['ttl_ms']
+   wire=json.loads(x['wire_utf8']);request=wire['request'];assert set(wire)=={'op','request'}and set(request)=={'route','ttl_ms','until_boottime_ns','level_percent','muted'}and request['route']=='media-a7'and type(request['level_percent'])is int and request['level_percent']==50 and type(request['muted'])is bool and request['muted']==(ordinal==2)and type(request['ttl_ms'])is int and 1<=request['ttl_ms']<=ttl<=1001 and type(request['until_boottime_ns'])is int and request['until_boottime_ns']>0
+   assert 0<request['until_boottime_ns']-decimal(x['record']['before_boottime_ns'])<=1_000_000_000;assert until is None or until==request['until_boottime_ns'];until=request['until_boottime_ns'];ttl=request['ttl_ms']
    if x['record']['complete_send']:assert decimal(x['record']['after_boottime_ns'])<until
   expected={'ordinal':ordinal,'attempts':len(attempts),'complete_sends':len(complete)}
   if complete:expected['original_until_boottime_ns']=str(until)
@@ -136,17 +136,24 @@ try:
    if(R/'pcm/qml/result.json').exists():raise RuntimeError('observer concluded before '+name)
    time.sleep(.002)
   raise TimeoutError('one original six-second case cutoff waiting for '+name)
- idle=lambda s:s['canPlay']and s['requested']=='media-a7'and s['applied']==''and s['status']==s['qml_status']=='Output selected; preview idle'
- playing=lambda s:s['canStop']and s['requested']==s['applied']=='media-a7'and s['status']==s['qml_status']=='Preview playing'
- retiring=lambda s:s['status']==s['qml_status']=='Preview retiring'
+ idle=lambda s:s['canAdjustPreview']and s['canPlay']and s['requested']=='media-a7'and s['applied']==''and s['status']==s['qml_status']=='Output selected; preview idle'
+ playing=lambda s:not s['canAdjustPreview']and s['canStop']and s['requested']==s['applied']=='media-a7'and s['status']==s['qml_status']=='Preview playing'
+ starting=lambda s:not s['canAdjustPreview']and s['status']==s['qml_status']=='Preview starting'
+ retiring=lambda s:not s['canAdjustPreview']and s['status']==s['qml_status']=='Preview retiring'
+ def effect_attempts():return {op:sum(json.loads(v['wire_utf8'])['op']==op for v in qml['actor_sends'])for op in ['media_route','media_preview_play','media_preview_stop']}
+ def local_choice(op,button,choice,muted):
+  before=effect_attempts();dispatch=clicked(op,button,choice)
+  observed=model_until(lambda s:idle(s)and s['previewLevelPercent']==50 and s['previewMuted']is muted,after_ns=decimal(dispatch['before_boottime_ns']))
+  component();after=effect_attempts();assert before==after,'local Rust level/mute choice emitted an effect packet'
+  return {'dispatch':dispatch,'state':observed['state'],'observed_boottime_ns':observed['observed_boottime_ns'],'effect_attempts_before':before,'effect_attempts_after':after}
  r['actual_granted_catalog']=model_until(lambda s:s['canChoose']and any(x['id']=='media-a7'for x in s['routes']));assert qml['actor_sends']and json.loads(qml['actor_sends'][0]['wire_utf8'])['op']=='media_status'
- r['route_click']=clicked('click_route','route_media-a7',0);r['route_send']=sent_until('media_route');r['selected_idle']=model_until(idle,after_ns=decimal(r['route_click']['before_boottime_ns']))
+ r['route_click']=clicked('click_route','route_media-a7',0);r['route_send']=sent_until('media_route');r['selected_idle']=model_until(idle,after_ns=decimal(r['route_click']['before_boottime_ns']));assert r['selected_idle']['state']['previewLevelPercent']==100 and r['selected_idle']['state']['previewMuted']is False
  observer=start(['/usr/bin/python3',str(SRC/'pcm_observer.py'),str(R/'pcm/qml')],'actual-QML-and-full-paired-PCM.log',11040,env,(0,1));wait(lambda:(R/'pcm/qml/ready.json').exists(),5);r['monitor_ready']=json.loads((R/'pcm/qml/ready.json').read_text());assert r['monitor_ready']['no_fixture_media_source'];case_until=r['monitor_ready']['original_capture_until_boottime_ns'];observer_wait_until=min(W,case_until+4_000_000_000)
- setup=True;r['setup_qualified']=True;r['phase']='actual-unshown-QML-route-Play-Stop-new-Play'
- first_click=clicked('click_play','previewPlay',1);first_send=sent_until('media_preview_play',1);r['first_Play']={'dispatch':first_click,'send':first_send};publish('qml-play-sent.json',r['first_Play']);r['first_QML_Playing']=model_until(playing,after_ns=decimal(first_click['before_boottime_ns']));first_stage=stage('before-Stop.json');r['before_Stop_full_PCM']=first_stage
+ setup=True;r['setup_qualified']=True;r['phase']='actual-unshown-QML-half-Stop-quiet-muted-Play';r['local_level_50']=local_choice('click_level50','previewLevel50',0,False)
+ first_click=clicked('click_play','previewPlay',1);first_send=sent_until('media_preview_play',1);r['first_Play']={'dispatch':first_click,'send':first_send};publish('qml-play-sent.json',r['first_Play']);r['first_QML_Starting']=model_until(starting,after_ns=decimal(first_click['before_boottime_ns']));r['first_QML_Playing']=model_until(playing,after_ns=decimal(first_click['before_boottime_ns']));first_stage=stage('before-Stop.json');r['before_Stop_full_PCM']=first_stage
  r['QML_Playing_before_Stop']=model_until(playing,after_ns=first_stage['full_PCM']['captured_boottime_ns']);first_pid=first_stage['producer']['pid'];firstfd=os.pidfd_open(first_pid,os.O_NONBLOCK);producerfds.append((first_pid,firstfd));first_fields=Path(f'/proc/{first_pid}/stat').read_text().rsplit(') ',1)[1].split();r['producer_live_before_Stop']=not bool(select.select([firstfd],[],[],0)[0])and int(first_fields[1])==audio['child'].pid and first_fields[19]==first_stage['producer']['starttime']
  stop_click=clicked('click_stop','previewStop',1);stop_send=sent_until('media_preview_stop',1);r['QML_Retiring']=model_until(retiring,after_ns=decimal(stop_click['before_boottime_ns']));r['explicit_Stop']={'dispatch':stop_click,'send':stop_send,'observed_retiring':r['QML_Retiring']};publish('qml-stop-sent.json',r['explicit_Stop'])
- r['independent_quiet_stage']=stage('quiet.json');r['QML_idle_before_new_Play']=model_until(idle,after_ns=r['independent_quiet_stage']['captured_boottime_ns']);second_click=clicked('click_play','previewPlay',2);second_send=sent_until('media_preview_play',2);r['new_explicit_Play']={'dispatch':second_click,'send':second_send};publish('qml-new-play-sent.json',r['new_explicit_Play']);r['new_QML_Playing']=model_until(playing,after_ns=decimal(second_click['before_boottime_ns']));code=scope.finish(observer,observer_wait_until);assert code in[0,1]
+ r['independent_quiet_stage']=stage('quiet.json');r['QML_idle_before_new_Play']=model_until(idle,after_ns=r['independent_quiet_stage']['captured_boottime_ns']);r['local_mute']=local_choice('click_mute','previewMute',1,True);second_click=clicked('click_play','previewPlay',2);second_send=sent_until('media_preview_play',2);r['new_explicit_Play']={'dispatch':second_click,'send':second_send};publish('qml-new-play-sent.json',r['new_explicit_Play']);r['new_QML_Starting']=model_until(starting,after_ns=decimal(second_click['before_boottime_ns']));r['new_QML_Playing']=model_until(playing,after_ns=decimal(second_click['before_boottime_ns']));code=scope.finish(observer,observer_wait_until);assert code in[0,1]
  pcm=json.loads((R/'pcm/qml/result.json').read_text());r['PCM']=pcm;r['PCM_result_sha256']=sha(R/'pcm/qml/result.json');assert pcm['classification']in['ACTUAL_PCM_ORACLES_PASS','BEHAVIORAL_SAMPLE_FAILURE'];component()
  if pcm.get('passed'):
   second_pid=pcm['new_explicit_original_start_gate']['producer']['pid'];secondfd=os.pidfd_open(second_pid,os.O_NONBLOCK);producerfds.append((second_pid,secondfd));r['new_producer_live_before_cleanup']=not bool(select.select([secondfd],[],[],0)[0])
