@@ -91,9 +91,11 @@ SyntheticTree service, in the same app. Root reviewed five original1080×2424
 captures and external Pixel10 profile metadata. The prior failed observer and
 single-tap attempts remain separate. Direct normal QWindow DPR/Qt.enabled getters,
 all input races, cold full-shell startup, default-Cargo Qt, ARM UI and physical
-backlight remain open. A separate accepted-click/readonly overlap repair now
-passes real host C ABI tests; these published GUI images retain the preceding
-engine. Joining the repaired archive into a new normal Qt app remains separate.
+backlight remain open. These published GUI images retain the preceding engine.
+The repaired Rust archive now passes native x86 and ARM normal Qt build/install
+and offscreen component execution. A new x86 touch attempt fails the first75%
+transition: one input, no raw change, cause unknown. The earlier success is not
+inherited; persistent tap-outcome feedback is now being regression-tested.
 Future captures must qualify the actual
 [Pixel10 profile](../docs/native-phone-display-profile.md); no resized capture is valid evidence.
 
@@ -106,7 +108,8 @@ All19 client waits/38 PIPE EOFs and the separate wrong-PID writer close; Stop
 actually joins within its original200ms. Format, strict all-target Clippy and
 normal host/ARM Release archives pass with six strong C APIs each. These archives
 are build results; the actual host C ABI fixture executes a debug test binary,
-and ARM execution/new normal Qt integration are not inferred.
+and ARM execution/new normal Qt integration are not inferred from those Rust tests.
+Separate native Qt execution is recorded below.
 
 The first post-repair attempt exposed a fixture clock-reference defect after the
 correct first Set: it compared sender TTL with later receive time. The precise
@@ -114,3 +117,24 @@ test-only successor samples before releasing usable Status, retains the original
 cutoff, and fails against the archived original engine before passing unchanged
 against the repair. Earlier failed-attempt child receipt gaps remain explicit.
 See [hash-only provenance](../docs/evidence/native-settings-pending-choice-provenance.json).
+
+The new platform join compiles the production Settings targets with the repaired
+Rust archive, links each matching Settings/appearance archive once, verifies
+six/eleven strong C APIs and native loader resolution, then installs root-owned
+files. The same component ELF is copied into a guest UID11050 runtime and checked
+before/after actual execution; host private directories stay private. Both native
+x86 and ARM consumers pass actual C ABI/refusal/200ms join and normal Settings plus
+shared appearance QML construction without showing a window. ARM reproduces the
+exact signed cached eight-tool addition353→361, preserving all353 versions and
+all50 selected Qt libraries/plugins. Its34 command waits/merged PIPE EOFs close
+under original bounds; the x86 join closes29 waits/36 EOFs. ARM normal main/window,
+Source/brightness composition and graphics remain unqualified. The earlier x86
+component exec-path permission failure is retained as setup, with no runtime RED.
+
+The updated x86 app then fails the first75% touch transition within the original
+five seconds. Root views initial25 ready→unavailable/pending→25 ready;116 independent
+raw samples stay100/max400/actual120, with no mutation events. Session and app stay
+healthy, but Qt.clicked/first wire Set/reply are not observed. Only the initial
+state passes; the actor/service/VM/container close. No second input is sent. The
+lost outcome is a separate usability gap, not evidence identifying the original
+failure. See [platform and failed-trace provenance](../docs/evidence/native-settings-qt-platform-provenance.json).

@@ -85,8 +85,10 @@ them independently of rounded percent or observation cadence. Deployment
 alone selects a backlight backend and device. LinuxBacklight requires the Linux
 sysfs class; the qualified SyntheticTree tests use authored files with no driver
 fallback. The prepared normal Settings touch/change/unavailable/recovery path
-also passes on x86 KVM with that authored backend, using the same Rust service
-interfaces. Requested and optional actual attributes are distinct, and neither is
+also passes on an earlier x86 KVM cohort with that authored backend, using the
+same Rust service interfaces. A newer client has separate native x86/ARM Qt
+build/install/offscreen C ABI proof; its current x86 tap trace fails and is not
+promoted from the earlier success. No ARM visible UI is qualified. Requested and optional actual attributes are distinct, and neither is
 physical luminance. A Pixel panel without a usable Linux backlight interface will
 need its own independently qualified backend; these host tests add no supported
 phone model.

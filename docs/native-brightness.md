@@ -444,17 +444,40 @@ resolved. A separate client correction now preserves an accepted unsent choice
 through fresh same-revision readonly pending work, under its original one-second
 deadline. Four new real-socket cases and the seven existing groups pass after
 compiled RED, with explicit earlier fixture-error evidence. That repaired Rust
-archive has not yet been joined into this normal Qt/GUI cohort; actor busy refusal
-and all post-first-send uncertainty/no-replay rules stay unchanged. See the
+archive has a separate native Qt qualification and failed current touch attempt
+below; these five published baseline images retain the earlier engine. Actor busy
+refusal and all post-first-send uncertainty/no-replay rules stay unchanged. See the
 [client correction](evidence/native-settings-pending-choice-provenance.json) and
 [five-state provenance](evidence/native-settings-brightness-tracer-provenance.json).
+
+## Updated native Qt builds and current touch gate
+
+The accepted-choice client now links into normal Qt6.12 Settings builds on both
+native x86 and an actual ARM7.1.6 guest kernel. Native loader/install checks and
+UID11050 C ABI plus real adapter/QML construction pass with the unchanged
+assertions and200ms owned-thread Stop budget. No ARM window is shown. ARM adds
+only the exact eight previously qualified signed build tools to353 packages,
+preserving every existing version and all50 selected Qt libraries/plugins.
+The two architecture results remain separate from crossbuilds and GUI evidence.
+
+The fresh x86 normal app then fails the first75% change: one touch,116 raw samples
+at requested100/max400/actual120, no MODIFY/CLOSE_WRITE events. Root views initial
+25 ready, immediate unavailable/pending and final25 ready. The session and app
+remain healthy, but the exact Qt click/first wire Set/reply boundary is unobserved.
+Only the initial state passes; the earlier five-state baseline is not inherited.
+Actor/service/guest/QEMU/container custody closes despite the failed trace.
+
+The client currently lets a fresh readonly response replace the displayed outcome
+of a tap. A persistent outcome correction is being tested independently, without
+retrying writes or changing Source, cadence or deadlines. See the
+[platform and failed-trace provenance](evidence/native-settings-qt-platform-provenance.json).
 
 ## Remaining integration and hardware gates
 
 The finite Settings touch/change/unavailable/recovery path is qualified only for
-the explicit SyntheticTree backend above. Joining the accepted-intent correction
-into normal Qt, actor busy/refusal UX, cold startup and full-shell composition
-retain their own gates. Linux driver execution and matched Pixel
+the earlier explicit SyntheticTree backend cohort above. The updated normal app's
+touch path, persistent outcome/actor refusal UX, cold startup and full-shell
+composition retain their own gates. Linux driver execution and matched Pixel
 panel/backlight discovery, brightness response, physical readback, suspend/resume,
 lock behavior and power/drain measurements remain separate gates. No phone has
 been accessed, and this component does not advance calls, IMS or SMS hardware

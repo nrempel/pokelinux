@@ -1,0 +1,306 @@
+{
+  "schema": 1,
+  "scope": "Separate native x86 and ARM Qt6.12 normal Settings builds/install/offscreen C ABI component execution for d919 Rust engine; current new x86 five-state touch trace FAILED. No physical phone or ARM graphics qualification.",
+  "engine_sha256": "d9191ce0878e2c449bbb4c69ede9870d3f06f0155c56e65c4d0dae4d8324796f",
+  "x86": {
+    "qualification": {
+      "bytes": 20848,
+      "sha256": "a0f8af0a5eceb022095097bb92f72736c600e7b81d7535ac79455430f8f756ff"
+    },
+    "execution": {
+      "bytes": 11993,
+      "sha256": "8b4b049f129bdd5370e3d9bc265fc1b8af984ccc2199d1b0bb678c7665daae6e"
+    },
+    "native_Qt_result": {
+      "bytes": 14901,
+      "sha256": "d5f9637da9bf2385269b94a940b34aa3fa060e16e815c9d943ce994e8ef8b800"
+    },
+    "normal_ELF": {
+      "bytes": 6115600,
+      "sha256": "aa3487f1a838ef204484cb720c06827009e1bb76e50f45d73e71d6ec5e7e0937"
+    },
+    "ELF_machine": 62,
+    "current_Settings_archive_sha256": "a6ba320f20908d8de1298e58127d7fa1d5262fd0a26fb9e05616dcabab45b50b",
+    "actual_UID11050_component_two_PASS_lines": true,
+    "same_built_component_guest_copy_hash_before_after": true,
+    "actual_waits": 29,
+    "PIPE_EOFs": 36,
+    "all_original_bounds_and_VM_container_input_closure": true,
+    "preserved_Qt4_setup_failure": {
+      "bytes": 11088,
+      "sha256": "e36af67d682ba76ae5dcc830760e6a9d5eb376359dc83b538cf0a18d85c8001d"
+    }
+  },
+  "ARM": {
+    "qualification": {
+      "bytes": 8720,
+      "sha256": "f65ff6dc3d4b3942da75e6e308af7f27671752902d4a45681d4de6958ae567ee"
+    },
+    "provider_manifest": {
+      "bytes": 3754,
+      "sha256": "87c3457330bc02d3729a9fd36048509335c59e67116baa7b28698697d899b205"
+    },
+    "source_closure": {
+      "bytes": 18355,
+      "sha256": "798d1b091eea53b27ffc2011eed61e8794bb0c3b6bbaa45d595261b856bc5d52"
+    },
+    "tool_closure": {
+      "bytes": 6354,
+      "sha256": "4c8b1e3421be9796ea17d1d1e38e7a6720ba171e18be488a57cbaa81cc930f02"
+    },
+    "native_environment": {
+      "architecture": "aarch64",
+      "kernel_release": "7.1.6-1-aarch64-ARCH",
+      "Qt": "6.12.0",
+      "GCC": "16.1.1",
+      "CMake": "4.4.4",
+      "Ninja": "1.13.2",
+      "native_tools_ELF_machine": 183,
+      "base_packages": 353,
+      "installed_packages": 361,
+      "exact_signed_cached8_only": true,
+      "Qt50_before_and_after_unchanged": true,
+      "x86_367_inventory_used": false
+    },
+    "normal_build": {
+      "binaries": {
+        "pokelinux-settings": {
+          "sha256": "6f9fa8ec6401dfb0254bed07c11c1cc808d6d4b58c1ac057ae0280b0faf1081f",
+          "bytes": 6294640,
+          "ELF_machine": 183
+        },
+        "settings-client-component-test": {
+          "sha256": "2f03b5476fd6fea9fab84cddef1c91a39393f9c3cb4d7a0bc6b155b687c6ddcf",
+          "bytes": 6295328,
+          "ELF_machine": 183
+        }
+      },
+      "CMake_production_targets": [
+        "pokelinux-settings",
+        "settings-client-component-test"
+      ],
+      "matching_selected_archives_exactly_once": true,
+      "strong_C_API": {
+        "settings": [
+          "pr_settings_client_free_v1",
+          "pr_settings_client_join_v1",
+          "pr_settings_client_new_v1",
+          "pr_settings_client_set_v1",
+          "pr_settings_client_stop_v1",
+          "pr_settings_client_view_v1"
+        ],
+        "appearance": [
+          "pr_appearance_client_available_v1",
+          "pr_appearance_client_free_v1",
+          "pr_appearance_client_new_v1",
+          "pr_appearance_client_ready_v1",
+          "pr_appearance_client_received_v1",
+          "pr_appearance_client_refresh_v1",
+          "pr_appearance_client_report_v1",
+          "pr_appearance_client_step_v1",
+          "pr_appearance_client_stop_v1",
+          "pr_appearance_client_tick_v1",
+          "pr_appearance_client_view_v1"
+        ]
+      },
+      "warnings_as_errors": true,
+      "component_assertions_enabled_by_UNDEBUG": true,
+      "native_ldd_r_no_missing_or_undefined": true,
+      "native_installed_files": {
+        "/usr/libexec/pokelinux/pokelinux-settings": {
+          "sha256": "6f9fa8ec6401dfb0254bed07c11c1cc808d6d4b58c1ac057ae0280b0faf1081f",
+          "UID": 0,
+          "GID": 0,
+          "mode": "0755"
+        },
+        "/usr/share/pokelinux/appearance/PhoneAppearance.qml": {
+          "sha256": "705ab25799cba18095a76f4fb47e70eb10099ca035426d7e4400fa9cef8452bc",
+          "UID": 0,
+          "GID": 0,
+          "mode": "0644"
+        },
+        "/usr/share/applications/org.omarchy.Settings.desktop": {
+          "sha256": "3b6ade1081e3a72a010bb2b33b1cf41c828c10513fd3521c36101cbc098eb7d0",
+          "UID": 0,
+          "GID": 0,
+          "mode": "0644"
+        }
+      },
+      "normal_six_argument_contract_compiled": {
+        "argc": 7,
+        "UID": 11050,
+        "compiled_main_sha256": "996e0a1acd9d2a1438875ab989eeb2163a8cead32ef628a64bc9df3a630edf07",
+        "normal_main_not_executed": true
+      },
+      "normal_main_executed": false,
+      "separate_direct_compiler_process_wait_claimed": false
+    },
+    "component_execution": {
+      "actual_UID_GID": [
+        11050,
+        11050
+      ],
+      "supplementary_groups": [],
+      "real_Settings_and_shared_appearance_adapters": true,
+      "normal_embedded_Settings_QML_and_installed_PhoneAppearance_QML_created": true,
+      "unavailable_status_and_disabled25_75_controls_asserted": true,
+      "C_ABI_layout_null_refusal_actual_join_asserted": true,
+      "original_engine_Stop_ns": 200000000,
+      "original_process_seconds": 30,
+      "same_ELF_runtime_copy_hash_before_and_after": true,
+      "runtime_directory_mode": "0700",
+      "runtime_component_mode": "0555",
+      "actual_wait_and_merged_PIPE_EOF": true,
+      "wait_and_EOF_before_original_cutoff": true,
+      "returncode": 0,
+      "stdout_sha256": "888a653ba42263da4046e49ac6e99a61f9571c80d8a5d85c18c60c69c30c8fd6",
+      "offscreen": true,
+      "window_shown": false
+    },
+    "closure": {
+      "host_receipt": {
+        "bytes": 24086,
+        "sha256": "b6f07e23305b84bc2623688a9892217681b3d40dc060bfd657dcbdf87022d2f4"
+      },
+      "guest_receipt": {
+        "bytes": 38817,
+        "sha256": "f4e44c45c127afdb7d0126c7e8101334ab68f26872b4ab9e2969cb6df3cb1c75"
+      },
+      "native_Qt_receipt": {
+        "bytes": 14255,
+        "sha256": "06865de8bb9b08ed9cdf6310f5a8d8ae3e853129ac456fb6794ba46b2666eb24"
+      },
+      "host_owned_commands": 11,
+      "guest_owned_commands": 23,
+      "all_34_actual_direct_parent_waits_and_merged_PIPE_EOF_before_original_cutoffs": true,
+      "container_exit": 0,
+      "container_running": false,
+      "container_pid": 0,
+      "container_OOMKilled": false,
+      "exact_CID_removed_and_absent": true,
+      "same_daemon": true,
+      "cleanup_errors": [],
+      "selected76_inputs_unchanged": true,
+      "readonly_raw_kernel_initrd_full_stream_hashes_before_and_after_under_shared_input_lock": true,
+      "private_output_bytes_at_runner_closure": 119760947,
+      "private_output_original_bound": 536870912,
+      "host_runner_exit": 0,
+      "guest_functional_duration_ns": 148541672586,
+      "host_runner_duration_ns": 185861059447,
+      "original_bounds": {
+        "host_outer_seconds": 900,
+        "host_work_seconds": 870,
+        "QEMU_seconds": 840,
+        "guest_work_seconds": 720,
+        "guest_close_seconds": 724,
+        "guest_vCPUs": 6,
+        "guest_memory_MiB": 4096,
+        "host_container_CPUs": 8,
+        "host_container_memory": "7g",
+        "tmpfs_overlay_bytes": 2147483648,
+        "RAM_output_bytes": 536870912,
+        "normal_build_seconds": 300,
+        "normal_ELF_nm_seconds": 10,
+        "archive_nm_seconds": 30,
+        "C++_component_seconds": 30,
+        "original_engine_Stop_ns": 200000000
+      },
+      "guest_shutdown_boundary": {
+        "functional_build_component_result_saved_before_request": true,
+        "owner": "inherited Python subprocess.run with timeout cleanup",
+        "separate_poweroff_wait_PIPE_EOF_receipt_claimed": false,
+        "QMP_or_direct_QEMU_wait_claimed": false,
+        "timeout_rule": "min(15 seconds, remaining original guest CLOSE)",
+        "original_close_until_ns": 740195730287,
+        "request_outcome": "unclaimed by this pre-request functional result; outer VM/container exit is checked separately"
+      },
+      "independent_QMP_or_direct_QEMU_wait_claimed": false
+    },
+    "unqualified": [
+      "normal visible ARM Settings window",
+      "normal main runtime or all six arguments exercised on ARM",
+      "ARM Source/actor/brightness-service composition",
+      "ARM compositor/graphics/DPR/capture",
+      "physical phone or hardware behavior"
+    ]
+  },
+  "current_new_x86_GUI": {
+    "qualification": {
+      "bytes": 16724,
+      "sha256": "9e32fcded115289644a2207612cc2be384fb0cde19c5506664043b78a3116987"
+    },
+    "execution": {
+      "bytes": 12024,
+      "sha256": "f2c5ba46a4ee48a69d37fda1d9488ab854263605b1f09155281117fd5b5644b9"
+    },
+    "result": {
+      "bytes": 384395,
+      "sha256": "7dad0c56219ff62bb71bf2ca61203136f3d6561fcb1dbf73803f53cbf592f95a"
+    },
+    "Root_failed_visual_review": {
+      "bytes": 1606,
+      "sha256": "5075b65585b5b2373d3cfb3d6ee83b08abb16a83e8454e7c50c3863b0250336d"
+    },
+    "whole_trace_passed": false,
+    "groups_passed": [
+      1
+    ],
+    "one_actual75_input_no_retry": true,
+    "raw_samples": 116,
+    "requested_all_samples": 100,
+    "max_all_samples": 400,
+    "optional_actual_all_samples": 120,
+    "inotify_events": 0,
+    "Root_observed_frames": [
+      {
+        "file": "Settings-initial25-attempt-2.png",
+        "bytes": 51477,
+        "sha256": "25ab583c1ed87e44749683f19d6b1a10ac71db2807c7ea2ee937ff0e955b4d04",
+        "Root_viewed_original_resolution": true,
+        "observed_text": "Brightness: 25%",
+        "observed_status": "Brightness ready",
+        "no_crop_resize_or_repaint": true
+      },
+      {
+        "file": "Settings-first75-immediate-post-tap.png",
+        "bytes": 53745,
+        "sha256": "e9f0779c9d53880bd93b775c8e167b5a5e31a7ef0974dcd473f6c1b6bf5393f2",
+        "Root_viewed_original_resolution": true,
+        "observed_text": "Brightness unavailable",
+        "observed_status": "Brightness change pending",
+        "no_crop_resize_or_repaint": true
+      },
+      {
+        "file": "Settings-first75-failure.png",
+        "bytes": 50055,
+        "sha256": "17cb4eb5a942b3fad62b11e5a35210b06f8ea00451d3b3d965194dccb0062859",
+        "Root_viewed_original_resolution": true,
+        "observed_text": "Brightness: 25%",
+        "observed_status": "Brightness ready",
+        "no_crop_resize_or_repaint": true
+      }
+    ],
+    "actual_waits": 95,
+    "PIPE_EOFs": 102,
+    "separate_adopted_wait": 1,
+    "VM_container_and_input_closure": true,
+    "precise_cause_unknown": true,
+    "Qt_clicked_or_first_wire_Set_or_reply_observed": false,
+    "no_new_security_or_Source_campaign": true
+  },
+  "earlier_five_state_baseline": {
+    "public_provenance": {
+      "bytes": 8494,
+      "sha256": "74ecb1c73e84ea24e2a7bda5c4289ea6203c0e2132a54b2ab2a34d7cf3cc99cb"
+    },
+    "engine_sha256": "c199f96e4932cbb0dc0be034862477af8b4eb5f5414a843c94dd4e1501937e15",
+    "success_not_inherited_by_current_engine": true
+  },
+  "limits": [
+    "Build and offscreen component execution do not establish normal app main/window or ARM Source/driver integration.",
+    "Fresh readonly attributes do not acknowledge an uncertain earlier Set.",
+    "Current tap outcome is lost during readonly recovery; persistent outcome UX is being regression-tested separately.",
+    "No Source policy, cadence, deadline or input retry changed.",
+    "Linux sysfs driver, matched Pixel panel, cold full-shell and phone gates remain open."
+  ]
+}
