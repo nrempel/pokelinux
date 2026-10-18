@@ -81,8 +81,11 @@ now has separate actual actor/CLI/staging tests. The core installer requires an
 explicit Settings launcher and stages its desktop entry; this does not grant
 DisplayBrightness or qualify the normal graphical session.
 
-The normal visible window, actor/Source/brightness-driver composition, native
-Pixel10 geometry and original captures remain unqualified. Default-Cargo Qt,
+A [first normal Settings frame](../docs/native-brightness.md#first-normal-settings-frame)
+now reads25% through the real actor and installed synthetic brightness service.
+External native Pixel10 geometry and the original capture are qualified; direct
+normal QWindow DPR remains unmeasured. The full visual run fails its image observer
+before any click, so input/change/unavailable/recovery remain unqualified. Default-Cargo Qt,
 ARM and phone hardware also remain separate gates. Future captures must qualify
 the actual [Pixel10 profile](../docs/native-phone-display-profile.md); no resized
 capture is valid evidence.

@@ -102,7 +102,10 @@ unprivileged adapter/QML construction. Rust owns transport, state, deadlines and
 thread shutdown; Qt renders the shared Omarchy theme. The component window is
 never shown. Fixed desktop launch now passes six actor groups, three CLI and
 three staging groups plus six unchanged Sounds controls, with separate host/ARM
-builds. The visible actor/service tracer remains open.
+builds. A prepared native Pixel-profile Settings window now visibly reads25%
+through the actual actor and installed Rust service. Its five-state tracer stops
+in the image observer before any click; change/recovery and hardware gates remain
+open. See the original first frame in the brightness report.
 
 
 > **Development status:** no physical phone has been accessed. There is no verified bootable phone image. Modem communication, carrier IMS registration, physical call audio, Pixel GPU rendering, camera capture and suspend remain unverified.

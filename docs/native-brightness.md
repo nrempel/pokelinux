@@ -5,8 +5,9 @@ local observation/intent ownership and the lifecycle actor's app permission.
 The production daemon and its concrete Rust client now pass joined native-host
 process/socket tests against authored SyntheticTree attributes. A lifecycle
 Provider adapter and explicit installed configuration have separate qualified
-host evidence. Full actor/Settings composition, the visible Settings window,
-installed service and physical display change remain open.
+host evidence. A first prepared normal Settings frame now reads through the actual
+actor and installed service. Interactive change/recovery, cold startup and physical
+display behavior remain open.
 
 ## Attribute backend
 
@@ -332,10 +333,40 @@ six-argument UID11050 process, not the normal Qt window; no Source, compositor,
 brightness operation or phone is selected. See the
 [desktop provenance](evidence/native-settings-desktop-provenance.json).
 
+## First normal Settings frame
+
+The prepared x86 KVM session now starts the normal fixed desktop client and maps
+the actual UID11050 Settings window. It reads25% through the lifecycle actor and
+installed PID1 Rust service against explicit SyntheticTree attributes100/max400.
+The shared Omarchy Tokyo theme is active. Root inspected the original unedited
+frame at1080×2424; external compositor/window/output/capture metadata qualifies
+the Pixel10 profile with2.625 scale and65×146mm nominal output size. The normal
+QWindow DPR is not measured directly. The compositor debug banner and pointer
+remain in the capture; this is a prepared prototype session, not full-shell or
+phone evidence.
+
+![First normal Settings frame](assets/settings-brightness-first-frame.png)
+
+The full attempt is a failure: its original20-second/eight-capture image observer
+expects a button fill different from the background. This theme renders equal
+colors with thin borders. The final frame visibly says “Brightness ready”, but
+that observer never admits a click. No change/unavailable/recovery steps pass.
+The earlier import-setup failure is also retained separately. The new image
+observer must first reproduce and correct detection on these same original PNGs;
+production code and the behavior assertions remain unchanged.
+
+Installed brightness start and Stop are separate measured evidence: normalMain0,
+retained pidfd dead, process/socket absent and empty exact cgroup with no restart.
+This does not establish fresh cold autostart or a fixture parent wait for PID1's
+child. The actor/audio/appearance owners and VM/container close under their
+original bounds despite the failed visual aggregate. See the
+[first-frame provenance](evidence/native-settings-first-frame-provenance.json).
+
 ## Remaining integration and hardware gates
 
-Next are the configured full lifecycle actor, visible themed UI, explicit service
-installation and a synthetic VM end-to-end tracer. Linux driver execution and matched Pixel
+Next is the actual Settings input/change/unavailable/recovery sequence through
+the configured lifecycle actor and installed service. Cold startup and full-shell
+composition retain their own gates. Linux driver execution and matched Pixel
 panel/backlight discovery, brightness response, physical readback, suspend/resume,
 lock behavior and power/drain measurements remain separate gates. No phone has
 been accessed, and this component does not advance calls, IMS or SMS hardware

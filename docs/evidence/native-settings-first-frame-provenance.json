@@ -1,0 +1,116 @@
+{
+  "schema": 1,
+  "scope": "First actual normal Settings window reading SyntheticTree brightness through the current lifecycle actor and installed PID1 Rust brightness service. Native x86 KVM prepared session only. Whole five-state tracer FAILED its pixel observer before any input; no brightness-change or recovery qualification.",
+  "aggregate_passed": false,
+  "qualified_narrow_first_frame": true,
+  "Root_original_image_visually_reviewed": true,
+  "Root_visible_text": [
+    "Settings",
+    "Display brightness",
+    "Brightness: 25%",
+    "Brightness ready",
+    "25%",
+    "75%"
+  ],
+  "original_capture": {
+    "file": "docs/assets/settings-brightness-first-frame.png",
+    "bytes": 51477,
+    "sha256": "4d0d32b4cbde7c23d32e4b868bdfddfd4362bfb9ecc0d712e9b8dea4ea4d3cf7",
+    "width": 1080,
+    "height": 2424,
+    "resized_cropped_or_repainted": false,
+    "debug_banner_and_cursor_retained": true
+  },
+  "selection": {
+    "bytes": 233792,
+    "sha256": "aeede56b8495d6c322aaf65c035ece30e4e6a43b89f7737b468f2a840a82a681"
+  },
+  "execution": {
+    "bytes": 12024,
+    "sha256": "dc445d9f73cd211ac2a2f39275211191c3c73ca7a417f8436ee95084e6e8d5b8"
+  },
+  "guest_result": {
+    "bytes": 316790,
+    "sha256": "8fa6228397b5ee109c74d8479b3f153380a8438e30d1bab1f99fce02db265b3d"
+  },
+  "current_owner": {
+    "bytes": 5694472,
+    "sha256": "101f72248d07936b684dc5c571c49d9b946e836ddfe6e091205e6fbf63030028",
+    "ELF_machine": 62,
+    "interpreter": "/lib64/ld-linux-x86-64.so.2",
+    "mode": "0755",
+    "features": [],
+    "Release_opt_level": 3,
+    "release_ELF_executed": false
+  },
+  "normal_Settings": {
+    "sha256": "b6a236f4d634ae83b6ac1be9a04a997b3e725386bbc88610a5602522ec07602f",
+    "bytes": 6115600,
+    "ELF_machine": 62
+  },
+  "brightness_service": {
+    "Root_qualified": true,
+    "bytes": 776536,
+    "sha256": "99dfc25669cdcd643c5b2be8e3f033cb4d4177d7917a7b03291d7cbc485eac19",
+    "scope": "Normal current Release service built after composed Client/Main/worker qualification; installed SyntheticTree runtime is new and unqualified before this epoch",
+    "component_qualification_sha256": "3be6d93bdf40b279f7d12ca2cbda6822bc846d3cd12c1fc3d6d846803e9bf9ac"
+  },
+  "geometry": {
+    "external_profile_qualified": true,
+    "native_pixels": [
+      1080,
+      2424
+    ],
+    "logical_window": [
+      411,
+      923
+    ],
+    "nominal_mm": [
+      65,
+      146
+    ],
+    "axis_PPI": [
+      422.03076923076924,
+      421.70958904109585
+    ],
+    "output_scale": 2.625,
+    "normal_QWindow_DPR_measured": false,
+    "normal_QWindow_DPR": null
+  },
+  "synthetic_initial_attributes": {
+    "max": 400,
+    "brightness": 100,
+    "actual": 120
+  },
+  "installed_PID1": {
+    "start_active": true,
+    "same_Main_no_restart": true,
+    "normal_Main_exit0": true,
+    "retained_pidfd_dead": true,
+    "proc_absent": true,
+    "socket_removed": true,
+    "cgroup_empty": true,
+    "fixture_direct_parent_wait_claimed": false,
+    "cold_autostart_qualified": false
+  },
+  "closure": {
+    "guest_case": true,
+    "owner_actual_wait0": true,
+    "audio_actual_wait0": true,
+    "appearance_actual_wait0": true,
+    "cleanup_errors": [],
+    "exact_CID_absent": true,
+    "same_daemon": true,
+    "all_selected_and_original_inputs_unchanged": true
+  },
+  "preserved_failure": "Original twenty-second/eight-capture enabled-button observer expected surface different from background; Tokyo theme uses equal colors and thin borders. No click occurred. A separate observer successor must retain all actual input/readback/recovery requirements.",
+  "open": [
+    "five-state actual input/readback/unavailable/recovery tracer",
+    "cold graphics/full original shell",
+    "normal direct QWindow DPR",
+    "ARM Settings app execution",
+    "Linux backlight driver and matched Pixel hardware",
+    "physical luminance/suspend/drain",
+    "complete smartphone system"
+  ]
+}
