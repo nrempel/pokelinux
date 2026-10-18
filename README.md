@@ -16,8 +16,10 @@ and the [earlier queue-only result](docs/native-sounds-rust-queue.md) retain the
 separate evidence. Cold installed startup and ARM remain open.
 The [finite Play/Stop preview](docs/native-sounds-preview.md) now passes one real
 host actor Play through the Rust-owned producer to selected-speaker virtual PCM,
-plus host Rust/frontend components. UI clicks, natural completion, preview Stop,
-revocation and backend-failure integration remain open.
+plus host Rust/frontend components. A separate same-session case now proves
+explicit Stop, producer retirement, full measured silence and one new explicit
+Play. UI clicks, natural completion, revocation and backend-failure integration
+remain open.
 
 The [Messages request and model engine](docs/native-messages-rust-client.md) now
 also runs in Rust. An earlier cohort with the pre-port appearance client builds

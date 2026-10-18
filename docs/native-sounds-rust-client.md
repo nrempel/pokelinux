@@ -3,9 +3,10 @@
 The later [finite Play/Stop preview](native-sounds-preview.md) extends the current
 interface to fifteen explicit functions and exactly seven required State fields,
 including `policy_settled` and `preview`, without earlier-ABI compatibility. Host
-components and one actor Play to virtual PCM now pass. Actual Qt click/PCM,
-completion, explicit preview Stop/quiet, revocation and backend-failure joins
-remain open. Historical thirteen-function executions retain their original scope.
+components and one actor Play to virtual PCM now pass. A separate same-session
+case proves explicit Stop, actual producer retirement, full measured silence and
+one new explicit Play. Actual Qt click/PCM, natural completion, revocation and
+backend-failure joins remain open. Historical thirteen-function executions retain their original scope.
 
 The later [shared appearance Rust client](native-appearance-rust-client.md)
 adds separately qualified policy and fresh joined normal host/default-Cargo/

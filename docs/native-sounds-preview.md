@@ -2,8 +2,9 @@
 
 One registered/granted host actor client now plays the Rust-owned preview through
 original private PipeWire to independently measured virtual PCM. Host Rust and
-frontend components also pass. This qualifies one Play/PCM case; full feature
-integration remains open. Earlier Sounds GUI/PCM results retain their own sources.
+frontend components also pass. A separate same-session case now proves explicit
+Stop, producer retirement, full measured silence and one new explicit Play. Full
+feature integration remains open. Earlier Sounds GUI/PCM results retain their own sources.
 
 ## Ownership and model
 
@@ -42,9 +43,9 @@ blocking the request loop. Cleanup may wait behind one read-only status under it
 original deadline; during an in-flight effect, app-channel closure withdraws
 ownership. Actual wait, stderr EOF and closed handles establish local reclamation.
 A later successful absent-source graph observation releases the retiring slot.
-Neither establishes acoustic silence. Whole-service Stop retains its original
-bounded drain and aborts instead of detaching unfinished owners. New explicit
-preview-Stop/quiet integration remains open.
+Neither alone establishes acoustic silence. Whole-service Stop retains its
+original bounded drain and aborts instead of detaching unfinished owners.
+Independent virtual PCM now separately qualifies explicit preview Stop and quiet.
 
 ## Evidence and remaining gates
 
@@ -53,6 +54,7 @@ preview-Stop/quiet integration remains open.
 | Offscreen Qt adapters/QML | Missing-controls RED→same frozen-test GREEN: construction and two unavailable-state buttons under UID 11042, root-owned 0644 shared QML, unshown window. No input action executes. |
 | Sounds C ABI/Qt sockets | Required-seven-field RED→six existing, seven schema and seven preview groups plus two cleanup cases pass; 30 existing Qt behaviors plus setup/cleanup pass. |
 | Real actor/audio owner, original PipeWire 1.4.2, authored lifecycle facts/virtual sinks | Initial denial and later zero-PCM failures precede an `unsupported_channel_layout` diagnostic. Sole producer-port initialization change makes the same frozen fixture pass: 24,000 frames per sink, 440 Hz speaker content and exactly zero earpiece samples. |
+| Same-session explicit Stop and new Play | The live first producer retires before its natural end; source/client/links disappear and its retained pidfd is terminal. Both full sink windows then measure zero. Only a new explicit Play starts a distinct producer and restores selected-speaker tone. |
 | Finite producer owner | Same frozen SIGABRT RED→GREEN after Process-only repair. Delayed polling reaps the already-dead helper; no suspend or PCM inference. |
 
 The same producer is alive before and after capture; its parentage, server
@@ -67,10 +69,22 @@ Seven frontend targets each link the selected archive once. Preserved failed
 epochs, assertion-preserving bridges and independent raw recomputation remain in
 [hash-only provenance](evidence/native-sounds-preview-provenance.json).
 
-Actual Qt Play/Stop clicks joined to PCM, natural completion, explicit Stop with
-quiet, app-close/revocation retirement and unavailable-backend failure without
-replay remain open. No deployment, ARM execution, normal window/cold graphical
-session or physical-audio qualification follows. No physical phone was accessed.
+The Stop case adds three paired windows under one original six-second cutoff:
+24,000 measured frames per sink per stage, 144,000 total. The same app socket,
+actor, audio Main and graph remain alive; the new producer has distinct PID,
+starttime and node/client serials. Actual app status reports Playing before Stop
+and Idle after quiet. The Retiring reply is only the acceptance fence; producer
+death, graph absence and PCM are independently checked. Root recomputed all six
+raw windows. All 15 host, nine build/assertion, nine runtime and 15 observer waits
+close within their original bounds; regular stderr closes remain separate from
+PIPE EOF. No production change or new behavioral RED is claimed for this added
+coverage. The first preparation remains unexecuted; before launch, its successor
+strengthened pre-send/post-parse deadline checks.
+
+Actual Qt Play/Stop clicks joined to PCM, natural completion, app-close/revocation
+retirement and unavailable-backend failure without replay remain open. No
+deployment, ARM execution, normal window/cold graphical session or physical-audio
+qualification follows. No physical phone was accessed.
 
 ## Reproduce the Linux process tests
 

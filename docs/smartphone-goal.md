@@ -115,8 +115,10 @@ GUI/audio groups with192,000 measured frames and Pixel10 captures. Its initial
 frame-observer RED and stronger Qt/native-size predicate remain explicit; no
 production client change supplies that GREEN. Cold installed and ARM integration
 remain open. The later [finite Play/Stop preview](native-sounds-preview.md) passes
-host components and one actor Play to selected-speaker virtual PCM; actual Qt
-click/PCM, completion and retirement/failure joins remain open.
+host components and one actor Play to selected-speaker virtual PCM. A separate
+same-session case passes explicit Stop, producer retirement, full measured quiet
+and one new explicit Play. Actual Qt click/PCM, natural completion, revocation
+and backend-failure joins remain open.
 
 The [Rust Messages client engine](native-messages-rust-client.md) now also owns
 request/parser/model, pagination, generations, scheduling and worker lifetime.

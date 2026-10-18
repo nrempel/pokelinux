@@ -58,8 +58,11 @@ original private PipeWire: 24,000 frames per sink contain 440 Hz speaker content
 and exactly zero earpiece samples. Earlier zero-PCM runs and the fixed
 `unsupported_channel_layout` diagnostic remain preserved; creation-time producer
 port initialization is the sole behavior fix. Host Rust and frontend C ABI/socket/
-unshown-QML components pass separately. Actual Qt clicks joined to PCM, natural
-completion, explicit preview Stop/quiet, app-close/revocation and backend failure
+unshown-QML components pass separately. A separate same-session actor case now
+passes explicit Stop, actual producer retirement and graph absence, full paired
+quiet, then one new explicit Play with a distinct producer. All 144,000 measured
+frames and actual owned closure pass without a production change. Actual Qt
+clicks joined to PCM, natural completion, app-close/revocation and backend failure
 without replay remain open. Continue with the private stack/offscreen component;
 no window/capture campaign.
 The private Messages read-provider remains parked at compiled assertion RED,
