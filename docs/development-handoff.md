@@ -82,8 +82,20 @@ preparation now passes all five Rust loaders and native Qt6.12 consumer build/
 link/loader checks (15 Sounds and 11 appearance APIs). The old active/available
 PID1 daemon fails the required-field assertion with exit 101. All four old units
 then Stop successfully before explicit four-file installation and export after
-QEMU closure. Fresh cold current QML/PCM remains unexecuted and is next; no further
-host combination or window/capture campaign.
+QEMU closure. The first cold ARM aggregate fails whole-service terminal
+verification despite schema/QML/PCM passes; its final assertion never runs. A
+second cold boot now passes all four fresh PID1 invocations, schema, four real
+QML clicks and 144,000 PCM frames under PipeWire 1.6.9. One target Stop has two
+independent qualified terminal records under the same original cutoff. Each
+records one observation, so the new repeat-poll branch is unexercised. The final
+compiled QML assertion exits 0 after cleanup, then QEMU exit 0/closure pass.
+No production change or causal repair is claimed. The [repository test entry](../tools/native-audio-preview/)
+now passes on the host with all three fresh outputs of its passing public
+Cargo/CMake builds: four real clicks and 144,000 PCM frames under one original
+six-second cutoff, final assertion 0 after cleanup. The earlier prebuilt entry
+retains its own mapping. The added C++ belongs to the test fixture; production
+policy remains Rust. Proceed to preview volume, with no further host/ARM
+combination or window/capture campaign.
 The private Messages read-provider remains parked at compiled assertion RED,
 with no qualified GREEN or deployed join; do not retry it. Normal ARM windows,
 cold graphical startup and all matched-device gates remain open.

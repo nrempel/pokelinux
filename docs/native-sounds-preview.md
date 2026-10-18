@@ -132,10 +132,37 @@ pidfds. Eight cached package additions retain the original 385 versions and 50
 selected Qt libraries/plugins, yielding 393 packages. The current daemon and three VM site configs are
 explicitly installed while stopped. All 62 direct waits/merged PIPE EOFs close;
 four PID1 outcomes remain separate. QEMU exit 0/EOF and closed handles precede
-export. The fresh cold QML/actor/PCM run has not executed. This is generic ARM
-preparation, with no Pixel kernel, normal app main/window, display-profile/
-capture, live theme switching or physical-audio qualification. No physical phone
-was accessed.
+export.
+
+The first cold generic ARM run passes schema/QML/PCM but fails whole-service
+terminal verification after one Stop command and transient sequential samples.
+Its final compiled assertion never runs; later console poweroff does not qualify
+that Stop. A second cold boot now passes four fresh automatic PID1 invocations,
+current schema, four real QML clicks and three paired PipeWire 1.6.9 PCM windows:
+144,000 measured frames of tone/quiet/tone under the original ARM 12-second
+aggregate and six-second window limits. The same app FD carries 41 actual sends;
+each Play completes once under its original one-second deadline.
+
+One target Stop has two independent terminal records under the same original
+30-second cutoff: all four units have MainPID 0, PID1 code/status 1/0, empty
+cgroups, terminal retained pidfds and absent proc entries. Both records contain one
+observation, so the new repeat-poll branch is unexercised and no causal repair
+is claimed. The final compiled QML assertion exits 0 only after cleanup. All 68
+actual waits, 81 real PIPE EOFs, QEMU exit 0 and outer closure pass separately.
+Regular stderr files and DEVNULL streams retain separate accounting. No feature C++/Rust
+change supplies this result.
+
+The [repository test entry and build commands](../tools/native-audio-preview/)
+now pass build→run on the host: locked/offline Rust and explicit-archive Qt
+builds supply the three new test ELFs executed by actual public `run.py`. Four
+real clicks and 144,000 measured PCM frames pass under one original six-second
+cutoff; the native assertion exits 0 only after cleanup. Actual 58 direct waits/
+79 real PIPE EOFs and one separate adopted wait close; four regular stderr files
+have no individual close timestamps. The earlier prebuilt entry keeps its own
+provider mapping; normal audio/launcher retain their separate original builds.
+These C++ additions are test fixtures; production policy remains Rust. Pixel-
+kernel, normal app main/window, display-profile/capture, live theme switching and
+physical-audio gates remain open. No physical phone was accessed.
 
 ## Reproduce the Linux process tests
 

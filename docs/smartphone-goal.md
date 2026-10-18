@@ -125,8 +125,11 @@ recovery also pass full quiet until a new Play. An unshown real QML consumer now
 passes route/Play/Stop/new-Play mouse input through the actual Rust client/actor/
 audio owner to independent PCM. The specified host preview gates pass; installed
 ARM preparation now passes current loaders, native Qt6.12 consumer build/link
-and stopped installation/export. Fresh cold QML/PCM and normal windows remain
-open.
+and stopped installation/export. A second cold generic ARM aggregate now passes
+current PID1 autostart/schema, real QML/PCM, full service-Stop verification and
+the final compiled assertion. The first aggregate failure remains preserved.
+The repository host entry now also passes with the three fresh outputs of its
+public builds. Normal app windows and phone gates remain open.
 
 The [Rust Messages client engine](native-messages-rust-client.md) now also owns
 request/parser/model, pagination, generations, scheduling and worker lifetime.

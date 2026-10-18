@@ -1,0 +1,17 @@
+[package]
+name = "pokelinux-preview-fixture"
+version = "0.1.0"
+edition = "2024"
+publish = false
+[dependencies]
+pokelinux-lifecycle = { path = "../../../native-lifecycle" }
+serde_json = "=1.0.154"
+rustix = { version = "=1.1.5", features = ["net", "process", "fs", "time"] }
+[[bin]]
+name = "preview-actor"
+path = "actor.rs"
+[[bin]]
+name = "preview-qml-assert"
+path = "qml-positive-assert.rs"
+[lints.rust]
+unsafe_code = "forbid"

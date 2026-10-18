@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "status": "specified host finite-preview gates qualified; generic ARM preparation/loaders/native Qt build and stopped install/export qualified; fresh cold installed QML/actor/PCM remains pending",
-  "scope": "Host original-code Rust/Qt components and seven authored real-actor/original-PipeWire virtual PCM cases; separate current Rust AArch64 crossbuild and generic Arch ARM/QEMU installed preparation with old PID1 schema refusal, current loader/native Qt build checks and stopped installation/export. No fresh cold current preview/QML/PCM success, normal app main/window, display-profile/capture, live-theme, vendor-specific backend cleanup, real suspend or physical-phone qualification.",
+  "status": "host finite-preview, generic installed ARM cold aggregate and actual public Cargo/CMake build-to-run host entry qualified; earlier cold failure and prebuilt entry lineages retained; normal-window/device gates remain open",
+  "scope": "Host original-code Rust/Qt components and seven authored real-actor/original-PipeWire virtual PCM cases; separate current AArch64 crossbuild, generic Arch ARM/QEMU preparation, first cold aggregate failure and second current installed PID1/unshown-QML/PipeWire1.6.9 PCM aggregate GREEN. Actual repository host entry passes with both its original prebuilt lineage and a later run of fresh public Rust/Qt build outputs. No normal app main/window, Pixel kernel/display-profile/capture, live-theme, vendor-specific backend cleanup, real suspend or physical-phone qualification.",
   "evidence": [
     {
       "boundary": "actual Qt adapters and offscreen QML",
@@ -1484,10 +1484,487 @@
       "physical_phone_accessed": false,
       "next_gate": "fresh cold installed ARM QML/actor/PCM",
       "fresh_cold_current_preview_functional_qualified": false
+    },
+    {
+      "boundary": "first fresh cold generic Arch ARM installed current PID1 stack and unshown QML/actor/PipeWire1.6.9 PCM",
+      "outcome": "Functional QML/PCM pass, whole PID1 Stop terminal verification failed; not deployment GREEN",
+      "published_baseline": "984e20506e212520a876a7ef2e88da69f4a935b1",
+      "aggregate_passed": false,
+      "deployment_GREEN_qualified": false,
+      "source_manifest_sha256": "6ec73f1e262eff361718e42e61d08ca0889f267d43eb412e43007c0accdf1edb",
+      "source_seal_sha256": "07a42c8e1c4cdf26b8c51b91c2eb90cfd4521ec3f4b1a7ae5996d3178627b8c8",
+      "source_selection_sha256": "ccf7b7a1790a87d6ebf664840e114c1d76d1521787e1f9ea7bdcfc89958782b3",
+      "command_sha256": "86684eb035c8c7f97271c76432bafe847e952bdac2dfc98539aa9d361133a34c",
+      "host_report_sha256": "8d64f94f3382b7604e31c663349fe1a3d43ddad4e00beea3f736c6471d95a2d8",
+      "guest_report_sha256": "faf43fc6b20141174445640c26f2560e849df27c405442fd4a70da6bf47a3939",
+      "boot_report_sha256": "cfacfda2b69beb84edba4be17408abed6183b15025ebb6b73bf5224524017705",
+      "runtime_report_sha256": "cec4cd63de7b5c462bf6620db653dc1e76f77526de22bdbcf1833ecd42ac4ef8",
+      "pcm_report_sha256": "5af986aaf81b2459689741afc0f93a8db3635b0c9f88386d92a756068d045670",
+      "schema_report_sha256": "f84371a5d22372f13f459dba750857ccdce9b5bd80fc844d079edd5532e08047",
+      "review_sha256": "719dfaf1253aef11183d2a93c40c628130ac653e538c2b36b986856e82f9d710",
+      "independent_raw_PCM_closed_review_sha256": "bcdcf4de37320edb8a81951f606243301650a30a39a977496c8a934c073d0ab4",
+      "prepared_native_Qt_consumer": {
+        "ELF_machine": 183,
+        "bytes": 7074624,
+        "sha256": "51474e77321813c87b12d5d1d40fc52a1c6565cd8e41d58867d8f280e9d502c3"
+      },
+      "cold_autostart": {
+        "current_PID1_units": 4,
+        "active_enabled_running": true,
+        "no_install_reload_enable_or_start_before_admission": true,
+        "current_schema_assertion_exit": 0,
+        "actual_available_IPC_policy_settled_and_preview_fields": true
+      },
+      "native_ARM_QML_functional_observations": {
+        "four_real_native_mouse_pairs_each_clicked_once": true,
+        "all_Quick_windows_unshown_unexposed": true,
+        "same_actual_Rust_client_actor_normal_audio_path": true,
+        "explicit_route_choices": 1,
+        "explicit_Plays": 2,
+        "explicit_preview_Stops": 1,
+        "full_paired_PCM_windows": 3,
+        "raw_sample_files": 6,
+        "measured_frames_each": 24000,
+        "total_measured_frames": 144000,
+        "actual_PipeWire_version": "1.6.9",
+        "stages": [
+          "tone before preview Stop",
+          "full quiet after preview Stop",
+          "tone after new explicit Play"
+        ],
+        "independent_all_raw_statistics_recomputed_and_passed": true,
+        "original_ARM_aggregate_seconds": 12,
+        "original_explicit_per_window_seconds": 6,
+        "original_pre_natural_retirement_seconds": 3,
+        "production_Play_deadline_seconds": 1
+      },
+      "whole_PID1_Stop_terminal_verification": {
+        "Stop_CLI_calls": 1,
+        "Stop_CLI_exit": 0,
+        "sequential_first_audio_sample": "deactivating/stop-sigterm",
+        "sequential_first_bus_sample": "active/running",
+        "PipeWire_and_WirePlumber_first_samples_MainPID": 0,
+        "terminal_unit_predicates_collected_before_shutdown": false,
+        "runtime_cleanup_qualified": false,
+        "final_compiled_QML_assertion_executed": false,
+        "later_console_poweroff_qualifies_Stop": false,
+        "production_repair_claimed": false,
+        "failure": "single immediate sequential transient-state samples after the Stop job do not establish all terminal outcomes"
+      },
+      "all_retained_app_and_producer_death_checks_passed": true,
+      "counts": {
+        "host_actual_wait_merged_PIPE_EOF": 13,
+        "boot_actual_wait_merged_PIPE_EOF": 3,
+        "guest_actual_wait_merged_PIPE_EOF": 9,
+        "poweroff_actual_wait_merged_PIPE_EOF": 1,
+        "controller_actual_wait_merged_PIPE_EOF": 15,
+        "separate_observer_actual_waits": 19,
+        "total_actual_waits": 60,
+        "total_real_PIPE_EOFs": 73,
+        "separate_observer_real_PIPE_EOFs": 32
+      },
+      "outer_custody": {
+        "actual_QEMU_wait_exit": 0,
+        "actual_wait_and_PIPE_EOF_and_handle_closure_qualified": true,
+        "exact_container_absence_same_daemon_inputs_unchanged": true,
+        "aggregate_failure_is_retained": true
+      },
+      "normal_app_Main_or_visible_window_qualified": false,
+      "Pixel_kernel_qualified": false,
+      "display_profile_or_capture_qualified": false,
+      "live_theme_switching_qualified": false,
+      "physical_phone_accessed": false,
+      "next_gate": "bounded whole-PID1 terminal verification under original Stop cutoff, then final compiled QML assertion",
+      "PIPE_EOF_accounting_correction": {
+        "earlier_independent_review_total": 69,
+        "corrected_total": 73,
+        "observer_actual_waits": 19,
+        "observer_real_PIPE_EOFs": 32,
+        "reason": "fifteen two-PIPE graph/configure tools plus two recorder stdout EOFs; four regular stderr files and two DEVNULL stdout streams are separate",
+        "earlier_review_preserved_immutable": true,
+        "erratum_sha256": "ee4b1a11147e37d6de39df3ff11aa0d92613f9e219183b8f1ec00dfaa0b71a89",
+        "raw_receipts_outcomes_timeliness_unchanged": true
+      }
+    },
+    {
+      "boundary": "second fresh cold generic Arch ARM installed current PID1 stack and real unshown QML/actor/PipeWire1.6.9 PCM with terminal Stop cleanup",
+      "outcome": "qualified installed generic ARM aggregate GREEN; cold1 aggregate failure retained separately; no production repair claim",
+      "published_baseline": "984e20506e212520a876a7ef2e88da69f4a935b1",
+      "aggregate_passed": true,
+      "installed_generic_ARM_PID1_unshown_QML_PCM_qualified": true,
+      "source_manifest_sha256": "713c521b0647dd0f30d4562ae6901b78935b3ba6e3b7d3720762bb865a6f8f16",
+      "source_seal_sha256": "38bacdb5de10a0ab5acf6924f5d17915f5e50989d06ddf8199e7539fe2fc90fe",
+      "source_selection_sha256": "3e7ef7c9179df44c254a35914b4b0f3ca32892647f9ce495c3774d2a84c9434a",
+      "command_sha256": "ec5f2826a8362a784c6cb7774f70e59b7e5b5054597f21173855e1a757a57cda",
+      "host_report_sha256": "716930b59a82ec3200c4f514644c38d9048636e6afc148134c5017c92f930aa4",
+      "guest_report_sha256": "afdbe6cad3c5e85ee8077af7431cd148e1a28b8979663ac22a85ce59f1355731",
+      "boot_report_sha256": "e622f41f5fcba7fb74192699040b677298bf8024a9ceeaf7e465b5a0f53d6530",
+      "runtime_report_sha256": "48245003b416ca35a9d0030c54ee42c380e894ce7e107efedd454efae89b51ed",
+      "pcm_report_sha256": "70efab038b0e9a86302fe8cf65f17fb8484ac9a423a9c40d6671eef4b9609889",
+      "schema_report_sha256": "418d635b5730ab4eef5fd44ad8084fb590169b8aaa684d1df36c3b1bd4039251",
+      "review_sha256": "4e69f7d53c90307245137d9f58810ffe78fc5ce777da2465928e8a802e2985f0",
+      "prior_failed_aggregate_review_sha256": "719dfaf1253aef11183d2a93c40c628130ac653e538c2b36b986856e82f9d710",
+      "native_Qt_consumer": {
+        "ELF_machine": 183,
+        "bytes": 7074624,
+        "sha256": "51474e77321813c87b12d5d1d40fc52a1c6565cd8e41d58867d8f280e9d502c3",
+        "Qt_version": "6.12",
+        "actual_unshown_consumer_executed": true,
+        "normal_app_Main_executed": false
+      },
+      "cold_autostart": {
+        "fresh_boot_identity_observed": true,
+        "four_new_PID1_invocations": true,
+        "current_units_active_enabled_running_before_admission": true,
+        "no_manual_backend_start_install_or_reconcile": true,
+        "schema_assertion_exit": 0
+      },
+      "native_ARM_QML_functional_observations": {
+        "actual_PipeWire_version": "1.6.9",
+        "four_real_native_mouse_pairs_each_clicked_once": true,
+        "all_Quick_windows_unshown_unexposed": true,
+        "same_actual_Rust_client_actor_normal_PID1_audio_path": true,
+        "same_app_FD_actual_sends": 41,
+        "actual_operation_counts": {
+          "media_status": 37,
+          "media_route": 1,
+          "media_preview_play": 2,
+          "media_preview_stop": 1
+        },
+        "distinct_explicit_Play_choices": 2,
+        "Play_attempts_each": 1,
+        "complete_Play_sends_each": 1,
+        "actual_Play_wire_ttl_ms_each": 999,
+        "original_Play_absolute_deadline_seconds_each": 1,
+        "full_paired_PCM_windows": 3,
+        "raw_sample_files": 6,
+        "measured_frames_each": 24000,
+        "total_measured_frames": 144000,
+        "stages": [
+          "tone before preview Stop",
+          "full quiet after preview Stop",
+          "tone after new explicit Play"
+        ],
+        "original_ARM_aggregate_seconds": 12,
+        "original_explicit_per_window_seconds": 6,
+        "producer_retired_before_first_Play_plus_seconds": 3,
+        "independent_all_six_raw_statistics_recomputed_and_passed": true
+      },
+      "whole_PID1_Stop_terminal_verification": {
+        "target_Stop_calls": 1,
+        "independent_observation_records": 2,
+        "observation_record_sha256": [
+          "2fbf9f4b1144d1e673d1cd28d57f11160d4d7a8e5f12dd3d1a5d0f3ee20ac8da",
+          "7d9fbb0a27132525461453873284079f1d478ac138c620696ffe6f33e0ac38ed"
+        ],
+        "same_original_Stop_until_in_both_records": true,
+        "original_Stop_budget_seconds": 30,
+        "observations_each_record": 1,
+        "repeat_poll_branch_exercised": false,
+        "causal_repair_claimed": false,
+        "all_four_MainPIDs_zero": true,
+        "all_four_normal_PID1_outcomes": [
+          1,
+          0
+        ],
+        "all_four_cgroups_empty": true,
+        "all_four_retained_pidfds_terminal": true,
+        "all_four_proc_entries_absent": true,
+        "fixture_differences": "bounded original terminal assertions plus explicit selected verifier preload and new boot identity metadata; original single Stop, deadline, predicates, QML/PCM oracles and feature C++/Rust unchanged",
+        "PID1_service_parent_wait_claimed_by_observer": false
+      },
+      "runtime_cleanup_qualified": true,
+      "compiled_native_QML_assertion_exit_only_after_controller_cleanup": 0,
+      "counts": {
+        "host_actual_wait_merged_PIPE_EOF": 15,
+        "boot_actual_wait_merged_PIPE_EOF": 3,
+        "guest_actual_wait_merged_PIPE_EOF": 15,
+        "poweroff_actual_wait_merged_PIPE_EOF": 1,
+        "controller_actual_wait_merged_PIPE_EOF": 15,
+        "primary_Scope_actual_waits_and_merged_PIPE_EOFs": 49,
+        "separate_observer_actual_waits": 19,
+        "separate_observer_real_PIPE_EOFs": 32,
+        "total_actual_waits": 68,
+        "total_real_PIPE_EOFs": 81,
+        "observer_two_PIPE_graph_and_configure_tools": 15,
+        "recorder_stdout_PIPE_EOFs": 2,
+        "regular_stderr_files_not_PIPE": 4,
+        "DEVNULL_stdout_streams_without_EOF_claim": 2,
+        "expected_recorder_SIGINT_exitcodes": [
+          1,
+          1
+        ],
+        "individual_regular_stderr_close_timestamps_emitted": false
+      },
+      "outer_custody": {
+        "actual_QEMU_wait_exit": 0,
+        "actual_wait_and_PIPE_EOF_and_handle_closure_qualified": true,
+        "exact_container_absence_same_daemon_inputs_unchanged": true,
+        "all_original_raw_timestamp_cutoffs_verified": true
+      },
+      "production_Cpp_or_Rust_feature_changes": false,
+      "repository_tool_entry_executed": false,
+      "normal_app_Main_or_visible_window_qualified": false,
+      "Pixel_kernel_qualified": false,
+      "display_profile_or_capture_qualified": false,
+      "live_theme_switching_qualified": false,
+      "physical_phone_accessed": false,
+      "next_gate": "actual repository-tool entry run; no further host or ARM combination matrices",
+      "independent_raw_PCM_closed_review_sha256": "3872101ed185ffbec8624a1010d11a9a739496a8b07327c85667648f91aa5e60",
+      "historical_cold1_EOF_erratum_sha256": "ee4b1a11147e37d6de39df3ff11aa0d92613f9e219183b8f1ec00dfaa0b71a89",
+      "independent_review_preserves_separate_host_guest_clock_domains": true
+    },
+    {
+      "boundary": "actual public repository run.py host entry to unshown QML/real actor/normal audio and virtual PCM with earlier prebuilt role providers",
+      "outcome": "qualified host public-entry GREEN; new public Cargo/CMake outputs were not used by this epoch",
+      "public_entrypoint": "tools/native-audio-preview/run.py",
+      "published_baseline": "984e20506e212520a876a7ef2e88da69f4a935b1",
+      "passed": true,
+      "source_manifest_sha256": "b82cfd436b6d5119fa9ef469c3aa80059246fc8b5090563b439777f41eda3452",
+      "source_seal_sha256": "6a0760c5a9007f3c4e76f6fe01a45ca121096b339e74e487663fe102370d0b1b",
+      "source_selection_sha256": "fcc095858928fade0b62a0b67d25f69e544e7c2fc5027a47236ea0cf761ae267",
+      "command_sha256": "7eb3b382f3fb0dacd266a0239b0e5b76bc1310f6a81fa71060f24074936f0ee3",
+      "host_report_sha256": "f6c2e0a5b7c070300c690793babefc7931619f3afd7e84ff13949e1abf350a0a",
+      "entry_report_sha256": "6e53b89ec0bae1ef06d0eb41ca1a801fbe7cf84cf9492f86dae41722485b3948",
+      "runtime_report_sha256": "58be6978e4dc9cf84e8edf3851e5577d45f0644504ce46dd9a86e2d4fa4e42c8",
+      "pcm_report_sha256": "b33632967a851602ec53c31a74f0e3e32bf8da1c7710dbc97a34c41f16ca2569",
+      "review_sha256": "4cea71270ec3b01aad2957a8887f727fd7abff319fc82076c2c11608274598f2",
+      "public_freeze_sha256": "4cb7adb5aab5ec28fd3a72d18d1ec9d298392c37cda9df834d284ab2f7b78773",
+      "public_source_sha256_at_execution": {
+        "tools/native-audio-preview/CMakeLists.txt": "229fb2033940986a91884575c57425e87e4a79dfed9a170c021b3af6b4fe0dc8",
+        "tools/native-audio-preview/ORACLES.json": "241aeeb82a3fa43a3b5541d76d1e2d2563d88144377284d473133c7a763dbc39",
+        "tools/native-audio-preview/README.md": "90845adf23f2524ec6fca230d85313abb4c67ec9ea7c01425fd574d381542bc6",
+        "tools/native-audio-preview/audio_config.py": "f8056719aa8ebfccee560ae1a3f1cc75448605aa6a0f9a1d9af881c682b22257",
+        "tools/native-audio-preview/closure.py": "646e9cfd5f755b626fe8babfa26637ddac328ede05cdab75aa77cc51332d70d6",
+        "tools/native-audio-preview/controller.py": "e6a93eba0443a07d3842e11ca1337020ecf56b9b8216034fd66f252e753117e9",
+        "tools/native-audio-preview/fixture/Cargo.lock": "bda3fa38adf72a6dd2eec9c4e1cf88265d622587cf1c34599b51dd03bc0cb641",
+        "tools/native-audio-preview/fixture/Cargo.toml": "2d0304227a234da053a9d51ac216a7b1cb7da6652e6d741a3ba733f011296523",
+        "tools/native-audio-preview/fixture/actor.rs": "d76250231f058d7cb9bc7e11d4037be51df67b7d3b9303e9766de331a02998ed",
+        "tools/native-audio-preview/fixture/qml-positive-assert.rs": "ec407b3752778bea5c2e9a006f0741d079b1a885951136d6b7b899624cd79e02",
+        "tools/native-audio-preview/pcm_observer.py": "af869eb298a1be48e5049520d2d37fd90154c7d8141dcf93d59d9016427efb32",
+        "tools/native-audio-preview/qml-input-client.cpp": "8e7183433f0bb337de731de5c380ec754cbc8e010a5a27701d0a089010d1e0a2",
+        "tools/native-audio-preview/run.py": "fccd703d8ed6433ee8ae8d6a7259c503a3a4f2d0c76e81f2b1571248e394265a",
+        "tools/native-installed-services/owned.py": "5a738b9529a1a0e5d5b0bd20e27e2ec4244d4e61d7c8e0dad96fe1ffbef3c423"
+      },
+      "prebuilt_five_role_BUILD_MAPPING_sha256": "7c394d9fe63bfccac42c7f622484d3eca1ac4e65cd0e85fdbbb438f4688e97a1",
+      "current_public_build_commands_executed_in_this_epoch": false,
+      "new_public_build_artifacts_used_to_relabel_this_runtime": false,
+      "four_real_native_mouse_clicks": 4,
+      "full_paired_PCM_windows": 3,
+      "measured_frames_each": 24000,
+      "total_measured_frames": 144000,
+      "original_shared_case_seconds": 6,
+      "native_positive_assertion_exit_only_after_runtime_cleanup_and_entry_Scope_closure": 0,
+      "counts": {
+        "host_actual_wait_merged_PIPE_EOF": 15,
+        "public_entry_actual_wait_merged_PIPE_EOF": 7,
+        "controller_actual_wait_merged_PIPE_EOF": 9,
+        "observer_actual_direct_waits": 25,
+        "observer_real_PIPE_EOFs": 44,
+        "total_actual_direct_waits": 56,
+        "total_real_PIPE_EOFs": 75,
+        "separate_adopted_actual_parent_waits": 1,
+        "adopted_actual_returncode": -9,
+        "adopted_wait_has_no_PIPE_EOF_claim": true,
+        "observer_regular_stderr_files_not_PIPE": 4,
+        "individual_regular_stderr_close_timestamps_measured": false
+      },
+      "adopted_ECHILD_qualified": true,
+      "all_selected_inputs_container_absence_same_daemon_closed": true,
+      "host_child_owned_audio_Main_qualified": true,
+      "installed_ARM_or_PID1_execution_qualified_by_this_entry": false,
+      "normal_Main_or_visible_window_qualified": false,
+      "physical_phone_accessed": false,
+      "independent_runtime_closed_review_sha256": "19fda97cc0e78c3b0a8d87e48df406d756e1429fea5a963ee5190d6230a9c601"
+    },
+    {
+      "boundary": "actual public repository Cargo and CMake test-fixture build commands",
+      "outcome": "qualified build GREEN; three new test ELF outputs unexecuted at this build-only closure",
+      "public_tool_directory": "tools/native-audio-preview",
+      "published_baseline": "984e20506e212520a876a7ef2e88da69f4a935b1",
+      "builds_passed": true,
+      "public_freeze_sha256": "4cb7adb5aab5ec28fd3a72d18d1ec9d298392c37cda9df834d284ab2f7b78773",
+      "public13_source_files_exact_at_build": true,
+      "independent_closed_review_sha256": "e72735d875a228db2e9500ce26838a3ae4caeaf48123cd854bba7a3dcb770e93",
+      "builds": {
+        "rust": {
+          "source_manifest_sha256": "68dcf76529f2c5a3a051c8f38b8921d0ddf2cb6b506b4132aeec0cc63b361208",
+          "source_selection_sha256": "2469db35cb07427fb418518a5b1142c05ea95740ef5e129e0efa6a32f4611e67",
+          "command_sha256": "5006e63fc3533a597b64c86dab69084c7cfdb06731dc09ef9881505b721c9251",
+          "host_report_sha256": "36eb47f8e3812744b7fbd0be8a55bc397721ba06a3bf8f68adaf51c1481e6802",
+          "inner_report_sha256": "695a5dd27af3143540d468d2ea3162883e46a41305a124018cb773d871967f4d",
+          "review_sha256": "d16cd08b08d85e4204f46ac9a286a4fd6531ad0411ea636237b2692053c2ad1f",
+          "host_actual_wait_PIPE_EOF": 15,
+          "build_actual_wait_PIPE_EOF": 7,
+          "adopted_ECHILD": true,
+          "source_lock_archive_container_absence_same_daemon_closed": true,
+          "artifacts_at_build_closure": {
+            "preview-actor": {
+              "bytes": 1756912,
+              "sha256": "a18580c376e733dfa604c63044e2d0ef9f6d069b059ef59c847a2b5571382f47",
+              "ELF_machine": 62,
+              "executed": false
+            },
+            "preview-qml-assert": {
+              "bytes": 601184,
+              "sha256": "807e0d090f2579246f5d1bfbb08b0033688e48f0bd40446819af00765e386ab7",
+              "ELF_machine": 62,
+              "executed": false
+            }
+          },
+          "build_only_at_this_checkpoint": true
+        },
+        "qt": {
+          "source_manifest_sha256": "67627110bcd5c9073f65be2d3515c906bd0b13ebb997726f59dfb9997cdf2c41",
+          "source_selection_sha256": "76aad2c7ea2eca97035a2193a30010ce1ad7ccef344a972a74fde0c26cfd2f78",
+          "command_sha256": "7c858a8315200834632fa0c3ea45e2660921b30ba4e7c091405e44a2c05f01b7",
+          "host_report_sha256": "bd7e1f431e38a8d712bfc63ec417c9ac6e99c2e83f871de6c33917687d99648a",
+          "inner_report_sha256": "35a655f685695a4ad99f90c21c1a2a0436bb0db05938ef98fcec789896bfd312",
+          "review_sha256": "3c2e6dcb43e5503d61c6fd895fe0c11fac9732dbd8a8b0dff7250a32f541e6e9",
+          "host_actual_wait_PIPE_EOF": 15,
+          "build_actual_wait_PIPE_EOF": 18,
+          "adopted_ECHILD": true,
+          "source_lock_archive_container_absence_same_daemon_closed": true,
+          "artifacts_at_build_closure": {
+            "sounds-qml-input-client": {
+              "bytes": 6869768,
+              "sha256": "5a3a36a3408b3894d24bb09ae8288a6af701022e206c2863a7bbf79c02299af6",
+              "ELF_machine": 62,
+              "executed": false
+            }
+          },
+          "build_only_at_this_checkpoint": true
+        }
+      },
+      "Rust_checks": {
+        "actual_locked_offline_Release": true,
+        "normal_features": [],
+        "opt_level": "3",
+        "rustc": "1.98.1",
+        "cargo": "1.98.1",
+        "public_lock_unchanged": true
+      },
+      "Qt_checks": {
+        "actual_CMake_Qt_version": "6.8.2",
+        "Sounds_and_appearance_archive_each_linked_once": true,
+        "strong_C_API_count": 26,
+        "both_adapters_original_send_to_wrapper_and_single_real_libc_send": true,
+        "native_ldd_r_passed": true
+      },
+      "counts": {
+        "total_actual_direct_waits": 55,
+        "total_real_PIPE_EOFs": 55,
+        "separate_regular_Cargo_stderr_close": 1,
+        "adopted_waits": 0,
+        "both_adopted_ECHILD": true
+      },
+      "compiler_descendant_direct_Scope_wait_claim": false,
+      "earlier_runtime_provider_lineage_preserved": true,
+      "production_Cpp_or_Rust_feature_changes": false,
+      "ARM_execution_qualified_by_these_host_builds": false,
+      "new_outputs_were_unexecuted_at_build_closure": true
+    },
+    {
+      "boundary": "actual public repository Cargo/CMake output-to-run.py host join with three freshly built test ELF roles",
+      "outcome": "qualified host public build\u2192run GREEN; normal audio/launcher retain earlier original build lineages",
+      "public_entrypoint": "tools/native-audio-preview/run.py",
+      "published_baseline": "984e20506e212520a876a7ef2e88da69f4a935b1",
+      "passed": true,
+      "source_manifest_sha256": "11d08e70bfd93efce8f647eef5788c02e4d6d16abe501761c2dd2640fce580c1",
+      "source_seal_sha256": "a548baed66ac43a7dad76b4ecb0ece0da63c489b6c7f313f962c5ef822e28590",
+      "source_selection_sha256": "9cbefeac5260c571f770b3724f3c0146d141bff381612b54a61e558fe58a1ee3",
+      "command_sha256": "76bb0644c07597a6be26c38c391817f97e0b869e568626f7de6fbb4aa8a4f8cc",
+      "host_report_sha256": "d0771e3370518240a6107f2b93493cf65e8892350136aa793fd53c8af1981063",
+      "entry_report_sha256": "60ca712077012c818022303ff0fc07e13c0da09a38a4325b0e76a735b1f1a30a",
+      "runtime_report_sha256": "536d2d79d13564393788e8029dcc90d1c14b6e618cf08f35fc6f9e6a1287b76e",
+      "pcm_report_sha256": "701326fe88fbb1129188c2384746c85028937cfff123ec27a8b10cb22c3ded6a",
+      "review_sha256": "1ab1953f012664877f96a8717077e2457f3d8e1428f4b02416c0161967e29ee6",
+      "fresh_five_role_BUILD_MAPPING_sha256": "550a8d5803586f09468e2e6ec2ee367fb19015012a0dbca5025a7cbc2c924eb2",
+      "public_source_sha256_at_execution": {
+        "tools/native-audio-preview/CMakeLists.txt": "229fb2033940986a91884575c57425e87e4a79dfed9a170c021b3af6b4fe0dc8",
+        "tools/native-audio-preview/ORACLES.json": "241aeeb82a3fa43a3b5541d76d1e2d2563d88144377284d473133c7a763dbc39",
+        "tools/native-audio-preview/README.md": "90845adf23f2524ec6fca230d85313abb4c67ec9ea7c01425fd574d381542bc6",
+        "tools/native-audio-preview/audio_config.py": "f8056719aa8ebfccee560ae1a3f1cc75448605aa6a0f9a1d9af881c682b22257",
+        "tools/native-audio-preview/closure.py": "646e9cfd5f755b626fe8babfa26637ddac328ede05cdab75aa77cc51332d70d6",
+        "tools/native-audio-preview/controller.py": "e6a93eba0443a07d3842e11ca1337020ecf56b9b8216034fd66f252e753117e9",
+        "tools/native-audio-preview/fixture/Cargo.lock": "bda3fa38adf72a6dd2eec9c4e1cf88265d622587cf1c34599b51dd03bc0cb641",
+        "tools/native-audio-preview/fixture/Cargo.toml": "2d0304227a234da053a9d51ac216a7b1cb7da6652e6d741a3ba733f011296523",
+        "tools/native-audio-preview/fixture/actor.rs": "d76250231f058d7cb9bc7e11d4037be51df67b7d3b9303e9766de331a02998ed",
+        "tools/native-audio-preview/fixture/qml-positive-assert.rs": "ec407b3752778bea5c2e9a006f0741d079b1a885951136d6b7b899624cd79e02",
+        "tools/native-audio-preview/pcm_observer.py": "af869eb298a1be48e5049520d2d37fd90154c7d8141dcf93d59d9016427efb32",
+        "tools/native-audio-preview/qml-input-client.cpp": "8e7183433f0bb337de731de5c380ec754cbc8e010a5a27701d0a089010d1e0a2",
+        "tools/native-audio-preview/run.py": "fccd703d8ed6433ee8ae8d6a7259c503a3a4f2d0c76e81f2b1571248e394265a",
+        "tools/native-installed-services/owned.py": "5a738b9529a1a0e5d5b0bd20e27e2ec4244d4e61d7c8e0dad96fe1ffbef3c423"
+      },
+      "documentation_qualification_update_after_all_selected_build_and_run_inputs_closed": true,
+      "actual_fresh_public_build_roles_executed": {
+        "preview-actor": {
+          "bytes": 1756912,
+          "sha256": "a18580c376e733dfa604c63044e2d0ef9f6d069b059ef59c847a2b5571382f47"
+        },
+        "preview-qml-assert": {
+          "bytes": 601184,
+          "sha256": "807e0d090f2579246f5d1bfbb08b0033688e48f0bd40446819af00765e386ab7"
+        },
+        "sounds-qml-input-client": {
+          "bytes": 6869768,
+          "sha256": "5a3a36a3408b3894d24bb09ae8288a6af701022e206c2863a7bbf79c02299af6"
+        }
+      },
+      "public_Rust_build_review_sha256": "d16cd08b08d85e4204f46ac9a286a4fd6531ad0411ea636237b2692053c2ad1f",
+      "public_Qt_build_review_sha256": "3c2e6dcb43e5503d61c6fd895fe0c11fac9732dbd8a8b0dff7250a32f541e6e9",
+      "independent_builds_review_sha256": "e72735d875a228db2e9500ce26838a3ae4caeaf48123cd854bba7a3dcb770e93",
+      "normal_audio_sha256": "5d79db588da134c8d33a010d895806e726b8e1e74721528f6f8e7367dda54380",
+      "normal_launcher_sha256": "0526065536c9d5d42d1767e33afb87fe667ec97ee13dc531479c042a496d38b0",
+      "normal_audio_and_launcher_rebuilt_for_this_epoch": false,
+      "previous_prebuilt_entry_lineage_retained": true,
+      "public14_code_oracle_resource_inputs_unchanged_during_run": true,
+      "public_cpp_is_test_fixture_production_policy_remains_Rust": true,
+      "four_real_native_mouse_clicks": 4,
+      "same_app_FD_and_actual_actor_peer": true,
+      "each_explicit_Play_attempts_and_complete_sends": 1,
+      "full_paired_PCM_windows": 3,
+      "raw_sample_files": 6,
+      "measured_frames_each": 24000,
+      "total_measured_frames": 144000,
+      "original_shared_case_seconds": 6,
+      "Root_independent_raw_recomputation": {
+        "performed": true,
+        "six_F32LE_48000_mono_raw_files": true,
+        "total_measured_frames": 144000,
+        "tone_RMS": 0.17677339975691214,
+        "selected_440_energy_fraction_above_0_995": true,
+        "four_quiet_files_measured_samples_exact_numeric_zero": true,
+        "raw_report_sha256": "701326fe88fbb1129188c2384746c85028937cfff123ec27a8b10cb22c3ded6a"
+      },
+      "native_positive_assertion_exit_only_after_runtime_cleanup_and_entry_Scope_closure": 0,
+      "counts": {
+        "host_actual_wait_merged_PIPE_EOF": 15,
+        "public_entry_actual_wait_merged_PIPE_EOF": 7,
+        "controller_actual_wait_merged_PIPE_EOF": 9,
+        "observer_actual_direct_waits": 27,
+        "observer_real_PIPE_EOFs": 48,
+        "total_actual_direct_waits": 58,
+        "total_real_PIPE_EOFs": 79,
+        "separate_adopted_actual_parent_waits": 1,
+        "adopted_actual_returncode": -9,
+        "adopted_wait_has_no_PIPE_EOF_claim": true,
+        "observer_regular_stderr_files_not_PIPE": 4,
+        "individual_regular_stderr_close_timestamps_measured": false
+      },
+      "adopted_ECHILD_qualified": true,
+      "all_selected_inputs_container_absence_same_daemon_closed": true,
+      "repository_public_entry_executed": true,
+      "production_Cpp_or_Rust_feature_changes": false,
+      "normal_Main_or_visible_window_ARM_PID1_hardware_qualified_by_this_host_entry": false,
+      "physical_phone_accessed": false,
+      "independent_runtime_closed_review_sha256": "19fda97cc0e78c3b0a8d87e48df406d756e1429fea5a963ee5190d6230a9c601",
+      "fresh_role_execution_proof": "selected immutable copies, protected actor-launched app, actual actor/Qt traffic and direct final assertion chain",
+      "extra_proc_executable_hash_measurement_claimed": false,
+      "numeric_Qt_ExitStatus_measured": false
     }
   ],
   "pending": [
-    "fresh cold installed ARM QML/actor/PCM integration",
     "normal windows and cold graphical session",
     "physical audio and complete smartphone"
   ],
@@ -1517,5 +1994,6 @@
     "https://docs.pipewire.org/page_man_pipewire-props_7.html",
     "https://github.com/PipeWire/pipewire/blob/1.4.2/spa/plugins/audioconvert/audioadapter.c#L1810-L1892"
   ],
-  "next_integration_gate": "fresh cold installed ARM tracer with QML/actor/PCM; no further host combinations selected"
+  "next_integration_gate": "normal app windows and remaining device gates; no further host or ARM combination matrices selected",
+  "next_work": "finite preview volume with separate new evidence"
 }

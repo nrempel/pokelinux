@@ -26,7 +26,12 @@ a new Play. A later unshown real QML consumer now passes route/Play/Stop/new-Pla
 mouse input through the actual Rust client, actor and normal audio owner to
 independent PCM. The specified host preview gates pass. Generic ARM preparation
 now qualifies current loaders, a native Qt6.12 consumer build and stopped
-installation/export; fresh cold QML/PCM integration remains next.
+installation/export. A second cold generic ARM run now passes PID1 autostart,
+current schema, real QML/PCM and full service-Stop cleanup/final assertion. The
+first aggregate failure remains preserved. The [repository test entry](tools/native-audio-preview/)
+now passes host QML/PCM with the three fresh outputs of its public Cargo/CMake
+builds. The earlier entry retains its prebuilt provider lineage. Normal app
+windows and phone gates remain open.
 
 The [Messages request and model engine](docs/native-messages-rust-client.md) now
 also runs in Rust. An earlier cohort with the pre-port appearance client builds
