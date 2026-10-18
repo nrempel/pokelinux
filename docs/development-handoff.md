@@ -61,9 +61,13 @@ port initialization is the sole behavior fix. Host Rust and frontend C ABI/socke
 unshown-QML components pass separately. A separate same-session actor case now
 passes explicit Stop, actual producer retirement and graph absence, full paired
 quiet, then one new explicit Play with a distinct producer. All 144,000 measured
-frames and actual owned closure pass without a production change. Actual Qt
-clicks joined to PCM, natural completion, app-close/revocation and backend failure
-without replay remain open. Continue with the private stack/offscreen component;
+frames and actual owned closure pass without a production change. Separate cases
+now pass natural completion (96,000 measured frames, same-FD `completed`, a new
+original eight-second case cutoff) and permission revocation/regrant/one explicit
+Reconnect/new Play (192,000 frames under one original six-second cutoff).
+Regrant/reconnect alone stays quiet; app-close retirement remains distinct and
+open. Actual Qt clicks joined to PCM and backend failure without replay remain
+open. Continue with the private stack/offscreen component;
 no window/capture campaign.
 The private Messages read-provider remains parked at compiled assertion RED,
 with no qualified GREEN or deployed join; do not retry it. Normal ARM windows,

@@ -117,8 +117,9 @@ production client change supplies that GREEN. Cold installed and ARM integration
 remain open. The later [finite Play/Stop preview](native-sounds-preview.md) passes
 host components and one actor Play to selected-speaker virtual PCM. A separate
 same-session case passes explicit Stop, producer retirement, full measured quiet
-and one new explicit Play. Actual Qt click/PCM, natural completion, revocation
-and backend-failure joins remain open.
+and one new explicit Play. Separate cases now pass natural completion and
+permission revocation, with quiet retained after regrant/explicit reconnect until
+a new Play. Actual Qt click/PCM, app-close and backend-failure joins remain open.
 
 The [Rust Messages client engine](native-messages-rust-client.md) now also owns
 request/parser/model, pagination, generations, scheduling and worker lifetime.

@@ -81,6 +81,9 @@ through the normal Rust-owned producer to original private PipeWire: 24,000
 measured frames per sink contain 440 Hz speaker content and exactly zero earpiece
 samples. The producer creation-time port configuration repairs the preceding
 channel-layout refusal with the same frozen fixture. This is separate from the
-component checks above. Actual Qt clicks joined to PCM, natural completion,
-explicit preview Stop/quiet, app-close/revocation and backend-failure integration
-remain open. Historical GUI/PCM and ARM results retain their original providers.
+component checks above. Separate native actor cases qualify explicit Stop/quiet/
+new Play, natural completion with same-connection `completed`, and permission
+revocation with full measured quiet. Regrant plus one explicit reconnect remains
+quiet until a new Play. Actual Qt clicks joined to PCM, app-close retirement and
+backend-failure integration remain open. Historical GUI/PCM and ARM results
+retain their original providers.
