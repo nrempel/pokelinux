@@ -22,7 +22,10 @@ Play. Separate cases now pass natural completion and permission revocation;
 regrant plus one explicit Reconnect stays quiet until a new Play. A native
 app-close/relaunch case also passes retirement and full quiet before explicit
 reconnect/new Play. Backend-worker loss and explicit recovery stay quiet until
-a new Play. Actual Qt clicks joined to PCM remain open.
+a new Play. A later unshown real QML consumer now passes route/Play/Stop/new-Play
+mouse input through the actual Rust client, actor and normal audio owner to
+independent PCM. The specified host preview gates pass; the installed ARM tracer
+is next.
 
 The [Messages request and model engine](docs/native-messages-rust-client.md) now
 also runs in Rust. An earlier cohort with the pre-port appearance client builds

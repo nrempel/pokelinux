@@ -13,8 +13,10 @@ full paired silence and one new explicit Play. Separate cases now pass natural
 completion and permission revocation; regrant/explicit reconnect remains quiet
 until a new Play. Native app-close/relaunch now separately passes retirement,
 full quiet and explicit reconnect before a new Play. Backend-worker loss and one
-explicit reconcile also pass retirement/full quiet without replay. Actual Qt
-clicks joined to PCM remain open. Host Rust/frontend checks and the focused
+explicit reconcile also pass retirement/full quiet without replay. An unshown
+real QML consumer now joins route/Play/Stop/new-Play mouse input to the same app
+FD, actor, normal audio owner and independent PCM. Host preview gates pass; the
+installed ARM tracer remains next. Host Rust/frontend checks and the focused
 delayed-owner-poll regression pass separately.
 
 The [logical output-selector foundation](native-audio-output-selector.md) now

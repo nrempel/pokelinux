@@ -8,8 +8,10 @@ Separate cases now pass natural completion and permission revocation, including
 quiet after regrant/explicit reconnect until a new Play. Native app-close/relaunch
 also passes retirement, full quiet and explicit reconnect before a new Play.
 Backend-worker loss and explicit recovery stay quiet until a new Play on the same
-app FD. Actual Qt input joined to PCM remains open. Earlier Sounds GUI/PCM results
-retain their own sources.
+app FD. A later unshown real QML consumer now joins route/Play/Stop/new-Play
+mouse input through the actual Rust client/actor/audio owner to independent PCM.
+The specified host preview gates pass. Earlier Sounds GUI/PCM results retain
+their own sources.
 
 ## Ownership and model
 
@@ -56,7 +58,7 @@ Independent virtual PCM now separately qualifies explicit preview Stop and quiet
 
 | Boundary | Qualified result |
 | --- | --- |
-| Offscreen Qt adapters/QML | Missing-controls RED→same frozen-test GREEN: construction and two unavailable-state buttons under UID 11042, root-owned 0644 shared QML, unshown window. No input action executes. |
+| Earlier offscreen Qt adapters/QML | Missing-controls RED→same frozen-test GREEN: construction and two unavailable-state buttons under UID 11042, root-owned 0644 shared QML, unshown window. No input action executes. |
 | Sounds C ABI/Qt sockets | Required-seven-field RED→six existing, seven schema and seven preview groups plus two cleanup cases pass; 30 existing Qt behaviors plus setup/cleanup pass. |
 | Real actor/audio owner, original PipeWire 1.4.2, authored lifecycle facts/virtual sinks | Initial denial and later zero-PCM failures precede an `unsupported_channel_layout` diagnostic. Sole producer-port initialization change makes the same frozen fixture pass: 24,000 frames per sink, 440 Hz speaker content and exactly zero earpiece samples. |
 | Same-session explicit Stop and new Play | The live first producer retires before its natural end; source/client/links disappear and its retained pidfd is terminal. Both full sink windows then measure zero. Only a new explicit Play starts a distinct producer and restores selected-speaker tone. |
@@ -64,6 +66,7 @@ Independent virtual PCM now separately qualifies explicit preview Stop and quiet
 | Permission revocation | Revoke retires the live producer before natural completion. Regrant alone stays disconnected; one explicit Reconnect yields available idle/unselected state and full quiet. Only a new Play creates a new producer/tone. |
 | Native app close/relaunch | Old app and producer retire before natural completion, followed by full quiet. A distinct same-profile app retains permission but starts unavailable; one explicit Reconnect and another full quiet precede a new Play. |
 | Backend-worker loss/recovery | One exact worker SIGKILL retires the producer before natural completion. Full quiet precedes and follows one privileged reconcile; recovered actor state is `failed` with `applied:null`. Only new Play starts a distinct producer on the same app FD. |
+| Real unshown QML input→actor/audio→PCM | Route, Play, Stop and new-Play mouse pairs each emit exactly one real click. Public model/QML text passes Playing→Retiring→Idle→Playing on the same app FD. Three paired windows measure 144,000 frames: selected-speaker tone, full quiet, then new-Play tone. |
 | Finite producer owner | Same frozen SIGABRT RED→GREEN after Process-only repair. Delayed polling reaps the already-dead helper; no suspend or PCM inference. |
 
 The same producer is alive before and after capture; its parentage, server
@@ -106,16 +109,22 @@ unavailable/`retiring` to available/`failed`, with `applied:null` and full quiet
 Exactly two Plays, zero Reconnects and zero preview Stops execute. Recovery cannot
 replay the original Play. This does not qualify vendor-specific cleanup.
 
+The QML case uses current AudioClient, shared appearance and real SoundsView
+Buttons, with all top-level Quick windows unshown/unexposed. Native mouse press/release
+pairs drive the scene centers; no direct effect calls, model writes or synthetic
+`clicked` emissions supply the result. Actual send bytes retain Rust deadlines.
+The three paired windows share one original six-second cutoff. Fixture-only C++
+visual discovery and layout polishing precede success; earlier object-lookup and
+zero-click setup failures remain separate, without a production RED/repair claim.
+
 Raw windows are independently recomputed; actual waits, PIPE EOF, regular-log
-closes and adopted-child waits retain separate provenance. These added cases
-change no production code and claim no new behavioral RED. Actual Qt Play/Stop
-clicks joined to PCM remain open. QML attempts stop in setup, first at control
-socket readiness and later at first-route reply validation. A separate bounded
-diagnostic observes Button object lookup returning no match before mouse dispatch;
-visual delegate presence remains unmeasured. Earlier failed epochs and the backend
-setup failure are preserved. No deployment,
-ARM execution, normal window/cold graphical session or physical-audio
-qualification follows. No physical phone was accessed.
+closes and adopted-child waits retain separate provenance. These cases change no
+production code. The next gate is the installed ARM tracer. A separate Rust 1.98.1
+crossbuild produces current audio/launcher plus three fixture binaries as
+AArch64 ELF and a 452-member/15-API Sounds archive. This is static build evidence;
+ARM loaders, Qt components and PID1 execution remain unqualified. Deployment,
+normal app main/window, display-profile/capture, live theme switching, cold
+graphical session and physical audio remain open. No physical phone was accessed.
 
 ## Reproduce the Linux process tests
 

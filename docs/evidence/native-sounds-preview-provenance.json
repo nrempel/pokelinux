@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "status": "partial feature qualification: host actor Play, Stop/quiet/new Play, natural completion, permission revocation, native app-close/relaunch and backend-worker loss/explicit recovery/quiet/new Play pass; UI input/PCM integration open",
-  "scope": "Host native Rust/frontend components and six separate authored real-actor/original-PipeWire virtual PCM cases; no UI-click join, vendor-specific backend cleanup, ARM, physical phone, real suspend or normal-window qualification.",
+  "status": "specified host finite-preview gates qualified: real unshown QML route/Play/Stop/new Play to actual Rust actor/audio and independent PCM, plus natural completion, revocation, app-close and backend recovery; installed ARM and normal-window gates remain open",
+  "scope": "Host original-code Rust/Qt components and seven separate authored real-actor/original-PipeWire virtual PCM cases, including actual unshown QML input; separate current Rust AArch64 crossbuild/static ABI only. No installed ARM execution, normal app main/window, display-profile/capture, live-theme, vendor-specific backend cleanup, real suspend or physical-phone qualification.",
   "evidence": [
     {
       "boundary": "actual Qt adapters and offscreen QML",
@@ -1010,10 +1010,373 @@
       "runtime_cleanup_phase_custody_ECHILD_qualified": true,
       "exact_container_absence_same_daemon_inputs_unchanged": true,
       "failure": "real enabled Button absent before mouse dispatch; no event/effect retry or production change"
+    },
+    {
+      "boundary": "actual unshown QML real first-route mouse pair before any accepted click",
+      "outcome": "ACTUAL_SETUP_FAILURE_real_mouse_pair_zero_clicked_signals",
+      "feature_passed": false,
+      "setup_failure_only": true,
+      "behavioral_or_production_RED_claim": false,
+      "host_report_sha256": "dbd43736a0d634c7ec70fee10fa3a632428575dfe9f224ea7f6c950d943ad55b",
+      "inner_report_sha256": "5568421365ca6fa14bab4eab0beb405296c0d1c87ffe4fff915c20c70066ea98",
+      "runtime_report_sha256": "4632fe793efe6cdbfc87f10cbfef9cb64042f1057a0e0c5f22b7acee83b7a8f9",
+      "review_sha256": "ab41a3c082fe1a649e7c8a352079c3d5e9dcc9d2235e2d0e0eaf8fac660de28f",
+      "authenticated_private_diagnostic": true,
+      "observed_Button_found_enabled_in_clip": true,
+      "mouse_press_release_delivered": true,
+      "observed_clicked_signals": 0,
+      "press_accepted": false,
+      "release_accepted": true,
+      "layout_cause_measured": false,
+      "counts": {
+        "host_actual_wait_PIPE_EOF": 13,
+        "phase_actual_wait_PIPE_EOF": 6,
+        "runtime_actual_wait_PIPE_EOF": 8
+      },
+      "runtime_cleanup_phase_custody_ECHILD_qualified": true,
+      "exact_container_absence_same_daemon_inputs_unchanged": true,
+      "failure": "actual first-route mouse pair emits zero clicked signals; no PCM or final positive assertion admitted"
+    },
+    {
+      "boundary": "host real unshown QML route/Play/Stop/new-Play input through actual Rust client, actor and normal native audio to original PipeWire virtual PCM",
+      "outcome": "qualified host input/PCM GREEN; specified host preview gates closed with no production change since 0b4c6c1ca0ada77b78cc84f84d876a65faad7ff3 and no new production behavioral RED/repair claimed",
+      "published_baseline": "f8a8fea90c64bb3c43985ddc2216e36c5345e25e",
+      "feature_passed": true,
+      "host_UI_input_PCM_qualified": true,
+      "Qt_consumer": "Qt6.8 test consumer using current AudioClient, shared appearance and real SoundsView Buttons under app UID11042",
+      "normal_app_main_executed": false,
+      "source_manifest_sha256": "7eff2a75754361ad023121156d4ea1904a08f488c97c5b0b42e31638c9b5592a",
+      "source_seal_sha256": "e3b45770c49fdd6ee75b9bbfc17e48e5aa71f0674f7066fdf55a7038a12a1101",
+      "source_selection_sha256": "bfdd9b0daad38f7a544af58e8905f8f86c4fa3c7dd45d736acd45c90b8f93431",
+      "consumer_CPP_sha256": "8e7183433f0bb337de731de5c380ec754cbc8e010a5a27701d0a089010d1e0a2",
+      "consumer_ELF_sha256": "fa62324acb308e3c4328f78743f37ae8a6683bde71579877c7d6fd0bfb1dd882",
+      "consumer_build_review_sha256": "bf508d1452ab9c29a2d19c513baaf5c0b4d169ee3941d4bd38220c27b20165de",
+      "consumer_source_seal_sha256": "c92de8ef53396e774fb39cfd7426deea32f65019d6d77e4e79ee3f60e57e8f3e",
+      "controller_sha256": "96a532d8ec4b6c5a833f5783b8fe16cfb320227d48b84858eafd756a19b4c641",
+      "observer_sha256": "28758d46aa43cb5489687dea64d4e3ae9ef3476cfa42b22347d54f3dd3c161ec",
+      "assertion_source_sha256": "ec407b3752778bea5c2e9a006f0741d079b1a885951136d6b7b899624cd79e02",
+      "assertion_ELF_sha256": "7e47333a1b6d075462449a535dc89e8a10474d48e6cf05687682171df09e5d79",
+      "unchanged_oracles_sha256": "241aeeb82a3fa43a3b5541d76d1e2d2563d88144377284d473133c7a763dbc39",
+      "normal_audio_sha256": "5d79db588da134c8d33a010d895806e726b8e1e74721528f6f8e7367dda54380",
+      "normal_launcher_sha256": "0526065536c9d5d42d1767e33afb87fe667ec97ee13dc531479c042a496d38b0",
+      "launcher_lineage": "separate earlier full Rust2 source730fcfab; unchanged provider, not relabeled current audio source",
+      "host_report_sha256": "f7d75538bbcd86e6438713edd728edf75ab633e979dcfbea5f31628dad3180b3",
+      "inner_report_sha256": "4d29cce2cd0e19f3716716be4ad888f5ea49b824ee1b44ee72f9b04e6f2a7509",
+      "runtime_report_sha256": "cb2eacbad89ca9a9d00ec5b9e119f02d7a5d59dea66f6a46daefc254eaf215b1",
+      "pcm_report_sha256": "735db71449c23b4a8a6ea159358d3e545d1d73f2ee74f666d3b30c7a92d8125f",
+      "review_sha256": "fdad4be301b7dca3508cdfd14a6b4a8f863b3150fc1e3c7d699c5bcc6ea69bf1",
+      "independent_review_sha256": "48df1a2ab5001c5818accd64ece87f17173888efe977756f888f840343834f80",
+      "fixture_successor": "test C++ visual-item discovery then one public children-before-parents ensurePolished layout pass; diagnostic output retained; no show, input retry, effect/model call or production change",
+      "unchanged_from_zero_click_epoch": [
+        "controller",
+        "owned-process helpers",
+        "PCM observer",
+        "compiled assertion source and ELF",
+        "normal production providers",
+        "PCM oracle bytes",
+        "original bounds"
+      ],
+      "historical_setup_failures_preserved": [
+        "control socket readiness",
+        "first-route reply validation",
+        "Button object lookup returned no match before mouse dispatch",
+        "real first-route mouse pair emitted zero clicked signals"
+      ],
+      "four_native_mouse_pairs_each_real_clicked_once": true,
+      "mouse_delivery_predicate": "native press/release delivered, one real clicked signal; press_accepted is false and is not required",
+      "direct_effect_call_model_write_or_clicked_emission_used": false,
+      "public_QML_states": {
+        "selected_idle": {
+          "applied": "",
+          "canChoose": true,
+          "canPlay": true,
+          "canStop": false,
+          "qml_status": "Output selected; preview idle",
+          "requested": "media-a7",
+          "routes": [
+            {
+              "id": "media-a7",
+              "label": "Speaker (virtual)"
+            },
+            {
+              "id": "media-z2",
+              "label": "Headphones (virtual)"
+            }
+          ],
+          "status": "Output selected; preview idle"
+        },
+        "first_QML_Playing": {
+          "applied": "media-a7",
+          "canChoose": true,
+          "canPlay": false,
+          "canStop": true,
+          "qml_status": "Preview playing",
+          "requested": "media-a7",
+          "routes": [
+            {
+              "id": "media-a7",
+              "label": "Speaker (virtual)"
+            },
+            {
+              "id": "media-z2",
+              "label": "Headphones (virtual)"
+            }
+          ],
+          "status": "Preview playing"
+        },
+        "QML_Playing_before_Stop": {
+          "applied": "media-a7",
+          "canChoose": true,
+          "canPlay": false,
+          "canStop": true,
+          "qml_status": "Preview playing",
+          "requested": "media-a7",
+          "routes": [
+            {
+              "id": "media-a7",
+              "label": "Speaker (virtual)"
+            },
+            {
+              "id": "media-z2",
+              "label": "Headphones (virtual)"
+            }
+          ],
+          "status": "Preview playing"
+        },
+        "QML_Retiring": {
+          "applied": "media-a7",
+          "canChoose": false,
+          "canPlay": false,
+          "canStop": false,
+          "qml_status": "Preview retiring",
+          "requested": "media-a7",
+          "routes": [
+            {
+              "id": "media-a7",
+              "label": "Speaker (virtual)"
+            },
+            {
+              "id": "media-z2",
+              "label": "Headphones (virtual)"
+            }
+          ],
+          "status": "Preview retiring"
+        },
+        "QML_idle_before_new_Play": {
+          "applied": "",
+          "canChoose": true,
+          "canPlay": true,
+          "canStop": false,
+          "qml_status": "Output selected; preview idle",
+          "requested": "media-a7",
+          "routes": [
+            {
+              "id": "media-a7",
+              "label": "Speaker (virtual)"
+            },
+            {
+              "id": "media-z2",
+              "label": "Headphones (virtual)"
+            }
+          ],
+          "status": "Output selected; preview idle"
+        },
+        "new_QML_Playing": {
+          "applied": "media-a7",
+          "canChoose": true,
+          "canPlay": false,
+          "canStop": true,
+          "qml_status": "Preview playing",
+          "requested": "media-a7",
+          "routes": [
+            {
+              "id": "media-a7",
+              "label": "Speaker (virtual)"
+            },
+            {
+              "id": "media-z2",
+              "label": "Headphones (virtual)"
+            }
+          ],
+          "status": "Preview playing"
+        }
+      },
+      "Retiring_is_not_process_custody_or_PCM_ack": true,
+      "same_app_FD_same_actual_actor_peer_through_trace": true,
+      "actual_complete_actor_sends": {
+        "total": 17,
+        "media_status": 13,
+        "media_route": 1,
+        "media_preview_play": 2,
+        "media_preview_stop": 1
+      },
+      "wire_authority": "actual send bytes copied verbatim; decoded lengths, peer and CLOCK_BOOTTIME brackets checked; actual MSG_DONTWAIT|MSG_NOSIGNAL; exactly one real forward preserving bytes/fd/flags/result/errno",
+      "Play_choices": {
+        "distinct_explicit_choices": 2,
+        "attempts_each": 1,
+        "complete_sends_each": 1,
+        "original_absolute_budget_seconds_each": 1,
+        "actual_wire_ttl_ms_each": 999,
+        "same_choice_reprepare_or_retry_observed": false,
+        "each_choice_retains_its_own_original_absolute_until": true
+      },
+      "original_shared_PCM_case_seconds": 6,
+      "full_paired_windows": 3,
+      "measured_frames_each": 24000,
+      "total_measured_frames": 144000,
+      "PCM_stages": [
+        "before_Stop tone",
+        "after_Stop full quiet",
+        "new explicit Play tone"
+      ],
+      "independent_raw_recomputation": {
+        "performed": true,
+        "raw_sample_files": 6,
+        "raw_bytes_each": 134400,
+        "discarded_frames_each": 9600,
+        "measured_frames_each": 24000,
+        "total_measured_frames": 144000,
+        "all_recorded_statistics_reproduced_and_thresholds_passed": true,
+        "initial_speaker_sha256": "100e3d2963f64cc4d96782947fde169c94eac36582f8ee3cca2bcbc8cfbfffe9",
+        "new_Play_speaker_sha256": "cd2db05f81a39dea1d8cb408f2af81f9135c0c08beedfc92656e0c3d6b0e2b44",
+        "four_quiet_raw_sha256": "ac8f5613c4b176d380009fa1306c49a027644dba38b9703ed102634c60f8d5ff",
+        "quiet_measured_samples_all_zero": true,
+        "selected_speaker_rms": 0.17677339975691214,
+        "selected_speaker_energy440_min": 0.999197210072033
+      },
+      "counts": {
+        "host_direct_waits_and_real_PIPE_EOFs": 15,
+        "phase_direct_waits_and_real_PIPE_EOFs": 7,
+        "runtime_direct_waits_and_real_PIPE_EOFs": 9,
+        "observer_direct_waits": 25,
+        "observer_real_PIPE_EOFs": 44,
+        "total_direct_waits": 56,
+        "total_real_PIPE_EOFs": 75,
+        "additional_PID1_adopted_actual_wait_without_PIPE_EOF_claim": 1,
+        "total_actual_waits_including_adopted": 57,
+        "monitor_link_stdout_DEVNULL_no_EOF_claim": 2,
+        "observer_regular_stderr_files": 4
+      },
+      "regular_log_closure": "source finally closes four regular observer stderr handles before result publication; regular files are not PIPEs; no per-log timestamp receipts were recorded",
+      "all_recorded_original_direct_wait_and_real_PIPE_EOF_cutoffs_verified": true,
+      "actual_compiled_positive_assertion_only_after_runtime_and_adopted_cleanup_exit": 0,
+      "actual_runtime_functional_passed": true,
+      "actual_cleanup_qualified": true,
+      "exact_container_absence_same_daemon_inputs_unchanged": true,
+      "installed_ARM_qualified": false,
+      "normal_window_qualified": false,
+      "display_profile_or_capture_qualified": false,
+      "live_theme_switching_qualified": false,
+      "physical_phone_qualified": false,
+      "next_integration_gate": "installed ARM tracer",
+      "all_top_level_Quick_windows_unshown_unexposed": true
+    },
+    {
+      "boundary": "current Rust AArch64 crossbuild and static 15-API Sounds archive",
+      "outcome": "qualified build-only GREEN; no ARM runtime claim",
+      "published_baseline": "f8a8fea90c64bb3c43985ddc2216e36c5345e25e",
+      "build_passed": true,
+      "compiler": "rustc 1.98.1",
+      "compiler_log_sha256": "778fbc643a806f0dd123c056e66201d7e8a56a61928ec0a33171be8d6c2d5a37",
+      "source_manifest_sha256": "f9fc270f62990aef26eb92a6df531a78bc5e83c549d90df6eea9e3eec90b9797",
+      "source_seal_sha256": "cd18f734c3f88ab69a603677c2c374b7fc96ae4a47d8d2f47911e9132336108d",
+      "source_selection_sha256": "888c1d3cae27e759be4c6093f6e57947bd9a9ec8bbf3617b6cc6e2892fbfbc79",
+      "authorized_selection_sha256": "4b87990c5755720a73bedda0c91394bb1c89dc38e2f70580e72eb50a91f74b12",
+      "host_report_sha256": "18d0e493c653fcdbb26a10a7c8d2d72e6c65588aff6af4f7c8d7b994ec647fea",
+      "artifacts_report_sha256": "4ba65233bb88033b37056f893cc5326e0ab3a9778987e0b10816e16d4b7367ed",
+      "review_sha256": "d3f74f6f12c7c415eecaf4ca6aecd8daae1df0e45c775c698e4896f88db76f17",
+      "normal_production_binaries": [
+        "pokelinux-audio",
+        "lifecycle-launcher"
+      ],
+      "test_fixture_binaries": [
+        "preview-actor",
+        "preview-qml-assert",
+        "preview-deployment-assert"
+      ],
+      "binaries": {
+        "pokelinux-audio": {
+          "bytes": 1339392,
+          "sha256": "b6b5d2c53ab7f7186dd4a1dd6b4b438f4858719fd2a3d89a7287570dee553ac1",
+          "ELF_machine": 183,
+          "ELF_type": 3,
+          "ARM_loader_resolution_qualified": false,
+          "ARM_execution_qualified": false
+        },
+        "lifecycle-launcher": {
+          "bytes": 1082976,
+          "sha256": "77364dcf96694caf3e5e639c65fa8c403e94712efdae96766fa32b153db2d228",
+          "ELF_machine": 183,
+          "ELF_type": 3,
+          "ARM_loader_resolution_qualified": false,
+          "ARM_execution_qualified": false
+        },
+        "preview-actor": {
+          "bytes": 1698040,
+          "sha256": "34718b21597eb547e13c36de26a057a40052511fca6f6c470baa5dac2c661868",
+          "ELF_machine": 183,
+          "ELF_type": 3,
+          "ARM_loader_resolution_qualified": false,
+          "ARM_execution_qualified": false
+        },
+        "preview-qml-assert": {
+          "bytes": 637968,
+          "sha256": "df2adc107f9f011d9241e5e916a12441e568d4ce02415577e8c6fdf23d2592ea",
+          "ELF_machine": 183,
+          "ELF_type": 3,
+          "ARM_loader_resolution_qualified": false,
+          "ARM_execution_qualified": false
+        },
+        "preview-deployment-assert": {
+          "bytes": 625728,
+          "sha256": "89e2dfa88d84082ac184d73deeefe69da99d732eec8b06bfe58a70ad680b3be1",
+          "ELF_machine": 183,
+          "ELF_type": 3,
+          "ARM_loader_resolution_qualified": false,
+          "ARM_execution_qualified": false
+        }
+      },
+      "Sounds_archive": {
+        "bytes": 24901100,
+        "sha256": "98700d7bb21597528576d1ef88a5605536baf7767e9cb80f53905e58d6d19765",
+        "ELF_member_count": 452,
+        "all_ELF_members_machine": 183,
+        "strong_unique_C_API_count": 15,
+        "strong_C_API_names": [
+          "pr_sounds_client_choose_v1",
+          "pr_sounds_client_connected_v1",
+          "pr_sounds_client_disconnected_v1",
+          "pr_sounds_client_free_v1",
+          "pr_sounds_client_new_v1",
+          "pr_sounds_client_prepare_v1",
+          "pr_sounds_client_preview_play_v1",
+          "pr_sounds_client_preview_stop_v1",
+          "pr_sounds_client_reconnect_v1",
+          "pr_sounds_client_refresh_v1",
+          "pr_sounds_client_reply_v1",
+          "pr_sounds_client_sent_v1",
+          "pr_sounds_client_start_v1",
+          "pr_sounds_client_tick_v1",
+          "pr_sounds_client_view_v1"
+        ],
+        "ARM_link_or_execution_qualified": false
+      },
+      "actual_host_wait_PIPE_EOF_count": 16,
+      "shell_actual_waits_with_separate_regular_redirections": 15,
+      "shell_PIPE_EOF_claim": false,
+      "actual_container_attach_wait_exit": 0,
+      "exact_container_absence_same_daemon_inputs_unchanged": true,
+      "unexecuted_predecessor_preserved": true,
+      "ARM_execution_qualified": false,
+      "ARM_native_loader_qualified": false,
+      "ARM_Qt_component_qualified": false,
+      "ARM_PID1_execution_qualified": false,
+      "QEMU_execution_qualified": false,
+      "physical_phone_qualified": false,
+      "independent_static_review_sha256": "856bc36582f5f51f833bc1a1e1c521a8a60cd64b91f80ed4df547a52afd1a4a5"
     }
   ],
   "pending": [
-    "actual Qt Play/Stop clicks joined to independent PCM",
     "deployment qualification for the new preview",
     "ARM execution",
     "normal windows and cold graphical session",
@@ -1044,5 +1407,6 @@
   "primary_port_configuration_references": [
     "https://docs.pipewire.org/page_man_pipewire-props_7.html",
     "https://github.com/PipeWire/pipewire/blob/1.4.2/spa/plugins/audioconvert/audioadapter.c#L1810-L1892"
-  ]
+  ],
+  "next_integration_gate": "installed ARM tracer; no further host combinations selected"
 }

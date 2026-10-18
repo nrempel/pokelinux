@@ -86,6 +86,12 @@ new Play, natural completion with same-connection `completed`, and permission
 revocation with full measured quiet. Regrant plus one explicit reconnect remains
 quiet until a new Play. Native app-close/relaunch separately passes retirement,
 full quiet and explicit reconnect before a new Play. Backend-worker loss and
-explicit recovery remain quiet until new Play on the same app FD. Actual Qt
-clicks joined to PCM remain open. Historical GUI/PCM and ARM results retain their
-original providers.
+explicit recovery remain quiet until new Play on the same app FD. A later
+unshown real QML consumer passes route/Play/Stop/new-Play mouse input through
+current AudioClient/SoundsView and Rust policy to real actor/audio PCM: three
+paired windows, 144,000 measured frames under one original six-second cutoff.
+Only test C++ setup changes; production policy and presentation remain unchanged.
+A separate current AArch64 crossbuild qualifies all 452 ELF archive members and
+15 APIs; ARM linking/execution remains open. Installed ARM, normal windows and
+live-theme integration remain open. Historical GUI/PCM and ARM results retain
+their original providers.

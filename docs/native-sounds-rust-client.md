@@ -9,8 +9,12 @@ one new explicit Play. Separate cases now pass natural completion and permission
 revocation; regrant/explicit reconnect stays quiet until a new Play. Native
 app-close/relaunch separately passes retirement/full quiet and explicit reconnect
 before a new Play. Backend-worker loss/explicit recovery also stays quiet until
-a new Play on the same app FD. Actual Qt click/PCM remains open. Historical
-thirteen-function executions retain their original scope.
+a new Play on the same app FD. An unshown real QML consumer now joins actual
+route/Play/Stop/new-Play mouse input and accepted public states to actor/audio PCM
+on the same app FD, preserving Rust packet/deadline policy. Host preview gates
+pass; installed ARM and normal windows remain open. The current 15-API Sounds
+archive also crossbuilds for AArch64; loader/link/execution remains unqualified.
+Historical thirteen-function executions retain their original scope.
 
 The later [shared appearance Rust client](native-appearance-rust-client.md)
 adds separately qualified policy and fresh joined normal host/default-Cargo/
