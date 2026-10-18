@@ -48,6 +48,33 @@ The controlled-clock tests use one-second collection deadlines and observations
 expiring two seconds from collection start. Calling retired in these tests is a
 policy input: it proves no process wait, pipe EOF or kernel suspend behavior.
 
+## Stable value revisions across readonly refreshes
+
+A revision now versions usable observed attributes rather than the number of
+reads. A successful identical readonly refresh preserves the revision only while
+freshness is uninterrupted, and renews collection expiry separately. Changed raw
+attributes, Set admission, expiry, unavailable state and cancellation still
+invalidate the previous version. Read worker occupancy remains busy; preserving
+a version does not admit concurrent writes or extend a caller's original deadline.
+
+The frozen real Rust Client/normal Release daemon regression first fails at an
+actual remote decision: two unchanged completed reads advance revision2→4→6,
+then reject one explicit Set using the still-fresh cached revision2. The authored
+requested attribute stays200. After the model-only repair, the same test observes
+revision1→1→1 and one Completed Set75%, with independent raw300/max400 and
+unchanged optional actual120. Raw200→201 still invalidates the version despite
+both values rounding to50%. Actual expiry, missing-attribute and cancelled-write
+gaps retain new revisions, uncertainty and no replay.
+
+One full Release suite passes52 tests:32 backend/owner/deadline/protocol/client,
+six composed Client/Main, eight service and six worker groups. Format, strict
+all-target Clippy and normal host/ARM Release builds pass. The host service is
+executed; ARM is crossbuilt only. The composed/service/credential controls close
+16 retained processes with wait0 and32 PIPE EOFs; the outer runner closes10 CLI
+waits/20 EOFs, unchanged inputs and exact container absence. No GUI cause is
+inferred from this independent defect. See the
+[readonly-version provenance](evidence/native-brightness-readonly-version-provenance.json).
+
 ## App permission and lifecycle
 
 The lifecycle actor now understands DisplayBrightness for the fixed
@@ -351,9 +378,16 @@ The full attempt is a failure: its original20-second/eight-capture image observe
 expects a button fill different from the background. This theme renders equal
 colors with thin borders. The final frame visibly says “Brightness ready”, but
 that observer never admits a click. No change/unavailable/recovery steps pass.
-The earlier import-setup failure is also retained separately. The new image
-observer must first reproduce and correct detection on these same original PNGs;
-production code and the behavior assertions remain unchanged.
+The earlier import-setup failure is also retained separately. A detector-only
+successor reproduces the old failure on all eight unchanged PNGs and detects
+the actual paired button borders while still rejecting the first pending frame.
+A fresh VM then admits the initial state and sends exactly one actual75% touch.
+The requested attribute fails to reach300 within its original five seconds;
+remaining steps do not run. That failure originally exported no post-touch raw
+trace, so its cause remains unknown. A separately frozen diagnostic successor
+retains bounded raw/inotify samples and original frames without retrying input,
+changing production code or extending the functional deadline. The stable-revision
+repair above is independently qualified and is not yet qualified in this UI path.
 
 Installed brightness start and Stop are separate measured evidence: normalMain0,
 retained pidfd dead, process/socket absent and empty exact cgroup with no restart.

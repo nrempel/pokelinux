@@ -121,7 +121,7 @@ impl Owner {
         self.refresh(now);
         self.view
     }
-    /// Initial test-first forwarding stub: the caller deadline is not yet honored.
+    /// Collect readonly state within the exact original caller deadline.
     pub fn observe_until(&mut self, now: u64, until_ns: u64) -> Option<Ticket> {
         if until_ns <= now || until_ns - now > SECOND {
             return None;
@@ -137,7 +137,8 @@ impl Owner {
             admitted: true,
         });
         self.view.pending = true;
-        self.advance();
+        // Read custody is separate from the version of fresh observed values.
+        // A completed unchanged refresh must not stale an otherwise valid intent.
         Some(ticket)
     }
     pub fn observe(&mut self, now: u64) -> Option<Ticket> {
@@ -228,6 +229,12 @@ impl Owner {
                     .baseline
                     .is_some_and(|b| b.max == v.max && v.requested == scaled(b.max, percent)),
             });
+        // refresh(now) above has already withdrawn an expired/cancelled view.
+        // Equality is useful only across uninterrupted freshness, never a gap.
+        let unchanged_read = confirmed
+            && matches!(ticket.action, Action::Observe)
+            && self.view.observation.is_some()
+            && self.view.observation == value;
         self.withdraw();
         if confirmed {
             self.view.observation = value;
@@ -238,7 +245,9 @@ impl Owner {
         } else if matches!(ticket.action, Action::Set { .. }) {
             self.view.last_set_uncertain = true;
         }
-        self.advance();
+        if !unchanged_read {
+            self.advance();
+        }
         confirmed && !self.exhausted
     }
 }

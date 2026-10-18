@@ -17,16 +17,13 @@ separate. Do not equate registration, submission or API success with carrier
 acceptance, delivery, native call state or working physical hardware.
 
 The [native Rust brightness service](native-brightness.md) now joins its real Rust client,
-owned worker and authored attribute backend in three process/socket cases:
-explicit changes, cancellation with readonly recovery, and refusal of a queued
-success after its original deadline. A concrete lifecycle adapter passes five
-new socket groups plus11 existing policy groups. Installed configuration passes
-27 filesystem/selection controls with an explicit disabled or owner choice and
-fixed Settings identity. The normal runtime constructor also executes that provider
-against the actual release service in two focused cases. Earlier38 service and
-eight client groups retain their
-separate evidence. Full actor/Settings composition, installation, visible UI,
-ARM execution and physical display gates remain open.
+owned worker and authored attribute backend in six process/socket cases. Unchanged
+fresh readonly observations now preserve the state revision, so background reads
+do not reject an otherwise valid explicit choice. A compiled real-client RED
+passes after the model repair; all52 brightness tests pass in one Release suite.
+Raw changes and expiry/unavailable/cancellation gaps still invalidate old intent.
+Separate lifecycle adapter, installed configuration and constructor qualifications
+remain distinct. ARM execution and physical display gates remain open.
 
 The [normal Settings app](../native-settings-ui/README.md) now passes seven frozen Rust socket/C ABI
 groups after compiled assertion RED, plus a native Qt6.12 build/install and real
@@ -35,9 +32,12 @@ thread shutdown; Qt renders the shared Omarchy theme. The component window is
 never shown. Fixed desktop launch now passes six actor groups, three CLI and
 three staging groups plus six unchanged Sounds controls, with separate host/ARM
 builds. A prepared native Pixel-profile Settings window now visibly reads25%
-through the actual actor and installed Rust service. Its five-state tracer stops
-in the image observer before any click; change/recovery and hardware gates remain
-open. See the original first frame in the brightness report.
+through the actual actor and installed Rust service. The first image-observer
+failure is preserved; corrected detection admits one actual75% touch, but the
+requested attribute fails to change within its original five seconds. That tap's
+cause remains unknown and separate from the independently proven revision bug.
+Change/recovery and hardware gates remain open. See the original first frame in
+the brightness report.
 
 The [audio SIGTERM repair](native-audio.md#sigterm-enters-owned-stop) now routes
 the shared Rust termination latch into existing idempotent Stop. The unchanged

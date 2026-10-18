@@ -1,0 +1,119 @@
+{
+  "schema": 1,
+  "scope": "Original native x86 host Rust Client/normal Release Main/owned worker with authored SyntheticTree attributes. No actor/Source/Qt GUI, Linux driver, physical phone or ARM execution qualification.",
+  "red": {
+    "qualification": {
+      "bytes": 4539,
+      "sha256": "932ab32f50ffcd0fdec463128d8397b79aeaedcd9317d1d37f01b3574479836b"
+    },
+    "receipt": {
+      "bytes": 21709,
+      "sha256": "b4cd861744a6cf9c26da7424f05faf76fe6e4d0e18548c2a218ba0c9dbf1082a"
+    },
+    "compiled_cases": 6,
+    "passed": 5,
+    "failed": 1,
+    "assertion": "UNCHANGED_REFRESH_MUST_PRESERVE_CACHED_SET_ADMISSION",
+    "actual_cached_revision": 2,
+    "actual_unchanged_refresh_revisions": [
+      4,
+      6
+    ],
+    "one_explicit_cached_Set": "Rejected{id41}; requested attribute remains200",
+    "original_cache_still_fresh": true,
+    "pre_repair_service": {
+      "bytes": 776536,
+      "sha256": "99dfc25669cdcd643c5b2be8e3f033cb4d4177d7917a7b03291d7cbc485eac19"
+    },
+    "setup_or_compiler_failure": false
+  },
+  "green": {
+    "qualification": {
+      "bytes": 6448,
+      "sha256": "e9d513119c228c7f5012a98d87ad4e812fb7b2bbc862e4374ff0252c921b037b"
+    },
+    "source": {
+      "bytes": 3712,
+      "sha256": "a6aa2737681e2ebb51ab4e1059cafbfbff407ac3cb0575be24b1347fa1c2c5e7"
+    },
+    "receipt": {
+      "bytes": 21502,
+      "sha256": "58b3e3fde69f3188f1fc03a0eec376e737cd55d2a89251bb1413d96d68f2f7a1"
+    },
+    "checks": {
+      "fmt": 0,
+      "one_whole_suite_Release": 0,
+      "standard_groups": 32,
+      "actual_composed_groups": 6,
+      "actual_service_groups": 8,
+      "actual_worker_groups": 6,
+      "total": 52,
+      "strict_alltarget_Clippy": 0,
+      "host_Release": 0,
+      "ARM_Release": 0,
+      "host_and_ARM_readelf": 0,
+      "test_suite_repeated": false
+    },
+    "actual_cached_revision": 1,
+    "actual_unchanged_refresh_revisions": [
+      1,
+      1
+    ],
+    "observation_expiry_renewed": true,
+    "one_explicit_cached_Set": "Completed{id41}; independent requested attribute300/max400; optional actual120",
+    "original_cache_still_fresh": true,
+    "actual_process_custody": {
+      "inside_composed_fixture_Main_waits0": 6,
+      "inside_rawservice_Main_waits0": 8,
+      "inside_credential_probe_waits0": 2,
+      "inside_these16_owned_process_PIPE_EOFs": 32,
+      "all_these_process_records_normal_not_failure_cleanup": true,
+      "worker_parent_wait_scope": "Worker harness measures its own retained children; service workers remain service Main children and are not relabelled as fixture direct waits.",
+      "outer_actual_Docker_CLI_waits": 10,
+      "outer_actual_PIPE_EOFs": 20,
+      "exact_CID_absent": true,
+      "same_daemon": true,
+      "inputs_unchanged": true,
+      "original_cutoffs_passed": true,
+      "SETUID_SETGID_only_added_for_existing_credential_controls": true
+    },
+    "providers": {
+      "pokelinux-brightness-host": {
+        "bytes": 776616,
+        "sha256": "74e56b4000da678b6ebb2b8556cfbb875340d3179852c459896568df8c3c5a83",
+        "ELF_machine": 62,
+        "actual_execution": true,
+        "normal_features": [],
+        "Release_opt_level": "3"
+      },
+      "pokelinux-brightness-ARM": {
+        "bytes": 824232,
+        "sha256": "32111d160c523065a0ba3e82370a3a00d81843d3f4a90ef5857a8fc0ad695b3d",
+        "ELF_machine": 183,
+        "actual_execution": false,
+        "normal_features": [],
+        "Release_opt_level": "3"
+      }
+    }
+  },
+  "same_frozen_consumer": {
+    "bytes": 30988,
+    "sha256": "4ef40ae8721d809ffb1d16b5eeccda3a671eda2fdc47c4f2b408692fad0bfb1b"
+  },
+  "model_repair": {
+    "bytes": 8293,
+    "sha256": "f5d62cbdc9d8a16a6b0450ace617d6f0362c4711efedd3b97e96e4e6cec11ee4"
+  },
+  "Root_independently_rehashed_selected_source_files": 28,
+  "fences": [
+    "Raw200 to201 changes revision even when both round to50%; stale remote Set rejected without write.",
+    "Real expiry, unavailable and cancelled Set gaps cannot restore an old revision or acknowledge uncertain work.",
+    "Read worker occupancy, original deadlines, cancellation, queued late success and actual wait/EOF custody remain enforced."
+  ],
+  "limits": [
+    "Stable state revision is separate from observation freshness and busy custody.",
+    "This independent repair does not establish the cause of the failed Settings tap.",
+    "ARM artifact is crossbuilt only.",
+    "No Source/policy/deadline/cadence changes; no physical phone accessed."
+  ]
+}

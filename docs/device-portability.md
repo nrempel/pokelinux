@@ -79,7 +79,9 @@ That join uses virtual routes and root-authored lifecycle controls; the current
 installed Source/audio session owner remains separate.
 
 The [brightness vertical](native-brightness.md) carries percent intent and fresh
-readback revisions through shared Rust app/lifecycle/service code. Deployment
+readback revisions through shared Rust app/lifecycle/service code. Identical
+fresh reads preserve value revisions; raw changes and freshness gaps invalidate
+them independently of rounded percent or observation cadence. Deployment
 alone selects a backlight backend and device. LinuxBacklight requires the Linux
 sysfs class; the qualified SyntheticTree tests use authored files with no driver
 fallback. Requested and optional actual attributes are distinct, and neither is

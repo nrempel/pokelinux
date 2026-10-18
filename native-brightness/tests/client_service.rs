@@ -610,6 +610,197 @@ fn queued_success_expires(work: u64, close: u64) {
     assert_eq!(reconciled.requested_percent, None);
     realm.stop();
 }
+fn unchanged_refresh_preserves_cached_revision(work: u64, close: u64) {
+    let mut realm = Realm::start("unchanged-refresh", work, close);
+    let mut cached = realm.client();
+    let initial = realm.inspect(&mut cached);
+    positive(&initial, 200, Some(120));
+    let mut observer = realm.client();
+    let first = realm.inspect(&mut observer);
+    let second = realm.inspect(&mut observer);
+    positive(&first, 200, Some(120));
+    positive(&second, 200, Some(120));
+    assert!(
+        now() < initial.until_ns,
+        "cached original observation must remain fresh"
+    );
+    assert!(
+        realm.children().is_empty(),
+        "completed refresh retains worker custody"
+    );
+    let until = work.min(initial.until_ns).min(now() + 800_000_000);
+    // Exactly one NEW explicit Set uses A's still-fresh cached value revision.
+    // Record the actual remote decision before asserting the new contract.
+    assert!(cached.set(41, 75, initial.revision, until).unwrap());
+    let event = realm.event(&mut cached, until);
+    record_observer(
+        &realm,
+        "cached_Set_after_unchanged_refresh",
+        1,
+        until,
+        until,
+        &event,
+        &cached.snapshot(),
+    );
+    println!(
+        "{}",
+        json!({"readonly_version_case":"unchanged",
+        "cached_revision":initial.revision,"first_refresh_revision":first.revision,
+        "second_refresh_revision":second.revision,"cached_original_until_ns":initial.until_ns,
+        "first_refresh_until_ns":first.until_ns,"second_refresh_until_ns":second.until_ns,
+        "exactly_one_explicit_Set":true})
+    );
+    assert!(
+        matches!(&event, Event::Completed { id:41, reply } if reply.ok),
+        "UNCHANGED_REFRESH_MUST_PRESERVE_CACHED_SET_ADMISSION"
+    );
+    assert_eq!(
+        (first.revision, second.revision),
+        (initial.revision, initial.revision)
+    );
+    assert!(first.until_ns > initial.until_ns && second.until_ns > first.until_ns);
+    assert!(cached.snapshot().revision > initial.revision);
+    positive(&cached.snapshot(), 300, Some(120));
+    assert_eq!(fs::read(realm.attr("brightness")).unwrap(), b"300\n");
+    realm.stop();
+}
+fn raw_change_invalidates_cached_revision(work: u64, close: u64) {
+    let mut realm = Realm::start("changed-raw", work, close);
+    let mut cached = realm.client();
+    let initial = realm.inspect(&mut cached);
+    positive(&initial, 200, Some(120));
+    fs::write(realm.attr("brightness"), b"201\n").unwrap();
+    let mut observer = realm.client();
+    let changed = realm.inspect(&mut observer);
+    positive(&changed, 201, Some(120));
+    assert!(changed.revision > initial.revision);
+    assert!(
+        now() < initial.until_ns,
+        "remote stale test needs fresh local cache"
+    );
+    let until = work.min(initial.until_ns).min(now() + 800_000_000);
+    assert!(cached.set(42, 75, initial.revision, until).unwrap());
+    let event = realm.event(&mut cached, until);
+    record_observer(
+        &realm,
+        "stale_Set_after_raw201",
+        1,
+        until,
+        until,
+        &event,
+        &cached.snapshot(),
+    );
+    assert!(matches!(event, Event::Rejected { id: 42 }));
+    assert_eq!(fs::read(realm.attr("brightness")).unwrap(), b"201\n");
+    assert_eq!(fs::read(realm.attr("actual_brightness")).unwrap(), b"120\n");
+    assert!(realm.children().is_empty());
+    for _ in 0..4 {
+        assert!(cached.poll().is_none());
+        assert_eq!(fs::read(realm.attr("brightness")).unwrap(), b"201\n");
+        tick();
+    }
+    realm.stop();
+}
+fn positive_until(realm: &mut Realm, client: &mut Client, until: u64) -> Snapshot {
+    for attempt in 1..=16 {
+        assert!(now() < until, "original readonly gap reconciliation cutoff");
+        assert!(client.inspect(until).unwrap());
+        let event = realm.event(client, until);
+        let view = client.snapshot();
+        record_observer(
+            realm,
+            "gap_readonly_reconciliation",
+            attempt,
+            until,
+            until,
+            &event,
+            &view,
+        );
+        assert!(matches!(event, Event::Observed));
+        if !view.pending && view.observation.is_some() {
+            return view;
+        }
+    }
+    panic!("bounded readonly gap reconciliation exhausted");
+}
+fn gaps_never_restore_old_revision_or_cancelled_ack(work: u64, close: u64) {
+    let mut realm = Realm::start("version-gaps", work, close);
+    let mut client = realm.client();
+    let initial = realm.inspect(&mut client);
+    positive(&initial, 200, Some(120));
+    while now() < initial.until_ns {
+        assert!(now() < work);
+        assert!(realm.service.poll().is_none());
+        tick();
+    }
+    assert!(client.snapshot().observation.is_none());
+    assert!(
+        !client
+            .set(51, 75, initial.revision, work.min(now() + 800_000_000))
+            .unwrap()
+    );
+    let expired_recovery = realm.inspect(&mut client);
+    positive(&expired_recovery, 200, Some(120));
+    assert!(
+        expired_recovery.revision > initial.revision
+            && expired_recovery.requested_percent.is_none()
+    );
+    fs::remove_file(realm.attr("max_brightness")).unwrap();
+    let unavailable = realm.inspect(&mut client);
+    assert!(!unavailable.pending && unavailable.observation.is_none() && unavailable.until_ns == 0);
+    assert!(
+        !client
+            .set(
+                52,
+                75,
+                expired_recovery.revision,
+                work.min(now() + 800_000_000)
+            )
+            .unwrap()
+    );
+    fs::write(realm.attr("max_brightness"), b"400\n").unwrap();
+    let recovered = realm.inspect(&mut client);
+    positive(&recovered, 200, Some(120));
+    assert!(
+        recovered.revision > expired_recovery.revision && recovered.requested_percent.is_none()
+    );
+    let before_cancel = recovered.revision;
+    realm.fifo_max();
+    let until = work.min(now() + 900_000_000);
+    assert!(client.set(53, 75, before_cancel, until).unwrap());
+    let worker = realm.one_worker(until);
+    realm.stopped(until);
+    client.revoke();
+    assert!(
+        client.snapshot().pending
+            && client.snapshot().last_set_uncertain
+            && client.snapshot().observation.is_none()
+    );
+    assert_eq!(fs::read(realm.attr("brightness")).unwrap(), b"200\n");
+    realm.service.signal(Signal::CONT);
+    realm.worker_gone(worker, work.min(now() + 500_000_000));
+    realm.restore_max();
+    let final_view = positive_until(&mut realm, &mut client, work.min(now() + 800_000_000));
+    positive(&final_view, 200, Some(120));
+    assert!(
+        final_view.revision > before_cancel
+            && final_view.last_set_uncertain
+            && final_view.requested_percent.is_none()
+    );
+    assert!(
+        !client
+            .set(53, 75, before_cancel, work.min(now() + 800_000_000))
+            .unwrap()
+    );
+    for _ in 0..4 {
+        assert!(client.poll().is_none());
+        assert!(realm.children().is_empty());
+        assert_eq!(fs::read(realm.attr("brightness")).unwrap(), b"200\n");
+        tick();
+    }
+    realm.stop();
+}
+
 fn main() {
     assert_eq!(rustix::process::getuid().as_raw(), 0);
     let start = now();
@@ -617,6 +808,18 @@ fn main() {
     let close = start + 30 * SECOND;
     let mut failed = 0;
     for (name, case) in [
+        (
+            "unchanged_refresh_preserves_cached_revision",
+            unchanged_refresh_preserves_cached_revision as fn(u64, u64),
+        ),
+        (
+            "raw_change_invalidates_cached_revision",
+            raw_change_invalidates_cached_revision,
+        ),
+        (
+            "gaps_never_restore_old_revision_or_cancelled_ack",
+            gaps_never_restore_old_revision_or_cancelled_ack,
+        ),
         (
             "persistent_Client_Inspect_25_75_independent_optional_actual",
             persistent_updates as fn(u64, u64),
@@ -642,7 +845,7 @@ fn main() {
     }
     println!(
         "{}",
-        json!({"brightness_client_service_cases":3,"failed":failed,
+        json!({"brightness_client_service_cases":6,"failed":failed,
         "SyntheticTree_only":true,"original_work_ns":work-start,"original_close_ns":close-start})
     );
     assert_eq!(failed, 0, "composed actual Client/Main/worker cases failed");
