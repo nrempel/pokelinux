@@ -141,8 +141,8 @@ class Component final : public QObject {
     QString diagnosticOperation;
     QJsonObject observedClick;
     bool controlTrusted = false;
-    bool routeClicked = false, stopClicked = false, levelClicked = false, muteClicked = false, initialized = false, qmlWarning = false;
-    unsigned playClicks = 0;
+    bool routeClicked = false, stopClicked = false, levelClicked = false, initialized = false, qmlWarning = false;
+    unsigned playClicks = 0, muteClicks = 0;
     dev_t socketDevice{}; ino_t socketInode{};
     static void retireNotice(std::unique_ptr<QSocketNotifier> &notice) {
         if (notice) { notice->setEnabled(false); notice.release()->deleteLater(); }
@@ -186,7 +186,10 @@ class Component final : public QObject {
             {"canChoose", audio->canChoose()}, {"canPlay", audio->canPlay()}, {"canStop", audio->canStop()},
             {"qml_status", statusItem->property("text").toString()},
             {"previewLevelPercent", audio->previewLevelPercent()}, {"previewMuted", audio->previewMuted()},
-            {"canAdjustPreview", audio->canAdjustPreview()}, {"qml_level", levelItem->property("text").toString()},
+            {"canAdjustPreview", audio->canAdjustPreview()},
+            {"canTogglePreviewMute", audio->canTogglePreviewMute()},
+            {"previewMuteChecked", audio->previewMuteChecked()}, {"previewMuteLive", audio->previewMuteLive()},
+            {"qml_level", levelItem->property("text").toString()},
             {"qml_muted", muteItem->property("checked").toBool()},
             {"qml_level50_enabled", level50Item->isEnabled()}, {"qml_level100_enabled", level100Item->isEnabled()},
             {"qml_mute_enabled", muteItem->isEnabled()}};
@@ -260,11 +263,13 @@ class Component final : public QObject {
         if (operation == QStringLiteral("click_play")) {
             require(playClicks < 2, "only two separate explicit Play choices are admitted");
             currentPlayChoice.store(++playClicks, std::memory_order_release);
+        } else if (operation == QStringLiteral("click_mute")) {
+            require(muteClicks < 2, "only two separate explicit mute choices are admitted");
+            ++muteClicks;
         } else {
             bool &used = operation == QStringLiteral("click_route") ? routeClicked
-                : operation == QStringLiteral("click_level50") ? levelClicked
-                : operation == QStringLiteral("click_mute") ? muteClicked : stopClicked;
-            require(!used, "route/level/mute/Stop click cannot be retried"); used = true;
+                : operation == QStringLiteral("click_level50") ? levelClicked : stopClicked;
+            require(!used, "route/level/Stop click cannot be retried"); used = true;
         }
         const QString name = operation == QStringLiteral("click_route") ? QStringLiteral("route_media-a7")
             : operation == QStringLiteral("click_play") ? QStringLiteral("previewPlay")
@@ -354,11 +359,13 @@ class Component final : public QObject {
         observedClick.insert("before_boottime_ns", decimal(before)); observedClick.insert("after_boottime_ns", decimal(after));
         require(hiddenAfterPress && allHidden(*view), "mouse delivery made a Quick window visible/exposed");
         require(pressDelivered && releaseDelivered && clicked.count() == 1, "actual mouse pair did not click the real Button once");
-        return {{"button", name}, {"play_choice", int(currentPlayChoice.load(std::memory_order_acquire))}, {"scene_x", center.x()}, {"scene_y", center.y()},
+        QJsonObject dispatch{{"button", name}, {"play_choice", int(currentPlayChoice.load(std::memory_order_acquire))}, {"scene_x", center.x()}, {"scene_y", center.y()},
             {"press_delivered", pressDelivered}, {"release_delivered", releaseDelivered},
             {"press_accepted", press.isAccepted()}, {"release_accepted", release.isAccepted()},
             {"clicked_signals", clicked.count()}, {"all_quick_windows_hidden", true},
             {"before_boottime_ns", decimal(before)}, {"after_boottime_ns", decimal(after)}};
+        if (operation == QStringLiteral("click_mute")) dispatch.insert("mute_choice", int(muteClicks));
+        return dispatch;
     }
     void accepted() {
         require(control < 0, "overlapping private control request");

@@ -51,6 +51,7 @@ fn preview_deadlines(now: BootTime, until_ns: u64) -> Result<(BootTime, BootTime
 
 struct Preview {
     peer: Identity,
+    generation: u64,
     lease: u64,
     route: String,
     process: pokelinux_audio::preview_process::Process,
@@ -75,6 +76,7 @@ struct State {
     policy_settled: bool,
     media_present: bool,
     preview: Option<Preview>,
+    preview_sequence: u64,
     last_preview: Option<(Identity, PreviewState)>,
     needs_apply: bool,
     recovery_required: bool,
@@ -153,6 +155,57 @@ impl State {
                     .map(|(_, state)| state)
             })
             .unwrap_or_default()
+    }
+    fn current_preview_for(&self, peer: Identity) -> Option<&Preview> {
+        self.preview.as_ref().filter(|p| {
+            p.peer == peer && matches!(p.state, PreviewState::Starting | PreviewState::Playing)
+        })
+    }
+    fn mute_preview(&mut self, peer: Identity, value: &Value) -> Result<(), &'static str> {
+        if value.as_object().is_none_or(|object| object.len() != 5) {
+            return Err("invalid_request");
+        }
+        let id = value["lease"].as_u64().ok_or("invalid_lease")?;
+        if self.authority.role(peer, id)? != Role::Media {
+            return Err("invalid_role");
+        }
+        let generation = value["generation"]
+            .as_u64()
+            .filter(|n| *n > 0)
+            .ok_or("invalid_preview_generation")?;
+        let muted = value["muted"].as_bool().ok_or("invalid_preview_mute")?;
+        let until_ns = value["until_boottime_ns"]
+            .as_u64()
+            .ok_or("invalid_deadline")?;
+        let now = BootClock.now();
+        let until = BootTime::from_elapsed(Duration::from_nanos(until_ns));
+        if until <= now
+            || now
+                .checked_after(Duration::from_secs(1))
+                .is_none_or(|max| until > max)
+        {
+            return Err("preview_expired");
+        }
+        if self.recovery_required || !self.observed.available || !self.policy_settled {
+            return Err("backend_unavailable");
+        }
+        self.enforce_preview_route();
+        let p = self
+            .preview
+            .as_mut()
+            .filter(|p| {
+                p.peer == peer
+                    && p.lease == id
+                    && p.generation == generation
+                    && p.state == PreviewState::Playing
+            })
+            .ok_or("preview_not_current")?;
+        p.process
+            .set_live_muted(muted, until)
+            .map_err(|_| "preview_mute_refused")?;
+        // This control changes only the exact producer's future PCM. It does not
+        // revise route intent, relink the graph, restart a producer or renew work.
+        Ok(())
     }
     fn enforce_preview_route(&mut self) {
         if self.preview.as_ref().is_some_and(|p| {
@@ -387,10 +440,16 @@ impl State {
         if existing.is_none() {
             self.authority.can_acquire(peer, Role::Media)?;
         }
+        let generation = self
+            .preview_sequence
+            .checked_add(1)
+            .ok_or("preview_generation_limit")?;
+        self.preview_sequence = generation;
         let process = pokelinux_audio::preview_process::Process::start(&source, level, work_until)
             .map_err(|_| "preview_start_failed")?;
         self.preview = Some(Preview {
             peer,
+            generation,
             lease: existing.unwrap_or(0),
             route: route.into(),
             process,
@@ -446,6 +505,7 @@ impl State {
                 "preview_play" => {
                     lease = Some(self.start_preview(peer, &value)?);
                 }
+                "preview_mute" => self.mute_preview(peer, &value)?,
                 "preview_stop" => {
                     if value.as_object().is_none_or(|object| object.len() != 2) {
                         return Err("invalid_request");
@@ -542,6 +602,8 @@ impl State {
         let mut response = json!({"ok":true,"lease":lease,"peer_uid":peer.uid,"desired":self.authority.desired(),
             "observed":self.observed,"intent_revision":self.intent,
             "policy_settled":self.policy_settled,"preview":self.preview_for(peer),
+            "preview_generation":self.current_preview_for(peer).map(|p| p.generation),
+            "preview_muted":self.current_preview_for(peer).map(|p| p.process.muted()),
             "application":if self.recovery_required { "uncertain" } else if self.applied == Some(self.intent) { "observed" } else { "pending" },
             "phase":if self.stopping { "stopping" } else { "running" },
             "cleanup":if self.stopping { "pending" } else { "none" }});
@@ -716,6 +778,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         policy_settled: false,
         media_present: false,
         preview: None,
+        preview_sequence: 0,
         last_preview: None,
         needs_apply: false,
         recovery_required: false,

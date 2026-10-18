@@ -2,7 +2,8 @@
 use crate::{
     Reply,
     audio::{
-        Event, PreviewIntent, PreviewLevel, PreviewRequest, PreviewState, Provider, Request, State,
+        Event, MuteIntent, PreviewIntent, PreviewLevel, PreviewMuteRequest, PreviewRequest,
+        PreviewState, Provider, Request, State,
     },
     authority::{Authority, MediaLeaseStamp, MediaStamp},
     boottime_ns,
@@ -19,6 +20,11 @@ enum Kind {
         stamp: MediaStamp,
         preview: Option<PreviewLevel>,
     },
+    Mute {
+        stamp: MediaStamp,
+        generation: u64,
+        muted: bool,
+    },
     Stop {
         id: u64,
         until: u64,
@@ -31,16 +37,38 @@ struct Pending {
 impl Pending {
     fn id(&self) -> u64 {
         match &self.kind {
-            Kind::Effect { stamp, .. } => stamp.intent().id,
+            Kind::Effect { stamp, .. } | Kind::Mute { stamp, .. } => stamp.intent().id,
             Kind::Stop { id, .. } => *id,
         }
     }
-    fn valid(&self, authority: &Authority, backend: &str) -> bool {
+    fn valid(&self, authority: &Authority, provider: &dyn Provider) -> bool {
         match &self.kind {
-            Kind::Effect { stamp, .. } => authority.current_media(stamp, backend, boottime_ns()),
+            Kind::Effect { stamp, .. } => {
+                authority.current_media(stamp, provider.incarnation(), boottime_ns())
+            }
+            Kind::Mute {
+                stamp,
+                generation,
+                muted,
+            } => {
+                let state = provider.state();
+                authority.current_media(stamp, provider.incarnation(), boottime_ns())
+                    && current_preview(&state, *generation, &stamp.intent().route)
+                    && (self.phase != Phase::ReplyReady || state.preview_muted == Some(*muted))
+            }
             Kind::Stop { until, .. } => boottime_ns() < *until,
         }
     }
+}
+fn current_preview(state: &State, generation: u64, route: &str) -> bool {
+    state.connected
+        && state.available
+        && state.policy_settled
+        && state.preview == PreviewState::Playing
+        && state.preview_generation == Some(generation)
+        && state.preview_muted.is_some()
+        && state.applied.as_deref() == Some(route)
+        && state.requested.as_deref() == Some(route)
 }
 struct Active {
     connection: u64,
@@ -78,6 +106,8 @@ impl Session {
             state.pending = false;
             state.policy_settled = false;
             state.preview = PreviewState::Idle;
+            state.preview_generation = None;
+            state.preview_muted = None;
         }
         state
     }
@@ -155,6 +185,48 @@ impl Session {
         )?;
         Ok(self.install(connection, stamp, Some(level)))
     }
+    pub(crate) fn begin_preview_mute(
+        &mut self,
+        connection: u64,
+        pid: u32,
+        uid: u32,
+        request: PreviewMuteRequest,
+        authority: &mut Authority,
+        provider: &dyn Provider,
+    ) -> Result<u64, Reply> {
+        let active = self
+            .active
+            .as_ref()
+            .filter(|a| a.connection == connection && a.pending.is_none())
+            .ok_or(Reply::Denied)?;
+        let approved = active.approved.as_ref().ok_or(Reply::Denied)?;
+        if !authority.current_media_lease(approved, provider.incarnation()) {
+            return Err(Reply::Denied);
+        }
+        let state = provider.state();
+        let route = state.applied.as_deref().ok_or(Reply::Denied)?;
+        if !current_preview(&state, request.generation, route) {
+            return Err(Reply::Denied);
+        }
+        let stamp = authority.begin_media_preview_mute(
+            pid,
+            uid,
+            provider.incarnation(),
+            route,
+            &request,
+            boottime_ns(),
+        )?;
+        let until = stamp.intent().until_ns;
+        self.active.as_mut().unwrap().pending = Some(Pending {
+            kind: Kind::Mute {
+                stamp,
+                generation: request.generation,
+                muted: request.muted,
+            },
+            phase: Phase::Unsent,
+        });
+        Ok(until)
+    }
     /// Cleanup belongs to the existing connection, including in the background.
     /// No new playback stamp or grant is minted. Existing lease invalidation
     /// still closes the provider before any later response can publish.
@@ -203,10 +275,12 @@ impl Session {
         if active
             .pending
             .as_ref()
-            .is_some_and(|p| !p.valid(authority, provider.incarnation()))
+            .is_some_and(|p| !p.valid(authority, provider))
         {
             let p = active.pending.as_ref().unwrap();
-            if p.phase == Phase::Unsent && matches!(&p.kind, Kind::Effect { .. }) {
+            if p.phase == Phase::Unsent
+                && matches!(&p.kind, Kind::Effect { .. } | Kind::Mute { .. })
+            {
                 // An unsent replacement preserves the earlier approved lease.
                 self.active.as_mut().unwrap().pending = None;
             } else {
@@ -260,6 +334,16 @@ impl Session {
                 route_intent: stamp.intent().clone(),
                 level: *level,
             }),
+            Kind::Mute {
+                stamp,
+                generation,
+                muted,
+            } => provider.mute_preview(&MuteIntent {
+                id: stamp.intent().id,
+                generation: *generation,
+                muted: *muted,
+                until_ns: stamp.intent().until_ns,
+            }),
             Kind::Stop { id, until } => provider.stop_preview(*id, *until),
         };
         match result {
@@ -296,7 +380,10 @@ impl Session {
         let connection = active.connection;
         let pending = active.pending.as_ref()?;
         let id = match &event {
-            Event::Selected { id, .. } | Event::Preview { id, .. } | Event::Rejected { id } => *id,
+            Event::Selected { id, .. }
+            | Event::Preview { id, .. }
+            | Event::Muted { id, .. }
+            | Event::Rejected { id } => *id,
             _ => unreachable!(),
         };
         let matching_kind = matches!(
@@ -309,9 +396,24 @@ impl Session {
                     } | Kind::Stop { .. },
                     Event::Preview { .. }
                 )
+                | (Kind::Mute { .. }, Event::Muted { .. })
                 | (_, Event::Rejected { .. })
         );
-        if pending.phase != Phase::Sent || pending.id() != id || !matching_kind {
+        let matching_mute = match (&pending.kind, &event) {
+            (
+                Kind::Mute {
+                    stamp,
+                    generation,
+                    muted,
+                },
+                Event::Muted { state, .. },
+            ) => {
+                current_preview(state, *generation, &stamp.intent().route)
+                    && state.preview_muted == Some(*muted)
+            }
+            _ => true,
+        };
+        if pending.phase != Phase::Sent || pending.id() != id || !matching_kind || !matching_mute {
             self.retire(provider);
             return Some((connection, Reply::Unavailable));
         }
@@ -329,7 +431,7 @@ impl Session {
                     .phase = Phase::ReplyReady;
                 Some((connection, Reply::MediaSelected { state }))
             }
-            Event::Preview { state, .. } => {
+            Event::Preview { state, .. } | Event::Muted { state, .. } => {
                 self.active
                     .as_mut()
                     .unwrap()
@@ -383,6 +485,12 @@ impl Session {
         {
             return;
         }
+        if matches!(active.pending.as_ref().unwrap().kind, Kind::Mute { .. })
+            && !active.pending.as_ref().unwrap().valid(authority, provider)
+        {
+            self.retire(provider);
+            return;
+        }
         match active.pending.take().unwrap().kind {
             Kind::Effect { stamp, .. } => {
                 match authority.approve_media(&stamp, provider.incarnation(), boottime_ns()) {
@@ -390,7 +498,7 @@ impl Session {
                     None => self.retire(provider),
                 }
             }
-            Kind::Stop { .. } => {}
+            Kind::Mute { .. } | Kind::Stop { .. } => {}
         }
     }
 }

@@ -8,7 +8,7 @@
 namespace {
 QString routeText(const PrSoundsClientIdV1 &id){return QString::fromLatin1(reinterpret_cast<const char*>(id.bytes),int(id.length));}
 constexpr const char *statuses[]={
- "Audio disconnected","Connecting to audio","Audio unavailable; reconnect to inspect","Checking audio","Applying output","Output applied","Media interrupted","Choose an output","Media route unavailable","Output requested","Media route denied","Audio unavailable","Audio command state unavailable","Audio actor path or clock refused","Audio actor connection refused","Audio actor connection expired","Audio actor unavailable; reconnect to inspect","Audio actor identity refused","Audio request expired; reconnect to inspect","Audio request expired","Audio clock unavailable","Audio request refused","Audio queued command refused","Audio request could not be sent","Audio reply outside its request","Audio reply expired","Audio actor packet refused","Audio reply refused","Output selected; preview idle","Preview starting","Preview playing","Preview retiring","Preview completed","Preview failed","Preview cancelled; reconnect to inspect"
+ "Audio disconnected","Connecting to audio","Audio unavailable; reconnect to inspect","Checking audio","Applying output","Output applied","Media interrupted","Choose an output","Media route unavailable","Output requested","Media route denied","Audio unavailable","Audio command state unavailable","Audio actor path or clock refused","Audio actor connection refused","Audio actor connection expired","Audio actor unavailable; reconnect to inspect","Audio actor identity refused","Audio request expired; reconnect to inspect","Audio request expired","Audio clock unavailable","Audio request refused","Audio queued command refused","Audio request could not be sent","Audio reply outside its request","Audio reply expired","Audio actor packet refused","Audio reply refused","Output selected; preview idle","Preview starting","Preview playing","Preview retiring","Preview completed","Preview failed","Preview cancelled; reconnect to inspect","Updating preview mute"
 };
 }
 PrSoundsClientViewV1 AudioClient::view() const {
@@ -31,6 +31,10 @@ bool AudioClient::canStop() const {return view().can_stop!=0;}
 int AudioClient::previewLevelPercent() const {return int(view().selected_level_percent);}
 bool AudioClient::previewMuted() const {return view().selected_muted!=0;}
 bool AudioClient::canAdjustPreview() const {return view().can_adjust_preview!=0;}
+bool AudioClient::canTogglePreviewMute() const {return view().can_toggle_mute!=0;}
+bool AudioClient::previewMuteChecked() const {return view().mute_checked!=0;}
+bool AudioClient::previewMuteLive() const {return view().mute_is_live!=0;}
+void AudioClient::togglePreviewMute(){pr_sounds_client_preview_toggle_mute_v1(m_client);drive();}
 void AudioClient::setPreviewLevel(int percent,bool muted){pr_sounds_client_preview_level_v1(m_client,uint32_t(percent),uint32_t(muted));sync();}
 AudioClient::AudioClient(QString path,uid_t ownerUid,QObject *parent):QObject(parent),m_path(std::move(path)),m_ownerUid(ownerUid) {
  if(pr_sounds_client_new_v1(&m_client)!=PR_SOUNDS_CLIENT_OK)return;

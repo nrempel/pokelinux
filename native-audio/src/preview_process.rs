@@ -2,7 +2,7 @@
 use pokelinux_power::clock::{BootClock, BootTime, Clock};
 use rustix::event::{PollFd, PollFlags, Timespec, poll};
 use rustix::fs::{OFlags, fcntl_getfl, fcntl_setfl};
-use rustix::pipe::{PipeFlags, pipe_with};
+use rustix::pipe::{PipeFlags, fcntl_setpipe_size, pipe_with};
 use rustix::process::{Pid, PidfdFlags, Signal, pidfd_open, pidfd_send_signal};
 use std::fs::File;
 use std::io::{self, Read, Write};
@@ -12,6 +12,8 @@ use std::process::{Child, Command, ExitStatus, Stdio};
 const STDERR_LIMIT: usize = 4096;
 const WRITE_QUANTUM: usize = 65_536;
 const PCM_LIMIT: usize = 4 * 48_000 * 4;
+const PCM_PIPE_REQUEST: usize = 4096;
+const PCM_PIPE_LIMIT: usize = 16_384;
 
 /// Local process completion, never evidence of delivered sound or graph cleanup.
 #[derive(Debug)]
@@ -29,6 +31,8 @@ pub struct Process {
     input: Option<File>,
     stderr: Option<File>,
     pcm: Vec<u8>,
+    unmuted_pcm: Vec<u8>,
+    muted: bool,
     sent: usize,
     diagnostic: Vec<u8>,
     status: Option<ExitStatus>,
@@ -87,11 +91,20 @@ impl Process {
             &properties,
             "-",
         ]);
-        Self::spawn_owned(
+        let unmuted = crate::PreviewLevel::new(u64::from(level.percent()), false)
+            .expect("validated frozen preview percentage");
+        let mut process = Self::spawn_owned(
             command,
-            crate::fixed_pcm::fixed_preview_pcm(level),
+            crate::fixed_pcm::fixed_preview_pcm(unmuted),
             work_until,
-        )
+        )?;
+        // No input has been written before the owner is returned. Retain the
+        // immutable original percentage so an initially muted Play can unmute.
+        if level.muted() {
+            process.pcm.fill(0);
+            process.muted = true;
+        }
+        Ok(process)
     }
 
     // Production and the private finite-process fixture share the same owner.
@@ -106,6 +119,13 @@ impl Process {
         // Opposite pipe endpoints have distinct file descriptions. Only the
         // parent endpoints become nonblocking; child read_to_end stays blocking.
         let (child_input, parent_input) = pipe_with(PipeFlags::CLOEXEC)?;
+        // Limit already queued PCM before any child exists. Linux may round the
+        // request to a kernel page; admit 4K/16K pages without inheriting the
+        // default pipe's much larger playback lookahead. This is not a bound on
+        // downstream PipeWire buffering or a claim of immediate sink silence.
+        if fcntl_setpipe_size(&parent_input, PCM_PIPE_REQUEST)? > PCM_PIPE_LIMIT {
+            return Err(io::ErrorKind::Unsupported.into());
+        }
         let (parent_stderr, child_stderr) = pipe_with(PipeFlags::CLOEXEC)?;
         for fd in [&parent_input, &parent_stderr] {
             fcntl_setfl(fd, fcntl_getfl(fd)? | OFlags::NONBLOCK)?;
@@ -127,7 +147,9 @@ impl Process {
             pidfd: None,
             input: Some(File::from(parent_input)),
             stderr: Some(File::from(parent_stderr)),
+            unmuted_pcm: pcm.clone(),
             pcm,
+            muted: false,
             sent: 0,
             diagnostic: Vec::new(),
             status: None,
@@ -150,6 +172,49 @@ impl Process {
         // Returning Err here would enter Drop's last-resort abort with live custody.
         // Main must retain a refused admission in its Retiring slot and poll it.
         Ok(process)
+    }
+
+    /// Change future complete frames on this exact retained preview producer.
+    /// Buffered audio is separate from acceptance of the digital feed policy.
+    pub fn set_live_muted(&mut self, muted: bool, original_until: BootTime) -> io::Result<()> {
+        let until = original_until.min(self.work_until);
+        if BootClock.now() >= until {
+            return Err(io::ErrorKind::TimedOut.into());
+        }
+        if self.retired || self.closed || self.status.is_some() || !self.alive() {
+            return Err(io::ErrorKind::BrokenPipe.into());
+        }
+        // Preserve the remainder of a sample that has already entered the pipe.
+        // No mutation can retract buffered audio or renew this finite asset.
+        let first = self.sent.div_ceil(4) * 4;
+        if self.input.is_none() || first >= self.pcm.len() {
+            return Err(io::ErrorKind::WouldBlock.into());
+        }
+        if !self.pcm.len().is_multiple_of(4) {
+            return Err(io::ErrorKind::InvalidData.into());
+        }
+        if muted {
+            self.pcm[first..].fill(0);
+        } else {
+            self.pcm[first..].copy_from_slice(&self.unmuted_pcm[first..]);
+        }
+        if BootClock.now() >= until {
+            // This is one Main-thread operation: no poll/write can occur while
+            // changing the tail. Roll back a late local change before any IO.
+            if self.muted {
+                self.pcm[first..].fill(0);
+            } else {
+                self.pcm[first..].copy_from_slice(&self.unmuted_pcm[first..]);
+            }
+            return Err(io::ErrorKind::TimedOut.into());
+        }
+        self.muted = muted;
+        Ok(())
+    }
+
+    /// Accepted digital feed policy, never an observation of delivered silence.
+    pub fn muted(&self) -> bool {
+        self.muted
     }
 
     pub fn pid(&self) -> u32 {

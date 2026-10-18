@@ -47,7 +47,9 @@ Historical queue-only results remain in their
 [original record](../../docs/native-sounds-rust-queue.md).
 
 
-The preview source requires an explicit seven-field State. `policy_settled`
+The current preview source requires an explicit nine-field State. Positive
+`preview_generation` and boolean `preview_muted` are paired during Starting/Playing;
+both are explicitly null in other states. `policy_settled`
 describes the selected logical route; `preview` is one of `idle`, `starting`,
 `playing`, `retiring`, `completed` or `failed`. A settled selected route with idle
 preview is distinct from an interrupted route. Starting is distinct from Playing;
@@ -77,15 +79,15 @@ a new client starts 100/0. Each Play packet requires typed
 Actor and audio Main validate the pair; only that finite preview's PCM is scaled.
 There is no old-wire or old-layout compatibility.
 
-The current 16-function ABI/5616-byte View adds selected percent, mute, adjustment
+The earlier qualified 16-function ABI/5616-byte View adds selected percent, mute, adjustment
 availability and explicit padding. Host Rust fmt/strict Clippy and the 356-member
 Release archive pass; all seven Qt targets pass link/load with 16 Sounds plus 11
 appearance APIs. Six existing C ABI, seven schema, ten preview and two cleanup
 groups pass, as do 31 Qt behaviors plus setup/cleanup and unshown QML level/default/
-50%/Muted bindings. The current public entry separately passes six real mouse
+50%/Muted bindings. That cohort’s public entry separately passes six real mouse
 pairs and 144,000 PCM frames: half-level tone, Stop/retirement/full quiet, then muted
 Play with a distinct live producer/active link. See [level evidence](../../docs/evidence/native-preview-level-provenance.json).
-The current AArch64 Rust crossbuild also passes with 452 ELF archive members and
+That cohort’s AArch64 Rust crossbuild also passes with 452 ELF archive members and
 16 APIs. Later generic ARM preparation passes native Qt6.12 consumer build/link/
 load with 16 Sounds and 11 appearance APIs, each archive linked once. One fresh
 cold installed generic ARM run also passes six real QML clicks and 144,000 frames
@@ -122,3 +124,21 @@ the later installed generic ARM full-level execution is recorded in the preview
 report. These earlier GUI/PCM/ARM results retain their original providers and do
 not qualify current level/mute on ARM. Normal windows and live-theme integration
 remain open.
+
+
+Current live mute adds `pr_sounds_client_preview_toggle_mute_v1` (17 functions,
+5648-byte View). Idle toggles retain the local next-Play behavior. During Playing,
+Rust freezes the exact Play generation, inverse confirmed mute and one original
+one-second deadline. Busy controls are refused without a queue; sending or
+receiving never changes the checkbox optimistically. An exact matching reply
+confirms it. Failure closes the channel; Stop during an in-flight control uses
+the existing ownership-withdrawal path. This action leaves the next-Play choice
+unchanged. See [live-mute evidence](../../docs/native-live-preview-mute.md) for
+current qualification and remaining integration gates.
+
+The current 17-API frontend passes six existing/eight schema/14 preview groups and
+two cleanup cases, 32 Qt behaviors plus setup/cleanup and six unshown QML incidents.
+The matching archive/header are unchanged by the later native feeder repair. One
+separate actual host QML/actor/audio trace passes live Mute/Unmute with the same
+producer and 144,000 measured frames before the original four-second asset ends.
+Current ARM live-control, normal-window and physical-audio qualification remain open.

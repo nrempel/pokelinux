@@ -62,7 +62,7 @@ fn status(
     application: &str,
     inspected: bool,
 ) -> Value {
-    let mut v = json!({"ok":true,"lease":lease,"peer_uid":uid(),"desired":if route.is_empty(){json!([])}else{json!([[7,"media",route]])},"observed":{"epoch":1,"revision":intent+1,"available":true,"links":[]},"intent_revision":intent,"application":application,"phase":"running","cleanup":"none","policy_settled":false,"preview":"idle"});
+    let mut v = json!({"ok":true,"lease":lease,"peer_uid":uid(),"desired":if route.is_empty(){json!([])}else{json!([[7,"media",route]])},"observed":{"epoch":1,"revision":intent+1,"available":true,"links":[]},"intent_revision":intent,"application":application,"phase":"running","cleanup":"none","policy_settled":false,"preview":"idle","preview_generation":null,"preview_muted":null});
     if inspected {
         v["media_routes"] = catalog();
     }
@@ -549,6 +549,8 @@ fn explicit_preview_uses_one_original_absolute_deadline_and_owned_lease() {
     quiet(&peer);
     let mut starting = status(Some(7), "media-a7", 1, "pending", false);
     starting["preview"] = json!("starting");
+    starting["preview_generation"] = json!(17);
+    starting["preview_muted"] = json!(false);
     starting["policy_settled"] = json!(true);
     reply(&mut peer, starting);
     let state = updated(&mut c);
@@ -562,6 +564,8 @@ fn explicit_preview_uses_one_original_absolute_deadline_and_owned_lease() {
     request(&peer);
     let mut playing = status(None, "media-a7", 1, "observed", true);
     playing["preview"] = json!("playing");
+    playing["preview_generation"] = json!(17);
+    playing["preview_muted"] = json!(false);
     playing["policy_settled"] = json!(true);
     reply(&mut peer, playing);
     let state = updated(&mut c);
@@ -611,6 +615,8 @@ fn expired_preview_cannot_publish_buffered_start_or_retry_itself() {
     assert_eq!(request(&peer)["until_boottime_ns"], original);
     let mut late = status(Some(7), "media-a7", 1, "pending", false);
     late["preview"] = json!("starting");
+    late["preview_generation"] = json!(17);
+    late["preview_muted"] = json!(false);
     reply(&mut peer, late);
     while now() < original {
         sleep(Duration::from_millis(1));
@@ -658,5 +664,157 @@ fn exact_preview_level_socket_wire_and_owner_refusal_never_retry() {
             assert!(c.poll().is_none());
         }
         quiet(&peer);
+    }
+}
+
+// These peers exercise the native owner's exact socket protocol and client state,
+// not a running PCM producer. The actual producer is qualified separately.
+fn observed_preview(c: &mut Client, peer: &mut UnixStream, generation: u64) -> Snapshot {
+    inspected(c, peer);
+    assert_eq!(
+        c.preview_play(
+            "media-a7",
+            PreviewLevel::new(50, false).unwrap(),
+            now() + 900_000_000
+        ),
+        Ok(SendOutcome::Sent)
+    );
+    request(peer);
+    let mut starting = status(Some(7), "media-a7", 1, "pending", false);
+    starting["preview"] = json!("starting");
+    starting["preview_generation"] = json!(generation);
+    starting["preview_muted"] = json!(false);
+    starting["policy_settled"] = json!(true);
+    reply(peer, starting);
+    updated(c);
+    assert_eq!(c.inspect(until()), Ok(SendOutcome::Sent));
+    request(peer);
+    reply(peer, observed_preview_reply(generation, false, true));
+    let state = updated(c);
+    assert!(state.applied.is_some() && state.policy_settled);
+    state
+}
+fn observed_preview_reply(generation: u64, muted: bool, inspected: bool) -> Value {
+    let mut playing = status(None, "media-a7", 1, "observed", inspected);
+    playing["preview"] = json!("playing");
+    playing["preview_generation"] = json!(generation);
+    playing["preview_muted"] = json!(muted);
+    playing["policy_settled"] = json!(true);
+    playing
+}
+#[test]
+fn live_mute_exact_socket_wire_preserves_route_and_waits_for_confirmation() {
+    let generation = 9_007_199_254_740_993;
+    let (mut c, mut peer, _) = pair();
+    let before = observed_preview(&mut c, &mut peer, generation);
+    let original = now() + 900_000_000;
+    assert_eq!(
+        c.preview_mute(generation, true, original),
+        Ok(SendOutcome::Sent)
+    );
+    assert_eq!(
+        request(&peer),
+        json!({"op":"preview_mute","lease":7,
+        "generation":generation,"muted":true,"until_boottime_ns":original})
+    );
+    let pending = c.snapshot();
+    assert_eq!(pending.applied, before.applied);
+    assert_eq!(pending.admitted, before.admitted);
+    assert_eq!(pending.preview_muted, Some(false));
+    assert_eq!(
+        c.preview_mute(generation, false, original),
+        Err(SubmitError::Busy)
+    );
+    quiet(&peer);
+    reply(&mut peer, observed_preview_reply(generation, true, false));
+    let confirmed = updated(&mut c);
+    assert_eq!(confirmed.preview_muted, Some(true));
+    assert_eq!(confirmed.preview_generation, Some(generation));
+    assert_eq!(confirmed.admitted, before.admitted);
+    assert_eq!(confirmed.applied, before.applied);
+    for _ in 0..3 {
+        assert!(c.poll().is_none());
+    }
+    quiet(&peer);
+}
+#[test]
+fn live_mute_wrong_generation_or_boolean_ack_closes_without_replay() {
+    for (ack_generation, ack_muted) in [(18, true), (17, false)] {
+        let (mut c, mut peer, _) = pair();
+        observed_preview(&mut c, &mut peer, 17);
+        assert_eq!(
+            c.preview_mute(17, true, now() + 900_000_000),
+            Ok(SendOutcome::Sent)
+        );
+        request(&peer);
+        reply(
+            &mut peer,
+            observed_preview_reply(ack_generation, ack_muted, false),
+        );
+        failure(&mut c, Failure::Protocol);
+        assert!(c.snapshot().preview_generation.is_none());
+        assert!(c.snapshot().preview_muted.is_none());
+        assert!(c.poll().is_none());
+        let mut byte = [0];
+        assert_eq!(
+            peer.read(&mut byte).unwrap(),
+            0,
+            "failed channel actually closed"
+        );
+    }
+}
+#[test]
+fn live_mute_stale_or_expired_input_emits_nothing_and_does_not_change_play() {
+    let (mut c, mut peer, _) = pair();
+    let before = observed_preview(&mut c, &mut peer, 17);
+    for stale in [0, 16, 18] {
+        assert_eq!(
+            c.preview_mute(stale, true, now() + 900_000_000),
+            Err(SubmitError::InvalidPreview)
+        );
+        quiet(&peer);
+        assert_eq!(c.snapshot(), before);
+    }
+    assert_eq!(c.preview_mute(17, true, now()), Err(SubmitError::Expired));
+    quiet(&peer);
+    assert_eq!(c.snapshot(), before);
+}
+#[test]
+fn live_identity_fields_are_required_and_consistent_on_actual_socket() {
+    for malformed in 0..7 {
+        let (mut c, mut peer, _) = pair();
+        assert_eq!(c.inspect(until()), Ok(SendOutcome::Sent));
+        request(&peer);
+        let mut value = status(None, "", 0, "pending", true);
+        match malformed {
+            0 => {
+                value.as_object_mut().unwrap().remove("preview_generation");
+            }
+            1 => {
+                value.as_object_mut().unwrap().remove("preview_muted");
+            }
+            2 => {
+                value["preview_generation"] = json!(17);
+            }
+            3 => {
+                value["preview_muted"] = json!(false);
+            }
+            4 => {
+                value["preview"] = json!("playing");
+            }
+            5 => {
+                value["preview"] = json!("playing");
+                value["preview_generation"] = json!(0);
+                value["preview_muted"] = json!(false);
+            }
+            6 => {
+                value["preview"] = json!("playing");
+                value["preview_generation"] = json!(17);
+                value["preview_muted"] = json!(0);
+            }
+            _ => unreachable!(),
+        }
+        reply(&mut peer, value);
+        failure(&mut c, Failure::Protocol);
     }
 }

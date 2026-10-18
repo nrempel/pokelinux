@@ -1685,6 +1685,28 @@ fn run_with_brightness_services_inner(
                                 Reply::Unavailable
                             }
                         }
+                        Ok(AppRequest::MediaPreviewMute { request }) if !stopping => {
+                            if operation.is_some() {
+                                Reply::Unavailable
+                            } else if let Some(provider) = audio.as_deref() {
+                                match media.begin_preview_mute(
+                                    connection.id,
+                                    cred.pid.as_raw_nonzero().get() as u32,
+                                    cred.uid.as_raw(),
+                                    request,
+                                    &mut authority,
+                                    provider,
+                                ) {
+                                    Ok(until) => {
+                                        connection.deadline = until.saturating_add(1_000_000_000);
+                                        return true;
+                                    }
+                                    Err(reply) => reply,
+                                }
+                            } else {
+                                Reply::Unavailable
+                            }
+                        }
                         Ok(AppRequest::MediaPreviewStop {}) if !stopping => {
                             let authenticated = matches!(
                                 authority.plan_request(

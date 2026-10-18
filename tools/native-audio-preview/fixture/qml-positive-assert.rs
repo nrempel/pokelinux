@@ -8,11 +8,15 @@ fn public(value: &Value, text: &str) {
     assert_eq!(s["status"], text); assert_eq!(s["qml_status"], text);
     assert_eq!(s["requested"], "media-a7");
 }
-fn level(value: &Value, muted: bool, enabled: bool) {
+fn level(value: &Value, muted: bool, enabled: bool, live: bool) {
     let s = &value["state"];
     assert_eq!(s["previewLevelPercent"], 50); assert_eq!(s["previewMuted"], muted);
-    assert_eq!(s["qml_level"], "50%"); assert_eq!(s["qml_muted"], muted);
-    for field in ["canAdjustPreview", "qml_level50_enabled", "qml_level100_enabled", "qml_mute_enabled"] { assert_eq!(s[field], enabled); }
+    assert_eq!(s["qml_level"], "50%");
+    for field in ["canAdjustPreview", "qml_level50_enabled", "qml_level100_enabled"] { assert_eq!(s[field], enabled); }
+    assert_eq!(s["qml_mute_enabled"], s["canTogglePreviewMute"]);
+    assert_eq!(s["qml_muted"], s["previewMuteChecked"]);
+    assert_eq!(s["canTogglePreviewMute"], enabled || live);
+    assert_eq!(s["previewMuteChecked"], muted); assert_eq!(s["previewMuteLive"], live);
 }
 fn main() -> io::Result<()> {
     let args: Vec<_> = env::args_os().skip(1).collect();
@@ -65,14 +69,16 @@ fn main() -> io::Result<()> {
     assert!(complete[0] >= 1); assert_eq!(&complete[1..], &[1,2,1]); assert_eq!(plays, [1,1]);
     public(&r["selected_idle"], "Output selected; preview idle"); assert_eq!(r["selected_idle"]["state"]["canPlay"], true);
     assert_eq!(r["selected_idle"]["state"]["previewLevelPercent"], 100); assert_eq!(r["selected_idle"]["state"]["previewMuted"], false);
+    for field in ["canAdjustPreview", "canTogglePreviewMute", "qml_level50_enabled", "qml_level100_enabled", "qml_mute_enabled"] { assert_eq!(r["selected_idle"]["state"][field], true); }
+    for field in ["previewMuteChecked", "previewMuteLive", "qml_muted"] { assert_eq!(r["selected_idle"]["state"][field], false); }
     for name in ["local_level_50", "local_mute"] { assert_eq!(r[name]["effect_attempts_before"], r[name]["effect_attempts_after"]); }
     assert_eq!(r["local_level_50"]["effect_attempts_after"], serde_json::json!({"media_route":1,"media_preview_play":0,"media_preview_stop":0}));
     assert_eq!(r["local_mute"]["effect_attempts_after"], serde_json::json!({"media_route":1,"media_preview_play":1,"media_preview_stop":1}));
-    level(&r["local_level_50"], false, true); level(&r["local_mute"], true, true);
-    public(&r["first_QML_Starting"], "Preview starting"); level(&r["first_QML_Starting"], false, false);
-    public(&r["new_QML_Starting"], "Preview starting"); level(&r["new_QML_Starting"], true, false);
-    level(&r["first_QML_Playing"], false, false); level(&r["QML_Playing_before_Stop"], false, false);
-    level(&r["QML_Retiring"], false, false); level(&r["QML_idle_before_new_Play"], false, true); level(&r["new_QML_Playing"], true, false);
+    level(&r["local_level_50"], false, true, false); level(&r["local_mute"], true, true, false);
+    public(&r["first_QML_Starting"], "Preview starting"); level(&r["first_QML_Starting"], false, false, false);
+    public(&r["new_QML_Starting"], "Preview starting"); level(&r["new_QML_Starting"], true, false, false);
+    level(&r["first_QML_Playing"], false, false, true); level(&r["QML_Playing_before_Stop"], false, false, true);
+    level(&r["QML_Retiring"], false, false, false); level(&r["QML_idle_before_new_Play"], false, true, false); level(&r["new_QML_Playing"], true, false, true);
     public(&r["first_QML_Playing"], "Preview playing"); public(&r["QML_Playing_before_Stop"], "Preview playing");
     assert_eq!(r["QML_Playing_before_Stop"]["state"]["applied"], "media-a7"); assert_eq!(r["QML_Playing_before_Stop"]["state"]["canStop"], true);
     public(&r["QML_Retiring"], "Preview retiring"); public(&r["QML_idle_before_new_Play"], "Output selected; preview idle");

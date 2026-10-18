@@ -18,7 +18,8 @@
 namespace {
 QJsonObject emptyState() {
  return {{"connected",true},{"available",true},{"pending",false},
-         {"requested",QJsonValue::Null},{"applied",QJsonValue::Null},{"policy_settled",false},{"preview","idle"}};
+         {"requested",QJsonValue::Null},{"applied",QJsonValue::Null},{"policy_settled",false},{"preview","idle"},
+         {"preview_generation",QJsonValue::Null},{"preview_muted",QJsonValue::Null}};
 }
 QJsonArray catalog(int count=2) {
  if(count==2) return {QJsonObject{{"id","media-a7"},{"label","Speaker"}},QJsonObject{{"id","media-z2"},{"label","Headphones"}}};
@@ -105,7 +106,7 @@ private slots:
    if(q.value("op")!="media_preview_play")return false;
    const auto request=q.value("request").toObject();
    if(q.size()!=2||request.size()!=5||request.value("route")!="media-a7"||request.value("level_percent").toInteger()!=50||!request.value("muted").isBool()||request.value("muted").toBool()||request.value("ttl_ms").toInteger()<1||request.value("ttl_ms").toInteger()>1000||request.value("until_boottime_ns").toInteger()<=0)qFatal("preview level wire shape");
-   p.state["preview"]="starting";p.send({{"result","media_preview"},{"state",p.state}});return true;
+   p.state["preview"]="starting";p.state["preview_generation"]=17;p.state["preview_muted"]=false;p.send({{"result","media_preview"},{"state",p.state}});return true;
   };
   AudioClient c(p.path(),0);QCOMPARE(c.previewLevelPercent(),100);QVERIFY(!c.previewMuted());
   QTRY_VERIFY_WITH_TIMEOUT(c.canPlay(),1500);QVERIFY(c.canAdjustPreview());
@@ -119,6 +120,31 @@ private slots:
   hold=false;p.send(p.status());QTRY_VERIFY_WITH_TIMEOUT(c.canPlay(),1500);c.playPreview();
   QTRY_COMPARE_WITH_TIMEOUT(p.count("media_preview_play"),1,1500);QTRY_COMPARE_WITH_TIMEOUT(c.status(),QString("Preview starting"),1500);
   QVERIFY(!c.canAdjustPreview());c.setPreviewLevel(100,true);QCOMPARE(c.previewLevelPercent(),50);QVERIFY(!c.previewMuted());
+ }
+ void liveMuteConfirmsOnlyMatchingCurrentPlayReply(){
+  Peer p;p.state["requested"]="media-a7";p.state["applied"]="media-a7";
+  p.state["policy_settled"]=true;p.state["preview"]="playing";
+  p.state["preview_generation"]=17;p.state["preview_muted"]=false;
+  QJsonObject held;
+  p.custom=[&](const QJsonObject&q){
+   if(q.value("op")!="media_preview_mute")return false;
+   held=q.value("request").toObject();
+   if(q.size()!=2||held.size()!=4||held.value("generation").toInteger()!=17
+      ||!held.value("muted").isBool()||!held.value("muted").toBool()
+      ||held.value("ttl_ms").toInteger()<1||held.value("ttl_ms").toInteger()>1000
+      ||held.value("until_boottime_ns").toInteger()<=0)qFatal("live mute wire shape");
+   return true;
+  };
+  AudioClient c(p.path(),0);QTRY_VERIFY_WITH_TIMEOUT(c.previewMuteLive()&&c.canTogglePreviewMute(),1500);
+  QVERIFY(c.previewMuteLive());QVERIFY(!c.previewMuteChecked());QVERIFY(!c.previewMuted());
+  c.togglePreviewMute();QTRY_VERIFY_WITH_TIMEOUT(!held.isEmpty(),1500);
+  QCOMPARE(c.status(),QString("Updating preview mute"));QVERIFY(!c.previewMuteChecked());
+  QVERIFY(!c.canTogglePreviewMute());QCOMPARE(p.count("media_preview_mute"),1);
+  p.state["preview_muted"]=true;p.send({{"result","media_preview"},{"state",p.state}});
+  QTRY_VERIFY_WITH_TIMEOUT(c.previewMuteChecked(),1500);QVERIFY(!c.previewMuted());
+  QTRY_COMPARE_WITH_TIMEOUT(c.status(),QString("Preview playing"),1500);
+  p.choose=false;QTRY_VERIFY_WITH_TIMEOUT(!c.canTogglePreviewMute(),1500);
+  QCOMPARE(p.count("media_preview_mute"),1);
  }
  void initTestCase(){QVERIFY2(::getuid()==0&&::getgid()==0,"actual root actor peer required for this fixed socket suite");}
  void authenticatedPaginatedCatalog(){

@@ -97,7 +97,7 @@ private slots:
         QCOMPARE(audio->previewLevelPercent(), 100);
         QVERIFY(!audio->previewMuted());
         QVERIFY(plainTextExists(QStringLiteral("Preview level")));
-        QVERIFY(plainTextExists(QStringLiteral("Applies to next preview")));
+        QVERIFY(plainTextExists(QStringLiteral("Level applies to next preview")));
         for (const auto &entry : {qMakePair(QStringLiteral("previewLevel50"), QStringLiteral("50%")),
                                   qMakePair(QStringLiteral("previewLevel100"), QStringLiteral("100%")),
                                   qMakePair(QStringLiteral("previewMute"), QStringLiteral("Mute"))}) {

@@ -293,3 +293,6 @@ fn delayed_poll_after_internal_close_reaps_already_dead_child_without_abort() {
         "late polling retires local success but still reaps/drains an already dead child without abort"
     );
 }
+
+#[path = "preview_process_live_tests.rs"]
+mod live_tests;

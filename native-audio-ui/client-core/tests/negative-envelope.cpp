@@ -19,7 +19,7 @@ int main(){
  const auto until=now()+5000000000ULL;
  for(const char*result:{"denied","unavailable"}){
   Client c;assert(pr_sounds_client_start_v1(c.p)==PR_SOUNDS_CLIENT_OK);assert(pr_sounds_client_connected_v1(c.p,c.view().connection_epoch)==PR_SOUNDS_CLIENT_OK);c.sent();
-  assert(c.reply("{\"result\":\"media_status\",\"state\":{\"connected\":true,\"available\":true,\"pending\":false,\"requested\":\"media-a7\",\"applied\":null,\"policy_settled\":true,\"preview\":\"playing\"},\"routes\":[{\"id\":\"media-a7\",\"label\":\"Speaker\"}],\"next_offset\":null,\"can_choose\":true,\"can_reconnect\":false}")==PR_SOUNDS_CLIENT_OK);
+  assert(c.reply("{\"result\":\"media_status\",\"state\":{\"connected\":true,\"available\":true,\"pending\":false,\"requested\":\"media-a7\",\"applied\":null,\"policy_settled\":true,\"preview\":\"playing\",\"preview_generation\":17,\"preview_muted\":false},\"routes\":[{\"id\":\"media-a7\",\"label\":\"Speaker\"}],\"next_offset\":null,\"can_choose\":true,\"can_reconnect\":false}")==PR_SOUNDS_CLIENT_OK);
   assert(c.view().can_stop&&pr_sounds_client_refresh_v1(c.p)==PR_SOUNDS_CLIENT_OK);c.sent();assert(pr_sounds_client_preview_stop_v1(c.p)==PR_SOUNDS_CLIENT_OK&&c.view().queued_kind==PR_SOUNDS_CLIENT_STOP_INTENT);
   assert(c.reply(std::string("{\"result\":\"")+result+"\"}")==PR_SOUNDS_CLIENT_OK);const auto v=c.view();
   assert(v.stage==PR_SOUNDS_CLIENT_CLOSED&&!v.online&&!v.can_play&&!v.can_stop&&v.queued_kind==0&&v.can_reconnect&&v.status==PR_SOUNDS_CLIENT_PREVIEW_CANCELLED);

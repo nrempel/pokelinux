@@ -71,7 +71,9 @@ static std::string object(const Fields &fields) {
 }
 static Fields stateFields(const std::string &preview = "\"idle\"", const std::string &settled = "true", const std::string &requested = "\"media-a7\"", const std::string &applied = "null") {
     return {"\"connected\":true", "\"available\":true", "\"pending\":false", "\"requested\":" + requested,
-            "\"applied\":" + applied, "\"policy_settled\":" + settled, "\"preview\":" + preview};
+            "\"applied\":" + applied, "\"policy_settled\":" + settled, "\"preview\":" + preview,
+            "\"preview_generation\":" + std::string(preview == "\"starting\"" || preview == "\"playing\"" ? "17" : "null"),
+            "\"preview_muted\":" + std::string(preview == "\"starting\"" || preview == "\"playing\"" ? "false" : "null")};
 }
 static Fields statusFields(const std::string &state) {
     return {"\"result\":\"media_status\"", "\"state\":" + state,
@@ -105,14 +107,14 @@ static bool requiredIdle() {
     Client c; c.begin();
     const int actual = c.reply(status());
     if (actual != PR_SOUNDS_CLIENT_OK) {
-        std::printf("SOUNDS_STATE_SCHEMA_ASSERT required_7_field_idle_acceptance expected=%d actual=%d available=true requested=media-a7 policy_settled=true preview=idle\n", PR_SOUNDS_CLIENT_OK, actual);
+        std::printf("SOUNDS_STATE_SCHEMA_ASSERT required_9_field_idle_acceptance expected=%d actual=%d available=true requested=media-a7 policy_settled=true preview=idle\n", PR_SOUNDS_CLIENT_OK, actual);
         std::fflush(stdout);
         return false;
     }
     const auto v = c.view();
     assert(v.stage == PR_SOUNDS_CLIENT_IDLE && v.online && v.available && v.route_count == 2);
     assert(v.requested_present && same(v.requested, "media-a7") && !v.applied_present);
-    pass("required_7_field_idle_acceptance");
+    pass("required_9_field_idle_acceptance");
     return true;
 }
 static void sixEnums() {
@@ -144,8 +146,32 @@ static void strictState() {
     for (size_t index : {size_t(3), size_t(4)}) {
         auto fields = original; const auto name = fields[index].substr(0, fields[index].find(':') + 1); fields[index] = name + "false"; refused(status(fields)); ++cases;
     }
-    assert(cases == 29);
+    assert(cases == 31);
     pass("strict_required_state_legacy5_types_unknowns", cases);
+}
+static void strictPreviewIdentity() {
+    unsigned cases = 0;
+    const auto playing = stateFields("\"playing\"", "true", "\"media-a7\"", "\"media-a7\"");
+    for (const char *value : {"0", "-1", "true", "\"17\"", "17.0", "{}", "[]", "null"}) {
+        auto fields = playing; fields[7] = std::string("\"preview_generation\":") + value;
+        refused(status(fields)); ++cases;
+    }
+    for (const char *value : {"null", "0", "1", "\"true\"", "{}", "[]"}) {
+        auto fields = playing; fields[8] = std::string("\"preview_muted\":") + value;
+        refused(status(fields)); ++cases;
+    }
+    auto noGeneration = playing; noGeneration[7] = "\"preview_generation\":null";
+    noGeneration[8] = "\"preview_muted\":null"; refused(status(noGeneration)); ++cases;
+    for (const char *phase : {"\"idle\"", "\"retiring\"", "\"completed\"", "\"failed\""}) {
+        auto fields = playing; fields[6] = std::string("\"preview\":") + phase;
+        refused(status(fields)); ++cases;
+    }
+    for (const char *phase : {"\"starting\"", "\"playing\""}) {
+        auto fields = playing; fields[6] = std::string("\"preview\":") + phase;
+        fields[8] = "\"preview_muted\":true"; accepted(status(fields)); ++cases;
+    }
+    assert(cases == 21);
+    pass("strict_current_Play_generation_and_nullable_mute", cases);
 }
 static void strictTop() {
     unsigned cases = 0;
@@ -199,13 +225,13 @@ static void selected() {
         if (fault == 0) assert(v.stage == PR_SOUNDS_CLIENT_IDLE && v.online && v.requested_present && same(v.requested, "media-a7") && !v.applied_present);
         else assert(v.stage == PR_SOUNDS_CLIENT_CLOSED && !v.online && !v.requested_present && !v.applied_present);
     }
-    pass("selected_reply_same_seven_field_state", 4);
+    pass("selected_reply_same_nine_field_state", 4);
 }
 int main() {
     const auto start = now(); work = start + 5000000000ULL;
     baseline();
     if (!requiredIdle()) return 101; // Intended old-engine functional RED; all following cases are frozen before repair.
-    sixEnums(); strictState(); strictTop(); routesAndApplied(); selected();
+    sixEnums(); strictState(); strictPreviewIdentity(); strictTop(); routesAndApplied(); selected();
     bounded();
-    std::puts("SOUNDS_STATE_SCHEMA_ALL_PASS groups=7 schema_only=true public_playback_model=false");
+    std::puts("SOUNDS_STATE_SCHEMA_ALL_PASS groups=8 schema_only=true public_playback_model=false");
 }

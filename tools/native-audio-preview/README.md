@@ -78,8 +78,10 @@ a path, frequency, producer command or PipeWire node.
 
 Six actual route/50%/Play/Stop/mute/new-Play mouse pairs must join the same
 actor FD to Starting→Playing→Retiring→Idle→Starting→Playing. Local level/mute
-choices change Rust-selected presentation without any effect packet; all level
-controls are disabled during Starting, Playing and Retiring. All three full paired PCM windows share ONE
+choices change Rust-selected presentation without any effect packet. Percentage
+controls remain disabled during Starting, Playing and Retiring. Current Playing
+exposes a separate Rust-owned live mute action; this existing six-click case does
+not invoke it, and the displayed checkbox follows confirmed live state. All three full paired PCM windows share ONE
 original six-second cutoff beginning at observer readiness before Play1,
 including active controls/status/telemetry/identity observations. Each sink and
 stage discards9600 frames then measures24000. The first speaker window requires
@@ -100,8 +102,8 @@ custody. Earlier commit9983/source/provider bindings qualify the public
 locked/offline Cargo and explicit-archive CMake commands and a four-click host
 run with144,000 measured frames. Those full-level executions remain historical;
 the CPU full-level bit-exact test separately covers unchanged100% sample generation.
-The current half/mute build and host entry now pass with the qualified 16-API
-Sounds archive and current native providers. Six real mouse pairs and 144,000
+The earlier half/mute build and host entry pass with the qualified 16-API
+Sounds archive and its then-current native providers. Six real mouse pairs and 144,000
 frames share one original six-second cutoff: half-level speaker tone/quiet
 earpiece, Stop/actual retirement/full quiet, then muted Play/full quiet with a
 distinct live attributed producer and active selected link. The final compiled
@@ -110,7 +112,7 @@ close; one adopted wait and four regular stderr closures are counted separately.
 The earlier raw valid50 denied/quiet behavioral RED, same-fixture GREEN, component
 checks and preserved failed preparations are in
 [level provenance](../../docs/evidence/native-preview-level-provenance.json).
-Current Rust AArch64 providers/archive now crossbuild. Generic ARM preparation
+That cohort’s Rust AArch64 providers/archive crossbuild. Generic ARM preparation
 also passes all five Rust loaders and native Qt6.12 consumer build/link/load.
 One separate cold installed generic ARM run passes six real QML mouse pairs and
 144,000 half-level/Stop-quiet/muted-live PCM frames under its upfront 12-second
@@ -122,3 +124,18 @@ Separate host and installed ARM evidence remains in
 [the preview report](../../docs/native-sounds-preview.md).
 No visible window, normal Main, display profile/capture, theme switch, full
 shell, physical audio or phone result is implied.
+
+
+The current helper reports `canTogglePreviewMute`, `previewMuteChecked` and
+`previewMuteLive` separately from the next-Play choice. Its real enabled-button
+input path permits at most two explicit mute clicks, recording each ordinal;
+wrapped production sends and mouse-delivery guards are unchanged. The existing
+six-click case retains its actions, effect counts and PCM comparisons. Current
+live-mute qualification is tracked [separately](../../docs/native-live-preview-mute.md).
+
+The separate [live-mute qualification](../../docs/native-live-preview-mute.md) now
+passes one Play and two live controls through this helper to 144,000 measured
+frames with the same producer. Its private case uses a separate final compiled
+C++ observer; it does not relabel the earlier six-click public invocation as a
+current 17-API execution. The public six-click source remains a regression case;
+its current runtime has not been rerun in this live-control epoch.

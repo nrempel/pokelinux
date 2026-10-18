@@ -32,7 +32,7 @@ first aggregate failure remains preserved. The [repository test entry](tools/nat
 now passes host QML/PCM with the three fresh outputs of its public Cargo/CMake
 builds. The earlier entry retains its prebuilt provider lineage.
 
-The current next-preview level is Rust-selected (0–100%, initially 100%, unmuted).
+The qualified next-preview level cohort is Rust-selected (0–100%, initially 100%, unmuted).
 An atomic local choice sends no IPC; Play freezes level/mute with its original
 deadline. The same frozen valid50 request now passes its earlier denied/quiet
 behavioral RED with measured half-amplitude speaker PCM. Native Rust checks,
@@ -44,6 +44,15 @@ generic ARM six-click/PCM tracer also pass under its separate 12-second aggregat
 [Level evidence](docs/evidence/native-preview-level-provenance.json) keeps the
 earlier full-level cohorts separate. Pixel integration, normal app windows,
 physical audio and phone gates remain open.
+
+[Live preview mute](docs/native-live-preview-mute.md) is now implemented across the Rust
+feeder, owner, actor and app engine. Five real QML clicks now produce one Play,
+Mute and Unmute with the same live producer: tone→full quiet→tone, 144,000 measured
+frames within 2.322333488 seconds of the original four-second asset. A real failure
+from buffered tone precedes the bound on queued PCM; clocks and oracles stay fixed.
+55 audio tests, 31 focused lifecycle tests, the 17-API frontend and 32 Qt behaviors pass.
+This is a host unshown-component result; ARM live control, normal windows, physical
+audio and all phone gates remain open. No phone access is authorized.
 
 The [Messages request and model engine](docs/native-messages-rust-client.md) now
 also runs in Rust. An earlier cohort with the pre-port appearance client builds

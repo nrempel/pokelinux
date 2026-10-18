@@ -1,16 +1,17 @@
 # Finite native Sounds preview
 
-Current next-preview level/mute passes host native checks, frontend C ABI/Qt
+The qualified next-preview level/mute cohort passes host native checks, frontend C ABI/Qt
 components and real unshown QML input through the actor/audio owner to measured
 virtual PCM. Six real clicks select a route, 50%, Play, Stop, mute and Play again:
 half-level tone, full quiet after retirement, then a distinct live muted producer.
-A separate current cold installed generic ARM tracer also passes. Earlier
+That cohort’s separate cold installed generic ARM tracer also passes. Earlier
 full-level cohorts retain their own sources; physical hardware remains unqualified.
 
 ## Ownership and model
 
-Rust generates fixed four-second 440 Hz mono F32LE PCM at 48 kHz, scaled once
-from an immutable per-Play level/mute pair. Applications supply no file, PCM,
+Rust generates fixed four-second 440 Hz mono F32LE PCM at 48 kHz. Each Play
+freezes its percentage; live mute changes only future whole frames of that
+retained producer. The original percentage remains available for unmute. Applications supply no file, PCM,
 executable, node or frequency. The lifecycle actor checks
 current app generation, MediaRoute permission and foreground authority before
 Play. Qt retains thin QObject/QML presentation, the shared Omarchy theme and the
@@ -28,14 +29,18 @@ The private graph supplies no session-manager port policy. The producer sets
 This initialization is documented by the [PipeWire property reference](https://docs.pipewire.org/page_man_pipewire-props_7.html)
 and implemented in the [exact 1.4.2 adapter](https://github.com/PipeWire/pipewire/blob/1.4.2/spa/plugins/audioconvert/audioadapter.c#L1810-L1892).
 
-State requires exactly seven fields: `connected`, `available`, `pending`,
-`requested`, `applied`, `policy_settled` and `preview`; old five-field replies are
-refused. Preview states are `idle`, `starting`, `playing`, `retiring`, `completed`
-and `failed`. The current 16-function C ABI adds atomic
-`pr_sounds_client_preview_level_v1`; its 5616-byte View appends selected percent,
-mute, adjustment availability and explicit padding. Earlier 15-function preview
-and 13-function client executions retain their original scope; old ABI/wire shapes
-have no compatibility fallback.
+Current State requires exactly nine fields: `connected`, `available`, `pending`,
+`requested`, `applied`, `policy_settled`, `preview`, `preview_generation` and
+`preview_muted`. The last two are a positive integer and boolean during Starting
+or Playing, otherwise both null. Preview states are `idle`, `starting`, `playing`,
+`retiring`, `completed` and `failed`. The current 17-function C ABI adds
+`pr_sounds_client_preview_toggle_mute_v1`; its 5648-byte View distinguishes the
+next-Play choice from confirmed live mute and the pending action. Earlier
+16-function/5616-byte and 15-function executions retain their original scope;
+old ABI/wire shapes have no compatibility fallback.
+
+The [live-mute implementation and qualification](native-live-preview-mute.md)
+are separate from the earlier next-preview level cohort below.
 
 Play is never queued or replayed. Its original absolute `CLOCK_BOOTTIME` deadline
 passes through app, actor and audio owner; preparation only reduces remaining
@@ -52,7 +57,7 @@ Neither alone establishes acoustic silence. Whole-service Stop retains its
 original bounded drain and aborts instead of detaching unfinished owners.
 Independent virtual PCM now separately qualifies explicit preview Stop and quiet.
 
-## Current level evidence
+## Qualified next-preview level evidence
 
 Rust owns a 0–100% choice, initially 100%/unmuted. The atomic setter changes no IPC,
 request or deadline and is allowed offline or during read-only status. A pending
@@ -68,13 +73,13 @@ A healthy granted app's literal valid50 request first returns denied; both 24,00
 frame sink windows are zero and the compiled assertion exits 101 after cleanup.
 The same frozen client/controller/observer/oracle then passes: speaker RMS
 0.08838669987845607, peak 0.12499618530273438 and 440 Hz energy fraction
-0.9991972100720329; all 24,000 earpiece samples are zero. Current native checks
-pass 46 audio tests (one existing ignored), 11 authority and seven input tests,
+0.9991972100720329; all 24,000 earpiece samples are zero. That cohort
+passes 46 audio tests (one existing ignored), 11 authority and seven input tests,
 fmt and strict Clippy. The 356-member x86-64 frontend archive has exactly 16 APIs;
 all seven normal Qt targets pass link/loader checks, six C ABI/seven schema/ten
 preview/two cleanup groups, 31 Qt behaviors and unshown level/mute bindings.
 
-The current [public test](../tools/native-audio-preview/) passes six native mouse
+That cohort’s [public test](../tools/native-audio-preview/) passes six native mouse
 pairs through the same app FD: one route, two Plays and one Stop. Its 144,000
 measured frames share one original six-second cutoff. Half-level speaker tone
 and quiet earpiece precede Stop; actual producer/graph retirement precedes full
@@ -86,7 +91,7 @@ stderr closures remain separate, without individual log-close timestamps.
 Preserved style-check and build-wrapper/file-limit failures and exact hashes are
 in [level provenance](evidence/native-preview-level-provenance.json).
 
-The current Rust 1.98.1 AArch64 crossbuild also passes: normal audio/launcher and
+That cohort’s Rust 1.98.1 AArch64 crossbuild also passes: normal audio/launcher and
 three fixture ELFs, plus a 452-member/16-API Sounds archive. All 16 host waits/merged
 PIPE EOFs and 18 separate shell waits with regular-file output close.
 

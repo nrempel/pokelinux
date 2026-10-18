@@ -29,7 +29,7 @@ struct Client{
  int reply(const std::string&s,uint64_t epoch=0){return pr_sounds_client_reply_v1(p,epoch?epoch:view().connection_epoch,reinterpret_cast<const uint8_t*>(s.data()),uint32_t(s.size()));}
  uint64_t begin(){const auto before=now();assert(pr_sounds_client_start_v1(p)==PR_SOUNDS_CLIENT_OK);const auto after=now();auto v=view();assert(v.stage==PR_SOUNDS_CLIENT_CONNECTING&&!v.online&&v.connection_epoch>0&&v.request_kind==PR_SOUNDS_CLIENT_CONNECT);assert(v.request_until_boottime_ns>=before+1000000000ULL&&v.request_until_boottime_ns<=after+1000000000ULL);assert(pr_sounds_client_connected_v1(p,v.connection_epoch)==PR_SOUNDS_CLIENT_OK);const auto q=packet();assert(text(q)=="{\"offset\":0,\"op\":\"media_status\"}"&&q.original_until_boottime_ns==v.request_until_boottime_ns);sent(q);return v.connection_epoch;}
 };
-static std::string state(const char*requested="null",const char*applied="null",bool pending=false,bool connected=true,bool available=true){return std::string("{\"connected\":")+(connected?"true":"false")+",\"available\":"+(available?"true":"false")+",\"pending\":"+(pending?"true":"false")+",\"requested\":"+requested+",\"applied\":"+applied+",\"policy_settled\":false,\"preview\":\"idle\"}";}
+static std::string state(const char*requested="null",const char*applied="null",bool pending=false,bool connected=true,bool available=true){return std::string("{\"connected\":")+(connected?"true":"false")+",\"available\":"+(available?"true":"false")+",\"pending\":"+(pending?"true":"false")+",\"requested\":"+requested+",\"applied\":"+applied+",\"policy_settled\":false,\"preview\":\"idle\",\"preview_generation\":null,\"preview_muted\":null}";}
 static std::string rows(int offset=0,int n=2,const std::string&label="Output") {std::string s="[";for(int i=0;i<n;++i){char name[32];if(offset==0&&n==2)std::snprintf(name,sizeof(name),"%s",i?"media-z2":"media-a7");else std::snprintf(name,sizeof(name),"route-%02d",offset+i);if(i)s+=",";s+="{\"id\":\""+std::string(name)+"\",\"label\":\""+label+"\"}";}return s+"]";}
 static std::string status(const std::string&r=rows(),const char*next="null",bool choose=true,bool reconnect=false,const std::string&s=state()){return "{\"result\":\"media_status\",\"state\":"+s+",\"routes\":"+r+",\"next_offset\":"+next+",\"can_choose\":"+(choose?"true":"false")+",\"can_reconnect\":"+(reconnect?"true":"false")+"}";}
 static void online(Client&c,const std::string&s=status()){c.begin();assert(c.reply(s)==PR_SOUNDS_CLIENT_OK);auto v=c.view();assert(v.stage==PR_SOUNDS_CLIENT_IDLE&&v.online&&v.request_kind==PR_SOUNDS_CLIENT_NO_REQUEST);}
@@ -111,7 +111,7 @@ static void expiry(){
 }
 int main(){
  static_assert(sizeof(PrSoundsClientIdV1)==68&&sizeof(PrSoundsClientLabelV1)==100&&sizeof(PrSoundsClientRowV1)==168);
- static_assert(sizeof(PrSoundsClientViewV1)==5616&&alignof(PrSoundsClientViewV1)==8&&offsetof(PrSoundsClientViewV1,routes)==208);
+ static_assert(sizeof(PrSoundsClientViewV1)==5648&&alignof(PrSoundsClientViewV1)==8&&offsetof(PrSoundsClientViewV1,routes)==208);
  static_assert(sizeof(PrSoundsClientPacketV1)==4128&&offsetof(PrSoundsClientPacketV1,bytes)==32&&std::is_trivially_copyable_v<PrSoundsClientPacketV1>);
  const uint64_t started=now();work=started+5000000000ULL;close_until=started+8000000000ULL;
  direct_model();parser_pages();send_fences();queued_fresh();incarnation();expiry();const auto done=now();assert(done<work&&done<close_until);

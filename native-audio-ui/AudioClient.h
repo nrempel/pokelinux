@@ -20,6 +20,9 @@ class AudioClient final : public QObject {
  Q_PROPERTY(int previewLevelPercent READ previewLevelPercent NOTIFY changed)
  Q_PROPERTY(bool previewMuted READ previewMuted NOTIFY changed)
  Q_PROPERTY(bool canAdjustPreview READ canAdjustPreview NOTIFY changed)
+ Q_PROPERTY(bool canTogglePreviewMute READ canTogglePreviewMute NOTIFY changed)
+ Q_PROPERTY(bool previewMuteChecked READ previewMuteChecked NOTIFY changed)
+ Q_PROPERTY(bool previewMuteLive READ previewMuteLive NOTIFY changed)
 public:
  AudioClient(QString path, uid_t ownerUid, QObject *parent=nullptr);
  ~AudioClient() override;
@@ -34,6 +37,10 @@ public:
  int previewLevelPercent() const;
  bool previewMuted() const;
  bool canAdjustPreview() const;
+ bool canTogglePreviewMute() const;
+ bool previewMuteChecked() const;
+ bool previewMuteLive() const;
+ Q_INVOKABLE void togglePreviewMute();
  Q_INVOKABLE void setPreviewLevel(int percent, bool muted);
  Q_INVOKABLE void reconnect();
  Q_INVOKABLE void playPreview();

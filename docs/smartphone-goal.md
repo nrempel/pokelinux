@@ -11,6 +11,13 @@ headless generic ARM checkpoint; normal app windows, the complete phone session
 and physical-phone gates remain open. The earlier three-service reinstall and
 two-boot evidence remains separate.
 
+The [live preview mute slice](native-live-preview-mute.md) now changes a running
+preview without restarting it: real QML Mute/Unmute produces measured tone→quiet
+→tone with the same producer and 144,000 frames within the original four-second
+asset. A complete PCM failure precedes a bounded-pipe repair with unchanged
+oracles and clocks. Native and frontend checks pass; this host unshown-component
+trace adds no qualified phone model, normal app window or physical audio result.
+
 The [local-network status path](native-network-status.md) now passes the same
 real service/Rust-client/Settings QML loss, expiry and reconnection sequence on
 host and native generic ARM. The ARM service starts automatically through PID1;

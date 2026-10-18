@@ -52,6 +52,7 @@ pub enum AppRequest {
     BrightnessStatus {},
     MediaRoute { request: audio::Request },
     MediaPreviewPlay { request: audio::PreviewRequest },
+    MediaPreviewMute { request: audio::PreviewMuteRequest },
     MediaPreviewStop {},
     MediaStatus { offset: usize },
     MediaReconnect {},

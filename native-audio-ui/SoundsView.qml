@@ -37,12 +37,12 @@ Rectangle {
    }
    Text { text: "Preview level"; textFormat: Text.PlainText; color: root.theme.foreground; font.family: root.theme.fontFamily; font.pixelSize: root.theme.fontPixel("subtitle",18) }
    Text { objectName: "previewLevelValue"; text: root.audioClient.previewLevelPercent+"%"; textFormat: Text.PlainText; color: root.theme.foreground; font.family: root.theme.fontFamily; font.pixelSize: root.theme.fontPixel("body",16) }
-   Text { text: "Applies to next preview"; textFormat: Text.PlainText; color: root.theme.muted; font.family: root.theme.fontFamily; font.pixelSize: root.theme.fontPixel("body",16) }
+   Text { text: "Level applies to next preview"; textFormat: Text.PlainText; color: root.theme.muted; font.family: root.theme.fontFamily; font.pixelSize: root.theme.fontPixel("body",16) }
    Row {
     width: column.width; spacing: root.theme.spacingPixel("panelGap",14)
     SoundButton { objectName: "previewLevel50"; width: Math.max(0,(parent.width-2*parent.spacing)/3); text: "50%"; enabled: root.audioClient.canAdjustPreview; onClicked: root.audioClient.setPreviewLevel(50,root.audioClient.previewMuted) }
     SoundButton { objectName: "previewLevel100"; width: Math.max(0,(parent.width-2*parent.spacing)/3); text: "100%"; enabled: root.audioClient.canAdjustPreview; onClicked: root.audioClient.setPreviewLevel(100,root.audioClient.previewMuted) }
-    SoundButton { objectName: "previewMute"; width: Math.max(0,(parent.width-2*parent.spacing)/3); text: root.audioClient.previewMuted ? "Muted" : "Mute"; checkable: true; checked: root.audioClient.previewMuted; enabled: root.audioClient.canAdjustPreview; onClicked: root.audioClient.setPreviewLevel(root.audioClient.previewLevelPercent,!root.audioClient.previewMuted) }
+    SoundButton { objectName: "previewMute"; width: Math.max(0,(parent.width-2*parent.spacing)/3); text: root.audioClient.previewMuteLive ? (root.audioClient.previewMuteChecked ? "Unmute playback" : "Mute playback") : (root.audioClient.previewMuteChecked ? "Muted" : "Mute"); checkable: true; checked: root.audioClient.previewMuteChecked; enabled: root.audioClient.canTogglePreviewMute; onClicked: root.audioClient.togglePreviewMute() }
    }
    SoundButton { objectName: "previewPlay"; width: column.width; text: "Play preview"; enabled: root.audioClient.canPlay; onClicked: root.audioClient.playPreview() }
    SoundButton { objectName: "previewStop"; width: column.width; text: "Stop"; enabled: root.audioClient.canStop; onClicked: root.audioClient.stopPreview() }

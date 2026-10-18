@@ -65,6 +65,13 @@ and labels. Only the trusted audio profile maps them to private PipeWire nodes;
 shared UI code carries no Pixel device names. Host virtual routes qualify no
 physical audio backend or additional phone model.
 
+The [live preview mute control](native-live-preview-mute.md) carries only a Play
+generation, boolean and original deadline through shared Rust policy. Its retained
+feeder bounds kernel-pipe lookahead before spawning and checks the actual allocation;
+4K/16K-page admission does not establish either Pixel kernel's execution. The
+same-producer host PCM proof qualifies virtual audio only. Backend buffering,
+suspend and physical output remain separate device gates.
+
 The [fixed Sounds desktop request](native-sounds-desktop.md) selects only the
 installed app profile; it carries no device identity, route or vendor parcel.
 Host launch/ownership tests and ARM compilation qualify separately from normal

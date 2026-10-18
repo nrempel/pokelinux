@@ -18,6 +18,10 @@ use std::{fs, io, os::unix::fs::PermissionsExt, path::PathBuf};
 
 const CONNECTION: u64 = 71;
 struct ObservedProvider {
+    observed: audio::State,
+    incarnation: &'static str,
+    mute_intent: Option<audio::MuteIntent>,
+    mute_calls: usize,
     revoked: usize,
     sent: Option<u64>,
     played: Option<u64>,
@@ -27,13 +31,12 @@ struct ObservedProvider {
 }
 impl Provider for ObservedProvider {
     fn incarnation(&self) -> &str {
-        "media-input-component"
+        self.incarnation
     }
     fn state(&self) -> audio::State {
         audio::State {
             connected: self.revoked == 0,
-            available: true,
-            ..Default::default()
+            ..self.observed.clone()
         }
     }
     fn routes(&self) -> Vec<audio::Route> {
@@ -50,6 +53,11 @@ impl Provider for ObservedProvider {
         self.played = Some(intent.route_intent.id);
         self.preview_intent = Some(intent.clone());
         self.preview_calls += 1;
+        Ok(true)
+    }
+    fn mute_preview(&mut self, intent: &audio::MuteIntent) -> io::Result<bool> {
+        self.mute_intent = Some(intent.clone());
+        self.mute_calls += 1;
         Ok(true)
     }
     fn stop_preview(&mut self, id: u64, _: u64) -> io::Result<bool> {
@@ -121,6 +129,13 @@ impl Ready {
         net::sockopt::set_socket_passcred(&server, true).unwrap();
         net::sockopt::set_socket_passcred(&client, true).unwrap();
         let mut provider = ObservedProvider {
+            observed: audio::State {
+                available: true,
+                ..Default::default()
+            },
+            incarnation: "media-input-component",
+            mute_intent: None,
+            mute_calls: 0,
             revoked: 0,
             sent: None,
             played: None,
@@ -372,3 +387,6 @@ fn preview_dispatch_preserves_admitted_level_route_and_absolute_deadline() {
         assert_eq!(c.provider.preview_calls, 1);
     }
 }
+
+#[path = "service_media_mute_tests.rs"]
+mod live_mute;

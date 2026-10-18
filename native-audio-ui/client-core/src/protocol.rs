@@ -40,6 +40,8 @@ pub struct State {
     pub applied: Option<Route>,
     pub policy_settled: bool,
     pub preview: Preview,
+    pub preview_generation: Option<u64>,
+    pub preview_muted: Option<bool>,
 }
 pub struct Page {
     pub state: State,
@@ -75,7 +77,25 @@ fn nullable(v: &Value) -> Option<Option<Route>> {
     }
 }
 fn state(v: &Value) -> Option<State> {
-    let s = object(v, 7)?;
+    let s = object(v, 9)?;
+    let preview = Preview::parse(s.get("preview")?)?;
+    let generation = s.get("preview_generation")?;
+    let muted = s.get("preview_muted")?;
+    let preview_generation = if generation.is_null() {
+        None
+    } else {
+        Some(generation.as_u64().filter(|value| *value > 0)?)
+    };
+    let preview_muted = if muted.is_null() {
+        None
+    } else {
+        Some(muted.as_bool()?)
+    };
+    if preview_generation.is_some() != preview_muted.is_some()
+        || preview_generation.is_some() != matches!(preview, Preview::Starting | Preview::Playing)
+    {
+        return None;
+    }
     Some(State {
         connected: s.get("connected")?.as_bool()?,
         available: s.get("available")?.as_bool()?,
@@ -83,7 +103,9 @@ fn state(v: &Value) -> Option<State> {
         requested: nullable(s.get("requested")?)?,
         applied: nullable(s.get("applied")?)?,
         policy_settled: s.get("policy_settled")?.as_bool()?,
-        preview: Preview::parse(s.get("preview")?)?,
+        preview,
+        preview_generation,
+        preview_muted,
     })
 }
 fn whitespace(c: char) -> bool {
@@ -165,4 +187,11 @@ pub fn preview_play(route: &Route, ttl: u32, until: u64, percent: u32, muted: bo
 }
 pub fn preview_stop() -> String {
     "{\"op\":\"media_preview_stop\"}".to_owned()
+}
+
+/// One explicit change for the exact observed Play. No producer or route selector.
+pub fn preview_mute(generation: u64, muted: bool, ttl: u32, until: u64) -> String {
+    format!(
+        "{{\"op\":\"media_preview_mute\",\"request\":{{\"generation\":{generation},\"muted\":{muted},\"ttl_ms\":{ttl},\"until_boottime_ns\":{until}}}}}"
+    )
 }

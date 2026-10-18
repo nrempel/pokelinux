@@ -23,6 +23,15 @@ pub struct PreviewRequest {
     pub level_percent: u64,
     pub muted: bool,
 }
+/// One explicit control of the currently observed finite preview generation.
+#[derive(Debug, Deserialize, Serialize)]
+#[serde(deny_unknown_fields)]
+pub struct PreviewMuteRequest {
+    pub generation: u64,
+    pub muted: bool,
+    pub ttl_ms: u64,
+    pub until_boottime_ns: u64,
+}
 /// Trusted actor-only data, never an application-supplied capability.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Intent {
@@ -35,6 +44,14 @@ pub struct Intent {
 pub struct PreviewIntent {
     pub route_intent: Intent,
     pub level: PreviewLevel,
+}
+/// Actor-owned control; it cannot select a route, gain or producer.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct MuteIntent {
+    pub id: u64,
+    pub generation: u64,
+    pub muted: bool,
+    pub until_ns: u64,
 }
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(deny_unknown_fields)]
@@ -52,11 +69,14 @@ pub struct State {
     pub applied: Option<String>,
     pub policy_settled: bool,
     pub preview: PreviewState,
+    pub preview_generation: Option<u64>,
+    pub preview_muted: Option<bool>,
 }
 pub enum Event {
     Observed,
     Selected { id: u64, state: State },
     Preview { id: u64, state: State },
+    Muted { id: u64, state: State },
     Rejected { id: u64 },
     Unavailable,
 }
@@ -69,6 +89,7 @@ pub trait Provider {
     /// false means no command sent and no local command queue.
     fn submit(&mut self, intent: &Intent) -> io::Result<bool>;
     fn play(&mut self, intent: &PreviewIntent) -> io::Result<bool>;
+    fn mute_preview(&mut self, intent: &MuteIntent) -> io::Result<bool>;
     /// Cleanup of this connection only, independent of a new Play grant.
     fn stop_preview(&mut self, id: u64, until_ns: u64) -> io::Result<bool>;
     /// Read-only, same single-in-flight transport and original deadline.

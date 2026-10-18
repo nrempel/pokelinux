@@ -1,0 +1,481 @@
+{
+  "schema": 1,
+  "scope": "Host native Rust components and actual unshown QML/actor/original PipeWire1.4.2 virtual PCM live preview mute",
+  "qualified_phone_models": 0,
+  "current_ARM_live_control_qualified": false,
+  "normal_app_Main_or_visible_window_executed": false,
+  "baseline_commit": "eea3a8ac013842e06a36ffa11009a08a545915c0",
+  "public_source_files": {
+    "native-audio-ui/AudioClient.cpp": {
+      "bytes": 9948,
+      "sha256": "d58904df6d801ab29edd46f4ec1ab62e7a5f6e0daca885736dbad9279335f330"
+    },
+    "native-audio-ui/AudioClient.h": {
+      "bytes": 2461,
+      "sha256": "c005263fecf1df49d99f252763cd2302842720160ffad49725a353766945f1c0"
+    },
+    "native-audio-ui/AudioClientTest.cpp": {
+      "bytes": 28193,
+      "sha256": "060b808804d822fe9f70c66754db7802afd3e14c209e8413e02209fa29c83ba4"
+    },
+    "native-audio-ui/SoundsView.qml": {
+      "bytes": 4201,
+      "sha256": "75182f20d3b8fce34046e97dd09145799f24099639b0ac8eaee2926e0f83ff1c"
+    },
+    "native-audio-ui/client-core/include/pokelinux_sounds_client.h": {
+      "bytes": 7954,
+      "sha256": "83624565069d99b164fc42d4736ab715af7e980edb4e9c7c25db0bee6fed008d"
+    },
+    "native-audio-ui/client-core/src/engine.rs": {
+      "bytes": 32087,
+      "sha256": "c7011f8584e4b73dc734533ca9d08e4bfbee084b5ca6693956f0515accd1d8ec"
+    },
+    "native-audio-ui/client-core/src/ffi.rs": {
+      "bytes": 8627,
+      "sha256": "a4fee089b6c048f8d077f1bb1506939cb0a170d31e50b39ae82f6c4939cff17a"
+    },
+    "native-audio-ui/client-core/src/protocol.rs": {
+      "bytes": 6519,
+      "sha256": "a6f6b1658c57181ddd12fdfce713a57cf2f3805dfc3f9cf4ee3edaaf80fb5f8c"
+    },
+    "native-audio-ui/client-core/tests/client-functional.cpp": {
+      "bytes": 22644,
+      "sha256": "ddda508b936c396be93830b5bfa88295b88583289e6ea4f1596908a155b68c95"
+    },
+    "native-audio-ui/client-core/tests/negative-envelope.cpp": {
+      "bytes": 2444,
+      "sha256": "5be4fd60064ae89866e6c7e82adf7bbb3e90632dccd4ff95d861865aab7b582b"
+    },
+    "native-audio-ui/client-core/tests/preview-functional.cpp": {
+      "bytes": 29310,
+      "sha256": "35289a2d9f52c1fc8dce8743b02dce0103072cdc6dfe836b717ba9e55961d1ec"
+    },
+    "native-audio-ui/client-core/tests/state-schema.cpp": {
+      "bytes": 13271,
+      "sha256": "42f449fb65b942566e1688dea5ae9d892b2f8c5c310d1f990cbf34904689f856"
+    },
+    "native-audio-ui/preview-tests/preview-component.cpp": {
+      "bytes": 7037,
+      "sha256": "926f7804fdb5d9a0f9544396d2e74ff82a35331144bc66188a881ccb2650bf7f"
+    },
+    "native-audio/src/client.rs": {
+      "bytes": 21506,
+      "sha256": "872b0f2e86d5a1c113c955e9c9df73d630a8e84076e2b748f46f360d35f0633b"
+    },
+    "native-audio/src/main.rs": {
+      "bytes": 34387,
+      "sha256": "7d74cdfce495978d3b38c0a785d443610da7ff9effc9959842d0efd41a88d402"
+    },
+    "native-audio/src/preview_process.rs": {
+      "bytes": 13914,
+      "sha256": "7c8fae80e8fcb76b7e0664bdf595dcc11ba72d8eea31b9144b37f2ea5c62c6b4"
+    },
+    "native-audio/src/preview_process_live_tests.rs": {
+      "bytes": 10067,
+      "sha256": "afbd9e522172a22cde030d3ceec4b76f639dbf335d1fbaa55b8b02eb9c1264b6"
+    },
+    "native-audio/src/preview_process_test_child.rs": {
+      "bytes": 4631,
+      "sha256": "aca41b85dbba91007c5cd9dfde28bf74b6c82c9bfc12caa69edf56d11484920d"
+    },
+    "native-audio/src/preview_process_tests.rs": {
+      "bytes": 11005,
+      "sha256": "e8644d4de2af93e218ddcaa170c6df0f6f200a3a9c810ee8cc2c1e9e8c71a222"
+    },
+    "native-audio/tests/client.rs": {
+      "bytes": 30283,
+      "sha256": "b53959b0abd4e18e422bcea32553f4bea2dde004273fc21e48452a8568172d28"
+    },
+    "native-lifecycle/src/audio.rs": {
+      "bytes": 3661,
+      "sha256": "5fe6c5d7f8e1b8c555308f2e9a546b0072097c1c61e3715157a105033322f396"
+    },
+    "native-lifecycle/src/audio_owner.rs": {
+      "bytes": 8675,
+      "sha256": "c6ebaca5e729828edd62b8cf873f3c96765f2be7344894a146d52932571b0f46"
+    },
+    "native-lifecycle/src/audio_session.rs": {
+      "bytes": 16684,
+      "sha256": "a0a1b5a0f3072ffd369ecbc82a1494cea896391e65cad72a11a543edd672ec9e"
+    },
+    "native-lifecycle/src/authority.rs": {
+      "bytes": 81129,
+      "sha256": "b639ea3d1e80fad248af7fdd88d55678d353008b8f255a1cedeb5654b856aa8f"
+    },
+    "native-lifecycle/src/lib.rs": {
+      "bytes": 4343,
+      "sha256": "0cdc86d3703d39b8ee5e3af904079dc0ad7e3e1b074e5a4e0f2efb2b2e54df65"
+    },
+    "native-lifecycle/src/media_authority_tests.rs": {
+      "bytes": 13100,
+      "sha256": "1459d9f1b648b074a16a96d2faf2e0e1666b7318ad107041614bd35c922b8fed"
+    },
+    "native-lifecycle/src/service.rs": {
+      "bytes": 98336,
+      "sha256": "26063e10b1842e0545c29514be4fef895ca47011842f475468953593250f9d6c"
+    },
+    "native-lifecycle/src/service_media_input_tests.rs": {
+      "bytes": 12915,
+      "sha256": "408c32481c190b9d664384bc407f2feac817131c130426e1c76b1dc8c31ad90e"
+    },
+    "native-lifecycle/src/service_media_mute_tests.rs": {
+      "bytes": 11143,
+      "sha256": "ff3ab4a60d32a60deb3bcd8456cc258c65af922de966bd3a71be162028dd8a5f"
+    },
+    "tools/native-audio-preview/fixture/qml-positive-assert.rs": {
+      "bytes": 9706,
+      "sha256": "54e90350d649e3a748971f362a860b7a70ded94201017c12dfc2dbab52951986"
+    },
+    "tools/native-audio-preview/qml-input-client.cpp": {
+      "bytes": 35563,
+      "sha256": "e6eb93e6fa6825f88fad20f9ca00aac2608395e9f6589a07bdcde03cca2e7442"
+    }
+  },
+  "proofs": {
+    "compiled_QML_disabled_RED": {
+      "bytes": 1913,
+      "sha256": "3187fe933d80a65ea703a04228855e63400bfde7d6f975171415213490e6f915"
+    },
+    "process_stub_RED": {
+      "bytes": 2074,
+      "sha256": "5a8ba617584a1717b8b705833943aff777beeea3591ec445fc14d86548110503"
+    },
+    "process_GREEN_before_format": {
+      "bytes": 1315,
+      "sha256": "83c70f58c468db17edc2c3998c3c9d7f134a1b4378d2e7030c04b4031bd8bdac"
+    },
+    "native_QA_GREEN": {
+      "bytes": 1056,
+      "sha256": "52380eaa5b57837175a8cec427ca68b0bab2aa655b75e60005b512789dd550a1"
+    },
+    "frontend_GREEN": {
+      "bytes": 757,
+      "sha256": "4b425bea23f0b2e44b19249cc4007c92f4195e7c7d284d9d319bf9594dfd6f3f"
+    },
+    "input_helper_build_GREEN": {
+      "bytes": 1584,
+      "sha256": "6d26b0bd149e503a5785d4456e85886686a4d9c2bf5b08026b51dad50be401ff"
+    },
+    "full_PCM_RED": {
+      "bytes": 5196,
+      "sha256": "08452a5ba9102bff30cb040f0d51ee02a11e956e3fb6916988b658457e27daed"
+    },
+    "full_PCM_GREEN": {
+      "bytes": 3926,
+      "sha256": "a5d1a0c0ede8e8b484044853bd66180709fcc04a0298d71a1d7eaf3634e6257f"
+    },
+    "failed_process_compile": {
+      "bytes": 459,
+      "sha256": "d3593cd931ad598f734dfdf1cf3f5f305af0586236a43580c44535cce287cf75"
+    },
+    "failed_native_Clippy": {
+      "bytes": 983,
+      "sha256": "edbd45ad3bd08ae0ee781ae518cb69dd51657d360bb7a919a8c197ae85ae20ec"
+    },
+    "native_QA_before_pipe_repair": {
+      "bytes": 933,
+      "sha256": "85ab4ef2a06edd7d41b051f291b5637c120d58d437fdb3d1c17f1837b4ba1f9c"
+    },
+    "failed_frontend_valid_State_setup": {
+      "bytes": 533,
+      "sha256": "5c17fc1970da93892d2725c1bb5c3149aad854345b383ecde97d835f6230ce19"
+    },
+    "failed_frontend_live_readiness_setup": {
+      "bytes": 723,
+      "sha256": "6f0714697546ffdee522569cec64d8de429618d9b60c7baf446d93fdac62dd25"
+    }
+  },
+  "selected_epochs": {
+    "native_QA": {
+      "selection.json": {
+        "bytes": 86925,
+        "sha256": "f282318f73fd60c5dd59da7007e0dd9785bdfd40f9fa79d11e4cc1290fa83889"
+      },
+      "command.json": {
+        "bytes": 611,
+        "sha256": "3ce9309fdac6efa3c2b6f377ae35c05672cf320e9eeb44149e05219cb0e18f44"
+      },
+      "SOURCE.json": {
+        "bytes": 33248,
+        "sha256": "0f5894359a158a9604675d318615af781b04118b7f18122147edef4d2ea7be80"
+      },
+      "SEAL.json": {
+        "bytes": 31379,
+        "sha256": "0bf51197446368f743bafaf861a1448aadb7c0b30e97e7e6a4b14ea1f1a8d824"
+      }
+    },
+    "frontend": {
+      "selection.json": {
+        "bytes": 202587,
+        "sha256": "d483c4c849fbd6dd0b971fd71b6d3120305b40f6f490629ce81b5fadfc125416"
+      },
+      "command.json": {
+        "bytes": 555,
+        "sha256": "f786b896415ce93b42189eed7166c5e05786f36f49ee406e374ae05f04f197de"
+      },
+      "SOURCE.json": {
+        "bytes": 11675,
+        "sha256": "7dac6e72f71e289dd2bd055b51bf87d98439d907a54468e426e91a1d0c280586"
+      },
+      "SEAL.json": {
+        "bytes": 1579,
+        "sha256": "c256401a4e0835552e5f53d4d05d657c0b0b94ecfe3c56d916845ab8998fc733"
+      }
+    },
+    "helper": {
+      "selection.json": {
+        "bytes": 200405,
+        "sha256": "f7f427a7d3e2b657745d3edfd9b0b8cbddde57c27f1268ad218de04faad7abb3"
+      },
+      "command.json": {
+        "bytes": 567,
+        "sha256": "d8466f5a22df1dd5200d7f7e39eb3698e0846bc233ba573e7d13ad1282dfb72a"
+      },
+      "SOURCE.json": {
+        "bytes": 9363,
+        "sha256": "6189f619a47b461de074f2642b5ae811a030d888b8719f78a1209e12c89a2867"
+      },
+      "SEAL.json": {
+        "bytes": 2577,
+        "sha256": "66bc2b43dfc3c8dbfad6c24e8fdc40d657ccc3131ef917c7ae0aa00998e3448e"
+      }
+    },
+    "PCM_RED": {
+      "selection.json": {
+        "bytes": 261230,
+        "sha256": "5711e50ff1ee5c135e83b1825bddcd22ea4c4c5bcdb8a0ecced1386204cdc784"
+      },
+      "command.json": {
+        "bytes": 81947,
+        "sha256": "27d574460b9bd51b873f5ea060aea4e71fb0f8a0de74f560fe60761ce2c0dd96"
+      },
+      "SOURCE.json": {
+        "bytes": 5547,
+        "sha256": "cc8ca3ca7d1feca913035b8e345eccdbb62cbeb764eaed4d75a99ff4e872ef1c"
+      },
+      "SEAL.json": {
+        "bytes": 2015,
+        "sha256": "a9b1d5cf20e7f8052d1168b496256daa4a9e41c204f3587eeb1714e3289d0217"
+      }
+    },
+    "PCM_GREEN": {
+      "selection.json": {
+        "bytes": 264095,
+        "sha256": "a789b1fc006c7df4b981a23fc871485ddfbf770c40f4a8cd3be3be313eef0ff4"
+      },
+      "command.json": {
+        "bytes": 81947,
+        "sha256": "b815f03a65360dfadd551f1a6b927c23c9d6146269c59a1eded01ede34b4f9da"
+      },
+      "SOURCE.json": {
+        "bytes": 6564,
+        "sha256": "d345b177acace26f0e0b27b88dfc9cf143fd094952b861b4565f83f16c4cce9d"
+      },
+      "SEAL.json": {
+        "bytes": 2015,
+        "sha256": "1ec0bd5c451b36c31308e106d1823c185ef559db30e52da2618d2eecdbfa08c4"
+      }
+    }
+  },
+  "native_checks": {
+    "audio_passed": 55,
+    "audio_ignored": 1,
+    "authority_media_passed": 12,
+    "media_input_passed": 19,
+    "finite_process_cases": 9,
+    "nested_actual_retirement_markers": 13,
+    "fmt_strict_Clippy_passed": true,
+    "direct_host_waits": 15,
+    "direct_inner_waits": 23,
+    "adopted_waits_separate": 1
+  },
+  "frontend_checks": {
+    "normal_targets": 7,
+    "strong_Sounds_APIs": 17,
+    "strong_appearance_APIs": 11,
+    "View_bytes": 5648,
+    "State_required_fields": 9,
+    "C_ABI_existing_groups": 6,
+    "schema_groups": 8,
+    "preview_groups": 14,
+    "cleanup_cases": 2,
+    "Qt_behaviors": 32,
+    "Qt_incidents_including_setup_cleanup": 34,
+    "unshown_QML_incidents": 6,
+    "matching_archive_and_header_exact_after_pipe_repair": true
+  },
+  "normal_provider_artifacts": {
+    "pokelinux-audio": {
+      "bytes": 1357656,
+      "sha256": "87c8b29953498cc13426f3beab7a5a71237d8b92f49cfe297354915b6fe12603",
+      "ELF_machine": 62,
+      "features": [],
+      "opt_level": "3",
+      "test": false
+    },
+    "lifecycle-launcher": {
+      "bytes": 1106888,
+      "sha256": "aeb49d0f5149941837820ffc70c693fced499d99487191617c31f3d805610016",
+      "ELF_machine": 62,
+      "features": [],
+      "opt_level": "3",
+      "test": false
+    },
+    "preview-actor": {
+      "bytes": 1783592,
+      "sha256": "a9b5cfb79b4757739103f8f5fe6b5c3da8ecd91ea15a335fe3a19c49b8ba2026",
+      "ELF_machine": 62,
+      "features": [],
+      "opt_level": "3",
+      "test": false
+    }
+  },
+  "Sounds_archive": {
+    "bytes": 23939232,
+    "sha256": "632280c9225840ba10de50ebbf58959a05574056a5cc4299732d0f7b99a046cf",
+    "ELF_machine": 62,
+    "actual_ELF_members": 356,
+    "strong_C_API": [
+      "pr_sounds_client_choose_v1",
+      "pr_sounds_client_connected_v1",
+      "pr_sounds_client_disconnected_v1",
+      "pr_sounds_client_free_v1",
+      "pr_sounds_client_new_v1",
+      "pr_sounds_client_prepare_v1",
+      "pr_sounds_client_preview_level_v1",
+      "pr_sounds_client_preview_play_v1",
+      "pr_sounds_client_preview_stop_v1",
+      "pr_sounds_client_preview_toggle_mute_v1",
+      "pr_sounds_client_reconnect_v1",
+      "pr_sounds_client_refresh_v1",
+      "pr_sounds_client_reply_v1",
+      "pr_sounds_client_sent_v1",
+      "pr_sounds_client_start_v1",
+      "pr_sounds_client_tick_v1",
+      "pr_sounds_client_view_v1"
+    ]
+  },
+  "PCM": {
+    "actual_mouse_pairs": 5,
+    "complete_effects": {
+      "route": 1,
+      "plays": 1,
+      "mutes": 2,
+      "stops": 0,
+      "reconnects": 0
+    },
+    "effect_attempts": {
+      "media_route": 1,
+      "media_preview_play": 1,
+      "media_preview_mute": 2,
+      "media_preview_stop": 0,
+      "media_reconnect": 0
+    },
+    "same_original_producer_all_stages": true,
+    "same_positive_Play_generation": true,
+    "original_each_control_deadline_max_ns": 1000000000,
+    "rate": 48000,
+    "format": "F32LE",
+    "channels": 1,
+    "discard_frames_per_window": 9600,
+    "measured_frames_per_window": 24000,
+    "total_measured_frames": 144000,
+    "capture_elapsed_from_original_Play_ns": 2322333488,
+    "original_asset_ns": 4000000000,
+    "original_capture_aggregate_ns": 6000000000,
+    "raw_window_hashes_and_recomputed_statistics": {
+      "before_live_mute_half_tone:speaker": {
+        "bytes": 134400,
+        "sha256": "1dd088649c6e61ca9eb99aac665ed6df471d006f1a69324ac8521d4ca828a996",
+        "measured_frames": 24000,
+        "rms": 0.08838669987845607,
+        "peak": 0.12499618530273438
+      },
+      "before_live_mute_half_tone:earpiece": {
+        "bytes": 134400,
+        "sha256": "ac8f5613c4b176d380009fa1306c49a027644dba38b9703ed102634c60f8d5ff",
+        "measured_frames": 24000,
+        "rms": 0.0,
+        "peak": 0.0
+      },
+      "live_muted_quiet:speaker": {
+        "bytes": 134400,
+        "sha256": "009b13a8e99ef958efd9e237b0a8bc1f7298cb54f49137cd0bccad079d303a81",
+        "measured_frames": 24000,
+        "rms": 0.0,
+        "peak": 0.0
+      },
+      "live_muted_quiet:earpiece": {
+        "bytes": 134400,
+        "sha256": "ac8f5613c4b176d380009fa1306c49a027644dba38b9703ed102634c60f8d5ff",
+        "measured_frames": 24000,
+        "rms": 0.0,
+        "peak": 0.0
+      },
+      "live_unmuted_half_tone:speaker": {
+        "bytes": 134400,
+        "sha256": "13132f786efaaf6799334e4fbd47f5fcc82cbae4bec8aa4a58a0ebe75048940c",
+        "measured_frames": 24000,
+        "rms": 0.08838669987845607,
+        "peak": 0.12499618530273438
+      },
+      "live_unmuted_half_tone:earpiece": {
+        "bytes": 134400,
+        "sha256": "ac8f5613c4b176d380009fa1306c49a027644dba38b9703ed102634c60f8d5ff",
+        "measured_frames": 24000,
+        "rms": 0.0,
+        "peak": 0.0
+      }
+    },
+    "compiled_assertion_after_cleanup_exit": 0,
+    "direct_waits_by_owner": {
+      "host": 15,
+      "entry": 7,
+      "controller": 9,
+      "observer": 20,
+      "total_direct_waits": 51,
+      "real_PIPE_EOFs": 65
+    },
+    "adopted_waits_separate": 1,
+    "regular_observer_stderr_closes_separate": 4,
+    "individual_regular_close_timestamps_recorded": false,
+    "DEVNULL_streams_separate": 2,
+    "exact_CID_absent_same_daemon_inputs_unchanged": true
+  },
+  "causal_repair": {
+    "actual_full_PCM_RED_measured_frames": 96000,
+    "muted_window_RED_speaker_RMS": 0.04518145167796858,
+    "muted_capture_RED_last_nonzero_frame_including_discard": 15871,
+    "sole_runtime_production_change": "Pre-spawn PCM pipe requested4096 bytes, reject actual capacity above16384; original asset/deadlines/oracle/Qt and fixture unchanged",
+    "acceptance_is_future_feed_policy_not_instantaneous_or_physical_silence": true
+  },
+  "failed_preparations_preserved": [
+    "process expected-RED outer attach classification mismatch; inner behavioral result retained separately",
+    "process integer-conversion compile failure, no tests",
+    "combined QA strictClippy failure after component passes",
+    "frontend valid setup State still seven fields",
+    "frontend new live test readiness accepted offline local-toggle state",
+    "full PCM mute acknowledged but buffered tone remained; complete quiet-window behavioral failure"
+  ],
+  "remaining_gates": [
+    "current ARM live-control compile/runtime",
+    "normal app Main/window and Pixel10-profile capture",
+    "complete phone session and live-theme integration",
+    "system-wide media mixer, call/capture separation and physical audio backend",
+    "suspend and hardware deadline behavior",
+    "all matched Pixel kernel/modules/firmware and physical-phone gates",
+    "full smartphone completion matrix"
+  ],
+  "independent_review": {
+    "passed": true,
+    "reviewer": "Sol6.1 xhigh independent read-only agent",
+    "matched_executed_record_sha256": {
+      "outer": "47001efec64cd2c9bb5b3313301a703b2b06f0f76bc7b2e2c97d640f2ad66901",
+      "entry": "1d53d3bdf524f309f17e506c6b8c9d7e4eecfe29d2620c5540a6c6fee228cc23",
+      "controller": "2ef03d594c24f623e20e25a52e5e64fdbafd2d2f0b1bca3d4ffd75511a31f91b",
+      "PCM": "a3f70b3be9adec1fdeae14b4becb4d375b7ae51ecee3f1d81f942a04e651f27a"
+    },
+    "scope": "Raw6 recomputation, actual wires, same producer,51direct waits/65PIPEEOF, separate adopted/regularfiles, final assertion aftercleanup, exactfailed1 fixture andQt roles",
+    "no_additional_execution": true
+  }
+}

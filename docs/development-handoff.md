@@ -106,7 +106,7 @@ retains its own mapping. The added C++ belongs to the test fixture; production
 policy remains Rust. Those full-level host and installed ARM cohorts retain
 their original providers.
 
-Current preview level/mute is Rust-owned, local and atomic; default 100%/unmuted,
+The qualified next-preview level cohort is Rust-owned, local and atomic; default 100%/unmuted,
 no choice IPC, and each Play freezes its pair and original deadline. Actor and
 Main require typed level/mute fields and scale only that preview's fixed PCM.
 The frozen valid50 request progresses from actual denied/48,000 quiet-frame RED
@@ -132,6 +132,16 @@ pass, as does independent review. Both terminal verification records need one
 observation, leaving repeat polling unexercised. This preview-level campaign is
 complete; do not expand host/ARM combinations or resume a window/capture campaign.
 Normal-window, Pixel integration, capture and physical-audio gates remain open.
+
+[Live preview mute](native-live-preview-mute.md) is now implemented across the Rust
+feeder, owner, actor and app engine. Five real QML clicks now produce one Play,
+Mute and Unmute with the same live producer: tone→full quiet→tone, 144,000 measured
+frames within 2.322333488 seconds of the original four-second asset. A real failure
+from buffered tone precedes the bound on queued PCM; clocks and oracles stay fixed.
+55 audio tests, 31 focused lifecycle tests, the 17-API frontend and 32 Qt behaviors pass.
+This is a host unshown-component result; ARM live control, normal windows, physical
+audio and all phone gates remain open. No phone access is authorized.
+
 The private Messages read-provider remains parked at compiled assertion RED,
 with no qualified GREEN or deployed join; do not retry it. Normal ARM windows,
 cold graphical startup and all matched-device gates remain open.

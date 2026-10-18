@@ -43,13 +43,13 @@ def packet(path,body,pid,uid,cleanup=False,limit=4096,with_peer=False):
 def admin(v,cleanup=False):return packet(RUN/'admin.sock',json.dumps(v).encode(),actor['child'].pid,0,cleanup)
 qml={'records':[],'actor_sends':[],'states':[],'clicks':[]};cursor=0;actor_fd=None
 r['qml']=qml
-state_keys={'routes','requested','applied','status','canChoose','canPlay','canStop','qml_status','previewLevelPercent','previewMuted','canAdjustPreview','qml_level','qml_muted','qml_level50_enabled','qml_level100_enabled','qml_mute_enabled'}
+state_keys={'routes','requested','applied','status','canChoose','canPlay','canStop','qml_status','previewLevelPercent','previewMuted','canAdjustPreview','canTogglePreviewMute','previewMuteChecked','previewMuteLive','qml_level','qml_muted','qml_level50_enabled','qml_level100_enabled','qml_mute_enabled'}
 def decimal(v,signed=False):
  assert type(v)is str and re.fullmatch(r'-?(0|[1-9][0-9]*)'if signed else r'0|[1-9][0-9]*',v);return int(v)
 def page(value,after):
  global cursor,actor_fd
  assert set(value)in[{'operation','state','telemetry'},{'operation','state','telemetry','dispatch'}]
- model=value['state'];assert set(model)==state_keys and type(model['routes'])is list and all(type(model[k])is bool for k in ['canChoose','canPlay','canStop','previewMuted','canAdjustPreview','qml_muted','qml_level50_enabled','qml_level100_enabled','qml_mute_enabled'])and all(type(model[k])is str for k in ['requested','applied','status','qml_status','qml_level'])and type(model['previewLevelPercent'])is int and 0<=model['previewLevelPercent']<=100;assert model['qml_level']==str(model['previewLevelPercent'])+'%'and model['qml_muted']==model['previewMuted']and all(model[k]==model['canAdjustPreview']for k in ['qml_level50_enabled','qml_level100_enabled','qml_mute_enabled']);assert len(qml['states'])<4096;qml['states'].append({'observed_boottime_ns':now(),'state':model})
+ model=value['state'];assert set(model)==state_keys and type(model['routes'])is list and all(type(model[k])is bool for k in ['canChoose','canPlay','canStop','previewMuted','canAdjustPreview','canTogglePreviewMute','previewMuteChecked','previewMuteLive','qml_muted','qml_level50_enabled','qml_level100_enabled','qml_mute_enabled'])and all(type(model[k])is str for k in ['requested','applied','status','qml_status','qml_level'])and type(model['previewLevelPercent'])is int and 0<=model['previewLevelPercent']<=100;assert model['qml_level']==str(model['previewLevelPercent'])+'%'and model['qml_muted']==model['previewMuteChecked']and model['qml_mute_enabled']==model['canTogglePreviewMute']and all(model[k]==model['canAdjustPreview']for k in ['qml_level50_enabled','qml_level100_enabled']);assert len(qml['states'])<4096;qml['states'].append({'observed_boottime_ns':now(),'state':model})
  t=value['telemetry'];assert set(t)=={'after','next','available_through','more','overflow','records','complete_play_sends','play_choices'}and t['after']==after and t['overflow']is False and len(t['records'])<=4 and after<=t['next']<=t['available_through']<=128 and t['more']==(t['next']<t['available_through'])
  for record in t['records']:
   assert record['marker']==cursor+1;cursor+=1;qml['records'].append(record)
@@ -58,7 +58,7 @@ def page(value,after):
   assert record['peer_valid']is True and(record['peer_pid'],record['peer_uid'],record['peer_gid'])==(actor['child'].pid,0,0)and type(record['fd'])is int and record['fd']>=0 and record['fd']!=record['controller_fd_at_send']and record['clocks_valid']is True and before<=after_send and len(raw)==record['copied_bytes']==length<=4096 and record['complete_send']==(returned==length and returned>=0)and record['flags']==socket.MSG_DONTWAIT|socket.MSG_NOSIGNAL
   if actor_fd is None:actor_fd=record['fd']
   assert record['fd']==actor_fd,'same actual observed actor FD, no reconnect'
-  wire=json.loads(raw);assert type(wire)is dict and wire.get('op')in['media_status','media_route','media_preview_play','media_preview_stop']
+  wire=json.loads(raw);assert type(wire)is dict and wire.get('op')in['media_status','media_route','media_preview_play','media_preview_stop','media_preview_mute']
   item={'record':record,'wire_utf8':raw.decode('utf8')};qml['actor_sends'].append(item)
  assert cursor==t['next'];return t
 def check_choices(t):
@@ -137,7 +137,7 @@ try:
    time.sleep(.002)
   raise TimeoutError('one original six-second case cutoff waiting for '+name)
  idle=lambda s:s['canAdjustPreview']and s['canPlay']and s['requested']=='media-a7'and s['applied']==''and s['status']==s['qml_status']=='Output selected; preview idle'
- playing=lambda s:not s['canAdjustPreview']and s['canStop']and s['requested']==s['applied']=='media-a7'and s['status']==s['qml_status']=='Preview playing'
+ playing=lambda s:not s['canAdjustPreview']and s['canStop']and s['canTogglePreviewMute']and s['previewMuteLive']and s['requested']==s['applied']=='media-a7'and s['status']==s['qml_status']=='Preview playing'
  starting=lambda s:not s['canAdjustPreview']and s['status']==s['qml_status']=='Preview starting'
  retiring=lambda s:not s['canAdjustPreview']and s['status']==s['qml_status']=='Preview retiring'
  def effect_attempts():return {op:sum(json.loads(v['wire_utf8'])['op']==op for v in qml['actor_sends'])for op in ['media_route','media_preview_play','media_preview_stop']}

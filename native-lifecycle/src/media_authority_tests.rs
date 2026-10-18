@@ -352,3 +352,49 @@ fn preview_wire_requires_explicit_integer_level_and_boolean_mute() {
     extra["request"]["gain"] = json!(0.5);
     assert!(serde_json::from_value::<crate::AppRequest>(extra).is_err());
 }
+
+#[test]
+fn live_mute_authority_clamps_original_deadline_and_refuses_invalid_envelopes() {
+    let mut c = Case::new(true);
+    let now = boottime_ns();
+    let original = now + 900_000_000;
+    let request = crate::audio::PreviewMuteRequest {
+        generation: 17,
+        muted: true,
+        ttl_ms: 1000,
+        until_boottime_ns: original,
+    };
+    let stamp = c
+        .authority
+        .begin_media_preview_mute(std::process::id(), UID, BACKEND, "speaker", &request, now)
+        .unwrap();
+    assert_eq!(stamp.intent().until_ns, original);
+    assert!(c.authority.current_media(&stamp, BACKEND, boottime_ns()));
+    assert!(!c.authority.current_media(&stamp, BACKEND, original));
+    for (generation, ttl_ms, until_boottime_ns) in [
+        (0, 1000, original),
+        (17, 0, original),
+        (17, 1001, original),
+        (17, 1000, now),
+        (17, 1000, now + 1_000_000_001),
+    ] {
+        let request = crate::audio::PreviewMuteRequest {
+            generation,
+            muted: false,
+            ttl_ms,
+            until_boottime_ns,
+        };
+        assert!(
+            c.authority
+                .begin_media_preview_mute(
+                    std::process::id(),
+                    UID,
+                    BACKEND,
+                    "speaker",
+                    &request,
+                    now,
+                )
+                .is_err()
+        );
+    }
+}

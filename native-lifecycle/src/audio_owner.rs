@@ -1,5 +1,5 @@
 //! Safe, nonblocking protocol adapter to the existing sole Rust audio owner.
-use crate::audio::{Event, Intent, PreviewIntent, Provider, Route, State};
+use crate::audio::{Event, Intent, MuteIntent, PreviewIntent, Provider, Route, State};
 use pokelinux_audio::client::{Client, Event as ClientEvent, SendOutcome, SubmitError};
 use rustix::net::{self, AddressFamily, SocketAddrUnix, SocketFlags, SocketType};
 use std::{
@@ -18,8 +18,19 @@ pub struct Owner {
 }
 enum Operation {
     Inspect,
-    Select { id: u64, route: String },
-    Preview { id: u64, route: Option<String> },
+    Select {
+        id: u64,
+        route: String,
+    },
+    Preview {
+        id: u64,
+        route: Option<String>,
+    },
+    Mute {
+        id: u64,
+        generation: u64,
+        muted: bool,
+    },
 }
 fn connect(path: &Path) -> io::Result<UnixStream> {
     if !path.is_absolute() {
@@ -101,6 +112,8 @@ impl Provider for Owner {
             applied: snapshot.applied.as_ref().map(|a| a.route.clone()),
             policy_settled: snapshot.policy_settled,
             preview: snapshot.preview,
+            preview_generation: snapshot.preview_generation,
+            preview_muted: snapshot.preview_muted,
         }
     }
     fn routes(&self) -> Vec<Route> {
@@ -134,6 +147,19 @@ impl Provider for Owner {
             Operation::Preview {
                 id: intent.id,
                 route: Some(intent.route.clone()),
+            },
+        )
+    }
+    fn mute_preview(&mut self, intent: &MuteIntent) -> io::Result<bool> {
+        let result = self
+            .client
+            .preview_mute(intent.generation, intent.muted, intent.until_ns);
+        self.sent(
+            result,
+            Operation::Mute {
+                id: intent.id,
+                generation: intent.generation,
+                muted: intent.muted,
             },
         )
     }
@@ -179,8 +205,28 @@ impl Provider for Owner {
                 }
             }
             (
+                ClientEvent::Updated(snapshot),
+                Some(Operation::Mute {
+                    id,
+                    generation,
+                    muted,
+                }),
+            ) if snapshot.preview == crate::audio::PreviewState::Playing
+                && snapshot.preview_generation == Some(generation)
+                && snapshot.preview_muted == Some(muted) =>
+            {
+                Event::Muted {
+                    id,
+                    state: self.state(),
+                }
+            }
+            (
                 ClientEvent::Rejected { .. },
-                Some(Operation::Select { id, .. } | Operation::Preview { id, .. }),
+                Some(
+                    Operation::Select { id, .. }
+                    | Operation::Preview { id, .. }
+                    | Operation::Mute { id, .. },
+                ),
             ) => Event::Rejected { id },
             (ClientEvent::Updated(_), Some(Operation::Inspect)) => Event::Observed,
             _ => {

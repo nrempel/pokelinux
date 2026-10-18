@@ -44,6 +44,10 @@ pub struct Snapshot {
     /// Selection policy is settled; this does not assert an observed audio link.
     pub policy_settled: bool,
     pub preview: PreviewState,
+    /// Opaque per-Play identity within this exact verified owner connection.
+    pub preview_generation: Option<u64>,
+    /// Accepted future PCM feed policy; never immediate physical silence.
+    pub preview_muted: Option<bool>,
     /// Owner uncertainty or a locally unknown outcome; never a cleanup claim.
     pub uncertain: bool,
 }
@@ -68,6 +72,7 @@ pub enum SubmitError {
     Expired,
     NoCatalog,
     InvalidRoute,
+    InvalidPreview,
     Uncertain(Failure),
 }
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -83,6 +88,7 @@ enum Operation {
     Route(String),
     PreviewPlay { route: String, lease: Option<u64> },
     PreviewStop,
+    PreviewMute { generation: u64, muted: bool },
 }
 struct Pending {
     operation: Operation,
@@ -136,6 +142,8 @@ struct Reply {
     cleanup: Cleanup,
     policy_settled: bool,
     preview: PreviewState,
+    preview_generation: Option<u64>,
+    preview_muted: Option<bool>,
     media_routes: Option<Vec<MediaRoute>>,
 }
 
@@ -195,6 +203,8 @@ impl Client {
                 in_flight: false,
                 policy_settled: false,
                 preview: PreviewState::Idle,
+                preview_generation: None,
+                preview_muted: None,
                 uncertain: false,
             },
             inspected: false,
@@ -280,6 +290,40 @@ impl Client {
             until_ns,
         )
     }
+    /// One explicit live control for the previously observed exact Play.
+    /// WouldBlock creates no queue and preserves the caller's original deadline.
+    pub fn preview_mute(
+        &mut self,
+        generation: u64,
+        muted: bool,
+        until_ns: u64,
+    ) -> Result<SendOutcome, SubmitError> {
+        if self.pending.is_some() {
+            return Err(SubmitError::Busy);
+        }
+        if generation == 0
+            || self.state.preview_generation != Some(generation)
+            || self.state.preview != PreviewState::Playing
+            || self.state.preview_muted.is_none()
+            || !self.state.policy_settled
+            || self.state.uncertain
+            || self.state.applied.is_none()
+        {
+            return Err(SubmitError::InvalidPreview);
+        }
+        let lease = self
+            .state
+            .admitted
+            .as_ref()
+            .ok_or(SubmitError::InvalidRoute)?
+            .lease;
+        self.submit(
+            Operation::PreviewMute { generation, muted },
+            json!({"op":"preview_mute","lease":lease,"generation":generation,
+                "muted":muted,"until_boottime_ns":until_ns}),
+            until_ns,
+        )
+    }
     fn submit(
         &mut self,
         operation: Operation,
@@ -299,7 +343,10 @@ impl Client {
         }
         match send(stream, &bytes, SendFlags::DONTWAIT | SendFlags::NOSIGNAL) {
             Ok(n) if n == bytes.len() => {
-                let selecting = !matches!(operation, Operation::Inspect);
+                let selecting = !matches!(
+                    operation,
+                    Operation::Inspect | Operation::PreviewMute { .. }
+                );
                 self.pending = Some(Pending {
                     operation,
                     until_ns,
@@ -389,7 +436,10 @@ impl Client {
             }
             return Ok(Some(reason.into()));
         }
-        if !object.contains_key("lease") {
+        if !object.contains_key("lease")
+            || !object.contains_key("preview_generation")
+            || !object.contains_key("preview_muted")
+        {
             return Err(invalid());
         }
         let reply: Reply = serde_json::from_value(value)?;
@@ -407,6 +457,16 @@ impl Client {
                     || reply.observed.epoch < old.epoch
                     || reply.observed.revision < old.revision
             })
+        {
+            return Err(invalid());
+        }
+        if reply.preview_generation.is_some() != reply.preview_muted.is_some()
+            || reply.preview_generation.is_some()
+                != matches!(
+                    reply.preview,
+                    PreviewState::Starting | PreviewState::Playing
+                )
+            || reply.preview_generation == Some(0)
         {
             return Err(invalid());
         }
@@ -466,6 +526,16 @@ impl Client {
                     intent_revision: reply.intent_revision,
                 });
             }
+            Operation::PreviewMute { generation, muted } => {
+                if reply.media_routes.is_some()
+                    || reply.lease.is_some()
+                    || reply.preview_generation != Some(*generation)
+                    || reply.preview_muted != Some(*muted)
+                    || reply.preview != PreviewState::Playing
+                {
+                    return Err(invalid());
+                }
+            }
             Operation::PreviewStop => {
                 if reply.media_routes.is_some() || reply.lease.is_some() {
                     return Err(invalid());
@@ -488,6 +558,8 @@ impl Client {
             return Err(invalid());
         }
         self.state.preview = reply.preview;
+        self.state.preview_generation = reply.preview_generation;
+        self.state.preview_muted = reply.preview_muted;
         self.state.policy_settled = reply.policy_settled
             && self.state.admitted.as_ref().is_some_and(|own| {
                 reply.desired.iter().any(|(lease, role, route)| {
@@ -535,6 +607,8 @@ impl Client {
         self.state.in_flight = false;
         self.state.policy_settled = false;
         self.state.preview = PreviewState::Idle;
+        self.state.preview_generation = None;
+        self.state.preview_muted = None;
         self.state.uncertain = uncertain;
         self.state.admitted = None;
         self.state.applied = None;

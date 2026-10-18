@@ -18,6 +18,9 @@ typedef struct {
  PrSoundsClientRowV1 routes[32];
  uint32_t policy_settled, preview, can_play, can_stop;
  uint32_t selected_level_percent, selected_muted, can_adjust_preview, preview_reserved;
+ uint64_t preview_generation;
+ uint32_t playback_muted, playback_mute_known, can_toggle_mute;
+ uint32_t mute_checked, mute_is_live, mute_reserved;
 } PrSoundsClientViewV1;
 typedef struct {
  uint64_t connection_epoch, token, original_until_boottime_ns;
@@ -31,7 +34,8 @@ enum { PR_SOUNDS_CLIENT_CLOSED=0, PR_SOUNDS_CLIENT_CONNECTING=1,
  PR_SOUNDS_CLIENT_SENDING=2, PR_SOUNDS_CLIENT_RECEIVING=3, PR_SOUNDS_CLIENT_IDLE=4 };
 enum { PR_SOUNDS_CLIENT_NO_REQUEST=0, PR_SOUNDS_CLIENT_CONNECT=1,
  PR_SOUNDS_CLIENT_STATUS=2, PR_SOUNDS_CLIENT_ROUTE=3, PR_SOUNDS_CLIENT_RECONNECT=4,
- PR_SOUNDS_CLIENT_PREVIEW_PLAY=5, PR_SOUNDS_CLIENT_PREVIEW_STOP=6 };
+ PR_SOUNDS_CLIENT_PREVIEW_PLAY=5, PR_SOUNDS_CLIENT_PREVIEW_STOP=6,
+ PR_SOUNDS_CLIENT_PREVIEW_MUTE=7 };
 enum { PR_SOUNDS_CLIENT_NO_INTENT=0, PR_SOUNDS_CLIENT_ROUTE_INTENT=1,
  PR_SOUNDS_CLIENT_RECONNECT_INTENT=2, PR_SOUNDS_CLIENT_STOP_INTENT=3 };
 enum { PR_SOUNDS_CLIENT_SEND_COMPLETE=1, PR_SOUNDS_CLIENT_SEND_WOULD_BLOCK=2,
@@ -54,7 +58,7 @@ enum { PR_SOUNDS_CLIENT_DISCONNECTED=0, PR_SOUNDS_CLIENT_CONNECTING_AUDIO=1,
  PR_SOUNDS_CLIENT_SELECTED_IDLE=28, PR_SOUNDS_CLIENT_PREVIEW_STARTING=29,
  PR_SOUNDS_CLIENT_PREVIEW_PLAYING=30, PR_SOUNDS_CLIENT_PREVIEW_RETIRING=31,
  PR_SOUNDS_CLIENT_PREVIEW_COMPLETED=32, PR_SOUNDS_CLIENT_PREVIEW_FAILED=33,
- PR_SOUNDS_CLIENT_PREVIEW_CANCELLED=34 };
+ PR_SOUNDS_CLIENT_PREVIEW_CANCELLED=34, PR_SOUNDS_CLIENT_PREVIEW_MUTE_PENDING=35 };
 enum { PR_SOUNDS_CLIENT_PREVIEW_IDLE_STATE=0, PR_SOUNDS_CLIENT_PREVIEW_STARTING_STATE=1,
  PR_SOUNDS_CLIENT_PREVIEW_PLAYING_STATE=2, PR_SOUNDS_CLIENT_PREVIEW_RETIRING_STATE=3,
  PR_SOUNDS_CLIENT_PREVIEW_COMPLETED_STATE=4, PR_SOUNDS_CLIENT_PREVIEW_FAILED_STATE=5 };
@@ -74,6 +78,13 @@ int32_t pr_sounds_client_reconnect_v1(PrSoundsClient *client);
  * a new client starts 100/0.
  * No socket operation, effect intent or request/token/deadline mutation. */
 int32_t pr_sounds_client_preview_level_v1(PrSoundsClient *client, uint32_t percent, uint32_t muted);
+/* One explicit mute button choice. Idle changes only the local next-preview
+ * choice. Playing freezes this connection's observed generation, inverse of its
+ * confirmed feed policy and original one-second deadline. It never queues behind
+ * status/effects or changes next-preview choices while Playing. Confirmation is
+ * digital feeder policy, not immediate sink silence. Stop while this effect is
+ * in flight closes local channel state and must close the native socket. */
+int32_t pr_sounds_client_preview_toggle_mute_v1(PrSoundsClient *client);
 /* Explicit Play only while idle with a settled selected logical route.
  * Never queues Play. Packet carries the original absolute BOOTTIME deadline;
  * each prepare recalculates its remaining ttl_ms without renewing it. The route,

@@ -16,6 +16,7 @@ const SELECT: u32 = 3;
 const RECON: u32 = 4;
 const PLAY: u32 = 5;
 const STOP_REQUEST: u32 = 6;
+const MUTE_REQUEST: u32 = 7;
 // Exact public presentation codes from the frozen C header.
 const DISCONNECTED: u32 = 0;
 const CONNECTING_AUDIO: u32 = 1;
@@ -44,6 +45,7 @@ const PREVIEW_RETIRING: u32 = 31;
 const PREVIEW_COMPLETED: u32 = 32;
 const PREVIEW_FAILED: u32 = 33;
 const PREVIEW_CANCELLED: u32 = 34;
+const PREVIEW_MUTE_PENDING: u32 = 35;
 
 struct Pending {
     kind: u32,
@@ -54,6 +56,7 @@ struct Pending {
     prepared_length: u32,
     preview_route: Option<Route>,
     preview_level: Option<(u32, bool)>,
+    preview_mute: Option<(u64, bool)>,
 }
 pub struct Client {
     started: bool,
@@ -71,6 +74,8 @@ pub struct Client {
     applied: Option<Route>,
     policy_settled: bool,
     preview: Preview,
+    preview_generation: Option<u64>,
+    playback_muted: Option<bool>,
     selected_level_percent: u32,
     selected_muted: bool,
     rows: Vec<Row>,
@@ -116,6 +121,13 @@ pub struct View {
     pub selected_muted: u32,
     pub can_adjust_preview: u32,
     pub preview_reserved: u32,
+    pub preview_generation: u64,
+    pub playback_muted: u32,
+    pub playback_mute_known: u32,
+    pub can_toggle_mute: u32,
+    pub mute_checked: u32,
+    pub mute_is_live: u32,
+    pub mute_reserved: u32,
 }
 #[repr(C)]
 pub struct Packet {
@@ -144,6 +156,8 @@ impl Client {
             applied: None,
             policy_settled: false,
             preview: Preview::Idle,
+            preview_generation: None,
+            playback_muted: None,
             selected_level_percent: 100,
             selected_muted: false,
             rows: Vec::new(),
@@ -193,6 +207,8 @@ impl Client {
         self.applied = None;
         self.policy_settled = false;
         self.preview = Preview::Failed;
+        self.preview_generation = None;
+        self.playback_muted = None;
         self.rows.clear();
         self.pages.clear();
         self.status = status;
@@ -227,6 +243,7 @@ impl Client {
             prepared_length: 0,
             preview_route: None,
             preview_level: None,
+            preview_mute: None,
         });
         self.stage = SENDING;
         Ok(())
@@ -249,6 +266,7 @@ impl Client {
             prepared_length: 0,
             preview_route: None,
             preview_level: None,
+            preview_mute: None,
         });
         self.stage = CONNECTING;
         self.status = CONNECTING_AUDIO;
@@ -297,10 +315,9 @@ impl Client {
     fn can_adjust_preview(&self) -> bool {
         !self.queue.pending()
             && !self.preview.active()
-            && !self
-                .pending
-                .as_ref()
-                .is_some_and(|p| matches!(p.kind, SELECT | RECON | PLAY | STOP_REQUEST))
+            && !self.pending.as_ref().is_some_and(|p| {
+                matches!(p.kind, SELECT | RECON | PLAY | STOP_REQUEST | MUTE_REQUEST)
+            })
     }
     pub fn preview_level(&mut self, percent: u32, muted: u32) -> Code {
         if percent > 100 || muted > 1 {
@@ -312,6 +329,51 @@ impl Client {
         // A local next-preview choice never creates, consumes or renews a request.
         self.selected_level_percent = percent;
         self.selected_muted = muted != 0;
+        Code::Ok
+    }
+    fn can_mute_playing(&self) -> bool {
+        self.online
+            && self.available
+            && self.choose
+            && self.policy_settled
+            && self.preview == Preview::Playing
+            && self.preview_generation.is_some()
+            && self.playback_muted.is_some()
+            && self
+                .applied
+                .zip(self.requested)
+                .is_some_and(|(a, b)| a.id() == b.id())
+            && self.pending.is_none()
+            && !self.queue.pending()
+    }
+    /// Idle changes only the next-preview choice. Playing changes this exact
+    /// generation's future feed; the confirmed model stays unchanged until reply.
+    pub fn toggle_preview_mute(&mut self) -> Code {
+        if self.preview != Preview::Playing {
+            return self
+                .preview_level(self.selected_level_percent, u32::from(!self.selected_muted));
+        }
+        let n = match self.timely() {
+            Ok(n) => n,
+            Err(e) => return e,
+        };
+        if self.pending.is_some() || self.queue.pending() {
+            return Code::Busy;
+        }
+        if !self.can_mute_playing() {
+            return Code::Refused;
+        }
+        let generation = self.preview_generation.expect("current Play generation");
+        let muted = !self.playback_muted.expect("current feed policy");
+        let until = match self.deadline(n) {
+            Ok(n) => n,
+            Err(e) => return e,
+        };
+        if let Err(e) = self.request(MUTE_REQUEST, until, String::new(), None) {
+            return e;
+        }
+        self.pending.as_mut().expect("mute request").preview_mute = Some((generation, muted));
+        self.status = PREVIEW_MUTE_PENDING;
         Code::Ok
     }
     fn can_play(&self) -> bool {
@@ -584,6 +646,19 @@ impl Client {
                 muted,
             );
         }
+        if p.kind == MUTE_REQUEST {
+            let (generation, muted) = p.preview_mute.expect("frozen mute intent");
+            let ttl = ((p.until - n) / 1_000_000) as u32;
+            if ttl == 0 {
+                self.fail(REQUEST_EXPIRED);
+                return Err(Code::Expired);
+            }
+            if self.preview_generation != Some(generation) || self.preview != Preview::Playing {
+                self.fail(REQUEST_REFUSED);
+                return Err(Code::Refused);
+            }
+            p.output = protocol::preview_mute(generation, muted, ttl, p.until);
+        }
         let length = p.output.len();
         if length == 0 || length > 4096 {
             self.fail(REQUEST_REFUSED);
@@ -648,6 +723,8 @@ impl Client {
         self.applied = s.applied;
         self.policy_settled = s.policy_settled;
         self.preview = s.preview;
+        self.preview_generation = s.preview_generation;
+        self.playback_muted = s.preview_muted;
         self.status = if !self.available {
             UNAVAILABLE_INSPECT
         } else if s.preview == Preview::Starting {
@@ -689,7 +766,7 @@ impl Client {
                     self.fail(PREVIEW_CANCELLED);
                     return Ok(());
                 }
-                if kind == PLAY || kind == STOP_REQUEST {
+                if kind == PLAY || kind == STOP_REQUEST || kind == MUTE_REQUEST {
                     self.fail(if matches!(r, Reply::Denied) {
                         DENIED
                     } else {
@@ -715,6 +792,22 @@ impl Client {
                 return Ok(());
             }
             Reply::Selected(s) if kind == SELECT => {
+                self.apply(s);
+                self.idle();
+            }
+            Reply::Preview(s) if kind == MUTE_REQUEST => {
+                let (generation, muted) = self
+                    .pending
+                    .as_ref()
+                    .expect("mute request")
+                    .preview_mute
+                    .expect("frozen mute intent");
+                if s.preview_generation != Some(generation)
+                    || s.preview_muted != Some(muted)
+                    || s.preview != Preview::Playing
+                {
+                    return Err(Code::Refused);
+                }
                 self.apply(s);
                 self.idle();
             }
@@ -845,6 +938,17 @@ impl Client {
             selected_muted: u32::from(self.selected_muted),
             can_adjust_preview: u32::from(self.can_adjust_preview()),
             preview_reserved: 0,
+            preview_generation: self.preview_generation.unwrap_or(0),
+            playback_muted: u32::from(self.playback_muted.unwrap_or(false)),
+            playback_mute_known: u32::from(self.playback_muted.is_some()),
+            can_toggle_mute: u32::from(self.can_adjust_preview() || self.can_mute_playing()),
+            mute_checked: u32::from(if self.preview == Preview::Playing {
+                self.playback_muted.unwrap_or(false)
+            } else {
+                self.selected_muted
+            }),
+            mute_is_live: u32::from(self.preview == Preview::Playing),
+            mute_reserved: 0,
         }
     }
 }
