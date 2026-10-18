@@ -555,6 +555,30 @@ kernel runtime. The graphical experiment retains its frozen brightness daemon
 and changes only the qualified actor/launcher plus failure diagnostics; it is not
 yet qualified. See [reservation provenance](evidence/native-brightness-readonly-reservation-provenance.json).
 
+## Published readiness follows effect custody
+
+A second actual Session/Owner/socket boundary exposes two public-state errors:
+own fresh readonly polling reports pending although it can reserve a first send;
+after that read retires, an accepted effect reports idle before first dispatch.
+The same frozen append-only test first fails both assertions, while still
+executing the refusal and one-Set continuations. The known-remote-busy control
+passes. Each case closes its socket, pidfd and storage owners before the final
+assertion. The earlier four-case fixture remains an exact byte prefix.
+
+The Rust projection now keeps accepted effects pending and lets an idle control
+remain actionable during its own fresh readonly Inspect. Private transport
+occupancy remains true; dispatch still waits for a fresh idle reply at the original
+revision and deadline. Remote pending remains unavailable, and an old revision
+cannot bind a new explicit choice. The correction changes no Qt policy, permission,
+wire field, Source rule or cadence. It is not a causal diagnosis of a previous tap.
+
+Both original four and new three cases pass, alongside16 lifecycle brightness
+and six Settings/six Sounds desktop cases. Format, strict Clippy and normal
+host/ARM owner/launcher builds pass; unchanged daemon/client, constructor, Qt and
+Source suites are not repeated or relabelled. The new normal owner/window join
+remains unexecuted at this checkpoint. See
+[readiness provenance](evidence/native-brightness-readiness-provenance.json).
+
 ## New owner join: first tap still fails
 
 The published first-send reservation repair now runs in a fresh prepared normal

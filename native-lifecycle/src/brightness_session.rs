@@ -46,6 +46,8 @@ impl Session {
     }
     pub(crate) fn state(&self, c: u64, p: &dyn Provider) -> State {
         let mut s = p.state().current(boottime_ns());
+        // Own readonly polling permits reservation; accepted effects stay pending.
+        s.pending = self.pending() || (s.pending && !p.readonly_in_flight());
         if self.active.as_ref().is_some_and(|a| a.connection != c) {
             s.requested_percent = None;
         }

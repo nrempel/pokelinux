@@ -463,3 +463,233 @@ fn actor_own_inspect_reservation_has_one_original_first_send() {
         "BRIGHTNESS_FIRST_SEND_RESERVATION_BEHIND_OWN_READONLY_INSPECT"
     );
 }
+
+// Additional published-readiness contract. The original fixture above is unchanged.
+fn projection_can_set(case: &mut Case, state: &brightness::State) -> bool {
+    // The real Status predicate with no unrelated actor operation in this fixture.
+    case.session.available_to(CONNECTION)
+        && state.available
+        && !state.pending
+        && case.authority.brightness_allowed(
+            std::process::id(),
+            brightness::UID,
+            case.owner.incarnation(),
+        )
+}
+fn projection_idle_then_active() -> Value {
+    let mut case = Case::new();
+    let private_held = case.owner.state();
+    let published_idle = case.session.state(CONNECTION, &case.owner);
+    let idle_can_set = projection_can_set(&mut case, &published_idle);
+    let own_readonly = case.owner.readonly_in_flight();
+    let no_active_at_read = !case.session.pending();
+    let admitted = case.session.begin(
+        CONNECTION,
+        std::process::id(),
+        brightness::UID,
+        Request {
+            percent: 75,
+            expected_revision: REVISION,
+            ttl_ms: 800,
+        },
+        &mut case.authority,
+        &case.owner,
+    );
+    let original_until = admitted.ok();
+    let published_active_held = case.session.state(CONNECTION, &case.owner);
+    let drive_held = case
+        .session
+        .drive(CONNECTION, &case.authority, &mut case.owner);
+    let no_set_held = receive_request(&case.peer).is_none();
+    let replied = send_reply(&case.peer, &reply(case.held.id(), REVISION, 25, None));
+    let observed = matches!(case.owner.poll(), Some(Event::Observed));
+    let private_after_read = case.owner.state();
+    let active_before_drive = case.session.pending();
+    let published_active_before_drive = case.session.state(CONNECTION, &case.owner);
+    let active_can_set = projection_can_set(&mut case, &published_active_before_drive);
+    let drive_first = case
+        .session
+        .drive(CONNECTION, &case.authority, &mut case.owner);
+    let first = receive_request(&case.peer);
+    let original_first_set = matches!(first.as_ref(),
+        Some(WireRequest::Set { percent: 75, expected_revision: REVISION, until_ns, .. })
+        if original_until.is_some_and(|until| until_ns == &until.to_string()
+            && boottime_ns() < until));
+    let drive_second = case
+        .session
+        .drive(CONNECTION, &case.authority, &mut case.owner);
+    let no_second = receive_request(&case.peer).is_none();
+    let pass = private_held.pending
+        && private_held.is_current(boottime_ns())
+        && own_readonly
+        && no_active_at_read
+        && published_idle.available
+        && !published_idle.pending
+        && idle_can_set
+        && published_idle.revision == REVISION
+        && published_idle.requested_percent.is_none()
+        && published_idle.observed_percent == private_held.observed_percent
+        && published_idle.actual_percent == private_held.actual_percent
+        && published_idle.until_ns == private_held.until_ns
+        && original_until.is_some()
+        && published_active_held.pending
+        && drive_held.is_none()
+        && no_set_held
+        && replied
+        && observed
+        && !private_after_read.pending
+        && active_before_drive
+        && published_active_before_drive.pending
+        && !active_can_set
+        && drive_first.is_none()
+        && original_first_set
+        && drive_second.is_none()
+        && no_second;
+    case.close(json!({"case":"OwnReadonlyIdleThenActive","passed":pass,
+        "private_held_state":private_held,"own_readonly_in_flight":own_readonly,
+        "no_active_effect_at_read":no_active_at_read,
+        "published_idle_state":published_idle,"idle_can_set":idle_can_set,
+        "admitted_original_until_ns":original_until,
+        "published_active_while_read_held":published_active_held,
+        "no_Set_while_held":no_set_held,"actual_readonly_reply_sent":replied,
+        "actual_readonly_reply_observed":observed,"private_state_after_read":private_after_read,
+        "session_pending_before_first_drive":active_before_drive,
+        "published_active_before_first_drive":published_active_before_drive,
+        "active_can_set":active_can_set,"one_original_first_Set":original_first_set,
+        "first_wire_packet":first,"no_second_Set":no_second}))
+}
+fn projection_known_remote_pending() -> Value {
+    let mut case = Case::new();
+    let busy = WireReply {
+        schema: 1,
+        id: case.held.id(),
+        ok: false,
+        revision: REVISION,
+        pending: true,
+        observation: None,
+        until_ns: "0".into(),
+        requested_percent: None,
+        last_set_uncertain: false,
+    };
+    let replied = send_reply(&case.peer, &busy);
+    let observed = matches!(case.owner.poll(), Some(Event::Observed));
+    let private = case.owner.state();
+    let own_readonly = case.owner.readonly_in_flight();
+    let published = case.session.state(CONNECTION, &case.owner);
+    let can_set = projection_can_set(&mut case, &published);
+    let refused = case.session.begin(
+        CONNECTION,
+        std::process::id(),
+        brightness::UID,
+        Request {
+            percent: 75,
+            expected_revision: REVISION,
+            ttl_ms: 800,
+        },
+        &mut case.authority,
+        &case.owner,
+    );
+    let unavailable = matches!(refused, Err(Reply::Unavailable));
+    let no_set = receive_request(&case.peer).is_none();
+    let pass = replied
+        && observed
+        && private.pending
+        && !own_readonly
+        && published.pending
+        && !published.available
+        && !can_set
+        && unavailable
+        && !case.session.pending()
+        && no_set;
+    case.close(json!({"case":"KnownRemotePending","passed":pass,
+        "actual_readonly_reply_sent":replied,"actual_readonly_reply_observed":observed,
+        "private_state":private,"own_readonly_in_flight":own_readonly,
+        "published_state":published,"can_set":can_set,
+        "begin_Unavailable":unavailable,"no_Set":no_set}))
+}
+fn projection_fresh_revision_requires_new_choice() -> Value {
+    let mut case = Case::new();
+    let replied = send_reply(&case.peer, &reply(case.held.id(), REVISION + 1, 26, None));
+    let observed = matches!(case.owner.poll(), Some(Event::Observed));
+    let published = case.session.state(CONNECTION, &case.owner);
+    let fresh_can_set = projection_can_set(&mut case, &published);
+    let stale = case.session.begin(
+        CONNECTION,
+        std::process::id(),
+        brightness::UID,
+        Request {
+            percent: 75,
+            expected_revision: REVISION,
+            ttl_ms: 800,
+        },
+        &mut case.authority,
+        &case.owner,
+    );
+    let stale_denied = matches!(stale, Err(Reply::Denied));
+    let stale_emitted_no_set = receive_request(&case.peer).is_none();
+    let fresh = case.session.begin(
+        CONNECTION,
+        std::process::id(),
+        brightness::UID,
+        Request {
+            percent: 75,
+            expected_revision: REVISION + 1,
+            ttl_ms: 800,
+        },
+        &mut case.authority,
+        &case.owner,
+    );
+    let original_until = fresh.ok();
+    let private_idle = !case.owner.state().pending;
+    let active_state = case.session.state(CONNECTION, &case.owner);
+    let active_can_set = projection_can_set(&mut case, &active_state);
+    let driven = case
+        .session
+        .drive(CONNECTION, &case.authority, &mut case.owner);
+    let first = receive_request(&case.peer);
+    let one_fresh_explicit_set = matches!(first.as_ref(),
+        Some(WireRequest::Set { percent: 75, expected_revision, until_ns, .. })
+        if *expected_revision == REVISION + 1
+            && original_until.is_some_and(|until| until_ns == &until.to_string()
+                && boottime_ns() < until));
+    let no_second = receive_request(&case.peer).is_none();
+    let pass = replied
+        && observed
+        && published.is_current(boottime_ns())
+        && published.revision == REVISION + 1
+        && !published.pending
+        && fresh_can_set
+        && stale_denied
+        && stale_emitted_no_set
+        && original_until.is_some()
+        && private_idle
+        && active_state.pending
+        && !active_can_set
+        && driven.is_none()
+        && one_fresh_explicit_set
+        && no_second;
+    case.close(
+        json!({"case":"FreshRevisionNeedsNewExplicitChoice","passed":pass,
+        "actual_readonly_reply_sent":replied,"actual_readonly_reply_observed":observed,
+        "published_fresh_state":published,"fresh_can_set":fresh_can_set,
+        "stale_R7_Denied":stale_denied,"no_Set_for_stale_R7":stale_emitted_no_set,
+        "fresh_R8_original_until_ns":original_until,"private_idle_before_fresh_Set":private_idle,
+        "published_active_before_first_drive":active_state,"active_can_set":active_can_set,
+        "one_new_explicit_R8_Set":one_fresh_explicit_set,"first_wire_packet":first,
+        "no_second_Set":no_second}),
+    )
+}
+#[test]
+fn published_readiness_distinguishes_own_readonly_from_choice_custody() {
+    let reports = [
+        projection_idle_then_active(),
+        projection_known_remote_pending(),
+        projection_fresh_revision_requires_new_choice(),
+    ];
+    // Each Case dropped its actual socket, pidfd and disk owners before this assert.
+    println!("{}", serde_json::to_string(&reports).unwrap());
+    assert!(
+        reports.iter().all(|report| report["passed"] == true),
+        "BRIGHTNESS_PUBLISHED_READINESS_DISTINGUISHES_READONLY_AND_EFFECT"
+    );
+}

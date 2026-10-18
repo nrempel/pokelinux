@@ -1,0 +1,239 @@
+{
+  "schema": 1,
+  "passed": true,
+  "scope": "Controlled Authority, production brightness Session/Owner and actual root-credentialed SEQPACKET public-state boundary. Native host component tests and host/ARM normal builds only; no Source, normal Qt, ARM runtime or hardware qualification.",
+  "qualification": {
+    "bytes": 7627,
+    "sha256": "74b39c5a8f0a386e4902663f80a071e326324997db10131b63f0ed0365bd83b6"
+  },
+  "provider_manifest": {
+    "bytes": 6877,
+    "sha256": "fcce5d99f12564f2d623ad94dae512406853d7a567b8e52a28d1536a23630be6"
+  },
+  "source": {
+    "manifest": {
+      "bytes": 59934,
+      "sha256": "7a4eab51c2a7c69d5b9786f14f08de8ef8f0487179bb4fa554e77fc4e50adb24"
+    },
+    "session": {
+      "sha256": "d61c2cb02d6dbad40679f0ce5db2dccb67b7f08e441d1fcaa94780054b382014"
+    },
+    "frozen_fixture": {
+      "bytes": 27789,
+      "sha256": "d5731ce78a79976dd24cecde3d638298ab372c82e51f3aa6ba20d871138ecf84"
+    },
+    "original_fixture_prefix": {
+      "bytes": 18297,
+      "sha256": "86ac070d09b3d78a4ff88a2f72ada6e43643fc2886b54b2bb92b53450c7a7bc9"
+    },
+    "public_source_rows": 212,
+    "copied_source_and_QA_rows": 215,
+    "only_two_public_Rust_files_changed": true,
+    "private_QA_recipes_changed_for_narrowed_checks": true
+  },
+  "Root_route_review": {
+    "bytes": 4547,
+    "sha256": "95a74e6368f9d889bbbb773ea493b0e7d9cb7ff7fe5a3a5a31ba7120b76f5926"
+  },
+  "behavior": "Published pending includes accepted effect custody and reported remote custody; own fresh retained readonly Inspect can remain actionable. Raw Provider pending remains occupied and no Set is sent until fresh idle reply. Existing authority/revision/incarnation/deadline guards remain unchanged.",
+  "strict_TDD": {
+    "actual_compiled_RED": {
+      "bytes": 7261,
+      "sha256": "2464296da8ca2fa0e4bc874fa39dee6f73f85a5c3b40b3d1b0e05dce512aa28c"
+    },
+    "actual_RED_exit": 101,
+    "RED_failing_cases": [
+      "idle ownInspect publicpending incorrectly true",
+      "accepted effect before firstsend publicpending incorrectly false"
+    ],
+    "RED_known_remote_busy_control_passed": true,
+    "RED_continuations_actually_exercised": "Both originalR7 and newexplicitR8 Set emitted once; staleR7 refused, no Set while held and no duplicate.",
+    "same_fixture_GREEN_exit": 0,
+    "new_case_count": 3,
+    "original_case_count": 4,
+    "all_case_owners_closed_before_final_assert": true,
+    "selected_original_work_close_seconds": [
+      5,
+      7
+    ],
+    "selected_actual_wait_and_merged_EOF_and_ECHILD": true
+  },
+  "other_regressions": {
+    "lifecycle_brightness_existing_without_whole_two_test_module": 16,
+    "Settings_desktop_ignored_existing": 6,
+    "Sounds_desktop_ignored_existing": 6,
+    "all_executed_once_in_this_epoch": true
+  },
+  "strict_checks": {
+    "fmt_manifests": [
+      "native-lifecycle",
+      "native-session-owner"
+    ],
+    "strict_all_target_Clippy_manifests": [
+      "native-lifecycle",
+      "native-session-owner"
+    ],
+    "all_passed": true
+  },
+  "normal_providers": {
+    "host": {
+      "settings-launch": {
+        "bytes": 1002712,
+        "sha256": "6ac68e3414fcfdd698155acfc4bb12a8dc8ae4f6de6b99eeaff98aa75a55dd05",
+        "ELF_machine": 62,
+        "target": "x86_64-unknown-linux-gnu",
+        "mode": "0755",
+        "Cargo_features": [],
+        "release_opt_level": "3",
+        "actual_Cargo_artifact_proof": {
+          "bytes": 33217,
+          "sha256": "1d83f39d63edfa75db72ceb5e4860a5aba7680db6c6dc8c59f61f3e56f04fb7c"
+        },
+        "actual_ELF_header_loader_proof": {
+          "bytes": 5150,
+          "sha256": "733e65e573099f096ebcdc7e237596ae15adbda84784c9890383c6bd07be0812"
+        },
+        "normal_target_build_only": true,
+        "actual_full_owner_GUI_or_ARM_execution_qualified": false
+      },
+      "pokelinux-session-owner": {
+        "bytes": 5695752,
+        "sha256": "d136adc3146ed393ffa541fd36cc58ddb0b5f59ce14781f19b19e031b7c71f83",
+        "ELF_machine": 62,
+        "target": "x86_64-unknown-linux-gnu",
+        "mode": "0755",
+        "Cargo_features": [],
+        "release_opt_level": "3",
+        "actual_Cargo_artifact_proof": {
+          "bytes": 86831,
+          "sha256": "729aa59a37e8f1459745b474c42439e4465c7742bb7d23e7b4b857005d35fc1b"
+        },
+        "actual_ELF_header_loader_proof": {
+          "bytes": 5234,
+          "sha256": "7449408bd6afd4615ce0b54df223747692e4c48a3339b07007e9d59492f8b813"
+        },
+        "normal_target_build_only": true,
+        "actual_full_owner_GUI_or_ARM_execution_qualified": false
+      }
+    },
+    "ARM": {
+      "settings-launch": {
+        "bytes": 980168,
+        "sha256": "094b0a7dffe6f232a50cf4ab8b00e634b1d7f6c68a0b9fc402f95b04a90ef091",
+        "ELF_machine": 183,
+        "target": "aarch64-unknown-linux-gnu",
+        "mode": "0755",
+        "Cargo_features": [],
+        "release_opt_level": "3",
+        "actual_Cargo_artifact_proof": {
+          "bytes": 33347,
+          "sha256": "ae50a4adf124c217d6afbf1b3743bb45d840a50e8af6d795e7dfccb754a0b6b8"
+        },
+        "actual_ELF_header_loader_proof": {
+          "bytes": 4853,
+          "sha256": "686cbf00f0efe801212351529749a5530299434ea0a616dabc4f1f508eab0b71"
+        },
+        "normal_target_build_only": true,
+        "actual_full_owner_GUI_or_ARM_execution_qualified": false
+      },
+      "pokelinux-session-owner": {
+        "bytes": 5535552,
+        "sha256": "e624f17192e53172d912fba827d89bdf1ca86fd593cf51c1fa8e1973bbbdb4f2",
+        "ELF_machine": 183,
+        "target": "aarch64-unknown-linux-gnu",
+        "mode": "0755",
+        "Cargo_features": [],
+        "release_opt_level": "3",
+        "actual_Cargo_artifact_proof": {
+          "bytes": 88030,
+          "sha256": "83b99e80eab4b4a70711c33bf08df85ddd59f9f24cc2e9af5ba171b81df859d2"
+        },
+        "actual_ELF_header_loader_proof": {
+          "bytes": 4938,
+          "sha256": "d96081029cfa53d2fdcb0202c13c21594ecaa1d78a0e6bcd5bbf166e7e1e539d"
+        },
+        "normal_target_build_only": true,
+        "actual_full_owner_GUI_or_ARM_execution_qualified": false
+      }
+    }
+  },
+  "actual_inner": {
+    "QA_result": {
+      "bytes": 14160,
+      "sha256": "2392d511c0f42052c372fd07d64fa4f6b5ce2a2cc7bfe33c8c26132444967167"
+    },
+    "top_level_Scope_wait0": 15,
+    "top_level_merged_PIPE_EOF": 15,
+    "separate_focused_direct_test_wait0": 2,
+    "separate_focused_merged_PIPE_EOF": 2,
+    "combined_actual_Scope_child_wait0": 17,
+    "combined_actual_merged_PIPE_EOF": 17,
+    "no_unclosed_children_or_cleanup_error": true,
+    "ARM_controller_actual_bash_wait0_and_PIPE_EOF": true,
+    "ARM_Cargo_logs_regular_files_not_PIPE_EOF": true,
+    "nested_compiler_children_not_individually_receipted": true
+  },
+  "actual_outer": {
+    "receipt": {
+      "bytes": 67443,
+      "sha256": "bfc6f8ffa8a9c929e3c86693b7eb6da74a3ce860de17de082b181273d1ab5561"
+    },
+    "passed": true,
+    "actual_CLI_wait0": 10,
+    "actual_PIPE_EOF": 20,
+    "exact_CID_absence": true,
+    "same_daemon": true,
+    "all_selected_inputs_unchanged": true,
+    "original_global_work_seconds": 600,
+    "original_global_close_seconds": 660
+  },
+  "resources": {
+    "CPU": 12,
+    "memory_GiB": 10,
+    "parallel_host_ARM_Cargo_jobs": 6,
+    "separate_Cargo_homes_and_targets": true,
+    "network": "none",
+    "capabilities": [
+      "SETUID",
+      "SETGID",
+      "KILL"
+    ],
+    "all_source_target_output_RAM": true
+  },
+  "not_repeated_or_relabelled": {
+    "brightness_service52_suite": true,
+    "constructor_suite": true,
+    "normal_brightness_daemon_release_build": true,
+    "Qt_Source_or_auth_suites": true,
+    "preserved_current_service_cohort": "9d5b73e2/e194a8c2 exact prior qualification remains separate",
+    "historical_GUI_daemon74e_unchanged": true
+  },
+  "Root_independent_review": {
+    "bound_Q_manifest_artifacts_verified": 24,
+    "current_public_source_files_verified": 212,
+    "frozen_copied_files_verified": 215,
+    "only_public_source_changes": [
+      "native-lifecycle/src/brightness_session.rs",
+      "native-lifecycle/src/brightness_readonly_reservation_tests.rs"
+    ],
+    "private_QA_recipes_also_changed_for_narrowed_checks": true,
+    "focused_original_four_and_new_three_cases_all_verified": true,
+    "original18297byte_fixture_prefix_86ac_preserved": true,
+    "actual_inner_waits_PIPE_EOF": 17,
+    "actual_outer_waits": 10,
+    "actual_outer_PIPE_EOF": 20,
+    "focused_ECHILD_and_owner_closure_verified": true,
+    "normal_Cargo_O3_testfalse_emptyfeatures_records_verified": 4,
+    "actual_ELF62_and183_verified": true,
+    "fixed_UID11050_six_Settings_args_desktop_UID1000_Source_permissions_wire_and_cadence_unchanged": true,
+    "policy": "Public pending represents accepted effect custody; own fresh readonlyInspect alone does not block first-send readiness. Provider raw transport occupancy and deferred firstsend guards remain unchanged.",
+    "historical_GUI8_and_GUI7_causes": "unknown; actual Rust boundary does not establish prior GUI causality"
+  },
+  "limits": {
+    "new_Qt_characterization_executed": false,
+    "new_GUI_executed": false,
+    "historical_GUI_cause": "unknown",
+    "ARM_execution_or_hardware_qualified": false,
+    "private_transport_pending_cleared_or_write_retry_added": false
+  }
+}

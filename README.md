@@ -125,6 +125,10 @@ focused lifecycle/launch/constructor checks pass, with fresh host/ARM releases.
 The fresh graphical join still fails its first75% input: the backend stays25%
 and the sampled UI says ready. Qt delivery/Set/reply and the cause remain unknown;
 see the brightness report. The full current touch path remains unqualified.
+A further actual state-boundary RED→GREEN fixes public readiness: own fresh
+readonly polling remains actionable while accepted effects stay pending. Both
+frozen groups, lifecycle/launch controls and host/ARM releases pass; the next
+normal-window join remains separate.
 
 
 > **Development status:** no physical phone has been accessed. There is no verified bootable phone image. Modem communication, carrier IMS registration, physical call audio, Pixel GPU rendering, camera capture and suspend remain unverified.
