@@ -19,8 +19,10 @@ host actor Play through the Rust-owned producer to selected-speaker virtual PCM,
 plus host Rust/frontend components. A separate same-session case now proves
 explicit Stop, producer retirement, full measured silence and one new explicit
 Play. Separate cases now pass natural completion and permission revocation;
-regrant plus one explicit Reconnect stays quiet until a new Play. UI clicks,
-app-close retirement and backend-failure integration remain open.
+regrant plus one explicit Reconnect stays quiet until a new Play. A native
+app-close/relaunch case also passes retirement and full quiet before explicit
+reconnect/new Play. Backend-worker loss and explicit recovery stay quiet until
+a new Play. Actual Qt clicks joined to PCM remain open.
 
 The [Messages request and model engine](docs/native-messages-rust-client.md) now
 also runs in Rust. An earlier cohort with the pre-port appearance client builds

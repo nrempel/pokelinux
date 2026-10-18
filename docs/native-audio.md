@@ -11,9 +11,11 @@ actor Play now reaches selected-speaker virtual PCM after producer-port setup.
 A separate same-session case proves explicit Stop, actual producer retirement,
 full paired silence and one new explicit Play. Separate cases now pass natural
 completion and permission revocation; regrant/explicit reconnect remains quiet
-until a new Play. UI clicks, app-close retirement and backend-failure integration
-remain open. Host Rust/frontend checks and the focused delayed-owner-poll
-regression pass separately.
+until a new Play. Native app-close/relaunch now separately passes retirement,
+full quiet and explicit reconnect before a new Play. Backend-worker loss and one
+explicit reconcile also pass retirement/full quiet without replay. Actual Qt
+clicks joined to PCM remain open. Host Rust/frontend checks and the focused
+delayed-owner-poll regression pass separately.
 
 The [logical output-selector foundation](native-audio-output-selector.md) now
 adds configured logical Media routes, exact current application observations,

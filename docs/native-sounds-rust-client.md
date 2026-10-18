@@ -6,8 +6,10 @@ including `policy_settled` and `preview`, without earlier-ABI compatibility. Hos
 components and one actor Play to virtual PCM now pass. A separate same-session
 case proves explicit Stop, actual producer retirement, full measured silence and
 one new explicit Play. Separate cases now pass natural completion and permission
-revocation; regrant/explicit reconnect stays quiet until a new Play. Actual Qt
-click/PCM, app-close retirement and backend-failure joins remain open. Historical
+revocation; regrant/explicit reconnect stays quiet until a new Play. Native
+app-close/relaunch separately passes retirement/full quiet and explicit reconnect
+before a new Play. Backend-worker loss/explicit recovery also stays quiet until
+a new Play on the same app FD. Actual Qt click/PCM remains open. Historical
 thirteen-function executions retain their original scope.
 
 The later [shared appearance Rust client](native-appearance-rust-client.md)

@@ -119,7 +119,9 @@ host components and one actor Play to selected-speaker virtual PCM. A separate
 same-session case passes explicit Stop, producer retirement, full measured quiet
 and one new explicit Play. Separate cases now pass natural completion and
 permission revocation, with quiet retained after regrant/explicit reconnect until
-a new Play. Actual Qt click/PCM, app-close and backend-failure joins remain open.
+a new Play. Native app-close/relaunch now separately passes retirement, full quiet
+and explicit reconnect before a new Play. Backend-worker loss and explicit
+recovery also pass full quiet until a new Play. Actual Qt click/PCM remains open.
 
 The [Rust Messages client engine](native-messages-rust-client.md) now also owns
 request/parser/model, pagination, generations, scheduling and worker lifetime.

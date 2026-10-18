@@ -84,6 +84,8 @@ channel-layout refusal with the same frozen fixture. This is separate from the
 component checks above. Separate native actor cases qualify explicit Stop/quiet/
 new Play, natural completion with same-connection `completed`, and permission
 revocation with full measured quiet. Regrant plus one explicit reconnect remains
-quiet until a new Play. Actual Qt clicks joined to PCM, app-close retirement and
-backend-failure integration remain open. Historical GUI/PCM and ARM results
-retain their original providers.
+quiet until a new Play. Native app-close/relaunch separately passes retirement,
+full quiet and explicit reconnect before a new Play. Backend-worker loss and
+explicit recovery remain quiet until new Play on the same app FD. Actual Qt
+clicks joined to PCM remain open. Historical GUI/PCM and ARM results retain their
+original providers.

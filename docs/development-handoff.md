@@ -65,9 +65,15 @@ frames and actual owned closure pass without a production change. Separate cases
 now pass natural completion (96,000 measured frames, same-FD `completed`, a new
 original eight-second case cutoff) and permission revocation/regrant/one explicit
 Reconnect/new Play (192,000 frames under one original six-second cutoff).
-Regrant/reconnect alone stays quiet; app-close retirement remains distinct and
-open. Actual Qt clicks joined to PCM and backend failure without replay remain
-open. Continue with the private stack/offscreen component;
+Regrant/reconnect alone stays quiet. A separate native app-close/relaunch case now
+passes 192,000 measured frames under one original six-second cutoff: old app and
+producer retire, a distinct same-profile app retains permission but starts
+unavailable, and one explicit Reconnect/full quiet precedes a new Play. Numeric
+app ExitStatus and literal actor generation remain unmeasured. Backend-worker
+death/producer retirement and full quiet also pass: one privileged reconcile
+restores availability with preview `failed`/`applied:null`; only a new Play starts
+sound on the same app FD. Actual Qt clicks joined to PCM remain open. Continue
+with the private stack/offscreen component;
 no window/capture campaign.
 The private Messages read-provider remains parked at compiled assertion RED,
 with no qualified GREEN or deployed join; do not retry it. Normal ARM windows,
