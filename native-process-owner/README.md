@@ -9,7 +9,11 @@ for the former radio-local modules.
   `BoundParent::from_stdin` validates the retained parent/socket identity,
   credentials, original deadline and READY/GO exchange before Binder startup.
 - `Supervisor::start_worker`, `poll_worker`, `stop` and `poll_reap` keep one child
-  occupied through its actual wait. Stop revokes local admission first. The
+  occupied through actual wait and stdout EOF. Actual wait revokes publication
+  immediately; `poll_reap` caches that status and returns it only after EOF.
+  Each poll discards at most4096 stale bytes without blocking. Empty reads,
+  `Interrupted` and `WouldBlock` do not establish EOF. Stop revokes local
+  admission first and never signals a child whose wait is already cached. The
   mode-0600 journal remains across failure, Stop, wait and owner recreation;
   `StartError::AdmissionUncertain` forbids another admission.
 - `send_message`/`receive_message` reuse the authenticated retained pair after
@@ -26,8 +30,9 @@ for the former radio-local modules.
 Cooperative launch requires the process main thread, equal real/effective
 UID/GID, trusted executable/procfs provisioning and a common PID namespace. The
 non-Send/non-Sync supervisor must remain on the spawning thread until actual
-child wait. Dropping an unreaped child kills then aborts; it does not detach or
-wait in Drop. Deployment still needs service-manager supervision and current
+child wait and stdout EOF. Dropping an unreaped child kills then aborts;
+dropping a waited child without witnessed stdout EOF also aborts. Neither path
+detaches or waits in Drop. Deployment still needs service-manager supervision and current
 permission/containment policy.
 
 The [shared custody regression](../docs/native-process-custody.md) passes eight
@@ -68,3 +73,18 @@ Stop revokes admission and retains the child through actual signal9 wait. The
 durable `AdmissionUncertain` fence survives and blocks a successor. Attempt
 snapshots and identity codecs clear no journal and establish no vendor cleanup,
 safe retry, provider/APN readiness or CPIF/physical-phone compatibility.
+
+## Later stdout EOF custody repair
+
+A separate host real-pipe regression first fails101: a child exits after
+transferring its stdout writer to the parent, and the old owner clears capacity
+before EOF. The unchanged test then passes with the retained exit-status/EOF
+repair, alongside the nine existing Supervisor unit controls, production-file
+formatting and strict all-target Clippy. Its empty-read/EAGAIN controls and
+caller-observed EOF exercise actual pipe behavior; its native wait is witnessed
+independently with `waitid(WNOWAIT)` returning `ECHILD`.
+
+[Summarized proof](../docs/evidence/native-process-stdout-eof-provenance.json).
+This host selection does not rerun the historical Radio, Data, channel, SIT or
+ARM consumers above. Local wait and EOF establish neither remote cleanup nor a
+safe successor, and the durable admission marker remains unchanged.

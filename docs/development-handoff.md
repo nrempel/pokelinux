@@ -16,6 +16,8 @@ phone. Keep synthetic emulator, original-code, ARM64/QEMU and physical evidence
 separate. Do not equate registration, submission or API success with carrier
 acceptance, delivery, native call state or working physical hardware.
 
+The shared process owner now [retains stdout through actual EOF after child wait](native-process-custody.md#later-stdout-eof-custody-repair). A real held-writer RED passes after the repair, alongside nine existing Supervisor controls and strict Clippy. Local output closure remains separate from remote cleanup and successor authority. Earlier consumer cohorts are historical and were not rerun.
+
 The new [Rust connectivity-control component](native-connectivity-control.md)
 now [passes actual fixed IPv4 packet control](native-connectivity-packets.md): two nonce roundtrips,
 continued traffic after fixture-principal withdrawal, and explicit Disconnect

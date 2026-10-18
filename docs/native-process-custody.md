@@ -74,3 +74,27 @@ unchanged-journal restart78 starts no new worker/setup. All34 guest direct
 waits/EOF are separately counted from that nested native wait. No Binder pool
 join, remote provider cleanup, safe successor operation, permission/APN grant
 or normal systemd installation is inferred; manager fallback remains untested.
+
+## Later stdout EOF custody repair
+
+A separate host regression retains a duplicate of a real child's stdout writer
+after that child exits. The original owner actually waits the child but returns
+its status and releases capacity while the pipe still returns `EAGAIN`; the
+compiled positive assertion fails101 after cleanup. The exact same frozen test
+passes after the shared owner caches wait status and retains stdout until a
+nonempty-buffer read witnesses EOF. Publication is revoked at actual wait;
+repeated Stop cannot signal the reaped PID. Each poll drains at most4096 stale
+bytes, with nonblocking mode enforced even after an initial setup error.
+
+The nine existing Supervisor unit controls also pass, alongside production-file
+formatting and strict all-target Clippy. The GREEN has19 direct Scope waits and
+19 stdout PIPE EOFs (13 host plus six inside), with two regular Cargo stderr
+handle closures counted separately. The child has one additional native wait,
+independently witnessed by `ECHILD`, and actual stdout EOF; those are not extra
+Scope receipts. Both scopes close with `ECHILD`, no adopted waits, unchanged
+inputs and exact container absence.
+
+[Summarized proof](evidence/native-process-stdout-eof-provenance.json). These
+results are host-only and separate from all earlier Radio/ARM/Data evidence in
+this report. Neither local EOF nor wait proves remote cleanup, clears the
+admission marker or authorizes retry. A separate token/literal-checked formatter bridge preserves all predicates and cutoffs. The published formatted fixture also passes the real pipe test and the same nine controls, full-crate formatting and strict Clippy; its current-source receipts remain separate from the earlier frozen test.

@@ -1,0 +1,176 @@
+{
+  "schema": 1,
+  "component": "native-process-owner stdout EOF custody",
+  "evidence_kind": "actual Linux host self-exec pipe regression; controlled existing unit tests",
+  "baseline_commit": "6b50fca89338202ed4af21af286967b0012eef0e",
+  "source": {
+    "baseline_supervisor": {
+      "bytes": 25442,
+      "sha256": "a796309b2ed1134c74cf100bc8df391136a3284f5829c38df8d2a4fa20626e70"
+    },
+    "repaired_supervisor": {
+      "bytes": 27534,
+      "sha256": "c8dac99e60685dcac9f383be2adb16f9dc7d6e14fac79e939fdf9de59c74490c"
+    },
+    "executed_frozen_test": {
+      "bytes": 10458,
+      "sha256": "0d853e1893dd326bba8e662d220ec3db2e542f363402c543a71fb869a99b1595"
+    },
+    "unchanged_lock": {
+      "bytes": 1850,
+      "sha256": "ef3e54b17ce70a83d3d1a59c4d0510e04c00969829c5dd41ede8ecc8b39d5b2f"
+    },
+    "selected_files": 12,
+    "unchanged_public_baseline_files": 11
+  },
+  "RED": {
+    "source": {
+      "bytes": 4138,
+      "sha256": "b2a9e594de299ad91da361a23f69e857ea4063c180ebb4192f32d501908d9ea9"
+    },
+    "outer_receipt": {
+      "bytes": 30519,
+      "sha256": "84ddeedcee1bbcc208483201f3336884264ba9ae8bfa0fe053f02ec208f09159"
+    },
+    "inner_result": {
+      "bytes": 6122,
+      "sha256": "5987420da6f012df2ce0003661eed272dbd08ea07fb18534dd57dfc80c0e535e"
+    },
+    "component_review": {
+      "bytes": 878,
+      "sha256": "bb2811df0b7504cf97650ef43a3b027d29a98659738a9bd35cc6311b98c4ca21"
+    },
+    "actual_compiled_test_exit": 101,
+    "child_terminal_before_work": true,
+    "held_writer_actual_EAGAIN": true,
+    "native_wait_ECHILD_witness": true,
+    "returned_status_before_EOF": true,
+    "released_capacity_before_EOF": true,
+    "child_stdout_EOF_observed": false,
+    "final_assertion_after_cleanup": true
+  },
+  "GREEN": {
+    "source": {
+      "bytes": 4117,
+      "sha256": "e876ffd1ec6fe28854c562c6e7c2aa7970e205b6b96ac9563bf365bb287526b8"
+    },
+    "outer_receipt": {
+      "bytes": 31033,
+      "sha256": "303092b21b958925fb1b9cd6782bb35c53097a97dbc80d9a5bc95e064ac6a882"
+    },
+    "inner_result": {
+      "bytes": 10613,
+      "sha256": "196a7abff1d911151482df956e4d431e8204659e4b3463f7e7ede152977b121f"
+    },
+    "same_frozen_test_exit": 0,
+    "existing_Supervisor_units_passed": 9,
+    "production_supervisor_rustfmt_check": true,
+    "strict_all_target_Clippy": true,
+    "child_terminal_before_work": true,
+    "held_writer_actual_EAGAIN": true,
+    "native_wait_ECHILD_witness": true,
+    "capacity_retained_until_EOF": true,
+    "publication_revoked_at_wait": true,
+    "repeated_Stop_succeeded": true,
+    "caller_read_EOF_remembered": true,
+    "returned_cached_success_after_EOF": true
+  },
+  "custody": {
+    "RED_Scope_direct_waits_and_stdout_PIPE_EOF": 16,
+    "GREEN_Scope_direct_waits_and_stdout_PIPE_EOF": 19,
+    "GREEN_host_inside_split": [
+      13,
+      6
+    ],
+    "RED_regular_Cargo_stderr_handle_closures": 1,
+    "GREEN_regular_Cargo_stderr_handle_closures": 2,
+    "additional_native_child_wait_each_epoch": 1,
+    "native_wait_not_counted_as_Scope_wait": true,
+    "all_Scope_wait_EOF_before_original_cutoffs": true,
+    "adopted_waits_both_epochs": 0,
+    "both_scopes_ECHILD": true,
+    "exact_container_absence_same_daemon_inputs_unchanged": true
+  },
+  "original_limits_seconds": {
+    "case_work_close": [
+      3,
+      5
+    ],
+    "enclosing_direct_test_work_close": [
+      7,
+      10
+    ],
+    "inside_work_close": [
+      140,
+      160
+    ],
+    "host_work_close": [
+      180,
+      200
+    ]
+  },
+  "test_formatting": "The original10458-byte test executed in same-byte RED/GREEN; current public test is the separate formatter-only successor below.",
+  "limits": [
+    "Host Debug test ELFs; no ARM, installed service or hardware execution.",
+    "Historical Radio, Data, channel and SIT executions are not rerun.",
+    "Local wait and EOF do not prove remote cleanup or safe retry; admission marker remains."
+  ],
+  "publication_test_format_bridge": {
+    "original_executed_test": {
+      "bytes": 10458,
+      "sha256": "0d853e1893dd326bba8e662d220ec3db2e542f363402c543a71fb869a99b1595"
+    },
+    "current_public_test": {
+      "bytes": 11289,
+      "sha256": "d30f98c760c1bb0a2fed33b52caa309e1e3a0463f57e2d5b5473c67e6e00211b"
+    },
+    "outer_receipt": {
+      "bytes": 24283,
+      "sha256": "28530ba8febd6ad138aa3f769d3e7b5712bfc1285de11982d8038391e73f1b36"
+    },
+    "inner_result": {
+      "bytes": 3094,
+      "sha256": "7f4f8ed9fd491eec2816b6e495dbbed9e00441969d8f1bd287128e9cadefba02"
+    },
+    "copyback_review": {
+      "bytes": 514,
+      "sha256": "3c168b28437132015944955e054b8cd5c5b24487e758e6a569fefdb87aede268"
+    },
+    "normalized_tokens": 1977,
+    "exact_string_literals": 43,
+    "tokens_literals_predicates_deadlines_preserved": true,
+    "formatter_exit": 0,
+    "compile_or_behavior_in_formatter_epoch": false
+  },
+  "FINAL_current_source_QA": {
+    "outer_receipt": {
+      "bytes": 32257,
+      "sha256": "8f8b0eea17577aac83b2a1940ec0cdc5226cf28ba058a2fb758f52710b5ab28b"
+    },
+    "inner_result": {
+      "bytes": 10556,
+      "sha256": "e481673d822a75c196ae6dc810f7bd468514d4b9d7ffaf09de05762f69714bc2"
+    },
+    "source_manifest": {
+      "bytes": 3018,
+      "sha256": "5c1cb54d0fd219c0ebeac257b471ee256114245bde681b0773dd90da09e7fc7d"
+    },
+    "formatted_test": {
+      "bytes": 11289,
+      "sha256": "d30f98c760c1bb0a2fed33b52caa309e1e3a0463f57e2d5b5473c67e6e00211b"
+    },
+    "actual_test_ELF": {
+      "bytes": 1500360,
+      "sha256": "baf76de848f68376935c9d1b809581782f6b761fb6cce0069122039428d89c8e",
+      "ELF_machine": 62
+    },
+    "actual_real_pipe_test_passed": 1,
+    "existing_Supervisor_units_passed": 9,
+    "full_crate_fmt_passed": true,
+    "strict_all_target_Clippy_passed": true,
+    "Scope_direct_waits_and_stdout_PIPE_EOF": 19,
+    "separate_regular_Cargo_stderr_closures": 2,
+    "additional_native_child_wait_EOF": 1,
+    "no_adopted_waits_ECHILD_exact_CID_absent_same_daemon_current_sources_unchanged": true
+  }
+}

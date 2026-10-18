@@ -19,11 +19,15 @@ trait ProcessControl {
     fn configure_output(&self) -> io::Result<()> {
         Ok(())
     }
+    fn output_eof(&self) -> bool {
+        false
+    }
 }
 struct NativeChild {
     child: Child,
     output: ChildStdout,
     reaped: bool,
+    output_eof: bool,
 }
 impl ProcessControl for NativeChild {
     fn pid(&self) -> Option<u32> {
@@ -38,12 +42,25 @@ impl ProcessControl for NativeChild {
         Ok(result)
     }
     fn read_output(&mut self, buffer: &mut [u8]) -> io::Result<usize> {
-        self.output.read(buffer)
+        if buffer.is_empty() {
+            return Ok(0);
+        }
+        // Also enforce this after a failed start-time configure_output attempt.
+        // A later drain must never block on a pipe with another writer retained.
+        self.configure_output()?;
+        let count = self.output.read(buffer)?;
+        self.output_eof |= count == 0;
+        Ok(count)
+    }
+    fn output_eof(&self) -> bool {
+        self.output_eof
     }
     fn configure_output(&self) -> io::Result<()> {
         use rustix::fs::{OFlags, fcntl_getfl, fcntl_setfl};
         let flags = fcntl_getfl(&self.output)?;
-        fcntl_setfl(&self.output, flags | OFlags::NONBLOCK)?;
+        if !flags.contains(OFlags::NONBLOCK) {
+            fcntl_setfl(&self.output, flags | OFlags::NONBLOCK)?;
+        }
         Ok(())
     }
 }
@@ -51,6 +68,8 @@ impl Drop for NativeChild {
     fn drop(&mut self) {
         if !self.reaped {
             let _ = self.child.kill();
+        }
+        if !self.reaped || !self.output_eof {
             // Explicit fail-closed misuse. Never detach ownership or wait in Drop.
             // A deployed supervisor must itself be managed by a service manager.
             std::process::abort();
@@ -113,6 +132,7 @@ pub struct Supervisor {
     bootstrap: Option<crate::bootstrap::ParentBootstrap>,
     _same_thread: std::marker::PhantomData<std::rc::Rc<()>>,
     child: Option<Box<dyn ProcessControl>>,
+    waited_status: Option<ExitStatus>,
     live: Option<ProcessIdentity>,
     admitted: bool,
     journal: PathBuf,
@@ -126,6 +146,7 @@ impl Supervisor {
             bootstrap: None,
             _same_thread: std::marker::PhantomData,
             child: None,
+            waited_status: None,
             live: None,
             admitted: false,
             journal,
@@ -210,6 +231,7 @@ impl Supervisor {
             child,
             output,
             reaped: false,
+            output_eof: false,
         }));
         self.live = Some(id);
         if self
@@ -350,29 +372,56 @@ impl Supervisor {
         // Revocation precedes signal delivery, including kill failure.
         self.live = None;
         self.bootstrap = None;
-        if let Some(child) = &mut self.child {
+        if self.waited_status.is_none()
+            && let Some(child) = &mut self.child
+        {
             child.kill()?;
         }
         Ok(())
     }
+    /// Revoke publication at actual wait, then retain capacity until stdout EOF.
+    /// Each call discards at most one bounded nonblocking output buffer. Neither
+    /// an interrupted read nor WouldBlock proves EOF or authorizes a successor.
     pub fn poll_reap(&mut self) -> io::Result<Option<ExitStatus>> {
         let Some(child) = self.child.as_mut() else {
             return Ok(None);
         };
-        match child.try_wait() {
-            Ok(Some(status)) => {
-                self.live = None;
-                self.bootstrap = None;
-                self.child = None;
-                Ok(Some(status))
-            }
-            Ok(None) => Ok(None),
-            Err(error) => {
-                self.live = None;
-                self.bootstrap = None;
-                Err(error)
+        if self.waited_status.is_none() {
+            match child.try_wait() {
+                Ok(Some(status)) => {
+                    self.live = None;
+                    self.bootstrap = None;
+                    self.waited_status = Some(status);
+                }
+                Ok(None) => return Ok(None),
+                Err(error) => {
+                    self.live = None;
+                    self.bootstrap = None;
+                    return Err(error);
+                }
             }
         }
+        if !child.output_eof() {
+            let mut discarded = [0; 4096];
+            match child.read_output(&mut discarded) {
+                Ok(_) => {}
+                Err(error)
+                    if matches!(
+                        error.kind(),
+                        io::ErrorKind::WouldBlock | io::ErrorKind::Interrupted
+                    ) =>
+                {
+                    return Ok(None);
+                }
+                Err(error) => return Err(error),
+            }
+            if !child.output_eof() {
+                return Ok(None);
+            }
+        }
+        let status = self.waited_status.take().expect("actual waited status");
+        self.child = None;
+        Ok(Some(status))
     }
 }
 
@@ -385,6 +434,9 @@ mod tests {
     };
     struct HeldReap(Arc<AtomicBool>);
     impl ProcessControl for HeldReap {
+        fn output_eof(&self) -> bool {
+            true // This controlled fake has no output pipe.
+        }
         fn kill(&mut self) -> io::Result<()> {
             Ok(())
         }
@@ -412,6 +464,7 @@ mod tests {
             bootstrap: None,
             _same_thread: std::marker::PhantomData,
             child: Some(Box::new(FailedControl)),
+            waited_status: None,
             live: Some(id),
             admitted: true,
             journal: PathBuf::from("unused-test-journal"),
@@ -433,6 +486,7 @@ mod tests {
             bootstrap: Some(crate::bootstrap::ParentBootstrap::ready_fixture(identity)),
             _same_thread: std::marker::PhantomData,
             child: Some(Box::new(FailedControl)),
+            waited_status: None,
             live: Some(identity),
             admitted: true,
             journal: PathBuf::from("unused-test-journal"),
@@ -478,6 +532,7 @@ mod tests {
             bootstrap: None,
             _same_thread: std::marker::PhantomData,
             child: None,
+            waited_status: None,
             live: Some(live),
             admitted: true,
             journal: PathBuf::from("unused-test-journal"),
@@ -561,6 +616,7 @@ mod tests {
             bootstrap: None,
             _same_thread: std::marker::PhantomData,
             child: Some(Box::new(HeldReap(release.clone()))),
+            waited_status: None,
             live: Some(id),
             admitted: true,
             journal: std::path::PathBuf::from("unused-test-journal"),
@@ -587,6 +643,7 @@ mod tests {
             bootstrap: None,
             _same_thread: std::marker::PhantomData,
             child: Some(Box::new(HeldReap(Arc::new(AtomicBool::new(false))))),
+            waited_status: None,
             live: Some(ProcessIdentity([7; 16])),
             admitted: true,
             journal: std::path::PathBuf::from("unused-test-journal"),

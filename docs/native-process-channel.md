@@ -22,7 +22,10 @@ The8KiB bound leaves room for a4096-byte future radio response plus its provenan
 Fresh CLOCK_BOOTTIME samples and live exact retained pidfds bracket I/O, including
 backpressure/error results. Each caller supplies its original absolute operation
 or session deadline. The three-second bootstrap cutoff remains startup-only.
-Stop revokes admission before signaling; occupancy remains until actual wait.
+Stop revokes admission before signaling. The current shared owner retains
+occupancy through actual wait and stdout EOF; the later
+[host EOF repair](native-process-custody.md#later-stdout-eof-custody-repair)
+is separate from the historical channel execution below.
 The durable admission marker never clears. Per-call expiry does not silently
 kill the generic role; the caller owns Stop and disposal.
 
