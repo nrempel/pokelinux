@@ -47,9 +47,12 @@ the earlier unlocalized touch failure. The installed Config component remains a
 separate pass. Current native Rust Main/worker, normal app helper and the
 13-API Settings archive now cross-compile for ARM64; the exact test-only 32s
 observation bridge compiles
-separately with unchanged production outputs. Native loaders, Qt build/install
-and window/packet execution remain open. Next prepare one installed generic ARM
-connectivity cohort using current native build/package paths. Keep
+separately with unchanged production outputs. Native Qt6.12 CMake/install,
+current loaders and the exact three production app files now pass in a separate
+generic ARM preparation. The first missing-bootentry setup failure is preserved;
+the corrected cohort has 63 direct waits/stdout EOFs and exports its layer after
+actual QEMU closure. Next run the ordinary ARM window/packet case against those
+installed bytes; no normal app/compositor/backend executes during preparation. Keep
 Source/authentication/full-session Main
 and broader capture campaigns parked; authored session=None/admin facts remain
 explicit. Worker reaping is separate from remote cleanup; no implicit mutation

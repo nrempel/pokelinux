@@ -1,0 +1,266 @@
+{
+  "schema": 1,
+  "evidence_class": "original native generic AArch64 Linux-kernel VM preparation; TCG full-system emulation",
+  "source_commit": "bfe6e556465d611d2a0e4b34137d7c422b177c2f",
+  "classification": "NATIVE_ARM_NORMAL_SETTINGS_BUILD_PRODUCTION_INSTALL_AND_LOADERS_ONLY",
+  "passed": true,
+  "phone_accessed": false,
+  "hardware_models_qualified": 0,
+  "normal_app_Main_compositor_backend_or_packet_executed": false,
+  "actual_Qt_versions": [
+    "6.12.0",
+    "6.12.0",
+    "6.12.0",
+    "6.12.0"
+  ],
+  "normal_target": "pokelinux-settings",
+  "normal_ELF": {
+    "bytes": 6458240,
+    "sha256": "97ce7a3c1db928fb4ce0d12e4a627502c41aef47fc3be923393a49c27e2c3e7e",
+    "ELF_machine": 183
+  },
+  "normal_source_files": 26,
+  "all_normal_sources_and_archives_unchanged": true,
+  "archives": {
+    "settings": {
+      "bytes": 26605614,
+      "sha256": "a1006830e65e3f457e6f19cccdb310bb963917b4844e3750682bc5ae99fef649"
+    },
+    "appearance": {
+      "bytes": 24830446,
+      "sha256": "1b760cf33b1a1cceb2a5b2f2f4e3914823e93e4ebe26c551b634297ad59286b9"
+    },
+    "network_status": {
+      "bytes": 24659196,
+      "sha256": "5314f4a5ca0bb1a94d08cbb1c2ec8e9eaf02f6aa15bf63752b6a2c0715788dc3"
+    }
+  },
+  "actual_native_CMake": {
+    "build_type": "Release",
+    "CXX_flags": "-fPIC",
+    "parallel": 4,
+    "target": "pokelinux-settings",
+    "production_install_prefix": "/usr",
+    "all_three_frozen_Rust_archives_linked_once": true,
+    "Rust_rebuilt": false,
+    "components_or_app_executed": false
+  },
+  "production_DESTDIR_installed_rows": {
+    "usr/libexec/pokelinux/pokelinux-settings": {
+      "bytes": 6458240,
+      "sha256": "97ce7a3c1db928fb4ce0d12e4a627502c41aef47fc3be923393a49c27e2c3e7e",
+      "mode": 493
+    },
+    "usr/share/pokelinux/appearance/PhoneAppearance.qml": {
+      "bytes": 1954,
+      "sha256": "705ab25799cba18095a76f4fb47e70eb10099ca035426d7e4400fa9cef8452bc",
+      "mode": 420
+    },
+    "usr/share/applications/org.omarchy.Settings.desktop": {
+      "bytes": 256,
+      "sha256": "3b6ade1081e3a72a010bb2b33b1cf41c828c10513fd3521c36101cbc098eb7d0",
+      "mode": 420
+    }
+  },
+  "Rust_fixture_loaders": {
+    "main": {
+      "bytes": 860048,
+      "sha256": "5a555f284df0636c63f3bbe2a7cf3aa1c4293e5d48a958fc2460cf26d886c5d7",
+      "mode": 493,
+      "loader_sha256": "b847d933c0462faf235c20e14689324ef8c8456f6cca43ec0b34e67df9f27b94"
+    },
+    "worker": {
+      "bytes": 654992,
+      "sha256": "c7deb6d43a791a110c7a7aae36d23cd5db45006b042fa0035ffcb882e531f928",
+      "mode": 493,
+      "loader_sha256": "5c831f103854b3ff01ad0d35800b01dfec35ca7309ce88751a529cd40e748c5e"
+    },
+    "helper": {
+      "bytes": 5757656,
+      "sha256": "36536176cc7dc69b1c04f38aab16edd6653a8906ac6fedd15e6d13b9328ee8ec",
+      "mode": 493,
+      "loader_sha256": "dc65d445b1683564f2c1297c06d1f6b36f103433f8634ece6aa2a67b5d0d4880"
+    },
+    "driver": {
+      "bytes": 10710008,
+      "sha256": "5c9b18cc53a9804d9031a663ed2d249837c512f44d64220d6208acf71f28429f",
+      "mode": 493,
+      "loader_sha256": "934c1c17dffa94c33de36fa42c6c524f4331512b59edfa87883bd1cdc8b9d788"
+    }
+  },
+  "compositor_SDK": {
+    "ELF": {
+      "sha256": "49087490cd11253b8098211c20319e40dbcf092d484b42fd297602d03a77e57f",
+      "bytes": 17319104,
+      "ELF_machine": 183
+    },
+    "matching_SDK_files": 498,
+    "full_replacement_without_old_header_overlay": true,
+    "compositor_main_executed": false
+  },
+  "profile_and_capture_helpers": {
+    "pixel10-raw-output-capture": {
+      "sha256": "383a0a4448fa4a9dfd5202e57b8dd92cc46d93b52df7a127920d62517dcbe5c8",
+      "bytes": 104848,
+      "ELF_machine": 183,
+      "mode": 493,
+      "loader_sha256": "0d885d1d086db6626a0328c88beb9c3549b3f2a527824c8b898488f73a0e8373",
+      "host_resolved_plugin": false
+    },
+    "pixel10-physical-size-adapter.so": {
+      "sha256": "098b6a7c32090d74bad5af9c3cec899bf7ce24100159df5d1ddaed5182ba5c08",
+      "bytes": 82968,
+      "ELF_machine": 183,
+      "mode": 493,
+      "loader_sha256": "fbf4abdd306ea28e53f216cc6f8d866f04e5d42a6cc8e1ddfe0a7fdcfd9cdb7a",
+      "host_resolved_plugin": true
+    },
+    "profile-ready-bootstrap.so": {
+      "sha256": "c6979dbaaaa7cb964c3fad416572302859cffdc66c1f2f738a92f5889d2b4f9a",
+      "bytes": 79544,
+      "ELF_machine": 183,
+      "mode": 493,
+      "loader_sha256": "9dafd698cfdd0e83b3be18466c2bc213c1dc17776cad51f95274cf0eb984a5e7",
+      "host_resolved_plugin": true
+    },
+    "pixel10-output-discovery": {
+      "sha256": "1e11041c66efb6220b2f6547d353399486d5c1ecf7636bbc1d62789605104466",
+      "bytes": 80912,
+      "ELF_machine": 183,
+      "mode": 493,
+      "loader_sha256": "1c1ca4b815f87b59c64679a1d2fb364bf7ed915f4080cab57152ee2598297d30",
+      "host_resolved_plugin": false
+    },
+    "settings-layout-metrics": {
+      "sha256": "d6cb5ff2e3e3a1e426ff33b4eca28bf29e9c9f01b1196c7b6819fac3c7e62509",
+      "bytes": 74912,
+      "ELF_machine": 183,
+      "mode": 493,
+      "loader_sha256": "d930843f4710ee8c206436adb544063f64c4601c0098d11960eac2cf3e1653c1",
+      "host_resolved_plugin": false
+    }
+  },
+  "helper_sources": {
+    "native_arm_settings_build.py": {
+      "bytes": 6287,
+      "sha256": "183fe5453971bef78a4468580873c1f747ef2feec82741b6b2f012be96dbb1d3"
+    },
+    "guest_install_settings.py": {
+      "bytes": 2560,
+      "sha256": "eb7b9312202ecae688f9823dda3f307070835e944ece24d2bf642af9d9b153fe"
+    }
+  },
+  "compiled_capture_source_and_XML_unchanged": true,
+  "unchanged_packages": 393,
+  "unchanged_selected_Qt_libraries_and_plugins": 50,
+  "unselected_services_boot_masked_and_inactive": true,
+  "actual_direct_wait_and_stdout_EOF": {
+    "host": 15,
+    "boot": 3,
+    "guest": 44,
+    "guest_poweroff": 1,
+    "total": 63
+  },
+  "guest_actual_subreaper_ECHILD_no_adopted": true,
+  "QEMU_actual_wait0_EOF_handles_closed_then_layer_export": true,
+  "exact_CID_absent_same_daemon_original_bounds_inputs_unchanged": true,
+  "selected_resources": {
+    "host_container_CPUs": 8,
+    "host_container_memory_GiB": 6,
+    "host_container_uid_gid": "1000:1000",
+    "outer_capabilities": 0,
+    "NoNewPrivileges": true,
+    "network": "none",
+    "guest_CPUs": 4,
+    "guest_memory_MiB": 3072,
+    "QEMU_mode": "AArch64 TCG thread=multi; headless; no host device or KVM"
+  },
+  "original_bounds_seconds": {
+    "host": [
+      810,
+      840
+    ],
+    "boot": [
+      780,
+      800
+    ],
+    "guest": [
+      660,
+      700
+    ]
+  },
+  "prepared_layer_hash_only": {
+    "bytes": 72155136,
+    "sha256": "d3bd16c78143d69e170d60ecb73e737c4b6c79bd049a8607c0d75542dfa639ec"
+  },
+  "hash_only_receipts": {
+    "selection.json": {
+      "bytes": 151819,
+      "sha256": "276076e71cd5ae8180502ea17105579e871b42d6d29abed7eacaaab92d77727a"
+    },
+    "command.json": {
+      "bytes": 2514,
+      "sha256": "8dbce3858e6591e4cc740d9f749cf485155bc8dfacd661c58c20484e831ec0c5"
+    },
+    "result.json": {
+      "bytes": 232594,
+      "sha256": "168d6ae4702f6d2f1c6fd8845254b479106500b30d618f8b717a1a627c484115"
+    },
+    "boot-result.json": {
+      "bytes": 13550,
+      "sha256": "ed6f266f9643a4dbc747991d1b3bfba3f8831a5f4eeb30c5a3c0cd50d4315628"
+    },
+    "run/receipt.json": {
+      "bytes": 38509,
+      "sha256": "3228cec60d558206dd0c9d48a54ac578d278a2365872e93a24b16252a7ef2333"
+    },
+    "Root_closed_review": {
+      "bytes": 2209,
+      "sha256": "8876ad106cae7c8852beb992a090e19a0fe5c76d46861cdc1d22c838b4330896"
+    }
+  },
+  "preserved_failed_preparation": {
+    "classification": "SETUP_BOOT_ENTRY_MISSING_NO_GUEST_PREPARATION",
+    "cause": "Selected image invokes /results/source/guest.py; intended same-PID bootstrap was staged only as /workspace/sim-entry.py. No guest result or native exported layer.",
+    "production_or_functional_RED": false,
+    "host_Scope_actual_wait_stdout_EOF": 13,
+    "boot_Scope_actual_wait_stdout_EOF": 3,
+    "actual_QEMU_wait": 0,
+    "actual_container_wait": 1,
+    "guest_preparation_or_case_started": false,
+    "exact_CID_absent_same_daemon_inputs_unchanged": true,
+    "hash_only_receipts": {
+      "selection.json": {
+        "bytes": 151728,
+        "sha256": "cdeb41c505859ab1a9396703351ac6651639130e767f4eb528a86da21b1d7a34"
+      },
+      "command.json": {
+        "bytes": 2514,
+        "sha256": "a03d2c62ec3db6cb7be07c23ddd020b587630c98e823d8170a2dea95c61df174"
+      },
+      "run/receipt.json": {
+        "bytes": 36791,
+        "sha256": "8d5e851fd9995655b020364894307d8704c99811d48e09ddb76f720a3e060086"
+      },
+      "boot-result.json": {
+        "bytes": 14404,
+        "sha256": "fea68144351a8292e5f0a8233dd35ef11933d27271f62d3ccf5271cfd8227178"
+      },
+      "console.log": {
+        "bytes": 64954,
+        "sha256": "93fb19988e42235c91ea9b67edccff4d0d4b7c2b30b3da6f62e94b5c5705be80"
+      }
+    },
+    "Root_closed_review": {
+      "bytes": 1404,
+      "sha256": "62de4253030aa7f525a5c3b46af79ca5bca2e42e6ab6680590e199fa82c4fb80"
+    }
+  },
+  "remaining_gates": [
+    "normal ARM app window and touchscreen/packet lifecycle",
+    "installed connectivity Main service-manager ownership",
+    "genuine Source/auth/full session Main",
+    "Wi-Fi/Internet and matched Google kernel/backend integration",
+    "all physical-phone behavior"
+  ]
+}

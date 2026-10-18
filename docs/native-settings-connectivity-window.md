@@ -169,5 +169,43 @@ an ARM runtime qualification.
 
 [Hash-only build provenance](evidence/native-settings-connectivity-arm-build-provenance.json)
 binds both build epochs, their outputs and closed reviews. No AArch64 code executes in
-these crossbuilds. Native ARM loader resolution, Qt CMake/install, normal windows,
-packets, PID1 connectivity deployment and every physical-phone gate remain open.
+these crossbuilds. They qualify neither native ARM loaders nor Qt installation;
+the following separate preparation covers those boundaries.
+
+## Native ARM build and installation
+
+The next generic ARM kernel VM preparation now passes the normal Qt6.12 CMake
+Release Settings target, exactly three linked Rust archives, native app/current
+Rust loaders and protected installation of the three production CMake rows.
+Settings is installed at `/usr/libexec/pokelinux/pokelinux-settings`; its shared
+appearance QML and desktop file retain the production paths. The Rust networking
+Main/worker, normal helper and 32s libtest are installed separately as fixtures.
+No component, normal app Main, compositor Main, backend or packet case executes.
+
+The same preparation installs the previously qualified ARM upstream Hyprland and
+its whole matching SDK of 498 files, then builds the five existing profile/capture/
+layout helpers against it. Plugin dependencies are checked without claiming
+standalone resolution of symbols supplied later by Hyprland. The 393-package
+inventory, 50 selected Qt libraries/plugins and all selected frontend/archive
+bytes remain unchanged. Unrelated services are boot-masked in this authored
+slice; this adds no PID1 connectivity startup or coexistence qualification.
+
+The initial preparation fails before the guest body: the selected image invokes
+`/results/source/guest.py`, while the intended same-PID bootstrap was staged only
+as `/workspace/sim-entry.py`. It records 13 host and three boot waits/stdout EOFs,
+actual QEMU 0 and container 1, exact container absence and unchanged inputs.
+No guest preparation result or image is exported. The fresh successor adds only
+the exact intended bootstrap at the actual entry path; no production change,
+deadline alteration or production RED is attributed to that setup failure.
+
+The successor records 63 direct waits/stdout EOFs: 15 host, three boot, 44 guest and
+one poweroff command. Actual guest subreaper/ECHILD, no adopted children, bounded
+output, unchanged input pins and original cutoffs pass. QEMU returns 0 with its
+output EOF and every handle closed before exporting the new layer; actual
+container wait 0/removal/absence on the same daemon passes separately.
+
+The [original helper sources](../tools/native-connectivity-settings-window/arm/README.md)
+and [hash-only preparation provenance](evidence/native-settings-connectivity-arm-preparation-provenance.json)
+bind this result. A normal ARM window, touch/packet lifecycle, complete session,
+service-manager connectivity owner, matched Google-kernel backend and every
+physical-phone gate remain open. No new screenshot follows from preparation.
