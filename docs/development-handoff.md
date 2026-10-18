@@ -43,14 +43,23 @@ Preserve all failed aggregates and the third's theme-host255 cleanup error.
 Source100ms, warmup, authority and cutoffs are unchanged. Do not retry this branch
 or resume Source/authentication/capture investigations.
 
-The [combined ARM development image](native-arm-development-image.md) now passes
-actual missing-installation RED, twelve-file stopped installation and two distinct
-fresh boots. All three services start automatically. The unchanged Settings and
-power consumers pass recovery and normal Stops before and after a ten-file
-runtime reinstall; both site configs and an unrelated sentinel preserve bytes,
-ownership, modes, inode and mtime. All197 direct waits/merged PIPE EOFs close
-within original bounds. This is an installed development image, with no normal
-app main/window or graphical phone-session claim.
+The [combined ARM development image](native-arm-development-image.md) now
+cold-boots seven installed services together: battery, brightness, network status
+and the four-unit audio stack, with Settings and Sounds installed. One fresh boot
+passes network and power recovery, then real QML input and measured half-volume,
+Stop and muted audio preview. Unrelated services retain their identities through
+local Stops; all seven finish with normal shutdown. The393 package versions,
+50 selected Qt files, site configs and unrelated data stay unchanged. This is a
+headless generic ARM checkpoint; normal app windows, the complete phone session
+and physical-phone gates remain open. The earlier three-service reinstall and
+two-boot evidence remains separate.
+Preparation uses the existing production Python installer for fourteen rows,
+reusing the independently qualified normal Sounds build from a failed earlier
+preparation. Its58 waits/merged EOFs are separate from the fresh cold boot's187
+direct waits and201 PIPE EOFs. Audio Stop actually observes a nonterminal sample
+then terminal state under its one original cutoff; the outer checks reuse that
+cutoff. Failed setup epochs remain failed. No new normal Main/window, Source,
+graphical capture, Google-kernel or physical-phone result follows.
 
 The earlier full-level [finite Play/Stop Sounds preview](native-sounds-preview.md)
 passes one registered/granted host actor Play through the normal Rust-owned producer to

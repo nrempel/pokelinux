@@ -10,11 +10,16 @@ prepared x86 Settings screenshots and from physical Pixel support.
 
 ## Deployment RED and separate cold boot
 
-The same frozen [consumer](../tools/native-installed-services/power-observation-probe.py)
+The same frozen [353 consumer](https://github.com/nrempel/pokelinux/blob/286ef79cdbef0ad32efea483dce9adbd1a3ea4f4/tools/native-installed-services/power-observation-probe.py)
 first runs on the unchanged353-package image. It reports two actual assertion
 failures: each required unit has LoadState=not-found. All three inner command
 waits/PIPE EOFs close, followed by the consumer's expected exit1. A setup failure,
 timeout or compiler error would not satisfy this RED.
+
+The current repository file is an inventory-only393 successor, now executed in
+the [seven-service joined cold boot](native-arm-development-image.md). The same
+power predicates pass there while the other five service Mains retain their
+identities. The recorded353 evidence below retains its frozen source and results.
 
 The existing production `install-native-services` Make target stages exactly
 seven explicit files: the two normal ARM executables, two unchanged production

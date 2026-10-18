@@ -1,0 +1,336 @@
+{
+  "schema": 1,
+  "status": "closed seven-service preparation and one fresh generic ARM cold boot passed",
+  "evidence_class": "generic ARM kernel QEMU installed-service composition; no original vendor code or physical phone evidence",
+  "source_commit_before_this_change": "286ef79cdbef0ad32efea483dce9adbd1a3ea4f4",
+  "public_sources": {
+    "tools/native-installed-services/development-image-probe.py": {
+      "bytes": 18809,
+      "sha256": "d60081d1c8950c9d72efb4ceebb972c5b507dcf2633fb6f493a41febc22d7b2d"
+    },
+    "tools/native-installed-services/power-observation-probe.py": {
+      "bytes": 12577,
+      "sha256": "d9803f022639b0d37d2b024c8da8a17a5f5b6f9dec2de06d9db5ab3043fb0ba4"
+    },
+    "tools/native-installed-services/installed_component.py": {
+      "bytes": 9206,
+      "sha256": "8871ead0b3bfc077c3498802d1cabadaefd4870e0c0ff09161daf124f07ef262"
+    },
+    "tools/native-installed-services/owned.py": {
+      "bytes": 12712,
+      "sha256": "5a738b9529a1a0e5d5b0bd20e27e2ec4244d4e61d7c8e0dad96fe1ffbef3c423"
+    },
+    "tools/native-audio-preview/closure.py": {
+      "bytes": 3596,
+      "sha256": "646e9cfd5f755b626fe8babfa26637ddac328ede05cdab75aa77cc51332d70d6"
+    },
+    "native-session-owner/packaging/install_deployment.py": {
+      "bytes": 7352,
+      "sha256": "42a6daacdde7c6c0fcbec7316b50e21f753d67df917de33bf991d42999b82482"
+    }
+  },
+  "normal_Sounds_build": {
+    "built_in": "earlier preparation2; overall preparation failed after build",
+    "independent_subartifact_qualified": true,
+    "failed_parent_promoted_to_success": false,
+    "provider_qualification": {
+      "bytes": 11540,
+      "sha256": "d57471b85ef3bd50027bccc2e4bec4e4893b93ebdf33bab6ac512f0ca6e680ce"
+    },
+    "build_result": {
+      "bytes": 8627,
+      "sha256": "bd58f1b6ad8818d99e4c5255fce8c22a527201520b11052f7e143609b0e6c121"
+    },
+    "ELF": {
+      "bytes": 6446192,
+      "sha256": "eb031b4351e50e627ee14587d946042ced8907d307b5f203533cde2ee3465aa9",
+      "path": "usr/libexec/pokelinux/pokelinux-sounds"
+    },
+    "native_Qt": "6.12.0",
+    "source_file_count": 22,
+    "explicit_archives": {
+      "Sounds": {
+        "bytes": 24902936,
+        "sha256": "60adedaf81b80e569a91845c88192fa9626197ed1baa26cfd7e021af58040f41"
+      },
+      "appearance": {
+        "bytes": 24830446,
+        "sha256": "1b760cf33b1a1cceb2a5b2f2f4e3914823e93e4ebe26c551b634297ad59286b9"
+      }
+    },
+    "normal_Main_or_window_executed": false
+  },
+  "preparation": {
+    "passed": true,
+    "records": {
+      "Root-closed-preparation-review.json": {
+        "bytes": 4994,
+        "sha256": "ecfeb388c42dc0f367b4a3c115eec0983c976ac18ee76906528b49c9c0668636"
+      },
+      "selection.json": {
+        "bytes": 92273,
+        "sha256": "e17aa3496463053ceb174728fbf3be18b03d4f444aa128db0ac9795e4ce5e1f0"
+      },
+      "command.json": {
+        "bytes": 15167,
+        "sha256": "7052ec15f392f9bbd21ac70e200d57c6f0271507bbd3a750cf64ff2476aeaf63"
+      },
+      "SOURCE.json": {
+        "bytes": 25204,
+        "sha256": "3adc96054333e756ec96cc0efdb2a97822859ec4fe251d49ed5bb18127fe8d71"
+      },
+      "SEAL.json": {
+        "bytes": 17316,
+        "sha256": "b39b83abbe482ca1ece6de037123a9f086a5ee63da12131b1ed2a7cce65b8b96"
+      },
+      "run/receipt.json": {
+        "bytes": 85113,
+        "sha256": "d24eaa6b70899459f06b146c61b426b0f8d698061a2695e3731de0ca913ebddd"
+      },
+      "boot-result.json": {
+        "bytes": 15521,
+        "sha256": "b26e9023cc2d3fa071fa48909f4a6ef620ca55ac81bd2feb697f99ec3bff2225"
+      },
+      "result.json": {
+        "bytes": 84757,
+        "sha256": "2d17cd1e27cb690859ed17fc8b5ef9484299befc6e245a95ea80f79104360c09"
+      },
+      "joined-presence.json": {
+        "bytes": 14925,
+        "sha256": "435df21b679b2f1493559850fd6bb8d5310d83980a110853bd376e857f130d46"
+      },
+      "full-manifest.json": {
+        "bytes": 2603,
+        "sha256": "b6f6578b6c2aad63aff1bff88d64cccd8ca6d2188155f07cb7f18c02da565e45"
+      }
+    },
+    "presence_RED": {
+      "order": [
+        "battery",
+        "brightness",
+        "network",
+        "audio",
+        "bus",
+        "pipewire",
+        "wireplumber",
+        "Settings installed files",
+        "Sounds installed files"
+      ],
+      "passed_cases": [
+        false,
+        false,
+        false,
+        true,
+        true,
+        true,
+        true,
+        false,
+        false
+      ],
+      "consumer_exit": 1,
+      "before_build_or_install": true,
+      "setup_failures_not_RED": true
+    },
+    "deployment": {
+      "existing_four_original_normal_Stop": true,
+      "existing_production_Python_installer_calls": 1,
+      "rows": 14,
+      "normal_build_reused": true,
+      "current_compiler_calls": 0,
+      "current_DT_utility_calls": 0,
+      "all_seven_enabled_stopped": true,
+      "export_after_direct_QEMU_wait0_PIPE_EOF_handles_closed": true,
+      "exported_layer": {
+        "bytes": 44826624,
+        "sha256": "63bca2353858e3bc76f8de7a4d020e81519e82da292b27bde38fcf903be91987"
+      },
+      "matching_4CPU_3072MiB_DT": {
+        "bytes": 8527,
+        "sha256": "0f95f216fd6d18e8c889e26765e3629cec0a2abfe5180aa59fa24e73d8e0ffc8"
+      }
+    },
+    "actual_waits_and_merged_PIPE_EOF_by_disjoint_scope": {
+      "host": 15,
+      "boot": 3,
+      "guest": 31,
+      "poweroff": 1,
+      "presence": 8
+    },
+    "actual_waits": 58,
+    "actual_PIPE_EOF": 58
+  },
+  "fresh_cold": {
+    "passed": true,
+    "records": {
+      "Root-closed-cold-review.json": {
+        "bytes": 3092,
+        "sha256": "4e81033ff42ff0e6508fdbebd92c7808d96a07905b5025f761bbbc95f1decb9e"
+      },
+      "selection.json": {
+        "bytes": 64532,
+        "sha256": "4b05faf88267cddd16ba1f8f3aa5fc012f117efe273ba4e164ca6736b8a09c92"
+      },
+      "command.json": {
+        "bytes": 5167,
+        "sha256": "8161b858cc397bac05d8a46b379b09f8d36a5c669eb08dc2ee5ae50298e23016"
+      },
+      "SOURCE.json": {
+        "bytes": 2656,
+        "sha256": "f18144355fbf9579d2bfd1111d1a55f098a4738b71707e5f0f624e2ee9483579"
+      },
+      "SEAL.json": {
+        "bytes": 4517,
+        "sha256": "9ab24f09c60c9a6d45091042b20fdc6269424564275ed31ca8c1bff1aba9a483"
+      },
+      "run/receipt.json": {
+        "bytes": 33217,
+        "sha256": "a58ae50a247e7c56608c52ac0d0b07e605894e0d674ecbb0b442a26c35bfefca"
+      },
+      "boot-result.json": {
+        "bytes": 12741,
+        "sha256": "ab9af309bd31e4e790e7d2e97da8e03d733ea5e1b7c459478246baa002cac726"
+      },
+      "result.json": {
+        "bytes": 162030,
+        "sha256": "1f36c9a0a2f64da10752c990c3f990cc730bd81588338bffa25a66155a1de699"
+      },
+      "joined-run.json": {
+        "bytes": 138846,
+        "sha256": "5a107add210f6b890baf64a26b461f7662dd7bafeb604bd2da2bdef0ebb39a75"
+      },
+      "power-observation.json": {
+        "bytes": 27265,
+        "sha256": "599736b94c45224e39037386b99e2dc479b3a3aa162d4484494d6435bcafbd3c"
+      },
+      "runtime/result.json": {
+        "bytes": 380189,
+        "sha256": "8a728f319c6aa7076126779ef89cde8f346f6281f225417fbed1fc994aca69fd"
+      },
+      "runtime/pcm/qml/result.json": {
+        "bytes": 19070,
+        "sha256": "394b01ca780fd617566a2313833f1088da8aed44d799d8b91f470a61dd36474a"
+      }
+    },
+    "fresh_BootID_and_all7_InvocationIDs": true,
+    "all_seven_PID1_active_before_mutation": true,
+    "serial_case_order": [
+      "network_Settings",
+      "readonly_power",
+      "audio_LAST"
+    ],
+    "unrelated_Main_identity_checkpoints": 8,
+    "explicit_readonly_restores": [
+      [
+        "network"
+      ],
+      [
+        "battery",
+        "brightness"
+      ]
+    ],
+    "effect_replay_requested": false,
+    "power": {
+      "completed_battery_available": false,
+      "brightness_absence_and_typed_Client_recovery": true,
+      "brightness_Set_sent": false
+    },
+    "audio": {
+      "actual_mouse_press_release_pairs": 6,
+      "component_unshown": true,
+      "normal_app_Main_or_window": false,
+      "same_installed_audio_Main": true,
+      "distinct_muted_live_producer": true,
+      "complete_paired_PCM_windows": 6,
+      "frames_per_window": 24000,
+      "total_measured_frames": 144000,
+      "half_speaker_RMS": 0.08838669987845607,
+      "half_speaker_peak": 0.12499618530273438,
+      "other5_windows_exact_zero": true,
+      "timing_selected_upfront": {
+        "aggregate_seconds": 12,
+        "per_window_seconds": 6,
+        "Play_gate_seconds": 1,
+        "retirement_seconds_after_first_Play": 3,
+        "producer_seconds": 6
+      },
+      "audio_Stop_first_sample_nonterminal_then_terminal": true,
+      "audio_Stop_original_cutoff_reused_by_outer_checks": true,
+      "audio_parent_wait_EOF_handles_ECHILD_before_native_positive_assertion": true,
+      "native_assertion_exit": 0
+    },
+    "all_seven_normal_PID1_Stop": true,
+    "all_retained_Main_pidfds_dead_and_cgroups_empty": true,
+    "original393_Qt50_installed_assets_configs_sentinel_unchanged": true,
+    "actual_waits_by_disjoint_scope": {
+      "host": 15,
+      "boot": 3,
+      "guest": 12,
+      "poweroff": 1,
+      "joined": 91,
+      "power": 25,
+      "audio_controller": 19,
+      "PCM_observer": 20,
+      "native_network_Qt": 1
+    },
+    "actual_direct_waits": 187,
+    "actual_PIPE_EOF": 201,
+    "regular_stderr_sink_closes": 4,
+    "DEVNULL_stdout_sinks": 2,
+    "adopted_actual_waits": 0,
+    "ECHILD": true,
+    "count_correction": "Independent review identified the separate one-command native network Qt parent receipt; prior186/200 accounting retained privately, corrected187/201 without rerunning."
+  },
+  "retained_failed_preparations": [
+    {
+      "epoch": 1,
+      "classification": "missing inherited guest entry before RED",
+      "review": {
+        "bytes": 4311,
+        "sha256": "0591ecf210c8487e38327c52bc265240f01fd9368774471b16228e71d631f5cb"
+      },
+      "aggregate_passed": false,
+      "independent_DT_subartifact_qualified": true
+    },
+    {
+      "epoch": 2,
+      "classification": "missing Make after genuine RED and qualified normal Sounds build",
+      "review": {
+        "bytes": 11540,
+        "sha256": "d57471b85ef3bd50027bccc2e4bec4e4893b93ebdf33bab6ac512f0ca6e680ce"
+      },
+      "aggregate_passed": false,
+      "independent_normal_build_qualified": true
+    },
+    {
+      "epoch": 3,
+      "classification": "container-only proof path after genuine RED, before installation",
+      "review": {
+        "bytes": 1313,
+        "sha256": "3497394349124f2f49797621a257726c059a2d6ad53efa30faa6eb8c0de096c2"
+      },
+      "aggregate_passed": false
+    }
+  ],
+  "environment": {
+    "architecture": "aarch64",
+    "kernel": "7.1.6-1-aarch64-ARCH",
+    "VM_vcpus": 4,
+    "VM_memory_MiB": 3072,
+    "container_cpus": 4,
+    "container_memory_GiB": 5,
+    "package_count": 393,
+    "selected_Qt_files": 50,
+    "network": "none"
+  },
+  "closure_limits": [
+    "Disjoint receipts counted once; copied guest/controller receipts not added again.",
+    "PID1 service Main outcomes are not fixture-parent waits.",
+    "Four regular stderr closes have no independent close timestamps; DEVNULL has no PIPE EOF."
+  ],
+  "remaining_gates": [
+    "Normal installed app Main/windows and complete graphical cold session/Source.",
+    "Matched Google kernel/modules/firmware deployment, Pixel display/audio/power hardware, physical phone and carrier.",
+    "Battery remains unavailable in this generic ARM image; GPIO readback is not luminance; local interface counts are not connectivity.",
+    "No screenshot or full-smartphone completion claim."
+  ]
+}

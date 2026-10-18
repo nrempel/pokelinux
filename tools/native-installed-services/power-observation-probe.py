@@ -109,7 +109,7 @@ def stop(cleanup=False):
   for _,fd in fds:os.close(fd)
 try:
  assert os.getresuid()==os.getresgid()==(0,0,0)and Path('/proc/1/comm').read_text().strip()=='systemd'and os.uname().release=='7.1.6-1-aarch64-ARCH'and os.uname().machine=='aarch64';assert M['schema']==1 and set(M['files'])==EXPECTED
- _,packages=command(['/usr/bin/pacman','-Q'],'actual353');assert packages==(P/'source/expected-installed353.txt').read_text();r['original353_exact']=True
+ _,packages=command(['/usr/bin/pacman','-Q'],'actual393');assert packages==(P/'source/expected-installed393.txt').read_text();r['original393_exact']=True
  for role in ROLES:
   row={'role':role,'passed':False,'failure_kind':None};v=properties(role);row['initial']=v
   try:

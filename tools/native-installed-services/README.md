@@ -102,8 +102,11 @@ correction and final five-case GREEN are recorded in the
 [hash-only provenance](../../docs/evidence/native-owned-timeout-provenance.json).
 
 
-`power-observation-probe.py` is the exact frozen generic ARM battery/brightness
-pair consumer. The recorded VM selects it unchanged as
+The recorded353 generic ARM battery/brightness pair uses the
+[historical power consumer](https://github.com/nrempel/pokelinux/blob/286ef79cdbef0ad32efea483dce9adbd1a3ea4f4/tools/native-installed-services/power-observation-probe.py).
+The current `power-observation-probe.py` changes only the inventory filename and
+labels to393 for the separately qualified seven-service joined image.
+The earlier recorded VM selects the historical source unchanged as
 `/run/pokelinux-pair-inputs/source/cold-consumer.py`, with `owned.py` alongside.
 The input root also contains `bundle-manifest.json`, the original353 inventory
 at `source/expected-installed353.txt`, and the separately compiled
@@ -145,26 +148,47 @@ Python consumer from the host Rust reader and offscreen Settings tests.
 
 ## Combined ARM development-image consumer
 
-`development-image-probe.py` is the frozen reproducibility consumer, selected at
-runtime as `source/combined-consumer.py`; the repository filename is not a new
-service or installer. Use only the explicitly selected disposable generic ARM
-353-package guest, actual PID1/root credentials and original BOOTTIME bounds.
-Supply `/results/selection.json` and `/run/pokelinux-development-inputs` containing
-the twelve-file manifest, inventory, Qt50 baseline, fixture binaries and unchanged
-power consumer; keep the selected [`owned.py`](owned.py) and
-[`installed_component.py`](installed_component.py) alongside. The latter is the
-unchanged PID1 network/Settings case controller, not a production service.
+The current `development-image-probe.py` selects the seven-service393-package
+cohort: battery, brightness, local-network status and the four-unit audio stack,
+plus protected Settings/Sounds assets. Presence-only mode reaches real
+installed-boundary RED; run mode passes one fresh installed cold boot with serial
+network, power and real-input/PCM audio recovery and all-seven normal shutdown.
+The [joined report](../../docs/native-arm-development-image.md) records the exact
+cohort and limits. The earlier
+qualified three-service353 consumer remains at
+[commit286ef79](https://github.com/nrempel/pokelinux/blob/286ef79cdbef0ad32efea483dce9adbd1a3ea4f4/tools/native-installed-services/development-image-probe.py).
+
+Use an explicitly prepared disposable generic ARM guest with PID1/root and
+original BOOTTIME work/close bounds. Supply `/results/selection.json` and the
+selected `/run/pokelinux-development-inputs` payload, exact393 inventory, Qt50
+baseline, fixture binaries and fourteen-file production manifest. Copy
+[`owned.py`](owned.py), [`installed_component.py`](installed_component.py) and
+[the existing audio closure helper](../native-audio-preview/closure.py) alongside
+it. The payload selects the current393 inventory successor of the power probe;
+the historical353 pair keeps its own frozen source and results.
 
 ```sh
-python3 /run/pokelinux-development-inputs/source/combined-consumer.py \
-  --output /results/combined-consumer.json \
+python3 /run/pokelinux-development-inputs/source/development-image-probe.py \
+  --mode check-only \
+  --output /results/joined-presence.json \
   --until-ns "$POKELINUX_VM_ORIGINAL_UNTIL_NS" \
   --close-ns "$POKELINUX_VM_ORIGINAL_CLOSE_NS"
 ```
 
-It requires three already-active enabled PID1 owners and protected Settings files
-before serial readonly network-QML and power recovery checks, then normal Stops.
-Installation, enablement, reboot and config-preserving reinstall belong to the
-outer fixture. PID1 outcomes are separate from actual owned command/component
-waits. Battery may be honestly unavailable; GPIO readback is not luminance and
-network counts are not connectivity. No normal app window, Source or phone claim.
+`check-only` collects all seven service and both app-file boundaries before
+asserting. It runs before build or installation and does not require a future
+normal Sounds artifact. The executed baseline reports missing battery,
+brightness and network units and missing app files, with all four audio units
+already active. A missing installed-boundary assertion is distinct from setup
+failure. `--mode run` additionally verifies the exact installed
+manifest and executes existing network/Settings, power and audio consumers.
+Only the tested readonly services are explicitly restored between completed
+cases; unrelated services must retain their Main identities. Audio runs last
+under its original ARM12-second aggregate and six-second window caps. Its Stop
+verification keeps the original cutoff, followed by normal Stop of the remaining
+three services. PID1 outcomes stay separate from fixture-parent waits.
+
+Installation, enablement, matching VM device tree and fresh boot belong to the
+outer fixture. Battery may be honestly unavailable; GPIO readback is not
+luminance and network counts are not connectivity. No normal app window,
+Source, matched-Pixel or physical-phone behavior is qualified by this source.
