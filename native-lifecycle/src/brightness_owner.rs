@@ -62,6 +62,9 @@ impl Provider for Owner {
         }
         state
     }
+    fn readonly_in_flight(&self) -> bool {
+        self.client.readonly_in_flight()
+    }
     fn submit(&mut self, intent: &Intent) -> io::Result<bool> {
         self.client.set(
             intent.id,

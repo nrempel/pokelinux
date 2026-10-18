@@ -516,6 +516,45 @@ success retain their own cohorts. See
 
 ![Current normal Settings at75%, from the four-state partial trace](assets/settings-brightness-current75.png)
 
+## First-send reservation behind the actor's own readonly Inspect
+
+The concrete owner now distinguishes its own in-flight Inspect from reported
+remote custody. With a fresh retained observation, a new explicit choice can
+reserve its first send while that readonly request retires. The actor suppresses
+successor periodic Inspects and sends no Set until the reply establishes fresh,
+idle state at the original revision. The same connection, authority stamp and
+original deadline remain required. Remote pending, changed revision, expiry or
+loss terminate the reservation; there is no reconnect, deadline renewal or write
+retry. Historical uncertainty from an earlier Set remains distinct from the
+new choice and is never turned into an acknowledgement.
+
+One frozen actual Rust test uses the production Session/Owner and a real
+root-credentialed SEQPACKET peer under controlled Authority. Before the change,
+all four admissions fail with Unavailable. After the change, the unchanged reply
+permits exactly one original Set and matching completion; reported remote busy,
+changed revision and original expiry each prevent dispatch. Each case closes its
+socket, pidfd and storage owners before the final assertion. This reproduces an
+actor boundary, not an attribution of the preceding graphical failure. The test
+does not exercise an actual Settings UID, app ingress, Source, daemon worker,
+backend or normal window.
+
+The current source also passes all52 brightness cases across two epochs,16
+existing lifecycle brightness cases, six Settings and six Sounds desktop controls,
+and two normal owner-constructor cases. The already executed focused reservation
+test is not repeated. Formatting, strict all-target Clippy and normal host/ARM
+owner, launcher and brightness releases pass. The first aggregate stops after24
+passing cases because its observer expects libtest output from a custom harness;
+that harness itself reports six passing groups and exits0. The corrected narrowed
+epoch runs only the remaining28 brightness cases and remaining checks. Its
+successful closure does not erase the earlier aggregate failure or the interrupted
+ARM controller, whose nested compilers are not individually claimed as waited.
+
+The new brightness ELFs differ from the preceding kernel-tested cohort. Neither
+the old ARM kernel execution nor a fresh build qualifies these new binaries for
+kernel runtime. The graphical experiment retains its frozen brightness daemon
+and changes only the qualified actor/launcher plus failure diagnostics; it is not
+yet qualified. See [reservation provenance](evidence/native-brightness-readonly-reservation-provenance.json).
+
 ## Actual ARM kernel LinuxBacklight integration
 
 The retained normal ARM daemon and real Rust Client now run through PID1 and the

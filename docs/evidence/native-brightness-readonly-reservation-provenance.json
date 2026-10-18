@@ -1,0 +1,491 @@
+{
+  "schema": 1,
+  "passed": true,
+  "scope": "Controlled Authority plus production brightness Session/Owner and actual root-credentialed local SEQPACKET first-send reservation. Relevant component regressions and normal host/ARM Release builds. No full actor, Source, normal app/window, ARM execution or physical hardware qualification.",
+  "qualification": {
+    "bytes": 9006,
+    "sha256": "d18cb859f53050bf008426a534da39042179261b86eeffb860f082fc4375a6c1"
+  },
+  "provider_manifest": {
+    "bytes": 17161,
+    "sha256": "a1605c98552a64b6ce0309589247dc2166df40a847dfeb96135eab8a6bb67977"
+  },
+  "source": {
+    "bytes": 59106,
+    "sha256": "0e0594cb72b22fc21a0fb29ec5f19703955943e27f074107af0e318f3f19c5ba"
+  },
+  "Root_route_review": {
+    "bytes": 4605,
+    "sha256": "f3c88a58af61d4e46f417df452be52a316459813f5de06be706917eca1c1e77a"
+  },
+  "source_base_commit": "6b8fbd7d24946734f035333df79450f8d1f88210",
+  "production_and_frozen_test_source": {
+    "native-brightness/src/client.rs": {
+      "bytes": 13913,
+      "sha256": "b9ef3e8e78eb785292f4a9efa370bd62fd8434c40bf48ecacdf6eb0e2f16f3bf"
+    },
+    "native-lifecycle/src/brightness.rs": {
+      "bytes": 3910,
+      "sha256": "d3713e4eb08f92d2ab115e8ab3cd9faa0f232e2720df5f7dac663abdfebef15c"
+    },
+    "native-lifecycle/src/brightness_owner.rs": {
+      "bytes": 3348,
+      "sha256": "bde1ed1d7ba5015b2a416a9717043e3dcb0e6c484fc8e05abc0a4a95d9086648"
+    },
+    "native-lifecycle/src/brightness_session.rs": {
+      "bytes": 7130,
+      "sha256": "f7abc792c1b4d848e47d5247cc38934c5f93b8551963977e8aabfabaed50ae5f"
+    },
+    "native-lifecycle/src/brightness_tests.rs": {
+      "bytes": 15916,
+      "sha256": "7952cc6ff856abdefb332c9dc46259f517fed3d2a25e8d5f08ecbeb856758f8c"
+    },
+    "native-lifecycle/src/service.rs": {
+      "bytes": 94818,
+      "sha256": "a2cc2b0a283fe47a3976b149ee10b67af30baa103f120b669458284158bfd943"
+    },
+    "native-lifecycle/src/brightness_readonly_reservation_tests.rs": {
+      "bytes": 18297,
+      "sha256": "86ac070d09b3d78a4ff88a2f72ada6e43643fc2886b54b2bb92b53450c7a7bc9"
+    }
+  },
+  "behavior": {
+    "one_first_send_only": true,
+    "eligible": "Same verified connection own in-flight readonly Inspect, fresh retained observation, no reported remote custody.",
+    "reservation_retains": [
+      "current authority stamp",
+      "original expected revision",
+      "original BOOTTIME deadline",
+      "connection incarnation"
+    ],
+    "dispatch_requires": "Readonly reply establishes fresh idle state before one original Set.",
+    "terminates_without_dispatch": [
+      "reported remote pending",
+      "changed revision",
+      "original expiry",
+      "lost connection or authority"
+    ],
+    "no_implicit_write_retry_reconnect_deadline_renewal_or_Source_change": true,
+    "old_Set_uncertainty_is_not_acknowledged_by_new_readonly_state": true
+  },
+  "strict_TDD": {
+    "original_compiled_assertion_RED": {
+      "bytes": 7827,
+      "sha256": "8e0be769ca0dcd19b7f7ac208197fef1fe44cc6935c1c29cbe230b0ab6c5b178"
+    },
+    "same_frozen_fixture_focused_GREEN": {
+      "bytes": 6045,
+      "sha256": "d2c076d24769a2559c8c334afeccac477f1b57f6042f61a4fd8108a64273f965"
+    },
+    "fixture_sha256": "86ac070d09b3d78a4ff88a2f72ada6e43643fc2886b54b2bb92b53450c7a7bc9",
+    "groups": 1,
+    "subcases": 4,
+    "RED_actual_exit": 101,
+    "RED_all_four_admissions_Unavailable": true,
+    "RED_dependent_continuations_not_exercised": true,
+    "GREEN_actual_exit": 0,
+    "GREEN_unchanged_reply_exact_one_Set_original_revision_and_cutoff_then_matching_completion": true,
+    "GREEN_remote_pending_changed_revision_expiry_no_Set": true,
+    "all_case_kernel_and_storage_owners_dropped_before_final_assertion": true,
+    "actual_selected_process_wait_and_merged_PIPE_EOF_each_epoch": 1,
+    "actual_selected_wait_EOF_before_original5seconds": true,
+    "Scope_close_seconds": 7,
+    "ECHILD_after_wait": true,
+    "original_source_copy_and_E0596_fixture_compile_failures_not_functional_RED": true,
+    "formatter_only_bridge": {
+      "bytes": 1746,
+      "sha256": "5062200ca806c2599e8bbec7ba87981828a1ba7f004714c804c8e46e2a14bc34"
+    }
+  },
+  "broader_QA1": {
+    "aggregate_passed": false,
+    "preserved_failure": "Observer expected standard libtest text from custom WORKER_SUMMARY harness; actual six worker groups and exit0 passed.",
+    "observer_qualification": {
+      "bytes": 2641,
+      "sha256": "dc8efcd9f7e8e3804550e305792ecf4028088b36ba60e8285b28278d0b2f1017"
+    },
+    "outer_receipt": {
+      "bytes": 68013,
+      "sha256": "f9ab25fa1483e4febd5546d6d9027c4f7532feff87adc7113c2d9f9ab276a782"
+    },
+    "inner_result": {
+      "bytes": 11029,
+      "sha256": "2fda495fe582397e08fb00cf573ab46c38b0e7bb313f116367d8bdf416cecb00"
+    },
+    "fmt_three_manifests_passed": true,
+    "actual_distinct_brightness_cases_completed": 24,
+    "actual_top_level_Scope_waits": 12,
+    "actual_top_level_merged_PIPE_EOF": 12,
+    "ARM_controller_wait_exit": -9,
+    "ARM_descendant_compiler_individual_waits_not_claimed": true,
+    "container_namespace_closure_separate": true,
+    "actual_outer_CLI_waits": 10,
+    "actual_outer_PIPE_EOF": 20,
+    "exact_CID_absent_source_unchanged_same_daemon": true
+  },
+  "broader_QA2": {
+    "aggregate_passed": true,
+    "selection": {
+      "bytes": 26073,
+      "sha256": "0a010da417913653070862a84b26f0e02186b879e994f9a3f9d3b4136537fe63"
+    },
+    "outer_receipt": {
+      "bytes": 67428,
+      "sha256": "0c9e13551ab3c783fa45616e97b527d1c5e6801bef88266b81b6318b099583f5"
+    },
+    "inner_result": {
+      "bytes": 23590,
+      "sha256": "8339670f963a9d75ba58c7c9d9252a1ee4b24f3d8d56bd858fe281a47b0f2d24"
+    },
+    "actual_test_groups": {
+      "brightness52_across_QA1_QA2": {
+        "passed": 52,
+        "prior_epoch_passed": 24,
+        "executed_here": 28,
+        "binaries_executed_here": [
+          {
+            "name": "client_service",
+            "passed": 6
+          },
+          {
+            "name": "client",
+            "passed": 8
+          },
+          {
+            "name": "protocol",
+            "passed": 6
+          },
+          {
+            "name": "service",
+            "passed": 8
+          }
+        ],
+        "prior_binaries_not_repeated": [
+          "inspection_deadline",
+          "pokelinux_brightness",
+          "backend",
+          "ownership",
+          "worker",
+          "pokelinux-brightness"
+        ]
+      },
+      "lifecycle_brightness_existing": 16,
+      "settings_desktop": 6,
+      "sounds_desktop": 6,
+      "owner_constructor": 2
+    },
+    "strict_all_target_Clippy_manifests": [
+      "native-brightness",
+      "native-lifecycle",
+      "native-session-owner"
+    ],
+    "completed_QA1_tests_and_fmt_not_repeated": true,
+    "all_52_brightness_cases_once_across_two_epochs": true,
+    "normal_host_ARM_release_roles": [
+      "pokelinux-brightness",
+      "lifecycle-daemon",
+      "lifecycle-launcher",
+      "settings-launch",
+      "sounds-launch",
+      "pokelinux-session-owner"
+    ],
+    "actual_top_level_Scope_waits": 25,
+    "actual_top_level_merged_PIPE_EOF": 25,
+    "actual_outer_CLI_waits": 10,
+    "actual_outer_PIPE_EOF": 20,
+    "no_unclosed_children_or_cleanup_error": true,
+    "exact_CID_absent_source_unchanged_same_daemon": true,
+    "ARM_controller_successful_wait0_and_PIPE_EOF": true,
+    "ARM_Cargo_logs_regular_files_no_PIPE_EOF_claim": true,
+    "compiler_internal_children_not_individually_receipted": true
+  },
+  "normal_providers": {
+    "host": {
+      "pokelinux-brightness": {
+        "bytes": 776680,
+        "sha256": "9d5b73e215fd97a6eeb8615a590116a002a0060ce3ed6636debfc917653f5210",
+        "ELF_machine": 62,
+        "target": "x86_64-unknown-linux-gnu",
+        "mode": "0755",
+        "Cargo_features": [],
+        "release_opt_level": "3",
+        "Cargo_artifact_proof": {
+          "bytes": 22167,
+          "sha256": "a0931b9db579e2e9b83e0460023e47a9bfb61c9da544be7033d19d5b29a6f7db"
+        },
+        "ELF_header_loader_proof": {
+          "bytes": 5151,
+          "sha256": "af21027fdfac8f13eb6ad9ca2ad52312c147e8604505fb5ca40c585d01ba772b"
+        },
+        "execution_qualified_here": true,
+        "scope": "actual normal Release service constructor Inspect/oneSet/readback on SyntheticTree"
+      },
+      "lifecycle-daemon": {
+        "bytes": 1544080,
+        "sha256": "c7288453c3369ef6ff58757e4d387c0f19015795aa0d268b9978fb55b7d8c7bb",
+        "ELF_machine": 62,
+        "target": "x86_64-unknown-linux-gnu",
+        "mode": "0755",
+        "Cargo_features": [],
+        "release_opt_level": "3",
+        "Cargo_artifact_proof": {
+          "bytes": 34626,
+          "sha256": "612366412b4eb6e1a938bf7b8d129114a86c4164d3ae5342babe2b2ece844926"
+        },
+        "ELF_header_loader_proof": {
+          "bytes": 5159,
+          "sha256": "c39af1c020aebf63d323b19babc40a17c9e266dbfb1f20fe3bad34a323d9978c"
+        },
+        "execution_qualified_here": false,
+        "scope": "normal target build only"
+      },
+      "lifecycle-launcher": {
+        "bytes": 1074608,
+        "sha256": "493b70d6d063e780229510b20c55515be36f51fe86a239de811ae5ac87e77f33",
+        "ELF_machine": 62,
+        "target": "x86_64-unknown-linux-gnu",
+        "mode": "0755",
+        "Cargo_features": [],
+        "release_opt_level": "3",
+        "Cargo_artifact_proof": {
+          "bytes": 34626,
+          "sha256": "612366412b4eb6e1a938bf7b8d129114a86c4164d3ae5342babe2b2ece844926"
+        },
+        "ELF_header_loader_proof": {
+          "bytes": 5151,
+          "sha256": "48314a401eb68d597f940adac49c6a3b5e131248f4d69b000e77030af1c5cf82"
+        },
+        "execution_qualified_here": false,
+        "scope": "normal target build only"
+      },
+      "settings-launch": {
+        "bytes": 1003120,
+        "sha256": "12362d8e114f289cb722d63f3e5e87d8f10aa59c5b037429cb772bb8ac04141b",
+        "ELF_machine": 62,
+        "target": "x86_64-unknown-linux-gnu",
+        "mode": "0755",
+        "Cargo_features": [],
+        "release_opt_level": "3",
+        "Cargo_artifact_proof": {
+          "bytes": 34626,
+          "sha256": "612366412b4eb6e1a938bf7b8d129114a86c4164d3ae5342babe2b2ece844926"
+        },
+        "ELF_header_loader_proof": {
+          "bytes": 5150,
+          "sha256": "66ce748e9c1843a60b61a864b52cae7163d517ad8f556fb07d0fc3762a0945a2"
+        },
+        "execution_qualified_here": false,
+        "scope": "normal target build only"
+      },
+      "sounds-launch": {
+        "bytes": 1002488,
+        "sha256": "216a100fd63e00eeadf44255506c54b467727ca2b423040d00a65ebccc74b60c",
+        "ELF_machine": 62,
+        "target": "x86_64-unknown-linux-gnu",
+        "mode": "0755",
+        "Cargo_features": [],
+        "release_opt_level": "3",
+        "Cargo_artifact_proof": {
+          "bytes": 34626,
+          "sha256": "612366412b4eb6e1a938bf7b8d129114a86c4164d3ae5342babe2b2ece844926"
+        },
+        "ELF_header_loader_proof": {
+          "bytes": 5150,
+          "sha256": "977ebbf5dfcb16bf4f6867611db4f11a0477ab5f602ccbad4e18dc332bbf85cf"
+        },
+        "execution_qualified_here": false,
+        "scope": "normal target build only"
+      },
+      "pokelinux-session-owner": {
+        "bytes": 5695792,
+        "sha256": "2b92653975bf6483fa4c1e5b3e3d6db61c00f46685c8433d57fc812195397c3c",
+        "ELF_machine": 62,
+        "target": "x86_64-unknown-linux-gnu",
+        "mode": "0755",
+        "Cargo_features": [],
+        "release_opt_level": "3",
+        "Cargo_artifact_proof": {
+          "bytes": 86831,
+          "sha256": "0249b281fd7e7bb82e346e1233434b1779a334195cd3f266fc3f67570e810f83"
+        },
+        "ELF_header_loader_proof": {
+          "bytes": 5234,
+          "sha256": "0d5c9f63d58af7e1ff37ba7b1f69a11d2500f9d8b3ed308068800f1a7a8be486"
+        },
+        "execution_qualified_here": false,
+        "scope": "normal target build only"
+      }
+    },
+    "ARM": {
+      "pokelinux-brightness": {
+        "bytes": 824216,
+        "sha256": "e194a8c294d2be7f1dca0278bed66caa5fea04e7a48afbdf4997e89c46e41d46",
+        "ELF_machine": 183,
+        "target": "aarch64-unknown-linux-gnu",
+        "mode": "0755",
+        "Cargo_features": [],
+        "release_opt_level": "3",
+        "Cargo_artifact_proof": {
+          "bytes": 22237,
+          "sha256": "94580a33bd6f2a6b4d7e74aeb5b2e01231893a4fb4961b488a4614c15d96e8b3"
+        },
+        "ELF_header_loader_proof": {
+          "bytes": 4857,
+          "sha256": "ba9a78f9974d73fc53af91c88e411be21f18225a4e002b80898275efb4fedc26"
+        },
+        "execution_qualified_here": false,
+        "scope": "normal target build only"
+      },
+      "lifecycle-daemon": {
+        "bytes": 1484960,
+        "sha256": "d2213e45f2746c16d7d9a44052e79fdfabcc22e7c4df14966d7b48593b606fce",
+        "ELF_machine": 183,
+        "target": "aarch64-unknown-linux-gnu",
+        "mode": "0755",
+        "Cargo_features": [],
+        "release_opt_level": "3",
+        "Cargo_artifact_proof": {
+          "bytes": 35326,
+          "sha256": "cda5fe1cf3c4f470f4d03e9216ca53dd1ceef757f8edb8f11f82f9738d89160f"
+        },
+        "ELF_header_loader_proof": {
+          "bytes": 4859,
+          "sha256": "032c405af9af712e0f77ddc396d289297115f7518dd29f829702d782714dd03c"
+        },
+        "execution_qualified_here": false,
+        "scope": "normal target build only"
+      },
+      "lifecycle-launcher": {
+        "bytes": 1007368,
+        "sha256": "81c70c1a6c1342b6199474bd83ae22a4af38345236aeeeb898f2bb1822b5ac2b",
+        "ELF_machine": 183,
+        "target": "aarch64-unknown-linux-gnu",
+        "mode": "0755",
+        "Cargo_features": [],
+        "release_opt_level": "3",
+        "Cargo_artifact_proof": {
+          "bytes": 35326,
+          "sha256": "cda5fe1cf3c4f470f4d03e9216ca53dd1ceef757f8edb8f11f82f9738d89160f"
+        },
+        "ELF_header_loader_proof": {
+          "bytes": 4856,
+          "sha256": "9dc233bf651933d074c8ee3697339fed041326a851c09f3463f513dce8191ce4"
+        },
+        "execution_qualified_here": false,
+        "scope": "normal target build only"
+      },
+      "settings-launch": {
+        "bytes": 980576,
+        "sha256": "c43e06bb5ff122695ef327dc7a3400d937de4aab9548767f697545a99f9bb990",
+        "ELF_machine": 183,
+        "target": "aarch64-unknown-linux-gnu",
+        "mode": "0755",
+        "Cargo_features": [],
+        "release_opt_level": "3",
+        "Cargo_artifact_proof": {
+          "bytes": 35326,
+          "sha256": "cda5fe1cf3c4f470f4d03e9216ca53dd1ceef757f8edb8f11f82f9738d89160f"
+        },
+        "ELF_header_loader_proof": {
+          "bytes": 4853,
+          "sha256": "fc89166bc4386e6e6d1805a0e231d755be6c1ba2de0473d1b4e22425ed032817"
+        },
+        "execution_qualified_here": false,
+        "scope": "normal target build only"
+      },
+      "sounds-launch": {
+        "bytes": 980024,
+        "sha256": "5c82b3cadccb30b9a002fdb34eef80d54ae1eba24970b2db90b8b52d51b56c08",
+        "ELF_machine": 183,
+        "target": "aarch64-unknown-linux-gnu",
+        "mode": "0755",
+        "Cargo_features": [],
+        "release_opt_level": "3",
+        "Cargo_artifact_proof": {
+          "bytes": 35326,
+          "sha256": "cda5fe1cf3c4f470f4d03e9216ca53dd1ceef757f8edb8f11f82f9738d89160f"
+        },
+        "ELF_header_loader_proof": {
+          "bytes": 4853,
+          "sha256": "3cbf4a1b02e298fa654c129ae03fedbcae62cb0c2be378893a9713f787481f20"
+        },
+        "execution_qualified_here": false,
+        "scope": "normal target build only"
+      },
+      "pokelinux-session-owner": {
+        "bytes": 5535800,
+        "sha256": "a93543de80bd91ce8e9dab7e100527a5f2a73d91c063e6da39952fd7cfe482bc",
+        "ELF_machine": 183,
+        "target": "aarch64-unknown-linux-gnu",
+        "mode": "0755",
+        "Cargo_features": [],
+        "release_opt_level": "3",
+        "Cargo_artifact_proof": {
+          "bytes": 88030,
+          "sha256": "fee6fd36fbca0b870f889cd37f86ac37b567c3eb110fc3e6b77ac8097c107dca"
+        },
+        "ELF_header_loader_proof": {
+          "bytes": 4938,
+          "sha256": "8fb82c73c8e7a092b3a2b474a2f3165e8e820cd670457fbbd6b04300d90cd884"
+        },
+        "execution_qualified_here": false,
+        "scope": "normal target build only"
+      }
+    }
+  },
+  "historical_daemon_comparison": {
+    "old_host_sha256": "74e56b4000da678b6ebb2b8556cfbb875340d3179852c459896568df8c3c5a83",
+    "new_host_sha256": "9d5b73e215fd97a6eeb8615a590116a002a0060ce3ed6636debfc917653f5210",
+    "host_identical": false,
+    "old_ARM_sha256": "32111d160c523065a0ba3e82370a3a00d81843d3f4a90ef5857a8fc0ad695b3d",
+    "new_ARM_sha256": "e194a8c294d2be7f1dca0278bed66caa5fea04e7a48afbdf4997e89c46e41d46",
+    "ARM_identical": false,
+    "no_new_kernel_or_GUI_qualification": true,
+    "Root_GUI_selection_retains_old_74e_separately": true
+  },
+  "actual_constructor_Release_execution": {
+    "log": {
+      "bytes": 676,
+      "sha256": "547a810dc307c41c8ac4486fa0b4cd76256567182d86a338506cf99cb0ef9312"
+    },
+    "Main_wait0_stdout_EOF_stderr_EOF_ECHILD": true,
+    "real_current_Root_constructor_used": true,
+    "typed_Inspect_one_Set_readback": true,
+    "SyntheticTree_only_no_full_actor_Source_UI": true
+  },
+  "bounds": {
+    "each_broader_epoch_original_work_seconds": 600,
+    "each_broader_epoch_original_close_seconds": 660,
+    "existing_individual_test_and_Stop_bounds_unchanged": true,
+    "CPU": 12,
+    "memory_GiB": 10,
+    "host_ARM_jobs": 6,
+    "independent_Cargo_homes_and_targets": true,
+    "capabilities": [
+      "SETUID",
+      "SETGID",
+      "KILL"
+    ],
+    "network": "none",
+    "all_build_source_output_RAM": true
+  },
+  "Root_independent_review": {
+    "RED_GREEN_bound_artifacts_verified": 29,
+    "Q_manifest_bound_artifacts_verified": 51,
+    "current_public_source_rows_verified": 212,
+    "frozen_copied_files_verified": 215,
+    "normal_Cargo_bin_records_emptyfeatures_O3_testfalse_verified": 12,
+    "QA1_actual_custom_worker_pass_labels": 6,
+    "QA1_worker_retirement_markers": 21,
+    "QA1_and_QA2_actual_top_level_waits_and_EOF_independently_verified": true,
+    "nested_compilers_not_individually_claimed_as_waited": true,
+    "wording_erratum": "The immutable private qualification describes a JSON expectation. The actual failed observer expected standard libtest text from a custom WORKER_SUMMARY harness; actual logs, pass facts and aggregate failure remain unchanged."
+  },
+  "limits": {
+    "GUI7_failure_cause": "unknown; reproduced actor branch does not establish causal attribution",
+    "new_joined_GUI_qualified": false,
+    "new_ARM_kernel_runtime_qualified": false,
+    "matched_Pixel_panel_and_hardware_qualified": false,
+    "phone_accessed": false
+  }
+}

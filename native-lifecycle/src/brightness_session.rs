@@ -68,7 +68,7 @@ impl Session {
             return Err(Reply::Denied);
         }
         let state = p.state();
-        if !state.is_current(boottime_ns()) || state.pending {
+        if !state.is_current(boottime_ns()) || (state.pending && !p.readonly_in_flight()) {
             return Err(Reply::Unavailable);
         }
         if r.percent > 100 || r.expected_revision == 0 || r.expected_revision != state.revision {
@@ -98,7 +98,7 @@ impl Session {
         let now = boottime_ns();
         let unsent_stale = active.phase == Phase::Unsent
             && (!state.is_current(now)
-                || state.pending
+                || (state.pending && !p.readonly_in_flight())
                 || state.revision != active.stamp.intent().expected_revision);
         let readback_expired = active.phase == Phase::ReplyReady && now >= active.reply_until;
         if stopping
@@ -121,7 +121,9 @@ impl Session {
             return Some(r);
         }
         let active = self.active.as_mut()?;
-        if active.phase != Phase::Unsent {
+        if active.phase != Phase::Unsent || p.state().pending {
+            // Reserve only the first submission while our own Inspect retires.
+            // A returned response must establish fresh idle state before Set.
             return None;
         }
         match p.submit(active.stamp.intent()) {

@@ -49,6 +49,14 @@ fails the new25% change. No final failure image or precise cause is available;
 the full current path remains unqualified. See the screenshots and limits in
 the brightness report.
 
+The actor now reserves a new choice behind its own fresh readonly Inspect,
+then sends once only after a fresh idle reply at the original revision. A frozen
+actual Session/Owner/socket test passes after compiled assertion RED, including
+remote-busy, changed-revision and expiry controls. All52 brightness cases and
+focused lifecycle/launch/constructor checks pass, with fresh host/ARM releases.
+The prior graphical failure's cause remains unknown; the new graphical join is
+not yet qualified.
+
 The [audio SIGTERM repair](native-audio.md#sigterm-enters-owned-stop) now routes
 the shared Rust termination latch into existing idempotent Stop. The unchanged
 actual-process RED (signal15) is GREEN (Main0, backend reaped, partial frontend

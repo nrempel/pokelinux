@@ -29,6 +29,9 @@ impl Provider for ObservedProvider {
     fn state(&self) -> State {
         self.state.clone()
     }
+    fn readonly_in_flight(&self) -> bool {
+        false
+    }
     fn submit(&mut self, intent: &Intent) -> io::Result<bool> {
         self.sent.push(intent.clone());
         if self.fail_send {

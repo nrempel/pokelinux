@@ -2093,6 +2093,9 @@ mod brightness_inspection_tests {
                 ..State::default()
             }
         }
+        fn readonly_in_flight(&self) -> bool {
+            false
+        }
         fn submit(&mut self, _: &Intent) -> io::Result<bool> {
             panic!("inspection must never submit Set")
         }
@@ -2167,3 +2170,7 @@ mod brightness_inspection_tests {
         );
     }
 }
+
+#[cfg(test)]
+#[path = "brightness_readonly_reservation_tests.rs"]
+mod brightness_readonly_reservation_tests;

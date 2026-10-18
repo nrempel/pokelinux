@@ -94,6 +94,9 @@ pub enum Event {
 pub trait Provider {
     fn incarnation(&self) -> &str;
     fn state(&self) -> State;
+    /// Only this connection's outstanding Inspect with a fresh retained baseline
+    /// and no reported remote custody. This never grants permission to write.
+    fn readonly_in_flight(&self) -> bool;
     /// false proves no bytes sent and no queued command. It is not retried here.
     fn submit(&mut self, intent: &Intent) -> io::Result<bool>;
     /// Fresh readonly connection/status is permitted; no flush, replay or write.

@@ -133,6 +133,18 @@ impl Client {
         }
         view
     }
+    /// This connection's own readonly request may retain a fresh baseline while
+    /// waiting. Known remote custody never supplies this first-send eligibility.
+    pub fn readonly_in_flight(&self) -> bool {
+        let sample = now();
+        self.fd.is_some()
+            && !self.view.pending
+            && self.view.observation.is_some()
+            && sample < self.view.until_ns
+            && self
+                .pending
+                .is_some_and(|p| sample < p.until && matches!(p.operation, Operation::Inspect))
+    }
     fn budget(until: u64) -> bool {
         let sample = now();
         until > sample && until - sample <= SECOND
