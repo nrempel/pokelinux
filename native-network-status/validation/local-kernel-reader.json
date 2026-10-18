@@ -1,0 +1,247 @@
+{
+  "schema": 1,
+  "feature": "readonly coarse local-kernel network-status service",
+  "scope": "Container-isolated Linux kernel observation and actual root Unix-stream service boundary; controlled reader lifecycle separately identified. Release compile/link only.",
+  "source": {
+    "crate_compiled_inputs": {
+      "Cargo.toml": {
+        "bytes": 599,
+        "sha256": "a8657073f24d57c2e05476633b37c2ea609280b3c7e4d00a38ce8ae2fa3f47f1"
+      },
+      "Cargo.lock": {
+        "bytes": 4467,
+        "sha256": "3264fb37fec7c8caf577176c87389f7a2e423b71d4b8ae97743c10dd683980f4"
+      },
+      "src/lib.rs": {
+        "bytes": 3591,
+        "sha256": "58c2b62457f7b48bd90bdab223aeb9cb6139edbfebe6ef46e71da3da7a6eaa2d"
+      },
+      "src/main.rs": {
+        "bytes": 427,
+        "sha256": "dfcb21bd6323f0b04fd4a5e3737f469972497ac8455b49d4045dfac3f15036ce"
+      },
+      "src/service.rs": {
+        "bytes": 10987,
+        "sha256": "be3fd9166c88648fec7bf88f3b7625affff6ae6096c63a246ffc821ffa56da80"
+      },
+      "tests/model.rs": {
+        "bytes": 2115,
+        "sha256": "4d215e8f87302b40b5895703425ae0c152c1bbde8063581ab6add9c29146cf2f"
+      },
+      "tests/fixture_driver.rs": {
+        "bytes": 1977,
+        "sha256": "3f2f7601dfdc672a2af159938b2eb2b9004503db5c2270a136d734e085867a65"
+      }
+    },
+    "dependency_repository_manifest_sha256": "0dc0af7f7df7669ebe48d3d32128678e6416dc2d8c2be4de0b5b8c0aee05670b",
+    "KernelObserver_lib_sha256": "55b6e15060445e1949ccb4a10a27019be620356a327af6114be1938fd8f06ebf",
+    "kernel_identity_lib_sha256": "17760f73db788e91810e9ba8c688955e5efd49efde6736922435085047efe131",
+    "upstream_dependency_bytes_changed": false
+  },
+  "toolchain": {
+    "image_sha256": "b6818cecd61a5e378fecbf25d7b0979360cf29fda9ad0801b4a21e2054f69678",
+    "rustc_version": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "cargo_version": "cargo 1.98.1 (797e8a9bc 2026-08-05)",
+    "rustfmt_version": "rustfmt 1.9.0-stable (48a229ceae 2026-09-01)",
+    "offline": true
+  },
+  "preserved_preceding_outcomes": {
+    "static_Cargo_merged_output_parser_refusal": "Source-only, no runtime RED.",
+    "capless_source_directory_setup_failure": {
+      "outer_receipt_sha256": "bcb37c0283351a30d35e9a4c8a92e7e4b1cc40ffca36c48de07e780cb9cb1ebc",
+      "before_Cargo_or_test_execution": true,
+      "compiled_assertion_RED": false
+    }
+  },
+  "compiled_publication_RED": {
+    "qualification": {
+      "bytes": 7814,
+      "sha256": "fb9fec7fcdcd40644ee403e0420998ba7604687f1b0f170aca3d1aa9f07db2d4"
+    },
+    "outer_receipt_sha256": "5d8ff53e2c9e353301ecfe23b4ba4f652f0ed0be7a676d81231918b572723690",
+    "inner_receipt_sha256": "fa7c7a2db13613bf0f6b1d5d12a7e2fff768af20973169a4ca6a64a058b41ba6",
+    "model_passed": 0,
+    "model_failed": 3,
+    "model_exit": 101,
+    "failure": "Initial positive Model::complete assertions returned false in deliberate publication stub; later assertions in those groups were not reached.",
+    "actual_service_publication_expectations_failed": 2,
+    "existing_lifecycle_controls_passed": 2,
+    "scope_limit": "Transport/Reader/Stop were scaffolded before RED; the passing controls are not preimplementation RED proof for those behaviors."
+  },
+  "same_frozen_functional_GREEN": {
+    "qualification": {
+      "bytes": 7888,
+      "sha256": "db6c1715af572456f9203a35a570b7a8aed60716d8d369b9d07869f8784fa04e"
+    },
+    "outer_receipt": {
+      "bytes": 21042,
+      "sha256": "ada11510d824ab084ffafc652267c97f2075bd3e9976fe01e8982c8e851530ca"
+    },
+    "inner_receipt": {
+      "bytes": 14079,
+      "sha256": "c2b25afb005c35ad222d000fe0f3fdc6b0cc99b593ebde1be976f05befe657ee"
+    },
+    "model_passed": 3,
+    "model_failed": 0,
+    "model_names": [
+      "healthy_empty_is_available_and_expires_on_getter",
+      "invalid_counts_clear_prior_success",
+      "original_deadline_and_withdrawal_never_publish_late_or_old_tokens"
+    ],
+    "service_cases": [
+      {
+        "name": "normal_kernel_empty",
+        "passed": true,
+        "controlled_collector": false,
+        "normal_production_binary": true
+      },
+      {
+        "name": "wait_and_EOF_before_publication",
+        "passed": true,
+        "controlled_collector": true,
+        "normal_production_binary": false
+      },
+      {
+        "name": "held_collector_Stop",
+        "passed": true,
+        "controlled_collector": true,
+        "normal_production_binary": false
+      },
+      {
+        "name": "queued_success_after_original_deadline",
+        "passed": true,
+        "controlled_collector": true,
+        "normal_production_binary": false
+      }
+    ],
+    "actual_kernel_collection": {
+      "isolated_namespace_independently_only_loopback": true,
+      "effective_capabilities": 0,
+      "normal_collector_exit": 0,
+      "local_interfaces": 0,
+      "address_records": 0,
+      "host_network_mutated": false
+    },
+    "closure": {
+      "host_actual_timely_wait_and_merged_PIPE_EOF": 11,
+      "inner_actual_timely_wait_and_merged_PIPE_EOF": 11,
+      "container_exit": 0,
+      "exact_CID_absent": true,
+      "same_daemon": true,
+      "all_selected_inputs_unchanged": true,
+      "cleanup_errors": []
+    }
+  },
+  "frozen_oracles": {
+    "model": {
+      "bytes": 1854,
+      "sha256": "e818f72e5deec9aead64b8db6ef081a156185ba4564d4f916da34818c8d1042e"
+    },
+    "service_boundary": {
+      "bytes": 8426,
+      "sha256": "529dcb59ece835f0ee6d38f3097f69ef3f03cb7128c6ad06451a186db30a0a31"
+    },
+    "private_collector": {
+      "bytes": 1890,
+      "sha256": "a4a5e77a17a8fd4cd5d1a785d5ff153ed3a5dea31b625f352968809280dc9065"
+    }
+  },
+  "formatter_bridge": {
+    "qualification": {
+      "bytes": 2311,
+      "sha256": "564539d473db13892cca7f657c75939302adefa203e52619f76d43c6e646e00a"
+    },
+    "diff": {
+      "bytes": 18122,
+      "sha256": "ec088c9d1a413f785c0d9bca6a1cc9a05a2aaa6cbcf6a258642ccabd5077a113"
+    },
+    "only_tool_commands": [
+      "rustfmt --version",
+      "cargo fmt --manifest-path <new-crate>"
+    ],
+    "functional_tests_repeated": false,
+    "upstream_dependencies_unchanged": true
+  },
+  "preserved_strict_check_failure": {
+    "qualification": {
+      "bytes": 1355,
+      "sha256": "dc05854910def9322570becd0046d93a79bb89899e0a2f0110e3fd17f9f1db59"
+    },
+    "fmt_passed": true,
+    "Clippy_exit": 101,
+    "diagnostics": "Two private cfg(test) fixture items unused in the normal bin test entry.",
+    "release_builds_started": false
+  },
+  "test_only_lint_successor": {
+    "diff": {
+      "bytes": 654,
+      "sha256": "d844fb45364345300f59cf391affd441041122f67792d5a5be280922e21d11e9"
+    },
+    "predicate": {
+      "bytes": 813,
+      "sha256": "e291bfb1b0f823301d1725f0971cefb4d0bc4ef007e89282207c5c6c051abcca"
+    },
+    "scope": "Only two reason-bearing allow(dead_code) attributes under existing cfg(test); deleting them restores prior service bytes. No production branch/assertion/deadline change.",
+    "functional_tests_repeated": false
+  },
+  "final_checks_and_release_build": {
+    "qualification": {
+      "bytes": 3422,
+      "sha256": "a178235bd949875d660130fcd8e06de89c9b17d5112bdc451f8e78ba59e32c76"
+    },
+    "outer_receipt": {
+      "bytes": 21057,
+      "sha256": "4c5f64779ed170f57338b0657348a4abb07afbb6e816a710c5ef50cc9e113fe8"
+    },
+    "inner_receipt": {
+      "bytes": 9835,
+      "sha256": "88e84eef7b573d406dfdc735f09ab2a4a5813e53bca9129758185a1a6e24cfad"
+    },
+    "whole_crate_fmt_check": true,
+    "strict_all_targets_Clippy_D_warnings": true,
+    "normal_release_exits": {
+      "host": 0,
+      "ARM": 0
+    },
+    "artifacts": {
+      "host": {
+        "bytes": 786112,
+        "sha256": "18981da4eba1c557328ec611b5671657873d1c9514e387500fb23eb434cdaffa",
+        "machine": "Advanced Micro Devices X86-64",
+        "interpreter": "/lib64/ld-linux-x86-64.so.2",
+        "private_fixture_cli_absent": true,
+        "executed": false
+      },
+      "ARM": {
+        "bytes": 819208,
+        "sha256": "46e74dae968a710e0c233f6aa3666ec0df6abac34bed802e7b1f2bc39c57d3cc",
+        "machine": "AArch64",
+        "interpreter": "/lib/ld-linux-aarch64.so.1",
+        "private_fixture_cli_absent": true,
+        "executed": false
+      }
+    },
+    "closure": {
+      "host_actual_timely_wait_and_merged_PIPE_EOF": 11,
+      "inner_actual_timely_wait_and_merged_PIPE_EOF": 10,
+      "container_exit": 0,
+      "exact_CID_absent": true,
+      "same_daemon": true,
+      "all_selected_inputs_unchanged": true,
+      "cleanup_errors": []
+    }
+  },
+  "unqualified": [
+    "ARM release execution or loading",
+    "normal release ELF execution",
+    "TUN creation/disappearance integration",
+    "installed service or PID1 lifecycle",
+    "client exact root-server identity enforcement",
+    "Settings or shell integration",
+    "Internet or route/transport reachability",
+    "signal/modem/physical-device behavior"
+  ],
+  "VM_launched": false,
+  "physical_device_accessed": false,
+  "host_network_mutated": false
+}

@@ -12,6 +12,19 @@ compile checks. The [public provenance](evidence/native-network-observer-provena
 records source hashes and summarized evidence; private audit files and guest logs
 are retained separately.
 
+## Owned status-service consumer
+
+The new [Rust status service](../native-network-status/README.md) reuses this
+observer unchanged. Its actual normal host service publishes healthy-empty0/0
+from an independently checked isolated namespace, while three controlled-worker
+cases qualify publication only after wait/EOF, held-reader Stop and late-success
+refusal. Fresh observer instances do not establish continuous interface lifetimes
+or persistent provider associations. Host/ARM release compilation is separate
+from this document's earlier actual ARM kernel/TUN execution; the new service
+has no installed, TUN, UI, Wi-Fi, Internet or phone qualification.
+See the [service proof](evidence/native-network-status-provenance.json) and
+[default-test/permanent-driver proof](../native-network-status/validation/test-entry.json).
+
 ## What the producer owns
 
 `KernelObserver::subscribe_current_namespace(until_boottime_ns)` retains the

@@ -1,0 +1,189 @@
+{
+  "schema": 1,
+  "Root_promoted_reviewed_source": true,
+  "evidence_class": "Original Rust host kernel/socket service plus controlled process-lifecycle fixtures. Normal host/ARM releases build-only.",
+  "crate_files": {
+    "Cargo.lock": {
+      "bytes": 4467,
+      "sha256": "3264fb37fec7c8caf577176c87389f7a2e423b71d4b8ae97743c10dd683980f4"
+    },
+    "Cargo.toml": {
+      "bytes": 612,
+      "sha256": "38125a70877f1ed12457294ab460b150463975972a22a564a4ef315f040acb51"
+    },
+    "README.md": {
+      "bytes": 4847,
+      "sha256": "cb0dc06fce500967d18a0c0fd8a38f25cc976f2f03f2235b5c65e55a5d685942"
+    },
+    "src/lib.rs": {
+      "bytes": 3591,
+      "sha256": "58c2b62457f7b48bd90bdab223aeb9cb6139edbfebe6ef46e71da3da7a6eaa2d"
+    },
+    "src/main.rs": {
+      "bytes": 427,
+      "sha256": "dfcb21bd6323f0b04fd4a5e3737f469972497ac8455b49d4045dfac3f15036ce"
+    },
+    "src/service.rs": {
+      "bytes": 10987,
+      "sha256": "be3fd9166c88648fec7bf88f3b7625affff6ae6096c63a246ffc821ffa56da80"
+    },
+    "tests/fixture_driver.rs": {
+      "bytes": 1977,
+      "sha256": "3f2f7601dfdc672a2af159938b2eb2b9004503db5c2270a136d734e085867a65"
+    },
+    "tests/model.rs": {
+      "bytes": 2115,
+      "sha256": "4d215e8f87302b40b5895703425ae0c152c1bbde8063581ab6add9c29146cf2f"
+    },
+    "tests/run_service_cases.py": {
+      "bytes": 4908,
+      "sha256": "5614fca037015d6e619df76451bb4a2e94096bdf57a533e443d6354b56d52acf"
+    },
+    "tests/service_cases.py": {
+      "bytes": 8426,
+      "sha256": "529dcb59ece835f0ee6d38f3097f69ef3f03cb7128c6ad06451a186db30a0a31"
+    },
+    "validation/local-kernel-reader.json": {
+      "bytes": 8924,
+      "sha256": "72676255399a1587e04e854009098d9013b8cd24e39af557352dd18f3a9ec96c"
+    },
+    "validation/test-entry.json": {
+      "bytes": 6636,
+      "sha256": "a469f4709fba6a13d4ce1c2e9391a3384f3f8a4b9dec830687417b318d84fda5"
+    }
+  },
+  "promotion_manifest": {
+    "bytes": 2964,
+    "sha256": "f3256a2d3f8a69cd710045387d9831c52f74e943899307d493d48182d5e9a91f"
+  },
+  "actual_default_test_RED": {
+    "qualification": {
+      "bytes": 2446,
+      "sha256": "2576645e2ff5870119cfcc8f6ab57107a7711f2c8955f3cb18a477c8e857dc58"
+    },
+    "successful_default_no_run_compile_exit": 0,
+    "default_Cargo_exit": 101,
+    "actual_helper_noargs_exit": 1,
+    "diagnostic": "Error: Kind(InvalidInput)",
+    "only_failed_target": "--test fixture-driver",
+    "model_tests_passed": 3,
+    "outer_receipt_sha256": "a23a41422746444faa13ad9d00031217e3601512bff89942c436f1086b151113",
+    "runtime_log_sha256": "ecad7fbb2e4795b795b5eef5976a5fef6c06193decc78a20461f771c0ed28a17"
+  },
+  "closed_GREEN": {
+    "qualification": {
+      "bytes": 9702,
+      "sha256": "bf594db96da7c40efddc47b3a9a1508dbfc9230179878db59051e9e97d23bc1e"
+    },
+    "outer_receipt": {
+      "bytes": 22021,
+      "sha256": "96023ac67c0cada723acd4faa8b897c26c1a54160122d9d6daec51e6fdb71303"
+    },
+    "inner_receipt": {
+      "bytes": 19183,
+      "sha256": "f6f56a5a161953fd0500a7995fb40d440f6b213c6700d35645d4e6f3d8a91e2c"
+    },
+    "default_Cargo_test_exit": 0,
+    "model_tests_passed": 3,
+    "model_tests_failed": 0,
+    "helper_noargs_entry_invoked": false,
+    "default_test_log": {
+      "bytes": 1721,
+      "sha256": "369f71c942713e4f18d042368b65c5922843ee53e08135a0586ae8d8d83dee23"
+    },
+    "whole_crate_fmt_check_passed": true,
+    "strict_all_target_Clippy_D_warnings_passed": true,
+    "strict_explicit_helper_Clippy_D_warnings_passed": true,
+    "explicit_named_helper_no_run_compile_exit": 0,
+    "public_driver_receipt": {
+      "bytes": 9023,
+      "sha256": "4921b9ecf7afc5aa4b7952ddfe53479e338894600f737a69bb2515855f69d381"
+    },
+    "permanent_service_cases": [
+      {
+        "name": "normal_kernel_empty",
+        "passed": true,
+        "normal_production_binary": true,
+        "controlled_collector": false
+      },
+      {
+        "name": "wait_and_EOF_before_publication",
+        "passed": true,
+        "normal_production_binary": false,
+        "controlled_collector": true
+      },
+      {
+        "name": "held_collector_Stop",
+        "passed": true,
+        "normal_production_binary": false,
+        "controlled_collector": true
+      },
+      {
+        "name": "queued_success_after_original_deadline",
+        "passed": true,
+        "normal_production_binary": false,
+        "controlled_collector": true
+      }
+    ],
+    "kernel_prerequisite": "Independently observed isolated onlyloopback namespace, real/effective root UID/GID and no effective capabilities. Normal debug service healthy-empty0/0. Controlled3/7 is authored lifecycle data only.",
+    "normal_release_exits": {
+      "host": 0,
+      "ARM": 0
+    },
+    "artifacts": {
+      "host": {
+        "bytes": 786112,
+        "sha256": "18981da4eba1c557328ec611b5671657873d1c9514e387500fb23eb434cdaffa",
+        "machine": "Advanced Micro Devices X86-64",
+        "interpreter": "/lib64/ld-linux-x86-64.so.2",
+        "private_fixture_cli_absent": true,
+        "executed": false
+      },
+      "ARM": {
+        "bytes": 819208,
+        "sha256": "46e74dae968a710e0c233f6aa3666ec0df6abac34bed802e7b1f2bc39c57d3cc",
+        "machine": "AArch64",
+        "interpreter": "/lib/ld-linux-aarch64.so.1",
+        "private_fixture_cli_absent": true,
+        "executed": false
+      }
+    },
+    "closure": {
+      "host_actual_timely_direct_wait_and_merged_PIPE_EOF": 11,
+      "inner_actual_timely_direct_wait_and_merged_PIPE_EOF": 15,
+      "public_driver_actual_timely_direct_wait_and_merged_PIPE_EOF": 4,
+      "container_exit": 0,
+      "exact_CID_removed_and_absent": true,
+      "same_daemon": true,
+      "all_selected_inputs_unchanged": true,
+      "cleanup_errors": []
+    }
+  },
+  "Root_independent_review": {
+    "actual_compiled_default_helper_failure_after_successful_compilation": true,
+    "unchanged_model_and_four_service_oracles": true,
+    "production_Rust_source_reviewed": true,
+    "all_selected_dependency_rows_match_Root": true,
+    "selected_source_and_candidate_rehashed": true,
+    "actual_wait_and_EOF_timestamps_against_original_cutoffs": true,
+    "wait_EOF_counts": {
+      "default_RED": 15,
+      "test_entry_GREEN": 30
+    },
+    "private_artifacts_and_credentials_published": false
+  },
+  "source_history": "Local publication-model assertion RED and same three model/four service-case GREEN precede formatting-only and narrow test-item lint annotation changes. Default-helper runtime RED then explicit-helper packaging GREEN; prior check failure retained. See crate validation records.",
+  "unchanged_primitive_observer": "native-network-state/src/lib.rs SHA55b6e15060445e1949ccb4a10a27019be620356a327af6114be1938fd8f06ebf",
+  "limits": [
+    "ARM execution or loading",
+    "normal release ELF execution",
+    "TUN creation/disappearance integration",
+    "installed-service or PID1 lifecycle",
+    "client exact root-server identity enforcement",
+    "Settings or shell integration",
+    "Internet or route/transport reachability",
+    "modem/signal/physical-device behavior"
+  ],
+  "physical_phone_accessed": false,
+  "VM_launched_for_this_service": false
+}

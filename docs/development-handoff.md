@@ -16,6 +16,22 @@ phone. Keep synthetic emulator, original-code, ARM64/QEMU and physical evidence
 separate. Do not equate registration, submission or API success with carrier
 acceptance, delivery, native call state or working physical hardware.
 
+A new [native Rust local-network status service](../native-network-status/README.md)
+uses the existing kernel observer in one owned finite collector. It publishes
+coarse interface/address-record counts, including truthful healthy-empty0/0;
+these counts do not claim Wi-Fi, Internet or modem connectivity. Actual host
+kernel/socket tests pass alongside held-reader Stop and late-success rejection,
+with permanent reproducible boundary tests and separate host/ARM release builds.
+Installed deployment, a client/UI join and physical connectivity remain open.
+
+Next composition priorities are one current installed ARM service/app cohort
+with fresh autostart and Messages data preserved across package replacement,
+then one prepared navigation session across Settings, Messages and Sounds with
+live Omarchy theme change and brightness after returning. Reuse existing authority
+and backends; cold graphical startup stays an explicit gate. Keep Source/auth
+investigations parked and do not expand coarse network counters into a broader
+connectivity campaign before those joins.
+
 The [native Rust brightness service](native-brightness.md) now joins its real Rust client,
 owned worker and authored attribute backend in six process/socket cases. Unchanged
 fresh readonly observations now preserve the state revision, so background reads

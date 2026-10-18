@@ -1,0 +1,25 @@
+[package]
+name = "pokelinux-network-status"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+pokelinux-network-state = { path = "../native-network-state" }
+pokelinux-kernel-identity = { path = "../native-kernel-identity" }
+rustix = { version = "=1.1.5", features = ["fs", "net", "process", "time", "pipe", "event"] }
+serde = { version = "=1.0.229", features = ["derive"] }
+serde_json = "=1.0.154"
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[[bin]]
+name = "pokelinux-network-status"
+path = "src/main.rs"
+
+[[test]]
+name = "fixture-driver"
+path = "tests/fixture_driver.rs"
+harness = false
+test = false

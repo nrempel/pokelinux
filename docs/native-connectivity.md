@@ -5,6 +5,12 @@ requires an explicit Unix D-Bus address and pins the daemon's unique owner on
 that connection. It is a tested backend boundary, not an installed connectivity
 service or a working Pixel Wi-Fi/Bluetooth stack.
 
+The separate [native local-network status service](../native-network-status/README.md)
+now uses Rust kernel observations directly. It does not depend on this adapter or
+NetworkManager, and exposes only coarse readonly counts. Its host kernel/socket
+and collector-lifecycle proof does not close association, Wi-Fi/Bluetooth control,
+Internet reachability or physical connectivity requirements.
+
 Every property/device query targets the pinned unique name. Before reading and
 before publishing, the adapter checks that the well-known NetworkManager name
 still belongs to that owner. The observation includes the bus ID as well as the

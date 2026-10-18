@@ -84,6 +84,14 @@ follows all three driver states through that service/client path, with original
 Pixel10-profile captures. Physical Pixel behavior remains a separate gate.
 Host/ARM64 service release builds pass.
 
+A new [native Rust local-network status service](native-network-status/README.md)
+uses the existing kernel observer in one owned finite collector. It publishes
+coarse interface/address-record counts, including truthful healthy-empty0/0;
+these counts do not claim Wi-Fi, Internet or modem connectivity. Actual host
+kernel/socket tests pass alongside held-reader Stop and late-success rejection,
+with permanent reproducible boundary tests and separate host/ARM release builds.
+Installed deployment, a client/UI join and physical connectivity remain open.
+
 The [native Rust brightness service](docs/native-brightness.md) now joins its real Rust client,
 owned worker and authored attribute backend in six process/socket cases. Unchanged
 fresh readonly observations now preserve the state revision, so background reads
