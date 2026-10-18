@@ -1,0 +1,396 @@
+{
+  "schema": 1,
+  "passed": true,
+  "scope": "One genuine fresh installed353-package ARM cold boot of current battery+brightness owners after two-unit installed-boundary RED and explicit production staging/preparation. Readonly realGPIO absence/recovery and honest unavailable battery; no GUI/Source/Set/hardware.",
+  "Root_independent_actual_terminal_and_timestamp_reviews": {
+    "preparation": {
+      "bytes": 1446,
+      "sha256": "6690760011d427ee82214addb8d07a897bef7ea4196259bf0c0bdc8b832d518b"
+    },
+    "cold": {
+      "bytes": 3892,
+      "sha256": "ae84ca392a3f9eb877af7701eda46b737370ea216fa52ec556c701eb53314833"
+    }
+  },
+  "actual_Root_terminal_exits": {
+    "preparation": {
+      "session": 35464,
+      "exit": 0
+    },
+    "cold": {
+      "session": 81494,
+      "exit": 0
+    }
+  },
+  "current_normal_providers": {
+    "brightness_ARM": {
+      "bytes": 824216,
+      "sha256": "e194a8c294d2be7f1dca0278bed66caa5fea04e7a48afbdf4997e89c46e41d46"
+    },
+    "battery_ARM": {
+      "bytes": 722472,
+      "sha256": "6cacd19ba989d16f431ed07e12f646a98a73e47aefbb0ce60c70560713e1022b"
+    },
+    "readonly_probe_ARM": {
+      "bytes": 730272,
+      "sha256": "19dc65af2322cfe291349b9d0c7c549c0824d35aa5aca4d6483882ef3ba45b86",
+      "ELF_machine": 183,
+      "native_execution_qualified": false
+    }
+  },
+  "provider_builds": {
+    "brightness": {
+      "bytes": 9006,
+      "sha256": "d18cb859f53050bf008426a534da39042179261b86eeffb860f082fc4375a6c1"
+    },
+    "battery": {
+      "bytes": 16007,
+      "sha256": "b43ec733bdba71de2118f5c61c0bb3f0e8151697e3bb928f93d8ba5532a75770"
+    },
+    "current_query_probe": {
+      "bytes": 9158,
+      "sha256": "836e6d0f6c55fc4cc0b0db785513654ee9f85a9a5c07fa242c7be1ef847d5a6b"
+    }
+  },
+  "production_host_staging": {
+    "qualification": {
+      "bytes": 2147,
+      "sha256": "ae9e58029b7ecd53a49aa67a4e8c7e0e9881b67e18bec379c22a03bf2c353ce1"
+    },
+    "actual_result": {
+      "bytes": 5130,
+      "sha256": "2d03748420fff237b7df8fd0e1338ce1ee108652d00ac30e5ba38932adade0c0"
+    },
+    "manifest": {
+      "bytes": 1289,
+      "sha256": "b97782ced0442f36e72f0e386c9b70fc5e244d716ed2e9d6298f4f2e11b2a2f5"
+    },
+    "actual_files": 7,
+    "actual_parent_waits": 3,
+    "actual_merged_PIPE_EOF": 3,
+    "no_live_root_install": true
+  },
+  "payload": {
+    "manifest": {
+      "bytes": 3867,
+      "sha256": "43ff10652b14612930fd14580bd941196420f7b9f671a08cb7af640886e3ba94"
+    },
+    "archive": {
+      "bytes": 2344960,
+      "sha256": "2e91f6acb40c493ae473e5cabe2bd55cdc435f6f4d2589675071988f8be258f9"
+    },
+    "regular_members": 14,
+    "identical_actual_bytes_for_both_boots": true
+  },
+  "source_consumers_for_possible_publication": {
+    "identical_python_consumer": {
+      "bytes": 12577,
+      "sha256": "856cd2a4b3e9af35aa51c09db896597a76808a7fc4c7905a198e7631f52a4cbc"
+    },
+    "actual_compiled_formatted_readonly_probe": {
+      "bytes": 2043,
+      "sha256": "e6b49450571160b0a0284ce8280ffa7739f52e422b99778310c404996d6636b5"
+    },
+    "original_fixture_and_format_delta": {
+      "bytes": 1304,
+      "sha256": "1431efc029b68f0c5fa73eade85ca2fe9fb6adf268f920ec6126e677fe15e8c2"
+    },
+    "owned_helper": {
+      "bytes": 12712,
+      "sha256": "5a738b9529a1a0e5d5b0bd20e27e2ec4244d4e61d7c8e0dad96fe1ffbef3c423"
+    }
+  },
+  "preparation": {
+    "selection": {
+      "bytes": 14788,
+      "sha256": "341ad553a931b11c2f1cc49e429588ad53fd8801c3ce74159018f3785d272f99"
+    },
+    "command": {
+      "bytes": 1403,
+      "sha256": "10435d320ab051fff853cb4c303ddc5685a0a7f1446125c1bfc2cc48211128e6"
+    },
+    "execution": {
+      "bytes": 19005,
+      "sha256": "4030f12473174f820f749abc14e0a04cee226e9679b7ff8d7adddaaf7e71e9c7"
+    },
+    "guest": {
+      "bytes": 18313,
+      "sha256": "a98ee742ee000ae7326143d27e8076a4ff1974e587511a331baa7d030a895573"
+    },
+    "boot": {
+      "bytes": 4688,
+      "sha256": "ca2e53f1b21fc319586ab7f8d1a8a9cd517baa758b3980090bf0e05c02caf856"
+    },
+    "original_missing_boundary_RED": {
+      "bytes": 4550,
+      "sha256": "b62d896f60f5fc5fb141510acbb21fca46f64872dd4c16ccfe32fe9da01ba118"
+    },
+    "both_missing_unit_assertions_not_setup": true,
+    "actual_frozen_consumer_expected_exit": 1,
+    "installed_current_ARM_ELFs_ldd_r_passed": true,
+    "enablement_while_stopped_and_target_Wants_checked": true,
+    "manual_readiness_and_normal_pair_Stop_sanity": true,
+    "manual_start_is_not_cold_autostart_proof": true,
+    "prepared_layer": {
+      "bytes": 22544384,
+      "sha256": "331980c21e5edaddad2827bb3887a3fd6fe89bee8d29a12bf7b8ed8272994cc9"
+    },
+    "export_only_after_actual_QEMU_wait0_and_handle_close": true,
+    "boot_id": "42154936-de2c-4e41-bddd-57eb4b2d90f9",
+    "invocations": {
+      "battery": "c88b76f45ee440ada2651b11318ef7bb",
+      "brightness": "7e28794e67494c6e9839d228d169e7fc"
+    }
+  },
+  "cold": {
+    "selection": {
+      "bytes": 17540,
+      "sha256": "d003bd5365f408cc5894331ed18fd32d2bf723a5459083d23af00d4dcdc9c797"
+    },
+    "command": {
+      "bytes": 1613,
+      "sha256": "d49de63286112012aa10ad74e4b28e150c335e727c5f9f2277cfe07b77d901a8"
+    },
+    "execution": {
+      "bytes": 20229,
+      "sha256": "8505d257152d6ba89012ede2155384066a8ff74b05b7df6cba059e19076e2fc1"
+    },
+    "guest": {
+      "bytes": 7447,
+      "sha256": "1d6376f6f57b8e4b8e8a2c52ee05001ca57e378828e5ffdf644e62b5f9995327"
+    },
+    "boot": {
+      "bytes": 8077,
+      "sha256": "346e92e6120939761227f8a224dd951d7833ae1c0b7c0b3de19440c363ad9431"
+    },
+    "same_frozen_consumer_result": {
+      "bytes": 27164,
+      "sha256": "99d03c0ae882dc2f14c2bac7ad69c06fefe6832095054bfbe0662d4bc52c1c95"
+    },
+    "boot_id": "da7b9a28-5a8e-4925-b2f2-0a07c7eb52c0",
+    "invocations": {
+      "battery": "150c5fdc44714c5d8ae1f09b29dd7051",
+      "brightness": "34f65c0af6bb43ccaaa3b2e74e14ecff"
+    },
+    "fresh_boot_and_invocations_vs_preparation": true,
+    "already_active_enabled_PID1_owners_before_consumer": true,
+    "no_install_reload_enable_start_or_modprobe_before_active_check": true,
+    "fresh_overlay_over_readonly_prepared_raw_chain": true,
+    "same_Main_and_invocations_through_all_observations": true,
+    "normal_owner_executable_and_root_socket_credential_readiness": true,
+    "battery_completed_observation": {
+      "available": false,
+      "capacity_percent": null,
+      "revision": 4,
+      "schema": 1,
+      "status": null,
+      "until_ns": "0"
+    },
+    "brightness_initial": {
+      "kernel": {
+        "max_brightness": 1,
+        "brightness": 1,
+        "actual_brightness": 1
+      },
+      "Client": {
+        "actual_typed_Client_Inspect": true,
+        "connected": true,
+        "last_set_uncertain": false,
+        "observation": {
+          "actual": 1,
+          "max": 1,
+          "requested": 1
+        },
+        "original_until_ns": "26457506243",
+        "pending": false,
+        "requested_percent": null,
+        "revision": 1,
+        "schema": 1,
+        "until_ns": "27471373605"
+      }
+    },
+    "brightness_absent": {
+      "actual_typed_Client_Inspect": true,
+      "connected": true,
+      "last_set_uncertain": false,
+      "observation": null,
+      "original_until_ns": "26767266624",
+      "pending": false,
+      "requested_percent": null,
+      "revision": 2,
+      "schema": 1,
+      "until_ns": "0"
+    },
+    "brightness_recovered": {
+      "kernel": {
+        "max_brightness": 1,
+        "brightness": 1,
+        "actual_brightness": 1
+      },
+      "Client": {
+        "actual_typed_Client_Inspect": true,
+        "connected": true,
+        "last_set_uncertain": false,
+        "observation": {
+          "actual": 1,
+          "max": 1,
+          "requested": 1
+        },
+        "original_until_ns": "27061928214",
+        "pending": false,
+        "requested_percent": null,
+        "revision": 3,
+        "schema": 1,
+        "until_ns": "28076734249"
+      }
+    },
+    "three_foreground_queries_each_original_one_second_cutoff_wait_EOF": true,
+    "whole_bundle_Stop": {
+      "final": {
+        "battery": {
+          "LoadState": "loaded",
+          "ActiveState": "inactive",
+          "SubState": "dead",
+          "UnitFileState": "enabled",
+          "InvocationID": "150c5fdc44714c5d8ae1f09b29dd7051",
+          "MainPID": "0",
+          "Result": "success",
+          "ExecMainCode": "1",
+          "ExecMainStatus": "0",
+          "ControlGroup": ""
+        },
+        "brightness": {
+          "LoadState": "loaded",
+          "ActiveState": "inactive",
+          "SubState": "dead",
+          "UnitFileState": "enabled",
+          "InvocationID": "34f65c0af6bb43ccaaa3b2e74e14ecff",
+          "MainPID": "0",
+          "Result": "success",
+          "ExecMainCode": "1",
+          "ExecMainStatus": "0",
+          "ControlGroup": ""
+        }
+      },
+      "both_Main_pidfds_dead": true,
+      "both_cgroups_empty": true,
+      "both_sockets_absent": true,
+      "observed_descendants_retained_and_dead": 0,
+      "fixture_parent_wait_for_PID1_children_claimed": false
+    }
+  },
+  "closure_counts_by_domain": {
+    "preparation": {
+      "inner_boundary_RED": {
+        "actual_direct_parent_waits": 3,
+        "actual_merged_PIPE_EOF": 3,
+        "all_actual_timestamps_before_original_cutoffs": true
+      },
+      "guest": {
+        "actual_direct_parent_waits": 19,
+        "actual_merged_PIPE_EOF": 19,
+        "all_actual_timestamps_before_original_cutoffs": true
+      },
+      "boot": {
+        "actual_direct_parent_waits": 2,
+        "actual_merged_PIPE_EOF": 2,
+        "all_actual_timestamps_before_original_cutoffs": true
+      },
+      "host": {
+        "actual_direct_parent_waits": 10,
+        "actual_merged_PIPE_EOF": 10,
+        "all_actual_timestamps_before_original_cutoffs": true
+      }
+    },
+    "cold": {
+      "consumer": {
+        "actual_direct_parent_waits": 25,
+        "actual_merged_PIPE_EOF": 25,
+        "all_actual_timestamps_before_original_cutoffs": true
+      },
+      "guest": {
+        "actual_direct_parent_waits": 7,
+        "actual_merged_PIPE_EOF": 7,
+        "all_actual_timestamps_before_original_cutoffs": true
+      },
+      "boot": {
+        "actual_direct_parent_waits": 3,
+        "actual_merged_PIPE_EOF": 3,
+        "all_actual_timestamps_before_original_cutoffs": true
+      },
+      "host": {
+        "actual_direct_parent_waits": 10,
+        "actual_merged_PIPE_EOF": 10,
+        "all_actual_timestamps_before_original_cutoffs": true
+      }
+    }
+  },
+  "same_original_bounds_seconds": {
+    "outer_work_close": [
+      820,
+      840
+    ],
+    "QEMU_boot_close": [
+      780,
+      800
+    ],
+    "guest_work_close": [
+      660,
+      700
+    ]
+  },
+  "closure": {
+    "actual_QEMU_exits": [
+      0,
+      0
+    ],
+    "both_exact_CIDs_absent": true,
+    "same_daemon_for_each_epoch": true,
+    "all_selected_and_external_inputs_unchanged": true,
+    "original353_inventory_unchanged_both_epochs": true,
+    "selected_Scope_handles_closed_no_cleanup_errors": true,
+    "PID1_service_exit_results_are_not_fixture_direct_parent_waits": true,
+    "no_extra_worker_reap_claim_when_no_descendant_observed_at_Stop": true
+  },
+  "kernel_and_backend_limits": {
+    "retained_generic_ARM_kernel": "7.1.6-1-aarch64-ARCH",
+    "kernel": {
+      "bytes": 44100096,
+      "sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b"
+    },
+    "raw353": {
+      "bytes": 17179869184,
+      "hash_scope": "inherited closed pinned provider; fresh full hash only by Root runner under shared input lock",
+      "sha256": "31e3ccf69a5496f61284abdcd049e8273e70e840407bab4e744c778f21e25842"
+    },
+    "packed_GPIO_DT": {
+      "bytes": 8239,
+      "sha256": "2e3c28ace9664c37cfc9d7659baf7d6a4f4e27f9c80d0017131ee7cdf723c259"
+    },
+    "matched_prebuilt_gpio_backlight_module_no_kernel_or_module_build": true,
+    "actual_driver_module_link_verified_by_consumer": true,
+    "authored_GPIO_device_only_not_hardware": true,
+    "binary_driver_max_brightness": 1,
+    "actual_brightness_is_requested_value_core_fallback": true,
+    "independent_luminance_or_physical_measurement_qualified": false,
+    "CONFIG_TEST_POWER_not_set_no_test_power_module_or_positive_battery_claim": true
+  },
+  "cohort_limits": {
+    "old32111_daemon_or_old6f8_query_runtime_proof_inherited": false,
+    "new_ReadonlyClient_crossbuild_plus_this_actual_native_query_runtime": true,
+    "brightness_Set_or_profile_transition_tested": false,
+    "GUI_Qt_Source_auth_or_fullphone_qualified": false,
+    "physical_phone_or_host_power_driver_access": false,
+    "existing_unrelated_failed_epochs_unchanged": true
+  },
+  "private_closed_qualification": {
+    "bytes": 17478,
+    "sha256": "c656419d3eae42a000551610832a783af3a977719aeb200ced102c81aa166393"
+  },
+  "Root_independent_review": {
+    "all_original_timestamp_checks": true,
+    "bound_artifact_pins_checked": 33,
+    "large_raw_input": "Already checked by Root under shared lock and bound to original closed-runner before/after hashes.",
+    "public_consumer_and_compiled_formatted_probe_exact": true
+  }
+}

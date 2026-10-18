@@ -1,5 +1,13 @@
 # Installed audio and appearance services
 
+The current [ARM battery/brightness observation pair](native-installed-power-observation.md)
+now passes actual missing-unit RED, production seven-file staging and a distinct
+fresh automatic cold boot. The same brightness Main follows real virtual-GPIO
+presence→absence→recovery through the typed Rust client; battery completes an
+honest unavailable observation. Both PID1 services Stop normally with empty
+cgroups. This readonly headless pair does not inherit the earlier kernel Set or
+x86 graphical results and supplies no Pixel hardware qualification.
+
 Production systemd units now select the native Rust audio and appearance owners.
 A frozen actual ARM PID1 test first fails for both missing units, after verifying
 the original353-package guest. The same probe now passes after explicit image

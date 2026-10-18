@@ -7,6 +7,23 @@ The production entry opens local history only. Incoming SMS, modem registration,
 ACK/send, notification delivery and app data-release permission remain separate
 gates. No Binder supervisor, Source substitute or physical phone is involved.
 
+## Current production composition gap
+
+This standalone service and the graphical session owner's `Messages::History`
+each construct a Projector. They must not run writers against the same receipt
+and Inbox databases. The installed history profile enables this daemon with the
+session owner stopped; prepared app traces select the session-owned Projector
+and exclude the standalone unit. These are mutually exclusive test profiles,
+not a qualified combined phone configuration.
+
+The next join needs one installed daemon as sole Projector/background owner and
+a narrow private read-provider connection for the session actor. Session permission
+and Source checks remain at dispatch/publication; session cancellation or exit
+must cancel its reads without stopping the daemon. Daemon replacement must fence
+old requests, authority and cached generations. The existing daemon app endpoint
+runs a separate policy actor and is not a transparent backend for this purpose.
+This gap is separate from incoming SMS reception, which remains unqualified.
+
 ## Existing boundary and actual RED
 
 The frozen [history probe](../tools/native-installed-services/messages-history-probe.py)

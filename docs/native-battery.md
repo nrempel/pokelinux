@@ -1,5 +1,13 @@
 # Native battery observations
 
+The current [ARM battery/brightness observation pair](native-installed-power-observation.md)
+now passes actual missing-unit RED, production seven-file staging and a distinct
+fresh automatic cold boot. The same brightness Main follows real virtual-GPIO
+presence→absence→recovery through the typed Rust client; battery completes an
+honest unavailable observation. Both PID1 services Stop normally with empty
+cgroups. This readonly headless pair does not inherit the earlier kernel Set or
+x86 graphical results and supplies no Pixel hardware qualification.
+
 The Rust battery service observes capacity and charging status through Linux
 `power_supply`, independently of the suspend authority and charging policy.
 Unavailable, malformed, removed or expired input clears the percentage and status.

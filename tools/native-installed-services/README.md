@@ -100,3 +100,34 @@ Use a fresh output path. These tests launch only their own finite children and
 access no service, power-supply driver or phone. Actual RED, the deadline-field
 correction and final five-case GREEN are recorded in the
 [hash-only provenance](../../docs/evidence/native-owned-timeout-provenance.json).
+
+
+`power-observation-probe.py` is the exact frozen generic ARM battery/brightness
+pair consumer. The recorded VM selects it unchanged as
+`/run/pokelinux-pair-inputs/source/cold-consumer.py`, with `owned.py` alongside.
+The input root also contains `bundle-manifest.json`, the original353 inventory
+at `source/expected-installed353.txt`, and the separately compiled
+`fixture-bin/brightness-readonly-probe`. Only the enclosing preparation installs
+and enables the seven-file bundle; this consumer never does so.
+
+```sh
+python3 /run/pokelinux-pair-inputs/source/cold-consumer.py \
+  --output /results/cold-consumer.json \
+  --until-ns "$POKELINUX_VM_ORIGINAL_UNTIL_NS" \
+  --close-ns "$POKELINUX_VM_ORIGINAL_CLOSE_NS"
+```
+
+The same command on the original image must first report two missing installed-unit
+assertions. Only a distinct fresh boot of the prepared layer qualifies enabled
+PID1 autostart. Battery must complete truthful unavailable/null state; the real
+GPIO backlight must disappear and recover at increasing Client revisions in the
+same Main. Both units must Stop normally with absent sockets and empty cgroups.
+
+`brightness-readonly-probe.rs` is the exact formatted source compiled for this
+consumer. Select it as a private bin named `brightness-readonly-probe` in a
+disposable copy of the current `native-brightness` manifest; keep its normal
+features empty and build ARM Release with the retained locked dependencies. It
+uses the production typed Client and accepts only an original absolute BOOTTIME
+deadline of at most one second. It has no Set mode or device-path input. See
+[the pair report](../../docs/native-installed-power-observation.md) for exact
+source/artifact hashes, build checks, two-boot results and limits.

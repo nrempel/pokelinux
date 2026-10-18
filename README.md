@@ -103,6 +103,14 @@ remain distinct. A generic ARM kernel/PID1 run now drives the real LinuxBackligh
 class through a virtual GPIO driver: raw0→1→0, then Unavailable after device removal,
 with normal Stop. The matched Pixel panel and physical display gates remain open.
 
+The current [ARM battery/brightness observation pair](docs/native-installed-power-observation.md)
+now passes actual missing-unit RED, production seven-file staging and a distinct
+fresh automatic cold boot. The same brightness Main follows real virtual-GPIO
+presence→absence→recovery through the typed Rust client; battery completes an
+honest unavailable observation. Both PID1 services Stop normally with empty
+cgroups. This readonly headless pair does not inherit the earlier kernel Set or
+x86 graphical results and supplies no Pixel hardware qualification.
+
 The [normal Settings app](native-settings-ui/README.md) now passes seven frozen Rust socket/C ABI
 groups after compiled assertion RED, plus a native Qt6.12 build/install and real
 unprivileged adapter/QML construction. Rust owns transport, state, deadlines and

@@ -32,6 +32,14 @@ and backends; cold graphical startup stays an explicit gate. Keep Source/auth
 investigations parked and do not expand coarse network counters into a broader
 connectivity campaign before those joins.
 
+Messages currently has two alternative Projector owners: standalone daemon and
+session History. Never run both against one database. Installed headless and
+prepared app profiles remain exclusive and do not qualify combined phone
+composition. Prioritize the [private read-provider join](native-installed-messages-history.md#current-production-composition-gap)
+so one daemon owns background history while the session actor retains permission
+checks and cancels only its own reads. Do not forward the old app endpoint or
+translate session shutdown into daemon Stop.
+
 The [native Rust brightness service](native-brightness.md) now joins its real Rust client,
 owned worker and authored attribute backend in six process/socket cases. Unchanged
 fresh readonly observations now preserve the state revision, so background reads
@@ -42,6 +50,14 @@ Separate lifecycle adapter, installed configuration and constructor qualificatio
 remain distinct. A generic ARM kernel/PID1 run now drives the real LinuxBacklight
 class through a virtual GPIO driver: raw0→1→0, then Unavailable after device removal,
 with normal Stop. The matched Pixel panel and physical display gates remain open.
+
+The current [ARM battery/brightness observation pair](native-installed-power-observation.md)
+now passes actual missing-unit RED, production seven-file staging and a distinct
+fresh automatic cold boot. The same brightness Main follows real virtual-GPIO
+presence→absence→recovery through the typed Rust client; battery completes an
+honest unavailable observation. Both PID1 services Stop normally with empty
+cgroups. This readonly headless pair does not inherit the earlier kernel Set or
+x86 graphical results and supplies no Pixel hardware qualification.
 
 The [normal Settings app](../native-settings-ui/README.md) now passes seven frozen Rust socket/C ABI
 groups after compiled assertion RED, plus a native Qt6.12 build/install and real
