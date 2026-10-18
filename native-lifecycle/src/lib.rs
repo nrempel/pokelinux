@@ -7,6 +7,8 @@ pub mod authority;
 pub mod brightness;
 mod brightness_session;
 pub mod camera;
+pub mod connectivity;
+mod connectivity_session;
 pub mod display;
 pub mod ipc;
 pub mod lock;
@@ -29,6 +31,7 @@ pub enum Permission {
     MessagesRead,
     MediaRoute,
     DisplayBrightness,
+    NetworkControl,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
@@ -48,6 +51,8 @@ pub struct Profile {
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(tag = "op", rename_all = "snake_case", deny_unknown_fields)]
 pub enum AppRequest {
+    ConnectivitySet { request: connectivity::Request },
+    ConnectivityStatus {},
     BrightnessSet { request: brightness::Request },
     BrightnessStatus {},
     MediaRoute { request: audio::Request },
@@ -95,6 +100,13 @@ pub enum AdminRequest {
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 #[serde(tag = "result", rename_all = "snake_case", deny_unknown_fields)]
 pub enum Reply {
+    ConnectivityCompleted {
+        state: connectivity::State,
+    },
+    ConnectivityState {
+        state: connectivity::State,
+        can_control: bool,
+    },
     BrightnessCompleted {
         state: brightness::State,
     },

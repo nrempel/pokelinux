@@ -678,6 +678,15 @@ installed deployment, arbitrary blocked-kernel reclamation, actual suspend, ARM
 and all hardware gates remain open. Read-only counts and NetworkManager
 reference evidence remain separate.
 
+The later [registered app connectivity path](native-connectivity-actor.md) now
+passes actual UID11050 launch and durable NetworkControl grant through the
+existing actor to Main and real packets. Traffic survives actual app exit; a
+fresh generation receives newer observations and explicitly Disconnects with
+independent removal/quiet. A genuine behavioral RED precedes the implementation;
+114 default lifecycle tests and strict Clippy pass. This Rust process fixture
+uses authored session/admin facts. Normal Settings engine/window, installed
+selection, ARM and every physical-phone gate remain open. No matrix row is complete.
+
 ## Completion matrix
 
 Every row requires permission boundaries, error and recovery behavior, service restart tests, and relevant offline integration tests. Device-dependent rows additionally require later authorized Pixel verification. An unavailable feature must be explicit in the UI and release report.

@@ -6,21 +6,16 @@
 
 The target is Arch Linux ARM, Hyprland, native phone apps and Rust services for calls, messages, camera, power and other phone functions. The initial hardware strategy uses Google's matched Pixel kernel, modules and firmware. Replacing Android framework userspace is the goal; it is not yet achieved. The [completion criteria](docs/smartphone-goal.md#completion-matrix) require native service integration; Android framework tests provide reference evidence. Hyprland, Aquamarine and Qt remain C++ dependencies. The [graphics critical-path decision](docs/runtime-language-decision.md#graphics-critical-path) selects normal upstream compositor initialization for the integrated app tracer; the custom Rust render executor remains component research.
 
-The [persistent Rust connectivity worker](docs/native-connectivity-worker.md) now
-passes real fixed IPv4 traffic, background readback after fixture-principal
-withdrawal, and explicit Disconnect. Stopped-worker tests also pass original
-deadline expiry without late mutation and responsive Stop with a queued command.
-An actual child/held-pipe regression fences cached readiness after wait while
-retaining custody through EOF. These are isolated host results; real
-permissions/Settings, installed deployment, ARM and all phone gates remain open.
-
-The [root-private Rust connectivity Main/client](docs/native-connectivity-private-ingress.md)
-now passes the unchanged packet consumer against the final source: real Connect,
-traffic after requester close, two newer observations and explicit Disconnect
-with independent address removal/quiet. A real Unix accept-error RED precedes
-the stop guard; the frozen regression, both active library tests, eight owner
-tests, formatting and strict Clippy pass. This is an isolated host endpoint;
-Settings, actor grants, installed deployment, ARM and phone gates remain open.
+The [registered app connectivity path](docs/native-connectivity-actor.md) now
+passes a durable permission grant through the existing lifecycle actor to the
+normal Rust Main and real packets. The connection survives actual app exit; a
+fresh generation observes it and explicitly Disconnects with independent address
+removal and silence. A genuine refusing-actor RED precedes the implementation;
+114 default lifecycle tests, six normal binaries and strict Clippy pass. This
+uses an actual UID11050 Rust process fixture. The normal Settings window/client,
+installed selection, ARM, Wi-Fi/Internet and all phone gates remain open.
+Earlier [private Main](docs/native-connectivity-private-ingress.md) and
+[persistent-worker](docs/native-connectivity-worker.md) cohorts remain separate.
 
 The [app-local Rust Sounds engine](docs/native-sounds-rust-client.md) now owns
 request packets, deadlines, replies, pagination, queued choices and the accepted
@@ -513,7 +508,7 @@ production session completion and all phone gates remain open.
 | Camera Binder boundary | Original generated NDK dispatcher/proxy and independent Rust client pass error-count omission, real FD transfer/release, 64-cycle FD bounds and peer death with SELinux enforcing. [Report](docs/native-camera-boundary.md) · [Evidence](docs/evidence/native-camera-boundary.json) | Camera service, exact provider ABI, gralloc/sync_file/DMA, capture and ARM64/device qualification |
 | Native kernel network observation | Actual ARM kernel RED then unchanged-oracle GREEN: an unprivileged Rust observer retains its namespace, observes one real TUN link and distinct IPv4 local/peer plus IPv6, then withdraws after the helper closes its sole TUN FD. All32 direct child waits/EOF and input/container closure qualify. [Report](docs/native-network-observer.md) · [Evidence](docs/evidence/native-network-observer-provenance.json) | Generic Arch kernel only; error/reuse/overflow/suspend controls, installed authority and matched Pixel kernel/policy remain open. A controlled Data-owner join is qualified separately above. No activation, APN or carrier proof |
 | Native connectivity boundary | Eight stages against original NetworkManager/private D-Bus pass with x86 and ARM64 user-QEMU Rust clients, including owner replacement, late-response expiry and actual daemon/bus death. [Report](docs/native-connectivity.md) · [Evidence](docs/evidence/native-connectivity-provenance.json) | Installed authority/permissions, scan/activation/IP/portal behavior, BlueZ, physical Wi-Fi/Bluetooth, coexistence and USB |
-| Native Rust fixed IPv4 control | The normal root-private Main and Rust client pass Connect, packets after requester close, fresh observations and explicit Disconnect/quiet. A separate actual accept-error RED→GREEN qualifies stopping before queued peer work; two active library and eight owner tests pass. Earlier persistent-worker expiry/Stop and cached-readiness cohorts remain separate. [Private ingress](docs/native-connectivity-private-ingress.md) · [Evidence](docs/evidence/native-connectivity-private-ingress-provenance.json) · [Worker](docs/native-connectivity-worker.md) | Isolated host virtual backend; real app permissions/Settings, installed deployment, arbitrary blocked-kernel reclamation, actual suspend, ARM, Wi-Fi/Internet and all phone gates remain open |
+| Native Rust fixed IPv4 control | Actual UID11050 app → durable NetworkControl grant → lifecycle actor → normal Rust Main → real packets. Traffic survives actual app exit; a fresh generation obtains newer readbacks and explicitly Disconnects with independent removal/quiet. Genuine behavioral RED precedes the implementation;114 default tests and strict Clippy pass. [Actor](docs/native-connectivity-actor.md) · [Evidence](docs/evidence/native-connectivity-actor-provenance.json) · [Earlier Main](docs/native-connectivity-private-ingress.md) | Isolated host virtual backend and Rust app fixture; normal Settings engine/window, installed deployment, arbitrary blocked-kernel reclamation, actual suspend, ARM, Wi-Fi/Internet and all phone gates remain open |
 | Native audio authority | The [installed audio/appearance pair](docs/native-installed-services.md) now passes actual ARM start/Stop and a separate fresh autostart with unavailable backend state and PID1 Main0. The [normal ARM tracer](docs/native-audio-arm-ui.md) passes five UI/audio/theme/loss/close groups and seven paired PCM stages, with native1080×2424 captures. [Lifecycle MediaRoute](docs/native-audio-lifecycle.md) passes64 Rust library tests and four actual host permission/audio groups; matching Qt passes30 socket behaviors. The separate [normal permission-aware ARM join](docs/native-audio-arm-lifecycle.md) now passes four touch/graph/PCM groups with root-authored authority. | Installed current Source/desktop/service management, app PCM broker, durable recovery, physical routes/AoC/carrier audio, DND/volume/haptics and idle power |
 | Native suspend coordination |27 checks pass on x86 and under an actual ARM64 kernel;24 component checks pass in ARM64 user-QEMU. Eight unmodified Android17 source cases qualify ordering and wake-object lifetime. [Report](docs/native-suspend.md) · [Evidence](docs/evidence/native-suspend-provenance.json) | Installed suspend authority, actual kernel abort/count semantics, stuck-driver supervision and Pixel wake/thermal/charging behavior |
 | Retained suspend Binder boundary |18 actual x86 Binder outcomes qualify frozen V1 NDK/Rust interoperability, wake-object transfer/destruction, authority death and both original libpower cache branches. [Report](docs/native-suspend-boundary.md) · [Evidence](docs/evidence/native-suspend-boundary-provenance.json) | Default service registration/VINTF/SELinux, production permissions, ARM64 Binder, supervised backend IO and real suspend/wake |

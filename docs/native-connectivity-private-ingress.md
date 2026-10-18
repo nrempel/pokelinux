@@ -1,5 +1,10 @@
 # Root-private connectivity Main and client
 
+The later [registered app actor tracer](native-connectivity-actor.md) now joins
+actual app credentials and durable NetworkControl grants to this unchanged Main.
+Its Rust process fixture is separate from the normal Settings engine/window,
+installed deployment, ARM control and physical hardware, which remain open.
+
 Current normal-Main/Rust-client packet execution passes on Main source
 `fca5b442…`, alongside the actual UNIX accept-error regression, two library tests,
 eight owner tests, formatting and strict Clippy.

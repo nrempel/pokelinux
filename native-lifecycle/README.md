@@ -184,3 +184,27 @@ phases before a genuine Qt wait15 Stop RED and repaired normal main wait0 GREEN.
 53 default host tests and13 selected host cases still pass; one ARM GUI case is
 separately selected. Authentication/Source/SMS seed remain authored; direct Qt API,
 secure presentation, production provisioning and hardware remain open.
+
+## Connectivity control
+
+The [registered app tracer](../docs/native-connectivity-actor.md) now joins actual
+UID11050 launch, durable NetworkControl grants and the normal private Rust Main
+to real packets. A genuine refusing-actor RED precedes the effect implementation.
+A successful connection survives actual app exit; a fresh app receives newer
+readbacks and explicitly Disconnects with independent removal and silence.
+
+`run_with_connectivity_services` takes an explicitly trusted provider. Other
+entrypoints select none. App requests contain only desired state and the original
+absolute BOOTTIME deadline. A current app/policy/lifecycle/session/backend stamp
+fences submission and publication; withdrawal closes the requester connection
+without Disconnect, retry or Stop. Separate private wire IDs and transport/worker
+incarnations prevent old intent reuse. Own Inspect occupancy permits reservation;
+remote pending effects block mutation. Readonly status refreshes preserve actual
+250ms timestamps and leases.
+
+Six normal binaries and114 staged default tests pass, including eight new
+controlled Authority/Provider plus real pidfd/socket groups, with formatting and
+strict all-target Clippy. The27 ignored include the copied integration case that
+runs separately. Registry identities remain unchanged. The normal Settings
+engine/window, installed selection, genuine session/authentication, ARM and
+hardware remain open; earlier private-Main evidence retains its own cohort.

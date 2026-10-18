@@ -40,7 +40,11 @@ The [packet proof](native-connectivity-packets.md) and later
 [persistent worker](native-connectivity-worker.md) add no qualified phone.
 The worker's host BOOTTIME freshness, stopped-worker controls and child/EOF
 custody are shared userspace behavior; each hardware backend still needs its own
-interface ownership, recovery, suspend and matched-kernel qualification.
+interface ownership, recovery, suspend and matched-kernel qualification. The later
+[actual app-grant/packet tracer](native-connectivity-actor.md) qualifies the
+existing actor boundary on Harbour with an actual UID11050 Rust app fixture;
+normal Settings/deployment, ARM control and physical devices remain open.
+
 
 ## Kernel choice
 

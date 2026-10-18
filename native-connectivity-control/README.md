@@ -78,3 +78,10 @@ two nonce roundtrips, fixture-principal withdrawal and explicit Disconnect with
 independent address removal and peer quiet. The [public fixture source](../tools/native-connectivity-control/)
 provides its controller/peer and setup contract. This remains separate from OS
 permissions, a real Settings window and an installed production service.
+
+The subsequent [registered app actor tracer](../docs/native-connectivity-actor.md)
+uses this unchanged Main/worker through the private Rust client and real durable
+grants. Actual app exit preserves packets; a fresh generation explicitly
+Disconnects. Normal Settings engine/window, installed deployment, ARM control
+and hardware remain open. This crate still receives no app-controlled identity,
+grant or backend targeting over its private wire.

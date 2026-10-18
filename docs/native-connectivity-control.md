@@ -21,6 +21,11 @@ now passes the same packet lifecycle through actual credentialed Unix sockets,
 with a separate real accept-error stopping regression. Real permissions/Settings,
 installed deployment, ARM and phone qualification remain open.
 
+The subsequent [registered app actor tracer](native-connectivity-actor.md) now
+adds actual app launch/credentials, durable NetworkControl grants and background
+packets after app exit. Its normal Settings engine/window, installed deployment,
+ARM control and phone gates remain open. Earlier cohorts above remain separate.
+
 ## Earlier foundation checkpoint
 
 Eight compiled Rust owner groups and one actual virtual-pair creation test now

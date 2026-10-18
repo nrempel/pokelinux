@@ -70,6 +70,16 @@ impl BrightnessStamp {
         &self.intent
     }
 }
+/// Current Settings control authority, never an application-supplied token.
+pub(crate) struct ConnectivityStamp {
+    authority: ReadStamp,
+    intent: crate::connectivity::Intent,
+}
+impl ConnectivityStamp {
+    pub(crate) fn intent(&self) -> &crate::connectivity::Intent {
+        &self.intent
+    }
+}
 struct SessionRead {
     source: String,
     revision: u64,
@@ -1141,6 +1151,86 @@ impl Authority {
             && self.current_stamp(&stamp.authority, backend, now)
             && crate::boottime_ns() < stamp.intent.until_ns
     }
+    pub(crate) fn connectivity_allowed(&mut self, pid: u32, uid: u32, backend: &str) -> bool {
+        !backend.is_empty()
+            && self
+                .begin_stamp(
+                    pid,
+                    uid,
+                    backend,
+                    Permission::NetworkControl,
+                    1000,
+                    crate::boottime_ns(),
+                )
+                .is_ok_and(|s| {
+                    s.app == crate::connectivity::APP
+                        && s.uid == crate::connectivity::UID
+                        && self.current_stamp(&s, backend, crate::boottime_ns())
+                })
+    }
+    pub(crate) fn begin_connectivity(
+        &mut self,
+        pid: u32,
+        uid: u32,
+        backend: &str,
+        request: crate::connectivity::Request,
+        now: u64,
+    ) -> Result<ConnectivityStamp, Reply> {
+        use pokelinux_connectivity_control::protocol::{SECOND, decimal};
+        let original_until = decimal(&request.until_ns).ok_or(Reply::Denied)?;
+        let remaining = original_until.checked_sub(now).ok_or(Reply::Denied)?;
+        if backend.is_empty() || remaining == 0 || remaining > SECOND {
+            return Err(Reply::Denied);
+        }
+        // Round up only for shared admission, then clamp back to the app's
+        // original absolute deadline and the captured current session lease.
+        let mut authority = self.begin_stamp(
+            pid,
+            uid,
+            backend,
+            Permission::NetworkControl,
+            remaining.div_ceil(1_000_000),
+            now,
+        )?;
+        if authority.app != crate::connectivity::APP || authority.uid != crate::connectivity::UID {
+            return Err(Reply::Denied);
+        }
+        authority.until = original_until.min(
+            authority
+                .session
+                .as_ref()
+                .map_or(original_until, |s| s.until),
+        );
+        let Some(id) = self.sequence.checked_add(1) else {
+            self.invalidate();
+            return Err(Reply::Unavailable);
+        };
+        self.sequence = id;
+        let until_ns = authority.until;
+        let stamp = ConnectivityStamp {
+            authority,
+            intent: crate::connectivity::Intent {
+                id,
+                connected: request.connected,
+                until_ns,
+            },
+        };
+        if !self.current_connectivity(&stamp, backend, crate::boottime_ns()) {
+            return Err(Reply::Denied);
+        }
+        Ok(stamp)
+    }
+    pub(crate) fn current_connectivity(
+        &self,
+        stamp: &ConnectivityStamp,
+        backend: &str,
+        now: u64,
+    ) -> bool {
+        stamp.authority.permission == Permission::NetworkControl
+            && now < stamp.intent.until_ns
+            && self.current_stamp(&stamp.authority, backend, now)
+            && crate::boottime_ns() < stamp.intent.until_ns
+    }
     pub(crate) fn brightness_allowed(&mut self, pid: u32, uid: u32, backend: &str) -> bool {
         self.begin_stamp(
             pid,
@@ -1413,7 +1503,9 @@ impl Authority {
             return immediate(Reply::Denied);
         };
         match request {
-            AppRequest::BrightnessSet { .. }
+            AppRequest::ConnectivitySet { .. }
+            | AppRequest::ConnectivityStatus {}
+            | AppRequest::BrightnessSet { .. }
             | AppRequest::BrightnessStatus {}
             | AppRequest::MessagesRead { .. }
             | AppRequest::CameraCapture { .. }
@@ -1430,6 +1522,7 @@ impl Authority {
                     Permission::MessagesRead
                         | Permission::MediaRoute
                         | Permission::DisplayBrightness
+                        | Permission::NetworkControl
                 ) || !(1..=5000).contains(&ttl_ms)
                     || !self.allowed(&app, permission)
                     || self.permits.len() >= MAX_PERMITS

@@ -1,0 +1,511 @@
+{
+  "schema": 1,
+  "status": "Registered app native connectivity actor: genuine RED, unchanged-consumer GREEN, formatting and strict QA on isolated host",
+  "public_base_commit": "dc44591db20a88af33a61f6b7f88bbf167d38899",
+  "final_runtime_aggregate_pending": false,
+  "evidence_class": "Native Rust on Harbour x86_64 Linux with isolated fixed-IPv4 virtual backend and authored session/admin facts",
+  "normal_Settings_engine_or_GUI": false,
+  "normal_session_owner_executable_selected": false,
+  "actor_entry": "Production loop in selected library-test process with existing cfg(test) helper selection and actual Apps wait observer",
+  "installed_deployment": false,
+  "new_ARM_or_physical_phone_evidence": false,
+  "physical_phone_access": false,
+  "sources": {
+    "native-lifecycle/Cargo.toml": {
+      "bytes": 752,
+      "sha256": "972ffc501bfee40e3d9d59a9963f2d607b4ae70fbf6571b0329c331310844e8c"
+    },
+    "native-lifecycle/Cargo.lock": {
+      "bytes": 25933,
+      "sha256": "ac419c35e0ac9552ee8083b3e54a2d3c9271efa80765565ee5989ed782645648"
+    },
+    "native-lifecycle/src/lib.rs": {
+      "bytes": 4659,
+      "sha256": "ad76984ba0683912386f63a0fbb4c3626a58ffe2cda4449cdb282685acd9b65a"
+    },
+    "native-lifecycle/src/authority.rs": {
+      "bytes": 84483,
+      "sha256": "aaa4cff7fb551307b6bf603a6666754075f17ff6173eeaa4da4fa6e8100847e7"
+    },
+    "native-lifecycle/src/service.rs": {
+      "bytes": 105815,
+      "sha256": "727b09d09ee46732bfd21abe7fe64443323c40b5e2df30b7f85d71bcb9b9cf32"
+    },
+    "native-lifecycle/src/connectivity.rs": {
+      "bytes": 8122,
+      "sha256": "84a53d2f5385df9a23f748f7617af1ceee77d9fb51bcee3a8f728771fa9cbf55"
+    },
+    "native-lifecycle/src/connectivity_session.rs": {
+      "bytes": 6877,
+      "sha256": "3bad15b3c4b22a59f000a7e064d4743bad5855c93f21d6e99ac0777f2ef3d6cc"
+    },
+    "native-lifecycle/src/connectivity_tests.rs": {
+      "bytes": 15474,
+      "sha256": "44b84b2b8775d4cc9313c0c8e4c9bea4d0cea162aac28fc7e9ad13bbc4be0282"
+    }
+  },
+  "frozen_consumer": {
+    "Cargo.toml": {
+      "bytes": 370,
+      "sha256": "9846cde64db9bf29255c6b6b03401b9d782da576b7ed43db5f3fc87fc1fc23c3"
+    },
+    "Cargo.lock": {
+      "bytes": 7504,
+      "sha256": "1298cea9a98511481dece81bc8b5b5b3176e780c3e62226391c0c8e0bf7f48df"
+    },
+    "settings-connectivity-app.rs": {
+      "bytes": 7846,
+      "sha256": "1f77c1d9d94b5d14c62f6eadf25796d51954bc90508fcd882cd2888e9cab5d5e"
+    },
+    "service_connectivity_actor_tests.rs": {
+      "bytes": 27735,
+      "sha256": "03a2d39bdb61b0b580862ae6de8395703846af5778f876f92eca5f7d5a3c2619"
+    },
+    "controller.py": {
+      "bytes": 22594,
+      "sha256": "7015c80d73881ee1a2cfd56cc1643363f7e2f584f5f7316b0adb8ae9adaa3fba"
+    },
+    "peer.py": {
+      "bytes": 10834,
+      "sha256": "83132acf9befb9ed901d22221dd64f493ff736357a58faa5404b5a9825ad05cb"
+    }
+  },
+  "behavioral_RED": {
+    "outer": {
+      "bytes": 276459,
+      "sha256": "81b61afa978e30a2db081fb7264d4b62a23c0363408d579a63f79a769f4a008f"
+    },
+    "build": {
+      "bytes": 36775,
+      "sha256": "eeb5bb936850c269bbca9e4726a6908e6adecf46cf163d178662f48fdc334f35"
+    },
+    "inner": {
+      "bytes": 18634,
+      "sha256": "f88f1c86c16100443e42c20ddb3c20bfb337300acedf5fd363c34a3ee1d7b95c"
+    },
+    "Root_review": {
+      "bytes": 1635,
+      "sha256": "48776e0aacde3c7b619d1a6d9eb2d6520ddfd5fc12fdfb0899acc18fc2f283fd"
+    },
+    "qualified": true,
+    "product_passed": false,
+    "driver_exit_after_cleanup": 101,
+    "desired_marker": "REGISTERED_GRANTED_SETTINGS_CONNECT_REQUIRES_REAL_OBSERVED_TRUE",
+    "actual_app_UID": 11050,
+    "Scope_wait_PIPE_EOF_split": [
+      13,
+      2,
+      6
+    ],
+    "regular_stderr_closures_separate": 2,
+    "Apps_actual_wait_separate_no_PIPE_EOF_claim": 1,
+    "native_worker_wait_EOF_separate": true
+  },
+  "first_GREEN_QA": {
+    "outer_aggregate_passed": false,
+    "outer": {
+      "bytes": 273020,
+      "sha256": "8ce82e1afa0dc049fe31a735c50ad580a775920a1d0f6c12d6a7dbb2a03608f6"
+    },
+    "build_QA": {
+      "bytes": 84998,
+      "sha256": "1628c46a28f20a3b78cc3b64ea2730cd7785068babce43b9dae49d00c6bfaa91"
+    },
+    "inner": {
+      "bytes": 25621,
+      "sha256": "d75b5fcf5010fde47bf64000aba46d7cdab0f9f2d37a0c0f15979e3725c0f152"
+    },
+    "Root_format_QA_inner_review": {
+      "bytes": 3319,
+      "sha256": "249a40cc07fe7aefb7595b082360c4da585917fdb02bfedd0eea9505f3d5a33a"
+    },
+    "followup_exact_CID_cleanup": {
+      "bytes": 8317,
+      "sha256": "19ad455c1504b051906689e0c156986d29204e62549594cc8563668338b14b79"
+    },
+    "followup_cleanup_passed_within_original_close_deadline": true,
+    "functional_inner_passed": true,
+    "default_library_passed": 114,
+    "default_library_ignored": 27,
+    "copied_integration_case_in_ignored_count": 1,
+    "new_controlled_component_groups_passed": 8,
+    "normal_lifecycle_binaries_built": 6,
+    "format_and_strict_Clippy_all_targets": true,
+    "same_build_storage_helper": true,
+    "build_QA_Scope_wait_PIPE_EOF": 6,
+    "build_QA_regular_stderr_closures_separate": 6,
+    "runtime_Scope_wait_PIPE_EOF": 6,
+    "followup_cleanup_Scope_wait_PIPE_EOF": 7,
+    "Apps_actual_waits_separate_no_PIPE_EOF_claim": 2,
+    "app_stdout_stderr": "null",
+    "native_worker_wait_EOF_separate": true,
+    "functional_duration_ns": 1188122454,
+    "original_case_ns": 6000000000,
+    "original_start_action_max_ns": 1000000000,
+    "original_quiet_deadline_including_delivery_ns": 800000000,
+    "actual_quiet_armed_to_final_EAGAIN_ns": 800625372,
+    "packets": 2,
+    "quiet_received_datagrams": 0,
+    "outer_failure": "Phase loop variable shadows container name; failed aggregate preserved. Exact retained exited CID separately waited/removed within original close cutoff."
+  },
+  "downstream_locks": {
+    "qualification": {
+      "bytes": 16129,
+      "sha256": "716d5030f7d667b7e5c25e82642cebdb165b2ec17f4202227b1941f5add26fd3"
+    },
+    "outer": {
+      "bytes": 246753,
+      "sha256": "aebcadc0119735dd0acabe50753813645248da990c76c68366f308cd2699001c"
+    },
+    "inner": {
+      "bytes": 128452,
+      "sha256": "c80cefaebebdd7a25cc2535bba61a2a8cd6c621f0d0348f7e3e84cdf4ccf91cf"
+    },
+    "aggregate_passed": false,
+    "actual_offline_metadata_refreshes_passed": 16,
+    "locked_offline_checks_passed": 11,
+    "external_frozen_schema_setup_gates": 5,
+    "registry_versions_sources_checksums_unchanged": true,
+    "new_local_packages": [
+      "pokelinux-connectivity-control",
+      "pokelinux-network-state",
+      "pokelinux-process-owner"
+    ],
+    "only_existing_record_change": "pokelinux-lifecycle dependency edge",
+    "Scope_wait_PIPE_EOF": {
+      "host": 13,
+      "inner": 33,
+      "total": 46
+    },
+    "regular_stderr_closures_separate": 33,
+    "entries": [
+      {
+        "manifest": "native-camera-service/Cargo.toml",
+        "lock": "native-camera-service/Cargo.lock",
+        "before": {
+          "bytes": 7051,
+          "sha256": "5314869d8964be8afee416ddfb04c234c15600d8fc9d772a77c92d990ee95cba"
+        },
+        "after": {
+          "bytes": 7516,
+          "sha256": "66b1c2a9433c80337a2c359954cb0bf23dfa4ec1aa3b55b64bd48b8f5362a873"
+        },
+        "check": "passed",
+        "exit": 0
+      },
+      {
+        "manifest": "native-messages/Cargo.toml",
+        "lock": "native-messages/Cargo.lock",
+        "before": {
+          "bytes": 23097,
+          "sha256": "e1a537a668a13e808e2581eb63540f3023e85f72a824d33d304bcbb097d44317"
+        },
+        "after": {
+          "bytes": 23562,
+          "sha256": "65b700178a1600e4b385dea88c50d4439fab106d0015c593fa2a49268956739c"
+        },
+        "check": "passed",
+        "exit": 0
+      },
+      {
+        "manifest": "native-session-owner/Cargo.toml",
+        "lock": "native-session-owner/Cargo.lock",
+        "before": {
+          "bytes": 25456,
+          "sha256": "cb9ae0852836af7eadd324af5d0aa65508603b613afa4d4be802107aeaab136e"
+        },
+        "after": {
+          "bytes": 25921,
+          "sha256": "01b883206ab05c128fe8fcad3928c1f6399d26ecadebf5bb2ddcf146ca4586b1"
+        },
+        "check": "passed",
+        "exit": 0
+      },
+      {
+        "manifest": "native-session/Cargo.toml",
+        "lock": "native-session/Cargo.lock",
+        "before": {
+          "bytes": 7053,
+          "sha256": "ed520e38904a41c07b423268c2b5a9955045218a68019ed0b48c734667ea3ddf"
+        },
+        "after": {
+          "bytes": 7518,
+          "sha256": "5e014a0c3dc57ac3d8b1336eee4ecd912e6532c6b52e66bf31550945e089700d"
+        },
+        "check": "passed",
+        "exit": 0
+      },
+      {
+        "manifest": "tools/native-audio-preview/fixture/Cargo.toml",
+        "lock": "tools/native-audio-preview/fixture/Cargo.lock",
+        "before": {
+          "bytes": 7021,
+          "sha256": "bda3fa38adf72a6dd2eec9c4e1cf88265d622587cf1c34599b51dd03bc0cb641"
+        },
+        "after": {
+          "bytes": 7486,
+          "sha256": "53346b62c3df8fbdace15c26722fd1c03043c2ae84296a4f555169e4b6c3eada"
+        },
+        "check": "passed",
+        "exit": 0
+      },
+      {
+        "manifest": "tools/native-camera-service-boundary/fixture/Cargo.toml",
+        "lock": "tools/native-camera-service-boundary/fixture/Cargo.lock",
+        "before": {
+          "bytes": 26667,
+          "sha256": "e4a614bd2493857c3208dcbdce6209fcc5569dc4f8bd263f53be05e0f64fc8be"
+        },
+        "after": {
+          "bytes": 27132,
+          "sha256": "29c83dfbf25bb1469c25b4771b0ff77e9d70a7b34fbee4d2e0be7224bcfa4537"
+        },
+        "check": "stopped: existing frozen-schema setup input unavailable",
+        "exit": 101
+      },
+      {
+        "manifest": "tools/native-display-app-generations/app-context-fixture/Cargo.toml",
+        "lock": "tools/native-display-app-generations/app-context-fixture/Cargo.lock",
+        "before": {
+          "bytes": 25403,
+          "sha256": "efd0e4aeab75f96798620123cb0877135947d8ab9897e28107e7f5084c074eba"
+        },
+        "after": {
+          "bytes": 25868,
+          "sha256": "45894adee0a907f15a29a5a4376801a522c982aec38f239dfed21cf43ad470b8"
+        },
+        "check": "passed",
+        "exit": 0
+      },
+      {
+        "manifest": "tools/native-incoming-cold-availability/current-fixture/Cargo.toml",
+        "lock": "tools/native-incoming-cold-availability/current-fixture/Cargo.lock",
+        "before": {
+          "bytes": 41055,
+          "sha256": "f655a1078bd9ff17ffd419935fa8015fa8c0e115312e5a94b366981557168aec"
+        },
+        "after": {
+          "bytes": 41520,
+          "sha256": "3a706d5ffd6206e12a23958775deb8b510b1e71c033f36eb94af00312a64d099"
+        },
+        "check": "stopped: existing frozen-schema setup input unavailable",
+        "exit": 101
+      },
+      {
+        "manifest": "tools/native-incoming-cold-availability/fixture/Cargo.toml",
+        "lock": "tools/native-incoming-cold-availability/fixture/Cargo.lock",
+        "before": {
+          "bytes": 41060,
+          "sha256": "83d1a14da46b6cbeb36ae04df9c228dc91994521ee46cccab2446d4f7e1e25f1"
+        },
+        "after": {
+          "bytes": 41525,
+          "sha256": "d9475586a1a37615dbc0a16504d468492b6b67ca8d453530b1440755c8ea20ff"
+        },
+        "check": "stopped: existing frozen-schema setup input unavailable",
+        "exit": 101
+      },
+      {
+        "manifest": "tools/native-incoming-session-app/fixture/Cargo.toml",
+        "lock": "tools/native-incoming-session-app/fixture/Cargo.lock",
+        "before": {
+          "bytes": 41054,
+          "sha256": "f5b18ee4aa903f7620fb879b0efcdd979a220909651fb224c03a7e3da5cb8b80"
+        },
+        "after": {
+          "bytes": 41519,
+          "sha256": "ebffec646dfa8cba5339eaf1a95763234308a70ddfc3f6ec21cc87cf081bfaad"
+        },
+        "check": "stopped: existing frozen-schema setup input unavailable",
+        "exit": 101
+      },
+      {
+        "manifest": "tools/native-messages-incoming-binder/fixture/Cargo.toml",
+        "lock": "tools/native-messages-incoming-binder/fixture/Cargo.lock",
+        "before": {
+          "bytes": 40653,
+          "sha256": "1f2558421e7ab1ddc383ba49803b9f94f5ad4641500a2f4461117b8e9605c53b"
+        },
+        "after": {
+          "bytes": 41118,
+          "sha256": "4263033539abddbadb8730d7f621efc4e8d26846422639bb06ea5b0bd26d75d2"
+        },
+        "check": "stopped: existing frozen-schema setup input unavailable",
+        "exit": 101
+      },
+      {
+        "manifest": "tools/native-phone-tracer/fixture/Cargo.toml",
+        "lock": "tools/native-phone-tracer/fixture/Cargo.lock",
+        "before": {
+          "bytes": 42996,
+          "sha256": "4e3f25277a81667f4543d4eca67ecb5ad30fcff15bcc08bec9202f9b17062a78"
+        },
+        "after": {
+          "bytes": 43461,
+          "sha256": "c6c69532211a84eff6e5d58e3945ce0aebe21fb59ab83cd5fdcc9a8200764f61"
+        },
+        "check": "passed",
+        "exit": 0
+      },
+      {
+        "manifest": "tools/native-session-authority/fixture/Cargo.toml",
+        "lock": "tools/native-session-authority/fixture/Cargo.lock",
+        "before": {
+          "bytes": 25431,
+          "sha256": "981cb591286609b190c5d5b984e4fdfce09da7b54ddfead8b685ae8e6002deae"
+        },
+        "after": {
+          "bytes": 25896,
+          "sha256": "90013f0efc5574ef56526985e0ec260ad6e075547800bc41252757666b23c8df"
+        },
+        "check": "passed",
+        "exit": 0
+      },
+      {
+        "manifest": "tools/native-session-display-app/fixture/Cargo.toml",
+        "lock": "tools/native-session-display-app/fixture/Cargo.lock",
+        "before": {
+          "bytes": 25403,
+          "sha256": "883106322c340c9764b3283dcd0e3ed1fa53f71632f22b143ed527cb6ca2c4e9"
+        },
+        "after": {
+          "bytes": 25868,
+          "sha256": "1f75378926b36626c905500d33f568de002d90792848803fe3c93083b4c596ab"
+        },
+        "check": "passed",
+        "exit": 0
+      },
+      {
+        "manifest": "tools/native-session-installed-app/fixture/Cargo.toml",
+        "lock": "tools/native-session-installed-app/fixture/Cargo.lock",
+        "before": {
+          "bytes": 23455,
+          "sha256": "ca1e91ce109083fcc3c2dc821d3663dc6f67d583a91a62bfaef4bcf8b06ac054"
+        },
+        "after": {
+          "bytes": 23920,
+          "sha256": "4df6da442d4ec20a7e6e57e907371b79c4d46602003cdb7b4e6c614ba9ff92a6"
+        },
+        "check": "passed",
+        "exit": 0
+      },
+      {
+        "manifest": "tools/native-source-timer-boundary/Cargo.toml",
+        "lock": "tools/native-source-timer-boundary/Cargo.lock",
+        "before": {
+          "bytes": 25586,
+          "sha256": "d25770c6f96a331b7884fe0a9db0c205ed6587d3e815efa9fb4208c48652e83b"
+        },
+        "after": {
+          "bytes": 26051,
+          "sha256": "c854850bb9dc51d7a5e9518dca23ee8d3c371d198eac3fbd7a9e757f6d166465"
+        },
+        "check": "passed",
+        "exit": 0
+      }
+    ],
+    "Root_review": {
+      "bytes": 3268,
+      "sha256": "849239e37b0760f8ed61b41c4cb068e68495cf26c91597f0f3d93e456b31a61b"
+    },
+    "copyback_after_final_runtime_closure": true
+  },
+  "failure_lineage": [
+    {
+      "epoch": "first actor runtime",
+      "classification": "SETUP_FAILURE; not behavioral RED",
+      "outer": {
+        "bytes": 188020,
+        "sha256": "807081664969566d24144fb35dff69be8873f207a57bedf1384c99496ec59061"
+      },
+      "inner": {
+        "bytes": 12571,
+        "sha256": "2d8bcc76ecd052accb27e65556fe3b5a06217b31919c142748791626ecd81e64"
+      },
+      "reason": "Older peer requires two packets before quiet on zero-packet refusal branch; successor requires explicit exact0 or2. Original quiet timing and EAGAIN oracle unchanged."
+    },
+    {
+      "epoch": "intermediate RED candidate",
+      "executed": false,
+      "reason": "Compile-budget predecessor preserved; final candidate selects compile and runtime clocks separately before any Main/app exists."
+    }
+  ],
+  "remaining_gates": [
+    "Normal Settings Rust client and explicit controls",
+    "Normal Settings window and session-owner selection",
+    "Installed service deployment and ARM control",
+    "Genuine Source/authentication/graphical session composition",
+    "Restart/recovery and actual suspend/wake",
+    "Arbitrary uninterruptible kernel calls",
+    "Wi-Fi/IP acquisition/DNS/Internet/Bluetooth/tethering/USB",
+    "Hardware-specific backends and every Pixel/phone gate"
+  ],
+  "publication": "Hash-only measured provenance and authored fixture source; no ELFs, raw receipts, nonces, packet captures, proprietary inputs or credentials",
+  "final_runtime_GREEN": {
+    "outer": {
+      "bytes": 291022,
+      "sha256": "1e6f040a211cda017045ac2131123da989e6e460343889aca54bc040fd8f7b1f"
+    },
+    "inner": {
+      "bytes": 25547,
+      "sha256": "d9b4a15e6594b6fba49bba271d23b8f5f84325a9bafe3c7df650bf34cfba9442"
+    },
+    "runtime_bindings": {
+      "bytes": 154851,
+      "sha256": "183a45cba5e759959db333938b9cd191432f29ba4beecc8d5582072375465aac"
+    },
+    "Root_review": {
+      "bytes": 939,
+      "sha256": "725880c68c4937eec092654db1f45b6ecd003c7184890a47f0c670ce386647f2"
+    },
+    "passed": true,
+    "runtime_only_no_build_or_QA_repeat": true,
+    "Scope_wait_PIPE_EOF_split": [
+      13,
+      6
+    ],
+    "Apps_actual_waits_separate_no_PIPE_EOF_claim": 2,
+    "app_stdout_stderr": "null",
+    "native_worker_wait_EOF_separate": true,
+    "worker_exit_signal": 9,
+    "independent_worker_terminal_pidfd_separate": true,
+    "same_six_ELFs": {
+      "worker": {
+        "bytes": 1471832,
+        "sha256": "a685b92e128257dd93be8db9806231d44a20eed82169f70a8ebedb5ab528a542"
+      },
+      "main": {
+        "bytes": 1958160,
+        "sha256": "63f9b56ffa91a45f3b80875c690b08421725af9d0564f9be43fb238f90733d73"
+      },
+      "app": {
+        "bytes": 2818192,
+        "sha256": "fb35f46854ef7f7ee5d7fc83bb11e8ba9a4f9d79e305a72431600b0ebd4b96f2"
+      },
+      "storage": {
+        "bytes": 4747872,
+        "sha256": "a57703ca66cf72819f1ad908ace15ed0ccd2858401cc15df692980d61f3000a6"
+      },
+      "launcher": {
+        "bytes": 2838864,
+        "sha256": "74efce90d4b601eb3f888c98bc47ef978e791885ec8a665415350b3f7bdeeb54"
+      },
+      "driver": {
+        "bytes": 11304224,
+        "sha256": "9dc47c7c3ece2cadbac202097e11ffd2b1f42642ab941b77a182ed68e1e78a95"
+      }
+    },
+    "functional_duration_ns": 1165834014,
+    "original_case_ns": 6000000000,
+    "original_start_action_max_ns": 1000000000,
+    "original_quiet_including_delivery_ns": 800000000,
+    "actual_quiet_armed_to_final_EAGAIN_ns": 799424473,
+    "packets": 2,
+    "quiet_received_datagrams": 0,
+    "actual_final_EAGAIN": true,
+    "all_input_pins_unchanged_at_closure": true,
+    "all_waits_EOF_timely_no_adopted_waits": true,
+    "same_daemon_actual_container_wait_remove_absence": true,
+    "normal_Main_driver_peer_keeper_exit": 0
+  }
+}

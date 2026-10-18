@@ -5,6 +5,7 @@ edition = "2024"
 publish = false
 
 [dependencies]
+pokelinux-connectivity-control = { path = "../native-connectivity-control" }
 pokelinux-brightness = { path = "../native-brightness" }
 pokelinux-audio = { path = "../native-audio" }
 pokelinux-kernel-identity = { path = "../native-kernel-identity" }
