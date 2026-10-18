@@ -1,5 +1,6 @@
 #include "SettingsClient.h"
 #include "PhoneAppearanceClient.h"
+#include "PhoneNetworkStatusClient.h"
 #include <QGuiApplication>
 #include <QQuickView>
 #include <QQmlComponent>
@@ -47,7 +48,8 @@ int main(int argc, char **argv) {
     if (!theme) return 66;
     SettingsClient client(QString::fromLocal8Bit(argv[5]));
     view.setTitle(QStringLiteral("Settings"));
-    view.setInitialProperties({{"theme", QVariant::fromValue(theme.data())}, {"settingsClient", QVariant::fromValue(&client)}});
+    PhoneNetworkStatusClient networkStatus;
+    view.setInitialProperties({{"theme", QVariant::fromValue(theme.data())}, {"settingsClient", QVariant::fromValue(&client)}, {"networkStatusClient", QVariant::fromValue(&networkStatus)}});
     view.setResizeMode(QQuickView::SizeRootObjectToView);
     view.setSource(QUrl(QStringLiteral("qrc:/settings/SettingsView.qml")));
     if (view.status() != QQuickView::Ready) return 67;

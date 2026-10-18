@@ -1,12 +1,13 @@
 # Native Settings UI
 
-This UID11050 `org.omarchy.Settings` application presents one display-brightness
-operation through the lifecycle actor's public credentialed `app.sock`. It has
+This UID11050 `org.omarchy.Settings` application presents display brightness and
+coarse local network status. Brightness operations use the lifecycle actor's
+public credentialed `app.sock`. The app has
 explicit 25% and 75% buttons and displays current `observed_percent`; a 75% request
 may correctly report 74%. It does not connect to the private brightness daemon
 or select a backend path. Settings cannot grant itself permission.
 
-The Rust engine owns strict JSON, root:root peer and exact per-packet credentials,
+The brightness Rust engine owns strict JSON, root:root peer and exact per-packet credentials,
 state validation, fresh CLOCK_BOOTTIME expiry, one queued explicit choice, bounded
 nonblocking socket I/O and one owned thread. A queued click retains its revision
 and original one-second local deadline. An accepted unsent choice now survives
@@ -48,10 +49,10 @@ cmake --build settings-build --target pokelinux-settings
 DESTDIR="$PWD/settings-stage" cmake --install settings-build --prefix /usr
 ```
 
-Native default builds use locked/offline Cargo. Explicit matching-target Settings
-and appearance archives each require their SHA256; cross builds require explicit
-archives. CMake installs the normal executable, desktop file and shared appearance
-QML. The Settings view is a compiled Qt resource; CMake does not install an FFI SDK.
+Native default builds use locked/offline Cargo. Explicit matching-target Settings,
+appearance and network-status archives each require their SHA256; cross builds
+require all three explicit matching-target archives. CMake installs the normal
+executable, desktop file and shared appearance QML. The Settings view is a compiled Qt resource; CMake does not install an FFI SDK.
 
 Seven frozen real-socket/C ABI groups pass after actual compiled assertion RED:
 real UID11050/root-peer status and explicit 75→confirmed 74/actual 72→25; generic
@@ -200,3 +201,38 @@ showing a window.17 strong C APIs and native loader resolution match. This does
 not execute the normal main/six arguments, a positive brightness service, Source
 or visible UI; default ARM Cargo and combined-image execution remain open.
 See [hash-only evidence](../docs/evidence/native-current-settings-messages-arm-qt-provenance.json).
+
+## Read-only local network card
+
+The normal view now includes “Local network status”, interface/address-record
+counts and “Counts do not indicate internet access.” Missing or stale observations
+show dashes. These are public coarse counts, with no addresses, interface names,
+Wi-Fi controls, connection icon or reachability claim. The new required
+`networkStatusClient` property is supplied by the real `PhoneNetworkStatusClient`.
+Its [Rust engine](../native-app/network-status-client-core/README.md) owns the fixed
+root-peer socket, strict six-field parser, nonblocking reads and BOOTTIME expiry;
+Qt provides scalar bindings and shared Omarchy typography, spacing and colors.
+
+The normal launch arguments remain the six listed above. Native default CMake
+uses locked/offline Cargo for the new dependency. An explicit build additionally
+selects `POKELINUX_NETWORK_STATUS_CLIENT_ARCHIVE` and its required
+`POKELINUX_NETWORK_STATUS_CLIENT_ARCHIVE_SHA256` for the matching target.
+
+Actual compiled missing-card RED precedes the card. The permanent
+`settings-network-card-unavailable-test` retains the original brightness/ABI/
+200ms Stop/join assertions, then requires the four exact plain-text items.
+`settings-network-card-service-test` uses the real normal daemon and Rust adapter
+in one offscreen QML instance: healthy0/0 → actual service Stop → getter expiry
+with Qt events withheld → dashes → fresh service/connection →0/0. Its external
+fixture verifies only-loopback kernel state and owns both daemon waits/PIPE EOFs.
+The test takes two stdin ordering messages, `L\n` after the first daemon's actual
+closure and `R\n` after the fresh service is ready; they are test-fixture controls,
+not production network-service requests. Both run as UID/GID11050 with the actual
+protected shared appearance QML; neither shows a window.
+
+The current host Qt6.8.2 CMake Release build and these components pass. The normal
+app is compiled/linked only. This does not supply a new screenshot, normal-main
+execution, default-Cargo CMake execution, ARM frontend or physical-phone result.
+The earlier ARM59fb0ef1 and five brightness screenshots predate this card; their
+own source/binary cohorts remain separate. See the
+[network-status report](../docs/native-network-status.md).

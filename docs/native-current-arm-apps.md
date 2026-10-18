@@ -1,6 +1,6 @@
 # Current ARM app builds and Rust providers
 
-Normal Settings and Messages-with-battery now pass a distinct native ARM
+The pre-network-card Settings and Messages-with-battery cohort passes a native ARM
 production CMake Release build, protected installation, loader checks and
 component execution. This uses the current Settings600 engine and all four
 matching ARM Rust archives. It executes neither normal app main nor a window;
@@ -12,6 +12,8 @@ Messages/Sounds builds and graphical attempts below retain their own cohorts.
 The frozen64-file source cohort matches the public base
 `21a1fa9e2fa1b0ad00f2627e14db378f071d7674`. Production CMake links explicit
 matching-target archives; this epoch does not rebuild them with guest Cargo.
+The later local-network Settings card and its additional Rust/Qt adapter are
+outside this64-file cohort; its59fb0ef1 ELF is not relabelled as that frontend.
 
 | Boundary | Actual current result |
 | --- | --- |

@@ -1,5 +1,11 @@
 # Installed audio and appearance services
 
+The separate [installed local-network service](../native-network-status/README.md#installed-arm-service)
+now passes missing-unit RED, production two-file staging, enablement while stopped
+and a fresh ARM PID1 autostart/Stop with an independent Python socket consumer.
+Its only-loopback healthy0/0 counts establish no Wi-Fi, Internet or modem
+connectivity. The host Rust-client/Settings join is separate evidence.
+
 The current [ARM battery/brightness observation pair](native-installed-power-observation.md)
 now passes actual missing-unit RED, production seven-file staging and a distinct
 fresh automatic cold boot. The same brightness Main follows real virtual-GPIO

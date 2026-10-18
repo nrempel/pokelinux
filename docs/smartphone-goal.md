@@ -1,5 +1,12 @@
 # Omarchy smartphone goal
 
+The [local-network status path](native-network-status.md) now separately passes
+ARM PID1 installation/cold-start/Stop and a host kernel-to-Rust-client-to-Settings
+QML loss/expiry/reconnection sequence. The new card uses shared Omarchy theme
+values and clears unavailable counts. These coarse observations establish no
+Wi-Fi, Internet or modem connectivity, normal ARM frontend/window or phone-image
+completion. The completion matrix and hardware gates remain open.
+
 The current [graphics selection](runtime-language-decision.md#graphics-critical-path)
 uses normal upstream Hyprland supervised by Rust services. Its
 [prepared full Sounds slice](native-normal-upstream-tracer.md#prepared-full-appservice-slice-passes)

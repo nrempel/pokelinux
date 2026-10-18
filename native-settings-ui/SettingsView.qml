@@ -4,6 +4,7 @@ Rectangle {
     id: root
     required property QtObject theme
     required property QtObject settingsClient
+    required property QtObject networkStatusClient
     color: theme.background
     component BrightnessButton: Button {
         id: button
@@ -90,6 +91,50 @@ Rectangle {
                     enabled: root.settingsClient.canSet
                     onClicked: root.settingsClient.setPercent(75)
                 }
+            }
+            Text {
+                objectName: "localNetworkTitle"
+                text: "Local network status"
+                textFormat: Text.PlainText
+                color: root.theme.foreground
+                font.family: root.theme.fontFamily
+                font.pixelSize: root.theme.fontPixel("title", 20)
+            }
+            Text {
+                objectName: "localNetworkInterfaces"
+                text: {
+                    const value = root.networkStatusClient.localInterfaces
+                    return "Network interfaces: " + (value === null || value === undefined ? "—" : value)
+                }
+                textFormat: Text.PlainText
+                width: parent.width
+                wrapMode: Text.Wrap
+                color: root.theme.foreground
+                font.family: root.theme.fontFamily
+                font.pixelSize: root.theme.fontPixel("body", 16)
+            }
+            Text {
+                objectName: "localNetworkAddresses"
+                text: {
+                    const value = root.networkStatusClient.addressRecords
+                    return "Address records: " + (value === null || value === undefined ? "—" : value)
+                }
+                textFormat: Text.PlainText
+                width: parent.width
+                wrapMode: Text.Wrap
+                color: root.theme.foreground
+                font.family: root.theme.fontFamily
+                font.pixelSize: root.theme.fontPixel("body", 16)
+            }
+            Text {
+                objectName: "localNetworkCaption"
+                text: "Counts do not indicate internet access."
+                textFormat: Text.PlainText
+                width: parent.width
+                wrapMode: Text.Wrap
+                color: root.theme.muted
+                font.family: root.theme.fontFamily
+                font.pixelSize: root.theme.fontPixel("caption", 12)
             }
         }
     }

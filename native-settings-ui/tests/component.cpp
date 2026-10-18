@@ -1,6 +1,7 @@
 // C++/Rust ABI and real adapter/QML construction only, without an app window.
 #include "SettingsClient.h"
 #include "PhoneAppearanceClient.h"
+#include "PhoneNetworkStatusClient.h"
 #include <QGuiApplication>
 #include <QQuickItem>
 #include <QQuickView>
@@ -56,7 +57,8 @@ int main(int argc, char **argv) {
     assert(theme);
     SettingsClient client(QString::fromUtf8(missing));
     assert(!client.available() && !client.canSet() && !client.confirmedPercent().isValid());
-    view.setInitialProperties({{"theme", QVariant::fromValue(theme.data())}, {"settingsClient", QVariant::fromValue(&client)}});
+    PhoneNetworkStatusClient networkStatus;
+    view.setInitialProperties({{"theme", QVariant::fromValue(theme.data())}, {"settingsClient", QVariant::fromValue(&client)}, {"networkStatusClient", QVariant::fromValue(&networkStatus)}});
     view.setSource(QUrl(QStringLiteral("qrc:/settings/SettingsView.qml")));
     if (view.status() != QQuickView::Ready) {
         for (const auto &error : view.errors()) qWarning("%s", qPrintable(error.toString()));

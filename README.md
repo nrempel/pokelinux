@@ -22,7 +22,7 @@ checks pass. Its separate production CMake Release build installs the app and
 protected theme QML and passes the nine-group client test. A later
 [Messages/Sounds ARM CMake epoch](docs/native-current-arm-apps.md#earlier-messages-and-sounds-cohort)
 builds both normal apps with the shared appearance Rust client and passes their
-nine/six C ABI groups. The newer [current Settings and Messages-with-battery build](docs/native-current-arm-apps.md#current-settings-and-messages-with-battery)
+nine/six C ABI groups. The [pre-network-card Settings and Messages-with-battery build](docs/native-current-arm-apps.md#current-settings-and-messages-with-battery)
 now passes native ARM CMake/install, all five loaders and actual offscreen
 components with four matching Rust archives. Normal ARM app mains/windows,
 default Cargo, the complete running cohort, cold startup and physical SMS remain
@@ -86,13 +86,15 @@ follows all three driver states through that service/client path, with original
 Pixel10-profile captures. Physical Pixel behavior remains a separate gate.
 Host/ARM64 service release builds pass.
 
-A new [native Rust local-network status service](native-network-status/README.md)
-uses the existing kernel observer in one owned finite collector. It publishes
-coarse interface/address-record counts, including truthful healthy-empty0/0;
-these counts do not claim Wi-Fi, Internet or modem connectivity. Actual host
-kernel/socket tests pass alongside held-reader Stop and late-success rejection,
-with permanent reproducible boundary tests and separate host/ARM release builds.
-Installed deployment, a client/UI join and physical connectivity remain open.
+The [native local-network status path](docs/native-network-status.md) now joins
+real kernel observations to a read-only Rust client and themed Settings card.
+The normal ARM daemon separately passes production installation, a fresh PID1
+cold boot and normal Stop. On the host, the same QML instance follows real0/0
+counts → service loss/expiry → dashes → fresh read-only recovery0/0. Seven Rust
+client groups, strict checks and separate host/ARM archives pass. Counts establish
+no Wi-Fi, Internet or modem connectivity. The new normal app is built, with no
+normal-main/window, new screenshot or physical-phone qualification; the ARM
+reader/Settings join and complete installed image remain separate gates.
 
 The [prepared three-app navigation branch](docs/native-three-app-navigation.md)
 is parked after three failed epochs. The later attempts reach Settings and

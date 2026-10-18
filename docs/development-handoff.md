@@ -16,17 +16,19 @@ phone. Keep synthetic emulator, original-code, ARM64/QEMU and physical evidence
 separate. Do not equate registration, submission or API success with carrier
 acceptance, delivery, native call state or working physical hardware.
 
-A new [native Rust local-network status service](../native-network-status/README.md)
-uses the existing kernel observer in one owned finite collector. It publishes
-coarse interface/address-record counts, including truthful healthy-empty0/0;
-these counts do not claim Wi-Fi, Internet or modem connectivity. Actual host
-kernel/socket tests pass alongside held-reader Stop and late-success rejection,
-with permanent reproducible boundary tests and separate host/ARM release builds.
-Installed deployment, a client/UI join and physical connectivity remain open.
+The [native local-network status path](native-network-status.md) now joins
+real kernel observations to a read-only Rust client and themed Settings card.
+The normal ARM daemon separately passes production installation, a fresh PID1
+cold boot and normal Stop. On the host, the same QML instance follows real0/0
+counts → service loss/expiry → dashes → fresh read-only recovery0/0. Seven Rust
+client groups, strict checks and separate host/ARM archives pass. Counts establish
+no Wi-Fi, Internet or modem connectivity. The new normal app is built, with no
+normal-main/window, new screenshot or physical-phone qualification; the ARM
+reader/Settings join and complete installed image remain separate gates.
 
 The [current native ARM Settings/Messages build](native-current-arm-apps.md#current-settings-and-messages-with-battery)
-passes production CMake/install and offscreen components with the current
-Settings600 and three-engine Messages frontend. All64 frozen sources and four
+passes production CMake/install and offscreen components for its frozen
+pre-network-card Settings600 and three-engine Messages frontend. All64 frozen sources and four
 archives match; new normal ELFs59fb0ef1/c7bb89e2 remain unexecuted. The56 Scope
 waits/merged EOFs and seven nested waits are distinct from the legacy shutdown
 request, which has no direct QEMU/QMP receipt. No window, default ARM Cargo or
@@ -41,12 +43,12 @@ Preserve all failed aggregates and the third's theme-host255 cleanup error.
 Source100ms, warmup, authority and cutoffs are unchanged. Do not retry this branch
 or resume Source/authentication/capture investigations.
 
-Next production work is the existing coarse network-status service's installed
-and client join, keeping interface/address counts distinct from Wi-Fi, Internet
-or modem connectivity. The private Messages read-provider branch is parked at
-compiled assertion RED, with no qualified GREEN or deployed join. Do not retry
-that branch. Current combined ARM deployment and cold graphical startup remain
-explicit later gates.
+Next is the same real network-status Rust-client/Settings component join under
+the generic ARM kernel and installed PID1 service. Keep it distinct from the
+already passing host QML and ARM Python-consumer results. The private Messages
+read-provider branch remains parked at compiled assertion RED, with no qualified
+GREEN or deployed join; do not retry it. A combined phone image, normal ARM
+windows, cold graphical startup and all matched-device gates remain open.
 
 Messages currently has two alternative Projector owners: standalone daemon and
 session History. Never run both against one database. Installed headless and

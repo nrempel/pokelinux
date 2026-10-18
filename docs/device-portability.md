@@ -124,6 +124,12 @@ local lifetime; each new observer/namespace needs its own evidence. This grants
 no modem context or physical connectivity and does not qualify the matched
 Google kernel, device namespace/policy or another phone model.
 
+The [local-network status path](native-network-status.md) composes that observer
+with a portable coarse-count service, fixed read-only Rust client and themed
+Settings card. Generic ARM PID1 startup/Stop and host real-service/QML expiry and
+reconnection are separate results. They qualify neither usable connectivity nor
+the matched Pixel kernel, radio, namespace/policy or another phone model.
+
 The [frozen public Data V3 boundary](native-cellular-data-abi.md) qualifies one
 Rust/NDK ABI exchange on generic ARM. Its API has no slot argument. Do not infer
 a mapping between production Data instances, Android subscriptions and recovered

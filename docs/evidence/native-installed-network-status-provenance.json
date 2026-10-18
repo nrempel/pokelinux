@@ -1,0 +1,119 @@
+{
+  "schema": 1,
+  "evidence_class": "Original normal ARM64 Rust daemon in a generic Linux VM; root Python socket consumer. No ARM typed-client or UI execution.",
+  "Root_independently_closed_all_epochs": true,
+  "normal_ARM_daemon": {
+    "bytes": 819208,
+    "sha256": "46e74dae968a710e0c233f6aa3666ec0df6abac34bed802e7b1f2bc39c57d3cc",
+    "ELF_machine": 183,
+    "normal_release_build_qualification_sha256": "bf594db96da7c40efddc47b3a9a1508dbfc9230179878db59051e9e97d23bc1e"
+  },
+  "production_unit": {
+    "bytes": 492,
+    "sha256": "41ec2b84afe653e6da5f9f71f3c6e7c7d23442bf60e461e39052cf634b57c45c",
+    "created_after_actual_missing_unit_RED": true
+  },
+  "same_positive_consumer": {
+    "sha256": "aad88cfd25c48e1150fefb6cdaf12e94ced0b0cc577d256576695ed55e4eb358",
+    "unchanged_between_missing_unit_RED_and_cold_GREEN": true,
+    "language": "Python"
+  },
+  "guest": {
+    "architecture": "aarch64",
+    "kernel": "7.1.6-1-aarch64-ARCH",
+    "original_package_count": 353,
+    "original_versions_unchanged": true,
+    "independent_sysfs_and_proc_only_loopback": true,
+    "namespace": "deployment-inherited"
+  },
+  "missing_unit_RED": {
+    "actual_consumer_exit": 1,
+    "failure_kind": "installed-boundary-assertion",
+    "observed_unit": "not-found",
+    "observed_Main_absent": true,
+    "outer_contract_exit": 0,
+    "host_guest_boot_consumer_wait_EOF_counts": [
+      15,
+      2,
+      2,
+      2
+    ],
+    "host_receipt_sha256": "11d4c71c41bd7ddce1dc58b9f3cd922e3153dcaa24004635725a33770df308f7",
+    "guest_result_sha256": "51f51c3f8d5c70a064aa33dfff6148af9ca6504d7ee2ed097e8d179d8d5cde27",
+    "boot_result_sha256": "5bb685c3907ab8a9c0d83237796e52b7121aae1381b904010a7df66e3d660fa5",
+    "consumer_result_sha256": "c3e4dee3e523029c9125f538966ea3e48bc8b65f88f3ae7b3be6023e7c1bd15f",
+    "Root_review_sha256": "9cc89ce71945a5c00aac5f75735e10647ae788c170d02da9c735290730adbc44"
+  },
+  "production_Make_stage": {
+    "target": "install-native-services",
+    "installed_file_count": 2,
+    "executable_mode": "0755",
+    "unit_mode": "0644",
+    "manifest_sha256": "e148190bff667fcf48fcca229022b89b689184e89d58b8065f579770984d04c6",
+    "receipt_sha256": "8ed238195adaed2f93a9f01f1085c60389df9fc0854c57d7fe2f2b2f342144fc",
+    "Root_review_sha256": "dd445c26d5bb839aae1cadebb0d4c14de58bfaa1da3fac3511497266f1ca286e",
+    "actual_timely_wait_EOF_count": 3,
+    "live_root_install": false
+  },
+  "stopped_preparation": {
+    "actual_Root_exit": 0,
+    "native_ldd_relocations_and_unit_verify_passed": true,
+    "enabled_while_inactive_Main_absent_and_invocation_empty": true,
+    "manual_service_start_executed": false,
+    "host_guest_boot_wait_EOF_counts": [
+      15,
+      10,
+      2
+    ],
+    "host_receipt_sha256": "eded3819c67693bead8454db980cb36a9d268efd7524d20f8cf2e39d1eb88ce2",
+    "guest_result_sha256": "1c0261fe0dc4561daff88185ea01e31fa9407c600fb0efe2cb044934aad7dd28",
+    "boot_result_sha256": "dcd75fd1db17c63fa9f4afe5ea425ca44b702faab6d49f89210c3c7cc685fc1d",
+    "Root_review_sha256": "9162c2226579d6823866b619fd755c40cb911bc3bb472b89fd03ba7ef6c52128",
+    "layer_export_after_actual_same_parent_QEMU_wait0_EOF_and_handle_close": true
+  },
+  "fresh_cold": {
+    "actual_Root_exit": 0,
+    "fresh_boot_and_service_invocation": true,
+    "already_enabled_active_PID1_Main_before_install_reload_enable_or_start": true,
+    "same_Main_and_invocation_around_readonly_observation": true,
+    "exact_installed_bytes_modes_and_root_ownership": true,
+    "exact_executable_root_peer_and_inherited_namespace_checked": true,
+    "snapshot": {
+      "schema": 1,
+      "revision": 3,
+      "available": true,
+      "local_interfaces": 0,
+      "address_records": 0,
+      "original_BOOTTIME_expiry_checked": true
+    },
+    "snapshot_stream_EOF_no_request_bytes": true,
+    "PID1_Stop_normal_exit0_Main_absent_pidfd_dead_cgroup_empty_socket_gone": true,
+    "fixture_direct_parent_wait_for_PID1_service_claimed": false,
+    "host_guest_boot_consumer_wait_EOF_counts": [
+      15,
+      6,
+      3,
+      6
+    ],
+    "host_receipt_sha256": "f051c8942d56572e108138d47e8ace3b98553fffc6c85b62cd291443d50a6af9",
+    "guest_result_sha256": "55d73816d4f81345e6c9743489fd95737988bcae5e072f3841a0213f9d5c3f3a",
+    "boot_result_sha256": "4b9d5aea5800834cd01287e224ffd1afae031977ed41642f4a28a6017dca76c8",
+    "consumer_result_sha256": "d3e7e044a9ea4115c03699745b1a71fb254cc940a1c5650e81d50f7de9c3b0df",
+    "Root_review_sha256": "888086f8094d6f7fa6990eefd4e786ccc454e18d1f3e9f3f8fe1ee558a3739cf"
+  },
+  "closure": {
+    "all_raw_wait_and_EOF_times_before_original_cutoffs": true,
+    "actual_same_parent_QEMU_wait0_and_PIPE_EOF_each_VM": true,
+    "same_daemon_exact_owned_containers_absent": true,
+    "original_inputs_and_sources_unchanged": true,
+    "cleanup_errors": []
+  },
+  "limits": [
+    "Coarse counts do not establish routes, usable addresses or connectivity.",
+    "No interface creation/disappearance, TUN, Wi-Fi, Internet, signal or modem result.",
+    "No ARM typed Rust client, Settings, Qt, GUI or combined phone integration from this run.",
+    "No physical phone, Pixel networking or device behavior."
+  ],
+  "network_mutated": false,
+  "physical_phone_accessed": false
+}

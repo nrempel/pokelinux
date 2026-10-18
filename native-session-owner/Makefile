@@ -20,7 +20,7 @@ install-normal-session:
 	test -n "$(DESTDIR)" && test -n "$(SESSION_DEPLOYMENT_ROOT)" && test -n "$(SESSION_DEPLOYMENT_MANIFEST)"
 	python3 packaging/install_deployment.py --root "$(SESSION_DEPLOYMENT_ROOT)" --manifest "$(SESSION_DEPLOYMENT_MANIFEST)" --destdir "$(DESTDIR)"
 
-# Explicit native-services bundle (audio, appearance and brightness), including caller-selected configuration.
+# Explicit native-services bundle, including caller-selected configuration where needed.
 # The shared stager rejects a live-root DESTDIR and never activates services.
 install-native-services:
 	test -n "$(DESTDIR)" && test -n "$(NATIVE_SERVICES_ROOT)" && test -n "$(NATIVE_SERVICES_MANIFEST)"

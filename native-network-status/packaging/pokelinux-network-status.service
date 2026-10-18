@@ -1,0 +1,23 @@
+[Unit]
+Description=Pokelinux public coarse local network observations
+After=systemd-tmpfiles-setup.service
+
+[Service]
+Type=exec
+User=root
+Group=root
+ExecStart=/usr/libexec/pokelinux/pokelinux-network-status --serve /run/pokelinux-network/snapshot.sock
+RuntimeDirectory=pokelinux-network
+RuntimeDirectoryMode=0755
+UMask=0022
+NoNewPrivileges=yes
+Restart=no
+KillMode=control-group
+KillSignal=SIGTERM
+TimeoutStopSec=5
+TasksMax=8
+MemoryMax=64M
+LimitNOFILE=64
+
+[Install]
+WantedBy=multi-user.target

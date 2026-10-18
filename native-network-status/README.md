@@ -6,8 +6,7 @@ and uses the existing Rust `KernelObserver`. Fresh collections do not establish
 continuous interface lifetimes or provider associations.
 
 `pokelinux-network-status --serve SOCKET` starts the root UID/GID 0 service. The
-intended deployment endpoint is `/run/pokelinux-network/snapshot.sock`; service
-packaging and installation are not part of this milestone. Connect receives one
+production unit selects `/run/pokelinux-network/snapshot.sock`. Connect receives one
 JSON line and EOF, with no request or mutation protocol. The six fields are
 `schema`, `revision`, `until_ns`, `available`, `local_interfaces`, and
 `address_records`. `until_ns` is an absolute CLOCK_BOOTTIME decimal string.
@@ -33,11 +32,47 @@ groups GREEN, the formatter bridge, a preserved test-only Clippy failure, and th
 final strict checks. The normal debug service published healthy empty counts from
 an independently verified isolated namespace containing only loopback. Authored
 `3/7` helper counts qualify process lifecycle controls only. Normal x86-64 and
-ARM64 release binaries compiled and linked; neither release ELF was executed.
+ARM64 release binaries compiled and linked. That build-only record does not
+include release execution; the later installed ARM result below is separate.
 
-TUN creation/disappearance integration, installed-service/PID1 behavior, client
-server-identity enforcement, Settings presentation, Internet reachability, modem
-behavior, and physical-device validation remain unqualified.
+A separate [Rust reader and Settings card](../docs/native-network-status.md) now
+pass host real-service integration and offscreen loss/expiry/recovery. They do not
+inherit this ARM service cohort.
+
+TUN creation/disappearance integration, ARM typed Rust-client integration,
+Settings presentation, Internet reachability, modem behavior, and physical-device
+validation remain unqualified by these service runs.
+
+
+## Installed ARM service
+
+The normal ARM64 release now passes a distinct installed-service sequence in a
+generic353-package guest. The unchanged positive consumer first fails because
+the unit is missing. Host production Make then stages exactly the daemon and
+[unit](packaging/pokelinux-network-status.service), with no site config. Preparation
+installs those bytes, checks native loader relocations and the unit, and enables
+it while stopped. It performs no manual service start.
+
+A separate fresh boot starts the enabled service through PID1 before any install,
+reload, enable or start command. An independent Python consumer verifies the
+original package versions, only-loopback kernel namespace, exact installed
+executable/root socket peer and a fresh available0/0 snapshot with stream EOF.
+The same Main/invocation remains selected around that observation. PID1 Stop then
+records normal exit0, dead Main pidfd, empty cgroup and removed socket. Each VM
+closes its actual same-parent QEMU wait and PIPE EOF under the original cutoffs.
+The exact consumer is retained as
+[`network-status-probe.py`](../tools/native-installed-services/network-status-probe.py).
+It runs inside the selected disposable guest with `/results/selection.json`, the
+authored `/run/pokelinux-network-inputs` payload and explicit original deadlines.
+See [hash-only installed provenance](../docs/evidence/native-installed-network-status-provenance.json).
+
+The service runs as root with Type=exec, Restart=no, KillMode=control-group and a
+five-second Stop limit. Its runtime directory is root0:0/0755; the public snapshot
+socket is root0:0/0666. The existing install-native-services Make target stages
+the0755 executable and0644 unit; enablement is an explicit image-preparation step.
+This result uses a Python socket consumer. It supplies no ARM typed-client or
+Settings UI evidence, interface-mutation test, Wi-Fi/Internet/modem connectivity,
+or physical-phone qualification.
 
 
 ## Reproducing the tests

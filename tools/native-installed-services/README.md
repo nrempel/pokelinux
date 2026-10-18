@@ -131,3 +131,14 @@ uses the production typed Client and accepts only an original absolute BOOTTIME
 deadline of at most one second. It has no Set mode or device-path input. See
 [the pair report](../../docs/native-installed-power-observation.md) for exact
 source/artifact hashes, build checks, two-boot results and limits.
+
+## Local network status
+
+`network-status-probe.py` is the exact positive installed-boundary consumer used
+for missing-unit RED and fresh ARM cold GREEN. It requires the selected generic
+353-package guest, actual PID1, root credentials, the authored fixture payload
+and `/results/selection.json`. The caller supplies original work/close BOOTTIME
+deadlines and a fresh result path. It performs read-only observations followed by
+normal Stop of the selected service; it never installs, enables or starts it.
+The [service report](../../docs/native-network-status.md) distinguishes this root
+Python consumer from the host Rust reader and offscreen Settings tests.
