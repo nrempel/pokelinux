@@ -84,7 +84,9 @@ fresh reads preserve value revisions; raw changes and freshness gaps invalidate
 them independently of rounded percent or observation cadence. Deployment
 alone selects a backlight backend and device. LinuxBacklight requires the Linux
 sysfs class; the qualified SyntheticTree tests use authored files with no driver
-fallback. Requested and optional actual attributes are distinct, and neither is
+fallback. The prepared normal Settings touch/change/unavailable/recovery path
+also passes on x86 KVM with that authored backend, using the same Rust service
+interfaces. Requested and optional actual attributes are distinct, and neither is
 physical luminance. A Pixel panel without a usable Linux backlight interface will
 need its own independently qualified backend; these host tests add no supported
 phone model.

@@ -1,0 +1,254 @@
+{
+  "schema": 1,
+  "scope": "Finite prepared normal Settings five-state same-app SyntheticTree GUI path; original code execution in generic Arch x86 KVM, separately reviewed original native images",
+  "finite_same_app_SyntheticTree_path_passed": true,
+  "entire_brightness_feature_complete": false,
+  "records": {
+    "selection.json": {
+      "bytes": 234902,
+      "sha256": "2011684508d84190d026a609dfb556c5f9476a101901eea611a42d2b1712dc60"
+    },
+    "command.json": {
+      "bytes": 1403,
+      "sha256": "f76465dafd74aee910e4194d95be09f190025a27ff648f0be05dce5c02a9fff2"
+    },
+    "Root-execution-admission.json": {
+      "bytes": 1675,
+      "sha256": "dc259a6c7999d6fefb824e41c4527de6919daba3a0ffc23b6cd342eb94ab9aa6"
+    },
+    "execution.json": {
+      "bytes": 12280,
+      "sha256": "3563a0c7d0197a1a148ef07752e7193c3ceee514d3f5263f54bec71b4335d136"
+    },
+    "result.json": {
+      "bytes": 499509,
+      "sha256": "12a3b8e9caacf95749014ec3478c1f47f373970e0e0ab7cec470bd30fb6c7d10"
+    },
+    "boot-result.json": {
+      "bytes": 11321,
+      "sha256": "37520c61806f096bf56e96e9ad07196fa7ce488df64172bcf97ff40322245682"
+    },
+    "bootstrap-result.json": {
+      "bytes": 7585,
+      "sha256": "b60c4343e4a9f66bd00eac0be07abb8b4321f5dee423cb1811b3613d2d418258"
+    },
+    "early-receipt.json": {
+      "bytes": 2129,
+      "sha256": "9c914677aff8e270e3f76c8e39fb7151aa6240ca64379cdec7889afbe93ed043"
+    },
+    "Root-visual-review.json": {
+      "bytes": 8313,
+      "sha256": "a7bfe6ed74f9797c56789439fb98af81a539478d912f48e4b621f7437eeecd6d"
+    }
+  },
+  "source_preparation_sha256": "c257c9a63bbea04fb8de20376d715792ac18dd942c243b3a216b7fc5eb876829",
+  "providers": {
+    "brightness": "74e56b4000da678b6ebb2b8556cfbb875340d3179852c459896568df8c3c5a83",
+    "brightness_component_Q": "e9d513119c228c7f5012a98d87ad4e812fb7b2bbc862e4374ff0252c921b037b",
+    "Settings": "b6a236f4d634ae83b6ac1be9a04a997b3e725386bbc88610a5602522ec07602f",
+    "owner": "101f72248d07936b684dc5c571c49d9b946e836ddfe6e091205e6fbf63030028",
+    "fixed_settings_launcher": "9780beb715f2325fb6926960dab028c33a4dc47b6137f27509ba49328031527f",
+    "owned_helper": "5a738b9529a1a0e5d5b0bd20e27e2ec4244d4e61d7c8e0dad96fe1ffbef3c423"
+  },
+  "states": [
+    {
+      "id": 1,
+      "expected_text": "Brightness: 25%",
+      "PNG_bytes": 51477,
+      "PNG_sha256": "2b3d763d233ef1e2e892674182409ca352a729be8ef4e7bece228fac670d8d24",
+      "decoded_RGBA_sha256": "b96506d09bc293f6b63374d62910d28a0b1e1c34830c32c96026a8d159330973",
+      "native_BGRA_sha256": "c0579ebb01175f9a73247b05f56b6f6e91fe58c991e1aa293f8cb687977d9a01",
+      "external_output": {
+        "pixels": [
+          1080,
+          2424
+        ],
+        "millimeters": [
+          65,
+          146
+        ],
+        "scale": 2.625
+      },
+      "requested": 100,
+      "actual_optional": 120,
+      "max": 400,
+      "public_asset": "../assets/settings-brightness-initial25.png"
+    },
+    {
+      "id": 2,
+      "expected_text": "Brightness: 75%",
+      "PNG_bytes": 49861,
+      "PNG_sha256": "f0b52f71c5943f0e46dcf5d2c4836956508efa2a15d23787de06a4f963b955a6",
+      "decoded_RGBA_sha256": "4cfcc33cd59408dddbefb7adc1bb3e2aed0324ef3e8acca32194e15f04336a91",
+      "native_BGRA_sha256": "81eea77baa7b09b3440d304fee407f2c7de33a549a5691ba022602f3134f6275",
+      "external_output": {
+        "pixels": [
+          1080,
+          2424
+        ],
+        "millimeters": [
+          65,
+          146
+        ],
+        "scale": 2.625
+      },
+      "requested": 300,
+      "actual_optional": 120,
+      "max": 400,
+      "public_asset": "../assets/settings-brightness-explicit75.png"
+    },
+    {
+      "id": 3,
+      "expected_text": "Brightness unavailable",
+      "PNG_bytes": 52861,
+      "PNG_sha256": "d99f0806f9efba02f390b59a3d6b45d0fec1f4333668fe4fc91e487743b5a19b",
+      "decoded_RGBA_sha256": "2db951d3bbd594160778f8fb2fc8bf0c6ad807008e68af2d07deb1bb9452bbe9",
+      "native_BGRA_sha256": "2ed4bcfb4a71ec7df6295f351392434d04565122f47bda7e169cb749c9e19f04",
+      "external_output": {
+        "pixels": [
+          1080,
+          2424
+        ],
+        "millimeters": [
+          65,
+          146
+        ],
+        "scale": 2.625
+      },
+      "requested": 300,
+      "actual_optional": 120,
+      "max": null,
+      "public_asset": "../assets/settings-brightness-unavailable.png"
+    },
+    {
+      "id": 4,
+      "expected_text": "Brightness: 75%",
+      "PNG_bytes": 49861,
+      "PNG_sha256": "85cd44e58e003c4391fa4c5b76c948656c7a368aa60028179e0f75622c2e11ed",
+      "decoded_RGBA_sha256": "280c6ce9033c2a9e5019eb07a8856ca60fcbaa486ab1a9f3ef96d05e2a024150",
+      "native_BGRA_sha256": "094eeb7382a345085ea3a2510dac44196fc84f1b70873a74ed3abde8d7f641ef",
+      "external_output": {
+        "pixels": [
+          1080,
+          2424
+        ],
+        "millimeters": [
+          65,
+          146
+        ],
+        "scale": 2.625
+      },
+      "requested": 300,
+      "actual_optional": 120,
+      "max": 400,
+      "public_asset": "../assets/settings-brightness-recovered75.png"
+    },
+    {
+      "id": 5,
+      "expected_text": "Brightness: 25%",
+      "PNG_bytes": 50058,
+      "PNG_sha256": "d7c1758ad0cc1b37343cc452eb5e0fefb7a07c7b5a1bc199fce7ab6ddff1db77",
+      "decoded_RGBA_sha256": "7981c74492e65f02018b706d97507299aa8a009494409935c57e5c8d496add30",
+      "native_BGRA_sha256": "589c4105ab85d7346e07cae456c1290ac31f1c2ae65a485460124665919f8a7c",
+      "external_output": {
+        "pixels": [
+          1080,
+          2424
+        ],
+        "millimeters": [
+          65,
+          146
+        ],
+        "scale": 2.625
+      },
+      "requested": 100,
+      "actual_optional": 120,
+      "max": 400,
+      "public_asset": "../assets/settings-brightness-second25.png"
+    }
+  ],
+  "inputs": [
+    "one75",
+    "disabled25",
+    "disabled75",
+    "new25"
+  ],
+  "observed_CLOSE_WRITE_events_per_explicit_transition": [
+    1,
+    1
+  ],
+  "events_not_syscall_write_counts": true,
+  "readback_not_Set_ACK": true,
+  "same_app_and_service_epoch": true,
+  "direct_Qt_enabled_getter": false,
+  "normal_QWindow_DPR": null,
+  "normal_app_numeric_exit": null,
+  "closure": {
+    "actual_direct_waits": 101,
+    "actual_PIPE_EOFs": 108,
+    "per_layer": {
+      "host": {
+        "actual_direct_waits": 7,
+        "actual_PIPE_EOFs": 14
+      },
+      "boot": {
+        "actual_direct_waits": 5,
+        "actual_PIPE_EOFs": 5
+      },
+      "bootstrap": {
+        "actual_direct_waits": 5,
+        "actual_PIPE_EOFs": 5
+      },
+      "early": {
+        "actual_direct_waits": 2,
+        "actual_PIPE_EOFs": 2
+      },
+      "guest": {
+        "actual_direct_waits": 82,
+        "actual_PIPE_EOFs": 82
+      }
+    },
+    "separate_actual_adopted_waits": 1,
+    "PID1_Main_normal_exit0_cgroup_empty_pidfd_dead": true,
+    "owner_Stop_wait0": true,
+    "guest_closure": true,
+    "QEMU0_containerCLI0_CID_absent_same_daemon_inputs_unchanged": true
+  },
+  "preserved_failures": {
+    "root1_import_setup": {
+      "bytes": 3876,
+      "sha256": "9d4b76fd26c9ad0927dda9c2cb5420ea46e2664d45cced904d452508a6937ec2"
+    },
+    "root2_pixel_observer": {
+      "bytes": 12610,
+      "sha256": "406de041252eb7f1dd0802e69f350f25273bf44a027e9a52ada1d45f44d71f3d"
+    },
+    "root3_first_input_unknown_cause": {
+      "bytes": 15279,
+      "sha256": "cedd3a3d59e819cf0c36e2b000d16acf50097933a9a8fc8735051b25a214f7b6"
+    },
+    "root4_first_input_diagnostics_not_definite_cause": {
+      "bytes": 13725,
+      "sha256": "bccd1feaec3caa89e55ee5d7433738fb93589621b25e5ec264410a61862fd2ec"
+    },
+    "initial_root5_admission_setup_failure": {
+      "bytes": 786,
+      "sha256": "56e2516f60b4826da69d9d77714c9651480fe73392a172b711986ddeee5b2b62"
+    }
+  },
+  "evidence_limits": [
+    "Readback is current observation, not Set ACK or physical luminance.",
+    "Rendered muted/foreground labels plus intended inputs/no mutation; no direct Qt.enabled getter.",
+    "This finite path does not establish general click reliability or close independent busy/pre-send races.",
+    "Normal app numeric exit and direct QWindow DPR remain unknown.",
+    "Prepared theme-only host, not cold full original shell; no ARM UI or phone/physical backlight execution."
+  ],
+  "closed_review": {
+    "bytes": 44953,
+    "sha256": "e8a1ce1d890b326174c8c6ad03ec8c3e8921d0f01e51ea48ec0f44e8194b06b4"
+  },
+  "prior_first_frame_public_provenance": {
+    "bytes": 3886,
+    "sha256": "bf86279cbbf0f1f735a275d9257eb1da5ccbb19f442d23c2ea39bf95a4ff0d2f"
+  }
+}

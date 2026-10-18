@@ -81,11 +81,13 @@ now has separate actual actor/CLI/staging tests. The core installer requires an
 explicit Settings launcher and stages its desktop entry; this does not grant
 DisplayBrightness or qualify the normal graphical session.
 
-A [first normal Settings frame](../docs/native-brightness.md#first-normal-settings-frame)
-now reads25% through the real actor and installed synthetic brightness service.
-External native Pixel10 geometry and the original capture are qualified; direct
-normal QWindow DPR remains unmeasured. The full visual run fails its image observer
-before any click, so input/change/unavailable/recovery remain unqualified. Default-Cargo Qt,
-ARM and phone hardware also remain separate gates. Future captures must qualify
-the actual [Pixel10 profile](../docs/native-phone-display-profile.md); no resized
-capture is valid evidence.
+The [prepared Settings touch tracer](../docs/native-brightness.md#settings-touch-unavailable-state-and-recovery)
+now passes25→explicit75→unavailable/no displayed percent and two no-mutation
+inputs→readonly recovery75→new explicit25 through the real actor and installed
+SyntheticTree service, in the same app. Root reviewed five original1080×2424
+captures and external Pixel10 profile metadata. The prior failed observer and
+single-tap attempts remain separate. Direct normal QWindow DPR/Qt.enabled getters,
+all input races, cold full-shell startup, default-Cargo Qt, ARM UI and physical
+backlight remain open. An accepted-click/readonly overlap regression is in progress.
+Future captures must qualify the actual
+[Pixel10 profile](../docs/native-phone-display-profile.md); no resized capture is valid evidence.

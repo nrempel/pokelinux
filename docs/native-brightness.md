@@ -6,8 +6,9 @@ The production daemon and its concrete Rust client now pass joined native-host
 process/socket tests against authored SyntheticTree attributes. A lifecycle
 Provider adapter and explicit installed configuration have separate qualified
 host evidence. A first prepared normal Settings frame now reads through the actual
-actor and installed service. Interactive change/recovery, cold startup and physical
-display behavior remain open.
+actor and installed service. A later same-app touch/change/unavailable/recovery
+sequence now passes against authored attributes with five original screenshots.
+Cold startup, other input races and physical display behavior remain open.
 
 ## Attribute backend
 
@@ -374,7 +375,7 @@ phone evidence.
 
 ![First normal Settings frame](assets/settings-brightness-first-frame.png)
 
-The full attempt is a failure: its original20-second/eight-capture image observer
+That earlier full attempt is a failure: its original20-second/eight-capture image observer
 expects a button fill different from the background. This theme renders equal
 colors with thin borders. The final frame visibly says “Brightness ready”, but
 that observer never admits a click. No change/unavailable/recovery steps pass.
@@ -387,7 +388,8 @@ remaining steps do not run. That failure originally exported no post-touch raw
 trace, so its cause remains unknown. A separately frozen diagnostic successor
 retains bounded raw/inotify samples and original frames without retrying input,
 changing production code or extending the functional deadline. The stable-revision
-repair above is independently qualified and is not yet qualified in this UI path.
+repair above is independently qualified. Its later UI qualification follows below;
+the original failed taps' precise cause was not observed.
 
 Installed brightness start and Stop are separate measured evidence: normalMain0,
 retained pidfd dead, process/socket absent and empty exact cgroup with no restart.
@@ -396,11 +398,57 @@ child. The actor/audio/appearance owners and VM/container close under their
 original bounds despite the failed visual aggregate. See the
 [first-frame provenance](evidence/native-settings-first-frame-provenance.json).
 
+## Settings touch, unavailable state and recovery
+
+Replacing only the installed brightness service with the stable-revision build
+makes the unchanged prepared five-state tracer pass. The normal UID11050 Settings
+app, fixed launcher, lifecycle actor, Source rules, shared Tokyo theme, input
+sequence and original deadlines stay unchanged. Root viewed all five original
+native captures at1080×2424; no capture was resized, cropped or repainted.
+
+| State | Observed behavior | Original screenshot |
+| --- | --- | --- |
+| Initial | Current25%, ready; authored requested100/max400 | [25%](assets/settings-brightness-initial25.png) |
+| One explicit75% touch | Requested100→300; current75%, ready | [75%](assets/settings-brightness-explicit75.png) |
+| Backend unavailable | Remove authored maximum, let prior freshness expire; no displayed percent, muted controls; two actual touches leave requested300 unchanged and no MODIFY/CLOSE_WRITE events | [Unavailable](assets/settings-brightness-unavailable.png) |
+| Readonly recovery | Restore maximum; current75% and usable controls return without restarting or sending a fixture Inspect/Set | [Recovered75%](assets/settings-brightness-recovered75.png) |
+| New explicit25% touch | Requested300→100; current25%, ready in the same app and service | [25% again](assets/settings-brightness-second25.png) |
+
+![Native Settings after one explicit75% touch](assets/settings-brightness-explicit75.png)
+
+The two successful transitions each have independently sampled raw attributes
+and actual MODIFY/CLOSE_WRITE events within the original five-second functional
+bounds. An inotify event count is not a write-syscall count. All four inputs are
+retained: one75%, two while unavailable, and a new25%; none is retried implicitly.
+Optional actual_brightness stays120, distinct from the requested attribute and
+from physical luminance. Current readonly recovery does not acknowledge an
+uncertain earlier request. The GUI trace does not directly observe the Set ACK;
+that protocol boundary has separate actual-client tests.
+
+External compositor, mapped window, registry and native-buffer metadata qualify
+each capture's Pixel10 profile:1080×2424,2.625 scale,65×146mm nominal size/about422PPI.
+Normal QWindow DPR and direct Qt.enabled getters remain unmeasured. Root observes
+muted labels during unavailability, alongside the two no-mutation inputs. The
+debug banner and pointer remain visible. This is a prepared session with a warmup,
+not fresh cold graphics or the full original Omarchy shell. Test root explicitly
+grants DisplayBrightness; no app self-grant or setup-permission flow is inferred.
+
+The installed PID1 brightness service stays in one invocation with no restart,
+then stops normally with ExecMainStatus0, dead retained pidfd, removed socket and
+empty cgroup. Actor/audio/appearance owners, guest, QEMU and container close under
+their original bounds. Root's semantic review is separate from the automated
+capture result. The initial missing-admission-field setup failure launched no
+container and is preserved separately. Earlier failed taps remain recorded; this
+success does not identify which boundary stopped them or prove all input races
+resolved. A focused client regression for accepted intent overlapping readonly
+work is still in progress. See the
+[five-state provenance](evidence/native-settings-brightness-tracer-provenance.json).
+
 ## Remaining integration and hardware gates
 
-Next is the actual Settings input/change/unavailable/recovery sequence through
-the configured lifecycle actor and installed service. Cold startup and full-shell
-composition retain their own gates. Linux driver execution and matched Pixel
+The finite Settings touch/change/unavailable/recovery path is qualified only for
+the explicit SyntheticTree backend above. Accepted-intent/readonly races, cold
+startup and full-shell composition retain their own gates. Linux driver execution and matched Pixel
 panel/backlight discovery, brightness response, physical readback, suspend/resume,
 lock behavior and power/drain measurements remain separate gates. No phone has
 been accessed, and this component does not advance calls, IMS or SMS hardware

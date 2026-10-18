@@ -32,12 +32,13 @@ thread shutdown; Qt renders the shared Omarchy theme. The component window is
 never shown. Fixed desktop launch now passes six actor groups, three CLI and
 three staging groups plus six unchanged Sounds controls, with separate host/ARM
 builds. A prepared native Pixel-profile Settings window now visibly reads25%
-through the actual actor and installed Rust service. The first image-observer
-failure is preserved; corrected detection admits one actual75% touch, but the
-requested attribute fails to change within its original five seconds. That tap's
-cause remains unknown and separate from the independently proven revision bug.
-Change/recovery and hardware gates remain open. See the original first frame in
-the brightness report.
+through the actual actor and installed Rust service. With the repaired service,
+the same prepared touch path passes five states:25→explicit75→unavailable with
+muted controls and no mutation from two inputs→readonly recovery75→new explicit25.
+The same app and service stay running. Five original1080×2424 screenshots are
+reviewed; earlier setup, observer and failed-tap attempts stay separate. This is
+an authored VM backend; cold full-shell, other input races and hardware remain
+open. See the screenshots and limits in the brightness report.
 
 The [audio SIGTERM repair](native-audio.md#sigterm-enters-owned-stop) now routes
 the shared Rust termination latch into existing idempotent Stop. The unchanged
