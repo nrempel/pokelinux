@@ -1,6 +1,14 @@
 # Native Settings UI
 
-This UID11050 `org.omarchy.Settings` application presents display brightness and
+The [normal Settings window](../docs/native-settings-connectivity-window.md) now
+passes real touch Enable, close/relaunch with the connection preserved, and
+explicit Disable through the Rust actor/Main/native worker. Two independent
+packet round trips, address removal and quiet pass in a generic x86 VM. Original
+1080×2424 screenshots show the ready control and the reopened enabled state.
+This uses authored session authority and the normal appearance fallback; full
+installed runtime, ARM, Wi-Fi/Internet and every physical-phone gate remain open.
+
+This UID11050 `org.omarchy.Settings` application presents display brightness, explicit local-connection controls and
 coarse local network status. Brightness operations use the lifecycle actor's
 public credentialed `app.sock`. The app has
 explicit 25% and 75% buttons and displays current `observed_percent`; a 75% request

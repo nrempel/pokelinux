@@ -30,13 +30,24 @@ Wi-Fi/Internet and all phone gates remain open.
 Earlier [private Main](native-connectivity-private-ingress.md) and
 [persistent-worker](native-connectivity-worker.md) cohorts remain separate.
 
-The next connectivity slice joins the normal Settings Main/window through the
-existing per-app display owner and normal upstream compositor to the actor/Main
-packet oracle. The later installed configuration component now passes separately;
-full session-owner Main runtime still depends on the parked Source composition.
-Keep Source/authentication/full-shell/capture branches parked. The current tracer
-uses authored session=None/admin facts; no genuine session/authentication follows.
-Worker Stop/reaping is separate from remote cleanup, and no implicit mutation
+The [normal Settings window](native-settings-connectivity-window.md) now
+passes real touch Enable, close/relaunch with the connection preserved, and
+explicit Disable through the Rust actor/Main/native worker. Two independent
+packet round trips, address removal and quiet pass in a generic x86 VM. Original
+1080×2424 screenshots show the ready control and the reopened enabled state.
+This uses authored session authority and the normal appearance fallback; full
+installed runtime, ARM, Wi-Fi/Internet and every physical-phone gate remain open.
+
+The normal window joins the existing per-app display owner and source-built
+upstream compositor to the actor/Main packet oracle. Eight preceding staged or
+failed attempts retain their exact classifications; Sol9 passes after bounded
+visible-control readiness. First app retirement preserves the connection, and a
+fresh generation explicitly disables it. No production repair is attributed to
+the earlier unlocalized touch failure. The installed Config component remains a
+separate pass. Next inventory one installed generic ARM connectivity cohort using
+current native build/package paths. Keep Source/authentication/full-session Main
+and broader capture campaigns parked; authored session=None/admin facts remain
+explicit. Worker reaping is separate from remote cleanup; no implicit mutation
 retry or same-namespace recovery is allowed.
 
 The [normal Settings Rust connectivity SDK](native-settings-connectivity-sdk.md)
@@ -2310,8 +2321,14 @@ See `native-session-freshness-chain.md` and its publication provenance.
 
 ## Next work
 
-Continue the existing Messages lock→restore tracer from the qualified downstream
-actor/storage path. Continue the remaining wrong-event/attempt-deadline and
+Current critical path: advance the qualified normal Settings connectivity tracer
+to one installed generic ARM cohort with current Rust services and app artifacts.
+The x86 window/packet/capture result remains separate from full Source/auth/session
+runtime, Wi-Fi/Internet and Pixel hardware. Keep the broader Source/authentication
+and capture branches parked.
+
+The following Messages lock→restore work remains backlog from the qualified
+downstream actor/storage path. Continue the remaining wrong-event/attempt-deadline and
 uncertain-clear-expiry combinations plus full-actor unclean reopen; the current
 six service cases now cover forced/expired Source, new-lock late completion and
 held-clear Stop/storage reopen refusal. Real retained history now composes behind
@@ -2320,9 +2337,9 @@ and original compositor. Keep the real-history-specific stress and early-failure
 gates separate. Keep authentication construction/ingress test-only until genuine
 whole-owner completion provenance and trusted locker handoff are independently
 qualified. Do not substitute models or ARM harness passes for authentication.
-Preserve the queued ARM setup failure without relaxing its predicate. Complete
-real authentication binding and normal Messages reopening before broadening the
-smartphone matrix.
+Preserve the queued ARM setup failure without relaxing its predicate. Real
+authentication binding and normal Messages reopening remain separate completion
+gates; no private-auth fixture establishes them.
 
 1. Continue the qualified synthetic incoming Messages path with raw retention/capacity
    and cold backlog availability. Held-read cancellation now preserves shared

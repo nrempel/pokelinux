@@ -6,6 +6,14 @@
 
 The target is Arch Linux ARM, Hyprland, native phone apps and Rust services for calls, messages, camera, power and other phone functions. The initial hardware strategy uses Google's matched Pixel kernel, modules and firmware. Replacing Android framework userspace is the goal; it is not yet achieved. The [completion criteria](docs/smartphone-goal.md#completion-matrix) require native service integration; Android framework tests provide reference evidence. Hyprland, Aquamarine and Qt remain C++ dependencies. The [graphics critical-path decision](docs/runtime-language-decision.md#graphics-critical-path) selects normal upstream compositor initialization for the integrated app tracer; the custom Rust render executor remains component research.
 
+The [normal Settings window](docs/native-settings-connectivity-window.md) now
+passes real touch Enable, close/relaunch with the connection preserved, and
+explicit Disable through the Rust actor/Main/native worker. Two independent
+packet round trips, address removal and quiet pass in a generic x86 VM. Original
+1080×2424 screenshots show the ready control and the reopened enabled state.
+This uses authored session authority and the normal appearance fallback; full
+installed runtime, ARM, Wi-Fi/Internet and every physical-phone gate remain open.
+
 The [registered app connectivity path](docs/native-connectivity-actor.md) now
 passes a durable permission grant through the existing lifecycle actor to the
 normal Rust Main and real packets. The connection survives actual app exit; a

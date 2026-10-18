@@ -1,5 +1,11 @@
 # Installed connectivity selection
 
+A later [normal Settings window/packet tracer](native-settings-connectivity-window.md)
+now passes real touch Enable, app close/relaunch, preserved traffic and explicit
+Disable/removal/quiet in a generic x86 VM. It uses authored authority and normal
+appearance fallback; the component/source cohort below retains its original
+scope. Full installed session runtime, ARM and phone gates remain separate.
+
 The normal Rust session-owner configuration now requires an explicit connectivity
 selection. `{"mode":"disabled"}` creates no provider;
 `{"mode":"owner","socket":"/absolute/private-connectivity/control.sock"}`
@@ -68,10 +74,11 @@ normal session-owner Main, Source, compositor, app, kernel-network operation,
 installed boot, ARM execution or phone runs in this cohort. Earlier actor/packet,
 safe SDK, C ABI and unshown Qt results remain separate.
 
-Next join the normal Settings window, existing per-app display ownership and
-upstream compositor to the actor/Main packet oracle, using explicitly authored
-session/admin authority. Enable must produce packets; normal app close must keep
-them flowing; a fresh launch must explicitly Disable and prove removal and quiet.
+The later [normal window tracer](native-settings-connectivity-window.md) now joins
+per-app display ownership and the upstream compositor to the actor/Main packet
+oracle with authored authority. Enable, preserved traffic after actual app close,
+fresh launch and explicit Disable/removal/quiet pass. Next qualify one current
+installed generic ARM cohort; this Config-only epoch supplies no runtime result.
 Full Source/authentication/session deployment remains a separate integration gate.
 Wi-Fi/Bluetooth/Internet, suspend, matched Pixel hardware and all phone gates stay
 open. No physical phone was accessed; zero models are hardware-qualified.

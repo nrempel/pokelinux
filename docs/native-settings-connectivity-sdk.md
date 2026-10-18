@@ -1,5 +1,11 @@
 # Settings Rust connectivity client
 
+A later [normal Settings window/packet tracer](native-settings-connectivity-window.md)
+now passes real touch Enable, app close/relaunch, preserved traffic and explicit
+Disable/removal/quiet in a generic x86 VM. It uses authored authority and normal
+appearance fallback; the component/source cohort below retains its original
+scope. Full installed session runtime, ARM and phone gates remain separate.
+
 The normal Settings Rust crate now has a separate safe connectivity engine. Its
 worker uses the lifecycle actor's public credentialed socket. It accepts one
 explicit desired boolean and the caller's original absolute CLOCK_BOOTTIME

@@ -1,5 +1,13 @@
 # Device portability
 
+The [normal Settings window](native-settings-connectivity-window.md) now
+passes real touch Enable, close/relaunch with the connection preserved, and
+explicit Disable through the Rust actor/Main/native worker. Two independent
+packet round trips, address removal and quiet pass in a generic x86 VM. Original
+1080×2424 screenshots show the ready control and the reopened enabled state.
+This uses authored session authority and the normal appearance fallback; full
+installed runtime, ARM, Wi-Fi/Internet and every physical-phone gate remain open.
+
 The new [native session owner](native-session-owner.md) keeps compositor Child
 custody and service composition outside hardware backends.32 host boundary cases,
 host/ARM64 compilation and Make staging add no qualified phone model; matched

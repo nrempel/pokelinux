@@ -1,5 +1,11 @@
 # Native Settings connectivity controls
 
+A later [normal Settings window/packet tracer](native-settings-connectivity-window.md)
+now passes real touch Enable, app close/relaunch, preserved traffic and explicit
+Disable/removal/quiet in a generic x86 VM. It uses authored authority and normal
+appearance fallback; the component/source cohort below retains its original
+scope. Full installed session runtime, ARM and phone gates remain separate.
+
 The normal Settings frontend adds explicit Enable and Disable controls for the
 Rust connectivity engine. It displays fresh configured state separately from
 pending or unconfirmed action outcomes. Local connection state establishes no
@@ -74,10 +80,12 @@ lifecycle actor, actual NetworkControl grant or network kernel backend.
 
 ## Remaining integration
 
-Reuse the existing actor/Main packet oracle for normal app ownership, then add
-installed session-owner/Main execution and deployment. The later
-[configuration component](native-connectivity-installed-selection.md) qualifies the
-explicit selection and normal build separately. Keep Source,
-authentication, full-shell and capture investigations parked. ARM controls,
+The later [normal window tracer](native-settings-connectivity-window.md) now
+passes ordinary app ownership, real touchscreen input and the actor/Main packet
+oracle separately from this unshown Qt component. The
+[configuration component](native-connectivity-installed-selection.md) qualifies
+explicit selection and the normal build separately. Next is one current installed
+generic ARM cohort; full session-owner Main and deployment remain open. Keep
+Source, authentication, full-shell and broader capture investigations parked. ARM controls,
 actual suspend, Wi-Fi/Bluetooth/Internet and all phone gates remain open. No
 physical phone was accessed; zero models are hardware-qualified.

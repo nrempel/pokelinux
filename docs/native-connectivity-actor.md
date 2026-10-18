@@ -1,5 +1,11 @@
 # Registered app control of native connectivity
 
+A later [normal Settings window/packet tracer](native-settings-connectivity-window.md)
+now passes real touch Enable, app close/relaunch, preserved traffic and explicit
+Disable/removal/quiet in a generic x86 VM. It uses authored authority and normal
+appearance fallback; the component/source cohort below retains its original
+scope. Full installed session runtime, ARM and phone gates remain separate.
+
 A launched UID11050 Rust app using the Settings profile can now obtain the
 existing durable NetworkControl grant, Connect through the lifecycle actor and
 normal root-private Rust Main, and exchange real UDP packets. The connection

@@ -1,5 +1,13 @@
 # Current native smartphone integration map
 
+The [normal Settings window](native-settings-connectivity-window.md) now
+passes real touch Enable, close/relaunch with the connection preserved, and
+explicit Disable through the Rust actor/Main/native worker. Two independent
+packet round trips, address removal and quiet pass in a generic x86 VM. Original
+1080×2424 screenshots show the ready control and the reopened enabled state.
+This uses authored session authority and the normal appearance fallback; full
+installed runtime, ARM, Wi-Fi/Internet and every physical-phone gate remain open.
+
 The later [policy-directory correction](native-session-owner.md#policy-directory-correction)
 passes15 preflight cases after five actual acceptance failures and two separate
 native storage-worker groups. The example now selects an existing root0700
