@@ -148,3 +148,10 @@ Raw-only preparation followed by two fresh353-package ARM boots qualifies
 reconciliation/persistence and real Main/ExecStop completion. Its protected
 normal app/QML dependency is not launched. This is separate from the385-package
 available audio-backend image and does not qualify a combined phone session.
+
+The [combined ARM development image](native-arm-development-image.md) separately
+uses the same explicit Make stager for twelve battery/brightness/network/Settings
+files and a ten-file runtime-only reinstall. Two actual fresh boots pass automatic
+startup and existing recovery/Stop consumers with preserved site configuration
+and unrelated authored data. This adds no installer policy, graphical session or
+physical-phone qualification.

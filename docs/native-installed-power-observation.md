@@ -69,3 +69,11 @@ This pair qualifies current readonly ARM execution and cold deployment. It does
 not qualify Set, the graphical shell, app permissions/Source, positive ARM battery
 values, suspend/charging/thermal behavior, Pixel hardware or a bootable phone.
 See [hash-only provenance](evidence/native-installed-power-observation-provenance.json).
+
+The later [combined ARM development image](native-arm-development-image.md) reuses
+these exact power providers and unchanged consumer alongside network status and
+current installed Settings. Both fresh boots pass the original readonly GPIO
+recovery and truthful battery-unavailable checks, with normal Stops. Runtime-only
+reinstallation preserves both site configurations and unrelated authored data.
+These results add composition/reinstallation evidence, without Set, normal app
+window, physical battery or Pixel backlight qualification.

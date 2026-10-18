@@ -225,3 +225,9 @@ The [owned SIT descriptor primitive](native-sit-owned-transport.md) keeps its
 and phone state gain no descriptor, Samsung layout, channel identity or retry
 policy. Source custody, complete-record admission and provider/APN ownership
 remain independent; Unix fixture success qualifies no physical model.
+
+The later [combined ARM development image](native-arm-development-image.md) joins
+three installed service owners, unchanged component consumers and runtime reinstall that preserves configuration
+across two fresh boots. It reuses the generic ARM
+kernel and virtual GPIO backend; it qualifies no additional phone model, Pixel
+backend, physical battery/display/networking or normal graphical phone session.

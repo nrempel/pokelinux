@@ -142,3 +142,29 @@ deadlines and a fresh result path. It performs read-only observations followed b
 normal Stop of the selected service; it never installs, enables or starts it.
 The [service report](../../docs/native-network-status.md) distinguishes this root
 Python consumer from the host Rust reader and offscreen Settings tests.
+
+## Combined ARM development-image consumer
+
+`development-image-probe.py` is the frozen reproducibility consumer, selected at
+runtime as `source/combined-consumer.py`; the repository filename is not a new
+service or installer. Use only the explicitly selected disposable generic ARM
+353-package guest, actual PID1/root credentials and original BOOTTIME bounds.
+Supply `/results/selection.json` and `/run/pokelinux-development-inputs` containing
+the twelve-file manifest, inventory, Qt50 baseline, fixture binaries and unchanged
+power consumer; keep the selected [`owned.py`](owned.py) and
+[`installed_component.py`](installed_component.py) alongside. The latter is the
+unchanged PID1 network/Settings case controller, not a production service.
+
+```sh
+python3 /run/pokelinux-development-inputs/source/combined-consumer.py \
+  --output /results/combined-consumer.json \
+  --until-ns "$POKELINUX_VM_ORIGINAL_UNTIL_NS" \
+  --close-ns "$POKELINUX_VM_ORIGINAL_CLOSE_NS"
+```
+
+It requires three already-active enabled PID1 owners and protected Settings files
+before serial readonly network-QML and power recovery checks, then normal Stops.
+Installation, enablement, reboot and config-preserving reinstall belong to the
+outer fixture. PID1 outcomes are separate from actual owned command/component
+waits. Battery may be honestly unavailable; GPIO readback is not luminance and
+network counts are not connectivity. No normal app window, Source or phone claim.

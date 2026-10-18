@@ -1,7 +1,7 @@
 {
   "schema":1,
   "source_public_commit":"fd1ee4f63582276705f2e44207c511d126d33452",
-  "evidence_class":"Original native AArch64 Qt6.12 CMake build/install and unprivileged offscreen QML with the installed PID1 normal network service",
+  "evidence_class":"Authored native AArch64 Qt6.12 CMake build/install and unprivileged offscreen QML with the installed PID1 normal network service",
   "passed":true,
   "records":{
     "Root_closed_review":{"bytes":2405,"sha256":"5b13f268569a03c5aaa018bcac071af0fb043056cceb2e39b4d379d941337c3d"},

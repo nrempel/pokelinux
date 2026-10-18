@@ -1,5 +1,13 @@
 # Omarchy smartphone goal
 
+The [combined ARM development image](native-arm-development-image.md) now starts
+battery, brightness and network services together through PID1, with current
+Settings installed. Two separate fresh boots pass the existing recovery checks,
+including another boot after runtime reinstallation. Both site configurations
+and unrelated authored data retain their bytes and file identity. This is a
+reproducible installed-service VM checkpoint; normal app windows, the complete
+phone session and all physical-phone gates remain open.
+
 The [local-network status path](native-network-status.md) now passes the same
 real service/Rust-client/Settings QML loss, expiry and reconnection sequence on
 host and native generic ARM. The ARM service starts automatically through PID1;

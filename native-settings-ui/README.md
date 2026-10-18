@@ -240,3 +240,9 @@ normal-main/window, new screenshot, default-Cargo CMake or phone result follows.
 The earlier ARM59fb0ef1 and five brightness screenshots predate this card; their
 own source/binary cohorts remain separate. See the
 [network-status report](../docs/native-network-status.md).
+
+The later [combined ARM development image](../docs/native-arm-development-image.md)
+installs normal3a8b8aac alongside the three native services. The unchanged network
+component passes in both fresh boots, including after runtime-only reinstall,
+while the original battery/brightness owners remain running. The normal app main
+and window are still unexecuted in this cohort.

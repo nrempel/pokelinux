@@ -86,6 +86,14 @@ follows all three driver states through that service/client path, with original
 Pixel10-profile captures. Physical Pixel behavior remains a separate gate.
 Host/ARM64 service release builds pass.
 
+The [combined ARM development image](docs/native-arm-development-image.md) now starts
+battery, brightness and network services together through PID1, with current
+Settings installed. Two separate fresh boots pass the existing recovery checks,
+including another boot after runtime reinstallation. Both site configurations
+and unrelated authored data retain their bytes and file identity. This is a
+reproducible installed-service VM checkpoint; normal app windows, the complete
+phone session and all physical-phone gates remain open.
+
 The [native local-network status path](docs/native-network-status.md) now passes both
 host and native ARM service-to-Rust-client-to-Settings integration. In the ARM VM,
 PID1 starts the installed service automatically; the same unprivileged QML

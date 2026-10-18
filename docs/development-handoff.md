@@ -42,14 +42,24 @@ Preserve all failed aggregates and the third's theme-host255 cleanup error.
 Source100ms, warmup, authority and cutoffs are unchanged. Do not retry this branch
 or resume Source/authentication/capture investigations.
 
-Next is one installed ARM development-image tracer joining the existing battery,
-brightness and network services with current Settings. Require automatic startup,
-actual component observations, same-cohort runtime reinstall with preserved site
-configuration/data, and another fresh boot. Reuse the existing stager and VM;
-this is not a graphical phone image. The private Messages read-provider remains
-parked at compiled assertion RED, with no qualified GREEN or deployed join; do
-not retry it. Normal ARM windows, cold graphical startup and all matched-device
-gates remain open.
+The [combined ARM development image](native-arm-development-image.md) now passes
+actual missing-installation RED, twelve-file stopped installation and two distinct
+fresh boots. All three services start automatically. The unchanged Settings and
+power consumers pass recovery and normal Stops before and after a ten-file
+runtime reinstall; both site configs and an unrelated sentinel preserve bytes,
+ownership, modes, inode and mtime. All197 direct waits/merged PIPE EOFs close
+within original bounds. This is an installed development image, with no normal
+app main/window or graphical phone-session claim.
+
+Next implement one finite Play/Stop sound preview in Sounds through the existing
+media authority and selected logical route. Rust owns playback lifetime; Qt owns
+controls. Require actual UI actions and independently measured virtual PCM, Stop,
+app-close/revocation retirement and unavailable-backend failure without queued
+replay. Reuse the private audio stack and offscreen component first; add no new
+permission system, direct app PipeWire access or window/capture campaign.
+The private Messages read-provider remains parked at compiled assertion RED,
+with no qualified GREEN or deployed join; do not retry it. Normal ARM windows,
+cold graphical startup and all matched-device gates remain open.
 
 Messages currently has two alternative Projector owners: standalone daemon and
 session History. Never run both against one database. Installed headless and

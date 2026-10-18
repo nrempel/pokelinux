@@ -63,3 +63,9 @@ and [Rust/client/QML provenance](evidence/native-settings-network-status-provena
 keep authored host execution, generic ARM, crossbuild and unqualified hardware
 results separate. The private Messages, Source/authentication and three-app
 navigation branches remain parked.
+
+The later [combined ARM development image](native-arm-development-image.md) reuses
+this exact normal service and Settings component alongside battery and brightness.
+All three start automatically in two fresh boots, including after runtime-only
+reinstall; the original network loss/expiry/reconnection case passes both times.
+This composition adds no interface mutation, Internet or phone evidence.
