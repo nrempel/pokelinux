@@ -24,6 +24,13 @@ kernel/socket tests pass alongside held-reader Stop and late-success rejection,
 with permanent reproducible boundary tests and separate host/ARM release builds.
 Installed deployment, a client/UI join and physical connectivity remain open.
 
+The first [prepared three-app navigation attempt](native-three-app-navigation.md)
+fails during setup at its first workspace command, with zero functional groups
+and no normal app capture. Raw reply/cause are unknown; exact Lua source supports
+a narrow fixture syntax correction with bounded reply retention. Its99 actual
+waits/106 PIPE EOFs and owned Stop close separately. Preserve this failed epoch;
+no Source/auth investigation, deadline change or automatic retry follows.
+
 Next composition priorities are one current installed ARM service/app cohort
 with fresh autostart and Messages data preserved across package replacement,
 then one prepared navigation session across Settings, Messages and Sounds with

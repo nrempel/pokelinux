@@ -1,0 +1,160 @@
+{
+  "schema": 1,
+  "evidence_class": "prepared native x86 KVM fixture; no physical phone",
+  "aggregate_passed": false,
+  "functional_groups": 0,
+  "normal_app_capture_candidates": 0,
+  "failure": {
+    "phase": "setup",
+    "assertion": "first workspace command returned text other than ok",
+    "source_defined_request": "/dispatch workspace 1",
+    "actual_reply_retained": false,
+    "actual_reply_and_runtime_cause": "unknown"
+  },
+  "Source_lease_ns": 100000000,
+  "automatic_retries": false,
+  "custody": {
+    "actual_direct_parent_waits": 99,
+    "actual_PIPE_EOFs": 106,
+    "all_original_cutoffs_satisfied": true,
+    "separate_adopted_exit_not_app_status": 1,
+    "guest_cleanup_errors": [],
+    "owner_audio_appearance_Stop_actual_wait0": true,
+    "both_PID1_power_services_Main0_success_empty_cgroups": true,
+    "QEMU_and_container_CLI_exit0": true,
+    "container_absent_same_daemon": true,
+    "selected355_and_external1485_unchanged": true,
+    "process_closure_does_not_promote_failed_aggregate": true
+  },
+  "artifacts": {
+    "selection.json": {
+      "bytes": 589508,
+      "sha256": "47a99e623bf57f43bdd3e40fd0b7448ad54d4eef53856466d316a9f92defdce0"
+    },
+    "command.json": {
+      "bytes": 1406,
+      "sha256": "f9e974395c97a936136c997acac6777c606f95fc84ed283664439b5174a0e3c7"
+    },
+    "execution.json": {
+      "bytes": 12044,
+      "sha256": "b14fed61e4f737bbce2058f1cfae0cafc1ce776e9060ea6ebe7d59ff541aa30d"
+    },
+    "result.json": {
+      "bytes": 291248,
+      "sha256": "cf1cc478538ee5073528db5c466199e391e50c468ee649a1dfbc4e3db81e3615"
+    },
+    "boot-result.json": {
+      "bytes": 11290,
+      "sha256": "33c01d123a2a44c0bc34b8b99871158b52b4d8b4441ce5e5d84157621fbee10b"
+    },
+    "bootstrap-result.json": {
+      "bytes": 7551,
+      "sha256": "0d220ee9781a7daee13b7e862d3673729d113e051b4d38e4477fdde008e25ff0"
+    },
+    "early-receipt.json": {
+      "bytes": 2129,
+      "sha256": "73c7c31318fef0de9f10398fb8b6748f07dec84269f206974b175ac6b652cbc5"
+    },
+    "Root-execution-admission.json": {
+      "bytes": 1169,
+      "sha256": "5a194dd16a325f1f95b616940c9fe95b91abab10c0467a07987b7f891c50d7f1"
+    },
+    "Root-failed-execution-review.json": {
+      "bytes": 1580,
+      "sha256": "6806d2503cb861a125c291c5dc1e5db879831398c526310530f3a143e088b4e1"
+    }
+  },
+  "closed_independent_review": {
+    "bytes": 10950,
+    "sha256": "2a60f9256646360f6bd4781c98a11a2465475c7c3ffbde49e5679c90baa9a7d8"
+  },
+  "current_Rust_helpers_build_only": {
+    "passed": true,
+    "source_rows": 144,
+    "normal_roles": [
+      "messages-service",
+      "messages-stop",
+      "messages-launch",
+      "lifecycle-launcher",
+      "sounds-launch"
+    ],
+    "normal_features": [],
+    "separate_seed_features": [
+      "isolated-fixture"
+    ],
+    "targets": [
+      "host",
+      "arm64"
+    ],
+    "release_ELFs": 12,
+    "host_waits_and_merged_PIPE_EOFs": 15,
+    "inner_shell_waits_regular_file_outputs": 36,
+    "normal_Main_or_ARM_loader_runtime_qualified": false,
+    "qualification": {
+      "bytes": 2319,
+      "sha256": "1164d5b2f8d75e9c2bd070d95bdf73bc43c9621cda8737ff0403fbf653109bd4"
+    },
+    "Root_review": {
+      "bytes": 2182,
+      "sha256": "3d1b9972c37af893e3deb9f075370e0395356b201e20ef879716be0e2343b7ff"
+    },
+    "artifacts": {
+      "host/messages-service": {
+        "bytes": 4404408,
+        "sha256": "a2eacd497cb29d42954a9c1b00f3e038ac0bd733638dd38c50902a77ef8e4175"
+      },
+      "host/messages-stop": {
+        "bytes": 992856,
+        "sha256": "886c3295284b3fdeefd1a50365da4a262163ff646f5140033fadaff96181158a"
+      },
+      "host/messages-launch": {
+        "bytes": 1002608,
+        "sha256": "7c77e2310a7372ce37c6b8f000620208ddb22e76a43a7c5ca120c59fa6f423b1"
+      },
+      "host/sounds-launch": {
+        "bytes": 1002008,
+        "sha256": "fe9c482d516c18f44b7b42164bde4b6eef003deaf0ae63d07086ad525e00cb9a"
+      },
+      "host/lifecycle-launcher": {
+        "bytes": 1074064,
+        "sha256": "3f34fe8079dfbd8cb8ae3f2036b02e0d049ccaf578589555b195d94745622a1f"
+      },
+      "host/messages-seed-fixture": {
+        "bytes": 2724880,
+        "sha256": "699fbbcb3ea14c501531d6ccf5e93e6268b7aa2ff0ade73252139e046c6a9126"
+      },
+      "arm64/messages-service": {
+        "bytes": 4274952,
+        "sha256": "4c0bf1c8655478735188af57dc38a60dabadaf9f561eb8bcbbe54d41abd6ee9c"
+      },
+      "arm64/messages-stop": {
+        "bytes": 978064,
+        "sha256": "1438357f9c10a0224d517d8bc91f8034cee17386cacb6f946eadd068652b0650"
+      },
+      "arm64/messages-launch": {
+        "bytes": 980088,
+        "sha256": "52c523ee96a518d7852112d6d9e706121b8c63ebbeaccd3b6ace0a662d46ce05"
+      },
+      "arm64/lifecycle-launcher": {
+        "bytes": 1007096,
+        "sha256": "c3764db1d33c403395c8c37b2a6e6553dc1268b120393da32bf41195c2106fe2"
+      },
+      "arm64/sounds-launch": {
+        "bytes": 979616,
+        "sha256": "75977ad2b48d377be45ba9543d473bb758325d8e4c20185418b4dcf01c8a26b4"
+      },
+      "arm64/messages-seed-fixture": {
+        "bytes": 2671568,
+        "sha256": "ad65b5cbf654bcc83d50230e0981c911fa35ca257fcd9f7ea1d9bff36465ee55"
+      }
+    }
+  },
+  "open_gates": [
+    "prepared five-app-frame navigation",
+    "private sole-daemon Messages read-provider join",
+    "combined installed current ARM cohort",
+    "cold full shell/menu",
+    "normal direct QWindow DPR",
+    "matched Pixel hardware"
+  ]
+}

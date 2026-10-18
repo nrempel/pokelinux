@@ -92,6 +92,12 @@ kernel/socket tests pass alongside held-reader Stop and late-success rejection,
 with permanent reproducible boundary tests and separate host/ARM release builds.
 Installed deployment, a client/UI join and physical connectivity remain open.
 
+The first [prepared three-app navigation attempt](docs/native-three-app-navigation.md)
+stops at a fixture workspace command before any functional group or app capture.
+Its failed aggregate is preserved separately from successful process closure and
+prior app milestones. A current12-executable Rust host/ARM build also closes;
+build facts do not establish a combined running phone system.
+
 The [native Rust brightness service](docs/native-brightness.md) now joins its real Rust client,
 owned worker and authored attribute backend in six process/socket cases. Unchanged
 fresh readonly observations now preserve the state revision, so background reads

@@ -89,14 +89,16 @@ actual LinuxBacklight class with the existing matching GPIO backlight module and
 one authored virtual device: raw0→1→0, then unavailable on removal, with normal
 Stop. It proves a shared Rust service/kernel interface, not a Pixel panel or
 independent light output. The prepared normal Settings touch/change/unavailable/recovery path
-also passes on an earlier x86 KVM cohort with that authored backend, using the
-same Rust service interfaces. A newer client has separate native x86/ARM Qt
-build/install/offscreen C ABI proof; its current x86 tap trace fails and is not
-promoted from the earlier success. A further shared Rust correction retains the
-last explicit choice outcome through readonly recovery; its socket/C ABI tests
-and host/ARM release builds remain separate from ARM runtime. Its new normal x86
-Qt build/component passes, while the latest touch trace reaches four states then
-fails the final new25% change. No ARM visible UI is qualified. Requested and optional actual attributes are
+also passes in an x86 KVM session with the authored backend. The current Rust
+client/owner cohort now completes25→explicit75→unavailable with disabled inputs
+and no mutation→readonly recovery75→new explicit25 in one normal app/window.
+Five original Pixel10-profile captures and the full owned closure pass; earlier
+failed cohorts remain separate with unknown causes. This prepared result does
+not qualify all-input reliability, cold startup or an ARM visible window.
+The current ARM battery/brightness pair separately passes fresh automatic cold
+boot and typed readonly presence→absence→recovery against the kernel virtual-GPIO
+class; it does not inherit the earlier ARM Set result or x86 graphical result.
+Requested and optional actual attributes are
 distinct, and neither is physical luminance. A Pixel panel without a usable Linux backlight interface will
 need its own independently qualified backend; these host tests add no supported
 phone model.
