@@ -37,7 +37,7 @@ target_link_libraries(settings-client-core INTERFACE Threads::Threads ${CMAKE_DL
 if(TARGET settings-client-rust-build)
  add_dependencies(settings-client-core settings-client-rust-build)
 endif()
-add_library(settings-client STATIC SettingsClient.cpp SettingsClient.h)
+add_library(settings-client STATIC SettingsClient.cpp SettingsClient.h SettingsConnectivityClient.cpp SettingsConnectivityClient.h)
 target_include_directories(settings-client PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 target_link_libraries(settings-client PUBLIC Qt6::Core settings-client-core)
 target_compile_options(settings-client PRIVATE -Wall -Wextra -Werror)
@@ -62,6 +62,16 @@ target_compile_options(settings-network-card-unavailable-test PRIVATE -Wall -Wex
 add_executable(settings-network-card-service-test tests/network-card-service.cpp resources.qrc)
 target_link_libraries(settings-network-card-service-test PRIVATE settings-client phone-appearance-client phone-network-status-client Qt6::Quick Qt6::QuickControls2)
 target_compile_options(settings-network-card-service-test PRIVATE -Wall -Wextra -Werror -UNDEBUG)
+# Actual unshown QML click/C ABI boundary; the authored peer owns the run.
+find_package(Qt6 REQUIRED COMPONENTS Test)
+add_executable(settings-connectivity-click-test tests/connectivity-click.cpp resources.qrc)
+target_link_libraries(settings-connectivity-click-test PRIVATE settings-client phone-appearance-client phone-network-status-client Qt6::Quick Qt6::QuickControls2 Qt6::Test)
+target_compile_options(settings-connectivity-click-test PRIVATE -Wall -Wextra -Werror -UNDEBUG)
+target_link_options(settings-connectivity-click-test PRIVATE
+ -Wl,--wrap=pr_settings_connectivity_deadline_v1
+ -Wl,--wrap=pr_settings_connectivity_stop_v1
+ -Wl,--wrap=pr_settings_connectivity_join_v1
+ -Wl,--wrap=pr_settings_connectivity_free_v1)
 # Run as UID11050 in an isolated root-authored environment with the installed QML.
 # This component target does not create a normal app window or contact a service.
 install(TARGETS pokelinux-settings RUNTIME DESTINATION libexec/pokelinux)

@@ -265,5 +265,14 @@ REDs, with actual waits, PIPE EOFs and owned joins closed. Formatting, strict
 Clippy and the normal Release archive pass. A separate UID11050 C++ consumer
 includes the real header, links that exact archive and qualifies unavailable/
 refusal and actual Stop/Join/Free under the original 200ms budget. It does not
-execute positive packets or Qt. No connectivity Qt control, new normal app build
-or deployment is qualified; the next slice adds asynchronous GUI ownership.
+execute positive packets or Qt. The later [Qt controls](../docs/native-settings-connectivity-qt.md)
+now pass a real Enable click, one exact-deadline Set and fresh Ready/Enabled QML
+state through that normal Release archive. Stop once, asynchronous actual Join
+and Free complete in about1.08ms under the original200ms budget; close never
+Disconnects. Normal CMake compiles/loads the app and three test targets, and both
+existing unavailable components execute. The frozen click target needs Qt Test
+development files; the normal app does not link Qt Test. This native Qt6.8.2
+unshown component supplies no normal Main runtime/window, new screenshot,
+installed deployment, current Qt6.12/ARM or physical result. The third existing
+network-service test is updated for the new property/explicit close but was not
+rerun in this cohort.

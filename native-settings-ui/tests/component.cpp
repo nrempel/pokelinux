@@ -1,5 +1,7 @@
 // C++/Rust ABI and real adapter/QML construction only, without an app window.
 #include "SettingsClient.h"
+#include "SettingsConnectivityClient.h"
+#include "connectivity-close.h"
 #include "PhoneAppearanceClient.h"
 #include "PhoneNetworkStatusClient.h"
 #include <QGuiApplication>
@@ -58,7 +60,8 @@ int main(int argc, char **argv) {
     SettingsClient client(QString::fromUtf8(missing));
     assert(!client.available() && !client.canSet() && !client.confirmedPercent().isValid());
     PhoneNetworkStatusClient networkStatus;
-    view.setInitialProperties({{"theme", QVariant::fromValue(theme.data())}, {"settingsClient", QVariant::fromValue(&client)}, {"networkStatusClient", QVariant::fromValue(&networkStatus)}});
+    SettingsConnectivityClient connectivity(QString::fromUtf8(missing));
+    view.setInitialProperties({{"theme", QVariant::fromValue(theme.data())}, {"settingsClient", QVariant::fromValue(&client)}, {"networkStatusClient", QVariant::fromValue(&networkStatus)}, {"connectivityClient", QVariant::fromValue(&connectivity)}});
     view.setSource(QUrl(QStringLiteral("qrc:/settings/SettingsView.qml")));
     if (view.status() != QQuickView::Ready) {
         for (const auto &error : view.errors()) qWarning("%s", qPrintable(error.toString()));
@@ -73,5 +76,10 @@ int main(int argc, char **argv) {
         assert(item && !item->property("enabled").toBool());
     }
     assert(client.status() == QStringLiteral("Brightness unavailable"));
+    assert(!connectivity.available() && !connectivity.canControl() && !connectivity.configured().isValid());
+    closeSettingsConnectivity(connectivity);
+    SettingsConnectivityClient invalid(QStringLiteral("relative"));
+    assert(!invalid.available() && !invalid.canControl() && !invalid.configured().isValid());
+    closeSettingsConnectivity(invalid);
     std::puts("PASS real adapters and normal QML construction without window");
 }

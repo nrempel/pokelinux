@@ -30,8 +30,8 @@ Wi-Fi/Internet and all phone gates remain open.
 Earlier [private Main](native-connectivity-private-ingress.md) and
 [persistent-worker](native-connectivity-worker.md) cohorts remain separate.
 
-The next connectivity slice adds explicit Qt controls to the qualified Rust
-Settings C ABI, then joins the normal app/window and installed Main deployment.
+The next connectivity slice joins ordinary Settings ownership and installed
+session-owner/Main selection to the qualified Rust C ABI and Qt controls.
 Keep Source/authentication/full-shell/capture branches parked. The current tracer
 uses authored session=None/admin facts; no genuine session/authentication follows.
 Worker Stop/reaping is separate from remote cleanup, and no implicit mutation
@@ -55,9 +55,15 @@ Rust engine. Formatting, strict Clippy and the normal Release archive pass; a
 separate UID11050 C++ consumer uses the real header and exact archive to qualify
 unavailable/refusal and actual Stop/Join/Free. The earlier format-only setup
 failure remains recorded. This is separate from the published safe SDK
-checkpoint141c622. Next add thin Qt controls with asynchronous close, then reuse
-the existing packet oracle for ordinary app ownership/deployment. No connectivity
-Qt control or installed selection is qualified yet.
+checkpoint141c622. The later [Qt controls](native-settings-connectivity-qt.md) now
+pass actual enabled-button input, one exact-deadline Set, fresh Ready/Enabled
+state and asynchronous owned close through the same Release archive. The genuine
+missing-Set RED precedes effect wiring; three setup failures and one unexecuted
+predecessor remain separate. Normal CMake builds/loads four selected targets and
+two existing unavailable components execute. This is native unshown Qt6.8.2,
+not the older Qt6.12 or ARM/window cohorts. Next reuse the existing packet oracle
+for ordinary app ownership and explicit installed session-owner/Main selection;
+normal Main runtime, window and deployment remain open.
 
 The [native local-network status path](native-network-status.md) now passes both
 host and native ARM service-to-Rust-client-to-Settings integration. In the ARM VM,

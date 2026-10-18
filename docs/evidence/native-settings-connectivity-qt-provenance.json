@@ -1,0 +1,251 @@
+{
+  "schema": 1,
+  "status": "Genuine actual QML clicked missing-Set RED then unchanged-consumer GREEN through normal CMake and Rust Release archive",
+  "public_base_commit": "024746596273ad92f4bab5ecc7342de540707d71",
+  "evidence_class": "Native Harbour x86_64 Qt6.8.2, unshown component, authored root Unix socket peer",
+  "sources": {
+    "native-settings-ui/SettingsConnectivityClient.h": {
+      "bytes": 1274,
+      "sha256": "c14640caabf39ae4d5482b601d39c1128e8d34746e85eca56a67facf096b152a"
+    },
+    "native-settings-ui/SettingsConnectivityClient.cpp": {
+      "bytes": 5356,
+      "sha256": "7c4fbe2b97b0959b78964e5d5c4af237f8e152e81f2f7d15db263c529c45a967"
+    },
+    "native-settings-ui/main.cpp": {
+      "bytes": 3564,
+      "sha256": "96448422440efce45898d37b6a648f956a1b78fb675820e4861d815fea4b5010"
+    },
+    "native-settings-ui/CMakeLists.txt": {
+      "bytes": 5956,
+      "sha256": "e3e21b4d0f0f8f23db989bf0cc52aa17a231c530b2d19af8803bedf63711f103"
+    },
+    "native-settings-ui/SettingsView.qml": {
+      "bytes": 8408,
+      "sha256": "01445eaf0fcf25f75acfc1ea622df97c00a9efb261cdb0ed7d778f314010d324"
+    },
+    "native-settings-ui/tests/connectivity-close.h": {
+      "bytes": 1047,
+      "sha256": "c3204f70e6bc63489cb9e1bb91de42b66cfe09151254ddd81066119d5d16040e"
+    },
+    "native-settings-ui/tests/component.cpp": {
+      "bytes": 4926,
+      "sha256": "f44cc8e09df64d232e6f30149ba4f418b8b004fcfa6cc7f2535e22b16e75b22a"
+    },
+    "native-settings-ui/tests/network-card-unavailable.cpp": {
+      "bytes": 5711,
+      "sha256": "8b0d803c6c7baadbb31ec213ad5aafeabfdd077148e46d32e559749d7a9d8e79"
+    },
+    "native-settings-ui/tests/network-card-service.cpp": {
+      "bytes": 6321,
+      "sha256": "0c074a0fa68c4196332fcdbec9011aab30c9b8fc08a425045681c887f68ec6e3"
+    },
+    "native-settings-ui/tests/connectivity-click.cpp": {
+      "bytes": 17135,
+      "sha256": "9f7aa4bb656f6635d4aa255bdecfd5860b296acd827329dfae65ce52923f3f90"
+    },
+    "tools/native-settings-connectivity-qt/case.py": {
+      "bytes": 11294,
+      "sha256": "e361455109329c9516a41b73a3f5fb9b6fe6119fef1a548346103f8d905cf297"
+    }
+  },
+  "private_artifact_digests": {
+    "unexecuted_predecessor": {
+      "SEAL.json": {
+        "bytes": 5283,
+        "sha256": "11ce168391a619a49a50effbef39c689f0fbee11129195ee1339036e7543a160"
+      }
+    },
+    "compile_setup_failure": {
+      "outer/receipt.json": {
+        "bytes": 56478,
+        "sha256": "41591daa961312022c3c3f73961cb3a2410172c1460ae2894717d4ff6c546cbc"
+      },
+      "out/result.json": {
+        "bytes": 12217,
+        "sha256": "b2acc5ab8819e261abc0727beadb49eaaaa2dc1068335ffb4e2c4f275eaa1661"
+      }
+    },
+    "directory_setup_failure": {
+      "outer/receipt.json": {
+        "bytes": 56477,
+        "sha256": "b6c18b0883300b7a3d72de95f21cf789a129a88b3130d592dcd2e620f163ca89"
+      },
+      "out/result.json": {
+        "bytes": 23751,
+        "sha256": "9298d194ed9a7e34b5c8b44c9ecf701eb889f12bf5c6b340f1709b5268ce0061"
+      }
+    },
+    "noexec_setup_failure": {
+      "outer/receipt.json": {
+        "bytes": 56478,
+        "sha256": "1229acca2adcafcdebb3a3859da03a9abf3276628d7437828e0d2c342a4f50de"
+      },
+      "out/result.json": {
+        "bytes": 29886,
+        "sha256": "db1c504b6d7472b4edf3aa76cd580f409ac3f5029c47738a42264be22f20bd1c"
+      }
+    },
+    "behavior_RED": {
+      "outer/receipt.json": {
+        "bytes": 55915,
+        "sha256": "100e9ba3aa229a8f5f130d1eed0e3ff6bd0532ea129dbba3e0b9a9e1e1ff748c"
+      },
+      "out/result.json": {
+        "bytes": 38973,
+        "sha256": "728d7286fbac99118c294f9533fa4b8bbaea9bb54ad858bc404532dde1b3f8bb"
+      },
+      "Root-behavior-RED-review.json": {
+        "bytes": 1163,
+        "sha256": "22218a766f381596b0903b8bf77fcd8b5749c71ff8d8527dfc9a9afd7a32d252"
+      },
+      "preparer-closed-QML-RED-review.json": {
+        "bytes": 2548,
+        "sha256": "d5d5df7586151440cbfc7f466d262ef992cc5ecf5885586542fbd63bce877e85"
+      }
+    },
+    "GREEN": {
+      "outer/receipt.json": {
+        "bytes": 57159,
+        "sha256": "a25335a67b9d5d8cf1889c058265626eedc89e1f669e98c862293048befd7d39"
+      },
+      "out/result.json": {
+        "bytes": 36945,
+        "sha256": "3f1bcec6f0fef1ba3d62784374681a5714277937d6cbe380c4b1b53a14702284"
+      },
+      "Root-GREEN-review.json": {
+        "bytes": 1260,
+        "sha256": "d5a4143c2b3fbbdde75afa05613cd04c8f1820fb7089543d8a87d1cfb5a03c34"
+      },
+      "preparer-closed-QML-GREEN-review.json": {
+        "bytes": 2993,
+        "sha256": "069eac7358c23e418e50af869fc5272a429d9e84824139a27688537c205846e2"
+      }
+    }
+  },
+  "Qt_version": "6.8.2",
+  "normal_Main_executed": false,
+  "normal_Main_built_and_loaded": {
+    "path": "/out/artifacts/pokelinux-settings",
+    "bytes": 6230688,
+    "sha256": "23ade7cd2538319cb16cbbefe61c66dab8fc5b3b3d31998c6f246e98d62da5a9",
+    "ELF_machine": 62,
+    "normal_Main_executed": false
+  },
+  "normal_CMake_four_targets_build_load_passed": true,
+  "existing_unavailable_components": {
+    "settings-client-component-test": {
+      "actual_exit": 0,
+      "stdout_sha256": "6e8d991ab9e6c2d00ebefbe5271230a9025c9b4a724116e874167bcf752df750",
+      "exact_PASS_lines": [
+        "PASS C++ C ABI layout/refusal/actual_join",
+        "PASS real adapters and normal QML construction without window"
+      ]
+    },
+    "settings-network-card-unavailable-test": {
+      "actual_exit": 0,
+      "stdout_sha256": "9b51570a9d400886480498302a4d590603ab9e2ad57ee2acd6ab24a6d06df10b",
+      "exact_PASS_lines": [
+        "PASS C++ C ABI layout/refusal/actual_join",
+        "PASS real adapters and normal QML construction without window",
+        "PASS normal Settings local network unavailable card"
+      ]
+    }
+  },
+  "Rust_archives": {
+    "settings": {
+      "bytes": 25678710,
+      "sha256": "b55b505975134cf2cd6601bde945ce71aeeea7e131ad3876d4efe50c92b9035b"
+    },
+    "appearance": {
+      "bytes": 23924416,
+      "sha256": "2352a455d1da1697309a18b8ae6f95b8e4efcc0422c90cf78d2aa9d468e72b94"
+    },
+    "network_status": {
+      "bytes": 23749220,
+      "sha256": "5eb2efbea41f072fb43d2b11b94047ba2d30fdf28e32d50bd023ae0bde7e179a"
+    }
+  },
+  "all_three_explicit_matching_archives_linked_once_each": true,
+  "Rust_archives_not_rebuilt": true,
+  "RED": {
+    "actual_enabled_mouse_press_release_clicked": 1,
+    "actual_Rust_deadline_captures": 1,
+    "actual_Set_packets": 0,
+    "fresh_configured": false,
+    "fresh_status": "Connection ready",
+    "final_compiled_desired_assert_signal": 6,
+    "child_wait0_and_actual_stdout_EOF_before_desired_assert": true,
+    "actual_close_elapsed_ns": 2174248,
+    "Scope_actual_wait_stdout_EOF": 24,
+    "regular_stderr_separate": 10
+  },
+  "GREEN": {
+    "actual_enabled_mouse_press_release_clicked": 1,
+    "actual_Rust_deadline_captures": 1,
+    "actual_Set_packets": 1,
+    "explicit_connected": true,
+    "wire_deadline_exact_original_capture": true,
+    "fresh_configured": true,
+    "fresh_property_and_QML_status": "Connection ready",
+    "Disable_enabled_Enable_disabled": true,
+    "final_compiled_assert_exit": 0,
+    "actual_close_elapsed_ns": 1080655,
+    "original_close_budget_ns": 200000000,
+    "Stop_calls": 1,
+    "Join_WAIT_calls": 1,
+    "actual_Join_OK_then_Free_OK": true,
+    "all_Join_Free_calls_after_beginClose_return": true,
+    "Qt_event_heartbeat": 1,
+    "deferred_closed_signals": 1,
+    "Scope_actual_wait_stdout_EOF": 24,
+    "regular_stderr_separate": 10,
+    "all91input_pins_and_current26compiled_sources_match": true,
+    "exact_consumer_and_peer_unchanged_from_RED": true,
+    "effect_repair": "One Qt handler delegates explicit bool and original absolute deadline to existing C ABI; no Rust engine/archive change"
+  },
+  "custody": {
+    "all_actual_wait_stdout_EOF_before_original_cutoffs": true,
+    "regular_stderr_closure_separate": true,
+    "no_adopted_waits": true,
+    "peer_actual_connectivity_zero_byte_socket_EOF": true,
+    "parent_handles_closed_before_final_compiled_assert": true,
+    "exact_container_removed_same_daemon": true,
+    "all_inputs_unchanged": true
+  },
+  "identity": {
+    "native_Qt_components_UID_GID11050_all_capability_sets_zero_NoNewPrivs1": true,
+    "compiler_children_all_capability_sets_zero_NoNewPrivs1": true,
+    "authored_root_peer_capabilities": [
+      "KILL",
+      "SETUID",
+      "SETGID"
+    ],
+    "final_compiled_assertion": "UID11050 selected through Popen identity; no independent child capability probe"
+  },
+  "profile": {
+    "root_logical_width": 411.42857142857144,
+    "root_logical_height": 923.4285714285714,
+    "view_logical_width": 411,
+    "view_logical_height": 923,
+    "scale_intent": 2.625,
+    "all_quick_windows_unshown": true,
+    "native_output_or_window_profile_qualified": false,
+    "frame_or_screenshot": false
+  },
+  "scope_limits": {
+    "actual_lifecycle_actor_OSgrant_or_kernel_network_backend": false,
+    "new_genuine_theme_provider": false,
+    "normal_Main_runtime_window_or_installed_deployment": false,
+    "new_Qt6_12_or_ARM_evidence": false,
+    "actual_suspend": false,
+    "phone_access_or_hardware_qualification": false
+  },
+  "remaining_gates": [
+    "Normal Settings ownership through existing actor/Main packet oracle",
+    "Explicit installed session-owner/Main selection and deployment",
+    "Normal app/window with qualified Pixel10 output profile",
+    "ARM controls and actual suspend",
+    "Wi-Fi/Bluetooth/Internet, carrier and all physical phone requirements; zero models qualified"
+  ]
+}

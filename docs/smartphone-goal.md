@@ -6,7 +6,10 @@ and explicit Disconnect through the native actor/Main/worker. Six socket groups
 and actual joins qualify its local lifecycle behavior. The later
 [C ABI component](native-settings-connectivity-cabi.md) passes six socket groups,
 strict QA, a normal Release archive and a separate real-header C++ unavailable/
-lifetime smoke. Qt controls, installed selection, ARM and all physical gates
+lifetime smoke. The later [unshown Qt component](native-settings-connectivity-qt.md)
+passes a real Enable click, one exact-deadline Set, fresh Ready state and
+asynchronous Stop/Join/Free. Normal CMake builds/loads the app and three test
+targets. Normal app/window, installed selection, ARM and all physical gates
 remain open; this advances a software slice without completing the smartphone
 matrix.
 

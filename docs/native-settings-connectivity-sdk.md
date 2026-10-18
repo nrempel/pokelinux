@@ -103,7 +103,8 @@ compiled consumer and implementation; no extra functional rerun is inferred.
 ## Remaining gates
 
 The later [normal Settings connectivity C ABI](native-settings-connectivity-cabi.md)
-is qualified separately. Qt controls, installed session-owner/Main selection,
+and [unshown Qt controls](native-settings-connectivity-qt.md) are qualified
+separately. Installed session-owner/Main selection, normal app/window,
 deployment and ARM integration remain open. This SDK cohort supplies no
 new normal window, screenshot, genuine Source/authentication, actual suspend,
 physical Wi-Fi/Bluetooth/Internet, carrier or phone result. No physical phone was

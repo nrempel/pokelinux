@@ -64,11 +64,13 @@ not a real OS permission grant or carrier observation.
 
 ## Next boundary
 
-Add thin Qt controls, then reuse the existing packet
-oracle for normal Settings ownership and installed actor/Main integration.
+The later [unshown Qt controls](native-settings-connectivity-qt.md) now qualify
+actual input, a positive exact-deadline command through the normal Release
+archive and asynchronous close separately. Next reuse the existing packet oracle
+for normal Settings ownership and installed actor/Main integration.
 Programmatic refresh must never emit a Set. Render fresh current facts while
 preserving unconfirmed action outcomes. Capture deadlines before queued gesture
 delivery. Window close must disable callbacks, Stop once and poll Join
 asynchronously before Free; it must neither busy-wait on the GUI thread nor
-trigger Disconnect. No new normal window, screenshot, deployment, ARM, actual
-suspend or phone qualification follows from this component work.
+trigger Disconnect. No normal Main runtime/window, screenshot, deployment, ARM,
+actual suspend or phone qualification follows from these components.

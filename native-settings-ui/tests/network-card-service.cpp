@@ -1,6 +1,8 @@
 // Actual normal QML + real Rust adapter + root normal-service lifecycle.
 // Construct the view offscreen; never show a normal application window.
 #include "SettingsClient.h"
+#include "SettingsConnectivityClient.h"
+#include "connectivity-close.h"
 #include "PhoneAppearanceClient.h"
 #include "PhoneNetworkStatusClient.h"
 #include <QCoreApplication>
@@ -66,7 +68,8 @@ int main(int argc, char **argv) {
     assert(theme);
     SettingsClient settings(QStringLiteral("/run/pokelinux-settings-component-no-actor/app.sock"));
     PhoneNetworkStatusClient network;
-    view.setInitialProperties({{"theme", QVariant::fromValue(theme.data())}, {"settingsClient", QVariant::fromValue(&settings)}, {"networkStatusClient", QVariant::fromValue(&network)}});
+    SettingsConnectivityClient connectivity(QStringLiteral("/run/pokelinux-settings-component-no-actor/app.sock"));
+    view.setInitialProperties({{"theme", QVariant::fromValue(theme.data())}, {"settingsClient", QVariant::fromValue(&settings)}, {"networkStatusClient", QVariant::fromValue(&network)}, {"connectivityClient", QVariant::fromValue(&connectivity)}});
     view.setSource(QUrl(QStringLiteral("qrc:/settings/SettingsView.qml")));
     if (view.status() != QQuickView::Ready) {
         for (const auto &error : view.errors()) qWarning("%s", qPrintable(error.toString()));
@@ -110,6 +113,7 @@ int main(int argc, char **argv) {
     deliveredUntil(until, zero);
     assert(text("localNetworkCaption") == QStringLiteral("Counts do not indicate internet access."));
     std::printf("NETWORK_QML_RECONNECTED_ZERO uid=%u observed_ns=%llu\n", unsigned(getuid()), static_cast<unsigned long long>(boot()));
+    closeSettingsConnectivity(connectivity);
     std::puts("PASS real normal service QML 0/0 then expired dash then fresh reconnection 0/0");
     std::fflush(stdout);
 }

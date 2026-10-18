@@ -5,6 +5,7 @@ Rectangle {
     required property QtObject theme
     required property QtObject settingsClient
     required property QtObject networkStatusClient
+    required property QtObject connectivityClient
     color: theme.background
     component BrightnessButton: Button {
         id: button
@@ -91,6 +92,65 @@ Rectangle {
                     enabled: root.settingsClient.canSet
                     onClicked: root.settingsClient.setPercent(75)
                 }
+            }
+            Text {
+                objectName: "connectivityTitle"
+                text: "Local connection"
+                textFormat: Text.PlainText
+                color: root.theme.foreground
+                font.family: root.theme.fontFamily
+                font.pixelSize: root.theme.fontPixel("title", 20)
+            }
+            Text {
+                objectName: "connectivityState"
+                text: {
+                    const value = root.connectivityClient.configured
+                    return "Local connection: " + (value === null || value === undefined ? "Unavailable" : value ? "Enabled" : "Disabled")
+                }
+                textFormat: Text.PlainText
+                width: parent.width
+                wrapMode: Text.Wrap
+                color: root.theme.foreground
+                font.family: root.theme.fontFamily
+                font.pixelSize: root.theme.fontPixel("body", 16)
+            }
+            Text {
+                objectName: "connectivityStatus"
+                text: root.connectivityClient.status
+                textFormat: Text.PlainText
+                width: parent.width
+                wrapMode: Text.Wrap
+                color: root.theme.muted
+                font.family: root.theme.fontFamily
+                font.pixelSize: root.theme.fontPixel("caption", 12)
+            }
+            Row {
+                width: parent.width
+                spacing: root.theme.spacingPixel("controlGap", 8)
+                BrightnessButton {
+                    objectName: "connectivityEnable"
+                    width: (parent.width - parent.spacing) / 2
+                    text: "Enable"
+                    enabled: root.connectivityClient.canControl && root.connectivityClient.configured === false
+                    onClicked: root.connectivityClient.setConnected(true)
+                }
+                BrightnessButton {
+                    objectName: "connectivityDisable"
+                    width: (parent.width - parent.spacing) / 2
+                    text: "Disable"
+                    enabled: root.connectivityClient.canControl && root.connectivityClient.configured === true
+                    onClicked: root.connectivityClient.setConnected(false)
+                }
+            }
+            Text {
+                objectName: "connectivityCaption"
+                text: "Connection state does not indicate internet access."
+                textFormat: Text.PlainText
+                width: parent.width
+                wrapMode: Text.Wrap
+                color: root.theme.muted
+                font.family: root.theme.fontFamily
+                font.pixelSize: root.theme.fontPixel("caption", 12)
             }
             Text {
                 objectName: "localNetworkTitle"
