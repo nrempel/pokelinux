@@ -95,7 +95,8 @@ backlight remain open. These published GUI images retain the preceding engine.
 The repaired Rust archive now passes native x86 and ARM normal Qt build/install
 and offscreen component execution. A new x86 touch attempt fails the first75%
 transition: one input, no raw change, cause unknown. The earlier success is not
-inherited; persistent tap-outcome feedback is now being regression-tested.
+inherited. Persistent tap-outcome feedback now passes separate real C ABI
+regressions; joining its archive into normal Qt remains a new gate.
 Future captures must qualify the actual
 [Pixel10 profile](../docs/native-phone-display-profile.md); no resized capture is valid evidence.
 
@@ -138,3 +139,32 @@ healthy, but Qt.clicked/first wire Set/reply are not observed. Only the initial
 state passes; the actor/service/VM/container close. No second input is sent. The
 lost outcome is a separate usability gap, not evidence identifying the original
 failure. See [platform and failed-trace provenance](../docs/evidence/native-settings-qt-platform-provenance.json).
+
+The Rust client now stores the last explicit choice outcome separately from the
+current readonly state. A fresh status may restore the current percentage and
+usable buttons while preserving “Brightness choice not sent,” “Brightness change
+unconfirmed,” or “Change unconfirmed: unavailable.” The last wording records an
+observed actor Unavailable after a full Set packet; it does not prove that no
+device effect occurred. A new accepted explicit choice or its matching positive
+completion clears the old outcome. Refusing a second click does not replace an
+active choice, and Denied/Stop retain their privacy and display priority.
+
+The final intent check, single nonblocking Set send and sent marker share one
+brief model lock, released before any polling or waiting. This prevents a
+concurrent getter from calling an already sent request “not sent.” No write
+retry, wire operation, request deadline, readonly cadence or Source policy is
+added. New C status constants preserve the current View layout and six exports;
+the Qt adapter only maps them to visible text. Native builds and touch evidence
+for the earlier engine are historical until a new normal app is qualified.
+
+The outcome qualification preserves two compiled assertion REDs: the final frozen
+fixture fails all four new outcome checks plus the intentionally changed
+unsent-expiry status assertion on the old engine. The repair passes all15 distinct
+requirements across the focused and prior socket/C ABI groups, with25 actual
+client waits/50 PIPE EOFs and the separate wrong-PID writer closed. That aggregate
+then fails only import formatting; an exact import-order-only successor passes
+format, strict all-target Clippy and normal host/ARM release archives. Functional
+tests are not repeated after this nonsemantic change. The original five-second
+client and200ms Stop/join bounds remain. No deterministic send/expiry interleaving
+reproduction or new Qt/GUI result is inferred. See
+[hash-only outcome provenance](../docs/evidence/native-settings-choice-outcome-provenance.json).

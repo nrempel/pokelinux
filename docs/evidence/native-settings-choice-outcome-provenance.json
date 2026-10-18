@@ -1,0 +1,330 @@
+{
+  "schema": 1,
+  "scope": "Persistent bounded Settings last-choice outcome actual Rust Engine/C ABI with authenticated authored root SEQPACKET peer and real UID/GID11050 client; strict normal host/ARM release staticlibs. No Qt/GUI/full actor/backend/Source/authority/device execution or causal GUI diagnosis.",
+  "compiled_assertion_RED": {
+    "initial_new_contract": "red-2 currentABI compiles: happyPASS/new4outcomeassertFAIL statuses1vs8/4/7/7",
+    "final_whole_fixture": "red-3 changes only obsoletependingexpiry predicate0\u21927; happyPASS/new4+updatedexpiryFAIL; productiond919unchanged untilRootrepair",
+    "qualification": {
+      "bytes": 7603,
+      "sha256": "9779d3605c281de1c8249517ce14a6101450cfd9c6708e43d510f9c02472b703"
+    }
+  },
+  "GREEN_qualification": {
+    "bytes": 10621,
+    "sha256": "ab41d1ad28987ea67b498737dcfe5b69fc0ce3162b8d71d97ff48b5b700f45c3"
+  },
+  "provider_manifest": {
+    "bytes": 4458,
+    "sha256": "f0f9e81bf03388b3434d1bf60e9496e26312d33bf15d5d9b2705a494a4b176ff"
+  },
+  "final_source_files": {
+    "native-settings-ui/SettingsClient.cpp": "27de565f6db687285fa5105fdc89c926067d0450154237d4c654f38524e172da",
+    "native-settings-ui/client-core/Cargo.lock": "3254825d8db03d6615c8765d165cfbf21dfbb2f5a1234087196be55c2709cfb9",
+    "native-settings-ui/client-core/Cargo.toml": "9e1e14944ff5a8a96ce99a240182c4ae1c05b6f1de3e86f51382bece88a92fc7",
+    "native-settings-ui/client-core/include/pokelinux_settings_client.h": "36a72aa7431515c40c79ea8d8dcc4c6e7bed549ac9a4aaf4a842f6429c23dec5",
+    "native-settings-ui/client-core/src/clock.rs": "5fb83f9152ddb609910df2ca5482064a87187d6d7d9ad602e00c007d351700a9",
+    "native-settings-ui/client-core/src/engine.rs": "600243d20cb0e88cd9206aac685ae4d26257c020ced0d46afb925c0ae5d32687",
+    "native-settings-ui/client-core/src/ffi.rs": "ff8ba6bd7471a64e0e8a3a7074b2d912fdd4b964c57dc89a68124d1ca51b899a",
+    "native-settings-ui/client-core/src/lib.rs": "f04105fd66bcc2bb8d2fdaa1e66f2dc7da000eb3572be13d7852e570ed6f2495",
+    "native-settings-ui/client-core/src/protocol.rs": "03edfdf6cdf817f4fc5ccb1a970972b0e846af4e11eff19cb57cab86de8b938a",
+    "native-settings-ui/client-core/tests/client-boundary.rs": "a3e091940d482f53e4101576fe0a1230d5f2682d7719b05c0d593bb7985a2c76"
+  },
+  "functional_GREEN": {
+    "epoch": "green-2",
+    "aggregate_passed": false,
+    "actual_engine_sha256": "e23151340f5f73010efdc2608956a0b92452986b0c0818a2c008153776f37977",
+    "frozen_fixture_same": true,
+    "modes": {
+      "outcome": {
+        "actual_exit": 0,
+        "group_rows": [
+          "GROUP happy PASS",
+          "GROUP outcome-unavailable PASS",
+          "GROUP outcome-uncertain PASS",
+          "GROUP outcome-changed PASS",
+          "GROUP outcome-expired PASS",
+          "GROUP pending-expiry PASS"
+        ],
+        "client_waits": 6,
+        "client_PIPE_EOF": 12
+      },
+      "original": {
+        "actual_exit": 0,
+        "group_rows": [
+          "GROUP happy PASS",
+          "GROUP controls PASS",
+          "GROUP validation PASS",
+          "GROUP expiry PASS",
+          "GROUP held PASS",
+          "GROUP stale PASS",
+          "GROUP stop PASS"
+        ],
+        "client_waits": 14,
+        "client_PIPE_EOF": 28
+      },
+      "pending": {
+        "actual_exit": 0,
+        "group_rows": [
+          "GROUP happy PASS",
+          "GROUP pending-usable PASS",
+          "GROUP pending-changed PASS",
+          "GROUP pending-expiry PASS",
+          "GROUP pending-stop PASS"
+        ],
+        "client_waits": 5,
+        "client_PIPE_EOF": 10
+      }
+    },
+    "distinct_requirement_groups": 15,
+    "new4_executed_once": true,
+    "prior_pending_expiry_status_assertion_explicitly_updated0_to7": true,
+    "functional_outcomes": {
+      "observed_actor_Unavailable_after_one_Set": "status8 persists through two ROcurrent snapshots, one75Set total",
+      "sent_timeout": "UNCERTAIN4 persists through ROcurrent; one fresh explicit25 clears outcome and completes; total2Set75then25,noReplay",
+      "accepted_unsent_changed_revision": "status7 after ROcurrent,zeroSet",
+      "accepted_unsent_original_expiry": "status7 after ROcurrent,zeroSet",
+      "refused_second_click": "cannot replace/cancel accepted75; verified before first peer reply",
+      "Denied": "priority over stored outcome and no cached percentages",
+      "Stop": "existing200msactualjoin and taskcount1 retained"
+    },
+    "actual_client_waits0": 25,
+    "client_stdout_PIPE_EOF": 25,
+    "client_stderr_PIPE_EOF": 25,
+    "all_client_original5s_and_Stop200ms": true,
+    "separate_wrong_PID_writer_wait0": 1,
+    "writer_stderr_PIPE_EOF": 1,
+    "writer_stdout": "owned SEQPACKET, not PIPE",
+    "strict_failure": "only Rustfmt import ordering; clippy/releases not executed here",
+    "outer_custody": {
+      "outer_actual_CLI_waits": 10,
+      "outer_PIPE_EOF": 20,
+      "all_original_cutoffs": true,
+      "exact_CID_absence": true,
+      "same_daemon": true,
+      "source_unchanged": true
+    }
+  },
+  "strict_archive_GREEN": {
+    "epoch": "green-3",
+    "aggregate_passed": true,
+    "exact_nonsemantic_bridge": "Only imported UNCERTAIN and UNCONFIRMED_UNAVAILABLE order swapped; exact old/new text verified; every other selected file unchanged.",
+    "functional_tests_not_repeated": true,
+    "fmt_check": true,
+    "strict_all_target_Clippy": true,
+    "normal_host_Release_archive": true,
+    "normal_ARM_Release_archive": true,
+    "exact6strong_C_exports_each": true,
+    "member_ELF62_and183": true,
+    "outer_custody": {
+      "outer_actual_CLI_waits": 10,
+      "outer_PIPE_EOF": 20,
+      "all_original_cutoffs": true,
+      "exact_CID_absence": true,
+      "same_daemon": true,
+      "source_unchanged": true
+    }
+  },
+  "source_review": {
+    "final_send_check_nonblocking_send_sent_marker_under_one_Model_guard": true,
+    "guard_dropped_before_OUT_wait": true,
+    "protocol_and250ms_cadence_unchanged": true,
+    "thin_Qt_text_reviewed_only": true,
+    "view48byte_alignment8_actual_checks": true
+  },
+  "provider_outputs": {
+    "host": {
+      "bytes": 25262688,
+      "sha256": "2a35b8519b1151ad1d7c3012b40cc9ba75f4e6c296466207dcbadb5da3168f88",
+      "target_triple": "x86_64-unknown-linux-gnu",
+      "member_ELF_machine": 62,
+      "ELF_members": 339,
+      "exact_strong_C_exports": [
+        "pr_settings_client_free_v1",
+        "pr_settings_client_join_v1",
+        "pr_settings_client_new_v1",
+        "pr_settings_client_set_v1",
+        "pr_settings_client_stop_v1",
+        "pr_settings_client_view_v1"
+      ],
+      "normal_features": [],
+      "release": true,
+      "archive_build_only": true
+    },
+    "ARM": {
+      "bytes": 26192446,
+      "sha256": "02015bd40106132dea0ce2f94e4cc766b5c5c164a6769f7396372634f4c06516",
+      "target_triple": "aarch64-unknown-linux-gnu",
+      "member_ELF_machine": 183,
+      "ELF_members": 435,
+      "exact_strong_C_exports": [
+        "pr_settings_client_free_v1",
+        "pr_settings_client_join_v1",
+        "pr_settings_client_new_v1",
+        "pr_settings_client_set_v1",
+        "pr_settings_client_stop_v1",
+        "pr_settings_client_view_v1"
+      ],
+      "normal_features": [],
+      "release": true,
+      "archive_build_only": true
+    }
+  },
+  "resources": {
+    "CPU": 2,
+    "memory_GiB": 2,
+    "network": "none",
+    "cached_image": "sha256:0b4b956502a9f55d992eaced6975737b523be19bd2034078983b36bbcfd7aee6",
+    "capabilities_only": [
+      "SETUID",
+      "SETGID"
+    ],
+    "original_work_seconds": 600,
+    "original_closure_seconds": 660
+  },
+  "artifact_pins": {
+    "handoff/RED-QUALIFICATION.json": {
+      "bytes": 7603,
+      "sha256": "9779d3605c281de1c8249517ce14a6101450cfd9c6708e43d510f9c02472b703"
+    },
+    "red-2/run/receipt.json": {
+      "bytes": 17660,
+      "sha256": "d036b264316e815d1fd9f92620a97edcc60997c2febcfc781d7d563db7d6cf04"
+    },
+    "red-3/run/receipt.json": {
+      "bytes": 17694,
+      "sha256": "e0eb28f9547e152b825fa326972316c2851d0de92f0f566e4c483da0f4ae6d01"
+    },
+    "green-2/SOURCE.json": {
+      "bytes": 1718,
+      "sha256": "f738801c62cfb65a665dede2932510dfc214db5d9c67a2af7fe4ce3f54bb924a"
+    },
+    "green-2/run/receipt.json": {
+      "bytes": 18075,
+      "sha256": "d352764894e887a3a5b50c9ccd3fe1d9146bf3482734e9a6a74f60c29c94b5b0"
+    },
+    "green-2/FUNCTIONAL-GREEN-STRICT-FAILED.json": {
+      "bytes": 1722,
+      "sha256": "bd9af9e99cc8cb7086bd0a5765120062fd73716a246e4cf46047d432c3ec0b65"
+    },
+    "green-3/SOURCE.json": {
+      "bytes": 2045,
+      "sha256": "88730eb8555b5f1191ed78b5a09146c7dddcdb255f74c13a9ea8c7bbeba2d428"
+    },
+    "green-3/selection.json": {
+      "bytes": 1771,
+      "sha256": "4b0317dd36b44523fd27ee16ba4ab469eadd64bf5a6a09d97ceed52713acaa6e"
+    },
+    "green-3/build.sh": {
+      "bytes": 1890,
+      "sha256": "262ceb01efeda096a01fdf6ea170e2fa6530ee579f2d1501e9035004cab2a584"
+    },
+    "green-3/run_once.py": {
+      "bytes": 8593,
+      "sha256": "11505a9b4171c1fb719ffce1027a5f3d2615cfc981854b786dc37ab4030dd450"
+    },
+    "green-3/run/receipt.json": {
+      "bytes": 17394,
+      "sha256": "28110982c50587c97e80490e00280846a06fdd0f3c7e99bef42d1f80ad64a86d"
+    },
+    "green-handoff/PROVIDER-MANIFEST.json": {
+      "bytes": 4458,
+      "sha256": "f0f9e81bf03388b3434d1bf60e9496e26312d33bf15d5d9b2705a494a4b176ff"
+    },
+    "green-2/run/out/outcome.stdout": {
+      "bytes": 4388,
+      "sha256": "4edeb51adeb3ab8f32827e1c9eb7e41e07992bfafd74a8afb1c000bf4458ec6b"
+    },
+    "green-2/run/out/outcome.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "green-2/run/out/outcome.exit": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "green-2/run/out/original.stdout": {
+      "bytes": 2690,
+      "sha256": "305afcf78b094ada18ad1e0bf6399cbb056eb0df39db319ac7265b18481b3640"
+    },
+    "green-2/run/out/original.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "green-2/run/out/original.exit": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "green-2/run/out/pending.stdout": {
+      "bytes": 3284,
+      "sha256": "856d80f77687e4e31c12a969040f287d7e38abd03cbc85ea35394d5e69e806a9"
+    },
+    "green-2/run/out/pending.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "green-2/run/out/pending.exit": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "green-2/run/out/fmt.stdout": {
+      "bytes": 347,
+      "sha256": "0a882ef93ac3282b892c90b9180edeeceb2fd1d3d0b48888ce858e77de359b17"
+    },
+    "green-3/run/out/fmt.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "green-3/run/out/fmt.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "green-3/run/out/clippy.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "green-3/run/out/clippy.stderr": {
+      "bytes": 598,
+      "sha256": "bb58bf6e2d6aa82ce4240d8941ce0d638a04bf920f58d6dc29a3a7723f347142"
+    },
+    "green-3/run/out/host-release.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "green-3/run/out/host-release.stderr": {
+      "bytes": 600,
+      "sha256": "ea8f4b71415bc5ad81a6de9ef903caf2a5ce8eb0d94a61642e5656ea2646b0f7"
+    },
+    "green-3/run/out/ARM-release.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "green-3/run/out/ARM-release.stderr": {
+      "bytes": 445,
+      "sha256": "8f454cbe524ae97d63df9e8899be75ef50f8469a7fcb323d1fdbe9718d78b9b3"
+    },
+    "green-3/run/out/host-C-exports.txt": {
+      "bytes": 160,
+      "sha256": "0650eb4562d73577412d46b08207f3fd3fbc7f5d73b04406fc45d3f78a4a0e03"
+    },
+    "green-3/run/out/ARM-C-exports.txt": {
+      "bytes": 160,
+      "sha256": "0650eb4562d73577412d46b08207f3fd3fbc7f5d73b04406fc45d3f78a4a0e03"
+    },
+    "green-3/run/out/libpokelinux_settings_client-host.a": {
+      "bytes": 25262688,
+      "sha256": "2a35b8519b1151ad1d7c3012b40cc9ba75f4e6c296466207dcbadb5da3168f88"
+    },
+    "green-3/run/out/libpokelinux_settings_client-ARM.a": {
+      "bytes": 26192446,
+      "sha256": "02015bd40106132dea0ce2f94e4cc766b5c5c164a6769f7396372634f4c06516"
+    }
+  },
+  "limits": [
+    "Authored credentialed root peer and actual UID11050 C ABI; not full lifecycle actor/service/Source or driver integration.",
+    "Functional run passes all15 distinct requirements, then fails only fmt; final strict run changes import order only and does not repeat functional tests.",
+    "The prior unsent-expiry status assertion intentionally changes from unavailable0 to not-sent7 after actual RED; no backward compatibility.",
+    "The new short send/state lock is structurally reviewed; no deterministic race-interleaving reproduction is claimed.",
+    "Qt text mapping is reviewed only; current archives require new normal Qt build and touch qualification. Earlier GUI failure cause remains unknown.",
+    "No phone, native ARM execution of this client, physical brightness or luminance qualification."
+  ]
+}

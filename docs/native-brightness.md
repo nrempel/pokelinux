@@ -467,10 +467,28 @@ remain healthy, but the exact Qt click/first wire Set/reply boundary is unobserv
 Only the initial state passes; the earlier five-state baseline is not inherited.
 Actor/service/guest/QEMU/container custody closes despite the failed trace.
 
-The client currently lets a fresh readonly response replace the displayed outcome
-of a tap. A persistent outcome correction is being tested independently, without
-retrying writes or changing Source, cadence or deadlines. See the
+That client let a fresh readonly response replace the displayed outcome of a tap.
+The current Rust correction keeps the last choice outcome separate from current
+attributes and controls: known unsent, sent but unconfirmed, or observed actor
+Unavailable after send. Only a new accepted explicit choice or matching positive
+completion clears it. Denied/Stop retain display priority and clear protected
+values. A refused second choice never replaces active intent. The final intent
+check, single nonblocking send and sent marker share a short model lock, released
+before poll/wait, so concurrent expiry cannot label a full send as unsent. No
+write retry, Source policy, cadence or deadline changes. The earlier native Qt
+builds and failed trace retain their historical engine. See the
 [platform and failed-trace provenance](evidence/native-settings-qt-platform-provenance.json).
+
+Two compiled assertion REDs precede this outcome correction. The final fixture
+intentionally changes the earlier accepted-unsent-expiry status0 to not-sent7;
+all other prior case bodies stay unchanged. All15 distinct Rust socket/C ABI
+requirements pass with actual waits/EOF and original Stop/deadline bounds. The
+same aggregate subsequently fails import formatting; an exact import-order-only
+successor passes format, strict Clippy and host/ARM normal release archives without
+repeating functional tests. Thin Qt text is reviewed, not executed in this run.
+The send/expiry lock invariant is reviewed without claiming a deterministic
+interleaving reproduction. See
+[outcome provenance](evidence/native-settings-choice-outcome-provenance.json).
 
 ## Remaining integration and hardware gates
 

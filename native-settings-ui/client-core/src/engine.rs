@@ -1,7 +1,10 @@
 //! One Rust-owned worker, one explicit intent and one nonblocking socket at a time.
 use crate::{
     clock,
-    ffi::{View, CONTROLS_UNAVAILABLE, DENIED, PENDING, READY, STOPPED, UNAVAILABLE, UNCERTAIN},
+    ffi::{
+        View, CONTROLS_UNAVAILABLE, DENIED, NOT_SENT, PENDING, READY, STOPPED, UNAVAILABLE,
+        UNCERTAIN, UNCONFIRMED_UNAVAILABLE,
+    },
     protocol::{Reply, Request, Set, State, LIMIT, SECOND},
 };
 use rustix::{
@@ -40,6 +43,8 @@ struct Model {
     click: Option<Click>,
     sequence: u64,
     status: u32,
+    // Last explicit choice outcome is independent of readonly current state.
+    outcome: Option<u32>,
 }
 impl Model {
     fn clear(&mut self, status: u32) {
@@ -47,10 +52,16 @@ impl Model {
         self.click = None;
         self.status = status;
     }
+    fn fail_choice(&mut self, sent_status: u32) {
+        if let Some(c) = self.click {
+            self.outcome = Some(if c.sent { sent_status } else { NOT_SENT });
+        }
+        self.clear(UNAVAILABLE);
+    }
     fn expire(&mut self, now: u64) {
         if let Some(c) = self.click {
             if now >= c.until {
-                self.clear(if c.sent { UNCERTAIN } else { UNAVAILABLE });
+                self.fail_choice(UNCERTAIN);
             }
         }
         if self
@@ -71,7 +82,12 @@ impl Model {
     }
     fn enqueue(&mut self, percent: u32, now: u64) -> bool {
         self.expire(now);
-        if !matches!(percent, 25 | 75) || self.click.is_some() || !self.usable(now) {
+        if !matches!(percent, 25 | 75) || self.click.is_some() {
+            return false;
+        }
+        if !self.usable(now) {
+            // A refusal cannot erase an earlier unconfirmed choice.
+            self.outcome.get_or_insert(NOT_SENT);
             return false;
         }
         let Some(id) = self.sequence.checked_add(1) else {
@@ -80,6 +96,7 @@ impl Model {
         let Some(until) = now.checked_add(SECOND) else {
             return false;
         };
+        self.outcome = None;
         self.sequence = id;
         self.click = Some(Click {
             id,
@@ -147,6 +164,11 @@ impl Model {
                 };
             }
         }
+        if !matches!(self.status, DENIED | STOPPED) {
+            if let Some(outcome) = self.outcome {
+                v.status = outcome;
+            }
+        }
         if self.click.is_some() {
             v.available = 0;
             v.pending = 1;
@@ -185,6 +207,7 @@ impl Model {
                 }) =>
             {
                 self.click = None;
+                self.outcome = None;
                 self.cache = Some(Cache {
                     state,
                     can_set: false,
@@ -197,7 +220,7 @@ impl Model {
                 true
             }
             Reply::Unavailable => {
-                self.clear(UNAVAILABLE);
+                self.fail_choice(UNCONFIRMED_UNAVAILABLE);
                 true
             }
             _ => false,
@@ -222,6 +245,7 @@ impl Engine {
                 click: None,
                 sequence: 0,
                 status: UNAVAILABLE,
+                outcome: None,
             }),
             stop: AtomicBool::new(false),
         });
@@ -405,8 +429,13 @@ fn transaction(
         if !active(shared, until) {
             return Err(io::ErrorKind::TimedOut.into());
         }
+        // Serialize expiry/getters with the final check, nonblocking send and
+        // sent marker. Never retain this guard across polling or waiting.
+        let mut model = operation
+            .map(|_| shared.model.lock().map_err(|_| io::ErrorKind::Other))
+            .transpose()?;
         let request = if let Some(click) = operation {
-            let mut m = shared.model.lock().map_err(|_| io::ErrorKind::Other)?;
+            let m = model.as_mut().unwrap();
             let now = clock::now().ok_or(io::ErrorKind::TimedOut)?;
             if !m.may_send(click, now) {
                 return Err(io::ErrorKind::InvalidInput.into());
@@ -432,17 +461,16 @@ fn transaction(
         match net::send(&fd, &bytes, SendFlags::DONTWAIT | SendFlags::NOSIGNAL) {
             Ok(n) if n == bytes.len() => {
                 if let Some(c) = operation {
-                    if let Ok(mut m) = shared.model.lock() {
-                        if let Some(current) = m.click.as_mut() {
-                            if current.id == c.id {
-                                current.sent = true;
-                            }
+                    if let Some(current) = model.as_mut().and_then(|m| m.click.as_mut()) {
+                        if current.id == c.id {
+                            current.sent = true;
                         }
                     }
                 }
                 break;
             }
             Err(rustix::io::Errno::AGAIN | rustix::io::Errno::INTR) => {
+                drop(model);
                 wait(&fd, PollFlags::OUT, shared, until)?
             }
             Ok(_) => return Err(io::ErrorKind::InvalidData.into()),
@@ -482,7 +510,7 @@ fn run(shared: Arc<Shared>, path: PathBuf) {
                         // never by resending or extending this explicit choice.
                         (now >= next_status).then_some(None)
                     } else {
-                        m.click = None;
+                        m.fail_choice(UNCERTAIN);
                         None
                     }
                 } else {
@@ -511,11 +539,11 @@ fn run(shared: Arc<Shared>, path: PathBuf) {
                 if let Some(c) = operation {
                     if let Some(current) = m.click {
                         if current.id == c.id {
-                            m.clear(if current.sent { UNCERTAIN } else { UNAVAILABLE });
+                            m.fail_choice(UNCERTAIN);
                         }
                     }
                 } else {
-                    m.clear(UNAVAILABLE);
+                    m.fail_choice(UNCERTAIN);
                 }
             }
             next_status = finished.saturating_add(250_000_000);

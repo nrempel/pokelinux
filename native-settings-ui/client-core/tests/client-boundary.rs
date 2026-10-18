@@ -195,6 +195,108 @@ fn child(case: &str, path: &Path) {
             assert_eq!(v.can_set, 1);
             thread::sleep(Duration::from_millis(300));
         }
+        "outcome-unavailable" | "outcome-uncertain" => {
+            assert_eq!(a.set(75), OK);
+            assert_eq!(
+                a.set(25),
+                REFUSED,
+                "refused second click cannot replace active75"
+            );
+            assert_eq!(a.view().status, PENDING);
+            println!("ACTIVE_SECOND_CLICK_REFUSED");
+            io::stdout().flush().unwrap();
+            if case == "outcome-uncertain" {
+                a.until(
+                    "sent Set reaches original uncertainty deadline",
+                    1_250_000_000,
+                    |v| v.status == UNCERTAIN,
+                );
+            }
+            let v = a.until(
+                "two fresh readonly replies restore current attributes",
+                1_800_000_000,
+                |v| v.revision == 9 && v.available == 1 && v.can_set == 1 && v.pending == 0,
+            );
+            assert_eq!(v.observed_percent, 50);
+            assert_eq!(v.requested_percent, -1);
+            assert_eq!(
+                v.status,
+                if case == "outcome-unavailable" {
+                    8u32
+                } else {
+                    4u32
+                },
+                "LAST_SENT_CHOICE_OUTCOME_MUST_SURVIVE_READONLY_RECOVERY"
+            );
+            println!("OUTCOME_CHECKED");
+            io::stdout().flush().unwrap();
+            if case == "outcome-uncertain" {
+                assert_eq!(
+                    a.set(25),
+                    OK,
+                    "only a fresh explicit choice clears prior outcome"
+                );
+                assert_eq!(a.view().status, PENDING);
+                println!("NEW_EXPLICIT25_ACCEPTED");
+                io::stdout().flush().unwrap();
+                let v = a.until(
+                    "new explicit25 completes without75 replay",
+                    900_000_000,
+                    |v| {
+                        v.revision == 10
+                            && v.requested_percent == 25
+                            && v.observed_percent == 25
+                            && v.pending == 0
+                    },
+                );
+                assert!(
+                    !matches!(v.status, 4 | 7 | 8),
+                    "matching positive completion clears old outcome"
+                );
+            } else {
+                let v = a.until(
+                    "denial has privacy and priority over stored outcome",
+                    800_000_000,
+                    |v| v.status == DENIED,
+                );
+                assert_eq!(v.available, 0);
+                assert_eq!(v.can_set, 0);
+                assert_eq!(v.requested_percent, -1);
+                assert_eq!(v.observed_percent, -1);
+                assert_eq!(v.actual_percent, -1);
+            }
+        }
+        "outcome-changed" | "outcome-expired" => {
+            let mut line = String::new();
+            io::stdin().read_line(&mut line).unwrap();
+            assert_eq!(line, "queue\n");
+            let before = now();
+            assert_eq!(a.set(75), OK);
+            println!("OUTCOME_CLICK_ACCEPTED {}", now());
+            io::stdout().flush().unwrap();
+            if case == "outcome-expired" {
+                a.until(
+                    "accepted unsent choice expires on its original1s",
+                    1_200_000_000,
+                    |v| v.pending == 0 && v.available == 0,
+                );
+                assert!(now() >= before + 1_000_000_000);
+                println!("UNSENT_EXPIRED");
+                io::stdout().flush().unwrap();
+            }
+            let v = a.until(
+                "fresh readonly attributes after unsent invalidation",
+                900_000_000,
+                |v| v.revision == 9 && v.available == 1 && v.can_set == 1 && v.pending == 0,
+            );
+            assert_eq!(v.observed_percent, 50);
+            assert_eq!(v.requested_percent, -1);
+            assert_eq!(
+                v.status, 7u32,
+                "UNSENT_CHOICE_OUTCOME_MUST_SURVIVE_READONLY_RECOVERY"
+            );
+            thread::sleep(Duration::from_millis(300));
+        }
         "pending-usable" | "pending-changed" | "pending-expiry" | "pending-stop" => {
             let mut line = String::new();
             io::stdin().read_line(&mut line).unwrap();
@@ -234,7 +336,7 @@ fn child(case: &str, path: &Path) {
                     let v = a.until(
                         "original unsent click expiry is visible",
                         1_200_000_000,
-                        |v| v.status == UNAVAILABLE && v.pending == 0,
+                        |v| v.status == 7u32 && v.pending == 0,
                     );
                     assert!(now() >= before + 1_000_000_000);
                     assert_eq!(v.available, 0);
@@ -834,6 +936,151 @@ fn pending_scenario(id: usize, case: &str) -> bool {
     }
     pass
 }
+fn outcome_marker(p: &mut Peer, prefix: &str) -> Option<String> {
+    loop {
+        p.pump();
+        if let Some(line) = String::from_utf8_lossy(&p.out)
+            .lines()
+            .find(|v| v.starts_with(prefix))
+        {
+            return Some(line.to_string());
+        }
+        if p.exit.is_some() {
+            return None;
+        }
+        assert!(
+            now() < p.until,
+            "outcome child marker before original cutoff"
+        );
+        pause();
+    }
+}
+fn outcome_scenario(id: usize, case: &str) -> bool {
+    let s = Socket::new(id);
+    let mut p = Peer::spawn(case, &s.path);
+    let (fd, request) = s.request(&mut p).unwrap();
+    is_status(&request);
+    send(&fd, status(state(7, 50, None, 2_000_000_000), true));
+    drop(fd);
+    let mut revision = 7;
+    let mut reads = 1;
+    let mut sets = 0;
+    let mut accepted_until = None;
+    let mut invalidated = false;
+    while let Some((fd, request)) = s.request(&mut p) {
+        println!(
+            "OUTCOME_PACKET {}",
+            json!({"case":case,"packet":request,"at_ns":now()})
+        );
+        if request["op"] == "brightness_set" {
+            sets += 1;
+            if sets == 1 && matches!(case, "outcome-unavailable" | "outcome-uncertain") {
+                is_set(&request, 75, 7);
+                if outcome_marker(&mut p, "ACTIVE_SECOND_CLICK_REFUSED").is_none() {
+                    break;
+                }
+                invalidated = true;
+                revision = 8;
+                if case == "outcome-unavailable" {
+                    send(&fd, json!({"result":"unavailable"}));
+                } else {
+                    eof(&fd, &mut p, 1_200_000_000);
+                }
+            } else {
+                assert_eq!(case, "outcome-uncertain");
+                assert_eq!(sets, 2, "no automatic resend of either explicit choice");
+                is_set(&request, 25, 9);
+                if outcome_marker(&mut p, "NEW_EXPLICIT25_ACCEPTED").is_some() {
+                    revision = 10;
+                    send(
+                        &fd,
+                        json!({"result":"brightness_completed","state":state(10,25,Some(25),2_000_000_000)}),
+                    );
+                }
+            }
+        } else {
+            is_status(&request);
+            reads += 1;
+            if matches!(case, "outcome-changed" | "outcome-expired") && reads == 2 {
+                p.child
+                    .stdin
+                    .as_mut()
+                    .unwrap()
+                    .write_all(b"queue\n")
+                    .unwrap();
+                let Some(marker) = outcome_marker(&mut p, "OUTCOME_CLICK_ACCEPTED ") else {
+                    break;
+                };
+                let accepted = marker
+                    .strip_prefix("OUTCOME_CLICK_ACCEPTED ")
+                    .unwrap()
+                    .parse::<u64>()
+                    .unwrap();
+                accepted_until = Some(accepted + 1_000_000_000);
+                if case == "outcome-changed" {
+                    revision = 8;
+                    invalidated = true;
+                    send(&fd, status(state(8, 50, None, 2_000_000_000), true));
+                } else {
+                    let mut value = state(7, 50, None, 2_000_000_000);
+                    value["pending"] = json!(true);
+                    value["until_ns"] = json!(accepted_until.unwrap().to_string());
+                    send(&fd, status(value, false));
+                }
+            } else if case == "outcome-expired" && !invalidated {
+                if now() + 250_000_000 < accepted_until.unwrap() {
+                    let mut value = state(7, 50, None, 2_000_000_000);
+                    value["pending"] = json!(true);
+                    value["until_ns"] = json!(accepted_until.unwrap().to_string());
+                    send(&fd, status(value, false));
+                } else if outcome_marker(&mut p, "UNSENT_EXPIRED").is_some() {
+                    invalidated = true;
+                    revision = 8;
+                    send(&fd, status(state(8, 50, None, 2_000_000_000), true));
+                }
+            } else if case == "outcome-unavailable"
+                && String::from_utf8_lossy(&p.out).contains("OUTCOME_CHECKED")
+            {
+                send(&fd, json!({"result":"denied"}));
+            } else {
+                let reply_revision = revision;
+                send(
+                    &fd,
+                    status(
+                        state(
+                            reply_revision,
+                            if reply_revision == 10 { 25 } else { 50 },
+                            None,
+                            2_000_000_000,
+                        ),
+                        true,
+                    ),
+                );
+                if invalidated && revision == 8 {
+                    revision = 9;
+                }
+            }
+        }
+    }
+    let passed = p.finish();
+    println!(
+        "OUTCOME_CASE {}",
+        json!({"case":case,"set_packets":sets,"status_packets":reads,"client_passed":passed})
+    );
+    if passed {
+        assert_eq!(
+            sets,
+            if case == "outcome-uncertain" {
+                2
+            } else if case == "outcome-unavailable" {
+                1
+            } else {
+                0
+            }
+        );
+    }
+    passed
+}
 fn main() {
     let args: Vec<_> = std::env::args().collect();
     if args.get(1).is_some_and(|v| v == "client") {
@@ -849,6 +1096,47 @@ fn main() {
         0,
         "root authored server required"
     );
+    if args.get(1).is_some_and(|v| v == "outcome-only") {
+        let mut failed = 0;
+        let mut groups = 0;
+        for (id, case) in [
+            "happy",
+            "outcome-unavailable",
+            "outcome-uncertain",
+            "outcome-changed",
+            "outcome-expired",
+        ]
+        .into_iter()
+        .enumerate()
+        {
+            let result = std::panic::catch_unwind(|| {
+                if case == "happy" {
+                    scenario(id, case, None)
+                } else {
+                    outcome_scenario(id, case)
+                }
+            });
+            let passed = matches!(result, Ok(true));
+            println!(
+                "GROUP {case} {}",
+                if passed { "PASS" } else { "ASSERT_FAIL" }
+            );
+            failed += usize::from(!passed);
+            groups += 1;
+        }
+        if args.get(2).is_some_and(|v| v == "with-expiry") {
+            let result = std::panic::catch_unwind(|| pending_scenario(100, "pending-expiry"));
+            let passed = matches!(result, Ok(true));
+            println!(
+                "GROUP pending-expiry {}",
+                if passed { "PASS" } else { "ASSERT_FAIL" }
+            );
+            failed += usize::from(!passed);
+            groups += 1;
+        }
+        println!("RESULT outcome_groups={groups} failed={failed}");
+        std::process::exit(if failed == 0 { 0 } else { 1 });
+    }
     if args.get(1).is_some_and(|v| v == "pending-only") {
         let mut failed = 0;
         for (id, case) in [

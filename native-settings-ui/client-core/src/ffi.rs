@@ -12,6 +12,8 @@ pub const PENDING: u32 = 3;
 pub const UNCERTAIN: u32 = 4;
 pub const STOPPED: u32 = 5;
 pub const CONTROLS_UNAVAILABLE: u32 = 6;
+pub const NOT_SENT: u32 = 7;
+pub const UNCONFIRMED_UNAVAILABLE: u32 = 8;
 #[repr(C)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct View {

@@ -65,6 +65,8 @@ QString SettingsClient::status() const {
     case PR_SETTINGS_DENIED: return QStringLiteral("Brightness access denied");
     case PR_SETTINGS_PENDING: return QStringLiteral("Brightness change pending");
     case PR_SETTINGS_UNCERTAIN: return QStringLiteral("Brightness change unconfirmed");
+    case PR_SETTINGS_NOT_SENT: return QStringLiteral("Brightness choice not sent");
+    case PR_SETTINGS_UNCONFIRMED_UNAVAILABLE: return QStringLiteral("Change unconfirmed: unavailable");
     case PR_SETTINGS_STOPPED: return QStringLiteral("Brightness stopped");
     case PR_SETTINGS_CONTROLS_UNAVAILABLE: return QStringLiteral("Brightness controls unavailable");
     default: return QStringLiteral("Brightness unavailable");

@@ -109,8 +109,10 @@ an authored VM backend; cold full-shell, other input races and hardware remain
 open. The newer Rust client now builds and passes offscreen Qt component checks
 on native x86 and ARM kernels. Its fresh x86 touch trace fails the first change,
 with no write and an unknown stopping boundary; the earlier five-state success
-is not inherited. Persistent tap-outcome feedback is the next regression-tested
-correction. See the screenshots and limits in the brightness report.
+is not inherited. A further Rust correction now preserves the tap outcome
+through readonly recovery, with actual socket/C ABI RED→GREEN and existing
+regressions passing. Its new normal Qt/touch qualification remains separate.
+See the screenshots and limits in the brightness report.
 
 
 > **Development status:** no physical phone has been accessed. There is no verified bootable phone image. Modem communication, carrier IMS registration, physical call audio, Pixel GPU rendering, camera capture and suspend remain unverified.

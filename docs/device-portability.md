@@ -88,8 +88,11 @@ fallback. The prepared normal Settings touch/change/unavailable/recovery path
 also passes on an earlier x86 KVM cohort with that authored backend, using the
 same Rust service interfaces. A newer client has separate native x86/ARM Qt
 build/install/offscreen C ABI proof; its current x86 tap trace fails and is not
-promoted from the earlier success. No ARM visible UI is qualified. Requested and optional actual attributes are distinct, and neither is
-physical luminance. A Pixel panel without a usable Linux backlight interface will
+promoted from the earlier success. A further shared Rust correction retains the
+last explicit choice outcome through readonly recovery; its socket/C ABI tests
+and host/ARM release builds remain separate from normal Qt/touch qualification.
+No ARM visible UI is qualified. Requested and optional actual attributes are
+distinct, and neither is physical luminance. A Pixel panel without a usable Linux backlight interface will
 need its own independently qualified backend; these host tests add no supported
 phone model.
 
