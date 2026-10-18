@@ -63,9 +63,16 @@ A separate [disabled connectivity bundle](../native-connectivity-control/packagi
 now passes actual Make/installer staging of exactly two current ARM provider
 files while preserving the existing Disabled config. All eight filesystem
 installer tests pass. This executes no provider and adds no installed activation;
-trusted namespace provisioning and runtime selection remain open. The next
-behavioral tracer is a bounded Rust nl80211 scan against original hostapd and
-Linux hwsim in a disposable guest, with explicit supported/unavailable results.
+trusted namespace provisioning and runtime selection remain open. A new
+behavioral tracer now passes native Rust nl80211 discovery of the exact fresh
+hostapd AP in a generic ARM hwsim guest after genuine refusing RED. The operation
+takes 47ms, with actual worker wait/EOF at 102ms under the unchanged 5s cutoff;
+full AP/endpoint/radio/module/process cleanup passes. 13 host tests, strict QA and
+normal host/ARM builds pass. The exact same completing ELF also passes a separate fresh-guest loopback
+unavailable control within 156ms; cfg80211/rfkill inventory additions are
+recorded, without a zero-effects claim.
+See [wireless discovery](native-wireless-scan.md). This is no association,
+Internet, normal Settings Wi-Fi or matched Pixel wireless qualification.
 Keep Source/authentication/full-session Main
 and broader capture campaigns parked; authored session=None/admin facts remain
 explicit. Worker reaping is separate from remote cleanup; no implicit mutation

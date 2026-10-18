@@ -1,0 +1,372 @@
+{
+  "schema": 1,
+  "classification": "Original tools, native Rust component QA and generic ARM scan evidence remain distinct",
+  "source_anchor_before_this_change": "9ad9558c66a516e18582c839a1b6a5366ae2cda2",
+  "runtime_profile": {
+    "architecture": "aarch64",
+    "machine": "generic QEMU virt, TCG",
+    "kernel_release": "7.1.6-1-aarch64-ARCH",
+    "kernel_Image_sha256": "2b069424bf66ffd5fe9e4f134ecb61c0381cd4356db3110940f0500e0ae2f45b",
+    "QEMU_network": "none",
+    "host_devices": [],
+    "wireless": "two guest-only mac80211_hwsim radios",
+    "phone_accessed": false
+  },
+  "original_tool_prerequisite": {
+    "passed": true,
+    "selection": {
+      "bytes": 19273,
+      "sha256": "24954cf731bd1838fc22d4ef8cc0505e9dd176d9077f0b2a96345c26e070ec88"
+    },
+    "private_review_pin": {
+      "bytes": 3056,
+      "sha256": "30517145683d91a450f776d08140a5f32dac8a6e30f2217fb42130908621b799"
+    },
+    "original_hostapd_plus_one_original_iw_scan": true,
+    "exact_BSS_match": true,
+    "AP_actual_SIGTERM_wait0_stdout_EOF": true,
+    "owned_control_endpoint_absent": true,
+    "hwsim_module_and_radios_removed": true,
+    "unchanged_preexisting_package_versions": 393,
+    "actual_direct_wait_stdout_EOF_counts": {
+      "host": 15,
+      "boot": 3,
+      "guest": 84,
+      "poweroff": 1
+    },
+    "adopted_actual_successful_terminal_waits": 33,
+    "adopted_origins_sampled": false,
+    "ECHILD": true,
+    "QEMU_wait0_stdout_EOF": true,
+    "exact_container_wait0_removed": true,
+    "same_daemon": true,
+    "inputs_unchanged": true
+  },
+  "native_refusing_integration_RED": {
+    "behavior_RED_qualified": true,
+    "desired_passed": false,
+    "selection": {
+      "bytes": 25211,
+      "sha256": "a0e997ceba35100468ab84db8d81868392d316c9002ea84755f76f655d4b4671"
+    },
+    "private_review_pin": {
+      "bytes": 4663,
+      "sha256": "1a84b84026d41fe6bf5d1b051d2254d2657c670a9a5971685b548c4e733a07be"
+    },
+    "desired_assertion": {
+      "passed": false,
+      "error_kind": "AssertionError",
+      "error": "WIRELESS_SCAN_MUST_COMPLETE_ACTUAL_AP_DISCOVERY"
+    },
+    "normal_ARM_ELF": {
+      "bytes": 471136,
+      "sha256": "3a40c84a375d83eff1af00c07c79825293600c651075eb7375a71b13a5c972e4",
+      "ELF_machine": 183
+    },
+    "one_native_worker": true,
+    "original_iw_scan_count": 0,
+    "actual_returncode": 2,
+    "wire_bytes": 124,
+    "original_action_ns": 5000000000,
+    "actual_armed_to_wait_and_EOF_ns": 54869170,
+    "same_PID_preexec_NET_ADMIN_only_NNP1": true,
+    "after_exec_capability_sample_claimed": false,
+    "actual_direct_wait_stdout_EOF_counts": {
+      "host": 15,
+      "boot": 3,
+      "guest": 85,
+      "poweroff": 1
+    },
+    "adopted_actual_successful_terminal_waits": 33,
+    "AP_endpoint_module_radio_cleanup_qualified": true,
+    "ECHILD": true,
+    "QEMU_wait0_stdout_EOF": true,
+    "exact_container_wait1_removed": true,
+    "same_daemon": true,
+    "inputs_unchanged": true
+  },
+  "source_QA_and_normal_build": {
+    "passed": true,
+    "private_review_pin": {
+      "bytes": 2441,
+      "sha256": "29b20eeab8f1daacc4887528d06b6e5ed7d65f90fe2edc5ecf77865bc6515f41"
+    },
+    "source_format": true,
+    "strict_clippy": true,
+    "host_component_tests": 13,
+    "normal_release_artifacts": {
+      "host": {
+        "bytes": 523072,
+        "sha256": "f3f47ab909519279852dbfd8aa8e4b5e7c29bb65404557e47a633c0f6da14309",
+        "ELF_machine": 62,
+        "PT_INTERP": "/lib64/ld-linux-x86-64.so.2"
+      },
+      "ARM": {
+        "bytes": 553568,
+        "sha256": "aac1c4640bde923ce6cd8bbf513613b7d202cb9f10b45a2d4f9783cc5d102534",
+        "ELF_machine": 183,
+        "PT_INTERP": "/lib/ld-linux-aarch64.so.1"
+      }
+    },
+    "Cargo_lock": {
+      "bytes": 2350,
+      "sha256": "e51e9758ff992cf23de6bcea74bee69180af241d1002d139eb719a3ceec6aa44"
+    },
+    "actual_host_direct_wait_stdout_EOF_count": 15,
+    "shell_foreground_regular_waits": 18,
+    "shell_PIPE_EOF_claimed": false,
+    "ECHILD": true,
+    "exact_container_wait0_removed": true,
+    "same_daemon": true,
+    "source_and_dependency_inputs_unchanged": true,
+    "ARM_worker_executed_during_build": false
+  },
+  "error_classification_component_RED": {
+    "compiled_host_passed": 12,
+    "compiled_host_failed": 1,
+    "actual_failed_assertion": "setup ENOENT became Unavailable instead of Failed(Kernel(2))",
+    "private_review_pin": {
+      "bytes": 1289,
+      "sha256": "d70ca596bed279b809727f03a66717a75c7c461523840716fea15318e3a254fc"
+    },
+    "repair": "Only recognized socket-protocol/family/interface kernel results become explicit Unsupported; other setup errors remain failed",
+    "same_test_passes_in_13_test_QA": true,
+    "native_ARM_integration_claim": false
+  },
+  "native_green": {
+    "passed": true,
+    "selection": {
+      "bytes": 26701,
+      "sha256": "d2342af8dc7e9dbd8735d8d48950a5676f2ca146b10f08ce6761f8af8f6671f5"
+    },
+    "private_review_pin": {
+      "bytes": 5300,
+      "sha256": "60d0e45ca8bcd2c874d89484919765c3c5a668c4541270bd206764d4698dae70"
+    },
+    "normal_ARM_ELF": {
+      "bytes": 553568,
+      "sha256": "aac1c4640bde923ce6cd8bbf513613b7d202cb9f10b45a2d4f9783cc5d102534",
+      "ELF_machine": 183
+    },
+    "unchanged_desired_consumer": {
+      "bytes": 9308,
+      "sha256": "5b577458d491685640c4588016cf3fc7e742545455fec51a8802f471883062f1"
+    },
+    "one_desired_assertion_after_full_cleanup": true,
+    "original_iw_scan_count": 0,
+    "actual_result": {
+      "schema": 1,
+      "status": "completed",
+      "ifindex": 3,
+      "frequency_mhz": 2412,
+      "original_until_ns": 70263642894,
+      "wiphy": 1,
+      "wdev": 4294967297,
+      "started_boottime_ns": 65311490218,
+      "completed_boottime_ns": 65358766456,
+      "bss": [
+        {
+          "bssid_hex": "020000000000",
+          "ssid_hex": "706b6c2d687773696d2d6462363165333937366633343561326531626639",
+          "frequency_mhz": 2412,
+          "last_seen_boottime_ns": 65321230637
+        }
+      ]
+    },
+    "actual_worker_returncode": 0,
+    "wire_bytes": 365,
+    "original_action_ns": 5000000000,
+    "actual_operation_span_ns": 47276238,
+    "original_armed_to_actual_wait_and_EOF_ns": 102044933,
+    "same_PID_preexec_NET_ADMIN_only_NNP1": true,
+    "after_exec_capability_sample_claimed": false,
+    "actual_direct_wait_stdout_EOF_counts": {
+      "host": 15,
+      "boot": 3,
+      "guest": 85,
+      "poweroff": 1
+    },
+    "adopted_actual_successful_terminal_waits": 33,
+    "adopted_origins_sampled": false,
+    "AP_endpoint_module_radio_cleanup_qualified": true,
+    "ECHILD": true,
+    "QEMU_wait0_stdout_EOF": true,
+    "exact_container_wait0_removed": true,
+    "same_daemon": true,
+    "inputs_unchanged": true,
+    "single_controlled_guest_observation_not_a_benchmark": true
+  },
+  "unavailable_control": {
+    "passed": true,
+    "selection": {
+      "bytes": 20420,
+      "sha256": "064e2d80a7a8b4fc30edbe7d626cbc0e7c38e2a6dafbefbe10daa6fb306d5a5e"
+    },
+    "private_review_pin": {
+      "bytes": 4704,
+      "sha256": "edf5e499543575a8c4586da15b542bd3d8124889a2c703e74d0fc57c63124a1e"
+    },
+    "same_normal_ARM_ELF_as_positive": {
+      "bytes": 553568,
+      "sha256": "aac1c4640bde923ce6cd8bbf513613b7d202cb9f10b45a2d4f9783cc5d102534",
+      "ELF_machine": 183
+    },
+    "actual_loopback_ifindex": 1,
+    "actual_loopback_type": 772,
+    "before_and_after_only_lo_and_no_wireless_phy": true,
+    "same_namespace_and_loopback_identity": true,
+    "one_native_worker": true,
+    "original_iw_or_AP_radio_or_package_install_commands": 0,
+    "actual_response": {
+      "schema": 1,
+      "status": "unavailable",
+      "reason": "unsupported",
+      "ifindex": 1,
+      "frequency_mhz": 2412,
+      "original_until_ns": 22877869783
+    },
+    "actual_worker_returncode": 2,
+    "original_action_ns": 5000000000,
+    "original_armed_to_actual_wait_and_EOF_ns": 155781626,
+    "module_inventory_delta": {
+      "added": [
+        "cfg80211",
+        "rfkill"
+      ],
+      "removed": []
+    },
+    "zero_kernel_effect_or_all_modules_absent_claimed": false,
+    "same_PID_preexec_NET_ADMIN_only_NNP1": true,
+    "after_exec_capability_sample_claimed": false,
+    "actual_direct_wait_stdout_EOF_counts": {
+      "host": 15,
+      "boot": 3,
+      "guest": 4,
+      "poweroff": 1
+    },
+    "adopted_actual_terminal_waits": 0,
+    "ECHILD": true,
+    "all393_package_versions_unchanged": true,
+    "QEMU_wait0_stdout_EOF": true,
+    "exact_container_wait0_removed": true,
+    "same_daemon": true,
+    "inputs_unchanged": true
+  },
+  "source_pins": {
+    "native-wireless-scan/Cargo.toml": {
+      "bytes": 369,
+      "sha256": "72841d218d32b4d0c874a359fe8a6cc89d2f2c996ec81bd0137d4cf6fbb31c61"
+    },
+    "native-wireless-scan/Cargo.lock": {
+      "bytes": 2350,
+      "sha256": "e51e9758ff992cf23de6bcea74bee69180af241d1002d139eb719a3ceec6aa44"
+    },
+    "native-wireless-scan/src/lib.rs": {
+      "bytes": 2901,
+      "sha256": "9cd595ba6a6be58a219c1051662f71afb2a735bcc54da29bd2272b464e8c807b"
+    },
+    "native-wireless-scan/src/wire.rs": {
+      "bytes": 32772,
+      "sha256": "f3ea834121f22625198f3605d3ec55e5bed8710c8c2583a27ee408222b267da9"
+    },
+    "native-wireless-scan/src/main.rs": {
+      "bytes": 3095,
+      "sha256": "56a4ad569f9b2f42430b92a8cc5debb36f24e0330754b237c2e0ddee8761fe9f"
+    },
+    "tools/native-wireless-scan/consumer.py": {
+      "bytes": 9308,
+      "sha256": "5b577458d491685640c4588016cf3fc7e742545455fec51a8802f471883062f1"
+    },
+    "tools/native-wireless-scan/refusing/Cargo.toml": {
+      "bytes": 221,
+      "sha256": "f8ce9b84b51306acdc9b0e18a749924337360f1e2e6c686fec8db5ba11253a80"
+    },
+    "tools/native-wireless-scan/refusing/Cargo.lock": {
+      "bytes": 167,
+      "sha256": "38883fa19bae15d142a9538f893687c2cb5ff9d7847246fc945110e4de58e967"
+    },
+    "tools/native-wireless-scan/refusing/src/lib.rs": {
+      "bytes": 896,
+      "sha256": "e613fbdee44216d8b5f6c6fe97d0acc6836ec098fa67a375ea58a21dfb8f675d"
+    },
+    "tools/native-wireless-scan/refusing/src/main.rs": {
+      "bytes": 1618,
+      "sha256": "d00315ecdf02a1b2d840fa4560808e4309e3b1f86ca18a5c6c855809f8dc81d5"
+    },
+    "tools/native-wireless-scan/arm/guest-main.py": {
+      "bytes": 29276,
+      "sha256": "c25036b4e915cab8a20a203ba62647fa42e6f5c45199e2057c4a830e4ea498e4"
+    },
+    "tools/native-wireless-scan/arm/guest.py": {
+      "bytes": 1288,
+      "sha256": "206db6f500283333ace2c3fcd352581a46a0b8c722b7424eec79e2868c85128d"
+    },
+    "tools/native-wireless-scan/arm/boot.py": {
+      "bytes": 4077,
+      "sha256": "73d102ba905b2421103279b2188fd27a5905620a6d0ef08ee30ae9562fbbb151"
+    },
+    "tools/native-wireless-scan/arm/arm_tools.py": {
+      "bytes": 4238,
+      "sha256": "80f1e6c0e0b5f8e6cfb70409b07c1fb39e2f1412a6100992849bfa646c2d2259"
+    },
+    "tools/native-wireless-scan/arm/worker_caps.py": {
+      "bytes": 1393,
+      "sha256": "50a659816d7c16952dba91f36a6bbd6ef3a6be4cc4b799100a75a904d44e8af8"
+    },
+    "tools/native-wireless-scan/arm/unavailable-guest-main.py": {
+      "bytes": 15663,
+      "sha256": "ab80d786e904722875f2e6a8ff0cd9eb205f4fee0e51acf8896ab2ea77778cf6"
+    },
+    "tools/native-wireless-scan/arm/unavailable-boot.py": {
+      "bytes": 3544,
+      "sha256": "36c5a0cd43ca4beec99c854cf0c83bb3e8ddab2e5fd1099c35b485c204087c45"
+    }
+  },
+  "limits": {
+    "fresh_exclusively_administered_radio_epoch_required": true,
+    "no_generic_per_scan_cookie": true,
+    "kernel_last_seen_is_optional_and_approximately_10ms_accurate": true,
+    "in_operation_timestamp_span_is_strict_hwsim_gate": true,
+    "observed_terminal_contradictions_refused_not_continuous_watch": true,
+    "worker_reaping_is_not_kernel_scan_cancellation_or_vendor_cleanup": true,
+    "association_credentials_IP_DHCP_routing_or_Internet_qualified": false,
+    "normal_Settings_WiFi_or_installed_activation_qualified": false,
+    "matched_Google_kernel_or_Pixel_WLAN_backend_qualified": false,
+    "physical_phone_models_qualified": 0
+  },
+  "preparation_epochs": [
+    {
+      "cohort": "original-Sol2",
+      "passed": false,
+      "classification": "Distro hostapd version-text mismatch; no radios or scan",
+      "scan_commands_admitted": 0,
+      "private_failed_review_pin": {
+        "bytes": 4722,
+        "sha256": "a7236c38a96f0fdaa87a8668300ed2bcafc9081e7b1dce7c5a3ea862a5e3132f"
+      },
+      "native_Rust_behavior_RED": false
+    },
+    {
+      "cohort": "original-Sol4",
+      "passed": false,
+      "classification": "iw capability integer-versus-zero-offset format; two radios, no AP or scan",
+      "scan_commands_admitted": 0,
+      "private_failed_review_pin": {
+        "bytes": 2334,
+        "sha256": "33a512e0f673645ce800bf0533be6a57e69707f7d9681822a0caa337c75572a5"
+      },
+      "native_Rust_behavior_RED": false
+    },
+    {
+      "cohort": "original-Sol5",
+      "passed": false,
+      "classification": "Channel1 filter included other frequency band; two radios, no AP or scan",
+      "scan_commands_admitted": 0,
+      "private_failed_review_pin": {
+        "bytes": 2277,
+        "sha256": "74268383d7d5f1385a533bb551b95982192d53ec25c8ff3b353fe51f9c01f9f2"
+      },
+      "native_Rust_behavior_RED": false
+    }
+  ]
+}

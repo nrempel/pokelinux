@@ -1,0 +1,15 @@
+[package]
+name = "pokelinux-wireless-scan"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+name = "pokelinux-wireless-scan"
+path = "src/main.rs"
+
+[lints.rust]
+unsafe_code = "forbid"
