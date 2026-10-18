@@ -6,6 +6,12 @@
 
 The target is Arch Linux ARM, Hyprland, native phone apps and Rust services for calls, messages, camera, power and other phone functions. The initial hardware strategy uses Google's matched Pixel kernel, modules and firmware. Replacing Android framework userspace is the goal; it is not yet achieved. The [completion criteria](docs/smartphone-goal.md#completion-matrix) require native service integration; Android framework tests provide reference evidence. Hyprland, Aquamarine and Qt remain C++ dependencies. The [graphics critical-path decision](docs/runtime-language-decision.md#graphics-critical-path) selects normal upstream compositor initialization for the integrated app tracer; the custom Rust render executor remains component research.
 
+The new [Rust connectivity-control component](docs/native-connectivity-control.md)
+passes eight request-lifecycle groups and actual isolated kernel virtual-pair
+creation after compiled assertion RED. Fixed IPv4 Connect/Disconnect remains
+unsupported; the separate UDP fixture prerequisite is not Rust packet evidence.
+Settings, service supervision/deployment, ARM and all phone gates remain open.
+
 The [app-local Rust Sounds engine](docs/native-sounds-rust-client.md) now owns
 request packets, deadlines, replies, pagination, queued choices and the accepted
 model. Six frozen C++/Rust groups, the30 unchanged Qt behaviors and29 appearance

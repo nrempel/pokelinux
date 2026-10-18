@@ -662,6 +662,12 @@ now qualifies automatic startup, authored raw reconciliation, exact selected
 record persistence across two fresh ARM boots and native Stop. Production receive,
 ACK/send, notifications, app read authority, power-loss and hardware remain open.
 
+The [connectivity-control foundation](native-connectivity-control.md) now passes
+host owner-policy and actual virtual-pair creation tests after compiled RED.
+Rust fixed IPv4 Connect/Disconnect remains unsupported. The separate original
+`ip`/UDP prerequisite, read-only network counts and NetworkManager observation
+do not complete the connectivity row or its installed/Settings/hardware gates.
+
 ## Completion matrix
 
 Every row requires permission boundaries, error and recovery behavior, service restart tests, and relevant offline integration tests. Device-dependent rows additionally require later authorized Pixel verification. An unavailable feature must be explicit in the UI and release report.

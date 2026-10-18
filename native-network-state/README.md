@@ -21,6 +21,11 @@ are64 links,16 addresses per link,64KiB per datagram,256 messages/datagrams and
 1MiB received bytes per refresh. Runtime negative controls, rename/reuse,
 concurrency, overflow, suspend and load qualification remain open.
 
+Nonblocking socket flags do not bound synchronous kernel rtnetlink dispatch,
+which can wait on kernel locking. The deadline fences accepted observation;
+production callers need owned worker isolation for responsive snapshots/Stop.
+See the [connectivity-control lifecycle caveat](../docs/native-connectivity-control.md#exclusive-virtual-backend).
+
 One fixed ignored-by-default kernel test actually returned101 for the explicit
 missing-observer baseline, then0 after the library repair, under a generic
 AArch64 Linux7.1.6 VM kernel. It observes a witnessed point-to-point TUN link with

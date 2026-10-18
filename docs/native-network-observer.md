@@ -55,6 +55,12 @@ they do not prove a hard return bound during scheduler stalls or suspend. These
 error, bound and concurrency paths have source review, not executed negative
 control qualification in this milestone.
 
+The newer [connectivity-control review](native-connectivity-control.md#exclusive-virtual-backend)
+also makes synchronous kernel dispatch explicit: `DONTWAIT` does not bound time
+inside rtnetlink handling or its locks. Keep this observer under owned worker
+custody before claiming responsive service Main snapshots or Stop. This is a
+lifecycle constraint, not a new observer runtime result.
+
 ## Actual RED, then GREEN
 
 The ignored-by-default `kernel_tests::actual_kernel_link_lifetime` test was

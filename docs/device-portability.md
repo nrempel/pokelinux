@@ -32,6 +32,11 @@ PID1 remains shared Rust; selecting a different device requires its own matched
 assets, loader/diagnostic/recovery evidence and backend profile. Zero models
 are hardware-qualified.
 
+The [new connectivity-control backend](native-connectivity-control.md) currently
+qualifies only isolated host virtual-pair creation and shared owner-policy tests.
+Its exclusive namespace lifecycle contract does not establish physical/hotplug
+interface safety, Rust packet control, a matched Pixel kernel or another model.
+
 ## Kernel choice
 
 The Android-derived kernel is an initial device-support choice, not a requirement

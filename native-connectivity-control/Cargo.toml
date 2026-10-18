@@ -1,0 +1,15 @@
+[package]
+name = "pokelinux-connectivity-control"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+pokelinux-network-state = { path = "../native-network-state" }
+rustix = { version = "=1.1.5", features = ["net", "time"] }
+
+[dev-dependencies]
+serde_json = "=1.0.154"
+
+[lints.rust]
+unsafe_code = "forbid"

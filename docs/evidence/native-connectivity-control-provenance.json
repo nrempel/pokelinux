@@ -1,0 +1,285 @@
+{
+  "schema": 1,
+  "scope": "Host Rust command-ownership policy and real kernel virtual-pair creation. Raw ip/UDP substrate qualification is separate.",
+  "evidence_class": "Native x86_64 host kernel 6.8.0-136-generic inside fresh isolated containers; no ARM or matched Pixel kernel execution.",
+  "runtime_image": "sha256:b6818cecd61a5e378fecbf25d7b0979360cf29fda9ad0801b4a21e2054f69678",
+  "source_files": {
+    "native-connectivity-control/Cargo.lock": {
+      "bytes": 4311,
+      "sha256": "2fda555382ab67a174cdb9d5a6aabb0686b20f8721bbeccb15600b208db038d0"
+    },
+    "native-connectivity-control/Cargo.toml": {
+      "bytes": 321,
+      "sha256": "468816fe8ad957f1f1aecd598d4af7bcd8c7fc29b1b80c9681dbd157687c31b3"
+    },
+    "native-connectivity-control/src/kernel.rs": {
+      "bytes": 11915,
+      "sha256": "a88cbcb2340c60fcca1e64856aa4803fade8a5eaa147d8d6de74c0ee88be533d"
+    },
+    "native-connectivity-control/src/lib.rs": {
+      "bytes": 203,
+      "sha256": "8d8590b66a278c6f8f61079a0f954d3a8b9cd3cc6654c515b6dace887b5c5071"
+    },
+    "native-connectivity-control/src/owner.rs": {
+      "bytes": 8673,
+      "sha256": "cf3824653bd0462105dcc2ff998af783d9b5ee1adebcf764fc35747dbe851830"
+    },
+    "native-connectivity-control/tests/kernel.rs": {
+      "bytes": 1548,
+      "sha256": "5f5ee08810f3c152659b6db29d250efc3e6ae19b34ab29cce924dd5f6f15beb3"
+    },
+    "native-connectivity-control/tests/owner.rs": {
+      "bytes": 10509,
+      "sha256": "1bf108bff31d78a7ccc66cbdc903cbe2dd4a1c1736c4ba8dd453166dcda6421a"
+    },
+    "native-network-state/Cargo.lock": {
+      "bytes": 4182,
+      "sha256": "12565a60a4784458741f00572db6e484e8c60887b11316de1d6b8b61457791ec"
+    },
+    "native-network-state/Cargo.toml": {
+      "bytes": 251,
+      "sha256": "7221e02625d30c473a2042f53734eae36bc941b86f5db3c0e449ea4e4a608a08"
+    },
+    "native-network-state/src/kernel_tests.rs": {
+      "bytes": 10209,
+      "sha256": "d0d6900ec8686cc3205f6520da8c8af6eaee5437c09ee6209deba8e0185be5d6"
+    },
+    "native-network-state/src/lib.rs": {
+      "bytes": 23830,
+      "sha256": "55b6e15060445e1949ccb4a10a27019be620356a327af6114be1938fd8f06ebf"
+    }
+  },
+  "epochs": {
+    "raw_udp_prerequisite": {
+      "private_epoch": "pokelinux-connectivity-netns-prerequisite-sol-2",
+      "outer_receipt": {
+        "bytes": 24180,
+        "sha256": "40976fe3347bb1ce844b7652cd727795204e51dbd1f90ed0da9c23bb9bfe93f7"
+      },
+      "inner_result": {
+        "bytes": 18467,
+        "sha256": "5f6809b592ea3ab091149c3faec8beacc1cf98d2742d85c178487cb3767a94d4"
+      },
+      "inside": {
+        "bytes": 8122,
+        "sha256": "1e42afab8205c1bd033d2cc927b4c47bdbdc450769c2bb8615c2bdcbf8f5a3a5"
+      },
+      "selected_command": {
+        "bytes": 4342,
+        "sha256": "0fee3effb2b842d21bf1a58d7db925e509e7d49398604edc896a3d4a0211e13a"
+      },
+      "actual_attach_exit": 0,
+      "actual_container_wait": 0,
+      "outer_direct_waits_with_EOF": 13,
+      "inner_direct_waits_with_EOF": 3,
+      "same_daemon": true,
+      "exact_container_name_absent": true,
+      "inputs_unchanged": true,
+      "inner_wait_all_ECHILD": true,
+      "inner_adopted_waits": 0,
+      "provisioner_direct_waits_with_EOF": 10,
+      "packet_peer_count": 2,
+      "peer_uid": 11042,
+      "peer_capabilities_zero": true,
+      "actual_packet_nonce_exchange": true,
+      "privileged_provisioner_waited_before_peer_start": true,
+      "rust_product_executed": false
+    },
+    "compiled_RED": {
+      "private_epoch": "pokelinux-connectivity-creation-red-prepared-sol-1",
+      "outer_receipt": {
+        "bytes": 29394,
+        "sha256": "b39a02a2baea590b99c01b663cbc49a11f271d6f623cbb923c3b94f01a916688"
+      },
+      "inner_result": {
+        "bytes": 9644,
+        "sha256": "11a0774755641abea23d420b0c6bfd54cfb78586dec12aae534faccdfa4492c2"
+      },
+      "inside": {
+        "bytes": 7589,
+        "sha256": "bfbabd6d8c65baac4149f777fe36bfea402cbb296a08d7fad185664feb1bede3"
+      },
+      "selected_command": {
+        "bytes": 4383,
+        "sha256": "bce846581b5c1f0d1c67c081712f6beeb09447d032cc832c2336b378a0b8d8eb"
+      },
+      "actual_attach_exit": 1,
+      "actual_container_wait": 1,
+      "outer_direct_waits_with_EOF": 13,
+      "inner_direct_waits_with_EOF": 6,
+      "same_daemon": true,
+      "exact_container_name_absent": true,
+      "inputs_unchanged": true,
+      "inner_wait_all_ECHILD": true,
+      "inner_adopted_waits": 0,
+      "owner_passed": 1,
+      "owner_failed": 7,
+      "kernel_passed": 0,
+      "kernel_failed": 1,
+      "owner_exit": 101,
+      "kernel_exit": 101,
+      "qualified": true,
+      "root_review": {
+        "bytes": 693,
+        "sha256": "c19016d21f8ae3c5763869bfafd02f434893bd00ce3b3f28ea68d1070a7fe6b5"
+      }
+    },
+    "formatter": {
+      "private_epoch": "pokelinux-connectivity-format-prepared-sol-2",
+      "outer_receipt": {
+        "bytes": 24568,
+        "sha256": "9311df2d118ad9b451045abb3d9961be911fc9e5b38b215201c912e7d2274dae"
+      },
+      "inner_result": {
+        "bytes": 9354,
+        "sha256": "73199114d072983d199eee2865c3967b6629a1db3319ce748c2304dda3e5e43d"
+      },
+      "inside": {
+        "bytes": 2402,
+        "sha256": "fd9ab072841c2972832379f879e8a21c31c9dd1c3afc11d4ef9326001a377997"
+      },
+      "selected_command": {
+        "bytes": 3349,
+        "sha256": "1426f9c30cd44f9617dcd269b47cd80c4f8969933132422fb2171e8c95050aa6"
+      },
+      "actual_attach_exit": 0,
+      "actual_container_wait": 0,
+      "outer_direct_waits_with_EOF": 13,
+      "inner_direct_waits_with_EOF": 5,
+      "same_daemon": true,
+      "exact_container_name_absent": true,
+      "inputs_unchanged": true,
+      "inner_wait_all_ECHILD": true,
+      "inner_adopted_waits": 0,
+      "format_only": true,
+      "root_copyback_review": {
+        "bytes": 2052,
+        "sha256": "4d799d4aa5d9821f8ff1a46bcaeeeecba0ed9bfbc88f3898254a4bd3cfa61bfe"
+      }
+    },
+    "current_GREEN": {
+      "private_epoch": "pokelinux-connectivity-creation-green-prepared-sol-2",
+      "outer_receipt": {
+        "bytes": 31065,
+        "sha256": "a64a192a71075ae83521f4a9ee6b682792df05907415755b357e05972becd4f7"
+      },
+      "inner_result": {
+        "bytes": 11216,
+        "sha256": "a6c9e323064b7a3eed2d801270951d0e04a92c0ead6199a7b8e126daa580ec98"
+      },
+      "inside": {
+        "bytes": 7827,
+        "sha256": "33982b0e2f73113f274559def226ab4698ec1a87401d597a68dac90a403f0e1c"
+      },
+      "selected_command": {
+        "bytes": 5165,
+        "sha256": "b3bb847e5541b6a578f9269293f1b276686c02b2f0452e4de01d9b7b5ddc4b5c"
+      },
+      "actual_attach_exit": 0,
+      "actual_container_wait": 0,
+      "outer_direct_waits_with_EOF": 13,
+      "inner_direct_waits_with_EOF": 7,
+      "same_daemon": true,
+      "exact_container_name_absent": true,
+      "inputs_unchanged": true,
+      "inner_wait_all_ECHILD": true,
+      "inner_adopted_waits": 0,
+      "owner_passed": 8,
+      "owner_failed": 0,
+      "kernel_passed": 1,
+      "kernel_failed": 0,
+      "owner_exit": 0,
+      "kernel_exit": 0,
+      "locked_offline": true,
+      "fmt_check": true,
+      "strict_clippy_all_targets": true,
+      "qualified": true,
+      "root_review": {
+        "bytes": 866,
+        "sha256": "31f9cdcce3b22644ce201dff9adfd304fdd35e18bd15f4baf76c602b987ccc99"
+      }
+    }
+  },
+  "frozen_test_format_bridge": {
+    "src/lib.rs": {
+      "before": {
+        "bytes": 203,
+        "sha256": "8d8590b66a278c6f8f61079a0f954d3a8b9cd3cc6654c515b6dace887b5c5071"
+      },
+      "after": {
+        "bytes": 203,
+        "sha256": "8d8590b66a278c6f8f61079a0f954d3a8b9cd3cc6654c515b6dace887b5c5071"
+      },
+      "same_tokens_ignoring_whitespace_and_commas_outside_strings": true
+    },
+    "src/kernel.rs": {
+      "before": {
+        "bytes": 9897,
+        "sha256": "9239eb1872c6199182333326d2150058d6b0fc2703134037972c061bd7299437"
+      },
+      "after": {
+        "bytes": 11760,
+        "sha256": "ac62401c6acb851b1df4b9166335120578b7e614f1d055e58c450221f3bbc2de"
+      },
+      "same_tokens_ignoring_whitespace_and_commas_outside_strings": true
+    },
+    "src/owner.rs": {
+      "before": {
+        "bytes": 8712,
+        "sha256": "f76c053e85214f2cf465ad181d2729eb49261d4804563b3ffadfd76b662ee65d"
+      },
+      "after": {
+        "bytes": 8673,
+        "sha256": "cf3824653bd0462105dcc2ff998af783d9b5ee1adebcf764fc35747dbe851830"
+      },
+      "same_tokens_ignoring_whitespace_and_commas_outside_strings": true
+    },
+    "tests/kernel.rs": {
+      "before": {
+        "bytes": 1421,
+        "sha256": "7d146256033493ac327758e522cdf07727ae98f25514930b29dfe3ce9e59edba"
+      },
+      "after": {
+        "bytes": 1548,
+        "sha256": "5f5ee08810f3c152659b6db29d250efc3e6ae19b34ab29cce924dd5f6f15beb3"
+      },
+      "same_tokens_ignoring_whitespace_and_commas_outside_strings": true
+    },
+    "tests/owner.rs": {
+      "before": {
+        "bytes": 9527,
+        "sha256": "2ca39e632ce47d3ee206a849c079688c38c673d81cb4bb4fefb922675890ff17"
+      },
+      "after": {
+        "bytes": 10509,
+        "sha256": "1bf108bff31d78a7ccc66cbdc903cbe2dd4a1c1736c4ba8dd453166dcda6421a"
+      },
+      "same_tokens_ignoring_whitespace_and_commas_outside_strings": true
+    }
+  },
+  "unexecuted_preparations": [
+    "raw UDP sol-1: Scope.finish tuple assumption fixed before execution",
+    "formatter sol-1: superseded source snapshot",
+    "GREEN sol-1: initializer self-reference caught before execution"
+  ],
+  "production_ipv4_connect_disconnect_implemented": false,
+  "kernel_dispatch_wall_time_bounded_by_DONTWAIT": false,
+  "claims_transitive_child_reaping": false,
+  "qualified_phone_models": 0,
+  "physical_phone_accessed": false,
+  "remaining_gates": [
+    "Rust fixed IPv4 mutation and packet lifecycle",
+    "owned service worker; responsive Main snapshots and Stop",
+    "real application authorization and Settings integration",
+    "installed deployment and service restart/recovery",
+    "ARM64 and matched Pixel kernel/backend qualification",
+    "suspend/resume and locked/background hardware behavior",
+    "Wi-Fi/IP acquisition/DNS/Internet/Bluetooth/tethering/USB",
+    "all physical-phone gates"
+  ],
+  "test_profile": "Cargo Debug test ELFs, features=[], profile.test=true; no normal Release execution",
+  "independent_review": {
+    "passed": true,
+    "scope": "Exact11 current source/lock bindings, actual8 owner and1 kernel test,20 direct waits/PIPE EOF,3 separate regular stderr closes, no adopted waits; Connect remains Unsupported."
+  }
+}
