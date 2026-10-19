@@ -1,0 +1,196 @@
+{
+  "schema": 1,
+  "evidence_class": "native x86_64 host normal CLI refusal and error-context reporting; separate offline host/ARM crossbuilds",
+  "source_base_commit": "854f3fd9f7feb90904b413d564a2d76a8738d735",
+  "only_production_delta": "native-connectivity-control/src/service.rs",
+  "current_service_source": {
+    "bytes": 20799,
+    "sha256": "fbbfc13923840f0c1cb725f21053ca264820a941367e0868c050a5edbba988aa"
+  },
+  "frozen_consumer": {
+    "bytes": 8290,
+    "sha256": "1934b8dbfbf4a40ca81b6d861834df5d3044685d80008a4167de5ea4c22c6fbd"
+  },
+  "records": {
+    "baseline-build-review": {
+      "bytes": 2774,
+      "sha256": "a9e472eaebbe5cd83e1ee0f7e4ab0d86a198948741a6f0b0106f358f7c6de594"
+    },
+    "baseline-build-receipt": {
+      "bytes": 953812,
+      "sha256": "a93d194e110b677efb039f63f9f206abbb7f45dc3a8b77984b84d2a4c7f1e4e6"
+    },
+    "candidate-build-review": {
+      "bytes": 2804,
+      "sha256": "0fbc446765abceaaf508d6190482872ffbe874f13b0bcb3f4178806bd6b233c2"
+    },
+    "candidate-build-receipt": {
+      "bytes": 957581,
+      "sha256": "a149670dea911007b4c9c2eb36a87e0b12933f0a122dfae69b8194653d1750ee"
+    },
+    "actual-CLI-RED-review": {
+      "bytes": 674,
+      "sha256": "59bac026dc52cc5ae208df33f1701fc917ed9d26e81adef40abfea4ae0b97d71"
+    },
+    "actual-CLI-RED-result": {
+      "bytes": 4042,
+      "sha256": "c51eb1650bf48781d22b4c61641f08e81c551faa99aa1c90ea1dbf46309b2151"
+    },
+    "actual-CLI-GREEN-review": {
+      "bytes": 1655,
+      "sha256": "28dcf9ce3ac4a4b805046ba08ed4e83d0ab84df658cc2b8575d4af25fea6044e"
+    },
+    "actual-CLI-GREEN-result": {
+      "bytes": 4063,
+      "sha256": "bb6b88651bb875dcfb048f71df6c64976b5a89c33c5e88a228efff1a1de97c35"
+    },
+    "formatter-receipt": {
+      "bytes": 18958,
+      "sha256": "a29769be993246c8de7dc49d5220955ef48503dbe3ca995ec6d60fbd8472d9e9"
+    }
+  },
+  "baseline_build": {
+    "passed": true,
+    "Scope_actual_wait_PIPE_EOF": 16,
+    "foreground_shell_regular_output_waits": 31,
+    "active_tests": 35,
+    "connectivity_active_tests": 10,
+    "process_owner_active_tests": 10,
+    "kernel_identity_active_tests": 15,
+    "ignored_tests": 7,
+    "network_state_tests_compiled_only": true,
+    "normal_artifacts": {
+      "host/pokelinux-connectivity-main": {
+        "bytes": 864128,
+        "sha256": "c1cf7d9e605a9a685ee3f8c8292afce6e2a228e00ae69887b38b44367ccf0215",
+        "ELF_machine": 62,
+        "PT_INTERP": "/lib64/ld-linux-x86-64.so.2"
+      },
+      "host/pokelinux-connectivity-service": {
+        "bytes": 645888,
+        "sha256": "4316281b970b175ca6e85550e0a1019ba124a5fe22e26f51649f8edf2136b6b3",
+        "ELF_machine": 62,
+        "PT_INTERP": "/lib64/ld-linux-x86-64.so.2"
+      },
+      "ARM/pokelinux-connectivity-main": {
+        "bytes": 860000,
+        "sha256": "64d058fad4c683f92a5dfc16a46ab6a6de01cad8b1fc3518e10436d70ff7a816",
+        "ELF_machine": 183,
+        "PT_INTERP": "/lib/ld-linux-aarch64.so.1"
+      },
+      "ARM/pokelinux-connectivity-service": {
+        "bytes": 654992,
+        "sha256": "2d1a6275d6b5870122e3678e869b086416d97560aa889e01c135aedffd296aa5",
+        "ELF_machine": 183,
+        "PT_INTERP": "/lib/ld-linux-aarch64.so.1"
+      }
+    },
+    "normal_ELFs_executed_by_build": false
+  },
+  "candidate_build": {
+    "passed": true,
+    "Scope_actual_wait_PIPE_EOF": 16,
+    "foreground_shell_regular_output_waits": 22,
+    "active_connectivity_tests": 10,
+    "ignored_connectivity_tests": 3,
+    "format_and_strict_all_target_Clippy_passed": true,
+    "shared_crates_and_all_locks_unchanged": true,
+    "shared_QA_not_repeated": true,
+    "normal_artifacts": {
+      "host/pokelinux-connectivity-main": {
+        "bytes": 864048,
+        "sha256": "16f1a057759e7aadfc390f311813aa8a35e5c0648f143069fd421c2e2d2aa660",
+        "ELF_machine": 62,
+        "PT_INTERP": "/lib64/ld-linux-x86-64.so.2"
+      },
+      "host/pokelinux-connectivity-service": {
+        "bytes": 655976,
+        "sha256": "d4a2c9afd28a616b87147e4fb1bc57da354c8731def94c02501f67481f49926d",
+        "ELF_machine": 62,
+        "PT_INTERP": "/lib64/ld-linux-x86-64.so.2"
+      },
+      "ARM/pokelinux-connectivity-main": {
+        "bytes": 861080,
+        "sha256": "7b06117df291a6ea04144fc378aae38c92da582afcf2ab8ca036f9f5085a15bc",
+        "ELF_machine": 183,
+        "PT_INTERP": "/lib/ld-linux-aarch64.so.1"
+      },
+      "ARM/pokelinux-connectivity-service": {
+        "bytes": 660848,
+        "sha256": "e3b449ccad3e4856e442f33e5a27424c6c3ae4fcbb90fb06ad6906c4c85f76a2",
+        "ELF_machine": 183,
+        "PT_INTERP": "/lib/ld-linux-aarch64.so.1"
+      }
+    },
+    "normal_ELFs_executed_by_build": false,
+    "prelaunch_extra_manifest_assertion_fault_preserved": true,
+    "generated_source_sha256_omission_corrected_after_build": true,
+    "all_frozen_input_pins_verified_before_launch_and_after_build": true
+  },
+  "CLI_RED": {
+    "behavior_RED_qualified": true,
+    "consumer_exit": 1,
+    "worker_natural_exit": 1,
+    "exact_original_EPERM_without_context": true,
+    "worker": {
+      "bytes": 645888,
+      "sha256": "4316281b970b175ca6e85550e0a1019ba124a5fe22e26f51649f8edf2136b6b3",
+      "ELF_machine": 62,
+      "PT_INTERP": "/lib64/ld-linux-x86-64.so.2"
+    }
+  },
+  "CLI_GREEN": {
+    "passed": true,
+    "consumer_exit": 0,
+    "worker_natural_exit": 1,
+    "worker": {
+      "bytes": 655976,
+      "sha256": "d4a2c9afd28a616b87147e4fb1bc57da354c8731def94c02501f67481f49926d",
+      "ELF_machine": 62,
+      "PT_INTERP": "/lib64/ld-linux-x86-64.so.2"
+    },
+    "stage": "ReduceCapabilities",
+    "stage_original_until_ns": null,
+    "source_errno": 1,
+    "source_kind": "PermissionDenied",
+    "detection_inside_actual_spawn_wait": true,
+    "only_this_stage_exercised": true
+  },
+  "both_actual_CLI_controls": {
+    "UID_GID": 1000,
+    "all_capability_sets_zero_NNP1": true,
+    "same_frozen_consumer_bytes": true,
+    "one_actual_child_wait_and_merged_PIPE_EOF": true,
+    "original_work_seconds": 1,
+    "separate_failure_custody_seconds": 3,
+    "worker_output_bound_bytes": 4096,
+    "namespace_and_parent_handles_closed": true,
+    "ECHILD_without_adopted_children": true,
+    "metadata_before_parent_poll_wait": true,
+    "zombie_sample_not_running_claim": true,
+    "host_network_effect_qualified": false
+  },
+  "compiled_stages": [
+    "ReduceCapabilities",
+    "BindParent",
+    "PublishInitial",
+    "ReceiveCommand",
+    "PublishRetirement",
+    "PublishCompletion",
+    "PublishObservation"
+  ],
+  "unchanged": [
+    "worker control flow and validation",
+    "47/19-byte records",
+    "original deadlines and guards",
+    "retry and retirement behavior",
+    "kernel error mappings"
+  ],
+  "original_io_kind_and_source_chain_retained": true,
+  "outer_raw_os_error_unchanged_claimed": false,
+  "clock_sample_only_on_error": true,
+  "ARM_context_execution_qualified": false,
+  "ARM_timeout_stage_or_repair_claimed": false,
+  "phone_accessed": false,
+  "qualified_physical_models": 0
+}

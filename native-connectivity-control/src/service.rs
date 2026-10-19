@@ -459,14 +459,67 @@ fn record(kind: u8, id: u64, fact: Fact, at: u64) -> [u8; RECORD] {
     b[46] = u8::from(fact.connected);
     b
 }
+/// Error-only context; it grants no retry and changes no operation cutoff.
+#[derive(Debug)]
+enum WorkerStep {
+    ReduceCapabilities,
+    BindParent,
+    PublishInitial,
+    ReceiveCommand,
+    PublishRetirement,
+    PublishCompletion,
+    PublishObservation,
+}
+#[derive(Debug)]
+struct WorkerFailure {
+    stage: WorkerStep,
+    original_until_ns: Option<u64>,
+    detected_at_ns: u64,
+    source: io::Error,
+}
+impl std::fmt::Display for WorkerFailure {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{:?} at {} with original cutoff {:?}: {}",
+            self.stage, self.detected_at_ns, self.original_until_ns, self.source
+        )
+    }
+}
+impl std::error::Error for WorkerFailure {
+    fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
+        Some(&self.source)
+    }
+}
+fn worker_step<T>(
+    stage: WorkerStep,
+    original_until_ns: Option<u64>,
+    result: io::Result<T>,
+) -> io::Result<T> {
+    result.map_err(|source| {
+        io::Error::new(
+            source.kind(),
+            WorkerFailure {
+                stage,
+                original_until_ns,
+                detected_at_ns: boot_time_ns(),
+                source,
+            },
+        )
+    })
+}
 /// Fixed cooperative worker entry. Arguments originate only in trusted startup,
 /// then the authenticated actual parent and exact retained namespace are checked.
 pub fn worker(arguments: &[String]) -> io::Result<()> {
     if arguments.len() != 4 {
         return Err(invalid());
     }
-    reduce(CapabilitySet::NET_ADMIN)?;
-    let mut parent = BoundParent::from_stdin()?;
+    worker_step(
+        WorkerStep::ReduceCapabilities,
+        None,
+        reduce(CapabilitySet::NET_ADMIN),
+    )?;
+    let mut parent = worker_step(WorkerStep::BindParent, None, BoundParent::from_stdin())?;
     let prefix = format!(
         "/proc/{}/fd/",
         rustix::process::getppid().ok_or_else(invalid)?
@@ -493,12 +546,20 @@ pub fn worker(arguments: &[String]) -> io::Result<()> {
     )
     .map_err(|_| invalid())?;
     let mut fact = link.fact().map_err(|_| invalid())?;
-    parent.send_message(cutoff(until), &record(1, 0, fact, boot_time_ns()))?;
+    worker_step(
+        WorkerStep::PublishInitial,
+        Some(until),
+        parent.send_message(cutoff(until), &record(1, 0, fact, boot_time_ns())),
+    )?;
     let mut last_seen_id = 0;
     let mut refreshed_at = boot_time_ns();
     loop {
         let envelope = boot_time_ns().saturating_add(ENVELOPE);
-        if let Some(bytes) = parent.receive_message(cutoff(envelope))? {
+        if let Some(bytes) = worker_step(
+            WorkerStep::ReceiveCommand,
+            Some(envelope),
+            parent.receive_message(cutoff(envelope)),
+        )? {
             if bytes.len() != 19 || bytes[0..2] != [1, 1] || bytes[18] > 1 {
                 return Err(invalid());
             }
@@ -512,9 +573,11 @@ pub fn worker(arguments: &[String]) -> io::Result<()> {
             if sampled >= original_until {
                 // Retirement receipt uses a separate transport envelope; it
                 // cannot renew or publish success for the expired operation.
-                parent.send_message(
-                    cutoff(sampled.saturating_add(ENVELOPE)),
-                    &record(3, id, fact, sampled),
+                let retirement_until = sampled.saturating_add(ENVELOPE);
+                worker_step(
+                    WorkerStep::PublishRetirement,
+                    Some(retirement_until),
+                    parent.send_message(cutoff(retirement_until), &record(3, id, fact, sampled)),
                 )?;
             } else {
                 if original_until - sampled > 1_000_000_000 {
@@ -524,7 +587,11 @@ pub fn worker(arguments: &[String]) -> io::Result<()> {
                     .set_connected(bytes[18] != 0, original_until)
                     .map_err(|_| invalid())?;
                 refreshed_at = boot_time_ns();
-                parent.send_message(cutoff(original_until), &record(2, id, fact, refreshed_at))?;
+                worker_step(
+                    WorkerStep::PublishCompletion,
+                    Some(original_until),
+                    parent.send_message(cutoff(original_until), &record(2, id, fact, refreshed_at)),
+                )?;
             }
         }
         let sampled = boot_time_ns();
@@ -532,7 +599,11 @@ pub fn worker(arguments: &[String]) -> io::Result<()> {
             let read_until = sampled.saturating_add(100_000_000);
             fact = link.refresh(read_until).map_err(|_| invalid())?;
             refreshed_at = boot_time_ns();
-            parent.send_message(cutoff(read_until), &record(1, 0, fact, refreshed_at))?;
+            worker_step(
+                WorkerStep::PublishObservation,
+                Some(read_until),
+                parent.send_message(cutoff(read_until), &record(1, 0, fact, refreshed_at)),
+            )?;
         }
         std::thread::sleep(Duration::from_millis(2));
     }

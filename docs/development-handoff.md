@@ -73,6 +73,19 @@ PIPE EOFs, QEMU/Xvfb 0, container 1/removal and unchanged inputs are recorded
 separately. No production RED/GREEN or new live theme-provider claim follows.
 See the [ARM window failures](native-settings-connectivity-window.md#arm-window-attempts-remain-failed).
 
+A focused [worker error-context checkpoint](native-connectivity-worker-error-context.md)
+now passes a genuine normal-CLI missing-context RED→GREEN with the same consumer.
+Actual UID1000/cap0/NNP1 capability reduction returns original EPERM and natural
+worker exit1; GREEN retains its fixed `ReduceCapabilities` stage, no call cutoff
+yet, and an error-only BOOTTIME sample inside the actual spawn/wait span. Both
+controls close one actual wait/PIPE EOF under the original1s cutoff. Baseline QA
+passes35 active host tests; candidate QA reruns10 connectivity tests with3 ignored,
+while unchanged shared QA remains baseline evidence. Four normal host/ARM Release
+ELFs build without executing during either build. No wire, guard, cutoff, retry
+or retirement changes. The next selected step is one ARM stage diagnostic using
+the contextual worker; ARM cause attribution and the complete window/packet
+lifecycle remain open.
+
 A separate [disabled connectivity bundle](../native-connectivity-control/packaging/README.md)
 now passes actual Make/installer staging of exactly two current ARM provider
 files while preserving the existing Disabled config. All eight filesystem

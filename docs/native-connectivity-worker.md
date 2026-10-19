@@ -59,3 +59,15 @@ closes; no same-namespace replacement or connection-persistence policy is select
 
 [Hash-only provenance](evidence/native-connectivity-worker-provenance.json) and
 [the exact public fixture sources](../tools/native-connectivity-worker/README.md).
+
+## Later normal CLI error context
+
+A separate [error-context checkpoint](native-connectivity-worker-error-context.md)
+uses the normal Release worker as an actual UID1000, cap0/NNP1 process. Its real
+capability-reduction EPERM first lacks the desired stage, then passes the unchanged
+consumer after error-only context is added. Natural worker exit1, the original
+source error, actual wait/PIPE EOF and the original1s cutoff are preserved.
+Seven contexts compile; only `ReduceCapabilities` executes in this control.
+Current normal host/ARM builds pass, but this adds no ARM context execution,
+virtual-link result or explanation of the failed ARM normal-window worker loss.
+The historical packet/expiry/Stop results above retain their original cohorts.

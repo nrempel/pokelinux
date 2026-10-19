@@ -20,6 +20,11 @@ before a retained-worker guard failure. Its original Enable-ready frame is
 [partial failed evidence](native-settings-connectivity-window.md#fourth-attempt-partial-touch-and-packets);
 background persistence, reopen and Disable remain unqualified. Final worker
 exit 1/`TimedOut` identifies no exact operation or production RED/GREEN.
+A separate [normal-worker error-context control](native-connectivity-worker-error-context.md)
+now passes unchanged-consumer RED→GREEN for actual cap0 EPERM. Only capability
+reduction is exercised; seven error stages compile and normal host/ARM builds
+pass. Worker exit1, original errors and all control deadlines remain unchanged.
+ARM stage execution, the loss cause and the full ARM lifecycle remain open.
 
 The [normal Settings Rust connectivity SDK](native-settings-connectivity-sdk.md)
 now passes granted Connect, packets after actual app exit, fresh app observations

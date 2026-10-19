@@ -36,6 +36,13 @@ BOOTTIME checks promise syscall cancellation or reclaimability of arbitrary
 blocked kernel calls. No implicit retry, replacement, Disconnect or rollback is
 performed; local descriptor/process release is distinct from link/vendor cleanup.
 
+Worker errors now retain a fixed stage, the selected call cutoff when known, an
+error-only BOOTTIME sample and the original `io::Error`. An unchanged real cap0
+CLI consumer passes after missing-context RED; the worker still exits naturally
+with code1 and source EPERM. Only `ReduceCapabilities` is executed by that control;
+all seven contexts compile. See [error-context evidence](../docs/native-connectivity-worker-error-context.md).
+No payload, guard, deadline, retry or retirement policy changes.
+
 The separate `main_service` and nonblocking `client` now pass the unchanged
 normal-Main packet consumer against the final source after an actual typed-refusal
 RED: UID11050 private access denial, traffic after requester close, fresh
