@@ -2,7 +2,7 @@
   "schema": 1,
   "evidence_class": "full-system generic AArch64 Linux kernel VM; TCG; original native apps/services and authored authority",
   "source_commit": "bfe6e556465d611d2a0e4b34137d7c422b177c2f",
-  "classification": "THREE_FAILED_ARM_NORMAL_SETTINGS_WINDOW_ATTEMPTS",
+  "classification": "FOUR_FAILED_ARM_NORMAL_SETTINGS_WINDOW_ATTEMPTS_WITH_PARTIAL_FOURTH_TOUCH_PACKET",
   "passed": false,
   "phone_accessed": false,
   "hardware_models_qualified": 0,
@@ -231,7 +231,7 @@
           "signal": 9
         }
       ],
-      "failure": "Expected retained worker-child list assertion fails after normal Settings window mapping, before Enable-ready or functional-clock release. The differing child list and loss cause were not sampled.",
+      "failure": "Retained worker-child list assertion fails before Enable-ready, capture or functional-clock release. Eventual mapped-window sampling occurs after cancellation; mapping-versus-guard order is unproven. The differing child list and loss cause were not sampled.",
       "setup_delta": "Use minimal standalone Python denial entry, with bounded stage markers; preserve credential/EACCES/final JSON and original1s spawn-through-wait/EOF predicates.",
       "actual_private_access_denial": {
         "passed": true,
@@ -283,8 +283,159 @@
           146
         ],
         "external_output_scale": 2.625,
-        "normal_QWindow_getters_sampled": false
+        "normal_QWindow_getters_sampled": false,
+        "sample_observed_after_cancel": true,
+        "mapping_before_guard_qualified": false
+      },
+      "chronology_correction": {
+        "last_available_state_expiry_ns": 39645183229,
+        "cancel_requested_at_ns": 39648531602,
+        "unavailable_state_observed_at_ns": 39674650809,
+        "mapped_window_sample_observed_at_ns": 39682148214,
+        "mapped_window_sample_after_cancel": true,
+        "mapping_versus_guard_order_qualified": false,
+        "post_cancel_unavailable_observation_not_a_pre_cancel_cause": true
       }
+    },
+    {
+      "attempt": 4,
+      "classification": "SETUP_FAILURE",
+      "aggregate_classification": "FAILED_ARM_WINDOW_PARTIAL_TOUCH_PACKET_WITH_PRECLEANUP_WORKER_EXIT",
+      "passed": false,
+      "functional_desired_passed": false,
+      "behavior_RED_qualified": false,
+      "production_RED_GREEN_claimed": false,
+      "records": {
+        "selection.json": {
+          "bytes": 12938,
+          "sha256": "d16dc66d0caeafee2a2b10c45d446f03286739333e92778fc6f6a62033d67e9f"
+        },
+        "command.json": {
+          "bytes": 2758,
+          "sha256": "319e7829309d4cf9a430772a57f5ddf8c207f67de519d67a56737934b1942390"
+        },
+        "SOURCE.json": {
+          "bytes": 7900,
+          "sha256": "e9ccad835831df18159fdc09689b6e0597d8c7899779f74c7a9371b259ca2d50"
+        },
+        "SEAL.json": {
+          "bytes": 1452,
+          "sha256": "104af3f10df7efbe8c02f0295bf0f06e8a09652223ea1c254cc08ad6ba3f3d29"
+        },
+        "run/receipt.json": {
+          "bytes": 23921,
+          "sha256": "fe135d91290cbc17b05eb9d0076ec2b89a144d78267edb486962bb7819573f2a"
+        },
+        "boot-result.json": {
+          "bytes": 16154,
+          "sha256": "b888a529e630f955d09e1b9fcbbfc10a3e9bd11755a8efeecd06088dcecf1f38"
+        },
+        "result.json": {
+          "bytes": 133733,
+          "sha256": "422f7a1aafc94d483fbc6d4f47b6e4e338fed206313bbada1c044d6cd877f9c2"
+        },
+        "connectivity-case/result.json": {
+          "bytes": 16807,
+          "sha256": "c60515448aa1a68ad45345984d0e1f0b16b0ba807b97d0b3feae616032513b86"
+        },
+        "connectivity-case/services/normal-connectivity-main.log": {
+          "bytes": 230,
+          "sha256": "6bd449a05b7ddea34a7ff4678c8066cd97c3731f973b7ecc03afdcf0110cb9af"
+        },
+        "connectivity-case/gates/connected-proof.json": {
+          "bytes": 244,
+          "sha256": "f6027dbc9059fa2f9f2a88cfbab813d03557e6a85dfd676fe20cc68a8315316a"
+        },
+        "connectivity-case/gates/connected-readback.json": {
+          "bytes": 619,
+          "sha256": "0c436220e4fca9384a87c4cc05c68e215953841f62707c8464f8ab7a023f996c"
+        },
+        "connectivity-case/gates/peer-packets.json": {
+          "bytes": 375,
+          "sha256": "de6d0484efe34d0c64448ce10441f764a869854d91b7eb9c88ce8fd4f99d3969"
+        },
+        "connectivity-case/gates/first-closed.json": {
+          "bytes": 310,
+          "sha256": "53388690a4d83c18a480fcae16f58791e407a21f46556923ef3d34eb2467781f"
+        },
+        "ROOT-CLOSED-PARTIAL-WINDOW-REVIEW.json": {
+          "bytes": 5351,
+          "sha256": "5e30184472dd6a827d0d05aefd47204c730903e593c0b7f5ec74ed7033c0ac24"
+        },
+        "executed-controller.py": {
+          "bytes": 31723,
+          "sha256": "2d8a6a5a39f3ae9552c33f2be43ad817df186f5dbde25b2aa3bf37e34dc64fc1"
+        }
+      },
+      "diagnostic_only_delta": "Bounded original-controller observations at existing retained-worker guard; production behavior, packet predicates and original clocks unchanged.",
+      "partial_behavior": {
+        "actual_normal_Enable_touch": true,
+        "matching_Completed_before_guard_failure": true,
+        "independently_observed_IPv4": "192.0.2.1/30",
+        "first_nonce_packet_before_guard_failure": true,
+        "first_app_actual_wait_code": 0,
+        "first_app_wait_observed_after_cancel": true,
+        "background_after_app_retirement_qualified": false,
+        "relaunch_Disable_address_removal_and_quiet_qualified": false
+      },
+      "pre_cancel_worker_observations": {
+        "Main_child_vector_empty": true,
+        "retained_worker_pidfd_ready": true,
+        "Main_live": true,
+        "sample_before_cleanup_cancel": true,
+        "process_state_snapshot_atomic": false,
+        "exact_operation_or_cause_claimed": false
+      },
+      "actual_worker_final_exit_code": 1,
+      "actual_worker_final_signal": null,
+      "worker_stderr_error_kind": "TimedOut",
+      "exact_worker_operation_unknown": true,
+      "actual_Main_exit_after_cleanup": 0,
+      "actual_driver_exit_after_cleanup": 101,
+      "controller_custody_qualified": true,
+      "guest_case_closure_qualified": false,
+      "eventual_ECHILD": true,
+      "guest_adopted_actual_wait_count": 1,
+      "guest_adopted_actual_returncodes": [
+        0
+      ],
+      "actual_direct_wait_and_PIPE_EOF_counts": {
+        "host": 13,
+        "boot": 4,
+        "guest": 28,
+        "controller": 6
+      },
+      "total_scope_actual_wait_and_PIPE_EOF_count": 51,
+      "actual_QEMU_wait_exit": 0,
+      "actual_Xvfb_wait_exit": 0,
+      "actual_container_wait_exit": 1,
+      "exact_CID_absent_same_daemon": true,
+      "selected_inputs_unchanged": true,
+      "capture": {
+        "public_asset": "docs/assets/settings-connectivity-arm-ready.png",
+        "phase": "Enable-ready before touch; partial failed ARM trace",
+        "bytes": 149235,
+        "sha256": "53a3532cc81ecb49b0021a735cc632d39b3ab4118226aa1e7258c95100e225ab",
+        "RGBA_sha256": "223005d43461b2d643d490dbb59969c498edad7459b8b7f0df984cc84437f0f5",
+        "native_pixels": [
+          1080,
+          2424
+        ],
+        "external_output_scale": 2.625,
+        "external_output_physical_mm": [
+          65,
+          146
+        ],
+        "logical_window": [
+          411,
+          923
+        ],
+        "Root_visually_reviewed_original": true,
+        "Root_independent_all_PNG_CRC_and_full_RGBA_decode_matches_native_buffer": true,
+        "debug_banner_and_unavailable_brightness_network_cards_retained": true,
+        "appearance_scope": "Normal unavailable-client fallback; no live Omarchy theme-provider claim"
+      },
+      "phone_accessed": false
     }
   ],
   "unchanged_upfront_measurement_profile": {
@@ -305,10 +456,10 @@
     "quiet_ms": 800
   },
   "remaining_gates": [
-    "ARM normal window Enable/packets/close/reopen/Disable and ready-control capture",
-    "exact retained-worker guard cause",
-    "installed activation, trusted namespace provisioning and complete session Main",
-    "real Wi-Fi, Internet and matched Pixel backend",
-    "all phone hardware behavior"
+    "Complete ARM normal-window background persistence, fresh reopen, explicit Disable, address removal and quiet under original cutoffs",
+    "Exact worker TimedOut operation and lifetime cause",
+    "Installed activation, trusted namespace provisioning and complete session Main",
+    "Real Wi-Fi, Internet and matched Pixel backend",
+    "All phone hardware behavior"
   ]
 }

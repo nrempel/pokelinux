@@ -52,11 +52,25 @@ current loaders and the exact three production app files now pass in a separate
 generic ARM preparation. The first missing-bootentry setup failure is preserved;
 the corrected cohort has 63 direct waits/stdout EOFs and exports its layer after
 actual QEMU closure; no normal app/compositor/backend executes during preparation.
-Three later ARM window attempts remain failed: existing appearance endpoint,
-a late denial child, then a retained-worker guard after normal Settings window
-mapping. The minimal denial probe passes the original 1s bound in the third;
-no Enable, app packet or capture follows, and the worker-loss cause is unknown.
-The second's custody-timeliness failure remains false despite eventual cleanup.
+Four later ARM window attempts remain failed. The first two stop at an existing
+appearance endpoint and a late denial child. The third passes the minimal denial
+probe under its original 1s bound but fails the retained-worker guard. Its mapped
+window is sampled after cancellation; mapping-versus-guard ordering and the
+worker-loss cause are unproven. Its later unavailable observation is not a
+pre-cancel cause. The second's custody-timeliness failure remains false despite
+eventual cleanup.
+
+The fourth diagnostic attempt reaches one actual Enable touch, matching Completed,
+independent `192.0.2.1/30` and one nonce packet before guard failure. Its original
+Enable-ready ARM frame is published as a partial failed trace. Before cancel,
+Main is live, its child vector is empty and the retained worker pidfd is ready;
+final actual worker exit is 1 with stderr `TimedOut`, exact operation unknown.
+The first app wait 0 is observed after cancel, so background persistence, fresh
+reopen and Disable remain unqualified. Literal controller `SETUP_FAILURE` and
+functional desired=false remain; controller custody qualifies while guest-case
+closure does not, despite eventual ECHILD/one adopted exit 0. All 51 scope waits/
+PIPE EOFs, QEMU/Xvfb 0, container 1/removal and unchanged inputs are recorded
+separately. No production RED/GREEN or new live theme-provider claim follows.
 See the [ARM window failures](native-settings-connectivity-window.md#arm-window-attempts-remain-failed).
 
 A separate [disabled connectivity bundle](../native-connectivity-control/packaging/README.md)

@@ -40,3 +40,21 @@ same original cutoff. Its host private/accessible controls and ARM denial pass;
 the later window/worker guard still fails. This is test infrastructure, not a
 production permission service or a newly qualified public VM launcher.
 See the [preserved ARM failures](../../../docs/native-settings-connectivity-window.md#arm-window-attempts-remain-failed).
+
+`worker-diagnostic-controller.py` is the exact 31,723-byte executed controller
+from the fourth failed ARM window attempt (SHA256
+`2d8a6a5a39f3ae9552c33f2be43ad817df186f5dbde25b2aa3bf37e34dc64fc1`).
+It adds bounded observations at the existing retained-worker guard; it does not
+change production behavior, packet predicates or clocks. The case reaches one
+normal Enable touch, matching Completed, independent virtual address and one
+nonce packet before an empty child vector/terminal worker pidfd is recorded
+with Main still live. Final worker exit 1 has stderr `TimedOut`; its exact
+operation remains unknown. First app wait 0 is observed only after cancel and
+does not qualify background persistence. Aggregate/controller functional status
+remains failed; controller custody and guest-case closure are distinct.
+
+This source copy requires the separately pinned helpers, native provider ELFs
+and owned guest/container envelope of its recorded cohort. It is original test
+infrastructure, not a public full VM launcher, production permission service or
+successful ARM lifecycle. The original frame and curated hashes are recorded in
+[the partial failed trace](../../../docs/native-settings-connectivity-window.md#fourth-attempt-partial-touch-and-packets).

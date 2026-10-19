@@ -13,7 +13,13 @@ explicit Disable through the Rust actor/Main/native worker. Two independent
 packet round trips, address removal and quiet pass in a generic x86 VM. Original
 1080×2424 screenshots show the ready control and the reopened enabled state.
 This uses authored session authority and the normal appearance fallback; full
-installed runtime, ARM, Wi-Fi/Internet and every physical-phone gate remain open.
+installed runtime, the complete ARM lifecycle, Wi-Fi/Internet and every
+physical-phone gate remain open. A later failed ARM trace reaches one actual
+Enable touch, matching Completed, independent virtual address and one packet
+before a retained-worker guard failure. Its original Enable-ready frame is
+[partial failed evidence](native-settings-connectivity-window.md#fourth-attempt-partial-touch-and-packets);
+background persistence, reopen and Disable remain unqualified. Final worker
+exit 1/`TimedOut` identifies no exact operation or production RED/GREEN.
 
 The [normal Settings Rust connectivity SDK](native-settings-connectivity-sdk.md)
 now passes granted Connect, packets after actual app exit, fresh app observations

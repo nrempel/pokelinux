@@ -215,7 +215,7 @@ physical-phone gate remain open. No new screenshot follows from preparation.
 
 ## ARM window attempts remain failed
 
-Three subsequent full-system ARM window attempts retain their failed results.
+Four subsequent full-system ARM window attempts retain their failed results.
 The first finds an existing appearance endpoint before the compositor/controller
 or app starts, so the required unavailable-appearance fallback cannot be assumed.
 Its exact endpoint owner was not sampled. The second adds only an explicit
@@ -235,26 +235,66 @@ The ARM child then actually returns EACCES as UID/GID11050, with no supplementar
 groups, zero effective/permitted capabilities and no-new-privileges. This does
 not identify the preceding timeout's cause or qualify an application grant.
 
-The normal installed Settings app now launches as UID11050 and maps through the
-upstream ARM compositor. Its external output is 1080 × 2424, 65 × 146 mm at scale 2.625;
-the identity-bound mapped window is 411 × 923 logical pixels. Direct QWindow getters
-are not sampled. Before Enable-ready, capture or the functional-clock release,
-the controller's retained-worker child-list assertion fails. The differing list
-and the cause are not sampled. No Enable or normal-app packet result follows.
-No implicit replacement, mutation retry or deadline relaxation is introduced.
+The third attempt eventually records the normal installed Settings app as
+UID11050 and mapped through the upstream ARM compositor. Its external output is
+1080 × 2424, 65 × 146 mm at scale 2.625; the identity-bound window is 411 × 923
+logical pixels. Direct QWindow getters are not sampled. The mapped-window sample
+was recorded after cancellation, so mapping versus the retained-worker guard
+failure is not ordered by this evidence. The last available state's expiry
+precedes cancellation; the later unavailable observation follows cancellation
+and does not establish the guard's cause. Before Enable-ready, capture or the
+functional-clock release, the child-list assertion fails without recording the
+differing list. No Enable or normal-app packet result follows. No implicit
+replacement, mutation retry or deadline relaxation is introduced.
 
 The third attempt's controller records six timely direct waits/merged stdout
 EOFs and complete custody. Its overall guest case remains failed. Normal App
 retirement records actual signal 9 with null stdio; the actor joins, Main exits 0
 and reports the retained worker reaped after signal 9 with output EOF. An
 independent worker pidfd is terminal after Main wait. The assertion driver
-exits 101 after owned cleanup. Guest subreaper/ECHILD and eventual closure pass;
-27 guest, four boot and 13 host direct waits/EOFs finish on time. QEMU and Xvfb
-actually return 0; the container returns 1 and is removed on the same daemon.
-Inputs stay unchanged. None of the three attempts produces a screenshot.
+exits 101 after owned cleanup. Eventual guest subreaper/ECHILD is observed, but
+aggregate guest-case closure remains unqualified; 27 guest, four boot and 13 host
+direct waits/EOFs finish on time. QEMU and Xvfb return 0; the container returns 1
+and is removed on the same daemon.
+Inputs stay unchanged. None of the first three attempts produces a screenshot.
 
-[Hash-only ARM window provenance](evidence/native-settings-connectivity-arm-window-provenance.json)
-binds all three failures and their exact frozen selections. Native build/install
-qualification remains valid; the full ARM window/packet lifecycle remains open.
-These setup refinements establish no production RED/GREEN. Complete session
+### Fourth attempt: partial touch and packets
+
+The fourth attempt adds an original test-controller diagnostic while retaining
+the production code, packet predicates and original deadlines. It reaches one
+actual normal Enable touch, the matching Completed result, independently observed
+`192.0.2.1/30` configuration and the first nonce packet before the guard fails.
+This is partial ARM behavior in a failed aggregate case, not a completed
+background/reopen/Disable lifecycle.
+
+Before cancellation, the diagnostic records an empty Main child vector, a ready
+retained-worker pidfd and Main still live. These process observations are not an
+atomic snapshot. The final actual worker wait reports exit 1, with `TimedOut`
+in its stderr; the exact worker operation and cause remain unknown. Main exits 0
+after cleanup and the assertion driver exits 101. The first app's actual wait 0
+is observed after cancellation, so it does not qualify connection persistence
+after normal app retirement.
+
+The controller's literal classification remains `SETUP_FAILURE`, its functional
+desired result is false and no production RED/GREEN is claimed. Controller custody
+qualifies; aggregate guest-case closure does not, despite eventual ECHILD and one
+adopted actual exit 0. The 51 scope direct waits/PIPE EOFs comprise 13 host, four
+boot, 28 guest and six controller observations. Actual QEMU/Xvfb exit 0, container
+wait 1/removal/absence on the same daemon and unchanged selected inputs are
+recorded separately. Reopen, Disable, address removal and quiet remain open.
+
+![Enable-ready Settings in a partial failed ARM trace](assets/settings-connectivity-arm-ready.png)
+
+*Original 1080 × 2424 Enable-ready frame from the partial failed ARM trace, before
+the Enable touch. The debug-launch banner, unavailable brightness/network cards
+and normal appearance fallback remain visible. Root reviewed the original and
+verified every PNG CRC plus the full decoded RGBA hash. Output scale is 2.625 at
+65 × 146 mm; the mapped window is 411 × 923 logical pixels. No live Omarchy
+theme-provider or complete ARM lifecycle success is claimed.*
+
+The [exact executed diagnostic controller](../tools/native-connectivity-settings-window/arm/worker-diagnostic-controller.py)
+is original test infrastructure, not production code or a public full VM launcher.
+[Curated ARM window provenance](evidence/native-settings-connectivity-arm-window-provenance.json)
+binds all four failed attempts, the original frame and their exact frozen
+selections. Native build/install qualification remains valid. Complete session
 startup, matched Pixel integration and every phone gate remain open.
