@@ -1,0 +1,155 @@
+{
+  "schema": 1,
+  "classification": "Retained matched Pixel WLAN config/index/catalog facts only; no driver or phone execution",
+  "factory_profile": "frankel CP3A.261005.005 4K",
+  "whole_factory_archive_sha256": "3721e6accc2e87d851ee7966d794318078ec74c7cc32343daa10968264d6bb62",
+  "whole_archive_authentication_inherited_not_reexecuted": true,
+  "authenticated_selection_pin": {
+    "bytes": 5489,
+    "sha256": "aab86deef87f7bc3824844d068c81541b393fafb6044fb299f54536770cf91ae"
+  },
+  "existing_public_factory_audit_pin": {
+    "bytes": 10953,
+    "sha256": "ead74a1be70a64d3081ba36a223f563fc8b880dd7ad0d68018ec81e06248b7fc"
+  },
+  "independent_readonly_review_pin": {
+    "bytes": 7188,
+    "sha256": "e1d9e683fc90f85b9e932651b3016dca2bdadb493c2f911d618e09408fb40609"
+  },
+  "selected_existing_images_stream_rehashed": {
+    "boot.img": {
+      "bytes": 67108864,
+      "sha256": "f68a58f2d4fd591beaca0e569713006a593644ffda4e2fb580339677d867d403"
+    },
+    "system_dlkm.img": {
+      "bytes": 11173888,
+      "sha256": "c9da4e00ca20436e5c407f2849dc1389e8501533917bf6350fc0b3e6d2eeb311"
+    },
+    "vendor_dlkm.img": {
+      "bytes": 43810816,
+      "sha256": "a41db39a1ffbb91b7176ddfc3a4bd1a424200961cd806fa2a3dfa250c32b038a"
+    }
+  },
+  "existing_decompressed_Image": {
+    "bytes": 36866560,
+    "sha256": "0226c3be4224b02884d4f9b332aee58ec06c65b2263265e80f2498332ef15c06"
+  },
+  "common_release": "6.6.127-android15-8-g91d825611104-ab16252310-4k",
+  "embedded_config_pin": {
+    "bytes": 211778,
+    "sha256": "f3be4cd72a437f07d1c804f2127c72f60ff1474d6acf370e5c969618ed6388d0"
+  },
+  "selected_config_facts": {
+    "CFG80211": "not set in retained common kernel config",
+    "WLAN": "y",
+    "RFKILL": "m",
+    "MAC80211": "no entry observed; no inferred setting"
+  },
+  "retained_module_index_pins": {
+    "system_dlkm.img/modules.dep": {
+      "bytes": 4737,
+      "sha256": "09ef60cd03510a396fd7c3e587c77aadce0f5310300d618ce719a2ca16f93b8d"
+    },
+    "system_dlkm.img/modules.load": {
+      "bytes": 906,
+      "sha256": "831916f1844fbf3b349c126d7820bad3e9171c959c61d6dacf49ad5befb43e51"
+    },
+    "vendor_dlkm.img/modules.dep": {
+      "bytes": 10919,
+      "sha256": "03b9f43ce11a4f63ad8d36ec3b8773851b9e1e24489aa1fc27565f3a51d4942d"
+    },
+    "vendor_dlkm.img/modules.load": {
+      "bytes": 1977,
+      "sha256": "54999a556743534dc75bc5ed25d8df2cf14001fcf3e45d88058ba0d91b85c671"
+    }
+  },
+  "retained_vendor_catalog_pin": {
+    "bytes": 31768,
+    "sha256": "75c01da4ee796ee652741fc7c9f440bec08dc522b60434b1dfffb19c1530455b"
+  },
+  "selected_module_catalog_facts": [
+    {
+      "name": "mac80211.ko",
+      "bytes": 1997448,
+      "sha256": "aa1c2a757c263556f38cfddd62bcd29b21d1bc568dacc95f4f47206002249117",
+      "recorded_vermagic": "6.6.127-android15-8-gee206ffe8752-ab16254410-4k SMP preempt mod_unload modversions aarch64"
+    },
+    {
+      "name": "cfg80211.ko",
+      "bytes": 2059464,
+      "sha256": "084a53bc38a2674252b54bc56364fd9b428b1c929f4b2b7e970bf1b88ebdf06b",
+      "recorded_vermagic": "6.6.127-android15-8-gee206ffe8752-ab16254410-4k SMP preempt mod_unload modversions aarch64"
+    },
+    {
+      "name": "bcmdhd4383.ko",
+      "bytes": 10722544,
+      "sha256": "0be0094f071dcbe75d12e71ba24752a2924b23684915fa76275e8e2dd304140e",
+      "recorded_vermagic": "6.6.127-android15-8-gee206ffe8752-ab16254410-4k SMP preempt mod_unload modversions aarch64"
+    },
+    {
+      "name": "bcmdhd4390.ko",
+      "bytes": 10659824,
+      "sha256": "0f1f55aaa8a65813a157f298a91cd1fe6cee07ca752451955ceb068102edd10e",
+      "recorded_vermagic": "6.6.127-android15-8-gee206ffe8752-ab16254410-4k SMP preempt mod_unload modversions aarch64"
+    }
+  ],
+  "authored_dependency_facts": {
+    "bcmdhd4383.ko": [
+      "google-pcie.ko",
+      "cfg80211.ko",
+      "rfkill.ko"
+    ],
+    "bcmdhd4390.ko": [
+      "google-pcie.ko",
+      "cfg80211.ko",
+      "rfkill.ko"
+    ],
+    "cfg80211.ko": [
+      "rfkill.ko"
+    ],
+    "mac80211.ko": [
+      "libarc4.ko",
+      "cfg80211.ko",
+      "rfkill.ko"
+    ]
+  },
+  "vendor_modules_load_lines": {
+    "cfg80211.ko": 16,
+    "mac80211.ko": 17,
+    "bcmdhd4383.ko": 115,
+    "bcmdhd4390.ko": 116
+  },
+  "DHD_dependency_record_lines": {
+    "bcmdhd4383.ko": 44,
+    "bcmdhd4390.ko": 86
+  },
+  "public_source_candidates": [
+    {
+      "repository": "https://android.googlesource.com/kernel/google-modules/wlan/bcmdhd/bcm4383/",
+      "correspondence_to_selected_binary_qualified": false
+    },
+    {
+      "repository": "https://android.googlesource.com/kernel/google-modules/wlan/bcmdhd/bcm4390/",
+      "correspondence_to_selected_binary_qualified": false
+    }
+  ],
+  "inputs_rehashed_unchanged": 12,
+  "no_new_extraction_or_execution": {
+    "fresh_whole_archive_download": false,
+    "fresh_AVB_verification": false,
+    "fresh_index_or_module_extraction": false,
+    "individual_module_bytes_inspected": false,
+    "module_loading": false,
+    "vendor_code_executed": false,
+    "phone_accessed": false
+  },
+  "open_gates": [
+    "Hardware selection between the cataloged DHD variants and exact DT/PCIe binding",
+    "Exact producing source revision/build manifest for selected external wireless modules",
+    "KMI/symbol-version compatibility and actual selected-profile loading",
+    "Firmware/board/calibration inputs and power/reset/rfkill/driver initialization",
+    "Actual matched-kernel nl80211 scan/event/BSS behavior, including timestamp semantics",
+    "Suspend/wake, association, credentials, IP/routing/Internet and physical device validation"
+  ],
+  "qualified_phone_models": 0
+}

@@ -6,6 +6,9 @@ after genuine refusing RED and with the unchanged consumer and full owned
 cleanup. The same binary passes a separate unavailable control. Association,
 Internet, normal Settings Wi-Fi, installed wireless
 activation and the matched Pixel backend remain open; no phone is qualified.
+The [retained Pixel WLAN catalog](native-pixel-wireless-boundary.md) identifies
+external cfg80211 and two DHD candidates; names and common interfaces do not
+qualify device selection, source/KMI, firmware initialization or another model.
 
 The [normal Settings window](native-settings-connectivity-window.md) now
 passes real touch Enable, close/relaunch with the connection preserved, and

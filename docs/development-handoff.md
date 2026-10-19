@@ -73,6 +73,11 @@ unavailable control within 156ms; cfg80211/rfkill inventory additions are
 recorded, without a zero-effects claim.
 See [wireless discovery](native-wireless-scan.md). This is no association,
 Internet, normal Settings Wi-Fi or matched Pixel wireless qualification.
+The [retained Pixel WLAN inventory](native-pixel-wireless-boundary.md) now binds
+existing config/index/catalog facts to the authenticated selected profile:
+external cfg80211 and bcmdhd4383/bcmdhd4390 candidates. Exact hardware selection,
+producing source/KMI, firmware and initialization remain open. No new extraction,
+module loading or phone execution occurs; the generic scan is not promoted.
 Keep Source/authentication/full-session Main
 and broader capture campaigns parked; authored session=None/admin facts remain
 explicit. Worker reaping is separate from remote cleanup; no implicit mutation

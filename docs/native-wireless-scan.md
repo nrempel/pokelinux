@@ -107,9 +107,10 @@ expiry, setup failure and uncertain state cannot pass this control.
 
 The matched Pixel common source exposes standard `nl80211` and vendor commands.
 That does not establish that its actual WLAN module can scan without vendor
-initialization. Existing authenticated config and module-index records must
-identify that module and its source, initialization, firmware and loading
-requirements. Generic ARM discovery qualifies no matched Google-kernel Wi-Fi
+initialization. The [retained Pixel records](native-pixel-wireless-boundary.md)
+now identify external cfg80211 and two cataloged DHD candidates. Hardware
+selection, exact producing source, initialization, firmware and loading remain
+open. Generic ARM discovery qualifies no matched Google-kernel Wi-Fi
 backend, association, credentials, suspend/wake, deployment or physical phone.
 Zero phone models are hardware-qualified.
 
