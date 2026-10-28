@@ -2440,12 +2440,17 @@ from full Source/auth/session runtime, Wi-Fi/Internet and Pixel hardware. Keep
 the broader Source/authentication and capture branches parked.
 
 The current single Messages owner now passes one installed ARM/PID1 cold boot.
-Next join its private adapter with the session app actor in the x86 VM preview,
-whose cold Source `sample_gap` failure exceeds the existing 100 ms limit.
-That Source boundary is separate from the unchanged 50 ms connectivity guard.
-Historical six-argument service/recovery and guest harnesses require their
-recorded sources/ELFs; they are not current preview launchers. A second current
-cold boot/reboot and normal Source/UI remain open.
+Its session-app join in the x86 preview remains blocked. The latest
+[backend dispatch diagnostic](native-session-x86-runtime.md#bounded-backend-dispatch-diagnostic)
+fails at `cached_sample/sample_expired` with only sequence 1 accepted, age
+110.114129 ms; earlier `sample_gap` failures remain separate. The ring records a
+completed fd 22 call and unmatched fd 25 entry; the same-epoch log maps fd 25 to
+idle. Next inspect the matched idle callbacks and normal startup authority
+boundary before selecting a repair, without inferring a hang or cause.
+Source's 100 ms limit, all consumer criteria
+and the separate 50 ms connectivity guard remain unchanged. Historical
+six-argument harnesses require their recorded sources/ELFs; a second current
+ARM boot/reboot and normal Source/UI remain open.
 
 The following Messages lock→restore work remains backlog from the qualified
 downstream actor/storage path. Continue the remaining wrong-event/attempt-deadline and

@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "evidence_class": "Native x86 KVM cold installed startup; bounded backend dispatch diagnostic only",
+  "functional_passed": false,
+  "diagnostic_repair_or_cause_qualified": false,
+  "records": {
+    "failed_execution": {"bytes": 111888, "sha256": "5edcfd0d6aebaccc295e28eb1f13d95b78927182c00cbffa1c57fbe7ef5b4811"},
+    "actual_result": {"bytes": 488346, "sha256": "d436591863751d5cd3f5536c49f8d81581344f3f198d3e4b6e21b479a0bfbc77"},
+    "boot_result": {"bytes": 11127, "sha256": "0d17789df5805c273a3fa369a94a56498a25ceaaf42832b3801492777e7fb600"},
+    "closed_ring": {"bytes": 4096, "sha256": "0e28c31b18f7cdfa93ebe842de5b19404a7b50713d5562b37168d34561192efc"},
+    "independent_observation": {"bytes": 1491, "sha256": "db8b4880f697724fd0ccd254962c35b205e9f9a9f6223d66ba1d53ca1306f9ab"},
+    "independent_decoder": {"bytes": 5003, "sha256": "78a1f0b97e19ab2c9672277c45edeabe2636fa3070a76fbfdbb659d847fcecbf"},
+    "same_epoch_Hyprland_log": {"bytes": 100866, "sha256": "315d046d526f3ee6c5c62f03700c29e5d19e9b9d4683a7d138f60296f770a560"}
+  },
+  "diagnostic_build": {
+    "single_changed_translation_unit": true,
+    "compile_export_and_custody_qualified": true,
+    "original_aggregate_passed": false,
+    "original_aggregate_reclassified": false,
+    "reporting_failure": "Old marker name and line-start parser; actual unique marker has cloud-init prefix",
+    "qualification": {"bytes": 1878, "sha256": "d8c1594f6e77c67100724e7fa33c17b4e0000968984efcc59446ac039909fc44"},
+    "Hyprland": {"bytes": 19535464, "sha256": "e6bd4a01ee16014a0b2972b3cf041e3237c09d3055d35a7b2c1dbb5a88db00f3"},
+    "SDK": {"bytes": 2590720, "sha256": "d3ffac36ab8de644e51c4003df552710ced19b2eebcd383926727688d93d5ede"},
+    "other_build_setup_failures_reclassified": false
+  },
+  "Source_rejection": {
+    "stage": "cached_sample",
+    "reason": "sample_expired",
+    "drain_ordinal": 0,
+    "sequence": 1,
+    "sampled_at_ns": 57425821999,
+    "previous_accepted": {
+      "sequence": 1,
+      "sampled_at_ns": 57425821999
+    },
+    "validated_at_boottime_ns": 57535936128,
+    "receive": null
+  },
+  "Source_limit_ns": 100000000,
+  "accepted_sample_to_expiry_validation_ns": 110114129,
+  "sequence2_accepted": false,
+  "earlier_sample_gap_epochs_reclassified": false,
+  "ring": {
+    "committed_records": 3,
+    "flags": 16,
+    "recorded_prefix_qualified": true,
+    "mapping_retired": false,
+    "complete_event_coverage_claimed": false,
+    "completed_spans": [
+      {
+        "call_ordinal": 1,
+        "fd_numeric_metadata_only": 22,
+        "enter_ns": 57425833711,
+        "normal_return_ns": 57425846635,
+        "inclusive_duration_ns": 12924,
+        "overlap_with_comparison_interval_ns": 12924
+      }
+    ],
+    "unmatched_entries": [
+      {
+        "call_ordinal": 2,
+        "enter_ns": 57425846685,
+        "fd_numeric_metadata_only": 25
+      }
+    ],
+    "uncommitted_tail_nonzero": false,
+    "same_epoch_logged_fd_roles": {
+      "22": "drm",
+      "25": "idle"
+    },
+    "unmatched_call_duration_or_hang_or_cause_qualified": false
+  },
+  "closure": {
+    "guest_boot_host_qualified": true,
+    "QEMU_actual_exit": 0,
+    "exact_container_absent_same_daemon": true,
+    "all_selected_inputs_unchanged": true
+  },
+  "normal_Source_and_all_consumer_criteria_unchanged": true,
+  "separate_connectivity_guard_ns_unchanged": 50000000,
+  "current_Messages_Settings_auth_UI_hardware_qualified": false,
+  "phone_accessed": false
+}

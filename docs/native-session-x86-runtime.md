@@ -332,6 +332,36 @@ QMP same-peer guest shutdown/EOF/QEMU0, CLI0, exact same-daemon container absenc
 and unchanged locked inputs close separately. [Root and independent receipt hashes](evidence/native-endrender-observation-provenance.json)
 retain these scopes separately from the failed full functional result.
 
+## Bounded backend dispatch diagnostic
+
+A later diagnostic builds one changed translation unit into a new Hyprland ELF
+and matching SDK. Its actual compile/export and custody qualify independently;
+the build runner's aggregate remains false because it expected an old marker
+name at line start while the actual marker has a cloud-init prefix. Earlier
+build/setup failures retain their own classifications. This is instrumentation,
+with no repair or Source/consumer criterion change.
+
+The new closed cold-startup epoch still fails before the functional groups.
+It accepts only Source sequence 1 at `57425821999` BOOTTIME ns, then records
+`cached_sample/sample_expired` at `57535936128`: age 110,114,129 ns, exceeding
+the unchanged 100 ms limit. No sequence 2 is accepted. This is a cached-sample expiry,
+separate from the earlier `validation/sample_gap` failures.
+
+The bounded ring qualifies three committed records with flags 16; its mapping
+is not retired and complete event coverage is not claimed. Call 1 on numeric
+fd 22 has entry/normal-return separation 12,924 ns. Call 2 enters on numeric fd 25
+at `57425846685` with no matched normal return in the recorded prefix. The same
+epoch's Hyprland log identifies fd 22 as DRM and fd 25 as idle. The unmatched
+entry supplies no duration, hang or cause; no exclusive driver/GPU/syscall
+attribution or diagnosis of earlier failures follows.
+
+Guest, boot and host closure, QEMU 0, exact container absence on the same daemon
+and unchanged selected inputs qualify separately from the failed functional
+result. The [curated diagnostic evidence](evidence/native-backend-dispatch-observation-provenance.json)
+binds the build, ring, independent decode and log. Normal Source's 100 ms limit,
+all consumer criteria and the separate 50 ms connectivity guard stay unchanged.
+There is no new Messages, Settings, authentication, UI or hardware qualification.
+
 ## Next integration
 
 The bounded Root9 capture separately qualifies selected syscall intervals after
