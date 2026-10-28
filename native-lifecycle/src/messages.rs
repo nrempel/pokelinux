@@ -11,14 +11,16 @@ pub enum Event {
     Complete { token: u64, packet: Vec<u8> },
     Failed { token: u64 },
 }
-/// Implementations retain occupied capacity until their actual child is reaped.
+/// Child owners retain occupied capacity until their actual child is reaped.
+/// A remote provider reports its local connection/transaction ownership; closing
+/// it does not certify retirement of children retained by the external service.
 /// The lifecycle actor checks current authority at publication, outside storage IO.
 pub trait Provider {
     /// Read lifetime incarnation; independent of incoming source identity.
     fn incarnation(&self) -> &str;
-    /// Any owned service child, including terminal children not yet reaped.
+    /// Owned local resources, including terminal children not yet reaped.
     fn occupied(&self) -> bool;
-    /// Read child ownership only; retained until actual reap.
+    /// Owned local read capacity. Direct child owners retain it until actual reap.
     fn read_occupied(&self) -> bool;
     fn busy(&self) -> bool;
     fn available(&self) -> bool;

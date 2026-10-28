@@ -597,6 +597,18 @@ impl Projector {
     }
 }
 impl Projector {
+    /// Explicit local read recovery never replaces or restarts the writer.
+    /// A cancelled reader retains its slot until this owner actually reaps it.
+    pub fn restart_read_only(&mut self) -> io::Result<()> {
+        if self.read_occupied() || self.writer_busy() {
+            return Err(io::ErrorKind::WouldBlock.into());
+        }
+        if !self.writer_available() {
+            return Err(io::ErrorKind::NotConnected.into());
+        }
+        self.reader = None;
+        self.spawn_reader()
+    }
     fn writer_available(&self) -> bool {
         self.worker.as_ref().is_some_and(|w| {
             w.ready && !w.terminal && w.child.is_some() && living(&w.alive).unwrap_or(false)

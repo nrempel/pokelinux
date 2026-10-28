@@ -92,7 +92,7 @@ impl Site {
         self.data["brightness"] =
             json!({"mode":"owner","socket":self.root.join("brightness/actor.sock")});
         if history {
-            self.data["messages"] = json!({"mode":"history","runtime":self.root.join("messages-owner"),"raw":self.root.join("raw"),"inbox":self.root.join("inbox")});
+            self.data["messages"] = json!({"mode":"owner","socket":self.root.join("messages-owner/read-provider.sock")});
         }
         self.profile(true, history);
     }
@@ -104,6 +104,19 @@ impl Site {
 }
 impl Drop for Site {
     fn drop(&mut self) {
+        // Restore fixture directory ownership after assertions. No DAC override
+        // is needed, and fixture symlinks are not followed during this pass.
+        for entry in fs::read_dir(&self.root).unwrap() {
+            let entry = entry.unwrap();
+            if entry.file_type().unwrap().is_dir() {
+                rustix::fs::chown(
+                    entry.path(),
+                    Some(rustix::process::Uid::from_raw(0)),
+                    Some(rustix::process::Gid::from_raw(0)),
+                )
+                .unwrap();
+            }
+        }
         fs::remove_dir_all(&self.root).unwrap();
     }
 }

@@ -1,0 +1,210 @@
+{
+  "schema": 1,
+  "evidence_class": "Native x86_64 host normal-daemon/private-read component; authored local history; no new VM or hardware execution",
+  "source_base_commit": "e4aef0a610402090460db76521b3f018bc636448",
+  "classification": "HOST_NORMAL_DAEMON_PRIVATE_READ_RED_GREEN_WITH_FOCUSED_CONTROLS",
+  "consumer_source": {
+    "public_path": "native-messages/tests/private_provider.rs",
+    "bytes": 10386,
+    "sha256": "77bb49719dc642a7aad69feacb993972f0a47db9a755494e9c9c2db186206c75",
+    "scope": "Frozen normal-boundary RED/GREEN Rust source; later regression/lint revisions are separate"
+  },
+  "epochs": [
+    {
+      "epoch": "normal-daemon-red",
+      "aggregate_runner_passed": true,
+      "actual_behavior_test_exit": 101,
+      "qualification": "Missing private socket after exact-history and typed Stop/wait prerequisites; actual behavior RED.",
+      "records": {
+        "receipt": {"bytes": 14993, "sha256": "3a415e39ee1846be89225303c3b625a357e41d2057aae239fb2e2cf2ca7da1e3"},
+        "result": {"bytes": 2228, "sha256": "c9f76a8ea1c3538292f5a81d43bb3bb7bf763293c99341697bc5155cd4e0490a"},
+        "actual_log": {"bytes": 858, "sha256": "df29b2027ee2f1fb43b1f596459a76f44664e52e937ee86b96fe021dbc8a5bc9"},
+        "separate_qualification": {"bytes": 699, "sha256": "7d6dc642a64305208b09d983f730799e0da7d37b339541cf59a789ebc4d114df"},
+        "source_manifest": {"bytes": 29771, "sha256": "1f9e831a85e7f7366f9d989b7fa77146ac0ccfa24b80a1e650fd03510bc3b641"}
+      },
+      "compiled_consumer_ELF": {"bytes": 13009312, "sha256": "5aebede6c92bb45040947192c9379e7298726dd3e29e688d76fda9a3488acf9d"},
+      "outer_actual_wait_PIPE_EOF": 10,
+      "inner_actual_wait_PIPE_EOF": 2
+    },
+    {
+      "epoch": "first-green-compile-failure",
+      "aggregate_runner_passed": false,
+      "actual_behavior_test_exit": null,
+      "qualification": "Compile failure; no behavioral result.",
+      "records": {
+        "receipt": {"bytes": 12127, "sha256": "3947f4119e661bb1ac25ad8807c1778bb0817c59b4a6cb95d8253ca16220715d"},
+        "result": {"bytes": 1345, "sha256": "9283974383ea27146782e0828eb5d1d516e029819386d154471ed5797b24eab1"},
+        "actual_log": {"bytes": 78071, "sha256": "749513d12fa507a8c685e10813d747dd277d68f9e2d122f090ca7c30f405a0c7"}
+      }
+    },
+    {
+      "epoch": "normal-daemon-green",
+      "aggregate_runner_passed": true,
+      "actual_behavior_test_exit": 0,
+      "qualification": "Unchanged raw consumer passes exact history, reconnect/generation and typed Stop/waits.",
+      "records": {
+        "receipt": {"bytes": 14949, "sha256": "374896c5f8ef94119d22616ef6246195fdb29586bd6f2d4d8a3e027c90ada59d"},
+        "result": {"bytes": 2217, "sha256": "323ab95e54c6cb46a0f1b42fe727bc6f996d3b029e2b6b011131b481792eaa9b"},
+        "actual_log": {"bytes": 383, "sha256": "49d44ff1a67ec9a53e5f3deea51ceaa1355049a4802888534364349b52c02053"},
+        "separate_qualification": {"bytes": 776, "sha256": "cd45716e8ae1bb33a9024d2e201beddd70085695c09e07cede13a87e71f9e6f7"},
+        "source_manifest": {"bytes": 29222, "sha256": "3689680f58e79875f40ac84e794c5c7ac49ad4025ca502e74b8967d241df6ae1"}
+      },
+      "compiled_consumer_ELF": {"bytes": 13040480, "sha256": "51ca415833f756ca65667840c3069fd2fb246a71a146d81a3e0cf22468a3ed11"},
+      "outer_actual_wait_PIPE_EOF": 10,
+      "inner_actual_wait_PIPE_EOF": 2
+    },
+    {
+      "epoch": "restart-admission-red-with-runner-failure",
+      "aggregate_runner_passed": false,
+      "actual_behavior_test_exit": 101,
+      "qualification": "Duplicate queued Restart accepted; actual test RED, aggregate false because diagnostic parser expected different panic text.",
+      "records": {
+        "receipt": {"bytes": 12011, "sha256": "0715fffd019de02c92bbdd9e055eca45342b96935b60a9f9c8406c8259306a48"},
+        "result": {"bytes": 2483, "sha256": "9467ffaad5d259c0af8a57114b39050e6d041dce3933fbeb7a83ace7abe288be"},
+        "actual_log": {"bytes": 596, "sha256": "32f2276a637ecff7201d0d858ee0f99164988e5ab05e6d5f64c2bd326c994a82"}
+      }
+    },
+    {
+      "epoch": "focused-green",
+      "aggregate_runner_passed": true,
+      "actual_behavior_test_exit": 0,
+      "qualification": "One Restart, one SCM_RIGHTS and four actual Remote cases pass.",
+      "records": {
+        "receipt": {"bytes": 17750, "sha256": "c6446fbf63ce5a5677813028a49cba5798be1f154f05330edc6959cb5290d680"},
+        "result": {"bytes": 4916, "sha256": "06c4e99b615a69094d4173617864f34cc3784b284c65c0b586d3d0421b6349cc"},
+        "actual_log": {"bytes": 433, "sha256": "d8f4e8604b725a53df723fb04c65b01d34b86f44cd50b4f1159cdfa24caa00b4"},
+        "restart_log": {"bytes": 208, "sha256": "8f32e3728b1ca2f043dd78d1eb01359b1aed62285dcb09230ab6791d342ad111"},
+        "SCM_RIGHTS_log": {"bytes": 185, "sha256": "171e0d6758305f3b470925b5b07799cbdda08deddf8df7f48f894ff02d4ee030"}
+      },
+      "focused_test_counts": {
+        "Restart": 1,
+        "SCM_RIGHTS": 1,
+        "actual_Remote": 4
+      }
+    }
+  ],
+  "metadata_qualifications": {
+    "CONTRACT_test_sha256": "Rust consumer source hash",
+    "result_test_sha256": "Compiled test ELF hash; different object from source",
+    "GREEN_inherited_wrong_flags": [
+      "outer.functional_RED_qualified:true",
+      "inner.production_unchanged:true"
+    ],
+    "GREEN_authority": "Actual test exit0/log and separate qualification; production changed from RED",
+    "failed_epochs_retained": true
+  },
+  "implementation": "One background Projector; session Messages::Owner socket uses Remote, retaining session actor permission/Source gates and typed Stop",
+  "historical_harnesses_require_recorded_source_and_ELFs": true,
+  "current_preview_launcher_qualified": false,
+  "new_ARM_PID1_cold_boot_qualified": false,
+  "session_owner_Main_normal_Source_UI_qualified": false,
+  "incoming_SMS_qualified": false,
+  "phone_accessed": false,
+  "hardware_models_qualified": 0,
+  "next_integration": "One installed background owner plus session app actor in reproducible VM preview; separate new ARM/PID1 qualification",
+  "broad_QA_failed_epochs": [
+    {
+      "epoch": 1,
+      "aggregate_passed": false,
+      "classification": "Formatter runner supplied unsupported --offline; no behavioral RED.",
+      "receipt": {"bytes": 12736, "sha256": "db627fb862072d9862849c54a438f146204a80576d68030029c0eae12e550687"},
+      "result": {"bytes": 2526, "sha256": "7ea695ac76b216ee2b20f72e802b4770f060d9541eff64c1a300ba95d4d15601"}
+    },
+    {
+      "epoch": 2,
+      "aggregate_passed": false,
+      "classification": "Strict Owner Clippy fails a needless borrow in a test; no production behavioral RED.",
+      "receipt": {"bytes": 15433, "sha256": "415e6f0c9d6d13f1be2ec398d34d78095c15e551e6ca4f50a68dfce288e8b4d4"},
+      "result": {"bytes": 8189, "sha256": "ef4a09de7d70f8da3b9b138f288ee3c3884f9efb4f18f92a7b613d0fce342669"}
+    },
+    {
+      "epoch": 3,
+      "aggregate_passed": false,
+      "classification": "Config fixture cleanup cannot traverse a deliberately foreign-owned private directory; aggregate remains failed, no Release artifacts. Separate Messages checks pass.",
+      "receipt": {"bytes": 16511, "sha256": "601a001af2e0e7737a5899ce10b66d0104d5acc48f9097ed0f050ecfd70cd945"},
+      "result": {"bytes": 16626, "sha256": "590a980ac6d7dbbe5349680db389d4f45c68e6b0e0970f76d8abc51dac311d20"}
+    },
+    {
+      "epoch": 4,
+      "aggregate_passed": false,
+      "classification": "Missing SESSION_RUNTIME_SETUP_HELPER before actual helper execution; runner prerequisite failure, not production regression. Config15 and MessagesConfig9 pass separately.",
+      "receipt": {"bytes": 15259, "sha256": "40e8df2fef0cee75d76d28c07806b6ba1f5ead36b93d1baeea1f1c905698fea1"},
+      "result": {"bytes": 9366, "sha256": "008f61a6d751aa4af3553b59ee45d93fc402f21dcfbbbf92ed8e82809e57e00b"}
+    }
+  ],
+  "closed_validation_scopes": {
+    "epoch3_separate_passes_with_aggregate_failed": {
+      "formatting_and_strict_Messages_Owner_Clippy": true,
+      "Messages_tests": {
+        "unit": 2,
+        "projection": 9,
+        "raw_consumer": 1,
+        "actual_Remote": 5,
+        "direct_worker": 3
+      },
+      "logs": {
+        "unit": {"bytes": 3013, "sha256": "917b3d862f8327fcd8320e2418e377af8c44ab5e2632c92cd83c7ee6220abba2"},
+        "projection": {"bytes": 1054, "sha256": "9e14d572a39c83c4688b4c753a2d7bf55b8e83d4fbba4246ffb3b64c9102c57a"},
+        "raw_consumer": {"bytes": 617, "sha256": "9f12ba2d66eea8771bd717f0032ba95efe4b6ab6e616c505dba4faf79cd8b275"},
+        "actual_Remote": {"bytes": 734, "sha256": "c5e1c7541a2adcf63d8cba768dc5d030c54f6e2463e01798ccbded17739d4ba5"},
+        "direct_worker": {"bytes": 1079, "sha256": "e851ae01665168607dc2dc03f4161d4e40a4175b082dc70caadd3435002ed163"}
+      }
+    },
+    "epoch4_separate_passes_with_aggregate_failed": {
+      "Config_tests": 15,
+      "formatting_and_strict_Owner_Clippy": true,
+      "Config_log": {"bytes": 4131, "sha256": "c00f5814da27a12ff8cb6123b84ee0f8b5887cdf4fba054df8c4fa9dcfe18b68"}
+    },
+    "epoch5_configuration_and_build_completion": {
+      "passed": true,
+      "configuration_tests": {
+        "Messages": 10,
+        "brightness": 4,
+        "connectivity": 4
+      },
+      "same_selected_source_as_epoch4": true,
+      "normal_Release_ELFs": 12,
+      "outer_actual_wait_merged_PIPE_EOF": 10,
+      "inner_actual_wait_merged_PIPE_EOF": 10,
+      "same_daemon_exact_container_removal_empty_cleanup": true,
+      "records": {
+        "receipt": {"bytes": 28598, "sha256": "2ec8ba4f753be7eec83d78b0453e60eea317ebb9f06c6aa9de845a6f8210631a"},
+        "result": {"bytes": 15070, "sha256": "0984a026c3473dad553f19767b34d966ff67ca13fdad1b980d7e064e6d28a579"},
+        "source_manifest": {"bytes": 29326, "sha256": "fb32a7dad2f1b8501ed891858bbdc678678b55b4da09bf18888f01107a94be5b"},
+        "Messages_config": {"bytes": 1284, "sha256": "45f2d8a38fe6498000f65f186110bf21b502f8ce470f57787c01887cd7a7aa3d"},
+        "brightness_config": {"bytes": 680, "sha256": "b6229aeffc9ec70114ad1f4c2ffc2780d256245e9d4ff8212dc0eb48d4e916fb"},
+        "connectivity_config": {"bytes": 6418, "sha256": "06121968b4c061cd708ead22d8dba150c442ae8ede26f8487b4d4e08bd3491fb"}
+      }
+    }
+  },
+  "missing_provider_setup_regression": {
+    "original_error": "NotFound",
+    "Source_children": "ECHILD",
+    "provider_absent": true,
+    "session_databases_not_created": true,
+    "actual_helper_wait_exit": 0,
+    "original_parent_cutoff_ns": 4000000000,
+    "numeric_Source_child_exit_exported": false,
+    "successful_normal_Main_Source_UI_qualified": false
+  },
+  "normal_release_artifacts": {
+    "messages-service-x86_64-unknown-linux-gnu": {"bytes": 3759560, "sha256": "3e4a48f6b1616d2aee64b3d246cdc3c5a149804e8ed32470b17fa1682395ce7b", "ELF_machine": 62, "features": [], "opt_level": "3"},
+    "messages-stop-x86_64-unknown-linux-gnu": {"bytes": 1071816, "sha256": "815800f379481875ebef2919e38b72934a4513b6b9cc5f2b394c92fea9148b41", "ELF_machine": 62, "features": [], "opt_level": "3"},
+    "messages-launch-x86_64-unknown-linux-gnu": {"bytes": 1090216, "sha256": "4b84b4cfdc07116c0a670ae79f9588db5f44f550da7cd729259b840982b4408f", "ELF_machine": 62, "features": [], "opt_level": "3"},
+    "pokelinux-session-owner-x86_64-unknown-linux-gnu": {"bytes": 3388512, "sha256": "1a6d4649bef2c432a514f07bd0c8dc185ff49e822ed61d4c4a763b7052b41cda", "ELF_machine": 62, "features": [], "opt_level": "3"},
+    "sounds-launch-x86_64-unknown-linux-gnu": {"bytes": 1089384, "sha256": "6432bc2a2f85bb7205184ebf27dd6083ac07bbbac7c4cff1690e2d22c0ebe1bc", "ELF_machine": 62, "features": [], "opt_level": "3"},
+    "settings-launch-x86_64-unknown-linux-gnu": {"bytes": 1090064, "sha256": "e505ae62eb12b2c483bb08a30578e5d0797fad0e9d4f2b2cfbe3c6ff1ebd24e4", "ELF_machine": 62, "features": [], "opt_level": "3"},
+    "messages-service-aarch64-unknown-linux-gnu": {"bytes": 3567256, "sha256": "0d2a40ac9b2835bf2dc90236f1b8e66b3b1b85e331b30dbfa4ee44a45bf006a5", "ELF_machine": 183, "features": [], "opt_level": "3"},
+    "messages-stop-aarch64-unknown-linux-gnu": {"bytes": 1002968, "sha256": "87a4592f48897b55d84554a4452e6a6f5e793cdfa61f7f71606532bb967a9e0a", "ELF_machine": 183, "features": [], "opt_level": "3"},
+    "messages-launch-aarch64-unknown-linux-gnu": {"bytes": 1007528, "sha256": "b6bcb45c0933ee56dfc4099859b7f8c1135d2849422087186b6048b9c433e532", "ELF_machine": 183, "features": [], "opt_level": "3"},
+    "pokelinux-session-owner-aarch64-unknown-linux-gnu": {"bytes": 3267752, "sha256": "79af6a9b3f8ed18852268b0b3cfd4d528c4ab28af75f1ab2cb04e6239f599ab0", "ELF_machine": 183, "features": [], "opt_level": "3"},
+    "sounds-launch-aarch64-unknown-linux-gnu": {"bytes": 1006944, "sha256": "aea0de613ee00acd52bb828e0988be95626f3374e9367ec70d4590cf80c92851", "ELF_machine": 183, "features": [], "opt_level": "3"},
+    "settings-launch-aarch64-unknown-linux-gnu": {"bytes": 1007712, "sha256": "acd87f2b21384622b336eebab26dd960d85b79b19276394e9add4b96ac2b5879", "ELF_machine": 183, "features": [], "opt_level": "3"}
+  },
+  "ARM_Release_execution_qualified": false,
+  "current_consumer_source": {
+    "bytes": 12002,
+    "sha256": "1a8ddea6a38800ff4b8728f6d5ef7b8bc96d27d7478df79ec304836ac08d1009",
+    "scope": "Separate later raw-consumer pass; stronger post-decode cutoff check plus lint/format revisions, not byte-identical to frozen RED/GREEN source"
+  }
+}

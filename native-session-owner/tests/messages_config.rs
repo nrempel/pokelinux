@@ -74,7 +74,7 @@ impl Case {
             apps.push(profile("org.omarchy.Messages", 11010, "messages"));
         }
         let messages = if history {
-            json!({"mode":"history","runtime":root.join("projector"),"raw":root.join("raw"),"inbox":root.join("inbox")})
+            json!({"mode":"owner","socket":root.join("projector/read-provider.sock")})
         } else {
             json!({"mode":"disabled"})
         };
@@ -101,16 +101,29 @@ impl Case {
 }
 impl Drop for Case {
     fn drop(&mut self) {
+        // Restore fixture directory ownership after assertions. No DAC override
+        // is needed, and fixture symlinks are not followed during this pass.
+        for entry in fs::read_dir(&self.root).unwrap() {
+            let entry = entry.unwrap();
+            if entry.file_type().unwrap().is_dir() {
+                rustix::fs::chown(
+                    entry.path(),
+                    Some(rustix::process::Uid::from_raw(0)),
+                    Some(rustix::process::Gid::from_raw(0)),
+                )
+                .unwrap();
+            }
+        }
         fs::remove_dir_all(&self.root).unwrap();
     }
 }
 #[test]
 #[ignore = "isolated Linux root/filesystem roles"]
-fn history_selects_both_fixed_app_roles() {
+fn owner_selects_both_fixed_app_roles() {
     let c = Case::new(true);
     let selected = c
         .load()
-        .expect("installed two-role history target must be selectable");
+        .expect("installed two-role owner target must be selectable");
     assert_eq!(selected.runtime, c.root.join("runtime"));
 }
 #[test]
@@ -137,7 +150,7 @@ fn missing_mode_and_undeclared_backends_are_refused() {
 }
 #[test]
 #[ignore = "isolated Linux root/filesystem roles"]
-fn history_requires_exact_roles_and_uids() {
+fn owner_requires_exact_roles_and_uids() {
     for mutation in 0..6 {
         let mut c = Case::new(true);
         match mutation {
@@ -165,7 +178,8 @@ fn mode_and_profile_set_cannot_disagree() {
     c.config["messages"] = json!({"mode":"disabled"});
     c.denied();
     let mut c = Case::new(false);
-    c.config["messages"] = json!({"mode":"history","runtime":c.root.join("projector"),"raw":c.root.join("raw"),"inbox":c.root.join("inbox")});
+    c.config["messages"] =
+        json!({"mode":"owner","socket":c.root.join("projector/read-provider.sock")});
     c.denied();
 }
 #[test]
@@ -194,37 +208,39 @@ fn app_private_directories_cannot_cross_principals() {
 }
 #[test]
 #[ignore = "isolated Linux root/filesystem roles"]
-fn history_directories_are_existing_root_private_and_separate() {
-    for field in ["runtime", "raw", "inbox"] {
-        for mutation in 0..4 {
-            let c = Case::new(true);
-            let path = PathBuf::from(c.config["messages"][field].as_str().unwrap());
-            match mutation {
-                0 => {
-                    fs::remove_dir(&path).unwrap();
-                }
-                1 => fs::set_permissions(&path, fs::Permissions::from_mode(0o755)).unwrap(),
-                2 => rustix::fs::chown(&path, Some(rustix::process::Uid::from_raw(11010)), None)
-                    .unwrap(),
-                _ => {
-                    fs::remove_dir(&path).unwrap();
-                    symlink(c.root.join("policy"), &path).unwrap();
-                }
+fn owner_endpoint_parent_is_existing_root_private_and_separate() {
+    for mutation in 0..5 {
+        let c = Case::new(true);
+        let path = c.root.join("projector");
+        match mutation {
+            0 => fs::remove_dir(&path).unwrap(),
+            1 => fs::set_permissions(&path, fs::Permissions::from_mode(0o755)).unwrap(),
+            2 => {
+                rustix::fs::chown(&path, Some(rustix::process::Uid::from_raw(11010)), None).unwrap()
             }
-            c.denied();
+            3 => {
+                rustix::fs::chown(&path, None, Some(rustix::process::Gid::from_raw(11010))).unwrap()
+            }
+            _ => {
+                fs::remove_dir(&path).unwrap();
+                symlink(c.root.join("policy"), &path).unwrap();
+            }
         }
+        c.denied();
+    }
+    for parent in ["runtime", "policy", "display"] {
         let mut c = Case::new(true);
-        c.config["messages"][field] = json!(c.root.join("policy"));
+        c.config["messages"]["socket"] = json!(c.root.join(parent).join("read-provider.sock"));
         c.denied();
     }
     let mut c = Case::new(true);
-    c.config["messages"]["inbox"] = c.config["messages"]["raw"].clone();
+    c.config["messages"]["raw"] = json!(c.root.join("raw"));
     c.denied();
 }
 
 #[test]
-#[ignore = "isolated root; actual authored Source child and projector runtime cleanup"]
-fn returning_runtime_setup_failure_drains_projector_and_source() {
+#[ignore = "isolated root; actual authored Source child and missing private provider"]
+fn missing_private_provider_setup_failure_drains_source() {
     use pokelinux_lifecycle::boottime_ns;
     use std::process::{Child, Command, ExitStatus};
     use std::time::Duration;
@@ -284,4 +300,44 @@ fn returning_runtime_setup_failure_drains_projector_and_source() {
         std::thread::sleep(Duration::from_millis(2));
     }
     panic!("original runtime setup-error test cutoff");
+}
+
+#[test]
+#[ignore = "isolated Linux root/filesystem roles; actual Config::load"]
+fn owner_selects_private_provider_without_database_paths() {
+    let mut c = Case::new(true);
+    // The session may know only the daemon endpoint. No Projector directories
+    // or raw/inbox database paths exist in this selected target.
+    for name in ["projector", "raw", "inbox"] {
+        fs::remove_dir(c.root.join(name)).unwrap();
+    }
+    let provider = c.root.join("provider");
+    fs::create_dir(&provider).unwrap();
+    fs::set_permissions(&provider, fs::Permissions::from_mode(0o700)).unwrap();
+    c.config["messages"] = json!({
+        "mode": "owner",
+        "socket": provider.join("read-provider.sock")
+    });
+    let observed = c.load();
+    // Release the fixture's foreign-owned empty directories before asserting.
+    // CAP_CHOWN releases fixture ownership; no DAC override is used.
+    for name in [
+        "home",
+        "desktop",
+        "sounds-home",
+        "sounds-run",
+        "messages-home",
+        "messages-run",
+    ] {
+        rustix::fs::chown(
+            c.root.join(name),
+            Some(rustix::process::Uid::from_raw(0)),
+            Some(rustix::process::Gid::from_raw(0)),
+        )
+        .unwrap();
+    }
+    let selected = observed.expect(
+        "socket-only Messages owner must select both fixed apps without session database ownership",
+    );
+    assert_eq!(selected.runtime, c.root.join("runtime"));
 }

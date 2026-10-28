@@ -1,5 +1,11 @@
 # Installed ARM Messages history across cold boots
 
+The cold-boot results below apply to the earlier six-argument service and its
+separate policy actor. The current three-argument background owner and updated
+private-read probe have not yet been qualified in a new PID1/ARM cold boot.
+Host daemon/read-adapter tests are separate evidence.
+
+
 The normal production Messages service now starts automatically in two distinct
 fresh ARM boots, reconciles authored raw records and retains their exact selected
 IDs/provenance/state/body across a clean shutdown and reboot, with its app closed.
@@ -7,26 +13,24 @@ The production entry opens local history only. Incoming SMS, modem registration,
 ACK/send, notification delivery and app data-release permission remain separate
 gates. No Binder supervisor, Source substitute or physical phone is involved.
 
-## Current production composition gap
+## Current owner integration
 
-This standalone service and the graphical session owner's `Messages::History`
-each construct a Projector. They must not run writers against the same receipt
-and Inbox databases. The installed history profile enables this daemon with the
-session owner stopped; prepared app traces select the session-owned Projector
-and exclude the standalone unit. These are mutually exclusive test profiles,
-not a qualified combined phone configuration.
+The current implementation moves Projector ownership into the background daemon.
+The graphical session selects `Messages::Owner { socket }` and uses a private
+read adapter instead of opening raw/Inbox paths. Session permission and Source
+checks remain at dispatch/publication. Actual host tests cover exact history,
+local connection closure, held-reader cancellation, expiry and daemon replacement.
+Normal installed session execution and a new cold-boot run remain unqualified.
 
-The next join needs one installed daemon as sole Projector/background owner and
-a narrow private read-provider connection for the session actor. Session permission
-and Source checks remain at dispatch/publication; session cancellation or exit
-must cancel its reads without stopping the daemon. Daemon replacement must fence
-old requests, authority and cached generations. The existing daemon app endpoint
-runs a separate policy actor and is not a transparent backend for this purpose.
-This gap is separate from incoming SMS reception, which remains unqualified.
+The revised probe checks private State/Read replies against independent SQLite
+records, the sole writer/readonly processes, and PID1 Stop. It no longer asks the
+history daemon for app-policy snapshots. Its current revision is preparation for
+the next installed run, not a reassignment of the earlier passing results.
+Incoming SMS reception remains a separate unfinished integration.
 
 ## Existing boundary and actual RED
 
-The frozen [history probe](../tools/native-installed-services/messages-history-probe.py)
+The frozen [historical history probe](https://github.com/nrempel/pokelinux/blob/e4aef0a610402090460db76521b3f018bc636448/tools/native-installed-services/messages-history-probe.py)
 first checks the actual PID1 deployment. On the unchanged original353 service
 image it fails with `Installed production Messages unit must be present`, after
 real systemctl reports LoadState=not-found. Its expected-data file is absent and
@@ -39,7 +43,7 @@ before manual unit startup; it supplies no existing cold-boot Binder topology.
 This new scenario uses the production history-only entry and authored raw input,
 without describing it as new incoming reception.
 
-## Selected providers and deployment
+## Historical selected providers and deployment
 
 A fresh offline build selects current committed Rust sources and five distinct
 ARM Release artifacts. Production `messages-service`, `messages-stop` and

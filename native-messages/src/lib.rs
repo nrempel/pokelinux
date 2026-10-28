@@ -2,6 +2,7 @@
 //! lifecycle actor; this provider has no app grant, modem send/ACK or simulator.
 pub mod projection;
 pub mod protocol;
+pub mod read_service;
 pub mod worker;
 
 pub mod incoming;

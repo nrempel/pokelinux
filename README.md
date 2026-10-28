@@ -56,6 +56,8 @@ into one complete phone session.
 | Local messages | Permission-aware history, revocation, durable storage and clean-reboot persistence; synthetic incoming Binder tests are tracked separately. Carrier SMS remains open. | [Installed history](docs/native-installed-messages-history.md), [incoming test boundary](docs/native-messages-incoming.md) |
 | Radio, camera and sensors | Rust protocol, ownership and lifecycle components with original-code comparisons and synthetic IPC tests, including actual ARM kernel Binder. Complete IMS, calls and physical capture/sensors remain open. | [Radio](docs/native-radio-operator.md), [camera](docs/native-camera-service.md), [sensors](docs/native-sensors-boundary.md) |
 
+A separate [host Messages checkpoint](docs/native-messages-private-provider.md) now serves exact local history from one background owner through a private read adapter; current VM/session integration remains open.
+
 Host component tests, original-code execution, Android reference tests, ARM
 user-mode emulation, full-system VMs and physical hardware evidence are recorded
 separately. A passing component or virtual device does not qualify a phone.

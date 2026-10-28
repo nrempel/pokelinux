@@ -2,6 +2,7 @@
 """Installed production history-only Messages, no app/receiving/Source/phone claim."""
 import argparse
 from contextlib import closing
+import array
 import json
 import os
 from pathlib import Path
@@ -21,7 +22,7 @@ UNIT = 'pokelinux-messages.service'
 EXE = '/usr/libexec/pokelinux/messages-service'
 RAW = Path('/var/lib/pokelinux/receipts/receipts.sqlite3')
 INBOX = Path('/var/lib/pokelinux/inbox/inbox.sqlite3')
-ADMIN = '/run/pokelinux/messages/admin.sock'
+PROVIDER = '/run/pokelinux/messages/read-provider.sock'
 PDU = '000008915155100000006201213141510005e8329bfd06'
 MISSING = 'Installed production Messages unit must be present'
 FIELDS = 'LoadState,UnitFileState,ActiveState,SubState,MainPID,ControlGroup,ExecMainCode,ExecMainStatus,Result,InvocationID,ExecStop'
@@ -77,16 +78,62 @@ def main():
         value = dict(line.split('=', 1) for line in body.decode().splitlines() if '=' in line)
         return code, value
 
-    def call(op):
-        assert now() < until
+    def private_read(cutoff, query=None, token=1):
+        assert now() < cutoff
         with socket.socket(socket.AF_UNIX, socket.SOCK_SEQPACKET) as peer:
-            peer.settimeout(min(1, (until - now()) / 1e9))
-            peer.connect(ADMIN)
-            assert struct.unpack('3i', peer.getsockopt(socket.SOL_SOCKET, socket.SO_PEERCRED, 12)) == (int(initial['MainPID']), 0, 0)
-            peer.sendall(json.dumps({'op': op}, separators=(',', ':')).encode())
-            packet = peer.recv(8193)
-            assert len(packet) <= 8192 and now() < until
-            return json.loads(packet)
+            peer.setsockopt(socket.SOL_SOCKET, socket.SO_PASSCRED, 1)
+            peer.settimeout(max(.001, (cutoff - now()) / 1e9))
+            peer.connect(PROVIDER)
+            expected_peer = (int(initial['MainPID']), 0, 0)
+            assert struct.unpack('3i', peer.getsockopt(socket.SOL_SOCKET, socket.SO_PEERCRED, 12)) == expected_peer
+
+            def send(value):
+                assert now() < cutoff
+                peer.settimeout(max(.001, (cutoff - now()) / 1e9))
+                body = json.dumps(value, separators=(',', ':')).encode()
+                assert peer.send(body) == len(body) and now() < cutoff
+
+            def receive():
+                assert now() < cutoff
+                peer.settimeout(max(.001, (cutoff - now()) / 1e9))
+                body, controls, flags, _ = peer.recvmsg(8192, socket.CMSG_SPACE(12) + socket.CMSG_SPACE(4))
+                credentials = []
+                unexpected = False
+                for level, kind, value in controls:
+                    if level == socket.SOL_SOCKET and kind == socket.SCM_RIGHTS:
+                        fds = array.array('i')
+                        fds.frombytes(value[:len(value) - len(value) % fds.itemsize])
+                        for fd in fds:
+                            os.close(fd)
+                        unexpected = True
+                    elif level == socket.SOL_SOCKET and kind == socket.SCM_CREDENTIALS:
+                        credentials.append(struct.unpack('3i', value))
+                    else:
+                        unexpected = True
+                assert body and not flags & (socket.MSG_TRUNC | socket.MSG_CTRUNC)
+                assert not unexpected and credentials == [expected_peer]
+                value = json.loads(body)
+                assert now() < cutoff
+                assert all(not select.select([fd], [], [], 0)[0] for child, fd in alive if child == expected_peer[0])
+                return value
+
+            send({'op': 'open', 'version': 1})
+            while True:
+                state = receive()
+                assert set(state) == {'event', 'version', 'generation', 'available'}
+                assert state['event'] == 'state' and state['version'] == 1
+                if state['available'] is True:
+                    break
+            generation = state['generation']
+            assert re.fullmatch('[0-9a-f]{32}', generation)
+            if query is None:
+                return state
+            send({'op': 'read', 'version': 1, 'generation': generation,
+                  'token': token, 'until_ns': cutoff, 'query': query})
+            response = receive()
+            assert set(response) == {'event', 'version', 'generation', 'token', 'until_ns', 'page'}
+            assert (response['event'], response['version'], response['generation'], response['token'], response['until_ns']) == ('complete', 1, generation, token, cutoff)
+            return response
 
     try:
         assert os.getresuid() == os.getresgid() == (0, 0, 0)
@@ -101,6 +148,9 @@ def main():
         assert re.fullmatch('[0-9a-f]{32}', initial['InvocationID'])
         pid = int(initial['MainPID'])
         assert pid > 1 and os.readlink(f'/proc/{pid}/exe') == EXE
+        assert Path(f'/proc/{pid}/cmdline').read_bytes().split(b'\0')[:-1] == [
+            os.fsencode(EXE), b'/run/pokelinux/messages', os.fsencode(RAW.parent), os.fsencode(INBOX.parent)]
+        result['normal_three_argument_history_owner'] = True
         metadata = Path(f'/proc/{pid}/status').read_text()
         assert int(re.search(r'^PPid:\s+(\d+)$', metadata, re.M)[1]) == 1
         for field in ['Uid', 'Gid']:
@@ -113,16 +163,10 @@ def main():
         assert any(child == pid for child, _ in alive)
         assert all(not select.select([fd], [], [], 0)[0] for _, fd in alive)
         admission = min(until, now() + 10_000_000_000)
-        while True:
-            state = call('messages_status')
-            result['messages_status'] = state
-            if state.get('available') is True and state.get('busy') is False:
-                break
-            assert now() < admission, 'production history storage must become available within original readiness budget'
-            time.sleep(.01)
-        assert state['result'] == 'messages_storage' and state['occupied'] is True
-        assert state['receiving'] is False and state['incoming_failure'] is None
-        assert all(state[k] == 0 for k in ['incoming_started', 'incoming_raw_committed', 'incoming_completed', 'pending_publications'])
+        state = private_read(admission)
+        result['private_state'] = state
+        assert not Path('/run/pokelinux/messages/app.sock').exists()
+        result['standalone_app_policy_endpoint_absent'] = True
         # Check the actual sole writer and independent readonly process after
         # bootstrap, rather than inferring database ownership from final rows.
         writers = []
@@ -153,10 +197,6 @@ def main():
         main_opened = opened_files(pid)
         assert str(RAW) not in main_opened and str(INBOX) not in main_opened
         result['actual_database_owners'] = roles
-        snapshot = call('snapshot')
-        result['snapshot'] = snapshot
-        assert snapshot['result'] == 'snapshot' and snapshot['ready'] is True
-        assert snapshot['principals'] == snapshot['permits'] == 0 and snapshot['locked'] is True
         expected = json.loads(args.expected.read_text())
         assert expected['schema'] == 1 and expected['authored_seed_only'] is True
         raw = raw_rows()
@@ -169,6 +209,23 @@ def main():
         assert [r[:4] for r in inbox] == [r[:4] for r in raw]
         assert all(r[4:] == ['text', 'hello'] for r in inbox)
         assert not list(RAW.parent.glob('incoming-attempt-*'))
+        conversations = private_read(min(until, now() + 1_000_000_000),
+                                     {'query': 'conversations', 'after': None, 'limit': 8})
+        assert conversations['generation'] == state['generation']
+        page = conversations['page']
+        assert page['page'] == 'conversations' and len(page['items']) == 1
+        conversation = page['items'][0]['id']
+        assert re.fullmatch('[0-9a-f]{32}', conversation)
+        messages = private_read(min(until, now() + 1_000_000_000),
+                                {'query': 'messages', 'conversation': conversation,
+                                 'after_ordinal': 0, 'limit': 2}, token=2)
+        assert messages['generation'] == state['generation']
+        page = messages['page']
+        assert page['page'] == 'messages' and len(page['items']) == 2
+        assert [item['receipt'] for item in page['items']] == [row[0] for row in raw]
+        assert all(item['text'] == 'hello' for item in page['items'])
+        result['private_history_exact_ids_and_text'] = True
+        result['private_reader_generation'] = state['generation']
         result['raw_rows'] = raw
         result['inbox_rows'] = inbox
         result['exact_raw_ids_and_provenance_reconciled'] = True

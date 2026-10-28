@@ -1,20 +1,21 @@
-# Explicit Messages VM profile
+# Explicit Messages VM history owner
 
-Install `messages-profile.json` at `/etc/pokelinux/messages-profile.json`,
-root0:0/0644, through the finite authenticated `install-native-services` manifest.
-Select the unchanged production `pokelinux-messages.service`, default-feature
-`messages-service`/`messages-stop`, and `lifecycle-launcher`. Its normal six-argument
-entry opens local history only, with no Binder dependency or receiving selector.
-The unit creates its root-owned private state/runtime paths at startup; enable it
-while stopped during image preparation. Staging does not activate host services.
+Select the production `pokelinux-messages.service` and normal feature-empty
+`messages-service`/`messages-stop` through the finite authenticated
+`install-native-services` manifest. The daemon takes exactly three absolute
+arguments: private runtime, raw receipts directory and Inbox directory. The unit
+creates root:root0700 runtime/state directories. It owns the sole Projector and
+has no app profile, lifecycle grant store or standalone app endpoint. No Binder
+dependency or receiving selector is installed.
 
-The profile names the real normal Messages ARM app at UID11010, its six normal
-arguments and the shared installed appearance QML. In the headless history
-scenario the executable/QML are protected unlaunched dependencies. No app account,
-Wayland session, unlock, focus, permission grant or app data release follows from
-this profile. A graphical session still needs its own complete deployment and
-qualification; this test checks the production storage service with zero app
-principals and locked policy.
+The graphical session independently selects
+`{"mode":"owner","socket":"/run/pokelinux/messages/read-provider.sock"}`,
+its fixed UID11010 app profile and normal shared appearance QML. Start the daemon
+independently before that session; selection adds no service start, retry or
+permission grant. Only the daemon knows database paths. Its private root peer
+returns bounded authenticated copied history; the session actor checks current
+app permission, principal, Source and the original deadline before publication.
+Session cancellation/exit closes local reads without stopping background history.
 
 The separate `messages-seed-fixture` is built only with `isolated-fixture`, kept
 under an explicit fixture path and invoked once during disposable image
@@ -23,10 +24,9 @@ unqualified raw GSM occurrences. The production service is never built with that
 feature. Require the Inbox database to remain absent and the Messages unit
 stopped before retaining the prepared image.
 
-Two distinct subsequent cold boots must perform no seed, installation, reload,
-enable or start operation before the frozen history probe. The first boot must
-reconcile the exact raw IDs/provenance into two plain-text records; the next must
-retain those IDs and contents. Both require actual writer/readonly database
-ownership, no incoming operation/counter, native PID1 Stop completion and empty
-cgroups. This is clean-shutdown/reboot persistence, not power-loss, incoming SMS,
-app-read or carrier evidence.
+The current installed-service probe uses private State/Read and normal typed Stop.
+Its current three-argument successor has not been run through PID1 or ARM. The
+earlier two cold boots qualify the historical six-argument service and its pinned
+probe only; see [the historical result](../../../docs/native-installed-messages-history.md).
+Host daemon/Remote components do not establish installed boot, app/window,
+incoming SMS, power-loss recovery or physical hardware behavior.

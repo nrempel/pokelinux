@@ -2,7 +2,7 @@
 use crate::{Compositor, MAX_SOURCE_STARTUP_NS, SourceOwner, config::Config};
 use pokelinux_lifecycle::messages::Provider as _;
 use pokelinux_lifecycle::{boottime_ns, session::Provider};
-use pokelinux_messages::worker::Projector;
+use pokelinux_messages::read_service::Remote;
 use std::{io, time::Duration};
 pub const CLEANUP_BUDGET_NS: u64 = 2_000_000_000;
 /// Every caller retains the same SourceOwner through successful actual reap.
@@ -81,21 +81,11 @@ pub fn run(config: &Config) -> io::Result<()> {
         },
         until,
     )?;
-    // Retain the optional history provider outside every subsequent fallible setup.
+    // Retain the optional read connection outside subsequent fallible setup.
     let mut messages = None;
     let outcome = (|| {
-        if let crate::config::Messages::History {
-            runtime,
-            raw,
-            inbox,
-        } = &config.messages
-        {
-            messages = Some(Projector::spawn(
-                runtime,
-                raw,
-                inbox,
-                &std::env::current_exe()?,
-            )?);
+        if let crate::config::Messages::Owner { socket } = &config.messages {
+            messages = Some(Remote::connect(socket)?);
         }
         let mut display = crate::display::Factory::new(
             config.display_parent.clone(),
@@ -153,7 +143,8 @@ pub fn run(config: &Config) -> io::Result<()> {
     // The actor drains its Source internally on normal/loop-error completion.
     // This outer original budget also covers setup errors before that loop.
     let cleanup_until = boottime_ns().saturating_add(CLEANUP_BUDGET_NS);
-    // Fence both providers before either drain spends the shared original cutoff.
+    // Fence local reads and Source before the original shared cleanup cutoff.
+    // Remote closure does not stop the daemon or certify its reader retirement.
     source.stop();
     if let Some(p) = &mut messages {
         p.stop();

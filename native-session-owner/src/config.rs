@@ -30,11 +30,7 @@ pub struct Config {
 #[serde(tag = "mode", rename_all = "snake_case", deny_unknown_fields)]
 pub enum Messages {
     Disabled,
-    History {
-        runtime: PathBuf,
-        raw: PathBuf,
-        inbox: PathBuf,
-    },
+    Owner { socket: PathBuf },
 }
 /// Explicit installed owner selection. Omission is rejected; no app capability
 /// or backend/device selection is accepted through this session configuration.
@@ -177,29 +173,31 @@ impl Config {
             }
             rustix::net::SocketAddrUnix::new(socket)?;
         }
-        if let Messages::History {
-            runtime,
-            raw,
-            inbox,
-        } = &self.messages
-        {
-            let mut identities = std::collections::BTreeSet::new();
-            for path in [
-                &self.runtime,
-                &self.policy,
-                &self.display_parent,
-                runtime,
-                raw,
-                inbox,
-            ] {
-                if [runtime, raw, inbox].contains(&path) {
-                    private_directory(path, 0)?;
-                }
-                let m = fs::symlink_metadata(path)?;
-                if !identities.insert((m.dev(), m.ino())) {
+        if let Messages::Owner { socket } = &self.messages {
+            absolute(socket)?;
+            let parent = socket.parent().ok_or(io::ErrorKind::InvalidInput)?;
+            private_directory(parent, 0)?;
+            let owner = fs::symlink_metadata(parent)?;
+            if owner.gid() != 0
+                || [
+                    &self.audio_socket,
+                    &self.appearance_socket,
+                    &self.wayland,
+                    &self.runtime.join("app.sock"),
+                ]
+                .contains(&socket)
+                || matches!(&self.brightness, Brightness::Owner { socket: other } if other == socket)
+                || matches!(&self.connectivity, Connectivity::Owner { socket: other } if other == socket)
+            {
+                return Err(io::ErrorKind::PermissionDenied.into());
+            }
+            for path in [&self.runtime, &self.policy, &self.display_parent] {
+                let own = fs::symlink_metadata(path)?;
+                if (own.dev(), own.ino()) == (owner.dev(), owner.ino()) {
                     return Err(io::ErrorKind::PermissionDenied.into());
                 }
             }
+            rustix::net::SocketAddrUnix::new(socket)?;
         }
         installed_file(&self.profiles)?;
         installed_file(&self.compositor_config)?;
@@ -249,7 +247,7 @@ impl Config {
             return Err(io::ErrorKind::PermissionDenied.into());
         }
         let profiles = pokelinux_lifecycle::service::profile(&self.profiles)?;
-        let history = matches!(&self.messages, Messages::History { .. });
+        let history = matches!(&self.messages, Messages::Owner { .. });
         let settings = matches!(&self.brightness, Brightness::Owner { .. })
             || matches!(&self.connectivity, Connectivity::Owner { .. });
         if profiles.apps.len() != 1 + usize::from(history) + usize::from(settings) {

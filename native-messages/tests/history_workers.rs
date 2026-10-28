@@ -1,4 +1,4 @@
-//! Default production executable's real credentialed local history helpers.
+//! Normal production executable's real credentialed local history helpers.
 //! These storage-child tests do not establish composed-owner GUI or app authority.
 use pokelinux_lifecycle::{
     boottime_ns,
@@ -82,7 +82,7 @@ impl Case {
                 &self.root.join("runtime"),
                 &self.root.join("raw"),
                 &self.root.join("inbox"),
-                std::path::Path::new(env!("CARGO_BIN_EXE_pokelinux-session-owner")),
+                std::path::Path::new(env!("CARGO_BIN_EXE_messages-service")),
             )
             .unwrap(),
         );
@@ -103,7 +103,7 @@ impl Case {
             tick();
         }
         panic!(
-            "default owner did not serve history worker entries before original readiness cutoff"
+            "normal daemon did not serve history worker entries before original readiness cutoff"
         );
     }
     fn query(&mut self, q: Value) -> Value {
@@ -157,7 +157,7 @@ impl Drop for Case {
 }
 #[test]
 #[ignore = "isolated root credentialed child IPC"]
-fn default_owner_reads_exact_committed_history_with_independent_reader() {
+fn normal_daemon_reads_exact_committed_history_with_independent_reader() {
     let mut c = Case::new(true);
     c.spawn();
     c.ready();

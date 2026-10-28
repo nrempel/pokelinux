@@ -718,10 +718,19 @@ whole-stack Stop. This is a virtual-backend deployment slice: full playback
 admission, production PCM isolation, physical audio, suspend and phone-session
 integration remain required below. No completed row follows from this pass.
 
-The [production Messages history service](native-installed-messages-history.md)
-now qualifies automatic startup, authored raw reconciliation, exact selected
-record persistence across two fresh ARM boots and native Stop. Production receive,
-ACK/send, notifications, app read authority, power-loss and hardware remain open.
+The earlier [production Messages history service](native-installed-messages-history.md)
+qualifies automatic startup, authored raw reconciliation, exact selected record
+persistence across two fresh ARM boots and native Stop for its recorded service.
+The current [private Messages owner](native-messages-private-provider.md) instead
+keeps one background Projector and a session Remote read adapter. A real normal
+daemon RED→GREEN and focused host controls pass. Separate closed formatting/
+strict Clippy, Messages checks and Config 15 scopes accompany the later
+Messages/brightness/connectivity configuration 10/4/4 pass and 12 normal host/ARM
+Release builds; failed aggregates retain their classifications. Missing-provider
+setup qualifies failure cleanup only. Next integrate that selection with the
+installed background owner and session app actor in the reproducible VM preview,
+then qualify a new ARM/PID1 boot. Current normal Source/UI/session behavior,
+production receive, ACK/send, notifications, power-loss and hardware remain open.
 
 The [connectivity-control foundation](native-connectivity-control.md) now passes
 host owner-policy and actual virtual-pair creation tests after compiled RED.

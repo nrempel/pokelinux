@@ -301,17 +301,15 @@ from buffered tone precedes the bound on queued PCM; clocks and oracles stay fix
 This is a host unshown-component result; ARM live control, normal windows, physical
 audio and all phone gates remain open. No phone access is authorized.
 
-The private Messages read-provider remains parked at compiled assertion RED,
-with no qualified GREEN or deployed join; do not retry it. Normal ARM windows,
-cold graphical startup and all matched-device gates remain open.
-
-Messages currently has two alternative Projector owners: standalone daemon and
-session History. Never run both against one database. Installed headless and
-prepared app profiles remain exclusive and do not qualify combined phone
-composition. The parked [private read-provider join](native-installed-messages-history.md#current-production-composition-gap)
-would let one daemon own background history while the session actor retains permission
-checks and cancels only its own reads. Do not forward the old app endpoint or
-translate session shutdown into daemon Stop.
+The earlier private read-provider compiled assertion RED remains historical.
+The current [private Messages owner](native-messages-private-provider.md) now
+passes a separate actual normal-daemon RED→GREEN and focused host controls.
+One background Projector serves the session's Remote adapter; the session actor
+retains permission/Source checks and cancels only its own reads. Session shutdown
+closes that local connection without stopping the daemon. The
+[current owner integration](native-installed-messages-history.md#current-owner-integration)
+still needs a new installed run. Normal ARM windows, cold graphical startup,
+normal Source/UI and all matched-device gates remain open.
 
 The [native Rust brightness service](native-brightness.md) now joins its real Rust client,
 owned worker and authored attribute backend in six process/socket cases. Unchanged
@@ -383,8 +381,8 @@ refusal remains separate. No Source, grant, playback/PCM or phone evidence is
 inferred. Keep the blocked authentication and expired-Source branches parked;
 next work should advance a bounded native phone-service path.
 
-The [production Messages history service](native-installed-messages-history.md)
-now passes missing-deployment RED→explicit installation and two fresh ARM boots.
+The earlier [production Messages history service](native-installed-messages-history.md)
+passes missing-deployment RED→explicit installation and two fresh ARM boots.
 Fresh normal-feature current service/Stop/launcher providers are separate from
 the isolated seed. Preparation creates only two authored unqualified raw records
 and never starts Messages; cold1 reconciles exact selected IDs/provenance into
@@ -394,6 +392,19 @@ locked/zero-principal policy and no receiving/counters. Both PID1 Main/ExecStop0
 and all three VM closures pass;353/Qt50 and original owners remain unchanged.
 This is local history, not incoming SMS, notifications, app reads or a complete
 phone session. The earlier Qt app remains an unlaunched dependency.
+
+The current [private Messages owner](native-messages-private-provider.md) separates
+one background Projector from the session's Remote read adapter. A real normal
+daemon missing-socket RED and unchanged-consumer GREEN close typed Stop and
+actual waits. Separate closed QA scopes pass formatting/strict Clippy; Messages
+unit 2, projection 9, raw consumer 1, Remote 5 and direct-worker 3; Config 15; and
+later Messages/brightness/connectivity configuration 10/4/4. The completing cohort builds 12
+normal host/ARM Release ELFs with optimization 3 and no optional features.
+Missing-provider setup cleanup preserves NotFound, Source ECHILD and no session
+databases, with actual helper exit 0; it is no successful normal startup.
+The first GREEN compile failure, restart parser fault and four failed broad-QA
+aggregates remain preserved. This is host component/build evidence; the earlier
+ARM/PID1 boots do not qualify the changed daemon or normal Source/UI/session.
 
 The [current language boundary](runtime-language-decision.md#current-language-boundary)
 retains upstream Hyprland/Aquamarine/Qt C++ scene, protocol and native operations.
@@ -2420,6 +2431,11 @@ test; discovery and retained Pixel inventory do not qualify that work as prepare
 or as a passed prerequisite. The x86 window/packet/capture result remains separate
 from full Source/auth/session runtime, Wi-Fi/Internet and Pixel hardware. Keep
 the broader Source/authentication and capture branches parked.
+
+Next join the current private Messages adapter to one installed background owner
+and the session app actor in the reproducible VM preview. Historical six-argument
+service/recovery and guest harnesses require their recorded sources/ELFs; they
+are not current preview launchers. Qualify the new ARM/PID1 cold boot separately.
 
 The following Messages lock→restore work remains backlog from the qualified
 downstream actor/storage path. Continue the remaining wrong-event/attempt-deadline and
