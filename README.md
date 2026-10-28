@@ -64,7 +64,9 @@ Omarchy background and bar with healthy session updates. It stops at unavailable
 appearance before app launch; complete graphical startup remains open.
 A new [normal theme provisioner](docs/native-omarchy-theme-provisioning.md) passes
 fresh-home tests against the real appearance service; its graphical integration
-is the next check. [Startup change](docs/native-source-establishment.md).
+is the next check. The [Rust shell launcher](docs/native-presentation-environment.md)
+also passes process-level display handoff and same-PID exec tests; combined
+PID1/Qt startup is still pending. [Startup change](docs/native-source-establishment.md).
 
 Host component tests, original-code execution, Android reference tests, ARM
 user-mode emulation, full-system VMs and physical hardware evidence are recorded

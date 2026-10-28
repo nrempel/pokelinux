@@ -1,0 +1,163 @@
+{
+  "schema": 1,
+  "scope": "selected UID1000 wayland-1 presentation helper; actual native host processes and synthetic socket/native exec fixtures, not a new PID1/Qt/VM result",
+  "product_red": {
+    "classification": "closed cold normal-session functional failure; genuine shell journal observed missing HYPRLAND_INSTANCE_SIGNATURE, not a sole-cause claim",
+    "execution_record": {
+      "bytes": 114234,
+      "sha256": "e35303b1fef3f292f9a2436bc4725ba99026f93342300474c0e882d66a1bfc9a"
+    },
+    "result_record": {
+      "bytes": 501588,
+      "sha256": "6bbaaf999f60e19019a761cbdf821c47c9a4dad7604131a7804d2bf36a2c80ef"
+    },
+    "shell_journal_record": {
+      "bytes": 41785,
+      "sha256": "e09b8c65ceb92431d461eba25c537517ae9a32c9aae47b21e1aa4355246365fc"
+    },
+    "functional_passed": false,
+    "nested_closure_qualified": true,
+    "same_daemon_and_exact_container_absent": true
+  },
+  "initial_compile_failure": {
+    "classification": "Rustix socket API compile error before behavioral execution; not a functional RED",
+    "receipt": {
+      "bytes": 16567,
+      "sha256": "09c992b21412dbefa377e64b0af1e23fe27970d249dcb2dfe19b570e24e96c83"
+    },
+    "result": {
+      "bytes": 43139,
+      "sha256": "ca06109a7d0e7cf54d3ae7215c9cba5a61f80519d4af0fffcfb236166c12bc62"
+    }
+  },
+  "original_ten_process_controls": {
+    "receipt": {
+      "bytes": 50552,
+      "sha256": "23fa45944a1ffd9df08e038e1174f3f3c0af042b1015462e89050ecb8afb396c"
+    },
+    "result": {
+      "bytes": 36940,
+      "sha256": "92d2071bf18000ee82617b876037ac0a8726aa411c500b7e75c412e33d55f57c"
+    },
+    "actual_cases_passed": 10,
+    "helper_ELF": {
+      "bytes": 520176,
+      "sha256": "c7221afe8c9b057ddcb6f857255d13a1d1d3a67c9474a1ec3be79d317c0b026c",
+      "features": [],
+      "opt_level": "3",
+      "ELF_machine": 62
+    }
+  },
+  "launch_consumer_red": {
+    "receipt": {
+      "bytes": 49423,
+      "sha256": "a8ee33cd3b06427dbe79a5048ca5b447dc4aefa9533c14efa4425de5750d6ac3"
+    },
+    "result": {
+      "bytes": 35775,
+      "sha256": "21f13b8713bedc63f098a4ac82395b639c81ec106ef70e2305b8ef48f4b2f3de"
+    },
+    "classification": "actual desired exec consumer RED: unchanged qualified helper refuses new launch mode before target execution",
+    "actual_test_exit": 101,
+    "actual_helper_exit": 1,
+    "functional_consumer_passed": false,
+    "unchanged_qualified_helper_sha256": "c7221afe8c9b057ddcb6f857255d13a1d1d3a67c9474a1ec3be79d317c0b026c"
+  },
+  "launch_consumer_and_regression_green": {
+    "receipt": {
+      "bytes": 52187,
+      "sha256": "b879067b820a6636c2d5e0ec536bdb4ba64d802eaafae1e031e857cfe30086ec"
+    },
+    "result": {
+      "bytes": 38350,
+      "sha256": "72fc333cd955b2cda673369ee87225ea7fb13118212955272319d6f03af86e97"
+    },
+    "source_input_manifest": {
+      "bytes": 31382,
+      "sha256": "5c10293646b1611979962fca8d360aa8afd20cf3e1bdd1d94e6b24a1eb2bf299"
+    },
+    "actual_cases_passed": 11,
+    "actual_case_log": {
+      "bytes": 4585,
+      "sha256": "f60ff2b298c5b54962abc19cb09de53941e60a5588b51bd42e25e00ebd44fc73"
+    },
+    "strict_clippy_exit": 0,
+    "normal_release_build_exit": 0,
+    "helper_ELF": {
+      "bytes": 560888,
+      "sha256": "8bab91fd79d54f96fe18af58053d7c907d5417c0ddfca5e8517171db791c6301",
+      "features": [],
+      "opt_level": "3",
+      "ELF_machine": 62
+    },
+    "input_pins_unchanged": 277,
+    "outer_actual_wait_and_PIPE_EOF": 10,
+    "inner_actual_wait_and_PIPE_EOF": 5,
+    "cleanup_errors": [],
+    "same_daemon_and_exact_container_absent": true
+  },
+  "same_frozen_exec_consumer_sha256": "4bee93707bb4389fe4566a2d15a0d77eef6b5492ffab8e9bace869629fa18e8c",
+  "same_native_exec_fixture_ELF_sha256": "efe2e8c6775a7f486805053a534593f6da30389c482fb3b6f693ffc4bfe85745",
+  "executed_repository_source_files": {
+    "native-session-owner/src/bin/presentation-environment.rs": {
+      "bytes": 347,
+      "sha256": "3da09bb2c7905d30ae2c227b4fa469fc0180d5d68011d41002a7d5fddebd112e"
+    },
+    "native-session-owner/src/presentation_environment.rs": {
+      "bytes": 10825,
+      "sha256": "2ad707ae161efa860b8c65fdf7d0d3d14cd8470bbad0db59f754011f6b47aba6"
+    },
+    "native-session-owner/tests/presentation_environment.rs": {
+      "bytes": 11415,
+      "sha256": "4bee93707bb4389fe4566a2d15a0d77eef6b5492ffab8e9bace869629fa18e8c"
+    },
+    "native-session-owner/tests/support/presentation-peer.py": {
+      "bytes": 1348,
+      "sha256": "f457b36fb4f2d8f8b774a99dd51e9e3f1070e8b8720ebb1f7ce4de5f243202a4"
+    },
+    "native-session-owner/tests/support/presentation-shell.rs": {
+      "bytes": 671,
+      "sha256": "ca89f1ecbba0dfc9ca3519f99b6abaa442d301d2a6ce92e20af2feb18493b9d8"
+    }
+  },
+  "packaging_not_PID1_executed": {
+    "native-session-owner/packaging/presentation/normal-presentation.lua": {
+      "bytes": 259,
+      "sha256": "e02ac609a0b9c870d57cce0496260dc704891a0193fc343d36d528086f09a6af"
+    },
+    "native-session-owner/packaging/presentation/owner-presentation.conf": {
+      "bytes": 226,
+      "sha256": "d57caa5fca118a34ef74a1b53cf60a93fa5947d195d01242cc4944cb04bca0b7"
+    },
+    "native-session-owner/packaging/presentation/shell-presentation.conf": {
+      "bytes": 237,
+      "sha256": "4554b96537c42b23f7e56448c56f3e89598fe6b8caa8dbfdbbd814108a0d2278"
+    }
+  },
+  "interface": {
+    "runtime_file": "/run/user/1000/pokelinux-presentation.env",
+    "allowed_keys": [
+      "WAYLAND_DISPLAY",
+      "HYPRLAND_INSTANCE_SIGNATURE"
+    ],
+    "fixed_display": "wayland-1",
+    "wait_CLOCK_BOOTTIME_ns": 5000000000,
+    "EnvironmentFile_used": false,
+    "launch_exec_fixed_image": "/usr/bin/quickshell",
+    "launch_exec_fixed_arguments": [
+      "-n",
+      "-p",
+      "/usr/share/pokelinux/omarchy/shell"
+    ],
+    "exec_same_PID_verified_with_native_fixture": true,
+    "Source_authority_changed": false
+  },
+  "not_qualified": [
+    "new PID1 integration",
+    "genuine Quickshell reconnection",
+    "Sounds functional consumer",
+    "graphical output",
+    "ARM execution",
+    "physical hardware"
+  ]
+}

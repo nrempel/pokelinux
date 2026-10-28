@@ -2459,7 +2459,12 @@ cleanup closes. Genuine [theme provisioning](native-omarchy-theme-provisioning.m
 the unchanged fresh-home RED→GREEN consumer against the real appearance service,
 plus preservation and partial-selection refusal controls. Integrate its normal
 oneshot/dependency rows, verify actual PID1 failure propagation, and resolve the
-separate shell namespace/environment gaps before the next full cold qualification. The Messages
+separate shell namespace/environment gaps before the next full cold qualification.
+The [presentation helper](native-presentation-environment.md) now passes eleven
+actual process controls, including unchanged-consumer exec RED→GREEN. It validates
+as UID1000 and execs fixed Quickshell in the same PID; no EnvironmentFile is used.
+Root has prepared the 54-file namespace correction separately. Neither component
+qualifies the pending combined PID1/Qt cold run. The Messages
 app join remains subsequent work.
 Source's 100 ms limit, all consumer criteria
 and the separate 50 ms connectivity guard remain unchanged. Historical
