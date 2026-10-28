@@ -52,7 +52,7 @@ current loaders and the exact three production app files now pass in a separate
 generic ARM preparation. The first missing-bootentry setup failure is preserved;
 the corrected cohort has 63 direct waits/stdout EOFs and exports its layer after
 actual QEMU closure; no normal app/compositor/backend executes during preparation.
-Four later ARM window attempts remain failed. The first two stop at an existing
+Six later ARM window attempts remain failed. The first two stop at an existing
 appearance endpoint and a late denial child. The third passes the minimal denial
 probe under its original 1s bound but fails the retained-worker guard. Its mapped
 window is sampled after cancellation; mapping-versus-guard ordering and the
@@ -82,9 +82,36 @@ controls close one actual wait/PIPE EOF under the original1s cutoff. Baseline QA
 passes35 active host tests; candidate QA reruns10 connectivity tests with3 ignored,
 while unchanged shared QA remains baseline evidence. Four normal host/ARM Release
 ELFs build without executing during either build. No wire, guard, cutoff, retry
-or retirement changes. The next selected step is one ARM stage diagnostic using
-the contextual worker; ARM cause attribution and the complete window/packet
-lifecycle remain open.
+or retirement changes. A separate fifth actual ARM attempt now observes
+`ReceiveCommand`/`TimedOut`: detection is 26.972719 ms past the recorded cutoff,
+with a derived 76.972719 ms envelope-origin span. This supplies no syscall-duration,
+pre/post-guard or CPU-throttling cause, and no stage attribution for attempts
+three/four. Whole-old-image verification and one current-worker install/loader
+pass before the same partial Enable/Completed/IP/first-packet behavior. The final
+worker wait is signal 9/code null; first app wait 0 follows cancel. Main 0/driver
+101, controller custody true and guest closure false remain distinct, despite
+eventual ECHILD/one adopted exit 0. All 53 scope waits/PIPE EOFs, QEMU/Xvfb 0 and
+container 1/removal/absence are recorded with unchanged inputs. Full background,
+reopen and Disable remain failed. Executed resources are guest 6 CPUs/6144 MiB,
+outer 8 CPUs/10 GiB.
+
+The separate sixth 16-guest/16-outer-CPU cohort closes as another failed case,
+with guest 6144 MiB/outer 10 GiB and unchanged binaries, deadlines and guards.
+It fails before Enable-ready, capture, touch or packet qualification; mapping is
+sampled after cancel. `ReceiveCommand`/`TimedOut` records original cutoff
+`42391806186` and detection `42436693683` BOOTTIME ns: 44.887497 ms late and a
+derived 94.887497 ms span from the 50 ms envelope origin. No syscall, pre/post
+guard, scheduling or CPU-throttling cause is qualified. The non-atomic pre-cancel
+sample has an empty child vector, ready worker pidfd and Main live. Final actual
+waits record worker natural exit 1, Main 0/driver 101 and first app signal 9/code
+null after cancel. Controller custody remains true and guest closure false,
+despite eventual ECHILD/one adopted exit 0. All 52 waits/PIPE EOFs comprise
+13 host, four boot, 29 guest and six controller observations. QEMU/Xvfb 0,
+container 1/removal/absence on the same daemon and independently rehashed
+unchanged inputs remain separate. No production behavior RED/GREEN, earlier
+cause or CPU repair is claimed. Repeated graphical ARM resource campaigns are
+parked with the production 50 ms guard unchanged. See the
+[sixth failed attempt](native-settings-connectivity-window.md#sixth-attempt-cpu16-receivecommand-failure).
 
 A separate [disabled connectivity bundle](../native-connectivity-control/packaging/README.md)
 now passes actual Make/installer staging of exactly two current ARM provider
@@ -2381,11 +2408,18 @@ See `native-session-freshness-chain.md` and its publication provenance.
 
 ## Next work
 
-Current critical path: advance the qualified normal Settings connectivity tracer
-to one installed generic ARM cohort with current Rust services and app artifacts.
-The x86 window/packet/capture result remains separate from full Source/auth/session
-runtime, Wi-Fi/Internet and Pixel hardware. Keep the broader Source/authentication
-and capture branches parked.
+Current product priority: deliver a reproducible VM preview with a documented
+launch path at the Pixel 10 display profile. Six ARM Settings connectivity epochs
+remain failed; the sixth 16-guest/16-outer-CPU run closes with ReceiveCommand
+context before Enable-ready, capture, touch or packets. Repeated graphical ARM
+resource campaigns are parked with the production 50 ms guard unchanged. The
+fifth epoch's partial Enable/IP/first-packet result and the sixth epoch's natural
+worker exit 1 remain separate, with no CPU cause or repair qualified.
+Headless wireless association still requires implementation and a behavioral
+test; discovery and retained Pixel inventory do not qualify that work as prepared
+or as a passed prerequisite. The x86 window/packet/capture result remains separate
+from full Source/auth/session runtime, Wi-Fi/Internet and Pixel hardware. Keep
+the broader Source/authentication and capture branches parked.
 
 The following Messages lock→restore work remains backlog from the qualified
 downstream actor/storage path. Continue the remaining wrong-event/attempt-deadline and

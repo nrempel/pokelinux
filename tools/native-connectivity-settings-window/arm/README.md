@@ -58,3 +58,35 @@ and owned guest/container envelope of its recorded cohort. It is original test
 infrastructure, not a public full VM launcher, production permission service or
 successful ARM lifecycle. The original frame and curated hashes are recorded in
 [the partial failed trace](../../../docs/native-settings-connectivity-window.md#fourth-attempt-partial-touch-and-packets).
+
+`worker_context_install.py` is the exact 2,388-byte helper executed in the fifth
+and sixth failed ARM window cohorts (SHA256
+`98006a00f2143f34d4c13feb60c8079633accebd9072f5714ae2285af92f975f`).
+After unchanged full `arm_prepared.verify`, it checks guest root, protected
+ancestry and the old worker hash; authenticates one qualified ARM source and
+Root build/host-CLI proofs; uses the existing owned `run` for `/usr/bin/install`
+at the same fixture path; verifies hash/mode 0755 and native `ldd -r`; and updates
+only in-memory `S.providers.worker`, retaining old/new proof. Main, helper,
+driver, app, Qt/498-file SDK and 393 packages remain unchanged. It is fixture
+infrastructure, not a standalone production installer or public VM launcher.
+
+The fifth ARM diagnostic reports ReceiveCommand/TimedOut after partial
+Enable/IP/packet behavior, with final worker wait signal 9/code null. The
+separate sixth 16-guest/16-outer-CPU resource cohort fails before Enable-ready,
+capture, touch or packets, with worker natural exit 1, Main 0/driver 101 and
+first app signal 9/code null after cancel. Its context cutoff `42391806186` and
+detection `42436693683` BOOTTIME ns give 44.887497 ms lateness and a derived
+94.887497 ms span from the unchanged 50 ms envelope origin. No syscall,
+scheduling or CPU-throttling cause or earlier-epoch repair is qualified.
+
+The sixth cohort retains guest 6144 MiB/outer 10 GiB memory, binaries, deadlines
+and guards. Controller custody passes; guest-case closure remains false despite
+eventual ECHILD/one adopted exit 0. Its 52 waits/PIPE EOFs comprise 13 host, four
+boot, 29 guest and six controller observations. QEMU/Xvfb 0, container 1/removal/
+absence on the same daemon and independently rehashed unchanged inputs remain
+separate. The host CLI remains scoped to ReduceCapabilities/EPERM. Repeated
+graphical ARM resource campaigns are parked with the production 50 ms guard
+unchanged; the next product priority is a reproducible VM preview, while headless
+wireless association requires implementation and a behavioral test. See the
+[fifth attempt](../../../docs/native-settings-connectivity-window.md#fifth-attempt-receivecommand-context)
+and [sixth failed attempt](../../../docs/native-settings-connectivity-window.md#sixth-attempt-cpu16-receivecommand-failure).

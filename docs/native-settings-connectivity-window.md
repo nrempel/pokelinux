@@ -215,7 +215,7 @@ physical-phone gate remain open. No new screenshot follows from preparation.
 
 ## ARM window attempts remain failed
 
-Four subsequent full-system ARM window attempts retain their failed results.
+Six subsequent full-system ARM window attempts retain their failed results.
 The first finds an existing appearance endpoint before the compositor/controller
 or app starts, so the required unavailable-appearance fallback cannot be assumed.
 Its exact endpoint owner was not sampled. The second adds only an explicit
@@ -294,7 +294,74 @@ theme-provider or complete ARM lifecycle success is claimed.*
 
 The [exact executed diagnostic controller](../tools/native-connectivity-settings-window/arm/worker-diagnostic-controller.py)
 is original test infrastructure, not production code or a public full VM launcher.
+
+### Fifth attempt: ReceiveCommand context
+
+The fifth attempt first verifies the entire old prepared image and all providers,
+then installs only the qualified current 660,848-byte ARM worker at the same
+fixture path. Protected ancestry, old/new hashes, mode 0755 and native `ldd -r`
+pass. Main, helper, driver, app, Qt, the 498-file SDK and 393-package inventory
+remain selected unchanged. The [exact install helper](../tools/native-connectivity-settings-window/arm/worker_context_install.py)
+is original fixture infrastructure, not a production installer or full VM launcher.
+
+One Enable touch again reaches matching Completed, independent `192.0.2.1/30`
+and the first nonce packet before failure. The worker now reports an actual
+`WorkerFailure` at `ReceiveCommand`, with source kind `TimedOut`. Detection is
+26.972719 ms after its recorded original cutoff; the derived 50 ms envelope
+origin-to-detection span is 76.972719 ms. These are envelope calculations, not
+syscall timing or attribution to a pre/post guard, scheduling or CPU throttling.
+They do not identify the unknown stages or causes of attempts three or four.
+See [the separate error-context evidence](native-connectivity-worker-error-context.md#failed-arm-receivecommand-observation).
+
+Before cancel, the child vector is empty, the retained worker pidfd is ready and
+Main is live; this is not an atomic process snapshot. This cohort's final actual
+worker wait records signal 9 and no exit code, distinct from attempt four's exit
+1. Main exits 0 and the assertion driver exits 101. First app wait 0 is observed
+after cancel, so background persistence, reopen and Disable remain unqualified.
+Controller custody qualifies; guest-case closure remains false despite eventual
+ECHILD and one adopted exit 0. All 53 scope waits/PIPE EOFs comprise 13 host, four
+boot, 30 guest and six controller observations. QEMU/Xvfb exit 0, container wait
+1/removal/absence on the same daemon and unchanged inputs remain separate facts.
+The aggregate case fails with literal controller `SETUP_FAILURE`; this is no
+ARM lifecycle repair or production behavior RED/GREEN.
+
+The actual fifth cohort uses six guest vCPUs/6144 MiB and eight outer CPUs/10 GiB.
+No new public image is attributed to this fifth attempt; the original frame above
+remains the fourth attempt's partial failed trace.
+
+### Sixth attempt: CPU16 ReceiveCommand failure
+
+The separate resource cohort closes as another failed ARM case with 16 guest
+vCPUs/6144 MiB and 16 outer CPUs/10 GiB. Binaries, deadlines, guards and memory
+selections remain unchanged. It fails before Enable-ready, capture, touch or
+packet qualification; the mapped-window sample follows cancellation.
+
+The actual worker context is `ReceiveCommand`/`TimedOut`, with original cutoff
+`42391806186` and error-only detection `42436693683` BOOTTIME nanoseconds.
+Detection is 44.887497 ms late; the derived 50 ms envelope-origin span is
+94.887497 ms. Neither value measures syscall duration or identifies a pre/post
+guard, scheduling or CPU-throttling cause. This separate failure establishes no
+cause or repair for earlier epochs.
+
+Before cancel, the child vector is empty, the retained worker pidfd is ready and
+Main is live; the process snapshot is not atomic. The final actual worker wait
+is natural exit 1, Main exits 0 and the assertion driver exits 101. The first app
+wait records signal 9/code null after cancel, so no background persistence,
+reopen or Disable is qualified. Controller custody passes while guest-case
+closure remains false, despite eventual ECHILD and one adopted actual exit 0.
+All 52 scope waits/PIPE EOFs comprise 13 host, four boot, 29 guest and six
+controller observations. QEMU/Xvfb exit 0 and container wait 1, removal/absence
+on the same daemon and independently rehashed unchanged inputs remain separate.
+The aggregate fails with literal controller `SETUP_FAILURE`; no production
+behavior RED/GREEN or CPU repair is claimed.
+
+Repeated graphical ARM resource campaigns are parked with the production 50 ms
+guard unchanged. The next product priority is a reproducible VM preview with a
+documented launch path at the Pixel 10 display profile. Headless wireless
+association still requires implementation and a behavioral test.
+
 [Curated ARM window provenance](evidence/native-settings-connectivity-arm-window-provenance.json)
-binds all four failed attempts, the original frame and their exact frozen
+binds all six failed attempts, the fourth attempt's frame and their exact
 selections. Native build/install qualification remains valid. Complete session
-startup, matched Pixel integration and every phone gate remain open.
+startup, the full ARM connectivity lifecycle, matched Pixel integration and every
+phone gate remain open.

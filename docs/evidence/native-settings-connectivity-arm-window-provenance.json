@@ -2,13 +2,13 @@
   "schema": 1,
   "evidence_class": "full-system generic AArch64 Linux kernel VM; TCG; original native apps/services and authored authority",
   "source_commit": "bfe6e556465d611d2a0e4b34137d7c422b177c2f",
-  "classification": "FOUR_FAILED_ARM_NORMAL_SETTINGS_WINDOW_ATTEMPTS_WITH_PARTIAL_FOURTH_TOUCH_PACKET",
+  "classification": "SIX_FAILED_ARM_NORMAL_SETTINGS_ATTEMPTS_WITH_SEPARATE_RECEIVE_COMMAND_CONTEXTS",
   "passed": false,
   "phone_accessed": false,
   "hardware_models_qualified": 0,
   "Source_auth_full_session_owner_selected": false,
   "matched_Google_kernel_or_WiFi_Internet_qualified": false,
-  "production_code_changed": false,
+  "production_code_changed": true,
   "production_RED_GREEN_claimed": false,
   "attempts": [
     {
@@ -436,6 +436,284 @@
         "appearance_scope": "Normal unavailable-client fallback; no live Omarchy theme-provider claim"
       },
       "phone_accessed": false
+    },
+    {
+      "attempt": 5,
+      "classification": "SETUP_FAILURE",
+      "aggregate_classification": "FAILED_ARM_WINDOW_WITH_QUALIFIED_RECEIVE_COMMAND_TIMEOUT_CONTEXT",
+      "passed": false,
+      "functional_desired_passed": false,
+      "production_behavior_RED_or_repair_claimed": false,
+      "authoritative_review_outside_runtime_cohort": true,
+      "records": {
+        "selection.json": {
+          "bytes": 15210,
+          "sha256": "273beeb254cc5f9e2f2ae630fc42d37f7a2548344983c2b041de64f12da0da41"
+        },
+        "command.json": {
+          "bytes": 2742,
+          "sha256": "a95cea42807ce60ede5847e722ea18df90a9f73370837095df18504902868be6"
+        },
+        "SOURCE.json": {
+          "bytes": 10791,
+          "sha256": "aed55968fbe4fd93cde2d3475522d7f88cc0ceabde69d3d2f985cb925fab8425"
+        },
+        "source/worker_context_install.py": {
+          "bytes": 2388,
+          "sha256": "98006a00f2143f34d4c13feb60c8079633accebd9072f5714ae2285af92f975f"
+        },
+        "source/worker-error-context.elf": {
+          "bytes": 660848,
+          "sha256": "e3b449ccad3e4856e442f33e5a27424c6c3ae4fcbb90fb06ad6906c4c85f76a2"
+        },
+        "run/receipt.json": {
+          "bytes": 23858,
+          "sha256": "7d0b948639de1c6e648b290d388d0f897fa00d745232f2548a455ab55752fd3a"
+        },
+        "boot-result.json": {
+          "bytes": 16154,
+          "sha256": "22b2a748bf16001ffd80ebc45422bde64af11f929455344453ceed79be433462"
+        },
+        "result.json": {
+          "bytes": 136819,
+          "sha256": "e11aa529440fd9558247a1823ff308aeb511ec23e162d215c872f29739b83b56"
+        },
+        "connectivity-case/result.json": {
+          "bytes": 16805,
+          "sha256": "d4c9322fedd4fff6c7c52167dca04eb07af40b3bd32194b898d37c14ef7db321"
+        },
+        "connectivity-case/services/normal-connectivity-main.log": {
+          "bytes": 380,
+          "sha256": "a4cc56503e70503e6bbfa6510d324306063a0a21db188d44f62e5c4bff2cb4ab"
+        },
+        "connectivity-case/gates/connected-proof.json": {
+          "bytes": 244,
+          "sha256": "e2f73fcc24dbaf884aa3674abee9d19e2b56a76da9baf67d3cc01af6ed4cdb33"
+        },
+        "connectivity-case/gates/connected-readback.json": {
+          "bytes": 619,
+          "sha256": "90d7c6546ba87369aebe77e3ac7fe599eed3be5039fa925bb0fefa821a4cd8d0"
+        },
+        "connectivity-case/gates/peer-packets.json": {
+          "bytes": 375,
+          "sha256": "2d315097a08d4003a989b2859653e491ad108f8cfbe18ad4056954b7fc36dcb5"
+        },
+        "connectivity-case/gates/first-closed.json": {
+          "bytes": 310,
+          "sha256": "345d2885fe7c1b5820aded0bee77301c189a248023fdc53b76beb0655b21328b"
+        },
+        "external-authoritative-Root-context-review": {
+          "bytes": 4890,
+          "sha256": "bd845f0a5f5c2fec2bee5fe511720e32c3f93b18716e773c404d141fe841be13"
+        }
+      },
+      "worker_install": {
+        "entire_old_image_all_providers_verified_first": true,
+        "one_current_ARM_worker_only": true,
+        "same_protected_fixture_path": true,
+        "old_and_new_hash_mode0755_native_loader_qualified": true,
+        "worker": {
+          "bytes": 660848,
+          "sha256": "e3b449ccad3e4856e442f33e5a27424c6c3ae4fcbb90fb06ad6906c4c85f76a2"
+        },
+        "exact_public_helper": {
+          "bytes": 2388,
+          "sha256": "98006a00f2143f34d4c13feb60c8079633accebd9072f5714ae2285af92f975f"
+        },
+        "Main_helper_driver_app_Qt498SDK_393packages_unchanged": true
+      },
+      "actual_context": {
+        "stage": "ReceiveCommand",
+        "source_kind": "TimedOut",
+        "original_until_ns": 44296794456,
+        "detected_at_ns": 44323767175,
+        "envelope_ns": 50000000,
+        "detection_past_original_cutoff_ns": 26972719,
+        "envelope_origin_to_detection_span_ns": 76972719,
+        "syscall_duration_or_pre_post_check_cause_qualified": false,
+        "scheduling_or_CPU_throttling_cause_qualified": false,
+        "envelope_origin_derived_not_directly_sampled": true,
+        "earlier_attempts_same_stage_or_cause_qualified": false
+      },
+      "partial_before_guard_failure": {
+        "actual_Enable_matching_Completed": true,
+        "independent_IPv4": "192.0.2.1/30",
+        "one_nonce_packet": true
+      },
+      "pre_cancel_worker_observations": {
+        "Main_child_vector_empty": true,
+        "retained_worker_pidfd_ready": true,
+        "Main_live": true,
+        "process_state_snapshot_atomic": false,
+        "cause_claimed": false
+      },
+      "first_app_wait_code": 0,
+      "first_app_wait_observed_after_cancel": true,
+      "background_reopen_Disable_qualified": false,
+      "worker_final_wait_signal": 9,
+      "worker_final_wait_code": null,
+      "Main_actual_exit": 0,
+      "driver_actual_exit": 101,
+      "controller_custody_qualified": true,
+      "guest_case_closure_qualified": false,
+      "eventual_ECHILD_and_one_adopted_exit0": true,
+      "actual_scope_wait_PIPE_EOF_counts": {
+        "host": 13,
+        "boot": 4,
+        "guest": 30,
+        "controller": 6
+      },
+      "actual_scope_wait_PIPE_EOF_total": 53,
+      "actual_QEMU_Xvfb_exit": 0,
+      "actual_container_wait_exit": 1,
+      "exact_CID_absence_same_daemon_all_inputs_unchanged": true,
+      "executed_resources": {
+        "QEMU_cpus": 6,
+        "QEMU_memory_MiB": 6144,
+        "outer_cpus": 8,
+        "outer_memory_GiB": 10
+      },
+      "new_public_image_attributed": false,
+      "phone_accessed": false
+    },
+    {
+      "attempt": 6,
+      "classification": "SETUP_FAILURE",
+      "aggregate_classification": "FAILED_ARM_CPU16_WINDOW_WITH_RECEIVE_COMMAND_TIMEOUT_CONTEXT",
+      "passed": false,
+      "functional_desired_passed": false,
+      "production_behavior_RED_or_repair_claimed": false,
+      "authoritative_review_outside_runtime_cohort": true,
+      "records": {
+        "external-authoritative-Root-CPU16-closed-receipt": {
+          "bytes": 4541,
+          "sha256": "50c139d4c7bad1da0b389a5544dbaeb7854ec4251d140aee5ca1cb441d3e9875"
+        },
+        "selection.json": {
+          "bytes": 15317,
+          "sha256": "00d770339365d8522f3b3da738f3fbffd3ebd99487bdc1e52477882581ea959e"
+        },
+        "command.json": {
+          "bytes": 2743,
+          "sha256": "a4a16dbdf9b6e9861e47bc84fb0c7769f749f4fc54c803d98b2689b0404da4fc"
+        },
+        "SOURCE.json": {
+          "bytes": 13184,
+          "sha256": "922dbe5766c316068ea37b2158b07ae8339895fafc2feb010d476441a1c6a685"
+        },
+        "ROOT-SOURCE-REVIEW.json": {
+          "bytes": 638,
+          "sha256": "715565ca4eb31891f1ef3efd4a0ed2f39c5d08ebdea9d4eed78430f7f571113f"
+        },
+        "Root-execution-admission.json": {
+          "bytes": 381,
+          "sha256": "cacabe054efe55b814d0f3b98a71324d87178f4a7f745fec46f9e49fa0c0d3da"
+        },
+        "source/worker_context_install.py": {
+          "bytes": 2388,
+          "sha256": "98006a00f2143f34d4c13feb60c8079633accebd9072f5714ae2285af92f975f"
+        },
+        "source/worker-error-context.elf": {
+          "bytes": 660848,
+          "sha256": "e3b449ccad3e4856e442f33e5a27424c6c3ae4fcbb90fb06ad6906c4c85f76a2"
+        },
+        "run/receipt.json": {
+          "bytes": 23860,
+          "sha256": "e4029990b4a5c25a5e09d4a1c6128cc0e24149f066402b10b5182dbb1409f878"
+        },
+        "boot-result.json": {
+          "bytes": 16156,
+          "sha256": "cd0d4000d0468d64b13525f4b1a1394f130d446322110b6436321693a6b0e617"
+        },
+        "result.json": {
+          "bytes": 111975,
+          "sha256": "d0ce97be7474ba39fb2f33c360fa7cfb9095eb3948c2312b056831e418e9c9b4"
+        },
+        "connectivity-case/result.json": {
+          "bytes": 14462,
+          "sha256": "a4f6673e82854246172aab389ebbdfc9a27c3be8f655f073e0270c4888ba9e7d"
+        },
+        "connectivity-case/services/normal-connectivity-main.log": {
+          "bytes": 380,
+          "sha256": "faa5bceaf8f4ec69a73983cf73bd2a14b773e527e64d3101521e37ffbfb55683"
+        },
+        "connectivity-case/gates/cancel-case.json": {
+          "bytes": 74,
+          "sha256": "34c1ff3f3125a58ae5ff9c0a09b21c4e969565ff86065ac3903cf30ef9e4dedb"
+        },
+        "connectivity-case/gates/actor-closed.json": {
+          "bytes": 213,
+          "sha256": "7c81bb53118bfb5c5112983e1ba917d0f4f751a93518bcc433c884e1efb220c4"
+        }
+      },
+      "actual_Root_tool_exit": 1,
+      "actual_context": {
+        "stage": "ReceiveCommand",
+        "source_kind": "TimedOut",
+        "original_until_ns": 42391806186,
+        "detected_at_ns": 42436693683,
+        "envelope_ns": 50000000,
+        "detection_past_original_cutoff_ns": 44887497,
+        "envelope_origin_to_detection_span_ns": 94887497,
+        "syscall_duration_or_pre_post_check_cause_qualified": false,
+        "scheduling_or_CPU_throttling_cause_qualified": false,
+        "envelope_origin_derived_not_directly_sampled": true,
+        "earlier_attempts_same_stage_or_cause_qualified": false
+      },
+      "Enable_ready_capture_touch_or_packet_qualified": false,
+      "mapped_window_sample_after_cancel": true,
+      "pre_cancel_worker_terminal_Main_live": {
+        "sample_phase": "before_guard_failure_cleanup",
+        "process_state_snapshot_atomic": false,
+        "cause_claimed": false,
+        "guard": "retained_child_vector",
+        "expected_worker_pid": 573,
+        "actual_child_vector": [],
+        "actual_child_vector_count": 0,
+        "actual_child_vector_truncated": false,
+        "observed_boottime_ns": 42448869742,
+        "worker_pidfd_ready": true,
+        "Main_live": true,
+        "original_work_until_ns": 124631622914,
+        "original_close_until_ns": 134631622914,
+        "original_start_until_ns": 37851921244,
+        "original_setup_case_until_ns": 66851908651,
+        "original_current_case_until_ns": 66851908651
+      },
+      "cancel_at_ns": 42484286173,
+      "first_app_final_wait_code": null,
+      "first_app_final_wait_signal": 9,
+      "first_app_owned_closure_after_cancel": true,
+      "background_reopen_Disable_qualified": false,
+      "worker_final_wait_signal": null,
+      "worker_final_wait_code": 1,
+      "Main_actual_exit": 0,
+      "driver_actual_exit": 101,
+      "controller_custody_qualified": true,
+      "guest_case_closure_qualified": false,
+      "eventual_ECHILD_and_one_adopted_exit0": true,
+      "actual_scope_wait_PIPE_EOF_counts": {
+        "host": 13,
+        "boot": 4,
+        "guest": 29,
+        "controller": 6
+      },
+      "actual_scope_wait_PIPE_EOF_total": 52,
+      "actual_QEMU_Xvfb_exit": 0,
+      "actual_container_wait_exit": 1,
+      "exact_CID_absence_same_daemon_all_inputs_independently_rehashed_unchanged": true,
+      "executed_resources": {
+        "QEMU_cpus": 16,
+        "QEMU_memory_MiB": 6144,
+        "outer_cpus": 16,
+        "outer_memory_GiB": 10
+      },
+      "binaries_deadlines_guards_caps_and_memory_unchanged": true,
+      "prior_epoch_cause_or_CPU_repair_qualified": false,
+      "automatic_resource_retry_selected": false,
+      "new_public_image_attributed": false,
+      "phone_accessed": false,
+      "hardware_qualified_models": 0
     }
   ],
   "unchanged_upfront_measurement_profile": {
@@ -457,9 +735,30 @@
   },
   "remaining_gates": [
     "Complete ARM normal-window background persistence, fresh reopen, explicit Disable, address removal and quiet under original cutoffs",
-    "Exact worker TimedOut operation and lifetime cause",
+    "ReceiveCommand syscall/pre-post guard and worker lifetime cause; earlier unknown-stage failures remain separate",
     "Installed activation, trusted namespace provisioning and complete session Main",
     "Real Wi-Fi, Internet and matched Pixel backend",
     "All phone hardware behavior"
-  ]
+  ],
+  "source_commit_scope": "Base prepared image/providers; fifth and sixth current-worker selections are individually pinned in their attempt records",
+  "production_change_scope": "Error-reporting context only in fifth and sixth worker; no production changes in attempts one through four",
+  "production_RED_GREEN_scope": "ARM window/packet behavior remains failed; separate host-only context-reporting RED/GREEN is independently qualified",
+  "sixth_CPU16_resource_cohort": {
+    "QEMU_cpus": 16,
+    "outer_cpus": 16,
+    "QEMU_memory_MiB": 6144,
+    "outer_memory_GiB": 10,
+    "binaries_deadlines_guards_caps_and_memory_unchanged": true,
+    "cause_or_repair_qualified": false,
+    "launched": true,
+    "result_pending": false,
+    "completed": true,
+    "passed": false,
+    "attempt": 6,
+    "repeated_graphical_ARM_resource_campaigns_parked": true,
+    "production_ReceiveCommand_guard_ns": 50000000,
+    "automatic_resource_retry_selected": false
+  },
+  "next_product_priority": "Reproducible VM preview with a documented launch path at the Pixel 10 display profile",
+  "headless_wireless_association_status": "Implementation and behavioral test still required; no prepared cohort or prerequisite pass claimed"
 }

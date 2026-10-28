@@ -24,7 +24,27 @@ A separate [normal-worker error-context control](native-connectivity-worker-erro
 now passes unchanged-consumer RED→GREEN for actual cap0 EPERM. Only capability
 reduction is exercised; seven error stages compile and normal host/ARM builds
 pass. Worker exit1, original errors and all control deadlines remain unchanged.
-ARM stage execution, the loss cause and the full ARM lifecycle remain open.
+A separate fifth failed ARM attempt now records ReceiveCommand/TimedOut after
+partial Enable/IP/packet behavior; it does not identify the earlier attempts'
+unknown stages. Final worker wait is signal 9/code null and first app wait 0
+follows cancel, so the full ARM lifecycle remains failed. The recorded envelope
+lateness supplies no syscall or CPU-throttling cause. The separate sixth
+16-guest/16-outer-CPU cohort closes as failed before Enable-ready, capture, touch
+or packets, with unchanged binaries, deadlines, guards and memory. Its
+ReceiveCommand/TimedOut cutoff `42391806186` and detection `42436693683` BOOTTIME
+ns give 44.887497 ms lateness and a derived 94.887497 ms span from the 50 ms
+envelope origin, without a syscall, scheduling or CPU-throttling cause. Final
+worker natural exit 1, Main 0/driver 101 and first app signal 9 after cancel
+remain separate from the fifth epoch. Controller custody passes, guest closure
+does not; 52 waits/PIPE EOFs, eventual ECHILD/one adopted exit 0, QEMU/Xvfb 0,
+container 1/removal and independently rehashed unchanged inputs are recorded in
+[the sixth-attempt report](native-settings-connectivity-window.md#sixth-attempt-cpu16-receivecommand-failure).
+
+Repeated graphical ARM resource campaigns are parked with the production 50 ms
+guard unchanged. The next product priority is a reproducible VM preview with a
+documented launch path at the Pixel 10 display profile. Headless wireless
+association still requires implementation and a behavioral test; no association
+preparation or prerequisite pass is claimed.
 
 The [normal Settings Rust connectivity SDK](native-settings-connectivity-sdk.md)
 now passes granted Connect, packets after actual app exit, fresh app observations
