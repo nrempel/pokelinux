@@ -1,6 +1,53 @@
 # Fresh Omarchy and native Sounds startup
 
-One fresh x86 KVM run now starts the selected PID1 profile, initializes genuine
+## First passing current trace
+
+One fresh x86 KVM cold trace now passes with genuine Omarchy, real compositor
+Source/focus and the pinned current Rust-backed Sounds frontend and normal audio
+service. Actual uinput touches select Speaker, 50% and Play; no Reconnect is
+needed. Operator grant/revoke is test administration, not a user-consent UI.
+
+![Current Sounds with 50% selected, captured before Play](assets/cold-omarchy-sounds-current-50-before-play.png)
+
+This unmodified 1080 × 2424 capture precedes Play. It shows 50%, Speaker Requested
+and Applying output; it is not a screenshot of active playback. The development
+compositor warning remains visible. Native QWindow DPR 2.625 and the selected
+Pixel 10 density/physical metadata qualify the simulated display.
+
+Separate PCM evidence measures 24,000 frames per route after 9,600 discarded
+frames in each of two paired windows. The 440 Hz speaker RMS is 0.0883867;
+earpiece is silent. After an actual operator permission revoke, the retained Main-owned
+`pw-cat` producer's pidfd becomes terminal, its process/client/source/links are
+absent before the original 3 s bound after Play, and both routes measure exact zero.
+These 96,000 measured frames fit the original 6 s work cutoff; the separate initial
+permission-withheld window supplies 48,000 silent frames. Producer credentials,
+normal ELF, direct Main parent and mono F32LE format at 48 kHz are checked
+independently of UI text. The observer exits 0 before audio Stop; Source, PID 1 Stop-after-Ready,
+service PID 1 exit observations, child wait/EOF, QEMU and exact-container closure
+pass. Native component checks also pass: 34 Qt cases, five C ABI cases and 29 appearance cases.
+
+This is the first passing current full trace, not a functional repair or a
+repeatability result. Two earlier runs reached Play but lost the producer before
+a full tone window; both remain unexplained failures. The immediately preceding
+failed diagnostic run uses the same normal `a499d675…` audio ELF, functional
+consumer and PCM oracle. The added filtered journal collection runs after cleanup and does not repair
+playback. Its Main log records
+Playing→Failed retirement during the actual revoke request; it does not identify
+the cause of either earlier failure. Repeat diagnosis remains the next gate.
+The sinks are virtual; live host-audio egress is not exercised.
+
+The next launched repetition stops at the actor metadata prerequisite before any
+boundary step, Play or PCM measurement. Source accepts sample 88 at
+67,855,440,932 ns, then rejects sample 89 (67,957,882,919 ns) for `sample_gap` at
+67,964,289,104 ns: a 102,441,987 ns interval. Full closure, unchanged inputs and
+exact-container absence pass. This is a Source prerequisite failure, with no
+scheduling cause or audio failure inferred. A separate preceding preparation
+fails a root file-mode check before any owned host helper, container or VM launches.
+Source freshness architecture remains under review; no code repair is selected.
+
+## Earlier frozen frontend and failed successors
+
+An earlier fresh x86 KVM run starts the selected PID1 profile, initializes genuine
 Tokyo Night theme state, brings up the real Omarchy shell and launches the native
 Sounds window through the Rust session owner. Real compositor focus identifies
 the app's UID11042 process. There are no authored Source snapshots, theme-only
@@ -10,9 +57,8 @@ host, manual first Source load or preparatory compositor warmup in this case.
 
 The captured Sounds frontend is the frozen selection used by this run. It
 predates the current Rust client and playback/level/mute controls in the
-repository. A successor run now boots the current app, but authorized playback
-with the current service remains an integration gate. The original result does
-not qualify those newer controls. The
+repository. Its original result does not qualify those newer controls; the
+current trace above records that scope separately. The
 [hash-only evidence](evidence/native-cold-omarchy-sounds.json) records the compared
 frontend source hashes separately from the executed result.
 
@@ -40,7 +86,7 @@ than a build or capture setup failure. Play and the new finite-preview observer
 never start. Operator grant is test administration, not a user-consent interface. The baseline's overall
 functional and positive manager-Stop-after-Ready qualifications remain false.
 
-Two current-daemon attempts remain failed. The first caught an initial Wayland
+Earlier current-daemon attempts remain failed. The first caught an initial Wayland
 configure transition: Qt still reported 411×923 while the mapped compositor
 client was already 369×855. Readiness now requires the same app PID and matching
 sizes within the original frame deadline. The second passes that startup check,
@@ -60,10 +106,14 @@ Normal-service diagnostics now report fixed local retirement/completion facts
 and the retirement callsite, without logging app requests, tokens or PCM. The
 normal diagnostic Release build passes the same 56 existing tests, formatting
 and strict Clippy. These diagnostics change no routing, lifecycle guard or
-deadline; an actual follow-up run must identify the early retirement before a
-functional repair is chosen.
+deadline. The first diagnostic run also loses its producer before a full tone
+window. Its saved 256-line unit tail misses the earlier Main diagnostics amid
+PipeWire child output. That failure remains unresolved; the passing successor
+adds a separate 64-line query for fixed preview messages under the retained Main
+PID and invocation, while preserving the original unit tail.
 
-This run withheld audio permission. The captured “Audio reply refused” message
+In the original frozen-frontend run, audio permission was withheld. Its captured
+“Audio reply refused” message
 does not establish that withholding permission was its sole cause: the selected
 frontend predates the current actor/client protocol. Independently, direct audio
 access was denied and measurement found zero RMS/peak across 48,000 PCM frames.
@@ -101,7 +151,8 @@ Earlier Source/appearance failures remain failed; this new passing epoch does
 not change their results.
 
 Remaining gates include actual failed-provision PID1 propagation, authorized
-permission and playback flows in this cold composition, live theme changes,
+repeatable current playback/revocation and user-facing permission flows, live
+theme changes,
 launcher/menu interactions, trusted authentication/locking, shell bindings to
 native phone services, ARM graphical integration and a reproducible full preview.
 Calls/IMS, carrier SMS, camera, suspend and every physical-phone gate remain open.

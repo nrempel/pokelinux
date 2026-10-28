@@ -58,16 +58,17 @@ into one complete phone session.
 
 The current [Messages background owner](docs/native-installed-messages-history.md#current-owner-integration) now passes one fresh ARM/PID1 cold boot, exact private history reads and normal Stop. A second new boot and graphical session remain open.
 
-A fresh x86 VM now starts genuine Omarchy and the native Sounds window through
-the Rust session owner, with Tokyo Night initialized automatically. The captured
-permission-withheld case verifies silence and normal shutdown at the Pixel10
-display profile. Authorized playback in this cold session and phone hardware
-remain open. This capture uses a frozen older Sounds frontend and audio daemon.
-The current app now builds and boots in a successor test, which confirms that the
-older daemon cannot provide its route controls. With the current Rust service,
-route selection and Play are reached, but playback stops early. Sustained
-playback and revocation in this session remain the next app gate.
-[Cold-start result and screenshot](docs/native-cold-omarchy-sounds.md).
+One current x86 VM cold trace now starts genuine Omarchy and the Rust-backed
+Sounds window, measures 50% playback on the virtual speaker and silence after an
+operator permission revoke, and completes normal shutdown at the Pixel 10 display
+profile. Two earlier short-producer failures remain unexplained; this first pass
+does not establish a repair or repeatability. Interactive preview and phone
+hardware remain open. [Cold trace and evidence](docs/native-cold-omarchy-sounds.md).
+
+<img src="docs/assets/cold-omarchy-sounds-current-50-before-play.png" width="320" alt="Sounds with 50% selected before Play" />
+
+Before Play: 50% selected, Speaker Requested/Applying output; the development
+warning remains visible.
 
 Host component tests, original-code execution, Android reference tests, ARM
 user-mode emulation, full-system VMs and physical hardware evidence are recorded

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "scope": "One fresh x86 KVM installed-profile cold startup with genuine patched Omarchy, real Source and Sounds, permission withheld, quiet PCM, normal manager Stop",
+  "scope": "Historical installed cold startup and failed successors, plus one separately recorded passing current x86 KVM Play/revoke trace; no stability or hardware qualification",
   "records": {
     "execution.json": {
       "bytes": 115024,
@@ -165,7 +165,8 @@
     "current_full_cold_run_executed": true,
     "permanent_fixture_media_producer_must_be_omitted": true,
     "finite_native_producer_not_yet_qualified_in_this_composition": true,
-    "current_full_cold_run_passed": false
+    "current_full_cold_run_passed": false,
+    "scope_is_historical_preparation": true
   },
   "current_frontend_historical_daemon_baseline": {
     "scope": "Actual current frontend cold boot against the historical audio daemon; desired UI RED, not current app/service success",
@@ -340,6 +341,33 @@
         "speaker_nonzero_sample_count": 992
       },
       "early_retirement_cause_identified": false
+    },
+    {
+      "cohort": "current-audio-diagnostic-sol-1",
+      "scope": "first normal diagnostic run; repeated short producer before full tone qualification",
+      "normal_audio_ELF_sha256": "a499d6751204f890158f6891c3d91f74394c2b5b65ba24f90bae7b7a00aec3ef",
+      "records": {
+        "execution.json": {
+          "bytes": 115187,
+          "sha256": "6e2efbd143360fa0f0a356236beb766ef3400721eff9ff7873c93542c59a153a"
+        },
+        "boot-result.json": {
+          "bytes": 11114,
+          "sha256": "5416ba86c5c9fbac5c2bbd4594d2f9ec54a3ef1b0f65e697f9b7ee92d4ccdcba"
+        },
+        "result.json": {
+          "bytes": 730674,
+          "sha256": "7101d94886feabb3f837e5421ac557c22ac4f01aba3ecdc02311b2e5e892a612"
+        },
+        "pcm/current-normal-preview/result.json": {
+          "bytes": 80557,
+          "sha256": "4bc3035ca37d8f797dfd45afdee6e474a15e96e622942eb244b98249ede424c0"
+        }
+      },
+      "functional_passed": false,
+      "guest_and_VM_closure_qualified": true,
+      "retirement_cause_identified": false,
+      "saved_unit_tail_lost_earlier_Main_diagnostics": true
     }
   ],
   "normal_audio_retirement_diagnostics": {
@@ -370,5 +398,174 @@
         "sha256": "012773420ce63fd9375e5a91bc1e308173db5c3de2e15efe8216854d60380ae1"
       }
     }
-  }
+  },
+  "first_passing_current_full_trace": {
+    "cohort": "current-audio-diagnostic-sol-2",
+    "scope": "One current x86 KVM installed cold trace: actual touches on Speaker, 50% and Play, followed by operator revoke and complete virtual PCM windows",
+    "records": {
+      "execution.json": {
+        "bytes": 115156,
+        "sha256": "af4a6c086fc238278e30bbf3c9ad2ad52f8b61b13f5a295185537d633ebdb059"
+      },
+      "boot-result.json": {
+        "bytes": 11089,
+        "sha256": "cb588c43dd354c87cd648a273572285f5bd5a945e2b30df15e1594b7ee0b1970"
+      },
+      "result.json": {
+        "bytes": 746301,
+        "sha256": "27ef0e77b38db6001a7c95ecb5d054ec97d5b7d58509ecef2ebe12db36b860be"
+      },
+      "selection.json": {
+        "bytes": 406495,
+        "sha256": "55eee0a9315653c345687ed880fdb4628472a63e0d018edddd697cd1b7b5a5d9"
+      },
+      "command.json": {
+        "bytes": 1325,
+        "sha256": "d31218af3e13419dfd39be263645a178673b06d6f6ec006bd921a4d12c61d8e3"
+      },
+      "pcm/current-normal-preview/result.json": {
+        "bytes": 23834,
+        "sha256": "3314fecda174020cf50e80a991169899b62f14d1903c22a23a860ebcf6796b3a"
+      },
+      "pcm/current-normal-preview/tone.json": {
+        "bytes": 3275,
+        "sha256": "f542aa4a691a9cd8486e8443ed3d8a989a063dd08ca9a52ca075c3591f0fe445"
+      },
+      "pcm/current-normal-preview/quiet.json": {
+        "bytes": 2323,
+        "sha256": "63f75ee3489bf1b45193b6bdc06b84cf13b0a6a05648978b245fd6799502c15d"
+      },
+      "unit-054-journal-retained-Main-pokelinux-normal-audio.service.log": {
+        "bytes": 132,
+        "sha256": "7aa219a05144c92e44dc1b8382378f4c4a21fae9abae4d231428135d751f462e"
+      }
+    },
+    "normal_audio_ELF_sha256": "a499d6751204f890158f6891c3d91f74394c2b5b65ba24f90bae7b7a00aec3ef",
+    "normal_audio_ELF_bytes": 1359240,
+    "functional_guest_sha256": "bd17cf00a46527f343591f98dd1e304e5c4d6313770ff3c13c9b402eed52fd75",
+    "normal_observer_sha256": "9b8c09b4c50e5092cd79eecade8be2f2d1b6fcc1382d8376c3c206101345b4d5",
+    "frozen_PCM_oracle_sha256": "41c415e2cf0b69239b98c0be17c2e59288c3a78316cc63c659377102733a01d5",
+    "same_ELF_functional_consumer_and_oracle_as_prior_failed_diagnostic": true,
+    "only_execution_consumer_delta": "Journal collection after cleanup, filtered by retained Main PID, invocation and fixed preview messages; original unit tail preserved",
+    "functional_repair_claimed": false,
+    "stable_or_repeatable_cold_playback_qualified": false,
+    "earlier_short_producer_failures_resolved": false,
+    "passed_boundary_steps": 2,
+    "native_component_case_counts": {
+      "Qt_including_setup_cleanup": 34,
+      "C_ABI": 5,
+      "appearance": 29
+    },
+    "actual_Reconnect_touch_executed": false,
+    "operator_grant_and_revoke_is_user_consent": false,
+    "normal_app_wire_instrumentation": false,
+    "producer": {
+      "actual_Main_parent_and_server_credentials_matched": true,
+      "normal_pwcat_ELF_sha256": "5af9809a4d830851c50ac44956af9edb183d6871d470d94a920017e46568007b",
+      "actual_format": "F32LE, 48 kHz, mono",
+      "same_retained_identity_through_full_tone": true,
+      "retained_pidfd_terminal_process_client_source_links_absent_after_revoke": true,
+      "observer_parent_wait_claimed": false
+    },
+    "PCM": {
+      "discard_frames_per_route_window": 9600,
+      "measured_frames_per_route_window": 24000,
+      "new_paired_window_measured_frames": 96000,
+      "initial_no_grant_measured_frames": 48000,
+      "speaker_440Hz_RMS": 0.08838669987845607,
+      "speaker_440Hz_energy_fraction": 0.999197210072033,
+      "earpiece_before_and_both_after_exact_zero": true,
+      "original_work_seconds": 6,
+      "observer_natural_exit0_and_ECHILD": true,
+      "observer_retired_before_audio_Stop": true,
+      "retirement_deadline_seconds_after_Play": 3
+    },
+    "capture": {
+      "file": "docs/assets/cold-omarchy-sounds-current-50-before-play.png",
+      "bytes": 459047,
+      "sha256": "4d26788652789d7eb33da247d6a5d20acbf07716bc5f3561b56936dd285a4ee5",
+      "width": 1080,
+      "height": 2424,
+      "native_QWindow_DPR": 2.625,
+      "before_Play": true,
+      "visible_level_percent": 50,
+      "visible_route_state": "Requested / Applying output",
+      "active_playback_screenshot_claimed": false,
+      "resized_or_cropped": false,
+      "development_warning_preserved": true
+    },
+    "filtered_Main_journal": {
+      "retained_Main_and_invocation_matched": true,
+      "observed_transition": "Playing to Failed during operator revoke request",
+      "static_caller_line": 99,
+      "earlier_failure_cause_inferred": false,
+      "process_exit_inferred": false
+    },
+    "closure": {
+      "direct_wait_EOF_counts": {
+        "host": 7,
+        "boot": 5,
+        "bootstrap": 5,
+        "guest": 171,
+        "normal_PCM_observer": 15
+      },
+      "all_under_original_cutoffs": true,
+      "cleanup_errors": [],
+      "QEMU_and_container_exit0": true,
+      "same_daemon_exact_container_absent_inputs_unchanged": true,
+      "Source_healthy_audio_appearance_owner_Stop_and_PID1_exit0": true
+    },
+    "live_host_audio_egress_executed": false,
+    "desktop_menu_or_close_reopen_qualified": false,
+    "phone_hardware_qualified": false,
+    "functional_passed": true
+  },
+  "subsequent_repetition_results": [
+    {
+      "cohort": "current-audio-diagnostic-sol-3",
+      "classification": "Preparation-only root file-mode mismatch; no audio result",
+      "record": {
+        "bytes": 2369,
+        "sha256": "bd34a77cc71d6bef1f41cc014552775cd66206aae8f61839c5d09bb44f8c2cee"
+      },
+      "actual_host_process_receipts": 0,
+      "container_or_VM_launched": false
+    },
+    {
+      "cohort": "current-audio-diagnostic-sol-4",
+      "classification": "Source sample_gap before actor metadata prerequisite completed; no audio result",
+      "records": {
+        "execution.json": {
+          "bytes": 115198,
+          "sha256": "d97721b8912d4e0136cf115b0f353bbfd372404fcae99a17a996cc1e8f17919d"
+        },
+        "boot-result.json": {
+          "bytes": 11119,
+          "sha256": "dd2d8e2078dd269d67343c0c7eb7844a65a6164f28e888fda9ac5b74cf6e3ed6"
+        },
+        "result.json": {
+          "bytes": 637604,
+          "sha256": "1fbf027c7d10019ed03de154886df0808e98d529a06752a2dcb54b57114ea210"
+        }
+      },
+      "functional_passed": false,
+      "boundary_steps": 0,
+      "Play_touches": 0,
+      "PCM_measurements": 0,
+      "Source_rejection": {
+        "previous_accepted_sequence": 88,
+        "previous_accepted_sampled_at_ns": 67855440932,
+        "rejected_sequence": 89,
+        "rejected_sampled_at_ns": 67957882919,
+        "interval_ns": 102441987,
+        "rejected_at_boottime_ns": 67964289104,
+        "reason": "sample_gap"
+      },
+      "scheduling_cause_inferred": false,
+      "audio_failure_claimed": false,
+      "guest_VM_host_closure_qualified": true,
+      "same_daemon_exact_container_absent_inputs_unchanged": true,
+      "code_repair_selected": false
+    }
+  ]
 }

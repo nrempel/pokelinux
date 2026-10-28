@@ -2615,9 +2615,26 @@ authentication on a new host without copying credentials from another machine.
 
 ## Current cold graphical checkpoint
 
-The combined [cold Omarchy/Sounds run](native-cold-omarchy-sounds.md) now passes
-on x86 KVM: normal theme provisioning, corrected genuine shell, same-PID native
-presentation launcher, real Source/focus, Pixel10-profile capture, permission
-refusal/48,000 silent PCM frames and positive manager Stop-after-Ready.
-Actual failed-provision PID1 propagation and authorized app flows remain next
-gates; this supersedes the earlier blocked startup status, not its failed evidence.
+One current [cold Omarchy/Sounds trace](native-cold-omarchy-sounds.md) now passes
+on x86 KVM with genuine shell, real Source/focus and Pixel 10 capture. Actual
+touches on Speaker, 50% and Play produce measured 440 Hz on speaker and quiet
+earpiece; operator revoke retires the same Main-owned producer and yields paired silence.
+The new 96,000 measured frames and initial 48,000 silent frames pass. Source
+remains healthy, and normal Stop and child, VM and container closure pass. The
+public screenshot shows 50% selected before Play, with Requested/Applying output and the development warning visible.
+
+Two earlier Play attempts lost the producer before a full tone window and remain
+unexplained. The passing run retains the same `a499d675…` normal diagnostic ELF,
+functional consumer and oracle as the immediately preceding failed diagnostic.
+Only postcleanup journal collection changes; this is no functional repair or
+repeatability claim. Next: identify the intermittent retirement under the same
+budgets, then complete the genuine menu/close/reopen and interactive preview path.
+User-facing consent, live theme changes, authentication and physical gates remain
+open; earlier failed evidence stays preserved.
+
+The next launched repeat stops at actor metadata after Source rejects a
+102,441,987 ns sample interval; it reaches no boundary step, Play or PCM. Closure
+and unchanged-input/exact-container checks pass. This adds a Source prerequisite
+failure, not an audio result or scheduling diagnosis. A preceding file-mode
+preparation failure starts no owned host helper, container or VM. Source freshness
+architecture is under review; no code repair has been selected.
