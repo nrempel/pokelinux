@@ -3,7 +3,7 @@
 //! Kernel dispatch can block despite DONTWAIT; isolate this component from a
 //! responsive service Main. Deadline checks fence accepted completion only.
 use pokelinux_network_state::{
-    KernelObserver, KernelSnapshot, NamespaceIdentity, ObserveError, boot_time_ns,
+    KernelObserver, KernelSnapshot, LinkSnapshot, NamespaceIdentity, ObserveError, boot_time_ns,
 };
 use rustix::{
     fd::OwnedFd,
@@ -21,7 +21,8 @@ use std::{
 const SECOND: u64 = 1_000_000_000;
 const LOCAL_NAME: &str = "pklown0";
 const PEER_NAME: &str = "pklpeer0";
-const LOCAL_ADDRESS: Ipv4Addr = Ipv4Addr::new(192, 0, 2, 1);
+pub(crate) const LOCAL_ADDRESS: Ipv4Addr = Ipv4Addr::new(192, 0, 2, 1);
+pub(crate) const LOCAL_PREFIX: u8 = 30;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Error {
@@ -173,12 +174,7 @@ impl VirtualLink {
             self.last = observed;
             return Ok(observed);
         }
-        let mut body = vec![2, 30, 0, 0]; // ifaddrmsg: AF_INET, /30, global scope.
-        body.extend_from_slice(&self.last.ifindex.to_ne_bytes());
-        attribute(&mut body, 2, &LOCAL_ADDRESS.octets()); // IFA_LOCAL.
-        attribute(&mut body, 1, &LOCAL_ADDRESS.octets()); // IFA_ADDRESS, same local.
-        let (kind, flags) = if connected { (20, 0x605) } else { (21, 5) };
-        match self.mutator.exchange(kind, flags, &body, until) {
+        match mutate_fixed_ipv4(&mut self.mutator, self.last.ifindex, connected, until) {
             Ok(()) => {}
             // exchange's Deadline is its last pre-send check. All later expiry
             // is Uncertain. This path has not entered the mutating syscall.
@@ -242,23 +238,7 @@ impl VirtualLink {
         {
             return Err(Error::Conflict);
         }
-        let addresses: Vec<_> = local
-            .addresses
-            .iter()
-            .filter(|address| address.local.is_ipv4())
-            .collect();
-        let connected = match addresses.as_slice() {
-            [] => false,
-            [address]
-                if address.local == IpAddr::V4(LOCAL_ADDRESS)
-                    && address.peer.is_none()
-                    && address.prefix_len == 30
-                    && address.scope == 0 =>
-            {
-                true
-            }
-            _ => return Err(Error::Conflict),
-        };
+        let connected = fixed_ipv4_state(local)?;
         before(until)?;
         Ok(Fact {
             connected,
@@ -267,21 +247,55 @@ impl VirtualLink {
     }
 }
 
-fn identity(file: &File) -> Result<NamespaceIdentity, Error> {
+pub(crate) fn fixed_ipv4_state(local: &LinkSnapshot) -> Result<bool, Error> {
+    let addresses: Vec<_> = local
+        .addresses
+        .iter()
+        .filter(|a| a.local.is_ipv4())
+        .collect();
+    match addresses.as_slice() {
+        [] => Ok(false),
+        [address]
+            if address.local == IpAddr::V4(LOCAL_ADDRESS)
+                && address.peer.is_none()
+                && address.prefix_len == LOCAL_PREFIX
+                && address.scope == 0 =>
+        {
+            Ok(true)
+        }
+        _ => Err(Error::Conflict),
+    }
+}
+
+pub(crate) fn mutate_fixed_ipv4(
+    mutator: &mut Mutator,
+    ifindex: u32,
+    configured: bool,
+    until: u64,
+) -> Result<(), Error> {
+    let mut body = vec![2, LOCAL_PREFIX, 0, 0]; // AF_INET, fixed /30, global scope.
+    body.extend_from_slice(&ifindex.to_ne_bytes());
+    attribute(&mut body, 2, &LOCAL_ADDRESS.octets()); // IFA_LOCAL.
+    attribute(&mut body, 1, &LOCAL_ADDRESS.octets()); // IFA_ADDRESS, same local.
+    let (kind, flags) = if configured { (20, 0x605) } else { (21, 5) };
+    mutator.exchange(kind, flags, &body, until)
+}
+
+pub(crate) fn identity(file: &File) -> Result<NamespaceIdentity, Error> {
     let m = file.metadata().map_err(io_error)?;
     Ok(NamespaceIdentity {
         dev: m.dev(),
         ino: m.ino(),
     })
 }
-fn before(until: u64) -> Result<(), Error> {
+pub(crate) fn before(until: u64) -> Result<(), Error> {
     if boot_time_ns() < until {
         Ok(())
     } else {
         Err(Error::Deadline)
     }
 }
-fn command_deadline(until: u64) -> Result<(), Error> {
+pub(crate) fn command_deadline(until: u64) -> Result<(), Error> {
     let now = boot_time_ns();
     if until > now && until - now <= SECOND {
         Ok(())
@@ -289,7 +303,7 @@ fn command_deadline(until: u64) -> Result<(), Error> {
         Err(Error::Deadline)
     }
 }
-fn collect(observer: &mut KernelObserver, until: u64) -> Result<KernelSnapshot, Error> {
+pub(crate) fn collect(observer: &mut KernelObserver, until: u64) -> Result<KernelSnapshot, Error> {
     loop {
         before(until)?;
         match observer.refresh(until) {
@@ -307,7 +321,7 @@ fn pause(until: u64) -> Result<(), Error> {
     ));
     before(until)
 }
-fn io_error(error: std::io::Error) -> Error {
+pub(crate) fn io_error(error: std::io::Error) -> Error {
     Error::Io(error.raw_os_error().unwrap_or(5))
 }
 fn errno(error: rustix::io::Errno) -> Error {
@@ -326,13 +340,13 @@ fn attribute(out: &mut Vec<u8>, kind: u16, value: &[u8]) {
     out.resize((out.len() + 3) & !3, 0);
 }
 
-struct Mutator {
+pub(crate) struct Mutator {
     socket: OwnedFd,
     port: u32,
     sequence: u32,
 }
 impl Mutator {
-    fn new() -> Result<Self, Error> {
+    pub(crate) fn new() -> Result<Self, Error> {
         let socket = net::socket_with(
             net::AddressFamily::NETLINK,
             net::SocketType::RAW,

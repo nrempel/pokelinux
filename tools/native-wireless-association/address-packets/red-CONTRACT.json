@@ -1,0 +1,160 @@
+{
+  "schema": 1,
+  "scope": "Fixed station .1/30 and independent packets after controlled open association; trusted fresh radio fixture only",
+  "formal_RED_executed": false,
+  "production_API_implemented": false,
+  "baseline_normal_ARM": {
+    "bytes": 660848,
+    "sha256": "e3b449ccad3e4856e442f33e5a27424c6c3ae4fcbb90fb06ad6906c4c85f76a2",
+    "ELF_machine": 183,
+    "features": [],
+    "optimization": 3
+  },
+  "normal_operations": {
+    "profile-up": [
+      "NS_DEV",
+      "NS_INO",
+      "IFINDEX",
+      "IFNAME",
+      "ORIGINAL_UNTIL_NS"
+    ],
+    "profile-down": [
+      "NS_DEV",
+      "NS_INO",
+      "IFINDEX",
+      "IFNAME",
+      "ORIGINAL_UNTIL_NS"
+    ]
+  },
+  "profile": {
+    "local": "192.0.2.1",
+    "prefix_len": 30
+  },
+  "exact_initial_state": {
+    "profile-up": "no IPv4 address",
+    "profile-down": "exact .1/30 profile present"
+  },
+  "normal_completion_schema": {
+    "schema": 1,
+    "status": "completed",
+    "operation": "requested profile-up or profile-down",
+    "namespace": {
+      "dev": "selected u64",
+      "ino": "selected u64"
+    },
+    "ifindex": "selected u32",
+    "ifname": "selected name",
+    "profile": {
+      "local": "192.0.2.1",
+      "prefix_len": 30
+    },
+    "configured": "requested bool confirmed by readback",
+    "observed_lifetime": null,
+    "observed_at_boottime_ns": "actual complete readback",
+    "original_until_ns": "unchanged requested deadline",
+    "started_boottime_ns": "normal operation start",
+    "completed_boottime_ns": "normal operation completion"
+  },
+  "original_clocks": {
+    "clock": "CLOCK_BOOTTIME",
+    "address_action_ns": 1000000000,
+    "packet_case_ns": 6000000000,
+    "each_nonce_roundtrip_ns": 1000000000,
+    "quiet_ns": 800000000,
+    "quiet_cutoff_includes_gate_delivery": true,
+    "actual_peer_arming_to_final_EAGAIN_recorded_separately": true,
+    "wireless_actions_ns": 5000000000,
+    "outer_work_close_seconds": [
+      810,
+      840
+    ],
+    "boot_work_close_seconds": [
+      780,
+      800
+    ],
+    "guest_work_close_seconds": [
+      660,
+      700
+    ],
+    "renew_deadlines": false
+  },
+  "baseline_refusal": {
+    "expected_exit": 1,
+    "expected_stdout": "Error: Kind(PermissionDenied)\n",
+    "expectation_basis": "Actual zero-capability retained normal host worker format preflight plus unchanged normal entry source; actual ARM refusal must still be captured and validated",
+    "known_refusal_requires_exact_baseline_ARM_hash": true,
+    "missing_packet_alone_qualifies_RED": false,
+    "independent_station_address_and_subnet_route_absent_required": true,
+    "healthy_split_namespace_L2_and_cap0_AP_packet_peer_required": true,
+    "desired_assertion": "WIRELESS_FIXED_IPV4_REQUIRES_INDEPENDENT_PACKET_LIFECYCLE",
+    "assert_once_after_owned_cleanup": true
+  },
+  "desired_GREEN_order": [
+    "one normal profile-up; actual wait and stdout EOF",
+    "independent exact station .1/30 and selected connected subnet route; no default",
+    "two fresh cap0 UDP clients after profile worker exit, distinct nonce/ACKs independently received by cap0 peer in retained AP namespace",
+    "one explicit normal profile-down; actual wait/EOF and independent address/subnet route absence",
+    "current exact L2 readback before quiet",
+    "fresh socket/loss probe and original800ms quiet, final actual peer EAGAIN",
+    "current exact L2 readback after quiet",
+    "packet peer actual STOP/wait/EOF",
+    "separate normal Rust wireless Disconnect and independent negative L2 readback",
+    "owned AP/radios/namespace/process/QEMU/container closure"
+  ],
+  "ownership": {
+    "radio_AP_namespaces": "existing trusted fresh exclusive fixture; no authority inferred from interface names or association result",
+    "AP_192_0_2_2": "existing short-lived fixture provisioner adapted only to selected AP name/index/namespace; closes before packet peer",
+    "station_profile": "one normal Rust worker per explicit action; NET_ADMIN only in same-PID preexec sample",
+    "UDP_sender_and_peer": "actual after-exec zero capability sets and no administration/namespace descriptors",
+    "case_controller": "retains existing radio setup authority; no production Main capability split or app/user-consent claim",
+    "case_scope": "Guest caller retains nested address/packet Scope across success or exception; all address handles must retire before radio teardown",
+    "peer_gates": "Guest-root-owned /run fixture subtree; actual after-exec guest UID0 cap0 create/fsync/close/unlink and exact ancestor owners/modes recorded before AP profile/peer setup; privileged parent persists selected gate bytes only after all case handles retire. Results root remains UID1000/mode0700."
+  },
+  "shared_API_requirements": {
+    "retained_namespace_fd_and_continuous_observer": true,
+    "constructing_thread_and_namespace_checked_on_every_method": true,
+    "optional_lifetime_is_exact_baseline_not_wildcard_or_authority": true,
+    "identity_lifecycle_change_or_observer_loss_terminal": true,
+    "all_further_methods_fail_after_terminal_uncertainty": true,
+    "expected_initial_state_is_not_idempotent_retry": true,
+    "VirtualLink_veth_creation_checks_preserved": true,
+    "no_implicit_retry_reconnect_rollback_or_replacement": true,
+    "persistent_service_can_retain_same_component": true,
+    "one_shot_modes_do_not_repair_50ms_Settings_path": true
+  },
+  "synthetic_consumer_controls": {
+    "passed": 11,
+    "native_kernel_result_claimed": false,
+    "controls": [
+      "valid proposed result",
+      "changed namespace",
+      "changed index",
+      "changed name",
+      "wrong profile state",
+      "invented creation witness",
+      "expired completion",
+      "renewed deadline",
+      "malformed JSON",
+      "exact pinned normal baseline refusal",
+      "same error from different ELF rejected"
+    ]
+  },
+  "frozen_files": {
+    "address_case.py": {
+      "bytes": 15450,
+      "sha256": "26cb8386c9a5c4b1920d611236d571e2f21b78d3a0d7e8b6b25d0ae64d27efa4"
+    },
+    "address_consumer.py": {
+      "bytes": 14365,
+      "sha256": "efe8a25a1a030ea945b987ddc2563f21a350090c5bc756aaf671274bfcdb3fe5"
+    },
+    "udp_client.py": {
+      "bytes": 3633,
+      "sha256": "b563aa430ca0078286825394c5056ee08d5fed534d004047790539571c678e12"
+    },
+    "wifi_peer.py": {
+      "bytes": 10999,
+      "sha256": "6810313e6e64b98e7574d53429f205c2a75ed163634108932f637cfaacd00911"
+    }
+  }
+}

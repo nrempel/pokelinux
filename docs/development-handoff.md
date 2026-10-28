@@ -127,7 +127,10 @@ unavailable control within 156ms; cfg80211/rfkill inventory additions are
 recorded, without a zero-effects claim.
 See [wireless discovery](native-wireless-scan.md). Subsequent explicit association
 and Disconnect pass separately in [the ARM connection tracer](native-wireless-association.md).
-Internet, normal Settings Wi-Fi and matched Pixel wireless remain unqualified.
+The [fixed-address packet tracer](native-wireless-address-packets.md) now adds
+normal Rust Up, two independent nonce ACKs, Down and quiet in separate AP/STA
+namespaces, with complete closure. Internet, normal Settings Wi-Fi and matched
+Pixel wireless remain unqualified.
 The [retained Pixel WLAN inventory](native-pixel-wireless-boundary.md) now binds
 existing config/index/catalog facts to the authenticated selected profile:
 external cfg80211 and bcmdhd4383/bcmdhd4390 candidates. Exact hardware selection,
@@ -2436,8 +2439,11 @@ fifth epoch's partial Enable/IP/first-packet result and the sixth epoch's natura
 worker exit 1 remain separate, with no CPU cause or repair qualified.
 Headless native Rust open association and separately requested Disconnect now pass
 the frozen ARM virtual-radio consumer with independent STA/AP kernel checks.
-See [association evidence](native-wireless-association.md). Address assignment,
-IP traffic, WPA, Settings integration and Pixel qualification remain open. The x86 window/packet/capture result remains separate
+See [association evidence](native-wireless-association.md). The subsequent
+[fixed IPv4/packet case](native-wireless-address-packets.md) passes normal Rust
+Up, two packet round trips, Down, quiet and separate Disconnect with full
+closure. WPA, DHCP/DNS, persistent Settings integration and Pixel qualification
+remain open. The x86 window/packet/capture result remains separate
 from full Source/auth/session runtime, Wi-Fi/Internet and Pixel hardware. Keep
 the broader Source/authentication and capture branches parked.
 

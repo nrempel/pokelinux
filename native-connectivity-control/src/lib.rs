@@ -1,6 +1,7 @@
-//! Fixed IPv4 connectivity in an exclusively administered disposable virtual backend.
-//! This component does not authorize applications or configure physical interfaces.
+//! Fixed IPv4 connectivity on exclusively administered virtual or existing links.
+//! Application authorization and physical backends remain unqualified here.
 pub mod client;
+pub mod fixed_address;
 pub mod kernel;
 pub mod main_service;
 pub mod owner;

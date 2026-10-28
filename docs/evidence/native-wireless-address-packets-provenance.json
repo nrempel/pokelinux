@@ -1,0 +1,558 @@
+{
+  "schema": 1,
+  "classification": "Actual normal refusal RED to source-bound shared Rust fixed-address API and complete native ARM profile Up/two independent nonce ACKs/Down/quiet/explicit wireless Disconnect GREEN; earlier failures preserved",
+  "whole_native_GREEN_qualified": true,
+  "normal_baseline_ARM_service": {
+    "bytes": 660848,
+    "sha256": "e3b449ccad3e4856e442f33e5a27424c6c3ae4fcbb90fb06ad6906c4c85f76a2",
+    "ELF_machine": 183
+  },
+  "frozen_pure_consumer": {
+    "path": "tools/native-wireless-association/address-packets/address_consumer.py",
+    "bytes": 14365,
+    "sha256": "efe8a25a1a030ea945b987ddc2563f21a350090c5bc756aaf671274bfcdb3fe5",
+    "unchanged_across_actual_RED_and_new_implementation": true
+  },
+  "runtime": {
+    "kernel_release": "7.1.6-1-aarch64-ARCH",
+    "architecture": "aarch64",
+    "acceleration": "TCG thread=multi",
+    "container_CPUs": 8,
+    "container_memory_GiB": 6,
+    "guest_CPUs": 4,
+    "guest_memory_MiB": 3072,
+    "network": "none",
+    "host_devices": [],
+    "read_only_backings": true,
+    "disposable_overlay_exported": false,
+    "original_cutoffs_seconds": {
+      "host_work": 810,
+      "host_close": 840,
+      "boot_work": 780,
+      "boot_close": 800,
+      "guest_work": 660,
+      "guest_close": 700,
+      "wireless_action": 5,
+      "address_action": 1,
+      "packet_case": 6,
+      "quiet_window": 0.8
+    }
+  },
+  "earlier_unexecuted_preparations": {
+    "sol1": "Assembly error before any VM or operation",
+    "sol2": "Unexecuted preparation before caller-retained Scope refactor",
+    "sol3": {
+      "executed": false,
+      "admission_mechanically_superseded": true,
+      "records": {
+        "selection.json": {
+          "bytes": 46133,
+          "sha256": "f6510f4b7649d75554816ff4daba32518578754d10c4a79eeec5fd977a4aeec5"
+        },
+        "Root-execution-admission.superseded.json": {
+          "bytes": 523,
+          "sha256": "c4678e490b9c978487d2aff5bc9a1d7a7394f86453fd92c3aa6bc33f0d8ca63f"
+        },
+        "Root-admission-superseded.json": {
+          "bytes": 296,
+          "sha256": "38d1967d3ee59a7b6a3cc663552923d367fa937308127af8df12f645ae776dfa"
+        }
+      }
+    }
+  },
+  "failed_gate_setup": {
+    "records": {
+      "selection.json": {
+        "bytes": 46133,
+        "sha256": "3043ba1c3bb8db94cb5625480abd3fe8c882130ce81875f0d216fcd3f9189ed2"
+      },
+      "run/receipt.json": {
+        "bytes": 33477,
+        "sha256": "ce610da76100769dfdf7b03d0f2fb2db17ca0bb6b513b146f00e536af57aed43"
+      },
+      "boot-result.json": {
+        "bytes": 14950,
+        "sha256": "b53c8cf8109b09fcb17a80b21a20eea6f952bd636515fc2f2596ef6abfdf8794"
+      },
+      "result.json": {
+        "bytes": 117669,
+        "sha256": "54651328f7a915d5600608959602131a890a729e046da7355351df7c0fc373cf"
+      },
+      "address-case/case-result.json": {
+        "bytes": 4886,
+        "sha256": "e5d26883cdd26de1b2487ce85e42deb8db68767fa3f5c4df9d6d1308120b3cd1"
+      }
+    },
+    "classification": "Guest cap0 UID0 could not traverse UID1000 mode0700 results directory; no behavior RED",
+    "profile_up": 0,
+    "profile_down": 0,
+    "positive_UDP_clients": 0,
+    "Rust_wireless_disconnect": 0,
+    "known_operations_retried": 0,
+    "owned_AP_radio_namespace_and_container_cleanup_closed": true,
+    "successor_change": "Guest RAM UID0 mode0700 gates plus actual cap0 create/fsync/close/unlink preflight; protected results unchanged"
+  },
+  "actual_baseline_RED": {
+    "records": {
+      "selection.json": {
+        "bytes": 46133,
+        "sha256": "9b298dc5b74ea0791b666c78b2e2b455636034d4adab638fd4c8739787cef596"
+      },
+      "command.json": {
+        "bytes": 2446,
+        "sha256": "ececa93b187704acb7a3c29560f8350fe8b0f46f3fb15d4819f9ece08aee494b"
+      },
+      "SOURCE.json": {
+        "bytes": 10747,
+        "sha256": "1fb82962ced5efe00c20d321af55441df74effb4d322a5ebd52ce21f97618cc7"
+      },
+      "run/receipt.json": {
+        "bytes": 33224,
+        "sha256": "c272457b5b2410c274fc827480b94c9bda485ca79a490148d6f62de688831fbc"
+      },
+      "boot-result.json": {
+        "bytes": 14406,
+        "sha256": "9b096436d8c9972d7e881c4444c6a69ec74862e441c18318e6f1a6edb0504b6b"
+      },
+      "result.json": {
+        "bytes": 226670,
+        "sha256": "fe41d357e09e04ddea8cbbb49b70d7edda824529fc393faec15ef7c29016260e"
+      },
+      "address-case/case-result.json": {
+        "bytes": 35449,
+        "sha256": "302d083056aac31fc93944592c677f355bdb3285c32db185531dc6f6aafec495"
+      },
+      "address-case/profile-up.log": {
+        "bytes": 30,
+        "sha256": "f3905990f85abbe5d378f369bed668a724745eb04753bd4ce437e201864a3ef8"
+      }
+    },
+    "actual_profile_up_exit": 1,
+    "actual_stdout_bytes": 30,
+    "actual_stdout_description": "Error: Kind(PermissionDenied) plus newline",
+    "not_reclassified_as_unsupported_or_invalid_arguments": true,
+    "profile_up": 1,
+    "profile_down": 0,
+    "positive_UDP_clients": 0,
+    "peer_packets": 0,
+    "no_station_IPv4_address_or_subnet_route": true,
+    "L2_associated_before_cleanup": true,
+    "explicit_normal_Rust_wireless_disconnect": 1,
+    "no_retry_or_deadline_renewal": true,
+    "single_desired_assertion_after_cleanup": {
+      "passed": false,
+      "marker": "WIRELESS_FIXED_IPV4_REQUIRES_INDEPENDENT_PACKET_LIFECYCLE"
+    },
+    "actual_direct_waits_and_PIPE_EOF": {
+      "host": 15,
+      "boot": 3,
+      "guest": 105,
+      "address_case": 15,
+      "poweroff": 1,
+      "total": 139
+    },
+    "adopted_terminal_waits": 33,
+    "adopted_origins_or_PIPE_EOF_inferred": false,
+    "actual_ECHILD": true,
+    "QEMU_exit": 0,
+    "container_attach_exit": 1,
+    "outer_expected_RED_exit": 0,
+    "exact_container_absent": true,
+    "inputs_unchanged": true
+  },
+  "first_build_setup_failure": {
+    "records": {
+      "SEAL.json": {
+        "bytes": 11824,
+        "sha256": "94b592bed736a42eeca36f0e598e9a5471cf577d07b96e70113108b9f451784c"
+      },
+      "outer/receipt.json": {
+        "bytes": 932640,
+        "sha256": "b151fa61feab298b0d7e246194bd2fbb21f5fe131e5c10081aac59a9b9d769be"
+      },
+      "out/source-format-write-connectivity.stderr": {
+        "bytes": 293,
+        "sha256": "4d0238869a9e7ac97f43eab8c0b13548c4b490a516548ecb3487910ce55d562f"
+      }
+    },
+    "failure": "Private copied source retained0444 mode, so cap0 rustfmt could not write; failed before compilation",
+    "successor_change": "chmod u+w only on private working copy; frozen inputs unchanged",
+    "closed_cleanup": true
+  },
+  "closed_source_bound_build": {
+    "records": {
+      "SOURCE.json": {
+        "bytes": 8954,
+        "sha256": "c5e9d63815c272e75ace299cb1fb5decf6116861d37d06b571e2a9ac4de161fc"
+      },
+      "SEAL.json": {
+        "bytes": 11824,
+        "sha256": "0b63b0bd7426f0b808589d01d7c2d3e8c7952757979dc6a2616f38083c2fcb74"
+      },
+      "outer/receipt.json": {
+        "bytes": 933288,
+        "sha256": "c580cdd01d2b0e2017677c6803bab695ef215c0cf031563cacf0fa009d267db6"
+      },
+      "out/result.json": {
+        "bytes": 31550,
+        "sha256": "b0f2d9acd223a08a700c15057f4fe309464c2eaf641564b73da898de11bbb89d"
+      },
+      "out/host-tests-connectivity.stdout": {
+        "bytes": 2591,
+        "sha256": "3006f4756bb0fd8c96502d3d16072a1fdc4144d7baa8d48cb196398571821bc7"
+      },
+      "out/command-waits.jsonl": {
+        "bytes": 9021,
+        "sha256": "e37b568faf47881acf6ba150aa8e5ec533adbbb56f2d9d0e269c17311ba3a9ee"
+      }
+    },
+    "passed": true,
+    "active_host_tests": 18,
+    "library_tests": 10,
+    "owner_tests": 8,
+    "new_focused_unit_groups": 8,
+    "existing_ignored_kernel_cases_not_passes": 3,
+    "format_and_strict_Clippy": true,
+    "normal_release_features": [],
+    "normal_release_optimization": 3,
+    "dependencies_and_locks_unchanged": true,
+    "normal_artifacts": {
+      "host/pokelinux-connectivity-main": {
+        "bytes": 863208,
+        "sha256": "9d0da0eda806d061ae6a9ef5464ac4ac29bb6260dce1204bde393fa2b7167e39",
+        "ELF_machine": 62,
+        "PT_INTERP": "/lib64/ld-linux-x86-64.so.2"
+      },
+      "host/pokelinux-connectivity-service": {
+        "bytes": 746536,
+        "sha256": "034aca1b55a3bcf9f5235cd7d7dcbf26427b18cf0ac4c9f32fe00fb27d57a1aa",
+        "ELF_machine": 62,
+        "PT_INTERP": "/lib64/ld-linux-x86-64.so.2"
+      },
+      "ARM/pokelinux-connectivity-main": {
+        "bytes": 860656,
+        "sha256": "e3109356deea7025b2eea02e0a1e9260cbab337e7ae087c4d152be06714615fe",
+        "ELF_machine": 183,
+        "PT_INTERP": "/lib/ld-linux-aarch64.so.1"
+      },
+      "ARM/pokelinux-connectivity-service": {
+        "bytes": 752432,
+        "sha256": "64c28416ec9747b8648019dfd0066213c96a0c31bdcad7b38175e046fb2e6c28",
+        "ELF_machine": 183,
+        "PT_INTERP": "/lib/ld-linux-aarch64.so.1"
+      }
+    },
+    "compiled_formatted_source": {
+      "src/bin/pokelinux-connectivity-service.rs": {
+        "bytes": 659,
+        "sha256": "0b4c2902bb307f34d8cb5893207496c890e5d05cb65d794f323c57d55eefc4ab"
+      },
+      "src/fixed_address.rs": {
+        "bytes": 11686,
+        "sha256": "d37ce2d8e83b42b2cb31e5750afe4886a9ae4b3928e8e21ae53f97526f37dec1"
+      },
+      "src/fixed_address_tests.rs": {
+        "bytes": 8658,
+        "sha256": "ac773156ef74fda55b3209dda9e14987e9bb2e1ce63475797aacdf14e179aa96"
+      },
+      "src/kernel.rs": {
+        "bytes": 16485,
+        "sha256": "e340f17c28153b1cef38c2c7c95179b91d3b2009e7e9b9a7157eaed9a842af91"
+      },
+      "src/lib.rs": {
+        "bytes": 308,
+        "sha256": "254aa405c2a3c72db4ef1ccafd97d48cf7b11a8af629c1b54b220001e2fe3f8b"
+      },
+      "src/service.rs": {
+        "bytes": 20810,
+        "sha256": "313111d1d434bb4238da7d8f74e1d0f5d7b9a00b3536e92ab81453cdb2e75570"
+      }
+    },
+    "raw_source_map_retained_separately": true,
+    "worktree_adopted_exact_post_rustfmt_bytes": true,
+    "outer_actual_waits_PIPE_EOF": 16,
+    "shell_foreground_regular_output_waits": 24,
+    "regular_outputs_not_claimed_as_PIPE_EOF": true,
+    "container_absent_same_daemon_inputs_unchanged": true,
+    "build_itself_executes_normal_ELF_or_VM": false
+  },
+  "pre_execution_static_packet_publication_bridge": {
+    "observed_RED_claimed": false,
+    "pure_consumer_unchanged": true,
+    "reason": "ACK2 precedes peer JSON publication by construction",
+    "change": "Read-only exact-two-record/nonces wait under original6s cutoff",
+    "additional_packet_sends": 0,
+    "effect_retry_or_deadline_renewal": false,
+    "whole_runtime_fixture_byte_identical": false
+  },
+  "failed_first_native_GREEN_publication": {
+    "records": {
+      "selection.json": {
+        "bytes": 48761,
+        "sha256": "9e2f795c7a0da0aad5205c7d29ead470d150447b3c9491b5e35c422abe8eb2b4"
+      },
+      "command.json": {
+        "bytes": 2454,
+        "sha256": "3e82de51f258408278efe9df48064c29ce60d2ac0140cee0c4f39e3598d36ca7"
+      },
+      "SOURCE.json": {
+        "bytes": 14822,
+        "sha256": "0b665592ea93ff5b52aecd75f1ea314300ff4014d6abac36c864e7a39e30d14a"
+      },
+      "run/receipt.json": {
+        "bytes": 33399,
+        "sha256": "a1b1fad1598ede8a3a0cb5f95fc3acc6e63ee7e577d8db2d60d009ebc2a6c125"
+      },
+      "boot-result.json": {
+        "bytes": 15401,
+        "sha256": "4e2397b654ce546be5941073a539f794bc1c5715f669e4b2aecfbd7c32fdc5b3"
+      },
+      "result.json": {
+        "bytes": 262144,
+        "sha256": "bf300d3605f868596728c7cf9e3159a5e8b6ca9f2e7db7a5b1689201efa2110c"
+      },
+      "address-case/case-result.json": {
+        "bytes": 60366,
+        "sha256": "692a84545d460837e39546f61e1257fc07bf643f3e90120ddf487f13c5b195d1"
+      },
+      "consumer-review-before-desired-assert.json": {
+        "bytes": 163907,
+        "sha256": "73217414f6ea278a85ffd999cd6aa98d9b6dd9ae33e5103c68b6a0ddaf8d1ff4"
+      },
+      "explicit-disconnect-observation.json": {
+        "bytes": 6209,
+        "sha256": "43a1c8602838b0f110bf149ef0923c9106eeda5486be3ca782db79732b34eee9"
+      }
+    },
+    "whole_cohort_passed": false,
+    "QEMU_exit": 0,
+    "container_attach_exit": 2,
+    "outer_exit": 1,
+    "final_result_truncated_bytes": 262144,
+    "boot_failure": "JSONDecodeError on truncated final guest report",
+    "saved_case_flags": {
+      "profile_up_qualified": true,
+      "profile_down_qualified": true,
+      "two_independent_nonce_ACKs_qualified": true,
+      "station_address_absent_after_removal": true,
+      "peer_quiet_qualified": true,
+      "L2_remained_associated_through_removal_and_quiet": true,
+      "all_handles_closed": true,
+      "owned_case_custody_qualified": true
+    },
+    "partial_case_passed_flag_is_not_overall_oracle": true,
+    "saved_complete_pure_review": {
+      "schema": 1,
+      "passed": true,
+      "behavior_RED_qualified": false,
+      "prerequisites_and_cleanup_qualified": true,
+      "actual_outcome_confirmed": true
+    },
+    "profile_up": 1,
+    "profile_down": 1,
+    "cap0_positive_UDP_clients": 2,
+    "case_actual_waits_and_PIPE_EOF": 24,
+    "guest_actual_waits_and_PIPE_EOF": 105,
+    "shutdown_actual_wait_and_PIPE_EOF": 1,
+    "adopted_terminal_waits": 33,
+    "no_retry_or_deadline_renewal": true,
+    "exact_container_absent_same_daemon_inputs_unchanged": true,
+    "ordering_defect": "Existing fixture submits asynchronous poweroff before final large report publication",
+    "suspected_shutdown_interruption_is_not_proven_unique_cause": true,
+    "actual_inherited_RLIMIT_FSIZE_not_sampled": true
+  },
+  "qualification_limits": [
+    "Controlled authored open AP in an owned ARM hwsim fixture, not a physical interface or phone.",
+    "Fixture owns radio/AP/namespaces and peer address provisioning; identity observations grant no authority.",
+    "UDP peer and clients have actual after-exec cap0; fixture root administration is not user consent or a production privilege split.",
+    "No Settings, persistent service ownership, WPA, DHCP, DNS, default routing or Internet qualification.",
+    "The existing ARM persistent-worker ReceiveCommand50ms failure remains separate."
+  ],
+  "publication_repair_selection": {
+    "records": {
+      "selection.json": {
+        "bytes": 53167,
+        "sha256": "807976b522a79a3b5b00ae749ee4fc493bafe1197c3db44f148339df9e6f35de"
+      },
+      "command.json": {
+        "bytes": 2304,
+        "sha256": "4f734c8c8acbd4aea26bab0dffe3357e47d664d81b4a3999686f1b15f3eac56f"
+      },
+      "SOURCE.json": {
+        "bytes": 17192,
+        "sha256": "da9f6454b622beb59be4eede862226a444449c52f3f1543a63bc895e2e253015"
+      },
+      "run_once.py": {
+        "bytes": 11874,
+        "sha256": "c159b9871e7ac17750af8bcad7bb0b42e0c428067129ecd916706dda24d3d28e"
+      }
+    },
+    "actual_inherited_RLIMIT_and_effective_unit_sampling": true,
+    "defer_SIGTERM_before_existing_poweroff_request": true,
+    "shutdown_child_restores_prior_mask": true,
+    "signal_handler_unchanged": true,
+    "atomic_temp_file_fsync_rename_parent_fsync_under_original_C": true,
+    "pending_TERM_may_prevent_natural_guest_exit0": true,
+    "no_new_timer_worker_retry_limit_override_or_production_change": true,
+    "new_results_underlying_tmp_B_and_results_both_require_2GiB": true,
+    "execution_performed": true
+  },
+  "actual_native_GREEN": {
+    "records": {
+      "selection.json": {
+        "bytes": 53167,
+        "sha256": "807976b522a79a3b5b00ae749ee4fc493bafe1197c3db44f148339df9e6f35de"
+      },
+      "command.json": {
+        "bytes": 2304,
+        "sha256": "4f734c8c8acbd4aea26bab0dffe3357e47d664d81b4a3999686f1b15f3eac56f"
+      },
+      "SOURCE.json": {
+        "bytes": 17192,
+        "sha256": "da9f6454b622beb59be4eede862226a444449c52f3f1543a63bc895e2e253015"
+      },
+      "run/receipt.json": {
+        "bytes": 32892,
+        "sha256": "cc96cf4257f5b5bbf14e672ab3bd46d6d772e7ae8027a5c59b388fd111320a95"
+      },
+      "boot-result.json": {
+        "bytes": 14405,
+        "sha256": "9bc479269730e4d9062e4e5402594b3e9e779cd8244cad0a83d1a8a530187828"
+      },
+      "result.json": {
+        "bytes": 284571,
+        "sha256": "f3cba6f62cd22efc92cfa736728b7632650d17e804c1e43aedb44ba0594feae3"
+      },
+      "address-case/case-result.json": {
+        "bytes": 60366,
+        "sha256": "5ac4c3708217bbaf3550e1211d69ef7dd12327d9f27bb2293d23239de2d72210"
+      },
+      "consumer-review-before-desired-assert.json": {
+        "bytes": 165629,
+        "sha256": "89404447f0bf8ffef9f778af6adb1a53fdbcf89e655af7b71e3c2c108e1c48d6"
+      },
+      "fixture-bootstrap.json": {
+        "bytes": 1171,
+        "sha256": "af11f3a2c1d2300753fd115ddabfba87d802169a319c1f9f35b6e368e5d02a44"
+      },
+      "explicit-disconnect-observation.json": {
+        "bytes": 6209,
+        "sha256": "341be6022c0d55aee73fbd8047e7367cf136c692382906e1abc3147c321c89f0"
+      }
+    },
+    "whole_cohort_passed": true,
+    "pure_consumer_byte_identical_to_actual_RED": true,
+    "normal_service_same_qualified_release_ELF": true,
+    "profile_up": 1,
+    "profile_down": 1,
+    "profile_workers_exit": 0,
+    "profile_up_wait_ns_from_original_arm": 58033969,
+    "profile_down_wait_ns_from_original_arm": 46596636,
+    "profile_up_actual_exit_and_EOF_precede_first_packet_client": true,
+    "two_cap0_nonce_roundtrip_clients": 2,
+    "two_independent_peer_nonce_receipts": true,
+    "separate_retained_AP_and_station_namespaces": true,
+    "independent_station_IPv4_and_subnet_after_Up": true,
+    "no_default_route": true,
+    "independent_station_IPv4_and_subnet_absent_after_Down": true,
+    "L2_associated_before_and_after_removal_quiet": true,
+    "original_quiet_request_ns": 800000000,
+    "actual_peer_armed_to_final_EAGAIN_ns": 799963664,
+    "peer_quiet_datagrams": 0,
+    "peer_final_actual_EAGAIN": true,
+    "fresh_loss_client_uses_new_socket": true,
+    "explicit_later_normal_Rust_wireless_disconnect": 1,
+    "no_effect_retry_reconnect_or_deadline_renewal": true,
+    "single_desired_assertion_after_qualified_cleanup": true,
+    "actual_direct_waits_and_PIPE_EOF": {
+      "host": 15,
+      "boot": 3,
+      "guest": 107,
+      "address_case": 24,
+      "poweroff": 1,
+      "total": 150
+    },
+    "adopted_terminal_waits": 33,
+    "adopted_origins_or_PIPE_EOF_inferred": false,
+    "actual_ECHILD": true,
+    "AP_SIGTERM_wait0_EOF_control_endpoint_absent": true,
+    "owned_radios_module_removed_peer_namespace_lo_only": true,
+    "keeper_STOP_wait0_EOF_both_namespace_descriptors_closed": true,
+    "case_Scope_retired_before_L2_disconnect_and_radio_removal": true,
+    "actual_QEMU_container_attach_exit": 0,
+    "exact_container_absent_same_daemon_all_selected_inputs_unchanged": true,
+    "cleanup_errors": [],
+    "actual_inherited_FSIZE_soft_hard": [
+      -1,
+      -1
+    ],
+    "effective_FSIZE_soft_hard": [
+      "infinity",
+      "infinity"
+    ],
+    "actual_MainPID_is_same_PID_exec_bootstrap_parent_PID1": true,
+    "unit_fragment": {
+      "bytes": 389,
+      "sha256": "0488d684e3f132b2bb6188372d513b730037ce53ff6da2be077646ff73ff13ae"
+    },
+    "SIGTERM_disposition_before": "SIG_DFL",
+    "publication_signal_deferral": {
+      "method": "pthread_sigmask SIG_BLOCK(SIGTERM)",
+      "started_before_poweroff_request": true,
+      "previous_mask": [],
+      "original_disposition_unchanged": true,
+      "restore_previous_mask_after_durable_publication": true,
+      "pending_SIGTERM_may_terminate_before_natural_exit": true,
+      "SIGTERM_pending_before_publication": false
+    },
+    "guest_natural_exit0_claimed": false,
+    "full_guest_result_bytes": 284571,
+    "actual_new_epoch_FSIZE_does_not_prove_unique_old_failure_cause": true
+  },
+  "public_source_pins": {
+    "tools/native-wireless-association/address-packets/CONTRACT.json": {
+      "bytes": 6795,
+      "sha256": "168d421ded0703f8a228f9d93debc4944f3872e57f3b7980a177419b22c6b424"
+    },
+    "tools/native-wireless-association/address-packets/address_case.py": {
+      "bytes": 16006,
+      "sha256": "e40aaa364317167a944bbe359a88957d82c20563e9f979b83e1f9c3672e4e63c"
+    },
+    "tools/native-wireless-association/address-packets/address_consumer.py": {
+      "bytes": 14365,
+      "sha256": "efe8a25a1a030ea945b987ddc2563f21a350090c5bc756aaf671274bfcdb3fe5"
+    },
+    "tools/native-wireless-association/address-packets/arm/boot.py": {
+      "bytes": 4703,
+      "sha256": "e9b74cf5cee5e66faab5e45e42f4dec7135494593bedf3e923704df8ba7b8f21"
+    },
+    "tools/native-wireless-association/address-packets/arm/guest-main.py": {
+      "bytes": 53226,
+      "sha256": "083597b63d68091595c538c16c905ff4ff718b6b746cdcaf3907b53e9dfcc606"
+    },
+    "tools/native-wireless-association/address-packets/arm/red-boot.py": {
+      "bytes": 4410,
+      "sha256": "5d104616f46825633eeb70bd51ce77e04e454fc49f5bc0ddb2488f47a47ddfb5"
+    },
+    "tools/native-wireless-association/address-packets/arm/red-guest-main.py": {
+      "bytes": 49459,
+      "sha256": "b72d1c0710c741af4d384cc7785a8fb8bfad078c3acb87accbdc502b8720028a"
+    },
+    "tools/native-wireless-association/address-packets/red-CONTRACT.json": {
+      "bytes": 6399,
+      "sha256": "dc1fa363812cb83f28fa98457958b24be6c1b5e13aac82170814279831b4181e"
+    },
+    "tools/native-wireless-association/address-packets/red-address_case.py": {
+      "bytes": 15450,
+      "sha256": "26cb8386c9a5c4b1920d611236d571e2f21b78d3a0d7e8b6b25d0ae64d27efa4"
+    },
+    "tools/native-wireless-association/address-packets/udp_client.py": {
+      "bytes": 3633,
+      "sha256": "b563aa430ca0078286825394c5056ee08d5fed534d004047790539571c678e12"
+    },
+    "tools/native-wireless-association/address-packets/wifi_peer.py": {
+      "bytes": 10999,
+      "sha256": "6810313e6e64b98e7574d53429f205c2a75ed163634108932f637cfaacd00911"
+    }
+  }
+}

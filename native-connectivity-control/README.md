@@ -6,6 +6,16 @@ identities, keeps one mutation slot, fences departed or expired requester replie
 and makes uncertain results terminal for an owner epoch. It does not authenticate
 applications or connect a Settings socket.
 
+`fixed_address::ExistingIpv4Profile` also manages the fixed address on an existing
+link whose lifecycle is exclusively retained by a trusted caller. It binds the
+constructing thread, namespace descriptor and continuous link observation;
+conflicts or possibly dispatched failures permanently fence that attachment.
+The explicit `profile-up` / `profile-down` worker modes now pass actual ARM
+virtual-radio address setup, two packet round trips, removal and quiet after
+separately qualified Rust association. See [the API and packet report](../docs/native-wireless-address-packets.md).
+This does not change the persistent Service's virtual-link backend or repair its
+separate ARM ReceiveCommand failure; Settings Wi-Fi integration remains open.
+
 `kernel::VirtualLink` is a Linux development backend for a fresh private virtual
 pair. It retains both namespaces, subscribes before creation, creates the pair
 with its own rtnetlink socket and observes its witnessed local lifetime and

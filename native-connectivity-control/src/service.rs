@@ -39,7 +39,7 @@ fn metadata(file: &File) -> io::Result<NamespaceIdentity> {
 
 /// Run once on the single final-UID/GID main thread, before bootstrap/admission.
 /// Bounding/ambient/permitted sets are irreversibly reduced; no launcher remains.
-fn reduce(keep: CapabilitySet) -> io::Result<()> {
+pub(crate) fn reduce(keep: CapabilitySet) -> io::Result<()> {
     if thread::gettid() != rustix::process::getpid()
         || std::fs::read_dir("/proc/self/task")?.count() != 1
     {

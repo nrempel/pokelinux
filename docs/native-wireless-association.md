@@ -185,6 +185,8 @@ versions remain unchanged after the three signed additions.
 This slice does not configure an address, exchange IP packets, obtain Internet,
 implement WPA/credentials, integrate normal Settings/connectivity ownership,
 qualify a Pixel backend or access a physical phone. The next product boundary is
-independent address and packet evidence after completed association. The existing
+independent address and packet evidence after completed association. The follow-on
+[fixed-address report](native-wireless-address-packets.md) records that separate
+request, actual baseline refusal and current verification status. The existing
 ARM persistent-worker `ReceiveCommand` 50 ms failure remains separate; a headless
 prerequisite does not repair Settings or establish persistent wireless ownership.
