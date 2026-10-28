@@ -727,9 +727,14 @@ daemon RED→GREEN and focused host controls pass. Separate closed formatting/
 strict Clippy, Messages checks and Config 15 scopes accompany the later
 Messages/brightness/connectivity configuration 10/4/4 pass and 12 normal host/ARM
 Release builds; failed aggregates retain their classifications. Missing-provider
-setup qualifies failure cleanup only. Next integrate that selection with the
-installed background owner and session app actor in the reproducible VM preview,
-then qualify a new ARM/PID1 boot. Current normal Source/UI/session behavior,
+setup qualifies failure cleanup only. One separate new ARM/PID1 cold boot now
+passes the three-argument daemon, sole writer/readonly pair, exact private history
+and typed Stop: helper/Main 0, inactive/dead, empty cgroup and dead pidfds. The
+original raw seed, 353 packages, Qt50 and audio/appearance pair stay unchanged;
+QEMU and owned container closure pass. This is one current boot; the older two
+boots remain historical. The next x86 session preview retains a genuine cold
+Source `sample_gap` failure exceeding its 100 ms limit, separate from the unchanged
+50 ms connectivity guard. A second current boot/reboot, normal Source/UI/session,
 production receive, ACK/send, notifications, power-loss and hardware remain open.
 
 The [connectivity-control foundation](native-connectivity-control.md) now passes

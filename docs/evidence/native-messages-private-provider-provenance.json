@@ -1,8 +1,8 @@
 {
   "schema": 1,
-  "evidence_class": "Native x86_64 host normal-daemon/private-read component; authored local history; no new VM or hardware execution",
+  "evidence_class": "Native x86_64 host normal-daemon/private-read components plus one separate current headless generic AArch64 PID1 cold boot; authored local history, no hardware execution",
   "source_base_commit": "e4aef0a610402090460db76521b3f018bc636448",
-  "classification": "HOST_NORMAL_DAEMON_PRIVATE_READ_RED_GREEN_WITH_FOCUSED_CONTROLS",
+  "classification": "HOST_PRIVATE_READ_RED_GREEN_AND_ONE_CURRENT_ARM_PID1_COLD_BOOT",
   "consumer_source": {
     "public_path": "native-messages/tests/private_provider.rs",
     "bytes": 10386,
@@ -96,12 +96,12 @@
   "implementation": "One background Projector; session Messages::Owner socket uses Remote, retaining session actor permission/Source gates and typed Stop",
   "historical_harnesses_require_recorded_source_and_ELFs": true,
   "current_preview_launcher_qualified": false,
-  "new_ARM_PID1_cold_boot_qualified": false,
+  "new_ARM_PID1_cold_boot_qualified": true,
   "session_owner_Main_normal_Source_UI_qualified": false,
   "incoming_SMS_qualified": false,
   "phone_accessed": false,
   "hardware_models_qualified": 0,
-  "next_integration": "One installed background owner plus session app actor in reproducible VM preview; separate new ARM/PID1 qualification",
+  "next_integration": "Single installed background owner plus session app actor in x86 VM preview; cold Source sample_gap RED under existing100ms interval remains separate from unchanged50ms connectivity guard",
   "broad_QA_failed_epochs": [
     {
       "epoch": 1,
@@ -201,10 +201,63 @@
     "sounds-launch-aarch64-unknown-linux-gnu": {"bytes": 1006944, "sha256": "aea0de613ee00acd52bb828e0988be95626f3374e9367ec70d4590cf80c92851", "ELF_machine": 183, "features": [], "opt_level": "3"},
     "settings-launch-aarch64-unknown-linux-gnu": {"bytes": 1007712, "sha256": "acd87f2b21384622b336eebab26dd960d85b79b19276394e9add4b96ac2b5879", "ELF_machine": 183, "features": [], "opt_level": "3"}
   },
-  "ARM_Release_execution_qualified": false,
+  "ARM_Release_execution_qualified": true,
   "current_consumer_source": {
     "bytes": 12002,
     "sha256": "1a8ddea6a38800ff4b8728f6d5ef7b8bc96d27d7478df79ec304836ac08d1009",
     "scope": "Separate later raw-consumer pass; stronger post-decode cutoff check plus lint/format revisions, not byte-identical to frozen RED/GREEN source"
+  },
+  "new_ARM_PID1_cold_boot_count": 1,
+  "second_current_cold_boot_or_reboot_persistence_qualified": false,
+  "ARM_Release_execution_scope": [
+    "messages-service normal Main and writer/readonly child entries",
+    "messages-stop"
+  ],
+  "current_ARM_PID1": {
+    "current_cold_boots": 1,
+    "preparation": {
+      "passed": true,
+      "old_daemon_masked_no_Main_no_Inbox": true,
+      "exact_Make_stage_files": 3,
+      "stage_roles": [
+        "messages-service",
+        "messages-stop",
+        "unit"
+      ],
+      "only_pinned_obsolete_profile_removed": true,
+      "original_raw_database_bytes_unchanged_no_reseed": true,
+      "records": {
+        "execution.json": {"bytes": 25416, "sha256": "a8d3b3ffbd96062c1bc2de2bb1034ba9c4ea43237c070402a043de283cdfd692"},
+        "boot-result.json": {"bytes": 8128, "sha256": "897671765a742605bc07452a74e83eb4363e933d5e7643a96a5c00f94a6f025e"},
+        "result.json": {"bytes": 8316, "sha256": "853e745737c1a72e20ce213e51acbf6f237f59bb2e7841db393dde066bae6149"}
+      }
+    },
+    "cold1": {
+      "passed": true,
+      "normal_three_argument_Main_parent_PID1": true,
+      "sole_writer_and_readonly": true,
+      "private_State_Read_matches_two_exact_authored_IDs_and_text_hello": true,
+      "standalone_app_policy_endpoint_absent": true,
+      "no_seed_install_reload_enable_or_manual_start": true,
+      "typed_Stop_helper_exit": 0,
+      "Main_exit": 0,
+      "inactive_dead_Result_success_empty_cgroup_dead_retained_pidfds": true,
+      "PID1_process_guest_parent_wait_claimed": false,
+      "records": {
+        "execution.json": {"bytes": 25640, "sha256": "acbd90ffe946e23c2a2af37ec57864607cc676d5a362a7831f238052673f3565"},
+        "boot-result.json": {"bytes": 9176, "sha256": "11f8938d1a8f09b82032471f3a11559fb06f9fec36d805328154f066ace5901b"},
+        "result.json": {"bytes": 5218, "sha256": "3dfea7504b3991a39b7ec9190b593438613a8da532bf7153541e663f2cbdcbd9"},
+        "messages-history-probe.json": {"bytes": 5670, "sha256": "1a8c468ce8691a4f98b49d36a3e947f08db297d9705544f8690293d867584f19"}
+      }
+    },
+    "both_phases": {
+      "original353_Qt50_audio_appearance_unchanged": true,
+      "QEMU_actual_wait_exit": 0,
+      "full_owned_wait_EOF_closure_before_original_cutoffs": true,
+      "same_Docker_daemon_exact_container_removal": true,
+      "all_original_and_selected_inputs_unchanged": true
+    },
+    "new_session_app_normal_Source_UI_incoming_or_hardware_qualified": false,
+    "historical_two_boot_cohort_promoted_to_current": false
   }
 }

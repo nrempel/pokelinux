@@ -50,15 +50,21 @@ retains original `NotFound`, observes Source ECHILD and creates no session
 databases; it exports no numeric Source child exit status. This is failure cleanup,
 not successful normal Main/Source/UI startup.
 
-This checkpoint qualifies no session-owner Main execution, new ARM/PID1 cold
-boot, normal Source, graphical UI, incoming SMS or physical phone. The
-[earlier ARM cold boots](native-installed-messages-history.md) remain historical
-six-argument-service evidence. Historical service/recovery fixtures,
-`native-messages-guest.py`, display-app-generation and installed-app guest
-harnesses require their recorded sources and ELFs. `run-native-messages-vm` is
-not a current preview launcher for the new three-argument daemon.
+A separate [current ARM/PID1 cold boot](native-installed-messages-history.md#current-owner-integration)
+now passes with the normal three-argument daemon, one writer/readonly pair and
+exact private reads of both authored IDs/text `hello`. Preparation keeps the old
+daemon masked with no Main or Inbox, stages exactly service/Stop/unit files,
+retains the original raw seed and removes only the pinned obsolete app profile.
+The original 353 packages, 50 Qt files and audio/appearance pair stay unchanged.
+Typed Stop records helper 0, Main 0, inactive/dead state, empty cgroup and dead
+retained pidfds. Both phases close QEMU 0, owned waits/EOFs and exact container
+removal on the same daemon. This qualifies one current cold boot; a second new
+boot or reboot-persistence result remains open.
 
-The next integration is one installed background owner plus the session app actor
-in the reproducible VM preview, followed by a separate new installed ARM/PID1
-cold-boot qualification. Current normal Source and UI behavior must be measured
-with that selection before it becomes a working preview claim.
+The earlier two ARM cold boots remain historical six-argument-service evidence.
+Historical service/recovery and guest harnesses require their recorded sources
+and ELFs; `run-native-messages-vm` is not a current preview launcher. Session-owner
+Main, normal Source/UI, incoming SMS and hardware remain unqualified. The next
+x86 preview is blocked by a separate cold Source `sample_gap` failure exceeding its
+100 ms limit. That boundary is separate from the unchanged 50 ms connectivity
+guard; the installed history pass supplies no graphical repair.

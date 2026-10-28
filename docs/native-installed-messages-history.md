@@ -1,34 +1,51 @@
 # Installed ARM Messages history across cold boots
 
-The cold-boot results below apply to the earlier six-argument service and its
-separate policy actor. The current three-argument background owner and updated
-private-read probe have not yet been qualified in a new PID1/ARM cold boot.
-Host daemon/read-adapter tests are separate evidence.
-
-
-The normal production Messages service now starts automatically in two distinct
-fresh ARM boots, reconciles authored raw records and retains their exact selected
-IDs/provenance/state/body across a clean shutdown and reboot, with its app closed.
-The production entry opens local history only. Incoming SMS, modem registration,
-ACK/send, notification delivery and app data-release permission remain separate
-gates. No Binder supervisor, Source substitute or physical phone is involved.
+One new generic ARM cold boot now qualifies the current three-argument background
+owner, exact private history reads and normal PID1 Stop. The earlier two cold
+boots below retain their historical six-argument service selection; they do not
+establish a second boot or reboot persistence for the current owner.
 
 ## Current owner integration
 
-The current implementation moves Projector ownership into the background daemon.
-The graphical session selects `Messages::Owner { socket }` and uses a private
-read adapter instead of opening raw/Inbox paths. Session permission and Source
-checks remain at dispatch/publication. Actual host tests cover exact history,
-local connection closure, held-reader cancellation, expiry and daemon replacement.
-Normal installed session execution and a new cold-boot run remain unqualified.
+The daemon owns one Projector with a sole writer and separate readonly child.
+The session selects `Messages::Owner { socket }` and a private read adapter,
+retaining its own permission/Source checks. The separate
+[host checkpoint](native-messages-private-provider.md) covers those adapter
+controls; the new headless cold boot does not execute the session app actor/UI.
 
-The revised probe checks private State/Read replies against independent SQLite
-records, the sole writer/readonly processes, and PID1 Stop. It no longer asks the
-history daemon for app-policy snapshots. Its current revision is preparation for
-the next installed run, not a reassignment of the earlier passing results.
-Incoming SMS reception remains a separate unfinished integration.
+Preparation keeps the old service masked, with no Main and no Inbox database.
+The finite Make stage installs exactly the normal service, Stop helper and unit;
+only the pinned obsolete app profile is removed. The original raw seed stays
+byte-identical with no reseed. All 353 package versions, 50 selected Qt files and
+the audio/appearance pair remain unchanged. The current owner is enabled while
+stopped and its retained layer follows actual QEMU exit 0.
 
-## Existing boundary and actual RED
+A separate cold boot performs no seed, install, reload, enable or manual start.
+PID1 starts the normal three-argument Main with its sole writer/readonly pair.
+The frozen private State/Read probe independently matches both exact receipt IDs
+and plain text `hello` against SQLite history. There is no standalone app-policy
+endpoint. Typed `messages-stop` exits 0; Main exits 0 and the unit is inactive/dead
+with Result=success, empty cgroup and dead retained process pidfds. PID1 owns
+those processes; no guest-parent wait is claimed for them.
+
+Both preparation and cold1 pass QEMU exit 0, original-cutoff owned wait/EOF
+closure, unchanged selected inputs and exact container removal on the same
+Docker daemon. The [current hash-only provenance](evidence/native-messages-private-provider-provenance.json)
+binds the two phases and private probe. This is one new installed cold boot,
+not a second reboot, graphical app, normal Source, incoming SMS or hardware pass.
+The next x86 preview retains its separate cold Source `sample_gap` RED under the
+100 ms interval; the connectivity guard remains 50 ms.
+
+## Historical six-argument service: two cold boots
+
+The earlier service starts automatically in two distinct fresh ARM boots,
+reconciles authored raw records and retains exact selected IDs/provenance/state/
+body across clean shutdown and reboot with its app closed. The production entry
+opens local history only. Incoming SMS, modem registration, ACK/send, notification
+delivery and app data-release permission remain separate gates. No Binder
+supervisor, Source substitute or physical phone is involved.
+
+### Existing boundary and actual RED
 
 The frozen [historical history probe](https://github.com/nrempel/pokelinux/blob/e4aef0a610402090460db76521b3f018bc636448/tools/native-installed-services/messages-history-probe.py)
 first checks the actual PID1 deployment. On the unchanged original353 service
@@ -43,20 +60,20 @@ before manual unit startup; it supplies no existing cold-boot Binder topology.
 This new scenario uses the production history-only entry and authored raw input,
 without describing it as new incoming reception.
 
-## Historical selected providers and deployment
+### Historical selected providers and deployment
 
-A fresh offline build selects current committed Rust sources and five distinct
-ARM Release artifacts. Production `messages-service`, `messages-stop` and
+That checkpoint's offline build selects its recorded Rust sources and five
+distinct ARM Release artifacts. Production `messages-service`, `messages-stop` and
 `lifecycle-launcher` use normal features. The separate `messages-seed-fixture`
 alone enables `isolated-fixture` and has a separate target/output directory.
 The provider build verifies ARM machine183, optimization3 and bundled SQLite;
 no new runtime package, Cargo dependency or lock change is required. These build
 observations are separate from native guest execution.
 
-The [VM profile](../native-messages/packaging/vm) names the real normal ARM
-Messages executable and six normal arguments, with protected shared appearance
-QML. The app is an unlaunched dependency here; no GUI/session readiness follows.
-Use the existing production unit unchanged, its six service arguments,
+The [historical VM profile](https://github.com/nrempel/pokelinux/blob/e4aef0a610402090460db76521b3f018bc636448/native-messages/packaging/vm/messages-profile.json)
+names its normal ARM Messages executable and six arguments, with protected shared
+appearance QML. The app is an unlaunched dependency; no GUI/session readiness
+follows. The recorded unit retains its six service arguments,
 RuntimeDirectory/StateDirectory and actual `messages-stop` ExecStop.
 
 All selected files pass through the existing finite `install-native-services`
@@ -68,7 +85,7 @@ raw IDs/provenance are recorded from that native output, then fsynced. Require
 the Inbox database absent and the enabled Messages unit stopped before retaining
 the image. The production service never runs in that preparation phase.
 
-## Frozen native assertions
+### Frozen native assertions
 
 The first separate cold boot must perform no install, seed, reload, enable or
 start before its checks. The actual production service must reconcile the exact
@@ -91,7 +108,7 @@ notifications, suspend or physical hardware. The earlier desktop/window and
 synthetic receiving proofs retain their own evidence selections.
 
 
-## Recorded native result
+### Recorded native result
 
 The production host Make target stages eight exact files. Actual preparation
 executes five loader checks and installed-unit verification, then runs the

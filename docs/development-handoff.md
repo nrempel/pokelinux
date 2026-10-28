@@ -308,8 +308,9 @@ One background Projector serves the session's Remote adapter; the session actor
 retains permission/Source checks and cancels only its own reads. Session shutdown
 closes that local connection without stopping the daemon. The
 [current owner integration](native-installed-messages-history.md#current-owner-integration)
-still needs a new installed run. Normal ARM windows, cold graphical startup,
-normal Source/UI and all matched-device gates remain open.
+now passes one new headless ARM/PID1 cold boot and actual typed Stop. A second
+new boot, normal ARM windows, cold graphical startup, normal Source/UI and all
+matched-device gates remain open.
 
 The [native Rust brightness service](native-brightness.md) now joins its real Rust client,
 owned worker and authored attribute backend in six process/socket cases. Unchanged
@@ -403,8 +404,14 @@ normal host/ARM Release ELFs with optimization 3 and no optional features.
 Missing-provider setup cleanup preserves NotFound, Source ECHILD and no session
 databases, with actual helper exit 0; it is no successful normal startup.
 The first GREEN compile failure, restart parser fault and four failed broad-QA
-aggregates remain preserved. This is host component/build evidence; the earlier
-ARM/PID1 boots do not qualify the changed daemon or normal Source/UI/session.
+aggregates remain preserved. A separate new ARM/PID1 cold boot now qualifies the
+three-argument daemon, sole writer/readonly pair, exact private reads of both
+authored IDs/text `hello`, and typed Stop with helper/Main 0, empty cgroup and
+dead retained pidfds. Preparation preserves the raw seed, original 353/Qt50/pair,
+keeps the old daemon masked with no Main/Inbox, and stages only service/Stop/unit.
+Both phases close QEMU 0, owned waits/EOFs and exact container removal on the same
+daemon. This is one current cold boot; the old two-boot cohort stays historical.
+No second new reboot, normal session Source/UI, incoming SMS or hardware follows.
 
 The [current language boundary](runtime-language-decision.md#current-language-boundary)
 retains upstream Hyprland/Aquamarine/Qt C++ scene, protocol and native operations.
@@ -2432,10 +2439,13 @@ or as a passed prerequisite. The x86 window/packet/capture result remains separa
 from full Source/auth/session runtime, Wi-Fi/Internet and Pixel hardware. Keep
 the broader Source/authentication and capture branches parked.
 
-Next join the current private Messages adapter to one installed background owner
-and the session app actor in the reproducible VM preview. Historical six-argument
-service/recovery and guest harnesses require their recorded sources/ELFs; they
-are not current preview launchers. Qualify the new ARM/PID1 cold boot separately.
+The current single Messages owner now passes one installed ARM/PID1 cold boot.
+Next join its private adapter with the session app actor in the x86 VM preview,
+whose cold Source `sample_gap` failure exceeds the existing 100 ms limit.
+That Source boundary is separate from the unchanged 50 ms connectivity guard.
+Historical six-argument service/recovery and guest harnesses require their
+recorded sources/ELFs; they are not current preview launchers. A second current
+cold boot/reboot and normal Source/UI remain open.
 
 The following Messages lock→restore work remains backlog from the qualified
 downstream actor/storage path. Continue the remaining wrong-event/attempt-deadline and

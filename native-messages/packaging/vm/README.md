@@ -24,9 +24,18 @@ unqualified raw GSM occurrences. The production service is never built with that
 feature. Require the Inbox database to remain absent and the Messages unit
 stopped before retaining the prepared image.
 
-The current installed-service probe uses private State/Read and normal typed Stop.
-Its current three-argument successor has not been run through PID1 or ARM. The
-earlier two cold boots qualify the historical six-argument service and its pinned
-probe only; see [the historical result](../../../docs/native-installed-messages-history.md).
-Host daemon/Remote components do not establish installed boot, app/window,
-incoming SMS, power-loss recovery or physical hardware behavior.
+The current installed-service probe now passes one fresh generic ARM/PID1 cold
+boot with the normal three-argument Main, sole writer/readonly pair, and exact
+private State/Read history. This upgrade retains the original raw seed without
+reseeding. Preparation keeps the old unit masked with no Main or Inbox, stages
+exactly service/Stop/unit files and removes only the pinned obsolete app profile.
+The 353 package versions, 50 Qt files and audio/appearance pair stay unchanged.
+
+Typed Stop records helper 0, Main 0, inactive/dead state, empty cgroup and dead
+retained pidfds. Preparation and cold1 both close QEMU 0, owned waits/EOFs and
+exact container removal on the same daemon. See
+[the current owner result](../../../docs/native-installed-messages-history.md#current-owner-integration).
+The earlier two cold boots remain historical six-argument evidence. A second new
+boot/reboot, session app/UI, normal Source, incoming SMS and hardware remain open.
+The next x86 preview still has a separate cold Source `sample_gap` failure exceeding its
+100 ms limit; the 50 ms connectivity guard is unchanged.
