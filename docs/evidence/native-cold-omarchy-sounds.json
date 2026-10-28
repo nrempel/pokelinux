@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "scope": "One fresh x86 KVM installed-profile cold startup with genuine patched Omarchy, real Source and Sounds, permission withheld, quiet PCM, normal manager Stop",
+  "records": {
+    "execution.json": {
+      "bytes": 115024,
+      "sha256": "9168b9f668cfe9d76907fb5fb7f3b129e32db40aca81ae4585336eaa464aa76c"
+    },
+    "boot-result.json": {
+      "bytes": 11068,
+      "sha256": "2737a7e40448f185e17abbeacbe77b3f7f3265da03eed976c32252966995d6c1"
+    },
+    "result.json": {
+      "bytes": 614340,
+      "sha256": "be602bd88e08240b41e7ac76347e1fa12708e29a815f172c239356dd5cfdcdda"
+    },
+    "selection.json": {
+      "bytes": 319629,
+      "sha256": "04bea0509260375b966eaa3fbc6d49def03ea57e458beadba2aa9d207a47d44e"
+    },
+    "command.json": {
+      "bytes": 1289,
+      "sha256": "cc5ffa8c2ea96fb96abba9f72ff6f147cf60a7eaaabbfe8363f47bdcb19fa1e5"
+    }
+  },
+  "capture": {
+    "bytes": 415967,
+    "sha256": "7259666d7f6f56fe87c81a71326cc82e2f2a5c90ec73099dcf6f0655d49da436"
+  },
+  "capture_resized": false,
+  "display": {
+    "width": 1080,
+    "height": 2424,
+    "window_dpr": 2.625,
+    "logical_density": 420,
+    "nominal_ppi": 422,
+    "qualification_passed": true,
+    "hardware_verified": false
+  },
+  "theme_PID1": {
+    "PID1_completed_invocation": {
+      "Id": "pokelinux-omarchy-theme.service",
+      "LoadState": "loaded",
+      "ActiveState": "active",
+      "SubState": "exited",
+      "Job": "",
+      "ConditionResult": "yes",
+      "InvocationID": "e559cfc87043405fb896bf29020d4fa5",
+      "Type": "oneshot",
+      "Restart": "no",
+      "NotifyAccess": "none",
+      "MainPID": 0,
+      "ControlPID": 0,
+      "Result": "success",
+      "NRestarts": 0,
+      "ExecMainPID": 1008,
+      "ExecMainCode": 1,
+      "ExecMainStatus": 0,
+      "ControlGroup": "",
+      "KillMode": "control-group",
+      "observed_boottime_ns": 58252597659
+    },
+    "cgroup_empty": true,
+    "guest_waitpid_or_PIPE_EOF_claimed": false,
+    "graphical_readiness_inferred": false
+  },
+  "case": {
+    "actual_app_uid": 11042,
+    "native_focus_verified": true,
+    "permission_granted": false,
+    "silent_PCM_frames": 48000,
+    "audio_playback_qualified": false
+  },
+  "manager_Stop_after_Ready": true,
+  "guest_closure": true,
+  "container_removed": true,
+  "inputs_unchanged": true,
+  "full_phone_qualified": false,
+  "ARM_graphics_qualified": false,
+  "PID1_failed_provision_control_executed": false,
+  "desktop_menu_activation_exercised": false,
+  "auth_PAM_paths_selected": false,
+  "initial_prelaunch_label_failure": {
+    "stage": "static preflight before container or child creation",
+    "error": "container name did not match inherited selection label",
+    "actual_command_exit": 1,
+    "old_selection_sha256": "6303318b2adb3afde4ac4ee4fc2cc1f967aebcc82c4d9cf6efca720bf11e63f9",
+    "only_selection_label_changed": true
+  },
+  "executed_consumer_sources": {
+    "tools/native-cold-omarchy/guest.py": {
+      "bytes": 70122,
+      "sha256": "f7c36110ac2009c498732979aa7ec66d72743e903557b765819b4d9c98f149e9"
+    },
+    "tools/native-cold-omarchy/systemd_units.py": {
+      "bytes": 24221,
+      "sha256": "4cd3a1b9911b3b271b0b55490f32a0ae9c76be335934851731624badd942cf20"
+    },
+    "tools/native-cold-omarchy/run-selected.py": {
+      "bytes": 24022,
+      "sha256": "1a0ec467f3025dce6d3ef11b75bc5bd8696140d7e3b8140b16739e11022bc16e"
+    }
+  }
+}

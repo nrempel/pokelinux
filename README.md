@@ -58,15 +58,11 @@ into one complete phone session.
 
 The current [Messages background owner](docs/native-installed-messages-history.md#current-owner-integration) now passes one fresh ARM/PID1 cold boot, exact private history reads and normal Stop. A second new boot and graphical session remain open.
 
-Cold-start work now keeps session authority unavailable until compositor updates
-form a fresh consecutive pair. The socket/process regression passes. A fresh x86 cold run now reaches the genuine
-Omarchy background and bar with healthy session updates. It stops at unavailable
-appearance before app launch; complete graphical startup remains open.
-A new [normal theme provisioner](docs/native-omarchy-theme-provisioning.md) passes
-fresh-home tests against the real appearance service; its graphical integration
-is the next check. The [Rust shell launcher](docs/native-presentation-environment.md)
-also passes process-level display handoff and same-PID exec tests; combined
-PID1/Qt startup is still pending. [Startup change](docs/native-source-establishment.md).
+A fresh x86 VM now starts genuine Omarchy and the native Sounds window through
+the Rust session owner, with Tokyo Night initialized automatically. The captured
+permission-withheld case verifies silence and normal shutdown at the Pixel10
+display profile. Authorized playback in this cold session and phone hardware
+remain open. [Cold-start result and screenshot](docs/native-cold-omarchy-sounds.md).
 
 Host component tests, original-code execution, Android reference tests, ARM
 user-mode emulation, full-system VMs and physical hardware evidence are recorded

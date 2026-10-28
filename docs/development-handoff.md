@@ -2606,3 +2606,12 @@ is on `main` at https://github.com/nrempel/pokelinux. Commit and push source/doc
 as work progresses, after checking staged files. Preserve private artifacts and
 pre-existing untracked files; never stage them wholesale. Check GitHub write
 authentication on a new host without copying credentials from another machine.
+
+## Current cold graphical checkpoint
+
+The combined [cold Omarchy/Sounds run](native-cold-omarchy-sounds.md) now passes
+on x86 KVM: normal theme provisioning, corrected genuine shell, same-PID native
+presentation launcher, real Source/focus, Pixel10-profile capture, permission
+refusal/48,000 silent PCM frames and positive manager Stop-after-Ready.
+Actual failed-provision PID1 propagation and authorized app flows remain next
+gates; this supersedes the earlier blocked startup status, not its failed evidence.
