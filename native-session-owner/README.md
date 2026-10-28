@@ -14,14 +14,19 @@ is installed. A fresh incarnation and original startup deadline are fixed before
 spawn; no automatic Source replacement or route replay occurs. First Source
 readiness may use at most120 seconds. The separate bootstrap receive cap is
 five seconds; subsequent samples retain the existing100ms lease.
+Before any Source snapshot is exported, the observer requires a fresh consecutive
+pair. Provisional timing expiry preserves protocol history and the original
+startup deadline; established expiry remains terminal. See
+[bounded establishment](../docs/native-source-establishment.md).
 
 SourceOwner retains Child custody before every post-spawn fallible operation.
 Poll is nonblocking and terminal errors still drive actual try_wait. Stop fences
 local facts and signals KILL immediately; occupancy clears only after actual
 wait. The parent lifecycle fences permissions before its normal provider Stop.
-In history mode the Projector is retained before subsequent fallible setup. Every
-returning outer setup path fences Source and history before draining both against
-one shared original two-second cutoff; retained occupancy aborts. Existing
+The background Messages daemon owns the Projector; the session owns only its
+private read adapter. Returning outer setup paths fence local Source and history
+state and drain owned resources against one original two-second cutoff; retained
+occupancy aborts. This does not stop or reap the background Messages daemon. Existing
 storage/actor fail-stop aborts are not graceful-return cleanup.
 No production poll writes to a potentially blocked logging stream.
 

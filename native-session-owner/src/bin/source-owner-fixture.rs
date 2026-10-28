@@ -121,7 +121,7 @@ fn main() -> io::Result<()> {
             rustix::io::fcntl_setfd(&fd, rustix::io::FdFlags::CLOEXEC)?;
             return Err(Command::new("/usr/bin/sleep").arg("30").exec());
         }
-        if mode == "diagnostic" {
+        if mode == "diagnostic" && sequence >= 2 {
             let root = diagnostic_root
                 .as_ref()
                 .ok_or(io::ErrorKind::InvalidInput)?;

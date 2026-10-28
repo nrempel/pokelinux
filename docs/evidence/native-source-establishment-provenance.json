@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "scope": "Host Source establishment and current normal x86 owner build; no graphical cold boot or phone qualification",
+  "cohorts": [
+    {
+      "epoch": 1,
+      "outer": {
+        "bytes": 16460,
+        "sha256": "05eca48d7780afebe818335c0c05782ebdde7d3c68d3efbbbe890f6b0ba3bd60"
+      },
+      "inner": {
+        "bytes": 17803,
+        "sha256": "e1a4f3bf4ddd38bcee508888ba13eba791235d8e67b482008b108bc75375747b"
+      },
+      "original_aggregate_passed": false,
+      "source": {
+        "bytes": 30739,
+        "sha256": "e9858a73509fd600c8d780155b18b72698223ac67b4a91f6535447b7690cceb3"
+      }
+    },
+    {
+      "epoch": 2,
+      "outer": {
+        "bytes": 16344,
+        "sha256": "e66e497abb2ef8f9b4c329bfcff75d16636070a213d799253e98e6e1799099e7"
+      },
+      "inner": {
+        "bytes": 12349,
+        "sha256": "4b2c72bf33ed9c8af07ae5b9d599cb349cb5ebcd21e559b514825a4725e3ac00"
+      },
+      "original_aggregate_passed": false,
+      "source": {
+        "bytes": 30739,
+        "sha256": "9c279a3f44429e4f819eb1de4c00981aa75ccd934dcac4eae71283eef1248716"
+      }
+    },
+    {
+      "epoch": 3,
+      "outer": {
+        "bytes": 21436,
+        "sha256": "d038ac952aa6d980d39857eea918c33b9c8974bf77828ebd1dc4d66d127081c5"
+      },
+      "inner": {
+        "bytes": 8153,
+        "sha256": "10762ba37ae47d00aad20b544d34c82bae09b525cf29d857e5755de56fa8fc12"
+      },
+      "original_aggregate_passed": true,
+      "source": {
+        "bytes": 30739,
+        "sha256": "56da8049ef17b9cc9b335f5ec7a00697b22aa4eaf8b57a1eec3639e9526756ac"
+      }
+    }
+  ],
+  "case_passes": {
+    "observer_and_protocol": 69,
+    "SourceOwner": 7,
+    "cleanup": 3,
+    "Source_status": 12,
+    "startup": 5
+  },
+  "total_case_passes": 96,
+  "failed_aggregates_reclassified": false,
+  "old_aborted_stale_case_leaf_cleanup_qualified": false,
+  "old_child_exit_typed_cause_inferred": false,
+  "all_current_Rust_inputs_match_final_snapshot": true,
+  "original_startup_deadline_and_established_100ms_rule_unchanged": true,
+  "normal_owner": {
+    "bytes": 3389992,
+    "sha256": "646245abd8435f6ac1551c2545cbe0af55f9b38685cd5a8a206c241216593cbb",
+    "features": [],
+    "opt_level": "3",
+    "ELF_machine": 62
+  },
+  "actual_CPP_timer_execution": false,
+  "new_graphical_VM_execution": false,
+  "phone_accessed": false
+}

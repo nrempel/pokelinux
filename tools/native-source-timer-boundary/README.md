@@ -6,13 +6,19 @@ shared `source_sampler.hpp` packet publisher and an actual libwayland event
 loop/timer. A separate fixture-only socket selects dispatch. No Source protocol,
 clock, receiver deadline or production CLI is extended.
 
-The frozen two-case baseline executes on a generic ARM kernel: early publication
+The recorded frozen two-case baseline executes on a generic ARM kernel: early publication
 fails with an actual Rust Snapshot, while the activated-source expiry control
 passes. Only the shared publisher's first-dispatch gate changes for GREEN; both
 unchanged cases then pass. Initial150ms silence precedes fresh sequences1/2;
 a later real stall reaches permanent `TimedOut`, including after timer dispatch
 resumes. The configured timer is25ms; its observed sample gap is25,690,904ns,
 without a timer-accuracy guarantee.
+
+The current Rust observer adds [bounded establishment](../../docs/native-source-establishment.md):
+the producer still emits on dispatch 1, but no snapshot escapes until dispatch 2.
+The current tests reflect that boundary and retain terminal expiry after export.
+Their renewed native C++/Wayland execution is pending; the recorded ARM results
+above apply to the earlier frozen tests and observer.
 
 The test startup limit is5s within the production120s maximum. Each case has one
 original8s child-custody cutoff; the unchanged receiver lease is100ms. Source

@@ -35,6 +35,23 @@ fn admitted(observer: &mut Observer, reason: &str) -> Value {
     )
     .unwrap()
 }
+fn establish_protocol(
+    peer: &mut Peer,
+    observer: &mut Observer,
+    initial: Value,
+    reason: &str,
+) -> Value {
+    send(peer, vec![initial.clone()]);
+    observer
+        .poll()
+        .expect("valid protocol prerequisite is provisional");
+    assert!(
+        observer.snapshot().is_none(),
+        "one protocol frame exported authority"
+    );
+    send(peer, vec![initial]);
+    admitted(observer, reason)
+}
 fn terminal(observer: &mut Observer, peer: &mut Peer, reason: &str) {
     assert!(
         observer.poll().is_err(),
@@ -55,8 +72,12 @@ fn terminal(observer: &mut Observer, peer: &mut Peer, reason: &str) {
 #[test]
 fn positive_known_generic_exact_and_sticky_heartbeats_preserve_event_revision() {
     let (mut p, mut o) = start(0);
-    send(&mut p, vec![locked(json!(1))]);
-    let first = admitted(&mut o, "first accepted generation1 with real mapped peer");
+    let first = establish_protocol(
+        &mut p,
+        &mut o,
+        locked(json!(1)),
+        "first accepted generation1 with real mapped peer",
+    );
     assert_eq!(first["lock_generation"], 1);
     assert!(first["protocol_unlock"].is_null());
     assert_eq!(o.revision(), 1);
@@ -108,9 +129,10 @@ fn positive_known_generic_exact_and_sticky_heartbeats_preserve_event_revision() 
 #[test]
 fn positive_late_attachment_unknown_generation_keeps_real_mapped_owner() {
     let (mut p, mut o) = start(0);
-    send(&mut p, vec![locked(Value::Null)]);
-    let frame = admitted(
+    let frame = establish_protocol(
+        &mut p,
         &mut o,
+        locked(Value::Null),
         "late attachment mapped owner with unknown generation",
     );
     assert!(frame["lock_generation"].is_null());
@@ -134,6 +156,14 @@ fn positive_late_attachment_unknown_generation_keeps_real_mapped_owner() {
 #[test]
 fn positive_queued_accepted_unlock_exact_unknown_relock_keeps_all_revisions() {
     let (mut p, mut o) = start(0);
+    let initial = establish_protocol(
+        &mut p,
+        &mut o,
+        generic_unlock(),
+        "neutral authority before queued transitions",
+    );
+    let initial_revision = o.revision();
+    let initial_sequence = initial["sequence"].as_u64().unwrap();
     send(
         &mut p,
         vec![
@@ -148,22 +178,29 @@ fn positive_queued_accepted_unlock_exact_unknown_relock_keeps_all_revisions() {
         &mut o,
         "all five queued semantic transitions must be admitted in one bounded drain",
     );
-    assert_eq!(frame["sequence"], 5);
+    assert_eq!(frame["sequence"], initial_sequence + 5);
     assert_eq!(frame["lock_generation"], 2);
     assert!(frame["protocol_unlock"].is_null());
     assert_eq!(
         o.revision(),
-        5,
+        initial_revision + 5,
         "queued exact event and generation changes cannot coalesce away"
     );
-    assert_eq!(Provider::poll(&mut o).unwrap().unwrap().revision, 5);
+    assert_eq!(
+        Provider::poll(&mut o).unwrap().unwrap().revision,
+        initial_revision + 5
+    );
 }
 
 #[test]
 fn positive_known_generation_survives_temporarily_unavailable_mapped_owner() {
     let (mut p, mut o) = start(0);
-    send(&mut p, vec![locked(json!(1))]);
-    admitted(&mut o, "known generation with actual owned mapped locker");
+    establish_protocol(
+        &mut p,
+        &mut o,
+        locked(json!(1)),
+        "known generation with actual owned mapped locker",
+    );
     let mut unavailable = locked(json!(1));
     unavailable["mapped"] = json!(false);
     send(&mut p, vec![unavailable]);
@@ -223,8 +260,15 @@ fn initial_generation_shape_refusals_are_terminal_but_old_unknown_field_is_not_s
     ] {
         let (mut p, mut o) = start(0);
         if !prefix.is_empty() {
+            let provisional = prefix.len() == 1;
             send(&mut p, prefix);
-            admitted(&mut o, &format!("valid prerequisite before {reason}"));
+            if provisional {
+                o.poll()
+                    .expect("valid initial prerequisite remains provisional");
+                assert!(o.snapshot().is_none());
+            } else {
+                admitted(&mut o, &format!("valid prerequisite before {reason}"));
+            }
         }
         send(&mut p, vec![packet]);
         terminal(&mut o, &mut p, reason);
@@ -236,8 +280,18 @@ fn initial_generation_shape_refusals_are_terminal_but_old_unknown_field_is_not_s
 
 fn after_valid_prefix(reason: &str, prefix: Vec<Value>, bad: Value) {
     let (mut p, mut o) = start(0);
-    send(&mut p, prefix);
-    admitted(&mut o, &format!("valid prerequisite before {reason}"));
+    let mut prefix = prefix.into_iter();
+    establish_protocol(
+        &mut p,
+        &mut o,
+        prefix.next().expect("valid initial protocol state"),
+        &format!("established prerequisite before {reason}"),
+    );
+    let remaining: Vec<_> = prefix.collect();
+    if !remaining.is_empty() {
+        send(&mut p, remaining);
+        admitted(&mut o, &format!("valid prerequisite before {reason}"));
+    }
     send(&mut p, vec![bad]);
     terminal(&mut o, &mut p, reason);
 }

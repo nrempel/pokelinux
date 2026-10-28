@@ -3,9 +3,10 @@
 The installed session owner now uses native Rust startup notification. Its unit
 selects `Type=notify`, `NotifyAccess=main` and a120s startup limit. This addresses
 the observed ordering defect: `Type=exec` allowed the genuine shell to try its
-Wayland connection before the compositor endpoint existed. The new installed
-PID1/cold-shell behavior has not yet been executed; the earlier two cold failures
-remain failed. See the [actual cold RED](native-normal-upstream-tracer.md#cold-installed-startup-fails-before-sounds).
+Wayland connection before the compositor endpoint existed. Subsequent installed
+PID1 runs reach Source freshness failures before healthy cold-shell startup;
+those failures remain failed. See the [actual cold RED](native-normal-upstream-tracer.md#cold-installed-startup-fails-before-sounds)
+and [later cold diagnostics](native-session-x86-runtime.md).
 
 ## Existing authority, one notification
 
@@ -14,6 +15,10 @@ after polling the sole Source provider. Durable policy must be ready, Source mus
 be required and its accepted sample must remain fresh and nonterminal. A locked
 session is eligible; unlock, foreground focus and app permission are independent.
 No second Source consumer, synthetic heartbeat or renewed deadline is added.
+
+The current provider performs [bounded Source establishment](native-source-establishment.md)
+before supplying that first accepted cutoff. Provisional packets cannot reach
+the lifecycle actor or satisfy the notifier; the original startup limit remains.
 
 The Rust notifier makes a nonblocking connection to the configured Wayland
 endpoint. It checks actual peer PID/UID/GID1000 and obtains the kernel's peer pidfd,

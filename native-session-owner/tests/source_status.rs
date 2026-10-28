@@ -344,8 +344,20 @@ fn snapshot_actual_source_child_exit_reports_disconnect() {
     let kind = source(&failed)["first_failure"]["error_kind"]
         .as_str()
         .unwrap();
+    let rejection = &source(&failed)["first_failure"]["observer_rejection"];
+    // Socket closure can be observed before the child's pidfd becomes readable.
+    // Preserve the observer's existing zero-byte rejection, not arbitrary errors.
+    let empty_receive = kind == "InvalidData"
+        && rejection["stage"] == "receive"
+        && rejection["reason"] == "receive_zero_bytes"
+        && rejection["receive"]["received_bytes"] == 0
+        && rejection["receive"]["payload_truncated"] == false
+        && rejection["receive"]["control_truncated"] == false
+        && rejection["receive"]["errno"].is_null();
+    eprintln!("ACTUAL_KILLED_SOURCE_STATUS {}", source(&failed));
+    assert!(!pokelinux_lifecycle::authority::living(&fd).unwrap());
     assert!(
-        matches!(kind, "NotConnected" | "UnexpectedEof"),
+        matches!(kind, "NotConnected" | "UnexpectedEof") || empty_receive,
         "actual child disconnect kind: {kind}"
     );
     failure(&failed, kind, before, after);

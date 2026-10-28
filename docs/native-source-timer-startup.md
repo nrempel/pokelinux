@@ -7,6 +7,11 @@ positive lock association before sampling starts. A shared publisher performs
 the existing bounded JSON/sendmsg/SCM_RIGHTS path. The wire, Rust SourceOwner,
 Observer and100ms freshness lease are unchanged; later failure stays terminal.
 
+That receiver statement describes the recorded producer-gate checkpoint below.
+The current Rust observer additionally requires a fresh consecutive pair before
+[first snapshot export](native-source-establishment.md). The C++ publisher is
+unchanged; adapted timer tests still await renewed native execution.
+
 The preceding [combined startup failures](native-session-owner.md#cold-start-source-failure)
 include a separately modified private owner diagnostic: first returned sequence1
 ages120.9ms, then `TimedOut` and actual child signal9. This identifies that

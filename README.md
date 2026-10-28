@@ -58,6 +58,10 @@ into one complete phone session.
 
 The current [Messages background owner](docs/native-installed-messages-history.md#current-owner-integration) now passes one fresh ARM/PID1 cold boot, exact private history reads and normal Stop. A second new boot and graphical session remain open.
 
+Cold-start work now keeps session authority unavailable until compositor updates
+form a fresh consecutive pair. The first real socket/process regression passes;
+full graphical cold startup remains open. [Startup change](docs/native-source-establishment.md).
+
 Host component tests, original-code execution, Android reference tests, ARM
 user-mode emulation, full-system VMs and physical hardware evidence are recorded
 separately. A passing component or virtual device does not qualify a phone.

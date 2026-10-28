@@ -143,11 +143,31 @@ fn start_transferred_pidfd(uid_offset: u32, transferred: bool) -> (Peer, Observe
         alive_raw,
     )
 }
+// Existing post-establishment regressions first cross the real raw boundary.
+// Neither start() nor a packet command silently primes an Observer.
+fn establish(peer: &mut Peer, observer: &mut Observer, first: &str, heartbeat: &str) {
+    peer.command(first);
+    observer
+        .poll()
+        .expect("valid first packet must remain provisional");
+    assert!(
+        observer.snapshot().is_none(),
+        "one packet exported authority"
+    );
+    peer.command(heartbeat);
+    observer
+        .poll()
+        .expect("fresh advancing second packet must validate");
+    assert!(
+        observer.snapshot().is_some(),
+        "fresh pair did not establish authority"
+    );
+}
+
 #[test]
 fn actual_packet_sender_overrides_socketpair_creation_credentials() {
     let (mut peer, mut observer) = start(0);
-    peer.command("valid");
-    observer.poll().unwrap();
+    establish(&mut peer, &mut observer, "valid", "heartbeat");
     let state = observer
         .snapshot()
         .expect("actual source packet must be admitted");
@@ -158,7 +178,7 @@ fn actual_packet_sender_overrides_socketpair_creation_credentials() {
 fn delegated_same_uid_descriptor_cannot_impersonate_source() {
     let (mut p, mut o) = start(0);
     p.command("delegated");
-    let _ = o.poll();
+    assert!(o.poll().is_err(), "strict invalid packet was not rejected");
     assert!(
         o.snapshot().is_none(),
         "delegated actual sender was admitted"
@@ -168,7 +188,7 @@ fn delegated_same_uid_descriptor_cannot_impersonate_source() {
 fn actual_sender_uid_must_match_installed_source() {
     let (mut p, mut o) = start(1);
     p.command("valid");
-    let _ = o.poll();
+    assert!(o.poll().is_err(), "strict invalid packet was not rejected");
     assert!(
         o.snapshot().is_none(),
         "wrong actual source UID was admitted"
@@ -177,7 +197,7 @@ fn actual_sender_uid_must_match_installed_source() {
 fn invalid_packet(mode: &str) {
     let (mut p, mut o) = start(0);
     p.command(mode);
-    let _ = o.poll();
+    assert!(o.poll().is_err(), "strict invalid packet was not rejected");
     assert!(
         o.snapshot().is_none(),
         "invalid actual packet admitted: {mode}"
@@ -203,17 +223,27 @@ fn contradictory_locked_native_focus_is_refused() {
 fn expired_actual_packet_does_not_refresh_source() {
     let (mut p, mut o) = start(0);
     p.command("stale");
-    let _ = o.poll();
+    o.poll()
+        .expect("stale provisional timing alone is not terminal");
     assert!(o.snapshot().is_none(), "stale actual packet was admitted");
+    assert!(pokelinux_lifecycle::session::Provider::first_rejection(&o).is_none());
+    p.command("valid");
+    o.poll().unwrap();
+    assert!(
+        o.snapshot().is_none(),
+        "stale packet counted toward a fresh pair"
+    );
+    p.command("heartbeat");
+    o.poll().unwrap();
+    assert_eq!(o.snapshot().expect("fresh pair must establish").sequence, 3);
 }
 #[test]
 fn idle_live_source_does_not_extend_original_sample() {
     let (mut p, mut o) = start(0);
-    p.command("valid");
-    o.poll().unwrap();
+    establish(&mut p, &mut o, "valid", "heartbeat");
     assert!(o.snapshot().is_some());
     std::thread::sleep(Duration::from_millis(150));
-    let _ = o.poll();
+    assert!(o.poll().is_err(), "strict invalid packet was not rejected");
     assert!(
         o.snapshot().is_none(),
         "living silent source extended original deadline"
@@ -224,7 +254,7 @@ fn buffered_packet_from_actually_reaped_source_is_refused() {
     let (mut p, mut o) = start(0);
     p.command("die");
     p.reap();
-    let _ = o.poll();
+    assert!(o.poll().is_err(), "strict invalid packet was not rejected");
     assert!(
         o.snapshot().is_none(),
         "buffered dead-source frame was admitted"
@@ -234,20 +264,20 @@ fn buffered_packet_from_actually_reaped_source_is_refused() {
 fn bounded_turn_overflow_is_terminal_and_discards_all_state() {
     let (mut p, mut o) = start(0);
     p.command("burst");
-    let _ = o.poll();
+    assert!(o.poll().is_err(), "strict invalid packet was not rejected");
     assert!(o.snapshot().is_none(), "flooded source was admitted");
     p.command("valid");
-    let _ = o.poll();
+    assert!(o.poll().is_err(), "strict invalid packet was not rejected");
     assert!(o.snapshot().is_none(), "failed source was reactivated");
 }
 #[test]
 fn invalid_source_stays_failed_even_after_valid_packet() {
     let (mut p, mut o) = start(0);
     p.command("wrong-source");
-    let _ = o.poll();
+    assert!(o.poll().is_err(), "strict invalid packet was not rejected");
     assert!(o.snapshot().is_none());
     p.command("valid");
-    let _ = o.poll();
+    assert!(o.poll().is_err(), "strict invalid packet was not rejected");
     assert!(
         o.snapshot().is_none(),
         "failed source implicitly reactivated"
@@ -264,13 +294,12 @@ fn _io_type(_: io::Error) {}
 #[test]
 fn unchanged_actual_heartbeat_does_not_cancel_semantic_revision() {
     let (mut p, mut o) = start(0);
-    p.command("valid");
-    o.poll().unwrap();
+    establish(&mut p, &mut o, "valid", "heartbeat");
     let initial = o.revision();
     assert_eq!(initial, 1);
     p.command("heartbeat");
     o.poll().unwrap();
-    assert_eq!(o.snapshot().unwrap().sequence, 2);
+    assert_eq!(o.snapshot().unwrap().sequence, 3);
     assert_eq!(
         o.revision(),
         initial,
@@ -280,8 +309,7 @@ fn unchanged_actual_heartbeat_does_not_cancel_semantic_revision() {
 #[test]
 fn actual_lock_unlock_drained_together_retains_both_semantic_changes() {
     let (mut p, mut o) = start(0);
-    p.command("valid");
-    o.poll().unwrap();
+    establish(&mut p, &mut o, "valid", "heartbeat");
     let initial_focus = o.snapshot().unwrap().focus.clone();
     assert_eq!(o.revision(), 1);
     p.command("cycle");
@@ -336,8 +364,7 @@ fn transferred_source_pidfd_does_not_leak_into_an_actual_later_exec() {
 #[test]
 fn actual_owned_focus_pidfd_is_retained_after_sender_closes_its_transfer_copy() {
     let (mut p, mut o) = start(0);
-    p.command("owned-focus");
-    o.poll().unwrap();
+    establish(&mut p, &mut o, "owned-focus", "owned-focus-heartbeat");
     let frame = o
         .snapshot()
         .expect("actual owned focused peer must be admitted");
@@ -356,7 +383,7 @@ fn actual_owned_focus_rejects_two_transferred_descriptors_without_leaking() {
     let (mut p, mut o) = start(0);
     let before = std::fs::read_dir("/proc/self/fd").unwrap().count();
     p.command("owned-focus-two");
-    let _ = o.poll();
+    assert!(o.poll().is_err(), "strict invalid packet was not rejected");
     assert!(o.snapshot().is_none());
     let after = std::fs::read_dir("/proc/self/fd").unwrap().count();
     assert!(
@@ -374,7 +401,7 @@ fn actual_ancillary_truncation_drops_every_delivered_handle() {
     let (mut p, mut o) = start(0);
     let before = std::fs::read_dir("/proc/self/fd").unwrap().count();
     p.command("owned-focus-truncated-rights");
-    let _ = o.poll();
+    assert!(o.poll().is_err(), "strict invalid packet was not rejected");
     assert!(o.snapshot().is_none());
     assert!(std::fs::read_dir("/proc/self/fd").unwrap().count() <= before);
 }
@@ -385,8 +412,7 @@ fn scalar_pidfs_wire_is_refused_without_compatibility() {
 #[test]
 fn repeated_actual_transfer_retains_one_handle_and_cloexec_fences_later_exec() {
     let (mut p, mut o) = start(0);
-    p.command("owned-focus");
-    o.poll().unwrap();
+    establish(&mut p, &mut o, "owned-focus", "owned-focus-heartbeat");
     let before = std::fs::read_dir("/proc/self/fd").unwrap().count();
     for _ in 0..100 {
         p.command("owned-focus-heartbeat");
@@ -420,8 +446,7 @@ fn repeated_actual_transfer_retains_one_handle_and_cloexec_fences_later_exec() {
 #[test]
 fn dead_focused_app_does_not_fail_source_and_changed_handle_fences_same_metadata() {
     let (mut p, mut o) = start(0);
-    p.command("focus-child-live");
-    o.poll().unwrap();
+    establish(&mut p, &mut o, "focus-child-live", "focus-child-heartbeat");
     let metadata = o.snapshot().unwrap().focus.clone();
     assert_eq!(o.revision(), 1);
     p.command("focus-child-dead");
@@ -485,8 +510,7 @@ fn queue_timely_successor(peer: &mut Peer, sampled_at: u64, mode: &str) -> u64 {
 #[test]
 fn timely_actual_queued_heartbeat_is_drained_before_cached_expiry() {
     let (mut peer, mut observer) = start(0);
-    peer.command("valid");
-    observer.poll().unwrap();
+    establish(&mut peer, &mut observer, "valid", "heartbeat");
     let initial = observer.snapshot().unwrap().clone();
     let original_until = initial.sampled_at_ns + pokelinux_session::SAMPLE_BUDGET_NS;
     let successor_after = queue_timely_successor(&mut peer, initial.sampled_at_ns, "heartbeat");
@@ -495,7 +519,7 @@ fn timely_actual_queued_heartbeat_is_drained_before_cached_expiry() {
         .poll()
         .expect("a real timely fresh queued heartbeat must precede expiry detection");
     let current = observer.snapshot().unwrap();
-    assert_eq!(current.sequence, 2);
+    assert_eq!(current.sequence, 3);
     assert!(current.sampled_at_ns >= successor_after);
     assert!(current.sampled_at_ns < original_until);
     assert_eq!(observer.revision(), 1);
@@ -506,15 +530,14 @@ fn timely_actual_queued_heartbeat_is_drained_before_cached_expiry() {
 #[test]
 fn timely_actual_queued_lock_cycle_preserves_every_semantic_revision() {
     let (mut peer, mut observer) = start(0);
-    peer.command("valid");
-    observer.poll().unwrap();
+    establish(&mut peer, &mut observer, "valid", "heartbeat");
     let initial = observer.snapshot().unwrap().clone();
     queue_timely_successor(&mut peer, initial.sampled_at_ns, "cycle");
     observer
         .poll()
         .expect("timely fresh queued lock/unlock must be examined before cache expiry");
     let current = observer.snapshot().unwrap();
-    assert_eq!(current.sequence, 3);
+    assert_eq!(current.sequence, 4);
     assert!(!current.locked);
     assert_eq!(current.focus, initial.focus);
     assert_eq!(observer.revision(), 3);
@@ -523,8 +546,7 @@ fn timely_actual_queued_lock_cycle_preserves_every_semantic_revision() {
 #[test]
 fn genuine_actual_successor_sampling_gap_remains_terminal() {
     let (mut peer, mut observer) = start(0);
-    peer.command("valid");
-    observer.poll().unwrap();
+    establish(&mut peer, &mut observer, "valid", "heartbeat");
     let until = observer.snapshot().unwrap().sampled_at_ns + pokelinux_session::SAMPLE_BUDGET_NS;
     await_boottime(until + 10_000_000);
     peer.command("heartbeat");
@@ -538,8 +560,7 @@ fn genuine_actual_successor_sampling_gap_remains_terminal() {
 #[test]
 fn expired_snapshot_observation_cannot_later_admit_queued_successor() {
     let (mut peer, mut observer) = start(0);
-    peer.command("valid");
-    observer.poll().unwrap();
+    establish(&mut peer, &mut observer, "valid", "heartbeat");
     let sampled_at = observer.snapshot().unwrap().sampled_at_ns;
     queue_timely_successor(&mut peer, sampled_at, "heartbeat");
     assert!(observer.snapshot().is_none());
@@ -552,8 +573,7 @@ fn expired_snapshot_observation_cannot_later_admit_queued_successor() {
 #[test]
 fn backwards_intermediate_actual_sample_cannot_hide_in_fresh_final_frame() {
     let (mut peer, mut observer) = start(0);
-    peer.command("valid");
-    observer.poll().unwrap();
+    establish(&mut peer, &mut observer, "valid", "heartbeat");
     let sampled_at = observer.snapshot().unwrap().sampled_at_ns;
     peer.command(&format!("backward-cycle:{}", sampled_at - 1));
     assert!(
@@ -566,6 +586,7 @@ fn backwards_intermediate_actual_sample_cannot_hide_in_fresh_final_frame() {
 #[test]
 fn expired_intermediate_actual_packet_is_not_skipped_for_fresh_final_frame() {
     let (mut peer, mut observer) = start(0);
+    establish(&mut peer, &mut observer, "valid", "heartbeat");
     peer.command("expired-then-fresh");
     assert!(observer.poll().is_err());
     assert!(observer.snapshot().is_none());
@@ -574,8 +595,7 @@ fn expired_intermediate_actual_packet_is_not_skipped_for_fresh_final_frame() {
 #[test]
 fn previously_returned_timeout_stays_terminal_after_actual_fresh_packet() {
     let (mut peer, mut observer) = start(0);
-    peer.command("valid");
-    observer.poll().unwrap();
+    establish(&mut peer, &mut observer, "valid", "heartbeat");
     let until = observer.snapshot().unwrap().sampled_at_ns + pokelinux_session::SAMPLE_BUDGET_NS;
     await_boottime(until + 10_000_000);
     assert!(observer.poll().is_err());
@@ -587,8 +607,7 @@ fn previously_returned_timeout_stays_terminal_after_actual_fresh_packet() {
 #[test]
 fn exactly_contiguous_actual_wire_leases_do_not_extend_old_deadline() {
     let (mut peer, mut observer) = start(0);
-    peer.command("valid");
-    observer.poll().unwrap();
+    establish(&mut peer, &mut observer, "valid", "heartbeat");
     let until = observer.snapshot().unwrap().sampled_at_ns + pokelinux_session::SAMPLE_BUDGET_NS;
     await_boottime(until);
     // An authored exact-boundary field travels through the real credential/FD
@@ -605,9 +624,7 @@ fn exactly_contiguous_actual_wire_leases_do_not_extend_old_deadline() {
 #[test]
 fn actual_mapped_locker_is_admitted_with_its_owned_kernel_handle() {
     let (mut p, mut o) = start(0);
-    p.command("owned-locker");
-    o.poll()
-        .expect("fresh mapped locker with an actual live matching pidfd must be admitted");
+    establish(&mut p, &mut o, "owned-locker", "owned-locker-heartbeat");
     let frame = serde_json::to_value(o.snapshot().unwrap()).unwrap();
     assert_eq!(frame["locker"]["state"], "mapped");
     assert_eq!(frame["locker"]["pid"], p.child.id());
@@ -637,7 +654,7 @@ fn actual_locker_shape_and_handle_contradictions_are_terminal() {
 fn owned_locker_heartbeats_retain_one_cloexec_handle_and_unavailable_releases_it() {
     use pokelinux_lifecycle::session::Provider;
     let (mut p, mut o) = start(0);
-    p.command("owned-locker");
+    establish(&mut p, &mut o, "owned-locker", "owned-locker-heartbeat");
     let snapshot = Provider::poll(&mut o).unwrap().unwrap();
     let locker = snapshot.locker.as_ref().unwrap();
     assert_eq!(locker.metadata.pid, p.child.id());
@@ -695,7 +712,12 @@ fn owned_locker_heartbeats_retain_one_cloexec_handle_and_unavailable_releases_it
 fn dead_locker_packet_cannot_keep_or_reactivate_owned_locker_state() {
     use pokelinux_lifecycle::session::Provider;
     let (mut p, mut o) = start(0);
-    p.command("locker-child-live");
+    establish(
+        &mut p,
+        &mut o,
+        "locker-child-live",
+        "locker-child-heartbeat",
+    );
     assert!(Provider::poll(&mut o).unwrap().unwrap().locker.is_some());
     p.command("locker-child-dead");
     assert!(Provider::poll(&mut o).is_err());
@@ -723,6 +745,10 @@ fn first_rejection_survives_stop_repeated_poll_and_snapshot() {
         ("expired-then-fresh", SourceRejectionReason::SampleExpired),
     ] {
         let (mut peer, mut observer) = start(0);
+        if mode == "expired-then-fresh" {
+            // Expiry remains terminal once authority has actually escaped.
+            establish(&mut peer, &mut observer, "valid", "heartbeat");
+        }
         peer.command(mode);
         assert_eq!(
             observer.poll().unwrap_err().kind(),
@@ -746,8 +772,7 @@ fn first_rejection_survives_stop_repeated_poll_and_snapshot() {
 fn intentional_observer_stop_does_not_fabricate_rejection() {
     use pokelinux_lifecycle::session::Provider;
     let (mut peer, mut observer) = start(0);
-    peer.command("valid");
-    observer.poll().unwrap();
+    establish(&mut peer, &mut observer, "valid", "heartbeat");
     assert!(observer.snapshot().is_some());
     assert!(Provider::first_rejection(&observer).is_none());
     Provider::stop(&mut observer);

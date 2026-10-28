@@ -64,6 +64,11 @@ pub struct Observer {
     uid: u32,
     source: String,
     current: Option<Frame>,
+    // Wire/protocol history remains in current even when startup timing expires.
+    candidate_live: bool,
+    pair_ready: bool,
+    first_export_sequence: Option<u64>,
+    exported: Option<Frame>,
     focus: Option<OwnedFocus>,
     locker: Option<OwnedFocus>,
     view: ProcessView,
@@ -112,6 +117,10 @@ impl Observer {
             uid,
             source,
             current: None,
+            candidate_live: false,
+            pair_ready: false,
+            first_export_sequence: None,
+            exported: None,
             focus: None,
             locker: None,
             view,
@@ -144,6 +153,7 @@ impl Observer {
         }
         self.failed = true;
         self.current = None;
+        self.exported = None;
         self.focus = None;
         self.locker = None;
         self.fd = None;
@@ -324,7 +334,9 @@ impl Observer {
                     context,
                 );
             }
-            // Preserve the uninterrupted monotonic chain before checking current freshness.
+            // Sequence, timestamp and protocol history survive provisional gaps.
+            // Once any snapshot escapes, the uninterrupted chain is mandatory.
+            let mut continuous = false;
             if let Some(previous) = &self.current {
                 if frame.sampled_at_ns < previous.sampled_at_ns {
                     return self.fail(
@@ -334,11 +346,12 @@ impl Observer {
                         context,
                     );
                 }
-                if previous
+                let gap = previous
                     .sampled_at_ns
                     .checked_add(SAMPLE_BUDGET_NS)
-                    .is_none_or(|until| frame.sampled_at_ns > until)
-                {
+                    .is_none_or(|until| frame.sampled_at_ns > until);
+                continuous = !gap && frame.sampled_at_ns > previous.sampled_at_ns;
+                if gap && self.first_export_sequence.is_some() {
                     return self.fail(
                         io::ErrorKind::InvalidData,
                         Stage::Validation,
@@ -349,7 +362,8 @@ impl Observer {
             }
             let now = boottime_ns();
             context.validated_at = Some(now);
-            if !Self::live_sample(&frame, now) {
+            let fresh = Self::live_sample(&frame, now);
+            if !fresh && (self.first_export_sequence.is_some() || frame.sampled_at_ns > now) {
                 let reason = if frame.sampled_at_ns > now {
                     Reason::SampleFuture
                 } else {
@@ -437,6 +451,10 @@ impl Observer {
                 self.revision = revision;
             }
             self.sequence = frame.sequence;
+            if self.first_export_sequence.is_none() {
+                self.pair_ready = self.candidate_live && continuous && fresh;
+                self.candidate_live = fresh;
+            }
             self.current = Some(frame);
             self.focus = focus;
             self.locker = locker;
@@ -452,6 +470,11 @@ impl Observer {
         if let Some(frame) = &self.current {
             let now = boottime_ns();
             if !Self::live_sample(frame, now) {
+                if self.first_export_sequence.is_none() {
+                    self.candidate_live = false;
+                    self.pair_ready = false;
+                    return Ok(());
+                }
                 let context = RejectionContext {
                     sample: Some(sample_metadata(frame)),
                     validated_at: Some(now),
@@ -472,7 +495,8 @@ impl Observer {
         self.revision
     }
     /// A living source alone never extends the original sample's absolute deadline.
-    /// Observed expiry/death is terminal, including before a later poll.
+    /// Before first export, a fresh advancing pair establishes the source.
+    /// Afterwards observed expiry/death is terminal, including before a later poll.
     pub fn snapshot(&mut self) -> Option<&Frame> {
         if self.failed {
             return None;
@@ -489,6 +513,11 @@ impl Observer {
         if let Some(frame) = &self.current {
             let now = boottime_ns();
             if !Self::live_sample(frame, now) {
+                if self.first_export_sequence.is_none() {
+                    self.candidate_live = false;
+                    self.pair_ready = false;
+                    return None;
+                }
                 let context = RejectionContext {
                     sample: Some(sample_metadata(frame)),
                     validated_at: Some(now),
@@ -503,7 +532,24 @@ impl Observer {
                 return None;
             }
         }
-        self.current.as_ref()
+        let frame = self.current.as_ref()?;
+        if self.first_export_sequence.is_none() && !self.pair_ready {
+            return None;
+        }
+        // Commit only at export, never partway through draining queued frames.
+        let first = *self.first_export_sequence.get_or_insert(frame.sequence);
+        let mut exported = frame.clone();
+        // Validate old occurrences against raw wire history, but never turn an
+        // occurrence from before authority existed into authentication evidence.
+        if exported
+            .protocol_unlock
+            .as_ref()
+            .is_some_and(|event| event.sequence <= first)
+        {
+            exported.protocol_unlock = None;
+        }
+        self.exported = Some(exported);
+        self.exported.as_ref()
     }
 }
 #[derive(Default)]
@@ -618,6 +664,7 @@ impl pokelinux_lifecycle::session::Provider for Observer {
     fn stop(&mut self) {
         self.failed = true;
         self.current = None;
+        self.exported = None;
         self.focus = None;
         self.locker = None;
         self.fd = None;

@@ -2445,8 +2445,13 @@ Its session-app join in the x86 preview remains blocked. The latest
 fails at `cached_sample/sample_expired` with only sequence 1 accepted, age
 110.114129 ms; earlier `sample_gap` failures remain separate. The ring records a
 completed fd 22 call and unmatched fd 25 entry; the same-epoch log maps fd 25 to
-idle. Next inspect the matched idle callbacks and normal startup authority
-boundary before selecting a repair, without inferring a hang or cause.
+idle; neither a hang nor a cause is established. The new
+[bounded Source establishment](native-source-establishment.md) withholds authority
+until a fresh consecutive pair, preserves protocol history through provisional
+timing gaps, and keeps established failure terminal. Its frozen kernel RED→GREEN
+and 96 scoped host cases pass, with a normal optimized owner built. Next run the
+original cold shell/Sounds consumer with that owner and explicit disabled optional
+backends; the Messages app join remains subsequent work.
 Source's 100 ms limit, all consumer criteria
 and the separate 50 ms connectivity guard remain unchanged. Historical
 six-argument harnesses require their recorded sources/ELFs; a second current

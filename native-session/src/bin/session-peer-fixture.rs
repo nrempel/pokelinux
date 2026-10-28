@@ -336,10 +336,12 @@ fn main() -> io::Result<()> {
                             "fixture does not force numeric PID reuse"
                         );
                         focus_child = Some((child, peer, old_pid));
-                    } else {
+                    } else if action != "heartbeat" {
                         return Err(io::ErrorKind::InvalidInput.into());
                     }
-                    let (_, peer, metadata_pid) = focus_child.as_ref().unwrap();
+                    // A heartbeat retains the exact same owned child and pidfd.
+                    let (_, peer, metadata_pid) =
+                        focus_child.as_ref().ok_or(io::ErrorKind::InvalidInput)?;
                     let mut frame: Frame =
                         serde_json::from_slice(&wire(source, "valid", own_sequence)).unwrap();
                     if locker {
@@ -381,38 +383,51 @@ fn main() -> io::Result<()> {
                         }
                     }
                 } else if let Some(sample) = mode.strip_prefix("timestamp-heartbeat:") {
+                    own_sequence += 1;
                     let mut frame: Frame =
-                        serde_json::from_slice(&wire(source, "valid", 2)).unwrap();
+                        serde_json::from_slice(&wire(source, "valid", own_sequence)).unwrap();
                     frame.sampled_at_ns =
                         sample.parse().map_err(|_| io::ErrorKind::InvalidInput)?;
                     packet(&fd, &serde_json::to_vec(&frame).unwrap())?;
                 } else if let Some(sample) = mode.strip_prefix("backward-cycle:") {
+                    own_sequence += 1;
                     let mut frame: Frame =
-                        serde_json::from_slice(&wire(source, "valid", 2)).unwrap();
+                        serde_json::from_slice(&wire(source, "valid", own_sequence)).unwrap();
                     frame.sampled_at_ns =
                         sample.parse().map_err(|_| io::ErrorKind::InvalidInput)?;
                     frame.locked = true;
                     frame.focus = None;
                     packet(&fd, &serde_json::to_vec(&frame).unwrap())?;
-                    packet(&fd, &wire(source, "valid", 3))?;
+                    own_sequence += 1;
+                    packet(&fd, &wire(source, "valid", own_sequence))?;
                 } else if mode == "expired-then-fresh" {
-                    packet(&fd, &wire(source, "stale", 1))?;
-                    packet(&fd, &wire(source, "valid", 2))?;
+                    own_sequence += 1;
+                    packet(&fd, &wire(source, "valid", own_sequence))?;
+                    // Expire an actually queued advancing packet, without
+                    // changing its clock or testing a backwards timestamp.
+                    std::thread::sleep(std::time::Duration::from_millis(130));
+                    own_sequence += 1;
+                    packet(&fd, &wire(source, "valid", own_sequence))?;
                 } else if mode == "heartbeat" {
-                    packet(&fd, &wire(source, "valid", 2))?;
+                    own_sequence += 1;
+                    packet(&fd, &wire(source, "valid", own_sequence))?;
                 } else if mode == "cycle" {
+                    own_sequence += 1;
                     let mut locked: Frame =
-                        serde_json::from_slice(&wire(source, "valid", 2)).unwrap();
+                        serde_json::from_slice(&wire(source, "valid", own_sequence)).unwrap();
                     locked.locked = true;
                     locked.focus = None;
                     packet(&fd, &serde_json::to_vec(&locked).unwrap())?;
-                    packet(&fd, &wire(source, "valid", 3))?;
+                    own_sequence += 1;
+                    packet(&fd, &wire(source, "valid", own_sequence))?;
                 } else if mode == "burst" {
-                    for sequence in 1..=18 {
-                        packet(&fd, &wire(source, "valid", sequence))?;
+                    for _ in 0..18 {
+                        own_sequence += 1;
+                        packet(&fd, &wire(source, "valid", own_sequence))?;
                     }
                 } else {
-                    packet(&fd, &wire(source, mode, 1))?;
+                    own_sequence += 1;
+                    packet(&fd, &wire(source, mode, own_sequence))?;
                 }
                 ipc::send(&command, b"ready")?;
                 if mode == "die" {

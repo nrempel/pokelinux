@@ -42,6 +42,7 @@ struct Case {
     stopped: bool,
     trace: UnixDatagram,
     polls: Vec<RawPoll>,
+    trace_limit: usize,
 }
 impl Case {
     fn new(mode: &str) -> Self {
@@ -99,6 +100,10 @@ impl Case {
             stopped: false,
             trace,
             polls: vec![],
+            // This case observes the entire original five-second startup
+            // budget, rather than a short immediate-error window. Retain every
+            // hook record within a fixed, sub-megabyte typed-record bound.
+            trace_limit: if mode == "gated_stale" { 16_384 } else { 2048 },
         };
         for fd in [
             c.child.stdout.as_ref().unwrap() as &dyn std::os::fd::AsFd,
@@ -135,7 +140,10 @@ impl Case {
                         assert!(previous.observed_at_boottime_ns <= raw.observed_at_boottime_ns);
                     }
                     self.polls.push(raw);
-                    assert!(self.polls.len() <= 2048, "bounded raw actor trace");
+                    assert!(
+                        self.polls.len() <= self.trace_limit,
+                        "bounded raw actor trace"
+                    );
                 }
                 Err(e) if e.kind() == io::ErrorKind::WouldBlock => break,
                 Err(e) => panic!("raw trace: {e}"),
@@ -392,16 +400,24 @@ fn rejected_first_source_never_becomes_startup_eligible() {
 fn stale_first_source_never_becomes_startup_eligible() {
     let mut c = Case::new("gated_stale");
     awaiting(&mut c);
-    let before = boottime_ns();
     c.allow_source();
-    let failed = c.failed();
-    failure(&failed, "InvalidData", before, boottime_ns());
+    let failed = loop {
+        let state = c.snapshot();
+        c.assert_no_publication();
+        if source(&state)["state"] == "failed" {
+            break state;
+        }
+        assert_eq!(source(&state)["state"], "awaiting_first");
+        assert!(source(&state)["last_accepted"].is_null());
+        assert!(source(&state)["first_failure"].is_null());
+        // Observe the original startup deadline, retaining the original later
+        // closure budget; no new allowance follows provisional timing expiry.
+        assert!(boottime_ns() < c.until - 1_000_000_000);
+        tick();
+    };
+    failure(&failed, "TimedOut", c.source_until, boottime_ns());
     assert!(source(&failed)["last_accepted"].is_null());
-    assert_eq!(
-        source(&failed)["first_failure"]["observer_rejection"]["reason"],
-        "sample_expired"
-    );
-    c.raw_window(40_000_000);
+    assert!(source(&failed)["first_failure"]["observer_rejection"].is_null());
     c.close();
     c.assert_no_publication();
 }
