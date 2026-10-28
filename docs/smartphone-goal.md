@@ -3,9 +3,11 @@
 The [native wireless tracer](native-wireless-scan.md) now discovers an exact
 fresh test AP through Rust and kernel nl80211 in a generic ARM hwsim guest,
 after genuine refusing RED and with the unchanged consumer and full owned
-cleanup. The same binary passes a separate unavailable control. Association,
-Internet, normal Settings Wi-Fi, installed wireless
-activation and the matched Pixel backend remain open; no phone is qualified.
+cleanup. The same discovery binary passes a separate unavailable control.
+Subsequent [native open association and explicit Disconnect](native-wireless-association.md)
+pass separately with independent kernel checks in generic ARM hwsim. Wi-Fi IP
+traffic, WPA, normal Settings integration, installed wireless activation and the
+matched Pixel backend remain open; no phone is qualified.
 
 The [normal Settings window](native-settings-connectivity-window.md) now
 passes real touch Enable, close/relaunch with the connection preserved, and
@@ -42,9 +44,9 @@ container 1/removal and independently rehashed unchanged inputs are recorded in
 
 Repeated graphical ARM resource campaigns are parked with the production 50 ms
 guard unchanged. The next product priority is a reproducible VM preview with a
-documented launch path at the Pixel 10 display profile. Headless wireless
-association still requires implementation and a behavioral test; no association
-preparation or prerequisite pass is claimed.
+documented launch path at the Pixel 10 display profile. Headless native open
+association and explicit Disconnect now pass their actual ARM virtual-radio
+boundary. Wireless address and packet evidence remain the next independent gate.
 
 The [normal Settings Rust connectivity SDK](native-settings-connectivity-sdk.md)
 now passes granted Connect, packets after actual app exit, fresh app observations

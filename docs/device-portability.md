@@ -3,9 +3,11 @@
 The [native wireless tracer](native-wireless-scan.md) now discovers an exact
 fresh test AP through Rust and kernel nl80211 in a generic ARM hwsim guest,
 after genuine refusing RED and with the unchanged consumer and full owned
-cleanup. The same binary passes a separate unavailable control. Association,
-Internet, normal Settings Wi-Fi, installed wireless
-activation and the matched Pixel backend remain open; no phone is qualified.
+cleanup. The same discovery binary passes a separate unavailable control.
+Subsequent [native open association and explicit Disconnect](native-wireless-association.md)
+pass separately with independent kernel checks in generic ARM hwsim. Wi-Fi IP
+traffic, WPA, normal Settings integration, installed wireless activation and the
+matched Pixel backend remain open; no phone is qualified.
 The [retained Pixel WLAN catalog](native-pixel-wireless-boundary.md) identifies
 external cfg80211 and two DHD candidates; names and common interfaces do not
 qualify device selection, source/KMI, firmware initialization or another model.
