@@ -103,9 +103,14 @@ inputs. A Root-selected virtual Pixel10 bundle now passes the frozen host
 GNUmake4.3 install consumer after an actual missing-target RED: eight core files
 plus205 selected files, including all196 pinned Omarchy blobs and modes. Eight
 filesystem cases also pass, including source corruption and path/symlink
-refusals before copying. This qualifies staged selection; unit ownership,
-dependency readiness, cold Source, full shell, Sounds and PCM startup still need
-the actual installed VM trace. See the [normal tracer report](../docs/native-normal-upstream-tracer.md#explicit-installed-session-selection).
+refusals before copying. This earlier result qualifies staged selection. The later
+[253-file cold session](../docs/native-cold-omarchy-sounds.md) now passes genuine
+Omarchy startup, real Source/focus, the native Sounds window, permission refusal
+with measured silence and normal manager Stop in one fresh x86 KVM run. It does
+not qualify authorized playback, user permission controls, failed-theme dependency
+propagation, ARM graphics or phone hardware. See the
+[normal tracer report](../docs/native-normal-upstream-tracer.md#explicit-installed-session-selection)
+for the earlier deployment selection.
 
 The deployment must create root-owned nonwritable runtime, display and policy
 ancestors, UID1000 compositor HOME/runtime0700 and UID11042 Sounds
@@ -173,7 +178,9 @@ The unit uses KillMode=mixed and Restart=no, without a second ExecStop client.
 Systemd first sends SIGTERM to Main; the Rust actor uses its existing Stop and
 drain before the manager's final cgroup kill boundary. Actual installed Stop after
 Source loss observes Main exit0, unit Result=success and an empty exact cgroup;
-healthy full-shell startup remains open. See the [separate evidence](../docs/native-session-manager-stop.md).
+that failure-path result remains separate from the later
+[healthy cold-shell Stop-after-Ready case](../docs/native-cold-omarchy-sounds.md).
+See the [failure-path evidence](../docs/native-session-manager-stop.md).
 Metadata and fallback killing do not establish native descendant reaping or
 hardware cleanup.
 Root needs the filesystem/UID/GID/signal capabilities used by the existing
