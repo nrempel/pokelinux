@@ -162,9 +162,10 @@
         "sha256": "5d224ccca8ea093a6d3fe12b64d553e64bf69dae960955b52dbc4d97ae938806"
       }
     },
-    "current_full_cold_run_executed": false,
+    "current_full_cold_run_executed": true,
     "permanent_fixture_media_producer_must_be_omitted": true,
-    "finite_native_producer_not_yet_qualified_in_this_composition": true
+    "finite_native_producer_not_yet_qualified_in_this_composition": true,
+    "current_full_cold_run_passed": false
   },
   "current_frontend_historical_daemon_baseline": {
     "scope": "Actual current frontend cold boot against the historical audio daemon; desired UI RED, not current app/service success",
@@ -240,7 +241,134 @@
     "cleanup_errors": [],
     "overall_functional_passed": false,
     "positive_manager_Stop_after_Ready_qualified": false,
-    "current_daemon_replacement_executed": false,
+    "current_daemon_replacement_executed": true,
     "phone_hardware_qualified": false
+  },
+  "current_daemon_attempts": [
+    {
+      "cohort": "pokelinux-native-x86-composition-current-audio-green-sol-1",
+      "passed": false,
+      "actual_error": "AssertionError: normal frame changed before qualification",
+      "guest_VM_host_closure_qualified": true,
+      "cleanup_errors": [],
+      "records": {
+        "selection.json": {
+          "bytes": 361786,
+          "sha256": "882c54bc438edef05effb6f3160116e3fc37b3006e5b9669ace132198d1aa0d2"
+        },
+        "command.json": {
+          "bytes": 1310,
+          "sha256": "72ec2d74d74b8450f2b81ee0b87157d6152696cf0f22a0a2314bf193f87b3ee4"
+        },
+        "execution.json": {
+          "bytes": 115235,
+          "sha256": "dcae435a3b2046d1fe269a8ed77f6e9154f238988c9719464c3cc8eedeac08b1"
+        },
+        "boot-result.json": {
+          "bytes": 11173,
+          "sha256": "3f72aa4142c376afba7852434ad6cfe9dae7215b840d3007990b4906ffd5f59e"
+        },
+        "result.json": {
+          "bytes": 621560,
+          "sha256": "cb8663e33c05c0496aab22bca02c47de4577fb22ebf33dc28467ea3b9cbc0346"
+        },
+        "normal-qt-window.jsonl": {
+          "bytes": 1043,
+          "sha256": "ad7236806b0741295cd28c98e31336940c3a2acbb3a727ce1f17918788897e9a"
+        }
+      }
+    },
+    {
+      "cohort": "pokelinux-native-x86-composition-current-audio-green-sol-2",
+      "passed": false,
+      "actual_error": "AssertionError: PCM observer exited before tone.json",
+      "guest_VM_host_closure_qualified": true,
+      "cleanup_errors": [],
+      "records": {
+        "selection.json": {
+          "bytes": 370423,
+          "sha256": "2bd3bb70d3393de0f7362e8a91efedc223da5967a35fb8e1cac69374d3163e6d"
+        },
+        "command.json": {
+          "bytes": 1310,
+          "sha256": "42ac139ef4e87eb3bad427f023378e8e2155adbc34ddf47d82cff1bdff4fade4"
+        },
+        "execution.json": {
+          "bytes": 115152,
+          "sha256": "6ac1d2ac134f2eb8eda93c48200d9a9db792aab3faaf60eaf30f5473086b0ce6"
+        },
+        "boot-result.json": {
+          "bytes": 11100,
+          "sha256": "e9c5c2173f0a7498c8bd248c67a86a6f73517588671333d34e609a8465fd1a7f"
+        },
+        "result.json": {
+          "bytes": 717123,
+          "sha256": "a2246d3c6e79cf38374bd4f03154eaf856add0dad97eaec96cf789ba929385df"
+        },
+        "normal-qt-window.jsonl": {
+          "bytes": 1043,
+          "sha256": "aa5c844d5bee42e6cc1c4ab4d4530aa16286a63e216e8b5d2d997f11029e57dd"
+        },
+        "pcm/current-normal-preview/result.json": {
+          "bytes": 80556,
+          "sha256": "202b14c7ecf47618d6e0991c00dcb625116761cca9c7b8b2244981c9c9ac9f28"
+        },
+        "pcm/current-normal-preview/speaker-all-recorded.raw": {
+          "bytes": 516096,
+          "sha256": "b67976ec79d2575bbe625eb933044eaa4cd5232683affcfb59ad641eea3c9297"
+        },
+        "pcm/current-normal-preview/earpiece-all-recorded.raw": {
+          "bytes": 516096,
+          "sha256": "4e4dc93db58b5a1f2c9b465043d1ad3135a0e45b3017c1e29b2d08f4ad1c7583"
+        }
+      },
+      "actual_Reconnect_touch_executed": false,
+      "actual_touch_labels": [
+        "Speaker route",
+        "50 percent preview level",
+        "Play native finite preview"
+      ],
+      "full_tone_window_qualified": false,
+      "producer_identity_pidfd_stage_reached": false,
+      "revoke_executed": false,
+      "raw_PCM_diagnostic": {
+        "speaker_nonzero_duration_ms": 21.333333333333332,
+        "speaker_matches_first_fixed_50_percent_samples": true,
+        "all_remaining_speaker_and_all_earpiece_samples_zero": true,
+        "not_a_qualified_Play_revoke_case": true,
+        "speaker_quantum_frames": 1024,
+        "speaker_nonzero_sample_count": 992
+      },
+      "early_retirement_cause_identified": false
+    }
+  ],
+  "normal_audio_retirement_diagnostics": {
+    "purpose": "fixed local transition/callsite evidence; no guard/routing/deadline change",
+    "normal_ELF_sha256": "a499d6751204f890158f6891c3d91f74394c2b5b65ba24f90bae7b7a00aec3ef",
+    "normal_ELF_bytes": 1359240,
+    "existing_tests_passed": 56,
+    "source_pins": 52,
+    "actual_wait_PIPE_EOF": 17,
+    "source_base_commit": "153e4bff96741919fcadf289c0f253d549c58897",
+    "main_rs_dirty_at_build": true,
+    "main_rs_sha256": "d050bff3315bbc5e4cd38e968ae7641628b1475115ddccc4d18360789056c603",
+    "records": {
+      "SOURCE.json": {
+        "bytes": 5777,
+        "sha256": "5745e3ee8d6283ceec89eeef7bd12dfc4e046ebaf8b31d6a6bdb70bbe52e0f8e"
+      },
+      "BUILD-QUALIFICATION.json": {
+        "bytes": 2334,
+        "sha256": "61c202b92f6f9401c01583178b115d4470d6069b5022f28a90c14edb6b6cab01"
+      },
+      "run/receipt.json": {
+        "bytes": 23410,
+        "sha256": "eebc639b07a78da897ac7654b6fccf4bedd179ee7486ba94dc4024c56bdfa374"
+      },
+      "run/out/result.json": {
+        "bytes": 10032,
+        "sha256": "012773420ce63fd9375e5a91bc1e308173db5c3de2e15efe8216854d60380ae1"
+      }
+    }
   }
 }

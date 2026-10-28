@@ -110,10 +110,18 @@ impl State {
         self.policy_settled = false;
         self.needs_apply = true;
     }
+    #[track_caller]
     fn retire_preview(&mut self, terminal: PreviewState) {
         if let Some(preview) = &mut self.preview
             && (preview.state != PreviewState::Retiring || preview.natural_drain)
         {
+            // Fixed local lifecycle facts only: no app requests, tokens or PCM.
+            eprintln!(
+                "preview retirement: state={:?} terminal={:?} caller_line={}",
+                preview.state,
+                terminal,
+                std::panic::Location::caller().line()
+            );
             preview.state = PreviewState::Retiring;
             preview.terminal = terminal;
             preview.natural_drain = false;
@@ -227,6 +235,10 @@ impl State {
         let mut failure = false;
         if let Some(done) = finished {
             if p.state == PreviewState::Playing || p.natural_drain {
+                eprintln!(
+                    "preview producer completion: successful={}",
+                    done.successful
+                );
                 p.terminal = if done.successful {
                     PreviewState::Completed
                 } else {
@@ -236,6 +248,7 @@ impl State {
                 p.natural_drain = false;
                 changed = true;
             } else if p.state == PreviewState::Starting {
+                eprintln!("preview producer completed before playback admission");
                 failure = true;
             }
         } else if now >= p.work_until
@@ -245,6 +258,7 @@ impl State {
         } else if p.state == PreviewState::Playing && !p.process.alive() {
             // Death fences Playing immediately; retain natural completion until
             // actual wait and stderr EOF decide Completed versus Failed.
+            eprintln!("preview producer no longer alive; completion still pending");
             p.state = PreviewState::Retiring;
             p.terminal = PreviewState::Failed;
             p.natural_drain = true;

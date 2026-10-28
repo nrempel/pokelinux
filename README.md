@@ -64,8 +64,9 @@ permission-withheld case verifies silence and normal shutdown at the Pixel10
 display profile. Authorized playback in this cold session and phone hardware
 remain open. This capture uses a frozen older Sounds frontend and audio daemon.
 The current app now builds and boots in a successor test, which confirms that the
-older daemon cannot provide its route controls. Playback with the current Rust
-service is the next app gate.
+older daemon cannot provide its route controls. With the current Rust service,
+route selection and Play are reached, but playback stops early. Sustained
+playback and revocation in this session remain the next app gate.
 [Cold-start result and screenshot](docs/native-cold-omarchy-sounds.md).
 
 Host component tests, original-code execution, Android reference tests, ARM

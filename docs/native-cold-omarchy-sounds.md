@@ -37,9 +37,31 @@ succeeds, followed by exactly one touch on the enabled Reconnect button. Eight
 valid subsequent captures still show no route controls and disabled Play. This
 is an actual desired UI failure, with complete guest/VM/container closure, rather
 than a build or capture setup failure. Play and the new finite-preview observer
-never start. The current-daemon replacement run remains pending; operator grant
-is test administration, not a user-consent interface. The baseline's overall
+never start. Operator grant is test administration, not a user-consent interface. The baseline's overall
 functional and positive manager-Stop-after-Ready qualifications remain false.
+
+Two current-daemon attempts remain failed. The first caught an initial Wayland
+configure transition: Qt still reported 411×923 while the mapped compositor
+client was already 369×855. Readiness now requires the same app PID and matching
+sizes within the original frame deadline. The second passes that startup check,
+initial silence and the current route controls, then reaches real Speaker, 50%
+and Play touches without needing Reconnect.
+
+That run records only one 1,024-frame speaker quantum (21.33ms), matching the
+first authored 50% PCM samples exactly; the remaining speaker samples and all
+earpiece samples are zero. The source appears briefly and disappears before the
+observer can bind its producer identity and qualify a full tone window. Its
+64-observation bound is reached; no revocation action occurs. All observer,
+guest and VM closure checks pass. This is useful failure evidence, not qualified
+sustained playback. The pre-Play screenshot still contains a pressed-button
+buffer and 100% label, so it does not establish visible level publication.
+
+Normal-service diagnostics now report fixed local retirement/completion facts
+and the retirement callsite, without logging app requests, tokens or PCM. The
+normal diagnostic Release build passes the same 56 existing tests, formatting
+and strict Clippy. These diagnostics change no routing, lifecycle guard or
+deadline; an actual follow-up run must identify the early retirement before a
+functional repair is chosen.
 
 This run withheld audio permission. The captured “Audio reply refused” message
 does not establish that withholding permission was its sole cause: the selected
