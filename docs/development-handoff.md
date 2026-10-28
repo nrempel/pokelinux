@@ -125,8 +125,9 @@ full AP/endpoint/radio/module/process cleanup passes. 13 host tests, strict QA a
 normal host/ARM builds pass. The exact same completing ELF also passes a separate fresh-guest loopback
 unavailable control within 156ms; cfg80211/rfkill inventory additions are
 recorded, without a zero-effects claim.
-See [wireless discovery](native-wireless-scan.md). This is no association,
-Internet, normal Settings Wi-Fi or matched Pixel wireless qualification.
+See [wireless discovery](native-wireless-scan.md). Subsequent explicit association
+and Disconnect pass separately in [the ARM connection tracer](native-wireless-association.md).
+Internet, normal Settings Wi-Fi and matched Pixel wireless remain unqualified.
 The [retained Pixel WLAN inventory](native-pixel-wireless-boundary.md) now binds
 existing config/index/catalog facts to the authenticated selected profile:
 external cfg80211 and bcmdhd4383/bcmdhd4390 candidates. Exact hardware selection,
@@ -2433,9 +2434,10 @@ context before Enable-ready, capture, touch or packets. Repeated graphical ARM
 resource campaigns are parked with the production 50 ms guard unchanged. The
 fifth epoch's partial Enable/IP/first-packet result and the sixth epoch's natural
 worker exit 1 remain separate, with no CPU cause or repair qualified.
-Headless wireless association still requires implementation and a behavioral
-test; discovery and retained Pixel inventory do not qualify that work as prepared
-or as a passed prerequisite. The x86 window/packet/capture result remains separate
+Headless native Rust open association and separately requested Disconnect now pass
+the frozen ARM virtual-radio consumer with independent STA/AP kernel checks.
+See [association evidence](native-wireless-association.md). Address assignment,
+IP traffic, WPA, Settings integration and Pixel qualification remain open. The x86 window/packet/capture result remains separate
 from full Source/auth/session runtime, Wi-Fi/Internet and Pixel hardware. Keep
 the broader Source/authentication and capture branches parked.
 
@@ -2449,9 +2451,13 @@ idle; neither a hang nor a cause is established. The new
 [bounded Source establishment](native-source-establishment.md) withholds authority
 until a fresh consecutive pair, preserves protocol history through provisional
 timing gaps, and keeps established failure terminal. Its frozen kernel RED→GREEN
-and 96 scoped host cases pass, with a normal optimized owner built. Next run the
-original cold shell/Sounds consumer with that owner and explicit disabled optional
-backends; the Messages app join remains subsequent work.
+and 96 scoped host cases pass, with a normal optimized owner built. The original cold shell/Sounds consumer now reaches genuine shell IPC ping and
+background/bar surfaces with Source sequences 14 then 76, ready and no failure.
+It fails at unavailable appearance before app launch. No new screenshot, final
+display-density qualification or positive manager Stop case is claimed; owned
+cleanup closes. Next complete genuine theme provisioning before startup, then
+resolve the separate shell namespace/environment integration gaps. The Messages
+app join remains subsequent work.
 Source's 100 ms limit, all consumer criteria
 and the separate 50 ms connectivity guard remain unchanged. Historical
 six-argument harnesses require their recorded sources/ELFs; a second current

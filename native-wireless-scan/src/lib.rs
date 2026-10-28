@@ -1,9 +1,14 @@
 //! One-shot Linux wireless discovery inside a caller-owned exclusive radio epoch.
 //!
-//! This worker never associates, configures IP, aborts a scan or retries a mutation.
+//! Scan and explicit open-association primitives never configure IP, abort or retry a mutation.
 //! The caller must own its process through actual wait and stdout EOF. Closing its
 //! sockets or reaping it does not prove cancellation of an admitted kernel scan.
+mod association;
 mod wire;
+pub use association::{
+    Associated, AssociationRequest, DisconnectRequest, Disconnected, associate_open_once,
+    disconnect_once,
+};
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub struct Request {
@@ -35,6 +40,13 @@ pub enum Failure {
     Unsupported,
     Expired,
     Malformed,
+    MissingAttribute(u16),
+    MissingAssociationAttribute {
+        stage: u8,
+        command: u8,
+        attribute: u16,
+    },
+    MalformedAssociation(u8),
     Loss,
     Limit,
     Identity,

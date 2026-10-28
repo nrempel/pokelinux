@@ -147,7 +147,7 @@ fn optional<'a>(attrs: &[Attribute<'a>], kind: u16) -> Result<Option<Attribute<'
     Ok(value)
 }
 fn required<'a>(attrs: &[Attribute<'a>], kind: u16) -> Result<Attribute<'a>> {
-    optional(attrs, kind)?.ok_or(Failure::Malformed)
+    optional(attrs, kind)?.ok_or(Failure::MissingAttribute(kind))
 }
 fn raw(a: Attribute<'_>) -> Result<&[u8]> {
     if a.flags != 0 {
@@ -437,9 +437,16 @@ fn error_reply(frame: &Frame<'_>, request: &[u8]) -> Result<Option<Failure>> {
 struct Family {
     id: u16,
     version: u8,
-    scan_group: u32,
+    group: u32,
 }
 fn family(connection: &mut Connection, budget: &mut Budget) -> Result<Family> {
+    family_group(connection, budget, b"scan\0")
+}
+fn family_group(
+    connection: &mut Connection,
+    budget: &mut Budget,
+    group_name: &[u8],
+) -> Result<Family> {
     let mut query = Vec::new();
     put(&mut query, 2, b"nl80211\0");
     let data = connection
@@ -466,7 +473,7 @@ fn family(connection: &mut Connection, budget: &mut Budget) -> Result<Family> {
         let fields = nested(group)?;
         let name = raw(required(&fields, 1)?)?;
         let value = number32(required(&fields, 2)?)?;
-        if name == b"scan\0" {
+        if name == group_name {
             if scan_group.is_some() || value == 0 {
                 return Err(Failure::Malformed);
             }
@@ -476,7 +483,7 @@ fn family(connection: &mut Connection, budget: &mut Budget) -> Result<Family> {
     Ok(Family {
         id,
         version: version as u8,
-        scan_group: scan_group.ok_or(Failure::Malformed)?,
+        group: scan_group.ok_or(Failure::Malformed)?,
     })
 }
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
@@ -725,10 +732,7 @@ pub(crate) fn scan(request: Request, started: u64, dispatched: &mut bool) -> Res
     let family = family(&mut command, &mut budget)?;
     let selected = interface(&mut command, &family, request.ifindex, &mut budget)?;
     let events = Connection::new()?;
-    events
-        .socket
-        .add_membership(family.scan_group)
-        .map_err(system)?;
+    events.socket.add_membership(family.group).map_err(system)?;
     // No old notification can authorize this new scan. Draining is bounded;
     // exclusive fresh-radio custody still comes from the caller's fixture.
     require_quiet_events(&events, &family, selected, &mut budget)?;
@@ -797,6 +801,457 @@ pub(crate) fn scan(request: Request, started: u64, dispatched: &mut bool) -> Res
     })
 }
 
+// Linux nl80211 open-system CONNECT and explicit DISCONNECT. MLME has no
+// per-request cookie: callers must retain the fresh exclusive radio epoch.
+const CONNECT: u8 = 46;
+const DISCONNECT: u8 = 48;
+const MAC: u16 = 6;
+const SSID: u16 = 52;
+const AUTH_TYPE: u16 = 53;
+const REASON_CODE: u16 = 54;
+const TIMED_OUT: u16 = 65;
+const DISCONNECTED_BY_AP: u16 = 71;
+const STATUS_CODE: u16 = 72;
+const WIPHY_FREQ: u16 = 38;
+
+#[derive(Clone, Copy)]
+enum MlmePhase {
+    Before,
+    Connecting,
+    Connected,
+    Disconnecting,
+    Disconnected,
+}
+
+fn mlme_event(
+    frame: &Frame<'_>,
+    family: &Family,
+    selected: Identity,
+    phase: MlmePhase,
+    peer: &[u8; 6],
+) -> Result<bool> {
+    if frame.kind != family.id
+        || frame.seq != 0
+        || frame.port != 0
+        || frame.flags & MULTI != 0
+        || frame.body.len() < 4
+    {
+        return Err(Failure::Malformed);
+    }
+    let command = frame.body[0];
+    let attrs = genl(frame, family.id, family.version, command)?;
+    let index = number32(required(&attrs, IFINDEX)?)?;
+    // The shared MLME group includes other interfaces' notifications, whose
+    // command-specific payload need not carry our selected identity fields.
+    if index != selected.ifindex {
+        return Ok(false);
+    }
+    let phy = optional(&attrs, WIPHY)?.map(number32).transpose()?;
+    if phy.is_some_and(|value| value != selected.wiphy)
+        || optional(&attrs, WDEV)?
+            .map(number64)
+            .transpose()?
+            .is_some_and(|v| v != selected.wdev)
+    {
+        return Err(Failure::Identity);
+    }
+    if optional(&attrs, TIMED_OUT)?.is_some() {
+        return Err(Failure::Aborted);
+    }
+    // Nonterminal MLME notifications have command-specific payloads. They can
+    // neither complete this action nor require the terminal CONNECT schema.
+    if command == 47 {
+        // ROAM contradicts our exact restricted peer selection.
+        return Err(Failure::Contended);
+    }
+    if command != CONNECT && command != DISCONNECT {
+        return Ok(false);
+    }
+    phy.ok_or(Failure::MissingAttribute(WIPHY))?;
+    match (phase, command) {
+        (MlmePhase::Connecting, CONNECT) => {
+            if u16n(raw(required(&attrs, STATUS_CODE)?)?)? != 0 {
+                return Err(Failure::Aborted);
+            }
+            if raw(required(&attrs, MAC)?)? != peer {
+                return Err(Failure::Identity);
+            }
+            Ok(true)
+        }
+        (MlmePhase::Disconnecting, DISCONNECT) => {
+            if optional(&attrs, DISCONNECTED_BY_AP)?.is_some()
+                || u16n(raw(required(&attrs, REASON_CODE)?)?)? != 3
+            {
+                return Err(Failure::Contended);
+            }
+            Ok(true)
+        }
+        _ => Err(Failure::Contended),
+    }
+}
+
+fn quiet_mlme(
+    events: &Connection,
+    family: &Family,
+    selected: Identity,
+    phase: MlmePhase,
+    peer: &[u8; 6],
+    budget: &mut Budget,
+) -> Result<()> {
+    for _ in 0..64 {
+        match events.ready(budget)? {
+            None => return Ok(()),
+            Some(data) => {
+                for frame in frames(&data)? {
+                    if mlme_event(&frame, family, selected, phase, peer)
+                        .map_err(|f| mlme_context(f, frame.body.first().copied().unwrap_or(0)))?
+                    {
+                        return Err(Failure::Contended);
+                    }
+                }
+            }
+        }
+    }
+    Err(Failure::Limit)
+}
+
+fn await_mlme(
+    events: &Connection,
+    family: &Family,
+    selected: Identity,
+    connecting: bool,
+    peer: &[u8; 6],
+    budget: &mut Budget,
+) -> Result<()> {
+    let mut completed = false;
+    for _ in 0..128 {
+        let data = events.receive(budget)?;
+        for frame in frames(&data)? {
+            let phase = match (connecting, completed) {
+                (true, false) => MlmePhase::Connecting,
+                (true, true) => MlmePhase::Connected,
+                (false, false) => MlmePhase::Disconnecting,
+                (false, true) => MlmePhase::Disconnected,
+            };
+            if mlme_event(&frame, family, selected, phase, peer)
+                .map_err(|f| mlme_context(f, frame.body.first().copied().unwrap_or(0)))?
+            {
+                completed = true;
+            }
+        }
+        if completed {
+            return Ok(());
+        }
+    }
+    Err(Failure::Limit)
+}
+
+#[derive(Debug, Eq, PartialEq)]
+struct AssociatedBss {
+    mac: [u8; 6],
+    ssid: Vec<u8>,
+    frequency: u32,
+}
+
+fn associated_bss(attrs: &[Attribute<'_>]) -> Result<Option<AssociatedBss>> {
+    let fields = nested(required(attrs, BSS)?)?;
+    let status = optional(&fields, 9)?.map(number32).transpose()?;
+    let Some(status) = status else {
+        return Ok(None);
+    };
+    if status != 1 {
+        // NL80211_BSS_STATUS_ASSOCIATED, not merely authenticated.
+        return Err(Failure::Contended);
+    }
+    let mac: [u8; 6] = raw(required(&fields, 1)?)?
+        .try_into()
+        .map_err(|_| Failure::Malformed)?;
+    if mac == [0; 6] || mac[0] & 1 != 0 {
+        return Err(Failure::Malformed);
+    }
+    let frequency = number32(required(&fields, 2)?)?;
+    if frequency == 0
+        || optional(&fields, 20)?
+            .map(number32)
+            .transpose()?
+            .unwrap_or(0)
+            != 0
+    {
+        return Err(Failure::Identity);
+    }
+    if u16n(raw(required(&fields, 5)?)?)? & 0x10 != 0 {
+        return Err(Failure::Identity); // This primitive admits no protected BSS.
+    }
+    let probe = optional(&fields, 6)?
+        .map(raw)
+        .transpose()?
+        .map(ssid)
+        .transpose()?;
+    let beacon = optional(&fields, 11)?
+        .map(raw)
+        .transpose()?
+        .map(ssid)
+        .transpose()?;
+    if let (Some(p), Some(b)) = (&probe, &beacon)
+        && !b.is_empty()
+        && p != b
+    {
+        return Err(Failure::Malformed);
+    }
+    Ok(Some(AssociatedBss {
+        mac,
+        ssid: probe.or(beacon).ok_or(Failure::Malformed)?,
+        frequency,
+    }))
+}
+
+fn association_readback(
+    connection: &mut Connection,
+    family: &Family,
+    selected: Identity,
+    budget: &mut Budget,
+) -> Result<Option<AssociatedBss>> {
+    let mut query = Vec::new();
+    put32(&mut query, IFINDEX, selected.ifindex);
+    let packet = connection.request(family.id, family.version, GET_SCAN, DUMP, &query)?;
+    connection.send(&packet, budget)?;
+    let mut associated = None;
+    let mut generation = None;
+    let mut seen: Vec<Vec<u8>> = Vec::new();
+    for _ in 0..128 {
+        let data = connection.receive(budget)?;
+        let messages = frames(&data)?;
+        for (i, frame) in messages.iter().enumerate() {
+            connection.correlated(frame)?;
+            if frame.kind == ERROR {
+                return Err(error_reply(frame, &packet)?.ok_or(Failure::Malformed)?);
+            }
+            if frame.flags & MULTI == 0 {
+                return Err(Failure::Malformed);
+            }
+            if frame.kind == DONE {
+                if frame.body.len() != 4 || u32n(frame.body)? != 0 || i + 1 != messages.len() {
+                    return Err(Failure::Loss);
+                }
+                budget.fence()?;
+                return Ok(associated);
+            }
+            let attrs = genl(frame, family.id, family.version, NEW_SCAN_RESULTS)?;
+            if number32(required(&attrs, IFINDEX)?)? != selected.ifindex
+                || number64(required(&attrs, WDEV)?)? != selected.wdev
+            {
+                return Err(Failure::Identity);
+            }
+            let next = number32(required(&attrs, GENERATION)?)?;
+            if generation
+                .replace(next)
+                .is_some_and(|previous| previous != next)
+            {
+                return Err(Failure::Loss);
+            }
+            let fields = nested(required(&attrs, BSS)?)?;
+            let mac = raw(required(&fields, 1)?)?;
+            if mac.len() != 6 || seen.len() == MAX_BSS || seen.iter().any(|v| v == mac) {
+                return Err(Failure::Limit);
+            }
+            seen.push(mac.to_vec());
+            if let Some(value) = associated_bss(&attrs)?
+                && associated.replace(value).is_some()
+            {
+                return Err(Failure::Contended);
+            }
+        }
+    }
+    Err(Failure::Limit)
+}
+
+// Fixed contexts:1 ACK,2 MLME,3 associated dump,4 interface readback.
+// Command0 means a non-MLME stage. No raw payload or refreshed deadline.
+fn association_context(failure: Failure, stage: u8) -> Failure {
+    match failure {
+        Failure::Malformed => Failure::MalformedAssociation(stage),
+        Failure::MissingAttribute(attribute) => Failure::MissingAssociationAttribute {
+            stage,
+            command: 0,
+            attribute,
+        },
+        other => other,
+    }
+}
+fn mlme_context(failure: Failure, command: u8) -> Failure {
+    match failure {
+        Failure::MissingAttribute(attribute) => Failure::MissingAssociationAttribute {
+            stage: 2,
+            command,
+            attribute,
+        },
+        other => association_context(other, 2),
+    }
+}
+
+pub(crate) fn associate(
+    request: crate::AssociationRequest,
+    started: u64,
+    dispatched: &mut bool,
+) -> Result<crate::Associated> {
+    let mut budget = Budget::new(request.original_until_ns)?;
+    let namespace = Namespace::retain()?;
+    let mut command = Connection::new()?;
+    let family = family_group(&mut command, &mut budget, b"mlme\0")?;
+    let selected = interface(&mut command, &family, request.ifindex, &mut budget)
+        .map_err(|f| association_context(f, 4))?;
+    let events = Connection::new()?;
+    events.socket.add_membership(family.group).map_err(system)?;
+    quiet_mlme(
+        &events,
+        &family,
+        selected,
+        MlmePhase::Before,
+        &request.bssid,
+        &mut budget,
+    )?;
+    if association_readback(&mut command, &family, selected, &mut budget)
+        .map_err(|f| association_context(f, 3))?
+        .is_some()
+    {
+        return Err(Failure::Contended);
+    }
+    namespace.check()?;
+    let mut attrs = Vec::new();
+    put32(&mut attrs, IFINDEX, selected.ifindex);
+    put(&mut attrs, WDEV, &selected.wdev.to_ne_bytes());
+    put(&mut attrs, MAC, &request.bssid);
+    put32(&mut attrs, WIPHY_FREQ, request.frequency_mhz);
+    put(&mut attrs, SSID, &request.ssid);
+    put32(&mut attrs, AUTH_TYPE, 0); // NL80211_AUTHTYPE_OPEN_SYSTEM.
+    put32(&mut attrs, 152, 0); // NL80211_ATTR_BG_SCAN_PERIOD: no background scan.
+    // No SOCKET_OWNER: worker exit must preserve a confirmed association.
+    let packet = command.request(family.id, family.version, CONNECT, ACK, &attrs)?;
+    budget.fence()?;
+    *dispatched = true; // Conservative latch before the sole potentially blocked send.
+    command.send(&packet, &budget)?;
+    command
+        .acknowledge(&packet, &mut budget)
+        .map_err(|f| association_context(f, 1))?;
+    await_mlme(
+        &events,
+        &family,
+        selected,
+        true,
+        &request.bssid,
+        &mut budget,
+    )
+    .map_err(|f| association_context(f, 2))?;
+    let actual = association_readback(&mut command, &family, selected, &mut budget)
+        .map_err(|f| association_context(f, 3))?;
+    if actual
+        != Some(AssociatedBss {
+            mac: request.bssid,
+            ssid: request.ssid.clone(),
+            frequency: request.frequency_mhz,
+        })
+    {
+        return Err(Failure::Identity);
+    }
+    if interface(&mut command, &family, request.ifindex, &mut budget)
+        .map_err(|f| association_context(f, 4))?
+        != selected
+    {
+        return Err(Failure::Identity);
+    }
+    namespace.check()?;
+    quiet_mlme(
+        &events,
+        &family,
+        selected,
+        MlmePhase::Connected,
+        &request.bssid,
+        &mut budget,
+    )?;
+    budget.fence()?;
+    let completed_boottime_ns = boottime_ns();
+    if completed_boottime_ns >= request.original_until_ns {
+        return Err(Failure::Expired);
+    }
+    Ok(crate::Associated {
+        request,
+        wiphy: selected.wiphy,
+        wdev: selected.wdev,
+        started_boottime_ns: started,
+        completed_boottime_ns,
+    })
+}
+
+pub(crate) fn disconnect(
+    request: crate::DisconnectRequest,
+    started: u64,
+    dispatched: &mut bool,
+) -> Result<crate::Disconnected> {
+    let mut budget = Budget::new(request.original_until_ns)?;
+    let namespace = Namespace::retain()?;
+    let mut command = Connection::new()?;
+    let family = family_group(&mut command, &mut budget, b"mlme\0")?;
+    let selected = interface(&mut command, &family, request.ifindex, &mut budget)
+        .map_err(|f| association_context(f, 4))?;
+    let events = Connection::new()?;
+    events.socket.add_membership(family.group).map_err(system)?;
+    let peer = association_readback(&mut command, &family, selected, &mut budget)
+        .map_err(|f| association_context(f, 3))?
+        .ok_or(Failure::Identity)?
+        .mac;
+    quiet_mlme(
+        &events,
+        &family,
+        selected,
+        MlmePhase::Before,
+        &peer,
+        &mut budget,
+    )?;
+    namespace.check()?;
+    let mut attrs = Vec::new();
+    put32(&mut attrs, IFINDEX, selected.ifindex);
+    put(&mut attrs, WDEV, &selected.wdev.to_ne_bytes());
+    put(&mut attrs, REASON_CODE, &3u16.to_ne_bytes());
+    let packet = command.request(family.id, family.version, DISCONNECT, ACK, &attrs)?;
+    budget.fence()?;
+    *dispatched = true;
+    command.send(&packet, &budget)?;
+    command
+        .acknowledge(&packet, &mut budget)
+        .map_err(|f| association_context(f, 1))?;
+    await_mlme(&events, &family, selected, false, &peer, &mut budget)?;
+    if association_readback(&mut command, &family, selected, &mut budget)
+        .map_err(|f| association_context(f, 3))?
+        .is_some()
+        || interface(&mut command, &family, request.ifindex, &mut budget)
+            .map_err(|f| association_context(f, 4))?
+            != selected
+    {
+        return Err(Failure::Identity);
+    }
+    namespace.check()?;
+    quiet_mlme(
+        &events,
+        &family,
+        selected,
+        MlmePhase::Disconnected,
+        &peer,
+        &mut budget,
+    )?;
+    budget.fence()?;
+    let completed_boottime_ns = boottime_ns();
+    if completed_boottime_ns >= request.original_until_ns {
+        return Err(Failure::Expired);
+    }
+    Ok(crate::Disconnected {
+        request,
+        wiphy: selected.wiphy,
+        wdev: selected.wdev,
+        started_boottime_ns: started,
+        completed_boottime_ns,
+    })
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -811,7 +1266,7 @@ mod tests {
         Family {
             id: 42,
             version: 1,
-            scan_group: 9,
+            group: 9,
         }
     }
     fn event_bytes(command: u8) -> Vec<u8> {
@@ -1038,5 +1493,236 @@ mod tests {
             }),
             Err(crate::Error::InvalidRequest)
         );
+    }
+    fn mlme_bytes(command: u8, peer: [u8; 6], status: u16) -> Vec<u8> {
+        let mut out = vec![command, 1, 0, 0];
+        put32(&mut out, IFINDEX, 3);
+        put32(&mut out, WIPHY, 1);
+        put(&mut out, MAC, &peer);
+        put(&mut out, STATUS_CODE, &status.to_ne_bytes());
+        out
+    }
+    #[test]
+    fn connect_event_requires_success_exact_peer_and_no_timeout() {
+        let peer = [2, 0, 0, 0, 0, 1];
+        for (status, expected) in [(0, Ok(true)), (1, Err(Failure::Aborted))] {
+            let body = mlme_bytes(CONNECT, peer, status);
+            let frame = Frame {
+                kind: 42,
+                flags: 0,
+                seq: 0,
+                port: 0,
+                body: &body,
+            };
+            assert_eq!(
+                mlme_event(
+                    &frame,
+                    &family_id(),
+                    selected(),
+                    MlmePhase::Connecting,
+                    &peer
+                ),
+                expected
+            );
+            if status == 0 {
+                assert_eq!(
+                    mlme_event(&frame, &family_id(), selected(), MlmePhase::Before, &peer),
+                    Err(Failure::Contended)
+                );
+                assert_eq!(
+                    mlme_event(
+                        &frame,
+                        &family_id(),
+                        selected(),
+                        MlmePhase::Connected,
+                        &peer
+                    ),
+                    Err(Failure::Contended)
+                );
+                assert_eq!(
+                    mlme_event(
+                        &frame,
+                        &family_id(),
+                        selected(),
+                        MlmePhase::Connecting,
+                        &[2; 6]
+                    ),
+                    Err(Failure::Identity)
+                );
+            }
+        }
+        let mut body = mlme_bytes(CONNECT, peer, 0);
+        put(&mut body, TIMED_OUT, &[]);
+        let frame = Frame {
+            kind: 42,
+            flags: 0,
+            seq: 0,
+            port: 0,
+            body: &body,
+        };
+        assert_eq!(
+            mlme_event(
+                &frame,
+                &family_id(),
+                selected(),
+                MlmePhase::Connecting,
+                &peer
+            ),
+            Err(Failure::Aborted)
+        );
+        let body = mlme_bytes(37, peer, 0);
+        let frame = Frame {
+            kind: 42,
+            flags: 0,
+            seq: 0,
+            port: 0,
+            body: &body,
+        };
+        assert_eq!(
+            mlme_event(
+                &frame,
+                &family_id(),
+                selected(),
+                MlmePhase::Connecting,
+                &peer
+            ),
+            Ok(false)
+        );
+    }
+    #[test]
+    fn disconnect_requires_local_reason_three_and_refuses_remote_drop() {
+        let peer = [2; 6];
+        let mut body = mlme_bytes(DISCONNECT, peer, 0);
+        put(&mut body, REASON_CODE, &3u16.to_ne_bytes());
+        let frame = Frame {
+            kind: 42,
+            flags: 0,
+            seq: 0,
+            port: 0,
+            body: &body,
+        };
+        assert_eq!(
+            mlme_event(
+                &frame,
+                &family_id(),
+                selected(),
+                MlmePhase::Disconnecting,
+                &peer
+            ),
+            Ok(true)
+        );
+        put(&mut body, DISCONNECTED_BY_AP, &[]);
+        let frame = Frame {
+            kind: 42,
+            flags: 0,
+            seq: 0,
+            port: 0,
+            body: &body,
+        };
+        assert_eq!(
+            mlme_event(
+                &frame,
+                &family_id(),
+                selected(),
+                MlmePhase::Disconnecting,
+                &peer
+            ),
+            Err(Failure::Contended)
+        );
+    }
+    #[test]
+    fn associated_readback_needs_actual_status_and_open_exact_ies() {
+        let mut fields = Vec::new();
+        put(&mut fields, 1, &[2; 6]);
+        put32(&mut fields, 2, 2412);
+        put(&mut fields, 5, &0u16.to_ne_bytes());
+        put(&mut fields, 6, &[0, 3, 0xff, 0, 0x80]);
+        let mut outer = Vec::new();
+        put(&mut outer, BSS | 0x8000, &fields);
+        assert_eq!(associated_bss(&attributes(&outer).unwrap()), Ok(None));
+        put32(&mut fields, 9, 1);
+        outer.clear();
+        put(&mut outer, BSS | 0x8000, &fields);
+        assert_eq!(
+            associated_bss(&attributes(&outer).unwrap()),
+            Ok(Some(AssociatedBss {
+                mac: [2; 6],
+                ssid: vec![0xff, 0, 0x80],
+                frequency: 2412
+            }))
+        );
+        put32(&mut fields, 9, 1); // Duplicate status cannot authorize completion.
+        outer.clear();
+        put(&mut outer, BSS | 0x8000, &fields);
+        assert_eq!(
+            associated_bss(&attributes(&outer).unwrap()),
+            Err(Failure::Malformed)
+        );
+    }
+    #[test]
+    fn unselected_mlme_interface_does_not_require_selected_wiphy() {
+        let mut body = vec![19, 1, 0, 0]; // AP NEW_STATION may carry only IFINDEX.
+        put32(&mut body, IFINDEX, 2);
+        let frame = Frame {
+            kind: 42,
+            flags: 0,
+            seq: 0,
+            port: 0,
+            body: &body,
+        };
+        assert_eq!(
+            mlme_event(
+                &frame,
+                &family_id(),
+                selected(),
+                MlmePhase::Connecting,
+                &[2; 6]
+            ),
+            Ok(false)
+        );
+        body.clear();
+        body.extend_from_slice(&[CONNECT, 1, 0, 0]);
+        put32(&mut body, IFINDEX, 3);
+        let frame = Frame {
+            kind: 42,
+            flags: 0,
+            seq: 0,
+            port: 0,
+            body: &body,
+        };
+        assert_eq!(
+            mlme_event(
+                &frame,
+                &family_id(),
+                selected(),
+                MlmePhase::Connecting,
+                &[2; 6]
+            ),
+            Err(Failure::MissingAttribute(WIPHY))
+        );
+    }
+    #[test]
+    fn selected_nonterminal_progress_neither_requires_terminal_wiphy_nor_completes() {
+        for (command, phase) in [
+            (37, MlmePhase::Connecting),
+            (38, MlmePhase::Connecting),
+            (39, MlmePhase::Disconnecting),
+            (40, MlmePhase::Disconnecting),
+            (125, MlmePhase::Connected),
+        ] {
+            let mut body = vec![command, 1, 0, 0];
+            put32(&mut body, IFINDEX, 3);
+            let frame = Frame {
+                kind: 42,
+                flags: 0,
+                seq: 0,
+                port: 0,
+                body: &body,
+            };
+            assert_eq!(
+                mlme_event(&frame, &family_id(), selected(), phase, &[2; 6]),
+                Ok(false)
+            );
+        }
     }
 }

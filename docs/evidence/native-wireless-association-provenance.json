@@ -1,0 +1,1004 @@
+{
+  "schema": 1,
+  "classification": "Explicit normal Rust open-association CLI refusal RED, bounded component QA and native ARM association plus explicit Disconnect GREEN; no address/packet/Internet/hardware result",
+  "source_anchor_before_this_change": "337128da047cbe0c166df9526c6c86747f4a1856",
+  "runtime_profile": {
+    "architecture": "aarch64",
+    "machine": "generic virt/mac80211_hwsim",
+    "acceleration": "TCG thread=multi",
+    "kernel_release": "7.1.6-1-aarch64-ARCH",
+    "container_CPUs": 8,
+    "container_memory_GiB": 6,
+    "guest_CPUs": 4,
+    "guest_memory_MiB": 3072,
+    "network": "none",
+    "host_devices": [],
+    "shared_original_image_backings_readonly": true,
+    "new_overlay_disposable_never_exported": true,
+    "original_cutoffs_seconds": {
+      "host_work": 810,
+      "host_close_from_T0": 840,
+      "boot_work": 780,
+      "boot_close_from_T0": 800,
+      "guest_work": 660,
+      "guest_close_from_T0": 700,
+      "each_explicit_action": 5
+    },
+    "each_action_wait_EOF_and_iw_observations_use_same_original_cutoff": true,
+    "capacity_guards": {
+      "MemAvailable_GiB": 12,
+      "free_disk_GiB": 2,
+      "disk_guard_adjusted_for_new_selection_with_Root_approval": true,
+      "exported_output_bound_MiB": 64,
+      "overlay_in_existing_container_tmpfs_GiB": 2
+    }
+  },
+  "frozen_consumer": {
+    "source": "tools/native-wireless-association/consumer.py",
+    "bytes": 13881,
+    "sha256": "c7a1ea56fafe318903b37b33707da5bc0812be8d1ed5d45e5baa4f64c9b73ae3",
+    "same_exact_bytes_in_RED_and_final_GREEN": true,
+    "desired_assertion_after_owned_cleanup_once": true
+  },
+  "native_refusal_RED": {
+    "normal_baseline_ARM": {
+      "bytes": 553568,
+      "sha256": "aac1c4640bde923ce6cd8bbf513613b7d202cb9f10b45a2d4f9783cc5d102534",
+      "features": [],
+      "ELF_machine": 183
+    },
+    "actual_worker_exit": 64,
+    "actual_JSON": {
+      "schema": 1,
+      "status": "invalid_request",
+      "reason": "invalid_arguments"
+    },
+    "unsupported_exit2_not_claimed": true,
+    "independent_STA_unassociated_and_AP_table_empty": true,
+    "desired_association_assertion_failed_after_cleanup": true,
+    "behavior_RED_qualified": true,
+    "Root_independent_record_verification": "Confirmed before implementation by parent Root",
+    "records": {
+      "selection.json": {
+        "bytes": 27203,
+        "sha256": "b75c0a67ffddc053c939b1400d9d044b865092b620d6f2da500663a07465e2ef"
+      },
+      "SOURCE.json": {
+        "bytes": 5924,
+        "sha256": "c979c6b2cd066a88953eb58f7cb66c11a19d2eea7dcf0d984587e87ce74ced2b"
+      },
+      "run/receipt.json": {
+        "bytes": 30845,
+        "sha256": "0ae25b206c5ff72d12b8a0e7da16f8d62d3768075c3db4b0e0806e4a153efaca"
+      },
+      "boot-result.json": {
+        "bytes": 14364,
+        "sha256": "e690e788e31bf9c5ece8bb2b628aca90397753178bc199ffbd2ae09faee69744"
+      },
+      "result.json": {
+        "bytes": 123643,
+        "sha256": "ce5a1171c5f894230114a195059f1ecb01b460e99b24e0ed306af5901dbad651"
+      },
+      "native-worker-observation.json": {
+        "bytes": 1085,
+        "sha256": "5e0dbd66c715d240a2c72783686cdcc27a08d769283a9ad0c442316e4d797513"
+      },
+      "kernel-observation-before-cleanup.json": {
+        "bytes": 4487,
+        "sha256": "f93784dc886b05aad6e7bb89e1efba6f28be22fb52fc4ede6334d5457e484896"
+      },
+      "consumer-review-before-desired-assert.json": {
+        "bytes": 82181,
+        "sha256": "30a0ada73dc71e5d6a1bb99606e9970b9fbda63dc1cd4e69ba8a031790758678"
+      }
+    }
+  },
+  "source_QA_and_build_epochs": [
+    {
+      "epoch": 1,
+      "scope": "Pre-compilation setup failure: cap-dropped UID0 could not traverse UID1000 support directory",
+      "outer_passed": false,
+      "actual_container_exit": 126,
+      "container_removed": true,
+      "same_daemon": true,
+      "owned_closure": true,
+      "actual_ECHILD": true,
+      "inputs_unchanged": true,
+      "records": {
+        "outer/receipt.json": {
+          "bytes": 749026,
+          "sha256": "4162296d4082bf708863ef9809213698de1404f070dbe38dded0cf0e98b5653b"
+        },
+        "CONTRACT.json": {
+          "bytes": 2513,
+          "sha256": "fa29b41690092fdc0c853f504d8b7e323e85e0cdffd495f804374ddcedd829b3"
+        },
+        "inputs.json": {
+          "bytes": 1089,
+          "sha256": "67beaf7bcc51416e8aab3be12ed5a303da5dbc66681f0c6dfbceda2ad0e12cd8"
+        },
+        "source/src/wire.rs": {
+          "bytes": 48179,
+          "sha256": "d78ac1b8c44a23d075d052c256c44c362e63458adb78cfb8c31a580290bc27dd"
+        }
+      }
+    },
+    {
+      "epoch": 2,
+      "scope": "Strict Clippy failure: collapsible conditional",
+      "outer_passed": false,
+      "actual_container_exit": 1,
+      "container_removed": true,
+      "same_daemon": true,
+      "owned_closure": true,
+      "actual_ECHILD": true,
+      "inputs_unchanged": true,
+      "records": {
+        "outer/receipt.json": {
+          "bytes": 749017,
+          "sha256": "586eb1badaa2475783015ebbeadd3acfdd385c150e390a6321743e0ea3df1154"
+        },
+        "CONTRACT.json": {
+          "bytes": 2513,
+          "sha256": "fa29b41690092fdc0c853f504d8b7e323e85e0cdffd495f804374ddcedd829b3"
+        },
+        "inputs.json": {
+          "bytes": 1089,
+          "sha256": "67beaf7bcc51416e8aab3be12ed5a303da5dbc66681f0c6dfbceda2ad0e12cd8"
+        },
+        "source/src/wire.rs": {
+          "bytes": 48179,
+          "sha256": "d78ac1b8c44a23d075d052c256c44c362e63458adb78cfb8c31a580290bc27dd"
+        },
+        "out/strict-clippy.stderr": {
+          "bytes": 1364,
+          "sha256": "de5a4054fbaa0ded514a05e00a3e6a14e14ea4ddfb9231c5d91ab1b4782a1b74"
+        }
+      }
+    },
+    {
+      "epoch": 3,
+      "scope": "Strict Clippy failure: constant chunks iterator",
+      "outer_passed": false,
+      "actual_container_exit": 1,
+      "container_removed": true,
+      "same_daemon": true,
+      "owned_closure": true,
+      "actual_ECHILD": true,
+      "inputs_unchanged": true,
+      "records": {
+        "outer/receipt.json": {
+          "bytes": 749017,
+          "sha256": "0b361a34abf748210a27e87567c82d141b3e6f889edd4bb39cdf475cc9f7ad1a"
+        },
+        "CONTRACT.json": {
+          "bytes": 2513,
+          "sha256": "fa29b41690092fdc0c853f504d8b7e323e85e0cdffd495f804374ddcedd829b3"
+        },
+        "inputs.json": {
+          "bytes": 1068,
+          "sha256": "2861c8fd2cfee1e561aaf649765e9f47399978f2a157fa046db1a79212617c76"
+        },
+        "source/src/wire.rs": {
+          "bytes": 50609,
+          "sha256": "b50e080b989c9f357492bdc0bc410cd8a9048bfb23f2a1b542e38c885e893fb0"
+        },
+        "out/strict-clippy.stderr": {
+          "bytes": 1051,
+          "sha256": "9da8e30f0b4adc19e5db3f0e9045bf5a664e8eb9c2b3906a91fb46cf5abb3cbb"
+        }
+      }
+    },
+    {
+      "epoch": 4,
+      "scope": "First qualified19-test normal host/ARM build; no native result",
+      "outer_passed": true,
+      "actual_container_exit": 0,
+      "container_removed": true,
+      "same_daemon": true,
+      "owned_closure": true,
+      "actual_ECHILD": true,
+      "inputs_unchanged": true,
+      "records": {
+        "outer/receipt.json": {
+          "bytes": 749706,
+          "sha256": "56b2bf717fa93785bf2c48d41befb5afdf3bd36e563372cded2096bee284cd77"
+        },
+        "CONTRACT.json": {
+          "bytes": 2513,
+          "sha256": "fa29b41690092fdc0c853f504d8b7e323e85e0cdffd495f804374ddcedd829b3"
+        },
+        "inputs.json": {
+          "bytes": 1068,
+          "sha256": "5b2c43fe161f778788aa5ceee7e496fddbd01e848f2d23e28cbad655fd523288"
+        },
+        "source/src/wire.rs": {
+          "bytes": 50609,
+          "sha256": "b50e080b989c9f357492bdc0bc410cd8a9048bfb23f2a1b542e38c885e893fb0"
+        },
+        "out/host-tests.stdout": {
+          "bytes": 1707,
+          "sha256": "80f6f2988ba0bab71c80d088ecb246c70a844c4bfb70635e06feda69b6f6b331"
+        },
+        "out/host-tests.stderr": {
+          "bytes": 521,
+          "sha256": "f5d6846a1aa3e6d781d39996e342144e23e9cd3ab68895d2eb92bfd2e3d14402"
+        },
+        "out/strict-clippy.stderr": {
+          "bytes": 321,
+          "sha256": "c19c227d982f44be11318c1017c71bcb6bb6341ecfd9dc8039bebc556db56b79"
+        },
+        "out/result.json": {
+          "bytes": 16520,
+          "sha256": "b42f29da8ddf2946370de6fda5ad7f58303bf564b0cfab5d5da79e12266f878b"
+        }
+      },
+      "actual_test_summaries": [
+        {
+          "status": "ok",
+          "passed": 18,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "epoch": 5,
+      "scope": "Qualified19-test bounded-context normal builds; no native result",
+      "outer_passed": true,
+      "actual_container_exit": 0,
+      "container_removed": true,
+      "same_daemon": true,
+      "owned_closure": true,
+      "actual_ECHILD": true,
+      "inputs_unchanged": true,
+      "records": {
+        "outer/receipt.json": {
+          "bytes": 749706,
+          "sha256": "e1d8aabe1300e4bcebd170ebb752fbb8e9788312524b1bbe91b5db1e6c3c3583"
+        },
+        "CONTRACT.json": {
+          "bytes": 2513,
+          "sha256": "fa29b41690092fdc0c853f504d8b7e323e85e0cdffd495f804374ddcedd829b3"
+        },
+        "inputs.json": {
+          "bytes": 1068,
+          "sha256": "cf12f9f78c8f68583a253c3d42dcbf55899e0ab1f66bab61c06f3e8aece650bb"
+        },
+        "source/src/wire.rs": {
+          "bytes": 51127,
+          "sha256": "898256185cc391fa5deaab504225a00c4c25c1440570c31f9648126bb3bca5b4"
+        },
+        "out/host-tests.stdout": {
+          "bytes": 1707,
+          "sha256": "80f6f2988ba0bab71c80d088ecb246c70a844c4bfb70635e06feda69b6f6b331"
+        },
+        "out/host-tests.stderr": {
+          "bytes": 521,
+          "sha256": "81b8add0ab2898dd2d1e1ef438901b8b370f0e5bf9abebbc65a2e900fdfc0561"
+        },
+        "out/strict-clippy.stderr": {
+          "bytes": 321,
+          "sha256": "1ca84310f0ddc9f50b25545ba4bcae9e5fdeb6fe01ee187a82b34965aa4a45ca"
+        },
+        "out/result.json": {
+          "bytes": 16520,
+          "sha256": "396598299b8f0e501ec2d3a5e9991c05eb2c7b015649ca1c105ec1546e0c319c"
+        }
+      },
+      "actual_test_summaries": [
+        {
+          "status": "ok",
+          "passed": 18,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "epoch": 6,
+      "scope": "Actual unrelated-interface decoder RED:18 library pass/1 desired failure",
+      "outer_passed": false,
+      "actual_container_exit": 1,
+      "container_removed": true,
+      "same_daemon": true,
+      "owned_closure": true,
+      "actual_ECHILD": true,
+      "inputs_unchanged": true,
+      "records": {
+        "outer/receipt.json": {
+          "bytes": 749017,
+          "sha256": "0ca18c9d7c950579885372288fdae7b5fd1022eac488822c69dd993be4f4ef92"
+        },
+        "CONTRACT.json": {
+          "bytes": 2591,
+          "sha256": "f8e2b759ef4536b00ea0003779d99e7ec672adf375ee5421c59ef2ef6045d5d3"
+        },
+        "inputs.json": {
+          "bytes": 1068,
+          "sha256": "3103686037b601af40194ff6f96b2c4a258f8e0feeee9815a02e858b3ff5f6bb"
+        },
+        "source/src/wire.rs": {
+          "bytes": 51933,
+          "sha256": "4f8800b45ad719c5473602c5d77c693b63faf6a95c6a225c9b483e6a4923fa50"
+        },
+        "out/host-tests.stdout": {
+          "bytes": 2090,
+          "sha256": "603f23eecb1adbcc28890d507fb82709d3146b838d346c922946d5c24fdb0278"
+        },
+        "out/host-tests.stderr": {
+          "bytes": 463,
+          "sha256": "c40671e86f8b4858902945eb47599728af6fb3ee645f4ed35832dfea6d9e98b8"
+        },
+        "out/strict-clippy.stderr": {
+          "bytes": 321,
+          "sha256": "d79c06bfea81e9cba5d5fa701d9e8d36cef238555aa72fc32203e6a82b9d334e"
+        }
+      },
+      "actual_test_summaries": [
+        {
+          "status": "FAILED",
+          "passed": 18,
+          "failed": 1,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "epoch": 7,
+      "scope": "Qualified20-test decoder correction and normal builds",
+      "outer_passed": true,
+      "actual_container_exit": 0,
+      "container_removed": true,
+      "same_daemon": true,
+      "owned_closure": true,
+      "actual_ECHILD": true,
+      "inputs_unchanged": true,
+      "records": {
+        "outer/receipt.json": {
+          "bytes": 749706,
+          "sha256": "6d283b41197b7c5ffd50981377b8e3b11f7a9fef37170daa8125dfff9b6ae009"
+        },
+        "CONTRACT.json": {
+          "bytes": 2591,
+          "sha256": "f8e2b759ef4536b00ea0003779d99e7ec672adf375ee5421c59ef2ef6045d5d3"
+        },
+        "inputs.json": {
+          "bytes": 1068,
+          "sha256": "146c05c430df5103d362d0694e0ec81c54b68c2155551e9933439c3de2ee1f5e"
+        },
+        "source/src/wire.rs": {
+          "bytes": 52498,
+          "sha256": "a2d4828da748dc64dd2e1a50b5a2e5405fab9add7b74974fce69382f3435d616"
+        },
+        "out/host-tests.stdout": {
+          "bytes": 1790,
+          "sha256": "cad1b5243f33f76d82a18e230fb101814f1b57578aa4a3c30651a34e72f40e07"
+        },
+        "out/host-tests.stderr": {
+          "bytes": 521,
+          "sha256": "91c19ff0a77c79efe5c6c7a323fcad3274fefee3dcb0270627ac0a74a7295482"
+        },
+        "out/strict-clippy.stderr": {
+          "bytes": 321,
+          "sha256": "47308ad833f622cd7d5a4f425988f8fefcdf243cfae24ae437ee0dc2510f5ced"
+        },
+        "out/result.json": {
+          "bytes": 16598,
+          "sha256": "e9004fc4995ecd3397be42ff13f1c9c2fc2643d9f44d1e9b577c3ddd815365e5"
+        }
+      },
+      "actual_test_summaries": [
+        {
+          "status": "ok",
+          "passed": 19,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "epoch": 8,
+      "scope": "Executed proposed progress test with an unnecessary frame-peer constraint; superseded after Root review, not the canonical ignored-progress regression",
+      "outer_passed": false,
+      "actual_container_exit": 1,
+      "container_removed": true,
+      "same_daemon": true,
+      "owned_closure": true,
+      "actual_ECHILD": true,
+      "inputs_unchanged": true,
+      "records": {
+        "outer/receipt.json": {
+          "bytes": 749017,
+          "sha256": "7aa1bb2de8b2e42167826e3b809c9d8cd2fb6024ed2a257c86676bfa12e5f013"
+        },
+        "CONTRACT.json": {
+          "bytes": 2681,
+          "sha256": "87869cf5f0ac7f5547d1417aefe541c6025e0106851bc9c413acd3900ed7e175"
+        },
+        "inputs.json": {
+          "bytes": 1068,
+          "sha256": "1227bb69eee60caeb242fe3a98f03e8f1cdfc4119fb04e6a2697cb5d2f6d6ab0"
+        },
+        "source/src/wire.rs": {
+          "bytes": 53438,
+          "sha256": "cc719080365e7b25e681301420bba5528ab4f8e6e962ecdd8806bc00547b1b70"
+        },
+        "out/host-tests.stdout": {
+          "bytes": 2222,
+          "sha256": "0372fa1ef1e83ec565837016565c6fa653febfe3a2a53e8b60d6255706043c20"
+        },
+        "out/host-tests.stderr": {
+          "bytes": 463,
+          "sha256": "f4cb6ba2f0135b39de6e1aed6826cbdef156352751eee304ce14804a82f3ae4a"
+        },
+        "out/strict-clippy.stderr": {
+          "bytes": 321,
+          "sha256": "88a9337cf3835b94935e433f72a8aeabfedec6be770ca0d9dc01e4731a701d9e"
+        }
+      },
+      "actual_test_summaries": [
+        {
+          "status": "FAILED",
+          "passed": 19,
+          "failed": 1,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "epoch": 9,
+      "scope": "Actual final ignored-progress decoder RED:19 library pass/1 desired failure",
+      "outer_passed": false,
+      "actual_container_exit": 1,
+      "container_removed": true,
+      "same_daemon": true,
+      "owned_closure": true,
+      "actual_ECHILD": true,
+      "inputs_unchanged": true,
+      "records": {
+        "outer/receipt.json": {
+          "bytes": 749017,
+          "sha256": "f6c288c08df4e0e5c844e6d9671d93d4e5893f47383e664c2151830d82e5708b"
+        },
+        "CONTRACT.json": {
+          "bytes": 2687,
+          "sha256": "5e55b4c3d204b184d1357b2d530d7266ffbf62f5b73c0244422182a627a152aa"
+        },
+        "inputs.json": {
+          "bytes": 1068,
+          "sha256": "524f50d14b79ebecc63e7485e53516333fa4f92d60f7b1ad3830d2c60e57ea19"
+        },
+        "source/src/wire.rs": {
+          "bytes": 53086,
+          "sha256": "a277d8e4be19cb52f1404d3bb45fb61410b7ca279ce5634dd50ed72990cca32c"
+        },
+        "out/host-tests.stdout": {
+          "bytes": 2246,
+          "sha256": "651ef8085ff1f9e12903632d7e0b57969fbfeba4a2ec3c8ff91ac1765ba2dffe"
+        },
+        "out/host-tests.stderr": {
+          "bytes": 463,
+          "sha256": "a8b0dc3e3ab95e1b252285a1acc101a584394074cb7049605bd2f8de653e9370"
+        },
+        "out/strict-clippy.stderr": {
+          "bytes": 321,
+          "sha256": "5dc892091b94e152a20fca11b3236220e91a0ce9418945cf40866e383ff29ca9"
+        }
+      },
+      "actual_test_summaries": [
+        {
+          "status": "FAILED",
+          "passed": 19,
+          "failed": 1,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "epoch": 10,
+      "scope": "Qualified21-test ignored-progress correction and normal builds",
+      "outer_passed": true,
+      "actual_container_exit": 0,
+      "container_removed": true,
+      "same_daemon": true,
+      "owned_closure": true,
+      "actual_ECHILD": true,
+      "inputs_unchanged": true,
+      "records": {
+        "outer/receipt.json": {
+          "bytes": 749772,
+          "sha256": "5fff7769d4b76e43b5dacfc67f2fadc7120473e61063c8329fad1bd5f0592d51"
+        },
+        "CONTRACT.json": {
+          "bytes": 2687,
+          "sha256": "5e55b4c3d204b184d1357b2d530d7266ffbf62f5b73c0244422182a627a152aa"
+        },
+        "inputs.json": {
+          "bytes": 1068,
+          "sha256": "74f5c03a76b2a3a024791c2a9e3325cd5164a631602ee7e080fa582e22945f15"
+        },
+        "source/src/wire.rs": {
+          "bytes": 53307,
+          "sha256": "33894569e7dd0c36d7bd389fbf988594a0885775cf332d4be16317613d5bec68"
+        },
+        "out/host-tests.stdout": {
+          "bytes": 1891,
+          "sha256": "cd4d69d8d87c9c8f6383e7b5c6604360d652ebf5cfab841a98250ed6f4e579b3"
+        },
+        "out/host-tests.stderr": {
+          "bytes": 521,
+          "sha256": "109cae69ae59704fb70b9add0f658c0fad74020cbbbbc7368dfd4d0ff9eab326"
+        },
+        "out/strict-clippy.stderr": {
+          "bytes": 321,
+          "sha256": "1ca84310f0ddc9f50b25545ba4bcae9e5fdeb6fe01ee187a82b34965aa4a45ca"
+        },
+        "out/result.json": {
+          "bytes": 16694,
+          "sha256": "0353656d435ea4bb4057c71bd9286303b1fdd5e4f2ceccfe2bdecdd4dd7b3dac"
+        }
+      },
+      "actual_test_summaries": [
+        {
+          "status": "ok",
+          "passed": 20,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "epoch": 11,
+      "scope": "Final qualified21-test bounded missing-attribute stage/MLME-command context and normal builds",
+      "outer_passed": true,
+      "actual_container_exit": 0,
+      "container_removed": true,
+      "same_daemon": true,
+      "owned_closure": true,
+      "actual_ECHILD": true,
+      "inputs_unchanged": true,
+      "records": {
+        "outer/receipt.json": {
+          "bytes": 749772,
+          "sha256": "a2c65a1b88b11c74fd75e4b88e9cd35a9d3f8494b652a1aa81c13dbef34eee03"
+        },
+        "CONTRACT.json": {
+          "bytes": 2687,
+          "sha256": "5e55b4c3d204b184d1357b2d530d7266ffbf62f5b73c0244422182a627a152aa"
+        },
+        "inputs.json": {
+          "bytes": 1068,
+          "sha256": "7d4f62a11290d77a85232fd50e2446b1ed7366972c41dc2e2edc0e6cc0768a06"
+        },
+        "source/src/wire.rs": {
+          "bytes": 54172,
+          "sha256": "6841ba76e82949d51f05348a637782311b2d9e24675d944b789e5a483f433392"
+        },
+        "out/host-tests.stdout": {
+          "bytes": 1891,
+          "sha256": "cd4d69d8d87c9c8f6383e7b5c6604360d652ebf5cfab841a98250ed6f4e579b3"
+        },
+        "out/host-tests.stderr": {
+          "bytes": 521,
+          "sha256": "bfee3f47796c190931f33368d340234ca1281c3d1f46b4bcf989a43fa403ff07"
+        },
+        "out/strict-clippy.stderr": {
+          "bytes": 321,
+          "sha256": "be547786cd60368d5b110315d58d1cc95fbb2ee348e82122cb0d2d2855c8b3c6"
+        },
+        "out/result.json": {
+          "bytes": 16694,
+          "sha256": "f13afad1f9f7f08f2a9a71997226a216397ee2570fe9df2ca29b83a86e8ceaa1"
+        }
+      },
+      "actual_test_summaries": [
+        {
+          "status": "ok",
+          "passed": 20,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "status": "ok",
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    }
+  ],
+  "failed_native_candidates": [
+    {
+      "epoch": 1,
+      "desired_passed": false,
+      "behavior_RED_qualified": false,
+      "outer_passed": false,
+      "actual_worker_exit": 70,
+      "actual_worker_status": "uncertain",
+      "actual_worker_reason": "Malformed",
+      "independent_exact_kernel_association": true,
+      "explicit_Disconnect_count": 0,
+      "QEMU_actual_wait_exit": 0,
+      "actual_container_exit": 2,
+      "AP_wait0_EOF": true,
+      "owned_radios_removed": true,
+      "namespace_descriptor_closed": true,
+      "actual_retirement_timing_received": true,
+      "container_removed": true,
+      "same_daemon": true,
+      "selected_inputs_unchanged": true,
+      "failure_not_promoted_to_completed_association": true,
+      "records": {
+        "selection.json": {
+          "bytes": 29515,
+          "sha256": "f5874934e350a372366d19c11b67fc6973fc133477b493271ff65418b23d2fb4"
+        },
+        "SOURCE.json": {
+          "bytes": 6478,
+          "sha256": "1658453e8b60fe4592e77ff18cf42421b03ddabfb15d5ffcb29c06e96ff75dde"
+        },
+        "run/receipt.json": {
+          "bytes": 31833,
+          "sha256": "a472e674abcdd410b6aca22acbccd450513d3e35874d20300f0b8ece1e146b73"
+        },
+        "boot-result.json": {
+          "bytes": 14824,
+          "sha256": "d649b0b3fbdbd20d3ddca0eea5f673a9ea390de2a6f9a35d63651a4a7df18e24"
+        },
+        "result.json": {
+          "bytes": 123953,
+          "sha256": "a97d62c18bad73e24dc205b602eec9de895a10a761cf10a783362845beee72a3"
+        },
+        "native-worker-observation.json": {
+          "bytes": 1186,
+          "sha256": "a5fb78b8463eb3569e9c80d493cada64904da2b48864bd4aac96e595be00e26b"
+        },
+        "kernel-observation-before-cleanup.json": {
+          "bytes": 4604,
+          "sha256": "269defb320e68bc3531173f844948cfd9c1c0e61f47683142d303fc1c847e205"
+        }
+      }
+    },
+    {
+      "epoch": 2,
+      "desired_passed": false,
+      "behavior_RED_qualified": false,
+      "outer_passed": false,
+      "actual_worker_exit": 70,
+      "actual_worker_status": "uncertain",
+      "actual_worker_reason": "MissingAttribute(1)",
+      "independent_exact_kernel_association": true,
+      "explicit_Disconnect_count": 0,
+      "QEMU_actual_wait_exit": 0,
+      "actual_container_exit": 2,
+      "AP_wait0_EOF": true,
+      "owned_radios_removed": true,
+      "namespace_descriptor_closed": true,
+      "actual_retirement_timing_received": true,
+      "container_removed": true,
+      "same_daemon": true,
+      "selected_inputs_unchanged": true,
+      "failure_not_promoted_to_completed_association": true,
+      "records": {
+        "selection.json": {
+          "bytes": 29515,
+          "sha256": "696ac230a839eb422b0ae5c88be07ec8d5d934d84b9c643bd7fef118733b6ce8"
+        },
+        "SOURCE.json": {
+          "bytes": 6478,
+          "sha256": "000611318624749b4d11ccc703dd39f6e4f07d5b25b14c3dbeb8aa64af3727c9"
+        },
+        "run/receipt.json": {
+          "bytes": 31831,
+          "sha256": "58f5d0092b5e0038996770c7c75429b7e1d62395c3e8efeed8962d92fbb7d702"
+        },
+        "boot-result.json": {
+          "bytes": 14824,
+          "sha256": "1b6d3cdfe19e5374d3bab4c431b4fe3a772d0d7bac20ac313caa7d942e956d1f"
+        },
+        "result.json": {
+          "bytes": 123973,
+          "sha256": "3181a7f5aec0cf3f7a3d12a336fc591eef997475f0dc75030b0f6d9886d6d67e"
+        },
+        "native-worker-observation.json": {
+          "bytes": 1196,
+          "sha256": "a40c5ae7a7a4f9e3ecb68e2067781659fa78269c9afb2a7fdae41432acab4c68"
+        },
+        "kernel-observation-before-cleanup.json": {
+          "bytes": 4614,
+          "sha256": "f6c97e8e5d6939fbbd167fdb90c04919d7e36f1ff22c6eca9d7cb79c74c932d5"
+        }
+      }
+    },
+    {
+      "epoch": 3,
+      "desired_passed": false,
+      "behavior_RED_qualified": false,
+      "outer_passed": false,
+      "actual_worker_exit": 70,
+      "actual_worker_status": "uncertain",
+      "actual_worker_reason": "MissingAttribute(1)",
+      "independent_exact_kernel_association": true,
+      "explicit_Disconnect_count": 0,
+      "QEMU_actual_wait_exit": 0,
+      "actual_container_exit": 2,
+      "AP_wait0_EOF": true,
+      "owned_radios_removed": true,
+      "namespace_descriptor_closed": true,
+      "actual_retirement_timing_received": true,
+      "container_removed": true,
+      "same_daemon": true,
+      "selected_inputs_unchanged": true,
+      "failure_not_promoted_to_completed_association": true,
+      "records": {
+        "selection.json": {
+          "bytes": 29515,
+          "sha256": "bccd1d17612891d165522b4cf1f145523e600445e2ae2f7af471dbcfd72d3ba3"
+        },
+        "SOURCE.json": {
+          "bytes": 6478,
+          "sha256": "0eea19f155dea06655cc8a4f7a2083a98aa4e677664a932f792aea005f6f3c9f"
+        },
+        "run/receipt.json": {
+          "bytes": 31832,
+          "sha256": "0403c80744390b2247c75951a49f5cd405bfffd8aa9e901304ee319bfcfa0124"
+        },
+        "boot-result.json": {
+          "bytes": 14824,
+          "sha256": "488a638f9b274bed795fa2fb194b288c93afa4b20ea7991f8ed3b6ae2ce5026b"
+        },
+        "result.json": {
+          "bytes": 123973,
+          "sha256": "f7545249081ede5d03c1549dae0dbc7cb3ec380bffa7917da333bc9737ac6a96"
+        },
+        "native-worker-observation.json": {
+          "bytes": 1196,
+          "sha256": "09f987cffcc2a19bcb523eec201f98cccf52958a2586383a55dc1f02653ed110"
+        },
+        "kernel-observation-before-cleanup.json": {
+          "bytes": 4614,
+          "sha256": "c7be86afc1fbf6bcfa52974d52a470e1f052757766df9fda752c16796bdf1757"
+        }
+      }
+    }
+  ],
+  "unexecuted_preparation": {
+    "epoch": 4,
+    "executed": false,
+    "reason": "Root requested stage and MLME-command context for MissingAttribute before another runtime epoch",
+    "records": {
+      "selection.json": {
+        "bytes": 29518,
+        "sha256": "4ea967176001bb4c731dc7e088c8392b5eb8d68a9cc42988b71527b64ed9c669"
+      },
+      "SOURCE.json": {
+        "bytes": 6479,
+        "sha256": "699ebdcedfb0accdf55028610d4db234678b3f870b9de310afe8f8042a102109"
+      },
+      "PREFLIGHT.json": {
+        "bytes": 3071,
+        "sha256": "2d3954fcd355c4051a7f7ff8808d91797975bb81180bfc62ecfd9a0b40009861"
+      }
+    }
+  },
+  "final_normal_build": {
+    "host_test_passes": 21,
+    "ignored_tests": 0,
+    "format_and_strict_Clippy_passed": true,
+    "lock_and_dependencies_unchanged": true,
+    "source_equals_actual_formatted_build_source": true,
+    "records": {
+      "outer/receipt.json": {
+        "bytes": 749772,
+        "sha256": "a2c65a1b88b11c74fd75e4b88e9cd35a9d3f8494b652a1aa81c13dbef34eee03"
+      },
+      "out/result.json": {
+        "bytes": 16694,
+        "sha256": "f13afad1f9f7f08f2a9a71997226a216397ee2570fe9df2ca29b83a86e8ceaa1"
+      },
+      "out/ARTIFACTS.json": {
+        "bytes": 16694,
+        "sha256": "f13afad1f9f7f08f2a9a71997226a216397ee2570fe9df2ca29b83a86e8ceaa1"
+      },
+      "out/Cargo.lock": {
+        "bytes": 2350,
+        "sha256": "e51e9758ff992cf23de6bcea74bee69180af241d1002d139eb719a3ceec6aa44"
+      },
+      "out/host-tests.stdout": {
+        "bytes": 1891,
+        "sha256": "cd4d69d8d87c9c8f6383e7b5c6604360d652ebf5cfab841a98250ed6f4e579b3"
+      }
+    },
+    "normal_artifacts": {
+      "host": {
+        "bytes": 556728,
+        "sha256": "0c0067f87a20d20c5d62529d796cd50b04c47cd6d8f4d0cd9125aa20cb5f8f50",
+        "ELF_machine": 62,
+        "PT_INTERP": "/lib64/ld-linux-x86-64.so.2",
+        "features": [],
+        "optimization": 3,
+        "normal_worker_execution_claimed_by_build": false
+      },
+      "ARM": {
+        "bytes": 560400,
+        "sha256": "4598f2e121cd78e8c8f794efde23c99f759985567aa1df6d7eaa18b4e5813044",
+        "ELF_machine": 183,
+        "PT_INTERP": "/lib/ld-linux-aarch64.so.1",
+        "features": [],
+        "optimization": 3,
+        "normal_worker_execution_claimed_by_build": false
+      }
+    }
+  },
+  "native_GREEN": {
+    "desired_passed": true,
+    "behavior_RED_qualified": false,
+    "actual_association_worker_exit": 0,
+    "normal_worker_result_status": "associated",
+    "independent_exact_STA_link_and_AP_station_table": true,
+    "association_survived_actual_worker_exit_in_this_epoch": true,
+    "explicit_Disconnect_actions": 1,
+    "actual_Disconnect_worker_exit": 0,
+    "independent_STA_Not_connected_and_AP_table_empty": true,
+    "no_original_iw_association_or_disconnect_mutation": true,
+    "no_resubmission_reconnect_automatic_Disconnect_or_rollback": true,
+    "association_operation_ns": 65748053,
+    "association_arming_to_actual_wait_ns": 118537241,
+    "association_arming_to_stdout_EOF_ns": 121236760,
+    "Disconnect_operation_ns": 25826249,
+    "Disconnect_arming_to_actual_wait_ns": 70103785,
+    "Disconnect_arming_to_stdout_EOF_ns": 70270274,
+    "single_controlled_observations_not_performance_benchmarks": true,
+    "actual_wait_stdout_EOF_counts": {
+      "host": 15,
+      "boot": 3,
+      "guest": 91,
+      "poweroff": 1
+    },
+    "adopted_successful_terminal_waits": 33,
+    "actual_final_ECHILD": true,
+    "adopted_origins_or_PIPE_EOF_not_inferred": true,
+    "AP_SIGTERM_wait0_EOF_endpoint_absent": true,
+    "hwsim_module_and_radios_removed": true,
+    "retained_namespace_descriptor_closed": true,
+    "original393_package_versions_unchanged_after_signed3_additions": true,
+    "QEMU_actual_wait_exit": 0,
+    "container_and_attach_exit": 0,
+    "exact_container_removed": true,
+    "same_daemon": true,
+    "selected_inputs_and_source_unchanged": true,
+    "records": {
+      "selection.json": {
+        "bytes": 29518,
+        "sha256": "26b310c375c96d2db787fb2c6ac15d34997515becd81af55bf13253847337cbd"
+      },
+      "SOURCE.json": {
+        "bytes": 6479,
+        "sha256": "de2cf299b0880a103a08bf4cbd49fce145344d3ce1b0d7fafd34291ac7286867"
+      },
+      "PREFLIGHT.json": {
+        "bytes": 3071,
+        "sha256": "d9943137a3613b6dd1bf154a1dcfaf74e3f18602d7268871e45d40b32f7c0b20"
+      },
+      "run/receipt.json": {
+        "bytes": 31567,
+        "sha256": "0e08efe3c9a1db277894289fd1205cf841611c3332c41f6eeac885f113eae706"
+      },
+      "boot-result.json": {
+        "bytes": 14405,
+        "sha256": "f12718f8c9fc769227d41ee9315ba4d72e6ff7d14c55834e37e261115e2a7533"
+      },
+      "result.json": {
+        "bytes": 129238,
+        "sha256": "9e14aa7921f4a283782a7cda4471604057fb3eb769605a8004c11a386eedde8d"
+      },
+      "native-worker-observation.json": {
+        "bytes": 1388,
+        "sha256": "1d136cd0247e5667a4d400b300d00f00220faea57a3605f55894e386284f41cf"
+      },
+      "kernel-observation-before-cleanup.json": {
+        "bytes": 4816,
+        "sha256": "62f309bb7e33786215bf017b6967417e9bf4730ac620facebd9d5d2fb1b95188"
+      },
+      "explicit-disconnect-observation.json": {
+        "bytes": 4323,
+        "sha256": "2bf82e76be4a520d6616bf6c844054ef428fb2088c946d382f6fd42157d30256"
+      },
+      "consumer-review-before-desired-assert.json": {
+        "bytes": 85522,
+        "sha256": "f1e392c6bab01930d729709a849cc81201795a6ad63a63bf14ee36afd9fb24c9"
+      }
+    }
+  },
+  "source_pins": {
+    "native-wireless-scan/Cargo.toml": {
+      "bytes": 369,
+      "sha256": "72841d218d32b4d0c874a359fe8a6cc89d2f2c996ec81bd0137d4cf6fbb31c61"
+    },
+    "native-wireless-scan/Cargo.lock": {
+      "bytes": 2350,
+      "sha256": "e51e9758ff992cf23de6bcea74bee69180af241d1002d139eb719a3ceec6aa44"
+    },
+    "native-wireless-scan/src/lib.rs": {
+      "bytes": 3228,
+      "sha256": "9920b0b130331be589a260d25715b4bf3644f85e621e79989a73ac3c74ce052f"
+    },
+    "native-wireless-scan/src/main.rs": {
+      "bytes": 6830,
+      "sha256": "73b854d81fe7f0c3076ea4e82484f4b42693bac260aa13cc002fc7c938d7b405"
+    },
+    "native-wireless-scan/src/wire.rs": {
+      "bytes": 54318,
+      "sha256": "766131eff1611f5c0bb82af7213648c6789c5ea4f19f08ddf93e419ce5e06b16"
+    },
+    "native-wireless-scan/src/association.rs": {
+      "bytes": 4936,
+      "sha256": "9f3288bbdb16afe733d2911c9cdfe4aff966baaddcf1d3b72aa64ed1a6ce213f"
+    },
+    "tools/native-wireless-association/consumer.py": {
+      "bytes": 13881,
+      "sha256": "c7a1ea56fafe318903b37b33707da5bc0812be8d1ed5d45e5baa4f64c9b73ae3"
+    },
+    "tools/native-wireless-association/disconnect_consumer.py": {
+      "bytes": 2582,
+      "sha256": "de6b04d0d7d5102755b889122ce5c617556e63c1c068c4d32b34a74bf30e995a"
+    },
+    "tools/native-wireless-association/arm/boot.py": {
+      "bytes": 4077,
+      "sha256": "73d102ba905b2421103279b2188fd27a5905620a6d0ef08ee30ae9562fbbb151"
+    },
+    "tools/native-wireless-association/arm/guest-main.py": {
+      "bytes": 36412,
+      "sha256": "bf6daf080de3674e4220ca1bd828786a1cdde2ca820459ee94ebc401ba224b70"
+    },
+    "tools/native-wireless-association/arm/guest.py": {
+      "bytes": 1288,
+      "sha256": "206db6f500283333ace2c3fcd352581a46a0b8c722b7424eec79e2868c85128d"
+    },
+    "tools/native-wireless-association/arm/red-boot.py": {
+      "bytes": 3810,
+      "sha256": "2bec5cf723c5f5839323a249b280f2a4b3ccc3272b8c854ffd0e0f39d960b571"
+    },
+    "tools/native-wireless-association/arm/red-guest-main.py": {
+      "bytes": 32323,
+      "sha256": "b524ece5bbe3df095efbccd049b38ede266bde1fddbbceeafac86c2d14686e57"
+    }
+  },
+  "limits": {
+    "no_addresses_acquired_or_configured": true,
+    "no_IP_packets_or_Internet_qualified": true,
+    "no_WPA_credentials_or_credential_protocol": true,
+    "no_normal_Settings_connectivity_service_integration": true,
+    "no_wireless_deployment_or_Pixel_backend_qualification": true,
+    "phone_accessed": false,
+    "hardware_qualified": false,
+    "exact_failed_notification_attribution_not_sampled": true,
+    "generic_reclaimability_or_kernel_syscall_cancellation_not_promised": true,
+    "Root_commit_and_push_not_performed_by_this_agent": true
+  }
+}

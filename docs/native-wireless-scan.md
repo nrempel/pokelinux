@@ -1,5 +1,9 @@
 # Native wireless discovery
 
+A later [explicit open-association tracer](native-wireless-association.md) now
+qualifies its own normal Rust association and explicit Disconnect in a fresh
+hwsim epoch. The discovery results below retain their original selections.
+
 This tracer exercises Linux wireless discovery below the existing local-network
 Settings path. It does not associate, authenticate, configure an address, route
 packets or provide Internet access. No physical phone has been accessed.

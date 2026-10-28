@@ -62,3 +62,28 @@ remains open.
 This host test does not qualify upstream compositor startup, ARM graphics,
 authentication, a screenshot or phone hardware. See the
 [separate failed cold diagnostic](native-session-x86-runtime.md#bounded-backend-dispatch-diagnostic).
+
+## Cold shell integration after establishment
+
+The fresh x86 installed-profile run reaches genuine Omarchy shell IPC `ping` and
+its background/bar compositor surfaces with the normal optimized Rust owner.
+Source is observed and ready at sequence 14, then remains healthy at sequence 76
+before cleanup. The original compositor and matching adapter remain unchanged.
+
+The full run still fails: the normal appearance snapshot is unavailable before
+app launch. The selected deployment omits genuine theme assets and initial theme
+selection; this is deployment-source evidence, not a captured collector errno.
+Separate shell journal errors concern Qt Color name resolution and missing
+compositor instance environment. These require normal deployment integration.
+
+No app boundary steps or new PNG were produced. Final Pixel display qualification
+is null and the positive manager Stop-after-Ready case is false. Guest cleanup,
+QEMU exit and container closure qualify independently of the failed scenario.
+The execution, boot and result SHA-256 values are respectively:
+
+- `e35303b1fef3f292f9a2436bc4725ba99026f93342300474c0e882d66a1bfc9a`
+- `c27ce1ee6a06ab4d370f049c816bf4e2ff3b8985233d0c7852bdc35ae8674125`
+- `6bbaaf999f60e19019a761cbdf821c47c9a4dad7604131a7804d2bf36a2c80ef`
+
+This is partial cold shell progress on x86, not completed app/session integration,
+ARM graphical qualification or a bootable Pixel image.

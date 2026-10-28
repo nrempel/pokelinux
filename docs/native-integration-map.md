@@ -1,9 +1,14 @@
 # Current native smartphone integration map
 
+The [explicit wireless connection path](native-wireless-association.md) now passes
+normal Rust open-AP association and separately requested Disconnect in a generic
+ARM virtual-radio epoch, independently checked against kernel STA/AP state.
+Wi-Fi address/packet, WPA, Settings and Pixel integration remain open.
+
 The [native wireless tracer](native-wireless-scan.md) now discovers an exact
 fresh test AP through Rust and kernel nl80211 in a generic ARM hwsim guest,
 after genuine refusing RED and with the unchanged consumer and full owned
-cleanup. The same binary passes a separate unavailable control. Association,
+cleanup. The same discovery binary passes a separate unavailable control.
 Internet, normal Settings Wi-Fi, installed wireless
 activation and the matched Pixel backend remain open; no phone is qualified.
 

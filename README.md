@@ -48,7 +48,7 @@ into one complete phone session.
 | --- | --- | --- |
 | Native apps and themes | Real Messages, Settings and Sounds windows in prepared VMs; live original Omarchy theme changes and permission controls in qualified app sessions. | [Messages](docs/native-messages-appearance-rust-tracer.md), [Settings brightness](docs/native-brightness.md), [Sounds](docs/native-normal-upstream-tracer.md#prepared-full-appservice-slice-passes) |
 | Connection ownership | Touch Enable → packets → app close/reopen → explicit Disable and silence through the normal Settings app and Rust services. | [Settings connection](docs/native-settings-connectivity-window.md) |
-| Wireless discovery | A native Rust worker discovers the exact test AP through kernel nl80211 in a generic ARM VM, after a genuine refusing RED; the same binary reports unavailable on a non-wireless interface. Association, Internet and Pixel Wi-Fi remain open. | [Wireless tracer](docs/native-wireless-scan.md) |
+| Wireless | Native Rust discovery plus explicit open-AP connection and disconnection pass against Linux virtual radios in a generic ARM VM, with independent kernel checks. Wi-Fi IP traffic, WPA, Settings integration and Pixel hardware remain open. | [Discovery](docs/native-wireless-scan.md), [connection](docs/native-wireless-association.md) |
 | ARM app build and partial runtime | Current Settings builds/installs with native Qt 6.12 and matching Rust libraries. A failed ARM trace reaches one Enable touch, a virtual address and one packet; background persistence, reopen and Disable remain open. | [ARM build/install](docs/native-settings-connectivity-window.md#native-arm-build-and-installation), [partial failed trace](docs/native-settings-connectivity-window.md#fourth-attempt-partial-touch-and-packets) |
 | Audio | Preview Play/Stop, volume and mute verified against measured virtual audio; separate installed ARM service startup and shutdown checks. Physical phone audio remains open. | [Preview](docs/native-sounds-preview.md), [live mute](docs/native-live-preview-mute.md) |
 | Battery and brightness | Rust services follow real Linux test drivers, including value changes and device loss; installed ARM startup and recovery checkpoints pass. | [Battery](docs/native-battery.md), [brightness](docs/native-brightness.md) |
@@ -59,8 +59,9 @@ into one complete phone session.
 The current [Messages background owner](docs/native-installed-messages-history.md#current-owner-integration) now passes one fresh ARM/PID1 cold boot, exact private history reads and normal Stop. A second new boot and graphical session remain open.
 
 Cold-start work now keeps session authority unavailable until compositor updates
-form a fresh consecutive pair. The first real socket/process regression passes;
-full graphical cold startup remains open. [Startup change](docs/native-source-establishment.md).
+form a fresh consecutive pair. The socket/process regression passes. A fresh x86 cold run now reaches the genuine
+Omarchy background and bar with healthy session updates. It stops at unavailable
+appearance before app launch; complete graphical startup remains open. [Startup change](docs/native-source-establishment.md).
 
 Host component tests, original-code execution, Android reference tests, ARM
 user-mode emulation, full-system VMs and physical hardware evidence are recorded
