@@ -15,6 +15,17 @@ integration gate; this result does not qualify those newer controls. The
 [hash-only evidence](evidence/native-cold-omarchy-sounds.json) records the compared
 frontend source hashes separately from the executed result.
 
+The selected audio daemon also predates the current client: source comparison
+finds that its status reply lacks the now-required `policy_settled` and `preview`
+fields. This is an identified version mismatch, not a replayed runtime failure.
+A replacement normal x86 Release build from current source passes 56 existing
+scoped tests, formatting and strict Clippy; 52 frozen source pins and 17 actual
+wait/EOF completions were independently checked. The current owner and appearance
+daemon retain exact matching source bindings. The successor cold run remains
+unexecuted. Its preview profile must retain the `source.media` selector while
+omitting the old fixture's permanent media producer, so the native service can
+create its own finite playback producer.
+
 This is the permission-withheld checkpoint. “Audio reply refused” is the expected
 app state: direct audio access is denied and independent measurement finds zero
 RMS/peak across 48,000 PCM frames. It does not demonstrate authorized playback.

@@ -119,5 +119,51 @@
         "current_repository_sha256": "6c0c434553bbef540ffad41bd4aec4807bfb6d259e6b71e12e915a0d8e4551b3"
       }
     }
+  },
+  "current_audio_successor_preparation": {
+    "source_commit": "4f7723b8143a341a71afded1cf5fb145ed6825ca",
+    "historical_audio_ELF_sha256": "858b1a6f9aa270314eac74f773d2d6ac3daa31c8ac5e3070f4d1284771e25762",
+    "historical_status_missing_current_required_fields": [
+      "policy_settled",
+      "preview"
+    ],
+    "compatibility_finding_scope": "source comparison; no runtime replay claimed",
+    "normal_current_audio_ELF": {
+      "bytes": 1357560,
+      "sha256": "b0a3379b273914ac12316fda0271ce0487b2520af5ff6a6cf6a4511a8faecce7",
+      "features": [],
+      "opt_level": "3",
+      "test_profile": false,
+      "ELF_machine": 62
+    },
+    "normal_build_and_existing_scoped_tests_pass": true,
+    "existing_test_cases": 56,
+    "Root_independently_matched_frozen_and_current_source_rows": 52,
+    "Root_verified_actual_waits_and_EOF": 17,
+    "records": {
+      "SOURCE.json": {
+        "bytes": 5777,
+        "sha256": "ec7ef6ab5969b5b6facb2f7610f000d626de0967e7a461880b0309154d932d56"
+      },
+      "BINDING-REVIEW.json": {
+        "bytes": 4369,
+        "sha256": "5f566523c390f836118e699136d36044a42a974871e08819462e4648a25acfe8"
+      },
+      "BUILD-QUALIFICATION.json": {
+        "bytes": 1293,
+        "sha256": "305d179cbfed82b4262bc1345d7e6c5433a0d17e4acd6464d0b46dc7e9807bc1"
+      },
+      "run/receipt.json": {
+        "bytes": 22525,
+        "sha256": "2ca277147e50f4d8fb9c0c284aec0ed294f459a341d6b3d9d019a067034958cd"
+      },
+      "run/out/result.json": {
+        "bytes": 9241,
+        "sha256": "5d224ccca8ea093a6d3fe12b64d553e64bf69dae960955b52dbc4d97ae938806"
+      }
+    },
+    "current_full_cold_run_executed": false,
+    "permanent_fixture_media_producer_must_be_omitted": true,
+    "finite_native_producer_not_yet_qualified_in_this_composition": true
   }
 }

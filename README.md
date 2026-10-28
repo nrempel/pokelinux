@@ -62,8 +62,8 @@ A fresh x86 VM now starts genuine Omarchy and the native Sounds window through
 the Rust session owner, with Tokyo Night initialized automatically. The captured
 permission-withheld case verifies silence and normal shutdown at the Pixel10
 display profile. Authorized playback in this cold session and phone hardware
-remain open. This capture uses a frozen older Sounds frontend; integrating the
-current Rust-backed app and its playback controls is the next app gate.
+remain open. This capture uses a frozen older Sounds frontend and audio daemon; integrating
+the current Rust-backed app/service and playback controls is the next app gate.
 [Cold-start result and screenshot](docs/native-cold-omarchy-sounds.md).
 
 Host component tests, original-code execution, Android reference tests, ARM
