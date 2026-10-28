@@ -1,5 +1,10 @@
 # Current native smartphone integration map
 
+The [cold x86 Omarchy/Sounds checkpoint](native-cold-omarchy-sounds.md) now passes
+genuine shell startup, real Source/focus, native app capture at the Pixel10
+profile, permission refusal with measured silence and normal manager Stop.
+This is one initial session case; authorized flows and phone qualification remain open.
+
 The [explicit wireless connection path](native-wireless-association.md) now passes
 normal Rust open-AP association and separately requested Disconnect in a generic
 ARM virtual-radio epoch, independently checked against kernel STA/AP state.

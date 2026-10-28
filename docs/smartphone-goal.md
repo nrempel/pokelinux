@@ -1,5 +1,10 @@
 # Omarchy smartphone goal
 
+The [cold x86 Omarchy/Sounds checkpoint](native-cold-omarchy-sounds.md) now passes
+genuine shell startup, real Source/focus, native app capture at the Pixel10
+profile, permission refusal with measured silence and normal manager Stop.
+This is one initial session case; authorized flows and phone qualification remain open.
+
 The [native wireless tracer](native-wireless-scan.md) now discovers an exact
 fresh test AP through Rust and kernel nl80211 in a generic ARM hwsim guest,
 after genuine refusing RED and with the unchanged consumer and full owned

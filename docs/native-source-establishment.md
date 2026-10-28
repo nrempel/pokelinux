@@ -57,13 +57,16 @@ case’s unqualified child cleanup. [Curated evidence](evidence/native-source-es
 records these distinctions.
 
 The adapted C++/Wayland timer cases compile as Rust tests but have not been
-re-executed with their native producer. Normal cold owner→shell→app execution
-remains open.
+re-executed with their native producer. A subsequent [cold x86 owner→shell→Sounds case](native-cold-omarchy-sounds.md)
+passes with permission withheld; broader authorized session flows remain open.
 This host test does not qualify upstream compositor startup, ARM graphics,
 authentication, a screenshot or phone hardware. See the
 [separate failed cold diagnostic](native-session-x86-runtime.md#bounded-backend-dispatch-diagnostic).
 
 ## Cold shell integration after establishment
+
+The failed attempt below is preserved. A later [combined cold checkpoint](native-cold-omarchy-sounds.md)
+passes after theme provisioning, namespace correction and presentation handoff.
 
 The fresh x86 installed-profile run reaches genuine Omarchy shell IPC `ping` and
 its background/bar compositor surfaces with the normal optimized Rust owner.

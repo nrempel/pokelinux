@@ -115,3 +115,8 @@ Place that directory on `PYTHONPATH` when running the consumers in the isolated
 root-capable test container. They create their own UID1000 home under `/run` and
 require the staged assets, exported helper and normal appearance daemon; they
 are not commands to run against a user's desktop home.
+
+Subsequent integration: the [combined cold x86 Omarchy/Sounds checkpoint](native-cold-omarchy-sounds.md)
+now passes with this helper, real Source, the actual native window, qualified
+Pixel10-profile capture and normal shutdown. It is one permission-withheld case;
+authorized flows, failed-provision PID1 propagation and phone hardware remain open.
