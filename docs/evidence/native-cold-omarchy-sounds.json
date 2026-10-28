@@ -165,5 +165,82 @@
     "current_full_cold_run_executed": false,
     "permanent_fixture_media_producer_must_be_omitted": true,
     "finite_native_producer_not_yet_qualified_in_this_composition": true
+  },
+  "current_frontend_historical_daemon_baseline": {
+    "scope": "Actual current frontend cold boot against the historical audio daemon; desired UI RED, not current app/service success",
+    "cohort": "pokelinux-native-x86-composition-current-audio-baseline-root-3",
+    "records": {
+      "selection.json": {
+        "bytes": 341412,
+        "sha256": "442c956a4548a152fc2ad59b4dbd17ae82e7d656400f21e88a088b6806478857"
+      },
+      "command.json": {
+        "bytes": 1322,
+        "sha256": "73702d6dfeb55fee79d89a1de4ec31def41e1ae2fe4dbd6de4f0f3ee040da260"
+      },
+      "source/guest.py": {
+        "bytes": 79358,
+        "sha256": "21db6beb771ff2498a704f056f6c7aaf740466dc0935b38279b2ee62d9e781fb"
+      },
+      "source/current_ui.py": {
+        "bytes": 9925,
+        "sha256": "fd6b9b36b80539d42593ef45013d1a1765ce4aea02eabefb650904689a611292"
+      },
+      "source/current-pcm/normal_pcm_observer.py": {
+        "bytes": 25248,
+        "sha256": "9b8c09b4c50e5092cd79eecade8be2f2d1b6fcc1382d8376c3c206101345b4d5"
+      },
+      "execution.json": {
+        "bytes": 115237,
+        "sha256": "ac5935f4eb1b3f4c08225a090eadbaee07e1ebbacdf1c6c00e18254027d87511"
+      },
+      "result.json": {
+        "bytes": 763114,
+        "sha256": "e324d222ac2235512afbbb09efa695ca83f8a7c8e26ff86ab388fa6ec20114f6"
+      },
+      "boot-result.json": {
+        "bytes": 11163,
+        "sha256": "5fd5bd12070e58ca7c0137e8ab0c6dfa1ffc29f65a4ea472bf6e4435af0e7a49"
+      },
+      "bootstrap-result.json": {
+        "bytes": 7277,
+        "sha256": "980e0fe821ed05432c05648b1c57eff90232e3000f69c3c239da1073e8c9acc8"
+      },
+      "native-Qt-build-result.json": {
+        "bytes": 83839,
+        "sha256": "b2700da2eedf5396dd02ed17d908abf58aac335911dfcf4ffdbbc0223edc65c2"
+      }
+    },
+    "current_Qt_cases": 34,
+    "Qt_behavior_cases": 32,
+    "C_ABI_cases": 5,
+    "appearance_cases": 29,
+    "current_normal_frontend_ELF_sha256": "96afca186917e9d075eae2d1394b9647a5b8188778e20491094c1cc6a88ca61b",
+    "historical_audio_ELF_sha256": "858b1a6f9aa270314eac74f773d2d6ac3daa31c8ac5e3070f4d1284771e25762",
+    "genuine_shell_Source_current_window_Pixel_display_pass": true,
+    "initial_measured_PCM_frames": 48000,
+    "initial_both_routes_RMS_and_peak": 0,
+    "operator_grant_reply": "ok",
+    "operator_grant_is_user_consent": false,
+    "actual_enabled_Reconnect_touches": 1,
+    "subsequent_valid_reconnect_layout_captures": 8,
+    "route_controls_observed": false,
+    "Play_enabled": false,
+    "Play_or_new_finite_PCM_observer_started": false,
+    "desired_failure": "AssertionError: CURRENT_RUST_SOUNDS_REQUIRED_VISIBLE_CONTROLS_NOT_OBSERVED: current-after-one-reconnect",
+    "guest_case_closure_qualified": true,
+    "host_VM_guest_closure_qualified": true,
+    "same_daemon_exact_container_absent_inputs_unchanged": true,
+    "direct_wait_EOF_counts": {
+      "host": 7,
+      "boot": 5,
+      "bootstrap": 5,
+      "guest": 170
+    },
+    "cleanup_errors": [],
+    "overall_functional_passed": false,
+    "positive_manager_Stop_after_Ready_qualified": false,
+    "current_daemon_replacement_executed": false,
+    "phone_hardware_qualified": false
   }
 }
