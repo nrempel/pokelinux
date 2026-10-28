@@ -100,5 +100,24 @@
       "bytes": 24022,
       "sha256": "1a0ec467f3025dce6d3ef11b75bc5bd8696140d7e3b8140b16739e11022bc16e"
     }
+  },
+  "frontend_version_boundary": {
+    "comparison_commit": "533077c8cda711b96c1d397fc38a4a9a3b1a38b6",
+    "frozen_frontend_predates_current_Rust_client_and_preview_controls": true,
+    "current_Rust_backed_Sounds_cold_integration_qualified": false,
+    "compared_source_files": {
+      "native-audio-ui/SoundsView.qml": {
+        "executed_selection_sha256": "eaa651d226d0cfcc3df4c04d6888937110e3de2fdde362af664676eabf0c4635",
+        "current_repository_sha256": "75182f20d3b8fce34046e97dd09145799f24099639b0ac8eaee2926e0f83ff1c"
+      },
+      "native-audio-ui/AudioClient.cpp": {
+        "executed_selection_sha256": "26e1a3aa3e05f2cba5a0824ae219f000aec1fe4edc35b6c31492945b1c159b9a",
+        "current_repository_sha256": "d58904df6d801ab29edd46f4ec1ab62e7a5f6e0daca885736dbad9279335f330"
+      },
+      "native-audio-ui/CMakeLists.txt": {
+        "executed_selection_sha256": "9c50cf5a3b4545a461091517bb364428d3f7d867210e0fd9fb429c8aec2254bd",
+        "current_repository_sha256": "6c0c434553bbef540ffad41bd4aec4807bfb6d259e6b71e12e915a0d8e4551b3"
+      }
+    }
   }
 }

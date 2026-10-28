@@ -100,6 +100,73 @@ parse failures. The [hash-only provenance](evidence/native-wireless-association-
 keeps the genuine CLI refusal RED, proposed and final decoder tests, all failed
 native attempts, normal builds and passing native epoch separate.
 
+## Split AP and station namespaces
+
+A later native ARM prerequisite passes with the same normal 560,400-byte Rust
+executable, SHA256
+`4598f2e121cd78e8c8f794efde23c99f759985567aa1df6d7eaa18b4e5813044`.
+No production source or build changes are involved. The fixture creates both
+hwsim radios in its fresh guest namespace, then moves the still-down AP phy once
+into a separately retained namespace before starting hostapd. The station and
+Rust workers remain in the original namespace. This separation prepares a later
+packet test whose traffic cannot take a local route between two addresses in one
+namespace; this prerequisite itself assigns no addresses and exchanges no IP
+packets.
+
+The [new frozen consumer](../tools/native-wireless-association/split-namespace/consumer.py)
+hashes `2417ecc302f0f63e5a979eeea7dd4bdfd30711b69b6bb4adf4a287d91b0ea3f3`.
+It retains exact worker completion and selected-peer checks, and validates four
+separate original `iw` receipts: station link/inventory in the original namespace
+and AP station table/inventory in the peer namespace. AP commands use explicit
+`nsenter --no-fork` targeting the owned keeper. Actual hostapd and keeper
+namespace identities match the retained peer descriptor; both namespace
+descriptors belong to the same kernel boot and remain distinct. Interface indices
+are namespace-local; the oracle checks each role in its own inventory. Four
+separate synthetic parser controls accept the intended evidence, reject a shared
+namespace and swapped role inventories, and accept equal indices in different
+namespaces. Those controls establish no native kernel result.
+
+An initial preparation remains unexecuted after a local socketpair check exposed
+Linux's echoed `MSG_CMSG_CLOEXEC` return flag. The next actual container exits
+before guest execution: its selected UID1000 cannot write the new UID0/mode0755
+results root. All 15 host waits/EOFs close and that container is removed; this is
+an infrastructure failure, not a Rust or kernel behavior RED. The corrected
+selection matches the prior successful results root, UID/GID1000 and mode0700,
+and checks that metadata before execution. A capability-free UID1000 host process
+also reads every selected input and actually creates, fsyncs, closes and removes
+an output probe. The failed and passing selections retain identical consumer and
+guest bytes.
+
+The corrected epoch completes one normal Rust association with exit0. After its
+actual wait and stdout EOF, independent station link and AP station table output
+confirm the exact selected peers across the two namespaces. A separately
+requested normal Rust Disconnect exits0, followed by station `Not connected.` and
+an empty AP station table. Both actions, their actual wait/EOF and all four
+independent observations use their respective original five-second BOOTTIME
+cutoffs. No association, namespace move or Disconnect is retried.
+
+All 123 direct waits have actual stdout EOF: 15 host, three boot, 104 guest and
+one poweroff. Thirty-three successful adopted terminal waits precede actual
+ECHILD; their origins and PIPE EOF are not inferred. Actual AP SIGTERM/wait0/EOF,
+control-endpoint absence, hwsim module/radio removal, peer namespace returning to
+loopback only, keeper STOP/wait0/EOF and closure of both namespace descriptors
+pass. QEMU, container and attach exit0; the exact container is removed on the
+same daemon and all selected inputs remain unchanged. Existing resource limits
+and outer work/close cutoffs are preserved.
+
+The exact executed [guest](../tools/native-wireless-association/split-namespace/arm/guest-main.py)
+and [boot](../tools/native-wireless-association/split-namespace/arm/boot.py)
+snapshots accompany the consumer. Staging reuses `arm/guest.py` and
+`disconnect_consumer.py` from the original association fixture,
+`tools/native-wireless-scan/arm/{arm_tools,worker_caps}.py`, and
+`tools/native-installed-services/owned.py`. The staged `namespace_peer.py` is
+byte-identical to `tools/native-connectivity-control/peer.py`; only its keeper
+role executes. The
+[hash-only evidence](evidence/native-wireless-split-namespace-association-provenance.json)
+binds these public sources, all three preparation/execution outcomes and the
+private closure records. Original same-namespace frozen sources remain intact.
+These are selected fixture snapshots, not a standalone VM installer.
+
 ## Fixture and remaining scope
 
 The fixture reuses the [discovery](native-wireless-scan.md) image's matching
@@ -118,4 +185,6 @@ versions remain unchanged after the three signed additions.
 This slice does not configure an address, exchange IP packets, obtain Internet,
 implement WPA/credentials, integrate normal Settings/connectivity ownership,
 qualify a Pixel backend or access a physical phone. The next product boundary is
-independent address and packet evidence after completed association.
+independent address and packet evidence after completed association. The existing
+ARM persistent-worker `ReceiveCommand` 50 ms failure remains separate; a headless
+prerequisite does not repair Settings or establish persistent wireless ownership.

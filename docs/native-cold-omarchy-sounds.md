@@ -8,6 +8,13 @@ host, manual first Source load or preparatory compositor warmup in this case.
 
 ![Fresh Omarchy and Sounds with audio permission withheld](assets/cold-omarchy-sounds-no-grant.png)
 
+The captured Sounds frontend is the frozen selection used by this run. It
+predates the current Rust client and playback/level/mute controls in the
+repository. Bringing that current app into this cold composition remains an
+integration gate; this result does not qualify those newer controls. The
+[hash-only evidence](evidence/native-cold-omarchy-sounds.json) records the compared
+frontend source hashes separately from the executed result.
+
 This is the permission-withheld checkpoint. “Audio reply refused” is the expected
 app state: direct audio access is denied and independent measurement finds zero
 RMS/peak across 48,000 PCM frames. It does not demonstrate authorized playback.

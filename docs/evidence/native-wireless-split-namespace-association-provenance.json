@@ -1,0 +1,225 @@
+{
+  "schema": 1,
+  "classification": "Existing normal Rust open association and explicit Disconnect across two retained ARM hwsim namespaces; address/packet prerequisite only",
+  "production_source_unchanged": true,
+  "production_build_performed": false,
+  "normal_ARM_worker": {
+    "bytes": 560400,
+    "sha256": "4598f2e121cd78e8c8f794efde23c99f759985567aa1df6d7eaa18b4e5813044",
+    "ELF_machine": 183,
+    "features": []
+  },
+  "runtime": {
+    "kernel_release": "7.1.6-1-aarch64-ARCH",
+    "architecture": "aarch64",
+    "acceleration": "TCG thread=multi",
+    "container_CPUs": 8,
+    "container_memory_GiB": 6,
+    "guest_CPUs": 4,
+    "guest_memory_MiB": 3072,
+    "network": "none",
+    "host_devices": [],
+    "backings_readonly": true,
+    "overlay_disposable_not_exported": true,
+    "original_cutoffs_seconds": {
+      "host_work": 810,
+      "host_close": 840,
+      "boot_work": 780,
+      "boot_close": 800,
+      "guest_work": 660,
+      "guest_close": 700,
+      "each_wireless_action": 5
+    }
+  },
+  "unexecuted_first_preparation": {
+    "selection": {
+      "bytes": 31754,
+      "sha256": "17cf5b246efaa2f6b3c4c3184bf0a61f848a3b4fb94d93c21b45cbe8c03a86b0"
+    },
+    "execution_performed": false,
+    "reason": "Local socketpair preflight observed the echoed MSG_CMSG_CLOEXEC return flag; successor masks only that allowed flag and retains received FDs for closure"
+  },
+  "failed_results_root_launch": {
+    "records": {
+      "selection.json": {
+        "bytes": 31754,
+        "sha256": "2dd758aa5791f6868ec80996fb7a3f2104ed844a8f65e8e8ee630620bec29193"
+      },
+      "command.json": {
+        "bytes": 2466,
+        "sha256": "b7aab1ade8195c61480d62a127fc8234f3743628bd201af32a17887ecb26e2d0"
+      },
+      "run/receipt.json": {
+        "bytes": 32165,
+        "sha256": "24e644754bfdc610e7c5cd37465536773ba2e6ec278636b0dccfb23d9dd14194"
+      },
+      "run/006-one-native-ARM-split-namespace-open-association-prerequisite": {
+        "bytes": 1027,
+        "sha256": "8859dab41186b01dab77cbab8c5dace8f4ecba890562a2a58bfb9f21d5ed5697"
+      }
+    },
+    "actual_attach_exit": 1,
+    "actual_container_exit": 1,
+    "actual_QEMU_or_guest_result_qualified": false,
+    "observed_error": "PermissionError writing /results/boot-result.json: selected UID1000 could not write UID0 mode0755 results root",
+    "actual_waits_and_PIPE_EOF": 15,
+    "exact_container_absent": true,
+    "same_daemon": true,
+    "inputs_unchanged": true,
+    "cleanup_errors": [],
+    "uncertain_wireless_action_claimed": false
+  },
+  "corrected_prerequisite": {
+    "records": {
+      "selection.json": {
+        "bytes": 32028,
+        "sha256": "885a58e765af06d5dcea6379950a73de72f186a5a5d0433caf7d09893bdfaa1f"
+      },
+      "command.json": {
+        "bytes": 2466,
+        "sha256": "a477ac7d94b43ff1a1e6440d2a84d34e46a780ab1dac8d7b9c5b55ecebe6373d"
+      },
+      "SOURCE.json": {
+        "bytes": 7683,
+        "sha256": "7d9c07f096e5d05bb9cf72b74916651dfb7df7e42c543ee8960d0f83a3f42929"
+      },
+      "run_once.py": {
+        "bytes": 11728,
+        "sha256": "5bd67388de521e94197d37b9b4dd2af87da890031d9d50862307ddcf25929a91"
+      },
+      "run/receipt.json": {
+        "bytes": 31921,
+        "sha256": "7f048c8ac99d06e8fcf8e8acb3f1794b283b7ee3daaca5d7b134829909f25570"
+      },
+      "boot-result.json": {
+        "bytes": 14405,
+        "sha256": "7dfa9ec9f75b15c46c10bb4062b49f256dc61c6fa5a5cd66dce6b1c7ccfc037f"
+      },
+      "result.json": {
+        "bytes": 146942,
+        "sha256": "c5a04bd129b1313a2ad097b89d4de53df6ffc136629b94b128a87226f5c7c522"
+      },
+      "native-worker-observation.json": {
+        "bytes": 1388,
+        "sha256": "68b3456f21620bf0b0f721910ca9b69a005a1b25f1c8fd40f3320ede1461d39d"
+      },
+      "kernel-observation-before-cleanup.json": {
+        "bytes": 6719,
+        "sha256": "47418d714c5e13569f151da97f2ae2c3ad8898028114e2716ec2d2bbbd880604"
+      },
+      "explicit-disconnect-observation.json": {
+        "bytes": 6209,
+        "sha256": "bbb7e36a7e5174a245ff0ec13f4a52c9ffe243829568288545e1377be532cbad"
+      },
+      "consumer-review-before-desired-assert.json": {
+        "bytes": 98066,
+        "sha256": "69cde463197f24fd089b4ecb648de05fce3cda1deeebd52621035f59058d7500"
+      }
+    },
+    "results_root": {
+      "uid": 1000,
+      "gid": 1000,
+      "mode_octal": "0700",
+      "matches_retained_successful_results_root": true,
+      "actual_cap0_UID1000_create_fsync_close_unlink_preflight": true
+    },
+    "consumer_and_guest_bytes_unchanged_from_failed_launch": true,
+    "one_AP_phy_namespace_move": true,
+    "two_retained_different_namespaces_same_boot": true,
+    "AP_and_keeper_actual_namespace_matches_retained_peer": true,
+    "station_stays_in_original_namespace": true,
+    "original_iw_association_or_disconnect_commands": 0,
+    "normal_Rust_association_commands": 1,
+    "normal_Rust_association_exit": 0,
+    "independent_four_iw_receipts_confirm_exact_STA_AP": true,
+    "normal_Rust_disconnect_commands": 1,
+    "normal_Rust_disconnect_exit": 0,
+    "independent_STA_unassociated_and_AP_table_empty_after_disconnect": true,
+    "AP_SIGTERM_actual_wait0_PIPE_EOF": true,
+    "AP_endpoint_absent": true,
+    "owned_hwsim_module_and_radios_removed": true,
+    "peer_namespace_lo_only_after_radio_removal": true,
+    "keeper_STOP_actual_wait0_PIPE_EOF": true,
+    "both_namespace_descriptors_closed": true,
+    "actual_direct_waits_PIPE_EOF": {
+      "host": 15,
+      "boot": 3,
+      "guest": 104,
+      "poweroff": 1,
+      "total": 123
+    },
+    "adopted_actual_terminal_waits": 33,
+    "adopted_all_actual_status_zero": true,
+    "actual_ECHILD": true,
+    "adopted_origin_or_PIPE_EOF_inferred": false,
+    "QEMU_container_attach_exit": 0,
+    "same_daemon_exact_container_absent": true,
+    "all_selected_inputs_unchanged": true,
+    "cleanup_errors": [],
+    "desired_passed": true,
+    "new_behavior_RED_claimed": false
+  },
+  "published_exact_sources": {
+    "tools/native-wireless-association/split-namespace/consumer.py": {
+      "bytes": 16105,
+      "sha256": "2417ecc302f0f63e5a979eeea7dd4bdfd30711b69b6bb4adf4a287d91b0ea3f3"
+    },
+    "tools/native-wireless-association/split-namespace/arm/guest-main.py": {
+      "bytes": 47228,
+      "sha256": "2987b6b596206999b91ca16a061b04c40c56f5d7243db80cc421ea56e410cbb0"
+    },
+    "tools/native-wireless-association/split-namespace/arm/boot.py": {
+      "bytes": 4239,
+      "sha256": "c8f2ec30062dba5414d9f5f07517a1fa4e592bf14d95be4e22ae9722877d7092"
+    }
+  },
+  "shared_exact_sources": {
+    "tools/native-wireless-association/arm/guest.py": {
+      "bytes": 1288,
+      "sha256": "206db6f500283333ace2c3fcd352581a46a0b8c722b7424eec79e2868c85128d",
+      "staged_relative_path": "source/guest.py"
+    },
+    "tools/native-wireless-association/disconnect_consumer.py": {
+      "bytes": 2582,
+      "sha256": "de6b04d0d7d5102755b889122ce5c617556e63c1c068c4d32b34a74bf30e995a",
+      "staged_relative_path": "source/disconnect_consumer.py"
+    },
+    "tools/native-wireless-scan/arm/arm_tools.py": {
+      "bytes": 4238,
+      "sha256": "80f1e6c0e0b5f8e6cfb70409b07c1fb39e2f1412a6100992849bfa646c2d2259",
+      "staged_relative_path": "source/arm_tools.py"
+    },
+    "tools/native-wireless-scan/arm/worker_caps.py": {
+      "bytes": 1393,
+      "sha256": "50a659816d7c16952dba91f36a6bbd6ef3a6be4cc4b799100a75a904d44e8af8",
+      "staged_relative_path": "source/worker_caps.py"
+    },
+    "tools/native-installed-services/owned.py": {
+      "bytes": 12712,
+      "sha256": "5a738b9529a1a0e5d5b0bd20e27e2ec4244d4e61d7c8e0dad96fe1ffbef3c423",
+      "staged_relative_path": "source/owned.py"
+    },
+    "tools/native-connectivity-control/peer.py": {
+      "bytes": 10728,
+      "sha256": "531428dd32088887d0448f8576a1b25c7bdb7280812c9174c0dc2f079ef9ec91",
+      "staged_relative_path": "source/namespace_peer.py"
+    }
+  },
+  "separate_synthetic_parser_checks": {
+    "count": 4,
+    "namespace_roles_accepted": true,
+    "same_namespace_rejected": true,
+    "swapped_namespace_roles_rejected": true,
+    "equal_namespace_local_ifindices_accepted": true,
+    "native_kernel_result_claimed": false
+  },
+  "scope": {
+    "addresses_configured": false,
+    "IP_packets_exchanged": false,
+    "DHCP_DNS_Internet": false,
+    "WPA_credentials": false,
+    "Settings_or_persistent_wireless_ownership": false,
+    "ARM_50ms_ReceiveCommand_repair": false,
+    "physical_phone_accessed": false
+  }
+}
