@@ -1,0 +1,18 @@
+[Unit]
+Description=Provision the selected desktop home from pinned genuine Omarchy theme assets
+Before=pokelinux-session-owner.service pokelinux-normal-appearance.service pokelinux-omarchy-shell.service
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+ExecStart=/usr/libexec/pokelinux/omarchy-theme-provision /etc/pokelinux/appearance.json /usr/share/pokelinux/omarchy
+RemainAfterExit=yes
+Restart=no
+TimeoutStartSec=30s
+TimeoutStopSec=5s
+KillMode=control-group
+SendSIGKILL=yes
+NoNewPrivileges=yes
+CapabilityBoundingSet=CAP_SETUID CAP_SETGID
+UMask=0077

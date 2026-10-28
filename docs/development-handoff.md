@@ -2455,8 +2455,11 @@ and 96 scoped host cases pass, with a normal optimized owner built. The original
 background/bar surfaces with Source sequences 14 then 76, ready and no failure.
 It fails at unavailable appearance before app launch. No new screenshot, final
 display-density qualification or positive manager Stop case is claimed; owned
-cleanup closes. Next complete genuine theme provisioning before startup, then
-resolve the separate shell namespace/environment integration gaps. The Messages
+cleanup closes. Genuine [theme provisioning](native-omarchy-theme-provisioning.md) now passes
+the unchanged fresh-home RED→GREEN consumer against the real appearance service,
+plus preservation and partial-selection refusal controls. Integrate its normal
+oneshot/dependency rows, verify actual PID1 failure propagation, and resolve the
+separate shell namespace/environment gaps before the next full cold qualification. The Messages
 app join remains subsequent work.
 Source's 100 ms limit, all consumer criteria
 and the separate 50 ms connectivity guard remain unchanged. Historical

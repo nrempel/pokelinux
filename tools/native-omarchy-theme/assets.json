@@ -1,0 +1,211 @@
+{
+  "schema": 1,
+  "commit": "c668141e9c42b13c80c9ca4ea108e11708c5e8a5",
+  "archive_sha256": "8cc6b1d9d903c606600395e3b3d80ad9f15bd3ab78f0f19b0f49041b1df82013",
+  "default_policy_reference": {
+    "path": "install/user/theme.sh",
+    "sha256": "4396284a0884388aea884e4f698ca9c99569d3f9cfeba8e37f6c559e7999e18e"
+  },
+  "files": {
+    "LICENSE": {
+      "bytes": 1063,
+      "sha256": "717ba1949502290f8e47688ae2e323acd06c8ca47aec9f7596b15f678c1af4a2",
+      "mode": 420
+    },
+    "bin/omarchy-theme-color": {
+      "bytes": 10784,
+      "sha256": "a429ed1b18114ff3e784fc4479c6b829e9effb64c0f9d22d3b15eda4c62d86b5",
+      "mode": 493
+    },
+    "bin/omarchy-theme-set": {
+      "bytes": 11452,
+      "sha256": "2356e6e19656fcc67aa345fc46352a310945e54146706c039bf92a7bd3b3fb5a",
+      "mode": 493
+    },
+    "bin/omarchy-theme-set-templates": {
+      "bytes": 9886,
+      "sha256": "add9154d012c12b5628128d71efcf216ed62024cef2370e3c5c470378c06d45f",
+      "mode": 493
+    },
+    "default/themed/alacritty.toml.tpl": {
+      "bytes": 1047,
+      "sha256": "02489f97737108e8a19d4c04d8251c8f3ee0bc896dbf0660b6ecaded91a61ade",
+      "mode": 420
+    },
+    "default/themed/btop.theme.tpl": {
+      "bytes": 2816,
+      "sha256": "88b5057821b674caa8d89a27a6ac912681633b22619927486a76f6ad8a3183a0",
+      "mode": 420
+    },
+    "default/themed/chromium.theme.tpl": {
+      "bytes": 21,
+      "sha256": "69ce7344bb3e9b98b589e2a5afe9ed678a5829b95214e49ca89784629e06d672",
+      "mode": 420
+    },
+    "default/themed/claude.json.tpl": {
+      "bytes": 1773,
+      "sha256": "ed4da8adb897511b349466fec31910de744e1ca5927ab11fdba3cfcbb4827e94",
+      "mode": 420
+    },
+    "default/themed/foot.ini.tpl": {
+      "bytes": 738,
+      "sha256": "0c719c4efc4e640bc4cb776fc704510f2c0087b45becba083b8eac5b8a43de74",
+      "mode": 420
+    },
+    "default/themed/ghostty.conf.tpl": {
+      "bytes": 652,
+      "sha256": "8f56c275227a6075f65dafc3040d2f2829b8fb413451c709a9f29f32a795e1b0",
+      "mode": 420
+    },
+    "default/themed/gum_env.lua.tpl": {
+      "bytes": 7209,
+      "sha256": "c6b1ed256357cd0a9bb4ec9937306deb936116781967c828a67ef63069754dc8",
+      "mode": 420
+    },
+    "default/themed/helix.toml.tpl": {
+      "bytes": 4795,
+      "sha256": "232ec1e0f753631d82f87c3b424c2e2092c2afefaf845c1566cd0ff97a1370d6",
+      "mode": 420
+    },
+    "default/themed/hermes.yaml.tpl": {
+      "bytes": 1589,
+      "sha256": "2f8a06b5c09d72a0bd7ab3a1944071ae9d6b6330bc14695c697cb110aa5835d7",
+      "mode": 420
+    },
+    "default/themed/hyprland-preview-share-picker.css.tpl": {
+      "bytes": 1921,
+      "sha256": "a478f96f9e6b2504aa44c61349e8fc7941a2943616fb53c61cba8e2986c6ee58",
+      "mode": 420
+    },
+    "default/themed/hyprland.lua.tpl": {
+      "bytes": 439,
+      "sha256": "dbe746fa74cfdc9a136806852fcb0bb66189426f8f5400b7e8324fbef3887deb",
+      "mode": 420
+    },
+    "default/themed/keyboard.rgb.tpl": {
+      "bytes": 13,
+      "sha256": "bdb8c6d3fe4df7498bd3e1888347383f490612ba05402d20e0546933fe58f4fd",
+      "mode": 420
+    },
+    "default/themed/kitty.conf.tpl": {
+      "bytes": 661,
+      "sha256": "0570fcafb47cb81b9265bf3faaef028acd0b9aa8b50fc24e3d1b48127fab82a2",
+      "mode": 420
+    },
+    "default/themed/neovim.lua.tpl": {
+      "bytes": 1447,
+      "sha256": "5391f827d5acd079658a19e2225d8c2a8509bc487cbdaec8b18cd0c5547bfe70",
+      "mode": 420
+    },
+    "default/themed/obsidian.css.tpl": {
+      "bytes": 2724,
+      "sha256": "bd5813990f3dbbacd27800a0d69a512cebd28b26c98cf07c6ad3ea08a20322c2",
+      "mode": 420
+    },
+    "default/themed/pi.json.tpl": {
+      "bytes": 3228,
+      "sha256": "1f1aaf1334c29190a3f9bf6ec345e67795b80ba2826f435f09be8dd8d5484c86",
+      "mode": 420
+    },
+    "default/themed/shell.toml.tpl": {
+      "bytes": 9305,
+      "sha256": "bdc8e76a5a9a700adaca0d2fa44a2a340584892fd507e3fcbd4f9a4843765242",
+      "mode": 420
+    },
+    "default/themed/t3code.json.tpl": {
+      "bytes": 1137,
+      "sha256": "c68316b0a3d59c8285d51e1420133d935a3aad87becc81e9dfc27bc5dfee0938",
+      "mode": 420
+    },
+    "default/themed/vscode-theme.json.tpl": {
+      "bytes": 59931,
+      "sha256": "08bac7f0ecc003bc7950dc3b85ec1828188d46a0cf7c6bfc6fae8035ec616124",
+      "mode": 420
+    },
+    "themes/tokyo-night/backgrounds/0-winding-road.jpg": {
+      "bytes": 4445106,
+      "sha256": "37746404ae9a4357442e520c34ea105780232ac3d08a9f289f00156e49f37c4e",
+      "mode": 420
+    },
+    "themes/tokyo-night/backgrounds/1-quattro.jpg": {
+      "bytes": 3830535,
+      "sha256": "ffd65594b6d5e7094fc706d9b7b91e5a94713345d264a7d62302b64589be3c8f",
+      "mode": 420
+    },
+    "themes/tokyo-night/backgrounds/2-swirl-buck.jpg": {
+      "bytes": 2941090,
+      "sha256": "4a4ce5ba6c228771c89439710bfa81005791d3c4f76a62481e4d00939b702e3c",
+      "mode": 420
+    },
+    "themes/tokyo-night/backgrounds/3-sunset-lake.png": {
+      "bytes": 2804358,
+      "sha256": "06dfb9fce029ec35adb40ea3939296777c2b140d1232b5a1697b15052d575362",
+      "mode": 420
+    },
+    "themes/tokyo-night/backgrounds/4-omakub.jpg": {
+      "bytes": 2319559,
+      "sha256": "c04a61df9928f1c1b078050078648bd9d717326e5cc19fc9de6228989af01f24",
+      "mode": 420
+    },
+    "themes/tokyo-night/backgrounds/5-oma-cityscape.jpg": {
+      "bytes": 1408419,
+      "sha256": "22e1d639722b33fa6f0d3ac2733450b4bae961b481f5665cb16397bc5f714e5c",
+      "mode": 420
+    },
+    "themes/tokyo-night/backgrounds/6-oma.jpg": {
+      "bytes": 457574,
+      "sha256": "41b8b6a175bb493e16e11c0829f9366491129520922c5c05e112e0295132bc14",
+      "mode": 420
+    },
+    "themes/tokyo-night/backgrounds/omarchy.png": {
+      "bytes": 4491,
+      "sha256": "0da53b82f9700a57e759ab9b689f294a3ef7342ffc56a7d3abfe55d4e6c80f96",
+      "mode": 420
+    },
+    "themes/tokyo-night/colors.toml": {
+      "bytes": 593,
+      "sha256": "8b5f53ba35b9305aafa72776dd56ea2029faaf29015e2e42db5e19ef698a8e0e",
+      "mode": 420
+    },
+    "themes/tokyo-night/icons.theme": {
+      "bytes": 13,
+      "sha256": "328fd2519268a09cbcb45b3e8393f6abcc1739b9816bdc87bd4761d9d240f026",
+      "mode": 420
+    },
+    "themes/tokyo-night/keyboard.rgb": {
+      "bytes": 7,
+      "sha256": "5647898e5842fab36ce9e6cac72266580095f0cea286fa683146da351b0a2c10",
+      "mode": 420
+    },
+    "themes/tokyo-night/neovim.lua": {
+      "bytes": 145,
+      "sha256": "4df3e20a042bb05ff3d9ed86ae9cac1ea8b068a0dd6922898c831f7d099315c0",
+      "mode": 420
+    },
+    "themes/tokyo-night/preview-unlock.png": {
+      "bytes": 678049,
+      "sha256": "54bd2c266a40440147cf54ab56b32c399db6decd44abb0bab68eb9e9379a6cd6",
+      "mode": 420
+    },
+    "themes/tokyo-night/preview.png": {
+      "bytes": 382202,
+      "sha256": "1e2a87a2d948af1d195b0d2f03bd743d5ae72671ae8ad38825fd4c494e82d8fb",
+      "mode": 420
+    },
+    "themes/tokyo-night/shell.lock.toml": {
+      "bytes": 174,
+      "sha256": "046820cc740007b8f34db4aa9f402d6c0be46fa1040c2b07ab0aa12587283a50",
+      "mode": 420
+    },
+    "themes/tokyo-night/unlock.png": {
+      "bytes": 411535,
+      "sha256": "31f7e20f9e692ca9273e132d9242db618cec64e69eb9bdc9f8955211910bef47",
+      "mode": 420
+    },
+    "themes/tokyo-night/vscode.json": {
+      "bytes": 64,
+      "sha256": "94a75f315b092f72ac684647ad20b72789b5d25a9f14885be7b87b374fb4160a",
+      "mode": 420
+    }
+  }
+}

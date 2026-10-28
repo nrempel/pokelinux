@@ -61,7 +61,10 @@ The current [Messages background owner](docs/native-installed-messages-history.m
 Cold-start work now keeps session authority unavailable until compositor updates
 form a fresh consecutive pair. The socket/process regression passes. A fresh x86 cold run now reaches the genuine
 Omarchy background and bar with healthy session updates. It stops at unavailable
-appearance before app launch; complete graphical startup remains open. [Startup change](docs/native-source-establishment.md).
+appearance before app launch; complete graphical startup remains open.
+A new [normal theme provisioner](docs/native-omarchy-theme-provisioning.md) passes
+fresh-home tests against the real appearance service; its graphical integration
+is the next check. [Startup change](docs/native-source-establishment.md).
 
 Host component tests, original-code execution, Android reference tests, ARM
 user-mode emulation, full-system VMs and physical hardware evidence are recorded

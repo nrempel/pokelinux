@@ -87,3 +87,12 @@ The execution, boot and result SHA-256 values are respectively:
 
 This is partial cold shell progress on x86, not completed app/session integration,
 ARM graphical qualification or a bootable Pixel image.
+
+The same shell journal also reports unavailable PipeWire, network and UPower
+integration, missing helper commands, and no login session for its polkit
+listener. Background/bar surfaces and IPC ping therefore do not establish working
+shell status controls, authentication or notifications. Native service bindings
+and the session/locker integration remain product gates; theme provisioning alone
+cannot close them. The selected audio service uses its own private runtime, so
+the shell's default PipeWire connection failure does not invalidate the separate
+qualified native audio paths.

@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "scope": "Host native provisioning and real appearance collector; PID1 and GUI pending",
+  "frozen_consumer": {
+    "bytes": 4317,
+    "sha256": "e929f5a940710ff6c76a384829efe0df1ae1dcda2dd05c5754bf2d0997fb0c3f"
+  },
+  "normal_provisioner": {
+    "bytes": 730144,
+    "sha256": "3ef3ba26bc3a8b69ef4a1401eda9385b70c0e8addab5691ad366a734a49a4de6"
+  },
+  "source_pins": {
+    "native-appearance/src/bin/omarchy-theme-provision.rs": {
+      "bytes": 6090,
+      "sha256": "fc1b4d78bd1441fd41a3f7b190953ea9d81abc21490b98838fd525ca4979bbe3"
+    },
+    "native-appearance/packaging/pokelinux-omarchy-theme.service": {
+      "bytes": 548,
+      "sha256": "5efe650420a773a58f2c15cbc07734bbfb3477922b8f66655189dae02df4134c"
+    },
+    "native-appearance/packaging/normal-session-theme.conf": {
+      "bytes": 86,
+      "sha256": "ef7346a213c1c4ffc91c6425ea666f16debae1f69c7ea25f8a45026fda93f835"
+    },
+    "tools/native-omarchy-theme/assets.json": {
+      "bytes": 7266,
+      "sha256": "b2072daf91e5f9fa83e4ef62118f79a6f17202d8dfca72a0aa2c293191bcf2bc"
+    },
+    "tools/native-omarchy-theme/stage.py": {
+      "bytes": 4381,
+      "sha256": "f57c8ac5b9f0deceb986ab2fc5a351dd2312ee5e629363f28a55b2198660e23a"
+    },
+    "tools/native-omarchy-theme/tests/fresh_home.py": {
+      "bytes": 4317,
+      "sha256": "e929f5a940710ff6c76a384829efe0df1ae1dcda2dd05c5754bf2d0997fb0c3f"
+    },
+    "tools/native-omarchy-theme/tests/selection.py": {
+      "bytes": 4263,
+      "sha256": "dd59c4e5f3852efa1b8df5649f5479d0cfa5df9423396b7bcc55524209391bcd"
+    }
+  },
+  "records": {
+    "red-sol-1": {
+      "run/receipt.json": {
+        "bytes": 15833,
+        "sha256": "a79a2201af180ebdf0fb09b3bde58749708779f64bbe9ab73f42f495b0dd8a00"
+      },
+      "run/out/result.json": {
+        "bytes": 2959,
+        "sha256": "6bee3a1c48081045623bd74db36075827f678c120b2a9a41e0eea27191f25d28"
+      }
+    },
+    "green-sol-1": {
+      "run/receipt.json": {
+        "bytes": 14607,
+        "sha256": "1ef3d9bc53df82969cb8ad09da8a22a3008ed9548d7b7649eeff0f79dedfea47"
+      },
+      "run/out/result.json": {
+        "bytes": 4601,
+        "sha256": "f373b6e1c7ff6ddc9473b8bfd3e5092f6f1a6c10d32e43ce9aebc0353ca1e8fc"
+      }
+    },
+    "green-sol-2": {
+      "run/receipt.json": {
+        "bytes": 14813,
+        "sha256": "32e484525a3023c2b723410d376418c303dd27846c1bac0c93b40c97e407a582"
+      },
+      "run/out/result.json": {
+        "bytes": 7894,
+        "sha256": "a78cc04c1ea9e362ef5c33893563526c0d7778811188cea9a27ae7efc890f4ca"
+      }
+    },
+    "green-sol-3": {
+      "run/receipt.json": {
+        "bytes": 25841,
+        "sha256": "dc30cc2c2c8752857a7e42ae46745c2bdfa3663b6d53fea5fd95bd2f0d5b8de1"
+      },
+      "run/out/result.json": {
+        "bytes": 12315,
+        "sha256": "9d92b14335a769cff027d6eaf9c6315cc166fbbc8495030b740612c3dd85ce41"
+      }
+    }
+  },
+  "RED": {
+    "completed": 1,
+    "available": false,
+    "consumer_exit": 1,
+    "appearance_wait_exit": 0
+  },
+  "GREEN": {
+    "completed": 1,
+    "revision": 1,
+    "available": true,
+    "appearance_wait_exit": 0,
+    "complete_selection_preserved": true,
+    "partial_selection_refused_unchanged": true
+  },
+  "failed_aggregates_preserved": [
+    "green-sol-1: compile error",
+    "green-sol-2: successful build, later hard-link staging refusal"
+  ],
+  "PID1_failure_propagation_executed": false,
+  "graphical_session_executed": false
+}
