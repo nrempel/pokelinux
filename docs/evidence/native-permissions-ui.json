@@ -82,5 +82,21 @@
     "ARM execution of new UI/client cohort",
     "all physical-device gates"
   ],
-  "failed_attempts": "See ../native-permissions-ui.md; setup failures and classifier errors are not behavioral RED evidence."
+  "failed_attempts": "See ../native-permissions-ui.md; setup failures and classifier errors are not behavioral RED evidence.",
+  "first_joined_vm_attempt": {
+    "passed": false,
+    "scope": "genuine Omarchy menu activation; no consent or PCM acceptance",
+    "selection_sha256": "101d93c7facc34c7e75195a77a61467a883e12d1c1b98e65609356795f0ad5dc",
+    "execution_sha256": "33afc1b02f7c9296b5ccc4c5354642b8e2ede93a4dfb1b1bb70e3efb598d5ed8",
+    "guest_result_sha256": "8cc3496928d3eec7f88b541e9bb76ec8dc3da12bd6127531e16ac40b9b59652c",
+    "viewer_result_sha256": "e894bda6b93d88755e54a64d62cc61b89b3e5cfbee2800c0b465d7efe473629a",
+    "three_actual_menu_input_actions": true,
+    "normal_window_observed": false,
+    "brief_UID11045_actor_child_observed": true,
+    "normal_executable_identity_captured": false,
+    "permission_changes_observed": 0,
+    "guest_closure_qualified": true,
+    "owned_container_absence_qualified": true,
+    "cause": "Unresolved early app-entry or executable exit; not yet a qualified production RED."
+  }
 }

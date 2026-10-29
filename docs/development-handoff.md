@@ -15,7 +15,10 @@ fixture failures and the corrected intermediate RED classifier. Desktop launch,
 the Rust request/state client and Allow/Revoke UI are now implemented. Separate
 actor launch tests, 12 credentialed client scenarios and real unshown QML button
 clicks pass; the full genuine Omarchy flow remains open. See
-[Permissions UI evidence](native-permissions-ui.md). Ordinary current profiles require `role.kind=application`; frozen
+[Permissions UI evidence](native-permissions-ui.md). The first joined VM attempt
+reaches the correct menu item but observes only a brief UID11045 actor child,
+without a captured normal executable or window. No consent/PCM test runs; cleanup
+passes. Diagnose startup before retrying the unchanged user actions. Ordinary current profiles require `role.kind=application`; frozen
 previous cohorts retain their matching old binary/profile pairs.
 
 Finish the full Omarchy smartphone system described in `smartphone-goal.md`.

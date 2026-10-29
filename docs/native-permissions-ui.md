@@ -55,3 +55,19 @@ The separate passing boundaries above do not substitute for that joined test.
 No new screenshot, native QWindow density, ARM execution or phone behavior is
 claimed. No permissions/audio completion-matrix row is closed. Physical phones
 remain untouched. [Machine-readable evidence](evidence/native-permissions-ui.json).
+
+## First joined Omarchy attempt
+
+The first genuine Omarchy VM attempt reaches the correct Permissions menu row
+through three actual external input actions. A direct child of the actor is briefly
+observed with UID11045, then exits before its executable/arguments can be captured.
+No normal Permissions window appears within the original deadline. No permission
+change or PCM acceptance runs. The menu geometry and selected desktop entry match;
+the precise early-exit cause remains unresolved because app stderr is discarded.
+This is not yet a qualified production behavioral RED. Next is a bounded loader/
+startup diagnosis against the guest's Qt6.12 runtime; the host component build uses
+Qt6.8.2, which is a difference to investigate, not proof of incompatibility.
+
+Guest process cleanup and exact container absence pass. The external viewer fails
+when its server ends during failure cleanup; that is not normal viewer acceptance.
+All inputs and failed results remain preserved. No new screenshot is published.
