@@ -26,7 +26,8 @@ Permission remains withheld in this capture, so Play stays disabled.
 
 A later [normal-entry preview](docs/native-omarchy-human-preview.md) opens Sounds
 through an external automated client without the capture wrapper, then shuts down
-normally on disconnect. Human SSH/VNC access is still being prepared.
+normally on disconnect. A [Harbour launch command and connection recipe](docs/try-harbour-preview.md)
+are now available; human SSH/VNC access remains unverified.
 
 The same Messages window follows an original Omarchy theme change from Tokyo
 Night to Catppuccin Latte while preserving its local history. Both its Messages

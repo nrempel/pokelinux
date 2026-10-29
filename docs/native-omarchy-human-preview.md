@@ -34,10 +34,12 @@ report no errors. No physical phone is accessed.
 
 ## What remains
 
-This is an automated external-client checkpoint, not verified human access. A
-reproducible operator launch command and SSH/VNC client workflow remain to be
-qualified. A connected client remaining until the dwell limit also needs its own
-runtime check. No public TCP listener was introduced.
+This is an automated external-client checkpoint, not verified human access. The
+[operator launch command](try-harbour-preview.md) now passes a fresh full VM and
+external automated-client run, including its readiness notification. Human SSH/VNC
+access remains unverified. A separate real-server connected-client expiry check
+passes with a requested two-second duration; it does not qualify full five-minute
+endurance. No public TCP listener was introduced.
 
 The guest performs no automated input, but the separate external smoke client does.
 It uses three fixed coordinates from the prior menu layout; it does not inherit the

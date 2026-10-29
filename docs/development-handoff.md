@@ -32,8 +32,10 @@ capture wrapper; human/SSH connection and consent remain open.
 The later [normal-entry external-client checkpoint](native-omarchy-human-preview.md)
 now passes direct native Sounds launch with the corrected Rust pair, frame receipt,
 client disconnect and complete VM shutdown. The two real viewer timeout/disconnect
-controls also pass separately. Next qualify an operator launch command and human
-SSH/VNC access; connected-client dwell expiry remains untested. No fresh QWindow
+controls also pass separately. The [operator launch command](try-harbour-preview.md)
+now passes fresh preparation, readiness notification and a full VM/client run.
+Human SSH/VNC access remains unverified. A separate connected-client expiry check
+passes at a requested two seconds; five-minute endurance remains untested. No fresh QWindow
 metadata or screenshot qualification is inherited from the capture-wrapper cohort.
 
 The earlier [menu integration](native-omarchy-menu-launch.md) closes actual

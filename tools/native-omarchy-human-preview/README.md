@@ -1,7 +1,9 @@
 # Bounded normal-entry Omarchy preview
 
 Original execution sources for the [preview checkpoint](../../docs/native-omarchy-human-preview.md).
-These are fixture components, not a standalone installer or a qualified human connection recipe.
+`launch.py` runs from the retained qualified Harbour seed; see the
+[operator recipe](../../docs/try-harbour-preview.md). It is not a standalone installer
+or a qualified human connection workflow.
 
 Apply the three patches with `git apply --unidiff-zero` to the reconstructed
 `native-omarchy-viewer` Sol6 consumers.
@@ -22,4 +24,10 @@ must not be treated as the earlier seven-action viewport-qualified consumer.
 The guest and host each cap their local dwell by their original work deadline and
 300 seconds. The server permits 60 seconds for a first connection. Both successful
 client disconnect and timeout retain actual owned process waits/EOF before teardown.
-A connected-client dwell-expiry case and the human SSH/VNC workflow remain untested.
+A separate connected-client expiry check passes with a two-second requested
+duration; five-minute endurance and the human SSH/VNC workflow remain untested.
+
+`executed-launcher-check.py` preserves the executed CLI/configuration consumer
+with its original Harbour worktree and seed paths. It is an execution snapshot,
+not a portable CI test. Launcher results are in the
+[separate evidence record](../../docs/evidence/native-omarchy-preview-launcher.json).
