@@ -42,7 +42,7 @@ def receive_raw_update(wire, width, height, name_hash):
             bells += 1
             assert bells <= 8, 'bounded bell notifications'
             continue
-        assert kind == 0, 'unexpected server message'
+        assert kind == 0, f'unexpected server message: type={kind}'
         padding, count = struct.unpack('>BH', wire.read(3))
         # RFC 6143 section 7: recipients must not assume a padding value.
         assert 0 < count <= 256, f'bounded rectangle count: padding={padding}, rectangles={count}'

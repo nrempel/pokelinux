@@ -35,3 +35,18 @@ Its nine cases retain the count, raw-size, encoding, coverage and caller-cutoff
 checks while accepting arbitrary protocol padding. The executed baseline failed
 on valid nonzero padding; the corrected reader passed. These parser checks alone
 do not qualify a socket, UI, human client or phone.
+
+
+Unsupported server messages remain refused. The error now records only the numeric
+message type, without reading or publishing its payload. Three actual socketpair
+controls with authored types pass RED→GREEN for that diagnostic and verify the
+payload remains unread; the nine existing parser checks also pass:
+
+```sh
+python3 -B tools/native-omarchy-viewer/test_rfb_message_error.py \
+  --module tools/native-omarchy-viewer/rfb_frames.py
+```
+
+This does not identify the message rejected by the earlier joined consent/audio
+VM: its original error omitted the byte. No additional RFB message is accepted,
+and the final-frame/EOF requirement remains unchanged.

@@ -359,5 +359,26 @@
     "fresh_QWindow_DPR_qualified": false,
     "published_screenshot_qualified": false,
     "hardware_qualified": false
+  },
+  "viewer_message_diagnostic": {
+    "scope": "Actual local socketpair with authored unsupported message types; not the original VM message",
+    "acceptance_behavior_changed": false,
+    "metadata_only_numeric_type": true,
+    "payload_remains_unread": true,
+    "receipts": {
+      "RED.json": {
+        "private_receipt": "/tmp/pokelinux-rfb-message-diagnostic-root-1/RED.json",
+        "sha256": "b25a18a3c9f8072f0f9bcfe700c103f1fce3c3fb384215d43d2d64e919716af7"
+      },
+      "GREEN.json": {
+        "private_receipt": "/tmp/pokelinux-rfb-message-diagnostic-root-1/GREEN.json",
+        "sha256": "d3a738d0f9044aa46a4d58812b27ca2b982d3988ba4bc1e1cf496b82f039a31b"
+      },
+      "existing-nine.json": {
+        "private_receipt": "/tmp/pokelinux-rfb-message-diagnostic-root-1/existing-nine.json",
+        "sha256": "2a54ef129087f1311c6b46de617f4773ab4541c82e751b9f5257b2cee497a92d"
+      }
+    },
+    "original_VM_message_type_still_unknown": true
   }
 }

@@ -45,7 +45,10 @@ bounds. Both app classes retain actual maximized internal/client mode1 and
 Both apps close normally; guest/boot results pass, QEMU0 and exact container
 absence pass, inputs remain unchanged. The external viewer completes16 actions
 but fails its final image read with unexpected server message; the outer result
-therefore remains failed. Diagnose that bounded viewer protocol boundary next;
+therefore remains failed. The viewer now reports the numeric unsupported message
+type while retaining refusal and leaving its payload unread; three actual socket
+controls pass RED→GREEN and the original nine parser controls pass. The old VM
+message type remains unknown. Diagnose that bounded viewer protocol boundary next;
 do not relabel it as a fully passing end-to-end run. New QWindow density evidence,
 public screenshots, ARM and physical-phone qualification remain open. Ordinary current profiles require `role.kind=application`; frozen
 previous cohorts retain their matching old binary/profile pairs.
