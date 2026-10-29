@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "status": "acceptance contract only; runtime consumer and production integration not implemented",
+  "status": "acceptance contract and read-only observation helpers only; runtime driver and production integration not implemented",
   "evidence_class": "future generic ARM hwsim integration; no Pixel or physical-radio qualification",
   "startup": {
     "selection": "explicit trusted profile; exact CLI and protected profile schema remain under review",

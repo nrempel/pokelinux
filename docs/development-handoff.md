@@ -27,7 +27,8 @@ See [address/packet scope](native-wireless-address-packets.md) and the
 The current veth Fact requires a witnessed lifetime; existing wireless identity
 must be represented separately. One-shot association closes its event sockets,
 so a persistent backend must retain radio observation rather than renew readiness
-from IPv4 alone. No executable consumer or wireless service RED is claimed yet.
+from IPv4 alone. Read-only observation helpers now reuse the existing kernel validators; the
+process-driving consumer and real wireless service RED remain unimplemented.
 
 ## Goal and constraints
 
