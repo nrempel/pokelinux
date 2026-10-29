@@ -38,9 +38,16 @@ RED→GREEN and six refusing controls. The fourth normal VM run repeats Allow an
 completes bar→Apps→Sounds launch/focus, then fails visible-control readiness:
 normal desktop tiling splits the two windows vertically and clips Sounds Play/Stop.
 No PCM/Revoke runs; full guest/QEMU/container cleanup and unchanged inputs pass.
-Next correct the phone window layout while preserving visible bar navigation,
-actual focus and the original playback/retirement bounds.
-Desktop consent/audio acceptance remains open. Ordinary current profiles require `role.kind=application`; frozen
+The fifth VM selects the scoped phone-window profile and passes the guest
+Allow→Play→Revoke→quiet→reallow/refocus→quiet sequence with all original audio
+bounds. Both app classes retain actual maximized internal/client mode1 and
+369×855 logical windows below the bar across focus changes and close-return.
+Both apps close normally; guest/boot results pass, QEMU0 and exact container
+absence pass, inputs remain unchanged. The external viewer completes16 actions
+but fails its final image read with unexpected server message; the outer result
+therefore remains failed. Diagnose that bounded viewer protocol boundary next;
+do not relabel it as a fully passing end-to-end run. New QWindow density evidence,
+public screenshots, ARM and physical-phone qualification remain open. Ordinary current profiles require `role.kind=application`; frozen
 previous cohorts retain their matching old binary/profile pairs.
 
 Finish the full Omarchy smartphone system described in `smartphone-goal.md`.

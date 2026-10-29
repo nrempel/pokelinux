@@ -29,16 +29,13 @@ through an external automated client without the capture wrapper, then shuts dow
 normally on disconnect. A [Harbour launch command and connection recipe](docs/try-harbour-preview.md)
 are now available; human SSH/VNC access remains unverified.
 
-[Native permission controls](docs/native-permission-controller.md) are in development:
-the native Permissions app now has Allow/Revoke controls backed by a Rust client.
-Real button-click component tests pass; the complete Omarchy allow/play/revoke
-flow is still being validated. An early startup defect exposed by its first VM
-run is now fixed: Permissions opens through the genuine Omarchy menu. A later VM
-run now saves an actual Allow choice and visibly confirms it. Permissions keeps
-the top bar accessible. With a corrected menu-image check, the next VM run
-launches Sounds from the menu too. It exposes a phone-layout gap: desktop tiling
-clips the playback controls when both apps are open. Playback and revocation
-still need to pass together. The frozen preview above does not include these controls.
+[Native permission controls](docs/native-permissions-ui.md) now complete a real
+VM sequence: allow Sounds, play a tone, revoke permission to stop it, then allow
+again without restarting playback. The phone window profile keeps each focused
+app usable below the Omarchy bar. Independent audio capture measures tone followed
+by silence. Both apps close normally; the overall run still fails a separate
+remote-viewer message check during final disconnect. This is VM evidence, not
+physical-phone audio, and the frozen screenshot above predates these controls.
 
 The same Messages window follows an original Omarchy theme change from Tokyo
 Night to Catppuccin Latte while preserving its local history. Both its Messages

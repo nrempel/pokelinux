@@ -170,3 +170,34 @@ phone needs a single-app presentation layout with the bar still accessible.
 No playback, Revoke or reallow-silence acceptance occurs. The original visibility
 check remains intact. Full guest/QEMU/container cleanup and unchanged inputs pass.
 The frames remain private without fresh QWindow density qualification.
+
+
+## Phone layout and guest consent/audio sequence pass
+
+The scoped [phone window profile](../native-session-owner/packaging/presentation/phone-windows.lua)
+selects maximized internal/client mode1 for Sounds and Permissions, transfers that
+mode on focus changes, and retains it on close. It preserves the shell reservation
+and configured gaps/decorations. The prior actual split-window frame is retained
+integration RED, not a new synthetic test. The fifth installed x86 VM appends the
+exact fragment to its selected normal compositor configuration; production app
+and Rust service binaries, PCM thresholds and original deadlines are unchanged.
+
+All observed focused windows report internal/client mode1, at[21,47] with logical
+size369×855. Genuine bar/menu navigation, actual Source focus and Alt-Tab work.
+The guest completes one Allow, explicit Speaker/50%/Play, Revoke, reallow without
+Play, and both normal closes. Independent paired48kHz PCM windows contain24,000
+samples per output: the speaker tone has RMS0.0883867 and440Hz amplitude0.1249475;
+the other output is zero. After Revoke, both outputs are exactly zero, the old
+producer pidfd is terminal and its process/node/client/links are absent before
+the original pre-natural-retirement bound. Reallow/refocus remains exactly zero
+without a second Play. This is three bounded audio windows, not continuous audio
+coverage or physical speaker validation.
+
+Guest and boot results pass, including normal app retirement and QEMU0. The outer
+result remains failed: the external client sends all16 requested actions but
+reports `unexpected server message` while reading its final frame. Exact container
+absence, host cleanup and unchanged inputs pass. No exact unexpected message type
+or cause is inferred from that assertion alone. The viewer boundary must be
+resolved before claiming the complete run passes. Fresh QWindow density metadata,
+new published screenshots, ARM, device audio and all physical-phone gates remain
+open. No phone was accessed.

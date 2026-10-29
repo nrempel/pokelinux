@@ -79,6 +79,18 @@ Supply a matching original Hyprland/Source-adapter build and a root-installed
 compositor configuration that loads that adapter. Full Omarchy shell setup and
 device graphics remain separate from a minimal Source composition.
 
+### Phone app presentation
+
+`packaging/presentation/phone-windows.lua` selects available-area maximization for
+the exact Sounds and Permissions app classes. Append it once to the selected
+normal Hyprland configuration before startup, then update that file's explicit
+deployment manifest bytes/hash. Copying an unused Lua file does not activate it.
+The focus-transfer and close-retention settings apply to the compositor; the
+initial maximization rule matches only those two apps. No service permission is
+granted by this profile. A genuine x86 VM now qualifies both apps' focused layout,
+consent, measured playback/revocation and normal closes; its final external-viewer
+message check remains failed. See [the bounded evidence](../docs/native-permissions-ui.md).
+
 ### Explicit normal-session deployment bundle
 
 `install-normal-session` stages a separately selected operational bundle. The
