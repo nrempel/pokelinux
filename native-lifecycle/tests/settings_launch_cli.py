@@ -14,12 +14,15 @@ NOW = lambda: time.clock_gettime_ns(time.CLOCK_BOOTTIME)
 
 
 class Launcher(unittest.TestCase):
+    role = "settings"
+
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(prefix="settings-launch-", dir="/run")
+        self.temp = tempfile.TemporaryDirectory(prefix=self.role+"-launch-", dir="/run")
         self.root = Path(self.temp.name)
         self.root.chmod(0o755)
-        self.path = self.root / "launch-settings.sock"
-        self.binary = os.environ["NATIVE_SETTINGS_LAUNCH_BIN"]
+        self.path = self.root / ("launch-"+self.role+".sock")
+        self.binary = os.environ["NATIVE_"+self.role.upper()+"_LAUNCH_BIN"]
+        self.expected_packet = ('{"op":"launch_'+self.role+'"}').encode()
 
     def tearDown(self):
         self.temp.cleanup()
@@ -60,7 +63,7 @@ class Launcher(unittest.TestCase):
                         self.assertEqual(ancillary[0][:2], (socket.SOL_SOCKET, socket.SCM_CREDENTIALS))
                         self.assertEqual(struct.unpack("3i", ancillary[0][2]), (child.pid, 1000, 1000))
                         packet = data
-                        self.assertEqual(data, b'{"op":"launch_settings"}')
+                        self.assertEqual(data, self.expected_packet)
                         body = json.dumps({"result": response}).encode()
                         self.assertEqual(peer.send(body), len(body))
                     except BlockingIOError:
@@ -85,12 +88,12 @@ class Launcher(unittest.TestCase):
 
     def test_actual_fixed_packet_and_ok(self):
         code, packet = self.invoke([str(self.path)], "ok")
-        self.assertEqual(packet, b'{"op":"launch_settings"}', "fixed CLI must actually send its single request")
+        self.assertEqual(packet, self.expected_packet, "fixed CLI must actually send its single request")
         self.assertEqual(code, 0)
 
     def test_actual_denied_reply_is_failure(self):
         code, packet = self.invoke([str(self.path)], "denied")
-        self.assertEqual(packet, b'{"op":"launch_settings"}')
+        self.assertEqual(packet, self.expected_packet)
         self.assertNotEqual(code, 0)
 
     def test_missing_relative_extra_and_absent_endpoint_refused(self):

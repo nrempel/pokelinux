@@ -97,8 +97,9 @@ durable Allowed state intact: the old media lease is fenced, but a new explicit 
 can still be authorized. The UI must not display Revoked merely because the audio
 provider disconnected.
 
-The desktop launch route, Rust client and visible Allow/Revoke surface remain
-unwired. The full acceptance sequence remains open: denied/quiet → Allow → explicit
+The desktop launch route, Rust client and visible Allow/Revoke surface are now
+implemented with separate host boundary tests; see [Permissions UI](native-permissions-ui.md).
+These tests do not join the normal UI to the genuine Omarchy session. The full acceptance sequence remains open: denied/quiet → Allow → explicit
 Play → tone → Revoke → silence → reallow stays quiet until a new Play → close/reopen
 and normal shutdown. No permission, audio or phone completion-matrix row is closed.
 

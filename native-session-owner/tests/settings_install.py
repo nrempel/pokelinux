@@ -13,23 +13,26 @@ SHA = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
 
 
 class Install(unittest.TestCase):
+    role = "settings"
+
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(prefix="settings-install-", dir="/run")
+        self.temp = tempfile.TemporaryDirectory(prefix=self.role+"-install-", dir="/run")
         self.root = Path(self.temp.name)
         self.source = Path(os.environ["NATIVE_SETTINGS_SOURCE"])
-        self.binary = Path(os.environ["NATIVE_SETTINGS_LAUNCH_BIN"])
+        self.binary = Path(os.environ["NATIVE_"+self.role.upper()+"_LAUNCH_BIN"])
 
     def tearDown(self):
         self.temp.cleanup()
 
     def install(self, settings):
         until = NOW() + 5_000_000_000
+        selected = {role: os.environ["NATIVE_"+role+"_LAUNCH_BIN"]
+                    for role in ["SOUNDS", "MESSAGES", "SETTINGS", "PERMISSIONS"]}
+        selected[self.role.upper()] = settings
         argv = ["make", "-C", str(self.source / "native-session-owner"), "install",
                 "DESTDIR=" + str(self.root / "stage"),
                 "SESSION_OWNER_BIN=" + os.environ["NATIVE_SESSION_OWNER_BIN"],
-                "SOUNDS_LAUNCH_BIN=" + os.environ["NATIVE_SOUNDS_LAUNCH_BIN"],
-                "MESSAGES_LAUNCH_BIN=" + os.environ["NATIVE_MESSAGES_LAUNCH_BIN"],
-                "SETTINGS_LAUNCH_BIN=" + settings]
+                *[role+"_LAUNCH_BIN="+path for role, path in selected.items()]]
         child = subprocess.Popen(argv, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,
                                  stderr=subprocess.PIPE, env={"PATH": os.environ["PATH"]})
         try:
@@ -44,8 +47,8 @@ class Install(unittest.TestCase):
                           "original_until_ns": until, "completed_ns": NOW()}), flush=True)
         return child.returncode
 
-    def test_settings_input_is_required(self):
-        self.assertNotEqual(self.install(""), 0, "SETTINGS_LAUNCH_BIN must be explicit")
+    def test_selected_launcher_input_is_required(self):
+        self.assertNotEqual(self.install(""), 0, self.role.upper()+"_LAUNCH_BIN must be explicit")
 
     def test_nonexecutable_input_is_refused(self):
         inert = self.root / "inert"
@@ -57,15 +60,19 @@ class Install(unittest.TestCase):
         self.assertEqual(self.install(str(self.binary)), 0)
         stage = self.root / "stage"
         for source, target, mode in [
-            (self.binary, stage / "usr/libexec/pokelinux/settings-launch", 0o755),
-            (self.source / "native-settings-ui/org.omarchy.Settings.desktop",
-             stage / "usr/share/applications/org.omarchy.Settings.desktop", 0o644),
+            (self.binary, stage / ("usr/libexec/pokelinux/"+self.role+"-launch"), 0o755),
+            (self.source / ("native-"+self.role+"-ui/org.omarchy."+self.role.capitalize()+".desktop"),
+             stage / ("usr/share/applications/org.omarchy."+self.role.capitalize()+".desktop"), 0o644),
         ]:
             self.assertTrue(target.is_file(), str(target))
             self.assertEqual(SHA(source), SHA(target))
             self.assertEqual(target.stat().st_mode & 0o777, mode)
             self.assertEqual((target.stat().st_uid, target.stat().st_gid), (0, 0))
-        self.assertEqual(len([p for p in stage.rglob("*") if p.is_file()]), 10)
+        self.assertEqual(len([p for p in stage.rglob("*") if p.is_file()]), 12)
+
+
+class PermissionsInstall(Install):
+    role = "permissions"
 
 
 if __name__ == "__main__":

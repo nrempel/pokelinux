@@ -71,24 +71,75 @@ impl messages::Provider for UnavailableMessages {
         true
     }
 }
-struct Case {
-    runtime: PathBuf,
+#[derive(Clone, Copy)]
+enum DesktopApp {
+    Settings,
+    Permissions,
+}
+impl DesktopApp {
+    fn name(self) -> &'static str {
+        match self {
+            Self::Settings => "settings",
+            Self::Permissions => "permissions",
+        }
+    }
+    fn app(self) -> &'static str {
+        match self {
+            Self::Settings => crate::brightness::APP,
+            Self::Permissions => crate::permission::APP,
+        }
+    }
+    fn endpoint(self) -> String {
+        format!("launch-{}.sock", self.name())
+    }
+}
+pub(super) struct Case {
+    pub(super) runtime: PathBuf,
     install: PathBuf,
+    policy: PathBuf,
     done: Receiver<io::Result<()>>,
     actor: Option<JoinHandle<()>>,
     app_waits: Receiver<(u32, ExitStatus)>,
-    reaped: Vec<(u32, ExitStatus)>,
+    pub(super) reaped: Vec<(u32, ExitStatus)>,
+    desktop: DesktopApp,
+    uid: u32,
     work_until: u64,
     close_until: u64,
     closed: bool,
 }
 impl Case {
     fn new(with_messages: bool, settings_profile: bool) -> Self {
+        Self::new_fixed(
+            with_messages,
+            settings_profile,
+            DesktopApp::Settings,
+            11050,
+            crate::AppRole::Application,
+        )
+    }
+    pub(super) fn permissions(profile: bool, ordinary: bool, uid: u32) -> Self {
+        let role = if ordinary {
+            crate::AppRole::Application
+        } else {
+            crate::AppRole::PermissionController {
+                target: crate::audio::APP.into(),
+                permission: crate::Permission::MediaRoute,
+            }
+        };
+        Self::new_fixed(false, profile, DesktopApp::Permissions, uid, role)
+    }
+    fn new_fixed(
+        with_messages: bool,
+        settings_profile: bool,
+        desktop: DesktopApp,
+        uid: u32,
+        role: crate::AppRole,
+    ) -> Self {
         assert_eq!(rustix::process::getuid().as_raw(), 0);
         let id = fresh_id().unwrap();
-        let install = PathBuf::from("/opt/settings-desktop-tests").join(&id);
-        let runtime = PathBuf::from("/run/settings-desktop-tests").join(&id);
-        let policy = PathBuf::from("/var/lib/settings-desktop-tests").join(&id);
+        let install = PathBuf::from(format!("/opt/{}-desktop-tests", desktop.name())).join(&id);
+        let runtime = PathBuf::from(format!("/run/{}-desktop-tests", desktop.name())).join(&id);
+        let policy = PathBuf::from(format!("/var/lib/{}-desktop-tests", desktop.name())).join(&id);
         for p in [&install, &runtime, &policy] {
             fs::create_dir_all(p).unwrap();
             fs::set_permissions(p, fs::Permissions::from_mode(0o755)).unwrap();
@@ -111,17 +162,20 @@ impl Case {
             fs::copy(
                 std::env::var_os("NATIVE_SETTINGS_APP_FIXTURE")
                     .expect("explicit native six-argument app fixture"),
-                install.join("settings-app"),
+                install.join(format!("{}-app", desktop.name())),
             )
             .unwrap();
             fs::set_permissions(
-                install.join("settings-app"),
+                install.join(format!("{}-app", desktop.name())),
                 fs::Permissions::from_mode(0o755),
             )
             .unwrap();
-            profiles.push(serde_json::json!({"role":{"kind":"application"},"app":"org.omarchy.Settings","uid":11050,"executable":install.join("settings-app"),"args":[install.join("home"),runtime.join("application"),runtime.join("wayland.sock"),runtime.join("appearance.sock"),runtime.join("app.sock"),install.join("themes")]}));
+            profiles.push(serde_json::json!({"role":role,"app":desktop.app(),"uid":uid,"executable":install.join(format!("{}-app",desktop.name())),"args":[install.join("home"),runtime.join("application"),runtime.join("wayland.sock"),runtime.join("appearance.sock"),runtime.join("app.sock"),install.join("themes")]}));
         }
-        if with_messages || !settings_profile {
+        if matches!(desktop, DesktopApp::Permissions) {
+            profiles.push(serde_json::json!({"role":{"kind":"application"},"app":crate::audio::APP,"uid":11042,"executable":"/usr/bin/sleep","args":["120"]}));
+        }
+        if with_messages || (!settings_profile && matches!(desktop, DesktopApp::Settings)) {
             profiles.push(serde_json::json!({"role":{"kind":"application"},"app":"org.omarchy.Messages","uid":11010,"executable":"/usr/bin/sleep","args":["120"]}));
         }
         let profile = install.join("profile.json");
@@ -136,6 +190,7 @@ impl Case {
         drop(commands);
         let sr = runtime.clone();
         let si = install.clone();
+        let sp = policy.clone();
         let actor = thread::spawn(move || {
             let mut control = ActorControl {
                 inbox,
@@ -150,7 +205,7 @@ impl Case {
             let mut provider = UnavailableMessages;
             let result = super::super::run_with_services_inner(
                 &sr,
-                &policy,
+                &sp,
                 &profile,
                 &si.join("lifecycle-launcher"),
                 None,
@@ -172,10 +227,13 @@ impl Case {
         let c = Self {
             runtime,
             install,
+            policy,
             done,
             actor: Some(actor),
             app_waits,
             reaped: vec![],
+            desktop,
+            uid,
             work_until: now + 12_000_000_000,
             close_until: now + 15_000_000_000,
             closed: false,
@@ -185,6 +243,10 @@ impl Case {
                 && let Ok(Reply::Snapshot { ready: true, .. }) =
                     c.admin(serde_json::json!({"op":"snapshot"}))
             {
+                eprintln!(
+                    "ACTUAL_DESKTOP_ACTOR_READY {}",
+                    serde_json::json!({"fixed_app":c.desktop.app(),"ready":true,"observed_ns":boottime_ns(),"source_configured":false})
+                );
                 return c;
             }
             thread::sleep(Duration::from_millis(2));
@@ -221,8 +283,8 @@ impl Case {
                 && output.stderr.len() < 8192
         );
         eprintln!(
-            "ACTUAL_SETTINGS_CLIENT_WAIT {}",
-            serde_json::json!({"pid":pid,"status":status.code(),"waited_ns":waited,"stdout_and_stderr_EOF_ns":eof,"original_until_ns":self.work_until})
+            "ACTUAL_DESKTOP_CLIENT_WAIT {}",
+            serde_json::json!({"fixed_app":self.desktop.app(),"pid":pid,"status":status.code(),"waited_ns":waited,"stdout_and_stderr_EOF_ns":eof,"original_until_ns":self.work_until})
         );
         assert!(
             status.success(),
@@ -231,10 +293,11 @@ impl Case {
         );
         (status, output.stdout)
     }
-    fn request(&self, uid: u32, endpoint: &str, bytes: &[u8]) -> Reply {
+    pub(super) fn request(&self, uid: u32, endpoint: &str, bytes: &[u8]) -> Reply {
         assert!(
-            self.runtime.join("launch-settings.sock").exists(),
-            "fixed Settings desktop endpoint missing after actual actor/storage readiness"
+            self.runtime.join(self.desktop.endpoint()).exists(),
+            "fixed {} desktop endpoint missing after actual actor/storage readiness",
+            self.desktop.name()
         );
         let child = Command::new("/usr/bin/python3")
             .arg("-I")
@@ -255,7 +318,7 @@ impl Case {
         assert!(row["completed_ns"].as_u64().unwrap() < row["original_until_ns"].as_u64().unwrap());
         serde_json::from_value(row["reply"].clone()).unwrap()
     }
-    fn app(&self, uid: u32) -> (u32, OwnedFd) {
+    pub(super) fn app(&self, uid: u32) -> (u32, OwnedFd) {
         while boottime_ns() < self.work_until {
             let mut children = BTreeSet::new();
             for t in fs::read_dir("/proc/self/task").unwrap() {
@@ -273,9 +336,9 @@ impl Case {
                 if status.lines().any(|l| {
                     l.starts_with("Uid:") && l.split_whitespace().skip(1).all(|x| x == expected)
                 }) && fs::read(format!("/proc/{pid}/cmdline")).is_ok_and(|b| {
-                    let paths = if uid == 11050 {
+                    let paths = if uid == self.uid {
                         vec![
-                            self.install.join("settings-app"),
+                            self.install.join(format!("{}-app", self.desktop.name())),
                             self.install.join("home"),
                             self.runtime.join("application"),
                             self.runtime.join("wayland.sock"),
@@ -316,7 +379,7 @@ impl Case {
         }
         panic!("setup: launched app identity/exec not observed");
     }
-    fn close(&mut self) -> io::Result<()> {
+    pub(super) fn close(&mut self) -> io::Result<()> {
         if self.closed {
             return Ok(());
         }
@@ -345,13 +408,16 @@ impl Case {
             let observed = boottime_ns();
             assert!(observed < self.close_until);
             eprintln!(
-                "ACTUAL_SETTINGS_APP_WAIT {}",
-                serde_json::json!({"pid":pid,"code":status.code(),"signal":status.signal(),"observed_ns":observed,"original_until_ns":self.close_until,"witness":"existing Apps child.try_wait Some -> bounded cfg(test) observer"})
+                "ACTUAL_DESKTOP_APP_WAIT {}",
+                serde_json::json!({"fixed_app":self.desktop.app(),"pid":pid,"code":status.code(),"signal":status.signal(),"observed_ns":observed,"original_until_ns":self.close_until,"witness":"existing Apps child.try_wait Some -> bounded cfg(test) observer"})
             );
             self.reaped.push((pid, status));
         }
-        assert!(!self.runtime.join("launch-settings.sock").exists());
+        assert!(!self.runtime.join(self.desktop.endpoint()).exists());
         assert!(!self.runtime.join("admin.sock").exists());
+        for directory in [&self.runtime, &self.install, &self.policy] {
+            fs::remove_dir_all(directory)?;
+        }
         self.closed = true;
         Ok(())
     }
@@ -359,7 +425,7 @@ impl Case {
 impl Drop for Case {
     fn drop(&mut self) {
         if let Err(e) = self.close() {
-            eprintln!("owned Settings case cleanup failed: {e}");
+            eprintln!("owned fixed-desktop case cleanup failed: {e}");
             std::process::abort();
         }
     }

@@ -7,7 +7,9 @@ The existing owned writer handles persistence; only an exact unsent admission ca
 be canceled. A submitted write can commit after its UI loses authority, so failed
 publication requires a fresh status read, never an automatic Set retry. See the
 [controller contract and evidence](../docs/native-permission-controller.md).
-The native controller UI and desktop launcher remain unwired.
+The fixed UID1000 desktop route `launch-permissions.sock` selects only the installed
+UID11045 controller. The [native UI](../native-permissions-ui/README.md) and launch
+boundary pass separate host tests; the full Omarchy consent/audio flow remains open.
 
 A separate fixed `launch-sounds.sock` accepts only desktop UID1000 and
 `launch_sounds`, without requiring a Messages provider. It reuses existing app

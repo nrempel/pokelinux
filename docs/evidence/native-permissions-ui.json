@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "scope": "Harbour x86 original-code host boundaries; authored peers and unshown QML; not joined Omarchy or phone acceptance",
+  "results": {
+    "client_red": {
+      "private_receipt": "/tmp/pokelinux-permissions-client-build-root-1/red-owned/result.json",
+      "sha256": "1ac8d927838764871ca12f99c2b9e75a127875f7d2b869fe27d1acba7d7fed4c"
+    },
+    "client_refresh_red": {
+      "private_receipt": "/tmp/pokelinux-permissions-client-build-root-1/red-refresh/result.json",
+      "sha256": "1b8c4a80377c6466005a79bc774bc830ca4d6fecaabe54b369da5f733846eb2d"
+    },
+    "client_final": {
+      "private_receipt": "/tmp/pokelinux-permissions-client-build-root-1/green-final/result.json",
+      "sha256": "4f5c1ab15e75676125aa726c0d77bcb60ec0b9b89fe4b5e9cd7ddfcfcbf64da4"
+    },
+    "qml_red": {
+      "private_receipt": "/tmp/pokelinux-permissions-ui-build-root-2/qt-red/result.json",
+      "sha256": "e94b46264206301186bd18c7b170148075424d46a660298d7748b37922986f15"
+    },
+    "final_rust": {
+      "private_receipt": "/tmp/pokelinux-permissions-ui-build-root-4/rust/result.json",
+      "sha256": "ed3b93d8ae7a1f5b0b0e6cd38da1d50ab99d4570196308882f4fbbcacedfdffd"
+    },
+    "final_qt": {
+      "private_receipt": "/tmp/pokelinux-permissions-ui-build-root-4/qt-green/result.json",
+      "sha256": "0bd81ae143c446ba8d1f3734da041c842b471c9b32111daf965e13c949aac505"
+    },
+    "desktop_red": {
+      "private_receipt": "/tmp/pokelinux-permissions-desktop-build-sol-1/red-run/result.json",
+      "sha256": "01294547d303a368e684e900e0bd431d30fea6ccaf5bb4ddf093abb4ded59b9a"
+    },
+    "desktop_green": {
+      "private_receipt": "/tmp/pokelinux-permissions-desktop-build-sol-1/green-run/result.json",
+      "sha256": "422d0dddf0b5b7548cb58afd89d4dc8fa3a177b56496e67a1a2acadfd1074fbb"
+    },
+    "desktop_remaining": {
+      "private_receipt": "/tmp/pokelinux-permissions-desktop-build-sol-1/green-remaining-run/result.json",
+      "sha256": "0b2a610f1bf7c66f712434792d9b0dde8913c59176294394c901ba0b6fb12810"
+    },
+    "owner_release": {
+      "private_receipt": "/tmp/pokelinux-permissions-owner-release-sol-1/release-run/result.json",
+      "sha256": "691a5aa88de4133a2f9da61f82f28c54be79ec4d95578ce7283abe6cfec71b1f"
+    }
+  },
+  "normal_permissions_elf_sha256": "7206911660e96d868e802d8aad1c5c9953dd1ae3410cedc321d93f98346846a6",
+  "normal_owner_elf_sha256": "4b2130851431bcef6f7ba6e7cb035419c71186e43290030bf01c9cbbe45476a3",
+  "frozen_ui_source_sha256": {
+    "native-permissions-ui/CMakeLists.txt": "e8f6fba51ca07f6163b22bef24f71191ec84bbeb9c8e6fb84013dc95b5b00486",
+    "native-permissions-ui/PermissionsView.qml": "51c607bfa7b6a1a4bab0d2c21a945bf19bce192272f939c96fc5b1dfa039e008",
+    "native-permissions-ui/PermissionsClient.h": "a8d032c4f4f0c4baeb6b3b438c11a0359b602a3474b8dd58baaab34a577c4f61",
+    "native-permissions-ui/resources.qrc": "9c6c421ecd0510233b92bf05636f74bd0b85436876bc5e98c89da58c3ce73865",
+    "native-permissions-ui/PermissionsClient.cpp": "1f8f582d34d2ef2d02e50e2dbc7bb56c2581456d272044df1314c64684ad5536",
+    "native-permissions-ui/org.omarchy.Permissions.desktop": "b7497480963c24620ec934c34de9cb837a6e38e88cc34dcba089058155da65da",
+    "native-permissions-ui/main.cpp": "a344ed03f83fecf38951b0b17cb5f8fdb67501b81020d12c9d01230391cc8e3c",
+    "native-permissions-ui/tests/click.cpp": "41f9155e6f40cb42568ff1fe5d521faf6069ad07262fe6aeed176dd550d69c2a",
+    "native-permissions-ui/client-core/Cargo.lock": "97cf5c1d958623f6446c1fc984cb40d8795364f55ef47c61df893dad21b67c9e",
+    "native-permissions-ui/client-core/Cargo.toml": "d3af6b91ac8e9a8b823b4f2387aba12cb07c3dfc28d8ebc85ffdb6f2ab1ff48e",
+    "native-permissions-ui/client-core/src/ffi.rs": "bb152156e1d35cf8a7ea9cc2d8181c417b9c8785e401b185f13c031305a7ddb0",
+    "native-permissions-ui/client-core/src/lib.rs": "3f3a8872e83d38167bf454ec2153642f1f883667ba0927b02ce07ffce27f2794",
+    "native-permissions-ui/client-core/tests/client-boundary.rs": "954a426207233dd17d31a8aa1245c974bf0da04d401c393089d56688b00d510c",
+    "native-permissions-ui/client-core/include/pokelinux_permissions_client.h": "86b7793e067424133f195ffbd5e61262a2214cf3f9cda0d4ba064acb78d0f64d",
+    "native-app/appearance-client-core/Cargo.lock": "17ca86b82ea1915692d8bf6dbb2d8b97bddcfc85f27796c29a9b91a493c41362",
+    "native-app/appearance-client-core/Cargo.toml": "6ce6142caa133a1e03c569c8661b558a1b6ddf62d8c0400e82310d97c56cfcad",
+    "native-app/appearance-client-core/README.md": "5beb9d464762f635ba0bfbe25379d7001b2ce54b0530ae5c1a1ced3864dd1c56",
+    "native-app/appearance-client-core/src/layout.rs": "f98e26d2aaff8b47925acffd8a795c45c4f950c973a2da0f4b4122c76270fc2f",
+    "native-app/appearance-client-core/src/ffi.rs": "3241542071f3ddd78a1b7f16a0bbd58c40928c89982773123e8492f7d481f920",
+    "native-app/appearance-client-core/src/lib.rs": "cf6cac9cfc0710cd990ed51acec7738bee6022cf8435109e059e7c9ce0463359",
+    "native-app/appearance-client-core/src/protocol.rs": "5173fd3db41142803dbe92c6eabc532af753ae005a7797da2dc8d76d5812aa80",
+    "native-app/appearance-client-core/src/clock.rs": "4648db05efb4a170f1934946eeb1e9e093b19a93666df16f07b147e1d6e80e68",
+    "native-app/appearance-client-core/src/engine.rs": "ad269b4f65e1d6abf084f780b12755f5476e0eee53711aeb777db3e6e4663ca8",
+    "native-app/appearance-client-core/tests/client-functional.cpp": "d3a9af1009656e0bccd834f01e75bf3d5eabbbc949f38b9f446c13282e79f56b",
+    "native-app/appearance-client-core/include/pokelinux_appearance_client.h": "46e993660ced0eb0f6d901071b347aefe289d757af4dc9ea0d9d601a06d79504",
+    "native-app/AppearanceRustClient.cmake": "e3f7f1801609297cbcb3d4f89baa7673291e7a3857984e4f35b8e8855a1a057f",
+    "native-app/PhoneAppearanceClient.cpp": "e4b65bf9e622702e8f72494db7b9387fbaad02d0e194d64ce0b26f0df68fc689",
+    "native-app/PhoneAppearanceClient.h": "3f67e172898df24d5548baf8dd94aa0cd6d394858c432967eb051a9ee0623076",
+    "native-app/PhoneAppearance.qml": "705ab25799cba18095a76f4fb47e70eb10099ca035426d7e4400fa9cef8452bc"
+  },
+  "remaining": [
+    "joined genuine Omarchy consent/audio flow",
+    "new native display-density and screenshot qualification",
+    "ARM execution of new UI/client cohort",
+    "all physical-device gates"
+  ],
+  "failed_attempts": "See ../native-permissions-ui.md; setup failures and classifier errors are not behavioral RED evidence."
+}

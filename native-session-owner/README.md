@@ -52,20 +52,25 @@ These checks do not claim containment of every compositor descendant.
 
 ```sh
 cargo build --manifest-path native-session-owner/Cargo.toml --locked --release --no-default-features --bin pokelinux-session-owner
-cargo build --manifest-path native-lifecycle/Cargo.toml --locked --release --no-default-features --bin sounds-launch --bin settings-launch
+cargo build --manifest-path native-lifecycle/Cargo.toml --locked --release --no-default-features --bin sounds-launch --bin settings-launch --bin permissions-launch
 cargo build --manifest-path native-messages/Cargo.toml --locked --release --no-default-features --bin messages-launch
 make -C native-session-owner install \
   SESSION_OWNER_BIN="$PWD/native-session-owner/target/release/pokelinux-session-owner" \
   SOUNDS_LAUNCH_BIN="$PWD/native-lifecycle/target/release/sounds-launch" \
   MESSAGES_LAUNCH_BIN="$PWD/native-messages/target/release/messages-launch" \
   SETTINGS_LAUNCH_BIN="$PWD/native-lifecycle/target/release/settings-launch" \
+  PERMISSIONS_LAUNCH_BIN="$PWD/native-lifecycle/target/release/permissions-launch" \
   DESTDIR="$PWD/session-stage"
 ```
 
-The install target defines ten staged files: four native binaries, three desktop
+The install target defines twelve staged files: five native binaries, four desktop
 files, the unit and two examples. It does not activate a host session or install
 examples as operational policy. Install the normal Sounds, [Messages](../native-messages-ui/README.md) and
-[Settings Qt/QML targets](../native-settings-ui/README.md) through their CMake rules.
+[Settings](../native-settings-ui/README.md) and
+[Permissions Qt/QML targets](../native-permissions-ui/README.md) through their CMake rules.
+The Permissions launcher requires the explicit `PERMISSIONS_LAUNCH_BIN`; its fixed
+UID1000 request selects only the installed UID11045 Sounds/MediaRoute controller.
+Launching the app does not grant audio permission.
 The fixed Settings request accepts only desktop UID1000 and selects the installed
 `org.omarchy.Settings` profile (UID11050 and six absolute arguments). It grants no
 permission and supplies no backend pathname. Its socket is present independently

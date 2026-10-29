@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Permissions
+Comment=Allow or revoke Sounds media permission
+Exec=/usr/libexec/pokelinux/permissions-launch /run/pokelinux/session/launch-permissions.sock
+Icon=preferences-system-privacy
+Terminal=false
+Categories=Settings;
+StartupWMClass=org.omarchy.Permissions

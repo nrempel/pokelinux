@@ -12,7 +12,10 @@ ownership. The 16 targeted credentialed/service-boundary tests pass, followed by
 These use authored Source/media facts and do not run the full actor loop. See
 [ingress evidence](evidence/native-permission-ingress.json), including preserved
 fixture failures and the corrected intermediate RED classifier. Desktop launch,
-Rust client and Allow/Revoke UI remain unwired. Ordinary current profiles require `role.kind=application`; frozen
+the Rust request/state client and Allow/Revoke UI are now implemented. Separate
+actor launch tests, 12 credentialed client scenarios and real unshown QML button
+clicks pass; the full genuine Omarchy flow remains open. See
+[Permissions UI evidence](native-permissions-ui.md). Ordinary current profiles require `role.kind=application`; frozen
 previous cohorts retain their matching old binary/profile pairs.
 
 Finish the full Omarchy smartphone system described in `smartphone-goal.md`.

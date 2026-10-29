@@ -1622,3 +1622,6 @@ mod sounds_desktop_tests;
 
 #[path = "service_settings_desktop_tests.rs"]
 mod settings_desktop_tests;
+
+#[path = "service_permissions_desktop_tests.rs"]
+mod permissions_desktop_tests;

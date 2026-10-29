@@ -185,6 +185,7 @@ enum DesktopEndpoint {
     Messages,
     Sounds,
     Settings,
+    Permissions,
 }
 #[derive(serde::Deserialize)]
 #[serde(tag = "op", rename_all = "snake_case", deny_unknown_fields)]
@@ -195,6 +196,11 @@ enum SoundsDesktopRequest {
 #[serde(tag = "op", rename_all = "snake_case", deny_unknown_fields)]
 enum SettingsDesktopRequest {
     LaunchSettings {},
+}
+#[derive(serde::Deserialize)]
+#[serde(tag = "op", rename_all = "snake_case", deny_unknown_fields)]
+enum PermissionsDesktopRequest {
+    LaunchPermissions {},
 }
 struct Connection {
     id: u64,
@@ -812,6 +818,12 @@ fn run_with_device_services_inner(
         let metadata = fs::symlink_metadata(&settings_path)?;
         (metadata.dev(), metadata.ino())
     };
+    let permissions_path = runtime.join("launch-permissions.sock");
+    let permissions = ipc::listener(&permissions_path, 0o666)?;
+    let permissions_identity = {
+        let metadata = fs::symlink_metadata(&permissions_path)?;
+        (metadata.dev(), metadata.ino())
+    };
     let desktop_path = runtime.join("launch-messages.sock");
     let desktop = if messages.is_some() {
         Some(ipc::listener(&desktop_path, 0o666)?)
@@ -1240,6 +1252,7 @@ fn run_with_device_services_inner(
             }
             fds.push(PollFd::new(&sounds, PollFlags::IN));
             fds.push(PollFd::new(&settings, PollFlags::IN));
+            fds.push(PollFd::new(&permissions, PollFlags::IN));
             for c in &connections {
                 fds.push(PollFd::new(
                     &c.fd,
@@ -1267,6 +1280,13 @@ fn run_with_device_services_inner(
                 (&lock, false, None, true, 2),
                 (&sounds, false, Some(DesktopEndpoint::Sounds), false, 2),
                 (&settings, false, Some(DesktopEndpoint::Settings), false, 2),
+                (
+                    &permissions,
+                    false,
+                    Some(DesktopEndpoint::Permissions),
+                    false,
+                    2,
+                ),
             ];
             if let Some(fd) = &desktop {
                 listeners.push((fd, false, Some(DesktopEndpoint::Messages), false, 2));
@@ -1691,6 +1711,26 @@ fn run_with_device_services_inner(
                     } else {
                         Reply::Unavailable
                     }
+                } else if connection.desktop == Some(DesktopEndpoint::Permissions) {
+                    if cred.uid.as_raw() != crate::messages::DESKTOP_UID
+                        || stopping
+                        || serde_json::from_slice::<PermissionsDesktopRequest>(&bytes).is_err()
+                    {
+                        Reply::Denied
+                    } else if let Some(p)=profiles.iter().find(|p| p.app==crate::permission::APP
+                        && p.uid==crate::permission::UID
+                        && matches!(&p.role,crate::AppRole::PermissionController{target,permission}
+                            if target==crate::audio::APP&&*permission==crate::Permission::MediaRoute))
+                    {
+                        match apps.start(p,connection.id,&authority,&mut display) {
+                            crate::apps::Start::Rejected(reply)=>reply,
+                            crate::apps::Start::Reserved{instance,until}=>{
+                                connection.launching=Some(instance);
+                                connection.deadline=until.saturating_add(1_000_000_000);
+                                return true;
+                            }
+                        }
+                    } else {Reply::Unavailable}
                 } else if connection.desktop == Some(DesktopEndpoint::Messages) {
                     if cred.uid.as_raw() != crate::messages::DESKTOP_UID
                         || stopping
@@ -2410,6 +2450,11 @@ fn run_with_device_services_inner(
         .is_ok_and(|metadata| (metadata.dev(), metadata.ino()) == settings_identity)
     {
         fs::remove_file(&settings_path)?;
+    }
+    if fs::symlink_metadata(&permissions_path)
+        .is_ok_and(|metadata| (metadata.dev(), metadata.ino()) == permissions_identity)
+    {
+        fs::remove_file(&permissions_path)?;
     }
     if desktop_identity.is_some_and(|identity| {
         fs::symlink_metadata(&desktop_path).is_ok_and(|m| (m.dev(), m.ino()) == identity)

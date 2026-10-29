@@ -5,7 +5,9 @@ Current app profiles require explicit installation-owned roles; see
 apps use `role: {"kind":"application"}`. An optional installed Permissions profile
 now selects UID11045 with the Sounds/MediaRoute controller role. Protected-config
 and owned-display tests pass. Scoped controller requests use the lifecycle actor;
-desktop launch and visible consent remain separate work. Frozen evidence keeps its original profiles.
+the fixed desktop launcher and Rust-backed consent UI now pass separate host tests.
+The complete normal Omarchy consent/audio flow remains open; see
+[Permissions UI](native-permissions-ui.md). Frozen evidence keeps its original profiles.
 
 The `native-session-owner` Rust entry starts and owns the compositor, then
 composes the existing Source Observer, lifecycle actor, per-app Wayland supervisor

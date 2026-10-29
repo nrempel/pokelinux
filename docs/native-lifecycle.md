@@ -4,8 +4,10 @@ Current app profiles require explicit installation-owned roles; see
 [permission-controller configuration](native-permission-controller.md). Ordinary
 apps use `role: {"kind":"application"}`. The separate fixed Permissions principal
 now has scoped status/set requests on the app socket, with current Source focus,
-owner/revision checks and the existing durable writer. Visible consent remains
-unwired; frozen historical evidence keeps its original profiles.
+owner/revision checks and the existing durable writer. Its fixed desktop launch
+and Rust-backed consent UI pass separate host tests; the complete Omarchy flow
+remains open. See [Permissions UI](native-permissions-ui.md). Frozen historical
+evidence keeps its original profiles.
 
 The initial authority milestone passed18 installed Linux process groups and
 four component tests on x86 and an actual ARM64 Arch kernel. The current
