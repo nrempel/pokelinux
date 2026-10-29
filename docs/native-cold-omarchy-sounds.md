@@ -1,5 +1,9 @@
 # Fresh Omarchy and native Sounds startup
 
+The later [genuine app-lifecycle checkpoint](native-omarchy-app-lifecycle.md) now
+passes cold menu launch, standard close, fresh reopen and normal shutdown with
+permission withheld. It is separate from the recovery/playback traces below.
+
 ## Diagnostic trace: Source recovery, PCM and revoke pass
 
 One later genuine Omarchy x86 KVM diagnostic trace passes the whole selected

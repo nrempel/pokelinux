@@ -15,8 +15,7 @@ No physical phone has been tested, and there is no verified bootable phone image
 
 These are real, unedited x86 VM captures at the
 [Pixel 10 display profile](docs/native-phone-display-profile.md): 1080 × 2424
-pixels, 422 PPI and 420 logical density. The upstream debug-launch banner remains
-visible.
+pixels, 422 PPI and 420 logical density. Some captures retain upstream development notices.
 
 The same Messages window follows an original Omarchy theme change from Tokyo
 Night to Catppuccin Latte while preserving its local history. Both its Messages
@@ -47,6 +46,7 @@ into one complete phone session.
 | Area | Demonstrated behavior | Evidence |
 | --- | --- | --- |
 | Native apps and themes | Real Messages, Settings and Sounds windows in prepared VMs; live original Omarchy theme changes and permission controls in qualified app sessions. | [Messages](docs/native-messages-appearance-rust-tracer.md), [Settings brightness](docs/native-brightness.md), [Sounds](docs/native-normal-upstream-tracer.md#prepared-full-appservice-slice-passes) |
+| App lifecycle | Genuine Omarchy menu → Sounds → Super+W close → fresh menu reopen → normal shutdown, with the same Rust session owner and permission withheld. | [Close/reopen test](docs/native-omarchy-app-lifecycle.md) |
 | Connection ownership | Touch Enable → packets → app close/reopen → explicit Disable and silence through the normal Settings app and Rust services. | [Settings connection](docs/native-settings-connectivity-window.md) |
 | Session recovery | The same Sounds window survives a compositor pause; fresh state returns about 55 ms after resume, followed by measured playback and permission-revoke silence. Earlier audio failures remain under investigation. | [Recovery checks](docs/native-session-timing-recovery.md) |
 | Connection reliability | A delayed idle poll no longer kills the connection worker; overdue received commands are still rejected. Host process tests only. | [Idle polling](docs/native-connectivity-idle-receive.md) |
@@ -60,7 +60,7 @@ into one complete phone session.
 
 The current [Messages background owner](docs/native-installed-messages-history.md#current-owner-integration) now passes one fresh ARM/PID1 cold boot, exact private history reads and normal Stop. A second new boot and graphical session remain open.
 
-The latest cold x86 VM trace starts genuine Omarchy and the Rust-backed Sounds
+An earlier cold x86 recovery trace starts genuine Omarchy and the Rust-backed Sounds
 window, recovers from a compositor pause without restarting the app, then measures
 50% playback on the virtual speaker and silence after an operator permission
 revoke. Normal shutdown also passes at the Pixel 10 display profile. This run
@@ -71,11 +71,14 @@ is not established. Interactive use and phone hardware remain open.
 The [genuine Omarchy menu now launches Sounds](docs/native-omarchy-menu-launch.md)
 through three real taps and the Rust-owned app service. Window, focus and
 permission-withheld silence checks pass; later playback in that run still fails.
+A later [complete app-lifecycle run](docs/native-omarchy-app-lifecycle.md) now
+passes menu launch, standard close, fresh reopen and normal shutdown. Both app
+instances retain the Pixel 10 display profile and remain silent without permission.
 
-<img src="docs/assets/cold-omarchy-sounds-recovery-50-before-play.png" width="320" alt="Sounds with 50% selected before Play" />
+<img src="docs/assets/cold-omarchy-sounds-reopened.png" width="320" alt="A fresh Sounds window reopened from the genuine Omarchy menu" />
 
-From the latest successful run, before Play: 50% selected, Speaker Requested,
-preview idle. The development warning remains visible.
+From the complete app-lifecycle run: a fresh Sounds window after close/reopen.
+Permission is withheld, so route and Play controls remain disabled.
 
 Host component tests, original-code execution, Android reference tests, ARM
 user-mode emulation, full-system VMs and physical hardware evidence are recorded

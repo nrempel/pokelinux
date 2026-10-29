@@ -30,3 +30,17 @@ snapshots do not supply a standalone interactive preview command.
 passing menu/app boundary from the failed later audio continuation, and retain
 the earlier actual menu RED. The native Sounds screenshot has measured window
 and output geometry; menu-only captures do not inherit that window qualification.
+
+
+## Standard close gesture
+
+`window-bindings.lua` supplies the standard Omarchy Super+W close action through
+the matched Hyprland Lua API. Append its bytes once to the selected compositor
+configuration when assembling the preview bundle, then regenerate that manifest
+row. The three-row menu overlay itself is unchanged.
+
+`close-reopen-consumer-pins.json` and its two patches reconstruct the later
+permission-withheld close/reopen consumers directly from the named public cold
+bases, using `git apply --unidiff-zero`. They do not stack on the earlier menu
+patches. [Actual results](../../docs/native-omarchy-app-lifecycle.md) distinguish
+this complete user loop from audio playback and remote-viewer input.

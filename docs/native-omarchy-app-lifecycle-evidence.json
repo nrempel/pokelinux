@@ -1,0 +1,208 @@
+{
+  "schema": 1,
+  "scope": "cold x86 KVM genuine Omarchy menu/close/reopen; no physical phone or viewer-input qualification",
+  "consumer_pins": "../tools/native-omarchy-menu/close-reopen-consumer-pins.json",
+  "binding_fragment_sha256": "1b3974c261ff467aca2289c4caf3f1bd0e112547e9ea97f0ffd9a080c9f58934",
+  "RED": {
+    "selection_sha256": "1a07c53f3b5125ccb184c8462fb7d72fa9a75d49e04bf006c943c617061fd1e0",
+    "execution_sha256": "59e4c590ae8f21b0b7987dffc66c772cab37825156f1fedf4524b756014d5d74",
+    "guest_result_sha256": "c1dd583e707c11f0016283be49d0935bdd947733f3a0608f8059fb7ab43b619b",
+    "boundary1_passed": true,
+    "close_gesture": {
+      "actual_guest_uinput": true,
+      "keys": [
+        "KEY_LEFTMETA",
+        "KEY_W"
+      ],
+      "pinned_Omarchy_shortcut": "SUPER + W",
+      "before_boottime_ns": 73709292159,
+      "after_boottime_ns": 73809449638,
+      "app_signal_or_compositor_dispatch_selected": false
+    },
+    "bindings": [],
+    "last_close_observation": {
+      "at_boottime_ns": 83703377799,
+      "original_close_until_ns": 83709291507,
+      "old_retained_pidfd_live": true,
+      "old_proc_present": true,
+      "old_listener_present": true,
+      "authenticated_actor_snapshot": {
+        "result": "snapshot",
+        "source": {
+          "state": "observed",
+          "last_accepted": {
+            "sequence": 765,
+            "sampled_at_ns": 83688935462
+          },
+          "first_failure": null
+        },
+        "principals": 1,
+        "permits": 0,
+        "receipts": 0,
+        "locked": false,
+        "suspended": false,
+        "degraded": false,
+        "ready": true,
+        "storage_occupied": true,
+        "storage_busy": false
+      }
+    },
+    "whole_passed": false
+  },
+  "GREEN": {
+    "selection_sha256": "5631f169bf0c2b1b76bb84706f29eec65b0fdc8961176677da47b296bc5d835f",
+    "execution_sha256": "d81aaff36df4208abcb34a964b16ddde15ec73acc57fe013a1e224119838c677",
+    "guest_result_sha256": "1a6876bb785bb64f6982245b83937c0022e76884d946890c75bb895327789d27",
+    "boot_result_sha256": "9693f80e2d5e836d07ad1945eac71061ede1eb8ed095af4992d7df4e57dbb6ab",
+    "whole_passed": true,
+    "old_app_PID": 1990,
+    "new_app_PID": 2267,
+    "same_owner_PID": 1413,
+    "close_gesture": {
+      "actual_guest_uinput": true,
+      "keys": [
+        "KEY_LEFTMETA",
+        "KEY_W"
+      ],
+      "pinned_Omarchy_shortcut": "SUPER + W",
+      "before_boottime_ns": 73399130958,
+      "after_boottime_ns": 73499290551,
+      "app_signal_or_compositor_dispatch_selected": false
+    },
+    "old_retirement": {
+      "PID": 1990,
+      "retained_pidfd_dead": true,
+      "proc_absent": true,
+      "old_per_app_listener_absent": true,
+      "old_window_absent": true,
+      "snapshot": {
+        "result": "snapshot",
+        "source": {
+          "state": "observed",
+          "last_accepted": {
+            "sequence": 368,
+            "sampled_at_ns": 73486092622
+          },
+          "first_failure": null
+        },
+        "principals": 0,
+        "permits": 0,
+        "receipts": 0,
+        "locked": false,
+        "suspended": false,
+        "degraded": false,
+        "ready": true,
+        "storage_occupied": true,
+        "storage_busy": false
+      },
+      "native_parent_wait_or_numeric_exit_not_claimed": true,
+      "observed_at_boottime_ns": 73500736731
+    },
+    "normal_app_ELF_sha256": "6850cba1361dc9eb22dc40d1a2fb8b9d8a1ef5360cc5ea1c807eeb736a660286",
+    "native_parent_wait_claimed": false,
+    "guest_case_closure_qualified": true,
+    "manager_Stop_after_Ready_qualified": true,
+    "permission_granted": false,
+    "Play_executed": false,
+    "boundaries": [
+      {
+        "id": 1,
+        "passed": true,
+        "PCM": {
+          "stage": "released_silence",
+          "result": "pcm/cold-installed-initial-no-grant/result.json",
+          "sha256": "cdc3f9cd633588c28278795112cb3e79483784530d7a824b148b4959a0c09c57",
+          "measured_frames": 48000,
+          "actual_stats": {
+            "speaker": {
+              "frames": 24000,
+              "finite_all": true,
+              "rms": 0.0,
+              "peak": 0.0,
+              "tone_amplitudes": {
+                "440": 0.0,
+                "880": 0.0
+              },
+              "expected_hz": 0
+            },
+            "earpiece": {
+              "frames": 24000,
+              "finite_all": true,
+              "rms": 0.0,
+              "peak": 0.0,
+              "tone_amplitudes": {
+                "440": 0.0,
+                "880": 0.0
+              },
+              "expected_hz": 0
+            }
+          }
+        },
+        "capture": {
+          "sha256": "2e99b2ca8dcf65607e41b36fbd383eb313423f4049b188f8a83b4066b4865f36",
+          "native_dimensions": [
+            1080,
+            2424
+          ],
+          "target_QWindow_DPR": 2.625,
+          "qualified": true,
+          "resized": false
+        }
+      },
+      {
+        "id": 2,
+        "passed": true,
+        "PCM": {
+          "stage": "released_silence",
+          "result": "pcm/reopened-no-grant/result.json",
+          "sha256": "30a9c208c35644f4e025f76cdaa76930a16f7f70281f889020fc0ad4aeaf7cfc",
+          "measured_frames": 48000,
+          "actual_stats": {
+            "speaker": {
+              "frames": 24000,
+              "finite_all": true,
+              "rms": 0.0,
+              "peak": 0.0,
+              "tone_amplitudes": {
+                "440": 0.0,
+                "880": 0.0
+              },
+              "expected_hz": 0
+            },
+            "earpiece": {
+              "frames": 24000,
+              "finite_all": true,
+              "rms": 0.0,
+              "peak": 0.0,
+              "tone_amplitudes": {
+                "440": 0.0,
+                "880": 0.0
+              },
+              "expected_hz": 0
+            }
+          }
+        },
+        "capture": {
+          "sha256": "9c2f2fddbcc42c127cdd4d7e2b35389cbb9118dd63b99b4a49a904ab141cc274",
+          "native_dimensions": [
+            1080,
+            2424
+          ],
+          "target_QWindow_DPR": 2.625,
+          "qualified": true,
+          "resized": false
+        }
+      }
+    ]
+  },
+  "screenshot": {
+    "file": "assets/cold-omarchy-sounds-reopened.png",
+    "sha256": "9c2f2fddbcc42c127cdd4d7e2b35389cbb9118dd63b99b4a49a904ab141cc274",
+    "bytes": 472224,
+    "native_dimensions": [
+      1080,
+      2424
+    ],
+    "resized": false
+  }
+}

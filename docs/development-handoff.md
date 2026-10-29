@@ -16,7 +16,16 @@ phone. Keep synthetic emulator, original-code, ARM64/QEMU and physical evidence
 separate. Do not equate registration, submission or API success with carrier
 acceptance, delivery, native call state or working physical hardware.
 
-The latest [menu integration](native-omarchy-menu-launch.md) closes actual
+The [genuine app lifecycle](native-omarchy-app-lifecycle.md) now passes cold menu
+launch → Super+W close → fresh menu reopen → normal manager shutdown. The only
+configuration change is the standard close binding; the matched consumer has a
+real missing-binding RED. Both actual app windows pass Pixel 10/focus and 48,000
+silent PCM frames each with permission withheld. The earlier host-readability
+and post-registry Source-readiness failures remain separate. This is guest uinput,
+not viewer input. A separate paused host-only Unix RFB/frame/closure probe passes;
+join its input to the real guest next, then deliver the interactive preview.
+
+The earlier [menu integration](native-omarchy-menu-launch.md) closes actual
 bar→Apps→Sounds RED→GREEN in genuine Omarchy. The new actor-owned UID 11042 app
 passes native Pixel/window/focus and 48,000 no-grant silent PCM frames. The later
 audio continuation still fails before tone.json; no preview diagnostic lines
@@ -25,12 +34,14 @@ The 255-file candidate uses an explicit three-row menu overlay and retains the
 original consumer deadlines/criteria. The full run and composite manager
 Stop-after-Ready remain failed; independent custody and guest closure pass.
 
-Prioritize a reproducible interactive VM preview with menu launch, close/reopen
-and normal shutdown, clearly labeling playback experimental. Complete one bounded
+Prioritize a reproducible interactive VM preview with the now-qualified
+menu/close/reopen and normal shutdown, clearly labeling playback experimental. Complete one bounded
 audio deadline correction and then a visible Sounds Allow/Revoke page. The private
-controlled startup fixture's two Rust bins pass locked/offline typecheck with no
-warnings; its Qt link and actual runtime RED remain unqualified. Preserve the
-existing background promotion policy described below. Do not expand this into
+controlled startup fixture's Rust release and Qt 6.8 link now pass. Two runtime
+attempts fail before Play: missing observation-mode argv, then setup grant/NSS
+prerequisites. The grant-race cause is inferred, not established; no desired
+startup RED or deadline repair is qualified. Preserve the existing background
+promotion policy described below. Do not expand this into
 another unbounded fixture campaign or treat the VM as phone qualification.
 
 The persistent connectivity worker now [checks readiness before starting its

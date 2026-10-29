@@ -52,7 +52,9 @@ guard unchanged. The next product priority is a reproducible interactive VM
 preview at the Pixel 10 display profile. Genuine Omarchy now passes the separate
 [bar→Apps→Sounds launch boundary](native-omarchy-menu-launch.md), including real
 app focus and permission-withheld silence; later playback in that cohort fails.
-Close/reopen, a visible permission flow and repeatable audio remain open.
+A later [complete cold app lifecycle](native-omarchy-app-lifecycle.md) passes
+standard close, fresh menu reopen and normal shutdown with permission withheld.
+Remote-viewer input, a visible permission flow and repeatable audio remain open.
 Headless native open association, fixed IP and packet round trips, address removal
 and Disconnect pass the separate [ARM virtual-radio boundary](native-wireless-address-packets.md).
 WPA, DHCP/DNS, Settings integration and physical wireless remain open.

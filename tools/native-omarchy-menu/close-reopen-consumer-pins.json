@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "base_commit": "4600d4695362e78cd91fed07e7b6db2fd0befaae",
+  "scope": "exact executed close/reopen consumers; not a standalone preview installer",
+  "consumers": {
+    "guest.py": {
+      "base_file": "tools/native-cold-omarchy/guest.py",
+      "base_sha256": "f7c36110ac2009c498732979aa7ec66d72743e903557b765819b4d9c98f149e9",
+      "patch": "close-reopen-guest.py.patch",
+      "patch_sha256": "dba1591b6e5f3e828607463b10a431d8671fb9936545274346388fd28784ffa8",
+      "executed_output_sha256": "a212275f952c2349214790b2e4ea3abf55a4a7a2206447dd4f65a7361e6b98ed",
+      "apply_option": "--unidiff-zero",
+      "actual_patch_reconstruction_verified": true
+    },
+    "run-selected.py": {
+      "base_file": "tools/native-cold-omarchy/run-selected.py",
+      "base_sha256": "1a0ec467f3025dce6d3ef11b75bc5bd8696140d7e3b8140b16739e11022bc16e",
+      "patch": "close-reopen-run-selected.py.patch",
+      "patch_sha256": "2a1124013ae2d6b933e52cad70d293595c80e022e0e65b8f0a607d38519915c7",
+      "executed_output_sha256": "ada9ec99a34a052fafbd0c09fa78ef92fa3e4aac8cdf68489be15c2d42f9c3da",
+      "apply_option": "--unidiff-zero",
+      "actual_patch_reconstruction_verified": true
+    }
+  }
+}

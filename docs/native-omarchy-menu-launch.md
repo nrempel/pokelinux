@@ -1,5 +1,7 @@
 # Opening native apps from Omarchy
 
+A later [app-lifecycle checkpoint](native-omarchy-app-lifecycle.md) adds the standard close binding and passes fresh menu reopen and normal shutdown. Its permission-withheld scope does not repair this report's later playback failure.
+
 **The real Omarchy menu now launches Sounds through the Rust-owned app service.**
 Three actual touches—bar, Apps, Sounds—open a new native app. Its real window,
 compositor focus and permission-withheld silence checks pass in an x86 VM at the
