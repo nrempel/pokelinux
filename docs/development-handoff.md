@@ -45,14 +45,26 @@ pass for those packages. Failed setup and test-migration cohorts remain recorded
 A subsequent genuine Omarchy x86 KVM run qualifies pre-Play recovery: after
 one controlled compositor pause, fresh Source state returns 52.257 ms after
 resume with the same retained compositor, owner, Sounds process and mapped window.
-The first 1080 × 2424 / DPR 2.625 boundary and quiet PCM check pass. The whole
+The first 1080 × 2424 / DPR 2.625 boundary and quiet PCM check pass. That whole
 run nevertheless fails during later Play: only a 1,024-frame authored PCM prefix
-appears before Starting-state retirement. Its exact guard and cause are not yet
-identified; Source continuity around retirement is also unestablished. Actual
-process waits, stream EOFs and container closure pass independently. Preserve
-that failed result. Next capture the original Source/app/forwarded startup
-cutoffs and the exact retirement predicate before changing preview behavior.
-ARM/phone recovery, menu launch and interactive preview remain open.
+appears before Starting-state retirement. Its exact guard and cause remain
+unidentified; Source continuity around that retirement is unestablished.
+
+A fresh diagnostic-only repetition now passes recovery, the unchanged 50% PCM
+and operator-revoke silence checks, and full manager-driven closure. The same
+window survives; fresh Source returns 54.852 ms after resume. Actual attributed
+logs confirm the app requests about one second, but the captured Source cutoff
+leaves only 55.015 ms at Main startup admission. This passing run identifies the
+clamp, not the cause of the earlier failure or a behavioral repair. Normal
+diagnostic owner/audio builds pass 151 and 56 checks, formatting and strict
+Clippy. See [startup diagnostics](native-preview-startup-diagnostics.md).
+
+Next establish a controlled real-boundary RED with continuously fresh Source and
+briefly held virtual audio startup. Preserve the existing successful Starting-reply
+publication → approved background lease policy; do not require foreground until
+Playing. A prospective split must retain the original Source cutoff for dispatch
+and publication, and the original app/TTL ceiling for admitted startup, without
+renewal or replay. ARM/phone recovery, menu launch and interactive use remain open.
 
 The shared process owner now [retains stdout through actual EOF after child wait](native-process-custody.md#later-stdout-eof-custody-repair). A real held-writer RED passes after the repair, alongside nine existing Supervisor controls and strict Clippy. Local output closure remains separate from remote cleanup and successor authority. Earlier consumer cohorts are historical and were not rerun.
 

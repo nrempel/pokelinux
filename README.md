@@ -48,7 +48,7 @@ into one complete phone session.
 | --- | --- | --- |
 | Native apps and themes | Real Messages, Settings and Sounds windows in prepared VMs; live original Omarchy theme changes and permission controls in qualified app sessions. | [Messages](docs/native-messages-appearance-rust-tracer.md), [Settings brightness](docs/native-brightness.md), [Sounds](docs/native-normal-upstream-tracer.md#prepared-full-appservice-slice-passes) |
 | Connection ownership | Touch Enable → packets → app close/reopen → explicit Disable and silence through the normal Settings app and Rust services. | [Settings connection](docs/native-settings-connectivity-window.md) |
-| Session recovery | In a genuine Omarchy VM, the same Sounds window survives a paused compositor and fresh state returns about 52 ms after resume. This pre-Play recovery passes; the subsequent audio flow fails and remains under investigation. | [Recovery checks](docs/native-session-timing-recovery.md) |
+| Session recovery | The same Sounds window survives a compositor pause; fresh state returns about 55 ms after resume, followed by measured playback and permission-revoke silence. Earlier audio failures remain under investigation. | [Recovery checks](docs/native-session-timing-recovery.md) |
 | Connection reliability | A delayed idle poll no longer kills the connection worker; overdue received commands are still rejected. Host process tests only. | [Idle polling](docs/native-connectivity-idle-receive.md) |
 | Wireless | Native Rust discovery, open-AP association, fixed IP setup, two packet round trips, address removal and disconnect pass against Linux virtual radios in an ARM VM. WPA, DHCP/DNS, Settings integration and Pixel hardware remain open. | [Discovery](docs/native-wireless-scan.md), [connection](docs/native-wireless-association.md), [IP and packets](docs/native-wireless-address-packets.md) |
 | ARM app build and partial runtime | Current Settings builds/installs with native Qt 6.12 and matching Rust libraries. A failed ARM trace reaches one Enable touch, a virtual address and one packet; background persistence, reopen and Disable remain open. | [ARM build/install](docs/native-settings-connectivity-window.md#native-arm-build-and-installation), [partial failed trace](docs/native-settings-connectivity-window.md#fourth-attempt-partial-touch-and-packets) |
@@ -60,17 +60,18 @@ into one complete phone session.
 
 The current [Messages background owner](docs/native-installed-messages-history.md#current-owner-integration) now passes one fresh ARM/PID1 cold boot, exact private history reads and normal Stop. A second new boot and graphical session remain open.
 
-One current x86 VM cold trace now starts genuine Omarchy and the Rust-backed
-Sounds window, measures 50% playback on the virtual speaker and silence after an
-operator permission revoke, and completes normal shutdown at the Pixel 10 display
-profile. Two earlier short-producer failures remain unexplained; this first pass
-does not establish a repair or repeatability. Interactive preview and phone
-hardware remain open. [Cold trace and evidence](docs/native-cold-omarchy-sounds.md).
+The latest cold x86 VM trace starts genuine Omarchy and the Rust-backed Sounds
+window, recovers from a compositor pause without restarting the app, then measures
+50% playback on the virtual speaker and silence after an operator permission
+revoke. Normal shutdown also passes at the Pixel 10 display profile. This run
+adds diagnostics; earlier audio failures remain unresolved, and repeatability
+is not established. Menu launch, interactive use and phone hardware remain open.
+[Cold trace and evidence](docs/native-cold-omarchy-sounds.md).
 
-<img src="docs/assets/cold-omarchy-sounds-current-50-before-play.png" width="320" alt="Sounds with 50% selected before Play" />
+<img src="docs/assets/cold-omarchy-sounds-recovery-50-before-play.png" width="320" alt="Sounds with 50% selected before Play" />
 
-Before Play: 50% selected, Speaker Requested/Applying output; the development
-warning remains visible.
+From the latest successful run, before Play: 50% selected, Speaker Requested,
+preview idle. The development warning remains visible.
 
 Host component tests, original-code execution, Android reference tests, ARM
 user-mode emulation, full-system VMs and physical hardware evidence are recorded

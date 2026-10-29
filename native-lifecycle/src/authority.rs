@@ -1557,7 +1557,19 @@ impl Authority {
         let mut stamp = self.begin_media(pid, uid, backend, &request.route, request.ttl_ms, now)?;
         stamp.intent.until_ns = stamp.intent.until_ns.min(request.until_boottime_ns);
         stamp.authority.until = stamp.authority.until.min(request.until_boottime_ns);
-        if !self.current_media(&stamp, backend, crate::boottime_ns()) {
+        let checked_at_ns = crate::boottime_ns();
+        let current = self.current_media(&stamp, backend, checked_at_ns);
+        // Captured local cutoffs only; no additional clock or authority probe.
+        eprintln!(
+            "preview authority: request_sampled_at_ns={} checked_at_ns={} captured_source_until_ns={:?} original_app_until_ns={} effective_forwarded_until_ns={} current={}",
+            now,
+            checked_at_ns,
+            stamp.authority.session.as_ref().map(|sample| sample.until),
+            request.until_boottime_ns,
+            stamp.intent.until_ns,
+            current
+        );
+        if !current {
             return Err(Reply::Denied);
         }
         Ok((stamp, level))

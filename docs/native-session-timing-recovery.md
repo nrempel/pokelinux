@@ -96,10 +96,38 @@ The SourceOwner snapshot explicitly includes an older unused `process.rs`; its
 owner targets neither compile nor execute that receiver test. Its production
 libraries match the qualified implementation; unrelated dependency inputs remain
 selected from public base `63c855c4be59bd491aaafd92cd0ed36a725302ef`.
-The original-compositor x86 selection below qualifies a narrow desktop prefix.
-Full desktop/audio completion, authentication, ARM and phone recovery remain
-unqualified. Earlier reports retain their frozen results and terminal-expiry
-behavior.
+The original-compositor x86 selections below separately record a failed audio
+successor and one diagnostic trace passing recovery plus the selected Play/revoke
+flow. Repeatability, authentication, ARM and phone recovery remain unqualified.
+Earlier reports retain their frozen results and terminal-expiry behavior.
+
+## Genuine x86 recovery, PCM and revoke pass in one diagnostic trace
+
+A later genuine Omarchy x86 KVM trace passes the whole selected flow. The same
+held compositor, normal Rust owner, Sounds app and window survive the pre-Play
+pause: observed Source sequence 146 becomes locked `recovering` with null first
+failure, then returns to fresh observed sequence 149, received 54.852 ms after
+the CONT request. Preview is idle and the media source absent during the pause.
+
+After recovery, actual Speaker, 50% and one Play touch need no Reconnect. The
+paired tone window measures 440 Hz speaker RMS 0.0883867 and a silent earpiece;
+after the operator fixture revokes permission, both routes measure exact zero
+and the retained producer pidfd is terminal with process/client/source/links
+absent. Each stage measures 24,000 frames per route, 96,000 total, in addition to
+48,000 initial no-grant silent frames. The original work, retirement and closure
+bounds, simulated 1080 × 2424/QWindow DPR 2.625 profile and positive manager
+Stop-after-Ready case pass. Grant/revoke is test administration, not user consent.
+
+This run uses separately qualified feature-free diagnostic Owner/audio binaries.
+PCM criteria, algorithm and Python code are unchanged; the oracle JSON only
+rebinds the expected Main ELF identity.
+The added diagnostics do not repair or explain the earlier failed cohort below,
+prove repeatability, or qualify a full one-second startup opportunity: the
+current request deadline remains Source-clamped. The controlled Source loss is
+before Play, so audio-active Source-loss cancellation remains untested. This is
+x86 KVM evidence, without ARM, physical-speaker or phone qualification. See the
+[current Sounds result](native-cold-omarchy-sounds.md#diagnostic-trace-source-recovery-pcm-and-revoke-pass)
+and the separately bound hash-only records.
 
 ## Genuine x86 desktop prefix; whole audio run failed
 

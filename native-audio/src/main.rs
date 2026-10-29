@@ -233,6 +233,10 @@ impl State {
         let finished = p.process.poll();
         let mut changed = false;
         let mut failure = false;
+        let mut failure_predicate = "none";
+        let mut starting_alive = None;
+        let mut finished_successful = None;
+        // Retain work/start/alive short-circuit order; labels never probe again.
         if let Some(done) = finished {
             if p.state == PreviewState::Playing || p.natural_drain {
                 eprintln!(
@@ -249,25 +253,58 @@ impl State {
                 changed = true;
             } else if p.state == PreviewState::Starting {
                 eprintln!("preview producer completed before playback admission");
+                failure_predicate = "producer_completed_while_starting";
+                finished_successful = Some(done.successful);
                 failure = true;
             }
-        } else if now >= p.work_until
-            || (p.state == PreviewState::Starting && (now >= p.start_until || !p.process.alive()))
-        {
-            failure = true;
-        } else if p.state == PreviewState::Playing && !p.process.alive() {
-            // Death fences Playing immediately; retain natural completion until
-            // actual wait and stderr EOF decide Completed versus Failed.
-            eprintln!("preview producer no longer alive; completion still pending");
-            p.state = PreviewState::Retiring;
-            p.terminal = PreviewState::Failed;
-            p.natural_drain = true;
-            changed = true;
+        } else {
+            if now >= p.work_until {
+                failure_predicate = "work_cutoff";
+                failure = true;
+            } else if p.state == PreviewState::Starting {
+                if now >= p.start_until {
+                    failure_predicate = "startup_cutoff";
+                    failure = true;
+                } else {
+                    let alive = p.process.alive();
+                    starting_alive = Some(alive);
+                    if !alive {
+                        failure_predicate = "starting_producer_not_alive";
+                        failure = true;
+                    }
+                }
+            }
+            if !failure && p.state == PreviewState::Playing && !p.process.alive() {
+                // Death fences Playing immediately; retain natural completion until
+                // actual wait and stderr EOF decide Completed versus Failed.
+                eprintln!("preview producer no longer alive; completion still pending");
+                p.state = PreviewState::Retiring;
+                p.terminal = PreviewState::Failed;
+                p.natural_drain = true;
+                changed = true;
+            }
         }
+        let sampled_state = p.state;
+        let sampled_start_until = p.start_until;
+        let sampled_work_until = p.work_until;
         if changed {
             self.change();
         }
         if failure {
+            // `now` precedes the existing process.poll(); None means the
+            // original short-circuit did not evaluate that liveness check.
+            if sampled_state != PreviewState::Retiring {
+                eprintln!(
+                    "preview retirement predicate: path=poll_preview predicate={} state={:?} poll_sampled_at_ns={} forwarded_start_until_ns={} work_until_ns={} starting_alive={:?} finished_successful={:?}",
+                    failure_predicate,
+                    sampled_state,
+                    now.elapsed().as_nanos(),
+                    sampled_start_until.elapsed().as_nanos(),
+                    sampled_work_until.elapsed().as_nanos(),
+                    starting_alive,
+                    finished_successful
+                );
+            }
             self.retire_preview(PreviewState::Failed);
         }
         if self.stopping && self.preview.as_ref().is_some_and(|p| p.process.settled()) {
@@ -414,8 +451,9 @@ impl State {
             return Err("invalid_request");
         }
         let level = preview_level(value)?;
+        let start_sampled_at = BootClock.now();
         let (start_until, work_until) = preview_deadlines(
-            BootClock.now(),
+            start_sampled_at,
             value["until_boottime_ns"]
                 .as_u64()
                 .ok_or("invalid_deadline")?,
@@ -475,11 +513,26 @@ impl State {
             identity: None,
         });
         self.last_preview = None;
-        if !self.preview.as_ref().unwrap().process.admission_ready() {
+        let admission_ready = self.preview.as_ref().unwrap().process.admission_ready();
+        if !admission_ready {
+            eprintln!(
+                "preview startup: predicate=admission_not_ready start_sampled_at_ns={} forwarded_start_until_ns={} work_until_ns={} admission_ready=false",
+                start_sampled_at.elapsed().as_nanos(),
+                start_until.elapsed().as_nanos(),
+                work_until.elapsed().as_nanos()
+            );
             self.retire_preview(PreviewState::Failed);
             return Err("preview_start_failed");
         }
-        if BootClock.now() >= start_until {
+        let start_checked_at = BootClock.now();
+        if start_checked_at >= start_until {
+            eprintln!(
+                "preview startup: predicate=startup_cutoff start_sampled_at_ns={} start_checked_at_ns={} forwarded_start_until_ns={} work_until_ns={} admission_ready=true",
+                start_sampled_at.elapsed().as_nanos(),
+                start_checked_at.elapsed().as_nanos(),
+                start_until.elapsed().as_nanos(),
+                work_until.elapsed().as_nanos()
+            );
             self.retire_preview(PreviewState::Failed);
             return Err("preview_expired");
         }
@@ -496,6 +549,13 @@ impl State {
         };
         self.preview.as_mut().unwrap().lease = lease;
         self.change();
+        eprintln!(
+            "preview startup: predicate=admitted start_sampled_at_ns={} start_checked_at_ns={} forwarded_start_until_ns={} work_until_ns={} admission_ready=true",
+            start_sampled_at.elapsed().as_nanos(),
+            start_checked_at.elapsed().as_nanos(),
+            start_until.elapsed().as_nanos(),
+            work_until.elapsed().as_nanos()
+        );
         Ok(lease)
     }
     fn request(&mut self, peer: Identity, value: Value) -> Value {

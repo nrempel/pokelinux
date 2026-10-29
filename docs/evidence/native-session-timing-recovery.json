@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "scope": "Host component/SourceOwner qualification, normal x86 release compilation and one genuine-compositor x86 KVM pre-Play Source-recovery prefix; whole later audio scenario FAILED; hash-only provenance",
+  "scope": "Host component/SourceOwner qualification plus separately bound genuine Omarchy x86 KVM Source-recovery failure and one passing diagnostic recovery/Play/revoke trace; hash-only provenance",
   "original_reds": {
     "actor_root3": {
       "source_manifest_sha256": "4cb29b248543d384fd33c5602ac449666a338deeca06f7ff41d9b55fd91f5909",
@@ -156,9 +156,10 @@
     "late_lifecycle_bound_durable_write_permanent_invalidation_fixed": false
   },
   "unqualified": [
-    "Original-compositor recovery beyond this pre-Play x86 KVM prefix",
-    "Whole current desktop/audio scenario and repeatability",
+    "Repeatable or stable desktop/audio availability",
     "Audio-active Source-loss cancellation",
+    "Full one-second preview startup under current Source clamp",
+    "Genuine menu activation and close/reopen",
     "Authentication/broker recovery",
     "ARM recovery",
     "Matched Google kernel and physical-phone recovery"
@@ -245,5 +246,100 @@
     },
     "new_screenshot_published": false,
     "ARM_or_phone_recovery_claimed": false
+  },
+  "desktop_source_recovery_diagnostic_passing_trace": {
+    "cohort": "pokelinux-native-x86-composition-source-recovery-diagnostic-sol-1",
+    "scope": "Single genuine Omarchy x86 KVM pre-Play Source recovery followed by measured 50-percent Play and operator-revoke silence; no repair/cause/repeatability claim",
+    "records": {
+      "execution_sha256": "24d18bd92d8f484cd9c54956947d3d2f7386e6318c8910145f9cdb7aa10c9a12",
+      "boot_result_sha256": "0fee51ced8a47e0d318179def2455404eb2e4ed5deca4dc98be8285372e27505",
+      "guest_result_sha256": "99cea949a2ef6713a311fa220520d6bee9313c7eae2aab78fb839b37dc606b0d",
+      "PCM_result_sha256": "ca7252a40cbb5de6388ef0a87439e65fad31afd2444e71c0bb0933847e02872f",
+      "tone_record_sha256": "f43a9708faae5baf65b1675b8996e3fd3c77beab32eecc0555e871ce2470786d",
+      "replay_admission_sha256": "564e6a10f2cab1f51d977091073b05783ace9e34e1e147d4daf0978dbfa75a73"
+    },
+    "whole_functional_passed": true,
+    "Source_recovery_qualified": true,
+    "same_retained_processes_starttimes_and_window": true,
+    "Source_sequences_before_after": [
+      146,
+      149
+    ],
+    "recovering_first_failure": null,
+    "recovering_locked_denial": true,
+    "CONT_request_to_fresh_snapshot_received_ns": 54852011,
+    "Source_pause_before_Play_preview_idle_media_source_absent": true,
+    "Pixel_profile": {
+      "native_pixels": [
+        1080,
+        2424
+      ],
+      "QWindow_DPR": 2.625,
+      "actual_metadata_qualified": true
+    },
+    "PCM": {
+      "measured_frames_per_route_per_tone_or_quiet_window": 24000,
+      "discarded_frames_per_raw_window": 9600,
+      "total_tone_revoke_measured_frames": 96000,
+      "initial_no_grant_silent_frames": 48000,
+      "speaker_tone_Hz": 440,
+      "speaker_tone_RMS": 0.08838669987845607,
+      "speaker_tone_peak": 0.12499618530273438,
+      "tone_earpiece_and_after_revoke_both_routes_bitwise_zero_independently_reviewed": true,
+      "oracle_JSON_sha256": "77b13c9bd8961ae0f1427f7a24c0c65b1517b7bcf507fd5baadf424b9a696b49",
+      "criteria_algorithm_and_Python_unchanged": true,
+      "only_oracle_JSON_rebinding": "expected_main_elf_sha256"
+    },
+    "actual_Reconnect_touch_executed": false,
+    "operator_grant_revoke_is_user_consent": false,
+    "producer": {
+      "PID": 1857,
+      "actual_parent_Main_PID": 1146,
+      "UID_GID": 11040,
+      "format": "mono F32LE 48000Hz",
+      "retained_pidfd_terminal_process_client_source_links_absent": true,
+      "actual_parent_wait_by_observer_claimed": false,
+      "retired_before_original_3s_after_Play_cutoff": true
+    },
+    "diagnostic_builds": {
+      "Owner_qualification_sha256": "448b253c2d89af915ce0f6c95ffb1759c960a06f714b024389865a0a53bd79ad",
+      "audio_qualification_sha256": "122f52c30a6fa735cb655aabbe0709d936cc5dbfb2f2c30ff3d142883173f440",
+      "normal_Owner_ELF_sha256": "20be6ff6d228aa2972e2879040578c7a400edce5ec76f6ead4a8a57daf31e039",
+      "normal_audio_ELF_sha256": "feefddd340ca52a2cd241973c4940ea8664e1b2e735522eeb02137c3ba14d465",
+      "features": [],
+      "diagnostics_are_functional_repair": false
+    },
+    "current_Source_clamped_deadlines_unchanged": true,
+    "full_one_second_startup_opportunity_qualified": false,
+    "prior_failed_Source_Sol1_reclassified": false,
+    "prior_failure_cause_established": false,
+    "repeatable_or_stable_playback_qualified": false,
+    "audio_active_Source_loss_cancellation_qualified": false,
+    "closure": {
+      "host_actual_wait_both_EOF_cutoff_records": 7,
+      "boot_actual_wait_EOF_cutoff_records": 5,
+      "guest_actual_wait_EOF_cutoff_records": 168,
+      "PCM_actual_wait_EOF_cutoff_records": 15,
+      "all_before_original_cutoffs_with_output_bounds": true,
+      "QMP_guest_shutdown_socket_EOF_and_actual_QEMU_exit0": true,
+      "same_daemon_exact_container_absent": true,
+      "selected_inputs_unchanged": true,
+      "manager_Stop_after_Ready_qualified": true,
+      "native_workers_not_relabelled_as_guest_parent_waits": true,
+      "no_cleanup_errors": true
+    },
+    "ARM_phone_physical_speaker_menu_close_reopen_qualified": false,
+    "capture": {
+      "asset": "docs/assets/cold-omarchy-sounds-recovery-50-before-play.png",
+      "sha256": "b38b08d525f9af76003e9eb742020cd9b316d89df30d0848ca7029f0a276a6a3",
+      "bytes": 460942,
+      "pixels": [
+        1080,
+        2424
+      ],
+      "selected_by_Root": true,
+      "moment": "Before Play: 50 percent, Speaker Requested, preview Idle; development banner visible",
+      "playing_state_claimed": false
+    }
   }
 }

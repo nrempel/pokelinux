@@ -142,13 +142,21 @@ impl Provider for Owner {
         let result = self
             .client
             .preview_play(&intent.route, preview.level, intent.until_ns);
-        self.sent(
+        let sent = self.sent(
             result,
             Operation::Preview {
                 id: intent.id,
                 route: Some(intent.route.clone()),
             },
-        )
+        );
+        // Only actual dispatch logs: Unsent backpressure can be polled again.
+        if matches!(&sent, Ok(true)) {
+            eprintln!(
+                "preview submit: effective_forwarded_until_ns={} sent=true",
+                intent.until_ns
+            );
+        }
+        sent
     }
     fn mute_preview(&mut self, intent: &MuteIntent) -> io::Result<bool> {
         let result = self

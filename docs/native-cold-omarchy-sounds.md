@@ -1,5 +1,45 @@
 # Fresh Omarchy and native Sounds startup
 
+## Diagnostic trace: Source recovery, PCM and revoke pass
+
+One later genuine Omarchy x86 KVM diagnostic trace passes the whole selected
+recovery/Play/revoke flow. The same held compositor 1413, Rust owner 1411, app 1716
+and window survive a pre-Play pause. Source sequence 146 becomes locked `recovering`
+after the unchanged 100 ms lease expires, with null first failure, then returns to
+fresh observed sequence 149, received 54.852 ms after the CONT request. The pause
+occurs with preview idle and no media source; it does not test Source loss during
+audio.
+
+Actual touches select Speaker, 50% and Play once, without Reconnect. Before
+operator revoke, 24,000 measured speaker frames have 440 Hz RMS 0.0883867 while
+24,000 earpiece frames are exact zero. After revoke, another 24,000 frames per
+route are exact zero; the retained Main-owned producer pidfd is terminal and
+its process/client/source/links are absent before the original 3 s retirement
+bound after Play. These 96,000 measured frames fit the original 6 s work bound;
+the initial no-grant window adds 48,000 silent frames. Operator grant/revoke is
+fixture administration rather than a user-consent UI. The sinks are virtual.
+
+The actual 1080 × 2424/QWindow DPR 2.625 Pixel profile, native component checks,
+positive manager Stop-after-Ready, service closure, owned waits/EOF, QMP guest
+shutdown/QEMU exit 0, exact-container absence and unchanged inputs pass. The shell
+retains its actual manager SIGTERM result; its closure is not relabeled exit 0.
+[Hash-only evidence](evidence/native-cold-omarchy-sounds.json) binds this result
+separately from the prior failure below.
+
+![Sounds at 50% after Source recovery, captured before Play](assets/cold-omarchy-sounds-recovery-50-before-play.png)
+
+This exact native capture shows 50%, Speaker Requested and preview Idle before
+Play. The development banner remains visible; the image does not depict playback.
+
+Only bounded diagnostics were added to the selected Owner/audio behavior. This
+selection keeps the PCM criteria, algorithm and Python code unchanged, rebinding
+only the oracle JSON's expected Main ELF identity. This passing epoch is not a
+repair of the earlier failure, a cause diagnosis or proof
+of repeatability. The current request still has its Source-clamped deadline;
+a full one-second startup opportunity is not qualified. Menu activation,
+close/reopen, active-audio Source-loss cancellation, authentication, ARM and phone
+qualification remain open.
+
 ## Source recovery prefix; whole audio repetition failed
 
 A later fresh x86 KVM repetition with genuine Omarchy and the current timing

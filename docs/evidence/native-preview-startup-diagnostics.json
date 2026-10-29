@@ -1,0 +1,310 @@
+{
+  "schema": 1,
+  "scope": "Fixed local preview cutoff/retirement diagnostics and qualified normal x86 builds; measured cutoff propagation in a separate passing GUI repetition",
+  "related_report": "docs/native-cold-omarchy-sounds.md",
+  "diagnostic_source_files": {
+    "native-lifecycle/src/authority.rs": {
+      "bytes": 100558,
+      "sha256": "bbfc300e2ecab52890a23de920048580104c6c28f5ef938c2b026794ba278150"
+    },
+    "native-lifecycle/src/audio_owner.rs": {
+      "bytes": 8975,
+      "sha256": "f55aeb14e71408a8d35d941125c3f548e20085a180707e21d0feebf47a9753f7"
+    },
+    "native-audio/src/main.rs": {
+      "bytes": 38131,
+      "sha256": "f30f316de89c8c81c325f3177bd7544079aae91b7d938cf61d233a3c3e5815d8"
+    }
+  },
+  "raw_bounded_diagnostic_revision2": {
+    "bytes": 8902,
+    "sha256": "8dd3c819628fb4f3d1f1b82f66e55eae2dc388e317544239c6fec5531d820fa6"
+  },
+  "invariants": {
+    "Source_app_clamp_unchanged": true,
+    "all_original_deadlines_and_policies_unchanged": true,
+    "original_short_circuit_probe_order_and_count_preserved": true,
+    "direct_probe_call_sites_only": {
+      "Authority.begin_media_preview": {
+        "boottime": 1,
+        "current_media": 1
+      },
+      "Main.start_preview": {
+        "BootClock_now": 2,
+        "admission_ready": 1,
+        "process_start": 1
+      },
+      "Main.poll_preview": {
+        "BootClock_now": 1,
+        "process_poll": 1,
+        "conditionally_selected_alive_call_sites": 2
+      }
+    },
+    "timestamp_for_poll_retirement": "Existing sample before process.poll, not a new clock probe",
+    "BootTime_elapsed_is_stored_Duration": true,
+    "no_counters_or_logging_state_added": true,
+    "no_app_ids_credentials_routes_tokens_or_payloads_logged": true,
+    "Owner_submit_emits_only_existing_Sent_result": true,
+    "Main_new_retirement_predicate_emits_only_sampled_state_not_Retiring": true,
+    "all_original_retire_calls_preserved": true,
+    "unevaluated_liveness_is_None": true
+  },
+  "builds": {
+    "owner": {
+      "cohort": "pokelinux-preview-cutoff-owner-diagnostic-build-sol-3",
+      "qualification": {
+        "bytes": 8118,
+        "sha256": "448b253c2d89af915ce0f6c95ffb1759c960a06f714b024389865a0a53bd79ad"
+      },
+      "source_manifest": {
+        "bytes": 30753,
+        "sha256": "f1c0452d27e751d794e3fb536c26416abdd63614ce16de767366a11fbfc8b563"
+      },
+      "base_manifest": {
+        "bytes": 5317,
+        "sha256": "8135b11a3f45b05b814caacd6dc65e03980b7a4189901a51df46ea3c227f10ed"
+      },
+      "frozen_selection": {
+        "bytes": 34044,
+        "sha256": "9c2bcda8107cab112503394fabf408d6d6b94fb6dbf02cc99dc4d89fc2120b10"
+      },
+      "outer_receipt": {
+        "bytes": 37982,
+        "sha256": "bf3fb4223e93f272b60438e585e9a6a4dd237c05d6276febd49d64df1e2959a6"
+      },
+      "inner_result": {
+        "bytes": 22408,
+        "sha256": "69be23745bfcfd675b02cd37d34f7b97295f1d7daf793bbc88241643cea5aad9"
+      },
+      "normal_artifact": {
+        "bytes": 3401744,
+        "sha256": "20be6ff6d228aa2972e2879040578c7a400edce5ec76f6ead4a8a57daf31e039",
+        "features": [],
+        "profile": {
+          "opt_level": "3",
+          "debuginfo": 0,
+          "debug_assertions": false,
+          "overflow_checks": false,
+          "test": false
+        },
+        "ELF_machine": 62,
+        "PT_INTERP": "/lib64/ld-linux-x86-64.so.2"
+      },
+      "actual_cases": {
+        "lifecycle_library": 117,
+        "owner_controls": 34,
+        "total": 151,
+        "preserved_ignored": 26
+      },
+      "format_and_strict_Clippy": true,
+      "closure": {
+        "outer_actual_wait_PIPE_EOF": 11,
+        "inner_actual_wait_PIPE_EOF": 19,
+        "original_cutoffs_qualified": true,
+        "same_daemon": true,
+        "CID_and_name_absent": true,
+        "cleanup_errors": []
+      }
+    },
+    "audio": {
+      "cohort": "pokelinux-preview-cutoff-audio-diagnostic-build-sol-2",
+      "qualification": {
+        "bytes": 1905,
+        "sha256": "122f52c30a6fa735cb655aabbe0709d936cc5dbfb2f2c30ff3d142883173f440"
+      },
+      "source_manifest": {
+        "bytes": 5777,
+        "sha256": "6d48cebed9139499087b52c223a28e3310194dd721b465a3ac659fe442fddfd1"
+      },
+      "base_manifest": {
+        "bytes": 2191,
+        "sha256": "d9fe5dd7eca55b57ec8df9d65c72f8fc2b7b1b9bb59b95367ae2e077bc104d44"
+      },
+      "frozen_selection": {
+        "bytes": 7046,
+        "sha256": "ad7528205c9f44fac238a828d3c295c57afe4dc01ef244b50f2509e68a2136b0"
+      },
+      "outer_receipt": {
+        "bytes": 25907,
+        "sha256": "4f97e8f2de4e31d8a0abe608d19e556e300109e1990c952c154ae372a866dca9"
+      },
+      "inner_result": {
+        "bytes": 11094,
+        "sha256": "23c6f17f55c425c1c0d402c09dc75b2ba3f70e4de2588f5f04c252b72e2de580"
+      },
+      "normal_artifact": {
+        "bytes": 1360296,
+        "sha256": "feefddd340ca52a2cd241973c4940ea8664e1b2e735522eeb02137c3ba14d465",
+        "features": [],
+        "profile": {
+          "opt_level": "3",
+          "debuginfo": 0,
+          "debug_assertions": false,
+          "overflow_checks": false,
+          "test": false
+        },
+        "ELF_machine": 62,
+        "PT_INTERP": "/lib64/ld-linux-x86-64.so.2"
+      },
+      "actual_cases": {
+        "default_package": 55,
+        "explicit_Main_wire": 1,
+        "total": 56
+      },
+      "format_and_strict_Clippy": true,
+      "closure": {
+        "outer_actual_wait_PIPE_EOF": 11,
+        "inner_actual_wait_PIPE_EOF": 8,
+        "original_cutoffs_qualified": true,
+        "same_daemon": true,
+        "CID_and_name_absent": true,
+        "cleanup_errors": []
+      }
+    }
+  },
+  "dependency_freeze": {
+    "Owner_dependency_base": "63c855c4be59bd491aaafd92cd0ed36a725302ef",
+    "Owner_raw_input_count": 271,
+    "Owner_only_changed_paths": [
+      "native-lifecycle/src/authority.rs",
+      "native-lifecycle/src/audio_owner.rs",
+      "native-audio/src/main.rs"
+    ],
+    "prior_audio_raw_input_count": 52,
+    "audio_only_changed_path": "native-audio/src/main.rs",
+    "all52shared_audio_inputs_exactly_equal": true,
+    "later_connectivity_publication_excluded": true,
+    "native_session_library_sha256": "304e8b6ac8e1740de3bcc4fa9a9f7f2b7bceed5ae7c81ba06b08b2b81480bcd9",
+    "native_process_owner_bootstrap_sha256": "5833095e1fa5dfcfac281e965840792bfdfdef9818f6f5d98fae340aaf8f5e28",
+    "compiled_formatted_source_matches_raw_working_files": true,
+    "formatting_adoption_required": false
+  },
+  "preserved_failures": {
+    "Owner_preparation_Sol1": {
+      "unexecuted_unsealed": true,
+      "classification": "AST indentation failure before sealing or build execution",
+      "inside_source": {
+        "bytes": 8589,
+        "sha256": "049695f7e65510aa1603fa043599e6c8416faadf5fff9b65c40428c98e9441a4"
+      },
+      "no_run_directory": true,
+      "no_build_runtime_process_or_container_started": true
+    },
+    "Owner_build_Sol2": {
+      "classification": "Additional library-suite prerequisite env omitted; not a product RED",
+      "lifecycle_suite": {
+        "passed": 60,
+        "failed": 57,
+        "ignored": 26
+      },
+      "normal_Owner_exported": false,
+      "outer": {
+        "bytes": 17775,
+        "sha256": "8c82fbee7a9ee1ae5bef473789506c4e7490a664da3c2664a5e92d3332b1c22a"
+      },
+      "inner": {
+        "bytes": 17654,
+        "sha256": "bfe20c9d79e64417d5bf60ec5ac436e0b44e5e266c3b72041b942abc9b42f642"
+      },
+      "failed_library_log": {
+        "bytes": 44088,
+        "sha256": "bb23994953cf4074d9361cdc407c0466dacaf4ce3d6b28720a7dfc8703e993c1"
+      },
+      "cleanup_qualified": true
+    },
+    "Owner_Sol3_specific_setup_bridge": {
+      "exact_successful_recipe": "pokelinux-source-timing-loss-actor-green-root-3",
+      "isolated_root": "/run/lifecycle-tests",
+      "helper": "lifecycle-daemon compiled from unchanged recorded helper/storage source",
+      "actual_library_test_bound_seconds": 90,
+      "test_or_production_predicates_relaxed": false
+    }
+  },
+  "measured_runtime": {
+    "cohort": "pokelinux-native-x86-composition-source-recovery-diagnostic-sol-1",
+    "selection": {
+      "bytes": 510321,
+      "sha256": "9ad64c29ce676dbeb94fc3863472d7327321c4347dd8998bbff0a9545ebffbc4"
+    },
+    "host_execution": {
+      "bytes": 115122,
+      "sha256": "24d18bd92d8f484cd9c54956947d3d2f7386e6318c8910145f9cdb7aa10c9a12"
+    },
+    "boot_result": {
+      "bytes": 11050,
+      "sha256": "0fee51ced8a47e0d318179def2455404eb2e4ed5deca4dc98be8285372e27505"
+    },
+    "guest_result": {
+      "bytes": 763925,
+      "sha256": "99cea949a2ef6713a311fa220520d6bee9313c7eae2aab78fb839b37dc606b0d"
+    },
+    "host_boot_guest_aggregate_passed": true,
+    "independent_preview_agent_runtime_review_passed": true,
+    "attributed_journals": {
+      "Owner": {
+        "bytes": 11861,
+        "sha256": "734407f285fa5afa2ccef0fb6b0219f78b0f5a5204deaa456990872fa4496c06",
+        "filename": "unit-054-journal-pokelinux-session-owner.service.log",
+        "retained_startup_ExecMainPID_matches_fixed_lines": true,
+        "same_unit_invocation": true,
+        "query_PID_filtered": false,
+        "line_limit": 256,
+        "byte_limit": 1048576,
+        "fixed_preview_lines": 2
+      },
+      "Main": {
+        "bytes": 383,
+        "sha256": "1565745521c428fefe8b56ce21d5072a9bdd57eb328d4eb57a0e088427d0537d",
+        "filename": "unit-050-journal-retained-Main-pokelinux-normal-audio.service.log",
+        "retained_startup_MainPID_matches_fixed_lines": true,
+        "same_unit_invocation": true,
+        "query_PID_filtered": true,
+        "MESSAGE_grep": "^preview ",
+        "line_limit": 64,
+        "byte_limit": 65536,
+        "fixed_preview_lines": 2
+      },
+      "journal_snapshot_is_not_service_PIPE_EOF": true
+    },
+    "fixed_local_fields": {
+      "Owner_authority": {
+        "request_sampled_at_ns": 72994277025,
+        "checked_at_ns": 72994285401,
+        "captured_source_until_ns": 73075646796,
+        "original_app_until_ns": 73994224306,
+        "effective_forwarded_until_ns": 73075646796,
+        "current": true
+      },
+      "Owner_successful_submission": {
+        "effective_forwarded_until_ns": 73075646796,
+        "sent": true
+      },
+      "Main_startup": {
+        "predicate": "admitted",
+        "start_sampled_at_ns": 73019905341,
+        "start_checked_at_ns": 73020631476,
+        "forwarded_start_until_ns": 73075646796,
+        "work_until_ns": 79019905341,
+        "admission_ready": true
+      }
+    },
+    "derived_intervals_ns": {
+      "original_app_remaining_at_owner_request_ns": 999947281,
+      "captured_source_remaining_at_owner_request_ns": 81369771,
+      "forwarded_start_remaining_at_Main_entry_ns": 55741455,
+      "forwarded_start_remaining_at_Main_post_start_check_ns": 55015320,
+      "work_interval_from_Main_entry_ns": 6000000000
+    },
+    "captured_Source_forwarded_Main_cutoffs_exactly_equal": true,
+    "startup_retirement_predicate_logged": false,
+    "later_generic_Playing_to_Failed_aligned_with_operator_revoke": true,
+    "functional_repair_or_previous_failure_cause_established": false,
+    "full_runtime_flow_evidence_kept_separate": true
+  },
+  "publication_limits": {
+    "raw_journals_PCM_or_credentials_included": false,
+    "reproducibility_or_stability_claimed": false,
+    "real_user_consent_UI_qualified": false,
+    "ARM_or_physical_phone_qualified": false
+  }
+}
