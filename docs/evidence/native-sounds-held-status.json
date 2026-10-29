@@ -42,9 +42,20 @@
     "Initial candidate formatting check failed; formatting-only correction, rebuilt and checked"
   ],
   "remaining": [
-    "Updated normal app build and joined graphical/PCM run",
+    "Guest Qt6.12 normal app build and joined graphical/PCM run",
     "ARM and physical device qualification"
   ],
   "seventh_VM_failure_cause_proven": false,
-  "physical_phone_accessed": false
+  "physical_phone_accessed": false,
+  "normal_host_app_build": {
+    "scope": "Normal Sounds CMake Release executable host x86 Qt6.8.2 build and pre-GUI refusal execution; not guestQt6.12 or window/PCM evidence",
+    "build_exit": 0,
+    "normal_ELF_sha256": "71f4217698b6186522fe919bcedd92948857ee74f6b29d6c0f9e8197df698606",
+    "normal_ELF_bytes": 6266160,
+    "ELF_machine": 62,
+    "argument_exit": 64,
+    "wrong_UID_exit": 65,
+    "input_sources_unchanged": true,
+    "receipt_sha256": "5492ae68198c4d814f89d337f15d86be07a1a4b88881d43de3e9b8ab9c0e54e5"
+  }
 }

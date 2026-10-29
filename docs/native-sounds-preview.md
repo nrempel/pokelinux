@@ -280,3 +280,8 @@ These are host component and authored-peer socket results, not a normal graphica
 app/PCM run, ARM execution or physical-device evidence. They do not establish the
 cause of the seventh joined Permissions run.
 [Machine-readable evidence](evidence/native-sounds-held-status.json).
+
+The normal Sounds CMake Release target also builds with this client against host
+Qt 6.8.2. The resulting x86 ELF executes its expected argument64 and wrong-UID65
+refusals before GUI startup. This supplies no window or audio evidence; the joined
+VM still needs its separate guest Qt6.12 build and execution.

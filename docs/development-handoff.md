@@ -63,8 +63,8 @@ run never reaches the repaired final-frame boundary. The separate held-Status in
 actual periodic Qt socket RED→GREEN. Rust accepts one copied Play intent, then
 requires final fresh eligibility before its first send; 18 preview groups and
 35 socket cases pass. This is a deliberate UX contract change, not a proven
-cause of the VM failure. Build the updated normal app and qualify its joined
-run next; see [held-Status evidence](evidence/native-sounds-held-status.json). Do not relabel earlier runs as
+cause of the VM failure. The normal host Qt6.8.2 app build and argument64/UID65 refusals now pass.
+Build it against guest Qt6.12 and qualify its joined run next; see [held-Status evidence](evidence/native-sounds-held-status.json). Do not relabel earlier runs as
 fully passing. New QWindow density evidence,
 public screenshots, ARM and physical-phone qualification remain open. Ordinary current profiles require `role.kind=application`; frozen
 previous cohorts retain their matching old binary/profile pairs.
