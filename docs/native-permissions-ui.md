@@ -227,10 +227,11 @@ contain 108,544 silent F32 frames each. This is a partial observation, not a
 completed paired tone/silence acceptance window. A short producer between
 snapshots or a later start is not excluded.
 
-No app wire request, acknowledgment or refusal reason was recorded. Periodic
-read-only Status currently disables Play in the Rust client; a separate held-Status
-client test is the next investigation, not an established explanation for this
-run. Do not extend the observation count or original deadlines to call it passing.
+No app wire request, acknowledgment or refusal reason was recorded. In that frozen app, periodic
+read-only Status disables Play in the Rust client; a separate held-Status
+client change now passes C ABI and real periodic-socket RED→GREEN, but remains
+an unproven explanation for this run. See the separate
+[held-Status evidence](evidence/native-sounds-held-status.json). Do not extend the observation count or original deadlines to call it passing.
 Revoke, reallow and normal app closes are not completed. Guest/boot closure,
 actual container CLI wait, exact container absence and unchanged inputs pass.
 The external viewer stops after ten actions when the server ends during guest

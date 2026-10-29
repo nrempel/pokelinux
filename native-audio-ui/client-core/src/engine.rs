@@ -2,7 +2,7 @@
 use crate::{
     protocol::{self, Preview, Reply, Row, State},
     queue::Queue,
-    wire::{Code, Fresh, RECONNECT, ROUTE, Route, STOP},
+    wire::{Code, Fresh, PLAY as PLAY_INTENT, RECONNECT, ROUTE, Route, STOP},
 };
 use pokelinux_power::clock::{BootClock, Clock};
 pub const CLOSED: u32 = 0;
@@ -381,8 +381,7 @@ impl Client {
             && self.available
             && self.choose
             && self.policy_settled
-            && self.stage == IDLE
-            && self.pending.is_none()
+            && self.status_or_idle()
             && !self.queue.pending()
             && !self.preview.active()
             && self
@@ -396,25 +395,33 @@ impl Client {
                 .pending
                 .as_ref()
                 .is_some_and(|p| p.kind == STOP_REQUEST)
-            && (self.preview.active() || self.pending.as_ref().is_some_and(|p| p.kind == PLAY))
+            && (self.preview.active()
+                || self.pending.as_ref().is_some_and(|p| p.kind == PLAY)
+                || self
+                    .queue
+                    .metadata()
+                    .is_some_and(|(kind, _)| kind == PLAY_INTENT))
     }
     pub fn preview_play(&mut self) -> Code {
         let n = match self.timely() {
             Ok(n) => n,
             Err(e) => return e,
         };
-        if self.pending.is_some() || self.queue.pending() {
+        if !self.status_or_idle() || self.queue.pending() {
             return Code::Busy;
         }
         if !self.can_play() {
             return Code::Refused;
         }
+        let route = self.requested.expect("selected logical route");
+        let level = (self.selected_level_percent, self.selected_muted);
+        if self.pending.is_some() {
+            return self.queue.offer_play(&route, level, n);
+        }
         let until = match self.deadline(n) {
             Ok(n) => n,
             Err(e) => return e,
         };
-        let route = self.requested.expect("selected logical route");
-        let level = (self.selected_level_percent, self.selected_muted);
         if let Err(e) = self.request(PLAY, until, String::new(), None) {
             return e;
         }
@@ -548,6 +555,9 @@ impl Client {
             available: u32::from(self.available),
             can_choose: u32::from(self.choose),
             can_reconnect: u32::from(self.reconnect),
+            policy_settled: u32::from(self.policy_settled),
+            preview_active: u32::from(self.preview.active()),
+            requested: self.requested.unwrap_or(Route::EMPTY),
             route_count: self.rows.len() as u32,
             routes,
         }
@@ -561,6 +571,19 @@ impl Client {
         let fresh = self.fresh();
         let cleanup = self.queue.metadata().is_some_and(|(kind, _)| kind == STOP);
         match self.queue.prepare(&fresh, n) {
+            Ok(c) if c.kind == PLAY_INTENT => {
+                // A final fresh status authorizes only this first Play attempt.
+                // Transfer the copied intent into the normal effect request;
+                // it can never be dispatched again after a send or lost reply.
+                self.request(PLAY, c.original_until_boottime_ns, String::new(), None)?;
+                let pending = self.pending.as_mut().expect("queued play request");
+                pending.preview_route = Some(c.route);
+                pending.preview_level = c.preview_level;
+                self.queue.cancel();
+                self.preview = Preview::Starting;
+                self.status = PREVIEW_STARTING;
+                Ok(())
+            }
             Ok(c) => self.request(
                 if c.kind == ROUTE {
                     SELECT

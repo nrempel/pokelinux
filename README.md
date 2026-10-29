@@ -35,8 +35,10 @@ again without restarting playback. The phone window profile keeps each focused
 app usable below the Omarchy bar. Independent audio capture measures tone followed
 by silence. Both apps close normally in two runs. A later repeat observes no
 playback producer and stops before the tone check; repeatability remains open.
-The separate final-disconnect viewer defect now passes socket and real-server
-tests, but still needs a complete joined run. This is VM evidence, not
+Play now accepts a tap during a background status refresh, with passing Rust
+client and real socket tests; the updated app still needs a joined VM run.
+The separate final-disconnect viewer defect passes socket and real-server tests,
+but also needs that complete joined run. This is VM evidence, not
 physical-phone audio, and the frozen screenshot above predates these controls.
 
 The same Messages window follows an original Omarchy theme change from Tokyo

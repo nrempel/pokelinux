@@ -26,6 +26,9 @@ pub struct Fresh {
     pub available: u32,
     pub can_choose: u32,
     pub can_reconnect: u32,
+    pub policy_settled: u32,
+    pub preview_active: u32,
+    pub requested: Route,
     pub route_count: u32,
     pub routes: [Route; 32],
 }
@@ -37,10 +40,15 @@ impl Fresh {
             self.available,
             self.can_choose,
             self.can_reconnect,
+            self.policy_settled,
+            self.preview_active,
         ]
         .iter()
         .any(|v| *v > 1)
         {
+            return false;
+        }
+        if self.requested.length != 0 && self.requested.id().is_none() {
             return false;
         }
         let Some(routes) = self.routes.get(..self.route_count as usize) else {
@@ -66,6 +74,7 @@ pub struct Command {
     pub kind: u32,
     pub ttl_ms: u32,
     pub route: Route,
+    pub preview_level: Option<(u32, bool)>,
 }
 #[repr(i32)]
 #[derive(Clone, Copy, PartialEq, Eq)]
@@ -82,3 +91,4 @@ pub const ROUTE: u32 = 1;
 pub const RECONNECT: u32 = 2;
 
 pub const STOP: u32 = 3;
+pub const PLAY: u32 = 4;

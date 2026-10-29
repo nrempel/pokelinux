@@ -84,7 +84,157 @@ static void playDeadline(){
  Client c;online(c);const auto before=now();assert(pr_sounds_client_preview_play_v1(c.p)==PR_SOUNDS_CLIENT_OK);const auto after=now();auto first=c.packet();const auto until=first.original_until_boottime_ns;assert(until>=before+1000000000ULL&&until<=after+1000000000ULL);const auto wire=text(first);assert(number(wire,"level_percent")==100&&wire.find("\"muted\":false")!=std::string::npos);assert(wire.find("\"op\":\"media_preview_play\"")!=std::string::npos&&wire.find("\"route\":\"media-a7\"")!=std::string::npos);assert(number(wire,"until_boottime_ns")==until&&number(wire,"ttl_ms")>0&&number(wire,"ttl_ms")<=1000);assert(c.view().can_stop&&!c.view().can_play&&c.view().status==PR_SOUNDS_CLIENT_PREVIEW_STARTING);assert(pr_sounds_client_preview_play_v1(c.p)==PR_SOUNDS_CLIENT_BUSY);
  advance(now()+4000000ULL);auto second=c.packet();assert(second.token==first.token&&second.original_until_boottime_ns==until&&number(text(second),"until_boottime_ns")==until&&number(text(second),"ttl_ms")<number(wire,"ttl_ms"));assert(pr_sounds_client_sent_v1(c.p,second.connection_epoch,second.token,PR_SOUNDS_CLIENT_SEND_WOULD_BLOCK,0)==PR_SOUNDS_CLIENT_OK);advance(now()+2000000ULL);auto third=c.packet();assert(third.token==first.token&&third.original_until_boottime_ns==until&&number(text(third),"ttl_ms")<number(text(second),"ttl_ms"));c.sent(third);assert(c.reply("{\"result\":\"media_preview\",\"state\":"+state("starting")+"}")==PR_SOUNDS_CLIENT_OK);assert(c.view().preview==PR_SOUNDS_CLIENT_PREVIEW_STARTING_STATE&&c.view().status==PR_SOUNDS_CLIENT_PREVIEW_STARTING);refresh(c);assert(c.reply(status(state("playing",true,"\"media-a7\"","\"media-a7\"")))==PR_SOUNDS_CLIENT_OK);assert(c.view().preview==PR_SOUNDS_CLIENT_PREVIEW_PLAYING_STATE&&c.view().status==PR_SOUNDS_CLIENT_PREVIEW_PLAYING);pass("play_original_absolute_and_decreasing_remaining_ttl");
 }
-static void noQueuedPlay(){Client c;online(c);refresh(c);const auto until=c.view().request_until_boottime_ns;assert(!c.view().can_play&&pr_sounds_client_preview_play_v1(c.p)==PR_SOUNDS_CLIENT_BUSY&&c.view().queued_kind==0&&c.view().request_until_boottime_ns==until);assert(c.reply(status())==PR_SOUNDS_CLIENT_OK&&c.view().can_play&&c.view().queued_kind==0);PrSoundsClientPacketV1 p{};assert(pr_sounds_client_prepare_v1(c.p,&p)==PR_SOUNDS_CLIENT_EMPTY);pass("readonly_status_never_queues_or_replays_play");}
+static void heldStatusAcceptsExplicitPlay(){
+ Client c;online(c);
+ // Polling alone creates no Play intent or packet.
+ refresh(c);assert(c.reply(status())==PR_SOUNDS_CLIENT_OK);
+ PrSoundsClientPacketV1 empty{};empty.token=99;
+ assert(pr_sounds_client_prepare_v1(c.p,&empty)==PR_SOUNDS_CLIENT_EMPTY&&empty.token==99);
+ assert(pr_sounds_client_preview_level_v1(c.p,50,0)==PR_SOUNDS_CLIENT_OK);
+ const auto route=c.view().requested;assert(same(route,"media-a7"));
+ assert(pr_sounds_client_refresh_v1(c.p)==PR_SOUNDS_CLIENT_OK);
+ const auto inspect=c.packet();c.sent(inspect);
+ const auto held=c.view();
+ assert(held.stage==PR_SOUNDS_CLIENT_RECEIVING&&held.request_kind==PR_SOUNDS_CLIENT_STATUS);
+ // RED against the old deliberate UX contract: a held read-only response must
+ // allow one explicit choice, without replacing or renewing the inspection.
+ assert(held.can_play);
+ const auto before=now();
+ assert(pr_sounds_client_preview_play_v1(c.p)==PR_SOUNDS_CLIENT_OK);
+ const auto after=now();const auto queued=c.view();
+ assert(queued.stage==held.stage&&queued.request_kind==held.request_kind&&queued.connection_epoch==held.connection_epoch);
+ assert(queued.request_until_boottime_ns==inspect.original_until_boottime_ns);
+ assert(queued.queued_kind!=0&&queued.queued_until_boottime_ns>=before+1000000000ULL&&queued.queued_until_boottime_ns<=after+1000000000ULL);
+ const auto until=queued.queued_until_boottime_ns;
+ assert(!queued.can_play&&queued.can_stop&&!queued.can_adjust_preview);
+ assert(pr_sounds_client_preview_play_v1(c.p)==PR_SOUNDS_CLIENT_BUSY);
+ assert(pr_sounds_client_preview_level_v1(c.p,100,1)==PR_SOUNDS_CLIENT_BUSY);
+ const auto unchanged=c.view();
+ assert(unchanged.queued_kind==queued.queued_kind&&unchanged.queued_until_boottime_ns==until&&unchanged.request_until_boottime_ns==held.request_until_boottime_ns);
+ assert(unchanged.selected_level_percent==50&&!unchanged.selected_muted&&same(unchanged.requested,"media-a7"));
+ assert(pr_sounds_client_prepare_v1(c.p,&empty)==PR_SOUNDS_CLIENT_EMPTY&&empty.token==99);
+ advance(now()+4000000ULL);
+ assert(c.reply(status())==PR_SOUNDS_CLIENT_OK);
+ assert(c.view().request_kind==PR_SOUNDS_CLIENT_PREVIEW_PLAY&&c.view().stage==PR_SOUNDS_CLIENT_SENDING);
+ const auto play=c.packet();const auto wire=text(play);
+ assert(play.connection_epoch==inspect.connection_epoch&&play.token!=inspect.token&&play.original_until_boottime_ns==until);
+ assert(wire.find("\"op\":\"media_preview_play\"")!=std::string::npos&&wire.find("\"route\":\"media-a7\"")!=std::string::npos);
+ assert(number(wire,"level_percent")==50&&wire.find("\"muted\":false")!=std::string::npos);
+ assert(number(wire,"until_boottime_ns")==until&&number(wire,"ttl_ms")>0&&number(wire,"ttl_ms")<1000);
+ c.sent(play);
+ assert(c.view().queued_kind==0&&c.view().stage==PR_SOUNDS_CLIENT_RECEIVING);
+ assert(pr_sounds_client_sent_v1(c.p,play.connection_epoch,play.token,PR_SOUNDS_CLIENT_SEND_COMPLETE,play.length)==PR_SOUNDS_CLIENT_STALE);
+ assert(pr_sounds_client_prepare_v1(c.p,&empty)==PR_SOUNDS_CLIENT_EMPTY&&empty.token==99);
+ assert(c.reply("{\"result\":\"media_preview\",\"state\":"+state("starting")+"}")==PR_SOUNDS_CLIENT_OK);
+ refresh(c);assert(c.reply(status(state("completed")))==PR_SOUNDS_CLIENT_OK);
+ // Completion and later polling never repeat the accepted first attempt.
+ assert(c.view().can_play&&c.view().queued_kind==0);
+ assert(pr_sounds_client_prepare_v1(c.p,&empty)==PR_SOUNDS_CLIENT_EMPTY&&empty.token==99);
+ refresh(c);assert(c.reply(status())==PR_SOUNDS_CLIENT_OK);
+ assert(pr_sounds_client_prepare_v1(c.p,&empty)==PR_SOUNDS_CLIENT_EMPTY&&empty.token==99);
+ pass("held_readonly_status_accepts_one_frozen_explicit_Play_without_replay");
+}
+static std::string statusWith(const std::string&s,const std::string&rows,bool choose=true,const char*next="null"){
+ return "{\"result\":\"media_status\",\"state\":"+s+",\"routes\":"+rows+",\"next_offset\":"+next+",\"can_choose\":"+(choose?"true":"false")+",\"can_reconnect\":false}";
+}
+static PrSoundsClientPacketV1 holdExplicitPlay(Client&c,bool status_sent){
+ online(c);assert(pr_sounds_client_refresh_v1(c.p)==PR_SOUNDS_CLIENT_OK);
+ const auto inspect=c.packet();if(status_sent)c.sent(inspect);
+ assert(c.view().can_play&&pr_sounds_client_preview_play_v1(c.p)==PR_SOUNDS_CLIENT_OK);
+ assert(c.view().queued_kind==PR_SOUNDS_CLIENT_PLAY_INTENT&&c.view().can_stop&&!c.view().can_play);
+ return inspect;
+}
+static void reconnectWithoutPlay(Client&c){
+ assert(pr_sounds_client_reconnect_v1(c.p)==PR_SOUNDS_CLIENT_OK);
+ const auto epoch=c.view().connection_epoch;
+ assert(pr_sounds_client_connected_v1(c.p,epoch)==PR_SOUNDS_CLIENT_OK);
+ const auto inspect=c.packet();assert(text(inspect)=="{\"offset\":0,\"op\":\"media_status\"}");
+ c.sent(inspect);assert(c.reply(status())==PR_SOUNDS_CLIENT_OK&&c.view().queued_kind==0);
+ PrSoundsClientPacketV1 empty{};empty.token=99;
+ assert(pr_sounds_client_prepare_v1(c.p,&empty)==PR_SOUNDS_CLIENT_EMPTY&&empty.token==99);
+}
+static void queuedPlaySendingAndPagination(){
+ Client c;online(c);assert(pr_sounds_client_preview_level_v1(c.p,25,1)==PR_SOUNDS_CLIENT_OK);
+ assert(pr_sounds_client_refresh_v1(c.p)==PR_SOUNDS_CLIENT_OK);const auto inspect=c.packet();
+ assert(c.view().stage==PR_SOUNDS_CLIENT_SENDING&&c.view().can_play);
+ assert(pr_sounds_client_preview_play_v1(c.p)==PR_SOUNDS_CLIENT_OK);
+ const auto queued=c.view();assert(queued.queued_kind==PR_SOUNDS_CLIENT_PLAY_INTENT);
+ const auto same_inspect=c.packet();
+ assert(same_inspect.token==inspect.token&&same_inspect.original_until_boottime_ns==inspect.original_until_boottime_ns&&text(same_inspect)==text(inspect));
+ c.sent(same_inspect);
+ const auto first_rows=std::string("[{\"id\":\"media-a7\",\"label\":\"Speaker\"}")+",{\"id\":\"route-01\",\"label\":\"One\"},{\"id\":\"route-02\",\"label\":\"Two\"},{\"id\":\"route-03\",\"label\":\"Three\"},{\"id\":\"route-04\",\"label\":\"Four\"},{\"id\":\"route-05\",\"label\":\"Five\"},{\"id\":\"route-06\",\"label\":\"Six\"},{\"id\":\"route-07\",\"label\":\"Seven\"}]";
+ assert(c.reply(statusWith(state(),first_rows,true,"8"))==PR_SOUNDS_CLIENT_OK);
+ assert(c.view().queued_kind==queued.queued_kind&&c.view().queued_until_boottime_ns==queued.queued_until_boottime_ns&&c.view().route_count==1);
+ const auto next=c.packet();assert(text(next)=="{\"offset\":8,\"op\":\"media_status\"}"&&next.original_until_boottime_ns==inspect.original_until_boottime_ns);
+ c.sent(next);PrSoundsClientPacketV1 empty{};empty.token=99;
+ assert(pr_sounds_client_prepare_v1(c.p,&empty)==PR_SOUNDS_CLIENT_EMPTY&&empty.token==99);
+ advance(now()+4000000ULL);
+ assert(c.reply(statusWith(state(),"[{\"id\":\"route-08\",\"label\":\"Eight\"}]"))==PR_SOUNDS_CLIENT_OK);
+ const auto play=c.packet();const auto wire=text(play);
+ assert(c.view().route_count==9&&play.original_until_boottime_ns==queued.queued_until_boottime_ns&&play.connection_epoch==inspect.connection_epoch);
+ assert(wire.find("\"op\":\"media_preview_play\"")!=std::string::npos&&wire.find("\"route\":\"media-a7\"")!=std::string::npos&&wire.find("\"muted\":true")!=std::string::npos);
+ assert(number(wire,"level_percent")==25&&number(wire,"ttl_ms")>0&&number(wire,"ttl_ms")<1000&&number(wire,"until_boottime_ns")==queued.queued_until_boottime_ns);
+ c.sent(play);assert(c.reply("{\"result\":\"media_preview\",\"state\":"+state("starting")+"}")==PR_SOUNDS_CLIENT_OK);
+ assert(pr_sounds_client_prepare_v1(c.p,&empty)==PR_SOUNDS_CLIENT_EMPTY&&empty.token==99);
+ pass("held_sending_STATUS_and_pagination_preserve_one_Play_until_final_authority");
+}
+static void queuedPlayFreshStatusCancels(){
+ const std::string speaker="[{\"id\":\"media-a7\",\"label\":\"Speaker\"}]";
+ const std::string both="[{\"id\":\"media-a7\",\"label\":\"Speaker\"},{\"id\":\"media-z2\",\"label\":\"Other\"}]";
+ std::string offline=state();const auto connected=offline.find("\"connected\":true");assert(connected!=std::string::npos);
+ offline.replace(connected,std::strlen("\"connected\":true"),"\"connected\":false");
+ const std::vector<std::string> cancelled{
+  statusWith(state(),speaker,false),status(state("idle",true,"\"media-a7\"","null",false)),status(offline),
+  statusWith(state("idle",true,"\"media-z2\""),both),
+  statusWith(state(),"[{\"id\":\"media-z2\",\"label\":\"Other\"}]"),
+  status(state("idle",true,"null")),status(state("idle",false)),
+  status(state("starting")),status(state("playing")),status(state("retiring")),
+  "{\"result\":\"denied\"}","{\"result\":\"unavailable\"}"
+ };
+ for(const auto&reply:cancelled){
+  Client c;(void)holdExplicitPlay(c,true);assert(c.reply(reply)==PR_SOUNDS_CLIENT_OK);
+  const auto v=c.view();assert(v.stage==PR_SOUNDS_CLIENT_IDLE&&v.request_kind==PR_SOUNDS_CLIENT_NO_REQUEST&&v.queued_kind==0);
+  PrSoundsClientPacketV1 empty{};empty.token=99;
+  assert(pr_sounds_client_prepare_v1(c.p,&empty)==PR_SOUNDS_CLIENT_EMPTY&&empty.token==99);
+  // Restored authority is observation, never a new Play gesture.
+  refresh(c);assert(c.reply(status())==PR_SOUNDS_CLIENT_OK&&c.view().can_play&&c.view().queued_kind==0);
+  assert(pr_sounds_client_prepare_v1(c.p,&empty)==PR_SOUNDS_CLIENT_EMPTY&&empty.token==99);
+ }
+ pass("queued_Play_cancelled_by_final_permission_route_policy_activity_or_negative_envelope",unsigned(cancelled.size()));
+}
+static void queuedPlayStopAndDisconnectCancel(){
+ for(bool status_sent:{false,true})for(bool stop:{false,true}){
+  Client c;const auto inspect=holdExplicitPlay(c,status_sent);
+  if(stop)assert(pr_sounds_client_preview_stop_v1(c.p)==PR_SOUNDS_CLIENT_OK);
+  else assert(pr_sounds_client_disconnected_v1(c.p,inspect.connection_epoch,PR_SOUNDS_CLIENT_ACTOR_UNAVAILABLE)==PR_SOUNDS_CLIENT_OK);
+  const auto v=c.view();assert(v.stage==PR_SOUNDS_CLIENT_CLOSED&&!v.online&&!v.can_play&&!v.can_stop&&v.queued_kind==0);
+  if(stop)assert(v.status==PR_SOUNDS_CLIENT_PREVIEW_CANCELLED);
+  assert(pr_sounds_client_sent_v1(c.p,inspect.connection_epoch,inspect.token,PR_SOUNDS_CLIENT_SEND_COMPLETE,inspect.length)==PR_SOUNDS_CLIENT_STALE);
+  reconnectWithoutPlay(c);
+  const auto wire=status();assert(pr_sounds_client_reply_v1(c.p,inspect.connection_epoch,reinterpret_cast<const uint8_t*>(wire.data()),uint32_t(wire.size()))==PR_SOUNDS_CLIENT_STALE);
+ }
+ pass("Stop_and_disconnect_cancel_waiting_Play_in_sending_and_receiving_without_replay",4);
+}
+static void queuedPlayExpiryAndSendFailure(){
+ Client sending,receiving,unconfirmed;
+ (void)holdExplicitPlay(sending,false);(void)holdExplicitPlay(receiving,true);(void)holdExplicitPlay(unconfirmed,true);
+ assert(unconfirmed.reply(status())==PR_SOUNDS_CLIENT_OK);const auto play=unconfirmed.packet();unconfirmed.sent(play);
+ const auto until=std::max({sending.view().request_until_boottime_ns,sending.view().queued_until_boottime_ns,receiving.view().request_until_boottime_ns,receiving.view().queued_until_boottime_ns,play.original_until_boottime_ns});
+ // Share one real expiry window; each intent retains its full original second.
+ advance(until);
+ for(Client*c:{&sending,&receiving,&unconfirmed}){
+  assert(pr_sounds_client_tick_v1(c->p)==PR_SOUNDS_CLIENT_EXPIRED);
+  const auto v=c->view();assert(v.stage==PR_SOUNDS_CLIENT_CLOSED&&!v.online&&!v.can_play&&!v.can_stop&&v.queued_kind==0);
+  reconnectWithoutPlay(*c);
+ }
+ for(bool failed:{false,true}){
+  Client c;(void)holdExplicitPlay(c,true);assert(c.reply(status())==PR_SOUNDS_CLIENT_OK);const auto packet=c.packet();
+  assert(pr_sounds_client_sent_v1(c.p,packet.connection_epoch,packet.token,failed?PR_SOUNDS_CLIENT_SEND_FAILED:PR_SOUNDS_CLIENT_SEND_COMPLETE,failed?0:packet.length-1)==PR_SOUNDS_CLIENT_REFUSED);
+  const auto v=c.view();assert(v.stage==PR_SOUNDS_CLIENT_CLOSED&&!v.online&&v.queued_kind==0&&!v.can_play&&!v.can_stop);
+  reconnectWithoutPlay(c);
+ }
+ pass("queued_Play_expiry_lost_ack_partial_and_failed_send_never_replay",5);
+}
 static void queuedStop(){
  Client c;online(c,status(state("playing")));refresh(c);const auto before=now();assert(pr_sounds_client_preview_stop_v1(c.p)==PR_SOUNDS_CLIENT_OK);const auto after=now();auto v=c.view();assert(v.queued_kind==PR_SOUNDS_CLIENT_STOP_INTENT&&v.queued_until_boottime_ns>=before+1000000000ULL&&v.queued_until_boottime_ns<=after+1000000000ULL);const auto until=v.queued_until_boottime_ns;assert(pr_sounds_client_preview_stop_v1(c.p)==PR_SOUNDS_CLIENT_BUSY&&!c.view().can_stop);assert(c.reply(status(state("playing",false,"\"media-a7\"","null",false)))==PR_SOUNDS_CLIENT_OK);auto packet=c.packet();assert(text(packet)=="{\"op\":\"media_preview_stop\"}"&&packet.original_until_boottime_ns==until&&c.view().request_kind==PR_SOUNDS_CLIENT_PREVIEW_STOP);c.sent(packet);assert(c.reply("{\"result\":\"media_preview\",\"state\":"+state("retiring",false)+"}")==PR_SOUNDS_CLIENT_OK);assert(c.view().preview==PR_SOUNDS_CLIENT_PREVIEW_RETIRING_STATE&&c.view().status==PR_SOUNDS_CLIENT_PREVIEW_RETIRING);pass("queued_cleanup_stop_survives_negative_status");
 }
@@ -275,4 +425,4 @@ static void liveMuteBusyAndStop() {
  pass("live_mute_busy_STATUS_no_queue_and_Stop_withdraws_inflight",5);
 }
 
-int main(){work=now()+5000000000ULL;projection();playDeadline();noQueuedPlay();queuedStop();cancelInflight();deadlinesAndFailure();replyContext();localLevel();levelBusy();levelSnapshot();localMuteToggle();liveMuteDeadlineAndAck();liveMuteWrongAck();liveMuteBusyAndStop();bounded();std::puts("SOUNDS_PREVIEW_ALL_PASS groups=14 authored_CPU_facts_only=true");}
+int main(){work=now()+5000000000ULL;projection();playDeadline();heldStatusAcceptsExplicitPlay();queuedPlaySendingAndPagination();queuedPlayFreshStatusCancels();queuedPlayStopAndDisconnectCancel();queuedPlayExpiryAndSendFailure();queuedStop();cancelInflight();deadlinesAndFailure();replyContext();localLevel();levelBusy();levelSnapshot();localMuteToggle();liveMuteDeadlineAndAck();liveMuteWrongAck();liveMuteBusyAndStop();bounded();std::puts("SOUNDS_PREVIEW_ALL_PASS groups=18 authored_CPU_facts_only=true");}

@@ -13,6 +13,7 @@
 #include <sys/un.h>
 #include <sys/wait.h>
 #include <fcntl.h>
+#include <time.h>
 #include <unistd.h>
 
 namespace {
@@ -120,6 +121,53 @@ private slots:
   hold=false;p.send(p.status());QTRY_VERIFY_WITH_TIMEOUT(c.canPlay(),1500);c.playPreview();
   QTRY_COMPARE_WITH_TIMEOUT(p.count("media_preview_play"),1,1500);QTRY_COMPARE_WITH_TIMEOUT(c.status(),QString("Preview starting"),1500);
   QVERIFY(!c.canAdjustPreview());c.setPreviewLevel(100,true);QCOMPARE(c.previewLevelPercent(),50);QVERIFY(!c.previewMuted());
+ }
+ void periodicStatusQueuesOneFrozenPlayUntilFinalPage(){
+  Peer p;p.state["requested"]="media-a7";p.state["policy_settled"]=true;
+  for(const auto &route:catalog(8))p.routes.append(route);
+  bool hold=false;qint64 heldOffset=-1;QJsonObject played;int playFd=-1;
+  p.custom=[&](const QJsonObject&q){
+   if(hold&&q.value("op")=="media_status"){heldOffset=q.value("offset").toInteger(-1);return true;}
+   if(q.value("op")!="media_preview_play")return false;
+   played=q;playFd=p.fd;p.state["preview"]="starting";p.state["preview_generation"]=17;p.state["preview_muted"]=false;
+   p.send({{"result","media_preview"},{"state",p.state}});return true;
+  };
+  auto c=std::make_unique<AudioClient>(p.path(),0);
+  QTRY_VERIFY_WITH_TIMEOUT(c->canPlay(),1500);QCOMPARE(c->routes().size(),10);
+  // Only the adapter's periodic timer starts these later inspections.
+  QTRY_VERIFY_WITH_TIMEOUT(p.count("media_status")>=4,1500);
+  QCOMPARE(p.count("media_preview_play"),0);QCOMPARE(p.connections,1);
+  hold=true;QTRY_COMPARE_WITH_TIMEOUT(heldOffset,qint64(0),1500);
+  const auto connectedFd=p.fd;QVERIFY(connectedFd>=0);QVERIFY(c->canPlay());QVERIFY(c->canAdjustPreview());
+  c->setPreviewLevel(50,false);QCOMPARE(c->previewLevelPercent(),50);QVERIFY(!c->previewMuted());
+  QTest::qWait(100);QVERIFY(c->canPlay());QCOMPARE(p.count("media_preview_play"),0);
+  timespec before{},after{};QVERIFY(::clock_gettime(CLOCK_BOOTTIME,&before)==0);
+  c->playPreview();QVERIFY(::clock_gettime(CLOCK_BOOTTIME,&after)==0);
+  const qint64 inputBefore=qint64(before.tv_sec)*1000000000LL+before.tv_nsec;
+  const qint64 inputAfter=qint64(after.tv_sec)*1000000000LL+after.tv_nsec;
+  QVERIFY(!c->canPlay());QVERIFY(c->canStop());QVERIFY(!c->canAdjustPreview());
+  c->playPreview();c->setPreviewLevel(100,true);c->select("media-z2");
+  QCOMPARE(c->previewLevelPercent(),50);QVERIFY(!c->previewMuted());QCOMPARE(c->requested(),QString("media-a7"));
+  QTest::qWait(200);QCOMPARE(p.count("media_preview_play"),0);
+  // The first fresh page cannot release an effect before the final page.
+  p.send(p.status(0));QTRY_COMPARE_WITH_TIMEOUT(heldOffset,qint64(8),1500);
+  QCOMPARE(p.count("media_preview_play"),0);QCOMPARE(p.fd,connectedFd);QCOMPARE(p.connections,1);
+  QTest::qWait(100);QCOMPARE(p.count("media_preview_play"),0);
+  hold=false;p.send(p.status(8));QTRY_COMPARE_WITH_TIMEOUT(p.count("media_preview_play"),1,1500);
+  QTRY_COMPARE_WITH_TIMEOUT(c->status(),QString("Preview starting"),1500);
+  QCOMPARE(played.size(),2);const auto request=played.value("request").toObject();QCOMPARE(request.size(),5);
+  QCOMPARE(request.value("route").toString(),QString("media-a7"));QCOMPARE(request.value("level_percent").toInteger(),qint64(50));
+  QVERIFY(request.value("muted").isBool());QVERIFY(!request.value("muted").toBool());
+  const auto until=request.value("until_boottime_ns").toInteger();
+  QVERIFY(until>=inputBefore+1000000000LL&&until<=inputAfter+1000000000LL);
+  const auto ttl=request.value("ttl_ms").toInteger();QVERIFY(ttl>0&&ttl<900);
+  QCOMPARE(playFd,connectedFd);QCOMPARE(p.fd,connectedFd);QCOMPARE(p.connections,1);QVERIFY(p.credentials);
+  QCOMPARE(p.count("media_route"),0);QCOMPARE(p.count("media_reconnect"),0);QCOMPARE(p.count("media_preview_stop"),0);
+  p.state["preview"]="completed";p.state["preview_generation"]=QJsonValue::Null;p.state["preview_muted"]=QJsonValue::Null;
+  QTRY_VERIFY_WITH_TIMEOUT(c->canPlay(),1500);const auto statusCount=p.count("media_status");
+  QTRY_VERIFY_WITH_TIMEOUT(p.count("media_status")>=statusCount+2,1500);
+  QCOMPARE(p.count("media_preview_play"),1);QCOMPARE(p.connections,1);QCOMPARE(p.fd,connectedFd);
+  c.reset();QTRY_COMPARE_WITH_TIMEOUT(p.disconnects,1,1500);QCOMPARE(p.fd,-1);
  }
  void liveMuteConfirmsOnlyMatchingCurrentPlayReply(){
   Peer p;p.state["requested"]="media-a7";p.state["applied"]="media-a7";

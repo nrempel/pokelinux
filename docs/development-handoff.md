@@ -59,9 +59,12 @@ measure-tone: the observer exhausts its original 64 graph observations without
 observing a playback producer. Both recorded outputs are silent; no app wire
 request or refusal cause was captured. The actual Play touch does not establish
 that Play was submitted. Guest/boot cleanup and input preservation pass. This
-run never reaches the repaired final-frame boundary. Test the separate client
-interaction with a held read-only Status response before changing behavior;
-it is not a proven cause of this VM failure. Do not relabel earlier runs as
+run never reaches the repaired final-frame boundary. The separate held-Status interaction now passes unchanged-consumer C ABI and
+actual periodic Qt socket RED→GREEN. Rust accepts one copied Play intent, then
+requires final fresh eligibility before its first send; 18 preview groups and
+35 socket cases pass. This is a deliberate UX contract change, not a proven
+cause of the VM failure. Build the updated normal app and qualify its joined
+run next; see [held-Status evidence](evidence/native-sounds-held-status.json). Do not relabel earlier runs as
 fully passing. New QWindow density evidence,
 public screenshots, ARM and physical-phone qualification remain open. Ordinary current profiles require `role.kind=application`; frozen
 previous cohorts retain their matching old binary/profile pairs.

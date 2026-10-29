@@ -37,7 +37,8 @@ enum { PR_SOUNDS_CLIENT_NO_REQUEST=0, PR_SOUNDS_CLIENT_CONNECT=1,
  PR_SOUNDS_CLIENT_PREVIEW_PLAY=5, PR_SOUNDS_CLIENT_PREVIEW_STOP=6,
  PR_SOUNDS_CLIENT_PREVIEW_MUTE=7 };
 enum { PR_SOUNDS_CLIENT_NO_INTENT=0, PR_SOUNDS_CLIENT_ROUTE_INTENT=1,
- PR_SOUNDS_CLIENT_RECONNECT_INTENT=2, PR_SOUNDS_CLIENT_STOP_INTENT=3 };
+ PR_SOUNDS_CLIENT_RECONNECT_INTENT=2, PR_SOUNDS_CLIENT_STOP_INTENT=3,
+ PR_SOUNDS_CLIENT_PLAY_INTENT=4 };
 enum { PR_SOUNDS_CLIENT_SEND_COMPLETE=1, PR_SOUNDS_CLIENT_SEND_WOULD_BLOCK=2,
  PR_SOUNDS_CLIENT_SEND_INTERRUPTED=3, PR_SOUNDS_CLIENT_SEND_FAILED=4 };
 /* Logical model/presentation codes, mapped by Qt to the existing exact text. */
@@ -85,10 +86,12 @@ int32_t pr_sounds_client_preview_level_v1(PrSoundsClient *client, uint32_t perce
  * digital feeder policy, not immediate sink silence. Stop while this effect is
  * in flight closes local channel state and must close the native socket. */
 int32_t pr_sounds_client_preview_toggle_mute_v1(PrSoundsClient *client);
-/* Explicit Play only while idle with a settled selected logical route.
- * Never queues Play. Packet carries the original absolute BOOTTIME deadline;
- * each prepare recalculates its remaining ttl_ms without renewing it. The route,
- * selected_level_percent and selected_muted are frozen at this explicit choice. */
+/* Explicit Play with a settled selected logical route may wait behind one
+ * read-only status. Its final complete state must still authorize the same route
+ * before the first Play attempt. The route, selected_level_percent, selected_muted
+ * and original one-second BOOTTIME deadline are frozen at the explicit choice.
+ * Each prepare only reduces ttl_ms; no completion, failure or reconnect replays
+ * Play. Stop cancels a waiting Play by closing local channel state. */
 int32_t pr_sounds_client_preview_play_v1(PrSoundsClient *client);
 /* Cleanup Stop may wait behind one read-only status under its original deadline.
  * Stop during an in-flight Play closes local channel state: native must close

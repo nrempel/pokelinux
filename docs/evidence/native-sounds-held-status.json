@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "scope": "Host Rust C ABI and actual Qt adapter Unix SEQPACKET with authored peer; no VM/ARM/PCM/phone qualification",
+  "behavior": "One explicit Play intent may wait for final fresh Status on the same connection; no implicit replay",
+  "red": {
+    "C_ABI_exit": 134,
+    "C_ABI_failure": "held.can_play",
+    "Qt_socket_exit": 1,
+    "Qt_socket_failure": "c->canPlay() while actual periodic status held",
+    "baseline_preview_groups_passed": 14,
+    "baseline_Qt_cases_passed": 34,
+    "receipt_sha256": "f182532c0d2c47d4d0eb52965f6cf119b7ef74aa8ec11eb77550a45eb2fa2271"
+  },
+  "green": {
+    "preview_groups": 18,
+    "Qt_socket_cases": 35,
+    "client_groups": 6,
+    "state_schema_groups": 8,
+    "cleanup_groups": 1,
+    "cleanup_cases": 2,
+    "release_build_exit": 0,
+    "strict_Clippy_exit": 0,
+    "format_check_exit": 0,
+    "exact_initial_consumer_GREEN_exit": 0,
+    "expanded_consumer_and_Qt_exit": 0,
+    "regressions_exit": 0
+  },
+  "green_receipt_sha256": "7a416dc124d6c85639cae8e8d9547522e325f5c445ce118a0585016811a923e1",
+  "production_source_sha256": {
+    "native-audio-ui/client-core/src/engine.rs": "91d6eef4c46fdc9b138ad123f612d8c061474dc5c07566dc4e494603df3e11f0",
+    "native-audio-ui/client-core/src/queue.rs": "b90a1b8fde8d1e0d02d486e9a51926937d61383a3c4543c5d3cd21b64b41b58b",
+    "native-audio-ui/client-core/src/wire.rs": "0004b050fb38cf96896968deaeb87d4b7500fc00563231416c59327c8effc45b",
+    "native-audio-ui/client-core/include/pokelinux_sounds_client.h": "128ed0401cded75062062233a7a06a8ec87b135d606be181fc452428e971eb1b"
+  },
+  "tests_sha256": {
+    "native-audio-ui/client-core/tests/preview-functional.cpp": "247e4ea52d622ffe409d5387c9cd8d9a6c297065ae83e8bea6bc5e5837deaaf9",
+    "native-audio-ui/AudioClientTest.cpp": "8fca7016727afc5717b1a0b5bb47e42eac6f1172ded6ed4c8ead49fa8f3ae910"
+  },
+  "preserved_intermediate_failures": [
+    "C++ compiler absent from Rust image; use pinned Qt compiler image",
+    "Nonroot Qt fixture refused because fixed actor peer requires root; rerun isolated root container",
+    "Initial candidate formatting check failed; formatting-only correction, rebuilt and checked"
+  ],
+  "remaining": [
+    "Updated normal app build and joined graphical/PCM run",
+    "ARM and physical device qualification"
+  ],
+  "seventh_VM_failure_cause_proven": false,
+  "physical_phone_accessed": false
+}

@@ -42,9 +42,14 @@ old ABI/wire shapes have no compatibility fallback.
 The [live-mute implementation and qualification](native-live-preview-mute.md)
 are separate from the earlier next-preview level cohort below.
 
-Play is never queued or replayed. Its original absolute `CLOCK_BOOTTIME` deadline
-passes through app, actor and audio owner; preparation only reduces remaining
-TTL. The [qualified startup correction](native-audio-startup-deadline.md) separates two immutable bounds:
+An explicit Play may wait behind one read-only Status inspection on the same
+connection. Rust freezes its route, level, mute and one-second deadline at the
+tap. Only the final complete status can release its first send: permission,
+settled policy, inactive preview and the same available requested route must
+still hold. Stop, disconnect, expiry or lost eligibility discards the intent.
+Polling alone never creates Play, and an uncertain sent request is never replayed.
+Its original absolute `CLOCK_BOOTTIME` deadline passes through app, actor and
+audio owner; preparation only reduces remaining TTL. The [qualified startup correction](native-audio-startup-deadline.md) separates two immutable bounds:
 `D = min(A, captured Source expiry)` for transport, admission and positive reply
 publication, and `A = min(original app deadline, original TTL expiry)` for admitted
 startup. The trusted owner-to-Main request carries both `until_boottime_ns` and
@@ -256,3 +261,22 @@ env POKELINUX_AUDIO_PREVIEW_PROCESS_FIXTURE="$preview_fixture_dir/preview-proces
 ```
 
 The frozen tests require this helper; production services never install it.
+
+## Explicit Play during background inspection
+
+The earlier client deliberately disabled Play throughout each read-only refresh.
+The new explicit-intent contract has a genuine failing C ABI consumer and a
+separate failing actual Qt periodic-socket consumer against the unchanged library.
+Both pass after the Rust change. The socket case holds a paginated reply, observes
+no Play before the final page, then receives one frozen 50% request on the same
+connection with its original deadline. Completion and later polling do not replay it.
+
+All 18 preview groups and 35 Qt socket cases pass, along with the existing client,
+state-schema and cleanup-envelope regressions, optimized Rust build, strict
+Clippy and formatting. Cancellation tests cover Stop, disconnect, expiry,
+permission/route/policy/activity changes, partial sends, failures and lost replies.
+The exact initial C ABI RED consumer is retained and rerun unchanged for GREEN.
+These are host component and authored-peer socket results, not a normal graphical
+app/PCM run, ARM execution or physical-device evidence. They do not establish the
+cause of the seventh joined Permissions run.
+[Machine-readable evidence](evidence/native-sounds-held-status.json).

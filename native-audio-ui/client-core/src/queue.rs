@@ -1,11 +1,12 @@
 #![forbid(unsafe_code)]
-use crate::wire::{Code, Command, Fresh, RECONNECT, ROUTE, Route, STOP};
+use crate::wire::{Code, Command, Fresh, PLAY, RECONNECT, ROUTE, Route, STOP};
 #[derive(Clone, Copy)]
 struct Intent {
     token: u64,
     until: u64,
     kind: u32,
     route: Route,
+    preview_level: Option<(u32, bool)>,
 }
 pub struct Queue {
     intent: Option<Intent>,
@@ -25,12 +26,27 @@ impl Queue {
         self.intent.is_some()
     }
     pub fn offer(&mut self, kind: u32, route: Option<&Route>, now: u64) -> Code {
+        self.offer_intent(kind, route, None, now)
+    }
+    pub fn offer_play(&mut self, route: &Route, level: (u32, bool), now: u64) -> Code {
+        self.offer_intent(PLAY, Some(route), Some(level), now)
+    }
+    fn offer_intent(
+        &mut self,
+        kind: u32,
+        route: Option<&Route>,
+        preview_level: Option<(u32, bool)>,
+        now: u64,
+    ) -> Code {
         if self.intent.is_some() {
             return Code::Busy;
         }
-        let route = match (kind, route) {
-            (ROUTE, Some(route)) if route.id().is_some() => *route,
-            (RECONNECT | STOP, None) => Route::EMPTY,
+        let route = match (kind, route, preview_level) {
+            (ROUTE, Some(route), None) if route.id().is_some() => *route,
+            (PLAY, Some(route), Some((percent, _))) if route.id().is_some() && percent <= 100 => {
+                *route
+            }
+            (RECONNECT | STOP, None, None) => Route::EMPTY,
             _ => return Code::Invalid,
         };
         let Some(until) = now
@@ -47,6 +63,7 @@ impl Queue {
             until,
             kind,
             route,
+            preview_level,
         });
         self.next_token = next;
         Code::Ok
@@ -70,11 +87,19 @@ impl Queue {
             return Err(Code::Busy);
         }
         let mut ttl_ms = 0;
-        if intent.kind == ROUTE {
+        if intent.kind == ROUTE || intent.kind == PLAY {
             let member = fresh.routes[..fresh.route_count as usize]
                 .iter()
                 .any(|r| r.id() == intent.route.id());
             if fresh.available == 0 || fresh.can_choose == 0 || !member {
+                self.cancel();
+                return Err(Code::Refused);
+            }
+            if intent.kind == PLAY
+                && (fresh.policy_settled == 0
+                    || fresh.preview_active != 0
+                    || fresh.requested.id() != intent.route.id())
+            {
                 self.cancel();
                 return Err(Code::Refused);
             }
@@ -93,6 +118,7 @@ impl Queue {
             kind: intent.kind,
             ttl_ms,
             route: intent.route,
+            preview_level: intent.preview_level,
         })
     }
     pub fn sent(&mut self, token: u64, now: u64) -> Code {

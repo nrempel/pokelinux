@@ -2,7 +2,7 @@
 
 This Rust static library owns the request stage, compact packet, original
 one-second BOOTTIME deadline, reply validation, pagination, accepted UI model and
-one copied queued route/reconnect/cleanup-Stop gesture. It reuses the internal Queue and shared
+one copied queued route/reconnect/cleanup-Stop/explicit-Play gesture. It reuses the internal Queue and shared
 BootClock. Safe engine/protocol/queue/layout modules forbid unsafe code; only the
 narrow borrowed-pointer FFI handles C storage.
 
@@ -142,3 +142,10 @@ The matching archive/header are unchanged by the later native feeder repair. One
 separate actual host QML/actor/audio trace passes live Mute/Unmute with the same
 producer and 144,000 measured frames before the original four-second asset ends.
 Current ARM live-control, normal-window and physical-audio qualification remain open.
+
+An explicit Play accepted during a read-only refresh waits on the same connection
+for the final complete status. It captures route, level, mute and the original
+one-second deadline. Dispatch rechecks eligibility and transfers the intent to
+one normal Play request; failure or uncertain delivery never requeues it. Stop
+can cancel the waiting intent by withdrawing the connection. Component validation
+for this interaction is recorded separately from full graphical/PCM acceptance.
