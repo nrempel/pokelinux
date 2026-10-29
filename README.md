@@ -35,8 +35,9 @@ Real button-click component tests pass; the complete Omarchy allow/play/revoke
 flow is still being validated. An early startup defect exposed by its first VM
 run is now fixed: Permissions opens through the genuine Omarchy menu. A later VM
 run now saves an actual Allow choice and visibly confirms it. Permissions keeps
-the top bar accessible, and its menu reopens over the app. The test then stops
-at menu-image recognition before launching Sounds, so playback and revocation
+the top bar accessible. With a corrected menu-image check, the next VM run
+launches Sounds from the menu too. It exposes a phone-layout gap: desktop tiling
+clips the playback controls when both apps are open. Playback and revocation
 still need to pass together. The frozen preview above does not include these controls.
 
 The same Messages window follows an original Omarchy theme change from Tokyo

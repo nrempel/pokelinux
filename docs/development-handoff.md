@@ -33,7 +33,13 @@ the persisted Sounds/media_route grant and confirmed controls. The bar click
 reopens the menu over Permissions, but menu-image recognition exhausts its eight
 frames before Apps/Sounds selection. No PCM, Revoke or normal app-close acceptance
 runs; guest/QEMU/container cleanup and unchanged inputs pass. Preserve this partial
-result and repair the menu observer against the retained frames before retrying.
+result separately. A bordered-card observer correction now passes retained-frame
+RED→GREEN and six refusing controls. The fourth normal VM run repeats Allow and
+completes bar→Apps→Sounds launch/focus, then fails visible-control readiness:
+normal desktop tiling splits the two windows vertically and clips Sounds Play/Stop.
+No PCM/Revoke runs; full guest/QEMU/container cleanup and unchanged inputs pass.
+Next correct the phone window layout while preserving visible bar navigation,
+actual focus and the original playback/retirement bounds.
 Desktop consent/audio acceptance remains open. Ordinary current profiles require `role.kind=application`; frozen
 previous cohorts retain their matching old binary/profile pairs.
 

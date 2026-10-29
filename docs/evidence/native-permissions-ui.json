@@ -227,5 +227,55 @@
     "fresh_QWindow_DPR_qualified": false,
     "published_screenshot_qualified": false,
     "hardware_qualified": false
+  },
+  "fourth_joined_vm_attempt": {
+    "execution": {
+      "private_receipt": "/tmp/pokelinux-native-x86-composition-permissions-acceptance-root-4/execution.json",
+      "sha256": "104b973590cf26691e006c1555f61c8c3fbecaf9a43262e80686333db551066f"
+    },
+    "passed": false,
+    "selection_sha256": "2e8e4f8d10dcd73317054c2b1909bf0b17f5b0c1e4b4102857cd25de4b14d127",
+    "same_production_ELFs_as_third_attempt": true,
+    "actual_menu_launches_completed": [
+      "Permissions",
+      "Sounds"
+    ],
+    "actual_Allow_durable_and_visible_confirmation": true,
+    "failure_boundary": {
+      "classification_scope": "actual partial observations only; no causal attribution",
+      "stage": "menu-Sounds",
+      "actual_menu_targets_attempted": [
+        "Permissions",
+        "Sounds"
+      ],
+      "actual_menu_input_counts": [
+        3,
+        3
+      ],
+      "actual_normal_windows_observed": [
+        "Permissions",
+        "Sounds"
+      ],
+      "actual_menu_focus_completed": [
+        "Permissions",
+        "Sounds"
+      ],
+      "permission_touches_recorded": 1,
+      "durable_permission_commits_observed": [
+        true
+      ],
+      "visible_permission_controls_completed": [
+        true
+      ],
+      "completed_PCM_record_present": false,
+      "normal_closes_completed": false,
+      "exact_underlying_cause_claimed": false
+    },
+    "observed_layout": "Two vertically tiled normal windows; Sounds Play/Stop clipped in final native frame",
+    "private_final_frame_sha256": "bc836b644e43e3810d33ad0927d04d77408b76b8ce8cc695f717cc54f3405230",
+    "guest_QEMU_container_closure": true,
+    "selected_inputs_unchanged": true,
+    "hardware_qualified": false,
+    "published_screenshot_qualified": false
   }
 }

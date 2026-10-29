@@ -149,3 +149,24 @@ the bar click failed. Playback, Revoke, reallow silence and ordinary app closes
 remain unexecuted in this cohort. Normal guest shutdown, QEMU wait, exact container
 absence and unchanged inputs pass. Fresh QWindow density metadata and publishable
 screenshots remain open; all diagnostic frames stay private.
+
+
+## Sounds launches; desktop tiling clips playback controls
+
+The fourth normal x86 VM run keeps the same production binaries and deadlines.
+Only menu recognition and failure-observation retention change: a contiguous
+bordered menu component replaces whole-row background extrema. The original
+observer fails on the retained menu-over-Permissions frame; the corrected observer
+passes it and the original root/Apps frames. Six authored negative controls reject
+blank, borderless, ambiguous, wrong-width, off-center and empty-label images.
+Strict controls require the intended rejection stage; this is observer evidence,
+not a new app or hardware qualification.
+
+The new VM repeats actual Allow and durable/visible confirmation, then completes
+bar→Apps→Sounds with normal executable/window identity and authenticated focus.
+Its eight-frame Sounds readiness bound fails. The final native frame shows both
+apps tiled vertically, leaving Sounds Play/Stop below the visible window; the
+phone needs a single-app presentation layout with the bar still accessible.
+No playback, Revoke or reallow-silence acceptance occurs. The original visibility
+check remains intact. Full guest/QEMU/container cleanup and unchanged inputs pass.
+The frames remain private without fresh QWindow density qualification.
