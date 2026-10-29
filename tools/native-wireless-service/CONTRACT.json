@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "status": "acceptance contract only; runtime consumer and production integration not implemented",
+  "evidence_class": "future generic ARM hwsim integration; no Pixel or physical-radio qualification",
+  "startup": {
+    "selection": "explicit trusted profile; exact CLI and protected profile schema remain under review",
+    "fallback": "none; no implicit virtual backend or open-network downgrade",
+    "network": "authored open AP and fixed 192.0.2.1/30 tracer; not WPA/DHCP/DNS/Internet"
+  },
+  "required_ownership": {
+    "worker": "one retained actual normal connectivity worker across requester closure and reopening",
+    "radio": "retain namespace, interface identity, command and MLME observation for the whole epoch",
+    "profile": "retain one ExistingIpv4Profile object on its constructing thread",
+    "observation": "typed existing-link identity; observed_lifetime is null, never a fabricated virtual-link lifetime",
+    "ready": "fresh matching association and profile observations; IP address alone is insufficient"
+  },
+  "sequence": [
+    "Start normal Main and actor with explicit selected backend; independently verify disconnected and unconfigured prior state",
+    "Explicit authorized Set connects to exact AP and configures fixed address under original action cutoff",
+    "Independent station/AP identity, associated peer, address and nonce packet round trip agree",
+    "Close and actually wait first requester; same live worker, association and profile remain; independent second packet round trip succeeds",
+    "Fresh requester observes existing connection without a second association or new worker",
+    "Explicit Disconnect removes fixed profile before issuing radio Disconnect under the same original action cutoff",
+    "Independent station/AP and profile readback confirm disconnection and absence; bounded quiet follows",
+    "Normal Main/actor Stop retains process custody through actual waits and pipe EOF; process reaping alone is not radio cleanup"
+  ],
+  "negative_controls": [
+    "Permission loss before dispatch sends no action",
+    "Selected interface or peer changes retire the epoch",
+    "Lost radio observation cannot be renewed from IPv4-only refresh",
+    "Possibly submitted action failure is terminal uncertain; no retry, replacement, automatic rollback or refreshed deadline",
+    "Expired action cannot publish success",
+    "Requester closure withdraws publication, not transferred ownership"
+  ],
+  "red_requirements": [
+    "Actual baseline normal binary and exact source identity",
+    "Same real hwsim setup and independent initial state as GREEN",
+    "Known runtime refusal or unmet persistent lifecycle; not compile/setup failure",
+    "Evaluate desired assertion only after actual owned closure",
+    "Do not classify an unsupported-response-only feature as persistent wireless completion"
+  ],
+  "bounds": {
+    "existing_action_cutoff_ns": 1000000000,
+    "deadline_changes": "require explicit architecture review, never extended merely to pass a run",
+    "original_hwsim_case_and_cleanup_bounds": "retain reviewed existing scope; do not invent new values"
+  },
+  "reuse": [
+    "tools/native-wireless-association/address-packets/address_consumer.py",
+    "tools/native-connectivity-worker/lifecycle/driver.rs",
+    "tools/native-connectivity-settings-sdk/controller.py"
+  ],
+  "remaining": [
+    "Exact startup profile and typed worker observation wire design",
+    "Retained radio epoch implementation and service composition",
+    "Executable consumer plus genuine RED before production change",
+    "GREEN actual hwsim persistence, packets, disconnect and negative controls",
+    "Normal Settings and matched Pixel backend integration"
+  ]
+}

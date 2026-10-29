@@ -22,7 +22,12 @@ then remove its profile before explicit Disconnect, preserving original deadline
 and terminal uncertainty. Reuse the existing Main/actor boundary and hwsim
 consumer. Open association and the fixed test IPv4 profile are tracer inputs;
 WPA credentials, DHCP/DNS, matched Pixel driver startup and hardware remain open.
-See [address/packet scope](native-wireless-address-packets.md).
+See [address/packet scope](native-wireless-address-packets.md) and the
+[unexecuted persistent-service acceptance contract](../tools/native-wireless-service/README.md).
+The current veth Fact requires a witnessed lifetime; existing wireless identity
+must be represented separately. One-shot association closes its event sockets,
+so a persistent backend must retain radio observation rather than renew readiness
+from IPv4 alone. No executable consumer or wireless service RED is claimed yet.
 
 ## Goal and constraints
 
