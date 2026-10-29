@@ -1,5 +1,36 @@
 # Fresh Omarchy and native Sounds startup
 
+## Source recovery prefix; whole audio repetition failed
+
+A later fresh x86 KVM repetition with genuine Omarchy and the current timing
+recovery implementation qualifies a narrow pre-Play Source prefix. The same
+compositor 1412, Rust owner 1410 and Sounds app 1719 retain their held pidfds,
+starttimes and mapped window. Authenticated Source sequence 150 is observed before
+SIGSTOP; after its unchanged 100 ms lease expires the actor reports `recovering`,
+locked denial and null first failure. Following SIGCONT, fresh sequence 153 is received
+52.257 ms after the CONT request. The app is not relaunched. Preview is idle and
+the media source absent during this pause, so audio-active cancellation is not
+qualified.
+
+Boundary 1 passes genuine focus, the actual 1080 × 2424 simulated Pixel 10 output,
+QWindow DPR 2.625 and 48,000 measured silent PCM frames. The whole cohort still
+**FAILED** later: Play produces only the first 1,024 authored 50% frames, without
+a full tone window or `tone.json`. Main's fixed diagnostic records Starting-state
+retirement at guest monotonic 73.004120 s with reported callsite 271; the producer is
+observed dead around 73.009 s. The observer later reaches its 64-graph bound. No
+revoke success is established. These observations identify neither which guard
+retired the preview nor its cause; Source continuity around retirement is not
+established.
+
+Host, boot and guest closure independently pass their actual wait/EOF and original
+cutoff checks, QMP-observed guest shutdown/QEMU exit 0, same-daemon exact-container
+absence and unchanged input checks. The full functional and positive manager
+Stop-after-Ready qualifications remain false. This is x86 KVM evidence only,
+without an ARM, phone or sustained-audio recovery claim. No new screenshot is
+published. [Hash-only provenance](evidence/native-session-timing-recovery.json)
+binds this prefix and whole audio failure; the earlier selections below keep
+their original results.
+
 ## First passing current trace
 
 One fresh x86 KVM cold trace now passes with genuine Omarchy, real compositor

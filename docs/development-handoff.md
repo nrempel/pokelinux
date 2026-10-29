@@ -42,11 +42,17 @@ nine new recovery controls and the process/establishment targets, whose shared
 cases are counted separately. SourceOwner passes 34 process/status/startup/Stop
 cases and a normal feature-free x86 release build. Formatting and strict Clippy
 pass for those packages. Failed setup and test-migration cohorts remain recorded.
-These are host Rust/kernel boundaries with authored Source facts, not original
-compositor, ARM or phone recovery. Next replay the existing cold Omarchy/Sounds
-flow with one controlled compositor pause before Play, retaining the same apps
-and unchanged Pixel/PCM/deadline checks. Menu launch and interactive preview
-remain subsequent gates.
+A subsequent genuine Omarchy x86 KVM run qualifies pre-Play recovery: after
+one controlled compositor pause, fresh Source state returns 52.257 ms after
+resume with the same retained compositor, owner, Sounds process and mapped window.
+The first 1080 × 2424 / DPR 2.625 boundary and quiet PCM check pass. The whole
+run nevertheless fails during later Play: only a 1,024-frame authored PCM prefix
+appears before Starting-state retirement. Its exact guard and cause are not yet
+identified; Source continuity around retirement is also unestablished. Actual
+process waits, stream EOFs and container closure pass independently. Preserve
+that failed result. Next capture the original Source/app/forwarded startup
+cutoffs and the exact retirement predicate before changing preview behavior.
+ARM/phone recovery, menu launch and interactive preview remain open.
 
 The shared process owner now [retains stdout through actual EOF after child wait](native-process-custody.md#later-stdout-eof-custody-repair). A real held-writer RED passes after the repair, alongside nine existing Supervisor controls and strict Clippy. Local output closure remains separate from remote cleanup and successor authority. Earlier consumer cohorts are historical and were not rerun.
 

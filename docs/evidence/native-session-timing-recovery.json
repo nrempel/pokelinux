@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "scope": "Host actor components, authored credentialed Source receiver traffic, authored SourceOwner integration and normal x86 release compilation; hash-only provenance",
+  "scope": "Host component/SourceOwner qualification, normal x86 release compilation and one genuine-compositor x86 KVM pre-Play Source-recovery prefix; whole later audio scenario FAILED; hash-only provenance",
   "original_reds": {
     "actor_root3": {
       "source_manifest_sha256": "4cb29b248543d384fd33c5602ac449666a338deeca06f7ff41d9b55fd91f5909",
@@ -156,8 +156,9 @@
     "late_lifecycle_bound_durable_write_permanent_invalidation_fixed": false
   },
   "unqualified": [
-    "Original-compositor/Omarchy recovery",
-    "GUI/desktop recovery; no new GUI run",
+    "Original-compositor recovery beyond this pre-Play x86 KVM prefix",
+    "Whole current desktop/audio scenario and repeatability",
+    "Audio-active Source-loss cancellation",
     "Authentication/broker recovery",
     "ARM recovery",
     "Matched Google kernel and physical-phone recovery"
@@ -177,5 +178,72 @@
       "all_before_original_cutoffs": true
     },
     "historical_inputs_unchanged": 56
+  },
+  "desktop_original_compositor_source_recovery_sol1": {
+    "execution_sha256": "e9aabd0b1cfe5bbac4e752f089d4361c3170bcaec4a006e309a76c3fe9dea4c4",
+    "boot_result_sha256": "a3f8c9d055f7521317aa5a405032057346d2b575fd43f120e92dbfe41687dcf3",
+    "guest_result_sha256": "d96b1c554cc1f26309dc9be7f6d2459edea18e8f815ee22a5fda8a1075ec2164",
+    "selection_sha256": "aeafeeaf0adffae369c2e51013b3c649d6e0b379e73c298070a9c479b708ace7",
+    "whole_functional_cohort_passed": false,
+    "whole_cold_startup_slice_qualified": false,
+    "Source_recovery_prefix_qualified": true,
+    "scope": "One pre-Play timing recovery with genuine Omarchy/compositor, normal owner and Sounds in x86 KVM; not audio-active cancellation",
+    "guest_authored_Source_snapshots_selected": false,
+    "Source_receiver_exclusively_owned_by_Rust": true,
+    "owned_process_PIDs": {
+      "compositor": 1412,
+      "owner": 1410,
+      "app": 1719
+    },
+    "same_retained_pidfds_starttimes_and_window": true,
+    "sequence_before": 150,
+    "after_expiry_state": "recovering",
+    "after_expiry_first_failure": null,
+    "after_expiry_locked_denial": true,
+    "sequence_after_CONT": 153,
+    "CONT_request_to_fresh_snapshot_received_ns": 52257337,
+    "preview_idle_and_media_source_absent_during_pause": true,
+    "boundary_1": {
+      "passed": true,
+      "native_output_pixels": [
+        1080,
+        2424
+      ],
+      "QWindow_DPR": 2.625,
+      "quiet_PCM_measured_frames": 48000,
+      "both_routes_zero": true,
+      "quiet_PCM_result_sha256": "8f4e08b476bef89a8398da50ade094a75b8cf9c5d879901ad5d17fc1c2e3f8f7"
+    },
+    "later_audio_failure": {
+      "full_audio_passed": false,
+      "reviewed_authored_50_percent_matching_prefix_frames": 1024,
+      "complete_paired_tone_windows": false,
+      "tone_json_exists": false,
+      "revoke_success_qualified": false,
+      "Main_state_at_retirement": "Starting",
+      "Main_retirement_guest_monotonic_s": 73.00412,
+      "reported_retirement_callsite": 271,
+      "producer_dead_observed_approximately_guest_s": 73.009,
+      "later_graph_observation_bound": 64,
+      "retirement_guard_or_cause_identified": false,
+      "Source_continuity_around_audio_retirement_established": false,
+      "failed_PCM_result_sha256": "4a315685e0b5ce957fa39e8d5c61b787c030713032418fc06d274b389c655008",
+      "retained_Main_fixed_diagnostic_sha256": "fc488d524016236b2008ee0b55b5db89b31ea97ec30dafc4702a75f6df14a907"
+    },
+    "closure": {
+      "qualified_independently_of_function": true,
+      "host_actual_wait_both_EOF_cutoff_records": 7,
+      "boot_actual_wait_EOF_cutoff_records": 5,
+      "guest_actual_wait_EOF_cutoff_records": 170,
+      "QMP_guest_shutdown_and_socket_EOF": true,
+      "actual_QEMU_wait_exit": 0,
+      "actual_host_CLI_wait_exit": 0,
+      "same_daemon_exact_container_absent": true,
+      "selected_inputs_unchanged": true,
+      "guest_case_closure_qualified": true,
+      "positive_manager_Stop_after_Ready_qualified": false
+    },
+    "new_screenshot_published": false,
+    "ARM_or_phone_recovery_claimed": false
   }
 }

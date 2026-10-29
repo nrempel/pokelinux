@@ -96,9 +96,39 @@ The SourceOwner snapshot explicitly includes an older unused `process.rs`; its
 owner targets neither compile nor execute that receiver test. Its production
 libraries match the qualified implementation; unrelated dependency inputs remain
 selected from public base `63c855c4be59bd491aaafd92cd0ed36a725302ef`.
-Original-compositor/Omarchy execution, GUI/desktop recovery, authentication, ARM
-and phone recovery remain unqualified. No new GUI run has executed. Earlier
-reports retain their frozen results and terminal-expiry behavior.
+The original-compositor x86 selection below qualifies a narrow desktop prefix.
+Full desktop/audio completion, authentication, ARM and phone recovery remain
+unqualified. Earlier reports retain their frozen results and terminal-expiry
+behavior.
+
+## Genuine x86 desktop prefix; whole audio run failed
+
+A fresh x86 KVM trace now observes timing recovery with genuine Omarchy and the
+same retained compositor, normal Rust owner, Sounds app and mapped window.
+Authenticated Source sequence 150 is observed before SIGSTOP. After the original
+100 ms sample expires, the actor reports `recovering`, locked denial and null
+`first_failure`. SIGCONT is followed by fresh `observed` sequence 153, received
+52.257 ms after the CONT request. Held pidfds and unchanged process starttimes
+confirm continuity of all three processes and the same app window.
+
+The first boundary also passes the actual simulated Pixel 10 profile at
+1080 × 2424 with QWindow DPR 2.625 and 48,000 quiet PCM frames. The Source pause
+occurs before Play, with preview idle and no media source. This qualifies that
+same-process pre-Play recovery only, not audio-active cancellation or repeatable
+desktop recovery.
+
+The whole functional cohort remains **FAILED**. Later Play yields only the first
+1,024 authored 50% PCM frames before producer loss; no `tone.json`, full tone
+window or revoke success is qualified. Main records Starting-state retirement at
+guest monotonic 73.004120 s, reported callsite 271; the producer is observed dead
+around 73.009 s, before the later 64-observation graph bound. Those records identify
+neither the retiring guard nor its cause, and do not establish Source continuity
+around the audio retirement. See the [separately scoped Sounds report](native-cold-omarchy-sounds.md#source-recovery-prefix-whole-audio-repetition-failed).
+
+Actual host/boot/guest waits and EOFs, QMP guest shutdown, QEMU exit 0, same-daemon
+exact-container absence and unchanged selected inputs qualify closure separately
+from that failed functional result. The hash-only provenance binds both scopes.
+No new screenshot is published; no ARM or phone recovery follows from this x86 run.
 
 ## Fixture and core selection
 
