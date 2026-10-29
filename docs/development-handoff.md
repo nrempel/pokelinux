@@ -1,5 +1,29 @@
 # Development handoff
 
+## Immediate integration order
+
+Finish the updated Sounds/Permissions joined VM acceptance when its unchanged
+resource admission passes. The held-Status Play change has component and normal
+host-build evidence; it has not yet passed the joined graphical/PCM run.
+
+Keep the current boot diagnostic frozen. The selected future development-partition
+experiment does not require a temporary RAM override. Its artifact format and
+restoration inputs have offline evidence; actual slot policy, loader acceptance
+and fragment selection need later authorized device evidence. Production native
+rootfs/service supervision is still a separate implementation gap, not proven by
+the diagnostic PID1. See [deployment scope](native-deployment.md) and
+[development bundle gates](native-boot-development-bundle.md).
+
+The next service integration is persistent wireless ownership in the existing
+connectivity worker. It currently constructs only `VirtualLink`; the separate
+association and `ExistingIpv4Profile` operations do not yet own one combined
+lifetime. A controlled backend should retain that lifetime across app closure,
+then remove its profile before explicit Disconnect, preserving original deadlines
+and terminal uncertainty. Reuse the existing Main/actor boundary and hwsim
+consumer. Open association and the fixed test IPv4 profile are tracer inputs;
+WPA credentials, DHCP/DNS, matched Pixel driver startup and hardware remain open.
+See [address/packet scope](native-wireless-address-packets.md).
+
 ## Goal and constraints
 
 Current permission work: [explicit installed app roles](native-permission-controller.md)

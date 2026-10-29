@@ -83,6 +83,13 @@ observed loader selection.
 
 ## Next admission boundary
 
+For the selected development-partition experiment, keep the qualified offline
+bundle frozen: a temporary RAM override is not a prerequisite. Actual device
+slot policy, admission and fragment selection remain later hardware gates.
+The conditional analysis below does not justify an open-ended search for another
+loader path while those gates remain unobservable. Continue native service
+integration separately; diagnostic PID1 is not production rootfs supervision.
+
 The required result is a concrete accepted request/header/context that selects
 the authored generic init while retaining required board resources. The reviewed
 v4 path with valid present stock `init_boot` is an explicit negative-selection
