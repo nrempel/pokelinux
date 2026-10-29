@@ -1,0 +1,23 @@
+--- a/run-selected.py
++++ b/run-selected.py
+@@ -220,0 +221,5 @@
++    if not guest['passed']:
++     menu_failure=guest.get('actual_menu_launch',{});phase=guest.get('phase');touches=menu_failure.get('touches',[])
++     completed_bar_touch=bool(menu_failure.get('bar_geometry')and menu_failure.get('captures')and touches and touches[0].get('label')=='genuine bar menu'and touches[0].get('actual_guest_uinput')and touches[0].get('after_boottime_ns',0)>0)
++     boundary=('PRE_MENU_PREREQUISITE_FAILURE'if not completed_bar_touch else'MENU_APP_ACTIVATION_OR_FRAME_FAILURE'if menu_failure.get('all_three_actual_menu_touches_complete')and not menu_failure.get('qualified')else'POST_MENU_FUNCTIONAL_FAILURE'if menu_failure.get('qualified')else'LIVE_BAR_OR_MENU_NAVIGATION_FAILURE')
++     record['menu_failure_boundary']={'classification':boundary,'classification_scope':'boundary_observation_only','product_regression_qualified':False,'independent_qualification_required':True,'guest_phase':phase,'completed_first_bar_touch_with_geometry_and_capture':completed_bar_touch,'three_navigation_touches_observed':bool(menu_failure.get('all_three_actual_menu_touches_complete')),'exact_underlying_cause_claimed':False,'ten_seconds_applies_to':'navigation only; original app-start/registry/frame/PCM and closure cutoffs remain separate'}
+@@ -223 +228,5 @@
+-     assert [v['id']for v in guest['boundary_steps']]==[1]and guest['boundary_steps'][0]['passed']
++     menu=guest['actual_menu_launch'];assert menu['qualified']and menu['all_three_actual_menu_touches_complete']and not menu['direct_desktop_client_invoked_by_guest']
++     assert [v['label']for v in menu['touches']]==['genuine bar menu','Apps','Sounds']and all(v['actual_guest_uinput']for v in menu['touches'])
++     assert guest['desktop_menu_activation_exercised']and guest['actual_actor_launch']['desktop_menu_activation_claimed']and menu['retained_app_PID']==guest['actual_actor_launch']['app_PID']
++     assert [v['id']for v in guest['boundary_steps']]==[1,2]and all(v['passed']for v in guest['boundary_steps'])and guest['current_native_finite_preview_qualified']
++     pcm_path=R/guest['boundary_steps'][1]['normal_observer_result'];assert sha(pcm_path)==guest['boundary_steps'][1]['observer_result_sha256'];current_pcm=load(pcm_path);assert current_pcm['passed']and current_pcm['complete_paired_windows']and current_pcm['classification']=='ACTUAL_PCM_ORACLES_PASS'
+@@ -227 +236 @@
+-     qt=guest['current_native_Qt_build'];assert qt['actual_audio_total_including_setup_cleanup']==32 and qt['actual_audio_behavior_cases']==30 and len(qt['actual_appearance_cases'])==29
++     qt=guest['current_native_Qt_build'];assert qt['actual_audio_total_including_setup_cleanup']==34 and qt['actual_audio_behavior_cases']==32 and qt['actual_CABI_CTest_total']==5 and len(qt['actual_appearance_cases'])==29
+@@ -229 +238,3 @@
+-     assert len(list((R/'pcm').glob('*/result.json')))==1 and guest['boundary_steps'][0]['PCM']['measured_frames']==48000
++     assert {str(p.relative_to(R/'pcm'))for p in (R/'pcm').glob('*/result.json')}=={'cold-installed-initial-no-grant/result.json','current-normal-preview/result.json'}and guest['boundary_steps'][0]['PCM']['measured_frames']==48000
++     assert sum(v['frames']for stage in current_pcm['stages'].values()for v in stage['stats'].values())==96000
++     assert guest['current_observer_retired_before_audio_Stop']['actual_wait']['returncode']==0

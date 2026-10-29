@@ -65,8 +65,12 @@ window, recovers from a compositor pause without restarting the app, then measur
 50% playback on the virtual speaker and silence after an operator permission
 revoke. Normal shutdown also passes at the Pixel 10 display profile. This run
 adds diagnostics; earlier audio failures remain unresolved, and repeatability
-is not established. Menu launch, interactive use and phone hardware remain open.
+is not established. Interactive use and phone hardware remain open.
 [Cold trace and evidence](docs/native-cold-omarchy-sounds.md).
+
+The [genuine Omarchy menu now launches Sounds](docs/native-omarchy-menu-launch.md)
+through three real taps and the Rust-owned app service. Window, focus and
+permission-withheld silence checks pass; later playback in that run still fails.
 
 <img src="docs/assets/cold-omarchy-sounds-recovery-50-before-play.png" width="320" alt="Sounds with 50% selected before Play" />
 

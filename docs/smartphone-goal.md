@@ -48,10 +48,14 @@ container 1/removal and independently rehashed unchanged inputs are recorded in
 [the sixth-attempt report](native-settings-connectivity-window.md#sixth-attempt-cpu16-receivecommand-failure).
 
 Repeated graphical ARM resource campaigns are parked with the production 50 ms
-guard unchanged. The next product priority is a reproducible VM preview with a
-documented launch path at the Pixel 10 display profile. Headless native open
-association and explicit Disconnect now pass their actual ARM virtual-radio
-boundary. Wireless address and packet evidence remain the next independent gate.
+guard unchanged. The next product priority is a reproducible interactive VM
+preview at the Pixel 10 display profile. Genuine Omarchy now passes the separate
+[bar→Apps→Sounds launch boundary](native-omarchy-menu-launch.md), including real
+app focus and permission-withheld silence; later playback in that cohort fails.
+Close/reopen, a visible permission flow and repeatable audio remain open.
+Headless native open association, fixed IP and packet round trips, address removal
+and Disconnect pass the separate [ARM virtual-radio boundary](native-wireless-address-packets.md).
+WPA, DHCP/DNS, Settings integration and physical wireless remain open.
 
 The [normal Settings Rust connectivity SDK](native-settings-connectivity-sdk.md)
 now passes granted Connect, packets after actual app exit, fresh app observations

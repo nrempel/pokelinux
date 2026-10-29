@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "scope": "exact executed menu consumers reconstructed from pinned published cold-consumer bases",
+  "base_commit": "76503aed161ecafea30197ecd7cb68e2e1257472",
+  "consumers": {
+    "guest.py": {
+      "base_file": "tools/native-cold-omarchy/guest.py",
+      "base_sha256": "f7c36110ac2009c498732979aa7ec66d72743e903557b765819b4d9c98f149e9",
+      "patch": "guest.py.patch",
+      "patch_sha256": "f2f161c52bd75a75afbe27b3d73745523ba7d501fbd0311f5903eede8ee31850",
+      "executed_output_sha256": "7bcb3cf6a21bef8589eeef6e9e52eafe1f10aae15853f5ef1331140a17c52823",
+      "actual_patch_reconstruction_verified": true,
+      "apply_option": "--unidiff-zero"
+    },
+    "run-selected.py": {
+      "base_file": "tools/native-cold-omarchy/run-selected.py",
+      "base_sha256": "1a0ec467f3025dce6d3ef11b75bc5bd8696140d7e3b8140b16739e11022bc16e",
+      "patch": "run-selected.py.patch",
+      "patch_sha256": "8159e90fe1ab86d80aba26109e4da69d4bf4b6ced606c76b8e8a440975ecef07",
+      "executed_output_sha256": "cc489d6dfdc6659300dc4c86e32f43c9a99de211ab45b550608e2e9bbec51678",
+      "actual_patch_reconstruction_verified": true,
+      "apply_option": "--unidiff-zero"
+    }
+  }
+}

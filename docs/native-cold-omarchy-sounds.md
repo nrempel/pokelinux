@@ -36,9 +36,10 @@ selection keeps the PCM criteria, algorithm and Python code unchanged, rebinding
 only the oracle JSON's expected Main ELF identity. This passing epoch is not a
 repair of the earlier failure, a cause diagnosis or proof
 of repeatability. The current request still has its Source-clamped deadline;
-a full one-second startup opportunity is not qualified. Menu activation,
-close/reopen, active-audio Source-loss cancellation, authentication, ARM and phone
-qualification remain open.
+a full one-second startup opportunity is not qualified. A separate later
+[menu-launched app boundary passes](native-omarchy-menu-launch.md), while its audio
+continuation fails. Close/reopen, active-audio Source-loss cancellation,
+authentication, ARM and phone qualification remain open.
 
 ## Source recovery prefix; whole audio repetition failed
 
@@ -224,7 +225,8 @@ not change their results.
 Remaining gates include actual failed-provision PID1 propagation, authorized
 repeatable current playback/revocation and user-facing permission flows, live
 theme changes,
-launcher/menu interactions, trusted authentication/locking, shell bindings to
+broader menu interactions beyond the separately passing Sounds launch, trusted
+authentication/locking, shell bindings to
 native phone services, ARM graphical integration and a reproducible full preview.
 Calls/IMS, carrier SMS, camera, suspend and every physical-phone gate remain open.
 This one cold-start slice is not completion of the smartphone system.

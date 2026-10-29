@@ -16,6 +16,23 @@ phone. Keep synthetic emulator, original-code, ARM64/QEMU and physical evidence
 separate. Do not equate registration, submission or API success with carrier
 acceptance, delivery, native call state or working physical hardware.
 
+The latest [menu integration](native-omarchy-menu-launch.md) closes actual
+bar→Apps→Sounds RED→GREEN in genuine Omarchy. The new actor-owned UID 11042 app
+passes native Pixel/window/focus and 48,000 no-grant silent PCM frames. The later
+audio continuation still fails before tone.json; no preview diagnostic lines
+identify dispatch or startup, so do not attribute this failure to deadline clamping.
+The 255-file candidate uses an explicit three-row menu overlay and retains the
+original consumer deadlines/criteria. The full run and composite manager
+Stop-after-Ready remain failed; independent custody and guest closure pass.
+
+Prioritize a reproducible interactive VM preview with menu launch, close/reopen
+and normal shutdown, clearly labeling playback experimental. Complete one bounded
+audio deadline correction and then a visible Sounds Allow/Revoke page. The private
+controlled startup fixture's two Rust bins pass locked/offline typecheck with no
+warnings; its Qt link and actual runtime RED remain unqualified. Preserve the
+existing background promotion policy described below. Do not expand this into
+another unbounded fixture campaign or treat the VM as phone qualification.
+
 The persistent connectivity worker now [checks readiness before starting its
 receive deadline](native-connectivity-idle-receive.md). An actual empty-channel
 delay reproduces worker retirement before the change and preserves the same live
@@ -64,7 +81,8 @@ briefly held virtual audio startup. Preserve the existing successful Starting-re
 publication → approved background lease policy; do not require foreground until
 Playing. A prospective split must retain the original Source cutoff for dispatch
 and publication, and the original app/TTL ceiling for admitted startup, without
-renewal or replay. ARM/phone recovery, menu launch and interactive use remain open.
+renewal or replay. ARM/phone recovery and interactive use remain open; the separate
+menu/app boundary above now passes.
 
 The shared process owner now [retains stdout through actual EOF after child wait](native-process-custody.md#later-stdout-eof-custody-repair). A real held-writer RED passes after the repair, alongside nine existing Supervisor controls and strict Clippy. Local output closure remains separate from remote cleanup and successor authority. Earlier consumer cohorts are historical and were not rerun.
 

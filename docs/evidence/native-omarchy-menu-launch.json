@@ -1,0 +1,285 @@
+{
+  "schema": 1,
+  "scope": "genuine Omarchy menu and actor-owned Sounds launch; x86 KVM only",
+  "status": "menu and boundary1 GREEN; whole later audio continuation FAILED",
+  "red": {
+    "selection_sha256": "40fdc3475afd9db04e29f3ec00a238f8d2fb6a39657920aa9cae3b347f899a69",
+    "receipts": {
+      "execution.json": "f79c765eb9c3cdab3d33369a0456678ef2ce27bed4282273222bced658717ecf",
+      "boot-result.json": "f2a23b3d9331d19453badcafbb0b8a7b3c81f9fa476c54fd63c5cd81a8e9ae46",
+      "result.json": "a084c00a99d3d48396c8d97345e77a87fefcd9ddd19eb039e95c4b68650c8e76"
+    },
+    "observations": {
+      "shell_pid": 1449,
+      "native_capture_pixels": [
+        1080,
+        2424
+      ],
+      "native_bar_bounds": [
+        21,
+        0,
+        87,
+        68
+      ],
+      "actual_uinput_point": [
+        54,
+        34
+      ],
+      "touch_before_boottime_ns": 67726393685,
+      "touch_after_boottime_ns": 67826564539,
+      "original_navigation_until_ns": 76891027325,
+      "menu_layer_observed": false,
+      "app_launched": false,
+      "direct_client_invoked": false,
+      "exclusive_failure_cause_proven": false,
+      "actual_shell_PATH_captured": false
+    },
+    "closure": {
+      "host_owned_receipts": 7,
+      "boot_owned_receipts": 5,
+      "guest_owned_receipts": 157,
+      "actual_wait_required_EOF_original_bounds_pass": true,
+      "native_descendants_terminal_and_absent": 19,
+      "native_descendants_claimed_as_parent_waits": false,
+      "guest_case_closure_qualified": true,
+      "QEMU_exit": 0,
+      "same_daemon_exact_container_absent": true,
+      "cleanup_errors": [],
+      "full_manager_Stop_after_Ready_qualified": false
+    },
+    "phone_accessed": false,
+    "physical_hardware_qualified": false
+  },
+  "green": {
+    "selection_sha256": "95afc43a8d5c3bb180e91feccca9afff303b6776572423839079958c7850a77d",
+    "receipts": {
+      "execution.json": "6a5781c3ed3b53a7d667ccda9400db677f47777fd6b3e87f2323f109b6d14c8f",
+      "boot-result.json": "06d21a0fb442397c6dc77af74c2fc6118fd357780272a97e11265547fb4178a5",
+      "result.json": "ceb6efd545ca3200cde2315aeb7fc84712e7fc5b213aa64ce9bea4a55072e797"
+    },
+    "guest_source_sha256": "7bcb3cf6a21bef8589eeef6e9e52eafe1f10aae15853f5ef1331140a17c52823",
+    "outer_source_sha256": "cc489d6dfdc6659300dc4c86e32f43c9a99de211ab45b550608e2e9bbec51678",
+    "actual_touches": [
+      {
+        "label": "genuine bar menu",
+        "actual_guest_uinput": true,
+        "native_point": [
+          54,
+          34
+        ],
+        "before_boottime_ns": 67453130383,
+        "after_boottime_ns": 67553297440
+      },
+      {
+        "label": "Apps",
+        "actual_guest_uinput": true,
+        "native_point": [
+          540,
+          645
+        ],
+        "before_boottime_ns": 68898187545,
+        "after_boottime_ns": 68998348000
+      },
+      {
+        "label": "Sounds",
+        "actual_guest_uinput": true,
+        "native_point": [
+          540,
+          1196
+        ],
+        "before_boottime_ns": 70546242077,
+        "after_boottime_ns": 70646412020
+      }
+    ],
+    "navigation_elapsed_seconds": 4.028879085,
+    "navigation_is_not_total_boot_or_window_startup_time": true,
+    "all_three_touches_complete": true,
+    "direct_client_invoked_by_guest": false,
+    "app": {
+      "PID": 1971,
+      "actor_parent_PID": 1413,
+      "UID": 11042,
+      "GID": 11042,
+      "extra_groups": [],
+      "normal_ELF_sha256": "6850cba1361dc9eb22dc40d1a2fb8b9d8a1ef5360cc5ea1c807eeb736a660286"
+    },
+    "desktop_binding": {
+      "scope": "pre-menu fixed DesktopEntry.execute binding prerequisite only",
+      "retained_shell_PID": 1455,
+      "retained_shell_starttime": "6462",
+      "same_retained_shell_pidfd_living_before_and_after": true,
+      "actual_shell_data_environment": {
+        "HOME": "/home/alarm"
+      },
+      "scanner": "pinned Quickshell0.3.2 GenericDataLocation precedence; supported fixed standard paths only",
+      "ordered_application_roots": [
+        "/home/alarm/.local/share/applications",
+        "/usr/local/share/applications",
+        "/usr/share/applications"
+      ],
+      "chosen_path": "/usr/share/applications/org.omarchy.Sounds.desktop",
+      "sha256": "42f4157e5edae04d0c57a8311cf2abeda518d395ca3ef2206f63216d54d03e1d",
+      "bytes": 261,
+      "Exec": "/usr/libexec/pokelinux/sounds-launch /run/pokelinux/session/launch-sounds.sock",
+      "UID": 0,
+      "GID": 0,
+      "mode": "0o644",
+      "nlink": 1,
+      "higher_priority_candidates": [
+        {
+          "path": "/home/alarm/.local/share/applications/org.omarchy.Sounds.desktop",
+          "absent": true
+        },
+        {
+          "path": "/usr/local/share/applications/org.omarchy.Sounds.desktop",
+          "absent": true
+        }
+      ],
+      "fixed_no_hyphen_ID_cannot_alias_nested_directory": true,
+      "entry_authored_or_replaced_by_guard": false,
+      "application_launched_by_guard": false
+    },
+    "window": {
+      "visible": true,
+      "exposed": true,
+      "logical_size": [
+        369,
+        855
+      ],
+      "DPR": 2.625,
+      "QScreen_DPR_diagnostic": 3,
+      "regular_window_record_sha256": "8e1fd0b1085290e4d13d88c9efe53aa2ba6e899c0ded2ad30aefa5e49a681d7d",
+      "record_is_not_PIPE_EOF": true
+    },
+    "no_grant_PCM": {
+      "stage": "released_silence",
+      "result": "pcm/cold-installed-initial-no-grant/result.json",
+      "sha256": "d735663ca3fee6c88e45bed87611008ca145720e88b36afb80c219aa18f595c6",
+      "measured_frames": 48000,
+      "actual_stats": {
+        "speaker": {
+          "frames": 24000,
+          "finite_all": true,
+          "rms": 0.0,
+          "peak": 0.0,
+          "tone_amplitudes": {
+            "440": 0.0,
+            "880": 0.0
+          },
+          "expected_hz": 0
+        },
+        "earpiece": {
+          "frames": 24000,
+          "finite_all": true,
+          "rms": 0.0,
+          "peak": 0.0,
+          "tone_amplitudes": {
+            "440": 0.0,
+            "880": 0.0
+          },
+          "expected_hz": 0
+        }
+      }
+    },
+    "screenshot": {
+      "public_path": "docs/assets/cold-omarchy-menu-launched-sounds.png",
+      "sha256": "4f51088652e285b7d50952520dedf1a4e2f01eb86989523dab890ac8c4338ac5",
+      "bytes": 451918,
+      "native_pixels": [
+        1080,
+        2424
+      ],
+      "window_and_output_profile_qualified": true,
+      "resized": false,
+      "caption": "Sounds launched through the real menu; permission withheld; disabled routes and default 100%; development warning retained"
+    },
+    "closure": {
+      "host_owned_receipts": 7,
+      "boot_owned_receipts": 5,
+      "guest_owned_receipts": 188,
+      "later_PCM_owned_receipts": 70,
+      "actual_wait_required_EOF_original_bounds_pass": true,
+      "native_descendants_terminal_and_absent": 19,
+      "native_descendants_claimed_as_parent_waits": false,
+      "guest_case_closure_qualified": true,
+      "QEMU_exit": 0,
+      "same_daemon_exact_container_absent": true,
+      "cleanup_errors": [],
+      "full_manager_Stop_after_Ready_qualified": false
+    },
+    "later_failure": {
+      "error": "AssertionError: PCM observer exited before tone.json",
+      "PCM_classification": "SETUP_FAILURE",
+      "graph_count_bound_reached": true,
+      "full_tone_or_revoke_silence_qualified": false,
+      "preview_diagnostic_lines_captured": false,
+      "exact_cause_proven": false
+    },
+    "exclusive_three_row_causation_claimed": false
+  },
+  "overlay": {
+    "schema": 1,
+    "files": {
+      "usr/bin/omarchy-shell": {
+        "bytes": 2766,
+        "sha256": "538ece231aba80154c76ab48df8ab013b2f02c5171241d08bddbf08a5fe5ac34",
+        "mode": 493
+      },
+      "usr/share/pokelinux/omarchy/default/omarchy/omarchy-menu.jsonc": {
+        "bytes": 52910,
+        "sha256": "8c791cfc457d6c50b90a6636a6f28c9415a2fa6e4edf84826906457b75649689",
+        "mode": 420
+      },
+      "usr/share/pokelinux/omarchy/shell/services/AppLibrary.qml": {
+        "bytes": 9756,
+        "sha256": "f62c4967a8d3ce601137573ecf723dd3b5299ab491b65c73a9725d4bac9f788e",
+        "mode": 420
+      }
+    },
+    "source": {
+      "commit": "c668141e9c42b13c80c9ca4ea108e11708c5e8a5",
+      "archive_sha256": "8cc6b1d9d903c606600395e3b3d80ad9f15bd3ab78f0f19b0f49041b1df82013",
+      "original_git_blobs": {
+        "bin/omarchy-shell": "ac8b3108d17bcd81ccd2c131b21de633b2f37233",
+        "default/omarchy/omarchy-menu.jsonc": "fb2b31d748ed5fef14b9ebd8de40f371c2fe6cf8",
+        "shell/services/AppLibrary.qml": "738529de428e6b39eb1de326b7fe69600b08a241"
+      },
+      "adaptation": "AppLibrary.launch uses DesktopEntry.execute; wrapper and default menu unchanged"
+    }
+  },
+  "source_counts": {
+    "upstream_base": 196,
+    "namespace_adapted": 54,
+    "launch_adapted": 1,
+    "unchanged_base": 141,
+    "genuine_theme_assets": 40,
+    "additional_original_menu_assets": 2
+  },
+  "consumer_reconstruction": {
+    "schema": 1,
+    "scope": "exact executed menu consumers reconstructed from pinned published cold-consumer bases",
+    "base_commit": "76503aed161ecafea30197ecd7cb68e2e1257472",
+    "consumers": {
+      "guest.py": {
+        "base_file": "tools/native-cold-omarchy/guest.py",
+        "base_sha256": "f7c36110ac2009c498732979aa7ec66d72743e903557b765819b4d9c98f149e9",
+        "patch": "guest.py.patch",
+        "patch_sha256": "f2f161c52bd75a75afbe27b3d73745523ba7d501fbd0311f5903eede8ee31850",
+        "executed_output_sha256": "7bcb3cf6a21bef8589eeef6e9e52eafe1f10aae15853f5ef1331140a17c52823",
+        "actual_patch_reconstruction_verified": true,
+        "apply_option": "--unidiff-zero"
+      },
+      "run-selected.py": {
+        "base_file": "tools/native-cold-omarchy/run-selected.py",
+        "base_sha256": "1a0ec467f3025dce6d3ef11b75bc5bd8696140d7e3b8140b16739e11022bc16e",
+        "patch": "run-selected.py.patch",
+        "patch_sha256": "8159e90fe1ab86d80aba26109e4da69d4bf4b6ced606c76b8e8a440975ecef07",
+        "executed_output_sha256": "cc489d6dfdc6659300dc4c86e32f43c9a99de211ab45b550608e2e9bbec51678",
+        "actual_patch_reconstruction_verified": true,
+        "apply_option": "--unidiff-zero"
+      }
+    }
+  },
+  "phone_accessed": false,
+  "physical_hardware_qualified": false
+}
