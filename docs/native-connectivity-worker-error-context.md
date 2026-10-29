@@ -1,5 +1,10 @@
 # Native worker error context
 
+The later [idle receive investigation](native-connectivity-idle-receive.md)
+separately reproduces empty-idle expiry on the host and adds a non-consuming
+readiness hint. It preserves the 50 ms authenticated receive envelope and the
+failed ARM observations below; their unique cause remains unknown.
+
 The normal connectivity worker now preserves operation-stage context on errors
 after an actual missing-context CLI RED. The unchanged frozen consumer passes
 with `ReduceCapabilities`, `original_until_ns: None`, an error-only BOOTTIME

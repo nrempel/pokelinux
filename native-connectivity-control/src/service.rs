@@ -465,6 +465,7 @@ enum WorkerStep {
     ReduceCapabilities,
     BindParent,
     PublishInitial,
+    CheckCommandReady,
     ReceiveCommand,
     PublishRetirement,
     PublishCompletion,
@@ -554,44 +555,50 @@ pub fn worker(arguments: &[String]) -> io::Result<()> {
     let mut last_seen_id = 0;
     let mut refreshed_at = boot_time_ns();
     loop {
-        let envelope = boot_time_ns().saturating_add(ENVELOPE);
-        if let Some(bytes) = worker_step(
-            WorkerStep::ReceiveCommand,
-            Some(envelope),
-            parent.receive_message(cutoff(envelope)),
-        )? {
-            if bytes.len() != 19 || bytes[0..2] != [1, 1] || bytes[18] > 1 {
-                return Err(invalid());
-            }
-            let id = u64::from_le_bytes(bytes[2..10].try_into().unwrap());
-            if id == 0 || id <= last_seen_id {
-                return Err(invalid());
-            }
-            last_seen_id = id;
-            let original_until = u64::from_le_bytes(bytes[10..18].try_into().unwrap());
-            let sampled = boot_time_ns();
-            if sampled >= original_until {
-                // Retirement receipt uses a separate transport envelope; it
-                // cannot renew or publish success for the expired operation.
-                let retirement_until = sampled.saturating_add(ENVELOPE);
-                worker_step(
-                    WorkerStep::PublishRetirement,
-                    Some(retirement_until),
-                    parent.send_message(cutoff(retirement_until), &record(3, id, fact, sampled)),
-                )?;
-            } else {
-                if original_until - sampled > 1_000_000_000 {
+        if worker_step(WorkerStep::CheckCommandReady, None, parent.message_ready())? {
+            let envelope = boot_time_ns().saturating_add(ENVELOPE);
+            if let Some(bytes) = worker_step(
+                WorkerStep::ReceiveCommand,
+                Some(envelope),
+                parent.receive_message(cutoff(envelope)),
+            )? {
+                if bytes.len() != 19 || bytes[0..2] != [1, 1] || bytes[18] > 1 {
                     return Err(invalid());
                 }
-                fact = link
-                    .set_connected(bytes[18] != 0, original_until)
-                    .map_err(|_| invalid())?;
-                refreshed_at = boot_time_ns();
-                worker_step(
-                    WorkerStep::PublishCompletion,
-                    Some(original_until),
-                    parent.send_message(cutoff(original_until), &record(2, id, fact, refreshed_at)),
-                )?;
+                let id = u64::from_le_bytes(bytes[2..10].try_into().unwrap());
+                if id == 0 || id <= last_seen_id {
+                    return Err(invalid());
+                }
+                last_seen_id = id;
+                let original_until = u64::from_le_bytes(bytes[10..18].try_into().unwrap());
+                let sampled = boot_time_ns();
+                if sampled >= original_until {
+                    // Retirement receipt uses a separate transport envelope; it
+                    // cannot renew or publish success for the expired operation.
+                    let retirement_until = sampled.saturating_add(ENVELOPE);
+                    worker_step(
+                        WorkerStep::PublishRetirement,
+                        Some(retirement_until),
+                        parent
+                            .send_message(cutoff(retirement_until), &record(3, id, fact, sampled)),
+                    )?;
+                } else {
+                    if original_until - sampled > 1_000_000_000 {
+                        return Err(invalid());
+                    }
+                    fact = link
+                        .set_connected(bytes[18] != 0, original_until)
+                        .map_err(|_| invalid())?;
+                    refreshed_at = boot_time_ns();
+                    worker_step(
+                        WorkerStep::PublishCompletion,
+                        Some(original_until),
+                        parent.send_message(
+                            cutoff(original_until),
+                            &record(2, id, fact, refreshed_at),
+                        ),
+                    )?;
+                }
             }
         }
         let sampled = boot_time_ns();

@@ -16,6 +16,18 @@ phone. Keep synthetic emulator, original-code, ARM64/QEMU and physical evidence
 separate. Do not equate registration, submission or API success with carrier
 acceptance, delivery, native call state or working physical hardware.
 
+The persistent connectivity worker now [checks readiness before starting its
+receive deadline](native-connectivity-idle-receive.md). An actual empty-channel
+delay reproduces worker retirement before the change and preserves the same live
+worker afterward. The identical consumed-command and parent-death controls still
+reject late work and close the owned processes. The qualified host pair keeps
+the same Main and consumer and changes only the worker binary. Thirty active
+component tests, formatting, strict Clippy and normal host/ARM builds pass; four
+unrelated isolated tests remain ignored. Earlier failed fixture cohorts remain
+failed. Main's receive path is unchanged; persistent ARM execution and Settings
+integration still require their own evidence. The prior one-shot ARM packet
+trace does not qualify this persistent idle path.
+
 The current [Source timing recovery](native-session-timing-recovery.md) replaces
 terminal timing expiry with immediate authority withdrawal and fresh-pair
 reestablishment in the same owned Source. The 100 ms budget is unchanged;

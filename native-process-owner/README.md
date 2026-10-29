@@ -21,6 +21,13 @@ for the former radio-local modules.
   application BOOTTIME deadlines. No raw handle, queue or resend is exposed.
   The [real host channel consumer](../docs/native-process-channel.md) passes five
   groups, including actual rights overflow, EAGAIN and Stop-before-wait fencing.
+- `BoundParent::message_ready` checks the channel and both retained parent
+  pidfds without consuming a record or starting a deadline. It brackets the
+  zero-time poll with the existing local thread, credentials, PPID and parent
+  death-signal checks. Hangup, parent readiness and errors fail closed. A
+  readable hint grants no admission: `receive_message` still performs its full
+  authenticated checks under the caller's original deadline. See the
+  [idle receive investigation](../docs/native-connectivity-idle-receive.md).
 - `ProcessIdentity::{from_bytes,as_bytes,from_hex,hex}` are explicit codecs.
   Decoding an identity grants no custody or publication authority: admission
   also binds the current source connection and attempt.

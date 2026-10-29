@@ -16,6 +16,15 @@ separately qualified Rust association. See [the API and packet report](../docs/n
 This does not change the persistent Service's virtual-link backend or repair its
 separate ARM ReceiveCommand failure; Settings Wi-Fi integration remains open.
 
+The persistent worker now polls a non-consuming retained-parent readiness hint
+before constructing its unchanged 50 ms authenticated receive envelope. Empty
+idle polling retains parent-death and local identity checks; readable commands
+retain full authentication, pre/post-I/O deadlines and the original action
+cutoff. The [separate host investigation](../docs/native-connectivity-idle-receive.md)
+qualifies the deterministic idle RED and unchanged-consumer host GREEN, with
+strict consumed-frame expiry and parent-death controls. The old ARM failure's
+cause remains unknown, and Main's receive path is unchanged.
+
 `kernel::VirtualLink` is a Linux development backend for a fresh private virtual
 pair. It retains both namespaces, subscribes before creation, creates the pair
 with its own rtnetlink socket and observes its witnessed local lifetime and
@@ -50,7 +59,9 @@ Worker errors now retain a fixed stage, the selected call cutoff when known, an
 error-only BOOTTIME sample and the original `io::Error`. An unchanged real cap0
 CLI consumer passes after missing-context RED; the worker still exits naturally
 with code1 and source EPERM. Only `ReduceCapabilities` is executed by that control;
-all seven contexts compile. See [error-context evidence](../docs/native-connectivity-worker-error-context.md).
+the original seven contexts compile. The readiness hint adds a separate
+`CheckCommandReady` context without a command cutoff. See
+[error-context evidence](../docs/native-connectivity-worker-error-context.md).
 No payload, guard, deadline, retry or retirement policy changes.
 
 The separate `main_service` and nonblocking `client` now pass the unchanged

@@ -6,6 +6,7 @@ use crate::{
 };
 use pokelinux_kernel_identity::{ProcessView, socket_peer_pidfd};
 use rustix::{
+    event::{PollFd, PollFlags, Timespec, poll},
     fd::{AsFd, BorrowedFd, OwnedFd},
     net::{
         self, RecvAncillaryBuffer, RecvAncillaryMessage, RecvFlags, ReturnFlags,
@@ -212,6 +213,29 @@ fn receive_payload(fd: impl AsFd, expected: UCred) -> io::Result<Option<Vec<u8>>
         return Err(invalid());
     }
     Ok(Some(bytes[..message.bytes].to_vec()))
+}
+
+fn poll_message_readiness(
+    channel: &OwnedFd,
+    origin: &OwnedFd,
+    transferred: &OwnedFd,
+) -> io::Result<bool> {
+    let mut fds = [
+        PollFd::new(channel, PollFlags::IN),
+        PollFd::new(origin, PollFlags::IN),
+        PollFd::new(transferred, PollFlags::IN),
+    ];
+    let zero = Timespec {
+        tv_sec: 0,
+        tv_nsec: 0,
+    };
+    poll(&mut fds, Some(&zero))?;
+    if fds[1..].iter().any(|fd| !fd.revents().is_empty())
+        || !(fds[0].revents() - PollFlags::IN).is_empty()
+    {
+        return Err(io::ErrorKind::PermissionDenied.into());
+    }
+    Ok(fds[0].revents() == PollFlags::IN)
 }
 
 fn wait_packet(fd: impl AsFd, until: u64) -> io::Result<Packet> {
@@ -473,8 +497,7 @@ impl BoundParent {
     pub fn identity(&self) -> ProcessIdentity {
         self.identity
     }
-    fn check_message(&self, until: Deadline) -> io::Result<()> {
-        message_before(until)?;
+    fn check_local_parent(&self) -> io::Result<()> {
         if rustix::thread::gettid() != process::getpid()
             || process::getuid() != self.creator.uid
             || process::geteuid() != self.creator.uid
@@ -482,15 +505,34 @@ impl BoundParent {
             || process::getegid() != self.creator.gid
             || process::getppid() != Some(self.creator.pid)
             || process::parent_process_death_signal()? != Some(Signal::KILL)
-            || !self.view.matches(
-                &self.origin,
-                &self.transferred,
-                self.creator.pid.as_raw_pid() as u32,
-            )?
         {
             return Err(io::ErrorKind::PermissionDenied.into());
         }
+        Ok(())
+    }
+    fn check_message(&self, until: Deadline) -> io::Result<()> {
+        message_before(until)?;
+        self.check_local_parent()?;
+        if !self.view.matches(
+            &self.origin,
+            &self.transferred,
+            self.creator.pid.as_raw_pid() as u32,
+        )? {
+            return Err(io::ErrorKind::PermissionDenied.into());
+        }
         message_before(until)
+    }
+    /// Non-consuming, zero-wait channel readiness with retained parent death
+    /// watches and local main-thread/credential/parent checks. Any hangup or
+    /// error is terminal, including when data is also queued. This is only a
+    /// hint: a true result authenticates no record and starts no deadline.
+    /// The caller must still use `receive_message` with its original deadline;
+    /// that method retains its full live identity and pre/post-I/O checks.
+    pub fn message_ready(&self) -> io::Result<bool> {
+        self.check_local_parent()?;
+        let result = poll_message_readiness(&self.channel, &self.origin, &self.transferred);
+        self.check_local_parent()?;
+        result
     }
     /// Copy one opaque bounded record over the retained post-GO channel.
     /// The caller supplies its original absolute application/session deadline;
@@ -515,6 +557,10 @@ impl BoundParent {
         result
     }
 }
+
+#[cfg(test)]
+#[path = "bootstrap_readiness_tests.rs"]
+mod readiness_tests;
 
 #[cfg(test)]
 impl ParentBootstrap {

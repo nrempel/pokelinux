@@ -1,0 +1,472 @@
+{
+  "schema": 1,
+  "classification": "Native x86_64 normal persistent-worker actual boundary; controlled idle fault RED to GREEN",
+  "public_fixture_sources": {
+    "tools/native-connectivity-worker/idle-receive/consumer.py": {
+      "bytes": 6433,
+      "sha256": "44c1d1ed65461d1df586106ad438addc506f3f4f67acb908bcd9e6f3772d241c"
+    },
+    "tools/native-connectivity-worker/idle-receive/controller.py": {
+      "bytes": 13146,
+      "sha256": "04678f69680fbfa7ed2a346388d224bbd66c862661d27d34619fe9a9e59c72a9"
+    },
+    "tools/native-connectivity-worker/idle-receive/worker_trace.py": {
+      "bytes": 8605,
+      "sha256": "373158ddbd129203915e1153089977d07c069dc39b73d73e40208d7612f00230"
+    }
+  },
+  "same_pure_consumer_controller_and_revised_tracer_across_final_pair": true,
+  "same_exact_baseline_normal_Main_across_final_pair": true,
+  "only_normal_worker_provider_changed": true,
+  "build": {
+    "cohort": "pokelinux-connectivity-idle-readiness-build-sol-1",
+    "SOURCE": {
+      "bytes": 8856,
+      "sha256": "9cc07f075a65844d835bcbec7578c1e8db6cd9ff211b1877fee5a8ef5afc14c5"
+    },
+    "SEAL": {
+      "bytes": 12008,
+      "sha256": "30058631cedb67840144aabe0a6c1f7cde3fb5f3ee511a3e0a0141204ba0c10f"
+    },
+    "actual_closed_outer": {
+      "bytes": 935414,
+      "sha256": "be2c154037f2928076631ee189c13436eaf526e4dca73f21b19a58436d05a3bd"
+    },
+    "actual_inner": {
+      "bytes": 36098,
+      "sha256": "64de3b1d5856ec8fcd206df859f3001fd9b45e3cc4b7a9db0bfc59bfabd9d1b2"
+    },
+    "active_tests": {
+      "process-owner": 12,
+      "connectivity": 18
+    },
+    "preserved_ignored": {
+      "process-owner": 1,
+      "connectivity": 3
+    },
+    "normal_profile": "Release opt3 features[]",
+    "normal_artifacts": {
+      "host/pokelinux-connectivity-main": {
+        "bytes": 863312,
+        "sha256": "3743db34a5ff9d9eb5ad26d9c301a1b657b7e789e815d089c84545d0afa2466c",
+        "ELF_machine": 62,
+        "PT_INTERP": "/lib64/ld-linux-x86-64.so.2"
+      },
+      "host/pokelinux-connectivity-service": {
+        "bytes": 748520,
+        "sha256": "e73777f6f21f274931f53010404ec5e71facafc93ef16a56a9d424139ca886fc",
+        "ELF_machine": 62,
+        "PT_INTERP": "/lib64/ld-linux-x86-64.so.2"
+      },
+      "ARM/pokelinux-connectivity-main": {
+        "bytes": 860656,
+        "sha256": "1f1321bbf083153bbe7ee1424c6bd8708f4fd00b88497fbec1a39321edb2643f",
+        "ELF_machine": 183,
+        "PT_INTERP": "/lib/ld-linux-aarch64.so.1"
+      },
+      "ARM/pokelinux-connectivity-service": {
+        "bytes": 752952,
+        "sha256": "18da683acf6ef6f669ed28562d6898badc753d39408260821fc7d65e51e7b4c0",
+        "ELF_machine": 183,
+        "PT_INTERP": "/lib/ld-linux-aarch64.so.1"
+      }
+    },
+    "direct_Scope_wait_EOF_count": 16,
+    "separate_foreground_shell_regular_output_waits": 29,
+    "raw_frozen_inputs_formatted_in_private_copy_before_compile": true,
+    "compiled_formatted_three_files_adopted_exactly": {
+      "native-process-owner/src/bootstrap.rs": {
+        "bytes": 20428,
+        "sha256": "857715d16c81a616742d8c8b29e8da907565a0c361583f67ca0867e38fa7aa48"
+      },
+      "native-process-owner/src/bootstrap_readiness_tests.rs": {
+        "bytes": 1906,
+        "sha256": "50969c1a23e4dffa753545bed2e69003a8321d31d9ebf29b34a63d9ce9ba4b24"
+      },
+      "native-connectivity-control/src/service.rs": {
+        "bytes": 21202,
+        "sha256": "d5143267ae24c855cb781a78003127276e3404f763f29f84f3bad5571d53a3e3"
+      }
+    }
+  },
+  "current_production_source_bindings": {
+    "native-connectivity-control/Cargo.lock": {
+      "bytes": 4625,
+      "sha256": "81d88520b68d517cd981e879c226bba5c22bbb49c61fee8bb5eca85a9a4fcfb8"
+    },
+    "native-connectivity-control/Cargo.toml": {
+      "bytes": 514,
+      "sha256": "9d7b8eb68c30c25a83ad1aefc738ff02129160bd249ac31126fb4fddf059e054"
+    },
+    "native-connectivity-control/src/bin/pokelinux-connectivity-main.rs": {
+      "bytes": 641,
+      "sha256": "661918a3ec1f9cb67e13bee5af10a5a996501ab73e40ef1b9da731d73929ada0"
+    },
+    "native-connectivity-control/src/bin/pokelinux-connectivity-service.rs": {
+      "bytes": 659,
+      "sha256": "0b4c2902bb307f34d8cb5893207496c890e5d05cb65d794f323c57d55eefc4ab"
+    },
+    "native-connectivity-control/src/client.rs": {
+      "bytes": 3763,
+      "sha256": "2811885e1433f6a80c995da2ec4d490e54f869d56e25816342967e353e2dd48a"
+    },
+    "native-connectivity-control/src/fixed_address.rs": {
+      "bytes": 11686,
+      "sha256": "d37ce2d8e83b42b2cb31e5750afe4886a9ae4b3928e8e21ae53f97526f37dec1"
+    },
+    "native-connectivity-control/src/fixed_address_tests.rs": {
+      "bytes": 8658,
+      "sha256": "ac773156ef74fda55b3209dda9e14987e9bb2e1ce63475797aacdf14e179aa96"
+    },
+    "native-connectivity-control/src/kernel.rs": {
+      "bytes": 16485,
+      "sha256": "e340f17c28153b1cef38c2c7c95179b91d3b2009e7e9b9a7157eaed9a842af91"
+    },
+    "native-connectivity-control/src/lib.rs": {
+      "bytes": 308,
+      "sha256": "254aa405c2a3c72db4ef1ccafd97d48cf7b11a8af629c1b54b220001e2fe3f8b"
+    },
+    "native-connectivity-control/src/main_service.rs": {
+      "bytes": 11540,
+      "sha256": "fca5b4422514c965610ebf0c3cff5d60508e1830b0a33c5c2dc2dd02e2193dc5"
+    },
+    "native-connectivity-control/src/owner.rs": {
+      "bytes": 8673,
+      "sha256": "cf3824653bd0462105dcc2ff998af783d9b5ee1adebcf764fc35747dbe851830"
+    },
+    "native-connectivity-control/src/private_channel.rs": {
+      "bytes": 2102,
+      "sha256": "de1b4cfc09772729fc55b77d9276bf529eff836af492fc9fa785b376cf595d24"
+    },
+    "native-connectivity-control/src/protocol.rs": {
+      "bytes": 4208,
+      "sha256": "8540c3b692bdcfe1582cbc8794d4eea37fb871ec22b126be9a1a332906dd32c7"
+    },
+    "native-connectivity-control/src/service.rs": {
+      "bytes": 21202,
+      "sha256": "d5143267ae24c855cb781a78003127276e3404f763f29f84f3bad5571d53a3e3"
+    },
+    "native-connectivity-control/src/service_tests.rs": {
+      "bytes": 24878,
+      "sha256": "c6d8fe68ed91af386d290c5ade71b05537dbc97ce706a1f020793a3e197a06f8"
+    },
+    "native-connectivity-control/tests/kernel.rs": {
+      "bytes": 1548,
+      "sha256": "5f5ee08810f3c152659b6db29d250efc3e6ae19b34ab29cce924dd5f6f15beb3"
+    },
+    "native-connectivity-control/tests/owner.rs": {
+      "bytes": 10509,
+      "sha256": "1bf108bff31d78a7ccc66cbdc903cbe2dd4a1c1736c4ba8dd453166dcda6421a"
+    },
+    "native-connectivity-control/tests/packet_lifecycle.rs": {
+      "bytes": 12771,
+      "sha256": "7745ea84301fb9213c33faeb296fb8701a50e75391f0b8c0215ec2fe01bd89b6"
+    },
+    "native-process-owner/Cargo.lock": {
+      "bytes": 1850,
+      "sha256": "ef3e54b17ce70a83d3d1a59c4d0510e04c00969829c5dd41ede8ecc8b39d5b2f"
+    },
+    "native-process-owner/Cargo.toml": {
+      "bytes": 319,
+      "sha256": "a671c9109e703f6779c143834435fba8793564b14d3dd4db9a15a822f0cec103"
+    },
+    "native-process-owner/src/bootstrap.rs": {
+      "bytes": 20428,
+      "sha256": "857715d16c81a616742d8c8b29e8da907565a0c361583f67ca0867e38fa7aa48"
+    },
+    "native-process-owner/src/deadline.rs": {
+      "bytes": 925,
+      "sha256": "abc2a3f23284402fe3bc34abfb380bdf1f84a1f6d15cbd90b38a09bf5450c2ee"
+    },
+    "native-process-owner/src/lib.rs": {
+      "bytes": 141,
+      "sha256": "98be0831d3663f7a271e0fbdbee672e7eccfe63f5ae1b588a5e7c38fceff63f0"
+    },
+    "native-process-owner/src/supervisor.rs": {
+      "bytes": 27534,
+      "sha256": "c8dac99e60685dcac9f383be2adb16f9dc7d6e14fac79e939fdf9de59c74490c"
+    },
+    "native-process-owner/tests/stdout_eof.rs": {
+      "bytes": 11289,
+      "sha256": "d30f98c760c1bb0a2fed33b52caa309e1e3a0463f57e2d5b5473c67e6e00211b"
+    },
+    "native-network-state/Cargo.lock": {
+      "bytes": 4182,
+      "sha256": "12565a60a4784458741f00572db6e484e8c60887b11316de1d6b8b61457791ec"
+    },
+    "native-network-state/Cargo.toml": {
+      "bytes": 251,
+      "sha256": "7221e02625d30c473a2042f53734eae36bc941b86f5db3c0e449ea4e4a608a08"
+    },
+    "native-network-state/src/kernel_tests.rs": {
+      "bytes": 10209,
+      "sha256": "d0d6900ec8686cc3205f6520da8c8af6eaee5437c09ee6209deba8e0185be5d6"
+    },
+    "native-network-state/src/lib.rs": {
+      "bytes": 23830,
+      "sha256": "55b6e15060445e1949ccb4a10a27019be620356a327af6114be1938fd8f06ebf"
+    },
+    "native-kernel-identity/Cargo.lock": {
+      "bytes": 1726,
+      "sha256": "ea2dd27ddd1bf8c00b3bf15d5fface7d5bddd6e20b5d1e89fbc1fc10172ff592"
+    },
+    "native-kernel-identity/Cargo.toml": {
+      "bytes": 421,
+      "sha256": "73dcde30e1860aa1d2d41d3c24c50b57cdcfddb907ebb3a1c8f039f63c7e6586"
+    },
+    "native-kernel-identity/src/lib.rs": {
+      "bytes": 3706,
+      "sha256": "17760f73db788e91810e9ba8c688955e5efd49efde6736922435085047efe131"
+    },
+    "native-kernel-identity/src/pidfd.rs": {
+      "bytes": 10064,
+      "sha256": "caf4b44738fc53093a32ef96c2e639c1a376935ad29fa17a42091a56180b11ff"
+    },
+    "native-kernel-identity/src/termination.rs": {
+      "bytes": 6316,
+      "sha256": "76b25680e311bb1fb0bb957c7cec93f336969e269023f616bd204c8252f7675e"
+    },
+    "native-kernel-identity/tests/pidfd.rs": {
+      "bytes": 10551,
+      "sha256": "ed310e5152426ae8a3d723ca2869cdcd3fda50e0552cdc16938c638d308cc3b3"
+    },
+    "native-kernel-identity/tests/socket.rs": {
+      "bytes": 2541,
+      "sha256": "2e9d134e7913ddadb564939bf241538690698a9ca7b660213479d843c638fd08"
+    },
+    "native-kernel-identity/tests/termination_control.rs": {
+      "bytes": 9926,
+      "sha256": "f1540527ca78ff2e1df285de118ad01ab3f1f344ae461f012c53efd72dced2ad"
+    },
+    "native-process-owner/src/bootstrap_readiness_tests.rs": {
+      "bytes": 1906,
+      "sha256": "50969c1a23e4dffa753545bed2e69003a8321d31d9ebf29b34a63d9ce9ba4b24"
+    }
+  },
+  "epochs": {
+    "qualified_original_RED": {
+      "cohort": "pokelinux-connectivity-idle-receive-red-sol-5",
+      "selected_control": {
+        "bytes": 20376,
+        "sha256": "d37f78f825a817962400943e2d7400dec14c463fa9a2b7305ed226ffc9728283"
+      },
+      "command": {
+        "bytes": 4830,
+        "sha256": "7541b7ca6595e5b283b903871cce3a0a42eb3a1e93341e4b92d042735156979f"
+      },
+      "SOURCE": {
+        "bytes": 15112,
+        "sha256": "29e5c139cfb8904eaeae8c12386190910c0ffdfd568c07389b40697277f074d2"
+      },
+      "outer": {
+        "bytes": 53513,
+        "sha256": "c12aa71fcfbbc9de3f4ea56773b0f389f22c53f28c25f7f6869b3eb6e06d1918"
+      },
+      "outer_envelope_passed": true,
+      "desired_assertion_passed": false,
+      "direct_outer_wait_EOF_count": 39,
+      "cases": {
+        "idle": {
+          "bytes": 7807,
+          "sha256": "2e9ae9ac90cc26820d72db0bd953fe13ca8ada70b30a06fa20f0ded8d64d6c2d"
+        },
+        "consumed": {
+          "bytes": 7925,
+          "sha256": "87e70b9f41e10546bc9f426ebe0d7575775722571fe914417365eeec55cd5891"
+        },
+        "parent-death": {
+          "bytes": 5362,
+          "sha256": "ebc3a9473349efbbef4fe5d00ae3ad91914e2a1e8b2b57e19bb79cb0f9560f3a"
+        }
+      }
+    },
+    "failed_first_GREEN": {
+      "cohort": "pokelinux-connectivity-idle-receive-green-sol-1",
+      "selected_control": {
+        "bytes": 22917,
+        "sha256": "261e75585bded2aceaab865cf63c59c1b7b73f5ec58a5e8c72ad7be1c16b9f07"
+      },
+      "command": {
+        "bytes": 4866,
+        "sha256": "a89165de725ad1d025be257f587b9863fa690a91e7730693d66e344c6b863af5"
+      },
+      "SOURCE": {
+        "bytes": 18828,
+        "sha256": "e1b280645822641d0abf678955aa972b26d71e92b647aba81a868349bffd2d73"
+      },
+      "outer": {
+        "bytes": 36767,
+        "sha256": "225562d922c35cd802e0e10e0ddd934e3930b2efb004576e62a5d2a09fbf5236"
+      },
+      "outer_envelope_passed": false,
+      "desired_assertion_passed": null,
+      "direct_outer_wait_EOF_count": 27,
+      "cases": {
+        "idle": {
+          "bytes": 8359,
+          "sha256": "07c198323fc04be9ac7bd7b6dbb5891126986d4e31585d03dbfac8f246436a25"
+        },
+        "consumed": {
+          "bytes": 6685,
+          "sha256": "c1d7ab87a0f33bff587cdbfb3ae26783016abab811a19b08a838b8cd4acb14f9"
+        }
+      }
+    },
+    "qualified_revised_RED": {
+      "cohort": "pokelinux-connectivity-idle-receive-red-sol-6",
+      "selected_control": {
+        "bytes": 23695,
+        "sha256": "cb3f2536e16138503d320793db41027704e53e0844505015e17bcb7ca71138a7"
+      },
+      "command": {
+        "bytes": 4830,
+        "sha256": "394e933c937b858083b319fccca8046557d0b1077fe0b09775fe99be6a7921b9"
+      },
+      "SOURCE": {
+        "bytes": 20238,
+        "sha256": "947870a4ce5009d0da5d19eae93d6b72521b9380c3691cf1faa679ce533c35ae"
+      },
+      "outer": {
+        "bytes": 53513,
+        "sha256": "432c44b28020356a5cddf81e7a687fdb8150ba747aabc2995f668e711d062eb6"
+      },
+      "outer_envelope_passed": true,
+      "desired_assertion_passed": false,
+      "direct_outer_wait_EOF_count": 39,
+      "cases": {
+        "idle": {
+          "bytes": 7807,
+          "sha256": "3f6cd8218b23968d5963ca143ea29deb5b4f98232e15d9804d14db141c333c53"
+        },
+        "consumed": {
+          "bytes": 8747,
+          "sha256": "59af62c8cf8b5bbab48746b65e22d1ea51e7aecf3aabf36ad25e21c881bca851"
+        },
+        "parent-death": {
+          "bytes": 5362,
+          "sha256": "62cf10d81b167d7ddddc2a7b531e7b12d6efc80d8164804d034504fcee5f1e47"
+        }
+      }
+    },
+    "qualified_revised_GREEN": {
+      "cohort": "pokelinux-connectivity-idle-receive-green-sol-2",
+      "selected_control": {
+        "bytes": 23692,
+        "sha256": "d7f3802ecd60244e1061dd3b6d00a8fc986e8c4cf025a7face8303475b9e7153"
+      },
+      "command": {
+        "bytes": 4866,
+        "sha256": "9ee2dc218a7b018d7284234bb15fc48263658f7542b38265fa94dde06dafd632"
+      },
+      "SOURCE": {
+        "bytes": 20238,
+        "sha256": "8b3e89d42f5f6ed422f4a1f612fb35ede2e1e8235d6c5ef00bd82ad05b7af7ca"
+      },
+      "outer": {
+        "bytes": 53352,
+        "sha256": "b5c38000d8b36a844d132da794c71d2094f876e6aff227d057022608e485da1c"
+      },
+      "outer_envelope_passed": true,
+      "desired_assertion_passed": true,
+      "direct_outer_wait_EOF_count": 39,
+      "cases": {
+        "idle": {
+          "bytes": 8359,
+          "sha256": "d7f235c09d785b3e5207dbcbc11a7707c4d030f6ab3e8f8debe4946ee62c01db"
+        },
+        "consumed": {
+          "bytes": 8747,
+          "sha256": "8ee9fdcbd22b5140f916ecb96069fa540cb0559d88a2a9fb0d935f615a144c22"
+        },
+        "parent-death": {
+          "bytes": 5362,
+          "sha256": "5aff422d6d553adcbf9f7a157e7fe126f619d044126f2757088565d68bd0aa4e"
+        }
+      }
+    }
+  },
+  "same_final_seven_runner_files": {
+    "closure.py": {
+      "bytes": 3596,
+      "sha256": "646e9cfd5f755b626fe8babfa26637ddac328ede05cdab75aa77cc51332d70d6"
+    },
+    "consumer.py": {
+      "bytes": 6433,
+      "sha256": "44c1d1ed65461d1df586106ad438addc506f3f4f67acb908bcd9e6f3772d241c"
+    },
+    "controller.py": {
+      "bytes": 13146,
+      "sha256": "04678f69680fbfa7ed2a346388d224bbd66c862661d27d34619fe9a9e59c72a9"
+    },
+    "inside.py": {
+      "bytes": 3028,
+      "sha256": "edb90031880868838d855b34468b1b044f0fdf59bf0aeb5912cfb8f735b72f6a"
+    },
+    "owned.py": {
+      "bytes": 12712,
+      "sha256": "5a738b9529a1a0e5d5b0bd20e27e2ec4244d4e61d7c8e0dad96fe1ffbef3c423"
+    },
+    "peer.py": {
+      "bytes": 10728,
+      "sha256": "531428dd32088887d0448f8576a1b25c7bdb7280812c9174c0dc2f079ef9ec91"
+    },
+    "worker_trace.py": {
+      "bytes": 8605,
+      "sha256": "373158ddbd129203915e1153089977d07c069dc39b73d73e40208d7612f00230"
+    }
+  },
+  "baseline_normal_Main": {
+    "bytes": 863208,
+    "sha256": "9d0da0eda806d061ae6a9ef5464ac4ac29bb6260dce1204bde393fa2b7167e39"
+  },
+  "baseline_normal_worker": {
+    "bytes": 746536,
+    "sha256": "034aca1b55a3bcf9f5235cd7d7dcbf26427b18cf0ac4c9f32fe00fb27d57a1aa"
+  },
+  "candidate_normal_worker": {
+    "bytes": 748520,
+    "sha256": "e73777f6f21f274931f53010404ec5e71facafc93ef16a56a9d424139ca886fc"
+  },
+  "original_bounds": {
+    "functional_case_ns": 6000000000,
+    "receive_envelope_ns": 50000000,
+    "explicit_consumed_action_ns": 100000000,
+    "idle_hold_ns": 80000000,
+    "consumed_hold_ns": 80000000,
+    "observation_refresh_ns": 50000000,
+    "observation_read_ns": 100000000,
+    "observation_lease_ns": 250000000,
+    "host_work_close_seconds": [
+      180,
+      200
+    ],
+    "inside_work_close_seconds": [
+      30,
+      40
+    ],
+    "syscall_stop_bound": 8192
+  },
+  "final_pair_closure": {
+    "per_cohort_direct_Scope_wait_EOF_count": 54,
+    "separate_normal_Main_worker_wait_EOF_reports": 2,
+    "separate_exact_known_adopted_worker_waits": 1,
+    "all_three_CIDs_and_names_absent": true,
+    "same_daemon_unchanged_inputs_no_cleanup_errors": true,
+    "retained_namespace_handles_through_custody_then_closed": true,
+    "final_ECHILD": true
+  },
+  "preserved_failure_classification": {
+    "RED2": "Pre-container Docker exact-absence-message normalization failure; no product execution",
+    "RED3": "OCI missing Python in selected build-only image; no product execution",
+    "RED4": "Isolated idle RED; aggregate consumed-control failed,120ms exceeds100ms action; exact SIG9 cause unknown",
+    "GREEN1": "Isolated idle desired pass; aggregate failed because consumed Apply awaited recvmsg-entry before making channel readable; no Apply/no consumed frame,8192 stop bound exhausted"
+  },
+  "limits": {
+    "original_ARM_failure_cause_established": false,
+    "candidate_ARM_persistent_loop_executed": false,
+    "candidate_ARM_normal_release_built": true,
+    "Main_receive_path_changed": false,
+    "Settings_VM_phone_or_Internet_qualified": false,
+    "raw_traces_nonces_or_credentials_published": false
+  }
+}

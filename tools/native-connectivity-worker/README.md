@@ -87,3 +87,55 @@ missing-context RED. Unexpected output, setup or closure faults stay unconfirmed
 The desired contextual Debug structure and detection time must match. Result and
 closed wait/EOF receipts are persisted before the final desired assertion.
 The Debug grammar is a private component diagnostic, not a new control protocol.
+
+## Persistent idle readiness consumer
+
+The exact [`consumer.py`](idle-receive/consumer.py),
+[`controller.py`](idle-receive/controller.py) and
+[`worker_trace.py`](idle-receive/worker_trace.py) execute unchanged across the
+[revised normal-provider RED and GREEN](../../docs/native-connectivity-idle-receive.md).
+The controller's original RED-oriented docstring is preserved with its executed
+bytes. The pure consumer performs no I/O and makes its one desired assertion
+only after the outer scope has qualified all three case closures.
+
+Stage these as `/runner/consumer.py`, `/runner/controller.py` and
+`/runner/worker_trace.py`, beside the exact existing
+`tools/native-installed-services/owned.py`,
+`tools/native-audio-preview/closure.py` and
+`tools/native-connectivity-control/peer.py`. Their hashes are retained in the
+[evidence](../../docs/evidence/native-connectivity-idle-receive-provenance.json).
+Each of `idle`, `consumed` and `parent-death` needs a fresh trusted Docker
+network/PID namespace, network none, root read-only, no host devices and a
+retaining outer supervisor. The selected fixture uses 2 CPUs/2 GiB and only
+NET_ADMIN/SYS_ADMIN/SETPCAP/SYS_PTRACE setup capabilities; Main drops all
+capabilities and only its normal worker retains NET_ADMIN. No physical or
+shared host interface is an admissible target.
+
+After actual loader preflight for both read-only normal providers, an owning
+runner invokes:
+
+```sh
+python3 -B /runner/controller.py --case idle \
+  --main /providers/pokelinux-connectivity-main \
+  --worker /providers/pokelinux-connectivity-service --output /results/case \
+  --work-until-ns ORIGINAL_WORK_BOOTTIME_NS \
+  --close-until-ns ORIGINAL_CLOSE_BOOTTIME_NS
+```
+
+Select `consumed` and `parent-death` separately with fresh output/namespaces.
+The original case is 6 seconds including at most 3 seconds for Main startup.
+Inner work/close bounds are 30/40 seconds, clipped to the original outer
+180/200-second work/close bounds. The outer runner retains actual create,
+attach, container wait, removal, exact CID/name absence, daemon identity and
+all command wait/EOF ownership before invoking the pure final oracle. Neither
+a case-only success nor stopped-process status qualifies the aggregate.
+
+Only the exact fixture-owned single worker is traced. The tracer reads syscall
+metadata, never packet contents or process memory, and detaches at a nonterminal
+stop before normal Main's actual terminal wait. One 80 ms empty-idle stop is
+distinct from the consumed case's single Apply at the post-publish/post-sleep
+`gettid` gate and 80 ms actual 19-byte receive-exit hold. The consumed case must
+still produce natural worker exit 1 and `ReceiveCommand`/`TimedOut` after its
+unchanged 50 ms envelope and before the unchanged 100 ms action cutoff. The
+8192 syscall-stop bound is unchanged. No effect retry, late-frame forgiveness,
+renewed cutoff or supervisor-kill substitute qualifies that control.
