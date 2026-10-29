@@ -143,5 +143,22 @@
     "exact_container_absent": true,
     "all_selected_and_external_inputs_unchanged": true,
     "GUI_actor_permission_audio_qualified": false
+  },
+  "second_joined_vm_attempt": {
+    "passed": false,
+    "selection_sha256": "2561802e351db8a815e8fce2a35e516c34bef459a405dda39f96970e5b3ad179",
+    "execution_sha256": "eb1b7eb97a835b7d1e3e96108c26e8efca8d5e91f172f125016a8fc8937562a9",
+    "result_sha256": "1e2cbc263cf1e176e9758f34beac726480801e7a4926d3f77d0a4b8d3f5f70b7",
+    "normal_permissions_executable_observed": true,
+    "UID": 11045,
+    "six_arguments_and_private_Wayland_observed": true,
+    "genuine_menu_launch_and_Source_focus_observed": true,
+    "initial_frame_sha256": "d27e6b128fa0234850c72df332bbae9b602a8d0024b96f2aacecfe218d260561",
+    "frame_scope": "Private original native-output capture; no fresh QWindow DPR qualification or published screenshot",
+    "failure": "Exact-color text observer aborted on first unavailable frame with antialiased near-muted labels",
+    "permission_changes_observed": 0,
+    "PCM_acceptance_executed": false,
+    "all_guest_QEMU_container_closure_qualified": true,
+    "all_inputs_unchanged": true
   }
 }

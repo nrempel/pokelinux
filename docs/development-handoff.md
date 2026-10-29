@@ -24,7 +24,12 @@ Qt metadata copy relocations are rejected by the guest library. The two expected
 Explicit PIC compilation now fixes this: the compiled-ELF contract goes RED→GREEN,
 normal build/QML clicks/staging pass, and the identical guest consumer returns64/65
 with complete shutdown and input preservation. Retry the normal Omarchy flow with
-fixed ELF3b73a5e5…; no desktop consent/audio success is yet claimed. Ordinary current profiles require `role.kind=application`; frozen
+fixed ELF3b73a5e5…. The second actual run now observes its normal window and real
+Source focus, but the first unavailable frame trips an exact-RGB text observer.
+No Set/PCM run follows; complete cleanup passes. Correct and independently validate
+antialiased label observation and the erroneous durable-receipt-growth predicate;
+production grants change policy without adding receipts. Desktop consent/audio
+acceptance remains open. Ordinary current profiles require `role.kind=application`; frozen
 previous cohorts retain their matching old binary/profile pairs.
 
 Finish the full Omarchy smartphone system described in `smartphone-goal.md`.

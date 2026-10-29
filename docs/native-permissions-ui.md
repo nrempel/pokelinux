@@ -101,3 +101,26 @@ probe deadlines and unchanged guest libraries match RED. Actual waits/EOFs,
 ordinary guest shutdown, QEMU0, exact container absence and input preservation
 pass. This closes the demonstrated loader defect; the full normal Omarchy
 permission/audio retry remains open.
+
+## Normal window observed after the repair
+
+The second genuine Omarchy attempt now observes the fixed normal Permissions
+executable at UID11045 with all six arguments, its owned private Wayland socket,
+a mapped native window, and actual compositor focus with healthy authenticated
+Source state. This advances beyond the first attempt's early process exit.
+
+The observer stops on the first frame about0.24 seconds after the executable
+witness: the caption shows Permission unavailable and both labels are dimmed.
+Button geometry is correct, but the visible antialiased label pixels do not equal
+the expected muted RGB exactly. The observer aborts instead of collecting another
+frame within its existing bound. One early frame cannot distinguish transient
+readiness from persistent unavailability. No Set or PCM acceptance runs. Full
+guest/QEMU/container cleanup and input preservation pass.
+
+Review also finds a downstream observer mistake: permission grants do not append
+to the durable receipt list. The next consumer must observe the requested grant
+transition and changed persisted content, not require a receipt-count increment.
+Neither correction changes production authorization. Validate the visual classifier
+against independent real QML enabled/disabled states before retrying; preserve
+separate visible-state, durable-state and PCM evidence, with no wire-ACK claim.
+The frame remains private and has no new QWindow density or screenshot qualification.
