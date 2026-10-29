@@ -6,8 +6,10 @@ installation and display ownership now pass additional host tests. Scoped Rust
 permission requests, desktop launch and the Rust-backed Allow/Revoke UI are implemented.
 Separate host boundary tests pass. A normal x86 VM now completes actual
 Allow/Play/Revoke/silence and reallow-without-restart, with measured audio and
-normal app closes. Its external viewer fails final-frame protocol handling, so
-the overall end-to-end run remains failed. See [Permissions UI evidence](native-permissions-ui.md). This
+normal app closes in two runs. Their external viewer fails final-frame protocol
+handling; its separate socket/real-server repair passes. A later integrated
+repeat stops earlier without an observed playback producer. Repeatability and
+the complete end-to-end run remain unqualified. See [Permissions UI evidence](native-permissions-ui.md). This
 does not close the permissions or audio matrix entries.
 
 The [cold x86 Omarchy/Sounds checkpoint](native-cold-omarchy-sounds.md) now passes

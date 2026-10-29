@@ -215,3 +215,24 @@ isolated authored X11 cut buffer produces actual ServerCutText; the old reader
 rejects type3, while the repaired reader discards29 bytes and receives the full
 frame and EOF. Exact owned cleanup passes. This does not recover the earlier VM
 payload or identify its originating application; the integrated retry remains open.
+
+## Seventh joined attempt: no observed playback
+
+The next x86 VM selects the bounded ServerCutText repair with unchanged app and
+service executables, phone profile, input sequence and audio bounds. Normal
+Permissions/Sounds launch, Allow and the actual Play touch run. The tone observer
+stops after its original 64 graph observations with `SETUP_FAILURE`: no
+`source.media` producer appears in those snapshots. Both recorded output files
+contain 108,544 silent F32 frames each. This is a partial observation, not a
+completed paired tone/silence acceptance window. A short producer between
+snapshots or a later start is not excluded.
+
+No app wire request, acknowledgment or refusal reason was recorded. Periodic
+read-only Status currently disables Play in the Rust client; a separate held-Status
+client test is the next investigation, not an established explanation for this
+run. Do not extend the observation count or original deadlines to call it passing.
+Revoke, reallow and normal app closes are not completed. Guest/boot closure,
+actual container CLI wait, exact container absence and unchanged inputs pass.
+The external viewer stops after ten actions when the server ends during guest
+failure; this run never tests its repaired final-frame boundary. No screenshot,
+ARM or physical-phone qualification follows.

@@ -449,5 +449,25 @@
       },
       "both_cases_owned_closure_and_exact_container_absence": true
     }
+  },
+  "seventh_joined_vm_attempt": {
+    "scope": "Actual x86 Omarchy normal app entry, partial failed repeat; no phone or screenshot qualification",
+    "passed": false,
+    "selection_sha256": "729d4f2a94213723b941512586c1fa028fe8a660e395e8067e39a8637018d94a",
+    "execution_sha256": "00d7e34728d6e53f133dca2d96195e0971adeea43d1cdc94b760c98bd614a751",
+    "guest_result_sha256": "7ece4b4527b729b26dbe3e2ff14f9f7c703f858f9a464d22bb9e6c374150e5af",
+    "PCM_result_sha256": "99b3b7a6a2cad923b481a9fc8c5a6aed212f30b4f01c38a4346828f5918bb620",
+    "stage": "measure-tone",
+    "PCM_classification": "SETUP_FAILURE",
+    "PCM_error": "bounded graph observation count exceeded",
+    "graph_observations_without_source_media": 64,
+    "recorded_silent_F32_frames_per_output": 108544,
+    "complete_paired_windows": false,
+    "app_wire_request_or_cause_observed": false,
+    "held_Status_interaction_is_proven_cause": false,
+    "final_repaired_viewer_boundary_reached": false,
+    "nested_boot_and_guest_closure_qualified": true,
+    "owned_container_absence_qualified": true,
+    "all_original_and_selected_inputs_unchanged": true
   }
 }

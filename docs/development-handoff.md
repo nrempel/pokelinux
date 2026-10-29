@@ -54,8 +54,15 @@ The viewer now discards bounded ServerCutText (max8 messages,4096 bytes each)
 without applying/logging contents, with eight socket RED→GREEN cases and the
 original parser/refusal checks passing. An actual x11vnc/Xvfb authored-cutbuffer
 pair now passes RED→GREEN, full raw frame/EOF and exact owned cleanup. The original
-VM payload/origin remain unknown. Qualify the integrated retry next; do not
-relabel the earlier runs as fully passing. New QWindow density evidence,
+VM payload/origin remain unknown. The seventh integrated run stops earlier at
+measure-tone: the observer exhausts its original 64 graph observations without
+observing a playback producer. Both recorded outputs are silent; no app wire
+request or refusal cause was captured. The actual Play touch does not establish
+that Play was submitted. Guest/boot cleanup and input preservation pass. This
+run never reaches the repaired final-frame boundary. Test the separate client
+interaction with a held read-only Status response before changing behavior;
+it is not a proven cause of this VM failure. Do not relabel earlier runs as
+fully passing. New QWindow density evidence,
 public screenshots, ARM and physical-phone qualification remain open. Ordinary current profiles require `role.kind=application`; frozen
 previous cohorts retain their matching old binary/profile pairs.
 
