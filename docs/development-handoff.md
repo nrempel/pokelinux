@@ -18,7 +18,13 @@ clicks pass; the full genuine Omarchy flow remains open. See
 [Permissions UI evidence](native-permissions-ui.md). The first joined VM attempt
 reaches the correct menu item but observes only a brief UID11045 actor child,
 without a captured normal executable or window. No consent/PCM test runs; cleanup
-passes. Diagnose startup before retrying the unchanged user actions. Ordinary current profiles require `role.kind=application`; frozen
+passes. A separate exact-ELF guest diagnostic now reproduces exit127 before main:
+Qt metadata copy relocations are rejected by the guest library. The two expected
+64/65 refusal controls fail with identical loader output; complete cleanup passes.
+Explicit PIC compilation now fixes this: the compiled-ELF contract goes RED→GREEN,
+normal build/QML clicks/staging pass, and the identical guest consumer returns64/65
+with complete shutdown and input preservation. Retry the normal Omarchy flow with
+fixed ELF3b73a5e5…; no desktop consent/audio success is yet claimed. Ordinary current profiles require `role.kind=application`; frozen
 previous cohorts retain their matching old binary/profile pairs.
 
 Finish the full Omarchy smartphone system described in `smartphone-goal.md`.

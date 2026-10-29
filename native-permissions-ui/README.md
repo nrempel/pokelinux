@@ -25,10 +25,13 @@ With Qt6 development packages and the locked Cargo dependencies cached locally:
 ```sh
 cmake -S native-permissions-ui -B build/permissions -DCMAKE_BUILD_TYPE=Release
 cmake --build build/permissions --parallel
+ctest --test-dir build/permissions --output-on-failure
 DESTDIR="$PWD/permissions-stage" cmake --install build/permissions --prefix /usr
 ```
 
-CMake builds the Rust clients offline. Cross builds require matching-target static
+CMake builds the Rust clients offline. The Qt-facing C++ targets explicitly use
+PIC; the compiled-ELF tests reject copy relocations in both executables before
+staging. This avoids loader rejection of protected Qt data symbols. Cross builds require matching-target static
 archives and their SHA256 values; see `POKELINUX_PERMISSIONS_CLIENT_ARCHIVE` and
 `POKELINUX_PERMISSIONS_CLIENT_ARCHIVE_SHA256`, plus the shared appearance CMake
 contract. The UI stages its executable, desktop file and shared appearance QML;

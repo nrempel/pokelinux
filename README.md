@@ -32,9 +32,9 @@ are now available; human SSH/VNC access remains unverified.
 [Native permission controls](docs/native-permission-controller.md) are in development:
 the native Permissions app now has Allow/Revoke controls backed by a Rust client.
 Real button-click component tests pass; the complete Omarchy allow/play/revoke
-flow is still being validated. Its first VM run exposed an early startup failure
-before the Permissions window appeared. The frozen preview above does not include
-these controls.
+flow is still being validated. An early startup defect exposed by its first VM
+run is now fixed and passes the same guest loader checks. The desktop flow still
+needs to pass; the frozen preview above does not include these controls.
 
 The same Messages window follows an original Omarchy theme change from Tokyo
 Night to Catppuccin Latte while preserving its local history. Both its Messages

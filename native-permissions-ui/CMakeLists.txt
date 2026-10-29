@@ -51,6 +51,22 @@ find_package(Qt6 REQUIRED COMPONENTS Test)
 add_executable(permissions-click-test tests/click.cpp resources.qrc)
 target_link_libraries(permissions-click-test PRIVATE permissions-client phone-appearance-client Qt6::Quick Qt6::QuickControls2 Qt6::Test)
 target_compile_options(permissions-click-test PRIVATE -Wall -Wextra -Werror -UNDEBUG)
+# Protected Qt data symbols require PIC even in executables: -fPIE may copy them.
+# Keep the C++ archive members PIC as well as the two final executables.
+foreach(qt_target IN ITEMS permissions-client phone-appearance-client pokelinux-permissions permissions-click-test)
+ target_compile_options(${qt_target} PRIVATE -fPIC)
+endforeach()
+include(CTest)
+if(BUILD_TESTING)
+ if(NOT CMAKE_READELF)
+  find_program(CMAKE_READELF NAMES readelf llvm-readelf REQUIRED)
+ endif()
+ foreach(elf_target IN ITEMS pokelinux-permissions permissions-click-test)
+  add_test(NAME ${elf_target}-no-copy-relocations
+   COMMAND "${CMAKE_COMMAND}" "-DREADELF=${CMAKE_READELF}" "-DELF=$<TARGET_FILE:${elf_target}>"
+    -P "${CMAKE_CURRENT_SOURCE_DIR}/tests/no-copy-relocations.cmake")
+ endforeach()
+endif()
 install(TARGETS pokelinux-permissions RUNTIME DESTINATION libexec/pokelinux)
 install(FILES ../native-app/PhoneAppearance.qml DESTINATION share/pokelinux/appearance)
 install(FILES org.omarchy.Permissions.desktop DESTINATION share/applications)

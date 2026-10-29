@@ -43,7 +43,7 @@
       "sha256": "691a5aa88de4133a2f9da61f82f28c54be79ec4d95578ce7283abe6cfec71b1f"
     }
   },
-  "normal_permissions_elf_sha256": "7206911660e96d868e802d8aad1c5c9953dd1ae3410cedc321d93f98346846a6",
+  "normal_permissions_elf_sha256": "3b73a5e51404031a97d1740ce181d2c69c157fd06a0d0491c0b1ec1233078012",
   "normal_owner_elf_sha256": "4b2130851431bcef6f7ba6e7cb035419c71186e43290030bf01c9cbbe45476a3",
   "frozen_ui_source_sha256": {
     "native-permissions-ui/CMakeLists.txt": "e8f6fba51ca07f6163b22bef24f71191ec84bbeb9c8e6fb84013dc95b5b00486",
@@ -98,5 +98,50 @@
     "guest_closure_qualified": true,
     "owned_container_absence_qualified": true,
     "cause": "Unresolved early app-entry or executable exit; not yet a qualified production RED."
+  },
+  "loader_red": {
+    "scope": "Exact normal executable on unchanged guest libraries; pre-Qt main-entry controls",
+    "normal_elf_sha256": "7206911660e96d868e802d8aad1c5c9953dd1ae3410cedc321d93f98346846a6",
+    "expected_exit_codes": [
+      64,
+      65
+    ],
+    "actual_exit_codes": [
+      127,
+      127
+    ],
+    "error": "Copy relocation against protected QSocketNotifier::staticMetaObject; GNU_PROPERTY_1_NEEDED_INDIRECT_EXTERN_ACCESS",
+    "selection_sha256": "8d83003db7758eae0f65b557b5b53e141c7385e7ed113b9c0e1636b56a61dc83",
+    "execution_sha256": "b77c25b4ae0264fb9628c9c743b4e4181e1a4e91abdf9ac3ddaeed92ef812154",
+    "result_sha256": "dd29a8b4944fd41329a3eae16cbdd829c271dd7acae9862d51229142566cc6bb",
+    "guest_source_sha256": "1266723e92c912fb3702d84bf07e29cadf06c6a3ab5fe32adbc0b79d18c81dd8",
+    "both_output_bytes": 306,
+    "both_output_sha256": "4882763b163319398bfa59f98f34de5a460579b8c6d1cd67703af21395e29292",
+    "guest_and_QEMU_closure_qualified": true,
+    "exact_container_absent": true,
+    "all_selected_and_external_inputs_unchanged": true,
+    "Qt_objects_Wayland_or_GUI_started": false
+  },
+  "initial_normal_permissions_elf_sha256": "7206911660e96d868e802d8aad1c5c9953dd1ae3410cedc321d93f98346846a6",
+  "pic_repair": {
+    "changed_behavior": "Qt-facing C++ targets compile with -fPIC; compiled-ELF CTests reject COPY relocations",
+    "compiled_elf_red_receipt_sha256": "b7cd5133030a5c6bec0062e6f161033f900dfdfe6c448d20bd0b2c37d7370c45",
+    "host_green_receipt_sha256": "58e6dd3b310885733e29ad3f2d85b2afa24963dfd037391b78647c6b92f2523e",
+    "host_source_manifest_sha256": "2f1db0d2af78246e8630a639ffc5c0d805a31b0a1132e941b8218ae3254bd0c0",
+    "host_frozen_source_files": 30,
+    "normal_elf_sha256": "3b73a5e51404031a97d1740ce181d2c69c157fd06a0d0491c0b1ec1233078012",
+    "loader_green_selection_sha256": "16f815949a0689e7fe4a86837be522e8091ae236357d0f054647a26b07cf3fc8",
+    "loader_green_execution_sha256": "304249780a8814060808cedb5a50438b2e8384db5266261f383b403d752d39e8",
+    "loader_green_result_sha256": "050d47137eafb1a3fbf215889a9d87a640aff4453a38b5d6d790ab9e94f91264",
+    "same_guest_source_sha256": "1266723e92c912fb3702d84bf07e29cadf06c6a3ab5fe32adbc0b79d18c81dd8",
+    "same_six_execution_sources": true,
+    "actual_guest_exit_codes": [
+      64,
+      65
+    ],
+    "guest_and_QEMU_closure_qualified": true,
+    "exact_container_absent": true,
+    "all_selected_and_external_inputs_unchanged": true,
+    "GUI_actor_permission_audio_qualified": false
   }
 }
