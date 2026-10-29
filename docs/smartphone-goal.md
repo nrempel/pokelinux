@@ -55,6 +55,10 @@ app focus and permission-withheld silence; later playback in that cohort fails.
 A later [complete cold app lifecycle](native-omarchy-app-lifecycle.md) passes
 standard close, fresh menu reopen and normal shutdown with permission withheld.
 Remote-viewer input, a visible permission flow and repeatable audio remain open.
+The separate [Rust audio startup correction](native-audio-startup-deadline.md) now
+passes controlled host RED→GREEN and Source-loss/app-expiry cancellation controls.
+It retains original deadlines and does not retry; this does not qualify graphical
+playback or physical audio.
 Headless native open association, fixed IP and packet round trips, address removal
 and Disconnect pass the separate [ARM virtual-radio boundary](native-wireless-address-packets.md).
 WPA, DHCP/DNS, Settings integration and physical wireless remain open.

@@ -43,6 +43,8 @@ pub struct Intent {
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct PreviewIntent {
     pub route_intent: Intent,
+    /// Immutable application startup bound; admission still uses route_intent.until_ns.
+    pub startup_until_ns: u64,
     pub level: PreviewLevel,
 }
 /// Actor-owned control; it cannot select a route, gain or producer.

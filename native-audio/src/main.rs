@@ -32,9 +32,15 @@ fn preview_level(value: &Value) -> Result<PreviewLevel, &'static str> {
     .ok_or("invalid_preview_level")
 }
 
-fn preview_deadlines(now: BootTime, until_ns: u64) -> Result<(BootTime, BootTime), &'static str> {
-    let start = BootTime::from_elapsed(Duration::from_nanos(until_ns));
-    if start <= now
+fn preview_deadlines(
+    now: BootTime,
+    until_ns: u64,
+    startup_until_ns: u64,
+) -> Result<(BootTime, BootTime, BootTime), &'static str> {
+    let admission = BootTime::from_elapsed(Duration::from_nanos(until_ns));
+    let start = BootTime::from_elapsed(Duration::from_nanos(startup_until_ns));
+    if admission <= now
+        || start < admission
         || start
             > now
                 .checked_after(Duration::from_secs(1))
@@ -43,6 +49,7 @@ fn preview_deadlines(now: BootTime, until_ns: u64) -> Result<(BootTime, BootTime
         return Err("preview_expired");
     }
     Ok((
+        admission,
         start,
         now.checked_after(Duration::from_secs(6))
             .ok_or("deadline_overflow")?,
@@ -447,14 +454,17 @@ impl State {
     }
     fn start_preview(&mut self, peer: Identity, value: &Value) -> Result<u64, &'static str> {
         let object = value.as_object().ok_or("invalid_request")?;
-        if object.len() != 6 || !object.contains_key("lease") {
+        if object.len() != 7 || !object.contains_key("lease") {
             return Err("invalid_request");
         }
         let level = preview_level(value)?;
         let start_sampled_at = BootClock.now();
-        let (start_until, work_until) = preview_deadlines(
+        let (admission_until, start_until, work_until) = preview_deadlines(
             start_sampled_at,
             value["until_boottime_ns"]
+                .as_u64()
+                .ok_or("invalid_deadline")?,
+            value["startup_until_boottime_ns"]
                 .as_u64()
                 .ok_or("invalid_deadline")?,
         )?;
@@ -516,8 +526,9 @@ impl State {
         let admission_ready = self.preview.as_ref().unwrap().process.admission_ready();
         if !admission_ready {
             eprintln!(
-                "preview startup: predicate=admission_not_ready start_sampled_at_ns={} forwarded_start_until_ns={} work_until_ns={} admission_ready=false",
+                "preview startup: predicate=admission_not_ready start_sampled_at_ns={} admission_until_ns={} startup_until_ns={} work_until_ns={} admission_ready=false",
                 start_sampled_at.elapsed().as_nanos(),
+                admission_until.elapsed().as_nanos(),
                 start_until.elapsed().as_nanos(),
                 work_until.elapsed().as_nanos()
             );
@@ -525,11 +536,12 @@ impl State {
             return Err("preview_start_failed");
         }
         let start_checked_at = BootClock.now();
-        if start_checked_at >= start_until {
+        if start_checked_at >= admission_until {
             eprintln!(
-                "preview startup: predicate=startup_cutoff start_sampled_at_ns={} start_checked_at_ns={} forwarded_start_until_ns={} work_until_ns={} admission_ready=true",
+                "preview startup: predicate=admission_cutoff start_sampled_at_ns={} start_checked_at_ns={} admission_until_ns={} startup_until_ns={} work_until_ns={} admission_ready=true",
                 start_sampled_at.elapsed().as_nanos(),
                 start_checked_at.elapsed().as_nanos(),
+                admission_until.elapsed().as_nanos(),
                 start_until.elapsed().as_nanos(),
                 work_until.elapsed().as_nanos()
             );
@@ -550,9 +562,10 @@ impl State {
         self.preview.as_mut().unwrap().lease = lease;
         self.change();
         eprintln!(
-            "preview startup: predicate=admitted start_sampled_at_ns={} start_checked_at_ns={} forwarded_start_until_ns={} work_until_ns={} admission_ready=true",
+            "preview startup: predicate=admitted start_sampled_at_ns={} start_checked_at_ns={} admission_until_ns={} startup_until_ns={} work_until_ns={} admission_ready=true",
             start_sampled_at.elapsed().as_nanos(),
             start_checked_at.elapsed().as_nanos(),
+            admission_until.elapsed().as_nanos(),
             start_until.elapsed().as_nanos(),
             work_until.elapsed().as_nanos()
         );

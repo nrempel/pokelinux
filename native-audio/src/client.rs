@@ -246,14 +246,18 @@ impl Client {
             )
         }
     }
-    /// One explicit finite preview. The actor supplies the already clamped
-    /// CLOCK_BOOTTIME deadline; neither this transport nor the service renews it.
+    /// One explicit finite preview with immutable CLOCK_BOOTTIME bounds.
+    /// Transport/publication uses admission; Main startup uses the application bound.
     pub fn preview_play(
         &mut self,
         route: &str,
         level: PreviewLevel,
         until_ns: u64,
+        startup_until_ns: u64,
     ) -> Result<SendOutcome, SubmitError> {
+        if startup_until_ns < until_ns {
+            return Err(SubmitError::InvalidPreview);
+        }
         if self.stream.is_none() {
             return Err(SubmitError::Closed);
         }
@@ -272,7 +276,7 @@ impl Client {
                 route: route.into(),
                 lease,
             },
-            json!({"op":"preview_play","lease":lease,"route":route,"until_boottime_ns":until_ns,"level_percent":level.percent(),"muted":level.muted()}),
+            json!({"op":"preview_play","lease":lease,"route":route,"until_boottime_ns":until_ns,"startup_until_boottime_ns":startup_until_ns,"level_percent":level.percent(),"muted":level.muted()}),
             until_ns,
         )
     }

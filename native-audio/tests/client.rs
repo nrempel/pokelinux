@@ -529,21 +529,42 @@ fn actual_listener_credentials_and_original_main_catalog_acquire_route_wire() {
 }
 
 #[test]
-fn explicit_preview_uses_one_original_absolute_deadline_and_owned_lease() {
+fn explicit_preview_preserves_distinct_admission_and_startup_bounds() {
     use pokelinux_audio::PreviewState;
     let (mut c, mut peer, _) = pair();
     inspected(&mut c, &mut peer);
-    let original = now() + 900_000_000;
+    let original = now() + 400_000_000;
+    let startup = original + 500_000_000;
     assert_eq!(
-        c.preview_play("media-a7", PreviewLevel::new(50, false).unwrap(), original),
+        c.preview_play(
+            "media-a7",
+            PreviewLevel::new(50, false).unwrap(),
+            original,
+            original - 1
+        ),
+        Err(SubmitError::InvalidPreview)
+    );
+    quiet(&peer);
+    assert_eq!(
+        c.preview_play(
+            "media-a7",
+            PreviewLevel::new(50, false).unwrap(),
+            original,
+            startup
+        ),
         Ok(SendOutcome::Sent)
     );
     assert_eq!(
         request(&peer),
-        json!({"op":"preview_play","lease":null,"route":"media-a7","level_percent":50,"muted":false,"until_boottime_ns":original})
+        json!({"op":"preview_play","lease":null,"route":"media-a7","level_percent":50,"muted":false,"until_boottime_ns":original,"startup_until_boottime_ns":startup})
     );
     assert_eq!(
-        c.preview_play("media-a7", PreviewLevel::new(50, false).unwrap(), original),
+        c.preview_play(
+            "media-a7",
+            PreviewLevel::new(50, false).unwrap(),
+            original,
+            startup
+        ),
         Err(SubmitError::Busy)
     );
     quiet(&peer);
@@ -609,7 +630,12 @@ fn expired_preview_cannot_publish_buffered_start_or_retry_itself() {
     inspected(&mut c, &mut peer);
     let original = now() + 40_000_000;
     assert_eq!(
-        c.preview_play("media-a7", PreviewLevel::new(50, false).unwrap(), original),
+        c.preview_play(
+            "media-a7",
+            PreviewLevel::new(50, false).unwrap(),
+            original,
+            original + 800_000_000
+        ),
         Ok(SendOutcome::Sent)
     );
     assert_eq!(request(&peer)["until_boottime_ns"], original);
@@ -626,6 +652,7 @@ fn expired_preview_cannot_publish_buffered_start_or_retry_itself() {
         c.preview_play(
             "media-a7",
             PreviewLevel::new(50, false).unwrap(),
+            now() + 800_000_000,
             now() + 900_000_000
         ),
         Err(SubmitError::Closed)
@@ -641,14 +668,14 @@ fn exact_preview_level_socket_wire_and_owner_refusal_never_retry() {
         let original = now() + 900_000_000;
         let level = PreviewLevel::new(percent, muted).unwrap();
         assert_eq!(
-            c.preview_play("media-a7", level, original),
+            c.preview_play("media-a7", level, original, original),
             Ok(SendOutcome::Sent)
         );
         assert_eq!(
             request(&peer),
             json!({
                 "op":"preview_play", "lease":null, "route":"media-a7",
-                "level_percent":percent, "muted":muted, "until_boottime_ns":original
+                "level_percent":percent, "muted":muted, "until_boottime_ns":original,"startup_until_boottime_ns":original
             })
         );
         // Actual socket response control, not evidence that Main rejected input.
@@ -675,6 +702,7 @@ fn observed_preview(c: &mut Client, peer: &mut UnixStream, generation: u64) -> S
         c.preview_play(
             "media-a7",
             PreviewLevel::new(50, false).unwrap(),
+            now() + 800_000_000,
             now() + 900_000_000
         ),
         Ok(SendOutcome::Sent)

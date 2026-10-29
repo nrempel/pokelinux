@@ -44,9 +44,19 @@ are separate from the earlier next-preview level cohort below.
 
 Play is never queued or replayed. Its original absolute `CLOCK_BOOTTIME` deadline
 passes through app, actor and audio owner; preparation only reduces remaining
-TTL. Starting must settle before that limit. The producer has a separate
-six-second work limit. Backend loss, changed authority/route, app connection loss
-and revocation retire ownership; recovery cannot replay old Play.
+TTL. The [qualified startup correction](native-audio-startup-deadline.md) separates two immutable bounds:
+`D = min(A, captured Source expiry)` for transport, admission and positive reply
+publication, and `A = min(original app deadline, original TTL expiry)` for admitted
+startup. The trusted owner-to-Main request carries both `until_boottime_ns` and
+`startup_until_boottime_ns`; Main requires the seven-field shape and
+`now < D <= A <= now + 1 second`, and rechecks D after producer creation.
+Successful Starting publication retains the existing approved background lease.
+The producer keeps its separate six-second work limit. Backend loss, changed
+authority/route, app connection loss and revocation retire ownership; recovery
+cannot replay old Play. The controlled held-Source RED→GREEN and existing Source-loss/app-expiry controls
+pass. Formatting, strict Clippy and selected host component checks also pass
+(56 audio, 117 lifecycle and 34 owner cases). These controlled host results do not
+qualify PCM, genuine graphical playback, ARM execution or phone hardware.
 
 Stop fences acceptance, closes PCM input and signals the retained child without
 blocking the request loop. Cleanup may wait behind one read-only status under its

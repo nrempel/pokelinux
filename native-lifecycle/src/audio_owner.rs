@@ -139,9 +139,12 @@ impl Provider for Owner {
     }
     fn play(&mut self, preview: &PreviewIntent) -> io::Result<bool> {
         let intent = &preview.route_intent;
-        let result = self
-            .client
-            .preview_play(&intent.route, preview.level, intent.until_ns);
+        let result = self.client.preview_play(
+            &intent.route,
+            preview.level,
+            intent.until_ns,
+            preview.startup_until_ns,
+        );
         let sent = self.sent(
             result,
             Operation::Preview {

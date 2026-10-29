@@ -22,8 +22,11 @@ configuration change is the standard close binding; the matched consumer has a
 real missing-binding RED. Both actual app windows pass Pixel 10/focus and 48,000
 silent PCM frames each with permission withheld. The earlier host-readability
 and post-registry Source-readiness failures remain separate. This is guest uinput,
-not viewer input. A separate paused host-only Unix RFB/frame/closure probe passes;
-join its input to the real guest next, then deliver the interactive preview.
+not viewer input. A separate paused host-only Unix RFB/frame/closure probe passes.
+The full viewer continuation now reaches the real guest, but stops before any
+input because its QEMU host window is 640×480 centered inside the native canvas,
+even with fullscreen selected. Correct host window setup, retain the exact geometry
+checks, and then deliver the interactive preview. No capture resizing.
 
 The earlier [menu integration](native-omarchy-menu-launch.md) closes actual
 bar→Apps→Sounds RED→GREEN in genuine Omarchy. The new actor-owned UID 11042 app
@@ -37,11 +40,19 @@ Stop-after-Ready remain failed; independent custody and guest closure pass.
 Prioritize a reproducible interactive VM preview with the now-qualified
 menu/close/reopen and normal shutdown, clearly labeling playback experimental. Complete one bounded
 audio deadline correction and then a visible Sounds Allow/Revoke page. The private
-controlled startup fixture's Rust release and Qt 6.8 link now pass. Two runtime
-attempts fail before Play: missing observation-mode argv, then setup grant/NSS
-prerequisites. The grant-race cause is inferred, not established; no desired
-startup RED or deadline repair is qualified. Preserve the existing background
-promotion policy described below. Do not expand this into
+controlled Qt 6.8.2 startup fixture now qualifies an unpaused control and a held-Source
+RED against unchanged production audio code. Main expires Starting at captured D
+while Source remains fresh and the original app budget remains valid; the intended
+final native assertion fails after prerequisites, with full original cleanup and
+unchanged inputs. Earlier setup/observer failures and a separate outer-runner cleanup
+failure remain preserved, distinct from that qualified RED. The narrow Rust [D/A separation](native-audio-startup-deadline.md) now passes the
+same held-Source positive oracle and existing Source-loss/app-expiry controls, with
+full closure and no replay. Formatting, strict Clippy and selected host component
+checks pass: 56 audio, 117 lifecycle and 34 owner cases. Matched normal release
+binaries are built; graphical deployment and playback remain separate gates.
+This establishes the controlled startup failure mechanism, not the cause of earlier
+unrelated graphical audio failures. Preserve the existing background promotion
+policy described below. Do not expand this into
 another unbounded fixture campaign or treat the VM as phone qualification.
 
 The persistent connectivity worker now [checks readiness before starting its

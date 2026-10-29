@@ -332,6 +332,7 @@ impl Session {
                 preview: Some(level),
             } => provider.play(&PreviewIntent {
                 route_intent: stamp.intent().clone(),
+                startup_until_ns: stamp.startup_until_ns(),
                 level: *level,
             }),
             Kind::Mute {

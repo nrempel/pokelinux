@@ -1,0 +1,111 @@
+{
+  "schema": 1,
+  "scope": "Controlled host integration: unshown Qt 6.8.2, authored Source, actual Rust actor and normal Main, private PipeWire. No PCM, genuine desktop, ARM or physical qualification.",
+  "status": "Controlled host RED\u2192GREEN and cancellation regressions qualified",
+  "unpaused_control_qualification_sha256": "3f42fcd6e316f4e889f3c080ac4c3bc42ccf1796592e4c23fd12d99b9c45baa7",
+  "red_qualification_sha256": "2d083b94324984b37b71213f7621cb252ce81eadb0d09e2ca19bd6e0aaccd997",
+  "green_qualification_sha256": "db222272ff2f7cfe5a068ae7d749ea7b09afde0b9db03de258af42547508636e",
+  "build_qualification_sha256": "2dbc7ec72ecc02634820cf5feb07c93137750d8a8e64488a4b245be29fb5ac68",
+  "red": {
+    "native_assertion_exit": 101,
+    "failure": "Admitted Starting retired at captured Source deadline while Source remained fresh and original app budget remained valid.",
+    "fully_closed": true
+  },
+  "green": {
+    "classification": "STARTUP_BOUNDARY_PASS",
+    "native_assertion_exit": 0,
+    "native_assertion_after_actual_runtime_cleanup": true,
+    "same_frozen_positive_consumer_and_all18fixture_sources_as_RED": true,
+    "only_replaced_roles": [
+      "pokelinux-audio",
+      "preview-actor"
+    ],
+    "old_remaining3ELFs_retained_exactly": true,
+    "D_ns": 7188444855031009,
+    "immutable_A_ns": 7188445763596546,
+    "original_app_until_ns": 7188445764561701,
+    "actor_original_ttl_ms": 999,
+    "A_equals_min_original_app_and_original_actor_TTL": true,
+    "Main_admission_postspawn_checked_before_D": true,
+    "Main_startup_A_and_same6second_work_verified": true,
+    "margins_ns": {
+      "Starting_before_D": 50146907,
+      "PW_resume_after_D": 20326376,
+      "Playing_after_D": 396034090,
+      "Playing_before_immutable_A": 512531447,
+      "graph_before_immutable_A": 496573911
+    },
+    "actual_packet_counts": {
+      "media_status": 6,
+      "media_route": 1,
+      "media_preview_play": 1
+    },
+    "Source_advancing_same_revision_focus_samples": 26,
+    "Source_no_loss_recovery_and_closed_no_overlapping_provider_teardown": true,
+    "credential_and_dumpable_restoration_exact": true,
+    "actual_direct_wait_EOF_counts": {
+      "outer": 16,
+      "entry": 7,
+      "controller": 9
+    },
+    "adopted_ECHILD": true,
+    "Source_actual_wait_focusFD_and_app_producer_closure": true,
+    "same_daemon_exact_CID_and_name_absence": true,
+    "original_bounds_floors_and_all_inputs_qualified": true,
+    "files": {
+      "SOURCE.json": "d4442036ba58c43ac8c43b303f488e349662ac15cea73e5322bd286ab7a2e118",
+      "CONTRACT.json": "5116ab39217c450c6060177ff3604523c5ed683855cfdff6a5c11eecc774e403",
+      "PREPARED-PINS.json": "d8cc6c7031e31c63dbc810c3665c55fd6c39ae8a037da47c40e4f10a405cb792",
+      "providers.json": "ca9749c9afba7be17c91d4cee42338630d0216ed0a6ee3875a19b307151b0cb8",
+      "run/receipt.json": "f01bc1e5fc35e333dd4caa4f3280aa8a4dabd598764a8cef5d2272514a51ad1b",
+      "run/out/result.json": "022d92ac572daee0834561ab781a5ff642faf9140b02572a8eb5a5b695040868",
+      "run/out/runtime/result.json": "3fb8ffde43babf247edd9793ec7da02c5dc64f0563a9fe3fb8ab10c8eab96edd",
+      "run/out/runtime/006-normal-nativeaudio.log": "66d65b648437fac6bd84d05714c489d9945e0cfb09c2e7ffcf931eb5e8784df3",
+      "run/out/runtime/007-plain-real-owner-actor.log": "cffb8e9caf5860714f307b419060a5ca4fe25df2ddbcf2a8c5cd38cf9557902e"
+    }
+  },
+  "green_roles": {
+    "pokelinux-audio": {
+      "bytes": 1361136,
+      "sha256": "f4a2af97259eee10bd7b3b3127c9c8ec78352f3d5223814c7c19384de4655a56"
+    },
+    "sounds-qml-input-client": {
+      "bytes": 7442192,
+      "sha256": "686a62388ba07ee0c2cb0669de78bb4fa56160f5a95ea17411fbfd98c50d8386"
+    },
+    "preview-actor": {
+      "bytes": 2047992,
+      "sha256": "7f0b29a59bc9b6164b02efd7e5f66c6596ef648eb489a393d3ec9faffbe10a01"
+    },
+    "preview-qml-assert": {
+      "bytes": 636992,
+      "sha256": "1b16d4e778ba6d7ae7b95446b8297737fb532772b3c4c53f2d191e103ba2763c"
+    },
+    "lifecycle-launcher": {
+      "bytes": 1157464,
+      "sha256": "b660dcff386d21ef56ee0cb7e3fee6d12b50f061697b0a959c18f8d9c65a7990"
+    }
+  },
+  "component_checks": {
+    "audio_passed": 56,
+    "lifecycle_passed": 117,
+    "lifecycle_ignored": 26,
+    "selected_owner_passed": 34,
+    "format_and_strict_clippy": true
+  },
+  "reporting_limits": [
+    "The runtime record inherits a stale two-Play label; actual packets establish one Play and no retry.",
+    "Old RED-only Main diagnostic parsing is not the positive oracle.",
+    "Earlier setup, observer, graphical and outer-cleanup failures remain separate."
+  ],
+  "cancellation_regressions_qualification_sha256": "1e9ebac3bb94b3df5500c60e81222f2623808d64480fed6bc18325797331cb25",
+  "cancellation_regressions": {
+    "source_loss": "SampleExpired, completed revoke, fresh accepted recovery before PipeWire resume; original producer already dead, no Playing or replay.",
+    "app_expiry": "Continuously fresh Source; Main expires Starting at original immutable A, no Playing or replay after backend resumes beyond app cutoff.",
+    "same_fixture_sources_and_roles": true,
+    "each_native_assertion_exit": 0,
+    "each_explicit_play_count": 1,
+    "each_full_cleanup_and_input_integrity_passed": true,
+    "attempts_per_case": 1
+  }
+}

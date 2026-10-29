@@ -58,6 +58,11 @@ into one complete phone session.
 | Local messages | Permission-aware history, revocation, durable storage and clean-reboot persistence; synthetic incoming Binder tests are tracked separately. Carrier SMS remains open. | [Installed history](docs/native-installed-messages-history.md), [incoming test boundary](docs/native-messages-incoming.md) |
 | Radio, camera and sensors | Rust protocol, ownership and lifecycle components with original-code comparisons and synthetic IPC tests, including actual ARM kernel Binder. Complete IMS, calls and physical capture/sensors remain open. | [Radio](docs/native-radio-operator.md), [camera](docs/native-camera-service.md), [sensors](docs/native-sensors-boundary.md) |
 
+A controlled [audio startup test](docs/native-audio-startup-deadline.md) now survives
+a delayed backend within the original Play time limit. Losing session authority or
+reaching the app timeout still cancels it without retry. This is a host integration
+result; repeatable graphical playback and phone audio remain open.
+
 The current [Messages background owner](docs/native-installed-messages-history.md#current-owner-integration) now passes one fresh ARM/PID1 cold boot, exact private history reads and normal Stop. A second new boot and graphical session remain open.
 
 An earlier cold x86 recovery trace starts genuine Omarchy and the Rust-backed Sounds

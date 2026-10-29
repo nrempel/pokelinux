@@ -56,6 +56,10 @@ pub(crate) struct MediaLeaseStamp {
     revocation: u64,
 }
 impl MediaStamp {
+    /// Original application/TTL bound, independent of the captured Source lease.
+    pub(crate) fn startup_until_ns(&self) -> u64 {
+        self.authority.until
+    }
     pub(crate) fn intent(&self) -> &MediaIntent {
         &self.intent
     }
