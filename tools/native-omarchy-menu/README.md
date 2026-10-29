@@ -44,3 +44,6 @@ permission-withheld close/reopen consumers directly from the named public cold
 bases, using `git apply --unidiff-zero`. They do not stack on the earlier menu
 patches. [Actual results](../../docs/native-omarchy-app-lifecycle.md) distinguish
 this complete user loop from audio playback and remote-viewer input.
+
+The later [viewer sources](../native-omarchy-viewer/README.md) reconstruct the
+separately qualified Unix RFB input continuation.

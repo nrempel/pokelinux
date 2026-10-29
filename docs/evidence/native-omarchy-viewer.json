@@ -1,0 +1,410 @@
+{
+  "schema": 1,
+  "qualified": true,
+  "scope": "Cold x86 KVM genuine Omarchy, private Unix RFB automated input, permission-withheld Sounds close/reopen, native final frame and normal shutdown. No human/SSH, consent/Play, ARM or physical-phone claim.",
+  "selection_sha256": "c11c13c35c851b975ceff6c78c14dec757d8cae1ac845bed33b5092454ee9bad",
+  "execution_sha256": "04d3a8612143e69a5ce08fab9909e387cf39540b023f6964d820450cb797b4a3",
+  "independent_audit_sha256": "4a9fa2656c3048d770aab738223b8851ebb778c4d06bbdcc4300a61d06d5d447",
+  "records": {
+    "result.json": "55d40762aee666a189c68321a102f0aa12d12d57afc342a5bde9aa6be21fbe5c",
+    "boot-result.json": "2206582a7a6e48346e5c75d4602c9f73c612fd5fb1da2fbc2e35726a414aa993",
+    "bootstrap-result.json": "5e0a6dcfc9c1045255c98a2a9eed4fd8d0eed2c1831482cd492a1b94d18b1b1f",
+    "viewer-worker-result.json": "09138c6481301d5f8f001d9dece994423153f50e524e0eb3a9a369555385ae8a"
+  },
+  "actions": [
+    {
+      "action": "bar-1",
+      "outcome": "sent_once",
+      "packet_count": 3,
+      "native_viewport": {
+        "x": 0,
+        "y": 0,
+        "width": 1080,
+        "height": 2424
+      },
+      "keyboard_focus_valid": true,
+      "readonly_observer": true
+    },
+    {
+      "action": "apps-1",
+      "outcome": "sent_once",
+      "packet_count": 3,
+      "native_viewport": {
+        "x": 0,
+        "y": 0,
+        "width": 1080,
+        "height": 2424
+      },
+      "keyboard_focus_valid": true,
+      "readonly_observer": true
+    },
+    {
+      "action": "sounds-1",
+      "outcome": "sent_once",
+      "packet_count": 3,
+      "native_viewport": {
+        "x": 0,
+        "y": 0,
+        "width": 1080,
+        "height": 2424
+      },
+      "keyboard_focus_valid": true,
+      "readonly_observer": true
+    },
+    {
+      "action": "close-1",
+      "outcome": "sent_once",
+      "packet_count": 4,
+      "native_viewport": {
+        "x": 0,
+        "y": 0,
+        "width": 1080,
+        "height": 2424
+      },
+      "keyboard_focus_valid": true,
+      "readonly_observer": true
+    },
+    {
+      "action": "bar-2",
+      "outcome": "sent_once",
+      "packet_count": 3,
+      "native_viewport": {
+        "x": 0,
+        "y": 0,
+        "width": 1080,
+        "height": 2424
+      },
+      "keyboard_focus_valid": true,
+      "readonly_observer": true
+    },
+    {
+      "action": "apps-2",
+      "outcome": "sent_once",
+      "packet_count": 3,
+      "native_viewport": {
+        "x": 0,
+        "y": 0,
+        "width": 1080,
+        "height": 2424
+      },
+      "keyboard_focus_valid": true,
+      "readonly_observer": true
+    },
+    {
+      "action": "sounds-2",
+      "outcome": "sent_once",
+      "packet_count": 3,
+      "native_viewport": {
+        "x": 0,
+        "y": 0,
+        "width": 1080,
+        "height": 2424
+      },
+      "keyboard_focus_valid": true,
+      "readonly_observer": true
+    }
+  ],
+  "epochs": [
+    {
+      "app_PID": 2025,
+      "actor_PID": 1412,
+      "UIDs": [
+        11042,
+        11042,
+        11042,
+        11042
+      ],
+      "GIDs": [
+        11042,
+        11042,
+        11042,
+        11042
+      ],
+      "supplementary_groups": [],
+      "normal_ELF_sha256": "6850cba1361dc9eb22dc40d1a2fb8b9d8a1ef5360cc5ea1c807eeb736a660286",
+      "window_metadata": {
+        "kind": "sounds_window_metadata",
+        "pid": 2025,
+        "schema": 1,
+        "screen": {
+          "available_geometry": [
+            0,
+            0,
+            411,
+            923
+          ],
+          "dpr": 3,
+          "geometry": [
+            0,
+            0,
+            411,
+            923
+          ],
+          "logical_dpi": [
+            96,
+            96
+          ],
+          "name": "Virtual-1",
+          "physical_dpi": [
+            160.60615384615383,
+            160.57671232876712
+          ],
+          "physical_mm": [
+            65,
+            146
+          ]
+        },
+        "title": "Sounds",
+        "window": {
+          "dpr": 2.625,
+          "exposed": true,
+          "geometry": [
+            0,
+            0,
+            369,
+            855
+          ],
+          "visible": true
+        }
+      },
+      "pixel_qualification": {
+        "measurement_contract_version": 2,
+        "qualified": true,
+        "failures": [],
+        "densities": {
+          "x": {
+            "native_pixels_over_wl_mm_ppi": 422.03076923076924,
+            "qt_physical_dpi_times_screen_dpr_diagnostic": 481.8184615384615,
+            "qt_physical_dpi_times_target_window_dpr_ppi": 421.5911538461538
+          },
+          "y": {
+            "native_pixels_over_wl_mm_ppi": 421.70958904109585,
+            "qt_physical_dpi_times_screen_dpr_diagnostic": 481.7301369863013,
+            "qt_physical_dpi_times_target_window_dpr_ppi": 421.51386986301367
+          }
+        },
+        "pixel_dimensions": {
+          "height": 2424,
+          "refresh_millihz": 60000,
+          "width": 1080
+        },
+        "native_surface_dpr": 2.625,
+        "qt_screen_dpr_diagnostic": 3,
+        "physical_qt_coordinate_basis": "actual target QWindow DPR with less than one logical pixel rounding per axis; integer QScreen DPR diagnostic retained",
+        "logical_geometry": {
+          "x": 0,
+          "y": 0,
+          "width": 411,
+          "height": 923
+        },
+        "physical_size_scope": "actual Wayland/Qt metadata of selected simulation profile; DRM connector/base EDID precision separately recorded"
+      },
+      "quiet_PCM_frames": 48000,
+      "quiet_PCM_stats": {
+        "speaker": {
+          "frames": 24000,
+          "finite_all": true,
+          "rms": 0.0,
+          "peak": 0.0,
+          "tone_amplitudes": {
+            "440": 0.0,
+            "880": 0.0
+          },
+          "expected_hz": 0
+        },
+        "earpiece": {
+          "frames": 24000,
+          "finite_all": true,
+          "rms": 0.0,
+          "peak": 0.0,
+          "tone_amplitudes": {
+            "440": 0.0,
+            "880": 0.0
+          },
+          "expected_hz": 0
+        }
+      }
+    },
+    {
+      "app_PID": 2278,
+      "actor_PID": 1412,
+      "UIDs": [
+        11042,
+        11042,
+        11042,
+        11042
+      ],
+      "GIDs": [
+        11042,
+        11042,
+        11042,
+        11042
+      ],
+      "supplementary_groups": [],
+      "normal_ELF_sha256": "6850cba1361dc9eb22dc40d1a2fb8b9d8a1ef5360cc5ea1c807eeb736a660286",
+      "window_metadata": {
+        "kind": "sounds_window_metadata",
+        "pid": 2278,
+        "schema": 1,
+        "screen": {
+          "available_geometry": [
+            0,
+            0,
+            411,
+            923
+          ],
+          "dpr": 3,
+          "geometry": [
+            0,
+            0,
+            411,
+            923
+          ],
+          "logical_dpi": [
+            96,
+            96
+          ],
+          "name": "Virtual-1",
+          "physical_dpi": [
+            160.60615384615383,
+            160.57671232876712
+          ],
+          "physical_mm": [
+            65,
+            146
+          ]
+        },
+        "title": "Sounds",
+        "window": {
+          "dpr": 2.625,
+          "exposed": true,
+          "geometry": [
+            0,
+            0,
+            369,
+            855
+          ],
+          "visible": true
+        }
+      },
+      "pixel_qualification": {
+        "measurement_contract_version": 2,
+        "qualified": true,
+        "failures": [],
+        "densities": {
+          "x": {
+            "native_pixels_over_wl_mm_ppi": 422.03076923076924,
+            "qt_physical_dpi_times_screen_dpr_diagnostic": 481.8184615384615,
+            "qt_physical_dpi_times_target_window_dpr_ppi": 421.5911538461538
+          },
+          "y": {
+            "native_pixels_over_wl_mm_ppi": 421.70958904109585,
+            "qt_physical_dpi_times_screen_dpr_diagnostic": 481.7301369863013,
+            "qt_physical_dpi_times_target_window_dpr_ppi": 421.51386986301367
+          }
+        },
+        "pixel_dimensions": {
+          "height": 2424,
+          "refresh_millihz": 60000,
+          "width": 1080
+        },
+        "native_surface_dpr": 2.625,
+        "qt_screen_dpr_diagnostic": 3,
+        "physical_qt_coordinate_basis": "actual target QWindow DPR with less than one logical pixel rounding per axis; integer QScreen DPR diagnostic retained",
+        "logical_geometry": {
+          "x": 0,
+          "y": 0,
+          "width": 411,
+          "height": 923
+        },
+        "physical_size_scope": "actual Wayland/Qt metadata of selected simulation profile; DRM connector/base EDID precision separately recorded"
+      },
+      "quiet_PCM_frames": 48000,
+      "quiet_PCM_stats": {
+        "speaker": {
+          "frames": 24000,
+          "finite_all": true,
+          "rms": 0.0,
+          "peak": 0.0,
+          "tone_amplitudes": {
+            "440": 0.0,
+            "880": 0.0
+          },
+          "expected_hz": 0
+        },
+        "earpiece": {
+          "frames": 24000,
+          "finite_all": true,
+          "rms": 0.0,
+          "peak": 0.0,
+          "tone_amplitudes": {
+            "440": 0.0,
+            "880": 0.0
+          },
+          "expected_hz": 0
+        }
+      }
+    }
+  ],
+  "final_RFB_frame": {
+    "RFB_version": "3.8",
+    "security_type": 1,
+    "exclusive_client": true,
+    "server_name_sha256": "581855c6ecead55f14c4db5cf0195783bf0f930919f67889cb5ffcad13e6220b",
+    "width": 1080,
+    "height": 2424,
+    "requested_pixel_format": "little-endian32/depth24/R16G8B0",
+    "sole_encoding": "raw",
+    "rectangles": [
+      {
+        "x": 0,
+        "y": 0,
+        "width": 1080,
+        "height": 2424
+      }
+    ],
+    "bell_count": 0,
+    "framebuffer_update_padding_byte": 21,
+    "framebuffer_update_rectangle_count": 1,
+    "raw_bytes_received": 10471680,
+    "frame_bytes": 10471680,
+    "frame_sha256": "c466ac6dcd40df49050f5324735019fce44b9efb66ed4a85a2727f0b12d1ed4b",
+    "frame_receipt_function_sends_input": false,
+    "meaningful_guest_picture_required": false,
+    "pixel_profile_or_input_qualified_by_frame_alone": false
+  },
+  "screenshot": {
+    "path": "docs/assets/omarchy-viewer-sounds-reopened.png",
+    "sha256": "317dcad695402e040bf4fb753b0debff19add9a203334623c6b0bc0614582d18",
+    "dimensions": [
+      1080,
+      2424
+    ],
+    "conversion": "Lossless BGRX to RGB PNG; no resizing/content editing"
+  },
+  "closure": {
+    "host_wait_EOF_receipts": 7,
+    "boot_wait_EOF_receipts": 8,
+    "bootstrap_wait_EOF_receipts": 5,
+    "guest_wait_EOF_receipts": 199,
+    "readonly_helper_wait_EOF_receipts": 7,
+    "QEMU_actual_exit": 0,
+    "QMP_guest_shutdown": {
+      "guest": true,
+      "reason": "guest-shutdown"
+    },
+    "QMP_socket_EOF": true,
+    "guest_case_closure_qualified": true,
+    "exact_container_absent": true,
+    "same_daemon": true,
+    "all_inputs_unchanged": true
+  },
+  "preserved_failures": [
+    "Receipt-count preparation defect before execution.",
+    "Legacy vmmouse selected instead of intended virtio tablet.",
+    "Initial host viewport mismatch; first failed tuple was not captured.",
+    "Fullscreen selection still observed640x480 at220,972.",
+    "All seven UI actions passed, but final frame failed combined padding/count predicate; failed header values were not recorded."
+  ],
+  "parser_scope": "Same authored-byte consumer RED\u2192GREEN, nine cases; no socket or failed-header claim from that small test."
+}

@@ -1,0 +1,395 @@
+{
+  "schema": 1,
+  "scope": "authenticated extracted tree and static ELF bytes only, no new-binary execution",
+  "DOWNLOAD_sha256": "24930b44407217dc2665bc212386bd0629c9d684bf2ad09f90497cfb955a1d33",
+  "runtime_image": "sha256:3b6891447ad0490585badb0cbbac5658238b9dc61bfa57e64a4cbad050be8f1f",
+  "files": [
+    {
+      "path": "usr",
+      "mode": "0o755",
+      "kind": "directory"
+    },
+    {
+      "path": "usr/bin",
+      "mode": "0o755",
+      "kind": "directory"
+    },
+    {
+      "path": "usr/bin/Xdummy",
+      "mode": "0o755",
+      "kind": "regular",
+      "bytes": 46844,
+      "sha256": "e059cf8c7c76b0d2c5d6c0f689f869c1c627ab362c545e89717bf699fc699b6d"
+    },
+    {
+      "path": "usr/bin/x11vnc",
+      "mode": "0o755",
+      "kind": "regular",
+      "bytes": 1657536,
+      "sha256": "249bdc17e09fd96ea73ca7fbec2d8f3cd9ff411d0bbfb634d99431548fb77132"
+    },
+    {
+      "path": "usr/lib",
+      "mode": "0o755",
+      "kind": "directory"
+    },
+    {
+      "path": "usr/lib/x86_64-linux-gnu",
+      "mode": "0o755",
+      "kind": "directory"
+    },
+    {
+      "path": "usr/lib/x86_64-linux-gnu/libXtst.so.6",
+      "mode": "0o777",
+      "kind": "symlink",
+      "target": "libXtst.so.6.1.0"
+    },
+    {
+      "path": "usr/lib/x86_64-linux-gnu/libXtst.so.6.1.0",
+      "mode": "0o644",
+      "kind": "regular",
+      "bytes": 26976,
+      "sha256": "90289665882c7f141ef6ac4853c17ac473d8644576db5d86961433ed3c586eac"
+    },
+    {
+      "path": "usr/lib/x86_64-linux-gnu/liblzo2.so.2",
+      "mode": "0o777",
+      "kind": "symlink",
+      "target": "liblzo2.so.2.0.0"
+    },
+    {
+      "path": "usr/lib/x86_64-linux-gnu/liblzo2.so.2.0.0",
+      "mode": "0o644",
+      "kind": "regular",
+      "bytes": 145320,
+      "sha256": "c5425e5594b9f73641796b7a311b55ee679773f840c5f1a211f5eea6fa35775b"
+    },
+    {
+      "path": "usr/lib/x86_64-linux-gnu/libvncclient.so.0.9.15",
+      "mode": "0o644",
+      "kind": "regular",
+      "bytes": 170152,
+      "sha256": "c6c284c94871c299e9d479e9a4f76854a3a70ea31e1e056d97ebb156348b0e3c"
+    },
+    {
+      "path": "usr/lib/x86_64-linux-gnu/libvncclient.so.1",
+      "mode": "0o777",
+      "kind": "symlink",
+      "target": "libvncclient.so.0.9.15"
+    },
+    {
+      "path": "usr/lib/x86_64-linux-gnu/libvncserver.so.0.9.15",
+      "mode": "0o644",
+      "kind": "regular",
+      "bytes": 322480,
+      "sha256": "e7577897cdc8aec8277a47b3c0cc9a2651188fb99e4c245a6fb21d288db6f3bc"
+    },
+    {
+      "path": "usr/lib/x86_64-linux-gnu/libvncserver.so.1",
+      "mode": "0o777",
+      "kind": "symlink",
+      "target": "libvncserver.so.0.9.15"
+    },
+    {
+      "path": "usr/share",
+      "mode": "0o755",
+      "kind": "directory"
+    },
+    {
+      "path": "usr/share/applications",
+      "mode": "0o755",
+      "kind": "directory"
+    },
+    {
+      "path": "usr/share/applications/x11vnc.desktop",
+      "mode": "0o644",
+      "kind": "regular",
+      "bytes": 319,
+      "sha256": "1428606fbe85d1ccfe1a09c16d45a38521c16efbce2440896d8d3f594e87511b"
+    },
+    {
+      "path": "usr/share/doc",
+      "mode": "0o755",
+      "kind": "directory"
+    },
+    {
+      "path": "usr/share/doc/liblzo2-2",
+      "mode": "0o755",
+      "kind": "directory"
+    },
+    {
+      "path": "usr/share/doc/liblzo2-2/AUTHORS",
+      "mode": "0o644",
+      "kind": "regular",
+      "bytes": 112,
+      "sha256": "a94f2d3916d2987ae0adc0a8dc641d94beb38e341d543bc956a6c8f0c3151c40"
+    },
+    {
+      "path": "usr/share/doc/liblzo2-2/LZO.TXT.gz",
+      "mode": "0o644",
+      "kind": "regular",
+      "bytes": 4956,
+      "sha256": "7439350580d73445e94331ddeea77c5dbf0704e3d1fb6a7537e095d734e958af"
+    },
+    {
+      "path": "usr/share/doc/liblzo2-2/THANKS",
+      "mode": "0o644",
+      "kind": "regular",
+      "bytes": 690,
+      "sha256": "6e22aa70e4a9da110afa122e3019bbb629b6b21955ec8dc756cb02ab4cdf479d"
+    },
+    {
+      "path": "usr/share/doc/liblzo2-2/changelog.Debian.amd64.gz",
+      "mode": "0o644",
+      "kind": "regular",
+      "bytes": 231,
+      "sha256": "45cd1336c49a38953c3eeab105eab0b9b6cf328b906c2307c861256e089ad678"
+    },
+    {
+      "path": "usr/share/doc/liblzo2-2/changelog.Debian.gz",
+      "mode": "0o644",
+      "kind": "regular",
+      "bytes": 801,
+      "sha256": "632e618f2c0064ad87153971a03c04f4971eea4ccf0426cf994ae40ab38b0414"
+    },
+    {
+      "path": "usr/share/doc/liblzo2-2/changelog.gz",
+      "mode": "0o644",
+      "kind": "regular",
+      "bytes": 4681,
+      "sha256": "843efde9644e296b5e5271ab92044c58653fffd8f30566fda294409ff4826ac6"
+    },
+    {
+      "path": "usr/share/doc/liblzo2-2/copyright",
+      "mode": "0o644",
+      "kind": "regular",
+      "bytes": 1286,
+      "sha256": "67f612aaf8ba7dc7dc8d0dd8b67745dee8b87d97cb388768da2cd8b902175479"
+    },
+    {
+      "path": "usr/share/doc/libvncclient1",
+      "mode": "0o755",
+      "kind": "directory"
+    },
+    {
+      "path": "usr/share/doc/libvncclient1/changelog.Debian.gz",
+      "mode": "0o644",
+      "kind": "regular",
+      "bytes": 3510,
+      "sha256": "21ac3ac3cdb5a7ad549badfbe8b7b4ab4c51c5267dc30ea6a6a1dfe53496ea40"
+    },
+    {
+      "path": "usr/share/doc/libvncclient1/changelog.gz",
+      "mode": "0o644",
+      "kind": "regular",
+      "bytes": 121031,
+      "sha256": "69562befd74e781e841b1615dcab2637dced46be8b16620b23bcf8a8f47e4c82"
+    },
+    {
+      "path": "usr/share/doc/libvncclient1/copyright",
+      "mode": "0o644",
+      "kind": "regular",
+      "bytes": 23306,
+      "sha256": "bbc6ec91305120135037e7105aa564b5a26b5fd4b5812a70d69b6f5140d8b075"
+    },
+    {
+      "path": "usr/share/doc/libvncserver1",
+      "mode": "0o755",
+      "kind": "directory"
+    },
+    {
+      "path": "usr/share/doc/libvncserver1/changelog.Debian.gz",
+      "mode": "0o644",
+      "kind": "regular",
+      "bytes": 3509,
+      "sha256": "08d891816ca7dd55c2e7a34fcf3bd3cec58a3200d1ff5c2c804f0d8fd423337a"
+    },
+    {
+      "path": "usr/share/doc/libvncserver1/changelog.gz",
+      "mode": "0o644",
+      "kind": "regular",
+      "bytes": 121031,
+      "sha256": "69562befd74e781e841b1615dcab2637dced46be8b16620b23bcf8a8f47e4c82"
+    },
+    {
+      "path": "usr/share/doc/libvncserver1/copyright",
+      "mode": "0o644",
+      "kind": "regular",
+      "bytes": 23306,
+      "sha256": "bbc6ec91305120135037e7105aa564b5a26b5fd4b5812a70d69b6f5140d8b075"
+    },
+    {
+      "path": "usr/share/doc/libxtst6",
+      "mode": "0o755",
+      "kind": "directory"
+    },
+    {
+      "path": "usr/share/doc/libxtst6/changelog.Debian.gz",
+      "mode": "0o644",
+      "kind": "regular",
+      "bytes": 1155,
+      "sha256": "7a563ff86e826fa628190a64fc17663891f9bba9a0606a3ebb481011235a8d7d"
+    },
+    {
+      "path": "usr/share/doc/libxtst6/changelog.gz",
+      "mode": "0o644",
+      "kind": "regular",
+      "bytes": 13276,
+      "sha256": "a88737242310b526e421a9cdc634608c7de45d7f40ca96a77ff60bd9d0e5644e"
+    },
+    {
+      "path": "usr/share/doc/libxtst6/copyright",
+      "mode": "0o644",
+      "kind": "regular",
+      "bytes": 5914,
+      "sha256": "304f78731e1e0e78132fbba4e1909c8642878a3b8c4837b36cb2d38891bf2204"
+    },
+    {
+      "path": "usr/share/doc/x11vnc",
+      "mode": "0o755",
+      "kind": "directory"
+    },
+    {
+      "path": "usr/share/doc/x11vnc/NEWS.gz",
+      "mode": "0o644",
+      "kind": "regular",
+      "bytes": 20905,
+      "sha256": "9280a6f3e82e023254ed3c9327cc338d5d3813c098e431c88f715f2ca55a27fd"
+    },
+    {
+      "path": "usr/share/doc/x11vnc/README.gz",
+      "mode": "0o644",
+      "kind": "regular",
+      "bytes": 20342,
+      "sha256": "53a5953a4284758ee315dee6ac2ee7fafe046eb25367d90770c5da4da5265541"
+    },
+    {
+      "path": "usr/share/doc/x11vnc/changelog.Debian.gz",
+      "mode": "0o644",
+      "kind": "regular",
+      "bytes": 1449,
+      "sha256": "17b523f5f743241084ab21af9db04801a751e482f1b0abd95e106c9e819a0662"
+    },
+    {
+      "path": "usr/share/doc/x11vnc/changelog.gz",
+      "mode": "0o644",
+      "kind": "regular",
+      "bytes": 20274,
+      "sha256": "a291a27cadcb6dd84c782fc3a864b969390a768eb408948e3a4bb0a356bc76c5"
+    },
+    {
+      "path": "usr/share/doc/x11vnc/copyright",
+      "mode": "0o644",
+      "kind": "regular",
+      "bytes": 2732,
+      "sha256": "9e583269ed61d3fc3ea711f95a06fb15face67767bb02269fc228616af41cc87"
+    },
+    {
+      "path": "usr/share/man",
+      "mode": "0o755",
+      "kind": "directory"
+    },
+    {
+      "path": "usr/share/man/man1",
+      "mode": "0o755",
+      "kind": "directory"
+    },
+    {
+      "path": "usr/share/man/man1/x11vnc.1.gz",
+      "mode": "0o644",
+      "kind": "regular",
+      "bytes": 88598,
+      "sha256": "6ace7e98fc98dd41d4f72c5780cbca18dc2fd4847b6cd7c3bd03b7b2c85748ec"
+    },
+    {
+      "path": "usr/share/man/man8",
+      "mode": "0o755",
+      "kind": "directory"
+    },
+    {
+      "path": "usr/share/man/man8/Xdummy.8.gz",
+      "mode": "0o644",
+      "kind": "regular",
+      "bytes": 4148,
+      "sha256": "6ddf0d15fc847d33a4ee5c196e9c5ccdec460f4d626e0a99cd8ada955d14c2f6"
+    }
+  ],
+  "ELFs": [
+    {
+      "path": "usr/bin/x11vnc",
+      "sha256": "249bdc17e09fd96ea73ca7fbec2d8f3cd9ff411d0bbfb634d99431548fb77132",
+      "DT_NEEDED": [
+        "libvncserver.so.1",
+        "libvncclient.so.1",
+        "libssl.so.3",
+        "libcrypto.so.3",
+        "libcrypt.so.1",
+        "libXtst.so.6",
+        "libXext.so.6",
+        "libXinerama.so.1",
+        "libXrandr.so.2",
+        "libXfixes.so.3",
+        "libXdamage.so.1",
+        "libX11.so.6",
+        "libavahi-common.so.3",
+        "libavahi-client.so.3",
+        "libXi.so.6",
+        "libc.so.6"
+      ],
+      "RPATH_RUNPATH": [],
+      "static_bytes_only": true
+    },
+    {
+      "path": "usr/lib/x86_64-linux-gnu/libXtst.so.6.1.0",
+      "sha256": "90289665882c7f141ef6ac4853c17ac473d8644576db5d86961433ed3c586eac",
+      "DT_NEEDED": [
+        "libX11.so.6",
+        "libXext.so.6",
+        "libc.so.6"
+      ],
+      "RPATH_RUNPATH": [],
+      "static_bytes_only": true
+    },
+    {
+      "path": "usr/lib/x86_64-linux-gnu/liblzo2.so.2.0.0",
+      "sha256": "c5425e5594b9f73641796b7a311b55ee679773f840c5f1a211f5eea6fa35775b",
+      "DT_NEEDED": [
+        "libc.so.6"
+      ],
+      "RPATH_RUNPATH": [],
+      "static_bytes_only": true
+    },
+    {
+      "path": "usr/lib/x86_64-linux-gnu/libvncclient.so.0.9.15",
+      "sha256": "c6c284c94871c299e9d479e9a4f76854a3a70ea31e1e056d97ebb156348b0e3c",
+      "DT_NEEDED": [
+        "libsasl2.so.2",
+        "libz.so.1",
+        "liblzo2.so.2",
+        "libjpeg.so.62",
+        "libgcrypt.so.20",
+        "libgnutls.so.30",
+        "libc.so.6"
+      ],
+      "RPATH_RUNPATH": [],
+      "static_bytes_only": true
+    },
+    {
+      "path": "usr/lib/x86_64-linux-gnu/libvncserver.so.0.9.15",
+      "sha256": "e7577897cdc8aec8277a47b3c0cc9a2651188fb99e4c245a6fb21d288db6f3bc",
+      "DT_NEEDED": [
+        "libz.so.1",
+        "liblzo2.so.2",
+        "libjpeg.so.62",
+        "libgcrypt.so.20",
+        "libgnutls.so.30",
+        "libc.so.6"
+      ],
+      "RPATH_RUNPATH": [],
+      "static_bytes_only": true
+    }
+  ],
+  "loader_validated": false,
+  "listener_started": false,
+  "VM_started": false
+}

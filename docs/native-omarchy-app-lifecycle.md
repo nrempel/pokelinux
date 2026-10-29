@@ -69,3 +69,7 @@ ARM integration and all physical Pixel gates remain open. No phone was accessed.
 result/input hashes. [Consumer patches](../tools/native-omarchy-menu/close-reopen-consumer-pins.json)
 reconstruct the executed consumers from the published cold-consumer bases; they
 still require separately prepared runtime and deployment inputs.
+
+The later [viewer input checkpoint](native-omarchy-viewer.md) separately carries
+this loop through Unix RFB and receives the final native framebuffer. The
+earlier uinput evidence on this page retains its original scope.

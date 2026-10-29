@@ -17,6 +17,13 @@ These are real, unedited x86 VM captures at the
 [Pixel 10 display profile](docs/native-phone-display-profile.md): 1080 × 2424
 pixels, 422 PPI and 420 logical density. Some captures retain upstream development notices.
 
+The latest [viewer test](docs/native-omarchy-viewer.md) drives genuine Omarchy:
+open Sounds, close it with Super+W, reopen it, receive the final image and shut
+down normally. This automated VM path passes; a user-launchable preview is next.
+Permission remains withheld in this capture, so Play stays disabled.
+
+<img src="docs/assets/omarchy-viewer-sounds-reopened.png" width="320" alt="Native Sounds reopened through the viewer connection at Pixel 10 resolution" />
+
 The same Messages window follows an original Omarchy theme change from Tokyo
 Night to Catppuccin Latte while preserving its local history. Both its Messages
 and appearance client engines run in Rust; Qt renders the interface. The two
@@ -46,6 +53,7 @@ into one complete phone session.
 | Area | Demonstrated behavior | Evidence |
 | --- | --- | --- |
 | Native apps and themes | Real Messages, Settings and Sounds windows in prepared VMs; live original Omarchy theme changes and permission controls in qualified app sessions. | [Messages](docs/native-messages-appearance-rust-tracer.md), [Settings brightness](docs/native-brightness.md), [Sounds](docs/native-normal-upstream-tracer.md#prepared-full-appservice-slice-passes) |
+| Viewer controls | Seven mouse/keyboard actions open, close and reopen Sounds; native final image and normal VM shutdown pass. Human connection workflow remains open. | [Viewer test](docs/native-omarchy-viewer.md) |
 | App lifecycle | Genuine Omarchy menu → Sounds → Super+W close → fresh menu reopen → normal shutdown, with the same Rust session owner and permission withheld. | [Close/reopen test](docs/native-omarchy-app-lifecycle.md) |
 | Connection ownership | Touch Enable → packets → app close/reopen → explicit Disable and silence through the normal Settings app and Rust services. | [Settings connection](docs/native-settings-connectivity-window.md) |
 | Session recovery | The same Sounds window survives a compositor pause; fresh state returns about 55 ms after resume, followed by measured playback and permission-revoke silence. Earlier audio failures remain under investigation. | [Recovery checks](docs/native-session-timing-recovery.md) |
@@ -80,10 +88,8 @@ A later [complete app-lifecycle run](docs/native-omarchy-app-lifecycle.md) now
 passes menu launch, standard close, fresh reopen and normal shutdown. Both app
 instances retain the Pixel 10 display profile and remain silent without permission.
 
-<img src="docs/assets/cold-omarchy-sounds-reopened.png" width="320" alt="A fresh Sounds window reopened from the genuine Omarchy menu" />
-
-From the complete app-lifecycle run: a fresh Sounds window after close/reopen.
-Permission is withheld, so route and Play controls remain disabled.
+The later [viewer run](docs/native-omarchy-viewer.md), pictured above, carries this
+loop through actual viewer input and final framebuffer receipt.
 
 Host component tests, original-code execution, Android reference tests, ARM
 user-mode emulation, full-system VMs and physical hardware evidence are recorded

@@ -54,7 +54,9 @@ preview at the Pixel 10 display profile. Genuine Omarchy now passes the separate
 app focus and permission-withheld silence; later playback in that cohort fails.
 A later [complete cold app lifecycle](native-omarchy-app-lifecycle.md) passes
 standard close, fresh menu reopen and normal shutdown with permission withheld.
-Remote-viewer input, a visible permission flow and repeatable audio remain open.
+The later [viewer input loop](native-omarchy-viewer.md) passes all seven actions,
+final native image and normal shutdown. A human connection workflow, visible
+permission flow and repeatable graphical audio remain open.
 The separate [Rust audio startup correction](native-audio-startup-deadline.md) now
 passes controlled host RED→GREEN and Source-loss/app-expiry cancellation controls.
 It retains original deadlines and does not retry; this does not qualify graphical

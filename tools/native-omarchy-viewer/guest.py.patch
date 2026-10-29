@@ -1,0 +1,529 @@
+--- a/guest.py
++++ b/guest.py
+@@ -7,0 +8,3 @@
++from viewer_guest import GuestInput
++from viewer_protocol import publish as viewer_publish
++import current_ui
+@@ -10 +13,2 @@
+-scope=Scope(R);serial=0;expected={};watched={};call_offset=0;call_item=None;actor=None;app_pid=None;app_pidfd=None;service=None;compositor_pid=None;compositor_pidfd=None;compositor_log=None;broker=None;theme_shell=None;focus_layer=None;touch=None;startup=None;normal_argv_bound=False;normal_argv=None;profile_args=None;metadata_file=None;stderr_file=None;capture_dir=None;capture_mounted=False;owned_files=[]
++pcm_worker=None
++scope=Scope(R);serial=0;expected={};watched={};call_offset=0;call_item=None;actor=None;app_pid=None;app_pidfd=None;service=None;compositor_pid=None;compositor_pidfd=None;compositor_log=None;broker=None;theme_shell=None;focus_layer=None;startup=None;normal_argv_bound=False;normal_argv=None;profile_args=None;metadata_file=None;stderr_file=None;capture_dir=None;capture_mounted=False;owned_files=[];capture_epoch=1;viewer=None
+@@ -131,6 +135,224 @@
+-def tap(point,number):
+- from evdev import ecodes as E
+- x,y=point;assert 0<x<1080 and 0<y<2424;x=round(x*32767/1079);y=round(y*32767/2423)
+- for code,value in [(E.ABS_MT_SLOT,0),(E.ABS_MT_TRACKING_ID,number),(E.ABS_MT_POSITION_X,x),(E.ABS_MT_POSITION_Y,y),(E.ABS_X,x),(E.ABS_Y,y)]:touch.write(E.EV_ABS,code,value)
+- touch.write(E.EV_KEY,E.BTN_TOUCH,1);touch.syn();time.sleep(.1);touch.write(E.EV_ABS,E.ABS_MT_TRACKING_ID,-1);touch.write(E.EV_KEY,E.BTN_TOUCH,0);touch.syn()
+- result.setdefault('normal_input_events',[]).append({'actual_guest_uinput':True,'physical_native_point':point,'absolute_axes':[x,y],'tracking_id':number,'at_boottime_ns':now()})
++def tap(point,number,absolute_cutoff):
++ assert viewer is not None
++ value=viewer.perform(list(point),absolute_cutoff)
++ result.setdefault('normal_input_events',[]).append({'actual_RFB':True,'actual_guest_uinput':False,'physical_native_point':point,'request_seq':value['request']['seq'],'at_boottime_ns':now(),'handoff':value})
++ return value
++
++def menu_shell_environment():
++ # Exact data/locale/desktop inputs of the retained genuine shell, not the
++ # controller's environment. Never record unrelated variables or credentials.
++ assert live(theme_shell)
++ raw=(Path('/proc')/str(theme_shell['child'].pid)/'environ').read_bytes();assert len(raw)<=65536
++ allowed={'HOME','XDG_DATA_HOME','XDG_DATA_DIRS','LANG','LC_MESSAGES','XDG_CURRENT_DESKTOP','XDG_SESSION_DESKTOP','DESKTOP_SESSION'}
++ values={}
++ for entry in raw.split(b'\0'):
++  if b'='not in entry:continue
++  key,value=entry.split(b'=',1);key=key.decode()
++  if key in allowed:assert key not in values;values[key]=value.decode()
++ assert values['HOME']=='/home/alarm';return {'PATH':'/usr/bin',**values}
++
++def menu_style():
++ import tomllib
++ env=menu_shell_environment();home=Path(env['HOME']);theme_file=home/'.config/omarchy/current/theme/shell.toml';user_file=home/'.config/omarchy/shell.toml'
++ assert not user_file.exists(),'fixed genuine-default-theme geometry refuses machine style overrides'
++ values=tomllib.loads(theme_file.read_text())if theme_file.exists()else{}
++ assert values.get('font',{})in[{}, {'base-size':12}]
++ assert values.get('spacing',{})in[{}, {'scale':1.0,'scale-with-font':True}]
++ # Style.qml panelPadding18/title14/heading16/controlPaddingY6/md6.
++ # Menu.qml header=max34,14+2*6=34. Scan only after its entire vertical area.
++ return {'panel_padding':18,'header_height':34,'content_spacing':6,'row_height':50,'row_spacing':3,'heading':16,'first_row_offset_from_card_background':58,'theme_sha256':sha(theme_file)if theme_file.exists()else None,'machine_override_absent':True}
++
++def menu_catalog(until):
++ env=menu_shell_environment();script=Path('/usr/share/pokelinux/omarchy/shell/services/hidden-entries.sh');assert os.access(script,os.X_OK)
++ desktops=':'.join(env.get(k,'')for k in ['XDG_CURRENT_DESKTOP','XDG_SESSION_DESKTOP','DESKTOP_SESSION']if env.get(k,''))
++ hidden=command([str(script),desktops],'menu-genuine-hidden-entries.log',env=env,user=1000,seconds=5,limit=65536,absolute_cutoff=until,allowed=(0,1)).splitlines()
++ hidden_exit=scope.receipts[-1]['returncode'];assert hidden_exit==0 or not(Path(env['HOME'])/'.nix-profile/share/applications').is_dir(),'unexpected genuine hide-script failure'
++ # The selected v0.3.2 scanner is not Gio: it ignores TryExec/OnlyShowIn.
++ # AppLibrary separately runs this exact genuine script for desktop hides.
++ code='''import json,os,re
++from pathlib import Path
++assert os.getuid()==os.getgid()==1000
++hidden=set(json.loads(__import__('sys').argv[1]));configured=Path('/usr/share/pokelinux/omarchy/default/omarchy/launcher.hides')
++def normalize(v):return re.sub(r'\\.desktop$','',v.strip(' \\t\\n\\r\\v\\f'))
++if configured.exists():hidden.update(normalize(v)for v in configured.read_text().split('\\n'))
++def locale(raw):
++ m=re.fullmatch(r'([^_.@]*)(?:_([^.@]*))?(?:\\.[^@]*)?(?:@(.*))?',raw);assert m
++ return tuple(v or''for v in m.groups())
++system=locale(os.environ.get('LC_MESSAGES')or os.environ.get('LANG',''))
++def score(value):
++ if value[0]!=system[0]or(value[1]and value[1]!=system[1])or(value[2]and value[2]!=system[2]):return 0
++ return 1+2*bool(value[1])+bool(value[2])
++def parse(path):
++ body=path.read_bytes();assert len(body)<=262144;section='';fields={};groups=0
++ for line in body.decode('utf-8','replace').split('\\n'):
++  if not line or line.startswith('#'):continue
++  if line.startswith('[')and line.endswith(']'):
++   section=line[1:-1];groups+=section=='Desktop Entry';assert groups<=1;continue
++  if section!='Desktop Entry'or'='not in line:continue
++  key,value=line.split('=',1);loc=('','','')
++  if'['in key:
++   key,tail=key.split('[',1);assert tail.endswith(']');loc=locale(tail[:-1])
++  if key not in fields or score(loc)>score(fields[key][0])or(score(fields[key][0])==0 and not loc[0]):fields[key]=(loc,value)
++ return {k:v for k,(_,v)in fields.items()}
++paths=[];home=os.environ.get('XDG_DATA_HOME')or(os.environ.get('HOME','')+'/.local/share'if'HOME'in os.environ else'')
++if home:paths.append(Path(home)/'applications')
++paths.extend(Path(v)/'applications'for v in(os.environ.get('XDG_DATA_DIRS')or'/usr/local/share:/usr/share').split(':')if v)
++entries={}
++def walk(directory,prefix,seen):
++ for path in sorted(directory.iterdir(),key=lambda p:p.name.lower()):
++  if path.name.startswith('.'):continue
++  assert path.name.isascii(),'fixed catalog refuses ambiguous non-ASCII filename ordering'
++  identifier=(prefix+'-'if prefix else'')+path.name
++  if path.is_dir():walk(path,identifier,seen)
++  elif path.is_file()and path.name.endswith('.desktop'):
++   identifier=identifier[:-8];assert identifier not in seen,'ambiguous same-root desktop id collision';seen.add(identifier)
++   value=parse(path)
++   if value.get('Type')!='Application':continue
++   if value.get('Hidden')=='true':entries.pop(identifier,None)
++   elif value.get('Name'):entries[identifier]=value
++for directory in reversed(paths):
++ if directory.is_dir():walk(directory,'',set())
++rows=[{'id':identifier,'name':value['Name']}for identifier,value in entries.items()if value.get('NoDisplay')!='true'and identifier not in hidden]
++assert len(rows)<=128 and all(v['name'].isascii()for v in rows)
++assert len({v['name'].lower()for v in rows})==len(rows),'ambiguous equal AppSearch sort keys'
++rows.sort(key=lambda v:v['name'].lower());print(json.dumps(rows))
++'''
++ rows=json.loads(command(['/usr/bin/python3','-c',code,json.dumps(hidden)],'menu-real-desktop-catalog.json',env=env,user=1000,seconds=5,limit=65536,absolute_cutoff=until))
++ assert 0<len(rows)<=128
++ matches=[i for i,v in enumerate(rows)if v=={'name':'Sounds','id':'org.omarchy.Sounds'}];assert len(matches)==1,rows
++ result['actual_menu_launch']['catalog_semantics']={'source':'Quickshell0.3.2 desktopentry.cpp plus actual genuine AppLibrary hidden-entries.sh plus AppSearch.js','Gio_used':False,'TryExec_ignored_as_in_pinned_source':True,'OnlyShowIn_NotShowIn_handled_by_genuine_script':True,'actual_hidden_ids':hidden,'actual_hide_script_exit':hidden_exit,'shell_environment_keys_used':sorted(env)}
++ return rows,matches[0]
++
++def menu_capture(label,until):
++ monitors=json.loads(control('j/monitors',absolute_cutoff=until));assert len(monitors)==1
++ output=monitors[0];assert output['name']=='Virtual-1'and[output['width'],output['height']]==[1080,2424]and abs(output['scale']-2.625)<=.001
++ def bounded(argv,name,**kwargs):return command(argv,name,absolute_cutoff=until,**kwargs)
++ return display.capture_output_native(label,R,public_profile,profile_bins,bounded,desktop_env)
++
++def menu_layer():
++ rows=[v for v in full_shell_surface()or[]if v.get('namespace')=='omarchy-menu'];assert len(rows)<=1
++ return rows[0]if rows else None
++
++def menu_frame(label,until,minimum,maximum,prior_header=None):
++ # Native background edges and real label ink establish the rows. No OCR,
++ # authored shell metadata, image resize, scrolling or coordinate fallback.
++ frame=menu_capture(label,until);image=pixels(frame);bg=color8(appearance()['appearance']['palette']['background']);layout=menu_style();runs=[];bounds={}
++ for y in range(100,2400):
++  xs=[x for x in range(80,1000)if image.getpixel((x,y))==bg]
++  if len(xs)>=600 and 760<=xs[-1]-xs[0]+1<=800:
++   bounds[y]=(xs[0],xs[-1])
++   if not runs or y>runs[-1][-1]+round((layout['row_height']+layout['row_spacing'])*2.625)+12:runs.append([y])
++   else:runs[-1].append(y)
++ candidates=[v for v in runs if v[-1]-v[0]+1>=250];assert len(candidates)==1,{'actual_native_card_candidate_edges':[(v[0],v[-1])for v in candidates]}
++ ys=candidates[0];lefts=sorted(bounds[y][0]for y in ys);rights=sorted(bounds[y][1]for y in ys);left,right=lefts[len(ys)//2],rights[len(ys)//2];top,bottom=ys[0],ys[-1]
++ assert abs((left+right)/2-540)<=3
++ # Menu.qml reserves 8+36+6 logical pixels for the icon lane; the card
++ # adds its padding. Start65 logical pixels inside the real card to exclude icons.
++ x0=left+round(65*2.625);x1=right-round(20*2.625);bands=[]
++ scan_top=top+round(layout['first_row_offset_from_card_background']*2.625)
++ from collections import Counter
++ for y in range(scan_top,bottom-8):
++  line=[image.getpixel((x,y))for x in range(x0,x1)];line_bg=Counter(line).most_common(1)[0][0]
++  count=sum(pixel!=line_bg for pixel in line)
++  assert count<(x1-x0)*.8,'ambiguous nonuniform menu row'
++  if count>=3:
++   if not bands or y>bands[-1][-1]+6:bands.append([y])
++   else:bands[-1].append(y)
++ bands=[v for v in bands if len(v)>=8];assert minimum<=len(bands)<=maximum,{'native_label_bands':[(v[0],v[-1])for v in bands],'required':[minimum,maximum]}
++ centers=[(v[0]+v[-1])//2 for v in bands];assert all(110<=b-a<=175 for a,b in zip(centers,centers[1:]))
++ header_box=(left+8,top+8,right-8,bands[0][0]-8);assert header_box[3]>header_box[1]
++ header=hashlib.sha256(image.crop(header_box).tobytes()).hexdigest()
++ if prior_header is not None:assert header!=prior_header,'Apps header has not replaced the root header'
++ return {'capture':frame,'actual_native_card_background_edges':[left,top,right,bottom],'actual_native_label_bands':[[v[0],v[-1]]for v in bands],'native_row_points':[[int((left+right)/2),y]for y in centers],'header_pixel_sha256':header,'source_bound_layout':layout,'actual_header_excluded_through_native_y':scan_top,'selected_row_background_is_normal':True,'profile_app_QWindow_qualified':False}
++
++def chosen_sounds_desktop():
++ # Explicit execute() prerequisite; no desktop entry or application is authored.
++ pid=theme_shell['child'].pid;expected=theme_shell['identity']['proc_starttime'];proc=Path('/proc')/str(pid)
++ assert live(theme_shell)and proc.joinpath('stat').read_text().rsplit(') ',1)[1].split()[19]==expected
++ env=menu_shell_environment();keys={k:env[k]for k in ['HOME','XDG_DATA_HOME','XDG_DATA_DIRS']if k in env}
++ assert keys['HOME']=='/home/alarm'
++ assert keys.get('XDG_DATA_HOME','')in ['', '/home/alarm/.local/share'],'unsupported fixed-cohort XDG_DATA_HOME'
++ assert keys.get('XDG_DATA_DIRS','')in ['', '/usr/local/share:/usr/share'],'unsupported fixed-cohort XDG_DATA_DIRS'
++ roots=[Path(keys.get('XDG_DATA_HOME')or'/home/alarm/.local/share')/'applications',Path('/usr/local/share/applications'),Path('/usr/share/applications')]
++ identifier='org.omarchy.Sounds';assert '-'not in identifier
++ target=roots[-1]/(identifier+'.desktop');overrides=[]
++ for root in roots[:-1]:
++  candidate=root/target.name
++  try:candidate.lstat()
++  except FileNotFoundError:overrides.append({'path':str(candidate),'absent':True})
++  else:raise AssertionError('higher-priority fixed Sounds desktop entry exists: '+str(candidate))
++ fd=os.open(target,os.O_RDONLY|os.O_CLOEXEC|os.O_NOFOLLOW|os.O_NONBLOCK)
++ try:
++  before=os.fstat(fd);assert stat.S_ISREG(before.st_mode)and before.st_uid==before.st_gid==0 and stat.S_IMODE(before.st_mode)==0o644 and before.st_nlink==1 and before.st_size<=4096
++  body=os.read(fd,4097);after=os.fstat(fd)
++  assert len(body)==before.st_size and (before.st_dev,before.st_ino,before.st_size,before.st_mtime_ns,before.st_mode,before.st_uid,before.st_gid,before.st_nlink)==(after.st_dev,after.st_ino,after.st_size,after.st_mtime_ns,after.st_mode,after.st_uid,after.st_gid,after.st_nlink)
++ finally:os.close(fd)
++ assert body==(R/'source/desktop/org.omarchy.Sounds.desktop').read_bytes()
++ lines=body.decode().splitlines();exec_lines=[line[5:]for line in lines if line.startswith('Exec=')]
++ expected_exec=str(installed.BIN/'sounds-launch')+' '+str(RUN/'launch-sounds.sock');assert exec_lines==[expected_exec]
++ assert live(theme_shell)and proc.joinpath('stat').read_text().rsplit(') ',1)[1].split()[19]==expected and now()<WORK
++ return {'scope':'pre-menu fixed DesktopEntry.execute binding prerequisite only','retained_shell_PID':pid,'retained_shell_starttime':expected,'same_retained_shell_pidfd_living_before_and_after':True,'actual_shell_data_environment':keys,'scanner':'pinned Quickshell0.3.2 GenericDataLocation precedence; supported fixed standard paths only','ordered_application_roots':[str(root)for root in roots],'chosen_path':str(target),'sha256':hashlib.sha256(body).hexdigest(),'bytes':len(body),'Exec':exec_lines[0],'UID':before.st_uid,'GID':before.st_gid,'mode':oct(stat.S_IMODE(before.st_mode)),'nlink':before.st_nlink,'higher_priority_candidates':overrides,'fixed_no_hyphen_ID_cannot_alias_nested_directory':True,'entry_authored_or_replaced_by_guard':False,'application_launched_by_guard':False}
++
++def menu_launch(epoch=1):
++ prefix=""if epoch==1 else"reopen-"
++ # Reuse the original direct-launch10s ceiling as one absolute menu deadline.
++ until=min(WORK,now()+10_000_000_000);flow={'original_until_ns':until,'touches':[],'captures':[],'direct_desktop_client_invoked_by_guest':False,'qualified':False};result['actual_menu_launch']=flow;result['phase']='cold-genuine-menu-launch'
++ def absent():
++  watch();assert app_pid is None and app_pidfd is None and not normal_argv_bound
++  pids=[]
++  for proc in Path('/proc').iterdir():
++   if not proc.name.isdigit():continue
++   try:lines=(proc/'status').read_text().splitlines()
++   except(FileNotFoundError,ProcessLookupError):continue
++   if any(line.startswith('Uid:')and line.split()[1:]==['11042']*4 for line in lines):pids.append(int(proc.name))
++  listeners=[str(p)for p in installed.DISPLAY.rglob('*')if stat.S_ISSOCK(p.lstat().st_mode)]
++  snapshot=admin({'op':'snapshot'});assert not pids and not listeners and snapshot['principals']==0
++  assert snapshot['source']['state']=='observed'and snapshot['source']['first_failure']is None
++  return {'actual_UID11042_PIDs':pids,'actual_per_app_listeners':listeners,'source_snapshot':snapshot}
++ flow['before_first_touch']=absent()
++ reference=(R/'source/menu-default-reference.jsonc').read_text();assert sha(R/'source/menu-default-reference.jsonc')=='8c791cfc457d6c50b90a6636a6f28c9415a2fa6e4edf84826906457b75649689'
++ model=json.loads(re.sub(r',(\s*[}\]])',r'\1',re.sub(r'^\s*//[^\n]*(\n|$)','',reference,flags=re.M)))
++ root_rows=[(k,v)for k,v in model.items()if'.'not in k and k!='root'];assert root_rows[0][0]=='apps'and root_rows[0][1]['label']=='Apps'and root_rows[0][1]['provider']=='apps'
++ assert len(root_rows)==10 and all(not v.get('when')for _,v in root_rows)
++ geo=json.loads(command(['/usr/bin/quickshell','ipc','-n','-p',str(theme_host),'call','shell','debugBarGeometry'],'menu-genuine-bar-geometry.json',env=desktop_env,user=1000,seconds=5,limit=65536,absolute_cutoff=until))
++ entries=[v for v in geo if v['id']=='omarchy.menu'];assert len(entries)==1;entry=entries[0];assert entry['section']=='left'and entry['visible']and entry['itemVisible']and entry['width']>0 and entry['height']>0
++ bars=[v for v in full_shell_surface()if v.get('namespace')=='omarchy-bar'];assert len(bars)==1;bar=bars[0];assert bar['x']==bar['y']==0 and bar['h']==26
++ frame=menu_capture(prefix+'menu-before-bar-touch',until);flow['captures'].append(frame)
++ box=[round((bar['x']+entry['x'])*2.625),round((bar['y']+entry['y'])*2.625),round((bar['x']+entry['x']+entry['width'])*2.625),round((bar['y']+entry['y']+entry['height'])*2.625)]
++ assert 0<=box[0]<box[2]<=1080 and 0<=box[1]<box[3]<=round(bar['h']*2.625)+1
++ assert len(set(pixels(frame).crop(box).getdata()))>2,'actual menu glyph region has no rendered content'
++ flow['bar_geometry']={'real_shell_IPC':entry,'authenticated_layer':bar,'actual_native_bounds':box}
++ def touch_once(point,tracking,label):
++  assert now()<until;before=now();tap(point,tracking,until);after=now();assert after<until
++  flow['touches'].append({'label':label,'actual_guest_uinput':False,'actual_RFB':True,'native_point':point,'before_boottime_ns':before,'after_boottime_ns':after})
++ touch_once([(box[0]+box[2])//2,(box[1]+box[3])//2],91,'genuine bar menu')
++ layer=wait(menu_layer,10,absolute_cutoff=until);flow['actual_menu_layer']=layer
++ def observe(label,minimum,maximum,prior=None):
++  attempts=[];flow.setdefault('row_observations',[]).append({'label':label,'attempts':attempts})
++  def check():
++   try:view=menu_frame(label+'-'+str(len(attempts)+1),until,minimum,maximum,prior)
++   except AssertionError as error:
++    attempts.append({'observation_error':str(error)});assert len(attempts)<8;return
++   attempts.append({'observed':view});return view
++  return wait(check,10,absolute_cutoff=until)
++ root_view=observe(prefix+'menu-root',10,10);flow['root_view']=root_view;absent()
++ touch_once(root_view['native_row_points'][0],92,'Apps')
++ rows,index=menu_catalog(until);flow['actual_UID1000_desktop_catalog']=rows;flow['Sounds_catalog_index']=index
++ def model_matches():
++  prefix=['/usr/bin/quickshell','ipc','-n','-p',str(theme_host),'call','shell','call','omarchy.menu']
++  count=command(prefix+['childCount','apps'],'menu-actual-app-count.log',env=desktop_env,user=1000,seconds=5,limit=65536,absolute_cutoff=until).strip()
++  if count!=str(len(rows)):return
++  actual=[]
++  for row in rows:
++   path=command(prefix+['pathFor','apps.'+row['id']],'menu-actual-app-path.log',env=desktop_env,user=1000,seconds=5,limit=65536,absolute_cutoff=until).strip()
++   if path!='Apps › '+row['name']:return
++   actual.append(path)
++  return {'actual_genuine_child_count':int(count),'actual_genuine_paths':actual,'new_QML_instrumentation':False}
++ flow['actual_model_before_capture']=wait(model_matches,10,absolute_cutoff=until)
++ apps=observe(prefix+'menu-Apps',len(rows),len(rows),root_view['header_pixel_sha256']);flow['Apps_view']=apps
++ assert all(point[1]+round(25*2.625)<apps['actual_native_card_background_edges'][3]-10 for point in apps['native_row_points']),'catalog rows clipped; no scrolling fallback'
++ flow['actual_model_after_capture']=wait(model_matches,10,absolute_cutoff=until)
++ point=apps['native_row_points'][index]
++ absent();touch_once(point,93,'Sounds');flow['all_three_actual_menu_touches_complete']=True
++ result['desktop_menu_activation_exercised']=True
++
+@@ -180,0 +403,206 @@
++
++def current_controls(label, required=(), allow_reconnect=False):
++ until=min(WORK,now()+20_000_000_000);attempts=[]
++ result.setdefault('current_UI_observations',[]).append({'label':label,'original_until_ns':until,'attempts':attempts,'read_only_repaint_observation':True})
++ for i in range(1,9):
++  assert now()<until
++  try:
++   view=current_ui.observe(label+'-'+str(i),None,capture=capture,window=window,appearance=appearance,pixels=pixels,tick=tick,window_address=window_address,qml_source=R/'source/qt-source/native-audio-ui/SoundsView.qml',until_ns=until)
++   attempts.append({'observed':view})
++   controls=view['controls']
++   if all(name in controls and controls[name]['visual_state']=='enabled'for name in required):return view
++   if allow_reconnect and controls.get('Reconnect',{}).get('visual_state')=='enabled':return view
++  except AssertionError as error:
++   attempts.append({'frame_requirement_not_observed':str(error),'observed_boottime_ns':now()})
++  tick();time.sleep(.1)
++ raise AssertionError('CURRENT_RUST_SOUNDS_REQUIRED_VISIBLE_CONTROLS_NOT_OBSERVED: '+label)
++
++def actual_touch(point,number,label):
++ assert app_focus(),'selected normal app must have real native focus before input'
++ before=now();tap(point,number);after=now()
++ value={'before_boottime_ns':before,'after_boottime_ns':after}
++ result.setdefault('actual_current_app_touches',[]).append({'label':label,'point':point,**value})
++ return value
++
++def observer_marker(output,name,value):
++ target=output/'markers'/name;temporary=target.with_suffix('.root-tmp');assert not temporary.exists()and not target.exists()
++ with temporary.open('x')as stream:
++  json.dump(value,stream);stream.write('\n');stream.flush();os.fsync(stream.fileno())
++ os.chown(temporary,11040,11040);temporary.chmod(0o600);os.replace(temporary,target)
++
++def observer_record(output,name,until):
++ path=output/name
++ def read():
++  assert pcm_worker is not None
++  if path.exists():
++   st=path.lstat();assert stat.S_ISREG(st.st_mode)and st.st_nlink==1 and st.st_size<=1048576
++   return json.loads(path.read_text())
++  assert live(pcm_worker),'PCM observer exited before '+name
++  return None
++ return wait(read,absolute_cutoff=until)
++
++def retire_current_observer(cleanup):
++ if pcm_worker is None:return
++ item=pcm_worker
++ if not result['passed']:expected[item['child'].pid]['allowed_actual_exit']=[0,1]
++ if item['wait']is None or not item['eof']:
++  if item['child'].poll()is None:
++   try:
++    if item['pidfd']is not None:signal.pidfd_send_signal(item['pidfd'],signal.SIGTERM)
++    else:item['child'].send_signal(signal.SIGTERM)
++   except ProcessLookupError:pass
++  late_recorded=False;hold_recorded=False
++  while item['wait']is None or not item['eof']:
++   if not item['pipe_ready']:
++    try:os.set_blocking(item['child'].stdout.fileno(),False);item['pipe_ready']=True
++    except OSError:pass
++   scope.pump()
++   if item['wait']is None and item['child'].poll()is not None:
++    try:scope.finish(item,CLOSE,check=False)
++    except BaseException as error:cleanup.append('current-PCM-observer-late-wait: '+repr(error))
++   if now()>=item['original_wait_cutoff_ns']and not late_recorded:
++    cleanup.append('current-PCM-observer original cutoff failed; custody retained');late_recorded=True
++   if now()>=CLOSE and not hold_recorded:
++    (R/'observer-custody-hold.json').write_text(json.dumps({'pid':item['child'].pid,'original_guest_close_ns':CLOSE,'observer_original_wait_until_ns':item['original_wait_cutoff_ns'],'actual_wait_present':item['wait']is not None,'actual_EOF':item['eof'],'normal_audio_Stop_admitted':False,'retaining_child_until_actual_closure_or_outer_VM_disposal':True})+'\n');hold_recorded=True
++   time.sleep(.005)
++  receipt=item['wait'];receipt.update(stdout_EOF=item['eof'],stdout_EOF_at_ns=item.get('eof_at_ns'),EOF_before_original_cutoff=bool(item['eof']and item['eof_at_ns']<receipt['original_cutoff_ns']))
++  if receipt['returncode']not in(0,1):cleanup.append('current-PCM-observer unexpected actual exit '+str(receipt['returncode']))
++ assert item['wait']is not None and item['eof']
++ item['log'].close();item['child'].stdout.close()
++ if item['pidfd']is not None:os.close(item['pidfd']);item['pidfd']=None
++ result['current_observer_retired_before_audio_Stop']={'pid':item['child'].pid,'actual_wait':item['wait'],'stdout_closed':item['child'].stdout.closed,'log_closed':item['log'].closed,'pidfd_closed':item['pidfd']is None}
++
++def current_preview():
++ global pcm_worker,serial
++ result['current_frontend_operator_fixture_flow']={'grant_is_user_consent':False,'automatic_reconnect_or_effect_retry':False,'one_visible_Reconnect_only_if_offered':True}
++ assert app_focus();grant(True)
++ view=current_controls('current-granted-controls',('Speaker','Headphones'),allow_reconnect=True)
++ enabled=lambda v,name:v['controls'].get(name,{}).get('visual_state')=='enabled'
++ reconnected=False
++ if not all(enabled(view,name)for name in ['Speaker','Headphones']):
++  assert enabled(view,'Reconnect');actual_touch(view['points']['Reconnect'],101,'one explicit visible Reconnect');reconnected=True
++  view=current_controls('current-after-one-reconnect',('Speaker','Headphones'))
++ result['current_frontend_operator_fixture_flow']['actual_Reconnect_touch_executed']=reconnected
++ actual_touch(view['points']['Speaker'],102,'Speaker route')
++ level=current_controls('current-level-available',('50%',))
++ level_touch=actual_touch(level['points']['50%'],103,'50 percent preview level')
++ playable=current_controls('current-Play-enabled',('Speaker','Headphones','Play'))
++ result['current_ready_before_Play']=playable
++ output=R/'pcm/current-normal-preview';assert not output.exists()
++ helper_until=min(WORK,now()+14_000_000_000);assert helper_until+2_000_000_000<CLOSE
++ serial+=1;name=f'{serial:03d}-current-normal-preview-observer.log'
++ try:
++  pcm_worker=scope.start(['/usr/bin/python3',str(R/'source/current-pcm/normal_pcm_observer.py'),str(service['child'].pid),str(output)],name,4194304,env=audio_env,cutoff=helper_until,wait_cutoff=helper_until,identity=identity(11040))
++ finally:
++  retained=[item for item in scope.children if item['name']==name]
++  assert len(retained)<=1
++  if retained:
++   pcm_worker=retained[0];expected[pcm_worker['child'].pid]={'role':'current-normal-preview-observer','allowed_actual_exit':[0]}
++ ready=observer_record(output,'ready.json',helper_until)
++ capture_until=ready['original_capture_until_boottime_ns'];assert ready['observer_pid']==pcm_worker['child'].pid and capture_until-ready['original_capture_started_boottime_ns']==6_000_000_000 and ready['original_cleanup_until_boottime_ns']-capture_until==2_000_000_000 and ready['original_cleanup_until_boottime_ns']<helper_until
++ play_touch=actual_touch(playable['points']['Play'],104,'Play native finite preview')
++ observer_marker(output,'play.json',{'schema':1,'kind':'actual_uinput_Play','clock':'CLOCK_BOOTTIME','requested_level_percent':50,'level_touch':level_touch,'play_touch':play_touch})
++ tone=observer_record(output,'tone.json',capture_until)
++ request={'op':'grant','app':APP,'permission':'media_route','allowed':False}
++ before=now();reply=admin(request,absolute_cutoff=min(capture_until,play_touch['before_boottime_ns']+3_000_000_000));after=now();assert reply=={'result':'ok'}
++ observer_marker(output,'revoke.json',{'schema':1,'kind':'actual_admin_media_revoke','clock':'CLOCK_BOOTTIME','before_boottime_ns':before,'after_boottime_ns':after,'request':request,'reply':reply})
++ quiet_record=observer_record(output,'quiet.json',capture_until)
++ assert finish(pcm_worker)==0
++ observed=json.loads((output/'result.json').read_text());assert observed['passed']and observed['classification']=='ACTUAL_PCM_ORACLES_PASS'and observed['complete_paired_windows']
++ final_source=admin({'op':'snapshot'});assert final_source['source']['state']=='observed'and final_source['source']['first_failure']is None
++ assert app_focus()and all(live(item)for item in [actor,service,broker,theme_shell])and compositor_live()and live_fd(app_pidfd)
++ result['boundary_steps'].append({'id':2,'name':'current_Rust_Sounds_operator_grant_actual_route_level_Play_and_revoke_PCM','passed':True,'normal_observer_result':str(output.relative_to(R))+'/result.json','observer_result_sha256':sha(output/'result.json'),'observer_ready':ready,'tone':tone,'quiet':quiet_record,'actual_Reconnect_touch_executed':reconnected,'operator_fixture_grant_not_user_consent':True,'final_authenticated_source_snapshot':final_source})
++ result['current_native_finite_preview_qualified']=True
++
++def close_reopen():
++ global app_pid,app_pidfd,normal_argv_bound,normal_argv,startup,capture_epoch,qualification,window_address,display_discovery
++ flow={'qualified':False,'permission_withheld_throughout':True,'user_consent_claimed':False,'direct_uinput_is_not_viewer_input':True,'close_attempts':0,'menu_attempts':1,'first_epoch':{},'second_epoch':{}}
++ result['close_reopen']=flow;result['close_reopen_slice_only']=True;result['original_audio_preview_continuation_selected']=False;result['phase']='standard-user-close'
++ first=flow['first_epoch'];old_pid=app_pid;old_fd=app_pidfd;old_display=Path(result['actual_per_app_display']['pathname']);old_window=window_address
++ first.update(app_PID=old_pid,starttime=watched[old_pid]['starttime'],actor_launch=dict(result['actual_actor_launch']),per_app_display=dict(result['actual_per_app_display']),menu=result['actual_menu_launch'],normal_window_metadata=result['actual_normal_window_metadata'],Pixel10_profile=json.loads(json.dumps(result['Pixel10_profile'])),boundary=result['boundary_steps'][0],startup={'file':str(startup.path.relative_to(R)),'sha256':sha(startup.path),'bytes':startup.bytes,'snapshots':list(startup.rows)})
++ def same_session():
++  assert all(live(item)for item in [actor,service,broker,theme_shell])and compositor_live()
++  assert actor['child'].pid==first['actor_launch']['observed_parent_PID']
++  assert not any(v['request'].get('op')=='grant'for v in result.get('actual_root_actor_requests',[])),'permission grant selected in permission-withheld case'
++ same_session();assert wait(app_focus,10)and window()['address']==old_window
++ # Actual RFB keyboard packets through the existing emulated keyboard.
++ devices=json.loads(control('j/devices'));flow['actual_compositor_keyboard_devices']=devices
++ flow['read_only_input_device_identity']=viewer.verify_devices(devices)
++ flow['actual_Lua_config_sha256']=sha(Path(selection['compositor_config']))
++ flow['actual_compositor_bindings_before_close']=json.loads(control('j/binds'))
++ assert app_focus()and window()['address']==old_window
++ until=min(WORK,now()+10_000_000_000);flow['original_close_until_ns']=until;before=now();flow['close_attempts']=1
++ input_result=viewer.perform(None,until)
++ after=now();assert after<until
++ flow['close_gesture']={'actual_guest_uinput':False,'actual_RFB':True,'keys':['Super_L','w'],'pinned_Omarchy_shortcut':'SUPER + W','before_boottime_ns':before,'after_boottime_ns':after,'handoff':input_result,'app_signal_or_compositor_dispatch_selected':False}
++
++ def retired():
++  same_session();snapshot=admin({'op':'snapshot'},absolute_cutoff=until)
++  old_live=live_fd(old_fd);old_proc=Path('/proc/'+str(old_pid)).exists();old_listener=old_display.exists()
++  flow['last_close_observation']={'at_boottime_ns':now(),'original_close_until_ns':until,'old_retained_pidfd_live':old_live,'old_proc_present':old_proc,'old_listener_present':old_listener,'authenticated_actor_snapshot':snapshot}
++  if old_live or old_proc or snapshot['principals']!=0 or old_listener:return
++  clients=json.loads(control('j/clients',absolute_cutoff=until))
++  if any(v.get('pid')==old_pid or v.get('address')==old_window for v in clients):return
++  assert snapshot['permits']==0 and snapshot['receipts']==0 and snapshot['source']['state']=='observed'and snapshot['source']['first_failure']is None
++  return {'PID':old_pid,'retained_pidfd_dead':True,'proc_absent':True,'old_per_app_listener_absent':True,'old_window_absent':True,'snapshot':snapshot,'native_parent_wait_or_numeric_exit_not_claimed':True,'observed_at_boottime_ns':now()}
++ flow['first_epoch']['retirement']=wait(retired,10,absolute_cutoff=until)
++ # The unchanged wrapper requires fresh EMPTY files. Only after old identity and
++ # display retirement: preserve each bounded regular file, then prepare epoch2.
++ for path,budget in [(metadata_file,16392),(stderr_file,4194304)]:
++  fd=os.open(path,os.O_RDONLY|os.O_CLOEXEC|os.O_NOFOLLOW|os.O_NONBLOCK)
++  try:
++   st=os.fstat(fd);assert stat.S_ISREG(st.st_mode)and st.st_uid==st.st_gid==11042 and stat.S_IMODE(st.st_mode)==0o600 and st.st_nlink==1 and st.st_size<=budget
++   body=os.read(fd,budget+1);again=os.fstat(fd)
++   assert len(body)==st.st_size and (st.st_dev,st.st_ino,st.st_size,st.st_mtime_ns)==(again.st_dev,again.st_ino,again.st_size,again.st_mtime_ns)
++  finally:os.close(fd)
++  dest=R/('epoch-1-'+path.name)
++  with dest.open('xb')as saved:saved.write(body)
++  result.setdefault('preserved_regular_files',[]).append({'file':dest.name,'sha256':sha(dest),'bytes':len(body),'budget_bytes':budget,'PIPE_EOF_claimed':False,'epoch':1,'captured_after_retained_app_pidfd_dead':True})
++ first['captures_preserved_before_reopen']=True
++ for path in [metadata_file,stderr_file]:path.unlink()
++ capture_epoch=2
++ for path in [metadata_file,stderr_file]:path.touch(exist_ok=False);path.chmod(0o600);os.chown(path,11042,11042)
++ # Retain watched[old_pid]'s independent pidfd until normal final cleanup.
++ os.close(old_fd);app_pid=None;app_pidfd=None;normal_argv_bound=False;normal_argv=[str(installed.BIN/'pokelinux-sounds'),*profile_args]
++ startup_root=R/'epoch-2-startup';startup_root.mkdir(mode=0o700)
++ startup=startup_observer.StartupObserver(startup_root,WORK,actor['child'].pid,normal_argv,control)
++ # Same monitor/DRM discovery; second actual app metadata is qualified afresh.
++ display_discovery=json.loads(json.dumps(display_discovery_template));result['Pixel10_profile']=display_discovery
++ result['chosen_Sounds_desktop_binding_reopen']=chosen_sounds_desktop()
++ result['phase']='genuine-menu-reopen';flow['menu_attempts']=2;menu_launch(epoch=2)
++ wait(lambda:normal_argv_bound and app_pid is not None and live_fd(app_pidfd),10)
++ assert app_pid!=old_pid,'reopen did not produce a distinct process'
++ flow['second_epoch']['app_PID']=app_pid
++ def second_metadata():
++  capture_bounds();text=metadata_file.read_text()
++  if not text or not text.endswith('\n'):return
++  lines=text.splitlines();assert len(lines)<=8 and all(len(line.encode())<=2048 for line in lines)
++  value=json.loads(lines[-1]);assert value.get('kind')=='sounds_window_metadata'and value['schema']==1 and value['title']=='Sounds'
++  if not(value['window']['visible']is True and value['window']['exposed']is True and abs(value['window']['dpr']-2.625)<=.001):return
++  client=window(absolute_cutoff=frame_until)
++  if client is None:return
++  assert value['pid']==client['pid']==app_pid
++  if value['window']['geometry'][2:]!=client['size']:return
++  return value
++ def timeout(until):startup.record('before-original-frame-cutoff',app_pid,app_pidfd,absolute_cutoff=until,expected_starttime=watched.get(app_pid,{}).get('starttime'))
++ frame_until=min(WORK,now()+30_000_000_000)
++ observed=wait(second_metadata,30,before_timeout=timeout,absolute_cutoff=frame_until);assert normal_argv_bound and app_pidfd is not None
++ proc=Path('/proc')/str(app_pid);startup.record('first-qualified-frame',app_pid,app_pidfd,expected_starttime=watched[app_pid]['starttime']);assert sha(proc/'exe')==sha(normal)
++ text=(proc/'status').read_text();assert next(v for v in text.splitlines()if v.startswith('Uid:')).split()[1:]==next(v for v in text.splitlines()if v.startswith('Gid:')).split()[1:]==['11042']*4 and not next(v for v in text.splitlines()if v.startswith('Groups:')).split()[1:]
++ assert int((proc/'stat').read_text().split(') ',1)[1].split()[1])==actor['child'].pid
++ window_address=wait(window,10)['address'];snapshot=admin({'op':'snapshot'});assert snapshot['principals']==1 and snapshot['permits']==snapshot['receipts']==0
++ assert Path(result['actual_per_app_display']['pathname'])!=old_display and not old_display.exists()
++ result['actual_normal_window_metadata']=observed
++ result['actual_actor_launch']={'app_PID':app_pid,'observed_parent_PID':actor['child'].pid,'kernel_UIDs':[11042]*4,'kernel_GIDs':[11042]*4,'supplementary_groups':[],'single_actor_launch_epoch':True,'scope':'second launch only; first epoch retained separately','numeric_generation_exported':False,'normal_ELF_sha256':sha(proc/'exe'),'fixed_desktop_client_executed_as_UID':1000,'desktop_menu_activation_claimed':True}
++ assert now()<frame_until and second_metadata()==observed,'normal frame changed before qualification'
++ qualification=display.qualify_app(public_profile,display_discovery,observed,control,result,frame_until)
++ assert now()<frame_until and second_metadata()==observed,'normal frame changed during qualification'
++ result['actual_menu_launch']['qualified']=True;result['actual_menu_launch']['retained_app_PID']=app_pid
++ result['phase']='reopened-Sounds-focus-Pixel-and-permission-withheld-quiet-PCM'
++ focused=wait(app_focus,10);quiet_graph=wait(quiet,10);measured=pcm('released_silence','reopened-no-grant');frame=capture('Sounds-reopened-no-grant')
++ snapshot=admin({'op':'snapshot'});same_session();assert app_focus()and live_fd(app_pidfd)and snapshot['principals']==1 and snapshot['permits']==snapshot['receipts']==0 and snapshot['source']['state']=='observed'and snapshot['source']['first_failure']is None
++ flow['second_epoch'].update(starttime=watched[app_pid]['starttime'],actor_launch=dict(result['actual_actor_launch']),per_app_display=dict(result['actual_per_app_display']),menu=result['actual_menu_launch'],normal_window_metadata=observed,Pixel10_profile=json.loads(json.dumps(result['Pixel10_profile'])),native_focus=focused,final_authenticated_source_snapshot=snapshot)
++ result['boundary_steps'].append({'id':2,'name':'standard_close_fresh_menu_reopen_Pixel_focus_permission_withheld_quiet_PCM','passed':True,'native_focus':focused,'owner_and_graph':quiet_graph,'PCM':measured,'native_capture':frame,'final_authenticated_source_snapshot':snapshot})
++ flow['qualified']=True
++
++
+@@ -307 +735 @@
+-def window():
++def window(absolute_cutoff=None):
+@@ -309 +737 @@
+- rows=[v for v in json.loads(control('j/clients'))if v.get('pid')==app_pid and v.get('mapped')];assert len(rows)<=1
++ rows=[v for v in json.loads(control('j/clients',absolute_cutoff=absolute_cutoff))if v.get('pid')==app_pid and v.get('mapped')];assert len(rows)<=1
+@@ -464,0 +893 @@
++ viewer=GuestInput(R/'viewer-input',result['selection_sha256'],WORK,CLOSE,tick,lambda:(scope.pump(),scope.check()))
+@@ -472 +901 @@
+- command(['/usr/bin/usermod','-a','-G','video,input','alarm'],'desktop-support-groups.log');command(['/usr/bin/modprobe','virtio_gpu'],'GPU-module.log');command(['/usr/bin/modprobe','uinput'],'uinput-module.log');command(['/usr/bin/udevadm','settle'],'udev-settle.log')
++ command(['/usr/bin/usermod','-a','-G','video,input','alarm'],'desktop-support-groups.log');command(['/usr/bin/modprobe','virtio_gpu'],'GPU-module.log');command(['/usr/bin/modprobe','virtio_input'],'viewer-virtio-input-module.log');command(['/usr/bin/udevadm','settle'],'udev-settle.log')
+@@ -501 +930 @@
+- pipewire=start(['/usr/bin/pipewire','-c',str(root/'config/pipewire.conf')],'private-PipeWire.log',env=audio_env,user=11040,allowed=(0,-15));wait(lambda:graph()['node_ids'].get('source.media'),10)
++ pipewire=start(['/usr/bin/pipewire','-c',str(root/'config/pipewire.conf')],'private-PipeWire.log',env=audio_env,user=11040,allowed=(0,-15));wait(lambda:graph()['node_ids'].get('route.speaker'),10);assert 'source.media' not in graph()['node_ids'];result['finite_media_profile_without_permanent_fixture_producer']=True
+@@ -576,0 +1006 @@
++ display_discovery_template=json.loads(json.dumps(display_discovery))
+@@ -591 +1021 @@
+- result['genuine_full_shell']={'upstream_base_files':196,'namespace_only_modified_QML_files':54,'genuine_theme_asset_files':40,'actual_unit_MainPID':theme_shell['child'].pid,'same_Wayland_path':str(installed.WAYLAND),'authenticated_compositor_layers_query_PID':compositor_pid,'actual_layer_rows_with_PID_in_shell_unit_cgroup':shell_surfaces,'literal_Wayland_socket_client_peer_inspection_claimed':False,'actual_shell_ping':ping.strip(),'palette_snapshot_or_live_theme_qualified':False,'startup_unit_environment_unchanged':False,'manager_main_PID_is_not_guest_child':True}
++ result['genuine_full_shell']={'upstream_base_files':196,'namespace_only_modified_QML_files':54,'genuine_theme_asset_files':40,'launch_adapted_QML_files':1,'unchanged_upstream_base_files':141,'menu_overlay_admission_relative':'source/proofs/menu-overlay-admission.json','actual_unit_MainPID':theme_shell['child'].pid,'same_Wayland_path':str(installed.WAYLAND),'authenticated_compositor_layers_query_PID':compositor_pid,'actual_layer_rows_with_PID_in_shell_unit_cgroup':shell_surfaces,'literal_Wayland_socket_client_peer_inspection_claimed':False,'actual_shell_ping':ping.strip(),'palette_snapshot_or_live_theme_qualified':False,'startup_unit_environment_unchanged':False,'manager_main_PID_is_not_guest_child':True}
+@@ -599 +1029,6 @@
+- command([str(client),str(RUN/'launch-sounds.sock')],'installed-UID1000-native-desktop-client.log',env=desktop_env,user=1000,seconds=10)
++ result['chosen_Sounds_desktop_binding']=chosen_sounds_desktop()
++ result['viewer_input_selection']={'new_emulated_device':'virtio-tablet-pci,id=viewer-tablet','seven_action_RFB_test_consumer':True,'actual_guest_uinput':False,'prior_guest_uinput_result_inherited':False,'human_viewer_UI_qualified':False}
++ result['read_only_input_devices']=viewer.identify()
++ result['compositor_selected_input_devices']=viewer.verify_devices(json.loads(control('j/devices')))
++ result['viewer_input_preflight']=viewer.preflight(min(WORK,now()+10_000_000_000))
++ menu_launch()
+@@ -607 +1042,2 @@
+- snapshot=admin({'op':'snapshot'})
++ frame_until=min(WORK,now()+30_000_000_000)
++ snapshot=admin({'op':'snapshot'},absolute_cutoff=frame_until)
+@@ -614 +1050,6 @@
+- assert snapshot['source']['state']=='observed'and snapshot['source']['first_failure']is None
++ assert snapshot['source']['first_failure']is None
++ def registry_source_observed():
++  current=admin({'op':'snapshot'},absolute_cutoff=frame_until)
++  assert current['source']['first_failure']is None
++  return current if current['source']['state']=='observed'else None
++ logical['Source_readiness_before_frame']={'original_absolute_frame_until_ns':frame_until,'observed_snapshot':snapshot if snapshot['source']['state']=='observed'else wait(registry_source_observed,30,absolute_cutoff=frame_until)}
+@@ -621,0 +1063,4 @@
++  client=window(absolute_cutoff=frame_until)
++  if client is None:return
++  assert value['pid']==client['pid']==app_pid
++  if value['window']['geometry'][2:]!=client['size']:return
+@@ -625 +1069,0 @@
+- frame_until=min(WORK,now()+30_000_000_000)
+@@ -631 +1075 @@
+- result['actual_normal_window_metadata']=observed;result['actual_actor_launch']={'app_PID':app_pid,'observed_parent_PID':actor['child'].pid,'kernel_UIDs':[11042]*4,'kernel_GIDs':[11042]*4,'supplementary_groups':[],'single_actor_launch_epoch':True,'numeric_generation_exported':False,'normal_ELF_sha256':sha(proc/'exe'),'fixed_desktop_client_executed_as_UID':1000,'desktop_menu_activation_claimed':False}
++ result['actual_normal_window_metadata']=observed;result['actual_actor_launch']={'app_PID':app_pid,'observed_parent_PID':actor['child'].pid,'kernel_UIDs':[11042]*4,'kernel_GIDs':[11042]*4,'supplementary_groups':[],'single_actor_launch_epoch':True,'numeric_generation_exported':False,'normal_ELF_sha256':sha(proc/'exe'),'fixed_desktop_client_executed_as_UID':1000,'desktop_menu_activation_claimed':True}
+@@ -634,0 +1079,2 @@
++ result['actual_menu_launch']['qualified']=True
++ result['actual_menu_launch']['retained_app_PID']=app_pid
+@@ -640,0 +1087 @@
++ close_reopen()
+@@ -649 +1096,13 @@
+- if startup is not None:result['passive_startup_observations']={'file':startup.path.name,'sha256':sha(startup.path),'bytes':startup.bytes,'snapshot_count':len(startup.rows),'snapshots':startup.rows,'normal_metadata_or_authority_channel':False}
++ if viewer is not None:
++  try:
++   result['viewer_input_retirement']=viewer.retire(CLOSE)
++   result['viewer_input_actions']=viewer.actions
++   result['remote_event_queues_drained_claim']=False
++   if not result['viewer_input_retirement']['worker_operational_success']:cleanup.append('viewer worker/server operational failure; no future writes proven, queue drain not claimed')
++  except BaseException as fence_error:
++   result['passed']=False;result['viewer_retirement_fence_failure']=repr(fence_error);result['normal_guest_teardown_withheld']=True
++   viewer_publish(R/'viewer-input/guest-fence-failure.json',{'selection_sha256':result['selection_sha256'],'normal_teardown_withheld':True,'remote_event_queues_drained_claim':False})
++   (R/'result.json').write_text(json.dumps(result,indent=2)+'\n')
++   raise RuntimeError('unknown viewer retirement; normal teardown and automatic poweroff withheld')from fence_error
++ retire_current_observer(cleanup)
++ if startup is not None:result['passive_startup_observations']={'file':str(startup.path.relative_to(R)),'sha256':sha(startup.path),'bytes':startup.bytes,'snapshot_count':len(startup.rows),'snapshots':startup.rows,'normal_metadata_or_authority_channel':False}
+@@ -689 +1148 @@
+- for source,dest,limit in [(metadata_file,R/'normal-qt-window.jsonl',16392),(stderr_file,R/'normal-qt.stderr',4194304),(FOCUS_LOG,R/'actual-native-focus.jsonl',512*768)]:
++ for source,dest,limit in [(metadata_file,R/('epoch-'+str(capture_epoch)+'-normal-qt-window.jsonl'),16392),(stderr_file,R/('epoch-'+str(capture_epoch)+'-normal-qt.stderr'),4194304),(FOCUS_LOG,R/'actual-native-focus.jsonl',512*768)]:
+@@ -692 +1151,4 @@
+-    assert source.stat().st_size<=limit;shutil.copyfile(source,dest);result.setdefault('preserved_regular_files',[]).append({'file':dest.name,'sha256':sha(dest),'bytes':dest.stat().st_size,'budget_bytes':limit,'PIPE_EOF_claimed':False})
++    assert source.stat().st_size<=limit
++    if dest.exists():assert sha(dest)==sha(source),'preserved epoch evidence changed'
++    else:shutil.copyfile(source,dest)
++    result.setdefault('preserved_regular_files',[]).append({'file':dest.name,'sha256':sha(dest),'bytes':dest.stat().st_size,'budget_bytes':limit,'PIPE_EOF_claimed':False})
+@@ -694 +1156 @@
+- if touch is not None:touch.close()
++ if viewer is not None:viewer.close_devices()

@@ -1,0 +1,50 @@
+--- a/run-selected.py
++++ b/run-selected.py
+@@ -97 +97 @@
+- assert command.count('-v')==4 and S['host_devices_attached']==['/dev/kvm']and S['automatic_retries_selected']is False
++ assert command.count('-v')==5 and S['host_devices_attached']==['/dev/kvm']and S['automatic_retries_selected']is False
+@@ -101 +101 @@
+- mounts=[command[i+1]for i,v in enumerate(command[:-1])if v=='-v'];assert set(mounts)=={str(R)+':/results:rw',S['stock_cloud_image_path']+':/vm/stock-cloud.qcow2:ro',S['provisioned_layer_path']+':/vm/provisioned-layer.qcow2:ro',S['theme_archive_host_path']+':/assets/omarchy-public.tar.gz:ro'}
++ mounts=[command[i+1]for i,v in enumerate(command[:-1])if v=='-v'];assert set(mounts)=={str(R)+':/results:rw',S['stock_cloud_image_path']+':/vm/stock-cloud.qcow2:ro',S['provisioned_layer_path']+':/vm/provisioned-layer.qcow2:ro',S['theme_archive_host_path']+':/assets/omarchy-public.tar.gz:ro',S['viewer_input_integration']['bundle_host_root']+':/viewer:ro'}
+@@ -220,0 +221,7 @@
++    if not guest['passed']:
++     menu_failure=guest.get('actual_menu_launch',{});phase=guest.get('phase');touches=menu_failure.get('touches',[])
++     completed_bar_touch=bool(menu_failure.get('bar_geometry')and menu_failure.get('captures')and touches and touches[0].get('label')=='genuine bar menu'and touches[0].get('actual_RFB')and touches[0].get('actual_guest_uinput')is False and touches[0].get('after_boottime_ns',0)>0)
++     boundary=('PRE_MENU_PREREQUISITE_FAILURE'if not completed_bar_touch else'MENU_APP_ACTIVATION_OR_FRAME_FAILURE'if menu_failure.get('all_three_actual_menu_touches_complete')and not menu_failure.get('qualified')else'POST_MENU_FUNCTIONAL_FAILURE'if menu_failure.get('qualified')else'LIVE_BAR_OR_MENU_NAVIGATION_FAILURE')
++     record['menu_failure_boundary']={'classification':boundary,'classification_scope':'boundary_observation_only','product_regression_qualified':False,'independent_qualification_required':True,'guest_phase':phase,'completed_first_bar_touch_with_geometry_and_capture':completed_bar_touch,'three_navigation_touches_observed':bool(menu_failure.get('all_three_actual_menu_touches_complete')),'exact_underlying_cause_claimed':False,'ten_seconds_applies_to':'navigation only; original app-start/registry/frame/PCM and closure cutoffs remain separate'}
++    if 'close_reopen'in guest and not guest['passed']:
++     close=guest['close_reopen'];record['close_reopen_failure_boundary']={'classification_scope':'boundary_observation_only','product_regression_qualified':False,'independent_qualification_required':True,'guest_phase':guest['phase'],'actual_close_gesture_completed':bool(close.get('close_gesture')),'first_app_retirement_observed':bool(close['first_epoch'].get('retirement')),'second_menu_attempted':close['menu_attempts']==2,'exact_underlying_cause_claimed':False}
+@@ -223 +230,16 @@
+-     assert [v['id']for v in guest['boundary_steps']]==[1]and guest['boundary_steps'][0]['passed']
++     menu=guest['actual_menu_launch'];assert menu['qualified']and menu['all_three_actual_menu_touches_complete']and not menu['direct_desktop_client_invoked_by_guest']
++     assert [v['label']for v in menu['touches']]==['genuine bar menu','Apps','Sounds']and all(v['actual_RFB']and v['actual_guest_uinput']is False for v in menu['touches'])
++     assert guest['desktop_menu_activation_exercised']and guest['actual_actor_launch']['desktop_menu_activation_claimed']and menu['retained_app_PID']==guest['actual_actor_launch']['app_PID']
++     assert [v['id']for v in guest['boundary_steps']]==[1,2]and all(v['passed']for v in guest['boundary_steps'])
++     bridge=boot['viewer_input_host'];assert bridge['operational_success']and bridge['worker_actual_exit']==bridge['server_actual_exit']==0
++     worker=bridge['worker_result'];assert worker['passed']and len(worker['actions'])==7 and [a['action']for a in worker['actions']]==['bar-1','apps-1','sounds-1','close-1','bar-2','apps-2','sounds-2']and all(a['outcome']=='sent_once'for a in worker['actions'])
++     assert guest['viewer_input_retirement']['no_future_host_writes']and guest['viewer_input_retirement']['worker_operational_success']and guest['remote_event_queues_drained_claim']is False and len(guest['viewer_input_actions'])==7
++     assert all(row['open_access']=='O_RDONLY'for row in guest['read_only_input_devices'].values())
++     assert guest['close_reopen']['close_gesture']['actual_RFB']and guest['close_reopen']['close_gesture']['actual_guest_uinput']is False
++     flow=guest['close_reopen'];assert flow['qualified']and flow['permission_withheld_throughout']and flow['close_attempts']==1 and flow['menu_attempts']==2
++     first,second=flow['first_epoch'],flow['second_epoch'];assert first['app_PID']!=second['app_PID']
++     assert first['retirement']['retained_pidfd_dead']and first['retirement']['proc_absent']and first['retirement']['old_window_absent']and first['retirement']['old_per_app_listener_absent']
++     assert first['actor_launch']['observed_parent_PID']==second['actor_launch']['observed_parent_PID']and first['per_app_display']['pathname']!=second['per_app_display']['pathname']
++     assert all(epoch['Pixel10_profile']['qualification']['qualified']and epoch['menu']['qualified']and epoch['menu']['all_three_actual_menu_touches_complete']and not epoch['menu']['direct_desktop_client_invoked_by_guest']for epoch in [first,second])
++     assert not any(v['request'].get('op')=='grant'for v in guest.get('actual_root_actor_requests',[]))
++     assert not guest.get('current_native_finite_preview_qualified')and not guest.get('current_observer_retired_before_audio_Stop')
+@@ -227 +249 @@
+-     qt=guest['current_native_Qt_build'];assert qt['actual_audio_total_including_setup_cleanup']==32 and qt['actual_audio_behavior_cases']==30 and len(qt['actual_appearance_cases'])==29
++     qt=guest['current_native_Qt_build'];assert qt['actual_audio_total_including_setup_cleanup']==34 and qt['actual_audio_behavior_cases']==32 and qt['actual_CABI_CTest_total']==5 and len(qt['actual_appearance_cases'])==29
+@@ -229 +251,8 @@
+-     assert len(list((R/'pcm').glob('*/result.json')))==1 and guest['boundary_steps'][0]['PCM']['measured_frames']==48000
++     assert {str(p.relative_to(R/'pcm'))for p in (R/'pcm').glob('*/result.json')}=={'cold-installed-initial-no-grant/result.json','reopened-no-grant/result.json'}
++     for step in guest['boundary_steps']:
++      pcm=step['PCM'];assert pcm['measured_frames']==48000 and pcm['stage']=='released_silence'
++      pcm_path=R/pcm['result'];assert sha(pcm_path)==pcm['sha256'];measured=load(pcm_path);assert measured['passed']and measured['classification']=='ACTUAL_PCM_ORACLES_PASS'
++      assert step['final_authenticated_source_snapshot']['source']['state']=='observed'and step['final_authenticated_source_snapshot']['source']['first_failure']is None
++     captures={v['file']:v for v in guest['preserved_regular_files']}
++     assert {'epoch-1-normal-qt-window.jsonl','epoch-1-normal-qt.stderr','epoch-2-normal-qt-window.jsonl','epoch-2-normal-qt.stderr'}<=captures.keys()
++     assert all(sha(R/name)==v['sha256']and (R/name).stat().st_size==v['bytes']and not v['PIPE_EOF_claimed']for name,v in captures.items())
+@@ -234 +263 @@
+-    assert boot['passed'] and boot['QEMU_actual_wait_exit']==0 and len(boot['owned_process_receipts'])==5 and boot['actual_QMP_KVM']['query_kvm_enabled']and boot['actual_QMP_KVM']['query_kvm_present']and boot['serial_guest_identity_and_result_hash_match']and boot['actual_QMP_KVM']['actual_guest_SHUTDOWN']['value']['data']=={'guest':True,'reason':'guest-shutdown'}and boot['actual_QMP_KVM']['socket_EOF_before_original_cutoff']
++    assert boot['passed'] and boot['QEMU_actual_wait_exit']==0 and len(boot['owned_process_receipts'])==8 and boot['actual_QMP_KVM']['query_kvm_enabled']and boot['actual_QMP_KVM']['query_kvm_present']and boot['serial_guest_identity_and_result_hash_match']and boot['actual_QMP_KVM']['actual_guest_SHUTDOWN']['value']['data']=={'guest':True,'reason':'guest-shutdown'}and boot['actual_QMP_KVM']['socket_EOF_before_original_cutoff']

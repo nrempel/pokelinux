@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "scope": "Exact executed full-VM viewer consumers; qualified automated input, not a standalone human preview installer",
+  "base_commit": "b94872b3aad3029c6034de11eab9dbc283d57cef",
+  "files": {
+    "boot.py": "dac88a6892f51c287cbc6070e421a6bc99d0fffff502f316433216f4ee6edc6e",
+    "viewer_protocol.py": "e44b7a8dcea74d4968ca2d4372d90405cb415504f154b94e8f34c44188cd6a66",
+    "viewer_guest.py": "7a1814e90ad856c604893f5b5336dc70a53e79b0c157caffee04acd576d03007",
+    "viewer_host.py": "b9feb707c047972d1951874c7f26665aae2b3a2da18c189a0ac191203b0955ad",
+    "viewer_worker.py": "06255249ae6cea0f673472dc88f4830741ff508b4929b015f31b6ac7d5be4693",
+    "viewer_viewport.py": "342b3adb9b2f7e25c3c862412a2d791e375788e4281fa08ad506c65b654f20b8",
+    "rfb_input_packets.py": "668f60c49e9cb3f39d32108c99b1496ec993b95ed31c872e0566d024626462fa",
+    "rfb_frames.py": "7674aacedbccae843ae0f18e593df6c021e55cad93a0c605b588c8417b4b0fa3",
+    "viewer-bundle.json": "2e78905a047d5df43dcae3a7c8ace9ce7827a3d567db8b43d7732a1f5abfae8c",
+    "test_rfb_frames.py": "4bb22a545dd44b736ba2419434d90e8815fbae437880ac55eda319790a9adeae"
+  },
+  "consumers": {
+    "guest.py": {
+      "base_file": "tools/native-cold-omarchy/guest.py",
+      "base_sha256": "f7c36110ac2009c498732979aa7ec66d72743e903557b765819b4d9c98f149e9",
+      "patch": "guest.py.patch",
+      "patch_sha256": "41a88a9f46d8695ca2369da7b3884312668b3ad8f26bbbb9c298879071398ea0",
+      "selected_output_sha256": "dc2e5f839e895624fe10d684e87c9c0bcec2940442ff12dd5a23d3b0f94e0b4d",
+      "apply_option": "--unidiff-zero",
+      "actual_patch_reconstruction_verified": true
+    },
+    "run-selected.py": {
+      "base_file": "tools/native-cold-omarchy/run-selected.py",
+      "base_sha256": "1a0ec467f3025dce6d3ef11b75bc5bd8696140d7e3b8140b16739e11022bc16e",
+      "patch": "run-selected.py.patch",
+      "patch_sha256": "1d09d1f7b3550363121445107a410a9c1e94e38fd480ccc58e42eca948b53787",
+      "selected_output_sha256": "fb079674326f77f072120cdd432cc129217c01d7c1f50d65a180d4b17d8dc074",
+      "apply_option": "--unidiff-zero",
+      "actual_patch_reconstruction_verified": true
+    }
+  },
+  "shared_dependencies": {
+    "owned.py": {
+      "base_file": "tools/native-callback-spans/owned.py",
+      "sha256": "266024c425f92732c53c4b4ea1f06e90f4cd30cbc5cca0d19b8385e63921ae3f"
+    }
+  }
+}

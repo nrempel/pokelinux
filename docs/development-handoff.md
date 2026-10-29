@@ -23,10 +23,12 @@ real missing-binding RED. Both actual app windows pass Pixel 10/focus and 48,000
 silent PCM frames each with permission withheld. The earlier host-readability
 and post-registry Source-readiness failures remain separate. This is guest uinput,
 not viewer input. A separate paused host-only Unix RFB/frame/closure probe passes.
-The full viewer continuation now reaches the real guest, but stops before any
-input because its QEMU host window is 640×480 centered inside the native canvas,
-even with fullscreen selected. Correct host window setup, retain the exact geometry
-checks, and then deliver the interactive preview. No capture resizing.
+The later [full viewer continuation](native-omarchy-viewer.md) now passes all seven
+RFB actions, actual close/reopen, both native Pixel/quiet-PCM checks, final raw
+frame receipt and normal shutdown. An owned initial host-window setup corrects
+the no-WM SDL geometry; the decoder accepts RFC-permitted padding with all bounds
+retained. Earlier failed runs remain separate. Deliver the bounded human preview
+using the normal app entry point next; human/SSH connection and consent remain open.
 
 The earlier [menu integration](native-omarchy-menu-launch.md) closes actual
 bar→Apps→Sounds RED→GREEN in genuine Omarchy. The new actor-owned UID 11042 app
