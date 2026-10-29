@@ -2,8 +2,10 @@
 
 Current app profiles require explicit installation-owned roles; see
 [permission-controller configuration](native-permission-controller.md). Ordinary
-apps use `role: {"kind":"application"}`. This schema change does not yet wire
-controller requests or visible consent; frozen evidence keeps its original profiles.
+apps use `role: {"kind":"application"}`. The separate fixed Permissions principal
+now has scoped status/set requests on the app socket, with current Source focus,
+owner/revision checks and the existing durable writer. Visible consent remains
+unwired; frozen historical evidence keeps its original profiles.
 
 The initial authority milestone passed18 installed Linux process groups and
 four component tests on x86 and an actual ARM64 Arch kernel. The current
@@ -26,7 +28,9 @@ a transferable token granting a later hardware operation.
 
 The installer owns a bounded profile mapping app IDs to unique UIDs, absolute
 executables and fixed arguments. Only the privileged admin socket can request
-launch arbitrary configured apps, grant/revoke policy, change lifecycle or stop.
+launch arbitrary configured apps, change lifecycle or stop. General grant/revoke
+remains root-only; the installed UID11045 Permissions role has only the scoped
+Sounds/MediaRoute control described above.
 The optional Messages provider also admits one fixed launch-only request from the
 actual designated desktop UID; it grants no policy or data authority. A privileged
 launch request supplies an app ID; it cannot select executable, UID, PID or arguments. Executables and

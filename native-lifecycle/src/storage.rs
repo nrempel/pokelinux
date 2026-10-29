@@ -365,6 +365,20 @@ impl Worker {
     pub(crate) fn busy(&self) -> bool {
         self.pending.is_some()
     }
+    /// Cancel only this exact admission while no bytes have been submitted.
+    /// An already submitted write remains owned through its original deadline.
+    pub(crate) fn cancel_queued(&mut self, token: u64) -> bool {
+        if self
+            .pending
+            .as_ref()
+            .is_some_and(|p| p.token == token && p.wire.is_some())
+        {
+            self.pending = None;
+            true
+        } else {
+            false
+        }
+    }
     pub(crate) fn start_load(&mut self, apps: Vec<String>, until: u64) -> io::Result<u64> {
         self.start(Job::Load { apps }, until)
     }

@@ -6,6 +6,10 @@ use rustix::{
 };
 use std::{collections::BTreeMap, io};
 
+#[cfg(test)]
+#[path = "permission_ingress_tests.rs"]
+pub(crate) mod permission_ingress_tests;
+
 struct Principal {
     uid: u32,
     pid: u32,
@@ -13,6 +17,20 @@ struct Principal {
     background: bool,
     background_intent: bool,
     alive: OwnedFd,
+}
+/// Actor-owned publication context; wire identities never construct this stamp.
+#[derive(Clone)]
+pub(crate) struct PermissionStamp {
+    app: String,
+    pid: u32,
+    uid: u32,
+    generation: u64,
+    owner: String,
+    policy: u64,
+    lifecycle: u64,
+    source: String,
+    revision: u64,
+    pub(crate) until: u64,
 }
 /// Internal, non-cloneable stamp; never serialized or supplied by an app.
 pub(crate) struct ReadStamp {
@@ -99,6 +117,7 @@ struct Permit {
 }
 pub(crate) enum Gate {
     Grant,
+    Permission(PermissionStamp),
     Lock,
     RequiredLock,
     Restore {
@@ -118,6 +137,14 @@ pub(crate) struct WriteIntent {
     policy: u64,
     lifecycle: u64,
     gate: Gate,
+}
+impl WriteIntent {
+    pub(crate) fn permission_stamp(&self) -> Option<PermissionStamp> {
+        match &self.gate {
+            Gate::Permission(stamp) => Some(stamp.clone()),
+            _ => None,
+        }
+    }
 }
 pub(crate) enum Decision {
     Immediate(Reply),
@@ -1181,6 +1208,116 @@ impl Authority {
                 .iter()
                 .any(|g| g.app == app && g.permission == permission && g.allowed)
     }
+    pub(crate) fn permission_stamp(
+        &mut self,
+        pid: u32,
+        uid: u32,
+        until: u64,
+        now: u64,
+    ) -> Result<PermissionStamp, Reply> {
+        let _ = self.reap_dead();
+        if !self.ready() {
+            return Err(Reply::Unavailable);
+        }
+        if now >= until
+            || until.saturating_sub(now) > 1_000_000_000
+            || !self.session_required
+            || self.locked
+            || self.suspended
+            || self.root_lock_intent
+        {
+            return Err(Reply::Denied);
+        }
+        let Some((app, principal)) = self
+            .principals
+            .iter()
+            .find(|(_, p)| p.pid == pid && p.uid == uid)
+        else {
+            return Err(Reply::Denied);
+        };
+        let controller = self.profiles.iter().any(|p| {
+            p.app == *app
+                && p.app == crate::permission::APP
+                && p.uid == crate::permission::UID
+                && matches!(&p.role, crate::AppRole::PermissionController{target,permission}
+                if target == crate::audio::APP && *permission == Permission::MediaRoute)
+        });
+        let target = self
+            .profiles
+            .iter()
+            .any(|p| p.app == crate::audio::APP && p.role == crate::AppRole::Application);
+        let sample = self.fresh_session(now).ok_or(Reply::Denied)?;
+        if !controller
+            || !target
+            || principal.background
+            || sample.locked
+            || !living(&principal.alive).unwrap_or(false)
+            || !sample
+                .focus
+                .as_ref()
+                .is_some_and(|focus| self.matches_focus(principal, focus))
+        {
+            return Err(Reply::Denied);
+        }
+        let stamp = PermissionStamp {
+            app: app.clone(),
+            pid,
+            uid,
+            generation: principal.generation,
+            owner: self.incarnation.clone(),
+            policy: self.policy,
+            lifecycle: self.lifecycle,
+            source: sample.source.clone(),
+            revision: sample.revision,
+            until,
+        };
+        if self.current_permission(&stamp, crate::boottime_ns()) {
+            Ok(stamp)
+        } else {
+            Err(Reply::Denied)
+        }
+    }
+    pub(crate) fn current_permission(&self, stamp: &PermissionStamp, now: u64) -> bool {
+        self.ready()
+            && now < stamp.until
+            && self.incarnation == stamp.owner
+            && self.policy == stamp.policy
+            && self.lifecycle == stamp.lifecycle
+            && self.session_required
+            && !self.locked
+            && !self.suspended
+            && !self.root_lock_intent
+            && self.principals.get(&stamp.app).is_some_and(|p| {
+                p.pid == stamp.pid
+                    && p.uid == stamp.uid
+                    && p.generation == stamp.generation
+                    && !p.background
+                    && living(&p.alive).unwrap_or(false)
+                    && self.fresh_session(now).is_some_and(|s| {
+                        !s.locked
+                            && s.source == stamp.source
+                            && s.revision == stamp.revision
+                            && s.focus
+                                .as_ref()
+                                .is_some_and(|focus| self.matches_focus(p, focus))
+                    })
+            })
+            && {
+                let final_now = crate::boottime_ns();
+                final_now < stamp.until && self.fresh_session(final_now).is_some()
+            }
+    }
+    fn permission_state(&self) -> Reply {
+        Reply::PermissionState {
+            target: crate::audio::APP.into(),
+            permission: Permission::MediaRoute,
+            allowed: self.durable.grants.iter().any(|g| {
+                g.app == crate::audio::APP && g.permission == Permission::MediaRoute && g.allowed
+            }),
+            owner: self.incarnation.clone(),
+            revision: self.policy,
+        }
+    }
     pub(crate) fn begin_read(
         &mut self,
         pid: u32,
@@ -1694,6 +1831,35 @@ impl Authority {
             return immediate(Reply::Denied);
         };
         match request {
+            AppRequest::PermissionStatus { deadline_ns } => {
+                match self.permission_stamp(pid, uid, deadline_ns, now) {
+                    Ok(_) => immediate(self.permission_state()),
+                    Err(reply) => immediate(reply),
+                }
+            }
+            AppRequest::PermissionSet {
+                allowed,
+                expected_owner,
+                expected_revision,
+                deadline_ns,
+            } => {
+                let mut stamp = match self.permission_stamp(pid, uid, deadline_ns, now) {
+                    Ok(stamp) => stamp,
+                    Err(reply) => return immediate(reply),
+                };
+                if expected_owner != self.incarnation || expected_revision != self.policy {
+                    return immediate(Reply::Denied);
+                }
+                match self.plan_grant(crate::audio::APP, Permission::MediaRoute, allowed, now) {
+                    Ok(mut intent) => {
+                        stamp.policy = self.policy;
+                        intent.until = deadline_ns;
+                        intent.gate = Gate::Permission(stamp);
+                        Decision::Persist(intent)
+                    }
+                    Err(_) => immediate(Reply::Unavailable),
+                }
+            }
             AppRequest::ConnectivitySet { .. }
             | AppRequest::ConnectivityStatus {}
             | AppRequest::BrightnessSet { .. }
@@ -1829,6 +1995,15 @@ impl Authority {
         }
         // A known durable commit is retained as history, even when current publication fails.
         self.durable = intent.next;
+        if let Gate::Permission(stamp) = &intent.gate {
+            // Sync is historical fact even if current focus or deadline changed.
+            // Losing publication authority does not undo or invent the commit.
+            return if self.current_permission(stamp, now) {
+                self.permission_state()
+            } else {
+                Reply::Denied
+            };
+        }
         if matches!(intent.gate, Gate::Lock | Gate::RequiredLock) {
             if matches!(intent.gate, Gate::RequiredLock) {
                 self.required_lock = None;
@@ -1856,6 +2031,7 @@ impl Authority {
                 unreachable!("lock completion handled above")
             }
             Gate::Grant => Reply::Ok,
+            Gate::Permission(_) => unreachable!("permission completion handled above"),
             Gate::Admit {
                 app,
                 generation,

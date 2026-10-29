@@ -326,3 +326,63 @@ fn policy_directory_writable_ancestor_is_refused() {
     c.write();
     c.denied();
 }
+
+// Installation boundary only: these tests launch no controller and grant nothing.
+fn install_permissions(c: &Case) -> Value {
+    for name in ["permissions-home", "permissions-run"] {
+        let path = c.root.join(name);
+        fs::create_dir(&path).unwrap();
+        rustix::fs::chown(
+            &path,
+            Some(rustix::process::Uid::from_raw(11045)),
+            Some(rustix::process::Gid::from_raw(11045)),
+        )
+        .unwrap();
+        fs::set_permissions(path, fs::Permissions::from_mode(0o700)).unwrap();
+    }
+    let mut p = c.profile();
+    let mut controller = p["apps"][0].clone();
+    controller["app"] = json!("org.omarchy.Permissions");
+    controller["uid"] = json!(11045);
+    controller["role"] = json!({
+        "kind": "permission_controller",
+        "target": "org.omarchy.Sounds",
+        "permission": "media_route"
+    });
+    controller["args"][0] = json!(c.root.join("permissions-home"));
+    controller["args"][1] = json!(c.root.join("permissions-run"));
+    p["apps"].as_array_mut().unwrap().push(controller);
+    c.set_profile(&p);
+    p
+}
+
+#[test]
+#[ignore = "requires isolated root and protected fixture directory"]
+fn permission_controller_explicit_installation_is_selected() {
+    let c = Case::new();
+    install_permissions(&c);
+    Config::load(&c.path).expect("explicit fixed permission controller must be selected");
+}
+
+#[test]
+#[ignore = "requires isolated root and protected fixture directory"]
+fn permission_controller_identity_scope_and_endpoints_are_bound() {
+    for mutation in 0..8 {
+        let c = Case::new();
+        let mut p = install_permissions(&c);
+        match mutation {
+            0 => p["apps"][1]["uid"] = json!(11046),
+            1 => p["apps"][1]["app"] = json!("org.omarchy.OtherController"),
+            2 => p["apps"][1]["role"] = json!({"kind": "application"}),
+            3 => p["apps"][1]["role"]["permission"] = json!("capture"),
+            4 => p["apps"][1]["args"][4] = json!(c.root.join("other.sock")),
+            5 => p["apps"][1]["args"][2] = json!(c.root.join("other-wayland")),
+            6 => p["apps"][1]["args"][0] = json!(c.root.join("app-home")),
+            _ => {
+                p["apps"][1]["args"].as_array_mut().unwrap().pop();
+            }
+        }
+        c.set_profile(&p);
+        c.denied();
+    }
+}

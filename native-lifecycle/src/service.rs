@@ -205,12 +205,141 @@ struct Connection {
     lock: bool,
     reading: Option<(u64, ReadStamp)>,
     read_stamp: Option<ReadStamp>,
+    permission_stamp: Option<crate::authority::PermissionStamp>,
     deadline: u64,
     pending: Option<Vec<u8>>,
     // Set only with typed Ok on the lock-only route. Retain storage admission
     // identity even if an intervening write finishes before the next send.
     lock_ack: Option<u64>,
     launching: Option<String>,
+}
+fn revalidate_permission_reply(
+    connection: &mut Connection,
+    authority: &Authority,
+    busy: bool,
+    stopping: bool,
+) {
+    if connection.pending.is_some()
+        && connection.permission_stamp.as_ref().is_some_and(|stamp| {
+            stopping || busy || !authority.current_permission(stamp, boottime_ns())
+        })
+    {
+        connection.pending = serde_json::to_vec(&Reply::Denied).ok();
+        // Refusal is permanent even if focus later returns before a blocked send.
+        connection.permission_stamp = None;
+    }
+}
+fn detach_permission_writer(id: u64, operation: &mut Option<Operation>) -> bool {
+    if let Some(op) = operation.as_mut()
+        && op.connection == Some(id)
+        && op
+            .intent
+            .as_ref()
+            .is_some_and(|intent| intent.permission_stamp().is_some())
+    {
+        // Disconnect withdraws publication, never custody of a submitted write.
+        op.connection = None;
+        return true;
+    }
+    false
+}
+fn revalidate_permission_write(
+    authority: &Authority,
+    storage: &mut Worker,
+    operation: &mut Option<Operation>,
+    connections: &mut [Connection],
+) {
+    let Some(op) = operation.as_ref() else { return };
+    let Some(stamp) = op
+        .intent
+        .as_ref()
+        .and_then(|intent| intent.permission_stamp())
+    else {
+        return;
+    };
+    if (op.connection.is_none() || !authority.current_permission(&stamp, boottime_ns()))
+        && storage.cancel_queued(op.token)
+    {
+        for c in connections
+            .iter_mut()
+            .filter(|c| c.awaiting == Some(op.token))
+        {
+            c.awaiting = None;
+            c.permission_stamp = None;
+            c.pending = serde_json::to_vec(&Reply::Denied).ok();
+        }
+        // No rollback of the consumed policy revision or conservative revoke fence.
+        *operation = None;
+    }
+}
+
+#[allow(clippy::too_many_arguments)]
+fn permission_request(
+    connection: &mut Connection,
+    authority: &mut Authority,
+    storage: &mut Worker,
+    operation: &mut Option<Operation>,
+    request: AppRequest,
+    pid: u32,
+    uid: u32,
+    audio: &mut Option<&mut dyn crate::audio::Provider>,
+) -> Option<Reply> {
+    // Do not consume a revision, cancel storage or revoke a lease for a request
+    // which never acquired the sole writer slot.
+    if operation.is_some() || storage.busy() {
+        return Some(Reply::Unavailable);
+    }
+    let (deadline, revoke) = match &request {
+        AppRequest::PermissionStatus { deadline_ns } => (*deadline_ns, false),
+        AppRequest::PermissionSet {
+            deadline_ns,
+            allowed,
+            ..
+        } => (*deadline_ns, !allowed),
+        _ => return Some(Reply::Denied),
+    };
+    let stamp = match authority.permission_stamp(pid, uid, deadline, boottime_ns()) {
+        Ok(stamp) => stamp,
+        Err(reply) => return Some(reply),
+    };
+    match authority.plan_request(pid, uid, request, boottime_ns()) {
+        Decision::Immediate(reply) => {
+            if matches!(reply, Reply::PermissionState { .. }) {
+                connection.permission_stamp = Some(stamp);
+            }
+            Some(reply)
+        }
+        Decision::Persist(intent) => {
+            connection.permission_stamp = intent.permission_stamp();
+            if revoke && let Some(provider) = audio.as_deref_mut() {
+                // Withdraw the actual provider connection before durable IO.
+                // Retain media-session stamps so its queued replies also fence.
+                provider.revoke();
+            }
+            match storage.start_write(intent.next.clone(), intent.until) {
+                Ok(token) => {
+                    connection.awaiting = Some(token);
+                    connection.deadline = intent.until.saturating_add(1_000_000_000);
+                    *operation = Some(Operation {
+                        token,
+                        connection: Some(connection.id),
+                        until: intent.until,
+                        intent: Some(intent),
+                        retired: false,
+                        shutdown: false,
+                        camera: false,
+                    });
+                    None
+                }
+                Err(_) => {
+                    connection.permission_stamp = None;
+                    authority.invalidate();
+                    storage.stop();
+                    Some(Reply::Unavailable)
+                }
+            }
+        }
+    }
 }
 fn queue_media_reply(connections: &mut [Connection], id: u64, reply: Reply) -> io::Result<()> {
     if let Some(connection) = connections.iter_mut().find(|c| c.id == id) {
@@ -858,6 +987,9 @@ fn run_with_device_services_inner(
                     c.pending = Some(serde_json::to_vec(&Reply::Denied)?);
                 }
             }
+            // A provably unsent controller admission can expire without killing
+            // the healthy sole writer. Submitted writes keep normal uncertainty rules.
+            revalidate_permission_write(&authority, &mut storage, &mut operation, &mut connections);
             if let Some(op) = &mut operation
                 && !op.retired
                 && boottime_ns() >= op.until
@@ -872,7 +1004,7 @@ fn run_with_device_services_inner(
                         c.deadline = boottime_ns().saturating_add(1_000_000_000);
                     }
                 }
-                if op.connection.is_none() && !stopping {
+                if op.connection.is_none() && op.intent.is_none() && !stopping {
                     startup_failed = true;
                 }
             }
@@ -967,7 +1099,7 @@ fn run_with_device_services_inner(
                         storage.stop();
                         if let Some(op) = &mut operation {
                             op.retired = true;
-                            if op.connection.is_none() && !stopping {
+                            if op.connection.is_none() && op.intent.is_none() && !stopping {
                                 startup_failed = true;
                             }
                             for c in &mut connections {
@@ -1164,6 +1296,7 @@ fn run_with_device_services_inner(
                             lock: is_lock,
                             reading: None,
                             read_stamp: None,
+                            permission_stamp: None,
                             deadline: now.saturating_add(30_000_000_000),
                             pending: None,
                             lock_ack: None,
@@ -1229,6 +1362,9 @@ fn run_with_device_services_inner(
                         Ok(None) => return true,
                         Err(e) if e.raw_os_error() == Some(4) => return true,
                         _ => {
+                            if detach_permission_writer(connection.id, &mut operation) {
+                                return false;
+                            }
                             authority.invalidate();
                             if let Some(op) = &mut operation {
                                 op.retired = true;
@@ -1410,6 +1546,12 @@ fn run_with_device_services_inner(
                     connection.pending = serde_json::to_vec(&reply).ok();
                 }
                 revalidate_lock_ack(connection, stopping, &authority, &operation, &storage);
+                revalidate_permission_reply(
+                    connection,
+                    &authority,
+                    operation.is_some() || storage.busy(),
+                    stopping,
+                );
                 if let Some(bytes) = &connection.pending {
                     return match ipc::send(&connection.fd, bytes) {
                         Ok(()) => {
@@ -1429,6 +1571,7 @@ fn run_with_device_services_inner(
                             connection.pending = None;
                             connection.lock_ack = None;
                             connection.read_stamp = None;
+                            connection.permission_stamp = None;
                             if let Some(active) = &mut capture
                                 && active.connection == connection.id
                                 && active.phase == CapturePhase::ReplyReady
@@ -2068,6 +2211,24 @@ fn run_with_device_services_inner(
                                 Reply::Unavailable
                             }
                         }
+                        Ok(
+                            r @ (AppRequest::PermissionStatus { .. }
+                            | AppRequest::PermissionSet { .. }),
+                        ) if !stopping => {
+                            match permission_request(
+                                connection,
+                                &mut authority,
+                                &mut storage,
+                                &mut operation,
+                                r,
+                                cred.pid.as_raw_nonzero().get() as u32,
+                                cred.uid.as_raw(),
+                                &mut audio,
+                            ) {
+                                Some(reply) => reply,
+                                None => return true,
+                            }
+                        }
                         Ok(r) if !stopping => {
                             if operation.is_some() && !matches!(r, AppRequest::Query {}) {
                                 authority.refuse_busy(
@@ -2434,3 +2595,7 @@ mod brightness_readonly_reservation_tests;
 #[cfg(test)]
 #[path = "connectivity_tests.rs"]
 mod connectivity_tests;
+
+#[cfg(test)]
+#[path = "permission_service_tests.rs"]
+mod permission_service_tests;

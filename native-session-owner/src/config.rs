@@ -1,4 +1,5 @@
 //! Root-installed fixed session selection. No permission or restoration ingress.
+use pokelinux_lifecycle::permission::{APP as PERMISSIONS_APP, UID as PERMISSIONS_UID};
 use serde::Deserialize;
 use std::{
     collections::BTreeMap,
@@ -53,9 +54,18 @@ pub(crate) fn app_uid(app: &pokelinux_lifecycle::AppProfile) -> io::Result<u32> 
         pokelinux_lifecycle::audio::APP => 11042,
         pokelinux_lifecycle::messages::APP => 11010,
         pokelinux_lifecycle::brightness::APP => pokelinux_lifecycle::brightness::UID,
+        PERMISSIONS_APP => PERMISSIONS_UID,
         _ => return Err(io::ErrorKind::PermissionDenied.into()),
     };
-    if app.uid != uid || app.args.len() != 6 {
+    let role_matches = match &app.role {
+        pokelinux_lifecycle::AppRole::Application => app.app != PERMISSIONS_APP,
+        pokelinux_lifecycle::AppRole::PermissionController { target, permission } => {
+            app.app == PERMISSIONS_APP
+                && target == pokelinux_lifecycle::audio::APP
+                && *permission == pokelinux_lifecycle::Permission::MediaRoute
+        }
+    };
+    if !role_matches || app.uid != uid || app.args.len() != 6 {
         return Err(io::ErrorKind::PermissionDenied.into());
     }
     Ok(uid)
@@ -250,7 +260,12 @@ impl Config {
         let history = matches!(&self.messages, Messages::Owner { .. });
         let settings = matches!(&self.brightness, Brightness::Owner { .. })
             || matches!(&self.connectivity, Connectivity::Owner { .. });
-        if profiles.apps.len() != 1 + usize::from(history) + usize::from(settings) {
+        // Inclusion in the protected installation profile explicitly selects
+        // the separate controller. It does not grant a target permission.
+        let permissions = profiles.apps.iter().any(|app| app.app == PERMISSIONS_APP);
+        if profiles.apps.len()
+            != 1 + usize::from(history) + usize::from(settings) + usize::from(permissions)
+        {
             return Err(io::ErrorKind::PermissionDenied.into());
         }
         let mut roles = std::collections::BTreeSet::new();
@@ -259,7 +274,8 @@ impl Config {
             if !roles.insert(app.app.as_str())
                 || !(app.app == pokelinux_lifecycle::audio::APP
                     || history && app.app == pokelinux_lifecycle::messages::APP
-                    || settings && app.app == pokelinux_lifecycle::brightness::APP)
+                    || settings && app.app == pokelinux_lifecycle::brightness::APP
+                    || permissions && app.app == PERMISSIONS_APP)
             {
                 return Err(io::ErrorKind::PermissionDenied.into());
             }

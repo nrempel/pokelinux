@@ -30,7 +30,8 @@ normally on disconnect. A [Harbour launch command and connection recipe](docs/tr
 are now available; human SSH/VNC access remains unverified.
 
 [Native permission controls](docs/native-permission-controller.md) are in development:
-explicit installed roles pass configuration checks; visible Allow/Revoke is not wired yet.
+installed roles, display ownership and scoped Rust requests are implemented; visible
+Allow/Revoke is not wired yet.
 
 The same Messages window follows an original Omarchy theme change from Tokyo
 Night to Catppuccin Latte while preserving its local history. Both its Messages

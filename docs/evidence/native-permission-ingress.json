@@ -1,0 +1,186 @@
+{
+  "schema": 1,
+  "scope": "Host Linux credentialed Authority/codec components and shared service ingress/publication functions with actual owned storage worker and disk. Authored Source facts and media provider; no complete actor loop, GUI, ARM, audio hardware or phone qualification.",
+  "runs": {
+    "red-ingress-independent2": {
+      "result_sha256": "e279fa95fec0174b95208795e455bdf7d0806e8f9694444daea2469fa66e1d37",
+      "source_sha256": "b5529dacafea2b6b36ba57e595e999135cfaabb02f615b4a1d65180afe72f099",
+      "qualified": true,
+      "source_unchanged": true,
+      "container_removed_and_absent": true,
+      "executed_summaries": [
+        [
+          "FAILED",
+          "3",
+          "2",
+          "0",
+          "0",
+          "148"
+        ]
+      ]
+    },
+    "green-ingress-targeted-final": {
+      "result_sha256": "8895ef062bbc1ed66734cb4d1a47633fb17c8b66c23a620dcfb2256cb9744235",
+      "source_sha256": "1fb82a8103d0501e9cc2187a49ac2d3ac8177740e9eb9f29383b55e603ef36c3",
+      "qualified": true,
+      "source_unchanged": true,
+      "container_removed_and_absent": true,
+      "executed_summaries": [
+        [
+          "ok",
+          "16",
+          "0",
+          "0",
+          "0",
+          "148"
+        ]
+      ]
+    },
+    "qa-ingress-final": {
+      "result_sha256": "f44fc90f04612d6335044196496b3969664dd5f99182a6d7192f7fbd6747accd",
+      "source_sha256": "b249089ef2fb38ab27f4b1dd970d51b6109659ce89ab3d6285db3e4fc1f73095",
+      "qualified": true,
+      "source_unchanged": true,
+      "container_removed_and_absent": true,
+      "steps": [
+        {
+          "label": "rustfmt-changed-files",
+          "exit": 0,
+          "summaries": []
+        },
+        {
+          "label": "storage-helper-build",
+          "exit": 0,
+          "summaries": []
+        },
+        {
+          "label": "lifecycle-default-library",
+          "exit": 0,
+          "summaries": [
+            [
+              "ok",
+              "138",
+              "0",
+              "26",
+              "0",
+              "0"
+            ]
+          ]
+        },
+        {
+          "label": "owner-helpers-build",
+          "exit": 0,
+          "summaries": []
+        },
+        {
+          "label": "owner-selected-tests",
+          "exit": 0,
+          "summaries": [
+            [
+              "ok",
+              "4",
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "ok",
+              "17",
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "ok",
+              "4",
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "ok",
+              "10",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          ]
+        },
+        {
+          "label": "lifecycle-strict-clippy",
+          "exit": 0,
+          "summaries": []
+        },
+        {
+          "label": "owner-strict-clippy",
+          "exit": 0,
+          "summaries": []
+        }
+      ]
+    },
+    "qa-display-final": {
+      "result_sha256": "4524f0cd971c6abcdb36397da12ef14d491c8e5845636947e3c229eb09923fd1",
+      "source_sha256": "adce1b6f5719226c99499e7ef83b638588672475b9ab464835a738d55d8fed5f",
+      "qualified": true,
+      "source_unchanged": true,
+      "container_removed_and_absent": true,
+      "steps": [
+        {
+          "label": "owner-helpers-build",
+          "exit": 0,
+          "summaries": []
+        },
+        {
+          "label": "owner-selected-tests",
+          "exit": 0,
+          "summaries": [
+            [
+              "ok",
+              "20",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          ]
+        }
+      ]
+    }
+  },
+  "final_source_files": {
+    "native-lifecycle/src/service.rs": "a5a946b46c3be5bf8a8d7153412695d4e26a7f87a8e06411a4df224c6027aa30",
+    "native-lifecycle/src/authority.rs": "7dbc4b980497951c291c72646874fe1616de80d562e08de54c1741282bf36ce4",
+    "native-lifecycle/src/permission_service_tests.rs": "0e75f6383e221d783d85fb0be90eba84cef3c0785ac62d5e5b8c8c6ac56fadd6",
+    "native-lifecycle/src/lib.rs": "688cea887685b7231028966a22a0dcc5cc0b0666c551a00f3e7fa285fed7b784",
+    "native-lifecycle/src/permission.rs": "b15a5f04372138afa2b2215e7b7dfdfb35381f7762404f2c59e5d3cd96b17be7",
+    "native-lifecycle/src/storage.rs": "df6a48d1698eb2dc6502fa4ccd7a708ace615b7ded227ddd35a9ff2e8f02166e",
+    "native-lifecycle/src/permission_ingress_tests.rs": "4d26bada06de109381081f4260b0cebcc37e6d667b13131762bd4214d0e2fa7e",
+    "native-session-owner/src/config.rs": "edc72b98797517e7a9cbfa7e559796a3360d0db2eb76ca154ce8ead1047a0a1e"
+  },
+  "preserved_failed_attempts": {
+    "red-ingress-controls2": "Historical qualified flag is incorrect: 2 passed/3 failed, including fixture unwrap of absent policy.json before dispatch; not clean behavioral RED.",
+    "red-ingress-independent": "Compile-only fixture mismatch: new Connection test initializer against baseline service; no runtime evidence.",
+    "green-ingress-initial": "Fixture expected policy.json to exist before first durable replacement.",
+    "green-ingress-service1": "7 passed/3 failed: fixture incorrectly required shutdown ACK although actual child may exit before reply is consumed.",
+    "green-ingress-service2": "15 passed/1 failed: fixture incorrectly expected unclean reopen to return locked state; actual storage refuses it."
+  },
+  "classifier_correction_sha256": "4d802e835aaba941bc0c468a13a983a0467ccab9ea820cf0ae98f46745b724de",
+  "targeted_passed": 16,
+  "lifecycle_passed": 138,
+  "lifecycle_ignored": 26,
+  "owner_configuration_passed": 35,
+  "owner_display_passed": 20,
+  "formatting_passed": true,
+  "strict_clippy_passed": true,
+  "display_observer_only_extra_capability": "DAC_OVERRIDE",
+  "production_privilege_change": false,
+  "older_runner_scope_label_correction": "Earlier ingress receipts inherited profile_configuration_only=true; final targeted receipt records the actual component scope.",
+  "held_worker_boundary": "Existing isolated worker pauses after synced replacement and before completion reply; not a blocked filesystem syscall proof.",
+  "full_actor_loop_qualified": false,
+  "visible_consent_qualified": false,
+  "hardware_accessed": false
+}

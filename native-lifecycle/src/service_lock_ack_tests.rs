@@ -121,6 +121,7 @@ fn queued_lock_ok_is_revoked_after_complete_intervening_storage_write() {
         lock: true,
         reading: None,
         read_stamp: None,
+        permission_stamp: None,
         deadline: boottime_ns().saturating_add(1_000_000_000),
         pending: Some(serde_json::to_vec(&reply).unwrap()),
         lock_ack: Some(owner.0.admission_sequence()),

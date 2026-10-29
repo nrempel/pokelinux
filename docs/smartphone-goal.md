@@ -2,7 +2,9 @@
 
 The [permission-controller role boundary](native-permission-controller.md) now
 passes protected-profile RED→GREEN and scoped Rust regression checks. Controller
-launch, authenticated permission requests and visible consent remain unwired; this
+installation and display ownership now pass additional host tests. Scoped Rust
+permission requests are implemented; desktop launch and visible consent remain
+unwired. This
 does not close the permissions or audio matrix entries.
 
 The [cold x86 Omarchy/Sounds checkpoint](native-cold-omarchy-sounds.md) now passes

@@ -2,8 +2,10 @@
 
 Current app profiles require explicit installation-owned roles; see
 [permission-controller configuration](native-permission-controller.md). Ordinary
-apps use `role: {"kind":"application"}`. This schema change does not yet wire
-controller requests or visible consent; frozen evidence keeps its original profiles.
+apps use `role: {"kind":"application"}`. An optional installed Permissions profile
+now selects UID11045 with the Sounds/MediaRoute controller role. Protected-config
+and owned-display tests pass. Scoped controller requests use the lifecycle actor;
+desktop launch and visible consent remain separate work. Frozen evidence keeps its original profiles.
 
 The `native-session-owner` Rust entry starts and owns the compositor, then
 composes the existing Source Observer, lifecycle actor, per-app Wayland supervisor
@@ -54,15 +56,16 @@ An unresolved occupied owner aborts rather than detaching. Existing actor/storag
 fail-stop paths are not graceful-return cleanup. This qualifies the direct leader
 Child, without claiming native reaping of all compositor descendants.
 
-The fixed Sounds/Messages display Factory accepts its configured original Wayland
+The fixed installed-app display Factory accepts its configured original Wayland
 path before it is bound. An admitted launch connects nonblocking, checks the actual peer
 against the retained compositor PID/UID/GID and pidfd, and starts the existing
 owned SDK. Only a fresh per-app listener is given to UID11042 Sounds or
-UID11010 Messages. Listener withdrawal precedes SDK termination even when withdrawal fails; occupancy lasts until reap.
+UID11010 Messages, UID11050 Settings or UID11045 Permissions. Listener withdrawal precedes SDK termination even when withdrawal fails; occupancy lasts until reap.
 
 Root-installed strict configuration requires `appearance_socket` and an explicit
-tagged `messages` mode. Disabled mode binds only UID11042 Sounds; history mode
-requires both Sounds and UID11010 Messages, exactly six absolute arguments per
+tagged `messages` mode. Sounds is required; history mode additionally requires
+UID11010 Messages. Brightness/connectivity selects Settings, and a protected profile
+can explicitly add Permissions. Selection requires exactly six absolute arguments per
 app, matching canonical Wayland/appearance/actor paths and private app HOME/runtime
 directories. History runtime/raw/inbox must be existing, distinct root0700
 directories, separate from session runtime/policy/display. Private UID1000

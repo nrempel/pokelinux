@@ -588,5 +588,48 @@ fn messages_owns_only_its_uid_listener_then_actual_sdk_reap() {
     assert_eq!(child_set(), before);
 }
 
+#[test]
+#[ignore = "isolated root and real UID1000 process required"]
+fn permission_controller_owns_only_its_uid_listener_then_actual_sdk_reap() {
+    let root = RootDir::new();
+    let peer = Peer::new(&root.0, "permissions-peer", 1000);
+    let mut factory = factory(&root, &peer, "permissions-peer");
+    let mut p = profile();
+    p.app = "org.omarchy.Permissions".into();
+    p.uid = 11045;
+    p.role = pokelinux_lifecycle::AppRole::PermissionController {
+        target: audio::APP.into(),
+        permission: pokelinux_lifecycle::Permission::MediaRoute,
+    };
+    let before = child_set();
+    let mut guard = Guard::new(
+        factory
+            .start(&p, INSTANCE, boottime_ns() + 900_000_000)
+            .expect("Permissions fixed UID11045 role must be admitted"),
+    );
+    let children: Vec<_> = child_set().difference(&before).copied().collect();
+    assert_eq!(children.len(), 1);
+    let pid = Pid::from_raw(children[0] as i32).unwrap();
+    let args = guard.value().arguments().to_vec();
+    assert_eq!(args.len(), 6);
+    for i in [0, 1, 3, 4, 5] {
+        assert_eq!(args[i], p.args[i]);
+    }
+    let path = PathBuf::from(&args[2]);
+    let m = fs::symlink_metadata(&path).unwrap();
+    assert!(m.file_type().is_socket());
+    assert_eq!((m.uid(), m.gid(), m.mode() & 0o777), (0, 11045, 0o660));
+    assert_eq!(guard.value().poll().unwrap(), State::Preparing);
+    guard.value().stop().unwrap();
+    assert!(!path.exists());
+    assert!(guard.value().occupied());
+    guard.reap();
+    assert_eq!(
+        rustix::process::waitpid(Some(pid), rustix::process::WaitOptions::NOHANG).unwrap_err(),
+        rustix::io::Errno::CHILD
+    );
+    assert_eq!(child_set(), before);
+}
+
 #[path = "support/readiness_cases.rs"]
 mod readiness_cases;

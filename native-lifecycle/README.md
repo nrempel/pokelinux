@@ -1,5 +1,14 @@
 # Native lifecycle authority
 
+The installed UID11045 Permissions principal can read/set only Sounds' MediaRoute
+policy through credentialed `app.sock` requests. Current Source focus, owner/policy
+revision and the original BOOTTIME deadline gate writes and positive replies.
+The existing owned writer handles persistence; only an exact unsent admission can
+be canceled. A submitted write can commit after its UI loses authority, so failed
+publication requires a fresh status read, never an automatic Set retry. See the
+[controller contract and evidence](../docs/native-permission-controller.md).
+The native controller UI and desktop launcher remain unwired.
+
 A separate fixed `launch-sounds.sock` accepts only desktop UID1000 and
 `launch_sounds`, without requiring a Messages provider. It reuses existing app
 reservation/ownership and exposes no grants or arbitrary app selection. Six

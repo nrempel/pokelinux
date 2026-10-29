@@ -1,0 +1,174 @@
+{
+  "schema": 1,
+  "scope": "Host protected installation configuration and actual preparing display SDK child/socket ownership; no rendered UI, consent, ARM or physical hardware evidence",
+  "runs": {
+    "configuration_RED": {
+      "result_sha256": "c980d6cc09f2d01d7f5c81f62281b93f17d589ea8b953997824e3da5615fa591",
+      "qualified": true,
+      "source_sha256": "c3eec5a3e5c0ff9fefa4c132ea5bcd07ab988f1d2bab9dcbeb8868c82ae9c7a6",
+      "steps": [
+        {
+          "label": "owner-helpers-build",
+          "exit": 0,
+          "summaries": []
+        },
+        {
+          "label": "owner-selected-tests",
+          "exit": 101,
+          "summaries": [
+            [
+              "FAILED",
+              "1",
+              "1",
+              "0",
+              "0",
+              "15"
+            ]
+          ]
+        }
+      ],
+      "source_unchanged": true,
+      "container_removed_and_absent": true
+    },
+    "display_environment_failure": {
+      "result_sha256": "eb617c535b8ab76b7a033836283377b89b5dd16ec0dce77bc0633abb4220c06f",
+      "qualified": false,
+      "source_sha256": "1b00dce9ef90f5fa5159267651e637b384c4bd14f9876b291de8129815bce2bd",
+      "steps": [
+        {
+          "label": "owner-helpers-build",
+          "exit": 0,
+          "summaries": []
+        },
+        {
+          "label": "owner-selected-tests",
+          "exit": 101,
+          "summaries": []
+        }
+      ],
+      "source_unchanged": true,
+      "container_removed_and_absent": true
+    },
+    "display_RED": {
+      "result_sha256": "7bf072f450cea20a144150be032b76734372a1fc7f6d761bf5dca103e4854150",
+      "qualified": true,
+      "source_sha256": "1b00dce9ef90f5fa5159267651e637b384c4bd14f9876b291de8129815bce2bd",
+      "steps": [
+        {
+          "label": "owner-helpers-build",
+          "exit": 0,
+          "summaries": []
+        },
+        {
+          "label": "owner-selected-tests",
+          "exit": 101,
+          "summaries": [
+            [
+              "FAILED",
+              "0",
+              "1",
+              "0",
+              "0",
+              "19"
+            ]
+          ]
+        }
+      ],
+      "source_unchanged": true,
+      "container_removed_and_absent": true
+    },
+    "GREEN": {
+      "result_sha256": "a7996de40026891ae70ea9fc2002671c05425c30450fc1736f4b505d950084a2",
+      "qualified": true,
+      "source_sha256": "7eac58f45ad988fa24d3e091ed40bf2459138e30b74ad3fb2aef05888ee7faaa",
+      "steps": [
+        {
+          "label": "owner-helpers-build",
+          "exit": 0,
+          "summaries": []
+        },
+        {
+          "label": "owner-selected-tests",
+          "exit": 0,
+          "summaries": [
+            [
+              "ok",
+              "2",
+              "0",
+              "0",
+              "0",
+              "15"
+            ],
+            [
+              "ok",
+              "1",
+              "0",
+              "0",
+              "0",
+              "19"
+            ]
+          ]
+        }
+      ],
+      "source_unchanged": true,
+      "container_removed_and_absent": true
+    },
+    "regression": {
+      "result_sha256": "48f39eda007346ec658c01201a863830f5d8851f734adb21c2cff62ef153a455",
+      "qualified": true,
+      "source_sha256": "833cebe1bad4f7ce9570585e665d750639cdaf3f60ad1a8ffc00ed2f299ef746",
+      "steps": [
+        {
+          "label": "owner-helpers-build",
+          "exit": 0,
+          "summaries": []
+        },
+        {
+          "label": "owner-selected-tests",
+          "exit": 0,
+          "summaries": [
+            [
+              "ok",
+              "17",
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "ok",
+              "20",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          ]
+        },
+        {
+          "label": "rustfmt-owner",
+          "exit": 0,
+          "summaries": []
+        },
+        {
+          "label": "owner-strict-clippy",
+          "exit": 0,
+          "summaries": []
+        }
+      ],
+      "source_unchanged": true,
+      "container_removed_and_absent": true
+    }
+  },
+  "controller_uid": 11045,
+  "controller_app": "org.omarchy.Permissions",
+  "target": "org.omarchy.Sounds",
+  "permission": "media_route",
+  "display_observer_extra_capability": "DAC_OVERRIDE",
+  "production_privilege_change": false,
+  "first_display_failure": "Fixture cleanup traversal of UID1000 private directory aborted after expected admission refusal; not qualified behavioral RED.",
+  "configuration_test_change_between_red_green": "rustfmt formatting only",
+  "desktop_launch_qualified": false,
+  "rendered_controller_qualified": false,
+  "hardware_accessed": false
+}

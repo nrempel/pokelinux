@@ -13,6 +13,7 @@ pub mod display;
 pub mod ipc;
 pub mod lock;
 pub mod messages;
+pub mod permission;
 pub mod service;
 pub mod startup;
 pub mod storage;
@@ -63,21 +64,51 @@ pub struct Profile {
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(tag = "op", rename_all = "snake_case", deny_unknown_fields)]
 pub enum AppRequest {
-    ConnectivitySet { request: connectivity::Request },
+    PermissionStatus {
+        deadline_ns: u64,
+    },
+    PermissionSet {
+        allowed: bool,
+        expected_owner: String,
+        expected_revision: u64,
+        deadline_ns: u64,
+    },
+    ConnectivitySet {
+        request: connectivity::Request,
+    },
     ConnectivityStatus {},
-    BrightnessSet { request: brightness::Request },
+    BrightnessSet {
+        request: brightness::Request,
+    },
     BrightnessStatus {},
-    MediaRoute { request: audio::Request },
-    MediaPreviewPlay { request: audio::PreviewRequest },
-    MediaPreviewMute { request: audio::PreviewMuteRequest },
+    MediaRoute {
+        request: audio::Request,
+    },
+    MediaPreviewPlay {
+        request: audio::PreviewRequest,
+    },
+    MediaPreviewMute {
+        request: audio::PreviewMuteRequest,
+    },
     MediaPreviewStop {},
-    MediaStatus { offset: usize },
+    MediaStatus {
+        offset: usize,
+    },
     MediaReconnect {},
-    CameraCapture { request: camera::Request },
-    MessagesRead { request: messages::ReadRequest },
+    CameraCapture {
+        request: camera::Request,
+    },
+    MessagesRead {
+        request: messages::ReadRequest,
+    },
     Query {},
-    Prepare { permission: Permission, ttl_ms: u64 },
-    Admit { permit: String },
+    Prepare {
+        permission: Permission,
+        ttl_ms: u64,
+    },
+    Admit {
+        permit: String,
+    },
 }
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(tag = "op", rename_all = "snake_case", deny_unknown_fields)]
@@ -112,6 +143,13 @@ pub enum AdminRequest {
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 #[serde(tag = "result", rename_all = "snake_case", deny_unknown_fields)]
 pub enum Reply {
+    PermissionState {
+        target: String,
+        permission: Permission,
+        allowed: bool,
+        owner: String,
+        revision: u64,
+    },
     ConnectivityCompleted {
         state: connectivity::State,
     },

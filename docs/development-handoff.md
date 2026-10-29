@@ -4,8 +4,15 @@
 
 Current permission work: [explicit installed app roles](native-permission-controller.md)
 pass the same five protected-profile RED→GREEN consumers. This is configuration
-only; controller launch, authenticated ingress, Rust client and Allow/Revoke UI
-remain unwired. Ordinary current profiles require `role.kind=application`; frozen
+only. The subsequent owner selection passes protected configuration and actual
+per-app display-helper ownership/cleanup tests. Scoped credentialed requests now use
+the existing durable writer, with unsent cancellation and retained submitted-write
+ownership. The 16 targeted credentialed/service-boundary tests pass, followed by
+138 lifecycle, 35 owner configuration and 20 display checks plus strict Clippy.
+These use authored Source/media facts and do not run the full actor loop. See
+[ingress evidence](evidence/native-permission-ingress.json), including preserved
+fixture failures and the corrected intermediate RED classifier. Desktop launch,
+Rust client and Allow/Revoke UI remain unwired. Ordinary current profiles require `role.kind=application`; frozen
 previous cohorts retain their matching old binary/profile pairs.
 
 Finish the full Omarchy smartphone system described in `smartphone-goal.md`.
