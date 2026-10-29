@@ -1,4 +1,8 @@
-use pokelinux_lifecycle::{authority::living, boottime_ns, session::Provider};
+use pokelinux_lifecycle::{
+    authority::living,
+    boottime_ns,
+    session::{Provider, Update},
+};
 use pokelinux_session::Observer;
 use pokelinux_session_owner::{Compositor, SourceOwner};
 use rustix::{
@@ -48,11 +52,11 @@ impl Guard {
     fn sample(&mut self) {
         loop {
             match self.owner.poll() {
-                Ok(Some(s)) => {
+                Ok(Update::Current(s)) => {
                     assert_eq!(s.source, SOURCE);
                     break;
                 }
-                Ok(None) if boottime_ns() < self.until => tick(),
+                Ok(Update::AwaitingFirst) if boottime_ns() < self.until => tick(),
                 other => panic!("actual Source did not produce sample: {other:?}"),
             }
         }
@@ -188,7 +192,7 @@ fn no_first_sample_expires_original_deadline() {
     };
     loop {
         match owner.poll() {
-            Ok(None) if boottime_ns() < original + 100_000_000 => tick(),
+            Ok(Update::AwaitingFirst) if boottime_ns() < original + 100_000_000 => tick(),
             Err(e) => {
                 assert_eq!(e.kind(), io::ErrorKind::TimedOut);
                 break;
@@ -264,4 +268,45 @@ fn spawn_accepts_original_startup_window_over_five_seconds() {
     owner.sample();
     owner.drain();
     assert!(!living(&alive).unwrap());
+}
+
+#[test]
+#[ignore = "requires isolated root and UID transition capabilities"]
+fn timing_loss_and_resume_retain_same_child_until_explicit_stop_and_wait() {
+    let mut owner = Guard::start("valid", 1_000_000_000);
+    owner.sample();
+    let original_pid = owner.pid();
+    let alive = owner.duplicate_pidfd().unwrap();
+    rustix::process::pidfd_send_signal(&alive, rustix::process::Signal::STOP).unwrap();
+    loop {
+        match owner.poll() {
+            Ok(Update::AuthorityLost(_)) => break,
+            Ok(Update::Current(_) | Update::Recovering) if boottime_ns() < owner.until => tick(),
+            other => panic!("actual timing loss did not remain nonterminal: {other:?}"),
+        }
+    }
+    assert_eq!(owner.pid(), original_pid);
+    assert!(living(&alive).unwrap());
+    assert!(owner.occupied());
+    assert!(owner.exit_status().is_none());
+    rustix::process::pidfd_send_signal(&alive, rustix::process::Signal::CONT).unwrap();
+    loop {
+        match owner.poll() {
+            Ok(Update::Current(_)) => break,
+            Ok(Update::Recovering) if boottime_ns() < owner.until => tick(),
+            other => panic!("same live child did not resume Source facts: {other:?}"),
+        }
+    }
+    assert_eq!(owner.pid(), original_pid);
+    assert!(living(&alive).unwrap());
+    assert!(owner.occupied());
+    assert!(owner.exit_status().is_none());
+    owner.stop();
+    assert!(owner.occupied(), "explicit Stop released unwaited custody");
+    assert!(owner.exit_status().is_none());
+    owner.drain();
+    assert!(!living(&alive).unwrap());
+    assert!(!owner.occupied());
+    assert!(owner.exit_status().is_some());
+    assert!(owner.poll().is_err());
 }

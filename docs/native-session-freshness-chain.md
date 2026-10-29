@@ -1,5 +1,11 @@
 # Bounded source freshness across delayed observer turns
 
+This report preserves the earlier queued-successor correction and its exact
+execution evidence. Its terminal-timing rules below describe that frozen
+checkpoint. The current [timing-recovery contract](native-session-timing-recovery.md)
+instead records loss before replacement export and requires fresh advancing
+samples after actual discovery; this report does not qualify that recovery.
+
 The Rust observer now drains authenticated queued source facts before deciding
 that its cached sample has expired. Every successor must belong to the same
 monotonic, continuous 100 ms sample chain and remain fresh at its own examination.

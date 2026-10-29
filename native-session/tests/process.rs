@@ -164,6 +164,19 @@ fn establish(peer: &mut Peer, observer: &mut Observer, first: &str, heartbeat: &
     );
 }
 
+fn provider_current(observer: &mut Observer) -> pokelinux_lifecycle::session::Snapshot {
+    match pokelinux_lifecycle::session::Provider::poll(observer).unwrap() {
+        pokelinux_lifecycle::session::Update::Current(snapshot) => snapshot,
+        other => panic!("expected Current, received {other:?}"),
+    }
+}
+fn provider_loss(observer: &mut Observer) -> pokelinux_lifecycle::session::TimingLoss {
+    match pokelinux_lifecycle::session::Provider::poll(observer).unwrap() {
+        pokelinux_lifecycle::session::Update::AuthorityLost(loss) => loss,
+        other => panic!("expected AuthorityLost, received {other:?}"),
+    }
+}
+
 #[test]
 fn actual_packet_sender_overrides_socketpair_creation_credentials() {
     let (mut peer, mut observer) = start(0);
@@ -242,8 +255,17 @@ fn idle_live_source_does_not_extend_original_sample() {
     let (mut p, mut o) = start(0);
     establish(&mut p, &mut o, "valid", "heartbeat");
     assert!(o.snapshot().is_some());
+    let original = o.snapshot().expect("established Source authority");
+    let original_expiry = original.sampled_at_ns + pokelinux_session::SAMPLE_BUDGET_NS;
     std::thread::sleep(Duration::from_millis(150));
-    assert!(o.poll().is_err(), "strict invalid packet was not rejected");
+    o.poll()
+        .expect("silent timing loss must preserve the receiver");
+    let loss = provider_loss(&mut o);
+    assert!(matches!(
+        loss.reason,
+        pokelinux_lifecycle::session::TimingLossReason::SampleExpired
+    ));
+    assert!(loss.observed_at_ns >= original_expiry);
     assert!(
         o.snapshot().is_none(),
         "living silent source extended original deadline"
@@ -508,66 +530,77 @@ fn queue_timely_successor(peer: &mut Peer, sampled_at: u64, mode: &str) -> u64 {
 }
 
 #[test]
-fn timely_actual_queued_heartbeat_is_drained_before_cached_expiry() {
+fn timely_queued_heartbeat_cannot_conceal_exported_lease_expiry() {
     let (mut peer, mut observer) = start(0);
     establish(&mut peer, &mut observer, "valid", "heartbeat");
     let initial = observer.snapshot().unwrap().clone();
     let original_until = initial.sampled_at_ns + pokelinux_session::SAMPLE_BUDGET_NS;
-    let successor_after = queue_timely_successor(&mut peer, initial.sampled_at_ns, "heartbeat");
-    assert!(boottime_ns() >= original_until);
-    observer
-        .poll()
-        .expect("a real timely fresh queued heartbeat must precede expiry detection");
-    let current = observer.snapshot().unwrap();
-    assert_eq!(current.sequence, 3);
-    assert!(current.sampled_at_ns >= successor_after);
-    assert!(current.sampled_at_ns < original_until);
+    queue_timely_successor(&mut peer, initial.sampled_at_ns, "heartbeat");
+    let loss = provider_loss(&mut observer);
+    assert!(loss.observed_at_ns >= original_until);
+    assert!(observer.snapshot().is_none());
+    assert!(matches!(
+        pokelinux_lifecycle::session::Provider::poll(&mut observer).unwrap(),
+        pokelinux_lifecycle::session::Update::Recovering
+    ));
     assert_eq!(observer.revision(), 1);
-    // A new source sample never renews a deadline already captured by old work.
-    assert!(boottime_ns() >= original_until);
 }
 
 #[test]
-fn timely_actual_queued_lock_cycle_preserves_every_semantic_revision() {
+fn expired_queued_lock_cycle_preserves_raw_semantic_history_without_authority() {
     let (mut peer, mut observer) = start(0);
     establish(&mut peer, &mut observer, "valid", "heartbeat");
     let initial = observer.snapshot().unwrap().clone();
     queue_timely_successor(&mut peer, initial.sampled_at_ns, "cycle");
-    observer
-        .poll()
-        .expect("timely fresh queued lock/unlock must be examined before cache expiry");
-    let current = observer.snapshot().unwrap();
-    assert_eq!(current.sequence, 4);
-    assert!(!current.locked);
-    assert_eq!(current.focus, initial.focus);
+    provider_loss(&mut observer);
+    assert!(observer.snapshot().is_none());
     assert_eq!(observer.revision(), 3);
+    peer.command("heartbeat");
+    assert!(matches!(
+        pokelinux_lifecycle::session::Provider::poll(&mut observer).unwrap(),
+        pokelinux_lifecycle::session::Update::Recovering
+    ));
+    peer.command("heartbeat");
+    let current = provider_current(&mut observer);
+    assert_eq!(current.sequence, 6);
+    assert!(!current.locked);
+    assert_eq!(
+        current.focus.as_ref().map(|focus| &focus.metadata),
+        initial.focus.as_ref()
+    );
+    assert!(current.protocol_unlock.is_none());
 }
 
 #[test]
-fn genuine_actual_successor_sampling_gap_remains_terminal() {
+fn genuine_sampling_gap_withdraws_authority_without_terminal_failure() {
     let (mut peer, mut observer) = start(0);
     establish(&mut peer, &mut observer, "valid", "heartbeat");
     let until = observer.snapshot().unwrap().sampled_at_ns + pokelinux_session::SAMPLE_BUDGET_NS;
     await_boottime(until + 10_000_000);
     peer.command("heartbeat");
-    assert!(
-        observer.poll().is_err(),
-        "a real sampling gap revived the source"
-    );
+    observer
+        .poll()
+        .expect("timing gap must preserve the receiver");
     assert!(observer.snapshot().is_none());
+    provider_loss(&mut observer);
+    assert!(matches!(
+        pokelinux_lifecycle::session::Provider::poll(&mut observer).unwrap(),
+        pokelinux_lifecycle::session::Update::Recovering
+    ));
 }
 
 #[test]
-fn expired_snapshot_observation_cannot_later_admit_queued_successor() {
+fn expired_snapshot_notification_precedes_any_queued_successor() {
     let (mut peer, mut observer) = start(0);
     establish(&mut peer, &mut observer, "valid", "heartbeat");
     let sampled_at = observer.snapshot().unwrap().sampled_at_ns;
     queue_timely_successor(&mut peer, sampled_at, "heartbeat");
     assert!(observer.snapshot().is_none());
-    assert!(
-        observer.poll().is_err(),
-        "an observed expired established source was implicitly restored"
-    );
+    provider_loss(&mut observer);
+    assert!(matches!(
+        pokelinux_lifecycle::session::Provider::poll(&mut observer).unwrap(),
+        pokelinux_lifecycle::session::Update::Recovering
+    ));
 }
 
 #[test]
@@ -584,24 +617,34 @@ fn backwards_intermediate_actual_sample_cannot_hide_in_fresh_final_frame() {
 }
 
 #[test]
-fn expired_intermediate_actual_packet_is_not_skipped_for_fresh_final_frame() {
+fn expired_intermediate_cannot_be_hidden_by_a_fresh_final_packet() {
     let (mut peer, mut observer) = start(0);
     establish(&mut peer, &mut observer, "valid", "heartbeat");
     peer.command("expired-then-fresh");
-    assert!(observer.poll().is_err());
+    provider_loss(&mut observer);
     assert!(observer.snapshot().is_none());
+    assert!(matches!(
+        pokelinux_lifecycle::session::Provider::poll(&mut observer).unwrap(),
+        pokelinux_lifecycle::session::Update::Recovering
+    ));
+    assert!(pokelinux_lifecycle::session::Provider::first_rejection(&observer).is_none());
 }
 
 #[test]
-fn previously_returned_timeout_stays_terminal_after_actual_fresh_packet() {
+fn observed_expiry_stays_recovering_until_a_fresh_pair() {
     let (mut peer, mut observer) = start(0);
     establish(&mut peer, &mut observer, "valid", "heartbeat");
     let until = observer.snapshot().unwrap().sampled_at_ns + pokelinux_session::SAMPLE_BUDGET_NS;
     await_boottime(until + 10_000_000);
-    assert!(observer.poll().is_err());
+    provider_loss(&mut observer);
     peer.command("heartbeat");
-    assert!(observer.poll().is_err());
+    assert!(matches!(
+        pokelinux_lifecycle::session::Provider::poll(&mut observer).unwrap(),
+        pokelinux_lifecycle::session::Update::Recovering
+    ));
     assert!(observer.snapshot().is_none());
+    peer.command("heartbeat");
+    provider_current(&mut observer);
 }
 
 #[test]
@@ -617,7 +660,8 @@ fn exactly_contiguous_actual_wire_leases_do_not_extend_old_deadline() {
     observer
         .poll()
         .expect("contiguous half-open leases must be accepted");
-    assert_eq!(observer.snapshot().unwrap().sampled_at_ns, until);
+    assert!(observer.snapshot().is_none());
+    provider_loss(&mut observer);
     assert!(boottime_ns() >= until);
 }
 
@@ -655,7 +699,7 @@ fn owned_locker_heartbeats_retain_one_cloexec_handle_and_unavailable_releases_it
     use pokelinux_lifecycle::session::Provider;
     let (mut p, mut o) = start(0);
     establish(&mut p, &mut o, "owned-locker", "owned-locker-heartbeat");
-    let snapshot = Provider::poll(&mut o).unwrap().unwrap();
+    let snapshot = provider_current(&mut o);
     let locker = snapshot.locker.as_ref().unwrap();
     assert_eq!(locker.metadata.pid, p.child.id());
     assert!(
@@ -682,7 +726,7 @@ fn owned_locker_heartbeats_retain_one_cloexec_handle_and_unavailable_releases_it
     let before = std::fs::read_dir("/proc/self/fd").unwrap().count();
     for _ in 0..100 {
         p.command("owned-locker-heartbeat");
-        let current = Provider::poll(&mut o).unwrap().unwrap();
+        let current = provider_current(&mut o);
         assert!(current.focus.is_none());
         assert_eq!(current.locker.as_ref().unwrap().metadata.pid, p.child.id());
         assert_eq!(current.revision, 1);
@@ -690,14 +734,14 @@ fn owned_locker_heartbeats_retain_one_cloexec_handle_and_unavailable_releases_it
     assert_eq!(std::fs::read_dir("/proc/self/fd").unwrap().count(), before);
     p.command("owned-locker-unavailable");
     p.command("owned-locker");
-    let current = Provider::poll(&mut o).unwrap().unwrap();
+    let current = provider_current(&mut o);
     assert_eq!(
         current.revision, 3,
         "queued owner disappearance cannot be coalesced away"
     );
     drop(current);
     p.command("owned-locker-unavailable");
-    let current = Provider::poll(&mut o).unwrap().unwrap();
+    let current = provider_current(&mut o);
     assert!(current.locker.is_none());
     assert_eq!(current.revision, 4);
     assert_eq!(
@@ -718,7 +762,7 @@ fn dead_locker_packet_cannot_keep_or_reactivate_owned_locker_state() {
         "locker-child-live",
         "locker-child-heartbeat",
     );
-    assert!(Provider::poll(&mut o).unwrap().unwrap().locker.is_some());
+    assert!(provider_current(&mut o).locker.is_some());
     p.command("locker-child-dead");
     assert!(Provider::poll(&mut o).is_err());
     assert!(o.snapshot().is_none());
@@ -742,13 +786,8 @@ fn first_rejection_survives_stop_repeated_poll_and_snapshot() {
             "owned-focus-truncated-rights",
             SourceRejectionReason::ControlTruncated,
         ),
-        ("expired-then-fresh", SourceRejectionReason::SampleExpired),
     ] {
         let (mut peer, mut observer) = start(0);
-        if mode == "expired-then-fresh" {
-            // Expiry remains terminal once authority has actually escaped.
-            establish(&mut peer, &mut observer, "valid", "heartbeat");
-        }
         peer.command(mode);
         assert_eq!(
             observer.poll().unwrap_err().kind(),

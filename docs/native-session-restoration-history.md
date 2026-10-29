@@ -96,7 +96,10 @@ authentication and trusted broker handoff remain open. The success producer stay
 cfgtest-only; no production setting enables it. Real-history-specific held-clear/
 new-lock/expiry combinations, early-initialization failure, full-actor unclean
 reopen and whole-actor EAGAIN/completed-write timing need distinct evidence.
-Existing Source loss remains terminal; nothing here renews a failed Source.
+Source timing loss remained terminal in this frozen selection; it supplies no
+evidence for the later [timing-recovery contract](native-session-timing-recovery.md).
+That contract still retires old authentication/restoration attempts and cannot
+clear durable lock intent by recovering fresh Source facts.
 
 New ARM execution, matched Google-kernel composition, secure presentation and
 suspend/wake remain separate. The older queued ARM setup failure stays failed.

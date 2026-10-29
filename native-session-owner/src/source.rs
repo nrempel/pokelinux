@@ -1,6 +1,6 @@
 use pokelinux_lifecycle::{
     boottime_ns,
-    session::{Provider, Snapshot},
+    session::{Provider, Update},
 };
 use pokelinux_session::Observer;
 use rustix::{fd::OwnedFd, process::Pid};
@@ -177,7 +177,7 @@ impl Provider for SourceOwner {
     fn first_rejection(&self) -> Option<&pokelinux_lifecycle::session::SourceRejection> {
         self.observer.as_ref().and_then(Provider::first_rejection)
     }
-    fn poll(&mut self) -> io::Result<Option<Snapshot>> {
+    fn poll(&mut self) -> io::Result<Update> {
         // Terminal state must never bypass actual child reaping.
         self.reap();
         if let Some(kind) = self.terminal {
@@ -194,7 +194,7 @@ impl Provider for SourceOwner {
                     self.fail(io::ErrorKind::TimedOut);
                     return Err(io::ErrorKind::TimedOut.into());
                 }
-                self.initialized |= sample.is_some();
+                self.initialized |= matches!(&sample, Update::Current(_));
                 Ok(sample)
             }
             Err(error) => {

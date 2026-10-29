@@ -1,6 +1,6 @@
 //! Isolated original-session and authored frozen-V3 receive composition.
 //! No production incoming backend or application FD selector.
-use pokelinux_lifecycle::session::{Provider as SessionProvider, Snapshot};
+use pokelinux_lifecycle::session::{Provider as SessionProvider, TimingLossReason, Update};
 use pokelinux_lifecycle::{boottime_ns, messages::Provider};
 use pokelinux_session::Observer;
 use rustix::{
@@ -31,10 +31,22 @@ struct Timing {
     dropped: u64,
 }
 impl Timing {
-    fn record(&mut self, begin: u64, ended: u64, reply: &io::Result<Option<Snapshot>>) {
-        let (kind, sequence, sampled, error) = match reply {
-            Ok(Some(s)) => (1, s.sequence, s.sampled_at_ns, 0),
-            Ok(None) => (0, 0, 0, 0),
+    fn record(&mut self, begin: u64, ended: u64, reply: &io::Result<Update>) {
+        // kind0 awaits first,1 current,2 terminal error,3 authority loss,4 recovering.
+        // For loss, detail1 is a gap and2 expiry; no snapshot sequence/time is authored.
+        let (kind, sequence, sampled, detail) = match reply {
+            Ok(Update::Current(s)) => (1, s.sequence, s.sampled_at_ns, 0),
+            Ok(Update::AwaitingFirst) => (0, 0, 0, 0),
+            Ok(Update::AuthorityLost(loss)) => (
+                3,
+                0,
+                0,
+                match loss.reason {
+                    TimingLossReason::SampleGap => 1,
+                    TimingLossReason::SampleExpired => 2,
+                },
+            ),
+            Ok(Update::Recovering) => (4, 0, 0, 0),
             Err(e) => (
                 2,
                 0,
@@ -55,7 +67,7 @@ impl Timing {
             kind,
             sequence,
             sampled,
-            error,
+            detail,
             self.dropped,
         ];
         self.previous_begin = begin;
@@ -79,13 +91,19 @@ struct TracedObserver {
     maximum_sample_gap: u64,
 }
 impl SessionProvider for TracedObserver {
-    fn poll(&mut self) -> io::Result<Option<Snapshot>> {
+    fn stop(&mut self) {
+        SessionProvider::stop(&mut self.observer);
+    }
+    fn occupied(&self) -> bool {
+        SessionProvider::occupied(&self.observer)
+    }
+    fn poll(&mut self) -> io::Result<Update> {
         let began = boottime_ns();
         let reply = SessionProvider::poll(&mut self.observer);
         let ended = boottime_ns();
         self.timing.record(began, ended, &reply);
         match &reply {
-            Ok(Some(s)) => {
+            Ok(Update::Current(s)) => {
                 if self.sampled_at != 0 {
                     self.maximum_sample_gap = self
                         .maximum_sample_gap

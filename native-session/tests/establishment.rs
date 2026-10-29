@@ -5,30 +5,29 @@ include!("process.rs");
 
 #[test]
 fn establishment_first_snapshot_waits_for_two_fresh_packets() {
-    use pokelinux_lifecycle::session::Provider;
+    use pokelinux_lifecycle::session::{Provider, Update};
     let (mut peer, mut observer) = start(0);
     peer.command("owned-focus");
-    let first = Provider::poll(&mut observer).expect("first packet must validate provisionally");
-    assert!(
-        first.is_none(),
-        "first Source sample escaped before an uninterrupted fresh pair; actual sequence={:?}",
-        first.as_ref().map(|sample| sample.sequence)
-    );
+    assert!(matches!(
+        Provider::poll(&mut observer).unwrap(),
+        Update::AwaitingFirst
+    ));
     assert!(observer.snapshot().is_none());
     assert!(Provider::first_rejection(&observer).is_none());
 
     let expiry = boottime_ns() + pokelinux_session::SAMPLE_BUDGET_NS + 20_000_000;
-    while boottime_ns() < expiry {
-        std::thread::sleep(Duration::from_millis(1));
-    }
-    assert!(Provider::poll(&mut observer).unwrap().is_none());
-    assert!(Provider::first_rejection(&observer).is_none());
+    await_boottime(expiry);
+    assert!(matches!(
+        Provider::poll(&mut observer).unwrap(),
+        Update::AwaitingFirst
+    ));
     peer.command("owned-focus-heartbeat");
-    assert!(Provider::poll(&mut observer).unwrap().is_none());
+    assert!(matches!(
+        Provider::poll(&mut observer).unwrap(),
+        Update::AwaitingFirst
+    ));
     peer.command("owned-focus-heartbeat");
-    let established = Provider::poll(&mut observer)
-        .unwrap()
-        .expect("fresh advancing seq2/seq3 must establish authority");
+    let established = provider_current(&mut observer);
     assert_eq!(established.sequence, 3);
     let focus = established.focus.as_ref().expect("actual owned focus");
     assert_eq!(focus.metadata.pid, peer.child.id());
@@ -38,20 +37,20 @@ fn establishment_first_snapshot_waits_for_two_fresh_packets() {
             .matches(focus.pidfd(), focus.pidfd(), peer.child.id())
             .unwrap()
     );
-    let expiry = established.sampled_at_ns + pokelinux_session::SAMPLE_BUDGET_NS + 20_000_000;
-    while boottime_ns() < expiry {
-        std::thread::sleep(Duration::from_millis(1));
-    }
-    assert!(Provider::poll(&mut observer).is_err());
-    assert!(Provider::first_rejection(&observer).is_some());
+    await_boottime(established.sampled_at_ns + pokelinux_session::SAMPLE_BUDGET_NS + 20_000_000);
+    provider_loss(&mut observer);
+    assert!(Provider::first_rejection(&observer).is_none());
     peer.command("owned-focus-heartbeat");
-    assert!(Provider::poll(&mut observer).is_err());
+    assert!(matches!(
+        Provider::poll(&mut observer).unwrap(),
+        Update::Recovering
+    ));
     assert!(observer.snapshot().is_none());
 }
 
 mod controls {
     use super::*;
-    use pokelinux_lifecycle::session::{Provider, SourceRejectionReason as Reason};
+    use pokelinux_lifecycle::session::{Provider, SourceRejectionReason as Reason, Update};
     use serde_json::{Value, json};
 
     fn plain() -> Value {
@@ -80,11 +79,10 @@ mod controls {
         }
     }
     fn pending(observer: &mut Observer) {
-        assert!(
-            Provider::poll(observer)
-                .expect("provisional validation must succeed")
-                .is_none()
-        );
+        assert!(matches!(
+            Provider::poll(observer).expect("provisional validation must succeed"),
+            Update::AwaitingFirst
+        ));
         assert!(observer.snapshot().is_none());
         assert!(Provider::first_rejection(observer).is_none());
     }
@@ -108,9 +106,7 @@ mod controls {
     }
     fn established(peer: &mut Peer, observer: &mut Observer) {
         send(peer, vec![plain(), plain()]);
-        let sample = Provider::poll(observer)
-            .unwrap()
-            .expect("fresh actual pair must export");
+        let sample = provider_current(observer);
         assert_eq!(sample.sequence, 2);
     }
 
@@ -123,7 +119,7 @@ mod controls {
         send(&mut peer, vec![plain()]);
         pending(&mut observer);
         send(&mut peer, vec![plain()]);
-        assert_eq!(Provider::poll(&mut observer).unwrap().unwrap().sequence, 4);
+        assert_eq!(provider_current(&mut observer).sequence, 4);
     }
 
     #[test]
@@ -134,7 +130,7 @@ mod controls {
         send(&mut peer, vec![plain()]);
         pending(&mut observer);
         send(&mut peer, vec![plain()]);
-        assert_eq!(Provider::poll(&mut observer).unwrap().unwrap().sequence, 4);
+        assert_eq!(provider_current(&mut observer).sequence, 4);
     }
 
     #[test]
@@ -148,7 +144,7 @@ mod controls {
         peer.command(&format!("timestamp-heartbeat:{sampled}"));
         pending(&mut observer);
         peer.command("owned-focus-heartbeat");
-        assert_eq!(Provider::poll(&mut observer).unwrap().unwrap().sequence, 3);
+        assert_eq!(provider_current(&mut observer).sequence, 3);
     }
 
     #[test]
@@ -235,48 +231,36 @@ mod controls {
         send(&mut peer, vec![unlock(1)]);
         pending(&mut observer);
         send(&mut peer, vec![repeated()]);
-        let first = Provider::poll(&mut observer).unwrap().unwrap();
+        let first = provider_current(&mut observer);
         assert_eq!(first.sequence, 3);
         assert!(
             first.protocol_unlock.is_none(),
             "preauthority occurrence must not become authentication evidence"
         );
         send(&mut peer, vec![repeated()]);
-        assert!(
-            Provider::poll(&mut observer)
-                .unwrap()
-                .unwrap()
-                .protocol_unlock
-                .is_none()
-        );
+        assert!(provider_current(&mut observer).protocol_unlock.is_none());
         send(&mut peer, vec![locked(2)]);
-        let locked = Provider::poll(&mut observer).unwrap().unwrap();
+        let locked = provider_current(&mut observer);
         assert_eq!(locked.lock_generation, Some(2));
         assert_eq!(
             locked.locker.as_ref().unwrap().metadata.pid,
             peer.child.id()
         );
         send(&mut peer, vec![unlock(2)]);
-        let current = Provider::poll(&mut observer).unwrap().unwrap();
+        let current = provider_current(&mut observer);
         let event = current
             .protocol_unlock
             .expect("new postauthority exact occurrence");
         assert_eq!((event.generation, event.sequence), (2, 6));
         send(&mut peer, vec![repeated()]);
-        assert_eq!(
-            Provider::poll(&mut observer)
-                .unwrap()
-                .unwrap()
-                .protocol_unlock,
-            Some(event)
-        );
+        assert_eq!(provider_current(&mut observer).protocol_unlock, Some(event));
     }
 
     #[test]
     fn event_on_first_export_is_masked_but_raw_occurrence_still_fences_change() {
         let (mut peer, mut observer) = start(0);
         send(&mut peer, vec![locked(1), unlock(1)]);
-        let first = Provider::poll(&mut observer).unwrap().unwrap();
+        let first = provider_current(&mut observer);
         assert_eq!(first.sequence, 2);
         assert!(first.protocol_unlock.is_none());
         send(&mut peer, vec![unlock(1)]); // another occurrence is not the sticky exact record
@@ -284,21 +268,32 @@ mod controls {
     }
 
     #[test]
-    fn established_gap_is_permanent_even_when_new_packet_is_fresh() {
+    fn established_gap_with_fresh_packet_reports_loss_before_recovery() {
         let (mut peer, mut observer) = start(0);
         established(&mut peer, &mut observer);
         expire_now();
         send(&mut peer, vec![plain()]);
-        terminal(&mut observer, &mut peer, Reason::SampleGap);
+        provider_loss(&mut observer);
+        assert!(matches!(
+            Provider::poll(&mut observer).unwrap(),
+            Update::Recovering
+        ));
+        assert!(observer.snapshot().is_none());
+        assert!(Provider::first_rejection(&observer).is_none());
     }
 
     #[test]
-    fn established_expired_intermediate_cannot_be_hidden_by_fresh_successor() {
+    fn established_expired_intermediate_cannot_hide_in_fresh_successor() {
         let (mut peer, mut observer) = start(0);
         established(&mut peer, &mut observer);
         send(&mut peer, vec![plain()]);
         expire_now();
         send(&mut peer, vec![plain()]);
-        terminal(&mut observer, &mut peer, Reason::SampleExpired);
+        provider_loss(&mut observer);
+        assert!(matches!(
+            Provider::poll(&mut observer).unwrap(),
+            Update::Recovering
+        ));
+        assert!(observer.snapshot().is_none());
     }
 }

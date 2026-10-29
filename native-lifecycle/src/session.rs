@@ -84,10 +84,32 @@ pub struct Snapshot {
     pub lock_generation: Option<u64>,
     pub protocol_unlock: Option<ProtocolUnlock>,
 }
-/// Poll is bounded and nonblocking. None/Err supplies no positive authority;
+/// Timing loss withdraws authority without changing the Source's wire identity.
+/// This is internal provider state, not an app-supplied recovery request.
+#[derive(Debug, Clone)]
+pub struct TimingLoss {
+    pub source: String,
+    pub observed_at_ns: u64,
+    pub reason: TimingLossReason,
+}
+#[derive(Debug, Clone, Copy, Eq, PartialEq)]
+pub enum TimingLossReason {
+    SampleGap,
+    SampleExpired,
+}
+/// Loss must be delivered before a replacement Current, including when both
+/// are discovered in one bounded drain. Recovery confers no grants or effects.
+#[derive(Debug, Clone)]
+pub enum Update {
+    AwaitingFirst,
+    AuthorityLost(TimingLoss),
+    Recovering,
+    Current(Snapshot),
+}
+/// Poll is bounded and nonblocking. Only Current supplies candidate facts;
 /// the actor retains policy and must match its exact launched app pidfd.
 pub trait Provider {
-    fn poll(&mut self) -> io::Result<Option<Snapshot>>;
+    fn poll(&mut self) -> io::Result<Update>;
     /// Bounded first Observer rejection, when this Provider owns an Observer.
     /// Diagnostic history only; stop and later errors must not replace it.
     fn first_rejection(&self) -> Option<&SourceRejection> {
@@ -113,6 +135,7 @@ pub enum SourceState {
     NotConfigured,
     AwaitingFirst,
     Observed,
+    Recovering,
     Failed,
     Stopping,
 }
@@ -225,6 +248,14 @@ impl SourceObservation {
             sequence,
             sampled_at_ns,
         });
+    }
+    pub(crate) fn recovering(&mut self) {
+        if matches!(
+            self.state,
+            SourceState::AwaitingFirst | SourceState::Observed | SourceState::Recovering
+        ) {
+            self.state = SourceState::Recovering;
+        }
     }
     pub(crate) fn fail(
         &mut self,

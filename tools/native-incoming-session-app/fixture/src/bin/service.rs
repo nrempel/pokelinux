@@ -1,6 +1,6 @@
 //! Isolated original-session and authored frozen-V3 receive composition.
 //! No production incoming backend or application FD selector.
-use pokelinux_lifecycle::session::{Provider as SessionProvider, Snapshot};
+use pokelinux_lifecycle::session::{Provider as SessionProvider, Update};
 use pokelinux_lifecycle::{boottime_ns, messages::Provider};
 use pokelinux_session::Observer;
 use rustix::{
@@ -37,10 +37,10 @@ impl SessionProvider for TracedObserver {
     fn occupied(&self) -> bool {
         SessionProvider::occupied(&self.observer)
     }
-    fn poll(&mut self) -> io::Result<Option<Snapshot>> {
+    fn poll(&mut self) -> io::Result<Update> {
         let reply = SessionProvider::poll(&mut self.observer);
         match &reply {
-            Ok(Some(s)) => {
+            Ok(Update::Current(s)) => {
                 if self.sampled_at != 0 {
                     self.maximum_sample_gap = self
                         .maximum_sample_gap

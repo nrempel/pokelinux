@@ -441,9 +441,16 @@ fn refresh_session(
     session: &mut Option<&mut dyn crate::session::Provider>,
 ) -> io::Result<()> {
     if let Some(provider) = session.as_deref_mut() {
+        authority.expire_source(boottime_ns())?;
         match provider.poll() {
-            Ok(Some(s)) => authority.observe_session(s, boottime_ns())?,
-            Ok(None) => authority.missing_session()?,
+            Ok(crate::session::Update::Current(s)) => {
+                authority.observe_session(s, boottime_ns())?
+            }
+            Ok(crate::session::Update::AwaitingFirst) => authority.missing_session()?,
+            Ok(crate::session::Update::AuthorityLost(loss)) => {
+                authority.source_timing_lost(loss)?
+            }
+            Ok(crate::session::Update::Recovering) => authority.recovering_source()?,
             Err(error) => {
                 authority.source_provider_failed(error.kind(), provider.first_rejection().cloned());
                 authority.fail_session()?;

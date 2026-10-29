@@ -110,8 +110,10 @@ same-daemon container absence and unchanged locked inputs close separately.
 Production control/render ownership separation is still unimplemented and no
 GREEN is claimed. Retain these frozen actors/oracle and genuine focus, client
 lifetime and lock facts; preserve GL/context/command/buffer/fence/output ownership,
-late completion and shutdown. Authority stalls must remain terminal; cached-state
-heartbeats remain refused. Source100ms, predicate order, real grants and every
+late completion and shutdown. Authority stalls must withdraw positive authority;
+the current [timing-recovery contract](native-session-timing-recovery.md) requires
+fresh advancing samples after discovery and never revives old work. Cached-state
+heartbeats remain refused. Source100ms, real grants and every
 functional/Pixel/PCM guard stay unchanged. The original cold full-owner
 [Root9 selection remains failed](native-session-x86-runtime.md#corrected-four-request-capture).
 Cold actor permissions, full Sounds/PCM, secure frames, ARM, the matched Google

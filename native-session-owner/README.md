@@ -16,8 +16,11 @@ readiness may use at most120 seconds. The separate bootstrap receive cap is
 five seconds; subsequent samples retain the existing100ms lease.
 Before any Source snapshot is exported, the observer requires a fresh consecutive
 pair. Provisional timing expiry preserves protocol history and the original
-startup deadline; established expiry remains terminal. See
-[bounded establishment](../docs/native-source-establishment.md).
+startup deadline. Established timing loss withdraws authority while keeping the
+same owned child; recovery requires fresh advancing samples after discovery and
+never revives old work. Identity, wire, protocol and child-death failures remain
+terminal. See [bounded establishment](../docs/native-source-establishment.md) and
+the [timing recovery contract](../docs/native-session-timing-recovery.md).
 
 SourceOwner retains Child custody before every post-spawn fallible operation.
 Poll is nonblocking and terminal errors still drive actual try_wait. Stop fences

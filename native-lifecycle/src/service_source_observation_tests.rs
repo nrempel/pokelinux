@@ -13,11 +13,14 @@ struct Facts {
     stopped: bool,
 }
 impl Provider for Facts {
-    fn poll(&mut self) -> io::Result<Option<Snapshot>> {
+    fn poll(&mut self) -> io::Result<crate::session::Update> {
         if self.stopped {
             Err(io::ErrorKind::NotConnected.into())
         } else {
-            Ok(self.sample.clone())
+            Ok(self.sample.clone().map_or(
+                crate::session::Update::AwaitingFirst,
+                crate::session::Update::Current,
+            ))
         }
     }
     fn stop(&mut self) {

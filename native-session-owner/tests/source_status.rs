@@ -196,8 +196,19 @@ impl Case {
         let before = boottime_ns();
         loop {
             let v = self.snapshot();
-            if v["locked"] == true {
+            if v["locked"] == true && source(&v)["state"] == "failed" {
                 return (v, before, boottime_ns());
+            }
+            assert!(boottime_ns() < self.until - 2_000_000_000);
+            tick();
+        }
+    }
+    fn wait_recovering(&mut self) -> (Value, u64, u64) {
+        let before = boottime_ns();
+        loop {
+            let value = self.snapshot();
+            if value["locked"] == true && source(&value)["state"] == "recovering" {
+                return (value, before, boottime_ns());
             }
             assert!(boottime_ns() < self.until - 2_000_000_000);
             tick();
@@ -303,7 +314,7 @@ fn snapshot_awaiting_first_then_original_timeout_retains_first_failure() {
 }
 #[test]
 #[ignore = "isolated root, UID transitions, built actor/Source helpers"]
-fn snapshot_accepted_sample_then_real_stall_retains_first_failure() {
+fn snapshot_accepted_sample_then_real_stall_reports_recovering() {
     let mut c = Case::new("valid");
     let initial = c.observed();
     assert_eq!(
@@ -313,16 +324,26 @@ fn snapshot_accepted_sample_then_real_stall_retains_first_failure() {
     let fd = c.source();
     let before = boottime_ns();
     rustix::process::pidfd_send_signal(&fd, Signal::STOP).unwrap();
-    let (failed, _, after) = c.wait_locked();
+    let (recovering, _, after) = c.wait_recovering();
     let repeated = c.snapshot();
+    assert!(pokelinux_lifecycle::authority::living(&fd).unwrap());
     c.close();
     let s = source(&initial);
     assert_eq!(s["state"], "observed");
     assert!(s["last_accepted"]["sequence"].as_u64().unwrap() > 0);
-    failure(&failed, "TimedOut", before, after);
-    assert_eq!(source(&failed), source(&repeated));
+    assert_eq!(source(&recovering)["state"], "recovering");
+    assert!(source(&recovering)["first_failure"].is_null());
+    assert!(after >= before);
     assert!(
-        source(&failed)["last_accepted"]["sequence"]
+        after
+            >= source(&recovering)["last_accepted"]["sampled_at_ns"]
+                .as_u64()
+                .unwrap()
+                + pokelinux_session::SAMPLE_BUDGET_NS
+    );
+    assert_eq!(source(&recovering), source(&repeated));
+    assert!(
+        source(&recovering)["last_accepted"]["sequence"]
             .as_u64()
             .unwrap()
             >= s["last_accepted"]["sequence"].as_u64().unwrap()
@@ -377,12 +398,12 @@ impl Drop for ResumeActor {
         let _ = rustix::process::pidfd_send_signal(&self.0, Signal::CONT);
     }
 }
-// These assertions compile against the pre-diagnostic production Snapshot API.
-// Each case completes real failure controls and owned child cleanup before RED.
-fn actual_rejection(command: &str, stage: &str, reason: &str) {
+// Actual child transport controls keep terminal wire faults distinct from timing loss.
+fn queue_diagnostic(command: &str) -> (Case, Value, ResumeActor, OwnedFd, u64) {
     let mut c = Case::new("diagnostic");
     fs::set_permissions(&c.root, fs::Permissions::from_mode(0o777)).unwrap();
     let initial = c.observed();
+    let source_pidfd = c.source();
     let actor = ResumeActor(
         rustix::process::pidfd_open(
             Pid::from_raw(c.child.id() as i32).unwrap(),
@@ -411,6 +432,10 @@ fn actual_rejection(command: &str, stage: &str, reason: &str) {
         tick();
     }
     rustix::process::pidfd_send_signal(&actor.0, Signal::CONT).unwrap();
+    (c, initial, actor, source_pidfd, before)
+}
+fn actual_rejection(command: &str, stage: &str, reason: &str) {
+    let (mut c, initial, _actor, _source_pidfd, before) = queue_diagnostic(command);
     let (failed, _, after) = c.wait_locked();
     let repeated = c.snapshot();
     c.close();
@@ -442,31 +467,6 @@ fn actual_rejection(command: &str, stage: &str, reason: &str) {
     );
     let sample = rejection["sampled_at_ns"].as_u64();
     match command {
-        "queued_expired" => {
-            let sample = sample.unwrap();
-            assert!(sample + pokelinux_session::SAMPLE_BUDGET_NS <= validated);
-            assert!(sample >= previous["sampled_at_ns"].as_u64().unwrap());
-            assert!(
-                sample
-                    <= previous["sampled_at_ns"].as_u64().unwrap()
-                        + pokelinux_session::SAMPLE_BUDGET_NS
-            );
-            assert_eq!(
-                rejection["sequence"].as_u64().unwrap(),
-                previous["sequence"].as_u64().unwrap() + 1
-            );
-        }
-        "sample_gap" => {
-            let sample = sample.unwrap();
-            assert!(
-                sample
-                    > previous["sampled_at_ns"].as_u64().unwrap()
-                        + pokelinux_session::SAMPLE_BUDGET_NS
-            );
-            assert!(
-                sample <= validated && validated < sample + pokelinux_session::SAMPLE_BUDGET_NS
-            );
-        }
         "sequence" => assert!(
             rejection["sequence"].as_u64().unwrap() > previous["sequence"].as_u64().unwrap() + 1
         ),
@@ -514,15 +514,44 @@ fn actual_rejection(command: &str, stage: &str, reason: &str) {
         );
     }
 }
-#[test]
-#[ignore = "isolated root, UID transitions, built actor/Source helpers"]
-fn rejection_queued_expired_frame_is_distinct_from_sample_gap() {
-    actual_rejection("queued_expired", "validation", "sample_expired");
+fn actual_timing_loss(command: &str) {
+    let (mut c, initial, _actor, source_pidfd, _) = queue_diagnostic(command);
+    let (recovering, _, after) = c.wait_recovering();
+    let repeated = c.snapshot();
+    assert_eq!(source(&recovering)["state"], "recovering");
+    assert!(source(&recovering)["first_failure"].is_null());
+    assert_eq!(source(&recovering), source(&repeated));
+    assert!(
+        source(&recovering)["last_accepted"]["sequence"]
+            .as_u64()
+            .unwrap()
+            >= source(&initial)["last_accepted"]["sequence"]
+                .as_u64()
+                .unwrap()
+    );
+    assert!(
+        after
+            >= source(&recovering)["last_accepted"]["sampled_at_ns"]
+                .as_u64()
+                .unwrap()
+                + pokelinux_session::SAMPLE_BUDGET_NS
+    );
+    assert!(
+        pokelinux_lifecycle::authority::living(&source_pidfd).unwrap(),
+        "timing loss killed the retained Source child"
+    );
+    c.close();
+    assert!(!pokelinux_lifecycle::authority::living(&source_pidfd).unwrap());
 }
 #[test]
 #[ignore = "isolated root, UID transitions, built actor/Source helpers"]
-fn rejection_actual_sampling_gap_is_distinct_from_queued_expiry() {
-    actual_rejection("sample_gap", "validation", "sample_gap");
+fn queued_expired_frame_withdraws_authority_without_terminal_source_failure() {
+    actual_timing_loss("queued_expired");
+}
+#[test]
+#[ignore = "isolated root, UID transitions, built actor/Source helpers"]
+fn actual_sampling_gap_withdraws_authority_without_terminal_source_failure() {
+    actual_timing_loss("sample_gap");
 }
 #[test]
 #[ignore = "isolated root, UID transitions, built actor/Source helpers"]

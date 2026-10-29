@@ -52,8 +52,11 @@ accepted generation; impossible sequence/time or state; rewritten sticky records
 and loss of a record on an unlocked heartbeat. A new unknown lock retires the old
 operation. Generation and event changes advance semantic revision, including
 intermediate transitions drained in one turn. Later ordinary heartbeats preserve
-that revision. Source expiry/death remains terminal. General app IPC still
-rejects descriptors and has no protocol-unlock operation.
+that revision. [Timing loss](native-session-timing-recovery.md) withdraws authority
+and requires a fresh pair after discovery; Source death and invalid protocol
+history remain terminal. Raw unlock history remains validated, while occurrences
+from before recovery cannot become new authentication evidence. General app IPC
+still rejects descriptors and has no protocol-unlock operation.
 
 The lifecycle actor independently checks the typed Provider boundary. Impossible
 protocol facts, changed generations or changed unlock records at a repeated

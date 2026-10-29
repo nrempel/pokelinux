@@ -20,12 +20,18 @@ cycle can expose its new occurrence.
 
 The original Source startup deadline is never renewed. Until first export,
 SourceOwner remains uninitialized and the lifecycle actor receives no Source
-authority. After export, every observed expiry or sampling gap retains its
-existing terminal behavior. The 100 ms sample budget and original sample cutoff
-are unchanged. No compositor restart, authority reset or registration retry is
-introduced.
+authority. After export, observed expiry or sampling gaps now follow the
+[same-Source timing-recovery contract](native-session-timing-recovery.md): withdraw
+authority, deliver loss before replacement export and require a new advancing
+pair after actual discovery. Identity/wire/protocol failures and Source death
+remain terminal. The100ms sample budget and original sample cutoff are unchanged.
+No compositor restart, authority reset or registration retry is introduced.
 
-## Executed boundary
+## Executed establishment checkpoint
+
+The following frozen selections used the earlier terminal-after-establishment
+timing policy. Their passes and failures remain evidence for that checkpoint,
+not qualification of the current recovery contract.
 
 The initial host regression uses an actual authored child, credentialed Unix
 seqpacket traffic, transferred pidfds and actual child wait. The original

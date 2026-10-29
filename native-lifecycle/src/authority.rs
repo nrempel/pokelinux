@@ -201,6 +201,10 @@ pub struct Authority {
     session: Option<crate::session::Snapshot>,
     session_source: Option<String>,
     session_failed: bool,
+    source_recovering: bool,
+    recovery_candidate: Option<crate::session::AcceptedSourceSample>,
+    recovery_unlock_floor: u64,
+    source_raw_unlock: Option<crate::session::ProtocolUnlock>,
     source_observation: crate::session::SourceObservation,
     root_lock_intent: bool,
     reconcile_after: u64,
@@ -232,6 +236,10 @@ impl Authority {
             session: None,
             session_source: None,
             session_failed: false,
+            source_recovering: false,
+            recovery_candidate: None,
+            recovery_unlock_floor: 0,
+            source_raw_unlock: None,
             source_observation: crate::session::SourceObservation::default(),
             root_lock_intent: true,
             reconcile_after: 0,
@@ -256,7 +264,10 @@ impl Authority {
     }
     fn fresh_session(&self, now: u64) -> Option<&crate::session::Snapshot> {
         self.session.as_ref().filter(|s| {
-            !self.session_failed && s.sampled_at_ns > self.reconcile_after && now < s.until
+            !self.session_failed
+                && !self.source_recovering
+                && s.sampled_at_ns > self.reconcile_after
+                && now < s.until
         })
     }
     fn retire_authentication_attempt(&mut self) {
@@ -291,6 +302,7 @@ impl Authority {
             && self.root_lock_intent
             && self.durable.lock_pending
             && !self.session_failed
+            && !self.source_recovering
             && !attempt.retired
             && self.lock_admission_epoch == attempt.lock_epoch
             && now < attempt.until
@@ -448,6 +460,7 @@ impl Authority {
             && self.root_lock_intent
             && self.durable.lock_pending
             && !self.session_failed
+            && !self.source_recovering
             && !attempt.retired
             && self.lock_admission_epoch == attempt.lock_epoch
             && now < attempt.until
@@ -598,6 +611,82 @@ impl Authority {
     pub(crate) fn source_stopping(&mut self) {
         self.source_observation.stopping();
     }
+    pub(crate) fn source_timing_lost(
+        &mut self,
+        loss: crate::session::TimingLoss,
+    ) -> io::Result<()> {
+        let now = crate::boottime_ns();
+        if self.session_failed
+            || !self.session_required
+            || loss.observed_at_ns == 0
+            || loss.observed_at_ns > now
+            || loss.source.len() != 32
+            || !loss
+                .source
+                .bytes()
+                .all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b))
+            || self
+                .session_source
+                .as_ref()
+                .is_some_and(|source| source != &loss.source)
+        {
+            return self.fail_session();
+        }
+        if self.source_recovering {
+            // One unavailable interval has one fence and one discovery floor.
+            return Ok(());
+        }
+        self.session_source.get_or_insert(loss.source);
+        self.retire_authentication_attempt();
+        self.lifecycle(None, None, None)?;
+        self.source_recovering = true;
+        self.recovery_candidate = None;
+        self.reconcile_after = self.reconcile_after.max(now);
+        self.locked = true;
+        // Cancel the current finite preview, without revoking durable permission.
+        // Ordinary focus/background changes do not take this path.
+        for app in self.principals.keys().cloned().collect::<Vec<_>>() {
+            let old = self.media_revocations.get(&app).copied().unwrap_or(0);
+            let Some(next) = old.checked_add(1) else {
+                self.invalidate();
+                return Err(io::ErrorKind::Other.into());
+            };
+            self.media_revocations.insert(app, next);
+        }
+        for principal in self.principals.values_mut() {
+            principal.background = true;
+        }
+        self.source_observation.recovering();
+        Ok(())
+    }
+    pub(crate) fn expire_source(&mut self, now: u64) -> io::Result<()> {
+        if !self.session_failed
+            && !self.source_recovering
+            && let Some(sample) = &self.session
+            && now.max(crate::boottime_ns()) >= sample.until
+        {
+            return self.source_timing_lost(crate::session::TimingLoss {
+                source: sample.source.clone(),
+                observed_at_ns: crate::boottime_ns(),
+                reason: crate::session::TimingLossReason::SampleExpired,
+            });
+        }
+        Ok(())
+    }
+    pub(crate) fn recovering_source(&mut self) -> io::Result<()> {
+        if self.session_failed || !self.source_recovering {
+            return self.fail_session();
+        }
+        if self.recovery_candidate.as_ref().is_some_and(|candidate| {
+            candidate
+                .sampled_at_ns
+                .checked_add(crate::session::SAMPLE_BUDGET_NS)
+                .is_none_or(|until| crate::boottime_ns() >= until)
+        }) {
+            self.recovery_candidate = None;
+        }
+        Ok(())
+    }
     pub(crate) fn fail_session(&mut self) -> io::Result<()> {
         self.source_observation.fail(
             crate::session::SourceFailureCategory::AuthorityRejected,
@@ -635,14 +724,34 @@ impl Authority {
     }
     pub(crate) fn observe_session(
         &mut self,
-        s: crate::session::Snapshot,
+        mut s: crate::session::Snapshot,
         now: u64,
     ) -> io::Result<()> {
         // Check the previous lease/liveness before a later observation can
         // replace it, even when no independent timer or current query ran.
+        self.expire_source(now)?;
         self.refresh_authentication_lifetime(now);
         if self.session_failed {
             return self.fail_session();
+        }
+        let previous_authority_until = if self.source_recovering {
+            None
+        } else {
+            self.session.as_ref().map(|sample| sample.until)
+        };
+        let raw_unlock = s.protocol_unlock.clone();
+        let raw_protocol_valid = crate::session::valid_protocol_facts(
+            s.locked,
+            s.sequence,
+            s.sampled_at_ns,
+            s.lock_generation,
+            raw_unlock.as_ref(),
+        );
+        if s.protocol_unlock
+            .as_ref()
+            .is_some_and(|event| event.sequence <= self.recovery_unlock_floor)
+        {
+            s.protocol_unlock = None;
         }
         let canonical = s.source.len() == 32
             && s.source
@@ -655,16 +764,9 @@ impl Authority {
             || s.sampled_at_ns
                 .checked_add(crate::session::SAMPLE_BUDGET_NS)
                 != Some(s.until)
-            || now >= s.until
             || (s.locked && s.focus.is_some())
             || (!s.locked && s.locker.is_some())
-            || !crate::session::valid_protocol_facts(
-                s.locked,
-                s.sequence,
-                s.sampled_at_ns,
-                s.lock_generation,
-                s.protocol_unlock.as_ref(),
-            )
+            || !raw_protocol_valid
             || self
                 .session_source
                 .as_ref()
@@ -681,28 +783,77 @@ impl Authority {
                             || !self.same_peer(s.focus.as_ref(), old.focus.as_ref())
                             || !self.same_peer(s.locker.as_ref(), old.locker.as_ref())
                             || s.lock_generation != old.lock_generation
-                            || s.protocol_unlock != old.protocol_unlock))
+                            || raw_unlock != self.source_raw_unlock))
                     || (s.revision == old.revision
                         && (s.locked != old.locked
                             || s.focus.as_ref().map(|f| &f.metadata)
                                 != old.focus.as_ref().map(|f| &f.metadata)
                             || !self.same_peer(s.locker.as_ref(), old.locker.as_ref())
                             || s.lock_generation != old.lock_generation
-                            || s.protocol_unlock != old.protocol_unlock))
+                            || raw_unlock != self.source_raw_unlock))
             })
         {
             return self.fail_session();
+        }
+        self.source_raw_unlock = raw_unlock;
+        if now.max(crate::boottime_ns()) >= s.until {
+            self.source_timing_lost(crate::session::TimingLoss {
+                source: s.source.clone(),
+                observed_at_ns: crate::boottime_ns(),
+                reason: crate::session::TimingLossReason::SampleExpired,
+            })?;
+            self.session = Some(s); // Comparison history only; never fresh authority.
+            return Ok(());
         }
         // Explicit resume/session reconciliation needs a newly sampled packet.
         // Cached but otherwise fresh pre-resume facts cannot restore authority.
         if s.sampled_at_ns <= self.reconcile_after {
             self.retire_authentication_attempt();
-            self.session = None;
+            if self.source_recovering {
+                self.session = Some(s);
+            } else {
+                self.session = None;
+            }
             self.locked = true;
             for p in self.principals.values_mut() {
                 p.background = true;
             }
             return Ok(());
+        }
+        let mut recovery_pair_until = None;
+        if self.source_recovering {
+            let pair = self.recovery_candidate.as_ref().is_some_and(|candidate| {
+                candidate.sequence < s.sequence
+                    && candidate.sampled_at_ns > self.reconcile_after
+                    && candidate.sampled_at_ns < s.sampled_at_ns
+                    && candidate
+                        .sampled_at_ns
+                        .checked_add(crate::session::SAMPLE_BUDGET_NS)
+                        .is_some_and(|until| {
+                            s.sampled_at_ns <= until && crate::boottime_ns() < until
+                        })
+            });
+            if !pair {
+                if self.recovery_candidate.as_ref().is_none_or(|candidate| {
+                    candidate.sequence != s.sequence
+                        && candidate
+                            .sampled_at_ns
+                            .checked_add(crate::session::SAMPLE_BUDGET_NS)
+                            .is_none_or(|until| crate::boottime_ns() >= until)
+                }) {
+                    self.recovery_candidate = Some(crate::session::AcceptedSourceSample {
+                        sequence: s.sequence,
+                        sampled_at_ns: s.sampled_at_ns,
+                    });
+                }
+                self.session = Some(s);
+                return Ok(());
+            }
+            recovery_pair_until = self.recovery_candidate.as_ref().and_then(|candidate| {
+                candidate
+                    .sampled_at_ns
+                    .checked_add(crate::session::SAMPLE_BUDGET_NS)
+            });
         }
         if self.authentication.as_ref().is_some_and(|attempt| {
             !self.authentication_context_current(attempt, &s, now.max(crate::boottime_ns()))
@@ -731,6 +882,29 @@ impl Authority {
             || self.principals.iter().any(|(app, p)| {
                 p.background != (p.background_intent || selected.as_ref() != Some(app))
             });
+        // Identity observations can consume time. Do not commit an expired pair
+        // or let an expired replacement conceal loss at this final boundary.
+        let completed_at = crate::boottime_ns();
+        if completed_at >= s.until
+            || previous_authority_until.is_some_and(|until| completed_at >= until)
+            || recovery_pair_until.is_some_and(|until| completed_at >= until)
+        {
+            self.source_timing_lost(crate::session::TimingLoss {
+                source: s.source.clone(),
+                observed_at_ns: completed_at,
+                reason: crate::session::TimingLossReason::SampleExpired,
+            })?;
+            self.recovery_candidate = None;
+            self.session = Some(s);
+            return Ok(());
+        }
+        if recovery_pair_until.is_some() {
+            // Authentication cannot reuse an occurrence from the unavailable interval.
+            self.recovery_unlock_floor = self.recovery_unlock_floor.max(s.sequence);
+            s.protocol_unlock = None;
+            self.recovery_candidate = None;
+            self.source_recovering = false;
+        }
         if changed {
             self.lifecycle(None, None, None)?;
         }
@@ -964,6 +1138,7 @@ impl Authority {
             if self.session_required {
                 self.reconcile_after = crate::boottime_ns();
                 self.session = None;
+                self.recovery_candidate = None;
                 self.locked = true;
                 for p in self.principals.values_mut() {
                     p.background = true;
@@ -1802,6 +1977,202 @@ mod tests {
         authority.activate(Durable::default());
         authority.require_session().unwrap();
         authority
+    }
+    fn next_source_sample(
+        previous: &crate::session::Snapshot,
+        sequence: u64,
+    ) -> crate::session::Snapshot {
+        let mut next = previous.clone();
+        next.sequence = sequence;
+        next.sampled_at_ns = crate::boottime_ns();
+        next.until = next.sampled_at_ns + crate::session::SAMPLE_BUDGET_NS;
+        next
+    }
+    fn wait_past_source_sample(sample: &crate::session::Snapshot) {
+        let until = sample.until + 20_000_000;
+        while crate::boottime_ns() < until {
+            std::thread::sleep(std::time::Duration::from_millis(1));
+        }
+    }
+    #[test]
+    fn source_recovery_preserves_pending_root_lock_and_denied_durable_grant() {
+        // Authored provider snapshots and real BOOTTIME; not a Source IPC proof.
+        let durable = Durable {
+            grants: vec![Grant {
+                app: "denied".into(),
+                permission: Permission::MediaRoute,
+                allowed: false,
+            }],
+            lock_pending: true,
+            ..Durable::default()
+        };
+        let durable_bytes = serde_json::to_vec(&durable).unwrap();
+        let mut authority = Authority::loading(vec![]).unwrap();
+        authority.activate(durable);
+        authority.require_session().unwrap();
+        let mut initial = locker_snapshot(None);
+        initial.locked = false;
+        authority
+            .observe_session(initial.clone(), crate::boottime_ns())
+            .unwrap();
+        assert!(authority.fresh_session(crate::boottime_ns()).is_some());
+        assert!(authority.locked && authority.root_lock_intent);
+        let original_epoch = authority.lifecycle;
+        wait_past_source_sample(&initial);
+        authority.expire_source(crate::boottime_ns()).unwrap();
+        assert!(authority.fresh_session(crate::boottime_ns()).is_none());
+        assert!(!authority.session_terminal());
+        assert!(authority.locked && authority.root_lock_intent);
+        assert_eq!(
+            serde_json::to_vec(&authority.durable).unwrap(),
+            durable_bytes
+        );
+        let loss_epoch = authority.lifecycle;
+        let loss_floor = authority.reconcile_after;
+        assert_eq!(loss_epoch, original_epoch + 1);
+        for _ in 0..2 {
+            std::thread::sleep(std::time::Duration::from_millis(1));
+            authority
+                .source_timing_lost(crate::session::TimingLoss {
+                    source: initial.source.clone(),
+                    observed_at_ns: crate::boottime_ns(),
+                    reason: crate::session::TimingLossReason::SampleExpired,
+                })
+                .unwrap();
+            authority.recovering_source().unwrap();
+            assert_eq!(authority.lifecycle, loss_epoch);
+            assert_eq!(authority.reconcile_after, loss_floor);
+            assert_eq!(
+                serde_json::to_vec(&authority.durable).unwrap(),
+                durable_bytes
+            );
+        }
+        let first = next_source_sample(&initial, 2);
+        assert!(first.sampled_at_ns > loss_floor);
+        authority
+            .observe_session(first.clone(), crate::boottime_ns())
+            .unwrap();
+        assert!(authority.fresh_session(crate::boottime_ns()).is_none());
+        authority
+            .observe_session(first.clone(), crate::boottime_ns())
+            .unwrap();
+        authority.recovering_source().unwrap();
+        assert!(
+            authority.fresh_session(crate::boottime_ns()).is_none(),
+            "one fresh sample and its cached repeat reestablished authority"
+        );
+        assert_eq!(authority.lifecycle, loss_epoch);
+        assert_eq!(authority.reconcile_after, loss_floor);
+        std::thread::sleep(std::time::Duration::from_millis(1));
+        let second = next_source_sample(&initial, 3);
+        assert!(second.sampled_at_ns > first.sampled_at_ns);
+        authority
+            .observe_session(second, crate::boottime_ns())
+            .unwrap();
+        assert!(authority.fresh_session(crate::boottime_ns()).is_some());
+        assert!(!authority.session_terminal());
+        assert!(authority.locked && authority.root_lock_intent && authority.durable.lock_pending);
+        assert!(!authority.durable.grants[0].allowed);
+        assert_eq!(
+            serde_json::to_vec(&authority.durable).unwrap(),
+            durable_bytes
+        );
+    }
+    #[test]
+    fn source_timing_loss_requires_new_pair_without_terminal_shutdown() {
+        // Actor policy with authored snapshots and real BOOTTIME, not Source IPC.
+        let mut authority = session_authority();
+        let mut initial = locker_snapshot(None);
+        initial.locked = false;
+        authority
+            .observe_session(initial.clone(), crate::boottime_ns())
+            .unwrap();
+        let epoch = authority.lifecycle;
+        wait_past_source_sample(&initial);
+        authority
+            .observe_session(next_source_sample(&initial, 2), crate::boottime_ns())
+            .unwrap();
+        assert!(
+            authority.fresh_session(crate::boottime_ns()).is_none(),
+            "fresh replacement concealed an expired actor Source lease"
+        );
+        assert!(!authority.session_terminal());
+        assert!(authority.locked && !authority.root_lock_intent);
+        assert_eq!(authority.lifecycle, epoch + 1);
+        std::thread::sleep(std::time::Duration::from_millis(1));
+        authority
+            .observe_session(next_source_sample(&initial, 3), crate::boottime_ns())
+            .unwrap();
+        assert!(authority.fresh_session(crate::boottime_ns()).is_none());
+        assert_eq!(authority.lifecycle, epoch + 1);
+        std::thread::sleep(std::time::Duration::from_millis(1));
+        authority
+            .observe_session(next_source_sample(&initial, 4), crate::boottime_ns())
+            .unwrap();
+        assert!(authority.fresh_session(crate::boottime_ns()).is_some());
+        assert!(!authority.locked && !authority.session_terminal());
+    }
+    #[test]
+    fn source_timing_loss_cancels_preview_lease_without_revoking_grant() {
+        // Real owned self-pidfd; policy/grant and Source facts are authored models.
+        let uid = rustix::process::getuid().as_raw();
+        let mut authority = Authority::loading(vec![AppProfile {
+            app: "sounds".into(),
+            uid,
+            executable: "/unused-model-entry".into(),
+            args: vec![],
+        }])
+        .unwrap();
+        let mut durable = Durable::default();
+        durable.grants.push(crate::storage::Grant {
+            app: "sounds".into(),
+            permission: Permission::MediaRoute,
+            allowed: true,
+        });
+        authority.activate(durable);
+        authority.require_session().unwrap();
+        authority
+            .register(
+                "sounds",
+                std::process::id(),
+                rustix::process::pidfd_open(
+                    rustix::process::getpid(),
+                    rustix::process::PidfdFlags::empty(),
+                )
+                .unwrap(),
+            )
+            .unwrap();
+        let mut initial = locker_snapshot(None);
+        initial.locked = false;
+        initial.focus = Some(own_locker());
+        authority
+            .observe_session(initial.clone(), crate::boottime_ns())
+            .unwrap();
+        let stamp = authority
+            .begin_media(
+                std::process::id(),
+                uid,
+                "audio",
+                "speaker",
+                1000,
+                crate::boottime_ns(),
+            )
+            .unwrap();
+        let lease = authority
+            .approve_media(&stamp, "audio", crate::boottime_ns())
+            .unwrap();
+        assert!(authority.current_media_lease(&lease, "audio"));
+        wait_past_source_sample(&initial);
+        authority
+            .observe_session(next_source_sample(&initial, 2), crate::boottime_ns())
+            .unwrap();
+        assert!(
+            !authority.current_media_lease(&lease, "audio"),
+            "expired Source left the old preview lease current"
+        );
+        assert_eq!(authority.principals.len(), 1);
+        assert!(authority.durable.grants[0].allowed);
+        assert!(!authority.durable.lock_pending && !authority.root_lock_intent);
     }
     #[test]
     fn locker_changes_without_a_new_revision_are_terminal() {

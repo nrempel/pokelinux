@@ -193,9 +193,9 @@ struct Facts {
     stopped: bool,
 }
 impl crate::session::Provider for Facts {
-    fn poll(&mut self) -> io::Result<Option<Snapshot>> {
+    fn poll(&mut self) -> io::Result<crate::session::Update> {
         if self.stopped {
-            return Ok(None);
+            return Ok(crate::session::Update::AwaitingFirst);
         }
         match self.shared.try_lock() {
             Ok(sample) => self.cached = sample.clone(),
@@ -204,7 +204,7 @@ impl crate::session::Provider for Facts {
         }
         self.observed_revision
             .store(self.cached.revision, Ordering::Release);
-        Ok(Some(self.cached.clone()))
+        Ok(crate::session::Update::Current(self.cached.clone()))
     }
     fn stop(&mut self) {
         self.stopped = true;

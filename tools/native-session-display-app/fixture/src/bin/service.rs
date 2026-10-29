@@ -8,7 +8,7 @@ use pokelinux_display::{
 use pokelinux_lifecycle::{
     boottime_ns,
     messages::Provider as MessagesProvider,
-    session::{Provider as SessionProvider, Snapshot},
+    session::{Provider as SessionProvider, Update},
 };
 use pokelinux_session::Observer;
 use rustix::{
@@ -85,13 +85,13 @@ impl SessionProvider for Combined {
     fn occupied(&self) -> bool {
         self.display.occupied()
     }
-    fn poll(&mut self) -> io::Result<Option<Snapshot>> {
+    fn poll(&mut self) -> io::Result<Update> {
         // Always drive ownership/reaping, even after either input is terminal.
         let display = self.display.poll();
         // Drain/check actual source throughout setup; never defer its deadline.
         let observed = SessionProvider::poll(&mut self.observer);
         match &observed {
-            Ok(Some(s)) => {
+            Ok(Update::Current(s)) => {
                 if self.sampled_at != 0 {
                     self.maximum_sample_gap = self
                         .maximum_sample_gap
@@ -131,10 +131,11 @@ impl SessionProvider for Combined {
         if self.failed {
             return Err(io::ErrorKind::NotConnected.into());
         }
-        if self.display.admission() {
-            observed
-        } else {
-            Ok(None)
+        match observed {
+            // Only current facts are gated by the authored display admission.
+            // Loss/recovery updates must reach the actor in Observer order.
+            Ok(Update::Current(_)) if !self.display.admission() => Ok(Update::AwaitingFirst),
+            update => update,
         }
     }
 }

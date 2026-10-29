@@ -48,7 +48,18 @@ fn main() -> io::Result<()> {
     )?;
     while boottime_ns() < until {
         let snapshot = match pokelinux_lifecycle::session::Provider::poll(&mut source) {
-            Ok(snapshot) => snapshot,
+            Ok(pokelinux_lifecycle::session::Update::Current(snapshot)) => Some(snapshot),
+            Ok(pokelinux_lifecycle::session::Update::AuthorityLost(loss)) => {
+                emit(
+                    json!({"event":"authority_lost", "observed_at_ns":loss.observed_at_ns,
+                    "reason":format!("{:?}", loss.reason)}),
+                )?;
+                None
+            }
+            Ok(
+                pokelinux_lifecycle::session::Update::AwaitingFirst
+                | pokelinux_lifecycle::session::Update::Recovering,
+            ) => None,
             Err(error) => {
                 emit(
                     json!({"event":"failed","error":error.to_string(),"positive_state":source.snapshot().is_some()}),
@@ -56,7 +67,8 @@ fn main() -> io::Result<()> {
                 return Ok(());
             }
         };
-        if let Some(frame) = source.snapshot()
+        if snapshot.is_some()
+            && let Some(frame) = source.snapshot()
             && frame.sequence != sequence
         {
             sequence = frame.sequence;

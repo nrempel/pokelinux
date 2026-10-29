@@ -423,7 +423,7 @@ fn stale_first_source_never_becomes_startup_eligible() {
 }
 #[test]
 #[ignore = "isolated root actor/storage, authored UID1000 Source and actual IPC"]
-fn accepted_locked_source_is_eligible_then_stall_failure_is_terminal() {
+fn accepted_locked_source_withdraws_eligibility_until_same_source_recovers() {
     let mut c = Case::new("gated_locked");
     awaiting(&mut c);
     c.allow_source();
@@ -454,26 +454,60 @@ fn accepted_locked_source_is_eligible_then_stall_failure_is_terminal() {
         );
     }
     let source_pidfd = c.source();
-    let before = boottime_ns();
+    let actor_pid = c.child.id();
     rustix::process::pidfd_send_signal(&source_pidfd, Signal::STOP).unwrap();
-    let failed = c.failed();
-    failure(&failed, "TimedOut", before, boottime_ns());
-    let failed_observed = boottime_ns();
+    let recovering = loop {
+        let reply = c.snapshot();
+        if source(&reply)["state"] == "recovering" {
+            break reply;
+        }
+        assert!(boottime_ns() < c.source_until - 1_000_000_000);
+        tick();
+    };
+    let loss_observed = boottime_ns();
+    assert_eq!(recovering["locked"], true);
+    assert!(source(&recovering)["first_failure"].is_null());
+    let retained = &source(&recovering)["last_accepted"];
+    assert!(retained["sequence"].as_u64().unwrap() > 0);
     c.raw_window(40_000_000);
-    c.no_later_publication(failed_observed);
-    let reply = c.snapshot();
-    assert_eq!(source(&reply), source(&failed));
+    c.no_later_publication(loss_observed);
+    let repeated = c.snapshot();
+    assert_eq!(source(&repeated), source(&recovering));
     c.pump();
     assert!(
         c.polls
             .iter()
-            .any(|r| r.observed_at_boottime_ns >= failed_observed),
-        "actual post-failure actor hook call"
+            .any(|r| r.observed_at_boottime_ns >= loss_observed),
+        "actual recovery-denied actor hook call"
     );
+    assert_eq!(c.child.id(), actor_pid);
+    assert!(c.child.try_wait().unwrap().is_none());
+    assert!(pokelinux_lifecycle::authority::living(&source_pidfd).unwrap());
+    rustix::process::pidfd_send_signal(&source_pidfd, Signal::CONT).unwrap();
+    loop {
+        let recovered = c.observed_locked();
+        let accepted = &source(&recovered)["last_accepted"];
+        assert!(accepted["sequence"].as_u64().unwrap() > retained["sequence"].as_u64().unwrap());
+        let sampled = accepted["sampled_at_ns"].as_u64().unwrap();
+        assert!(sampled > loss_observed);
+        assert!(source(&recovered)["first_failure"].is_null());
+        c.pump();
+        if c.polls.iter().any(|r| {
+            r.observed_at_boottime_ns >= loss_observed
+                && r.source_until == Some(sampled + pokelinux_session::SAMPLE_BUDGET_NS)
+        }) {
+            break;
+        }
+        assert!(boottime_ns() < c.source_until - 1_000_000_000);
+        tick();
+    }
+    assert_eq!(c.child.id(), actor_pid);
+    assert!(c.child.try_wait().unwrap().is_none());
+    assert!(pokelinux_lifecycle::authority::living(&source_pidfd).unwrap());
     let stop_ack = c.stop();
     c.close();
-    c.no_later_publication(failed_observed);
     c.no_later_publication(stop_ack);
+    assert!(!pokelinux_lifecycle::authority::living(&source_pidfd).unwrap());
 }
 #[test]
 #[ignore = "isolated root actor/storage, authored UID1000 Source and actual IPC"]

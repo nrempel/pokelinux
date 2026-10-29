@@ -54,9 +54,12 @@ numeric metadata. Repeated observation of the same retained object can validate
 cached-sample consistency after app death; that reference equality never authorizes
 publication. Old reads capture source/revision and the original100ms BOOTTIME
 sample deadline. Heartbeats cannot extend the stamp. Final read validation checks
-both request and sample deadlines again after identity IO. Source loss is terminal,
-including after explicit resume discarded the prior sample. Resume requires later
-sampling; real logind/power coordination remains open.
+both request and sample deadlines again after identity IO. Observed timing loss
+withdraws authority under the [same-Source recovery contract](native-session-timing-recovery.md):
+fresh advancing samples after actual discovery are required, and old reads,
+authentication and previews remain retired. Source death and malformed identity,
+wire or protocol history remain terminal, including across explicit resume.
+Resume requires later sampling; real logind/power coordination remains open.
 
 ## Executed selections
 

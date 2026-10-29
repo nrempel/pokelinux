@@ -1,4 +1,7 @@
-use pokelinux_lifecycle::{boottime_ns, session::Provider};
+use pokelinux_lifecycle::{
+    boottime_ns,
+    session::{Provider, Update},
+};
 use pokelinux_session_owner::{Compositor, SourceOwner, runtime::drain_after};
 use std::{
     collections::BTreeMap,
@@ -34,8 +37,10 @@ impl Guard {
         };
         loop {
             match g.owner.poll() {
-                Ok(Some(_)) => break,
-                Ok(None) if boottime_ns() < g.until => std::thread::sleep(Duration::from_millis(1)),
+                Ok(Update::Current(_)) => break,
+                Ok(Update::AwaitingFirst) if boottime_ns() < g.until => {
+                    std::thread::sleep(Duration::from_millis(1))
+                }
                 other => panic!("real Source setup failed: {other:?}"),
             }
         }

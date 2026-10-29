@@ -39,8 +39,11 @@ The exact selected normal Hyprland configuration directly loads the Source
 plugin before any shell unit starts. Its timer can publish a valid no-focus
 observation independently of the shell. Source-only review finds no dependency
 cycle in waiting for this observation; it does not qualify actual cold startup.
-The100ms sample budget,120s original Source startup bound and terminal-loss rules
-are unchanged. Upstream graphics engines remain unchanged.
+The100ms sample budget and120s original Source startup bound are unchanged.
+Established timing loss now follows the separate
+[recovery contract](native-session-timing-recovery.md); terminal identity/wire/
+protocol failure and Source-death handling remain intact. Upstream graphics
+engines remain unchanged.
 
 ## Executed Harbour boundaries
 

@@ -37,7 +37,10 @@ There is no raw descriptor launch CLI or automatic compositor replacement.
 First valid Source readiness has one original BOOTTIME deadline, capped at120s.
 Bootstrap receive has a separate5s cap; later Source samples keep their existing
 100ms lease. The host startup test proves allowance admission, not cold Hyprland
-performance. Terminal Source observations cannot recover by later samples.
+performance. After establishment, [timing loss](native-session-timing-recovery.md)
+keeps the same owned Source and denies authority until fresh advancing samples
+after discovery qualify again. Identity/wire/protocol failures and Source death
+remain terminal; no old authentication, read or preview is restored.
 
 The owner polls without blocking logging. Stop fences local facts and immediately
 signals KILL; occupancy clears only after actual child wait. Every returning outer
@@ -185,8 +188,10 @@ A genuine early-publication RED precedes two unchanged real Wayland/socket ARM
 GREEN cases and matching adapter SDK compilation. The fixture must complete heavy
 display-profile setup before Source activation. The shared production publisher tests exercise actual Wayland dispatch and
 its credentialed packet boundary, including permanent expiry after a real later
-stall. Next replay original Hyprland with the unmodified production owner. The100ms freshness lease,
-original120s first-sample allowance and terminal failure remain unchanged.
+stall in that frozen checkpoint. The current
+[timing-recovery contract](native-session-timing-recovery.md) supersedes that
+terminal-timing policy without changing the100ms freshness lease or original120s
+first-sample allowance. Original-compositor recovery remains unqualified.
 
 [Startup evidence](evidence/native-session-startup-provenance.json) binds the
 failed selections and diagnostic separately. No new normal-window capture,

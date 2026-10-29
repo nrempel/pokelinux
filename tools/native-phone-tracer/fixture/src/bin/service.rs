@@ -9,7 +9,7 @@ use pokelinux_lifecycle::{
     AppProfile, boottime_ns,
     display::{Context, Factory, State},
     messages::Provider as MessagesProvider,
-    session::{Provider as SessionProvider, Snapshot},
+    session::{Provider as SessionProvider, Update},
 };
 use pokelinux_session::Observer;
 use rustix::{
@@ -40,10 +40,10 @@ struct TracedObserver {
     failed: bool,
 }
 impl SessionProvider for TracedObserver {
-    fn poll(&mut self) -> io::Result<Option<Snapshot>> {
+    fn poll(&mut self) -> io::Result<Update> {
         let result = SessionProvider::poll(&mut self.observer);
         match &result {
-            Ok(Some(s)) if s.revision != self.revision => {
+            Ok(Update::Current(s)) if s.revision != self.revision => {
                 self.revision = s.revision;
                 println!(
                     "{}",

@@ -382,8 +382,10 @@ or GREEN. Preserve genuine focus, lock and
 client-lifetime facts plus ordering, fences, buffer lifetime, render-context,
 command/completion and shutdown custody. Required integration must stall rendering
 while real focus, client death and lock intent advance within the unchanged100ms
-Source contract; authority stalls remain terminal. Cached heartbeats are refused.
-Keep the Source adapter, predicate order, ErrorKinds, real grants and every
+Source contract. Authority stalls must withdraw positive authority under the
+current [timing-recovery contract](native-session-timing-recovery.md); malformed
+identity/wire/protocol history and Source death remain terminal. Cached heartbeats
+are refused. Keep the Source adapter, real grants and every
 functional/Pixel/PCM guard unchanged. A future GREEN must retain the frozen
 actor/oracle bytes, real Source live, ready clients, entered render stalls beyond
 100ms and real operations issued within them. Cold failure before these prerequisites

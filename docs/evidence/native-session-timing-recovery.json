@@ -1,0 +1,181 @@
+{
+  "schema": 1,
+  "scope": "Host actor components, authored credentialed Source receiver traffic, authored SourceOwner integration and normal x86 release compilation; hash-only provenance",
+  "original_reds": {
+    "actor_root3": {
+      "source_manifest_sha256": "4cb29b248543d384fd33c5602ac449666a338deeca06f7ff41d9b55fd91f5909",
+      "outer_sha256": "8b1c07ebf548d35716763999f8d38f81a90ddad2aa5ee5e4277602ed8223131f",
+      "inner_sha256": "3054910dcca12c139e445f334798dddf36876fcabcba10bd8fb23592f754fbdf",
+      "failed_cases": 2,
+      "actual_test_exit": 101,
+      "behavioral_RED_qualified": true,
+      "authored_Provider_facts_no_Source_IPC": true
+    },
+    "receiver_root1": {
+      "source_manifest_sha256": "b8b95d2f53e6888d021e4b9694e32ea78d89721e7aac4fc0e1df96c2598ffe8b",
+      "outer_sha256": "a8069a7323068d044cdc28c61188ec3d199f18683fad5e18d66dc6160c00a440",
+      "inner_sha256": "59ef4356d681af5689912b43618711a1a395ec3d5e279a215f64cc4f887627f8",
+      "failed_cases": 1,
+      "actual_test_exit": 101,
+      "behavioral_RED_qualified": true,
+      "test_source_sha256": "859f3312d37bbb7c8a6ad0fcbc2cfcbd7e3a37fb72704fd92cf30df848dc2014"
+    }
+  },
+  "actor_green_root3": {
+    "source_manifest_sha256": "6b24e9da7c4d745f249911ce1c84c1afe169c23fcd3d08e570cac15cc2626581",
+    "outer_sha256": "71bdc3d556c2f6348d059d70e78834ac3245ac743e4b2f0754371afebb6a8590",
+    "inner_sha256": "71429f97a11835ebccb519c256e45374930ced5f665f910c6de5569e85e8a206",
+    "whole_cohort_passed": true,
+    "cases_passed": 117,
+    "cases_ignored": 26,
+    "original_two_cases_independently_passed": true,
+    "original_case_bytes_unchanged_sha256": {
+      "source_timing_loss_requires_new_pair_without_terminal_shutdown": "fc242e591bb30e0dacf781c23578e97999d9a28b254a49eb30428500eba698f4",
+      "source_timing_loss_cancels_preview_lease_without_revoking_grant": "511878951a49d1c257434dfd1d0624ad96a16e906087cf412887e016c5406ae4"
+    },
+    "format_exit": 0,
+    "strict_all_target_Clippy_exit": 0,
+    "custody": {
+      "outer_command_wait_EOF": 10,
+      "inner_command_wait_EOF": 6,
+      "all_before_original_cutoffs": true
+    },
+    "real_Source_IPC_claimed": false
+  },
+  "receiver_green_sol2": {
+    "source_manifest_sha256": "d83b6706b65484dd0d4abaef665ef53db32595d218a3d64077c74978701baca1",
+    "outer_sha256": "f87ace5a2af31796c6e15296b9c91a09a4134407ea05738eb0a639bfee93b7a0",
+    "inner_sha256": "5a70955052cde9b4ca355aba397042516a7da850b01a277e07cc17000d1680cf",
+    "qualification_sha256": "27b65eeed5b66f8242d502ffa9879977e438ef8776bcbee0e78ec5955a9e21f1",
+    "whole_cohort_passed": true,
+    "library_source_sha256": "304e8b6ac8e1740de3bcc4fa9a9f7f2b7bceed5ae7c81ba06b08b2b81480bcd9",
+    "original_RED_test_source_sha256": "859f3312d37bbb7c8a6ad0fcbc2cfcbd7e3a37fb72704fd92cf30df848dc2014",
+    "per_target_passes": {
+      "timing_loss_original_red": 1,
+      "timing_loss": 9,
+      "process": 57,
+      "establishment": 69
+    },
+    "counts_overlap": "Per-target execution counts; shared process cases prevent a combined unique-case total",
+    "format_exit": 0,
+    "strict_all_target_Clippy_exit": 0,
+    "custody": {
+      "outer_command_wait_EOF": 10,
+      "inner_command_wait_EOF": 8,
+      "all_before_original_cutoffs": true
+    },
+    "all_process_capability_sets_zero": true,
+    "original_RED_test_bytes_unchanged": true
+  },
+  "owner_green_sol2": {
+    "source_manifest_sha256": "a8b95237cc5008b0e595e535fef3af1276ffd76a14130089f7229b64f85ea919",
+    "outer_sha256": "78e2e6df712626737e9e0b445721eba3344f7f0417163ea44ea828c95270e9ac",
+    "inner_sha256": "383c3f038c84f12df3bc562648b15ad94a93dda5b146bf74de135195a3833956",
+    "qualification_sha256": "5a5c976a6c1bc453123c003b15e3eebcbb67553ead04550f6cba6c2467686019",
+    "whole_cohort_passed": true,
+    "per_target_passes": {
+      "source": 8,
+      "cleanup": 3,
+      "source_status": 12,
+      "startup_status": 5,
+      "stop": 6
+    },
+    "total_passed": 34,
+    "format_passed": true,
+    "strict_all_target_Clippy_passed": true,
+    "normal_release": {
+      "bytes": 3399504,
+      "sha256": "ee7fb3d96e1c95d2deb2f406d39f3e4b4d083a83f9f862a67c119d99b194faf5",
+      "features": [],
+      "ELF": "ELF64 little-endian machine62 x86_64",
+      "opt_level": "3"
+    },
+    "custody": {
+      "outer_command_wait_EOF": 10,
+      "inner_command_wait_EOF": 12,
+      "all_before_original_cutoffs": true
+    },
+    "case_child_wait_scope": "Source/cleanup retain actual Child reaps with DEVNULL, not additional PIPE claims; qualification binds separately exported actor/Source/Stop waits",
+    "snapshot_scope": "Explicit private SOURCE includes older unused process.rs, neither compiled nor executed by owner targets; production library matches admitted receiver GREEN",
+    "unrelated_dependency_public_base": "63c855c4be59bd491aaafd92cd0ed36a725302ef",
+    "production_receiver_library_source_sha256": "304e8b6ac8e1740de3bcc4fa9a9f7f2b7bceed5ae7c81ba06b08b2b81480bcd9"
+  },
+  "preserved_failed_whole_cohorts": [
+    {
+      "cohort": "actor-green-root-1",
+      "whole_cohort_passed": false,
+      "classification": "Missing required isolated component root/storage-helper setup",
+      "narrow_passes_only": {
+        "original_actor_cases_passed": 2
+      },
+      "source_manifest_sha256": "f551d9a63903a1ddd84c15b5909118ed5102a26a9847ef2d17f9a5768c9d321e",
+      "outer_sha256": "d17cb21e17da224aad09540dcabb7981f47de9c9c7a9ea0547f5b38b45c713ee",
+      "inner_sha256": "dbae372e4d98a470c7305924e2a9994d474f73bb85f0f4d450f58008e5a197bd"
+    },
+    {
+      "cohort": "actor-green-root-2",
+      "whole_cohort_passed": false,
+      "classification": "One obsolete terminal-expiry expectation",
+      "narrow_passes_only": {
+        "original_actor_cases_passed": 2
+      },
+      "source_manifest_sha256": "f551d9a63903a1ddd84c15b5909118ed5102a26a9847ef2d17f9a5768c9d321e",
+      "outer_sha256": "3e726454fd8fbeb4c4d637fd4c38b8b55f0795d3c53f2a58b6fbb689d9d1a4c9",
+      "inner_sha256": "e7851d572826a26140c2f357b6a4476e74a6ffb1085f3178ce6e59753e9d9b7a"
+    },
+    {
+      "cohort": "green-sol-1",
+      "whole_cohort_passed": false,
+      "classification": "Two process-test migration expectation failures",
+      "narrow_passes_only": {
+        "original_receiver_case_passed": 1,
+        "recovery_controls_passed": 9
+      },
+      "source_manifest_sha256": "4d007e14c084fc9cede0c2ba15fcea4f9ad34650b6dfc89b6614cfc9650a2eb1",
+      "outer_sha256": "74aa6e80614924a8b0e9b111698a0daf8f507b86884de6c942455a57acfad90e",
+      "inner_sha256": "d759ef8682472ac8531c87b17cfe6642e424d1b1f643ab39cb2d7b85c83f5d39"
+    },
+    {
+      "cohort": "owner-sol-1",
+      "whole_cohort_passed": false,
+      "classification": "Mechanical test-only Option/Update compile migration; no 34-case execution",
+      "normal_release_build_passed": true,
+      "source_manifest_sha256": "6c8c99ad3a430b24ceec9db596bec4cbfaa7b9de0cc905117be868db199295ce",
+      "outer_sha256": "1e1278d88fef37e6fef06ef81c479ab9aaec65bf91620939aa87ac9af77f7cf7",
+      "inner_sha256": "7eb5dd769c43f20882fea5a44ae1f6be5df9e42ad6c618ff075649eceeb4127c"
+    }
+  ],
+  "test_corrections_are_additional_production_repairs": false,
+  "failed_aggregates_reclassified": false,
+  "fixture_core_version_matching_required": true,
+  "historical_frozen_core_Python_recipes_accept_current_Update_fixtures_automatically": false,
+  "unchanged_limits": {
+    "Source_sample_budget_ns": 100000000,
+    "request_startup_cleanup_deadlines_increased": false,
+    "effect_replay_added": false,
+    "late_lifecycle_bound_durable_write_permanent_invalidation_fixed": false
+  },
+  "unqualified": [
+    "Original-compositor/Omarchy recovery",
+    "GUI/desktop recovery; no new GUI run",
+    "Authentication/broker recovery",
+    "ARM recovery",
+    "Matched Google kernel and physical-phone recovery"
+  ],
+  "live_fixture_adapter_compile": {
+    "selected_bins": 7,
+    "offline_locked_cargo_check_passed": true,
+    "compiler_warnings": 0,
+    "fixture_runtime_executed": false,
+    "source_manifest_sha256": "6bb061cfa06d8df23d35980decfe938470c3bc942940f3be2543312ab2e9f9e9",
+    "qualification_sha256": "5270391c299da68e4f2a6468f457c4436f210795e8a8881a0afa1037299120d1",
+    "outer_sha256": "47030d1483aa5e29d6eede92f01e08a20baf1882e5271c038ba32e49d855914d",
+    "inner_sha256": "1a46697845ad740887249bb6130c67da4195a1fdd9697725e3a83f0207e01031",
+    "custody": {
+      "outer_command_wait_EOF": 10,
+      "inner_command_wait_EOF": 9,
+      "all_before_original_cutoffs": true
+    },
+    "historical_inputs_unchanged": 56
+  }
+}

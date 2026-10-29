@@ -16,6 +16,26 @@ phone. Keep synthetic emulator, original-code, ARM64/QEMU and physical evidence
 separate. Do not equate registration, submission or API success with carrier
 acceptance, delivery, native call state or working physical hardware.
 
+The current [Source timing recovery](native-session-timing-recovery.md) replaces
+terminal timing expiry with immediate authority withdrawal and fresh-pair
+reestablishment in the same owned Source. The 100 ms budget is unchanged;
+identity, wire, protocol and death failures remain terminal. Old reads,
+authentication attempts and finite previews stay retired, and durable lock and
+permission policy survives. The existing late durable-write/lifecycle mismatch
+still permanently invalidates the actor.
+
+Actor checks pass 117 cases with 26 unrelated isolated cases ignored; the two
+original timing REDs also pass unchanged. Receiver checks pass the original RED,
+nine new recovery controls and the process/establishment targets, whose shared
+cases are counted separately. SourceOwner passes 34 process/status/startup/Stop
+cases and a normal feature-free x86 release build. Formatting and strict Clippy
+pass for those packages. Failed setup and test-migration cohorts remain recorded.
+These are host Rust/kernel boundaries with authored Source facts, not original
+compositor, ARM or phone recovery. Next replay the existing cold Omarchy/Sounds
+flow with one controlled compositor pause before Play, retaining the same apps
+and unchanged Pixel/PCM/deadline checks. Menu launch and interactive preview
+remain subsequent gates.
+
 The shared process owner now [retains stdout through actual EOF after child wait](native-process-custody.md#later-stdout-eof-custody-repair). A real held-writer RED passes after the repair, alongside nine existing Supervisor controls and strict Clippy. Local output closure remains separate from remote cleanup and successor authority. Earlier consumer cohorts are historical and were not rerun.
 
 The [registered app connectivity path](native-connectivity-actor.md) now

@@ -1,6 +1,5 @@
 //! Chronological RED: real credentials/pidfds, authored Value wire, old API only.
 use super::*;
-use pokelinux_lifecycle::session::Provider;
 use serde_json::{Value, json};
 
 fn locked(generation: Value) -> Value {
@@ -81,7 +80,7 @@ fn positive_known_generic_exact_and_sticky_heartbeats_preserve_event_revision() 
     assert_eq!(first["lock_generation"], 1);
     assert!(first["protocol_unlock"].is_null());
     assert_eq!(o.revision(), 1);
-    let owned = Provider::poll(&mut o).unwrap().unwrap();
+    let owned = provider_current(&mut o);
     assert_eq!(owned.locker.as_ref().unwrap().metadata.pid, p.child.id());
     assert_eq!(owned.revision, 1);
     send(&mut p, vec![generic_unlock()]);
@@ -114,11 +113,11 @@ fn positive_known_generic_exact_and_sticky_heartbeats_preserve_event_revision() 
             3,
             "sticky event heartbeat must preserve revision"
         );
-        let snapshot = Provider::poll(&mut o).unwrap().unwrap();
+        let snapshot = provider_current(&mut o);
         assert_eq!(snapshot.revision, 3);
         assert!(!snapshot.locked && snapshot.locker.is_none());
     }
-    let snapshot = Provider::poll(&mut o).unwrap().unwrap();
+    let snapshot = provider_current(&mut o);
     assert!(snapshot.lock_generation.is_none());
     assert_eq!(
         serde_json::to_value(snapshot.protocol_unlock.unwrap()).unwrap(),
@@ -138,7 +137,7 @@ fn positive_late_attachment_unknown_generation_keeps_real_mapped_owner() {
     assert!(frame["lock_generation"].is_null());
     assert!(frame["protocol_unlock"].is_null());
     assert_eq!(frame["locker"]["pid"], p.child.id());
-    let snapshot = Provider::poll(&mut o).unwrap().unwrap();
+    let snapshot = provider_current(&mut o);
     let locker = snapshot.locker.as_ref().unwrap();
     assert!(
         pokelinux_kernel_identity::ProcessView::open()
@@ -186,10 +185,7 @@ fn positive_queued_accepted_unlock_exact_unknown_relock_keeps_all_revisions() {
         initial_revision + 5,
         "queued exact event and generation changes cannot coalesce away"
     );
-    assert_eq!(
-        Provider::poll(&mut o).unwrap().unwrap().revision,
-        initial_revision + 5
-    );
+    assert_eq!(provider_current(&mut o).revision, initial_revision + 5);
 }
 
 #[test]

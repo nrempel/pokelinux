@@ -15,8 +15,11 @@ const ATTEMPT_BUDGET_NS: u64 = 20_000_000_000;
 
 struct Facts(Option<Snapshot>);
 impl Provider for Facts {
-    fn poll(&mut self) -> io::Result<Option<Snapshot>> {
-        Ok(self.0.clone())
+    fn poll(&mut self) -> io::Result<crate::session::Update> {
+        Ok(self.0.clone().map_or(
+            crate::session::Update::AwaitingFirst,
+            crate::session::Update::Current,
+        ))
     }
     fn stop(&mut self) {}
     fn occupied(&self) -> bool {
@@ -618,8 +621,35 @@ fn auth_closed_capacity_after_actual_source_expiry_keeps_locked_policy() {
             .is_err()
     );
     poll(&mut authority, &mut facts);
-    assert!(authority.session_terminal());
+    assert!(!authority.session_terminal());
+    let status = serde_json::to_value(authority.snapshot(false, false)).unwrap();
+    assert_eq!(status["source"]["state"], "recovering");
     assert_eq!(facts.0.as_ref().unwrap().until, source_until);
+    assert_policy_retained(&mut authority);
+    // Recovery requires two new samples; it does not complete the old attempt,
+    // clear the durable lock, or start another authentication attempt itself.
+    for index in 0..2 {
+        std::thread::sleep(std::time::Duration::from_millis(1));
+        let sample = facts.0.as_mut().unwrap();
+        sample.sequence += 1;
+        sample.sampled_at_ns = boottime_ns();
+        sample.until = sample.sampled_at_ns + SAMPLE_BUDGET_NS;
+        poll(&mut authority, &mut facts);
+        assert!(!authority.current_authentication_attempt(&old, boottime_ns()));
+        assert_policy_retained(&mut authority);
+        if index == 0 {
+            assert!(
+                authority
+                    .begin_authentication_attempt(boottime_ns(), until)
+                    .is_err()
+            );
+        }
+    }
+    let fresh = authority
+        .begin_authentication_attempt(boottime_ns(), until)
+        .unwrap();
+    assert!(authority.current_authentication_attempt(&fresh, boottime_ns()));
+    assert!(!authority.current_authentication_attempt(&old, boottime_ns()));
     assert_policy_retained(&mut authority);
 }
 
