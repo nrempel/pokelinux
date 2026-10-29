@@ -36,11 +36,23 @@ def receive_raw_update(wire, width, height, name_hash):
     frame = bytearray(width * height * 4)
     covered = bytearray(width * height)
     bells = 0
+    cut_text_messages = 0
+    cut_text_bytes = 0
     while True:
         kind = wire.read(1)[0]
         if kind == 2:
             bells += 1
             assert bells <= 8, 'bounded bell notifications'
+            continue
+        if kind == 3:
+            # RFC 6143 section 7.6.4. Clipboard integration is not selected.
+            # Consume bounded text to keep framing; never retain its contents.
+            cut_text_messages += 1
+            assert cut_text_messages <= 8, 'bounded ServerCutText messages'
+            length = struct.unpack('>I', wire.read(7)[3:])[0]
+            assert length <= 4096, 'bounded ServerCutText bytes'
+            wire.read(length)
+            cut_text_bytes += length
             continue
         assert kind == 0, f'unexpected server message: type={kind}'
         padding, count = struct.unpack('>BH', wire.read(3))
@@ -69,6 +81,8 @@ def receive_raw_update(wire, width, height, name_hash):
             'server_name_sha256': name_hash, 'width': width, 'height': height,
             'requested_pixel_format': 'little-endian32/depth24/R16G8B0',
             'sole_encoding': 'raw', 'rectangles': rectangles, 'bell_count': bells,
+            'discarded_server_cut_text_messages': cut_text_messages,
+            'discarded_server_cut_text_bytes': cut_text_bytes,
             'framebuffer_update_padding_byte': padding,
             'framebuffer_update_rectangle_count': count,
             'raw_bytes_received': raw_bytes, 'frame_bytes': len(frame),

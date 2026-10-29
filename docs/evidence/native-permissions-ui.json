@@ -380,5 +380,74 @@
       }
     },
     "original_VM_message_type_still_unknown": true
+  },
+  "sixth_joined_vm_attempt": {
+    "private_execution": "/tmp/pokelinux-native-x86-composition-permissions-acceptance-root-6/execution.json",
+    "execution_sha256": "c96491ab5824723f95472cdef812a05467c46b3c492f7b7cca5cf8b1d1de0549",
+    "selection_sha256": "95f132db7118c1508f1021da49c919b7a33e0900ba2da1bc6d39d5d0ce4a273a",
+    "guest_passed": true,
+    "overall_passed": false,
+    "actual_viewer_error": "AssertionError: unexpected server message: type=3",
+    "observed_rejected_server_message_type": 3,
+    "earlier_fifth_message_type_retrospectively_observed": false,
+    "selected_inputs_unchanged": true,
+    "owned_container_absent": true,
+    "hardware_qualified": false
+  },
+  "bounded_ServerCutText_repair": {
+    "maximum_messages_per_frame": 8,
+    "maximum_bytes_per_message": 4096,
+    "host_clipboard_applied": false,
+    "payload_logged_or_retained": false,
+    "caller_deadline_unchanged": true,
+    "full_VM_retry_passed": false,
+    "receipts": {
+      "RED.json": {
+        "private_receipt": "/tmp/pokelinux-rfb-cut-text-root-1/RED.json",
+        "sha256": "f097de1d3468a01e8a52e788c7e12a78f09aa02a126f0c265e0758da41bf445a"
+      },
+      "GREEN.json": {
+        "private_receipt": "/tmp/pokelinux-rfb-cut-text-root-1/GREEN.json",
+        "sha256": "39305af50e17150524ba3466fe0fa1dc96bc51b5bbb8f280b116c72b3195e722"
+      },
+      "existing-nine.json": {
+        "private_receipt": "/tmp/pokelinux-rfb-cut-text-root-1/existing-nine.json",
+        "sha256": "bd5f48a9ef061b4c1d993523ab1c5f38ab1d697c4e268666e083ca76219c1446"
+      },
+      "unknown-types.json": {
+        "private_receipt": "/tmp/pokelinux-rfb-cut-text-root-1/unknown-types.json",
+        "sha256": "1b47dbdcdc41fc74327a236232bcc9f40a9d89db20328582dd3330f24b344725"
+      },
+      "setup-failure.json": {
+        "private_receipt": "/tmp/pokelinux-rfb-cut-text-root-1/setup-failure.json",
+        "sha256": "fe2dd3a95a5035b6091260d874c67af16e36772055c616e94d63ae728fb7e60b"
+      },
+      "fixture-length-correction.json": {
+        "private_receipt": "/tmp/pokelinux-rfb-cut-text-root-1/fixture-length-correction.json",
+        "sha256": "cbed5fcddc94d205fee9d813c5cbc84a43d3bfe3e6dad0a22cc18f51d6a620b0"
+      }
+    },
+    "actual_server_pair": {
+      "scope": "Actual x11vnc/Xvfb, authored isolated X11 cut buffer; no original VM payload or sender attribution",
+      "RED": {
+        "private_receipt": "/tmp/pokelinux-rfb-cutbuffer-diagnostic-sol-1/RED/receipt.json",
+        "sha256": "89f2c6ba4c5f1b97a0d94306a8ea350e699a20c521b9e02f73f0d1f69ab0a9bd",
+        "actual_server_type": 3,
+        "parser_accepted": false
+      },
+      "GREEN": {
+        "private_receipt": "/tmp/pokelinux-rfb-cutbuffer-diagnostic-sol-1/GREEN/receipt.json",
+        "sha256": "5eddc103689d04173de5da31b25f6376cbc0c43c9d8654f18385279c37c72a51",
+        "actual_server_types": [
+          3,
+          0
+        ],
+        "discarded_messages": 1,
+        "discarded_bytes": 29,
+        "raw_frame_bytes": 10471680,
+        "actual_stream_EOF": true
+      },
+      "both_cases_owned_closure_and_exact_container_absence": true
+    }
   }
 }

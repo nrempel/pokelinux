@@ -201,3 +201,17 @@ or cause is inferred from that assertion alone. The viewer boundary must be
 resolved before claiming the complete run passes. Fresh QWindow density metadata,
 new published screenshots, ARM, device audio and all physical-phone gates remain
 open. No phone was accessed.
+
+
+The sixth integrated run repeats the guest consent/audio/close sequence successfully,
+then the metadata-only viewer diagnostic identifies actual server message type3.
+The outer run remains failed. Type3 is the standard ServerCutText message; the
+subsequent reader change discards bounded text and retains the final-frame/EOF
+requirements. Socket RED→GREEN checks pass; a fresh integrated retry is required.
+The fifth run's unrecorded byte is not retrospectively relabeled as observed.
+
+A separate real-server RED→GREEN pair now qualifies that reader boundary: an
+isolated authored X11 cut buffer produces actual ServerCutText; the old reader
+rejects type3, while the repaired reader discards29 bytes and receives the full
+frame and EOF. Exact owned cleanup passes. This does not recover the earlier VM
+payload or identify its originating application; the integrated retry remains open.

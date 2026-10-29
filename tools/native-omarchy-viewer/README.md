@@ -37,16 +37,33 @@ on valid nonzero padding; the corrected reader passed. These parser checks alone
 do not qualify a socket, UI, human client or phone.
 
 
-Unsupported server messages remain refused. The error now records only the numeric
-message type, without reading or publishing its payload. Three actual socketpair
-controls with authored types pass RED→GREEN for that diagnostic and verify the
-payload remains unread; the nine existing parser checks also pass:
+The consent VM now identifies type3 (`ServerCutText`) before its final frame.
+The reader discards this unused text without applying it to the host clipboard or
+retaining/logging its contents. It accepts at most eight messages of at most4096
+bytes each per frame read, under the caller's original deadline. Oversized,
+truncated and excess messages remain failures; unknown types still report their
+numeric type and fail before reading their payload. See
+[RFC6143 section7.6.4](https://www.rfc-editor.org/rfc/rfc6143.html#section-7.6.4).
 
 ```sh
+python3 -B tools/native-omarchy-viewer/test_rfb_cut_text.py \
+  --module tools/native-omarchy-viewer/rfb_frames.py
 python3 -B tools/native-omarchy-viewer/test_rfb_message_error.py \
   --module tools/native-omarchy-viewer/rfb_frames.py
 ```
 
-This does not identify the message rejected by the earlier joined consent/audio
-VM: its original error omitted the byte. No additional RFB message is accepted,
-and the final-frame/EOF requirement remains unchanged.
+Eight actual socketpair cases with authored protocol bytes pass strict RED→GREEN,
+including bounded text followed by a real decoded frame, empty text, limit-size
+messages, and oversized/excess/truncated refusals. The nine original parser cases
+and three unsupported-type socket controls pass. An initial struct-packing setup
+failure and incorrect authored text-length expectation are preserved separately;
+the final corrected consumer is run against both old and repaired readers.
+These socket cases do not qualify the complete VM retry or its final shutdown.
+
+
+A separate real x11vnc/Xvfb pair also passes RED→GREEN with a fixed authored
+isolated X11 cut buffer: the old reader observes type3 and refuses it; the repaired
+reader discards one29-byte message, receives the full1080×2424 raw frame and
+reaches stream EOF. Both cases close the server/display and remove their exact
+containers. This reproduces the message-class defect, not the original VM's text
+contents or which guest application produced them. The full VM retry remains open.

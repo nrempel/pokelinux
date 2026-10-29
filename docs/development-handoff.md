@@ -48,8 +48,14 @@ but fails its final image read with unexpected server message; the outer result
 therefore remains failed. The viewer now reports the numeric unsupported message
 type while retaining refusal and leaving its payload unread; three actual socket
 controls pass RED→GREEN and the original nine parser controls pass. The old VM
-message type remains unknown. Diagnose that bounded viewer protocol boundary next;
-do not relabel it as a fully passing end-to-end run. New QWindow density evidence,
+message type remains unknown. A sixth integrated run repeats guest/PCM success
+and now records actual type3 before the final frame; the outer result stays failed.
+The viewer now discards bounded ServerCutText (max8 messages,4096 bytes each)
+without applying/logging contents, with eight socket RED→GREEN cases and the
+original parser/refusal checks passing. An actual x11vnc/Xvfb authored-cutbuffer
+pair now passes RED→GREEN, full raw frame/EOF and exact owned cleanup. The original
+VM payload/origin remain unknown. Qualify the integrated retry next; do not
+relabel the earlier runs as fully passing. New QWindow density evidence,
 public screenshots, ARM and physical-phone qualification remain open. Ordinary current profiles require `role.kind=application`; frozen
 previous cohorts retain their matching old binary/profile pairs.
 

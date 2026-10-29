@@ -25,7 +25,7 @@ class Wire:
 
 
 rows = []
-for kind, bells in [(3, 0), (255, 0), (17, 2)]:
+for kind, bells in [(1, 0), (255, 0), (17, 2)]:
     client, peer = socket.socketpair()
     with client, peer:
         client.settimeout(1)
