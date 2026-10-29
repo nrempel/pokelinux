@@ -27,8 +27,14 @@ The later [full viewer continuation](native-omarchy-viewer.md) now passes all se
 RFB actions, actual close/reopen, both native Pixel/quiet-PCM checks, final raw
 frame receipt and normal shutdown. An owned initial host-window setup corrects
 the no-WM SDL geometry; the decoder accepts RFC-permitted padding with all bounds
-retained. Earlier failed runs remain separate. Deliver the bounded human preview
-using the normal app entry point next; human/SSH connection and consent remain open.
+retained. Earlier failed runs remain separate. That frozen cohort retains the
+capture wrapper; human/SSH connection and consent remain open.
+The later [normal-entry external-client checkpoint](native-omarchy-human-preview.md)
+now passes direct native Sounds launch with the corrected Rust pair, frame receipt,
+client disconnect and complete VM shutdown. The two real viewer timeout/disconnect
+controls also pass separately. Next qualify an operator launch command and human
+SSH/VNC access; connected-client dwell expiry remains untested. No fresh QWindow
+metadata or screenshot qualification is inherited from the capture-wrapper cohort.
 
 The earlier [menu integration](native-omarchy-menu-launch.md) closes actual
 bar→Apps→Sounds RED→GREEN in genuine Omarchy. The new actor-owned UID 11042 app
@@ -40,8 +46,10 @@ original consumer deadlines/criteria. The full run and composite manager
 Stop-after-Ready remain failed; independent custody and guest closure pass.
 
 Prioritize a reproducible interactive VM preview with the now-qualified
-menu/close/reopen and normal shutdown, clearly labeling playback experimental. Complete one bounded
-audio deadline correction and then a visible Sounds Allow/Revoke page. The private
+menu/close/reopen and normal shutdown, clearly labeling playback experimental. Keep
+the matched corrected audio Main/session-owner pair in new previews, preserving
+the frozen viewer cohort. After the operator workflow, implement the visible
+Sounds Allow/Revoke page. The private
 controlled Qt 6.8.2 startup fixture now qualifies an unpaused control and a held-Source
 RED against unchanged production audio code. Main expires Starting at captured D
 while Source remains fresh and the original app budget remains valid; the intended

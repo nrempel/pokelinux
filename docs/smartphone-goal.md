@@ -57,6 +57,10 @@ standard close, fresh menu reopen and normal shutdown with permission withheld.
 The later [viewer input loop](native-omarchy-viewer.md) passes all seven actions,
 final native image and normal shutdown. A human connection workflow, visible
 permission flow and repeatable graphical audio remain open.
+A later [normal-entry preview](native-omarchy-human-preview.md) passes direct Sounds
+launch from an external automated client, using the corrected Rust pair, and normal
+VM shutdown on disconnect. Human access, connected-client dwell expiry and fresh
+app-window density evidence remain open.
 The separate [Rust audio startup correction](native-audio-startup-deadline.md) now
 passes controlled host RED→GREEN and Source-loss/app-expiry cancellation controls.
 It retains original deadlines and does not retry; this does not qualify graphical

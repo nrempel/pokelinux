@@ -1,0 +1,44 @@
+--- a/run-selected.py
++++ b/run-selected.py
+@@ -99 +99 @@
+- provision=load(R/'source/proofs/native-provision-admission.json');assert provision==S['native_guest_admission']
++ provision=load(R/'source/proofs/human-native-admission.json');assert provision==S['native_guest_admission']
+@@ -230,7 +230,2 @@
+-     menu=guest['actual_menu_launch'];assert menu['qualified']and menu['all_three_actual_menu_touches_complete']and not menu['direct_desktop_client_invoked_by_guest']
+-     assert [v['label']for v in menu['touches']]==['genuine bar menu','Apps','Sounds']and all(v['actual_RFB']and v['actual_guest_uinput']is False for v in menu['touches'])
+-     assert guest['desktop_menu_activation_exercised']and guest['actual_actor_launch']['desktop_menu_activation_claimed']and menu['retained_app_PID']==guest['actual_actor_launch']['app_PID']
+-     assert [v['id']for v in guest['boundary_steps']]==[1,2]and all(v['passed']for v in guest['boundary_steps'])
+-     bridge=boot['viewer_input_host'];assert bridge['operational_success']and bridge['worker_actual_exit']==bridge['server_actual_exit']==0
+-     worker=bridge['worker_result'];assert worker['passed']and len(worker['actions'])==7 and [a['action']for a in worker['actions']]==['bar-1','apps-1','sounds-1','close-1','bar-2','apps-2','sounds-2']and all(a['outcome']=='sent_once'for a in worker['actions'])
+-     assert guest['viewer_input_retirement']['no_future_host_writes']and guest['viewer_input_retirement']['worker_operational_success']and guest['remote_event_queues_drained_claim']is False and len(guest['viewer_input_actions'])==7
++     bridge=boot['human_viewer_host'];assert bridge['operational_success']and not bridge['internal_RFB_client_selected']
++     assert guest['viewer_input_retirement']['no_future_host_writes']and guest['viewer_input_retirement']['operational_success']and guest['remote_event_queues_drained_claim']is False and guest['viewer_input_actions']==[]
+@@ -238,8 +233,3 @@
+-     assert guest['close_reopen']['close_gesture']['actual_RFB']and guest['close_reopen']['close_gesture']['actual_guest_uinput']is False
+-     flow=guest['close_reopen'];assert flow['qualified']and flow['permission_withheld_throughout']and flow['close_attempts']==1 and flow['menu_attempts']==2
+-     first,second=flow['first_epoch'],flow['second_epoch'];assert first['app_PID']!=second['app_PID']
+-     assert first['retirement']['retained_pidfd_dead']and first['retirement']['proc_absent']and first['retirement']['old_window_absent']and first['retirement']['old_per_app_listener_absent']
+-     assert first['actor_launch']['observed_parent_PID']==second['actor_launch']['observed_parent_PID']and first['per_app_display']['pathname']!=second['per_app_display']['pathname']
+-     assert all(epoch['Pixel10_profile']['qualification']['qualified']and epoch['menu']['qualified']and epoch['menu']['all_three_actual_menu_touches_complete']and not epoch['menu']['direct_desktop_client_invoked_by_guest']for epoch in [first,second])
+-     assert not any(v['request'].get('op')=='grant'for v in guest.get('actual_root_actor_requests',[]))
+-     assert not guest.get('current_native_finite_preview_qualified')and not guest.get('current_observer_retired_before_audio_Stop')
++     preview=guest['human_preview'];assert preview['normal_app_entrypoint']and not preview['capture_wrapper_selected']and not preview['fresh_app_QWindow_metadata_qualified']and not preview['automated_input_selected']and preview['permission_withheld']
++     assert guest['actual_installed_config']['profile']['apps'][0]['executable']=='/usr/libexec/pokelinux/pokelinux-sounds'
++     assert guest['boundary_steps']==[]and not any(v['request'].get('op')=='grant'for v in guest.get('actual_root_actor_requests',[]))
+@@ -247 +237 @@
+-     assert guest['genuine_full_shell_executed']and len(guest['actual_Root_installed_bundle']['files'])==len(S['cold_installed_bundle']['files']) and len(guest['actual_installed_PID1_identities'])==4
++     assert guest['genuine_full_shell_executed']and len(guest['actual_Root_installed_bundle']['files'])==len(S['cold_installed_bundle']['files'])and len(guest['actual_installed_PID1_identities'])==4
+@@ -251,8 +240,0 @@
+-     assert {str(p.relative_to(R/'pcm'))for p in (R/'pcm').glob('*/result.json')}=={'cold-installed-initial-no-grant/result.json','reopened-no-grant/result.json'}
+-     for step in guest['boundary_steps']:
+-      pcm=step['PCM'];assert pcm['measured_frames']==48000 and pcm['stage']=='released_silence'
+-      pcm_path=R/pcm['result'];assert sha(pcm_path)==pcm['sha256'];measured=load(pcm_path);assert measured['passed']and measured['classification']=='ACTUAL_PCM_ORACLES_PASS'
+-      assert step['final_authenticated_source_snapshot']['source']['state']=='observed'and step['final_authenticated_source_snapshot']['source']['first_failure']is None
+-     captures={v['file']:v for v in guest['preserved_regular_files']}
+-     assert {'epoch-1-normal-qt-window.jsonl','epoch-1-normal-qt.stderr','epoch-2-normal-qt-window.jsonl','epoch-2-normal-qt.stderr'}<=captures.keys()
+-     assert all(sha(R/name)==v['sha256']and (R/name).stat().st_size==v['bytes']and not v['PIPE_EOF_claimed']for name,v in captures.items())
+@@ -263,2 +245,2 @@
+-    assert boot['passed'] and boot['QEMU_actual_wait_exit']==0 and len(boot['owned_process_receipts'])==8 and boot['actual_QMP_KVM']['query_kvm_enabled']and boot['actual_QMP_KVM']['query_kvm_present']and boot['serial_guest_identity_and_result_hash_match']and boot['actual_QMP_KVM']['actual_guest_SHUTDOWN']['value']['data']=={'guest':True,'reason':'guest-shutdown'}and boot['actual_QMP_KVM']['socket_EOF_before_original_cutoff']
+-    assert all(v['returncode']==0 and v['actual_direct_parent_wait'] and v['stdout_EOF'] and v['wait_before_original_cutoff'] and v['EOF_before_original_cutoff'] for v in boot['owned_process_receipts'])
++    assert boot['passed'] and boot['QEMU_actual_wait_exit']==0 and len(boot['owned_process_receipts'])==7 and boot['actual_QMP_KVM']['query_kvm_enabled']and boot['actual_QMP_KVM']['query_kvm_present']and boot['serial_guest_identity_and_result_hash_match']and boot['actual_QMP_KVM']['actual_guest_SHUTDOWN']['value']['data']=={'guest':True,'reason':'guest-shutdown'}and boot['actual_QMP_KVM']['socket_EOF_before_original_cutoff']
++    assert all((v['returncode']==0 if v['role']!='human-x11vnc.log' else boot['human_viewer_host']['operational_success']and v['returncode']==boot['human_viewer_host']['server_actual_exit'])and v['actual_direct_parent_wait']and v['stdout_EOF']and v['wait_before_original_cutoff']and v['EOF_before_original_cutoff']for v in boot['owned_process_receipts'])

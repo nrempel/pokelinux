@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "base": "published native-omarchy-viewer reconstructed Sol6 sources at0f1cf1226b70919f02dd7f721d733448da930d91",
+  "patches": {
+    "guest.py": {
+      "base_sha256": "dc2e5f839e895624fe10d684e87c9c0bcec2940442ff12dd5a23d3b0f94e0b4d",
+      "selected_sha256": "921ce39b9c039041b717d54dff2a884d76ed845f0a3acb7f29c0c0dea1734498",
+      "patch_sha256": "8278ddc799a6ecc3f625abad1b34e9d61b4fa5e6378ad8241526d038c65c295f"
+    },
+    "boot.py": {
+      "base_sha256": "dac88a6892f51c287cbc6070e421a6bc99d0fffff502f316433216f4ee6edc6e",
+      "selected_sha256": "274ced5c33d194b74bac2dada35e7e7c9afdccd27e8cf78dcaaa258a4e2469fe",
+      "patch_sha256": "facbd1793398c74a50310349a5c373790526e2994c21d870f3754fe9e514cf4e"
+    },
+    "run-selected.py": {
+      "base_sha256": "fb079674326f77f072120cdd432cc129217c01d7c1f50d65a180d4b17d8dc074",
+      "selected_sha256": "3b7e5ae4963e265da394478bde2ea8c194a616db886a75922aff667f3f82ef9b",
+      "patch_sha256": "eea66a05aef717e4e251955134a72c8c2cfdcb18bc6389cb4e3e7897598db80a"
+    }
+  },
+  "files": {
+    "boot.py.patch": "facbd1793398c74a50310349a5c373790526e2994c21d870f3754fe9e514cf4e",
+    "guest.py.patch": "8278ddc799a6ecc3f625abad1b34e9d61b4fa5e6378ad8241526d038c65c295f",
+    "human_guest.py": "0cb8a0efad0f1ddcf9605a0853fe2f80b03a695bece96302352a4d4909f2abfd",
+    "human_viewer_boundary.py": "c88dde726e47f0f0a6d4f91755733decccda2c28b27955659fa79a837e800571",
+    "human_viewer_host.py": "b5e5e7ba24a14a54a03cd9e3acc0830073796c7337c52c0fc38a25a1ae2fb6c1",
+    "normal-apps.json": "bf7cbfc3562d426592f35026d194d6b9c62a37e202371d1674a1cd4000483a33",
+    "profile_contract.py": "8091ef9754acf784483be1cea0a5eb2a7311f1c2f5077abb98daa0798a39af7b",
+    "run-selected.py.patch": "eea66a05aef717e4e251955134a72c8c2cfdcb18bc6389cb4e3e7897598db80a",
+    "viewer_smoke.py": "f60ec098d8a172679fef5aba41587a4d16b6244f976309a20000b13e6a7eae8c"
+  }
+}

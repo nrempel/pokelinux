@@ -1,0 +1,14 @@
+--- a/boot.py
++++ b/boot.py
+@@ -7 +7 @@
+-from viewer_host import ViewerOwner
++from human_viewer_host import HumanViewerOwner
+@@ -100 +100 @@
+- viewer=ViewerOwner(scope,R,S,qemu,xvfb,QEMU_UNTIL,CLOSE_UNTIL,lambda:qmp_read(QEMU_UNTIL),viewer_query_mice)
++ viewer=HumanViewerOwner(scope,R,S,qemu,xvfb,QEMU_UNTIL,CLOSE_UNTIL,lambda:qmp_read(QEMU_UNTIL),viewer_query_mice)
+@@ -103 +103 @@
+- assert viewer.retired and viewer.passed;result['viewer_input_host']=viewer.record
++ assert viewer.retired and viewer.passed;result['human_viewer_host']=viewer.record
+@@ -122 +122 @@
+- errors=scope.close(CLOSE_UNTIL);result.update({'cleanup_errors':errors,'owned_process_receipts':scope.receipts,'completed_at_ns':now()});result['passed']='failure'not in result and not errors and len(scope.receipts)==8 and all(r['returncode']==0 and r['actual_direct_parent_wait']and r['stdout_EOF']and r['wait_before_original_cutoff']and r['EOF_before_original_cutoff']for r in scope.receipts)and now()<CLOSE_UNTIL
++ errors=scope.close(CLOSE_UNTIL);result.update({'cleanup_errors':errors,'owned_process_receipts':scope.receipts,'completed_at_ns':now()});result['passed']='failure'not in result and not errors and len(scope.receipts)==7 and all((r['returncode']==0 if r['role']!='human-x11vnc.log' else viewer is not None and viewer.passed and r['returncode']==viewer.record.get('server_actual_exit'))and r['actual_direct_parent_wait']and r['stdout_EOF']and r['wait_before_original_cutoff']and r['EOF_before_original_cutoff']for r in scope.receipts)and now()<CLOSE_UNTIL

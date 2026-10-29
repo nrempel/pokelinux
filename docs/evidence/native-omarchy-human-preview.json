@@ -1,0 +1,98 @@
+{
+  "schema": 1,
+  "scope": "cold x86 VM with normal Sounds entry and separate automated external RFB client; no human/SSH/phone qualification",
+  "selection_sha256": "7e139e5d7bf814ffe3f0469630b8f166885ab45741112923555c26f7ea4f16b7",
+  "execution_sha256": "49076387b18a1cdbb942f5fb2897ffb7cc1046357b7d84ff4c99db365b3019cc",
+  "guest_result_sha256": "9c1a68c3d308b63fe3c6cc342ae6faadaacc185ebac6362d65f6be66fec42472",
+  "boot_result_sha256": "86c2b68f5a9dc8cc97e515c25530654e5b2fb3e8aacc22c94b3d487b093138fe",
+  "external_client_result_sha256": "cb1826c55ce1d5a06c08ed1e9c5212f8906facd6efc1fdda5b45e25fc155a1ce",
+  "host_boundary_receipt_sha256": "e236d7f72fd431375099907814639b5640d6e423289c1d7ced197baf7e0d015d",
+  "normal_profile_sha256": "bf7cbfc3562d426592f35026d194d6b9c62a37e202371d1674a1cd4000483a33",
+  "same_profile_consumer_sha256": "8091ef9754acf784483be1cea0a5eb2a7311f1c2f5077abb98daa0798a39af7b",
+  "configuration_RED_exit": 1,
+  "configuration_GREEN_exit": 0,
+  "normal_audio_sha256": "f4a2af97259eee10bd7b3b3127c9c8ec78352f3d5223814c7c19384de4655a56",
+  "normal_owner_sha256": "5d23c3fdccdb9a3b2d1b1f7741cd5004087da927cc2575a856da9cc5ca919be7",
+  "observed_app": {
+    "PID": 1893,
+    "actor_PID": 1409,
+    "UID": 11042,
+    "executable": "/usr/libexec/pokelinux/pokelinux-sounds",
+    "sha256": "6850cba1361dc9eb22dc40d1a2fb8b9d8a1ef5360cc5ea1c807eeb736a660286",
+    "argument_count": 6,
+    "protected_per_app_Wayland": true
+  },
+  "external_actions": [
+    {
+      "action": "bar-1",
+      "point": [
+        54,
+        34
+      ],
+      "attempted_ns": 7228825991993894,
+      "sent_once": true,
+      "completed_ns": 7228826092113082
+    },
+    {
+      "action": "apps-1",
+      "point": [
+        540,
+        644
+      ],
+      "attempted_ns": 7228826792199514,
+      "sent_once": true,
+      "completed_ns": 7228826892313954
+    },
+    {
+      "action": "sounds-1",
+      "point": [
+        540,
+        1196
+      ],
+      "attempted_ns": 7228827592390899,
+      "sent_once": true,
+      "completed_ns": 7228827692494097
+    }
+  ],
+  "final_frame": {
+    "RFB_version": "3.8",
+    "security_type": 1,
+    "exclusive_client": true,
+    "server_name_sha256": "bfe3fe57c666ede3806f8f91c0a5c5579bec6cbd0be70c097974060b42638c9a",
+    "width": 1080,
+    "height": 2424,
+    "requested_pixel_format": "little-endian32/depth24/R16G8B0",
+    "sole_encoding": "raw",
+    "rectangles": [
+      {
+        "x": 0,
+        "y": 0,
+        "width": 1080,
+        "height": 2424
+      }
+    ],
+    "bell_count": 0,
+    "framebuffer_update_padding_byte": 21,
+    "framebuffer_update_rectangle_count": 1,
+    "raw_bytes_received": 10471680,
+    "frame_bytes": 10471680,
+    "frame_sha256": "022afeb12c2ba0c00cdb8dd05d204ff58c1812518360e9dcf50117138d8b1f49",
+    "frame_receipt_function_sends_input": false,
+    "meaningful_guest_picture_required": false,
+    "pixel_profile_or_input_qualified_by_frame_alone": false
+  },
+  "fresh_QWindow_profile_qualified": false,
+  "new_screenshot_published": false,
+  "host_ending": "client-disconnected",
+  "x11vnc_exit": 0,
+  "QEMU_exit": 0,
+  "normal_manager_Stop_after_Ready": true,
+  "guest_closure_qualified": true,
+  "exact_container_absence_qualified": true,
+  "cleanup_errors": [],
+  "no_client_and_early_disconnect_host_cases_passed": true,
+  "host_cases_include_VM": false,
+  "permission_withheld": true,
+  "playback_qualified": false,
+  "phone_accessed": false
+}

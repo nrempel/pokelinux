@@ -1,0 +1,116 @@
+--- a/guest.py
++++ b/guest.py
+@@ -8 +8 @@
+-from viewer_guest import GuestInput
++from human_guest import HumanGuest
+@@ -618,4 +618,4 @@
+- direct=[str(installed.BIN/'pokelinux-sounds'),str(installed.FIX/'sounds-exec')]
+- if argv and argv[0]in direct:args=argv[1:]
+- elif argv[:5]==[str(installed.BIN/'pokelinux-session-owner'),'app-entry','11042',str(actor['child'].pid),str(installed.FIX/'sounds-exec')]:args=argv[5:]
+- else:return
++ if not argv or argv[0]!=str(installed.BIN/'pokelinux-sounds'):return
++ if os.readlink(proc/'exe')!=str(installed.BIN/'pokelinux-sounds'):return
++ assert sha(proc/'exe')==sha(installed.BIN/'pokelinux-sounds')
++ args=argv[1:]
+@@ -626,0 +627 @@
++ result.setdefault('observed_normal_app_instances',[]).append({'PID':pid,'actor_PID':actor['child'].pid,'native_executable_sha256':sha(proc/'exe'),'actual_arguments':normal_argv,'observed_guest_ns':now()})
+@@ -627,0 +629 @@
++ viewer_publish(R/'viewer-input'/('app-'+str(pid)+'.json'),{'schema':1,'selection_sha256':result['selection_sha256'],'native_app':result['observed_normal_app_instances'][-1]})
+@@ -665 +667,4 @@
+- global app_pid,app_pidfd,compositor_pid,compositor_pidfd
++ global app_pid,app_pidfd,compositor_pid,compositor_pidfd,normal_argv_bound
++ if app_pidfd is not None and not live_fd(app_pidfd):
++  os.close(app_pidfd);app_pid=None;app_pidfd=None;normal_argv_bound=False
++ assert len(watched)<=256, "bounded retained descendant observations exceeded"
+@@ -893 +898 @@
+- viewer=GuestInput(R/'viewer-input',result['selection_sha256'],WORK,CLOSE,tick,lambda:(scope.pump(),scope.check()))
++ viewer=HumanGuest(R/'viewer-input',result['selection_sha256'],WORK,CLOSE,tick,lambda:(scope.pump(),scope.check()))
+@@ -932,8 +936,0 @@
+- # Dedicated output tmpfs; reserve cleanup before fallible admission/post-command hooks.
+- capture_dir=installed.directory(installed.HOME/'captures',0o700,11042);capture_mounted=True
+- command(['/usr/bin/mount','-t','tmpfs','-o','size=8388608,mode=0700,uid=11042,gid=11042,nosuid,nodev,noexec','sounds-capture-files',str(capture_dir)],'capture-tmpfs-mount.log',seconds=5)
+- mountlines=[line for line in Path('/proc/self/mountinfo').read_text().splitlines()if line.split(' - ',1)[0].split()[4]==str(capture_dir)];assert len(mountlines)==1;left,right=mountlines[0].split(' - ',1)
+- assert right.split()[0]=='tmpfs'and {'rw','nosuid','nodev','noexec'}<=set(left.split()[5].split(','));vfs=os.statvfs(capture_dir);st=capture_dir.lstat();assert vfs.f_blocks*vfs.f_frsize==8388608 and st.st_uid==st.st_gid==11042 and stat.S_IMODE(st.st_mode)==0o700 and st.st_dev!=installed.HOME.stat().st_dev
+- result['capture_tmpfs']={'mountinfo_line':mountlines[0],'aggregate_hard_bytes':8388608,'UID':11042,'GID':11042,'mode':'0700','HOME_on_distinct_overlay_device':True,'accepted_metadata_bytes':16392,'accepted_stderr_bytes':4194304,'global_RLIMIT_FSIZE_override_selected':False}
+- metadata_file=capture_dir/'normal-qt-window.jsonl';stderr_file=capture_dir/'normal-qt.stderr'
+- for path in [metadata_file,stderr_file]:path.touch(exist_ok=False);path.chmod(0o600);os.chown(path,11042,11042)
+@@ -943 +940 @@
+- result['actual_installed_config']={'path':str(config),'sha256':sha(config),'selection':selection,'profile':app_profile,'private_capture_instrumentation_only':True,'production_profile_argument_count':6}
++ result['actual_installed_config']={'path':str(config),'sha256':sha(config),'selection':selection,'profile':app_profile,'normal_app_entrypoint_without_capture_wrapper':True,'production_profile_argument_count':6}
+@@ -1027,4 +1024,4 @@
+- startup=startup_observer.StartupObserver(R,WORK,actor['child'].pid,normal_argv,control)
+- client=installed.BIN/'sounds-launch';desktop_file=Path('/usr/share/applications/org.omarchy.Sounds.desktop');assert desktop_file.read_text().split('Exec=',1)[1].splitlines()[0]==str(client)+' '+str(RUN/'launch-sounds.sock')
+- result['chosen_Sounds_desktop_binding']=chosen_sounds_desktop()
+- result['viewer_input_selection']={'new_emulated_device':'virtio-tablet-pci,id=viewer-tablet','seven_action_RFB_test_consumer':True,'actual_guest_uinput':False,'prior_guest_uinput_result_inherited':False,'human_viewer_UI_qualified':False}
++ client=installed.BIN/'sounds-launch';desktop_file=Path('/usr/share/applications/org.omarchy.Sounds.desktop')
++ assert desktop_file.read_text().split('Exec=',1)[1].splitlines()[0]==str(client)+' '+str(RUN/'launch-sounds.sock')
++ assert app_profile['apps'][0]['executable']==str(installed.BIN/'pokelinux-sounds')
++ assert app_profile['apps'][0]['uid']==11042 and len(profile_args)==6
+@@ -1033,55 +1030,3 @@
+- result['viewer_input_preflight']=viewer.preflight(min(WORK,now()+10_000_000_000))
+- menu_launch()
+- # Independent actual registry boundary on the already-owned app listener; no Source or app permissions are supplied.
+- wait(lambda:normal_argv_bound and app_pid is not None and live_fd(app_pidfd),10)
+- registry_probe=installed.program(R/'source/logical-output-registry-probe.py',installed.FIX/'logical-output-registry-probe.py')
+- trusted_registry=json.loads(command(['/usr/bin/python3',str(registry_probe),str(installed.WAYLAND),'--bind-allowed'],'logical-output-trusted-registry.json',env={'PATH':'/usr/bin','LANG':'C.UTF-8'},user=1000,seconds=5))
+- app_registry=json.loads(command(['/usr/bin/python3',str(registry_probe),result['actual_per_app_display']['pathname'],'--bind-allowed'],'logical-output-owned-app-registry.json',env={'PATH':'/usr/bin','LANG':'C.UTF-8'},user=11042,seconds=5))
+- trusted_interfaces={v['interface']for v in trusted_registry['globals']};app_interfaces={v['interface']for v in app_registry['globals']}
+- forbidden={'ext_session_lock_manager_v1','wp_security_context_manager_v1','zwlr_screencopy_manager_v1','zwp_virtual_keyboard_manager_v1','zwlr_layer_shell_v1'}
+- frame_until=min(WORK,now()+30_000_000_000)
+- snapshot=admin({'op':'snapshot'},absolute_cutoff=frame_until)
+- logical={'trusted':trusted_registry,'app':app_registry,'per_app_listener':result['actual_per_app_display'],'source_snapshot_after_registry':snapshot,'required_logical_output':'zxdg_output_manager_v1','forbidden_privileged_globals':sorted(forbidden),'privileged_globals_still_hidden':not bool(forbidden&app_interfaces),'logical_output_advertised_to_app':'zxdg_output_manager_v1'in app_interfaces,'positive_Sounds_Pixel_metadata_still_required':True}
+- result['actual_logical_output_boundary']=logical
+- assert trusted_registry['uid']==trusted_registry['gid']==1000 and app_registry['uid']==app_registry['gid']==11042
+- assert trusted_registry['allowed_bound']==app_registry['allowed_bound']==['wl_compositor','xdg_wm_base']
+- assert {'wl_output','wp_fractional_scale_manager_v1','zxdg_output_manager_v1'}<=trusted_interfaces
+- assert {'wl_output','wp_fractional_scale_manager_v1'}<=app_interfaces and not forbidden&app_interfaces
+- assert snapshot['source']['first_failure']is None
+- def registry_source_observed():
+-  current=admin({'op':'snapshot'},absolute_cutoff=frame_until)
+-  assert current['source']['first_failure']is None
+-  return current if current['source']['state']=='observed'else None
+- logical['Source_readiness_before_frame']={'original_absolute_frame_until_ns':frame_until,'observed_snapshot':snapshot if snapshot['source']['state']=='observed'else wait(registry_source_observed,30,absolute_cutoff=frame_until)}
+- assert logical['logical_output_advertised_to_app'],'actual owned app listener omits required logical output metadata'
+- def actor_metadata():
+-  capture_bounds();text=metadata_file.read_text()
+-  if not text or not text.endswith('\n'):return
+-  lines=text.splitlines();assert len(lines)<=8 and all(len(line.encode())<=2048 for line in lines)
+-  value=json.loads(lines[-1]);assert value.get('kind')=='sounds_window_metadata'and value['schema']==1 and value['title']=='Sounds'
+-  if not(value['window']['visible']is True and value['window']['exposed']is True and abs(value['window']['dpr']-2.625)<=.001):return
+-  client=window(absolute_cutoff=frame_until)
+-  if client is None:return
+-  assert value['pid']==client['pid']==app_pid
+-  if value['window']['geometry'][2:]!=client['size']:return
+-  assert value['window']['visible']is True and value['window']['exposed']is True and abs(value['window']['dpr']-2.625)<=.001,'latest normal app frame metadata incompatible'
+-  return value
+- def before_metadata_timeout(until):startup.record('before-original-frame-cutoff',app_pid,app_pidfd,absolute_cutoff=until,expected_starttime=watched.get(app_pid,{}).get('starttime'))
+- observed=wait(actor_metadata,30,before_timeout=before_metadata_timeout,absolute_cutoff=frame_until);assert app_pid==observed['pid']and app_pidfd is not None and normal_argv_bound;proc=Path('/proc')/str(app_pid)
+- startup.record('first-qualified-frame',app_pid,app_pidfd,expected_starttime=watched[app_pid]['starttime']);assert sha(proc/'exe')==sha(normal)
+- text=(proc/'status').read_text();assert next(v for v in text.splitlines()if v.startswith('Uid:')).split()[1:]==next(v for v in text.splitlines()if v.startswith('Gid:')).split()[1:]==['11042']*4 and not next(v for v in text.splitlines()if v.startswith('Groups:')).split()[1:]
+- assert int((proc/'stat').read_text().split(') ',1)[1].split()[1])==actor['child'].pid
+- window_address=wait(window,10)['address'];assert admin({'op':'snapshot'})['principals']==1
+- result['actual_normal_window_metadata']=observed;result['actual_actor_launch']={'app_PID':app_pid,'observed_parent_PID':actor['child'].pid,'kernel_UIDs':[11042]*4,'kernel_GIDs':[11042]*4,'supplementary_groups':[],'single_actor_launch_epoch':True,'numeric_generation_exported':False,'normal_ELF_sha256':sha(proc/'exe'),'fixed_desktop_client_executed_as_UID':1000,'desktop_menu_activation_claimed':True}
+- assert now()<frame_until and actor_metadata()==observed,'normal frame changed before qualification'
+- qualification=display.qualify_app(public_profile,display_discovery,observed,control,result,frame_until)
+- assert now()<frame_until and actor_metadata()==observed,'normal frame changed during qualification'
+- result['actual_menu_launch']['qualified']=True
+- result['actual_menu_launch']['retained_app_PID']=app_pid
+- result['phase']='cold-fixed-Sounds-window-focus-and-quiet-PCM'
+- focused=wait(app_focus,10);initial=wait(quiet,10);initial_PCM=pcm('released_silence','cold-installed-initial-no-grant')
+- frame=capture('Sounds-cold-installed-no-grant')
+- final_source=admin({'op':'snapshot'});assert final_source['source']['state']=='observed'and final_source['source']['first_failure']is None
+- assert all(live(item)for item in [actor,service,broker,theme_shell])and compositor_live()and live_fd(app_pidfd)
+- result['boundary_steps']=[{'id':1,'name':'cold_installed_PID1_full_shell_Source_fixed_Sounds_Pixel_focus_no_grant_quiet_PCM','passed':True,'native_focus':focused,'owner_and_graph':initial,'PCM':initial_PCM,'native_capture':frame,'final_authenticated_source_snapshot':final_source}]
+- close_reopen()
++ result['phase']='bounded-human-preview'
++ result['human_preview']={'normal_app_entrypoint':True,'capture_wrapper_selected':False,'fresh_app_QWindow_metadata_qualified':False,'automated_input_selected':False,'permission_withheld':True}
++ result['human_preview']['session']=viewer.dwell(S['human_preview']['dwell_ns'],{'shell_ready':True,'Source_observed':True,'appearance_available':True,'native_output_discovered':True})
+@@ -1099 +1044 @@
+-   result['viewer_input_actions']=viewer.actions
++   result['viewer_input_actions']=[]
+@@ -1101 +1046 @@
+-   if not result['viewer_input_retirement']['worker_operational_success']:cleanup.append('viewer worker/server operational failure; no future writes proven, queue drain not claimed')
++   if not result['viewer_input_retirement']['operational_success']:cleanup.append('human viewer operational failure; no future writes proven, queue drain not claimed')
+@@ -1182 +1127 @@
+- result['passed']=bool(result['passed']and result['installed_unit_closure']['all_unit_operational_results_success']and result['guest_case_closure_qualified']and result.get('owner_PID1_exit0')and result.get('manager_owner_Stop_after_Ready_qualified')and result.get('authenticated_audio_stop_PID1_exit0')and result.get('authenticated_appearance_stop_PID1_exit0')and result.get('capture_tmpfs_unmount_actual_wait0')and result.get('external_app_closure',{}).get('retained_pidfd_dead')and result.get('external_Source_compositor_closure',{}).get('retained_pidfd_dead'))
++ result['passed']=bool(result['passed']and result['installed_unit_closure']['all_unit_operational_results_success']and result['guest_case_closure_qualified']and result.get('owner_PID1_exit0')and result.get('manager_owner_Stop_after_Ready_qualified')and result.get('authenticated_audio_stop_PID1_exit0')and result.get('authenticated_appearance_stop_PID1_exit0')and (app_pid is None or result.get('external_app_closure',{}).get('retained_pidfd_dead'))and result.get('external_Source_compositor_closure',{}).get('retained_pidfd_dead'))
