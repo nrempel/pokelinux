@@ -22,6 +22,7 @@ impl Case {
         fs::set_permissions(&path, fs::Permissions::from_mode(0o700)).unwrap();
         let (disk, durable) = Disk::open(&path, &[APP.into()]).unwrap();
         let mut authority = Authority::loading(vec![AppProfile {
+            role: crate::AppRole::Application,
             app: APP.into(),
             uid: UID,
             executable: "/unused".into(),

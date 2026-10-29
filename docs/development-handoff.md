@@ -2,6 +2,12 @@
 
 ## Goal and constraints
 
+Current permission work: [explicit installed app roles](native-permission-controller.md)
+pass the same five protected-profile RED→GREEN consumers. This is configuration
+only; controller launch, authenticated ingress, Rust client and Allow/Revoke UI
+remain unwired. Ordinary current profiles require `role.kind=application`; frozen
+previous cohorts retain their matching old binary/profile pairs.
+
 Finish the full Omarchy smartphone system described in `smartphone-goal.md`.
 The earlier call-bridge goal was expanded to native Rust phone userspace: calls,
 cellular/IMS, SMS, camera, power, audio, connectivity, sensors and background/lock

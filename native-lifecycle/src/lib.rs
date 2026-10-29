@@ -34,9 +34,21 @@ pub enum Permission {
     NetworkControl,
 }
 
+/// Installation-owned role; app request labels never establish controller authority.
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(tag = "kind", rename_all = "snake_case", deny_unknown_fields)]
+pub enum AppRole {
+    Application,
+    PermissionController {
+        target: String,
+        permission: Permission,
+    },
+}
+
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(deny_unknown_fields)]
 pub struct AppProfile {
+    pub role: AppRole,
     pub app: String,
     pub uid: u32,
     pub executable: String,
@@ -187,3 +199,6 @@ pub fn fresh_id() -> std::io::Result<String> {
 }
 
 pub mod session;
+
+#[cfg(test)]
+mod permission_profile_tests;

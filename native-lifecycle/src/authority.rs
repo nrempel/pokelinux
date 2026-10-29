@@ -2133,6 +2133,7 @@ mod tests {
         // Real owned self-pidfd; policy/grant and Source facts are authored models.
         let uid = rustix::process::getuid().as_raw();
         let mut authority = Authority::loading(vec![AppProfile {
+            role: crate::AppRole::Application,
             app: "sounds".into(),
             uid,
             executable: "/unused-model-entry".into(),
@@ -2562,6 +2563,7 @@ mod tests {
         }
         fn authority(&self) -> Harness {
             let profiles = vec![AppProfile {
+                role: crate::AppRole::Application,
                 app: "one".into(),
                 uid: 10000,
                 executable: "/unused".into(),

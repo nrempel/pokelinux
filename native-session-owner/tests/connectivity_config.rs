@@ -83,7 +83,7 @@ impl Site {
         site
     }
     fn app(&self, name: &str, uid: u32, leaf: &str) -> Value {
-        json!({"app":name,"uid":uid,"executable":self.root.join(leaf),"args":[self.root.join(format!("{leaf}-home")),
+        json!({"role":{"kind":"application"},"app":name,"uid":uid,"executable":self.root.join(leaf),"args":[self.root.join(format!("{leaf}-home")),
             self.root.join(format!("{leaf}-run")),self.root.join("desktop/wayland-1"),self.root.join("appearance.sock"),
             self.root.join("runtime/app.sock"),self.root.join("appearance")]})
     }

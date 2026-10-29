@@ -107,10 +107,10 @@ impl Case {
         fs::write(install.join("client.py"), CLIENT).unwrap();
         let mut profiles = vec![];
         if sounds_profile {
-            profiles.push(serde_json::json!({"app":"org.omarchy.Sounds","uid":11042,"executable":"/usr/bin/sleep","args":["120"]}));
+            profiles.push(serde_json::json!({"role":{"kind":"application"},"app":"org.omarchy.Sounds","uid":11042,"executable":"/usr/bin/sleep","args":["120"]}));
         }
         if with_messages || !sounds_profile {
-            profiles.push(serde_json::json!({"app":"org.omarchy.Messages","uid":11010,"executable":"/usr/bin/sleep","args":["120"]}));
+            profiles.push(serde_json::json!({"role":{"kind":"application"},"app":"org.omarchy.Messages","uid":11010,"executable":"/usr/bin/sleep","args":["120"]}));
         }
         let profile = install.join("profile.json");
         fs::write(

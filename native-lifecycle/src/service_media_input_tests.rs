@@ -95,6 +95,7 @@ impl Ready {
         fs::set_permissions(&directory, fs::Permissions::from_mode(0o700)).unwrap();
         let (mut disk, durable) = Disk::open(&directory, &[audio::APP.into()]).unwrap();
         let mut authority = Authority::loading(vec![AppProfile {
+            role: crate::AppRole::Application,
             app: audio::APP.into(),
             uid: 11042,
             executable: "/unused".into(),

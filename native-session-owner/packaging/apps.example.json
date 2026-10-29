@@ -11,7 +11,10 @@
         "/run/pokelinux/appearance.sock",
         "/run/pokelinux/session/app.sock",
         "/usr/share/pokelinux/appearance"
-      ]
+      ],
+      "role": {
+        "kind": "application"
+      }
     },
     {
       "app": "org.omarchy.Messages",
@@ -24,7 +27,10 @@
         "/run/pokelinux/appearance.sock",
         "/run/pokelinux/session/app.sock",
         "/usr/share/pokelinux/appearance"
-      ]
+      ],
+      "role": {
+        "kind": "application"
+      }
     }
   ]
 }

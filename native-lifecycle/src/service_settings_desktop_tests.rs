@@ -119,10 +119,10 @@ impl Case {
                 fs::Permissions::from_mode(0o755),
             )
             .unwrap();
-            profiles.push(serde_json::json!({"app":"org.omarchy.Settings","uid":11050,"executable":install.join("settings-app"),"args":[install.join("home"),runtime.join("application"),runtime.join("wayland.sock"),runtime.join("appearance.sock"),runtime.join("app.sock"),install.join("themes")]}));
+            profiles.push(serde_json::json!({"role":{"kind":"application"},"app":"org.omarchy.Settings","uid":11050,"executable":install.join("settings-app"),"args":[install.join("home"),runtime.join("application"),runtime.join("wayland.sock"),runtime.join("appearance.sock"),runtime.join("app.sock"),install.join("themes")]}));
         }
         if with_messages || !settings_profile {
-            profiles.push(serde_json::json!({"app":"org.omarchy.Messages","uid":11010,"executable":"/usr/bin/sleep","args":["120"]}));
+            profiles.push(serde_json::json!({"role":{"kind":"application"},"app":"org.omarchy.Messages","uid":11010,"executable":"/usr/bin/sleep","args":["120"]}));
         }
         let profile = install.join("profile.json");
         fs::write(

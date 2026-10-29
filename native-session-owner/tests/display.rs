@@ -263,6 +263,7 @@ fn factory(root: &RootDir, peer: &Peer, label: &str) -> Factory {
 }
 fn profile() -> AppProfile {
     AppProfile {
+        role: pokelinux_lifecycle::AppRole::Application,
         app: audio::APP.into(),
         uid: 11042,
         executable: "/usr/libexec/pokelinux/pokelinux-sounds".into(),

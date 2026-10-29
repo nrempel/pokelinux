@@ -70,7 +70,7 @@ impl Site {
         s
     }
     fn app(&self, name: &str, uid: u32, leaf: &str) -> Value {
-        json!({"app":name,"uid":uid,"executable":self.root.join(leaf),"args":[self.root.join(format!("{leaf}-home")),self.root.join(format!("{leaf}-run")),self.root.join("desktop/wayland-1"),self.root.join("appearance.sock"),self.root.join("runtime/app.sock"),self.root.join("appearance")]})
+        json!({"role":{"kind":"application"},"app":name,"uid":uid,"executable":self.root.join(leaf),"args":[self.root.join(format!("{leaf}-home")),self.root.join(format!("{leaf}-run")),self.root.join("desktop/wayland-1"),self.root.join("appearance.sock"),self.root.join("runtime/app.sock"),self.root.join("appearance")]})
     }
     fn profile(&self, settings: bool, history: bool) {
         let mut apps = vec![self.app("org.omarchy.Sounds", 11042, "sounds")];

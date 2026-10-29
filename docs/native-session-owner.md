@@ -1,5 +1,10 @@
 # Native session owner
 
+Current app profiles require explicit installation-owned roles; see
+[permission-controller configuration](native-permission-controller.md). Ordinary
+apps use `role: {"kind":"application"}`. This schema change does not yet wire
+controller requests or visible consent; frozen evidence keeps its original profiles.
+
 The `native-session-owner` Rust entry starts and owns the compositor, then
 composes the existing Source Observer, lifecycle actor, per-app Wayland supervisor
 and sole audio client. Current configuration also explicitly selects local

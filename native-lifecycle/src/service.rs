@@ -148,6 +148,21 @@ pub fn profile(path: &Path) -> io::Result<Profile> {
         {
             return Err(io::ErrorKind::InvalidData.into());
         }
+        if let crate::AppRole::PermissionController { target, permission } = &p.role {
+            // First controller surface is explicitly limited to Sounds media.
+            // A role is installation metadata only; IPC must separately establish
+            // the live caller and current session before any policy mutation.
+            if target != crate::audio::APP
+                || *permission != crate::Permission::MediaRoute
+                || target == &p.app
+                || !profile
+                    .apps
+                    .iter()
+                    .any(|app| app.app == *target && app.role == crate::AppRole::Application)
+            {
+                return Err(io::ErrorKind::InvalidData.into());
+            }
+        }
         trusted_executable(Path::new(&p.executable))?;
     }
     Ok(profile)

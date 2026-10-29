@@ -74,7 +74,7 @@ impl Case {
             root.join("runtime/app.sock"),
             root.join("appearance")
         ]);
-        fs::write(root.join("apps.json"),serde_json::to_vec(&json!({"apps":[{"app":"org.omarchy.Sounds","uid":11042,"executable":root.join("sounds"),"args":args}]})).unwrap()).unwrap();
+        fs::write(root.join("apps.json"),serde_json::to_vec(&json!({"apps":[{"role":{"kind":"application"},"app":"org.omarchy.Sounds","uid":11042,"executable":root.join("sounds"),"args":args}]})).unwrap()).unwrap();
         let data = json!({"runtime":root.join("runtime"),"policy":root.join("policy"),"profiles":root.join("apps.json"),"app_entry":root.join("entry"),"display_parent":root.join("display"),"wayland":root.join("desktop/wayland-1"),"audio_socket":root.join("audio.sock"),"appearance_socket":root.join("appearance.sock"),"messages":{"mode":"disabled"},"brightness":{"mode":"disabled"},"connectivity":{"mode":"disabled"},"compositor_executable":root.join("compositor"),"compositor_config":root.join("hyprland.conf"),"environment":{"HOME":root.join("home"),"XDG_RUNTIME_DIR":root.join("desktop"),"PATH":"/usr/bin"}});
         let path = root.join("session.json");
         let c = Self { root, path, data };

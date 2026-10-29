@@ -659,17 +659,17 @@ impl Case {
         }
         let profile = install.join(format!("profile-{}.json", &id[..10]));
         let configured_app = if let Some(config) = &normal_gui_config {
-            json!({"app":APP,"uid":11010,
+            json!({"role":{"kind":"application"},"app":APP,"uid":11010,
                 "executable":Path::new(NORMAL_GUI_ROOT).join("normal-gui-launch"),
                 "args":[driver_dir.join("home"),driver_dir,config.original_wayland,
                     config.theme_home,runtime.join("app.sock"),config.appearance]})
         } else if qt_client {
             let executable = install.join("messages-client-model");
             super::trusted_executable(&executable)?;
-            json!({"app":APP,"uid":11010,"executable":executable,
+            json!({"role":{"kind":"application"},"app":APP,"uid":11010,"executable":executable,
                 "args":[runtime.join("app.sock"),driver_dir.join("driver.sock")]})
         } else {
-            json!({"app":APP,"uid":11010,"executable":python,
+            json!({"role":{"kind":"application"},"app":APP,"uid":11010,"executable":python,
                 "args":[install.join("app.py").into_os_string().into_string().map_err(|_|io::ErrorKind::InvalidData)?,
                     if matches!(app_mode, TestApp::IgnoreTerm) {"--ignore-term-app"} else {"--app"}.to_owned(),
                     runtime.join("app.sock").display().to_string(),driver_dir.join("driver.sock").display().to_string()]})

@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "scope": "host Rust protected installation-profile boundary; no controller IPC, UI, ARM or phone qualification",
+  "RED": {
+    "result_sha256": "e96b8c25404d4161720a3a17b8932be401a42cddc710549131ae7795a6d54cac",
+    "cargo_exit": 101,
+    "passed": 3,
+    "failed": 2,
+    "filtered": 143
+  },
+  "GREEN": {
+    "result_sha256": "d06480baf56e84e3ddbd4fc1f04da5c3b6509108b893f6f71298a955b23cc1ee",
+    "cargo_exit": 0,
+    "passed": 5,
+    "failed": 0,
+    "filtered": 143
+  },
+  "identical_RED_GREEN_test_sha256": "81dbda8671ac6728074e45f6d1127c01335bf6b782bbf88da588649ca6a265cb",
+  "subsequent_test_changes": "rustfmt formatting only",
+  "final_test_sha256": "77e0043c95244d7030b855d33f3819a51460bdeb1c7a39025347e1ed6bd82721",
+  "QA": {
+    "primary_result_sha256": "407bed9972e80ff9bfa7d25760c6c712f81b3996777b67afd7ee5df2fa55df4c",
+    "remaining_result_sha256": "0931ad07aeaab7c5c4a74cb47ceb80927f976e14ef5a967088805ebf236182b2",
+    "display_environment_result_sha256": "799c1ea0dc787131b2dd928d775a8a1851c53a0c274ab3092febcd0f3bbf033c",
+    "lifecycle_passed": 122,
+    "lifecycle_ignored": 26,
+    "owner_configuration_passed": 33,
+    "display_passed": 19,
+    "formatting_passed": true,
+    "strict_Clippy_passed": true,
+    "primary_overall_run_passed": false,
+    "display_failure": "root test observer could not traverse UID1000 fixture directory; preserved environment failure",
+    "display_corrected_environment_extra_capability": "DAC_OVERRIDE",
+    "display_correction_changed_production_code": false,
+    "all_execution_containers_closed_and_removed": true
+  },
+  "controller_launch_selected": false,
+  "controller_requests_implemented": false,
+  "visible_consent_implemented": false,
+  "hardware_accessed": false
+}

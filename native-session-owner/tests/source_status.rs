@@ -52,7 +52,7 @@ impl Case {
             )
             .unwrap();
         }
-        fs::write(root.join("profile.json"),br#"{"apps":[{"app":"org.omarchy.Sounds","uid":11042,"executable":"/usr/bin/sleep","args":["30"]}]}"#).unwrap();
+        fs::write(root.join("profile.json"),br#"{"apps":[{"role":{"kind":"application"},"app":"org.omarchy.Sounds","uid":11042,"executable":"/usr/bin/sleep","args":["30"]}]}"#).unwrap();
         let start = boottime_ns();
         let until = start + 8_000_000_000;
         let source_until = start + 5_000_000_000;

@@ -68,7 +68,7 @@ impl Case {
             fs::set_permissions(root.join(name), fs::Permissions::from_mode(0o755)).unwrap();
         }
         fs::write(root.join("hyprland.conf"), b"# trusted fixture\n").unwrap();
-        let profile = |role: &str, uid: u32, prefix: &str| json!({"app":role,"uid":uid,"executable":root.join(prefix),"args":[root.join(format!("{prefix}-home")),root.join(format!("{prefix}-run")),root.join("desktop/wayland-1"),root.join("appearance.sock"),root.join("runtime/app.sock"),root.join("appearance")]});
+        let profile = |role: &str, uid: u32, prefix: &str| json!({"role":{"kind":"application"},"app":role,"uid":uid,"executable":root.join(prefix),"args":[root.join(format!("{prefix}-home")),root.join(format!("{prefix}-run")),root.join("desktop/wayland-1"),root.join("appearance.sock"),root.join("runtime/app.sock"),root.join("appearance")]});
         let mut apps = vec![profile("org.omarchy.Sounds", 11042, "sounds")];
         if history {
             apps.push(profile("org.omarchy.Messages", 11010, "messages"));

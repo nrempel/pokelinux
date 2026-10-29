@@ -1,5 +1,10 @@
 # Omarchy smartphone goal
 
+The [permission-controller role boundary](native-permission-controller.md) now
+passes protected-profile RED→GREEN and scoped Rust regression checks. Controller
+launch, authenticated permission requests and visible consent remain unwired; this
+does not close the permissions or audio matrix entries.
+
 The [cold x86 Omarchy/Sounds checkpoint](native-cold-omarchy-sounds.md) now passes
 genuine shell startup, real Source/focus, native app capture at the Pixel10
 profile, permission refusal with measured silence and normal manager Stop.

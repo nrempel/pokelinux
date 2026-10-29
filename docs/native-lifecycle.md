@@ -1,5 +1,10 @@
 # Native installed permission and lifecycle authority
 
+Current app profiles require explicit installation-owned roles; see
+[permission-controller configuration](native-permission-controller.md). Ordinary
+apps use `role: {"kind":"application"}`. This schema change does not yet wire
+controller requests or visible consent; frozen evidence keeps its original profiles.
+
 The initial authority milestone passed18 installed Linux process groups and
 four component tests on x86 and an actual ARM64 Arch kernel. The current
 [owned storage extension](native-lifecycle-storage.md) passes27 installed/process

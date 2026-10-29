@@ -73,6 +73,7 @@ impl Case {
         fs::set_permissions(&directory, fs::Permissions::from_mode(0o700)).unwrap();
         let (disk, durable) = Disk::open(&directory, &[brightness::APP.into()]).unwrap();
         let mut authority = Authority::loading(vec![AppProfile {
+            role: crate::AppRole::Application,
             app: brightness::APP.into(),
             uid: brightness::UID,
             executable: "/unused".into(),
