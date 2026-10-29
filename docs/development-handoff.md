@@ -26,10 +26,15 @@ normal build/QML clicks/staging pass, and the identical guest consumer returns64
 with complete shutdown and input preservation. Retry the normal Omarchy flow with
 fixed ELF3b73a5e5…. The second actual run now observes its normal window and real
 Source focus, but the first unavailable frame trips an exact-RGB text observer.
-No Set/PCM run follows; complete cleanup passes. Correct and independently validate
-antialiased label observation and the erroneous durable-receipt-growth predicate;
-production grants change policy without adding receipts. Desktop consent/audio
-acceptance remains open. Ordinary current profiles require `role.kind=application`; frozen
+No Set/PCM run follows; complete cleanup passes. The corrected observer now passes
+independent real-QML enabled/disabled rendering controls. The third normal VM run,
+using maximized Permissions to preserve bar access, observes one actual Allow,
+the persisted Sounds/media_route grant and confirmed controls. The bar click
+reopens the menu over Permissions, but menu-image recognition exhausts its eight
+frames before Apps/Sounds selection. No PCM, Revoke or normal app-close acceptance
+runs; guest/QEMU/container cleanup and unchanged inputs pass. Preserve this partial
+result and repair the menu observer against the retained frames before retrying.
+Desktop consent/audio acceptance remains open. Ordinary current profiles require `role.kind=application`; frozen
 previous cohorts retain their matching old binary/profile pairs.
 
 Finish the full Omarchy smartphone system described in `smartphone-goal.md`.

@@ -124,3 +124,28 @@ Neither correction changes production authorization. Validate the visual classif
 against independent real QML enabled/disabled states before retrying; preserve
 separate visible-state, durable-state and PCM evidence, with no wire-ACK claim.
 The frame remains private and has no new QWindow density or screenshot qualification.
+
+
+## Actual Allow and menu access over Permissions
+
+Permissions now requests a maximized window instead of fullscreen so the Omarchy
+bar remains accessible. The retained fullscreen run hid the bar icon; this is a
+retained negative observation, not a fresh VM RED. The new normal build passes
+both compiled-ELF relocation checks, real unshown QML Allow/Revoke clicks, root
+argument/UID refusals and exact three-file staging. An initial build attempt
+failed because its bind-source directory was missing; it is not a behavioral RED.
+
+The third normal x86 VM run launches Permissions through the genuine menu, then
+receives one actual remote Allow click. Independent read-only policy observation
+sees the previously absent Sounds/media_route grant persisted as allowed, with
+zero receipts as expected. A later native frame shows Allow disabled and Revoke
+enabled. This is visible-state and durable-state evidence, not an independently
+observed wire acknowledgement.
+
+Clicking the visible bar opens the menu over Permissions. The run nevertheless
+fails after eight menu-recognition attempts, before selecting Apps or Sounds.
+The retained final frame visibly contains the menu; this is not evidence that
+the bar click failed. Playback, Revoke, reallow silence and ordinary app closes
+remain unexecuted in this cohort. Normal guest shutdown, QEMU wait, exact container
+absence and unchanged inputs pass. Fresh QWindow density metadata and publishable
+screenshots remain open; all diagnostic frames stay private.

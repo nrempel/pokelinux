@@ -44,6 +44,6 @@ int main(int argc,char **argv){
  view.setInitialProperties({{"theme",QVariant::fromValue(theme.data())},{"permissionClient",QVariant::fromValue(&client)}});
  view.setResizeMode(QQuickView::SizeRootObjectToView);view.setSource(QUrl(QStringLiteral("qrc:/permissions/PermissionsView.qml")));
  if(view.status()!=QQuickView::Ready){client.close();return 67;}
- view.showFullScreen();const int result=app.exec();
+ view.showMaximized();const int result=app.exec();
  client.close();view.setSource(QUrl());return result;
 }

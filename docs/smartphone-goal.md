@@ -4,7 +4,8 @@ The [permission-controller role boundary](native-permission-controller.md) now
 passes protected-profile RED→GREEN and scoped Rust regression checks. Controller
 installation and display ownership now pass additional host tests. Scoped Rust
 permission requests, desktop launch and the Rust-backed Allow/Revoke UI are implemented.
-Separate host boundary tests pass; the complete genuine Omarchy consent/audio
+Separate host boundary tests pass, and a normal x86 VM run now saves and visibly
+confirms an actual Allow choice. The complete genuine Omarchy consent/audio
 flow remains open. See [Permissions UI evidence](native-permissions-ui.md). This
 does not close the permissions or audio matrix entries.
 

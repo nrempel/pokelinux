@@ -160,5 +160,72 @@
     "PCM_acceptance_executed": false,
     "all_guest_QEMU_container_closure_qualified": true,
     "all_inputs_unchanged": true
+  },
+  "third_joined_vm_attempt": {
+    "execution": {
+      "private_receipt": "/tmp/pokelinux-native-x86-composition-permissions-acceptance-root-3/execution.json",
+      "sha256": "edc034408a3346487fc043fa6cdd231007f90c80b70738b924c1d24fd4268b0a"
+    },
+    "passed": false,
+    "selection_sha256": "d3e45e9f4a45d8671f01a5d25ba8cd293dafaf06379728635747168af4075adf",
+    "normal_permissions_elf_sha256": "b8db947ec23eb4c7d5d8cd254588a26759708a78aec93d129a98b29f7e6f52f1",
+    "host_build": {
+      "private_receipt": "/tmp/pokelinux-native-x86-composition-permissions-loader-root-1/maximized-build-2/qt-green/result.json",
+      "sha256": "bf7a91f0ccb9ef66af40e3866cd76125bedf8b676afd728ec9af04b0dc43b5c8"
+    },
+    "retained_fullscreen_negative": {
+      "private_receipt": "/tmp/pokelinux-native-x86-composition-permissions-acceptance-root-2/maximized-navigation-retained-red.json",
+      "sha256": "a45001ef19ae0b5aaf6f19f43485d01e64c1a902f707f6eea4b9fa4c8c35d92e"
+    },
+    "normal_main_source_sha256": "2b7a080603ecfdde75bf215610b5b0c4163387d68d37b26aac3aee3082c816ed",
+    "actual_allow_click": true,
+    "policy_before_absent": true,
+    "persisted_target_grant": {
+      "app": "org.omarchy.Sounds",
+      "permission": "media_route",
+      "allowed": true
+    },
+    "persisted_policy_sha256": "e0080761a78f4d29074e7e08f77d93daa503cf2afdf1a35784ccd61d651cbaed",
+    "durable_receipts": 0,
+    "visible_Allow_Revoke_enabled": [
+      false,
+      true
+    ],
+    "independently_observed_wire_ACK": false,
+    "menu_open_over_permissions_observed_in_private_frame": "accept-sounds-root-8.png",
+    "failure_boundary": {
+      "classification_scope": "actual partial observations only; no causal attribution",
+      "stage": "menu-Sounds",
+      "actual_menu_targets_attempted": [
+        "Permissions",
+        "Sounds"
+      ],
+      "actual_menu_input_counts": [
+        3,
+        1
+      ],
+      "actual_normal_windows_observed": [
+        "Permissions"
+      ],
+      "actual_menu_focus_completed": [
+        "Permissions"
+      ],
+      "permission_touches_recorded": 1,
+      "durable_permission_commits_observed": [
+        true
+      ],
+      "visible_permission_controls_completed": [
+        true
+      ],
+      "completed_PCM_record_present": false,
+      "normal_closes_completed": false,
+      "exact_underlying_cause_claimed": false
+    },
+    "failure": "menu root image recognition exhausted eight frames before Apps/Sounds selection",
+    "guest_QEMU_container_closure": true,
+    "selected_inputs_unchanged": true,
+    "fresh_QWindow_DPR_qualified": false,
+    "published_screenshot_qualified": false,
+    "hardware_qualified": false
   }
 }
