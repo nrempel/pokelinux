@@ -1,0 +1,5 @@
+--- a/run-selected.py
++++ b/run-selected.py
+@@ -247 +247 @@
+-     qt=guest['current_native_Qt_build'];assert qt['actual_audio_total_including_setup_cleanup']==34 and qt['actual_audio_behavior_cases']==32 and qt['actual_CABI_CTest_total']==5 and len(qt['actual_appearance_cases'])==29
++     qt=guest['current_native_Qt_build'];names=load(R/'source/qt-cases.json')['audio_client_case_names'];assert qt['actual_audio_case_names']==names and qt['actual_audio_total_including_setup_cleanup']==len(names)==S['expected_native_Qt_audio_total'] and qt['actual_audio_behavior_cases']==len(names)-2 and qt['actual_CABI_CTest_total']==5 and len(qt['actual_appearance_cases'])==29

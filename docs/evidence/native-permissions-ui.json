@@ -469,5 +469,28 @@
     "nested_boot_and_guest_closure_qualified": true,
     "owned_container_absence_qualified": true,
     "all_original_and_selected_inputs_unchanged": true
+  },
+  "eighth_joined_vm_attempt": {
+    "scope": "Native x86 KVM guest graphical/PCM and viewer pass; original outer result failed; no phone or fresh screenshot",
+    "selection_sha256": "ac12de5eb088ca2eb3c033b4d3121b16904d5ee63cc639c60efd0b45cf8475fa",
+    "execution_sha256": "af21e11edd65a31d640b872710df7e664ae9de0c9708f00f74e371d94028f7e9",
+    "guest_result_sha256": "a45fcbf8c989f2b00223027705143359ac4c2fadcb20f03faf1433885c221539",
+    "boot_result_sha256": "0514748f47fe651ede81027bca917d13f1091c6e925d49d6aef06c933b521019",
+    "PCM_result_sha256": "9f48e462166ac366a3a272b3a2f9b5e1ea1543c714ebda492d34370775e73c53",
+    "viewer_result_sha256": "41cc490cdf243b2a017823402a620a308d0f1145b3df37ee437a57de97d5f6e6",
+    "outer_passed": false,
+    "guest_passed": true,
+    "PCM_passed": true,
+    "viewer_passed": true,
+    "viewer_actions": 16,
+    "actual_Qt_cases": 35,
+    "outer_stale_Qt_expected_cases": 34,
+    "original_failure_confirmed_by_exact_assertion_replay": true,
+    "nested_closure_replay_sha256": "59602295172703a4b9aa3952450ebff59cb3dd1a9b6e64409ab18c23623d60e2",
+    "Qt_count_RED_GREEN_receipt_sha256": "2c9bc75818ab871067d37917ec6d99db3b3bc9f009203f45c09f7f832e0a1cca",
+    "refusing_mutations": 5,
+    "fresh_outer_runner_run_pending": true,
+    "seventh_failure_cause_proven": false,
+    "physical_phone_accessed": false
   }
 }

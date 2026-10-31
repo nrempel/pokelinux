@@ -42,7 +42,7 @@
     "Initial candidate formatting check failed; formatting-only correction, rebuilt and checked"
   ],
   "remaining": [
-    "Guest Qt6.12 normal app build and joined graphical/PCM run",
+    "Fresh complete outer VM runner qualification after selected Qt count repair",
     "ARM and physical device qualification"
   ],
   "seventh_VM_failure_cause_proven": false,
@@ -57,5 +57,15 @@
     "wrong_UID_exit": 65,
     "input_sources_unchanged": true,
     "receipt_sha256": "5492ae68198c4d814f89d337f15d86be07a1a4b88881d43de3e9b8ab9c0e54e5"
+  },
+  "eighth_guest_run": {
+    "guest_Qt_version": "6.12.0",
+    "normal_build_and_35_cases_passed": true,
+    "graphical_PCM_passed": true,
+    "viewer_final_frame_and_EOF_passed": true,
+    "outer_run_passed": false,
+    "outer_failure": "Historical assertion expects34/32 Qt cases instead of selected35/33",
+    "guest_result_sha256": "a45fcbf8c989f2b00223027705143359ac4c2fadcb20f03faf1433885c221539",
+    "physical_phone_accessed": false
   }
 }

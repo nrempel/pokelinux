@@ -67,3 +67,12 @@ reader discards one29-byte message, receives the full1080×2424 raw frame and
 reaches stream EOF. Both cases close the server/display and remove their exact
 containers. This reproduces the message-class defect, not the original VM's text
 contents or which guest application produced them. The full VM retry remains open.
+
+The separate `selected-qt-cases.patch` replaces the historical fixed Qt34/32
+assertion with exact ordered names from frozen `source/qt-cases.json`, matching
+total/behavior counts and the selection's expected total. It applies with
+`git apply --unidiff-zero` to the eighth permission acceptance runner (SHA256
+4e40909c0e12ed81922f0cd4e330bd76bf99d1af118a76850ffb2747bca2394c).
+Historical patches and pins above remain unchanged. The eighth guest, PCM and
+viewer pass, but its outer result fails on that count. Exact actual-result
+RED→GREEN and five altered-result refusal controls pass; a fresh run is pending.

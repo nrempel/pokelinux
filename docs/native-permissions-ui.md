@@ -237,3 +237,23 @@ actual container CLI wait, exact container absence and unchanged inputs pass.
 The external viewer stops after ten actions when the server ends during guest
 failure; this run never tests its repaired final-frame boundary. No screenshot,
 ARM or physical-phone qualification follows.
+
+## Eighth attempt: guest and viewer pass, outer count assertion fails
+
+The updated normal Sounds app builds against guest Qt6.12. Its 35 Qt cases,
+five C ABI targets and 29 appearance cases pass. Genuine Omarchy menu launches,
+Allow, explicit Play, paired tone capture, Revoke with retirement/silence, reallow
+without replay and normal app closes complete under the unchanged bounds. The
+external viewer completes16 actions, its final frame and actual EOF. Guest/QEMU
+closure, actual container wait/absence and input preservation pass.
+
+The outer result remains failed: its historical assertion expects34/32 Qt
+total/behavior cases rather than the selected35/33. Replaying the exact frozen
+nested closure assertions identifies that failure; changing only the predicate
+to require the selected ordered case names and counts passes every assertion.
+Five altered-result controls reject missing, extra or reordered names and wrong
+total/behavior counts. This read-only replay does not reclassify the original
+run. A fresh run must qualify the updated outer checker. The historical consumer
+patches retain their original pins; the separate selected-qt-cases.patch carries
+the repair. The seventh run's cause is still unproven. No new screenshot,
+QWindow density, ARM or physical-phone qualification is claimed.
