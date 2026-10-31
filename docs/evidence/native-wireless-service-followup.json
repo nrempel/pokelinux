@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "status": "Both current ARM scenario attempts failed at the app SDK boundary; no new ARM GREEN",
+  "scope": "Generic ARM Linux simulated radios; no graphical app or phone",
+  "published_parent": "bbbbccfbe725ec54d800390b7ed0949abe536a83",
+  "production_repair": "Boxed owned wireless backend plus test conditional; current virtual runtime separately passes",
+  "current_test_source": {
+    "tools/native-wireless-service/consumer.py": "1dd642abdf56d7a2f60ae77da0d38b1514a9613b151034d21e6477c18d2b6fa9",
+    "tools/native-wireless-service/arm/guest-main.py": "4be77b3493534ad67c73de317b5a2ff95ed4020aa546a58c1e84d4b1473e291b",
+    "tools/native-wireless-service/service_connectivity_wireless_actor_tests.rs": "969cd241b6c81d3ea569a711596a42e41dd764ad5818b801b03311bddd78ca35"
+  },
+  "normal_build_sha256": "53ceaef184f056f6bffd30f7720a7b6bdfe731fb5a9b21f488aeac70794787af",
+  "attempts": {
+    "persistent": {
+      "qualified": false,
+      "Connect_success_gate_count": 1,
+      "Disconnect_success_gate_count": 0,
+      "UDP_clients_started": 1,
+      "AP_deauthentication_commands": 0,
+      "normal_case_custody_qualified": false,
+      "failure_cleanup": {
+        "guest_ECHILD": true,
+        "guest_command_handles_closed": true,
+        "guest_cleanup_errors": [],
+        "actual_QEMU_wait_exit": 0,
+        "exact_container_absence": true,
+        "outer_cleanup_errors": [],
+        "source_unchanged": true,
+        "selected_inputs_unchanged": true
+      },
+      "proof_sha256": {
+        "selection.json": "19f11664fe6fa32ce2b9a7ed7785edc9b4fe87aca010e948f6f4b07c5d5644b2",
+        "result.json": "114e00bfff53c4f1d72b6f4f44037f4802c92e9b6a4f7c3c469089eff46c3a68",
+        "boot-result.json": "1404ea3071e2720d4bed4cdab418cd480e1b32fb1c4a874bd88af57450e57fc1",
+        "run/receipt.json": "e20dc4513c3b96b35f56bb3f2e74c7fde2026c09103fef3b0764a7534e4e5071",
+        "wireless-service-case/case-result.json": "a99474e808bc01bca22c55cb43f22d38c53fd7c1339d0c08841554daf3766dab"
+      },
+      "actor_failure": "UnexpectedEof receiving app-control reply; operation not captured",
+      "actual_first_app_exit_code": 1,
+      "cause": "Unresolved; no SDK exit diagnostics retained"
+    },
+    "ap-loss": {
+      "qualified": false,
+      "Connect_success_gate_count": 1,
+      "Disconnect_success_gate_count": 0,
+      "UDP_clients_started": 2,
+      "AP_deauthentication_commands": 1,
+      "normal_case_custody_qualified": false,
+      "failure_cleanup": {
+        "guest_ECHILD": true,
+        "guest_command_handles_closed": true,
+        "guest_cleanup_errors": [],
+        "actual_QEMU_wait_exit": 0,
+        "exact_container_absence": true,
+        "outer_cleanup_errors": [],
+        "source_unchanged": true,
+        "selected_inputs_unchanged": true
+      },
+      "proof_sha256": {
+        "selection.json": "1a25ba37166b4a0bef1307da778d98898226ddd1d6ead15e3237de33029649de",
+        "result.json": "185e6291262cd20f0474cfc03790e3212ef837594c44f24fa46fb30edc03be98",
+        "boot-result.json": "568bf15c3b891e888c2abe31d991630e153be723a4ee5b1cb47c2a80e240d2d6",
+        "run/receipt.json": "c683bbe5dc6080d56eb48672077c259518a31beb56ceae67de1969d0776e3660",
+        "wireless-service-case/case-result.json": "e5d4ae71687a7323903cb3ceb5ab6902fabee7a1b51d70c5fd23d2e18454dfa8"
+      },
+      "actor_failure": "Actual SDK unavailable getter predicate not satisfied before original loss cutoff",
+      "independent_radio_loss_confirmed": true,
+      "profile_retained": true,
+      "original_worker_terminal_before_Main_Stop": true,
+      "Main_alive": true,
+      "no_replacement": true,
+      "Main_unavailable": true,
+      "remaining_at_loss_ready_ns": 550092614,
+      "cause": "Unresolved; rejected getter rows were not retained; no API mismatch found in source review"
+    }
+  },
+  "next": "Capture bounded app-control operation/error context and rejected SDK getter rows without changing original deadlines or desired predicates; then re-evaluate actual boundary."
+}

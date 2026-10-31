@@ -348,6 +348,28 @@ impl Case {
         }
         panic!("original fresh normal SDK getter deadline expired");
     }
+    fn unavailable_after(&self, app: &mut App, after: u64, end: u64) -> Value {
+        assert!(after > 0 && after <= boottime_ns() && boottime_ns() < end);
+        while boottime_ns() < end {
+            let row = self.command(app, "status", None, end);
+            let view = &row["sdk_view"];
+            if row["sdk_call_before_ns"].as_u64().unwrap() >= after
+                && view["available"] == false
+                && view["configured"].is_null()
+                && view["pending"] == false
+                && view["can_control"] == false
+                && view["observed_at_ns"] == 0
+                && view["until_ns"] == 0
+                && view["status"] == "unavailable"
+            {
+                return row;
+            }
+            // Fresh read-only SDK getters share the frozen loss cutoff. No
+            // choice, Disconnect, replacement or action retry is submitted.
+            pause();
+        }
+        panic!("original AP-loss cutoff: actual SDK did not become unavailable");
+    }
     fn collect_waits(&mut self) {
         self.reaped.extend(self.app_waits.try_iter());
     }
@@ -484,6 +506,30 @@ fn quiet(root: &Path, case: u64, expected_packets: usize) -> Value {
     assert!(result["quiet_end_EAGAIN_at_ns"].as_u64().unwrap() >= quiet_until);
     json!({"peer":result,"loss_send":format!("{sent:?}"),"sent_at_ns":sent_at})
 }
+fn quiet_without_probe(root: &Path, case: u64) -> Value {
+    let requested_at = boottime_ns();
+    let quiet_until = requested_at.checked_add(800_000_000).unwrap();
+    assert!(quiet_until < case);
+    publish(
+        root,
+        "quiet-request.json",
+        &json!({"original_until_ns":quiet_until,"requested_at_ns":requested_at,"expected_packets":2}),
+    );
+    let armed = gate(root, "peer-quiet-armed.json", quiet_until);
+    assert_eq!(armed["original_until_ns"], quiet_until);
+    let armed_at = armed["armed_at_ns"].as_u64().unwrap();
+    assert!(requested_at <= armed_at && armed_at < quiet_until);
+    while boottime_ns() < quiet_until {
+        pause();
+    }
+    let result = gate(root, "peer-quiet.json", case);
+    assert_eq!(result["received_datagrams"], 0);
+    assert_eq!(result["quiet_end_actual_EAGAIN"], true);
+    assert_eq!(result["original_until_ns"], quiet_until);
+    assert_eq!(result["armed_at_ns"], armed_at);
+    assert!(result["quiet_end_EAGAIN_at_ns"].as_u64().unwrap() >= quiet_until);
+    json!({"peer":result,"requested_at_ns":requested_at,"no_post_loss_probe_submitted":true})
+}
 fn independent(value: &Value, configured: bool, index: u64) {
     assert_eq!(value["ifindex"], index);
     assert_eq!(value["default_route_absent"], true);
@@ -494,9 +540,10 @@ fn independent(value: &Value, configured: bool, index: u64) {
     };
     assert_eq!(value["ipv4"], expected);
 }
-fn desired(c: &mut Case, root: &Path) -> Value {
+fn desired(c: &mut Case, root: &Path, scenario: &str) -> Value {
     let case = c.case;
     let ready = gate(root, "ready.json", case);
+    assert_eq!(ready["scenario"], scenario);
     assert_eq!(ready["provisioner_reaped_before_packet_peer"], true);
     let index = ready["initial_link_ifindex"].as_u64().unwrap();
     assert!(index > 1);
@@ -619,6 +666,63 @@ fn desired(c: &mut Case, root: &Path) -> Value {
     publish(root, "before-disconnect.json", &json!({"second_app_pid":second.pid,
         "first_app_actual_wait_observed_at_ns":first_waited,
         "fresh_idle_observations":idle,"requested_at_ns":boottime_ns()}));
+    if scenario == "ap_loss" {
+        let intent = gate(root, "loss-intent.json", until(case));
+        assert_eq!(intent["scenario"], scenario);
+        assert_eq!(intent["original_worker_identity"], retained["worker"]);
+        let loss_requested_at = intent["loss_requested_at_ns"].as_u64().unwrap();
+        let loss_until = intent["original_until_ns"].as_u64().unwrap();
+        assert!(loss_requested_at > 0 && loss_requested_at <= boottime_ns());
+        assert!(loss_requested_at < loss_until && loss_until <= case);
+        assert!(loss_until - loss_requested_at <= 1_000_000_000);
+        let lost = gate(root, "loss-ready.json", loss_until);
+        assert_eq!(lost["original_until_ns"], loss_until);
+        assert_eq!(lost["loss_requested_at_ns"], loss_requested_at);
+        for key in [
+            "independent_radio_loss_confirmed", "profile_retained", "same_target_identity",
+            "IFF_UP", "worker_pidfd_terminal", "no_replacement", "Main_unavailable",
+            "terminal_uncertain",
+        ] {
+            assert_eq!(lost[key], true, "actual AP-loss prerequisite: {key}");
+        }
+        assert!(lost["independent_loss_proof"].is_object());
+        let worker_id = lost["original_worker_identity"].as_str().unwrap();
+        assert!(worker_id.len() == 32 && worker_id.bytes().all(|b| b.is_ascii_hexdigit()));
+        assert_eq!(worker_id, retained["worker"].as_str().unwrap());
+        let observed_at = lost["loss_observed_at_ns"].as_u64().unwrap();
+        assert!(loss_requested_at <= observed_at && observed_at < loss_until);
+        let main = &lost["Main_observation"];
+        assert_eq!(main["status"], "unavailable");
+        assert_eq!(main["state"]["available"], false);
+        assert!(main["state"]["configured"].is_null());
+        assert_eq!(main["state"]["pending"], false);
+        assert_eq!(main["state"]["terminal_uncertain"], true);
+        assert_eq!(main["state"]["observed_at_ns"], "0");
+        assert_eq!(main["state"]["until_ns"], "0");
+        assert_eq!(main["state"]["worker"], lost["original_worker_identity"]);
+        let unavailable = c.unavailable_after(&mut second, observed_at, loss_until);
+        publish(root, "loss-SDK-unavailable.json", &json!({
+            "original_until_ns":loss_until,"loss_observed_at_ns":observed_at,
+            "actual_SDK_unavailable":unavailable,"observed_at_ns":boottime_ns()}));
+        let silent = quiet_without_probe(root, case);
+        c.exit_app(&mut second);
+        let second_waited = boottime_ns();
+        return json!({"functional_green":false,"functional_ap_loss_green":true,
+            "genuine_refused_candidate":false,"configured_positive":true,
+            "no_grant_refused_by_SDK":denied,"granted_status":granted,
+            "connected_choice":connected,"connected_observation":connected_observation,
+            "first_packet":first_packet,"background_packet_after_withdraw":background_packet,
+            "first_app_pid":first.pid,"second_app_pid":second.pid,
+            "first_sdk_stop_join":first.sdk_stop,"second_sdk_stop_join":second.sdk_stop,
+            "first_app_actual_wait_observed_at_ns":first_waited,
+            "second_app_actual_wait_observed_at_ns":second_waited,
+            "fresh_app_status":first_second_status,"fresh_idle_observations":idle,
+            "loss_intent":intent,"loss_ready":lost,"actual_SDK_unavailable":unavailable,
+            "loss_requested_at_ns":loss_requested_at,"loss_observed_at_ns":observed_at,
+            "original_loss_until_ns":loss_until,"post_loss_Set_commands":0,
+            "Disconnect_commands_admitted":0,"peer_quiet":silent,
+            "functional_finished_at_ns":boottime_ns()});
+    }
     assert_eq!(gate(root, "disconnect-ready.json", case)["same_worker_radio_profile_confirmed"], true);
     let disconnect_until = until(case);
     publish(root, "disconnect-attempt.json", &json!({"attempted_at_ns":boottime_ns(),
@@ -650,6 +754,9 @@ fn settings_sdk_wireless_packet_lifecycle() {
         env::var("POKELINUX_CONNECTIVITY_ISOLATED").as_deref(),
         Ok("1")
     );
+    let scenario = env::var("CONNECTIVITY_WIRELESS_SCENARIO")
+        .expect("selected explicit persistent or ap_loss scenario");
+    assert!(matches!(scenario.as_str(), "persistent" | "ap_loss"));
     let root = PathBuf::from(env::var_os("CONNECTIVITY_CASE_GATES").unwrap());
     let endpoint = PathBuf::from(env::var_os("CONNECTIVITY_ACTOR_ENDPOINT").unwrap());
     let case = env::var("CONNECTIVITY_CASE_UNTIL_NS")
@@ -673,18 +780,19 @@ fn settings_sdk_wireless_packet_lifecycle() {
     publish(
         &root,
         "created.json",
-        &json!({"driver_pid":std::process::id(),"main_pid":main_pid,"authored_session_none":true}),
+        &json!({"driver_pid":std::process::id(),"main_pid":main_pid,"authored_session_none":true,"scenario":scenario}),
     );
     let result = panic::catch_unwind(AssertUnwindSafe(|| {
         c.ready(start);
-        desired(&mut c, &root)
+        desired(&mut c, &root, &scenario)
     }));
-    let result = match result {
+    let mut result = match result {
         Ok(v) => v,
         Err(_) => {
-            json!({"functional_green":false,"genuine_refused_candidate":false,"setup_error":"consumer panic; see actual libtest stderr","functional_finished_at_ns":boottime_ns()})
+            json!({"functional_green":false,"functional_ap_loss_green":false,"genuine_refused_candidate":false,"setup_error":"consumer panic; see actual libtest stderr","functional_finished_at_ns":boottime_ns()})
         }
     };
+    result["scenario"] = json!(scenario);
     c.close();
     let waits:Vec<_>=c.reaped.iter().map(|(pid,s)|json!({"pid":pid,"code":s.code(),"signal":s.signal(),"witness":"existing Apps Child::try_wait Some observer","PIPE_EOF_claim":false})).collect();
     assert!(!waits.is_empty());
@@ -704,7 +812,8 @@ fn settings_sdk_wireless_packet_lifecycle() {
         &root,
         "driver-boundary-after-service-cleanup.json",
         &json!({"reported_after_service_cleanup_at_ns":boottime_ns(),"cleanup_completed_at_ns":cleanup["completed_at_ns"],
-        "genuine_refused_candidate":result["genuine_refused_candidate"],"functional_green":result["functional_green"],"original_close_until_ns":close}),
+        "genuine_refused_candidate":result["genuine_refused_candidate"],"functional_green":result["functional_green"],
+        "functional_ap_loss_green":result["functional_ap_loss_green"],"scenario":scenario,"original_close_until_ns":close}),
     );
     // The enclosing hwsim owner makes the sole desired assertion only after
     // AP/radio/namespace teardown. This test reports its actual boundary result.

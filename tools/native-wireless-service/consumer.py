@@ -1,4 +1,4 @@
-"""Frozen normal Main/actor persistent-wireless acceptance consumer.
+"""Frozen normal Main/actor wireless integration acceptance consumer.
 
 run_case binds the existing generic ARM hwsim owner's actual station, AP,
 namespace keeper and Scope. Only the outer owner may qualify and assert after
@@ -86,6 +86,13 @@ START_NS = 3_000_000_000
 ACTOR_CAPS = sum(1 << number for number in [5, 6, 7, 8])
 
 
+def selected_scenario(selection):
+    value = selection['wireless_service_scenario']
+    need(type(value) is str and value in ['persistent', 'ap_loss'],
+         'explicit persistent or ap_loss service scenario required')
+    return value
+
+
 def pin(path):
     import hashlib
     path = Path(path)
@@ -99,6 +106,7 @@ def prepare(run, inputs, selection, work_until):
     import os
     import stat
     from owned import now
+    selected_scenario(selection)
     rows = selection['service_binaries']
     need(set(rows) == {'main', 'worker', 'driver', 'settings_app', 'launcher', 'storage'},
          'all six actual normal/fixture ELF selections')
@@ -144,7 +152,8 @@ def run_case(*, root, inputs, selection, station, ap, ap_prefix, namespace_bindi
     The caller has already created two exclusive hwsim radios, moved AP to its
     retained namespace and started owned foreground hostapd. No association or
     station address mutation is permitted before this case. There is one Main
-    startup, one granted Connect and one explicit Disconnect; no effect retry.
+    startup and one granted Connect. The selected scenario then explicitly
+    Disconnects or injects one AP deauthentication; no effect is retried.
     """
     import hashlib
     import json
@@ -161,6 +170,7 @@ def run_case(*, root, inputs, selection, station, ap, ap_prefix, namespace_bindi
     import worker_caps
     import wifi_peer
 
+    scenario = selected_scenario(selection)
     out = root / 'wireless-service-case'
     out.mkdir(mode=0o700)
     scope = owned_scope
@@ -197,8 +207,10 @@ def run_case(*, root, inputs, selection, station, ap, ap_prefix, namespace_bindi
     worker_pid = worker_pidfd = None
     worker_id = None
     stopping = False
+    loss_intent = None
     pending_clients = set()
     r = {'schema': 1, 'passed': False, 'baseline_profile_rejection_candidate': False,
+         'scenario': scenario, 'AP_loss_commands_admitted': 0,
          'normal_Main_and_actual_actor_selected': True, 'startup_profile': startup,
          'startup_profile_pin': pin(profile), 'target': selected,
          'original_work_until_ns': work_until, 'original_close_until_ns': close_until,
@@ -218,9 +230,14 @@ def run_case(*, root, inputs, selection, station, ap, ap_prefix, namespace_bindi
             need(main is not None and scope.live(main), 'original normal Main remains live')
             children = Path('/proc/' + str(main['child'].pid) + '/task/'
                             + str(main['child'].pid) + '/children').read_text().split()
-            need(children == [str(worker_pid)]
-                 and not select.select([worker_pidfd], [], [], 0)[0],
-                 'same actual worker lives; no replacement')
+            if scenario == 'ap_loss' and loss_intent is not None:
+                need(children == [] if r.get('worker_terminal_before_Main_Stop') is not None
+                     else children in [[str(worker_pid)], []],
+                     'only original worker may retire after AP-loss intent; no replacement')
+            else:
+                need(children == [str(worker_pid)]
+                     and not select.select([worker_pidfd], [], [], 0)[0],
+                     'same actual worker lives; no replacement')
 
     def run(argv, label, end, limit=262144, identity=None):
         pump()
@@ -295,7 +312,7 @@ def run_case(*, root, inputs, selection, station, ap, ap_prefix, namespace_bindi
                 return value
         raise TimeoutError('original normal Main Inspect cutoff')
 
-    def readback(label, configured, end):
+    def readback(label, configured, end, *, associated=None):
         """Four namespace-bound radio commands plus address/route readback."""
         armed = now()
         outputs, receipts = {}, {}
@@ -322,7 +339,8 @@ def run_case(*, root, inputs, selection, station, ap, ap_prefix, namespace_bindi
                             'wdev': hex(role['wdev']), 'addr': ':'.join(role[mac][i:i+2] for i in range(0, 12, 2)),
                             'type': kind}, 'same selected actual radio identity/mode')
         binding = namespace_binding()
-        if configured:
+        radio_connected = configured if associated is None else associated
+        if radio_connected:
             radio = address.l2_observation(selected_station=station, selected_AP=ap,
                 outputs=outputs, receipts=receipts, ap_prefix=ap_prefix, armed=armed,
                 until=end, namespace_binding=binding)
@@ -339,11 +357,116 @@ def run_case(*, root, inputs, selection, station, ap, ap_prefix, namespace_bindi
         route, route_actual = run(['/usr/bin/cat', '/proc/net/route'], label + '-routes.log', end, limit=65536)
         routes = address.route_profile(route.decode(), selected, configured)
         value = {'radio': radio, 'profile': profile_observation, 'routes': routes,
+                 'station_identity': dict(station),
                  'receipts': dict(receipts, GETADDR=actual, routes=route_actual),
                  'raw_sha256': {key: hashlib.sha256(body).hexdigest() for key, body in outputs.items()},
                  'observed_at_ns': now(), 'original_until_ns': end}
         r[label + '_independent_readback'] = value
         return value
+
+    def retained_profile(label, end):
+        """Independent IFF_UP/profile/route proof after retirement; no mutation."""
+        armed = now()
+        argv = ['/usr/bin/ip', '-j', 'address', 'show', 'dev', selected['name']]
+        body, actual = run(argv, label + '-GETADDR.log', end)
+        address.receipt(actual, expected_argv=argv, until=end, armed=armed,
+                        code=0, byte_count=len(body), limit=262144)
+        profile_fact = address.kernel_profile(body, selected=selected, configured=True)
+        raw = json.loads(body, object_pairs_hook=address.unique)
+        need(type(raw[0]['flags']) is list and 'UP' in raw[0]['flags'],
+             'selected existing station remains administratively IFF_UP')
+        route_argv = ['/usr/bin/cat', '/proc/net/route']
+        route, route_actual = run(route_argv, label + '-routes.log', end, limit=65536)
+        address.receipt(route_actual, expected_argv=route_argv, until=end, armed=armed,
+                        code=0, byte_count=len(route), limit=65536)
+        routes = address.route_profile(route.decode(), selected, True)
+        value = {'profile': profile_fact, 'routes': routes, 'IFF_UP': True,
+                 'namespace': {key: namespace_binding()['station_namespace'][key] for key in ['dev', 'ino']},
+                 'observed_at_ns': now(), 'original_until_ns': end,
+                 'GETADDR_receipt': actual, 'route_receipt': route_actual,
+                 'address_sha256': hashlib.sha256(body).hexdigest(),
+                 'route_sha256': hashlib.sha256(route).hexdigest()}
+        need(value['namespace'] == selected['namespace'] and now() < end,
+             'same current namespace throughout retained-profile readback')
+        r[label + '_profile_readback'] = value
+        return value
+
+    def inject_ap_loss():
+        nonlocal loss_intent
+        need(scenario == 'ap_loss' and loss_intent is None
+             and r['AP_loss_commands_admitted'] == 0 and r['UDP_roundtrip_clients_admitted'] == 2,
+             'one explicit AP loss only after both actual nonce clients')
+        pump()  # Original worker must still be live before publishing intent.
+        requested = now()
+        end = min(case, requested + address.ACTION_NS)
+        need(requested < end, 'original AP-loss cutoff')
+        loss_intent = {'scenario': scenario, 'requested_at_ns': requested,
+                       'loss_requested_at_ns': requested, 'original_until_ns': end,
+                       'original_worker_identity': worker_id}
+        r['AP_loss_intent'] = loss_intent
+        publish('loss-intent.json', loss_intent)
+        control_path = inputs / 'ap-control'
+        control_stat = control_path.lstat()
+        need(stat.S_ISDIR(control_stat.st_mode) and control_stat.st_uid == control_stat.st_gid == 0
+             and stat.S_IMODE(control_stat.st_mode) == 0o700
+             and (control_path / ap['name']).is_socket(), 'actual owned private hostapd control endpoint')
+        mac = ':'.join(station['mac_hex'][offset:offset+2] for offset in range(0, 12, 2))
+        argv = ap_prefix + ['/usr/bin/hostapd_cli', '-p', str(control_path), '-i', ap['name'],
+                            'deauthenticate', mac]
+        r['AP_loss_commands_admitted'] += 1
+        body, actual = run(argv, 'one-AP-deauthenticate.log', end, limit=32768)
+        address.receipt(actual, expected_argv=argv, until=end, armed=requested,
+                        code=0, byte_count=len(body), limit=32768)
+        need(body == b'OK\n', 'exact actual hostapd deauthenticate OK reply')
+        r['AP_loss_command'] = {'receipt': actual, 'reply': 'OK', 'original_until_ns': end}
+        # Read-only transition observation uses the SAME end; no second AP
+        # command, deadline renewal, reconnect or service Disconnect is allowed.
+        attempts = []
+        while now() < end:
+            number = len(attempts)
+            link, link_receipt = run(['/usr/bin/iw', 'dev', station['name'], 'link'],
+                                     'AP-loss-transition-' + str(number) + '-link.log', end)
+            dump, dump_receipt = run(ap_prefix + ['/usr/bin/iw', 'dev', ap['name'], 'station', 'dump'],
+                                     'AP-loss-transition-' + str(number) + '-AP-station.log', end)
+            attempts.append({'link_receipt': link_receipt, 'AP_receipt': dump_receipt,
+                             'link_sha256': hashlib.sha256(link).hexdigest(),
+                             'AP_dump_sha256': hashlib.sha256(dump).hexdigest()})
+            if link.strip() == b'Not connected.' and dump.strip() == b'':
+                break
+            time.sleep(.001)
+        else:
+            raise TimeoutError('original AP-loss radio observation cutoff')
+        r['AP_loss_transition_readbacks'] = attempts
+        lost = readback('after-AP-loss', True, end, associated=False)
+        observation = None
+        while now() < end:
+            observation = inspect(end)
+            state = observation['state']
+            need(state['worker'] == worker_id, 'same original worker wire identity after AP loss')
+            children = Path('/proc/' + str(main['child'].pid) + '/task/'
+                            + str(main['child'].pid) + '/children').read_text().split()
+            if (not state['available'] and state['configured'] is None and not state['pending']
+                    and state['terminal_uncertain'] and state['observed_at_ns'] == state['until_ns'] == '0'
+                    and select.select([worker_pidfd], [], [], 0)[0] and children == []):
+                break
+            time.sleep(.001)
+        else:
+            raise TimeoutError('original AP-loss terminal worker/unavailable cutoff')
+        r['worker_terminal_before_Main_Stop'] = {'pidfd_terminal': True, 'children': [],
+            'observed_at_ns': now(), 'original_until_ns': end, 'Main_alive': scope.live(main)}
+        need(r['worker_terminal_before_Main_Stop']['Main_alive'], 'normal Main survives original worker retirement')
+        retained = retained_profile('after-worker-terminal', end)
+        ready = {'scenario': scenario, 'original_until_ns': end,
+                 'loss_requested_at_ns': requested, 'loss_observed_at_ns': now(),
+                 'original_worker_identity': worker_id, 'Main_observation': observation,
+                 'independent_loss_proof': {'radio': lost['radio'], 'station_identity': lost['station_identity'],
+                                            'target': selected, 'retained_profile': retained},
+                 'independent_radio_loss_confirmed': True, 'profile_retained': True,
+                 'same_target_identity': True, 'IFF_UP': True, 'worker_pidfd_terminal': True,
+                 'no_replacement': True, 'Main_unavailable': True, 'terminal_uncertain': True}
+        need(now() < end, 'loss-ready publication under unchanged AP-loss cutoff')
+        r['AP_loss_ready'] = ready
+        publish('loss-ready.json', ready)
 
     def packet_client(tag, request):
         need(tag not in pending_clients, 'one actual cap0 client per nonce')
@@ -498,6 +621,7 @@ def run_case(*, root, inputs, selection, station, ap, ap_prefix, namespace_bindi
                               '--ignored', '--nocapture', '--test-threads=1'],
             'actual-wireless-registered-settings-actor.log', 1048576,
             env=dict(os.environ, POKELINUX_CONNECTIVITY_ISOLATED='1',
+                CONNECTIVITY_WIRELESS_SCENARIO=scenario,
                 CONNECTIVITY_ACTOR_ENDPOINT=str(endpoint), CONNECTIVITY_CASE_GATES=str(gates),
                 CONNECTIVITY_MAIN_PID=str(main['child'].pid), CONNECTIVITY_CASE_UNTIL_NS=str(case),
                 CONNECTIVITY_CASE_CLOSE_UNTIL_NS=str(close_until), CONNECTIVITY_START_UNTIL_NS=str(start_until),
@@ -509,10 +633,12 @@ def run_case(*, root, inputs, selection, station, ap, ap_prefix, namespace_bindi
         created = gate('created.json', start_until)
         need(created['driver_pid'] == driver['child'].pid and created['main_pid'] == main['child'].pid,
              'actual driver/normal Main gate binding')
+        need(created['scenario'] == scenario, 'actual actor selected the same explicit scenario')
         r['driver_caps'] = process_caps(driver['child'].pid)
         caps(r['driver_caps'], ACTOR_CAPS)
         r['healthy_setup_qualified'] = True
         publish('ready.json', {'provisioner_reaped_before_packet_peer': True,
+            'scenario': scenario,
             'initial_link_ifindex': selected['ifindex'], 'startup_profile_rejected_candidate': rejected,
             'released_at_ns': now(), 'original_case_until_ns': case})
         handled = set()
@@ -524,6 +650,8 @@ def run_case(*, root, inputs, selection, station, ap, ap_prefix, namespace_bindi
                 path = gates / (phase + '-proof.json')
                 if path.exists() and phase not in handled:
                     proof = json.loads(path.read_text())
+                    need(scenario == 'persistent' or loss_intent is None,
+                         'no service choice/readback gate after AP loss')
                     end = min(case, proof['original_until_ns'])
                     value = readback(phase, configured, end)
                     snapshot = wifi_peer.ipv4_snapshot(selected['name'], end)
@@ -550,9 +678,12 @@ def run_case(*, root, inputs, selection, station, ap, ap_prefix, namespace_bindi
                     if gate_name.startswith('first-'):
                         need(not Path('/proc/' + str(witness['pid'])).exists(), 'first requester actually absent after Apps wait')
                         r['first_requester_actual_wait'] = witness
-                    publish(reply_name, {'same_worker_radio_profile_confirmed': True,
-                        'worker': worker_id, 'observed_at_ns': value['observed_at_ns'],
-                        'normal_Main_observation': observation, 'original_until_ns': end})
+                    if gate_name == 'before-disconnect.json' and scenario == 'ap_loss':
+                        inject_ap_loss()
+                    else:
+                        publish(reply_name, {'same_worker_radio_profile_confirmed': True,
+                            'worker': worker_id, 'observed_at_ns': value['observed_at_ns'],
+                            'normal_Main_observation': observation, 'original_until_ns': end})
                     handled.add(gate_name)
             time.sleep(.001)
         functional = gate('functional-finished.json', case)
@@ -576,16 +707,63 @@ def run_case(*, root, inputs, selection, station, ap, ap_prefix, namespace_bindi
                  'actual actor SDK confirms normal startup unavailable')
             readback('after-runtime-profile-rejection', False, min(case, now() + address.ACTION_NS))
         else:
-            need(functional.get('functional_green') is True, 'actual normal actor functional sequence completed')
+            if scenario == 'persistent':
+                need(functional.get('functional_green') is True, 'actual normal actor functional sequence completed')
+            else:
+                need(functional.get('functional_ap_loss_green') is True
+                     and functional.get('functional_green') is False
+                     and functional.get('scenario') == 'ap_loss'
+                     and functional.get('loss_ready') == r.get('AP_loss_ready')
+                     and functional.get('loss_intent') == loss_intent
+                     and functional.get('post_loss_Set_commands') == 0
+                     and functional.get('Disconnect_commands_admitted') == 0
+                     and r['Connect_commands_admitted'] == 1 and r['Disconnect_commands_admitted'] == 0
+                     and not (gates / 'disconnect-attempt.json').exists()
+                     and not (gates / 'disconnected-proof.json').exists(),
+                     'actual AP-loss actor branch completed without service Disconnect or replay')
+                sdk = gate('loss-SDK-unavailable.json', case)
+                need(sdk['original_until_ns'] == loss_intent['original_until_ns']
+                     and sdk['actual_SDK_unavailable'] == functional['actual_SDK_unavailable']
+                     and sdk['loss_observed_at_ns'] == r['AP_loss_ready']['loss_observed_at_ns'],
+                     'actual post-loss SDK result gate binding')
+                app = sdk['actual_SDK_unavailable']
+                view = app['sdk_view']
+                need(view['available'] is False and view['configured'] is None
+                     and view['can_control'] is False and view['pending'] is False
+                     and view['observed_at_ns'] == view['until_ns'] == 0
+                     and view['status'] == 'unavailable'
+                     and app['original_until_ns'] == loss_intent['original_until_ns']
+                     and r['AP_loss_ready']['loss_observed_at_ns'] <= app['sdk_call_before_ns']
+                     <= app['sdk_call_returned_ns'] <= app['completed_ns'] < loss_intent['original_until_ns'],
+                     'fresh unavailable SDK observation under the one original AP-loss cutoff')
+                r['AP_loss_SDK_unavailable'] = sdk
             packets = gate('peer-packets.json', case)
             need(len(packets['packets']) == 2 and [row['payload_hex'] for row in packets['packets']]
                  == [r['nonce_' + str(tag)]['value']['payload_hex'] for tag in [1, 2]], 'independent two nonce peer receipt')
             quiet = gate('peer-quiet.json', case)
             need(quiet['received_datagrams'] == 0 and quiet['quiet_end_actual_EAGAIN']
                  and quiet['quiet_end_EAGAIN_at_ns'] >= quiet['original_until_ns'], 'full original independent peer quiet')
+            if scenario == 'ap_loss':
+                negative_quiet = functional['peer_quiet']
+                need(negative_quiet['no_post_loss_probe_submitted'] is True
+                     and negative_quiet['peer'] == quiet
+                     and quiet['original_until_ns'] - negative_quiet['requested_at_ns'] == 800_000_000,
+                     'original 800ms peer quiet budget without a post-loss UDP probe')
+                r['AP_loss_peer_quiet_without_probe'] = True
             r['peer_packets'], r['peer_quiet'] = packets, quiet
         main_stop()
         need(r['normal_Main_exit'] == 0, 'normal Main actual exit0')
+        if scenario == 'ap_loss' and not rejected:
+            closure = r['Main_reported_worker_closure']
+            lines = r['Main_non_JSON_lines']
+            need((closure['worker_exit_code'] == 1 and closure['worker_exit_signal'] is None
+                  and any('WorkerFailure' in line for line in lines))
+                 or (closure['worker_exit_code'] is None and closure['worker_exit_signal'] == signal.SIGKILL),
+                 'AP-loss worker actual failure or owned SIGKILL race; no replacement')
+            r['AP_loss_worker_outcome'] = {'exit_code': closure['worker_exit_code'],
+                'exit_signal': closure['worker_exit_signal'], 'original_stderr_lines': list(lines),
+                'WorkerFailure_lines': [line for line in lines if 'WorkerFailure' in line]}
+            retained_profile('after-Main-Stop', min(case, now() + address.ACTION_NS))
         publish('stop-peer', {})
         r['packet_peer_exit'] = scope.finish(packet, close_until)
         need(r['packet_peer_exit'] == 0, 'normal cap0 packet peer Stop/wait')
@@ -604,6 +782,8 @@ def run_case(*, root, inputs, selection, station, ap, ap_prefix, namespace_bindi
             'original_close_until_ns': close_until})
         r['driver_exit'] = scope.finish(driver, close_until)
         need(r['driver_exit'] == 0, 'actual actor reporting driver exit0')
+        if scenario == 'ap_loss' and not rejected:
+            r['AP_loss_oracle_qualified'] = True
         r['runtime_outcome_confirmed'] = True
     except BaseException as error:
         r.update(error=repr(error), traceback=traceback.format_exc())
@@ -636,15 +816,17 @@ def run_case(*, root, inputs, selection, station, ap, ap_prefix, namespace_bindi
 def qualify_after_cleanup(case, *, fixture_cleanup_qualified, normal_ELF_loaders_qualified,
                           retained_namespaces_qualified, selection):
     """No desired success or RED before the original hwsim owner's full closure."""
+    scenario = selected_scenario(selection)
     ready = bool(fixture_cleanup_qualified is True and normal_ELF_loaders_qualified is True
         and retained_namespaces_qualified is True and case.get('healthy_setup_qualified') is True
         and case.get('AP_profile_setup_qualified') is True and case.get('peer_ready_qualified') is True
         and case.get('owned_case_custody_qualified') is True and case.get('no_unexpected_peer_datagram') is True
-        and case.get('runtime_outcome_confirmed') is True)
+        and case.get('runtime_outcome_confirmed') is True and case.get('scenario') == scenario
+        and case.get('error') is None)
     baseline = selection.get('baseline_profile_rejection', {})
     actual_pins = selection['service_binaries']
     closure = case.get('Main_reported_worker_closure', {})
-    rejected = bool(ready and case.get('baseline_profile_rejection_candidate') is True
+    rejected = bool(ready and scenario == 'persistent' and case.get('baseline_profile_rejection_candidate') is True
         and baseline.get('main_ELF') == actual_pins['main']['ELF']
         and baseline.get('worker_ELF') == actual_pins['worker']['ELF']
         and baseline.get('Main_exit_code') == case.get('normal_Main_exit') == 0
@@ -654,19 +836,65 @@ def qualify_after_cleanup(case, *, fixture_cleanup_qualified, normal_ELF_loaders
         and case.get('functional', {}).get('startup_profile_rejected_candidate') is True
         and case.get('UDP_roundtrip_clients_admitted') == 0
         and case.get('after-runtime-profile-rejection_independent_readback', {}).get('radio', {}).get('station_unassociated') is True)
-    green = bool(ready and case.get('baseline_profile_rejection_candidate') is False
+    green = bool(ready and scenario == 'persistent' and case.get('baseline_profile_rejection_candidate') is False
         and case.get('functional', {}).get('functional_green') is True
         and case.get('Connect_commands_admitted') == case.get('Disconnect_commands_admitted') == 1
         and case.get('UDP_roundtrip_clients_admitted') == 2
         and case.get('independent_original_worker_pidfd_terminal') is True
         and case.get('first_requester_actual_wait') is not None
         and case.get('disconnected_independent_readback', {}).get('radio', {}).get('station_unassociated') is True
+        and case.get('AP_loss_commands_admitted') == 0 and not case.get('radio_or_address_retry_admitted'))
+    target = case.get('target')
+
+    def retained(label):
+        value = case.get(label + '_profile_readback', {})
+        profile, routes = value.get('profile', {}), value.get('routes', {})
+        return bool(value.get('IFF_UP') is True and value.get('namespace') == target['namespace']
+            and profile.get('confirmed') is True and profile.get('configured') is True
+            and profile.get('target') == target and routes.get('confirmed') is True
+            and routes.get('default_route_absent') is True and routes.get('station_subnet_route_present') is True)
+
+    functional = case.get('functional', {})
+    intent, lost = case.get('AP_loss_intent', {}), case.get('AP_loss_ready', {})
+    terminal = case.get('worker_terminal_before_Main_Stop', {})
+    quiet = case.get('peer_quiet', {})
+    outcome = case.get('AP_loss_worker_outcome', {})
+    loss = bool(ready and scenario == 'ap_loss' and case.get('AP_loss_oracle_qualified') is True
+        and case.get('baseline_profile_rejection_candidate') is False
+        and functional.get('functional_ap_loss_green') is True and functional.get('functional_green') is False
+        and functional.get('scenario') == scenario and functional.get('loss_intent') == intent
+        and functional.get('loss_ready') == lost
+        and functional.get('actual_SDK_unavailable') == case.get('AP_loss_SDK_unavailable', {}).get('actual_SDK_unavailable')
+        and functional.get('actual_SDK_unavailable', {}).get('sdk_view', {}).get('status') == 'unavailable'
+        and functional.get('post_loss_Set_commands') == functional.get('Disconnect_commands_admitted') == 0
+        and case.get('Connect_commands_admitted') == case.get('AP_loss_commands_admitted') == 1
+        and case.get('Disconnect_commands_admitted') == 0 and case.get('UDP_roundtrip_clients_admitted') == 2
+        and len(case.get('peer_packets', {}).get('packets', [])) == 2
+        and case.get('AP_loss_peer_quiet_without_probe') is True
+        and quiet.get('received_datagrams') == 0 and quiet.get('quiet_end_actual_EAGAIN') is True
+        and quiet.get('quiet_end_EAGAIN_at_ns', 0) >= quiet.get('original_until_ns', 1)
+        and case.get('first_requester_actual_wait') is not None
+        and case.get('normal_Main_exit') == 0 and case.get('independent_original_worker_pidfd_terminal') is True
+        and terminal.get('pidfd_terminal') is True and terminal.get('children') == [] and terminal.get('Main_alive') is True
+        and terminal.get('original_until_ns') == intent.get('original_until_ns') == lost.get('original_until_ns')
+        and terminal.get('observed_at_ns', 0) < intent.get('original_until_ns', 0)
+        and lost.get('original_worker_identity') == intent.get('original_worker_identity') == case.get('original_worker_identity')
+        and all(lost.get(key) is True for key in ['independent_radio_loss_confirmed', 'profile_retained',
+            'same_target_identity', 'IFF_UP', 'worker_pidfd_terminal', 'no_replacement', 'Main_unavailable', 'terminal_uncertain'])
+        and lost.get('independent_loss_proof', {}).get('target') == target
+        and case.get('after-AP-loss_independent_readback', {}).get('radio', {}).get('station_unassociated') is True
+        and retained('after-worker-terminal') and retained('after-Main-Stop')
+        and ((outcome.get('exit_code') == 1 and outcome.get('exit_signal') is None
+              and bool(outcome.get('WorkerFailure_lines')))
+             or (outcome.get('exit_code') is None and outcome.get('exit_signal') == 9))
         and not case.get('radio_or_address_retry_admitted'))
-    return {'schema': 1, 'passed': green, 'behavior_RED_qualified': rejected,
+    return {'schema': 1, 'scenario': scenario, 'passed': green or loss, 'behavior_RED_qualified': rejected,
+            'persistent_service_passed': green, 'ap_loss_control_passed': loss,
             'prerequisites_and_cleanup_qualified': ready,
-            'actual_outcome_confirmed': rejected or green,
+            'actual_outcome_confirmed': rejected or green or loss,
             'classification': ('QUALIFIED_NORMAL_WIRELESS_STARTUP_PROFILE_REJECTION_RED' if rejected
                 else 'NORMAL_ACTOR_PERSISTENT_WIRELESS_PACKET_GREEN' if green
+                else 'NORMAL_ACTOR_AP_LOSS_RETIRES_WIRELESS_EPOCH' if loss
                 else 'PREREQUISITE_CLEANUP_OR_RUNTIME_OUTCOME_UNQUALIFIED')}
 
 

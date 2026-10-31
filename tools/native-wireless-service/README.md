@@ -181,3 +181,19 @@ fixed documentation IPv4 in generic simulated radios, using the SDK app fixture
 and authored actor authority. It adds no normal Wi-Fi window, credentials, WPA,
 DHCP/DNS, Internet, matched Pixel driver or physical-phone evidence. See
 [candidate evidence](../../docs/evidence/native-wireless-service-candidate.json).
+
+## Current scenario follow-up
+
+Current selections require `wireless_service_scenario` equal to `persistent` or
+`ap_loss`. The latter deauthenticates the station once from the actual AP after
+two packet probes, requires retained IPv4 with a retired original worker and
+unavailable Main/SDK, and preserves normal joins, quiet and owned teardown.
+The guest records and preserves its actual STA loopback baseline; only the new
+AP namespace is required to have empty loopback addresses.
+
+These extended consumer bytes are a new cohort. Their first two ARM executions
+both fail at the app boundary: persistence sees app-control UnexpectedEof and
+app exit1, while AP loss reaches unavailable Main but does not satisfy the SDK
+getter predicate before its original cutoff. Neither qualifies GREEN. Failure
+cleanup completed; bounded diagnostics are next. The original frozen-consumer
+success above remains separate. See [follow-up evidence](../../docs/evidence/native-wireless-service-followup.json).

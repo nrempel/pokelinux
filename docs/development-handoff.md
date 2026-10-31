@@ -2,6 +2,23 @@
 
 ## Immediate integration order
 
+Latest follow-up: the two-file Clippy repair passes the actual current virtual
+Service/worker packet lifecycle and normal host/ARM builds. The new ARM
+`persistent` and `ap_loss` scenario runs both fail at the app SDK boundary.
+Persistence reaches Connect and starts one packet client, then receives
+UnexpectedEof from app control and observes app exit1. AP loss reaches two packet
+clients and one real deauthentication; independent loss, retained IPv4, original
+worker retirement, Main survival and unavailable state pass, but the actual SDK
+getter predicate does not pass before its original cutoff. Rejected getter rows
+and the positive failing control operation were not recorded, so neither cause
+is established. Both failure cleanups confirm closed handles, ECHILD and exact
+container absence; normal case qualification is false. Preserve these attempts
+and collect bounded diagnostics next. Do not loosen deadlines or label either
+run GREEN. The earlier frozen-consumer ARM success below remains its separate
+source cohort. [Follow-up evidence](evidence/native-wireless-service-followup.json)
+and [current virtual regression](evidence/native-connectivity-current-virtual-lifecycle.json).
+
+
 The ninth Sounds/Permissions acceptance passes end to end: guest build, real menu
 launches, Allow/Play with independent PCM, Revoke/quiet, reallow without replay,
 normal closes, external viewer final frame/EOF and complete outer closure.

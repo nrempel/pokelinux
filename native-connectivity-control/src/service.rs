@@ -83,7 +83,7 @@ struct WorkerStart {
 
 enum Link {
     Virtual(VirtualLink),
-    Wireless(WirelessBackend),
+    Wireless(Box<WirelessBackend>),
 }
 #[derive(Debug)]
 struct BackendFailure<E> {
@@ -709,10 +709,10 @@ pub fn worker(arguments: &[String]) -> io::Result<()> {
                 ifindex: target.ifindex,
                 name: target.name,
             };
-            Link::Wireless(backend_result(
+            Link::Wireless(Box::new(backend_result(
                 "attach_wireless",
                 WirelessBackend::attach(target, frequency_mhz, bssid, ssid, backend_until),
-            )?)
+            )?))
         }
     };
     let (mut fact, mut refreshed_at) = worker_step(

@@ -562,10 +562,10 @@ mod tests {
         }
         fn call(&mut self, step: Step, until: u64) -> Result<(), Error> {
             self.calls.push((step, until));
-            if let Some((index, error)) = self.fail_at {
-                if self.calls.len() == index {
-                    return Err(error);
-                }
+            if let Some((index, error)) = self.fail_at
+                && self.calls.len() == index
+            {
+                return Err(error);
             }
             Ok(())
         }

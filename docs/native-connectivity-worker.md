@@ -21,6 +21,16 @@ identity. Old worker startup/record forms are rejected. Observations expire afte
 facts use the oldest bracketed radio/profile observation, not publication time.
 Backend I/O stays in the worker; snapshots do local model/deadline work.
 
+A subsequent current-source x86 container regression passes the real virtual-link
+Service/worker lifecycle: two independent packets across requester withdrawal,
+same-worker idle observations, explicit Disconnect and quiet, then actual worker
+wait/EOF before namespace release. Strict Clippy first rejected the large backend
+enum and a nested test conditional; the repair owns the wireless backend in one
+Box and collapses that conditional. The unchanged formatting, lint, eight owner
+tests and cache-custody test then pass. All 24 owned waits/EOF and exact container
+absence qualify. This direct Service test does not exercise Main's protected
+profile-file entry. [Current virtual evidence](evidence/native-connectivity-current-virtual-lifecycle.json).
+
 The third candidate ARM cohort now passes the same frozen
 [wireless service consumer](../tools/native-wireless-service/README.md) in a generic
 ARM64 QEMU guest with simulated hwsim radios. The actual UID11050 Settings SDK app

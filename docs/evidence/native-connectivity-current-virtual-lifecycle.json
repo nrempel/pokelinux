@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "scope": "Actual x86 host-container virtual-link Service/normal-worker lifecycle; no VM or phone; protected Main profile-file entry not exercised",
+  "base_commit": "bbbbccfbe725ec54d800390b7ed0949abe536a83",
+  "RED": {
+    "strict_Clippy_rejected": [
+      "large_enum_variant",
+      "collapsible_if"
+    ],
+    "runtime_started": false,
+    "full_owned_closure": true
+  },
+  "repair": {
+    "wireless_backend_owned_in_Box": true,
+    "test_conditional_collapsed": true,
+    "no_lint_allowances_added": true,
+    "original_resources_deadlines_and_QA_retained": true,
+    "source_sha256": {
+      "native-connectivity-control/src/service.rs": "1af28abef805b6a94598846c62cdea36ec708fde53cc7f82b1c8277f730967ab",
+      "native-connectivity-control/src/wireless_backend.rs": "68f796666cd1b76fdb0a93c53c1d9080e7a75e7d1dae8eecda11159b2865a3eb"
+    }
+  },
+  "GREEN": {
+    "format_and_strict_Clippy": true,
+    "owner_tests": 8,
+    "cached_snapshot_custody_test": 1,
+    "independent_packet_roundtrips": 2,
+    "requester_withdrawal_and_same_worker_idle_observation": true,
+    "explicit_disconnect_and_quiet": true,
+    "native_worker_wait_EOF_before_namespace_release": true,
+    "owned_scope_waits_EOF": 24,
+    "exact_container_absence_and_same_daemon": true
+  },
+  "proof_sha256": {
+    "RED": {
+      "outer/receipt.json": "6359aabdc95065c212a415b1dd0fc7edb390aceb1df5d6523449f87d13e775a0",
+      "out/build-result.json": "b748c586958b679d470c556068d1918fefb196308c84152803f24610a94869ee",
+      "Root-postclosure-audit/result.json": "d91fcdd80c7e376080b9c0080d3110e094c2eceea3ce988ace68ff059a0405b5",
+      "source-pins.json": "e58c7181c0a3fb46041d49285792158159ef917dd30e757a73cdf80718d23cfd"
+    },
+    "GREEN": {
+      "outer/receipt.json": "618dba92890a674a4517268f2462f85765da8124d41fef888c68acedd43e3318",
+      "out/build-result.json": "757e5c19c28eb814d8b5d3402b14c61364de6aee21d0a94eef123d6d78ae5181",
+      "Root-postclosure-audit/result.json": "f6c39a62d8413a5aeaf474529d38ab9c6aa2f6070eba625a00ca4b50c2de65d7",
+      "source-pins.json": "4b4dc9b048e0b57d1a1a6d49cc2caf330f2f76e74d48df9250d8458f5d735f24"
+    }
+  },
+  "remaining": [
+    "Current normal-Main virtual idle-receive aggregate",
+    "Current ARM persistent and AP-loss scenarios",
+    "WPA DHCP DNS Internet and normal Wi-Fi GUI",
+    "All physical-phone gates"
+  ]
+}

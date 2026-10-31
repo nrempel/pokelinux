@@ -1,4 +1,4 @@
-"""Persistent normal wireless service in the existing hwsim owner; assert only after owned cleanup."""
+"""Normal wireless scenarios in the existing hwsim owner; assert only after owned cleanup."""
 from pathlib import Path
 import array, ctypes, gzip, hashlib, json, os, re, resource, select, signal, socket, stat, sys, time, traceback
 sys.dont_write_bytecode = True
@@ -8,6 +8,7 @@ import service_consumer
 R = Path("/results")
 I = Path("/run/hwsim-original-viability")
 S = json.loads((R / "selection.json").read_text())
+SCENARIO = service_consumer.selected_scenario(S)
 T = int(os.environ["POKELINUX_HWSIM_T0_NS"])
 W = T + S["guest_work_seconds"] * 1_000_000_000
 C = T + S["guest_close_seconds"] * 1_000_000_000
@@ -22,6 +23,7 @@ namespace_other = None
 ap_prefix = None
 received_namespace_fds = []
 r = {"schema": 1, "phase": S["phase"], "passed": False,
+     "wireless_service_scenario": SCENARIO,
      "original_work_until_ns": W, "original_close_until_ns": C,
      "normal_app_graphics_Source_auth_executed": False,
      "native_wireless_worker_executed": False,
@@ -418,6 +420,12 @@ try:
         "wiphy": ap_role["phy"], "wdev": int(ap_role["wdev"], 16),
         "bssid_hex": ap_role["addr"].replace(":", ""),
         "ssid_hex": ssid.encode().hex(), "frequency_mhz": 2412}
+    loopback_before = json.loads(run(["/usr/bin/ip", "-j", "address", "show", "dev", "lo"],
+        "STA-loopback-baseline-before-service"), object_pairs_hook=consumer.unique, parse_constant=consumer.no_constant)
+    assert len(loopback_before) == 1 and loopback_before[0]["ifname"] == "lo"
+    r["STA_loopback_before_service"] = {"ifindex": loopback_before[0]["ifindex"], "ifname": "lo",
+        "addr_info": sorted(loopback_before[0]["addr_info"], key=lambda value: json.dumps(value, sort_keys=True))}
+    assert all(value["local"] not in ["192.0.2.1", "192.0.2.2"] for value in r["STA_loopback_before_service"]["addr_info"])
     address_scope = Scope(R / "wireless-service-case")
     r["service_case"] = service_consumer.run_case(root=R, inputs=I, selection=S,
         station=actual_station, ap=actual_ap, ap_prefix=ap_prefix,
@@ -436,6 +444,26 @@ try:
             address = body[0]["addr_info"][0]
             assert address["family"] == "inet" and address["local"] == "192.0.2.2" and address["prefixlen"] == 30 and address["scope"] == "global"
             r["AP_fixture_profile_retained_until_radio_cleanup"] = True
+        elif SCENARIO == "ap_loss":
+            case = r["service_case"]
+            assert case.get("AP_loss_oracle_qualified") is True
+            assert case.get("functional", {}).get("functional_ap_loss_green") is True
+            assert case["after-Main-Stop_profile_readback"]["IFF_UP"] is True
+            selected = case["target"]
+            assert selected == {"namespace": {key: namespace()[key] for key in ["dev", "ino"]},
+                "ifindex": int(role["ifindex"]), "name": role["name"]}
+            body = run(["/usr/bin/ip", "-j", "address", "show", "dev", role["name"]],
+                       "STA-fixed-profile-retained-before-owned-radio-removal")
+            profile = service_consumer.address.kernel_profile(body.encode(), selected=selected, configured=True)
+            raw = json.loads(body, object_pairs_hook=consumer.unique, parse_constant=consumer.no_constant)
+            assert "UP" in raw[0]["flags"]
+            route = run(["/usr/bin/cat", "/proc/net/route"], "STA-subnet-retained-before-owned-radio-removal")
+            routes = service_consumer.address.route_profile(route, selected, True)
+            r["STA_profile_retained_until_explicit_hwsim_teardown"] = {
+                "confirmed": True, "profile": profile, "routes": routes, "IFF_UP": True,
+                "station_identity": actual_station, "observed_at_ns": now(),
+                "address_sha256": hashlib.sha256(body.encode()).hexdigest(),
+                "route_sha256": hashlib.sha256(route.encode()).hexdigest()}
         else:
             no_addresses(role["name"], "no-station-address-after-case-" + role["name"])
     r["original_iw_scan_commands_admitted"] = r["scan_commands_admitted"]
@@ -453,6 +481,14 @@ try:
     assert sorted(p.name for p in Path("/sys/class/net").iterdir()) == ["lo"]
     assert not Path("/sys/module/mac80211_hwsim").exists()
     r["owned_simulated_radios_removed"] = True
+    station_after = json.loads(run(["/usr/bin/ip", "-j", "address", "show"], "STA-lo-only-after-owned-module-removal"))
+    assert len(station_after) == 1 and station_after[0]["ifname"] == "lo"
+    loopback_after = {"ifindex": station_after[0]["ifindex"], "ifname": "lo",
+        "addr_info": sorted(station_after[0]["addr_info"], key=lambda value: json.dumps(value, sort_keys=True))}
+    assert loopback_after == r["STA_loopback_before_service"]
+    assert all(value["local"] not in ["192.0.2.1", "192.0.2.2"] for value in loopback_after["addr_info"])
+    r["STA_loopback_preserved_after_radio_removal"] = True
+    r["STA_namespace_lo_only_after_radio_removal"] = station_after
     assert run_ap(["/usr/bin/iw", "dev"], "peer-no-wireless-interfaces-after-owned-module-removal").strip() == ""
     peer_after = json.loads(run_ap(["/usr/bin/ip", "-j", "address", "show"], "peer-lo-only-after-owned-module-removal"))
     assert len(peer_after) == 1 and peer_after[0]["ifname"] == "lo" and peer_after[0]["addr_info"] == []
@@ -633,12 +669,15 @@ finally:
             r["desired_assertion"] = {"passed": False, "error_kind": type(error).__name__,
                                       "error": str(error)}
         r["desired_passed"] = bool(review["passed"] and r["desired_assertion"]["passed"])
+        r["persistent_service_passed"] = bool(r["desired_passed"] and review["persistent_service_passed"])
+        r["ap_loss_control_passed"] = bool(r["desired_passed"] and review["ap_loss_control_passed"])
         r["behavior_RED_qualified"] = bool(review["behavior_RED_qualified"]
             and r["desired_assertion"].get("error_kind") == "AssertionError"
             and r["desired_assertion"].get("error") == service_consumer.DESIRED_MARKER)
         r["classification"] = ("QUALIFIED_NORMAL_PERSISTENT_WIRELESS_REFUSAL_RED"
-            if r["behavior_RED_qualified"] else "DESIRED_PERSISTENT_WIRELESS_SERVICE_PASSED"
-            if r["desired_passed"] else "PREREQUISITE_CLEANUP_OR_WORKER_OUTCOME_UNQUALIFIED")
+            if r["behavior_RED_qualified"] else "DESIRED_WIRELESS_AP_LOSS_CONTROL_PASSED"
+            if r["ap_loss_control_passed"] else "DESIRED_PERSISTENT_WIRELESS_SERVICE_PASSED"
+            if r["persistent_service_passed"] else "PREREQUISITE_CLEANUP_OR_WORKER_OUTCOME_UNQUALIFIED")
         r["passed"] = r["desired_passed"]
         r["completed_ns"] = now()
         r["publication_signal_deferral"]["SIGTERM_pending_before_publication"] = signal.SIGTERM in signal.sigpending()

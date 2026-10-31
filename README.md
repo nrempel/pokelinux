@@ -71,6 +71,8 @@ passes too. This uses simulated radios, an open test AP and fixed IPv4;
 normal Settings Wi-Fi controls, WPA, DHCP/DNS, Internet and Pixel hardware remain
 open. The screenshots above show the earlier virtual-link UI, not this wireless
 run. [Persistent wireless evidence](tools/native-wireless-service/README.md).
+New follow-up runs expose app-client failures during shutdown and connection loss;
+those remain under investigation. [Current results](docs/evidence/native-wireless-service-followup.json).
 
 ## What works today
 
