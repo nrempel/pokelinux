@@ -1,0 +1,69 @@
+{
+  "base_commit": "7c87d01207b6a21d8d945a3c6dc27569d777cc2b",
+  "scope": "Host unit-text/manifest contract and actual safe filesystem staging only. No service activation, Main/worker execution, namespace change, ARM runtime or cold boot.",
+  "host_uid": 1000,
+  "host_gid": 1000,
+  "tests": {
+    "baseline_existing_installer": {
+      "passed": 8,
+      "failed": 0,
+      "exit_code": 0
+    },
+    "original_packaging_RED": {
+      "passed": 0,
+      "failed": 3,
+      "exit_code": 1
+    },
+    "final_frozen_packaging_RED": {
+      "passed": 0,
+      "failed": 3,
+      "exit_code": 1
+    },
+    "packaging_GREEN": {
+      "passed": 3,
+      "failed": 0,
+      "exit_code": 0
+    },
+    "existing_installer_GREEN": {
+      "passed": 8,
+      "failed": 0,
+      "exit_code": 0
+    }
+  },
+  "frozen_test_sha256": "71519ff02833d763d2a667003bf971dcde1c3f4d6852ad8a6cab9ce2bdbf9b5f",
+  "unchanged_inputs_sha256": {
+    "native-connectivity-control/tests/packaging.py": "71519ff02833d763d2a667003bf971dcde1c3f4d6852ad8a6cab9ce2bdbf9b5f",
+    "native-connectivity-control/packaging/development-arm64.manifest.json": "f96fb35d2a6be3dd2f4a91a9fc0753de2f6448d26586f8948bef6004b7f81707",
+    "native-session-owner/packaging/install_deployment.py": "42a6daacdde7c6c0fcbec7316b50e21f753d67df917de33bf991d42999b82482",
+    "native-session-owner/Makefile": "681bfe10189be22636c3b3f80ec74686a52279180b2f00e248438c6c837f5a77",
+    "native-session-owner/tests/install_deployment.py": "7e37ec2cd8b44c4ecde547a2e6a7f06964cae35d004e54eec82ceae08e5747d9"
+  },
+  "changed_files_sha256": {
+    "native-connectivity-control/packaging/README.md": "245135c139c87846b38fd98d7b140ef4cd4e4f825564e95be8d5a60be8dff320",
+    "native-connectivity-control/packaging/pokelinux-connectivity.service": "463f6b84578028d1b0d9ede20ca177beebd580c39d6c62b2f6d07d1e49e75f99",
+    "native-connectivity-control/packaging/installed-unit.manifest.json": "385223874bff2ae6b3dc888b5f199fbf2b05bceb43cdd8b7a34dbe78b4f702ba",
+    "native-connectivity-control/tests/packaging.py": "71519ff02833d763d2a667003bf971dcde1c3f4d6852ad8a6cab9ce2bdbf9b5f"
+  },
+  "manifest_boundary": "installed-unit.manifest.json selects only the unit. development-arm64.manifest.json remains historical and unchanged; no provider pins fabricated or compatibility CLI introduced.",
+  "remaining_integration_choices": [
+    "One coherent authenticated manifest for qualified current ARM Main and worker",
+    "Protected root0600 operational startup profile and exact-name interface resolution",
+    "Exclusive namespace/hwsim/AP test provisioning and explicit installed dependency ordering",
+    "Session socket selection and normal Permissions/Settings join",
+    "Actual PID1 readiness, preserved admission marker after Stop, cgroup/native closure, and two cold boots"
+  ],
+  "evidence_sha256": {
+    "red-final-tests-exit-code.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "baseline-installer-tests.log": "3ab99dcc6b75eeafbbc63c3803cd44b3fe98e20aea0e0c71c2a6b5c42277bd43",
+    "green-source-pins.json": "90c7c98fb6380ec49387911c6316be52573470ac6de833cb3da42c27de70e376",
+    "red-final-tests.log": "e7f082ecfa1b489c8df0603cf8b3aad07ae34276cebd2caaed6ce93f0f53ae24",
+    "red-source-pins.json": "75c08b257aaa24cff4a154ffc250daaabc8ac2b982307b102d59cd0887b0323d",
+    "red.log": "e7f082ecfa1b489c8df0603cf8b3aad07ae34276cebd2caaed6ce93f0f53ae24",
+    "green-installer-tests.log": "ea944f463a961a17d08023cd574bf14e9faadc8503867e52ed6f8546d4ef47ee",
+    "candidate.patch": "7808d97f4cd5cdcaa85fabcbcb9f2d37fe02f8c6efa4105a4e193c38fd63dc36",
+    "green-exit-code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "green.log": "532518df0b710f378eaf97b96243702ce6d917c84e10acab25daef2de4c3a89e",
+    "red-exit-code.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+  },
+  "reviewed_on_commit": "97ef52c5ab93974414f23d938b92bdd3d8afe3a2"
+}

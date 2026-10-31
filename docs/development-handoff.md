@@ -10,6 +10,11 @@ controller now passes idle, consumed-expiry and parent-death with complete
 closure under unchanged bounds; the other eight current launch migrations are
 unexecuted. Historical cohorts are preserved. Existing GUI
 runs, including root6, use88842e2 providers and do not qualify the new CLI.
+The optional connectivity unit now passes three host packaging/staging checks
+after missing-unit RED, plus eight installer regressions. It preserves the runtime
+admission directory across Stop and adds no automatic restart. Its manifest
+authenticates only the unit; current provider pins and activation remain open.
+[Packaging scope](../native-connectivity-control/packaging/README.md).
 Installed PID1 startup and stable interface resolution remain separate.
 [CLI evidence and current-launch scope](native-connectivity-installed-startup.md).
 

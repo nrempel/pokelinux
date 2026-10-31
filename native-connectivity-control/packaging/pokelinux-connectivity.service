@@ -1,0 +1,23 @@
+[Unit]
+Description=Pokelinux protected connectivity owner
+After=systemd-tmpfiles-setup.service
+
+[Service]
+Type=exec
+User=root
+Group=root
+ExecStart=/usr/libexec/pokelinux/pokelinux-connectivity-main /run/pokelinux-connectivity/control.sock /etc/pokelinux/connectivity.json /run/pokelinux-connectivity/admitted /usr/libexec/pokelinux/pokelinux-connectivity-service
+RuntimeDirectory=pokelinux-connectivity
+RuntimeDirectoryMode=0700
+RuntimeDirectoryPreserve=yes
+KillMode=mixed
+KillSignal=SIGTERM
+TimeoutStartSec=5s
+TimeoutStopSec=5s
+SendSIGKILL=yes
+Restart=no
+NoNewPrivileges=yes
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "files": {
+    "usr/lib/systemd/system/pokelinux-connectivity.service": {
+      "bytes": 625,
+      "sha256": "463f6b84578028d1b0d9ede20ca177beebd580c39d6c62b2f6d07d1e49e75f99",
+      "mode": 420
+    }
+  }
+}
