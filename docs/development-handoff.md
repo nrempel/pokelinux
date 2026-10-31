@@ -2,6 +2,17 @@
 
 ## Immediate integration order
 
+The isolated normal Main now passes the same frozen static-startup CLI pair
+after actual paired RED. It accepts four paths and captures one fixed three-second
+BOOTTIME cutoff before argument collection; the old fifth argument is refused.
+53 host tests and host/ARM compilation pass. The current four-path Main-idle
+controller now passes idle, consumed-expiry and parent-death with complete
+closure under unchanged bounds; the other eight current launch migrations are
+unexecuted. Historical cohorts are preserved. Existing GUI
+runs, including root6, use88842e2 providers and do not qualify the new CLI.
+Installed PID1 startup and stable interface resolution remain separate.
+[CLI evidence and current-launch scope](native-connectivity-installed-startup.md).
+
 The [fixed NetworkControl permission authority](native-network-permission-authority.md)
 now passes actual three-case RED→GREEN, two unchanged audio controls and all 24
 affected permission regressions on native x86_64. Scope comes only from the

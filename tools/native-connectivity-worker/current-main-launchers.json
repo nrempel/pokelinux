@@ -1,0 +1,124 @@
+{
+  "schema": 1,
+  "scope": "Prepared current four-path normal Main launchers; no migrated launcher execution",
+  "Main_path_argument_count": 4,
+  "Main_fixed_startup_budget_ns": 3000000000,
+  "current_launchers": {
+    "tools/native-wireless-service/consumer.py": {
+      "bytes": 57019,
+      "sha256": "d04e04e565353d5ad7c3868a1e0ff2ac9f0ed07180a57aee091257b0be58b007",
+      "historical_source_commit": "256c553c1eb7c8434711772fa815d2d5ab21cc00",
+      "historical_sha256": "1dd642abdf56d7a2f60ae77da0d38b1514a9613b151034d21e6477c18d2b6fa9",
+      "runtime_executed": false,
+      "deadline_adaptation": "fixture observation cutoff retained and labeled separately"
+    },
+    "tools/native-connectivity-private-ingress/controller.py": {
+      "bytes": 20506,
+      "sha256": "d199d4b651c8dcfc5beeee1dd51f7c6f7496c09209a266a7ac731619e03d91bb",
+      "historical_source_commit": "256c553c1eb7c8434711772fa815d2d5ab21cc00",
+      "historical_sha256": "87b01a7d044cf91d74a623a26ebf5301a170e3bfadfbcc120898e4ffeadcb392",
+      "runtime_executed": false,
+      "deadline_adaptation": "fixture observation cutoff retained and labeled separately"
+    },
+    "tools/native-connectivity-actor/controller.py": {
+      "bytes": 23212,
+      "sha256": "7bc1aad325f9db9774520826425e3beccd1d4fd9e762295a15c70f644bfaaa0b",
+      "historical_source_commit": "256c553c1eb7c8434711772fa815d2d5ab21cc00",
+      "historical_sha256": "debe2c3abcea83a7a8a7be2fb3c2c3116f5ec9f28a63099d1d74898f95001717",
+      "runtime_executed": false,
+      "deadline_adaptation": "fixture observation cutoff retained and labeled separately"
+    },
+    "tools/native-connectivity-settings-sdk/controller.py": {
+      "bytes": 23890,
+      "sha256": "47f30e344ccd79b16a32305a881208d1785740e7a462bc10143ee68ecf376c24",
+      "historical_source_commit": "256c553c1eb7c8434711772fa815d2d5ab21cc00",
+      "historical_sha256": "f2ebb82bda701df99cfd03a236f3d7fad39a03f37bab7c4ce46abb680ded200f",
+      "runtime_executed": false,
+      "deadline_adaptation": "fixture observation cutoff retained and labeled separately"
+    },
+    "tools/native-connectivity-settings-window/controller.py": {
+      "bytes": 31390,
+      "sha256": "9ca0e1e959968f376460c9915ca8e9ede122ded4aefcfed05ba93b75ecef6bc8",
+      "historical_source_commit": "256c553c1eb7c8434711772fa815d2d5ab21cc00",
+      "historical_sha256": "9360354186cf9018f2332408863af04e92a68fe906683a6669f97f1311188ea8",
+      "runtime_executed": false,
+      "deadline_adaptation": "fixture observation cutoff retained and labeled separately"
+    },
+    "tools/native-connectivity-settings-window/arm/worker-diagnostic-controller.py": {
+      "bytes": 32341,
+      "sha256": "ab4c8f6172aee15b27c8987d77e2ac366c52173d38c6b2cd80fcdba94193b07d",
+      "historical_source_commit": "256c553c1eb7c8434711772fa815d2d5ab21cc00",
+      "historical_sha256": "fd0bec2282742884b57338f0d32ad2325ea68911759960a063a65aa762746bb5",
+      "runtime_executed": false,
+      "deadline_adaptation": "fixture observation cutoff retained and labeled separately"
+    },
+    "tools/native-connectivity-worker/idle-receive/controller.py": {
+      "bytes": 13694,
+      "sha256": "d8545e712c8fb11770945a4cd36e0490ccdcbc3bf0b6254e39261d903059b748",
+      "historical_source_commit": "256c553c1eb7c8434711772fa815d2d5ab21cc00",
+      "historical_sha256": "4350398aba9938cca2194c2737a9674a721952a952a909f3f7e606a67b753a95",
+      "runtime_executed": false,
+      "deadline_adaptation": "fixture observation cutoff retained and labeled separately"
+    },
+    "tools/native-connectivity-worker/main-idle-receive/controller.py": {
+      "bytes": 15530,
+      "sha256": "c48b6a1bf3124f8d0f6de9c3fda2ec5d4ef418d7ce515087f62735abeab8c669",
+      "historical_source_commit": "256c553c1eb7c8434711772fa815d2d5ab21cc00",
+      "historical_sha256": "acdc7d72b2a1e5628c88d38575a2132b12af434fec1004b662a1e8653ae0ba1b",
+      "runtime_executed": false,
+      "deadline_adaptation": "fixture observation cutoff retained and labeled separately"
+    },
+    "tools/native-connectivity-worker/first-retirement/consumer.py": {
+      "bytes": 14046,
+      "sha256": "5c532ba931b771a1cc98e7d83fd5d863195585df5bb4a993c5458f5f7fc26e44",
+      "historical_source_commit": "256c553c1eb7c8434711772fa815d2d5ab21cc00",
+      "historical_sha256": "e7c0bbbd4dcc68caa6061b78ea8aeafdb7b2519e92439c48e27edd4e1b6f365e",
+      "runtime_executed": false,
+      "deadline_adaptation": "entry interval instead of parentW equality"
+    }
+  },
+  "current_Main_idle_helper_bindings": {
+    "owned.py": {
+      "source": "tools/native-installed-services/owned.py",
+      "bytes": 12712,
+      "sha256": "5a738b9529a1a0e5d5b0bd20e27e2ec4244d4e61d7c8e0dad96fe1ffbef3c423"
+    },
+    "closure.py": {
+      "source": "tools/native-audio-preview/closure.py",
+      "bytes": 3596,
+      "sha256": "646e9cfd5f755b626fe8babfa26637ddac328ede05cdab75aa77cc51332d70d6"
+    },
+    "worker_trace.py": {
+      "source": "tools/native-connectivity-worker/idle-receive/worker_trace.py",
+      "bytes": 8605,
+      "sha256": "4076d637d52e8342f71441ca031302bc623818fecd41e49c755c5932fa1a4a7b"
+    },
+    "main_trace.py": {
+      "source": "tools/native-connectivity-worker/main-idle-receive/main_trace.py",
+      "bytes": 10489,
+      "sha256": "9fc147a1ef92810a1be9ca65c66f893ed212b1d0eff917d98dc5a6217a27f2a2"
+    },
+    "peer.py": {
+      "source": "tools/native-connectivity-worker/main-idle-receive/peer.py",
+      "bytes": 10834,
+      "sha256": "83132acf9befb9ed901d22221dd64f493ff736357a58faa5404b5a9825ad05cb"
+    },
+    "inside.py": {
+      "source": "tools/native-connectivity-worker/main-idle-receive/inside.py",
+      "bytes": 3028,
+      "sha256": "edb90031880868838d855b34468b1b044f0fdf59bf0aeb5912cfb8f735b72f6a"
+    },
+    "consumer.py": {
+      "source": "tools/native-connectivity-worker/main-idle-receive/consumer.py",
+      "bytes": 7383,
+      "sha256": "a9ed4919c2f8c8405e64649f3e6e0fdd2e6bf2ed135ca4ad0c8bf00455ab75b1"
+    }
+  },
+  "current_Main_idle_source_proof": {
+    "source": "tools/native-connectivity-worker/main-idle-receive/current-candidate/main-source-proof.json",
+    "bytes": 3569,
+    "sha256": "61d7ff63e54131e1d9ce174371e4dee8720533606163be6f0f9024f36f7fb539"
+  },
+  "staging_policy": "Owning launchers must regenerate selected runner_files and files maps from these exact current files; historical manifests/proofs remain with old binaries",
+  "runtime_executed": false
+}

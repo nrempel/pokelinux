@@ -1,5 +1,10 @@
 # Registered app to native connectivity actor fixture
 
+The [pre-migration launcher](https://github.com/nrempel/pokelinux/blob/256c553c1eb7c8434711772fa815d2d5ab21cc00/tools/native-connectivity-actor/controller.py) is preserved with its original
+source cohorts and evidence hashes. The current launcher uses four Main paths;
+that launch migration has not executed. See the
+[separate CLI result](../../docs/native-connectivity-installed-startup.md).
+
 This source exercises an actual launched UID11050 Rust process under the Settings
 profile, the existing lifecycle actor and durable grant worker, the normal
 root-private connectivity Main and independent real UDP packets. It is a process

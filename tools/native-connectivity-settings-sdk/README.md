@@ -1,5 +1,10 @@
 # Normal Settings Rust client to native connectivity
 
+The [pre-migration launcher](https://github.com/nrempel/pokelinux/blob/256c553c1eb7c8434711772fa815d2d5ab21cc00/tools/native-connectivity-settings-sdk/controller.py) is preserved with its original
+source cohorts and evidence hashes. The current launcher uses four Main paths;
+that launch migration has not executed. See the
+[separate CLI result](../../docs/native-connectivity-installed-startup.md).
+
 This fixture links the normal Settings crate's safe Rust `connectivity::Engine`
 into an actual launched UID11050 Settings process. It exercises the production
 lifecycle actor loop, durable NetworkControl grant, root-private connectivity

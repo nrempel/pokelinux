@@ -1,5 +1,10 @@
 # Normal Settings connectivity window fixture
 
+The [pre-migration launcher](https://github.com/nrempel/pokelinux/blob/256c553c1eb7c8434711772fa815d2d5ab21cc00/tools/native-connectivity-settings-window/controller.py) is preserved with its original
+source cohorts and evidence hashes. The current launcher uses four Main paths;
+that launch migration has not executed. See the
+[separate CLI result](../../docs/native-connectivity-installed-startup.md).
+
 These are the original core sources of one generic x86_64 VM case: the normal
 Settings executable opens through the real per-app `display::Factory` on normal
 upstream Hyprland. Ordinary uinput Enable/Disable touches reach the real Settings

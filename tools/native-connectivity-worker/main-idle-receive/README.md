@@ -1,6 +1,6 @@
 # Actual Main empty-idle receive fixture
 
-The exact `consumer.py`, `controller.py`, `main_trace.py`, `inside.py` and
+The historical exact `consumer.py`, [controller.py](https://github.com/nrempel/pokelinux/blob/256c553c1eb7c8434711772fa815d2d5ab21cc00/tools/native-connectivity-worker/main-idle-receive/controller.py), `main_trace.py`, `inside.py` and
 `peer.py` are unchanged across the qualified native host
 [RED/GREEN](../../../docs/native-connectivity-main-idle-receive.md).
 This captured peer differs from the older shared peer; use this copy. Stage
@@ -9,6 +9,20 @@ these files at `/runner`, plus exact shared
 [`closure.py`](../../native-audio-preview/closure.py) and
 [`worker_trace.py`](../idle-receive/worker_trace.py). Their hashes are in the
 [evidence](../../../docs/evidence/native-connectivity-main-idle-receive.json).
+
+The current four-path controller now passes all three healthy Main cases with
+the new CLI providers and complete closure; the
+[CLI report](../../../docs/native-connectivity-installed-startup.md) records this
+separate execution. Original idle RED/GREEN results retain their recorded
+controllers/providers. `current-candidate/main-source-proof.json` and its eight
+snapshots bind the qualified new compiler outputs and current controller. Its
+pre-execution preparation metadata remains frozen; the CLI evidence supplies
+the actual subsequent result. No new-CLI GUI runtime is qualified.
+The owning runner must regenerate every selected helper/runner hash from the
+actual current files; no old manifest hash is accepted as a current binding.
+
+Historical replay instructions follow; their `baseline/` and `candidate/` proof
+examples belong only to the historical controller/provider cohorts.
 
 Select normal x86_64 Release Main/worker from actual Cargo compiler-artifact JSON
 and verify their exact hashes. Choose the matching `baseline/main-source-proof.json`

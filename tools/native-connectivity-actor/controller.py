@@ -176,9 +176,9 @@ try:
     # denial, real Rust Apply, traffic/background control and full800ms quiet.
     case = min(W, now() + 6_000_000_000)
     start_until = min(case, now() + 1_000_000_000)
-    r['original_case_until_ns'], r['original_start_until_ns'] = case, start_until
+    r['original_case_until_ns'], r['fixture_start_observation_until_ns'] = case, start_until
     main = services.start([str(a.main_elf), str(endpoint), str(startup_profile), str(J / 'admitted'),
-        str(a.worker_elf), str(start_until)], 'normal-connectivity-main.log', 1024 * 1024,
+        str(a.worker_elf)], 'normal-connectivity-main.log', 1024 * 1024,
         env=dict(os.environ, POKELINUX_CONNECTIVITY_ISOLATED='1'), cutoff=start_until,
         wait_cutoff=C, identity={'preexec_fn': lambda: peer.reduce_caps((1 << peer.NET_ADMIN) | (1 << 8))})
     while not endpoint.is_socket():

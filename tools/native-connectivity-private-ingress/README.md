@@ -1,5 +1,10 @@
 # Root-private connectivity ingress fixture
 
+The [pre-migration launcher](https://github.com/nrempel/pokelinux/blob/256c553c1eb7c8434711772fa815d2d5ab21cc00/tools/native-connectivity-private-ingress/controller.py) is preserved with its original
+source cohorts and evidence hashes. The current launcher uses four Main paths;
+that launch migration has not executed. See the
+[separate CLI result](../../docs/native-connectivity-installed-startup.md).
+
 The authored driver, controller, manifest and actually generated 4809-byte fixture
 lock are byte-identical across the private Main/client RED and both packet GREEN
 cohorts. Development comments retain their original preparation wording. No ELF,

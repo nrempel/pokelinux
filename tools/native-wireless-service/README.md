@@ -8,11 +8,19 @@ a generic ARM64 QEMU guest with simulated hwsim radios. Normal Wi-Fi GUI, WPA,
 DHCP/DNS, Internet and physical-phone qualification remain open. These consumer
 bytes were frozen before production changes.
 
-The normal Main keeps five arguments:
+The recorded Main cohort used five arguments:
 
 ```text
 ENDPOINT ROOT0600_STARTUP_PROFILE JOURNAL WORKER_ELF ORIGINAL_START_UNTIL_NS
 ```
+
+The [pre-migration consumer](https://github.com/nrempel/pokelinux/blob/256c553c1eb7c8434711772fa815d2d5ab21cc00/tools/native-wireless-service/consumer.py)
+retains that historical ABI and its recorded evidence. The current consumer
+passes only `ENDPOINT ROOT0600_STARTUP_PROFILE JOURNAL WORKER_ELF`; Main derives
+its own fixed three-second cutoff. The fixture keeps its independent startup
+observation limit and action deadlines. This current launch migration is
+unexecuted; the [host CLI pair](../../docs/native-connectivity-installed-startup.md)
+does not validate the wireless/ARM/GUI consumer with the new CLI.
 
 The protected root-owned regular `0600` JSON startup profile is selected once:
 

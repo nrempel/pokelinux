@@ -152,7 +152,7 @@ def main():
         m = profile_path.stat()
         assert m.st_uid == m.st_gid == 0 and stat.S_IMODE(m.st_mode) == 0o600 and m.st_nlink == 1
         endpoint = a.output / 'control.sock'
-        argv = [str(a.main), str(endpoint), str(profile_path), str(a.output / 'admitted'), str(a.worker), str(W)]
+        argv = [str(a.main), str(endpoint), str(profile_path), str(a.output / 'admitted'), str(a.worker)]
         r['actual_argv'] = argv
         r['startup_profile'] = profile
         child = scope.start(argv, 'normal-main.log', 16384,
@@ -239,7 +239,12 @@ def main():
     desired = (type(cause) is dict and cause.get('reason') == 'startup_failure'
         and type(cause.get('detected_at_ns')) is int
         and child['spawn_started_at_ns'] <= cause['detected_at_ns'] < r['external_Stop_sent_at_ns']
-        and cause.get('original_until_ns') == W)
+        and type(cause.get('original_until_ns')) is int
+        and child['spawn_started_at_ns'] <= cause['original_until_ns'] - 3_000_000_000
+        <= r['startup_failure_before_external_Stop']['observed_at_ns'])
+    r['fixture_start_observation_until_ns'] = W
+    r['Main_entry_startup_budget_ns'] = 3_000_000_000
+    r['first_statement_placement_runtime_proved'] = False
     r['observation_qualified'] = observation
     r['passed'] = observation and desired
     r['behavior_RED_qualified'] = observation and not desired

@@ -51,6 +51,17 @@ capabilities; the worker retains only NET_ADMIN.
 `pokelinux-connectivity-main` owns the protected root endpoint; neither is
 installed by this checkpoint, and applications cannot access that endpoint.
 
+The isolated [installed startup candidate](../docs/native-connectivity-installed-startup.md)
+uses four path arguments and captures one fixed three-second BOOTTIME startup
+cutoff first in Main. The same frozen host consumer now passes after qualified
+paired RED: four paths enter owned startup and the old fifth argument is refused.
+53 host tests, all seven required controls and host/ARM compilation pass. The
+current four-path Main also passes the unchanged healthy idle/consumed-expiry/
+parent-death oracles with complete closure. ARM runtime, installed boot and GUI
+qualification for this new CLI remain open. The old fifth
+clock argument is refused, with no compatibility path. This entry change leaves
+receive/action budgets and worker ownership unchanged.
+
 Main snapshots expire both observation paths from completed kernel readback
 under CLOCK_BOOTTIME. Idle renewal requires another actual readback, never a
 heartbeat. Original action expiry permanently fences the epoch; late retirement

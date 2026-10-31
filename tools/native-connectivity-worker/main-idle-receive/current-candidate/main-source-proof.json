@@ -1,0 +1,81 @@
+{
+  "schema": 1,
+  "files": {
+    "bootstrap.rs": {
+      "source": "native-process-owner/src/bootstrap.rs",
+      "sha256": "b24d557868dbfb0cf9603ea8efb20b9a459a7ed01f2c0bb483b0fc4711a661e1"
+    },
+    "pidfd.rs": {
+      "source": "native-kernel-identity/src/pidfd.rs",
+      "sha256": "caf4b44738fc53093a32ef96c2e639c1a376935ad29fa17a42091a56180b11ff"
+    },
+    "supervisor.rs": {
+      "source": "native-process-owner/src/supervisor.rs",
+      "sha256": "aad3a02103e31bd908ffd385e302e2e13f5d71cb1b6ca9d36dac44d10677863f"
+    },
+    "service.rs": {
+      "source": "native-connectivity-control/src/service.rs",
+      "sha256": "d5b1d5627d5c8d3856ddbbe7f196038d1ff243a1bebd414591b1e6413f3c155e"
+    },
+    "main_service.rs": {
+      "source": "native-connectivity-control/src/main_service.rs",
+      "sha256": "d0c498790b37de73300e640cb0db2d9e0d07d9fe52dec7a2004ca1a6a9a51960"
+    },
+    "private_channel.rs": {
+      "source": "native-connectivity-control/src/private_channel.rs",
+      "sha256": "de1b4cfc09772729fc55b77d9276bf529eff836af492fc9fa785b376cf595d24"
+    },
+    "retirement.rs": {
+      "source": "native-connectivity-control/src/retirement.rs",
+      "sha256": "1d7e2a069a52cc8e5686ca9988b4c427cf9f0a29bbeae449f0cab23a308edf87"
+    },
+    "main_entry.rs": {
+      "source": "native-connectivity-control/src/bin/pokelinux-connectivity-main.rs",
+      "sha256": "a4f7b5c516a32d94a0db8db5d6b00854dad7dfd597ed611cd180f878c603ff91"
+    }
+  },
+  "roles": {
+    "readiness_helper": "bootstrap.rs::poll_message_readiness",
+    "readiness_poll_nfds": 3,
+    "readiness_descriptor_roles": [
+      "private_channel",
+      "retained_child_pidfd",
+      "same_retained_child_pidfd"
+    ],
+    "identity_helper": "pidfd.rs::ProcessView::matches_after_reads",
+    "identity_poll_nfds": 2,
+    "zero_timeout": true,
+    "Main_other_three_fd_poll_paths": [],
+    "next_gettid_role": "ParentBootstrap receive pre-auth on baseline; readiness local check on candidate before new50ms envelope",
+    "roles_source_qualified": true
+  },
+  "scope": "Prepared current four-path launcher source dataset only. Exact compiled-source/control-flow attribution; no current Main-idle regression or GUI execution. Historical baseline/candidate proof directories retain their original cohorts.",
+  "published_base_commit": "256c553c1eb7c8434711772fa815d2d5ab21cc00",
+  "source_state": "Qualified compiled one-file Main CLI candidate; publication of this change pending",
+  "compiled_source_manifest": {
+    "sha256": "90358dce60122e53d71039d5d2fbd5ccf378c74f330a051fd4894d08f21d1ed6",
+    "source_rows": 59
+  },
+  "qualified_build_result_sha256": "ea6399fbf29f69b1a44e98fe29663b32846988991f7d5da98456106ff91ae128",
+  "qualified_build_outer_receipt_sha256": "3f9009e704a5367e359f9059c08a97c05de7b5e1015951a390b07f41e3329527",
+  "actual_static_entry_pair_review_sha256": "1a64e7d8910ee46f5af614b46e6614834c040d1e91961e93eda03dda51c72c11",
+  "current_controller": {
+    "source": "tools/native-connectivity-worker/main-idle-receive/controller.py",
+    "bytes": 15530,
+    "sha256": "c48b6a1bf3124f8d0f6de9c3fda2ec5d4ef418d7ce515087f62735abeab8c669"
+  },
+  "normal_host_ELFs": {
+    "main": {
+      "bytes": 960280,
+      "sha256": "28c423e28b5814f7b9919d6bbed30ed991234fb03e7d2bf4cda51f7a4ba7f68e",
+      "ELF_machine": 62
+    },
+    "worker": {
+      "bytes": 978512,
+      "sha256": "405a881e846a01fe7b0343ac3ad08bd957649b80a0606201b60fd7fbe064811d",
+      "ELF_machine": 62
+    }
+  },
+  "current_fixture_runtime_executed": false,
+  "first_statement_placement_runtime_proved": false
+}

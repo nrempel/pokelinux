@@ -1,0 +1,305 @@
+{
+  "schema": 1,
+  "classification": "ACTUAL_NORMAL_MAIN_STATIC_ENTRY_RED_THEN_GREEN",
+  "scope": "Native x86_64 normal Main static-entry CLI pair and healthy isolated virtual-backend idle/expiry/parent-death regression; no installed boot, GUI or hardware",
+  "entry_contract": {
+    "arguments": [
+      "control_socket",
+      "protected_startup_profile",
+      "admission_journal",
+      "worker_executable"
+    ],
+    "fixed_startup_budget_ns": 3000000000,
+    "cutoff_captured_before_argument_collection": true,
+    "first_statement_placement_evidence": "source review, not initialization-delay runtime proof",
+    "old_fifth_argument_rejected": true,
+    "receive_action_and_retirement_durations_changed": false
+  },
+  "same_frozen_consumer": {
+    "bytes": 15842,
+    "sha256": "a1b1d34472caceafc73465ada6ef28a5a846245cfd9543f947eb47936aafd10c"
+  },
+  "same_frozen_paired_qualifier": {
+    "bytes": 1766,
+    "sha256": "88d311331052993e7aea48938387cfdd50563f1f2eca8b221c251d9243bece4f"
+  },
+  "helpers": {
+    "owned.py": {
+      "bytes": 12712,
+      "sha256": "5a738b9529a1a0e5d5b0bd20e27e2ec4244d4e61d7c8e0dad96fe1ffbef3c423"
+    },
+    "closure.py": {
+      "bytes": 3596,
+      "sha256": "646e9cfd5f755b626fe8babfa26637ddac328ede05cdab75aa77cc51332d70d6"
+    }
+  },
+  "original_per_case_work_close_seconds": [
+    1,
+    3
+  ],
+  "output_limit_bytes": 16384,
+  "baseline": {
+    "published_commit": "88842e2fc979e77edce499f20851a6ebdf3cb09b",
+    "selection_sha256": "e860a976f3393a95b6e1e1f91a664c14f79e3a6306c7b10bea00babce96ddfd8",
+    "pair_review_sha256": "baabc720122ed1f3a59703f59038d82707eb59ee117196402b769470f28a816a",
+    "consumer_exits": {
+      "static": 1,
+      "absolute": 1
+    },
+    "Main_exits": {
+      "static": 1,
+      "absolute": 0
+    },
+    "static_paths_rejected_before_admission": true,
+    "old_absolute_argument_has_actual_owned_startup_witness": true,
+    "complete_closure_and_ECHILD": true
+  },
+  "candidate": {
+    "published_base_commit": "256c553c1eb7c8434711772fa815d2d5ab21cc00",
+    "compiled_Main_entry": {
+      "bytes": 654,
+      "sha256": "a4f7b5c516a32d94a0db8db5d6b00854dad7dfd597ed611cd180f878c603ff91"
+    },
+    "compiled_source_manifest_sha256": "90358dce60122e53d71039d5d2fbd5ccf378c74f330a051fd4894d08f21d1ed6",
+    "selection_sha256": "ebe1186683994c146cf9dcd994d81ec5c948f5946565aef057a348fdec2c5ed0",
+    "pair_review_sha256": "1a64e7d8910ee46f5af614b46e6614834c040d1e91961e93eda03dda51c72c11",
+    "consumer_exits": {
+      "static": 0,
+      "absolute": 0
+    },
+    "Main_exits": {
+      "static": 0,
+      "absolute": 1
+    },
+    "static_paths_reach_actual_owned_startup": true,
+    "reported_cutoff_minus_3s_within_parent_entry_interval": true,
+    "old_argument_rejected_before_admission": true,
+    "complete_closure_and_ECHILD": true,
+    "host_normal_ELFs": {
+      "pokelinux-connectivity-main": {
+        "bytes": 960280,
+        "sha256": "28c423e28b5814f7b9919d6bbed30ed991234fb03e7d2bf4cda51f7a4ba7f68e"
+      },
+      "pokelinux-connectivity-service": {
+        "bytes": 978512,
+        "sha256": "405a881e846a01fe7b0343ac3ad08bd957649b80a0606201b60fd7fbe064811d"
+      }
+    }
+  },
+  "qualified_build": {
+    "result_sha256": "ea6399fbf29f69b1a44e98fe29663b32846988991f7d5da98456106ff91ae128",
+    "outer_receipt_sha256": "3f9009e704a5367e359f9059c08a97c05de7b5e1015951a390b07f41e3329527",
+    "host_tests_passed": 53,
+    "host_tests_ignored": 1,
+    "required_FIFO_and_wire_controls_passed": 7,
+    "fmt_and_strict_clippy_passed": true,
+    "host_and_ARM_release_bins_compiled": true,
+    "ARM_libtest_compile_only": true,
+    "all_original_locks_unchanged": true,
+    "compiler_container_removed_and_inputs_unchanged": true
+  },
+  "current_caller_migrations": {
+    "historical_source_commit": "256c553c1eb7c8434711772fa815d2d5ab21cc00",
+    "files": {
+      "tools/native-wireless-service/consumer.py": {
+        "historical_commit": "256c553c1eb7c8434711772fa815d2d5ab21cc00",
+        "historical_sha256": "1dd642abdf56d7a2f60ae77da0d38b1514a9613b151034d21e6477c18d2b6fa9",
+        "current_sha256": "d04e04e565353d5ad7c3868a1e0ff2ac9f0ed07180a57aee091257b0be58b007",
+        "current_variant_executed": false,
+        "launch_shape": "four paths only",
+        "deadline_assertion_change": "fixture observation cutoff retained and labeled separately"
+      },
+      "tools/native-connectivity-private-ingress/controller.py": {
+        "historical_commit": "256c553c1eb7c8434711772fa815d2d5ab21cc00",
+        "historical_sha256": "87b01a7d044cf91d74a623a26ebf5301a170e3bfadfbcc120898e4ffeadcb392",
+        "current_sha256": "d199d4b651c8dcfc5beeee1dd51f7c6f7496c09209a266a7ac731619e03d91bb",
+        "current_variant_executed": false,
+        "launch_shape": "four paths only",
+        "deadline_assertion_change": "fixture observation cutoff retained and labeled separately"
+      },
+      "tools/native-connectivity-actor/controller.py": {
+        "historical_commit": "256c553c1eb7c8434711772fa815d2d5ab21cc00",
+        "historical_sha256": "debe2c3abcea83a7a8a7be2fb3c2c3116f5ec9f28a63099d1d74898f95001717",
+        "current_sha256": "7bc1aad325f9db9774520826425e3beccd1d4fd9e762295a15c70f644bfaaa0b",
+        "current_variant_executed": false,
+        "launch_shape": "four paths only",
+        "deadline_assertion_change": "fixture observation cutoff retained and labeled separately"
+      },
+      "tools/native-connectivity-settings-sdk/controller.py": {
+        "historical_commit": "256c553c1eb7c8434711772fa815d2d5ab21cc00",
+        "historical_sha256": "f2ebb82bda701df99cfd03a236f3d7fad39a03f37bab7c4ce46abb680ded200f",
+        "current_sha256": "47f30e344ccd79b16a32305a881208d1785740e7a462bc10143ee68ecf376c24",
+        "current_variant_executed": false,
+        "launch_shape": "four paths only",
+        "deadline_assertion_change": "fixture observation cutoff retained and labeled separately"
+      },
+      "tools/native-connectivity-settings-window/controller.py": {
+        "historical_commit": "256c553c1eb7c8434711772fa815d2d5ab21cc00",
+        "historical_sha256": "9360354186cf9018f2332408863af04e92a68fe906683a6669f97f1311188ea8",
+        "current_sha256": "9ca0e1e959968f376460c9915ca8e9ede122ded4aefcfed05ba93b75ecef6bc8",
+        "current_variant_executed": false,
+        "launch_shape": "four paths only",
+        "deadline_assertion_change": "fixture observation cutoff retained and labeled separately"
+      },
+      "tools/native-connectivity-settings-window/arm/worker-diagnostic-controller.py": {
+        "historical_commit": "256c553c1eb7c8434711772fa815d2d5ab21cc00",
+        "historical_sha256": "fd0bec2282742884b57338f0d32ad2325ea68911759960a063a65aa762746bb5",
+        "current_sha256": "ab4c8f6172aee15b27c8987d77e2ac366c52173d38c6b2cd80fcdba94193b07d",
+        "current_variant_executed": false,
+        "launch_shape": "four paths only",
+        "deadline_assertion_change": "fixture observation cutoff retained and labeled separately"
+      },
+      "tools/native-connectivity-worker/idle-receive/controller.py": {
+        "historical_commit": "256c553c1eb7c8434711772fa815d2d5ab21cc00",
+        "historical_sha256": "4350398aba9938cca2194c2737a9674a721952a952a909f3f7e606a67b753a95",
+        "current_sha256": "d8545e712c8fb11770945a4cd36e0490ccdcbc3bf0b6254e39261d903059b748",
+        "current_variant_executed": false,
+        "launch_shape": "four paths only",
+        "deadline_assertion_change": "fixture observation cutoff retained and labeled separately"
+      },
+      "tools/native-connectivity-worker/main-idle-receive/controller.py": {
+        "historical_commit": "256c553c1eb7c8434711772fa815d2d5ab21cc00",
+        "historical_sha256": "acdc7d72b2a1e5628c88d38575a2132b12af434fec1004b662a1e8653ae0ba1b",
+        "current_sha256": "c48b6a1bf3124f8d0f6de9c3fda2ec5d4ef418d7ce515087f62735abeab8c669",
+        "current_variant_executed": true,
+        "launch_shape": "four paths only",
+        "deadline_assertion_change": "fixture observation cutoff retained and labeled separately",
+        "qualified_runtime_scope": "idle/consumed/parent-death only"
+      },
+      "tools/native-connectivity-worker/first-retirement/consumer.py": {
+        "historical_commit": "256c553c1eb7c8434711772fa815d2d5ab21cc00",
+        "historical_sha256": "e7c0bbbd4dcc68caa6061b78ea8aeafdb7b2519e92439c48e27edd4e1b6f365e",
+        "current_sha256": "5c532ba931b771a1cc98e7d83fd5d863195585df5bb4a993c5458f5f7fc26e44",
+        "current_variant_executed": false,
+        "launch_shape": "four paths only",
+        "deadline_assertion_change": "entry interval instead of parentW equality"
+      }
+    },
+    "runtime_manifest_policy": "Regenerate current selected runner/consumer hashes from these files; old source-proof datasets and evidence hashes remain historical",
+    "qualified_current_variants": [
+      "tools/native-connectivity-worker/main-idle-receive/controller.py"
+    ],
+    "other_eight_current_variants_runtime_executed": false,
+    "frozen_preparation_manifests_retain_preexecution_metadata": true
+  },
+  "remaining": {
+    "installed_PID1_boot_unqualified": true,
+    "static_interface_resolution_unimplemented": true,
+    "existing_GUI_cohort_uses_88842e2_binaries": true,
+    "GUI_with_new_four_path_CLI_unqualified": true,
+    "ARM_runtime_with_new_CLI_unqualified": true,
+    "physical_phone_accessed": false,
+    "installed_permissions_and_normal_session_boot_unqualified": true
+  },
+  "raw_private_inventories_logs_or_profiles_published": false,
+  "CLI_pair_capabilities": {
+    "initial_uid_gid": [
+      0,
+      0
+    ],
+    "initial_permitted_effective_bounding": [
+      "SETPCAP"
+    ],
+    "inheritable_ambient": [],
+    "NoNewPrivs": true,
+    "supplementary_groups": [],
+    "entered_Main_observed_cap0": true,
+    "NET_ADMIN_ever_available": false
+  },
+  "healthy_actual_Main_regression": {
+    "prepared_selection_sha256": "708c0279c1dbf4801eccab0a002d52e5662066a16325c4ef484477742433a6a6",
+    "prepared_command_sha256": "5f480a6b1955e9b1871d1a3dde15e77d38327378479a5115ef86aae2f82b5080",
+    "cases": [
+      "idle",
+      "consumed",
+      "parent-death"
+    ],
+    "existing_owner_consumer_and_seven_other_runtime_helpers_unchanged": true,
+    "controller_delta": "Four Main paths and explicit fixture observation-cutoff metadata label only",
+    "functional_case_seconds": 6,
+    "fixture_startup_observation_seconds": 3,
+    "hold_ns": 80000000,
+    "receive_envelope_ns": 50000000,
+    "observation_lease_ns": 250000000,
+    "CPUs": 2,
+    "memory_GiB": 2,
+    "outer_work_close_seconds": [
+      180,
+      200
+    ],
+    "inner_work_close_seconds": [
+      30,
+      40
+    ],
+    "prepared_only_at_curation": false,
+    "Root_review_and_admission_required": false,
+    "runtime_success_claimed": true,
+    "classification": "ACTUAL_HEALTHY_MAIN_THREE_CASE_GREEN",
+    "selection_sha256": "708c0279c1dbf4801eccab0a002d52e5662066a16325c4ef484477742433a6a6",
+    "outer_receipt_sha256": "e6222be498d74cd2433b6bf88ef0e74140a1d51146d85a859ca01939603f5bc5",
+    "curated_review_sha256": "8c799cf2f73c3373239672c02e3bfaf43f3e080f72b1376dab214179f9c16170",
+    "desired_assertion_after_all_three_container_closures_passed": true,
+    "cases_qualified": {
+      "idle": {
+        "case_result_sha256": "dcb6e91303bc34e67f0555360057def3d2fb34f3b163393b3a9b66ef43208ded",
+        "inside_result_sha256": "7696592b3d5608101a0727593e361c9c21b1d229479086f2a00888cc208e963c",
+        "Main_exit": 0,
+        "actual_effect_requests": 0,
+        "custody_qualified": true,
+        "all_owned_waits_PIPE_EOF_namespace_FDs_and_ECHILD_qualified": true,
+        "exact_container_absence": true,
+        "first_retirement_reason": "external_stop",
+        "worker_exit_code": null,
+        "worker_exit_signal": 9,
+        "same_worker_fresh_after_SIGCONT": true,
+        "worker_nonterminal_before_cleanup": true,
+        "Main_exit_after_explicit_Stop": 0
+      },
+      "consumed": {
+        "case_result_sha256": "99e332c33bd80f8c9d55c7c38f693e17abf74cca202abca1cca7da1f4a1c4c19",
+        "inside_result_sha256": "3ec5fd53c17d3ac77ad6b6e54aac202b214af3065f9060afff58eff9e92ec896",
+        "Main_exit": 0,
+        "actual_effect_requests": 0,
+        "custody_qualified": true,
+        "all_owned_waits_PIPE_EOF_namespace_FDs_and_ECHILD_qualified": true,
+        "exact_container_absence": true,
+        "first_retirement_reason": "receive_failure",
+        "worker_exit_code": 1,
+        "worker_exit_signal": null,
+        "actual_consumed_bytes": 48,
+        "late_consumed_frame_refused": true,
+        "no_late_success_or_retry": true
+      },
+      "parent-death": {
+        "case_result_sha256": "21da42e771dfeffaba294149ae080d0dd31124256b82c6310ebe736619330a44",
+        "inside_result_sha256": "a3c38bc1a7f7c3e95db61a6e848216f1f9600fc50a0e5220d703e168f9e8a26a",
+        "Main_exit": -9,
+        "actual_effect_requests": 0,
+        "custody_qualified": true,
+        "all_owned_waits_PIPE_EOF_namespace_FDs_and_ECHILD_qualified": true,
+        "exact_container_absence": true,
+        "known_worker_actual_adopted_wait_signal": 9,
+        "ordinary_Main_worker_wait_claimed": false
+      }
+    },
+    "closure_counts_by_disjoint_scope": {
+      "outer_owned_commands": 39,
+      "inner_owned_commands": 9,
+      "case_owned_Main_and_keeper": 6,
+      "separate_known_adopted_worker_waits": 1
+    },
+    "separate_known_adopted_wait_is_not_PIPE_EOF": true,
+    "same_daemon_and_all_inputs_unchanged": true,
+    "all_three_exact_container_names_CIDs_absent": true,
+    "setup_capabilities": [
+      "NET_ADMIN",
+      "SYS_ADMIN",
+      "SETPCAP",
+      "SYS_PTRACE"
+    ],
+    "Main_observed_cap0_worker_NET_ADMIN_only": true,
+    "network": "none; fresh disposable namespaces",
+    "zero_Apply_requests_all_cases": true,
+    "scope": "Actual healthy virtual-backend Main startup and observation; no packets or connected address effects"
+  }
+}

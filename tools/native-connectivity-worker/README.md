@@ -92,12 +92,28 @@ stay unconfirmed. Result and
 closed wait/EOF receipts are persisted before the final desired assertion.
 The Debug grammar is a private component diagnostic, not a new control protocol.
 
+## Current Main entry and historical launchers
+
+The current normal Main uses four paths and owns one fixed three-second startup
+cutoff. [The host CLI pair](../../docs/native-connectivity-installed-startup.md)
+passes after RED. The migrated four-path Main-idle controller also passes its
+three healthy cases with unchanged oracles/bounds and full closure; eight other
+current launcher variants remain unexecuted. Recorded historical worker/Main
+idle and first-retirement results retain their original
+five-argument source cohorts. Use immutable historical sources for those replays,
+and regenerate current runner/provider hashes for a fresh regression selection.
+Fixture observation/action/retirement limits remain unchanged.
+The installed-startup fixture and its preparation README retain their frozen
+pre-execution88842e2 narrative and bytes; the linked CLI report supplies the
+subsequent actual paired RED/GREEN result.
+
 ## Persistent idle readiness consumer
 
-The exact [`consumer.py`](idle-receive/consumer.py),
-[`controller.py`](idle-receive/controller.py) and
-[`worker_trace.py`](idle-receive/worker_trace.py) execute unchanged across the
-[revised normal-provider RED and GREEN](../../docs/native-connectivity-idle-receive.md).
+The [revised normal-provider RED and GREEN](../../docs/native-connectivity-idle-receive.md)
+retain their recorded exact source hashes. The
+[pre-migration controller](https://github.com/nrempel/pokelinux/blob/256c553c1eb7c8434711772fa815d2d5ab21cc00/tools/native-connectivity-worker/idle-receive/controller.py)
+is preserved separately; the current four-path controller migration has not run.
+The consumer and worker tracer are unchanged by this CLI migration.
 The controller's original RED-oriented docstring is preserved with its executed
 bytes. The pure consumer performs no I/O and makes its one desired assertion
 only after the outer scope has qualified all three case closures.

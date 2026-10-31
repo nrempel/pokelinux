@@ -560,7 +560,7 @@ def run_case(*, root, inputs, selection, station, ap, ap_prefix, namespace_bindi
         need(case < work_until, 'unchanged six-second original functional aggregate')
         start_until = min(case, case_armed + START_NS)
         r.update(original_case_armed_at_ns=case_armed, original_case_until_ns=case,
-                 original_start_until_ns=start_until)
+                 fixture_start_observation_until_ns=start_until)
         readback('initial-before-Main', False, start_until)
         packet = scope.start(['/usr/bin/python3', '-B', str(peer_script), 'serve', peer_path,
                               str(gates), str(case)], 'cap0-AP-packet-peer.log', 65536,
@@ -577,7 +577,7 @@ def run_case(*, root, inputs, selection, station, ap, ap_prefix, namespace_bindi
         r['peer_ready_qualified'] = True
         r['peer_ready'] = ready_peer
         argv = [str(binaries['main']), str(endpoint), str(profile), str(journal / 'admitted'),
-                str(binaries['worker']), str(start_until)]
+                str(binaries['worker'])]
         r['normal_Main_exact_argv'] = argv
         main = scope.start(argv, 'normal-connectivity-main.log', 1048576,
             env=dict(os.environ, POKELINUX_CONNECTIVITY_ISOLATED='1'),

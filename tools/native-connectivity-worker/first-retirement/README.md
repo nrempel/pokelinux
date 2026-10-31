@@ -1,11 +1,19 @@
 # Normal Main first-retirement consumer
 
-This is the exact13728-byte consumer used unchanged for the native x86_64
+The [historical13728-byte consumer](https://github.com/nrempel/pokelinux/blob/256c553c1eb7c8434711772fa815d2d5ab21cc00/tools/native-connectivity-worker/first-retirement/consumer.py)
+was used unchanged for the native x86_64
 [baseline RED and candidate GREEN](../../../docs/evidence/native-connectivity-first-retirement.json).
 It observes a startup failure, then sends one later SIGTERM and requires Main's
 closure JSON to preserve the first `startup_failure` reason and original cutoff.
 The authored target is absent; NET_ADMIN is always outside the bounding set.
 No backend/interface effect, GUI recovery or phone behavior is qualified.
+
+The current `consumer.py` is a separately migrated four-path launcher and has
+not executed. It keeps the original1s observation/3s closure bounds; its Main
+cutoff assertion now checks `reported_until - 3s` within the parent entry
+interval rather than equality with parent W. Source review establishes first
+placement. The [separate static-entry pair](../../../docs/native-connectivity-installed-startup.md)
+uses its own frozen consumer and is the only new CLI runtime result.
 
 Copy `consumer.py` to a fresh runner directory with exact copies of
 [`owned.py`](../../native-installed-services/owned.py) and
