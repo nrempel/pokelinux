@@ -368,7 +368,7 @@ phone gate remain open.
 
 ## Current graphical wireless tracer remains partial
 
-Three later generic ARM attempts join the normal installed Settings window to the
+Four later generic ARM attempts join the normal installed Settings window to the
 current Rust wireless Main/worker and an owned hwsim open AP. They retain
 authored actor authority, fixed IPv4 and the existing ARM measurement bounds;
 this is the normal Local connection toggle for one selected AP, without SSID
@@ -414,8 +414,24 @@ handles. Wireless teardown/loopback preservation, QEMU/Xvfb wait0, container wai
 exact removal/absence and unchanged inputs pass separately. A later Main
 first-retirement latch now passes its separate native host CLI missing-reason
 RED/candidate GREEN, preserving startup failure through a later Stop. That
-candidate has not run graphically and identifies no cause for root3.
+candidate later executes as root4 below; it identifies no cause for root3.
 [First-retirement host evidence](evidence/native-connectivity-first-retirement.json).
+
+Root4 (`ee2d71b`) reaches one Enable/Completed and cap0 nonce/ACK, normal first-app
+wait0 plus SDK retirement, and a brief associated/profile background readback.
+The second app launches but no second readiness frame or packet qualifies.
+Main's first-retirement record now identifies `receive_failure`, operation
+`receive_message`, kind `TimedOut`. Detection `135610806603` is 40,356,591 ns after
+its original cutoff `135570450012`; this is not syscall timing. The record does
+not identify empty versus consumed input or a pre/post deadline check, CPU,
+scheduling or IPv6 cause. The last pre-detection GUI state publication is
+available/configured/connected with pending false; its fact age at detection is
+183,111,087 ns and its reported lease expires 66,888,913 ns after detection. That
+separates the transport cutoff from the last published lease, without establishing
+Main's current pending state or internal receive stage. It attributes only this
+run, leaving root2/root3 unexplained. Worker signal9, Main0 and driver101 follow. Controller custody,
+wireless teardown and outer closure qualify; guest-case closure remains false
+with34 adopted exit0 waits. Complete reopen/Disable/quiet remains failed.
 
 Root2 retains one original Enable-ready PNG at 1080×2424. External compositor
 measurements are scale 2.625, nominal 65×146mm and a 411×923 mapped Settings window
@@ -425,5 +441,5 @@ buffer/PNG hash matching and Root's original-frame review show Disabled/Connecti
 ready, Enable active and Disable dimmed in the ordinary fallback theme. There is
 no connected-success frame, resize or new public screenshot in this checkpoint.
 [Hash-only partial provenance](evidence/native-wireless-settings-window-partial.json)
-binds all three attempts, frozen sources, key gates and outer receipts; its
+binds all four attempts, frozen sources, key gates and outer receipts; its
 visually reviewed frame remains root2 only.

@@ -153,7 +153,8 @@
     "exact_container_absence_same_daemon": true,
     "closure_ECHILD_without_adopted_waits": true,
     "ARM_tests_executed": false,
-    "normal_ARM_Main_worker_executed": false
+    "normal_ARM_Main_worker_executed": false,
+    "execution_scope": "Build/host CLI checkpoint; ARM component libtest stayed compile-only. Later graphical root4 is recorded separately."
   },
   "earlier_root1_setup_failure": {
     "cohort": "pokelinux-main-first-retirement-cli-root-1",
@@ -164,9 +165,29 @@
     "scope": "cap0 Main could not perform its own bounding-set drop; immutable setup failure"
   },
   "graphical_root3_failure_preserved": true,
-  "graphical_first_retirement_candidate_executed": false,
+  "graphical_first_retirement_candidate_executed": true,
   "graphical_underlying_cause_known": false,
   "behavior_or_deadline_change_qualified": false,
   "phone_accessed": false,
-  "raw_host_network_inventory_or_private_outputs_published": false
+  "raw_host_network_inventory_or_private_outputs_published": false,
+  "graphical_first_retirement_observation": {
+    "epoch": "root4",
+    "source_commit": "ee2d71b1d0f14bc2592602a101420956bea47727",
+    "evidence": "native-wireless-settings-window-partial.json",
+    "first_retirement": {
+      "detected_at_ns": 135610806603,
+      "errno": null,
+      "io_kind": "TimedOut",
+      "observation_age_ns": null,
+      "observation_at_ns": null,
+      "operation": "receive_message",
+      "original_until_ns": 135570450012,
+      "reason": "receive_failure",
+      "record_length": null,
+      "record_type": null
+    },
+    "complete_graphical_lifecycle_qualified": false,
+    "underlying_timing_cause_known": false,
+    "root2_or_root3_cause_established": false
+  }
 }

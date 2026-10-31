@@ -44,11 +44,22 @@ Initial UID0/SETPCAP-only authority lets Main reduce itself to cap0; NET_ADMIN
 is always absent and the worker fails ReduceCapabilities with errno1 before
 backend access. Main exits0, worker exits1 and both cases qualify actual
 wait/PIPE EOF, closed handles and ECHILD. The candidate passes45 library plus8
-owner tests,1 ignored, formatting, strict Clippy and host/ARM compilation. This
-first-retirement candidate has not executed the GUI failure path or ARM tests.
+owner tests,1 ignored, formatting, strict Clippy and host/ARM compilation. ARM connectivity component tests remain compile-only.
 [Curated host evidence](evidence/native-connectivity-first-retirement.json) and
 [exact consumer/reproduction](../tools/native-connectivity-worker/first-retirement/README.md).
-Root3 and its unknown cause remain unchanged.
+
+The graphical first-retirement candidate later executes as failed root4. Its
+Main closure records `receive_failure` / `receive_message` / `TimedOut`, detected
+at `135610806603` against original cutoff `135570450012`, followed by worker
+signal9. The 40,356,591 ns difference is detection past the cutoff, not a measured
+syscall duration or evidence of empty/consumed input or a specific pre/post guard.
+The last published lease extends beyond detection, while the transport cutoff
+has passed; no exact internal pending state or receive stage is established.
+No CPU, scheduling or IPv6 attribution follows. This identifies only root4's
+first Main retirement branch; root2/root3 and the underlying timing cause remain
+unexplained. One packet and brief post-close background readback qualify, but
+complete graphical success remains failed.
+[Graphical evidence](evidence/native-wireless-settings-window-partial.json).
 
 ## Earlier context-wrapper checkpoint
 

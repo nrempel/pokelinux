@@ -275,6 +275,147 @@
       "combined_retirement_recorded_after_cancel": true,
       "first_App_wait_observation_time_separately_recorded": false,
       "failure_path_Main_worker_closure_verified": true
+    },
+    "root4": {
+      "passed": false,
+      "controller_classification": "SETUP_FAILURE",
+      "guest_classification": "VISUAL_SETUP_UNQUALIFIED",
+      "normal_case_custody_qualified": true,
+      "guest_case_closure_qualified": false,
+      "normal_Main_worker_source_commit": "ee2d71b1d0f14bc2592602a101420956bea47727",
+      "source_manifest_sha256": "e12d6ae7c7898fee8751c2f7be45f2f0ac9c1f1f273b53d930eb40bc2960e6ac",
+      "frozen_test_source_sha256": {
+        "source/guest.py": "e7f20701589496bd8ac610ef49c02280718b90e1395290af5c2f04f3e5e801a6",
+        "source/controller.py": "4bcfa261fbd952930bae90548edaf135cbbf929580559f0a5c5e517a8ad61632",
+        "source/boot.py": "ad8cd83047f0c7be6990b0304a5178f433de0dbca85bfe5788f20bb541d78c41",
+        "source/service_connectivity_window_tests.rs": "6db946087dccdc34e3f5ae2722d09459199a575475ee2359fb844b797b64188b"
+      },
+      "ELFs": {
+        "main": {
+          "bytes": 962120,
+          "sha256": "2e8e3a4cff3530fff28a35174e1659f138543466579968b99602fbe1fae0e0ef"
+        },
+        "worker": {
+          "bytes": 956544,
+          "sha256": "d0c930fd344e2e27775ea7763b85021451da368edade1821cb4fa7fb2c3d57a1"
+        }
+      },
+      "other_ELF_cohorts_unchanged_from_root3": [
+        "driver",
+        "launcher",
+        "storage",
+        "normal_Settings"
+      ],
+      "outer_closure": {
+        "functional_passed": false,
+        "actual_QEMU_wait_exit": 0,
+        "actual_Xvfb_wait_exit": 0,
+        "boot_wait_EOF_handles_closed": true,
+        "actual_container_cleanup_wait_exit": 1,
+        "exact_container_removed_and_absent_same_daemon": true,
+        "cleanup_errors": [],
+        "unresolved_direct_children": 0,
+        "source_unchanged": true,
+        "selected_inputs_unchanged": true
+      },
+      "guest_eventual_ECHILD": true,
+      "guest_adopted_actual_waits": {
+        "count": 34,
+        "all_exit_codes_zero": true,
+        "pidfds_signaled": 0
+      },
+      "wireless_owned_radios_removed": true,
+      "wireless_teardown_custody_qualified": true,
+      "STA_loopback_preserved": true,
+      "proof_sha256": {
+        "selection.json": "07afaaea766ea90cc6a42b3763c6ca3ee50fa3e180623607112589ed2f24069d",
+        "SOURCE.json": "e12d6ae7c7898fee8751c2f7be45f2f0ac9c1f1f273b53d930eb40bc2960e6ac",
+        "result.json": "95e2545839486ffc9c46d400493643b88f0dcb76d3058bc217eb0eb20d83dd42",
+        "connectivity-case/result.json": "07a028fb5b6bb2c9379526b9d2c472e11d8d4b0b196ddb1f3ba852e1d5631bbe",
+        "boot-result.json": "45c9bf274549683fd35fa5d8baefdeac29a4e09d4ff36168682cb3f3e07194b2",
+        "run/receipt.json": "df24c2ed7371bf450d41068450ada648ee70255d11b7163c592ef95c97306a29",
+        "connectivity-case/services/normal-connectivity-main.log": "e9341a8d4ae43837fa64635f0431ebde3efa9fd67996a8a6a638e23ce34dda2a",
+        "connectivity-case/gates/connected-proof.json": "4698b810f51a21df12854881e7433bd4188139cecff4277b5d468c6bda6768bf",
+        "connectivity-case/gates/nonce-1-complete.json": "7f2a96a25c711db95d71c26e74658e22ccc192ad8cc34da15e103a8ff9794b5b",
+        "connectivity-case/gates/close-first-sent.json": "1be4284b40425320b87724e474b13cf7b6481bb86a4cd0a60483884b96936ad5",
+        "connectivity-case/gates/first-closed.json": "e21296f9c427b4a89c9f419172a6fce238c9b0583251303820a26cb2ea610367",
+        "connectivity-case/gates/background-readback.json": "ef29b786a6361c7df6b37a2c86261f21e41834e4f8d8fa60c21877f4d4483658",
+        "connectivity-case/gates/second-window.json": "68e300f9db6f854bcc632039fcdfc4a2af9316741b94b3af52774b15e5cafc6e",
+        "connectivity-case/gates/cancel-case.json": "d3155073ee743334111cf2429422e7a4e6c803338f7293d9e304653c58da2cd4",
+        "connectivity-case/gates/actor-publications.json": "5dfd4d575c59db14e90dd2095eb88a3e08db896eea1d3224889676a14fc9a5aa",
+        "connectivity-case/gates/actor-closed.json": "e3e225c85bc197f857aea91817b177ba6a56b50ca3180db044d23f2d66e56d9d",
+        "connectivity-case/gates/peer-packets.json": "3e9d5eb8bd2c331f732b579e4f78f7c9ea451e513697bf66afa40a6478417dfc",
+        "connectivity-case/gates/cleanup-complete.json": "161055304315970e974c86e26441018d282e5719a79b7938cf7b382af50092b2",
+        "connectivity-case/gates/desired-assertion.json": "a7a87c0713dd6874d880dc93605c0217cbd8a41b938da818224081f44a13e4e2",
+        "connectivity-case/services/cap0-nonce-1.log": "ed3002ffd7eb592f77629506e416de50d292286ec6b3a84335dcb3d0e3abec22"
+      },
+      "actual_Enable_touches": 1,
+      "matching_Completed_true": true,
+      "station_association_readback": true,
+      "AP_station_dump_observed": false,
+      "fixed_IPv4_and_subnet_route_readback": true,
+      "nonce_roundtrips_verified": 1,
+      "cap0_client_actual_wait_EOF": true,
+      "first_App_actual_wait_exit_code": 0,
+      "first_per_app_SDK_helper_terminal_and_listener_absent": true,
+      "first_App_and_SDK_retirement_recorded_ns": 134029693895,
+      "background_radio_readback_at_ns": 134101671931,
+      "brief_background_persistence_before_first_retirement_qualified": true,
+      "second_app_launched": true,
+      "second_window_qualified": false,
+      "second_packet_verified": false,
+      "Disable_or_quiet_qualified": false,
+      "first_enable_readiness_qualified": true,
+      "first_enable_captured_frames": 1,
+      "second_disable_captured_frames": 0,
+      "new_visual_review_or_public_screenshot": false,
+      "first_Main_retirement": {
+        "detected_at_ns": 135610806603,
+        "errno": null,
+        "io_kind": "TimedOut",
+        "observation_age_ns": null,
+        "observation_at_ns": null,
+        "operation": "receive_message",
+        "original_until_ns": 135570450012,
+        "reason": "receive_failure",
+        "record_length": null,
+        "record_type": null
+      },
+      "detection_after_original_cutoff_ns": 40356591,
+      "retained_guard_observed_ns": 135654157023,
+      "cancel_requested_ns": 135705285411,
+      "original_worker_pidfd_terminal": true,
+      "Main_child_vector_empty": true,
+      "Main_live_at_guard": true,
+      "process_state_snapshot_atomic": false,
+      "early_worker_diagnostic_observed": false,
+      "normal_Main_log_only_closure_JSON": true,
+      "normal_Main_exit_code": 0,
+      "worker_exit_signal_from_Main_log_tail": 9,
+      "failure_path_Main_worker_closure_verified": true,
+      "driver_exit_after_owned_cleanup": 101,
+      "compiled_desired_assertion_after_backend_cleanup_failed": true,
+      "functional_green": false,
+      "service_behavior_RED_qualified": false,
+      "record_empty_or_consumed_established": false,
+      "specific_pre_or_post_deadline_check_identified": false,
+      "syscall_duration_established": false,
+      "CPU_or_scheduling_cause_established": false,
+      "IPv6_cause_established": false,
+      "underlying_timing_cause_known": false,
+      "root2_or_root3_failure_attributed": false,
+      "last_state_publication_before_first_retirement": {
+        "sent_at_ns": 135499714809,
+        "available": true,
+        "configured": true,
+        "connected": true,
+        "pending": false,
+        "observed_at_ns": 135427695516,
+        "until_ns": 135677695516,
+        "fact_age_at_detection_ns": 183111087,
+        "published_lease_expiry_after_detection_ns": 66888913
+      },
+      "internal_pending_state_at_failure_established": false
     }
   },
   "selected_measurement_bounds": {
@@ -330,12 +471,13 @@
     }
   },
   "selected_production_source_commit_scope": "root1/root2 normal Main/worker; root3 records its later diagnostic source and providers separately",
-  "latest_attempt": "root3",
+  "latest_attempt": "root4",
   "ELFs_scope": "root1/root2; root3 Main/worker overrides are recorded in attempts.root3.ELFs",
   "later_host_first_retirement_diagnostic": {
     "evidence": "native-connectivity-first-retirement.json",
     "qualified_native_x86_64_RED_GREEN": true,
-    "graphical_candidate_executed": false,
-    "root3_cause_established": false
+    "graphical_candidate_executed": true,
+    "root3_cause_established": false,
+    "graphical_epoch": "root4"
   }
 }
