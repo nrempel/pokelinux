@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "scope": "Native host actual normal-worker CLI and FIFO tests; ARM compilation only",
+  "GUI_failure_resolved": false,
+  "phone_accessed": false,
+  "hardware_models_qualified": 0,
+  "source_sha256": {
+    "native-connectivity-control/src/service.rs": "17fd544e87904312c98cf92eb0cea38941527ced0e32062d90d2e53437bd9e8d",
+    "native-connectivity-control/src/worker_diagnostic.rs": "7b831f434664b790ce26a21583fd3ef385b6aee3d7a4867935a1f0fffc5009e7",
+    "tools/native-connectivity-worker/error-context/consumer.py": "4677522a234951e99c08eceabed75f5809a3c5923fdc8f619c88ea8e2a2ee865"
+  },
+  "report_contract": {
+    "maximum_bytes": 4096,
+    "single_nonblocking_FIFO_write": true,
+    "inherited_stderr_flags_unchanged": true,
+    "unsupported_or_unwritable_sink_skipped": true,
+    "delivery_guaranteed": false,
+    "original_error_retained": true,
+    "control_protocol_or_deadlines_changed": false
+  },
+  "actual_CLI": {
+    "baseline": {
+      "passed": false,
+      "behavior_RED_qualified": true,
+      "observation_qualified": true,
+      "classification": "ACTUAL_NORMAL_WORKER_MISSING_EARLY_CONTEXT_RED",
+      "actual_consumer_exit": 1,
+      "worker_exit": 1,
+      "worker_sha256": "c9d5a0bdd8419d5f0f3ddb7e63e8ef2885b7b2dff5ede7f702b9db3413efbde6",
+      "natural_exit_without_cleanup_signal": true,
+      "all_parent_handles_closed": true,
+      "wait_all_ECHILD": true,
+      "result_sha256": "4d0a69114996d00525a4c6bc1a91696a1ceb73ebaad9a64f540f29a51ac545ed",
+      "selection_sha256": "1fd3f2b48868f03b40a2c1350c2d01c7901fac5abfe6125c4620353667386b22",
+      "original_work_close_seconds": [
+        1,
+        3
+      ]
+    },
+    "candidate": {
+      "passed": true,
+      "behavior_RED_qualified": false,
+      "observation_qualified": true,
+      "classification": "ACTUAL_NORMAL_WORKER_COMPLETE_EARLY_CONTEXT_GREEN",
+      "actual_consumer_exit": 0,
+      "worker_exit": 1,
+      "worker_sha256": "95468dde74ef3c5ddd53bd5c42f1129667ad7f2650b4685849bcd176ee8fb85b",
+      "natural_exit_without_cleanup_signal": true,
+      "all_parent_handles_closed": true,
+      "wait_all_ECHILD": true,
+      "result_sha256": "08c987c17281442eda801b0af682928bb421b6a8b28db6bbbde31f4e61681302",
+      "selection_sha256": "0732e3531a7547afa21439a312861a1d16042d6275149cb09915b04c43c569d2",
+      "original_work_close_seconds": [
+        1,
+        3
+      ]
+    }
+  },
+  "build": {
+    "passed": true,
+    "host_library_passed": 42,
+    "host_library_ignored": 1,
+    "host_owner_passed": 8,
+    "actual_FIFO_sink_controls_passed": 4,
+    "fmt_and_strict_all_target_clippy_passed": true,
+    "normal_host_and_ARM_Release_ELFs": {
+      "host/pokelinux-connectivity-main": {
+        "sha256": "5777cf89d8f6f66e1490192a7fbb7bc6a0e49481126373b6ec84d7e3d2e38a67",
+        "bytes": 942608,
+        "ELF_machine": 62
+      },
+      "host/pokelinux-connectivity-service": {
+        "sha256": "95468dde74ef3c5ddd53bd5c42f1129667ad7f2650b4685849bcd176ee8fb85b",
+        "bytes": 979176,
+        "ELF_machine": 62
+      },
+      "ARM/pokelinux-connectivity-main": {
+        "sha256": "85b6564bd6f0660d623f2587b88b74c11aff6991ba9dae460cfd153180c24c3c",
+        "bytes": 956360,
+        "ELF_machine": 183
+      },
+      "ARM/pokelinux-connectivity-service": {
+        "sha256": "b58fca09ad3a1c1f0044ef5d61fe16c44aad9a0d35ad7b733e85971012212f60",
+        "bytes": 960488,
+        "ELF_machine": 183
+      }
+    },
+    "ARM_libtest_compiled_not_executed": true,
+    "result_sha256": "ea1a81454b510f4f04d45526c5d82f95bba4fb5d845bc19dff96de669b80259d",
+    "source_pins_sha256": "56ef785b0822052d93e7d65257d4f076d04dc3bc744bb94c65ec49ebed37b5f3",
+    "outer_receipt_sha256": "109b9eb1f4f41a964c09324717054b44fff297268e4aa3854e7faca1194b1356",
+    "all_owned_wait_EOF_qualified": true,
+    "exact_container_absence": true,
+    "inputs_unchanged": true
+  },
+  "preceding_build_setup_failure": {
+    "host_library_passed": 31,
+    "failed_existing_UID0_fixture_assertions": 11,
+    "new_FIFO_controls_passed": 4,
+    "source_and_tests_unchanged_for_corrected_build": true,
+    "review_sha256": "647c8a30222e9e8f8ca2eff10bb8f041408eacdd392249be40aa76aa664001c4"
+  },
+  "remaining": "Same-cohort graphical ARM diagnostic must recover RefreshBackend cause; GUI persistence and installed composition remain open."
+}

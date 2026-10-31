@@ -25,6 +25,8 @@ use std::{
 
 const LEASE: u64 = 250_000_000;
 const ENVELOPE: u64 = 50_000_000;
+#[path = "worker_diagnostic.rs"]
+mod worker_diagnostic;
 fn invalid() -> io::Error {
     io::ErrorKind::InvalidData.into()
 }
@@ -634,7 +636,7 @@ fn worker_step<T>(
     result: io::Result<T>,
 ) -> io::Result<T> {
     result.map_err(|source| {
-        io::Error::new(
+        let error = io::Error::new(
             source.kind(),
             WorkerFailure {
                 stage,
@@ -642,7 +644,11 @@ fn worker_step<T>(
                 detected_at_ns: boot_time_ns(),
                 source,
             },
-        )
+        );
+        // Emit the complete bounded record before error propagation drops any
+        // caller-owned BoundParent. Rust's Termination print comes later.
+        worker_diagnostic::emit(&error);
+        error
     })
 }
 /// Fixed cooperative worker entry. Arguments originate only in trusted startup,

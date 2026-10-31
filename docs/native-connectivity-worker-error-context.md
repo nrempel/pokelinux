@@ -1,5 +1,33 @@
 # Native worker error context
 
+## Complete early pipe diagnostic
+
+A failed graphical ARM wireless run lost its `RefreshBackend` error during
+worker retirement. `worker_step` now attempts a complete error record before
+error propagation releases any caller-owned parent connection. It formats into
+a fixed4096-byte buffer and performs one nonblocking write through a separately
+reopened, identity-checked FIFO handle. It does not change inherited stderr flags.
+Full/closed pipes, oversized records and unsupported sinks are skipped; the
+original error, control protocol, cutoffs and immediate retirement stay intact.
+Delivery is best effort, including when another failure already caused SIGKILL.
+
+The frozen normal-worker CLI check fails against the preceding worker and passes
+against the candidate: actual UID1000/cap0/NNP1 execution retains the original
+EPERM and natural exit1, now with the complete early record matching the later
+Termination context. Both cases qualify actual wait/PIPE EOF and closed custody
+under the unchanged1s work/3s close bounds. This executes ReduceCapabilities,
+not the graphical RefreshBackend failure.
+
+Four actual FIFO/sink controls and the full selected host suite pass:42 library
+tests and8 owner tests, with1 ignored library test. Formatting, strict all-target
+Clippy, host/ARM normal Release builds and ARM libtest compilation pass. ARM
+tests and the new GUI diagnostic have not executed. An initial test run used
+UID1000 and failed11 existing root-fixture assertions; the unchanged source and
+tests pass with isolated UID0 plus CHOWN/DAC_OVERRIDE, without network authority.
+The original GUI cause remains unknown. [Exact evidence](evidence/native-connectivity-early-diagnostic.json).
+
+## Earlier context-wrapper checkpoint
+
 The later [idle receive investigation](native-connectivity-idle-receive.md)
 separately reproduces empty-idle expiry on the host and adds a non-consuming
 readiness hint. It preserves the 50 ms authenticated receive envelope and the
@@ -13,7 +41,7 @@ exits naturally with code1 in that host control; the GREEN consumer exits0.
 
 ## What changed
 
-Only `native-connectivity-control/src/service.rs` changes production behavior at
+The original checkpoint changed only `native-connectivity-control/src/service.rs` at
 error reporting: a private `WorkerFailure` wraps the original `io::Error`, keeps
 its outer kind and exposes the source chain. The outer custom error's
 `raw_os_error()` is not claimed unchanged. The detection clock is sampled only

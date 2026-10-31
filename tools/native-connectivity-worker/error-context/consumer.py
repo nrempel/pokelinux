@@ -8,10 +8,9 @@ from closure import close_owned
 
 OWNED = '5a738b9529a1a0e5d5b0bd20e27e2ec4244d4e61d7c8e0dad96fe1ffbef3c423'
 CLOSURE = '646e9cfd5f755b626fe8babfa26637ddac328ede05cdab75aa77cc51332d70d6'
-MARKER = 'WORKER_FAILURE_MUST_IDENTIFY_REDUCE_CAPABILITIES_AND_ORIGINAL_EPERM'
+MARKER = 'WORKER_FAILURE_MUST_EMIT_COMPLETE_EARLY_CONTEXT'
 MESSAGE = r'"(?:[^"\\\r\n]|\\.){0,300}"'
 SOURCE = r'Os \{ code: 1, kind: PermissionDenied, message: ' + MESSAGE + r' \}'
-BASELINE = re.compile(r'Error: ' + SOURCE + r'\n')
 DESIRED = re.compile(r'Error: Custom \{ kind: PermissionDenied, error: WorkerFailure \{ stage: ReduceCapabilities, original_until_ns: None, detected_at_ns: ([0-9]{1,20}), source: ' + SOURCE + r' \} \}\n')
 
 def digest(path):
@@ -102,17 +101,23 @@ def main():
         natural = True
         body = (a.output / 'actual-normal-worker.log').read_bytes()
         text = body.decode('utf-8', errors='strict')
-        baseline = BASELINE.fullmatch(text) is not None
-        match = DESIRED.fullmatch(text)
-        detected = int(match.group(1)) if match else None
-        within = (match is not None and child['spawn_started_at_ns'] <= detected
+        baseline_match = DESIRED.fullmatch(text)
+        baseline = baseline_match is not None
+        lines = text.splitlines(keepends=True)
+        match = (DESIRED.fullmatch(lines[1]) if len(lines) == 2
+                 and lines[1].startswith('Error: ')
+                 and lines[0] == 'connectivity_worker_failure_v1 ' + lines[1][7:]
+                 else None)
+        context = match or baseline_match
+        detected = int(context.group(1)) if context else None
+        within = (context is not None and child['spawn_started_at_ns'] <= detected
                   <= child['wait']['waited_at_boottime_ns'] < W)
         r.update(actual_worker_exit=code, natural_exit_without_cleanup_signal=True,
                  raw_output_sha256=hashlib.sha256(body).hexdigest(), raw_output_bytes=len(body),
-                 exact_unwrapped_original_EPERM=baseline,
+                 exact_single_termination_context=baseline,
                  exact_desired_context=match is not None, detected_at_ns=detected,
                  detection_in_actual_spawn_wait_span=within,
-                 normal_worker_observation_qualified=(code == 1 and (baseline or within)))
+                 normal_worker_observation_qualified=(code == 1 and within))
     except BaseException as e:
         r['setup_or_observation_error'] = type(e).__name__ + ': ' + str(e)
     finally:
@@ -137,12 +142,12 @@ def main():
                    and not scope.receipts[0]['output_overflow']
                    and r['completed_at_ns'] < C)
     r['observation_qualified'] = observation
-    r['passed'] = observation and r.get('detection_in_actual_spawn_wait_span', False)
-    r['behavior_RED_qualified'] = observation and r.get('exact_unwrapped_original_EPERM', False)
+    r['passed'] = observation and r.get('exact_desired_context', False)
+    r['behavior_RED_qualified'] = observation and r.get('exact_single_termination_context', False)
     if r['passed']:
-        r['classification'] = 'ACTUAL_NORMAL_WORKER_ORIGINAL_EPERM_STAGE_CONTEXT_GREEN'
+        r['classification'] = 'ACTUAL_NORMAL_WORKER_COMPLETE_EARLY_CONTEXT_GREEN'
     elif r['behavior_RED_qualified']:
-        r['classification'] = 'ACTUAL_NORMAL_WORKER_ORIGINAL_EPERM_MISSING_STAGE_RED'
+        r['classification'] = 'ACTUAL_NORMAL_WORKER_MISSING_EARLY_CONTEXT_RED'
     (a.output / 'result.json').write_text(json.dumps(r, indent=2) + '\n')
     if not observation:
         raise RuntimeError('UNCONFIRMED: setup, observation, timing or custody qualification failed')

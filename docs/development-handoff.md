@@ -2,6 +2,15 @@
 
 ## Immediate integration order
 
+The complete early worker diagnostic now passes an actual normal-worker CLI
+missing-record baseline and unchanged-consumer candidate check, plus50 selected
+host tests and host/ARM compilation. It is a best-effort single nonblocking FIFO
+write before error propagation, with no deadline or retirement changes. Run one
+otherwise unchanged graphical ARM wireless diagnostic next to identify the
+truncated RefreshBackend cause, then make the bounded repair and proceed to
+installed cold boot. No GUI recovery is established by these host checks.
+[Diagnostic evidence](evidence/native-connectivity-early-diagnostic.json).
+
 Latest graphical wireless checkpoint: root1 fails normal Main startup with
 EACCES before app input. Root2 reaches one real Settings Enable, matching
 Completed, independent station association/fixed IPv4 and one cap0 nonce/ACK.

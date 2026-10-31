@@ -63,7 +63,8 @@ qualification; raw nonces and process traces remain private.
 schema2 worker startup encoding. Its earlier8290-byte version remains the frozen
 consumer for the recorded [error-context RED and GREEN](../../docs/native-connectivity-worker-error-context.md).
 The current version runs the normal compiler-JSON-selected x86_64 Release worker
-with the existing cooperative selector; fresh execution remains pending. It requires no hidden
+with the existing cooperative selector. The current early-record consumer now
+passes its actual host baseline/candidate check. It requires no hidden
 worker flag or special capability: the actual parent/child cohort is UID1000,
 all capability sets0 and NNP1. No Main or virtual-link setup is exercised.
 
@@ -83,9 +84,11 @@ Before any parent poll/wait, actual child status/task metadata is retained; an
 observed zombie is not called running. One original1s absolute BOOTTIME cutoff
 covers natural worker exit1 and merged stderr/stdout PIPE EOF, with output capped
 at4096 bytes. A separately selected3s custody cutoff cannot qualify late work.
-Only exact unwrapped source errno1/PermissionDenied with full custody qualifies
-missing-context RED. Unexpected output, setup or closure faults stay unconfirmed.
-The desired contextual Debug structure and detection time must match. Result and
+Only the exact single Termination context with original errno1/PermissionDenied
+and full custody qualifies missing-early-record RED. GREEN requires one complete
+`connectivity_worker_failure_v1` record followed by an identical Termination
+context, including its detection time. Unexpected output, setup or closure faults
+stay unconfirmed. Result and
 closed wait/EOF receipts are persisted before the final desired assertion.
 The Debug grammar is a private component diagnostic, not a new control protocol.
 

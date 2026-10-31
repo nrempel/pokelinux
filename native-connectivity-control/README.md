@@ -1,5 +1,11 @@
 # Rust connectivity control
 
+Worker failures attempt one complete, bounded nonblocking FIFO diagnostic before
+error propagation drops the parent connection. Unsupported/full sinks are skipped
+and the original error is retained. Actual host pipe and normal-worker CLI checks
+pass; the failed ARM graphical wireless cause remains unknown.
+[Diagnostic scope and evidence](../docs/native-connectivity-worker-error-context.md).
+
 This component separates short-lived fixed-profile commands from background
 connection ownership. `owner` accepts only trusted in-process principal/grant
 identities, keeps one mutation slot, fences departed or expired requester replies
@@ -13,8 +19,8 @@ conflicts or possibly dispatched failures permanently fence that attachment.
 The explicit `profile-up` / `profile-down` worker modes now pass actual ARM
 virtual-radio address setup, two packet round trips, removal and quiet after
 separately qualified Rust association. See [the API and packet report](../docs/native-wireless-address-packets.md).
-This does not change the persistent Service's virtual-link backend or repair its
-separate ARM ReceiveCommand failure; Settings Wi-Fi integration remains open.
+These explicit profile modes are separate from the persistent wireless service.
+The full graphical ARM Wi-Fi lifecycle remains open.
 
 The persistent worker now polls a non-consuming retained-parent readiness hint
 before constructing its unchanged 50 ms authenticated receive envelope. Empty
