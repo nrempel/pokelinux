@@ -37,9 +37,11 @@ validators and generic hwsim owner. Fresh unmodified normal Main/worker host+ARM
 builds and the ARM actor/SDK/launcher/storage builds pass. The first actual ARM attempt stops at the cap0 path preflight before Main/actor
 launch: operational files were under UID1000-owned0700 results. This is setup
 failure, not service RED. The corrected root-owned guest runtime layout passes
-a separate actual host cap0 RED→GREEN control using the unchanged helper. Run a
-fresh ARM cohort, observe actual normal-service refusal and full cleanup, then
-implement the retained backend without changing the desired consumer. Keep the
+a separate actual host cap0 RED→GREEN control using the unchanged helper. The fresh
+second ARM cohort now qualifies actual normal-service refusal RED with exact
+worker InvalidData/exit1, Main exit0, actual SDK unavailable and full owned
+AP/radio/namespace/QEMU/container closure. Desired behavior remains false.
+Implement the retained backend against these frozen consumer bytes. Keep the
 first failed attempt and normal closure qualification separate.
 Astra's review supports one concrete virtual-pair/wireless-open startup profile
 enum and typed observations, retaining radio and IPv4 objects on one worker

@@ -59,6 +59,11 @@ Disable removes the address and stops traffic. This passes in an x86 VM with
 explicit test session authority. Wi-Fi and Internet connectivity remain open.
 [App-to-packets test](docs/native-settings-connectivity-window.md).
 
+The next step is persistent Wi-Fi. An [ARM Linux simulated-radio integration
+test](tools/native-wireless-service/README.md) now reaches the real service and
+app boundary and confirms the missing behavior, with complete test cleanup.
+The retained wireless backend is still to be implemented.
+
 | Before Enable | Reopened with the connection preserved |
 | --- | --- |
 | ![Settings with the local connection disabled and Enable available](docs/assets/settings-connectivity-disabled.png) | ![A fresh Settings instance observes the local connection still enabled](docs/assets/settings-connectivity-reopened-enabled.png) |

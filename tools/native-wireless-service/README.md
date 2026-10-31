@@ -1,9 +1,10 @@
 # Persistent wireless service acceptance
 
 This directory contains a concrete normal Main/actor integration consumer and
-the existing generic ARM hwsim owner adapted to call it. No persistent-service
-RED, GREEN, production backend implementation or phone qualification is claimed
-by writing these files. Freeze these consumer bytes before production changes.
+the existing generic ARM hwsim owner adapted to call it. The second actual ARM
+cohort qualifies the baseline refusal RED through this consumer. Persistent-service
+GREEN, production backend implementation and phone qualification remain open.
+These consumer bytes are frozen before production changes.
 
 The normal Main keeps five arguments:
 
@@ -96,8 +97,8 @@ observation helpers do not manufacture such provenance.
 The first selected baseline is now built from unmodified current production
 sources: normal Main/worker for host and ARM64, plus the copied actual actor
 test and normal SDK/launcher/storage ARM64 executables. Source pins remain
-unchanged after compilation. This is build evidence only: the hwsim runtime RED
-has not run. Three missing non-Linux lockfile archives were obtained from the
+unchanged after compilation. Compilation alone is build evidence; the separate second ARM hwsim run now
+qualifies runtime RED. Three missing non-Linux lockfile archives were obtained from the
 public crates.io distribution and verified against the existing lock checksums;
 lockfiles and shared registry inputs were not modified. The guest adapter sets
 the explicit isolated-test environment after exclusive hwsim setup and creates
@@ -110,10 +111,10 @@ Baseline classification also requires exactly the selected unscoped normal-worke
 worker exit1. Wrapped capability/bootstrap failures or other error text remain
 unqualified. This identifies the retained implementation's refusal class, not
 the exact underlying kernel error discarded by that implementation. It is an
-expected baseline contract until the actual runtime observes it.
+baseline contract observed by the second actual ARM cohort.
 
 The first actual ARM attempt fails the cap0 path preflight before Main/actor
-launch or any network command: `/results` belongs to UID1000 with mode0700,
+launch or any normal-service network request: `/results` belongs to UID1000 with mode0700,
 so capability-free guest UID0 cannot traverse it. The failed case stays separate
 from service RED. QEMU wait0, owned radio removal, exact container absence and
 unchanged inputs are recorded; normal case closure qualification remains false.
@@ -121,4 +122,12 @@ Operational gates, startup profile/socket and journal now live beneath the
 root-owned guest input/runtime directory; only output logs remain under `/results`.
 The unchanged helper reproduces the bad-ancestor refusal and passes the corrected
 layout in actual native host cap0 processes with waits/EOF and original one-second
-bounds. A fresh ARM run is still required.
+bounds. The fresh second ARM run passes setup and observes Main Inspect and the
+actual UID11050 SDK app both unavailable, with the exact worker InvalidData line,
+worker exit1 and Main exit0. No Connect, Disconnect or packet client is admitted.
+Independent readback stays unassociated and unconfigured. The actor/app join,
+command waits/EOF, AP/radio/namespace cleanup, QEMU wait0 and exact container
+absence qualify the intended RED; the desired service assertion remains false.
+See the [curated receipt](../../docs/evidence/native-wireless-service-baseline.json).
+This authorizes the next production implementation against unchanged consumer
+bytes; it establishes no working persistent wireless service.

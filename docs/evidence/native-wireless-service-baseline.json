@@ -98,6 +98,35 @@
     "new_root_owned_runtime_ancestor_exit": 0,
     "actual_wait_and_PIPE_EOF": true,
     "same_original_one_second_cutoff": true,
-    "fresh_ARM_retry_pending": true
+    "fresh_ARM_retry_pending": false
+  },
+  "qualified_ARM_RED": {
+    "classification": "QUALIFIED_NORMAL_PERSISTENT_WIRELESS_REFUSAL_RED",
+    "scope": "Generic ARM64 QEMU Linux hwsim, real normal Main/worker and lifecycle SDK actor; no Settings GUI or phone",
+    "receipt_sha256": {
+      "selection.json": "121551cc4ebf6cd506ce27003ed61a57e53c5e298a88618d3e4728f1b353405b",
+      "command.json": "26331f273f49929904c74646249ac972767c880d58853a82281a33aed68a5b6e",
+      "result.json": "ca927cc0c4b1609e229b1526e590cbe8fa51c735eb70a955fca7e54d247bd12a",
+      "boot-result.json": "c33a959c994c8ef8f0c906d37d192d785ebb10df0182e432e2fd489c5ffb0c3d",
+      "run/receipt.json": "2afec348a3269478014bcbdef634f1cf7d5afb934cd690563de5b97d1b12aea0",
+      "wireless-service-case/case-result.json": "b05a4e14128326e0d4d095d34184acbb4a43da808963e3ecc12a6bb0ae1e221c"
+    },
+    "consumer_sha256": "92bfa45884c1efb7f0fa9d559a1df6bf3f41b4dc2ffe544bdcf350275da6b37d",
+    "desired_passed": false,
+    "behavior_RED_qualified": true,
+    "normal_Main_exit": 0,
+    "worker_exit": 1,
+    "actual_Main_and_SDK_unavailable": true,
+    "Connect_Disconnect_UDP_commands_admitted": [
+      0,
+      0,
+      0
+    ],
+    "fixture_and_namespace_custody_passed": true,
+    "all_commands_wait_EOF": true,
+    "QEMU_wait_exit": 0,
+    "exact_container_absence": true,
+    "source_and_selected_inputs_unchanged": true,
+    "production_backend_implemented": false
   }
 }
