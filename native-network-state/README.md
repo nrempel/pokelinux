@@ -46,7 +46,10 @@ cargo test --locked --offline --manifest-path native-network-state/Cargo.toml --
 cargo build --locked --offline --manifest-path native-network-state/Cargo.toml --release --target aarch64-unknown-linux-gnu
 ```
 
-No host behavioral test result is claimed. The actual kernel test requires its
+Eight authored sparse-notification host tests now pass after four assertion
+failures on the old parser. They preserve existing lifetimes, refuse unknown
+sparse creation, and keep full dumps and malformed attributes strict. These are
+synthetic parser/bookkeeping tests; the actual kernel test requires its
 isolated ARM VM controller, independent TUN/IP controls and owned process/module/
 namespace cleanup; ordinary `cargo test` skips it. Its exact test name is
 `kernel_tests::actual_kernel_link_lifetime`. Do not infer a VM or phone pass from

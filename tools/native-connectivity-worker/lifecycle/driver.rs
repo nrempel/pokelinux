@@ -1,9 +1,10 @@
 //! Private standalone desired behavior. Runs Service on the actual main thread.
 //! Literal Authority is a trusted fixture input, never Settings/OS permission.
 use pokelinux_connectivity_control::{
-    kernel::Fact,
+    service_fact::{Fact, LinkIdentity},
     owner::{Action, Authority, Finish, Id, Principal, Reply},
     service::{Service, Snapshot},
+    startup::Profile,
 };
 use pokelinux_network_state::{KernelObserver, ObserveError, boot_time_ns};
 use serde_json::{Value, json};
@@ -89,8 +90,11 @@ fn gate(service: &mut Service, root: &Path, name: &str, end: u64) -> Value {
     panic!("original case cutoff waiting for {name}");
 }
 fn fact(value: Fact) -> Value {
+    let LinkIdentity::VirtualPair { lifetime } = value.identity else {
+        panic!("virtual-pair lifecycle fixture received a different backend identity");
+    };
     json!({"namespace":{"dev":value.namespace.dev,"ino":value.namespace.ino},
-        "ifindex":value.ifindex,"lifetime":value.lifetime,"connected":value.connected})
+        "ifindex":value.ifindex,"lifetime":lifetime,"connected":value.connected})
 }
 fn auth(instance: u64) -> Authority {
     Authority {
@@ -104,8 +108,8 @@ fn auth(instance: u64) -> Authority {
 }
 fn same(first: Fact, later: Fact, connected: bool) {
     assert_eq!(
-        (first.namespace, first.ifindex, first.lifetime),
-        (later.namespace, later.ifindex, later.lifetime)
+        (first.namespace, first.ifindex, first.identity),
+        (later.namespace, later.ifindex, later.identity)
     );
     assert_eq!(later.connected, connected);
 }
@@ -255,7 +259,8 @@ fn main() {
     let args:Vec<_>=env::args().skip(1).collect();assert_eq!(args.len(),6,"case worker-elf gates peer-ns case-until close-until");assert_eq!(args[0],"lifecycle","only frozen lifecycle executable admitted; expiry/stop are contract-only");
     let worker=PathBuf::from(&args[1]);let root=PathBuf::from(&args[2]);let case:u64=args[4].parse().unwrap();let close:u64=args[5].parse().unwrap();let started=boot_time_ns();assert!(started<case && case-started<=6_000_000_000 && case<close);
     let journal=root.join("journal");fs::DirBuilder::new().mode(0o700).create(&journal).unwrap();
-    let mut service=Service::start(&worker,File::open(&args[3]).unwrap(),journal.join("admitted"),until(case)).unwrap();
+    let profile=Profile::VirtualPair{peer_namespace:PathBuf::from(&args[3])};
+    let mut service=Service::start(&worker,profile,journal.join("admitted"),until(case)).unwrap();
     let desired=panic::catch_unwind(AssertUnwindSafe(||lifecycle(&mut service,&root,case)));
     let before_stop=snapshot(service.snapshot());let stop_result=service.stop();let after_stop=snapshot(service.snapshot());
     let mut close_errors=Vec::new();if let Err(error)=stop_result {close_errors.push(format!("stop: {error}"));}

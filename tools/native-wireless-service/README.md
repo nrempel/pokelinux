@@ -2,9 +2,11 @@
 
 This directory contains a concrete normal Main/actor integration consumer and
 the existing generic ARM hwsim owner adapted to call it. The second actual ARM
-cohort qualifies the baseline refusal RED through this consumer. Persistent-service
-GREEN, production backend implementation and phone qualification remain open.
-These consumer bytes are frozen before production changes.
+cohort qualifies the baseline refusal RED through this consumer. The third
+candidate ARM cohort now passes the same frozen Main/actor service consumer in
+a generic ARM64 QEMU guest with simulated hwsim radios. Normal Wi-Fi GUI, WPA,
+DHCP/DNS, Internet and physical-phone qualification remain open. These consumer
+bytes were frozen before production changes.
 
 The normal Main keeps five arguments:
 
@@ -44,7 +46,7 @@ granted Connect, matching station/AP and IPv4 state, a fresh cap0 nonce/ACK, act
 SDK Stop/join and Apps child wait, persistent radio/address/same-worker evidence,
 a new requester with two fresh observations, a second independent cap0 packet,
 and explicit Disconnect followed by independent radio/address absence and the
-full quiet period. The original worker's retained pidfd and exact Main children
+original quiet-window checks. The original worker's retained pidfd and exact Main children
 list fence replacement. Root-private Inspect binds the same worker wire ID.
 No action is retried and an uncertain failure never admits another effect.
 
@@ -110,8 +112,8 @@ Baseline classification also requires exactly the selected unscoped normal-worke
 `Error: Kind(InvalidData)` line in Main's inherited stderr, alongside its recorded
 worker exit1. Wrapped capability/bootstrap failures or other error text remain
 unqualified. This identifies the retained implementation's refusal class, not
-the exact underlying kernel error discarded by that implementation. It is an
-baseline contract observed by the second actual ARM cohort.
+the exact underlying kernel error discarded by that implementation. This
+baseline contract was observed by the second actual ARM cohort.
 
 The first actual ARM attempt fails the cap0 path preflight before Main/actor
 launch or any normal-service network request: `/results` belongs to UID1000 with mode0700,
@@ -129,5 +131,53 @@ Independent readback stays unassociated and unconfigured. The actor/app join,
 command waits/EOF, AP/radio/namespace cleanup, QEMU wait0 and exact container
 absence qualify the intended RED; the desired service assertion remains false.
 See the [curated receipt](../../docs/evidence/native-wireless-service-baseline.json).
-This authorizes the next production implementation against unchanged consumer
-bytes; it establishes no working persistent wireless service.
+This RED preceded production implementation against the unchanged consumer;
+it qualified baseline refusal only.
+
+The implementation retains actual current namespace and constructing-thread
+identity, command/MLME sockets and the IPv4 observer. It brackets profile reads
+with exact radio observations and publishes the oldest timestamp. Action-wide
+uncertainty survives later component failures; retirement never retries or
+performs implicit Disconnect. At that component checkpoint the host library
+suite passed38 tests (one explicit ignore), and the radio suite passed28. The
+subsequent ARM service result below is separate from those component/build checks.
+
+The first candidate ARM attempt reaches available/disconnected, then loses the
+worker during the case. All three counters remain zero, but they advance only
+after successful readback gates; they are not reliable dispatch counts on a
+failure path. Zero therefore cannot prove no Connect or kernel effect. Failure cleanup removes the owned radios,
+closes handles and QEMU/container custody; normal case qualification is false.
+The generic worker InvalidData does not identify the originating component error.
+This attempt remains separate from service GREEN and the
+old baseline refusal RED. [Candidate evidence](../../docs/evidence/native-wireless-service-candidate.json).
+
+The diagnostic second attempt identifies ApplyBackend / Profile::Add /
+Observation(InvalidData), with891ms left on the action deadline. Association was
+confirmed before that profile call; the composed result correctly stays Uncertain.
+Sparse Linux wireless link notifications without MTU were the unsupported parser
+shape investigated at that checkpoint. Full dumps retain their required fields;
+the original action deadline, no-retry policy and frozen consumer remain unchanged.
+
+The third candidate ARM run, `wireless-service-arm-green-root-3`, passes the full
+frozen consumer (`92bfa458…`). The actual UID11050 Settings SDK fixture receives
+the durable grant and submits one accepted Connect through the normal actor and
+Main. Independent station/AP and fixed IPv4 readback agree with a capability-free
+nonce/ACK exchange. The first requester stops and joins its SDK and is actually
+waited; a distinct requester reopens, observes the same retained worker and
+connection twice, and completes a second independent cap0 packet exchange.
+One explicit Disconnect then has independent station/AP disconnection and
+address/subnet-route absence, followed by the original quiet-window checks.
+The800ms budget includes gate delivery; the peer records zero datagrams and an
+actual final EAGAIN after the original cutoff.
+
+Main, actor driver and packet peer exit0. Main normally retires its worker with
+SIGKILL9 and retains actual worker wait/output EOF and namespace custody; that
+signal is process retirement, not vendor or radio cleanup. Independent radio and
+address checks precede owned AP/radio/namespace teardown. Guest, QEMU wait0 and
+outer container exit0/absence all qualify, with no unresolved owned child or
+changed selected input. The earlier setup failure, baseline RED and two failed
+candidate cohorts remain preserved. This result covers an authored open AP and
+fixed documentation IPv4 in generic simulated radios, using the SDK app fixture
+and authored actor authority. It adds no normal Wi-Fi window, credentials, WPA,
+DHCP/DNS, Internet, matched Pixel driver or physical-phone evidence. See
+[candidate evidence](../../docs/evidence/native-wireless-service-candidate.json).

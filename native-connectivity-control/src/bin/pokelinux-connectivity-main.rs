@@ -1,4 +1,4 @@
-//! Trusted virtual-backend Main, separate from the app-launching lifecycle actor.
+//! Trusted selected-backend Main, separate from the app-launching lifecycle actor.
 fn main() -> std::io::Result<()> {
     let args: Vec<_> = std::env::args_os().skip(1).collect();
     if args.len() != 5 {

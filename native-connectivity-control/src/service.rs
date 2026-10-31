@@ -1,8 +1,11 @@
-//! Single persistent virtual-link epoch. Trusted provisioning only: no app IPC.
+//! One persistent selected backend epoch. Trusted provisioning only: no app IPC.
 //! A failed or stopped epoch has no replacement or implicit network cleanup.
 use crate::{
-    kernel::{Fact, VirtualLink},
+    kernel::VirtualLink,
     owner::{self, Action, Authority, Finish, Id, Principal, Reject, Reply},
+    service_fact::{Fact, LinkIdentity, decode_record, record},
+    startup::{Namespace, Profile},
+    wireless_backend::WirelessBackend,
 };
 use pokelinux_network_state::{NamespaceIdentity, boot_time_ns};
 use pokelinux_process_owner::{
@@ -22,7 +25,6 @@ use std::{
 
 const LEASE: u64 = 250_000_000;
 const ENVELOPE: u64 = 50_000_000;
-const RECORD: usize = 47;
 fn invalid() -> io::Error {
     io::ErrorKind::InvalidData.into()
 }
@@ -35,6 +37,133 @@ fn metadata(file: &File) -> io::Result<NamespaceIdentity> {
         dev: m.dev(),
         ino: m.ino(),
     })
+}
+
+fn open_namespace(path: &Path) -> io::Result<File> {
+    use rustix::fs::{Mode, OFlags, fstatfs, open};
+    let file = File::from(open(
+        path,
+        OFlags::RDONLY | OFlags::CLOEXEC | OFlags::NONBLOCK,
+        Mode::empty(),
+    )?);
+    // NSFS_MAGIC: reject regular configuration files and other filesystem objects.
+    // The virtual backend's kernel operation additionally validates a netns peer.
+    if fstatfs(&file)?.f_type as u64 != 0x6e736673 {
+        return Err(invalid());
+    }
+    Ok(file)
+}
+
+#[derive(Clone, Copy)]
+enum Selected {
+    VirtualPair,
+    WirelessOpen { ifindex: u32 },
+}
+impl Selected {
+    fn accepts(self, fact: Fact) -> bool {
+        match (self, fact.identity) {
+            (Self::VirtualPair, LinkIdentity::VirtualPair { .. }) => true,
+            (Self::WirelessOpen { ifindex }, LinkIdentity::WirelessOpen { .. }) => {
+                fact.ifindex == ifindex
+            }
+            _ => false,
+        }
+    }
+}
+
+#[derive(serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+struct WorkerStart {
+    schema: u8,
+    profile: Profile,
+    namespace: Namespace,
+    peer_identity: Option<Namespace>,
+    original_start_until_ns: u64,
+}
+
+enum Link {
+    Virtual(VirtualLink),
+    Wireless(WirelessBackend),
+}
+#[derive(Debug)]
+struct BackendFailure<E> {
+    operation: &'static str,
+    source: E,
+}
+impl<E: std::fmt::Debug> std::fmt::Display for BackendFailure<E> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}: {:?}", self.operation, self.source)
+    }
+}
+impl<E: std::fmt::Debug> std::error::Error for BackendFailure<E> {}
+fn backend_result<T, E: std::fmt::Debug + Send + Sync + 'static>(
+    operation: &'static str,
+    result: Result<T, E>,
+) -> io::Result<T> {
+    result.map_err(|source| {
+        io::Error::new(
+            io::ErrorKind::InvalidData,
+            BackendFailure { operation, source },
+        )
+    })
+}
+impl Link {
+    fn virtual_fact(value: crate::kernel::Fact, at: u64) -> (Fact, u64) {
+        (
+            Fact {
+                namespace: value.namespace,
+                ifindex: value.ifindex,
+                identity: LinkIdentity::VirtualPair {
+                    lifetime: value.lifetime,
+                },
+                connected: value.connected,
+            },
+            at,
+        )
+    }
+    fn wireless_fact(value: crate::wireless_backend::WirelessFact) -> (Fact, u64) {
+        (
+            Fact {
+                namespace: value.namespace,
+                ifindex: value.ifindex,
+                identity: LinkIdentity::WirelessOpen {
+                    wiphy: value.wiphy,
+                    wdev: value.wdev,
+                    observed_lifetime: value.observed_lifetime,
+                },
+                connected: value.connected,
+            },
+            value.observed_at_ns,
+        )
+    }
+    fn refresh(&mut self, until: u64) -> io::Result<(Fact, u64)> {
+        let at = boot_time_ns();
+        match self {
+            Self::Virtual(link) => backend_result(
+                "refresh_virtual",
+                link.refresh(until).map(|v| Self::virtual_fact(v, at)),
+            ),
+            Self::Wireless(link) => backend_result(
+                "refresh_wireless",
+                link.refresh(until).map(Self::wireless_fact),
+            ),
+        }
+    }
+    fn set_connected(&mut self, connected: bool, until: u64) -> io::Result<(Fact, u64)> {
+        let at = boot_time_ns();
+        match self {
+            Self::Virtual(link) => backend_result(
+                "apply_virtual",
+                link.set_connected(connected, until)
+                    .map(|v| Self::virtual_fact(v, at)),
+            ),
+            Self::Wireless(link) => backend_result(
+                "apply_wireless",
+                link.set_connected(connected, until)
+                    .map(Self::wireless_fact),
+            ),
+        }
+    }
 }
 
 /// Run once on the single final-UID/GID main thread, before bootstrap/admission.
@@ -108,7 +237,8 @@ pub struct Service {
     supervisor: Supervisor,
     identity: Option<ProcessIdentity>,
     _current: File,
-    _peer: File,
+    _peer: Option<File>,
+    selected: Selected,
     namespace: NamespaceIdentity,
     owner: owner::Owner,
     observed: Option<(Fact, u64)>,
@@ -122,13 +252,13 @@ pub struct Service {
     start_until: u64,
 }
 impl Service {
-    /// Trusted startup in two fresh exclusively administered namespaces. Once
+    /// Trusted startup for one exclusively administered selected backend. Once
     /// spawning is attempted, even a failed startup returns an owned terminal
     /// handle: caller must Stop/poll through closure. If main_caps_dropped is
     /// false, the caller must then exit this process. No clients are installed.
     pub fn start(
         executable: &Path,
-        peer: File,
+        mut profile: Profile,
         journal: PathBuf,
         original_start_until: u64,
     ) -> io::Result<Self> {
@@ -136,27 +266,61 @@ impl Service {
         if original_start_until <= now || original_start_until - now > 3_000_000_000 {
             return Err(invalid());
         }
-        let current = File::open("/proc/thread-self/ns/net")?;
+        profile.validate()?;
+        let current = open_namespace(Path::new("/proc/thread-self/ns/net"))?;
         let namespace = metadata(&current)?;
-        let other = metadata(&peer)?;
-        if namespace == other {
-            return Err(invalid());
-        }
+        let (peer, peer_identity, selected) = match &mut profile {
+            Profile::VirtualPair { peer_namespace } => {
+                let file = open_namespace(peer_namespace)?;
+                let other = metadata(&file)?;
+                if namespace == other {
+                    return Err(invalid());
+                }
+                *peer_namespace = PathBuf::from(format!(
+                    "/proc/{}/fd/{}",
+                    std::process::id(),
+                    file.as_raw_fd()
+                ));
+                (
+                    Some(file),
+                    Some(Namespace {
+                        dev: other.dev,
+                        ino: other.ino,
+                    }),
+                    Selected::VirtualPair,
+                )
+            }
+            Profile::WirelessOpen { target, .. } => {
+                if (target.namespace.dev, target.namespace.ino) != (namespace.dev, namespace.ino) {
+                    return Err(invalid());
+                }
+                (
+                    None,
+                    None,
+                    Selected::WirelessOpen {
+                        ifindex: target.ifindex,
+                    },
+                )
+            }
+        };
+        let startup = WorkerStart {
+            schema: 2,
+            profile,
+            namespace: Namespace {
+                dev: namespace.dev,
+                ino: namespace.ino,
+            },
+            peer_identity,
+            original_start_until_ns: original_start_until,
+        };
         let mut command = WorkerCommand::new(executable)?;
-        command
-            .arg(format!(
-                "/proc/{}/fd/{}",
-                std::process::id(),
-                peer.as_raw_fd()
-            ))
-            .arg(other.dev.to_string())
-            .arg(other.ino.to_string())
-            .arg(original_start_until.to_string());
+        command.arg(serde_json::to_string(&startup)?);
         let mut service = Self {
             supervisor: Supervisor::new(journal),
             identity: None,
             _current: current,
             _peer: peer,
+            selected,
             namespace,
             owner: owner::Owner::default(),
             observed: None,
@@ -263,7 +427,7 @@ impl Service {
         let id = self.owner.stage(authority, action, original_until, now)?;
         let command = self.owner.dispatch(id, authority, boot_time_ns())?;
         let mut bytes = [0_u8; 19];
-        bytes[0] = 1;
+        bytes[0] = 2;
         bytes[1] = 1;
         bytes[2..10].copy_from_slice(&id.0.to_le_bytes());
         bytes[10..18].copy_from_slice(&command.original_until_ns.to_le_bytes());
@@ -295,7 +459,7 @@ impl Service {
             self.owner.take_reply(id, authority, now)
         }
     }
-    /// Revocation precedes the signal. Retains child and both namespace handles;
+    /// Revocation precedes the signal. Retains child and selected namespace handles;
     /// this call does not promise the kernel will make the worker reclaimable.
     pub fn stop(&mut self) -> io::Result<()> {
         self.stopping = true;
@@ -369,35 +533,18 @@ impl Service {
         Ok(())
     }
     fn accept(&mut self, bytes: &[u8]) -> io::Result<()> {
-        if bytes.len() != RECORD || bytes[0] != 1 || !(1..=4).contains(&bytes[1]) || bytes[46] > 1 {
-            return Err(invalid());
-        }
-        let n = |at: usize| u64::from_le_bytes(bytes[at..at + 8].try_into().unwrap());
-        let id = Id(n(2));
-        let at = n(10);
+        let (_, id, fact, at) = decode_record(bytes)?;
+        let id = Id(id);
         let now = boot_time_ns();
-        let fact = Fact {
-            namespace: NamespaceIdentity {
-                dev: n(18),
-                ino: n(26),
-            },
-            ifindex: u32::from_le_bytes(bytes[34..38].try_into().unwrap()),
-            lifetime: n(38),
-            connected: bytes[46] != 0,
-        };
         if at > now
             || now - at >= LEASE
             || fact.namespace != self.namespace
-            || fact.ifindex <= 1
-            || fact.lifetime == 0
+            || !self.selected.accepts(fact)
         {
             return Err(invalid());
         }
         if let Some((old, old_at)) = self.observed
-            && (old.namespace != fact.namespace
-                || old.ifindex != fact.ifindex
-                || old.lifetime != fact.lifetime
-                || at < old_at)
+            && (!old.same_target(fact) || at < old_at)
         {
             return Err(invalid());
         }
@@ -446,19 +593,6 @@ impl Service {
         Ok(())
     }
 }
-fn record(kind: u8, id: u64, fact: Fact, at: u64) -> [u8; RECORD] {
-    let mut b = [0; RECORD];
-    b[0] = 1;
-    b[1] = kind;
-    b[2..10].copy_from_slice(&id.to_le_bytes());
-    b[10..18].copy_from_slice(&at.to_le_bytes());
-    b[18..26].copy_from_slice(&fact.namespace.dev.to_le_bytes());
-    b[26..34].copy_from_slice(&fact.namespace.ino.to_le_bytes());
-    b[34..38].copy_from_slice(&fact.ifindex.to_le_bytes());
-    b[38..46].copy_from_slice(&fact.lifetime.to_le_bytes());
-    b[46] = u8::from(fact.connected);
-    b
-}
 /// Error-only context; it grants no retry and changes no operation cutoff.
 #[derive(Debug)]
 enum WorkerStep {
@@ -470,6 +604,8 @@ enum WorkerStep {
     PublishRetirement,
     PublishCompletion,
     PublishObservation,
+    RefreshBackend,
+    ApplyBackend,
 }
 #[derive(Debug)]
 struct WorkerFailure {
@@ -512,7 +648,7 @@ fn worker_step<T>(
 /// Fixed cooperative worker entry. Arguments originate only in trusted startup,
 /// then the authenticated actual parent and exact retained namespace are checked.
 pub fn worker(arguments: &[String]) -> io::Result<()> {
-    if arguments.len() != 4 {
+    if arguments.len() != 1 || arguments[0].len() > 8192 {
         return Err(invalid());
     }
     worker_step(
@@ -521,39 +657,75 @@ pub fn worker(arguments: &[String]) -> io::Result<()> {
         reduce(CapabilitySet::NET_ADMIN),
     )?;
     let mut parent = worker_step(WorkerStep::BindParent, None, BoundParent::from_stdin())?;
-    let prefix = format!(
-        "/proc/{}/fd/",
-        rustix::process::getppid().ok_or_else(invalid)?
-    );
-    if !arguments[0].starts_with(&prefix)
-        || !arguments[0][prefix.len()..]
-            .bytes()
-            .all(|b| b.is_ascii_digit())
-    {
+    let startup: WorkerStart = serde_json::from_str(&arguments[0])?;
+    if startup.schema != 2 {
         return Err(invalid());
     }
-    let peer = File::open(&arguments[0])?;
-    let expected = NamespaceIdentity {
-        dev: arguments[1].parse().map_err(|_| invalid())?,
-        ino: arguments[2].parse().map_err(|_| invalid())?,
+    startup.profile.validate()?;
+    let current = open_namespace(Path::new("/proc/thread-self/ns/net"))?;
+    let actual = metadata(&current)?;
+    if (actual.dev, actual.ino) != (startup.namespace.dev, startup.namespace.ino) {
+        return Err(invalid());
+    }
+    let until = startup.original_start_until_ns;
+    let now = boot_time_ns();
+    if until <= now || until - now > 3_000_000_000 {
+        return Err(invalid());
+    }
+    let backend_until = until.min(now.saturating_add(1_000_000_000));
+    let mut link = match startup.profile {
+        Profile::VirtualPair { peer_namespace } => {
+            let prefix = format!(
+                "/proc/{}/fd/",
+                rustix::process::getppid().ok_or_else(invalid)?
+            );
+            let path = peer_namespace.to_str().ok_or_else(invalid)?;
+            let tail = path.strip_prefix(&prefix).ok_or_else(invalid)?;
+            if tail.is_empty() || !tail.bytes().all(|b| b.is_ascii_digit()) {
+                return Err(invalid());
+            }
+            let peer = open_namespace(&peer_namespace)?;
+            let expected = startup.peer_identity.ok_or_else(invalid)?;
+            let actual = metadata(&peer)?;
+            if (actual.dev, actual.ino) != (expected.dev, expected.ino) {
+                return Err(invalid());
+            }
+            Link::Virtual(backend_result(
+                "attach_virtual",
+                VirtualLink::create(peer, backend_until),
+            )?)
+        }
+        Profile::WirelessOpen {
+            target,
+            frequency_mhz,
+            bssid,
+            ssid,
+        } => {
+            if startup.peer_identity.is_some() || target.namespace != startup.namespace {
+                return Err(invalid());
+            }
+            let target = crate::fixed_address::ExistingLinkIdentity {
+                namespace: actual,
+                ifindex: target.ifindex,
+                name: target.name,
+            };
+            Link::Wireless(backend_result(
+                "attach_wireless",
+                WirelessBackend::attach(target, frequency_mhz, bssid, ssid, backend_until),
+            )?)
+        }
     };
-    if metadata(&peer)? != expected {
-        return Err(invalid());
-    }
-    let until: u64 = arguments[3].parse().map_err(|_| invalid())?;
-    let mut link = VirtualLink::create(
-        peer,
-        until.min(boot_time_ns().saturating_add(1_000_000_000)),
-    )
-    .map_err(|_| invalid())?;
-    let mut fact = link.fact().map_err(|_| invalid())?;
+    let (mut fact, mut refreshed_at) = worker_step(
+        WorkerStep::RefreshBackend,
+        Some(backend_until),
+        link.refresh(backend_until),
+    )?;
     worker_step(
         WorkerStep::PublishInitial,
         Some(until),
-        parent.send_message(cutoff(until), &record(1, 0, fact, boot_time_ns())),
+        parent.send_message(cutoff(until), &record(1, 0, fact, refreshed_at)),
     )?;
     let mut last_seen_id = 0;
-    let mut refreshed_at = boot_time_ns();
     loop {
         if worker_step(WorkerStep::CheckCommandReady, None, parent.message_ready())? {
             let envelope = boot_time_ns().saturating_add(ENVELOPE);
@@ -562,7 +734,7 @@ pub fn worker(arguments: &[String]) -> io::Result<()> {
                 Some(envelope),
                 parent.receive_message(cutoff(envelope)),
             )? {
-                if bytes.len() != 19 || bytes[0..2] != [1, 1] || bytes[18] > 1 {
+                if bytes.len() != 19 || bytes[0..2] != [2, 1] || bytes[18] > 1 {
                     return Err(invalid());
                 }
                 let id = u64::from_le_bytes(bytes[2..10].try_into().unwrap());
@@ -586,10 +758,11 @@ pub fn worker(arguments: &[String]) -> io::Result<()> {
                     if original_until - sampled > 1_000_000_000 {
                         return Err(invalid());
                     }
-                    fact = link
-                        .set_connected(bytes[18] != 0, original_until)
-                        .map_err(|_| invalid())?;
-                    refreshed_at = boot_time_ns();
+                    (fact, refreshed_at) = worker_step(
+                        WorkerStep::ApplyBackend,
+                        Some(original_until),
+                        link.set_connected(bytes[18] != 0, original_until),
+                    )?;
                     worker_step(
                         WorkerStep::PublishCompletion,
                         Some(original_until),
@@ -604,8 +777,11 @@ pub fn worker(arguments: &[String]) -> io::Result<()> {
         let sampled = boot_time_ns();
         if sampled.saturating_sub(refreshed_at) >= 50_000_000 {
             let read_until = sampled.saturating_add(100_000_000);
-            fact = link.refresh(read_until).map_err(|_| invalid())?;
-            refreshed_at = boot_time_ns();
+            (fact, refreshed_at) = worker_step(
+                WorkerStep::RefreshBackend,
+                Some(read_until),
+                link.refresh(read_until),
+            )?;
             worker_step(
                 WorkerStep::PublishObservation,
                 Some(read_until),
@@ -619,3 +795,7 @@ pub fn worker(arguments: &[String]) -> io::Result<()> {
 #[cfg(test)]
 #[path = "service_tests.rs"]
 mod tests;
+
+#[cfg(test)]
+#[path = "service_wire_tests.rs"]
+mod wire_tests;

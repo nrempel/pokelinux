@@ -1,19 +1,56 @@
 # Native connectivity worker
 
-Three current-source host cases pass: persistent packet lifecycle, request expiry,
-and explicit Stop with an outstanding queued Connect. The Rust component exports
-a reusable `Service` Main library and a worker-only executable. There is no
-installed Main, public application ingress or Settings permission/UI boundary.
+The current Rust Main selects one backend from a bounded root-owned regular
+`0600` JSON profile passed as its second argument. It rejects unknown fields,
+symlinks and old raw-namespace startup arguments. For example:
 
-Trusted startup retains two fresh, exclusively administered network namespaces,
-launches one cooperative worker, then drops Main's capabilities. The worker keeps
-only `CAP_NET_ADMIN`; no privileged broker or replacement worker remains. It owns
-the fixed IPv4 virtual backend while Main snapshots do local model/deadline work.
-Observations expire after250ms. Idle refresh is scheduled after50ms and uses its
-original100ms read deadline. Absolute BOOTTIME fences publication, not kernel
-syscall duration or cancellation.
+```json
+{"backend":"virtual_pair","peer_namespace":"/proc/123/ns/net"}
+```
 
-## Actual host join
+The [wireless-open profile](../tools/native-wireless-service/README.md) instead
+selects the actual current station namespace and existing interface. Main retains
+that namespace; only virtual-pair startup retains a peer namespace too. The worker
+independently checks its inherited namespace before backend construction. Decoded
+configuration is copied to the authenticated worker; it never reopens the profile.
+
+Main drops all capabilities; the worker keeps only `CAP_NET_ADMIN`. Typed private
+v2 observations distinguish witnessed virtual lifetimes from existing wireless
+identity. Old worker startup/record forms are rejected. Observations expire after
+250ms; idle refresh is scheduled after50ms with its original100ms cutoff. Wireless
+facts use the oldest bracketed radio/profile observation, not publication time.
+Backend I/O stays in the worker; snapshots do local model/deadline work.
+
+The third candidate ARM cohort now passes the same frozen
+[wireless service consumer](../tools/native-wireless-service/README.md) in a generic
+ARM64 QEMU guest with simulated hwsim radios. The actual UID11050 Settings SDK app
+obtains its durable grant through authored actor authority and submits Connect to
+normal Main. Independent station/AP and fixed IPv4 readback agree with a cap0
+nonce/ACK exchange. Actual SDK Stop/join and requester wait precede reopening in a
+distinct requester, two fresh observations of the same worker/connection, and a
+second independent cap0 packet exchange. Explicit Disconnect has independent
+radio/address/subnet-route absence and the original quiet-window checks: the800ms
+budget includes gate delivery, with zero peer datagrams and actual final EAGAIN
+after the original cutoff.
+
+Main, actor driver and packet peer exit0. Main's normal Stop retires the retained
+worker with SIGKILL9, actual wait/output EOF and retained namespace custody. The
+signal establishes process retirement; independent radio/address checks and
+owned AP/radio/namespace teardown establish their separate closure. Guest, QEMU
+wait0, container exit0/absence and unchanged selected inputs all qualify. The
+original six-second case, three-second startup, one-second actions and250ms lease
+remain unchanged.
+
+The first candidate loses the worker after initial Ready without an identified
+cause; the diagnostic second candidate confirms association, then fails profile
+observation. Both remain failed. Zero success-gate counters do not prove zero
+dispatched work. The passing third cohort uses an authored open AP and fixed IPv4;
+normal Wi-Fi GUI, WPA/credentials, DHCP/DNS, Internet, matched Pixel startup and
+physical-phone gates remain open. The following virtual packet/expiry/Stop
+results retain their separate historical cohorts. See
+[wireless candidate evidence](evidence/native-wireless-service-candidate.json).
+
+## Earlier actual host join
 
 - Lifecycle: one worker exchanges two nonces across fixture-principal withdrawal,
   publishes fresh idle observations, and handles explicit Disconnect from a fresh
@@ -50,12 +87,13 @@ plumbing and runs the unchanged final fixtures against the current sources.
 
 Action uncertainty is terminal: no retry, rollback, implicit Disconnect or restart
 is supplied. Local wait/EOF proves no remote cleanup. SIGSTOP and signal9 reaping
-do not qualify arbitrary uninterruptible kernel work. All evidence is native
-x86_64 host Debug execution with authored authority and fixed synthetic IPv4.
-Installed Main, OS/application permissions, Settings, restart/recovery, actual
-suspend, ARM, Wi-Fi, DNS, Internet and physical-phone gates remain open. A new
-epoch requires explicit trusted startup in fresh namespaces after old custody
-closes; no same-namespace replacement or connection-persistence policy is selected.
+do not qualify arbitrary uninterruptible kernel work. Those earlier virtual
+results use native x86_64 host Debug execution with authored authority and fixed
+synthetic IPv4. They establish no installed service activation, normal Settings
+GUI, restart/recovery, actual suspend, ARM or physical-radio result; the newer
+generic ARM hwsim checkpoint above is separate. A new epoch requires explicit
+trusted startup after old custody closes; no same-namespace replacement policy
+is selected.
 
 [Hash-only provenance](evidence/native-connectivity-worker-provenance.json) and
 [the exact public fixture sources](../tools/native-connectivity-worker/README.md).
@@ -68,6 +106,6 @@ capability-reduction EPERM first lacks the desired stage, then passes the unchan
 consumer after error-only context is added. Natural worker exit1, the original
 source error, actual wait/PIPE EOF and the original1s cutoff are preserved.
 Seven contexts compile; only `ReduceCapabilities` executes in this control.
-Current normal host/ARM builds pass, but this adds no ARM context execution,
+At that checkpoint normal host/ARM builds passed, but this added no ARM context execution,
 virtual-link result or explanation of the failed ARM normal-window worker loss.
 The historical packet/expiry/Stop results above retain their original cohorts.

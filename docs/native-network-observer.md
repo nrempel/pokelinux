@@ -141,3 +141,22 @@ responsive Stop and persistence policy. The read-only
 [NetworkManager boundary](native-connectivity.md) is separate. No modem, vendor
 backend, normal installed app, carrier traffic, authentication or physical phone
 was exercised by this observer proof.
+
+## Sparse link notifications
+
+Linux's [wireless event producer](https://raw.githubusercontent.com/torvalds/linux/master/net/wireless/wext-core.c)
+emits link notifications carrying interface identity without MTU. Notification
+bookkeeping now validates those partial fields separately from full dump parsing.
+Known links retain their exact optional lifetime; an unknown sparse NEWLINK
+returns EvidenceLost rather than inventing a creation epoch. Full dumps still
+require MTU, and malformed or duplicate recognized attributes remain invalid.
+
+Eight authored host parser/bookkeeping tests pass after four assertion failures
+on the earlier implementation. Formatting, strict Clippy and ARM compilation
+pass. These do not prove actual kernel notification delivery. The retained
+wireless service's diagnostic ARM failure identified a profile prior-observation
+InvalidData after association. With this correction, the same frozen ARM service
+consumer now passes connection, packets across app close/reopen, explicit
+Disconnect, quiet and full owned cleanup. This is separate actual simulated-radio
+integration evidence; no raw notification shape was captured. Existing kernel/TUN
+results keep their original source cohorts.

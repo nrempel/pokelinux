@@ -102,7 +102,7 @@ class WorkerTrace:
     entry=self.pending;self.pending=None
     if entry is not None:
      nr=entry['nr'];a=entry['args'];at=now()
-     if nr in [SENDTO,SENDMSG]and a[0]==self.channel['fd']and value==47:
+     if nr in [SENDTO,SENDMSG]and a[0]==self.channel['fd']and value==48:
       row={'syscall':nr,'fd':a[0],'bytes':value,'entry_ns':entry['entry_ns'],'exit_ns':at,'contents_inspected':False}
       if not held:self.record['observation_send']=row;phase='loop-sleep'
       elif held:self.record['post_hold_observation_send']=row

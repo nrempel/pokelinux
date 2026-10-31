@@ -1,4 +1,4 @@
-use crate::{Bss, Completed, Failure, Request};
+use crate::{Bss, Completed, Error, Failure, RadioFact, RadioTarget, Request};
 use netlink_sys::{Socket, protocols};
 use rustix::fd::OwnedFd;
 use rustix::{event, io::Errno, net, time};
@@ -864,6 +864,16 @@ fn mlme_event(
         // ROAM contradicts our exact restricted peer selection.
         return Err(Failure::Contended);
     }
+    if (37..=40).contains(&command)
+        && !matches!(
+            (phase, command),
+            (MlmePhase::Connecting, 37 | 38) | (MlmePhase::Disconnecting, 39 | 40)
+        )
+    {
+        // Authentication/association or deauthentication/disassociation is
+        // expected progress only during its explicitly requested transition.
+        return Err(Failure::Contended);
+    }
     if command != CONNECT && command != DISCONNECT {
         return Ok(false);
     }
@@ -879,6 +889,13 @@ fn mlme_event(
             Ok(true)
         }
         (MlmePhase::Disconnecting, DISCONNECT) => {
+            if optional(&attrs, MAC)?
+                .map(raw)
+                .transpose()?
+                .is_some_and(|actual| actual != peer)
+            {
+                return Err(Failure::Identity);
+            }
             if optional(&attrs, DISCONNECTED_BY_AP)?.is_some()
                 || u16n(raw(required(&attrs, REASON_CODE)?)?)? != 3
             {
@@ -1089,6 +1106,257 @@ fn mlme_context(failure: Failure, command: u8) -> Failure {
     }
 }
 
+fn valid_radio_cutoff(started: u64, until: u64) -> bool {
+    until > started && until - started <= 1_000_000_000
+}
+
+fn check_radio_association(
+    target: &RadioTarget,
+    expected: bool,
+    actual: Option<&AssociatedBss>,
+) -> Result<()> {
+    match (expected, actual) {
+        (false, None) => Ok(()),
+        (true, Some(peer))
+            if peer.mac == target.bssid
+                && peer.ssid == target.ssid
+                && peer.frequency == target.frequency_mhz =>
+        {
+            Ok(())
+        }
+        _ => Err(Failure::Identity),
+    }
+}
+
+// Retirement is permanent. Keeping the original error also prevents a caller
+// from mistaking a later pre-dispatch refusal for resolved mutation uncertainty.
+struct RadioState {
+    thread: std::thread::ThreadId,
+    associated: bool,
+    retired: Option<Error>,
+}
+impl RadioState {
+    fn new() -> Self {
+        Self {
+            thread: std::thread::current().id(),
+            associated: false,
+            retired: None,
+        }
+    }
+    fn check_thread(&mut self) -> std::result::Result<(), Error> {
+        if let Some(error) = self.retired {
+            return Err(error);
+        }
+        if self.thread != std::thread::current().id() {
+            return Err(self.fail(Failure::Identity, false));
+        }
+        Ok(())
+    }
+    fn fail(&mut self, failure: Failure, dispatched: bool) -> Error {
+        *self
+            .retired
+            .get_or_insert_with(|| crate::classify_failure(failure, dispatched))
+    }
+}
+
+/// Persistent nl80211 custody for one exclusively administered open radio.
+///
+/// The caller supplies fresh-radio exclusivity; kernel identity alone cannot
+/// establish it. The namespace handle, constructing thread, command socket,
+/// subscribed MLME socket and exact interface/peer remain pinned until drop.
+/// Runtime loss, contradictory events, identity changes and uncertainty retire
+/// this value permanently. Drop only closes handles; it sends no Disconnect.
+pub struct RadioEpoch {
+    namespace: Namespace,
+    command: Connection,
+    events: Connection,
+    family: Family,
+    selected: Identity,
+    target: RadioTarget,
+    state: RadioState,
+}
+impl RadioEpoch {
+    /// Attach without changing the radio, requiring an initially disconnected
+    /// baseline. The original CLOCK_BOOTTIME cutoff must be at most one second.
+    pub fn attach_disconnected(
+        target: RadioTarget,
+        until: u64,
+    ) -> std::result::Result<Self, Error> {
+        let started = boottime_ns();
+        if !valid_radio_cutoff(started, until)
+            || target.namespace_dev == 0
+            || target.namespace_ino == 0
+            || target.ifindex == 0
+            || target.frequency_mhz == 0
+            || target.frequency_mhz > 100_000
+            || target.bssid == [0; 6]
+            || target.bssid[0] & 1 != 0
+            || target.ssid.is_empty()
+            || target.ssid.len() > 32
+        {
+            return Err(Error::InvalidRequest);
+        }
+        Self::attach_inner(target, until).map_err(|failure| crate::classify_failure(failure, false))
+    }
+    fn attach_inner(target: RadioTarget, until: u64) -> Result<Self> {
+        let state = RadioState::new();
+        let namespace = Namespace::retain()?;
+        if (namespace.dev, namespace.ino) != (target.namespace_dev, target.namespace_ino) {
+            return Err(Failure::Identity);
+        }
+        namespace.check()?;
+        // Expected namespace identity is established before either socket opens.
+        let mut budget = Budget::new(until)?;
+        let mut command = Connection::new()?;
+        let family = family_group(&mut command, &mut budget, b"mlme\0")?;
+        let events = Connection::new()?;
+        events.socket.add_membership(family.group).map_err(system)?;
+        // Subscribe before even the initial interface and association baseline.
+        let selected = interface(&mut command, &family, target.ifindex, &mut budget)
+            .map_err(|f| association_context(f, 4))?;
+        let mut epoch = Self {
+            namespace,
+            command,
+            events,
+            family,
+            selected,
+            target,
+            state,
+        };
+        epoch.observe(false, &mut budget)?;
+        Ok(epoch)
+    }
+    fn budget(&mut self, until: u64) -> std::result::Result<Budget, Error> {
+        self.state.check_thread()?;
+        if !valid_radio_cutoff(boottime_ns(), until) {
+            return Err(Error::InvalidRequest);
+        }
+        Budget::new(until).map_err(|failure| self.state.fail(failure, false))
+    }
+    fn phase(associated: bool) -> MlmePhase {
+        if associated {
+            MlmePhase::Connected
+        } else {
+            MlmePhase::Disconnected
+        }
+    }
+    fn quiet(&self, associated: bool, budget: &mut Budget) -> Result<()> {
+        quiet_mlme(
+            &self.events,
+            &self.family,
+            self.selected,
+            Self::phase(associated),
+            &self.target.bssid,
+            budget,
+        )
+    }
+    fn observe(&mut self, expected: bool, budget: &mut Budget) -> Result<RadioFact> {
+        self.namespace.check()?;
+        self.quiet(expected, budget)?;
+        // A dump is not an atomic kernel snapshot. Conservatively date the fact
+        // before the first applicable readback, and fence both ends with events.
+        let observed_at_boottime_ns = boottime_ns();
+        self.check_interface(budget)?;
+        let actual = association_readback(&mut self.command, &self.family, self.selected, budget)
+            .map_err(|f| association_context(f, 3))?;
+        check_radio_association(&self.target, expected, actual.as_ref())?;
+        self.check_interface(budget)?;
+        self.quiet(expected, budget)?;
+        self.namespace.check()?;
+        budget.fence()?;
+        Ok(RadioFact {
+            associated: expected,
+            observed_at_boottime_ns,
+            wiphy: self.selected.wiphy,
+            wdev: self.selected.wdev,
+        })
+    }
+    fn check_interface(&mut self, budget: &mut Budget) -> Result<()> {
+        if interface(&mut self.command, &self.family, self.target.ifindex, budget)
+            .map_err(|f| association_context(f, 4))?
+            != self.selected
+        {
+            return Err(Failure::Identity);
+        }
+        Ok(())
+    }
+    /// Refresh actual radio state without replacing retained identity or sockets.
+    pub fn refresh(&mut self, until: u64) -> std::result::Result<RadioFact, Error> {
+        let mut budget = self.budget(until)?;
+        self.observe(self.state.associated, &mut budget)
+            .map_err(|failure| self.state.fail(failure, false))
+    }
+    /// Make at most one explicitly requested CONNECT or DISCONNECT. A repeated
+    /// request for the confirmed state only refreshes readback. No retry, rollback,
+    /// automatic disconnect or socket replacement occurs after any failure.
+    pub fn set_associated(
+        &mut self,
+        associated: bool,
+        until: u64,
+    ) -> std::result::Result<RadioFact, Error> {
+        let mut budget = self.budget(until)?;
+        let mut dispatched = false;
+        let result = self.set_inner(associated, &mut budget, &mut dispatched);
+        match result {
+            Ok(fact) => {
+                self.state.associated = associated;
+                Ok(fact)
+            }
+            Err(failure) => Err(self.state.fail(failure, dispatched)),
+        }
+    }
+    fn set_inner(
+        &mut self,
+        associated: bool,
+        budget: &mut Budget,
+        dispatched: &mut bool,
+    ) -> Result<RadioFact> {
+        let before = self.observe(self.state.associated, budget)?;
+        if associated == self.state.associated {
+            return Ok(before);
+        }
+        let mut attrs = Vec::new();
+        put32(&mut attrs, IFINDEX, self.selected.ifindex);
+        put(&mut attrs, WDEV, &self.selected.wdev.to_ne_bytes());
+        if associated {
+            put(&mut attrs, MAC, &self.target.bssid);
+            put32(&mut attrs, WIPHY_FREQ, self.target.frequency_mhz);
+            put(&mut attrs, SSID, &self.target.ssid);
+            put32(&mut attrs, AUTH_TYPE, 0);
+            put32(&mut attrs, 152, 0); // No background scan or SOCKET_OWNER.
+        } else {
+            put(&mut attrs, REASON_CODE, &3u16.to_ne_bytes());
+        }
+        let packet = self.command.request(
+            self.family.id,
+            self.family.version,
+            if associated { CONNECT } else { DISCONNECT },
+            ACK,
+            &attrs,
+        )?;
+        self.namespace.check()?;
+        self.quiet(self.state.associated, budget)?;
+        budget.fence()?;
+        // Set before the sole potentially admitted mutation syscall. All errors
+        // after this line remain uncertain, even send/ACK/kernel errors.
+        *dispatched = true;
+        self.command.send(&packet, budget)?;
+        self.command
+            .acknowledge(&packet, budget)
+            .map_err(|f| association_context(f, 1))?;
+        await_mlme(
+            &self.events,
+            &self.family,
+            self.selected,
+            associated,
+            &self.target.bssid,
+            budget,
+        )
+        .map_err(|f| association_context(f, 2))?;
+        self.observe(associated, budget)
+    }
+}
+
 pub(crate) fn associate(
     request: crate::AssociationRequest,
     started: u64,
@@ -1255,6 +1523,224 @@ pub(crate) fn disconnect(
 #[cfg(test)]
 mod tests {
     use super::*;
+    fn radio_target() -> crate::RadioTarget {
+        let namespace = Namespace::retain().unwrap();
+        crate::RadioTarget {
+            namespace_dev: namespace.dev,
+            namespace_ino: namespace.ino,
+            ifindex: 3,
+            frequency_mhz: 2412,
+            bssid: [2, 0, 0, 0, 0, 1],
+            ssid: vec![0xff, 0, 0x80],
+        }
+    }
+    #[test]
+    fn retained_radio_validates_original_one_second_cutoff_and_target_before_sockets() {
+        assert!(valid_radio_cutoff(100, 1_000_000_100));
+        for until in [0, 99, 100, 1_000_000_101] {
+            assert!(!valid_radio_cutoff(100, until));
+        }
+        let mut target = radio_target();
+        target.namespace_ino ^= 1;
+        assert!(matches!(
+            crate::RadioEpoch::attach_disconnected(target, boottime_ns() + 500_000_000),
+            Err(crate::Error::Failed(Failure::Identity))
+        ));
+        for target in [
+            crate::RadioTarget {
+                ifindex: 0,
+                ..radio_target()
+            },
+            crate::RadioTarget {
+                namespace_ino: 0,
+                ..radio_target()
+            },
+            crate::RadioTarget {
+                frequency_mhz: 0,
+                ..radio_target()
+            },
+            crate::RadioTarget {
+                bssid: [1; 6],
+                ..radio_target()
+            },
+            crate::RadioTarget {
+                ssid: vec![],
+                ..radio_target()
+            },
+        ] {
+            assert!(matches!(
+                crate::RadioEpoch::attach_disconnected(target, boottime_ns() + 500_000_000),
+                Err(crate::Error::InvalidRequest)
+            ));
+        }
+    }
+    #[test]
+    fn retained_radio_refuses_same_ifindex_with_changed_identity() {
+        let mut body = mlme_bytes(CONNECT, [2; 6], 0);
+        put(&mut body, WDEV, &5u64.to_ne_bytes());
+        let frame = Frame {
+            kind: 42,
+            flags: 0,
+            seq: 0,
+            port: 0,
+            body: &body,
+        };
+        assert_eq!(
+            mlme_event(
+                &frame,
+                &family_id(),
+                selected(),
+                MlmePhase::Connecting,
+                &[2; 6]
+            ),
+            Err(Failure::Identity)
+        );
+    }
+    #[test]
+    fn retained_radio_observation_requires_the_exact_target_peer() {
+        let target = radio_target();
+        assert_eq!(check_radio_association(&target, false, None), Ok(()));
+        assert_eq!(
+            check_radio_association(&target, true, None),
+            Err(Failure::Identity)
+        );
+        let peer = AssociatedBss {
+            mac: target.bssid,
+            ssid: target.ssid.clone(),
+            frequency: 2412,
+        };
+        assert_eq!(check_radio_association(&target, true, Some(&peer)), Ok(()));
+        assert_eq!(
+            check_radio_association(&target, false, Some(&peer)),
+            Err(Failure::Identity)
+        );
+        for peer in [
+            AssociatedBss {
+                mac: [2; 6],
+                ssid: target.ssid.clone(),
+                frequency: 2412,
+            },
+            AssociatedBss {
+                mac: target.bssid,
+                ssid: b"other".to_vec(),
+                frequency: 2412,
+            },
+            AssociatedBss {
+                mac: target.bssid,
+                ssid: target.ssid.clone(),
+                frequency: 2417,
+            },
+        ] {
+            assert_eq!(
+                check_radio_association(&target, true, Some(&peer)),
+                Err(Failure::Identity)
+            );
+        }
+    }
+    #[test]
+    fn retained_radio_failure_permanently_blocks_later_operations() {
+        let mut state = RadioState::new();
+        assert_eq!(state.check_thread(), Ok(()));
+        assert_eq!(
+            state.fail(Failure::Loss, true),
+            crate::Error::Uncertain(Failure::Loss)
+        );
+        assert_eq!(
+            state.check_thread(),
+            Err(crate::Error::Uncertain(Failure::Loss))
+        );
+        // A later apparent success or a different failure cannot clear retirement.
+        assert_eq!(
+            state.fail(Failure::Expired, false),
+            crate::Error::Uncertain(Failure::Loss)
+        );
+        assert_eq!(
+            state.check_thread(),
+            Err(crate::Error::Uncertain(Failure::Loss))
+        );
+    }
+    #[test]
+    fn retained_radio_constructing_thread_is_part_of_epoch_identity() {
+        let mut state = RadioState::new();
+        let state = std::thread::spawn(move || {
+            assert_eq!(
+                state.check_thread(),
+                Err(crate::Error::Failed(Failure::Identity))
+            );
+            state
+        })
+        .join()
+        .unwrap();
+        let mut state = state;
+        assert_eq!(
+            state.check_thread(),
+            Err(crate::Error::Failed(Failure::Identity))
+        );
+    }
+    #[test]
+    fn retained_radio_quiet_observation_refuses_roam_or_unrequested_disconnect() {
+        for command in [47, DISCONNECT] {
+            let body = mlme_bytes(command, [2; 6], 0);
+            let frame = Frame {
+                kind: 42,
+                flags: 0,
+                seq: 0,
+                port: 0,
+                body: &body,
+            };
+            assert_eq!(
+                mlme_event(
+                    &frame,
+                    &family_id(),
+                    selected(),
+                    MlmePhase::Connected,
+                    &[2; 6]
+                ),
+                Err(Failure::Contended)
+            );
+        }
+    }
+    #[test]
+    fn retained_radio_rejects_unsolicited_authentication_and_link_loss_events() {
+        for command in [37, 38, 39, 40] {
+            for phase in [MlmePhase::Connected, MlmePhase::Disconnected] {
+                let body = mlme_bytes(command, [2; 6], 0);
+                let frame = Frame {
+                    kind: 42,
+                    flags: 0,
+                    seq: 0,
+                    port: 0,
+                    body: &body,
+                };
+                assert_eq!(
+                    mlme_event(&frame, &family_id(), selected(), phase, &[2; 6]),
+                    Err(Failure::Contended)
+                );
+            }
+        }
+    }
+    #[test]
+    fn disconnect_notification_cannot_name_a_different_peer() {
+        let mut body = mlme_bytes(DISCONNECT, [2; 6], 0);
+        put(&mut body, REASON_CODE, &3u16.to_ne_bytes());
+        let frame = Frame {
+            kind: 42,
+            flags: 0,
+            seq: 0,
+            port: 0,
+            body: &body,
+        };
+        assert_eq!(
+            mlme_event(
+                &frame,
+                &family_id(),
+                selected(),
+                MlmePhase::Disconnecting,
+                &[4; 6]
+            ),
+            Err(Failure::Identity)
+        );
+    }
     fn selected() -> Identity {
         Identity {
             ifindex: 3,

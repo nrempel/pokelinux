@@ -5,6 +5,7 @@ edition = "2024"
 publish = false
 
 [dependencies]
+pokelinux-wireless-scan = { path = "../native-wireless-scan" }
 pokelinux-kernel-identity = { path = "../native-kernel-identity" }
 serde = { version = "=1.0.229", features = ["derive"] }
 serde_json = "=1.0.154"

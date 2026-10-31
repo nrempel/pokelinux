@@ -7,7 +7,7 @@ launches, Allow/Play with independent PCM, Revoke/quiet, reallow without replay,
 normal closes, external viewer final frame/EOF and complete outer closure.
 The eighth run remains failed on its obsolete Qt count assertion. No fresh
 screenshot/QWindow-density or physical-phone qualification follows. Move on to
-persistent wireless ownership; do not keep repeating this passing VM slice.
+the next wireless integration gates; do not keep repeating this passing VM slice.
 Disk cleanup recovered about17GiB from journals and Cargo incremental caches;
 source, final builds, private inputs and all1982 selected/external pins survived.
 
@@ -19,43 +19,56 @@ rootfs/service supervision is still a separate implementation gap, not proven by
 the diagnostic PID1. See [deployment scope](native-deployment.md) and
 [development bundle gates](native-boot-development-bundle.md).
 
-The next service integration is persistent wireless ownership in the existing
-connectivity worker. It currently constructs only `VirtualLink`; the separate
-association and `ExistingIpv4Profile` operations do not yet own one combined
-lifetime. A controlled backend should retain that lifetime across app closure,
-then remove its profile before explicit Disconnect, preserving original deadlines
-and terminal uncertainty. Reuse the existing Main/actor boundary and hwsim
-consumer. Open association and the fixed test IPv4 profile are tracer inputs;
-WPA credentials, DHCP/DNS, matched Pixel driver startup and hardware remain open.
-See [address/packet scope](native-wireless-address-packets.md) and the
-[persistent-service runtime consumer](../tools/native-wireless-service/README.md).
-The current veth Fact requires a witnessed lifetime; existing wireless identity
-must be represented separately. One-shot association closes its event sockets,
-so a persistent backend must retain radio observation rather than renew readiness
-from IPv4 alone. The executable consumer and copied real actor test now reuse the existing kernel
-validators and generic hwsim owner. Fresh unmodified normal Main/worker host+ARM
-builds and the ARM actor/SDK/launcher/storage builds pass. The first actual ARM attempt stops at the cap0 path preflight before Main/actor
-launch: operational files were under UID1000-owned0700 results. This is setup
-failure, not service RED. The corrected root-owned guest runtime layout passes
-a separate actual host cap0 RED→GREEN control using the unchanged helper. The fresh
-second ARM cohort now qualifies actual normal-service refusal RED with exact
-worker InvalidData/exit1, Main exit0, actual SDK unavailable and full owned
-AP/radio/namespace/QEMU/container closure. Desired behavior remains false.
-Implement the retained backend against these frozen consumer bytes. Keep the
-first failed attempt and normal closure qualification separate.
-Astra's review supports one concrete virtual-pair/wireless-open startup profile
-enum and typed observations, retaining radio and IPv4 objects on one worker
-thread. Subscribe before baseline; combine radio/profile observations using the
-oldest timestamp and retire on loss or identity change. Keep the1s action/250ms
-lease bounds. Crucially, carry an action-wide mutation latch: once radio CONNECT
-or profile removal is submitted, a later component's pre-send failure is still
-uncertain for the composed action. Freeze an actual normal Main+actor hwsim
-consumer before implementing this complete vertical slice; no admission-only
-milestone or new generic framework.
+The persistent Rust wireless service now passes the frozen ARM Main/actor/SDK
+consumer after the earlier qualified baseline refusal RED. The third candidate
+run connects once, independently exchanges a packet, actually closes/waits the
+first app, reopens on the same worker, exchanges another packet, explicitly
+Disconnects and verifies radio/address absence and quiet. Main/driver/peer exit0,
+actual worker terminal state, all guest waits/EOF, namespace custody, QEMU wait0
+and exact container absence qualify the final GREEN. Worker SIGKILL9 on normal
+Stop proves process closure only; explicit Disconnect and independent readback
+supply the separate radio/profile evidence. No phone or normal Wi-Fi GUI ran.
+See [runtime consumer](../tools/native-wireless-service/README.md) and
+[curated evidence](evidence/native-wireless-service-candidate.json).
+
+Main selects typed virtual-pair or wireless-open from a protected root profile.
+The worker retains radio and IPv4 observers on its constructing thread across
+app closure. Typed wireless identity does not invent a witnessed link lifetime.
+Subscription-before-baseline and bracketed readback prevent IPv4 alone renewing
+wireless readiness. Original 1s actions and 250ms leases remain unchanged. An
+action-wide mutation latch preserves uncertainty after either component may have
+changed state; there is no implicit retry, rollback or replacement worker.
+
+Keep earlier failures distinct. The first baseline attempt failed the cap0 path
+preflight; the corrected second baseline qualified real service refusal RED.
+The first candidate lost its worker with generic InvalidData; the exact cause
+remains unknown. Its zero success-gate counters do not prove no command or effect.
+The diagnostic second candidate confirmed association then failed the profile's
+prior observation with InvalidData and about891ms still available. Structured
+component/deadline errors now preserve this distinction. The third candidate
+changes sparse link-notification bookkeeping: known identities retain their
+optional lifetime without requiring MTU, unknown sparse creation fails closed,
+and full dumps stay strict. Four authored assertion failures become eight passes.
+The unchanged ARM consumer then passes; no raw kernel event shape was captured.
+The first failure's cause is not retroactively established.
+
+The current host connectivity suite passes38 tests with one deliberately ignored
+child fixture; the radio suite passes28. Host/ARM normal builds and dependent
+virtual-driver compilation pass. Astra found no unsafe parser weakening or
+lifetime invention; that review is not runtime evidence. Next run actual radio
+observation-loss/identity-change negatives and current virtual runtime
+regressions, then join the normal Settings Wi-Fi UI. Open AP and fixed test IPv4
+remain tracer inputs: WPA, DHCP/DNS/Internet, installed service composition,
+matched Pixel driver startup and all hardware gates remain open.
+
+Additional cleanup removed89GiB of old on-disk Rust dependency caches and13GiB
+of RAM-backed caches. Source, final executables, logs, screenshots and private
+inputs were retained; root had103GiB free after cleanup. Old removed dependency
+caches may need rebuilding; original finished runtime evidence remains intact.
 
 ## Goal and constraints
 
-Current permission work: [explicit installed app roles](native-permission-controller.md)
+Permission implementation history: [explicit installed app roles](native-permission-controller.md)
 pass the same five protected-profile RED→GREEN consumers. This is configuration
 only. The subsequent owner selection passes protected configuration and actual
 per-app display-helper ownership/cleanup tests. Scoped credentialed requests now use
@@ -67,7 +80,8 @@ These use authored Source/media facts and do not run the full actor loop. See
 fixture failures and the corrected intermediate RED classifier. Desktop launch,
 the Rust request/state client and Allow/Revoke UI are now implemented. Separate
 actor launch tests, 12 credentialed client scenarios and real unshown QML button
-clicks pass; the full genuine Omarchy flow remains open. See
+clicks pass; the ninth joined VM acceptance above now qualifies the authored
+Allow/Play/Revoke flow. See
 [Permissions UI evidence](native-permissions-ui.md). The first joined VM attempt
 reaches the correct menu item but observes only a brief UID11045 actor child,
 without a captured normal executable or window. No consent/PCM test runs; cleanup

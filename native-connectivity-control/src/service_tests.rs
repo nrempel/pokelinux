@@ -164,7 +164,8 @@ fn cached_snapshot_revokes_after_actual_wait_before_stdout_eof() {
         supervisor: Supervisor::new(journal.clone()),
         identity: None,
         _current: current,
-        _peer: peer,
+        _peer: Some(peer),
+        selected: super::Selected::VirtualPair,
         namespace,
         owner: owner::Owner::default(),
         observed: None,
@@ -247,7 +248,7 @@ fn cached_snapshot_revokes_after_actual_wait_before_stdout_eof() {
         let fact = Fact {
             namespace,
             ifindex: 2,
-            lifetime: 1,
+            identity: super::LinkIdentity::VirtualPair { lifetime: 1 },
             connected: true,
         };
         let observed_at = now();
@@ -355,7 +356,7 @@ fn cached_snapshot_revokes_after_actual_wait_before_stdout_eof() {
             && !after.reaped
             && !after.stopping;
         namespace_files_live = metadata(&service._current)? == namespace
-            && metadata(&service._peer)? == peer_namespace
+            && metadata(service._peer.as_ref().unwrap())? == peer_namespace
             && after.namespace_handles_open;
         snapshot_after = Some(after);
         if !(cache_fresh_around_snapshot && retained_child_output && namespace_files_live) {
@@ -510,7 +511,8 @@ fn accept_error_stop_fences_existing_private_client_work() {
         supervisor: Supervisor::new(directory.join("unused-admission")),
         identity: None,
         _current: current,
-        _peer: second,
+        _peer: Some(second),
+        selected: super::Selected::VirtualPair,
         namespace,
         owner: owner::Owner::default(),
         observed: None,

@@ -162,12 +162,22 @@ try:
     assert peer.namespace(fds[1]) == kept['namespace'] and kept['namespace'] != r['current_namespace']
     r['peer_keeper'] = kept
     peer_path = '/proc/' + str(keeper['child'].pid) + '/ns/net'
+    startup_profile = R / 'startup-profile.json'
+    with os.fdopen(os.open(startup_profile, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_CLOEXEC, 0o600), 'w') as stream:
+        json.dump({'backend': 'virtual_pair', 'peer_namespace': peer_path}, stream)
+        stream.write('\n')
+        stream.flush()
+        os.fsync(stream.fileno())
+    startup_metadata = startup_profile.lstat()
+    assert startup_metadata.st_uid == startup_metadata.st_gid == 0 and startup_metadata.st_nlink == 1
+    assert startup_metadata.st_mode & 0o170000 == 0o100000 and startup_metadata.st_mode & 0o7777 == 0o600
+    assert now() < W
     # One original six-second functional aggregate: normal startup, peer setup,
     # denial, real Rust Apply, traffic/background control and full800ms quiet.
     case = min(W, now() + 6_000_000_000)
     start_until = min(case, now() + 1_000_000_000)
     r['original_case_until_ns'], r['original_start_until_ns'] = case, start_until
-    main = services.start([str(a.main_elf), str(endpoint), peer_path, str(J / 'admitted'),
+    main = services.start([str(a.main_elf), str(endpoint), str(startup_profile), str(J / 'admitted'),
         str(a.worker_elf), str(start_until)], 'normal-connectivity-main.log', 1024 * 1024,
         env=dict(os.environ, POKELINUX_CONNECTIVITY_ISOLATED='1'), cutoff=start_until,
         wait_cutoff=C, identity={'preexec_fn': lambda: peer.reduce_caps((1 << peer.NET_ADMIN) | (1 << 8))})

@@ -69,7 +69,13 @@ try:
  r['peer_keeper']=json.loads(body);assert peer.namespace(fds[1])==r['peer_keeper']['namespace']!=r['current_namespace']
  case=min(W,now()+6_000_000_000);r['original_case_until_ns']=case;start_until=min(case,now()+3_000_000_000);r['original_start_until_ns']=start_until
  private=Path('/run/fixture/'+a.case);private.mkdir(mode=0o700);journal=private/'journal';journal.mkdir(mode=0o700);endpoint=private/'control.sock';peerpath=f"/proc/{keeper['child'].pid}/ns/net"
- argv=[str(a.main),str(endpoint),peerpath,str(journal/'admitted'),str(a.worker),str(start_until)]
+ startup_profile=private/'startup-profile.json'
+ with os.fdopen(os.open(startup_profile,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_CLOEXEC,0o600),'w')as stream:
+  json.dump({'backend':'virtual_pair','peer_namespace':peerpath},stream);stream.write('\n');stream.flush();os.fsync(stream.fileno())
+ startup_metadata=startup_profile.lstat()
+ assert startup_metadata.st_uid==startup_metadata.st_gid==0 and startup_metadata.st_nlink==1
+ assert stat.S_ISREG(startup_metadata.st_mode)and stat.S_IMODE(startup_metadata.st_mode)==0o600 and now()<start_until
+ argv=[str(a.main),str(endpoint),str(startup_profile),str(journal/'admitted'),str(a.worker),str(start_until)]
  main=scope.start(argv,'normal-main.log',65536,cutoff=start_until,wait_cutoff=C,identity={'preexec_fn':lambda:peer.reduce_caps((1<<peer.NET_ADMIN)|(1<<8))})
  initial=wait_ready(start_until);r['initial_private_inspect']=initial
  children=Path(f"/proc/{main['child'].pid}/task/{main['child'].pid}/children").read_text().split();assert len(children)==1;worker_pid=int(children[0]);worker_pidfd=os.pidfd_open(worker_pid,os.O_NONBLOCK)

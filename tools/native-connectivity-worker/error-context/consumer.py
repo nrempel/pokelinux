@@ -76,8 +76,14 @@ def main():
                  parent_metadata=parent)
         ns = Path('/proc/self/ns/net').open('rb')
         ns_meta = os.fstat(ns.fileno())
+        namespace = {'dev': ns_meta.st_dev, 'ino': ns_meta.st_ino}
+        startup = {'schema': 2,
+                   'profile': {'backend': 'virtual_pair',
+                               'peer_namespace': f'/proc/{os.getpid()}/fd/{ns.fileno()}'},
+                   'namespace': namespace, 'peer_identity': namespace,
+                   'original_start_until_ns': W}
         argv = [str(a.worker), '--pokelinux-process-worker',
-                f'/proc/{os.getpid()}/fd/{ns.fileno()}', str(ns_meta.st_dev), str(ns_meta.st_ino), str(W)]
+                json.dumps(startup, separators=(',', ':'))]
         r['actual_argv'] = argv
         environment = dict(os.environ, LANG='C', LC_ALL='C')
         child = scope.start(argv, 'actual-normal-worker.log', 4096, env=environment,

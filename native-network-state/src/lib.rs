@@ -271,10 +271,15 @@ impl KernelObserver {
         }
         match message.kind {
             NEW_LINK => {
-                let link = parse_link(&message.body)?;
+                let link = parse_link_fields(&message.body)?;
                 if let Some(lifetime) = self.lifetimes.get_mut(&link.ifindex) {
                     lifetime.name = link.name;
                 } else {
+                    // Sparse NEWLINK can be an update (for example a wireless
+                    // event), so absence from the map cannot witness creation.
+                    if link.mtu.is_none() {
+                        return Err(ObserveError::EvidenceLost);
+                    }
                     if self.lifetimes.len() >= MAX_LINKS {
                         return Err(ObserveError::BoundExceeded);
                     }
@@ -297,7 +302,7 @@ impl KernelObserver {
                 }
             }
             DEL_LINK => {
-                let link = parse_link(&message.body)?;
+                let link = parse_link_fields(&message.body)?;
                 if self.lifetimes.remove(&link.ifindex).is_none() && self.synchronized {
                     return Err(ObserveError::EvidenceLost);
                 }
@@ -553,7 +558,18 @@ fn attributes(bytes: &[u8]) -> Result<Vec<(u16, &[u8])>> {
     Ok(output)
 }
 
-fn parse_link(body: &[u8]) -> Result<LinkSnapshot> {
+struct LinkFields {
+    ifindex: u32,
+    name: String,
+    flags: u32,
+    mtu: Option<u32>,
+    operstate: Option<u8>,
+}
+
+// Notifications identify links without necessarily carrying every dump field.
+// Validate all recognized attributes even when notification bookkeeping needs
+// only the identity; snapshot construction below remains strict.
+fn parse_link_fields(body: &[u8]) -> Result<LinkFields> {
     if body.len() < 16 {
         return Err(ObserveError::InvalidData);
     }
@@ -597,13 +613,24 @@ fn parse_link(body: &[u8]) -> Result<LinkSnapshot> {
             _ => {}
         }
     }
-    Ok(LinkSnapshot {
+    Ok(LinkFields {
         ifindex: ifindex as u32,
         name: name.ok_or(ObserveError::InvalidData)?,
-        observed_lifetime: None,
         flags: u32_at(body, 8)?,
-        mtu: mtu.ok_or(ObserveError::InvalidData)?,
+        mtu,
         operstate,
+    })
+}
+
+fn parse_link(body: &[u8]) -> Result<LinkSnapshot> {
+    let link = parse_link_fields(body)?;
+    Ok(LinkSnapshot {
+        ifindex: link.ifindex,
+        name: link.name,
+        observed_lifetime: None,
+        flags: link.flags,
+        mtu: link.mtu.ok_or(ObserveError::InvalidData)?,
+        operstate: link.operstate,
         addresses: Vec::new(),
     })
 }
@@ -680,3 +707,6 @@ pub fn boot_time_ns() -> u64 {
 
 #[cfg(test)]
 mod kernel_tests;
+
+#[cfg(test)]
+mod notification_tests;

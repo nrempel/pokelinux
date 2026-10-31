@@ -18,7 +18,7 @@ def qualify_idle(r,log):
  need(t['detached_at_actual_nonterminal_stop']and t['normal_Main_retains_terminal_wait'],'tracer does not consume Main terminal wait')
  stops=t['trace_stops'];need(len(stops)==1 and stops[0]['label']=='empty-idle-before-auth'and stops[0]['requested_hold_ns']==80_000_000,'one exact fixed empty-idle stop')
  stop=stops[0];need(stop['actual_resume_started_at_ns']>=stop['original_resume_at_ns'],'actual controlled interval')
- gate=t['idle_gate_attribution'];need(gate['prior_private_observation_send']['bytes']==47 and gate['loop_sleep_exit_ns']<stop['kernel_stopped_at_ns'],'actual send/sleep/thread-check ordering')
+ gate=t['idle_gate_attribution'];need(gate['prior_private_observation_send']['bytes']==48 and gate['loop_sleep_exit_ns']<stop['kernel_stopped_at_ns'],'actual send/sleep/thread-check ordering')
  need(r['after_trace_independent_readback']['ipv4']==[]and r['functional_completed_before_original_case'],'no address effect and original case bound')
  desired=bool(r.get('same_worker_fresh_after_idle')and not r['worker_terminal_before_cleanup']and t.get('post_hold_observation_send'))
  behavior_red=False;detail={}

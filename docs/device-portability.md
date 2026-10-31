@@ -5,9 +5,14 @@ fresh test AP through Rust and kernel nl80211 in a generic ARM hwsim guest,
 after genuine refusing RED and with the unchanged consumer and full owned
 cleanup. The same discovery binary passes a separate unavailable control.
 Subsequent [native open association and explicit Disconnect](native-wireless-association.md)
-pass separately with independent kernel checks in generic ARM hwsim. Wi-Fi IP
-traffic, WPA, normal Settings integration, installed wireless activation and the
-matched Pixel backend remain open; no phone is qualified.
+pass separately with independent kernel checks in generic ARM hwsim. The
+[persistent Rust service](../tools/native-wireless-service/README.md) now passes
+the same frozen normal Main/actor/SDK consumer: Connect, independent packets,
+actual app close/wait, reopen on the same worker, another packet, explicit
+Disconnect and quiet, followed by full owned cleanup. This is open-AP/fixed-IPv4
+ARM simulated-radio evidence. WPA, DHCP/DNS/Internet, normal Settings Wi-Fi UI,
+installed wireless activation and the matched Pixel backend remain open; no
+phone is qualified.
 The [retained Pixel WLAN catalog](native-pixel-wireless-boundary.md) identifies
 external cfg80211 and two DHD candidates; names and common interfaces do not
 qualify device selection, source/KMI, firmware initialization or another model.

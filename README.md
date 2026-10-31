@@ -56,17 +56,21 @@ Settings now controls a real virtual network through the Rust service stack.
 Enable exchanges packets; closing Settings leaves the connection working.
 A fresh app instance observes that connection, exchanges another packet, then
 Disable removes the address and stops traffic. This passes in an x86 VM with
-explicit test session authority. Wi-Fi and Internet connectivity remain open.
+explicit test session authority. This graphical checkpoint uses a virtual link.
 [App-to-packets test](docs/native-settings-connectivity-window.md).
-
-The next step is persistent Wi-Fi. An [ARM Linux simulated-radio integration
-test](tools/native-wireless-service/README.md) now reaches the real service and
-app boundary and confirms the missing behavior, with complete test cleanup.
-The retained wireless backend is still to be implemented.
 
 | Before Enable | Reopened with the connection preserved |
 | --- | --- |
 | ![Settings with the local connection disabled and Enable available](docs/assets/settings-connectivity-disabled.png) | ![A fresh Settings instance observes the local connection still enabled](docs/assets/settings-connectivity-reopened-enabled.png) |
+
+The Rust Wi-Fi service now keeps a connection alive across test-app closure
+and reopening in an ARM Linux VM. The same app SDK connects once, independent
+packet probes succeed before and after reopening, and explicit Disconnect removes
+the address and association and passes quiet checks. Full process and VM cleanup
+passes too. This uses simulated radios, an open test AP and fixed IPv4;
+normal Settings Wi-Fi controls, WPA, DHCP/DNS, Internet and Pixel hardware remain
+open. The screenshots above show the earlier virtual-link UI, not this wireless
+run. [Persistent wireless evidence](tools/native-wireless-service/README.md).
 
 ## What works today
 
@@ -81,7 +85,7 @@ into one complete phone session.
 | Connection ownership | Touch Enable → packets → app close/reopen → explicit Disable and silence through the normal Settings app and Rust services. | [Settings connection](docs/native-settings-connectivity-window.md) |
 | Session recovery | The same Sounds window survives a compositor pause; fresh state returns about 55 ms after resume, followed by measured playback and permission-revoke silence. Earlier audio failures remain under investigation. | [Recovery checks](docs/native-session-timing-recovery.md) |
 | Connection reliability | A delayed idle poll no longer kills the connection worker; overdue received commands are still rejected. Host process tests only. | [Idle polling](docs/native-connectivity-idle-receive.md) |
-| Wireless | Native Rust discovery, open-AP association, fixed IP setup, two packet round trips, address removal and disconnect pass against Linux virtual radios in an ARM VM. WPA, DHCP/DNS, Settings integration and Pixel hardware remain open. | [Discovery](docs/native-wireless-scan.md), [connection](docs/native-wireless-association.md), [IP and packets](docs/native-wireless-address-packets.md) |
+| Wireless | The Rust service preserves open-AP association and fixed IPv4 across SDK app close/reopen, with two independent packet checks, explicit Disconnect, quiet and complete cleanup in an ARM VM with simulated radios. WPA, DHCP/DNS, Settings Wi-Fi UI and Pixel hardware remain open. | [Persistent service](tools/native-wireless-service/README.md), [earlier IP tracer](docs/native-wireless-address-packets.md) |
 | ARM app build and partial runtime | Current Settings builds/installs with native Qt 6.12 and matching Rust libraries. A failed ARM trace reaches one Enable touch, a virtual address and one packet; background persistence, reopen and Disable remain open. | [ARM build/install](docs/native-settings-connectivity-window.md#native-arm-build-and-installation), [partial failed trace](docs/native-settings-connectivity-window.md#fourth-attempt-partial-touch-and-packets) |
 | Audio | Preview Play/Stop, volume and mute verified against measured virtual audio; separate installed ARM service startup and shutdown checks. Physical phone audio remains open. | [Preview](docs/native-sounds-preview.md), [live mute](docs/native-live-preview-mute.md) |
 | Battery and brightness | Rust services follow real Linux test drivers, including value changes and device loss; installed ARM startup and recovery checkpoints pass. | [Battery](docs/native-battery.md), [brightness](docs/native-brightness.md) |

@@ -59,10 +59,11 @@ qualification; raw nonces and process traces remain private.
 
 ## Normal CLI error-context consumer
 
-[`error-context/consumer.py`](error-context/consumer.py) is the exact8290-byte
-consumer executed unchanged for the [error-context RED and GREEN](../../docs/native-connectivity-worker-error-context.md).
-It runs only the normal compiler-JSON-selected x86_64 Release worker, using its
-existing cooperative selector and four trusted arguments. It requires no hidden
+[`error-context/consumer.py`](error-context/consumer.py) now uses the one-argument
+schema2 worker startup encoding. Its earlier8290-byte version remains the frozen
+consumer for the recorded [error-context RED and GREEN](../../docs/native-connectivity-worker-error-context.md).
+The current version runs the normal compiler-JSON-selected x86_64 Release worker
+with the existing cooperative selector; fresh execution remains pending. It requires no hidden
 worker flag or special capability: the actual parent/child cohort is UID1000,
 all capability sets0 and NNP1. No Main or virtual-link setup is exercised.
 

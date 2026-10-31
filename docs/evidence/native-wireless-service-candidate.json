@@ -1,0 +1,258 @@
+{
+  "schema": 1,
+  "status": "Same frozen ARM normal Main/actor/SDK consumer qualifies persistent wireless packet lifecycle GREEN with full owned closure",
+  "scope": "Native Rust retained open-radio and fixed IPv4 backend; no phone",
+  "baseline_RED_commit": "92ecbdd1e894512a0b24e38dd6218bbc7a0b496b",
+  "frozen_consumer_sha256": "92bfa45884c1efb7f0fa9d559a1df6bf3f41b4dc2ffe544bdcf350275da6b37d",
+  "proof_sha256": {
+    "actual_ARM_baseline_RED": "2afec348a3269478014bcbdef634f1cf7d5afb934cd690563de5b97d1b12aea0",
+    "typed_record_assertion_RED": "ea3057a36e9d16187af4d96ec071047924c4d98e8469fb2a87444642bfad8de7",
+    "protected_startup_fd_tests": "814a8948950271dc886aa37feb8490a4ba555cdba1603ce4124b7347eda59bbd",
+    "radio_parser_and_unit_tests": "e3edfc0f50177649053fb51485e847591fe4932d4ae17b530591f3e66ad80286",
+    "full_connectivity_library_tests": "b412364f2675030194f2e829515f35f96ad71191362f9cf439fa7bc861db5406",
+    "dependent_lock_and_tool_builds": "4aaae53065c5c6673d9bccdfee12c963761c513c7e8356180e869ea4bc155d65",
+    "full_diagnostic_library_tests": "5cb8566326ac3f7f1be58addebb2830488a46c1a06115d792b4c505056c6ede9",
+    "service_context_assertion_RED": "bdb60dad7d4541e3947b1c48cc86aaaccfb9c5358ff0e43ff43c26dcc3aaa9cf",
+    "current_connectivity_host_suite": "e733731e703a52d01276ca90176a423c3a24291b7cb4da7723fc89ecc2b33a1d"
+  },
+  "host_library": {
+    "passed": 38,
+    "failed": 0,
+    "ignored": 1,
+    "ignored_helper": "stdout_writer_fixture_child selected separately by actual custody parent test",
+    "startup_fd_tests": 11,
+    "composition_tests": 11,
+    "typed_record_tests": 6
+  },
+  "radio_library": {
+    "passed": 28,
+    "parser_assertion_failures_before_fix": 2,
+    "missing_API_compile_errors_not_counted_as_behavioral_RED": true
+  },
+  "build": {
+    "schema": 1,
+    "scope": "Sparse link notification candidate build used by qualified ARM GREEN; source unpublished at build time",
+    "source_commit": "uncommitted candidate based on92ecbdd",
+    "source_pins_sha256": "817b0abaae70c59fba2801e0e4bf0ea40f39ea725eaa2baa113983198fe5cb13",
+    "source_files_unchanged": 49,
+    "normal_ELFs": {
+      "ARM/pokelinux-connectivity-service": {
+        "bytes": 955080,
+        "sha256": "3bf9cd476afbf26bdca6c2b802837407869e42c40ff6e702fa2982c4df558f1b",
+        "ELF_machine": 183
+      },
+      "ARM/pokelinux-connectivity-main": {
+        "bytes": 955960,
+        "sha256": "6e759d12ad7fdb28efcb49eb667c3b6808771013342d31cd3ae1c29f260ef028",
+        "ELF_machine": 183
+      },
+      "host/pokelinux-connectivity-service": {
+        "bytes": 976320,
+        "sha256": "4a1b694fecd33e3e04f64fd47ab69a5faebbc8595472557b27b3d40af450fd8e",
+        "ELF_machine": 62
+      },
+      "host/pokelinux-connectivity-main": {
+        "bytes": 943808,
+        "sha256": "de730c2d71126c0befbe82dcb0bd6544f84c1cd0554c42f5e821ae4a10235ed5",
+        "ELF_machine": 62
+      }
+    }
+  },
+  "dependent_lock_versions_and_checksums_unchanged": true,
+  "current_virtual_driver_host_compilation_passed": true,
+  "remaining": [
+    "Actual event-loss and identity-change negatives",
+    "Current virtual runtime regressions",
+    "Normal Settings Wi-Fi GUI",
+    "WPA credentials DHCP DNS Internet",
+    "Matched Pixel startup and all physical-phone gates"
+  ],
+  "first_candidate_attempt": {
+    "desired_GREEN": false,
+    "initial_available": true,
+    "initial_configured": false,
+    "error": "same actual worker lives; no replacement",
+    "worker_error": "Kind(InvalidData)",
+    "underlying_cause": "unresolved; do not infer deadline or parser cause",
+    "actual_QEMU_wait": 0,
+    "guest_command_handles_closed": true,
+    "guest_ECHILD": true,
+    "owned_failure_radio_cleanup_confirmed": true,
+    "exact_container_absence": true,
+    "selected_inputs_unchanged": true,
+    "normal_case_wait_EOF_qualification": false,
+    "summary_sha256": "1fcd107295db4361f9c6a533caf1d4b6b81baa592e963595bbed8a480ae8464d",
+    "consumer_success_gate_counters": [
+      0,
+      0,
+      0
+    ],
+    "zero_counters_do_not_prove_absence_of_commands_or_effects": true
+  },
+  "initial_build": {
+    "schema": 1,
+    "scope": "Native retained wireless candidate builds only; runtime GREEN pending",
+    "source_commit": "uncommitted candidate based on92ecbdd",
+    "source_pins_sha256": "0f418a5a467eee432ecc7fa0a6e4078e2d4f305d6505effe1631403bb92f896b",
+    "source_files_unchanged": 48,
+    "normal_ELFs": {
+      "ARM/pokelinux-connectivity-service": {
+        "bytes": 947448,
+        "sha256": "d44b6155cb3d7b1f3153891018215516887cb219027b206500aa632d2a674707",
+        "ELF_machine": 183
+      },
+      "ARM/pokelinux-connectivity-main": {
+        "bytes": 955752,
+        "sha256": "bfa5d308a684de1a87e5ad137d87bdb97f5f5f3c3e422eea929881f599f3cc1e",
+        "ELF_machine": 183
+      },
+      "host/pokelinux-connectivity-service": {
+        "bytes": 959168,
+        "sha256": "caf0ecdc109579a290ee7746fba0acff84df1294553d1fdaa30a98cf32694c21",
+        "ELF_machine": 62
+      },
+      "host/pokelinux-connectivity-main": {
+        "bytes": 941088,
+        "sha256": "895b91c3d872f1ef1de7e2dc3417094a14078ceb48297732776db5b114035bf6",
+        "ELF_machine": 62
+      }
+    }
+  },
+  "diagnostic_revision": {
+    "original_backend_component_and_classification_preserved": true,
+    "worker_error_original_cutoff_and_detection_time_retained": true,
+    "action_and_observation_orchestration_unchanged": true,
+    "host_passed": 38,
+    "host_ignored": 1,
+    "ARM_host_builds_passed": true,
+    "fresh_ARM_attempt_in_progress": false,
+    "first_runtime_failure_not_claimed_fixed": true
+  },
+  "diagnostic_ARM_attempt": {
+    "schema": 1,
+    "classification": "Unqualified candidate execution; actual association then profile prior-observation failure",
+    "backend_stage": "ApplyBackend",
+    "operation": "apply_wireless",
+    "classification_at_action_boundary": "Uncertain",
+    "component_operation": "Profile::Add",
+    "component_error": "Observation(InvalidData)",
+    "original_until_ns": 72269266697,
+    "detected_at_ns": 71377860528,
+    "remaining_ns": 891406169,
+    "association_confirmed_before_profile_call": true,
+    "profile_failure_before_address_mutation": "inferred from ExistingIpv4Profile prior-read error propagation; post-mutation errors become Uncertain",
+    "consumer_counters_are_successful_readback_gates_not_dispatch_counts": true,
+    "zero_counters_do_not_prove_no_Connect_or_kernel_effect": true,
+    "candidate1_original_cause_remains_unresolved": true,
+    "failure_radio_cleanup_confirmed": true,
+    "all_guest_handles_closed": true,
+    "guest_ECHILD": true,
+    "QEMU_wait": 0,
+    "QEMU_handles_closed": true,
+    "exact_container_absence": true,
+    "inputs_unchanged": true,
+    "normal_case_qualification": false,
+    "receipt_sha256": {
+      "result.json": "5ae75624f46f9a246d89481dfb52238329a797b966ac2e14d2292f646498e6d0",
+      "boot-result.json": "2e266582b987c7d52b54be6165cd07efa7798a0bdd6b35d1cf70b73444da6423",
+      "run/receipt.json": "5f62de92c815c8ab64a324bbcc5130af8113d6743baa3b2f92f8256cd9a4d666",
+      "wireless-service-case/case-result.json": "ef7bec373f5139cc0fcded1d4c8c05236c8798a87f2383194daf291388abad64"
+    }
+  },
+  "diagnostic_build": {
+    "schema": 1,
+    "scope": "Diagnostic revision build; underlying first runtime failure unresolved",
+    "source_commit": "uncommitted candidate based on92ecbdd",
+    "source_pins_sha256": "4121529974add238c04a023154de9be5de445f781eb330ec5e031cc3074fb280",
+    "source_files_unchanged": 48,
+    "normal_ELFs": {
+      "ARM/pokelinux-connectivity-service": {
+        "bytes": 955000,
+        "sha256": "278373947cc85b0fc0f21f75270197ed191b1d74f790db3fadd20780b2fa790d",
+        "ELF_machine": 183
+      },
+      "ARM/pokelinux-connectivity-main": {
+        "bytes": 955904,
+        "sha256": "1ea6f4f3d515a95629427d8af7b9f7b4d6d7f2bbd881ffe0d1ffd9b746125cfa",
+        "ELF_machine": 183
+      },
+      "host/pokelinux-connectivity-service": {
+        "bytes": 976384,
+        "sha256": "e1e8659f83b0824e306b3a6a68c742b755cf9bbb84a09349c6efa8631d119c5e",
+        "ELF_machine": 62
+      },
+      "host/pokelinux-connectivity-main": {
+        "bytes": 943824,
+        "sha256": "7dea79e22aa6a94f871b3624afb432084a77e679772ff211a7016dba415dd654",
+        "ELF_machine": 62
+      }
+    }
+  },
+  "sparse_notification_fix": {
+    "known_partial_notifications_preserve_optional_lifetime": true,
+    "unknown_partial_NEWLINK_refuses_creation": true,
+    "full_dump_requirements_unchanged": true,
+    "authored_test_RED_passed": 4,
+    "authored_test_RED_failed": 4,
+    "authored_test_GREEN_passed": 8,
+    "actual_kernel_event_shape_not_captured": true,
+    "same_consumer_ARM_rerun_pending": false,
+    "evidence_sha256": "d006f22d565a0fcb639ee0275a434d8631afe636f0537c7c6214256f7a69b99e"
+  },
+  "qualified_ARM_GREEN": {
+    "evidence_class": "Generic ARM Linux VM with simulated radios; native Rust normal Main/worker and actual actor/SDK; no physical device or normal graphical Settings session",
+    "receipt_sha256": {
+      "selection.json": "0f23c281f097790094ea71ba9460736eda9a9620ac3987002f888660a4ffca60",
+      "result.json": "87d131d2c6b25cdbdba9f91c5168e7a7dc7a18c733e75ebc746e1702cf706d27",
+      "boot-result.json": "6da593b86b5db9b4a9ecbfd377e09c7944fdaa85d73c56b8fbb324ea3f991528",
+      "run/receipt.json": "5387eba5fcb6b477e351630dbc1367ba8aa3b468f949079479e92a2cb1f2a7ce",
+      "wireless-service-case/case-result.json": "ea6a75fb06a011b972f28d3099b5a506986b34b2c95da11d26cad508414e6a45"
+    },
+    "functional_green": true,
+    "Connect_success_gate_count": 1,
+    "Disconnect_success_gate_count": 1,
+    "independent_UDP_roundtrips": 2,
+    "first_requester_actual_wait": true,
+    "independent_original_worker_terminal": true,
+    "normal_Main_exit": 0,
+    "driver_exit": 0,
+    "packet_peer_exit": 0,
+    "quiet_received_datagrams": 0,
+    "quiet_end_drained_datagrams": 0,
+    "quiet_end_actual_EAGAIN": true,
+    "quiet_armed_to_original_deadline_ns": 797693090,
+    "original_deadlines_unchanged": true,
+    "worker_reaping_does_not_claim_radio_cleanup": true,
+    "provisional_case_passed_field_is_not_final_cleanup_qualification": true,
+    "actual_QEMU_wait_exit": 0,
+    "guest_closure": {
+      "all_commands_actual_wait_EOF": true,
+      "all_command_handles_closed": true,
+      "ECHILD": true,
+      "owned_simulated_radios_removed": true,
+      "retained_namespace_custody_qualified": true,
+      "retained_AP_namespace_custody_qualified": true,
+      "cleanup_errors": []
+    },
+    "outer_closure": {
+      "classification": "CLOSED_NORMAL_MAIN_ACTOR_PERSISTENT_WIRELESS_PACKET_GREEN",
+      "source_unchanged": true,
+      "all_selected_inputs_unchanged": true,
+      "same_daemon": true,
+      "exact_CID_absence": true,
+      "selected_output_bound_passed": true,
+      "cleanup_errors": []
+    },
+    "four_non_service_ELFs_unchanged_from_baseline": true,
+    "frozen_guest_and_consumer_unchanged": true,
+    "worker_stop_closure": {
+      "closed": true,
+      "namespace_handles_open": true,
+      "occupied": false,
+      "output_eof": true,
+      "reaped": true,
+      "worker_exit_code": null,
+      "worker_exit_signal": 9
+    }
+  }
+}

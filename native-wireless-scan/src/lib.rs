@@ -1,4 +1,4 @@
-//! One-shot Linux wireless discovery inside a caller-owned exclusive radio epoch.
+//! Linux wireless discovery and a retained caller-owned exclusive radio epoch.
 //!
 //! Scan and explicit open-association primitives never configure IP, abort or retry a mutation.
 //! The caller must own its process through actual wait and stdout EOF. Closing its
@@ -9,6 +9,28 @@ pub use association::{
     Associated, AssociationRequest, DisconnectRequest, Disconnected, associate_open_once,
     disconnect_once,
 };
+pub use wire::RadioEpoch;
+
+/// Exact open-network target in the constructing thread's current namespace.
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct RadioTarget {
+    pub namespace_dev: u64,
+    pub namespace_ino: u64,
+    pub ifindex: u32,
+    pub frequency_mhz: u32,
+    pub bssid: [u8; 6],
+    pub ssid: Vec<u8>,
+}
+
+/// An exact readback bracketed by checks on the retained MLME event stream.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub struct RadioFact {
+    pub associated: bool,
+    /// Start of the oldest readback used for this fact, never publication time.
+    pub observed_at_boottime_ns: u64,
+    pub wiphy: u32,
+    pub wdev: u64,
+}
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub struct Request {

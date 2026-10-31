@@ -252,7 +252,7 @@ pub(crate) fn clients_turn(
 /// Trusted root startup only. No app identity, grant, interface or backend selector is accepted over the socket.
 pub fn run(
     path: &Path,
-    peer_namespace: &Path,
+    startup_profile: &Path,
     journal: &Path,
     worker: &Path,
     original_start_until: u64,
@@ -263,19 +263,15 @@ pub fn run(
         rustix::process::getgid().as_raw(),
         rustix::process::getegid().as_raw(),
     ] != [0; 4]
-        || !peer_namespace.is_absolute()
+        || !startup_profile.is_absolute()
         || !journal.is_absolute()
     {
         return Err(io::ErrorKind::PermissionDenied.into());
     }
     let _termination = TerminationGuard::install()?;
+    let profile = crate::startup::load(startup_profile)?;
     let socket = listener(path)?;
-    let mut service = Service::start(
-        worker,
-        fs::File::open(peer_namespace)?,
-        journal.into(),
-        original_start_until,
-    )?;
+    let mut service = Service::start(worker, profile, journal.into(), original_start_until)?;
     let mut peers = Vec::<Peer>::new();
     let mut serial = 0u64;
     let mut fatal = None;
