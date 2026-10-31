@@ -42,7 +42,7 @@
     "Initial candidate formatting check failed; formatting-only correction, rebuilt and checked"
   ],
   "remaining": [
-    "Fresh complete outer VM runner qualification after selected Qt count repair",
+    "Fresh normal-app QWindow/screenshot qualification",
     "ARM and physical device qualification"
   ],
   "seventh_VM_failure_cause_proven": false,
@@ -67,5 +67,12 @@
     "outer_failure": "Historical assertion expects34/32 Qt cases instead of selected35/33",
     "guest_result_sha256": "a45fcbf8c989f2b00223027705143359ac4c2fadcb20f03faf1433885c221539",
     "physical_phone_accessed": false
+  },
+  "ninth_complete_run": {
+    "scope": "Native x86 KVM normal-entry guest/PCM/viewer and outer closure",
+    "passed": true,
+    "execution_sha256": "c3f8efbd6760f880b37f433b8d71f41b1f2c8c36c08b218b86093d3eb582c7b4",
+    "normal_guest_Sounds_ELF_sha256": "fbccc93fbcef1b2ad69f9f7f9c2a9a0020d01df79d7ca455fb8a94a3ac6db92c",
+    "seventh_failure_cause_proven": false
   }
 }

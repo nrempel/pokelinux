@@ -75,4 +75,6 @@ total/behavior counts and the selection's expected total. It applies with
 4e40909c0e12ed81922f0cd4e330bd76bf99d1af118a76850ffb2747bca2394c).
 Historical patches and pins above remain unchanged. The eighth guest, PCM and
 viewer pass, but its outer result fails on that count. Exact actual-result
-RED→GREEN and five altered-result refusal controls pass; a fresh run is pending.
+RED→GREEN and five altered-result refusal controls pass. A ninth fresh VM run
+now passes the repaired checker, guest PCM sequence, final frame/EOF and complete
+outer closure. Historical failed results remain unchanged.

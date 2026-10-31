@@ -9,7 +9,9 @@ Allow/Play/Revoke/silence and reallow-without-restart, with measured audio and
 normal app closes in two runs. Their external viewer fails final-frame protocol
 handling; its separate socket/real-server repair passes. A later integrated
 repeat stops earlier without an observed playback producer. Repeatability and
-the complete end-to-end run remain unqualified. See [Permissions UI evidence](native-permissions-ui.md). This
+the cause of that repeat remain unresolved. A subsequent ninth complete run now
+passes the updated normal app, measured permission/audio sequence, viewer final
+frame/EOF and outer VM/container closure. See [Permissions UI evidence](native-permissions-ui.md). This
 does not close the permissions or audio matrix entries.
 
 The [cold x86 Omarchy/Sounds checkpoint](native-cold-omarchy-sounds.md) now passes

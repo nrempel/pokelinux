@@ -257,3 +257,27 @@ run. A fresh run must qualify the updated outer checker. The historical consumer
 patches retain their original pins; the separate selected-qt-cases.patch carries
 the repair. The seventh run's cause is still unproven. No new screenshot,
 QWindow density, ARM or physical-phone qualification is claimed.
+
+## Ninth attempt: complete normal-entry acceptance
+
+The fresh x86 KVM run selects only the repaired Qt-result predicate and new case
+paths. Normal guest Qt6.12 build,35 audio cases, five C ABI targets and29 appearance
+cases pass. The same real menu/Allow/Play/Revoke/reallow/normal-close sequence
+passes. Independent paired capture measures Speaker RMS0.0883867 with the other
+output silent, then exact zero RMS on both outputs after Revoke and reallow.
+The viewer completes16 actions, its final frame and EOF. Guest and outer results
+both pass; all seven host children and seven QEMU-host children have actual
+waits and output closure. Container exit0, exact absence and all2015 selected/
+external input hashes pass under the original bounds.
+
+Two pre-launch admissions refused temporary memory pressure; no VM started.
+The original viewer remained live within its unchanged700s outer bound. Moving
+a completed old Rust build from tmpfs to disk preserved all3800 entries and
+original-path access while freeing RAM; no build artifacts were discarded.
+The admitted VM ran once, without extending guards or deadlines.
+
+This closes this defined acceptance sequence, not the full phone matrix. Initial
+denied PCM within this sequence, explicit second Play after reallow, reopen,
+fresh QWindow/screenshot evidence, ARM and physical phone audio remain separate
+gates. The seventh run's cause remains unproven; the eighth outer result remains
+failed.

@@ -492,5 +492,33 @@
     "fresh_outer_runner_run_pending": true,
     "seventh_failure_cause_proven": false,
     "physical_phone_accessed": false
+  },
+  "ninth_joined_vm_attempt": {
+    "scope": "Complete native x86 KVM normal-entry permission/audio acceptance; no ARM, fresh screenshot or phone qualification",
+    "receipts_sha256": {
+      "selection.json": "2a3ad22ced5fd7503af53e0a998590d902e09b2dea71c7f096ab52b3e456f611",
+      "command.json": "926a56f5dc1ca8fffe3453116b9d14e100340ba7ef190f04b46046f194be89fb",
+      "execution.json": "c3f8efbd6760f880b37f433b8d71f41b1f2c8c36c08b218b86093d3eb582c7b4",
+      "result.json": "32e586a82baeff32104b5e61af7998c25a782d8ae9706289f2723167ae0d329c",
+      "boot-result.json": "09ae0eeece33e7606be44eda576a742e9a0a2df334a6d1f6e785007aa04449c8",
+      "permissions-viewer-result.json": "db7107b0ded2d560c130af343e2b7a34b720510144944d69e6ebe7f154f3ee6d",
+      "pcm/permissions-acceptance/result.json": "5cc44c9c8380b53d0d684baff0120b5b1da1856da2293cc37faa6c4f5c93d148"
+    },
+    "outer_guest_boot_PCM_viewer_passed": true,
+    "actual_Qt_cases": 35,
+    "actual_CABI_targets": 5,
+    "appearance_cases": 29,
+    "viewer_actions": 16,
+    "host_actual_waits_and_EOF": 7,
+    "QEMU_host_actual_waits_and_EOF": 7,
+    "selected_files": 592,
+    "external_inputs": 1423,
+    "all_inputs_unchanged_at_closure": true,
+    "owned_container_absent": true,
+    "original_deadlines_unchanged": true,
+    "VM_runs": 1,
+    "prelaunch_memory_admission_refusals": 2,
+    "historical_results_reclassified": false,
+    "physical_phone_accessed": false
   }
 }

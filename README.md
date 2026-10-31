@@ -35,10 +35,10 @@ again without restarting playback. The phone window profile keeps each focused
 app usable below the Omarchy bar. Independent audio capture measures tone followed
 by silence. Both apps close normally in two runs. A later repeat observes no
 playback producer and stops before the tone check; its cause remains unknown.
-Play now accepts a tap during a background status refresh. The updated app passes
-the guest permission/audio sequence, and the repaired viewer reaches its final
-frame and EOF. That run's outer checker still fails on an obsolete test count;
-a corrected checker passes a separate replay, with a fresh full run pending.
+Play now accepts a tap during a background status refresh. A fresh complete
+run now passes the updated app's permission/audio sequence, viewer final frame
+and EOF, and full VM/container shutdown. The prior run's obsolete test-count
+assertion is repaired; its original failed result remains separate.
 This is VM evidence, not physical-phone audio. The frozen screenshot above
 predates these controls.
 

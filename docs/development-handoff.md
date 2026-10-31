@@ -2,10 +2,12 @@
 
 ## Immediate integration order
 
-The eighth Sounds/Permissions guest passes graphical/PCM acceptance and the
-external viewer passes final frame/EOF. Its outer runner remains failed because
-it expects 34 Qt cases instead of the selected 35. Exact frozen-result RED→GREEN
-checks the selected case names/counts; a fresh full run must qualify that runner.
+The ninth Sounds/Permissions acceptance passes end to end: guest build, real menu
+launches, Allow/Play with independent PCM, Revoke/quiet, reallow without replay,
+normal closes, external viewer final frame/EOF and complete outer closure.
+The eighth run remains failed on its obsolete Qt count assertion. No fresh
+screenshot/QWindow-density or physical-phone qualification follows. Move on to
+persistent wireless ownership; do not keep repeating this passing VM slice.
 Disk cleanup recovered about17GiB from journals and Cargo incremental caches;
 source, final builds, private inputs and all1982 selected/external pins survived.
 
@@ -32,6 +34,15 @@ must be represented separately. One-shot association closes its event sockets,
 so a persistent backend must retain radio observation rather than renew readiness
 from IPv4 alone. Read-only observation helpers now reuse the existing kernel validators; the
 process-driving consumer and real wireless service RED remain unimplemented.
+Astra's review supports one concrete virtual-pair/wireless-open startup profile
+enum and typed observations, retaining radio and IPv4 objects on one worker
+thread. Subscribe before baseline; combine radio/profile observations using the
+oldest timestamp and retire on loss or identity change. Keep the1s action/250ms
+lease bounds. Crucially, carry an action-wide mutation latch: once radio CONNECT
+or profile removal is submitted, a later component's pre-send failure is still
+uncertain for the composed action. Freeze an actual normal Main+actor hwsim
+consumer before implementing this complete vertical slice; no admission-only
+milestone or new generic framework.
 
 ## Goal and constraints
 
@@ -98,7 +109,7 @@ requires final fresh eligibility before its first send; 18 preview groups and
 35 socket cases pass. This is a deliberate UX contract change, not a proven
 cause of the VM failure. The normal host Qt6.8.2 app build and argument64/UID65 refusals now pass.
 Guest Qt6.12 build and joined guest/PCM now pass in the eighth cohort; the outer
-runner count repair still needs a fresh complete run. See [held-Status evidence](evidence/native-sounds-held-status.json). Do not relabel earlier runs as
+runner count repair now passes the ninth complete run. See [held-Status evidence](evidence/native-sounds-held-status.json). Do not relabel earlier runs as
 fully passing. New QWindow density evidence,
 public screenshots, ARM and physical-phone qualification remain open. Ordinary current profiles require `role.kind=application`; frozen
 previous cohorts retain their matching old binary/profile pairs.
