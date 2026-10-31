@@ -270,7 +270,7 @@ both pass; all seven host children and seven QEMU-host children have actual
 waits and output closure. Container exit0, exact absence and all2015 selected/
 external input hashes pass under the original bounds.
 
-Two pre-launch admissions refused temporary memory pressure; no VM started.
+Three pre-launch resource checks refused temporary memory pressure; no VM started.
 The original viewer remained live within its unchanged700s outer bound. Moving
 a completed old Rust build from tmpfs to disk preserved all3800 entries and
 original-path access while freeing RAM; no build artifacts were discarded.

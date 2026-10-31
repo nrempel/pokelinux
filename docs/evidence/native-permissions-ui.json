@@ -517,8 +517,8 @@
     "owned_container_absent": true,
     "original_deadlines_unchanged": true,
     "VM_runs": 1,
-    "prelaunch_memory_admission_refusals": 2,
     "historical_results_reclassified": false,
-    "physical_phone_accessed": false
+    "physical_phone_accessed": false,
+    "prelaunch_memory_check_refusals": 3
   }
 }
