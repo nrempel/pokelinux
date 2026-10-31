@@ -165,7 +165,9 @@ def run_case(*, root, inputs, selection, station, ap, ap_prefix, namespace_bindi
     out.mkdir(mode=0o700)
     scope = owned_scope
     need(scope.output == out and not scope.children, 'fresh existing owned Scope for this case')
-    gates, runtime, journal = [out / name for name in ['gates', 'runtime', 'journal']]
+    operational = inputs / 'wireless-service-runtime'
+    operational.mkdir(mode=0o700)
+    gates, runtime, journal = [operational / name for name in ['gates', 'runtime', 'journal']]
     for path in [gates, runtime, journal]:
         path.mkdir(mode=0o700)
     source = inputs / 'source'
