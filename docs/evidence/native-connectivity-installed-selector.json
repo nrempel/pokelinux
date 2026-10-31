@@ -1,0 +1,239 @@
+{
+  "schema": 1,
+  "scope": "Native Rust host component checks and generic AArch64 QEMU hwsim integration; no vendor-original-code, physical device or installed startup evidence",
+  "published_candidate_source_base": "7c87d01207b6a21d8d945a3c6dc27569d777cc2b",
+  "candidate_runtime_source_changes": {
+    "native-connectivity-control/src/main_service.rs": {
+      "bytes": 17591,
+      "sha256": "78f74a6b372247fc5c2907b439fde22b4fa40332135f7b5ecc1282019743ed34"
+    },
+    "native-connectivity-control/src/startup.rs": {
+      "bytes": 20825,
+      "sha256": "2c9d3e41209ab7e01cd9d2192142c922b42f4aca5a3dcbdfe9ae8fb85425eb54"
+    }
+  },
+  "compiled_source_and_lock_rows": 51,
+  "candidate_patch": {
+    "bytes": 21049,
+    "sha256": "ef1eaa5238c7bd75b1f757d381a23451087c69f00647d7eb4427b82f8ace2630"
+  },
+  "protected_profile": {
+    "backend": "wireless_open",
+    "selector": "exact interface name only",
+    "legacy_numeric_namespace_ifindex_schema": "refused",
+    "resolved_trusted_WorkerStart_profile": "unchanged numeric namespace/ifindex/name; worker independently checks disconnected/unconfigured baseline",
+    "Main_fixed_original_startup_budget_ns": 3000000000,
+    "resolution": "Existing constructor plus one complete refresh; exact name chosen once; observer retained across matching Service namespace ownership, then dropped",
+    "name_index_continuous_ownership_claimed": false,
+    "exclusive_administration_and_provisioned_station_name_required": true,
+    "retry_or_rebind": false
+  },
+  "component_baseline": {
+    "published_base": "9589a8d4638d5e56cfa902a813503f3921cb0e0e",
+    "compile_exit": 0,
+    "actual_test_exit": 101,
+    "actual_assertion_failures": 2,
+    "markers": [
+      "STATIC_NAME_ONLY_PROFILE_MUST_LOAD",
+      "OBSOLETE_NUMERIC_TARGET_PROFILE_MUST_BE_REFUSED"
+    ],
+    "desired_passed": false,
+    "behavioral_assertion_pair_RED_qualified": true,
+    "original_owner_passed": false,
+    "original_owner_failure": "Expected container101; inherited wrapper records test101 and returns container1. Failed owner preserved; separate read-only assertion/closure qualification.",
+    "full_actual_custody_and_input_closure": true,
+    "review": {
+      "bytes": 2382,
+      "sha256": "7537292bd25ea8a18b4d84f75022f9961348a3b7f73f7b5516d047ae898e725d"
+    },
+    "actual_original_owner": {
+      "bytes": 1218294,
+      "sha256": "9c4d64408512f7d41634b858075041ec638bcf7196c6dda0407aab0f1ef6f3be"
+    },
+    "test_only_patch": {
+      "bytes": 1215,
+      "sha256": "9955396ea4335c8ca8897007ce707e76950a966454020f6aa86a2bad368f3bf7"
+    }
+  },
+  "actual_ARM_baseline": {
+    "published_normal_provider_code": "9589a8d4638d5e56cfa902a813503f3921cb0e0e",
+    "qualified_RED": true,
+    "desired_passed": false,
+    "outer_qualification_passed": true,
+    "actual_Main_exit": 1,
+    "observed_refusal": "Exact unknown-interface protected-schema error before endpoint/journal/worker/actor admission",
+    "in_process_desired_assertion_calls": 1,
+    "caught_desired_assertion_failed": true,
+    "separate_assertion_child_claimed": false,
+    "Main_cap0_or_worker_App_wait_claimed": false,
+    "Connect_Disconnect_packet_clients": 0,
+    "QEMU_exit": 0,
+    "container_exit": 1,
+    "outer_owner_exit": 0,
+    "full_guest_namespace_radio_process_ECHILD_QEMU_container_closure": true,
+    "first_owner_preflight_permission_failure_preserved_separately": true,
+    "hashes": {
+      "selection.json": {
+        "bytes": 113627,
+        "sha256": "14a48db3de82f4329aa6decf223bc06bd025fadd569de6afe871610ae0315c5e"
+      },
+      "SOURCE.json": {
+        "bytes": 16907,
+        "sha256": "1f774f4c8b5fdc571710ba980dbd475ec65d1543598df3841a17b4db19f6c572"
+      },
+      "command.json": {
+        "bytes": 2316,
+        "sha256": "f88e5a2815a74c213c56ce05cc6b1c5d9a233cf834fa1bb6025bf89b5bef94f0"
+      },
+      "run_once.py": {
+        "bytes": 12983,
+        "sha256": "ceb0a5a7ebe33b01ef99bda7807751feb012ebc8f7c39d5ed520e14469a7a829"
+      },
+      "run/receipt.json": {
+        "bytes": 33873,
+        "sha256": "bad062f183114b7b4690ea0924ff8b64c699f5acf765250bfa72fefc0aae0e2f"
+      },
+      "boot-result.json": {
+        "bytes": 14486,
+        "sha256": "a2c1134aefdc4f3d8cb891e6aed9445159342fa3d31c8dcceca5bdba96319d22"
+      },
+      "result.json": {
+        "bytes": 169595,
+        "sha256": "32ce5d1ccd740ecde8ba0198d09fe073eb6142d10e64157ff2efaac1a6300a8f"
+      }
+    }
+  },
+  "candidate_build": {
+    "build_passed": true,
+    "fmt_and_strict_all_target_Clippy_passed": true,
+    "host_library_passed": 52,
+    "owner_tests_passed": 8,
+    "ignored": 1,
+    "required_controls_passed": 14,
+    "all_original_locks_and_inputs_unchanged": true,
+    "normal_host_ARM_release_ELFs": {
+      "host/pokelinux-connectivity-main": {
+        "bytes": 1027232,
+        "sha256": "f6c79fa5b8e449505fb03c68e6cccbf9db09cbf1a79b432d93dc7d23905a3f64",
+        "ELF_machine": 62
+      },
+      "host/pokelinux-connectivity-service": {
+        "bytes": 981424,
+        "sha256": "667e011fa25fdf8e3dceb15a81ebb55ec37a7685b1f313e7a743f057d9fff691",
+        "ELF_machine": 62
+      },
+      "ARM/pokelinux-connectivity-main": {
+        "bytes": 1046488,
+        "sha256": "1eb215fd6ac0ae632580752bfa76224bd5dc195fa852626dca07c86c178659e6",
+        "ELF_machine": 183
+      },
+      "ARM/pokelinux-connectivity-service": {
+        "bytes": 958712,
+        "sha256": "96b44f7bdd12303c4a9282761dcddb133d418c3d9026257568d63b73567b9a2c",
+        "ELF_machine": 183
+      }
+    },
+    "ARM_libtest_compile_only": true,
+    "ARM_libtests_executed": false,
+    "full_actual_wait_EOF_ECHILD_same_daemon_exact_container_absence": true,
+    "hashes": {
+      "source-pins.json": {
+        "bytes": 29953,
+        "sha256": "fddfdb12109d5ac7b2dcc989e78e5c4d495f8f1d772bb3617b056c30eb70bd05"
+      },
+      "candidate-freeze.json": {
+        "bytes": 11626,
+        "sha256": "644f965d3402ac28f8db1a90f7dd3d65b51ad302319c657cb0c3576c44e4b63b"
+      },
+      "Root-command.json": {
+        "bytes": 612659,
+        "sha256": "67cb5d66cf79ac7a91e8ee6901bad386d43732901545ee92be7456b12b838bfd"
+      },
+      "run_once.py": {
+        "bytes": 6415,
+        "sha256": "fc3c90c3cda17115b28a1f7a3098855d8208eff58c757ac074908a7c9baf7bf9"
+      },
+      "outer/receipt.json": {
+        "bytes": 1240481,
+        "sha256": "96a37a31b22a323aa13abb08be967054c2f91ede326e23a3d43831fb356aa747"
+      },
+      "out/build-result.json": {
+        "bytes": 8947,
+        "sha256": "6aa04396f27ff72af3ac474622afdec12dcea58350c18f2cef7e2ed34824c646"
+      }
+    }
+  },
+  "actual_ARM_candidate": {
+    "desired_passed": true,
+    "behavior_RED_qualified": false,
+    "outer_qualification_passed": true,
+    "interface": "wlan1",
+    "actual_Main_driver_peer_exits": [
+      0,
+      0,
+      0
+    ],
+    "Connect_commands": 1,
+    "Disconnect_commands": 1,
+    "cap0_UDP_roundtrips": 2,
+    "same_worker_after_actual_requester_close_and_reopen": true,
+    "quiet_received_datagrams": 0,
+    "worker_terminal_signal": 9,
+    "first_retirement": "external_stop",
+    "QEMU_exit": 0,
+    "container_exit": 0,
+    "outer_owner_exit": 0,
+    "full_guest_namespace_radio_process_ECHILD_QEMU_container_closure": true,
+    "all_selected_inputs_unchanged": true,
+    "exact_CID_absent": true,
+    "hashes": {
+      "selection.json": {
+        "bytes": 126797,
+        "sha256": "691883303981682a1e2ed8c3fb3a664bd8bc9f5452f982fd1b8207cd1c0cb1fa"
+      },
+      "SOURCE.json": {
+        "bytes": 17816,
+        "sha256": "739855c38c1e45aca0476d8d5395a213490bd7c901acef43e983b4099d9b12a6"
+      },
+      "command.json": {
+        "bytes": 2324,
+        "sha256": "9d2fd205b9cde2f747ecc9564ec8c557cf9c4b4a48492c20966f77ec93c3f82d"
+      },
+      "run_once.py": {
+        "bytes": 12694,
+        "sha256": "6b20a4dae09059f003ffb9c781479242f82e10dec1d9ca709bc6fa108f2ea488"
+      },
+      "run/receipt.json": {
+        "bytes": 33970,
+        "sha256": "80fbf4c93eab7ffbc2e10c9631d63071fa6cdc21ba42a2f0fab0d632c2bd2621"
+      },
+      "boot-result.json": {
+        "bytes": 14547,
+        "sha256": "3e428867628a79b1a5ab3e5e0da8ff3d1eafd418e432599d0d5d0a39d14e6f51"
+      },
+      "result.json": {
+        "bytes": 256688,
+        "sha256": "2943858978b3ef87cd444b74cdeed50e851ba4a794c7b03cde24c788274e3a21"
+      }
+    },
+    "frozen_consumer_byte_identical_to_baseline": true,
+    "profile_schema_interface_frequency_and_bssid_match_baseline": true,
+    "profile_bytes_identical_to_baseline": false,
+    "profile_difference": "The independently provisioned AP has a fresh authored SSID in each guest."
+  },
+  "frozen_acceptance_consumer": {
+    "bytes": 46682,
+    "sha256": "c5358e10f2d1b8be807ca17354cfb25cdac28e6943349709ab63cfb2baa22a1e"
+  },
+  "frozen_consumer_reconstruction_base": "c51174102adc838dba8a9f9f541a198ab7be0072",
+  "maintained_followup_consumer_after_profile_migration_executed": false,
+  "current_first_retirement_interface_migration_executed": false,
+  "limits": [
+    "Authored fixture authority and durable NetworkControl grant; no actual normal consent UI evidence from this case",
+    "Authored open AP and fixed documentation IPv4 profile; no WPA/DHCP/DNS/Internet qualification",
+    "Headless generic ARM hwsim; IPv6 disabled as in original cohort; no GUI/window/Pixel/display or phone execution",
+    "No installed PID1/Main/Permissions/session wiring or second-boot no-Connect-replay result",
+    "No proof that a provisioned interface name identifies hardware or owns an interface continuously; exclusive administration is required",
+    "No retry, rebind, deadline/resource extension or host network mutation"
+  ]
+}

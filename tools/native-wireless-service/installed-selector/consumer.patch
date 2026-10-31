@@ -1,0 +1,102 @@
+--- a/tools/native-wireless-service/consumer.py
++++ b/tools/native-wireless-service/consumer.py
+@@ -94,0 +95,9 @@
++
++
++def known_static_schema_refusal(lines):
++    import re
++    error = (r'Error: Custom \{ kind: InvalidData, error: Error\("unknown field '
++             r'`interface`, expected one of `target`, `frequency_mhz`, `bssid`, '
++             r'`ssid`", line: [0-9]{1,4}, column: [0-9]{1,4}\) \}')
++    return (type(lines) is list and len(lines) == 1 and type(lines[0]) is str
++            and re.fullmatch(error, lines[0]) is not None)
+@@ -183 +192,2 @@
+-    startup = {'backend': 'wireless_open', 'target': selected,
++    need(station['name'] == selection['installed_static_selector']['interface'], 'predeclared exclusively provisioned station name')
++    startup = {'backend': 'wireless_open', 'interface': station['name'],
+@@ -376,0 +387,28 @@
++    def finish_static_schema_refusal():
++        # This branch admits only the pinned pre-worker protected-schema error.
++        # The future successful actor/packet path below remains unchanged.
++        r['normal_Main_exit'] = scope.finish(main, start_until)
++        lines = (out / main['name']).read_text().splitlines()
++        need(r['normal_Main_exit'] == 1 and known_static_schema_refusal(lines),
++             'known normal Main static-interface schema refusal only')
++        need(not endpoint.exists() and not (journal / 'admitted').exists()
++             and driver is None and worker_pid is None and worker_pidfd is None,
++             'schema refusal before listener, worker journal or actor admission')
++        need(pin(profile) == r['startup_profile_pin'], 'unchanged exact protected selector input')
++        r['static_schema_refusal_candidate'] = True
++        r['Main_non_JSON_lines'] = lines
++        r['static_schema_refusal_observation'] = {
++            'actual_Main_exit': 1, 'actual_Main_argv': argv,
++            'observed_before_original_startup_cutoff': now() < start_until,
++            'endpoint_absent': True, 'worker_journal_absent': True,
++            'actor_not_admitted': True, 'worker_not_admitted_source_evidence': True,
++            'no_Main_cap0_or_worker_wait_claim': True, 'error_lines': lines}
++        readback('after-static-schema-refusal', False, start_until)
++        publish('stop-peer', {})
++        r['packet_peer_exit'] = scope.finish(packet, start_until)
++        terminal = json.loads((out / packet['name']).read_text())
++        need(r['packet_peer_exit'] == 0 and terminal['peer_stopped']
++             and terminal['packets'] == 0, 'actual cap0 peer Stop/wait0 with no datagram')
++        r['static_selector_prerequisites_qualified'] = True
++        r['runtime_outcome_confirmed'] = True
++
+@@ -440 +478 @@
+-                 original_start_until_ns=start_until)
++                 fixture_start_observation_until_ns=start_until)
+@@ -457 +495 @@
+-                str(binaries['worker']), str(start_until)]
++                str(binaries['worker'])]
+@@ -466 +504,3 @@
+-            need(scope.live(main), 'normal Main startup runtime exited')
++            if not scope.live(main):
++                finish_static_schema_refusal()
++                return r
+@@ -627 +667,3 @@
+-                and value['returncode'] == 0 and not value['output_overflow'] for value in scope.receipts))
++                and (value['returncode'] == 0 or (r.get('static_schema_refusal_candidate') is True
++                      and value['returncode'] == 1 and value['argv'] == r['normal_Main_exact_argv']))
++                 and not value['output_overflow'] for value in scope.receipts))
+@@ -638,0 +681,40 @@
++    if case.get('static_schema_refusal_candidate') is True:
++        expected = selection['installed_static_selector_rejection']
++        actual = selection['service_binaries']
++        observation = case.get('static_schema_refusal_observation', {})
++        after = case.get('after-static-schema-refusal_independent_readback', {})
++        profile = case.get('startup_profile', {})
++        ready = bool(fixture_cleanup_qualified is True and normal_ELF_loaders_qualified is True
++            and retained_namespaces_qualified is True
++            and case.get('static_selector_prerequisites_qualified') is True
++            and case.get('AP_profile_setup_qualified') is True and case.get('peer_ready_qualified') is True
++            and case.get('owned_case_custody_qualified') is True
++            and case.get('no_unexpected_peer_datagram') is True
++            and case.get('runtime_outcome_confirmed') is True and not case.get('error'))
++        rejected = bool(ready and expected['main_ELF'] == actual['main']['ELF']
++            and expected['worker_ELF'] == actual['worker']['ELF']
++            and case.get('normal_Main_exit') == observation.get('actual_Main_exit') == 1
++            and known_static_schema_refusal(case.get('Main_non_JSON_lines'))
++            and case['Main_non_JSON_lines'] == observation.get('error_lines')
++            and observation.get('observed_before_original_startup_cutoff') is True
++            and observation.get('endpoint_absent') is True and observation.get('worker_journal_absent') is True
++            and observation.get('actor_not_admitted') is True
++            and observation.get('worker_not_admitted_source_evidence') is True
++            and len(observation.get('actual_Main_argv', [])) == 5
++            and observation['actual_Main_argv'][0] == actual['main']['guest_path']
++            and observation['actual_Main_argv'][-1] == actual['worker']['guest_path']
++            and set(profile) == {'backend','interface','frequency_mhz','bssid','ssid'}
++            and profile['backend'] == 'wireless_open'
++            and profile['interface'] == selection['installed_static_selector']['interface'] == case['target']['name']
++            and case.get('packet_peer_exit') == 0
++            and case.get('Connect_commands_admitted') == case.get('Disconnect_commands_admitted') == 0
++            and case.get('UDP_roundtrip_clients_admitted') == 0
++            and case.get('radio_or_address_retry_admitted') is False
++            and after.get('radio', {}).get('station_unassociated') is True
++            and after.get('profile', {}).get('configured') is False
++            and 'original_worker_pid' not in case and 'driver_exit' not in case
++            and 'Main_reported_worker_closure' not in case)
++        return {'schema':1,'passed':False,'behavior_RED_qualified':rejected,
++            'prerequisites_and_cleanup_qualified':ready,'actual_outcome_confirmed':rejected,
++            'classification':('QUALIFIED_NORMAL_MAIN_STATIC_WIRELESS_SCHEMA_REFUSAL_RED' if rejected
++                else 'PREREQUISITE_CLEANUP_OR_RUNTIME_OUTCOME_UNQUALIFIED')}

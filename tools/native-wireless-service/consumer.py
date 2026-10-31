@@ -190,7 +190,7 @@ def run_case(*, root, inputs, selection, station, ap, ap_prefix, namespace_bindi
                 'ifindex': station['ifindex'], 'name': station['name']}
     address.target(selected)
     endpoint, profile = runtime / 'control.sock', runtime / 'startup-profile.json'
-    startup = {'backend': 'wireless_open', 'target': selected,
+    startup = {'backend': 'wireless_open', 'interface': station['name'],
                'frequency_mhz': ap['frequency_mhz'],
                'bssid': list(bytes.fromhex(ap['bssid_hex'])),
                'ssid': list(bytes.fromhex(ap['ssid_hex']))}

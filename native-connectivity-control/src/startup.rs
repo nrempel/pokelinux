@@ -1,5 +1,5 @@
-//! One protected startup profile. Namespace ownership belongs to the Service;
-//! this module only validates configuration and the exact opened input file.
+//! Protected installation configuration and the separate resolved worker profile.
+//! This module validates data and the exact opened file; Main resolves names.
 use rustix::fs::{CWD, FileType, Mode, OFlags, fstat, openat};
 use serde::{Deserialize, Serialize};
 use std::{
@@ -10,6 +10,56 @@ use std::{
 
 const MAX_PROFILE_BYTES: usize = 4096;
 
+/// Stable installation input. Numeric kernel identities are never read from it.
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(tag = "backend", rename_all = "snake_case", deny_unknown_fields)]
+pub enum InstalledProfile {
+    VirtualPair {
+        peer_namespace: PathBuf,
+    },
+    WirelessOpen {
+        interface: String,
+        frequency_mhz: u32,
+        bssid: [u8; 6],
+        ssid: Vec<u8>,
+    },
+}
+
+impl InstalledProfile {
+    pub fn validate(&self) -> io::Result<()> {
+        let valid = match self {
+            Self::VirtualPair { peer_namespace } => {
+                peer_namespace.is_absolute()
+                    && !peer_namespace.as_os_str().as_encoded_bytes().contains(&0)
+            }
+            Self::WirelessOpen {
+                interface,
+                frequency_mhz,
+                bssid,
+                ssid,
+            } => {
+                !interface.is_empty()
+                    && interface.len() <= 15
+                    && interface != "lo"
+                    && interface
+                        .bytes()
+                        .all(|byte| byte.is_ascii_alphanumeric() || b"_.-".contains(&byte))
+                    && (1..=100_000).contains(frequency_mhz)
+                    && *bssid != [0; 6]
+                    && bssid[0] & 1 == 0
+                    && !ssid.is_empty()
+                    && ssid.len() <= 32
+            }
+        };
+        if valid {
+            Ok(())
+        } else {
+            Err(io::ErrorKind::InvalidData.into())
+        }
+    }
+}
+
+/// Resolved trusted Main-to-worker data, independent of the installed JSON schema.
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(tag = "backend", rename_all = "snake_case", deny_unknown_fields)]
 pub enum Profile {
@@ -80,7 +130,7 @@ impl Profile {
 
 /// Open exactly once, validate that descriptor, and read only from it. NONBLOCK
 /// prevents a FIFO pathname from waiting for a writer before type validation.
-pub fn load(path: &Path) -> io::Result<Profile> {
+pub fn load(path: &Path) -> io::Result<InstalledProfile> {
     if !path.is_absolute() {
         return Err(io::ErrorKind::InvalidInput.into());
     }
@@ -93,7 +143,7 @@ pub fn load(path: &Path) -> io::Result<Profile> {
     from_file(File::from(fd))
 }
 
-fn from_file(file: File) -> io::Result<Profile> {
+fn from_file(file: File) -> io::Result<InstalledProfile> {
     let metadata = fstat(&file)?;
     if FileType::from_raw_mode(metadata.st_mode) != FileType::RegularFile
         || metadata.st_uid != 0
@@ -109,7 +159,7 @@ fn from_file(file: File) -> io::Result<Profile> {
     if bytes.len() > MAX_PROFILE_BYTES {
         return Err(io::ErrorKind::InvalidData.into());
     }
-    let profile: Profile = serde_json::from_slice(&bytes)?;
+    let profile: InstalledProfile = serde_json::from_slice(&bytes)?;
     profile.validate()?;
     Ok(profile)
 }
@@ -159,7 +209,7 @@ mod tests {
         }
     }
 
-    fn wireless() -> Value {
+    fn resolved_wireless() -> Value {
         let namespace = File::open("/proc/thread-self/ns/net")
             .unwrap()
             .metadata()
@@ -167,6 +217,11 @@ mod tests {
         json!({"backend":"wireless_open", "target":{
             "namespace":{"dev":namespace.dev(),"ino":namespace.ino()},
             "ifindex":2,"name":"wlan1"},"frequency_mhz":2412,
+            "bssid":[2,0,0,0,0,1],"ssid":[112,107,108]})
+    }
+
+    fn wireless() -> Value {
+        json!({"backend":"wireless_open","interface":"wlan1","frequency_mhz":2412,
             "bssid":[2,0,0,0,0,1],"ssid":[112,107,108]})
     }
 
@@ -298,20 +353,26 @@ mod tests {
     }
 
     #[test]
-    fn duplicate_backend_target_namespace_and_selector_fields_are_refused() {
+    fn duplicate_backend_interface_and_radio_fields_are_refused() {
         let root = Directory::new();
-        let value = wireless();
-        let body = serde_json::to_string(&value).unwrap();
-        let dev = format!("\"dev\":{}", value["target"]["namespace"]["dev"]);
+        let body = serde_json::to_string(&wireless()).unwrap();
         for (number, duplicate) in [
             body.replacen(
                 "\"backend\":",
                 "\"backend\":\"wireless_open\",\"backend\":",
                 1,
             ),
-            body.replacen("\"target\":", "\"target\":{},\"target\":", 1),
-            body.replacen("\"ifindex\":2", "\"ifindex\":2,\"ifindex\":2", 1),
-            body.replacen(&dev, &format!("{dev},{dev}"), 1),
+            body.replacen(
+                "\"interface\":",
+                "\"interface\":\"wlan1\",\"interface\":",
+                1,
+            ),
+            body.replacen(
+                "\"frequency_mhz\":2412",
+                "\"frequency_mhz\":2412,\"frequency_mhz\":2412",
+                1,
+            ),
+            body.replacen("\"ssid\":", "\"ssid\":[112,107,108],\"ssid\":", 1),
         ]
         .iter()
         .enumerate()
@@ -321,20 +382,41 @@ mod tests {
     }
 
     #[test]
+    fn resolved_worker_profile_refuses_duplicate_numeric_and_unknown_fields() {
+        let value = resolved_wireless();
+        let body = serde_json::to_string(&value).unwrap();
+        let dev = format!("\"dev\":{}", value["target"]["namespace"]["dev"]);
+        for duplicate in [
+            body.replacen("\"target\":", "\"target\":{},\"target\":", 1),
+            body.replacen("\"ifindex\":2", "\"ifindex\":2,\"ifindex\":2", 1),
+            body.replacen(&dev, &format!("{dev},{dev}"), 1),
+        ] {
+            assert!(serde_json::from_str::<Profile>(&duplicate).is_err());
+        }
+        for pointer in ["/target/lifetime", "/target/namespace/path"] {
+            let mut value = resolved_wireless();
+            if pointer.ends_with("lifetime") {
+                value["target"]["lifetime"] = json!(1);
+            } else {
+                value["target"]["namespace"]["path"] = json!("/proc/self/ns/net");
+            }
+            assert!(serde_json::from_value::<Profile>(value).is_err());
+        }
+    }
+
+    #[test]
     fn invalid_wireless_selectors_are_refused_at_load_and_validate() {
         let root = Directory::new();
         let mut cases = Vec::new();
         for (key, invalid) in [
-            ("ifindex", json!(0)),
-            ("ifindex", json!(1)),
-            ("name", json!("lo")),
-            ("name", json!("")),
-            ("name", json!("bad/name")),
-            ("name", json!("abcdefghijklmnop")),
-            ("name", json!("wlan\u{0}")),
+            ("interface", json!("lo")),
+            ("interface", json!("")),
+            ("interface", json!("bad/name")),
+            ("interface", json!("abcdefghijklmnop")),
+            ("interface", json!("wlan\u{0}")),
         ] {
             let mut value = wireless();
-            value["target"][key] = invalid;
+            value[key] = invalid;
             cases.push(value);
         }
         for (key, invalid) in [
@@ -349,11 +431,48 @@ mod tests {
             value[key] = invalid;
             cases.push(value);
         }
-        let mut zero_inode = wireless();
-        zero_inode["target"]["namespace"]["ino"] = json!(0);
-        cases.push(zero_inode);
         for (number, value) in cases.iter().enumerate() {
             assert!(load(&root.json(&number.to_string(), value)).is_err());
+            let profile: InstalledProfile = serde_json::from_value(value.clone()).unwrap();
+            assert!(
+                profile.validate().is_err(),
+                "installed selector semantics are checked before resolution"
+            );
+        }
+    }
+
+    #[test]
+    fn resolved_worker_profile_keeps_namespace_ifindex_and_name_validation() {
+        let mut cases = Vec::new();
+        for (key, invalid) in [
+            ("ifindex", json!(0)),
+            ("ifindex", json!(1)),
+            ("name", json!("lo")),
+            ("name", json!("")),
+            ("name", json!("bad/name")),
+            ("name", json!("abcdefghijklmnop")),
+            ("name", json!("wlan\u{0}")),
+        ] {
+            let mut value = resolved_wireless();
+            value["target"][key] = invalid;
+            cases.push(value);
+        }
+        for (key, invalid) in [
+            ("frequency_mhz", json!(0)),
+            ("frequency_mhz", json!(100001)),
+            ("bssid", json!(vec![0; 6])),
+            ("bssid", json!([1, 0, 0, 0, 0, 1])),
+            ("ssid", json!([])),
+            ("ssid", json!(vec![0; 33])),
+        ] {
+            let mut value = resolved_wireless();
+            value[key] = invalid;
+            cases.push(value);
+        }
+        let mut zero_inode = resolved_wireless();
+        zero_inode["target"]["namespace"]["ino"] = json!(0);
+        cases.push(zero_inode);
+        for value in &cases {
             let profile: Profile = serde_json::from_value(value.clone()).unwrap();
             assert!(
                 profile.validate().is_err(),
@@ -378,9 +497,26 @@ mod tests {
         .iter()
         .enumerate()
         {
-            let mut value = wireless();
+            let mut value = resolved_wireless();
             *value.pointer_mut(pointer).unwrap() = invalid.clone();
             assert!(load(&root.json(&number.to_string(), &value)).is_err());
+            assert!(serde_json::from_value::<Profile>(value).is_err());
+        }
+        for (number, (pointer, invalid)) in [
+            ("/interface", json!(3)),
+            ("/interface", json!([])),
+            ("/frequency_mhz", json!(2412.5)),
+            ("/bssid", json!([2, 0, 0, 0, 1])),
+            ("/bssid", json!([2, 0, 0, 0, 0, 256])),
+            ("/ssid", json!([256])),
+            ("/ssid", json!("pkl")),
+        ]
+        .iter()
+        .enumerate()
+        {
+            let mut value = wireless();
+            *value.pointer_mut(pointer).unwrap() = invalid.clone();
+            assert!(load(&root.json(&format!("installed-{number}"), &value)).is_err());
         }
         for (number, path) in ["", "relative/ns", "../ns", "relative\u{0}"]
             .iter()
@@ -406,7 +542,7 @@ mod tests {
 
     #[test]
     fn validation_preserves_raw_ssid_bytes_and_namespace_selector() {
-        let mut value = wireless();
+        let mut value = resolved_wireless();
         value["ssid"] = json!([0, 255]);
         value["target"]["namespace"]["dev"] = json!(0);
         value["target"]["name"] = json!("wlan_1.a-2");
@@ -415,5 +551,28 @@ mod tests {
             .validate()
             .expect("valid raw bytes and syntactic namespace selector");
         assert_eq!(serde_json::to_value(profile).unwrap(), value);
+    }
+
+    #[test]
+    fn installed_wireless_name_only_profile_is_accepted() {
+        let root = Directory::new();
+        let value = json!({"backend":"wireless_open","interface":"pklsta0",
+            "frequency_mhz":2412,"bssid":[2,0,0,0,0,1],"ssid":[112,107,108]});
+        assert!(
+            load(&root.json("installed-name-only", &value)).is_ok(),
+            "STATIC_NAME_ONLY_PROFILE_MUST_LOAD"
+        );
+    }
+
+    #[test]
+    fn installed_wireless_numeric_target_schema_is_refused() {
+        let root = Directory::new();
+        let value = json!({"backend":"wireless_open","target":{
+            "namespace":{"dev":4,"ino":123},"ifindex":3,"name":"pklsta0"},
+            "frequency_mhz":2412,"bssid":[2,0,0,0,0,1],"ssid":[112,107,108]});
+        assert!(
+            load(&root.json("obsolete-numeric-target", &value)).is_err(),
+            "OBSOLETE_NUMERIC_TARGET_PROFILE_MUST_BE_REFUSED"
+        );
     }
 }

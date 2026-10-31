@@ -17,6 +17,12 @@ passes host tests for both audio and network permissions, including actual butto
 presses. Joining it to the installed ARM session and connection flow is next.
 [Permission progress](docs/native-network-permission-authority.md).
 
+The Rust connection service now resolves its configured interface at startup,
+without saving boot-specific kernel IDs. An ARM simulation passes connection,
+packet exchange across client close/reopen, and explicit disconnection. Installed
+boot and phone Wi-Fi remain unverified.
+[Startup and connection evidence](docs/native-connectivity-installed-selector.md).
+
 ## See it running
 
 These are real, unedited x86 VM captures at the

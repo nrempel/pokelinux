@@ -69,3 +69,8 @@ boot-specific namespace identity and ifindex. Installing Main, resolving the
 selected interface each boot and joining Permissions with the normal graphical
 session remain separate installed-boot work. Permission implementation and its
 separate component results are outside this CLI report.
+
+The later [static interface selector](native-connectivity-installed-selector.md)
+now executes the four-path entry in a separate passing ARM/hwsim packet
+lifecycle cohort. It does not retroactively execute the other migrated launchers
+or close the installed PID1 and normal consent gates.

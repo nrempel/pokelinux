@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "parent_successful_contract": {
+    "bytes": 5716,
+    "sha256": "d3d1a7b459d440494617319f40de15824d9432792a87e18185ca56787fd1f5b6"
+  },
+  "parent_functional_path_and_sole_assertion_unchanged": true,
+  "static_selector": {
+    "interface": "wlan1",
+    "exclusive_administration_and_provisioned_station_name_required": true,
+    "no_numeric_namespace_or_ifindex_in_installed_JSON": true,
+    "name_does_not_prove_continuous_ownership": true
+  },
+  "known_refusal": {
+    "main_ELF": {
+      "bytes": 962456,
+      "sha256": "4808a59d21a417151f5c1efa0232ef62cf93c49154280e1838774635a9c5e4d4"
+    },
+    "worker_ELF": {
+      "bytes": 956560,
+      "sha256": "a5f3c28d793cc7f925a68aaf1d35307153324898d411bb26ff2dc9813dc7a3c9"
+    },
+    "Main_exit": 1,
+    "unknown_field": "interface",
+    "before_listener_and_worker_journal": true,
+    "desired_passed": false,
+    "actual_ARM_execution_completed": false
+  },
+  "refusal_requires": [
+    "actual selected Main1 and exact unknown-interface stderr",
+    "no endpoint or worker journal",
+    "no actor admission",
+    "actual cap0 peer0/zero packets",
+    "independent disconnected/unconfigured readback",
+    "all genuine AP/loader/source prerequisites",
+    "original actual wait/EOF/namespace/radio/ECHILD/QEMU0/exactCID absence closure"
+  ],
+  "known_refusal_never_claims": [
+    "Maincap0",
+    "workerwait",
+    "actor/Appwait",
+    "functionalGREEN"
+  ],
+  "unqualified": [
+    "compile/loader/setup failure",
+    "unexpected error or exit",
+    "timeout",
+    "any unresolved custody"
+  ],
+  "desired_assertion": "unchanged sole in-process functional AssertionError after full guest closure; desiredfalse separate from outer-qualifiedRED"
+}

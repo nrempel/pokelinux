@@ -65,8 +65,7 @@ def main():
     parser.add_argument('--worker', required=True, type=Path)
     parser.add_argument('--worker-sha256', required=True)
     parser.add_argument('--output', required=True, type=Path)
-    parser.add_argument('--target-name', required=True)
-    parser.add_argument('--target-ifindex', required=True, type=int)
+    parser.add_argument('--interface', required=True)
     a = parser.parse_args()
     assert a.output.is_absolute() and not a.output.exists()
     a.output.mkdir(mode=0o700)
@@ -80,7 +79,7 @@ def main():
          'original_work_until_ns': W, 'original_close_until_ns': C,
          'original_work_close_seconds': [1, 3], 'phone_accessed': False,
          'network_mutating_requests_admitted': 0, 'backend_or_interface_qualified': False,
-         'selector_scope': 'Authored syntactic absent device; worker must fail before backend access',
+         'selector_scope': 'Explicit already provisioned fixture interface; read-only Main lookup, worker fails before backend access',
          'Main_SIGTERM_commands_admitted': 0, 'readonly_Inspect_requests': 0,
          'capability_policy': {'parent_only_bit': 8, 'NET_ADMIN_bounding_absent': True,
              'Main_observation_requires_cap0': True},
@@ -136,14 +135,14 @@ def main():
             assert header[:6] == b'\x7fELF\x02\x01' and int.from_bytes(header[18:20], 'little') == 62
             r[role] = {'path': str(path), 'bytes': m.st_size, 'sha256': wanted, 'ELF_machine': 62}
         before = network_inventory()
-        assert a.target_name == 'pkl-diag-none' and a.target_ifindex == 2147483646
-        assert all(index != a.target_ifindex and name != a.target_name for index, name in before['links'])
+        assert re.fullmatch(r'[A-Za-z0-9_.-]{1,15}', a.interface) and a.interface != 'lo'
+        matches = [(index, name) for index, name in before['links'] if name == a.interface]
+        assert len(matches) == 1 and matches[0][0] > 1
         r['network_before'] = before
         namespace = Path('/proc/self/ns/net').open('rb')
         n = os.fstat(namespace.fileno())
         assert before['namespace'] == {'dev': n.st_dev, 'ino': n.st_ino}
-        profile = {'backend': 'wireless_open', 'target':
-            {'namespace': before['namespace'], 'ifindex': a.target_ifindex, 'name': a.target_name},
+        profile = {'backend': 'wireless_open', 'interface': a.interface,
             'frequency_mhz': 2412, 'bssid': [2, 0, 0, 0, 0, 1], 'ssid': list(b'pkl-diag')}
         profile_path = a.output / 'startup-profile.json'
         with profile_path.open('x') as stream:

@@ -8,12 +8,15 @@ closure JSON to preserve the first `startup_failure` reason and original cutoff.
 The authored target is absent; NET_ADMIN is always outside the bounding set.
 No backend/interface effect, GUI recovery or phone behavior is qualified.
 
-The current `consumer.py` is a separately migrated four-path launcher and has
-not executed. It keeps the original1s observation/3s closure bounds; its Main
+The current `consumer.py` is a separately migrated four-path launcher with an
+interface-only installed profile and has not executed. It requires an explicit
+already provisioned, exclusively administered fixture non-loopback `--interface`.
+It does not create, rename or auto-select a host interface. It keeps the original1s observation/3s closure bounds; its Main
 cutoff assertion now checks `reported_until - 3s` within the parent entry
 interval rather than equality with parent W. Source review establishes first
 placement. The [separate static-entry pair](../../../docs/native-connectivity-installed-startup.md)
-uses its own frozen consumer and is the only new CLI runtime result.
+uses its own frozen consumer. The separate healthy Main-idle result also keeps
+its own providers, consumer and source cohort.
 
 Copy `consumer.py` to a fresh runner directory with exact copies of
 [`owned.py`](../../native-installed-services/owned.py) and
@@ -32,12 +35,13 @@ sudo -n /usr/bin/env -i PATH=/usr/bin:/bin LANG=C LC_ALL=C \
   /usr/bin/python3 -B /runner/consumer.py \
   --main /providers/pokelinux-connectivity-main --main-sha256 MAIN_SHA256 \
   --worker /providers/pokelinux-connectivity-service --worker-sha256 WORKER_SHA256 \
-  --target-name pkl-diag-none --target-ifindex 2147483646 \
+  --interface FIXTURE_INTERFACE \
   --output /absolute/fresh/output
 ```
 
-The consumer verifies the target is absent and retains the actual current
-namespace. Initial SETPCAP lets Main perform its normal bounding-set reduction;
+The current consumer verifies the explicitly supplied fixture name exists and
+retains the actual current namespace. Namespace/ifindex stay observation data;
+the installed profile carries only the name. Initial SETPCAP lets Main perform its normal bounding-set reduction;
 Main is observed cap0 after the worker's ReduceCapabilities/EPERM failure. Two
 readonly Inspect replies precede the one SIGTERM in each recorded case. The
 original1s work/3s closure budgets and16384-byte merged PIPE limit are fixed.

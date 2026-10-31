@@ -76,8 +76,9 @@ are appended under `supplemental_boundary_regressions` in the curated evidence.
 
 This is native x86_64 component evidence with authored Source, installation and
 network backend facts. The earlier audio spy check and supplemental real Owner
-transport/lease check retain their separate scopes. The normal session-owner
-installation checks and Permissions client/UI are still Audio-only at this
-checkpoint. Network consent through those installed paths, actual backend
-cross-service isolation, ARM permission execution and cold-boot persistence remain to be
-joined. No new phone, radio, carrier or hardware support is established.
+transport/lease check retain their separate scopes. At this authority checkpoint,
+normal session-owner installation and Permissions client/UI were Audio-only.
+The later [normal consent checkpoint](native-permissions-ui.md) now passes host
+configuration, client and real unshown QML boundaries for both scopes. Installed
+ARM consent, actual backend cross-service isolation and cold-boot persistence
+remain to be joined. No new phone, radio, carrier or hardware support is established.

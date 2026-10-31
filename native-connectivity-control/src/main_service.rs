@@ -5,9 +5,10 @@ use crate::{
     private_channel,
     protocol::{Choice, LEASE, Reply, Request, State, Status},
     service::{Service, Snapshot},
+    startup::{InstalledProfile, Namespace, Profile, Target},
 };
 use pokelinux_kernel_identity::{TerminationGuard, termination_requested};
-use pokelinux_network_state::boot_time_ns;
+use pokelinux_network_state::{KernelObserver, KernelSnapshot, ObserveError, boot_time_ns};
 use rustix::{
     fd::OwnedFd,
     net::{self, AddressFamily, SocketAddrUnix, SocketFlags, SocketType, UCred},
@@ -252,6 +253,83 @@ pub(crate) fn clients_turn(
     }
 }
 
+fn startup_before(until: u64) -> io::Result<()> {
+    if boot_time_ns() >= until {
+        Err(io::ErrorKind::TimedOut.into())
+    } else {
+        Ok(())
+    }
+}
+
+fn startup_observation_error(error: ObserveError) -> io::Error {
+    match error {
+        ObserveError::Deadline => io::ErrorKind::TimedOut.into(),
+        ObserveError::Io(code) => io::Error::from_raw_os_error(code),
+        _ => io::Error::new(
+            io::ErrorKind::InvalidData,
+            format!("startup link observation: {error:?}"),
+        ),
+    }
+}
+
+fn exact_installed_target(snapshot: &KernelSnapshot, interface: &str) -> io::Result<Target> {
+    let mut matches = snapshot.links.iter().filter(|link| link.name == interface);
+    let link = matches.next().ok_or(io::ErrorKind::NotFound)?;
+    if matches.next().is_some() {
+        return Err(io::ErrorKind::InvalidData.into());
+    }
+    Ok(Target {
+        namespace: Namespace {
+            dev: snapshot.namespace.dev,
+            ino: snapshot.namespace.ino,
+        },
+        ifindex: link.ifindex,
+        name: link.name.clone(),
+    })
+}
+
+fn resolve_installed_profile(
+    installed: InstalledProfile,
+    original_start_until: u64,
+) -> io::Result<(Profile, Option<KernelObserver>)> {
+    startup_before(original_start_until)?;
+    installed.validate()?;
+    let (profile, retained_observer) = match installed {
+        InstalledProfile::VirtualPair { peer_namespace } => {
+            (Profile::VirtualPair { peer_namespace }, None)
+        }
+        InstalledProfile::WirelessOpen {
+            interface,
+            frequency_mhz,
+            bssid,
+            ssid,
+        } => {
+            // One selection from a complete bounded read-only snapshot. The
+            // existing constructor also collects its initial subscription map.
+            // An exact name requires exclusive administration/provisioning; it
+            // does not witness continuous ownership of the name or ifindex.
+            let mut observer = KernelObserver::subscribe_current_namespace(original_start_until)
+                .map_err(startup_observation_error)?;
+            let snapshot = observer
+                .refresh(original_start_until)
+                .map_err(startup_observation_error)?;
+            let target = exact_installed_target(&snapshot, &interface)?;
+            (
+                Profile::WirelessOpen {
+                    target,
+                    frequency_mhz,
+                    bssid,
+                    ssid,
+                },
+                Some(observer),
+            )
+        }
+    };
+    profile.validate()?;
+    startup_before(original_start_until)?;
+    Ok((profile, retained_observer))
+}
+
 /// Trusted root startup only. No app identity, grant, interface or backend selector is accepted over the socket.
 pub fn run(
     path: &Path,
@@ -272,9 +350,13 @@ pub fn run(
         return Err(io::ErrorKind::PermissionDenied.into());
     }
     let _termination = TerminationGuard::install()?;
-    let profile = crate::startup::load(startup_profile)?;
+    startup_before(original_start_until)?;
+    let installed = crate::startup::load(startup_profile)?;
+    let (profile, retained_observer) = resolve_installed_profile(installed, original_start_until)?;
     let socket = listener(path)?;
     let mut service = Service::start(worker, profile, journal.into(), original_start_until)?;
+    // Service now owns its independently checked matching namespace descriptor.
+    drop(retained_observer);
     let mut peers = Vec::<Peer>::new();
     let mut serial = 0u64;
     let mut fatal = None;
@@ -330,5 +412,94 @@ pub fn run(
         Ok(())
     } else {
         Err(io::ErrorKind::Other.into())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use pokelinux_network_state::{LinkSnapshot, NamespaceIdentity};
+    use std::path::PathBuf;
+
+    fn snapshot() -> KernelSnapshot {
+        KernelSnapshot {
+            namespace: NamespaceIdentity { dev: 11, ino: 22 },
+            revision: 1,
+            link_dump_sequence: 1,
+            address_dump_sequence: 2,
+            observed_at_boottime_ns: 1,
+            links: vec![LinkSnapshot {
+                ifindex: 7,
+                name: "pklsta0".into(),
+                observed_lifetime: None,
+                flags: 0,
+                mtu: 1500,
+                operstate: None,
+                addresses: vec![],
+            }],
+        }
+    }
+
+    #[test]
+    fn installed_target_uses_exact_name_and_snapshot_namespace_once() {
+        let snapshot = snapshot();
+        assert_eq!(
+            exact_installed_target(&snapshot, "pklsta0").unwrap(),
+            Target {
+                namespace: Namespace { dev: 11, ino: 22 },
+                ifindex: 7,
+                name: "pklsta0".into(),
+            }
+        );
+        assert_eq!(
+            exact_installed_target(&snapshot, "PKLsta0")
+                .unwrap_err()
+                .kind(),
+            io::ErrorKind::NotFound
+        );
+        let mut ambiguous = snapshot.clone();
+        ambiguous.links.push(snapshot.links[0].clone());
+        assert_eq!(
+            exact_installed_target(&ambiguous, "pklsta0")
+                .unwrap_err()
+                .kind(),
+            io::ErrorKind::InvalidData
+        );
+    }
+
+    #[test]
+    fn installed_resolution_refuses_original_expired_cutoff_before_observation() {
+        let installed = InstalledProfile::WirelessOpen {
+            interface: "pklsta0".into(),
+            frequency_mhz: 2412,
+            bssid: [2, 0, 0, 0, 0, 1],
+            ssid: b"pkl".to_vec(),
+        };
+        assert_eq!(
+            resolve_installed_profile(installed, boot_time_ns())
+                .err()
+                .unwrap()
+                .kind(),
+            io::ErrorKind::TimedOut
+        );
+    }
+
+    #[test]
+    fn installed_virtual_pair_keeps_explicit_path_without_a_link_observer() {
+        let path = PathBuf::from("/absolute/peer/namespace");
+        let (profile, observer) = resolve_installed_profile(
+            InstalledProfile::VirtualPair {
+                peer_namespace: path.clone(),
+            },
+            boot_time_ns().checked_add(3_000_000_000).unwrap(),
+        )
+        .unwrap();
+        assert_eq!(
+            profile,
+            Profile::VirtualPair {
+                peer_namespace: path
+            }
+        );
+        assert!(observer.is_none());
     }
 }

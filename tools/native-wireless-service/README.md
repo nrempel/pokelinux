@@ -22,22 +22,40 @@ observation limit and action deadlines. This current launch migration is
 unexecuted; the [host CLI pair](../../docs/native-connectivity-installed-startup.md)
 does not validate the wireless/ARM/GUI consumer with the new CLI.
 
-The protected root-owned regular `0600` JSON startup profile is selected once:
+The current protected root-owned regular `0600` JSON startup profile uses only
+the exact provisioned station interface name:
 
 ```json
 {
   "backend": "wireless_open",
-  "target": {"namespace": {"dev": 4, "ino": 123}, "ifindex": 3, "name": "wlan1"},
+  "interface": "wlan1",
   "frequency_mhz": 2412,
   "bssid": [2, 0, 0, 0, 0, 1],
   "ssid": [112, 107, 108]
 }
 ```
 
-These numbers illustrate the schema; the consumer supplies the actual retained
-station namespace/interface and nonce AP. The separate virtual backend has
+The consumer supplies the existing fixture station name and nonce AP. Main's
+resolver selects it once from a complete bounded kernel snapshot
+under the same original three-second cutoff and retains the namespace across
+Service startup. The worker still validates disconnected/unconfigured state.
+This requires exclusive administration/provisioning and does not prove continuous
+ownership of a name or index. There is no resolution retry or rebind. Old numeric
+installed fields are refused; the trusted internal resolved worker profile keeps
+its namespace and ifindex. The recorded historical successful cohort and its
+`CONTRACT.json` retain the old numeric schema at their immutable source commit.
+The separate virtual backend has
 `{"backend":"virtual_pair","peer_namespace":"/absolute/namespace/path"}`.
 There is no argv2 namespace compatibility fallback or implicit backend selection.
+The current public profile-writer migration is unexecuted. A separate fresh
+headless adapter retains the original successful functional path and now
+qualifies the pre-implementation Main's unknown-interface schema refusal;
+no actor or worker was admitted by that RED. The exact same frozen consumer now
+passes candidate Connect, persistence, two cap0 packets and Disconnect/quiet
+with full closure. Its [small reconstruction patch and contract](installed-selector/README.md)
+retain the immutable original source cohort. The maintained follow-up variant
+still has not executed after migration. This is separate from the historical
+worker-refusal contract below.
 Open association and documentation addresses `.1/30` and `.2/30` are authored
 tracer inputs. Credentials, WPA, DHCP/DNS, Internet and Pixel hardware remain open.
 

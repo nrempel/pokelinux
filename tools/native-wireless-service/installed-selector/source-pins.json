@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "scope": "Exact actual static-name ARM baseline/candidate acceptance consumer reconstructed from immutable historical code; separate maintained follow-up consumer remains unexecuted after profile migration",
+  "base_public_commit": "c51174102adc838dba8a9f9f541a198ab7be0072",
+  "base_path": "tools/native-wireless-service/consumer.py",
+  "base_consumer": {
+    "bytes": 41025,
+    "sha256": "92bfa45884c1efb7f0fa9d559a1df6bf3f41b4dc2ffe544bdcf350275da6b37d"
+  },
+  "adapter_patch": {
+    "bytes": 6705,
+    "sha256": "d84bf1695a1b438dc21ea1e9ba35fe14d7a657c8e8af2a3d9305231461891eff"
+  },
+  "result_consumer": {
+    "bytes": 46682,
+    "sha256": "c5358e10f2d1b8be807ca17354cfb25cdac28e6943349709ab63cfb2baa22a1e"
+  },
+  "contract": {
+    "bytes": 1716,
+    "sha256": "fe90a2793512f37a3c4bdf9e45f843e6fbf74ab09b14656d852e0597c66baf27"
+  },
+  "preserved_original_successful_functional_path_and_single_in_process_desired_assertion": true,
+  "static_interface": "wlan1",
+  "candidate_refusal_never_adopts_new_ELF_pins": true,
+  "contract_preexecution_status_fields_preserved": true,
+  "actual_outcome_evidence": "../../../docs/evidence/native-connectivity-installed-selector.json",
+  "patch_application": "git apply --unidiff-zero consumer.patch, after exact base SHA verification"
+}

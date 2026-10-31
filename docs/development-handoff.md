@@ -15,7 +15,12 @@ after missing-unit RED, plus eight installer regressions. It preserves the runti
 admission directory across Stop and adds no automatic restart. Its manifest
 authenticates only the unit; current provider pins and activation remain open.
 [Packaging scope](../native-connectivity-control/packaging/README.md).
-Installed PID1 startup and stable interface resolution remain separate.
+Static exact-name resolution now passes protected-file RED→GREEN, 60 host tests
+and the unchanged generic ARM/hwsim packet lifecycle consumer after an actual
+missing-schema RED. Connect, client close/reopen, packets, Disconnect/quiet and
+full guest/container closure pass; authority remains authored, with no normal GUI.
+Installed PID1 startup and normal consent remain separate.
+[Selector scope](native-connectivity-installed-selector.md).
 [CLI evidence and current-launch scope](native-connectivity-installed-startup.md).
 
 The [fixed NetworkControl permission authority](native-network-permission-authority.md)

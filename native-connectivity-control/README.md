@@ -57,10 +57,25 @@ cutoff first in Main. The same frozen host consumer now passes after qualified
 paired RED: four paths enter owned startup and the old fifth argument is refused.
 53 host tests, all seven required controls and host/ARM compilation pass. The
 current four-path Main also passes the unchanged healthy idle/consumed-expiry/
-parent-death oracles with complete closure. ARM runtime, installed boot and GUI
-qualification for this new CLI remain open. The old fifth
+parent-death oracles with complete closure. That CLI-only cohort supplies no ARM
+or GUI runtime evidence; the selector checkpoint below adds ARM execution.
+Installed boot remains open. The old fifth
 clock argument is refused, with no compatibility path. This entry change leaves
 receive/action budgets and worker ownership unchanged.
+
+Installed wireless configuration now selects an exact `interface` name rather
+than persisting namespace/inode/ifindex values across boots. Main resolves it
+once under the original startup cutoff and retains its observer until Service
+owns the matching namespace; the worker still independently attaches and checks
+its disconnected baseline. This requires exclusive provisioning and does not
+prove interface continuity. The obsolete numeric installation schema is refused.
+The candidate passes 60 host tests, host/ARM builds and the unchanged generic
+ARM packet lifecycle consumer, including client close/reopen and explicit
+Disconnect/quiet. This uses authored authority and a simulated open AP. [Selector contract and evidence](../docs/native-connectivity-installed-selector.md).
+
+An optional [installed unit layer](packaging/README.md) now passes host staging
+checks and preserves runtime admission across Stop. It does not yet supply the
+coherent provider/profile bundle or qualify installed PID1 activation.
 
 Main snapshots expire both observation paths from completed kernel readback
 under CLOCK_BOOTTIME. Idle renewal requires another actual readback, never a

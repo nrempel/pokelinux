@@ -5,12 +5,14 @@
   "Main_fixed_startup_budget_ns": 3000000000,
   "current_launchers": {
     "tools/native-wireless-service/consumer.py": {
-      "bytes": 57019,
-      "sha256": "d04e04e565353d5ad7c3868a1e0ff2ac9f0ed07180a57aee091257b0be58b007",
+      "bytes": 57029,
+      "sha256": "970a0f5e0b8d1f37dc383cf87318c1f7b64c11c9da9ad73d8cbc64ee305dd0eb",
       "historical_source_commit": "256c553c1eb7c8434711772fa815d2d5ab21cc00",
       "historical_sha256": "1dd642abdf56d7a2f60ae77da0d38b1514a9613b151034d21e6477c18d2b6fa9",
       "runtime_executed": false,
-      "deadline_adaptation": "fixture observation cutoff retained and labeled separately"
+      "deadline_adaptation": "fixture observation cutoff retained and labeled separately",
+      "static_selector_migration": "Installed wireless profile carries exact fixture station name only; current variant unexecuted",
+      "previous_four_path_source_commit": "7c87d01207b6a21d8d945a3c6dc27569d777cc2b"
     },
     "tools/native-connectivity-private-ingress/controller.py": {
       "bytes": 20506,
@@ -69,12 +71,14 @@
       "deadline_adaptation": "fixture observation cutoff retained and labeled separately"
     },
     "tools/native-connectivity-worker/first-retirement/consumer.py": {
-      "bytes": 14046,
-      "sha256": "5c532ba931b771a1cc98e7d83fd5d863195585df5bb4a993c5458f5f7fc26e44",
+      "bytes": 13971,
+      "sha256": "2fbdce7b553ad325819e0ba95f59200f2b1277a92ce4244e13f482fc8074cdda",
       "historical_source_commit": "256c553c1eb7c8434711772fa815d2d5ab21cc00",
       "historical_sha256": "e7c0bbbd4dcc68caa6061b78ea8aeafdb7b2519e92439c48e27edd4e1b6f365e",
       "runtime_executed": false,
-      "deadline_adaptation": "entry interval instead of parentW equality"
+      "deadline_adaptation": "entry interval instead of parentW equality",
+      "static_selector_migration": "Requires explicit --interface naming already provisioned fixture non-loopback link; no numeric-schema fallback; current variant unexecuted",
+      "previous_four_path_source_commit": "7c87d01207b6a21d8d945a3c6dc27569d777cc2b"
     }
   },
   "current_Main_idle_helper_bindings": {
