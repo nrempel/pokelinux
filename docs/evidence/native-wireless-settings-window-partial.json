@@ -1,0 +1,220 @@
+{
+  "schema": 1,
+  "classification": "PARTIAL_NORMAL_SETTINGS_WIRELESS_TRACE_FAILED",
+  "passed": false,
+  "scope": "Full-system generic ARM Linux with normal installed Settings, production Rust wireless Main/worker, hwsim open AP and fixed IPv4; authored actor authority",
+  "selected_production_source_commit": "5a805f11e573be2fcf544424f2541368f6102eb9",
+  "normal_Qt_CABI_Rust_SDK_selected": true,
+  "genuine_Source_auth_full_session_selected": false,
+  "normal_app_test_control_endpoint_selected": false,
+  "complete_graphical_lifecycle_qualified": false,
+  "production_RED_GREEN_claimed": false,
+  "IPv6_cause_established": false,
+  "phone_accessed": false,
+  "hardware_models_qualified": 0,
+  "attempts": {
+    "root1": {
+      "passed": false,
+      "controller_classification": "SETUP_FAILURE",
+      "normal_case_custody_qualified": false,
+      "guest_case_closure_qualified": false,
+      "source_manifest_sha256": "6a324d43c60387d90544d51ca85e1f8b2f3f64391a9cd9d53665e1dd33dd7853",
+      "frozen_test_source_sha256": {
+        "source/guest.py": "e7f20701589496bd8ac610ef49c02280718b90e1395290af5c2f04f3e5e801a6",
+        "source/controller.py": "4bcfa261fbd952930bae90548edaf135cbbf929580559f0a5c5e517a8ad61632",
+        "source/boot.py": "ad8cd83047f0c7be6990b0304a5178f433de0dbca85bfe5788f20bb541d78c41",
+        "source/service_connectivity_window_tests.rs": "6db946087dccdc34e3f5ae2722d09459199a575475ee2359fb844b797b64188b"
+      },
+      "outer_closure": {
+        "functional_passed": false,
+        "actual_QEMU_wait_exit": 0,
+        "actual_Xvfb_wait_exit": 0,
+        "boot_wait_EOF_handles_closed": true,
+        "actual_container_cleanup_wait_exit": 1,
+        "exact_container_removed_and_absent_same_daemon": true,
+        "cleanup_errors": [],
+        "unresolved_direct_children": 0,
+        "source_unchanged": true,
+        "selected_inputs_unchanged": true
+      },
+      "guest_eventual_ECHILD": true,
+      "wireless_owned_radios_removed": true,
+      "nested_cleanup_assertion_errors_preserved": [
+        "normal Main owned Stop AssertionError()"
+      ],
+      "proof_sha256": {
+        "selection.json": "f3b1476d4f52a6b9f30fb3a699764f3499c4407d04496c27206154124a2cca88",
+        "SOURCE.json": "6a324d43c60387d90544d51ca85e1f8b2f3f64391a9cd9d53665e1dd33dd7853",
+        "result.json": "2740a19ebe8f29b7c9ce6bcb8107d7994859b4e3afbec31b66f9c720cbc800eb",
+        "connectivity-case/result.json": "3eb39426134c84487a250674d007d0b82aad57572a316c1fc02beb006b759add",
+        "boot-result.json": "a44e85f39907da73f1a677f5500113db90e58780cdcd17d7208b56562b9ec2b2",
+        "run/receipt.json": "8d7ef33a46080771d07f729256ad97a31dfe871ff74a63d52da0e65abebf0fe8",
+        "connectivity-case/services/normal-connectivity-main.log": "12cbe712091c48d4c8c8817a386b49575fd7fe08d288a6a95d6a35ad04f75bd5"
+      },
+      "failure_boundary": "Normal Main startup; actual EACCES/PermissionDenied13",
+      "normal_Main_exit": 1,
+      "actual_Settings_window_or_touch": false,
+      "nonce_roundtrips_verified": 0,
+      "screenshot_produced": false,
+      "service_behavior_RED_qualified": false
+    },
+    "root2": {
+      "passed": false,
+      "controller_classification": "SETUP_FAILURE",
+      "normal_case_custody_qualified": false,
+      "guest_case_closure_qualified": false,
+      "source_manifest_sha256": "99ec5bc20c67f086cf8b1be74694908c75ac63c715eb46e0a9f3c70ae5c668f7",
+      "frozen_test_source_sha256": {
+        "source/guest.py": "e7f20701589496bd8ac610ef49c02280718b90e1395290af5c2f04f3e5e801a6",
+        "source/controller.py": "4bcfa261fbd952930bae90548edaf135cbbf929580559f0a5c5e517a8ad61632",
+        "source/boot.py": "ad8cd83047f0c7be6990b0304a5178f433de0dbca85bfe5788f20bb541d78c41",
+        "source/service_connectivity_window_tests.rs": "6db946087dccdc34e3f5ae2722d09459199a575475ee2359fb844b797b64188b"
+      },
+      "outer_closure": {
+        "functional_passed": false,
+        "actual_QEMU_wait_exit": 0,
+        "actual_Xvfb_wait_exit": 0,
+        "boot_wait_EOF_handles_closed": true,
+        "actual_container_cleanup_wait_exit": 1,
+        "exact_container_removed_and_absent_same_daemon": true,
+        "cleanup_errors": [],
+        "unresolved_direct_children": 0,
+        "source_unchanged": true,
+        "selected_inputs_unchanged": true
+      },
+      "guest_eventual_ECHILD": true,
+      "wireless_owned_radios_removed": true,
+      "nested_cleanup_assertion_errors_preserved": [
+        "normal Main owned Stop AssertionError()",
+        "failure cleanup acknowledgement AssertionError()"
+      ],
+      "proof_sha256": {
+        "selection.json": "6cd02ff67a213d8861a09bd39b18ae4c77f308b7fdf6b9611b61b533a29c6e00",
+        "SOURCE.json": "99ec5bc20c67f086cf8b1be74694908c75ac63c715eb46e0a9f3c70ae5c668f7",
+        "result.json": "cad1124b47e86425488afeca282daae7d76cfb1446202de90362a2afc7b04842",
+        "connectivity-case/result.json": "94d293a672632cf025f3c48054f03a4937ff022adca3ec3d3b38a8b5a430ad2f",
+        "boot-result.json": "034adb7ce34007ad43ad0854cce881b29081a3e33d8c8cd645144bc0c9da0611",
+        "run/receipt.json": "8dc41eac0d0e0b2092f8d775618b5cfc743b6c7660b37da2ef8a0d743a323c48",
+        "connectivity-case/services/normal-connectivity-main.log": "475e2d4452417f3c50202e928bc8fbf969f5d1abeb4a2b503d3614795a6bb8f7",
+        "connectivity-case/gates/connected-proof.json": "2930924a69c73df9ca66d01aaf1fd77830ff72025726bc94b35075e897fb7406",
+        "connectivity-case/gates/nonce-1-complete.json": "fab72dae288c5f0796d05e3078ac7fa653a6ac577348c786713ef95fd813ed5e",
+        "connectivity-case/gates/first-closed.json": "7e701ccf08ea009f6a7fd807cd39ed736d1136c83d828de985a3a4e44d5713cd",
+        "connectivity-case/gates/background-readback.json": "f31a70239db3f5c1d03992b6855f31c09253ae379555bce8bcc7eb34a7de7697",
+        "connectivity-case/gates/second-window.json": "fac862996636c8edea2c8c9cee4203cd5c1b3f3845476849c14a72f7eecca08b",
+        "connectivity-case/gates/actor-publications.json": "08b6e5a633c0a251c833a3014339c51c6816ccc00986573083398faac7596ab8",
+        "connectivity-case/services/cap0-nonce-1.log": "5a5e0f2704a340e27dada175d764d21da6d5f265de29a5c835aa65b174b98a00"
+      },
+      "failure_boundary": "Original worker becomes terminal before second-window qualification; RefreshBackend error text is truncated",
+      "actual_Enable_touches": 1,
+      "matching_Completed_true": true,
+      "station_association_readback": true,
+      "AP_station_dump_observed": false,
+      "fixed_IPv4_and_subnet_route_readback": true,
+      "nonce_roundtrips_verified": 1,
+      "cap0_client_actual_wait_EOF": true,
+      "first_App_actual_wait_exit_code": 0,
+      "brief_background_association_and_profile_readback_after_first_wait": true,
+      "original_worker_pidfd_terminal": true,
+      "Main_child_vector_empty": true,
+      "Main_live_at_guard": true,
+      "process_state_snapshot_atomic": false,
+      "second_app_launched": true,
+      "second_window_qualified": false,
+      "second_packet_verified": false,
+      "Disable_or_quiet_qualified": false,
+      "worker_error_stage": "RefreshBackend",
+      "worker_error_text_truncated": true,
+      "underlying_component_error_known": false,
+      "IPv6_cause_established": false,
+      "normal_Main_exit_code": 0,
+      "worker_exit_signal_from_Main_log_tail": 9,
+      "log_tail_is_not_a_passing_original_closure_assertion": true,
+      "functional_green": false,
+      "screenshot": {
+        "artifact": "first-enable-ready-1.png",
+        "sha256": "fb807c05066968e6b1ea9202ac782016e1c821949fd639b4a16edb1d65d24007",
+        "native_pixels": [
+          1080,
+          2424
+        ],
+        "recorded_native_RGBA_sha256": "8571468e041ee0120fb63b7a11ae949fa479ae87857d37850948b361b5ebfb4f",
+        "recorded_PNG_decode_matches_native_buffer": true,
+        "external_compositor_scale": 2.625,
+        "nominal_physical_mm": [
+          65,
+          146
+        ],
+        "selected_profile_PPI": 422,
+        "selected_logical_density": 420,
+        "mapped_window_logical_pixels": [
+          411,
+          923
+        ],
+        "normal_class": "pokelinux-settings",
+        "normal_title": "Settings",
+        "normal_Settings_QWindow_getters_sampled": false,
+        "separate_QScreen_probe_DPR": 3,
+        "Root_original_frame_visually_reviewed": true,
+        "visible_state": "Fallback Settings: Disabled / Connection ready; Enable active, Disable dimmed; brightness unavailable",
+        "connected_success_frame": false,
+        "resize_used": false,
+        "published_as_new_README_screenshot": false
+      },
+      "outer_normal_app_executed_scalar": false,
+      "outer_scalar_scope": "Legacy false scalar is not updated on this failing path; actual app execution is bound by the window/executable/input and Completed records",
+      "first_per_app_SDK_helper_terminal_and_listener_absent": true
+    }
+  },
+  "selected_measurement_bounds": {
+    "host": [
+      810,
+      840
+    ],
+    "boot": [
+      780,
+      800
+    ],
+    "guest": [
+      660,
+      700
+    ],
+    "controller": [
+      90,
+      100
+    ],
+    "GUI_setup": 30,
+    "functional_measurement": 32,
+    "readiness_stage": 20,
+    "max_frames": 8,
+    "action": 1,
+    "SDK_close_ms": 200,
+    "lease_ms": 250,
+    "quiet_ms": 800
+  },
+  "ELFs": {
+    "main": {
+      "bytes": 955872,
+      "sha256": "d7afa115b392293d16bf701234216edcc77255116847641d87aebf4a6bffc7ff"
+    },
+    "worker": {
+      "bytes": 955264,
+      "sha256": "4a8def53431d9e9aa2029e8fecc0b80c6f219f0e56010451aa033326ac4b0cff"
+    },
+    "launcher": {
+      "bytes": 1108368,
+      "sha256": "cb18ce42f430c353800b13e07e07fe428f33cb1adea139b35eb6e28981587ca4"
+    },
+    "storage": {
+      "bytes": 1677112,
+      "sha256": "ab18aa2941ac6d6dd3623b3ea9442bb26ce54a06e28c193a0e6fc1c57fe99265"
+    },
+    "driver": {
+      "bytes": 4793136,
+      "sha256": "d7205a158704a7142b11baaed92d454d0e060919ca47ce480ea1c4cb1aa015f0"
+    },
+    "normal_Settings": {
+      "bytes": 6458240,
+      "sha256": "97ce7a3c1db928fb4ce0d12e4a627502c41aef47fc3be923393a49c27e2c3e7e"
+    }
+  }
+}

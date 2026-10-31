@@ -76,6 +76,12 @@ including actual SDK unavailable state and complete owned shutdown. The earlier
 app-client failures remain unexplained; added test diagnostics are not a proven
 repair. [Current results](docs/evidence/native-wireless-service-followup.json).
 
+A later graphical ARM wireless trace is partial: one normal Settings Enable
+touch reaches matching completion, simulated open-AP association, fixed IPv4 and
+one packet exchange. The first app closes normally, then the worker retires
+before second-window qualification. Reopen, Disable and the complete graphical
+lifecycle remain failed. [Partial wireless trace](docs/native-settings-connectivity-window.md#current-graphical-wireless-tracer-remains-partial).
+
 ## What works today
 
 These are separate, documented test checkpoints. They have not all been joined

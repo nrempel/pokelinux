@@ -365,3 +365,40 @@ binds all six failed attempts, the fourth attempt's frame and their exact
 selections. Native build/install qualification remains valid. Complete session
 startup, the full ARM connectivity lifecycle, matched Pixel integration and every
 phone gate remain open.
+
+## Current graphical wireless tracer remains partial
+
+Two later generic ARM attempts join the normal installed Settings window to the
+current Rust wireless Main/worker and an owned hwsim open AP. They retain
+authored actor authority, fixed IPv4 and the existing ARM measurement bounds;
+this is the normal Local connection toggle for one selected AP, without SSID
+selection, WPA, DHCP/DNS, Internet or phone qualification.
+
+Root1 stops at normal Main startup with actual EACCES/PermissionDenied13 and
+Main exit1, before a Settings window, touch or packet. Root2 selects shared
+results mode0755 and reaches rendered Enable readiness. One real touch produces
+matching Completed(true), independent station association and `192.0.2.1/30`
+with its subnet route, and a cap0 nonce/ACK. Actual first-app wait0 and per-app
+SDK helper/listener retirement precede a brief associated/profile readback.
+
+The retained-worker guard then observes empty Main children and a ready original
+worker pidfd while Main is live; the process snapshot is not atomic. The second
+app launches but never qualifies its window. Worker stderr truncates within
+`RefreshBackend` and is concatenated with Main's closure record, which reports
+worker signal9. The underlying component error and any IPv6 cause are unknown.
+No second packet, Disable/removal/quiet or complete graphical success qualifies.
+Both controller classifications remain `SETUP_FAILURE`, with functional false
+and nested controller/guest custody false. Their cleanup assertion failures
+remain recorded despite eventual guest ECHILD, QEMU/Xvfb wait0, container wait1
+and exact removal/absence on the same daemon. Selected source and inputs remain
+unchanged. These failures do not replace the earlier virtual-link traces.
+
+Root2 retains one original Enable-ready PNG at 1080×2424. External compositor
+measurements are scale 2.625, nominal 65×146mm and a 411×923 mapped Settings window
+under the selected 422PPI/420 logical-density profile. Actual Settings QWindow
+getters are unsampled; the separate QScreen probe reports DPR3. Recorded native
+buffer/PNG hash matching and Root's original-frame review show Disabled/Connection
+ready, Enable active and Disable dimmed in the ordinary fallback theme. There is
+no connected-success frame, resize or new public screenshot in this checkpoint.
+[Hash-only partial provenance](evidence/native-wireless-settings-window-partial.json)
+binds both attempts, frozen sources, key gates, outer receipts and the frame.

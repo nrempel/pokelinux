@@ -2,6 +2,18 @@
 
 ## Immediate integration order
 
+Latest graphical wireless checkpoint: root1 fails normal Main startup with
+EACCES before app input. Root2 reaches one real Settings Enable, matching
+Completed, independent station association/fixed IPv4 and one cap0 nonce/ACK.
+The first app has an actual normal wait0 and brief background readback, then the
+original worker is terminal before second-window qualification while Main stays
+alive. Its stderr truncates within `RefreshBackend`; final wait records signal9.
+The underlying error and any IPv6 cause remain unestablished. No second packet,
+Disable or complete GUI success follows. QEMU/Xvfb wait0 and container wait1,
+removal/absence and unchanged inputs pass separately; nested controller/guest
+custody flags remain false. Preserve both attempts and the earlier failed
+virtual-link traces. [Partial GUI evidence](evidence/native-wireless-settings-window-partial.json).
+
 Latest follow-up: the two-file Clippy repair passes the actual current virtual
 Service/worker packet lifecycle and normal host/ARM builds. Both diagnostic-cohort
 `current-arm-root-2` ARM scenarios now pass their desired assertions and complete
@@ -24,7 +36,7 @@ positive operation. The root2 actor/SDK fixture adds error-only diagnostics;
 production Main/worker, consumer/guest, desired predicates and deadlines are
 unchanged. The new passes establish no causal repair or repeatability guarantee.
 Root1 failure cleanup and the earlier frozen-consumer success retain their own
-source cohorts. No graphical Settings or phone ran.
+source cohorts. No graphical Settings or phone ran in those headless cohorts.
 [Follow-up evidence](evidence/native-wireless-service-followup.json)
 and [current virtual regression](evidence/native-connectivity-current-virtual-lifecycle.json).
 
