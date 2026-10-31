@@ -104,3 +104,10 @@ the explicit isolated-test environment after exclusive hwsim setup and creates
 the protected fixture executable directory before loader checks. The final
 consumer review retains summary flags; full case evidence remains separately in
 the guest record to avoid duplicating it under the inherited publication bound.
+
+Baseline classification also requires exactly the selected unscoped normal-worker
+`Error: Kind(InvalidData)` line in Main's inherited stderr, alongside its recorded
+worker exit1. Wrapped capability/bootstrap failures or other error text remain
+unqualified. This identifies the retained implementation's refusal class, not
+the exact underlying kernel error discarded by that implementation. It is an
+expected baseline contract until the actual runtime observes it.

@@ -54,8 +54,8 @@
   },
   "consumer_sources_sha256": {
     "tools/native-wireless-service/service_connectivity_wireless_actor_tests.rs": "cb73446cf7e5f5806c827895c83b1d77feaf20f030df6d6b6552aeeec57d94b5",
-    "tools/native-wireless-service/consumer.py": "5705df57e29511075c730d6e765e4104a92456f0118fd4ccc2db0a7104a610f1",
-    "tools/native-wireless-service/CONTRACT.json": "237372be07ccb8a398dd2ec104c282c94ec5cabeff7baf2e5260ca141bfba458",
+    "tools/native-wireless-service/consumer.py": "887df0ae3831b02f79ea41ff9282b86f85a61cdeafb052dc5ca5307ea6be7787",
+    "tools/native-wireless-service/CONTRACT.json": "d3d1a7b459d440494617319f40de15824d9432792a87e18185ca56787fd1f5b6",
     "tools/native-wireless-service/arm/guest-main.py": "fadc85a19ebabce7a4f5266ad0e5904d05f5cb6191e1e12ab2036a3c0a31102a"
   },
   "remaining": [
@@ -64,5 +64,6 @@
     "Same consumer GREEN and negative cases",
     "Normal Settings window and matched Pixel hardware gates"
   ],
-  "physical_phone_accessed": false
+  "physical_phone_accessed": false,
+  "RED_requires_exact_worker_refusal_line": true
 }

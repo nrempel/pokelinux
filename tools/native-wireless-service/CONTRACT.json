@@ -88,7 +88,7 @@
     "driver": "consumer.py: prepare and run_case",
     "actor": "service_connectivity_wireless_actor_tests.rs",
     "final_review": "qualify_after_cleanup then one assert_desired_after_cleanup after full hwsim closure",
-    "baseline_selection": "baseline_profile_rejection binds exact main_ELF, worker_ELF, Main_exit_code=0, worker_exit_code=1; actual unavailable normal Inspect and SDK and independent unassociated/address-absent readback also required",
+    "baseline_selection": "baseline_profile_rejection binds exact main_ELF, worker_ELF, Main_exit_code=0, worker_exit_code=1; actual unavailable normal Inspect and SDK and independent unassociated/address-absent readback also required; exact inherited worker stderr must be Error: Kind(InvalidData), excluding wrapped capability/bootstrap failures",
     "internal_disconnect_order": "external readback proves final radio/address absence; internal profile-before-radio submission order needs component/event evidence separately"
   }
 }

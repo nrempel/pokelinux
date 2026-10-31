@@ -380,13 +380,16 @@ def run_case(*, root, inputs, selection, station, ap, ap_prefix, namespace_bindi
         if main is not None:
             r['normal_Main_exit'] = scope.finish(main, close_until)
             rows = []
+            non_json = []
             for line in (out / main['name']).read_text().splitlines():
                 try:
                     value = json.loads(line)
                 except json.JSONDecodeError:
+                    non_json.append(line)
                     continue
                 if type(value) is dict and value.get('event') == 'connectivity_main_closure':
                     rows.append(value)
+            r['Main_non_JSON_lines'] = non_json
             need(len(rows) == 1, 'one normal Main-owned worker closure receipt')
             terminal = rows[0]
             r['Main_reported_worker_closure'] = terminal
@@ -644,6 +647,8 @@ def qualify_after_cleanup(case, *, fixture_cleanup_qualified, normal_ELF_loaders
         and baseline.get('worker_ELF') == actual_pins['worker']['ELF']
         and baseline.get('Main_exit_code') == case.get('normal_Main_exit') == 0
         and baseline.get('worker_exit_code') == closure.get('worker_exit_code') == 1
+        and baseline.get('worker_error_line') == 'Error: Kind(InvalidData)'
+        and case.get('Main_non_JSON_lines') == [baseline['worker_error_line']]
         and case.get('functional', {}).get('startup_profile_rejected_candidate') is True
         and case.get('UDP_roundtrip_clients_admitted') == 0
         and case.get('after-runtime-profile-rejection_independent_readback', {}).get('radio', {}).get('station_unassociated') is True)
