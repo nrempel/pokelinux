@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "scope": "Frozen actual runtime consumer sources and unmodified production baseline builds only; no persistent wireless runtime RED/GREEN",
+  "production_backend_implemented": false,
+  "runtime_RED_executed": false,
+  "normal_source_commit": "b980428af6cfd16b0f306b046e7224bbf073ffaa",
+  "normal_build_source_files_unchanged": 45,
+  "actor_build_source_files_unchanged": 255,
+  "normal_build_receipt_sha256": "2786d70b0a5a633406a988aef022165598f74ce6741bd302e7fe15ce574cdd0a",
+  "actor_build_receipt_sha256": "dbce966cc17b3f3b2d37888c224a23910d916a8d3fe14d82b5d82c6b4c55c56a",
+  "normal_ELFs": {
+    "ARM/pokelinux-connectivity-service": {
+      "bytes": 752984,
+      "sha256": "1b309aaa0ce45ee602112c8568ab756676d06e83b2e5354560761ecc9dc65b83",
+      "ELF_machine": 183
+    },
+    "ARM/pokelinux-connectivity-main": {
+      "bytes": 860696,
+      "sha256": "f2714dd3d3226d018b93d77fb7267bb5be9b0b939959899a1c9f097680207bc9",
+      "ELF_machine": 183
+    },
+    "host/pokelinux-connectivity-service": {
+      "bytes": 748480,
+      "sha256": "af5077ae953ebabfbbae7e16f4015e77d9f2c45dee4a65e44523f251f2b156f1",
+      "ELF_machine": 62
+    },
+    "host/pokelinux-connectivity-main": {
+      "bytes": 863272,
+      "sha256": "1bfac741b10268d87a5d4306034df6900684da05a3d7a8096522b4cc58af954a",
+      "ELF_machine": 62
+    }
+  },
+  "actor_and_helper_ELFs": {
+    "launcher": {
+      "bytes": 1107664,
+      "sha256": "5b7da79de5ca2717815225da891cce7fb3504f09e53e72cdf469e85b3477f1c0",
+      "ELF_machine": 183
+    },
+    "storage": {
+      "bytes": 1676464,
+      "sha256": "1fff74dbba97dc4de9cbffd908c3db3ca213f2dc866ee6531c585c9b61cba6a4",
+      "ELF_machine": 183
+    },
+    "settings_app": {
+      "bytes": 862280,
+      "sha256": "f1d4fd415c5f0e266137cc751a3e72be1162d2bdd3fa68508043138e43d509ef",
+      "ELF_machine": 183
+    },
+    "driver": {
+      "bytes": 4790432,
+      "sha256": "eebcf774b8c5ddbe159bc0f0f9ee63867bd061f57377fb7a556e6cee99b9b3ad",
+      "ELF_machine": 183
+    }
+  },
+  "consumer_sources_sha256": {
+    "tools/native-wireless-service/service_connectivity_wireless_actor_tests.rs": "cb73446cf7e5f5806c827895c83b1d77feaf20f030df6d6b6552aeeec57d94b5",
+    "tools/native-wireless-service/consumer.py": "5705df57e29511075c730d6e765e4104a92456f0118fd4ccc2db0a7104a610f1",
+    "tools/native-wireless-service/CONTRACT.json": "237372be07ccb8a398dd2ec104c282c94ec5cabeff7baf2e5260ca141bfba458",
+    "tools/native-wireless-service/arm/guest-main.py": "fadc85a19ebabce7a4f5266ad0e5904d05f5cb6191e1e12ab2036a3c0a31102a"
+  },
+  "remaining": [
+    "Actual normal Main/actor hwsim refusal RED and full owned closure",
+    "Retained radio/profile backend implementation",
+    "Same consumer GREEN and negative cases",
+    "Normal Settings window and matched Pixel hardware gates"
+  ],
+  "physical_phone_accessed": false
+}

@@ -1,11 +1,30 @@
 {
   "schema": 1,
-  "status": "acceptance contract and read-only observation helpers only; runtime driver and production integration not implemented",
-  "evidence_class": "future generic ARM hwsim integration; no Pixel or physical-radio qualification",
+  "status": "concrete Main/actor hwsim consumer and generic ARM owner adapter written; no persistent-service runtime result claimed",
+  "evidence_class": "generic ARM hwsim integration consumer; no Pixel or physical-radio qualification",
   "startup": {
-    "selection": "explicit trusted profile; exact CLI and protected profile schema remain under review",
+    "selection": "normal Main retains five arguments: ENDPOINT ROOT0600_STARTUP_PROFILE JOURNAL WORKER_ELF ORIGINAL_START_UNTIL_NS",
     "fallback": "none; no implicit virtual backend or open-network downgrade",
-    "network": "authored open AP and fixed 192.0.2.1/30 tracer; not WPA/DHCP/DNS/Internet"
+    "network": "authored open AP and fixed 192.0.2.1/30 tracer; not WPA/DHCP/DNS/Internet",
+    "wireless_open_profile": {
+      "backend": "wireless_open",
+      "target": {
+        "namespace": {
+          "dev": "u64",
+          "ino": "u64"
+        },
+        "ifindex": "u32",
+        "name": "string"
+      },
+      "frequency_mhz": "u32",
+      "bssid": "six u8 values",
+      "ssid": "one to32 u8 values"
+    },
+    "virtual_pair_profile": {
+      "backend": "virtual_pair",
+      "peer_namespace": "absolute protected namespace path"
+    },
+    "protection": "root-owned regular0600 startup profile; no fallback to argv2 namespace or implicit virtual backend"
   },
   "required_ownership": {
     "worker": "one retained actual normal connectivity worker across requester closure and reopening",
@@ -42,18 +61,34 @@
   "bounds": {
     "existing_action_cutoff_ns": 1000000000,
     "deadline_changes": "require explicit architecture review, never extended merely to pass a run",
-    "original_hwsim_case_and_cleanup_bounds": "retain reviewed existing scope; do not invent new values"
+    "original_hwsim_case_and_cleanup_bounds": "retain reviewed existing scope; do not invent new values",
+    "existing_startup_cutoff_ns": 3000000000,
+    "existing_lease_ns": 250000000,
+    "existing_functional_case_ns": 6000000000,
+    "existing_quiet_ns": 800000000
   },
   "reuse": [
+    "tools/native-wireless-association/address-packets/arm/guest-main.py",
     "tools/native-wireless-association/address-packets/address_consumer.py",
-    "tools/native-connectivity-worker/lifecycle/driver.rs",
-    "tools/native-connectivity-settings-sdk/controller.py"
+    "tools/native-wireless-association/address-packets/wifi_peer.py",
+    "tools/native-wireless-association/address-packets/udp_client.py",
+    "tools/native-connectivity-actor/peer.py",
+    "tools/native-connectivity-settings-sdk/service_connectivity_sdk_actor_tests.rs",
+    "tools/native-installed-services/owned.py"
   ],
   "remaining": [
-    "Exact startup profile and typed worker observation wire design",
-    "Retained radio epoch implementation and service composition",
-    "Executable consumer plus genuine RED before production change",
-    "GREEN actual hwsim persistence, packets, disconnect and negative controls",
-    "Normal Settings and matched Pixel backend integration"
-  ]
+    "Genuine runtime RED from frozen consumer before production change",
+    "Retained radio epoch and profile composition in production",
+    "GREEN actual hwsim persistence, cap0 packets, explicit disconnect and full closure",
+    "Additional permission-revocation, radio-loss, target-change and composed-uncertainty negative runs",
+    "Normal Settings window, credentials/WPA/DHCP/DNS, matched Pixel backend and all physical gates"
+  ],
+  "runtime_consumer": {
+    "owner": "arm/guest-main.py",
+    "driver": "consumer.py: prepare and run_case",
+    "actor": "service_connectivity_wireless_actor_tests.rs",
+    "final_review": "qualify_after_cleanup then one assert_desired_after_cleanup after full hwsim closure",
+    "baseline_selection": "baseline_profile_rejection binds exact main_ELF, worker_ELF, Main_exit_code=0, worker_exit_code=1; actual unavailable normal Inspect and SDK and independent unassociated/address-absent readback also required",
+    "internal_disconnect_order": "external readback proves final radio/address absence; internal profile-before-radio submission order needs component/event evidence separately"
+  }
 }

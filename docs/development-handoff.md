@@ -28,12 +28,17 @@ and terminal uncertainty. Reuse the existing Main/actor boundary and hwsim
 consumer. Open association and the fixed test IPv4 profile are tracer inputs;
 WPA credentials, DHCP/DNS, matched Pixel driver startup and hardware remain open.
 See [address/packet scope](native-wireless-address-packets.md) and the
-[unexecuted persistent-service acceptance contract](../tools/native-wireless-service/README.md).
+[persistent-service runtime consumer](../tools/native-wireless-service/README.md).
 The current veth Fact requires a witnessed lifetime; existing wireless identity
 must be represented separately. One-shot association closes its event sockets,
 so a persistent backend must retain radio observation rather than renew readiness
-from IPv4 alone. Read-only observation helpers now reuse the existing kernel validators; the
-process-driving consumer and real wireless service RED remain unimplemented.
+from IPv4 alone. The executable consumer and copied real actor test now reuse the existing kernel
+validators and generic hwsim owner. Fresh unmodified normal Main/worker host+ARM
+builds and the ARM actor/SDK/launcher/storage builds pass. No actual persistent
+wireless RED has run yet. Stage this frozen consumer against the passing prior
+address/packet cohort (second GREEN, not the first failed publication cohort),
+observe actual normal-service refusal and complete cleanup, then implement the
+retained backend without changing the desired consumer.
 Astra's review supports one concrete virtual-pair/wireless-open startup profile
 enum and typed observations, retaining radio and IPv4 objects on one worker
 thread. Subscribe before baseline; combine radio/profile observations using the
